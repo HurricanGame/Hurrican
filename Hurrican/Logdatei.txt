@@ -1,0 +1,200 @@
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei Ende
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei Ende
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei Ende
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei Ende
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei Ende
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei Ende
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei Ende
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei Ende
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei Ende
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei Ende
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei Ende
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei Ende
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei Ende
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/static_blue.bmp erfolgreich ! 
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/clouds1.bmp erfolgreich ! 
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/back_cave.png erfolgreich ! 
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/front_cave.png erfolgreich ! 
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei Ende
