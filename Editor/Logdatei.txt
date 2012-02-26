@@ -1,0 +1,326 @@
+>------------------------------<
+|  Hurrican Level-Editor V1.0  |
+| (c) 2002 Jörg M. Winterstein |
+>------------------------------<
+Logdatei vom : Aug 13 2007 - 22:48:39
+
+>-----------------------------------<
+| Fenster Initialisierung gestartet |
+>-----------------------------------<
+
+RegisterClassEx	: erfolgreich !
+CreateWindowEx	: erfolgreich !
+WindowSizeX	: 1024
+WindowSizeY	: 768
+
+-> Fenster Initialisierung erfolgreich beendet !
+
+>--------------------<
+| GameInit gestartet |
+>--------------------<
+
+--> DirectInput8 Initialisierung gestartet <--
+----------------------------------------------
+
+DirectInput8Create				: erfolgreich !
+Keyboard : CreateDevice				: erfolgreich !
+Keyboard : SetDataFormat			: erfolgreich !
+Keyboard : SetCooperativeLevel			: erfolgreich !
+Keyboard : Acquire				: erfolgreich !
+Maus : CreateDevice				: erfolgreich !
+Maus : SetDataFormat				: erfolgreich !
+Maus : SetCooperativeLevel			: erfolgreich !
+Maus : SetProperty				: erfolgreich !
+Maus : Acquire					: erfolgreich !
+Joystick : EnumDevices				: erfolgreich !
+Joystick : kein Joystick gefunden, überspringe Initialisierung !
+
+-> DirectInput8 Initialisierung erfolgreich beendet !
+
+
+--> Direct3D init <--
+---------------------
+
+NOT using VSync...
+DX8 Device initialised!
+
+-> Direct3D init successfull!
+
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/clouds_jungle.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/extras.png erfolgreich ! 
+Bitmap laden : gfx/spielerstart.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/oneup.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/diamant.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/powerblock.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/spitter.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/enemy-walker.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/enemy-guntower.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/spiderbomb.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/piranha.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/stahlmuecke.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/deckenturm.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/kugel4.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/kugel3.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/kugel2.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/kugel1.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/krabbleroben.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/krabblerlinks.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/krabblerrechts.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/auge.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/qualle.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/fallingstone.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/fallingstone2.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/roboraupe.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/stalagtit.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/raketenwerfer.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/swimwalker.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/flugsack.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/flugsack.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/eisstachel.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/skiwalker.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/flugkanone.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/snowbomb.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/roboman1.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/boulder.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/stelzsack.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/fallbombe.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/pokenuke.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/lavakrabbe.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/lavaball.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/lavaball.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/fettespinne.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/eiermann.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/wandcannon.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/starsmall.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/starbig.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/made.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/drone.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/neufisch.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/pflanze.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/spitterbombe.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/nest.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/schienenviech.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/wassermine.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/fledermaus.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/climbspider.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/feuerspinne.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/ballerdrone.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/schwabbel.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/bigrocket.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/eiszapfen.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/wandkrabbe.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/jaeger.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/siderocket.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/fiesedrone.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/schleimboller.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/schleimrot.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/schleimmaul.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/fieserwalker.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/fieserwalker2.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/mittelspinne.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/smallwespe.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/lavakrabbe.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/stampfstein.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/lavamann.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/lafass.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/geschuetz.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/fetterakete.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/schabe.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/minidragon.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/Schneekoppe.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/zitrone.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/rotzpott.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/stachelbeere.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/minirocket.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/mutant.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/riesenpiranha.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/riesenqualle.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/riesenraupe.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/wasp.png erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : gfx/nix.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/stahlfaust.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/pharaokopf.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/spiderboss_rumpf.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/ufo.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/ufo.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/fahrstuhlboss_rahmen.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/flugboss_main.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/bratklops0000.bmp erfolgreich ! 
+Bitmap laden : gfx/trschmidt.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/metalhead_birne.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/stahlfaust_eis.bmp erfolgreich ! 
+Bitmap laden : gfx/wuxe.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/golem_rumpf.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/spinnenmaschine_oben.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/drache_body.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/rollmops_rollen.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/schneekoenig.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/bigfish.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/skeletor.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/endbossmaschine.png erfolgreich ! 
+Bitmap laden : gfx/partikelspawner.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/fahrstuhl.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/fass.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/flammenwerfer.bmp erfolgreich ! 
+Bitmap laden : gfx/fademusic.bmp erfolgreich ! 
+Bitmap laden : gfx/endlevel.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/plattform.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/presse.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/trenzshrine.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/bruecke.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/floating.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/floating2.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/floating3.bmp erfolgreich ! 
+Bitmap laden : gfx/surfbrett.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/shootplattformbutton.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/shootplattform.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/glubschi.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/glubschi2.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/column.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/lift.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/column.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/Schleuse.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/Schleuse2.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/switch.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/warning.png erfolgreich ! 
+Bitmap laden : gfx/soundtrigger.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/luefter_gross.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/luefter1.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/luefter2.png erfolgreich ! 
+Bitmap laden : gfx/tutorialtext.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/lavaflare.bmp erfolgreich ! 
+Bitmap laden : gfx/secret.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/mushroom_head.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/presswurst.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/lafass_spawner.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/spikelift.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/tube.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/water.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/water2.bmp erfolgreich ! 
+Bitmap laden : gfx/blockarten.png erfolgreich ! 
+Bitmap laden : gfx/smallfont.bmp erfolgreich ! 
+
+-> GameInit erfolgreich beendet !
+
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_arrow.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_cave.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_cave2.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_cave3.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_cave4.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_cave5.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_cave6.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_colum1.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_cschraeg.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_factory.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_factory2.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_factory3.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_factory4.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_factory5.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_fliesband.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_graues.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_hoehlen.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_jaeger1.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_jaeger2.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_Jungle2.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_kacheln.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_machine1.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_machine2.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_machine3.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_machine4.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_mario1.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_mario2.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_mario3.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_mario4.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_mario5.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_mpde.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_mpde2.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_mpde3.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_mpde5.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_panel.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_panel3.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_pflanzen.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_plate.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_rohre.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_saeulen.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_schrott1.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_snowplate.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_spears.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_spinne1.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_spinne2.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_technik.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_tempel.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_tempel2.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_tot.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_tower1.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_tower4.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_traeger.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_weltend1.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_blau.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_blau2.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_blau3.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_bluestone.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_braun.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_chains.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_cracks.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_dino2.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_end.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_end2.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_end3.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_end4.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_gerippe.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_ice.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_ice2.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_ice3.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_Jungle.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_Jungle3.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_kacheln.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_kisten.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_mosi.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_mpde4.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_mpde5.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_mpde6.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_mushi.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_mushi3.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_pflanzen.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_pflanzen2.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_pflanzen3.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_pflanzen4.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_ray1.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_ray2.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_skull.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_snow.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_snow2.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_spinne3.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_tower2.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/s_tower3.png erfolgreich ! 
