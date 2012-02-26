@@ -1,0 +1,4926 @@
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_end.bmp erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_cave.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_cave.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_cave.bmp erfolgreich ! 
+s_cave.bmp
+s_cave2.bmp
+s_cschraeg.bmp
+s_cave4.bmp
+s_tower3.png
+s_pflanzen.png
+s_spinne1.bmp
+s_gerippe.png
+s_skull.png
+s_end2.png
+s_end.png
+s_factory4.bmp
+s_end3.png
+s_end4.png
+s_factory.bmp
+s_kisten.png
+s_factory3.bmp
+s_arrow.bmp
+s_chains.png
+s_snow.png
+s_bluestone.png
+s_snow2.png
+s_graues.bmp
+s_ray1.png
+s_ray2.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_spinne.bmp erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_spinne.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_spinne.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_factory5.bmp
+s_factory4.bmp
+s_factory.bmp
+s_factory3.bmp
+s_fliesband.bmp
+s_factory2.bmp
+s_saeulen.bmp
+s_graues.bmp
+s_arrow.bmp
+s_traeger.bmp
+s_mpde4.png
+s_weltend1.bmp
+s_rohre.bmp
+s_technik.bmp
+s_technik.bmp
+s_machine2.bmp
+s_machine1.bmp
+s_machine4.bmp
+s_panel.bmp
+s_kacheln.png
+s_tower2.png
+s_tot.bmp
+s_spinne1.bmp
+s_spinne3.png
+s_pflanzen.png
+s_pflanzen4.png
+s_chains.png
+s_tower1.bmp
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_cave.bmp erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_cave.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_cave.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_cave.bmp erfolgreich ! 
+s_cave.bmp
+s_cschraeg.bmp
+s_cave2.bmp
+s_cave4.bmp
+s_tower3.png
+s_pflanzen.bmp
+s_pflanzen2.png
+s_arrow.bmp
+s_cave3.bmp
+s_skull.png
+s_tot.bmp
+s_gerippe.png
+s_mosi.png
+s_mpde4.png
+s_cave5.bmp
+s_end3.png
+s_spinne1.bmp
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_jungle.bmp erfolgreich ! 
+s_pflanzen2.png
+s_panel.bmp
+s_panel3.bmp
+s_Jungle.png
+s_factory3.bmp
+s_pflanzen.png
+s_kacheln.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_jaeger1.bmp
+s_jaeger2.bmp
+s_Jungle2.bmp
+s_cracks.png
+s_Jungle3.png
+s_saeulen.bmp
+s_rohre.bmp
+s_graues.bmp
+s_pflanzen3.png
+s_pflanzen4.png
+s_tower1.bmp
+s_factory5.bmp
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_jungle.bmp erfolgreich ! 
+s_pflanzen2.png
+s_panel.bmp
+s_panel3.bmp
+s_Jungle.png
+s_factory3.bmp
+s_pflanzen.png
+s_kacheln.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_jaeger1.bmp
+s_jaeger2.bmp
+s_Jungle2.bmp
+s_cracks.png
+s_Jungle3.png
+s_saeulen.bmp
+s_rohre.bmp
+s_graues.bmp
+s_pflanzen3.png
+s_pflanzen4.png
+s_tower1.bmp
+s_factory5.bmp
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_jungle.bmp erfolgreich ! 
+s_pflanzen2.png
+s_panel.bmp
+s_panel3.bmp
+s_Jungle.png
+s_factory3.bmp
+s_pflanzen.png
+s_kacheln.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_jaeger1.bmp
+s_jaeger2.bmp
+s_Jungle2.bmp
+s_cracks.png
+s_Jungle3.png
+s_saeulen.bmp
+s_rohre.bmp
+s_graues.bmp
+s_pflanzen3.png
+s_pflanzen4.png
+s_tower1.bmp
+s_factory5.bmp
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_jungle.bmp erfolgreich ! 
+s_pflanzen2.png
+s_panel.bmp
+s_panel3.bmp
+s_Jungle.png
+s_factory3.bmp
+s_pflanzen.png
+s_kacheln.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_jaeger1.bmp
+s_jaeger2.bmp
+s_Jungle2.bmp
+s_cracks.png
+s_Jungle3.png
+s_saeulen.bmp
+s_rohre.bmp
+s_graues.bmp
+s_pflanzen3.png
+s_pflanzen4.png
+s_tower1.bmp
+s_factory5.bmp
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_jungle.bmp erfolgreich ! 
+s_pflanzen2.png
+s_panel.bmp
+s_panel3.bmp
+s_Jungle.png
+s_factory3.bmp
+s_pflanzen.png
+s_kacheln.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_jaeger1.bmp
+s_jaeger2.bmp
+s_Jungle2.bmp
+s_cracks.png
+s_Jungle3.png
+s_saeulen.bmp
+s_rohre.bmp
+s_graues.bmp
+s_pflanzen3.png
+s_pflanzen4.png
+s_tower1.bmp
+s_factory5.bmp
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_jungle.bmp erfolgreich ! 
+s_pflanzen2.png
+s_panel.bmp
+s_panel3.bmp
+s_Jungle.png
+s_factory3.bmp
+s_pflanzen.png
+s_kacheln.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_jaeger1.bmp
+s_jaeger2.bmp
+s_Jungle2.bmp
+s_cracks.png
+s_Jungle3.png
+s_saeulen.bmp
+s_rohre.bmp
+s_graues.bmp
+s_pflanzen3.png
+s_pflanzen4.png
+s_tower1.bmp
+s_factory5.bmp
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_jungle.bmp erfolgreich ! 
+s_pflanzen2.png
+s_panel.bmp
+s_panel3.bmp
+s_Jungle.png
+s_factory3.bmp
+s_pflanzen.png
+s_kacheln.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_jaeger1.bmp
+s_jaeger2.bmp
+s_Jungle2.bmp
+s_cracks.png
+s_Jungle3.png
+s_saeulen.bmp
+s_rohre.bmp
+s_graues.bmp
+s_pflanzen3.png
+s_pflanzen4.png
+s_tower1.bmp
+s_factory5.bmp
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_jungle.bmp erfolgreich ! 
+s_pflanzen2.png
+s_panel.bmp
+s_panel3.bmp
+s_Jungle.png
+s_factory3.bmp
+s_pflanzen.png
+s_kacheln.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_jaeger1.bmp
+s_jaeger2.bmp
+s_Jungle2.bmp
+s_cracks.png
+s_Jungle3.png
+s_saeulen.bmp
+s_rohre.bmp
+s_graues.bmp
+s_pflanzen3.png
+s_pflanzen4.png
+s_tower1.bmp
+s_factory5.bmp
+
+-> Keyboard : GetDeviceState Fehler !
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_jungle.bmp erfolgreich ! 
+s_pflanzen2.png
+s_panel.bmp
+s_panel3.bmp
+s_Jungle.png
+s_factory3.bmp
+s_pflanzen.png
+s_kacheln.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_jaeger1.bmp
+s_jaeger2.bmp
+s_Jungle2.bmp
+s_cracks.png
+s_Jungle3.png
+s_saeulen.bmp
+s_rohre.bmp
+s_graues.bmp
+s_pflanzen3.png
+s_pflanzen4.png
+s_tower1.bmp
+s_factory5.bmp
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_jungle.bmp erfolgreich ! 
+s_pflanzen2.png
+s_panel.bmp
+s_panel3.bmp
+s_Jungle.png
+s_factory3.bmp
+s_pflanzen.png
+s_kacheln.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_jaeger1.bmp
+s_jaeger2.bmp
+s_Jungle2.bmp
+s_cracks.png
+s_Jungle3.png
+s_saeulen.bmp
+s_rohre.bmp
+s_graues.bmp
+s_pflanzen3.png
+s_pflanzen4.png
+s_tower1.bmp
+s_factory5.bmp
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_end.bmp erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_cave.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_cave.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_cave.bmp erfolgreich ! 
+s_cave.bmp
+s_cave2.bmp
+s_cschraeg.bmp
+s_cave4.bmp
+s_tower3.png
+s_pflanzen.png
+s_spinne1.bmp
+s_gerippe.png
+s_skull.png
+s_end2.png
+s_end.png
+s_factory4.bmp
+s_end3.png
+s_end4.png
+s_factory.bmp
+s_kisten.png
+s_factory3.bmp
+s_arrow.bmp
+s_chains.png
+s_snow.png
+s_bluestone.png
+s_snow2.png
+s_graues.bmp
+s_ray1.png
+s_ray2.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_jungle.bmp erfolgreich ! 
+s_pflanzen2.png
+s_panel.bmp
+s_panel3.bmp
+s_Jungle.png
+s_factory3.bmp
+s_pflanzen.png
+s_kacheln.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_jaeger1.bmp
+s_jaeger2.bmp
+s_Jungle2.bmp
+s_cracks.png
+s_Jungle3.png
+s_saeulen.bmp
+s_rohre.bmp
+s_graues.bmp
+s_pflanzen3.png
+s_pflanzen4.png
+s_tower1.bmp
+s_factory5.bmp
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_tower.bmp erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_tower.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_tower.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_tower.bmp erfolgreich ! 
+s_tower1.bmp
+s_tower1.bmp
+s_tower2.png
+s_tower3.png
+s_saeulen.bmp
+s_pflanzen.png
+s_factory.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_pflanzen2.png
+s_saeulen.bmp
+s_tower4.bmp
+s_spinne1.bmp
+s_chains.png
+s_cave.bmp
+s_mushi.png
+s_cave3.bmp
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_tower.bmp erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_tower.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_tower.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_tower.bmp erfolgreich ! 
+s_tower1.bmp
+s_tower1.bmp
+s_tower2.png
+s_tower3.png
+s_saeulen.bmp
+s_pflanzen.png
+s_factory.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_pflanzen2.png
+s_saeulen.bmp
+s_tower4.bmp
+s_spinne1.bmp
+s_chains.png
+s_cave.bmp
+s_mushi.png
+s_cave3.bmp
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_jungle.bmp erfolgreich ! 
+s_pflanzen2.png
+s_panel.bmp
+s_panel3.bmp
+s_Jungle.png
+s_factory3.bmp
+s_pflanzen.png
+s_kacheln.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_jaeger1.bmp
+s_jaeger2.bmp
+s_Jungle2.bmp
+s_cracks.png
+s_Jungle3.png
+s_saeulen.bmp
+s_rohre.bmp
+s_graues.bmp
+s_pflanzen3.png
+s_pflanzen4.png
+s_tower1.bmp
+s_factory5.bmp
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_tower.bmp erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_tower.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_tower.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_tower.bmp erfolgreich ! 
+s_tower1.bmp
+s_tower1.bmp
+s_tower2.png
+s_tower3.png
+s_saeulen.bmp
+s_pflanzen.png
+s_factory.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_pflanzen2.png
+s_saeulen.bmp
+s_tower4.bmp
+s_spinne1.bmp
+s_chains.png
+s_cave.bmp
+s_mushi.png
+s_cave3.bmp
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_tempel.bmp
+s_pflanzen.png
+s_pflanzen.png
+s_graues.bmp
+s_graues.bmp
+s_weltend1.bmp
+s_technik.bmp
+s_hoehlen.bmp
+s_hoehlen.bmp
+s_technik.bmp
+s_fliesband.bmp
+s_arrow.bmp
+s_rohre.bmp
+s_technik.bmp
+s_tempel2.bmp
+s_pflanzen2.png
+s_pflanzen4.png
+s_pflanzen3.png
+s_factory4.bmp
+s_spears.bmp
+s_Jungle.png
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/static_tower.bmp erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/back_tower.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/front_tower.png erfolgreich ! 
+Bitmap laden : D:\Projects\Hurrican\Code\Hurrican\data/clouds_tower.bmp erfolgreich ! 
+s_tower1.bmp
+s_tower1.bmp
+s_tower2.png
+s_tower3.png
+s_saeulen.bmp
+s_pflanzen.png
+s_factory.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_pflanzen2.png
+s_saeulen.bmp
+s_tower4.bmp
+s_spinne1.bmp
+s_chains.png
+s_cave.bmp
+s_mushi.png
+s_cave3.bmp
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/clouds_jungle.bmp erfolgreich ! 
+s_pflanzen2.png
+s_panel.bmp
+s_panel3.bmp
+s_Jungle.png
+s_factory3.bmp
+s_pflanzen.png
+s_kacheln.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_jaeger1.bmp
+s_jaeger2.bmp
+s_Jungle2.bmp
+s_cracks.png
+s_Jungle3.png
+s_saeulen.bmp
+s_rohre.bmp
+s_graues.bmp
+s_pflanzen3.png
+s_pflanzen4.png
+s_tower1.bmp
+s_factory5.bmp
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/back_cave.png erfolgreich ! 
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/clouds_jungle.bmp erfolgreich ! 
+s_pflanzen2.png
+s_panel.bmp
+s_panel3.bmp
+s_Jungle.png
+s_factory3.bmp
+s_pflanzen.png
+s_kacheln.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_jaeger1.bmp
+s_jaeger2.bmp
+s_Jungle2.bmp
+s_cracks.png
+s_Jungle3.png
+s_saeulen.bmp
+s_rohre.bmp
+s_graues.bmp
+s_pflanzen3.png
+s_pflanzen4.png
+s_tower1.bmp
+s_factory5.bmp
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/clouds_jungle.bmp erfolgreich ! 
+s_pflanzen2.png
+s_panel.bmp
+s_panel3.bmp
+s_Jungle.png
+s_factory3.bmp
+s_pflanzen.png
+s_kacheln.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_jaeger1.bmp
+s_jaeger2.bmp
+s_Jungle2.bmp
+s_cracks.png
+s_Jungle3.png
+s_saeulen.bmp
+s_rohre.bmp
+s_graues.bmp
+s_pflanzen3.png
+s_pflanzen4.png
+s_tower1.bmp
+s_factory5.bmp
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/clouds_jungle.bmp erfolgreich ! 
+s_pflanzen2.png
+s_panel.bmp
+s_panel3.bmp
+s_Jungle.png
+s_factory3.bmp
+s_pflanzen.png
+s_kacheln.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_jaeger1.bmp
+s_jaeger2.bmp
+s_Jungle2.bmp
+s_cracks.png
+s_Jungle3.png
+s_saeulen.bmp
+s_rohre.bmp
+s_graues.bmp
+s_pflanzen3.png
+s_pflanzen4.png
+s_tower1.bmp
+s_factory5.bmp
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/static_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/back_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/front_jungle.png erfolgreich ! 
+Bitmap laden : D:\Projects\Poke53280\Hurrican\Code\Hurrican\data/clouds_jungle.bmp erfolgreich ! 
+s_pflanzen2.png
+s_panel.bmp
+s_panel3.bmp
+s_Jungle.png
+s_factory3.bmp
+s_pflanzen.png
+s_kacheln.bmp
+s_arrow.bmp
+s_arrow.bmp
+s_factory.bmp
+s_tot.bmp
+s_tempel.bmp
+s_jaeger1.bmp
+s_jaeger2.bmp
+s_Jungle2.bmp
+s_cracks.png
+s_Jungle3.png
+s_saeulen.bmp
+s_rohre.bmp
+s_graues.bmp
+s_pflanzen3.png
+s_pflanzen4.png
+s_tower1.bmp
+s_factory5.bmp
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+-> Keyboard : GetDeviceState Fehler !
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei EndeBitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/static_spinne.bmp erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/back_spinne.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/front_spinne.png erfolgreich ! 
+Bitmap laden : J:\Backup\Projects\Poke53280\Hurrican\Code\Hurrican\data/clouds2.bmp erfolgreich ! 
+s_factory5.bmp
+s_factory4.bmp
+s_factory.bmp
+s_factory3.bmp
+s_fliesband.bmp
+s_factory2.bmp
+s_saeulen.bmp
+s_graues.bmp
+s_arrow.bmp
+s_traeger.bmp
+s_mpde4.png
+s_weltend1.bmp
+s_rohre.bmp
+s_technik.bmp
+s_technik.bmp
+s_machine2.bmp
+s_machine1.bmp
+s_machine4.bmp
+s_panel.bmp
+s_kacheln.png
+s_tower2.png
+s_tot.bmp
+s_spinne1.bmp
+s_spinne3.png
+s_pflanzen.png
+s_pflanzen4.png
+s_chains.png
+s_tower1.bmp
+
+>--------------------<
+| GameExit gestartet |
+>--------------------<
+
+-> Direct3D erfolgreich beendet !
+-> DirectInput8 erfolgreich beendet !
+
+-> GameExit erfolgreich beendet !
+
+http://www.poke53280.de
+Bugreports, Fragen etc : Eiswuxe@Poke53280.de
+
+-> Logdatei Ende

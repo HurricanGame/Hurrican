@@ -1,0 +1,32 @@
+<html>
+<body>
+<pre>
+<h1>Erstellungsprotokoll</h1>
+<h3>
+--------------------Konfiguration: Editor v1 - Win32 Debug--------------------
+</h3>
+<h3>Befehlszeilen</h3>
+Erstellen der temporären Datei  "D:\DOKUME~1\JÖRG\LOKALE~1\Temp\RSP471.tmp" mit Inhalten
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib d3d8.lib d3dx8.lib dinput8.lib dsound.lib fmodvc.lib winmm.lib dxguid.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/Editor v1.pdb" /debug /machine:I386 /out:"Debug/Editor v1.exe" /pdbtype:sept 
+".\Debug\DX8Graphics.obj"
+".\Debug\DX8Input.obj"
+".\Debug\DX8Sound.obj"
+".\Debug\DX8Sprite.obj"
+".\Debug\Logdatei.obj"
+".\Debug\Main.obj"
+".\Debug\Tileengine.obj"
+".\Debug\Timer.obj"
+".\Debug\MainMenu.res"
+]
+Erstellen der Befehlzeile "link.exe @"D:\DOKUME~1\JÖRG\LOKALE~1\Temp\RSP471.tmp""
+<h3>Ausgabefenster</h3>
+Linker-Vorgang läuft...
+
+
+
+<h3>Ergebnisse</h3>
+Editor v1.exe - 0 Fehler, 0 Warnung(en)
+</pre>
+</body>
+</html>
