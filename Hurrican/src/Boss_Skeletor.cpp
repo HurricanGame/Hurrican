@@ -17,7 +17,7 @@ GegnerSkeletor::GegnerSkeletor(int Wert1, int Wert2, bool Light)
 	BlickRichtung	= RECHTS;
 	Value1			= Wert1;
 	Value2			= Wert2;
-	Energy			= 7000;	
+	Energy			= 7000;
 	ChangeLight		= Light;
 	Destroyable		= false;
 	TestBlock		= false;
@@ -100,11 +100,11 @@ void GegnerSkeletor::DoDraw(void)
 		DirectGraphics.SetAdditiveMode();
 		LavaFlare.RenderSpriteScaled(xPos - (float)pTileEngine->XOffset - 90,
 									 yPos - (float)pTileEngine->YOffset - 50,
-									 300, 300, 0, 0x88FF8822);									 
+									 300, 300, 0, 0x88FF8822);
 
 		LavaFlare.RenderSpriteScaled(xPos - (float)pTileEngine->XOffset - 40,
 									 yPos - (float)pTileEngine->YOffset,
-									 200, 200, 0, 0x88FFCC66);									 
+									 200, 200, 0, 0x88FFCC66);
 
 		DirectGraphics.SetColorKeyMode();
 	}
@@ -125,7 +125,7 @@ void GegnerSkeletor::DoDraw(void)
 		}
 	}
 
-	// Flamme rendern	
+	// Flamme rendern
 	if (Handlung == GEGNER_SCHIESSEN &&
 		ShotDelay > 0.5f)
 	{
@@ -138,11 +138,11 @@ void GegnerSkeletor::DoDraw(void)
 		Flamme.itsRect = Flamme.itsPreCalcedRects[ShotCount % 2];
 
 		if (BlickRichtung == RECHTS)
-			Flamme.RenderSpriteRotatedOffset(xPos - (float)pTileEngine->XOffset + foff, 
+			Flamme.RenderSpriteRotatedOffset(xPos - (float)pTileEngine->XOffset + foff,
 										     yPos - (float)pTileEngine->YOffset + 60, 90 - GunWinkel,
 											 -50, 0, 0xFFFFFFFF, !mirror);
 		else
-			Flamme.RenderSpriteRotatedOffset(xPos - (float)pTileEngine->XOffset + foff, 
+			Flamme.RenderSpriteRotatedOffset(xPos - (float)pTileEngine->XOffset + foff,
 										     yPos - (float)pTileEngine->YOffset + 60, GunWinkel - 90,
 											 -50, 0, 0xFFFFFFFF, !mirror);
 
@@ -156,7 +156,7 @@ void GegnerSkeletor::DoDraw(void)
 // --------------------------------------------------------------------------------------
 
 void GegnerSkeletor::DoKI(void)
-{	
+{
 	CalcGunWinkel();
 
 	// Energie anzeigen
@@ -172,10 +172,10 @@ void GegnerSkeletor::DoKI(void)
 		yPos = (float)pTileEngine->YOffset - 250.0f;
 		DrawNow = true;
 
-		pTileEngine->ScrollLevel((float)Value1, 
+		pTileEngine->ScrollLevel((float)Value1,
 								 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
-		pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren		
+		pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
 	}
 
 	// Je nach Handlung richtig verhalten
@@ -195,8 +195,8 @@ void GegnerSkeletor::DoKI(void)
 		case GEGNER_CRUSHENERHOLEN:
 		{
 			AnimCount += 1.0f SYNC;
-	
-			if (AnimCount > 10.0f && 
+
+			if (AnimCount > 10.0f &&
 				AnimPhase == 0)
 			{
 				//pSoundManager->PlayWave(100, 128, 11025, SOUND_STANDUP);
@@ -209,11 +209,11 @@ void GegnerSkeletor::DoKI(void)
 				AnimPhase = 2;
 
 				if (HasLaughed == false)
-					pSoundManager->PlayWave(100, 128, 11025, SOUND_LAUGH);				
+					pSoundManager->PlayWave(100, 128, 11025, SOUND_LAUGH);
 			}
 
 			if (AnimCount > 25.0f)
-			{				
+			{
 				Handlung = GEGNER_STEHEN;
 				if (HasLaughed == false)
 				{
@@ -244,7 +244,7 @@ void GegnerSkeletor::DoKI(void)
 					AnimOffset = 0;
 				} break;
 
-				case 1:	
+				case 1:
 				{
 					ShotDelay = 0.0f;
 					ShotCount = 20;
@@ -253,14 +253,14 @@ void GegnerSkeletor::DoKI(void)
 					AnimOffset = 0;
 				} break;
 
-				case 2:	
+				case 2:
 				{
 					ShotDelay = 3.0f;
 					ShotCount = 1;
 					Handlung = GEGNER_SPRINGEN;
 					xSpeed = 25.0f;
 					ySpeed = -60.0f;
-					yAcc   = 6.0f;			
+					yAcc   = 6.0f;
 				} break;
 
 				case 3:
@@ -291,19 +291,19 @@ void GegnerSkeletor::DoKI(void)
 				WinkelUebergabe = 2.0f * ShotCount + 8.0f;
 				pSoundManager->PlayWave(100, 128, 10000 + rand()%2000, SOUND_ROCKET);
 				pProjectiles->PushProjectile(xPos + 50.0f, yPos + 80.0f, TURRIEXTRAWURST);
-													
+
 				ShotDelay = 3.0f;
 				ShotCount--;
 			}
 
 			// Animationsphase setzen
-			int a;			
+			int a;
 
 			if ((xSpeed >  31.0f &&
 				 xAcc > 0.0f) ||
 				(xSpeed < -31.0f &&
 				 xAcc < 0.0f))
-				xAcc *= -1.0f;			
+				xAcc *= -1.0f;
 
 			if ((xAcc > 0.0f && xSpeed < 0.0f && xSpeed > -2.0f) ||
 				(xAcc < 0.0f && xSpeed > 0.0f && xSpeed <  2.0f))
@@ -343,8 +343,8 @@ void GegnerSkeletor::DoKI(void)
 		case GEGNER_SPRINGEN:
 		{
 			// Animationsphase setzen
-			int a;			
-			
+			int a;
+
 			if (xPos + 60 < Value1 + 320)
 			{
 				a = (int)(xPos - pTileEngine->XOffset) / 56;
@@ -375,7 +375,7 @@ void GegnerSkeletor::DoKI(void)
 					}
 				}
 			}
-			
+
 			// Aufgekommen?
 			if (yPos > Value2 + 250)
 			{
@@ -405,11 +405,11 @@ void GegnerSkeletor::DoKI(void)
 		case GEGNER_BOMBARDIEREN:
 		{
 			ShotDelay -= 0.1f SYNC;
-			
+
 			AnimCount -= 1.0f SYNC;
 
 			if (AnimCount <= 0.0f)
-			{				
+			{
 				AnimOffset++;
 
 				if (AnimOffset % 2 == 0)
@@ -439,9 +439,9 @@ void GegnerSkeletor::DoKI(void)
 
 					pProjectiles->PushProjectile(xPos + 100 + off, yPos + 80, SKELETORGRANATE);
 
-					ShotCount--;				
+					ShotCount--;
 				}
-				
+
 				int a = AnimOffset % 14;
 
 				if (a < 8)
@@ -455,7 +455,7 @@ void GegnerSkeletor::DoKI(void)
 				// fertig?
 				if (ShotCount < 0)
 					Laugh();
-			}			
+			}
 		} break;
 
 		// Gatling
@@ -471,7 +471,7 @@ void GegnerSkeletor::DoKI(void)
 
 			// schuss abgeben
 			if (ShotDelay <= 0.0f)
-			{											
+			{
 				ShotCount--;
 
 				ShotDelay = 1.0f;
@@ -481,11 +481,11 @@ void GegnerSkeletor::DoKI(void)
 				if (BlickRichtung == LINKS)
 					off = 30;
 
-				pPartikelSystem->PushPartikel(xPos + off, yPos + 75, BULLET_SKELETOR);				
+				pPartikelSystem->PushPartikel(xPos + off, yPos + 75, BULLET_SKELETOR);
 
 				// Sound
 				pSoundManager->PlayWave(100, 128, 10000 + rand()%400, SOUND_GATLING);
-				
+
 				// Schuss
 				WinkelUebergabe = GunWinkel + rand()%4 - 2;
 
@@ -510,7 +510,7 @@ void GegnerSkeletor::DoKI(void)
 			if (pTileEngine->Zustand == ZUSTAND_LOCKED)
 			{
 				// Boss erscheinen lassen
-				//				
+				//
 				pSoundManager->PlayWave(100, 128, 11025, SOUND_STONEFALL);
 				Handlung = GEGNER_EINFLIEGEN;
 				xSpeed = 0.0f;
@@ -541,7 +541,7 @@ void GegnerSkeletor::DoKI(void)
 				pSoundManager->PlayWave(100, 128, 11025, SOUND_DOORSTOP);
 			}
 		} break;
-		
+
 		case GEGNER_EXPLODIEREN:
 		{
 			ShotDelay -= 1.0f SYNC;
@@ -566,7 +566,7 @@ void GegnerSkeletor::DoKI(void)
 		pGegner->PushGegner(xPos + 50, yPos + 50, SKULL, 0, 99, false);
 
 		// Explosionen
-		int i = 0;		
+		//int i = 0;	// PICKLE not used
 
 		for (int i = 0; i < 15; i++)
 			pPartikelSystem->PushPartikel(xPos + rand()% 100,
@@ -587,7 +587,7 @@ void GegnerSkeletor::DoKI(void)
 			pPartikelSystem->PushPartikel(xPos + rand()% 200 - 50,
 										  yPos + rand()% 200 - 50,
 										  EXPLOSION_MEDIUM2);
-		
+
 		pPartikelSystem->PushPartikel (xPos + 62, yPos + 100, SHOCKEXPLOSION);
 		pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 		pPlayer[0]->Score += 12500;
@@ -605,6 +605,6 @@ void GegnerSkeletor::DoKI(void)
 // --------------------------------------------------------------------------------------
 
 void GegnerSkeletor::GegnerExplode(void)
-{		
-	ScrolltoPlayeAfterBoss();	
+{
+	ScrolltoPlayeAfterBoss();
 }

@@ -25,7 +25,7 @@ GegnerSkull::GegnerSkull(int Wert1, int Wert2, bool Light)
 	ShotDelay		= 10.0f;
 	ShotCount		= 0;
 	Disappear	    = 20.0f;
-	pMachine		= NULL;	
+	pMachine		= NULL;
 
 	AnimCount = 0.0f;
 	if (Value2 == 99)
@@ -56,24 +56,24 @@ GegnerSkull::GegnerSkull(int Wert1, int Wert2, bool Light)
 // --------------------------------------------------------------------------------------
 
 void GegnerSkull::DoKI(void)
-{	
+{
 	Energy = 100000;
 	BlickRichtung = LINKS;
 
 	// Animphase abhängig von Position zum Spieler setzen
-	//	
+	//
 	float dx = (float)(pAim->xpos + 35) - (xPos + 16);
 	AnimPhase = (int)(dx / 30);
 	if (AnimPhase < -5) AnimPhase =  -5;
 	if (AnimPhase > 9)	AnimPhase = 9;
-	AnimPhase += 5;	
+	AnimPhase += 5;
 	if (xSpeed < 0.0f)
 		AnimPhase = 20 - AnimPhase;
 	if (AnimPhase < 0)  AnimPhase =  0;
 	if (AnimPhase > 19)	AnimPhase = 19;
 
 	// Antrieb
-	//	
+	//
 	SmokeDelay -= 1.0f SYNC;
 	if (SmokeDelay <= 0.0f)
 	{
@@ -92,7 +92,7 @@ void GegnerSkull::DoKI(void)
 	{
 		// In die Mitte fliegen und explodieren
 		case GEGNER_SPECIAL3:
-		{			
+		{
 			Disappear -= 1.0f SYNC;
 
 			float endwert;
@@ -101,7 +101,7 @@ void GegnerSkull::DoKI(void)
 			if (endwert < 1.0f)
 				endwert = 1.0f;
 
-			pTimer->SetMoveSpeed(endwert);			
+			pTimer->SetMoveSpeed(endwert);
 
 			// Explosionen
 			if (AnimCount > 0.0f)
@@ -121,7 +121,7 @@ void GegnerSkull::DoKI(void)
 					pPartikelSystem->PushPartikel(xPos + rand()%30 - 10, yPos + rand()%20 - 10, SPIDERSPLITTER);
 			}
 
-			if (xPos + 16 > pTileEngine->XOffset + 320.0f) 
+			if (xPos + 16 > pTileEngine->XOffset + 320.0f)
 				xAcc = -4.0f;
 			else
 				xAcc = 4.0f;
@@ -134,7 +134,7 @@ void GegnerSkull::DoKI(void)
 			if (xSpeed >  25.0f) xSpeed =  25.0f;
 			if (xSpeed < -25.0f) xSpeed = -25.0f;
 			if (ySpeed >  15.0f) ySpeed =  15.0f;
-			if (ySpeed < -15.0f) ySpeed = -15.0f;			
+			if (ySpeed < -15.0f) ySpeed = -15.0f;
 
 			if (Disappear < 0.0f)
 			{
@@ -149,7 +149,7 @@ void GegnerSkull::DoKI(void)
 				pPartikelSystem->PushPartikel (xPos + 20, yPos + 20, SHOCKEXPLOSION);
 				pPartikelSystem->PushPartikel (xPos + 20, yPos + 20, SHOCKEXPLOSION);
 				pPartikelSystem->PushPartikel (xPos + 20, yPos + 20, SHOCKEXPLOSION);
-				
+
 				int i;
 				for (i = 0; i < 20; i++)
 					pPartikelSystem->PushPartikel(xPos + rand()%30,
@@ -157,18 +157,18 @@ void GegnerSkull::DoKI(void)
 												  SPIDERSPLITTER);
 
 				for (i = 0; i < 20; i++)
-					pPartikelSystem->PushPartikel(xPos - 50 + rand()%100, 
+					pPartikelSystem->PushPartikel(xPos - 50 + rand()%100,
 												  yPos - 50 + rand()%100, EXPLOSION_BIG);
 
 				for (i = 0; i < 20; i++)
-					pPartikelSystem->PushPartikel(xPos - 50 + rand()%100, 
+					pPartikelSystem->PushPartikel(xPos - 50 + rand()%100,
 												  yPos - 50 + rand()%100, SPLITTER);
 
 				for (int i = 0; i < 20; i++)
-					pPartikelSystem->PushPartikel(xPos - 50 + rand()%100, 
+					pPartikelSystem->PushPartikel(xPos - 50 + rand()%100,
 												  yPos - 50 + rand()%100, SCHROTT1);
 
-				pPartikelSystem->PushPartikel(xPos-80, 
+				pPartikelSystem->PushPartikel(xPos-80,
 											  yPos-80, EXPLOSION_GIGA);
 
 				pTimer->SetMoveSpeed(10.0f);
@@ -181,20 +181,20 @@ void GegnerSkull::DoKI(void)
 				if (NUMPLAYERS ==2 )
 					pGegner->PushGegner((float)(pTileEngine->XOffset + 300.0f),
 										(float)(pTileEngine->YOffset - 50.0f),
-										REITFLUGSACK, 1, 0, false);				
+										REITFLUGSACK, 1, 0, false);
 			}
 		} break;
 
 		// Der Schädel fliegt um den Spieler herum. Darf nicht aus dem Screen gedrängt werden
 		// So lange, bis der Counter abgelaufen ist
 		// dann setzt er sich wieder auf die Endboss Maschine
-		case GEGNER_SPECIAL:			
-		{			
+		case GEGNER_SPECIAL:
+		{
 			if (AnimCount > 0.0f)
 				AnimCount -= 1.0f SYNC;
 			else
 			{
-				if (xPos + 16 > pAim->xpos + 35) 
+				if (xPos + 16 > pAim->xpos + 35)
 					xAcc = -2.0f;
 				else
 					xAcc = 2.0f;
@@ -221,9 +221,9 @@ void GegnerSkull::DoKI(void)
 
 		// Auf die Maschine zufliegen?
 		case GEGNER_SPECIAL2:
-		{					
+		{
 			xAcc = 0.0f;
-			yAcc = 0.0f;								
+			yAcc = 0.0f;
 
 			if (xSpeed < 0.0f)	xSpeed += 1.0f SYNC;
 			if (xSpeed > 0.0f)	xSpeed -= 1.0f SYNC;
@@ -269,9 +269,9 @@ void GegnerSkull::DoKI(void)
 				Energy = 0.0f;
 				pMachine->Value1 = 1;
 
-				pSoundManager->PlayWave(50, 128, 15000, SOUND_KLONG);				
+				pSoundManager->PlayWave(50, 128, 15000, SOUND_KLONG);
 
-				if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+				if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
 					pSoundManager->PlaySong(MUSIC_BOSS, false);
 			}
 		} break;
@@ -290,7 +290,7 @@ void GegnerSkull::DoKI(void)
 			ShotDelay = 15.0f;
 			pProjectiles->PushProjectile(xPos - 10, yPos, SUCHSCHUSS2, pAim);
 			pSoundManager->PlayWave(50, 128, 14000 + rand()%2000, SOUND_GOLEMSHOT);
-		}		
+		}
 	}
 
 	if (Handlung != GEGNER_SPECIAL3)
@@ -302,5 +302,5 @@ void GegnerSkull::DoKI(void)
 // --------------------------------------------------------------------------------------
 
 void GegnerSkull::GegnerExplode(void)
-{	
+{
 }

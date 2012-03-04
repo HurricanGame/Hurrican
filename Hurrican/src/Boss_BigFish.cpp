@@ -160,45 +160,45 @@ void GegnerBigFish::NewAction(void)
 // --------------------------------------------------------------------------------------
 
 void GegnerBigFish::DoDraw(void)
-{	
+{
 	static float FlossenSin = 0.0f;
 	static float FlossenSin2 = 0.0f;
 	float mw = (float)(sin(-PI/2 + MaulWinkel) * 35.0f);
 	float fs = (float)sin(FlossenSin) * 40.0f;
 	float fs2 = (float)sin(FlossenSin2) * 10.0f;
 	float YOff = (float)(sin(SinOff) * 5.0f);
-	
+
 	// Maul rendern
 	Maul.RenderSpriteRotatedOffset((float)(xPos-pTileEngine->XOffset) + 51.0f,
-								   (float)(yPos-pTileEngine->YOffset) + YOff + 94.0f, 
+								   (float)(yPos-pTileEngine->YOffset) + YOff + 94.0f,
 								   mw,
 								   12, -17, 0xFFFFFFFF, false);
 
 	// Schwanzflosse rendern
 	FlosseGross.RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) + 203.0f,
-								   (float)(yPos-pTileEngine->YOffset) + YOff - 9.0f, 
+								   (float)(yPos-pTileEngine->YOffset) + YOff - 9.0f,
 								   88 + (int)fs2, 157, 0, 0xFFFFFFFF);
 
 	// obere Floße rendern
 	FlosseOben.RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) + 151.0f,
-								  (float)(yPos-pTileEngine->YOffset) + YOff - 20.0f + (int)fs2, 
+								  (float)(yPos-pTileEngine->YOffset) + YOff - 20.0f + (int)fs2,
 								  74, 59 -  (int)fs2, 0, 0xFFFFFFFF);
 
 	// untere Floße rendern
 	FlosseUnten.RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) + 140.0f,
-			 					   (float)(yPos-pTileEngine->YOffset) + YOff + 120.0f, 
+			 					   (float)(yPos-pTileEngine->YOffset) + YOff + 120.0f,
 								   97, 72  + (int)fs2, 0, 0xFFFFFFFF);
 
 	// Fisch rendern
 	pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-										   (float)(yPos-pTileEngine->YOffset) + YOff, 
+										   (float)(yPos-pTileEngine->YOffset) + YOff,
 										   0, 0xFFFFFFFF, false);
 
 	// kleine Floße rendern
 	FlosseKlein.RenderSpriteRotatedOffset((float)(xPos-pTileEngine->XOffset) + 184.0f,
-										  (float)(yPos-pTileEngine->YOffset) + YOff + 80.0f, 
+										  (float)(yPos-pTileEngine->YOffset) + YOff + 80.0f,
 										  fs,
-										  -28, -9, 0xFFFFFFFF, false);	
+										  -28, -9, 0xFFFFFFFF, false);
 
 
 	if (AlreadyDrawn == false)
@@ -215,10 +215,10 @@ void GegnerBigFish::DoDraw(void)
 
 		for (int i = 0; i < 2; i++)
 		LavaFlare.RenderSprite((float)(xPos-pTileEngine->XOffset) - 49,
-							   (float)(yPos-pTileEngine->YOffset) - 22 + YOff, 
+							   (float)(yPos-pTileEngine->YOffset) - 22 + YOff,
 							   0, col, false);
 
-		// Flossen bewegen		
+		// Flossen bewegen
 		float fact;
 
 		fact = (xSpeed * xSpeed + ySpeed * ySpeed + 20.0f) / 200.0f;
@@ -248,21 +248,21 @@ void GegnerBigFish::DoKI(void)
 	KugelCount -= 1.0f SYNC;
 
 	if (KugelCount <= 0.0f)
-	{		
+	{
 		int LeftOrRight = 1;
 		int Art = 2;
 		KugelCount = 80.0f;
-		
-		if (Energy > 500)	
+
+		if (Energy > 500)
 			Art = 1;
 
-		if (Energy > 1500)	
+		if (Energy > 1500)
 			Art = 0;
-		
+
 		if (rand()%2 == 0)
 			LeftOrRight *= -1;
-		
-		if (IsKugel) 
+
+		if (IsKugel)
 			pGegner->PushGegner((float)pTileEngine->XOffset + 300.0f + 300 * LeftOrRight,
 								(float)pTileEngine->YOffset + 200, KUGELKLEIN + Art, 5, 0, false);
 		else
@@ -283,12 +283,12 @@ void GegnerBigFish::DoKI(void)
 		pHUD->ShowBossHUD(2000, Energy);
 
 	// Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
-	if (Active == true && 
+	if (Active == true &&
 		Handlung != GEGNER_EXPLODIEREN &&
-		pTileEngine->Zustand == ZUSTAND_SCROLLBAR && 
+		pTileEngine->Zustand == ZUSTAND_SCROLLBAR &&
 		Energy > 0.0f)
 	{
-		pTileEngine->ScrollLevel((float)Value1, 
+		pTileEngine->ScrollLevel((float)Value1,
 								 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf die Faust zentrieren
 		pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
 		xPos  += 400;
@@ -321,7 +321,7 @@ void GegnerBigFish::DoKI(void)
 		yAcc      = 1.0f;
 		AnimCount = 50.0f;
 
-		Moving = false;		
+		Moving = false;
 	}
 
 	// Je nach Handlung richtig verhalten
@@ -335,10 +335,10 @@ void GegnerBigFish::DoKI(void)
 			if (pTileEngine->Zustand == ZUSTAND_LOCKED)
 			{
 				// Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-				if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+				if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
 					pSoundManager->PlaySong(MUSIC_BOSS, false);
 
-				// Und Boss erscheinen lassen				
+				// Und Boss erscheinen lassen
 				Handlung = GEGNER_EINFLIEGEN;
 			}
 		} break;
@@ -432,7 +432,7 @@ void GegnerBigFish::DoKI(void)
 	} // switch
 
 	// Testen, ob der Fisch den Spieler berührt hat
-	GegnerRect[BIGFISH].left   = 60;	
+	GegnerRect[BIGFISH].left   = 60;
 	GegnerRect[BIGFISH].right  = 280;
 	GegnerRect[BIGFISH].top    = 28   + (int)(sin(SinOff) * 5.0f);
 	GegnerRect[BIGFISH].bottom = 156 + (int)(sin(SinOff) * 5.0f);
@@ -440,7 +440,7 @@ void GegnerBigFish::DoKI(void)
 	TestDamagePlayers(8.0f SYNC);
 
 	// Normales Cliprect setzen
-	GegnerRect[BIGFISH].left   = 0;	
+	GegnerRect[BIGFISH].left   = 0;
 	GegnerRect[BIGFISH].right  = 17;
 	GegnerRect[BIGFISH].top    = 28 + (int)(sin(SinOff) * 5.0f);
 	GegnerRect[BIGFISH].bottom = 50 + (int)(sin(SinOff) * 5.0f);
@@ -456,12 +456,12 @@ void GegnerBigFish::GegnerExplode(void)
 
 	// Blut
 	for (int i=0; i<80; i++)
-		pPartikelSystem->PushPartikel(xPos + rand()%200+40, 
-									  yPos + 50 + rand()%100, 
+		pPartikelSystem->PushPartikel(xPos + rand()%200+40,
+									  yPos + 50 + rand()%100,
 									  PIRANHABLUT);
 
 	for (int i=0; i<20; i++)
-		pGegner->PushGegner(xPos + rand()%200+40, 
+		pGegner->PushGegner(xPos + rand()%200+40,
 							yPos + 30 + rand()%80, PIRANHA, 99, 0, false);
 
 	for (int i = 0; i < NUMPLAYERS; i++)

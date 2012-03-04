@@ -1,6 +1,6 @@
 // Datei : DX8Font.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Font Klasse
 // zum Anzeigen von Schriften
@@ -52,13 +52,13 @@ DirectGraphicsFont::~DirectGraphicsFont(void)
 // Anzahl der Zeichen pro Zeile
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsFont::LoadFont(char *Filename, int xts, int yts,
+bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 								  int xCharsize, int yCharsize, int xChars,int yChars)
 {
 	mTexture = new (DirectGraphicsSprite);
 	if (!mTexture->LoadImage(Filename, xts, yts, xCharsize, yCharsize, xChars, 0))
 		return false;
-	
+
 	// Grösse setzen
 	//
 	mXCharSize		= xCharsize;
@@ -72,6 +72,7 @@ bool DirectGraphicsFont::LoadFont(char *Filename, int xts, int yts,
 
 	// Geladene Font Textur locken
 	//
+#if defined(PLATFORM_DIRECTX)
 	D3DSURFACE_DESC d3dsd;
 	D3DLOCKED_RECT  d3dlr;
 
@@ -86,8 +87,31 @@ bool DirectGraphicsFont::LoadFont(char *Filename, int xts, int yts,
 
 	// Colorkey feststellen
 	DWORD key = ((DWORD*)d3dlr.pBits)[0];
-	key = 0;
-	
+#elif defined(PLATFORM_SDL)
+    // This code below need to account for unrarlib
+	char Temp[256];
+	sprintf_s(Temp, "data/%s", Filename);
+    SDL_Surface* temp = loadImage( Temp );
+    if (temp == NULL) {
+        return true;
+    }
+    DWORD key = ((DWORD*)temp->pixels)[0];
+
+/* // PICKLE Not OpenGLES compat, left for info
+    int textureWidth, textureHeight;
+    glBindTexture( GL_TEXTURE_2D, mTexture->itsTexture );
+    glGetTexLevelParameteriv( GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &textureWidth );
+    glGetTexLevelParameteriv( GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &textureHeight );
+
+    GLubyte *buffer = (GLubyte *)malloc(textureWidth*textureHeight*4);
+    glGetTexImage( GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer );
+    DWORD key = ((DWORD*)buffer)[0];
+
+    glBindTexture( GL_TEXTURE_2D, 0 );
+*/
+#endif
+	//key = 0;
+
 	// Einzelne Zeichen durchgehen
 	for (int i=0; i < xChars; i++)
 	 for (int j=0; j < yChars; j++)
@@ -99,10 +123,19 @@ bool DirectGraphicsFont::LoadFont(char *Filename, int xts, int yts,
 		{
 			found = false;
 
-			for (int l = 0; l<yCharsize; l++) 
+			for (int l = 0; l<yCharsize; l++)
 			{
+#if defined(PLATFORM_DIRECTX)
 				if (((DWORD*)d3dlr.pBits)[(j * yCharsize + l) * d3dsd.Width + (i*xCharsize + k)] != key)
 					found = true;
+#elif defined(PLATFORM_SDL)
+				if (((DWORD*)temp->pixels)[(j * yCharsize + l) * temp->w + (i*xCharsize + k)] != key)
+					found = true;
+/*
+				if (((DWORD*)buffer)[(j * yCharsize + l) * textureWidth + (i*xCharsize + k)] != key)
+					found = true;
+*/
+#endif
 			}
 
 			if (found == true)
@@ -112,10 +145,15 @@ bool DirectGraphicsFont::LoadFont(char *Filename, int xts, int yts,
 		mCharLength[j * xChars + i] = last+1;
 	 }
 
+#if defined(PLATFORM_DIRECTX)
 	// Unlocken
 	mTexture->itsTexture->UnlockRect(0);
-	
-	return true;
+#elif defined(PLATFORM_SDL)
+    //delete [] buffer;
+    SDL_FreeSurface( temp );
+#endif
+
+	return false;
 }
 
 // --------------------------------------------------------------------------------------
@@ -136,7 +174,7 @@ bool DirectGraphicsFont::DrawValue(float x, float y, float Value, D3DCOLOR Color
 // Text an xPos,yPos mit Farbe Color ausgeben
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsFont::DrawText(float x, float y, char Text[], D3DCOLOR Color)
+bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR Color)
 {
 	RECT rect;
 	unsigned char z;
@@ -156,30 +194,30 @@ bool DirectGraphicsFont::DrawText(float x, float y, char Text[], D3DCOLOR Color)
 		mTexture->SetRect(rect.left, rect.top, rect.right, rect.bottom);
 
 		if(Text[i] != 32 &&
-		   Text[i] != '\n') 
+		   Text[i] != '\n')
 		   mTexture->RenderSprite(x, y, Color);
 
-		if(Text[i] == 32) 
+		if(Text[i] == 32)
 			x += mXCharSize-3;				// Bei Space frei lassen
-		else			  
+		else
 		if(Text[i] == '\n')					// Zeilenumbruch
 		{
 			x = oldx;
 			y += mYCharSize + 6;
 		}
-		else			  
+		else
 			x += mCharLength[z]-1;			// Ansonsten Breite des Zeichens weiter
 	}
 
 	return true;
 }
 
-void DirectGraphicsFont::DrawTextRightAlign(float x, float y, char Text[], D3DCOLOR Color, int Spacing)
+void DirectGraphicsFont::DrawTextRightAlign(float x, float y, const char Text[], D3DCOLOR Color, int Spacing)
 {
 	DrawText(x - StringLength(Text, Spacing), y, Text, Color, Spacing);
 }
 
-void DirectGraphicsFont::DrawTextCenterAlign(float x, float y, char Text[], D3DCOLOR Color, int Spacing)
+void DirectGraphicsFont::DrawTextCenterAlign(float x, float y, const char Text[], D3DCOLOR Color, int Spacing)
 {
 	DrawText(x - StringLength(Text, Spacing) / 2 , y, Text, Color, Spacing);
 }
@@ -188,10 +226,10 @@ void DirectGraphicsFont::DrawTextCenterAlign(float x, float y, char Text[], D3DC
 // Zeichen an xPos,yPos mit Farbe Color ausgeben (Demo Font, mit mehr Platz zwischen Zeichen)
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsFont::DrawDemoChar(float x, float y, char Text, D3DCOLOR Color)
+bool DirectGraphicsFont::DrawDemoChar(float x, float y, const char Text, D3DCOLOR Color)
 {
 	if(Text == 32 ||
-	   Text == '\n') 
+	   Text == '\n')
 	   return false;
 
 	RECT rect;
@@ -206,7 +244,7 @@ bool DirectGraphicsFont::DrawDemoChar(float x, float y, char Text, D3DCOLOR Colo
 	rect.right  = rect.left + mXCharSize;
 	rect.bottom = rect.top  + mYCharSize;
 
-	mTexture->SetRect(rect.left, rect.top, rect.right, rect.bottom);	
+	mTexture->SetRect(rect.left, rect.top, rect.right, rect.bottom);
 	mTexture->RenderSprite(x, y, Color);
 
 	return true;
@@ -216,7 +254,7 @@ bool DirectGraphicsFont::DrawDemoChar(float x, float y, char Text, D3DCOLOR Colo
 // Text an xPos,yPos mit Farbe Color ausgeben (Demo Font, mit mehr Platz zwischen Zeichen)
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsFont::DrawDemoText(float x, float y, char Text[], D3DCOLOR Color)
+bool DirectGraphicsFont::DrawDemoText(float x, float y, const char Text[], D3DCOLOR Color)
 {
 	RECT rect;
 	unsigned char z;
@@ -236,18 +274,18 @@ bool DirectGraphicsFont::DrawDemoText(float x, float y, char Text[], D3DCOLOR Co
 		mTexture->SetRect(rect.left, rect.top, rect.right, rect.bottom);
 
 		if(Text[i] != 32 &&
-		   Text[i] != '\n') 
+		   Text[i] != '\n')
 		   mTexture->RenderSprite(x, y, Color);
 
-		if(Text[i] == 32) 
+		if(Text[i] == 32)
 			x += mXCharSize;				// Bei Space frei lassen
-		else			  
+		else
 		if(Text[i] == '\n')					// Zeilenumbruch
 		{
 			x = oldx;
 			y += mYCharSize + 6;
 		}
-		else			  
+		else
 			x += mCharLength[z]+1;			// Ansonsten Breite des Zeichens weiter
 	}
 
@@ -258,7 +296,7 @@ bool DirectGraphicsFont::DrawDemoText(float x, float y, char Text[], D3DCOLOR Co
 // Text an xPos,yPos mit Farbe Color ausgeben, aber "Spacing" Pixel Platz dazwischen lassen
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsFont::DrawText(float x, float y, char Text[], D3DCOLOR Color, int Spacing)
+bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR Color, int Spacing)
 {
 	RECT rect;
 	unsigned char z;
@@ -278,18 +316,18 @@ bool DirectGraphicsFont::DrawText(float x, float y, char Text[], D3DCOLOR Color,
 		mTexture->SetRect(rect.left, rect.top, rect.right, rect.bottom);
 
 		if(Text[i] != 32 &&
-		   Text[i] != '\n') 
+		   Text[i] != '\n')
 		   mTexture->RenderSprite(x, y, Color);
 
-		if(Text[i] == 32) 
+		if(Text[i] == 32)
 			x += mXCharSize-3 - Spacing*2;				// Bei Space frei lassen
-		else			  
+		else
 		if(Text[i] == '\n')								// Zeilenumbruch
 		{
 			x = oldx;
 			y += mYCharSize + 6 + Spacing;
 		}
-		else			  
+		else
 			x += mCharLength[z]-1 + Spacing;	// Ansonsten Breite des Zeichens weiter
 	}
 
@@ -300,7 +338,7 @@ bool DirectGraphicsFont::DrawText(float x, float y, char Text[], D3DCOLOR Color,
 // Länge eines Strings in Pixeln zurückliefern
 // --------------------------------------------------------------------------------------
 
-int DirectGraphicsFont::DemoStringLength(char Text[])
+int DirectGraphicsFont::DemoStringLength(const char Text[])
 {
 	if (strlen(Text) <= 1)
 		return 0;
@@ -313,10 +351,10 @@ int DirectGraphicsFont::DemoStringLength(char Text[])
 	{
 		z = Text[i];						// Aktuell zu bearbeitendes Zeichen holen
 		z -=33;								// "!" als erstes Zeichen setzen, das heisst,
-											// Fontgrafik muss mit "!" beginnen		
-		if(Text[i] == 32) 
+											// Fontgrafik muss mit "!" beginnen
+		if(Text[i] == 32)
 			l += mXCharSize-3;				// Bei Space frei lassen
-		else			  
+		else
 			l += mCharLength[z];			// Ansonsten Breite des Zeichens weiter
 	}
 
@@ -328,7 +366,7 @@ int DirectGraphicsFont::DemoStringLength(char Text[])
 // Länge eines Strings in Pixeln zurückliefern
 // --------------------------------------------------------------------------------------
 
-int DirectGraphicsFont::StringLength(char Text[])
+int DirectGraphicsFont::StringLength(const char Text[])
 {
 	if (strlen(Text) <= 1)
 		return 0;
@@ -341,10 +379,10 @@ int DirectGraphicsFont::StringLength(char Text[])
 	{
 		z = Text[i];						// Aktuell zu bearbeitendes Zeichen holen
 		z -=33;								// "!" als erstes Zeichen setzen, das heisst,
-											// Fontgrafik muss mit "!" beginnen		
-		if(Text[i] == 32) 
+											// Fontgrafik muss mit "!" beginnen
+		if(Text[i] == 32)
 			l += mXCharSize-1;				// Bei Space frei lassen
-		else			  
+		else
 			l += mCharLength[z]-1;			// Ansonsten Breite des Zeichens weiter
 	}
 
@@ -355,7 +393,7 @@ int DirectGraphicsFont::StringLength(char Text[])
 // Länge eines Strings in Pixeln mit "Spacing" Pixeln freiraum zwischen den Zeichen zurückliefern
 // --------------------------------------------------------------------------------------
 
-int DirectGraphicsFont::StringLength(char Text[], int Spacing)
+int DirectGraphicsFont::StringLength(const char Text[], int Spacing)
 {
 	if (strlen(Text) <= 1)
 		return 0;
@@ -369,10 +407,10 @@ int DirectGraphicsFont::StringLength(char Text[], int Spacing)
 		z = Text[i]
 			;						// Aktuell zu bearbeitendes Zeichen holen
 		z -=33;								// "!" als erstes Zeichen setzen, das heisst,
-											// Fontgrafik muss mit "!" beginnen		
-		if(Text[i] == 32) 
+											// Fontgrafik muss mit "!" beginnen
+		if(Text[i] == 32)
 			l += mXCharSize-3 - Spacing*2;	// Bei Space frei lassen
-		else			  
+		else
 			l += mCharLength[z]-1+ Spacing;	// Ansonsten Breite des Zeichens weiter
 	}
 
@@ -413,7 +451,7 @@ void DirectGraphicsFont::ShowFPS (void)
 	_itoa_s((int)(Value), Buffer, 10);
 	DrawText(0,   15, "Durchschnitt FPS :", 0xFFFFFFFF);
 	DrawText(150, 15, Buffer, 0xFFFFFFFF);
-	
+
 	// Maximale FPS
 	Value = pTimer->getMaxFrameRate();
 	_itoa_s((int)(Value), Buffer, 10);

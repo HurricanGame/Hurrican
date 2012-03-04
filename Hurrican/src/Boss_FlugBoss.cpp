@@ -55,11 +55,11 @@ GegnerFlugBoss::GegnerFlugBoss(int Wert1, int Wert2, bool Light)
 	Kanone_big.LoadImage    ("flugboss_kanone_fett.bmp",  21, 85, 21, 85, 1, 1);
 	Kanone_medium.LoadImage ("flugboss_kanone_klein.bmp", 11, 48, 11, 48, 1, 1);
 	Kanone_small.LoadImage  ("flugboss_kanone_mini.bmp",   8, 63,  8, 63, 1, 1);
-	Geschuetz.LoadImage     ("flugboss_geschuetz.png",  62, 97, 62, 97, 1, 1);
+	Geschuetz.LoadImage     ("flugboss_geschuetz.bmp",  62, 97, 62, 97, 1, 1);
 
 	Auge.LoadImage		    ("flugboss_auge.bmp",  29, 30, 29, 30, 1, 1);
 
-	Hitzone[0].LoadImage    ("flugboss_hitzone.png",  52, 100, 52, 100, 1, 1);
+	Hitzone[0].LoadImage    ("flugboss_hitzone.bmp",  52, 100, 52, 100, 1, 1);
 	Hitzone[1].LoadImage    ("flugboss_hitzone2.bmp", 52,  31, 52,  31, 1, 1);
 }
 
@@ -70,11 +70,11 @@ GegnerFlugBoss::GegnerFlugBoss(int Wert1, int Wert2, bool Light)
 void GegnerFlugBoss::DoDraw(void)
 {
 		// Schienen
-	SchieneL.RenderSprite(-SchienePos, 
+	SchieneL.RenderSprite(-SchienePos,
 						   (float)(yPos-pTileEngine->YOffset) + 161,
 							0xFFFFFFFF);
 
-	SchieneR.RenderSprite(320 + SchienePos, 
+	SchieneR.RenderSprite(320 + SchienePos,
 						   (float)(yPos-pTileEngine->YOffset) + 161,
 							0xFFFFFFFF);
 
@@ -106,9 +106,9 @@ void GegnerFlugBoss::DoDraw(void)
 	// Main
 	pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
 										   (float)(yPos-pTileEngine->YOffset),
-										   AnimPhase, 0xFFFFFFFF);	
+										   AnimPhase, 0xFFFFFFFF);
 
-	int a = int (alphaAuge);
+	//int a = int (alphaAuge); // PICKLE not used
 
 	// Hit Zone
 	Hitzone[0].RenderSprite(xHit, 380.0f + yHit, 0, 0xFFFFFFFF);
@@ -144,7 +144,7 @@ void GegnerFlugBoss::DoDraw(void)
 		alphaAuge = 0.0f;
 		alphaDir  = 1.0f;
 	}
-	
+
 	Auge.RenderSprite((float) (- pTileEngine->XOffset + xPos + 175),
 					  (float) (- pTileEngine->YOffset + yPos + 182), 0,
 					  0xFFFFFFFF);
@@ -179,7 +179,7 @@ void GegnerFlugBoss::DoKI(void)
 	// Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
 	if (Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
 	{
-		pTileEngine->ScrollLevel((float)Value1, 
+		pTileEngine->ScrollLevel((float)Value1,
 								 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
 		pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
@@ -223,7 +223,7 @@ void GegnerFlugBoss::DoKI(void)
 		// von oben einfliegen
 		//
 		case GEGNER_INIT2 :
-		{			
+		{
 			tempSpeed -= 1.35f SYNC;
 
 			if (tempSpeed < 3.0f)
@@ -235,10 +235,10 @@ void GegnerFlugBoss::DoKI(void)
 			//
 			if (yPos >= float (Value2 - 60))
 			{
-				yPos	  = float (Value2 - 60);				
+				yPos	  = float (Value2 - 60);
 				tempSpeed = 15.0f;
 				Handlung  = GEGNER_INIT3;
-				
+
 				pSoundManager->StopWave (SOUND_ROCKET);
 				pSoundManager->PlayWave (100, 128, 11025, SOUND_DOORSTOP);
 				pSoundManager->PlayWave (100, 128, 11025, SOUND_DOOR);
@@ -270,7 +270,7 @@ void GegnerFlugBoss::DoKI(void)
 
 				// Boss-Musik abspielen, sofern diese noch nicht gespielt wird
 				//
-				if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+				if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
 					pSoundManager->PlaySong(MUSIC_BOSS, false);
 			}
 
@@ -326,7 +326,7 @@ void GegnerFlugBoss::DoKI(void)
 		// Mit Geschützen ballern
 		//
 		case GEGNER_SPECIAL:
-		{			
+		{
 			// Kanonen ausrichten
 			//
 			float dx, dy;
@@ -340,7 +340,7 @@ void GegnerFlugBoss::DoKI(void)
 
 			// Division durch Null verhinden
 			if (dy == 0.0f)
-				dy = 0.01f;			
+				dy = 0.01f;
 
 			w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
 
@@ -351,7 +351,7 @@ void GegnerFlugBoss::DoKI(void)
 
 			winkel = 180.0f - winkel;
 
-			if (Winkel[0] < winkel)	
+			if (Winkel[0] < winkel)
 				Winkel[0] += 5.0f SYNC;
 			if (Winkel[0] > winkel)	Winkel[0] -= 5.0f SYNC;
 
@@ -363,7 +363,7 @@ void GegnerFlugBoss::DoKI(void)
 
 			// Division durch Null verhinden
 			if (dy == 0.0f)
-				dy = 0.01f;			
+				dy = 0.01f;
 
 			w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
 
@@ -374,7 +374,7 @@ void GegnerFlugBoss::DoKI(void)
 
 			winkel = 180.0f - winkel;
 
-			if (Winkel[1] < winkel)	
+			if (Winkel[1] < winkel)
 				Winkel[1] += 5.0f SYNC;
 			if (Winkel[1] > winkel)	Winkel[1] -= 5.0f SYNC;
 
@@ -442,7 +442,7 @@ void GegnerFlugBoss::DoKI(void)
 				{
 					// aus den zwei kleinen Geschützen ballern?
 					//
-					case 0 : 
+					case 0 :
 					{
 						Handlung = GEGNER_SCHIESSEN;
 
@@ -453,7 +453,7 @@ void GegnerFlugBoss::DoKI(void)
 
 					// Geschütze einfahren und ballern
 					//
-					case 1 : 
+					case 1 :
 					{
 						xKanone    = 0.0f;
 						AnimCount  = 10.0f;
@@ -463,7 +463,7 @@ void GegnerFlugBoss::DoKI(void)
 						tempSpeed = 12.0f;
 					} break;
 
-					case 2 : 
+					case 2 :
 					{
 					} break;
 
@@ -487,7 +487,7 @@ void GegnerFlugBoss::DoKI(void)
 					if (int (ShotCount) % 2 == 0)
 					{
 						yKanone[2] = 20;
-						
+
 						pProjectiles->PushProjectile (xPos + 68,
 													  yPos + 261 + 30, FLUGLASER);
 					}
@@ -528,9 +528,9 @@ void GegnerFlugBoss::DoKI(void)
 	// Kanone reindrehen
 	//
 	if (xKanone < 150.0f)
-	{		
+	{
 		/*Winkel[0] = xKanone + 180.0f * 1.4f;
-		
+
 
 		if (Winkel[0] > 360.0f)
 			Winkel[0] = 0.0f;
@@ -553,7 +553,7 @@ void GegnerFlugBoss::DoKI(void)
 		yHit = 100.0f;
 		dHit = -3.0f;
 		xHit = rand ()%440 + 100.0f;
-	}	
+	}
 }
 
 // --------------------------------------------------------------------------------------
@@ -564,7 +564,7 @@ void GegnerFlugBoss::GegnerExplode(void)
 {
 	// Splitter
 	for (int i=0; i<20; i++)
-	pPartikelSystem->PushPartikel(xPos + rand()%500 + 30, 
+	pPartikelSystem->PushPartikel(xPos + rand()%500 + 30,
 								  yPos + rand()%2000 + 30, SPLITTER);
 
 	pPlayer[0]->Score += 6000;
@@ -575,11 +575,11 @@ void GegnerFlugBoss::GegnerExplode(void)
 	// negativen liegt, da sonst das Spiel hängenbleibt =)
 	//
 	if (pPlayer->xpos - 300 <= 0)
-		pTileEngine->ScrollLevel(0, 
+		pTileEngine->ScrollLevel(0,
 								 pPlayer->ypos - 280, ZUSTAND_SCROLLTOPLAYER);
 	else
 
-		pTileEngine->ScrollLevel(pPlayer->xpos - 300, 
+		pTileEngine->ScrollLevel(pPlayer->xpos - 300,
 								 pPlayer->ypos - 280, ZUSTAND_SCROLLTOPLAYER);
 								 */
 

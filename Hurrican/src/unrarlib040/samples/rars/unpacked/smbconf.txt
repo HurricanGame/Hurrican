@@ -1,0 +1,48 @@
+Return-Path: <schec2@hta-bi.bfh.ch>
+Received: from vega.hta-bi.bfh.ch (147.87.65.1) by newmail.spectraweb.ch
+	for <unique@freesurf.ch>; 16 Feb 2000 12:47:27 +0100
+Received: from bibli10 (bibli10.hta-bi.bfh.ch [147.87.2.51])
+	by vega.hta-bi.bfh.ch (8.9.3+Sun/8.8.8) with SMTP id MAA25334
+	for <unique@freesurf.ch>; Wed, 16 Feb 2000 12:47:15 +0100 (MET)
+Message-Id: <200002161147.MAA25334@vega.hta-bi.bfh.ch>
+Date: Wed, 16 Feb 2000 12:47:15 +0100
+From: Christian Scheurer <schec2@hta-bi.bfh.ch>
+Reply-To: schec2@hta-bi.bfh.ch
+To: "unique@freesurf.ch" <unique@freesurf.ch>
+Subject: SMB schneller
+Organization: HTA Biel
+X-mailer: FoxMail 2.1 [en]
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8bit
+
+
+Lösung:
+
+   1.Socket Options
+     Diese werden entweder dem smbd mit der Option -O übergeben, oder in die /etc/smb.conf eingetragen. Welche Option verwendet werden soll, und welche
+     Optionen kombiniert werden können, ist netzabhängig und muß durch experimentieren herausgefunden werden. Hinweise hierzu finden Sie in der Manppage
+     "smb.conf" ("man smb.conf") und der Datei /usr/doc/packages/samba/Speed.txt.
+     Beachten Sie jedoch, daß Sie hiermit auch genau das Gegenteil bewirken können!
+     Einen großen Effekt erzielen Sie mit der Option TCP_NODELAY in der [Global]-Sektion der Konfigurationsdatei /etc/smb.conf: 
+
+     [Global]
+
+     ; workgroup = NT-Domain-Name or Workgroup-Name, eg: REDHAT4
+     workgroup = SUSE
+     ...
+
+     socket options = TCP_NODELAY
+
+     Ab Samba-Version 1.9.18 hilft es mitunter auch, in der /etc/smb.conf an gleicher Stelle einzutragen: 
+
+     read raw = no
+
+
+   2.Share Mode Handling
+     Ab Version 1.9.17 kann Samba mit der Option FAST_SHARE_MODES compliert werden. Insbesondere wird eine deutliche (!) Steigerung des Durchsatzes bei
+     Datenbankzugriffen (z. B. Microsoft Access) erzielt.
+     In der neuen Version (S.u.S.E. 5.1) haben wir Samba mit FAST_SHARE_MODES compiliert. Feedback willkommen! 
+
+
+

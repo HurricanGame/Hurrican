@@ -26,7 +26,7 @@ GegnerDrache::GegnerDrache(int Wert1, int Wert2, bool Light)
 	OwnDraw			= true;
 	HeadWinkel		= 0.0f;
 	SmokeCount		= 0.0f;
-	AnimWinkel		= 0.0f;	
+	AnimWinkel		= 0.0f;
 	KieferWinkel	= 0.0f;
 	Growl			= true;
 	AlreadyDrawn	= false;
@@ -57,17 +57,17 @@ GegnerDrache::GegnerDrache(int Wert1, int Wert2, bool Light)
 		}
 
 		Active = true;
-		Destroyable = false;		
+		Destroyable = false;
 		StopStageMusicAtStart = true;
 		HeadLocked = true;
 	}
 
-	Arm.LoadImage("drache_arm.png", 126, 107, 126, 107, 1, 1);
-	Leg.LoadImage("drache_bein.png", 212, 85, 212, 85, 1, 1);
-	Head[0].LoadImage("drache_head.png", 105, 64, 105, 64, 1, 1);
-	Head[1].LoadImage("drache_head2.png", 93, 55, 93, 55, 1, 1);
-	Tail.LoadImage("drache_tail.png", 12, 29, 12, 29, 1, 1);
-	Spitze.LoadImage("drache_spitze.png", 46, 34, 46, 34, 1, 1);	
+	Arm.LoadImage("drache_arm.bmp", 126, 107, 126, 107, 1, 1);
+	Leg.LoadImage("drache_bein.bmp", 212, 85, 212, 85, 1, 1);
+	Head[0].LoadImage("drache_head.bmp", 105, 64, 105, 64, 1, 1);
+	Head[1].LoadImage("drache_head2.bmp", 93, 55, 93, 55, 1, 1);
+	Tail.LoadImage("drache_tail.bmp", 12, 29, 12, 29, 1, 1);
+	Spitze.LoadImage("drache_spitze.bmp", 46, 34, 46, 34, 1, 1);
 }
 
 // --------------------------------------------------------------------------------------
@@ -77,36 +77,36 @@ GegnerDrache::GegnerDrache(int Wert1, int Wert2, bool Light)
 #define NUM_TAILS	20
 
 void GegnerDrache::DoDraw(void)
-{	
+{
 	if (PlayerAbstand() > 1000)
 		return;
 
 	int mirrored = 0;
 
 	if (xSpeed < 0.0f)
-	{		
+	{
 		mirrored = -1;
-		mirrorOffset = -1;		
+		mirrorOffset = -1;
 		GegnerRect[DRACHE].left = -50;	GegnerRect[DRACHE].right  = 161;
 	}
 	else
 	if (xSpeed > 0.0f)
 	{
 		mirrored = 1;
-		mirrorOffset = 0;		
+		mirrorOffset = 0;
 		GegnerRect[DRACHE].left = 40;	GegnerRect[DRACHE].right  = 250;
 	}
 	else
 	if (Position == LINKS)
 	{
 		mirrored = -1;
-		mirrorOffset = -1;		
+		mirrorOffset = -1;
 		GegnerRect[DRACHE].left = -50;	GegnerRect[DRACHE].right  = 161;
 	}
 	else
 	{
 		mirrored = 1;
-		mirrorOffset = 0;		
+		mirrorOffset = 0;
 		GegnerRect[DRACHE].left = 40;	GegnerRect[DRACHE].right  = 250;
 	}
 
@@ -130,19 +130,19 @@ void GegnerDrache::DoDraw(void)
 			GegnerRect[DRACHE].right  = (int)HeadX + 20;
 		}
 		else
-		{			
+		{
 			GegnerRect[DRACHE].left   = 180 + (int)HeadX;
 			GegnerRect[DRACHE].right  = 270 + (int)HeadX;
 		}
 	}
 	else
-	// Spieler kann draufhopsen?	
+	// Spieler kann draufhopsen?
 	if (Handlung == GEGNER_WARTEN ||
 		Handlung == GEGNER_AUSFAHREN ||
 		Handlung == GEGNER_EINFLIEGEN)
 	{
 		GegnerRect[DRACHE].left   = 50;
-		GegnerRect[DRACHE].right  = 150; 
+		GegnerRect[DRACHE].right  = 150;
 		GegnerRect[DRACHE].top    = 15;
 		GegnerRect[DRACHE].bottom = 135;
 	}
@@ -178,7 +178,7 @@ void GegnerDrache::DoDraw(void)
 
 		xoff = 0.0f;
 		yoff = 0.0f;
-		render = true;	
+		render = true;
 
 		if (Position == LINKS)
 			winkel = HeadWinkel - 180.0f;
@@ -191,32 +191,32 @@ void GegnerDrache::DoDraw(void)
 		float xadd = HeadX / dist * 10.0f;
 		float yadd = HeadY / dist * 10.0f;
 		while (render-- > 0)
-		{					
+		{
 			Tail.RenderSpriteRotated((float)(xPos-pTileEngine->XOffset) + 200 + mirrorOffset * 220 + xoff * Position,
 									 (float)(yPos-pTileEngine->YOffset) + 60 + yoff + DrawYOffset, winkel, 0xFFFFFFFF);
 			// ein wirbel weiter
 			if (Position == LINKS)
 			{
-				xoff -= xadd;			
+				xoff -= xadd;
 				yoff += yadd;
 			}
 			else
 			{
-				xoff += xadd;			
+				xoff += xadd;
 				yoff += yadd;
 			}
 
 			if (xoff > HeadX &&
 				yoff > HeadY)
 				render = 0;
-		}				
+		}
 	}
 
 	// Körper rendern
 	//
-	pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-pTileEngine->XOffset), 
+	pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-pTileEngine->XOffset),
 												  (float)(yPos-pTileEngine->YOffset) + DrawYOffset,
-												  0, 0, 0xFFFFFFFF, (mirrored < 0));	
+												  0, 0, 0xFFFFFFFF, (mirrored < 0));
 
 	// Knubbel am Hals rendern
 	pGegnerGrafix[MINIDRAGON]->RenderSprite((float)(xPos-pTileEngine->XOffset) + 170 + mirrorOffset * 210,
@@ -247,13 +247,13 @@ void GegnerDrache::DoDraw(void)
 	//
 	Head[1].RenderSpriteRotatedOffset((float)(xPos-pTileEngine->XOffset) + 190 + mirrorOffset * 276 + HeadX,
 									  (float)(yPos-pTileEngine->YOffset) + 50 + HeadY + DrawYOffset,
-									  (float)(HeadWinkel + sin(KieferWinkel) * 10.0f) - 10.0f, 
+									  (float)(HeadWinkel + sin(KieferWinkel) * 10.0f) - 10.0f,
 									  -40, -10, 0xFFFFFFFF, (mirrored < 0));
 	// Kopf
 	//
 	Head[0].RenderSpriteRotatedOffset((float)(xPos-pTileEngine->XOffset) + 180 + mirrorOffset * 276 + HeadX,
 									  (float)(yPos-pTileEngine->YOffset) + 15 + HeadY + DrawYOffset,
-									  (float)(HeadWinkel - sin(KieferWinkel) * 10.0f) + 10.0f, 
+									  (float)(HeadWinkel - sin(KieferWinkel) * 10.0f) + 10.0f,
 									  -35, 15, 0xFFFFFFFF, (mirrored < 0));
 
 	// Vorderes Bein rendern
@@ -267,10 +267,10 @@ void GegnerDrache::DoDraw(void)
 	//
 	Arm.RenderSpriteRotatedOffset((float)(xPos-pTileEngine->XOffset) + 140 + mirrorOffset * 210,
 								  (float)(yPos-pTileEngine->YOffset) + 90 + DrawYOffset,
-								  (float)(cos(AnimWinkel)) * 12.0f, -42, -35, 0xFFFFFFFF, (mirrored < 0));	
+								  (float)(cos(AnimWinkel)) * 12.0f, -42, -35, 0xFFFFFFFF, (mirrored < 0));
 
 
-	// Flare	
+	// Flare
 	if (AlreadyDrawn == false)
 	if (Handlung != GEGNER_EINFLIEGEN ||
 		(Handlung == GEGNER_EINFLIEGEN &&
@@ -280,12 +280,12 @@ void GegnerDrache::DoDraw(void)
 		 Attack == GEGNER_LAUFEN)
 	{
 		DirectGraphics.SetAdditiveMode();
-		LavaFlare.RenderSpriteScaledRotated (float (xPos - 100 - pTileEngine->XOffset) - mirrorOffset * 230, 
+		LavaFlare.RenderSpriteScaledRotated (float (xPos - 100 - pTileEngine->XOffset) - mirrorOffset * 230,
 	 										 float (yPos -  55 - pTileEngine->YOffset) + DrawYOffset, 180, 180, FlareRot, 0xFF66FF66);
 
-		LavaFlare.RenderSpriteScaledRotated (float (xPos - 40 - pTileEngine->XOffset) - mirrorOffset * 230, 
+		LavaFlare.RenderSpriteScaledRotated (float (xPos - 40 - pTileEngine->XOffset) - mirrorOffset * 230,
 	 										 float (yPos - 10 - pTileEngine->YOffset) + DrawYOffset, 90, 90, FlareRot*2, 0xFF88AAFF);
-		DirectGraphics.SetColorKeyMode();		
+		DirectGraphics.SetColorKeyMode();
 	}
 
 	// Pfeile anzeigen
@@ -294,7 +294,7 @@ void GegnerDrache::DoDraw(void)
 		ArrowCount -= 0.2f SYNC;
 		if (ArrowCount < 0.0f)
 			ArrowCount = 2.0f;
-		
+
 		if ((int)(ArrowCount) % 2 == 0)
 			pHUD->Arrow.RenderMirroredSprite((float)(xPos - pTileEngine->XOffset) + 50,
 											 (float)(yPos - pTileEngine->YOffset) - 30,
@@ -330,7 +330,7 @@ void GegnerDrache::ComputeHeadWinkel(void)
 		xdiv = (pAim->xpos + 35) - (xPos - 80);
 		HeadWinkel = -(float)atan(xdiv / ydiv) * 180.0f / PI - 82.0f;
 	}
-				
+
 	if (HeadWinkel < -90.0f)  HeadWinkel = -90.0f;
 	if (HeadWinkel >  90.0f)  HeadWinkel =  90.0f;
 }
@@ -343,7 +343,7 @@ void GegnerDrache::DoKI(void)
 {
 	// Energie anzeigen
 	if (Value2 == 0 &&
-		Handlung != GEGNER_NOTVISIBLE && 
+		Handlung != GEGNER_NOTVISIBLE &&
 		Handlung != GEGNER_EXPLODIEREN)
 		pHUD->ShowBossHUD(7000, Energy);
 
@@ -351,7 +351,7 @@ void GegnerDrache::DoKI(void)
 	if (Value2 == 0 &&
 		Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
 	{
-		pTileEngine->ScrollLevel((float)Value1, 
+		pTileEngine->ScrollLevel((float)Value1,
 								 yPos, ZUSTAND_SCROLLTOLOCK);		// Level auf den Drache zentrieren
 
 		// Drache aus Screen bringen
@@ -366,7 +366,7 @@ void GegnerDrache::DoKI(void)
 		DamageTaken = 0.0f;						// oder ganz anhalten
 
 	// Hat der Drache keine Energie mehr ? Dann explodiert er
-	if (Energy <= 100.0f && 
+	if (Energy <= 100.0f &&
 		Handlung != GEGNER_EXPLODIEREN &&
 		Destroyable == true)
 	{
@@ -376,7 +376,7 @@ void GegnerDrache::DoKI(void)
 		yAcc      = -1.0f;
 		AnimCount = 50.0f;
 		ShotDelay = 1.0f;
-		Energy    = 100.0f;		
+		Energy    = 100.0f;
 		HeadLocked = true;
 
 		// Alle übrigen Mini-Drachen zerstören
@@ -393,16 +393,16 @@ void GegnerDrache::DoKI(void)
 		// Endboss-Musik ausfaden und abschalten
 		pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
 	}
-	
+
 	if (!(Handlung == GEGNER_EINFLIEGEN &&
 		  Attack == GEGNER_STEHEN))
 		AnimWinkel += 0.2f SYNC;
 
-	while (AnimWinkel > 2 * PI)     
-		AnimWinkel -= 2 * PI;	
+	while (AnimWinkel > 2 * PI)
+		AnimWinkel -= 2 * PI;
 
 	// Headwinkel ausrechnen
-	ComputeHeadWinkel();	
+	ComputeHeadWinkel();
 
 	// Je nach Handlung richtig verhalten
 	switch (Handlung)
@@ -425,13 +425,13 @@ void GegnerDrache::DoKI(void)
 			if (AnimCount < 0.0f)
 			{
 				AnimCount = 5.0f;
-				pPartikelSystem->PushPartikel(xPos - 100 + rand()%300, 
+				pPartikelSystem->PushPartikel(xPos - 100 + rand()%300,
 											  yPos +  rand()%100 + DrawYOffset,
 											  SMOKEBIG);
 			}
 
 			AnimWinkel = 0;
-			BlickRichtung = LINKS;														
+			BlickRichtung = LINKS;
 
 			// testen ob spieler draufsteht
 			PlattformTest(GegnerRect[GegnerArt]);
@@ -443,16 +443,16 @@ void GegnerDrache::DoKI(void)
 			if (pPlayer[p]->Handlung != TOT &&
 				(
 				 pPlayer[p]->AufPlattform != this ||
-				 pPlayer[p]->Handlung == RADELN ||				
+				 pPlayer[p]->Handlung == RADELN ||
 				 pPlayer[p]->Handlung == RADELN_FALL)
 				)
 				alledrauf = false;
 
 			if (alledrauf == true)
 			{
-				pSoundManager->PlayWave(100, 128, 6000,  SOUND_EXPLOSION1);				
+				pSoundManager->PlayWave(100, 128, 6000,  SOUND_EXPLOSION1);
 				pSoundManager->PlayWave(100, 128, 8000,  SOUND_ROCKET);
-				pSoundManager->PlayWave(100, 128, 11025, SOUND_ROCKET);				
+				pSoundManager->PlayWave(100, 128, 11025, SOUND_ROCKET);
 				Handlung = GEGNER_AUSFAHREN;
 				xAcc = -2.0f;
 				yAcc = -0.2f;
@@ -461,7 +461,7 @@ void GegnerDrache::DoKI(void)
 				{
 					pPlayer[p]->DoFesteAktion = true;
 					pPlayer[p]->FesteAktion = -1;
-					pPlayer[p]->CanBeDamaged = false;				
+					pPlayer[p]->CanBeDamaged = false;
 				}
 			}
 		} break;
@@ -488,7 +488,7 @@ void GegnerDrache::DoKI(void)
 				NewStage = Stage + 1;
 
 				for (int p = 0; p < NUMPLAYERS; p++)
-				{					
+				{
 					pPlayer[p]->FesteAktion = -1;
 					pPlayer[p]->DoFesteAktion = true;
 				}
@@ -499,11 +499,11 @@ void GegnerDrache::DoKI(void)
 
 		// Spieler stehen zu Beginn auf Drache drauf
 		case GEGNER_EINFLIEGEN:
-		{			
+		{
 			if (Attack != GEGNER_STEHEN)
-			{			
+			{
 				for (int p = 0; p < NUMPLAYERS; p++)
-				{					
+				{
 					pPlayer[p]->xpos = xPos + 40.0f + p * 30.0f;
 					pPlayer[p]->ypos = yPos - 65.0f + DrawYOffset;
 					pPlayer[p]->Blickrichtung = LINKS;
@@ -524,14 +524,14 @@ void GegnerDrache::DoKI(void)
 			if (AnimCount < 0.0f)
 			{
 				AnimCount = 15.0f;
-				pPartikelSystem->PushPartikel(xPos - 120 + rand()%300, 
+				pPartikelSystem->PushPartikel(xPos - 120 + rand()%300,
 											  yPos +  rand()%100 + DrawYOffset,
 											  SMOKEBIG);
 
 				if (Attack != GEGNER_STEHEN &&
 					rand()%4 == 0)
 				{
-					pPartikelSystem->PushPartikel(xPos - 120 + rand()%300, 
+					pPartikelSystem->PushPartikel(xPos - 120 + rand()%300,
 											  yPos +  rand()%100 + DrawYOffset,
 											  EXPLOSION_MEDIUM2);
 					pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
@@ -550,14 +550,14 @@ void GegnerDrache::DoKI(void)
 					if (off > 2 * PI)
 						off -= 2 * PI;
 
-					DrawYOffset = (float)sin(off) * 8.0f;												
+					DrawYOffset = (float)sin(off) * 8.0f;
 
 					if (Energy > 100.0f)
 						Energy -= 85 SYNC;
 					else
 					{
 						yAcc = 2.0f;
-						Attack = GEGNER_LAUFEN2;					
+						Attack = GEGNER_LAUFEN2;
 					}
 				} break;
 
@@ -570,7 +570,7 @@ void GegnerDrache::DoKI(void)
 						DrawYOffset = 0.0f;
 
 					if (ySpeed > 0.0f &&
-						pTileEngine->BlockUnten(xPos,	 yPos, 
+						pTileEngine->BlockUnten(xPos,	 yPos,
 												xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_WAND)
 					{
 						ySpeed *= -0.3f;
@@ -586,7 +586,7 @@ void GegnerDrache::DoKI(void)
 							Attack = GEGNER_LAUFEN3;
 							xAcc = 2.0f;
 							SmokeCount = 0.0f;
-							HeadLocked = true;							
+							HeadLocked = true;
 						}
 					}
 				} break;
@@ -610,16 +610,16 @@ void GegnerDrache::DoKI(void)
 					{
 						SmokeCount = 0.2f;
 						pPartikelSystem->PushPartikel(xPos - 100 +  rand()%260, yPos + 120.0f, SNOWFLUSH);
-					}					
+					}
 
 					// liegenbleiben?
 					if (xSpeed > 0.0f)
 					{
 						xSpeed = 0.0f;
 						xAcc = 0.0f;
-						Attack = GEGNER_STEHEN;						
+						Attack = GEGNER_STEHEN;
 
-						for (int p = 0; p < NUMPLAYERS; p++)								
+						for (int p = 0; p < NUMPLAYERS; p++)
 							pPlayer[p]->DoFesteAktion = false;
 
 						pSoundManager->PlaySong(MUSIC_STAGEMUSIC, false);
@@ -640,13 +640,13 @@ void GegnerDrache::DoKI(void)
 						HeadWinkel = -70.0f;
 				} break;
 			}
-			
+
 		} break;
 
 
 		// explodieren lassen
 		case GEGNER_EXPLODIEREN:
-		{				
+		{
 			AnimWinkel = 0.0f;
 			Energy = 100.0f;
 
@@ -695,9 +695,9 @@ void GegnerDrache::DoKI(void)
 						Attack = GEGNER_LAUFEN2;
 					}
 				} break;
-			
+
 				case GEGNER_LAUFEN2:
-				{		
+				{
 					BlickRichtung = LINKS;
 
 					// Runtergefallen? Dann warten, bis der Hurri aufsteigt
@@ -728,27 +728,27 @@ void GegnerDrache::DoKI(void)
 			if (pTileEngine->Zustand == ZUSTAND_LOCKED)
 			{
 				// Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-				if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+				if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
 					pSoundManager->PlaySong(MUSIC_BOSS, false);
 
 				// Und Boss erscheinen lassen
-				Handlung = GEGNER_EINFLIEGEN2;				
+				Handlung = GEGNER_EINFLIEGEN2;
 			}
 		} break;
 
 		case GEGNER_EINFLIEGEN2:		// Gegner kommt DAS ERSTE MAL in den Screen geflogen
 		{
-			static bool drachevorbei = false;			
+			static bool drachevorbei = false;
 
 			Energy = 7000;
-			DamageTaken = 0.0f;			
+			DamageTaken = 0.0f;
 
 			// mindestens einmal vorbeigeflogen?
 			if (pTileEngine->pDragonHack->m_State == STATE_FLY)
 				drachevorbei = true;
-			
+
 			// Hinten vorbeigeflogen?
-			if (pTileEngine->pDragonHack->m_State == STATE_WAIT && 
+			if (pTileEngine->pDragonHack->m_State == STATE_WAIT &&
 				drachevorbei == true)
 			{
 				delete pTileEngine->pDragonHack;
@@ -804,7 +804,7 @@ void GegnerDrache::DoKI(void)
 							KieferWinkel = 0.0;
 							AnimCount = 10.0f;
 						} break;
-					} 
+					}
 				} break;
 
 				// Vorbeizischen und Dinge abwerfen =)
@@ -843,7 +843,7 @@ void GegnerDrache::DoKI(void)
 						case 1 :
 						{
 						} break;
-					} 
+					}
 				} break;
 
 				// An der Seite reinkommen
@@ -871,7 +871,7 @@ void GegnerDrache::DoKI(void)
 		} break;
 
 		case GEGNER_LAUFEN:
-		{ 			
+		{
 			// Je nach "Unterhandlung" anders verhalten
 			switch (Attack)
 			{
@@ -879,33 +879,33 @@ void GegnerDrache::DoKI(void)
 				case GEGNER_SCHIESSEN :
 				{
 					KieferWinkel  += 0.75f SYNC;
-					while (KieferWinkel > 2 * PI)   
+					while (KieferWinkel > 2 * PI)
 						KieferWinkel -= 2 * PI;
 
 					AnimCount += 0.75f SYNC;
 
 					while (AnimCount > 2 * PI)
 					{
-						
-						AnimCount -= 2 * PI;						
+
+						AnimCount -= 2 * PI;
 
 						if (BlickRichtung == 1)
 						{
 							WinkelUebergabe = 90 - HeadWinkel;
-							pProjectiles->PushProjectile(xPos + 240.0f + HeadWinkel/2.0f, 
+							pProjectiles->PushProjectile(xPos + 240.0f + HeadWinkel/2.0f,
 														 yPos +  50.0f - HeadWinkel/2.0f,  FIREBALL_BIG);
 						}
 						else
 						{
 							WinkelUebergabe = 270.0f + HeadWinkel;
-							pProjectiles->PushProjectile(xPos - 110.0f - HeadWinkel/2.0f, 
+							pProjectiles->PushProjectile(xPos - 110.0f - HeadWinkel/2.0f,
 														 yPos +  50.0f - HeadWinkel/2.0f,  FIREBALL_BIG);
 						}
 
 						pSoundManager->PlayWave(100, 128, 8000 + rand()%2000, SOUND_FIREBALL);
 					}
-								
-				} break;				
+
+				} break;
 
 				// Feuerbälle schiessen
 				case GEGNER_BOMBARDIEREN :
@@ -917,7 +917,7 @@ void GegnerDrache::DoKI(void)
 					if (AnimCount < 0.0f)
 					{
 						AnimCount = 25.0f;
-						pGegner->PushGegner(xPos + 100.0f - mirrorOffset, 
+						pGegner->PushGegner(xPos + 100.0f - mirrorOffset,
 										    yPos +  80.0f, MINIDRAGON, 0, 99, false, false);
 					}
 				} break;
@@ -934,7 +934,7 @@ void GegnerDrache::DoKI(void)
 
 		// Vorbeiflitzen?
 		case GEGNER_LAUFEN2:
-		{ 			
+		{
 			// Je nach "Unterhandlung" anders verhalten
 			switch (Attack)
 			{
@@ -949,7 +949,7 @@ void GegnerDrache::DoKI(void)
 					if (ShotDelay < 0.0f)
 					{
 						ShotDelay = 3.0f;
-						pGegner->PushGegner(xPos + 100.0f - mirrorOffset, 
+						pGegner->PushGegner(xPos + 100.0f - mirrorOffset,
 										    yPos +  80.0f, FETTERAKETE, 0, 99, false, false);
 					}
 
@@ -983,7 +983,7 @@ void GegnerDrache::DoKI(void)
 								pPlayer[p]->xpos -= 8.0f SYNC;
 						}
 					}
-				} break;				
+				} break;
 			}
 
 			// Am Rand angekommen? Dann wieder neue Aktion wählen
@@ -997,13 +997,13 @@ void GegnerDrache::DoKI(void)
 
 		// An der Seite reinkommen
 		case GEGNER_LAUFEN3:
-		{			
+		{
 			// Welchen Angriff genau macht der Drache?
 			switch (Attack)
 			{
 				// Reinkommen?
 				case GEGNER_EINFLIEGEN:
-				{					
+				{
 					if (Position == RECHTS)
 					{
 						xPos = Value1 - 300.0f;
@@ -1015,7 +1015,7 @@ void GegnerDrache::DoKI(void)
 						xPos -= (float)sin(AnimCount) * 150.0f;
 					}
 
-					// Angekommen? 					
+					// Angekommen?
 					if (AnimCount >= PI / 2.0f)
 					{
 						// schon genau am richtigen Punkt? Dann auf Angriff umschalten
@@ -1024,7 +1024,7 @@ void GegnerDrache::DoKI(void)
 							Attack = GEGNER_SCHIESSEN;
 						}
 						else
-							AnimCount = PI / 2.0f;						
+							AnimCount = PI / 2.0f;
 					}
 					else
 						AnimCount += 0.075f SYNC;
@@ -1041,7 +1041,7 @@ void GegnerDrache::DoKI(void)
 						KieferWinkel = -PI / 2.0f;
 						Attack = GEGNER_VERFOLGEN;
 
-						HeadLocked = true;					
+						HeadLocked = true;
 
 						HeadXSpeed =  (float)cos(HeadWinkel / 180.0f * PI) * (40.0f + 10.0f * (Skill)) * Position;
 						HeadYSpeed = -(float)sin(HeadWinkel / 180.0f * PI) * (30.0f +  8.0f * (Skill));
@@ -1052,7 +1052,7 @@ void GegnerDrache::DoKI(void)
 
 						if (Position == RECHTS &&
 							HeadXSpeed < 0.1f)
-							HeadXSpeed = 0.01f;						
+							HeadXSpeed = 0.01f;
 					}
 				} break;
 
@@ -1071,7 +1071,7 @@ void GegnerDrache::DoKI(void)
 					HeadX += HeadXSpeed SYNC;
 					HeadY += HeadYSpeed SYNC;
 
-					for (int p = 0; p < NUMPLAYERS; p++)								
+					for (int p = 0; p < NUMPLAYERS; p++)
 					if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
 										pPlayer[p]->xpos, pPlayer[p]->ypos, colliderect) == true)
 					{
@@ -1085,7 +1085,7 @@ void GegnerDrache::DoKI(void)
 						(HeadXSpeed > 0.0f && xPos + HeadX > (float)Value1 + 400.0f) ||
 						(HeadXSpeed < 0.0f && xPos + HeadX < (float)Value1 + 100.0f) ||
 						 PlayerHit == true)
-					{						
+					{
 						Attack = GEGNER_SCHLIESSEN;
 						AnimCount = 4.0f;
 						KieferWinkel = PI / 2.0f;
@@ -1094,19 +1094,19 @@ void GegnerDrache::DoKI(void)
 						HeadXSpeed *= -1;
 
 						for (int i = 0; i < 30; i++)
-							pPartikelSystem->PushPartikel(xPos + HeadX + 220.0f + rand()%20 + mirrorOffset * 275.0f, 
+							pPartikelSystem->PushPartikel(xPos + HeadX + 220.0f + rand()%20 + mirrorOffset * 275.0f,
 														  yPos + HeadY + 70.0f + rand()%20, FUNKE);
 					}
-					
+
 				} break;
 
 				case GEGNER_SCHLIESSEN:
 				{
 					if (AnimCount > 0.0f)
-						AnimCount -= 1.0f SYNC;						
+						AnimCount -= 1.0f SYNC;
 
 					else
-					{	
+					{
 						AnimCount = 0.0f;
 						HeadX += HeadXSpeed SYNC;
 						HeadY += HeadYSpeed SYNC;
@@ -1118,7 +1118,7 @@ void GegnerDrache::DoKI(void)
 							 (HeadXSpeed > 0.0f &&
 							  HeadX > 0.0f))
 							)
-						{			
+						{
 							HeadLocked = false;
 
 							// noch einmal zuschnappen?
@@ -1137,7 +1137,7 @@ void GegnerDrache::DoKI(void)
 				} break;
 
 				case GEGNER_EINFLIEGEN2:
-				{					
+				{
 					if (Position == RECHTS)
 					{
 						xPos = Value1 - 300.0f;
@@ -1149,7 +1149,7 @@ void GegnerDrache::DoKI(void)
 						xPos -= (float)sin(AnimCount) * 150.0f;
 					}
 
-					// Angekommen? 		
+					// Angekommen?
 					AnimCount -= 0.075f SYNC;
 					if (AnimCount <= -PI / 2.0f)
 						Handlung = GEGNER_AUSWAHL;
@@ -1212,5 +1212,5 @@ void GegnerDrache::DoKI(void)
 // --------------------------------------------------------------------------------------
 
 void GegnerDrache::GegnerExplode(void)
-{	
+{
 }

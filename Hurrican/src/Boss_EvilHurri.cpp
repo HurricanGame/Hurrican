@@ -39,22 +39,22 @@ void GegnerEvilHurri::DoDraw(void)
 	{
 		DirectGraphics.SetAdditiveMode();
 		if (BlickRichtung == LINKS)
-		{				
-				PlayerRun[0].RenderSprite((float)(xPos-pTileEngine->XOffset), 
-									   (float)(yPos-pTileEngine->YOffset), 
-									    AnimPhase, 0xAA444444, true);			
-				PlayerRun[0].RenderSprite((float)(xPos-pTileEngine->XOffset), 
-									   (float)(yPos-pTileEngine->YOffset), 
+		{
+				PlayerRun[0].RenderSprite((float)(xPos-pTileEngine->XOffset),
+									   (float)(yPos-pTileEngine->YOffset),
+									    AnimPhase, 0xAA444444, true);
+				PlayerRun[0].RenderSprite((float)(xPos-pTileEngine->XOffset),
+									   (float)(yPos-pTileEngine->YOffset),
 										AnimPhase, 0xFF0022FF, true);
 		}
 		else
 		{
-				PlayerRun[0].RenderSprite((float)(xPos-pTileEngine->XOffset), 
-									   (float)(yPos-pTileEngine->YOffset), 
+				PlayerRun[0].RenderSprite((float)(xPos-pTileEngine->XOffset),
+									   (float)(yPos-pTileEngine->YOffset),
 									   AnimPhase, 0xAA444444);
 
-				PlayerRun[0].RenderSprite((float)(xPos-pTileEngine->XOffset), 
-									   (float)(yPos-pTileEngine->YOffset), 
+				PlayerRun[0].RenderSprite((float)(xPos-pTileEngine->XOffset),
+									   (float)(yPos-pTileEngine->YOffset),
 									   AnimPhase, 0xFF0022FF);
 		}
 	}
@@ -76,7 +76,7 @@ void GegnerEvilHurri::DoKI(void)
 	// Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
 	if (Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
 	{
-		pTileEngine->ScrollLevel((float)Value1, 
+		pTileEngine->ScrollLevel((float)Value1,
 								 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf die Faust zentrieren
 
 		pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
@@ -152,7 +152,7 @@ void GegnerEvilHurri::DoKI(void)
 			if (pTileEngine->Zustand == ZUSTAND_LOCKED)
 			{
 				// Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-				if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+				if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
 					pSoundManager->PlaySong(MUSIC_BOSS, false);
 
 				// Und Boss erscheinen lassen
@@ -175,7 +175,7 @@ void GegnerEvilHurri::DoKI(void)
 			if (ActionDelay < 0.0f)
 			{
 				ActionDelay = 0.0f;
-				
+
 				// Bei großem Abstand spieler zerquetschen
 				if (PlayerAbstand() > 300)
 				{
@@ -201,7 +201,7 @@ void GegnerEvilHurri::DoKI(void)
 						else
 							xSpeed      =-40.0f;
 					}
-					
+
 				}
 
 				// Ansonsten im Kreis rum ballern
@@ -249,7 +249,7 @@ void GegnerEvilHurri::DoKI(void)
 							else
 								xSpeed      =-20.0f;
 						}
-						
+
 					}
 				}
 			}

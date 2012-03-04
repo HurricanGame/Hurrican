@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerClass::GegnerClass(void)
-{	
+{
 	Active		 = false;
 	TestBlock    = true;
 	OwnDraw	     = false;
@@ -33,7 +33,7 @@ GegnerClass::GegnerClass(void)
 	TurnCount    = 0.0f;
 
 	// Ziel zufällig wählen
-	pAim = ChooseAim();	
+	pAim = ChooseAim();
 }
 
 // --------------------------------------------------------------------------------------
@@ -54,7 +54,7 @@ GegnerClass::~GegnerClass(void)
 void GegnerClass::TestDamagePlayers(float dam, bool destroy)
 {
 	for (int i = 0; i < NUMPLAYERS; i++)
-	if (SpriteCollision(xPos,  yPos,  GegnerRect[GegnerArt], 
+	if (SpriteCollision(xPos,  yPos,  GegnerRect[GegnerArt],
 						pPlayer[i]->xpos, pPlayer[i]->ypos, pPlayer[i]->CollideRect))
 	{
 		pPlayer[i]->DamagePlayer(dam);
@@ -72,7 +72,7 @@ void GegnerClass::GegnerExplode(void)
 {
 	for (int p = 0; p < NUMPLAYERS; p++)
 		if (pPlayer[p]->AufPlattform == this)
-			pPlayer[p]->AufPlattform = NULL;	
+			pPlayer[p]->AufPlattform = NULL;
 }
 
 // --------------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ void GegnerClass::GegnerExplode(void)
 // --------------------------------------------------------------------------------------
 
 void GegnerClass::Render(void)
-{	
+{
 	// Nicht auf Screen? Dann nicht rendern ;)
 	if (IsOnScreen() == false)
 		return;
@@ -89,7 +89,7 @@ void GegnerClass::Render(void)
 	int Anim = AnimPhase;
 	D3DCOLOR Color;
 
-	mirrored = (BlickRichtung == RECHTS);	
+	mirrored = (BlickRichtung == RECHTS);
 
 	if (GegnerArt == DIAMANT)		// Diamant
 		Color = 0xFFFFFFFF;
@@ -110,12 +110,12 @@ void GegnerClass::Render(void)
 			DirectGraphics.SetColorKeyMode();
 
 			if (pGegnerGrafix[GegnerArt]->itsTexture != NULL)
-				pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset), 
-													   (float)(yPos-pTileEngine->YOffset), 
+				pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
+													   (float)(yPos-pTileEngine->YOffset),
 													   Anim, Color, mirrored);
 		}
 		// DAS ist die Extrawurst =)
-		else			
+		else
 			if (OwnDraw == true)
 				DoDraw();
 	}
@@ -126,14 +126,14 @@ void GegnerClass::Render(void)
 	{
 		int	  Wert;
 		float f = DamageTaken;
-		
+
 		MYMATH_FTOL(f,Wert);
 
-		Color = D3DCOLOR_RGBA(255, 255, 255, Wert);		
+		Color = D3DCOLOR_RGBA(255, 255, 255, Wert);
 
 		// neu rendern
 		if (Handlung != GEGNER_NOTVISIBLE)
-		{		
+		{
 			DirectGraphics.SetAdditiveMode();
 
 			if (OwnDraw  == false &&
@@ -141,8 +141,8 @@ void GegnerClass::Render(void)
 			{
 				if (pGegnerGrafix[GegnerArt]->itsTexture != NULL)
 					for (int i = 0; i < 2; i++)
-						pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset), 
-															   (float)(yPos-pTileEngine->YOffset), 
+						pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
+															   (float)(yPos-pTileEngine->YOffset),
 															   Anim, Color, mirrored);
 			}
 
@@ -150,9 +150,9 @@ void GegnerClass::Render(void)
 			else
 			if (OwnDraw  == true)
 				for (int i = 0; i < 2; i++)
-					DoDraw();		
+					DoDraw();
 
-			DirectGraphics.SetColorKeyMode();		
+			DirectGraphics.SetColorKeyMode();
 		}
 
 		// Rotwerden langsam ausfaden lassen
@@ -163,7 +163,7 @@ void GegnerClass::Render(void)
 		else
 			DamageTaken -= 75 SYNC;
 
-		if (DamageTaken < 0.0f)				
+		if (DamageTaken < 0.0f)
 			DamageTaken = 0.0f;
 	}
 
@@ -172,7 +172,7 @@ void GegnerClass::Render(void)
 	{
 		char Buffer[10];
 		_itoa_s(PlayerAbstand(), Buffer, 10);
-		pMenuFont->DrawText(float(xPos-pTileEngine->XOffset), 
+		pMenuFont->DrawText(float(xPos-pTileEngine->XOffset),
 					 	   	float(yPos-pTileEngine->YOffset), Buffer, 0xFFFFFFFF);
 	}
 }
@@ -182,9 +182,9 @@ void GegnerClass::Render(void)
 // --------------------------------------------------------------------------------------
 
 bool GegnerClass::Run(void)
-{	
+{
 	// Ist der Gegner überhaupt schon aktiviert worden, also im Screen gewesen ?
-	// Oder ist es ein Eisstachel, der sich immer bewegt 
+	// Oder ist es ein Eisstachel, der sich immer bewegt
 	if (Active    == true ||
 		GegnerArt == EISSTACHEL)
 	{
@@ -197,7 +197,7 @@ bool GegnerClass::Run(void)
 			return false;
 
 		// Animationsphasen checken
-		if (AnimStart < 0 || AnimPhase < 0) 
+		if (AnimStart < 0 || AnimPhase < 0)
 		{
 			AnimStart = 0;
 		}
@@ -238,7 +238,7 @@ bool GegnerClass::Run(void)
 			 yPos + GegnerRect[GegnerArt].bottom < 0.0f ||
 			 xPos > pTileEngine->LEVELPIXELSIZE_X ||
 			 yPos > pTileEngine->LEVELPIXELSIZE_Y))
-			Energy = 0.0f;		
+			Energy = 0.0f;
 
 		// Gegner Energie abziehen, wenn der Spieler ein Rad ist
 		for (int p = 0; p < NUMPLAYERS; p++)
@@ -254,7 +254,7 @@ bool GegnerClass::Run(void)
 				// blinken lassen, wenn noch nicht blinkt
 				if (DamageTaken <= 0.0f)
 					DamageTaken = 255;
-			
+
 				if (pPlayer[p]->WheelMode == false)
 					pPlayer[p]->Armour -= float(3.0 SYNC);	// Spieler verliert Rad Energie
 
@@ -285,7 +285,7 @@ bool GegnerClass::Run(void)
 		if (GegnerArt != EXTRAS)
 		{
 			xSpeed = xSpeed * BlickRichtung;
-			xAcc   = xAcc * BlickRichtung; 
+			xAcc   = xAcc * BlickRichtung;
 		}
 
 		if (TestBlock == true)
@@ -329,7 +329,7 @@ int GegnerClass::PlayerAbstand(bool both)
 			xdiff = (pPlayer[p]->xpos + 35) - (xPos + GegnerRect[GegnerArt].right/2);
 			ydiff = (pPlayer[p]->ypos + 40) - (yPos + GegnerRect[GegnerArt].bottom/2);
 
-			Abstand = min(Abstand, float(sqrt((xdiff * xdiff) + (ydiff * ydiff))));
+			Abstand = MIN(Abstand, float(sqrt((xdiff * xdiff) + (ydiff * ydiff))));
 		}
 
 	}
@@ -380,7 +380,7 @@ int GegnerClass::PlayerAbstandVert(PlayerClass *pTarget)
 	if (pTarget == NULL)
 		pTarget = pAim;
 
-	Abstand = (pTarget->ypos + pTarget->CollideRect.top  + (pTarget->CollideRect.bottom - pTarget->CollideRect.top)/2) 
+	Abstand = (pTarget->ypos + pTarget->CollideRect.top  + (pTarget->CollideRect.bottom - pTarget->CollideRect.top)/2)
 			- (yPos + GegnerRect[GegnerArt].bottom/2);
 
 	int a;
@@ -400,7 +400,7 @@ void GegnerClass::PlattformTest(RECT rect)
 	//
 	for (int p = 0; p < NUMPLAYERS; p++)
 	if (pPlayer[p]->AufPlattform == this)
-	{		
+	{
 		// so bewegen wie die Plattform selber, wenn keine Wand im Weg
 		//
 		float x = pPlayer[p]->xpos;
@@ -459,8 +459,8 @@ void GegnerClass::Wegschieben(RECT rect, float dam)
 	//
 	for (int i = 0; i < NUMPLAYERS; i++)
 	if (SpriteCollision(xPos, yPos, rect,
-						pPlayer[i]->xpos, 
-						pPlayer[i]->ypos, 
+						pPlayer[i]->xpos,
+						pPlayer[i]->ypos,
 						pPlayer[i]->CollideRect) == true &&
 		pPlayer[i]->AufPlattform != this)
 	{
@@ -488,7 +488,7 @@ void GegnerClass::Wegschieben(RECT rect, float dam)
 			if   (pPlayer[i]->xpos + 35 >= xPos + rect.left + (rect.right - rect.left) / 2 &&
 				!(pTileEngine->BlockRechts(pPlayer[i]->xpos, pPlayer[i]->ypos,
 										   pPlayer[i]->xpos, pPlayer[i]->ypos,
-										   pPlayer[i]->CollideRect) & BLOCKWERT_WAND))				
+										   pPlayer[i]->CollideRect) & BLOCKWERT_WAND))
 				pPlayer[i]->xpos += (PLAYER_MOVESPEED + 1) SYNC;
 		}
 	}
@@ -581,7 +581,7 @@ bool GegnerClass::IsOnScreen(void)
 	int off;
 	int xsize, ysize;
 
-	off = min(GegnerRect[GegnerArt].left, 0);
+	off = MIN(GegnerRect[GegnerArt].left, 0);
 
 	xsize = pGegnerGrafix[GegnerArt]->itsXFrameSize;
 	ysize = pGegnerGrafix[GegnerArt]->itsYFrameSize;
@@ -593,7 +593,7 @@ bool GegnerClass::IsOnScreen(void)
 		off = -400;
 	}
 
-		
+
 	if (xPos + xsize < pTileEngine->XOffset ||
 		xPos + off > pTileEngine->XOffset + 640.0f ||
 		yPos + ysize < pTileEngine->YOffset ||
@@ -632,10 +632,10 @@ GegnerListClass::GegnerListClass(void)
 	pGegnerGrafix[POWERBLOCK]->LoadImage("powerblock.png", 440, 40, 40, 40, 11, 1);
 	pGegnerGrafix[ONEUP]->LoadImage		("oneup.png", 200, 160, 40, 40, 5, 4);
 	pGegnerGrafix[DIAMANT]->LoadImage	("diamant.bmp", 261, 29, 29, 29, 9, 1);
-	pGegnerGrafix[EXTRAS]->LoadImage	("extras.png", 312, 24, 24, 24, 13, 1); 
-	pGegnerGrafix[PUNISHER]->LoadImage	("punisher.png", 1020, 850, 170, 170, 6, 5); 
+	pGegnerGrafix[EXTRAS]->LoadImage	("extras.png", 312, 24, 24, 24, 13, 1);
+	pGegnerGrafix[PUNISHER]->LoadImage	("punisher.png", 1020, 850, 170, 170, 6, 5);
 	LavaFlare.LoadImage ("lavaflare.bmp", 120, 120, 120, 120, 1, 1);
-	
+
 	// Gegner-Rects festlegen
 	// BonusBlock
 	GegnerRect[POWERBLOCK].left = 0;	GegnerRect[POWERBLOCK].right  = 40;
@@ -945,7 +945,7 @@ GegnerListClass::GegnerListClass(void)
 	GegnerRect[FIESERWALKER2].left = 5;	GegnerRect[FIESERWALKER2].right  = 59;
 	GegnerRect[FIESERWALKER2].top  = 8;	GegnerRect[FIESERWALKER2].bottom = 55;
 
-	// Die mittelgroße Spinne 
+	// Die mittelgroße Spinne
 	GegnerRect[MITTELSPINNE].left = 10;	GegnerRect[MITTELSPINNE].right  = 97;
 	GegnerRect[MITTELSPINNE].top  = 10;	GegnerRect[MITTELSPINNE].bottom = 76;
 
@@ -1004,7 +1004,7 @@ GegnerListClass::GegnerListClass(void)
 
 	// MetalHead
 	GegnerRect[METALHEAD].left = 20;	   GegnerRect[METALHEAD].right  = 130;
-	GegnerRect[METALHEAD].top  = 20 + 113; GegnerRect[METALHEAD].bottom = 130 + 82;	
+	GegnerRect[METALHEAD].top  = 20 + 113; GegnerRect[METALHEAD].bottom = 130 + 82;
 
 	// Endboss
 	GegnerRect[SKELETOR].left = 40;	GegnerRect[SKELETOR].right  = 85;
@@ -1657,22 +1657,22 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
 		case RIESENPIRANHA:
 		{
 			pNew = new GegnerRiesenPiranha(Value1, Value2, Light);
-		} break;	
+		} break;
 
 		case RIESENQUALLE:
 		{
 			pNew = new GegnerRiesenQualle(Value1, Value2, Light);
-		} break;	
+		} break;
 
 		case RIESENRAUPE:
 		{
 			pNew = new GegnerRiesenRaupe(Value1, Value2, Light);
-		} break;	
+		} break;
 
 		case RIESENWASP:
 		{
 			pNew = new GegnerRiesenWasp(Value1, Value2, Light);
-		} break;	
+		} break;
 
 		case PARTIKELSPAWN:
 		{
@@ -1877,7 +1877,7 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
 		case LUEFTER_GROSS:
 		{
 			pNew = new GegnerLuefterGross(Value1, Value2, Light);
-		} break;		
+		} break;
 
 		case LUEFTER_KLEIN:
 		{
@@ -2041,7 +2041,7 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
 
 		pStart->pNext=NULL;						// Next/Previous gibts nich, da wir
 		pStart->pPrev=NULL;						// nur 1 Gegner haben
-	} 
+	}
 	else										// Liste ist NICHT leer
 	{
 		// Gegner am Ende einfügen?
@@ -2049,7 +2049,7 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
 		{
 			pEnd->pNext = pNew;						// Letzter Gegner zeigt auf den neuen
 			pNew->pPrev = pEnd;						// Letzter Gegner ist nicht mehr der letzte
-		
+
 			pNew->pNext = NULL;						// Nach dem neuen Gegner kommt keiner mehr
 			pEnd		= pNew;						// da er jetzt der letzte in der Liste ist
 		}
@@ -2059,7 +2059,7 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
 		{
 			pStart->pPrev = pNew;					// Erster Gegner zeigt auf den neuen
 			pNew->pNext = pStart;					// Erster Gegner ist nicht mehr der erste
-		
+
 			pNew->pPrev = NULL;						// Vor dem neuen Gegner kommt keiner mehr
 			pStart		= pNew;						// da er jetzt der erste in der Liste ist
 		}
@@ -2071,7 +2071,7 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
 	//
 	if (Art == SHOOTPLATTFORM)
 	{
-		// Button anfügen	
+		// Button anfügen
 		pGegner->PushGegner (pNew->xPos + 42, pNew->yPos - 9, SHOOTBUTTON, 0, 0, Light);
 	}
 
@@ -2087,11 +2087,11 @@ void GegnerListClass::DelSel(GegnerClass *pTemp)
 	GegnerClass  *pN;
     GegnerClass  *pP;
 
-	if(pTemp!=NULL)						// zu löschender Gegner existiert 
+	if(pTemp!=NULL)						// zu löschender Gegner existiert
 	{
-		pN = pTemp->pNext;			
+		pN = pTemp->pNext;
 		pP = pTemp->pPrev;
-  
+
 		if(pP == NULL)					// Wird der erste Gegner gelöscht ?
 			pStart = pN;				// Dann wird dessen Nächster zum Ersten
 		else
@@ -2101,7 +2101,7 @@ void GegnerListClass::DelSel(GegnerClass *pTemp)
 			pEnd = pP;					// Dann wir der letzte Gegner zum ersten
 		else
 		pN->pPrev = pP;
-  
+
 		delete (pTemp);					// Speicher freigeben
 		pTemp = NULL;
 
@@ -2149,14 +2149,14 @@ void GegnerListClass::RenderAll(void)
 	// Zuerst die "Gegner" rendern, die als Background fungieren
 	// z.B. der große Lüfter, damit diese nicht die anderen Gegner verdecken können
 	//
-	while (pTemp != NULL)					// noch nicht alle durch ?		   
+	while (pTemp != NULL)					// noch nicht alle durch ?
 	{
 		if (pTemp->BackGround == false)		// kein Background? Dann nächsten
 		{
 			pTemp = pTemp->pNext;
 			continue;
 		}
-		
+
 		if (pTemp->Active == true)			// aktueller Gegner aktiv ?
 		{
 			// dann Gegner rendern
@@ -2172,16 +2172,16 @@ void GegnerListClass::RenderAll(void)
 
 	pTemp = pGegner->pStart;
 
-	while (pTemp != NULL)					// noch nicht alle durch ?		   
+	while (pTemp != NULL)					// noch nicht alle durch ?
 	{
 		if (pTemp->BackGround == true)		// Background? Dann nächsten
 		{
 			pTemp = pTemp->pNext;
 			continue;
-		}		
-		
+		}
+
 		if (pTemp->Active == true)			// aktueller Gegner aktiv ?
-		{			
+		{
 			// dann Gegner rendern
 			pTemp->AlreadyDrawn = false;
 			pTemp->Render();
@@ -2202,22 +2202,22 @@ void GegnerListClass::RunAll(void)
 
 	// Alle Einträge der Gegnerliste durchgehen
 	//
-	while (pTemp != NULL)					// noch nicht alle durch ?		   
+	while (pTemp != NULL)					// noch nicht alle durch ?
 	{
 		pNext = pTemp->pNext;
 
 		pTemp->Run();
 
 		// ggf Gegner löschen (bei Energy <= 0)
-		if (pTemp->Energy <= 0.0f)		 	
+		if (pTemp->Energy <= 0.0f)
 		{
 			pTemp->GegnerExplode();			// Jeder Gegner explodiert anders
 			DelSel(pTemp);					// Gegner aus der Liste löschen
 		}
-			
+
 
 		pTemp = pNext;
-	}	
+	}
 }
 
 // --------------------------------------------------------------------------------------
@@ -2239,7 +2239,7 @@ void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage)
 		pNext = pTemp->pNext;				// Nächsten sichern
 
 		// Stampfstein? Fällt runter bei Wackeln
-		if (pTemp->Active	   == true		  &&			
+		if (pTemp->Active	   == true		  &&
 			pTemp->GegnerArt   == STAMPFSTEIN &&
 			pTemp->Handlung    == GEGNER_STEHEN &&
 			dx < 300						  &&
@@ -2253,9 +2253,9 @@ void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage)
 			pTemp->yAcc     = 15.0f;
 
 			if (pSoundManager->its_Sounds[SOUND_STONEFALL]->isPlaying == false)
-				pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_STONEFALL);				
+				pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_STONEFALL);
 		}
-		
+
 		// Gegner in der Nähe? Dann Energie abziehen
 		if (pTemp->Active	   == true		    &&
 			dx < 300							&&

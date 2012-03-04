@@ -85,7 +85,7 @@ void GegnerUfo::DoKI(void)
 	// Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
 	if (Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
 	{
-		pTileEngine->ScrollLevel((float)Value1, 
+		pTileEngine->ScrollLevel((float)Value1,
 								 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 		yPos -= 300;												// und Boss aus dem Screen setzen
 		Handlung = GEGNER_INIT;
@@ -120,11 +120,11 @@ void GegnerUfo::DoKI(void)
 
 	// Über dem Spieler schweben
 	//
-	if (Handlung != GEGNER_INIT		  && 
+	if (Handlung != GEGNER_INIT		  &&
 		Handlung != GEGNER_EINFLIEGEN &&
 		Handlung != GEGNER_EXPLODIEREN)
 	{
-		if (xPos + 100 < Value1 + 320) 
+		if (xPos + 100 < Value1 + 320)
 				xAcc =  3.0f;
 			else
 				xAcc = -3.0f;
@@ -138,7 +138,7 @@ void GegnerUfo::DoKI(void)
 			if (pTileEngine->Zustand == ZUSTAND_LOCKED)
 			{
 				// Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-				if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+				if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
 					pSoundManager->PlaySong(MUSIC_BOSS, false);
 
 				// Und Boss erscheinen lassen
@@ -172,7 +172,7 @@ void GegnerUfo::DoKI(void)
 				ShotDelay -= 1.0f SYNC;
 
 				if (ShotDelay < 0.0f)
-				{	
+				{
 					pGegner->PushGegner(xPos + 45.0f, yPos + 40.0f, FETTERAKETE, 360, 99, false);
 					pGegner->PushGegner(xPos + 135.0f, yPos + 40.0f, FETTERAKETE, 0, 99, false);
 					ShotDelay = 18.0f;
@@ -196,8 +196,8 @@ void GegnerUfo::DoKI(void)
 
 				if (j == 0)	Handlung = GEGNER_SCHIESSEN;
 				if (j == 1)	Handlung = GEGNER_BOMBARDIEREN;
-				if (j == 2)	
-				{	
+				if (j == 2)
+				{
 					Handlung  = GEGNER_FALLEN;
 					ySpeed    =  28.0f;
 					yAcc      = - 2.0f;
@@ -212,7 +212,7 @@ void GegnerUfo::DoKI(void)
 		case GEGNER_SCHIESSEN:		// Mit Suchschuss auf den Spieler schiessen
 		{
 			// Nach unten fliegen
-			if (yPos > Value2 + 50) 
+			if (yPos > Value2 + 50)
 				yPos -= 5.0f SYNC;
 			else
 				yPos = Value2 + 50.0f;
@@ -230,7 +230,7 @@ void GegnerUfo::DoKI(void)
 
 			if (ShotDelay <= 0.0f)
 			{
-				pSoundManager->PlayWave(50, 128, 14000 + rand()%2000, SOUND_GOLEMSHOT);					
+				pSoundManager->PlayWave(50, 128, 14000 + rand()%2000, SOUND_GOLEMSHOT);
 				pProjectiles->PushProjectile(xPos + 20.0f, yPos + 40.0f, SUCHSCHUSS2);
 				pProjectiles->PushProjectile(xPos + 165.0f, yPos + 40.0f, SUCHSCHUSS2);
 				ShotDelay = 5.0f;
@@ -240,7 +240,7 @@ void GegnerUfo::DoKI(void)
 		case GEGNER_BOMBARDIEREN:		// Mit Laser auf den Spieler schiessen
 		{
 			// Nach oben fliegen
-			if (yPos > Value2 + 50) 
+			if (yPos > Value2 + 50)
 				yPos -= 5.0f SYNC;
 			else
 				yPos = Value2 + 50.0f;
@@ -327,7 +327,7 @@ void GegnerUfo::GegnerExplode(void)
 
 	// Splitter
 	for (int i=0; i<20; i++)
-	pPartikelSystem->PushPartikel(xPos + rand()%190, 
+	pPartikelSystem->PushPartikel(xPos + rand()%190,
 								  yPos + rand()%60 + 30, SPLITTER);
 
 	pPlayer[0]->Score += 4000;

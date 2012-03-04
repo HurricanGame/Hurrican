@@ -1,0 +1,77 @@
+*****************************************************************************
+**  
+**  Change log of the UniquE RAR File Library.
+**
+*****************************************************************************
+ * = public release versions
+
+
+
+ *Changes in 0.4.0  (16.06.2002) by JW & CS
+    - new license (unrarlib-license & GPL)
+    - easy samples for linux/unix and Win32
+
+  Changes in 0.4.0-beta (10.05.2002) by Christian Scheurer
+    - re-organization of the package and the samples
+
+ *Changes in 0.3.4a (21.9.2001) by JW & CS
+    - fclose()-bug fixed
+
+ *Changes in 0.3.4 (18.03.2001) by Christian Scheurer
+    - public release
+
+  Changes in 0.3.3a (18.03.2001) by Christian Scheurer
+    - Support for Memory-to-memory decompression added. Works fine with
+      VisualC
+
+ *Changes in 0.3.3 (12.01.2001) by JW&CS
+    - Making library ready for 4th release
+
+  Changes in 0.3.2c (25.11.2000) by Johannes Winkelmann
+    - Guess: something in UnpInitData()
+
+  Changes in 0.3.2b (24.11.2000) by Johannes Winkelmann
+    - SetCryptKeys() ported to i386 asm in AT & T syntax as well
+
+  Changes in 0.3.2a (23.11.2000) by Johannes Winkelmann 
+    - DecodeNumber() ported to i386 asm in AT & T syntax (compiles w/gcc)
+
+ *Changes in 0.3.2 (21.11.2000) by Christian Scheurer
+    - Listing of RAR archives support added: urarlib_list()
+    - memory bug in ExtrFile() fixed caused by debug code
+
+ *Changes in 0.3.1 (07.09.2000) by Christian Scheurer
+    - bug fixed in Unpack() (check for buffer overflow added)
+
+  Changes in 0.3.0b (04.09.2000) by Christian Scheurer
+    - removed some unused structures
+    - Bugs fixed: CRC32 is now computed correctly if '_DO_CRC32_CHECK' is
+      defined 
+    - function UnstoreFile() is completely rewritten
+    - memory management in case of failure improved
+
+  Changes in 0.3.0a (30.08.2000) by Christian Scheurer
+    - UnpInitData() rewritten in i386 asm
+    - stricomp() doesn't regard if a filename is 'bla/b.x' or 'bla\b.x'.
+
+ *Changes in 0.3 (24.08.2000) by JW&CS
+    - making library easier to use both with Win32, Linux and SunOS. 
+    - First public release
+
+  Changes in 0.2d (23.08.2000) by Christian Scheurer
+    - merged all files into one, merged linux and win32 version
+
+  Changes in 0.2c (21.08.2000) by Johannes Winkelmann (JW)
+    - first linux-beta port for gcc
+
+  Changes in 0.2b (20.08.2000) by Christian Scheurer
+    - Support for solid and normal RARs added: decompression speed 
+      increased by factors!
+
+  Changes in 0.1 (17.08.2000) by Christian Scheurer
+    - After many tests and versions, finally the first working release 
+      is out.
+
+  Changes in 0.0 (14.02.2000) by Christian Scheurer (CS)
+    - Begin of the URARFileLib project
+

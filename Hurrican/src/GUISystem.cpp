@@ -30,7 +30,7 @@ void CGUISystem::InitGUISystem(void)
 	m_BoxSize.left	 = 0;
 	m_BoxSize.right	 = 0;
 	m_BoxSize.bottom = 0;
-	
+
 	m_FadingAlpha = 0.0f;
 	m_FadeMode    = INVISIBLE;
 
@@ -64,16 +64,16 @@ void CGUISystem::RenderBox(void)
 
 	// Ecken
 	//
-	m_Rahmen.RenderSprite(m_xPos, 
+	m_Rahmen.RenderSprite(m_xPos,
 						  m_yPos, 0, color);
 
-	m_Rahmen.RenderSprite(m_xPos + m_BoxSize.right + TILESIZE,  
+	m_Rahmen.RenderSprite(m_xPos + m_BoxSize.right + TILESIZE,
 						  m_yPos, 2, color);
 
-	m_Rahmen.RenderSprite(m_xPos, 
+	m_Rahmen.RenderSprite(m_xPos,
 						  m_yPos + m_BoxSize.bottom + TILESIZE, 6, color);
 
-	m_Rahmen.RenderSprite(m_xPos + m_BoxSize.right  + TILESIZE, 
+	m_Rahmen.RenderSprite(m_xPos + m_BoxSize.right  + TILESIZE,
 						  m_yPos + m_BoxSize.bottom + TILESIZE, 8, color);
 
 	// Rand oben/unten
@@ -93,12 +93,12 @@ void CGUISystem::RenderBox(void)
 	// Hintergrund in der Mitte
 	for (int i = 0; i < (m_BoxSize.right) / TILESIZE; i++)
 	 for (int j = 0; j < (m_BoxSize.bottom) / TILESIZE; j++)
-		 m_Rahmen.RenderSprite(m_xPos + (i + 1) * TILESIZE, 
+		 m_Rahmen.RenderSprite(m_xPos + (i + 1) * TILESIZE,
 							   m_yPos + (j + 1) * TILESIZE, 4, color);
 
 	 // Text rendern
 	 //
-	 pDefaultFont->DrawText(m_xPos + TILESIZE, 
+	 pDefaultFont->DrawText(m_xPos + TILESIZE,
 							m_yPos + (TILESIZE * 2 + m_BoxSize.bottom - ((pDefaultFont->mYCharSize + 6) * (m_BoxLines + 1))) / 2 + 4, m_BoxText, color);
 }
 
@@ -107,7 +107,7 @@ void CGUISystem::RenderBox(void)
 //
 
 void CGUISystem::ShowBox(char Text[BOXTEXTLENGTH], int yoff, int xoff)
-{	
+{
 
 	int FontLength = 0;
 	m_BoxLines     = 0;
@@ -121,7 +121,7 @@ void CGUISystem::ShowBox(char Text[BOXTEXTLENGTH], int yoff, int xoff)
 
 		char buffer[1000];			// buffer, der jeweils die aktuelle Zeile beinhaltet
 		int  offset       = 0;		// Offset im übergebenen Text
-		int  offsetbox	  = 0;		// Offset im BoxText (der später angezeigt wird)		
+		int  offsetbox	  = 0;		// Offset im BoxText (der später angezeigt wird)
 		int  offsetbuffer = 0;		// Offset im Buffer
 
 		strcpy_s (buffer, 1, "");
@@ -135,7 +135,7 @@ void CGUISystem::ShowBox(char Text[BOXTEXTLENGTH], int yoff, int xoff)
 			buffer   [offsetbuffer + 1]	= '\0';
 			m_BoxText[offsetbox]        = Text[offset];
 			m_BoxText[offsetbox + 1]    = '\0';
-			
+
 
 			// Länge für eine Zeile überschritten und gerade ein Leerzeichen?
 			// Dann Zeilenumbruch einfügen
@@ -148,20 +148,20 @@ void CGUISystem::ShowBox(char Text[BOXTEXTLENGTH], int yoff, int xoff)
 
 				// Umbruch einfügen
 				offsetbox++;
-				m_BoxText[offsetbox] = '\n';				
+				m_BoxText[offsetbox] = '\n';
 
 				// Zeilenanzahl erhöhen
 				m_BoxLines++;
-			}			
+			}
 			else
 				// ein Zeichen im Buffer weiter
 				offsetbuffer++;
 
 			// ein Zeichen im Text und im BoxText weiter
-			offset++;		
+			offset++;
 			offsetbox++;
-		}				
-	}	
+		}
+	}
 	else
 		strcpy_s (m_BoxText, strlen(Text) + 1, Text);
 
@@ -256,5 +256,5 @@ void CGUISystem::Run(void)
 			m_FadingAlpha = 0.0f;
 			m_FadeMode    = INVISIBLE;
 		}
-	}	
+	}
 }

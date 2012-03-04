@@ -1,6 +1,6 @@
 // Datei : CDragonHack.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Klasse für den Drache, der im Hintergrund beim Turmlevel rumfliegt
 //
@@ -20,7 +20,7 @@
 
 CDragonHack::CDragonHack(void)
 {
-	m_GFX.LoadImage("drache_klein.png", 160, 160, 160, 40, 1, 4);
+	m_GFX.LoadImage("drache_klein.bmp", 160, 160, 160, 40, 1, 4);
 
 	m_AnimCount = 0.0f;
 	m_xPos = 0.0f;
@@ -37,7 +37,7 @@ CDragonHack::CDragonHack(void)
 // --------------------------------------------------------------------------------------
 
 CDragonHack::~CDragonHack(void)
-{	
+{
 
 }
 
@@ -52,14 +52,14 @@ void CDragonHack::Run(void)
 	if (m_AnimCount >= 4.0f)
 		m_AnimCount = 0.0f;
 
-	switch (m_State) 
+	switch (m_State)
 	{
 		// nicht zu sehen
 		case STATE_WAIT:
 		{
 			if (m_AppearCount > 0.0f)
 				m_AppearCount -= 1.0f SYNC;
-			else	
+			else
 			{
 				m_AppearCount = 20.0f;
 				m_State = STATE_FLY;

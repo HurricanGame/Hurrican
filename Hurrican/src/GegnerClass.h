@@ -1,6 +1,6 @@
 // Datei : Gegner.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Gegner für Hurrican
 //
@@ -15,7 +15,11 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_SDL)
+#include "SDL_port.h"
+#else
 #include <d3dx8.h>
+#endif
 #include "DX8Sprite.h"
 
 
@@ -27,10 +31,10 @@ class PlayerClass;
 
 class GegnerClass
 {
-	protected:											// protected wegen Ableitung		
-		int					AnimStart;					// Erste Animationsphase				
+	protected:											// protected wegen Ableitung
+		int					AnimStart;					// Erste Animationsphase
 		int					BlickRichtung;				// Links oder Rechts :)
-		bool				ChangeLight;				// Licht des Levels annehmen ?				
+		bool				ChangeLight;				// Licht des Levels annehmen ?
 		float				TurnCount;
 
 
@@ -38,8 +42,8 @@ class GegnerClass
 		bool				AlreadyDrawn;
 		int					HitSound;					// Metall = 0, Organisch = 1
 		int					LastAction;					// Letzter Angriff (damit Bosse nicht immer das Gleiche machen)
-		float				AnimSpeed, AnimCount;		// Anim-Geschwindigkeit und Counter		
-		int					AnimPhase, AnimEnde;		// Aktuelle Phase und Endphase		
+		float				AnimSpeed, AnimCount;		// Anim-Geschwindigkeit und Counter
+		int					AnimPhase, AnimEnde;		// Aktuelle Phase und Endphase
 		bool				Active;						// Gegner überhaupt aktiv ?
 		int					Handlung;					// Aktuelle "Handlung" des Gegners
 		bool				Destroyable;				// Ist er kaputtbar ? :)
@@ -56,7 +60,7 @@ class GegnerClass
 		int					Value1, Value2;				// Trigger-Werte
 		float				DamageTaken;				// Wie lange rot nach Treffer
 		float				Energy;						// Energie des Gegners
-		float				TimeToChange;				// pAim wechseln :)		
+		float				TimeToChange;				// pAim wechseln :)
 		int					blocku, blocko,
 							blockl, blockr;				// Block links rechts über und unter dem Gegner
 		PlayerClass			*pAim;						// Player to attack

@@ -1,6 +1,6 @@
 // Datei : Timer.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Timer Klasse
 // zum Auslesen/Berechnen der Framerate
@@ -40,21 +40,25 @@ TimerClass::TimerClass(void)
    MoveSpeed				= 10.0f;						// so moven wie bei 60 fps
    SpeedFaktor				= 1.0f;
 
+#if defined(PLATFORM_DIRECTX)
    // testen, ob ein PerformanceCounter exisitert
    if(QueryPerformanceFrequency((LARGE_INTEGER *) &Frequenz))
-   { 
+   {
 	   PerformanceCounter=true;
-	   QueryPerformanceCounter((LARGE_INTEGER *) &letzterFrame); 
+	   QueryPerformanceCounter((LARGE_INTEGER *) &letzterFrame);
 	   ZeitFaktor=1.0f/Frequenz;
 	   //Protokoll.WriteValue(Frequenz);
    }
    // wenn nicht, dann timeGetTime verwenden
    else
-   { 
+   {
+#endif
      PerformanceCounter=false;
 	 letzterFrame=timeGetTime();
 	 ZeitFaktor=0.001f;
-   } 
+#if defined(PLATFORM_DIRECTX)
+   }
+#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -72,12 +76,15 @@ TimerClass::~TimerClass(void)
 void  TimerClass::update(void)
 {
 	vergangeneFrames++;												// für die Schnittberechnung
-    if(PerformanceCounter)											// Counter vorhanden ?
+    if(PerformanceCounter) {     									// Counter vorhanden ?
+#if defined(PLATFORM_DIRECTX)
         QueryPerformanceCounter((LARGE_INTEGER *) &aktuelleZeit);   // dann beutzen
+#endif
+    }
     else															// wenn nicht, dann benutzen
-	aktuelleZeit=timeGetTime();										// wir timeGetTime
+        aktuelleZeit=timeGetTime();								    // wir timeGetTime
 
-    vergangeneZeit=(aktuelleZeit-letzterFrame)*ZeitFaktor;			// vergangene Zeit neu setzen
+    vergangeneZeit=(MAX(0,aktuelleZeit-letzterFrame))*ZeitFaktor;			// vergangene Zeit neu setzen
     letzterFrame=aktuelleZeit;										// letzten Frame aktualisieren
 
 	aktuelleFramerate=1/vergangeneZeit;								// Framerate berechnen
@@ -94,8 +101,9 @@ void  TimerClass::update(void)
 	SpeedFaktor = (float)(MoveSpeed * vergangeneZeit);
 
 	// begrenzen
-	if (SpeedFaktor > 1.0f)
-		SpeedFaktor = 1.0f;
+	#define MAX_FACTOR 2.0f
+	if (SpeedFaktor > MAX_FACTOR)
+		SpeedFaktor = MAX_FACTOR;
 }
 
 // --------------------------------------------------------------------------------------
@@ -110,10 +118,13 @@ void  TimerClass::wait(void)
 	// Diese Schleife wird solange durchlaufen, bis die gewünschte Framerate erreicht ist
 	do
 	{	// Zeit holen
-		if(PerformanceCounter)				// mit PerformanceCounter
-			QueryPerformanceCounter((LARGE_INTEGER *) &aktuelleZeit); 
+		if(PerformanceCounter) {			// mit PerformanceCounter
+#if defined(PLATFORM_DIRECTX)
+			QueryPerformanceCounter((LARGE_INTEGER *) &aktuelleZeit);
+#endif
+		}
 		else								// oder timeGetTime, je nach dem
-			aktuelleZeit=timeGetTime(); 
+			aktuelleZeit=timeGetTime();
 	}
 	while(maxFPS<(int)1/((aktuelleZeit-letzterFrame)*ZeitFaktor));
 }
@@ -126,10 +137,13 @@ void  TimerClass::wait(int Wert)
 {
 	do
 	{	// Zeit holen
-		if(PerformanceCounter)						// mit PerformanceCounter
-			QueryPerformanceCounter((LARGE_INTEGER *) &aktuelleZeit); 
+		if(PerformanceCounter) {						// mit PerformanceCounter
+#if defined(PLATFORM_DIRECTX)
+			QueryPerformanceCounter((LARGE_INTEGER *) &aktuelleZeit);
+#endif
+		}
 		else										// oder timeGetTime, je nach dem
-			aktuelleZeit=timeGetTime(); 
+			aktuelleZeit=timeGetTime();
 	}
 	while(Wert>(aktuelleZeit-letzterFrame)*ZeitFaktor*1000);
 }

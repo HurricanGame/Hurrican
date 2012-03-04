@@ -29,16 +29,16 @@ GegnerRollmops::GegnerRollmops(int Wert1, int Wert2, bool Light)
 	ShotCount 		= 0.0f;
 	Delay			= 0.0f;
 
-	Rollen.LoadImage("rollmops_rollen.png", 650, 260, 130, 130, 5, 2);
-	Aufklappen.LoadImage("rollmops_aufklappen.png", 390, 390, 130, 130, 3, 3);
-	Gun.LoadImage("rollmops_gun.png", 53, 52, 53, 52, 1, 1);
+	Rollen.LoadImage("rollmops_rollen.bmp", 650, 260, 130, 130, 5, 2);
+	Aufklappen.LoadImage("rollmops_aufklappen.bmp", 390, 390, 130, 130, 3, 3);
+	Gun.LoadImage("rollmops_gun.bmp", 53, 52, 53, 52, 1, 1);
 
 	for (int i = 0; i < NUM_KETTENGLIEDER; i++)
 	{
 		pGegner->PushGegner(0, 0, KETTENGLIED, 0, 0, false);
 		pKettenTeile[i] = (GegnerKettenglied*)(pGegner->pEnd);
 		pKettenTeile[i]->pParent = this;
-	}	
+	}
 }
 
 // --------------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ void GegnerRollmops::CalcGunWinkel(void)
 		xdiv = (pAim->xpos + 35) - (xPos + 50);
 		neww = -(float)atan(ydiv / xdiv) * 180.0f / PI;
 	}
-				
+
 
 	if (neww < -30.0f)  neww = -30.0f;
 	if (neww >  90.0f)  neww =  90.0f;
@@ -81,7 +81,7 @@ void GegnerRollmops::CalcGunWinkel(void)
 // --------------------------------------------------------------------------------------
 
 void GegnerRollmops::DoDraw(void)
-{	
+{
 	bool mirrored = false;
 
 	// Je nach Handlung andere Grafik rendern
@@ -89,14 +89,14 @@ void GegnerRollmops::DoDraw(void)
 	switch (Handlung)
 	{
 		case GEGNER_AUSSPUCKEN:
-		{			
+		{
 			float x, y;
 
 			x = ((xPos + 65 - 9) - HookX) / NUM_KETTENGLIEDER;
 			y = ((yPos + 65.0f) - HookY) / NUM_KETTENGLIEDER;
 
 			for (int i = 0; i < NUM_KETTENGLIEDER; i++)
-			{				
+			{
 				// Position setzen
 				pKettenTeile[i]->xPos = HookX + i * x;
 				pKettenTeile[i]->yPos = HookY + i * y;
@@ -129,7 +129,7 @@ void GegnerRollmops::DoDraw(void)
 		case GEGNER_STEHEN:
 		{
 			pGegnerGrafix[GegnerArt]->RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) + 16.0f,
-														 (float)(yPos-pTileEngine->YOffset), 
+														 (float)(yPos-pTileEngine->YOffset),
 														 120, 120,
 														 AnimPhase, 0xFFFFFFFF);
 		} break;
@@ -140,29 +140,29 @@ void GegnerRollmops::DoDraw(void)
 			mirrored = (xPos < Value1 + 320.0f);
 
 			Aufklappen.RenderSprite((float)(xPos-pTileEngine->XOffset),
-									(float)(yPos-pTileEngine->YOffset), 								 
+									(float)(yPos-pTileEngine->YOffset),
 									AnimPhase, 0xFFFFFFFF, mirrored);
 		} break;
 
 		case GEGNER_VERFOLGEN:
-		{	
+		{
 			mirrored = (xPos < Value1 + 320.0f);
 
 			float xoff = 0.0f;
 
-			if (mirrored) 
+			if (mirrored)
 				xoff = 65.0f;
-				
+
 			// Knarre rendern
 			Gun.RenderSpriteRotatedOffset((float)(xPos-pTileEngine->XOffset) + 6.0f + xoff,
 										  (float)(yPos-pTileEngine->YOffset) + 38.0f,
-										  GunWinkel, 
+										  GunWinkel,
 										  53, 20, 0xFFFFFFFF, mirrored);
 
-			// Mops ohne Knarre rendern			
+			// Mops ohne Knarre rendern
 			Aufklappen.RenderSprite((float)(xPos-pTileEngine->XOffset),
 									(float)(yPos-pTileEngine->YOffset),
-									8, 0xFFFFFFFF, mirrored);			
+									8, 0xFFFFFFFF, mirrored);
 		} break;
 
 	}
@@ -196,11 +196,11 @@ void GegnerRollmops::GunAusfahren(bool Auf)
 
 		AnimPhase = 0;
 		AnimStart = 0;
-		AnimEnde = 9;		
+		AnimEnde = 9;
 		HitsToTake = Energy;
 	}
 	else
-	{		
+	{
 		Handlung = GEGNER_SCHLIESSEN;
 
 		AnimPhase = 7;
@@ -208,7 +208,7 @@ void GegnerRollmops::GunAusfahren(bool Auf)
 		AnimEnde = 0;
 		Delay    = 0.0f;
 	}
-	
+
 	AnimCount = 0.0f;
 	AnimSpeed = 1.2f;
 }
@@ -264,7 +264,7 @@ void GegnerRollmops::RoundShot(bool single)
 	if (single)
 	{
 		WinkelUebergabe = WinkelCount;
-		pProjectiles->PushProjectile(xPos + 50 + (float)sin(WinkelCount / 180.0f * PI) * 40.0f, 
+		pProjectiles->PushProjectile(xPos + 50 + (float)sin(WinkelCount / 180.0f * PI) * 40.0f,
 									 yPos + 50 - (float)cos(WinkelCount / 180.0f * PI) * 40.0f, EISZAPFENSHOT);
 
 		WinkelCount += 30;
@@ -276,7 +276,7 @@ void GegnerRollmops::RoundShot(bool single)
 	for (WinkelCount = (float)(rand()%30); WinkelCount < 360.0f; WinkelCount += 30)
 	{
 		WinkelUebergabe = WinkelCount;
-		pProjectiles->PushProjectile(xPos + 50 + (float)sin(WinkelCount / 180.0f * PI) * 50.0f, 
+		pProjectiles->PushProjectile(xPos + 50 + (float)sin(WinkelCount / 180.0f * PI) * 50.0f,
 									 yPos + 50 - (float)cos(WinkelCount / 180.0f * PI) * 50.0f, EISZAPFENSHOT);
 	}
 
@@ -290,19 +290,19 @@ void GegnerRollmops::RoundShot(bool single)
 void GegnerRollmops::DoKI(void)
 {
 	// Energie anzeigen
-	if (Handlung != GEGNER_INIT && 
+	if (Handlung != GEGNER_INIT &&
 		Handlung != GEGNER_EXPLODIEREN)
 		pHUD->ShowBossHUD(4000, Energy);
 
 	// Levelausschnitt auf den Mops zentrieren, sobald dieser sichtbar wird
 	if (pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
 	{
-		pTileEngine->ScrollLevel((float)Value1, 
+		pTileEngine->ScrollLevel((float)Value1,
 								 (float)Value2, ZUSTAND_SCROLLTOLOCK);
 
 		// Mops aus Screen bringen
 		xPos = Value1 + 640.0f;
-		//yPos = Value2 + 100.0f;		
+		//yPos = Value2 + 100.0f;
 		pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
 	}
 
@@ -333,16 +333,16 @@ void GegnerRollmops::DoKI(void)
 				AnimEnde  = 19;
 				AnimSpeed = 0.25f;
 //				NeueAktion();
-				
+
 				// Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-				if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+				if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
 					pSoundManager->PlaySong(MUSIC_BOSS, false);
 			}
 		} break;
 
 		// Schneekugel hopst rein
 		case GEGNER_INIT:
-		{						
+		{
 			SimpleAnimation();
 
 			AnimSpeed += 0.02f SYNC;
@@ -351,7 +351,7 @@ void GegnerRollmops::DoKI(void)
 
 			// ausrollen
 			if (ySpeed == 0.0f)
-			{				
+			{
 				xAcc = 1.0f;
 				AnimSpeed += 0.02f SYNC;
 
@@ -364,14 +364,14 @@ void GegnerRollmops::DoKI(void)
 					HookY = yPos;
 					Schwung = 0.0f;
 					SchwungDir = 0.0f;
-					ShotDelay = 5.0f;	
+					ShotDelay = 5.0f;
 				}
 			}
 		} break;
 
 		// Haken nach oben schiessen
 		case GEGNER_AUSSPUCKEN:
-		{		
+		{
 			static bool shot = false;
 
 			if (AnimCount > 0.0f)
@@ -410,7 +410,7 @@ void GegnerRollmops::DoKI(void)
 					  SchwungDir < PI + 0.2f) ||
 
 				 	 (SchwungDir > 2*PI - 0.2f   &&
-				 	  SchwungDir < 2*PI + 0.2f)) && 
+				 	  SchwungDir < 2*PI + 0.2f)) &&
 					rand()%2 == 0)
 				{
 					shot = false;
@@ -441,7 +441,7 @@ void GegnerRollmops::DoKI(void)
 					pKettenTeile[i]->Handlung = GEGNER_SPECIAL;
 			}
 		} break;
-			
+
 
 		case GEGNER_LAUFEN_LINKS:
 		case GEGNER_LAUFEN_LINKS2:
@@ -498,8 +498,8 @@ void GegnerRollmops::DoKI(void)
 					xSpeed = 12.0f;
 					ySpeed = -60.0f;
 					yAcc = 15.0f;
-				}		
-				
+				}
+
 				if (ShotDelay <= 0.0f)
 				{
 					GunAusfahren(true);
@@ -553,10 +553,10 @@ void GegnerRollmops::DoKI(void)
 			if (AnimPhase < 0)
 				AnimPhase = AnimEnde;
 
-			// Richtung umdrehen?				
+			// Richtung umdrehen?
 			if (xSpeed < 0.0f)
 			{
-				Handlung = GEGNER_LAUFEN_LINKS;				
+				Handlung = GEGNER_LAUFEN_LINKS;
 				ShotDelay -= 1.0f;
 
 				// abspringen?
@@ -608,7 +608,7 @@ void GegnerRollmops::DoKI(void)
 		case GEGNER_LAUFEN :
 		{
 			Abhopsen(-0.4f);
-			SimpleAnimation();			
+			SimpleAnimation();
 		} break;
 
 		case GEGNER_WARTEN:
@@ -633,7 +633,7 @@ void GegnerRollmops::DoKI(void)
 			}
 		} break;
 
-		// 
+		//
 		case GEGNER_OEFFNEN :
 		case GEGNER_SCHLIESSEN :
 		{
@@ -667,11 +667,11 @@ void GegnerRollmops::DoKI(void)
 			}
 
 			if (fertig)
-			{				
+			{
 				AnimPhase = AnimEnde;
 
 				// schiessen?
-				if (Handlung == GEGNER_OEFFNEN) 
+				if (Handlung == GEGNER_OEFFNEN)
 				{
 					ShotCount = (float)(rand()%15) + 15;
 					Handlung = GEGNER_VERFOLGEN;
@@ -715,7 +715,7 @@ void GegnerRollmops::DoKI(void)
 		// Mit der Kanone zielen
 		case GEGNER_VERFOLGEN :
 		{
-			CalcGunWinkel();			
+			CalcGunWinkel();
 
 			// schiessen
 			ShotDelay -= 1.0f SYNC;
@@ -733,10 +733,10 @@ void GegnerRollmops::DoKI(void)
 					xoff = -70.0f;
 				}
 
-				pPartikelSystem->PushPartikel(xPos + xoff + 85 + (float)sin(WinkelUebergabe / 180.0f * PI) * 105.0f, 
+				pPartikelSystem->PushPartikel(xPos + xoff + 85 + (float)sin(WinkelUebergabe / 180.0f * PI) * 105.0f,
 											 yPos + 46 - (float)cos(WinkelUebergabe / 180.0f * PI) * 90.0f, SNOWFLUSH);
 
-				pProjectiles->PushProjectile(xPos + xoff + 90 + (float)sin(WinkelUebergabe / 180.0f * PI) * 105.0f, 
+				pProjectiles->PushProjectile(xPos + xoff + 90 + (float)sin(WinkelUebergabe / 180.0f * PI) * 105.0f,
 											 yPos + 46 - (float)cos(WinkelUebergabe / 180.0f * PI) * 90.0f, EISZAPFENSHOT);
 
 				ShotDelay = 3.0f;
@@ -749,7 +749,7 @@ void GegnerRollmops::DoKI(void)
 		} break;
 
 		case GEGNER_SPECIAL2:
-		{	
+		{
 			Abhopsen(-0.3f);
 
 			if (ySpeed == 0.0f)
@@ -769,12 +769,12 @@ void GegnerRollmops::DoKI(void)
 					RoundShot(false);
 					ShotCount = 4.0f;
 				}
-			}			
+			}
 		} break;
 
 		// hochspringen, kreiseln und in alle Richtungen schiessen
 		case GEGNER_SPECIAL3:
-		{	
+		{
 			Abhopsen(-0.3f);
 
 			if (ySpeed == 0.0f)
@@ -794,7 +794,7 @@ void GegnerRollmops::DoKI(void)
 					RoundShot(true);
 					ShotCount = 0.5f;
 				}
-			}			
+			}
 		} break;
 
 		case GEGNER_EXPLODIEREN:
@@ -815,7 +815,7 @@ void GegnerRollmops::DoKI(void)
 
 				AnimCount -= AnimSpeed;
 				AnimSpeed -= 0.01f;
-		
+
 				AnimPhase++;
 
 				if (AnimPhase > AnimEnde)
@@ -881,7 +881,7 @@ void GegnerRollmops::DoKI(void)
 // --------------------------------------------------------------------------------------
 
 void GegnerRollmops::GegnerExplode(void)
-{	
+{
 	pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION2);
 
 	int i;

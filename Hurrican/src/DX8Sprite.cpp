@@ -1,6 +1,6 @@
 // Datei : DX8Sprite.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // DX8 Sprite Klasse
 // zum laden und anzeigen von dx8 Surfaces und D3DSprites
@@ -15,14 +15,16 @@
 
 #include <stdio.h>
 #include "DX8Sprite.h"
+#if defined(PLATFORM_DIRECTX)
 #include <d3dx8.h>										// Für die Texturen
 #include <d3dx8math.h>									// Für D3DXVECTOR2
+#endif
 #include "DX8Graphics.h"
 #include "Gameplay.h"
 #include "Globals.h"
 #include "Logdatei.h"
 #include "Main.h"
-#include "Unrarlib.h"
+#include "unrarlib.h"
 
 extern bool					GameRunning;				// Läuft das Spiel noch ?
 
@@ -85,7 +87,12 @@ DirectGraphicsSurface::DirectGraphicsSurface(void)
 
 DirectGraphicsSurface::~DirectGraphicsSurface(void)
 {
+#if defined(PLATFORM_DIRECTX)
 	SafeRelease(itsSurface);
+#elif defined(PLATFORM_SDL)
+    delete_texture( itsSurface );
+    itsSurface = 0;
+#endif
 	Protokoll.WriteText("Surface freigeben		: erfolgreich !\n", false);
 }
 
@@ -94,10 +101,11 @@ DirectGraphicsSurface::~DirectGraphicsSurface(void)
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize)
-{	
+{
 	HRESULT hresult;
 	char	Temp[140];
 
+#if defined(PLATFORM_DIRECTX)
 	// Surface erstellen
 	hresult = lpD3DDevice->CreateImageSurface(xSize, ySize, D3DFormat, &itsSurface);
 
@@ -112,7 +120,7 @@ bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize
 	}
 
 	// Bild laden
-	hresult = D3DXLoadSurfaceFromFile(itsSurface, NULL, NULL, Filename, NULL, 
+	hresult = D3DXLoadSurfaceFromFile(itsSurface, NULL, NULL, Filename, NULL,
 									  D3DX_FILTER_NONE, 0, NULL);
 
 	// Fehler beim Laden ?
@@ -124,7 +132,11 @@ bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize
 		Protokoll.WriteText(Temp, true);
 		return false;
 	}
-	
+#elif defined(PLATFORM_SDL)
+    SDL_Rect dims;
+	itsSurface = loadTexture( Filename, dims, 0 );
+#endif
+
 	// Grösse setzen
 	itsRect.left   = 0;
 	itsRect.top    = 0;
@@ -137,6 +149,7 @@ bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize
 	strcat_s(Temp, strlen(TextArray [TEXT_LADEN_ERFOLGREICH]) + 1, TextArray [TEXT_LADEN_ERFOLGREICH]);
 	strcat_s(Temp, 3, "\n");
 	Protokoll.WriteText(Temp, false);
+
 	return true;
 }
 
@@ -156,7 +169,7 @@ bool DirectGraphicsSurface::SetRect(int left,  int top, int right, int bottom)
 // --------------------------------------------------------------------------------------
 // Ausschnitt holen
 // --------------------------------------------------------------------------------------
-		
+
 RECT DirectGraphicsSurface::GetRect(void)
 {
 	return itsRect;
@@ -166,12 +179,15 @@ RECT DirectGraphicsSurface::GetRect(void)
 // Bild auf Surface anzeigen
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_DIRECTX)
 bool DirectGraphicsSurface::DrawSurface(LPDIRECT3DSURFACE8 &Temp, int xPos, int yPos)
 {
 	POINT Dest = {(int)(xPos), (int)(yPos)};						// Zielkoordinaten
 	lpD3DDevice->CopyRects(itsSurface, &itsRect, 1, Temp, &Dest);	// anzeigen
+
 	return true;
 }
+#endif
 
 // --------------------------------------------------------------------------------------
 // DirectGraphicsSprite Funktionen
@@ -196,7 +212,12 @@ DirectGraphicsSprite::~DirectGraphicsSprite(void)
 
 	if(itsTexture != NULL)
 	{
+#if defined(PLATFORM_DIRECTX)
 		SafeRelease(itsTexture);
+#elif defined(PLATFORM_SDL)
+        delete_texture( itsTexture );
+        itsTexture = 0;
+#endif
 		itsTexture = NULL;
 		LoadedTextures--;
 //		Protokoll.WriteText("-> Sprite Textur erfolgreich freigegeben ! \n", false);
@@ -208,25 +229,33 @@ DirectGraphicsSprite::~DirectGraphicsSprite(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Laden des Bildes "Filename" 
+// Laden des Bildes "Filename"
 // xfs, yfs Grösse eines Frames
 // xfc, yfc Anzahl der Frames
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsSprite::LoadImage(char *Filename, int xs, int ys, int xfs, int yfs, 
+bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int xfs, int yfs,
 														 int xfc,  int yfc)
 {
-	if(GameRunning == false) 
+	if(GameRunning == false)
 		return false;
 
 	bool			fromrar;
 	HRESULT			hresult;
-	char			*pData; 
+	char			*pData;
 	char			Temp[256];
-	unsigned long	Size; 
+	unsigned long	Size;
+#if defined(PLATFORM_SDL)
+    SDL_Rect        dims;
+#endif
 
 	// zuerst eine evtl benutzte Textur freigeben
+#if defined(PLATFORM_DIRECTX)
 	SafeRelease(itsTexture);
+#elif defined(PLATFORM_SDL)
+    delete_texture( itsTexture );
+    itsTexture = 0;
+#endif
 
 	fromrar = false;
 
@@ -244,8 +273,9 @@ bool DirectGraphicsSprite::LoadImage(char *Filename, int xs, int ys, int xfs, in
 		goto loadfile;
 
 	// Auch nicht? Dann ist es hoffentlich im RAR file
+
 	if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
-	{		
+	{
 		sprintf_s(Temp, "\n-> Error loading %s from Archive !\n", Filename);
 		Protokoll.WriteText(Temp, true);
 		return false;
@@ -253,11 +283,13 @@ bool DirectGraphicsSprite::LoadImage(char *Filename, int xs, int ys, int xfs, in
 	else
 		fromrar = true;
 
+
 loadfile:
 
 	// normal von Platte laden?
 	if (fromrar == false)
 	{
+#if defined(PLATFORM_DIRECTX)
 		// Textur laden
 		hresult = D3DXCreateTextureFromFileEx(
 				  lpD3DDevice,
@@ -266,36 +298,44 @@ loadfile:
 				  1,                          // Nur eine Version der Textur
 				  0,                          // Immer 0 setzen
 				  D3DFMT_UNKNOWN,			  // Format aus der Datei lesen
-				  D3DPOOL_MANAGED,            // DX bestimmt wo die Textur gespeichert wird 
+				  D3DPOOL_MANAGED,            // DX bestimmt wo die Textur gespeichert wird
 				  D3DX_FILTER_NONE,			  // Keine Filter verwenden
 				  D3DX_FILTER_NONE,
 				  0xFFFF00FF,                 // Colorkeyfarbe (Lila)
 				  NULL,						  // Keine Image Info
 				  NULL,						  // Keine Palette angeben
 				  &itsTexture);
+
+#elif defined(PLATFORM_SDL)
+        itsTexture = loadTexture( Temp, dims, 0 );
+#endif
 	}
 	else
 	{
+#if defined(PLATFORM_DIRECTX)
 		// Textur aus Speicher erzeugen
 		hresult = D3DXCreateTextureFromFileInMemoryEx(
 				  lpD3DDevice,
 				  (LPVOID)pData,
-				  Size, 
+				  Size,
 				  NULL, NULL,				  // x und y Grösse des Sprites (aus Datei übernehmen)
 				  1,                          // Nur eine Version der Textur
 				  0,                          // Immer 0 setzen
 				  D3DFMT_UNKNOWN,			  // Format aus der Datei lesen
-				  D3DPOOL_MANAGED,            // DX bestimmt wo die Textur gespeichert wird 
+				  D3DPOOL_MANAGED,            // DX bestimmt wo die Textur gespeichert wird
 				  D3DX_FILTER_NONE,			  // Keine Filter verwenden
 				  D3DX_FILTER_NONE,
 				  0xFFFF00FF,                 // Colorkeyfarbe (Lila)
 				  NULL,						  // Keine Image Info
 				  NULL,						  // Keine Palette angeben
 				  &itsTexture);
-
+#elif defined(PLATFORM_SDL)
+        itsTexture = loadTexture( pData, dims, Size );
+#endif
 		free(pData);
 	}
 
+#if defined(PLATFORM_DIRECTX)
 	// Fehler beim Laden ?
 	if(hresult != D3D_OK)
 	{
@@ -305,14 +345,20 @@ loadfile:
 		Protokoll.WriteText(Temp, true);
 		return false;
 	}
-	
+
 	// Grösse der Textur anpassen
 	D3DSURFACE_DESC desc;
-	itsTexture->GetLevelDesc(0,&desc);	
+	itsTexture->GetLevelDesc(0,&desc);
+#endif
 
 	// Grösse setzen
+#if defined(PLATFORM_DIRECTX)
 	itsXSize		= (float)desc.Width;
 	itsYSize		= (float)desc.Height;
+#elif defined(PLATFORM_SDL)
+	itsXSize		= (float)dims.w;
+	itsYSize		= (float)dims.h;
+#endif
 	itsXFrameCount	= xfc;
 	itsYFrameCount	= yfc;
 	itsXFrameSize	= xfs;
@@ -335,7 +381,7 @@ loadfile:
 
 	// Bild korrekt geladen
 	sprintf_s(Temp, "%s %s %s %s", TextArray [TEXT_LADE_BITMAP], Filename, TextArray [TEXT_LADEN_ERFOLGREICH], "\n");
-	Protokoll.WriteText(Temp, false);			
+	Protokoll.WriteText(Temp, false);
 
 	DisplayLoadInfo(Temp);
 
@@ -412,11 +458,15 @@ bool DirectGraphicsSprite::RenderTexture(float x, float y, float w, float h, flo
 	TriangleStrip[3].tu		= tr;
 	TriangleStrip[3].tv		= tu;
 
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTexture (0, itsTexture);							// Textur setzen
+#elif defined(PLATFORM_SDL)
+    DirectGraphics.SetTexture(  itsTexture );
+#endif
 
-    // Sprite zeichnen	
-	DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);	
-    
+    // Sprite zeichnen
+	DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
+
 	return true;
 }
 
@@ -470,15 +520,19 @@ bool DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
 	TriangleStrip[3].tu		= tr;
 	TriangleStrip[3].tv		= tu;
 
+#if defined(PLATFORM_DIRECTX)
 	//if (ActualTexture != (int)itsTexture)
 	//{
 		lpD3DDevice->SetTexture (0, itsTexture);							// Textur setzen
 	//	ActualTexture = (int)itsTexture;
 	//}
+#elif defined(PLATFORM_SDL)
+    DirectGraphics.SetTexture( itsTexture );
+#endif
 
-    // Sprite zeichnen	
-	DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);	
-    
+    // Sprite zeichnen
+	DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
+
 	return true;
 }
 
@@ -542,10 +596,14 @@ bool DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR c1,
 	TriangleStrip[3].tu		= tr;
 	TriangleStrip[3].tv		= tu;
 
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTexture (0, itsTexture);							// Textur setzen
+#elif defined(PLATFORM_SDL)
+    DirectGraphics.SetTexture(  itsTexture );
+#endif
 
-    // Sprite zeichnen	
-	DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);		
+    // Sprite zeichnen
+	DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
 
 	return true;
 }
@@ -559,7 +617,7 @@ bool DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
 	float tl, tr, to, tu;					// Textur Koordinaten
 
 	x = float (int (x));
-	y = float (int (y));	
+	y = float (int (y));
 
 	if (v == false)
 	{
@@ -569,7 +627,7 @@ bool DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
 	else
 	{
 		u = y-0.5f;									// Unten
-		o = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Oben		
+		o = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Oben
 	}
 
 	if (h == false)
@@ -613,11 +671,15 @@ bool DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
 	TriangleStrip[3].tu		= tr;
 	TriangleStrip[3].tv		= tu;
 
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTexture (0, itsTexture);							// Textur setzen
+#elif defined(PLATFORM_SDL)
+    DirectGraphics.SetTexture(  itsTexture );
+#endif
 
     // Sprite zeichnen
 	DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
-    
+
 	return true;
 }
 
@@ -673,11 +735,15 @@ bool DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
 	TriangleStrip[3].tu		= tr;
 	TriangleStrip[3].tv		= tu;
 
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTexture (0, itsTexture);							// Textur setzen
+#elif defined(PLATFORM_SDL)
+    DirectGraphics.SetTexture(  itsTexture );
+#endif
 
     // Sprite zeichnen
 	DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
-    
+
 	return true;
 }
 
@@ -691,8 +757,8 @@ bool DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR Col
 	Anim %= 255;
 	itsRect = itsPreCalcedRects [Anim];
 
-	// Und Sprite rendern	
-	RenderSprite(x, y, Color);	
+	// Und Sprite rendern
+	RenderSprite(x, y, Color);
 
 	return true;
 }
@@ -720,7 +786,7 @@ bool DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR Col
 // Sprite skaliert zeichnen mit aktuellem Surfaceausschnitt (mit textur Filter)
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int height, D3DCOLOR col)										
+bool DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int height, D3DCOLOR col)
 {
 	float l,  r,  o,  u;					// Vertice Koordinaten
 	float tl, tr, to, tu;					// Textur Koordinaten
@@ -763,7 +829,11 @@ bool DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int he
 	TriangleStrip[3].tu		= tr;
 	TriangleStrip[3].tv		= tu;
 
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTexture (0, itsTexture);							// Textur setzen
+#elif defined(PLATFORM_SDL)
+    DirectGraphics.SetTexture(  itsTexture );
+#endif
 
 	DirectGraphics.SetFilterMode (true);
 
@@ -779,7 +849,7 @@ bool DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int he
 // Sprite skaliert zeichnen mit angegebener Animationsphase (mit textur Filter)
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int height, int Anim, D3DCOLOR col)										
+bool DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int height, int Anim, D3DCOLOR col)
 {
 	float l,  r,  o,  u;					// Vertice Koordinaten
 	float tl, tr, to, tu;					// Textur Koordinaten
@@ -822,7 +892,11 @@ bool DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int he
 	TriangleStrip[3].tu		= tr;
 	TriangleStrip[3].tv		= tu;
 
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTexture (0, itsTexture);							// Textur setzen
+#elif defined(PLATFORM_SDL)
+    DirectGraphics.SetTexture(  itsTexture );
+#endif
 
 	DirectGraphics.SetFilterMode (true);
 
@@ -881,7 +955,11 @@ bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
 	TriangleStrip[3].tu		= tr;
 	TriangleStrip[3].tv		= tu;
 
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTexture (0, itsTexture);							// Textur setzen
+#elif defined(PLATFORM_SDL)
+    DirectGraphics.SetTexture(  itsTexture );
+#endif
 
 //----- Sprite rotieren
 
@@ -905,7 +983,14 @@ bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans);		// Verschieben
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRot);		// rotieren
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurück verschieben
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    D3DXMATRIXA16 matModelView;
+    matrixmode( GL_MODELVIEW );
+    matModelView = matWorld * g_matView;
+    glLoadMatrixf( matModelView.data() );
+#endif
 
 	DirectGraphics.SetFilterMode (true);
 
@@ -916,7 +1001,12 @@ bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
 
 	// Normale Projektions-Matrix wieder herstellen
 	D3DXMatrixRotationZ (&matWorld, 0.0f);
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    matModelView = matWorld * g_matView;
+    glLoadMatrixf( matModelView.data() );
+#endif
 
 	return true;
 }
@@ -932,8 +1022,8 @@ bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
 	itsRect = itsPreCalcedRects [Anim];
 
 	// Und Sprite rendern
-	RenderSpriteScaledRotated (x, y, 
-							   float (itsRect.right  - itsRect.left), 
+	RenderSpriteScaledRotated (x, y,
+							   float (itsRect.right  - itsRect.left),
 							   float (itsRect.bottom - itsRect.top), Winkel, Color);
 
 	return true;
@@ -967,7 +1057,7 @@ bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
 	else
 	{
 		r = x+0.5f;									// Links
-		l = x+(itsRect.right-itsRect.left-1)-0.5f;	// Rechts		
+		l = x+(itsRect.right-itsRect.left-1)-0.5f;	// Rechts
 	}
 
 	o = y-0.5f;									// Oben
@@ -1001,7 +1091,11 @@ bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
 	TriangleStrip[3].tu		= tr;
 	TriangleStrip[3].tv		= tu;
 
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTexture (0, itsTexture);							// Textur setzen
+#elif defined(PLATFORM_SDL)
+    DirectGraphics.SetTexture(  itsTexture );
+#endif
 
 //----- Sprite rotieren
 
@@ -1025,7 +1119,14 @@ bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans);		// Verschieben
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRot);		// rotieren
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurück verschieben
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    D3DXMATRIXA16 matModelView;
+    matrixmode( GL_MODELVIEW );
+    matModelView = matWorld * g_matView;
+    glLoadMatrixf( matModelView.data() );
+#endif
 
 	DirectGraphics.SetFilterMode (true);
 
@@ -1036,7 +1137,12 @@ bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
 
 	// Normale Projektions-Matrix wieder herstellen
 	D3DXMatrixRotationZ (&matWorld, 0.0f);
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    matModelView = matWorld * g_matView;
+    glLoadMatrixf( matModelView.data() );
+#endif
 
 	return true;
 }
@@ -1059,7 +1165,7 @@ bool DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
 	{
 		float t = l;
 		l = r;
-		r = t;	
+		r = t;
 
 		offx = -offx;
 		Winkel = 360.0f - Winkel;
@@ -1098,7 +1204,12 @@ bool DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
 	TriangleStrip[3].tu		= tr;
 	TriangleStrip[3].tv		= tu;
 
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTexture (0, itsTexture);							// Textur setzen
+#elif defined(PLATFORM_SDL)
+    DirectGraphics.SetTexture(  itsTexture );
+#endif
+
 
 //----- Sprite rotieren
 
@@ -1122,7 +1233,14 @@ bool DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans);		// Verschieben
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRot);		// rotieren
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurück verschieben
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    D3DXMATRIXA16 matModelView;
+    matrixmode( GL_MODELVIEW );
+    matModelView = matWorld * g_matView;
+    glLoadMatrixf( matModelView.data() );
+#endif
 
 	DirectGraphics.SetFilterMode (true);
 
@@ -1133,7 +1251,12 @@ bool DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
 
 	// Normale Projektions-Matrix wieder herstellen
 	D3DXMatrixRotationZ (&matWorld, 0.0f);
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    matModelView = matWorld * g_matView;
+    glLoadMatrixf( matModelView.data() );
+#endif
 
 	return true;
 }
@@ -1142,7 +1265,7 @@ bool DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
 // Sprite mit übergebenem Winkel rotiert darstellen in beliebiger Grösse
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y, 
+bool DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
 													 float width, float height,
 													 float Winkel, D3DCOLOR Color)
 {
@@ -1187,7 +1310,11 @@ bool DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
 	TriangleStrip[3].tu		= tr;
 	TriangleStrip[3].tv		= tu;
 
-	lpD3DDevice->SetTexture (0, itsTexture);							// Textur setzen
+#if defined(PLATFORM_DIRECTX)
+	lpD3DDevice->SetTexture (0, itsTexture);								// Textur setzen
+#elif defined(PLATFORM_SDL)
+    DirectGraphics.SetTexture(  itsTexture );
+#endif
 
 //----- Sprite rotieren
 
@@ -1209,13 +1336,20 @@ bool DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
 									 y+(height)/2, 0.0f);
 
 	// Verschieben und rotieren
-	D3DXMatrixMultiply	 (&matWorld, &matTrans, &matRot);	
+	D3DXMatrixMultiply	 (&matWorld, &matTrans, &matRot);
 
 	// und wieder zurück verschieben
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    D3DXMATRIXA16 matModelView;
+    matrixmode( GL_MODELVIEW );
+    matModelView = matWorld * g_matView;
+    glLoadMatrixf( matModelView.data() );
+#endif
 
-	DirectGraphics.SetFilterMode (true);	
+	DirectGraphics.SetFilterMode (true);
 
     // Sprite zeichnen
     DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
@@ -1224,7 +1358,12 @@ bool DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
 
 	// Normale Projektions-Matrix wieder herstellen
 	D3DXMatrixRotationZ (&matWorld, 0.0f);
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    matModelView = matWorld * g_matView;
+    glLoadMatrixf( matModelView.data() );
+#endif
 
 	return true;
 }
@@ -1277,10 +1416,10 @@ void RenderRect(float x, float y, float width, float height, D3DCOLOR Color)
 	RenderRect4(x, y , width, height, Color, Color, Color, Color);
 }
 
-void RenderRect4(float x, float y, float width, float height, 
-				 D3DCOLOR c1, 
-				 D3DCOLOR c2, 
-				 D3DCOLOR c3, 
+void RenderRect4(float x, float y, float width, float height,
+				 D3DCOLOR c1,
+				 D3DCOLOR c2,
+				 D3DCOLOR c3,
 				 D3DCOLOR c4)
 {
 	float l,  r,  o,  u;					// Vertice Koordinaten
@@ -1313,10 +1452,14 @@ void RenderRect4(float x, float y, float width, float height,
 	TriangleStrip[3].x		= r;		// Rechts unten
 	TriangleStrip[3].y		= u;
 
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTexture (0, NULL);								// Textur setzen
+#elif defined(PLATFORM_SDL)
+    DirectGraphics.SetTexture( 0 );
+#endif
 
     // Rechteck zeichnen
-    DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
 }
 
 // --------------------------------------------------------------------------------------
@@ -1334,10 +1477,18 @@ void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2,	D3DCOLOR Color)
 	TriangleStrip[1].x		= p2.x;		// p2
 	TriangleStrip[1].y		= p2.y;;
 
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTexture (0, NULL);								// Textur setzen
+#elif defined(PLATFORM_SDL)
+    DirectGraphics.SetTexture( 0 );
+#endif
 
     // Linie zeichnen
+#if defined(PLATFORM_DIRECTX)
     lpD3DDevice->DrawPrimitiveUP(D3DPT_LINELIST,1,&TriangleStrip[0],sizeof(VERTEX2D));
+#elif defined(PLATFORM_SDL)
+    DirectGraphics.RendertoBuffer (D3DPT_LINELIST, 1, &TriangleStrip[0]);
+#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -1357,10 +1508,18 @@ void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2,	D3DCOLOR Color1, D3DCOLOR Color2
 	TriangleStrip[1].x		= p2.x;		// p2
 	TriangleStrip[1].y		= p2.y;;
 
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTexture (0, NULL);								// Textur setzen
+#elif defined(PLATFORM_SDL)
+    DirectGraphics.SetTexture(  0 );
+#endif
 
     // Linie zeichnen
+#if defined(PLATFORM_DIRECTX)
     lpD3DDevice->DrawPrimitiveUP(D3DPT_LINELIST,1,&TriangleStrip[0],sizeof(VERTEX2D));
+#elif defined(PLATFORM_SDL)
+    DirectGraphics.RendertoBuffer (D3DPT_LINELIST, 1, &TriangleStrip[0]);
+#endif
 }
 
 // --------------------------------------------------------------------------------------

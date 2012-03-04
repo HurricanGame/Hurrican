@@ -37,7 +37,7 @@ void GegnerFadeMusic::DoKI(void)
 		if (Value1 == 0)
 		{
 		// Spielt die Levelmusik überhaupt oder fadet nicht (oder ein) ?
-		//if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_STAGEMUSIC]->SongData))// &&
+		//if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_STAGEMUSIC]->SongData))// &&
 			//pSoundManager->its_Songs[MUSIC_STAGEMUSIC]->FadingVolume >= 0.0f)
 			pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -1.0f, 0, true);
 		}
@@ -68,7 +68,7 @@ void GegnerFadeMusic::DoKI(void)
 		}
 	}
 
-	if (DebugMode) 
+	if (DebugMode)
 		RenderCircle((float)(xPos + 20 - pTileEngine->XOffset),
 					 (float)(yPos + 20 - pTileEngine->YOffset), 150, 0xFFFFFFFF);
 

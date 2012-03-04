@@ -1,6 +1,6 @@
 // Datei : DX8Input.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // DirectInput Klasse
 // zum Erfassen von Eingaben durch Tastaur, Maus und Joystick/Joypad
@@ -23,12 +23,17 @@
 // Variablen
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_DIRECTX)
 char					TastaturPuffer[256];	// Tastaturpuffer für Keyboardabfrage
+#elif defined(PLATFORM_SDL)
+char*                   TastaturPuffer;
+#endif
 
 // --------------------------------------------------------------------------------------
 // Joystick mit ForceFeedback Enumeration Callback-Funktion
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_DIRECTX)
 bool CALLBACK EnumForceFeedbackDevices(LPDIDEVICEINSTANCE lpddi, LPVOID pv)
 {
 	GUID *pguidDevice = NULL;
@@ -38,10 +43,10 @@ bool CALLBACK EnumForceFeedbackDevices(LPDIDEVICEINSTANCE lpddi, LPVOID pv)
 		pguidDevice = (GUID*)pv;
 		*pguidDevice = lpddi->guidInstance;
 	}
-	
+
 	DirectInput.Joysticks[DirectInput.JoysticksFound].CanForceFeedback = true;
 	DirectInput.Joysticks[DirectInput.JoysticksFound].guidJoystickDevice = DirectInput.guidJoystickDevice;
-	strcpy_s(DirectInput.Joysticks[DirectInput.JoysticksFound].JoystickName, strlen((char*)lpddi->tszProductName) + 1, (char*)lpddi->tszProductName);	
+	strcpy_s(DirectInput.Joysticks[DirectInput.JoysticksFound].JoystickName, strlen((char*)lpddi->tszProductName) + 1, (char*)lpddi->tszProductName);
 
 	// Counter erhöhen
 	DirectInput.JoysticksFound++;
@@ -52,11 +57,18 @@ bool CALLBACK EnumForceFeedbackDevices(LPDIDEVICEINSTANCE lpddi, LPVOID pv)
 	else
 		return DIENUM_STOP;
 }
+#elif defined(PLATFORM_SDL)
+bool EnumForceFeedbackDevices(int lpddi, LPVOID pv)
+{
+    return true;
+}
+#endif
 
 // --------------------------------------------------------------------------------------
 // Joystick Enumeration Callback-Funktion
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_DIRECTX)
 bool CALLBACK EnumJoystickDevices(LPDIDEVICEINSTANCE lpddi, LPVOID pv)
 {
 	GUID *pguidDevice = NULL;
@@ -66,9 +78,9 @@ bool CALLBACK EnumJoystickDevices(LPDIDEVICEINSTANCE lpddi, LPVOID pv)
 		pguidDevice = (GUID*)pv;
 		*pguidDevice = lpddi->guidInstance;
 	}
-	
+
 	DirectInput.Joysticks[DirectInput.JoysticksFound].CanForceFeedback = false;
-	strcpy_s(DirectInput.Joysticks[DirectInput.JoysticksFound].JoystickName, strlen((char*)lpddi->tszProductName) + 1, (char*)lpddi->tszProductName);	
+	strcpy_s(DirectInput.Joysticks[DirectInput.JoysticksFound].JoystickName, strlen((char*)lpddi->tszProductName) + 1, (char*)lpddi->tszProductName);
 
 	// Counter erhöhen
 	DirectInput.JoysticksFound++;
@@ -79,6 +91,12 @@ bool CALLBACK EnumJoystickDevices(LPDIDEVICEINSTANCE lpddi, LPVOID pv)
 	else
 		return DIENUM_STOP;
 }
+#elif defined(PLATFORM_SDL)
+bool EnumJoystickDevices(int lpddi, LPVOID pv)
+{
+    return true;
+}
+#endif
 
 // --------------------------------------------------------------------------------------
 // Klassenfunktionen
@@ -94,9 +112,12 @@ bool CALLBACK EnumJoystickDevices(LPDIDEVICEINSTANCE lpddi, LPVOID pv)
 
 DirectInputClass::DirectInputClass(void)
 {
+#if defined(PLATFORM_DIRECTX)
 	lpDI		 = NULL;
 	lpDIKeyboard = NULL;
 	lpDIMaus	 = NULL;
+    NumberOfKeys = 256;
+#endif
 
 	// Zu Beginn alle Eingabegeräte zurücksetzen
 	MausX		 = 0;
@@ -121,6 +142,7 @@ DirectInputClass::~DirectInputClass(void)
 // Keyboard und Maus initialisieren und Joystick, falls vorhanden
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_DIRECTX)
 bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 {
 	HRESULT hresult;
@@ -128,8 +150,8 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 	Protokoll.WriteText("\n--> DirectInput8 init <--\n", false);
 	Protokoll.WriteText(  "-------------------------\n\n", false);
 
-	hresult = DirectInput8Create(hinst, DIRECTINPUT_VERSION, 
-                                 IID_IDirectInput8, (LPVOID*)&lpDI, NULL); 
+	hresult = DirectInput8Create(hinst, DIRECTINPUT_VERSION,
+                                 IID_IDirectInput8, (LPVOID*)&lpDI, NULL);
 
 	// DirectInput Haupt-Device erstellen
 	if(hresult != DI_OK)
@@ -173,7 +195,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 	Protokoll.WriteText("Keyboard : SetCooperativeLevel	successfull!\n", false);
 
 	// Keyboard akquirieren
-	if (lpDIKeyboard) 
+	if (lpDIKeyboard)
 	{
 		hresult = lpDIKeyboard->Acquire();
 		if(hresult != DI_OK)
@@ -183,19 +205,19 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 		}
 		Protokoll.WriteText("Keyboard : Acquire	successfull!\n", false);
 	}
-  
+
 	// angeschlossenen Joystick mit ForceFeedback enumerieren
-	hresult = lpDI->EnumDevices(DI8DEVCLASS_GAMECTRL, 
-							   (LPDIENUMDEVICESCALLBACK)EnumForceFeedbackDevices, 
+	hresult = lpDI->EnumDevices(DI8DEVCLASS_GAMECTRL,
+							   (LPDIENUMDEVICESCALLBACK)EnumForceFeedbackDevices,
                                &guidJoystickDevice, 0/*DIEDFL_ATTACHEDONLY*/);
-	if(hresult != DI_OK) 
-	{ 
-		hresult = lpDI->EnumDevices(DI8DEVCLASS_GAMECTRL, 
-							   (LPDIENUMDEVICESCALLBACK)EnumJoystickDevices, 
+	if(hresult != DI_OK)
+	{
+		hresult = lpDI->EnumDevices(DI8DEVCLASS_GAMECTRL,
+							   (LPDIENUMDEVICESCALLBACK)EnumJoystickDevices,
                                &guidJoystickDevice, 0/*DIEDFL_ATTACHEDONLY*/);
 	}
 	else
-		Protokoll.WriteText("Joystick : EnumDevices successfull!\n", false);	
+		Protokoll.WriteText("Joystick : EnumDevices successfull!\n", false);
 
 	// Gefundene Joysticks initialisieren
 	if (JoysticksFound == 0)
@@ -206,7 +228,6 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 		char Buf[255];
 
 		if(Joysticks[i].Init(hwnd, lpDI) == false)
-		
 		{
 			strcpy_s(Buf, strlen("Error initialising Joystick ") + 1, "Error initialising Joystick ");
 			strcat_s(Buf, strlen(Joysticks[i].JoystickName) + 1, Joysticks[i].JoystickName);
@@ -234,7 +255,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 				DWORD				 dwAxes[2] = {DIJOFS_X, DIJOFS_Y};
 				LONG				 lDirection[2] = {180*DI_DEGREES,0};
 
-				diConstantForce.lMagnitude = DI_FFNOMINALMAX;			
+				diConstantForce.lMagnitude = DI_FFNOMINALMAX;
 
 				diEffect.dwSize = sizeof(DIEFFECT);
 				diEffect.dwFlags = DIEFF_OBJECTOFFSETS | DIEFF_CARTESIAN;
@@ -284,7 +305,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 					Joysticks[i].CanForceFeedback = false;
 				}
 
-				// Blitz Effekt			
+				// Blitz Effekt
 				diEffect.dwTriggerRepeatInterval = INFINITE;
 				diEffect.dwGain = DI_FFNOMINALMAX;
 				diEffect.dwDuration = DI_SECONDS | INFINITE;
@@ -302,10 +323,33 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 			}
 		}
 	}
-	
+
 	Protokoll.WriteText("\n-> DirectInput8 init successfull!\n\n", false);
 	return true;
 }
+#elif defined(PLATFORM_SDL)
+bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
+{
+    TastaturPuffer = (char*)SDL_GetKeyState( &NumberOfKeys );
+
+    JoysticksFound = SDL_NumJoysticks();
+
+    for (int i = 0; i < JoysticksFound; i++)
+	{
+        if(Joysticks[i].Init(i) == false)
+        {
+			Protokoll.WriteText ("Error opening joystick", false);
+        }
+		else
+		{
+			JoystickFound = true;
+            Joysticks[i].CanForceFeedback = false;
+		}
+	}
+
+    return true;
+}
+#endif
 
 // --------------------------------------------------------------------------------------
 // DirectInput beenden
@@ -313,6 +357,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 
 void DirectInputClass::Exit(void)
 {
+#if defined(PLATFORM_DIRECTX)
 	if(lpDIKeyboard != NULL)			// Keyboard freigeben
 	{
 		lpDIKeyboard->Unacquire();
@@ -336,9 +381,18 @@ void DirectInputClass::Exit(void)
 			Joysticks[i].lpDIJoystick = NULL;
 		}
 	}
-	
+
 	SafeRelease(lpDI);					// DirectInput Hauptobjekt freigeben
 	Protokoll.WriteText("-> DirectInput8 erfolgreich beendet !\n", false);
+#elif defined(PLATFORM_SDL)
+    for (int i = 0; i < JoysticksFound; i++)
+	{
+        if (SDL_JoystickOpened(i)) {
+            SDL_JoystickClose(Joysticks[i].lpDIJoystick);
+            Joysticks[i].lpDIJoystick = NULL;
+        }
+	}
+#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -347,20 +401,23 @@ void DirectInputClass::Exit(void)
 
 bool DirectInputClass::UpdateTastatur(void)
 {
+#if defined(PLATFORM_DIRECTX)
 	HRESULT hresult;
 
-	hresult = lpDIKeyboard->GetDeviceState(sizeof(TastaturPuffer), (LPVOID)&TastaturPuffer); 
+	hresult = lpDIKeyboard->GetDeviceState(sizeof(TastaturPuffer), (LPVOID)&TastaturPuffer);
 
 	if(hresult == DIERR_INPUTLOST)				// Keyboard verloren gegangen ?
 	{
 		if(lpDIKeyboard)						// Dann nochmal versuchen
 		{
 			lpDIKeyboard->Acquire();
-			hresult = lpDIKeyboard->GetDeviceState(sizeof(TastaturPuffer), 
-												   (LPVOID)&TastaturPuffer); 
+			hresult = lpDIKeyboard->GetDeviceState(sizeof(TastaturPuffer),
+												   (LPVOID)&TastaturPuffer);
 		}
 	}
-
+#elif defined(PLATFORM_SDL)
+    SDL_PumpEvents();
+#endif
 	return true;
 }
 
@@ -372,6 +429,7 @@ bool DirectInputClass::UpdateTastatur(void)
 
 bool DirectInputClass::UpdateMaus(bool gepuffert)
 {
+#if defined(PLATFORM_DIRECTX)
 	return true;
 
    HRESULT      hresult;
@@ -379,55 +437,55 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
    bool         fertig = false;
 
 	// Gepufferte Abfrage : Langsam, bearbeitet aber ALLE Maus-Aktionen
-	if (gepuffert == true) 
+	if (gepuffert == true)
 	{
-		while (!fertig) 
+		while (!fertig)
 		{
 			DIDEVICEOBJECTDATA od;  // Speichert Mauszustand
 			DWORD dwElemente = 1;   // Elemente die abgefragt werden sollen
 
 			hresult = lpDIMaus->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), &od, &dwElemente, 0);
-			if (hresult == DIERR_INPUTLOST) 
+			if (hresult == DIERR_INPUTLOST)
 			{
 				hresult = lpDIMaus->Acquire();
-				if (hresult != DI_OK) 
+				if (hresult != DI_OK)
 				{
 					Protokoll.WriteText("\n-> Maus : Re-Acquire Fehler !\n", false);
 					return false;
 				}
-				else 
+				else
 				{
-					hresult = lpDIMaus->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), 
+					hresult = lpDIMaus->GetDeviceData(sizeof(DIDEVICEOBJECTDATA),
 													  &od, &dwElemente, 0);
-					if (hresult == DIERR_INPUTLOST) 
+					if (hresult == DIERR_INPUTLOST)
 					{
 						Protokoll.WriteText("\n-> Maus : GetData Fehler !\n", false);
 						return false;
 					}
-				} 
+				}
             }
-        else 
+        else
 		if (hresult != DI_OK)		// anderer Fehler ?
-		{			
+		{
 			fertig = true;
             return false;
 		}
-         
+
 		if (dwElemente == 0)			// Keine Elemente wurden verändert
 			fertig = true;
-         
+
 		switch (od.dwOfs)				// Feld 'dwOfs' enthält Maus-Aktion:
-		{		
+		{
 			case DIMOFS_X:				// Horizontale Bewegung
 				MausX += od.dwData;
 				fertig = true;
 				break;
-            
+
             case DIMOFS_Y:				// Vertikale Bewegung
 				MausY += od.dwData;
 				fertig = true;
 				break;
-         
+
             case DIMOFS_BUTTON0:		// Knopf 0 gedrückt
 				if (od.dwData & 0x80)	// Knopf gedrück
 				{
@@ -465,27 +523,27 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
 					MausButtons[2] = false;
 					fertig = TRUE;
                 }
-				break;            
+				break;
 			};
          }
       }
 
 	// Ungepuffert: Schnell, verpasst aber ab und zu Maus-Aktionen:
-	else 
+	else
 	{
 		hresult = lpDIMaus->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&ms);
-		if (hresult == DIERR_INPUTLOST) 
+		if (hresult == DIERR_INPUTLOST)
 		{
 			hresult = lpDIMaus->Acquire();
-			if (hresult != DI_OK) 
+			if (hresult != DI_OK)
 			{
 				Protokoll.WriteText("\n-> Maus : Re-Acquire Fehler !\n", false);
 				return false;
             }
-			else 
+			else
 			{
 				hresult = lpDIMaus->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&ms);
-				if (hresult == DIERR_INPUTLOST) 
+				if (hresult == DIERR_INPUTLOST)
 				{
 					Protokoll.WriteText("\n-> Maus : GetDeviceState Fehler !\n", false);
 					return false;
@@ -493,7 +551,7 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
 			}
 		}
 		else									// anderer Fehler
-		if (hresult != DI_OK) 
+		if (hresult != DI_OK)
 		{
 			return false;
         }
@@ -501,7 +559,7 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
 		// Mauskoordinaten angleichen
 		MausX += ms.lX;
 		MausY += ms.lY;
-      
+
 		// Buttons prüfen
 		if (ms.rgbButtons[0] & 0x80)
 			MausButtons[0] = true;
@@ -524,6 +582,34 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
 	if (MausY > SCREENHEIGHT)	MausY = SCREENHEIGHT;
 
 	return true;
+#elif defined(PLATFORM_SDL)
+    SDL_PumpEvents();
+
+    // Position
+    uint8_t buttons  = SDL_GetMouseState(&MausX, &MausY);
+
+    // Buttons
+    if ((buttons & SDL_BUTTON(0)) == SDL_BUTTON(0))
+        MausButtons[0] = true;
+    else
+        MausButtons[1] = false;
+    if ((buttons & SDL_BUTTON(1)) == SDL_BUTTON(1))
+        MausButtons[1] = true;
+    else
+        MausButtons[2] = false;
+    if ((buttons & SDL_BUTTON(2)) == SDL_BUTTON(2))
+        MausButtons[2] = true;
+    else
+        MausButtons[2] = false;
+
+    // Clamps
+	if (MausX < 0)				MausX = 0;
+	if (MausY < 0)				MausY = 0;
+	if (MausX > SCREENWIDTH)	MausX = SCREENWIDTH;
+	if (MausY > SCREENHEIGHT)	MausY = SCREENHEIGHT;
+
+	return true;
+#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -532,8 +618,10 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
 
 void DirectInputClass::AcquireKeyboard(void)
 {
+#if defined(PLATFORM_DIRECTX)
 	if(lpDIKeyboard)
 		lpDIKeyboard->Acquire();
+#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -552,7 +640,7 @@ void DirectInputClass::UpdateJoysticks(void)
 
 bool DirectInputClass::AreAllKeysReleased()
 {
-	for (int i = 0; i < 255; i++)
+	for (int i = 0; i < MIN(NumberOfKeys,256); i++)
 		if (TastaturPuffer[i] != NULL)
 			return false;
 
@@ -565,7 +653,7 @@ bool DirectInputClass::AreAllKeysReleased()
 
 bool DirectInputClass::AnyKeyDown(void)
 {
-	for (int i = 0; i < 256; i++)
+	for (int i = 0; i < MIN(NumberOfKeys,256); i++)
 		if (KeyDown(i))
 			return true;
 

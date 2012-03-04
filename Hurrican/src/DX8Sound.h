@@ -1,6 +1,6 @@
 // Datei : DX8Sound.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // DirectSound Klasse
 // zum Abspielen von Wave-Dateien
@@ -16,13 +16,55 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_DIRECTX)
 #include <dsound.h>
-#include "fmod.h"				
+#include "fmod.h"
 #include "fmod_errors.h"
+#elif defined(PLATFORM_SDL)
+#include "SDL_fmod.h"
+#else
+#error no sound system selected
+#endif
 
 // --------------------------------------------------------------------------------------
 // Defines
 // --------------------------------------------------------------------------------------
+
+#if defined(PLATFORM_DIRECTX)
+#define MUSIC_MODULE            FMUSIC_MODULE
+#define SOUND_SAMPLE            FSOUND_SAMPLE
+
+#define MUSIC_PlaySong          FMUSIC_PlaySong
+#define MUSIC_IsPlaying         FMUSIC_IsPlaying
+#define MUSIC_FreeSong          FMUSIC_FreeSong
+#define MUSIC_StopSong          FMUSIC_StopSong
+#define MUSIC_SetPaused         FMUSIC_SetPaused
+#define MUSIC_GetPaused         FMUSIC_GetPaused
+#define MUSIC_SetMasterVolume   FMUSIC_SetMasterVolume
+#define MUSIC_StopAllSongs      FMUSIC_StopAllSongs
+#define MUSIC_LoadSong          FMUSIC_LoadSong
+#define MUSIC_LoadSongEx        FMUSIC_LoadSongEx
+#define MUSIC_IsFinished        FMUSIC_IsFinished
+
+#define SOUND_Init              FSOUND_Init
+#define SOUND_GetError          FSOUND_GetError
+#define SOUND_GetMaxChannels    FSOUND_GetMaxChannels
+#define SOUND_SetFrequency      FSOUND_SetFrequency
+#define SOUND_SetPan            FSOUND_SetPan
+#define SOUND_Close             FSOUND_Close
+#define SOUND_PlaySound         FSOUND_PlaySound
+#define SOUND_Sample_Free       FSOUND_Sample_Free
+#define SOUND_IsPlaying         FSOUND_IsPlaying
+#define SOUND_GetVolume         FSOUND_GetVolume
+#define SOUND_SetVolume         FSOUND_SetVolume
+#define SOUND_StopSound         FSOUND_StopSound
+
+#elif defined(PLATFORM_SDL)
+#define MUSIC_MODULE            Mix_Music
+#define SOUND_SAMPLE            Mix_Chunk
+#else
+#error no sound system selected
+#endif
 
 #define MAX_SOUNDS				140 					// Anzahl verschiedener Soundeffekte
 #define MAX_SONGS				15						// Anzahl verschiedener Musikstücke
@@ -94,18 +136,18 @@
 #define SOUND_FLAMETHROWER2		59
 
 // Voices bei eingesammelten Extras
-#define SOUND_VOICE_EXTRALIFE	60	
-#define SOUND_VOICE_SPREAD		61						
-#define SOUND_VOICE_LASER		62						
-#define SOUND_VOICE_BOUNCE		63						
-#define SOUND_VOICE_LIGHTNING	64						
-#define SOUND_VOICE_SHIELD		65						
-#define SOUND_VOICE_POWERUP		66						
-#define SOUND_VOICE_WHEELPOWER	67					
+#define SOUND_VOICE_EXTRALIFE	60
+#define SOUND_VOICE_SPREAD		61
+#define SOUND_VOICE_LASER		62
+#define SOUND_VOICE_BOUNCE		63
+#define SOUND_VOICE_LIGHTNING	64
+#define SOUND_VOICE_SHIELD		65
+#define SOUND_VOICE_POWERUP		66
+#define SOUND_VOICE_WHEELPOWER	67
 #define SOUND_VOICE_POWERLINE	68
-#define SOUND_VOICE_GRENADE		69						
-#define SOUND_VOICE_SMARTBOMB	70						
-#define SOUND_VOICE_RAPIDFIRE	71						
+#define SOUND_VOICE_GRENADE		69
+#define SOUND_VOICE_SMARTBOMB	70
+#define SOUND_VOICE_RAPIDFIRE	71
 #define SOUND_VOICE_SUPERSHOT	72
 
 // Endgegner Sounds
@@ -178,7 +220,7 @@ struct SOUNDMANAGER_PARAMETERS
 {
 	int		GlobalMusicVolume;		// Globale Musik-Lautstärke (0-100)
 	int		GlobalSoundVolume;		// Globale Sound-Lautstärke (0-100)
-	int		Mixrate;			
+	int		Mixrate;
 	int		MaxSoftwareChannels;
 	int		Flags;
 };
@@ -200,7 +242,8 @@ char *GetFMODErrorString(int ErrorNr);
 class CSong
 {
 	public :
-		FMUSIC_MODULE	   *SongData;		// MOD-Daten
+
+		MUSIC_MODULE	   *SongData;		// MOD-Daten
 		float				Volume;			// Lautstärke
 		float				FadingVolume;	// Aktuelle Fading Speed und Richtung
 		int					FadingEnd;		// Fading Grenze
@@ -218,7 +261,7 @@ class CSong
 class CWave
 {
 	public :
-		FSOUND_SAMPLE		*SoundData;		// Daten des Sounds
+		SOUND_SAMPLE		*SoundData;		// Daten des Sounds
 		int					Channel;		// Channel in dem es gerade gespielt wird
 		bool				isPlaying;		// Spielt der Sound gerade ?
 		bool				isLooped;
@@ -257,7 +300,7 @@ class CSoundManager
 
 		bool InitFMOD	(SOUNDMANAGER_PARAMETERS smpp);	// FMOD Init
 		void SetVolumes (float Sound, float Musik);		// neue global Volumes setzen
-		bool LoadSong	(char *Filename, int Nr);		// Song laden
+		bool LoadSong	(const char *Filename, int Nr);		// Song laden
 		bool PlaySong	(int Nr, bool Paused);			// Song abspielen (Von Pause oder neu)
 		bool StopSong	(int Nr, bool Paused);			// Song anhalten  (Pause oder ganz)
 		void StopAllSongs	(bool Paused);				// Alle Songs anhalten
@@ -268,10 +311,10 @@ class CSoundManager
 		void SetAllSongVolumes(void);					// Volume aller Songs setzen
 		void Update		(void);							// Channel und Fades bearbeiten
 		void FadeSong	(int Nr, float Speed, int End,	// Song ein/aus faden
-						 bool Paused);	
+						 bool Paused);
 		void FadeWave(int Nr, int Mode);				// Fade Mode
-		bool LoadWave	(char *Filename, int Nr,		// Sound laden
-						 bool looped);	
+		bool LoadWave	(const char *Filename, int Nr,		// Sound laden
+						 bool looped);
 		bool PlayWave	(int Vol,  int Pan,				// Sound spielen
 						 int Freq, int Nr);
 		bool PlayWave3D	(int x,    int y, 				// Sound spielen abhängig von der Spieler

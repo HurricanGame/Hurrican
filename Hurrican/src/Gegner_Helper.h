@@ -1,6 +1,6 @@
 // Datei : Gegner.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Gegner für Hurrican
 //
@@ -17,7 +17,9 @@
 
 #include "Trigger_TutorialText.h"			// muss oben sein, weil es <string> includiert
 
+#if defined(PLATFORM_DIRECTX)
 #include <d3dx8.h>
+#endif
 #include "DX8Sprite.h"
 
 #include "Gegner_Auge.h"
@@ -62,7 +64,7 @@
 #include "Gegner_Lavamann.h"
 #include "Gegner_LavaKrabbe.h"
 #include "Gegner_Made.h"
-#include "Gegner_MiniDragon.h"
+#include "Gegner_Minidragon.h"
 #include "Gegner_MiniRocket.h"
 #include "Gegner_MittelSpinne.h"
 #include "Gegner_Mutant.h"
@@ -185,7 +187,7 @@ extern GegnerListClass		*pGegner;
 extern DirectGraphicsSprite	*pGegnerGrafix[MAX_GEGNERGFX];		// Grafiken der Gegner
 extern DirectGraphicsSprite	*pDroneFlame;						// Flamme der Drone
 extern DirectGraphicsSprite	*pDroneGun;							// Knarre der Zitrone
-extern RECT					 GegnerRect	  [MAX_GEGNERGFX];		// Rechtecke für Kollision	
+extern RECT					 GegnerRect	  [MAX_GEGNERGFX];		// Rechtecke für Kollision
 extern float				 g_Fahrstuhl_yPos;					// yPosition des Fahrstuhls
 extern float				 g_Fahrstuhl_Offset;				// Scrollposition relativ zum Farhstuhl
 extern float				 g_Fahrstuhl_Speed;					// Fahrstuhl Geschwindigkeit

@@ -21,7 +21,7 @@ GegnerRiesenSpinne::GegnerRiesenSpinne(int Wert1, int Wert2, bool Light)
 	Value2			= Wert2;
 	ChangeLight		= Light;
 	Destroyable		= true;
-	OwnDraw			= true;	
+	OwnDraw			= true;
 	TestBlock		= false;
 
 	ShotMode = 0;
@@ -34,14 +34,14 @@ GegnerRiesenSpinne::GegnerRiesenSpinne(int Wert1, int Wert2, bool Light)
 	ShotCount = 0;
 
 	// Zusätzliche Grafiken für die Beine
-	Head.LoadImage("spiderboss_kopf.png",  127, 92, 127, 92, 1, 1);
-	Legs[0].LoadImage("spiderboss_foot.png",  305, 388, 61, 97, 5, 4);
-	Legs[1].LoadImage("spiderboss_leg2.png",  320, 228, 32, 114, 10, 2);
-	Legs[2].LoadImage("spiderboss_leg1.png",  340, 308, 34, 154, 10, 2);	
+	Head.LoadImage("spiderboss_kopf.bmp",  127, 92, 127, 92, 1, 1);
+	Legs[0].LoadImage("spiderboss_foot.bmp",  305, 388, 61, 97, 5, 4);
+	Legs[1].LoadImage("spiderboss_leg2.bmp",  320, 228, 32, 114, 10, 2);
+	Legs[2].LoadImage("spiderboss_leg1.bmp",  340, 308, 34, 154, 10, 2);
 }
 
 // --------------------------------------------------------------------------------------
-// 
+//
 // --------------------------------------------------------------------------------------
 
 void GegnerRiesenSpinne::StopCurrentAction(void)
@@ -64,7 +64,7 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
 	x += 120;
 
 	// Je nach "winkel" die beine anderes positionieren
-	if (winkel < PI) 
+	if (winkel < PI)
 	{
 		xp = x + (float(sin(winkel + PI / 2.0f) * 18.0f));
 		yp = y + (float(cos(winkel + PI / 2.0f) * 30.0f));
@@ -74,7 +74,7 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
 //		xp = x + (float(sin(winkel + PI / 2.0f) * 20.0f));
 		xp = x + (winkel - PI) * 10.0f - 16;
 		yp = y;
-	}		
+	}
 
 	float l,  r,  o,  u;					// Vertice Koordinaten
 	float tl, tr, to, tu;					// Textur Koordinaten
@@ -97,9 +97,9 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
 	to = Legs[2].itsRect.top   /Legs[2].itsYSize;	// Oben
 	tu = Legs[2].itsRect.bottom/Legs[2].itsYSize;	// Unten
 
-	TriangleStrip[0].color = 
-	TriangleStrip[1].color = 
-	TriangleStrip[2].color = 
+	TriangleStrip[0].color =
+	TriangleStrip[1].color =
+	TriangleStrip[2].color =
 	TriangleStrip[3].color = col;
 	TriangleStrip[0].z	   = TriangleStrip[1].z		= TriangleStrip[2].z	 = TriangleStrip[3].z	  = 0.0f;
 
@@ -124,35 +124,35 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
 	TriangleStrip[3].tv		= tu;
 
 	//TriangleStrip[0].x = xPos + 100 + anim*40;
-	//TriangleStrip[1].x = xPos + 100 + anim*40 + 34;	
+	//TriangleStrip[1].x = xPos + 100 + anim*40 + 34;
 
-	float winkel2 = -(float)((int)(winkel + 320.0f) % 360);
+	//float winkel2 = -(float)((int)(winkel + 320.0f) % 360); // Pickle not used
 	float temp = (float)(sin(winkel) * 10.0f);
 
 	switch (anim)
 	{
-		case 0: 
+		case 0:
 			TriangleStrip[0].x = temp + x + 40;
 			TriangleStrip[1].x = temp + x+32 + 40;
 			TriangleStrip[2].x = x + 120;
-			TriangleStrip[3].x = x+34 + 120;			
+			TriangleStrip[3].x = x+34 + 120;
 		break;
 
-		case 1: 
+		case 1:
 			TriangleStrip[0].x = temp + x + 24;
 			TriangleStrip[1].x = temp + x+32 + 24;
 			TriangleStrip[2].x = x + 40;
 			TriangleStrip[3].x = x+34 + 40;
 		break;
 
-		case 2: 
+		case 2:
 			TriangleStrip[0].x = temp + x - 10;
 			TriangleStrip[1].x = temp + x+32 - 10;
 			TriangleStrip[2].x = x - 40;
 			TriangleStrip[3].x = x+34 - 40;
 		break;
 
-		case 3: 
+		case 3:
 			TriangleStrip[0].x = temp + x - 20;
 			TriangleStrip[1].x = temp + x+32 - 20;
 			TriangleStrip[2].x = x - 120;
@@ -160,7 +160,11 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
 		break;
 	}
 
-	lpD3DDevice->SetTexture (0, Legs[2].itsTexture);
+#if defined(PLATFORM_DIRECTX)
+    lpD3DDevice->SetTexture (0, Legs[2].itsTexture);
+#elif defined(PLATFORM_SDL)
+    DirectGraphics.SetTexture(  Legs[2].itsTexture );
+#endif
 	DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
 
 //----- Unterteil des Beines rendern
@@ -177,9 +181,9 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
 	to = Legs[1].itsRect.top   /Legs[1].itsYSize;	// Oben
 	tu = Legs[1].itsRect.bottom/Legs[1].itsYSize;	// Unten
 
-	TriangleStrip[0].color = 
-	TriangleStrip[1].color = 
-	TriangleStrip[2].color = 
+	TriangleStrip[0].color =
+	TriangleStrip[1].color =
+	TriangleStrip[2].color =
 	TriangleStrip[3].color = col;
 	TriangleStrip[0].z	   = TriangleStrip[1].z		= TriangleStrip[2].z	 = TriangleStrip[3].z	  = 0.0f;
 
@@ -205,37 +209,41 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
 
 	switch (anim)
 	{
-		case 0: 
+		case 0:
 			TriangleStrip[0].x = temp + x + 40;
 			TriangleStrip[1].x = temp + x+32 + 40;
 			TriangleStrip[2].x += 20;
 			TriangleStrip[3].x += 20;
 		break;
 
-		case 1: 
+		case 1:
 			TriangleStrip[0].x = temp + x + 20;
 			TriangleStrip[1].x = temp + x+32 + 20;
 			TriangleStrip[2].x += 20;
 			TriangleStrip[3].x += 20;
 		break;
 
-		case 2: 
+		case 2:
 			TriangleStrip[0].x = temp + x - 20;
 			TriangleStrip[1].x = temp + x+32 - 20;
 		break;
 
-		case 3: 
+		case 3:
 			TriangleStrip[0].x = temp + x - 40;
 			TriangleStrip[1].x = temp + x+32 - 40;
 		break;
 	}
 
-	lpD3DDevice->SetTexture (0, Legs[1].itsTexture);
+#if defined(PLATFORM_DIRECTX)
+    lpD3DDevice->SetTexture (0, Legs[1].itsTexture);
+#elif defined(PLATFORM_SDL)
+    DirectGraphics.SetTexture(  Legs[1].itsTexture );
+#endif
 	DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
-	
+
 
 //----- Fuß rendern
-	Legs[0].RenderSpriteRotated(xp, yp, 0, anim*3 + off, col);	
+	Legs[0].RenderSpriteRotated(xp, yp, 0, anim*3 + off, col);
 }
 
 // --------------------------------------------------------------------------------------
@@ -244,7 +252,7 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
 
 void GegnerRiesenSpinne::DoDraw(void)
 {
-	D3DCOLOR Color = 0xFFFFFFFF;	
+	D3DCOLOR Color = 0xFFFFFFFF;
 
 	DirectGraphics.SetFilterMode(true);
 
@@ -261,11 +269,11 @@ void GegnerRiesenSpinne::DoDraw(void)
 
 		w = LegsAnim[a] + PI;
 
-		if (w > 2*PI) 
+		if (w > 2*PI)
 			w -= 2*PI;
 
-		DrawLeg((float)(xPos-pTileEngine->XOffset - 70 + a * 110), 
-				(float)(yPos-pTileEngine->YOffset + 130), 
+		DrawLeg((float)(xPos-pTileEngine->XOffset - 70 + a * 110),
+				(float)(yPos-pTileEngine->YOffset + 130),
 				w, a, 10, 0xFF888888);
 	}
 
@@ -278,14 +286,14 @@ void GegnerRiesenSpinne::DoDraw(void)
 		tempwinkel -= 360.0f;
 
 	// Rumpf
-	pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset), 
-										   (float)(yPos-pTileEngine->YOffset) + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 0, Color);	
+	pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
+										   (float)(yPos-pTileEngine->YOffset) + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 0, Color);
 
-	// Kopf	
-	Head.RenderSpriteRotatedOffset((float)(xPos-pTileEngine->XOffset - 90 + 120) + (float)(sin(HeadXOffset) * 10.0f), 
-								   (float)(yPos-pTileEngine->YOffset + 60) + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 
+	// Kopf
+	Head.RenderSpriteRotatedOffset((float)(xPos-pTileEngine->XOffset - 90 + 120) + (float)(sin(HeadXOffset) * 10.0f),
+								   (float)(yPos-pTileEngine->YOffset + 60) + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody,
 								   tempwinkel, 127, 0,
-								   Color);	
+								   Color);
 
 	// Beine vor dem Körper
 	for (int i = 0; i < 4; i++)
@@ -297,9 +305,9 @@ void GegnerRiesenSpinne::DoDraw(void)
 		if (i == 2) a = 3;
 		if (i == 3) a = 2;
 
-		DrawLeg((float)(xPos-pTileEngine->XOffset - 70 + a * 110), 
-				(float)(yPos-pTileEngine->YOffset + 130), 
-				LegsAnim[a], a, 0, 0xFFFFFFFF);	
+		DrawLeg((float)(xPos-pTileEngine->XOffset - 70 + a * 110),
+				(float)(yPos-pTileEngine->YOffset + 130),
+				LegsAnim[a], a, 0, 0xFFFFFFFF);
 	}
 
 	// Evtl. Lila Leuchten vor kopf
@@ -311,10 +319,10 @@ void GegnerRiesenSpinne::DoDraw(void)
 
 		DirectGraphics.SetAdditiveMode();
 
-		LavaFlare.RenderSprite((float)(xPos-pTileEngine->XOffset) - 10.0f + (float)(sin(HeadXOffset) * 10.0f), 
+		LavaFlare.RenderSprite((float)(xPos-pTileEngine->XOffset) - 10.0f + (float)(sin(HeadXOffset) * 10.0f),
 							   (float)(yPos-pTileEngine->YOffset) + 50.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, D3DCOLOR_RGBA(255, 0, 255, a));
 
-		LavaFlare.RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) + 30.0f + (float)(sin(HeadXOffset) * 10.0f), 
+		LavaFlare.RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) + 30.0f + (float)(sin(HeadXOffset) * 10.0f),
 								     (float)(yPos-pTileEngine->YOffset) + 90.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 40, 40, D3DCOLOR_RGBA(255, 255, 255, a));
 	}
 
@@ -325,10 +333,10 @@ void GegnerRiesenSpinne::DoDraw(void)
 
 		DirectGraphics.SetAdditiveMode();
 
-		LavaFlare.RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) - 20.0f + (float)(sin(HeadXOffset) * 10.0f), 
+		LavaFlare.RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) - 20.0f + (float)(sin(HeadXOffset) * 10.0f),
 								     (float)(yPos-pTileEngine->YOffset) + 60.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 100, 100, D3DCOLOR_RGBA(255, 255, 255, a));
 
-		LavaFlare.RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) - 90.0f + (float)(sin(HeadXOffset) * 10.0f), 
+		LavaFlare.RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) - 90.0f + (float)(sin(HeadXOffset) * 10.0f),
 								     (float)(yPos-pTileEngine->YOffset) - 10.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 240, 240, D3DCOLOR_RGBA(255, 255, 255, a));
 	}
 
@@ -342,7 +350,7 @@ void GegnerRiesenSpinne::DoDraw(void)
 
 void GegnerRiesenSpinne::RandomHandlung(void)
 {
-	ShotDelay = 4.0f;					
+	ShotDelay = 4.0f;
 	xSpeed = 0.0f;
 
 	static int last = - 1;
@@ -367,7 +375,7 @@ void GegnerRiesenSpinne::RandomHandlung(void)
 		} break;
 
 		case 1:
-		{						
+		{
 			Handlung = GEGNER_ABSENKEN;
 		} break;
 
@@ -379,19 +387,19 @@ void GegnerRiesenSpinne::RandomHandlung(void)
 
 		case 3:
 		{
-			Handlung = GEGNER_ABSENKENZWEI;					
+			Handlung = GEGNER_ABSENKENZWEI;
 		} break;
 
 		case 4:
-		{		
+		{
 			Handlung = GEGNER_LAUFEN_LINKS;
 			ShotDelay = 1.0f;
 			ShotMode = rand()%2;
 		} break;
-	
+
 		case 5:
 		{
-			Handlung = GEGNER_SPECIAL2;		
+			Handlung = GEGNER_SPECIAL2;
 			pProjectiles->PushProjectile((float) Value1, yPos + yBody + 110.0f, SPIDERLASER);
 			pSoundManager->PlayWave (100, 128, 11025, SOUND_BEAMLOAD2);
 			AnimCount = 140;
@@ -413,7 +421,7 @@ void GegnerRiesenSpinne::DoKI(void)
 	// Levelausschnitt auf die RiesenSpinne zentrieren, sobald diese sichtbar wird
 	if (Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
 	{
-		pTileEngine->ScrollLevel((float)Value1, 
+		pTileEngine->ScrollLevel((float)Value1,
 								 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf die Spinne zentrieren
 
 		pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
@@ -427,7 +435,7 @@ void GegnerRiesenSpinne::DoKI(void)
 			if (pTileEngine->Zustand == ZUSTAND_LOCKED)
 			{
 				// Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-				if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+				if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
 					pSoundManager->PlaySong(MUSIC_BOSS, false);
 
 				// Und Boss erscheinen lassen
@@ -436,7 +444,7 @@ void GegnerRiesenSpinne::DoKI(void)
 		} break;
 
 		case GEGNER_EINFLIEGEN:		// Spinne läuft ins Level ein
-		{			
+		{
 			yPos -= 55;
 			Energy = 100000;
 			DamageTaken = 0.0f;
@@ -461,7 +469,7 @@ void GegnerRiesenSpinne::DoKI(void)
 				HeadWinkel -= 1.0f SYNC;
 
 			if (HeadWinkel < 0.0f)
-				HeadWinkel += 1.0f SYNC;	
+				HeadWinkel += 1.0f SYNC;
 
 			xSpeed = WalkDir;
 			WalkCount -= WalkDir / 10.0f SYNC;
@@ -470,14 +478,14 @@ void GegnerRiesenSpinne::DoKI(void)
 			if (WalkCount < 0.0f) WalkCount += 2*PI;
 
 			if (Handlung == GEGNER_CRUSHEN)
-			{				
+			{
 				if (HeadWinkel < 45.0f)
 					HeadWinkel += 1.0f SYNC;
 
 				WalkDir -= 10.0f SYNC;
 
 				if (WalkDir < -35.0f)
-					WalkDir = -35.0f;				
+					WalkDir = -35.0f;
 
 				if (xPos < Value1 - 50)
 				{
@@ -487,7 +495,7 @@ void GegnerRiesenSpinne::DoKI(void)
 
 				// Spieler wegschieben?
 
-				RECT coll;				
+				RECT coll;
 
 				coll.left = 50;					coll.right  = 120;
 				coll.top  = 40 + int(yBody);	coll.bottom = 140 + int(yBody);
@@ -495,11 +503,11 @@ void GegnerRiesenSpinne::DoKI(void)
 			}
 
 			if (Handlung == GEGNER_LAUFEN_LINKS)
-			{								
+			{
 				WalkDir -= 1.0f SYNC;
 
 				if (WalkDir < -8.0f)
-					WalkDir = -8.0f;				
+					WalkDir = -8.0f;
 
 				if (xPos < Value1 + 100)
 				{
@@ -533,7 +541,7 @@ void GegnerRiesenSpinne::DoKI(void)
 							}
 
 						}
-						
+
 					}
 				}
 			}
@@ -554,7 +562,7 @@ void GegnerRiesenSpinne::DoKI(void)
 
 				if (Handlung == GEGNER_LAUFEN_RECHTS)
 				{
-					// Spinnen hinten rauslassen							
+					// Spinnen hinten rauslassen
 					ShotDelay -= 1.0f SYNC;
 					if (ShotDelay < 0.0f)
 					{
@@ -576,12 +584,12 @@ void GegnerRiesenSpinne::DoKI(void)
 
 					if (Handlung == GEGNER_EXPLODIEREN)
 					if (WalkDir > 4.0f)
-						WalkDir = 4.0f;					
+						WalkDir = 4.0f;
 				}
 
 				if (Handlung == GEGNER_LAUFEN_RECHTS)
 				if (xPos > Value1 + 400)
-					RandomHandlung();				
+					RandomHandlung();
 
 			}
 
@@ -643,7 +651,7 @@ void GegnerRiesenSpinne::DoKI(void)
 					ShotDelay = 5.0f;
 				}
 				//RandomHandlung();
-			}						
+			}
 		} break;
 
 		// Kopf bewegen und Schüsse abgeben
@@ -665,7 +673,7 @@ void GegnerRiesenSpinne::DoKI(void)
 				// Böller abschiessen
 				pSoundManager->PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
 				WinkelUebergabe = 180 - HeadWinkel * 1.5f;
-				pProjectiles->PushProjectile(xPos - (float)cos(HeadWinkel * PI / 180.0f) * 10.0f, 
+				pProjectiles->PushProjectile(xPos - (float)cos(HeadWinkel * PI / 180.0f) * 10.0f,
 											 yPos + (float)sin(HeadWinkel * PI / 180.0f) * 140.0f + 90.0f + yBody, SPIDERSHOT);
 
 				// Kopf zurückschnellen lassen
@@ -680,7 +688,7 @@ void GegnerRiesenSpinne::DoKI(void)
 					ShotDelay = 5.0f;
 				}
 					//RandomHandlung();
-			}			
+			}
 		} break;
 
 		case GEGNER_SPECIAL2:
@@ -703,7 +711,7 @@ void GegnerRiesenSpinne::DoKI(void)
 
 		case GEGNER_ABSENKEN:
 		{
-			yBody += 1.0f SYNC;			
+			yBody += 1.0f SYNC;
 
 			// ganz unten?
 			if (yBody > 50.0f)
@@ -730,7 +738,7 @@ void GegnerRiesenSpinne::DoKI(void)
 
 		case GEGNER_ABSENKENZWEI:
 		{
-			yBody += 8.0f SYNC;			
+			yBody += 8.0f SYNC;
 
 			// ganz unten? Dann nach links losrennen
 			if (yBody > 50.0f)
@@ -742,7 +750,7 @@ void GegnerRiesenSpinne::DoKI(void)
 
 		case GEGNER_AUFRICHTEN:
 		{
-			yBody -= 1.0f SYNC;			
+			yBody -= 1.0f SYNC;
 
 			if (yBody <= 0.0f)
 			{
@@ -770,10 +778,10 @@ void GegnerRiesenSpinne::DoKI(void)
 				HeadXOffset = 3 * PI;
 			}
 		} break;
-		
+
 
 		default : break;
-	} // switch	
+	} // switch
 
 	// Kopf zurückgeschnellt?
 	if (HeadXOffset > PI)
@@ -838,7 +846,7 @@ void GegnerRiesenSpinne::DoKI(void)
 void GegnerRiesenSpinne::GegnerExplode(void)
 {
 	pPlayer[0]->Score += 15000;
-	pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION2);	
+	pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 	ShakeScreen(5.0f);
 
 	ScrolltoPlayeAfterBoss();

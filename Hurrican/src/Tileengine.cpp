@@ -1,6 +1,6 @@
 // Datei : Tileengine.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // 2D Tile-Engine für Hurrican
 // bestehend aus einem Vordergrund-Layer in verschiedenen Helligkeitsstufen
@@ -30,7 +30,7 @@
 #include "Projectiles.h"
 #include "Logdatei.h"
 #include "Timer.h"
-#include "Unrarlib.h"
+#include "unrarlib.h"
 #include "Main.h"
 
 // --------------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ extern DirectGraphicsSprite	*pGegnerGrafix[MAX_GEGNERGFX];		// Grafiken  der Geg
 extern float				WackelMaximum;
 extern float				WackelValue;
 
-D3DCOLOR		Col1, Col2, Col3;								// Farben für Wasser/Lava etc		
+D3DCOLOR		Col1, Col2, Col3;								// Farben für Wasser/Lava etc
 bool			DrawDragon;										// Für den Drachen im Turm Level
 float			ShadowAlpha;
 
@@ -110,9 +110,9 @@ TileEngineClass::TileEngineClass(void)
 		Tiles[i][j].Blue		  = 255;
 		Tiles[i][j].Alpha		  = 255;
 
-		Tiles[i][j].move_v1 = 
-		Tiles[i][j].move_v2 = 
-		Tiles[i][j].move_v3 = 
+		Tiles[i][j].move_v1 =
+		Tiles[i][j].move_v2 =
+		Tiles[i][j].move_v3 =
 		Tiles[i][j].move_v4 = false;
 	}
 
@@ -160,25 +160,25 @@ TileEngineClass::TileEngineClass(void)
 
 	int i = 0;
 	float w = 0.0f;
-	while (i < 4000)	
+	while (i < 4000)
 	{
 		SinList  [i] = 0.0f;
 		SinList2 [i] = float (sin(w)) * 5.0f;
-		WaterList[i] = float (sin(w)) * 2.5f;		
+		WaterList[i] = float (sin(w)) * 2.5f;
 		w += PI / TILESIZE_X;
 		i++;
-	}	
+	}
 
-	SinPos   = 0.0f;	
+	SinPos   = 0.0f;
 	SinPos2  = 0.0f;
-	WaterPos = 0.0f;	
+	WaterPos = 0.0f;
 
-	// LightMaps laden	
+	// LightMaps laden
 	lightmaps[LIGHTMAP_BLITZ].Load("lightmap_blitz.bmp");
 	lightmaps[LIGHTMAP_EXPLOSION].Load("lightmap_explosion.bmp");
 	lightmaps[LIGHTMAP_GOLEMSHOT].Load("lightmap_golem.bmp");
 	lightmaps[LIGHTMAP_LILA].Load("lightmap_lila.bmp");
-	
+
 	pDragonHack = NULL;
 }
 
@@ -213,15 +213,15 @@ bool TileEngineClass::LineHitsLine(const Vector2D p,
 
     // s = Ds / D berechnen und prüfen, ob s in den Grenzen liegt
     const float s = Ds / D;
-    if (s < 0.0f || 
-		s > 1.0f) 
+    if (s < 0.0f ||
+		s > 1.0f)
 		return false;
 
     // Jetzt berechnen wir Dt und t.
     const float Dt = (q.y - p.y) * u.x - (q.x - p.x) * u.y;
     const float t = Dt / D;
-    if (t < 0.0f || 
-		t > 1.0f) 
+    if (t < 0.0f ||
+		t > 1.0f)
 		return false;
 
     // Die Linien schneiden sich!
@@ -277,8 +277,16 @@ void TileEngineClass::ClearLevel()
 			pGegnerGrafix[i] = NULL;						// und auf NULL setzen
 		}
 
-	for(int i=0; i<MAX_TILESETS; i++)
+	for(int i=0; i<MAX_TILESETS; i++) {
+#if defined(PLATFORM_DIRECTX)
 		SafeRelease(TileGfx[i].itsTexture);
+#elif defined(PLATFORM_SDL)
+        if (TileGfx[i].itsTexture) {
+            glDeleteTextures( 1, &TileGfx[i].itsTexture );
+            TileGfx[i].itsTexture = 0;
+        }
+#endif
+	}
 
 	pProjectiles->ClearAll();
 	pPartikelSystem->ClearAll();
@@ -294,12 +302,12 @@ void TileEngineClass::ClearLevel()
 bool TileEngineClass::LoadLevel(char Filename[100])
 {
 	bool			fromrar;
-	char			*pData; 
+	char			*pData;
 	char			Temp[256];
-	unsigned long	Size; 
-	FileHeader				DateiHeader;					// Header der Level-Datei	
+	unsigned long	Size;
+	FileHeader				DateiHeader;					// Header der Level-Datei
 	FILE					*Datei = NULL;					// Level-Datei
-	LevelObjectStruct		LoadObject;	
+	LevelObjectStruct		LoadObject;
 
 	MustCenterPlayer = false;
 
@@ -325,7 +333,7 @@ bool TileEngineClass::LoadLevel(char Filename[100])
 
 	// Auch nicht? Dann ist es hoffentlich im RAR file
 	if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
-	{		
+	{
 		sprintf_s(Temp, "\n-> Error loading %s from Archive !\n", Filename);
 		Protokoll.WriteText(Temp, true);
 		return false;
@@ -344,10 +352,10 @@ loadfile:
 		fopen_s(&TempFile, "temp.map", "wb");	// Datei öffnen
 		fwrite (pData, Size, 1, TempFile);			// speichern
 		fclose (TempFile);							// und schliessen
-		
-		sprintf_s(Temp, "%s", "temp.map");			// Name anpassen		
+
+		sprintf_s(Temp, "%s", "temp.map");			// Name anpassen
 		free(pData);								// und Speicher freigeben
-	}		
+	}
 
 	Protokoll.WriteText("\n-> Loading Level <-\n\n", false);
 
@@ -395,7 +403,7 @@ loadfile:
 	Background.LoadImage(DateiHeader.BackgroundFile, 640, 480, 640, 480, 1, 1);
 	ParallaxLayer[0].LoadImage(DateiHeader.ParallaxAFile, 640, 480, 640, 480, 1, 1);
 	ParallaxLayer[1].LoadImage(DateiHeader.ParallaxBFile, 640, 480, 640, 480, 1, 1);
-	CloudLayer.LoadImage(DateiHeader.CloudFile, 640, 240, 640, 240, 1, 1);	
+	CloudLayer.LoadImage(DateiHeader.CloudFile, 640, 240, 640, 240, 1, 1);
 	Timelimit = (double) DateiHeader.Timelimit;
 
 	if (Timelimit <= 0)
@@ -419,7 +427,7 @@ loadfile:
 	LevelTileLoadStruct LoadTile;
 
 	for(i=0; i<LEVELSIZE_X; i++)
-	 for(int j=0; j<LEVELSIZE_Y; j++) 
+	 for(int j=0; j<LEVELSIZE_Y; j++)
 	 {
 		 fread(&LoadTile, sizeof(LoadTile), 1, Datei);
 
@@ -441,13 +449,13 @@ loadfile:
 		 Tiles[i][j].Color [0] = D3DCOLOR_RGBA(LoadTile.Red, LoadTile.Green, LoadTile.Blue, LoadTile.Alpha);
 		 Tiles[i][j].Color [1] = D3DCOLOR_RGBA(LoadTile.Red, LoadTile.Green, LoadTile.Blue, LoadTile.Alpha);
 		 Tiles[i][j].Color [2] = D3DCOLOR_RGBA(LoadTile.Red, LoadTile.Green, LoadTile.Blue, LoadTile.Alpha);
-		 Tiles[i][j].Color [3] = D3DCOLOR_RGBA(LoadTile.Red, LoadTile.Green, LoadTile.Blue, LoadTile.Alpha);		 
+		 Tiles[i][j].Color [3] = D3DCOLOR_RGBA(LoadTile.Red, LoadTile.Green, LoadTile.Blue, LoadTile.Alpha);
 
 		 // Eine Flüssigkeit als Block?
 		 // damit man nicht immer auf alle vier möglichen Flüssigkeiten checken muss,
 		 // sondern nur auf BLOCKWERT_LIQUID
 
-		 if (Tiles[i][j].Block & BLOCKWERT_WASSER ||			 
+		 if (Tiles[i][j].Block & BLOCKWERT_WASSER ||
 			 Tiles[i][j].Block & BLOCKWERT_SUMPF)
 			 Tiles[i][j].Block ^= BLOCKWERT_LIQUID;
 	 }
@@ -457,7 +465,7 @@ loadfile:
 	 int bl, br, bo, bu;
 
 	 for(i=1; i<LEVELSIZE_X-1; i++)
-	  for(int j=2; j<LEVELSIZE_Y-1; j++) 
+	  for(int j=2; j<LEVELSIZE_Y-1; j++)
 		{
 			// Schräge links hoch
 			if (  Tiles[i+0][j+0].Block & BLOCKWERT_WAND  &&
@@ -490,7 +498,7 @@ loadfile:
 				!(Tiles[i]    [j - 1].Block & BLOCKWERT_WASSERFALL) &&
 				!(Tiles[i - 1][j - 1].Block & BLOCKWERT_WASSERFALL) &&
 				(bl & BLOCKWERT_LIQUID &&
- 			  (!(bo & BLOCKWERT_WAND))))					  
+ 			  (!(bo & BLOCKWERT_WAND))))
 				Tiles[i][j].move_v1 = true;
 			else
 				Tiles[i][j].move_v1 = false;
@@ -529,7 +537,7 @@ loadfile:
 		// Startposition des Spielers
 		if(LoadObject.ObjectID == 0)
 		{
-			if (LoadObject.Value1 == 0)									// Anfängliche 
+			if (LoadObject.Value1 == 0)									// Anfängliche
 				pPlayer[LoadObject.Value2]->Blickrichtung = RECHTS;		// Blickrichtung auch
 			else														// aus Leveldatei
 				pPlayer[LoadObject.Value2]->Blickrichtung = LINKS;		// lesen
@@ -542,7 +550,7 @@ loadfile:
 			pPlayer[LoadObject.Value2]->JumpySave = pPlayer[LoadObject.Value2]->ypos;
 			pPlayer[LoadObject.Value2]->CenterLevel();
 			UpdateLevel ();
-		}																
+		}
 
 		// Anzahl Secrets, OneUps usw zählen, für Summary-Box
 
@@ -634,7 +642,7 @@ loadfile:
 
 			// Boulder laden, wenn der MetalHead Boss geladen wird
 			if (LoadObject.ObjectID    == METALHEAD &&
-				pGegnerGrafix[BOULDER] == NULL) 
+				pGegnerGrafix[BOULDER] == NULL)
 				LoadGegnerGrafik(BOULDER);
 
 			// Schleimbollen laden, wenn das Schleimmaul geladen wird
@@ -677,7 +685,7 @@ loadfile:
 				pGegnerGrafix[MINIROCKET] == NULL)
 			{
 				LoadGegnerGrafik(MINIROCKET);
-			}			
+			}
 
 			// Fette Rakete laden, wenn Riesenspinne oder Drache geladen wird
 			if ((LoadObject.ObjectID == RIESENSPINNE ||
@@ -743,7 +751,7 @@ loadfile:
 
 			// Gegner laden, wenn er nicht schon geladen wurde
 			if (pGegnerGrafix[LoadObject.ObjectID] == NULL)
-				LoadGegnerGrafik(LoadObject.ObjectID);		
+				LoadGegnerGrafik(LoadObject.ObjectID);
 
 			// Gegner bei aktuellem Skill level überhaupt erzeugen ?
 			if (LoadObject.Skill <= Skill)
@@ -781,7 +789,7 @@ loadfile:
 		pPlayer[1]->JumpySave = pPlayer[1]->ypos;
 	}
 
-	fread(&pTileEngine->DateiAppendix, sizeof(pTileEngine->DateiAppendix), 1, Datei);	
+	fread(&pTileEngine->DateiAppendix, sizeof(pTileEngine->DateiAppendix), 1, Datei);
 
 	bDrawShadow = pTileEngine->DateiAppendix.Taschenlampe;
 	ShadowAlpha = 255.0f;
@@ -811,7 +819,7 @@ loadfile:
 	ColG3 = ColG1 + ColG2 + 32; if (ColG3 > 255) ColG3 = 255;
 	ColB3 = ColB1 + ColB2 + 32; if (ColB3 > 255) ColB3 = 255;
 
-	ColA3 = GetDecValue(&pTileEngine->DateiAppendix.Col1[6], 2) + 
+	ColA3 = GetDecValue(&pTileEngine->DateiAppendix.Col1[6], 2) +
 			GetDecValue(&pTileEngine->DateiAppendix.Col2[6], 2);
 	if (ColA3 > 255) ColA3 = 255;
 
@@ -868,13 +876,13 @@ void TileEngineClass::CalcRenderRange(void)
 	if (xo + RenderPosXTo > LEVELSIZE_X) RenderPosXTo = SCREENSIZE_X;
 	if (yo + RenderPosYTo > LEVELSIZE_Y) RenderPosYTo = SCREENSIZE_Y;
 
-	// Sonstige Ausgangswerte berechnen	
+	// Sonstige Ausgangswerte berechnen
 	xLevel = (int)(XOffset * 0.05f);
 	yLevel = (int)(YOffset * 0.05f);
 
 	// Offsets der Tiles berechnen (0-19)
 	xTileOffs = (int)(XOffset) % TILESIZE_X;
-	yTileOffs = (int)(YOffset) % TILESIZE_Y;	
+	yTileOffs = (int)(YOffset) % TILESIZE_Y;
 }
 
 // --------------------------------------------------------------------------------------
@@ -890,7 +898,11 @@ void TileEngineClass::DrawBackground(void)
 	//
 	D3DXMATRIX matView;
 	D3DXMatrixIdentity	 (&matView);
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_VIEW, &matView);
+#elif defined(PLATFORM_SDL)
+    g_matView = matView;
+#endif
 
 //----- Hintergrund-Bild
 
@@ -926,9 +938,9 @@ void TileEngineClass::DrawBackground(void)
 	// Rechte Hälfte
 	ParallaxLayer[0].SetRect(xoff, 0, 640, 480);
 	ParallaxLayer[0].RenderSprite(0, yoff, 0xFFFFFFFF);
-	
 
-//----- vorletzter Layer 
+
+//----- vorletzter Layer
 
 	yoff = (float)((LEVELSIZE_Y-SCREENSIZE_Y)*TILESIZE_Y);	// Grösse des Levels in Pixeln (-1 Screen)
 	yoff = (float)(200-200/yoff*YOffset);			// y-Offset des Layers berechnen
@@ -1003,7 +1015,7 @@ void TileEngineClass::DrawSpecialLayer(void)
 //
 // Das Level wird Tile für Tile durchgegangen das Vertex-Array solange mit
 // Vertices gefüllt, die das selbe Tileset verwenden, bis ein anderes Tileset
-// gesetzt werden muss, worauf alle Vetices im Array mit der alten Textur gerendert 
+// gesetzt werden muss, worauf alle Vetices im Array mit der alten Textur gerendert
 // werden und alles mit der neuen Textur von vorne wieder losgeht, bis alle Tiles
 // durchgenommen wurden.
 
@@ -1028,7 +1040,7 @@ void TileEngineClass::DrawBackLevel(void)
 	// x und ypos am screen errechnen
 	xScreen = (float)(-xTileOffs) + RenderPosX * TILESIZE_X;
 	yScreen = (float)(-yTileOffs) + RenderPosY * TILESIZE_Y;
-	
+
 	DirectGraphics.SetColorKeyMode();
 
 	// Noch keine Tiles zum rendern
@@ -1058,7 +1070,11 @@ void TileEngineClass::DrawBackLevel(void)
 						DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, NumToRender*2, &TilesToRender[0]);
 
 					// Neue aktuelle Textur setzen
+#if defined(PLATFORM_DIRECTX)
 					lpD3DDevice->SetTexture (0, TileGfx[ActualTexture].itsTexture);
+#elif defined(PLATFORM_SDL)
+                    DirectGraphics.SetTexture(  TileGfx[ActualTexture].itsTexture );
+#endif
 
 					// Und beim rendern wieder von vorne anfangen
 					NumToRender = 0;
@@ -1069,10 +1085,10 @@ void TileEngineClass::DrawBackLevel(void)
 				// Animiertes Tile ?
 				if (Tiles[xLevel+i][yLevel+j].Block & BLOCKWERT_ANIMIERT_BACK)
 					Type += 36*TileAnimPhase;
-			
+
 				// richtigen Ausschnitt für das aktuelle Tile setzen
 				Rect = TileRects[Type];
-				
+
 				// Screen-Koordinaten der Vertices
 				l = xScreen   ;						// Links
 				o = yScreen   ;						// Oben
@@ -1088,7 +1104,7 @@ void TileEngineClass::DrawBackLevel(void)
 				tl = Rect.left  /TILESETSIZE_X;				// Links
 				tr = Rect.right /TILESETSIZE_X;				// Rechts
 				to = Rect.top   /TILESETSIZE_Y;				// Oben
-				tu = Rect.bottom/TILESETSIZE_Y;				// Unten								
+				tu = Rect.bottom/TILESETSIZE_Y;				// Unten
 
 				off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
 
@@ -1120,7 +1136,7 @@ void TileEngineClass::DrawBackLevel(void)
 				v4.tv		= tu;
 
 				// Hintergrund des Wasser schwabbeln lassen
-				//								
+				//
 				if (Tiles[xLevel+i][yLevel+j-1].Block & BLOCKWERT_LIQUID)
 				{
 					if (Tiles[xLevel+i][yLevel+j].move_v1 == true) v1.x += SinList2[off];
@@ -1134,9 +1150,9 @@ void TileEngineClass::DrawBackLevel(void)
 				TilesToRender[NumToRender*6]   = v1;	// Jeweils 2 Dreicke als
 				TilesToRender[NumToRender*6+1] = v2;	// als ein viereckiges
 				TilesToRender[NumToRender*6+2] = v3;	// Tile ins Array kopieren
-				TilesToRender[NumToRender*6+3] = v3;	
-				TilesToRender[NumToRender*6+4] = v2;	
-				TilesToRender[NumToRender*6+5] = v4;	
+				TilesToRender[NumToRender*6+3] = v3;
+				TilesToRender[NumToRender*6+4] = v2;
+				TilesToRender[NumToRender*6+5] = v4;
 
 				NumToRender++;				// Weiter im Vertex Array
 			}
@@ -1198,7 +1214,11 @@ void TileEngineClass::DrawFrontLevel(void)
 													   &TilesToRender[0]);
 
 					// Neue aktuelle Textur setzen
+#if defined(PLATFORM_DIRECTX)
 					lpD3DDevice->SetTexture (0, TileGfx[ActualTexture].itsTexture);
+#elif defined(PLATFORM_SDL)
+                    DirectGraphics.SetTexture(  TileGfx[ActualTexture].itsTexture );
+#endif
 
 					// Und beim rendern wieder von vorne anfangen
 					NumToRender = 0;
@@ -1212,7 +1232,7 @@ void TileEngineClass::DrawFrontLevel(void)
 
 				// richtigen Ausschnitt für das aktuelle Tile setzen
 				Rect = TileRects[Type];
-				
+
 				// Screen-Koordinaten der Vertices
 				l = xScreen   ;						// Links
 				o = yScreen   ;						// Oben
@@ -1229,7 +1249,7 @@ void TileEngineClass::DrawFrontLevel(void)
 				tr = Rect.right /TILESETSIZE_X;				// Rechts
 				to = Rect.top   /TILESETSIZE_Y;				// Oben
 				tu = Rect.bottom/TILESETSIZE_Y;				// Unten
-			
+
 				// Vertices definieren
 				v1.z	 = v2.z		= v3.z	   = v4.z	  = 0.0f;
 
@@ -1243,9 +1263,9 @@ void TileEngineClass::DrawFrontLevel(void)
 				}
 					else
 				{
-					v1.color = 
-					v2.color = 
-					v3.color = 
+					v1.color =
+					v2.color =
+					v3.color =
 					v4.color = D3DCOLOR_RGBA(255, 255, 255, Tiles[xLevel+i][yLevel+j].Alpha);
 				}
 
@@ -1272,7 +1292,7 @@ void TileEngineClass::DrawFrontLevel(void)
 				v4.tv		= tu;
 
 				// Hintergrund des Wasser schwabbeln lassen
-				//				
+				//
 
 				if (Tiles[xLevel+i][yLevel+j-1].Block & BLOCKWERT_LIQUID)
 				{
@@ -1287,9 +1307,9 @@ void TileEngineClass::DrawFrontLevel(void)
 				TilesToRender[NumToRender*6]   = v1;	// Jeweils 2 Dreicke als
 				TilesToRender[NumToRender*6+1] = v2;	// als ein viereckiges
 				TilesToRender[NumToRender*6+2] = v3;	// Tile ins Array kopieren
-				TilesToRender[NumToRender*6+3] = v3;	
-				TilesToRender[NumToRender*6+4] = v2;	
-				TilesToRender[NumToRender*6+5] = v4;	
+				TilesToRender[NumToRender*6+3] = v3;
+				TilesToRender[NumToRender*6+4] = v2;
+				TilesToRender[NumToRender*6+5] = v4;
 
 				NumToRender++;				// Weiter im Vertex Array
 
@@ -1356,7 +1376,7 @@ void TileEngineClass::DrawBackLevelOverlay (void)
 			//
 			if (Tiles[xLevel+i][yLevel+j].BackArt > 0 &&
 			    Tiles[xLevel+i][yLevel+j].Block & BLOCKWERT_WAND &&
-				(!(Tiles[xLevel+i][yLevel+j].FrontArt > 0 && 
+				(!(Tiles[xLevel+i][yLevel+j].FrontArt > 0 &&
 				   Tiles[xLevel+i][yLevel+j].Block & BLOCKWERT_VERDECKEN)))
 			{
 				// Neue Textur ?
@@ -1370,7 +1390,12 @@ void TileEngineClass::DrawBackLevelOverlay (void)
 						DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, NumToRender*2, &TilesToRender[0]);
 
 					// Neue aktuelle Textur setzen
+#if defined(PLATFORM_DIRECTX)
 					lpD3DDevice->SetTexture (0, TileGfx[ActualTexture].itsTexture);
+#elif defined(PLATFORM_SDL)
+                    DirectGraphics.SetTexture(  TileGfx[ActualTexture].itsTexture );
+#endif
+
 
 					// Und beim rendern wieder von vorne anfangen
 					NumToRender = 0;
@@ -1381,7 +1406,7 @@ void TileEngineClass::DrawBackLevelOverlay (void)
 				// Animiertes Tile ?
 				if (Tiles[xLevel+i][yLevel+j].Block & BLOCKWERT_ANIMIERT_BACK)
 					Type += 36*TileAnimPhase;
-			
+
 				// richtigen Ausschnitt für das aktuelle Tile setzen
 				Rect = TileRects[Type];
 
@@ -1401,9 +1426,9 @@ void TileEngineClass::DrawBackLevelOverlay (void)
 				tr = Rect.right /TILESETSIZE_X;				// Rechts
 				to = Rect.top   /TILESETSIZE_Y;				// Oben
 				tu = Rect.bottom/TILESETSIZE_Y;				// Unten
-	
+
 				al = Tiles[xLevel+i][yLevel+j].Alpha;
-				
+
 				off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
 
 				// Vertices definieren
@@ -1437,9 +1462,9 @@ void TileEngineClass::DrawBackLevelOverlay (void)
 				TilesToRender[NumToRender*6]   = v1;	// Jeweils 2 Dreicke als
 				TilesToRender[NumToRender*6+1] = v2;	// als ein viereckiges
 				TilesToRender[NumToRender*6+2] = v3;	// Tile ins Array kopieren
-				TilesToRender[NumToRender*6+3] = v3;	
-				TilesToRender[NumToRender*6+4] = v2;	
-				TilesToRender[NumToRender*6+5] = v4;	
+				TilesToRender[NumToRender*6+3] = v3;
+				TilesToRender[NumToRender*6+4] = v2;
+				TilesToRender[NumToRender*6+5] = v4;
 
 				NumToRender++;				// Weiter im Vertex Array
 			}
@@ -1476,8 +1501,8 @@ void TileEngineClass::DrawOverlayLevel(void)
 
 	// Noch keine Tiles zum rendern
 	NumToRender = 0;
-	int al;	
-	int off = 0;	
+	int al;
+	int off = 0;
 
 	for(int j = RenderPosY; j<RenderPosYTo; j++)
 	{
@@ -1512,7 +1537,7 @@ void TileEngineClass::DrawOverlayLevel(void)
 					// Tiles zeichnen
 					if (NumToRender > 0)
 					{
-						DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, NumToRender*2, &TilesToRender[0]);						
+						DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, NumToRender*2, &TilesToRender[0]);
 						NumToRender   = 0;
 					}
 
@@ -1520,11 +1545,11 @@ void TileEngineClass::DrawOverlayLevel(void)
 
 					// Drei Schichten Wasserfall rendern =)
 					//
-					
+
 					// Schicht 1
 					//
 					int xoff = (i+xLevel) % 3 * 20;
-					int yoff = (j+yLevel) % 3 * 20 + 120 - int (WasserfallOffset);					
+					int yoff = (j+yLevel) % 3 * 20 + 120 - int (WasserfallOffset);
 
 					Wasserfall[0].SetRect (xoff, yoff, xoff+20, yoff+20);
 					Wasserfall[0].RenderSprite((float)(i*20-xTileOffs), (float)(j*20-yTileOffs), Col1);
@@ -1567,19 +1592,23 @@ void TileEngineClass::DrawOverlayLevel(void)
 							DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, NumToRender*2, &TilesToRender[0]);
 
 						// Neue aktuelle Textur setzen
+#if defined(PLATFORM_DIRECTX)
 						lpD3DDevice->SetTexture (0, TileGfx[ActualTexture].itsTexture);
+#elif defined(PLATFORM_SDL)
+                        DirectGraphics.SetTexture(  TileGfx[ActualTexture].itsTexture );
+#endif
 
 						// Und beim rendern wieder von vorne anfangen
 						NumToRender = 0;
 					}
 
-					// "normales" Overlay Tile setzen				
+					// "normales" Overlay Tile setzen
 					Type = Tiles[xLevel+i][yLevel+j].FrontArt - INCLUDE_ZEROTILE;
 
 					// Animiertes Tile ?
 					if (Tiles[xLevel+i][yLevel+j].Block & BLOCKWERT_ANIMIERT_FRONT)
 						Type += 36*TileAnimPhase;
-				
+
 					// richtigen Ausschnitt für das aktuelle Tile setzen
 					Rect = TileRects[Type];
 
@@ -1609,7 +1638,7 @@ void TileEngineClass::DrawOverlayLevel(void)
 						tl -= 60.0f / 256.0f * WasserfallOffset / 120.0f;
 						tr -= 60.0f / 256.0f * WasserfallOffset / 120.0f;
 					}
-		
+
 					al = Tiles[xLevel+i][yLevel+j].Alpha;
 
 					// Vertices definieren
@@ -1621,12 +1650,12 @@ void TileEngineClass::DrawOverlayLevel(void)
 						v2.color = Tiles[xLevel+i][yLevel+j].Color [1];
 						v3.color = Tiles[xLevel+i][yLevel+j].Color [2];
 						v4.color = Tiles[xLevel+i][yLevel+j].Color [3];
-					} 
-					else 
+					}
+					else
 					{
 						v1.color = v2.color = v3.color = v4.color = D3DCOLOR_RGBA (255, 255, 255, Tiles[xLevel+i][yLevel+j].Alpha);
 					}
-					
+
 					off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
 
 					v1.x		= l + SinList[off];						// Links oben
@@ -1647,15 +1676,15 @@ void TileEngineClass::DrawOverlayLevel(void)
 					v4.x		= r + SinList[off + 2];					// Rechts unten
 					v4.y		= u;
 					v4.tu		= tr;
-					v4.tv		= tu;											
+					v4.tv		= tu;
 
 					// Zu rendernde Vertices ins Array schreiben
 					TilesToRender[NumToRender*6]   = v1;	// Jeweils 2 Dreicke als
 					TilesToRender[NumToRender*6+1] = v2;	// als ein viereckiges
 					TilesToRender[NumToRender*6+2] = v3;	// Tile ins Array kopieren
-					TilesToRender[NumToRender*6+3] = v3;	
-					TilesToRender[NumToRender*6+4] = v2;	
-					TilesToRender[NumToRender*6+5] = v4;	
+					TilesToRender[NumToRender*6+3] = v3;
+					TilesToRender[NumToRender*6+4] = v2;
+					TilesToRender[NumToRender*6+5] = v4;
 
 					NumToRender++;				// Weiter im Vertex Array
 				}
@@ -1696,8 +1725,13 @@ void TileEngineClass::DrawWater(void)
 	// billiges Wasser?
 	//
 	if (options_Detail < DETAIL_MEDIUM)
-	{					
+	{
+
+#if defined(PLATFORM_DIRECTX)
 		lpD3DDevice->SetTexture (0, 0);
+#elif defined(PLATFORM_SDL)
+        DirectGraphics.SetTexture(  0 );
+#endif
 
 		for(int j = RenderPosY; j<RenderPosYTo; j++)
 		{
@@ -1707,7 +1741,7 @@ void TileEngineClass::DrawWater(void)
 			{
 				// Vordergrund Tiles setzen um Spieler zu verdecken
 				if (Tiles[i+xLevel][j+yLevel].Block & BLOCKWERT_LIQUID)
-				{				
+				{
 					// Screen-Koordinaten der Vertices
 					l = xScreen   ;						// Links
 					o = yScreen   ;						// Oben
@@ -1718,7 +1752,7 @@ void TileEngineClass::DrawWater(void)
 					r += 0.5f;
 					o -= 0.5f;
 					u += 0.5f;
-					
+
 					// Textur Koordinaten setzen
 					//
 					xo = (i + xLevel) % 8;
@@ -1749,9 +1783,9 @@ void TileEngineClass::DrawWater(void)
 					TilesToRender[NumToRender*6]   = v1;	// Jeweils 2 Dreicke als
 					TilesToRender[NumToRender*6+1] = v2;	// als ein viereckiges
 					TilesToRender[NumToRender*6+2] = v3;	// Tile ins Array kopieren
-					TilesToRender[NumToRender*6+3] = v3;	
-					TilesToRender[NumToRender*6+4] = v2;	
-					TilesToRender[NumToRender*6+5] = v4;	
+					TilesToRender[NumToRender*6+3] = v3;
+					TilesToRender[NumToRender*6+4] = v2;
+					TilesToRender[NumToRender*6+5] = v4;
 
 					NumToRender++;				// Weiter im Vertex Array
 				}
@@ -1768,7 +1802,7 @@ void TileEngineClass::DrawWater(void)
 
 	// oder geiles, animiertes Wasser?
 	else
-	{		
+	{
 		// zwei Schichten Wasser rendern
 		for (int schicht = 0; schicht < 2; schicht++)
 		{
@@ -1776,9 +1810,9 @@ void TileEngineClass::DrawWater(void)
 			xTileOffs = (int)(XOffset) % TILESIZE_X;
 			yTileOffs = (int)(YOffset) % TILESIZE_Y;
 
-			// ypos am screen errechnen					
+			// ypos am screen errechnen
 			yScreen = (float)(-yTileOffs) + RenderPosY * TILESIZE_Y;
-			
+
 			for(int j = RenderPosY; j<RenderPosYTo; j++)
 			{
 				xScreen = (float)(-xTileOffs) + RenderPosX * TILESIZE_X;
@@ -1787,7 +1821,7 @@ void TileEngineClass::DrawWater(void)
 				{
 					// Vordergrund Tiles setzen um Spieler zu verdecken
 					if (Tiles[i+xLevel][j+yLevel].Block & BLOCKWERT_LIQUID)
-					{				
+					{
 						// Screen-Koordinaten der Vertices
 						l = xScreen   ;						// Links
 						o = yScreen   ;						// Oben
@@ -1831,7 +1865,7 @@ void TileEngineClass::DrawWater(void)
 							if (!(Tiles[xLevel+i+1][yLevel+j-1].Block & BLOCKWERT_LIQUID) &&
 								!(Tiles[xLevel+i+1][yLevel+j-1].Block & BLOCKWERT_WASSERFALL))
 								v2.color = Col3;
-						}						
+						}
 
 						xo = (i + xLevel) % 8;
 						yo = (j + yLevel) % 8;
@@ -1852,9 +1886,9 @@ void TileEngineClass::DrawWater(void)
 							v1.tu = WasserU [xo];	v1.tv = WasserV [yo];
 							v2.tu = WasserU [xo+1];	v2.tv = WasserV [yo];
 							v3.tu = WasserU [xo];	v3.tv = WasserV [yo+1];
-							v4.tu = WasserU [xo+1];	v4.tv = WasserV [yo+1];							
-						}						
-									
+							v4.tu = WasserU [xo+1];	v4.tv = WasserV [yo+1];
+						}
+
 						if (Tiles[xLevel+i][yLevel+j].move_v1 == true)
 							v1.y += WaterList[off + j*10 + i * 2];
 
@@ -1866,13 +1900,13 @@ void TileEngineClass::DrawWater(void)
 
 						if (Tiles[xLevel+i][yLevel+j].move_v4 == true)
 							v4.y += WaterList[off + j*10 + i * 2 + 10];
-								
+
 						// Zu rendernde Vertices ins Array schreiben
 						TilesToRender[NumToRender*6]   = v1;	// Jeweils 2 Dreicke als
 						TilesToRender[NumToRender*6+1] = v2;	// als ein viereckiges
 						TilesToRender[NumToRender*6+2] = v3;	// Tile ins Array kopieren
-						TilesToRender[NumToRender*6+3] = v3;	
-						TilesToRender[NumToRender*6+4] = v2;	
+						TilesToRender[NumToRender*6+3] = v3;
+						TilesToRender[NumToRender*6+4] = v2;
 						TilesToRender[NumToRender*6+5] = v4;
 
 						NumToRender++;				// Weiter im Vertex Array
@@ -1889,11 +1923,21 @@ void TileEngineClass::DrawWater(void)
 				if (schicht > 0)
 				{
 					DirectGraphics.SetAdditiveMode();
+#if defined(PLATFORM_DIRECTX)
 					lpD3DDevice->SetTexture (0, LiquidGfx[1].itsTexture);
+#elif defined(PLATFORM_SDL)
+                    DirectGraphics.SetTexture(  LiquidGfx[1].itsTexture );
+#endif
+
 				}
-				else
+				else {
+#if defined(PLATFORM_DIRECTX)
 					lpD3DDevice->SetTexture (0, LiquidGfx[0].itsTexture);
-	
+#elif defined(PLATFORM_SDL)
+                    DirectGraphics.SetTexture(  LiquidGfx[0].itsTexture );
+#endif
+				}
+
 				DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, NumToRender*2, &TilesToRender[0]);
 			}
 
@@ -1904,7 +1948,7 @@ void TileEngineClass::DrawWater(void)
 	// Wasserfall rendern
 	xScreen = (float)(-xTileOffs) + RenderPosX * TILESIZE_X;
 	yScreen = (float)(-yTileOffs) + RenderPosY * TILESIZE_Y;
-	{					
+	{
 		for(int j = RenderPosY; j<RenderPosYTo; j++)
 		{
 			xScreen = (float)(-xTileOffs) + RenderPosX * TILESIZE_X;
@@ -1913,15 +1957,15 @@ void TileEngineClass::DrawWater(void)
 			{
 				// Ist ein Wasserfall teil?
 				if (Tiles[i+xLevel][j+yLevel].Block & BLOCKWERT_WASSERFALL)
-				{		
+				{
 					DirectGraphics.SetColorKeyMode();
 					// Drei Schichten Wasserfall rendern =)
 					//
-					
+
 					// Schicht 1
 					//
 					int xoff = (i+xLevel) % 3 * TILESIZE_X;
-					int yoff = (j+yLevel) % 3 * TILESIZE_Y + 120 - int (WasserfallOffset);					
+					int yoff = (j+yLevel) % 3 * TILESIZE_Y + 120 - int (WasserfallOffset);
 
 					Wasserfall[0].SetRect (xoff, yoff, xoff+TILESIZE_X, yoff+TILESIZE_Y);
 					Wasserfall[0].RenderSprite((float)(i*TILESIZE_X-xTileOffs), (float)(j*TILESIZE_Y-yTileOffs), Col1);
@@ -1933,16 +1977,16 @@ void TileEngineClass::DrawWater(void)
 
 					Wasserfall[0].SetRect (xoff, yoff, xoff+TILESIZE_X, yoff+TILESIZE_Y);
 					Wasserfall[0].RenderSprite((float)(i*TILESIZE_X-xTileOffs), (float)(j*TILESIZE_Y-yTileOffs), Col2);
-					
+
 					// Glanzschicht (Schicht 3) drüber
-					//					
-					Wasserfall[1].SetRect ((i*TILESIZE_X-xTileOffs)%640, 
-										   (j*TILESIZE_Y-yTileOffs)%480, 
-										   (i*TILESIZE_X-xTileOffs)%640+TILESIZE_X, 
+					//
+					Wasserfall[1].SetRect ((i*TILESIZE_X-xTileOffs)%640,
+										   (j*TILESIZE_Y-yTileOffs)%480,
+										   (i*TILESIZE_X-xTileOffs)%640+TILESIZE_X,
 										   (j*TILESIZE_Y-yTileOffs)%480+TILESIZE_Y);
 
-					Wasserfall[1].RenderSprite((float)(i*TILESIZE_X-xTileOffs), 
-											   (float)(j*TILESIZE_Y-yTileOffs), 
+					Wasserfall[1].RenderSprite((float)(i*TILESIZE_X-xTileOffs),
+											   (float)(j*TILESIZE_Y-yTileOffs),
 											   D3DCOLOR_RGBA (180, 240, 255, 60));
 				}
 
@@ -2040,7 +2084,7 @@ void TileEngineClass::UpdateLevel(void)
 	// Zeit abgelaufen? Dann Punisher erscheinen lassen
 	//
 	if (Timelimit < 0.0f)
-	{		
+	{
 		if (pPlayer[0]->PunisherActive == false &&
 			pHUD->BossHUDActive == 0.0f)
 		{
@@ -2053,7 +2097,7 @@ void TileEngineClass::UpdateLevel(void)
 		}
 
 		Timelimit = 0.0f;
-	}	
+	}
 
 	XOffset += ScrollSpeedX * SpeedFaktor;
 	YOffset += ScrollSpeedY * SpeedFaktor;
@@ -2070,35 +2114,35 @@ void TileEngineClass::UpdateLevel(void)
 	}
 
 	// Sichtbaren Level-Ausschnitt scrollen
-	if (Zustand == ZUSTAND_SCROLLTO ||		
+	if (Zustand == ZUSTAND_SCROLLTO ||
 		Zustand == ZUSTAND_SCROLLTOLOCK)
 	{
-		if (XOffset < ScrolltoX) 
-		{	
+		if (XOffset < ScrolltoX)
+		{
 			XOffset += SpeedX SYNC;
 
 			if (XOffset > ScrolltoX)
 				XOffset = ScrolltoX;
 		}
 
-		if (XOffset > ScrolltoX) 
-		{	
+		if (XOffset > ScrolltoX)
+		{
 			XOffset -= SpeedX SYNC;
 
 			if (XOffset < ScrolltoX)
 				XOffset = ScrolltoX;
 		}
 
-		if (YOffset < ScrolltoY) 
-		{	
+		if (YOffset < ScrolltoY)
+		{
 			YOffset += SpeedY SYNC;
 
 			if (YOffset > ScrolltoY)
 				YOffset = ScrolltoY;
 		}
 
-		if (YOffset > ScrolltoY) 
-		{	
+		if (YOffset > ScrolltoY)
+		{
 			YOffset -= SpeedY SYNC;
 
 			if (YOffset < ScrolltoY)
@@ -2141,9 +2185,9 @@ void TileEngineClass::UpdateLevel(void)
 				float xdist = (float)(pPlayer[1]->xpos - pPlayer[0]->xpos);
 				float ydist = (float)(pPlayer[1]->ypos - pPlayer[0]->ypos);
 
-				ScrolltoX = (pPlayer[0]->xpos + 35) + xdist / 2.0f - 320.0f;			
-				ScrolltoY = (pPlayer[0]->ypos + 40) + ydist / 2.0f - 240.0f;		
-			}			
+				ScrolltoX = (pPlayer[0]->xpos + 35) + xdist / 2.0f - 320.0f;
+				ScrolltoY = (pPlayer[0]->ypos + 40) + ydist / 2.0f - 240.0f;
+			}
 		}
 
 		bool isScrolling = false;
@@ -2171,18 +2215,18 @@ void TileEngineClass::UpdateLevel(void)
 			YOffset += SpeedY SYNC;
 			isScrolling = true;
 		}
-		
+
 		if (isScrolling == false)
 			Zustand = ZUSTAND_SCROLLBAR;
 	}
 
 	// Scrollbar und 2-Spieler Modus? Dann Kamera entsprechend setzen
 	if (Zustand == ZUSTAND_SCROLLBAR)
-	{		
+	{
 		float newx, newy;
 		float angleichx, angleichy;
 
-		if (NUMPLAYERS == 2)		
+		if (NUMPLAYERS == 2)
 		{
 			if (pPlayer[0]->Handlung == TOT)
 			{
@@ -2198,7 +2242,7 @@ void TileEngineClass::UpdateLevel(void)
 			else
 			{
 				float xdist, ydist;
-			
+
 				xdist = (float)(pPlayer[1]->xpos - pPlayer[0]->xpos);
 				newx = (pPlayer[0]->xpos + 35) + xdist / 2.0f;
 
@@ -2213,7 +2257,7 @@ void TileEngineClass::UpdateLevel(void)
 		}
 
 		if (newx < 0) newx = 0;
-		if (newy < 0) newy = 0;				
+		if (newy < 0) newy = 0;
 
 		angleichx = pTileEngine->XOffset;
 		angleichy = pTileEngine->YOffset;
@@ -2241,12 +2285,12 @@ void TileEngineClass::UpdateLevel(void)
 			if (newx > pTileEngine->XOffset + 320.0f + SCROLL_BORDER_HORIZ)	 pTileEngine->XOffset = newx - 320.0f - SCROLL_BORDER_HORIZ;
 			if (newy < pTileEngine->YOffset + 240.0f - SCROLL_BORDER_TOP)	 pTileEngine->YOffset = newy - 240.0f + SCROLL_BORDER_TOP;
 			if (newy > pTileEngine->YOffset + 240.0f + SCROLL_BORDER_BOTTOM) pTileEngine->YOffset = newy - 240.0f - SCROLL_BORDER_TOP;
-		}		
+		}
 		*/
 	}
-	
+
 	// Wasserfall animieren
-	WasserfallOffset += 16.0f SYNC;	
+	WasserfallOffset += 16.0f SYNC;
 
 	while (WasserfallOffset >= 120.0f)
 		   WasserfallOffset -= 120.0f;
@@ -2311,7 +2355,7 @@ void TileEngineClass::MakeBordersLookCool(int x, int y)
 														Tiles[x+1][y+0].Green,
 														Tiles[x+1][y+0].Blue,
 														0);
-	}*/	
+	}*/
 }
 
 // --------------------------------------------------------------------------------------
@@ -2350,7 +2394,7 @@ int	TileEngineClass::BlockRechts(float &x, float &y, float  &xo, float &yo, RECT
 			if (Tiles[xlevel][ylevel].Block > 0 && !(Art & BLOCKWERT_WAND))
 				Art = Tiles[xlevel][ylevel].Block;
 
-			if (Art & BLOCKWERT_WAND)							
+			if (Art & BLOCKWERT_WAND)
 			{
 				if (resolve)
 				{
@@ -2396,7 +2440,7 @@ bool TileEngineClass::BlockDestroyRechts(float &x, float &y, float  &xo, float &
 			ylevel = (unsigned int)((y+i) * 0.05f);
 
 			if (Tiles[xlevel][ylevel].Block & BLOCKWERT_DESTRUCTIBLE)
-			{	
+			{
 				ExplodeWall(xlevel, ylevel);
 				return true;
 			}
@@ -2422,7 +2466,7 @@ void TileEngineClass::ResolveLinks (float &x, float &y, float &xo, float &yo, RE
 		pdir.x = x - xo;
 		pdir.y = y - yo;
 
-		
+
 		D3DXVECTOR2 p1, p2;
 		p1.x = ppos.x;
 		p1.y = ppos.y;
@@ -2469,7 +2513,7 @@ int	TileEngineClass::BlockLinks(float &x, float &y, float &xo, float &yo, RECT r
 			if (Tiles[xlevel][ylevel].Block > 0 && !(Art & BLOCKWERT_WAND))
 				Art = Tiles[xlevel][ylevel].Block;
 
-			if (Art & BLOCKWERT_WAND)							
+			if (Art & BLOCKWERT_WAND)
 			{
 				if (resolve)
 				{
@@ -2518,7 +2562,7 @@ bool TileEngineClass::BlockDestroyLinks(float &x, float &y, float &xo, float &yo
 			ylevel = (unsigned int)((y+i) * 0.05f);
 
 			if (Tiles[xlevel][ylevel].Block & BLOCKWERT_DESTRUCTIBLE)
-			{	
+			{
 				ExplodeWall(xlevel, ylevel);
 				return true;
 			}
@@ -2565,7 +2609,7 @@ int	TileEngineClass::BlockOben(float &x, float &y, float &xo, float &yo, RECT re
 			if (Tiles[xlevel][ylevel].Block > 0 && !(Art & BLOCKWERT_WAND))
 				Art = Tiles[xlevel][ylevel].Block;
 
-			if (Art & BLOCKWERT_WAND)							
+			if (Art & BLOCKWERT_WAND)
 			{
 				if (resolve)
 				{
@@ -2613,7 +2657,7 @@ bool TileEngineClass::BlockDestroyOben(float &x, float &y, float &xo, float &yo,
 			ylevel = (unsigned int)((y+rect.top-l-1) * 0.05f);
 
 			if (Tiles[xlevel][ylevel].Block & BLOCKWERT_DESTRUCTIBLE)
-			{	
+			{
 				ExplodeWall(xlevel, ylevel);
 				return true;
 			}
@@ -2650,7 +2694,7 @@ int	TileEngineClass::BlockUntenNormal(float &x, float &y, float &xo, float &yo, 
 
 	laenge = int(y - yo)+1;
 	laenge = 5;
-	
+
 	for (int l=0; l<laenge && Art == 0; l+=20)
 	{
 		for(int i=rect.left+1; i<rect.right-1; i++)
@@ -2662,7 +2706,7 @@ int	TileEngineClass::BlockUntenNormal(float &x, float &y, float &xo, float &yo, 
 				Art = Tiles[xlevel][ylevel].Block;
 
 			if (Art & BLOCKWERT_WAND ||
-				Art & BLOCKWERT_PLATTFORM)			
+				Art & BLOCKWERT_PLATTFORM)
 					return Art;
 		}
 	}
@@ -2713,7 +2757,7 @@ int	TileEngineClass::BlockUnten(float &x, float &y, float &xo, float &yo, RECT r
 				Art = Tiles[xlevel][ylevel].Block;
 
 			if (Art & BLOCKWERT_WAND ||
-				Art & BLOCKWERT_PLATTFORM) 
+				Art & BLOCKWERT_PLATTFORM)
 			{
 //				while ((Tiles[xlevel][ylevel - 1].Block & BLOCKWERT_WAND) &&
 //					    yLevel > 0)
@@ -2723,7 +2767,7 @@ int	TileEngineClass::BlockUnten(float &x, float &y, float &xo, float &yo, RECT r
 				{
 					// resolven
 					y = (float)(ylevel*TILESIZE_Y-rect.bottom);
-					yo = y;												
+					yo = y;
 				}
 
 				return Art;
@@ -2770,7 +2814,7 @@ bool TileEngineClass::BlockDestroyUnten(float &x, float &y, float &xo, float &yo
 			ylevel = (unsigned int)((y+rect.bottom+l+1) * 0.05f);
 
 			if (Tiles[xlevel][ylevel].Block & BLOCKWERT_DESTRUCTIBLE)
-			{	
+			{
 				ExplodeWall(xlevel, ylevel);
 				return true;
 			}
@@ -2785,7 +2829,7 @@ bool TileEngineClass::BlockDestroyUnten(float &x, float &y, float &xo, float &yo
 // --------------------------------------------------------------------------------------
 
 int	TileEngineClass::BlockSlopes(float &x, float &y, float &xo, float &yo, RECT rect, float ySpeed, bool resolve)
-{	
+{
 	int Art	= 0;
 	int xlevel;
 	int ylevel;
@@ -2793,7 +2837,7 @@ int	TileEngineClass::BlockSlopes(float &x, float &y, float &xo, float &yo, RECT 
 
 	//laenge = int(y - yo)+1;
 	laenge = 5;
-		
+
 	for(int j = rect.bottom; j<rect.bottom+TILESIZE_Y; j++)
 	{
 		// Schräge links
@@ -2831,7 +2875,7 @@ int	TileEngineClass::BlockSlopes(float &x, float &y, float &xo, float &yo, RECT 
 
 			Art = Tiles[xlevel][ylevel].Block;
 
-		
+
 			if (Art & BLOCKWERT_SCHRAEGE_R)
 			{
 				float newy = (ylevel+1) * TILESIZE_Y - rect.bottom - (float (int (x + i) % TILESIZE_X)) - 1;
@@ -2917,7 +2961,7 @@ D3DCOLOR TileEngineClass::LightValue(float x, float y, RECT rect, bool forced)
 	if (g > 255) g = 255;
 	if (b > 255) b = 255;
 
-	Color = D3DCOLOR_RGBA(r, g, b, 255);	
+	Color = D3DCOLOR_RGBA(r, g, b, 255);
 
 	return Color;
 }
@@ -2939,7 +2983,7 @@ void TileEngineClass::ComputeShitLight (void)
 											  Tiles[i][j].Green,
 											  Tiles[i][j].Blue,
 											  Tiles[i][j].Alpha);
-	 }	
+	 }
 } // ComputeShitLight
 
 // --------------------------------------------------------------------------------------
@@ -2960,27 +3004,27 @@ void TileEngineClass::ComputeCoolLight (void)
 
 	for (int i = 1; i < LEVELSIZE_X - 1; i += 1)
 	 for (int j = 1; j < LEVELSIZE_Y - 1; j += 1)
-	 {	
+	 {
 		al = Tiles[i][j].Alpha;
 
 		// Ecke links oben
-		//		 
-		if ((!(Tiles[i-1][j-1].Block & BLOCKWERT_WAND)  && !(Tiles[i][j].Block & BLOCKWERT_WAND)) || 
+		//
+		if ((!(Tiles[i-1][j-1].Block & BLOCKWERT_WAND)  && !(Tiles[i][j].Block & BLOCKWERT_WAND)) ||
 			  (Tiles[i-1][j-1].Block & BLOCKWERT_WAND   &&   Tiles[i][j].Block & BLOCKWERT_WAND))
 		{ r1 = Tiles[i-1][j-1].Red;	g1 = Tiles[i-1][j-1].Green;		b1 = Tiles[i-1][j-1].Blue;} else
 		{ r1 = Tiles[i][j].Red;		g1 = Tiles[i][j].Green;			b1 = Tiles[i][j].Blue;}
 
-		if ((!(Tiles[i+0][j-1].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) || 
+		if ((!(Tiles[i+0][j-1].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) ||
 			  (Tiles[i+0][j-1].Block & BLOCKWERT_WAND  &&   Tiles[i][j].Block & BLOCKWERT_WAND))
 		{ r2 = Tiles[i+0][j-1].Red;	g2 = Tiles[i+0][j-1].Green;		b2 = Tiles[i+0][j-1].Blue;} else
 		{ r2 = Tiles[i][j].Red;		g2 = Tiles[i][j].Green;			b2 = Tiles[i][j].Blue;}
 
-		if ((!(Tiles[i-1][j+0].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) || 
+		if ((!(Tiles[i-1][j+0].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) ||
 			  (Tiles[i-1][j+0].Block & BLOCKWERT_WAND  &&  Tiles[i][j].Block & BLOCKWERT_WAND))
 		{ r3 = Tiles[i-1][j+0].Red;	g3 = Tiles[i-1][j+0].Green;		b3 = Tiles[i-1][j+0].Blue;} else
 		{ r3 = Tiles[i][j].Red;		g3 = Tiles[i][j].Green;			b3 = Tiles[i][j].Blue;}
 
-		if ((!(Tiles[i][j].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) || 
+		if ((!(Tiles[i][j].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) ||
 			  (Tiles[i][j].Block & BLOCKWERT_WAND  &&   Tiles[i][j].Block & BLOCKWERT_WAND))
 		{ r4 = Tiles[i][j].Red;		g4 = Tiles[i][j].Green;			b4 = Tiles[i][j].Blue;} else
 		{ r4 = Tiles[i][j].Red;		g4 = Tiles[i][j].Green;			b4 = Tiles[i][j].Blue;}
@@ -2988,28 +3032,28 @@ void TileEngineClass::ComputeCoolLight (void)
 		rn = int ((r1 + r2 + r3 + r4) / 4.0f);
 		gn = int ((g1 + g2 + g3 + g4) / 4.0f);
 		bn = int ((b1 + b2 + b3 + b4) / 4.0f);
-		
 
-		Tiles[i][j].Color[0] = D3DCOLOR_RGBA (rn, gn, bn, al);		
+
+		Tiles[i][j].Color[0] = D3DCOLOR_RGBA (rn, gn, bn, al);
 
 		// Ecke rechts oben
-		//		 
-		if ((!(Tiles[i-0][j-1].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) || 
+		//
+		if ((!(Tiles[i-0][j-1].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) ||
 			  (Tiles[i-0][j-1].Block & BLOCKWERT_WAND  &&   Tiles[i][j].Block & BLOCKWERT_WAND))
 		{ r1 = Tiles[i-0][j-1].Red;	g1 = Tiles[i-0][j-1].Green;		b1 = Tiles[i-0][j-1].Blue;} else
 		{ r1 = Tiles[i][j].Red;		g1 = Tiles[i][j].Green;			b1 = Tiles[i][j].Blue;}
 
-		if ((!(Tiles[i+1][j-1].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) || 
+		if ((!(Tiles[i+1][j-1].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) ||
 			  (Tiles[i+1][j-1].Block & BLOCKWERT_WAND  &&   Tiles[i][j].Block & BLOCKWERT_WAND))
 		{ r2 = Tiles[i+1][j-1].Red;	g2 = Tiles[i+1][j-1].Green;		b2 = Tiles[i+1][j-1].Blue;} else
 		{ r2 = Tiles[i][j].Red;		g2 = Tiles[i][j].Green;			b2 = Tiles[i][j].Blue;}
 
-		if ((!(Tiles[i+1][j+0].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) || 
+		if ((!(Tiles[i+1][j+0].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) ||
 			  (Tiles[i+1][j+0].Block & BLOCKWERT_WAND  &&   Tiles[i][j].Block & BLOCKWERT_WAND))
 		{ r3 = Tiles[i+1][j+0].Red;	g3 = Tiles[i+1][j+0].Green;		b3 = Tiles[i+1][j+0].Blue;} else
 		{ r3 = Tiles[i][j].Red;		g3 = Tiles[i][j].Green;			b3 = Tiles[i][j].Blue;}
 
-		if ((!(Tiles[i][j].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) || 
+		if ((!(Tiles[i][j].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) ||
 		 	  (Tiles[i][j].Block & BLOCKWERT_WAND  &&   Tiles[i][j].Block & BLOCKWERT_WAND))
 		{ r4 = Tiles[i][j].Red;		g4 = Tiles[i][j].Green;			b4 = Tiles[i][j].Blue;} else
 		{ r4 = Tiles[i][j].Red;		g4 = Tiles[i][j].Green;			b4 = Tiles[i][j].Blue;}
@@ -3021,23 +3065,23 @@ void TileEngineClass::ComputeCoolLight (void)
 		Tiles[i][j].Color[1] = D3DCOLOR_RGBA (rn, gn, bn, al);
 
 		// Ecke links unten
-		//		 
-		if ((!(Tiles[i-1][j-0].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) || 
+		//
+		if ((!(Tiles[i-1][j-0].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) ||
 		 	  (Tiles[i-1][j-0].Block & BLOCKWERT_WAND  &&   Tiles[i][j].Block & BLOCKWERT_WAND))
 		{ r1 = Tiles[i-1][j-0].Red;	g1 = Tiles[i-1][j-0].Green;		b1 = Tiles[i-1][j-0].Blue;} else
 		{ r1 = Tiles[i][j].Red;		g1 = Tiles[i][j].Green;			b1 = Tiles[i][j].Blue;}
 
-		if ((!(Tiles[i-1][j+1].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) || 
+		if ((!(Tiles[i-1][j+1].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) ||
 			  (Tiles[i-1][j+1].Block & BLOCKWERT_WAND  &&   Tiles[i][j].Block & BLOCKWERT_WAND))
 		{ r2 = Tiles[i-1][j+1].Red;	g2 = Tiles[i-1][j+1].Green;		b2 = Tiles[i-1][j+1].Blue;} else
 		{ r2 = Tiles[i][j].Red;		g2 = Tiles[i][j].Green;			b2 = Tiles[i][j].Blue;}
 
-		if ((!(Tiles[i-0][j+1].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) || 
+		if ((!(Tiles[i-0][j+1].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) ||
 			  (Tiles[i-0][j+1].Block & BLOCKWERT_WAND  &&   Tiles[i][j].Block & BLOCKWERT_WAND))
 		{ r3 = Tiles[i-0][j+1].Red;	g3 = Tiles[i-0][j+1].Green;		b3 = Tiles[i-0][j+1].Blue;} else
 		{ r3 = Tiles[i][j].Red;		g3 = Tiles[i][j].Green;			b3 = Tiles[i][j].Blue;}
 
-		if ((!(Tiles[i][j].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) || 
+		if ((!(Tiles[i][j].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) ||
 			  (Tiles[i][j].Block & BLOCKWERT_WAND  &&   Tiles[i][j].Block & BLOCKWERT_WAND))
 		{ r4 = Tiles[i][j].Red;		g4 = Tiles[i][j].Green;			b4 = Tiles[i][j].Blue;} else
 		{ r4 = Tiles[i][j].Red;		g4 = Tiles[i][j].Green;			b4 = Tiles[i][j].Blue;}
@@ -3049,23 +3093,23 @@ void TileEngineClass::ComputeCoolLight (void)
 		Tiles[i][j].Color[2] = D3DCOLOR_RGBA (rn, gn, bn, al);
 
 		// Ecke rechts unten
-		//		 
-		if ((!(Tiles[i+1][j-0].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) || 
+		//
+		if ((!(Tiles[i+1][j-0].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) ||
 			  (Tiles[i+1][j-0].Block & BLOCKWERT_WAND  &&   Tiles[i][j].Block & BLOCKWERT_WAND))
 		{ r1 = Tiles[i+1][j-0].Red;	g1 = Tiles[i+1][j-0].Green;		b1 = Tiles[i+1][j-0].Blue;} else
 		{ r1 = Tiles[i][j].Red;		g1 = Tiles[i][j].Green;			b1 = Tiles[i][j].Blue;}
 
-		if ((!(Tiles[i-0][j+1].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) || 
+		if ((!(Tiles[i-0][j+1].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) ||
 			  (Tiles[i-0][j+1].Block & BLOCKWERT_WAND  &&   Tiles[i][j].Block & BLOCKWERT_WAND))
 		{ r2 = Tiles[i-0][j+1].Red;	g2 = Tiles[i-0][j+1].Green;		b2 = Tiles[i-0][j+1].Blue;} else
 		{ r2 = Tiles[i][j].Red;		g2 = Tiles[i][j].Green;			b2 = Tiles[i][j].Blue;}
 
-		if ((!(Tiles[i+1][j+1].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) || 
+		if ((!(Tiles[i+1][j+1].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) ||
 			  (Tiles[i+1][j+1].Block & BLOCKWERT_WAND  &&   Tiles[i][j].Block & BLOCKWERT_WAND))
 		{ r3 = Tiles[i+1][j+1].Red;	g3 = Tiles[i+1][j+1].Green;		b3 = Tiles[i+1][j+1].Blue;} else
 		{ r3 = Tiles[i][j].Red;		g3 = Tiles[i][j].Green;			b3 = Tiles[i][j].Blue;}
 
-		if ((!(Tiles[i][j].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) || 
+		if ((!(Tiles[i][j].Block & BLOCKWERT_WAND) && !(Tiles[i][j].Block & BLOCKWERT_WAND)) ||
 			  (Tiles[i][j].Block & BLOCKWERT_WAND  &&   Tiles[i][j].Block & BLOCKWERT_WAND))
 		{ r4 = Tiles[i][j].Red;		g4 = Tiles[i][j].Green;			b4 = Tiles[i][j].Blue;} else
 		{ r4 = Tiles[i][j].Red;		g4 = Tiles[i][j].Green;			b4 = Tiles[i][j].Blue;}
@@ -3080,7 +3124,7 @@ void TileEngineClass::ComputeCoolLight (void)
 		OriginalTiles[i][j].Color[1] = Tiles[i][j].Color[1];
 		OriginalTiles[i][j].Color[2] = Tiles[i][j].Color[2];
 		OriginalTiles[i][j].Color[3] = Tiles[i][j].Color[3];
-	 }		 
+	 }
 
 } // ComputeCoolLight
 
@@ -3132,8 +3176,8 @@ void TileEngineClass::DrawShadow (void)
 void TileEngineClass::ExplodeWall (int x, int y)
 {
 	// ausserhalb des Levels nicht testen ;)
-	if (x<1 || 
-		y<1 || 
+	if (x<1 ||
+		y<1 ||
 		x>(int)pTileEngine->LEVELSIZE_X-1 ||
 		y>(int)pTileEngine->LEVELSIZE_Y-1)
 		return;
@@ -3147,7 +3191,7 @@ void TileEngineClass::ExplodeWall (int x, int y)
 	Tiles[x][y].FrontArt = 0;
 
 	for (int i = 0; i < 2; i++)
-		pPartikelSystem->PushPartikel((float)(x * TILESIZE_X + rand()%10), (float)(y * TILESIZE_Y + rand()%10), ROCKSPLITTERSMALL);	
+		pPartikelSystem->PushPartikel((float)(x * TILESIZE_X + rand()%10), (float)(y * TILESIZE_Y + rand()%10), ROCKSPLITTERSMALL);
 
 	for (int k=0; k<4; k++)
 		pPartikelSystem->PushPartikel(float(x*TILESIZE_X+8), float(y*TILESIZE_Y+8), FUNKE);
@@ -3194,7 +3238,7 @@ void TileEngineClass::ExplodeWalls (int x, int y)
 
 	ExplodeWall(x-1, y+2);
 	ExplodeWall(x+0, y+2);
-	ExplodeWall(x+1, y+2);		 
+	ExplodeWall(x+1, y+2);
 }
 
 // --------------------------------------------------------------------------------------
@@ -3220,7 +3264,7 @@ void TileEngineClass::ClearLightMaps(void)
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::DrawLightmap (int Map, float x, float y, int alpha)
-{	
+{
 	// keine Lightmap Effekte?
 	if (options_Detail < DETAIL_HIGH)
 		return;
@@ -3240,7 +3284,7 @@ void TileEngineClass::DrawLightmap (int Map, float x, float y, int alpha)
 	int xo, yo;
 	int sx;
 
-	sx = lightmaps[Map].xsize;	
+	sx = lightmaps[Map].xsize;
 
 	if (alpha < 0)
 		alpha = 0;
@@ -3256,10 +3300,10 @@ void TileEngineClass::DrawLightmap (int Map, float x, float y, int alpha)
 		  {
 				// Position des Level Tiles ausrechnen
 				xo = xpos + mapx;
-				yo = ypos + mapy;			
+				yo = ypos + mapy;
 
 				if (!(Tiles[xo][yo].Block & BLOCKWERT_WAND))
-				{							
+				{
 					// Farben addieren (mit OR verknüpfen)
 					Tiles[xo][yo].Color[0] |= lightmaps[Map].map[mapx + mapy * sx];
 					Tiles[xo][yo].Color[1] |= lightmaps[Map].map[mapx + 1 + mapy * sx];
@@ -3283,13 +3327,13 @@ void TileEngineClass::DrawLightmap (int Map, float x, float y, int alpha)
 		  {
 				// Position des Level Tiles ausrechnen
 				xo = xpos + mapx;
-				yo = ypos + mapy;			
+				yo = ypos + mapy;
 
 				// Nur Levelhintergrund bzw farbiges overlay beleuchten
 				if (!(Tiles[xo][yo].Block & BLOCKWERT_WAND))
-				{							
+				{
 					// links oben
-					col.color = lightmaps[Map].map[mapx + mapy * sx];					
+					col.color = lightmaps[Map].map[mapx + mapy * sx];
 					col.color = D3DCOLOR_RGBA(col.farbStruct.r * alpha / 255,
 											  col.farbStruct.g * alpha / 255,
 											  col.farbStruct.b * alpha / 255,
@@ -3311,7 +3355,7 @@ void TileEngineClass::DrawLightmap (int Map, float x, float y, int alpha)
 											  col.farbStruct.b * alpha / 255,
 											  255);
 					Tiles[xo][yo].Color[2] |= col.color;
-					
+
 					// rechts unten
 					col.color = lightmaps[Map].map[mapx + 1 + (mapy + 1) * sx];
 					col.color = D3DCOLOR_RGBA(col.farbStruct.r * alpha / 255,

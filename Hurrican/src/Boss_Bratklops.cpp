@@ -39,7 +39,7 @@ GegnerBratklops::GegnerBratklops(int Wert1, int Wert2, bool Light)
 
 	pLaser = new DirectGraphicsSprite();
 	pFlare = new DirectGraphicsSprite();
-	
+
 
 	pGfx[0]->LoadImage ("bratklops0000.bmp", 232, 400, 232, 400, 1, 1);
 	pGfx[1]->LoadImage ("bratklops0001.bmp", 232, 400, 232, 400, 1, 1);
@@ -113,7 +113,7 @@ void GegnerBratklops::DoDraw()
 			o = float (yPos - pTileEngine->YOffset + 215.0f-0.5f);			// Oben
 			r = float (xPos - pTileEngine->XOffset + 170.0f+0.5f);			// Rechts
 			u = float (yPos - pTileEngine->YOffset + 800.0f+0.5f);			// Unten
-				
+
 			tl = 0.0f;
 			tr = 1.0f;
 			to = 0.0f;
@@ -128,7 +128,11 @@ void GegnerBratklops::DoDraw()
 
 			// Textur setzen
 			//
+#if defined(PLATFORM_DIRECTX)
 			lpD3DDevice->SetTexture (0, pLaser->itsTexture);
+#elif defined(PLATFORM_SDL)
+            DirectGraphics.SetTexture(  pLaser->itsTexture );
+#endif
 
 			// Blitz rotieren lassen
 			//
@@ -139,12 +143,19 @@ void GegnerBratklops::DoDraw()
 			D3DXMatrixTranslation(&matTrans2, l+15,  o, 0.0f);			// Transformation wieder zurück
 			D3DXMatrixMultiply	 (&matWorld, &matTrans, &matRot);		// Verschieben und rotieren
 			D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurück
+#if defined(PLATFORM_DIRECTX)
 			lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+            D3DXMATRIXA16 matModelView;
+            matrixmode( GL_MODELVIEW );
+            matModelView = matWorld * g_matView;
+            glLoadMatrixf( matModelView.data() );
+#endif
 
 			DirectGraphics.SetFilterMode (true);
 
 			// Blitzstrahl zeichnen
-			//			
+			//
 			DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
 
 			DirectGraphics.SetFilterMode (false);
@@ -152,7 +163,12 @@ void GegnerBratklops::DoDraw()
 			// Normale Projektions-Matrix wieder herstellen
 			//
 			D3DXMatrixRotationZ (&matWorld, 0.0f);
+#if defined(PLATFORM_DIRECTX)
 			lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+            matModelView = matWorld * g_matView;
+            glLoadMatrixf( matModelView.data() );
+#endif
 
 			DirectGraphics.SetColorKeyMode();
 
@@ -174,8 +190,8 @@ void GegnerBratklops::DoDraw()
 			{
 				// Zum anzeigen der Rects, die geprüft werden
 				if (DebugMode == true)
-					RenderRect(float(xstart-pTileEngine->XOffset), 
-							   float(ystart-pTileEngine->YOffset), 
+					RenderRect(float(xstart-pTileEngine->XOffset),
+							   float(ystart-pTileEngine->YOffset),
 							   24, 24, 0x80FFFFFF);
 
 				// Laser auf Kollision mit dem Spieler prüfen
@@ -260,7 +276,7 @@ void GegnerBratklops::DoKI(void)
 	//
 	if (Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
 	{
-		pTileEngine->ScrollLevel((float)Value1, 
+		pTileEngine->ScrollLevel((float)Value1,
 								 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 		xPos -= 232;												// und Boss aus dem Screen setzen
 
@@ -294,7 +310,7 @@ void GegnerBratklops::DoKI(void)
 			{
 				// Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
 				//
-				if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+				if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
 				{
 					pSoundManager->PlaySong(MUSIC_BOSS, false);
 
@@ -303,7 +319,7 @@ void GegnerBratklops::DoKI(void)
 					Handlung = GEGNER_EINFLIEGEN;
 				}
 
-				
+
 			}
 		} break;
 
@@ -321,7 +337,7 @@ void GegnerBratklops::DoKI(void)
 			}
 		} break;
 
-		case GEGNER_STEHEN:			
+		case GEGNER_STEHEN:
 		{
 			static int oldaction = 0;
 
@@ -354,7 +370,7 @@ void GegnerBratklops::DoKI(void)
 
 				// Kotzen
 				//
-				else 
+				else
 				if (j == 1)
 				{
 					Handlung = GEGNER_SCHIESSEN;
@@ -362,7 +378,7 @@ void GegnerBratklops::DoKI(void)
 					pSoundManager->PlayWave (100, 128, 11025, SOUND_KOTZEN);
 				}
 				else
-				
+
 				// Laser
 				//
 				if (j == 2)
@@ -424,7 +440,7 @@ void GegnerBratklops::DoKI(void)
 		case GEGNER_SPECIAL:
 		{
 			FlareDelay += (10000.0f - Energy) / 1000.0f SYNC;
-		}	
+		}
 		break;
 
 		// Laser schiessen, der am Boden entlang wandert (von rechts nach links)
@@ -438,7 +454,7 @@ void GegnerBratklops::DoKI(void)
 				Handlung = GEGNER_STEHEN;
 				ActionDelay = 8.0f;
 			}
-		}	
+		}
 		break;
 
 		// Laser aufladen und dann drei Fett Boller schiessen
@@ -466,7 +482,7 @@ void GegnerBratklops::DoKI(void)
 				pSoundManager->PlayWave (100, 128, 11025, SOUND_GRANATE);
 				pSoundManager->PlayWave (100, 128, 11025, SOUND_BRATLASER);
 			}
-		}	
+		}
 		break;
 
 		case GEGNER_EXPLODIEREN:
@@ -487,7 +503,7 @@ void GegnerBratklops::DoKI(void)
 				Energy = 0.0f;
 		} break;
 
-		case GEGNER_SCHIESSEN:			
+		case GEGNER_SCHIESSEN:
 		{
 			// Aktion vorbei ?
 			//
@@ -497,7 +513,7 @@ void GegnerBratklops::DoKI(void)
 				Handlung    = GEGNER_STEHEN;
 			}
 
-			// Made kotzen 
+			// Made kotzen
 			//
 			ShotDelay -= 1.0f SYNC;
 			if (ShotDelay <= 0.0f)
@@ -538,7 +554,7 @@ void GegnerBratklops::DoKI(void)
 // --------------------------------------------------------------------------------------
 
 void GegnerBratklops::GegnerExplode(void)
-{	
+{
 	pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
 	// Zusäzliche Grafiken freigeben

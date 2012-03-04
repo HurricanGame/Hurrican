@@ -1,0 +1,22 @@
+UNRARLIB LICENSE
+
+You may use this library under one of these licenses:
+
+
+ - The UniquE RAR File Library license 
+   (see unrarlib-license.txt from http://www.unrarlib.org/unrarlib-license.txt)
+
+ - The GNU Public License - GPL license
+   (see gpl.txt from http://www.unrarlib.org/gpl.txt)
+
+
+Software distributed under any License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied warranty.
+
+Choose between UniquE RAR File Library and GPL license. You may not 
+use this file except in compliance with the chosen License. Express your
+choice by pasting the chosen license into the source file "unrarlib.c" and
+declare the license in the public documentation of your program.
+
+Christian Scheurer (cs@unrarlib.org)
+08. June 2002

@@ -48,7 +48,7 @@ void GegnerFahrstuhlBoss::DoDraw(void)
 {
 	// Gegner mit Kopf und Kanonen rendern
 	//
-	pGegnerGrafix[GegnerArt]->RenderSprite(float (xPos-pTileEngine->XOffset), 
+	pGegnerGrafix[GegnerArt]->RenderSprite(float (xPos-pTileEngine->XOffset),
 										   float (yPos-pTileEngine->YOffset), 0, 0xFFFFFFFF);
 
 	Head.RenderSprite  (float (xPos + x1 - pTileEngine->XOffset), float (yPos + y1 - pTileEngine->YOffset), 0xFFFFFFFF);
@@ -101,7 +101,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 
 		// Level wieder auf Spieler zentrieren
 		//
-		pTileEngine->ScrollLevel(pPlayer[0]->xpos - 300, 
+		pTileEngine->ScrollLevel(pPlayer[0]->xpos - 300,
 								 pPlayer[0]->ypos - 280, ZUSTAND_SCROLLTOPLAYER, 10.0f, 50.0f);
 
 		// Endboss-Musik ausfaden und abschalten
@@ -116,7 +116,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 	if (smokecount < 0.0f)
 	{
 		smokecount = 1.0f;
-	
+
 		pPartikelSystem->PushPartikel(xPos + rand()%10 - 15, yPos,  SMOKEBIG);
 		pPartikelSystem->PushPartikel(xPos + rand()%10 - 15, yPos + 210, SMOKEBIG);
 
@@ -124,7 +124,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 		pPartikelSystem->PushPartikel(xPos + rand()%10 + 375, yPos + 210, SMOKEBIG);
 
 		// Wunden Punkt rauchen lassen bei wenig Energy
-		if (Energy <= 1500.0f)	
+		if (Energy <= 1500.0f)
 		{
 			pPartikelSystem->PushPartikel(xPos + x1 + 35 + rand()%20, yPos + y1 + rand()%15,  SMOKEBIG);
 
@@ -133,7 +133,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 				pPartikelSystem->PushPartikel(xPos + x1 + 50 + rand()%20, yPos + y1 + 35 + rand()%15, LASERFLAME);
 			}
 		}
-	}	
+	}
 
 	// Kanonen bewegen
 	x1 += dx1 SYNC;
@@ -153,9 +153,9 @@ void GegnerFahrstuhlBoss::DoKI(void)
 	{
 			if ((dx1 < 0.0f && x1 < 140.0f) ||
 				(dx1 > 0.0f && x1 > 140.0f))
-			{ 
-				x1 = 140.0f; 
-				dx1 = 0.0f; 
+			{
+				x1 = 140.0f;
+				dx1 = 0.0f;
 			}
 	}
 
@@ -168,7 +168,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 			if (pSoundManager->its_Songs[MUSIC_STAGEMUSIC]->Volume == pSoundManager->its_Songs[MUSIC_STAGEMUSIC]->FadingEnd)
 			{
 				// Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-				if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+				if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
 					pSoundManager->PlaySong(MUSIC_BOSS, false);
 
 				Handlung = GEGNER_EINFLIEGEN2;				// Und Boss erscheinen lassen
@@ -181,7 +181,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 			DamageTaken = 0.0f;
 
 			TempY -= 5.0f SYNC;
-			
+
 			// Gegner an der richtigen Position ?
 			if (TempY < 500.0f)
 			{
@@ -200,7 +200,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 		case GEGNER_EINFLIEGEN:		// Gegner kommt in den Screen geflogen
 		{
 			TempY -= 5.0f SYNC;
-			
+
 			// Gegner an der richtigen Position ?
 			if (TempY < 500.0f)
 			{
@@ -249,7 +249,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 		case GEGNER_ABSENKEN:		// Gegner kommt nach unten
 		{
 			TempY -= 5.0f SYNC;
-			
+
 			// Gegner an der richtigen Position ?
 			if (TempY < 380.0f)
 			{
@@ -273,7 +273,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 		case GEGNER_AUFRICHTEN:		// Gegner fährt wieder hoch
 		{
 			TempY += 5.0f SYNC;
-			
+
 			// Gegner an der richtigen Position ?
 			if (TempY > 600.0f)
 			{
@@ -316,7 +316,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 				ShotDelay = 6.0f;
 
 				pSoundManager->PlayWave(100, 128, 44100, SOUND_LASERSHOT);
-				
+
 				pProjectiles->PushProjectile (xPos + x2 + 28,      yPos + y2 + 95,     KRABBLERLASER1);
 				pPartikelSystem->PushPartikel(xPos + x2 + 28 - 25, yPos + y2 + 95 - 4, LASERFLAME);
 
@@ -338,7 +338,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 		case GEGNER_BOMBARDIEREN:		// Steine bröckeln lassen
 		{
 			// An der Seite angekommen ? Dann ruckeln lassen und Steine werfen
-			if ((x1 > 280 && dx1 > 0.0f) || 
+			if ((x1 > 280 && dx1 > 0.0f) ||
 				(x1 < 0   && dx1 < 0.0f))
 			{
 				ShakeScreen(3);
@@ -423,7 +423,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 						dx1 = -10.0f;
 				}
 			}
-			
+
 		} break;
 
 		case GEGNER_CRUSHEN:				// Suchschüsse ballern
@@ -435,7 +435,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 				ShotDelay = 5.0f;
 
 				pSoundManager->PlayWave(100, 128, 8000 + rand ()%4000, SOUND_CANON);
-				
+
 				pProjectiles->PushProjectile (xPos + x2 + 28,      yPos + y2 + 95+5, SUCHSCHUSS);
 				pPartikelSystem->PushPartikel(xPos + x2 + 28 - 10, yPos + y2 + 95,   SMOKE);
 
@@ -443,7 +443,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 				pPartikelSystem->PushPartikel(xPos + x3 + 28 - 10, yPos + y2 + 95,   SMOKE);
 
 				y2 = 77;
-				
+
 				// Genug losgelassen ?
 				Shots--;
 				if (Shots <= 0)
@@ -457,7 +457,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 						dx1 = -10.0f;
 				}
 			}
-			
+
 		} break;
 
 		case GEGNER_FALLEN:

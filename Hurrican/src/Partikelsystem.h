@@ -1,6 +1,6 @@
 // Datei : Partikelsystem.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Partikelsystem für Hurrican
 // für Funken, Rauchwolken, Patronenhülsen usw.
@@ -16,7 +16,9 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_DIRECTX)
 #include <d3dx8.h>
+#endif
 #include "DX8Sprite.h"
 #include "Player.h"
 
@@ -204,8 +206,8 @@ class PartikelClass
 		D3DCOLOR			Color;						// Farbe des Partikels
 		float				xSpeed,ySpeed;				// Geschwindigkeit des Partikels
 		float				xAcc, yAcc;					// Beschleunigung des Partikels
-		int					AnimPhase, AnimEnde;		// Aktuelle Phase und Endphase		
-		float				AnimSpeed, AnimCount;		// Anim-Geschwindigkeit und Counter		
+		int					AnimPhase, AnimEnde;		// Aktuelle Phase und Endphase
+		float				AnimSpeed, AnimCount;		// Anim-Geschwindigkeit und Counter
 		bool				Rotate;						// evtl rotieren?
 		float				Rot;						// Rotation
 		float				RotDir;						// Richtung
@@ -238,7 +240,7 @@ class PartikelClass
 class PartikelsystemClass
 {
 	private:
-		int						NumPartikel;			// aktuelle Zahl der Partikel		
+		int						NumPartikel;			// aktuelle Zahl der Partikel
 		int						MAX_PARTIKEL;			// was wohl
 
 	public:

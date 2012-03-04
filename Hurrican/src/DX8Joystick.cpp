@@ -1,6 +1,6 @@
 // Datei : DX8Joystick.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Joystick Klasse
 //
@@ -37,7 +37,7 @@ DirectJoystickClass::DirectJoystickClass(void)
 // --------------------------------------------------------------------------------------
 
 DirectJoystickClass::~DirectJoystickClass(void)
-{	
+{
 }
 
 // --------------------------------------------------------------------------------------
@@ -50,6 +50,7 @@ void DirectJoystickClass::ForceFeedbackEffect(int nr)
 		CanForceFeedback == false)
 		return;
 
+#if defined(PLATFORM_DIRECTX)
 	switch (nr)
 	{
 		case 0:
@@ -68,6 +69,8 @@ void DirectJoystickClass::ForceFeedbackEffect(int nr)
 			pFFE_Blitz->Start(1,0);
 		break;
 	}
+#elif defined(PLATFORM_SDL)
+#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -80,6 +83,7 @@ void DirectJoystickClass::StopForceFeedbackEffect(int nr)
 		CanForceFeedback == false)
 		return;
 
+#if defined(PLATFORM_DIRECTX)
 	switch (nr)
 	{
 		case 0:
@@ -98,12 +102,15 @@ void DirectJoystickClass::StopForceFeedbackEffect(int nr)
 			pFFE_Blitz->Stop();
 		break;
 	}
+#elif defined(PLATFORM_SDL)
+#endif
 }
 
 // --------------------------------------------------------------------------------------
 // Joystick initialisieren
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_DIRECTX)
 bool DirectJoystickClass::Init(HWND hwnd, LPDIRECTINPUT8 lpDI)
 {
    HRESULT             dirval;           // Rückgabewert
@@ -111,7 +118,7 @@ bool DirectJoystickClass::Init(HWND hwnd, LPDIRECTINPUT8 lpDI)
 
 	// Joystick für enumerierte GUID erstellen
 	dirval = lpDI->CreateDevice(guidJoystickDevice,&lpDIJoystick, NULL);
-	if (dirval != DI_OK) 
+	if (dirval != DI_OK)
 	{
 		Protokoll.WriteText("\n-> Joystick : CreateDevice error!\n", false);
 		return false;
@@ -120,7 +127,7 @@ bool DirectJoystickClass::Init(HWND hwnd, LPDIRECTINPUT8 lpDI)
 
 	// Datenformat für Joystick festlegen
 	dirval = lpDIJoystick->SetDataFormat(&c_dfDIJoystick2);
-	if (dirval != DI_OK) 
+	if (dirval != DI_OK)
 	{
 		Protokoll.WriteText("\n-> Joystick : SetDataFormat error!\n", false);
 		return false;
@@ -129,7 +136,7 @@ bool DirectJoystickClass::Init(HWND hwnd, LPDIRECTINPUT8 lpDI)
 
 	// Zusammenarbeit mit Windows regeln
 	dirval = lpDIJoystick->SetCooperativeLevel(hwnd, DISCL_EXCLUSIVE | DISCL_FOREGROUND);
-	if (dirval != DI_OK) 
+	if (dirval != DI_OK)
 	{
 		Protokoll.WriteText("\n-> Joystick : SetCooperativeLevel error!\n", false);
 		return false;
@@ -145,7 +152,7 @@ bool DirectJoystickClass::Init(HWND hwnd, LPDIRECTINPUT8 lpDI)
 	diprg.lMax = +1000;                             // von, bis
 
 	dirval = lpDIJoystick->SetProperty(DIPROP_RANGE, &diprg.diph);
-	if (dirval != DI_OK) 
+	if (dirval != DI_OK)
 	{
 		Protokoll.WriteText("\n-> Joystick : SetPropertyX error!\n", false);
 		return false;
@@ -160,7 +167,7 @@ bool DirectJoystickClass::Init(HWND hwnd, LPDIRECTINPUT8 lpDI)
 	diprg.lMax = +1000;                             // von, bis
 
 	dirval = lpDIJoystick->SetProperty(DIPROP_RANGE, &diprg.diph);
-	if (dirval != DI_OK) 
+	if (dirval != DI_OK)
 	{
 		Protokoll.WriteText("\n-> Joystick : SetPropertyY error!\n", false);
 		return false;
@@ -168,28 +175,42 @@ bool DirectJoystickClass::Init(HWND hwnd, LPDIRECTINPUT8 lpDI)
 	Protokoll.WriteText("Joystick : SetPropertyY successfull!\n", false);
 
 	// Joystick Objekt aktivieren
-	if (lpDIJoystick) 
+	if (lpDIJoystick)
 	{
 		dirval = lpDIJoystick->Acquire();
-		if (dirval != DI_OK) 
+		if (dirval != DI_OK)
 		{
 			Protokoll.WriteText("\n-> Joystick : Acquire error!\n", false);
 			return false;
-		}  
+		}
 		Protokoll.WriteText("Joystick : Acquire successfull!\n", false);
 	}
-   else 
+   else
 	   return false;
 
    Active = true;
 
-   return true;	
+   return true;
 }
+#elif defined(PLATFORM_SDL)
+bool DirectJoystickClass::Init(int joy)
+{
+    lpDIJoystick = SDL_JoystickOpen(joy);
+
+    if (lpDIJoystick == NULL)
+        return false;
+
+    Active = true;
+
+    return true;
+}
+#endif
 
 // --------------------------------------------------------------------------------------
 // Joystick updaten
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_DIRECTX)
 bool DirectJoystickClass::Update(void)
 {
 	HRESULT		hresult;
@@ -209,7 +230,7 @@ bool DirectJoystickClass::Update(void)
 
 		// immernoch wech? Dann gibts halt kein Joystick mehr
 		//
-		if (hresult != DI_OK) 
+		if (hresult != DI_OK)
 		{
 			Protokoll.WriteText("\n-> Joystick : Re-Acquire Fehler !\n", false);
 			return false;
@@ -217,13 +238,13 @@ bool DirectJoystickClass::Update(void)
 
 		// Ansonsten State holen
 		//
-		else 
+		else
 		{
 			hresult = lpDIJoystick->GetDeviceState (sizeof (DIJOYSTATE2), &js);
 
 			// Wieder fehler? Dann wars das auch mit dem Joystick
 			//
-			if (hresult == DIERR_INPUTLOST) 
+			if (hresult == DIERR_INPUTLOST)
 			{
 				Protokoll.WriteText("\n-> Joystick : Re-Acquire Fehler !\n", false);
 				return false;
@@ -245,3 +266,31 @@ bool DirectJoystickClass::Update(void)
 
 	return true;
 }
+#elif defined(PLATFORM_SDL)
+bool DirectJoystickClass::Update(void)
+{
+    if (lpDIJoystick != NULL)
+    {
+        SDL_PumpEvents();
+
+        for (int i = 0; i < SDL_JoystickNumButtons( lpDIJoystick ); i++)
+        {
+            if (SDL_JoystickGetButton( lpDIJoystick, i ) == 1)
+                JoystickButtons[i] = true;
+            else
+                JoystickButtons[i] = false;
+        }
+
+        if (SDL_JoystickNumAxes(lpDIJoystick) > 1) {
+            JoystickX = SDL_JoystickGetAxis( lpDIJoystick, 0 );
+            JoystickY = SDL_JoystickGetAxis( lpDIJoystick, 1 );
+        }
+
+        if (SDL_JoystickNumHats(lpDIJoystick) > 0) {
+            JoystickPOV = SDL_JoystickGetHat( lpDIJoystick, 0 );
+        }
+    }
+
+    return true;
+}
+#endif

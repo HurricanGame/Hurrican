@@ -1,6 +1,6 @@
 // Datei : CCracktro.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Klasse für das Cracktro am Anfang
 //
@@ -23,7 +23,7 @@ char CrackText	[] = {	"                                              "
 						"classic turrican made by manfred trenz, chris huelsbeck, andreas escher,"
 						" jeroen tel, peter thierolf, ramiro vaca, markus siebold, julian eggebrecht,"
 						" celal kandemiroglu and many other people. it took us a loooong time to crack "
-						"this damn game, but at least it's here. hope you like it... "						
+						"this damn game, but at least it's here. hope you like it... "
 						"for updates and more visit www.hurrican-game.de or www.poke53280.de "
 						"and now have fun with this game!"
 						"                                               "
@@ -51,30 +51,30 @@ D3DCOLOR ScrollCol[] = {0xFF000088, 0xFF000088,
 						0xFF0000AA, 0xFF0000AA,
 						0xFF0000FF, 0xFF0000FF,
 						0xFF0000FF, 0xFF0000FF,
-						0xFF0088FF, 0xFF0088FF, 
-						0xFF0088FF, 0xFF0088FF, 
-						0xFFAAFFEE, 0xFFAAFFEE, 
-						0xFFAAFFEE, 0xFFAAFFEE, 
-						0xFFEEEE77, 
-						0xFFFFFFFF, 0xFFFFFFFF,
-						0xFFEEEE77, 
-						0xFFAAFFEE, 0xFFAAFFEE, 
+						0xFF0088FF, 0xFF0088FF,
+						0xFF0088FF, 0xFF0088FF,
 						0xFFAAFFEE, 0xFFAAFFEE,
-						0xFF0088FF, 0xFF0088FF, 
+						0xFFAAFFEE, 0xFFAAFFEE,
+						0xFFEEEE77,
+						0xFFFFFFFF, 0xFFFFFFFF,
+						0xFFEEEE77,
+						0xFFAAFFEE, 0xFFAAFFEE,
+						0xFFAAFFEE, 0xFFAAFFEE,
+						0xFF0088FF, 0xFF0088FF,
 						0xFF0088FF, 0xFF0088FF,
 						0xFF0000FF, 0xFF0000FF,
 						0xFF0000FF, 0xFF0000FF,
 						0xFF000088, 0xFF000088,
 						0xFF000088, 0xFF000088};
 
-D3DCOLOR BlinkCol[] = {	0xFF664400, 
-						0xFF664400, 
-						0xFF880000, 
-						0xFF880000, 
+D3DCOLOR BlinkCol[] = {	0xFF664400,
+						0xFF664400,
+						0xFF880000,
+						0xFF880000,
 						0xFFCC44CC,
 						0xFFCC44CC,
 						0xFFDD8855,
-						0xFFDD8855, 
+						0xFFDD8855,
 						0xFFEEEE77,
 						0xFFEEEE77,
 						0xFFFFFFFF,
@@ -120,10 +120,10 @@ D3DCOLOR BlinkCol[] = {	0xFF664400,
 // --------------------------------------------------------------------------------------
 
 CCracktro::CCracktro()
-{	
+{
 	b_running = true;
 	pFont = new(DirectGraphicsFont);
-	pFont->LoadFont("demofont.bmp", 288, 256, 18, 16, 16, 8);	
+	pFont->LoadFont("demofont.bmp", 288, 256, 18, 16, 16, 8);
 
 	Bars[0].LoadImage("copper1.bmp", 32, 36, 32, 36, 1, 1);
 	Bars[1].LoadImage("copper2.bmp", 32, 18, 32, 18, 1, 1);
@@ -133,7 +133,7 @@ CCracktro::CCracktro()
 
 	Logo[0].LoadImage("demologo.bmp", 341, 80, 341, 80, 1, 1);
 
-	Star.LoadImage("Star.bmp", 5, 5, 5, 5, 1, 1);
+	Star.LoadImage("star.bmp", 5, 5, 5, 5, 1, 1);
 
 	ScrollOffset  = 0.0f;
 	ScrollOffset2 = 0.0f;
@@ -148,9 +148,9 @@ CCracktro::CCracktro()
 		Stars[i].Ebene   = rand()%200 + 55;
 	}
 
-	pSoundManager->LoadSong("Cracktro.it", MUSIC_CRACKTRO);		
+	pSoundManager->LoadSong("Cracktro.it", MUSIC_CRACKTRO);
 	pSoundManager->PlaySong(MUSIC_CRACKTRO, false);
-	pSoundManager->SetAbsoluteSongVolume(MUSIC_CRACKTRO, 255);	
+	pSoundManager->SetAbsoluteSongVolume(MUSIC_CRACKTRO, 255);
 
 	DirectGraphics.SetAdditiveMode();
 	DirectGraphics.SetColorKeyMode();
@@ -164,7 +164,7 @@ CCracktro::CCracktro()
 // --------------------------------------------------------------------------------------
 
 CCracktro::~CCracktro()
-{	
+{
 	delete (pFont);
 } // Destruktor
 
@@ -174,7 +174,11 @@ CCracktro::~CCracktro()
 
 void CCracktro::Main(void)
 {
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,	D3DCOLOR_XRGB(0,0,0), 1.0f, 0);
+#elif defined(PLATFORM_SDL)
+    glClear( GL_COLOR_BUFFER_BIT );
+#endif
 
 	int i;
 
@@ -196,25 +200,25 @@ void CCracktro::Main(void)
 	// Sinus Scroller
 	// --------------------------------------------------------------------------------------
 	float xchar = 0;
-	float s;	
+	float s;
 	static float colpos = 0.0f;
 	static float LogoPos = 0.0f;
 
 	s = SinPos;
-	s =(float)(sin(s)) * 80.0f;
+	s =(float)(sinf(s)) * 80.0f;
 	s = (float)(abs((int)s));
 
 	colpos += 6.0f SYNC;
-	
+
 	for(i = 0; i < 43; i++)
-	{				
+	{
 		pFont->DrawDemoChar(xchar - ScrollOffset, (float)(450 - s), CrackText[i + ScrollPos], ScrollCol[(int)(colpos + i) % (sizeof(ScrollCol) / sizeof(D3DCOLOR))]);
 
 		if (CrackText[i + ScrollPos] != 32)
 			xchar += pFont->mCharLength[CrackText[i + ScrollPos] - 33] + 2;
 		else
 			xchar += pFont->mXCharSize;
-	}	
+	}
 
 	ScrollOffset += 12.0f SYNC;
 
@@ -251,7 +255,7 @@ void CCracktro::Main(void)
 	{
 		DirectGraphics.SetColorKeyMode();
 		Logo[0].RenderSprite((640 - 341) / 2 + (float)(sin(LogoPos) * 100.0f), 50, 0, 0xFFFFFFFF);
-	
+
 		numsin += 0.4f SYNC;
 
 		if (numsin > 2 * PI)
@@ -266,7 +270,7 @@ void CCracktro::Main(void)
 			off  = (float)(sin(numsin + i / 3.0f) * 10.0f);
 			off2 = (float)(sin(numsin + i / 3.0f + PI / 2) * 20.0f);
 
-			Zahlen.RenderSprite(75 + i * 40 - off + (640 - 341) / 2 + (float)(sin(LogoPos) * 100.0f), 
+			Zahlen.RenderSprite(75 + i * 40 - off + (640 - 341) / 2 + (float)(sin(LogoPos) * 100.0f),
 								110 - off2, i, 0xFFFFFFFF);
 		}
 	}
@@ -284,16 +288,16 @@ void CCracktro::Main(void)
 	// Scroller 2
 	// --------------------------------------------------------------------------------------
 	xchar = 0;
-	
+
 	for(i = 0; i < 50; i++)
-	{				
+	{
 		pFont->DrawDemoChar(xchar - ScrollOffset2, 295, StaticText[i + ScrollPos2], 0xFF000000);
 
 		if (StaticText[i + ScrollPos2] != 32)
 			xchar += pFont->mCharLength[StaticText[i + ScrollPos2] - 33] + 2;
 		else
 			xchar += pFont->mXCharSize;
-	}	
+	}
 
 	if (StaticText[ScrollPos2] == 32)
 		l = pFont->mXCharSize;
@@ -334,11 +338,11 @@ void CCracktro::Main(void)
 			off  = (float)(sin(numsin + i / 3.0f) * 10.0f);
 			off2 = (float)(sin(numsin + i / 3.0f + PI / 2) * 20.0f);
 
-			Zahlen.RenderSprite(75 + i * 40 - off + (640 - 341) / 2 + (float)(sin(LogoPos) * 100.0f), 
+			Zahlen.RenderSprite(75 + i * 40 - off + (640 - 341) / 2 + (float)(sin(LogoPos) * 100.0f),
 								110 - off2, i, 0xFFFFFFFF);
 		}
 	}
-	
+
 	// --------------------------------------------------------------------------------------
 	// Static Blink Text
 	// --------------------------------------------------------------------------------------
@@ -363,9 +367,9 @@ void CCracktro::Main(void)
 	RenderRect(0, yo + 20.0f, 640, 2, col);
 
 	pFont->DrawDemoText((float)(-sin(LogoPos) * 140.0f) +
-						(float)(626 - pFont->DemoStringLength(BlinkText[fontoff])) / 2.0f, yo + 2.0f, 
+						(float)(626 - pFont->DemoStringLength(BlinkText[fontoff])) / 2.0f, yo + 2.0f,
 						BlinkText[fontoff],
-						col);	
+						col);
 
 	// --------------------------------------------------------------------------------------
 	// Kringel
@@ -374,7 +378,7 @@ void CCracktro::Main(void)
 	for (int i = 0; i < 16; i++)
 	{
 		RenderRect((float)(-sin(LogoPos) * 140.0f) +
-				   320 +	 (float)(sin(SinPos + i * (2 * PI / 16)) * 140 ), 
+				   320 +	 (float)(sin(SinPos + i * (2 * PI / 16)) * 140 ),
 				   yo + 10 + (float)(cos(SinPos + i * (2 * PI / 16)) * 20), 4, 2, 0xFFFFFFFF);
 	}
 
@@ -386,8 +390,8 @@ void CCracktro::Main(void)
 		DirectInput.AnyButtonDown())
 	{
 		pSoundManager->StopSong(MUSIC_CRACKTRO, false);
-		State = 1;		
-	}	
+		State = 1;
+	}
 }
 
 // --------------------------------------------------------------------------------------
@@ -400,7 +404,7 @@ void CCracktro::Load(void)
 
 	// farbige Balken
 	for (int i = 0; i < 320; i++)
-		RenderRect(0,   (float)(i * 2), 
+		RenderRect(0,   (float)(i * 2),
 				   640, (float)(i * 2), ScrollCol[rand()%(int(sizeof(ScrollCol) / sizeof(D3DCOLOR)))]);
 
 	count -= 1.0f SYNC;
@@ -414,7 +418,7 @@ void CCracktro::Load(void)
 // --------------------------------------------------------------------------------------
 
 void CCracktro::Run (void)
-{	
+{
 	switch (State)
 	{
 	case 0 : Main();

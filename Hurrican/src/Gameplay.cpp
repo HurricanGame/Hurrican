@@ -1,6 +1,6 @@
 // Datei : Gameplay.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Beinhaltet den Haupt Game-Loop
 //
@@ -34,9 +34,9 @@
 #include "Tileengine.h"
 #include "Timer.h"
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 // Gameplay Variablen
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 
 int		MAX_LEVELS	   = 0;
 int		NUMPLAYERS	   = 1;
@@ -71,9 +71,9 @@ bool	FlugsackFliesFree;
 
 int		DisplayHintNr = -1;
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 // Ein neues Spiel initialisieren
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 
 void InitNewGame(void)
 {
@@ -85,7 +85,7 @@ void InitNewGame(void)
 		pPlayer[p]->Handlung = STEHEN;
 		pPlayer[p]->InitPlayer();
 		pPlayer[p]->InitNewLevel();
-		pPlayer[p]->SecretFullGame   = 0;	
+		pPlayer[p]->SecretFullGame   = 0;
 		pPlayer[p]->DiamondsFullGame = 0;
 		pPlayer[p]->LivesFullGame	  = 0;
 		pPlayer[p]->BlocksFullGame	  = 0;
@@ -98,12 +98,12 @@ void InitNewGame(void)
 	pHUD->BossHUDActive = 0.0f;
 }
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 // Ein neues Level initialisieren und Level "Stage'Nr'.map" laden
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 
 void InitNewGameLevel(int Nr)
-{	
+{
 	char Name[100];
 
 	pSoundManager->StopSong(MUSIC_STAGEMUSIC, false);
@@ -126,7 +126,7 @@ void InitNewGameLevel(int Nr)
 	{
 		// Nein, dann normales Level in der Reihenfolge laden oder Tutorial Level
 		if (RunningTutorial == true)
-			strcpy_s(Name, strlen("Tutorial.map") + 1, "Tutorial.map");
+			strcpy_s(Name, strlen("tutorial.map") + 1, "tutorial.map");
 		else
 			strcpy_s(Name, strlen(StageReihenfolge[Stage-1]) + 1, StageReihenfolge[Stage-1]);
 	}
@@ -155,11 +155,11 @@ void InitNewGameLevel(int Nr)
 	pTimer->update();
 
 	// Menu Musik ausfaden
-	// 
+	//
 	//pSoundManager->FadeSong (MUSIC_LOADING, -10.0f, 0, false);
 	if (true == pSoundManager->InitSuccessfull &&
-		FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_MENU]->SongData))
-	{		
+		MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_MENU]->SongData))
+	{
 		pSoundManager->FadeSong (MUSIC_MENU, -10.0f, 0, false);
 
 		while (pSoundManager->its_Songs[MUSIC_MENU]->FadingVolume != 0.0f)
@@ -176,9 +176,9 @@ void InitNewGameLevel(int Nr)
 	// Level-Musik abspielen
 	if (StopStageMusicAtStart == false)
 		pSoundManager->PlaySong(MUSIC_STAGEMUSIC, false);
-	
+
 	FahrstuhlPos = -1.0f;
-	
+
 	SpielZustand = GAMELOOP;
 }
 
@@ -189,7 +189,7 @@ void InitNewGameLevel(int Nr)
 void ShowGameOver(void)
 {
 	// Game Over Musik anhalten wenn sie beendet wurde
-	if (FMUSIC_IsFinished(pSoundManager->its_Songs[MUSIC_GAMEOVER]->SongData))
+	if (MUSIC_IsFinished(pSoundManager->its_Songs[MUSIC_GAMEOVER]->SongData))
 		pSoundManager->StopSong(MUSIC_GAMEOVER, false);
 
 	int col;
@@ -207,9 +207,9 @@ void ShowGameOver(void)
 	// Dann schön alle löschen und auf ein neues Spiel vorbereiten
 	if (pPlayer[0]->GameOverTimer <= 0.0f)
 	{
-		pPlayer[0]->GameOverTimer = 0.0f;		
+		pPlayer[0]->GameOverTimer = 0.0f;
 		pMenu->CheckForNewHighscore();
-		
+
 		pConsole->Hide();
 		Stage = -1;
 	}
@@ -220,60 +220,90 @@ void ShowGameOver(void)
 // --------------------------------------------------------------------------------------
 
 void GameLoop(void)
-{	
+{
 	pHUD->bShowArrow = false;
 
 	// Total löschen
+#if defined(PLATFORM_DIRECTX)
     lpD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-					   D3DCOLOR_XRGB(0,0,0), 1.0f, 0);		
+					   D3DCOLOR_XRGB(0,0,0), 1.0f, 0);
+#elif defined(PLATFORM_SDL)
+    glClear( GL_COLOR_BUFFER_BIT );
+#endif
 
 	pTileEngine->NewXOffset = -1;
-	pTileEngine->NewYOffset = -1;		
+	pTileEngine->NewYOffset = -1;
 
-	for (int p = 0; p < NUMPLAYERS; p++)
-	{		
-		pPlayer[p]->WasDamaged = false;
+    #define SPD_INC 0.3f
+    float i = 0;
+    float SpeedFaktorMax = SpeedFaktor;
 
-		if (pConsole->Showing == false &&
-			pPlayer[p]->Handlung != TOT)
-		{
-			if (pPlayer[p]->GameOverTimer == 0.0f)
-			{
-				// Spieler-Eingabe abfragen
-				pPlayer[p]->GetPlayerInput();
-				pPlayer[p]->AnimatePlayer();
-				pPlayer[p]->MovePlayer();
-			}
-		}
+    while (i<SpeedFaktorMax)
+    {
+        // If the hardware can not render fast enough the logic catch up becomes too large
+        // In this case the logic needs to be broken up into chunks
+        if (SpeedFaktorMax < SPD_INC)           // hardware is fast and sync does not need to be split
+        {
+            SpeedFaktor = SpeedFaktorMax;
+            i = SpeedFaktorMax;
+        }
+        else if (SpeedFaktorMax-i < SPD_INC)    // sync has been split and only a small value is needed to meet the total sync request
+        {
+            SpeedFaktor = SpeedFaktorMax-i;
+            i = SpeedFaktorMax;
+        }
+        else                                    // hardware is not fast and sync does need to be split into chunks
+        {
+            SpeedFaktor = SPD_INC;
+            i += SPD_INC;
+        }
 
-		pPlayer[p]->GegnerDran = false;
+        for (int p = 0; p < NUMPLAYERS; p++)
+        {
+            pPlayer[p]->WasDamaged = false;
 
-		// Spieler bewegen
-		if (p == 0 &&
-			pConsole->Showing == false)
-			pPlayer[p]->ScrollFlugsack();
-	}		
+            if (pConsole->Showing == false &&
+                pPlayer[p]->Handlung != TOT)
+            {
+                if (pPlayer[p]->GameOverTimer == 0.0f)
+                {
+                    // Spieler-Eingabe abfragen
+                    pPlayer[p]->GetPlayerInput();
+                    pPlayer[p]->AnimatePlayer();
+                    pPlayer[p]->MovePlayer();
+                }
+            }
 
-	// Spieler auf einer Plattform ?
-	for (int p = 0; p < NUMPLAYERS; p++)
-		if (pPlayer[p]->AufPlattform != NULL)
-			pPlayer[p]->DoPlattformStuff();    
+            pPlayer[p]->GegnerDran = false;
 
-	// Gegner bewegen
-	if (pConsole->Showing == false)
-		pGegner->RunAll();
+            // Spieler bewegen
+            if (p == 0 &&
+                pConsole->Showing == false)
+                pPlayer[p]->ScrollFlugsack();
+        }
 
-	// Level checken	
-	if (pConsole->Showing == false)
-		pTileEngine->UpdateLevel();
+        // Spieler auf einer Plattform ?
+        for (int p = 0; p < NUMPLAYERS; p++)
+            if (pPlayer[p]->AufPlattform != NULL)
+                pPlayer[p]->DoPlattformStuff();
 
-	pTileEngine->CheckBounds();
+        // Gegner bewegen
+        if (pConsole->Showing == false)
+            pGegner->RunAll();
+
+        // Level checken
+        if (pConsole->Showing == false)
+            pTileEngine->UpdateLevel();
+
+        pTileEngine->CheckBounds();
+    }
+    SpeedFaktor = SpeedFaktorMax;   // Restore the factor so other logic can stay in sync
 
 	if (SpielZustand != GAMELOOP)
-		return;		
+		return;
 
 	// Hintergrund und Parallax Layer anzeigen
-	DirectGraphics.SetColorKeyMode();	
+	DirectGraphics.SetColorKeyMode();
 	pTileEngine->CalcRenderRange();
 	pTileEngine->DrawBackground();
 
@@ -287,24 +317,24 @@ void GameLoop(void)
 	// Level anzeigen
 	pTileEngine->DrawBackLevel();
 	pTileEngine->DrawFrontLevel();
-	
+
 	// LighMaps löschen
 	if (options_Detail >= DETAIL_HIGH)
-		pTileEngine->ClearLightMaps();			
+		pTileEngine->ClearLightMaps();
 
 	// Gegner anzeigen
 	pGegner->RenderAll();
 
-	// Spieler anzeigen	
+	// Spieler anzeigen
 	for (int p = 0; p < NUMPLAYERS; p++)
-	{		
+	{
 		pPlayer[p]->AlreadyDrawn = false;
 
 		pPlayer[p]->DrawPlayer(false, false);
 
 
 		if (pPlayer[p]->BlinkCounter > 0.0f)			// noch farbig blinken vom PowerUp?
-		{			
+		{
 			if (pPlayer[p]->BlinkCounter < 4.0f)
 			{
 				int a = int ((pPlayer[p]->BlinkCounter) * 63.0f);
@@ -316,15 +346,15 @@ void GameLoop(void)
 
 				pPlayer[p]->DrawPlayer(true, true);
 				pPlayer[p]->DrawPlayer(true, true);
-				pPlayer[p]->DrawPlayer(false, true);			
+				pPlayer[p]->DrawPlayer(false, true);
 			}
 
-			pPlayer[p]->BlinkCounter -= 0.5f SYNC;		
+			pPlayer[p]->BlinkCounter -= 0.5f SYNC;
 		}
 			else
 			if (pPlayer[p]->WasDamaged == true)
-				pPlayer[p]->DrawPlayer(true, false);						
-	}	
+				pPlayer[p]->DrawPlayer(true, false);
+	}
 
 	// Schüsse abhandeln
 	pProjectiles->DoProjectiles();
@@ -333,12 +363,12 @@ void GameLoop(void)
 	pPartikelSystem->DoPartikel();
 
 	// Overlay Tiles des Levels zeigen und Spieler und Objekte verdecken
-	DirectGraphics.SetColorKeyMode();	
+	DirectGraphics.SetColorKeyMode();
 
 	pTileEngine->DrawWater();
 	pTileEngine->DrawBackLevelOverlay();
-	pTileEngine->DrawOverlayLevel();	
-	pTileEngine->DrawShadow();		
+	pTileEngine->DrawOverlayLevel();
+	pTileEngine->DrawShadow();
 
 	// HUD anhandeln
 	pHUD->DoHUD();
@@ -347,7 +377,7 @@ void GameLoop(void)
 	pHUD->RenderBossHUD();
 
 	// Pisstext anzeigen
-	ShowPissText();	
+	ShowPissText();
 
 	// evtl Warning Schild rendern
 	if (WarningCount > 0.0f)
@@ -366,7 +396,7 @@ void GameLoop(void)
 		pGegnerGrafix [WARNING]->SetRect (0, 0, 180, 40);
 		pGegnerGrafix [WARNING]->RenderSpriteScaled(float (230 - off * 4.5f / 4.0f),
 													float (390 - off / 4.0f),
-													int (180 + off * 4.5f / 2.0f), 
+													int (180 + off * 4.5f / 2.0f),
 													int (40  + off * 1.0f / 2.0f), Col);
 
 		DirectGraphics.SetFilterMode (false);
@@ -383,18 +413,18 @@ void GameLoop(void)
 		if (KeyDown(DIK_1))
 			pPlayer[0]->SelectedWeapon = 0;
 
-		if (KeyDown(DIK_2) &&  
+		if (KeyDown(DIK_2) &&
 			pPlayer[0]->CurrentWeaponLevel[1] > 0)
 			pPlayer[0]->SelectedWeapon = 1;
 
-		if (KeyDown(DIK_3) &&  
+		if (KeyDown(DIK_3) &&
 			pPlayer[0]->CurrentWeaponLevel[2] > 0)
 			pPlayer[0]->SelectedWeapon = 2;
 
 		for (int p = 0; p < NUMPLAYERS; p++)
 		if (pPlayer[p]->Handlung != TOT)
-			pPlayer[p]->CheckForExplode();	
-	}	
+			pPlayer[p]->CheckForExplode();
+	}
 
 	// Game-Over Schrift anzeigen ?
 	if (pPlayer[0]->GameOverTimer > 0.0f)
@@ -405,17 +435,17 @@ void GameLoop(void)
 		LeaveGameLoop();
 
 /*
-	if (KeyDown(DIK_F1)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 1;	
-	if (KeyDown(DIK_F2)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 2;	
-	if (KeyDown(DIK_F3)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 3;	
-	if (KeyDown(DIK_F4)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 4;	
-	if (KeyDown(DIK_F5)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 5;	
-	if (KeyDown(DIK_F6)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 6;	
-	if (KeyDown(DIK_F7)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 7;	
-	if (KeyDown(DIK_F8)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 8;	
+	if (KeyDown(DIK_F1)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 1;
+	if (KeyDown(DIK_F2)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 2;
+	if (KeyDown(DIK_F3)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 3;
+	if (KeyDown(DIK_F4)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 4;
+	if (KeyDown(DIK_F5)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 5;
+	if (KeyDown(DIK_F6)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 6;
+	if (KeyDown(DIK_F7)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 7;
+	if (KeyDown(DIK_F8)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 8;
 */
 
-	if (DEMORecording == true) pDefaultFont->DrawText (10, 455, "Recording demo", D3DCOLOR_RGBA (255, 255, 255, 255));		
+	if (DEMORecording == true) pDefaultFont->DrawText (10, 455, "Recording demo", D3DCOLOR_RGBA (255, 255, 255, 255));
 
 } // GameLoop
 
@@ -451,10 +481,10 @@ void LeaveGameLoop(void)
 	pSoundManager->StopAllSounds();
 
 	// Loop Sounds stoppen
-	pSoundManager->StopAllLoopedSounds();	
+	pSoundManager->StopAllLoopedSounds();
 
 	// Menu Musik spielen
-	pSoundManager->PlaySong(MUSIC_MENU, false);	
+	pSoundManager->PlaySong(MUSIC_MENU, false);
 
 	// TODO
 	// Alle Joysticks anhalten
@@ -476,6 +506,7 @@ void SetScreenShake (void)
 	int			Winkel;									// Rotationswinkel
 
 	float f = (ScreenWinkel + WackelValue);
+
 	MYMATH_FTOL(f, Winkel);
 
 	// Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
@@ -483,17 +514,21 @@ void SetScreenShake (void)
 	if (Winkel > 360) Winkel -= 360;
 	if (Winkel < 0)	  Winkel += 360;
 	D3DXMatrixRotationZ  (&matRot, DegreetoRad[Winkel]);
-	
-	D3DXMatrixTranslation(&matTrans, -320,-240, 0.0f);			// Transformation zum Ursprung
-	D3DXMatrixTranslation(&matTrans2, 320, 240, 0.0f);			// Transformation wieder zurück
-	
+
+	D3DXMatrixTranslation(&matTrans, -320.0f,-240.0f, 0.0f);			// Transformation zum Ursprung
+	D3DXMatrixTranslation(&matTrans2, 320.0f, 240.0f, 0.0f);			// Transformation wieder zurück
+
 	D3DXMatrixIdentity	 (&matView);
 	D3DXMatrixMultiply	 (&matView, &matView, &matTrans);		// Verschieben
 	D3DXMatrixMultiply	 (&matView, &matView, &matRot);			// rotieren
 	D3DXMatrixMultiply	 (&matView, &matView, &matTrans2);		// und wieder zurück verschieben
-	
+
 	// rotierte Matrix setzen
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_VIEW, &matView);
+#elif defined(PLATFORM_SDL)
+    g_matView = matView;
+#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -501,14 +536,14 @@ void SetScreenShake (void)
 // --------------------------------------------------------------------------------------
 
 void ScreenWackeln(void)
-{	
+{
 	// Weiterwackeln
 	//
 	if (pConsole->Active == false)
 	{
 		WackelValue += WackelDir SYNC * WackelSpeed;
 
-		if (WackelValue < -WackelMaximum ||			// An der aktuellen oberen  Grenze oder 
+		if (WackelValue < -WackelMaximum ||			// An der aktuellen oberen  Grenze oder
 			WackelValue >  WackelMaximum)			//				    unteren Grenze angekommen ?
 		{
 			WackelMaximum -=  0.5f;					// Dann Grenze verkleinern
@@ -543,7 +578,7 @@ void ShakeScreen (float staerke)
 void CreateDefaultConfig(void)
 {
 	strcpy_s (ActualLanguage, strlen("english.lng") + 1, "english.lng");
-	LoadLanguage (ActualLanguage);	
+	LoadLanguage (ActualLanguage);
 	pSoundManager->SetVolumes(50, 60);
 
 	pPlayer[0]->AktionKeyboard [AKTION_LINKS]			= DIK_LEFT;
@@ -551,6 +586,18 @@ void CreateDefaultConfig(void)
 	pPlayer[0]->AktionKeyboard [AKTION_DUCKEN]			= DIK_DOWN;
 	pPlayer[0]->AktionKeyboard [AKTION_OBEN]			= DIK_UP;
 	pPlayer[0]->AktionKeyboard [AKTION_UNTEN]			= DIK_DOWN;
+#if defined(PANDORA)
+	pPlayer[0]->AktionKeyboard [AKTION_JUMP]			= DIK_NEXT;
+	pPlayer[0]->AktionKeyboard [AKTION_SHOOT]			= DIK_HOME;
+	pPlayer[0]->AktionKeyboard [AKTION_BLITZ]			= DIK_PRIOR;
+	pPlayer[0]->AktionKeyboard [AKTION_POWERLINE]		= DIK_LSHIFT;
+	pPlayer[0]->AktionKeyboard [AKTION_GRANATE]		    = DIK_END;
+	pPlayer[0]->AktionKeyboard [AKTION_SMARTBOMB]		= DIK_RCONTROL;
+	pPlayer[0]->AktionKeyboard [AKTION_WAFFE_SPREAD]	= DIK_1;
+	pPlayer[0]->AktionKeyboard [AKTION_WAFFE_LASER]		= DIK_2;
+	pPlayer[0]->AktionKeyboard [AKTION_WAFFE_BOUNCE]	= DIK_3;
+	pPlayer[0]->AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_RETURN;
+#else
 	pPlayer[0]->AktionKeyboard [AKTION_JUMP]			= DIK_LALT;
 	pPlayer[0]->AktionKeyboard [AKTION_SHOOT]			= DIK_LCONTROL;
 	pPlayer[0]->AktionKeyboard [AKTION_BLITZ]			= DIK_LSHIFT;
@@ -561,7 +608,7 @@ void CreateDefaultConfig(void)
 	pPlayer[0]->AktionKeyboard [AKTION_WAFFE_LASER]		= 0;
 	pPlayer[0]->AktionKeyboard [AKTION_WAFFE_BOUNCE]	= 0;
 	pPlayer[0]->AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_RETURN;
-
+#endif
 	pPlayer[1]->AktionKeyboard [AKTION_LINKS]			= DIK_A;
 	pPlayer[1]->AktionKeyboard [AKTION_RECHTS]			= DIK_D;
 	pPlayer[1]->AktionKeyboard [AKTION_DUCKEN]			= DIK_S;
@@ -644,7 +691,7 @@ bool LoadConfig(void)
 
 	// Spracheinstellung laden
 	fread(&ActualLanguage, sizeof(ActualLanguage), 1, Datei);
-	LoadLanguage (ActualLanguage);	
+	LoadLanguage (ActualLanguage);
 
 	// Daten für Sound und Musik-Lautstärke auslesen
 	fread(&Sound, sizeof(Sound), 1, Datei);
@@ -665,10 +712,10 @@ bool LoadConfig(void)
 	fread(&UseForceFeedback, sizeof(UseForceFeedback), 1, Datei);
 
 	// Sonstige Optionen laden
-	fread(&options_Detail, sizeof(options_Detail), 1, Datei);	
-	
-	fread(&pPlayer[0]->ControlType,		sizeof(pPlayer[0]->ControlType),	 1, Datei);	
-	fread(&pPlayer[0]->JoystickMode,    sizeof(pPlayer[0]->JoystickMode),	 1, Datei);	
+	fread(&options_Detail, sizeof(options_Detail), 1, Datei);
+
+	fread(&pPlayer[0]->ControlType,		sizeof(pPlayer[0]->ControlType),	 1, Datei);
+	fread(&pPlayer[0]->JoystickMode,    sizeof(pPlayer[0]->JoystickMode),	 1, Datei);
 	fread(&pPlayer[0]->JoystickSchwelle,sizeof(pPlayer[0]->JoystickSchwelle),1, Datei);
 
 	// Joystick nicht mehr da?
@@ -687,8 +734,8 @@ bool LoadConfig(void)
 	}
 
 	pPlayer[1]->JoystickSchwelle = 500.0f;
-	fread(&pPlayer[1]->ControlType,		sizeof(pPlayer[1]->ControlType),	 1, Datei);	
-	fread(&pPlayer[1]->JoystickMode,	sizeof(pPlayer[1]->JoystickMode),	 1, Datei);	
+	fread(&pPlayer[1]->ControlType,		sizeof(pPlayer[1]->ControlType),	 1, Datei);
+	fread(&pPlayer[1]->JoystickMode,	sizeof(pPlayer[1]->JoystickMode),	 1, Datei);
 	fread(&pPlayer[1]->JoystickSchwelle,sizeof(pPlayer[1]->JoystickSchwelle),1, Datei);
 
 	Protokoll.WriteText("Konfigurationsdatei erfolgreich geladen !\n", false);
@@ -749,25 +796,25 @@ void SaveConfig(void)
 	fwrite(&UseForceFeedback, sizeof(UseForceFeedback), 1, Datei);
 
 	// Sonstige Optionen sichern
-	fwrite(&options_Detail, sizeof(options_Detail), 1, Datei);	
+	fwrite(&options_Detail, sizeof(options_Detail), 1, Datei);
 
-	fwrite(&pPlayer[0]->ControlType,		sizeof(pPlayer[0]->ControlType),	 1, Datei);	
-	fwrite(&pPlayer[0]->JoystickMode,		sizeof(pPlayer[0]->JoystickMode),	 1, Datei);	
+	fwrite(&pPlayer[0]->ControlType,		sizeof(pPlayer[0]->ControlType),	 1, Datei);
+	fwrite(&pPlayer[0]->JoystickMode,		sizeof(pPlayer[0]->JoystickMode),	 1, Datei);
 	fwrite(&pPlayer[0]->JoystickSchwelle,	sizeof(pPlayer[0]->JoystickSchwelle),1, Datei);
 
-	fwrite(&pPlayer[1]->ControlType,		sizeof(pPlayer[1]->ControlType),	 1, Datei);	
-	fwrite(&pPlayer[1]->JoystickMode,		sizeof(pPlayer[1]->JoystickMode),	 1, Datei);	
+	fwrite(&pPlayer[1]->ControlType,		sizeof(pPlayer[1]->ControlType),	 1, Datei);
+	fwrite(&pPlayer[1]->JoystickMode,		sizeof(pPlayer[1]->JoystickMode),	 1, Datei);
 	fwrite(&pPlayer[1]->JoystickSchwelle,	sizeof(pPlayer[1]->JoystickSchwelle),1, Datei);
 
 	fclose(Datei);							// Und Datei wieder schliessen
 }
 
 // --------------------------------------------------------------------------------------
-// Beim Loading Screen anzeigen, was alles geladen wurde, dabei 
+// Beim Loading Screen anzeigen, was alles geladen wurde, dabei
 // mehrere Zeilen anzeigen und immer bei neuem Text eins nach oben rutschen
 // --------------------------------------------------------------------------------------
 
-bool DisplayLoadInfo(char Text[100])
+bool DisplayLoadInfo(const char Text[100])
 {
 	if (NochKeinFullScreen == true ||
 		pMenu == NULL)
@@ -780,16 +827,20 @@ bool DisplayLoadInfo(char Text[100])
 	*/
 
 	// Anzeigen im Loadingscreen
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->EndScene();
 
 	lpD3DDevice->BeginScene();
 	lpD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,	D3DCOLOR_XRGB(0,0,0), 1.0f, 0);
+#elif defined(PLATFORM_SDL)
+    glClear( GL_COLOR_BUFFER_BIT );
+#endif
 
 	pMenu->ShowMenuBack();
 
 	DirectGraphics.SetAdditiveMode();
-	
-	pMenuFont->DrawTextCenterAlign(320, 
+
+	pMenuFont->DrawTextCenterAlign(320,
 								   200,
 								   TextArray[TEXT_MENUE_LOADING], 0xFFFFFFFF);
 
@@ -800,7 +851,7 @@ bool DisplayLoadInfo(char Text[100])
 	sprintf_s(buf, "%d", LoadingItemsLoaded);
 	pDefaultFont->DrawText((700 - pDefaultFont->StringLength(TextArray[TEXT_MENUE_LOADING])) / 2.0f, 220,
 						 buf, 0xFFFFFFFF);
-	
+
 #endif
 
 	// Hint anzeigen
@@ -815,9 +866,13 @@ bool DisplayLoadInfo(char Text[100])
 	/*for (i=0; i<24; i++)
 		pDefaultFont->DrawText(10, float(230+i*10), LoadInfoText[i], D3DCOLOR_RGBA(0, 255, 0, i*10));*/
 
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->EndScene();
-	DirectGraphics.ShowBackBuffer();		
+#endif
+	DirectGraphics.ShowBackBuffer();
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->BeginScene();
+#endif
 
 	LoadingItemsLoaded++;
 	LoadingProgress += 318.0f / LoadingItemsToLoad;
@@ -839,7 +894,9 @@ void ExplodePlayer(void)
 	static float delay = 0.0f;
 
 	// alte Darstellung beenden
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->EndScene();
+#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -855,17 +912,17 @@ void StageClear(bool PlaySong)
 		pPlayer[p]->PunisherActive = false;
 	}
 
-	pGUI->HideBoxFast();	
+	pGUI->HideBoxFast();
 
 	pSoundManager->StopSong(MUSIC_STAGEMUSIC, false);
 
 	if (PlaySong)
-		pSoundManager->PlaySong(MUSIC_STAGECLEAR, false);			
+		pSoundManager->PlaySong(MUSIC_STAGECLEAR, false);
 
 	// Punisher Musik stoppen
-	if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_PUNISHER]->SongData))
+	if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_PUNISHER]->SongData))
 		pSoundManager->StopSong(MUSIC_PUNISHER, false);
-			
+
 }
 
 // --------------------------------------------------------------------------------------
@@ -873,7 +930,7 @@ void StageClear(bool PlaySong)
 // --------------------------------------------------------------------------------------
 
 void SummaryScreen(void)
-{	
+{
 	bool leave      = false;
 	bool keypressed = false;
 
@@ -885,11 +942,15 @@ void SummaryScreen(void)
 	while (leave == false)
 	{
 		// alte Darstellung beenden
+#if defined(PLATFORM_DIRECTX)
 		lpD3DDevice->EndScene();
+#endif
 
 		// Mit dem Darstellen beginnen
-		lpD3DDevice->BeginScene();	
-		
+#if defined(PLATFORM_DIRECTX)
+		lpD3DDevice->BeginScene();
+#endif
+
 		pTileEngine->DrawBackground	();				// Level abhandeln
 		pTileEngine->DrawBackLevel	();
 		pTileEngine->DrawFrontLevel	();
@@ -904,10 +965,10 @@ void SummaryScreen(void)
 
 		pTileEngine->DrawWater();
 		pTileEngine->DrawBackLevelOverlay();
-		pTileEngine->DrawOverlayLevel();	
+		pTileEngine->DrawOverlayLevel();
 		pTileEngine->DrawShadow();
 
-		pHUD->DoHUD();								// HUD anhandeln		
+		pHUD->DoHUD();								// HUD anhandeln
 
 		// Blitz und andere Partikel rendern, die alles überlagern
 		pPartikelSystem->DoThunder ();
@@ -915,7 +976,7 @@ void SummaryScreen(void)
 		// Summary Screen rendern
 		pGUI->Run();
 		D3DCOLOR color = D3DCOLOR_RGBA(0, 255, 0, (int)(pGUI->m_FadingAlpha));
-		pDefaultFont->DrawText((float)(640 - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_TITLE]))     / 2, 120, TextArray[TEXT_SUMMARY_TITLE], color);		
+		pDefaultFont->DrawText((float)(640 - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_TITLE]))     / 2, 120, TextArray[TEXT_SUMMARY_TITLE], color);
 		pDefaultFont->DrawText((float)(640 - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_PRESSFIRE])) / 2, 225, TextArray[TEXT_SUMMARY_PRESSFIRE], color);
 
 		pGegnerGrafix[POWERBLOCK]->RenderSpriteScaled(226, 155, 32, 32, 1, color);
@@ -935,12 +996,12 @@ void SummaryScreen(void)
 		pDefaultFont->DrawText((float)(345 - pDefaultFont->StringLength(buf) / 2), 195, buf, color);
 
 		sprintf_s(buf, "%i/%i", pPlayer[0]->SecretThisLevel, pTileEngine->MaxSecrets);
-		pDefaultFont->DrawText((float)(400 - pDefaultFont->StringLength(buf) / 2), 195, buf, color);		
+		pDefaultFont->DrawText((float)(400 - pDefaultFont->StringLength(buf) / 2), 195, buf, color);
 
 		// Cheat freigespielt? -> Wenn alle Diamanten gefunden
 		if (RunningTutorial == false &&
 			pPlayer[0]->DiamondsThisLevel == pTileEngine->MaxDiamonds)
-		{		
+		{
 			sprintf_s(buf, "%s", Cheats[Stage - 1]);
 			for (unsigned int p = 0; p < strlen(buf); p++)
 				buf[p] ^= 64;
@@ -950,7 +1011,9 @@ void SummaryScreen(void)
 		}
 
 		// Darstellung beenden
+#if defined(PLATFORM_DIRECTX)
 		lpD3DDevice->EndScene();
+#endif
 
 		// Backbuffer mit Frontbuffer tauschen
 		DirectGraphics.ShowBackBuffer();
@@ -965,18 +1028,22 @@ void SummaryScreen(void)
 			if (TastaturPuffer[i] != 0)
 				keypressed = true;
 
-		if (keypressed == true && 
+		if (keypressed == true &&
 			DirectInput.AreAllKeysReleased())
 			leave = true;
 
 		// Musik zuende ?
-		if (FMUSIC_IsFinished(pSoundManager->its_Songs[MUSIC_STAGECLEAR]->SongData))
+		if (MUSIC_IsFinished(pSoundManager->its_Songs[MUSIC_STAGECLEAR]->SongData))
 			pSoundManager->StopSong(MUSIC_STAGECLEAR, false);
 	}
 
+#if defined(PLATFORM_DIRECTX) /* SDL_mixer does not work this kind of check, as far as i can tell */
 	// Musik noch nicht zu Ende ? Dann nochmal warten
-	while (!FMUSIC_IsFinished(pSoundManager->its_Songs[MUSIC_STAGECLEAR]->SongData))
+	while (!MUSIC_IsFinished(pSoundManager->its_Songs[MUSIC_STAGECLEAR]->SongData))
 		;
+#elif defined(PLATFORM_SDL)
+    SDL_Delay( 3000 );
+#endif
 
 	pSoundManager->StopSong(MUSIC_STAGECLEAR, false);
 
@@ -990,7 +1057,7 @@ void SummaryScreen(void)
 // Demo Aufnahme starten
 // --------------------------------------------------------------------------------------
 
-bool NewDemo (char Filename[])
+bool NewDemo (const char Filename[])
 {
 	fopen_s(&DEMOFile, Filename, "wb");
 
@@ -1035,7 +1102,7 @@ bool NewDemo (char Filename[])
 // Demo Laden
 // --------------------------------------------------------------------------------------
 
-bool LoadDemo (char Filename[])
+bool LoadDemo (const char Filename[])
 {
 	char Kennung[20];
 
@@ -1044,7 +1111,7 @@ bool LoadDemo (char Filename[])
 
 	// File öffnen
 	fopen_s(&DEMOFile, Filename, "rb");
-	
+
 	if(!DEMOFile)
 		return false;
 
@@ -1058,7 +1125,7 @@ bool LoadDemo (char Filename[])
 	// Stage Nr laden
 	fread (&Stage, sizeof (Stage), 1, DEMOFile);
 	NewStage = Stage;
-	
+
 	DEMOPlaying = true;
 	DEMOPress   = 0;
 
@@ -1177,7 +1244,7 @@ void ShowPissText(void)
 	{
 		int TextNr = int ((pPlayer[0]->BronsonCounter - 220.0f) / 50.0f);
 
-		pGUI->ShowBox(TextArray[TEXT_PISS_1 + TextNr], 
+		pGUI->ShowBox(TextArray[TEXT_PISS_1 + TextNr],
 					  (int)(pPlayer[0]->ypos - 70 - pTileEngine->YOffset),
 					  (int)(pPlayer[0]->xpos - pTileEngine->XOffset) - 10);
 
@@ -1208,7 +1275,7 @@ PlayerClass* ChooseAim(void)
 }
 
 
-char *convertText(char *text)
+const char *convertText(const char *text)
 {
 	// Text konvertieren
 	static char temp[MAX_CHARS];
@@ -1217,6 +1284,6 @@ char *convertText(char *text)
 	for (i = 0; i < strlen(text); i++)
 		temp[i] = text[i] ^ 64;
 	temp[i] = 0;
-	
+
 	return temp;
 }

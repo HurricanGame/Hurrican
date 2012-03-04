@@ -1,6 +1,6 @@
 // Datei : Logdatei.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Logdatei Klasse
 // zum leichten Handhaben einer Protokoll Datei
@@ -24,9 +24,9 @@ class Logdatei
 	public:
 		bool	delLogFile;									// Logfile am Ende löschen, wenn kein Fehler auftrat
 
-		     Logdatei    (char Name[20]);					// Konstruktor
+		     Logdatei    (const char Name[20]);					// Konstruktor
 			~Logdatei    (void);							// Desktruktor;
-		void WriteText   (char Text[180], bool Abbruch);	// Text in Datei schreiben
+		void WriteText   (const char Text[180], bool Abbruch);	// Text in Datei schreiben
 		void WriteValue  (int value);						// Wert in Datei schreiben
 };
 

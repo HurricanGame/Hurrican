@@ -62,7 +62,7 @@ void GegnerPartikelSpawner::DoKI(void)
 {
 	// Smoke Emitter geben Auftrieb beim Springen bei geradem Rauch nach oben (Value2 == 0)
 	if (Value1 == 19 ||
-	  ((Value1 == 5  ||		 
+	  ((Value1 == 5  ||
 	   ( Value1 == 6 && Aussetzer > 6.0f)) && Value2 == 0))
 	{
 		for (int p = 0; p < NUMPLAYERS; p++)
@@ -115,7 +115,7 @@ void GegnerPartikelSpawner::DoKI(void)
 
 					pPartikelSystem->PushPartikel(sx , sy, REGENTROPFEN);
 					AnimCount = Value2 / 4.0f;
-					if (AnimCount = 0.0f)
+					if (AnimCount == 0.0f)
 						AnimCount = 1.0f;
 				} break;
 
@@ -154,7 +154,7 @@ void GegnerPartikelSpawner::DoKI(void)
 				{
 					for (int i = 0; i < 3; i++)
 						pPartikelSystem->PushPartikel(xPos - 26 + rand ()%50 , yPos - 26 + rand ()%40, WATERFLUSH);
-					
+
 				} break; // Wasserdampf
 
 				// Wassertropfen von der Decke
@@ -177,7 +177,7 @@ void GegnerPartikelSpawner::DoKI(void)
 				// Blitz (und Donner)
 				case 9 :
 				{
-					pPartikelSystem->ThunderAlpha = 128; 
+					pPartikelSystem->ThunderAlpha = 128;
 					pPartikelSystem->ThunderColor [0] = 228;
 					pPartikelSystem->ThunderColor [1] = 242;
 					pPartikelSystem->ThunderColor [2] = 255;
@@ -202,7 +202,7 @@ void GegnerPartikelSpawner::DoKI(void)
 					pSoundManager->PlayWave (80, 128, 11025 + rand()%2000, SOUND_FUNKE + rand ()%4);
 
 					Value2 = rand()%20 + 10;
-				} break;	
+				} break;
 
 				// Spinnenteil
 				case 14 :
@@ -219,33 +219,33 @@ void GegnerPartikelSpawner::DoKI(void)
 
 					if (Value2 == 0)
 					{
-						pPartikelSystem->PushPartikel((float)(pTileEngine->XOffset + 640.0f), 
+						pPartikelSystem->PushPartikel((float)(pTileEngine->XOffset + 640.0f),
 													  (float)(yPos - 240.0f + rand()%480), BLATT2);
 						AnimCount = (rand()%5 + 1) / 5.0f;
 					}
 					else
 					{
-						pPartikelSystem->PushPartikel((float)(pTileEngine->XOffset + 640.0f), 
+						pPartikelSystem->PushPartikel((float)(pTileEngine->XOffset + 640.0f),
 													  (float)(yPos - 240.0f + rand()%480), DUST);
 						AnimCount = (rand()%5 + 1) / 2.0f;
 					}
-					
+
 				} break;
 
 				// Staub
 				case 16:
-				{					
+				{
 					pPartikelSystem->PushPartikel((float)(xPos + rand()%200 - 100),
 												  (float)(yPos + rand()%200 - 100), DUST);
 
 					AnimCount = (rand()%5 + 1) / 5.0f;
-				} break;	
-				
+				} break;
+
 				case 18:
-				{				
+				{
 					AnimCount = 3.0f;
 					pPartikelSystem->PushPartikel(xPos - (Value2) + rand()%(Value2 * 2),
-												  yPos, LAVADUST);	
+												  yPos, LAVADUST);
 				} break;
 
 				// Aufsteigender Rauch mit Auftrieb (Value2)
@@ -284,7 +284,7 @@ void GegnerPartikelSpawner::DoKI(void)
 					if (rand()%4 == 0)
 					{
 						// mit Sound?
-						if (Value1 == 3)					
+						if (Value1 == 3)
 							pSoundManager->PlayWave3D(int(xPos), int(yPos), 11025 + rand()%1000, SOUND_FUNKE);
 
 						pPartikelSystem->PushPartikel(xPos, yPos-24, LASERFLAME);
@@ -303,10 +303,10 @@ void GegnerPartikelSpawner::DoKI(void)
 					pPlayer[0]->AutoScrollspeed = float (Value2);
 					Energy = 0.0f;
 				} break;
-				
+
 				// Maden
 				case 17:
-				{	
+				{
 					pGegner->PushGegner((float)(xPos + rand()%20 - 10),
 										(float)(yPos + 16), MADE, 0, 0, false, false);
 				} break;

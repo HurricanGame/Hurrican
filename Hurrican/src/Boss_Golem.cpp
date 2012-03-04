@@ -34,8 +34,8 @@ GegnerGolem::GegnerGolem(int Wert1, int Wert2, bool Light)
 
 	last = 0;
 
-	arm[0].LoadImage("golemarm_hinten.png", 224, 241, 224, 241, 1, 1);
-	arm[1].LoadImage("golemarm_vorne.png", 205, 266, 205, 266, 1, 1);	
+	arm[0].LoadImage("golemarm_hinten.bmp", 224, 241, 224, 241, 1, 1);
+	arm[1].LoadImage("golemarm_vorne.bmp", 205, 266, 205, 266, 1, 1);
 }
 
 // --------------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ float GegnerGolem::WinkelToPlayer(void)
 // --------------------------------------------------------------------------------------
 
 void GegnerGolem::Wackeln(void)
-{	
+{
 	// yoff bewegen
 	if (Wackel > 0.0f)
 		yoff = Wackel * 8.0f;
@@ -85,7 +85,7 @@ void GegnerGolem::Wackeln(void)
 			ShakeScreen(4.0f);
 			pSoundManager->PlayWave(100, 128, 15000 + rand()%2000, SOUND_DOORSTOP);
 		}
-	} 
+	}
 }
 
 // --------------------------------------------------------------------------------------
@@ -107,19 +107,19 @@ void GegnerGolem::DoDraw(void)
 
 	Wert /= 2;
 	Color2 = D3DCOLOR_RGBA(128, Wert, Wert, 255);
-		
+
 	// Rotationsmatrizen erstellen
 	RECT itsRect;
 	D3DXMATRIX	matRotBody, matRotArm, matTransBody, matTransArm, matTrans2Body, matTrans2Arm;
 
-	// Körper	
+	// Körper
 	int offx = 0;
 	int offy = 80;
 	float x = (float)(xPos - pTileEngine->XOffset);
 	float y = (float)(yPos - pTileEngine->YOffset);
 
 	itsRect = GegnerRect[GegnerArt];
-	D3DXMatrixRotationZ  (&matRotBody,  Wackel);	
+	D3DXMatrixRotationZ  (&matRotBody,  Wackel);
 	D3DXMatrixTranslation(&matTransBody,-x-(itsRect.right  - itsRect.left)/2.0f-offx,
 									    -y-(itsRect.bottom - itsRect.top )/2.0f-offy, 0.0f);
 
@@ -127,7 +127,7 @@ void GegnerGolem::DoDraw(void)
 	D3DXMatrixTranslation(&matTrans2Body,x+(itsRect.right  - itsRect.left)/2.0f+offx,
 										 y+(itsRect.bottom - itsRect.top )/2.0f+offy, 0.0f);
 
-	D3DXMatrixRotationZ  (&matRotArm,  rotarm2 - 0.5f);	
+	D3DXMatrixRotationZ  (&matRotArm,  rotarm2 - 0.5f);
 
 	// arm bewegen
 	offx = 0;
@@ -142,11 +142,19 @@ void GegnerGolem::DoDraw(void)
 	D3DXMatrixIdentity	 (&matWorld);
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTransArm);		// rotieren (Körper)
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRotArm);		// rotieren (Arm)
-	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2Arm);		// und wieder zurück verschieben	
+	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2Arm);		// und wieder zurück verschieben
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTransBody);		// rotieren (Körper)
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRotBody);		// rotieren (Arm)
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2Body);		// und wieder zurück verschieben
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    D3DXMATRIXA16 matModelView;
+    matrixmode( GL_MODELVIEW );
+    matModelView = matWorld * g_matView;
+    glLoadMatrixf( matModelView.data() );
+#endif
+
 
 	// Arm hinten zeichnen
     arm[0].RenderSprite((float)(xPos - pTileEngine->XOffset) + wackel,
@@ -157,7 +165,12 @@ void GegnerGolem::DoDraw(void)
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTransBody);		// rotieren (Körper)
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRotBody);		// rotieren (Arm)
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2Body);		// und wieder zurück verschieben
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);	
+#if defined(PLATFORM_DIRECTX)
+	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    matModelView = matWorld * g_matView;
+    glLoadMatrixf( matModelView.data() );
+#endif
 
     pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos - pTileEngine->XOffset) + wackel,
 										   (float)(yPos - pTileEngine->YOffset) + yoff, Color);
@@ -173,7 +186,7 @@ void GegnerGolem::DoDraw(void)
 	itsRect.right = 193;
 	itsRect.bottom = 179;
 
-	D3DXMatrixRotationZ  (&matRotArm,  rotarm1 - 0.3f);	
+	D3DXMatrixRotationZ  (&matRotArm,  rotarm1 - 0.3f);
 
 	// arm bewegen
 	D3DXMatrixTranslation(&matTransArm,-x-180, -y - 50, 0.0f);
@@ -184,24 +197,34 @@ void GegnerGolem::DoDraw(void)
 	D3DXMatrixIdentity	 (&matWorld);
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTransArm);		// rotieren (Körper)
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRotArm);		// rotieren (Arm)
-	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2Arm);		// und wieder zurück verschieben	
+	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2Arm);		// und wieder zurück verschieben
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTransBody);		// rotieren (Körper)
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRotBody);		// rotieren (Arm)
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2Body);		// und wieder zurück verschieben
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    matModelView = matWorld * g_matView;
+    glLoadMatrixf( matModelView.data() );
+#endif
 
     // Arm zeichnen
     arm[1].RenderSprite((float)(xPos - pTileEngine->XOffset) + wackel,
-		  		     (float)(yPos - pTileEngine->YOffset) + yoff, Color);	
+		  		     (float)(yPos - pTileEngine->YOffset) + yoff, Color);
 
 	// Normale Projektions-Matrix wieder herstellen
 	D3DXMatrixRotationZ (&matWorld, 0.0f);
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    matModelView = matWorld * g_matView;
+    glLoadMatrixf( matModelView.data() );
+#endif
 
 
 	// Blockrect setzen
 	GegnerRect[GOLEM].left = 42; GegnerRect[GOLEM].right  = 138 + (int)yoff;
-	GegnerRect[GOLEM].top  = 29; GegnerRect[GOLEM].bottom = 300;	
+	GegnerRect[GOLEM].top  = 29; GegnerRect[GOLEM].bottom = 300;
 
 	DirectGraphics.SetFilterMode (false);
 	DirectGraphics.SetColorKeyMode();
@@ -250,7 +273,7 @@ void GegnerGolem::DoKI(void)
 		xPos += 400;
 
 		// hinscrollen
-		pTileEngine->ScrollLevel((float)Value1, 
+		pTileEngine->ScrollLevel((float)Value1,
 								 (float)Value2, ZUSTAND_SCROLLTOLOCK);
 
 		 // Ausfaden und pausieren
@@ -271,13 +294,13 @@ void GegnerGolem::DoKI(void)
 		xSpeed    = 0.0f;
 		ySpeed    = 0.0f;
 		xAcc      = 0.0f;
-		yAcc      = 0.0f;		
+		yAcc      = 0.0f;
 		AnimCount = 1.0f;
 		ShotDelay = 30.0f;
-		
+
 		// Endboss-Musik ausfaden und abschalten
 		pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
-	}	
+	}
 
 // Je nach Handlung richtig verhalten
 	switch (Handlung)
@@ -287,10 +310,10 @@ void GegnerGolem::DoKI(void)
 			if (pTileEngine->Zustand == ZUSTAND_LOCKED)
 			{
 				// Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-				if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+				if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
 					pSoundManager->PlaySong(MUSIC_BOSS, false);
 
-				// Und Boss erscheinen lassen				
+				// Und Boss erscheinen lassen
 				Handlung = GEGNER_EINFLIEGEN;
 				pSoundManager->PlayWave(100, 128, 7000, SOUND_MUTANT);
 			}
@@ -298,7 +321,7 @@ void GegnerGolem::DoKI(void)
 
 		// Gegner läuft am Anfang langsam nach links
 		case GEGNER_EINFLIEGEN:
-		{			
+		{
 			Energy = 8000;
 			DamageTaken = 0.0f;
 			xPos -= float(10.0 SYNC);					// Faust nach unten bewegen
@@ -309,13 +332,13 @@ void GegnerGolem::DoKI(void)
 			if (xPos <= pTileEngine->ScrolltoX + 380)	// Weit genug oben ?
 			{
 				xPos = (float)(pTileEngine->ScrolltoX + 380);
-				Handlung = GEGNER_SPECIAL;				
+				Handlung = GEGNER_SPECIAL;
 			}
 		} break;
 
 		// Gegner läuft am Anfang langsam nach links
 		case GEGNER_LAUFEN:
-		{			
+		{
 			xPos -= float(10.0 SYNC);
 			Wackel += WackelDir * 0.025f SYNC;
 			rotarm1 -= WackelDir * 0.2f SYNC;
@@ -324,7 +347,7 @@ void GegnerGolem::DoKI(void)
 			if (xPos <= pTileEngine->ScrolltoX + 380)	// Weit genug in Mitte  ?
 			{
 				xPos = (float)(pTileEngine->ScrolltoX + 380);
-				Handlung = GEGNER_SPECIAL;				
+				Handlung = GEGNER_SPECIAL;
 			}
 		} break;
 
@@ -340,7 +363,7 @@ void GegnerGolem::DoKI(void)
 			{
 				// zurücklaufen?
 				xPos = (float)(pTileEngine->ScrolltoX + 540);
-				Handlung = GEGNER_SPECIAL;				
+				Handlung = GEGNER_SPECIAL;
 			}
 		} break;
 
@@ -373,7 +396,7 @@ void GegnerGolem::DoKI(void)
 			if (xPos >= pTileEngine->ScrolltoX + 380)	// Weit genug in Mitte  ?
 			{
 				xPos = (float)(pTileEngine->ScrolltoX + 380);
-				Handlung = GEGNER_SPECIAL;				
+				Handlung = GEGNER_SPECIAL;
 			}
 		} break;
 
@@ -434,8 +457,8 @@ void GegnerGolem::DoKI(void)
 		} break;
 
 		// Ausgangsposition für Aktionen herstellen
-		case GEGNER_SPECIAL:		
-		{	
+		case GEGNER_SPECIAL:
+		{
 			bool fertig[3] = {true, true, true};
 
 			// zuende wackeln
@@ -444,16 +467,16 @@ void GegnerGolem::DoKI(void)
 			fertig[0] = GoToZero(Wackel);
 			fertig[1] = GoToZero(rotarm1);
 			fertig[2] = GoToZero(rotarm2);
-			
-			if (fertig[0] && 
-				fertig[1] && 
+
+			if (fertig[0] &&
+				fertig[1] &&
 				fertig[2])
 			{
-				int j = 0;
+				//int j = 0; // PICKLE not used
 
-				// Golem steht gerade rechts? 
+				// Golem steht gerade rechts?
 				if (xPos > pTileEngine->ScrolltoX + 400)
-				{		
+				{
 					// Dann Steine werfen
 					if (rand()%2 == 0)
 					{
@@ -473,13 +496,13 @@ void GegnerGolem::DoKI(void)
 				}
 
 				// Golem steht gerade in der Mitte?
-				else				
+				else
 				if (xPos > pTileEngine->ScrolltoX + 120)
-				{	
+				{
 					// Weiterlaufen?
 					if (rand()%3 > 0)
 					{
-						// Die Aktion ausführen, die eben nicht dran war					
+						// Die Aktion ausführen, die eben nicht dran war
 						if (last == GEGNER_SPECIAL2)
 							Handlung = GEGNER_LAUFEN2;
 						else
@@ -493,7 +516,7 @@ void GegnerGolem::DoKI(void)
 						ShotDelay = 80.0f;
 						count = 4.0f + rand()%4;
 						Wackel = 0.0f;
-					}										
+					}
 				}
 
 				// Golem steht schon links? Dann zurück zur Mitte
@@ -504,7 +527,7 @@ void GegnerGolem::DoKI(void)
 				}
 			}
 
-			
+
 		} break;
 
 		// Grüne Rotzbobel schiessen
@@ -526,7 +549,7 @@ void GegnerGolem::DoKI(void)
 			ShotDelay -= 10.0f SYNC;
 
 			if (ShotDelay < 0.0f)
-			{	
+			{
 				// Suchschuss erzeugen
 				WinkelUebergabe = WinkelToPlayer() + 180.0f;
 				pProjectiles->PushProjectile(xPos + 35.0f, yPos + yoff + 35.0f, FIREBALL_BIG, pAim);
@@ -535,7 +558,7 @@ void GegnerGolem::DoKI(void)
 
 				// Sound ausgeben
 				pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_FIREBALL);
-				
+
 				ShotDelay = 80.0f;
 
 				// Schusszahl verringern
@@ -543,14 +566,14 @@ void GegnerGolem::DoKI(void)
 
 				// kein schuss mehr? dann neue aktion
 				if (count <= 0.0f)
-				{					
+				{
 					Handlung = GEGNER_WARTEN;
 					ShotDelay = 10.0f;
 				}
-				
+
 				Wackel = 0.0f;
 				rotarm1 = 0.0f;
-				rotarm2 = 0.0f;				
+				rotarm2 = 0.0f;
 			}
 		} break;
 
@@ -604,14 +627,14 @@ void GegnerGolem::DoKI(void)
 
 					if (Wackel >= 0.35f)
 					{
-						state2 = ARM_WERFEN;												
+						state2 = ARM_WERFEN;
 						pSoundManager->PlayWave(100, 128, 6000 + rand()%2000, SOUND_MUTANT);
 					}
 				} break;
 
 				// Stein werfen
 				case ARM_WERFEN:
-				{					
+				{
 					if (Wackel > 0.0f)
 						Wackel -= 0.1f SYNC;
 					else
@@ -639,9 +662,9 @@ void GegnerGolem::DoKI(void)
 					fertig[0] = GoToZero(Wackel, 0.5f);
 					fertig[1] = GoToZero(rotarm1, 0.5f);
 					fertig[2] = GoToZero(rotarm2, 0.5f);
-					
-					if (fertig[0] && 
-						fertig[1] && 
+
+					if (fertig[0] &&
+						fertig[1] &&
 						fertig[2])
 					{
 						StoneCount--;
@@ -659,7 +682,7 @@ void GegnerGolem::DoKI(void)
 
 		// Feuer spucken
 		case GEGNER_SCHIESSEN :
-		{			
+		{
 			count += 1.0f SYNC;
 
 			// vorbeugen
@@ -690,7 +713,7 @@ void GegnerGolem::DoKI(void)
 
 		} break;
 
-		// 
+		//
 		case GEGNER_BOMBARDIEREN:
 		{
 			// arm heben
@@ -701,7 +724,7 @@ void GegnerGolem::DoKI(void)
 				{
 					rotarm1 += 0.3f SYNC;
 					rotarm2 += 0.2f SYNC;
-					
+
 					if (rotarm1 > 3.0f)
 					{
 						rotarm1 = 3.0f;
@@ -715,7 +738,7 @@ void GegnerGolem::DoKI(void)
 				{
 					rotarm1 -= 0.8f SYNC;
 					rotarm2 -= 0.7f SYNC;
-					
+
 					// Lava berührt?
 					if (rotarm1 < 0.7f)
 					{
@@ -740,7 +763,7 @@ void GegnerGolem::DoKI(void)
 				{
 					rotarm1 += 0.25f SYNC;
 					rotarm2 += 0.25f SYNC;
-					
+
 					if (rotarm1 > 1.5f)
 					{
 						rotarm1 = 1.5f;
@@ -759,9 +782,9 @@ void GegnerGolem::DoKI(void)
 		} break;
 
 		case GEGNER_EXPLODIEREN:
-		{			
+		{
 			Energy = 100.0f;
-				
+
 			AnimCount -= SpeedFaktor;
 			if (AnimCount <= 0.0f)
 			{
@@ -772,7 +795,7 @@ void GegnerGolem::DoKI(void)
 				pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
 				if (rand()%2 == 0)
-					pPartikelSystem->PushPartikel(xPos + rand()%160, yPos + rand()%300 + yoff, SMOKEBIG);				
+					pPartikelSystem->PushPartikel(xPos + rand()%160, yPos + rand()%300 + yoff, SMOKEBIG);
 			}
 
 			ShotDelay -= 1.0f SYNC;
@@ -809,10 +832,10 @@ void GegnerGolem::GegnerExplode(void)
 		pPartikelSystem->PushPartikel(xPos + rand()%200 - 50, yPos + yoff + rand()%300, SMOKEBIG);
 
 	for (i = 0; i < 40; i++)
-		pPartikelSystem->PushPartikel(xPos + rand()%200 - 50, yPos + yoff + rand()%300, EXPLOSION_MEDIUM2);	
+		pPartikelSystem->PushPartikel(xPos + rand()%200 - 50, yPos + yoff + rand()%300, EXPLOSION_MEDIUM2);
 
 	for (i = 0; i < 10; i++)
-		pPartikelSystem->PushPartikel(xPos + rand()%200 - 50, yPos + yoff + rand()%300, EXPLOSION_BIG);	
+		pPartikelSystem->PushPartikel(xPos + rand()%200 - 50, yPos + yoff + rand()%300, EXPLOSION_BIG);
 
 	ShakeScreen(4);
 

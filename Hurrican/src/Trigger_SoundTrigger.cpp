@@ -77,8 +77,8 @@ void GegnerSoundTrigger::DoKI(void)
 							pSoundManager->PlayWave(100, 128, 11025, SOUND_TRIGGER_START + Value1);
 
 					int channel = pSoundManager->its_Sounds [SOUND_TRIGGER_START + Value1]->Channel;
-					FSOUND_SetVolume (channel, vol);
-					FSOUND_SetPan	 (channel, 128);
+					SOUND_SetVolume (channel, vol);
+					SOUND_SetPan	 (channel, 128);
 				}
 			}
 

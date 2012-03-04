@@ -10,7 +10,7 @@
 #include "Globals.h"
 #include "GUISystem.h"
 #include "HUD.h"
-#include "LogDatei.h"
+#include "Logdatei.h"
 #include "Partikelsystem.h"
 #include "Projectiles.h"
 #include "Player.h"

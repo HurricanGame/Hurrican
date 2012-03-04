@@ -37,7 +37,7 @@ void GegnerSchmidtOrgie::DoKI(void)
 			ShadowAlpha -= 5.0f SYNC;
 		else
 			ShadowAlpha = 0.0f;
-	}	
+	}
 	else
 	{
 		if (ShadowAlpha < 255.0f)
@@ -47,7 +47,7 @@ void GegnerSchmidtOrgie::DoKI(void)
 	}
 
 	// Energie anzeigen
-	if (Handlung != GEGNER_INIT		 && 
+	if (Handlung != GEGNER_INIT		 &&
 		Handlung != GEGNER_VERFOLGEN &&
 		Handlung != GEGNER_EXPLODIEREN)
 		pHUD->ShowBossHUD(4500, Energy);
@@ -58,7 +58,7 @@ void GegnerSchmidtOrgie::DoKI(void)
 		Handlung != GEGNER_VERFOLGEN &&
 		pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
 	{
-		pTileEngine->ScrollLevel((float)Value1, 
+		pTileEngine->ScrollLevel((float)Value1,
 								 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
 		pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
@@ -83,18 +83,18 @@ void GegnerSchmidtOrgie::DoKI(void)
 			{
 				// Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
 				//
-				if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+				if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
 				{
 					pSoundManager->PlaySong(MUSIC_BOSS, false);
 
 					// Und Boss erscheinen lassen
 					//
 					Handlung = GEGNER_STEHEN;
-				}	
+				}
 			}
 		} break;
 
-		case GEGNER_STEHEN:			
+		case GEGNER_STEHEN:
 		{
 			// ActionCounter runterzählen
 			// bei null Gegner spawnen
@@ -111,13 +111,13 @@ void GegnerSchmidtOrgie::DoKI(void)
 				ActionCounter = 1.2f + Energy / 600.0f;
 
 				// Gegner per Zufall wählen und spawnen
-				//				
+				//
 				int spawn = rand()%2;
-	
-				if (spawn == 0) 
+
+				if (spawn == 0)
 					pGegner->PushGegner (float (Value1) + x, float (Value2) + 50 + rand ()%200, FLEDERMAUS, 0, 1, false);
 
-				if (spawn == 1) 
+				if (spawn == 1)
 					pGegner->PushGegner (float (Value1) + x, float (Value2) + 200 + rand ()%50, SCHLEIMBOLLER, 24, 0, false);
 
 				Energy -= 10;
@@ -149,24 +149,24 @@ void GegnerSchmidtOrgie::DoKI(void)
 						case 2:
 							pGegner->PushGegner (float (Value1) + x, float (Value2) + 250, FIESERWALKER2, 0, 0, false);
 						break;
-					}									
+					}
 				}
 			}
 		} break;
 
 		// warten, bis der Spieler den Gegner berührt hat, und dann aktivieren
 		//
-		case GEGNER_VERFOLGEN:	
+		case GEGNER_VERFOLGEN:
 		{
 			if (PlayerAbstand() < 600 &&
 				pAim->xpos + 80 > xPos)
-			
+
 				Handlung = GEGNER_INIT;
-	
+
 		} break;
-		
+
 		case GEGNER_EXPLODIEREN:
-		{			
+		{
 				Energy = 0.0f;
 		} break;
 
@@ -183,6 +183,6 @@ void GegnerSchmidtOrgie::GegnerExplode(void)
 {
 	// Extra Leben
 	pGegner->PushGegner (xPos, yPos - 250, ONEUP, 10, 0, false);
-		
+
 	ScrolltoPlayeAfterBoss();
 }

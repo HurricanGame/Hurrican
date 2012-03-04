@@ -1,6 +1,6 @@
 // Datei : Gegner.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Gegner für Hurrican
 //
@@ -19,7 +19,7 @@
 #include "Gegner_Helper.h"
 #include "Globals.h"
 #include "HUD.h"
-#include "LogDatei.h"
+#include "Logdatei.h"
 #include "Partikelsystem.h"
 #include "Projectiles.h"
 #include "Player.h"
@@ -35,7 +35,7 @@ DirectGraphicsSprite	LavaFlare;							// Leuchten des lava Balles
 DirectGraphicsSprite	*pGegnerGrafix[MAX_GEGNERGFX];		// Grafiken der Gegner
 DirectGraphicsSprite	*pDroneFlame = NULL;				// Flamme der Drone
 DirectGraphicsSprite	*pDroneGun = NULL;					// Flamme der Zitrone
-RECT					 GegnerRect	  [MAX_GEGNERGFX];		// Rechtecke für Kollision	
+RECT					 GegnerRect	  [MAX_GEGNERGFX];		// Rechtecke für Kollision
 float					g_Fahrstuhl_yPos;					// yPosition des Fahrstuhls
 float					g_Fahrstuhl_Offset;					// Scrollposition relativ zum Farhstuhl
 float					g_Fahrstuhl_Speed;					// Fahrstuhl Geschwindigkeit
@@ -53,7 +53,7 @@ void LoadGegnerGrafik(int Nr)
 		case SPITTER:
 			pGegnerGrafix[SPITTER]->LoadImage("spitter.bmp", 110,  23, 22, 23, 5,1);
 		break;
-	
+
 		case WALKER:
 			pGegnerGrafix[WALKER]->LoadImage("enemy-walker.bmp", 360, 180, 45, 45, 8, 4);
 		break;
@@ -196,7 +196,7 @@ void LoadGegnerGrafik(int Nr)
 
 		case LAVABALL:
 		{
-			pGegnerGrafix[LAVABALL]->LoadImage("lavaball.bmp", 300, 240, 60, 60, 5,4);			
+			pGegnerGrafix[LAVABALL]->LoadImage("lavaball.bmp", 300, 240, 60, 60, 5,4);
 		}
 		break;
 
@@ -364,7 +364,7 @@ void LoadGegnerGrafik(int Nr)
 			pGegnerGrafix[RIESENSPINNE]->LoadImage("spiderboss_rumpf.png", 415, 160, 415, 160, 1, 1);
 		break;
 
-		case EVILHURRI:			
+		case EVILHURRI:
 		break;
 
 		case UFO:

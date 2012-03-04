@@ -40,7 +40,7 @@ void GegnerStahlfaust::DoKI(void)
 	// Levelausschnitt auf die Faust zentrieren, sobald dieses sichtbar wird
 	if (Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
 	{
-		pTileEngine->ScrollLevel((float)Value1, 
+		pTileEngine->ScrollLevel((float)Value1,
 								 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf die Faust zentrieren
 		yPos -= 300;												// und Faust aus dem Screen setzen
 		Handlung = GEGNER_INIT;
@@ -82,7 +82,7 @@ void GegnerStahlfaust::DoKI(void)
 			if (pTileEngine->Zustand == ZUSTAND_LOCKED)
 			{
 				// Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-				if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+				if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
 					pSoundManager->PlaySong(MUSIC_BOSS, false);
 
 				// Und Boss erscheinen lassen
@@ -171,7 +171,7 @@ void GegnerStahlfaust::DoKI(void)
 				// Rauch am Boden erzeugen
 				for (int i=0; i<25; i++)
 					pPartikelSystem->PushPartikel(xPos + rand()%200, yPos + GegnerRect[GegnerArt].bottom-20, SMOKE);
-			
+
 				// Beschleunigung und Geschwindigkeit wieder richtig setzen um hochzufliegen
 				yAcc   = -1.5f;
 				ySpeed =  0.0f;
@@ -227,7 +227,7 @@ void GegnerStahlfaust::DoKI(void)
 				// Rauch am Boden erzeugen
 				for (int i=0; i<25; i++)
 					pPartikelSystem->PushPartikel(xPos + 30 + rand()%180, yPos + GegnerRect[GegnerArt].bottom-20, SMOKE);
-			
+
 				// Beschleunigung und Geschwindigkeit wieder richtig setzen um hochzufliegen
 				yAcc   = -0.5f;
 				ySpeed =  0.0f;
@@ -239,8 +239,8 @@ void GegnerStahlfaust::DoKI(void)
 
 				// Spieler auch als Rad verwunden
 				for (int i = 0; i < NUMPLAYERS; i++)
-				if (SpriteCollision(xPos,  yPos,  GegnerRect[GegnerArt], 
-					pPlayer[i]->xpos, pPlayer[i]->ypos, pPlayer[i]->CollideRect))	
+				if (SpriteCollision(xPos,  yPos,  GegnerRect[GegnerArt],
+					pPlayer[i]->xpos, pPlayer[i]->ypos, pPlayer[i]->CollideRect))
 					pPlayer[i]->DamagePlayer(100.0f, true);
 			}
 		} break;
@@ -304,11 +304,11 @@ void GegnerStahlfaust::GegnerExplode(void)
 
 	// Splitter
 	for (int i=0; i<20; i++)
-	pPartikelSystem->PushPartikel(xPos + 60 + rand()%60, 
+	pPartikelSystem->PushPartikel(xPos + 60 + rand()%60,
 								  yPos + 80 + rand()%40, SPLITTER);
 
 	for (int i=0; i<60; i++)
-	pPartikelSystem->PushPartikel(xPos + 20 + rand()%100, 
+	pPartikelSystem->PushPartikel(xPos + 20 + rand()%100,
 								  yPos + 40 + rand()%100, SPIDERSPLITTER2);
 
 	for (int p = 0; p < NUMPLAYERS; p++)

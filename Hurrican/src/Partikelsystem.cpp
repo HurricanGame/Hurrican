@@ -1,6 +1,6 @@
 // Datei : Partikelsystem.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Partikelsystem für Hurrican
 // für Funken, Rauchwolken, Patronenhülsen usw.
@@ -20,7 +20,7 @@
 #include "DX8Sound.h"
 #include "Gameplay.h"
 #include "Globals.h"
-#include "LogDatei.h"
+#include "Logdatei.h"
 #include "Player.h"
 #include "Tileengine.h"
 #include "Projectiles.h"
@@ -46,7 +46,7 @@ extern VERTEX2D				TriangleStrip[4];					// Strip für einen Partikel
 // --------------------------------------------------------------------------------------
 
 DirectGraphicsSprite	*pPartikelGrafix[MAX_PARTIKELGFX];	// Grafiken der Partikel
-RECT					PartikelRect[MAX_PARTIKELGFX];		// Rechtecke für Level Kollision	
+RECT					PartikelRect[MAX_PARTIKELGFX];		// Rechtecke für Level Kollision
 int						CurrentPartikelTexture;				// Aktuelle Textur der Partikel
 int						DrawMode;							// normale oder rotierte Partikel?
 
@@ -59,7 +59,7 @@ int						DrawMode;							// normale oder rotierte Partikel?
 // --------------------------------------------------------------------------------------
 
 PartikelClass::PartikelClass(void)
-{	
+{
 	// Partikelwerte auf Null setzen (zur Sicherheit)
 	red = green = blue = 255;
 	AnimCount = 0.0f;
@@ -68,7 +68,7 @@ PartikelClass::PartikelClass(void)
 	xSpeed	= 0.0f;	ySpeed	= 0.0f;
 	xAcc	= 0.0f;	yAcc	= 0.0f;
 	OwnDraw				= false;
-	Rotate				= false;	
+	Rotate				= false;
 	Rot					= 0.0f;
 	RemoveWhenOffScreen = true;
 	m_pParent = NULL;
@@ -89,7 +89,7 @@ PartikelClass::~PartikelClass(void)
 // --------------------------------------------------------------------------------------
 
 bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pParent)
-{	
+{
 	// leucht-Partikel nur im Glow-Modus anzeigen
 	// d.h., im nicht-Glow Modus gleich wieder aussteigen, sobald ein
 	// solcher Partikel erzeugt werden soll
@@ -165,7 +165,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
 			Rotate		= true;
 		} break;
-			 
+
 
 
 		case EXPLOSION_MEDIUM :	// Mittelgrosse Explosion
@@ -176,14 +176,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			AnimEnde	= 19;
 			AnimSpeed	= float((rand()%6+3)/20.0f);
 
-			pPartikelSystem->PushPartikel (x - 30, y - 30, EXPLOSIONFLARE);			
+			pPartikelSystem->PushPartikel (x - 30, y - 30, EXPLOSIONFLARE);
 
 			Rotate = true;
 
 			if (rand()%2 == 0)
 				PartikelArt = EXPLOSION_MEDIUM2_ADD;
-			
-		} break;		
+
+		} break;
 
 		case EXPLOSION_MEDIUM2 :	// Mittelgrosse Explosion Nr 2
 		{
@@ -193,13 +193,13 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			AnimEnde	= 19;
 			AnimSpeed	= float((rand()%6+3)/20.0f);
 
-			pPartikelSystem->PushPartikel (x - 30, y - 30, EXPLOSIONFLARE);			
+			pPartikelSystem->PushPartikel (x - 30, y - 30, EXPLOSIONFLARE);
 
 			Rotate = true;
 
 			if (rand()%2 == 0)
 				PartikelArt = EXPLOSION_MEDIUM2_ADD;
-			
+
 		} break;
 
 		case EXPLOSION_MEDIUM3 :	// Mittelgrosse Explosion Nr 2
@@ -216,7 +216,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 				PartikelArt = EXPLOSION_MEDIUM3_ADD;
 
 			Rotate = true;
-			
+
 		} break;
 
 		case EXPLOSION_GIGA :	// Riesig fette Explosion
@@ -229,17 +229,17 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			AnimEnde	= 19;
 			AnimSpeed	= float((rand()%2+5)/10.0f);
 
-			pPartikelSystem->PushPartikel (x + 30, y + 30, EXPLOSIONFLARE);			
+			pPartikelSystem->PushPartikel (x + 30, y + 30, EXPLOSIONFLARE);
 
 			for (int i = 0; i < 20; i++)
 			{
-				pPartikelSystem->PushPartikel (x + 60 + rand()%40, 
+				pPartikelSystem->PushPartikel (x + 60 + rand()%40,
 											   y + 60 + rand()%40, FUNKE);
-				pPartikelSystem->PushPartikel (x + 60 + rand()%40, 
+				pPartikelSystem->PushPartikel (x + 60 + rand()%40,
 											   y + 60 + rand()%40, LONGFUNKE);
 			}
-			
-		} break;		
+
+		} break;
 
 		case EXPLOSION_GREEN :	// Grüne Explosion
 		{
@@ -248,7 +248,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			Lebensdauer = 192;
 			AnimEnde	= 22;
 			AnimSpeed	= float((rand()%10+5)/15.0f);
-			
+
 		} break;
 
 		case EXPLOSION_ALIEN :	// Lilane Alien Explosion
@@ -259,8 +259,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			AnimEnde	= 22;
 			AnimSpeed	= float((rand()%5+10)/80.0f);
 
-			pPartikelSystem->PushPartikel (x - 30, y - 30, EXPLOSIONFLARE);			
-			
+			pPartikelSystem->PushPartikel (x - 30, y - 30, EXPLOSIONFLARE);
+
 		} break;
 
 		case EXPLOSION_BIG :	// Grosse Explosion
@@ -286,7 +286,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			Lebensdauer = 192;
 			AnimEnde	= 15;
 			AnimSpeed	= float((rand()%5+10)/15.0f);
-			
+
 		} break;
 
 		case BLUE_EXPLOSION :	// Kleine blaue Explosion
@@ -296,7 +296,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			Lebensdauer = 224;
 			AnimEnde	= 12;
 			AnimSpeed	= float((rand()%10+5)/15.0f);
-			
+
 		} break;
 
 		case SPLITTER :			// Kleiner animierter Splitter
@@ -310,7 +310,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			ySpeed		=-((float)((rand()%20+50)/2.0f));
 			yAcc		= 3.0f;
 			BounceWalls = true;
-			
+
 		} break;
 
 		case PIRANHATEILE  :		// Fetzen eines kaputten Piranhas
@@ -332,7 +332,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			}
 
 			yAcc = -(float)(rand()%10+20)/100;
-			
+
 		} break;
 
 		case PIRANHABLUT :		// Blut eines kaputten Piranhas
@@ -372,7 +372,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			Lebensdauer = 255;
 			ySpeed	    = - float ((rand()%40) + 25) / 3.0f;
 			yAcc	    = 5.0f;
-			xSpeed	    = float ((rand()%40) - 20) / 2.0f;			
+			xSpeed	    = float ((rand()%40) - 20) / 2.0f;
 
 			Rotate = true;
 
@@ -402,14 +402,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 		{
 			red	= 255; green = 255;	blue = 255;	alpha = 255;
 
-			Lebensdauer = 255;			
+			Lebensdauer = 255;
 			yAcc	    = 5.0f;
 			xSpeed	    =  float ((rand()%40) - 20) / 2.0f;
 			ySpeed	    = -float ((rand()%10) + 20);
 			AnimSpeed   = 1.5f;
 
 			BounceWalls = true;
-			Rotate		= true;			
+			Rotate		= true;
 
 			RotDir      = 2.0f;
 
@@ -426,7 +426,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
 			Lebensdauer = 255;
 			AnimPhase = rand()%2;
-			
+
 			RemoveWhenOffScreen = false;
 			AnimCount = 0.0f;
 		} break;
@@ -544,7 +544,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 		{
 			red	= 255; green = 255;	blue = 255; alpha = 255;
 
-			Lebensdauer = 255;			
+			Lebensdauer = 255;
 			xSpeed		= (float(rand()%40-20)/3.0f);
 			ySpeed		= -float(rand()%80+40)/3.0f;
 			yAcc		= 5.0f;
@@ -586,7 +586,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			// Grafik hat sich von 20x20 auf 24x24 pixel geändert :P
 			xPos -= 2;
 			yPos -= 2;
-			
+
 			Rotate = true;
 
 		} break;
@@ -653,13 +653,13 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 					xSpeed		= - float(rand()%10+20) / 3.0f;
 					ySpeed		= xSpeed - (float(rand()%40-20)/15.0f);
 				} break;
-			}			
+			}
 
 			PartikelArt = SMOKE3;
 			RemoveWhenOffScreen = false;
 			Rotate = true;
 
-		} break;		
+		} break;
 
 		case SMOKEBIG_OUTTRO:			// Riesen Rauchwolke
 		{
@@ -668,11 +668,11 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			Lebensdauer = 90;
 			xSpeed		= (float(rand()%40-20)/6.0f);
 			ySpeed		= -float(rand()%10+10)/5.0f;
-			
+
 			AnimPhase = rand()%4;
 			Rotate = true;
 
-		} break;		
+		} break;
 
 		case SMOKEBIG:			// Riesen Rauchwolke
 		{
@@ -681,7 +681,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			Lebensdauer = 140;
 			xSpeed		= (float(rand()%40-20)/10.0f);
 			ySpeed		= -float(rand()%20+10)/10.0f;
-			
+
 			AnimPhase = rand()%4;
 			Rotate = true;
 
@@ -695,7 +695,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			xSpeed		= (float)(rand()%6-3) * 6.0f;
 			ySpeed		= (float)(rand()%10-5) * 2.0f;
 			yAcc        = -1.0f;
-			
+
 			AnimPhase = rand()%4;
 			Rotate = true;
 
@@ -708,7 +708,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			ySpeed		= float(rand()%10+40)/5;
 			Lebensdauer = float(180 + rand()%10);
 			PartikelArt = ROCKETSMOKE;
-		
+
 		} break;
 
 		case DUST:
@@ -721,7 +721,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			else
 			{
 				red	= 255; green = 192;	blue = 64; alpha = 255;
-				yAcc   =  0.8f;							
+				yAcc   =  0.8f;
 			}
 
 			Lebensdauer = 255;
@@ -768,9 +768,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 				ySpeed /= 2.0f;
 			}
 
-			Lebensdauer = 60;			
-			RemoveWhenOffScreen = false;						
-		} break;		
+			Lebensdauer = 60;
+			RemoveWhenOffScreen = false;
+		} break;
 
 		case BOULDER_SMALL :	// kleiner blauer Boulder
 		{
@@ -785,7 +785,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			AnimEnde	= 15;
 			AnimSpeed	= float((rand()%10+5)/20.0f);
 
-		} break;		
+		} break;
 
 		case LAVAKRABBE_KOPF :	// Kopf der Lava Krabbe
 		{
@@ -800,7 +800,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			Rotate		= true;
 			Rot			= float (rand()%360);
 
-		} break;		
+		} break;
 
 		case LAVAKRABBE_BEIN :	// Bein der Lava Krabbe
 		{
@@ -812,12 +812,12 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			yAcc		= 5.0f;
 			Lebensdauer = 255;
 			BounceWalls = true;
-			Rotate		= true;	
+			Rotate		= true;
 			Rot			= float (rand()%360);
 			AnimPhase   = 1;
 			PartikelArt = LAVAKRABBE_KOPF;
 
-		} break;		
+		} break;
 
 		case SPIDERPARTS :	// Spinnenstücke auf dem Fliessband
 		{
@@ -826,13 +826,13 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			AnimPhase = rand()%4;
 			RemoveWhenOffScreen = false;
 
-		} break;		
+		} break;
 
 		case KETTENTEILE:
 		{
 			red	= 255; green = 255;	blue = 255; alpha = 255;
 			Lebensdauer = 255;
-			AnimPhase = 0;			
+			AnimPhase = 0;
 
 			xSpeed		=  (float(rand()%80-40)/3.0f);
 			ySpeed		= -(float(rand()%30+10)/2.0f);
@@ -848,7 +848,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 		{
 			red	= 255; green = 255;	blue = 255; alpha = 255;
 			Lebensdauer = 255;
-			AnimPhase = 1;			
+			AnimPhase = 1;
 
 			xSpeed		=  (float(rand()%80-40)/3.0f);
 			ySpeed		= -(float(rand()%30+10)/2.0f);
@@ -860,13 +860,13 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
 			PartikelArt = KETTENTEILE;
 
-		} break;		
+		} break;
 
 		case KETTENTEILE3:
 		{
 			red	= 255; green = 255;	blue = 255; alpha = 255;
 			Lebensdauer = 255;
-			AnimPhase = 2;			
+			AnimPhase = 2;
 
 			xSpeed		=  (float(rand()%80-40)/3.0f);
 			ySpeed		= -(float(rand()%30+10)/2.0f);
@@ -878,7 +878,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
 			PartikelArt = KETTENTEILE;
 
-		} break;		
+		} break;
 
 		case KETTENTEILE4:
 		{
@@ -893,16 +893,16 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			Rotate		= true;
 			Rot			= float (rand()%360);
 
-		} break;				
+		} break;
 
 		case WASSER_SPRITZER :	// Wasserspritzer, wenn der Spieler aus dem Wasser hopst
 		{
-			static int count = 0;			
+			static int count = 0;
 
 			if (count == 0)
 			{
 				red   = 255;
-				green = 255;				
+				green = 255;
 				blue  = 255;
 				count++;
 			}
@@ -912,7 +912,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 				red   = pTileEngine->ColR3;
 				green = pTileEngine->ColG3;
 				blue  = pTileEngine->ColB3;
-			}			
+			}
 
 			if (rand()%2 == 0)
 				Lebensdauer = (float)(rand()%128 + 128);
@@ -922,16 +922,16 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			AnimSpeed = (float)(rand()%20 + 30);
 			AnimCount = (float)(rand()%25 + 5) / 10.0f;
 
-		} break;		
+		} break;
 
 		case WASSER_SPRITZER2 :	// Wasserspritzer, wenn der Spieler ins Wasser hopst
 		{
-			static int count = 0;			
+			static int count = 0;
 
 			if (count == 0)
 			{
 				red   = 255;
-				green = 255;				
+				green = 255;
 				blue  = 255;
 				count++;
 			}
@@ -951,7 +951,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			AnimSpeed = (float)(rand()%15 + 25);
 			AnimCount = (float)(rand()%25 + 5) / 8.0f;
 
-		} break;		
+		} break;
 
 		case LAVA_SPRITZER :	// LavaSpritzer beim raushopsen
 		{
@@ -971,7 +971,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
 			PartikelArt = WASSER_SPRITZER;
 
-		} break;		
+		} break;
 
 		case LAVA_SPRITZER2 :	// LavaSpritzer beim reinhopsen
 		{
@@ -991,7 +991,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
 			PartikelArt = WASSER_SPRITZER2;
 
-		} break;		
+		} break;
 
 		case HURRITEILE_ARM1  :
 		case HURRITEILE_ARM2  :
@@ -1010,17 +1010,17 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			yAcc		= 2.0f;
 			BounceWalls = true;
 			PartikelArt = HURRITEILE;
-			
+
 			Rotate = true;
 
 		} break;
-		
+
 		case REGENTROPFEN :			// Regentropfen
 		{
 			red	= 220; green = 240;	blue = 255;	alpha = 192;
 			xSpeed =  -24.0f;
 			ySpeed =  44.0f;
-			Lebensdauer = 255;	
+			Lebensdauer = 255;
 			RemoveWhenOffScreen = false;
 		} break;
 
@@ -1031,7 +1031,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
 	} // switch < Additiv Grenze
 
-	else	
+	else
 
 	switch (Art)
 	{
@@ -1073,9 +1073,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			if (m_pParent != NULL)
 			{
 														// berechnung
-				absx = m_pParent->BeamX-xPos;				// Differenz der x 
+				absx = m_pParent->BeamX-xPos;				// Differenz der x
 				absy = m_pParent->BeamY-yPos;				// und y Strecke
-				
+
 				speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
 				speed = speed*(4+AnimPhase * 2);		// Geschwindigkeit
 
@@ -1107,7 +1107,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
 			xSpeed		= (float)(sin(arc) * mul);
 			ySpeed		= (float)(cos(arc) * mul);
-			
+
 			Lebensdauer = float (rand()%200 + 55);
 		} break;
 
@@ -1128,7 +1128,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
 		case BEAMSMOKE5:		// Druckwelle beim Beam Explodieren
 		{
-			red	= 255; green = 255;	blue = 255; alpha = 255;			
+			red	= 255; green = 255;	blue = 255; alpha = 255;
 
 			if (int (xPos) % 2 == 0)
 				AnimPhase = 20;
@@ -1154,12 +1154,12 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
 		case WATERFLUSH:	// Wasserfall Dampfwolken
 		{
-			static int count = 0;			
+			static int count = 0;
 
 			if (count == 0)
 			{
 				red   = 255;
-				green = 255;				
+				green = 255;
 				blue  = 255;
 				count++;
 			}
@@ -1169,7 +1169,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 				red   = pTileEngine->ColR3;
 				green = pTileEngine->ColG3;
 				blue  = pTileEngine->ColB3;
-			}						
+			}
 
 			xSpeed		= ((float)(rand()%80-40)/20);
 			ySpeed		= ((float)(rand()%60-10)/20);
@@ -1188,7 +1188,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			if (count == 0)
 			{
 				red   = 255;
-				green = 255;				
+				green = 255;
 				blue  = 255;
 				count++;
 			}
@@ -1198,7 +1198,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 				red   = pTileEngine->ColR3;
 				green = pTileEngine->ColG3;
 				blue  = pTileEngine->ColB3;
-			}						
+			}
 
 			xSpeed		= ((float)(rand()%80-40)/20);
 			ySpeed		= -((float)(rand()%40+40)/20);
@@ -1218,7 +1218,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			if (count == 0)
 			{
 				red   = 255;
-				green = 255;				
+				green = 255;
 				blue  = 255;
 				count++;
 			}
@@ -1228,7 +1228,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 				red   = pTileEngine->ColR3;
 				green = pTileEngine->ColG3;
 				blue  = pTileEngine->ColB3;
-			}						
+			}
 
 			xSpeed		=  ((float)(rand()%80-40)/2.0f);
 			ySpeed		= -((float)(rand()%100+100)/5.0f);
@@ -1247,7 +1247,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			if (count == 0)
 			{
 				red   = 255;
-				green = 255;				
+				green = 255;
 				blue  = 255;
 				count++;
 			}
@@ -1257,7 +1257,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 				red   = pTileEngine->ColR3;
 				green = pTileEngine->ColG3;
 				blue  = pTileEngine->ColB3;
-			}						
+			}
 
 			xSpeed		=  ((float)(rand()%40-20)/4.0f);
 			ySpeed		= -((float)(rand()%50+50)/3.0f);
@@ -1273,7 +1273,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 		{
 			red	= 255; green = 64;	blue = 224; alpha = 255;
 			Lebensdauer = 255;
-		} break;		
+		} break;
 
 		case FUNKE :			// Roter Funken
 		{
@@ -1284,7 +1284,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			BounceWalls = true;
 
 			Lebensdauer = 255;
-			
+
 		} break;
 
 		case FUNKE2 :			// Grüner Funken
@@ -1296,7 +1296,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			BounceWalls = true;
 
 			Lebensdauer = 255;
-			
+
 		} break;
 
 		case LASERFUNKE :		// Laser-Funken blau
@@ -1308,7 +1308,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			BounceWalls = true;
 
 			Lebensdauer = 255;
-			
+
 		} break;
 
 		case LASERFUNKE2 :		// Laser-Funken rot
@@ -1322,8 +1322,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			AnimSpeed   = 0.75f;
 
 			Lebensdauer = 255;
-			
-		} break;		
+
+		} break;
 
 		case PHARAOSMOKE :		// Roter Rauch für den Pharaokopf schuss
 		{
@@ -1331,7 +1331,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			xSpeed		= ((float)(rand()%80-40)/40);
 			ySpeed		= -(float)(rand()%80-40)/40;
 			Lebensdauer = 255;
-			
+
 		} break;
 
 		case ROCKETSMOKE :		// Rauch einer Rakete
@@ -1342,7 +1342,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			xSpeed		= ((float)(rand()%40-20)*0.025f);
 			ySpeed		= -(float)(rand()%40-20)*0.025f;
 			Lebensdauer = 200;
-			
+
 		} break;
 
 		case FLUGSACKSMOKE :	// Rauch des FlugSacks links
@@ -1424,9 +1424,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
 			double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
 													// berechnung
-			absx = m_pParent->xpos+35-(xPos+4);		// Differenz der x 
+			absx = m_pParent->xpos+35-(xPos+4);		// Differenz der x
 			absy = m_pParent->ypos+40-(yPos+4);		// und y Strecke
-				
+
 			speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
 			speed = speed*(8+AnimPhase);			// Geschwindigkeit ist 4 fach
 
@@ -1447,9 +1447,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
 			double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
 													// berechnung
-			absx = m_pParent->xpos+35-(xPos+4);		// Differenz der x 
+			absx = m_pParent->xpos+35-(xPos+4);		// Differenz der x
 			absy = m_pParent->ypos+40-(yPos+4);		// und y Strecke
-				
+
 			speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
 			speed = speed*(8+AnimPhase);			// Geschwindigkeit ist 4 fach
 
@@ -1470,9 +1470,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
 			double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
 													// berechnung
-			absx = m_pParent->xpos+35-(xPos+4);		// Differenz der x 
+			absx = m_pParent->xpos+35-(xPos+4);		// Differenz der x
 			absy = m_pParent->ypos+40-(yPos+4);		// und y Strecke
-				
+
 			speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
 			speed = speed*(8+AnimPhase);			// Geschwindigkeit ist 4 fach
 
@@ -1493,9 +1493,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
 			double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
 													// berechnung
-			absx = m_pParent->xpos+35-(xPos+4);		// Differenz der x 
+			absx = m_pParent->xpos+35-(xPos+4);		// Differenz der x
 			absy = m_pParent->ypos+40-(yPos+4);		// und y Strecke
-				
+
 			speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
 			speed = speed*(8+AnimPhase);			// Geschwindigkeit ist 4 fach
 
@@ -1516,7 +1516,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			OwnDraw		= true;
 
 			Lebensdauer = 255;
-			
+
 		} break;
 
 		case WATERFUNKE :		// Wasserspritzer
@@ -1530,7 +1530,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			OwnDraw		= true;
 
 			Lebensdauer = 255;
-			
+
 		} break;
 
 		case EVILFUNKE:			// Funke des Evil Blitzes
@@ -1549,7 +1549,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			Lebensdauer = 128;
 			ySpeed	    = - float(rand()%10 + 2) / 2.0f;
 			xSpeed	    =   float(rand()%20 - 10) / 2.0f;
-			yAcc		= 4.0f;						
+			yAcc		= 4.0f;
 		} break;
 
 		case BUBBLE :		// Luftbläschen im Wasser
@@ -1572,15 +1572,15 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 				yAcc = -1.0f;
 			}
 
-			Lebensdauer = 255;		
+			Lebensdauer = 255;
 			RemoveWhenOffScreen = false;
-		} break;		
+		} break;
 
 		case LASERFLAME :			// Leuchteffekt für den Krabbler
 		{
 			red	= 255; green = 255;	blue = 255;	alpha = 255;
 			Lebensdauer = 255.0f;
-			
+
 		} break;
 
 		case LASERFLAMEPHARAO :		// Leuchteffekt für den Pharao
@@ -1588,7 +1588,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			red	= 255; green = 64;	blue = 64;	alpha = 255;
 			Lebensdauer = 192.0f;
 			PartikelArt = LASERFLAME;
-			
+
 		} break;
 
 		case SHIELD :				// Schutzschild
@@ -1617,8 +1617,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			// Offset zum Spieler merken
 			xSpeed = m_pParent->xpos - xPos;
 			ySpeed = m_pParent->ypos - yPos;
-			
-		} break;		
+
+		} break;
 
 		case TURBINESMOKE :			// Partikel für die Turbine des Metalhead Bosses
 		{
@@ -1629,9 +1629,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
 			double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
 													// berechnung
-			absx = pPartikelSystem->xtarget-xPos;	// Differenz der x 
+			absx = pPartikelSystem->xtarget-xPos;	// Differenz der x
 			absy = pPartikelSystem->ytarget-yPos;	// und y Strecke
-				
+
 			speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
 			speed = speed*(8+AnimPhase);			// Geschwindigkeit ist 4 fach
 
@@ -1675,7 +1675,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			red	= 255; green = 128;	blue = 255; alpha = 192;
 			Lebensdauer = 192;
 		} break;
-		
+
 		case SCHLEIM:			// kleiner Schleimbollen
 		case SCHLEIM2:
 		{
@@ -1801,7 +1801,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 		{
 			red	= 32; green = 192;	blue = 255;	alpha = 255;
 			Lebensdauer = 255;
-		} break;		
+		} break;
 
 		case EXPLOSION_TRACE_END:
 		{
@@ -1843,12 +1843,12 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
 			xPos -= 60;
 			yPos -= 60;
-			
+
 			xSpeed		= ((float)(rand()%80-40));
 			ySpeed		= -(float)(rand()%10+50);
 			yAcc		= 8.0f;
-			
-		} break;		
+
+		} break;
 
 		case EXPLOSION_REGULAR:
 		{
@@ -1858,8 +1858,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 			AnimEnde	= 17;
 			AnimSpeed	= 0.75f;
 
-			Rotate = true;			
-		} break;		
+			Rotate = true;
+		} break;
 
 		default :
 		break;
@@ -1920,28 +1920,28 @@ void PartikelClass::Run(void)
 	{
 		// Testen,ob der Partikel sich in einer Wand verfangen hat, wenn ja
 		// dann verschwinden lassen
-	
+
 		if((bo & BLOCKWERT_WAND && bu & BLOCKWERT_WAND && bl & BLOCKWERT_WAND) ||
 		   (bo & BLOCKWERT_WAND && bu & BLOCKWERT_WAND && br & BLOCKWERT_WAND))
 		    Lebensdauer = 0.0f;
 
 		// An der Decke abgeprallt?
 		if (ySpeed < 0.0f &&
-			bo & BLOCKWERT_WAND) 
+			bo & BLOCKWERT_WAND)
 			ySpeed *= -1.0f;
 
 		// Am Boden abgesprungen?
 		if (ySpeed > 0.0f &&
 			(bu & BLOCKWERT_WAND ||
 			 bu & BLOCKWERT_PLATTFORM))
-		{	
-			ySpeed = -ySpeed/2.0f;	
+		{
+			ySpeed = -ySpeed/2.0f;
 
 			if (ySpeed > -0.5f)
-			{				
+			{
 				ySpeed  = 0.0f;
 				xSpeed *= 0.99f;
-			}			
+			}
 		}
 
 		if ((xSpeed > 0.0f && br & BLOCKWERT_WAND) ||
@@ -1975,7 +1975,7 @@ void PartikelClass::Run(void)
 			Lebensdauer -= 20.0f SYNC;	// langsam ausfaden lassen
 			alpha		 = (int)Lebensdauer;
 		} break;
-		
+
 		case BULLET_SKELETOR:
 		case BULLET:						// Patronenhülse
 		{
@@ -1986,26 +1986,26 @@ void PartikelClass::Run(void)
 
 			// Testen,ob der Partikel sich in einer Wand verfangen hat, wenn ja
 			// dann verschwinden lassen
-		
+
 			if((bo & BLOCKWERT_WAND && bu & BLOCKWERT_WAND && bl & BLOCKWERT_WAND) ||
 			   (bo & BLOCKWERT_WAND && bu & BLOCKWERT_WAND && br & BLOCKWERT_WAND))
 				Lebensdauer = 0.0f;
 
 			// An der Decke abgeprallt?
 			if (ySpeed < 0.0f &&
-				bo & BLOCKWERT_WAND) 
+				bo & BLOCKWERT_WAND)
 				ySpeed *= -1.0f;
 
 			// Am Boden abgesprungen?
 			if (ySpeed > 0.0f &&
 				(bu & BLOCKWERT_WAND ||
 				 bu & BLOCKWERT_PLATTFORM))
-			{	
-				ySpeed = -ySpeed/2.0f;	
+			{
+				ySpeed = -ySpeed/2.0f;
 				xSpeed *= 0.5f;
 
 				if (ySpeed > -0.5f)
-				{				
+				{
 					yAcc = 0.0f;
 					ySpeed = 0.0f;
 					xSpeed = 0.0f;
@@ -2022,7 +2022,7 @@ void PartikelClass::Run(void)
 			alpha		 = (int)Lebensdauer;
 
 		} break;
-		
+
 		case EXPLOSION_GREEN:				// Mittlere Grüne Explosion
 		case EXPLOSION_ALIEN:				// Mittlere Alien Explosion
 		case EXPLOSION_MEDIUM:				// Mittlere Explosion
@@ -2030,7 +2030,7 @@ void PartikelClass::Run(void)
 		case EXPLOSION_MEDIUM3:				// Mittlere Explosion Nr 3
 		case EXPLOSION_GIGA:				// Riesen fette Explosion
 		case EXPLOSION_BIG:					// Grosse Explosion
-		case EXPLOSION_GIANT:					// Grosse Explosion		
+		case EXPLOSION_GIANT:					// Grosse Explosion
 		{
 			Lebensdauer -= 5.0f SYNC;	// langsam ausfaden lassen
 			alpha		 = (int)Lebensdauer;
@@ -2040,7 +2040,7 @@ void PartikelClass::Run(void)
 			if (Rotate == true)
 				Rot += RotDir * AnimSpeed * 10.0f SYNC;
 
-		} break;		
+		} break;
 
 		case BLUE_EXPLOSION:				// Kleine blaue Explosion
 		{
@@ -2094,7 +2094,7 @@ void PartikelClass::Run(void)
 			// Partikel drehen
 			Rot += 40.0f SYNC;
 
-		} break;	
+		} break;
 
 		case SPIDERPARTS:				// Spinnenstücke auf dem Fliessband
 		{
@@ -2114,12 +2114,12 @@ void PartikelClass::Run(void)
 						xSpeed = 11.0f;
 					else
 						xSpeed = -11.0f;
-				}			
-				
+				}
+
 				// oder verschwinden
 				else
 					Lebensdauer = 0.0f;
-			}				
+			}
 
 			// auf dem Fliessband bewegen
 			if (bu & BLOCKWERT_FLIESSBANDL)
@@ -2152,7 +2152,7 @@ void PartikelClass::Run(void)
 				ySpeed = -2.0f;
 
 			if (ySpeed == 0.0f)				// an der Oberfläche langsam ausfaden lassen
-				Lebensdauer -= 7.0f SYNC;	
+				Lebensdauer -= 7.0f SYNC;
 			alpha		 = (int)Lebensdauer;
 
 			if ((xAcc > 0.0f && xSpeed > 0.0f) ||
@@ -2317,11 +2317,11 @@ void PartikelClass::Run(void)
 
 			// Fadet ein ?
 			//
-			if (AnimCount < 128.0f)	
+			if (AnimCount < 128.0f)
 				alpha = int (AnimCount);
 
 			// oder aus ?
-			else   				
+			else
 				alpha = 256 - int (AnimCount);
 
 			if (AnimCount >= 256.0f)
@@ -2329,8 +2329,8 @@ void PartikelClass::Run(void)
 		} break;
 
 		case ROCKSPLITTER:					// Splitter eines Felsblocks
-		case ROCKSPLITTERSMALL:		
-		case ROCKSPLITTERSMALLBLUE:		
+		case ROCKSPLITTERSMALL:
+		case ROCKSPLITTERSMALLBLUE:
 		case BOULDER_SMALL:
 		{
 			if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
@@ -2392,7 +2392,7 @@ void PartikelClass::Run(void)
 
 			Rot += xSpeed * 2.0f SYNC;
 		} break;
-				
+
 		case STELZHEAD:
 		{
 			AnimCount -= 1.0f SYNC;
@@ -2402,7 +2402,7 @@ void PartikelClass::Run(void)
 				AnimCount = 0.5f;
 				pPartikelSystem->PushPartikel (xPos - 20 + rand()%40, yPos - 20 + rand()%40, EXPLOSION_MEDIUM2);
 			}
-		} break;						
+		} break;
 
 		case SMOKEBIG:						// Riesen Rauch
 		{
@@ -2410,7 +2410,7 @@ void PartikelClass::Run(void)
 			alpha		 = (int)Lebensdauer;
 
 			Rot += RotDir * ySpeed * 3.0f SYNC;
-			
+
 		} break;
 
 		case SMOKEBIG2:						// Riesen Rauch
@@ -2431,7 +2431,7 @@ void PartikelClass::Run(void)
 
 			if (xSpeed < 0.0f)
 				xSpeed += 3.0f SYNC;
-			
+
 		} break;
 
 		case SMOKEBIG_OUTTRO:				// Riesen Rauch
@@ -2440,7 +2440,7 @@ void PartikelClass::Run(void)
 			alpha		 = (int)Lebensdauer;
 
 			Rot += RotDir * ySpeed * 1.0f SYNC;
-			
+
 		} break;
 
 		case SMOKE:							// Rauchwolke
@@ -2461,7 +2461,7 @@ void PartikelClass::Run(void)
 
 			// Rauch im Wasser ? Dann zur Blubberblase werden lassen
 			//
-			if (pTileEngine->Tiles[(int)((xPos + 5) / TILESIZE_X)][(int)((yPos + 5) / TILESIZE_Y)].Block & BLOCKWERT_LIQUID)				
+			if (pTileEngine->Tiles[(int)((xPos + 5) / TILESIZE_X)][(int)((yPos + 5) / TILESIZE_Y)].Block & BLOCKWERT_LIQUID)
 			{
 				int off = 0;
 
@@ -2471,7 +2471,7 @@ void PartikelClass::Run(void)
 				Lebensdauer = 0;
 				pPartikelSystem->PushPartikel (xPos + 5, yPos + off, BUBBLE);
 			}
-		} break;		
+		} break;
 
 		case REGENTROPFEN:							// Verschwindet wenn Wand oder Boden getroffen
 		{
@@ -2492,9 +2492,9 @@ void PartikelClass::Run(void)
 				if (options_Detail >= DETAIL_HIGH)
 				for (int i=0; i<2; i++)
 					pPartikelSystem->PushPartikel(xPos+8, yPos+16, WASSERTROPFEN);
-			}			
+			}
 
-		} break;		
+		} break;
 
 		case HALSWIRBEL:
 		case KAPUTTETURBINE:
@@ -2507,7 +2507,7 @@ void PartikelClass::Run(void)
 				   AnimCount -= 2 * PI;
 		} break;
 
-		case DUST:		
+		case DUST:
 		{
 			Lebensdauer -= 1.0f SYNC;	// langsam ausfaden lassen
 			alpha		 = (int)Lebensdauer;
@@ -2524,7 +2524,7 @@ void PartikelClass::Run(void)
 		case SCHROTT2:
 		{
 			Lebensdauer -= 5.0f SYNC;	// langsam ausfaden lassen
-			alpha		 = (int)Lebensdauer;			
+			alpha		 = (int)Lebensdauer;
 
 			if (AnimPhase >= AnimEnde)
 				AnimPhase = 0;
@@ -2561,7 +2561,7 @@ void PartikelClass::Run(void)
 				alpha = int(Lebensdauer);
 			}
 
-		} break;		
+		} break;
 
 		case SCHNEEFLOCKE_END:					// Verschwindet am unteren Level-Rand
 		{
@@ -2572,15 +2572,15 @@ void PartikelClass::Run(void)
 			if (xSpeed >  2.0f)
 				xAcc = -0.1f;
 
-			// Unten aus dem Screen raus? Dann verschwinden lassen			
+			// Unten aus dem Screen raus? Dann verschwinden lassen
 			if (yPos > 480.0f)
 				Lebensdauer = 0.0f;
-		} break;		
+		} break;
 
 		default : break;
 	} // switch < Additiv Grenze
 
-	else	
+	else
 
 	switch (PartikelArt)
 	{
@@ -2595,7 +2595,7 @@ void PartikelClass::Run(void)
 
 		} break;
 
-		
+
 		case BEAMSMOKE3:
 		case BEAMSMOKE4:
 		{
@@ -2618,9 +2618,9 @@ void PartikelClass::Run(void)
 			if (m_pParent != NULL)
 			{
 				// Bewegungsrichtung anpassen
-				double absx = m_pParent->BeamX-xPos;				// Differenz der x 
+				double absx = m_pParent->BeamX-xPos;				// Differenz der x
 				double absy = m_pParent->BeamY-yPos;				// und y Strecke
-					
+
 				double speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
 				speed = speed*(4+AnimPhase * 2);				// Geschwindigkeit
 
@@ -2634,11 +2634,11 @@ void PartikelClass::Run(void)
 
 		case SNOWFLUSH:
 		{
-			Lebensdauer -= 8.0f SYNC;		
+			Lebensdauer -= 8.0f SYNC;
 
 			// Im Wasser gelandet ?
 			if (pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) & BLOCKWERT_LIQUID)
-				Lebensdauer -= 20.0f SYNC;		
+				Lebensdauer -= 20.0f SYNC;
 
 			alpha		 = (int)Lebensdauer;
 
@@ -2647,13 +2647,13 @@ void PartikelClass::Run(void)
 
 		case WATERFLUSH:
 		{
-			Lebensdauer -= 1.5f SYNC;		
+			Lebensdauer -= 1.5f SYNC;
 
 			// Im Wasser gelandet ?
 			if (pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) & BLOCKWERT_LIQUID    ||
 				pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) & BLOCKWERT_PLATTFORM ||
 				pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) & BLOCKWERT_WAND)
-				Lebensdauer -= 4.0f SYNC;		
+				Lebensdauer -= 4.0f SYNC;
 
 			alpha		 = (int)Lebensdauer;
 
@@ -2662,7 +2662,7 @@ void PartikelClass::Run(void)
 
 		case UFOLASERFLARE:
 		{
-			Lebensdauer -= 20.0f SYNC;		
+			Lebensdauer -= 20.0f SYNC;
 			alpha		 = (int)Lebensdauer;
 		} break;
 
@@ -2670,7 +2670,7 @@ void PartikelClass::Run(void)
 		{
 			Lebensdauer -= 14.0f SYNC;	// langsam ausfaden lassen
 			alpha		 = (int)Lebensdauer;
-		} break;				
+		} break;
 
 		case FUNKE2:						// Grüner Funken
 		{
@@ -2687,7 +2687,7 @@ void PartikelClass::Run(void)
 			//
 			if (yPosOld == yPos)
 				Lebensdauer -= 100.0f SYNC;
-			 
+
 			if (Lebensdauer < 0.0f)
 				Lebensdauer = 0.0f;
 
@@ -2700,8 +2700,8 @@ void PartikelClass::Run(void)
 				Lebensdauer = 0.0f;
 
 			// langsam ausfaden lassen
-			Lebensdauer -= 18.0f SYNC;	
-			alpha		 = (int)Lebensdauer;			
+			Lebensdauer -= 18.0f SYNC;
+			alpha		 = (int)Lebensdauer;
 		} break;
 
 		case LASERFUNKE:					// Laser-Funken
@@ -2716,14 +2716,14 @@ void PartikelClass::Run(void)
 			alpha		 = (int)Lebensdauer;
 			if (AnimPhase >= AnimEnde)
 				AnimPhase = 0;
-		} break;		
+		} break;
 
 		case PHARAOSMOKE:					// Rauch des Pharao-Schusses
 		{
 			Lebensdauer -= 20.0f SYNC;	// langsam ausfaden lassen
 			alpha		 = (int)Lebensdauer;
 		} break;
-		
+
 		case ROCKETSMOKE:					// Rauch einer Rakete
 		case ROCKETSMOKEBLUE:				// in blau
 		{
@@ -2737,7 +2737,7 @@ void PartikelClass::Run(void)
 			alpha		 = (int)Lebensdauer;
 		} break;
 
-		case FLUGSACKSMOKE:				
+		case FLUGSACKSMOKE:
 		{
 			Lebensdauer -= 30.0f SYNC;	// langsam ausfaden lassen
 			alpha		 = (int)Lebensdauer;
@@ -2786,10 +2786,10 @@ void PartikelClass::Run(void)
 					Lebensdauer = 0;
 				}
 			}
-		} break;		
+		} break;
 
 		case LASERFLAME:			// Wird immer durchsichtiger
-		case STELZFLARE:		
+		case STELZFLARE:
 		{
 			Lebensdauer -= float(50.0 SYNC);
 			alpha = int (Lebensdauer);
@@ -2798,7 +2798,7 @@ void PartikelClass::Run(void)
 
 		case SHIELD:				// Verschwindet nach Ablauf der Animation
 		{
-			Lebensdauer -= 20.0f SYNC;			
+			Lebensdauer -= 20.0f SYNC;
 			alpha = int (Lebensdauer);
 
 			// an Spieler anpassen
@@ -2821,8 +2821,8 @@ void PartikelClass::Run(void)
 			Lebensdauer -= float(10.0 SYNC + AnimPhase);
 			alpha = int (Lebensdauer);
 
-			xSpeed -= (xSpeed * 0.1f) SYNC;			
-			ySpeed -= (ySpeed * 0.1f) SYNC;			
+			xSpeed -= (xSpeed * 0.1f) SYNC;
+			ySpeed -= (ySpeed * 0.1f) SYNC;
 		} break;
 
 		case KRINGEL:
@@ -2837,9 +2837,9 @@ void PartikelClass::Run(void)
 			//
 			double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
 													// berechnung
-			absx = m_pParent->xpos+35-(xPos+4);		// Differenz der x 
+			absx = m_pParent->xpos+35-(xPos+4);		// Differenz der x
 			absy = m_pParent->ypos+40-(yPos+4);		// und y Strecke
-				
+
 			speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
 			speed = speed*(8+AnimPhase);			// Geschwindigkeit ist 4 fach
 
@@ -2859,9 +2859,9 @@ void PartikelClass::Run(void)
 			//
 			double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
 													// berechnung
-			absx = pPartikelSystem->xtarget-xPos;	// Differenz der x 
+			absx = pPartikelSystem->xtarget-xPos;	// Differenz der x
 			absy = pPartikelSystem->ytarget-yPos;	// und y Strecke
-				
+
 			speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
 			speed = speed*(15+AnimPhase*2);			// Geschwindigkeit ist 4 fach
 
@@ -2924,21 +2924,21 @@ void PartikelClass::Run(void)
 
 			if (AnimPhase >= AnimEnde)
 				AnimPhase = 0;
-		} break;		
+		} break;
 
 		case SHOCKEXPLOSION:				// Schockwelle bei Spieler Explosion
 		{
 			Lebensdauer -= 10.0f SYNC;	// langsam ausfaden lassen
 			alpha		 = (int)Lebensdauer;
-			AnimCount += 130.0f SYNC;			
-		} break;		
+			AnimCount += 130.0f SYNC;
+		} break;
 
 		case SHOTFLARE:						// Leuchten bei Schuss-Aufprall
 		case SHOTFLARE2:
 		{
 			Lebensdauer -= 100.0f SYNC;	// langsam ausfaden lassen
 			alpha		 = (int)Lebensdauer;
-		} break;		
+		} break;
 
 		case EXTRACOLLECTED:
 		{
@@ -2994,8 +2994,8 @@ void PartikelClass::Run(void)
 			Rot += RotDir * AnimSpeed * 3.0f SYNC;
 
 		} break;
-		
-		case LAVADUST:		
+
+		case LAVADUST:
 		{
 			Lebensdauer -= 1.0f SYNC;	// langsam ausfaden lassen
 			alpha		 = (int)Lebensdauer;
@@ -3010,7 +3010,7 @@ void PartikelClass::Run(void)
 
 		case EXPLOSION_MEDIUM2_ADD:
 		case EXPLOSION_MEDIUM3_ADD:
-		case EXPLOSION_REGULAR:		
+		case EXPLOSION_REGULAR:
 		{
 			Lebensdauer -= 5.0f SYNC;	// langsam ausfaden lassen
 			alpha		 = (int)Lebensdauer;
@@ -3019,7 +3019,7 @@ void PartikelClass::Run(void)
 
 			Rot += RotDir * AnimSpeed * 10.0f SYNC;
 
-		} break;		
+		} break;
 
 		case EXPLOSION_TRACE:
 		{
@@ -3059,7 +3059,7 @@ bool PartikelClass::Render(void)
 		if (Rot <   0.0f) Rot += 360.0f;
 		if (Rot > 360.0f) Rot -= 360.0f;
 
-		DirectGraphics.SetFilterMode (true);			
+		DirectGraphics.SetFilterMode (true);
 
 		D3DXMATRIX	matRot, matTrans, matTrans2;
 		int width  = pPartikelGrafix[PartikelArt]->itsXFrameSize;
@@ -3080,11 +3080,18 @@ bool PartikelClass::Render(void)
 										 y+(height)/2, 0.0f);
 
 		// Verschieben und rotieren
-		D3DXMatrixMultiply	 (&matWorld, &matTrans, &matRot);	
+		D3DXMatrixMultiply	 (&matWorld, &matTrans, &matRot);
 
 		// und wieder zurück verschieben
 		D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);
-		lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);			
+#if defined(PLATFORM_DIRECTX)
+        lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+        D3DXMATRIXA16 matModelView;
+        matrixmode( GL_MODELVIEW );
+        matModelView = matWorld * g_matView;
+        glLoadMatrixf( matModelView.data() );
+#endif
 	}
 	else
 
@@ -3098,11 +3105,18 @@ bool PartikelClass::Render(void)
 
 		// Normale Projektions-Matrix wieder herstellen
 		D3DXMatrixRotationZ (&matWorld, 0.0f);
-		lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#if defined(PLATFORM_DIRECTX)
+        lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+        D3DXMATRIXA16 matModelView;
+        matrixmode( GL_MODELVIEW );
+        matModelView = matWorld * g_matView;
+        glLoadMatrixf( matModelView.data() );
+#endif
 	}
 
 	// Normaler Partikel (aus Grafik) zeichnen
-	if (OwnDraw == false)						
+	if (OwnDraw == false)
 	{
 		float l,  r,  o,  u;					// Vertice Koordinaten
 		float tl, tr, to, tu;					// Textur Koordinaten
@@ -3164,13 +3178,18 @@ bool PartikelClass::Render(void)
 
 		if (PartikelArt != CurrentPartikelTexture)
 		{
+#if defined(PLATFORM_DIRECTX)
 			lpD3DDevice->SetTexture (0, pPartikelGrafix[PartikelArt]->itsTexture);							// Textur setzen
+#elif defined(PLATFORM_SDL)
+            DirectGraphics.SetTexture(  pPartikelGrafix[PartikelArt]->itsTexture );
+#endif
+
 			CurrentPartikelTexture = PartikelArt;
-		}	
+		}
 
 		// Sprite zeichnen
 		DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
-		
+
 	}
 	else
 	if (PartikelArt == TEXTSECRET)
@@ -3184,12 +3203,12 @@ bool PartikelClass::Render(void)
 	}
 
 	// Langer Funke (Linie)
-	else 
+	else
 	if (PartikelArt == EXPLOSION_TRACE_END)
 	{
 		D3DCOLOR col = D3DCOLOR_RGBA(255, 255, 255, (int)(Lebensdauer));
 		pPartikelGrafix[PartikelArt]->itsRect = pPartikelGrafix[PartikelArt]->itsPreCalcedRects[AnimPhase];
-		pPartikelGrafix[PartikelArt]->RenderSpriteScaledRotated(xPos, yPos, 
+		pPartikelGrafix[PartikelArt]->RenderSpriteScaledRotated(xPos, yPos,
 																(float)blue, (float)blue,  Rot, col);
 		CurrentPartikelTexture = EXPLOSION_TRACE_END;
 	}
@@ -3197,7 +3216,11 @@ bool PartikelClass::Render(void)
 	if (PartikelArt == LONGFUNKE ||
 		PartikelArt == WATERFUNKE)
 	{
-		lpD3DDevice->SetTexture (0, NULL);																	// Keine Textur setzen
+#if defined(PLATFORM_DIRECTX)
+        lpD3DDevice->SetTexture (0, NULL);																	// Keine Textur setzen
+#elif defined(PLATFORM_SDL)
+        DirectGraphics.SetTexture(  0 );
+#endif
 
 		D3DXVECTOR2 pos, dir;
 
@@ -3207,49 +3230,53 @@ bool PartikelClass::Render(void)
 		dir.y = pos.y - ySpeed;
 
 		if (PartikelArt == LONGFUNKE)
-			RenderLine (dir, pos, D3DCOLOR_RGBA(255, 64, 16, int (Lebensdauer/3.0f)), D3DCOLOR_RGBA(255, 192, 32, int (Lebensdauer))); 
+			RenderLine (dir, pos, D3DCOLOR_RGBA(255, 64, 16, int (Lebensdauer/3.0f)), D3DCOLOR_RGBA(255, 192, 32, int (Lebensdauer)));
 
 		else if (PartikelArt == WATERFUNKE)
 		{
 			dir.x = pos.x - xSpeed * 0.5f;
 			dir.y = pos.y - ySpeed * 0.5f;
 
-			RenderLine (dir, pos, D3DCOLOR_RGBA(pTileEngine->ColR1, pTileEngine->ColG1, pTileEngine->ColB1, int (Lebensdauer / 3.0f)), 
-								  D3DCOLOR_RGBA(pTileEngine->ColR2, pTileEngine->ColG2, pTileEngine->ColB2, int (Lebensdauer))); 
+			RenderLine (dir, pos, D3DCOLOR_RGBA(pTileEngine->ColR1, pTileEngine->ColG1, pTileEngine->ColB1, int (Lebensdauer / 3.0f)),
+								  D3DCOLOR_RGBA(pTileEngine->ColR2, pTileEngine->ColG2, pTileEngine->ColB2, int (Lebensdauer)));
 		}
 
 		CurrentPartikelTexture = -1;
 	}
 
 	// Halswirbel oder Turbine des Metalhead Bosses (dreht sich, daher extrawurscht)
-	else 
+	else
 	if (PartikelArt == HALSWIRBEL	  ||
 		PartikelArt == KAPUTTETURBINE)
 	{
+#if defined(PLATFORM_DIRECTX)
 		lpD3DDevice->SetTexture (0, pPartikelGrafix[PartikelArt]->itsTexture);							// Textur setzen
+#elif defined(PLATFORM_SDL)
+        DirectGraphics.SetTexture(  pPartikelGrafix[PartikelArt]->itsTexture );
+#endif
 
-		pPartikelGrafix[PartikelArt]->RenderSpriteRotated (float (xPos - pTileEngine->XOffset), 
-														   float (yPos - pTileEngine->YOffset), 
+		pPartikelGrafix[PartikelArt]->RenderSpriteRotated (float (xPos - pTileEngine->XOffset),
+														   float (yPos - pTileEngine->YOffset),
 														   AnimCount / PI * 180.0f, D3DCOLOR_RGBA(red, green, blue, alpha));
 
 		CurrentPartikelTexture = PartikelArt;
 	}
 
 	// Druckwelle bei der Explosion des Beams
-	else 
+	else
 	if (PartikelArt == BEAMSMOKE5)
 	{
 		float a = (float)(255 - alpha + 64);
 
-		pPartikelGrafix[PartikelArt]->RenderSpriteScaledRotated (float (xPos - a / 2.0f - pTileEngine->XOffset) + 30, 
-																 float (yPos - a / 2.0f - pTileEngine->YOffset) + 30, 
+		pPartikelGrafix[PartikelArt]->RenderSpriteScaledRotated (float (xPos - a / 2.0f - pTileEngine->XOffset) + 30,
+																 float (yPos - a / 2.0f - pTileEngine->YOffset) + 30,
 																 a, a, Rot, D3DCOLOR_RGBA(255, 255, 255, alpha));
 
 		CurrentPartikelTexture = PartikelArt;
 	}
 
 	// Druckwelle bei der Explosion des Spieler
-	else 
+	else
 	if (PartikelArt == SHOCKEXPLOSION)
 	{
 		int a = 255 - alpha + 64;
@@ -3262,7 +3289,7 @@ bool PartikelClass::Render(void)
 	}
 
 	// Leuchten beim Extra Einsammeln
-	else 
+	else
 	if (PartikelArt == EXTRACOLLECTED)
 	{
 		pPartikelGrafix[PartikelArt]->RenderSpriteScaled (float (xPos + 16 - AnimCount / 2.0f - pTileEngine->XOffset),
@@ -3273,7 +3300,7 @@ bool PartikelClass::Render(void)
 	}
 
 	// Leuchten beim Diamant Einsammeln
-	else 
+	else
 	if (PartikelArt == DIAMANTCOLLECTED)
 	{
 		DirectGraphics.SetAdditiveMode();
@@ -3295,9 +3322,9 @@ bool PartikelClass::Render(void)
 		h = 100;
 		if (PartikelArt == WASSER_SPRITZER)
 			b = (int)(200 - alpha / 2);
-		else	
+		else
 			b = (int)(AnimCount * 30);
-		
+
 		pPartikelGrafix[PartikelArt]->RenderSpriteScaled (float (xPos - pTileEngine->XOffset) - b/4,
 														  float (yPos - pTileEngine->YOffset) - h/2,
 														  b, h, D3DCOLOR_RGBA(red, green, blue, alpha));
@@ -3338,7 +3365,7 @@ PartikelsystemClass::PartikelsystemClass(void)
 		pPartikelGrafix[i] = new(DirectGraphicsSprite);
 
 	// Patronenhülse
-	pPartikelGrafix[BULLET]->LoadImage("Bullet.bmp", 8, 8, 8, 8, 1, 1);
+	pPartikelGrafix[BULLET]->LoadImage("bullet.bmp", 8, 8, 8, 8, 1, 1);
 	PartikelRect[BULLET].left = 2;	PartikelRect[BULLET].right  = 6;
 	PartikelRect[BULLET].top  = 2;	PartikelRect[BULLET].bottom = 6;
 
@@ -3433,7 +3460,7 @@ PartikelsystemClass::PartikelsystemClass(void)
 	PartikelRect[PIRANHABLUT].top  = 0;	PartikelRect[PIRANHABLUT].bottom = 40;
 
 	// Blut einer kaputten Made
-	pPartikelGrafix[MADEBLUT]->LoadImage("MADEblut.bmp", 48, 12, 12, 12, 4, 1);
+	pPartikelGrafix[MADEBLUT]->LoadImage("madeblut.bmp", 48, 12, 12, 12, 4, 1);
 	PartikelRect[MADEBLUT].left = 0;	PartikelRect[MADEBLUT].right  = 12;
 	PartikelRect[MADEBLUT].top  = 0;	PartikelRect[MADEBLUT].bottom = 12;
 
@@ -3568,7 +3595,7 @@ PartikelsystemClass::PartikelsystemClass(void)
 	pPartikelGrafix[UFOLASERFLARE]->LoadImage("ufolaserflare.bmp", 160, 160, 160, 160, 1, 1);
 	PartikelRect[UFOLASERFLARE].left = 0;	PartikelRect[UFOLASERFLARE].right  = 160;
 	PartikelRect[UFOLASERFLARE].top  = 0;	PartikelRect[UFOLASERFLARE].bottom = 160;
-	
+
 	// Additive Partikel
 	//
 	// Roter Funken
@@ -3688,22 +3715,22 @@ PartikelsystemClass::PartikelsystemClass(void)
 	// Schrott der Lava Krabbe
 	pPartikelGrafix[LAVAKRABBE_KOPF]->LoadImage("lavakrabbe_teile.bmp", 80, 40, 40, 40, 2, 1);
 	PartikelRect[LAVAKRABBE_KOPF].left = 12;	PartikelRect[LAVAKRABBE_KOPF].right  = 28;
-	PartikelRect[LAVAKRABBE_KOPF].top  = 12;	PartikelRect[LAVAKRABBE_KOPF].bottom = 28;	
+	PartikelRect[LAVAKRABBE_KOPF].top  = 12;	PartikelRect[LAVAKRABBE_KOPF].bottom = 28;
 
 	// Spinnenteile
 	pPartikelGrafix[SPIDERPARTS]->LoadImage("spiderparts.bmp", 192, 40, 48, 40, 4, 1);
 	PartikelRect[SPIDERPARTS].left = 0;	PartikelRect[SPIDERPARTS].right  = 48;
-	PartikelRect[SPIDERPARTS].top  = 0;	PartikelRect[SPIDERPARTS].bottom = 36;	
+	PartikelRect[SPIDERPARTS].top  = 0;	PartikelRect[SPIDERPARTS].bottom = 36;
 
 	// Kettenteile
 	pPartikelGrafix[KETTENTEILE]->LoadImage("kettenteile.png", 126, 50, 42, 50, 3, 1);
 	PartikelRect[KETTENTEILE].left = 10;	PartikelRect[KETTENTEILE].right  = 40;
-	PartikelRect[KETTENTEILE].top  = 10;	PartikelRect[KETTENTEILE].bottom = 32;	
+	PartikelRect[KETTENTEILE].top  = 10;	PartikelRect[KETTENTEILE].bottom = 32;
 
 	// Kettenteile 4
 	pPartikelGrafix[KETTENTEILE4]->LoadImage("kettenteil2.bmp", 11, 21, 11, 21, 1, 1);
 	PartikelRect[KETTENTEILE4].left = 0;	PartikelRect[KETTENTEILE4].right  = 11;
-	PartikelRect[KETTENTEILE4].top  = 0;	PartikelRect[KETTENTEILE4].bottom = 21;	
+	PartikelRect[KETTENTEILE4].top  = 0;	PartikelRect[KETTENTEILE4].bottom = 21;
 
 	// Regentropfen
 	pPartikelGrafix[REGENTROPFEN]->LoadImage("rain.png", 16, 32, 16, 32, 1, 1);
@@ -3713,7 +3740,7 @@ PartikelsystemClass::PartikelsystemClass(void)
 	// Schutzschild
 	pPartikelGrafix[SHIELD]->LoadImage("shield.bmp", 48, 48, 48, 48, 1, 1);
 	PartikelRect[SHIELD].left = 0;	PartikelRect[SHIELD].right  = 48;
-	PartikelRect[SHIELD].top  = 0;	PartikelRect[SHIELD].bottom = 48;	
+	PartikelRect[SHIELD].top  = 0;	PartikelRect[SHIELD].bottom = 48;
 
 	// Rauch des Rundumschusses des evil hurri
 	pPartikelGrafix[EVILROUNDSMOKE]->LoadImage("evilroundsmoke.bmp", 12, 12, 12, 12, 1, 1);
@@ -3746,7 +3773,7 @@ PartikelsystemClass::PartikelsystemClass(void)
 	PartikelRect[TURBINESMOKE].top  = 0;	PartikelRect[TURBINESMOKE].bottom = 8;
 
 	// MiniFlare
-	pPartikelGrafix[MINIFLARE]->LoadImage("MINIFLARE.bmp", 32, 32, 32, 32, 1, 1);
+	pPartikelGrafix[MINIFLARE]->LoadImage("miniflare.bmp", 32, 32, 32, 32, 1, 1);
 	PartikelRect[MINIFLARE].left = 0;	PartikelRect[MINIFLARE].right  = 32;
 	PartikelRect[MINIFLARE].top  = 0;	PartikelRect[MINIFLARE].bottom = 32;
 
@@ -3828,7 +3855,7 @@ PartikelsystemClass::PartikelsystemClass(void)
 	// Leuchten beim Einsammeln eines Extras
 	pPartikelGrafix[LASERFLARE]->LoadImage("lavaflare.bmp", 120, 120, 120, 120, 1, 1);
 	PartikelRect[LASERFLARE].left = 0;	PartikelRect[LASERFLARE].right  = 120;
-	PartikelRect[LASERFLARE].top  = 0;	PartikelRect[LASERFLARE].bottom = 120;	
+	PartikelRect[LASERFLARE].top  = 0;	PartikelRect[LASERFLARE].bottom = 120;
 
 	// Reguläre Explosion
 	pPartikelGrafix[EXPLOSION_REGULAR]->LoadImage("explosion-regular.bmp", 380, 304, 76, 76, 5, 4);
@@ -3890,13 +3917,13 @@ PartikelsystemClass::~PartikelsystemClass(void)
 // --------------------------------------------------------------------------------------
 
 bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass* pParent)
-{	
+{
 	if(NumPartikel >= MAX_PARTIKEL)			// Grenze überschritten ?
 		return false;
 
     PartikelClass *pNew = new PartikelClass;		// Neuer zu erstellender Partikel
 
-	if (pNew->CreatePartikel(x, y, Art, pParent) == false)	// neuen Partikel erzeugen	
+	if (pNew->CreatePartikel(x, y, Art, pParent) == false)	// neuen Partikel erzeugen
 		return false;
 
 	if(pStart==NULL)						// Liste leer ?
@@ -3906,12 +3933,12 @@ bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass* p
 
 		pStart->pNext=NULL;					// Next/Previous gibts nich, da wir
 		pStart->pPrev=NULL;					// nur 1 Partikel haben
-	} 
+	}
 	else									// Liste ist NICHT leer
 	{
 		pEnd->pNext = pNew;					// Letzter Partikel zeigt auf den neuen
 		pNew->pPrev = pEnd;					// Letzter Partikel ist nicht mehr das letzte
-		
+
 		pNew->pNext = NULL;					// Nach dem neuen Partikel kommt keiner mehr
 		pEnd		= pNew;					// da es jetzt das letzte in der Liste ist
 	}
@@ -3929,11 +3956,11 @@ void PartikelsystemClass::DelSel(PartikelClass *pTemp)
 	PartikelClass  *pN;
     PartikelClass  *pP;
 
-	if(pTemp!=NULL)						// zu löschender Partikel existiert 
+	if(pTemp!=NULL)						// zu löschender Partikel existiert
 	{
-		pN = pTemp->pNext;			
+		pN = pTemp->pNext;
 		pP = pTemp->pPrev;
-  
+
 		if(pP == NULL)					// Wird der erste Partikel gelöscht ?
 			pStart = pN;				// Dann wird dessen Nächster zum Ersten
 		else
@@ -3943,7 +3970,7 @@ void PartikelsystemClass::DelSel(PartikelClass *pTemp)
 			pEnd = pP;					// Dann wir der letzte Partikel zum ersten
 		else
 		pN->pPrev = pP;
-  
+
 		delete (pTemp);					// Speicher freigeben
 		pTemp = NULL;
 
@@ -4020,7 +4047,14 @@ void PartikelsystemClass::DrawOnly(void)
 
 	// Normale Projektions-Matrix wieder herstellen
 	D3DXMatrixRotationZ (&matWorld, 0.0f);
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    D3DXMATRIXA16 matModelView;
+    matrixmode( GL_MODELVIEW );
+    matModelView = matWorld * g_matView;
+    glLoadMatrixf( matModelView.data() );
+#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -4033,7 +4067,7 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem)
 	{
 		DrawOnly();
 		return;
-	}		
+	}
 
 	PartikelClass *pTemp = pStart;			// Anfang der Liste
 	PartikelClass *pNext = NULL;			// Nächster Partikel in der Liste
@@ -4096,7 +4130,14 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem)
 
 	// Normale Projektions-Matrix wieder herstellen
 	D3DXMatrixRotationZ (&matWorld, 0.0f);
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    D3DXMATRIXA16 matModelView;
+    matrixmode( GL_MODELVIEW );
+    matModelView = matWorld * g_matView;
+    glLoadMatrixf( matModelView.data() );
+#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -4109,7 +4150,7 @@ void PartikelsystemClass::DoPartikel(void)
 	{
 		DrawOnly();
 		return;
-	}		
+	}
 
 	PartikelClass *pTemp = pStart;			// Anfang der Liste
 	PartikelClass *pNext = NULL;			// Nächster Partikel in der Liste
@@ -4163,7 +4204,14 @@ void PartikelsystemClass::DoPartikel(void)
 
 	// Normale Projektions-Matrix wieder herstellen
 	D3DXMatrixRotationZ (&matWorld, 0.0f);
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    D3DXMATRIXA16 matModelView;
+    matrixmode( GL_MODELVIEW );
+    matModelView = matWorld * g_matView;
+    glLoadMatrixf( matModelView.data() );
+#endif
 }
 
 // --------------------------------------------------------------------------------------

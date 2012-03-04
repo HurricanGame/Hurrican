@@ -1,0 +1,47 @@
+UniquE RAR File Library - Frequently Asked Questions
+~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~
+
+Please read this FAQ before you mail us your questions. You can
+contact Johannes Winkelmann (jw@unrarlib.org) for unix/linux related questions
+and Christian Scheurer (cs@unrarlib.org) for other issues.
+
+
+Q: What is a RAR file and how do to open RAR files? 
+A: A RAR archive is a "collection of files". Compression
+   is used to make the archive file size smaller. A RAR
+   archive is something like a ZIP archive, but the
+   compression is usually better. The program WinRAR
+   can create and extract RAR archives. 
+   For further information please visit the official RAR 
+   homepage (http://www.rarlabs.com).
+   If you want to extract ("open", "read") RAR archives,
+   you may use a tool like WinRAR, WinZIP the free
+   Aladdin Expander (http://www.stuffit.com/expander/).
+
+Q: Which version of WinRAR should I use to create the RAR archives?
+A: Currently, only the RAR 2.0 archive format is
+   supported. Use WinRAR v2.9 (RAR 3.0 is introducing
+   new compression algorithms which are not
+   implemented yet). If you don't have this version of
+   WinRAR, you can get it here: http://www.unrarlib.org/download/wrar290.exe
+
+Q: What is a URARFileLib? 
+A: The URARFileLib (short name for UniquE RAR File
+   Library, also called unrarlib) is a free library for C
+   programmers to access RAR archives.
+
+Q: There is no way to create a RAR archive with the
+   URARFileLib. When will you add a "create archive"
+   function?
+A: Probably never. The license of the free unrar source
+   code prohibits making a tool that can create RAR
+   compatible archives. Eugene Roshal spent a lot of
+   time making RAR what it is today and RAR helps him
+   to earn his livelihood. If you really need to create
+   RAR archives form your application, I suggest
+   contacting the author of RAR. His EMail can be found
+   at http://www.rarlabs.com.
+
+
+Last update: 09.06.2002 by CS
+
