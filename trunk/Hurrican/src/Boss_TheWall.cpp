@@ -39,13 +39,13 @@ GegnerTheWall::GegnerTheWall(int Wert1, int Wert2, bool Light)
 	SkullShotDelay	= 0.0f;
 
 	// Zusätzliche Grafiken laden
-	//	
-	Tuer.LoadImage("endbosstuer.png", 288, 185, 288, 185, 1, 1);	
-	Kringel[0].LoadImage("endbosskringel.png", 192, 191, 192, 191, 1, 1);
-	Kringel[1].LoadImage("endbosskringel2.png", 570, 382, 190, 191, 3, 2);
-	Brain.LoadImage("endbosshirni.png", 129, 157, 38, 42, 2, 1);
-	Rahmen.LoadImage("endbossrahmen.png", 285, 217, 285,217, 1, 1);
-	Vorne.LoadImage("endbossmaschine_vorne.png", 136, 223, 136, 223, 1, 1);
+	//
+	Tuer.LoadImage("endbosstuer.bmp", 288, 185, 288, 185, 1, 1);
+	Kringel[0].LoadImage("endbosskringel.bmp", 192, 191, 192, 191, 1, 1);
+	Kringel[1].LoadImage("endbosskringel2.bmp", 570, 382, 190, 191, 3, 2);
+	Brain.LoadImage("endbosshirni.bmp", 129, 157, 38, 42, 2, 1);
+	Rahmen.LoadImage("endbossrahmen.bmp", 285, 217, 285,217, 1, 1);
+	Vorne.LoadImage("endbossmaschine_vorne.bmp", 136, 223, 136, 223, 1, 1);
 }
 
 // --------------------------------------------------------------------------------------
@@ -58,16 +58,16 @@ const int TunnelOffY = +140;
 void GegnerTheWall::DoDraw(void)
 {
 	if (PlayerAbstand() > 800)
-		return;	
+		return;
 
-	D3DCOLOR Color, col;	
+	D3DCOLOR Color, col;
 	int toff;
 
 	if (AlreadyDrawn == false)
-	{		
+	{
 		toff = int(sin(DoorOffset) * 100);
-		col = D3DCOLOR_RGBA(toff*2 + 50, 
-						    toff*2 + 50, 
+		col = D3DCOLOR_RGBA(toff*2 + 50,
+						    toff*2 + 50,
 							toff*2 + 50, 255);
 
 		int	Wert = 255-(int(DamageTaken));
@@ -85,7 +85,7 @@ void GegnerTheWall::DoDraw(void)
 		// Vorderteil
 		Vorne.RenderSprite(xPos - (float)pTileEngine->XOffset + VorneX + 3.0f,
 						   yPos - (float)pTileEngine->YOffset + VorneY + 148.0f,
-						   0xFFFFFFFF);	
+						   0xFFFFFFFF);
 	}
 
 	// Skeletorkopf rendern
@@ -100,19 +100,19 @@ void GegnerTheWall::DoDraw(void)
 
 	if (AlreadyDrawn == true)
 		return;
-	
+
 	// Kringel im Hintergrund
 	Kringel[1].RenderSprite(xPos - (float)pTileEngine->XOffset + TunnelOffx + 38,
 						    yPos - (float)pTileEngine->YOffset + TunnelOffY - 14, (int)(KringelWinkel / 3.0f ) % 5,
-						    col);	
+						    col);
 
 	// Herz rendern
 	if (Handlung != GEGNER_EXPLODIEREN)
 	{
 		Brain.RenderSprite(xPos - (float)pTileEngine ->XOffset + TunnelOffx + 116,
 						   yPos - (float)pTileEngine->YOffset + TunnelOffY + 59, HeartAnim,
-						   col);	
-	
+						   col);
+
 		// Suppe rendern
 		DirectGraphics.SetAdditiveMode();
 		D3DCOLOR supcol1 = D3DCOLOR_RGBA(150, 0, 0, (int)(toff*1.5f));
@@ -136,7 +136,7 @@ void GegnerTheWall::DoDraw(void)
 								   yPos - (float)pTileEngine->YOffset + TunnelOffY - 16, 360.0f - KringelWinkel, 0,
 								   col);
 
-	// Türen	
+	// Türen
 
 	// Tür links
 	Tuer.SetRect(toff, 0, 138, 185);
@@ -146,10 +146,10 @@ void GegnerTheWall::DoDraw(void)
 					  yPos - (float)pTileEngine->YOffset + TunnelOffY - 10, 0x80000000);
 
 	Tuer.RenderSprite(xPos - (float)pTileEngine ->XOffset + TunnelOffx  + 10,
-					  yPos - (float)pTileEngine->YOffset + TunnelOffY - 10, -1, 
-					  0xFF333333, col, 0xFF333333, col);	
+					  yPos - (float)pTileEngine->YOffset + TunnelOffY - 10, -1,
+					  0xFF333333, col, 0xFF333333, col);
 
-	// Tür rechts	
+	// Tür rechts
 	Tuer.SetRect(138, 0, 266 - toff, 185);
 
 	Tuer.RenderSprite(xPos - (float)pTileEngine ->XOffset + TunnelOffx + 128 + toff,
@@ -158,10 +158,10 @@ void GegnerTheWall::DoDraw(void)
 
 	// rahmen aussenrum
 	Rahmen.RenderSprite(xPos - (float)pTileEngine ->XOffset + TunnelOffx - 8,
-					    yPos - (float)pTileEngine->YOffset + TunnelOffY - 26, 0xFFA0A0A0);	
+					    yPos - (float)pTileEngine->YOffset + TunnelOffY - 26, 0xFFA0A0A0);
 
-	AlreadyDrawn = true;											
-}	
+	AlreadyDrawn = true;
+}
 
 // --------------------------------------------------------------------------------------
 // Neue Aktion
@@ -209,7 +209,7 @@ void GegnerTheWall::NeueAktion(void)
 		switch(i)
 		{
 			case 0:
-			{				
+			{
 				ShotCount = 20;
 				ShotDelay = 5.0f;
 				Handlung = GEGNER_SPECIAL;
@@ -217,22 +217,22 @@ void GegnerTheWall::NeueAktion(void)
 			} break;
 
 			case 1:
-			{				
+			{
 				ShotCount = 16;
 				ShotDelay = 5.0f;
 				Handlung = GEGNER_SPECIAL2;
 			} break;
 
 			case 2:
-			{		
+			{
 				ShotCount = 2;
-				ShotDelay = 20.0f;				
+				ShotDelay = 20.0f;
 
 				if (DoLaser)
-					Handlung = GEGNER_BOMBARDIEREN;					
+					Handlung = GEGNER_BOMBARDIEREN;
 				else
 					Handlung = GEGNER_SPECIAL3;
-					
+
 			} break;
 		}
 	}
@@ -276,7 +276,7 @@ void GegnerTheWall::DoKI(void)
 			SkullShotDelay = 15.0f;
 			pProjectiles->PushProjectile(xPos, yPos + 240.0f, SUCHSCHUSS2, pAim);
 			pSoundManager->PlayWave(50, 128, 14000 + rand()%2000, SOUND_GOLEMSHOT);
-		}		
+		}
 	}
 
 	if (Laughing > 0.0f)
@@ -293,7 +293,7 @@ void GegnerTheWall::DoKI(void)
 		else
 			VorneX = 0.0f;
 
-		// getroffen? Dann dem Schädel die Energie abziehen	
+		// getroffen? Dann dem Schädel die Energie abziehen
 		if (Energy < OldEnergy)
 		{
 			if (SkullEnergy > 0.0f)
@@ -308,8 +308,8 @@ void GegnerTheWall::DoKI(void)
 				{
 					CountOpen = 0;
 					NeueAktion();
-				}			
-			}		
+				}
+			}
 		}
 
 		Destroyable = false;
@@ -346,15 +346,15 @@ void GegnerTheWall::DoKI(void)
 		// Herz klopfen lassen
 		float e = 1.0f;
 
-		if (Energy < 3500.0f) e = 1.0f;	
-		if (Energy < 3000.0f) e = 2.0f;	
-		if (Energy < 2500.0f) e = 3.0f;	
-		if (Energy < 2000.0f) e = 4.0f;	
-		if (Energy < 1500.0f) e = 5.0f;	
-		if (Energy < 1000.0f) e = 6.0f;	
-		if (Energy <  500.0f) e = 7.0f;	
-		if (Energy <  250.0f) e = 8.0f;	
-		if (Energy <  150.0f) e = 9.0f;	
+		if (Energy < 3500.0f) e = 1.0f;
+		if (Energy < 3000.0f) e = 2.0f;
+		if (Energy < 2500.0f) e = 3.0f;
+		if (Energy < 2000.0f) e = 4.0f;
+		if (Energy < 1500.0f) e = 5.0f;
+		if (Energy < 1000.0f) e = 6.0f;
+		if (Energy <  500.0f) e = 7.0f;
+		if (Energy <  250.0f) e = 8.0f;
+		if (Energy <  150.0f) e = 9.0f;
 
 		HeartBeat += e SYNC;
 
@@ -378,8 +378,8 @@ void GegnerTheWall::DoKI(void)
 					Handlung == GEGNER_SCHLIESSEN)
 					pSoundManager->PlayWave(100, 128, 11025, SOUND_HEART1);
 			}
-		}	
-	
+		}
+
 		// Rauch
 		SmokeDelay -= 1.0f SYNC;
 
@@ -398,40 +398,40 @@ void GegnerTheWall::DoKI(void)
 
 			if (Energy < 2000)
 				pPartikelSystem->PushPartikel(xPos + 255, yPos + 130, SMOKE3);
-			
+
 			if (Energy < 1500)
 			if (rand()%20 == 0)
 			{
-				pPartikelSystem->PushPartikel(xPos - 10 + rand()%10, 
+				pPartikelSystem->PushPartikel(xPos - 10 + rand()%10,
 											  yPos + 220 + rand()%10, LASERFLAME);
 
 				for (int i = 0; i < 10; i++)
-					pPartikelSystem->PushPartikel(xPos + 10 + rand()%10, 
+					pPartikelSystem->PushPartikel(xPos + 10 + rand()%10,
 												  yPos + 240 + rand()%10, FUNKE);
 
 				for (int i = 0; i < 10; i++)
-					pPartikelSystem->PushPartikel(xPos + 20 + rand()%2, 
+					pPartikelSystem->PushPartikel(xPos + 20 + rand()%2,
 												  yPos + 240 + rand()%10, LASERFUNKE2);
 			}
-		}	
+		}
 
 		// Energie anzeigen
 		if (Handlung != GEGNER_INIT)
-			pHUD->ShowBossHUD(4000, Energy);		
+			pHUD->ShowBossHUD(4000, Energy);
 
 		// Boss aktivieren und Mucke laufen lassen
 		//
-		if (Active == true && 
+		if (Active == true &&
 			pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
-		{					
+		{
 			if (PlayerAbstand() < 800 &&
 				PlayerAbstandHoriz() < 400.0f)
 			{
-				pTileEngine->ScrollLevel(xPos - 355, 
+				pTileEngine->ScrollLevel(xPos - 355,
 										 yPos, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
-				pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren	
+				pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
 			}
-		}	
+		}
 
 		// Keine Energie mehr? Dann explodieren lassen
 		if (Energy < 100.0f)
@@ -440,8 +440,8 @@ void GegnerTheWall::DoKI(void)
 			Destroyable = false;
 
 			// Level wieder zum Spieler scrollen und dann weiterscrollen lassen
-			pTileEngine->ScrollLevel(pPlayer[0]->xpos - 300, 
-									 pPlayer[0]->ypos - 280, ZUSTAND_SCROLLTOPLAYER);	
+			pTileEngine->ScrollLevel(pPlayer[0]->xpos - 300,
+									 pPlayer[0]->ypos - 280, ZUSTAND_SCROLLTOPLAYER);
 
 			// Rad checken
 			for (int p = 0; p < NUMPLAYERS; p++)
@@ -496,10 +496,10 @@ void GegnerTheWall::DoKI(void)
 				pTemp = pTemp->pNext;
 			}
 		}
-	}	
+	}
 	else
 	{
-		int x = 0;
+		//int x = 0;    // PICKLE not used
 	}
 
 
@@ -545,7 +545,7 @@ void GegnerTheWall::DoKI(void)
 				pPartikelSystem->PushPartikel(xPos, yPos + 320, SMOKEBIG);
 				ShotDelay = 1.2f;
 				VorneX = 5.0f;
-				ShotCount--;				
+				ShotCount--;
 
 				if (ShotCount <= 0)
 					NeueAktion();
@@ -558,7 +558,7 @@ void GegnerTheWall::DoKI(void)
 			ShotDelay -= 1.0f SYNC;
 
 			if (ShotDelay < 0.0f)
-			{				
+			{
 				pSoundManager->PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
 				pProjectiles->PushProjectile(xPos, yPos + 332, SPIDERSHOT2);
 				pPartikelSystem->PushPartikel(xPos - 30, yPos + 295, EXPLOSIONFLARE);
@@ -578,14 +578,14 @@ void GegnerTheWall::DoKI(void)
 			ShotDelay -= 1.0f SYNC;
 
 			if (ShotDelay < 0.0f)
-			{	
+			{
 				if (ShotCount > 1)
 				{
 					pSoundManager->PlayWave(128, 100, 11025, SOUND_LILA);
 					pSoundManager->PlayWave(128, 100, 25050, SOUND_GOLEMLOAD);
-					pProjectiles->PushProjectile(xPos + 220.0f, 
-												 yPos + 210.0f, 
-												 ELEKTROSCHUSS);				
+					pProjectiles->PushProjectile(xPos + 220.0f,
+												 yPos + 210.0f,
+												 ELEKTROSCHUSS);
 				}
 
 				ShotDelay = 30.0f;
@@ -602,10 +602,10 @@ void GegnerTheWall::DoKI(void)
 			ShotDelay -= 1.0f SYNC;
 
 			if (ShotDelay < 0.0f)
-			{	
+			{
 				if (ShotCount > 1)
 				{
-					pProjectiles->PushProjectile((float) pTileEngine->XOffset - 40.0f, 
+					pProjectiles->PushProjectile((float) pTileEngine->XOffset - 40.0f,
 												  yPos + 240.0f, SPIDERLASER);
 					pSoundManager->PlayWave (100, 128, 11025, SOUND_BEAMLOAD2);
 				}
@@ -619,7 +619,7 @@ void GegnerTheWall::DoKI(void)
 		} break;
 
 		case GEGNER_STEHEN:
-		{	
+		{
 			if (Value1 == 1)
 				NeueAktion();
 		} break;
@@ -650,7 +650,7 @@ void GegnerTheWall::DoKI(void)
 				}
 			}
 
-			
+
 		} break;
 
 		case GEGNER_SCHLIESSEN:
@@ -708,5 +708,5 @@ void GegnerTheWall::DoKI(void)
 // --------------------------------------------------------------------------------------
 
 void GegnerTheWall::GegnerExplode(void)
-{			
+{
 }

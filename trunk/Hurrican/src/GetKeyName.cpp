@@ -15,7 +15,9 @@
 // Include-Dateien
 //---------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_DIRECTX)
 #include <dinput.h>								// Wegen der Key-Code Defines
+#endif
 #include "DX8Input.h"
 #include "GetKeyName.h"							// Unser Header =)
 
@@ -25,9 +27,9 @@
 //				  DirectInput Keyboard Scan Codes zurück
 //---------------------------------------------------------------------------------------
 
-char *GetKeyName(int DIK_Code)
+const char *GetKeyName(int DIK_Code)
 {
-	char *Text;									// Hier wird der Name der Taste gespeichert
+	const char *Text;									// Hier wird der Name der Taste gespeichert
 
 	switch (DIK_Code)							// Name der Taste ermitteln
 	{
@@ -120,6 +122,7 @@ char *GetKeyName(int DIK_Code)
 		case DIK_F13             : Text = "F13";						break;
 		case DIK_F14             : Text = "F14";						break;
 		case DIK_F15             : Text = "F15";						break;
+#if defined(PLATFORM_DIRECTX)
 		case DIK_KANA            : Text = "Kana";						break;
 		case DIK_ABNT_C1         : Text = "?";							break;
 		case DIK_CONVERT         : Text = "Convert";					break;
@@ -137,7 +140,7 @@ char *GetKeyName(int DIK_Code)
 		case DIK_UNLABELED       : Text = "Unlabeled";					break;
 		case DIK_NEXTTRACK       : Text = "Next Track";					break;
 		case DIK_NUMPADENTER     : Text = "Numpad Enter";				break;
-		case DIK_RCONTROL        : Text = "Right ctrl";				break;
+		case DIK_RCONTROL        : Text = "Right ctrl";				    break;
 		case DIK_MUTE            : Text = "Mute";						break;
 		case DIK_CALCULATOR      : Text = "Calculator";					break;
 		case DIK_PLAYPAUSE       : Text = "Play / Pause";				break;
@@ -150,6 +153,7 @@ char *GetKeyName(int DIK_Code)
 		case DIK_SYSRQ           : Text = "PrintScreen";				break;
 		case DIK_RMENU           : Text = "Right alt";					break;
 		case DIK_PAUSE           : Text = "Pause";						break;
+#endif
 		case DIK_HOME            : Text = "Home";						break;
 		case DIK_UP              : Text = "Cursor up";					break;
 		case DIK_PRIOR           : Text = "Page up";					break;
@@ -163,6 +167,7 @@ char *GetKeyName(int DIK_Code)
 		case DIK_LWIN            : Text = "left windows";				break;
 		case DIK_RWIN            : Text = "right windows";				break;
 		case DIK_APPS            : Text = "AppMenu";					break;
+#if defined(PLATFORM_DIRECTX)
 		case DIK_POWER           : Text = "System Power";				break;
 		case DIK_SLEEP           : Text = "System Sleep";				break;
 		case DIK_WAKE            : Text = "System Wake";				break;
@@ -175,18 +180,18 @@ char *GetKeyName(int DIK_Code)
 		case DIK_MYCOMPUTER      : Text = "My Computer";				break;
 		case DIK_MAIL            : Text = "Mail";						break;
 		case DIK_MEDIASELECT     : Text = "Media Select";				break;
-
+#endif
 		default : Text = "Nicht definiert";
 	} // switch
 
+#if defined(PLATFORM_DIRECTX)
 	DIPROPSTRING str;
 	str.diph.dwSize = sizeof(DIPROPSTRING);
 	str.diph.dwHeaderSize = sizeof(DIPROPHEADER);
 	str.diph.dwObj = DIK_Code;
 	str.diph.dwHow = DIPH_BYOFFSET;
 	DirectInput.lpDIKeyboard->GetProperty(DIPROP_KEYNAME, (LPDIPROPHEADER) &str);
-
-	
+#endif
 
 	return Text;								// Und den Name der Taste zurückliefern
 }

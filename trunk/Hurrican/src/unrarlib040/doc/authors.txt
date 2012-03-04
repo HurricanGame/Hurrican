@@ -1,0 +1,3 @@
+URARFileLib: Christian Scheurer aka. UniquE <cs@unrarlib.org>
+Linux Port : Johannes Winkelmann <jw@unrarlib.org>
+unRAR code : Eugene Roshal <author of RAR and WinRAR>

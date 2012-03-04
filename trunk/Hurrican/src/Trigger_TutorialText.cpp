@@ -11,7 +11,7 @@
 #include "stdafx.h"
 using namespace std;
 
-#include "Gegner_Powerblock.h"
+#include "Gegner_PowerBlock.h"
 #include "Trigger_TutorialText.h"
 #include "GetKeyName.h"
 
@@ -25,12 +25,12 @@ GegnerTutorialText::GegnerTutorialText(int Wert1, int Wert2, bool Light)
 	BlickRichtung	= LINKS;
 	Energy			= 100;
 	Value1			= Wert1;
-	Value2			= Wert2;	
+	Value2			= Wert2;
 	AnimPhase		= 0;
 	ChangeLight		= Light;
 	Destroyable		= false;
 	Active		    = true;
-	DontMove		= true;	
+	DontMove		= true;
 }
 
 // --------------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ void GegnerTutorialText::DoKI(void)
 		int    pos;				// Position, an der das zu ersetzende Wort steht
 		string newWord = "";			// neuer Text für das zu ersetzende Wort
 		string s_text = "";			// Alter Text, in dem ersetzt wird
-		char   c_text[512];		// Neuer Text, nachdem alles ersetzt wurde		
+		char   c_text[512];		// Neuer Text, nachdem alles ersetzt wurde
 
 		// Bei Trigger 7 Anzahl der Diamanten auf fünf setzen (falls die ersten fünf nicht richtig
 		// eingesammelt wurden)
@@ -72,7 +72,7 @@ void GegnerTutorialText::DoKI(void)
 		for (int i = 0; i < MAX_AKTIONEN*2; i+= 2)
 		{
 			do
-			{				
+			{
 				pos = s_text.find (s_Replacers[i]);
 				if (pos != string::npos)
 				{
@@ -133,11 +133,11 @@ void GegnerTutorialText::DoKI(void)
 
 		// die ersten drei augen plattgemacht?
 		//
-		case 9:		
+		case 9:
 		{
 			GegnerClass* pTemp;
 
-			pTemp = pGegner->pStart;			
+			pTemp = pGegner->pStart;
 
 			while (pTemp != NULL)
 			{
@@ -165,30 +165,30 @@ void GegnerTutorialText::DoKI(void)
 				pPlayer[0]->BlinkCounter <= 3.0f)
 			{
 				Value1 = 11;
-			} 
+			}
 		}
 		break;
 
 		// Pfeil auf Spreadshot Stufe anzeigen
 		case 11:
-		{			
+		{
 			pHUD->ShowArrow (256, 60);
 		}
 		break;
 
 		// Pfeil auf Blitz Stufe anzeigen
 		case 15:
-		{			
+		{
 			pHUD->ShowArrow (351, 60);
 		}
 		break;
 
 		// ersten Powerblock angeschoßen?
 		case 16:
-		{			
+		{
 			GegnerClass* pTemp;
 
-			pTemp = pGegner->pStart;			
+			pTemp = pGegner->pStart;
 
 			while (pTemp != NULL)
 			{
@@ -217,7 +217,7 @@ void GegnerTutorialText::DoKI(void)
 
 		// alle PowerLines gesammelt?
 		case 17:
-		{		
+		{
 			if (pPlayer[0]->PowerLines >= 5)
 				Value1 = 18;
 		}
@@ -225,14 +225,14 @@ void GegnerTutorialText::DoKI(void)
 
 		// Pfeil auf PowerLines
 		case 18:
-		{		
+		{
 			pHUD->ShowArrow (391, 60);
 		}
 		break;
 
 		// alle Granaten gesammelt?
 		case 20:
-		{		
+		{
 			if (pPlayer[0]->Grenades >= 2)
 			{
 				pPlayer[0]->PowerLines = 0;
@@ -243,14 +243,14 @@ void GegnerTutorialText::DoKI(void)
 
 		// Pfeil auf Rad-Energie
 		case 24:
-		{		
+		{
 			pHUD->ShowArrow (548, 70);
 		}
 		break;
 
 		// Meldung nach der Schockwaver
 		case 28:
-		{		
+		{
 			if (pPlayer[0]->SmartBombs == 0)
 				Value1 = 29;
 		}
@@ -258,7 +258,7 @@ void GegnerTutorialText::DoKI(void)
 
 		// Pfeil auf Shockwave
 		case 29:
-		{		
+		{
 			pHUD->ShowArrow (434, 42);
 		}
 		break;

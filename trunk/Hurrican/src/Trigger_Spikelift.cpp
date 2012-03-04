@@ -34,14 +34,14 @@ void GegnerSpikelift::DoDraw(void)
 {
 	// Unterteil rendern
 	//
-	pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-pTileEngine->XOffset), 
+	pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-pTileEngine->XOffset),
 										    (float)(yPos-pTileEngine->YOffset) + 40.0f,
 										    1, 0xFFFFFFFF);
 
 	// Oberteil (Spikes) rendern
 	if (Value1 == 0)
-		pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-pTileEngine->XOffset), 
-											    (float)(yPos-pTileEngine->YOffset), 
+		pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-pTileEngine->XOffset),
+											    (float)(yPos-pTileEngine->YOffset),
 											    0, 0xFFFFFFFF);
 }
 
@@ -51,7 +51,7 @@ void GegnerSpikelift::DoDraw(void)
 
 void GegnerSpikelift::DoKI(void)
 {
-	/*
+#if 0 // PICKLE was turned off by comments, this is cleaner
 	// Je nach Handlung richtig verhalten
 	//
 	switch (Handlung)
@@ -85,23 +85,21 @@ void GegnerSpikelift::DoKI(void)
 				Handlung = GEGNER_LAUFEN;
 				yAcc = -1.0f;
 			}
-		} break;		
-		
+		} break;
+
 		case GEGNER_LAUFEN:
 		{
 			// nach oben fahren
 			if (ySpeed < - 7.0f)
 				ySpeed = -7.0f;
 
-/*
 			// Hurri eingeklemmt, dann anhalten
 			if (pPlayer->AufPlattform == this &&
-				pTileEngine->BlockOben(pPlayer->xpos,	 pPlayer->ypos, 
-									   pPlayer->xposold, pPlayer->yposold, 
+				pTileEngine->BlockOben(pPlayer->xpos,	 pPlayer->ypos,
+									   pPlayer->xposold, pPlayer->yposold,
 									   pPlayer->CollideRect) & BLOCKWERT_WAND)
 				ySpeed = 0.0f;
-*/
-/*
+
 			// Hurri draufgehopst, dann nach unten abstoßen
 			if (pPlayer->AufPlattform != this)
 			{
@@ -110,8 +108,8 @@ void GegnerSpikelift::DoKI(void)
 				// jetzt drauf?
 				if (pPlayer->AufPlattform == this)
 					ySpeed = 7.0f;
-			}	
-			
+			}
+
 			// Nicht höher als Startpunkt fahren?
 			if (Value1 != 0 &&
 				yPos < oldypos)
@@ -157,7 +155,8 @@ void GegnerSpikelift::DoKI(void)
 			pPlayer2->Handlung = SPRINGEN;
 			pPlayer2->yspeed  = 0.0f;
 			pPlayer2->JumpAdd = PLAYER_JUMPADDSPEED;
-		}*/
+		}
+#endif
 }
 
 // --------------------------------------------------------------------------------------

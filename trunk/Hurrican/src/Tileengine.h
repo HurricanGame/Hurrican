@@ -1,6 +1,6 @@
 // Datei : Tileengine.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // 2D Tile-Engine für Hurrican
 // bestehend aus einem Vordergrund-Layer in verschiedenen Helligkeitsstufen
@@ -16,7 +16,9 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_DIRECTX)
 #include <d3dx8.h>
+#endif
 #include "DX8Graphics.h"
 #include "DX8Sprite.h"
 #include "lightmap.h"
@@ -59,12 +61,12 @@
 
 //--- Werte zur Levelgrösse
 
-#define	TILESIZE_X			20						// Grösse eines 
+#define	TILESIZE_X			20						// Grösse eines
 #define	TILESIZE_Y			20						// einzelnen Tiles
 #define TILESETSIZE_X		256.0f					// Grösse eines
 #define TILESETSIZE_Y		256.0f					// Tilesets
 
-#define SCREENSIZE_X		32						// Leveltiles pro Screen 
+#define SCREENSIZE_X		32						// Leveltiles pro Screen
 #define SCREENSIZE_Y		24
 
 #define MAX_LEVELSIZE_X		1024					// Gesamtgrösse des Level
@@ -170,7 +172,7 @@ struct FileHeader
 	char			ParallaxAFile [24];				// Dateiname des 1. Parallax Layers
 	char			ParallaxBFile [24];				// Dateiname des 2. Parallax Layers
 	char			CloudFile     [24];				// Dateiname des WolkenLayers
-	unsigned int	Timelimit;						// aktuelles Zeitlimit des Levels	
+	unsigned int	Timelimit;						// aktuelles Zeitlimit des Levels
 	unsigned char	UsedTilesets;					// Anzahl der Tilesets
 	char			SetNames[64][16];				// Namen der benutzten Sets
 	unsigned int	SizeX, SizeY;					// Größe des Levels
@@ -208,11 +210,11 @@ struct SchwabbelPos
 
 // Union für r,g,b,a Zugriff in D3DCOLOR
 
-union FarbUnion 
+union FarbUnion
 {
     D3DCOLOR color;
 
-    struct 
+    struct
 	{
         unsigned char b;
         unsigned char g;
@@ -244,12 +246,12 @@ class TileEngineClass
 		float			ScrollSpeedX, ScrollSpeedY;				// Scrollspeed
 		VERTEX2D		TilesToRender[40*30*6];				// Alle zu rendernden Leveltiles
 		VERTEX2D		v1, v2, v3, v4;							// Vertices zum Sprite rendern
-		unsigned char	LoadedTilesets;							// Anzahl geladener Sets				
-		float			WaterPos;								// Position in der WaterListe für die Wasseroberfläche		
-		CLightMap		lightmaps[MAX_LIGHTMAPS];				
+		unsigned char	LoadedTilesets;							// Anzahl geladener Sets
+		float			WaterPos;								// Position in der WaterListe für die Wasseroberfläche
+		CLightMap		lightmaps[MAX_LIGHTMAPS];
 
 	public:
-		FileAppendix	DateiAppendix;							// Anhang der Level-Datei		
+		FileAppendix	DateiAppendix;							// Anhang der Level-Datei
 		bool			IsElevatorLevel;
 		bool			MustCenterPlayer;
 		int				ColR1, ColG1, ColB1;					// Farben in RGB
@@ -264,7 +266,7 @@ class TileEngineClass
 		int				Zustand;								// Aktueller Zustand
 		float			ScrolltoX, ScrolltoY;					// Lock-Werte
 		float			SpeedX, SpeedY;							// Speed for ScrollTo Funktion
-		bool			bDrawShadow;							// Taschenlampen Shatten im Alien Level rendern?		
+		bool			bDrawShadow;							// Taschenlampen Shatten im Alien Level rendern?
 		int				MaxBlocks;
 		int				MaxOneUps;
 		int				MaxSecrets;
@@ -290,7 +292,7 @@ class TileEngineClass
 		float							WasserV[9];				// vorberechnete TexturKoordinaten für das Wasser TV
 		DirectGraphicsSprite			Shadow;					// Schatten im Alien Level
 		float							WasserfallOffset;		// Wasserfall Offset
-		float							XOffset, YOffset;		// Scrolloffset des Levels		
+		float							XOffset, YOffset;		// Scrolloffset des Levels
 		float							NewXOffset, NewYOffset; // Neue Scrolloffsets, falls das Level von einem Gegner gelockt ist
 		double							Timelimit;				// Zeitlimit
 		double							TimelimitSave;			// usprüngliches Zeitlimit
@@ -310,7 +312,7 @@ class TileEngineClass
 		int								xLevel;
 		int								yLevel;
 		int								xTileOffs;
-		int								yTileOffs;	
+		int								yTileOffs;
 		float							xScreen;
 		float							yScreen;
 
@@ -330,13 +332,13 @@ class TileEngineClass
 		void DrawWater				(void);							// Wasser Planes rendern
 		void CheckBounds			(void);
 		void UpdateLevel			(void);							// Level evtl scrollen usw
-		void ScrollLevel		(float x,  float y,  int neu, 
+		void ScrollLevel		(float x,  float y,  int neu,
 								 float sx = 10.0f, float sy = 10.0f);// Screen scrollen
 		int	 BlockSlopes		(float &x, float &y, float &xo, float &yo, RECT rect, float ySpeed, bool resolve = false);
 		int	 BlockRechts		(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve = false);
 		int	 BlockLinks			(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve = false);
 		int	 BlockOben			(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve = false);
-		int	 BlockUnten			(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve = false);		
+		int	 BlockUnten			(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve = false);
 		int	 BlockUntenNormal	(float &x, float &y, float &xo, float &yo, RECT rect);
 
 		void ResolveLinks		(float &x, float &y, float &xo, float &yo, RECT rect);
@@ -344,7 +346,7 @@ class TileEngineClass
 		bool BlockDestroyRechts		(float &x, float &y, float &xo, float &yo, RECT rect);
 		bool BlockDestroyLinks		(float &x, float &y, float &xo, float &yo, RECT rect);
 		bool BlockDestroyOben		(float &x, float &y, float &xo, float &yo, RECT rect);
-		bool BlockDestroyUnten		(float &x, float &y, float &xo, float &yo, RECT rect);		
+		bool BlockDestroyUnten		(float &x, float &y, float &xo, float &yo, RECT rect);
 		void MakeBordersLookCool	(int x, int y);
 
 		bool CheckDestroyableWalls(float &x, float &y,			// Schuss auf Zerstörbare

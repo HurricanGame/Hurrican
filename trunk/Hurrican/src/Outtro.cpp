@@ -1,6 +1,6 @@
 // Datei : Outtro.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Klasse für das Hurrican Outtro
 //
@@ -15,14 +15,13 @@
 #include <stdio.h>
 #include "Console.h"
 #include "Outtro.h"
-#include "FMOD.h"
 #include "DX8Sound.h"
 #include "Main.h"
 #include "Menu.h"
-#include "gameplay.h"
-#include "PartikelSystem.h"
+#include "Gameplay.h"
+#include "Partikelsystem.h"
 #include "Projectiles.h"
-#include "TileEngine.h"
+#include "Tileengine.h"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor, lädt die Grafiken
@@ -31,10 +30,10 @@
 OuttroClass::OuttroClass(void)
 {
 	Background.LoadImage("endscreen_background.bmp", 640, 480, 640, 480, 1, 1);
-	Tower.LoadImage("endscreen_turm.png", 199, 315, 199, 315, 1, 1);
-	Henry.LoadImage("endscreen_henry.png", 237, 88, 237, 88, 1, 1);
-	Reiter[0].LoadImage("endritt.png", 760, 520, 190, 260, 4, 2);
-	Reiter[1].LoadImage("endritt.png", 760, 520, 190, 260, 4, 2);
+	Tower.LoadImage("endscreen_turm.bmp", 199, 315, 199, 315, 1, 1);
+	Henry.LoadImage("endscreen_henry.bmp", 237, 88, 237, 88, 1, 1);
+	Reiter[0].LoadImage("endritt.bmp", 760, 520, 190, 260, 4, 2);
+	Reiter[1].LoadImage("endritt.bmp", 760, 520, 190, 260, 4, 2);
 	ConvertPlayerTexture(&Reiter[1]);
 
 	Zustand		 = OUTTRO_FADEIN;
@@ -49,7 +48,7 @@ OuttroClass::OuttroClass(void)
 	pPartikelSystem->ClearAll();
 	pSoundManager->LoadSong("outtro.it", MUSIC_OUTTRO);
 	pSoundManager->StopAllSongs(false);
-	FMUSIC_StopAllSongs();	
+	MUSIC_StopAllSongs();
 	pTileEngine->ClearLevel();
 
 	// Ein paar Schneepartikel adden
@@ -63,7 +62,7 @@ OuttroClass::OuttroClass(void)
 
 OuttroClass::~OuttroClass(void)
 {
-	FMUSIC_StopAllSongs();	
+	MUSIC_StopAllSongs();
 }
 
 // --------------------------------------------------------------------------------------
@@ -100,11 +99,11 @@ void OuttroClass::DoOuttro(void)
 	if (Zustand != OUTTRO_SCROLLER)
 		off = (float)(sin(Counter / 2.0f)) / 2.0f;
 
-	Tower.RenderSpriteRotated(299 + off, 
-							  61 + TowerOffset, 
+	Tower.RenderSpriteRotated(299 + off,
+							  61 + TowerOffset,
 							  TowerOffset / 10.0f, 0xFFFFFFFF);
-	
-	// Partikel 
+
+	// Partikel
 	pPartikelSystem->DoPartikelSpecial(false);
 
 	// Den Henry, die alte Maske, rendern
@@ -131,18 +130,18 @@ void OuttroClass::DoOuttro(void)
 			col1 = 0xFFFFFFFF;
 
 		int a;
-			
+
 		// Spieler 2
 		a = (int)((Counter - 15.0f) / 10);
-		if (a > 8) a = 7;		
+		if (a > 8) a = 7;
 
 		if (NUMPLAYERS == 2)
 		if (a >= 0)
 		{
-			Reiter[1].itsRect = Reiter[1].itsPreCalcedRects[a];		
+			Reiter[1].itsRect = Reiter[1].itsPreCalcedRects[a];
 
 			Reiter[1].itsRect = Reiter[1].itsPreCalcedRects[a];
-			Reiter[1].RenderSpriteScaledRotated(px[1] - (190 / 150.0f * Counter / 2.0f), 
+			Reiter[1].RenderSpriteScaledRotated(px[1] - (190 / 150.0f * Counter / 2.0f),
 											 py[1] - (260 / 150.0f * Counter / 2.0f),
 											 190 / 180.0f * Counter,
 											 260 / 180.0f * Counter,
@@ -151,7 +150,7 @@ void OuttroClass::DoOuttro(void)
 			// Schatten
 			Reiter[1].itsRect.bottom = Reiter[1].itsPreCalcedRects[a].top;
 			Reiter[1].itsRect.top    = Reiter[1].itsPreCalcedRects[a].bottom;
-			Reiter[1].RenderSpriteScaledRotated(px[1] - (190 / 150.0f * Counter / 2.0f), 
+			Reiter[1].RenderSpriteScaledRotated(px[1] - (190 / 150.0f * Counter / 2.0f),
 											 230.0f + py[1] / 2.0f + Counter * 2.0f,
 											 190 / 180.0f * Counter,
 											 260 / 180.0f * Counter / 3.0f,
@@ -160,10 +159,10 @@ void OuttroClass::DoOuttro(void)
 		}
 
 		// Spieler 1
-		a = (int)(Counter / 10);		
+		a = (int)(Counter / 10);
 		Reiter[0].itsRect = Reiter[0].itsPreCalcedRects[a];
-		
-		Reiter[0].RenderSpriteScaledRotated(px[0] - (190 / 100.0f * Counter / 2.0f), 
+
+		Reiter[0].RenderSpriteScaledRotated(px[0] - (190 / 100.0f * Counter / 2.0f),
 										 py[0] - (260 / 100.0f * Counter / 2.0f),
 										 190 / 100.0f * Counter,
 										 260 / 100.0f * Counter,
@@ -172,7 +171,7 @@ void OuttroClass::DoOuttro(void)
 		// Schatten
 		Reiter[0].itsRect.bottom = Reiter[0].itsPreCalcedRects[a].top;
 		Reiter[0].itsRect.top    = Reiter[0].itsPreCalcedRects[a].bottom;
-		Reiter[0].RenderSpriteScaledRotated(px[0] - (190 / 100.0f * Counter / 2.0f), 
+		Reiter[0].RenderSpriteScaledRotated(px[0] - (190 / 100.0f * Counter / 2.0f),
 										 230.0f + py[0] / 2.0f + Counter * 2.0f,
 										 190 / 180.0f * Counter,
 										 260 / 180.0f * Counter / 3.0f,
@@ -209,7 +208,7 @@ void OuttroClass::DoOuttro(void)
 			if (Counter > 255.0f)
 			{
 				Counter = 255.0f;
-				Zustand = OUTTRO_TOWER_EXPLODE;				
+				Zustand = OUTTRO_TOWER_EXPLODE;
 			}
 
 			D3DCOLOR col = D3DCOLOR_RGBA(0, 0, 0, 255-int(Counter));
@@ -221,13 +220,13 @@ void OuttroClass::DoOuttro(void)
 			if (SmokeDelay < 0.0f)
 			{
 				SmokeDelay = 1.5f;
-				pPartikelSystem->PushPartikel((float)(280 + rand()%180), 
+				pPartikelSystem->PushPartikel((float)(280 + rand()%180),
 											  (float)(320 + rand()%10), SMOKEBIG_OUTTRO);
 
-				pPartikelSystem->PushPartikel((float)(280 + rand()%180), 
+				pPartikelSystem->PushPartikel((float)(280 + rand()%180),
 											  (float)(150 + TowerOffset + rand()%100), EXPLOSION_MEDIUM2);
 			}
-			
+
 		} break;
 
 		// Explosionen
@@ -242,11 +241,11 @@ void OuttroClass::DoOuttro(void)
 			{
 				SmokeDelay = 0.5f;
 
-				pPartikelSystem->PushPartikel((float)(280 + rand()%180), 
+				pPartikelSystem->PushPartikel((float)(280 + rand()%180),
 											  (float)(320 + rand()%10), SMOKEBIG_OUTTRO);
 
-				pPartikelSystem->PushPartikel((float)(280 + rand()%180), 
-											  (float)(150 + TowerOffset + rand()%100), EXPLOSION_MEDIUM2);								
+				pPartikelSystem->PushPartikel((float)(280 + rand()%180),
+											  (float)(150 + TowerOffset + rand()%100), EXPLOSION_MEDIUM2);
 			}
 
 			if (Zustand == OUTTRO_TOWER_EXPLODE)
@@ -261,7 +260,7 @@ void OuttroClass::DoOuttro(void)
 			}
 
 			if (Zustand == OUTTRO_PLAYER_FLEES)
-			{				
+			{
 				PlayerSmoke -= 1.0f SYNC;
 
 				if (PlayerSmoke < 0.0f)
@@ -331,7 +330,7 @@ void OuttroClass::DoOuttro(void)
 					pSoundManager->PlayWave(100, 128, 8000, SOUND_EXPLOSION2);
 					pSoundManager->PlaySong(MUSIC_OUTTRO, false);
 				}
-			}			
+			}
 		} break;
 
 		case OUTTRO_SCROLLER:
@@ -345,11 +344,11 @@ void OuttroClass::DoOuttro(void)
 				SmokeDelay = (float)(rand()%10) + 5.0f;
 
 				for (int i = 0; i < 10; i++)
-					pPartikelSystem->PushPartikel((float)(280 + rand()%180), 
+					pPartikelSystem->PushPartikel((float)(280 + rand()%180),
 												  (float)(340 + rand()%10), SMOKEBIG_OUTTRO);
 
-				pPartikelSystem->PushPartikel((float)(280 + rand()%180), 
-											  (float)(150 + TowerOffset + rand()%100), EXPLOSION_MEDIUM2);								
+				pPartikelSystem->PushPartikel((float)(280 + rand()%180),
+											  (float)(150 + TowerOffset + rand()%100), EXPLOSION_MEDIUM2);
 			}
 
 			Counter += 1.5f SYNC;
@@ -358,7 +357,7 @@ void OuttroClass::DoOuttro(void)
 			{
 				Counter -= 20.0f;
 				TextOff++;
-				
+
 				if (TEXT_OUTTRO1 + TextOff > TEXT_SEPERATOR_MARIO + CreditsCount - 30)
 					TextOff = 0;
 			}
@@ -370,15 +369,15 @@ void OuttroClass::DoOuttro(void)
 				if (off > 0)
 				{
 					if (TEXT_OUTTRO1 + off < TEXT_SEPERATOR_MARIO)
-						sprintf_s(text, "%s", TextArray[TEXT_OUTTRO1 + off]); 
+						sprintf_s(text, "%s", TextArray[TEXT_OUTTRO1 + off]);
 					else
 					if (TEXT_OUTTRO1 + off <= TEXT_SEPERATOR_MARIO + AnzahlCredits)
-						sprintf_s(text, "%s", Credits[off + 25]); 
+						sprintf_s(text, "%s", Credits[off + 25]);
 					else
 					if (TEXT_OUTTRO1 + off <= TEXT_SEPERATOR_MARIO + AnzahlCredits + 10)
-						sprintf_s(text, "%s", TextArray[TEXT_OUTTRO1 + off - AnzahlCredits]); 
+						sprintf_s(text, "%s", TextArray[TEXT_OUTTRO1 + off - AnzahlCredits]);
 					else
-						sprintf_s(text, "");
+						strcpy_s(text, "");
 
 					// rendern
 					if (strcmp(text, "") != 0)
@@ -390,5 +389,5 @@ void OuttroClass::DoOuttro(void)
 
 		default : break;
 
-	} // switch	
+	} // switch
 }

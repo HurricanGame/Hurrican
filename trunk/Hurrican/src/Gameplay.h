@@ -1,6 +1,6 @@
 // Datei : Gameplay.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Beinhaltet den Haupt Game-Loop
 //
@@ -12,7 +12,7 @@
 #define _Gameplay_h_
 
 #include "DX8Sprite.h"
-#include "TileEngine.h"
+#include "Tileengine.h"
 
 // --------------------------------------------------------------------------------------
 // Defines
@@ -33,7 +33,7 @@
 void InitNewGame	(void);						// Neues Spiel initialisieren
 void InitNewGameLevel(int Nr);					// Alles für den Levelstart in Stage NR vorbereiten
 void GameLoop		(void);						// Haupt-Spielablauf
-void ScreenWackeln  (void);						// Screen wackeln lassen		
+void ScreenWackeln  (void);						// Screen wackeln lassen
 void ShakeScreen	(float staerke);			// Angeben wie stark der Screen wackeln soll
 void SetScreenShake (void);						// Geshakten Screen setzen bzw Matrix dafür einstellen
 void ExplodePlayer	(void);						// Spieler explodieren lassen
@@ -42,17 +42,17 @@ void SummaryScreen	(void);						// Zusammenfassung des Levels
 bool LoadConfig		(void);						// Konfigurationen laden
 void SaveConfig		(void);						// Konfigurationen speichern
 void CreateDefaultConfig	(void);				// DefaultKonfigurationen erstellen
-bool DisplayLoadInfo(char Text[100]);			// Text beim Loading anzeigen
-bool NewDemo		(char Filename[]);			// Neues Demo aufzeichnen
+bool DisplayLoadInfo(const char Text[100]);			// Text beim Loading anzeigen
+bool NewDemo		(const char Filename[]);	// Neues Demo aufzeichnen
 void RecordDemo		(void);						// Spielereingaben sichern
-bool LoadDemo		(char Filename[]);			// Demo laden
+bool LoadDemo		(const char Filename[]);	// Demo laden
 void PlayDemo		(void);						// Demo laufen lassen
 void EndDemo		(void);						// Demo anhalten
 void LeaveGameLoop  (void);						// Game Loop verlassen
 void ScrolltoPlayeAfterBoss(void);				// Der Name ist Programm
 void ShowPissText	(void);
 void ShowGameOver	(void);
-char *convertText	(char *text);
+const char *convertText	( const char *text);
 PlayerClass* ChooseAim(void);
 
 // --------------------------------------------------------------------------------------

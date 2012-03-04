@@ -28,19 +28,19 @@ GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light)
 	GegnerRect[SPINNENMASCHINE].top  = 0;	GegnerRect[SPINNENMASCHINE].bottom = 300;
 
 	// Zusätzliche Grafiken laden
-	//	
+	//
 	Display.LoadImage("spinnenmaschine_states.bmp", 280, 84, 70, 84, 4, 1);
 
-	Deckel.LoadImage("spinnenmaschine_topf.png", 372, 264, 186, 44, 2, 6);	
-	Unten[0].LoadImage ("spinnenmaschine_unten.png", 228, 129, 228, 129, 1, 1);
-	Unten[1].LoadImage ("spinnenmaschine_unten2.png", 228, 129, 228, 129, 1, 1);
+	Deckel.LoadImage("spinnenmaschine_topf.bmp", 372, 264, 186, 44, 2, 6);
+	Unten[0].LoadImage ("spinnenmaschine_unten.bmp", 228, 129, 228, 129, 1, 1);
+	Unten[1].LoadImage ("spinnenmaschine_unten2.bmp", 228, 129, 228, 129, 1, 1);
 
-	Strahl.LoadImage("blitztexture.bmp", 64, 64, 64, 64, 1, 1);	
+	Strahl.LoadImage("blitztexture.bmp", 64, 64, 64, 64, 1, 1);
 
 	DeckelPhase = 0;
 	DeckelOffset = 0.0f;
 	DeckelCount = 0.0f;
-	DeckelStatus = ZU;	
+	DeckelStatus = ZU;
 	OpenCounter = TIME_TILL_OPEN;
 
 	HochCounter = TIME_TILL_HOCH;
@@ -86,13 +86,13 @@ void GegnerSpinnenmaschine::DoDraw(void)
 									  (int)(LightRayCount * 16.0f),
 									  190, 0xFFFF8822);
 			DirectGraphics.SetColorKeyMode();
-		}	
+		}
 
 		// Oberteil
 		DeckelOffset = -((float)(cos(DeckelCount) * 20.0f) + (float)(cos(PI) * 20));
 		pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos - pTileEngine->XOffset),
 											   (float)(yPos - pTileEngine->YOffset) - (int)DeckelOffset,
-												0, Color, true);	
+												0, Color, true);
 
 		// Anzeige
 		Display.RenderSprite((float)(xPos - pTileEngine->XOffset) + 133,
@@ -116,7 +116,7 @@ void GegnerSpinnenmaschine::DoDraw(void)
 
 void GegnerSpinnenmaschine::DoDeckel(void)
 {
-	switch (DeckelStatus) 
+	switch (DeckelStatus)
 	{
 		// deckel ist zu und Counter zählt, wann er auf geht
 		case ZU :
@@ -150,7 +150,7 @@ void GegnerSpinnenmaschine::DoDeckel(void)
 				DeckelPhase = 10;
 				DeckelStatus = OFFEN;
 				OpenCounter = TIME_TILL_CLOSE;
-			}			
+			}
 		}
 		break;
 
@@ -169,31 +169,31 @@ void GegnerSpinnenmaschine::DoDeckel(void)
 			// Gegner spawnen
 			SpawnDelay -= 1.0f SYNC;
 			if (SpawnDelay < 0.0f)
-			{				
+			{
 				// Je nach Art der grünen Anzeige vorne einen anderen Gegner spawnen
 				switch (DisplayState)
 				{
 					// Climber
-					case 1 : 
+					case 1 :
 					{
 						SpawnDelay = 6.0f;
 						pGegner->PushGegner(xPos + 100 + rand()%60 , yPos + 190 - DeckelOffset, CLIMBSPIDER, 99, 0, false, false);
 					} break;
-						
+
 					// Dronen
-					case 2 : 
+					case 2 :
 					{
 						SpawnDelay = 20.0f;
 						pGegner->PushGegner(xPos + 135, yPos + 190 - DeckelOffset, DRONE, 99, 0, false, false);
 					} break;
 
 					// Spinnenbombe
-					case 3 : 
+					case 3 :
 					{
 						SpawnDelay = 15.0f;
 						pGegner->PushGegner(xPos + 100 + rand()%80 , yPos + 180 - DeckelOffset, SPIDERBOMB, 99, 0, false, false);
 					} break;
-				}							
+				}
 			}
 		}
 		break;
@@ -232,7 +232,7 @@ void GegnerSpinnenmaschine::DoDeckel(void)
 
 void GegnerSpinnenmaschine::DoHoch(void)
 {
-	switch (HochStatus) 
+	switch (HochStatus)
 	{
 		// Kopf ist unten, Counter zählt, wann er hochgeht
 		case ZU :
@@ -244,7 +244,7 @@ void GegnerSpinnenmaschine::DoHoch(void)
 				HochCounter  = 0.0f;
 				HochStatus = OEFFNEN;
 
-				pSoundManager->PlayWave(100, 128, 11025, SOUND_STEAM);				
+				pSoundManager->PlayWave(100, 128, 11025, SOUND_STEAM);
 			}
 		}
 		break;
@@ -252,7 +252,7 @@ void GegnerSpinnenmaschine::DoHoch(void)
 		// Kopf fährt gerade hoch
 		case OEFFNEN :
 		{
-			DeckelCount += 0.2f SYNC;			
+			DeckelCount += 0.2f SYNC;
 
 			if (DeckelCount > PI)
 			{
@@ -289,8 +289,8 @@ void GegnerSpinnenmaschine::DoHoch(void)
 				HochStatus = SCHLIESSEN;
 
 				pSoundManager->PlayWave(50, 128, 11025, SOUND_STEAM);
-			}		
-			
+			}
+
 			ShotDelay -= 1.0f SYNC;
 
 			// schuss abgeben
@@ -339,20 +339,20 @@ void GegnerSpinnenmaschine::DoHoch(void)
 void GegnerSpinnenmaschine::DoKI(void)
 {
 	// Energie anzeigen
-	if (Handlung != GEGNER_INIT && 
+	if (Handlung != GEGNER_INIT &&
 		Handlung != GEGNER_SPECIAL &&
 		Handlung != GEGNER_EXPLODIEREN)
 		pHUD->ShowBossHUD(4000, Energy);
 
 	// Boss aktivieren und Mucke laufen lassen
 	//
-	if (Active == true && 
+	if (Active == true &&
 		Handlung != GEGNER_SPECIAL &&
 		pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
 	{
 		if (PlayerAbstandHoriz() < 450)
 		{
-			pTileEngine->ScrollLevel((float)Value1, 
+			pTileEngine->ScrollLevel((float)Value1,
 									 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 			pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
 		}
@@ -365,7 +365,7 @@ void GegnerSpinnenmaschine::DoKI(void)
 		DamageTaken = 0.0f;						// oder ganz anhalten
 
 	// Hat die Maschine keine Energie mehr ? Dann explodiert sie
-	if (Energy <= 100.0f && 
+	if (Energy <= 100.0f &&
 		Handlung != GEGNER_EXPLODIEREN &&
 		Handlung != GEGNER_SPECIAL)
 	{
@@ -375,7 +375,7 @@ void GegnerSpinnenmaschine::DoKI(void)
 		ySpeed     = 0.0f;
 		xAcc       = 0.0f;
 		yAcc       = 0.0f;
-		DeathCount = 40.0f;		
+		DeathCount = 40.0f;
 
 		pGegner->PushGegner(140, 820, ONEUP, 0, 0, false);
 
@@ -385,11 +385,11 @@ void GegnerSpinnenmaschine::DoKI(void)
 		pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
 	}
 
-	
+
 	// Bei Damage dampfen lassen
 	if (Handlung != GEGNER_SPECIAL)
 		SmokeDelay2 -= 1.0f SYNC;
-	
+
 	if (SmokeDelay2 < 0.0f)
 	{
 		SmokeDelay2 = 0.3f;
@@ -404,7 +404,7 @@ void GegnerSpinnenmaschine::DoKI(void)
 
 		if (Energy < 3400)
 			pPartikelSystem->PushPartikel(xPos + 228.0f, yPos + 202.0f - DeckelOffset, SMOKE3_RO);
-		
+
 		if (Energy < 3100)
 			pPartikelSystem->PushPartikel(xPos + 40.0f, yPos + 228.0f - DeckelOffset, SMOKE3_LO);
 
@@ -423,25 +423,25 @@ void GegnerSpinnenmaschine::DoKI(void)
 		if (Energy < 1000)
 			pPartikelSystem->PushPartikel(xPos + 108.0f, yPos + 389.0f, SMOKE3_LU);
 	}
-	
+
 // Je nach Handlung richtig verhalten
 	switch (Handlung)
 	{
 		// Warten bis der Screen zentriert wurde
-		case GEGNER_INIT:			
+		case GEGNER_INIT:
 		{
 			if (pTileEngine->Zustand == ZUSTAND_LOCKED)
 			{
 				// Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
 				//
-				if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+				if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
 				{
 					pSoundManager->PlaySong(MUSIC_BOSS, false);
 
 					// Und Boss erscheinen lassen
 					//
 					Handlung = GEGNER_EINFLIEGEN;
-				}				
+				}
 			}
 		} break;
 
@@ -483,18 +483,18 @@ void GegnerSpinnenmaschine::DoKI(void)
 		case GEGNER_LAUFEN:
 		{
 			// Deckel abhandeln
-			DoDeckel();	
+			DoDeckel();
 
 			if (AktionFertig == true)
 			{
 				AktionFertig = false;
-				Handlung = GEGNER_STEHEN;				
+				Handlung = GEGNER_STEHEN;
 				DisplayState = 0;
 			}
 		} break;
 
 		case GEGNER_SPECIAL:
-		{			
+		{
 			if (PlayerAbstand(true) < 800)
 			{
 				SmokeDelay -= 1.0f SYNC;
@@ -508,7 +508,7 @@ void GegnerSpinnenmaschine::DoKI(void)
 		} break;
 
 		case GEGNER_EXPLODIEREN:
-		{			
+		{
 			Energy = 100.0f;
 
 			SpawnDelay -= 1.0f SYNC;
@@ -640,5 +640,5 @@ void GegnerSpinnenmaschine::DoKI(void)
 // --------------------------------------------------------------------------------------
 
 void GegnerSpinnenmaschine::GegnerExplode(void)
-{		
+{
 }

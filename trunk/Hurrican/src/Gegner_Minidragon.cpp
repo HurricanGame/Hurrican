@@ -5,7 +5,7 @@
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
-#include "Gegner_MiniDragon.h"
+#include "Gegner_Minidragon.h"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
@@ -17,11 +17,11 @@ GegnerMiniDragon::GegnerMiniDragon(int Wert1, int Wert2, bool Light)
 	Energy			= 200;
 	AnimSpeed		= 0.5f;
 	ChangeLight		= Light;
-	Destroyable		= false;	
+	Destroyable		= false;
 	Value1			= Wert1;
 	Value2			= Wert2;
-	OwnDraw			= true;	
-	Segments		= 6;	
+	OwnDraw			= true;
+	Segments		= 6;
 	AnimEnde		= 3;
 	AnimSpeed		= 1.0f;
 	ShotDelay		= 4.0f;
@@ -47,7 +47,7 @@ GegnerMiniDragon::GegnerMiniDragon(int Wert1, int Wert2, bool Light)
 // --------------------------------------------------------------------------------------
 
 void GegnerMiniDragon::DoDraw(void)
-{	
+{
 	bool mirrored;
 	float mulx, muly;
 
@@ -58,8 +58,8 @@ void GegnerMiniDragon::DoDraw(void)
 
 	int i = 0;
 	for (int i = 0; i < Segments; i++)
-		pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-pTileEngine->XOffset) + (6-i) * mulx, 
-											    (float)(yPos-pTileEngine->YOffset) + (6-i) * muly, 
+		pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-pTileEngine->XOffset) + (6-i) * mulx,
+											    (float)(yPos-pTileEngine->YOffset) + (6-i) * muly,
 											    4, 0xFFFFFFFF);
 
 	// Kopf
@@ -95,7 +95,7 @@ void GegnerMiniDragon::DoDraw(void)
 	if (Segments == 6)
 	{
 		i++;
-		pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-pTileEngine->XOffset) + BlickRichtung * 15.0f, 
+		pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-pTileEngine->XOffset) + BlickRichtung * 15.0f,
 											    (float)(yPos-pTileEngine->YOffset),
 											    a, 0xFFFFFFFF, mirrored);
 	}
@@ -119,7 +119,7 @@ void GegnerMiniDragon::DoKI(void)
 	// Je nach Handlung richtig verhalten
 	switch (Handlung)
 	{
-		
+
 		case GEGNER_FALLEN:
 		{
 			SimpleAnimation();
@@ -193,7 +193,7 @@ void GegnerMiniDragon::DoKI(void)
 					pSoundManager->PlayWave(80, 128, 18000, SOUND_SPIDERSCREAM);
 				}
 
-				Destroyable = true;	
+				Destroyable = true;
 
 				AnimCount = 5.0f;
 
@@ -245,12 +245,12 @@ void GegnerMiniDragon::DoKI(void)
 			NewX = OldX + xdiv;
 			NewY = OldY + ydiv;
 
-			if (xPos < NewX) 
+			if (xPos < NewX)
 				xAcc =  2.0f;
 			else
 				xAcc = -2.0f;
 
-			if (yPos < NewY) 
+			if (yPos < NewY)
 				yAcc =  2.0f;
 			else
 				yAcc = -2.0f;
@@ -260,7 +260,7 @@ void GegnerMiniDragon::DoKI(void)
 			if (ySpeed < -8.0f) ySpeed = -8.0f;
 			if (ySpeed >  8.0f) ySpeed =  8.0f;
 
-			
+
 
 		} break;
 
@@ -268,7 +268,7 @@ void GegnerMiniDragon::DoKI(void)
 		case GEGNER_EXPLODIEREN:
 		{
 			Energy = 100.0f;
-			Destroyable = false;			
+			Destroyable = false;
 			ShotDelay -= 1.0f SYNC;
 
 			// Ein Segment explodieren lassen
@@ -280,23 +280,23 @@ void GegnerMiniDragon::DoKI(void)
 				mulx = (OldX - xPos) / 6.0f;
 
 				pSoundManager->PlayWave (100, 128, 8000 + rand()%8000, SOUND_EXPLOSION1);
-				pPartikelSystem->PushPartikel(xPos + (6 - Segments) * mulx, 
+				pPartikelSystem->PushPartikel(xPos + (6 - Segments) * mulx,
 											  yPos + (6 - Segments) * muly, EXPLOSION_MEDIUM2);
-			
 
-				for (int i=0; i < 3; i++)	
-					pPartikelSystem->PushPartikel (xPos + (6 - Segments) * mulx + rand ()%40, 
-												   yPos + (6 - Segments) * muly + rand()%30, SPIDERSPLITTER); 
 
-				for (int i=0; i < 10; i++)	
-					pPartikelSystem->PushPartikel (xPos + (6 - Segments) * mulx + rand ()%40, 
-												   yPos + (6 - Segments) * muly + rand()%30, FUNKE); 			
+				for (int i=0; i < 3; i++)
+					pPartikelSystem->PushPartikel (xPos + (6 - Segments) * mulx + rand ()%40,
+												   yPos + (6 - Segments) * muly + rand()%30, SPIDERSPLITTER);
+
+				for (int i=0; i < 10; i++)
+					pPartikelSystem->PushPartikel (xPos + (6 - Segments) * mulx + rand ()%40,
+												   yPos + (6 - Segments) * muly + rand()%30, FUNKE);
 
 				ShotDelay = 2.0f;
 				Segments--;
 
 				if (Segments == 0)
-					Energy = 0.0f;				
+					Energy = 0.0f;
 			}
 		} break;
 	}
@@ -313,7 +313,7 @@ void GegnerMiniDragon::DoKI(void)
 		yAcc = 0.0f;
 
 		pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
-		pPartikelSystem->PushPartikel(xPos - 26, 
+		pPartikelSystem->PushPartikel(xPos - 26,
 									  yPos - 22, EXPLOSION_BIG);
 	}
 

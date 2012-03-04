@@ -1,6 +1,6 @@
 // Datei : DX8Joystick.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Joystick Klasse
 //
@@ -21,7 +21,12 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_DIRECTX)
 #include <dinput.h>
+#endif
+#if defined(PLATFORM_SDL)
+#include "SDL_port.h"
+#endif
 
 // --------------------------------------------------------------------------------------
 // Klassendeklaration
@@ -34,12 +39,14 @@
 class DirectJoystickClass
 {
 	public:
-		LPDIRECTINPUTDEVICE8	lpDIJoystick;			// Joystick Device Interface		
+		LPDIRECTINPUTDEVICE8	lpDIJoystick;			// Joystick Device Interface
+#if defined(PLATFORM_DIRECTX)
 		GUID					guidJoystickDevice;		// GUID des Joystick Devices
 		LPDIRECTINPUTEFFECT		pFFE_SmallVib;			// Kurzes, schwaches Vibrieren
 		LPDIRECTINPUTEFFECT		pFFE_BigVib;			// Kurzes, starkes Vibrieren
 		LPDIRECTINPUTEFFECT		pFFE_MaxVib;			// Kurzes, heftiges Vibrieren
-		LPDIRECTINPUTEFFECT		pFFE_Blitz;				// Blitz Effekt			
+		LPDIRECTINPUTEFFECT		pFFE_Blitz;				// Blitz Effekt
+#endif
 
 		bool  CanForceFeedback;
 		bool  Active;
@@ -48,17 +55,22 @@ class DirectJoystickClass
 		int   JoystickX2;								// Joystick x-Koordinaten 2. analog Stick
 		int   JoystickY2;								// Joystick y-Koordinaten 2. analog Stick
 		int   JoystickPOV;								// POV (für coolie hat)
-		int   JoystickMode;								// Joypad oder Stickmode		
+		int   JoystickMode;								// Joypad oder Stickmode
 		bool  JoystickButtons[MAX_JOYSTICKBUTTONS];		// Feuerknopf gedrückt?
 		char  JoystickName[50];							// Joystick Produktname
 
-		 DirectJoystickClass(void);							
-		~DirectJoystickClass(void);							
+		 DirectJoystickClass(void);
+		~DirectJoystickClass(void);
 
-	void ForceFeedbackEffect	(int nr);		
-	void StopForceFeedbackEffect(int nr);		
+	void ForceFeedbackEffect	(int nr);
+	void StopForceFeedbackEffect(int nr);
 
+#if defined(PLATFORM_DIRECTX)
 	bool Init(HWND hwnd, LPDIRECTINPUT8 lpDI);
+#elif defined(PLATFORM_SDL)
+    bool Init(int joy);
+#endif
+
 	bool Update(void);
 };
 

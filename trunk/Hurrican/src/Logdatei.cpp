@@ -1,6 +1,6 @@
 // Datei : Logdatei.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Logdatei Klasse
 // zum leichten Handhaben einer Protokoll Datei
@@ -14,7 +14,11 @@
 // --------------------------------------------------------------------------------------
 
 #include "Logdatei.h"									// Header-Datei einbinden
-#include <windows.h>									// Windowsheader für Messagebox und Beep
+#if defined(PLATFORM_DIRECTX)
+#include <windows.h>									// Windowsheader für Messagebox und Beep#
+#elif defined(PLATFORM_SDL)
+#include "SDL_port.h"
+#endif
 #include <string.h>										// Für String Operationen
 #include <stdio.h>										// Für Datei Operationen
 
@@ -36,7 +40,7 @@ extern bool					GameRunning;				// Läuft das Spiel noch ?
 // erstellt eine neue Logdatei mit dem Namen "Name"
 // --------------------------------------------------------------------------------------
 
-Logdatei::Logdatei(char Name[20])
+Logdatei::Logdatei(const char Name[20])
 {
 	int len = strlen(Name) + 1;
 	strcpy_s(itsFilename, len, Name);							// Namen sichern
@@ -60,7 +64,7 @@ Logdatei::~Logdatei()
 // bei Fehler-Eintrag ggf Messagebox ausgeben
 // --------------------------------------------------------------------------------------
 
-void Logdatei::WriteText(char Text[180], bool Abbruch)
+void Logdatei::WriteText(const char Text[180], bool Abbruch)
 {
 	fopen_s(&Logfile, itsFilename, "a");					// Datei zum anfügen öffnen
 	fprintf_s(Logfile, Text);								// und Text schreiben
@@ -77,7 +81,11 @@ void Logdatei::WriteText(char Text[180], bool Abbruch)
 		fprintf(Logfile, "  Error\n\n");
 		fclose(Logfile);									// Datei wieder schliessen
 
+#if defined(PLATFORM_DIRECTX)
 		MessageBox (g_hwnd, Text, "Ein Fehler ist aufgetreten !", MB_OK | MB_ICONEXCLAMATION);
+#elif defined(PLATFORM_SDL)
+        printf ( "Ein Fehler ist aufgetreten !" );
+#endif
 		delLogFile  = false;
 		GameRunning = false;
 	}

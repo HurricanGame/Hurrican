@@ -1,6 +1,6 @@
 // Datei : Timer.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Timer Klasse
 // zum Auslesen/Berechnen der Framerate
@@ -24,7 +24,11 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_DIRECTX)
 #include <windows.h>
+#elif defined(PLATFORM_SDL)
+#include "SDL_port.h"
+#endif
 
 // --------------------------------------------------------------------------------------
 // Defines
@@ -49,7 +53,7 @@ class TimerClass
 		double		FPSMaximum;				// grösste  gemessene Framerate
 
    public:
-		double		vergangeneZeit;			// Zeit seit dem vorherigen Frame	    
+		double		vergangeneZeit;			// Zeit seit dem vorherigen Frame
 		double		aktuelleFramerate;		// Aktuelle Framerate
 	   	int			maxFPS;					// Maximum Framerate (Framebremse)
 		float		SpeedFaktor;			// Faktor, mit dem alle Werte verrechnet werden

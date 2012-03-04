@@ -1,10 +1,10 @@
 // Datei : mymath.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Mathe-Hilfsfuktionen
 //
-// (c) 2004 
+// (c) 2004
 // Jörg M. Winterstein
 // http://www.poke53280.de
 //
@@ -19,8 +19,16 @@
 
 // Schnelle Float to Int Konvertierung
 
+#if defined(USE_X86)
+
 #define MYMATH_FTOL(fx,x)\
 		_asm fld fx\
 		_asm fistp x
+
+#else
+
+#define MYMATH_FTOL(fx,x)  (x) = (long)(fx)
+
+#endif /* defined(USE_X86) */
 
 #endif

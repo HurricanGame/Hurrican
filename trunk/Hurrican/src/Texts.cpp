@@ -1,6 +1,6 @@
 // Datei : Texts.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Beinhaltet die Defines und Funktionen für die Texte in Hurrican
 // Es ist möglich, verschiedene Language-Files zu laden
@@ -21,8 +21,8 @@
 #include "Gameplay.h"
 #include "GetKeyName.h"
 #include "Player.h"
-#include "TileEngine.h"
-#include "Unrarlib.h"
+#include "Tileengine.h"
+#include "unrarlib.h"
 
 #include <iostream>
 #include <fstream>
@@ -34,10 +34,10 @@ extern Logdatei Protokoll;
 char TextArray  [TEXT_LASTTEXT][1024];
 char s_Replacers[MAX_AKTIONEN*2][256];
 
-char Cheats[MAX_CHEATS][256] = 
+char Cheats[MAX_CHEATS][256] =
 			{"$.345&&",				// 99 Extras = dnstuff
 			 ")$&!",				// Alle Waffen = idfa
-			 "\"%.+%.752-53",		// Shield = Benkenwurmus			 
+			 "\"%.+%.752-53",		// Shield = Benkenwurmus
 			 "42!6%,,%2`).`4)-%",	// 999 Zeit = traveller in time
 			 "$%2&.!-`:.%24",		// Godmode = derfnam znert
 			 "42!),\",!:%2"	,		// Radmode = trailblazer
@@ -83,14 +83,14 @@ loadfile:
 	// Texte auslesen
 	//
 	for (int i = 0; i < TEXT_LASTTEXT - 2; i++)
-	{		
+	{
 		strcpy_s (TextArray [i], 1, "");
 		count = 0;
 		c	  = getc (Datei);
 
 		// Zeichen für Zeichen auslesen, bis ein c==10 gelesen wird. Dies markiert das Zeilenende
 		//
-		while (c != 10 && 
+		while (c != 10 &&
 			   count < 1023)
 		{
 			TextArray [i][count]= c;
@@ -99,7 +99,7 @@ loadfile:
 		}
 
 		TextArray [i][count]= '\0';
-	} 
+	}
 
 	fclose (Datei);
 
@@ -115,19 +115,19 @@ loadfile:
 		sprintf_s(buf, "levels/%s/levellist.dat", CommandLineParams.OwnLevelList);
 
 		fopen_s (&Datei, buf, "rt");							// Reihenfolge Level laden
-		if (Datei == NULL)				
+		if (Datei == NULL)
 		{
-			// Fehler beim öffnen ? Dann standard Liste öffnen			
+			// Fehler beim öffnen ? Dann standard Liste öffnen
 			CommandLineParams.RunOwnLevelList = false;
 			Protokoll.WriteText("-> Error opening level-order file\n", true);
 			return false;
 		}
 	}
 	else
-	{		
-		char			*pData; 
+	{
+		char			*pData;
 		char			Temp[256];
-		unsigned long	Size; 
+		unsigned long	Size;
 
 		fromrar = false;
 
@@ -139,7 +139,7 @@ loadfile:
 		// Nicht? Dann ist es hoffentlich im RAR file
 		sprintf_s(Temp, "%s", "levellist.dat");
 		if (urarlib_get(&pData, &Size, Temp, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
-		{		
+		{
 			sprintf_s(Temp, "\n-> Error loading %s from Archive !\n", Temp);
 			Protokoll.WriteText(Temp, true);
 			return false;
@@ -158,11 +158,11 @@ loadfilelevel:
 			fopen_s (&TempFile, "temp.dat", "wb");	// Datei öffnen
 			fwrite (pData, Size, 1, TempFile);			// speichern
 			fclose (TempFile);							// und schliessen
-			
-			sprintf_s(Temp, "%s", "temp.dat");			// Name anpassen		
+
+			sprintf_s(Temp, "%s", "temp.dat");			// Name anpassen
 			free(pData);								// und Speicher freigeben
-		}		
-		
+		}
+
 		in.open(Temp); //Datei öffnen
 	}
 
@@ -182,8 +182,9 @@ loadfilelevel:
 	}
 	in.close();
 
-	if (fromrar)
+	if (fromrar) {
 		DeleteFile("temp.dat");
+	}
 
 	return true;
 
@@ -194,22 +195,22 @@ loadfilelevel:
 // --------------------------------------------------------------------------------------
 
 void InitReplacers(void)
-{	
+{
 	strcpy_s(s_Replacers[0],  strlen("KEY_LEFT") + 1, "KEY_LEFT");
-	strcpy_s(s_Replacers[2],  strlen("KEY_RIGHT") + 1, "KEY_RIGHT");			
-	strcpy_s(s_Replacers[4],  strlen("KEY_CROUCH") + 1, "KEY_CROUCH");			
-	strcpy_s(s_Replacers[6],  strlen("KEY_UP") + 1, "KEY_UP");				
-	strcpy_s(s_Replacers[8],  strlen("KEY_DOWN") + 1, "KEY_DOWN");			
-	strcpy_s(s_Replacers[10], strlen("KEY_JUMP") + 1, "KEY_JUMP");			
-	strcpy_s(s_Replacers[12], strlen("KEY_SHOOT") + 1, "KEY_SHOOT");			
-	strcpy_s(s_Replacers[14], strlen("KEY_BLITZ") + 1, "KEY_BLITZ");			
-	strcpy_s(s_Replacers[16], strlen("KEY_POWERLINE") + 1, "KEY_POWERLINE");		
-	strcpy_s(s_Replacers[18], strlen("KEY_GRANATE") + 1, "KEY_GRANATE");		
-	strcpy_s(s_Replacers[20], strlen("KEY_SHOCKWAVE") + 1, "KEY_SHOCKWAVE");		
+	strcpy_s(s_Replacers[2],  strlen("KEY_RIGHT") + 1, "KEY_RIGHT");
+	strcpy_s(s_Replacers[4],  strlen("KEY_CROUCH") + 1, "KEY_CROUCH");
+	strcpy_s(s_Replacers[6],  strlen("KEY_UP") + 1, "KEY_UP");
+	strcpy_s(s_Replacers[8],  strlen("KEY_DOWN") + 1, "KEY_DOWN");
+	strcpy_s(s_Replacers[10], strlen("KEY_JUMP") + 1, "KEY_JUMP");
+	strcpy_s(s_Replacers[12], strlen("KEY_SHOOT") + 1, "KEY_SHOOT");
+	strcpy_s(s_Replacers[14], strlen("KEY_BLITZ") + 1, "KEY_BLITZ");
+	strcpy_s(s_Replacers[16], strlen("KEY_POWERLINE") + 1, "KEY_POWERLINE");
+	strcpy_s(s_Replacers[18], strlen("KEY_GRANATE") + 1, "KEY_GRANATE");
+	strcpy_s(s_Replacers[20], strlen("KEY_SHOCKWAVE") + 1, "KEY_SHOCKWAVE");
 	strcpy_s(s_Replacers[22], strlen("KEY_WAFFE_CYCLE") + 1, "KEY_WAFFE_CYCLE");
-	strcpy_s(s_Replacers[24], strlen("KEY_WAFFE_SPREAD") + 1, "KEY_WAFFE_SPREAD");	
-	strcpy_s(s_Replacers[26], strlen("KEY_WAFFE_LASER") + 1, "KEY_WAFFE_LASER");	
-	strcpy_s(s_Replacers[28], strlen("KEY_WAFFE_BOUNCE") + 1, "KEY_WAFFE_BOUNCE");	
+	strcpy_s(s_Replacers[24], strlen("KEY_WAFFE_SPREAD") + 1, "KEY_WAFFE_SPREAD");
+	strcpy_s(s_Replacers[26], strlen("KEY_WAFFE_LASER") + 1, "KEY_WAFFE_LASER");
+	strcpy_s(s_Replacers[28], strlen("KEY_WAFFE_BOUNCE") + 1, "KEY_WAFFE_BOUNCE");
 
 	// TODO FIX
 
@@ -230,7 +231,7 @@ void InitReplacers(void)
 		strcpy (s_Replacers[23], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_WAFFEN_CYCLE]));
 		strcpy (s_Replacers[25], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_WAFFE_SPREAD]));
 		strcpy (s_Replacers[27], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_WAFFE_LASER]));
-		strcpy (s_Replacers[29], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_WAFFE_BOUNCE]));		
+		strcpy (s_Replacers[29], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_WAFFE_BOUNCE]));
 	}
 	else
 	{
@@ -282,7 +283,7 @@ void InitReplacers(void)
 		strcpy (s_Replacers[27], buf);
 
 		sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_WAFFE_BOUNCE]);
-		strcpy (s_Replacers[29], buf);		
+		strcpy (s_Replacers[29], buf);
 	}
 */
 }
@@ -318,7 +319,7 @@ int GetDecValue(char *pair, int len)
 			case 'C' : f = 12; break;
 			case 'D' : f = 13; break;
 			case 'E' : f = 14; break;
-			case 'F' : f = 15; break;			
+			case 'F' : f = 15; break;
 		}
 
 		for (int j = 0; j < i; j++)

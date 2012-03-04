@@ -1,6 +1,6 @@
 // Datei : DX8Graphics.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Direct Graphics Klasse
 // zum initialisieren von DirectX8
@@ -17,10 +17,14 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_SDL)
+#include "SDL_port.h"
+#else
 #include <d3d8.h>
 #include <d3dx8.h>
 #include <d3dx8tex.h>
 #include <D3dx8math.h>
+#endif
 
 // --------------------------------------------------------------------------------------
 // Defines
@@ -44,11 +48,11 @@
 // --------------------------------------------------------------------------------------
 
 struct VERTEX2D
-{ 
+{
 	float		x, y, z;		// x,y,z Koordinaten
 	D3DCOLOR	color;			// Vertex-Color
 	float		tu, tv;			// Textur-Koordinaten
-};  
+};
 
 // --------------------------------------------------------------------------------------
 // Klassendeklaration
@@ -61,13 +65,21 @@ struct VERTEX2D
 class DirectGraphicsClass
 {
 	private:
-		bool					useVSync;						// VSync ein/aus ?		
-		bool					FilterMode;						// Linearer Filter an/aus?		
+		bool					useVSync;						// VSync ein/aus ?
+		bool					FilterMode;						// Linearer Filter an/aus?
+#if defined(PLATFORM_DIRECTX)
 		D3DDISPLAYMODE			d3ddm;							// Display Mode
-		
-	public:		
+#elif defined(PLATFORM_SDL)
+        bool                    use_texture;
+		SDL_Surface*            Screen;
+		int                     MaxTextureUnits;
+#endif
+
+	public:
 		int						BlendMode;						// Additiv, Colorkey oder White mode aktiviert?
+#if defined(PLATFORM_DIRECTX)
 		D3DPRESENT_PARAMETERS	d3dpp;							// Present Parameters
+#endif
 		bool					SquareOnly;						// Nur quadratische Texturen
 		bool					PowerOfTwo;						// Nur 2er Potenz Texturen
 		void					ShowBackBuffer(void);			// Present aufrufen
@@ -80,18 +92,21 @@ class DirectGraphicsClass
 		bool Exit(void);										// D3D beenden
 		bool SetDeviceInfo(void);
 
-		bool TakeScreenshot(char Filename[100], int screenx, 
+		bool TakeScreenshot(const char Filename[100], int screenx,
 												int screeny);	// Screenshot machen
 		void SetColorKeyMode(void);								// Alpha für Colorkey oder
 		void SetAdditiveMode(void);								// Additive-Blending nutzen
 		void SetWhiteMode	(void);								// Komplett weiss rendern
 		void SetFilterMode(bool filteron);						// Linearer Textur Filter ein/aus
 
-		void RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,    // Rendert in den Buffer, der am Ende 
-							 UINT PrimitiveCount,				// eines jeden Frames komplett in 
-							 CONST void* pVertexStreamZeroData);// den Backbuffer gerendert wird	
+		void RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,    // Rendert in den Buffer, der am Ende
+							 UINT PrimitiveCount,				// eines jeden Frames komplett in
+							 CONST void* pVertexStreamZeroData);// den Backbuffer gerendert wird
 
 		void DisplayBuffer  (void);								// Render den Buffer auf den Backbuffer
+#if defined(PLATFORM_SDL)
+        void SetTexture( GLuint texture );
+#endif
 };
 
 // --------------------------------------------------------------------------------------
@@ -102,8 +117,10 @@ extern LPDIRECT3D8				lpD3D;							// Direct3D Hauptobjekt
 extern LPDIRECT3DDEVICE8		lpD3DDevice;					// Direct3D Device-Objekt
 extern DirectGraphicsClass		DirectGraphics;					// DirectGraphics Klasse
 extern LPDIRECT3DSURFACE8		lpBackbuffer;					// Der Backbuffer
+#if defined(PLATFORM_DIRECTX)
 extern D3DFORMAT				D3DFormat;						// Format der Primary Surface
 extern D3DCAPS8					d3dcaps;						// Möglichkeiten der Hardware
+#endif
 extern LPDIRECT3DVERTEXBUFFER8	lpVBSprite;						// VertexBuffer für die Sprites
 extern D3DXMATRIX				matProj;						// Projektionsmatrix
 extern D3DXMATRIX				matWorld;						// Weltmatrix

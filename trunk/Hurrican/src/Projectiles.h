@@ -1,6 +1,6 @@
 // Datei : Projectiles.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Projektile (Schüsse) für Hurrican
 //
@@ -15,7 +15,9 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_DIRECTX)
 #include <d3dx8.h>
+#endif
 #include "DX8Sprite.h"
 #include "Player.h"
 
@@ -113,18 +115,18 @@
 
 #define ARCSHOTLEFT				236						// Schuss der im Bogen fliegt nach links
 #define ARCSHOTRIGHT			237						// Schuss der im Bogen fliegt nach rechts
-#define EVILROUND1				238						// Rundschuss EvilHurri	
-#define EVILROUND2				239						// Rundschuss EvilHurri	
-#define EVILROUND3				240						// Rundschuss EvilHurri	
-#define EVILROUND4				241						// Rundschuss EvilHurri	
-#define EVILROUND5				242						// Rundschuss EvilHurri	
-#define EVILROUND6				243						// Rundschuss EvilHurri	
-#define EVILROUND7				244						// Rundschuss EvilHurri	
-#define EVILROUND8				245						// Rundschuss EvilHurri	
-#define EVILROUND9				246						// Rundschuss EvilHurri	
-#define EVILROUNDA				247						// Rundschuss EvilHurri	
-#define EVILROUNDB				248						// Rundschuss EvilHurri	
-#define EVILROUNDC				249						// Rundschuss EvilHurri	
+#define EVILROUND1				238						// Rundschuss EvilHurri
+#define EVILROUND2				239						// Rundschuss EvilHurri
+#define EVILROUND3				240						// Rundschuss EvilHurri
+#define EVILROUND4				241						// Rundschuss EvilHurri
+#define EVILROUND5				242						// Rundschuss EvilHurri
+#define EVILROUND6				243						// Rundschuss EvilHurri
+#define EVILROUND7				244						// Rundschuss EvilHurri
+#define EVILROUND8				245						// Rundschuss EvilHurri
+#define EVILROUND9				246						// Rundschuss EvilHurri
+#define EVILROUNDA				247						// Rundschuss EvilHurri
+#define EVILROUNDB				248						// Rundschuss EvilHurri
+#define EVILROUNDC				249						// Rundschuss EvilHurri
 #define ROBOROCKET				250						// Rakete des RoboMans
 
 
@@ -175,7 +177,7 @@ class ProjectileClass
 	public:
 		float				xSpeed,ySpeed;				// Geschwindigkeit des Partikels
 		float				xAcc, yAcc;					// Beschleunigung des Partikels
-		int					AnimPhase, AnimEnde;		// Aktuelle Phase und Endphase		
+		int					AnimPhase, AnimEnde;		// Aktuelle Phase und Endphase
 		float				AnimSpeed, AnimCount;		// Anim-Geschwindigkeit und Counter
 		bool				BounceWalls;				// an Wänden abprallen ?
 		bool				CheckBlock;					// überhaupt Kollision mit Wand checken?
@@ -219,7 +221,7 @@ class ProjectileListClass
 	   ~ProjectileListClass(void);						// Destruktor
 
 	    bool PushProjectile(float x, float y, int Art, PlayerClass* pTemp = NULL); 	// Schuss "Art" hinzufügen
-		bool PushBlitzBeam (int Size, float Richtung, PlayerClass* pSource);	// BlitzBeam hinzufügen (in verschiedenen Größen und Richtungen möglich)								
+		bool PushBlitzBeam (int Size, float Richtung, PlayerClass* pSource);	// BlitzBeam hinzufügen (in verschiedenen Größen und Richtungen möglich)
 		void DelSel		(ProjectileClass *pTemp);		// Ausgewähltes Objekt entfernen
 		void ClearAll	(void);							// Alle Objekte löschen
 		void ClearType	(int type);						// Alle Objekte eines Typs löschen

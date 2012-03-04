@@ -1,0 +1,25 @@
+              _____________________________
+ ____   ____ | UniquE of  __               |         
+ \   \ /   /____    _____/  |______     ____   ____  
+  \   Y   /\__  \  /    \   __\__  \   / ___\_/ __ \ 
+   \     /  / __ \|   |  \  |  / __ \_/ /_/  >  ___/ 
+    \___/  (____  /___|  /__| (____  /\___  / \___  >
+             |  \/     \/          \//_____/      \/ 
+             | -presents:-                 |
+             |_____________________________|
+
+                UniquE RAR File Library v0.4.0
+            The free file lib for the demoscene
+    multi-OS version (Win32, Linux, OS/2, SunOS and more)
+ 
+The UniquE RAR File Library gives you the ability to
+access RAR archives directly from your program with
+ease an by adding only about 12kB (6kB UPX-compressed)
+code to your program. Any compression method from RAR
+v2.0 is supported, including Multimedia Compression
+and encryption for both solid and normal archive.
+The library is now available at your choice under GPL or 
+the unrarlib license and has improved samples.
+e-mail : unique@vantage.ch       home: http://www.vantage.ch
+updates: http://www.unrarlib.org
+[16.06.2002]

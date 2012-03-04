@@ -1,0 +1,18 @@
+Free License for UniquE RAR File Library
+Copyright (C) 2000-2002 by Christian Scheurer (www.ChristianScheurer.ch)
+UNIX port by Johannes Winkelmann (jw@tks6.net)
+
+You have the permission to use, copy, modify, and distribute the
+UniquE RAR File Library (also called URARFileLib or unrarlib) and its 
+documentation for any purpose except for re-creating the RAR compression
+algorithm, which is proprietary. URARFileLib may not be used or modified
+to create RAR/WinRAR compatible archives, only decompression is permitted.
+If you use URARFileLib, or parts of URARFileLib in your program,
+you must give the program away for free.
+The above copyright notice must be shipped with all copies.
+No representations are made about the suitability of the URARFileLib
+for any purpose. It is provided "as is" without expressed or implied warranty.
+
+
+Christian Scheurer (cs@unrarlib.org)
+14. June 2002

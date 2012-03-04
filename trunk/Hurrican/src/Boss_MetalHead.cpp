@@ -9,7 +9,7 @@
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
-#include "TileEngine.h"
+#include "Tileengine.h"
 #include "Boss_MetalHead.h"
 
 // --------------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ GegnerMetalHead::GegnerMetalHead(int Wert1, int Wert2, bool Light)
 {
 	Handlung		= GEGNER_NOTVISIBLE;
 	BlickRichtung	= LINKS;
-	Energy			= 4000;	
+	Energy			= 4000;
 	ChangeLight		= Light;
 	Destroyable		= false;
 	Value1			= Wert1;
@@ -44,7 +44,7 @@ GegnerMetalHead::GegnerMetalHead(int Wert1, int Wert2, bool Light)
 	ShotCount		= 0;
 
 	MoveSpeed		  = 5.0f;
-	g_Fahrstuhl_Speed = 0.0f;	
+	g_Fahrstuhl_Speed = 0.0f;
 
 	// Zusätzliche Grafiken laden
 	//
@@ -52,7 +52,7 @@ GegnerMetalHead::GegnerMetalHead(int Wert1, int Wert2, bool Light)
 	Kiefer2.LoadImage ("metalhead_kiefer2.bmp",  131, 88, 131, 88, 1, 1);
 	Turbine.LoadImage ("metalhead_turbine.bmp",  98,  49, 98, 49, 1, 1);
 	Turbine2.LoadImage("metalhead_turbine2.bmp", 98,  49, 98, 49, 1, 1);
-	HalsGfx.LoadImage    ("metalhead_halsteil.png",  56,  16,  56,  16, 1, 1);
+	HalsGfx.LoadImage    ("metalhead_halsteil.bmp",  56,  16,  56,  16, 1, 1);
 	Flare.LoadImage   ("giantspiderflare.bmp", 128, 128, 128, 128, 1, 1);
 }
 
@@ -69,10 +69,10 @@ void GegnerMetalHead::DoDraw(void)
 	if (Handlung == GEGNER_EXPLODIEREN)
 	{
 		// Kopf wirbelt herum
-		//			
+		//
 		if (AnimEnde > MAXWIRBEL-5)
-			pGegnerGrafix [GegnerArt]->RenderSpriteRotated  (float (xPos - pTileEngine->XOffset), 
-														     float (yPos - pTileEngine->YOffset), 
+			pGegnerGrafix [GegnerArt]->RenderSpriteRotated  (float (xPos - pTileEngine->XOffset),
+														     float (yPos - pTileEngine->YOffset),
 															 Eye_Alpha / PI * 180.0f, 0xFFFFFFFF);
 		else
 		{
@@ -87,9 +87,9 @@ void GegnerMetalHead::DoDraw(void)
 			HalsGfx.RenderSpriteRotated (Hals[i].x,
 										 Hals[i].y - (float)pTileEngine->YOffset,
 										 Hals[i].w, 0xFFFFFFFF);
-		
+
 		return;
-	}		
+	}
 
 	D3DCOLOR Color;
 
@@ -100,12 +100,12 @@ void GegnerMetalHead::DoDraw(void)
 	else
 		Color = D3DCOLOR_RGBA(255, 255, 255, 255);
 
-	Kiefer.RenderSprite  (float (xPos - pTileEngine->XOffset) + 87, 
+	Kiefer.RenderSprite  (float (xPos - pTileEngine->XOffset) + 87,
 				  		  float (yPos - pTileEngine->YOffset) + 107 + KieferPos, Color);
 
 	// Hals rendern ... uiuiu =)
 	// Zuerst die Wirbel richtig positionieren
-	// Dazu Strecke vom linken Screenrand bis zum linken Ende des Kopfes nehmen. 
+	// Dazu Strecke vom linken Screenrand bis zum linken Ende des Kopfes nehmen.
 	// Diese dann durch Anzahl der Wirbel teilen
 
 	// Strecke linker Rand bis zum Kopf
@@ -119,9 +119,9 @@ void GegnerMetalHead::DoDraw(void)
 	{
 		Hals[i].x = float (Value1 - 40 + i * dx / (MAXWIRBEL-1) - pTileEngine->XOffset);
 		Hals[i].y = float (Value2 + 400);
-			
+
 		float dummy;
-			
+
 		// Die Strecke von linkem Rand Punkt zum Kopf soll der Strecke 0 - PI entsprechen
 		dummy = (i * dy / MAXWIRBEL * PI) / dy;
 
@@ -148,7 +148,7 @@ void GegnerMetalHead::DoDraw(void)
 	for (int i = 0; i < MAXWIRBEL-1; i++)
 		HalsGfx.RenderSpriteRotated (Hals[i].x,
 									 Hals[i].y - (float)pTileEngine->YOffset,
-									 Hals[i].w, 0xFFFFFFFF);	
+									 Hals[i].w, 0xFFFFFFFF);
 
 	// Turbine läuft? Dann Orange leuchten lassen
 	//
@@ -172,19 +172,19 @@ void GegnerMetalHead::DoDraw(void)
 			a = 255;
 
 		DirectGraphics.SetAdditiveMode();
-		Turbine2.RenderSprite (float (xPos - pTileEngine->XOffset) + 20, 
+		Turbine2.RenderSprite (float (xPos - pTileEngine->XOffset) + 20,
 				  		       float (yPos - pTileEngine->YOffset) + 130, D3DCOLOR_RGBA(255, 144, 80, a));
 		DirectGraphics.SetColorKeyMode();
-	}	
+	}
 
-	pGegnerGrafix [GegnerArt]->RenderSprite  (float (xPos - pTileEngine->XOffset), 
+	pGegnerGrafix [GegnerArt]->RenderSprite  (float (xPos - pTileEngine->XOffset),
 											  float (yPos - pTileEngine->YOffset), Color);
 
 	if (Turbine_dran == true)
 	{
 		Color = D3DCOLOR_RGBA(255, Wert, Wert, 255);
-		Turbine.RenderSpriteRotatedOffset(float (xPos - pTileEngine->XOffset) + 85 + TurbineOff, 
-										  float (yPos - pTileEngine->YOffset) + 202, 
+		Turbine.RenderSpriteRotatedOffset(float (xPos - pTileEngine->XOffset) + 85 + TurbineOff,
+										  float (yPos - pTileEngine->YOffset) + 202,
 										  360 - GunWinkel,
 										  -30, 0, Color);
 	}
@@ -200,8 +200,8 @@ void GegnerMetalHead::DoDraw(void)
 	{
 		int a = int (Eye_Alpha);
 		DirectGraphics.SetAdditiveMode();
-		Flare.RenderSpriteRotated (float (xPos + 100 - pTileEngine->XOffset), 
-								   float (yPos +  50 - pTileEngine->YOffset), 
+		Flare.RenderSpriteRotated (float (xPos + 100 - pTileEngine->XOffset),
+								   float (yPos +  50 - pTileEngine->YOffset),
 								   Eye_Winkel, D3DCOLOR_RGBA(255, 255, 255, a));
 		AlreadyDrawn = true;
 	}
@@ -320,7 +320,7 @@ void GegnerMetalHead::DoKI(void)
 			ShadowAlpha -= 5.0f SYNC;
 		else
 			ShadowAlpha = 0.0f;
-	}	
+	}
 	else
 	{
 		if (ShadowAlpha < 255.0f)
@@ -331,14 +331,14 @@ void GegnerMetalHead::DoKI(void)
 
 	if (Turbine_dran == false)
 	{
-		GegnerRect[METALHEAD].left   = 140; 
+		GegnerRect[METALHEAD].left   = 140;
 		GegnerRect[METALHEAD].right  = 180;
-		GegnerRect[METALHEAD].top    = 90; 
+		GegnerRect[METALHEAD].top    = 90;
 		GegnerRect[METALHEAD].bottom = 130;
 	}
-	
+
 	// Spieler unter Kopf? Dann runtercrashen
-	if (Handlung != GEGNER_CRUSHENERHOLEN && 
+	if (Handlung != GEGNER_CRUSHENERHOLEN &&
 		Handlung != GEGNER_EINFLIEGEN &&
 		Handlung != GEGNER_EXPLODIEREN &&
 		Handlung != GEGNER_NOTVISIBLE &&
@@ -367,7 +367,7 @@ void GegnerMetalHead::DoKI(void)
 	//
 	if (Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
 	{
-		pTileEngine->ScrollLevel((float)Value1, 
+		pTileEngine->ScrollLevel((float)Value1,
 								 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
 		pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
@@ -379,11 +379,11 @@ void GegnerMetalHead::DoKI(void)
 		// Turbine noch dran? Dann verliert Sie Energie, nicht der Gegner
 		//
 		if (Turbine_dran == true)
-		{			
+		{
 			// Turbine kaputt? Dann wegfliegen lassen
 			//
 			if (Energy < 2000.0f)
-			{				
+			{
 				Turbine_dran = false;
 
 				for (int i = 0; i < 20; i++)
@@ -459,7 +459,7 @@ void GegnerMetalHead::DoKI(void)
 
 		// Kopf fliegt wech (mit Explosion)
 		for (int i = 0; i < 60; i++)
-			pPartikelSystem->PushPartikel (xPos + rand ()% 10, 
+			pPartikelSystem->PushPartikel (xPos + rand ()% 10,
 										   yPos + 90 + rand ()% 10, FUNKE);
 
 		pPartikelSystem->PushPartikel (xPos - 40, yPos + 40, EXPLOSION_GIANT);
@@ -481,9 +481,9 @@ void GegnerMetalHead::DoKI(void)
 
 		// Oben umdrehen?
 		//
-		if (KieferPos < 0 && 
-			KieferSpeed < 0.0f) 
-		{ 
+		if (KieferPos < 0 &&
+			KieferSpeed < 0.0f)
+		{
 			KieferSpeed = 10.0f;
 			pSoundManager->PlayWave (25, 128, 10000 + rand ()% 2000, SOUND_KLONG);
 
@@ -494,7 +494,7 @@ void GegnerMetalHead::DoKI(void)
 
 	// Je nach Handlung richtig verhalten
 	//
-	if (Moving) 
+	if (Moving)
 		DoMove();
 	else
 	switch (Handlung)
@@ -515,7 +515,7 @@ void GegnerMetalHead::DoKI(void)
 				KieferPos = 0.0f;
 
 			if (yPos > Value2 + 200)
-			{				
+			{
 				xSpeed = 0.0f;
 				ySpeed = 0.0f;
 				xAcc = 0.0f;
@@ -548,8 +548,8 @@ void GegnerMetalHead::DoKI(void)
 							break;
 					}
 
-					pGegner->PushGegner((float)Value1 + 50 + rand()%550, 
-										(float)Value2 - 40, 
+					pGegner->PushGegner((float)Value1 + 50 + rand()%550,
+										(float)Value2 - 40,
 										SCHLEIMBOLLER, size, 0, false);
 				}
 
@@ -561,8 +561,8 @@ void GegnerMetalHead::DoKI(void)
 				// Spieler noch drunter? Dann wars das
 				for (int p = 0; p < NUMPLAYERS; p++)
 					if (pPlayer[p]->xpos + 35 < xPos + 200)
-						pPlayer[p]->DamagePlayer(500.0f);				
-			}			
+						pPlayer[p]->DamagePlayer(500.0f);
+			}
 		} break;
 
 		case GEGNER_CRUSHENERHOLEN:
@@ -572,8 +572,8 @@ void GegnerMetalHead::DoKI(void)
 			{
 				ySpeed = 0.0f;
 				yAcc = 0.0f;
-				MoveToNewPoint (float (Value1 + 130), 
-								float (Value2 + 0), 10.0f, GEGNER_SCHIESSEN);						
+				MoveToNewPoint (float (Value1 + 130),
+								float (Value2 + 0), 10.0f, GEGNER_SCHIESSEN);
 				ShotArt = 1;
 			}
 		} break;
@@ -589,14 +589,14 @@ void GegnerMetalHead::DoKI(void)
 			{
 				// Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
 				//
-				if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+				if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
 				{
 					pSoundManager->PlaySong(MUSIC_BOSS, false);
 
 					// Und Boss erscheinen lassen
 					//
 					Handlung = GEGNER_EINFLIEGEN;
-				}				
+				}
 			}
 		} break;
 
@@ -610,8 +610,8 @@ void GegnerMetalHead::DoKI(void)
 			if (Eye_Alpha > 255.0f)
 			{
 				Eye_Alpha = 255.0f;
-				
-				MoveToNewPoint (float (Value1 + 70), 
+
+				MoveToNewPoint (float (Value1 + 70),
 								float (Value2 + 130), 10.0f, GEGNER_SCHIESSEN);
 
 				ShotArt = 0;
@@ -631,18 +631,18 @@ void GegnerMetalHead::DoKI(void)
 					GunWinkel += 50.0f SYNC;
 			}
 			else
-				WinkelToPlayer();			
+				WinkelToPlayer();
 
-			if (ShotArt == 1) 
+			if (ShotArt == 1)
 			{
 				yPos += 1.5f SYNC;
 				xPos -= 1.0f SYNC;
 			}
 
-			KieferPos  = (float)sin(SinCount) * 50.0f;			
+			KieferPos  = (float)sin(SinCount) * 50.0f;
 
 			switch(Akt)
-			{				
+			{
 				case GEGNER_OEFFNEN:
 				{
 					TurbineOff = (float)sin(SinCount) * 30.0f;
@@ -671,13 +671,13 @@ void GegnerMetalHead::DoKI(void)
 						{
 							ShotCount = 100;
 							ShotDelay = 1.0f;
-						}						
+						}
 					}
 
 				} break;
 
 				case GEGNER_SCHIESSEN:
-				{						
+				{
 					if (TurbineOff < (float)sin(PI / 2.0f) * 30.0f)
 						TurbineOff += 5.0f SYNC;
 					else
@@ -693,21 +693,21 @@ void GegnerMetalHead::DoKI(void)
 							Destroyable = !(Turbine_dran == true);
 						}
 						else
-						{							
+						{
 							if (Turbine_dran)
 							{
 								pSoundManager->PlayWave(100, 128, 8000 + rand()%2000, SOUND_FIREBALL);
 
 								ShotDelay = 9.0f;
-								
+
 								if (ShotArt == 0)
 								{
 									WinkelUebergabe = GunWinkel + 90;
 
 									float w = (450.0f - GunWinkel) / 180.0f * PI;
 
-									pProjectiles->PushProjectile(xPos + 110 + (float)sin(w) * 70.0f, 
-																 yPos + 195 + (float)cos(w) * 70.0f, 
+									pProjectiles->PushProjectile(xPos + 110 + (float)sin(w) * 70.0f,
+																 yPos + 195 + (float)cos(w) * 70.0f,
 																 FIREBALL_BIG);
 								}
 
@@ -720,8 +720,8 @@ void GegnerMetalHead::DoKI(void)
 										float w = (450.0f - GunWinkel) / 180.0f * PI;
 
 										WinkelUebergabe = GunWinkel + 90 + i;
-										pProjectiles->PushProjectile(xPos + 130 + (float)sin(w) * 70.0f, 
-																	 yPos + 200 + (float)cos(w) * 70.0f, 
+										pProjectiles->PushProjectile(xPos + 130 + (float)sin(w) * 70.0f,
+																	 yPos + 200 + (float)cos(w) * 70.0f,
 																	 FIREBALL);
 									}
 
@@ -732,8 +732,8 @@ void GegnerMetalHead::DoKI(void)
 								if (ShotArt == 2)
 								{
 									pSoundManager->PlayWave(100, 128, 14000 + rand()%2000, SOUND_FIREBALL);
-									pProjectiles->PushProjectile(xPos + 180, 
-																 yPos + 195, 
+									pProjectiles->PushProjectile(xPos + 180,
+																 yPos + 195,
 																 FIREBALL_BOMB, pAim);
 								}
 
@@ -752,12 +752,12 @@ void GegnerMetalHead::DoKI(void)
 									{
 										pProjectiles->PushProjectile(xPos + 100, yPos + 213 + rand()%5, PFLANZESHOT, pAim);
 
-										pPartikelSystem->PushPartikel(xPos + 80, 
-																	  yPos + 150, 
+										pPartikelSystem->PushPartikel(xPos + 80,
+																	  yPos + 150,
 																	  EXPLOSIONFLARE);
 
-										pPartikelSystem->PushPartikel(xPos + 80, 
-																	  yPos + 150, 
+										pPartikelSystem->PushPartikel(xPos + 80,
+																	  yPos + 150,
 																	  EXPLOSIONFLARE);
 									}
 								}
@@ -765,7 +765,7 @@ void GegnerMetalHead::DoKI(void)
 
 							ShotCount--;
 						}
-					}					
+					}
 				} break;
 
 				case GEGNER_SCHLIESSEN:
@@ -796,21 +796,21 @@ void GegnerMetalHead::DoKI(void)
 						if (ShotArt == 2)
 						{
 							Akt = GEGNER_OEFFNEN;
-							MoveToNewPoint (float (Value1 + 10), 
+							MoveToNewPoint (float (Value1 + 10),
 											float (Value2 + 0), 10.0f, GEGNER_SCHIESSEN);
 						}
 						else
 						if (ShotArt == 1)
 						{
 							Akt = GEGNER_OEFFNEN;
-							MoveToNewPoint (float (Value1 + 130), 
+							MoveToNewPoint (float (Value1 + 130),
 											float (Value2 + 0), 10.0f, GEGNER_SCHIESSEN);
 						}
 						else
 						if (ShotArt == 0)
 						{
 							Akt = GEGNER_OEFFNEN;
-							MoveToNewPoint (float (Value1 + 70), 
+							MoveToNewPoint (float (Value1 + 70),
 											float (Value2 + 80), 10.0f, GEGNER_SCHIESSEN);
 						}
 						else
@@ -827,7 +827,7 @@ void GegnerMetalHead::DoKI(void)
 							SinCount = 0.0f;
 						}
 					}
-				} break;				
+				} break;
 			}
 
 		}
@@ -841,7 +841,7 @@ void GegnerMetalHead::DoKI(void)
 			{
 				if (KieferPos < 60.0f)
 					KieferPos += 5.0f SYNC;
-				else 
+				else
 					KieferPos = 60.0f;
 			}
 
@@ -851,7 +851,7 @@ void GegnerMetalHead::DoKI(void)
 			{
 				if (KieferPos > 0.0f)
 					KieferPos -= 5.0f SYNC;
-				else 
+				else
 					KieferPos = 0.0f;
 			}
 
@@ -861,10 +861,10 @@ void GegnerMetalHead::DoKI(void)
 		case GEGNER_EXPLODIEREN:
 		{
 			Energy = 100.0f;
-			
+
 			Eye_Alpha -= 0.3f SYNC;
-			while (Eye_Alpha < 0)	
-				   Eye_Alpha += 2 * PI;			
+			while (Eye_Alpha < 0)
+				   Eye_Alpha += 2 * PI;
 
 			AnimCount -= 1.0f SYNC;
 
@@ -875,11 +875,11 @@ void GegnerMetalHead::DoKI(void)
 				pPartikelSystem->PushPartikel (Hals[AnimEnde].x + (float)pTileEngine->XOffset,
 											   Hals[AnimEnde].y, HALSWIRBEL);
 
-				pPartikelSystem->PushPartikel (float (Hals[AnimEnde].x - 20) + (float)pTileEngine->XOffset, 
+				pPartikelSystem->PushPartikel (float (Hals[AnimEnde].x - 20) + (float)pTileEngine->XOffset,
 											   float (Hals[AnimEnde].y - Hals[AnimEnde].w / 3.0f), EXPLOSION_MEDIUM2);
 
 				for (int i = 0; i < 30; i++)
-					pPartikelSystem->PushPartikel (float (Hals[AnimEnde].x - 20 + rand ()% 20) + (float)pTileEngine->XOffset, 
+					pPartikelSystem->PushPartikel (float (Hals[AnimEnde].x - 20 + rand ()% 20) + (float)pTileEngine->XOffset,
 												   float (Hals[AnimEnde].y - 20 + rand ()% 20), FUNKE);
 
 				pSoundManager->PlayWave (100, 128, 10000 + rand()%2000, SOUND_EXPLOSION1);
@@ -891,23 +891,23 @@ void GegnerMetalHead::DoKI(void)
 				if (AnimEnde == MAXWIRBEL - 5)
 				{
 					for (int i = 0; i < 20; i++)
-						pPartikelSystem->PushPartikel (xPos + 10 + rand ()% 160, 
+						pPartikelSystem->PushPartikel (xPos + 10 + rand ()% 160,
 													   yPos + 20 + rand ()% 80, EXPLOSION_MEDIUM2);
 
 					for (int i = 0; i < 5; i++)
-						pPartikelSystem->PushPartikel (xPos + rand ()% 160, 
+						pPartikelSystem->PushPartikel (xPos + rand ()% 160,
 													   yPos + 40 + rand ()% 80, EXPLOSION_BIG);
 
 					for (int i = 0; i < 40; i++)
-						pPartikelSystem->PushPartikel (xPos + rand ()% 180, 
+						pPartikelSystem->PushPartikel (xPos + rand ()% 180,
 													   yPos + rand ()% 140, SCHROTT1);
 
 					for (int i = 0; i < 10; i++)
-						pPartikelSystem->PushPartikel (xPos + 30 + rand ()% 160, 
+						pPartikelSystem->PushPartikel (xPos + 30 + rand ()% 160,
 													   yPos + 50 + rand ()% 80, SPLITTER);
 
 					for (int i = 0; i < 100; i++)
-						pPartikelSystem->PushPartikel (xPos + 30 + rand ()% 160, 
+						pPartikelSystem->PushPartikel (xPos + 30 + rand ()% 160,
 													   yPos + 50 + rand ()% 80, SMOKE3);
 
 					pSoundManager->PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
@@ -916,7 +916,7 @@ void GegnerMetalHead::DoKI(void)
 				if (AnimEnde <= 0)
 					Energy = 0.0f;
 			}
-			
+
 		} break;
 
 		default : break;
@@ -925,7 +925,7 @@ void GegnerMetalHead::DoKI(void)
 	// Testen, ob der Spieler den Schädel berührt hat
 	//
 	RECT r;
-	r.top    = 0; 
+	r.top    = 0;
 	r.left   = 0;
 	r.bottom = 140;
 	r.right  = 110;
@@ -937,7 +937,7 @@ void GegnerMetalHead::DoKI(void)
 	{
 		// Beim Ansaugen gleich viel abziehen und Ansaugen beenden
 		//
-		if (Handlung == GEGNER_SPECIAL2 && 
+		if (Handlung == GEGNER_SPECIAL2 &&
 			pPlayer[p]->Handlung != RADELN &&
 			pPlayer[p]->Handlung != RADELN_FALL)
 		{
@@ -954,7 +954,7 @@ void GegnerMetalHead::DoKI(void)
 // --------------------------------------------------------------------------------------
 
 void GegnerMetalHead::GegnerExplode(void)
-{	
+{
 	pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
 	pPlayer[0]->Score += 12500;

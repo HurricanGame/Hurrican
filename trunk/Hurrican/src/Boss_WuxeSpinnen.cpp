@@ -31,7 +31,7 @@ GegnerWuxeSpinnen::GegnerWuxeSpinnen(int Wert1, int Wert2, bool Light)
 void GegnerWuxeSpinnen::DoKI(void)
 {
 	// Energie anzeigen
-	if (Handlung != GEGNER_INIT		 && 
+	if (Handlung != GEGNER_INIT		 &&
 		Handlung != GEGNER_VERFOLGEN &&
 		Handlung != GEGNER_EXPLODIEREN)
 		pHUD->ShowBossHUD(2000, Energy);
@@ -42,7 +42,7 @@ void GegnerWuxeSpinnen::DoKI(void)
 		Handlung != GEGNER_VERFOLGEN &&
 		pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
 	{
-		pTileEngine->ScrollLevel((float)Value1, 
+		pTileEngine->ScrollLevel((float)Value1,
 								 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
 		pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
@@ -67,18 +67,18 @@ void GegnerWuxeSpinnen::DoKI(void)
 			{
 				// Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
 				//
-				if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+				if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
 				{
 					pSoundManager->PlaySong(MUSIC_BOSS, false);
 
 					// Und Boss erscheinen lassen
 					//
 					Handlung = GEGNER_STEHEN;
-				}	
+				}
 			}
 		} break;
 
-		case GEGNER_STEHEN:			
+		case GEGNER_STEHEN:
 		{
 			// ActionCounter runterzählen
 			// bei null Gegner spawnen
@@ -121,15 +121,15 @@ void GegnerWuxeSpinnen::DoKI(void)
 
 		// warten, bis der Spieler den Gegner berührt hat, und dann aktivieren
 		//
-		case GEGNER_VERFOLGEN:	
+		case GEGNER_VERFOLGEN:
 		{
 			if (PlayerAbstand() < 400)
 				Handlung = GEGNER_INIT;
-	
+
 		} break;
-		
+
 		case GEGNER_EXPLODIEREN:
-		{			
+		{
 				Energy = 0.0f;
 		} break;
 
@@ -146,6 +146,6 @@ void GegnerWuxeSpinnen::GegnerExplode(void)
 {
 	// Extra Leben
 	pGegner->PushGegner (xPos, yPos - 250, ONEUP, 10, 0, false);
-		
+
 	ScrolltoPlayeAfterBoss();
 }

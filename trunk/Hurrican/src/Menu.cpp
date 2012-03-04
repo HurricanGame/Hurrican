@@ -1,8 +1,8 @@
 // Datei : Menu.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
-// Menu-Klasse für das 
+// Menu-Klasse für das
 // Hurrican Hauptmenu
 //
 // (c) 2002 Jörg M. Winterstein
@@ -27,7 +27,7 @@
 #include "GetKeyName.h"
 #include "Logdatei.h"
 #include "Player.h"
-#include "PartikelSystem.h"
+#include "Partikelsystem.h"
 #include "Timer.h"
 
 // --------------------------------------------------------------------------------------
@@ -35,8 +35,8 @@
 // --------------------------------------------------------------------------------------
 
 	int CreditsCount;
-	char *Credits[] =
-	
+	const char *Credits[] =
+
 	{
 
 	"",
@@ -80,16 +80,16 @@
 	"",
 	"(c) 2007",
 	"poke53280",
-	"",														
-	"",														
-	"",														
+	"",
+	"",
+	"",
 	"",
 	"Jörg 'Eiswuxe' Winterstein",
 	"",
 	"Programmierung",
 	"Gamedesign",
-	"Sound & Musik",										
-	"Leveldesign",												
+	"Sound & Musik",
+	"Leveldesign",
 	"",
 	"",
 	"",
@@ -98,7 +98,7 @@
 	"Grafik",
 	"Gamedesign",
 	"Gegnerdesign",
-	"Leveldesign",											
+	"Leveldesign",
 	"",
 	"",
 	"",
@@ -111,17 +111,17 @@
 	"",
 	"",
 	"Spezieller Dank geht auch",
-	"an unsere fleissigen Betatester",														
+	"an unsere fleissigen Betatester",
 	"",
 	"Wenkman, der Obertester",
-	"Gereon 'ntroPi' Bartel",	
+	"Gereon 'ntroPi' Bartel",
 	"Kai 'Flanderz' Schmiegelt",
 	"Michael 'Ram-Brand' Dahms",
 	"Carsten 'Jazzoid' Przyluczky",
-	"Heiko 'TheWanderer' Kalista",	
-	"Matthias 'KingKiKapu' Klocke",	
+	"Heiko 'TheWanderer' Kalista",
+	"Matthias 'KingKiKapu' Klocke",
 	"Manuel 'Heimdall' Rülke",
-	"Friedrich 'BadData' Volmering",	
+	"Friedrich 'BadData' Volmering",
 	"Christian 'Gryphon' Kleinsteinberg",
 	"Marc 'Dawn2069MS' Schmitt",
 	"",
@@ -137,20 +137,20 @@
 	"Eiswuxe's Grüße gehen an",
 	"",
 	"Thorstein",
-	"",														
+	"",
 	"Jens",
 	"",
 	"Herbie und Edi",
-	"",		
+	"",
 	"Maroff und Anna",
 	"",
 	"Der Bumsmichl",
 	"nebst Nina UND Linsensuppe",
 	"",
-	"Jarlock",	
+	"Jarlock",
 	"",
 	"Dan und Silke",
-	"",														
+	"",
 	"Sebastian und Doro",
 	"",
 	"The one and only Markus Gottschalk",
@@ -158,7 +158,7 @@
 	"Michael 'Skyrider' Matzka",
 	"",
 	"Andi, Simone und Johannes",
-	"",			
+	"",
 	"Stef, Margot und Reinhard",
 	"",
 	"Dalama",
@@ -169,7 +169,7 @@
 	"Friedrich 'BadData' Volmering",
 	"Carsten 'Jazzoid' Przyluczky",
 	"Andi, der alte Panner: *aufen!",
-	"",														
+	"",
 	"Michael 'Gargoyle' Kreft",
 	"",
 	"Martin Lassahn",
@@ -196,17 +196,17 @@
 	"Der Rest der Zealkind Familie",
 	"",
 	"Nils 'Steele' Gey",
-	"",														
-	"Alle bei www.modarchive.com",							
+	"",
+	"Alle bei www.modarchive.com",
 	"",
 	"ChrisCrusher",
-	"",														
-	"Alexander 'Jumperone' Krug",							
-	"und Softgames",										
-	"",														
+	"",
+	"Alexander 'Jumperone' Krug",
+	"und Softgames",
+	"",
 	"Sechsta Sinn",
 	"Haltet euch ran.... wir habens erstmal geschafft ;)",
-	"",														
+	"",
 	"andUp",
 	"",
 	"Nicht zu vergessen:",
@@ -217,29 +217,29 @@
 	"alle anderen Turrican Fans!",
 	"",
 	"Pekaro Soft",
-	"",	
+	"",
 	"Steve Harris :)",
 	"",
 	"Natürlich darf auch der wahre Meister nicht fehlen",
 	"Einen fetten Gruß an den Manne!",
 	"Wer fleissig sucht, der kann ihm",
 	"Tief im Jungel seine Ehrerbietung darbringen...",
-	"",	
+	"",
 	"Und das Beste kommt natürlich zum Schluß...",
 	"Meine kleine Kathrin",
 	"Ei laf juh ;)",
 	"",
 	"",
-	"",														
+	"",
 	"Und jetzt ist der Turri dran:",
-	"",														
+	"",
 	"ich grüße meine Mutti das wars...",
-	"",														
-	"",														
-	"",														
-	"",														
-	"",														
-	"",														
+	"",
+	"",
+	"",
+	"",
+	"",
+	"",
 	"",
 	"...noch lange nicht..",
 	"",
@@ -338,12 +338,12 @@
 
 MenuClass::MenuClass(void)
 {
-	MenuNebel.LoadImage("Hurrican_rund.bmp", 512, 512, 512, 512, 1, 1);
-	MenuTitel.LoadImage("Hurrican-logo.bmp", 400, 90, 400, 90, 1, 1);
+	MenuNebel.LoadImage("hurrican_rund.bmp", 512, 512, 512, 512, 1, 1);
+	MenuTitel.LoadImage("hurrican-logo.bmp", 400, 90, 400, 90, 1, 1);
 
-	Skills.LoadImage("Skills.png", 200, 200, 100, 100, 2, 2);
+	Skills.LoadImage("skills.png", 200, 200, 100, 100, 2, 2);
 
-	MenuStar.LoadImage("Star.bmp", 5, 5, 5, 5, 1, 1);
+	MenuStar.LoadImage("star.bmp", 5, 5, 5, 5, 1, 1);
 	MenuStar.SetRect(0, 0, 5, 5);
 
 	// Menu Werte initialisieren
@@ -495,7 +495,7 @@ MenuClass::MenuClass(void)
 	BlinkOffset  = 0;
 	BlinkCounter = 0.75f;
 
-	
+
 	// Sprache feststellen und schauen, welche Grafik wir anzeigen müssen
 	if (strcmp (TextArray[TEXT_BENUTZTE_GRAFIK], "0") == 0)
 		Sprachgrafik = 0;		// deutsch ?
@@ -543,7 +543,7 @@ void MenuClass::ShowMenuBack(void)
 	// Sterne anzeigen
 	for (int i=0; i<MAX_STARS; i++)
 		MenuStar.RenderSpriteRotated(320 - float(sin(Stars[i].Count) * Stars[i].Abstand),
-									 240 + float(cos(Stars[i].Count) * Stars[i].Abstand), 
+									 240 + float(cos(Stars[i].Count) * Stars[i].Abstand),
 									 Stars[i].Count, D3DCOLOR_RGBA(255, 255, 255, Stars[i].Ebene));
 
 	DirectGraphics.SetColorKeyMode();
@@ -567,7 +567,7 @@ void MenuClass::FillPossibleKeys(void)
 			pCurrentPlayer = pPlayer[0];
 		else
 			pCurrentPlayer = pPlayer[1];
-			
+
 		// Laufen, Ducken und Hoch/Runtersehen Tasten für Joystick/Pad deaktivieren
 		if (pCurrentPlayer->ControlType == JOYMODE_STICK)
 		{
@@ -581,7 +581,7 @@ void MenuClass::FillPossibleKeys(void)
 			if (pCurrentPlayer->JoystickMode == JOYMODE_STICK)
 				PossibleKeys[p][5] = false;
 		}
-	}								
+	}
 }
 
 // --------------------------------------------------------------------------------------
@@ -606,8 +606,13 @@ void MenuClass::ShowMenu(void)
 		ScrollPos -= 360.0f;
 
 	// Total löschen
+
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
                       D3DCOLOR_XRGB(0,0,0),	1.0f, 0);
+#elif defined(PLATFORM_SDL)
+    glClear( GL_COLOR_BUFFER_BIT );
+#endif
 
 	ShowMenuBack();
 
@@ -631,13 +636,13 @@ void MenuClass::ShowMenu(void)
 	RenderRect(0, 455, 640, 1, menucolor2);
 
 	MenuTitel.RenderSprite((640 - 400) / 2 + 15, 0, menucolor);
-	DirectGraphics.SetAdditiveMode();	
-	
+	DirectGraphics.SetAdditiveMode();
+
 
 	// Hintergrund des Menus anzeigen
 	/*if (AktuellerZustand != MENUPUNKT_CREDITS &&
 		AktuellerZustand != MENUZUSTAND_ENTERNAME)
-		MenuBackground.RenderSprite(xpos, ypos, 0xFFFFFFFF);*/	
+		MenuBackground.RenderSprite(xpos, ypos, 0xFFFFFFFF);*/
 
 	const int OFFSET = 80;
 
@@ -645,7 +650,7 @@ void MenuClass::ShowMenu(void)
 	switch (AktuellerZustand)
 	{
 		case MENUZUSTAND_MAINMENU :
-		{			
+		{
 			for (int i=0; i<6; i++)
 				if (AktuellerPunkt != i)
 				{
@@ -659,13 +664,13 @@ void MenuClass::ShowMenu(void)
 					else
 						pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + i*35, TextArray [TEXT_MENUE_SPIEL_STARTEN+i], menucolor2, 2);
 				}
-				
+
 			pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + AktuellerPunkt*35, TextArray [TEXT_MENUE_SPIEL_STARTEN+AktuellerPunkt], menucolor, 2);
 
 		} break;
 
 		case MENUZUSTAND_STARTGAME :
-		{			
+		{
 		} break;
 
 		case MENUZUSTAND_VOLUMES :
@@ -673,7 +678,7 @@ void MenuClass::ShowMenu(void)
 			const int OFFSET2 = 20;
 
 			float d = (float)(pMenuFont->StringLength(TextArray [TEXT_MENUE_EINSTELLUNGEN], 2));
-			pMenuFont->DrawText(320 - d/2.0f, ypos + OFFSET - OFFSET2, TextArray [TEXT_MENUE_EINSTELLUNGEN], menucolor, 2);			
+			pMenuFont->DrawText(320 - d/2.0f, ypos + OFFSET - OFFSET2, TextArray [TEXT_MENUE_EINSTELLUNGEN], menucolor, 2);
 
 			// Sound / Musik Lautstärke
 			for (int i=0; i<2; i++)
@@ -686,7 +691,7 @@ void MenuClass::ShowMenu(void)
 					LoadingBar.SetRect(0, 0, int(pSoundManager->its_GlobalMusicVolume / 100.0f * 318.0f), 19);
 
 				if (i == AktuellerPunkt)
-				{					
+				{
 					pMenuFont->DrawText (xpos + OFFSET - 20 - d, ypos + OFFSET - OFFSET2 + (i+2) * 35, TextArray[TEXT_SOUND + i], menucolor, 2);
 					LoadingScreen.RenderSprite (220, ypos + OFFSET - OFFSET2 + (i+2) * 35 - 18, menucolor);
 					LoadingBar.RenderSprite    (241, ypos + OFFSET - OFFSET2 + (i+2) * 35 +2, menucolor);
@@ -696,15 +701,15 @@ void MenuClass::ShowMenu(void)
 					pMenuFont->DrawText (xpos + OFFSET - 20 - d, ypos + OFFSET - OFFSET2 + (i+2) * 35, TextArray[TEXT_SOUND + i], menucolor2, 2);
 					LoadingScreen.RenderSprite (220, ypos + OFFSET - OFFSET2 + (i+2) * 35 - 18, menucolor2);
 					LoadingBar.RenderSprite    (241, ypos + OFFSET - OFFSET2 + (i+2) * 35 +2, menucolor2);
-				}			
+				}
 			}
 
 			pSoundManager->SetAllSongVolumes();
 
 			//Sonstige Menu-Punkte anzeigen
 			for (int i=2; i<4; i++)
-			{				
-				float d = (float)(pMenuFont->StringLength(TextArray [TEXT_SOUND + i], 2));				
+			{
+				float d = (float)(pMenuFont->StringLength(TextArray [TEXT_SOUND + i], 2));
 
 				// Schrift anzeigen
 				//
@@ -716,7 +721,7 @@ void MenuClass::ShowMenu(void)
 			}
 
 			// Detailstufe
-			d = (float)(pMenuFont->StringLength(TextArray [TEXT_DETAIL_LOW + options_Detail], 2));				
+			d = (float)(pMenuFont->StringLength(TextArray [TEXT_DETAIL_LOW + options_Detail], 2));
 			if (4 == AktuellerPunkt)
 				pMenuFont->DrawText (320.0f - d / 2.0f, ypos + OFFSET - OFFSET2 + (4+2) * 35, TextArray[TEXT_DETAIL_LOW + options_Detail], menucolor, 2);
 			else
@@ -741,16 +746,16 @@ void MenuClass::ShowMenu(void)
 			if (AktuellerPunkt == LanguageFileCount)
 				pDefaultFont->DrawText (320 - pDefaultFont->StringLength (TextArray[TEXT_ZURUECK]) / 2.0f, ypos + 136 + 16 * LanguageFileCount, (TextArray[TEXT_ZURUECK]), 0x88FFFFFF);
 
-			
+
 		} break; // MENUZUSTAND_LANGUAGE
 
 		case MENUZUSTAND_TASTEN :
-		{			
+		{
 			const int TASTENLINKS = 10;
 			const int SPIELER1OFFSET = 100;
 			const int SPIELER2OFFSET = 200;
 
-			FillPossibleKeys();			
+			FillPossibleKeys();
 
 			float d = (float)(pMenuFont->StringLength(TextArray [TEXT_STEUERUNG], 2));
 			pMenuFont->DrawText(320 - d/2.0f, ypos + OFFSET - 60, TextArray[TEXT_STEUERUNG], menucolor, 2);
@@ -767,7 +772,7 @@ void MenuClass::ShowMenu(void)
 				RenderRect(xpos + SPIELER1OFFSET + SPIELER2OFFSET - 4, ypos + 70 - 2, (float)pDefaultFont->StringLength(TextArray[TEXT_PLAYER_TWO], 1) + 8, 16, 0x30FFFFFF);
 				pDefaultFont->DrawText (xpos + SPIELER1OFFSET, ypos + 70, TextArray[TEXT_PLAYER_ONE], 0x88FFFFFF);
 				pDefaultFont->DrawText (xpos + SPIELER1OFFSET + SPIELER2OFFSET, ypos + 70, TextArray[TEXT_PLAYER_TWO], 0xFFFFFFFF);
-			}			
+			}
 
 			// Typ, Modus und Empfindlichkeit
 			if (AktuellerPunkt == 0)
@@ -781,9 +786,9 @@ void MenuClass::ShowMenu(void)
 				pDefaultFont->DrawTextRightAlign (xpos + TASTENLINKS, ypos + 116, TextArray[TEXT_MODUS], 0x88FFFFFF);
 
 			if (AktuellerPunkt == 2)
-				pDefaultFont->DrawTextRightAlign (xpos + TASTENLINKS, ypos + 134, TextArray[TEXT_EMPFINDLICHKEIT], 0xFFFFFFFF);			
+				pDefaultFont->DrawTextRightAlign (xpos + TASTENLINKS, ypos + 134, TextArray[TEXT_EMPFINDLICHKEIT], 0xFFFFFFFF);
 			else
-				pDefaultFont->DrawTextRightAlign (xpos + TASTENLINKS, ypos + 134, TextArray[TEXT_EMPFINDLICHKEIT], 0x88FFFFFF);			
+				pDefaultFont->DrawTextRightAlign (xpos + TASTENLINKS, ypos + 134, TextArray[TEXT_EMPFINDLICHKEIT], 0x88FFFFFF);
 
 
 			// Beschreibung links
@@ -810,10 +815,10 @@ void MenuClass::ShowMenu(void)
 
 			// Für beide Spieler den ganzen Klumbatsch anzeigen
 			for (int j = 0; j < 2; j++)
-			{				
+			{
 				D3DCOLOR col;
 				PlayerClass* pCurrentPlayer;
-				
+
 				if (j == 0)
 					pCurrentPlayer = pPlayer[0];
 				else
@@ -825,10 +830,10 @@ void MenuClass::ShowMenu(void)
 					col = 0xFFFFFFFF;
 				else
 					col = 0x88FFFFFF;
-				
+
 				if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD)
 					pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 98, TextArray[TEXT_KEYBOARD], col);
-				else					
+				else
 					pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 98, DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].JoystickName, col);
 
 				// Rechteck für Empfindlichkeit
@@ -839,11 +844,11 @@ void MenuClass::ShowMenu(void)
 						col = 0xFFFFFFFF;
 					else
 						col = 0x88FFFFFF;
-					
+
 					RenderRect(xpos + SPIELER1OFFSET - 1 + j * SPIELER2OFFSET, ypos + 134, 102, 1, col);
 					RenderRect(xpos + SPIELER1OFFSET - 1 + j * SPIELER2OFFSET, ypos + 145, 102, 1, col);
 					RenderRect(xpos + SPIELER1OFFSET - 2 + j * SPIELER2OFFSET, ypos + 135, 1, 10, col);
-					RenderRect(xpos + SPIELER1OFFSET + 101 + j * SPIELER2OFFSET, ypos + 135, 1, 10, col);			
+					RenderRect(xpos + SPIELER1OFFSET + 101 + j * SPIELER2OFFSET, ypos + 135, 1, 10, col);
 
 					// Aktueller Balken
 					RenderRect(xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 136, (1000.0f - (pCurrentPlayer->JoystickSchwelle + 100.0f))/8.0f, 8, col);
@@ -860,7 +865,7 @@ void MenuClass::ShowMenu(void)
 					else
 						pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 116, TextArray[TEXT_JOYMODE_PAD], col);
 				}
-			
+
 				for (int i = 0; i < 12; i++)
 				{
 					D3DCOLOR col;
@@ -874,13 +879,13 @@ void MenuClass::ShowMenu(void)
 					{
 						// Bestimmte Tasten werden ausgeblendet, wenn joymode = joystick oder joypad
 						if (PossibleKeys[j][i] == false)
-							continue;						
+							continue;
 
 						// Nicht definiert?
 						if (pCurrentPlayer->AktionKeyboard[i] == -1 &&
 						   (pCurrentPlayer->AktionJoystick[i] == -1 ||
-							JoystickFound == false))							
-							pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 170 + i * 16, TextArray[TEXT_NICHT_DEFINIERT], 0x88FFFFFF);						
+							JoystickFound == false))
+							pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 170 + i * 16, TextArray[TEXT_NICHT_DEFINIERT], 0x88FFFFFF);
 						else
 
 						// Taste anzeigen?
@@ -905,7 +910,7 @@ void MenuClass::ShowMenu(void)
 						// Nicht definiert?
 						if (pCurrentPlayer->AktionKeyboard[i] == -1 &&
 						   (pCurrentPlayer->AktionJoystick[i] == -1 ||
-							JoystickFound == false))							
+							JoystickFound == false))
 							pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 170 + i * 16, TextArray[TEXT_NICHT_DEFINIERT], col);
 						else
 
@@ -919,7 +924,7 @@ void MenuClass::ShowMenu(void)
 							char Buf[64];
 							sprintf_s (Buf, "Button nr %i", pCurrentPlayer->AktionJoystick[i]);
 							pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 170 + i * 16, Buf, col);
-						}						
+						}
 					}
 					else
 					{
@@ -944,7 +949,7 @@ void MenuClass::ShowMenu(void)
 			//
 			for (int i = 0; i < 3; i++)
 			{
-				float d = (float)(pMenuFont->StringLength(TextArray [TEXT_JOYMODE+i], 2));				
+				float d = (float)(pMenuFont->StringLength(TextArray [TEXT_JOYMODE+i], 2));
 
 				// forcefeedback? dann freilassen fürs Kästchen
 				//
@@ -981,7 +986,7 @@ void MenuClass::ShowMenu(void)
 //					LoadingBar.SetRect(0, 0, 318 - int(DirectInput.JoystickSchwelle / 1000.0f * 318.0f), 19);
 
 					if (i == AktuellerPunkt)
-					{					
+					{
 						LoadingScreen.RenderSprite (260, ypos + OFFSET - OFFSET2 + (i+2) * 35 - 18, menucolor);
 						LoadingBar.RenderSprite    (281, ypos + OFFSET - OFFSET2 + (i+2) * 35 +2, menucolor);
 					}
@@ -989,7 +994,7 @@ void MenuClass::ShowMenu(void)
 					{
 						LoadingScreen.RenderSprite (260, ypos + OFFSET - OFFSET2 + (i+2) * 35 - 18, menucolor2);
 						LoadingBar.RenderSprite    (281, ypos + OFFSET - OFFSET2 + (i+2) * 35 +2, menucolor2);
-					}			
+					}
 				}
 
 				char buf[100];
@@ -1012,7 +1017,7 @@ void MenuClass::ShowMenu(void)
 				else
 					pMenuFont->DrawText(320 - d/2.0f, ypos + OFFSET - OFFSET2 + (i+2) * 35, buf, menucolor2, 2);
 
-			}			
+			}
 
 			// Buttons
 			//
@@ -1032,7 +1037,7 @@ void MenuClass::ShowMenu(void)
 					pDefaultFont->DrawText (xpos + 220, ypos + 120 + i * 16, "Button nr ", 0x88FFFFFF);
 					pDefaultFont->DrawText (xpos + 285, ypos + 120 + i * 16, bnr, 0x88FFFFFF);
 				}
-				
+
 				if (AktuellerPunkt == i - 2)
 				{
 					//pDefaultFont->DrawText (xpos + 70, ypos + 120 + i * 16, TextArray[TEXT_TASTEN_L + i], 0x88FFFFFF);
@@ -1047,7 +1052,7 @@ void MenuClass::ShowMenu(void)
 					pDefaultFont->DrawText (xpos + 70, ypos + 120 + i * 16, TextArray[TEXT_TASTEN_L + i], 0x88FFFFFF);
 				}
 */
-			}			
+			}
 		} break; // MENUZUSTAND_BUTTONS
 
 		case MENUPUNKT_HIGHSCORES :
@@ -1060,7 +1065,7 @@ void MenuClass::ShowMenu(void)
 			//pMenuFont->DrawText(xpos-120,  ypos+55, TextArray [TEXT_HIGHSCORE_PLATZ],  0xFFFFFFFF, 2);
 			pMenuFont->DrawText(xpos-120,  ypos+55, TextArray [TEXT_HIGHSCORE_NAME],   0xFFFFFFFF, 2);
 			pMenuFont->DrawTextRightAlign(xpos+270, ypos+55, TextArray [TEXT_HIGHSCORE_PUNKTE], 0xFFFFFFFF, 2);
-			pMenuFont->DrawTextCenterAlign(xpos+350, ypos+55, TextArray [TEXT_HIGHSCORE_STAGE],  0xFFFFFFFF, 2);			
+			pMenuFont->DrawTextCenterAlign(xpos+350, ypos+55, TextArray [TEXT_HIGHSCORE_STAGE],  0xFFFFFFFF, 2);
 			pMenuFont->DrawText(xpos+420, ypos+55, TextArray [TEXT_HIGHSCORE_SKILL],  0xFFFFFFFF, 2);
 
 			for (int i=0; i<MAX_HIGHSCORES; i++)
@@ -1080,7 +1085,7 @@ void MenuClass::ShowMenu(void)
 				_itoa_s(Highscores[i].Stage, Buffer, 10);
 				pMenuFont->DrawTextCenterAlign(xpos+350, ypos+float(105+i*26), Buffer, Color, 2);
 
-				Skills.RenderSpriteScaled(xpos+422, ypos+float(105+i*26), 30, 30, Highscores[i].Skill, 0xFFFFFFFF);				
+				Skills.RenderSpriteScaled(xpos+422, ypos+float(105+i*26), 30, 30, Highscores[i].Skill, 0xFFFFFFFF);
 			}
 
 			// Highscore-Farben blinken lassen
@@ -1099,7 +1104,7 @@ void MenuClass::ShowMenu(void)
 		{
 			char Buffer[100];		// Für itoa
 
-			pMenuFont->DrawTextCenterAlign(320, ypos + 90, TextArray[TEXT_WAHNSINN], D3DCOLOR_RGBA(255, 255, 255, 255), 2);			
+			pMenuFont->DrawTextCenterAlign(320, ypos + 90, TextArray[TEXT_WAHNSINN], D3DCOLOR_RGBA(255, 255, 255, 255), 2);
 
 			strcpy_s(Buffer, strlen(TextArray[TEXT_NEUE_HIGHSCORE]) + 1, TextArray[TEXT_NEUE_HIGHSCORE]);
 			pMenuFont->DrawTextCenterAlign(320, ypos + 180, TextArray[TEXT_NAMEN_EINGEBEN], D3DCOLOR_RGBA(255, 255, 255, 255), 2);
@@ -1135,14 +1140,14 @@ void MenuClass::ShowMenu(void)
 					if (alpha < 0)
 						alpha = 0;
 				}
-				
+
 				else
 					alpha = 255;
 
 				Color = D3DCOLOR_RGBA(255, 255, 255, alpha);
 
 				pDefaultFont->DrawTextCenterAlign(320.0f,
-												  float(int(i*12-CreditsPosition)), 
+												  float(int(i*12-CreditsPosition)),
 												  Credits[CreditsOffset+i], Color, 0);
 			}
 
@@ -1177,7 +1182,6 @@ void MenuClass::ShowMenu(void)
 						CreditsOffset = 0;
 				}
 			}
-
 		} break; // CREDITS
 
 		case MENUZUSTAND_NEWGAME :
@@ -1189,19 +1193,19 @@ void MenuClass::ShowMenu(void)
 				pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + (i+2)*35, TextArray [TEXT_MENUE_TUTORIAL_SPIELEN+i], menucolor2, 2);
 
 			pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + (AktuellerPunkt+2)*35, TextArray [TEXT_MENUE_TUTORIAL_SPIELEN+AktuellerPunkt], menucolor, 2);
-			
+
 		} break;
 
 		case MENUZUSTAND_PLAYERCOUNT :
-		{	
+		{
 			pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET, TextArray [TEXT_MENUE_SPIEL_STARTEN], menucolor, 2);
 
 			for (int i=0; i<2; i++)
 			if (AktuellerPunkt != i)
 				pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + (i+2)*35, TextArray [TEXT_ONE_PLAYER+i], menucolor2, 2);
-			
+
 			pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + (AktuellerPunkt+2)*35, TextArray [TEXT_ONE_PLAYER+AktuellerPunkt], menucolor, 2);
-			
+
 		} break;
 
 		case MENUZUSTAND_SELECTSKILL :
@@ -1226,7 +1230,7 @@ void MenuClass::ShowMenu(void)
 		{
 			pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET, TextArray [TEXT_MENUE_ALTES_SPIEL_FORTSETZEN], menucolor, 2);
 
-			ShowSavegames(AktuellerPunkt);			
+			ShowSavegames(AktuellerPunkt);
 		} break; // Load Game
 
 		case MENUZUSTAND_SAVEGAME :
@@ -1240,7 +1244,7 @@ void MenuClass::ShowMenu(void)
 			//
 			if (AktuellerPunkt == MAX_SAVEGAMES)
 				pMenuFont->DrawTextCenterAlign(320, ypos + 150 + (MAX_SAVEGAMES+1)*15, TextArray[TEXT_WEITER], 0xFFFFFFFF, 2);
-			
+
 		} break; // Save Game
 
 
@@ -1260,7 +1264,11 @@ void MenuClass::DoMenu(void)
 	//
 	D3DXMATRIX matView;
 	D3DXMatrixIdentity	 (&matView);
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_VIEW, &matView);
+#elif defined(PLATFORM_SDL)
+    g_matView = matView;
+#endif
 
 	// Wird noch keine Menu Musik gespielt ?
 	//
@@ -1316,7 +1324,7 @@ void MenuClass::DoMenu(void)
 		if (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickButtons[i] == true)
 			anybutton = true;
 
-	if ((KeyDown(DIK_SPACE)  || 
+	if ((KeyDown(DIK_SPACE)  ||
 		 KeyDown(DIK_RETURN) ||
 		 anybutton == true) && AuswahlPossible == true)
 		 selected = true;
@@ -1343,14 +1351,14 @@ void MenuClass::DoMenu(void)
 		JoyOK = true;
 	else
 	{
-		if (anybutton == false &&		
+		if (anybutton == false &&
 			DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickY > -pPlayer[0]->JoystickSchwelle &&
 			DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickY <  pPlayer[0]->JoystickSchwelle &&
 			DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV == -1)
 			JoyOK = true;
 	}
 
-	if (KeyOK == true && 
+	if (KeyOK == true &&
 		JoyOK == true)
 		AuswahlPossible = true;
 
@@ -1359,18 +1367,18 @@ void MenuClass::DoMenu(void)
 		ShowLanguageInfoCounter = 256.0f;
 		pSoundManager->PlayWave(100, 128, 11025, SOUND_CLICK);
 		AuswahlPossible = false;
-	}	
+	}
 
 	if (AuswahlPossible == true && locked == false &&
 
-		(KeyDown(DIK_NUMPAD8) || KeyDown(DIK_UP)      || 
+		(KeyDown(DIK_NUMPAD8) || KeyDown(DIK_UP)      ||
 
 		(DirectInput.Joysticks[pPlayer[0]->JoystickIndex].Active &&
 
-		 (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickY < -pPlayer[0]->JoystickSchwelle || 
+		 (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickY < -pPlayer[0]->JoystickSchwelle ||
 
-		 ((DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV >= 4500 * 7 || 
-		   DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV <= 4500 * 1) && 
+		 ((DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV >= 4500 * 7 ||
+		   DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV <= 4500 * 1) &&
 		   DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV > -1)))))
 	{
 		AuswahlPossible = false;
@@ -1381,7 +1389,7 @@ void MenuClass::DoMenu(void)
 		//
 		if (Stage   == -1				     &&
 			AktuellerZustand == MENUZUSTAND_MAINMENU &&
-			AktuellerPunkt == 1)			 
+			AktuellerPunkt == 1)
 		{
 			AktuellerPunkt = 0;
 		}
@@ -1399,7 +1407,7 @@ void MenuClass::DoMenu(void)
 
 			if (AktuellerPunkt == 2 &&
 				pCurrentPlayer->ControlType == JOYMODE_KEYBOARD)
-				AktuellerPunkt = 0;				
+				AktuellerPunkt = 0;
 			else
 			if (AktuellerPunkt >= 3)
 			{
@@ -1412,14 +1420,14 @@ void MenuClass::DoMenu(void)
 
 	if (AuswahlPossible == true && locked == false &&
 
-		(KeyDown(DIK_NUMPAD2) || KeyDown(DIK_DOWN)      || 
+		(KeyDown(DIK_NUMPAD2) || KeyDown(DIK_DOWN)      ||
 
 		(DirectInput.Joysticks[pPlayer[0]->JoystickIndex].Active &&
 
-		 (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickY > pPlayer[0]->JoystickSchwelle || 
+		 (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickY > pPlayer[0]->JoystickSchwelle ||
 
-		 ((DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV >= 4500 * 3 || 
-		   DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV <= 4500 * 5) && 
+		 ((DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV >= 4500 * 3 ||
+		   DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV <= 4500 * 5) &&
 		   DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV > -1)))))
 	{
 		AuswahlPossible = false;
@@ -1430,7 +1438,7 @@ void MenuClass::DoMenu(void)
 		//
 		if (Stage   == -1				     &&
 			AktuellerZustand == MENUZUSTAND_MAINMENU &&
-			AktuellerPunkt == 1)			 
+			AktuellerPunkt == 1)
 		{
 			AktuellerPunkt = 2;
 		}
@@ -1465,7 +1473,7 @@ void MenuClass::DoMenu(void)
 	{
 		// Haupt-Menu
 		case MENUZUSTAND_MAINMENU :
-		{		
+		{
 			// zurück zum Game ?
 			if (KeyDown(DIK_ESCAPE) && AuswahlPossible == true && Stage != -1)
 			{
@@ -1484,7 +1492,7 @@ void MenuClass::DoMenu(void)
 
 			// Menu-Punkt im Hauptmenu ausgewählt ?
 			if (selected)
-			{		
+			{
 				AuswahlPossible = false;
 
 				// Je nach aktuellem Menupunkt in das entsprechende Untermenu wechseln
@@ -1500,17 +1508,17 @@ void MenuClass::DoMenu(void)
 					pSoundManager->StopSong(MUSIC_MENU, false);
 					SpielZustand = GAMELOOP;
 
-					if (FMUSIC_GetPaused(pSoundManager->its_Songs[MUSIC_BOSS]->SongData))
-						pSoundManager->PlaySong(MUSIC_BOSS, true); 
+					if (MUSIC_GetPaused(pSoundManager->its_Songs[MUSIC_BOSS]->SongData))
+						pSoundManager->PlaySong(MUSIC_BOSS, true);
 					else
 					if (pPlayer[0]->PunisherActive == true)
 						pSoundManager->PlaySong(MUSIC_PUNISHER, true);
 					else
 					if (pPlayer[0]->Riding())
-						pSoundManager->PlaySong(MUSIC_FLUGSACK, true); 
+						pSoundManager->PlaySong(MUSIC_FLUGSACK, true);
 					else
 						pSoundManager->PlaySong(MUSIC_STAGEMUSIC, true);
-				
+
 					pPlayer[0]->PowerLinePossible = false;
 					pPlayer[0]->ShotDelay = 2.0f;
 				}
@@ -1546,7 +1554,7 @@ void MenuClass::DoMenu(void)
 
 				if (AktuellerPunkt == MENUPUNKT_HIGHSCORES)
 					AktuellerPunkt = MENUZUSTAND_ENTERNAME;
-				
+
 				pSoundManager->PlayWave(100, 128, 11025, SOUND_CLICK);
 
 				// Highscore wieder von Anfang an blinken lassen
@@ -1574,7 +1582,7 @@ void MenuClass::DoMenu(void)
 			if (AktuellerPunkt <= 1)
 
 			if (KeyDown(DIK_NUMPAD4) ||
-				KeyDown(DIK_LEFT)    || 
+				KeyDown(DIK_LEFT)    ||
 			   (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].Active &&
 			   (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickX < -pPlayer[0]->JoystickSchwelle ||
 			   (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV >= 4500 * 5 && DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV <= 4500 * 7))))
@@ -1596,11 +1604,11 @@ void MenuClass::DoMenu(void)
 					pSoundManager->its_GlobalMusicVolume -= 5.0f SYNC;
 					if (pSoundManager->its_GlobalMusicVolume < 0.0f)
 						pSoundManager->its_GlobalMusicVolume = 0.0f;
-				}	
+				}
 			}
 
 			// Lauter
-			if (KeyDown(DIK_NUMPAD6) || 
+			if (KeyDown(DIK_NUMPAD6) ||
 				KeyDown(DIK_RIGHT)   ||
 			   (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].Active &&
 			   (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickX > pPlayer[0]->JoystickSchwelle ||
@@ -1622,13 +1630,13 @@ void MenuClass::DoMenu(void)
 					pSoundManager->its_GlobalMusicVolume += 5.0f SYNC;
 					if (pSoundManager->its_GlobalMusicVolume > 100.0f)
 						pSoundManager->its_GlobalMusicVolume = 100.0f;
-				}	
+				}
 			}
 
 			// Punkt gewählt
 			//
 			if (selected)
-			{		
+			{
 				AuswahlPossible = false;
 
 				// Keyboard konfigurieren
@@ -1639,7 +1647,7 @@ void MenuClass::DoMenu(void)
 					AktuellerZustand = MENUZUSTAND_TASTEN;
 					AktuellerPunkt   = 0;
 					locked			 = false;
-				}	
+				}
 
 /*
 				// Joystick Optionen
@@ -1649,7 +1657,7 @@ void MenuClass::DoMenu(void)
 					AktuellerZustand = MENUZUSTAND_BUTTONS;
 					AktuellerPunkt   = 0;
 					locked			 = false;
-				}	
+				}
 */
 
 				// Sprache wählen
@@ -1658,7 +1666,7 @@ void MenuClass::DoMenu(void)
 				{
 					AktuellerZustand = MENUZUSTAND_LANGUAGE;
 					AktuellerPunkt   = 0;
-				}	
+				}
 
 				// Sprache wählen
 				//
@@ -1670,12 +1678,12 @@ void MenuClass::DoMenu(void)
 						options_Detail = DETAIL_LOW;
 
 					pPartikelSystem->SetParticleCount();
-				}	
+				}
 			}
 
 			// zurück zum Hauptmenu ?
 			if (KeyDown(DIK_ESCAPE) && AuswahlPossible == true)
-			{		
+			{
 				SaveConfig();							// Sound Config speichern
 				AuswahlPossible = false;
 				AktuellerZustand = MENUZUSTAND_MAINMENU;
@@ -1696,7 +1704,7 @@ void MenuClass::DoMenu(void)
 			// Punkt gewählt
 			//
 			if (selected)
-			{		
+			{
 				AuswahlPossible = false;
 
 				// Language File gewählt ?
@@ -1729,7 +1737,7 @@ void MenuClass::DoMenu(void)
 
 			// zurück zum Hauptmenu ?
 			if (KeyDown(DIK_ESCAPE) && AuswahlPossible == true)
-			{		
+			{
 				SaveConfig();							// Sound Config speichern
 				AuswahlPossible = false;
 				AktuellerZustand = MENUZUSTAND_MAINMENU;
@@ -1760,7 +1768,7 @@ void MenuClass::DoMenu(void)
 
 			// neue Taste eingeben ?
 			if (locked == true)
-			{				
+			{
 				if (AuswahlPossible == true)
 				{
 					// Neue Taste?
@@ -1776,7 +1784,7 @@ void MenuClass::DoMenu(void)
 
 						while (KeyDown(i))
 							DirectInput.UpdateTastatur();
-							
+
 						break;
 					}
 
@@ -1784,12 +1792,12 @@ void MenuClass::DoMenu(void)
 					if (DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].Active == true)
 					{
 						for (int i = 0; i < MAX_JOYSTICKBUTTONS - 1; i++)
-						if (DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].JoystickButtons[i] == true)							
+						if (DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].JoystickButtons[i] == true)
 						{
 							pCurrentPlayer->AktionJoystick[AktuellerPunkt - 3] = i;
 							pCurrentPlayer->AktionKeyboard[AktuellerPunkt - 3] = -1;
 							locked		    = false;
-							AuswahlPossible = false;							
+							AuswahlPossible = false;
 
 							while (DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].JoystickButtons[i] == true)
 								DirectInput.UpdateJoysticks();
@@ -1797,7 +1805,7 @@ void MenuClass::DoMenu(void)
 					}
 				}
 				else
-				{				
+				{
 					if (!KeyDown(DIK_DELETE) &&
 						!KeyDown(DIK_NUMPAD2) &&
 						!KeyDown(DIK_NUMPAD8) &&
@@ -1821,13 +1829,13 @@ void MenuClass::DoMenu(void)
 				if (AuswahlPossible == true)
 				{
 					PlayerClass* pCurrentPlayer;
-				
+
 					if (CurrentPlayer == 0)
 						pCurrentPlayer = pPlayer[0];
 					else
 						pCurrentPlayer = pPlayer[1];
-	
-					if (KeyDown(DIK_NUMPAD6) || 
+
+					if (KeyDown(DIK_NUMPAD6) ||
 						KeyDown(DIK_RIGHT)   ||
 						 DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickX > pPlayer[0]->JoystickSchwelle ||
 						(DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV >= 4500 * 1 && DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV <= 4500 * 3))
@@ -1838,7 +1846,7 @@ void MenuClass::DoMenu(void)
 							pCurrentPlayer->JoystickSchwelle -= 100.0f SYNC;
 
 							if (pCurrentPlayer->JoystickSchwelle < 100.0f)
-								pCurrentPlayer->JoystickSchwelle = 100.0f;	
+								pCurrentPlayer->JoystickSchwelle = 100.0f;
 						}
 						else
 						{
@@ -1860,7 +1868,7 @@ void MenuClass::DoMenu(void)
 					}
 
 					if (KeyDown(DIK_NUMPAD4) ||
-						KeyDown(DIK_LEFT)    || 
+						KeyDown(DIK_LEFT)    ||
 						 DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickX < -pPlayer[0]->JoystickSchwelle ||
 						(DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV >= 4500 * 5 && DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV <= 4500 * 7))
 					{
@@ -1870,7 +1878,7 @@ void MenuClass::DoMenu(void)
 							pCurrentPlayer->JoystickSchwelle += 100.0f SYNC;
 
 							if (pCurrentPlayer->JoystickSchwelle > 900.0f)
-								pCurrentPlayer->JoystickSchwelle = 900.0f;							
+								pCurrentPlayer->JoystickSchwelle = 900.0f;
 						}
 						else
 						{
@@ -1895,12 +1903,12 @@ void MenuClass::DoMenu(void)
 				// Punkt gewählt
 				//
 				if (selected)
-				{	
+				{
 					AuswahlPossible = false;
 
 					// Taste ändern?
 					if (AktuellerPunkt >= 3)
-						locked = true;		
+						locked = true;
 					else
 					{
 						PlayerClass *pCurrentPlayer;
@@ -1924,7 +1932,7 @@ void MenuClass::DoMenu(void)
 						{
 							// Joytick dran?
 							if (JoystickFound == true)
-							{								
+							{
 								// Von Keyboard auf Joystick wechseln?
 								if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD)
 								{
@@ -1934,23 +1942,23 @@ void MenuClass::DoMenu(void)
 
 								// Von Joystick auf Keyboard wechseln?
 								else
-								{	
+								{
 									pCurrentPlayer->JoystickIndex++;
 
 									if (pCurrentPlayer->JoystickIndex >= DirectInput.JoysticksFound)
-									{										
+									{
 										pCurrentPlayer->ControlType = JOYMODE_KEYBOARD;
 										pCurrentPlayer->JoystickIndex = 0;
-									}																	
+									}
 								}
 							}
 						}
-					}								
+					}
 				}
 
 				// zurück zum Hauptmenu ?
 				if (KeyDown(DIK_ESCAPE) && AuswahlPossible == true)
-				{		
+				{
 					// Neue Tastennamen für die Tutorial-Texte übernehmen
 					InitReplacers();
 
@@ -1987,7 +1995,7 @@ void MenuClass::DoMenu(void)
 				bool pressed = false;
 
 				if (KeyDown(DIK_NUMPAD4) ||
-					KeyDown(DIK_LEFT)    || 
+					KeyDown(DIK_LEFT)    ||
 					DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickX < -pPlayer[0]->JoystickSchwelle ||
 					(DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV >= 4500 * 5 && DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV <= 4500 * 7))
 					pressed = true;
@@ -2002,7 +2010,7 @@ void MenuClass::DoMenu(void)
 				}
 
 				// Lauter
-				if (KeyDown(DIK_NUMPAD6) || 
+				if (KeyDown(DIK_NUMPAD6) ||
 					KeyDown(DIK_RIGHT)   ||
 					DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickX > pPlayer[0]->JoystickSchwelle ||
 					(DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV >= 4500 * 1 && DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV <= 4500 * 3))
@@ -2014,8 +2022,8 @@ void MenuClass::DoMenu(void)
 				{
 					pPlayer[0]->JoystickSchwelle -= 50.0f SYNC;
 					if (pPlayer[0]->JoystickSchwelle < 1.0f)
-						pPlayer[0]->JoystickSchwelle = 1.0f;						
-				}			
+						pPlayer[0]->JoystickSchwelle = 1.0f;
+				}
 			}
 
 			if (AktuellerPunkt < 0)
@@ -2052,7 +2060,7 @@ void MenuClass::DoMenu(void)
 
 			// zurück zum Hauptmenu ?
 			if (KeyDown(DIK_ESCAPE) && AuswahlPossible == true)
-			{		
+			{
 				SaveConfig();							// Sound Config speichern
 				AuswahlPossible = false;
 				AktuellerZustand = MENUZUSTAND_MAINMENU;
@@ -2068,7 +2076,7 @@ void MenuClass::DoMenu(void)
 		{
 			// zurück zum Hauptmenu ?
 			if (KeyDown(DIK_ESCAPE) && AuswahlPossible == true)
-			{		
+			{
 				if (AktuellerZustand == MENUPUNKT_CREDITS)
 				{
 					pSoundManager->SetSongVolume(MUSIC_MENU, 0);
@@ -2088,13 +2096,13 @@ void MenuClass::DoMenu(void)
 
 				AuswahlPossible = false;
 				AktuellerZustand = MENUZUSTAND_MAINMENU;
-				pSoundManager->PlayWave(100, 128, 11025, SOUND_CLICK);				
+				pSoundManager->PlayWave(100, 128, 11025, SOUND_CLICK);
 			}
 		} break; // Credits und Highscore
 
 		case MENUZUSTAND_ENTERNAME :
 		{
-			static char Taste;
+			static unsigned char Taste;
 			static bool possible = false;
 
 			if (!KeyDown(DIK_RETURN))
@@ -2126,6 +2134,7 @@ void MenuClass::DoMenu(void)
 				// Testen ob die gedrückte Taste loasgelassen wurde
 				if (KeyDown(Taste) || KeyDown(DIK_BACK) || KeyDown(DIK_SPACE))
 					possible = false;
+
 			}
 
 			for (int i=0; i<256; i++)		// Puffer durchgehen
@@ -2142,19 +2151,19 @@ void MenuClass::DoMenu(void)
 						//
 						/*
 						strrev(NewName);
-						
+
 												char buf[30];
 												int  laenge;
-						
+
 												laenge = strlen(NewName);
 												strcpy_s(buf, "");
-						
+
 												for (int l=0; l<laenge; l++)
 													buf[l] = NewName[l+1];
-						
+
 												strrev(buf);
 												strcpy_s(NewName, buf);*/
-						
+
 					}
 					//strcpy_s(NewName, "");
 				}
@@ -2165,7 +2174,7 @@ void MenuClass::DoMenu(void)
 					/*
 					if (strlen(NewName) < 16)
 										strcat_s(NewName, " ");*/
-					
+
 				}
 				else
 				{
@@ -2207,30 +2216,30 @@ void MenuClass::DoMenu(void)
 
 			// Menu-Punkt ausgewählt ?
 			if (selected)
-			{		
+			{
 				AuswahlPossible = false;
 
 				// Tutorial spielen?
-				if (AktuellerPunkt == 0)		
-				{					
+				if (AktuellerPunkt == 0)
+				{
 					pSoundManager->PlayWave(100, 128, 11025, SOUND_CLICK);
 
-					// Game starten mit Tutorial					
+					// Game starten mit Tutorial
 					NUMPLAYERS = 1;
 					RunningTutorial = true;
 					Skill = AktuellerPunkt;
 //					pSoundManager->StopSong(MUSIC_MENU, false);
 					InitNewGame();
-					InitNewGameLevel(1);				
-					SpielZustand = GAMELOOP;				
-				} 
+					InitNewGameLevel(1);
+					SpielZustand = GAMELOOP;
+				}
 
 				// Neues Spiel starten ?
 				if (AktuellerPunkt == 1)
 				{
 					AktuellerZustand = MENUZUSTAND_PLAYERCOUNT;
 					AktuellerPunkt	 = 0;						// Auf Medium anfangen
-				} 
+				}
 
 				// altes Spiel laden ?
 				else
@@ -2263,10 +2272,10 @@ void MenuClass::DoMenu(void)
 
 			// Menu-Punkt ausgewählt ?
 			if (selected)
-			{	
-				tempNUMPLAYERS = AktuellerPunkt + 1;				
+			{
+				tempNUMPLAYERS = AktuellerPunkt + 1;
 				AktuellerPunkt = 1;
-				
+
 				AktuellerZustand = MENUZUSTAND_SELECTSKILL;
 				pSoundManager->PlayWave(100, 128, 11025, SOUND_CLICK);
 
@@ -2293,7 +2302,7 @@ void MenuClass::DoMenu(void)
 
 			// Menu-Punkt ausgewählt ?
 			if (selected)
-			{		
+			{
 				NUMPLAYERS = tempNUMPLAYERS;
 				AuswahlPossible = false;
 				RunningTutorial = false;
@@ -2333,7 +2342,7 @@ void MenuClass::DoMenu(void)
 			// und wenn das nicht der Fall ist, dann das Savegame laden und
 			// das Spiel starten
 			if (selected)
-			{		
+			{
 				RunningTutorial = false;
 
 				AuswahlPossible = false;
@@ -2352,7 +2361,7 @@ void MenuClass::DoMenu(void)
 					Stage = Savegames[AktuellerPunkt].Stage;
 					Skill				= Savegames[AktuellerPunkt].Skill;
 					NewStage = Savegames[AktuellerPunkt].NewStage;
-					pPlayer[0]->CollectedDiamonds	= Savegames[AktuellerPunkt].CollectedDiamonds;					
+					pPlayer[0]->CollectedDiamonds	= Savegames[AktuellerPunkt].CollectedDiamonds;
 					pPlayer[0]->PowerLines	= Savegames[AktuellerPunkt].PowerLines;
 					pPlayer[0]->Grenades	= Savegames[AktuellerPunkt].Grenades;
 					pPlayer[0]->SmartBombs	= Savegames[AktuellerPunkt].SmartBombs;
@@ -2362,7 +2371,7 @@ void MenuClass::DoMenu(void)
 						pPlayer[p]->Handlung			= STEHEN;
 						pPlayer[p]->Energy				= Savegames[AktuellerPunkt].Energy[p];
 						pPlayer[p]->Armour				= Savegames[AktuellerPunkt].Armour[p];
-						pPlayer[p]->Shield				= Savegames[AktuellerPunkt].Shield[p];	
+						pPlayer[p]->Shield				= Savegames[AktuellerPunkt].Shield[p];
 						pPlayer[p]->SelectedWeapon		= Savegames[AktuellerPunkt].SelectedWeapon[p];
 						pPlayer[p]->BlitzLength			= Savegames[AktuellerPunkt].BlitzLength[p];
 						pPlayer[p]->AutoFireExtra		= Savegames[AktuellerPunkt].AutoFire[p];
@@ -2396,7 +2405,7 @@ void MenuClass::DoMenu(void)
 			// Dann das Spiel an dem aktuell gewählten Slot speichern
 			// oder weiterspielen ohne zu speichern (je nach Auswahl)
 			if (selected)
-			{		
+			{
 				AuswahlPossible = false;
 				pSoundManager->PlayWave(100, 128, 11025, SOUND_CLICK);
 
@@ -2409,19 +2418,19 @@ void MenuClass::DoMenu(void)
 
 					char   timestr[20];
 
-					time_t seconds= time(0);
+					time_t seconds= time(NULL);
+					struct tm *ptm= localtime(&seconds);
 
-					// TODO FIX
-//					struct tm *ptm= localtime(&seconds);
-					struct tm *ptm = NULL;
-
+/*
 					sprintf_s(timestr,"%02i-%02i-%04i %02i:%02i",
 						   (int)ptm->tm_mday,
 						   (int)ptm->tm_mon+1,
-						   (int)ptm->tm_year+1900,						   
-						   
+						   (int)ptm->tm_year+1900,
+
 						   (int)ptm->tm_hour,
 						   (int)ptm->tm_min);
+*/
+                    strcpy_s( timestr, asctime(ptm) );
 
 					strcpy_s(Savegames[AktuellerPunkt].Name, 1, "");
 					strcpy_s(Savegames[AktuellerPunkt].Name, strlen(timestr) + 1, timestr);
@@ -2431,17 +2440,17 @@ void MenuClass::DoMenu(void)
 					Savegames[AktuellerPunkt].Stage				= Stage;
 					Savegames[AktuellerPunkt].Skill				= Skill;
 					Savegames[AktuellerPunkt].NewStage			= NewStage;
-					Savegames[AktuellerPunkt].CollectedDiamonds = pPlayer[0]->CollectedDiamonds;					
+					Savegames[AktuellerPunkt].CollectedDiamonds = pPlayer[0]->CollectedDiamonds;
 					Savegames[AktuellerPunkt].PowerLines  = pPlayer[0]->PowerLines;
 					Savegames[AktuellerPunkt].Grenades    = pPlayer[0]->Grenades;
 					Savegames[AktuellerPunkt].SmartBombs  = pPlayer[0]->SmartBombs;
-					
+
 					for (int p = 0; p < 2; p++)
 					{
 						Savegames[AktuellerPunkt].Energy[p]			= pPlayer[0]->Energy;
 						Savegames[AktuellerPunkt].Armour[p]			= pPlayer[0]->Armour;
-						Savegames[AktuellerPunkt].Shield[p]			= pPlayer[0]->Shield;					
-						Savegames[AktuellerPunkt].SelectedWeapon[p]	= pPlayer[0]->SelectedWeapon;					
+						Savegames[AktuellerPunkt].Shield[p]			= pPlayer[0]->Shield;
+						Savegames[AktuellerPunkt].SelectedWeapon[p]	= pPlayer[0]->SelectedWeapon;
 						Savegames[AktuellerPunkt].Lives[p]			= pPlayer[p]->Lives;
 						Savegames[AktuellerPunkt].AutoFire[p]		= pPlayer[p]->AutoFireExtra;
 						Savegames[AktuellerPunkt].RiesenShot[p]		= pPlayer[p]->RiesenShotExtra;
@@ -2454,7 +2463,7 @@ void MenuClass::DoMenu(void)
 
 					// Prüfsumme gegen Savegame-Manipulation errechnen
 
-					Savegames[AktuellerPunkt].Pruefsumme = 
+					Savegames[AktuellerPunkt].Pruefsumme =
 						(int)pPlayer[0]->Energy + (int)pPlayer[0]->Armour + (int)pPlayer[0]->Shield +
 						pPlayer[0]->Score  + Stage  + Skill  +
 						NewStage + pPlayer[0]->CollectedDiamonds +
@@ -2465,7 +2474,7 @@ void MenuClass::DoMenu(void)
 							pPlayer[0]->CurrentWeaponLevel[i];
 
 					Savegames[AktuellerPunkt].Pruefsumme +=
-						pPlayer[0]->BlitzLength + 
+						pPlayer[0]->BlitzLength +
 						pPlayer[0]->PowerLines +
 						pPlayer[0]->Grenades + pPlayer[0]->SmartBombs +
 						NUMPLAYERS;
@@ -2505,7 +2514,7 @@ void MenuClass::DoMenu(void)
 					AktuellerPunkt   = 0;
 					InitNewGameLevel(NewStage);// Neues level laden
 				}
-				
+
 			}
 		} break;	// Save Game
 
@@ -2548,7 +2557,7 @@ void MenuClass::LoadSavegames(void)
 			// Ansonsten Slot auslesen
 			//
 			fread(&Savegames[i], sizeof(Savegames[i]), 1, Datei);
-			
+
 			// Und Datei wieder schliessen
 			//
 			fclose(Datei);
@@ -2557,18 +2566,18 @@ void MenuClass::LoadSavegames(void)
 			// und nur wenn diese stimmt das Savegame übernehmen
 			long Pruefsumme;
 
-			Pruefsumme = 
+			Pruefsumme =
 				(int)Savegames[i].Energy[0] + (int)Savegames[i].Armour[0] + (int)Savegames[i].Shield[0] +
 				Savegames[i].Score  + Savegames[i].Stage  + Savegames[i].Skill  +
 				Savegames[i].NewStage + Savegames[i].CollectedDiamonds +
 				Savegames[i].SelectedWeapon[0];
 
 			for (int j=0; j<4; j++)
-				Pruefsumme += 
-						Savegames[i].CurrentWeaponLevel[0][j];						
+				Pruefsumme +=
+						Savegames[i].CurrentWeaponLevel[0][j];
 
 			Pruefsumme +=
-				Savegames[i].BlitzLength[0] +			
+				Savegames[i].BlitzLength[0] +
 				Savegames[i].PowerLines +
 				Savegames[i].Grenades +
 				Savegames[i].SmartBombs +
@@ -2669,7 +2678,7 @@ void MenuClass::LoadHighscore(void)
 		//
 		for (int i=0; i<MAX_HIGHSCORES; i++)
 			fread(&Highscores[i], sizeof(Highscores[i]), 1, Datei);
-			
+
 		// Und Datei wieder schliessen
 		//
 		fclose(Datei);
@@ -2710,7 +2719,7 @@ void MenuClass::SaveHighscore(void)
 {
 	FILE *Datei;			// Savegame Datei
 
-	// Highscore Datei öffnen	
+	// Highscore Datei öffnen
 	fopen_s(&Datei, "Hurrican.hsl", "wb");
 
 	// Fehler beim Öffnen ? Dann standard Highscore setzen
@@ -2741,7 +2750,7 @@ void MenuClass::SaveHighscore(void)
 			fwrite(&Highscores[i], sizeof(Highscores[i]), 1, Datei);
 		}
 	}
-			
+
 	// Und Datei wieder schliessen
 	//
 	fclose(Datei);
@@ -2753,7 +2762,7 @@ void MenuClass::SaveHighscore(void)
 
 void MenuClass::ResetHighscore(void)
 {
-	char HighscoreNames[MAX_HIGHSCORES][30] = 
+	char HighscoreNames[MAX_HIGHSCORES][30] =
 	{
 	 "EISWUXE",
 	 "TURRI",
@@ -2765,7 +2774,7 @@ void MenuClass::ResetHighscore(void)
 	 "PETER",
 	 "CELAL",
 	 "MARKUS",
-	};							 
+	};
 
 	for (int i=0; i<MAX_HIGHSCORES; i++)
 	{
@@ -2813,7 +2822,7 @@ void MenuClass::ShowLanguageInfo (void)
 
 	for (int i = 0; i < 9; i++)
 	{
-		int  xoff = 320 - strlen (TextArray[i])*4; 
+		int  xoff = 320 - strlen (TextArray[i])*4;
 		for (unsigned int j = 0; j < strlen (TextArray[i]); j++)
 		{
 			char c[2];
@@ -2869,10 +2878,10 @@ void MenuClass::CheckForNewHighscore(void)
 		NewStage = Stage;
 		NewSkill = Skill;
 		pPlayer[0]->Score = 0;
-		
+
 		// Werte für den neuen Eintrag löschen
 		NewRank = j;
-		strcpy_s(NewName, "");			
+		strcpy_s(NewName, "");
 		strcpy_s(Highscores[NewRank].Name, "");
 		AktuellerZustand = MENUZUSTAND_ENTERNAME;
 		break;

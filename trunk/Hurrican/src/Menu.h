@@ -1,8 +1,8 @@
 // Datei : Menu.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
-// Menu-Klasse für das 
+// Menu-Klasse für das
 // Hurrican Hauptmenu
 //
 // (c) 2002 Jörg M. Winterstein
@@ -89,7 +89,7 @@ struct HighscoreStruct
 // --------------------------------------------------------------------------------------
 
 struct SavegameStruct
-{	
+{
 	char	Name[40];					// Name des Savegames
 	float	Energy[2];					// Energie
 	float	Armour[2];					// Rad Energie
@@ -97,7 +97,7 @@ struct SavegameStruct
 	float	AutoFire[2];				// Noch Dauerfeuer?
 	float	RiesenShot[2];				// Noch Fettboller?
 	int		Players;					// Playercount
-	long	Score;						// Punkte des Spielers	
+	long	Score;						// Punkte des Spielers
 	int		Stage;						// Aktuelles Level
 	int		Skill;						// 0 = easy, 1 = medium, 2 = hard
 	int		NewStage;					// Neues Level
@@ -151,7 +151,7 @@ class MenuClass
 
 		int					AktuellerPunkt;				// Aktuell gewählter Menupunkt
 		int					AktuellerZustand;			// Aktueller Menu-Unterpunkt
-		int					CurrentPlayer;				// Fürs Steuerung Konfigurieren		
+		int					CurrentPlayer;				// Fürs Steuerung Konfigurieren
 
 		int					NewRank;					// Neuer Platz in der Highscore
 		int					NewScore;					// Neue Punktezahl
@@ -184,7 +184,7 @@ class MenuClass
 // --------------------------------------------------------------------------------------
 
 extern MenuClass			*pMenu;
-extern char					*Credits[];
+extern const char			*Credits[];
 extern int					CreditsCount;
 
 #endif

@@ -1,0 +1,33 @@
+README UNIX
+============
+
+Unix version contributed by Johannes Winkelmann, jw@tks6.net
+
+0. Platforms
+============
+The urarlib has been tested on Linux >= 2.2.14, gcc >= 2.91.66
+and Sun/Solaris on Sparcs.
+Tested on Redhat 6.2, Redhat 7.1, debian potato 2.2r3, crux 0.9.3
+(maintained on crux, using gcc version 2.95.3 20010315)
+
+1. Samples
+------------
+
+The two examples in the samples/unix irectory show how unrarlib.c and
+unrarlib.h can be used in your project.
+
+Please note that the symlink trick is only done to avoid having
+unrarlib.c and unrarlib.h copied into every directory (and relative
+pathes in Makefiles are not too portable). For your project, just copy
+unrarlib.c and unrarlib.h to the project's directory and add them to the
+Makefile.
+
+If you have problems compiling, please deactivate _USE_ASM in unrarlib.h
+first. The assemly implementation is unfortunately very much bound
+to the gcc version used.
+
+Make sure you #define NON_INTEL_BYTE_ORDER on Motorola machines (e.g.
+Sun Sparc)
+
+WARNING: The linux assembly port is rather experimental. If you run into 
+trouble, feel free to contact me (jw@tks6.net)

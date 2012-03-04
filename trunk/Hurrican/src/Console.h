@@ -1,6 +1,6 @@
 // Datei : Console.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Konsolen-Klasse für Hurrican
 //
@@ -43,7 +43,7 @@ class ConsoleClass
 		bool					Activate;					// Aktivierungstaste gedrückt oder nicht
 		char					Text[MAX_LINES][MAX_CHARS]; // Text in der Konsole
 		char					Buffer[MAX_CHARS];
-		bool					Pressed[256];				// Für Tasten-lock		
+		bool					Pressed[256];				// Für Tasten-lock
 		bool					CONSOLE_CHEAT(char *cheat);
 
 	public:

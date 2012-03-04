@@ -34,7 +34,7 @@ bool GegnerPharaoKopf::Links(void)
 		xPos = (float)(Value1 + BORDER);
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -56,7 +56,7 @@ bool GegnerPharaoKopf::Unten(void)
 		yPos = (float)(Value2 + 480 - BORDER2 - GegnerRect[GegnerArt].bottom);
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -78,7 +78,7 @@ void GegnerPharaoKopf::DoKI(void)
 	// Levelausschnitt auf den PharaoKopf zentrieren, sobald dieser sichtbar wird
 	if (Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
 	{
-		pTileEngine->ScrollLevel((float)Value1, 
+		pTileEngine->ScrollLevel((float)Value1,
 								 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf die Faust zentrieren
 
 		pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
@@ -138,7 +138,7 @@ void GegnerPharaoKopf::DoKI(void)
 			if (pTileEngine->Zustand == ZUSTAND_LOCKED)
 			{
 				// Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-				if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+				if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
 					pSoundManager->PlaySong(MUSIC_BOSS, false);
 
 				// Und Boss erscheinen lassen
@@ -176,7 +176,7 @@ void GegnerPharaoKopf::DoKI(void)
 					yAcc   = - 3.0f;
 					goto _weiter;
 				}
-				
+
 				if (pAim->xpos < xPos)
 				{
 					xSpeed = -1.0f;
@@ -224,7 +224,7 @@ _weiter:
 				}
 
 				for (p = 0; p < NUMPLAYERS; p++)
-				if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], 
+				if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
 									pPlayer[p]->xpos, pPlayer[p]->ypos, pPlayer[p]->CollideRect) == true)
 				{
 									xSpeed = -xSpeed;
@@ -247,14 +247,14 @@ _weiter2:
 			{
 				// Hurri verschieben
 				for (int p = 0; p < NUMPLAYERS; p++)
-				if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], 
+				if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
 									pPlayer[p]->xpos, pPlayer[p]->ypos, pPlayer[p]->CollideRect) == true &&
 					!(pTileEngine->BlockLinks(pPlayer[p]->xpos, pPlayer[p]->ypos, pPlayer[p]->xposold, pPlayer[p]->yposold, pPlayer[p]->CollideRect) & BLOCKWERT_WAND))
 					pPlayer[p]->xpos += xSpeed SYNC;
 
 				// an die Wand gekommen?
 				if (Links())
-				{					
+				{
 					xSpeed = 0.0f;
 					xAcc   = 0.0f;
 
@@ -285,16 +285,16 @@ _weiter2:
 			{
 				// Hurri verschieben
 				for (int p = 0; p < NUMPLAYERS; p++)
-				if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], 
-									pPlayer[p]->xpos, 
-									pPlayer[p]->ypos, 
+				if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
+									pPlayer[p]->xpos,
+									pPlayer[p]->ypos,
 									pPlayer[p]->CollideRect) == true &&
 									!(blockr & BLOCKWERT_WAND))
 					pPlayer[p]->xpos += xSpeed SYNC;
 
 				// an die Wand gekommen?
 				if (Rechts())
-				{			
+				{
 					for (int p = 0; p < NUMPLAYERS; p++)
 						DirectInput.Joysticks[pPlayer[p]->JoystickIndex].ForceFeedbackEffect(FFE_MEDIUMRUMBLE);
 
@@ -342,7 +342,7 @@ _weiter2:
 							pPlayer[p]->DamagePlayer(200.0f);
 
 						pPlayer[p]->AufPlattform = NULL;
-					}							
+					}
 
 					// Screen Wackeln lassen
 					ShakeScreen(3);
@@ -356,9 +356,9 @@ _weiter2:
 				for (int p = 0; p < NUMPLAYERS; p++)
 				if (pPlayer[p]->Energy > 0 &&
 					pPlayer[p]->AufPlattform == NULL &&
-					SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], 
-									pPlayer[p]->xpos, 
-									pPlayer[p]->ypos, 
+					SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
+									pPlayer[p]->xpos,
+									pPlayer[p]->ypos,
 									pPlayer[p]->CollideRect) == true)
 				{
 					pPlayer[p]->DamagePlayer(25.0f);
@@ -405,7 +405,7 @@ _weiter2:
 					AnimPhase = 3;
 					AnimCount = 8.0f;
 				}
-				else 
+				else
 					j = rand()%2+1;
 
 				// Steine von der Decke rieseln lassen ?
@@ -418,7 +418,7 @@ _weiter2:
 					// böse kucken
 					if (AnimPhase == 0)
 						AnimPhase = 1;
-					else 
+					else
 						AnimPhase = 3;
 
 					Handlung = GEGNER_SPECIAL;
@@ -431,7 +431,7 @@ _weiter2:
 					if (pPlayer[p]->AufPlattform == this)
 						PlayerOn = true;
 
-				if (j == 2 || 
+				if (j == 2 ||
 					PlayerOn)
 				{
 					Handlung = GEGNER_LAUFEN;
@@ -506,7 +506,7 @@ _weiter2:
 			}
 		} break;
 
-		// Pharao Kopf explodiert 
+		// Pharao Kopf explodiert
 		case GEGNER_EXPLODIEREN:
 		{
 			AnimCount -= SpeedFaktor;
@@ -552,7 +552,7 @@ void GegnerPharaoKopf::GegnerExplode(void)
 	pSoundManager->PlayWave(100, 128, 11024, SOUND_EXPLOSION2);
 	pSoundManager->PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
 
-	ShakeScreen(4);	
+	ShakeScreen(4);
 
 	pHUD->BossHUDActive = false;
 

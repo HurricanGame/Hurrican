@@ -1,6 +1,6 @@
 // Datei : Console.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Konsolen-Klasse für Hurrican
 //
@@ -52,7 +52,7 @@ ConsoleClass::ConsoleClass()
 	// Text in Konsole schreiben
 	for (int i = 0; i < 9; i++)
 		CONSOLE_PRINT(TextArray[TEXT_CONSOLE1+i]);
-	
+
 	for (int i = 0; i < 10; i++)
 		CONSOLE_PRINT(" ");
 
@@ -112,11 +112,11 @@ void ConsoleClass::ShowConsole(void)
 
 	switch (int (cursorcount))
 	{
-		case 0 : 
+		case 0 :
 			strcat_s (Temp, 2, " ");
 		break;
 
-		case 1 : 
+		case 1 :
 			strcat_s (Temp, 2, "_");
 		break;
 
@@ -126,7 +126,7 @@ void ConsoleClass::ShowConsole(void)
 
 	if (cursorcount >= 2.0f)
 		cursorcount = 0.0f;
-	
+
 	Color = D3DCOLOR_RGBA(255, 255, 255, a);
 	pDefaultFont->DrawText(20, yoffset +  10 + (MAX_LINES) * 10, Temp, Color);
 } // ShowConsole
@@ -137,7 +137,7 @@ void ConsoleClass::ShowConsole(void)
 
 bool ConsoleClass::CONSOLE_CHEAT(char *cheat)
 {
-	bool result = false;	
+	bool result = false;
 
 	// TODO FIX
 //	result = CONSOLE_COMMAND(convertText(cheat));
@@ -177,7 +177,7 @@ void ConsoleClass::CheckCommands(void)
 			CONSOLE_PRINT("minimap - save minimap to disc");
 			CONSOLE_PRINT("quit - Quit game immediately");
 		} else*/
-	
+
 #endif
 
 	// Konsole löschen
@@ -229,7 +229,7 @@ void ConsoleClass::CheckCommands(void)
 		CONSOLE_PRINT("Shutting down ...");
 		GameRunning = false;
 	} else
-		
+
 
 	// Volle Extrawaffen
 	if (CONSOLE_CHEAT(Cheats[CHEAT_EXTRAS]))
@@ -277,13 +277,13 @@ void ConsoleClass::CheckCommands(void)
 				pProjectiles->PushProjectile (pPlayer[i]->xpos, pPlayer[i]->ypos, SHIELDSPAWNER, pPlayer[i]);
 				pProjectiles->PushProjectile (pPlayer[i]->xpos, pPlayer[i]->ypos, SHIELDSPAWNER2, pPlayer[i]);
 			}
-		
+
 			// Schild setzen
 			pPlayer[i]->Shield = 500.0f;*/
 
 			pPlayer[i]->Lives = 99;
 
-		}		
+		}
 
 		strcpy_s(Buffer, "-> Live long and prosper!");
 	} else
@@ -307,7 +307,7 @@ void ConsoleClass::CheckCommands(void)
 	} else
 
 
-	// Flammenwerfer Mode 
+	// Flammenwerfer Mode
 	if (CONSOLE_CHEAT(Cheats[CHEAT_FLAMER]))
 	{
 		FlameThrower = !FlameThrower;
@@ -322,7 +322,7 @@ void ConsoleClass::CheckCommands(void)
 		}
 	} //else
 
-	// GodMode 
+	// GodMode
 	if (CONSOLE_CHEAT(Cheats[CHEAT_GOD]))
 	{
 		if (pPlayer[0]->GodMode == false)
@@ -339,7 +339,7 @@ void ConsoleClass::CheckCommands(void)
 		}
 	} //else
 
-	// GodMode 
+	// GodMode
 	if (CONSOLE_CHEAT(Cheats[CHEAT_RAD]))
 	{
 		if (pPlayer[0]->WheelMode == false)
@@ -355,7 +355,7 @@ void ConsoleClass::CheckCommands(void)
 			CONSOLE_PRINT("-> WheelMode off");
 		}
 	} //else
-	
+
 	// max FPS setzen
 	if (strncmp(Buffer, "maxfps ", 7) == 0)
 	{
@@ -446,7 +446,7 @@ void ConsoleClass::CheckCommands(void)
 		// .map anhängen
 		if (dummy2[strlen (dummy2) - 1] != 'p' ||
 		    dummy2[strlen (dummy2) - 2] != 'a' ||
-		    dummy2[strlen (dummy2) - 3] != 'm') 
+		    dummy2[strlen (dummy2) - 3] != 'm')
 			strcat_s(name, ".map");
 
 		fopen_s(&Datei, name, "rb");
@@ -476,11 +476,15 @@ void ConsoleClass::CheckCommands(void)
 	if (strncmp(Buffer, "minimap", 7) == 0)
 	{
 		// Darstellung beenden
-		lpD3DDevice->EndScene();						
-		DirectGraphics.ShowBackBuffer();		
+#if defined(PLATFORM_DIRECTX)
+		lpD3DDevice->EndScene();
+#endif
+		DirectGraphics.ShowBackBuffer();
 
 		// Mit dem Darstellen beginnen
-		lpD3DDevice->BeginScene();			
+#if defined(PLATFORM_DIRECTX)
+		lpD3DDevice->BeginScene();
+#endif
 
 		// Screen schwarz färben
 		RenderRect(0, 0, 640, 480, 0xFF000000);
@@ -503,9 +507,11 @@ void ConsoleClass::CheckCommands(void)
 
 		pDefaultFont->DrawText(3, 458, buf, 0xFF00FF00);
 		pDefaultFont->DrawText(3, 470, pTileEngine->Beschreibung, 0xFF00FF00);
-	
+
+#if defined(PLATFORM_DIRECTX)
 		lpD3DDevice->EndScene();						// Darstellung beenden
-		DirectGraphics.ShowBackBuffer();		
+#endif
+		DirectGraphics.ShowBackBuffer();
 
 		// Screenshot machen
 		DirectGraphics.TakeScreenshot("MiniMap", 640, 480);
@@ -592,10 +598,10 @@ void ConsoleClass::CheckCommands(void)
 		{
 			this->Activate = false;
 			this->Fade   = -25.0f;
-			this->Active = false;		
+			this->Active = false;
 			this->Showing= false;
 
-			InitNewGame ();			
+			InitNewGame ();
 
 			for (int p = 0; p < NUMPLAYERS; p++)
 			{
@@ -608,7 +614,7 @@ void ConsoleClass::CheckCommands(void)
 
 			InitNewGameLevel (Stage);
 		}
-	} //else	
+	} //else
 #endif
 
 	if (CONSOLE_COMMAND("light cool"))
@@ -631,7 +637,7 @@ void ConsoleClass::CheckCommands(void)
 		else
 			pTileEngine->bDrawShadow = false;
 	}
-	
+
 	//strcpy_s(Buffer, "Error : Unknown Command !");
 
 } // CheckCommands
@@ -659,7 +665,7 @@ void ConsoleClass::CheckInput(void)
 {
 	for (int i = 0; i < 256; i++)
 	{
-		if (KeyDown(i) && 
+		if (KeyDown(i) &&
 			Pressed[i] == false)
 		{
 			pSoundManager->PlayWave(100, 128, 15000, SOUND_CLICK);
@@ -670,11 +676,11 @@ void ConsoleClass::CheckInput(void)
 			if (strlen(GetKeyName(i)) <= 1 &&
 					   strlen(Buffer) < MAX_CHARS)
 			{
-				char buf[50];				
+				char buf[50];
 				strcpy_s(buf, GetKeyName(i));
 
 				// unwandeln in kleinbuchstaben
-				if (!KeyDown(DIK_LSHIFT)) 
+				if (!KeyDown(DIK_LSHIFT))
 				{
 					char c;
 					for (int i=0; i < 50; i++)
@@ -686,7 +692,7 @@ void ConsoleClass::CheckInput(void)
 						buf[i] = c;
 					}
 				}
-				
+
 				strcat_s(Buffer, buf);
 			}
 
@@ -695,7 +701,7 @@ void ConsoleClass::CheckInput(void)
 				strcat_s(Buffer, " ");
 
 			// Backspace
-			if (i == DIK_BACKSPACE && strlen(Buffer) > 0) 
+			if (i == DIK_BACK && strlen(Buffer) > 0)
 			{
 				char Temp[MAX_CHARS];
 
@@ -703,21 +709,21 @@ void ConsoleClass::CheckInput(void)
 				strcpy_s(Buffer, "");
 				strncat_s(Buffer, Temp, strlen(Temp) - 1);
 			}
-	
+
 			// Neue Zeile
 			if (i == DIK_RETURN)
 			{
 				if (strlen(Buffer) > 0)
-				{					
-					CheckCommands();					
+				{
+					CheckCommands();
 					ScrollUp();
 				}
 			}
 		}
 
 		// Gedrückte Tasten locken
-		if (!KeyDown(i)) 
-			Pressed[i] = false;					
+		if (!KeyDown(i))
+			Pressed[i] = false;
 	}
 } // CheckInput
 
@@ -730,7 +736,7 @@ void ConsoleClass::Open(void)
 	Fade   = 25.0f;
 	Active = true;
 	Showing = true;
-	strcpy_s(Buffer, "");	
+	strcpy_s(Buffer, "");
 }
 
 // --------------------------------------------------------------------------------------
@@ -740,7 +746,7 @@ void ConsoleClass::Open(void)
 void ConsoleClass::Hide(void)
 {
 	Fade   = -25.0f;
-	Active = false;	
+	Active = false;
 }
 
 // --------------------------------------------------------------------------------------
@@ -767,7 +773,7 @@ bool ConsoleClass::DoConsole(void)
 	}
 
 	// Konsole fadet gerade ?
-	if (Fade != 0)	
+	if (Fade != 0)
 		its_Alpha += 2.0f * Fade SYNC;
 
 	// Überlauf verhindern
@@ -785,8 +791,8 @@ bool ConsoleClass::DoConsole(void)
 	}
 
 	// Konsole ausgefadet? Dann aussteigen
-	if (Active == false && 
-		its_Alpha <= 0.0f) 
+	if (Active == false &&
+		its_Alpha <= 0.0f)
 	{
 		Showing = false;
 		return false;
@@ -799,7 +805,11 @@ bool ConsoleClass::DoConsole(void)
 	//
 	D3DXMATRIX matView;
 	D3DXMatrixIdentity	 (&matView);
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_VIEW, &matView);
+#elif defined(PLATFORM_SDL)
+    g_matView = matView;
+#endif
 
 	// Und anzeigen
 	ShowConsole();

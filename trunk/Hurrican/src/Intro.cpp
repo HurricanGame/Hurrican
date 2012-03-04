@@ -1,6 +1,6 @@
 // Datei : Intro.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Klasse für das Hurrican Intro
 //
@@ -14,9 +14,8 @@
 
 #include <stdio.h>
 #include "Intro.h"
-#include "FMOD.h"
 #include "DX8Sound.h"
-#include "gameplay.h"
+#include "Gameplay.h"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor, lädt die Grafiken
@@ -29,18 +28,17 @@ IntroClass::IntroClass(void)
 	Background[2].LoadImage("intro3.bmp", 640, 480, 640, 480, 1, 1);
 	Background[3].LoadImage("intro4.bmp", 640, 480, 640, 480, 1, 1);
 	Background[4].LoadImage("intro5.bmp", 640, 480, 640, 480, 1, 1);
-	Background[5].LoadImage("intro6.bmp", 640, 480, 640, 480, 1, 1);
+ 	Background[5].LoadImage("intro6.bmp", 640, 480, 640, 480, 1, 1);
 
-	Zustand = INTRO_FADEIN;	
+	Zustand = INTRO_FADEIN;
 
 	TextOff = 0;
 	BildNr = 0;
 	Counter = 0.0f;
 	pSoundManager->LoadSong("intro.it", MUSIC_INTRO);
 
-	while (DirectInput.AreAllKeysReleased() == false)
+ 	while (DirectInput.AreAllKeysReleased() == false)
 		DirectInput.UpdateTastatur();
-
 }
 
 // --------------------------------------------------------------------------------------
@@ -49,7 +47,7 @@ IntroClass::IntroClass(void)
 
 IntroClass::~IntroClass(void)
 {
-	FMUSIC_StopAllSongs();	
+	MUSIC_StopAllSongs();
 }
 
 // --------------------------------------------------------------------------------------
@@ -63,7 +61,7 @@ void IntroClass::EndIntro(void)
 		if (Zustand != INTRO_FADEIN)
 			Counter = 255.0f;
 
-		Zustand = INTRO_FADEOUT;		
+		Zustand = INTRO_FADEOUT;
 		pSoundManager->FadeSong(MUSIC_INTRO, -1.5f, 0, false);
 	}
 }
@@ -92,7 +90,7 @@ void IntroClass::DoIntro(void)
 	}
 
 	// Balken unten
-	RenderRect4(0, 360, 640, 60, 0x00000000, 0x00000000, 
+	RenderRect4(0, 360, 640, 60, 0x00000000, 0x00000000,
 								 0xFF000000, 0xFF000000);
 	RenderRect(0, 420, 640, 60, 0xFF000000);
 
@@ -103,8 +101,8 @@ void IntroClass::DoIntro(void)
 		{
 			// Mucke spielen
 			if (pSoundManager->InitSuccessfull &&
-				FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_INTRO]->SongData) == false)
-				pSoundManager->PlaySong(MUSIC_INTRO, false);				
+				MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_INTRO]->SongData) == false)
+				pSoundManager->PlaySong(MUSIC_INTRO, false);
 
 			// und einfaden
 			Counter += 10.0f SYNC;
@@ -117,7 +115,7 @@ void IntroClass::DoIntro(void)
 			else
 			{
 				D3DCOLOR col = D3DCOLOR_RGBA(0, 0, 0, 255-int(Counter));
-				RenderRect(0, 0, 640, 480, col);			
+				RenderRect(0, 0, 640, 480, col);
 			}
 		} break;
 
@@ -133,8 +131,8 @@ void IntroClass::DoIntro(void)
 			}
 
 			D3DCOLOR col = D3DCOLOR_RGBA(0, 0, 0, 255-int(Counter));
-			RenderRect(0, 0, 640, 480, col);			
-			
+			RenderRect(0, 0, 640, 480, col);
+
 		} break;
 
 		// Scroller
@@ -153,8 +151,8 @@ void IntroClass::DoIntro(void)
 					break;
 				}
 			}
-			
-			// Text rendern	
+
+			// Text rendern
 			float xr = Counter;
 			if (xr > 700.0f)
 				xr = 700.0f;
@@ -188,13 +186,13 @@ void IntroClass::DoIntro(void)
 						RenderRect(xr, 464, 640.0f, 17, 0xFF000000);
 					}
 				}
-			}	
+			}
 
 			//grüne Rechtecke rendern
 			if (TextOff <= 28)
 			{
 				DirectGraphics.SetAdditiveMode();
-				{										
+				{
 					int l = pDefaultFont->StringLength(TextArray[TEXT_INTRO1 + TextOff], 0) + 28;
 					if (xr < l)
 					{
@@ -229,5 +227,5 @@ void IntroClass::DoIntro(void)
 
 		default : break;
 
-	} // switch	
+	} // switch
 }

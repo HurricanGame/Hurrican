@@ -1,6 +1,6 @@
 // Datei : HUD.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Funktionen für das Hurrican HUD
 // Werte anzeigen usw
@@ -13,7 +13,7 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
-#include "HUD.h"
+#include "HUD.H"
 #include "DX8Font.h"
 #include "DX8Graphics.h"
 #include "Gameplay.h"
@@ -29,7 +29,7 @@
 
 HUDClass::HUDClass(void)
 {
-	HUDGfx.LoadImage		("HUD.bmp", 548, 69, 548, 69, 1, 1);
+	HUDGfx.LoadImage		("hud.bmp", 548, 69, 548, 69, 1, 1);
 	HUDBlitz.LoadImage		("hudblitz.bmp",6, 18, 6, 18, 1, 1);
 	HUDBomb.LoadImage		("hudbomb.bmp", 18, 18, 18, 18, 1, 1);
 	HUDSuperShot.LoadImage	("hudsupershot.bmp", 24, 24, 24, 24, 1, 1);
@@ -60,7 +60,7 @@ HUDClass::HUDClass(void)
 // --------------------------------------------------------------------------------------
 
 HUDClass::~HUDClass(void)
-{	
+{
 }
 
 // --------------------------------------------------------------------------------------
@@ -79,7 +79,7 @@ void HUDClass::ShowHUD(void)
 {
 	char	 Buffer[100];							// Für iota Umwandlung der HUD-Werte
 	int		 BlitzOff;								// Für die Balken-Offsets
-//	int		 StateOff;								
+//	int		 StateOff;
 	D3DCOLOR Color;									// Farbe des Huds
 	D3DCOLOR playercol;
 
@@ -109,7 +109,7 @@ void HUDClass::ShowHUD(void)
 	for (int num = 0; num < NUMPLAYERS; num++)
 	{
 		PlayerClass *pCurrentPlayer;
-		
+
 		if (num == 0)
 		{
 			pCurrentPlayer = pPlayer[0];
@@ -121,7 +121,7 @@ void HUDClass::ShowHUD(void)
 			// Radenergie
 			off = ((MAX_ARMOUR - pCurrentPlayer->Armour) / MAX_ENERGY * 69);
 			HUDBall[1].SetRect(34, (int)off, 69, 69);
-			HUDBall[1].RenderSprite(xpos + 34, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));			
+			HUDBall[1].RenderSprite(xpos + 34, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));
 		}
 		else
 		{
@@ -129,27 +129,27 @@ void HUDClass::ShowHUD(void)
 
 			off = ((MAX_ENERGY - pCurrentPlayer->Energy) / MAX_ENERGY * 69);
 			HUDBall[0].SetRect(0, (int)off, 34, 69);
-			HUDBall[0].RenderSprite(xpos+548-69, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));			
+			HUDBall[0].RenderSprite(xpos+548-69, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));
 
 			// Radenergie
 			off = ((MAX_ARMOUR - pCurrentPlayer->Armour) / MAX_ARMOUR * 69);
 			HUDBall[1].SetRect(34, (int)off, 69, 69);
 			HUDBall[1].RenderSprite(xpos+548-69 + 34, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));
-		}		
+		}
 	}
 
 	HUDBlitz.SetRect (0, BlitzOff, 6, 18);
 
 	// Wenn geblitzt wird, die Blitzwaffe heller anzeigen
 	if (pPlayer[0]->Handlung == BLITZEN)
-	SelectedWeapon.RenderSprite(xpos + 212 + 3 * 32, 
+	SelectedWeapon.RenderSprite(xpos + 212 + 3 * 32,
 								ypos + 14, 3, Color);
 
 	D3DCOLOR color;
 
 	 // Blitz-Level anzeigen
 	if (pPlayer[0]->Handlung == BLITZEN)
-		color = D3DCOLOR_RGBA(0, 255, 0, 192);			
+		color = D3DCOLOR_RGBA(0, 255, 0, 192);
 	else
 		color = D3DCOLOR_RGBA(0, 255, 0, 64);
 
@@ -170,7 +170,7 @@ void HUDClass::ShowHUD(void)
 
 	 // Anzahl verbleibender Powerlines anzeigen
 	 for (int p = 0; p < NUMPLAYERS; p++)
-	 {		 
+	 {
 		 int off;
 
 		if (NUMPLAYERS == 1)
@@ -285,19 +285,19 @@ void HUDClass::ShowHUD(void)
 					HUDBomb.RenderSprite(xpos + 391 + 9, ypos + 19, playercol);
 				}
 			}
-		}	
+		}
 
 		// Gewählte Waffe heller darstellen
 		if (pPlayer[p]->Handlung != BLITZEN)
 		{
 			if (NUMPLAYERS == 1)
-				SelectedWeapon.RenderSprite(xpos + 212 + pPlayer[p]->SelectedWeapon * 32, 
+				SelectedWeapon.RenderSprite(xpos + 212 + pPlayer[p]->SelectedWeapon * 32,
 											ypos + 14, pPlayer[p]->SelectedWeapon, playercol);
 			else
 			{
 				// Anderer Spieler hat eine andere Waffe? Dann ganz rendern
 				if (pPlayer[p]->SelectedWeapon != pPlayer[1-p]->SelectedWeapon)
-					SelectedWeapon.RenderSprite(xpos + 212 + pPlayer[p]->SelectedWeapon * 32, 
+					SelectedWeapon.RenderSprite(xpos + 212 + pPlayer[p]->SelectedWeapon * 32,
 												ypos + 14, pPlayer[p]->SelectedWeapon, playercol);
 				// ansonsten halbieren
 				else
@@ -309,14 +309,14 @@ void HUDClass::ShowHUD(void)
 					else
 						SelectedWeapon.itsRect.left += 8;
 
-					SelectedWeapon.RenderSprite(xpos + 212 + p * 8 + pPlayer[p]->SelectedWeapon * 32, 
+					SelectedWeapon.RenderSprite(xpos + 212 + p * 8 + pPlayer[p]->SelectedWeapon * 32,
 												ypos + 14, playercol);
 				}
 			}
 		}
 
 		// PowerLevel der Waffen darstellen
-		for (unsigned int i=0; i<3; i++)	 
+		for (unsigned int i=0; i<3; i++)
 		{
 			if (NUMPLAYERS == 2 &&
 				pPlayer[p]->SelectedWeapon != pPlayer[1-p]->SelectedWeapon &&
@@ -326,7 +326,7 @@ void HUDClass::ShowHUD(void)
 			if (i == (unsigned int)pPlayer[p]->SelectedWeapon)
 			{
 				if (NUMPLAYERS == 1)
-					playercol = D3DCOLOR_RGBA(0, 255, 0, 224);			
+					playercol = D3DCOLOR_RGBA(0, 255, 0, 224);
 				else
 				{
 					if (p == 0)
@@ -360,11 +360,11 @@ void HUDClass::ShowHUD(void)
 				WeaponRahmen.itsRect.bottom = 18;
 
 				if (p == 0)
-					WeaponRahmen.itsRect.right = 5;					
+					WeaponRahmen.itsRect.right = 5;
 				else
 					WeaponRahmen.itsRect.left  = 5;
 
-				WeaponRahmen.RenderSprite((float)(xpos + p * 5 + 216 + i*32), 
+				WeaponRahmen.RenderSprite((float)(xpos + p * 5 + 216 + i*32),
 										  (float)(ypos +  35), playercol);
 
 			}
@@ -397,8 +397,8 @@ void HUDClass::ShowHUD(void)
 
 	 // Anzahl verbleibender Leben anzeigen
 	 int LivesToShow;
-	 
-	 LivesToShow = max(0, pPlayer[0]->Lives);
+
+	 LivesToShow = MAX(0, pPlayer[0]->Lives);
 
 	 _itoa_s(LivesToShow, Buffer, 10);
 
@@ -433,7 +433,7 @@ void HUDClass::ShowHUD(void)
 	// oder Leben Spieler 2
 	else
 	{
-		LivesToShow = max(0, pPlayer[1]->Lives);
+		LivesToShow = MAX(0, pPlayer[1]->Lives);
 		_itoa_s(LivesToShow, Buffer, 10);
 	}
 
@@ -476,9 +476,9 @@ void HUDClass::ShowHUD(void)
 			if ((int)(pTileEngine->Timelimit) == 1)
 				xoff = -size / 2.4f;
 
-			HUDFontBig.RenderSpriteScaled(320 - size / 2.0f + xoff, 
-										  240 - size / 2.0f, 
-										  12 + (int)size, 
+			HUDFontBig.RenderSpriteScaled(320 - size / 2.0f + xoff,
+										  240 - size / 2.0f,
+										  12 + (int)size,
 										  24 + (int)size, D3DCOLOR_RGBA(255, 0, 0, 255 - (int)(size)));
 
 			DirectGraphics.SetColorKeyMode();
@@ -538,14 +538,18 @@ void HUDClass::DoHUD(void)
 	//
 	for (int p = 0; p < NUMPLAYERS; p++)
 		pPlayer[p]->BlitzLength = pPlayer[p]->CurrentWeaponLevel[3]+1;
-	
+
 	UpdateValues();
 
 	// Einheitsmatrix setzen, da das HUD nie rotiert gerendert wird
 	//
 	D3DXMATRIX matView;
 	D3DXMatrixIdentity	 (&matView);
+#if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_VIEW, &matView);
+#elif defined(PLATFORM_SDL)
+    g_matView = matView;
+#endif
 
 	// Hud anzeigen
 	//
@@ -558,7 +562,7 @@ void HUDClass::DoHUD(void)
 
 	// und evtl wieder rotierten Screen setzen
 	//
-	SetScreenShake();	
+	SetScreenShake();
 }
 
 // --------------------------------------------------------------------------------------
@@ -595,5 +599,5 @@ void HUDClass::RenderArrow ()
 	D3DCOLOR Color = D3DCOLOR_RGBA (0, 255, 0, int (alpha));
 
 	DirectGraphics.SetColorKeyMode();
-	Arrow.RenderSprite (ArrowX, ArrowY, 0, Color);	
+	Arrow.RenderSprite (ArrowX, ArrowY, 0, Color);
 }

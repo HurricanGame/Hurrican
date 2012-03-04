@@ -43,19 +43,19 @@ void GegnerFahrstuhl::DoDraw(void)
 {
 	DirectGraphics.SetFilterMode (true);
 
-	// Schatten rendern	
+	// Schatten rendern
 	float l = (float) (g_Fahrstuhl_yPos - pTileEngine->YOffset) - 80;
-	pGegnerGrafix[GegnerArt]->RenderSpriteScaled((float)(xPos-pTileEngine->XOffset - 10), 
-												 (float)(g_Fahrstuhl_yPos-pTileEngine->YOffset), 
-												  GegnerRect[GegnerArt].right  + 20, 
+	pGegnerGrafix[GegnerArt]->RenderSpriteScaled((float)(xPos-pTileEngine->XOffset - 10),
+												 (float)(g_Fahrstuhl_yPos-pTileEngine->YOffset),
+												  GegnerRect[GegnerArt].right  + 20,
 												  int (GegnerRect[GegnerArt].bottom + l / 5.0f),
 												  AnimPhase, 0x99000000);
 
 	DirectGraphics.SetFilterMode (false);
 
 	// Fahrstuhl rendern
-	pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset), 
-										   (float)(g_Fahrstuhl_yPos-pTileEngine->YOffset), 
+	pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
+										   (float)(g_Fahrstuhl_yPos-pTileEngine->YOffset),
 										    AnimPhase, 0xFFFFFFFF);
 }
 
@@ -78,7 +78,7 @@ void GegnerFahrstuhl::DoKI(void)
 		{
 			if (Value1 == 0)
 			{
-				pTileEngine->Zustand = ZUSTAND_LOCKED;				
+				pTileEngine->Zustand = ZUSTAND_LOCKED;
 			}
 			else
 				if (pTileEngine->Zustand != ZUSTAND_SCROLLTOPLAYER)
@@ -102,9 +102,9 @@ void GegnerFahrstuhl::DoKI(void)
 		{
 			if (Value1 == 0)
 				pTileEngine->NewYOffset = yPos-320.0f-g_Fahrstuhl_Offset;
-	
+
 			// Spieler "auf" den Fahrstuhl setzen
-			if (Value1 != 0)				
+			if (Value1 != 0)
 			{
 				for (int p = 0; p < NUMPLAYERS; p++)
 				{
@@ -118,7 +118,7 @@ void GegnerFahrstuhl::DoKI(void)
 			else
 				new_ySpeed = pPlayer[0]->AutoScrollspeed;
 
-			// Speed angleichen			
+			// Speed angleichen
 			if (ySpeed < new_ySpeed) ySpeed += 0.3f SYNC;
 			if (ySpeed > new_ySpeed) ySpeed -= 0.3f SYNC;
 
@@ -145,12 +145,12 @@ void GegnerFahrstuhl::DoKI(void)
 
 	// Endposition erreicht ? Dann explodieren (nur im Fahrstuhllevel)
 	//
-	if (Value1 == 0 && 
+	if (Value1 == 0 &&
 		yPos >= Value2)
 			Energy = 0.0f;
 
 	g_Fahrstuhl_yPos  = yPos;
-	g_Fahrstuhl_Speed = ySpeed;	
+	g_Fahrstuhl_Speed = ySpeed;
 }
 
 // --------------------------------------------------------------------------------------

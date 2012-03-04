@@ -27,14 +27,14 @@ GegnerPunisher::GegnerPunisher(int Wert1, int Wert2, bool Light)
 	Value1			= Wert1;
 	Value2			= Wert2;
 	OwnDraw			= true;
-	TestBlock		= false;	
+	TestBlock		= false;
 	Active			= true;
 	alpha			= 0.0f;
 	ShotDelay		= 0.0f;
 
 	AnimPhase		= 15;
 	AnimCount		= 15.0f;
-}	
+}
 
 // --------------------------------------------------------------------------------------
 // Eigene Draw Funktion
@@ -54,16 +54,16 @@ void GegnerPunisher::DoDraw(void)
 			{
 				pGegnerGrafix[GegnerArt]->SetRect(3 * 170, 2 * 170 + i, 4 * 170, 2 * 170 + i+1);
 				pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset + (float)(sin((alpha / 20.0f) + i / 10.0f) * ((255.0f - alpha) / 255.0f * 200.0f))),
-													   (float)(yPos-pTileEngine->YOffset + i), 
+													   (float)(yPos-pTileEngine->YOffset + i),
 															   D3DCOLOR_RGBA (255, 255, 255, (int)alpha));
 			}
 		} break;
 
 		// normal rendern
 		case GEGNER_LAUFEN:
-		{			
-			pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset), 
-												   (float)(yPos-pTileEngine->YOffset), 
+		{
+			pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
+												   (float)(yPos-pTileEngine->YOffset),
 														   AnimPhase, D3DCOLOR_RGBA (255, 255, 255, 255), false);
 		} break;
 	}
@@ -97,7 +97,7 @@ void GegnerPunisher::DoKI(void)
 	{
 		// initialisieren
 		case GEGNER_INIT:
-		{	
+		{
 			// zentrieren
 			xPos = (float)(pTileEngine->XOffset + 320 - 100/2.0f);
 			yPos = (float)(pTileEngine->YOffset + 240 - 95/2.0f);
@@ -105,14 +105,14 @@ void GegnerPunisher::DoKI(void)
 			alpha = 0.0f;
 			Handlung = GEGNER_INIT2;
 
-			pSoundManager->StopSong(MUSIC_STAGEMUSIC, true);		
+			pSoundManager->StopSong(MUSIC_STAGEMUSIC, true);
 			pSoundManager->PlaySong(MUSIC_PUNISHER, false);
 
 		} break;
 
 		//einfaden
 		case GEGNER_INIT2:
-		{			
+		{
 			// einfaden
 			alpha += 5.0f SYNC;
 
@@ -127,7 +127,7 @@ void GegnerPunisher::DoKI(void)
 
 		// Spieler verfolgen
 		case GEGNER_LAUFEN:
-		{		
+		{
 			// Spieler verfolgen
 			FollowPlayer();
 
@@ -143,7 +143,7 @@ void GegnerPunisher::DoKI(void)
 				for (int i = 0; i < 4; i++)
 					if (pPlayer[p]->CurrentWeaponLevel[i] > 1)
 						pPlayer[p]->CurrentWeaponLevel[i]--;
-				
+
 				pPlayer[p]->CalcWeaponLevels();
 
 				// bekommt dafür aber wieder Zeit
@@ -151,20 +151,20 @@ void GegnerPunisher::DoKI(void)
 
 				// ausfaden
 				Energy = 0.0f;
-			}		
+			}
 
 			// Animphase setzen
 			if (xAcc < 0.0f)
 			{
 				if (AnimCount > 20.0f)	AnimCount = 20.0f;
 				AnimCount -= 1.0f SYNC;
-				if (AnimCount < 0.0f)	AnimCount = 10.0f;				
+				if (AnimCount < 0.0f)	AnimCount = 10.0f;
 			}
 			else
 			{
 				if (AnimCount < 10.0f)	AnimCount = 10.0f;
 				AnimCount += 1.0f SYNC;
-				if (AnimCount > 30.0f)	AnimCount = 20.0f;				
+				if (AnimCount > 30.0f)	AnimCount = 20.0f;
 			}
 
 			AnimPhase = (int)(AnimCount);
@@ -186,21 +186,21 @@ void GegnerPunisher::DoKI(void)
 				alpha = 0.0f;
 				Energy = 0.0f;
 			}
-			
+
 		} break;
 
 		default : break;
-	} // switch		
+	} // switch
 
 	// Boss oder SummaryScreen ? Dann verschwinden
 	if (pHUD->BossHUDActive != 0.0f ||
 		ShowSummary == true)
 		Energy = 0.0f;
 
-	if (Energy <= 0.0f && 
+	if (Energy <= 0.0f &&
 		alpha > 0.0f   &&
 		Handlung != GEGNER_SPECIAL)
-		Vanish();		
+		Vanish();
 }
 
 // --------------------------------------------------------------------------------------
@@ -210,13 +210,13 @@ void GegnerPunisher::DoKI(void)
 void GegnerPunisher::Vanish(void)
 {
 	if (ShowSummary == true)
-		pSoundManager->StopSong(MUSIC_PUNISHER, false);		
+		pSoundManager->StopSong(MUSIC_PUNISHER, false);
 	else
-		pSoundManager->FadeSong(MUSIC_PUNISHER, -2.0f, 0, false);		
+		pSoundManager->FadeSong(MUSIC_PUNISHER, -2.0f, 0, false);
 
 	Handlung = GEGNER_SPECIAL;
-	Energy = 1.0f;		
-	Destroyable	= false;		
+	Energy = 1.0f;
+	Destroyable	= false;
 }
 
 // --------------------------------------------------------------------------------------
@@ -224,12 +224,12 @@ void GegnerPunisher::Vanish(void)
 // --------------------------------------------------------------------------------------
 
 void GegnerPunisher::GegnerExplode(void)
-{		
+{
 	pTileEngine->Timelimit += 100;
 
 	pPlayer[0]->PunisherActive = false;
 	pPlayer[1]->PunisherActive = false;
 
 	pSoundManager->SetSongVolume(MUSIC_STAGEMUSIC, 0);
-	pSoundManager->FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);		
+	pSoundManager->FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);
 }

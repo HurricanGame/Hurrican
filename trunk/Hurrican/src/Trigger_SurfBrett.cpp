@@ -2,7 +2,7 @@
 // Das Surfbrett
 //
 // Wird aktiviert, sobald der Spieler daraufspringt
-// Dann raste es los, der Level scrollt mit 
+// Dann raste es los, der Level scrollt mit
 // Bleibt immer auf x-Höhe des Spielers
 // --------------------------------------------------------------------------------------
 
@@ -34,21 +34,21 @@ void GegnerSurfBrett::DoKI(void)
 {
 	/*
 	SimpleAnimation();
-	BlickRichtung	= LINKS;	
+	BlickRichtung	= LINKS;
 
 	// Testen, ob der Spieler den Sack berührt hat
 	//
 	PlattformTest(GegnerRect[GegnerArt]);
 
-	// LevelMusik beeinflussen ? 
+	// LevelMusik beeinflussen ?
 	// Denn in stage xx geht die Musik erst los, wenn der Spieler auf das SurfBrett springt !
 	//
-	if (FMUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_STAGEMUSIC]->SongData))
+	if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_STAGEMUSIC]->SongData))
 		pSoundManager->StopSong(MUSIC_STAGEMUSIC, true);
 
 	// Draufgesprungen, dann gehts los
 	//
-	if (pPlayer->AufPlattform == this && 
+	if (pPlayer->AufPlattform == this &&
 		Handlung == GEGNER_STEHEN)
 	{
 		Handlung = GEGNER_LAUFEN;
@@ -62,11 +62,11 @@ void GegnerSurfBrett::DoKI(void)
 		pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
 		pPartikelSystem->PushPartikel (xPos - 20, yPos - 20, EXPLOSION_MEDIUM2);
 	}
-	
+
 // Je nach Handlung richtig verhalten
 	switch (Handlung)
 	{
-		// Auf den Hurri warten 
+		// Auf den Hurri warten
 		//
 		case GEGNER_STEHEN:
 		{
@@ -127,10 +127,10 @@ void GegnerSurfBrett::DoKI(void)
 			{
 				SmokeCount += 0.5f;
 
-				pPartikelSystem->PushPartikel(xPos - 25 + rand()%20, yPos + 12, WATERFLUSH2);		
+				pPartikelSystem->PushPartikel(xPos - 25 + rand()%20, yPos + 12, WATERFLUSH2);
 
 				for (int i = 0; i < 5; i++)
-					pPartikelSystem->PushPartikel(xPos  + rand()%50, yPos+30, WASSERTROPFEN);		
+					pPartikelSystem->PushPartikel(xPos  + rand()%50, yPos+30, WASSERTROPFEN);
 			}
 
 			// Springen

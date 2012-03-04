@@ -1,6 +1,6 @@
 // Datei : Texts.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Beinhaltet die Defines und Funktionen für die Texte in Hurrican
 // Es ist möglich, verschiedene Language-Files zu laden
@@ -73,14 +73,14 @@ typedef enum Textenum
 	TEXT_LADE_MODULE,
 	TEXT_LADEN_ERFOLGREICH,
 	TEXT_LADE_LEVELDATEN,
-	
+
 	TEXT_SEPERATOR_TUTORIAL,
 
 	TEXT_TUTORIAL1,
 	TEXT_TUTORIAL2,
 	TEXT_TUTORIAL3,
 	TEXT_TUTORIAL4,
-	TEXT_TUTORIAL5,	
+	TEXT_TUTORIAL5,
 	TEXT_TUTORIAL6,
 	TEXT_TUTORIAL7,
 	TEXT_TUTORIAL8,
@@ -126,7 +126,7 @@ typedef enum Textenum
 	TEXT_CONSOLE6,
 	TEXT_CONSOLE7,
 	TEXT_CONSOLE8,
-	TEXT_CONSOLE9,	
+	TEXT_CONSOLE9,
 
 	TEXT_SEPERATOR_SUMMARY,
 
@@ -165,16 +165,16 @@ typedef enum Textenum
 
 	TEXT_VOLUMES,
 	TEXT_SOUND,
-	TEXT_MUSIK,	
-	TEXT_STEUERUNG,	
+	TEXT_MUSIK,
+	TEXT_STEUERUNG,
 
 	TEXT_SPRACHE,
 	TEXT_JOYMODE,
 	TEXT_FORECEFEEDBACK,
 	TEXT_SENSIBILITY,
-	
+
 	TEXT_JOYMODE_PAD,
-	TEXT_JOYMODE_STICK,	
+	TEXT_JOYMODE_STICK,
 
 	TEXT_WAHNSINN,
 	TEXT_NEUE_HIGHSCORE,
@@ -281,7 +281,7 @@ typedef enum Textenum
 	TEXT_PISS_18,
 
 	TEXT_SEPERAROT_INTRO,
-	
+
 	TEXT_INTRO1,
 	TEXT_INTRO2,
 	TEXT_INTRO3,
@@ -312,9 +312,9 @@ typedef enum Textenum
 	TEXT_INTRO23,
 	TEXT_INTRO24,
 	TEXT_INTRO25,
-	
+
 	TEXT_SEPERATOR_OUTTRO,
-	
+
 	TEXT_OUTTRO1,
 	TEXT_OUTTRO2,
 	TEXT_OUTTRO3,
@@ -338,7 +338,7 @@ typedef enum Textenum
 	TEXT_MARIO7,
 
 	TEXT_LASTTEXT,
-};
+} TEXTENUM_T;
 
 // --------------------------------------------------------------------------------------
 // Funktionen

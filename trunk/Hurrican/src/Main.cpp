@@ -1,9 +1,9 @@
 // Datei : Main.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Hurrican
-// 
+//
 // Shoot em up ala Turrican
 // benutzt die DirectX8.1 API für Grafik, Sound und Input
 //
@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------------------
-// Defines 
+// Defines
 // --------------------------------------------------------------------------------------
 
 #ifndef _DEBUG
@@ -23,9 +23,11 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_DIRECTX)
 #include <windows.h>									// Alle Windows Header includen
-#include <stdio.h>
 #include <Dxerr8.h>
+#endif
+#include <stdio.h>
 #include <iostream>
 #include <fstream>
 
@@ -51,7 +53,7 @@
 #include "Partikelsystem.h"
 #include "Player.h"
 #include "Projectiles.h"
-#include "Resource.h"
+#include "resource.h"
 #include "Tileengine.h"
 #include "Timer.h"
 #include "unrarlib.h"
@@ -75,6 +77,7 @@ extern DirectGraphicsSprite		*PartikelGrafix[MAX_PARTIKELGFX];	// Grafiken der P
 // globale Variablen
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_DIRECTX)
 D3DFORMAT				D3DFormat;						// Format der Primary Surface
 D3DCAPS8				d3dcaps;						// Möglichkeiten der Hardware
 LPDIRECT3D8				lpD3D			= NULL;			// Direct3D Hauptobjekt
@@ -83,6 +86,7 @@ LPDIRECT3DSURFACE8		lpBackbuffer	= NULL;			// Der Backbuffer
 HWND					DesktopHWND		= NULL;			// Handle des Desktops
 HWND					g_hwnd			= NULL;			// Handle des Hauptfensters
 HINSTANCE				g_hinst;						// hinstance des Hauptfensters
+#endif
 
 bool					FixedFramerate		= false;		// true = Spiel mit 50 Frames laufen lassen
 														// false = Spiel so flüssig wie möglich laufen lassen
@@ -131,7 +135,9 @@ int WINDOWHEIGHT;
 // Variablen für den Spielablauf
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_DIRECTX)
 HBITMAP					SplashScreen = NULL;			// SplashScreen Grafik
+#endif
 PlayerClass				*pPlayer[2];					// Werte der Spieler
 HUDClass				*pHUD;							// Das HUD
 unsigned char			SpielZustand = CRACKTRO;		// Aktueller Zustand des Spieles
@@ -141,6 +147,7 @@ char					StringBuffer[100];				// Für die Int / String Umwandlung
 // Callback Funktion
 // --------------------------------------------------------------------------------------
 
+#if defined(PLATFORM_DIRECTX)
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 {
 	switch(message)
@@ -169,7 +176,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 				DeleteDC (hdcMem);
 				EndPaint (g_hwnd, &ps);
 
-				InvalidateRect (g_hwnd, NULL, false);	
+				InvalidateRect (g_hwnd, NULL, false);
 			}
 		} break;
 
@@ -189,7 +196,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 		case WM_ACTIVATE:
 		{
-			int Active = LOWORD(wparam);           // activation flag 
+			int Active = LOWORD(wparam);           // activation flag
 
 			if (Active == WA_INACTIVE)
 			{
@@ -202,11 +209,11 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 				GamePaused = true;
 			}
 			else
-			{				
+			{
 				if (pSoundManager != NULL)
 					pSoundManager->PlayPaused();
 
-				GamePaused = false;				
+				GamePaused = false;
 			}
 
 		} break;
@@ -217,6 +224,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 	//unbearbeitete Nachrichten zurückliefern
 	return(DefWindowProc(hwnd, message, wparam, lparam));
 }
+#endif
 
 // --------------------------------------------------------------------------------------
 // File Exists Funktion
@@ -264,7 +272,7 @@ void FillCommandLineParams(void)
 	int windowpos;
 	int listpos;
 	int levelpos;
-	char buffer[256];	
+	char buffer[256];
 //	char *temppos;
 
 	// windowmode?
@@ -288,7 +296,7 @@ void FillCommandLineParams(void)
 			buffer[i] = CommandLineParams.Params[listpos + i];
 		}
 
-		buffer[i] = 0;		
+		buffer[i] = 0;
 		strcpy_s(CommandLineParams.OwnLevelList, strlen(buffer) + 1, buffer);
 	}
 
@@ -309,7 +317,7 @@ void FillCommandLineParams(void)
 			buffer[i] = CommandLineParams.Params[levelpos + i];
 		}
 
-		buffer[i] = 0;		
+		buffer[i] = 0;
 		strcpy_s(CommandLineParams.UserLevelName, strlen(buffer) + 1, buffer);
 	}
 
@@ -319,14 +327,26 @@ void FillCommandLineParams(void)
 // Win-Main Funktion
 // --------------------------------------------------------------------------------------
 
-int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace, 
+#if defined(PLATFORM_DIRECTX)
+int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 				   LPSTR lpcmdline,		int nshowcmd)
 {
+#elif defined(PLATFORM_SDL)
+int main(int argc, char *argv[])
+{
+    HWND g_hwnd = 0;
+    HINSTANCE hinstance = 0;
+    //int nshowcmd = argc;
+    const char* lpcmdline = argv[argc-1];
+#endif
+
 	GamePaused = false;
 
+#if defined(PLATFORM_DIRECTX)
 	WNDCLASSEX			winclass;							// eigene Windows-Klasse
-	MSG					message;							// Message	
+	MSG					message;							// Message
 	RECT				rect;								// Grösse des Desktops
+#endif
 
 	// evtle Parameter holen und Typ des Parameters rausfinden
 	strcpy_s (CommandLineParams.Params, 1, "");
@@ -334,12 +354,12 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 	if (strlen(lpcmdline) != 0)
 		strcpy_s (CommandLineParams.Params, strlen(lpcmdline) + 1, lpcmdline);
 
-	FillCommandLineParams();	
+	FillCommandLineParams();
 
 	if (CommandLineParams.RunWindowMode)
 	{
 		WINDOWWIDTH	 = 1024;
-		WINDOWHEIGHT = 768;	
+		WINDOWHEIGHT = 768;
 	}
 	else
 	{
@@ -347,6 +367,7 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 		WINDOWHEIGHT = 109;
 	}
 
+#if defined(PLATFORM_DIRECTX)
 	// Desktop Window holen und Grösse auslesen (damit wir unser Fenster in der Mitte des Screens
 	// positionnieren können)
 	DesktopHWND = GetDesktopWindow();
@@ -362,7 +383,7 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 	Protokoll.WriteText(">-------------------------<\n", false);
 	Protokoll.WriteText("Logfile date: ", false);
 	strcpy_s(StringBuffer, __DATE__);	Protokoll.WriteText(StringBuffer, false); Protokoll.WriteText(" - ", false);
-	strcpy_s(StringBuffer, __TIME__);	Protokoll.WriteText(StringBuffer, false); 
+	strcpy_s(StringBuffer, __TIME__);	Protokoll.WriteText(StringBuffer, false);
 
 	Protokoll.WriteText("\n\n>-------------<\n", false);
 	Protokoll.WriteText(    "| Init Window |\n", false);
@@ -399,9 +420,9 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 		style = WS_OVERLAPPED	|						// Fenster Style
 				WS_CAPTION		|
 				WS_SYSMENU		|
-				WS_BORDER		| 
-				WS_MINIMIZEBOX	| 
-				WS_MAXIMIZEBOX	| 
+				WS_BORDER		|
+				WS_MINIMIZEBOX	|
+				WS_MAXIMIZEBOX	|
 				WS_SIZEBOX	    |
 				WS_VISIBLE;
 	else
@@ -436,9 +457,10 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 
 	ShowWindow(g_hwnd, nshowcmd);						// Fenster anzeigen (sicher ist sicher)
 	UpdateWindow(g_hwnd);								// Fenster-infos updaten
+#endif
 
 //----- Spiel-Initialisierung
-	
+
 	if(!GameInit(g_hwnd, hinstance))
 	{
 		Protokoll.WriteText("\n-> GameInit error!\n\n", true);
@@ -447,19 +469,21 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 	else
 		Protokoll.WriteText("\n-> GameInit successfull!\n\n", false);
 
-//----- Main-Loop 
+//----- Main-Loop
 
 	while(GameRunning == true)
 	{
+#if defined(PLATFORM_DIRECTX)
 		while (PeekMessage (&message, NULL, 0, 0, PM_REMOVE))	// Nachricht vom Stapel holen
 		{														// und löschen
 			TranslateMessage(&message);							// Nachricht überetzen
 			DispatchMessage(&message);							// Nachricht an WinProc weiterleiten
 			UpdateWindow(g_hwnd);
-		}		
+		}
+#endif
 
 		try
-		{			
+		{
 			if (GamePaused == false)
 			{
 				// Main Loop
@@ -480,9 +504,9 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 				//
 				if (FixedFramerate == true)
 				{
-					pTimer->SetMaxFPS (60);			
+					pTimer->SetMaxFPS (60);
 					SpeedFaktor = 1.0f / 60.0f * pTimer->GetMoveSpeed();
-				} 
+				}
 				else
 				{
 					//pTimer->SetMaxFPS (0);
@@ -506,7 +530,7 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 			sprintf_s (Buffer, "Fehler! Unbehandelte Ausname\n %s", str);
 			Protokoll.WriteText (Buffer, true);
 			GameRunning = false;
-		}		
+		}
 	}
 
 //----- Spiel verlassen
@@ -525,17 +549,22 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 	if (Protokoll.delLogFile == true)
 		DeleteFile("Game_Log.txt");
 
+#if defined(PLATFORM_DIRECTX)
 	return(message.wParam);										// Rückkehr zu Windows
+#elif defined(PLATFORM_SDL)
+    return 0;
+#endif
 }
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 // GameInit, initialisiert die DX Objekte
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 
 bool GameInit(HWND hwnd, HINSTANCE hinstance)
 {
 	options_Detail = DETAIL_LOW;
 
+#if defined(PLATFORM_DIRECTX)
 	// Language Files
 	HWND	ComboBoxLanguageFiles	= NULL;
 	ComboBoxLanguageFiles = CreateWindow("COMBOBOX",
@@ -558,6 +587,7 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
 	{
 		SendMessage (ComboBoxLanguageFiles, CB_GETLBTEXT, i, (LPARAM) LanguageFiles [i]);
 	}
+#endif
 
 	Protokoll.WriteText("\n>--------------------<\n", false);
 	Protokoll.WriteText(  "| GameInit gestartet |\n", false);
@@ -571,7 +601,7 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
 	{
 		Protokoll.WriteText("\n-> DirectInput8 Initialisierung Fehler ...!\n", true);
 		return false;
-	}	
+	}
 
 	// Sound Manager initialisieren
 	pSoundManager = new CSoundManager();
@@ -581,48 +611,50 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
 	{
 		Protokoll.WriteText("\n-> Direct3D Initialisierung Fehler ...!\n", true);
 		return false;
-	}	
+	}
 
 	// Splash-Screen nicht mehr anzeigen
 	NochKeinFullScreen = false;
-	
+
 #ifdef SHOW_CRACKTRO
-	Cracktro = new CCracktro();	
+	Cracktro = new CCracktro();
 	SpielZustand = CRACKTRO;
 #endif
 
 	return true;
 }
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 // Textur von Spieler 2 anpassen
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 
 void ConvertPlayerTexture(DirectGraphicsSprite *pTexture)
 {
+    // PICKLE TODO
+#if defined(PLATFORM_DIRECTX)
 	HRESULT hr;
-	D3DLOCKED_RECT pLockedRect; 
+	D3DLOCKED_RECT pLockedRect;
 	int width, height, r, g, b, a, col, temp;
 	BYTE  *pRow;
 	DWORD *pPixel;
 
 	// Textur locken
-	hr = pTexture->itsTexture->LockRect(0, &pLockedRect, 0, 0); 
+	hr = pTexture->itsTexture->LockRect(0, &pLockedRect, 0, 0);
 	if (hr != D3D_OK)
 		return;
 
 	// Breite, Höhe und Pitch setzen
 	width  = (int)pTexture->itsXSize;
 	height = (int)pTexture->itsYSize;
-	pRow = (BYTE*)pLockedRect.pBits;	
+	pRow = (BYTE*)pLockedRect.pBits;
 
 	for (int y = 0;y < height;y++)
-	{ 
-		pPixel = (DWORD*)pRow; //pPixel auf Zeilenstart setzen 
-		pRow += pLockedRect.Pitch; //Zeilenpointer eine Zeile weiter.. 		
+	{
+		pPixel = (DWORD*)pRow; //pPixel auf Zeilenstart setzen
+		pRow += pLockedRect.Pitch; //Zeilenpointer eine Zeile weiter..
 
 		for (int x = 0; x < width; x++)
-		{ 
+		{
 			// farbe holen
 			col = (int)*pPixel;
 			a = (col >> 24) & 255;
@@ -648,8 +680,8 @@ void ConvertPlayerTexture(DirectGraphicsSprite *pTexture)
 			}
 
 			temp = 0;
-			
-			*pPixel = D3DCOLOR_RGBA(b, g, r, a); 			
+
+			*pPixel = D3DCOLOR_RGBA(b, g, r, a);
 
 			*pPixel++;
 		}
@@ -657,6 +689,7 @@ void ConvertPlayerTexture(DirectGraphicsSprite *pTexture)
 
 	// Textur wieder freigeben
 	pTexture->itsTexture->UnlockRect(0);
+#endif
 }
 
 void CreatePlayer2Texture(void)
@@ -678,20 +711,20 @@ void CreatePlayer2Texture(void)
 	ConvertPlayerTexture(&PlayerDiagonal[1]);
 }
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 // GameInit2, initialisiert den Rest nach dem Cracktro
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 
 bool GameInit2(void)
-{	
+{
 	// Player initialisieren
-	pPlayer[0]  = new PlayerClass();	
+	pPlayer[0]  = new PlayerClass();
 	pPlayer[1] = new PlayerClass();
 	pPlayer[0]->SoundOff = 0;
 	pPlayer[1]->SoundOff = 1;
 	memset(pPlayer[0], 0, sizeof(pPlayer[0]));
 	memset(pPlayer[1], 0, sizeof(pPlayer[1]));
-	
+
 	// Konfiguration laden
 	if (LoadConfig() == false)
 	{
@@ -706,14 +739,14 @@ bool GameInit2(void)
 
 	// Menu initialisieren
 	pMenuFont->LoadFont("menufont.png", 448, 256, 28, 28, 16, 7);
-	pMenu = new MenuClass();	
+	pMenu = new MenuClass();
 
 
 	// Fonts laden
 	pDefaultFont->LoadFont  ("smallfont.bmp", 320, 84, 10, 12, 32, 7);
 
-	LoadingScreen.LoadImage("Loading.bmp",    360, 60, 360, 60, 1, 1);
-	LoadingBar.LoadImage   ("Loadingbar.bmp", 318, 19, 318, 19, 1, 1);
+	LoadingScreen.LoadImage("loading.bmp",    360, 60, 360, 60, 1, 1);
+	LoadingBar.LoadImage   ("loadingbar.bmp", 318, 19, 318, 19, 1, 1);
 	LoadingProgress = 0.0f;
 	LoadingItemsToLoad = 345;
 	LoadingItemsLoaded = 0;
@@ -736,9 +769,9 @@ bool GameInit2(void)
 	pTileEngine->SetScrollSpeed(1.0f, 0.0f);
 
 	// HUD initialisieren
-	pHUD = new HUDClass();				
+	pHUD = new HUDClass();
 
-	InitReplacers();	
+	InitReplacers();
 
 	// Sounds laden
 	pSoundManager->LoadWave("spreadshot.wav",   SOUND_SPREADSHOT, false);
@@ -779,7 +812,7 @@ bool GameInit2(void)
 	pSoundManager->LoadWave("ammo.wav",			SOUND_AMMO, false);
 	pSoundManager->LoadWave("kotzen.wav",		SOUND_KOTZEN, false);
 	pSoundManager->LoadWave("made.wav",			SOUND_MADE, false);
-	pSoundManager->LoadWave("droneshot.wav",	SOUND_DRONE, false);	
+	pSoundManager->LoadWave("droneshot.wav",	SOUND_DRONE, false);
 	pSoundManager->LoadWave("waterdrop.wav",	SOUND_DROP, false);
 	pSoundManager->LoadWave("thunder.wav",		SOUND_THUNDER, false);
 	pSoundManager->LoadWave("upgrade.wav",		SOUND_UPGRADE, false);
@@ -845,22 +878,22 @@ bool GameInit2(void)
 	pSoundManager->LoadWave("blitzhit.wav",     SOUND_BLITZHIT, false);
 	pSoundManager->LoadWave("blitzhit2.wav",    SOUND_BLITZHIT2, false);
 	pSoundManager->LoadWave("bratlaser.wav",    SOUND_BRATLASER, false);
-	pSoundManager->LoadWave("metal.wav",	    SOUND_KLONG, false);	
+	pSoundManager->LoadWave("metal.wav",	    SOUND_KLONG, false);
 
 	// restliche musiken laden
 	pSoundManager->LoadSong("flugsack.it",	MUSIC_FLUGSACK);
 	pSoundManager->LoadSong("credits.it",	MUSIC_CREDITS);
 	pSoundManager->LoadSong("stageclear.it",MUSIC_STAGECLEAR);
 	pSoundManager->LoadSong("gameover.it",	MUSIC_GAMEOVER);
-	pSoundManager->LoadSong("highscore.it",	MUSIC_HIGHSCORE);	
-	pSoundManager->LoadSong("Punisher.it", MUSIC_PUNISHER);	
+	pSoundManager->LoadSong("highscore.it",	MUSIC_HIGHSCORE);
+	pSoundManager->LoadSong("Punisher.it", MUSIC_PUNISHER);
 
 	// Spieler grafiken laden
-	SchussFlamme[0].LoadImage("SchussFlamme.bmp",  76,  72,  38, 24, 2, 3);
-	SchussFlamme[1].LoadImage("SchussFlamme2.bmp", 80,  108,  40, 36, 2, 3);
-	SchussFlamme[2].LoadImage("SchussFlamme3.bmp", 48,  114,  24, 38, 2, 3);
+	SchussFlamme[0].LoadImage("schussflamme.bmp",  76,  72,  38, 24, 2, 3);
+	SchussFlamme[1].LoadImage("schussflamme2.bmp", 80,  108,  40, 36, 2, 3);
+	SchussFlamme[2].LoadImage("schussflamme3.bmp", 48,  114,  24, 38, 2, 3);
 
-	SchussFlammeFlare.LoadImage("SchussFlammeFlare.bmp", 140,  140,  140, 140, 1, 1);
+	SchussFlammeFlare.LoadImage("schussflammeflare.bmp", 140,  140,  140, 140, 1, 1);
 
 	for (int p = 0; p < 2; p++)
 	{
@@ -877,10 +910,10 @@ bool GameInit2(void)
 		PlayerRun[p].LoadImage("hurri_laufen.png",  350,  320, 70, 80, 5, 4);
 
 		// Diagonal schauen/schiessen
-		PlayerDiagonal[p].LoadImage("hurri_shootdiagonal.png",  140,  80, 70, 80, 2, 1);		
+		PlayerDiagonal[p].LoadImage("hurri_shootdiagonal.png",  140,  80, 70, 80, 2, 1);
 
 		// Hoch schauen/schiessen
-		PlayerOben[p].LoadImage("hurri_shootup.png",  140,  80, 70, 80, 2, 1);		
+		PlayerOben[p].LoadImage("hurri_shootup.png",  140,  80, 70, 80, 2, 1);
 
 		// Ducken
 		PlayerCrouch[p].LoadImage("hurri_crouch.png",  140,  80, 70, 80, 2, 1);
@@ -897,21 +930,21 @@ bool GameInit2(void)
 		PlayerPiss[p].LoadImage("hurri_pissen.png", 490, 240, 70, 80, 7, 3);
 
 		// Flugsack
-		PlayerRide[p].LoadImage  ("Hurri_ride.png",   450, 480, 90,120, 5, 4);
+		PlayerRide[p].LoadImage  ("hurri_ride.png",   450, 480, 90,120, 5, 4);
 
 		// Stachelrad
-		PlayerRad[p].LoadImage   ("Hurri_rad.bmp",    140,  70, 35, 35, 4, 2);
+		PlayerRad[p].LoadImage   ("hurri_rad.bmp",    140,  70, 35, 35, 4, 2);
 	}
 
-	Blitzstrahl[0].LoadImage("Blitzstrahl1.bmp",32,  32, 32, 32, 1, 1);
-	Blitzstrahl[1].LoadImage("Blitzstrahl2.bmp",32,  32, 32, 32, 1, 1);
-	Blitzstrahl[2].LoadImage("Blitzstrahl3.bmp",32,  32, 32, 32, 1, 1);
-	Blitzstrahl[3].LoadImage("Blitzstrahl4.bmp",32,  32, 32, 32, 1, 1);
-	Blitzflash[0].LoadImage("Blitzflash1.bmp",	66,  64, 66, 64, 1, 1);
-	Blitzflash[1].LoadImage("Blitzflash2.bmp",	66,  64, 66, 64, 1, 1);
-	Blitzflash[2].LoadImage("Blitzflash3.bmp",	66,  64, 66, 64, 1, 1);
-	Blitzflash[3].LoadImage("Blitzflash4.bmp",	66,  64, 66, 64, 1, 1);
-	BlitzTexture.LoadImage("Blitztexture.bmp", 64, 64, 64, 64, 1, 1);
+	Blitzstrahl[0].LoadImage("blitzstrahl1.bmp",32,  32, 32, 32, 1, 1);
+	Blitzstrahl[1].LoadImage("blitzstrahl2.bmp",32,  32, 32, 32, 1, 1);
+	Blitzstrahl[2].LoadImage("blitzstrahl3.bmp",32,  32, 32, 32, 1, 1);
+	Blitzstrahl[3].LoadImage("blitzstrahl4.bmp",32,  32, 32, 32, 1, 1);
+	Blitzflash[0].LoadImage("blitzflash1.bmp",	66,  64, 66, 64, 1, 1);
+	Blitzflash[1].LoadImage("blitzflash2.bmp",	66,  64, 66, 64, 1, 1);
+	Blitzflash[2].LoadImage("blitzflash3.bmp",	66,  64, 66, 64, 1, 1);
+	Blitzflash[3].LoadImage("blitzflash4.bmp",	66,  64, 66, 64, 1, 1);
+	BlitzTexture.LoadImage("blitztexture.bmp", 64, 64, 64, 64, 1, 1);
 
 	if (!GameRunning)
 		return false;
@@ -922,13 +955,13 @@ bool GameInit2(void)
 	pConsole = new ConsoleClass();
 
 	pSoundManager->SetAllSongVolumes();
-	
+
 	return true;
 }
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 // GameExit, de-initialisieren der DX Objekte, Sprites etc.
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 
 bool GameExit(void)
 {
@@ -952,7 +985,7 @@ bool GameExit(void)
 
 	// Menu beenden
 	delete(pMenu);
-	Protokoll.WriteText("-> Hauptmenu freigegeben\n", false);	
+	Protokoll.WriteText("-> Hauptmenu freigegeben\n", false);
 
 	// HUD freigeben
 	delete(pHUD);
@@ -990,12 +1023,13 @@ bool GameExit(void)
 	return true;
 }
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 // Heartbeat, der Mainloop. der bei jedem Frame durchlaufen wird
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 
 bool Heartbeat(void)
 {
+#if defined(PLATFORM_DIRECTX)
 	// Test cooperative level
     HRESULT hr;
 
@@ -1019,23 +1053,24 @@ bool Heartbeat(void)
 		hr = lpD3DDevice->Reset(&DirectGraphics.d3dpp);
 
 		if (hr == D3D_OK)
-		{			
+		{
 			DirectGraphics.SetDeviceInfo();
 		}
 		else
 		{
 			DXTRACE_ERR("lpD3DDevice->Reset", hr);
-			return false;			
+			return false;
 		}
-	}	
+	}
 
 	lpD3DDevice->BeginScene();					// Mit dem Darstellen beginnen
-	
+#endif
+
 	switch (SpielZustand)
 	{
 
 		// Cracktro
-		case CRACKTRO :					
+		case CRACKTRO :
 		{
 #ifdef SHOW_CRACKTRO
 
@@ -1054,7 +1089,7 @@ bool Heartbeat(void)
 					return false;
 
 				SpielZustand = MAINMENU;
-				
+
 #endif
 //		pOuttro = new OuttroClass();
 //		SpielZustand = OUTTRO;
@@ -1065,8 +1100,8 @@ bool Heartbeat(void)
 		} break;
 
 		//----- Intro anzeigen ?
-		case INTRO :					
-		{	
+		case INTRO :
+		{
 			// Laufen lassen, bis beendet
 			if (pIntro->Zustand != INTRO_DONE)
 			{
@@ -1077,17 +1112,17 @@ bool Heartbeat(void)
 					pIntro->EndIntro();
 			}
 			else
-			{			
+			{
 				pSoundManager->StopSong(MUSIC_INTRO, false);
-				delete(pIntro);							
-				InitNewGame();				
-				InitNewGameLevel(1);				
+				delete(pIntro);
+				InitNewGame();
+				InitNewGameLevel(1);
 				SpielZustand = GAMELOOP;
 			}
 		} break;
 
 		//----- Outtro anzeigen ?
-		case OUTTRO :					
+		case OUTTRO :
 		{
 			pOuttro->DoOuttro();
 
@@ -1096,7 +1131,7 @@ bool Heartbeat(void)
 				delete(pOuttro);
 				pSoundManager->StopSong(MUSIC_OUTTRO, false);
 				Stage = MAX_LEVELS;
-				pMenu->CheckForNewHighscore();				
+				pMenu->CheckForNewHighscore();
 			}
 		} break;
 
@@ -1126,7 +1161,7 @@ bool Heartbeat(void)
 	{
 		if (DebugMode == true)
 			DebugMode = false;
-		else 
+		else
 			DebugMode = true;
 		while(KeyDown(DIK_F10))
 			DirectInput.UpdateTastatur();
@@ -1138,7 +1173,7 @@ bool Heartbeat(void)
 	pGUI->Run();
 
 	// Konsole abhandeln
-	pConsole->DoConsole();	
+	pConsole->DoConsole();
 
 jump:
 
@@ -1146,20 +1181,19 @@ jump:
 
 	// Screenshot machen
 #ifdef _DEBUG
-	if(KeyDown(DIK_F12)) 
+	if(KeyDown(DIK_F12))
 		DirectGraphics.TakeScreenshot("HurricanShot", 640, 480);
 
 	// Screenshot machen
-	if(KeyDown(DIK_F9)) 
+	if(KeyDown(DIK_F9))
 		pGUI->HideBox();
 #endif
-
 	return true;
 }
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 // So Firlefanz wie FPS usw anzeigen
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 
 void ShowDebugInfo(void)
 {
@@ -1223,10 +1257,10 @@ void ShowDebugInfo(void)
 //----------------------------------------------------------------------------
 
 void StartOuttro(void)
-{	
+{
 	Stage = -1;
 	pOuttro = new OuttroClass();
-	SpielZustand = OUTTRO;	
+	SpielZustand = OUTTRO;
 }
 
 //----------------------------------------------------------------------------

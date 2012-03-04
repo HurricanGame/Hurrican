@@ -42,25 +42,37 @@ void GegnerColumn::DoDraw(void)
 	if (Winkel > 360) Winkel -= 360;
 	if (Winkel < 0)	  Winkel += 360;
 	D3DXMatrixRotationZ  (&matRot, DegreetoRad[Winkel]);
-	
+
 	D3DXMatrixTranslation(&matTrans, float (-(xPos-pTileEngine->XOffset+40)),float (-(yPos-pTileEngine->YOffset+100)), 0.0f);		// Transformation zum Ursprung
 	D3DXMatrixTranslation(&matTrans2,float   (xPos-pTileEngine->XOffset+40), float (  yPos-pTileEngine->YOffset+100),  0.0f);		// Transformation wieder zurück
-	
+
 	D3DXMatrixIdentity	 (&matWorld);
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans);		// Verschieben
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRot);			// rotieren
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);		// und wieder zurück verschieben
-	
+
 	// rotierte Matrix setzen
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#if defined(PLATFORM_DIRECTX)
+    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    D3DXMATRIXA16 matModelView;
+    matrixmode( GL_MODELVIEW );
+    matModelView = matWorld * g_matView;
+    glLoadMatrixf( matModelView.data() );
+#endif
 
 
-	pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-pTileEngine->XOffset), 
+	pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-pTileEngine->XOffset),
 										    (float)(yPos-pTileEngine->YOffset), 0, 0xFFFFFFFF);
 
 	// Normale Projektions-Matrix wieder herstellen
 	D3DXMatrixRotationZ (&matWorld, 0.0f);
-	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#if defined(PLATFORM_DIRECTX)
+    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    matModelView = matWorld * g_matView;
+    glLoadMatrixf( matModelView.data() );
+#endif
 
 	SetScreenShake();
 }
@@ -73,7 +85,7 @@ void GegnerColumn::DoKI(void)
 {
 	// Säule wird umgeschossen ?
 	//
-	if (Energy < 100.0f && 
+	if (Energy < 100.0f &&
 		Handlung != GEGNER_EXPLODIEREN)
 	{
 		Handlung = GEGNER_EXPLODIEREN;
@@ -86,7 +98,7 @@ void GegnerColumn::DoKI(void)
 
 		FallSpeed = 2.0f;
 
-		pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEFALL);		
+		pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEFALL);
 		pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_COLUMN);
 		pPartikelSystem->ThunderAlpha = 255;
 		pPartikelSystem->ThunderColor [0] = 255;
@@ -104,13 +116,13 @@ void GegnerColumn::DoKI(void)
 		// Säule fällt gerade um ?
 		//
 		case GEGNER_EXPLODIEREN:
-		{			
+		{
 			FallSpeed += 0.5f SYNC;
 			AnimCount += FallSpeed SYNC;
 
 			FallValue += 0.5f SYNC;
 			if (FallValue < 6.0f)
-				ScreenWinkel -= 0.5f SYNC;			
+				ScreenWinkel -= 0.5f SYNC;
 
 			Energy = 100.0f;
 
@@ -119,7 +131,7 @@ void GegnerColumn::DoKI(void)
 			if (AnimCount >= 90 || AnimCount <= -90.0f)
 				Energy = 0.0f;
 		} break;
-	}	
+	}
 
 	// Testen, ob der Spieler die Säule berührt hat
 	//

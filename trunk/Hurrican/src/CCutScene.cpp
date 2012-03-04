@@ -1,6 +1,6 @@
 // Datei : CCutScene.cpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Klasse für die CutScenes zwischen zwei Stages
 //
@@ -37,7 +37,7 @@ void PlayCutScene (int nr)
 	//
 	do
 	{
-		DirectInput.UpdateTastatur ();	
+		DirectInput.UpdateTastatur ();
 
 	} while (KeyDown(DIK_ESCAPE));
 
@@ -47,10 +47,14 @@ void PlayCutScene (int nr)
 	{
 		// CutScene rendern
 		//
+#if defined(PLATFORM_DIRECTX)
 		lpD3DDevice->BeginScene();
+#endif
 		pScene->RunCutScene();
+#if defined(PLATFORM_DIRECTX)
 		lpD3DDevice->EndScene();
-		DirectGraphics.ShowBackBuffer();		
+#endif
+		DirectGraphics.ShowBackBuffer();
 
 		// Keyboard abfragen
 		//
@@ -94,7 +98,7 @@ CCutScene::CCutScene()
 // --------------------------------------------------------------------------------------
 
 CCutScene::~CCutScene()
-{	
+{
 } // Destruktor
 
 
@@ -111,7 +115,7 @@ CCutScene::~CCutScene()
 CCutScene1::CCutScene1 (void)
 {
 	BackGround = new DirectGraphicsSprite ();
-	BackGround->LoadImage ("static_jungle.png", 640, 480, 640, 480, 1, 0);
+	BackGround->LoadImage ("static_jungle.bmp", 640, 480, 640, 480, 1, 0);
 
 } // CCutScene1 Konstruktor
 
@@ -119,9 +123,9 @@ CCutScene1::CCutScene1 (void)
 
 void CCutScene1::RunCutScene (void)
 {
-	static float yscroll = 0.0f;
+	//static float yscroll = 0.0f; // PICKLE not used
 
-	BackGround->RenderSprite (0, 0, 0xFFFFFFFF);	
+	BackGround->RenderSprite (0, 0, 0xFFFFFFFF);
 
 	for (int i = 0; i < 15; i++)
 	{
@@ -130,7 +134,7 @@ void CCutScene1::RunCutScene (void)
 
 		// CutScene Text anzeigen, sofern ausgefüllt
 //		if (strcmp (TextArray [TEXT_CUTSCENE1_1 + i], "-") != 0)
-//			pDefaultFont->DrawText (20, 480 - m_fYScroll + i * 12, TextArray [TEXT_CUTSCENE1_1 + i], D3DCOLOR_RGBA (255, 255, 255, a));	
+//			pDefaultFont->DrawText (20, 480 - m_fYScroll + i * 12, TextArray [TEXT_CUTSCENE1_1 + i], D3DCOLOR_RGBA (255, 255, 255, a));
 	}
 
 	// Schwarzes Rechteck zum Faden anzeigen?
@@ -142,7 +146,7 @@ void CCutScene1::RunCutScene (void)
 		int a = int (m_fFadeAlpha);
 
 		// Stop Fading
-		if (m_iFading == -1 && a < 0)   
+		if (m_iFading == -1 && a < 0)
 			m_iFading = 0;
 
 
