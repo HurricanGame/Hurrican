@@ -13,7 +13,9 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
+#ifndef __AROS__
 #include <sys/timeb.h>
+#endif
 #include <time.h>
 #include <stdio.h>
 #include "Main.h"
