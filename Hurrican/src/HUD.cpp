@@ -13,7 +13,7 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
-#include "HUD.H"
+#include "HUD.h"
 #include "DX8Font.h"
 #include "DX8Graphics.h"
 #include "Gameplay.h"
