@@ -109,7 +109,7 @@ void GegnerClass::Render(void)
 		{
 			DirectGraphics.SetColorKeyMode();
 
-			if (pGegnerGrafix[GegnerArt]->itsTexture != NULL)
+			if (pGegnerGrafix[GegnerArt]->itsTexture != 0)
 				pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
 													   (float)(yPos-pTileEngine->YOffset),
 													   Anim, Color, mirrored);
@@ -139,7 +139,7 @@ void GegnerClass::Render(void)
 			if (OwnDraw  == false &&
 				DontMove == false)
 			{
-				if (pGegnerGrafix[GegnerArt]->itsTexture != NULL)
+				if (pGegnerGrafix[GegnerArt]->itsTexture != 0)
 					for (int i = 0; i < 2; i++)
 						pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
 															   (float)(yPos-pTileEngine->YOffset),
