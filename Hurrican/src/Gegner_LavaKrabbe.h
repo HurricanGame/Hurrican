@@ -17,3 +17,4 @@ class GegnerLavaKrabbe : public GegnerClass
 };
 
 #endif
+
