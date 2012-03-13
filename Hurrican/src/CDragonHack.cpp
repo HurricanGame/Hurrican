@@ -20,7 +20,7 @@
 
 CDragonHack::CDragonHack(void)
 {
-	m_GFX.LoadImage("drache_klein.bmp", 160, 160, 160, 40, 1, 4);
+	m_GFX.LoadImage("drache_klein.png", 160, 160, 160, 40, 1, 4);
 
 	m_AnimCount = 0.0f;
 	m_xPos = 0.0f;
