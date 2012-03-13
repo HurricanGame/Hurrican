@@ -39,7 +39,7 @@ GegnerSchneeKoenig::GegnerSchneeKoenig(int Wert1, int Wert2, bool Light)
 	WackelAnim		= 0.0f;
 	DrawNow			= false;
 
-	Knarre.LoadImage("schneekoenig_knarre.bmp", 21, 94, 21, 94, 1, 1);
+	Knarre.LoadImage("schneekoenig_knarre.png", 21, 94, 21, 94, 1, 1);
 	Laser.LoadImage("redlaser.bmp", 32, 32, 32, 32, 1, 1);
 }
 
