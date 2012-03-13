@@ -34,10 +34,10 @@ GegnerRiesenSpinne::GegnerRiesenSpinne(int Wert1, int Wert2, bool Light)
 	ShotCount = 0;
 
 	// Zusätzliche Grafiken für die Beine
-	Head.LoadImage("spiderboss_kopf.bmp",  127, 92, 127, 92, 1, 1);
-	Legs[0].LoadImage("spiderboss_foot.bmp",  305, 388, 61, 97, 5, 4);
-	Legs[1].LoadImage("spiderboss_leg2.bmp",  320, 228, 32, 114, 10, 2);
-	Legs[2].LoadImage("spiderboss_leg1.bmp",  340, 308, 34, 154, 10, 2);
+	Head.LoadImage("spiderboss_kopf.png",  127, 92, 127, 92, 1, 1);
+	Legs[0].LoadImage("spiderboss_foot.png",  305, 388, 61, 97, 5, 4);
+	Legs[1].LoadImage("spiderboss_leg2.png",  320, 228, 32, 114, 10, 2);
+	Legs[2].LoadImage("spiderboss_leg1.png",  340, 308, 34, 154, 10, 2);
 }
 
 // --------------------------------------------------------------------------------------
