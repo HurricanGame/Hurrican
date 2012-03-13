@@ -30,10 +30,10 @@
 OuttroClass::OuttroClass(void)
 {
 	Background.LoadImage("endscreen_background.bmp", 640, 480, 640, 480, 1, 1);
-	Tower.LoadImage("endscreen_turm.bmp", 199, 315, 199, 315, 1, 1);
-	Henry.LoadImage("endscreen_henry.bmp", 237, 88, 237, 88, 1, 1);
-	Reiter[0].LoadImage("endritt.bmp", 760, 520, 190, 260, 4, 2);
-	Reiter[1].LoadImage("endritt.bmp", 760, 520, 190, 260, 4, 2);
+	Tower.LoadImage("endscreen_turm.png", 199, 315, 199, 315, 1, 1);
+	Henry.LoadImage("endscreen_henry.png", 237, 88, 237, 88, 1, 1);
+	Reiter[0].LoadImage("endritt.png", 760, 520, 190, 260, 4, 2);
+	Reiter[1].LoadImage("endritt.png", 760, 520, 190, 260, 4, 2);
 	ConvertPlayerTexture(&Reiter[1]);
 
 	Zustand		 = OUTTRO_FADEIN;
