@@ -238,3 +238,4 @@ extern int					CurrentShotTexture;
 extern float				WinkelUebergabe;
 
 #endif
+

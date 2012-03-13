@@ -276,3 +276,4 @@ extern DirectGraphicsSprite	*pPartikelGrafix[MAX_PARTIKELGFX];	// Grafiken der P
 extern int					CurrentPartikelTexture;
 
 #endif
+

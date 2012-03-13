@@ -70,3 +70,4 @@ class ConsoleClass
 extern ConsoleClass			*pConsole;
 
 #endif
+

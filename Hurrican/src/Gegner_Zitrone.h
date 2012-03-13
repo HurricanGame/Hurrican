@@ -25,3 +25,4 @@ class GegnerZitrone : public GegnerClass
 };
 
 #endif
+

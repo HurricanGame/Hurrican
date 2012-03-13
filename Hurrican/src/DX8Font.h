@@ -82,3 +82,4 @@ extern DirectGraphicsFont *pDefaultFont;
 extern DirectGraphicsFont *pFont;
 
 #endif
+
