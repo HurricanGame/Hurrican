@@ -31,9 +31,9 @@ GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light)
 	//
 	Display.LoadImage("spinnenmaschine_states.bmp", 280, 84, 70, 84, 4, 1);
 
-	Deckel.LoadImage("spinnenmaschine_topf.bmp", 372, 264, 186, 44, 2, 6);
-	Unten[0].LoadImage ("spinnenmaschine_unten.bmp", 228, 129, 228, 129, 1, 1);
-	Unten[1].LoadImage ("spinnenmaschine_unten2.bmp", 228, 129, 228, 129, 1, 1);
+	Deckel.LoadImage("spinnenmaschine_topf.png", 372, 264, 186, 44, 2, 6);
+	Unten[0].LoadImage ("spinnenmaschine_unten.png", 228, 129, 228, 129, 1, 1);
+	Unten[1].LoadImage ("spinnenmaschine_unten2.png", 228, 129, 228, 129, 1, 1);
 
 	Strahl.LoadImage("blitztexture.bmp", 64, 64, 64, 64, 1, 1);
 
