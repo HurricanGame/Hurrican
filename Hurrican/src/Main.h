@@ -65,3 +65,4 @@ extern sCommandLineParams CommandLineParams;			// Externer Paramter?
 void ShowDebugInfo(void);							// Allen möglichen Kram anzeigen
 
 #endif
+

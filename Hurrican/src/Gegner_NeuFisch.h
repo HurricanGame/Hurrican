@@ -19,3 +19,4 @@ class GegnerNeuFisch : public GegnerClass
 };
 
 #endif
+

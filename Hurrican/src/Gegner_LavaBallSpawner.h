@@ -17,3 +17,4 @@ class GegnerLavaBallSpawner : public GegnerClass
 };
 
 #endif
+
