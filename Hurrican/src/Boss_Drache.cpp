@@ -62,12 +62,12 @@ GegnerDrache::GegnerDrache(int Wert1, int Wert2, bool Light)
 		HeadLocked = true;
 	}
 
-	Arm.LoadImage("drache_arm.bmp", 126, 107, 126, 107, 1, 1);
-	Leg.LoadImage("drache_bein.bmp", 212, 85, 212, 85, 1, 1);
-	Head[0].LoadImage("drache_head.bmp", 105, 64, 105, 64, 1, 1);
-	Head[1].LoadImage("drache_head2.bmp", 93, 55, 93, 55, 1, 1);
-	Tail.LoadImage("drache_tail.bmp", 12, 29, 12, 29, 1, 1);
-	Spitze.LoadImage("drache_spitze.bmp", 46, 34, 46, 34, 1, 1);
+	Arm.LoadImage("drache_arm.png", 126, 107, 126, 107, 1, 1);
+	Leg.LoadImage("drache_bein.png", 212, 85, 212, 85, 1, 1);
+	Head[0].LoadImage("drache_head.png", 105, 64, 105, 64, 1, 1);
+	Head[1].LoadImage("drache_head2.png", 93, 55, 93, 55, 1, 1);
+	Tail.LoadImage("drache_tail.png", 12, 29, 12, 29, 1, 1);
+	Spitze.LoadImage("drache_spitze.png", 46, 34, 46, 34, 1, 1);
 }
 
 // --------------------------------------------------------------------------------------
