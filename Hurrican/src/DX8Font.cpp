@@ -95,7 +95,16 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
     if (temp == NULL) {
         return true;
     }
+
+#if 1
+    /* menufont.png: pixel at (0,0) (upper left corner) is part of a char/glyph,
+       so pick key from lower left corner. Maybe in DirectX image is flipped
+       vertically? */
+       
+    DWORD key = (((DWORD*)temp->pixels)[temp->w * (temp->h - 1)]);
+#else
     DWORD key = ((DWORD*)temp->pixels)[0];
+#endif
 
 /* // PICKLE Not OpenGLES compat, left for info
     int textureWidth, textureHeight;
