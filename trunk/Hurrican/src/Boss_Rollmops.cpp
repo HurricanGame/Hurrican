@@ -29,9 +29,9 @@ GegnerRollmops::GegnerRollmops(int Wert1, int Wert2, bool Light)
 	ShotCount 		= 0.0f;
 	Delay			= 0.0f;
 
-	Rollen.LoadImage("rollmops_rollen.bmp", 650, 260, 130, 130, 5, 2);
-	Aufklappen.LoadImage("rollmops_aufklappen.bmp", 390, 390, 130, 130, 3, 3);
-	Gun.LoadImage("rollmops_gun.bmp", 53, 52, 53, 52, 1, 1);
+	Rollen.LoadImage("rollmops_rollen.png", 650, 260, 130, 130, 5, 2);
+	Aufklappen.LoadImage("rollmops_aufklappen.png", 390, 390, 130, 130, 3, 3);
+	Gun.LoadImage("rollmops_gun.png", 53, 52, 53, 52, 1, 1);
 
 	for (int i = 0; i < NUM_KETTENGLIEDER; i++)
 	{
