@@ -40,12 +40,12 @@ GegnerTheWall::GegnerTheWall(int Wert1, int Wert2, bool Light)
 
 	// Zusätzliche Grafiken laden
 	//
-	Tuer.LoadImage("endbosstuer.bmp", 288, 185, 288, 185, 1, 1);
-	Kringel[0].LoadImage("endbosskringel.bmp", 192, 191, 192, 191, 1, 1);
-	Kringel[1].LoadImage("endbosskringel2.bmp", 570, 382, 190, 191, 3, 2);
-	Brain.LoadImage("endbosshirni.bmp", 129, 157, 38, 42, 2, 1);
-	Rahmen.LoadImage("endbossrahmen.bmp", 285, 217, 285,217, 1, 1);
-	Vorne.LoadImage("endbossmaschine_vorne.bmp", 136, 223, 136, 223, 1, 1);
+	Tuer.LoadImage("endbosstuer.png", 288, 185, 288, 185, 1, 1);
+	Kringel[0].LoadImage("endbosskringel.png", 192, 191, 192, 191, 1, 1);
+	Kringel[1].LoadImage("endbosskringel2.png", 570, 382, 190, 191, 3, 2);
+	Brain.LoadImage("endbosshirni.png", 129, 157, 38, 42, 2, 1);
+	Rahmen.LoadImage("endbossrahmen.png", 285, 217, 285,217, 1, 1);
+	Vorne.LoadImage("endbossmaschine_vorne.png", 136, 223, 136, 223, 1, 1);
 }
 
 // --------------------------------------------------------------------------------------
