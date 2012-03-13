@@ -19,3 +19,4 @@ class GegnerAuge : public GegnerClass
 };
 
 #endif
+
