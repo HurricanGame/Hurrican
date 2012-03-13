@@ -115,7 +115,7 @@ CCutScene::~CCutScene()
 CCutScene1::CCutScene1 (void)
 {
 	BackGround = new DirectGraphicsSprite ();
-	BackGround->LoadImage ("static_jungle.bmp", 640, 480, 640, 480, 1, 0);
+	BackGround->LoadImage ("static_jungle.png", 640, 480, 640, 480, 1, 0);
 
 } // CCutScene1 Konstruktor
 
