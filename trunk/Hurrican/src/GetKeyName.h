@@ -16,3 +16,4 @@
 //---------------------------------------------------------------------------------------
 
 const char *GetKeyName(int DIK_Code);			// Liefert den Namen der angegebenen Taste zurück
+
