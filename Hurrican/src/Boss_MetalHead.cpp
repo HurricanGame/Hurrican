@@ -52,7 +52,7 @@ GegnerMetalHead::GegnerMetalHead(int Wert1, int Wert2, bool Light)
 	Kiefer2.LoadImage ("metalhead_kiefer2.bmp",  131, 88, 131, 88, 1, 1);
 	Turbine.LoadImage ("metalhead_turbine.bmp",  98,  49, 98, 49, 1, 1);
 	Turbine2.LoadImage("metalhead_turbine2.bmp", 98,  49, 98, 49, 1, 1);
-	HalsGfx.LoadImage    ("metalhead_halsteil.bmp",  56,  16,  56,  16, 1, 1);
+	HalsGfx.LoadImage    ("metalhead_halsteil.png",  56,  16,  56,  16, 1, 1);
 	Flare.LoadImage   ("giantspiderflare.bmp", 128, 128, 128, 128, 1, 1);
 }
 
