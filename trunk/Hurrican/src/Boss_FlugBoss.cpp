@@ -55,11 +55,11 @@ GegnerFlugBoss::GegnerFlugBoss(int Wert1, int Wert2, bool Light)
 	Kanone_big.LoadImage    ("flugboss_kanone_fett.bmp",  21, 85, 21, 85, 1, 1);
 	Kanone_medium.LoadImage ("flugboss_kanone_klein.bmp", 11, 48, 11, 48, 1, 1);
 	Kanone_small.LoadImage  ("flugboss_kanone_mini.bmp",   8, 63,  8, 63, 1, 1);
-	Geschuetz.LoadImage     ("flugboss_geschuetz.bmp",  62, 97, 62, 97, 1, 1);
+	Geschuetz.LoadImage     ("flugboss_geschuetz.png",  62, 97, 62, 97, 1, 1);
 
 	Auge.LoadImage		    ("flugboss_auge.bmp",  29, 30, 29, 30, 1, 1);
 
-	Hitzone[0].LoadImage    ("flugboss_hitzone.bmp",  52, 100, 52, 100, 1, 1);
+	Hitzone[0].LoadImage    ("flugboss_hitzone.png",  52, 100, 52, 100, 1, 1);
 	Hitzone[1].LoadImage    ("flugboss_hitzone2.bmp", 52,  31, 52,  31, 1, 1);
 }
 
