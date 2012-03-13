@@ -34,8 +34,8 @@ GegnerGolem::GegnerGolem(int Wert1, int Wert2, bool Light)
 
 	last = 0;
 
-	arm[0].LoadImage("golemarm_hinten.bmp", 224, 241, 224, 241, 1, 1);
-	arm[1].LoadImage("golemarm_vorne.bmp", 205, 266, 205, 266, 1, 1);
+	arm[0].LoadImage("golemarm_hinten.png", 224, 241, 224, 241, 1, 1);
+	arm[1].LoadImage("golemarm_vorne.png", 205, 266, 205, 266, 1, 1);
 }
 
 // --------------------------------------------------------------------------------------
