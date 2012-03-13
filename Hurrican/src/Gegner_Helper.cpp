@@ -582,11 +582,11 @@ void LoadGegnerGrafik(int Nr)
 		break;
 
 		case SCHNEEKOENIG:
-			pGegnerGrafix[SCHNEEKOENIG]->LoadImage("Schneekoenig.png", 800, 600, 200, 200, 4,3);
+			pGegnerGrafix[SCHNEEKOENIG]->LoadImage("schneekoenig.png", 800, 600, 200, 200, 4,3);
 		break;
 
 		case SCHNEEKOPPE:
-			pGegnerGrafix[SCHNEEKOPPE]->LoadImage("Schneekoppe.bmp", 14, 28, 14, 28, 1, 1);
+			pGegnerGrafix[SCHNEEKOPPE]->LoadImage("schneekoppe.bmp", 14, 28, 14, 28, 1, 1);
 		break;
 
 		case ZITRONE:
