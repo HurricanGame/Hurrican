@@ -16,3 +16,4 @@ class GegnerPflanze : public GegnerClass
 };
 
 #endif
+

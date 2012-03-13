@@ -84,3 +84,4 @@ extern float		SpeedFaktor;
 extern TimerClass	*pTimer;
 
 #endif
+
