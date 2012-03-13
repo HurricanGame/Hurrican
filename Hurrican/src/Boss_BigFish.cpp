@@ -34,7 +34,7 @@ GegnerBigFish::GegnerBigFish(int Wert1, int Wert2, bool Light)
 	KugelCount		= 150.0f;
 
 	// Zusatzgrafiken laden
-	Maul.LoadImage("BigFishMaul.bmp", 106, 55, 106, 55, 1, 1);
+	Maul.LoadImage("bigfishmaul.bmp", 106, 55, 106, 55, 1, 1);
 	FlosseKlein.LoadImage("bigfishflosseklein.bmp", 66, 38, 66, 38, 1, 1);
 	FlosseGross.LoadImage("bigfishflossebig.bmp", 88, 157, 88, 157, 1, 1);
 	FlosseOben.LoadImage("bigfishflosseoben.bmp", 74, 59, 74, 59, 1, 1);
