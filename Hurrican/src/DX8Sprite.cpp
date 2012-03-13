@@ -210,7 +210,7 @@ DirectGraphicsSprite::~DirectGraphicsSprite(void)
 {
 	char	Buffer[10];
 
-	if(itsTexture != NULL)
+	if(itsTexture != 0)
 	{
 #if defined(PLATFORM_DIRECTX)
 		SafeRelease(itsTexture);
