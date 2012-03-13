@@ -16,3 +16,4 @@ class GegnerOneUp : public GegnerClass
 };
 
 #endif
+

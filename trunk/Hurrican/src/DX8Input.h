@@ -101,3 +101,4 @@ extern char*				TastaturPuffer;
 extern bool					UseForceFeedback;					// ForceFeedback Fähigkeit nutzen ?
 
 #endif
+

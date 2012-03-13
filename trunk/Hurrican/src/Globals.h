@@ -65,3 +65,4 @@ extern bool HasCheated;
 extern RECT	srcrect, destrect;
 
 #endif
+

@@ -382,3 +382,4 @@ extern  bool				DrawDragon;
 extern  float				ShadowAlpha;
 
 #endif
+
