@@ -37,3 +37,4 @@ class Logdatei
 extern Logdatei	Protokoll;
 
 #endif
+

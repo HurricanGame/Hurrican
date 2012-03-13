@@ -21,3 +21,4 @@ class GegnerColumn2 : public GegnerClass
 };
 
 #endif
+

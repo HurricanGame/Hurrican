@@ -19,3 +19,4 @@ class GegnerLavaBall : public GegnerClass
 };
 
 #endif
+

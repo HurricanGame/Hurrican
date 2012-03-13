@@ -88,3 +88,4 @@ extern const float ShockWaveY;
 extern char	StageReihenfolge[256][100];
 
 #endif
+
