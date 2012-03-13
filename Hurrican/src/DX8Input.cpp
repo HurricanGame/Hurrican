@@ -589,15 +589,15 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
     uint8_t buttons  = SDL_GetMouseState(&MausX, &MausY);
 
     // Buttons
-    if ((buttons & SDL_BUTTON(0)) == SDL_BUTTON(0))
+    if ((buttons & SDL_BUTTON(1)) == SDL_BUTTON(1))
         MausButtons[0] = true;
     else
         MausButtons[1] = false;
-    if ((buttons & SDL_BUTTON(1)) == SDL_BUTTON(1))
+    if ((buttons & SDL_BUTTON(2)) == SDL_BUTTON(2))
         MausButtons[1] = true;
     else
         MausButtons[2] = false;
-    if ((buttons & SDL_BUTTON(2)) == SDL_BUTTON(2))
+    if ((buttons & SDL_BUTTON(3)) == SDL_BUTTON(3))
         MausButtons[2] = true;
     else
         MausButtons[2] = false;
@@ -641,7 +641,7 @@ void DirectInputClass::UpdateJoysticks(void)
 bool DirectInputClass::AreAllKeysReleased()
 {
 	for (int i = 0; i < MIN(NumberOfKeys,256); i++)
-		if (TastaturPuffer[i] != NULL)
+		if (TastaturPuffer[i] != 0)
 			return false;
 
 	return true;
