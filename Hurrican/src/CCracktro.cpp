@@ -354,7 +354,7 @@ void CCracktro::Main(void)
 
 	fontoff = (int)(blinkpos / 100.0f);
 
-	if (fontoff >= (sizeof(BlinkText) / sizeof(BlinkText[0])))
+	if (fontoff >= (int)(sizeof(BlinkText) / sizeof(BlinkText[0])))
 	{
 		blinkpos = 0.0f;
 		fontoff = 0;
