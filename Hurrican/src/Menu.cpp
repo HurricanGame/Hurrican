@@ -1589,8 +1589,8 @@ void MenuClass::DoMenu(void)
 			   (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickX < -pPlayer[0]->JoystickSchwelle ||
 			   (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV >= 4500 * 5 && DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV <= 4500 * 7))))
 				pressed = true;
-			else
-				pressed = false;
+			//else
+			//	pressed = false;
 
 			if(pressed)
 			{
