@@ -78,7 +78,7 @@ RECT GetClippingArea(void)
 
 DirectGraphicsSurface::DirectGraphicsSurface(void)
 {
-	itsSurface = NULL;
+	itsSurface = (LPDIRECT3DSURFACE8)NULL;
 }
 
 // --------------------------------------------------------------------------------------
@@ -133,6 +133,8 @@ bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize
 		return false;
 	}
 #elif defined(PLATFORM_SDL)
+    (void)hresult;
+    
     SDL_Rect dims;
 	itsSurface = loadTexture( Filename, dims, 0 );
 #endif
@@ -199,7 +201,7 @@ bool DirectGraphicsSurface::DrawSurface(LPDIRECT3DSURFACE8 &Temp, int xPos, int 
 
 DirectGraphicsSprite::DirectGraphicsSprite(void)
 {
-	itsTexture = NULL;
+	itsTexture = (LPDIRECT3DTEXTURE8)NULL;
 }
 
 // --------------------------------------------------------------------------------------
@@ -218,7 +220,7 @@ DirectGraphicsSprite::~DirectGraphicsSprite(void)
         delete_texture( itsTexture );
         itsTexture = 0;
 #endif
-		itsTexture = NULL;
+		itsTexture = (LPDIRECT3DTEXTURE8)NULL;
 		LoadedTextures--;
 //		Protokoll.WriteText("-> Sprite Textur erfolgreich freigegeben ! \n", false);
 
@@ -246,6 +248,8 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
 	char			Temp[256];
 	unsigned long	Size;
 #if defined(PLATFORM_SDL)
+    (void)hresult;
+    
     SDL_Rect        dims;
 #endif
 
