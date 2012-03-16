@@ -186,7 +186,7 @@ void GegnerRotzpott::GegnerExplode(void)
 {
 	pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
-	int i = 0;
+	//int i = 0;
 	for (int i = 0; i < 8; i++)
 	{
 		pPartikelSystem->PushPartikel (xPos + rand ()%40-10, yPos - 10 + rand ()%20, EXPLOSION_MEDIUM2);
