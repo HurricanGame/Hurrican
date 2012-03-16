@@ -891,7 +891,7 @@ bool DisplayLoadInfo(const char Text[100])
 
 void ExplodePlayer(void)
 {
-	static float delay = 0.0f;
+//	static float delay = 0.0f;
 
 	// alte Darstellung beenden
 #if defined(PLATFORM_DIRECTX)
