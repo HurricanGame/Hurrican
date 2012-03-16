@@ -140,7 +140,7 @@ loadfile:
 								   GetBValue(BGRcolor),
 								   255);
 #elif defined(PLATFORM_SDL)
-        SDL_Color components;
+        //SDL_Color components;
         map[count] = getpixel(hbm,x,y);
         /*
 		DWORD BGRcolor=getpixel(hbm,x,y);
