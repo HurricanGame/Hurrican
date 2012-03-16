@@ -142,7 +142,7 @@ void GegnerMiniDragon::DoKI(void)
 
 				pSoundManager->PlayWave (100, 128, 8000 + rand()%8000, SOUND_EXPLOSION1);
 
-				int i = 0;
+				//int i = 0;
 				for (int i = 0; i < 10; i++)
 					pPartikelSystem->PushPartikel(xPos + 10 + rand()%30, yPos + rand()%10, SPIDERSPLITTER);
 
