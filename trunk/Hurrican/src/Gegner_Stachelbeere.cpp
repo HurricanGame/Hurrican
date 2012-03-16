@@ -115,7 +115,7 @@ void GegnerStachelbeere::DoKI(void)
 			blocku & BLOCKWERT_PLATTFORM)
 		{
 			// Partikel erzeugen
-			int i = 0;
+			//int i = 0;
 			for (int i = 0; i < 10; i++)
 				pPartikelSystem->PushPartikel(xPos + rand()%60, yPos + 50, FUNKE);
 
