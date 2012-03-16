@@ -168,7 +168,7 @@ loadfilelevel:
 
 	// Levels auslesen
 	//
-	bool eof = false;
+	//bool eof = false;
 	MAX_LEVELS = 0;
 
 	int index = 0;
