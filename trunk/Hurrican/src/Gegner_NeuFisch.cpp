@@ -113,8 +113,8 @@ void GegnerNeuFisch::DoKI(void)
 
 			if (onWall ||
 				(pAim->InLiquid == true &&
-				(xPos + 30 < pAim->xpos + 35 && BlickRichtung == LINKS  ||
-			 	 xPos + 30 > pAim->xpos + 35 && BlickRichtung == RECHTS)))
+				((xPos + 30 < pAim->xpos + 35 && BlickRichtung == LINKS)  ||
+			 	 (xPos + 30 > pAim->xpos + 35 && BlickRichtung == RECHTS))))
 			{
 				Handlung = GEGNER_DREHEN;
 				AnimPhase = 9;
