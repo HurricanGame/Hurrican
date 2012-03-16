@@ -3279,7 +3279,7 @@ bool PartikelClass::Render(void)
 	else
 	if (PartikelArt == SHOCKEXPLOSION)
 	{
-		int a = 255 - alpha + 64;
+		//int a = 255 - alpha + 64;
 
 		pPartikelGrafix[PartikelArt]->RenderSpriteScaled (float (xPos - AnimCount / 2.0f - pTileEngine->XOffset),
 														  float (yPos - AnimCount / 2.0f - pTileEngine->YOffset),
