@@ -74,14 +74,14 @@ void GegnerTutorialText::DoKI(void)
 			do
 			{
 				pos = s_text.find (s_Replacers[i]);
-				if (pos != string::npos)
+				if (pos != (int)string::npos)
 				{
 					newWord = s_Replacers[i+1];
 					newWord = "'" + newWord + "'";
 					s_text.replace(pos, strlen(s_Replacers[i]), newWord);
 				}
 
-			} while (pos != string::npos);
+			} while (pos != (int)string::npos);
 		}
 
 		// aktualisierten Text übernehmen
