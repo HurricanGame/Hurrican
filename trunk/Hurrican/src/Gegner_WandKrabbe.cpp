@@ -81,10 +81,10 @@ void GegnerWandKrabbe::DoKI(void)
 	if (((blocko & BLOCKWERT_WAND ||
 	 	  blocko & BLOCKWERT_GEGNERWAND) &&
 		  ySpeed < 0.0f) ||
-		((blocku & BLOCKWERT_WAND ||
+		(((blocku & BLOCKWERT_WAND ||
 	 	  blocku & BLOCKWERT_GEGNERWAND) &&
 		  ySpeed > 0.0f) &&
-		  Handlung == GEGNER_LAUFEN)
+		  Handlung == GEGNER_LAUFEN))
 		  ySpeed *= -1.0f;
 
 	switch (Handlung)
