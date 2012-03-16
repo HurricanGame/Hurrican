@@ -3553,8 +3553,8 @@ void ProjectileClass::Run(void)
 	}
 
 	// Hat ein Gegnerschuss den Spieler getroffen ?
-	bool coll1 = false;
-	bool coll2 = false;
+	//bool coll1 = false;
+	//bool coll2 = false;
 
 	for (int p = 0; p < NUMPLAYERS; p++)
 	if (DamagePlayer == true &&
