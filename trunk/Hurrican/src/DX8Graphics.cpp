@@ -360,6 +360,8 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
 	lpD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 	lpD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
 #elif defined(PLATFORM_SDL)
+    (void)hr;
+    
     /* Init OpenGL */
     glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );                 /* Set the background black */
     glClearDepth( 1.0f );                                   /* Depth buffer setup */
