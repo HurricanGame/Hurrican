@@ -1018,7 +1018,7 @@ void PlayerClass::AnimatePlayer(void)
 		// Nach Links laufen/springen oder blitzen
 		if (Aktion[AKTION_LINKS]  &&	// Links gedrückt ?
 		   !Aktion[AKTION_RECHTS])	 	// und Rechts nicht ?
-
+		{
 		if (Handlung == BLITZEN)		// Blitzen und dabei den Blitz bewegen ?
 		{
 			if (BlitzStart >= PLAYER_BLITZ_START)	// Bewegen schon möglich ?
@@ -1074,10 +1074,11 @@ void PlayerClass::AnimatePlayer(void)
 
 				xspeed = 0.0f;
 		}
-
+		}
 		// Nach Rechts laufen/springen oder blitzen
 		if (Aktion[AKTION_RECHTS] &&		// Rechts gedrückt ?
 		   !Aktion[AKTION_LINKS])			// und Links nicht ?
+		{
 		if (Handlung == BLITZEN)			// Blitzen und dabei den Blitz bewegen ?
 		{
 			if (BlitzStart >= PLAYER_BLITZ_START)	// Bewegen schon möglich ?
@@ -1132,10 +1133,11 @@ void PlayerClass::AnimatePlayer(void)
 				WalkLock == true)
 				xspeed = 0.0f;
 		}
-
+		}
+		
 		// Wand im Weg ? Dann stehenbleiben
-		if((Aktion[AKTION_LINKS]  && (bl & BLOCKWERT_WAND) ||
-		    Aktion[AKTION_RECHTS] && (br & BLOCKWERT_WAND)) &&
+		if(((Aktion[AKTION_LINKS]  && (bl & BLOCKWERT_WAND)) ||
+		    (Aktion[AKTION_RECHTS] && (br & BLOCKWERT_WAND))) &&
 			!(bu & BLOCKWERT_SCHRAEGE_L) &&
 			!(bu & BLOCKWERT_SCHRAEGE_R))
 
@@ -2792,7 +2794,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
 	if (pConsole->Showing == false)
 		DoStuffWhenDamaged();
 
-	CurrentShotTexture = NULL;
+	CurrentShotTexture = 0;
 	CurrentPartikelTexture = -1;
 
 	AlreadyDrawn = true;
@@ -4389,7 +4391,7 @@ void PlayerClass::CalcFlamePos (void)
 
 void PlayerClass::CalcAustrittsPunkt(void)
 {
-	float xver = 0.0f;	// Verschiebung des Austrittspunktes, wenn man vor einer Wandsteht
+	//float xver = 0.0f;	// Verschiebung des Austrittspunktes, wenn man vor einer Wandsteht
 
 	//----- Genauen Pixel am Anfang derFlamme finden
 	//
