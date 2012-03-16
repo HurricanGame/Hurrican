@@ -46,8 +46,8 @@ void GegnerSideRocket::DoKI(void)
 
 			if (PlayerAbstandVert()  < 100 &&
 			    PlayerAbstandHoriz() < 400 &&
-			   (Value1 == 0 && xPos > pAim->xpos ||
-			    Value1 != 0 && xPos < pAim->xpos))
+			   ((Value1 == 0 && xPos > pAim->xpos) ||
+			    (Value1 != 0 && xPos < pAim->xpos)))
 			Handlung  = GEGNER_STEHEN;
 		} break;
 
