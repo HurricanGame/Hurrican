@@ -117,7 +117,7 @@ TileEngineClass::TileEngineClass(void)
 	}
 
 	for(int i=0; i<MAX_TILESETS; i++)
-	 TileGfx[i].itsTexture = NULL;
+	 TileGfx[i].itsTexture = (LPDIRECT3DTEXTURE8)NULL;
 
 	// Wasserfall Textur laden
 	Wasserfall[0].LoadImage("wasserfall.bmp",  60,  240, 60,  240, 1, 1);
@@ -1064,8 +1064,8 @@ void TileEngineClass::DrawBackLevel(void)
 		{
 			if   (Tiles[xLevel+i][yLevel+j].BackArt > 0 &&			// Überhaupt ein Tile drin ?
 				(!(Tiles[xLevel+i][yLevel+j].Block & BLOCKWERT_WAND) ||
-				   Tiles[xLevel+i][yLevel+j].FrontArt > 0 &&
-				   Tiles[xLevel+i][yLevel+j].Block & BLOCKWERT_VERDECKEN))
+				   (Tiles[xLevel+i][yLevel+j].FrontArt > 0 &&
+				   Tiles[xLevel+i][yLevel+j].Block & BLOCKWERT_VERDECKEN)))
 			{
 				// Neue Textur ?
 				if (Tiles[xLevel+i][yLevel+j].TileSetBack != ActualTexture)
@@ -2747,7 +2747,7 @@ int	TileEngineClass::BlockUnten(float &x, float &y, float &xo, float &yo, RECT r
 	int  xlevel;
 	int  ylevel;
 	int  laenge;
-	bool checkagain = true;
+	//bool checkagain = true;
 
 	//laenge = int(y - yo)+1;
 	laenge = 5;
@@ -2807,7 +2807,7 @@ bool TileEngineClass::BlockDestroyUnten(float &x, float &y, float &xo, float &yo
 	int  xlevel;
 	int  ylevel;
 	int  laenge;
-	bool checkagain = true;
+	//bool checkagain = true;
 
 	//laenge = int(y - yo)+1;
 	laenge = 5;
