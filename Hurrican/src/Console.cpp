@@ -140,7 +140,7 @@ bool ConsoleClass::CONSOLE_CHEAT(char *cheat)
 	bool result = false;
 
 	// TODO FIX
-//	result = CONSOLE_COMMAND(convertText(cheat));
+	result = CONSOLE_COMMAND(convertText(cheat));
 
 	if (result)
 	{

@@ -1,3 +1,5 @@
+DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS
+
 TARGET = linux
 
 ifeq ($(TARGET),aros)
@@ -31,10 +33,9 @@ LDFLAGS := -g -lSDL -lGL -lSDL_mixer -lSDL_image
 
 endif
 
-DEFINES := -DPLATFORM_SDL
 INCLUDES := -I./SDLPort -Icml -I./unrarlib040/unrarlib $(INCLUDES_OS)
 
-CFLAGS := -O0 -g -c $(INCLUDES) $(DEFINES)
+CFLAGS := -Wall -O0 -c $(INCLUDES) $(DEFINES)
 
 SDL_FILES := SDLPort/SDL_fmod \
              SDLPort/SDL_port

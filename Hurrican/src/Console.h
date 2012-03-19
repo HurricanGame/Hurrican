@@ -27,7 +27,21 @@
 #define MAX_LINES	20				// Anzahl der Zeilen in der Konsole
 #define MAX_CHARS	90				// Anzahl der Zeichen pro Zeile
 
-#define CONSOLE_COMMAND(x) (false)//strcmp (_strlwr_s(Buffer), x) == 0)
+#if defined(ENABLE_CONSOLE_COMMANDS)
+
+#if defined(PLATFORM_SDL)
+#define CONSOLE_COMMAND(x) (strcmp (Buffer, x) == 0)
+#else
+#define CONSOLE_COMMAND(x) (strcmp (_strlwr_s(Buffer), x) == 0)
+#endif
+
+#else
+
+#define CONSOLE_COMMAND(x) (false)
+
+#endif
+
+
 #define CONSOLE_PRINT(x)   {strcpy_s(Buffer, strlen(x) + 1, x); ScrollUp();}
 
 // --------------------------------------------------------------------------------------
