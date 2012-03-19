@@ -35,7 +35,7 @@ endif
 
 INCLUDES := -I./SDLPort -Icml -I./unrarlib040/unrarlib $(INCLUDES_OS)
 
-CFLAGS := -Wall -O0 -c $(INCLUDES) $(DEFINES)
+CFLAGS := -g -Wall -O0 -c $(INCLUDES) $(DEFINES)
 
 SDL_FILES := SDLPort/SDL_fmod \
              SDLPort/SDL_port
