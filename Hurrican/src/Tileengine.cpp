@@ -860,6 +860,14 @@ void TileEngineClass::CalcRenderRange(void)
 	//
 	xo = (long)(XOffset * 0.05f);
 	yo = (long)(YOffset * 0.05f);
+        
+	/* CHECKME: Without the following checks the game
+	   in places like start of level 2 for a short
+	   time renders areas outside map which can cause
+	   crashes (random non existing textures). (stegerg) */
+                   
+	if (xo < 0) xo = 0;
+	if (yo < 0) yo = 0;
 
 	RenderPosX = - 1;
 	RenderPosY = - 1;
@@ -877,8 +885,8 @@ void TileEngineClass::CalcRenderRange(void)
 	if (yo + RenderPosYTo > LEVELSIZE_Y) RenderPosYTo = SCREENSIZE_Y;
 
 	// Sonstige Ausgangswerte berechnen
-	xLevel = (int)(XOffset * 0.05f);
-	yLevel = (int)(YOffset * 0.05f);
+	xLevel = (int)xo;
+	yLevel = (int)yo;
 
 	// Offsets der Tiles berechnen (0-19)
 	xTileOffs = (int)(XOffset) % TILESIZE_X;
