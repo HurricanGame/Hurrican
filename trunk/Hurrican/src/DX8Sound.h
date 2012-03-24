@@ -20,17 +20,7 @@
 #include <dsound.h>
 #include "fmod.h"
 #include "fmod_errors.h"
-#elif defined(PLATFORM_SDL)
-#include "SDL_fmod.h"
-#else
-#error no sound system selected
-#endif
 
-// --------------------------------------------------------------------------------------
-// Defines
-// --------------------------------------------------------------------------------------
-
-#if defined(PLATFORM_DIRECTX)
 #define MUSIC_MODULE            FMUSIC_MODULE
 #define SOUND_SAMPLE            FSOUND_SAMPLE
 
@@ -60,11 +50,14 @@
 #define SOUND_StopSound         FSOUND_StopSound
 
 #elif defined(PLATFORM_SDL)
-#define MUSIC_MODULE            Mix_Music
-#define SOUND_SAMPLE            Mix_Chunk
+#include "SDL_fmod.h"
 #else
 #error no sound system selected
 #endif
+
+// --------------------------------------------------------------------------------------
+// Defines
+// --------------------------------------------------------------------------------------
 
 #define MAX_SOUNDS				140 					// Anzahl verschiedener Soundeffekte
 #define MAX_SONGS				15						// Anzahl verschiedener Musikstücke
