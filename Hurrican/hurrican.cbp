@@ -40,6 +40,7 @@
 				<Option parameters="--windowmode" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-DUSE_MODPLUG" />
 				</Compiler>
 				<Linker>
 					<Add option="-lc" />
@@ -77,6 +78,7 @@
 			<Add library="SDL_image" />
 			<Add library="SDL_mixer" />
 			<Add library="SDL" />
+			<Add library="modplug" />
 		</Linker>
 		<Unit filename="src/Boss_BigFish.cpp" />
 		<Unit filename="src/Boss_BigFish.h" />

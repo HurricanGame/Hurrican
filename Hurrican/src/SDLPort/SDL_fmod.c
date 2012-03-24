@@ -1,9 +1,16 @@
 #include "SDL_fmod.h"
 
 int g_allocated = 0;
+int g_music_loops;
+int g_volume;
+MUSIC_MODULE* g_music_current = NULL;
+
 int sound_loops_total = 0;
 Mix_Chunk** sound_loops;
-Mix_Music*  music_current = NULL;
+
+#if defined(USE_MODPLUG)
+ModPlug_Settings settings;
+#endif
 
 signed char SOUND_Init( int mixrate, int maxsoftwarechannels, unsigned int flags )
 {
@@ -17,12 +24,31 @@ signed char SOUND_Init( int mixrate, int maxsoftwarechannels, unsigned int flags
 
     g_allocated = Mix_AllocateChannels(maxsoftwarechannels);
 
+#if defined(USE_MODPLUG)
+    ModPlug_GetSettings( &settings );
+
+    settings.mFlags             = MODPLUG_ENABLE_OVERSAMPLING | MODPLUG_ENABLE_NOISE_REDUCTION;
+    settings.mResamplingMode    = MODPLUG_RESAMPLE_LINEAR;
+    settings.mReverbDepth       = 0;
+    settings.mReverbDelay       = 0;
+    settings.mBassAmount        = 0;
+    settings.mBassRange         = 0;
+    settings.mSurroundDepth     = 0;
+    settings.mSurroundDelay     = 0;
+    settings.mFrequency         = mixrate;
+    settings.mBits              = 16;
+    settings.mChannels          = 2;
+    //settings.mStereoSeparation  = 128;
+    //settings.mMaxMixChannels    = g_allocated;
+
+    ModPlug_SetSettings( &settings );
+#endif
+
     return 1;
 }
 
 void SOUND_Close( void )
 {
-    free( sound_loops );
     Mix_CloseAudio();
 }
 
@@ -48,108 +74,152 @@ signed char SOUND_SetPan( int channel, int pan )
     return Mix_SetPanning( channel, 255-pan, pan );
 }
 
-Mix_Music* MUSIC_LoadSong( const char* filename )
+MUSIC_MODULE* MUSIC_LoadSong( const char* filename )
 {
-    return Mix_LoadMUS( filename );
+    MUSIC_MODULE* music = NULL;
+#if defined(USE_MODPLUG)
+    uint32_t size;
+    FILE* file = NULL;
+    uint8_t* buffer = NULL;
+
+    file = fopen( filename, "rb" );
+    if (file == NULL)
+    {
+        printf( "ERROR Error file operation: File: %s\n", filename );
+        return NULL;
+    }
+
+	fseek(file, 0, SEEK_END);
+	size = ftell(file);
+	fseek(file, 0, SEEK_SET);
+	buffer = (uint8_t *)malloc(size+1);
+
+	if (size != fread(buffer, sizeof(uint8_t), size, file))
+	{
+		free(buffer);
+		return NULL;
+	}
+	fclose( file );
+	buffer[size] = 0;
+
+    music = ModPlug_Load( buffer, size );
+
+    free( buffer );
+#else
+    music = Mix_LoadMUS( filename );
+#endif
+
+    return music;
 }
 
-Mix_Music* MUSIC_LoadSongEx( const char* filename, int offset, int length, unsigned int mode, const int *samplelist, int samplelistnum )
+MUSIC_MODULE* MUSIC_LoadSongEx( const char* filename, int offset, int length, unsigned int mode, const int *samplelist, int samplelistnum )
 {
     // TODO Only need for unrar, but this will require cache the music file to disk
     return NULL;
 }
 
-signed char MUSIC_PlaySong( Mix_Music* music )
+signed char MUSIC_PlaySong( MUSIC_MODULE* music )
 {
-    music_current = music;
+    //printf( "%8X MUSIC_PlaySong\n", music );
+#if defined(USE_MODPLUG)
+    ModPlug_SetMasterVolume( music, DEFAULT_VOLUME );
+    ModPlug_Seek( music, 0 );
+    Mix_HookMusic( &hookmusic, music );
+#else
+    Mix_PlayMusic( music, -1 );
+#endif
+    g_music_loops   = 1;
+    g_music_current = music;
 
-    return Mix_PlayMusic( music, -1 );
-}
-
-signed char MUSIC_IsPlaying( Mix_Music* music )
-{
-    if (music_current==music)
-    {
-        return Mix_PlayingMusic();
-    }
-    else /* if it doesnt match the currently played music then it cant be playing  */
-    {
-        return 0;
-    }
-}
-
-signed char MUSIC_FreeSong( Mix_Music* music )
-{
-    Mix_FreeMusic( music );
     return 0;
 }
 
-signed char MUSIC_StopSong( Mix_Music* music )
+signed char MUSIC_IsPlaying( MUSIC_MODULE* music )
 {
-    if (music_current!=music)
-    {
-        printf( "SDL_fmod: tried to halt music that is not currently being played\n" );
-        return 0;
-    }
-    else
-    {
-        return Mix_HaltMusic();
-    }
+    //printf( "%8X MUSIC_IsPlaying\n", music );
+    return g_music_current == music ? 1 : 0;
 }
 
-signed char MUSIC_SetPaused( Mix_Music* music, signed char pause )
+signed char MUSIC_FreeSong( MUSIC_MODULE* music )
 {
-    if (music_current!=music)
+    //printf( "%8X MUSIC_FreeSong\n", music );
+#if defined(USE_MODPLUG)
+    ModPlug_Unload( music );
+#else
+    Mix_FreeMusic( music );
+#endif
+
+    return 0;
+}
+
+signed char MUSIC_StopSong( MUSIC_MODULE* music )
+{
+    //printf( "%8X MUSIC_StopSong\n", music );
+    if (g_music_current == music)
     {
-        printf( "SDL_fmod: tried to pause music that is not currently being played\n" );
-        return 1;
+#if defined(USE_MODPLUG)
+        Mix_HookMusic( NULL, NULL );
+#else
+        Mix_HaltMusic();
+#endif
+        g_music_current = NULL;
     }
-    else
+    return 0;
+}
+
+signed char MUSIC_SetPaused( MUSIC_MODULE* music, signed char pause )
+{
+    //printf( "%8X MUSIC_SetPaused %d\n", music, pause );
+    if (g_music_current == music)
     {
-        if (pause >= 1) {
+        if (pause)
             Mix_PauseMusic();
-            return 0;
-        }
-        else return 1;
+        else
+            Mix_ResumeMusic();
     }
+    else if (!pause)
+    {
+        MUSIC_PlaySong( music );
+    }
+    return 0;
 }
 
-signed char MUSIC_GetPaused( Mix_Music* music )
+signed char MUSIC_GetPaused( MUSIC_MODULE* music )
 {
-    if (music_current!=music)
-    {
-        printf( "SDL_fmod: tried to query pause music that is not currently being played\n" );
-        return 0;
-    }
-    else
+    //printf( "%8X MUSIC_GetPaused\n", music );
+    if (g_music_current == music)
     {
         return Mix_PausedMusic();
     }
+    return 0;
 }
 
-signed char MUSIC_SetMasterVolume( Mix_Music* music, int volume )
+signed char MUSIC_SetMasterVolume( MUSIC_MODULE* music, int volume )
 {
-    if (music_current!=music)
+    //printf( "%8X MUSIC_SetMasterVolume %d\n", music, volume );
+    if (g_music_current == music)
     {
-        printf( "SDL_fmod: tried to set volume for music that is not currently being played\n" );
-        return 0;
+#if defined(USE_MODPLUG)
+        ModPlug_SetMasterVolume( music, volume );
+        g_volume = volume;
+#else
+        Mix_VolumeMusic( volume/2 );
+#endif
     }
-    else
-    {
-        return Mix_VolumeMusic( volume/2 ); // FMOD range is 0-255 SDL_mixer is 0-128
-    }
+    return 0;
 }
 
 void MUSIC_StopAllSongs( void )
 {
-    Mix_HaltMusic();
+    //printf( "MUSIC_StopAllSongs\n" );
+    MUSIC_StopSong( g_music_current );
 }
 
-signed char MUSIC_IsFinished( Mix_Music* music )
+signed char MUSIC_IsFinished( MUSIC_MODULE* music )
 {
-    if (music_current!=music)
+    //printf( "%8X MUSIC_IsFinished\n", music );
+    if (g_music_current == music)
     {
-        printf( "SDL_fmod: tried to query is finished for music that is not currently being played\n" );
         return 1;
     }
     else
@@ -157,6 +227,23 @@ signed char MUSIC_IsFinished( Mix_Music* music )
         return Mix_PlayingMusic();
     }
 }
+
+#if defined(USE_MODPLUG)
+void hookmusic( void* ptr, uint8_t* buffer, int size )
+{
+	int rsize;
+    ModPlugFile* music = (ModPlugFile*)ptr;
+
+	rsize = ModPlug_Read( music, (void*)buffer, size );
+    if (g_volume > 0 || (rsize < size))
+    {
+        if (rsize < size)
+        {
+            ModPlug_Seek( music, 0 );
+        }
+    }
+}
+#endif
 
 Mix_Chunk* SOUND_Sample_Load( int index, const char *filename, unsigned int inputmode, int offset, int length )
 {
