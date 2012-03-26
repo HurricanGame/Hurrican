@@ -1,4 +1,4 @@
-DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS
+DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS -DUSE_MODPLUG
 
 TARGET = linux
 
@@ -10,13 +10,16 @@ CC  := i386-aros-gcc
 LD  := i386-aros-g++
 RM  := rm -f
 
-INCLUDES_OS := -I/usr/local/arosv0/AROS/bin/linux-i386/AROS/Development/include/SDL/
+INCLUDES_OS := -I/usr/local/arosv0/AROS/bin/linux-i386/AROS/Development/include/SDL/ \
+               -I/usr/local/arosv0/AROS/bin/linux-i386/AROS/Development/include/libmodplug
 
 #LDFLAGS := -g -lSDL_mixer -lvorbisfile -lvorbis -logg -lSDL_image -lpng -larosz -ljpeg -lSDL -lGL
 #
 #SDL_mixer in AROS contrib does not have support for MODs compiled in, so use one from archives.aros-exec.org
-LDFLAGS := -g /usr/local/arosv0/AROS/bin/linux-i386/AROS/Development/SDL_mixer-1.2.6/Development/lib/libSDL_mixer.a \
-           -lvorbisfile -lvorbis -logg -lSDL_image -lpng -larosz -ljpeg -lSDL -lGL
+#LDFLAGS := -g /usr/local/arosv0/AROS/bin/linux-i386/AROS/Development/SDL_mixer-1.2.6/Development/lib/libSDL_mixer.a \
+#           -lmodplug -lvorbisfile -lvorbis -logg -lSDL_image -lpng -larosz -ljpeg -lSDL -lGL
+LDFLAGS := -g -lSDL_mixer \
+           -lmodplug -lvorbisfile -lvorbis -logg -lSDL_image -lpng -larosz -ljpeg -lSDL -lGL
 
 endif
 
@@ -28,8 +31,9 @@ CC  := gcc
 LD  := g++
 RM  := rm -f
 
-INCLUDES_OS := -I/usr/include/SDL
-LDFLAGS := -g -lSDL -lGL -lSDL_mixer -lSDL_image
+INCLUDES_OS := -I/usr/include/SDL -I/usr/include/libmodplug
+
+LDFLAGS := -g -lSDL -lGL -lSDL_mixer -lSDL_image -lmodplug
 
 endif
 
