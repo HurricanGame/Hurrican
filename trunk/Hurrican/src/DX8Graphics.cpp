@@ -270,6 +270,11 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
     {
         flags |= SDL_FULLSCREEN;
     }
+    else
+    {
+        SDL_WM_SetCaption("Hurrican", "Hurrican");
+    }
+    
     Screen = SDL_SetVideoMode( ScreenWidth, ScreenHeight, ScreenDepth, flags );
     if (Screen == NULL)
     {
