@@ -481,7 +481,14 @@ int main(int argc, char *argv[])
 			UpdateWindow(g_hwnd);
 		}
 #endif
-
+#if defined(PLATFORM_SDL)
+		SDL_Event event;
+        
+        while (SDL_PollEvent(&event))
+        {
+        	if (event.type == SDL_QUIT) GameRunning = false;
+        }
+#endif
 		try
 		{
 			if (GamePaused == false)
