@@ -141,7 +141,7 @@ CCracktro::CCracktro()
 	ScrollPos2 = 0;
 	SinPos = 0.0f;
 
-	for (int i = 0; i < 150; i++)
+	for (int i = 0; i < 200; i++)
 	{
 		Stars[i].Count   = (float)(rand()%640);
 		Stars[i].Abstand = (float)(rand()%140 + 340);
