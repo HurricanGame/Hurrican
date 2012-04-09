@@ -99,7 +99,11 @@ float					SpeedFaktor = 1.0f;				// Faktor, mit dem alle Bewegungen verrechnet w
 DirectGraphicsClass		DirectGraphics;					// Grafik-Objekt
 DirectInputClass		DirectInput;					// Input-Objekt
 TimerClass				*pTimer;						// Timer Klasse für die Framerate
+#if defined(__AROS__)
+Logdatei				Protokoll("T:Game_Log.txt");		// Protokoll Datei
+#else
 Logdatei				Protokoll("Game_Log.txt");		// Protokoll Datei
+#endif
 CSoundManager			*pSoundManager =  NULL;			// Sound Manager
 DirectGraphicsFont		*pDefaultFont = new(DirectGraphicsFont);
 DirectGraphicsFont		*pMenuFont	  = new(DirectGraphicsFont);
