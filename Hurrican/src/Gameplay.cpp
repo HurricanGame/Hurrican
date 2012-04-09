@@ -738,7 +738,7 @@ bool LoadConfig(void)
 	fread(&pPlayer[1]->JoystickMode,	sizeof(pPlayer[1]->JoystickMode),	 1, Datei);
 	fread(&pPlayer[1]->JoystickSchwelle,sizeof(pPlayer[1]->JoystickSchwelle),1, Datei);
 
-	Protokoll.WriteText("Konfigurationsdatei erfolgreich geladen !\n", false);
+	Protokoll.WriteText("Config file loading successfull !\n", false);
 
 	fclose(Datei);							// Und Datei wieder schliessen
 
@@ -771,7 +771,12 @@ void SaveConfig(void)
 	FILE *Datei = NULL;
 
 	fopen_s(&Datei, CONFIGFILE, "wb");
-
+	if (Datei == NULL)
+    {
+   		Protokoll.WriteText("Config file saving failed !\n", false);
+        return;
+    }
+    
 	// Spracheinstellung speichern
 	fwrite(&ActualLanguage, sizeof(ActualLanguage), 1, Datei);
 
