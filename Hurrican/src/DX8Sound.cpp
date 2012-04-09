@@ -440,7 +440,18 @@ void CSoundManager::SetVolumes(float Sound, float Musik)
 bool CSoundManager::LoadSong(const char *Filename, int Nr)
 {
 	if (false == InitSuccessfull)
+    {
+    	/* Need this even if sound output not possible, because lots of code
+           accesses its_Songs[] */
+
+	    if (its_Songs[Nr] != NULL)
+	    {
+		    delete(its_Songs[Nr]);
+	    }
+	    its_Songs[Nr] = new CSong();
+        
 		return false;
+    }
 
 	bool			fromrar;
 	char			*pData;
@@ -647,6 +658,9 @@ void CSoundManager::SetSongVolume(int Nr, float Volume)
 
 void CSoundManager::SetAbsoluteSongVolume(int Nr, float Volume)
 {
+	if (false == InitSuccessfull)
+		return;
+
 	its_Songs[Nr]->Volume = Volume;
 	MUSIC_SetMasterVolume(its_Songs[Nr]->SongData, (int)(Volume));
 } // SetSongVolume
@@ -674,6 +688,9 @@ void CSoundManager::SetAllSongVolumes(void)
 
 void CSoundManager::Update(void)
 {
+	if (false == InitSuccessfull)
+		return;
+
 	// Sounds durchgehen und updaten
 	//
 	for (int i=0; i<MAX_SOUNDS; i++)
@@ -758,9 +775,6 @@ void CSoundManager::FadeWave(int Nr, int Mode)
 
 bool CSoundManager::LoadWave(const char *Filename, int Nr, bool looped)
 {
-	if (false == InitSuccessfull)
-		return false;
-
 	if(GameRunning == false)
 		return false;
 
@@ -779,6 +793,15 @@ bool CSoundManager::LoadWave(const char *Filename, int Nr, bool looped)
 		its_Sounds[Nummer] = NULL;
 	}
 
+	if (false == InitSuccessfull)
+    {
+    	/* Need this even if sound output not possible, because lots of code
+           accesses its_Sounds[] */
+		its_Sounds[Nummer] = new CWave();
+    	
+		return false;
+	}
+    
 	// Zuerst checken, ob sich der Sound in einem MOD-Ordner befindet
 	if (CommandLineParams.RunOwnLevelList == true)
 	{
