@@ -306,16 +306,22 @@ void SOUND_Sample_Free( Mix_Chunk* chunk )
 
 signed char SOUND_IsPlaying( int channel )
 {
+    if (channel < 0) return 0;
+    
     return Mix_Playing( channel );
 }
 
 int SOUND_GetVolume( int channel )
 {
+    if (channel < 0) return 0;
+
     return Mix_Volume( channel, -1 );
 }
 
 signed char SOUND_SetVolume( int channel, int volume )
 {
+    if (channel < 0) return 0;
+    
     return Mix_Volume( channel, volume/2 ); // FMOD range is 0-255 SDL_mixer is 0-128
 }
 
