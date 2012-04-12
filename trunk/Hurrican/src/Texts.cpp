@@ -155,11 +155,11 @@ loadfilelevel:
 			// Zwischenspeichern
 			//
 			FILE *TempFile = NULL;
-			fopen_s (&TempFile, "temp.dat", "wb");	// Datei öffnen
+			fopen_s (&TempFile, TEMP_FILE_PREFIX "temp.dat", "wb");	// Datei öffnen
 			fwrite (pData, Size, 1, TempFile);			// speichern
 			fclose (TempFile);							// und schliessen
 
-			sprintf_s(Temp, "%s", "temp.dat");			// Name anpassen
+			sprintf_s(Temp, "%s", TEMP_FILE_PREFIX "temp.dat");			// Name anpassen
 			free(pData);								// und Speicher freigeben
 		}
 
@@ -193,7 +193,7 @@ loadfilelevel:
 	in.close();
 
 	if (fromrar) {
-		DeleteFile("temp.dat");
+		DeleteFile(TEMP_FILE_PREFIX "temp.dat");
 	}
 
 	return true;
