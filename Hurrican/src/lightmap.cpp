@@ -77,11 +77,11 @@ void CLightMap::Load(const char *filename)
 		return;
 	}
     
-	fopen_s (&TempFile, "temp.dat", "wb");	// Datei öffnen
+	fopen_s (&TempFile, TEMP_FILE_PREFIX "temp.dat", "wb");	// Datei öffnen
 	fwrite (pData, Size, 1, TempFile);			// speichern
 	fclose (TempFile);							// und schliessen
 
-	strcpy_s(Temp, sizeof(Temp), "temp.dat");
+	strcpy_s(Temp, sizeof(Temp), TEMP_FILE_PREFIX "temp.dat");
 
 loadfile:
 
@@ -93,7 +93,7 @@ loadfile:
     hbm = loadImage( Temp );
 #endif
 
-	if (TempFile) DeleteFile("temp.dat");
+	if (TempFile) DeleteFile(TEMP_FILE_PREFIX "temp.dat");
 
 	if (hbm == NULL)
 	{

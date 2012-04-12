@@ -349,11 +349,11 @@ loadfile:
 		// Zwischenspeichern
 		//
 		FILE *TempFile = NULL;
-		fopen_s(&TempFile, "temp.map", "wb");	// Datei öffnen
+		fopen_s(&TempFile, TEMP_FILE_PREFIX "temp.map", "wb");	// Datei öffnen
 		fwrite (pData, Size, 1, TempFile);			// speichern
 		fclose (TempFile);							// und schliessen
 
-		sprintf_s(Temp, "%s", "temp.map");			// Name anpassen
+		sprintf_s(Temp, "%s", TEMP_FILE_PREFIX "temp.map");			// Name anpassen
 		free(pData);								// und Speicher freigeben
 	}
 
@@ -798,7 +798,7 @@ loadfile:
 	fclose(Datei);
 
 	// Temp Datei löschen und speicher freigeben
-	DeleteFile("temp.map");
+	DeleteFile(TEMP_FILE_PREFIX "temp.map");
 
 	// Liquid Farben setzen
 	ColR1 = GetDecValue(&pTileEngine->DateiAppendix.Col1[0], 2);

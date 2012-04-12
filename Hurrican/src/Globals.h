@@ -45,6 +45,12 @@
 #define RARFILENAME "Hurrican.dat"
 #define RARFILEPASSWORD "+/#(%,,/"
 
+#if defined(__AROS__)
+#define TEMP_FILE_PREFIX "T:"
+#else
+#define TEMP_FILE_PREFIX
+#endif
+
 // --------------------------------------------------------------------------------------
 // Includes
 // --------------------------------------------------------------------------------------
