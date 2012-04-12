@@ -19,7 +19,8 @@
 #include "Timer.h"
 #include "DX8Font.h"
 #include "DX8Graphics.h"
-
+#include "Gameplay.h"
+#include "unrarlib.h"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor (leer)
@@ -88,13 +89,42 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 	// Colorkey feststellen
 	DWORD key = ((DWORD*)d3dlr.pBits)[0];
 #elif defined(PLATFORM_SDL)
-    // This code below need to account for unrarlib
+	SDL_Surface *temp = NULL;
 	char Temp[256];
-	sprintf_s(Temp, "data/%s", Filename);
-    SDL_Surface* temp = loadImage( Temp );
-    if (temp == NULL) {
-        return true;
-    }
+	char *pData;
+	unsigned long Size;
+
+	if (CommandLineParams.RunOwnLevelList == true)
+	{
+	    sprintf_s(Temp, "levels/%s/%s", CommandLineParams.OwnLevelList, Filename);
+		if (FileExists(Temp))
+		{
+			temp = loadImage(Temp);
+		}
+	}
+
+	if (temp == NULL)
+	{        
+	    sprintf_s(Temp, "data/%s", Filename);        
+		if (FileExists(Temp))
+		{
+			temp = loadImage(Temp);
+		}
+	}
+        
+	if (temp == NULL)
+	{
+		if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) != false)
+	    {
+			temp = loadImage(pData, Size);
+			free(pData);
+		}
+	}
+        
+	if (temp == NULL)
+	{
+		return true;
+	}
 
 #if 1
     /* menufont.png: pixel at (0,0) (upper left corner) is part of a char/glyph,
