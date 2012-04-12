@@ -77,6 +77,11 @@ extern "C"
 
 #endif
 
+#ifdef __AROS__
+#undef  _DEBUG_LOG_FILE
+#define _DEBUG_LOG_FILE "T:debug_unrar.txt"
+#endif
+
 /* ------------------------------------------------------------------------ */
 
 
