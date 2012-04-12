@@ -114,8 +114,12 @@ MUSIC_MODULE* MUSIC_LoadSong( const char* filename )
 
 MUSIC_MODULE* MUSIC_LoadSongEx( const char* filename, int offset, int length, unsigned int mode, const int *samplelist, int samplelistnum )
 {
+#if defined(USE_MODPLUG)
+	return ModPlug_Load( filename, length);
+#else
     // TODO Only need for unrar, but this will require cache the music file to disk
     return NULL;
+#endif
 }
 
 signed char MUSIC_PlaySong( MUSIC_MODULE* music )
@@ -252,7 +256,12 @@ Mix_Chunk* SOUND_Sample_Load( int index, const char *filename, unsigned int inpu
     // Load from memory
     if ((inputmode & FSOUND_LOADMEMORY) == FSOUND_LOADMEMORY)
     {
+#if 1
+        SDL_RWops* sdl_rw = SDL_RWFromConstMem( (const void*)filename, length );
+		chunk = Mix_LoadWAV_RW(sdl_rw, 1);		
+#else
         chunk = Mix_QuickLoad_WAV( (Uint8*)filename );
+#endif
     }
     else    // Load from file
     {
