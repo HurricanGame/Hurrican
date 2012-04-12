@@ -64,6 +64,7 @@ void CLightMap::Load(const char *filename)
 	char				Temp[100];
 	char				*pData;
 	unsigned long		Size;
+	FILE 				*TempFile = NULL;
 
 	sprintf_s(Temp, "data/%s", filename);
 	if (FileExists(Temp))
@@ -75,22 +76,24 @@ void CLightMap::Load(const char *filename)
 		Protokoll.WriteText(Name, false);
 		return;
 	}
-
-loadfile:
-
-#if defined(PLATFORM_DIRECTX)
-	FILE *TempFile = NULL;
+    
 	fopen_s (&TempFile, "temp.dat", "wb");	// Datei öffnen
 	fwrite (pData, Size, 1, TempFile);			// speichern
 	fclose (TempFile);							// und schliessen
 
+	strcpy_s(Temp, sizeof(Temp), "temp.dat");
+
+loadfile:
+
+#if defined(PLATFORM_DIRECTX)
 	//load bimap
 
-	hbm = (HBITMAP)LoadImage(GetModuleHandle(NULL), "temp.dat", IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE);
-	DeleteFile("temp.dat");
+	hbm = (HBITMAP)LoadImage(GetModuleHandle(NULL), Temp, IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE);
 #elif defined(PLATFORM_SDL)
     hbm = loadImage( Temp );
 #endif
+
+	if (TempFile) DeleteFile("temp.dat");
 
 	if (hbm == NULL)
 	{
