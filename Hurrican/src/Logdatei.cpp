@@ -84,7 +84,7 @@ void Logdatei::WriteText(const char Text[180], bool Abbruch)
 #if defined(PLATFORM_DIRECTX)
 		MessageBox (g_hwnd, Text, "Ein Fehler ist aufgetreten !", MB_OK | MB_ICONEXCLAMATION);
 #elif defined(PLATFORM_SDL)
-        printf ( "Ein Fehler ist aufgetreten !" );
+        printf ( "Ein Fehler ist aufgetreten !\n" );
 #endif
 		delLogFile  = false;
 		GameRunning = false;
