@@ -282,6 +282,8 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
         return false;
     }
 
+    SDL_ShowCursor(SDL_DISABLE);
+
 #if defined(USE_EGL_SDL)
     if (EGL_Init() != 0) {
         return 1;
