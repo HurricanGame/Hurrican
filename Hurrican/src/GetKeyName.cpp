@@ -140,7 +140,9 @@ const char *GetKeyName(int DIK_Code)
 		case DIK_UNLABELED       : Text = "Unlabeled";					break;
 		case DIK_NEXTTRACK       : Text = "Next Track";					break;
 		case DIK_NUMPADENTER     : Text = "Numpad Enter";				break;
+#endif
 		case DIK_RCONTROL        : Text = "Right ctrl";				    break;
+#if defined(PLATFORM_DIRECTX)
 		case DIK_MUTE            : Text = "Mute";						break;
 		case DIK_CALCULATOR      : Text = "Calculator";					break;
 		case DIK_PLAYPAUSE       : Text = "Play / Pause";				break;
@@ -151,7 +153,9 @@ const char *GetKeyName(int DIK_Code)
 		case DIK_NUMPADCOMMA     : Text = "Numpad ,";					break;
 		case DIK_DIVIDE          : Text = "Numpad /";					break;
 		case DIK_SYSRQ           : Text = "PrintScreen";				break;
+#endif
 		case DIK_RMENU           : Text = "Right alt";					break;
+#if defined(PLATFORM_DIRECTX)
 		case DIK_PAUSE           : Text = "Pause";						break;
 #endif
 		case DIK_HOME            : Text = "Home";						break;
