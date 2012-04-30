@@ -1776,8 +1776,8 @@ void MenuClass::DoMenu(void)
 					// Neue Taste?
 					DirectInput.UpdateTastatur();
 
-					for (int i=1; i<255; i++)		// Puffer durchgehen
-					if (KeyDown(i))					// ob eine Taste gedrückt wurde
+					for (int i=1; i<DirectInput.NumberOfKeys; i++)		// Puffer durchgehen
+					if (KeyDown(i) && i!=DIK_NUMLOCK && i!=DIK_CAPITAL && i!=DIK_SCROLL)					// ob eine Taste gedrückt wurde
 					{
 						pCurrentPlayer->AktionKeyboard[AktuellerPunkt - 3] = i;
 						pCurrentPlayer->AktionJoystick[AktuellerPunkt - 3] = -1;
