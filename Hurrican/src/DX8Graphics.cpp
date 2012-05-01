@@ -274,7 +274,7 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
     {
         SDL_WM_SetCaption("Hurrican", "Hurrican");
     }
-    
+
     Screen = SDL_SetVideoMode( ScreenWidth, ScreenHeight, ScreenDepth, flags );
     if (Screen == NULL)
     {
@@ -368,7 +368,7 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
 	lpD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
 #elif defined(PLATFORM_SDL)
     (void)hr;
-    
+
     /* Init OpenGL */
     glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );                 /* Set the background black */
     glClearDepth( 1.0f );                                   /* Depth buffer setup */
@@ -523,7 +523,7 @@ void DirectGraphicsClass::SetAdditiveMode(void)
 	lpD3DDevice->SetRenderState(D3DRS_SRCBLEND,  D3DBLEND_SRCALPHA);	// Additive Blending
 	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_DESTALPHA);	// einschalten
 #elif defined(PLATFORM_SDL)
-    glBlendFunc( GL_SRC_ALPHA, GL_DST_ALPHA );
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE );
 #endif
 
 	BlendMode = ADDITIV_MODE;
