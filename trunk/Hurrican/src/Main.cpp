@@ -341,7 +341,8 @@ int main(int argc, char *argv[])
     HWND g_hwnd = 0;
     HINSTANCE hinstance = 0;
     //int nshowcmd = argc;
-    const char* lpcmdline = argv[argc-1];
+    // On AmigaOS or clones argc my be 0 if started from WB (desktoip)!
+    const char* lpcmdline = argc ? argv[argc-1] : "";
 #endif
 
 	GamePaused = false;
