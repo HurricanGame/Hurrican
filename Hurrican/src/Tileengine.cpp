@@ -34,6 +34,16 @@
 #include "Main.h"
 
 // --------------------------------------------------------------------------------------
+// Endianess handling 
+// We will Swap values only for Big_Endian, Little_Endian should be unchanged
+// --------------------------------------------------------------------------------------
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+#define SWAP32(X) (X)
+#else
+#define SWAP32(X) SDL_Swap32(X)
+#endif
+
+// --------------------------------------------------------------------------------------
 // externe Variablen
 // --------------------------------------------------------------------------------------
 
@@ -384,8 +394,8 @@ loadfile:
 	fread(&DateiHeader, sizeof(DateiHeader), 1, Datei);
 
 	// und Werte übertragen
-	LEVELSIZE_X		 = DateiHeader.SizeX;
-	LEVELSIZE_Y		 = DateiHeader.SizeY;
+	LEVELSIZE_X		 = SWAP32(DateiHeader.SizeX);
+	LEVELSIZE_Y		 = SWAP32(DateiHeader.SizeY);
 	LEVELPIXELSIZE_X = (float)LEVELSIZE_X*TILESIZE_X;
 	LEVELPIXELSIZE_Y = (float)LEVELSIZE_Y*TILESIZE_Y;
 	LoadedTilesets   = DateiHeader.UsedTilesets;
@@ -404,7 +414,11 @@ loadfile:
 	ParallaxLayer[0].LoadImage(DateiHeader.ParallaxAFile, 640, 480, 640, 480, 1, 1);
 	ParallaxLayer[1].LoadImage(DateiHeader.ParallaxBFile, 640, 480, 640, 480, 1, 1);
 	CloudLayer.LoadImage(DateiHeader.CloudFile, 640, 240, 640, 240, 1, 1);
-	Timelimit = (double) DateiHeader.Timelimit;
+	Timelimit = (double) SWAP32(DateiHeader.Timelimit);
+	
+	#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+		DateiHeader.NumObjects = SWAP32(DateiHeader.NumObjects);
+	#endif
 
 	if (Timelimit <= 0)
 		Timelimit = 500;
@@ -438,7 +452,7 @@ loadfile:
 		 //
 		 Tiles[i][j].Alpha			= LoadTile.Alpha;
 		 Tiles[i][j].BackArt		= LoadTile.BackArt;
-		 Tiles[i][j].Block			= LoadTile.Block;
+		 Tiles[i][j].Block			= SWAP32(LoadTile.Block);
 		 Tiles[i][j].Blue			= LoadTile.Blue;
 		 Tiles[i][j].FrontArt		= LoadTile.FrontArt;
 		 Tiles[i][j].Green			= LoadTile.Green;
@@ -533,6 +547,14 @@ loadfile:
 	for(i=0; i < (int)(DateiHeader.NumObjects); i++)
 	{
 		fread(&LoadObject, sizeof(LoadObject), 1, Datei);				// Objekt laden
+
+		#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+			LoadObject.ObjectID = SWAP32(LoadObject.ObjectID);
+			LoadObject.XPos = SWAP32(LoadObject.XPos);
+			LoadObject.YPos = SWAP32(LoadObject.YPos);
+			LoadObject.Value1 = SWAP32(LoadObject.Value1);
+			LoadObject.Value2 = SWAP32(LoadObject.Value2);
+		#endif
 
 		// Startposition des Spielers
 		if(LoadObject.ObjectID == 0)
@@ -791,6 +813,10 @@ loadfile:
 
 	fread(&pTileEngine->DateiAppendix, sizeof(pTileEngine->DateiAppendix), 1, Datei);
 
+	#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+		pTileEngine->DateiAppendix.UsedPowerblock = SWAP32(pTileEngine->DateiAppendix.UsedPowerblock);
+	#endif
+	
 	bDrawShadow = pTileEngine->DateiAppendix.Taschenlampe;
 	ShadowAlpha = 255.0f;
 
