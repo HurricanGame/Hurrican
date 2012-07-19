@@ -13,7 +13,7 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
-#ifndef __AROS__
+#if !defined(__AROS__) && !defined(__MORPHOS__) && !defined(__amigaos4__)
 #include <sys/timeb.h>
 #endif
 #include <time.h>
@@ -31,6 +31,16 @@
 #include "Player.h"
 #include "Partikelsystem.h"
 #include "Timer.h"
+
+// --------------------------------------------------------------------------------------
+// Endianess handling 
+// We will Swap values only for Big_Endian, Little_Endian should be unchanged
+// --------------------------------------------------------------------------------------
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+#define SWAP32(X) (X)
+#else
+#define SWAP32(X) SDL_Swap32(X)
+#endif
 
 // --------------------------------------------------------------------------------------
 // Die Credits
@@ -2694,6 +2704,13 @@ void MenuClass::LoadHighscore(void)
 		{
 			Pruefsumme = 0;
 
+			#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+				Highscores[i].Score=SWAP32(Highscores[i].Score);
+				Highscores[i].Stage=SWAP32(Highscores[i].Stage);
+				Highscores[i].Skill=SWAP32(Highscores[i].Skill);
+				Highscores[i].Pruefsumme=SWAP32(Highscores[i].Pruefsumme);
+			#endif
+
 			for (unsigned int j=0; j<strlen(Highscores[i].Name); j++)
 				Pruefsumme += Highscores[i].Name[j];
 
@@ -2746,10 +2763,26 @@ void MenuClass::SaveHighscore(void)
 						  Highscores[i].Score +
 						  Highscores[i].Stage +
 						  Highscores[i].Skill;
+						  
+			#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+				// SixK - SWAP TO LITTLE ENDIAN before saving
+				Highscores[i].Score=SWAP32(Highscores[i].Score);
+				Highscores[i].Stage=SWAP32(Highscores[i].Stage);
+				Highscores[i].Skill=SWAP32(Highscores[i].Skill);
+				Highscores[i].Pruefsumme=SWAP32(Highscores[i].Pruefsumme);
+			#endif
 
 			// Und Eintrag speichern
 			//
 			fwrite(&Highscores[i], sizeof(Highscores[i]), 1, Datei);
+			
+			#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+				// SixK - SWAP TO BIG ENDIAN Again once datas have been written
+				Highscores[i].Score=SWAP32(Highscores[i].Score);
+				Highscores[i].Stage=SWAP32(Highscores[i].Stage);
+				Highscores[i].Skill=SWAP32(Highscores[i].Skill);
+				Highscores[i].Pruefsumme=SWAP32(Highscores[i].Pruefsumme);
+			#endif
 		}
 	}
 
