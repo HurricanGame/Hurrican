@@ -56,7 +56,11 @@ typedef uint32_t LPDIRECT3D8, LPDIRECT3D9, LPDIRECT3DDEVICE8, LPDIRECT3DDEVICE9,
 
 #define D3DX_PI M_PI
 #define D3DCOLOR_XRGB(r,g,b)    (float)((r)/255), (float)((g)/255), (float)((b)/255), 1.0f
-#define D3DCOLOR_RGBA(r,g,b,a)  (((a)<<24) + ((b)<<16) + ((g)<<8) + (r))
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+	#define D3DCOLOR_RGBA(r,g,b,a)  (((a)<<24) + ((b)<<16) + ((g)<<8) + (r))
+#else
+	#define D3DCOLOR_RGBA(r,g,b,a)  (((r)<<24) + ((g)<<16) + ((b)<<8) + (a))
+#endif
 #define timeGetTime             SDL_GetTicks
 
 #define LPDIRECTINPUTDEVICE8 SDL_Joystick*
