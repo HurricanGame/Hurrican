@@ -449,7 +449,7 @@ bool CSoundManager::LoadSong(const char *Filename, int Nr)
 		    delete(its_Songs[Nr]);
 	    }
 	    its_Songs[Nr] = new CSong();
-        
+
 		return false;
     }
 
@@ -798,10 +798,10 @@ bool CSoundManager::LoadWave(const char *Filename, int Nr, bool looped)
     	/* Need this even if sound output not possible, because lots of code
            accesses its_Sounds[] */
 		its_Sounds[Nummer] = new CWave();
-    	
+
 		return false;
 	}
-    
+
 	// Zuerst checken, ob sich der Sound in einem MOD-Ordner befindet
 	if (CommandLineParams.RunOwnLevelList == true)
 	{

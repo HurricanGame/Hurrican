@@ -67,7 +67,7 @@ void GegnerStalagtit::DoKI(void)
 				yAcc   =  12.0f;
 			}
 		} break;
-		
+
 		default : break;
 	} // switch
 }

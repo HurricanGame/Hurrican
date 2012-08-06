@@ -14,7 +14,7 @@
 
 GegnerSecret::GegnerSecret(int Wert1, int Wert2, bool Light)
 {
-	Handlung		= GEGNER_STEHEN;	
+	Handlung		= GEGNER_STEHEN;
 	Energy			= 100;
 	Value1			= Wert1;
 	Value2			= Wert2;
@@ -53,8 +53,8 @@ void GegnerSecret::DoKI(void)
 
 			for (int p = 0; p < NUMPLAYERS; p++)
 			if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-								pPlayer[p]->xpos, 
-								pPlayer[p]->ypos, 
+								pPlayer[p]->xpos,
+								pPlayer[p]->ypos,
 								pPlayer[p]->CollideRect) == true)
 			{
 				pPlayer[0]->SecretThisLevel++;

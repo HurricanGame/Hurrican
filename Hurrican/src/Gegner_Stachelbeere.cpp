@@ -54,7 +54,7 @@ void GegnerStachelbeere::DoDraw(void)
 		case GEGNER_SCHLIESSEN:
 		case GEGNER_SCHIESSEN:
 		{
-			pGegnerGrafix[GegnerArt]->SetRect((AnimPhase % 3) * 120,	   (AnimPhase / 3 + 1) * 60, 
+			pGegnerGrafix[GegnerArt]->SetRect((AnimPhase % 3) * 120,	   (AnimPhase / 3 + 1) * 60,
 											  (AnimPhase % 3) * 120 + 120, (AnimPhase / 3 + 2) * 60);
 
 			if (!mirrored)
@@ -66,7 +66,7 @@ void GegnerStachelbeere::DoDraw(void)
 													   yPos - (float)pTileEngine->YOffset,
 													   color);
 		} break;
-	}	
+	}
 }
 
 // --------------------------------------------------------------------------------------
@@ -74,22 +74,22 @@ void GegnerStachelbeere::DoDraw(void)
 // --------------------------------------------------------------------------------------
 
 void GegnerStachelbeere::DoKI(void)
-{		
+{
 	// Schrägen checken
 	//
 	if (ySpeed >= 0.0f)
 		blocku = pTileEngine->BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed);
 
 	// Runterfallen?
-	if (!(blocku & BLOCKWERT_SCHRAEGE_R) && 
+	if (!(blocku & BLOCKWERT_SCHRAEGE_R) &&
 		!(blocku & BLOCKWERT_SCHRAEGE_L))
 	{
 		blocku = pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
-		if (!(blocku & BLOCKWERT_WAND) && 
+		if (!(blocku & BLOCKWERT_WAND) &&
 			!(blocku & BLOCKWERT_PLATTFORM))
 			yAcc = 8.0f;
-	}	
+	}
 
 	// AnimSpeed passend zur Bewegugnsgeschwindigkeit setzen
 	if (Handlung == GEGNER_LAUFEN ||
@@ -104,7 +104,7 @@ void GegnerStachelbeere::DoKI(void)
 		AnimSpeed = 2.8f - temp / 4.0f;
 	}
 
-	
+
 	if (ySpeed > 0.0f)
 	{
 		if (ySpeed > 40.0f)
@@ -146,8 +146,8 @@ void GegnerStachelbeere::DoKI(void)
 			{
 				ShotCount = 4;
 				RollCount = 4.0f;
-				
-				Handlung = GEGNER_SCHIESSEN;				
+
+				Handlung = GEGNER_SCHIESSEN;
 				AnimStart = -1;
 				AnimPhase = AnimEnde - 2;
 			}
@@ -167,7 +167,7 @@ void GegnerStachelbeere::DoKI(void)
 				pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_GRANATE);
 
 				pGegner->PushGegner(xPos + ShotCount * 15.0f + off,
-									yPos + 10.0f, 
+									yPos + 10.0f,
 									MINIROCKET, 0, 99, false, false);
 
 				RollCount = 2.0f;
@@ -175,7 +175,7 @@ void GegnerStachelbeere::DoKI(void)
 
 				if (ShotCount <= 0)
 				{
-					Handlung = GEGNER_SCHLIESSEN;					
+					Handlung = GEGNER_SCHLIESSEN;
 				}
 			}
 		} break;
@@ -202,25 +202,25 @@ void GegnerStachelbeere::DoKI(void)
 
 			// abbremsen
 			if (xSpeed > 0.0f)
-			{		
+			{
 				xSpeed -= 1.0f SYNC;
 
 				if (xSpeed < 0.0f)
-					stop = true;									
-			} 
+					stop = true;
+			}
 			else
 			if (xSpeed < 0.0f)
-			{		
+			{
 				xSpeed += 1.0f SYNC;
 
 				if (xSpeed > 0.0f)
-					stop = true;									
-			}			
+					stop = true;
+			}
 			else
 				stop = true;
 
 			// angehalten?
-			if (stop) 
+			if (stop)
 			{
 				xSpeed = 0.0f;
 				Handlung = GEGNER_OEFFNEN;
@@ -288,7 +288,7 @@ void GegnerStachelbeere::DoKI(void)
 
 	// Berührt die Kugel den Spieler ?
 	//
-	Wegschieben(GegnerRect[GegnerArt], 4.0f);	
+	Wegschieben(GegnerRect[GegnerArt], 4.0f);
 }
 
 // --------------------------------------------------------------------------------------
@@ -298,11 +298,11 @@ void GegnerStachelbeere::DoKI(void)
 void GegnerStachelbeere::GegnerExplode(void)
 {
 	for (int i = 0; i < 5; i++)
-		pPartikelSystem->PushPartikel(float(xPos - 30 + rand()%60), 
+		pPartikelSystem->PushPartikel(float(xPos - 30 + rand()%60),
 									  float(yPos - 30 + rand()%60), EXPLOSION_MEDIUM2);
 
 	// Explosion
-	pPartikelSystem->PushPartikel(float(xPos - 15), 
+	pPartikelSystem->PushPartikel(float(xPos - 15),
 								  float(yPos - 15), EXPLOSION_BIG);
 
 	pSoundManager->PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION4);	// Sound ausgeben
@@ -311,14 +311,14 @@ void GegnerStachelbeere::GegnerExplode(void)
 
 	// noch einm paar Raketen spawnen
 	pGegner->PushGegner(xPos + 15.0f,
-						yPos + 35.0f, 
+						yPos + 35.0f,
 						MINIROCKET, 0, 99, false, false);
 
 	pGegner->PushGegner(xPos + 45.0f,
-						yPos + 35.0f, 
+						yPos + 35.0f,
 						MINIROCKET, 0, 99, false, false);
 
 	pGegner->PushGegner(xPos + 30.0f,
-						yPos + 20, 
+						yPos + 20,
 						MINIROCKET, 0, 99, false, false);
 }

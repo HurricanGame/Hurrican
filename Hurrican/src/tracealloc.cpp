@@ -12,7 +12,7 @@ Purpose:
 Author:
 
   Erik Rydgren, erik@rydgrens.net.
-  
+
 Usage:
   1/ Define DETECT_LEAKS in the project settings under
      C++/preprocessor.
@@ -20,9 +20,9 @@ Usage:
      If you want checking of overwrites then define DETECT_OVERWRITES
      in the project settings. Change the frequency of the checks by
      altering the NML_CHECK_EVERY define in tracealloc.cpp.
-  
+
   2/ Compile.
-  
+
      If you get multiple defined symbols (overloaded new and delete)
      add linker switch /FORCE:MULTIPLE on the exe and make sure the
      tracealloc new and delete is the ones used. If not, reorder the
@@ -79,15 +79,15 @@ void OutputDebugStringFormat( LPCTSTR lpszFormat, ... )
 void PCSTR2LPTSTR( PCSTR lpszIn, LPTSTR lpszOut )
 {
 #if defined(UNICODE)||defined(_UNICODE)
-   ULONG index = 0; 
+   ULONG index = 0;
    PCSTR lpAct = lpszIn;
-   
+
 	for( ; ; lpAct++ )
 	{
 		lpszOut[index++] = (TCHAR)(*lpAct);
 		if ( *lpAct == 0 )
 			break;
-	} 
+	}
 #else
    // This is trivial :)
 	int count = strlen(lpszIn);
@@ -155,7 +155,7 @@ BOOL InitSymInfo( PCSTR lpszInitialSymbolPath )
 	CHAR     lpszSymbolPath[BUFFERSIZE];
    DWORD    symOptions = SymGetOptions();
 
-	symOptions |= SYMOPT_LOAD_LINES; 
+	symOptions |= SYMOPT_LOAD_LINES;
 	symOptions &= ~SYMOPT_UNDNAME;
 	SymSetOptions( symOptions );
 
@@ -183,7 +183,7 @@ BOOL GetModuleNameFromAddress( UINT address, LPTSTR lpszModule )
 	else
 	   // Not found :(
 		_tcscpy( lpszModule, _T("?") );
-	
+
 	return ret;
 }
 
@@ -210,8 +210,8 @@ BOOL GetFunctionInfoFromAddresses( ULONG fnAddress, ULONG stackAddress, LPTSTR l
 	if ( SymGetSymFromAddr( GetCurrentProcess(), (ULONG)fnAddress, &dwDisp, pSym ) )
 	{
 	   // Make the symbol readable for humans
-		UnDecorateSymbolName( pSym->Name, lpszNonUnicodeUnDSymbol, BUFFERSIZE, 
-			UNDNAME_COMPLETE | 
+		UnDecorateSymbolName( pSym->Name, lpszNonUnicodeUnDSymbol, BUFFERSIZE,
+			UNDNAME_COMPLETE |
 			UNDNAME_NO_THISTYPE |
 			UNDNAME_NO_SPECIAL_SYMS |
 			UNDNAME_NO_MEMBER_TYPE |
@@ -271,7 +271,7 @@ BOOL GetFunctionInfoFromAddresses( ULONG fnAddress, ULONG stackAddress, LPTSTR l
 		}
 
 		_tcscat( lpszSymbol, lpszParsed );
-   
+
 		ret = TRUE;
 	}
 
@@ -319,7 +319,7 @@ BOOL GetSourceInfoFromAddress( UINT address, LPTSTR lpszSourceInfo )
 
 		ret = FALSE;
 	}
-	
+
 	return ret;
 }
 
@@ -349,7 +349,7 @@ void GetStackTrace(HANDLE hThread, ULONG ranOffsets[][2], ULONG nMaxStack )
       OutputDebugStringFormat( _T("Call stack info(thread=0x%X) failed.\n") );
 	   return;
 	}
-	
+
 	::ZeroMemory( &callStack, sizeof(callStack) );
 	callStack.AddrPC.Offset    = context.Eip;
 	callStack.AddrStack.Offset = context.Esp;
@@ -358,14 +358,14 @@ void GetStackTrace(HANDLE hThread, ULONG ranOffsets[][2], ULONG nMaxStack )
 	callStack.AddrStack.Mode   = AddrModeFlat;
 	callStack.AddrFrame.Mode   = AddrModeFlat;
 
-	for( ULONG index = 0; ; index++ ) 
+	for( ULONG index = 0; ; index++ )
 	{
 		bResult = StackWalk(
 			IMAGE_FILE_MACHINE_I386,
 			hProcess,
 			hThread,
 	      &callStack,
-			NULL, 
+			NULL,
 			NULL,
 			SymFunctionTableAccess,
 			SymGetModuleBase,
@@ -385,7 +385,7 @@ void GetStackTrace(HANDLE hThread, ULONG ranOffsets[][2], ULONG nMaxStack )
       ranOffsets[index-3][1] = 0;
 			break;
     }
-    	
+
     // Remember program counter and frame pointer
     ranOffsets[index-3][0] = callStack.AddrPC.Offset;
     ranOffsets[index-3][1] = callStack.AddrFrame.Offset;
@@ -475,12 +475,12 @@ public:
   cLeakDetector() {
     InitSymInfo("");
   }
-  
-  ~cLeakDetector() {    
-    tcstring leaks;    
-    LeakDump(leaks);    
-    OutputDebugString(leaks.c_str());    
-    UninitSymInfo();  
+
+  ~cLeakDetector() {
+    tcstring leaks;
+    LeakDump(leaks);
+    OutputDebugString(leaks.c_str());
+    UninitSymInfo();
   }
 };
 
@@ -500,14 +500,14 @@ sdAllocBlock& Head()
   return oHead;
 }
 
-class cInitializer { 
-  public: cInitializer() { Head(); }; 
+class cInitializer {
+  public: cInitializer() { Head(); };
 } oInitalizer;
 
 void LeakDump(tcstring& roOut)
 {
   Guard at(Gate());
-  
+
   TCHAR buffer[65];
 
   sdAllocBlock* poBlock = Head().poNext;
@@ -576,7 +576,7 @@ void CheckNoMansLand()
 void* TraceAlloc(size_t nSize)
 {
   Guard at(Gate());
-  
+
   nNumAllocs++;
 #ifdef DETECT_OVERWRITES
   if (nNumAllocs % NML_CHECK_EVERY == 0) {
@@ -626,7 +626,7 @@ void TraceDealloc(void* poMem)
       bool MEMORYERROR_STUFF_WRITTEN_IN_NOMANSLAND_LEAD = false;
       assert(MEMORYERROR_STUFF_WRITTEN_IN_NOMANSLAND_LEAD);
     }
-  }  
+  }
   else if (!AssertMem(poBlock->pzNoMansLand, 0x55, NO_MANS_LAND_SIZE)) {
     bool MEMORYERROR_STUFF_WRITTEN_IN_NOMANSLAND_LEAD = false;
     assert(MEMORYERROR_STUFF_WRITTEN_IN_NOMANSLAND_LEAD);

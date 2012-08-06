@@ -6,6 +6,7 @@
 #include <string>
 #include <math.h>
 #include <sstream>
+#include <fstream>
 #include <vector>
 
 #include "cml/cml.h"
@@ -137,6 +138,8 @@ void int_to_rgb( uint32_t color, SDL_Color& components );
 void matrixmode( GLenum mode );
 void delete_texture( GLuint texture );
 void delete_textures( void );
+
+uint8_t* LoadFileToMemory( const std::string& name, uint32_t& size );
 
 extern D3DXMATRIXA16 g_matView;
 

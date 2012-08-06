@@ -776,7 +776,7 @@ void SaveConfig(void)
    		Protokoll.WriteText("Config file saving failed !\n", false);
         return;
     }
-    
+
 	// Spracheinstellung speichern
 	fwrite(&ActualLanguage, sizeof(ActualLanguage), 1, Datei);
 

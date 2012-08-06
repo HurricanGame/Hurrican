@@ -41,14 +41,14 @@ void GegnerEndLevel::DoKI(void)
 		// Ausgang berührt ? Dann Nächsten Level laden
 		for (int p = 0; p < NUMPLAYERS; p++)
 		if (SpriteCollision(xPos,		   yPos,		  GegnerRect[GegnerArt],
-						    pPlayer[p]->xpos, 
-							pPlayer[p]->ypos, 
-							pPlayer[p]->CollideRect) == true)							
-							
+						    pPlayer[p]->xpos,
+							pPlayer[p]->ypos,
+							pPlayer[p]->CollideRect) == true)
+
 		{
 			// Spieler zentrieren
 			if (NUMPLAYERS == 0)
-				pTileEngine->ScrollLevel(pPlayer[0]->xpos - 300, 
+				pTileEngine->ScrollLevel(pPlayer[0]->xpos - 300,
 										 pPlayer[0]->ypos - 280, ZUSTAND_SCROLLTOLOCK);
 			else
 				pTileEngine->ScrollLevel(pTileEngine->XOffset,
@@ -57,7 +57,7 @@ void GegnerEndLevel::DoKI(void)
 			Energy = 0.0f;
 
 			for (int p2 = 0; p2 < NUMPLAYERS; p2++)
-			{				
+			{
 				pPlayer[p2]->FesteAktion   = Value2;		// Art wie der Spieler den Screen verlässt
 				pPlayer[p2]->DoFesteAktion = true;
 			}
@@ -69,7 +69,7 @@ void GegnerEndLevel::DoKI(void)
 				pSoundManager->PlayWave(100, 128, 11025, SOUND_MARIO);
 				StageClear(false);
 			}
-			else			
+			else
 				StageClear(true);
 		}
 	}
