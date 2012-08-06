@@ -134,7 +134,7 @@ bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize
 	}
 #elif defined(PLATFORM_SDL)
     (void)hresult;
-    
+
     SDL_Rect dims;
 	itsSurface = loadTexture( Filename, dims, 0 );
 #endif
@@ -246,10 +246,13 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
 	HRESULT			hresult;
 	char			*pData;
 	char			Temp[256];
+#if defined(USE_PVRTC)
+	char			pvr[256];
+#endif
 	unsigned long	Size;
 #if defined(PLATFORM_SDL)
     (void)hresult;
-    
+
     SDL_Rect        dims;
 #endif
 
@@ -267,12 +270,24 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
 	if (CommandLineParams.RunOwnLevelList == true)
 	{
 		sprintf_s(Temp, "levels/%s/%s", CommandLineParams.OwnLevelList, Filename);
+#if defined(USE_PVRTC)
+        strcpy( pvr, Temp );
+        strcat( pvr, ".pvr" );
+        if (FileExists(pvr))
+            goto loadfile;
+#endif
 		if (FileExists(Temp))
 			goto loadfile;
 	}
 
 	// Dann checken, ob sich das File im Standard Ordner befindet
 	sprintf_s(Temp, "data/%s", Filename);
+#if defined(USE_PVRTC)
+    strcpy( pvr, Temp );
+    strcat( pvr, ".pvr" );
+    if (FileExists(pvr))
+        goto loadfile;
+#endif
 	if (FileExists(Temp))
 		goto loadfile;
 

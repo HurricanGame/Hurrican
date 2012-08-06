@@ -62,7 +62,7 @@ void GegnerBruecke::DoKI(void)
 				pTemp->ySpeed == 0.0f	&&
 				SpriteCollision (xPos, yPos, GegnerRect[GegnerArt],
 								 pTemp->xPos, pTemp->yPos, GegnerRect[pTemp->GegnerArt]) == true)
-			{			
+			{
 				float dx, dy;
 				float   w, h;
 
@@ -74,7 +74,7 @@ void GegnerBruecke::DoKI(void)
 
 				dx = pTemp->xPos + w - (xPos + 5);
 				dy = pTemp->yPos + h - (yPos + 5);
-		
+
 				double a = sqrt ((dx * dx) + (dy * dy));
 
 				if (a > 40.0f)
@@ -94,8 +94,8 @@ void GegnerBruecke::DoKI(void)
 		//
 		for (int p = 0; p < NUMPLAYERS; p++)
 		if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-							pPlayer[p]->xpos, 
-							pPlayer[p]->ypos, 
+							pPlayer[p]->xpos,
+							pPlayer[p]->ypos,
 							pPlayer[p]->CollideRect) == true &&
 							pPlayer[p]->yspeed >= 0.0f)
 		{
@@ -112,7 +112,7 @@ void GegnerBruecke::DoKI(void)
 	else
 		yPos = (float)(Value1 + 3);
 
-	
+
 }
 
 // --------------------------------------------------------------------------------------

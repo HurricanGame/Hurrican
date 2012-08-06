@@ -53,15 +53,17 @@
 				<Option type="1" />
 				<Option compiler="pandora_code_sourcery" />
 				<Compiler>
-					<Add option="-O3" />
-					<Add option="-g" />
 					<Add option="-DUSE_EGL_SDL" />
 					<Add option="-DUSE_GLES1" />
+					<Add option="-DUSE_PVRTC" />
+					<Add option="-DUSE_MODPLUG" />
 					<Add option="-DPANDORA" />
+					<Add directory="../../../../toolchains/pandora/arm-2011.09/usr/include/libmodplug" />
 				</Compiler>
 				<Linker>
+					<Add option="-s" />
 					<Add option="-lGLES_CM -lIMGegl -lEGL -lsrv_um -lX11 -lXau -lXdmcp" />
-					<Add option="-lpng12 -lz -ltiff -lmad -ljpeg -lts" />
+					<Add option="-lpng12 -lz -ltiff -lmad -ljpeg -lts -lstdc++" />
 				</Linker>
 			</Target>
 		</Build>

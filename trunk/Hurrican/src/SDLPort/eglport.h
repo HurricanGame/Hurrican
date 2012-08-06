@@ -1,7 +1,7 @@
 /**
  *
  *  EGLPORT.H
- *  Copyright (C) 2011 Scott R. Smith
+ *  Copyright (C) 2011-2012 Scott R. Smith
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -26,55 +26,69 @@
 #ifndef EGLPORT_H
 #define EGLPORT_H
 
-#include <stdlib.h>
+#if defined(USE_EGL_SDL)
+#define SUPPORT_X11 1
+#endif
+
 #include <stdint.h>
-#include "EGL/egl.h"
+#include "egl.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-// Defines (in every case choose only one)
-// EGL window system
-#if defined(USE_EGL_RAW) && !defined(USE_EGL_SDL)
-    //#warning Using RAW EGL mode USE_EGL_RAW
-#elif !defined(USE_EGL_RAW) && defined(USE_EGL_SDL)
-    //#warning Using SDL EGL mode USE_EGL_SDL
-#else	// default configuration
-    #define USE_EGL_SDL 1
-    #define USE_GLES1 1
-#endif
-// GLES Version
-//  USE_GLES1
-//  USE_GLES2
-// Platform
-//  PANDORA
-//  WIZ
-//  CAANOO
+/** Defines (in every case choose only one) */
+/**     DEBUG : enable additional error monitoring per EGL function call */
+/**   Native display and window system for use with EGL */
+/**     USE_EGL_RAW : used for direct access to the framebuffer */
+/**     USE_EGL_SDL : used for access to a X window */
+/**     USE_EGL_RPI : used for raspberry pi window */
+/**   GLES Version */
+/**     USE_GLES1 : EGL for use with OpenGL-ES 1.X contexts */
+/**     USE_GLES2 : EGL for use with OpenGL-ES 2.0 contexts */
+/**   Platform: settings that are specific to that device */
+/**     PANDORA (use USE_EGL_SDL and USE_GLES1 or USE_GLES2)*/
+/**     WIZ     (use USE_EGL_RAW and USE_GLES1)*/
+/**     CAANOO  (use USE_EGL_RAW and USE_GLES1)*/
+/**     RPI     (use USE_EGL_RAW and USE_GLES1 or USE_GLES2)*/
 
-// External API
+/** Public API */
 void    EGL_Close                   ( void );
 int8_t  EGL_Open                    ( void );
 int8_t  EGL_Init                    ( void );
 void    EGL_SwapBuffers             ( void );
 
-// Internal API
-int8_t  ConfigureEGL                ( EGLConfig config );
-int8_t  FindAppropriateEGLConfigs   ( void );
-int8_t  CheckEGLErrors              ( const char* file, uint16_t line );
+/**   Simple Examples  */
+/**     Raw mode:
+          EGL_Open();
+          EGL_Init();
+          do while(!quit) {
+            ... run app
+            EGL_SwapBuffers();
+          }
+          EGL_Close();
+*/
+/**     X/SDL mode:
+          SDL_Init( SDL_INIT_VIDEO );
+          EGL_Open();
+          SDL_Surface* screen = SDL_SetVideoMode(640, 480, 16, SDL_SWSURFACE|SDL_FULLSCREEN);
+          EGL_Init();
+          do while(!quit) {
+            ... run app
+            EGL_SwapBuffers();
+          }
+          EGL_Close();
+          SDL_Quit();
+*/
 
-void    Platform_Open               ( void );
-void    Platform_Close              ( void );
-void    Platform_VSync              ( void );
-
-#if defined(_DEBUG)
-#define GET_EGLERROR(X)                                     \
-    X;                                                      \
-    {                                                       \
+#if defined(DEBUG)
+#define GET_EGLERROR(FUNCTION)               \
+    FUNCTION;                                \
+    {                                        \
         CheckEGLErrors(__FILE__, __LINE__);  \
     }
 #else
-#define GET_EGLERROR(X) X;
+#define GET_EGLERROR(FUNCTION) FUNCTION;
 #endif
 
 #define peglQueryString(A,B)                    GET_EGLERROR(eglQueryString(A,B))

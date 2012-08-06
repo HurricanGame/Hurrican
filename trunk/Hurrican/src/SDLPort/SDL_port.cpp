@@ -1,6 +1,22 @@
 
 #include "SDL_port.h"
 
+#if defined(USE_PVRTC)
+#define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG			0x8C00
+#define GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG			0x8C01
+#define GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG			0x8C02
+#define GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG			0x8C03
+
+#define PVRTC_HEADER_SIZE 52
+
+enum {
+    PVRTC_RGB_2BPP=0,
+    PVRTC_RGBA_2BPP,
+    PVRTC_RGB_4BPP,
+    PVRTC_RGBA_4BPP
+};
+#endif
+
 GLenum MatrixMode = 0;
 D3DXMATRIXA16 g_matView;
 std::vector<GLuint> textures;
@@ -91,62 +107,110 @@ GLuint loadTexture( const char* path, SDL_Rect& dims, uint32_t size )
     SDL_Surface* surface = NULL;
     GLuint texture;			// This is a handle to our texture object
 
-    temp = loadImage( path, size );
+#if defined(USE_PVRTC)
+    uint8_t* pvrtc_buffer = NULL;
+    uint32_t* pvrtc_buffer32 = NULL;
+    uint32_t pvrtc_format, pvrtc_filesize, pvrtc_size, pvrtc_width, pvrtc_height, pvrtc_depth, pvrtc_bitperpixel;
+    std::string filename = path;
 
-    if (temp != NULL)
+    filename = path + std::string(".pvr");
+
+    pvrtc_format = pvrtc_filesize = pvrtc_width = pvrtc_height = 0;
+
+    pvrtc_buffer = LoadFileToMemory( filename, pvrtc_filesize );
+
+    if (pvrtc_buffer != NULL)
     {
-#if defined(USE_GLES1)
-        if ((temp->h >= 512 || temp->w >= 512) && strstr(path, "font") == NULL )
+        pvrtc_buffer32  = (uint32_t*)pvrtc_buffer;
+
+        switch ( pvrtc_buffer32[2] )
         {
-            surface = SDL_CreateRGBSurface(SDL_SWSURFACE, temp->w/2, temp->h/2, 32,
-            #if SDL_BYTEORDER == SDL_LIL_ENDIAN // OpenGL RGBA masks
-                0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000
-            #else
-                0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF
-            #endif
-                );
-
-            xh = 0;
-            yh = 0;
-            for (y=0; y<temp->h; y+=2)
-            {
-                for (x=0; x<temp->w; x+=2)
-                {
-                    if (xh < surface->w && yh < surface->h)
-                        putpixel( surface, xh, yh, getpixel( temp, x, y) );
-                    else
-                        printf( "error tex shrink overflow\n" );
-
-                    xh++;
-                }
-                yh++;
-                xh = 0;
-            }
-
-            dims.w = temp->w;
-            dims.h = temp->h;
-
-            SDL_FreeSurface( temp );
+            case PVRTC_RGB_2BPP:
+                pvrtc_format = GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
+            case PVRTC_RGBA_2BPP:
+                pvrtc_format = GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
+                pvrtc_bitperpixel = 2;
+                break;
+            case PVRTC_RGB_4BPP:
+                pvrtc_format = GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
+            case PVRTC_RGBA_4BPP:
+                pvrtc_format = GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
+                pvrtc_bitperpixel = 4;
+                break;
+            default:
+                printf( "ERROR Unknown PVRTC format %X\n",  pvrtc_buffer32[2] );
+                delete [] pvrtc_buffer;
         }
-        else
-        {
-#endif
-            surface = temp;
 
-            dims.w = surface->w;
-            dims.h = surface->h;
-#if defined(USE_GLES1)
-        }
-#endif
+        pvrtc_height    = pvrtc_buffer32[6];
+        pvrtc_width     = pvrtc_buffer32[7];
+        pvrtc_depth     = pvrtc_buffer32[8];
     }
     else
-        return 0;
+    {
+#endif
+        temp = loadImage( path, size );
+
+        if (temp != NULL)
+        {
+#if defined(USE_GLES1)
+            if ((temp->h >= 512 || temp->w >= 512) && strstr(path, "font") == NULL )
+            {
+                surface = SDL_CreateRGBSurface(SDL_SWSURFACE, temp->w/2, temp->h/2, 32,
+                #if SDL_BYTEORDER == SDL_LIL_ENDIAN // OpenGL RGBA masks
+                    0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000
+                #else
+                    0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF
+                #endif
+                    );
+
+                xh = 0;
+                yh = 0;
+                for (y=0; y<temp->h; y+=2)
+                {
+                    for (x=0; x<temp->w; x+=2)
+                    {
+                        if (xh < surface->w && yh < surface->h)
+                            putpixel( surface, xh, yh, getpixel( temp, x, y) );
+                        else
+                            printf( "error tex shrink overflow\n" );
+
+                        xh++;
+                    }
+                    yh++;
+                    xh = 0;
+                }
+
+                dims.w = temp->w;
+                dims.h = temp->h;
+
+                SDL_FreeSurface( temp );
+            }
+            else
+            {
+#endif
+                surface = temp;
+
+                dims.w = surface->w;
+                dims.h = surface->h;
+#if defined(USE_GLES1)
+            }
+#endif
+        }
+        else
+            return 0;
+#if defined(USE_PVRTC)
+    }
+#endif
 
     //tex_mem_size += surface->w * surface->h * surface->format->BytesPerPixel;
     //printf( "%d bytes in textures\n", tex_mem_size );
 
+#if defined(USE_PVRTC)
+    if (surface != NULL || pvrtc_buffer != NULL) {
+#else
     if (surface != NULL) {
-
+#endif
         // Have OpenGL generate a texture object handle for us
         glGenTextures( 1, &texture );
 
@@ -159,9 +223,35 @@ GLuint loadTexture( const char* path, SDL_Rect& dims, uint32_t size )
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 
-        // Edit the texture object's image data using the information SDL_Surface gives us
-        glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0,
-                      GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
+#if defined(USE_PVRTC)
+        if (pvrtc_buffer != NULL)
+        {
+            dims.w = pvrtc_width;
+            dims.h = pvrtc_height;
+
+            pvrtc_size = (pvrtc_width * pvrtc_height * pvrtc_depth * pvrtc_bitperpixel) / 8;
+
+
+            printf( "Loaded PVRTC type %d for %s\n", pvrtc_buffer32[2], filename.c_str() );
+
+#if defined(DEBUG)
+            printf( "Version %X\nFlags %d\nPFormatA %d\nPFormatB %d\nColorS %d\nChanType %d\nHeight %d\nWidth %d\nDepth %d\nNumSurf %d\nNumFaces %d\nMipmap %d\nMeta %d\n", pvrtc_buffer32[0], pvrtc_buffer32[1], pvrtc_buffer32[2], pvrtc_buffer32[3],
+                    pvrtc_buffer32[4], pvrtc_buffer32[5], pvrtc_buffer32[6], pvrtc_buffer32[7], pvrtc_buffer32[8],
+                     pvrtc_buffer32[9], pvrtc_buffer32[10], pvrtc_buffer32[11], pvrtc_buffer32[12] );
+#endif
+
+            glCompressedTexImage2D( GL_TEXTURE_2D, 0, pvrtc_format,
+                                    pvrtc_width, pvrtc_height, 0, pvrtc_size, pvrtc_buffer+PVRTC_HEADER_SIZE );
+        }
+        else
+        {
+#endif
+            // Edit the texture object's image data using the information SDL_Surface gives us
+            glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0,
+                          GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
+#if defined(USE_PVRTC)
+        }
+#endif
 
 #if defined(_DEBUG)
         int error = glGetError();
@@ -178,6 +268,12 @@ GLuint loadTexture( const char* path, SDL_Rect& dims, uint32_t size )
     if ( surface ) {
         SDL_FreeSurface( surface );
     }
+
+#if defined(USE_PVRTC)
+    if (pvrtc_buffer != NULL) {
+        delete [] pvrtc_buffer;
+    }
+#endif
 
     textures.push_back( texture ); /* save a ref for deletion leter */
 
@@ -359,4 +455,29 @@ void matrixmode( GLenum mode )
         glMatrixMode( mode );
         MatrixMode = mode;
     }
+}
+
+uint8_t* LoadFileToMemory( const std::string& name, uint32_t& size )
+{
+    std::fstream file;
+    uint8_t* buffer;
+
+    file.open( name.c_str(), std::ios_base::in );
+    if (file.is_open() == 0)
+    {
+        printf( "Error file operation: File: %s\n", name.c_str() );
+        return NULL;
+    }
+
+    file.seekg( 0, std::ios::end );
+    size = file.tellg();
+    file.seekg( 0, std::ios::beg );
+
+    buffer = new uint8_t[size+1];
+    file.read( (char*)buffer, size );
+    buffer[size] = '\0';
+
+    file.close();
+
+    return buffer;
 }

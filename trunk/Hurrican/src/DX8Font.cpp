@@ -104,14 +104,14 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 	}
 
 	if (temp == NULL)
-	{        
-	    sprintf_s(Temp, "data/%s", Filename);        
+	{
+	    sprintf_s(Temp, "data/%s", Filename);
 		if (FileExists(Temp))
 		{
 			temp = loadImage(Temp);
 		}
 	}
-        
+
 	if (temp == NULL)
 	{
 		if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) != false)
@@ -120,7 +120,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 			free(pData);
 		}
 	}
-        
+
 	if (temp == NULL)
 	{
 		return true;
@@ -130,7 +130,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
     /* menufont.png: pixel at (0,0) (upper left corner) is part of a char/glyph,
        so pick key from lower left corner. Maybe in DirectX image is flipped
        vertically? */
-       
+
     DWORD key = (((DWORD*)temp->pixels)[temp->w * (temp->h - 1)]);
 #else
     DWORD key = ((DWORD*)temp->pixels)[0];

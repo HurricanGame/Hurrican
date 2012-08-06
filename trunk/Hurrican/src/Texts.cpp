@@ -176,16 +176,16 @@ loadfilelevel:
 	while(!in.eof())
 	{
 		in.getline(line, 256);
-       
+
 		/* CHECKME: Removing CR from line ending (stegerg) */
 
 		char *cr;
-        
+
 		if ((cr = strchr(line, '\r')))
         {
         	*cr = '\0';
-        }       
-        
+        }
+
 		strcpy_s(StageReihenfolge[MAX_LEVELS], strlen(line) + 1, line);
 		MAX_LEVELS++;
 		index++;

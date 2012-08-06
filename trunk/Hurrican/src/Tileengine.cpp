@@ -886,12 +886,12 @@ void TileEngineClass::CalcRenderRange(void)
 	//
 	xo = (long)(XOffset * 0.05f);
 	yo = (long)(YOffset * 0.05f);
-        
+
 	/* CHECKME: Without the following checks the game
 	   in places like start of level 2 for a short
 	   time renders areas outside map which can cause
 	   crashes (random non existing textures). (stegerg) */
-                   
+
 	if (xo < 0) xo = 0;
 	if (yo < 0) yo = 0;
 
