@@ -583,8 +583,6 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
 
 	return true;
 #elif defined(PLATFORM_SDL)
-    SDL_PumpEvents();
-
     // Position
     uint8_t buttons  = SDL_GetMouseState(&MausX, &MausY);
 
