@@ -33,7 +33,7 @@
 #include "Timer.h"
 
 // --------------------------------------------------------------------------------------
-// Endianess handling 
+// Endianess handling
 // We will Swap values only for Big_Endian, Little_Endian should be unchanged
 // --------------------------------------------------------------------------------------
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
@@ -2763,7 +2763,7 @@ void MenuClass::SaveHighscore(void)
 						  Highscores[i].Score +
 						  Highscores[i].Stage +
 						  Highscores[i].Skill;
-						  
+
 			#if SDL_BYTEORDER == SDL_BIG_ENDIAN
 				// SixK - SWAP TO LITTLE ENDIAN before saving
 				Highscores[i].Score=SWAP32(Highscores[i].Score);
@@ -2775,7 +2775,7 @@ void MenuClass::SaveHighscore(void)
 			// Und Eintrag speichern
 			//
 			fwrite(&Highscores[i], sizeof(Highscores[i]), 1, Datei);
-			
+
 			#if SDL_BYTEORDER == SDL_BIG_ENDIAN
 				// SixK - SWAP TO BIG ENDIAN Again once datas have been written
 				Highscores[i].Score=SWAP32(Highscores[i].Score);

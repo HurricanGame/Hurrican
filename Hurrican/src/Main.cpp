@@ -488,7 +488,7 @@ int main(int argc, char *argv[])
 #endif
 #if defined(PLATFORM_SDL)
 		SDL_Event event;
-        
+
         while (SDL_PollEvent(&event))
         {
         	if (event.type == SDL_QUIT) GameRunning = false;
@@ -608,6 +608,13 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
 	// Timer initialisieren
 	pTimer = new TimerClass();
 
+	// Direct3D initialisieren
+	if(!DirectGraphics.Init(hwnd, SCREENWIDTH, SCREENHEIGHT, SCREENBPP, true))
+	{
+		Protokoll.WriteText("\n-> Direct3D Initialisierung Fehler ...!\n", true);
+		return false;
+	}
+
 	// DirectInput initialisieren
 	if(!DirectInput.Init(hwnd, hinstance))
 	{
@@ -617,13 +624,6 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
 
 	// Sound Manager initialisieren
 	pSoundManager = new CSoundManager();
-
-	// Direct3D initialisieren
-	if(!DirectGraphics.Init(hwnd, SCREENWIDTH, SCREENHEIGHT, SCREENBPP, true))
-	{
-		Protokoll.WriteText("\n-> Direct3D Initialisierung Fehler ...!\n", true);
-		return false;
-	}
 
 	// Splash-Screen nicht mehr anzeigen
 	NochKeinFullScreen = false;
@@ -1024,11 +1024,11 @@ bool GameExit(void)
 	delete(pProjectiles);
 	Protokoll.WriteText("-> Projektil-Liste freigegeben\n", false);
 
-	DirectGraphics.Exit();				// Direct3D    beenden
-
 	delete(pSoundManager);				// DirectSound beenden
 
 	DirectInput.Exit();					// DirectInput beenden
+
+	DirectGraphics.Exit();				// Direct3D    beenden
 
 	//PrintStatus();
 

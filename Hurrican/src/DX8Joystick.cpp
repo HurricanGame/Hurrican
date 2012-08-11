@@ -197,8 +197,14 @@ bool DirectJoystickClass::Init(int joy)
 {
     lpDIJoystick = SDL_JoystickOpen(joy);
 
-    if (lpDIJoystick == NULL)
+    if (lpDIJoystick == NULL) {
+        Protokoll.WriteText("\n-> Joystick : Acquire error!\n", false);
         return false;
+    }
+
+    SDL_JoystickEventState( SDL_IGNORE ); /* the joy events will be updated manually */
+
+    Protokoll.WriteText("Joystick : Acquire successfull!\n", false);
 
     Active = true;
 
@@ -271,11 +277,11 @@ bool DirectJoystickClass::Update(void)
 {
     if (lpDIJoystick != NULL)
     {
-        SDL_PumpEvents();
+        SDL_JoystickUpdate();
 
         for (int i = 0; i < SDL_JoystickNumButtons( lpDIJoystick ); i++)
         {
-            if (SDL_JoystickGetButton( lpDIJoystick, i ) == 1)
+            if (SDL_JoystickGetButton( lpDIJoystick, i ) >= 1)
                 JoystickButtons[i] = true;
             else
                 JoystickButtons[i] = false;
@@ -288,6 +294,10 @@ bool DirectJoystickClass::Update(void)
 
         if (SDL_JoystickNumHats(lpDIJoystick) > 0) {
             JoystickPOV = SDL_JoystickGetHat( lpDIJoystick, 0 );
+
+            if (JoystickPOV == SDL_HAT_CENTERED) {
+                JoystickPOV = -1;
+            }
         }
     }
 
