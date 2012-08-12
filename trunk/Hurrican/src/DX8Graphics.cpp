@@ -23,7 +23,7 @@
 #include "Main.h"
 #include "DX8Font.h"
 #include "DX8Graphics.h"
-#if defined(USE_EGL_SDL) || defined(USE_EGL_RAW)
+#if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
 #include "eglport.h"
 #endif
 
@@ -232,10 +232,14 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
     uint16_t ScreenWidth    = SCREENWIDTH;
     uint16_t ScreenHeight   = SCREENHEIGHT;
     uint16_t ScreenDepth    = SCREENBPP;
-#if defined(USE_EGL_SDL) || defined(USE_EGL_RAW)
+#if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
     uint32_t flags          = SDL_SWSURFACE;
 #else
     uint32_t flags          = SDL_SWSURFACE|SDL_OPENGL;
+#endif
+#if defined(RPI)
+    ScreenWidth    = 0;
+    ScreenHeight   = 0;
 #endif
 
 
@@ -251,7 +255,7 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
     }
     printf( "SDL initialized.\n" );
 
-#if defined(USE_EGL_SDL) || defined(USE_EGL_RAW)
+#if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
     if (EGL_Open() != 0) {
         return 1;
     }
@@ -284,7 +288,7 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
 
     SDL_ShowCursor(SDL_DISABLE);
 
-#if defined(USE_EGL_SDL) || defined(USE_EGL_RAW)
+#if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
     if (EGL_Init() != 0) {
         return 1;
     }
@@ -314,7 +318,7 @@ bool DirectGraphicsClass::Exit(void)
 	SafeRelease (lpD3DDevice);
 	SafeRelease (lpD3D);
 #elif defined(PLATFORM_SDL)
-#if defined(USE_EGL_SDL) || defined(USE_EGL_RAW)
+#if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
     EGL_Close();
 #endif
     delete_textures();
@@ -670,7 +674,7 @@ void DirectGraphicsClass::ShowBackBuffer(void)
 
 	hresult = lpD3DDevice->Present(NULL, NULL, 0, NULL);		// Frontbuffer anzeigen
 #elif defined(PLATFORM_SDL)
-#if defined(USE_EGL_SDL) || defined(USE_EGL_RAW)
+#if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
     EGL_SwapBuffers();
 #else
     SDL_GL_SwapBuffers();
