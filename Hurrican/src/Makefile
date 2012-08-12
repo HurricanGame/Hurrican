@@ -1,6 +1,6 @@
 DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS -DUSE_MODPLUG
 
-TARGET = linux
+TARGET = rpi
 
 ifeq ($(TARGET),aros)
 
@@ -9,6 +9,8 @@ CCP := i386-aros-gcc
 CC  := i386-aros-gcc
 LD  := i386-aros-g++
 RM  := rm -f
+
+USE_EGL := no
 
 INCLUDES_OS := -I/usr/local/arosv0/AROS/bin/linux-i386/AROS/Development/include/SDL/ \
                -I/usr/local/arosv0/AROS/bin/linux-i386/AROS/Development/include/libmodplug
@@ -23,6 +25,26 @@ LDFLAGS := -g -lSDL_mixer \
 
 endif
 
+ifeq ($(TARGET),rpi)
+
+EXE := ../hurrican
+CCP := g++
+CC  := gcc
+LD  := g++
+RM  := rm -f
+
+USE_EGL := yes
+
+DEFINES += -DRPI -DUSE_GLES1 -DUSE_EGL_RPI
+
+INCLUDES_OS := -I/usr/include/SDL/ \
+               -I/usr/include/libmodplug \
+               -I/opt/vc/include -I/opt/vc/include/interface/vcos/pthreads -I/opt/vc/include/GLES -I/opt/vc/include/EGL
+
+LDFLAGS := -L/usr/lib -L/opt/vc/lib -g -lmodplug -lSDL_mixer -lSDL_image -lSDL -lGLESv2
+
+endif
+
 ifeq ($(TARGET),linux)
 
 EXE := ../hurricanlinux
@@ -30,6 +52,8 @@ CCP := gcc
 CC  := gcc
 LD  := g++
 RM  := rm -f
+
+USE_EGL := no
 
 INCLUDES_OS := -I/usr/include/SDL -I/usr/include/libmodplug
 
@@ -43,6 +67,8 @@ CFLAGS := -g -Wall -O0 -c $(INCLUDES) $(DEFINES)
 
 SDL_FILES := SDLPort/SDL_fmod \
              SDLPort/SDL_port
+
+EGL_FILES := SDLPort/eglport
 
 UNRAR_FILES := unrarlib040/unrarlib/unrarlib
 
@@ -228,6 +254,10 @@ FILES :=Boss_BigFish \
         tracealloc
 
 ALL_FILES := $(FILES) $(SDL_FILES) $(UNRAR_FILES)
+
+ifeq ($(USE_EGL),yes)
+ALL_FILES += $(EGL_FILES)
+endif
 
 ALL_OBJS := $(addsuffix .o, $(ALL_FILES))
 
