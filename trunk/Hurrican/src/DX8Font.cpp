@@ -89,7 +89,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 	// Colorkey feststellen
 	DWORD key = ((DWORD*)d3dlr.pBits)[0];
 #elif defined(PLATFORM_SDL)
-	SDL_Surface *temp = NULL;
+	image_t image;
 	char Temp[256];
 	char *pData;
 	unsigned long Size;
@@ -99,29 +99,29 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 	    sprintf_s(Temp, "levels/%s/%s", CommandLineParams.OwnLevelList, Filename);
 		if (FileExists(Temp))
 		{
-			temp = loadImage(Temp);
+			loadImage(image, Temp);
 		}
 	}
 
-	if (temp == NULL)
+	if (image.data == NULL)
 	{
 	    sprintf_s(Temp, "data/%s", Filename);
 		if (FileExists(Temp))
 		{
-			temp = loadImage(Temp);
+			loadImage(image, Temp);
 		}
 	}
 
-	if (temp == NULL)
+	if (image.data == NULL)
 	{
 		if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) != false)
 	    {
-			temp = loadImage(pData, Size);
+			loadImage(image, pData, Size);
 			free(pData);
 		}
 	}
 
-	if (temp == NULL)
+	if (image.data  == NULL)
 	{
 		return true;
 	}
@@ -131,9 +131,9 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
        so pick key from lower left corner. Maybe in DirectX image is flipped
        vertically? */
 
-    DWORD key = (((DWORD*)temp->pixels)[temp->w * (temp->h - 1)]);
+    DWORD key = (((DWORD*)image.data )[image.w * (image.h - 1)]);
 #else
-    DWORD key = ((DWORD*)temp->pixels)[0];
+    DWORD key = ((DWORD*)image.data )[0];
 #endif
 
 /* // PICKLE Not OpenGLES compat, left for info
@@ -168,7 +168,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 				if (((DWORD*)d3dlr.pBits)[(j * yCharsize + l) * d3dsd.Width + (i*xCharsize + k)] != key)
 					found = true;
 #elif defined(PLATFORM_SDL)
-				if (((DWORD*)temp->pixels)[(j * yCharsize + l) * temp->w + (i*xCharsize + k)] != key)
+				if (((DWORD*)image.data)[(j * yCharsize + l) * image.w + (i*xCharsize + k)] != key)
 					found = true;
 /*
 				if (((DWORD*)buffer)[(j * yCharsize + l) * textureWidth + (i*xCharsize + k)] != key)
@@ -188,8 +188,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 	// Unlocken
 	mTexture->itsTexture->UnlockRect(0);
 #elif defined(PLATFORM_SDL)
-    //delete [] buffer;
-    SDL_FreeSurface( temp );
+    delete [] image.data;
 #endif
 
 	return false;

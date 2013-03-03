@@ -1,6 +1,5 @@
 /**
  *
- *  EGLPORT.H
  *  Copyright (C) 2011-2012 Scott R. Smith
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,7 +30,7 @@
 #endif
 
 #include <stdint.h>
-#include "egl.h"
+#include "EGL/egl.h"
 
 #ifdef __cplusplus
 extern "C" {

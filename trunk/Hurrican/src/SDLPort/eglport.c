@@ -1,6 +1,5 @@
 /**
  *
- *  EGLPORT.C
  *  Copyright (C) 2011-2012 Scott R. Smith
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -417,8 +416,8 @@ int8_t GetNativeWindow( void )
 
     src_rect.x = 0;
     src_rect.y = 0;
-    src_rect.width = screen_width << 16;
-    src_rect.height = screen_height << 16;
+    src_rect.width = 640 << 16;
+    src_rect.height = 480 << 16;
 
     dispman_display = vc_dispmanx_display_open( 0 /* LCD */);
     dispman_update  = vc_dispmanx_update_start( 0 );

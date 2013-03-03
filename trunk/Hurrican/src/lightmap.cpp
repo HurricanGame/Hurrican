@@ -58,7 +58,8 @@ void CLightMap::Load(const char *filename)
     HDC                 hdcImage;
 	LPDIRECT3DTEXTURE8	tempText = NULL;
 #elif defined(PLATFORM_SDL)
-    SDL_Surface*        hbm = NULL;
+    uint32_t*           hbm = NULL;
+    image_t             image;
 #endif
 	char				Name[100];
 	char				Temp[100];
@@ -76,7 +77,7 @@ void CLightMap::Load(const char *filename)
 		Protokoll.WriteText(Name, false);
 		return;
 	}
-    
+
 	fopen_s (&TempFile, TEMP_FILE_PREFIX "temp.dat", "wb");	// Datei öffnen
 	fwrite (pData, Size, 1, TempFile);			// speichern
 	fclose (TempFile);							// und schliessen
@@ -90,7 +91,8 @@ loadfile:
 
 	hbm = (HBITMAP)LoadImage(GetModuleHandle(NULL), Temp, IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE);
 #elif defined(PLATFORM_SDL)
-    hbm = loadImage( Temp );
+    loadImage( image, Temp );
+    hbm = (uint32_t*)image.data;
 #endif
 
 	if (TempFile) DeleteFile(TEMP_FILE_PREFIX "temp.dat");
@@ -119,8 +121,8 @@ loadfile:
 	xsize = bm.bmWidth;
 	ysize = bm.bmHeight;
 #elif defined(PLATFORM_SDL)
-	xsize = hbm->w;
-	ysize = hbm->h;
+	xsize = image.w;
+	ysize = image.h;
 #endif
 
 	// neues MapArray erstellen
@@ -144,7 +146,7 @@ loadfile:
 								   255);
 #elif defined(PLATFORM_SDL)
         //SDL_Color components;
-        map[count] = getpixel(hbm,x,y);
+        map[count] = hbm[count];
         /*
 		DWORD BGRcolor=getpixel(hbm,x,y);
 		int_to_rgb( BGRcolor, components );
@@ -161,6 +163,6 @@ loadfile:
 	// Bitmap freigeben
     DeleteObject(hbm);
 #elif defined(PLATFORM_SDL)
-    SDL_FreeSurface(hbm);
+    delete [] hbm;
 #endif
 }

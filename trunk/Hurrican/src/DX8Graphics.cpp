@@ -56,6 +56,10 @@ DirectGraphicsClass::DirectGraphicsClass(void)
 	lpD3D = NULL;
 #endif
     use_texture = false;
+
+#if defined(USE_GL2)
+    ProgramCurrent = PROGRAM_NONE;
+#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -260,10 +264,11 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
         return 1;
     }
 #else
-    SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 5 );
-    SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 6 );
-    SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 5 );
-    SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, ScreenDepth );
+    SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 8 );
+    SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 8 );
+    SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 8 );
+    SDL_GL_SetAttribute( SDL_GL_BUFFER_SIZE, 32 );
+    SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
     SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
     //SDL_GL_SetAttribute( SDL_GL_MULTISAMPLEBUFFERS, 0 );
     //SDL_GL_SetAttribute( SDL_GL_MULTISAMPLESAMPLES, 0 );
@@ -318,6 +323,10 @@ bool DirectGraphicsClass::Exit(void)
 	SafeRelease (lpD3DDevice);
 	SafeRelease (lpD3D);
 #elif defined(PLATFORM_SDL)
+#if defined(USE_GL2)
+    Shaders[PROGRAM_COLOR].Close();
+    Shaders[PROGRAM_TEXTURE].Close();
+#endif
 #if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
     EGL_Close();
 #endif
@@ -335,9 +344,9 @@ bool DirectGraphicsClass::Exit(void)
 
 bool DirectGraphicsClass::SetDeviceInfo(void)
 {
+#if defined(PLATFORM_DIRECTX)
 	HRESULT hr;
 
-#if defined(PLATFORM_DIRECTX)
 	// Globale Variable mit dem tatsächlichen BackBuffer füllen
 	lpD3DDevice->GetBackBuffer(0, D3DBACKBUFFER_TYPE_MONO, &lpBackbuffer);
 
@@ -371,33 +380,71 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
 	lpD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 	lpD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
 #elif defined(PLATFORM_SDL)
-    (void)hr;
+    char* output;
+
+    /* OpenGL Information */
+    output = (char*)glGetString( GL_VENDOR );
+    printf( "GL_VENDOR: %s\n", output );
+    output = (char*)glGetString( GL_RENDERER );
+    printf( "GL_RENDERER: %s\n", output );
+    output = (char*)glGetString( GL_VERSION );
+    printf( "GL_VERSION: %s\n", output );
+#if defined(USE_GL2)
+    output = (char*)glGetString( GL_SHADING_LANGUAGE_VERSION );
+    printf( "GL_SHADING_LANGUAGE_VERSION: %s\n", output );
+#endif
+    output = (char*)glGetString( GL_EXTENSIONS );
+    printf( "GL_EXTENSIONS: %s\n", output );
 
     /* Init OpenGL */
     glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );                 /* Set the background black */
     glClearDepth( 1.0f );                                   /* Depth buffer setup */
 
-    glDisable( GL_LIGHTING );                               /* No light */
     glDisable( GL_DEPTH_TEST );                             /* No Depth Testing */
+    glEnable( GL_BLEND );
 
+#if defined(USE_GL1)
+    glDisable( GL_LIGHTING );                               /* No light */
     glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );    /* Really Nice Perspective Calculations */
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+#endif
 
-    glGetIntegerv( GL_MAX_TEXTURE_UNITS, &MaxTextureUnits );
-    printf( "Max Texure Units %d\n", MaxTextureUnits );
+#if defined(USE_GL2)
+#if defined(__WIN32__)
+    if (LoadGLFunctions() != 0) {
+        return false;
+    }
+#endif
+    // Compile the shader code and link into a program
+    if (Shaders[PROGRAM_COLOR].Load( "data/shaders/shader_color.vert", "data/shaders/shader_color.frag" ) != 0) {
+        return false;
+    }
+    if (Shaders[PROGRAM_TEXTURE].Load( "data/shaders/shader_texture.vert", "data/shaders/shader_texture.frag" ) != 0) {
+        return false;
+    }
+
+    // Get names for attributes and uniforms
+    Shaders[PROGRAM_COLOR].NamePos = Shaders[PROGRAM_COLOR].GetAttribute( "a_Position" );
+    Shaders[PROGRAM_COLOR].NameClr = Shaders[PROGRAM_COLOR].GetAttribute( "a_Color" );
+    Shaders[PROGRAM_COLOR].NameMvp = Shaders[PROGRAM_COLOR].GetUniform( "u_MVPMatrix" );
+
+    Shaders[PROGRAM_TEXTURE].NamePos = Shaders[PROGRAM_TEXTURE].GetAttribute( "a_Position" );
+    Shaders[PROGRAM_TEXTURE].NameClr = Shaders[PROGRAM_TEXTURE].GetAttribute( "a_Color" );
+    Shaders[PROGRAM_TEXTURE].NameTex = Shaders[PROGRAM_TEXTURE].GetAttribute( "a_Texcoord0" );
+    Shaders[PROGRAM_TEXTURE].NameMvp = Shaders[PROGRAM_TEXTURE].GetUniform( "u_MVPMatrix" );
+#endif
+    g_matView.identity();
+    g_matModelView.identity();
 
     glViewport( 0, 0, (GLsizei)SCREENWIDTH, (GLsizei)SCREENHEIGHT );    /* Setup our viewport. */
 
-    matrixmode( GL_PROJECTION );    /* change to the projection matrix and set our viewing volume. */
     cml::matrix_orthographic_RH( matProj, 0.0f, (float)SCREENWIDTH, (float)SCREENHEIGHT, 0.0f, 0.0f, 1.0f, cml::z_clip_neg_one );
-    glLoadMatrixf( matProj.data() );
+#if defined(USE_GL1)
+    /* change to the projection matrix and set our viewing volume. */
+    load_matrix( GL_PROJECTION, matProj.data() );
+    load_matrix( GL_MODELVIEW, g_matModelView.data() );
+#endif
 
-    matrixmode( GL_MODELVIEW );   /* Make sure we're changing the model view and not the projection */
-    glLoadIdentity();               /* Reset The View */
-
-    g_matView.identity();
-
-    glEnable( GL_BLEND );
-    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 #endif
 
 	return true;
@@ -584,6 +631,23 @@ void DirectGraphicsClass::RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,
     int clr_offset  = sizeof(float)*3;
     int tex_offset  = clr_offset + sizeof(D3DCOLOR);
 
+#if defined(USE_GL2)
+    uint8_t program_next = PROGRAM_COLOR;
+
+    // Determine the shader program to use
+    if (use_texture == true) {
+        program_next = PROGRAM_TEXTURE;
+    } else {
+        program_next = PROGRAM_COLOR;
+    }
+
+    // Check if the program is alreadt in use
+    if (ProgramCurrent != program_next) {
+        Shaders[program_next].Use();
+    }
+    ProgramCurrent = program_next;
+#endif
+
     if (PrimitiveType == D3DPT_LINELIST)
     {
         PrimitiveCount *= 2;
@@ -602,32 +666,71 @@ void DirectGraphicsClass::RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,
         return;
     }
 
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_COLOR_ARRAY);
+#if defined(USE_GL1)
+    // Swizzle the color from bgra to rgba
+    uint32_t color;
+    uint8_t* data = (uint8_t*)pVertexStreamZeroData;
+    for (uint32_t count=0; count<PrimitiveCount; count++)
+    {
+        color = *(uint32_t*)(data+clr_offset);
 
+        if (color != 0xFFFFFFFF)
+        {
+            *(uint32_t*)(data+clr_offset) =  (color & 0xFF00FF00) +
+                                            ((color & 0x00FF0000) >> 16) +
+                                            ((color & 0x000000FF) << 16);
+            data += stride;
+        }
+    }
+
+    // Enable the client states for transfer
     if (use_texture == true) {
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         glTexCoordPointer( 2, GL_FLOAT, stride, (uint8_t*)pVertexStreamZeroData+tex_offset );
     }
 
+    glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer( 2, GL_FLOAT, stride, pVertexStreamZeroData );
+
+    glEnableClientState(GL_COLOR_ARRAY);
     glColorPointer( 4, GL_UNSIGNED_BYTE, stride, (uint8_t*)pVertexStreamZeroData+clr_offset );
+#elif defined(USE_GL2)
+    // Enable attributes and uniforms for transfer
+    if (ProgramCurrent == PROGRAM_TEXTURE) {
+        glEnableVertexAttribArray( Shaders[ProgramCurrent].NameTex );
+        glVertexAttribPointer( Shaders[ProgramCurrent].NameTex, 2, GL_FLOAT, GL_FALSE, stride, (uint8_t*)pVertexStreamZeroData+tex_offset );
+    }
+
+    glEnableVertexAttribArray( Shaders[ProgramCurrent].NamePos );
+    glVertexAttribPointer( Shaders[ProgramCurrent].NamePos, 2, GL_FLOAT, GL_FALSE, stride, pVertexStreamZeroData );
+
+    glEnableVertexAttribArray( Shaders[ProgramCurrent].NameClr );
+    glVertexAttribPointer( Shaders[ProgramCurrent].NameClr, 4, GL_UNSIGNED_BYTE, GL_TRUE, stride, (uint8_t*)pVertexStreamZeroData+clr_offset );
+
+    D3DXMATRIXA16 matMVP = g_matModelView*matProj;
+    glUniformMatrix4fv( Shaders[ProgramCurrent].NameMvp, 1, GL_FALSE, matMVP.data() );
+#endif
 
     glDrawArrays( PrimitiveType, 0, PrimitiveCount );
 
+#if defined(USE_GL1)
+    // Disbale the client states
     glDisableClientState( GL_VERTEX_ARRAY );
     glDisableClientState( GL_COLOR_ARRAY );
 
     if (use_texture == true) {
         glDisableClientState( GL_TEXTURE_COORD_ARRAY );
     }
+#elif defined(USE_GL2)
+    // Disbale attributes and uniforms
+    glDisableVertexAttribArray( Shaders[ProgramCurrent].NamePos );
+    glDisableVertexAttribArray( Shaders[ProgramCurrent].NameClr );
 
-#if defined(_DEBUG)
-    int error = glGetError();
-
-    if (error != 0)
-        printf( "GL Error %X\n", error );
+    if (ProgramCurrent == PROGRAM_TEXTURE) {
+        glDisableVertexAttribArray( Shaders[ProgramCurrent].NameTex );
+    }
 #endif
+
 #endif
 }
 
@@ -651,14 +754,18 @@ void DirectGraphicsClass::SetTexture( GLuint texture )
     if (texture > 0)
     {
         use_texture = true;
-        glEnable( GL_TEXTURE_2D );
         glBindTexture( GL_TEXTURE_2D, texture );
+#if defined(USE_GL1)
+        glEnable( GL_TEXTURE_2D );
+#endif
     }
     else
     {
         use_texture = false;
         glBindTexture( GL_TEXTURE_2D, 0 );
+#if defined(USE_GL1)
         glDisable( GL_TEXTURE_2D );
+#endif
     }
 }
 #endif
@@ -679,5 +786,13 @@ void DirectGraphicsClass::ShowBackBuffer(void)
 #else
     SDL_GL_SwapBuffers();
 #endif
+
+#if defined(DEBUG)
+    int error = glGetError();
+
+    if (error != 0)
+        printf( "GL Error %X file %s: line %d\n", error, __FILE__, __LINE__ );
+#endif
+
 #endif
 }

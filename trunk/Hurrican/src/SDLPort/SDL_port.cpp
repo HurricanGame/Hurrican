@@ -1,314 +1,40 @@
+/**
+ *
+ *  Copyright (C) 2011-2012 Scott R. Smith
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ *
+ */
 
 #include "SDL_port.h"
 
-#if defined(USE_PVRTC)
-#define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG			0x8C00
-#define GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG			0x8C01
-#define GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG			0x8C02
-#define GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG			0x8C03
-
-#define PVRTC_HEADER_SIZE 52
-
-enum {
-    PVRTC_RGB_2BPP=0,
-    PVRTC_RGBA_2BPP,
-    PVRTC_RGB_4BPP,
-    PVRTC_RGBA_4BPP
-};
-#endif
-
+#if defined(USE_GL1)
 GLenum MatrixMode = 0;
+#endif
 D3DXMATRIXA16 g_matView;
-std::vector<GLuint> textures;
+D3DXMATRIXA16 g_matModelView;
 
 #ifndef __WIN32__
 void DeleteFile( const char* filename )
 {
 }
 #endif
-
-bool isPowerOfTwo(int x){return ((x != 0) && !(x & (x - 1)));}
-
-int nextPowerOfTwo(int x)
-{
-    double logbase2 = log(x) / log(2);
-    return (int)round(pow(2,ceil(logbase2)));
-}
-
-SDL_Surface* loadImage( const char* path, uint32_t size )
-{
-    SDL_Rect rawDimensions;
-    SDL_Surface* surface = NULL;	// This surface will tell us the details of the image
-    SDL_Surface* final = NULL;
-
-    if (size <= 0)  // Load from file
-    {
-        surface = IMG_Load(path);
-    }
-    else            // Load from memory
-    {
-        SDL_RWops* sdl_rw = SDL_RWFromConstMem( (const void*)path, size );
-
-        if (sdl_rw != NULL)
-        {
-            surface = IMG_Load_RW( sdl_rw, 1 );
-        }
-        else
-        {
-            printf( "ERROR Texture: Failed to load texture: %s\n", SDL_GetError() );
-            return NULL;
-        }
-    }
-
-    if (surface != NULL)
-    {
-        //  Store dimensions of original RAW surface
-        rawDimensions.x = surface->w;
-        rawDimensions.y = surface->h;
-
-#if defined(USE_GLES1)
-        //  Check if surface is PoT
-        if (!isPowerOfTwo(surface->w))
-            rawDimensions.x = nextPowerOfTwo(surface->w);
-        if (!isPowerOfTwo(surface->h))
-            rawDimensions.y = nextPowerOfTwo(surface->h);
-#endif
-
-        final = SDL_CreateRGBSurface(SDL_SWSURFACE, rawDimensions.x, rawDimensions.y, 32,
-        #if SDL_BYTEORDER == SDL_LIL_ENDIAN // OpenGL RGBA masks
-            0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000
-        #else
-            0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF
-        #endif
-            );
-
-        //  check if original image uses an alpha channel
-        if (!(surface->flags & SDL_SRCALPHA)) {
-            // if no alpha use MAGENTA and key it out.
-            SDL_SetColorKey( surface, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB( surface->format, 255, 0, 255 ) );
-        } else {
-            SDL_SetAlpha( surface, 0, 0 );
-        }
-
-        SDL_BlitSurface( surface, 0, final, 0 );
-        SDL_FreeSurface( surface );
-
-        return final;
-    }
-    else
-        return NULL;
-}
-
-GLuint loadTexture( const char* path, SDL_Rect& dims, uint32_t size )
-{
-    int x, y;
-    int xh, yh = 0;
-    SDL_Surface* temp = NULL;
-    SDL_Surface* surface = NULL;
-    GLuint texture;			// This is a handle to our texture object
-
-#if defined(USE_PVRTC)
-    uint8_t* pvrtc_buffer = NULL;
-    uint32_t* pvrtc_buffer32 = NULL;
-    uint32_t pvrtc_format, pvrtc_filesize, pvrtc_size, pvrtc_width, pvrtc_height, pvrtc_depth, pvrtc_bitperpixel;
-    std::string filename = path;
-
-    filename = path + std::string(".pvr");
-
-    pvrtc_format = pvrtc_filesize = pvrtc_width = pvrtc_height = 0;
-
-    pvrtc_buffer = LoadFileToMemory( filename, pvrtc_filesize );
-
-    if (pvrtc_buffer != NULL)
-    {
-        pvrtc_buffer32  = (uint32_t*)pvrtc_buffer;
-
-        switch ( pvrtc_buffer32[2] )
-        {
-            case PVRTC_RGB_2BPP:
-                pvrtc_format = GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
-            case PVRTC_RGBA_2BPP:
-                pvrtc_format = GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
-                pvrtc_bitperpixel = 2;
-                break;
-            case PVRTC_RGB_4BPP:
-                pvrtc_format = GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
-            case PVRTC_RGBA_4BPP:
-                pvrtc_format = GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
-                pvrtc_bitperpixel = 4;
-                break;
-            default:
-                printf( "ERROR Unknown PVRTC format %X\n",  pvrtc_buffer32[2] );
-                delete [] pvrtc_buffer;
-        }
-
-        pvrtc_height    = pvrtc_buffer32[6];
-        pvrtc_width     = pvrtc_buffer32[7];
-        pvrtc_depth     = pvrtc_buffer32[8];
-    }
-    else
-    {
-#endif
-        temp = loadImage( path, size );
-
-        if (temp != NULL)
-        {
-#if defined(USE_GLES1)
-            if ((temp->h >= 512 || temp->w >= 512) && strstr(path, "font") == NULL )
-            {
-                surface = SDL_CreateRGBSurface(SDL_SWSURFACE, temp->w/2, temp->h/2, 32,
-                #if SDL_BYTEORDER == SDL_LIL_ENDIAN // OpenGL RGBA masks
-                    0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000
-                #else
-                    0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF
-                #endif
-                    );
-
-                xh = 0;
-                yh = 0;
-                for (y=0; y<temp->h; y+=2)
-                {
-                    for (x=0; x<temp->w; x+=2)
-                    {
-                        if (xh < surface->w && yh < surface->h)
-                            putpixel( surface, xh, yh, getpixel( temp, x, y) );
-                        else
-                            printf( "error tex shrink overflow\n" );
-
-                        xh++;
-                    }
-                    yh++;
-                    xh = 0;
-                }
-
-                dims.w = temp->w;
-                dims.h = temp->h;
-
-                SDL_FreeSurface( temp );
-            }
-            else
-            {
-#endif
-                surface = temp;
-
-                dims.w = surface->w;
-                dims.h = surface->h;
-#if defined(USE_GLES1)
-            }
-#endif
-        }
-        else
-            return 0;
-#if defined(USE_PVRTC)
-    }
-#endif
-
-    //tex_mem_size += surface->w * surface->h * surface->format->BytesPerPixel;
-    //printf( "%d bytes in textures\n", tex_mem_size );
-
-#if defined(USE_PVRTC)
-    if (surface != NULL || pvrtc_buffer != NULL) {
-#else
-    if (surface != NULL) {
-#endif
-        // Have OpenGL generate a texture object handle for us
-        glGenTextures( 1, &texture );
-
-        // Bind the texture object
-        glBindTexture( GL_TEXTURE_2D, texture );
-
-        // Set the texture's stretching properties
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-
-#if defined(USE_PVRTC)
-        if (pvrtc_buffer != NULL)
-        {
-            dims.w = pvrtc_width;
-            dims.h = pvrtc_height;
-
-            pvrtc_size = (pvrtc_width * pvrtc_height * pvrtc_depth * pvrtc_bitperpixel) / 8;
-
-
-            printf( "Loaded PVRTC type %d for %s\n", pvrtc_buffer32[2], filename.c_str() );
-
-#if defined(DEBUG)
-            printf( "Version %X\nFlags %d\nPFormatA %d\nPFormatB %d\nColorS %d\nChanType %d\nHeight %d\nWidth %d\nDepth %d\nNumSurf %d\nNumFaces %d\nMipmap %d\nMeta %d\n", pvrtc_buffer32[0], pvrtc_buffer32[1], pvrtc_buffer32[2], pvrtc_buffer32[3],
-                    pvrtc_buffer32[4], pvrtc_buffer32[5], pvrtc_buffer32[6], pvrtc_buffer32[7], pvrtc_buffer32[8],
-                     pvrtc_buffer32[9], pvrtc_buffer32[10], pvrtc_buffer32[11], pvrtc_buffer32[12] );
-#endif
-
-            glCompressedTexImage2D( GL_TEXTURE_2D, 0, pvrtc_format,
-                                    pvrtc_width, pvrtc_height, 0, pvrtc_size, pvrtc_buffer+PVRTC_HEADER_SIZE );
-        }
-        else
-        {
-#endif
-            // Edit the texture object's image data using the information SDL_Surface gives us
-            glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0,
-                          GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
-#if defined(USE_PVRTC)
-        }
-#endif
-
-#if defined(_DEBUG)
-        int error = glGetError();
-        if (error != 0)
-            printf( "GL Tex Error %X %s\n", error, path );
-#endif
-    }
-    else {
-        printf("SDL could not load image: %s\n", SDL_GetError());
-        return 0;
-    }
-
-    // Free the SDL_Surface only if it was successfully created
-    if ( surface ) {
-        SDL_FreeSurface( surface );
-    }
-
-#if defined(USE_PVRTC)
-    if (pvrtc_buffer != NULL) {
-        delete [] pvrtc_buffer;
-    }
-#endif
-
-    textures.push_back( texture ); /* save a ref for deletion leter */
-
-    return texture;
-}
-
-void delete_texture( GLuint texture )
-{
-    uint16_t i;
-
-    for (i=0; i<textures.size(); i++)
-    {
-        if (texture == textures.at(i))
-        {
-            glDeleteTextures( 1, &textures.at(i) );
-            textures.at(i) = 0;
-        }
-    }
-}
-
-void delete_textures( void )
-{
-    uint16_t i;
-
-    for (i=0; i<textures.size(); i++)
-    {
-        if (textures.at(i) != 0)
-        {
-            glDeleteTextures( 1, &textures.at(i) );
-            textures.at(i) = 0;
-        }
-    }
-
-    textures.clear();
-}
 
 void D3DXMatrixIdentity( D3DXMATRIXA16* m )
 {
@@ -443,18 +169,41 @@ void putpixel( SDL_Surface *surface, int16_t x, int16_t y, uint32_t pixel )
     }
 }
 
+void get_components( SDL_Surface *surface, int16_t x, int16_t y, uint8_t& r, uint8_t& g, uint8_t& b, uint8_t& a )
+{
+    uint32_t color;
+    uint32_t comp;
+
+    color = getpixel( surface, x, y );
+
+    /* Get Red component */
+    comp=color&surface->format->Rmask; /* Isolate red component */
+    comp=comp>>surface->format->Rshift;/* Shift it down to 8-bit */
+    comp=comp<<surface->format->Rloss; /* Expand to a full 8-bit number */
+    r=(uint8_t)comp;
+
+    /* Get Green component */
+    comp=color&surface->format->Gmask; /* Isolate green component */
+    comp=comp>>surface->format->Gshift;/* Shift it down to 8-bit */
+    comp=comp<<surface->format->Gloss; /* Expand to a full 8-bit number */
+    g=(uint8_t)comp;
+
+    /* Get Blue component */
+    comp=color&surface->format->Bmask; /* Isolate blue component */
+    comp=comp>>surface->format->Bshift;/* Shift it down to 8-bit */
+    comp=comp<<surface->format->Bloss; /* Expand to a full 8-bit number */
+    b=(uint8_t)comp;
+
+    /* Get Alpha component */
+    comp=color&surface->format->Amask; /* Isolate alpha component */
+    comp=comp>>surface->format->Ashift;/* Shift it down to 8-bit */
+    comp=comp<<surface->format->Aloss; /* Expand to a full 8-bit number */
+    a=(uint8_t)comp;
+}
+
 void int_to_rgb( uint32_t color, SDL_Color& components )
 {
     SDL_GetRGB(color, SDL_GetVideoSurface()->format, &components.r, &components.g, &components.b);
-}
-
-void matrixmode( GLenum mode )
-{
-    if (MatrixMode != mode)
-    {
-        glMatrixMode( mode );
-        MatrixMode = mode;
-    }
 }
 
 uint8_t* LoadFileToMemory( const std::string& name, uint32_t& size )
@@ -476,8 +225,108 @@ uint8_t* LoadFileToMemory( const std::string& name, uint32_t& size )
     buffer = new uint8_t[size+1];
     file.read( (char*)buffer, size );
     buffer[size] = '\0';
+    size++;
 
     file.close();
 
     return buffer;
 }
+
+#if defined(USE_GL1)
+void load_matrix( GLenum mode, const GLfloat* m )
+{
+    if (MatrixMode != mode)
+    {
+        glMatrixMode( mode );
+        MatrixMode = mode;
+    }
+    glLoadMatrixf( m );
+}
+#endif
+
+#if defined(__WIN32__)
+#define LOAD_OPENGL_PROC(T,N)                                                   \
+{                                                                               \
+    N = (T)wglGetProcAddress(#N);                                               \
+    if (N == NULL) {                                                            \
+        printf( "ERROR Video: OpenGL function is NULL:" #N "\n" );      \
+        return 1;                                                               \
+    }                                                                           \
+}
+
+uint8_t LoadGLFunctions( void )
+{
+#if defined(USE_GL2)
+    LOAD_OPENGL_PROC( PFNGLDELETESHADERPROC,                glDeleteShader );
+    LOAD_OPENGL_PROC( PFNGLDELETEPROGRAMPROC,               glDeleteProgram );
+    LOAD_OPENGL_PROC( PFNGLUSEPROGRAMPROC,                  glUseProgram );
+    LOAD_OPENGL_PROC( PFNGLCREATESHADERPROC,                glCreateShader );
+    LOAD_OPENGL_PROC( PFNGLSHADERSOURCEPROC,                glShaderSource );
+    LOAD_OPENGL_PROC( PFNGLCOMPILESHADERPROC,               glCompileShader );
+    LOAD_OPENGL_PROC( PFNGLGETSHADERIVPROC,                 glGetShaderiv );
+    LOAD_OPENGL_PROC( PFNGLCREATEPROGRAMPROC,               glCreateProgram );
+    LOAD_OPENGL_PROC( PFNGLATTACHSHADERPROC,                glAttachShader );
+    LOAD_OPENGL_PROC( PFNGLLINKPROGRAMPROC,                 glLinkProgram );
+    LOAD_OPENGL_PROC( PFNGLGETPROGRAMIVPROC,                glGetProgramiv );
+    LOAD_OPENGL_PROC( PFNGLGETACTIVEATTRIBPROC,             glGetActiveAttrib );
+    LOAD_OPENGL_PROC( PFNGLGETATTRIBLOCATIONPROC,           glGetAttribLocation );
+    LOAD_OPENGL_PROC( PFNGLGETACTIVEUNIFORMPROC,            glGetActiveUniform );
+    LOAD_OPENGL_PROC( PFNGLGETUNIFORMLOCATIONPROC,          glGetUniformLocation );
+    LOAD_OPENGL_PROC( PFNGLGETSHADERINFOLOGPROC,            glGetShaderInfoLog );
+    LOAD_OPENGL_PROC( PFNGLGETPROGRAMINFOLOGPROC,           glGetProgramInfoLog );
+    LOAD_OPENGL_PROC( PFNGLDISABLEVERTEXATTRIBARRAYPROC,    glDisableVertexAttribArray );
+    LOAD_OPENGL_PROC( PFNGLENABLEVERTEXATTRIBARRAYPROC,     glEnableVertexAttribArray );
+    LOAD_OPENGL_PROC( PFNGLVERTEXATTRIBPOINTERPROC,         glVertexAttribPointer );
+    LOAD_OPENGL_PROC( PFNGLUNIFORM1IPROC,                   glUniform1i );
+    LOAD_OPENGL_PROC( PFNGLUNIFORM1FVPROC,                  glUniform1fv );
+    LOAD_OPENGL_PROC( PFNGLUNIFORM3FVPROC,                  glUniform3fv );
+    LOAD_OPENGL_PROC( PFNGLUNIFORM4FVPROC,                  glUniform4fv );
+    LOAD_OPENGL_PROC( PFNGLUNIFORMMATRIX3FVPROC,            glUniformMatrix3fv );
+    LOAD_OPENGL_PROC( PFNGLUNIFORMMATRIX4FVPROC,            glUniformMatrix4fv );
+#endif
+
+#if defined(USE_GL1) || defined(USE_GL2)
+    LOAD_OPENGL_PROC( PFNGLCOMPRESSEDTEXIMAGE2DARBPROC,     glCompressedTexImage2D );
+    LOAD_OPENGL_PROC( PFNGLGETCOMPRESSEDTEXIMAGEARBPROC,    glGetCompressedTexImageARB );
+#endif
+
+    return 0;
+}
+
+/* OpenGL Version 2.0 API */
+#if defined(USE_GL2)
+PFNGLDELETESHADERPROC               glDeleteShader              = NULL;
+PFNGLDELETEPROGRAMPROC              glDeleteProgram             = NULL;
+PFNGLUSEPROGRAMPROC                 glUseProgram                = NULL;
+PFNGLCREATESHADERPROC               glCreateShader              = NULL;
+PFNGLSHADERSOURCEPROC               glShaderSource              = NULL;
+PFNGLCOMPILESHADERPROC              glCompileShader             = NULL;
+PFNGLGETSHADERIVPROC                glGetShaderiv               = NULL;
+PFNGLCREATEPROGRAMPROC              glCreateProgram             = NULL;
+PFNGLATTACHSHADERPROC               glAttachShader              = NULL;
+PFNGLLINKPROGRAMPROC                glLinkProgram               = NULL;
+PFNGLGETPROGRAMIVPROC               glGetProgramiv              = NULL;
+PFNGLGETACTIVEATTRIBPROC            glGetActiveAttrib           = NULL;
+PFNGLGETATTRIBLOCATIONPROC          glGetAttribLocation         = NULL;
+PFNGLGETACTIVEUNIFORMPROC           glGetActiveUniform          = NULL;
+PFNGLGETUNIFORMLOCATIONPROC         glGetUniformLocation        = NULL;
+PFNGLGETSHADERINFOLOGPROC           glGetShaderInfoLog          = NULL;
+PFNGLGETPROGRAMINFOLOGPROC          glGetProgramInfoLog         = NULL;
+PFNGLDISABLEVERTEXATTRIBARRAYPROC   glDisableVertexAttribArray  = NULL;
+PFNGLENABLEVERTEXATTRIBARRAYPROC    glEnableVertexAttribArray   = NULL;
+PFNGLVERTEXATTRIBPOINTERPROC        glVertexAttribPointer       = NULL;
+PFNGLUNIFORM1IPROC                  glUniform1i                 = NULL;
+PFNGLUNIFORM1FVPROC                 glUniform1fv                = NULL;
+PFNGLUNIFORM3FVPROC                 glUniform3fv                = NULL;
+PFNGLUNIFORM4FVPROC                 glUniform4fv                = NULL;
+PFNGLUNIFORMMATRIX3FVPROC           glUniformMatrix3fv          = NULL;
+PFNGLUNIFORMMATRIX4FVPROC           glUniformMatrix4fv          = NULL;
+#endif
+
+#if defined(USE_GL1) || defined(USE_GL2)
+/* GL_ARB_texture_compression */
+PFNGLCOMPRESSEDTEXIMAGE2DARBPROC    glCompressedTexImage2D      = NULL;
+PFNGLGETCOMPRESSEDTEXIMAGEARBPROC   glGetCompressedTexImageARB  = NULL;
+#endif
+
+#endif

@@ -271,6 +271,7 @@ int GetStringPos(const char
 	return -1;
 }
 
+#if defined(PLATFORM_DIRECTX)
 void FillCommandLineParams(void)
 {
 	int windowpos;
@@ -324,8 +325,84 @@ void FillCommandLineParams(void)
 		buffer[i] = 0;
 		strcpy_s(CommandLineParams.UserLevelName, strlen(buffer) + 1, buffer);
 	}
-
 }
+
+#elif defined(PLATFORM_SDL)
+void FillCommandLineParams( int argc, char* args[] )
+{
+    uint16_t i;
+
+    for (i=1; i<argc; i++)
+    {
+        if ((strstr( args[i], "--windowmode" ) != NULL) || (strstr( args[i], "-W") != NULL))
+        {
+            CommandLineParams.RunWindowMode = true;
+            fprintf( stdout, "Window mode is enabled\n" );
+        }
+        if ((strstr( args[i], "--texfactor" ) != NULL) || (strstr( args[i], "-TF") != NULL))
+        {
+            i++;
+            if (i<argc)
+            {
+                CommandLineParams.TexFactor = LIM(atoi(args[i]), 1, 4);
+                fprintf( stdout, "Texfactor set to %d\n", CommandLineParams.TexFactor );
+            }
+        }
+        if ((strstr( args[i], "--texsizemin" ) != NULL) || (strstr( args[i], "-TS") != NULL))
+        {
+            i++;
+            if (i<argc)
+            {
+                CommandLineParams.TexSizeMin = LIM(atoi(args[i]), 32, 1024);
+                fprintf( stdout, "Texfactor set to %d\n", CommandLineParams.TexSizeMin );
+            }
+        }
+        if ((strstr( args[i], "--custom" ) != NULL) || (strstr( args[i], "-C") != NULL))
+        {
+            i++;
+            if (i<argc)
+            {
+                CommandLineParams.TexSizeMin = LIM(atoi(args[i]), 32, 1024);
+                fprintf( stdout, "Texfactor set to %d\n", CommandLineParams.TexSizeMin );
+            }
+        }
+
+
+        	listpos = GetStringPos(CommandLineParams.Params, "custom");
+	CommandLineParams.RunOwnLevelList = listpos > -1;
+	if (CommandLineParams.OwnLevelList)
+	{
+		int i = 0;
+		int len = strlen(CommandLineParams.Params);
+		for (i = 0; i < len; i++)
+		{
+			if (CommandLineParams.Params[listpos + i] == 0  ||
+				CommandLineParams.Params[listpos + i] == 32 ||
+				CommandLineParams.Params[listpos + i] == 10)
+				break;
+
+			buffer[i] = CommandLineParams.Params[listpos + i];
+		}
+
+		buffer[i] = 0;
+		strcpy_s(CommandLineParams.OwnLevelList, strlen(buffer) + 1, buffer);
+	}
+
+        else if ((strstr( args[i], "--help" ) != NULL) || (strstr( args[i], "-H") !=NULL))
+        {
+            printf( "Hurrican\n"  );
+            printf( "  Usage      : hurrican <arguments>\n" );
+            printf( "  Arguments\n" );
+            printf( "  -H,  --help        : Show this information\n" );
+            printf( "  -W,  --windowmode  : Run in a window, not fullsreen\n" );
+            printf( "  -TF, --texfactor   : Division factor for textures\n" );
+            printf( "  -TS, --texsizemin  : Size limitation for texture factor\n" );
+            exit(1);
+        }
+    }
+}
+
+#endif
 
 // --------------------------------------------------------------------------------------
 // Win-Main Funktion
@@ -338,11 +415,6 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 #elif defined(PLATFORM_SDL)
 int main(int argc, char *argv[])
 {
-    HWND g_hwnd = 0;
-    HINSTANCE hinstance = 0;
-    //int nshowcmd = argc;
-    // On AmigaOS or clones argc my be 0 if started from WB (desktoip)!
-    const char* lpcmdline = argc ? argv[argc-1] : "";
 #endif
 
 	GamePaused = false;
@@ -351,7 +423,6 @@ int main(int argc, char *argv[])
 	WNDCLASSEX			winclass;							// eigene Windows-Klasse
 	MSG					message;							// Message
 	RECT				rect;								// Grösse des Desktops
-#endif
 
 	// evtle Parameter holen und Typ des Parameters rausfinden
 	strcpy_s (CommandLineParams.Params, 1, "");
@@ -360,6 +431,14 @@ int main(int argc, char *argv[])
 		strcpy_s (CommandLineParams.Params, strlen(lpcmdline) + 1, lpcmdline);
 
 	FillCommandLineParams();
+
+#elif defined(PLATFORM_SDL)
+    HWND g_hwnd = 0;
+    HINSTANCE hinstance = 0;
+
+    FillCommandLineParams( argc, argv );
+
+#endif
 
 	if (CommandLineParams.RunWindowMode)
 	{

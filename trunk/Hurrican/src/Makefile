@@ -1,4 +1,4 @@
-DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS -DUSE_MODPLUG
+DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS -DUSE_MODPLUG -DDEBUG
 
 TARGET = rpi
 
@@ -34,12 +34,14 @@ LD  := g++
 RM  := rm -f
 
 USE_EGL := yes
+USE_GL2 := yes
 
-DEFINES += -DRPI -DUSE_GLES1 -DUSE_EGL_RPI
+DEFINES += -DRPI -DUSE_GL2 -DUSE_GLES2 -DUSE_EGL_RPI -DRGBA_5551
 
-INCLUDES_OS := -I/usr/include/SDL/ \
+INCLUDES_OS := -ISDL_port \
+               -I/usr/include/SDL/ \
                -I/usr/include/libmodplug \
-               -I/opt/vc/include -I/opt/vc/include/interface/vcos/pthreads -I/opt/vc/include/GLES -I/opt/vc/include/EGL
+               -I/opt/vc/include -I/opt/vc/include/interface/vcos/pthreads -I/opt/vc/include/GLES2 -I/opt/vc/include/EGL
 
 LDFLAGS := -L/usr/lib -L/opt/vc/lib -g -lmodplug -lSDL_mixer -lSDL_image -lSDL -lGLESv2
 
@@ -53,22 +55,30 @@ CC  := gcc
 LD  := g++
 RM  := rm -f
 
-USE_EGL := no
+USE_EGL := yes
+USE_GL2 := yes
 
-INCLUDES_OS := -I/usr/include/SDL -I/usr/include/libmodplug
+DEFINES += -DLINUX -DUSE_GL2 -DUSE_GLES2 -DUSE_EGL_SDL -DRGBA_5551
 
-LDFLAGS := -g -lSDL -lGL -lSDL_mixer -lSDL_image -lmodplug
+INCLUDES_OS := -I/usr/include -I/usr/include/SDL -I/usr/include/GLES2 -I/usr/include/libmodplug
+
+LDFLAGS := -g -lSDL -lGLESv2 -lSDL_mixer -lSDL_image -lmodplug -lX11 -lEGL
 
 endif
 
-INCLUDES := -I./SDLPort -Icml -I./unrarlib040/unrarlib $(INCLUDES_OS)
+INCLUDES := -I. -I./SDLPort -Icml -I./unrarlib040/unrarlib $(INCLUDES_OS)
 
 CFLAGS := -g -Wall -O0 -c $(INCLUDES) $(DEFINES)
 
 SDL_FILES := SDLPort/SDL_fmod \
-             SDLPort/SDL_port
+             SDLPort/SDL_port \
+             SDLPort/texture
 
 EGL_FILES := SDLPort/eglport
+
+GL2_FILES := SDLPort/cshader
+
+#SDLPort/cshader
 
 UNRAR_FILES := unrarlib040/unrarlib/unrarlib
 
@@ -257,6 +267,10 @@ ALL_FILES := $(FILES) $(SDL_FILES) $(UNRAR_FILES)
 
 ifeq ($(USE_EGL),yes)
 ALL_FILES += $(EGL_FILES)
+endif
+
+ifeq ($(USE_GL2),yes)
+ALL_FILES += $(GL2_FILES)
 endif
 
 ALL_OBJS := $(addsuffix .o, $(ALL_FILES))

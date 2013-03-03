@@ -1,3 +1,27 @@
+/**
+ *
+ *  Copyright (C) 2011-2012 Scott R. Smith
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ *
+ */
+
 #ifndef _SDLPORT_H_
 #define _SDLPORT_H_
 
@@ -13,16 +37,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "keymap.h"
-
-#define GL_GLEXT_PROTOTYPES 1
-#if defined(USE_GLES1)
-#include "GLES/gl.h"
-#include "GLES/glext.h"
-#define glClearDepth glClearDepthf
-#else
-#include "SDL_opengl.h"
-#endif
-
+#include "opengl.h"
 
 #define CONST       const
 #ifndef __WIN32__
@@ -52,17 +67,18 @@ typedef struct tagRECT {
 #endif
 typedef uint32_t LPDIRECT3D8, LPDIRECT3D9, LPDIRECT3DDEVICE8, LPDIRECT3DDEVICE9, LPDIRECTSOUND8, D3DCOLOR;
 
-#define MAX(a,b) ((a)>(b)?(a):(b))
-#define MIN(a,b) ((a)<(b)?(a):(b))
+#define MAX(a,b)    ((a)>(b)?(a):(b))
+#define MIN(a,b)    ((a)<(b)?(a):(b))
+#define LIM(a,b,c)  MAX(MIN(a,c),b)
 
 #define D3DX_PI M_PI
-#define D3DCOLOR_XRGB(r,g,b)    (float)((r)/255), (float)((g)/255), (float)((b)/255), 1.0f
+
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
-	#define D3DCOLOR_RGBA(r,g,b,a)  (((a)<<24) + ((b)<<16) + ((g)<<8) + (r))
+	#define D3DCOLOR_RGBA(r,g,b,a)  (((a)<<24) + ((r)<<16) + ((g)<<8) + (b))
 #else
-	#define D3DCOLOR_RGBA(r,g,b,a)  (((r)<<24) + ((g)<<16) + ((b)<<8) + (a))
+	#define D3DCOLOR_RGBA(r,g,b,a)  (((b)<<24) + ((g)<<16) + ((r)<<8) + (a))
 #endif
-#define timeGetTime             SDL_GetTicks
+#define timeGetTime SDL_GetTicks
 
 #define LPDIRECTINPUTDEVICE8 SDL_Joystick*
 
@@ -130,17 +146,19 @@ char* _strrev       ( char *);
 #ifndef __WIN32__
 void DeleteFile( const char* filename );
 #endif
-SDL_Surface* loadImage( const char* path, uint32_t size=0 );
-GLuint loadTexture( const char* path, SDL_Rect& dims, uint32_t size=0 );
 uint32_t getpixel( SDL_Surface *surface, int16_t x, int16_t y );
 void putpixel( SDL_Surface *surface, int16_t x, int16_t y, uint32_t pixel );
+void get_components( SDL_Surface *surface, int16_t x, int16_t y, uint8_t& r, uint8_t& g, uint8_t& b, uint8_t& a );
 void int_to_rgb( uint32_t color, SDL_Color& components );
-void matrixmode( GLenum mode );
-void delete_texture( GLuint texture );
-void delete_textures( void );
-
 uint8_t* LoadFileToMemory( const std::string& name, uint32_t& size );
+#if defined(USE_GL1)
+void load_matrix( GLenum mode, const GLfloat* m );
+#endif
+#if defined(USE_GL2)
+uint8_t LoadGLFunctions( void );
+#endif
 
 extern D3DXMATRIXA16 g_matView;
+extern D3DXMATRIXA16 g_matModelView;
 
 #endif // _SDLPORT_H_

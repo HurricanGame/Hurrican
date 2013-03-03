@@ -744,10 +744,10 @@ void PlayerClass::CheckForExplode(void)
 #if defined(PLATFORM_DIRECTX)
         lpD3DDevice->SetTransform(D3DTS_WORLD, &matRot);
 #elif defined(PLATFORM_SDL)
-        D3DXMATRIXA16 matModelView;
-        matrixmode( GL_MODELVIEW );
-        matModelView = matRot * g_matView;
-        glLoadMatrixf( matModelView.data() );
+        g_matModelView = matRot * g_matView;
+#if defined(USE_GL1)
+        load_matrix( GL_MODELVIEW, g_matModelView.data() );
+#endif
 #endif
 
 		CollideRect.left   = 0;
@@ -1134,7 +1134,7 @@ void PlayerClass::AnimatePlayer(void)
 				xspeed = 0.0f;
 		}
 		}
-		
+
 		// Wand im Weg ? Dann stehenbleiben
 		if(((Aktion[AKTION_LINKS]  && (bl & BLOCKWERT_WAND)) ||
 		    (Aktion[AKTION_RECHTS] && (br & BLOCKWERT_WAND))) &&
@@ -3546,10 +3546,10 @@ void PlayerClass::DrawNormalLightning(int DrawLength)
 #if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
-    D3DXMATRIXA16 matModelView;
-    matrixmode( GL_MODELVIEW );
-    matModelView = matWorld * g_matView;
-    glLoadMatrixf( matModelView.data() );
+    g_matModelView = matWorld * g_matView;
+#if defined(USE_GL1)
+    load_matrix( GL_MODELVIEW, g_matModelView.data() );
+#endif
 #endif
 
 	DirectGraphics.SetFilterMode (true);
@@ -3571,10 +3571,10 @@ void PlayerClass::DrawNormalLightning(int DrawLength)
 #if defined(PLATFORM_DIRECTX)
         lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
-        D3DXMATRIXA16 matModelView;
-        matrixmode( GL_MODELVIEW );
-        matModelView = matWorld * g_matView;
-        glLoadMatrixf( matModelView.data() );
+    g_matModelView = matWorld * g_matView;
+#if defined(USE_GL1)
+    load_matrix( GL_MODELVIEW, g_matModelView.data() );
+#endif
 #endif
 	}
 	else
@@ -3595,10 +3595,10 @@ void PlayerClass::DrawNormalLightning(int DrawLength)
 #if defined(PLATFORM_DIRECTX)
         lpD3DDevice->SetTransform(D3DTS_WORLD, &matRot);
 #elif defined(PLATFORM_SDL)
-        D3DXMATRIXA16 matModelView;
-        matrixmode( GL_MODELVIEW );
-        matModelView = matRot * g_matView;
-        glLoadMatrixf( matModelView.data() );
+    g_matModelView = matRot * g_matView;
+#if defined(USE_GL1)
+    load_matrix( GL_MODELVIEW, g_matModelView.data() );
+#endif
 #endif
 	}
 
@@ -3952,10 +3952,10 @@ bool PlayerClass::DoLightning(void)
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
-    D3DXMATRIXA16 matModelView;
-    matrixmode( GL_MODELVIEW );
-    matModelView = matWorld * g_matView;
-    glLoadMatrixf( matModelView.data() );
+    g_matModelView = matWorld * g_matView;
+#if defined(USE_GL1)
+    load_matrix( GL_MODELVIEW, g_matModelView.data() );
+#endif
 #endif
 
 	DirectGraphics.SetFilterMode (true);
@@ -3985,10 +3985,10 @@ bool PlayerClass::DoLightning(void)
 #if defined(PLATFORM_DIRECTX)
         lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
-        D3DXMATRIXA16 matModelView;
-        matrixmode( GL_MODELVIEW );
-        matModelView = matWorld * g_matView;
-        glLoadMatrixf( matModelView.data() );
+    g_matModelView = matWorld * g_matView;
+#if defined(USE_GL1)
+    load_matrix( GL_MODELVIEW, g_matModelView.data() );
+#endif
 #endif
 	}
 	else
@@ -4009,10 +4009,10 @@ bool PlayerClass::DoLightning(void)
 #if defined(PLATFORM_DIRECTX)
         lpD3DDevice->SetTransform(D3DTS_WORLD, &matRot);
 #elif defined(PLATFORM_SDL)
-        D3DXMATRIXA16 matModelView;
-        matrixmode( GL_MODELVIEW );
-        matModelView = matRot * g_matView;
-        glLoadMatrixf( matModelView.data() );
+        g_matModelView = matWorld * g_matView;
+#if defined(USE_GL1)
+        load_matrix( GL_MODELVIEW, g_matModelView.data() );
+#endif
 #endif
 	}
 

@@ -6,7 +6,7 @@
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
-			<Target title="Debug">
+			<Target title="WIN32 GL1 Debug">
 				<Option output="hurrican_dbg" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
@@ -14,6 +14,28 @@
 				<Option parameters="--windowmode" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-D__WIN32__" />
+					<Add option="-DDEBUG" />
+					<Add option="-DUSE_GL1" />
+					<Add option="-DRGBA_5551" />
+				</Compiler>
+				<Linker>
+					<Add option="-lmingw32 -lSDLmain -mwindows" />
+					<Add library="opengl32" />
+				</Linker>
+			</Target>
+			<Target title="WIN32 GL2 Debug">
+				<Option output="hurrican_dbg" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="--windowmode" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-D__WIN32__" />
+					<Add option="-DDEBUG" />
+					<Add option="-DUSE_GL2" />
+					<Add option="-DRGBA_5551" />
 				</Compiler>
 				<Linker>
 					<Add option="-lmingw32 -lSDLmain -mwindows" />
@@ -27,12 +49,33 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-D__WIN32__" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 				</Linker>
 			</Target>
-			<Target title="Linux Debug">
+			<Target title="Linux GL1 Debug">
+				<Option output="hurrican_dbg" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="--windowmode --texfactor 4 --texsizemin 512" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-DDEBUG" />
+					<Add option="-DUSE_GL1" />
+					<Add option="-DUSE_MODPLUG" />
+					<Add option="-DRGBA_5551" />
+					<Add directory="/usr/include/GL" />
+				</Compiler>
+				<Linker>
+					<Add option="-lc" />
+					<Add library="GL" />
+					<Add library="modplug" />
+				</Linker>
+			</Target>
+			<Target title="Linux GL2 Debug">
 				<Option output="hurrican_dbg" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
@@ -40,30 +83,130 @@
 				<Option parameters="--windowmode" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-DDEBUG" />
+					<Add option="-DUSE_GL2" />
 					<Add option="-DUSE_MODPLUG" />
+					<Add option="-DRGBA_5551" />
+					<Add directory="/usr/include/GL" />
 				</Compiler>
 				<Linker>
 					<Add option="-lc" />
 					<Add library="GL" />
+					<Add library="modplug" />
 				</Linker>
 			</Target>
-			<Target title="Pandora">
+			<Target title="Linux GLES1 Debug">
+				<Option output="hurrican_dbg" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="--windowmode" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-DDEBUG" />
+					<Add option="-DUSE_GL1" />
+					<Add option="-DUSE_GLES1" />
+					<Add option="-DUSE_EGL_SDL" />
+					<Add option="-DUSE_MODPLUG" />
+					<Add option="-DRGBA_5551" />
+					<Add directory="/usr/include/GLES" />
+				</Compiler>
+				<Linker>
+					<Add option="-lc" />
+					<Add library="GLESv1_CM" />
+					<Add library="EGL" />
+					<Add library="X11" />
+					<Add library="modplug" />
+				</Linker>
+			</Target>
+			<Target title="Linux GLES2 Debug">
+				<Option output="hurrican_dbg" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option parameters="--windowmode" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-DDEBUG" />
+					<Add option="-DUSE_GL2" />
+					<Add option="-DUSE_GLES2" />
+					<Add option="-DUSE_EGL_SDL" />
+					<Add option="-DUSE_MODPLUG" />
+					<Add option="-DRGBA_5551" />
+					<Add directory="/usr/include/GLES2" />
+				</Compiler>
+				<Linker>
+					<Add option="-lc" />
+					<Add library="GLESv2" />
+					<Add library="EGL" />
+					<Add library="X11" />
+					<Add library="modplug" />
+				</Linker>
+			</Target>
+			<Target title="Pandora GLES1">
 				<Option output="hurrican_pnd" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/pnd" />
 				<Option type="1" />
-				<Option compiler="pandora_code_sourcery" />
+				<Option compiler="cb201009_pandora_code_sourcery" />
 				<Compiler>
 					<Add option="-DUSE_EGL_SDL" />
+					<Add option="-DUSE_GL1" />
 					<Add option="-DUSE_GLES1" />
 					<Add option="-DUSE_PVRTC" />
 					<Add option="-DUSE_MODPLUG" />
 					<Add option="-DPANDORA" />
 					<Add directory="../../../../toolchains/pandora/arm-2011.09/usr/include/libmodplug" />
+					<Add directory="../../../../toolchains/pandora/arm-2011.09/usr/include/GLES" />
 				</Compiler>
 				<Linker>
-					<Add option="-s" />
-					<Add option="-lGLES_CM -lIMGegl -lEGL -lsrv_um -lX11 -lXau -lXdmcp" />
-					<Add option="-lpng12 -lz -ltiff -lmad -ljpeg -lts -lstdc++" />
+					<Add library="GLES_CM" />
+					<Add library="EGL" />
+					<Add library="IMGegl" />
+					<Add library="srv_um" />
+					<Add library="X11" />
+					<Add library="Xau" />
+					<Add library="Xdmcp" />
+					<Add library="modplug" />
+					<Add library="png12" />
+					<Add library="tiff" />
+					<Add library="jpeg" />
+					<Add library="mad" />
+					<Add library="z" />
+					<Add library="ts" />
+					<Add library="stdc++" />
+				</Linker>
+			</Target>
+			<Target title="Pandora GLES2">
+				<Option output="hurrican_pnd" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/pnd" />
+				<Option type="1" />
+				<Option compiler="cb201009_pandora_code_sourcery" />
+				<Compiler>
+					<Add option="-DUSE_EGL_SDL" />
+					<Add option="-DUSE_GL2" />
+					<Add option="-DUSE_GLES2" />
+					<Add option="-DUSE_PVRTC" />
+					<Add option="-DUSE_MODPLUG" />
+					<Add option="-DPANDORA" />
+					<Add directory="../../../../toolchains/pandora/arm-2010.09/usr/include/libmodplug" />
+					<Add directory="../../../../toolchains/pandora/arm-2010.09/usr/include/GLES2" />
+				</Compiler>
+				<Linker>
+					<Add library="GLESv2" />
+					<Add library="EGL" />
+					<Add library="IMGegl" />
+					<Add library="srv_um" />
+					<Add library="X11" />
+					<Add library="Xau" />
+					<Add library="Xdmcp" />
+					<Add library="modplug" />
+					<Add library="png12" />
+					<Add library="tiff" />
+					<Add library="jpeg" />
+					<Add library="mad" />
+					<Add library="z" />
+					<Add library="ts" />
+					<Add library="stdc++" />
 				</Linker>
 			</Target>
 		</Build>
@@ -80,8 +223,19 @@
 			<Add library="SDL_image" />
 			<Add library="SDL_mixer" />
 			<Add library="SDL" />
-			<Add library="modplug" />
 		</Linker>
+		<Unit filename="data/shaders/shader_color.frag">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="data/shaders/shader_color.vert">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="data/shaders/shader_texture.frag">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="data/shaders/shader_texture.vert">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="src/Boss_BigFish.cpp" />
 		<Unit filename="src/Boss_BigFish.h" />
 		<Unit filename="src/Boss_Bratklops.cpp" />
@@ -365,12 +519,39 @@
 		<Unit filename="src/SDLPort/SDL_fmod.h" />
 		<Unit filename="src/SDLPort/SDL_port.cpp" />
 		<Unit filename="src/SDLPort/SDL_port.h" />
+		<Unit filename="src/SDLPort/cshader.cpp">
+			<Option target="WIN32 GL2 Debug" />
+			<Option target="Release" />
+			<Option target="Linux GL2 Debug" />
+			<Option target="Linux GLES2 Debug" />
+			<Option target="Pandora GLES2" />
+		</Unit>
+		<Unit filename="src/SDLPort/cshader.h">
+			<Option target="WIN32 GL2 Debug" />
+			<Option target="Release" />
+			<Option target="Linux GL2 Debug" />
+			<Option target="Linux GLES2 Debug" />
+			<Option target="Pandora GLES2" />
+		</Unit>
 		<Unit filename="src/SDLPort/eglport.c">
 			<Option compilerVar="CC" />
-			<Option target="Pandora" />
+			<Option target="Pandora GLES1" />
+			<Option target="Linux GLES2 Debug" />
+			<Option target="Linux GLES1 Debug" />
+			<Option target="Pandora GLES2" />
 		</Unit>
-		<Unit filename="src/SDLPort/eglport.h" />
+		<Unit filename="src/SDLPort/eglport.h">
+			<Option target="Pandora GLES1" />
+			<Option target="Linux GLES2 Debug" />
+			<Option target="Linux GLES1 Debug" />
+			<Option target="Pandora GLES2" />
+		</Unit>
 		<Unit filename="src/SDLPort/keymap.h" />
+		<Unit filename="src/SDLPort/opengl.h" />
+		<Unit filename="src/SDLPort/texture.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/SDLPort/texture.h" />
 		<Unit filename="src/Texts.cpp" />
 		<Unit filename="src/Texts.h" />
 		<Unit filename="src/Tileengine.cpp" />
@@ -555,7 +736,6 @@
 		<Unit filename="src/cml/cml/vector/vector_promotions.h" />
 		<Unit filename="src/cml/cml/vector/vector_traits.h" />
 		<Unit filename="src/cml/cml/vector/vector_unroller.h" />
-		<Unit filename="src/cml/examples/cml_config.h" />
 		<Unit filename="src/lightmap.cpp" />
 		<Unit filename="src/lightmap.h" />
 		<Unit filename="src/mymath.h" />
@@ -571,6 +751,15 @@
 			<code_completion />
 			<debugger />
 			<envvars />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
