@@ -330,7 +330,9 @@ void FillCommandLineParams(void)
 #elif defined(PLATFORM_SDL)
 void FillCommandLineParams( int argc, char* args[] )
 {
+	char buffer[256];
     uint16_t i;
+    int32_t listpos;
 
     for (i=1; i<argc; i++)
     {
@@ -368,25 +370,25 @@ void FillCommandLineParams( int argc, char* args[] )
         }
 
 
-        	listpos = GetStringPos(CommandLineParams.Params, "custom");
-	CommandLineParams.RunOwnLevelList = listpos > -1;
-	if (CommandLineParams.OwnLevelList)
-	{
-		int i = 0;
-		int len = strlen(CommandLineParams.Params);
-		for (i = 0; i < len; i++)
-		{
-			if (CommandLineParams.Params[listpos + i] == 0  ||
-				CommandLineParams.Params[listpos + i] == 32 ||
-				CommandLineParams.Params[listpos + i] == 10)
-				break;
+        listpos = GetStringPos(CommandLineParams.Params, "custom");
+        CommandLineParams.RunOwnLevelList = listpos > -1;
+        if (CommandLineParams.OwnLevelList)
+        {
+            int i = 0;
+            int len = strlen(CommandLineParams.Params);
+            for (i = 0; i < len; i++)
+            {
+                if (CommandLineParams.Params[listpos + i] == 0  ||
+                    CommandLineParams.Params[listpos + i] == 32 ||
+                    CommandLineParams.Params[listpos + i] == 10)
+                    break;
 
-			buffer[i] = CommandLineParams.Params[listpos + i];
-		}
+                buffer[i] = CommandLineParams.Params[listpos + i];
+            }
 
-		buffer[i] = 0;
-		strcpy_s(CommandLineParams.OwnLevelList, strlen(buffer) + 1, buffer);
-	}
+            buffer[i] = 0;
+            strcpy_s(CommandLineParams.OwnLevelList, strlen(buffer) + 1, buffer);
+        }
 
         else if ((strstr( args[i], "--help" ) != NULL) || (strstr( args[i], "-H") !=NULL))
         {
