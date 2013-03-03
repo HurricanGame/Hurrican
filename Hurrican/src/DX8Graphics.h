@@ -19,6 +19,10 @@
 
 #if defined(PLATFORM_SDL)
 #include "SDL_port.h"
+#include "texture.h"
+#if defined(USE_GL2)
+#include "cshader.h"
+#endif
 #else
 #include <d3d8.h>
 #include <d3dx8.h>
@@ -38,6 +42,14 @@
 #define COLORKEY_MODE 1
 #define WHITE_MODE	  2
 
+#if defined(USE_GL2)
+enum {
+    PROGRAM_COLOR=0,
+    PROGRAM_TEXTURE,
+    PROGRAM_TOTAL,
+    PROGRAM_NONE
+};
+#endif
 
 // --------------------------------------------------------------------------------------
 // Strukturen
@@ -73,6 +85,10 @@ class DirectGraphicsClass
         bool                    use_texture;
 		SDL_Surface*            Screen;
 		int                     MaxTextureUnits;
+#if defined(USE_GL2)
+        GLuint                  ProgramCurrent;
+		CShader                 Shaders[PROGRAM_TOTAL];
+#endif
 #endif
 
 	public:

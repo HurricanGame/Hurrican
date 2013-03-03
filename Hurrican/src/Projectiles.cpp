@@ -1978,10 +1978,10 @@ void ProjectileClass::Render(void)
 #if defined(PLATFORM_DIRECTX)
             lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
-            D3DXMATRIXA16 matModelView;
-            matrixmode( GL_MODELVIEW );
-            matModelView = matWorld * g_matView;
-            glLoadMatrixf( matModelView.data() );
+            g_matModelView = matWorld * g_matView;
+#if defined(USE_GL1)
+            load_matrix( GL_MODELVIEW, g_matModelView.data() );
+#endif
 #endif
 
 			DirectGraphics.SetFilterMode (true);
@@ -2007,10 +2007,10 @@ void ProjectileClass::Render(void)
 #if defined(PLATFORM_DIRECTX)
             lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
-            D3DXMATRIXA16 matModelView;
-            matrixmode( GL_MODELVIEW );
-            matModelView = matWorld * g_matView;
-            glLoadMatrixf( matModelView.data() );
+            g_matModelView = matWorld * g_matView;
+#if defined(USE_GL1)
+            load_matrix( GL_MODELVIEW, g_matModelView.data() );
+#endif
 #endif
 
 			DirectGraphics.SetFilterMode (false);

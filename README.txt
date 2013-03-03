@@ -24,6 +24,34 @@ Eiswuxe
 SDL/OpenGL-ES Port Information
 
 Thanks to the release by Eiswuxe we now have the privilege of enhancing Hurrican. I have extended the source code to be compatible with SDL systems that are OpenGL-ES compatible.
-All changes by myself are under the same copyright as the original source.
+All changes by myself within exisiting files are under the same copyright as the original source. All original files are under the MIT license.
 
-Pickle (pickle136@gmail.com)
+Build Instructions
+In general these instructions should work for most linux versions:
+cd src && make
+
+Definitions:
+  Platform Type
+	PLATFORM_DIRECTX : Use the original directx code
+	PLATFORM_SDL     : Use the new SDL/OpenGL code
+	__WIN32__	 : Use on windows builds
+  OpenGL Options:
+  	EGL		 : see SDLPort/eglport.h
+	USE_GL1          : Use the OpenGL 1.X code (fixed pipline)
+	USE_GLES1        : Use the OpenGL 1.X code with ES compatible (requires USE_GL1)
+	USE_GL2          : Use the OpenGL 2.0 code (programable pipline)
+	USE_GLES2        : Use the OpenGL 2.0 code with ES compatible (requires USE_GL2)
+	USE_PVRTC	 : Use ImgTec's PVRTC texture compression (only for PVR gpu's)
+  Sound:
+  	USE_MODPLUG      : Use the stable modplug code for music. (otherwise mikmod is used, which is known to have problems)
+  	
+  Other:
+  	ENABLE_CONSOLE_COMMANDS : turns a console where commands can be entered
+  	_DEBUG			: enables some debug output
+  	
+  	
+ Typical desktop build would use: -DPLATFORM_SDL -DUSE_GL2 -DUSE_MODPLUG -DENABLE_CONSOLE_COMMANDS
+ An mobile device may use : -DPLATFORM_SDL -DUSE_GL2 -DUSE_GLES2 -DUSE_EGL_SDL -DUSE_MODPLUG -DENABLE_CONSOLE_COMMANDS
+ Check the makefile for other examples.
+ 
+ Pickle (pickle136@gmail.com)
