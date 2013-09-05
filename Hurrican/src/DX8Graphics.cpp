@@ -102,8 +102,8 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
 	d3dpp.EnableAutoDepthStencil			= true;
 	d3dpp.AutoDepthStencilFormat			= D3DFMT_D16;
 	d3dpp.hDeviceWindow						= hwnd;							// Fenster Handle
-	d3dpp.BackBufferWidth					= SCREENWIDTH;					// ScreenBreite
-	d3dpp.BackBufferHeight					= SCREENHEIGHT;					// Screenhöhe
+	d3dpp.BackBufferWidth					= dwBreite;					    // ScreenBreite
+	d3dpp.BackBufferHeight					= dwHoehe;					    // Screenhöhe
 	d3dpp.BackBufferFormat					= D3DFMT_X8R8G8B8;
 
 	d3dpp.SwapEffect	= D3DSWAPEFFECT_COPY_VSYNC;		// VSync an
@@ -438,7 +438,7 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
 
     glViewport( 0, 0, (GLsizei)SCREENWIDTH, (GLsizei)SCREENHEIGHT );    /* Setup our viewport. */
 
-    cml::matrix_orthographic_RH( matProj, 0.0f, (float)SCREENWIDTH, (float)SCREENHEIGHT, 0.0f, 0.0f, 1.0f, cml::z_clip_neg_one );
+    cml::matrix_orthographic_RH( matProj, 0.0f, (float)RENDERWIDTH, (float)RENDERHEIGHT, 0.0f, 0.0f, 1.0f, cml::z_clip_neg_one );
 #if defined(USE_GL1)
     /* change to the projection matrix and set our viewing volume. */
     load_matrix( GL_PROJECTION, matProj.data() );

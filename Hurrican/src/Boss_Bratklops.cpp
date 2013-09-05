@@ -251,7 +251,7 @@ void GegnerBratklops::DoKI(void)
 		(d < 0.0f && c < 0.0f))
 		d *= -1.0f;
 
-	D3DXMatrixOrthoOffCenterLH(&swap, 0, SCREENWIDTH, c, 480 - c, 0.0f, 1.0f);
+	D3DXMatrixOrthoOffCenterLH(&swap, 0, RENDERWIDTH, c, 480 - c, 0.0f, 1.0f);
 	lpD3DDevice->SetTransform(D3DTS_PROJECTION, &swap); */
 
 	// Schneller wabbeln

@@ -47,6 +47,29 @@ LDFLAGS := -L/usr/lib -L/opt/vc/lib -g -lmodplug -lSDL_mixer -lSDL_image -lSDL -
 
 endif
 
+ifeq ($(TARGET),gcw)
+
+EXE := ../hurrican
+CCP := $(GCWSDK)/bin/mipsel-gcw0-linux-uclibc-g++
+CC  := $(GCWSDK)/bin/mipsel-gcw0-linux-uclibc-gcc
+LD  := $(GCWSDK)/bin/mipsel-gcw0-linux-uclibc-g++
+RM  := rm -f
+
+USE_EGL := yes
+USE_GL2 := yes
+
+DEFINES += -DGCW -DUSE_GL2 -DUSE_GLES2 -DRGBA_5551 -DUSE_EGL_RAW -DUSE_320_240
+
+INCLUDES_OS := -ISDL_port \
+               -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/SDL \
+               -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/libmodplug \
+               -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/GLES2 -I$(GCWSDK)/include/mipsel-gcw0-linux-uclibc/sysroot/usr/include/EGL
+
+LDFLAGS := -L$(GCWSDK)/lib -g -lpthread -lmodplug -lSDL_mixer -lSDL_image -lSDL -lGLESv2 -lEGL
+
+endif
+
+
 ifeq ($(TARGET),linux)
 
 EXE := ../hurricanlinux
