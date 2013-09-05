@@ -690,7 +690,7 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
 	pTimer = new TimerClass();
 
 	// Direct3D initialisieren
-	if(!DirectGraphics.Init(hwnd, SCREENWIDTH, SCREENHEIGHT, SCREENBPP, true))
+	if(!DirectGraphics.Init(hwnd, RENDERWIDTH, RENDERHEIGHT, SCREENBPP, true))
 	{
 		Protokoll.WriteText("\n-> Direct3D Initialisierung Fehler ...!\n", true);
 		return false;

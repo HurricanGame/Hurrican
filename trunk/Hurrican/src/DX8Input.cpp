@@ -578,8 +578,8 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
 	// Die Maus nicht verschwinden lassen
 	if (MausX < 0)				MausX = 0;
 	if (MausY < 0)				MausY = 0;
-	if (MausX > SCREENWIDTH)	MausX = SCREENWIDTH;
-	if (MausY > SCREENHEIGHT)	MausY = SCREENHEIGHT;
+	if (MausX > RENDERWIDTH)	MausX = RENDERWIDTH;
+	if (MausY > RENDERHEIGHT)	MausY = RENDERHEIGHT;
 
 	return true;
 #elif defined(PLATFORM_SDL)
@@ -603,8 +603,8 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
     // Clamps
 	if (MausX < 0)				MausX = 0;
 	if (MausY < 0)				MausY = 0;
-	if (MausX > SCREENWIDTH)	MausX = SCREENWIDTH;
-	if (MausY > SCREENHEIGHT)	MausY = SCREENHEIGHT;
+	if (MausX > RENDERWIDTH)	MausX = RENDERWIDTH;
+	if (MausY > RENDERHEIGHT)	MausY = RENDERHEIGHT;
 
 	return true;
 #endif
