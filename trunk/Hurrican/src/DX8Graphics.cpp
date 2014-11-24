@@ -465,10 +465,15 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
 
 #if defined(USE_GL2)
     // Compile the shader code and link into a program
-    if (Shaders[PROGRAM_COLOR].Load( "data/shaders/shader_color.vert", "data/shaders/shader_color.frag" ) != 0) {
+    sprintf_s(vert, "%s/data/shaders/shader_color.vert", g_storage_ext);
+    sprintf_s(frag, "%s/data/shaders/shader_color.frag", g_storage_ext);
+    if (Shaders[PROGRAM_COLOR].Load( vert, frag ) != 0) {
         return false;
     }
-    if (Shaders[PROGRAM_TEXTURE].Load( "data/shaders/shader_texture.vert", "data/shaders/shader_texture.frag" ) != 0) {
+
+    sprintf_s(vert, "%s/data/shaders/shader_texture.vert", g_storage_ext);
+    sprintf_s(frag, "%s/data/shaders/shader_texture.frag", g_storage_ext);
+    if (Shaders[PROGRAM_TEXTURE].Load( vert, frag ) != 0) {
         return false;
     }
 
@@ -481,23 +486,27 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
     Shaders[PROGRAM_TEXTURE].NameClr = Shaders[PROGRAM_TEXTURE].GetAttribute( "a_Color" );
     Shaders[PROGRAM_TEXTURE].NameTex = Shaders[PROGRAM_TEXTURE].GetAttribute( "a_Texcoord0" );
     Shaders[PROGRAM_TEXTURE].NameMvp = Shaders[PROGRAM_TEXTURE].GetUniform( "u_MVPMatrix" );
-#endif
+#endif /* USE_GL2 */
+
+    /* Matrices setup */
     g_matView.identity();
     g_matModelView.identity();
 
-    glViewport( 0, 0, (GLsizei)SCREENWIDTH, (GLsizei)SCREENHEIGHT );    /* Setup our viewport. */
+    cml::matrix_orthographic_RH( matProjWindow, 0.0f, (float)WindowView.w, (float)WindowView.h, 0.0f, 0.0f, 1.0f, cml::z_clip_neg_one );
+    cml::matrix_orthographic_RH( matProjRender, 0.0f, (float)RenderView.w, (float)RenderView.h, 0.0f, 0.0f, 1.0f, cml::z_clip_neg_one );
+    matProj = matProjWindow;
 
-    cml::matrix_orthographic_RH( matProj, 0.0f, (float)RENDERWIDTH, (float)RENDERHEIGHT, 0.0f, 0.0f, 1.0f, cml::z_clip_neg_one );
 #if defined(USE_GL1)
     /* change to the projection matrix and set our viewing volume. */
     load_matrix( GL_PROJECTION, matProj.data() );
     load_matrix( GL_MODELVIEW, g_matModelView.data() );
+#endif /* USE_GL1 */
 
 #if defined(USE_FBO)
     SelectBuffer( true );
 #endif
 
-#endif
+#endif /* PLATFORM_SDL */
 
 	return true;
 }
@@ -862,8 +871,13 @@ void DirectGraphicsClass::ShowBackBuffer(void)
         DirectGraphics.SetTexture( RenderBuffer.texture );
         RendertoBuffer( D3DPT_TRIANGLESTRIP, 2, &vertices[0] );
         DirectGraphics.SetTexture( 0 );
+
+#if defined(ANDROID)
+        DrawTouchOverlay();
+#endif
     }
 #endif
+
 #if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
     EGL_SwapBuffers();
 #else
@@ -982,6 +996,62 @@ void DirectGraphicsClass::SelectBuffer( bool active )
         }
     }
 }
+
+#if defined(ANDROID)
+void DirectGraphicsClass::DrawTouchOverlay( void )
+{
+    int i;
+    int x, y, w, h;
+    VERTEX2D vertices[4];
+
+    for (i=0; i<DirectInput.TouchBoxes.size(); i++)
+    {
+        SDL_Rect *box = &DirectInput.TouchBoxes.at(i);
+
+        vertices[0].x = box->x;         vertices[0].y = box->y+box->h; /* lower left */
+        vertices[1].x = box->x;         vertices[1].y = box->y;   /* upper left */
+        vertices[2].x = box->x+box->w;  vertices[2].y = box->y+box->h; /* lower right */
+        vertices[3].x = box->x+box->w;  vertices[3].y = box->y;   /* upper right */
+        vertices[0].z = vertices[1].z = vertices[2].z = vertices[3].z = 0.0f;
+        vertices[0].color = vertices[1].color = vertices[2].color = vertices[3].color = 0x4000FF00;
+
+#if 0
+        vertices[0].tu = 0; vertices[0].tv = 0; /* lower left */
+        vertices[1].tu = 0; vertices[1].tv = 1; /* upper left */
+        vertices[2].tu = 1; vertices[2].tv = 0; /* lower right */
+        vertices[3].tu = 1; vertices[3].tv = 1; /* upper right */
+#endif
+        glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+        RendertoBuffer( D3DPT_TRIANGLESTRIP, 2, &vertices[0] );
+    }
+
+    DrawCircle( DirectInput.TouchdpadX, DirectInput.TouchdpadY, DirectInput.TouchdpadRadius );
+}
+
+void DirectGraphicsClass::DrawCircle( uint16_t x, uint16_t y, uint16_t radius )
+{
+    #define SECTORS 40
+    VERTEX2D vtx[SECTORS+2];
+
+    float radians = 0;
+    for (int i=0; i<SECTORS+1; i++)
+    {
+        vtx[i].color = 0x4000FF00;
+
+        vtx[i].x = x + (radius * cosf(cml::rad(radians)));
+        vtx[i].y = y + (radius * sinf(cml::rad(radians)));
+        vtx[i].z = 0;
+        radians += (360/SECTORS);
+    }
+    vtx[SECTORS+1].x = vtx[0].x;
+    vtx[SECTORS+1].y = vtx[0].y;
+    vtx[SECTORS+1].z = 0;
+    vtx[SECTORS+1].color = 0x8000FF00;
+
+    glLineWidth( 3 );
+    RendertoBuffer( D3DPT_LINESTRIP, SECTORS, &vtx[0] );
+}
+#endif /* ANDROID */
 #endif /* USE_GL2 && USE_FBO */
 
 #endif /* PLATFORM_SDL */

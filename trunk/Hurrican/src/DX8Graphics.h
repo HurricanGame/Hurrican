@@ -140,6 +140,8 @@ class DirectGraphicsClass
         void SetTexture( GLuint texture );
         void ClearBackBuffer( void );
         void SelectBuffer( bool active );
+        void DrawTouchOverlay( void );
+        void DrawCircle( uint16_t x, uint16_t y, uint16_t radius );
 #endif
 };
 

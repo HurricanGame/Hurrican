@@ -70,21 +70,6 @@
 #define DIK_F8              SDLK_F8
 #define DIK_F9              SDLK_F9
 #define DIK_F10             SDLK_F10
-#define DIK_NUMLOCK         SDLK_NUMLOCK
-#define DIK_SCROLL          SDLK_SCROLLOCK
-#define DIK_NUMPAD7         SDLK_KP7
-#define DIK_NUMPAD8         SDLK_KP8
-#define DIK_NUMPAD9         SDLK_KP9
-#define DIK_SUBTRACT        SDLK_KP_MINUS
-#define DIK_NUMPAD4         SDLK_KP4
-#define DIK_NUMPAD5         SDLK_KP5
-#define DIK_NUMPAD6         SDLK_KP6
-#define DIK_ADD             SDLK_KP_PLUS
-#define DIK_NUMPAD1         SDLK_KP1
-#define DIK_NUMPAD2         SDLK_KP2
-#define DIK_NUMPAD3         SDLK_KP3
-#define DIK_NUMPAD0         SDLK_KP0
-#define DIK_DECIMAL         SDLK_KP_PERIOD
 #define DIK_F11             SDLK_F11
 #define DIK_F12             SDLK_F12
 #define DIK_F13             SDLK_F13
@@ -107,10 +92,45 @@
 #define DIK_NEXT            SDLK_PAGEDOWN
 #define DIK_INSERT          SDLK_INSERT
 #define DIK_DELETE          SDLK_DELETE
+#define DIK_APPS            SDLK_MENU
+#define DIK_LALT            SDLK_LALT
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+#define DIK_NUMLOCK         SDLK_KP_DECIMAL
+#define DIK_SCROLL          SDLK_KP_HEXADECIMAL
+#define DIK_NUMPAD7         SDLK_KP_7
+#define DIK_NUMPAD8         SDLK_KP_8
+#define DIK_NUMPAD9         SDLK_KP_9
+#define DIK_SUBTRACT        SDLK_KP_LESS
+#define DIK_NUMPAD4         SDLK_KP_4
+#define DIK_NUMPAD5         SDLK_KP_5
+#define DIK_NUMPAD6         SDLK_KP_6
+#define DIK_ADD             SDLK_KP_GREATER
+#define DIK_NUMPAD1         SDLK_KP_1
+#define DIK_NUMPAD2         SDLK_KP_2
+#define DIK_NUMPAD3         SDLK_KP_3
+#define DIK_NUMPAD0         SDLK_KP_0
+#define DIK_DECIMAL         SDLK_KP_AMPERSAND
+#define DIK_LWIN            SDLK_LGUI
+#define DIK_RWIN            SDLK_RGUI
+#else
+#define DIK_NUMLOCK         SDLK_NUMLOCK
+#define DIK_SCROLL          SDLK_SCROLLOCK
+#define DIK_NUMPAD7         SDLK_KP7
+#define DIK_NUMPAD8         SDLK_KP8
+#define DIK_NUMPAD9         SDLK_KP9
+#define DIK_SUBTRACT        SDLK_KP_MINUS
+#define DIK_NUMPAD4         SDLK_KP4
+#define DIK_NUMPAD5         SDLK_KP5
+#define DIK_NUMPAD6         SDLK_KP6
+#define DIK_ADD             SDLK_KP_PLUS
+#define DIK_NUMPAD1         SDLK_KP1
+#define DIK_NUMPAD2         SDLK_KP2
+#define DIK_NUMPAD3         SDLK_KP3
+#define DIK_NUMPAD0         SDLK_KP0
+#define DIK_DECIMAL         SDLK_KP_PERIOD
 #define DIK_LWIN            SDLK_LMETA
 #define DIK_RWIN            SDLK_RMETA
-#define DIK_APPS            SDLK_MENU
-
-#define DIK_LALT            SDLK_LALT
+#endif
 
 #endif // _KEYMAP_H_

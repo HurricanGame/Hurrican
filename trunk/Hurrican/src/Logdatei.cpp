@@ -21,6 +21,9 @@
 #endif
 #include <string.h>										// Für String Operationen
 #include <stdio.h>										// Für Datei Operationen
+#if defined(ANDROID)
+#include <android/log.h>
+#endif
 
 // --------------------------------------------------------------------------------------
 // Variablen
@@ -45,7 +48,9 @@ Logdatei::Logdatei(const char Name[20])
 	int len = strlen(Name) + 1;
 	strcpy_s(itsFilename, len, Name);							// Namen sichern
 	fopen_s(&Logfile, itsFilename, "w");					// Datei neu erstellen
-	fclose(Logfile);									// und gleich wieder schliessen
+	if (Logfile != NULL) {
+      fclose(Logfile);									// und gleich wieder schliessen
+	}
 
 	delLogFile = false;
 }
@@ -66,13 +71,19 @@ Logdatei::~Logdatei()
 
 void Logdatei::WriteText(bool Abbruch, const char* text, ...)
 {
-    #define BUFFER_SIZE 4096
-    va_list fmtargs;
-    char buffer[BUFFER_SIZE];
+   #define BUFFER_SIZE 4096
+   va_list fmtargs;
+   char buffer[BUFFER_SIZE];
 
-    va_start( fmtargs, text );
-    vsnprintf( buffer, BUFFER_SIZE, text, fmtargs );
-    va_end( fmtargs );
+   va_start( fmtargs, text );
+   vsnprintf( buffer, BUFFER_SIZE, text, fmtargs );
+   va_end( fmtargs );
+
+#if defined(ANDROID)
+   __android_log_print(ANDROID_LOG_INFO, "libtcod", "%s", buffer);
+#else
+   printf( "%s", buffer );
+#endif
 
 	fopen_s(&Logfile, itsFilename, "a");					// Datei zum anfügen öffnen
 	if (Logfile != NULL)

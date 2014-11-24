@@ -166,6 +166,11 @@ bool loadCompressedImage( image_t& image, const char* path )
 
 bool loadImage( image_t& image, const char* path, uint32_t size )
 {
+#if SDL_VERSION_ATLEAST(2,0,0)
+    uint32_t flags = SDL_TRUE;
+#else
+    uint32_t flags = SDL_SRCCOLORKEY|SDL_RLEACCEL;
+#endif
     uint8_t factor;
     SDL_Rect rawDimensions;
     SDL_Surface* rawSurf = NULL;	// This surface will tell us the details of the image
@@ -219,14 +224,19 @@ bool loadImage( image_t& image, const char* path, uint32_t size )
                                       );
 
         //  check if original image uses an alpha channel
-        if (!(rawSurf->flags & SDL_SRCALPHA))
+        //if (!(rawSurf->flags & SDL_SRCALPHA))
+        if (rawSurf->format->BytesPerPixel <= 3 )
         {
             // if no alpha use MAGENTA and key it out.
-            SDL_SetColorKey( rawSurf, SDL_SRCCOLORKEY | SDL_RLEACCEL, SDL_MapRGB( rawSurf->format, 255, 0, 255 ) );
+            SDL_SetColorKey( rawSurf, flags, SDL_MapRGB( rawSurf->format, 255, 0, 255 ) );
         }
         else
         {
+#if SDL_VERSION_ATLEAST(2,0,0)
+            SDL_SetSurfaceAlphaMod( rawSurf, 255 );
+#else /* SDL 1.2 */
             SDL_SetAlpha( rawSurf, 0, 0 );
+#endif
         }
 
         SDL_BlitSurface( rawSurf, 0, finSurf, 0 );

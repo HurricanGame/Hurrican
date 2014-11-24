@@ -66,7 +66,7 @@ bool LoadLanguage (char *filename)
 			goto loadfile;
 	}
 
-	sprintf_s(temp, "%s", filename);
+	sprintf_s(temp, "%s/%s", g_storage_ext, filename);
 
 loadfile:
 
@@ -129,7 +129,7 @@ loadfile:
 		fromrar = false;
 
 		// Checken, ob sich das File im Standard Ordner befindet
-		sprintf_s(Temp, "%s", "data/levellist.dat");
+		sprintf_s(Temp, "%s/%s", g_storage_ext, "data/levellist.dat");
 		if (FileExists(Temp))
 			goto loadfilelevel;
 

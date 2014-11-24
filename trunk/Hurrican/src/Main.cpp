@@ -58,6 +58,10 @@
 #include "Timer.h"
 #include "unrarlib.h"
 
+#if defined(ANDROID)
+#include <android/log.h>
+#endif
+
 using namespace std;
 
 // Memory Leaks
@@ -419,6 +423,13 @@ int main(int argc, char *argv[])
 {
 #endif
 
+#if defined(ANDROID)
+   g_storage_ext = SDL_AndroidGetExternalStoragePath();
+#else
+   g_storage_ext = ".";
+#endif
+   Protokoll.WriteText( false, "\n--> Using external storage path '%s' <--\n", g_storage_ext );
+
 	GamePaused = false;
 
 #if defined(PLATFORM_DIRECTX)
@@ -699,6 +710,10 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
 		Protokoll.WriteText( true, "\n-> DirectInput8 Initialisierung Fehler ...!\n" );
 		return false;
 	}
+
+#if defined(ANDROID)
+    DirectInput.InitTouchBoxes( DirectGraphics.WindowView.w, DirectGraphics.WindowView.h );
+#endif
 
 	// Sound Manager initialisieren
 	pSoundManager = new CSoundManager();
