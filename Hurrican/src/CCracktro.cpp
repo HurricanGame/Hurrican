@@ -148,9 +148,10 @@ CCracktro::CCracktro()
 		Stars[i].Ebene   = rand()%200 + 55;
 	}
 
-	pSoundManager->LoadSong("Cracktro.it", MUSIC_CRACKTRO);
-	pSoundManager->PlaySong(MUSIC_CRACKTRO, false);
-	pSoundManager->SetAbsoluteSongVolume(MUSIC_CRACKTRO, 255);
+	if (pSoundManager->LoadSong("Cracktro.it", MUSIC_CRACKTRO) == true) {
+        pSoundManager->PlaySong(MUSIC_CRACKTRO, false);
+        pSoundManager->SetAbsoluteSongVolume(MUSIC_CRACKTRO, 255);
+    }
 
 	DirectGraphics.SetAdditiveMode();
 	DirectGraphics.SetColorKeyMode();
@@ -177,7 +178,7 @@ void CCracktro::Main(void)
 #if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,	D3DCOLOR_XRGB(0,0,0), 1.0f, 0);
 #elif defined(PLATFORM_SDL)
-    glClear( GL_COLOR_BUFFER_BIT );
+    DirectGraphics.ClearBackBuffer();
 #endif
 
 	int i;

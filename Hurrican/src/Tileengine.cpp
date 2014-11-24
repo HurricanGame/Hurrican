@@ -337,7 +337,7 @@ bool TileEngineClass::LoadLevel(char Filename[100])
 	}
 
 	// Dann checken, ob sich das File im Standard Ordner befindet
-	sprintf_s(Temp, "data/%s", Filename);
+	sprintf_s(Temp, "%s/data/%s", g_storage_ext,  Filename);
 	if (FileExists(Temp))
 		goto loadfile;
 

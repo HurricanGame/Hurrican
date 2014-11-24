@@ -597,6 +597,17 @@ void CreateDefaultConfig(void)
 	pPlayer[0]->AktionKeyboard [AKTION_WAFFE_LASER]		= DIK_2;
 	pPlayer[0]->AktionKeyboard [AKTION_WAFFE_BOUNCE]	= DIK_3;
 	pPlayer[0]->AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_RETURN;
+#elif defined(ANDROID)
+	pPlayer[0]->AktionKeyboard [AKTION_JUMP]			= DIK_A;
+	pPlayer[0]->AktionKeyboard [AKTION_SHOOT]			= DIK_B;
+	pPlayer[0]->AktionKeyboard [AKTION_BLITZ]			= DIK_C;
+	pPlayer[0]->AktionKeyboard [AKTION_POWERLINE]		= DIK_D;
+	pPlayer[0]->AktionKeyboard [AKTION_GRANATE]		    = DIK_E;
+	pPlayer[0]->AktionKeyboard [AKTION_SMARTBOMB]		= DIK_F;
+	pPlayer[0]->AktionKeyboard [AKTION_WAFFE_SPREAD]	= DIK_G;
+	pPlayer[0]->AktionKeyboard [AKTION_WAFFE_LASER]		= DIK_H;
+	pPlayer[0]->AktionKeyboard [AKTION_WAFFE_BOUNCE]	= DIK_I;
+	pPlayer[0]->AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_J;
 #else
 	pPlayer[0]->AktionKeyboard [AKTION_JUMP]			= DIK_LALT;
 	pPlayer[0]->AktionKeyboard [AKTION_SHOOT]			= DIK_LCONTROL;
@@ -683,8 +694,10 @@ bool LoadConfig(void)
 	float Sound, Musik;
 
 	FILE *Datei = NULL;
+   char temp[100];
 
-	fopen_s(&Datei, CONFIGFILE, "rb");		// versuchen Datei zu öffnen
+   snprintf( temp, sizeof(temp), "%s/%s", g_storage_ext, CONFIGFILE );
+	fopen_s(&Datei, temp, "rb");		// versuchen Datei zu öffnen
 
 	if (Datei == NULL)
 		return false;
@@ -769,8 +782,10 @@ void SaveConfig(void)
 	float	Sound, Musik;
 
 	FILE *Datei = NULL;
+   char temp[100];
 
-	fopen_s(&Datei, CONFIGFILE, "wb");
+   snprintf( temp, sizeof(temp), "%s/%s", g_storage_ext, CONFIGFILE );
+	fopen_s(&Datei, temp, "wb");
 	if (Datei == NULL)
     {
    		Protokoll.WriteText( false, "Config file saving failed !\n" );
@@ -1064,7 +1079,10 @@ void SummaryScreen(void)
 
 bool NewDemo (const char Filename[])
 {
-	fopen_s(&DEMOFile, Filename, "wb");
+   char temp[100];
+
+   snprintf( temp, sizeof(temp), "%s/%s", g_storage_ext, Filename );
+	fopen_s(&DEMOFile, temp, "wb");
 
 	if(!DEMOFile)
 	{
@@ -1115,7 +1133,10 @@ bool LoadDemo (const char Filename[])
 	pTileEngine->YOffset = 0;
 
 	// File öffnen
-	fopen_s(&DEMOFile, Filename, "rb");
+   char temp[100];
+
+   snprintf( temp, sizeof(100), "%s/%s", g_storage_ext, Filename );
+	fopen_s(&DEMOFile, temp, "rb");
 
 	if(!DEMOFile)
 		return false;

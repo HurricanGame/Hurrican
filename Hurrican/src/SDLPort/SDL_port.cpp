@@ -30,6 +30,8 @@ GLenum MatrixMode = 0;
 D3DXMATRIXA16 g_matView;
 D3DXMATRIXA16 g_matModelView;
 
+const char* g_storage_ext;
+
 #ifndef __WIN32__
 void DeleteFile( const char* filename )
 {

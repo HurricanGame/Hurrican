@@ -105,7 +105,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 
 	if (image.data == NULL)
 	{
-	    sprintf_s(Temp, "data/%s", Filename);
+	   sprintf_s(Temp, "%s/data/%s", g_storage_ext, Filename);
 		if (FileExists(Temp))
 		{
 			loadImage(image, Temp);

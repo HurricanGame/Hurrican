@@ -470,7 +470,7 @@ bool CSoundManager::LoadSong(const char *Filename, int Nr)
 	}
 
 	// Dann checken, ob sich das File im Standard Ordner befindet
-	sprintf_s(Temp, "data/%s", Filename);
+	sprintf_s(Temp, "%s/data/%s", g_storage_ext, Filename);
 	if (FileExists(Temp))
 		goto loadfile;
 
@@ -810,7 +810,7 @@ bool CSoundManager::LoadWave(const char *Filename, int Nr, bool looped)
 	}
 
 	// Dann checken, ob sich das File im Standard Ordner befindet
-	sprintf_s(Temp, "data/%s", Filename);
+	sprintf_s(Temp, "%s/data/%s", g_storage_ext, Filename);
 	if (FileExists(Temp))
 		goto loadfile;
 

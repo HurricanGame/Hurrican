@@ -67,7 +67,7 @@ void CLightMap::Load(const char *filename)
 	unsigned long		Size;
 	FILE 				*TempFile = NULL;
 
-	sprintf_s(Temp, "data/%s", filename);
+	sprintf_s(Temp, "%s/data/%s", g_storage_ext, filename);
 	if (FileExists(Temp))
 		goto loadfile;
 

@@ -337,6 +337,10 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 #endif
     Protokoll.WriteText( false, "DirectInput8 polling for %d keys!\n", NumberOfKeys );
 
+#if defined(ANDROID)
+    JoysticksFound = 0;
+    JoystickFound = false;
+#else
     JoysticksFound = SDL_NumJoysticks();
 
     for (int i = 0; i < JoysticksFound; i++)
@@ -351,6 +355,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
             Joysticks[i].CanForceFeedback = false;
 		}
 	}
+#endif /* ANDROID */
 
     return true;
 }
@@ -429,6 +434,9 @@ bool DirectInputClass::UpdateTastatur(void)
 	}
 #elif defined(PLATFORM_SDL)
     SDL_PumpEvents();
+    #if defined(ANDROID)
+    UpdateTouchscreen();
+    #endif
 #endif
 	return true;
 }
@@ -650,7 +658,7 @@ void DirectInputClass::UpdateJoysticks(void)
 
 bool DirectInputClass::AreAllKeysReleased()
 {
-	for (int i = 0; i < MIN(NumberOfKeys,256); i++)
+	for (int i = 0; i < MIN(NumberOfKeys,MAX_KEYS); i++)
 		if (TastaturPuffer[i] != 0)
 			return false;
 
@@ -663,7 +671,7 @@ bool DirectInputClass::AreAllKeysReleased()
 
 bool DirectInputClass::AnyKeyDown(void)
 {
-	for (int i = 0; i < MIN(NumberOfKeys,256); i++)
+	for (int i = 0; i < MIN(NumberOfKeys,MAX_KEYS); i++)
 		if (KeyDown(i))
 			return true;
 
@@ -687,3 +695,178 @@ bool DirectInputClass::AnyButtonDown(void)
 	return false;
 }
 
+#if defined(ANDROID)
+void DirectInputClass::InitTouchBoxes( int w, int h )
+{
+    int b;
+    int index;
+    int box_w, box_h;
+    int y_offset;
+
+    Width  = w;
+    Height = h;
+
+    TouchDeviceCount = SDL_GetNumTouchDevices();
+    Protokoll.WriteText( false, "Finger devices detected: %d\n", TouchDeviceCount );
+
+    y_offset = h - (h/4);
+    box_w = (RENDERWIDTH/9)*((float)w/(float)RENDERWIDTH);
+    box_h = (RENDERHEIGHT/9)*((float)h/(float)RENDERHEIGHT);
+    TouchBoxes.resize(BOX_RECT_TOTAL);
+    TouchBoxMaps.resize(BOX_RECT_TOTAL);
+    for (b=0; b<BOX_RECT_TOTAL; b++)
+    {
+    	TouchBoxes.at(b).w = box_w;
+    	TouchBoxes.at(b).h = box_h;
+    }
+
+    Protokoll.WriteText( false, "box size: %d x %d\n", box_w, box_h );
+
+    // DPAD
+    TouchdpadRadius = box_w*1.5f;
+    TouchdpadX = TouchdpadRadius;
+    TouchdpadY = y_offset+(box_h/2);
+	// ABXY
+	TouchBoxes.at( 0 ).x = w-box_w; 		TouchBoxes.at( 0 ).y = y_offset;
+	TouchBoxes.at( 1 ).x = w-(box_w*2);     TouchBoxes.at( 1 ).y = y_offset-box_h;
+	TouchBoxes.at( 2 ).x = w-(box_w*2);     TouchBoxes.at( 2 ).y = y_offset+box_h;
+	TouchBoxes.at( 3 ).x = w-(box_w*3); 	TouchBoxes.at( 3 ).y = y_offset;
+	// Side buttons
+	TouchBoxes.at( 4 ).x = 0;               TouchBoxes.at( 4 ).y = h/4;
+	TouchBoxes.at( 5 ).x = 0;               TouchBoxes.at( 5 ).y = (h/4)+(box_h)+(box_h/4);
+	TouchBoxes.at( 6 ).x = 0;               TouchBoxes.at( 6 ).y = (h/4)+(box_h*2)+(box_h/2);
+	TouchBoxes.at( 7 ).x = w-box_w;         TouchBoxes.at( 7 ).y = h/4;
+	TouchBoxes.at( 8 ).x = w-box_w;         TouchBoxes.at( 8 ).y = (h/4)+(box_h)+(box_h/4);
+	TouchBoxes.at( 9 ).x = w-box_w;         TouchBoxes.at( 9 ).y = (h/4)+(box_h*2)+(box_h/2);
+	// Shoulders
+	TouchBoxes.at( 10 ).x = 0;              TouchBoxes.at( 10 ).y = 0;
+	TouchBoxes.at( 11 ).x = w-box_w; 		TouchBoxes.at( 11 ).y = 0;
+
+	TouchBoxMaps.at(0) = SDLK_a;
+	TouchBoxMaps.at(1) = SDLK_b;
+	TouchBoxMaps.at(2) = SDLK_c;
+	TouchBoxMaps.at(3) = SDLK_d;
+	TouchBoxMaps.at(4) = SDLK_e;
+	TouchBoxMaps.at(5) = SDLK_f;
+	TouchBoxMaps.at(6) = SDLK_g;
+	TouchBoxMaps.at(7) = SDLK_h;
+	TouchBoxMaps.at(8) = SDLK_i;
+    TouchBoxMaps.at(9) = SDLK_j;
+	TouchBoxMaps.at(10) = SDLK_ESCAPE;
+	TouchBoxMaps.at(11) = SDLK_RETURN;
+}
+
+void DirectInputClass::UpdateTouchscreen( void )
+{
+    uint32_t buttons;
+    uint8_t box;
+    SDL_Finger* finger;
+    uint32_t index;
+    uint32_t finger_count;
+    SDL_Rect touch;
+    SDL_Rect dpad;
+    SDL_TouchID fingerdevice;
+
+    touch.w = touch.h = 2;
+
+    for (box=0; box<TouchBoxMaps.size(); box++)
+    {
+        TastaturPuffer[ SDL_GetScancodeFromKey(TouchBoxMaps.at(box)) ] = 0;
+    }
+    TastaturPuffer[ SDL_GetScancodeFromKey(SDLK_UP) ] = 0;
+    TastaturPuffer[ SDL_GetScancodeFromKey(SDLK_DOWN) ] = 0;
+    TastaturPuffer[ SDL_GetScancodeFromKey(SDLK_LEFT) ] = 0;
+    TastaturPuffer[ SDL_GetScancodeFromKey(SDLK_RIGHT) ] = 0;
+
+    if (TouchDeviceCount > 0)
+    {
+        fingerdevice = SDL_GetTouchDevice(0);
+
+        if (fingerdevice != 0)
+        {
+            finger_count = SDL_GetNumTouchFingers(fingerdevice);
+
+            for (index=0; index<finger_count; index++)
+            {
+                finger = SDL_GetTouchFinger( fingerdevice, index );
+                if (finger != NULL)
+                {
+                    touch.x = finger->x*Width;
+                    touch.y = finger->y*Height;
+
+                    //Protokoll.WriteText( false, "Finger at %fx%f at %f\n",  finger->x, finger->y,  finger->pressure );
+
+                    for (box=0; box<TouchBoxes.size(); box++)
+                    {
+                        if (CheckRectCollision( &touch, &TouchBoxes.at(box) ) == true)
+                        {
+                            TastaturPuffer[ SDL_GetScancodeFromKey(TouchBoxMaps.at(box)) ] = 1;
+                            break;
+                            //Protokoll.WriteText( false, "Set %s %s!\n", SDL_GetKeyName(TouchBoxMaps.at(box)), SDL_GetScancodeName( SDL_GetScancodeFromKey(TouchBoxMaps.at(box)))  );
+                        }
+                    }
+
+                    #define OFFSET 15
+                    int rel_x = TouchdpadX - touch.x;
+                    int rel_y = TouchdpadY - touch.y;
+                    if (pow(TouchdpadRadius, 2) >= (pow(abs(rel_x), 2) +  pow(abs(rel_y), 2)))
+                    {
+                        int angle = atan2(-rel_y,-rel_x)/M_PI*180 + 180;
+
+                        //Protokoll.WriteText( false, "%d x %d angle %d !\n", rel_x, rel_y, angle );
+                        if (angle > (45-OFFSET) && angle < (135+OFFSET))
+                            TastaturPuffer[ SDL_GetScancodeFromKey(SDLK_UP) ] = 1;
+
+                        if (angle > (135-OFFSET) && angle < (225+OFFSET))
+                            TastaturPuffer[ SDL_GetScancodeFromKey(SDLK_RIGHT) ] = 1;
+
+                        if (angle > (225-OFFSET) && angle < (285+OFFSET))
+                            TastaturPuffer[ SDL_GetScancodeFromKey(SDLK_DOWN) ] = 1;
+
+                        if ((angle > (285-OFFSET) && angle <= 0) || (angle >= 0 && (angle < 45+OFFSET)))
+                            TastaturPuffer[ SDL_GetScancodeFromKey(SDLK_LEFT) ] = 1;
+                    }
+
+                }
+                else
+                {
+                    Protokoll.WriteText( false, "ERROR finger was NULL\n" );
+                }
+            }
+        }
+        else
+        {
+            Protokoll.WriteText( false, "ERROR device is %d\n", fingerdevice );
+        }
+    }
+}
+
+bool DirectInputClass::CheckRectCollision( SDL_Rect* boxA, SDL_Rect* boxB )
+{
+    // The sides of the SDL_Rects
+    int16_t leftA, leftB;
+    int16_t rightA, rightB;
+    int16_t topA, topB;
+    int16_t bottomA, bottomB;
+
+    // Calculate the sides of rec mCollisionbox
+    leftA   = boxB->x;
+    rightA  = boxB->x + boxB->w;
+    topA    = boxB->y;
+    bottomA = boxB->y + boxB->h;
+
+    // Calculate the sides of rec box
+    leftB   = boxA->x;
+    rightB  = boxA->x + boxA->w;
+    topB    = boxA->y;
+    bottomB = boxA->y + boxA->h;
+
+    // If any of the sides from mCollisionbox are outside of box
+    if (bottomA <= topB) return false;
+    if (topA >= bottomB) return false;
+    if (rightA <= leftB) return false;
+    if (leftA >= rightB) return false;
+    // If none of the sides from mCollisionbox are outside box
+    return true;    // Collision has occured
+}
+#endif

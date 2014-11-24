@@ -281,12 +281,12 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
 	}
 
 	// Dann checken, ob sich das File im Standard Ordner befindet
-	sprintf_s(Temp, "data/%s", Filename);
+   sprintf_s(Temp, "%s/data/%s", g_storage_ext, Filename);
 #if defined(USE_PVRTC)
-    strcpy( pvr, Temp );
-    strcat( pvr, ".pvr" );
-    if (FileExists(pvr))
-        goto loadfile;
+   strcpy( pvr, Temp );
+   strcat( pvr, ".pvr" );
+   if (FileExists(pvr))
+      goto loadfile;
 #endif
 	if (FileExists(Temp))
 		goto loadfile;

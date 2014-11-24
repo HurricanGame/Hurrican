@@ -440,7 +440,8 @@ void ConsoleClass::CheckCommands(void)
 		FILE *Datei = NULL;
 		char name[100];
 
-		strcpy_s(name, "data/");
+      strcpy_s(name, g_storage_ext );
+		strcpy_s(name, "/data/");
 		strcat_s(name, dummy);
 
 		// .map anhängen

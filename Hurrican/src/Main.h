@@ -39,18 +39,21 @@ struct sCommandLineParams
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define WIN_32_LEAN_AND_MEAN						// MFC abschalten
-#define WINDOWCLASSNAME	"HurricanWindowsClass"		// Name der Windows-Klasse
+#define WIN_32_LEAN_AND_MEAN						   // MFC abschalten
+#define WINDOWCLASSNAME	"HurricanWindowsClass"	// Name der Windows-Klasse
 #if defined(USE_320_240)
-#define SCREENWIDTH		320							// D3D Screen Breite
+#define  SCREENWIDTH		320							// D3D Screen Breite
 #define	SCREENHEIGHT	240							// D3D Screen Höhe
+#elif defined(USE_GL2) && defined(USE_FBO)
+#define  SCREENWIDTH		1024
+#define	SCREENHEIGHT	768
 #else
-#define SCREENWIDTH		640
+#define  SCREENWIDTH		640
 #define	SCREENHEIGHT	480
 #endif
 #define RENDERWIDTH		640
-#define	RENDERHEIGHT	480
-#define	SCREENBPP		16							// Bits per Pixel
+#define RENDERHEIGHT	480
+#define SCREENBPP		16							      // Bits per Pixel
 #define PARAM_NONE  0
 #define PARAM_LEVEL 1
 #define PARAM_LIST  2
@@ -72,6 +75,9 @@ void StartIntro(void);
 extern int WINDOWWIDTH;
 extern int WINDOWHEIGHT;
 extern sCommandLineParams CommandLineParams;			// Externer Paramter?
+#if defined(PLATFORM_SDL)
+extern const char* g_storage_ext;
+#endif
 
 void ShowDebugInfo(void);							// Allen möglichen Kram anzeigen
 
