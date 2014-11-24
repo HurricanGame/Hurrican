@@ -34,8 +34,10 @@ const double BackBufferY = 1024.0f;
 // sonstige Variablen
 // --------------------------------------------------------------------------------------
 
-D3DXMATRIX					matProj;					// Projektionsmatrix
-D3DXMATRIX					matWorld;					// Weltmatrix
+D3DXMATRIX           matProj;                // Projektionsmatrix
+D3DXMATRIX           matWorld;               // Weltmatrix
+D3DXMATRIX           matProjWindow;
+D3DXMATRIX           matProjRender;
 float						DegreetoRad[360];			// Tabelle mit Rotationswerten
 
 // --------------------------------------------------------------------------------------
@@ -236,11 +238,16 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
     uint16_t ScreenWidth    = SCREENWIDTH;
     uint16_t ScreenHeight   = SCREENHEIGHT;
     uint16_t ScreenDepth    = SCREENBPP;
+#if SDL_VERSION_ATLEAST(2,0,0)
+    uint32_t flags          = SDL_WINDOW_OPENGL;
+#else /* SDL 1.2 */
 #if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
     uint32_t flags          = SDL_SWSURFACE;
 #else
     uint32_t flags          = SDL_SWSURFACE|SDL_OPENGL;
 #endif
+#endif
+
 #if defined(RPI)
     ScreenWidth    = 0;
     ScreenHeight   = 0;
@@ -263,25 +270,54 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
         return 1;
     }
 #else
+#if defined(USE_GLES1) || defined(USE_GLES2)
+    SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 5 );
+    SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 6 );
+    SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 5 );
+#else
     SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 8 );
     SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 8 );
     SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 8 );
+#endif
     SDL_GL_SetAttribute( SDL_GL_BUFFER_SIZE, 32 );
     SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
     SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
-    //SDL_GL_SetAttribute( SDL_GL_MULTISAMPLEBUFFERS, 0 );
-    //SDL_GL_SetAttribute( SDL_GL_MULTISAMPLESAMPLES, 0 );
-#endif
+    SDL_GL_SetAttribute( SDL_GL_MULTISAMPLEBUFFERS, 1 );
+    SDL_GL_SetAttribute( SDL_GL_MULTISAMPLESAMPLES, 0 );
+#if SDL_VERSION_ATLEAST(2,0,0)
+#if defined(USE_GLES1)
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+#elif defined(USE_GLES2)
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+#else
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+#endif /* defined(USE_GLES1) */
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+#endif /* PLATFORM_SDL */
 
     // Setup SDL Screen
     if (isFullscreen == true)
     {
+#if SDL_VERSION_ATLEAST(2,0,0)
+		flags |= SDL_WINDOW_FULLSCREEN;
+#else /* SDL 1.2 */
         flags |= SDL_FULLSCREEN;
+#endif
     }
-    else
-    {
-        SDL_WM_SetCaption("Hurrican", "Hurrican");
-    }
+
+#if SDL_VERSION_ATLEAST(2,0,0)
+	// Create a window. Window mode MUST include SDL_WINDOW_OPENGL for use with OpenGL.
+	Window = SDL_CreateWindow("Hurrican", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+							  ScreenWidth, ScreenHeight, flags);
+
+	// Create an OpenGL context associated with the window.
+	GLcontext = SDL_GL_CreateContext(Window);
+#else /* SDL 1.2 */
+    //SDL_WM_SetCaption("Hurrican", "Hurrican");
 
     Screen = SDL_SetVideoMode( ScreenWidth, ScreenHeight, ScreenDepth, flags );
     if (Screen == NULL)
@@ -289,6 +325,7 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
         Protokoll.WriteText( false, "Failed to %dx%dx%d video mode: %s\n", ScreenWidth, ScreenHeight, ScreenDepth, SDL_GetError() );
         return false;
     }
+#endif
 
     SDL_ShowCursor(SDL_DISABLE);
 
@@ -323,10 +360,17 @@ bool DirectGraphicsClass::Exit(void)
 	SafeRelease (lpD3D);
 	Protokoll.WriteText( false, "-> Direct3D shutdown successfully completed !\n" );
 #elif defined(PLATFORM_SDL)
+#if SDL_VERSION_ATLEAST(2,0,0)
+	SDL_GL_DeleteContext(GLcontext);
+	SDL_DestroyWindow(Window);
+#endif
 #if defined(USE_GL2)
     Shaders[PROGRAM_COLOR].Close();
     Shaders[PROGRAM_TEXTURE].Close();
-#endif
+#if defined(USE_FBO)
+    RenderBuffer.Close();
+#endif /* USE_FBO */
+#endif /* USE_GL2 */
 #if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
     EGL_Close();
 #endif
@@ -334,7 +378,6 @@ bool DirectGraphicsClass::Exit(void)
     SDL_Quit();
     Protokoll.WriteText( false, "-> SDL/OpenGL shutdown successfully completed !\n" );
 #endif
-	Protokoll.WriteText( false, "-> Direct3D erfolgreich beendet !\n" );
 	return true;
 }
 
@@ -381,7 +424,17 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
 	lpD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 	lpD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
 #elif defined(PLATFORM_SDL)
+    char vert[256];
+    char frag[256];
     char* output;
+
+#if defined(__WIN32__)
+    if (LoadGLFunctions() != 0) {
+        return false;
+    }
+#endif /* __WIN32__ */
+
+    SetupFramebuffers();
 
     /* OpenGL Information */
     output = (char*)glGetString( GL_VENDOR );
@@ -411,11 +464,6 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
 #endif
 
 #if defined(USE_GL2)
-#if defined(__WIN32__)
-    if (LoadGLFunctions() != 0) {
-        return false;
-    }
-#endif
     // Compile the shader code and link into a program
     if (Shaders[PROGRAM_COLOR].Load( "data/shaders/shader_color.vert", "data/shaders/shader_color.frag" ) != 0) {
         return false;
@@ -444,6 +492,9 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
     /* change to the projection matrix and set our viewing volume. */
     load_matrix( GL_PROJECTION, matProj.data() );
     load_matrix( GL_MODELVIEW, g_matModelView.data() );
+
+#if defined(USE_FBO)
+    SelectBuffer( true );
 #endif
 
 #endif
@@ -649,9 +700,13 @@ void DirectGraphicsClass::RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,
     ProgramCurrent = program_next;
 #endif
 
-    if (PrimitiveType == D3DPT_LINELIST)
+    if (PrimitiveType == GL_LINES)
     {
         PrimitiveCount *= 2;
+    }
+    else if (PrimitiveType == GL_LINE_STRIP )
+    {
+        PrimitiveCount += 2;
     }
     else if (PrimitiveType == GL_TRIANGLES )
     {
@@ -782,18 +837,151 @@ void DirectGraphicsClass::ShowBackBuffer(void)
 
 	hresult = lpD3DDevice->Present(NULL, NULL, 0, NULL);		// Frontbuffer anzeigen
 #elif defined(PLATFORM_SDL)
+
+#if defined(USE_GL2) && defined(USE_FBO)
+    if (RenderBuffer.Enabled == true)
+    {
+        VERTEX2D vertices[4];
+
+        //Protokoll.WriteText( false, "%dx%d at %dx%d\n", RenderRect.w, RenderRect.h, RenderRect.x, RenderRect.y );
+
+        vertices[0].x = RenderRect.x;               vertices[0].y = RenderRect.y+RenderRect.h; /* lower left */
+        vertices[1].x = RenderRect.x;               vertices[1].y = RenderRect.y;   /* upper left */
+        vertices[2].x = RenderRect.x+RenderRect.w;  vertices[2].y = RenderRect.y+RenderRect.h; /* lower right */
+        vertices[3].x = RenderRect.x+RenderRect.w;  vertices[3].y = RenderRect.y;   /* upper right */
+        vertices[0].z = vertices[1].z = vertices[2].z = vertices[3].z = 0.0f;
+        vertices[0].color = vertices[1].color = vertices[2].color = vertices[3].color = 0xFFFFFFFF;
+
+        vertices[0].tu = 0; vertices[0].tv = 0; /* lower left */
+        vertices[1].tu = 0; vertices[1].tv = 1; /* upper left */
+        vertices[2].tu = 1; vertices[2].tv = 0; /* lower right */
+        vertices[3].tu = 1; vertices[3].tv = 1; /* upper right */
+
+        SelectBuffer( false );
+
+        DirectGraphics.SetTexture( RenderBuffer.texture );
+        RendertoBuffer( D3DPT_TRIANGLESTRIP, 2, &vertices[0] );
+        DirectGraphics.SetTexture( 0 );
+    }
+#endif
 #if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
     EGL_SwapBuffers();
 #else
+    #if SDL_VERSION_ATLEAST(2,0,0)
+    SDL_GL_SwapWindow(Window);
+    #else
     SDL_GL_SwapBuffers();
+    #endif
 #endif
 
 #if defined(DEBUG)
     int error = glGetError();
 
-    if (error != 0)
-        printf( "GL Error %X file %s: line %d\n", error, __FILE__, __LINE__ );
+    if (error != 0) {
+        Protokoll.WriteText( false, "GL Error %X file %s: line %d\n", error, __FILE__, __LINE__ );
+    }
+#endif
+
+#if defined(USE_GL2) && defined(USE_FBO)
+    SelectBuffer( true );
 #endif
 
 #endif
 }
+
+#if defined(PLATFORM_SDL)
+void DirectGraphicsClass::SetupFramebuffers( void )
+{
+    WindowView.x = 0;
+    WindowView.y = 0;
+    /* Read the current window size */
+#if SDL_VERSION_ATLEAST(2,0,0)
+    SDL_GetWindowSize( Window, &WindowView.w, &WindowView.h );
+#else
+    WindowView.w = Screen->w;
+    WindowView.h = Screen->h;
+#endif
+	Protokoll.WriteText( false, "Window resolution: %dx%d\n", WindowView.w, WindowView.h );
+
+    RenderView.x = 0;
+    RenderView.y = 0;
+    RenderView.w = RENDERWIDTH;
+    RenderView.h = RENDERHEIGHT;
+#if defined(USE_GL2) && defined(USE_FBO)
+    /* Create an FBO for rendering */
+    RenderBuffer.Open( RenderView.w, RenderView.h );
+
+    if (RenderBuffer.Enabled == true)
+    {
+        /* Set the render viewport */
+        SelectBuffer( true );
+        glViewport( RenderView.x, RenderView.y, RenderView.w, RenderView.h );
+        SelectBuffer( false );
+        Protokoll.WriteText( false, "Render viewport resolution: %dx%d at %dx%d\n", RenderView.w, RenderView.h, RenderView.x, RenderView.y );
+
+        /* Select the best 4:3 resolution */
+        if (WindowView.w<WindowView.h)
+        {
+            RenderRect.w = WindowView.w;
+            RenderRect.h = (WindowView.w/4)*3;
+        }
+        else
+        {
+            RenderRect.w = (WindowView.h/3)*4;
+            RenderRect.h = WindowView.h;
+        }
+        RenderRect.x = MAX(0, WindowView.w - RenderRect.w)/2;
+        RenderRect.y = MAX(0, WindowView.h - RenderRect.h)/2;
+
+        Protokoll.WriteText( false, "Render area: %dx%d at %dx%d\n", RenderRect.w, RenderRect.h, RenderRect.x, RenderRect.y );
+    }
+    else
+#endif
+    {
+        /* No scaling just center the rendering in the window */
+        WindowView.x = MAX( 0,(WindowView.w-RenderView.w)/2 );
+        WindowView.y = MAX( 0,(WindowView.h-RenderView.h)/2 );
+        WindowView.w = RenderView.w;
+        WindowView.h = RenderView.h;
+    }
+
+    glViewport( WindowView.x, WindowView.y, WindowView.w, WindowView.h );    /* Setup our viewport. */
+	Protokoll.WriteText( false, "Window viewport: %dx%d at %dx%d\n", WindowView.w, WindowView.h, WindowView.x, WindowView.y );
+}
+
+void DirectGraphicsClass::ClearBackBuffer( void )
+{
+#if defined(USE_GL2) && defined(USE_FBO)
+    glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+#endif
+    glClear( GL_COLOR_BUFFER_BIT );
+
+#if defined(USE_GL2) && defined(USE_FBO)
+    glBindFramebuffer( GL_FRAMEBUFFER, RenderBuffer.framebuffer );
+    glClear( GL_COLOR_BUFFER_BIT );
+#endif
+}
+
+#if defined(USE_GL2) && defined(USE_FBO)
+void DirectGraphicsClass::SelectBuffer( bool active )
+{
+    if (RenderBuffer.Enabled == true)
+    {
+        if (active == true)
+        {
+            glBindFramebuffer( GL_FRAMEBUFFER, RenderBuffer.framebuffer );
+            glViewport( RenderView.x, RenderView.y, RenderView.w, RenderView.h );
+            matProj = matProjRender;
+        }
+        else
+        {
+            glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+            glViewport( WindowView.x, WindowView.y, WindowView.w, WindowView.h );
+            D3DXMatrixIdentity( &g_matModelView );
+            matProj = matProjWindow;
+        }
+    }
+}
+#endif /* USE_GL2 && USE_FBO */
+
+#endif /* PLATFORM_SDL */
