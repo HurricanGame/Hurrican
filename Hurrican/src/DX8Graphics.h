@@ -22,7 +22,10 @@
 #include "texture.h"
 #if defined(USE_GL2)
 #include "cshader.h"
-#endif
+#if defined(USE_FBO)
+#include "cfbo.h"
+#endif /* USE_FBO */
+#endif /* USE_GL2 */
 #else
 #include <d3d8.h>
 #include <d3dx8.h>
@@ -82,8 +85,7 @@ class DirectGraphicsClass
 #if defined(PLATFORM_DIRECTX)
 		D3DDISPLAYMODE			d3ddm;							// Display Mode
 #elif defined(PLATFORM_SDL)
-        bool                    use_texture;
-		SDL_Surface*            Screen;
+      bool                    use_texture;
 		int                     MaxTextureUnits;
 #if defined(USE_GL2)
         GLuint                  ProgramCurrent;
@@ -95,6 +97,19 @@ class DirectGraphicsClass
 		int						BlendMode;						// Additiv, Colorkey oder White mode aktiviert?
 #if defined(PLATFORM_DIRECTX)
 		D3DPRESENT_PARAMETERS	d3dpp;							// Present Parameters
+#elif defined(PLATFORM_SDL)
+    #if SDL_VERSION_ATLEAST(2,0,0)
+        SDL_Window*             Window;
+        SDL_GLContext           GLcontext;
+    #else  /* SDL 1.2 */
+		SDL_Surface*            Screen;
+    #endif
+        SDL_Rect                WindowView;
+        SDL_Rect                RenderView;
+        SDL_Rect                RenderRect;
+    #if defined(USE_GL2) && defined(USE_FBO)
+        CFbo                    RenderBuffer;
+    #endif
 #endif
 		bool					SquareOnly;						// Nur quadratische Texturen
 		bool					PowerOfTwo;						// Nur 2er Potenz Texturen
@@ -121,7 +136,10 @@ class DirectGraphicsClass
 
 		void DisplayBuffer  (void);								// Render den Buffer auf den Backbuffer
 #if defined(PLATFORM_SDL)
+        void SetupFramebuffers( void );
         void SetTexture( GLuint texture );
+        void ClearBackBuffer( void );
+        void SelectBuffer( bool active );
 #endif
 };
 

@@ -24,9 +24,9 @@
 // --------------------------------------------------------------------------------------
 
 #if defined(PLATFORM_DIRECTX)
-char					TastaturPuffer[256];	// Tastaturpuffer für Keyboardabfrage
+char        TastaturPuffer[MAX_KEYS];	// Tastaturpuffer für Keyboardabfrage
 #elif defined(PLATFORM_SDL)
-char*                   TastaturPuffer;
+char*       TastaturPuffer;
 #endif
 
 // --------------------------------------------------------------------------------------
@@ -116,7 +116,7 @@ DirectInputClass::DirectInputClass(void)
 	lpDI		 = NULL;
 	lpDIKeyboard = NULL;
 	lpDIMaus	 = NULL;
-    NumberOfKeys = 256;
+   NumberOfKeys = MAX_KEYS;
 #endif
 
 	// Zu Beginn alle Eingabegeräte zurücksetzen
@@ -330,7 +330,12 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 #elif defined(PLATFORM_SDL)
 bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 {
+#if SDL_VERSION_ATLEAST(2,0,0)
+    TastaturPuffer = (char*)SDL_GetKeyboardState( &NumberOfKeys );
+#else
     TastaturPuffer = (char*)SDL_GetKeyState( &NumberOfKeys );
+#endif
+    Protokoll.WriteText( false, "DirectInput8 polling for %d keys!\n", NumberOfKeys );
 
     JoysticksFound = SDL_NumJoysticks();
 
@@ -387,7 +392,12 @@ void DirectInputClass::Exit(void)
 #elif defined(PLATFORM_SDL)
     for (int i = 0; i < JoysticksFound; i++)
 	{
-        if (SDL_JoystickOpened(i)) {
+#if SDL_VERSION_ATLEAST(2,0,0)
+        if (Joysticks[i].lpDIJoystick != NULL)
+#else
+        if (SDL_JoystickOpened(i))
+#endif
+        {
             SDL_JoystickClose(Joysticks[i].lpDIJoystick);
             Joysticks[i].lpDIJoystick = NULL;
         }

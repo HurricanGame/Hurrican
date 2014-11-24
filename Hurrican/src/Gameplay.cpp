@@ -228,7 +228,7 @@ void GameLoop(void)
     lpD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
 					   D3DCOLOR_XRGB(0,0,0), 1.0f, 0);
 #elif defined(PLATFORM_SDL)
-    glClear( GL_COLOR_BUFFER_BIT );
+    DirectGraphics.ClearBackBuffer();
 #endif
 
 	pTileEngine->NewXOffset = -1;
@@ -838,7 +838,7 @@ bool DisplayLoadInfo(const char Text[100])
 	lpD3DDevice->BeginScene();
 	lpD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,	D3DCOLOR_XRGB(0,0,0), 1.0f, 0);
 #elif defined(PLATFORM_SDL)
-    glClear( GL_COLOR_BUFFER_BIT );
+    DirectGraphics.ClearBackBuffer();
 #endif
 
 	pMenu->ShowMenuBack();

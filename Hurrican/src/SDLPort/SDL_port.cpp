@@ -201,11 +201,6 @@ void get_components( SDL_Surface *surface, int16_t x, int16_t y, uint8_t& r, uin
     a=(uint8_t)comp;
 }
 
-void int_to_rgb( uint32_t color, SDL_Color& components )
-{
-    SDL_GetRGB(color, SDL_GetVideoSurface()->format, &components.r, &components.g, &components.b);
-}
-
 uint8_t* LoadFileToMemory( const std::string& name, uint32_t& size )
 {
     std::fstream file;
@@ -230,6 +225,17 @@ uint8_t* LoadFileToMemory( const std::string& name, uint32_t& size )
     file.close();
 
     return buffer;
+}
+
+bool isPowerOfTwo(int x)
+{
+    return ((x != 0) && !(x & (x - 1)));
+}
+
+int nextPowerOfTwo(int x)
+{
+    double logbase2 = log(x) / log(2);
+    return (int)round(pow(2,ceil(logbase2)));
 }
 
 #if defined(USE_GL1)
@@ -283,6 +289,18 @@ uint8_t LoadGLFunctions( void )
     LOAD_OPENGL_PROC( PFNGLUNIFORM4FVPROC,                  glUniform4fv );
     LOAD_OPENGL_PROC( PFNGLUNIFORMMATRIX3FVPROC,            glUniformMatrix3fv );
     LOAD_OPENGL_PROC( PFNGLUNIFORMMATRIX4FVPROC,            glUniformMatrix4fv );
+    /* FBO API */
+#if defined(USE_FBO)
+    LOAD_OPENGL_PROC( PFNGLBINDFRAMEBUFFEREXTPROC,          glBindFramebuffer );
+    LOAD_OPENGL_PROC( PFNGLDELETEFRAMEBUFFERSEXTPROC,       glDeleteFramebuffers );
+    LOAD_OPENGL_PROC( PFNGLGENFRAMEBUFFERSEXTPROC,          glGenFramebuffers );
+    LOAD_OPENGL_PROC( PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC,   glCheckFramebufferStatus );
+    LOAD_OPENGL_PROC( PFNGLFRAMEBUFFERTEXTURE2DEXTPROC,     glFramebufferTexture2D );
+    LOAD_OPENGL_PROC( PFNGLGENRENDERBUFFERSEXTPROC,         glGenRenderbuffers );
+    LOAD_OPENGL_PROC( PFNGLBINDRENDERBUFFEREXTPROC,         glBindRenderbuffer );
+    LOAD_OPENGL_PROC( PFNGLRENDERBUFFERSTORAGEEXTPROC,      glRenderbufferStorage );
+    LOAD_OPENGL_PROC( PFNGLDELETERENDERBUFFERSEXTPROC,      glDeleteRenderbuffers );
+#endif /* defined(USE_FBO) */
 #endif
 
 #if defined(USE_GL1) || defined(USE_GL2)
@@ -321,6 +339,18 @@ PFNGLUNIFORM3FVPROC                 glUniform3fv                = NULL;
 PFNGLUNIFORM4FVPROC                 glUniform4fv                = NULL;
 PFNGLUNIFORMMATRIX3FVPROC           glUniformMatrix3fv          = NULL;
 PFNGLUNIFORMMATRIX4FVPROC           glUniformMatrix4fv          = NULL;
+/* FBO API */
+#if defined(USE_FBO)
+PFNGLBINDFRAMEBUFFEREXTPROC         glBindFramebuffer           = NULL;
+PFNGLDELETEFRAMEBUFFERSEXTPROC      glDeleteFramebuffers        = NULL;
+PFNGLGENFRAMEBUFFERSEXTPROC         glGenFramebuffers           = NULL;
+PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC  glCheckFramebufferStatus    = NULL;
+PFNGLFRAMEBUFFERTEXTURE2DEXTPROC    glFramebufferTexture2D      = NULL;
+PFNGLGENRENDERBUFFERSEXTPROC        glGenRenderbuffers          = NULL;
+PFNGLBINDRENDERBUFFEREXTPROC        glBindRenderbuffer          = NULL;
+PFNGLRENDERBUFFERSTORAGEEXTPROC     glRenderbufferStorage       = NULL;
+PFNGLDELETERENDERBUFFERSEXTPROC     glDeleteRenderbuffers       = NULL;
+#endif /* defined(USE_FBO) */
 #endif
 
 #if defined(USE_GL1) || defined(USE_GL2)

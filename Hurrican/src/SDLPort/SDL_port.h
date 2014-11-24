@@ -146,17 +146,17 @@ char* _strrev       ( char *);
 
 #ifndef __WIN32__
 void DeleteFile( const char* filename );
+#else
+uint8_t LoadGLFunctions( void );
 #endif
 uint32_t getpixel( SDL_Surface *surface, int16_t x, int16_t y );
 void putpixel( SDL_Surface *surface, int16_t x, int16_t y, uint32_t pixel );
 void get_components( SDL_Surface *surface, int16_t x, int16_t y, uint8_t& r, uint8_t& g, uint8_t& b, uint8_t& a );
-void int_to_rgb( uint32_t color, SDL_Color& components );
 uint8_t* LoadFileToMemory( const std::string& name, uint32_t& size );
+bool isPowerOfTwo(int x);
+int nextPowerOfTwo(int x);
 #if defined(USE_GL1)
 void load_matrix( GLenum mode, const GLfloat* m );
-#endif
-#if defined(USE_GL2)
-uint8_t LoadGLFunctions( void );
 #endif
 
 extern D3DXMATRIXA16 g_matView;

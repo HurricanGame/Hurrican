@@ -44,17 +44,6 @@ enum
 };
 #endif
 
-bool isPowerOfTwo(int x)
-{
-    return ((x != 0) && !(x & (x - 1)));
-}
-
-int nextPowerOfTwo(int x)
-{
-    double logbase2 = log(x) / log(2);
-    return (int)round(pow(2,ceil(logbase2)));
-}
-
 GLuint loadTexture( const char* path, SDL_Rect& dims, uint32_t size )
 {
     image_t image;
