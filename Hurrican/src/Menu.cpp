@@ -2498,12 +2498,10 @@ void MenuClass::DoMenu(void)
 
 					// Name des Savegames erstellen
 					_itoa_s(AktuellerPunkt, Buffer, 10);
-					strcpy_s(Name, strlen("Savegame") + 1, "Savegame");
-					strcat_s(Name, strlen(Buffer) + 1, Buffer);
-					strcat_s(Name, 4, ".sav");
 
 					// Versuchen, die Datei zu erstellen
 					// nur weitermachen falls es keinen Fehler gibt
+               snprintf( Name, sizeof(Name), "%s/Savegame%s.save", g_storage_ext, Buffer );
 					fopen_s(&Datei, Name, "wb");
 
 					// Fehler beim Öffnen ? Dann leeren Slot erzeugen
@@ -2549,15 +2547,13 @@ void MenuClass::LoadSavegames(void)
 	{
 		// Name des Savegames erstellen
 		_itoa_s(i, Buffer, 10);
-		strcpy_s(Name, "Savegame");
-		strcat_s(Name, Buffer);
-		strcat_s(Name, ".sav");
+      snprintf( Name, sizeof(Name), "%s/Savegame%s.save", g_storage_ext, Buffer );
 
 		// Versuchen, die Datei zu öffnen
 		// falls sie nicht existiert oder es eine Fehler gibt, ist der Slot noch leer
 		fopen_s(&Datei, Name, "rb");
 
-		Protokoll.WriteText("save games loaded\n", false);
+		Protokoll.WriteText(  false, "save games loaded\n" );
 
 		// Fehler beim Öffnen ? Dann leeren Slot erzeugen
 		//
@@ -2672,11 +2668,13 @@ void MenuClass::ShowSavegames(int Highlight)
 void MenuClass::LoadHighscore(void)
 {
 	FILE *Datei;			// Savegame Datei
+	char name[256];
 
 	// Versuchen, die Highscore Datei zu öffnen
 	// falls sie nicht existiert oder es eine Fehler gibt, wird die Standard
 	// Highscore gesetzt
-	fopen_s(&Datei, "Hurrican.hsl", "rb");
+	sprintf_s(name, "%s/Hurrican.hsl", g_storage_ext);
+	fopen_s(&Datei, name, "rb");
 
 
 	// Fehler beim Öffnen ? Dann standard Highscore setzen
@@ -2737,9 +2735,11 @@ void MenuClass::LoadHighscore(void)
 void MenuClass::SaveHighscore(void)
 {
 	FILE *Datei;			// Savegame Datei
+	char name[256];
 
 	// Highscore Datei öffnen
-	fopen_s(&Datei, "Hurrican.hsl", "wb");
+	sprintf_s(name, "%s/Hurrican.hsl", g_storage_ext);
+	fopen_s(&Datei, name, "wb");
 
 	// Fehler beim Öffnen ? Dann standard Highscore setzen
 	//
