@@ -191,7 +191,7 @@ void IntroClass::DoIntro(void)
 			//grüne Rechtecke rendern
 			if (TextOff <= 28)
 			{
-				DirectGraphics.SetAdditiveMode();
+				//DirectGraphics.SetAdditiveMode(); // This causing over saturation with the FBO
 				{
 					int l = pDefaultFont->StringLength(TextArray[TEXT_INTRO1 + TextOff], 0) + 28;
 					if (xr < l)

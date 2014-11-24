@@ -26,7 +26,7 @@ class Logdatei
 
 		     Logdatei    (const char Name[20]);					// Konstruktor
 			~Logdatei    (void);							// Desktruktor;
-		void WriteText   (const char Text[180], bool Abbruch);	// Text in Datei schreiben
+		void WriteText   (bool Abbruch, const char* text, ...);	// Text in Datei schreiben
 		void WriteValue  (int value);						// Wert in Datei schreiben
 };
 

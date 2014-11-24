@@ -78,13 +78,13 @@ DirectGraphicsClass::~DirectGraphicsClass(void)
 bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
                            DWORD dwZ_Bits, bool VSync)
 {
-	Protokoll.WriteText("\n--> Direct3D init <--\n", false);
-	Protokoll.WriteText(  "---------------------\n\n", false);
+	Protokoll.WriteText( false, "\n--> Direct3D init <--\n" );
+	Protokoll.WriteText( false, "---------------------\n\n" );
 
 	if(VSync == true)
-		Protokoll.WriteText(  "using VSync...\n", false);
+		Protokoll.WriteText( false, "using VSync...\n" );
 	else
-		Protokoll.WriteText(  "NOT using VSync...\n", false);
+		Protokoll.WriteText( false, "NOT using VSync...\n" );
 
 	//D3DDISPLAYMODE			DisplayMode;
 	//HRESULT					Res;
@@ -176,12 +176,12 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
 		goto _ModeFound;
 
 	// no mode found!
-	Protokoll.WriteText("No compatible Graphics Mode found!\n", true);
+	Protokoll.WriteText( true, "No compatible Graphics Mode found!\n" );
 	return false;
 
 _ModeFound:
 
-	Protokoll.WriteText("DX8 Device initialised!\n", false);
+	Protokoll.WriteText( false, "DX8 Device initialised!\n" );
 
    /* Jetzt haben wir die Informationen zusammen und machen weiter */
 
@@ -191,34 +191,34 @@ _ModeFound:
 
 	lpD3DDevice->GetDeviceCaps(&d3dCaps);
 
-	Protokoll.WriteText("Texture restrictions:\n", false);
+	Protokoll.WriteText( false, "Texture restrictions:\n" );
 
 	if (d3dCaps.TextureCaps & D3DPTEXTURECAPS_SQUAREONLY)
 	{
-		Protokoll.WriteText("Square Only: TRUE\n", false);
+		Protokoll.WriteText( false, "Square Only: TRUE\n" );
 		SquareOnly = true;
 	}
 	else
 	{
-		Protokoll.WriteText("Square Only: FALSE\n", false);
+		Protokoll.WriteText( false, "Square Only: FALSE\n" );
 		SquareOnly = false;
 	}
 
 	// Device kann nur Texturen mit 2er-Potenz-Grösse
 	if (d3dCaps.TextureCaps & D3DPTEXTURECAPS_POW2)
 	{
-		Protokoll.WriteText("Power of Two: TRUE\n", false);
+		Protokoll.WriteText( false, "Power of Two: TRUE\n" );
 		PowerOfTwo = true;
 	}
 	else
 	{
-		Protokoll.WriteText("Power of Two: FALSE\n", false);
+		Protokoll.WriteText( false, "Power of Two: FALSE\n" );
 		PowerOfTwo = false;
 	}
 
 	SetDeviceInfo();
 
-	Protokoll.WriteText("\n-> Direct3D init successfull!\n\n", false);
+	Protokoll.WriteText( false, "\n-> Direct3D init successful!\n\n" );
 
 	// DegreetoRad-Tabelle füllen
 	for(int i=0; i<360; i++)
@@ -246,18 +246,17 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
     ScreenHeight   = 0;
 #endif
 
-
-	Protokoll.WriteText( "\n--> SDL/OpenGL init <--\n", false);
-	Protokoll.WriteText(  "---------------------\n\n", false);
+	Protokoll.WriteText( false, "\n--> SDL/OpenGL init <--\n" );
+	Protokoll.WriteText( false, "---------------------\n\n" );
 
     // Initialize defaults, Video and Audio subsystems
-    printf( "Initializing SDL.\n" );
+    Protokoll.WriteText( false, "Initializing SDL.\n" );
     if (SDL_Init( SDL_INIT_VIDEO|SDL_INIT_AUDIO|SDL_INIT_TIMER|SDL_INIT_JOYSTICK )==-1)
     {
-        printf( "Failed to initialize SDL: %s.\n", SDL_GetError() );
+        Protokoll.WriteText( false, "Failed to initialize SDL: %s.\n", SDL_GetError() );
         return false;
     }
-    printf( "SDL initialized.\n" );
+    Protokoll.WriteText( false, "SDL initialized.\n" );
 
 #if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
     if (EGL_Open() != 0) {
@@ -287,7 +286,7 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
     Screen = SDL_SetVideoMode( ScreenWidth, ScreenHeight, ScreenDepth, flags );
     if (Screen == NULL)
     {
-        printf( "Failed to %dx%dx%d video mode: %s\n", ScreenWidth, ScreenHeight, ScreenDepth, SDL_GetError() );
+        Protokoll.WriteText( false, "Failed to %dx%dx%d video mode: %s\n", ScreenWidth, ScreenHeight, ScreenDepth, SDL_GetError() );
         return false;
     }
 
@@ -301,7 +300,7 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
 
 	SetDeviceInfo();
 
-	Protokoll.WriteText("\n-> OpenGL init successfull!\n\n", false);
+	Protokoll.WriteText( false, "\n-> OpenGL init successful!\n\n" );
 
 	// DegreetoRad-Tabelle füllen
 	for(int i=0; i<360; i++)
@@ -322,6 +321,7 @@ bool DirectGraphicsClass::Exit(void)
 #if defined(PLATFORM_DIRECTX)
 	SafeRelease (lpD3DDevice);
 	SafeRelease (lpD3D);
+	Protokoll.WriteText( false, "-> Direct3D shutdown successfully completed !\n" );
 #elif defined(PLATFORM_SDL)
 #if defined(USE_GL2)
     Shaders[PROGRAM_COLOR].Close();
@@ -332,8 +332,9 @@ bool DirectGraphicsClass::Exit(void)
 #endif
     delete_textures();
     SDL_Quit();
+    Protokoll.WriteText( false, "-> SDL/OpenGL shutdown successfully completed !\n" );
 #endif
-	Protokoll.WriteText("-> Direct3D erfolgreich beendet !\n", false);
+	Protokoll.WriteText( false, "-> Direct3D erfolgreich beendet !\n" );
 	return true;
 }
 
@@ -364,7 +365,7 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
 
 	if(hr != D3D_OK)
 	{
-		Protokoll.WriteText("\n-> SetTransform error!\n", true);
+		Protokoll.WriteText( true, "\n-> SetTransform error!\n" );
 		return false;
 	}
 
@@ -372,7 +373,7 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
 	hr = lpD3DDevice->SetVertexShader (D3DFVF_TLVERTEX);
 	if(hr != D3D_OK)
 	{
-		Protokoll.WriteText("\n-> SetVertexShader error!\n", true);
+		Protokoll.WriteText( true, "\n-> SetVertexShader error!\n" );
 		return false;
 	}
 
@@ -384,17 +385,17 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
 
     /* OpenGL Information */
     output = (char*)glGetString( GL_VENDOR );
-    printf( "GL_VENDOR: %s\n", output );
+    Protokoll.WriteText( false, "GL_VENDOR: %s\n", output );
     output = (char*)glGetString( GL_RENDERER );
-    printf( "GL_RENDERER: %s\n", output );
+    Protokoll.WriteText( false, "GL_RENDERER: %s\n", output );
     output = (char*)glGetString( GL_VERSION );
-    printf( "GL_VERSION: %s\n", output );
+    Protokoll.WriteText( false, "GL_VERSION: %s\n", output );
 #if defined(USE_GL2)
     output = (char*)glGetString( GL_SHADING_LANGUAGE_VERSION );
-    printf( "GL_SHADING_LANGUAGE_VERSION: %s\n", output );
+    Protokoll.WriteText( false, "GL_SHADING_LANGUAGE_VERSION: %s\n", output );
 #endif
     output = (char*)glGetString( GL_EXTENSIONS );
-    printf( "GL_EXTENSIONS: %s\n", output );
+    Protokoll.WriteText( false, "GL_EXTENSIONS: %s\n", output );
 
     /* Init OpenGL */
     glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );                 /* Set the background black */
@@ -471,7 +472,7 @@ bool DirectGraphicsClass::TakeScreenshot(const char Filename[100], int screenx, 
 	// Fehler ?
 	if(hr != D3D_OK)
 	{
-		Protokoll.WriteText("\n-> TakeScreenshot error!\n", false);
+		Protokoll.WriteText( false, "\n-> TakeScreenshot error!\n" );
 		FrontBuffer->Release();
 		return false;
 	}
@@ -662,7 +663,7 @@ void DirectGraphicsClass::RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,
     }
     else
     {
-        printf( "Add type to count indinces\n" );
+        Protokoll.WriteText( false, "Add type to count indinces\n" );
         return;
     }
 
@@ -685,14 +686,14 @@ void DirectGraphicsClass::RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,
 
     // Enable the client states for transfer
     if (use_texture == true) {
-        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glEnableClientState( GL_TEXTURE_COORD_ARRAY );
         glTexCoordPointer( 2, GL_FLOAT, stride, (uint8_t*)pVertexStreamZeroData+tex_offset );
     }
 
-    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState( GL_VERTEX_ARRAY );
     glVertexPointer( 2, GL_FLOAT, stride, pVertexStreamZeroData );
 
-    glEnableClientState(GL_COLOR_ARRAY);
+    glEnableClientState( GL_COLOR_ARRAY );
     glColorPointer( 4, GL_UNSIGNED_BYTE, stride, (uint8_t*)pVertexStreamZeroData+clr_offset );
 #elif defined(USE_GL2)
     // Enable attributes and uniforms for transfer

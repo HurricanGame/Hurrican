@@ -461,7 +461,7 @@ void ConsoleClass::CheckCommands(void)
 
 			CONSOLE_PRINT("found.");
 			pTileEngine->LoadLevel(dummy);
-			Protokoll.WriteText(dummy, false);
+			Protokoll.WriteText(false, dummy);
 		}
 
 		// Ansonsten Fehlermeldung

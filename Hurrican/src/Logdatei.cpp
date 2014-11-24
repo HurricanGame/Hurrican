@@ -64,31 +64,44 @@ Logdatei::~Logdatei()
 // bei Fehler-Eintrag ggf Messagebox ausgeben
 // --------------------------------------------------------------------------------------
 
-void Logdatei::WriteText(const char Text[180], bool Abbruch)
+void Logdatei::WriteText(bool Abbruch, const char* text, ...)
 {
+    #define BUFFER_SIZE 4096
+    va_list fmtargs;
+    char buffer[BUFFER_SIZE];
+
+    va_start( fmtargs, text );
+    vsnprintf( buffer, BUFFER_SIZE, text, fmtargs );
+    va_end( fmtargs );
+
 	fopen_s(&Logfile, itsFilename, "a");					// Datei zum anfügen öffnen
-	fprintf_s(Logfile, Text);								// und Text schreiben
-	fclose(Logfile);									// Datei wieder schliessen
+	if (Logfile != NULL)
+    {
+        fprintf_s(Logfile, buffer);								// und Text schreiben
 
-	if(Abbruch == true)									// Abbruch nach Log-Eintrag ?
-	{
-		fopen_s(&Logfile, itsFilename, "a");					// Datei zum anfügen öffnen
-		fprintf(Logfile, "\n    ^\n");
-		fprintf(Logfile, "   /|\\\n");
-		fprintf(Logfile, "    |\n");
-		fprintf(Logfile, "    |\n");
-		fprintf(Logfile, "    |\n");
-		fprintf(Logfile, "  Error\n\n");
-		fclose(Logfile);									// Datei wieder schliessen
+        if(Abbruch == true)									// Abbruch nach Log-Eintrag ?
+        {
+            fprintf(Logfile, "\n    ^\n");
+            fprintf(Logfile, "   /|\\\n");
+            fprintf(Logfile, "    |\n");
+            fprintf(Logfile, "    |\n");
+            fprintf(Logfile, "    |\n");
+            fprintf(Logfile, "  Error\n\n");
+        }
+        fclose(Logfile);									// Datei wieder schliessen
+    }
+    Logfile = NULL;
 
+    if(Abbruch == true)									// Abbruch nach Log-Eintrag ?
+    {
 #if defined(PLATFORM_DIRECTX)
-		MessageBox (g_hwnd, Text, "Ein Fehler ist aufgetreten !", MB_OK | MB_ICONEXCLAMATION);
+        MessageBox (g_hwnd, Text, "An error has occurred !", MB_OK | MB_ICONEXCLAMATION);
 #elif defined(PLATFORM_SDL)
-        Protokoll.WriteText ( "Ein Fehler ist aufgetreten !\n", false );
+        printf( "An error has occurred !\n" );
 #endif
-		delLogFile  = false;
-		GameRunning = false;
-	}
+        delLogFile  = false;
+        GameRunning = false;
+    }
 }
 
 // --------------------------------------------------------------------------------------

@@ -93,7 +93,7 @@ DirectGraphicsSurface::~DirectGraphicsSurface(void)
     delete_texture( itsSurface );
     itsSurface = 0;
 #endif
-	Protokoll.WriteText("Surface freigeben		: erfolgreich !\n", false);
+	Protokoll.WriteText( false, "Surface release		: successful !\n" );
 }
 
 // --------------------------------------------------------------------------------------
@@ -112,10 +112,10 @@ bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize
 	// Fehler beim Surface erstellen ?
 	if(hresult != D3D_OK)
 	{
-		strcpy_s(Temp, strlen("Fehler beim Surface-Erstellen für ") + 1, "Fehler beim Surface-Erstellen für ");
+		strcpy_s(Temp, strlen("Failed to create surface-for ") + 1, "Failed to create surface-for ");
 		strcat_s(Temp, strlen(Filename) + 1, Filename);
 		strcat_s(Temp, 3, " !");
-		Protokoll.WriteText(Temp, true);
+		Protokoll.WriteText( true, Temp );
 		return false;
 	}
 
@@ -126,10 +126,10 @@ bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize
 	// Fehler beim Laden ?
 	if(hresult != D3D_OK)
 	{
-		strcpy_s(Temp, strlen("Fehler beim Laden von ") + 1, "Fehler beim Laden von ");
+		strcpy_s(Temp, strlen("Failed to load ") + 1, "Failed to load ");
 		strcat_s(Temp, strlen(Filename) + 1, Filename);
 		strcat_s(Temp, 5, " !\n");
-		Protokoll.WriteText(Temp, true);
+		Protokoll.WriteText( true, Temp );
 		return false;
 	}
 #elif defined(PLATFORM_SDL)
@@ -150,7 +150,7 @@ bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize
 	strcat_s(Temp, strlen(Filename) + 1, Filename);
 	strcat_s(Temp, strlen(TextArray [TEXT_LADEN_ERFOLGREICH]) + 1, TextArray [TEXT_LADEN_ERFOLGREICH]);
 	strcat_s(Temp, 3, "\n");
-	Protokoll.WriteText(Temp, false);
+	Protokoll.WriteText( false, Temp );
 
 	return true;
 }
@@ -222,11 +222,11 @@ DirectGraphicsSprite::~DirectGraphicsSprite(void)
 #endif
 		itsTexture = (LPDIRECT3DTEXTURE8)NULL;
 		LoadedTextures--;
-//		Protokoll.WriteText("-> Sprite Textur erfolgreich freigegeben ! \n", false);
+//		Protokoll.WriteText( false, "-> Sprite texture successfully released ! \n" );
 
 		_itoa_s(LoadedTextures, Buffer, 10);
-//		Protokoll.WriteText(Buffer, false);
-//		Protokoll.WriteText(" Sprite Textur(en) übrig !\n", false);
+//		Protokoll.WriteText( false, Buffer );
+//		Protokoll.WriteText( false, " Sprite Textur(en) übrig !\n" );
 	}
 }
 
@@ -295,8 +295,7 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
 
 	if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
 	{
-		sprintf_s(Temp, "\n-> Error loading %s from Archive !\n", Filename);
-		Protokoll.WriteText(Temp, true);
+		Protokoll.WriteText( true, "\n-> Error loading %s from Archive !\n", Filename );
 		return false;
 	}
 	else
@@ -361,7 +360,7 @@ loadfile:
 		strcpy_s(Temp, strlen("Fehler beim Laden von ") + 1, "Fehler beim Laden von ");
 		strcat_s(Temp, strlen(Filename) + 1, Filename);
 		strcat_s(Temp, 4, " !\n");
-		Protokoll.WriteText(Temp, true);
+		Protokoll.WriteText( true, Temp );
 		return false;
 	}
 
@@ -400,14 +399,14 @@ loadfile:
 
 	// Bild korrekt geladen
 	sprintf_s(Temp, "%s %s %s %s", TextArray [TEXT_LADE_BITMAP], Filename, TextArray [TEXT_LADEN_ERFOLGREICH], "\n");
-	Protokoll.WriteText(Temp, false);
+	Protokoll.WriteText( false, Temp );
 
 	DisplayLoadInfo(Temp);
 
 	LoadedTextures++;							// Anzahl der geladenen Texturen erhöhen
 	//_itoa_s(LoadedTextures, Temp, 10);
-//	Protokoll.WriteText(Temp, false);
-//	Protokoll.WriteText(" Sprite Textur(en) geladen !\n", false);
+//	Protokoll.WriteText( false, Temp );
+//	Protokoll.WriteText( false, " Sprite Textur(en) loaded !\n" );
 	return true;
 }
 

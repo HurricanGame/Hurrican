@@ -147,8 +147,8 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 {
 	HRESULT hresult;
 
-	Protokoll.WriteText("\n--> DirectInput8 init <--\n", false);
-	Protokoll.WriteText(  "-------------------------\n\n", false);
+	Protokoll.WriteText( false, "\n--> DirectInput8 init <--\n" );
+	Protokoll.WriteText( false, "-------------------------\n\n" );
 
 	hresult = DirectInput8Create(hinst, DIRECTINPUT_VERSION,
                                  IID_IDirectInput8, (LPVOID*)&lpDI, NULL);
@@ -156,10 +156,10 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 	// DirectInput Haupt-Device erstellen
 	if(hresult != DI_OK)
 	{
-		Protokoll.WriteText("\n-> DirectInput8Create error!\n", true);
+		Protokoll.WriteText( true, "\n-> DirectInput8Create error!\n" );
 		return false;
 	}
-	Protokoll.WriteText("DirectInput8Create	successfull!\n", false);
+	Protokoll.WriteText( false, "DirectInput8Create	successful!\n" );
 
 //----- Keyboard
 
@@ -167,19 +167,19 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 	hresult = lpDI->CreateDevice(GUID_SysKeyboard, &lpDIKeyboard, NULL);
 	if(hresult != DI_OK)
 	{
-		Protokoll.WriteText("\n-> Keyboard : CreateDevice error!\n", true);
+		Protokoll.WriteText( true, "\n-> Keyboard : CreateDevice error!\n" );
 		return false;
 	}
-	Protokoll.WriteText("Keyboard : CreateDevice successfull!\n", false);
+	Protokoll.WriteText( false, "Keyboard : CreateDevice successful!\n" );
 
 	// Datenformat für Keyboard festlegen
 	hresult = lpDIKeyboard->SetDataFormat(&c_dfDIKeyboard);
 	if(hresult != DI_OK)
 	{
-		Protokoll.WriteText("\n-> Keyboard : SetDataFormat error!\n", true);
+		Protokoll.WriteText( true, "\n-> Keyboard : SetDataFormat error!\n" );
 		return false;
 	}
-	Protokoll.WriteText("Keyboard : SetDataFormat successfull!\n", false);
+	Protokoll.WriteText( false, "Keyboard : SetDataFormat successful!\n" );
 
 	// Keyboard Cooperativelevel setzen
 	if (CommandLineParams.RunWindowMode == true)
@@ -189,10 +189,10 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 
 	if(hresult != DI_OK)
 	{
-		Protokoll.WriteText("\n-> Keyboard : SetCooperativeLevel error!\n", true);
+		Protokoll.WriteText( true, "\n-> Keyboard : SetCooperativeLevel error!\n" );
 		return false;
 	}
-	Protokoll.WriteText("Keyboard : SetCooperativeLevel	successfull!\n", false);
+	Protokoll.WriteText( false, "Keyboard : SetCooperativeLevel	successful!\n" );
 
 	// Keyboard akquirieren
 	if (lpDIKeyboard)
@@ -200,10 +200,10 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 		hresult = lpDIKeyboard->Acquire();
 		if(hresult != DI_OK)
 		{
-			Protokoll.WriteText("\n-> Keyboard : Acquire error!\n", true);
+			Protokoll.WriteText( true, "\n-> Keyboard : Acquire error!\n" );
 			return false;
 		}
-		Protokoll.WriteText("Keyboard : Acquire	successfull!\n", false);
+		Protokoll.WriteText( false, "Keyboard : Acquire	successful!\n" );
 	}
 
 	// angeschlossenen Joystick mit ForceFeedback enumerieren
@@ -217,11 +217,11 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
                                &guidJoystickDevice, 0/*DIEDFL_ATTACHEDONLY*/);
 	}
 	else
-		Protokoll.WriteText("Joystick : EnumDevices successfull!\n", false);
+		Protokoll.WriteText( false, "Joystick : EnumDevices successful!\n" );
 
 	// Gefundene Joysticks initialisieren
 	if (JoysticksFound == 0)
-		Protokoll.WriteText("No joystick found, skipping init!\n", false);
+		Protokoll.WriteText( false, "No joystick found, skipping init!\n" );
 	else
 	for (int i = 0; i < JoysticksFound; i++)
 	{
@@ -232,7 +232,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 			strcpy_s(Buf, strlen("Error initialising Joystick ") + 1, "Error initialising Joystick ");
 			strcat_s(Buf, strlen(Joysticks[i].JoystickName) + 1, Joysticks[i].JoystickName);
 			strcat_s(Buf, 5, " !\n");
-			Protokoll.WriteText(Buf, false);
+			Protokoll.WriteText( false, Buf );
 		}
 		else
 		{
@@ -241,11 +241,11 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 			strcpy_s(Buf, strlen("Joystick found : ") + 1, "Joystick found : ");
 			strcat_s(Buf, strlen(Joysticks[i].JoystickName) + 1, Joysticks[i].JoystickName);
 			strcat_s(Buf, 3, "\n");
-			Protokoll.WriteText (Buf, false);
+			Protokoll.WriteText( false, Buf );
 
 			if (Joysticks[i].CanForceFeedback)
 			{
-				Protokoll.WriteText ("Initializing ForceFeedback Effects\n", false);
+				Protokoll.WriteText( false, "Initializing ForceFeedback Effects\n" );
 
 				// Vibrations-Effekte erstellen
 				// Kurzes, schwaches Vibrieren (ShorVib)
@@ -275,7 +275,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 				hresult = Joysticks[i].lpDIJoystick->CreateEffect (GUID_ConstantForce , &diEffect, &Joysticks[i].pFFE_SmallVib, NULL);
 				if (hresult != DI_OK)
 				{
-					Protokoll.WriteText ("Error initializing Effect! Not using ForceFeedback\n", false);
+					Protokoll.WriteText( false, "Error initializing Effect! Not using ForceFeedback\n" );
 					Joysticks[i].CanForceFeedback = false;
 				}
 
@@ -286,7 +286,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 				hresult = Joysticks[i].lpDIJoystick->CreateEffect (GUID_ConstantForce , &diEffect, &Joysticks[i].pFFE_BigVib, NULL);
 				if (hresult != DI_OK)
 				{
-					Protokoll.WriteText ("Error initializing Effect! Not using ForceFeedback\n", false);
+					Protokoll.WriteText( false, "Error initializing Effect! Not using ForceFeedback\n" );
 					Joysticks[i].CanForceFeedback = false;
 				}
 
@@ -301,7 +301,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 				hresult = Joysticks[i].lpDIJoystick->CreateEffect (GUID_RampForce, &diEffect, &Joysticks[i].pFFE_MaxVib, NULL);
 				if (hresult != DI_OK)
 				{
-					Protokoll.WriteText ("Error initializing Effect! Not using ForceFeedback\n", false);
+					Protokoll.WriteText( false, "Error initializing Effect! Not using ForceFeedback\n" );
 					Joysticks[i].CanForceFeedback = false;
 				}
 
@@ -317,14 +317,14 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 				hresult = Joysticks[i].lpDIJoystick->CreateEffect (GUID_ConstantForce, &diEffect, &Joysticks[i].pFFE_Blitz, NULL);
 				if (hresult != DI_OK)
 				{
-					Protokoll.WriteText ("Error initializing Effect! Not using ForceFeedback\n", false);
+					Protokoll.WriteText( false, "Error initializing Effect! Not using ForceFeedback\n" );
 					Joysticks[i].CanForceFeedback = false;
 				}
 			}
 		}
 	}
 
-	Protokoll.WriteText("\n-> DirectInput8 init successfull!\n\n", false);
+	Protokoll.WriteText( false, "\n-> DirectInput8 init successful!\n\n" );
 	return true;
 }
 #elif defined(PLATFORM_SDL)
@@ -338,7 +338,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 	{
         if(Joysticks[i].Init(i) == false)
         {
-			Protokoll.WriteText ("Error opening joystick", false);
+			Protokoll.WriteText( false, "Error opening joystick" );
         }
 		else
 		{
@@ -383,7 +383,7 @@ void DirectInputClass::Exit(void)
 	}
 
 	SafeRelease(lpDI);					// DirectInput Hauptobjekt freigeben
-	Protokoll.WriteText("-> DirectInput8 erfolgreich beendet !\n", false);
+	Protokoll.WriteText( false, "-> DirectInput8 shutdown successfully completed !\n" );
 #elif defined(PLATFORM_SDL)
     for (int i = 0; i < JoysticksFound; i++)
 	{
@@ -392,6 +392,8 @@ void DirectInputClass::Exit(void)
             Joysticks[i].lpDIJoystick = NULL;
         }
 	}
+
+    Protokoll.WriteText( false, "-> SDL/OpenGL input shutdown successfully completed !\n" );
 #endif
 }
 
@@ -450,7 +452,7 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
 				hresult = lpDIMaus->Acquire();
 				if (hresult != DI_OK)
 				{
-					Protokoll.WriteText("\n-> Maus : Re-Acquire Fehler !\n", false);
+					Protokoll.WriteText( false, "\n-> Maus : Re-Acquire Fehler !\n" );
 					return false;
 				}
 				else
@@ -459,7 +461,7 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
 													  &od, &dwElemente, 0);
 					if (hresult == DIERR_INPUTLOST)
 					{
-						Protokoll.WriteText("\n-> Maus : GetData Fehler !\n", false);
+						Protokoll.WriteText( false, "\n-> Maus : GetData Fehler !\n" );
 						return false;
 					}
 				}
@@ -537,7 +539,7 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
 			hresult = lpDIMaus->Acquire();
 			if (hresult != DI_OK)
 			{
-				Protokoll.WriteText("\n-> Maus : Re-Acquire Fehler !\n", false);
+				Protokoll.WriteText( false, "\n-> Maus : Re-Acquire Fehler !\n" );
 				return false;
             }
 			else
@@ -545,7 +547,7 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
 				hresult = lpDIMaus->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&ms);
 				if (hresult == DIERR_INPUTLOST)
 				{
-					Protokoll.WriteText("\n-> Maus : GetDeviceState Fehler !\n", false);
+					Protokoll.WriteText( false, "\n-> Maus : GetDeviceState Fehler !\n" );
 					return false;
 				}
 			}

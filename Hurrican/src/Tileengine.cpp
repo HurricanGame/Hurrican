@@ -278,7 +278,7 @@ void TileEngineClass::ClearLevel()
 	// Zuerst alle Gegner-Texturen freigeben , damit
 	// nur die geladen werden, die auch benötigt werden
 	// Objekte, die immer benötigt werden, wie Extraleben, Diamanten etc.
-	// werden nicht freigegeben
+	// werden nicht released
 	for (int i = 4; i < MAX_GEGNERGFX; i++)
 		if (i != PUNISHER &&
 			pGegnerGrafix[i] != NULL)						// Ist eine Textur geladen ?
@@ -344,8 +344,7 @@ bool TileEngineClass::LoadLevel(char Filename[100])
 	// Auch nicht? Dann ist es hoffentlich im RAR file
 	if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
 	{
-		sprintf_s(Temp, "\n-> Error loading %s from Archive !\n", Filename);
-		Protokoll.WriteText(Temp, true);
+		Protokoll.WriteText( true, "\n-> Error loading %s from Archive !\n", Filename );
 		return false;
 	}
 	else
@@ -367,7 +366,7 @@ loadfile:
 		free(pData);								// und Speicher freigeben
 	}
 
-	Protokoll.WriteText("\n-> Loading Level <-\n\n", false);
+	Protokoll.WriteText(false, "\n-> Loading Level <-\n\n" );
 
 	StopStageMusicAtStart = false;
 
@@ -385,8 +384,7 @@ loadfile:
 
 	if(!Datei)
 	{
-		strcat_s(Temp, " \n-> Error loading level !\n");
-		Protokoll.WriteText(Temp, false);
+		Protokoll.WriteText( false, " \n-> Error loading level !\n" );
 		return false;
 	}
 
@@ -415,7 +413,7 @@ loadfile:
 	ParallaxLayer[1].LoadImage(DateiHeader.ParallaxBFile, 640, 480, 640, 480, 1, 1);
 	CloudLayer.LoadImage(DateiHeader.CloudFile, 640, 240, 640, 240, 1, 1);
 	Timelimit = (double) SWAP32(DateiHeader.Timelimit);
-	
+
 	#if SDL_BYTEORDER == SDL_BIG_ENDIAN
 		DateiHeader.NumObjects = SWAP32(DateiHeader.NumObjects);
 	#endif
@@ -816,7 +814,7 @@ loadfile:
 	#if SDL_BYTEORDER == SDL_BIG_ENDIAN
 		pTileEngine->DateiAppendix.UsedPowerblock = SWAP32(pTileEngine->DateiAppendix.UsedPowerblock);
 	#endif
-	
+
 	bDrawShadow = pTileEngine->DateiAppendix.Taschenlampe;
 	ShadowAlpha = 255.0f;
 
@@ -856,8 +854,8 @@ loadfile:
 	// Level korrekt geladen
 	strcpy_s(Temp, "-> Load Level : ");
 	strcat_s(Temp, Filename);
-	strcat_s(Temp, " successfull ! <-\n\n");
-	Protokoll.WriteText(Temp, false);
+	strcat_s(Temp, " successful ! <-\n\n");
+	Protokoll.WriteText( false, Temp );
 
 	Zustand = ZUSTAND_SCROLLBAR;
 

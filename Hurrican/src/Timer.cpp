@@ -245,7 +245,7 @@ void TimerClass::resetMaxMinFPS(void)
 
 void TimerClass::WriteLogValues(void)
 {
-	Protokoll.WriteText("\nMaximale      FPS : ", false); Protokoll.WriteValue((int)(FPSMaximum));
-	Protokoll.WriteText(  "Minimale      FPS : ", false); Protokoll.WriteValue((int)(FPSMinimum));
-	Protokoll.WriteText(  "Durchschnitts FPS : ", false); Protokoll.WriteValue((int)(DurchschnittFramerate));
+	Protokoll.WriteText( false, "\nMaximum  FPS : " ); Protokoll.WriteValue((int)(FPSMaximum));
+	Protokoll.WriteText( false,   "Minimum  FPS : " ); Protokoll.WriteValue((int)(FPSMinimum));
+	Protokoll.WriteText( false,   "Average  FPS : " ); Protokoll.WriteValue((int)(DurchschnittFramerate));
 }

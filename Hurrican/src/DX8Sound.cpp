@@ -302,9 +302,9 @@ CSoundManager::CSoundManager()
 	InitSuccessfull = InitFMOD(smpp);
 
 	if (true == InitSuccessfull)
-		Protokoll.WriteText("Sound Manager created\n", false);
+		Protokoll.WriteText( false, "Sound Manager created\n" );
 	else
-		Protokoll.WriteText("\n-> Create Sound Manager failed !\n", false);
+		Protokoll.WriteText( false, "\n-> Create Sound Manager failed !\n" );
 }; // Konstruktor
 
 //---------------------------------------------------------------------------------------
@@ -333,11 +333,11 @@ CSoundManager::CSoundManager   (SOUNDMANAGER_PARAMETERS smpp)
 
 	if (InitFMOD(smpp) == true)
 	{
-		Protokoll.WriteText("Sound Manager created\n", false);
+		Protokoll.WriteText( false, "Sound Manager created\n" );
 	}
 	else
 	{
-		Protokoll.WriteText("\n-> Create Sound Manager failed !\n", true);
+		Protokoll.WriteText( true, "\n-> Create Sound Manager failed !\n" );
 	}
 }; // Überladener Konstruktor
 
@@ -351,7 +351,7 @@ CSoundManager::CSoundManager   (SOUNDMANAGER_PARAMETERS smpp)
 
 CSoundManager::~CSoundManager()
 {
-	Protokoll.WriteText("-> Shutting down Sound Manager\n", false);
+	Protokoll.WriteText( false, "-> Shutting down Sound Manager\n" );
 
 	MUSIC_StopAllSongs();
 
@@ -392,26 +392,26 @@ CSoundManager::~CSoundManager()
 bool CSoundManager::InitFMOD(SOUNDMANAGER_PARAMETERS smpp)
 {
 #if defined(PLATFORM_DIRECTX)
-	Protokoll.WriteText ("Initializing FMOD\n", false);
+	Protokoll.WriteText( false, "Initializing FMOD\n" );
 
 	FSOUND_SetOutput(FSOUND_OUTPUT_DSOUND);					// Output-Mode setzen
 	FSOUND_SetDriver(0);									// Default-Soundkarte setzen
 	FSOUND_SetMixer(FSOUND_MIXER_QUALITY_AUTODETECT);		// Mixer-Quality setzen
 #elif defined(PLATFORM_SDL)
-	Protokoll.WriteText ("Initializing SDL_mixer\n", false);
+	Protokoll.WriteText( false, "Initializing SDL_mixer\n" );
 #endif
 
 	InitSuccessfull = (TRUE == SOUND_Init(smpp.Mixrate, smpp.MaxSoftwareChannels, smpp.Flags));
 
 	if (false == InitSuccessfull)
 	{
-		Protokoll.WriteText ("\n->", false);
-		Protokoll.WriteText (GetFMODErrorString(SOUND_GetError()), false);
+		Protokoll.WriteText( false, "\n->" );
+		Protokoll.WriteText( false, GetFMODErrorString(SOUND_GetError()) );
 		return false;
 	}
 
 	MaxChannels = SOUND_GetMaxChannels();
-	Protokoll.WriteText ("Successfull\n", false);
+	Protokoll.WriteText( false, "Successfull\n" );
 
 	return true;
 } // InitFMOD
@@ -477,8 +477,7 @@ bool CSoundManager::LoadSong(const char *Filename, int Nr)
 	// Auch nicht? Dann ist es hoffentlich im RAR file
 	if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
 	{
-		sprintf_s(Temp, "\n-> Error loading %s from Archive !\n", Filename);
-		Protokoll.WriteText(Temp, true);
+		Protokoll.WriteText( true, "\n-> Error loading %s from Archive !\n", Filename );
 		return false;
 	}
 	else
@@ -510,7 +509,7 @@ loadfile:
 		strcpy_s(Buffer, strlen("\n-> Error loading ") + 1, "\n-> Error loading ");
 		strcat_s(Buffer, strlen(Filename) + 1, Filename);
 		strcat_s(Buffer, 3, "\n");
-		Protokoll.WriteText(Buffer, true);
+		Protokoll.WriteText( true, Buffer );
 
 		//return (-1);
 		return false;
@@ -526,8 +525,8 @@ loadfile:
 	/*
 	strcpy_s(Buffer, "Load Song : ");
 	strcat_s(Buffer, Filename);
-	strcat_s(Buffer, " successfull\n");
-	Protokoll.WriteText(Buffer, false);
+	strcat_s(Buffer, " successful\n");
+	Protokoll.WriteText( false, Buffer );
 	*/
 
 	//return Nummer;
@@ -818,8 +817,7 @@ bool CSoundManager::LoadWave(const char *Filename, int Nr, bool looped)
 	// Auch nicht? Dann ist es hoffentlich im RAR file
 	if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
 	{
-		sprintf_s(Temp, "\n-> Error loading %s from Archive !\n", Filename);
-		Protokoll.WriteText(Temp, true);
+		Protokoll.WriteText( true, "\n-> Error loading %s from Archive !\n", Filename );
 		return false;
 	}
 	else
@@ -865,7 +863,7 @@ loadfile:
 		strcpy_s(Buffer, "\n-> Error loading ");
 		strcat_s(Buffer, Filename);
 		strcat_s(Buffer, "\n");
-		Protokoll.WriteText(Buffer, true);
+		Protokoll.WriteText( true, Buffer );
 */
 
 	//	return (-1);
@@ -889,7 +887,7 @@ loadfile:
 		strcat_s(Buffer, Filename);
 		strcat_s(Buffer, TextArray [TEXT_LADEN_ERFOLGREICH]);
 		strcat_s(Buffer, " \n");
-		Protokoll.WriteText(Buffer, false);*/
+		Protokoll.WriteText( false, Buffer );*/
 
 
 	DisplayLoadInfo(Buffer);

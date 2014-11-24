@@ -73,8 +73,7 @@ void CLightMap::Load(const char *filename)
 
 	if (urarlib_get(&pData, &Size, (char*)filename, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
 	{
-		sprintf_s(Name, "Error loading Lightmap %s !\n",filename);
-		Protokoll.WriteText(Name, false);
+		Protokoll.WriteText( false, "Error loading Lightmap %s !\n", filename );
 		return;
 	}
 
@@ -102,7 +101,7 @@ loadfile:
 		strcpy_s(Name, strlen("Error loading Lightmap \"") + 1, "Error loading Lightmap \"");
 		strcat_s(Name, strlen(filename) + 1, filename);
 		strcat_s(Name, 3, "\"!");
-		Protokoll.WriteText(Name, true);
+		Protokoll.WriteText( true, Name );
 		return;
 	}
 
