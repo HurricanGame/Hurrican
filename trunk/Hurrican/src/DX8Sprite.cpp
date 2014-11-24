@@ -448,10 +448,10 @@ bool DirectGraphicsSprite::RenderTexture(float x, float y, float w, float h, flo
 	o = y;		// Oben
 	u = y+h;	// Unten
 
-	l -= 0.5f;
-	r += 0.5f;
-	o -= 0.5f;
-	u += 0.5f;
+	l -= TEXTURE_COORD_OFFSET;
+	r += TEXTURE_COORD_OFFSET;
+	o -= TEXTURE_COORD_OFFSET;
+	u += TEXTURE_COORD_OFFSET;
 
 	TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
 	TriangleStrip[0].z	   = TriangleStrip[1].z		= TriangleStrip[2].z	 = TriangleStrip[3].z	  = 0.0f;
@@ -505,10 +505,10 @@ bool DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
 	o = y;									// Oben
 	u = y+(itsRect.bottom-itsRect.top) - 1;	// Unten
 
-	l -= 0.5f;
-	r += 0.5f;
-	o -= 0.5f;
-	u += 0.5f;
+	l -= TEXTURE_COORD_OFFSET;
+	r += TEXTURE_COORD_OFFSET;
+	o -= TEXTURE_COORD_OFFSET;
+	u += TEXTURE_COORD_OFFSET;
 
 	tl = itsRect.left  /itsXSize;	// Links
 	tr = itsRect.right /itsXSize;	// Rechts
@@ -578,10 +578,10 @@ bool DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR c1,
 	o = y;									// Oben
 	u = y+(itsRect.bottom-itsRect.top) - 1;	// Unten
 
-	l -= 0.5f;
-	r += 0.5f;
-	o -= 0.5f;
-	u += 0.5f;
+	l -= TEXTURE_COORD_OFFSET;
+	r += TEXTURE_COORD_OFFSET;
+	o -= TEXTURE_COORD_OFFSET;
+	u += TEXTURE_COORD_OFFSET;
 
 	tl = itsRect.left  /itsXSize;	// Links
 	tr = itsRect.right /itsXSize;	// Rechts
@@ -718,10 +718,10 @@ bool DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
 	o = y;									// Oben
 	u = y+(itsRect.bottom-itsRect.top) - 1;	// Unten
 
-	l += 0.5f;
-	r -= 0.5f;
-	o -= 0.5f;
-	u += 0.5f;
+	l += TEXTURE_COORD_OFFSET;
+	r -= TEXTURE_COORD_OFFSET;
+	o -= TEXTURE_COORD_OFFSET;
+	u += TEXTURE_COORD_OFFSET;
 
 	tl = itsRect.left  /itsXSize;	// Links
 	tr = itsRect.right /itsXSize;	// Rechts
@@ -814,10 +814,10 @@ bool DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int he
 	o = y;			// Oben
 	u = y+height;	// Unten
 
-	l -= 0.5f;
-	r += 0.5f;
-	o -= 0.5f;
-	u += 0.5f;
+	l -= TEXTURE_COORD_OFFSET;
+	r += TEXTURE_COORD_OFFSET;
+	o -= TEXTURE_COORD_OFFSET;
+	u += TEXTURE_COORD_OFFSET;
 
 	tl = itsRect.left  /itsXSize;	// Links
 	tr = itsRect.right /itsXSize;	// Rechts
@@ -877,10 +877,10 @@ bool DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int he
 	o = y;			// Oben
 	u = y+height;	// Unten
 
-	l -= 0.5f;
-	r += 0.5f;
-	o -= 0.5f;
-	u += 0.5f;
+	l -= TEXTURE_COORD_OFFSET;
+	r += TEXTURE_COORD_OFFSET;
+	o -= TEXTURE_COORD_OFFSET;
+	u += TEXTURE_COORD_OFFSET;
 
 	tl = ((Anim%itsXFrameCount) * itsXFrameSize)				 / itsXSize;	// Links
 	tr = ((Anim%itsXFrameCount) * itsXFrameSize + itsXFrameSize) / itsXSize;	// Rechts
@@ -940,10 +940,10 @@ bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
 	o = y;									// Oben
 	u = y+(itsRect.bottom-itsRect.top) - 1;	// Unten
 
-	l -= 0.5f;
-	r += 0.5f;
-	o -= 0.5f;
-	u += 0.5f;
+	l -= TEXTURE_COORD_OFFSET;
+	r += TEXTURE_COORD_OFFSET;
+	o -= TEXTURE_COORD_OFFSET;
+	u += TEXTURE_COORD_OFFSET;
 
 	tl = itsRect.left  /itsXSize;	// Links
 	tr = itsRect.right /itsXSize;	// Rechts
@@ -1301,10 +1301,10 @@ bool DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
 	o = y;			// Oben
 	u = y+height;	// Unten
 
-	l -= 0.5f;
-	r += 0.5f;
-	o -= 0.5f;
-	u += 0.5f;
+	l -= TEXTURE_COORD_OFFSET;
+	r += TEXTURE_COORD_OFFSET;
+	o -= TEXTURE_COORD_OFFSET;
+	u += TEXTURE_COORD_OFFSET;
 
 	tl = itsRect.left  /itsXSize;	// Links
 	tr = itsRect.right /itsXSize;	// Rechts
@@ -1455,10 +1455,10 @@ void RenderRect4(float x, float y, float width, float height,
 	o = y;			// Oben
 	u = y+height - 1;	// Unten
 
-	l -= 0.5f;
-	r += 0.5f;
-	o -= 0.5f;
-	u += 0.5f;
+	l -= TEXTURE_COORD_OFFSET;
+	r += TEXTURE_COORD_OFFSET;
+	o -= TEXTURE_COORD_OFFSET;
+	u += TEXTURE_COORD_OFFSET;
 
 	TriangleStrip[0].z = TriangleStrip[1].z = TriangleStrip[2].z = TriangleStrip[3].z = 0.0f;
 

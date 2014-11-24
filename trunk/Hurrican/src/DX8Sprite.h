@@ -22,8 +22,9 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define	MAX_SPRITES		32768									// Maximalzahl Sprites am Screen
-#define MAX_SPRITEGFX	500										// Maximal ladbare Sprites
+#define TEXTURE_COORD_OFFSET  0.6f
+#define	MAX_SPRITES		      32768    // Maximalzahl Sprites am Screen
+#define MAX_SPRITEGFX	      500      // Maximal ladbare Sprites
 
 // --------------------------------------------------------------------------------------
 // Strukturen
