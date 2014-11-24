@@ -25,11 +25,13 @@
 #ifndef _SDL_FMOD_H_
 #define _SDL_FMOD_H_
 
+#include <stdio.h>
 #include "SDL_mixer.h"
+#include "SDL_port.h"
 #if defined(USE_MODPLUG)
 #include "modplug.h"
 #endif
-#include <stdio.h>
+#include "Logdatei.h"
 
 #define SOUND_SAMPLE            Mix_Chunk
 #if defined(USE_MODPLUG)

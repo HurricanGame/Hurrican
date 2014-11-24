@@ -43,7 +43,7 @@ void D3DXMatrixIdentity( D3DXMATRIXA16* m )
 
 void fopen_s( FILE** file, const char* path, const char* mode )
 {
-    *file = fopen( path, mode  );
+    *file = fopen( path, mode );
 }
 
 void strcat_s( const char* dst, const char* src )
@@ -78,7 +78,7 @@ void strncpy_s( const char* dst, const char* src, int size )
 
 void fprintf_s( FILE* file, const char* src)
 {
-    fprintf( file, src );
+    fprintf( file, "%s", src );
 }
 
 void _itoa_s( int value, const char* dst, int size )
@@ -214,7 +214,7 @@ uint8_t* LoadFileToMemory( const std::string& name, uint32_t& size )
     file.open( name.c_str(), std::ios_base::in );
     if (file.is_open() == 0)
     {
-        printf( "Error file operation: File: %s\n", name.c_str() );
+        Protokoll.WriteText( false, "Error file operation: File: %s\n", name.c_str() );
         return NULL;
     }
 
@@ -245,13 +245,13 @@ void load_matrix( GLenum mode, const GLfloat* m )
 #endif
 
 #if defined(__WIN32__)
-#define LOAD_OPENGL_PROC(T,N)                                                   \
-{                                                                               \
-    N = (T)wglGetProcAddress(#N);                                               \
-    if (N == NULL) {                                                            \
-        printf( "ERROR Video: OpenGL function is NULL:" #N "\n" );      \
-        return 1;                                                               \
-    }                                                                           \
+#define LOAD_OPENGL_PROC(T,N)                                                           \
+{                                                                                       \
+    N = (T)wglGetProcAddress(#N);                                                       \
+    if (N == NULL) {                                                                    \
+        Protokoll.WriteText( false, "ERROR Video: OpenGL function is NULL:" #N "\n" );  \
+        return 1;                                                                       \
+    }                                                                                   \
 }
 
 uint8_t LoadGLFunctions( void )

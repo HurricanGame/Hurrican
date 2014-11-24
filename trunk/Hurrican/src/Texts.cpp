@@ -73,10 +73,7 @@ loadfile:
 	fopen_s(&Datei, temp, "r");												// Language File öffnen
 	if (Datei == NULL)															// Fehler beim öffnen ?
 	{
-		char buf[100];
-
-		sprintf_s (buf, "-> Error opening language-file\n'%s'", filename);
-		Protokoll.WriteText(buf, true);
+		Protokoll.WriteText( true, "-> Error opening language-file\n'%s'", temp );
 		return false;
 	}
 
@@ -119,7 +116,7 @@ loadfile:
 		{
 			// Fehler beim öffnen ? Dann standard Liste öffnen
 			CommandLineParams.RunOwnLevelList = false;
-			Protokoll.WriteText("-> Error opening level-order file\n", true);
+			Protokoll.WriteText( true, "-> Error opening level-order file\n" );
 			return false;
 		}
 	}
@@ -140,8 +137,7 @@ loadfile:
 		sprintf_s(Temp, "%s", "levellist.dat");
 		if (urarlib_get(&pData, &Size, Temp, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
 		{
-			sprintf_s(Temp, "\n-> Error loading %s from Archive !\n", Temp);
-			Protokoll.WriteText(Temp, true);
+			Protokoll.WriteText( true, "\n-> Error loading %s from Archive !\n", Temp );
 			return false;
 		}
 		else

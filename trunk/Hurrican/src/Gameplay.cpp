@@ -738,7 +738,7 @@ bool LoadConfig(void)
 	fread(&pPlayer[1]->JoystickMode,	sizeof(pPlayer[1]->JoystickMode),	 1, Datei);
 	fread(&pPlayer[1]->JoystickSchwelle,sizeof(pPlayer[1]->JoystickSchwelle),1, Datei);
 
-	Protokoll.WriteText("Config file loading successfull !\n", false);
+	Protokoll.WriteText( false, "Config file loading successful !\n" );
 
 	fclose(Datei);							// Und Datei wieder schliessen
 
@@ -773,7 +773,7 @@ void SaveConfig(void)
 	fopen_s(&Datei, CONFIGFILE, "wb");
 	if (Datei == NULL)
     {
-   		Protokoll.WriteText("Config file saving failed !\n", false);
+   		Protokoll.WriteText( false, "Config file saving failed !\n" );
         return;
     }
 
@@ -1068,7 +1068,7 @@ bool NewDemo (const char Filename[])
 
 	if(!DEMOFile)
 	{
-		Protokoll.WriteText("\n-> Error opening Demo File !\n", true);
+		Protokoll.WriteText( true, "\n-> Error opening Demo File !\n" );
 		return false;
 	}
 

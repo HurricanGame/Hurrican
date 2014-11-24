@@ -237,8 +237,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 bool FileExists(char Filename[256])
 {
 	std::fstream fin;
-	fin.open(Filename,std::ios::in);
 
+	fin.open(Filename,std::ios::in);
 	if (fin.is_open())
 	{
 		fin.close();
@@ -392,13 +392,13 @@ void FillCommandLineParams( int argc, char* args[] )
 
         else if ((strstr( args[i], "--help" ) != NULL) || (strstr( args[i], "-H") !=NULL))
         {
-            printf( "Hurrican\n"  );
-            printf( "  Usage      : hurrican <arguments>\n" );
-            printf( "  Arguments\n" );
-            printf( "  -H,  --help        : Show this information\n" );
-            printf( "  -W,  --windowmode  : Run in a window, not fullsreen\n" );
-            printf( "  -TF, --texfactor   : Division factor for textures\n" );
-            printf( "  -TS, --texsizemin  : Size limitation for texture factor\n" );
+            Protokoll.WriteText( false, "Hurrican\n"  );
+            Protokoll.WriteText( false, "  Usage      : hurrican <arguments>\n" );
+            Protokoll.WriteText( false, "  Arguments\n" );
+            Protokoll.WriteText( false, "  -H,  --help        : Show this information\n" );
+            Protokoll.WriteText( false, "  -W,  --windowmode  : Run in a window, not fullsreen\n" );
+            Protokoll.WriteText( false, "  -TF, --texfactor   : Division factor for textures\n" );
+            Protokoll.WriteText( false, "  -TS, --texsizemin  : Size limitation for texture factor\n" );
             exit(1);
         }
     }
@@ -460,20 +460,20 @@ int main(int argc, char *argv[])
 	GetWindowRect(DesktopHWND, &rect);
 
 	// Anfang der Logdatei mit Datum und Uhrzeit
-	Protokoll.WriteText(">-------------------------<\n", false);
-	Protokoll.WriteText("|        Hurrican         |\n", false);
-	Protokoll.WriteText("|   (c) 2007 poke53280    |\n", false);
-	Protokoll.WriteText("|                         |\n", false);
-	Protokoll.WriteText("|    www.poke53280.de     |\n", false);
-	Protokoll.WriteText("|  www.hurrican-game.de   |\n", false);
-	Protokoll.WriteText(">-------------------------<\n", false);
-	Protokoll.WriteText("Logfile date: ", false);
+	Protokoll.WriteText( false, ">-------------------------<\n" );
+	Protokoll.WriteText( false, "|        Hurrican         |\n" );
+	Protokoll.WriteText( false, "|   (c) 2007 poke53280    |\n" );
+	Protokoll.WriteText( false, "|                         |\n" );
+	Protokoll.WriteText( false, "|    www.poke53280.de     |\n" );
+	Protokoll.WriteText( false, "|  www.hurrican-game.de   |\n" );
+	Protokoll.WriteText( false, ">-------------------------<\n" );
+	Protokoll.WriteText( false, "Logfile date: ", false);
 	strcpy_s(StringBuffer, __DATE__);	Protokoll.WriteText(StringBuffer, false); Protokoll.WriteText(" - ", false);
 	strcpy_s(StringBuffer, __TIME__);	Protokoll.WriteText(StringBuffer, false);
 
-	Protokoll.WriteText("\n\n>-------------<\n", false);
-	Protokoll.WriteText(    "| Init Window |\n", false);
-	Protokoll.WriteText(    ">-------------<\n\n", false);
+	Protokoll.WriteText( false, "\n\n>-------------<\n" );
+	Protokoll.WriteText( false,     "| Init Window |\n" );
+	Protokoll.WriteText( false,     ">-------------<\n\n" );
 
 	g_hinst = hinstance;
 
@@ -494,11 +494,11 @@ int main(int argc, char *argv[])
 	// Fensterklasse bei Windows registrieren
 	if (!RegisterClassEx(&winclass))
 	{
-		Protokoll.WriteText("RegisterClassEx error!\n", true);
+		Protokoll.WriteText( true, "RegisterClassEx error!\n" );
 		return(0);
 	}
 
-	Protokoll.WriteText("RegisterClassEx successfull!\n", false);
+	Protokoll.WriteText( false, "RegisterClassEx successful!\n" );
 
 	DWORD style;
 
@@ -528,18 +528,18 @@ int main(int argc, char *argv[])
 								hinstance,							// Instance von Main
 								NULL)))								// extra creation parms
 		{
-			Protokoll.WriteText("CreateWindowEx error!\n", true);
+			Protokoll.WriteText( true, "CreateWindowEx error!\n" );
 			return(0);
 		}
 
-	Protokoll.WriteText("CreateWindowEx	successfull!\n", false);
-	Protokoll.WriteText("WindowSizeX : ", false); Protokoll.WriteValue(WINDOWWIDTH);
-	Protokoll.WriteText("WindowSizeY : ", false); Protokoll.WriteValue(WINDOWHEIGHT);
+	Protokoll.WriteText( false, "CreateWindowEx	successful!\n" );
+	Protokoll.WriteText( false, "WindowSizeX : " ); Protokoll.WriteValue(WINDOWWIDTH);
+	Protokoll.WriteText( false, "WindowSizeY : " ); Protokoll.WriteValue(WINDOWHEIGHT);
 
 	if (CommandLineParams.RunWindowMode == false)
 		ShowCursor(false);
 
-	Protokoll.WriteText("\n-> Init Window successfull!\n", false);
+	Protokoll.WriteText( false, "\n-> Init Window successful!\n" );
 
 	ShowWindow(g_hwnd, nshowcmd);						// Fenster anzeigen (sicher ist sicher)
 	UpdateWindow(g_hwnd);								// Fenster-infos updaten
@@ -549,11 +549,11 @@ int main(int argc, char *argv[])
 
 	if(!GameInit(g_hwnd, hinstance))
 	{
-		Protokoll.WriteText("\n-> GameInit error!\n\n", true);
+		Protokoll.WriteText( true, "\n-> GameInit error!\n\n" );
 		GameRunning = false;
 	}
 	else
-		Protokoll.WriteText("\n-> GameInit successfull!\n\n", false);
+		Protokoll.WriteText( false, "\n-> GameInit successful!\n\n" );
 
 //----- Main-Loop
 
@@ -618,10 +618,7 @@ int main(int argc, char *argv[])
 
 		catch(const char *str)
 	    {
-			char Buffer[200];
-
-			sprintf_s (Buffer, "Fehler! Unbehandelte Ausname\n %s", str);
-			Protokoll.WriteText (Buffer, true);
+			Protokoll.WriteText( false, "Failure! Unhandled exception\n %s", str );
 			GameRunning = false;
 		}
 	}
@@ -631,12 +628,12 @@ int main(int argc, char *argv[])
 	//pTimer->WriteLogValues();
 
 	if(!GameExit())
-		Protokoll.WriteText("-> GameExit Fehler !\n", true);
+		Protokoll.WriteText( true, "-> GameExit Fehler !\n" );
 
-	Protokoll.WriteText("\n-> Hurrican closed !\n", false);
-	Protokoll.WriteText("\nhttp://www.poke53280.de\n", false);
-	Protokoll.WriteText("Bugreports, questions etc : information@poke53280.de\n", false);
-	Protokoll.WriteText("\n-> logfile end", false);
+	Protokoll.WriteText( false, "\n-> Hurrican closed !\n" );
+	Protokoll.WriteText( false, "\nhttp://www.poke53280.de\n" );
+	Protokoll.WriteText( false, "Bugreports, questions etc : information@poke53280.de\n" );
+	Protokoll.WriteText( false, "\n-> logfile end" );
 
 	// Kein Fehler im Game? Dann Logfile löschen
 	if (Protokoll.delLogFile == true)
@@ -672,7 +669,7 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
 	// *.lng Files anfügen
 	if (SendMessage(ComboBoxLanguageFiles, CB_DIR, DDL_READWRITE, (LPARAM) "*.lng") == CB_ERR)
 	{
-		Protokoll.WriteText ("No language Files found!", true);
+		Protokoll.WriteText( false, "No language Files found!", true);
 	}
 
 	LanguageFileCount = SendMessage (ComboBoxLanguageFiles, CB_GETCOUNT, 0, 0);
@@ -682,9 +679,9 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
 	}
 #endif
 
-	Protokoll.WriteText("\n>--------------------<\n", false);
-	Protokoll.WriteText(  "| GameInit gestartet |\n", false);
-	Protokoll.WriteText(  ">--------------------<\n", false);
+	Protokoll.WriteText( false, "\n>--------------------<\n" );
+	Protokoll.WriteText( false,   "| GameInit started   |\n" );
+	Protokoll.WriteText( false,   ">--------------------<\n" );
 
 	// Timer initialisieren
 	pTimer = new TimerClass();
@@ -692,14 +689,14 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
 	// Direct3D initialisieren
 	if(!DirectGraphics.Init(hwnd, RENDERWIDTH, RENDERHEIGHT, SCREENBPP, true))
 	{
-		Protokoll.WriteText("\n-> Direct3D Initialisierung Fehler ...!\n", true);
+		Protokoll.WriteText( true, "\n-> Direct3D Initialisierung Fehler ...!\n" );
 		return false;
 	}
 
 	// DirectInput initialisieren
 	if(!DirectInput.Init(hwnd, hinstance))
 	{
-		Protokoll.WriteText("\n-> DirectInput8 Initialisierung Fehler ...!\n", true);
+		Protokoll.WriteText( true, "\n-> DirectInput8 Initialisierung Fehler ...!\n" );
 		return false;
 	}
 
@@ -821,7 +818,7 @@ bool GameInit2(void)
 	// Konfiguration laden
 	if (LoadConfig() == false)
 	{
-		Protokoll.WriteText("\n-> No config found. Creating default\n", false);
+		Protokoll.WriteText( false, "\n-> No config found. Creating default\n" );
 		CreateDefaultConfig ();
 	}
 
@@ -1058,9 +1055,9 @@ bool GameInit2(void)
 
 bool GameExit(void)
 {
-	Protokoll.WriteText("\n>--------------------<\n", false);
-	Protokoll.WriteText(  "| GameExit gestartet |\n", false);
-	Protokoll.WriteText(  ">--------------------<\n\n", false);
+	Protokoll.WriteText( false, "\n>--------------------<\n" );
+	Protokoll.WriteText( false,   "| GameExit started   |\n" );
+	Protokoll.WriteText( false,   ">--------------------<\n\n" );
 
 	// GUI freigeben
 	delete(pGUI);
@@ -1071,39 +1068,39 @@ bool GameExit(void)
 	// Sprites freigeben
 	delete(pDefaultFont);
 	delete(pMenuFont);
-	Protokoll.WriteText("-> Fonts freigegeben\n", false);
+	Protokoll.WriteText( false, "-> Fonts released\n" );
 
 	// Console beenden
 	delete (pConsole);
 
 	// Menu beenden
 	delete(pMenu);
-	Protokoll.WriteText("-> Hauptmenu freigegeben\n", false);
+	Protokoll.WriteText( false, "-> Head menu released\n" );
 
 	// HUD freigeben
 	delete(pHUD);
-	Protokoll.WriteText("-> HUD freigegeben\n", false);
+	Protokoll.WriteText( false, "-> HUD released\n" );
 
 	// Tileengine beenden
 	delete(pTileEngine);
-	Protokoll.WriteText("-> TileEngine freigegeben\n", false);
+	Protokoll.WriteText( false, "-> TileEngine released\n" );
 
 	// GegnerListe beenden
 	delete(pGegner);
-	Protokoll.WriteText("-> Gegner-Liste freigegeben\n", false);
+	Protokoll.WriteText( false, "-> Enemy List released\n" );
 
 	// Player freigeben
 	delete(pPlayer[0]);
 	delete(pPlayer[1]);
-	Protokoll.WriteText("-> Player freigegeben\n", false);
+	Protokoll.WriteText( false, "-> Player released\n" );
 
 	// Partikelsystem beenden
 	delete(pPartikelSystem);
-	Protokoll.WriteText("-> Partikelsystem freigegeben\n", false);
+	Protokoll.WriteText( false, "-> Particle System released\n" );
 
 	// ProjectileListe beenden
 	delete(pProjectiles);
-	Protokoll.WriteText("-> Projektil-Liste freigegeben\n", false);
+	Protokoll.WriteText( false, "-> Projectile List released\n" );
 
 	delete(pSoundManager);				// DirectSound beenden
 

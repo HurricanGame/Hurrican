@@ -1,6 +1,6 @@
 DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS -DUSE_MODPLUG -DDEBUG
 
-TARGET = rpi
+TARGET = linux
 
 ifeq ($(TARGET),aros)
 
@@ -91,7 +91,7 @@ endif
 
 INCLUDES := -I. -I./SDLPort -Icml -I./unrarlib040/unrarlib $(INCLUDES_OS)
 
-CFLAGS := -g -Wall -O0 -c $(INCLUDES) $(DEFINES)
+CFLAGS := -g -Wall -Wno-unused-local-typedefs -O0 -c $(INCLUDES) $(DEFINES)
 
 SDL_FILES := SDLPort/SDL_fmod \
              SDLPort/SDL_port \

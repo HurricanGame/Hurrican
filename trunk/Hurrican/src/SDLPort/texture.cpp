@@ -65,7 +65,7 @@ GLuint loadTexture( const char* path, SDL_Rect& dims, uint32_t size )
     {
         if (loadImage( image, path, size ) == false)
         {
-            printf( "ERROR Image was not loaded to memory\n" );
+            Protokoll.WriteText( false, "ERROR Image was not loaded to memory\n" );
             return GL_INVALID_VALUE;
         }
     }
@@ -103,7 +103,7 @@ GLuint loadTexture( const char* path, SDL_Rect& dims, uint32_t size )
 #if defined(DEBUG)
         int error = glGetError();
         if (error != 0)
-            printf( "GL Tex Error %X %s\n", error, path );
+            Protokoll.WriteText( false, "GL Tex Error %X %s\n", error, path );
 #endif
 
         // Cleanup
@@ -111,7 +111,7 @@ GLuint loadTexture( const char* path, SDL_Rect& dims, uint32_t size )
     }
     else
     {
-        printf( "ERROR Image data reference is NULL\n" );
+        Protokoll.WriteText( false, "ERROR Image data reference is NULL\n" );
         return GL_INVALID_VALUE;
     }
 
@@ -148,7 +148,7 @@ bool loadCompressedImage( image_t& image, const char* path )
                 pvrtc_bitperpixel = 4;
                 break;
             default:
-                printf( "ERROR Unknown PVRTC format %X\n",  pvrtc_buffer32[2] );
+                Protokoll.WriteText( false, "ERROR Unknown PVRTC format %X\n",  pvrtc_buffer32[2] );
                 delete [] image.data;
         }
 
@@ -160,10 +160,10 @@ bool loadCompressedImage( image_t& image, const char* path )
         image.type      = 0; /* dont care */
         image.compressed = true;
 
-        printf( "Loaded PVRTC type %d for %s\n", pvrtc_buffer32[2], filename.c_str() );
+        Protokoll.WriteText( false, "Loaded PVRTC type %d for %s\n", pvrtc_buffer32[2], filename.c_str() );
 
 #if defined(DEBUG)
-        printf( "Version %X\nFlags %d\nPFormatA %d\nPFormatB %d\nColorS %d\nChanType %d\nHeight %d\nWidth %d\nDepth %d\nNumSurf %d\nNumFaces %d\nMipmap %d\nMeta %d\n", pvrtc_buffer32[0], pvrtc_buffer32[1], pvrtc_buffer32[2], pvrtc_buffer32[3],
+        Protokoll.WriteText( false, "Version %X\nFlags %d\nPFormatA %d\nPFormatB %d\nColorS %d\nChanType %d\nHeight %d\nWidth %d\nDepth %d\nNumSurf %d\nNumFaces %d\nMipmap %d\nMeta %d\n", pvrtc_buffer32[0], pvrtc_buffer32[1], pvrtc_buffer32[2], pvrtc_buffer32[3],
                 pvrtc_buffer32[4], pvrtc_buffer32[5], pvrtc_buffer32[6], pvrtc_buffer32[7], pvrtc_buffer32[8],
                 pvrtc_buffer32[9], pvrtc_buffer32[10], pvrtc_buffer32[11], pvrtc_buffer32[12] );
 #endif
@@ -202,7 +202,7 @@ bool loadImage( image_t& image, const char* path, uint32_t size )
         }
         else
         {
-            printf( "ERROR Texture: Failed to load texture: %s\n", SDL_GetError() );
+            Protokoll.WriteText( false, "ERROR Texture: Failed to load texture: %s\n", SDL_GetError() );
             return false;
         }
     }
@@ -315,7 +315,7 @@ void LowerResolution( SDL_Surface* surface, int32_t dimension )
                 if (xh < temp->w && yh < temp->h)
                     putpixel( surface, xh, yh, getpixel( temp, x, y) );
                 else
-                    printf( "error tex shrink overflow\n" );
+                    Protokoll.WriteText( false, "error tex shrink overflow\n" );
 
                 xh++;
             }

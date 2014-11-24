@@ -84,7 +84,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 
 	// Fehler beim Locken ?
 	if (hresult != D3D_OK)
-		Protokoll.WriteText("error locking font texture!", true);
+		Protokoll.WriteText(true, "error locking font texture!");
 
 	// Colorkey feststellen
 	DWORD key = ((DWORD*)d3dlr.pBits)[0];
