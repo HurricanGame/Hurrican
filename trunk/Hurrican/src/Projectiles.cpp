@@ -3584,16 +3584,16 @@ void ProjectileClass::Run(void)
 	else
 		DirectGraphics.SetColorKeyMode();
 
-	D3DCOLOR Color;
+	//D3DCOLOR Color;
 
-	Color = 0xFFFFFFFF;
+	//Color = 0xFFFFFFFF;
 
 	// Evil Blitz fadet auch aus
-	if (ShotArt == EVILBLITZ2 && ySpeed == 0.0f)
-	{
-		int a = int (AnimCount);
-		Color = D3DCOLOR_RGBA(255, 255, 255, a);
-	}
+	//if (ShotArt == EVILBLITZ2 && ySpeed == 0.0f)
+	//{
+		//int a = int (AnimCount);
+		//Color = D3DCOLOR_RGBA(255, 255, 255, a);
+	//}
 
 	// Alte Position sichern
 	xPosOld = xPos;

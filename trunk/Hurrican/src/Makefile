@@ -1,6 +1,6 @@
 DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS -DUSE_MODPLUG -DDEBUG
 
-TARGET = linux
+TARGET = pandora
 
 ifeq ($(TARGET),aros)
 
@@ -58,7 +58,7 @@ RM  := rm -f
 USE_EGL := yes
 USE_GL2 := yes
 
-DEFINES += -DGCW -DUSE_GL2 -DUSE_GLES2 -DRGBA_5551 -DUSE_EGL_RAW -DUSE_320_240
+DEFINES += -DGCW -DUSE_GL2 -DUSE_GLES2 -DUSE_ETC1 -DUSE_EGL_RAW -DUSE_320_240 
 
 INCLUDES_OS := -ISDL_port \
                -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/SDL \
@@ -66,6 +66,29 @@ INCLUDES_OS := -ISDL_port \
                -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/GLES2 -I$(GCWSDK)/include/mipsel-gcw0-linux-uclibc/sysroot/usr/include/EGL
 
 LDFLAGS := -L$(GCWSDK)/lib -g -lpthread -lmodplug -lSDL_mixer -lSDL_image -lSDL -lGLESv2 -lEGL
+
+endif
+
+ifeq ($(TARGET),pandora)
+
+EXE := ../hurrican
+CCP := $(PNDSDK)/bin/arm-none-linux-gnueabi-g++
+CC  := $(PNDSDK)/bin/arm-none-linux-gnueabi-gcc
+LD  := $(PNDSDK)/bin/arm-none-linux-gnueabi-g++
+RM  := rm -f
+
+USE_EGL := yes
+USE_GL2 := yes
+
+DEFINES += -DPANDORA -DUSE_GL2 -DUSE_GLES2 -DUSE_EGL_RAW -DUSE_PVRTC
+
+INCLUDES_OS := -ISDL_port \
+               -I$(PNDSDK)/usr/include \
+               -I$(PNDSDK)/usr/include/SDL \
+               -I$(PNDSDK)/usr/include/libmodplug \
+               -I$(PNDSDK)/usr/include/GLES2 -I$(PNDSDK)/usr/include/EGL
+
+LDFLAGS := -L$(PNDSDK)/usr/lib -g -lSDL_mixer -lSDL_image -lSDL -lGLESv2 -lEGL -lIMGegl -lsrv_um -lpthread -lmodplug -lpng12 -lmad -ltiff -ljpeg -lz -lts
 
 endif
 
@@ -81,7 +104,7 @@ RM  := rm -f
 USE_EGL := yes
 USE_GL2 := yes
 
-DEFINES += -DLINUX -DUSE_GL2 -DUSE_GLES2 -DUSE_EGL_SDL -DRGBA_5551
+DEFINES += -DLINUX -DUSE_GL2 -DUSE_GLES2 -DUSE_EGL_SDL -DUSE_ETC1
 
 INCLUDES_OS := -I/usr/include -I/usr/include/SDL -I/usr/include/GLES2 -I/usr/include/libmodplug
 

@@ -534,19 +534,19 @@ void GegnerBratklops::DoKI(void)
 	// Testen, ob der Spieler den Bratklops berührt hat
 	// dafür nehmen wir ein anderes Rect, weil das normale GegnerRect nur das Grüne Auge ist, wo man den Gegner treffen kann
 	//
-	RECT rect;
+	//RECT rect;
 
-	rect.top    = 100;
-	rect.left   = 0;
-	rect.bottom = 340;
-	rect.right  = 60;
+	//rect.top    = 100;
+	//rect.left   = 0;
+	//rect.bottom = 340;
+	//rect.right  = 60;
 
 	TestDamagePlayers(4.0f SYNC);
 
-	rect.top    = 100;
-	rect.left   = 0;
-	rect.bottom = 300;
-	rect.right  = 120;
+	//rect.top    = 100;
+	//rect.left   = 0;
+	//rect.bottom = 300;
+	//rect.right  = 120;
 
 	TestDamagePlayers(4.0f SYNC);
 }

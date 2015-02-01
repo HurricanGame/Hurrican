@@ -66,7 +66,7 @@ class GegnerClass
 		PlayerClass			*pAim;						// Player to attack
 
 		 GegnerClass	 (void);						// Konstruktor
-		~GegnerClass	 (void);						// Destruktor
+		virtual ~GegnerClass	 (void);						// Destruktor
 virtual void GegnerExplode(void);						// Gegner explodiert
 virtual void DoKI	(void)	{}							// Gegner individuell bewegen
 virtual void DoDraw (void)	{}							// Gegner individuell rendern (nur bei manchen)

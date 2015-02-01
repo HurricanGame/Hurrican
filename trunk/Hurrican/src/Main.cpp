@@ -824,12 +824,12 @@ void CreatePlayer2Texture(void)
 bool GameInit2(void)
 {
 	// Player initialisieren
-	pPlayer[0]  = new PlayerClass();
+	pPlayer[0] = new PlayerClass();
 	pPlayer[1] = new PlayerClass();
 	pPlayer[0]->SoundOff = 0;
 	pPlayer[1]->SoundOff = 1;
-	memset(pPlayer[0], 0, sizeof(pPlayer[0]));
-	memset(pPlayer[1], 0, sizeof(pPlayer[1]));
+	memset(pPlayer[0], 0, sizeof(*pPlayer[0]));
+	memset(pPlayer[1], 0, sizeof(*pPlayer[1]));
 
 	// Konfiguration laden
 	if (LoadConfig() == false)

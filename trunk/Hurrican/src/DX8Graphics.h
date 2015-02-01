@@ -85,7 +85,7 @@ class DirectGraphicsClass
 #if defined(PLATFORM_DIRECTX)
 		D3DDISPLAYMODE			d3ddm;							// Display Mode
 #elif defined(PLATFORM_SDL)
-      bool                    use_texture;
+        bool                    use_texture;
 		int                     MaxTextureUnits;
 #if defined(USE_GL2)
         GLuint                  ProgramCurrent;
@@ -137,7 +137,7 @@ class DirectGraphicsClass
 		void DisplayBuffer  (void);								// Render den Buffer auf den Backbuffer
 #if defined(PLATFORM_SDL)
         void SetupFramebuffers( void );
-        void SetTexture( GLuint texture );
+        void SetTexture( int32_t index );
         void ClearBackBuffer( void );
         void SelectBuffer( bool active );
         void DrawTouchOverlay( void );

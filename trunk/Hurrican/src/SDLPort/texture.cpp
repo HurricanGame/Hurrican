@@ -27,7 +27,12 @@
 
 std::vector<GLuint> textures;
 
-#if defined(USE_PVRTC)
+#if defined(USE_ETC1)
+#define ETC1_HEADER_SIZE 16
+
+std::vector<GLuint> alphatexs;
+
+#elif defined(USE_PVRTC)
 #define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG			0x8C00
 #define GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG			0x8C01
 #define GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG			0x8C02
@@ -44,26 +49,67 @@ enum
 };
 #endif
 
-GLuint loadTexture( const char* path, SDL_Rect& dims, uint32_t size )
+int32_t LoadTexture( const char* path, SDL_Rect& dims, uint32_t size )
 {
     image_t image;
-    GLuint texture;			// This is a handle to our texture object
+    GLuint texture;     // This is a handle to our texture object
 
-    // Get the image data into memory
-    if (loadCompressedImage( image, path ) == false)
+#if defined(USE_ETC1)
+    image_t alpha;
+
+    if ((loadImageETC1( image, path, ".pkm" ) == true) && (loadImageETC1( alpha, path, "_alpha.pkm" ) == true))
     {
-        if (loadImage( image, path, size ) == false)
+        texture = load_texture( alpha );
+        alphatexs.push_back( texture );
+
+        delete [] alpha.data;
+
+        texture = load_texture( image );
+        textures.push_back( texture );
+
+        delete [] image.data;
+    }
+    else
+    {
+#elif defined(USE_PVRTC)
+    if (loadImagePVRTC( image, path ) == true)
+    {
+        texture = load_texture( image );
+        textures.push_back( texture );
+
+        delete [] image.data;
+    }
+    else
+    {
+#endif
+        if (loadImageSDL( image, path, size ) == true)
+        {
+            texture = load_texture( image );
+            textures.push_back( texture );
+
+            delete [] image.data;
+        }
+        else
         {
             Protokoll.WriteText( false, "ERROR Image was not loaded to memory\n" );
-            return GL_INVALID_VALUE;
+            return -1;
         }
+#if defined(USE_ETC1) || defined(USE_PVRTC)
     }
+#endif
+
+    dims.w = image.w;
+    dims.h = image.h;
+
+    return textures.size()-1;
+}
+
+GLuint load_texture( image_t& image )
+{
+    GLuint texture;
 
     if (image.data != NULL)
     {
-        dims.w = image.w;
-        dims.h = image.h;
-
         // Have OpenGL generate a texture object handle for us
         glGenTextures( 1, &texture );
 
@@ -87,16 +133,14 @@ GLuint loadTexture( const char* path, SDL_Rect& dims, uint32_t size )
                           image.format, image.type, image.data );
         }
 
-        textures.push_back( texture ); /* save a ref for deletion leter */
-
 #if defined(DEBUG)
         int error = glGetError();
-        if (error != 0)
-            Protokoll.WriteText( false, "GL Tex Error %X %s\n", error, path );
+        if (error != 0) {
+            Protokoll.WriteText( false, "GL load_texture Error %X\n", error );
+            Protokoll.WriteText( false, "Format %X W %d H %d S %d Data %X + %d\n", image.format, image.tex_w, image.tex_h, image.size, image.data, image.offset );
+        }
 #endif
 
-        // Cleanup
-        delete [] image.data;
     }
     else
     {
@@ -107,9 +151,69 @@ GLuint loadTexture( const char* path, SDL_Rect& dims, uint32_t size )
     return texture;
 }
 
-bool loadCompressedImage( image_t& image, const char* path )
+#if defined(USE_ETC1)
+bool loadImageETC1( image_t& image, const char* path, const char* ext )
 {
-#if defined(USE_PVRTC)
+    /*
+        00-03 4 bytes header "PKM "
+        04-05 2 bytes version "10"
+        06-07 2 bytes data type (always zero)
+        08-09 2 bytes extended width
+        10-11 2 bytes extended height
+        12-13 2 bytes original width
+        14-15 2 bytes original height
+        rest is data
+
+        compressed size = (extended width / 4) * (extended height / 4) * 8
+    */
+
+    uint32_t etc1_filesize;
+    std::string filename = path;
+
+    filename = path + std::string(ext);
+
+    image.data = LoadFileToMemory( filename, etc1_filesize );
+
+    if (image.data != NULL)
+    {
+        if ((image.data[0] == 'P') &&
+            (image.data[1] == 'K') &&
+            (image.data[2] == 'M') &&
+            (image.data[3] == ' ')
+           )
+        {
+            image.format = GL_ETC1_RGB8_OES;
+            image.h = image.tex_h = (image.data[14]<<8)+image.data[15];
+            image.w = image.tex_w = (image.data[12]<<8)+image.data[13];
+            image.size      = (((image.data[8]<<8)+image.data[9]) / 4) * (((image.data[10]<<8)+image.data[11]) / 4) * 8;
+            image.offset    = ETC1_HEADER_SIZE;
+            image.type      = 0; /* dont care */
+            image.compressed = true;
+
+            Protokoll.WriteText( false, "Loaded ETC type %c%c%c for %s\n", image.data[0], image.data[1], image.data[2], filename.c_str() );
+
+#if defined(DEBUG)
+            Protokoll.WriteText( false, "Header %c%c%c%c\nVersion %X\nType %d\nExt Width %d\nExt Height %d\nWidth %d\nHeight %d\n",
+                    image.data[0], image.data[1], image.data[2], image.data[3],
+                    (image.data[4]<<8)+image.data[5], (image.data[6]<<8)+image.data[7], (image.data[8]<<8)+image.data[9],
+                    (image.data[10]<<8)+image.data[11], (image.data[12]<<8)+image.data[13], (image.data[14]<<8)+image.data[15] );
+#endif
+        }
+        else
+        {
+            Protokoll.WriteText( false, "ERROR Unknown file type %c%c%c%c\n",  image.data[0], image.data[1], image.data[2], image.data[3] );
+            delete [] image.data;
+            return false;
+        }
+    }
+
+    return true;
+}
+
+#elif defined(USE_PVRTC)
+bool loadImagePVRTC( image_t& image, const char* path )
+{
+
     uint32_t* pvrtc_buffer32 = NULL;
     uint32_t pvrtc_filesize, pvrtc_depth, pvrtc_bitperpixel;
     std::string filename = path;
@@ -139,6 +243,7 @@ bool loadCompressedImage( image_t& image, const char* path )
             default:
                 Protokoll.WriteText( false, "ERROR Unknown PVRTC format %X\n",  pvrtc_buffer32[2] );
                 delete [] image.data;
+                return false;
         }
 
         image.h = image.tex_h = pvrtc_buffer32[6];
@@ -159,12 +264,12 @@ bool loadCompressedImage( image_t& image, const char* path )
 
         return true;
     }
-#endif
 
     return false;
 }
+#endif
 
-bool loadImage( image_t& image, const char* path, uint32_t size )
+bool loadImageSDL( image_t& image, const char* path, uint32_t size )
 {
 #if SDL_VERSION_ATLEAST(2,0,0)
     uint32_t flags = SDL_TRUE;
@@ -354,17 +459,17 @@ uint8_t* ConvertRGBA5551( SDL_Surface* surface, uint8_t factor )
 }
 #endif
 
-void delete_texture( GLuint texture )
+void delete_texture( int32_t index )
 {
-    uint16_t i;
-
-    for (i=0; i<textures.size(); i++)
+    if (index > -1 && (uint32_t)index < textures.size())
     {
-        if (texture == textures.at(i))
-        {
-            glDeleteTextures( 1, &textures.at(i) );
-            textures.at(i) = 0;
-        }
+        glDeleteTextures( 1, &textures.at(index) );
+        textures.at(index) = 0;
+
+#if defined(USE_ETC1)
+        glDeleteTextures( 1, &alphatexs.at(index) );
+        alphatexs.at(index) = 0;
+#endif
     }
 }
 
@@ -378,8 +483,17 @@ void delete_textures( void )
         {
             glDeleteTextures( 1, &textures.at(i) );
             textures.at(i) = 0;
+
+#if defined(USE_ETC1)
+            glDeleteTextures( 1, &alphatexs.at(i) );
+            alphatexs.at(i) = 0;
+#endif
         }
     }
 
     textures.clear();
+
+#if defined(USE_ETC1)
+    alphatexs.clear();
+#endif
 }

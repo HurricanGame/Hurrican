@@ -1105,7 +1105,7 @@ void TileEngineClass::DrawBackLevel(void)
 #if defined(PLATFORM_DIRECTX)
 					lpD3DDevice->SetTexture (0, TileGfx[ActualTexture].itsTexture);
 #elif defined(PLATFORM_SDL)
-                    DirectGraphics.SetTexture(  TileGfx[ActualTexture].itsTexture );
+                    DirectGraphics.SetTexture( TileGfx[ActualTexture].itsTexture );
 #endif
 
 					// Und beim rendern wieder von vorne anfangen
@@ -1249,7 +1249,7 @@ void TileEngineClass::DrawFrontLevel(void)
 #if defined(PLATFORM_DIRECTX)
 					lpD3DDevice->SetTexture (0, TileGfx[ActualTexture].itsTexture);
 #elif defined(PLATFORM_SDL)
-                    DirectGraphics.SetTexture(  TileGfx[ActualTexture].itsTexture );
+                    DirectGraphics.SetTexture( TileGfx[ActualTexture].itsTexture );
 #endif
 
 					// Und beim rendern wieder von vorne anfangen
@@ -1395,7 +1395,7 @@ void TileEngineClass::DrawBackLevelOverlay (void)
 
 	// Noch keine Tiles zum rendern
 	NumToRender = 0;
-	int al;
+	//int al;
 	int off = 0;
 
 	for(int j = RenderPosY; j<RenderPosYTo; j++)
@@ -1425,7 +1425,7 @@ void TileEngineClass::DrawBackLevelOverlay (void)
 #if defined(PLATFORM_DIRECTX)
 					lpD3DDevice->SetTexture (0, TileGfx[ActualTexture].itsTexture);
 #elif defined(PLATFORM_SDL)
-                    DirectGraphics.SetTexture(  TileGfx[ActualTexture].itsTexture );
+                    DirectGraphics.SetTexture( TileGfx[ActualTexture].itsTexture );
 #endif
 
 
@@ -1459,7 +1459,7 @@ void TileEngineClass::DrawBackLevelOverlay (void)
 				to = Rect.top   /TILESETSIZE_Y;				// Oben
 				tu = Rect.bottom/TILESETSIZE_Y;				// Unten
 
-				al = Tiles[xLevel+i][yLevel+j].Alpha;
+				//al = Tiles[xLevel+i][yLevel+j].Alpha;
 
 				off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
 
@@ -1533,7 +1533,7 @@ void TileEngineClass::DrawOverlayLevel(void)
 
 	// Noch keine Tiles zum rendern
 	NumToRender = 0;
-	int al;
+	//int al;
 	int off = 0;
 
 	for(int j = RenderPosY; j<RenderPosYTo; j++)
@@ -1627,7 +1627,7 @@ void TileEngineClass::DrawOverlayLevel(void)
 #if defined(PLATFORM_DIRECTX)
 						lpD3DDevice->SetTexture (0, TileGfx[ActualTexture].itsTexture);
 #elif defined(PLATFORM_SDL)
-                        DirectGraphics.SetTexture(  TileGfx[ActualTexture].itsTexture );
+                        DirectGraphics.SetTexture( TileGfx[ActualTexture].itsTexture );
 #endif
 
 						// Und beim rendern wieder von vorne anfangen
@@ -1671,7 +1671,7 @@ void TileEngineClass::DrawOverlayLevel(void)
 						tr -= 60.0f / 256.0f * WasserfallOffset / 120.0f;
 					}
 
-					al = Tiles[xLevel+i][yLevel+j].Alpha;
+					//al = Tiles[xLevel+i][yLevel+j].Alpha;
 
 					// Vertices definieren
 					v1.z	 = v2.z		= v3.z	   = v4.z	  = 0.0f;
@@ -1762,7 +1762,7 @@ void TileEngineClass::DrawWater(void)
 #if defined(PLATFORM_DIRECTX)
 		lpD3DDevice->SetTexture (0, 0);
 #elif defined(PLATFORM_SDL)
-        DirectGraphics.SetTexture(  0 );
+        DirectGraphics.SetTexture( -1 );
 #endif
 
 		for(int j = RenderPosY; j<RenderPosYTo; j++)
@@ -1958,7 +1958,7 @@ void TileEngineClass::DrawWater(void)
 #if defined(PLATFORM_DIRECTX)
 					lpD3DDevice->SetTexture (0, LiquidGfx[1].itsTexture);
 #elif defined(PLATFORM_SDL)
-                    DirectGraphics.SetTexture(  LiquidGfx[1].itsTexture );
+                    DirectGraphics.SetTexture( LiquidGfx[1].itsTexture );
 #endif
 
 				}
@@ -1966,7 +1966,7 @@ void TileEngineClass::DrawWater(void)
 #if defined(PLATFORM_DIRECTX)
 					lpD3DDevice->SetTexture (0, LiquidGfx[0].itsTexture);
 #elif defined(PLATFORM_SDL)
-                    DirectGraphics.SetTexture(  LiquidGfx[0].itsTexture );
+                    DirectGraphics.SetTexture( LiquidGfx[0].itsTexture );
 #endif
 				}
 
@@ -2073,6 +2073,7 @@ void TileEngineClass::WertAngleichen(float &nachx, float &nachy, float vonx, flo
 
 	nachx += rangex * 0.8f SYNC;
 
+    /*
 	if (NUMPLAYERS == 1 &&
 		(FlugsackFliesFree == false ||
 		 pPlayer[0]->Riding() == false)
@@ -2083,7 +2084,7 @@ void TileEngineClass::WertAngleichen(float &nachx, float &nachy, float vonx, flo
 		int a;
 		a = 0;
 	}
-	else
+	else */
 	if (FlugsackFliesFree == true)
 		nachy += rangey * 0.75f SYNC;
 }
@@ -2865,10 +2866,10 @@ int	TileEngineClass::BlockSlopes(float &x, float &y, float &xo, float &yo, RECT 
 	int Art	= 0;
 	int xlevel;
 	int ylevel;
-	int laenge;
+	//int laenge;
 
 	//laenge = int(y - yo)+1;
-	laenge = 5;
+	//laenge = 5;
 
 	for(int j = rect.bottom; j<rect.bottom+TILESIZE_Y; j++)
 	{

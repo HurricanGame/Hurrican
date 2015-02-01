@@ -90,7 +90,7 @@ loadfile:
 
 	hbm = (HBITMAP)LoadImage(GetModuleHandle(NULL), Temp, IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION | LR_LOADFROMFILE);
 #elif defined(PLATFORM_SDL)
-    loadImage( image, Temp );
+    loadImageSDL( image, Temp );
     hbm = (uint32_t*)image.data;
 #endif
 

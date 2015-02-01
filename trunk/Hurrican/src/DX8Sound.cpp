@@ -69,7 +69,7 @@ char *GetFMODErrorString(int ErrorNr)
 #if defined(PLATFORM_DIRECTX)
 	ReturnString = ErrorString;
 #elif defined(PLATFORM_SDL)
-    ReturnString = Mix_GetError();
+    ReturnString = (char*)Mix_GetError();
 #endif
 
 	return ReturnString;

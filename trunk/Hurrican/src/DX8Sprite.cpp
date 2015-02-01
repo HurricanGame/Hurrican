@@ -91,7 +91,7 @@ DirectGraphicsSurface::~DirectGraphicsSurface(void)
 	SafeRelease(itsSurface);
 #elif defined(PLATFORM_SDL)
     delete_texture( itsSurface );
-    itsSurface = 0;
+    itsSurface = -1;
 #endif
 	Protokoll.WriteText( false, "Surface release		: successful !\n" );
 }
@@ -136,7 +136,7 @@ bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize
     (void)hresult;
 
     SDL_Rect dims;
-	itsSurface = loadTexture( Filename, dims, 0 );
+	itsSurface = LoadTexture( Filename, dims, 0 );
 #endif
 
 	// Grösse setzen
@@ -201,7 +201,11 @@ bool DirectGraphicsSurface::DrawSurface(LPDIRECT3DSURFACE8 &Temp, int xPos, int 
 
 DirectGraphicsSprite::DirectGraphicsSprite(void)
 {
-	itsTexture = (LPDIRECT3DTEXTURE8)NULL;
+#if defined(PLATFORM_DIRECTX)
+    itsTexture = (LPDIRECT3DTEXTURE8)NULL;
+#elif defined(PLATFORM_SDL)
+    itsTexture = -1;
+#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -218,7 +222,7 @@ DirectGraphicsSprite::~DirectGraphicsSprite(void)
 		SafeRelease(itsTexture);
 #elif defined(PLATFORM_SDL)
         delete_texture( itsTexture );
-        itsTexture = 0;
+        itsTexture = -1;
 #endif
 		itsTexture = (LPDIRECT3DTEXTURE8)NULL;
 		LoadedTextures--;
@@ -246,8 +250,8 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
 	HRESULT			hresult;
 	char			*pData;
 	char			Temp[256];
-#if defined(USE_PVRTC)
-	char			pvr[256];
+#if defined(USE_PVRTC) || defined(USE_ETC1)
+	char			compresstex[256];
 #endif
 	unsigned long	Size;
 #if defined(PLATFORM_SDL)
@@ -269,25 +273,43 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
 	// Zuerst checken, ob sich die Grafik in einem MOD-Ordner befindet
 	if (CommandLineParams.RunOwnLevelList == true)
 	{
-		sprintf_s(Temp, "levels/%s/%s", CommandLineParams.OwnLevelList, Filename);
-#if defined(USE_PVRTC)
-        strcpy( pvr, Temp );
-        strcat( pvr, ".pvr" );
-        if (FileExists(pvr))
+		sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
+
+#if defined(USE_ETC1)
+        sprintf_s( compresstex, "%s/levels/%s/%s.pkm", g_storage_ext, CommandLineParams.OwnLevelList, Filename );
+        if (FileExists(compresstex))
             goto loadfile;
 #endif
+
+#if defined(USE_PVRTC)
+        sprintf_s( compresstex, "%s/levels/%s/%s.pvr", g_storage_ext,  CommandLineParams.OwnLevelList, Filename );
+        if (FileExists(compresstex))
+            goto loadfile;
+#endif
+
 		if (FileExists(Temp))
 			goto loadfile;
 	}
 
 	// Dann checken, ob sich das File im Standard Ordner befindet
    sprintf_s(Temp, "%s/data/%s", g_storage_ext, Filename);
-#if defined(USE_PVRTC)
-   strcpy( pvr, Temp );
-   strcat( pvr, ".pvr" );
-   if (FileExists(pvr))
-      goto loadfile;
+
+#if defined(USE_ETC1)
+    sprintf_s( compresstex, "%s/data/etc1/%s.pkm", g_storage_ext, Filename );
+    if (FileExists(compresstex)) {
+        sprintf_s( Temp, "%s/data/etc1/%s", g_storage_ext, Filename );
+        goto loadfile;
+    }
 #endif
+
+#if defined(USE_PVRTC)
+    sprintf_s( compresstex, "%s/data/pvr/%s.pvr", g_storage_ext, Filename );
+    if (FileExists(compresstex)) {
+        sprintf_s( Temp, "%s/data/pvr/%s", g_storage_ext, Filename );
+        goto loadfile;
+    }
+#endif
+
 	if (FileExists(Temp))
 		goto loadfile;
 
@@ -325,7 +347,7 @@ loadfile:
 				  &itsTexture);
 
 #elif defined(PLATFORM_SDL)
-        itsTexture = loadTexture( Temp, dims, 0 );
+        itsTexture = LoadTexture( Temp, dims, 0 );
 #endif
 	}
 	else
@@ -348,7 +370,7 @@ loadfile:
 				  NULL,						  // Keine Palette angeben
 				  &itsTexture);
 #elif defined(PLATFORM_SDL)
-        itsTexture = loadTexture( pData, dims, Size );
+        itsTexture = LoadTexture( pData, dims, Size );
 #endif
 		free(pData);
 	}
@@ -1481,7 +1503,7 @@ void RenderRect4(float x, float y, float width, float height,
 #if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTexture (0, NULL);								// Textur setzen
 #elif defined(PLATFORM_SDL)
-    DirectGraphics.SetTexture( 0 );
+    DirectGraphics.SetTexture( -1 );
 #endif
 
     // Rechteck zeichnen
@@ -1506,7 +1528,7 @@ void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2,	D3DCOLOR Color)
 #if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTexture (0, NULL);								// Textur setzen
 #elif defined(PLATFORM_SDL)
-    DirectGraphics.SetTexture( 0 );
+    DirectGraphics.SetTexture( -1 );
 #endif
 
     // Linie zeichnen
@@ -1537,7 +1559,7 @@ void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2,	D3DCOLOR Color1, D3DCOLOR Color2
 #if defined(PLATFORM_DIRECTX)
 	lpD3DDevice->SetTexture (0, NULL);								// Textur setzen
 #elif defined(PLATFORM_SDL)
-    DirectGraphics.SetTexture(  0 );
+    DirectGraphics.SetTexture( -1 );
 #endif
 
     // Linie zeichnen

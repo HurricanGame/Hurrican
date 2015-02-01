@@ -584,12 +584,12 @@ void GegnerSpinnenmaschine::DoKI(void)
 	// Testen, ob der Spieler die Spinnenmaschine berührt hat
 	// dafür nehmen wir ein anderes Rect, weil das normale GegnerRect nur das Auge ist, wo man den Gegner treffen kann
 	//
-	RECT rect;
+	//RECT rect;
 
-	rect.top    = 0;
-	rect.left   = 0;
-	rect.bottom = 317;
-	rect.right  = 400;
+	//rect.top    = 0;
+	//rect.left   = 0;
+	//rect.bottom = 317;
+	//rect.right  = 400;
 
 	//if (SpriteCollision(xPos, yPos, rect,
 	//					pPlayer->xpos, pPlayer->ypos, pPlayer->CollideRect) == true)

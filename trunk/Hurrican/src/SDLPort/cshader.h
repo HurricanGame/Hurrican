@@ -71,6 +71,10 @@ class CShader
         GLuint      NameClr;
         GLuint      NameTex;
         GLuint      NameMvp;
+#if defined(USE_ETC1)
+        GLuint      texUnit0;
+        GLuint      texUnit1;
+#endif
 
     private:
         int8_t      LoadShader      ( GLenum type, const string& path );
