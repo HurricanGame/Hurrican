@@ -94,7 +94,8 @@ void GegnerGolem::Wackeln(void)
 
 void GegnerGolem::DoDraw(void)
 {
-	D3DCOLOR Color, Color2;
+	D3DCOLOR Color;
+    //D3DCOLOR Color2;
 	float wackel = 0.0f;
 
 	if (Handlung == GEGNER_EXPLODIEREN)
@@ -105,8 +106,8 @@ void GegnerGolem::DoDraw(void)
 	int	Wert = 255-(int(DamageTaken));
 	Color = D3DCOLOR_RGBA(255, Wert, Wert, 255);
 
-	Wert /= 2;
-	Color2 = D3DCOLOR_RGBA(128, Wert, Wert, 255);
+	//Wert /= 2;
+	//Color2 = D3DCOLOR_RGBA(128, Wert, Wert, 255);
 
 	// Rotationsmatrizen erstellen
 	RECT itsRect;

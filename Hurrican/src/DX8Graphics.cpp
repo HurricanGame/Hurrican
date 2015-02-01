@@ -424,8 +424,10 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
 	lpD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 	lpD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
 #elif defined(PLATFORM_SDL)
+#if defined(USE_GL2)
     char vert[256];
     char frag[256];
+#endif
     char* output;
 
 #if defined(__WIN32__)
@@ -467,12 +469,18 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
     // Compile the shader code and link into a program
     sprintf_s(vert, "%s/data/shaders/shader_color.vert", g_storage_ext);
     sprintf_s(frag, "%s/data/shaders/shader_color.frag", g_storage_ext);
+
     if (Shaders[PROGRAM_COLOR].Load( vert, frag ) != 0) {
         return false;
     }
 
     sprintf_s(vert, "%s/data/shaders/shader_texture.vert", g_storage_ext);
+#if defined(USE_ETC1)
+    sprintf_s(frag, "%s/data/shaders/shader_etc1_texture.frag", g_storage_ext);
+#else
     sprintf_s(frag, "%s/data/shaders/shader_texture.frag", g_storage_ext);
+#endif
+
     if (Shaders[PROGRAM_TEXTURE].Load( vert, frag ) != 0) {
         return false;
     }
@@ -486,6 +494,11 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
     Shaders[PROGRAM_TEXTURE].NameClr = Shaders[PROGRAM_TEXTURE].GetAttribute( "a_Color" );
     Shaders[PROGRAM_TEXTURE].NameTex = Shaders[PROGRAM_TEXTURE].GetAttribute( "a_Texcoord0" );
     Shaders[PROGRAM_TEXTURE].NameMvp = Shaders[PROGRAM_TEXTURE].GetUniform( "u_MVPMatrix" );
+
+#if defined(USE_ETC1)
+    Shaders[PROGRAM_TEXTURE].texUnit0 = Shaders[PROGRAM_TEXTURE].GetUniform( "u_Texture0" );
+    Shaders[PROGRAM_TEXTURE].texUnit1 = Shaders[PROGRAM_TEXTURE].GetUniform( "u_Texture1" );
+#endif
 #endif /* USE_GL2 */
 
     /* Matrices setup */
@@ -762,6 +775,10 @@ void DirectGraphicsClass::RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,
 #elif defined(USE_GL2)
     // Enable attributes and uniforms for transfer
     if (ProgramCurrent == PROGRAM_TEXTURE) {
+#if defined(USE_ETC1)
+        glUniform1i( Shaders[ProgramCurrent].texUnit0, 0);
+        glUniform1i( Shaders[ProgramCurrent].texUnit1, 1);
+#endif
         glEnableVertexAttribArray( Shaders[ProgramCurrent].NameTex );
         glVertexAttribPointer( Shaders[ProgramCurrent].NameTex, 2, GL_FLOAT, GL_FALSE, stride, (uint8_t*)pVertexStreamZeroData+tex_offset );
     }
@@ -814,14 +831,19 @@ void DirectGraphicsClass::DisplayBuffer  (void)
 }
 
 #if defined(PLATFORM_SDL)
-void DirectGraphicsClass::SetTexture( GLuint texture )
+void DirectGraphicsClass::SetTexture( int32_t index )
 {
-    if (texture > 0)
+    if (index >= 0)
     {
         use_texture = true;
-        glBindTexture( GL_TEXTURE_2D, texture );
+        glBindTexture( GL_TEXTURE_2D, textures.at(index) );
 #if defined(USE_GL1)
         glEnable( GL_TEXTURE_2D );
+#endif
+#if defined(USE_ETC1)
+        glActiveTexture( GL_TEXTURE1 );
+        glBindTexture( GL_TEXTURE_2D, alphatexs.at(index) );
+        glActiveTexture( GL_TEXTURE0 );
 #endif
     }
     else
@@ -830,6 +852,12 @@ void DirectGraphicsClass::SetTexture( GLuint texture )
         glBindTexture( GL_TEXTURE_2D, 0 );
 #if defined(USE_GL1)
         glDisable( GL_TEXTURE_2D );
+#endif
+
+#if defined(USE_ETC1)
+        glActiveTexture( GL_TEXTURE1 );
+        glBindTexture( GL_TEXTURE_2D, 0 );
+        glActiveTexture( GL_TEXTURE0 );
 #endif
     }
 }
@@ -870,7 +898,7 @@ void DirectGraphicsClass::ShowBackBuffer(void)
 
         DirectGraphics.SetTexture( RenderBuffer.texture );
         RendertoBuffer( D3DPT_TRIANGLESTRIP, 2, &vertices[0] );
-        DirectGraphics.SetTexture( 0 );
+        DirectGraphics.SetTexture( -1 );
 
 #if defined(ANDROID)
         DrawTouchOverlay();
@@ -959,7 +987,11 @@ void DirectGraphicsClass::SetupFramebuffers( void )
         WindowView.h = RenderView.h;
     }
 
+#ifdef USE_320_240
+    glViewport( 0, 0, 320, 240);
+#else
     glViewport( WindowView.x, WindowView.y, WindowView.w, WindowView.h );    /* Setup our viewport. */
+#endif
 	Protokoll.WriteText( false, "Window viewport: %dx%d at %dx%d\n", WindowView.w, WindowView.h, WindowView.x, WindowView.y );
 }
 

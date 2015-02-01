@@ -147,9 +147,9 @@
 				<Option output="hurrican_pnd" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/pnd" />
 				<Option type="1" />
-				<Option compiler="cb201009_pandora_code_sourcery" />
+				<Option compiler="pandora" />
 				<Compiler>
-					<Add option="-DUSE_EGL_SDL" />
+					<Add option="-DUSE_EGL_RAW" />
 					<Add option="-DUSE_GL1" />
 					<Add option="-DUSE_GLES1" />
 					<Add option="-DUSE_PVRTC" />
@@ -180,9 +180,9 @@
 				<Option output="hurrican_pnd" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/pnd" />
 				<Option type="1" />
-				<Option compiler="cb201009_pandora_code_sourcery" />
+				<Option compiler="pandora" />
 				<Compiler>
-					<Add option="-DUSE_EGL_SDL" />
+					<Add option="-DUSE_EGL_RAW" />
 					<Add option="-DUSE_GL2" />
 					<Add option="-DUSE_GLES2" />
 					<Add option="-DUSE_PVRTC" />
@@ -513,9 +513,7 @@
 		<Unit filename="src/Player.h" />
 		<Unit filename="src/Projectiles.cpp" />
 		<Unit filename="src/Projectiles.h" />
-		<Unit filename="src/SDLPort/SDL_fmod.c">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Unit filename="src/SDLPort/SDL_fmod.cpp" />
 		<Unit filename="src/SDLPort/SDL_fmod.h" />
 		<Unit filename="src/SDLPort/SDL_port.cpp" />
 		<Unit filename="src/SDLPort/SDL_port.h" />
@@ -533,11 +531,10 @@
 			<Option target="Linux GLES2 Debug" />
 			<Option target="Pandora GLES2" />
 		</Unit>
-		<Unit filename="src/SDLPort/eglport.c">
-			<Option compilerVar="CC" />
-			<Option target="Pandora GLES1" />
-			<Option target="Linux GLES2 Debug" />
+		<Unit filename="src/SDLPort/eglport.cpp">
 			<Option target="Linux GLES1 Debug" />
+			<Option target="Linux GLES2 Debug" />
+			<Option target="Pandora GLES1" />
 			<Option target="Pandora GLES2" />
 		</Unit>
 		<Unit filename="src/SDLPort/eglport.h">

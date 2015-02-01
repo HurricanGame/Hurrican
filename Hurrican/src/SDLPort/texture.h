@@ -51,18 +51,29 @@ typedef struct IMAGE_T {
     { }
 } image_t;
 
-bool isPowerOfTwo(int x);
-int nextPowerOfTwo(int x);
-GLuint loadTexture( const char* path, SDL_Rect& dims, uint32_t size=0 );
-bool loadCompressedImage( image_t& image, const char* path );
-bool loadImage( image_t& image, const char* path, uint32_t size=0 );
+extern std::vector<GLuint> textures;
+#if defined(USE_ETC1)
+extern std::vector<GLuint> alphatexs;
+#endif
+
+int32_t LoadTexture( const char* path, SDL_Rect& dims, uint32_t size );
+GLuint load_texture( image_t& image );
+
+#if defined(USE_ETC1)
+bool loadImageETC1( image_t& image, const char* path, const char* ext );
+#elif defined(USE_PVRTC)
+bool loadImagePVRTC( image_t& image, const char* path );
+#endif
+bool loadImageSDL( image_t& image, const char* path, uint32_t size=0 );
+
 #if defined(USE_GLES1) || defined(USE_GLES2)
 void LowerResolution( SDL_Surface* surface, int32_t dimension );
 #endif
 #if defined(RGBA_5551)
 uint8_t* ConvertRGBA5551( SDL_Surface* surface, uint8_t factor );
 #endif
-void delete_texture( GLuint texture );
+
+void delete_texture( int32_t index );
 void delete_textures( void );
 
 #endif /* _TEXTURE_H_ */

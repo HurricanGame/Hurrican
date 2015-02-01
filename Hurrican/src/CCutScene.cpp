@@ -129,8 +129,8 @@ void CCutScene1::RunCutScene (void)
 
 	for (int i = 0; i < 15; i++)
 	{
-		int   a;
-		a = 255;
+		//int   a;
+		//a = 255;
 
 		// CutScene Text anzeigen, sofern ausgefüllt
 //		if (strcmp (TextArray [TEXT_CUTSCENE1_1 + i], "-") != 0)

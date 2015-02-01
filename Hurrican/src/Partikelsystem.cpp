@@ -3181,7 +3181,7 @@ bool PartikelClass::Render(void)
 #if defined(PLATFORM_DIRECTX)
 			lpD3DDevice->SetTexture (0, pPartikelGrafix[PartikelArt]->itsTexture);							// Textur setzen
 #elif defined(PLATFORM_SDL)
-            DirectGraphics.SetTexture(  pPartikelGrafix[PartikelArt]->itsTexture );
+            DirectGraphics.SetTexture( pPartikelGrafix[PartikelArt]->itsTexture );
 #endif
 
 			CurrentPartikelTexture = PartikelArt;
@@ -3219,7 +3219,7 @@ bool PartikelClass::Render(void)
 #if defined(PLATFORM_DIRECTX)
         lpD3DDevice->SetTexture (0, NULL);																	// Keine Textur setzen
 #elif defined(PLATFORM_SDL)
-        DirectGraphics.SetTexture(  0 );
+        DirectGraphics.SetTexture( -1 );
 #endif
 
 		D3DXVECTOR2 pos, dir;
@@ -3252,7 +3252,7 @@ bool PartikelClass::Render(void)
 #if defined(PLATFORM_DIRECTX)
 		lpD3DDevice->SetTexture (0, pPartikelGrafix[PartikelArt]->itsTexture);							// Textur setzen
 #elif defined(PLATFORM_SDL)
-        DirectGraphics.SetTexture(  pPartikelGrafix[PartikelArt]->itsTexture );
+        DirectGraphics.SetTexture( pPartikelGrafix[PartikelArt]->itsTexture );
 #endif
 
 		pPartikelGrafix[PartikelArt]->RenderSpriteRotated (float (xPos - pTileEngine->XOffset),

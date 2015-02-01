@@ -99,7 +99,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 	    sprintf_s(Temp, "levels/%s/%s", CommandLineParams.OwnLevelList, Filename);
 		if (FileExists(Temp))
 		{
-			loadImage(image, Temp);
+			loadImageSDL(image, Temp);
 		}
 	}
 
@@ -108,7 +108,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 	   sprintf_s(Temp, "%s/data/%s", g_storage_ext, Filename);
 		if (FileExists(Temp))
 		{
-			loadImage(image, Temp);
+			loadImageSDL(image, Temp);
 		}
 	}
 
@@ -116,7 +116,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 	{
 		if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) != false)
 	    {
-			loadImage(image, pData, Size);
+			loadImageSDL(image, pData, Size);
 			free(pData);
 		}
 	}

@@ -4048,10 +4048,11 @@ bool PlayerClass::LoadBeam (void)
 
 	// Ende des Blitzes beim Spieler leuchten lassen, falls er ihn grade noch auflädt
 	//
-	float x, y;
-
+	float x;
+    //float y;
+    
 	x = (float)(xpos - pTileEngine->XOffset+60);		// Position errechnen
-	y = (float)(ypos - pTileEngine->YOffset+36);
+	//y = (float)(ypos - pTileEngine->YOffset+36);
 
 	if (Blickrichtung == LINKS)
 		x -= 56;

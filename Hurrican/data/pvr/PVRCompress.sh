@@ -14,16 +14,16 @@ powerof2 () {
 
 rm -rf tc2
 rm -rf tc4
-rm -rf XRGB1555
+#rm -rf XRGB1555
 rm -rf ../png32
 
 mkdir tc2
 mkdir tc4
-mkdir XRGB1555
+#mkdir XRGB1555
 mkdir ../png32
 
 cd ..
-for f in ../*.bmp
+for f in *.bmp
 do
   cd pvr
   echo "Processing $f file..."
@@ -37,8 +37,8 @@ do
   # Convert the 32 bit png into the pvrtc formats
   ./PVRTexTool -fPVRTC2 -i../png32/$f.png -o tc2/$f.pvr
   ./PVRTexTool -fPVRTC4 -i../png32/$f.png -o tc4/$f.pvr
-  ./PVRTexTool -f1555 -i../png32/$f.png -o XRGB1555/$f.pvr
-  mv XRGB1555/$f.pvr XRGB1555/$f.XRGB1555
+#  ./PVRTexTool -f1555 -i../png32/$f.png -o XRGB1555/$f.pvr
+#  mv XRGB1555/$f.pvr XRGB1555/$f.XRGB1555
 
   cd ..
 done
@@ -54,8 +54,8 @@ do
 
   ./PVRTexTool -fPVRTC2 -i../png32/$f.png -o tc2/$f.pvr
   ./PVRTexTool -fPVRTC4 -i../png32/$f.png -o tc4/$f.pvr
-  ./PVRTexTool -f1555 -i../png32/$f.png -o XRGB1555/$f.pvr
-  mv XRGB1555/$f.pvr XRGB1555/$f.XRGB1555
+#  ./PVRTexTool -f1555 -i../png32/$f.png -o XRGB1555/$f.pvr
+#  mv XRGB1555/$f.pvr XRGB1555/$f.XRGB1555
 
   cd ..
 done
