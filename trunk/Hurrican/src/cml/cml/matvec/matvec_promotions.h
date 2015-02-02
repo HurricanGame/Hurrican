@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -21,8 +21,10 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #include <cml/et/scalar_promotions.h>
 #include <cml/vector/vector_promotions.h>
 
-namespace cml {
-namespace et {
+namespace cml
+{
+namespace et
+{
 
 /* Default mat/vec type promotion template. */
 template<typename LeftT, typename RightT> struct MatVecPromote;
@@ -38,15 +40,15 @@ struct MatVecPromote< cml::matrix<E1,AT1,BO,L>, cml::vector<E2,AT2> >
 
     /* Promote the arrays: */
     typedef typename ArrayPromote<
-        typename matrix_type::array_type,
-        typename vector_type::array_type
-    >::type promoted_array;
+    typename matrix_type::array_type,
+             typename vector_type::array_type
+             >::type promoted_array;
 
     /* The deduced vector result type: */
     typedef cml::vector<
-        typename promoted_array::value_type,
-        typename promoted_array::generator_type
-    > type;
+    typename promoted_array::value_type,
+             typename promoted_array::generator_type
+             > type;
 
     /* The deduced temporary type: */
     typedef typename type::temporary_type temporary_type;
@@ -66,15 +68,15 @@ struct MatVecPromote< cml::vector<E1,AT1>, cml::matrix<E2,AT2,BO,L> >
 
     /* Promote the arrays: */
     typedef typename ArrayPromote<
-        typename vector_type::array_type,
-        typename matrix_type::array_type
-    >::type promoted_array;
+    typename vector_type::array_type,
+             typename matrix_type::array_type
+             >::type promoted_array;
 
     /* The deduced vector result type: */
     typedef cml::vector<
-        typename promoted_array::value_type,
-        typename promoted_array::generator_type
-    > type;
+    typename promoted_array::value_type,
+             typename promoted_array::generator_type
+             > type;
 
     /* The deduced temporary type: */
     typedef typename type::temporary_type temporary_type;

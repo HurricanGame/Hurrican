@@ -5,17 +5,17 @@
 #include "Gegner_Stuff.h"
 
 class GegnerJaeger : public GegnerClass
-{	
-	private :
-		float smokeDelay;
+{
+private :
+    float smokeDelay;
 
-	public :
+public :
 
-	GegnerJaeger(int  Wert1, int Wert2,					// Konstruktor
-					 bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-	void DoDraw		   (void);							// Gegner individuell rendern
+    GegnerJaeger(int  Wert1, int Wert2,					// Konstruktor
+                 bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw		   (void);							// Gegner individuell rendern
 };
 
 #endif

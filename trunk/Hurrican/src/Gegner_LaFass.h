@@ -6,13 +6,13 @@
 
 class GegnerLaFass : public GegnerClass
 {
-	public:
+public:
 
-	GegnerLaFass  (int Wert1,	int Wert2,			// Konstruktor
-						bool		  Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerLaFass  (int Wert1,	int Wert2,			// Konstruktor
+                   bool		  Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

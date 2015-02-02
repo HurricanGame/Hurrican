@@ -18,16 +18,16 @@
 
 class Logdatei
 {
-	private:
-		char itsFilename[20];								// Dateiname der Log-Datei
+private:
+    char itsFilename[20];								// Dateiname der Log-Datei
 
-	public:
-		bool	delLogFile;									// Logfile am Ende löschen, wenn kein Fehler auftrat
+public:
+    bool	delLogFile;									// Logfile am Ende löschen, wenn kein Fehler auftrat
 
-		     Logdatei    (const char Name[20]);					// Konstruktor
-			~Logdatei    (void);							// Desktruktor;
-		void WriteText   (bool Abbruch, const char* text, ...);	// Text in Datei schreiben
-		void WriteValue  (int value);						// Wert in Datei schreiben
+    Logdatei    (const char Name[20]);					// Konstruktor
+    ~Logdatei    (void);							// Desktruktor;
+    void WriteText   (bool Abbruch, const char* text, ...);	// Text in Datei schreiben
+    void WriteValue  (int value);						// Wert in Datei schreiben
 };
 
 // --------------------------------------------------------------------------------------

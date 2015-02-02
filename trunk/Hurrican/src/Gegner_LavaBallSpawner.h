@@ -6,14 +6,14 @@
 
 class GegnerLavaBallSpawner : public GegnerClass
 {
-	public :
-		float			Delay;						
+public :
+    float			Delay;
 
-	GegnerLavaBallSpawner (int  Wert1, int Wert2,				// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerLavaBallSpawner (int  Wert1, int Wert2,				// Konstruktor
+                           bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

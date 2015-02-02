@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -17,7 +17,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #include <cml/quaternion/quaternion_expr.h>
 #include <cml/quaternion/quatop_macros.h>
 
-namespace cml {
+namespace cml
+{
 
 CML_QUAT_UNIOP(    operator+, et::OpPos)
 CML_QUATXPR_UNIOP( operator+, et::OpPos)

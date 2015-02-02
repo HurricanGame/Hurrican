@@ -5,17 +5,17 @@
 #include "Gegner_Stuff.h"
 
 class GegnerSchwabbel : public GegnerClass
-{	
-	private:
-		float	shotdelay;
+{
+private:
+    float	shotdelay;
 
-	public :
+public :
 
-	GegnerSchwabbel(int  Wert1, int Wert2,				// Konstruktor
-					 bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerSchwabbel(int  Wert1, int Wert2,				// Konstruktor
+                    bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

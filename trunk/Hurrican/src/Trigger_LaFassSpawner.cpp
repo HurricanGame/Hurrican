@@ -13,22 +13,22 @@
 
 GegnerLaFassSpawner::GegnerLaFassSpawner(int Wert1, int Wert2, bool Light)
 {
-	Handlung		= GEGNER_STEHEN;
-	BlickRichtung	= RECHTS;
-	Energy			= 100;
-	Value1			= Wert1;
-	Value2			= Wert2;
+    Handlung		= GEGNER_STEHEN;
+    BlickRichtung	= RECHTS;
+    Energy			= 100;
+    Value1			= Wert1;
+    Value2			= Wert2;
 
-	// default wert
-	if (Value2 == 0)
-		Value2 = 40;
+    // default wert
+    if (Value2 == 0)
+        Value2 = 40;
 
-	ChangeLight		= Light;
-	Destroyable		= false;
-	OwnDraw			= true;
-	AnimCount		= (float)(Wert2);
-	DontMove		= true;
-	Active			= true;
+    ChangeLight		= Light;
+    Destroyable		= false;
+    OwnDraw			= true;
+    AnimCount		= (float)(Wert2);
+    DontMove		= true;
+    Active			= true;
 }
 
 // --------------------------------------------------------------------------------------
@@ -37,24 +37,24 @@ GegnerLaFassSpawner::GegnerLaFassSpawner(int Wert1, int Wert2, bool Light)
 
 void GegnerLaFassSpawner::DoKI(void)
 {
-	// Fass spawnen?
-	if (PlayerAbstand() < 800)
-		AnimCount -= 1.0f SYNC;
+    // Fass spawnen?
+    if (PlayerAbstand() < 800)
+        AnimCount -= 1.0f SYNC;
 
-	if (AnimCount <= 0.0f)
-	{	
-		AnimCount = (float)(Value2);
+    if (AnimCount <= 0.0f)
+    {
+        AnimCount = (float)(Value2);
 
-		// in die richtige Richtung schubsen
-		if (Value1 == 0)
-		{			
- 			pGegner->PushGegner(xPos, yPos, LAFASS, -5, 0, false);			
-		}
-		else
-		{			
-			pGegner->PushGegner(xPos, yPos, LAFASS, 5, 0, false);			
-		}
-	}
+        // in die richtige Richtung schubsen
+        if (Value1 == 0)
+        {
+            pGegner->PushGegner(xPos, yPos, LAFASS, -5, 0, false);
+        }
+        else
+        {
+            pGegner->PushGegner(xPos, yPos, LAFASS, 5, 0, false);
+        }
+    }
 }
 
 // --------------------------------------------------------------------------------------

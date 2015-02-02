@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -19,7 +19,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #include <cml/constants.h>
 #include <cml/mathlib/epsilon.h>
 
-namespace cml {
+namespace cml
+{
 
 /* fixed-size vectors */
 typedef vector< int,    fixed<2> > vector2i;
@@ -91,13 +92,13 @@ typedef matrix< double, fixed<3,4>, col_basis, col_major > matrix34d_c;
 
 /* quaternions */
 typedef quaternion<float, fixed<>,vector_first,negative_cross>
-    quaternionf_n;
+quaternionf_n;
 typedef quaternion<float, fixed<>,vector_first,positive_cross>
-    quaternionf_p;
+quaternionf_p;
 typedef quaternion<double,fixed<>,vector_first,negative_cross>
-    quaterniond_n;
+quaterniond_n;
 typedef quaternion<double,fixed<>,vector_first,positive_cross>
-    quaterniond_p;
+quaterniond_p;
 typedef quaternion<float> quaternionf;
 typedef quaternion<double> quaterniond;
 

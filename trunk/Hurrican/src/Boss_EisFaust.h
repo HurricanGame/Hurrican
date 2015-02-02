@@ -6,13 +6,13 @@
 
 class GegnerEisFaust : public GegnerClass
 {
-	public:
+public:
 
-	GegnerEisFaust   (int Wert1,	int Wert2,			// Konstruktor
-						bool		  Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerEisFaust   (int Wert1,	int Wert2,			// Konstruktor
+                      bool		  Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

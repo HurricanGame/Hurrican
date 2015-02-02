@@ -1,6 +1,6 @@
 // Datei : Intro.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Klasse für das Hurrican Intro
 //
@@ -37,18 +37,18 @@
 
 class IntroClass
 {
-	private:
-		DirectGraphicsSprite	Background[6];		
-		int						BildNr;
-		int						TextOff;
-		float					Counter;
+private:
+    DirectGraphicsSprite	Background[6];
+    int						BildNr;
+    int						TextOff;
+    float					Counter;
 
-	public:
-		int						Zustand;
-			IntroClass(void);							// Konstruktor
-		   ~IntroClass(void);							// Destruktor
-	   void DoIntro   (void);							// Intro ablaufen lassen
-	   void EndIntro  (void);
+public:
+    int						Zustand;
+    IntroClass(void);							// Konstruktor
+    ~IntroClass(void);							// Destruktor
+    void DoIntro   (void);							// Intro ablaufen lassen
+    void EndIntro  (void);
 
 };
 

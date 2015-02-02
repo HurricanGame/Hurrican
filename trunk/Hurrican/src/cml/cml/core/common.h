@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -30,7 +30,8 @@ typedef _W64 int   ssize_t;
 #include <utility>              // for std::pair<>
 #include <cml/defaults.h>
 
-namespace cml {
+namespace cml
+{
 
 /** 1D tag (to select array shape). */
 struct oned_tag {};

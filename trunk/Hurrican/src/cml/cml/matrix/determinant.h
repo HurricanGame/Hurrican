@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -17,8 +17,10 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 
 #include <cml/matrix/lu.h>
 
-namespace cml {
-namespace detail {
+namespace cml
+{
+namespace detail
+{
 
 /* Need to use a functional, since template functions cannot be
  * specialized.  N is used to differentiate dimension only, so this can be
@@ -52,8 +54,8 @@ struct determinant_f<MatT,3>
     typename MatT::value_type operator()(const MatT& M) const
     {
         return M(0,0)*(M(1,1)*M(2,2) - M(1,2)*M(2,1))
-             + M(0,1)*(M(1,2)*M(2,0) - M(1,0)*M(2,2))
-             + M(0,2)*(M(1,0)*M(2,1) - M(1,1)*M(2,0));
+               + M(0,1)*(M(1,2)*M(2,0) - M(1,0)*M(2,2))
+               + M(0,2)*(M(1,0)*M(2,1) - M(1,1)*M(2,0));
     }
 
 };
@@ -99,24 +101,24 @@ struct determinant_f<MatT,4>
         value_type m_20_32_22_30 = M(2,0)*M(3,2) - M(2,2)*M(3,0);
 
         value_type d00 = M(0,0)*(
-                M(1,1) * m_22_33_23_32
-              + M(1,2) * m_23_31_21_33
-              + M(1,3) * m_21_32_22_31);
+                             M(1,1) * m_22_33_23_32
+                             + M(1,2) * m_23_31_21_33
+                             + M(1,3) * m_21_32_22_31);
 
         value_type d01 = M(0,1)*(
-                M(1,0) * m_22_33_23_32
-              + M(1,2) * m_23_30_20_33
-              + M(1,3) * m_20_32_22_30);
+                             M(1,0) * m_22_33_23_32
+                             + M(1,2) * m_23_30_20_33
+                             + M(1,3) * m_20_32_22_30);
 
         value_type d02 = M(0,2)*(
-                M(1,0) * - m_23_31_21_33
-              + M(1,1) * m_23_30_20_33
-              + M(1,3) * m_20_31_21_30);
+                             M(1,0) * - m_23_31_21_33
+                             + M(1,1) * m_23_30_20_33
+                             + M(1,3) * m_20_31_21_30);
 
         value_type d03 = M(0,3)*(
-                M(1,0) * m_21_32_22_31
-              + M(1,1) * - m_20_32_22_30
-              + M(1,2) * m_20_31_21_30);
+                             M(1,0) * m_21_32_22_31
+                             + M(1,1) * - m_20_32_22_30
+                             + M(1,2) * m_20_31_21_30);
 
         return d00 - d01 + d02 - d03;
     }
@@ -158,11 +160,16 @@ determinant(const MatT& M, dynamic_size_tag)
     cml::et::CheckedSquare(M, dynamic_size_tag());
 
     /* Dispatch based upon the matrix dimension: */
-    switch(M.rows()) {
-        case 2:  return determinant_f<MatT,2>()(M);
-        case 3:  return determinant_f<MatT,3>()(M);
-        case 4:  return determinant_f<MatT,4>()(M);
-        default: return determinant_f<MatT,0>()(M);     // > 4x4.
+    switch(M.rows())
+    {
+    case 2:
+        return determinant_f<MatT,2>()(M);
+    case 3:
+        return determinant_f<MatT,3>()(M);
+    case 4:
+        return determinant_f<MatT,4>()(M);
+    default:
+        return determinant_f<MatT,0>()(M);     // > 4x4.
     }
 }
 

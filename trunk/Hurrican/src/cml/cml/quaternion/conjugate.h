@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -15,14 +15,16 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 
 #include <cml/quaternion/quaternion_expr.h>
 
-namespace cml {
-namespace et {
+namespace cml
+{
+namespace et
+{
 
 /** An expression node for conjugating a quaternion. */
 template<class ExprT>
 class ConjugateOp
 {
-  public:
+public:
 
     typedef ConjugateOp<ExprT> expr_type;
 
@@ -61,13 +63,14 @@ class ConjugateOp
     typedef typename result_type::order_type order_type;
 
 
-  public:
+public:
 
     /** Record result size as an enum. */
     enum { array_size = ExprT::array_size };
 
     /** Localize the ordering as an enum. */
-    enum {
+    enum
+    {
         W = order_type::W,
         X = order_type::X,
         Y = order_type::Y,
@@ -75,37 +78,43 @@ class ConjugateOp
     };
 
 
-  public:
+public:
 
     /** Return the real part of the expression. */
-    value_type real() const {
+    value_type real() const
+    {
         return m_expr.real();
     }
 
     /** Return the vector part of the expression. */
-    imaginary_type imaginary() const {
+    imaginary_type imaginary() const
+    {
         return -m_expr.imaginary();
     }
 
     /** Return the Cayley norm of the expression. */
-    value_type norm() const {
+    value_type norm() const
+    {
         return length_squared();
     }
 
     /** Return square of the quaternion length. */
-    value_type length_squared() const {
+    value_type length_squared() const
+    {
         return dot(
-                QuaternionXpr<expr_type>(*this),
-                QuaternionXpr<expr_type>(*this));
+                   QuaternionXpr<expr_type>(*this),
+                   QuaternionXpr<expr_type>(*this));
     }
 
     /** Return the quaternion length. */
-    value_type length() const {
+    value_type length() const
+    {
         return std::sqrt(length_squared());
     }
 
     /** Return the result as a normalized quaternion. */
-    temporary_type normalize() const {
+    temporary_type normalize() const
+    {
         temporary_type q(QuaternionXpr<expr_type>(*this));
         return q.normalize();
     }
@@ -114,23 +123,28 @@ class ConjugateOp
      *
      * The conjugate of quaternion s + v is s - v.
      */
-    value_type operator[](size_t i) const {
+    value_type operator[](size_t i) const
+    {
         return (i == W) ? m_expr[W] : - m_expr[i] ;
     }
 
 
-  public:
+public:
 
     /** Return size of this expression (same as argument's size). */
-    size_t size() const {
+    size_t size() const
+    {
         return m_expr.size();
     }
 
     /** Return reference to contained expression. */
-    expr_reference expression() const { return m_expr; }
+    expr_reference expression() const
+    {
+        return m_expr;
+    }
 
 
-  public:
+public:
 
     /** Construct from the subexpression. */
     explicit ConjugateOp(expr_reference expr) : m_expr(expr) {}
@@ -139,12 +153,12 @@ class ConjugateOp
     ConjugateOp(const expr_type& e) : m_expr(e.m_expr) {}
 
 
-  protected:
+protected:
 
     expr_reference m_expr;
 
 
-  private:
+private:
 
     /* Cannot be assigned to: */
     expr_type& operator=(const expr_type&);
@@ -165,8 +179,14 @@ struct ExprTraits< ConjugateOp<ExprT> >
     typedef typename expr_type::assignable_tag assignable_tag;
     typedef expr_node_tag node_tag;
 
-    value_type get(const expr_type& v, size_t i) const { return v[i]; }
-    size_t size(const expr_type& e) const { return e.size(); }
+    value_type get(const expr_type& v, size_t i) const
+    {
+        return v[i];
+    }
+    size_t size(const expr_type& e) const
+    {
+        return e.size();
+    }
 };
 
 } // namespace et

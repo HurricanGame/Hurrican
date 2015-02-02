@@ -5,16 +5,16 @@
 #include "Gegner_Stuff.h"
 
 class GegnerMade : public GegnerClass
-{	
-	private :
-		float movesin;
-	public :
+{
+private :
+    float movesin;
+public :
 
-	GegnerMade (int  Wert1, int Wert2,					// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner KI bewegen
-	void DoDraw		   (void);							// eigene draw routine
+    GegnerMade (int  Wert1, int Wert2,					// Konstruktor
+                bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner KI bewegen
+    void DoDraw		   (void);							// eigene draw routine
 };
 
 #endif

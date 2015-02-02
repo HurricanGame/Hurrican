@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -68,8 +68,10 @@ _op_ (                                                                  \
 }
 
 
-namespace cml {
-namespace detail {
+namespace cml
+{
+namespace detail
+{
 
 /** Vector strict weak ordering relationship.
  *
@@ -87,36 +89,40 @@ vector_weak_order(const LeftT& left, const RightT& right, OpT)
 
     /* vector_comparison() requires vector expressions: */
     CML_STATIC_REQUIRE_M(
-            (et::VectorExpressions<LeftT,RightT>::is_true),
-            vector_comparison_expects_vector_args_error);
+        (et::VectorExpressions<LeftT,RightT>::is_true),
+        vector_comparison_expects_vector_args_error);
     /* Note: parens are required here so that the preprocessor ignores the
      * commas:
      */
 
     typedef typename et::VectorPromote<
-        typename left_traits::result_type,
-        typename right_traits::result_type
-    >::type result_type;
+    typename left_traits::result_type,
+             typename right_traits::result_type
+             >::type result_type;
     typedef typename result_type::size_tag size_tag;
 
     /* Verify expression size: */
     ssize_t N = (ssize_t) et::CheckedSize(left,right,size_tag());
-    for(ssize_t i = 0; i < N; ++ i) {
+    for(ssize_t i = 0; i < N; ++ i)
+    {
         if(OpT().apply(
                     left_traits().get(left,i),
                     right_traits().get(right,i)
-                    ))
+                ))
         {
             /* If weak order (a < b) is satisfied, return true: */
             return true;
-        } else if(OpT().apply(
+        }
+        else if(OpT().apply(
                     right_traits().get(right,i),
                     left_traits().get(left,i)
-                    ))
+                ))
         {
             /* If !(b < a), then return false: */
             return false;
-        } else {
+        }
+        else
+        {
 
             /* Have !(a < b) && !(b < a) <=> (a >= b && b >= a) <=> (a == b).
              * so need to test next element:
@@ -145,27 +151,28 @@ vector_total_order(const LeftT& left, const RightT& right, OpT)
 
     /* vector_comparison() requires vector expressions: */
     CML_STATIC_REQUIRE_M(
-            (et::VectorExpressions<LeftT,RightT>::is_true),
-            vector_comparison_expects_vector_args_error);
+        (et::VectorExpressions<LeftT,RightT>::is_true),
+        vector_comparison_expects_vector_args_error);
     /* Note: parens are required here so that the preprocessor ignores the
      * commas:
      */
 
     typedef typename et::VectorPromote<
-        typename left_traits::result_type,
-        typename right_traits::result_type
-    >::type result_type;
+    typename left_traits::result_type,
+             typename right_traits::result_type
+             >::type result_type;
     typedef typename result_type::size_tag size_tag;
 
     /* Verify expression size: */
     ssize_t N = (ssize_t) et::CheckedSize(left,right,size_tag());
-    for(ssize_t i = 0; i < N; ++ i) {
+    for(ssize_t i = 0; i < N; ++ i)
+    {
 
         /* Test total order: */
         if(OpT().apply(
                     left_traits().get(left,i),
                     right_traits().get(right,i)
-		    ))
+                ))
         {
             /* Automatically true if weak order (a <= b) && !(b <= a) <=>
              * (a <= b) && (b > a) <=> (a < b) is satisfied:
@@ -173,7 +180,7 @@ vector_total_order(const LeftT& left, const RightT& right, OpT)
             if(!OpT().apply(
                         right_traits().get(right,i),
                         left_traits().get(left,i)
-                        ))
+                    ))
                 return true;
 
             /* Otherwise, have equality (a <= b) && (b <= a), so continue
@@ -182,8 +189,10 @@ vector_total_order(const LeftT& left, const RightT& right, OpT)
             else
                 continue;
 
-        } else {
-            
+        }
+        else
+        {
+
             /* Total order isn't satisfied (a > b), so return false: */
             return false;
         }

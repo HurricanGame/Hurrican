@@ -5,16 +5,16 @@
 #include "Gegner_Stuff.h"
 
 class GegnerStarBig : public GegnerClass
-{	
-	private :
-		int ShotCount;
-	public :
+{
+private :
+    int ShotCount;
+public :
 
-	GegnerStarBig (int  Wert1, int Wert2,			// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerStarBig (int  Wert1, int Wert2,			// Konstruktor
+                   bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

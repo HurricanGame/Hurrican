@@ -5,21 +5,21 @@
 #include "Gegner_Stuff.h"
 
 class GegnerRotzpott : public GegnerClass
-{	
-	private:
-		float	GunWinkel;
-		float	ShotDelay;
-		float	NewWinkel;
+{
+private:
+    float	GunWinkel;
+    float	ShotDelay;
+    float	NewWinkel;
 
-	public :
+public :
 
-	GegnerRotzpott (int  Wert1, int Wert2,				// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-	void DoDraw		   (void);							// Eigene Drawroutine
-	void CalcKnarreWinkel(void);
-														
+    GegnerRotzpott (int  Wert1, int Wert2,				// Konstruktor
+                    bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw		   (void);							// Eigene Drawroutine
+    void CalcKnarreWinkel(void);
+
 };
 
 #endif

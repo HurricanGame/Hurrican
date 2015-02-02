@@ -6,13 +6,13 @@
 
 class GegnerEndLevel : public GegnerClass
 {
-	public:
+public:
 
-	GegnerEndLevel   (int Wert1,	int Wert2,			// Konstruktor
-						bool		  Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerEndLevel   (int Wert1,	int Wert2,			// Konstruktor
+                      bool		  Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

@@ -6,17 +6,17 @@
 
 class GegnerPowerBlock : public GegnerClass
 {
-	private:
-		int  WeaponSpawned;
-		bool AlreadySpawned[16];
-	public:
-		int	ExtraType;
+private:
+    int  WeaponSpawned;
+    bool AlreadySpawned[16];
+public:
+    int	ExtraType;
 
-	GegnerPowerBlock	(int Wert1, int Wert2,			// Konstruktor
-						 bool			Light);	
+    GegnerPowerBlock	(int Wert1, int Wert2,			// Konstruktor
+                         bool			Light);
     void GegnerExplode  (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-	void DoDraw		   (void);							// Gegner individuell rendern
+    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw		   (void);							// Gegner individuell rendern
 };
 
 #endif

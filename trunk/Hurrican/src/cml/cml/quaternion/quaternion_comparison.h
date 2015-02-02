@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -68,8 +68,10 @@ _op_ (                                                                  \
 }
 
 
-namespace cml {
-namespace detail {
+namespace cml
+{
+namespace detail
+{
 
 /** Quaternion strict weak ordering relationship.
  *
@@ -87,34 +89,38 @@ quaternion_weak_order(const LeftT& left, const RightT& right, OpT)
 
     /* quaternion_comparison() requires quaternion expressions: */
     CML_STATIC_REQUIRE_M(
-            (et::QuaternionExpressions<LeftT,RightT>::is_true),
-            quaternion_comparison_expects_quaternion_args_error);
+        (et::QuaternionExpressions<LeftT,RightT>::is_true),
+        quaternion_comparison_expects_quaternion_args_error);
     /* Note: parens are required here so that the preprocessor ignores the
      * commas:
      */
 
     typedef typename et::QuaternionPromote<
-        typename left_traits::result_type,
-        typename right_traits::result_type
-    >::type result_type;
+    typename left_traits::result_type,
+             typename right_traits::result_type
+             >::type result_type;
 
-    for(ssize_t i = 0; i < result_type::array_size; ++ i) {
+    for(ssize_t i = 0; i < result_type::array_size; ++ i)
+    {
 
         if(OpT().apply(
                     left_traits().get(left,i),
                     right_traits().get(right,i)
-                    ))
+                ))
         {
             /* If weak order (a < b) is satisfied, return true: */
             return true;
-        } else if(OpT().apply(
+        }
+        else if(OpT().apply(
                     right_traits().get(right,i),
                     left_traits().get(left,i)
-                    ))
+                ))
         {
             /* If !(b < a), then return false: */
             return false;
-        } else {
+        }
+        else
+        {
 
             /* Have !(a < b) && !(b < a) <=> (a >= b && b >= a) <=> (a == b).
              * so need to test next element:
@@ -143,24 +149,25 @@ quaternion_total_order(const LeftT& left, const RightT& right, OpT)
 
     /* quaternion_comparison() requires quaternion expressions: */
     CML_STATIC_REQUIRE_M(
-            (et::QuaternionExpressions<LeftT,RightT>::is_true),
-            quaternion_comparison_expects_quaternion_args_error);
+        (et::QuaternionExpressions<LeftT,RightT>::is_true),
+        quaternion_comparison_expects_quaternion_args_error);
     /* Note: parens are required here so that the preprocessor ignores the
      * commas:
      */
 
     typedef typename et::QuaternionPromote<
-        typename left_traits::result_type,
-        typename right_traits::result_type
-    >::type result_type;
+    typename left_traits::result_type,
+             typename right_traits::result_type
+             >::type result_type;
 
-    for(ssize_t i = 0; i < result_type::array_size; ++ i) {
+    for(ssize_t i = 0; i < result_type::array_size; ++ i)
+    {
 
         /* Test total order: */
         if(OpT().apply(
                     left_traits().get(left,i),
                     right_traits().get(right,i)
-		    ))
+                ))
         {
             /* Automatically true if weak order (a <= b) && !(b <= a) <=>
              * (a <= b) && (b > a) <=> (a < b) is satisfied:
@@ -168,7 +175,7 @@ quaternion_total_order(const LeftT& left, const RightT& right, OpT)
             if(!OpT().apply(
                         right_traits().get(right,i),
                         left_traits().get(left,i)
-                        ))
+                    ))
                 return true;
 
             /* Otherwise, have equality (a <= b) && (b <= a), so continue
@@ -177,8 +184,10 @@ quaternion_total_order(const LeftT& left, const RightT& right, OpT)
             else
                 continue;
 
-        } else {
-            
+        }
+        else
+        {
+
             /* Total order isn't satisfied (a > b), so return false: */
             return false;
         }

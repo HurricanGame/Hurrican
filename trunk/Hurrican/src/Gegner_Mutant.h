@@ -5,16 +5,16 @@
 #include "Gegner_Stuff.h"
 
 class GegnerMutant : public GegnerClass
-{	
-	private :
-		float zRot;
-		float JumpDelay;
-	public :
+{
+private :
+    float zRot;
+    float JumpDelay;
+public :
 
-	GegnerMutant(int  Wert1, int Wert2,					// Konstruktor
-					 bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
+    GegnerMutant(int  Wert1, int Wert2,					// Konstruktor
+                 bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
 };
 
 #endif

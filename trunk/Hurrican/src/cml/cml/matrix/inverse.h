@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -16,8 +16,10 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #include <vector>
 #include <cml/matrix/lu.h>
 
-namespace cml {
-namespace detail {
+namespace cml
+{
+namespace detail
+{
 
 /* Need to use a functional, since template functions cannot be
  * specialized. _tag is used to specialize based upon dimension:
@@ -44,8 +46,10 @@ struct inverse_f<MatT,2>
 
         /* Compute determinant and inverse: */
         value_type D = value_type(1) / (M(0,0)*M(1,1) - M(0,1)*M(1,0));
-        Z(0,0) =   M(1,1)*D; Z(0,1) = - M(0,1)*D;
-        Z(1,0) = - M(1,0)*D; Z(1,1) =   M(0,0)*D;
+        Z(0,0) =   M(1,1)*D;
+        Z(0,1) = - M(0,1)*D;
+        Z(1,0) = - M(1,0)*D;
+        Z(1,1) =   M(0,0)*D;
 
         return Z;
     }
@@ -88,9 +92,15 @@ struct inverse_f<MatT,3>
         cml::et::detail::Resize(Z,3,3);
 
         /* Assign the inverse as (1/D) * (cofactor matrix)^T: */
-        Z(0,0) = m_00*D;  Z(0,1) = m_10*D;  Z(0,2) = m_20*D;
-        Z(1,0) = m_01*D;  Z(1,1) = m_11*D;  Z(1,2) = m_21*D;
-        Z(2,0) = m_02*D;  Z(2,1) = m_12*D;  Z(2,2) = m_22*D;
+        Z(0,0) = m_00*D;
+        Z(0,1) = m_10*D;
+        Z(0,2) = m_20*D;
+        Z(1,0) = m_01*D;
+        Z(1,1) = m_11*D;
+        Z(1,2) = m_21*D;
+        Z(2,0) = m_02*D;
+        Z(2,1) = m_12*D;
+        Z(2,2) = m_22*D;
 
         return Z;
     }
@@ -197,11 +207,23 @@ struct inverse_f<MatT,4>
         cml::et::detail::Resize(Z,4,4);
 
         value_type D = value_type(1) /
-            (M(0,0)*d00 - M(0,1)*d01 + M(0,2)*d02 - M(0,3)*d03);
-        Z(0,0) = +d00*D; Z(0,1) = -d10*D; Z(0,2) = +d20*D; Z(0,3) = -d30*D;
-        Z(1,0) = -d01*D; Z(1,1) = +d11*D; Z(1,2) = -d21*D; Z(1,3) = +d31*D;
-        Z(2,0) = +d02*D; Z(2,1) = -d12*D; Z(2,2) = +d22*D; Z(2,3) = -d32*D;
-        Z(3,0) = -d03*D; Z(3,1) = +d13*D; Z(3,2) = -d23*D; Z(3,3) = +d33*D;
+                       (M(0,0)*d00 - M(0,1)*d01 + M(0,2)*d02 - M(0,3)*d03);
+        Z(0,0) = +d00*D;
+        Z(0,1) = -d10*D;
+        Z(0,2) = +d20*D;
+        Z(0,3) = -d30*D;
+        Z(1,0) = -d01*D;
+        Z(1,1) = +d11*D;
+        Z(1,2) = -d21*D;
+        Z(1,3) = +d31*D;
+        Z(2,0) = +d02*D;
+        Z(2,1) = -d12*D;
+        Z(2,2) = +d22*D;
+        Z(2,3) = -d32*D;
+        Z(3,0) = -d03*D;
+        Z(3,1) = +d13*D;
+        Z(3,2) = -d23*D;
+        Z(3,3) = +d33*D;
 
         return Z;
     }
@@ -213,7 +235,7 @@ struct inverse_f<MatT,4>
  * but the commented-out lines of code show where the calls to these functions
  * should go if and when they become available.
  */
- 
+
 /* @todo: In-place version, and address memory allocation for pivot vector.
  */
 
@@ -225,7 +247,7 @@ struct inverse_f
     {
         /* Shorthand. */
         typedef typename MatT::value_type value_type;
-        
+
         /* Size of matrix */
         size_t N = M.rows();
 
@@ -240,17 +262,23 @@ struct inverse_f
         std::vector<size_t> pivoted(N,0);
 
         /* For each column */
-        for (size_t i = 0; i < N; ++i) {
-        
+        for (size_t i = 0; i < N; ++i)
+        {
+
             /* Find the pivot */
             size_t row = 0, col = 0;
             value_type max = value_type(0);
-            for (size_t j = 0; j < N; ++j) {
-                if (!pivoted[j]) {
-                    for (size_t k = 0; k < N; ++k) {
-                        if (!pivoted[k]) {
+            for (size_t j = 0; j < N; ++j)
+            {
+                if (!pivoted[j])
+                {
+                    for (size_t k = 0; k < N; ++k)
+                    {
+                        if (!pivoted[k])
+                        {
                             value_type mag = std::fabs(Z(j,k));
-                            if (mag > max) {
+                            if (mag > max)
+                            {
                                 max = mag;
                                 row = j;
                                 col = k;
@@ -266,30 +294,36 @@ struct inverse_f
             col_index[i] = col;
 
             /* Swap rows if necessary */
-            if (row != col) {
+            if (row != col)
+            {
                 /*Z.row_op_swap(row,col);*/
-                for (size_t j = 0; j < Z.cols(); ++j) {
+                for (size_t j = 0; j < Z.cols(); ++j)
+                {
                     std::swap(Z(row,j),Z(col,j));
                 }
             }
-            
+
             /* Process pivot row */
             pivoted[col] = true;
             value_type pivot = Z(col,col);
             Z(col,col) = value_type(1);
             /*Z.row_op_mult(col,value_type(1)/pivot);*/
             value_type k = value_type(1)/pivot;
-            for (size_t j = 0; j < Z.cols(); ++j) {
+            for (size_t j = 0; j < Z.cols(); ++j)
+            {
                 Z(col,j) *= k;
             }
 
             /* Process other rows */
-            for (size_t j = 0; j < N; ++j) {
-                if (j != col) {
+            for (size_t j = 0; j < N; ++j)
+            {
+                if (j != col)
+                {
                     value_type mult = -Z(j,col);
                     Z(j,col) = value_type(0);
                     /*Z.row_op_add_mult(col,j,mult);*/
-                    for (size_t k = 0; k < Z.cols(); ++k) {
+                    for (size_t k = 0; k < Z.cols(); ++k)
+                    {
                         Z(j,k) += mult * Z(col,k);
                     }
                 }
@@ -297,10 +331,13 @@ struct inverse_f
         }
 
         /* Swap columns if necessary */
-        for (int i = N-1; i >= 0; --i) {
-            if (row_index[i] != col_index[i]) {
+        for (int i = N-1; i >= 0; --i)
+        {
+            if (row_index[i] != col_index[i])
+            {
                 /*Z.col_op_swap(row_index[i],col_index[i]);*/
-                for (size_t j = 0; j < Z.rows(); ++j) {
+                for (size_t j = 0; j < Z.rows(); ++j)
+                {
                     std::swap(Z(j,row_index[i]),Z(j,col_index[i]));
                 }
             }
@@ -315,7 +352,7 @@ struct inverse_f
  * pivoting in the implementation, but we may switch back to it at some future
  * time.
  */
- 
+
 #if 0
 
 /* General NxN inverse by LU factorization:  */
@@ -345,12 +382,14 @@ struct inverse_f
         /* XXX Need a fill() function here. */
 
         /* Use lu_solve to solve M*x = v for x, where v = [0 ... 1 ... 0]^T: */
-        for(size_t i = 0; i < N; ++i) {
+        for(size_t i = 0; i < N; ++i)
+        {
             v[i] = 1.;
             x = lu_solve(LU,v);
 
             /* x is column i of the inverse of LU: */
-            for(size_t k = 0; k < N; ++ k) {
+            for(size_t k = 0; k < N; ++ k)
+            {
                 Z(k,i) = x[k];
             }
             v[i] = 0.;
@@ -380,7 +419,7 @@ inverse(const MatT& M, fixed_size_tag/*, bool force_NxN*/)
 {
     /* Require a square matrix: */
     cml::et::CheckedSquare(M, fixed_size_tag());
-    
+
     /*
     if (force_NxN) {
         return inverse_f<MatT,0>()(M);
@@ -398,18 +437,23 @@ inverse(const MatT& M, dynamic_size_tag/*, bool force_NxN*/)
 {
     /* Require a square matrix: */
     cml::et::CheckedSquare(M, dynamic_size_tag());
-    
+
     /*
-    if (force_NxN) { 
+    if (force_NxN) {
         return inverse_f<MatT,0>()(M);
     } else {
     */
     /* Dispatch based upon the matrix dimension: */
-    switch(M.rows()) {
-        case 2:  return inverse_f<MatT,2>()(M);     //   2x2
-        case 3:  return inverse_f<MatT,3>()(M);     //   3x3
-        case 4:  return inverse_f<MatT,4>()(M);     //   4x4
-        default: return inverse_f<MatT,0>()(M);     // > 4x4 (or 1x1)
+    switch(M.rows())
+    {
+    case 2:
+        return inverse_f<MatT,2>()(M);     //   2x2
+    case 3:
+        return inverse_f<MatT,3>()(M);     //   3x3
+    case 4:
+        return inverse_f<MatT,4>()(M);     //   4x4
+    default:
+        return inverse_f<MatT,0>()(M);     // > 4x4 (or 1x1)
     }
     /*
     }

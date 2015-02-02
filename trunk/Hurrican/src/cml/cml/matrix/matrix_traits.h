@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -15,8 +15,10 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 
 #include <cml/et/traits.h>
 
-namespace cml {
-namespace et {
+namespace cml
+{
+namespace et
+{
 
 template<typename E, class AT, typename BO, typename L>
 struct ExprTraits< cml::matrix<E,AT,BO,L> >
@@ -31,13 +33,23 @@ struct ExprTraits< cml::matrix<E,AT,BO,L> >
     typedef expr_type result_type;
     typedef expr_leaf_tag node_tag;
 
-    value_type get(const expr_type& m, size_t i, size_t j) const {
+    value_type get(const expr_type& m, size_t i, size_t j) const
+    {
         return m(i,j);
     }
 
-    matrix_size size(const expr_type& e) const { return e.size(); }
-    size_t rows(const expr_type& m) const { return m.rows(); }
-    size_t cols(const expr_type& m) const { return m.cols(); }
+    matrix_size size(const expr_type& e) const
+    {
+        return e.size();
+    }
+    size_t rows(const expr_type& m) const
+    {
+        return m.rows();
+    }
+    size_t cols(const expr_type& m) const
+    {
+        return m.cols();
+    }
 };
 
 } // namespace et

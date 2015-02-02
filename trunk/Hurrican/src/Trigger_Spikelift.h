@@ -5,18 +5,18 @@
 #include "Gegner_Stuff.h"
 
 class GegnerSpikelift : public GegnerClass
-{	
-	private:
-		float	oldypos;
+{
+private:
+    float	oldypos;
 
-	public:
+public:
 
-	GegnerSpikelift	   (int Wert1,	int Wert2,			// Konstruktor
-						bool		  Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner // eigenen kleinen KI bewegen
-	void DoDraw		   (void);							// Eigene Draw Routine
-														
+    GegnerSpikelift	   (int Wert1,	int Wert2,			// Konstruktor
+                        bool		  Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner // eigenen kleinen KI bewegen
+    void DoDraw		   (void);							// Eigene Draw Routine
+
 };
 
 #endif

@@ -13,18 +13,18 @@
 
 GegnerEisStachel::GegnerEisStachel(int Wert1, int Wert2, bool Light)
 {
-	Handlung		= GEGNER_LAUFEN;
-	Energy			= 100;
-	Value1			= Wert1;
-	Value2			= Wert2;
-	ChangeLight		= Light;
-	Destroyable		= false;
-	xSpeed			= 0.0f;
-	ySpeed			= 0.0f;
-	xAcc			= 1.7f;
-	AnimSpeed       = 1.0f;
-	AnimEnde		= 19;
-	Active			= true;
+    Handlung		= GEGNER_LAUFEN;
+    Energy			= 100;
+    Value1			= Wert1;
+    Value2			= Wert2;
+    ChangeLight		= Light;
+    Destroyable		= false;
+    xSpeed			= 0.0f;
+    ySpeed			= 0.0f;
+    xAcc			= 1.7f;
+    AnimSpeed       = 1.0f;
+    AnimEnde		= 19;
+    Active			= true;
 }
 
 // --------------------------------------------------------------------------------------
@@ -33,22 +33,24 @@ GegnerEisStachel::GegnerEisStachel(int Wert1, int Wert2, bool Light)
 
 void GegnerEisStachel::DoKI(void)
 {
-	SimpleAnimation();
+    SimpleAnimation();
 
-	// Je nach Handlung richtig verhalten
-	switch (Handlung)
-	{
-		case GEGNER_LAUFEN:					// Umherdrehen
-		{
-			// Bei der Beschleunigungsgrenze umdrehen
-			if (xSpeed >  Value1 && xAcc > 0.0f) xAcc = -xAcc;
-			if (xSpeed < -Value1 && xAcc < 0.0f) xAcc = -xAcc;
-		} break;
+    // Je nach Handlung richtig verhalten
+    switch (Handlung)
+    {
+    case GEGNER_LAUFEN:					// Umherdrehen
+    {
+        // Bei der Beschleunigungsgrenze umdrehen
+        if (xSpeed >  Value1 && xAcc > 0.0f) xAcc = -xAcc;
+        if (xSpeed < -Value1 && xAcc < 0.0f) xAcc = -xAcc;
+    }
+    break;
 
-		default : break;
-	} // switch
+    default :
+        break;
+    } // switch
 
-	Wegschieben(GegnerRect[GegnerArt], 10.0f);	
+    Wegschieben(GegnerRect[GegnerArt], 10.0f);
 }
 
 // --------------------------------------------------------------------------------------

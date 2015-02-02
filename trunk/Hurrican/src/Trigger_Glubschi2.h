@@ -6,18 +6,18 @@
 
 class GegnerGlubschi2 : public GegnerClass
 {
-	private:
-		float	rotspeed;
-		float	rot;
+private:
+    float	rotspeed;
+    float	rot;
 
-	public:
+public:
 
-	GegnerGlubschi2  (int Wert1,	int Wert2,		// Konstruktor
-						bool Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
-	void DoDraw		   (void);
+    GegnerGlubschi2  (int Wert1,	int Wert2,		// Konstruktor
+                      bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
+    void DoDraw		   (void);
 };
 
 #endif

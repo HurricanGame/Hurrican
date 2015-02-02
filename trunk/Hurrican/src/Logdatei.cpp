@@ -45,14 +45,15 @@ extern bool					GameRunning;				// Läuft das Spiel noch ?
 
 Logdatei::Logdatei(const char Name[20])
 {
-	int len = strlen(Name) + 1;
-	strcpy_s(itsFilename, len, Name);							// Namen sichern
-	fopen_s(&Logfile, itsFilename, "w");					// Datei neu erstellen
-	if (Logfile != NULL) {
-      fclose(Logfile);									// und gleich wieder schliessen
-	}
+    int len = strlen(Name) + 1;
+    strcpy_s(itsFilename, len, Name);							// Namen sichern
+    fopen_s(&Logfile, itsFilename, "w");					// Datei neu erstellen
+    if (Logfile != NULL)
+    {
+        fclose(Logfile);									// und gleich wieder schliessen
+    }
 
-	delLogFile = false;
+    delLogFile = false;
 }
 
 // --------------------------------------------------------------------------------------
@@ -71,22 +72,22 @@ Logdatei::~Logdatei()
 
 void Logdatei::WriteText(bool Abbruch, const char* text, ...)
 {
-   #define BUFFER_SIZE 4096
-   va_list fmtargs;
-   char buffer[BUFFER_SIZE];
+#define BUFFER_SIZE 4096
+    va_list fmtargs;
+    char buffer[BUFFER_SIZE];
 
-   va_start( fmtargs, text );
-   vsnprintf( buffer, BUFFER_SIZE, text, fmtargs );
-   va_end( fmtargs );
+    va_start( fmtargs, text );
+    vsnprintf( buffer, BUFFER_SIZE, text, fmtargs );
+    va_end( fmtargs );
 
 #if defined(ANDROID)
-   __android_log_print(ANDROID_LOG_INFO, "libtcod", "%s", buffer);
+    __android_log_print(ANDROID_LOG_INFO, "libtcod", "%s", buffer);
 #else
-   printf( "%s", buffer );
+    printf( "%s", buffer );
 #endif
 
-	fopen_s(&Logfile, itsFilename, "a");					// Datei zum anfügen öffnen
-	if (Logfile != NULL)
+    fopen_s(&Logfile, itsFilename, "a");					// Datei zum anfügen öffnen
+    if (Logfile != NULL)
     {
         fprintf_s(Logfile, buffer);								// und Text schreiben
 
@@ -122,7 +123,7 @@ void Logdatei::WriteText(bool Abbruch, const char* text, ...)
 
 void Logdatei::WriteValue(int Value)
 {
-	fopen_s(&Logfile, itsFilename, "a");					// Datei zum anfügen öffnen
-	fprintf(Logfile, "%i\n", Value);					// und Wert schreiben
-	fclose(Logfile);									// Datei wieder schliessen
+    fopen_s(&Logfile, itsFilename, "a");					// Datei zum anfügen öffnen
+    fprintf(Logfile, "%i\n", Value);					// und Wert schreiben
+    fclose(Logfile);									// Datei wieder schliessen
 }

@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -30,8 +30,10 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
  */
 struct outer_promote_expects_properly_oriented_args_error;
 
-namespace cml {
-namespace et {
+namespace cml
+{
+namespace et
+{
 
 /** Promote two types to a matrixt type. */
 template<typename LeftT, typename RightT> struct MatrixPromote
@@ -48,22 +50,22 @@ template<typename LeftT, typename RightT> struct MatrixPromote
     template<typename E1, class AT1, typename L1, typename BO1,
              typename E2, class AT2, typename L2, typename BO2>
     struct MatrixPromoteHelper<
-    cml::matrix<E1,AT1,BO1,L1>, cml::matrix<E2,AT2,BO2,L2>
-    >
+        cml::matrix<E1,AT1,BO1,L1>, cml::matrix<E2,AT2,BO2,L2>
+        >
     {
         /* Promote the arrays: */
         typedef typename ArrayPromote<
-            typename cml::matrix<E1,AT1,BO1,L1>::array_type,
-        typename cml::matrix<E2,AT2,BO2,L2>::array_type
-            >::type promoted_array;
+        typename cml::matrix<E1,AT1,BO1,L1>::array_type,
+                 typename cml::matrix<E2,AT2,BO2,L2>::array_type
+                 >::type promoted_array;
 
         /* The deduced matrix result type: */
         typedef cml::matrix<
-            typename promoted_array::value_type,
-                     typename promoted_array::generator_type,
-                     BO1,
-                     typename promoted_array::layout
-                         > type;
+        typename promoted_array::value_type,
+                 typename promoted_array::generator_type,
+                 BO1,
+                 typename promoted_array::layout
+                 > type;
 
         /* The deduced temporary type: */
         typedef typename type::temporary_type temporary_type;
@@ -100,7 +102,8 @@ template<typename LeftT, typename RightT> struct MatrixPromote
         typedef CML_DEFAULT_BASIS_ORIENTATION basis_orient;
 
         /* Get matrix size: */
-        enum {
+        enum
+        {
             array_rows = left_type::array_size,
             array_cols = right_type::array_size
         };
@@ -108,13 +111,13 @@ template<typename LeftT, typename RightT> struct MatrixPromote
         /* Deduce the corresponding matrix types for the vectors: */
         typedef CML_DEFAULT_ARRAY_LAYOUT layout;
         typedef typename select_if<
-            array_rows == -1, dynamic<>, fixed<array_rows,1>
-            >::result left_storage;
+        array_rows == -1, dynamic<>, fixed<array_rows,1>
+        >::result left_storage;
         typedef cml::matrix<E1,left_storage,basis_orient,layout> left_matrix;
 
         typedef typename select_if<
-            array_cols == -1, dynamic<>, fixed<1,array_cols>
-            >::result right_storage;
+        array_cols == -1, dynamic<>, fixed<1,array_cols>
+        >::result right_storage;
         typedef cml::matrix<E2,right_storage,basis_orient,layout> right_matrix;
 
         /* Finally, promote the matrix types to get the result: */
@@ -124,9 +127,9 @@ template<typename LeftT, typename RightT> struct MatrixPromote
 
     /** Remove const and & from the to-be-promoted types. */
     typedef typename remove_const<
-        typename remove_reference<LeftT>::type>::type LeftBaseT;
+    typename remove_reference<LeftT>::type>::type LeftBaseT;
     typedef typename remove_const<
-        typename remove_reference<RightT>::type>::type RightBaseT;
+    typename remove_reference<RightT>::type>::type RightBaseT;
 
     typedef typename MatrixPromoteHelper<LeftBaseT,RightBaseT>::type type;
     typedef typename type::temporary_type temporary_type;
@@ -142,8 +145,8 @@ template < class Mat1_T, class Mat2_T >
 struct MatrixPromote2
 {
     typedef typename MatrixPromote<
-        typename Mat1_T::temporary_type, typename Mat2_T::temporary_type
-        >::temporary_type temporary_type;
+    typename Mat1_T::temporary_type, typename Mat2_T::temporary_type
+    >::temporary_type temporary_type;
     typedef typename temporary_type::value_type value_type;
 };
 
@@ -152,12 +155,12 @@ template < class Mat1_T, class Mat2_T, class Mat3_T >
 struct MatrixPromote3
 {
     typedef typename MatrixPromote<
-        typename Mat1_T::temporary_type,
-        typename MatrixPromote<
-            typename Mat2_T::temporary_type,
-            typename Mat3_T::temporary_type
-        >::temporary_type
-     >::temporary_type temporary_type;
+    typename Mat1_T::temporary_type,
+             typename MatrixPromote<
+             typename Mat2_T::temporary_type,
+             typename Mat3_T::temporary_type
+             >::temporary_type
+             >::temporary_type temporary_type;
     typedef typename temporary_type::value_type value_type;
 };
 
@@ -166,15 +169,15 @@ template < class Mat1_T, class Mat2_T, class Mat3_T, class Mat4_T >
 struct MatrixPromote4
 {
     typedef typename MatrixPromote<
-        typename Mat1_T::temporary_type,
-        typename MatrixPromote<
-            typename Mat2_T::temporary_type,
-            typename MatrixPromote<
-                typename Mat3_T::temporary_type,
-                typename Mat4_T::temporary_type
-            >::temporary_type
-         >::temporary_type
-     >::temporary_type temporary_type;
+    typename Mat1_T::temporary_type,
+             typename MatrixPromote<
+             typename Mat2_T::temporary_type,
+             typename MatrixPromote<
+             typename Mat3_T::temporary_type,
+             typename Mat4_T::temporary_type
+             >::temporary_type
+             >::temporary_type
+             >::temporary_type temporary_type;
     typedef typename temporary_type::value_type value_type;
 };
 

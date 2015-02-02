@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -17,7 +17,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #ifndef core_fwd_h
 #define core_fwd_h
 
-namespace cml {
+namespace cml
+{
 
 /* cml/core/fixed_1D.h */
 template<typename E, int S> class fixed_1D;

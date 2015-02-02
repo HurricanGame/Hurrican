@@ -5,19 +5,19 @@
 #include "Gegner_Stuff.h"
 
 class GegnerDrone : public GegnerClass
-{	
-	private :
-		int		ShotCount;								// Wieviele Schüsse abgeben ?
-		float	ShotDelay;								// Zeitabstand zwischen Schüssen
-		float	ActionDelay;							// Zeitabstand bis zur nächsten Salve
+{
+private :
+    int		ShotCount;								// Wieviele Schüsse abgeben ?
+    float	ShotDelay;								// Zeitabstand zwischen Schüssen
+    float	ActionDelay;							// Zeitabstand bis zur nächsten Salve
 
-	public :
+public :
 
-	GegnerDrone (int  Wert1, int Wert2,					// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerDrone (int  Wert1, int Wert2,					// Konstruktor
+                 bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

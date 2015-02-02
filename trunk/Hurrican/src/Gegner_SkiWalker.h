@@ -6,16 +6,16 @@
 
 class GegnerSkiWalker : public GegnerClass
 {
-	private:
-		float ShotDelay;
+private:
+    float ShotDelay;
 
-	public:
+public:
 
-	GegnerSkiWalker(int  Wert1, int Wert2,				// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerSkiWalker(int  Wert1, int Wert2,				// Konstruktor
+                    bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

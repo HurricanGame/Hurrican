@@ -9,37 +9,37 @@
 
 class GegnerRollmops : public GegnerClass
 {
-	private:
+private:
 
-		DirectGraphicsSprite	Rollen;
-		DirectGraphicsSprite	Aufklappen;
-		DirectGraphicsSprite	Gun;
+    DirectGraphicsSprite	Rollen;
+    DirectGraphicsSprite	Aufklappen;
+    DirectGraphicsSprite	Gun;
 
-		GegnerKettenglied		*pKettenTeile[NUM_KETTENGLIEDER];		
-		
-		float	GunWinkel;
-		float	SmokeCount;									// Für Antriebspartikel
-		float	ShotDelay;
-		float	ShotCount;
-		float	HookX, HookY;
-		float	Schwung, SchwungDir;
-		float	Delay;
-		float	HitsToTake;
+    GegnerKettenglied		*pKettenTeile[NUM_KETTENGLIEDER];
 
-		void	NeueAktion(void);
-		void	GunAusfahren(bool Auf);
-		void	Losrollen(void);
-		void	Abhopsen(float mul = -0.6f);
-		void    CalcGunWinkel(void);
-		void	RoundShot(bool single);
+    float	GunWinkel;
+    float	SmokeCount;									// Für Antriebspartikel
+    float	ShotDelay;
+    float	ShotCount;
+    float	HookX, HookY;
+    float	Schwung, SchwungDir;
+    float	Delay;
+    float	HitsToTake;
 
-	public:
+    void	NeueAktion(void);
+    void	GunAusfahren(bool Auf);
+    void	Losrollen(void);
+    void	Abhopsen(float mul = -0.6f);
+    void    CalcGunWinkel(void);
+    void	RoundShot(bool single);
 
-		GegnerRollmops	   (int Wert1,	int Wert2,			// Konstruktor
-							bool		  Light);	
-		void GegnerExplode (void);							// Gegner explodiert
-		void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-		void DoDraw		   (void);							// Gegner individuell rendern														// eigenen kleinen KI bewegen
+public:
+
+    GegnerRollmops	   (int Wert1,	int Wert2,			// Konstruktor
+                        bool		  Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw		   (void);							// Gegner individuell rendern														// eigenen kleinen KI bewegen
 };
 
 #endif

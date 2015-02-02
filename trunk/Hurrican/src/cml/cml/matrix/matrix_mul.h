@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -34,8 +34,10 @@ struct mul_expects_matrix_args_error;
  */
 struct mul_expressions_have_wrong_size_error;
 
-namespace cml {
-namespace detail {
+namespace cml
+{
+namespace detail
+{
 
 /** Verify the sizes of the argument matrices for matrix multiplication.
  *
@@ -45,8 +47,8 @@ template<typename LeftT, typename RightT> inline matrix_size
 MatMulCheckedSize(const LeftT&, const RightT&, fixed_size_tag)
 {
     CML_STATIC_REQUIRE_M(
-            ((size_t)LeftT::array_cols == (size_t)RightT::array_rows),
-            mul_expressions_have_wrong_size_error);
+        ((size_t)LeftT::array_cols == (size_t)RightT::array_rows),
+        mul_expressions_have_wrong_size_error);
     return matrix_size(LeftT::array_rows,RightT::array_cols);
 }
 
@@ -59,7 +61,7 @@ MatMulCheckedSize(const LeftT& left, const RightT& right, dynamic_size_tag)
 {
     matrix_size left_N = left.size(), right_N = right.size();
     et::GetCheckedSize<LeftT,RightT,dynamic_size_tag>()
-        .equal_or_fail(left_N.second, right_N.first); /* cols,rows */
+    .equal_or_fail(left_N.second, right_N.first); /* cols,rows */
     return matrix_size(left_N.first, right_N.second); /* rows,cols */
 }
 
@@ -70,10 +72,10 @@ MatMulCheckedSize(const LeftT& left, const RightT& right, dynamic_size_tag)
  */
 template<class LeftT, class RightT>
 inline typename et::MatrixPromote<
-    typename et::ExprTraits<LeftT>::result_type,
-    typename et::ExprTraits<RightT>::result_type
->::temporary_type
-mul(const LeftT& left, const RightT& right)
+typename et::ExprTraits<LeftT>::result_type,
+         typename et::ExprTraits<RightT>::result_type
+         >::temporary_type
+         mul(const LeftT& left, const RightT& right)
 {
     /* Shorthand: */
     typedef et::ExprTraits<LeftT> left_traits;
@@ -83,8 +85,8 @@ mul(const LeftT& left, const RightT& right)
 
     /* First, require matrix expressions: */
     CML_STATIC_REQUIRE_M(
-            (et::MatrixExpressions<LeftT,RightT>::is_true),
-            mul_expects_matrix_args_error);
+        (et::MatrixExpressions<LeftT,RightT>::is_true),
+        mul_expects_matrix_args_error);
     /* Note: parens are required here so that the preprocessor ignores the
      * commas.
      */
@@ -93,9 +95,9 @@ mul(const LeftT& left, const RightT& right)
      * necessary:
      */
     typedef typename et::MatrixPromote<
-        typename left_traits::result_type,
-        typename right_traits::result_type
-    >::type result_type;
+    typename left_traits::result_type,
+             typename right_traits::result_type
+             >::type result_type;
     typedef typename result_type::size_tag size_tag;
 
     /* Require that left has the same number of columns as right has rows.
@@ -112,10 +114,13 @@ mul(const LeftT& left, const RightT& right)
 
     /* XXX Specialize this for fixed-size matrices: */
     typedef typename result_type::value_type value_type;
-    for(size_t i = 0; i < left.rows(); ++i) {               /* rows */
-        for(size_t j = 0; j < right.cols(); ++j) {          /* cols */
+    for(size_t i = 0; i < left.rows(); ++i)                 /* rows */
+    {
+        for(size_t j = 0; j < right.cols(); ++j)            /* cols */
+        {
             value_type sum(left(i,0)*right(0,j));
-            for(size_t k = 1; k < right.rows(); ++k) {
+            for(size_t k = 1; k < right.rows(); ++k)
+            {
                 sum += (left(i,k)*right(k,j));
             }
             C(i,j) = sum;
@@ -133,7 +138,7 @@ template<typename E1, class AT1, typename L1,
          typename E2, class AT2, typename L2,
          typename BO>
 inline typename et::MatrixPromote<
-    matrix<E1,AT1,BO,L1>, matrix<E2,AT2,BO,L2>
+matrix<E1,AT1,BO,L1>, matrix<E2,AT2,BO,L2>
 >::temporary_type
 operator*(const matrix<E1,AT1,BO,L1>& left,
           const matrix<E2,AT2,BO,L2>& right)
@@ -144,7 +149,7 @@ operator*(const matrix<E1,AT1,BO,L1>& left,
 /** operator*() for a matrix and a MatrixXpr. */
 template<typename E, class AT, typename BO, typename L, typename XprT>
 inline typename et::MatrixPromote<
-    matrix<E,AT,BO,L>, typename XprT::result_type
+matrix<E,AT,BO,L>, typename XprT::result_type
 >::temporary_type
 operator*(const matrix<E,AT,BO,L>& left,
           const et::MatrixXpr<XprT>& right)
@@ -161,7 +166,7 @@ operator*(const matrix<E,AT,BO,L>& left,
 /** operator*() for a MatrixXpr and a matrix. */
 template<typename XprT, typename E, class AT, typename BO, typename L>
 inline typename et::MatrixPromote<
-    typename XprT::result_type , matrix<E,AT,BO,L>
+typename XprT::result_type , matrix<E,AT,BO,L>
 >::temporary_type
 operator*(const et::MatrixXpr<XprT>& left,
           const matrix<E,AT,BO,L>& right)
@@ -178,7 +183,7 @@ operator*(const et::MatrixXpr<XprT>& left,
 /** operator*() for two MatrixXpr's. */
 template<typename XprT1, typename XprT2>
 inline typename et::MatrixPromote<
-    typename XprT1::result_type, typename XprT2::result_type
+typename XprT1::result_type, typename XprT2::result_type
 >::temporary_type
 operator*(const et::MatrixXpr<XprT1>& left,
           const et::MatrixXpr<XprT2>& right)

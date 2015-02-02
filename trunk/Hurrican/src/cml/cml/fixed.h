@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -13,7 +13,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #ifndef fixed_h
 #define fixed_h
 
-namespace cml {
+namespace cml
+{
 
 
 /** This is a selector for fixed 1D and 2D arrays.
@@ -25,13 +26,17 @@ namespace cml {
  * @sa dynamic
  * @sa external
  */
-template<int Dim1 = -1, int Dim2 = -1> struct fixed {
+template<int Dim1 = -1, int Dim2 = -1> struct fixed
+{
 
     /** Rebind to a 1D type.
      *
      * This is used by quaternion<>.
      */
-    template<int D> struct rebind { typedef fixed<D> other; };
+    template<int D> struct rebind
+    {
+        typedef fixed<D> other;
+    };
 };
 
 } // namespace cml

@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -27,7 +27,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #define M_E 2.71828182845904523536028747135266250
 #endif
 
-namespace cml {
+namespace cml
+{
 
 #if 1
 
@@ -36,22 +37,62 @@ namespace cml {
  * Either float or double can be used.
  */
 template<typename Float>
-struct constants {
-    static Float pi()          { return Float(M_PI); }
-    static Float two_pi()      { return Float(2.*M_PI); }
-    static Float inv_pi()      { return Float(1./M_PI); }
-    static Float inv_two_pi()  { return Float(1./(2.*M_PI)); }
-    static Float pi_over_2()   { return Float(M_PI/2.); }
-    static Float pi_over_4()   { return Float(M_PI/4.); }
-    static Float deg_per_rad() { return Float(180./M_PI); }
-    static Float rad_per_deg() { return Float(M_PI/180.); }
+struct constants
+{
+    static Float pi()
+    {
+        return Float(M_PI);
+    }
+    static Float two_pi()
+    {
+        return Float(2.*M_PI);
+    }
+    static Float inv_pi()
+    {
+        return Float(1./M_PI);
+    }
+    static Float inv_two_pi()
+    {
+        return Float(1./(2.*M_PI));
+    }
+    static Float pi_over_2()
+    {
+        return Float(M_PI/2.);
+    }
+    static Float pi_over_4()
+    {
+        return Float(M_PI/4.);
+    }
+    static Float deg_per_rad()
+    {
+        return Float(180./M_PI);
+    }
+    static Float rad_per_deg()
+    {
+        return Float(M_PI/180.);
+    }
 
-    static Float sqrt_2() { return Float(M_SQRT2); }
-    static Float sqrt_3() { return Float(1.732050807568877293527446341505); }
-    static Float sqrt_5() { return Float(2.236067977499789696409173668731); }
-    static Float sqrt_6() { return Float(2.449489742783178098197284074705); }
+    static Float sqrt_2()
+    {
+        return Float(M_SQRT2);
+    }
+    static Float sqrt_3()
+    {
+        return Float(1.732050807568877293527446341505);
+    }
+    static Float sqrt_5()
+    {
+        return Float(2.236067977499789696409173668731);
+    }
+    static Float sqrt_6()
+    {
+        return Float(2.449489742783178098197284074705);
+    }
 
-    static Float e() { return Float(M_E); }
+    static Float e()
+    {
+        return Float(M_E);
+    }
 };
 
 #else
@@ -66,7 +107,8 @@ struct constants {
  * Either float or double can be used.
  */
 template<typename Float>
-struct constants {
+struct constants
+{
     static const Float pi = M_PI;
     static const Float two_pi = 2.*M_PI;
     static const Float inv_pi = 1./M_PI;                /* 1/pi */

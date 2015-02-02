@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -18,7 +18,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 
 /* Functions related to matrix rotations in 3D and 2D. */
 
-namespace cml {
+namespace cml
+{
 
 //////////////////////////////////////////////////////////////////////////////
 // 3D rotation about world axes
@@ -37,10 +38,10 @@ matrix_rotation_world_axis( matrix<E,A,B,L>& m, size_t axis, E angle)
 
     size_t i, j, k;
     cyclic_permutation(axis, i, j, k);
-    
+
     value_type s = value_type(std::sin(angle));
     value_type c = value_type(std::cos(angle));
-    
+
     identity_transform(m);
 
     m.set_basis_element(j,j, c);
@@ -51,19 +52,22 @@ matrix_rotation_world_axis( matrix<E,A,B,L>& m, size_t axis, E angle)
 
 /** Build a matrix representing a 3D rotation about the world x axis */
 template < typename E, class A, class B, class L > void
-matrix_rotation_world_x(matrix<E,A,B,L>& m, E angle) {
+matrix_rotation_world_x(matrix<E,A,B,L>& m, E angle)
+{
     matrix_rotation_world_axis(m,0,angle);
 }
 
 /** Build a matrix representing a 3D rotation about the world y axis */
 template < typename E, class A, class B, class L > void
-matrix_rotation_world_y(matrix<E,A,B,L>& m, E angle) {
+matrix_rotation_world_y(matrix<E,A,B,L>& m, E angle)
+{
     matrix_rotation_world_axis(m,1,angle);
 }
 
 /** Build a matrix representing a 3D rotation about the world z axis */
 template < typename E, class A, class B, class L > void
-matrix_rotation_world_z(matrix<E,A,B,L>& m, E angle) {
+matrix_rotation_world_z(matrix<E,A,B,L>& m, E angle)
+{
     matrix_rotation_world_axis(m,2,angle);
 }
 
@@ -81,7 +85,7 @@ matrix_rotation_axis_angle(matrix<E,A,B,L>& m, const VecT& axis, E angle)
     /* Checking */
     detail::CheckMatLinear3D(m);
     detail::CheckVec3(axis);
-    
+
     identity_transform(m);
 
     value_type s = std::sin(angle);
@@ -91,7 +95,7 @@ matrix_rotation_axis_angle(matrix<E,A,B,L>& m, const VecT& axis, E angle)
     value_type xomc = axis[0] * omc;
     value_type yomc = axis[1] * omc;
     value_type zomc = axis[2] * omc;
-    
+
     value_type xxomc = axis[0] * xomc;
     value_type yyomc = axis[1] * yomc;
     value_type zzomc = axis[2] * zomc;
@@ -127,22 +131,23 @@ matrix_rotation_quaternion(matrix<E,A,B,L>& m, const QuatT& q)
     typedef typename quaternion_type::order_type order_type;
     typedef typename matrix_type::value_type value_type;
 
-    enum {
+    enum
+    {
         W = order_type::W,
         X = order_type::X,
         Y = order_type::Y,
         Z = order_type::Z
     };
-    
+
     /* Checking */
     detail::CheckMatLinear3D(m);
     detail::CheckQuat(q);
 
     identity_transform(m);
-    
+
     value_type x2 = q[X] + q[X];
     value_type y2 = q[Y] + q[Y];
-    value_type z2 = q[Z] + q[Z];    
+    value_type z2 = q[Z] + q[Z];
 
     value_type xx2 = q[X] * x2;
     value_type yy2 = q[Y] * y2;
@@ -153,7 +158,7 @@ matrix_rotation_quaternion(matrix<E,A,B,L>& m, const QuatT& q)
     value_type xw2 = q[W] * x2;
     value_type yw2 = q[W] * y2;
     value_type zw2 = q[W] * z2;
-    
+
     m.set_basis_element(0,0, value_type(1) - yy2 - zz2);
     m.set_basis_element(0,1,                 xy2 + zw2);
     m.set_basis_element(0,2,                 zx2 - yw2);
@@ -193,7 +198,7 @@ matrix_rotation_quaternion(matrix<E,A,B,L>& m, const QuatT& q)
  */
 template < typename E, class A, class B, class L > void
 matrix_rotation_euler(matrix<E,A,B,L>& m, E angle_0, E angle_1, E angle_2,
-    EulerOrder order)
+                      EulerOrder order)
 {
     typedef matrix<E,A,B,L> matrix_type;
     typedef typename matrix_type::value_type value_type;
@@ -202,30 +207,32 @@ matrix_rotation_euler(matrix<E,A,B,L>& m, E angle_0, E angle_1, E angle_2,
     detail::CheckMatLinear3D(m);
 
     identity_transform(m);
-    
+
     size_t i, j, k;
     bool odd, repeat;
     detail::unpack_euler_order(order, i, j, k, odd, repeat);
 
-    if (odd) {
+    if (odd)
+    {
         angle_0 = -angle_0;
         angle_1 = -angle_1;
         angle_2 = -angle_2;
     }
-    
+
     value_type s0 = std::sin(angle_0);
     value_type c0 = std::cos(angle_0);
     value_type s1 = std::sin(angle_1);
     value_type c1 = std::cos(angle_1);
     value_type s2 = std::sin(angle_2);
     value_type c2 = std::cos(angle_2);
-    
+
     value_type s0s2 = s0 * s2;
     value_type s0c2 = s0 * c2;
     value_type c0s2 = c0 * s2;
     value_type c0c2 = c0 * c2;
 
-    if (repeat) {
+    if (repeat)
+    {
         m.set_basis_element(i,i, c1              );
         m.set_basis_element(i,j, s1 * s2         );
         m.set_basis_element(i,k,-s1 * c2         );
@@ -235,7 +242,9 @@ matrix_rotation_euler(matrix<E,A,B,L>& m, E angle_0, E angle_1, E angle_2,
         m.set_basis_element(k,i, c0 * s1         );
         m.set_basis_element(k,j,-c1 * c0s2 - s0c2);
         m.set_basis_element(k,k, c1 * c0c2 - s0s2);
-    } else {
+    }
+    else
+    {
         m.set_basis_element(i,i, c1 * c2         );
         m.set_basis_element(i,j, c1 * s2         );
         m.set_basis_element(i,k,-s1              );
@@ -285,9 +294,10 @@ matrix_rotation_euler_derivatives(
     bool odd, repeat;
     detail::unpack_euler_order(order, i, j, k, odd, repeat);
     if(repeat) throw std::invalid_argument(
-	"matrix_rotation_euler_derivatives does not support repeated axes");
+            "matrix_rotation_euler_derivatives does not support repeated axes");
 
-    if (odd) {
+    if (odd)
+    {
         angle_0 = -angle_0;
         angle_1 = -angle_1;
         angle_2 = -angle_2;
@@ -299,42 +309,47 @@ matrix_rotation_euler_derivatives(
     value_type c1 = std::cos(angle_1);
     value_type s2 = std::sin(angle_2);
     value_type c2 = std::cos(angle_2);
-    
+
     value_type s0s2 = s0 * s2;
     value_type s0c2 = s0 * c2;
     value_type c0s2 = c0 * s2;
     value_type c0c2 = c0 * c2;
 
-    if(axis == 0) {
-      m.set_basis_element(i,i, 0.              );
-      m.set_basis_element(i,j, 0.              );
-      m.set_basis_element(i,k, 0.              );
-      m.set_basis_element(j,i, s1 * c0*c2 + s0*s2);
-      m.set_basis_element(j,j, s1 * c0*s2 - s0*c2);
-      m.set_basis_element(j,k, c0 * c1         );
-      m.set_basis_element(k,i,-s1 * s0*c2 + c0*s2);
-      m.set_basis_element(k,j,-s1 * s0*s2 - c0*c2);
-      m.set_basis_element(k,k,-s0 * c1         );
-    } else if(axis == 1) {
-      m.set_basis_element(i,i,-s1 * c2         );
-      m.set_basis_element(i,j,-s1 * s2         );
-      m.set_basis_element(i,k,-c1              );
-      m.set_basis_element(j,i, c1 * s0*c2      );
-      m.set_basis_element(j,j, c1 * s0*s2      );
-      m.set_basis_element(j,k,-s0 * s1         );
-      m.set_basis_element(k,i, c1 * c0*c2      );
-      m.set_basis_element(k,j, c1 * c0*s2      );
-      m.set_basis_element(k,k,-c0 * s1         );
-    } else if(axis == 2) {
-      m.set_basis_element(i,i,-c1 * s2         );
-      m.set_basis_element(i,j, c1 * c2         );
-      m.set_basis_element(i,k, 0.              );
-      m.set_basis_element(j,i,-s1 * s0*s2 - c0*c2);
-      m.set_basis_element(j,j, s1 * s0*c2 - c0*s2);
-      m.set_basis_element(j,k, 0.              );
-      m.set_basis_element(k,i,-s1 * c0*s2 + s0*c2);
-      m.set_basis_element(k,j, s1 * c0*c2 + s0*s2);
-      m.set_basis_element(k,k, 0.              );
+    if(axis == 0)
+    {
+        m.set_basis_element(i,i, 0.              );
+        m.set_basis_element(i,j, 0.              );
+        m.set_basis_element(i,k, 0.              );
+        m.set_basis_element(j,i, s1 * c0*c2 + s0*s2);
+        m.set_basis_element(j,j, s1 * c0*s2 - s0*c2);
+        m.set_basis_element(j,k, c0 * c1         );
+        m.set_basis_element(k,i,-s1 * s0*c2 + c0*s2);
+        m.set_basis_element(k,j,-s1 * s0*s2 - c0*c2);
+        m.set_basis_element(k,k,-s0 * c1         );
+    }
+    else if(axis == 1)
+    {
+        m.set_basis_element(i,i,-s1 * c2         );
+        m.set_basis_element(i,j,-s1 * s2         );
+        m.set_basis_element(i,k,-c1              );
+        m.set_basis_element(j,i, c1 * s0*c2      );
+        m.set_basis_element(j,j, c1 * s0*s2      );
+        m.set_basis_element(j,k,-s0 * s1         );
+        m.set_basis_element(k,i, c1 * c0*c2      );
+        m.set_basis_element(k,j, c1 * c0*s2      );
+        m.set_basis_element(k,k,-c0 * s1         );
+    }
+    else if(axis == 2)
+    {
+        m.set_basis_element(i,i,-c1 * s2         );
+        m.set_basis_element(i,j, c1 * c2         );
+        m.set_basis_element(i,k, 0.              );
+        m.set_basis_element(j,i,-s1 * s0*s2 - c0*c2);
+        m.set_basis_element(j,j, s1 * s0*c2 - c0*s2);
+        m.set_basis_element(j,k, 0.              );
+        m.set_basis_element(k,i,-s1 * c0*s2 + s0*c2);
+        m.set_basis_element(k,j, s1 * c0*c2 + s0*s2);
+        m.set_basis_element(k,k, 0.              );
     }
 }
 
@@ -354,7 +369,7 @@ matrix_rotation_align(
     typedef vector< E,fixed<3> > vector_type;
 
     identity_transform(m);
-    
+
     vector_type x, y, z;
 
     orthonormal_basis(align, reference, x, y, z, normalize, order);
@@ -364,12 +379,12 @@ matrix_rotation_align(
 /** See vector_ortho.h for details */
 template < typename E, class A, class B, class L, class VecT > void
 matrix_rotation_align(matrix<E,A,B,L>& m, const VecT& align,
-    bool normalize = true, AxisOrder order = axis_order_zyx)
+                      bool normalize = true, AxisOrder order = axis_order_zyx)
 {
     typedef vector< E,fixed<3> > vector_type;
 
     identity_transform(m);
-    
+
     vector_type x, y, z;
 
     orthonormal_basis(align, x, y, z, normalize, order);
@@ -379,13 +394,13 @@ matrix_rotation_align(matrix<E,A,B,L>& m, const VecT& align,
 /** See vector_ortho.h for details */
 template < typename E,class A,class B,class L,class VecT_1,class VecT_2 > void
 matrix_rotation_align_axial(matrix<E,A,B,L>& m, const VecT_1& align,
-    const VecT_2& axis, bool normalize = true,
-    AxisOrder order = axis_order_zyx)
+                            const VecT_2& axis, bool normalize = true,
+                            AxisOrder order = axis_order_zyx)
 {
     typedef vector< E,fixed<3> > vector_type;
 
     identity_transform(m);
-    
+
     vector_type x, y, z;
 
     orthonormal_basis_axial(align, axis, x, y, z, normalize, order);
@@ -403,7 +418,7 @@ matrix_rotation_align_viewplane(
     typedef vector< E, fixed<3> > vector_type;
 
     identity_transform(m);
-    
+
     vector_type x, y, z;
 
     orthonormal_basis_viewplane(view_matrix, x, y, z, handedness, order);
@@ -438,7 +453,7 @@ matrix_rotation_align_viewplane_RH(
 
 /** See vector_ortho.h for details */
 template < typename E, class A, class B, class L,
-    class VecT_1, class VecT_2, class VecT_3 > void
+           class VecT_1, class VecT_2, class VecT_3 > void
 matrix_rotation_aim_at(
     matrix<E,A,B,L>& m,
     const VecT_1& pos,
@@ -451,7 +466,7 @@ matrix_rotation_aim_at(
 
 /** See vector_ortho.h for details */
 template < typename E, class A, class B, class L,
-    class VecT_1, class VecT_2 > void
+           class VecT_1, class VecT_2 > void
 matrix_rotation_aim_at(
     matrix<E,A,B,L>& m,
     const VecT_1& pos,
@@ -463,7 +478,7 @@ matrix_rotation_aim_at(
 
 /** See vector_ortho.h for details */
 template < typename E, class A, class B, class L,
-    class VecT_1, class VecT_2, class VecT_3 > void
+           class VecT_1, class VecT_2, class VecT_3 > void
 matrix_rotation_aim_at_axial(
     matrix<E,A,B,L>& m,
     const VecT_1& pos,
@@ -490,7 +505,7 @@ matrix_rotation_2D( matrix<E,A,B,L>& m, E angle)
 
     value_type s = value_type(std::sin(angle));
     value_type c = value_type(std::cos(angle));
-    
+
     identity_transform(m);
 
     m.set_basis_element(0,0, c);
@@ -506,12 +521,12 @@ matrix_rotation_2D( matrix<E,A,B,L>& m, E angle)
 /** See vector_ortho.h for details */
 template < typename E, class A, class B, class L, class VecT > void
 matrix_rotation_align_2D(matrix<E,A,B,L>& m, const VecT& align,
-    bool normalize = true, AxisOrder2D order = axis_order_xy)
+                         bool normalize = true, AxisOrder2D order = axis_order_xy)
 {
     typedef vector< E, fixed<2> > vector_type;
 
     identity_transform(m);
-    
+
     vector_type x, y;
 
     orthonormal_basis_2D(align, x, y, normalize, order);
@@ -542,11 +557,11 @@ matrix_rotate_about_world_axis(matrix<E,A,B,L>& m, size_t axis, E angle)
     value_type ij = c * m.basis_element(i,j) - s * m.basis_element(i,k);
     value_type jj = c * m.basis_element(j,j) - s * m.basis_element(j,k);
     value_type kj = c * m.basis_element(k,j) - s * m.basis_element(k,k);
-    
+
     m.set_basis_element(i,k, s*m.basis_element(i,j) + c*m.basis_element(i,k));
     m.set_basis_element(j,k, s*m.basis_element(j,j) + c*m.basis_element(j,k));
     m.set_basis_element(k,k, s*m.basis_element(k,j) + c*m.basis_element(k,k));
-    
+
     m.set_basis_element(i,j,ij);
     m.set_basis_element(j,j,jj);
     m.set_basis_element(k,j,kj);
@@ -554,19 +569,22 @@ matrix_rotate_about_world_axis(matrix<E,A,B,L>& m, size_t axis, E angle)
 
 /** Rotate a rotation matrix about the world x axis */
 template < typename E, class A, class B, class L > void
-matrix_rotate_about_world_x(matrix<E,A,B,L>& m, E angle) {
+matrix_rotate_about_world_x(matrix<E,A,B,L>& m, E angle)
+{
     matrix_rotate_about_world_axis(m,0,angle);
 }
 
 /** Rotate a rotation matrix about the world y axis */
 template < typename E, class A, class B, class L > void
-matrix_rotate_about_world_y(matrix<E,A,B,L>& m, E angle) {
+matrix_rotate_about_world_y(matrix<E,A,B,L>& m, E angle)
+{
     matrix_rotate_about_world_axis(m,1,angle);
 }
 
 /** Rotate a rotation matrix about the world z axis */
 template < typename E, class A, class B, class L > void
-matrix_rotate_about_world_z(matrix<E,A,B,L>& m, E angle) {
+matrix_rotate_about_world_z(matrix<E,A,B,L>& m, E angle)
+{
     matrix_rotate_about_world_axis(m,2,angle);
 }
 
@@ -606,19 +624,22 @@ matrix_rotate_about_local_axis(matrix<E,A,B,L>& m, size_t axis, E angle)
 
 /** Rotate a rotation matrix about its local x axis */
 template < typename E, class A, class B, class L > void
-matrix_rotate_about_local_x(matrix<E,A,B,L>& m, E angle) {
+matrix_rotate_about_local_x(matrix<E,A,B,L>& m, E angle)
+{
     matrix_rotate_about_local_axis(m,0,angle);
 }
 
 /** Rotate a rotation matrix about its local y axis */
 template < typename E, class A, class B, class L > void
-matrix_rotate_about_local_y(matrix<E,A,B,L>& m, E angle) {
+matrix_rotate_about_local_y(matrix<E,A,B,L>& m, E angle)
+{
     matrix_rotate_about_local_axis(m,1,angle);
 }
 
 /** Rotate a rotation matrix about its local z axis */
 template < typename E, class A, class B, class L > void
-matrix_rotate_about_local_z(matrix<E,A,B,L>& m, E angle) {
+matrix_rotate_about_local_z(matrix<E,A,B,L>& m, E angle)
+{
     matrix_rotate_about_local_axis(m,2,angle);
 }
 
@@ -665,8 +686,8 @@ matrix_rotation_vec_to_vec(
     bool unit_length_vectors = false)
 {
     typedef quaternion< E,fixed<>,vector_first,positive_cross >
-        quaternion_type;
-    
+    quaternion_type;
+
     quaternion_type q;
     quaternion_rotation_vec_to_vec(q,v1,v2,unit_length_vectors);
     matrix_rotation_quaternion(m,q);
@@ -679,11 +700,11 @@ matrix_rotation_vec_to_vec(
 /** Scale the angle of a 3D rotation matrix */
 template < typename E, class A, class B, class L > void
 matrix_scale_rotation_angle(matrix<E,A,B,L>& m, E t,
-    E tolerance = epsilon<E>::placeholder())
+                            E tolerance = epsilon<E>::placeholder())
 {
     typedef vector< E,fixed<3> > vector_type;
     typedef typename vector_type::value_type value_type;
-    
+
     vector_type axis;
     value_type angle;
     matrix_to_axis_angle(m, axis, angle, tolerance);
@@ -740,41 +761,48 @@ matrix_scale_rotation_angle_2D(
     row_major                        \
 >
 
-namespace detail {
+namespace detail
+{
 
 /** Concatenate two 3D row-basis rotation matrices in the order m1->m2 */
 template < class MatT_1, class MatT_2 > MAT_TEMP_3X3
-matrix_concat_rotations(const MatT_1& m1, const MatT_2& m2, row_basis) {
+matrix_concat_rotations(const MatT_1& m1, const MatT_2& m2, row_basis)
+{
     return m1*m2;
 }
 
 /** Concatenate two 3D col-basis rotation matrices in the order m1->m2 */
 template < class MatT_1, class MatT_2 > MAT_TEMP_3X3
-matrix_concat_rotations(const MatT_1& m1, const MatT_2& m2, col_basis) {
+matrix_concat_rotations(const MatT_1& m1, const MatT_2& m2, col_basis)
+{
     return m2*m1;
 }
 
 /** Concatenate two 3D rotation matrices in the order m1->m2 */
 template < class MatT_1, class MatT_2 > MAT_TEMP_3X3
-matrix_concat_rotations(const MatT_1& m1, const MatT_2& m2) {
+matrix_concat_rotations(const MatT_1& m1, const MatT_2& m2)
+{
     return matrix_concat_rotations(m1,m2,typename MatT_1::basis_orient());
 }
 
 /** Concatenate two 2D row-basis rotation matrices in the order m1->m2 */
 template < class MatT_1, class MatT_2 > MAT_TEMP_2X2
-matrix_concat_rotations_2D(const MatT_1& m1, const MatT_2& m2, row_basis) {
+matrix_concat_rotations_2D(const MatT_1& m1, const MatT_2& m2, row_basis)
+{
     return m1*m2;
 }
 
 /** Concatenate two 2D col-basis rotation matrices in the order m1->m2 */
 template < class MatT_1, class MatT_2 > MAT_TEMP_2X2
-matrix_concat_rotations_2D(const MatT_1& m1, const MatT_2& m2, col_basis) {
+matrix_concat_rotations_2D(const MatT_1& m1, const MatT_2& m2, col_basis)
+{
     return m2*m1;
 }
 
 /** Concatenate two 2D rotation matrices in the order m1->m2 */
 template < class MatT_1, class MatT_2 > MAT_TEMP_2X2
-matrix_concat_rotations_2D(const MatT_1& m1, const MatT_2& m2) {
+matrix_concat_rotations_2D(const MatT_1& m1, const MatT_2& m2)
+{
     return matrix_concat_rotations_2D(m1,m2,typename MatT_1::basis_orient());
 }
 
@@ -786,13 +814,15 @@ matrix_concat_rotations_2D(const MatT_1& m1, const MatT_2& m2) {
 
 /** Return the rotational 'difference' between two 3D rotation matrices */
 template < class MatT_1, class MatT_2 > MAT_TEMP_3X3
-matrix_rotation_difference(const MatT_1& m1, const MatT_2& m2) {
+matrix_rotation_difference(const MatT_1& m1, const MatT_2& m2)
+{
     return detail::matrix_concat_rotations(transpose(m1),m2);
 }
 
 /** Return the rotational 'difference' between two 2D rotation matrices */
 template < class MatT_1, class MatT_2 > MAT_TEMP_2X2
-matrix_rotation_difference_2D(const MatT_1& m1, const MatT_2& m2) {
+matrix_rotation_difference_2D(const MatT_1& m1, const MatT_2& m2)
+{
     return detail::matrix_concat_rotations_2D(transpose(m1),m2);
 }
 
@@ -816,7 +846,7 @@ matrix_rotation_difference_2D(const MatT_1& m1, const MatT_2& m2) {
 /** Spherical linear interpolation of two 3D rotation matrices */
 template < class MatT_1, class MatT_2, typename E > MAT_TEMP_3X3
 matrix_slerp(const MatT_1& m1, const MatT_2& m2, E t,
-    E tolerance = epsilon<E>::placeholder())
+             E tolerance = epsilon<E>::placeholder())
 {
     typedef MAT_TEMP_3X3 temporary_type;
 
@@ -828,7 +858,7 @@ matrix_slerp(const MatT_1& m1, const MatT_2& m2, E t,
 /** Spherical linear interpolation of two 2D rotation matrices */
 template < class MatT_1, class MatT_2, typename E > MAT_TEMP_2X2
 matrix_slerp_2D(const MatT_1& m1, const MatT_2& m2, E t,
-    E tolerance = epsilon<E>::placeholder())
+                E tolerance = epsilon<E>::placeholder())
 {
     typedef MAT_TEMP_2X2 temporary_type;
 
@@ -863,16 +893,21 @@ matrix_to_axis_angle(
         m.basis_element(2,0) - m.basis_element(0,2),
         m.basis_element(0,1) - m.basis_element(1,0)
     );
-	value_type l = length(axis);
+    value_type l = length(axis);
     value_type tmo = trace_3x3(m) - value_type(1);
 
-	if (l > tolerance) {
-		axis /= l;
+    if (l > tolerance)
+    {
+        axis /= l;
         angle = std::atan2(l, tmo); // l=2sin(theta),tmo=2cos(theta)
-	} else if (tmo > value_type(0)) {
-		axis.zero();
-		angle = value_type(0);
-	} else {
+    }
+    else if (tmo > value_type(0))
+    {
+        axis.zero();
+        angle = value_type(0);
+    }
+    else
+    {
         size_t largest_diagonal_element =
             index_of_max(
                 m.basis_element(0,0),
@@ -881,18 +916,18 @@ matrix_to_axis_angle(
             );
         size_t i, j, k;
         cyclic_permutation(largest_diagonal_element, i, j, k);
-		axis[i] =
+        axis[i] =
             std::sqrt(
                 m.basis_element(i,i) -
                 m.basis_element(j,j) -
                 m.basis_element(k,k) +
                 value_type(1)
             ) * value_type(.5);
-		value_type s = value_type(.5) / axis[i];
-		axis[j] = m.basis_element(i,j) * s;
-		axis[k] = m.basis_element(i,k) * s;
+        value_type s = value_type(.5) / axis[i];
+        axis[j] = m.basis_element(i,j) * s;
+        axis[k] = m.basis_element(i,k) * s;
         angle = constants<value_type>::pi();
-	}
+    }
 }
 
 /** Convert a 3D rotation matrix to an Euler-angle triple */
@@ -915,35 +950,45 @@ void matrix_to_euler(
     bool odd, repeat;
     detail::unpack_euler_order(order, i, j, k, odd, repeat);
 
-    if (repeat) {
+    if (repeat)
+    {
         value_type s1 = length(m.basis_element(j,i),m.basis_element(k,i));
         value_type c1 = m.basis_element(i,i);
 
         angle_1 = std::atan2(s1, c1);
-        if (s1 > tolerance) {
+        if (s1 > tolerance)
+        {
             angle_0 = std::atan2(m.basis_element(j,i),m.basis_element(k,i));
             angle_2 = std::atan2(m.basis_element(i,j),-m.basis_element(i,k));
-        } else {
+        }
+        else
+        {
             angle_0 = value_type(0);
             angle_2 = sign(c1) *
-                std::atan2(-m.basis_element(k,j),m.basis_element(j,j));
+                      std::atan2(-m.basis_element(k,j),m.basis_element(j,j));
         }
-    } else {
+    }
+    else
+    {
         value_type s1 = -m.basis_element(i,k);
         value_type c1 = length(m.basis_element(i,i),m.basis_element(i,j));
 
         angle_1 = std::atan2(s1, c1);
-        if (c1 > tolerance) {
+        if (c1 > tolerance)
+        {
             angle_0 = std::atan2(m.basis_element(j,k),m.basis_element(k,k));
             angle_2 = std::atan2(m.basis_element(i,j),m.basis_element(i,i));
-        } else {
+        }
+        else
+        {
             angle_0 = value_type(0);
             angle_2 = -sign(s1) *
-                std::atan2(-m.basis_element(k,j),m.basis_element(j,j));
+                      std::atan2(-m.basis_element(k,j),m.basis_element(j,j));
         }
     }
-    
-    if (odd) {
+
+    if (odd)
+    {
         angle_0 = -angle_0;
         angle_1 = -angle_1;
         angle_2 = -angle_2;
@@ -959,9 +1004,9 @@ matrix_to_euler(
     EulerOrder order,
     Real tolerance = epsilon<Real>::placeholder())
 {
-  Real e0, e1, e2;
-  matrix_to_euler(m, e0, e1, e2, order, tolerance);
-  return vector< Real, fixed<3> >(e0, e1, e2);
+    Real e0, e1, e2;
+    matrix_to_euler(m, e0, e1, e2, order, tolerance);
+    return vector< Real, fixed<3> >(e0, e1, e2);
 }
 
 /** Convert a 2D rotation matrix to a rotation angle */
@@ -970,7 +1015,7 @@ matrix_to_rotation_2D(const MatT& m)
 {
     /* Checking */
     detail::CheckMatLinear2D(m);
-    
+
     return std::atan2(m.basis_element(0,1),m.basis_element(0,0));
 }
 

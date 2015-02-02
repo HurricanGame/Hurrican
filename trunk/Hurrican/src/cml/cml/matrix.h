@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -17,7 +17,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 
 #include <cml/core/common.h>
 
-namespace cml {
+namespace cml
+{
 
 /** A configurable matrix.
  *
@@ -36,8 +37,8 @@ namespace cml {
  * matrices.
  */
 template<typename Element, class ArrayType,
-    typename BasisOrient = CML_DEFAULT_BASIS_ORIENTATION,
-    typename Layout = CML_DEFAULT_ARRAY_LAYOUT> class matrix;
+         typename BasisOrient = CML_DEFAULT_BASIS_ORIENTATION,
+         typename Layout = CML_DEFAULT_ARRAY_LAYOUT> class matrix;
 
 } // namespace cml
 

@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -17,7 +17,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #include <cml/vector/vector_expr.h>
 #include <cml/vector/vecop_macros.h>
 
-namespace cml {
+namespace cml
+{
 
 CML_VEC_UNIOP(    operator+, et::OpPos)
 CML_VECXPR_UNIOP( operator+, et::OpPos)

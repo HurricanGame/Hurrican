@@ -13,14 +13,14 @@
 
 GegnerWasserMine::GegnerWasserMine(int Wert1, int Wert2, bool Light)
 {
-	Handlung		= GEGNER_LAUFEN;
-	Energy			= 20;
-	AnimSpeed		= 3.0f;
-	ChangeLight		= Light;
-	Destroyable		= false;
-	AnimSpeed		= 4.0f;
-	AnimEnde		= 10;
-	Value1			= int (Wert1);
+    Handlung		= GEGNER_LAUFEN;
+    Energy			= 20;
+    AnimSpeed		= 3.0f;
+    ChangeLight		= Light;
+    Destroyable		= false;
+    AnimSpeed		= 4.0f;
+    AnimEnde		= 10;
+    Value1			= int (Wert1);
 }
 
 // --------------------------------------------------------------------------------------
@@ -29,10 +29,10 @@ GegnerWasserMine::GegnerWasserMine(int Wert1, int Wert2, bool Light)
 
 void GegnerWasserMine::DoKI(void)
 {
-	SimpleAnimation();
+    SimpleAnimation();
 
-	// Spieler berührt ?
-	TestDamagePlayers(50.0f, true);
+    // Spieler berührt ?
+    TestDamagePlayers(50.0f, true);
 }
 
 // --------------------------------------------------------------------------------------
@@ -41,16 +41,16 @@ void GegnerWasserMine::DoKI(void)
 
 void GegnerWasserMine::GegnerExplode(void)
 {
-	pSoundManager->PlayWave (100, 128, 8000, SOUND_EXPLOSION3);
-	pSoundManager->PlayWave (100, 128,14000, SOUND_EXPLOSION4);
+    pSoundManager->PlayWave (100, 128, 8000, SOUND_EXPLOSION3);
+    pSoundManager->PlayWave (100, 128,14000, SOUND_EXPLOSION4);
 
-	ShakeScreen(5.0f);
+    ShakeScreen(5.0f);
 
-	for (int i = 0; i < 50; i++)
-		pPartikelSystem->PushPartikel(xPos - 5 + rand()%40, yPos - 5 + rand()%60, WATERFLUSH_HIGH);
+    for (int i = 0; i < 50; i++)
+        pPartikelSystem->PushPartikel(xPos - 5 + rand()%40, yPos - 5 + rand()%60, WATERFLUSH_HIGH);
 
-	for (int i = 0; i < 25; i++)
-		pPartikelSystem->PushPartikel(xPos - 5 + rand()%40, yPos - 50 + rand()%110, SPIDERSPLITTER);
+    for (int i = 0; i < 25; i++)
+        pPartikelSystem->PushPartikel(xPos - 5 + rand()%40, yPos - 50 + rand()%110, SPIDERSPLITTER);
 
-	pPartikelSystem->PushPartikel(xPos - 40, yPos - 55, EXPLOSION_GIANT);
+    pPartikelSystem->PushPartikel(xPos - 40, yPos - 55, EXPLOSION_GIANT);
 }

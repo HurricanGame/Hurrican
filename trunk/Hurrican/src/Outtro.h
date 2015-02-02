@@ -1,6 +1,6 @@
 // Datei : Outtro.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Klasse für das Hurrican Outtro
 //
@@ -37,27 +37,27 @@
 
 class OuttroClass
 {
-	private:
-		DirectGraphicsSprite	Background;
-		DirectGraphicsSprite	Tower;
-		DirectGraphicsSprite	Henry;
-		DirectGraphicsSprite	Reiter[2];
-		bool					finished;
-		int						Zustand;
-		float					Counter;
-		int						TextOff;
-		float					SmokeDelay;
-		float					TowerOffset;
-		float					Snow;
-		float					PlayerSmoke;
-		float					px[2], py[2], xs[2], ys[2];
+private:
+    DirectGraphicsSprite	Background;
+    DirectGraphicsSprite	Tower;
+    DirectGraphicsSprite	Henry;
+    DirectGraphicsSprite	Reiter[2];
+    bool					finished;
+    int						Zustand;
+    float					Counter;
+    int						TextOff;
+    float					SmokeDelay;
+    float					TowerOffset;
+    float					Snow;
+    float					PlayerSmoke;
+    float					px[2], py[2], xs[2], ys[2];
 
-		void	InitPlayerPos(void);
+    void	InitPlayerPos(void);
 
-	public:
-			OuttroClass(void);							// Konstruktor
-		   ~OuttroClass(void);							// Destruktor
-	   void DoOuttro   (void);							// Intro ablaufen lassen
+public:
+    OuttroClass(void);							// Konstruktor
+    ~OuttroClass(void);							// Destruktor
+    void DoOuttro   (void);							// Intro ablaufen lassen
 
 };
 

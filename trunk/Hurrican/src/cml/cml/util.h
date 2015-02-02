@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -24,67 +24,78 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #undef max
 #endif
 
-namespace cml {
+namespace cml
+{
 
 /** Sign of input value as double. */
 template < typename T >
-double sign(T value) {
+double sign(T value)
+{
     return value < T(0) ? -1.0 : (value > T(0) ? 1.0 : 0.0);
 }
 
 /** Clamp input value to the range [min, max]. */
 template < typename T >
-T clamp(T value, T min, T max) {
+T clamp(T value, T min, T max)
+{
     return std::max(std::min(value, max), min);
 }
 
 /** Test input value for inclusion in [min, max]. */
 template < typename T >
-bool in_range(T value, T min, T max) {
+bool in_range(T value, T min, T max)
+{
     return !(value < min) && !(value > max);
 }
 
 /** Map input value from [min1, max1] to [min2, max2]. */
 template < typename T >
-T map_range(T value, T min1, T max1, T min2, T max2) {
+T map_range(T value, T min1, T max1, T min2, T max2)
+{
     return min2 + ((value - min1) / (max1 - min1)) * (max2 - min2);
 }
 
 
 /** Wrap std::acos() and clamp argument to [-1, 1]. */
 template < typename T >
-T acos_safe(T theta) {
+T acos_safe(T theta)
+{
     return T(std::acos(clamp(theta, T(-1.0), T(1.0))));
 }
 
 /** Wrap std::asin() and clamp argument to [-1, 1]. */
 template < typename T >
-T asin_safe(T theta) {
+T asin_safe(T theta)
+{
     return T(std::asin(clamp(theta, T(-1.0), T(1.0))));
 }
 
 /** Wrap std::sqrt() and clamp argument to [0, inf). */
 template < typename T >
-T sqrt_safe(T value) {
+T sqrt_safe(T value)
+{
     return T(std::sqrt(std::max(value, T(0.0))));
 }
 
 
 /** Square a value. */
 template < typename T >
-T sqr(T value) {
+T sqr(T value)
+{
     return value * value;
 }
 
 /** Cube a value. */
 template < typename T >
-T cub(T value) {
+T cub(T value)
+{
     return value * value * value;
 }
 
 /** Inverse square root. */
 template < typename T >
-T inv_sqrt(T value) {
+T inv_sqrt(T value)
+{
     return T(1.0 / std::sqrt(value));
 }
 
@@ -98,17 +109,20 @@ T inv_sqrt(T value) {
  */
 
 /** Return next, with cycling, in a series of N non-negative integers. */
-inline size_t next(size_t i, size_t N) {
+inline size_t next(size_t i, size_t N)
+{
     return (i + 1) % N;
 }
 
 /** Return previous, with cycling, in a series of N non-negative integers. */
-inline size_t prev(size_t i, size_t N) {
+inline size_t prev(size_t i, size_t N)
+{
     return i ? (i - 1) : (N - 1);
 }
 
 /** Cyclic permutation of the set { 0, 1 }, starting with 'first'. */
-inline void cyclic_permutation(size_t first, size_t& i, size_t& j) {
+inline void cyclic_permutation(size_t first, size_t& i, size_t& j)
+{
     i = first;
     j = next(i, 2);
 }
@@ -123,7 +137,7 @@ inline void cyclic_permutation(size_t first, size_t& i, size_t& j, size_t& k)
 
 /** Cyclic permutation of the set { 0, 1, 2, 3 }, starting with 'first'. */
 inline void cyclic_permutation(
-        size_t first, size_t& i, size_t& j, size_t& k, size_t& l)
+    size_t first, size_t& i, size_t& j, size_t& k, size_t& l)
 {
     i = first;
     j = next(i, 4);
@@ -134,13 +148,15 @@ inline void cyclic_permutation(
 
 /** Convert radians to degrees. */
 template < typename T >
-T deg(T theta) {
+T deg(T theta)
+{
     return theta * constants<T>::deg_per_rad();
 }
 
 /** Convert degrees to radians. */
 template < typename T >
-T rad(T theta) {
+T rad(T theta)
+{
     return theta * constants<T>::rad_per_deg();
 }
 
@@ -153,7 +169,8 @@ T rad(T theta) {
  * for interpolation u must lie between 0 and 1.
  */
 template <typename T, typename Scalar>
-T lerp(const T& f0, const T& f1, Scalar u) {
+T lerp(const T& f0, const T& f1, Scalar u)
+{
     return (Scalar(1.0) - u) * f0 + u * f1;
 }
 #endif
@@ -171,11 +188,11 @@ T bilerp(const T& f00, const T& f10,
 {
     Scalar uv = u * v;
     return (
-        (Scalar(1.0) - u - v + uv) * f00 +
-                          (u - uv) * f10 +
-                          (v - uv) * f01 +
-                                uv * f11
-    );
+               (Scalar(1.0) - u - v + uv) * f00 +
+               (u - uv) * f10 +
+               (v - uv) * f01 +
+               uv * f11
+           );
 }
 #endif
 
@@ -196,124 +213,143 @@ T trilerp(const T& f000, const T& f100,
     Scalar vw = v * w;
     Scalar wu = w * u;
     Scalar uvw = uv * w;
-    
+
     return (
-        (Scalar(1.0) - u - v - w + uv + vw + wu - uvw) * f000 +
-                                   (u - uv - wu + uvw) * f100 +
-                                   (v - uv - vw + uvw) * f010 +
-                                            (uv - uvw) * f110 +
-                                   (w - vw - wu + uvw) * f001 +
-                                            (wu - uvw) * f101 +
-                                            (vw - uvw) * f011 +
-                                                   uvw * f111
-    );
+               (Scalar(1.0) - u - v - w + uv + vw + wu - uvw) * f000 +
+               (u - uv - wu + uvw) * f100 +
+               (v - uv - vw + uvw) * f010 +
+               (uv - uvw) * f110 +
+               (w - vw - wu + uvw) * f001 +
+               (wu - uvw) * f101 +
+               (vw - uvw) * f011 +
+               uvw * f111
+           );
 }
 #endif
 
 /** Random binary (0,1) value. */
-inline size_t random_binary() {
+inline size_t random_binary()
+{
     return std::rand() % 2;
 }
 
 /** Random polar (-1,1) value. */
-inline int random_polar() {
+inline int random_polar()
+{
     return random_binary() ? 1 : -1;
 }
 
 /** Random real in [0,1]. */
-inline double random_unit() {
+inline double random_unit()
+{
     return double(std::rand()) / double(RAND_MAX);
 }
 
 /* Random integer in the range [min, max] */
-inline long random_integer(long min, long max) {
+inline long random_integer(long min, long max)
+{
     return min + std::rand() % (max - min + 1);
 }
 
 /* Random real number in the range [min, max] */
 template < typename T >
-T random_real(T min, T max) {
+T random_real(T min, T max)
+{
     return min + random_unit() * (max - min);
 }
 
 /** Squared length in R2. */
 template < typename T >
-T length_squared(T x, T y) {
+T length_squared(T x, T y)
+{
     return x * x + y * y;
 }
 
 /** Squared length in R3. */
 template < typename T >
-T length_squared(T x, T y, T z) {
+T length_squared(T x, T y, T z)
+{
     return x * x + y * y + z * z;
 }
 
 /** Length in R2. */
 template < typename T >
-T length(T x, T y) {
+T length(T x, T y)
+{
     return std::sqrt(length_squared(x,y));
 }
 
 /** Length in R3. */
 template < typename T >
-T length(T x, T y, T z) {
+T length(T x, T y, T z)
+{
     return std::sqrt(length_squared(x,y,z));
 }
 
 /** Index of maximum of 2 values. */
 template < typename T >
-size_t index_of_max(T a, T b) {
+size_t index_of_max(T a, T b)
+{
     return a > b ? 0 : 1;
 }
 
 /** Index of maximum of 2 values by magnitude. */
 template < typename T >
-size_t index_of_max_abs(T a, T b) {
+size_t index_of_max_abs(T a, T b)
+{
     return index_of_max(std::fabs(a),std::fabs(b));
 }
 
 /** Index of minimum of 2 values. */
 template < typename T >
-size_t index_of_min(T a, T b) {
+size_t index_of_min(T a, T b)
+{
     return a < b ? 0 : 1;
 }
 
 /** Index of minimum of 2 values by magnitude. */
 template < typename T >
-size_t index_of_min_abs(T a, T b) {
+size_t index_of_min_abs(T a, T b)
+{
     return index_of_min(std::fabs(a),std::fabs(b));
 }
 
 /** Index of maximum of 3 values. */
 template < typename T >
-size_t index_of_max(T a, T b, T c) {
+size_t index_of_max(T a, T b, T c)
+{
     return a > b ? (c > a ? 2 : 0) : (b > c ? 1 : 2);
 }
 
 /** Index of maximum of 3 values by magnitude. */
 template < typename T >
-size_t index_of_max_abs(T a, T b, T c) {
+size_t index_of_max_abs(T a, T b, T c)
+{
     return index_of_max(std::fabs(a),std::fabs(b),std::fabs(c));
 }
 
 /** Index of minimum of 3 values. */
 template < typename T >
-size_t index_of_min(T a, T b, T c) {
+size_t index_of_min(T a, T b, T c)
+{
     return a < b ? (c < a ? 2 : 0) : (b < c ? 1 : 2);
 }
 
 /** Index of minimum of 3 values by magnitude. */
 template < typename T >
-size_t index_of_min_abs(T a, T b, T c) {
+size_t index_of_min_abs(T a, T b, T c)
+{
     return index_of_min(std::fabs(a),std::fabs(b),std::fabs(c));
 }
 
 /** Wrap input value to the range [min,max]. */
 template < typename T >
-T wrap(T value, T min, T max) {
+T wrap(T value, T min, T max)
+{
     max -= min;
     value = std::fmod(value - min, max);
-    if (value < T(0)) {
+    if (value < T(0))
+    {
         value += max;
     }
     return min + value;
@@ -321,37 +357,43 @@ T wrap(T value, T min, T max) {
 
 /** Convert horizontal field of view to vertical field of view. */
 template < typename T >
-T xfov_to_yfov(T xfov, T aspect) {
+T xfov_to_yfov(T xfov, T aspect)
+{
     return T(2.0 * std::atan(std::tan(xfov * T(.5)) / double(aspect)));
 }
 
 /** Convert vertical field of view to horizontal field of view. */
 template < typename T >
-T yfov_to_xfov(T yfov, T aspect) {
+T yfov_to_xfov(T yfov, T aspect)
+{
     return T(2.0 * std::atan(std::tan(yfov * T(.5)) * double(aspect)));
 }
 
 /** Convert horizontal zoom to vertical zoom. */
 template < typename T >
-T xzoom_to_yzoom(T xzoom, T aspect) {
+T xzoom_to_yzoom(T xzoom, T aspect)
+{
     return xzoom * aspect;
 }
 
 /** Convert vertical zoom to horizontal zoom. */
 template < typename T >
-T yzoom_to_xzoom(T yzoom, T aspect) {
+T yzoom_to_xzoom(T yzoom, T aspect)
+{
     return yzoom / aspect;
 }
 
 /** Convert zoom factor to field of view. */
 template < typename T >
-T zoom_to_fov(T zoom) {
+T zoom_to_fov(T zoom)
+{
     return T(2) * T(std::atan(T(1) / zoom));
 }
 
 /** Convert field of view to zoom factor. */
 template < typename T >
-T fov_to_zoom(T fov) {
+T fov_to_zoom(T fov)
+{
     return T(1) / T(std::tan(fov * T(.5)));
 }
 

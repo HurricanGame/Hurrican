@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -15,7 +15,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 
 #include <iostream>
 
-namespace cml {
+namespace cml
+{
 
 /* NOTE: Made 'plain' quaternion output the default (Jesse) */
 
@@ -49,7 +50,8 @@ template<typename E, class AT, class OT, typename CT> std::ostream&
 operator<<(std::ostream& os, const cml::quaternion<E,AT,OT,CT>& q)
 {
     typedef typename cml::quaternion<E,AT,OT,CT>::order_type order_type;
-    enum {
+    enum
+    {
         W = order_type::W,
         X = order_type::X,
         Y = order_type::Y,
@@ -57,11 +59,11 @@ operator<<(std::ostream& os, const cml::quaternion<E,AT,OT,CT>& q)
     };
 
     os << "[ "
-      << " " << q[W]
-      << " " << q[X]
-      << " " << q[Y]
-      << " " << q[Z]
-      << " ]";
+       << " " << q[W]
+       << " " << q[X]
+       << " " << q[Y]
+       << " " << q[Z]
+       << " ]";
 
     return os;
 }

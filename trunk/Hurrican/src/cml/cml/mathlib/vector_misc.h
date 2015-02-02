@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -17,7 +17,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 
 /* Miscellaneous vector functions. */
 
-namespace cml {
+namespace cml
+{
 
 /* Function to project a vector v onto a hyperplane specified by a unit-length
  * normal n.
@@ -30,8 +31,8 @@ typename detail::CrossPromote<VecT_1,VecT_2>::promoted_vector
 project_to_hplane(const VecT_1& v, const VecT_2& n)
 {
     typedef typename detail::CrossPromote<VecT_1,VecT_2>::promoted_vector
-        result_type;
-        
+    result_type;
+
     result_type result;
     et::detail::Resize(result, v.size());
 
@@ -44,10 +45,10 @@ template < class VecT > vector< typename VecT::value_type, fixed<2> >
 perp(const VecT& v)
 {
     typedef vector< typename VecT::value_type, fixed<2> > temporary_type;
-    
+
     /* Checking */
     detail::CheckVec2(v);
-    
+
     return temporary_type(-v[1],v[0]);
 }
 
@@ -59,7 +60,8 @@ perp(const VecT& v)
 /** Return normalized cross product of two vectors */
 template< class LeftT, class RightT >
 typename detail::CrossPromote<LeftT,RightT>::promoted_vector
-unit_cross(const LeftT& left, const RightT& right) {
+unit_cross(const LeftT& left, const RightT& right)
+{
     /* @todo: This will probably break with dynamic<> vectors */
     return normalize(cross(left,right));
 }
@@ -107,30 +109,30 @@ cross_cardinal(size_t i, const VecT& v)
 /** Rotate a 3D vector v about a unit-length vector n. */
 template< class VecT_1, class VecT_2, typename Real >
 vector<
-    typename et::ScalarPromote<
-        typename VecT_1::value_type,
-        typename VecT_2::value_type
-    >::type,
-    fixed<3>
->
-rotate_vector(const VecT_1& v, const VecT_2& n, Real angle)
+typename et::ScalarPromote<
+typename VecT_1::value_type,
+         typename VecT_2::value_type
+         >::type,
+         fixed<3>
+         >
+         rotate_vector(const VecT_1& v, const VecT_2& n, Real angle)
 {
     typedef vector<
-        typename et::ScalarPromote<
-            typename VecT_1::value_type,
-            typename VecT_2::value_type
-        >::type,
-        fixed<3>
-    > result_type;
-    
+    typename et::ScalarPromote<
+    typename VecT_1::value_type,
+             typename VecT_2::value_type
+             >::type,
+             fixed<3>
+             > result_type;
+
     /* Checking */
     detail::CheckVec3(v);
     detail::CheckVec3(n);
-    
+
     result_type parallel = dot(v,n)*n;
     return (
-        std::cos(angle)*(v-parallel) + std::sin(angle)*cross(n,v) + parallel
-    );
+               std::cos(angle)*(v-parallel) + std::sin(angle)*cross(n,v) + parallel
+           );
 }
 
 /** Rotate a 2D vector v about a unit-length vector n. */
@@ -140,13 +142,13 @@ rotate_vector_2D(const VecT& v, Real angle)
 {
     typedef vector< typename VecT::value_type, fixed<2> > result_type;
     typedef typename result_type::value_type value_type;
-    
+
     /* Checking */
     detail::CheckVec2(v);
-    
+
     value_type s = std::sin(angle);
     value_type c = std::cos(angle);
-    
+
     return result_type(c * v[0] - s * v[1], s * v[0] + c * v[1]);
 }
 
@@ -174,40 +176,41 @@ random_unit(vector<E,A>& v)
 {
     typedef vector<E,A> vector_type;
     typedef typename vector_type::value_type value_type;
-    
-    switch (v.size()) {
-        case 3:
-        {
-            vector< E, fixed<3> > temp;
-            spherical_to_cartesian(
-                value_type(1),
-                value_type(random_unit() * constants<value_type>::two_pi()),
-                acos_safe(random_real(value_type(-1),value_type(1))),
-                2,
-                colatitude,
-                temp
-            );
-            v[0] = temp[0];
-            v[1] = temp[1];
-            v[2] = temp[2];
-            break;
-        }
-        case 2:
-        {
-            vector< E, fixed<2> > temp;
-            polar_to_cartesian(
-                value_type(1),
-                value_type(random_unit() * constants<value_type>::two_pi()),
-                temp
-            );
-            v[0] = temp[0];
-            v[1] = temp[1];
-            break;
-        }
-        default:
-            throw std::invalid_argument(
-                "random_unit() for N-d vectors not implemented yet");
-            break;
+
+    switch (v.size())
+    {
+    case 3:
+    {
+        vector< E, fixed<3> > temp;
+        spherical_to_cartesian(
+            value_type(1),
+            value_type(random_unit() * constants<value_type>::two_pi()),
+            acos_safe(random_real(value_type(-1),value_type(1))),
+            2,
+            colatitude,
+            temp
+        );
+        v[0] = temp[0];
+        v[1] = temp[1];
+        v[2] = temp[2];
+        break;
+    }
+    case 2:
+    {
+        vector< E, fixed<2> > temp;
+        polar_to_cartesian(
+            value_type(1),
+            value_type(random_unit() * constants<value_type>::two_pi()),
+            temp
+        );
+        v[0] = temp[0];
+        v[1] = temp[1];
+        break;
+    }
+    default:
+        throw std::invalid_argument(
+            "random_unit() for N-d vectors not implemented yet");
+        break;
     }
 }
 
@@ -230,54 +233,55 @@ random_unit(vector<E,A>& v, const VecT& axis, E theta)
 {
     typedef vector<E,A> vector_type;
     typedef typename vector_type::value_type value_type;
-    
-    switch (v.size()) {
-        case 3:
-        {
-            vector< E, fixed<3> > temp, n, temp_axis;
-            temp_axis[0] = axis[0];
-            temp_axis[1] = axis[1];
-            temp_axis[2] = axis[2];
 
-            /* @todo: Function for finding 'any perpendicular vector'? */
-            n = axis_3D(cml::index_of_min_abs(axis[0],axis[1],axis[2]));
-            n = cross(n,temp_axis);
-            
-            /* Rotate v 'away from' the axis by a random angle in the range
-             * [-theta,theta]
-             */
-            temp = rotate_vector(temp_axis,n,random_real(-theta,theta));
-             
-            /* Rotate v about the axis by a random angle in the range [-pi,pi]
-             */
-            temp = rotate_vector(
-                temp,
-                temp_axis,
-                random_real(
-                    -constants<value_type>::pi(),
-                     constants<value_type>::pi()
-                )
-            );
+    switch (v.size())
+    {
+    case 3:
+    {
+        vector< E, fixed<3> > temp, n, temp_axis;
+        temp_axis[0] = axis[0];
+        temp_axis[1] = axis[1];
+        temp_axis[2] = axis[2];
 
-            v[0] = temp[0];
-            v[1] = temp[1];
-            v[2] = temp[2];
-            break;
-        }
-        case 2:
-        {
-            vector< E, fixed<2> > temp, temp_axis;
-            temp_axis[0] = axis[0];
-            temp_axis[1] = axis[1];
-            temp = rotate_vector_2D(temp_axis, random_real(-theta,theta));
-            v[0] = temp[0];
-            v[1] = temp[1];
-            break;
-        }
-        default:
-            throw std::invalid_argument(
-                "random_unit(v,axis,theta) only implemented for 2D and 3D");
-            break;
+        /* @todo: Function for finding 'any perpendicular vector'? */
+        n = axis_3D(cml::index_of_min_abs(axis[0],axis[1],axis[2]));
+        n = cross(n,temp_axis);
+
+        /* Rotate v 'away from' the axis by a random angle in the range
+         * [-theta,theta]
+         */
+        temp = rotate_vector(temp_axis,n,random_real(-theta,theta));
+
+        /* Rotate v about the axis by a random angle in the range [-pi,pi]
+         */
+        temp = rotate_vector(
+                   temp,
+                   temp_axis,
+                   random_real(
+                       -constants<value_type>::pi(),
+                       constants<value_type>::pi()
+                   )
+               );
+
+        v[0] = temp[0];
+        v[1] = temp[1];
+        v[2] = temp[2];
+        break;
+    }
+    case 2:
+    {
+        vector< E, fixed<2> > temp, temp_axis;
+        temp_axis[0] = axis[0];
+        temp_axis[1] = axis[1];
+        temp = rotate_vector_2D(temp_axis, random_real(-theta,theta));
+        v[0] = temp[0];
+        v[1] = temp[1];
+        break;
+    }
+    default:
+        throw std::invalid_argument(
+            "random_unit(v,axis,theta) only implemented for 2D and 3D");
+        break;
     }
 }
 
@@ -285,15 +289,17 @@ random_unit(vector<E,A>& v, const VecT& axis, E theta)
 
 template< class VecT_1, class VecT_2 >
 typename detail::DotPromote< VecT_1, VecT_2 >::promoted_scalar
-manhattan_distance(const VecT_1& v1, const VecT_2& v2) {
+manhattan_distance(const VecT_1& v1, const VecT_2& v2)
+{
     /* Check that a promotion exists */
     typedef typename et::VectorPromote<
-        VecT_1,VecT_2>::temporary_type promoted_vector;
-        
+    VecT_1,VecT_2>::temporary_type promoted_vector;
+
     typedef typename detail::DotPromote< VecT_1, VecT_2 >::promoted_scalar scalar_type;
-    
+
     scalar_type sum = scalar_type(0);
-    for (size_t i = 0; i < v1.size(); ++i) {
+    for (size_t i = 0; i < v1.size(); ++i)
+    {
         sum += std::fabs(v2[i]-v1[i]);
     }
     return sum;

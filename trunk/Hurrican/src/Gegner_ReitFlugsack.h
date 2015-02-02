@@ -6,18 +6,18 @@
 
 class GegnerReitFlugsack : public GegnerClass
 {
-	private:
-		float ShotCount;								// Schuss Delay
-		float SmokeCount;								// Rauch  Delay
-		float ArrowCount;
+private:
+    float ShotCount;								// Schuss Delay
+    float SmokeCount;								// Rauch  Delay
+    float ArrowCount;
 
-	public:
+public:
 
-	GegnerReitFlugsack(int  Wert1, int Wert2,			// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert 
-	void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-	void DoDraw		   (void);
+    GegnerReitFlugsack(int  Wert1, int Wert2,			// Konstruktor
+                       bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw		   (void);
 };
 
 #endif

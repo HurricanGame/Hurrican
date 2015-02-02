@@ -6,20 +6,20 @@
 
 class GegnerMushroom : public GegnerClass
 {
-	private:
-		float	ySize;		
-		float	yCount;
-		float	count;
+private:
+    float	ySize;
+    float	yCount;
+    float	count;
 
-	public:
+public:
 
-	GegnerMushroom  (int Wert1,	int Wert2,		// Konstruktor
-						bool Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
-	void DoDraw		   (void);
-	void PlayerJumps   (PlayerClass *pPlayer);
+    GegnerMushroom  (int Wert1,	int Wert2,		// Konstruktor
+                     bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
+    void DoDraw		   (void);
+    void PlayerJumps   (PlayerClass *pPlayer);
 };
 
 #endif

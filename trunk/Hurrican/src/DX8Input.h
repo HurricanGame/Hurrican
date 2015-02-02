@@ -34,11 +34,11 @@
 #if defined(PLATFORM_DIRECTX)
 #define KeyDown(Taste) (TastaturPuffer[Taste] & 0x80)
 #elif defined(PLATFORM_SDL)
-    #if SDL_VERSION_ATLEAST(2,0,0)
-    #define KeyDown(Taste) (TastaturPuffer[SDL_GetScancodeFromKey(Taste)] > 0)
-    #else
-    #define KeyDown(Taste) (TastaturPuffer[Taste] > 0)
-    #endif
+#if SDL_VERSION_ATLEAST(2,0,0)
+#define KeyDown(Taste) (TastaturPuffer[SDL_GetScancodeFromKey(Taste)] > 0)
+#else
+#define KeyDown(Taste) (TastaturPuffer[Taste] > 0)
+#endif
 #endif
 
 // ForceFeedback Effekte
@@ -63,51 +63,51 @@
 
 class DirectInputClass
 {
-	private:
-		LPDIRECTINPUT8			lpDI;					// DirectInput Hauptinterface
+private:
+    LPDIRECTINPUT8			lpDI;					// DirectInput Hauptinterface
 
-	public:
+public:
 
 #if defined(PLATFORM_DIRECTX)
-		LPDIRECTINPUTDEVICE8	lpDIKeyboard;			// Keyboard Device Interface
-		LPDIRECTINPUTDEVICE8	lpDIMaus;				// Maus Device Interface
-		GUID					guidJoystickDevice;		// GUID des Joystick Devices
+    LPDIRECTINPUTDEVICE8	lpDIKeyboard;			// Keyboard Device Interface
+    LPDIRECTINPUTDEVICE8	lpDIMaus;				// Maus Device Interface
+    GUID					guidJoystickDevice;		// GUID des Joystick Devices
 #endif
 
-		int						JoysticksFound;
-		DirectJoystickClass		Joysticks[MAX_JOYSTICKS];
+    int						JoysticksFound;
+    DirectJoystickClass		Joysticks[MAX_JOYSTICKS];
 
-		int						MausX;					// Koordinaten der
-		int						MausY;					// der Maus und ihre Buttons
-		bool					MausButtons[MAX_MOUSEBUTTONS];
+    int						MausX;					// Koordinaten der
+    int						MausY;					// der Maus und ihre Buttons
+    bool					MausButtons[MAX_MOUSEBUTTONS];
 
-		DirectInputClass(void);							// Konstruktor
-	   ~DirectInputClass(void);							// Desktruktor
+    DirectInputClass(void);							// Konstruktor
+    ~DirectInputClass(void);							// Desktruktor
 
-		bool Init(HWND hwnd, HINSTANCE hinst);			// DirectInput initialisieren
-		void Exit(void);								// DirectInput beenden
-		bool UpdateTastatur(void);						// Tasten abfragen und im Puffer speichern
-		bool UpdateMaus	   (bool gepuffert);			// Maus abfragen gepuffert/ungepuffert
-		void AcquireKeyboard(void);						// Keyboard akquirierens
-		bool AreAllKeysReleased();						// Checken ob keine Taste mehr gedrückt ist
-		bool AnyKeyDown(void);
-		bool AnyButtonDown(void);
-		void UpdateJoysticks(void);
+    bool Init(HWND hwnd, HINSTANCE hinst);			// DirectInput initialisieren
+    void Exit(void);								// DirectInput beenden
+    bool UpdateTastatur(void);						// Tasten abfragen und im Puffer speichern
+    bool UpdateMaus	   (bool gepuffert);			// Maus abfragen gepuffert/ungepuffert
+    void AcquireKeyboard(void);						// Keyboard akquirierens
+    bool AreAllKeysReleased();						// Checken ob keine Taste mehr gedrückt ist
+    bool AnyKeyDown(void);
+    bool AnyButtonDown(void);
+    void UpdateJoysticks(void);
 #if defined(ANDROID)
-      #define BOX_RECT_TOTAL 12
-      uint16_t Width;
-      uint16_t Height;
-      uint16_t TouchDeviceCount;
-      uint16_t TouchdpadX;
-      uint16_t TouchdpadY;
-      uint16_t TouchdpadRadius;
-      void InitTouchBoxes( int w, int h );
-      void UpdateTouchscreen( void );
-      bool CheckRectCollision( SDL_Rect* boxA, SDL_Rect* boxB );
-      std::vector<SDL_Rect> TouchBoxes;
-      std::vector<SDL_Keycode> TouchBoxMaps;
+#define BOX_RECT_TOTAL 12
+    uint16_t Width;
+    uint16_t Height;
+    uint16_t TouchDeviceCount;
+    uint16_t TouchdpadX;
+    uint16_t TouchdpadY;
+    uint16_t TouchdpadRadius;
+    void InitTouchBoxes( int w, int h );
+    void UpdateTouchscreen( void );
+    bool CheckRectCollision( SDL_Rect* boxA, SDL_Rect* boxB );
+    std::vector<SDL_Rect> TouchBoxes;
+    std::vector<SDL_Keycode> TouchBoxMaps;
 #endif
-		int NumberOfKeys;
+    int NumberOfKeys;
 };
 
 // --------------------------------------------------------------------------------------

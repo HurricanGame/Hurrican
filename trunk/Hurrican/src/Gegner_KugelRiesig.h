@@ -6,13 +6,13 @@
 
 class GegnerKugelRiesig : public GegnerClass
 {
-	public:
+public:
 
-	GegnerKugelRiesig  (int  Wert1, int Wert2,			// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerKugelRiesig  (int  Wert1, int Wert2,			// Konstruktor
+                        bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

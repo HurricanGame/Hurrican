@@ -6,15 +6,15 @@
 
 class GegnerPartikelSpawner : public GegnerClass
 {
-	private:
-		float	Aussetzer;
-	public:
+private:
+    float	Aussetzer;
+public:
 
-	GegnerPartikelSpawner(int Wert1,	int Wert2,			// Konstruktor
-						bool		  Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerPartikelSpawner(int Wert1,	int Wert2,			// Konstruktor
+                          bool		  Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

@@ -60,11 +60,12 @@ typedef uint32_t    LPDIRECTINPUT8;
 #ifndef __WIN32__
 typedef uint32_t HINSTANCE, HANDLE, HWND, HRESULT;
 
-typedef struct tagRECT {
-	LONG left;
-	LONG top;
-	LONG right;
-	LONG bottom;
+typedef struct tagRECT
+{
+    LONG left;
+    LONG top;
+    LONG right;
+    LONG bottom;
 } RECT;
 #endif
 typedef uint32_t LPDIRECT3D8, LPDIRECT3D9, LPDIRECT3DDEVICE8, LPDIRECT3DDEVICE9, LPDIRECTSOUND8, D3DCOLOR;
@@ -76,9 +77,9 @@ typedef uint32_t LPDIRECT3D8, LPDIRECT3D9, LPDIRECT3DDEVICE8, LPDIRECT3DDEVICE9,
 #define D3DX_PI M_PI
 
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
-	#define D3DCOLOR_RGBA(r,g,b,a)  (((a)<<24) + ((r)<<16) + ((g)<<8) + (b))
+#define D3DCOLOR_RGBA(r,g,b,a)  (((a)<<24) + ((r)<<16) + ((g)<<8) + (b))
 #else
-	#define D3DCOLOR_RGBA(r,g,b,a)  (((b)<<24) + ((g)<<16) + ((r)<<8) + (a))
+#define D3DCOLOR_RGBA(r,g,b,a)  (((b)<<24) + ((g)<<16) + ((r)<<8) + (a))
 #endif
 #define timeGetTime SDL_GetTicks
 
@@ -95,7 +96,8 @@ void D3DXMatrixIdentity( D3DXMATRIXA16* m );
 #define D3DXMatrixRotationY(m,a)        cml::matrix_rotation_world_y((*m),(a))
 #define D3DXMatrixRotationZ(m,a)        cml::matrix_rotation_world_z((*m),(a))
 
-typedef enum D3DPRIMITIVETYPE {
+typedef enum D3DPRIMITIVETYPE
+{
     D3DPT_POINTLIST       = GL_POINTS,
     D3DPT_LINELIST        = GL_LINES,
     D3DPT_LINESTRIP       = GL_LINE_STRIP,
@@ -105,32 +107,35 @@ typedef enum D3DPRIMITIVETYPE {
     D3DPT_FORCE_DWORD     = 0x7fffffff
 } D3DPRIMITIVETYPE, *LPD3DPRIMITIVETYPE;
 
-class D3DXVECTOR2 {
-    public:
-        FLOAT x;
-        FLOAT y;
+class D3DXVECTOR2
+{
+public:
+    FLOAT x;
+    FLOAT y;
 
-        D3DXVECTOR2() : x(0), y(0) {};
-        D3DXVECTOR2(FLOAT X, FLOAT Y) : x(X), y(Y) {};
-        virtual ~D3DXVECTOR2() {};
+    D3DXVECTOR2() : x(0), y(0) {};
+    D3DXVECTOR2(FLOAT X, FLOAT Y) : x(X), y(Y) {};
+    virtual ~D3DXVECTOR2() {};
 };
 
-class D3DXVECTOR3 : public D3DXVECTOR2 {
-    public:
-        FLOAT z;
+class D3DXVECTOR3 : public D3DXVECTOR2
+{
+public:
+    FLOAT z;
 
-        D3DXVECTOR3() : D3DXVECTOR2(0,0), z(0) {};
-        D3DXVECTOR3(FLOAT X, FLOAT Y, FLOAT Z) : D3DXVECTOR2(X,Y),  z(Z) {};
-        virtual ~D3DXVECTOR3() {};
+    D3DXVECTOR3() : D3DXVECTOR2(0,0), z(0) {};
+    D3DXVECTOR3(FLOAT X, FLOAT Y, FLOAT Z) : D3DXVECTOR2(X,Y),  z(Z) {};
+    virtual ~D3DXVECTOR3() {};
 };
 
-class D3DXVECTOR4 : public D3DXVECTOR3 {
-    public:
-        FLOAT w;
+class D3DXVECTOR4 : public D3DXVECTOR3
+{
+public:
+    FLOAT w;
 
-        D3DXVECTOR4() : D3DXVECTOR3(0,0,0), w(0) {};
-        D3DXVECTOR4(FLOAT X, FLOAT Y, FLOAT Z, FLOAT W) : D3DXVECTOR3(X,Y,Z), w(W) {};
-        virtual ~D3DXVECTOR4() {};
+    D3DXVECTOR4() : D3DXVECTOR3(0,0,0), w(0) {};
+    D3DXVECTOR4(FLOAT X, FLOAT Y, FLOAT Z, FLOAT W) : D3DXVECTOR3(X,Y,Z), w(W) {};
+    virtual ~D3DXVECTOR4() {};
 };
 
 #define sprintf_s   sprintf

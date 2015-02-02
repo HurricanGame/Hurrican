@@ -6,18 +6,18 @@
 
 class GegnerPresswurst : public GegnerClass
 {
-	private:
-		float	oldy;
-		float	SmokeCount;
+private:
+    float	oldy;
+    float	SmokeCount;
 
-	public:
+public:
 
-	GegnerPresswurst	   (int Wert1,	int Wert2,			// Konstruktor
-						bool		  Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
-	void DoDraw		   (void);
+    GegnerPresswurst	   (int Wert1,	int Wert2,			// Konstruktor
+                            bool		  Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
+    void DoDraw		   (void);
 };
 
 #endif

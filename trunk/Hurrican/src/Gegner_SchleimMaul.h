@@ -5,19 +5,19 @@
 #include "Gegner_Stuff.h"
 
 class GegnerSchleimMaul : public GegnerClass
-{	
-	private:		
-		float	SpawnCount;
-		float	ShotDelay;
-		GegnerClass	*pChildren[10];
+{
+private:
+    float	SpawnCount;
+    float	ShotDelay;
+    GegnerClass	*pChildren[10];
 
-	public :		
+public :
 
-	GegnerSchleimMaul(float x, float y, int  Wert1, int Wert2,
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-	void DoDraw		   (void);							// Gegner individuell rendern
+    GegnerSchleimMaul(float x, float y, int  Wert1, int Wert2,
+                      bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw		   (void);							// Gegner individuell rendern
 };
 
 #endif

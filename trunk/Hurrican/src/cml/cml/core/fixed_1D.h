@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -18,7 +18,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #include <cml/core/cml_assert.h>
 #include <cml/fixed.h>
 
-namespace cml {
+namespace cml
+{
 
 /** Statically-allocated array.
  *
@@ -46,7 +47,7 @@ namespace cml {
 template<typename Element, int Size>
 class fixed_1D
 {
-  public:
+public:
 
     /* Require Size > 0: */
     CML_STATIC_REQUIRE(Size > 0);
@@ -77,16 +78,19 @@ class fixed_1D
     typedef oned_tag dimension_tag;
 
 
-  public:
+public:
 
     /** The length as an enumerated value. */
     enum { array_size = Size };
 
 
-  public:
+public:
 
     /** Return the number of elements in the array. */
-    size_t size() const { return size_t(array_size); }
+    size_t size() const
+    {
+        return size_t(array_size);
+    }
 
     /** Access to the data as a C array.
      *
@@ -95,7 +99,10 @@ class fixed_1D
      *
      * @note This function does not range-check the argument.
      */
-    reference operator[](size_t i) { return m_data[i]; }
+    reference operator[](size_t i)
+    {
+        return m_data[i];
+    }
 
     /** Const access to the data as a C array.
      *
@@ -104,20 +111,29 @@ class fixed_1D
      *
      * @note This function does not range-check the argument.
      */
-    const_reference operator[](size_t i) const { return m_data[i]; }
+    const_reference operator[](size_t i) const
+    {
+        return m_data[i];
+    }
 
     /** Return access to the data as a raw pointer. */
-    pointer data() { return &m_data[0]; }
+    pointer data()
+    {
+        return &m_data[0];
+    }
 
     /** Return access to the data as a raw pointer. */
-    const_pointer data() const { return &m_data[0]; }
+    const_pointer data() const
+    {
+        return &m_data[0];
+    }
 
-  protected:
+protected:
 
     fixed_1D() {}
 
 
-  protected:
+protected:
 
     array_impl                  m_data;
 };

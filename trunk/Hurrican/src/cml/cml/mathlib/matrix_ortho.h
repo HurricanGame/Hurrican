@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -27,12 +27,13 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
  * @todo: General NxN matrix orthogonalization.
  */
 
-namespace cml {
+namespace cml
+{
 
 /** Orthogonalize the upper-left 3x3 portion of a matrix */
 template < typename E, class A, class B, class L > void
 matrix_orthogonalize_3x3(matrix<E,A,B,L>& m, size_t stable_axis = 2,
-    size_t num_iter = 0, E s = E(1))
+                         size_t num_iter = 0, E s = E(1))
 {
     typedef vector< E, fixed<3> > vector_type;
 
@@ -45,7 +46,7 @@ matrix_orthogonalize_3x3(matrix<E,A,B,L>& m, size_t stable_axis = 2,
 /** Orthogonalize the upper-left 2x2 portion of a matrix */
 template < typename E, class A, class B, class L > void
 matrix_orthogonalize_2x2(matrix<E,A,B,L>& m, size_t stable_axis = 0,
-    size_t num_iter = 0, E s = E(1))
+                         size_t num_iter = 0, E s = E(1))
 {
     typedef vector< E, fixed<2> > vector_type;
 

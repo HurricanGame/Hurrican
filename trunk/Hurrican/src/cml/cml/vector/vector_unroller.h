@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -30,9 +30,12 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #error "CML_VECTOR_UNROLL_LIMIT is undefined."
 #endif
 
-namespace cml {
-namespace et {
-namespace detail {
+namespace cml
+{
+namespace et
+{
+namespace detail
+{
 
 /** Unroll a binary assignment operator on a fixed-size vector.
  *
@@ -46,7 +49,7 @@ namespace detail {
 template<class OpT, typename E, class AT, class SrcT>
 class VectorAssignmentUnroller
 {
-  protected:
+protected:
 
     /* Forward declare: */
     template<int N, int Last, bool can_unroll> struct Eval;
@@ -59,8 +62,10 @@ class VectorAssignmentUnroller
     typedef ExprTraits<SrcT> src_traits;
 
     /** Evaluate the binary operator for the first Len-1 elements. */
-    template<int N, int Last> struct Eval<N,Last,true> {
-        void operator()(vector_type& dest, const SrcT& src) const {
+    template<int N, int Last> struct Eval<N,Last,true>
+    {
+        void operator()(vector_type& dest, const SrcT& src) const
+        {
 
             /* Apply to current N: */
             OpT().apply(dest[N], src_traits().get(src,N));
@@ -72,8 +77,10 @@ class VectorAssignmentUnroller
     };
 
     /** Evaluate the binary operator at element Last. */
-    template<int Last> struct Eval<Last,Last,true> {
-        void operator()(vector_type& dest, const SrcT& src) const {
+    template<int Last> struct Eval<Last,Last,true>
+    {
+        void operator()(vector_type& dest, const SrcT& src) const
+        {
 
             /* Apply to last element: */
             OpT().apply(dest[Last], src_traits().get(src,Last));
@@ -87,9 +94,12 @@ class VectorAssignmentUnroller
      * This is used when the vector's length is longer than
      * CML_VECTOR_UNROLL_LIMIT
      */
-    template<int N, int Last> struct Eval<N,Last,false> {
-        void operator()(vector_type& dest, const SrcT& src) const {
-            for(size_t i = 0; i <= Last; ++i) {
+    template<int N, int Last> struct Eval<N,Last,false>
+    {
+        void operator()(vector_type& dest, const SrcT& src) const
+        {
+            for(size_t i = 0; i <= Last; ++i)
+            {
                 OpT().apply(dest[i], src_traits().get(src,i));
                 /* Note: we don't need get(), since dest is a vector. */
             }
@@ -97,7 +107,7 @@ class VectorAssignmentUnroller
     };
 
 
-  public:
+public:
 
     /** Unroll assignment to a fixed-sized vector. */
     void operator()(vector_type& dest, const SrcT& src, cml::fixed_size_tag)
@@ -105,7 +115,7 @@ class VectorAssignmentUnroller
         typedef cml::vector<E,AT> vector_type;
         enum { Len = vector_type::array_size };
         typedef typename VectorAssignmentUnroller<OpT,E,AT,SrcT>::template
-            Eval<0, Len-1, (Len <= CML_VECTOR_UNROLL_LIMIT)> Unroller;
+        Eval<0, Len-1, (Len <= CML_VECTOR_UNROLL_LIMIT)> Unroller;
         /* Note: Len is the array size, so Len-1 is the last element. */
 
         /* Use a run-time check if src is a run-time sized expression: */
@@ -126,10 +136,10 @@ class VectorAssignmentUnroller
     }
 
 
-  private:
+private:
     /* XXX Blah, a temp. hack to fix the auto-resizing stuff below. */
     size_t CheckOrResize(
-            vector_type& dest, const SrcT& src, cml::resizable_tag)
+        vector_type& dest, const SrcT& src, cml::resizable_tag)
     {
 #if defined(CML_AUTOMATIC_VECTOR_RESIZE_ON_ASSIGNMENT)
         /* Get the size of src.  This also causes src to check its size: */
@@ -145,13 +155,13 @@ class VectorAssignmentUnroller
     }
 
     size_t CheckOrResize(
-            vector_type& dest, const SrcT& src, cml::not_resizable_tag)
+        vector_type& dest, const SrcT& src, cml::not_resizable_tag)
     {
         return CheckedSize(dest,src,dynamic_size_tag());
     }
     /* XXX Blah, a temp. hack to fix the auto-resizing stuff below. */
-  public:
-    
+public:
+
 
     /** Just use a loop to assign to a runtime-sized vector. */
     void operator()(vector_type& dest, const SrcT& src, cml::dynamic_size_tag)
@@ -159,8 +169,9 @@ class VectorAssignmentUnroller
         /* Shorthand: */
         typedef ExprTraits<SrcT> src_traits;
         size_t N = this->CheckOrResize(
-                dest,src,typename vector_type::resizing_tag());
-        for(size_t i = 0; i < N; ++i) {
+            dest,src,typename vector_type::resizing_tag());
+        for(size_t i = 0; i < N; ++i)
+        {
             OpT().apply(dest[i], src_traits().get(src,i));
             /* Note: we don't need get(), since dest is a vector. */
         }
@@ -183,48 +194,52 @@ struct VectorAccumulateUnroller
     typedef ExprTraits<RightT> right_traits;
 
     /* Figure out the return type: */
-    typedef typename AccumT::value_type result_type; 
+    typedef typename AccumT::value_type result_type;
 
     /** Evaluate for the first Len-1 elements. */
-    template<int N, int Last> struct Eval<N,Last,true> {
+    template<int N, int Last> struct Eval<N,Last,true>
+    {
         result_type operator()(
-                const LeftT& left, const RightT& right) const
-        {
-            /* Apply to last value: */
-            return AccumT().apply(
-                    OpT().apply(left[N], right_traits().get(right,N)),
-                    Eval<N+1,Last,true>()(left, right));
-            /* Note: we don't need get(), since dest is a vector. */
-        }
-    };
+            const LeftT& left, const RightT& right) const
+{
+    /* Apply to last value: */
+    return AccumT().apply(
+        OpT().apply(left[N], right_traits().get(right,N)),
+        Eval<N+1,Last,true>()(left, right));
+    /* Note: we don't need get(), since dest is a vector. */
+}
+};
 
-    /** Evaluate the binary operator at element Last. */
-    template<int Last> struct Eval<Last,Last,true> {
-        result_type operator()(
-                const LeftT& left, const RightT& right) const
-        {
-            return OpT().apply(left[Last],right_traits().get(right,Last));
-            /* Note: we don't need get(), since dest is a vector. */
-        }
-    };
+/** Evaluate the binary operator at element Last. */
+template<int Last> struct Eval<Last,Last,true>
+{
+    result_type operator()(
+        const LeftT& left, const RightT& right) const
+{
+    return OpT().apply(left[Last],right_traits().get(right,Last));
+    /* Note: we don't need get(), since dest is a vector. */
+}
+};
 
-    /** Evaluate using a loop. */
-    template<int N, int Last> struct Eval<N,Last,false> {
-        result_type operator()(
-                const LeftT& left, const RightT& right) const
-        {
-            result_type accum = OpT().apply(left[0],right[0]);
-            for(size_t i = 1; i <= Last; ++i) {
-                /* XXX This might not be optimized properly by some compilers,
-                 * but to do anything else requires changing the requirements
-                 * of a scalar operator.
-                 */
-                accum = AccumT().apply(accum, OpT().apply(
-                            left[i],right_traits().get(right,i)));
-                /* Note: we don't need get(), since dest is a vector. */
-            }
-        }
-    };
+/** Evaluate using a loop. */
+template<int N, int Last> struct Eval<N,Last,false>
+{
+    result_type operator()(
+        const LeftT& left, const RightT& right) const
+{
+    result_type accum = OpT().apply(left[0],right[0]);
+    for(size_t i = 1; i <= Last; ++i)
+    {
+        /* XXX This might not be optimized properly by some compilers,
+         * but to do anything else requires changing the requirements
+         * of a scalar operator.
+         */
+        accum = AccumT().apply(accum, OpT().apply(
+                                   left[i],right_traits().get(right,i)));
+        /* Note: we don't need get(), since dest is a vector. */
+    }
+}
+   };
 };
 
 }

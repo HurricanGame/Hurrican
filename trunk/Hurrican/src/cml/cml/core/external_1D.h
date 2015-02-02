@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -23,7 +23,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #include <cml/core/cml_assert.h>
 #include <cml/external.h>
 
-namespace cml {
+namespace cml
+{
 
 /** Fixed-size external 1D array.
  *
@@ -33,7 +34,7 @@ namespace cml {
 template<typename Element, int Size = -1>
 class external_1D
 {
-  public:
+public:
 
     /* Require Size > 0: */
     CML_STATIC_REQUIRE(Size > 0);
@@ -64,22 +65,25 @@ class external_1D
     typedef oned_tag dimension_tag;
 
 
-  public:
+public:
 
     /** The length as an enumerated value. */
     enum { array_size = Size };
 
 
-  public:
+public:
 
     external_1D(pointer const ptr)
         : m_data(ptr) {}
 
 
-  public:
+public:
 
     /** Return the number of elements in the array. */
-    size_t size() const { return size_t(array_size); }
+    size_t size() const
+    {
+        return size_t(array_size);
+    }
 
     /** Access to the data as a C array.
      *
@@ -88,7 +92,10 @@ class external_1D
      *
      * @note This function does not range-check the argument.
      */
-    reference operator[](size_t i) { return m_data[i]; }
+    reference operator[](size_t i)
+    {
+        return m_data[i];
+    }
 
     /** Const access to the data as a C array.
      *
@@ -97,21 +104,30 @@ class external_1D
      *
      * @note This function does not range-check the argument.
      */
-    const_reference operator[](size_t i) const { return m_data[i]; }
+    const_reference operator[](size_t i) const
+    {
+        return m_data[i];
+    }
 
     /** Return access to the data as a raw pointer. */
-    pointer data() { return m_data; }
+    pointer data()
+    {
+        return m_data;
+    }
 
     /** Return access to the data as a raw pointer. */
-    const_pointer data() const { return m_data; }
+    const_pointer data() const
+    {
+        return m_data;
+    }
 
 
-  protected:
+protected:
 
     pointer const               m_data;
 
 
-  private:
+private:
 
     /* Initialization without an argument isn't allowed: */
     external_1D();
@@ -126,7 +142,7 @@ class external_1D
 template<typename Element>
 class external_1D<Element,-1>
 {
-  public:
+public:
 
     /* Record the generator.  Note: this is *not* unique, as it is the same
      * generator used by external_2D.  However, external_2D is used only by
@@ -154,22 +170,25 @@ class external_1D<Element,-1>
     typedef oned_tag dimension_tag;
 
 
-  public:
+public:
 
     /** The length as an enumerated value. */
     enum { array_size = -1 };
 
 
-  public:
+public:
 
     external_1D(pointer const ptr, size_t size)
         : m_data(ptr), m_size(size) {}
 
 
-  public:
+public:
 
     /** Return the number of elements in the array. */
-    size_t size() const { return m_size; }
+    size_t size() const
+    {
+        return m_size;
+    }
 
     /** Access to the data as a C array.
      *
@@ -178,7 +197,10 @@ class external_1D<Element,-1>
      *
      * @note This function does not range-check the argument.
      */
-    reference operator[](size_t i) { return m_data[i]; }
+    reference operator[](size_t i)
+    {
+        return m_data[i];
+    }
 
     /** Const access to the data as a C array.
      *
@@ -187,22 +209,31 @@ class external_1D<Element,-1>
      *
      * @note This function does not range-check the argument.
      */
-    const_reference operator[](size_t i) const { return m_data[i]; }
+    const_reference operator[](size_t i) const
+    {
+        return m_data[i];
+    }
 
     /** Return access to the data as a raw pointer. */
-    pointer data() { return m_data; }
+    pointer data()
+    {
+        return m_data;
+    }
 
     /** Return access to the data as a raw pointer. */
-    const_pointer data() const { return m_data; }
+    const_pointer data() const
+    {
+        return m_data;
+    }
 
 
-  protected:
+protected:
 
     pointer const               m_data;
     const size_t                m_size;
 
 
-  private:
+private:
 
     /* Initialization without an argument isn't allowed: */
     external_1D();

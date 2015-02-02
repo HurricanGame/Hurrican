@@ -11,16 +11,16 @@
 
 GegnerFieserWalker::GegnerFieserWalker (int  Wert1, int Wert2, bool Light)
 {
-	Handlung		= GEGNER_LAUFEN;
-	Energy			= 100;	
-	Value1			= Wert1;
-	Value2			= Wert2;
-	ChangeLight		= Light;
-	Destroyable		= true;
-	AnimSpeed       = 0.5f;
-	AnimEnde		= 14;
-	xSpeed			= 5.0f;
-	ShotDelay		= 0.0f;
+    Handlung		= GEGNER_LAUFEN;
+    Energy			= 100;
+    Value1			= Wert1;
+    Value2			= Wert2;
+    ChangeLight		= Light;
+    Destroyable		= true;
+    AnimSpeed       = 0.5f;
+    AnimEnde		= 14;
+    xSpeed			= 5.0f;
+    ShotDelay		= 0.0f;
 }
 
 // --------------------------------------------------------------------------------------
@@ -29,91 +29,94 @@ GegnerFieserWalker::GegnerFieserWalker (int  Wert1, int Wert2, bool Light)
 
 void GegnerFieserWalker::DoKI(void)
 {
-	SimpleAnimation ();
-	
-	// Je nach Handlung anders verhalten
-	//
-	switch (Handlung)
-	{
-		// rumhopsen
-		//
-		case GEGNER_LAUFEN:
-		{			
-			if (!(blocku & BLOCKWERT_WAND) &&
-				!(blocku & BLOCKWERT_PLATTFORM))
-			{
-				Handlung = GEGNER_FALLEN;
-				ySpeed   = 2.0f;
-				yAcc	 = 3.0f;
-			}
+    SimpleAnimation ();
 
-			// nahe genug zum schiessen?
-			//
-			if (ShotDelay <= 0.0f &&
-				AnimPhase == 3 &&
-				PlayerAbstand() < 400 &&
-				PlayerAbstandVert () < 150 &&
-				((BlickRichtung == RECHTS && xPos < pAim->xpos) ||
-				 (BlickRichtung == LINKS  && xPos > pAim->xpos))
-				)
-			{
-				ShotDelay = 15.0f;
-				Handlung  = GEGNER_STEHEN;
-				xSpeed    = 0.0f;
-				AnimEnde  = 0;
-			}
+    // Je nach Handlung anders verhalten
+    //
+    switch (Handlung)
+    {
+    // rumhopsen
+    //
+    case GEGNER_LAUFEN:
+    {
+        if (!(blocku & BLOCKWERT_WAND) &&
+                !(blocku & BLOCKWERT_PLATTFORM))
+        {
+            Handlung = GEGNER_FALLEN;
+            ySpeed   = 2.0f;
+            yAcc	 = 3.0f;
+        }
 
-			if (ShotDelay > 0.0f)
-				ShotDelay -= 1.0f SYNC;
+        // nahe genug zum schiessen?
+        //
+        if (ShotDelay <= 0.0f &&
+                AnimPhase == 3 &&
+                PlayerAbstand() < 400 &&
+                PlayerAbstandVert () < 150 &&
+                ((BlickRichtung == RECHTS && xPos < pAim->xpos) ||
+                 (BlickRichtung == LINKS  && xPos > pAim->xpos))
+           )
+        {
+            ShotDelay = 15.0f;
+            Handlung  = GEGNER_STEHEN;
+            xSpeed    = 0.0f;
+            AnimEnde  = 0;
+        }
 
-			TurnonShot();
+        if (ShotDelay > 0.0f)
+            ShotDelay -= 1.0f SYNC;
 
-		} break;
+        TurnonShot();
 
-		case GEGNER_STEHEN:
-		{
-			if (ShotDelay > 0.0f)
-				ShotDelay -= 1.0f SYNC;
+    }
+    break;
 
-			if (ShotDelay < 12.0f)
-			{
-				Handlung = GEGNER_LAUFEN;
-				AnimEnde = 14;
-				xSpeed = 5.0f * BlickRichtung;
+    case GEGNER_STEHEN:
+    {
+        if (ShotDelay > 0.0f)
+            ShotDelay -= 1.0f SYNC;
 
-				pSoundManager->PlayWave (100, 128, 10000 + rand()%2000, SOUND_LASERSHOT);
+        if (ShotDelay < 12.0f)
+        {
+            Handlung = GEGNER_LAUFEN;
+            AnimEnde = 14;
+            xSpeed = 5.0f * BlickRichtung;
 
-				pPartikelSystem->PushPartikel (xPos + 10 + BlickRichtung * 40, yPos + 6, LASERFLAME);
-				pProjectiles->PushProjectile  (xPos + 26 + BlickRichtung * 40, yPos + 23, SUCHSCHUSS);
-				
-			}
+            pSoundManager->PlayWave (100, 128, 10000 + rand()%2000, SOUND_LASERSHOT);
 
-		} break;
+            pPartikelSystem->PushPartikel (xPos + 10 + BlickRichtung * 40, yPos + 6, LASERFLAME);
+            pProjectiles->PushProjectile  (xPos + 26 + BlickRichtung * 40, yPos + 23, SUCHSCHUSS);
 
-		case GEGNER_FALLEN:
-		{
-			if (ySpeed > 35.0f)
-			{
-				ySpeed = 35.0f;
-				yAcc   = 0.0f;
-			}
+        }
 
-			if (blocku & BLOCKWERT_WAND ||
-				blocku & BLOCKWERT_PLATTFORM)
-			{
-				ySpeed = 0.0f;
-				yAcc   = 0.0f;
-				Handlung = GEGNER_LAUFEN;
-			}
-			
-		} break;
+    }
+    break;
 
-	}
+    case GEGNER_FALLEN:
+    {
+        if (ySpeed > 35.0f)
+        {
+            ySpeed = 35.0f;
+            yAcc   = 0.0f;
+        }
 
-	TurnonWall();	
+        if (blocku & BLOCKWERT_WAND ||
+                blocku & BLOCKWERT_PLATTFORM)
+        {
+            ySpeed = 0.0f;
+            yAcc   = 0.0f;
+            Handlung = GEGNER_LAUFEN;
+        }
 
-	// Spieler berührt den Gegner?	
-	TestDamagePlayers(4.0f SYNC);
+    }
+    break;
+
+    }
+
+    TurnonWall();
+
+    // Spieler berührt den Gegner?
+    TestDamagePlayers(4.0f SYNC);
 }
 
 // --------------------------------------------------------------------------------------
@@ -122,16 +125,16 @@ void GegnerFieserWalker::DoKI(void)
 
 void GegnerFieserWalker::GegnerExplode(void)
 {
-	pPartikelSystem->PushPartikel(xPos - 30, yPos - 30, EXPLOSION_BIG);
+    pPartikelSystem->PushPartikel(xPos - 30, yPos - 30, EXPLOSION_BIG);
 
-	for (int i = 0; i < 8; i++)
-		pPartikelSystem->PushPartikel(xPos - 30 + rand ()% 60, 
-									  yPos - 30 + rand ()% 60, EXPLOSION_MEDIUM2);
-	for (int i = 0; i < 12; i++)
-		pPartikelSystem->PushPartikel(xPos + rand ()% 50, 
-									  yPos + rand ()% 50, SPIDERSPLITTER);
+    for (int i = 0; i < 8; i++)
+        pPartikelSystem->PushPartikel(xPos - 30 + rand ()% 60,
+                                      yPos - 30 + rand ()% 60, EXPLOSION_MEDIUM2);
+    for (int i = 0; i < 12; i++)
+        pPartikelSystem->PushPartikel(xPos + rand ()% 50,
+                                      yPos + rand ()% 50, SPIDERSPLITTER);
 
-	pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);	// Sound ausgeben
+    pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);	// Sound ausgeben
 
-	pPlayer[0]->Score += 80;
+    pPlayer[0]->Score += 80;
 }

@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -16,13 +16,15 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #include <cml/vector/vector_expr.h>
 #include <cml/matrix/matrix_expr.h>
 
-namespace cml {
-namespace et {
+namespace cml
+{
+namespace et
+{
 
 template<class ExprT>
 class MatrixRowOp
 {
-  public:
+public:
 
     typedef MatrixRowOp<ExprT> expr_type;
 
@@ -49,29 +51,34 @@ class MatrixRowOp
     typedef typename result_type::temporary_type temporary_type;
 
 
-  public:
+public:
 
     /** Record result size as an enum. */
     enum { array_size = result_type::array_size };
 
 
-  public:
+public:
 
     /** Return the expression size as a pair. */
-    matrix_size size() const {
+    matrix_size size() const
+    {
         return expr_traits().rows(m_expr);
     }
 
     /** Return reference to contained expression. */
-    expr_reference expression() const { return m_expr; }
+    expr_reference expression() const
+    {
+        return m_expr;
+    }
 
     /** Compute value at index i of the row vector. */
-    value_type operator[](size_t i) const {
+    value_type operator[](size_t i) const
+    {
         return expr_traits().get(m_expr,m_row,i);
     }
 
 
-  public:
+public:
 
     /** Construct from the subexpression to store. */
     explicit MatrixRowOp(const ExprT& expr, size_t row)
@@ -82,13 +89,13 @@ class MatrixRowOp
         : m_expr(e.m_expr), m_row(e.m_row) {}
 
 
-  protected:
+protected:
 
     expr_reference m_expr;
     const size_t m_row;
 
 
-  private:
+private:
 
     /* Cannot be assigned to: */
     expr_type& operator=(const expr_type&);
@@ -108,14 +115,20 @@ struct ExprTraits< MatrixRowOp<ExprT> >
     typedef typename expr_type::result_type result_type;
     typedef expr_node_tag node_tag;
 
-    value_type get(const expr_type& v, size_t i) const { return v[i]; }
-    size_t size(const expr_type& e) const { return e.size(); }
+    value_type get(const expr_type& v, size_t i) const
+    {
+        return v[i];
+    }
+    size_t size(const expr_type& e) const
+    {
+        return e.size();
+    }
 };
 
 template<class ExprT>
 class MatrixColOp
 {
-  public:
+public:
 
     typedef MatrixColOp<ExprT> expr_type;
 
@@ -142,29 +155,34 @@ class MatrixColOp
     typedef typename result_type::temporary_type temporary_type;
 
 
-  public:
+public:
 
     /** Record result size as an enum. */
     enum { array_size = result_type::array_size };
 
 
-  public:
+public:
 
     /** Return the expression size as a pair. */
-    matrix_size size() const {
+    matrix_size size() const
+    {
         return expr_traits().cols(m_expr);
     }
 
     /** Return reference to contained expression. */
-    expr_reference expression() const { return m_expr; }
+    expr_reference expression() const
+    {
+        return m_expr;
+    }
 
     /** Compute value at index i of the col vector. */
-    value_type operator[](size_t i) const {
+    value_type operator[](size_t i) const
+    {
         return expr_traits().get(m_expr,i,m_col);
     }
 
 
-  public:
+public:
 
     /** Construct from the subexpression to store. */
     explicit MatrixColOp(const ExprT& expr, size_t col)
@@ -175,13 +193,13 @@ class MatrixColOp
         : m_expr(e.m_expr), m_col(e.m_col) {}
 
 
-  protected:
+protected:
 
     expr_reference m_expr;
     const size_t m_col;
 
 
-  private:
+private:
 
     /* Cannot be assigned to: */
     expr_type& operator=(const expr_type&);
@@ -201,8 +219,14 @@ struct ExprTraits< MatrixColOp<ExprT> >
     typedef typename expr_type::result_type result_type;
     typedef expr_node_tag node_tag;
 
-    value_type get(const expr_type& v, size_t i) const { return v[i]; }
-    size_t size(const expr_type& e) const { return e.size(); }
+    value_type get(const expr_type& v, size_t i) const
+    {
+        return v[i];
+    }
+    size_t size(const expr_type& e) const
+    {
+        return e.size();
+    }
 };
 
 } // namespace et

@@ -6,13 +6,13 @@
 
 class GegnerRaketenwerfer : public GegnerClass
 {
-	public:
+public:
 
-	GegnerRaketenwerfer(int  Wert1, int Wert2,				// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerRaketenwerfer(int  Wert1, int Wert2,				// Konstruktor
+                        bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

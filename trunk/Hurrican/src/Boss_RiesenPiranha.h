@@ -6,15 +6,15 @@
 
 class GegnerRiesenPiranha : public GegnerClass
 {
-	public:
+public:
 
-	float				ShotDelay;						// Schussverzögerung
+    float				ShotDelay;						// Schussverzögerung
 
-	GegnerRiesenPiranha(int  Wert1, int Wert2,			// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerRiesenPiranha(int  Wert1, int Wert2,			// Konstruktor
+                        bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

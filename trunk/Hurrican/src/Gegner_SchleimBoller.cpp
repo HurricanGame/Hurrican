@@ -17,32 +17,32 @@
 
 GegnerSchleimBoller::GegnerSchleimBoller(int Wert1, int Wert2, bool Light)
 {
-	Handlung		= GEGNER_FALLEN;	
-	HitSound		= 1;
-	Value1			= Wert1;
-	Value2			= Wert2;
-	ChangeLight		= Light;
-	Destroyable		= true;
+    Handlung		= GEGNER_FALLEN;
+    HitSound		= 1;
+    Value1			= Wert1;
+    Value2			= Wert2;
+    ChangeLight		= Light;
+    Destroyable		= true;
 
-	if (Value1 != 0)
-		Size			= Value1;
-	else
-		Size			= 60;
+    if (Value1 != 0)
+        Size			= Value1;
+    else
+        Size			= 60;
 
-	Energy = (float)Size;
+    Energy = (float)Size;
 
-	xSpeed			= (float)(Value2);
-	OwnDraw			= true;
+    xSpeed			= (float)(Value2);
+    OwnDraw			= true;
 
-	if (Value2 == 0)
-		ySpeed			= 0.0f;
-	else
-		ySpeed			= -40.0f;
+    if (Value2 == 0)
+        ySpeed			= 0.0f;
+    else
+        ySpeed			= -40.0f;
 
-	AnimSpeed       = 2.0f;
-	AnimEnde		= 2;
+    AnimSpeed       = 2.0f;
+    AnimEnde		= 2;
 
-	yAcc = 8.0f;
+    yAcc = 8.0f;
 }
 
 // --------------------------------------------------------------------------------------
@@ -51,27 +51,27 @@ GegnerSchleimBoller::GegnerSchleimBoller(int Wert1, int Wert2, bool Light)
 
 void GegnerSchleimBoller::DoDraw(void)
 {
-	// Je nach Größe anders gestrecht rendern
-	//
-	pGegnerGrafix[GegnerArt]->RenderSpriteScaled ((float)(xPos-pTileEngine->XOffset) + (30 - Size/2), 
-											      (float)(yPos-pTileEngine->YOffset) + (60 - Size),
-												  Size, Size, AnimPhase, 0xFFFFFFFF);
+    // Je nach Größe anders gestrecht rendern
+    //
+    pGegnerGrafix[GegnerArt]->RenderSpriteScaled ((float)(xPos-pTileEngine->XOffset) + (30 - Size/2),
+            (float)(yPos-pTileEngine->YOffset) + (60 - Size),
+            Size, Size, AnimPhase, 0xFFFFFFFF);
 
-	// Leuchten noch dazurendern?
-	//
-	if (AlreadyDrawn == false)
-	{
-		if (options_Detail >= DETAIL_HIGH)
-		{
-			DirectGraphics.SetAdditiveMode ();
-			LavaFlare.RenderSpriteScaled ((float)(xPos-pTileEngine->XOffset) + 30 - Size,
-										  (float)(yPos-pTileEngine->YOffset) + 40 - Size,
-										  Size * 2, Size * 2, 0x8888FF88);
-			DirectGraphics.SetColorKeyMode ();
-		}		
-	}
+    // Leuchten noch dazurendern?
+    //
+    if (AlreadyDrawn == false)
+    {
+        if (options_Detail >= DETAIL_HIGH)
+        {
+            DirectGraphics.SetAdditiveMode ();
+            LavaFlare.RenderSpriteScaled ((float)(xPos-pTileEngine->XOffset) + 30 - Size,
+                                          (float)(yPos-pTileEngine->YOffset) + 40 - Size,
+                                          Size * 2, Size * 2, 0x8888FF88);
+            DirectGraphics.SetColorKeyMode ();
+        }
+    }
 
-	AlreadyDrawn = true;
+    AlreadyDrawn = true;
 }
 
 // --------------------------------------------------------------------------------------
@@ -80,81 +80,82 @@ void GegnerSchleimBoller::DoDraw(void)
 
 void GegnerSchleimBoller::DoKI(void)
 {
-	BlickRichtung = LINKS;
+    BlickRichtung = LINKS;
 
-	if (Handlung == GEGNER_FALLEN)
-		SimpleAnimation ();
+    if (Handlung == GEGNER_FALLEN)
+        SimpleAnimation ();
 
-	// nach Animation am Boden wieder abspringen
-	//
-	else
-	{
-		AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-		if (AnimCount > AnimSpeed)			// Grenze überschritten ?
-		{
-			AnimCount = 0;					// Dann wieder auf Null setzen
-			AnimPhase++;					// Und nächste Animationsphase
-			if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
-			{
-				Handlung  = GEGNER_FALLEN;
-				ySpeed	  = -(float)(rand()%10 + 30);
-				yAcc	  = 8.0f;
-				AnimPhase = 0;
-				AnimEnde  = 2;
-				AnimSpeed = 2.0f;
+    // nach Animation am Boden wieder abspringen
+    //
+    else
+    {
+        AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
+        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        {
+            AnimCount = 0;					// Dann wieder auf Null setzen
+            AnimPhase++;					// Und nächste Animationsphase
+            if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
+            {
+                Handlung  = GEGNER_FALLEN;
+                ySpeed	  = -(float)(rand()%10 + 30);
+                yAcc	  = 8.0f;
+                AnimPhase = 0;
+                AnimEnde  = 2;
+                AnimSpeed = 2.0f;
 
-				if (pAim->xpos + 35 > xPos + 30)
-					xSpeed = (float)(rand ()%8 + 6);
-				else
-					xSpeed = -(float)(rand ()%8 + 6);
-			}
-		} 
-	}
-	
-	switch (Handlung)
-	{
-		// rumhopsen
-		//
-		case GEGNER_FALLEN:
-		{			
-			if (ySpeed > 50.0f)
-			{
-				ySpeed = 50.0f;
-				yAcc = 0.0f;
-			}
+                if (pAim->xpos + 35 > xPos + 30)
+                    xSpeed = (float)(rand ()%8 + 6);
+                else
+                    xSpeed = -(float)(rand ()%8 + 6);
+            }
+        }
+    }
 
-			// am Boden abhopfen?
-			//
-			if (ySpeed > 0.0f &&
-				(
-				 blocku & BLOCKWERT_WAND ||
-				 blocku & BLOCKWERT_PLATTFORM))
-			{
-				Handlung  = GEGNER_STEHEN;
-				AnimEnde  = 12;
-				AnimSpeed = 0.5f;
-				ySpeed = 0.0f;
-				yAcc   = 0.0f;
-				xSpeed = 0.0f;
-			}
+    switch (Handlung)
+    {
+    // rumhopsen
+    //
+    case GEGNER_FALLEN:
+    {
+        if (ySpeed > 50.0f)
+        {
+            ySpeed = 50.0f;
+            yAcc = 0.0f;
+        }
 
-			// an der Decke abprallen
-			if (ySpeed < 0.0f &&
-			   (blocko & BLOCKWERT_WAND ||
-			    blocko & BLOCKWERT_GEGNERWAND))
-				 ySpeed *= -1;
+        // am Boden abhopfen?
+        //
+        if (ySpeed > 0.0f &&
+                (
+                    blocku & BLOCKWERT_WAND ||
+                    blocku & BLOCKWERT_PLATTFORM))
+        {
+            Handlung  = GEGNER_STEHEN;
+            AnimEnde  = 12;
+            AnimSpeed = 0.5f;
+            ySpeed = 0.0f;
+            yAcc   = 0.0f;
+            xSpeed = 0.0f;
+        }
 
-		} break;
+        // an der Decke abprallen
+        if (ySpeed < 0.0f &&
+                (blocko & BLOCKWERT_WAND ||
+                 blocko & BLOCKWERT_GEGNERWAND))
+            ySpeed *= -1;
 
-		case GEGNER_STEHEN:
-		{
-		} break;
+    }
+    break;
 
-	}
+    case GEGNER_STEHEN:
+    {
+    } break;
 
-	// Testen, ob der Spieler den SchleimBoller berührt hat
-	TestDamagePlayers(2.0f SYNC);
-	Wegschieben(GegnerRect[GegnerArt], 2.0f);	
+    }
+
+    // Testen, ob der Spieler den SchleimBoller berührt hat
+    TestDamagePlayers(2.0f SYNC);
+    Wegschieben(GegnerRect[GegnerArt], 2.0f);
 }
 
 // --------------------------------------------------------------------------------------
@@ -163,27 +164,27 @@ void GegnerSchleimBoller::DoKI(void)
 
 void GegnerSchleimBoller::GegnerExplode(void)
 {
-	//pPartikelSystem->PushPartikel(xPos, yPos, EXPLOSION_GREEN);
+    //pPartikelSystem->PushPartikel(xPos, yPos, EXPLOSION_GREEN);
 
-	for (int i = 0; i < 3 + int (Size/8); i++)
-		pPartikelSystem->PushPartikel(xPos + 15 + rand ()% 20, 
-									  yPos + 15 + rand ()% 20, SCHLEIM);
+    for (int i = 0; i < 3 + int (Size/8); i++)
+        pPartikelSystem->PushPartikel(xPos + 15 + rand ()% 20,
+                                      yPos + 15 + rand ()% 20, SCHLEIM);
 
-	if (pSoundManager->its_Sounds[SOUND_SCHLEIM]->isPlaying == false)
-		pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_SCHLEIM);	// Sound ausgeben
+    if (pSoundManager->its_Sounds[SOUND_SCHLEIM]->isPlaying == false)
+        pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_SCHLEIM);	// Sound ausgeben
 
-	pPlayer[0]->Score += 150;
+    pPlayer[0]->Score += 150;
 
-	// Zwei kleinere Bobbel spawnen, wenn noch groß genug
-	//
-	if (Size >= 30)
-	{
-		int mul = 1;
+    // Zwei kleinere Bobbel spawnen, wenn noch groß genug
+    //
+    if (Size >= 30)
+    {
+        int mul = 1;
 
-		if (xPos + 30 - Size / 2 > pAim->xpos + 35)
-			mul = -1;
-		
-		pGegner->PushGegner (xPos + 20 * mul, yPos, SCHLEIMBOLLER, int (Size - 8),  5, ChangeLight);
-		pGegner->PushGegner (xPos - 20 * mul, yPos, SCHLEIMBOLLER, int (Size - 8), -5, ChangeLight);		
-	}
+        if (xPos + 30 - Size / 2 > pAim->xpos + 35)
+            mul = -1;
+
+        pGegner->PushGegner (xPos + 20 * mul, yPos, SCHLEIMBOLLER, int (Size - 8),  5, ChangeLight);
+        pGegner->PushGegner (xPos - 20 * mul, yPos, SCHLEIMBOLLER, int (Size - 8), -5, ChangeLight);
+    }
 }

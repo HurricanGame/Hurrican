@@ -6,15 +6,15 @@
 
 class GegnerPiranha : public GegnerClass
 {
-	private:
-		float xsave, ysave;
-	public:
+private:
+    float xsave, ysave;
+public:
 
-	GegnerPiranha	   (int Wert1, int Wert2,			// Konstruktor
-						bool		  Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-	void DoDraw		   (void);							// Gegner individuell rendern
+    GegnerPiranha	   (int Wert1, int Wert2,			// Konstruktor
+                        bool		  Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw		   (void);							// Gegner individuell rendern
 };
 
 #endif

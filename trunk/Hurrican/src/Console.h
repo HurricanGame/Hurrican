@@ -50,31 +50,31 @@
 
 class ConsoleClass
 {
-	private:
-		float					its_Alpha;					// Aktueller Alphawert der Konsole
-		float					Fade;						// Ein / Aus faden ?
-		DirectGraphicsSprite	ConsoleGFX;					// Grafik der Konsole
-		bool					Activate;					// Aktivierungstaste gedrückt oder nicht
-		char					Text[MAX_LINES][MAX_CHARS]; // Text in der Konsole
-		char					Buffer[MAX_CHARS];
-		bool					Pressed[256];				// Für Tasten-lock
-		bool					CONSOLE_CHEAT(char *cheat);
+private:
+    float					its_Alpha;					// Aktueller Alphawert der Konsole
+    float					Fade;						// Ein / Aus faden ?
+    DirectGraphicsSprite	ConsoleGFX;					// Grafik der Konsole
+    bool					Activate;					// Aktivierungstaste gedrückt oder nicht
+    char					Text[MAX_LINES][MAX_CHARS]; // Text in der Konsole
+    char					Buffer[MAX_CHARS];
+    bool					Pressed[256];				// Für Tasten-lock
+    bool					CONSOLE_CHEAT(char *cheat);
 
-	public:
-		bool					Active;						// Gerade aktiv ?
-		bool					Showing;					// Gerade angezeigt ?
-		bool					RenderBinary;				// Alles als 0 und 1 rendern (nur fun)
+public:
+    bool					Active;						// Gerade aktiv ?
+    bool					Showing;					// Gerade angezeigt ?
+    bool					RenderBinary;				// Alles als 0 und 1 rendern (nur fun)
 
-		     ConsoleClass	 (void);						// Menu initialisieren und Grafiken laden
-			~ConsoleClass	 (void);						// Menu freigeben
+    ConsoleClass	 (void);						// Menu initialisieren und Grafiken laden
+    ~ConsoleClass	 (void);						// Menu freigeben
 
-		void ShowConsole	 (void);						// Menu anzeigen
-		void Open			 (void);						// öffnen
-		void Hide			 (void);						// verstecken
-		void CheckInput		 (void);						// Wurde was eingegeben ?
-		void CheckCommands	 (void);						// Text nach enter drücken checken
-		void ScrollUp		 (void);						// Eine Zeile hochscrollen
-		bool DoConsole	     (void);						// Alles machen, was die Console betrifft =)
+    void ShowConsole	 (void);						// Menu anzeigen
+    void Open			 (void);						// öffnen
+    void Hide			 (void);						// verstecken
+    void CheckInput		 (void);						// Wurde was eingegeben ?
+    void CheckCommands	 (void);						// Text nach enter drücken checken
+    void ScrollUp		 (void);						// Eine Zeile hochscrollen
+    bool DoConsole	     (void);						// Alles machen, was die Console betrifft =)
 };
 
 // --------------------------------------------------------------------------------------

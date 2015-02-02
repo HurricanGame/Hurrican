@@ -6,17 +6,17 @@
 
 class GegnerFlugsack : public GegnerClass
 {
-	private:
-		float ShotCount;								// Schuss Delay
-		float SmokeCount;								// Rauch  Delay
+private:
+    float ShotCount;								// Schuss Delay
+    float SmokeCount;								// Rauch  Delay
 
-	public:
+public:
 
-	GegnerFlugsack(int  Wert1, int Wert2,				// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerFlugsack(int  Wert1, int Wert2,				// Konstruktor
+                   bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

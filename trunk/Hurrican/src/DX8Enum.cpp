@@ -15,5 +15,5 @@
 
 bool InitD3D()
 {
-	return true;
+    return true;
 }

@@ -6,17 +6,17 @@
 
 class GegnerEvilHurri : public GegnerClass
 {
-	public:
+public:
 
-	float					BlinkDirection;				// Animationsphase der Beine
-	float					BlinkWert;					// Y-Offset des Körpers
-	float					ActionDelay;				// Warten
+    float					BlinkDirection;				// Animationsphase der Beine
+    float					BlinkWert;					// Y-Offset des Körpers
+    float					ActionDelay;				// Warten
 
-	GegnerEvilHurri   (int Wert1,	int Wert2,			// Konstruktor
-							  bool		  Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-	void DoDraw		   (void);							// Gegner individuell rendern
+    GegnerEvilHurri   (int Wert1,	int Wert2,			// Konstruktor
+                       bool		  Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw		   (void);							// Gegner individuell rendern
 };
 
 #endif

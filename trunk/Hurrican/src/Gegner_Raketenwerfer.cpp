@@ -14,15 +14,15 @@
 
 GegnerRaketenwerfer::GegnerRaketenwerfer(int Wert1, int Wert2, bool Light)
 {
-	Handlung		= GEGNER_LAUFEN;
-	Energy			= 60;
-	Value1			= Wert1;
-	Value2			= Wert2;
-	ChangeLight		= Light;
-	Destroyable		= true;
-	AnimSpeed       = 1.3f;
-	AnimEnde		= 9;
-	TestBlock		= false;
+    Handlung		= GEGNER_LAUFEN;
+    Energy			= 60;
+    Value1			= Wert1;
+    Value2			= Wert2;
+    ChangeLight		= Light;
+    Destroyable		= true;
+    AnimSpeed       = 1.3f;
+    AnimEnde		= 9;
+    TestBlock		= false;
 }
 
 // --------------------------------------------------------------------------------------
@@ -31,30 +31,30 @@ GegnerRaketenwerfer::GegnerRaketenwerfer(int Wert1, int Wert2, bool Light)
 
 void GegnerRaketenwerfer::DoKI(void)
 {
-	// animieren wenn der Spieler in der Nähe ist
+    // animieren wenn der Spieler in der Nähe ist
 
-	if (PlayerAbstand() < 600 && 
-		pAim->ypos > yPos)
-		AnimCount += SpeedFaktor;		// Animationscounter weiterzählen
+    if (PlayerAbstand() < 600 &&
+            pAim->ypos > yPos)
+        AnimCount += SpeedFaktor;		// Animationscounter weiterzählen
 
-	if (AnimCount > AnimSpeed)			// Grenze überschritten ?
-	{
-		AnimCount = 0;					// Dann wieder auf Null setzen
-		AnimPhase++;					// Und nächste Animationsphase
+    if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+    {
+        AnimCount = 0;					// Dann wieder auf Null setzen
+        AnimPhase++;					// Und nächste Animationsphase
 
-		// Rakete schiessen
-		if (AnimPhase == 6)
-		{
-			pSoundManager->PlayWave(100, 128, 11025, SOUND_GRANATE);
-			pProjectiles->PushProjectile(xPos + 2, yPos + 5, ROCKETWERFER, pAim);
-		}
+        // Rakete schiessen
+        if (AnimPhase == 6)
+        {
+            pSoundManager->PlayWave(100, 128, 11025, SOUND_GRANATE);
+            pProjectiles->PushProjectile(xPos + 2, yPos + 5, ROCKETWERFER, pAim);
+        }
 
-		if (AnimPhase > AnimEnde)		// Animation von Vorne ?
-		{
-			AnimPhase = AnimStart;		// dann von vorne
-			AnimCount = -2.0f;			// und kurze Pause
-		}
-	}
+        if (AnimPhase > AnimEnde)		// Animation von Vorne ?
+        {
+            AnimPhase = AnimStart;		// dann von vorne
+            AnimCount = -2.0f;			// und kurze Pause
+        }
+    }
 }
 
 // --------------------------------------------------------------------------------------
@@ -63,14 +63,14 @@ void GegnerRaketenwerfer::DoKI(void)
 
 void GegnerRaketenwerfer::GegnerExplode(void)
 {
-	pPartikelSystem->PushPartikel(xPos-20 , yPos - 15, EXPLOSION_BIG);
+    pPartikelSystem->PushPartikel(xPos-20 , yPos - 15, EXPLOSION_BIG);
 
-	for (int i=0; i<20; i++)
-	{
-		pPartikelSystem->PushPartikel(xPos + rand()%40-8, yPos + rand()%20 - 8, SMOKE);
-	}
+    for (int i=0; i<20; i++)
+    {
+        pPartikelSystem->PushPartikel(xPos + rand()%40-8, yPos + rand()%20 - 8, SMOKE);
+    }
 
-	pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION4);	// Sound ausgeben
+    pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION4);	// Sound ausgeben
 
-	pPlayer[0]->Score += 400;
+    pPlayer[0]->Score += 400;
 }

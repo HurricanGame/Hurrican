@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -38,8 +38,10 @@ struct lu_expects_a_matrix_arg_error;
  */
 struct lu_inplace_expects_an_assignable_matrix_arg_error;
 
-namespace cml {
-namespace detail {
+namespace cml
+{
+namespace detail
+{
 
 /* Compute the LU decomposition in-place: */
 template<class MatT> inline
@@ -65,11 +67,14 @@ void lu_inplace(MatT& A)
     ssize_t N = (ssize_t) cml::et::CheckedSquare(A, size_tag());
 
 
-    for(ssize_t k = 0; k < N-1; ++k) {
+    for(ssize_t k = 0; k < N-1; ++k)
+    {
         /* XXX Should check if A(k,k) = 0! */
-        for(ssize_t i = k+1; i < N; ++i) {
+        for(ssize_t i = k+1; i < N; ++i)
+        {
             value_type n = (A(i,k) /= A(k,k));
-            for(ssize_t j = k+1; j < N; ++ j) {
+            for(ssize_t j = k+1; j < N; ++ j)
+            {
                 A(i,j) -= n*A(k,j);
             }
         }
@@ -135,7 +140,7 @@ lu_solve(const MatT& LU, const VecT& b)
 
     /* Verify that the matrix is square, and get the size: */
     ssize_t N = (ssize_t) cml::et::CheckedSquare(
-            LU, typename lu_traits::size_tag());
+                    LU, typename lu_traits::size_tag());
 
     /* Verify that the matrix and vector have compatible sizes: */
     et::CheckedSize(LU, b, typename vector_type::size_tag());
@@ -144,10 +149,13 @@ lu_solve(const MatT& LU, const VecT& b)
      * diagonal of LU correspond to L, understood to be below a diagonal of
      * 1's:
      */
-    vector_type y; cml::et::detail::Resize(y,N);
-    for(ssize_t i = 0; i < N; ++i) {
+    vector_type y;
+    cml::et::detail::Resize(y,N);
+    for(ssize_t i = 0; i < N; ++i)
+    {
         y[i] = b[i];
-        for(ssize_t j = 0; j < i; ++j) {
+        for(ssize_t j = 0; j < i; ++j)
+        {
             y[i] -= LU(i,j)*y[j];
         }
     }
@@ -155,10 +163,13 @@ lu_solve(const MatT& LU, const VecT& b)
     /* Solve Ux = y for x by backward substitution.  The entries at and above
      * the diagonal of LU correspond to U:
      */
-    vector_type x; cml::et::detail::Resize(x,N);
-    for(ssize_t i = N-1; i >= 0; --i) {
+    vector_type x;
+    cml::et::detail::Resize(x,N);
+    for(ssize_t i = N-1; i >= 0; --i)
+    {
         x[i] = y[i];
-        for(ssize_t j = i+1; j < N; ++j) {
+        for(ssize_t j = i+1; j < N; ++j)
+        {
             x[i] -= LU(i,j)*x[j];
         }
         x[i] /= LU(i,i);

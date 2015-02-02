@@ -6,19 +6,19 @@
 
 class GegnerSkull : public GegnerClass
 {
-	private:
-		float   mxPos, myPos;		// Koordinaten der Bossmaschine
-		float   SmokeDelay;
-		float	ShotDelay;	
-		int		ShotCount;
-		float	Disappear;
-		GegnerClass *pMachine;
-	public:
+private:
+    float   mxPos, myPos;		// Koordinaten der Bossmaschine
+    float   SmokeDelay;
+    float	ShotDelay;
+    int		ShotCount;
+    float	Disappear;
+    GegnerClass *pMachine;
+public:
 
-	GegnerSkull (int Wert1,	int Wert2,			// Konstruktor
-							  bool		  Light);	
-	void GegnerExplode (void);						// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
+    GegnerSkull (int Wert1,	int Wert2,			// Konstruktor
+                 bool		  Light);
+    void GegnerExplode (void);						// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
 };
 
 #endif

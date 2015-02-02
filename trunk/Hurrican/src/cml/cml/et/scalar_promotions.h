@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -16,18 +16,23 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #include <complex>
 #include <cml/core/cml_meta.h>
 
-namespace cml {
-namespace et {
+namespace cml
+{
+namespace et
+{
 
 /* The type promotion code below is a slightly modified version of:
  * http://ubiety.uwaterloo.ca/~tveldhui/papers/techniques/techniques01.html
  */
-namespace detail {
+namespace detail
+{
 
 template<class T>
-struct precision_trait {
+struct precision_trait
+{
     enum { precisionRank = 0,
-           knowPrecisionRank = 0 };
+           knowPrecisionRank = 0
+         };
 };
 
 #define DECLARE_PRECISION(T,rank)             \
@@ -53,7 +58,8 @@ DECLARE_PRECISION(std::complex<double>,900)
 DECLARE_PRECISION(std::complex<long double>,1000)
 
 template<class T>
-struct autopromote_trait {
+struct autopromote_trait
+{
     typedef T T_numtype;
 };
 
@@ -73,17 +79,20 @@ DECLARE_AUTOPROMOTE(short int, int)
 DECLARE_AUTOPROMOTE(short unsigned int, unsigned int)
 
 template<class T1, class T2, int promoteToT1>
-struct promote2 {
+struct promote2
+{
     typedef T1 T_promote;
 };
 
 template<class T1, class T2>
-struct promote2<T1,T2,0> {
+struct promote2<T1,T2,0>
+{
     typedef T2 T_promote;
 };
 
 template<class T1_orig, class T2_orig>
-struct promote_trait {
+struct promote_trait
+{
 
     // Need to remove const-ness:
     typedef typename cml::remove_const<T1_orig>::type T1_non_const;
@@ -94,41 +103,43 @@ struct promote_trait {
     typedef typename autopromote_trait<T2_non_const>::T_numtype T2;
 
     // True if T1 is higher ranked
-    enum {
-      T1IsBetter =
-        (int) precision_trait<T1>::precisionRank >
-          (int) precision_trait<T2>::precisionRank,
+    enum
+    {
+        T1IsBetter =
+            (int) precision_trait<T1>::precisionRank >
+            (int) precision_trait<T2>::precisionRank,
 
-    // True if we know ranks for both T1 and T2
-      knowBothRanks =
-        precision_trait<T1>::knowPrecisionRank
-      && precision_trait<T2>::knowPrecisionRank,
+        // True if we know ranks for both T1 and T2
+        knowBothRanks =
+            precision_trait<T1>::knowPrecisionRank
+            && precision_trait<T2>::knowPrecisionRank,
 
-    // True if we know T1 but not T2
-      knowT1butNotT2 =  precision_trait<T1>::knowPrecisionRank
-        && !(precision_trait<T2>::knowPrecisionRank),
+        // True if we know T1 but not T2
+        knowT1butNotT2 =  precision_trait<T1>::knowPrecisionRank
+                          && !(precision_trait<T2>::knowPrecisionRank),
 
-    // True if we know T2 but not T1
-      knowT2butNotT1 =  precision_trait<T2>::knowPrecisionRank
-        && !(precision_trait<T1>::knowPrecisionRank),
+        // True if we know T2 but not T1
+        knowT2butNotT1 =  precision_trait<T2>::knowPrecisionRank
+                          && !(precision_trait<T1>::knowPrecisionRank),
 
-    // True if T1 is bigger than T2
-      T1IsLarger = sizeof(T1) >= sizeof(T2),
+        // True if T1 is bigger than T2
+        T1IsLarger = sizeof(T1) >= sizeof(T2),
 
-    // We know T1 but not T2: true
-    // We know T2 but not T1: false
-    // Otherwise, if T1 is bigger than T2: true
-      defaultPromotion = knowT1butNotT2 ? false :
-         (knowT2butNotT1 ? true : T1IsLarger)
+        // We know T1 but not T2: true
+        // We know T2 but not T1: false
+        // Otherwise, if T1 is bigger than T2: true
+        defaultPromotion = knowT1butNotT2 ? false :
+                           (knowT2butNotT1 ? true : T1IsLarger)
     };
 
     // If we have both ranks, then use them.
     // If we have only one rank, then use the unknown type.
     // If we have neither rank, then promote to the larger type.
 
-    enum {
-      promoteToT1 = (knowBothRanks ? T1IsBetter : defaultPromotion) 
-                        ? 1 : 0
+    enum
+    {
+        promoteToT1 = (knowBothRanks ? T1IsBetter : defaultPromotion)
+                      ? 1 : 0
     };
 
     typedef typename promote2<T1,T2,promoteToT1>::T_promote T_promote;
