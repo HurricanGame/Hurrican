@@ -1,6 +1,6 @@
 DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS -DUSE_MODPLUG
 
-TARGET = pandora
+TARGET = linux
 
 ifeq ($(TARGET),aros)
 
@@ -104,7 +104,7 @@ RM  := rm -f
 USE_EGL := yes
 USE_GL2 := yes
 
-DEFINES += -DLINUX -DUSE_GL2 -DUSE_GLES2 -DUSE_EGL_SDL
+DEFINES += -DLINUX -DUSE_GL2 -DUSE_GLES2 -DUSE_EGL_SDL -DUSE_PVRTC -DUSE_ETC1
 
 INCLUDES_OS := -I/usr/include -I/usr/include/SDL -I/usr/include/GLES2 -I/usr/include/libmodplug
 

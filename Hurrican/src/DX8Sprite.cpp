@@ -276,15 +276,19 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
         sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
 
 #if defined(USE_ETC1)
-        sprintf_s( compresstex, "%s/levels/%s/%s.pkm", g_storage_ext, CommandLineParams.OwnLevelList, Filename );
-        if (FileExists(compresstex))
-            goto loadfile;
+        if (DirectGraphics.SupportedETC1 == true) {
+            sprintf_s( compresstex, "%s/levels/%s/%s.pkm", g_storage_ext, CommandLineParams.OwnLevelList, Filename );
+            if (FileExists(compresstex))
+                goto loadfile;
+        }
 #endif
 
 #if defined(USE_PVRTC)
-        sprintf_s( compresstex, "%s/levels/%s/%s.pvr", g_storage_ext,  CommandLineParams.OwnLevelList, Filename );
-        if (FileExists(compresstex))
-            goto loadfile;
+        if (DirectGraphics.SupportedPVRTC == true) {
+            sprintf_s( compresstex, "%s/levels/%s/%s.pvr", g_storage_ext,  CommandLineParams.OwnLevelList, Filename );
+            if (FileExists(compresstex))
+                goto loadfile;
+        }
 #endif
 
         if (FileExists(Temp))
@@ -295,20 +299,24 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
     sprintf_s(Temp, "%s/data/%s", g_storage_ext, Filename);
 
 #if defined(USE_ETC1)
-    sprintf_s( compresstex, "%s/data/etc1/%s.pkm", g_storage_ext, Filename );
-    if (FileExists(compresstex))
-    {
-        sprintf_s( Temp, "%s/data/etc1/%s", g_storage_ext, Filename );
-        goto loadfile;
+    if (DirectGraphics.SupportedETC1 == true) {
+        sprintf_s( compresstex, "%s/data/etc1/%s.pkm", g_storage_ext, Filename );
+        if (FileExists(compresstex))
+        {
+            sprintf_s( Temp, "%s/data/etc1/%s", g_storage_ext, Filename );
+            goto loadfile;
+        }
     }
 #endif
 
 #if defined(USE_PVRTC)
-    sprintf_s( compresstex, "%s/data/pvr/%s.pvr", g_storage_ext, Filename );
-    if (FileExists(compresstex))
-    {
-        sprintf_s( Temp, "%s/data/pvr/%s", g_storage_ext, Filename );
-        goto loadfile;
+    if (DirectGraphics.SupportedPVRTC == true) {
+        sprintf_s( compresstex, "%s/data/pvr/%s.pvr", g_storage_ext, Filename );
+        if (FileExists(compresstex))
+        {
+            sprintf_s( Temp, "%s/data/pvr/%s", g_storage_ext, Filename );
+            goto loadfile;
+        }
     }
 #endif
 

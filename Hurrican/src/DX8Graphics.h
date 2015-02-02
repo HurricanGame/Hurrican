@@ -86,6 +86,7 @@ private:
 #if defined(PLATFORM_DIRECTX)
     D3DDISPLAYMODE			d3ddm;							// Display Mode
 #elif defined(PLATFORM_SDL)
+    char*                   glextentsions;
     bool                    use_texture;
     int                     MaxTextureUnits;
 #if defined(USE_GL2)
@@ -99,6 +100,8 @@ public:
 #if defined(PLATFORM_DIRECTX)
     D3DPRESENT_PARAMETERS	d3dpp;							// Present Parameters
 #elif defined(PLATFORM_SDL)
+    bool SupportedETC1;
+    bool SupportedPVRTC;
 #if SDL_VERSION_ATLEAST(2,0,0)
     SDL_Window*             Window;
     SDL_GLContext           GLcontext;
@@ -137,6 +140,7 @@ public:
 
     void DisplayBuffer  (void);								// Render den Buffer auf den Backbuffer
 #if defined(PLATFORM_SDL)
+    bool ExtensionSupported( const char* ext );
     void SetupFramebuffers( void );
     void SetTexture( int32_t index );
     void ClearBackBuffer( void );
