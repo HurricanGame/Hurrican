@@ -14,11 +14,11 @@
 // --------------------------------------------------------------------------------------
 
 #include <stdio.h>
-#include "DX8Sprite.h"
 #if defined(PLATFORM_DIRECTX)
 #include <d3dx8.h>										// Für die Texturen
 #include <d3dx8math.h>									// Für D3DXVECTOR2
 #endif
+#include "DX8Sprite.h"
 #include "DX8Graphics.h"
 #include "Gameplay.h"
 #include "Globals.h"

@@ -14,7 +14,6 @@
 
 #include <stdio.h>
 #include <string.h>
-
 #include "Console.h"
 #include "DX8Graphics.h"
 #include "GetKeyName.h"
