@@ -26,10 +26,10 @@
 
 #include <string>
 #include <vector>
-#include "string.h"
-#include "stdint.h"
-#include "stdio.h"
-#include "stdlib.h"
+#include <string.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "opengl.h"
 #include "Logdatei.h"
 #include "cml/cml.h"

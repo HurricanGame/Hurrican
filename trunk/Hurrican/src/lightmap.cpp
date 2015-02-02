@@ -12,8 +12,8 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
+#include <stdio.h>
 #include "Gameplay.h"
-#include "stdio.h"
 #include "lightmap.h"
 #include "Logdatei.h"
 #include "unrarlib.h"

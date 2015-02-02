@@ -13,7 +13,6 @@
 // --------------------------------------------------------------------------------------
 
 #include <stdio.h>
-
 #include "CCutScene.h"
 #include "Gameplay.h"
 #include "Console.h"

@@ -13,9 +13,11 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
-#include "Texts.h"
 #include <stdio.h>
 #include <string.h>
+#include <iostream>
+#include <fstream>
+#include "Texts.h"
 #include "Logdatei.h"
 #include "Main.h"
 #include "Gameplay.h"
@@ -23,9 +25,6 @@
 #include "Player.h"
 #include "Tileengine.h"
 #include "unrarlib.h"
-
-#include <iostream>
-#include <fstream>
 
 using namespace std;
 
