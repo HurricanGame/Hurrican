@@ -13,17 +13,17 @@
 
 GegnerGlubschi::GegnerGlubschi(int Wert1, int Wert2, bool Light)
 {
-	Handlung		= GEGNER_STEHEN;
-	BlickRichtung	= LINKS;
-	Energy			= 100;
-	Value1			= Wert1;			// yPos der Plattform
-	Value2			= Wert2;
-	ChangeLight		= Light;
-	Destroyable		= false;
-	rot				= 0.0;
-	rotspeed		= float (rand()%10+1) / 5.0f;
-	TestBlock		= false;
-	OwnDraw			= true;
+    Handlung		= GEGNER_STEHEN;
+    BlickRichtung	= LINKS;
+    Energy			= 100;
+    Value1			= Wert1;			// yPos der Plattform
+    Value2			= Wert2;
+    ChangeLight		= Light;
+    Destroyable		= false;
+    rot				= 0.0;
+    rotspeed		= float (rand()%10+1) / 5.0f;
+    TestBlock		= false;
+    OwnDraw			= true;
 }
 
 // --------------------------------------------------------------------------------------
@@ -32,36 +32,36 @@ GegnerGlubschi::GegnerGlubschi(int Wert1, int Wert2, bool Light)
 
 void GegnerGlubschi::DoDraw(void)
 {
-	BlickRichtung	= LINKS;	
+    BlickRichtung	= LINKS;
 
-	// Je nach horizontalem Spielerabstand richtige Animationsphase setzen
-	//
-	float a;
-	int anim = 0;
+    // Je nach horizontalem Spielerabstand richtige Animationsphase setzen
+    //
+    float a;
+    int anim = 0;
 
-	a = xPos - pAim->xpos;
+    a = xPos - pAim->xpos;
 
-	if (a < 200)
-	{
-		anim = int ((200-a) / 18);
+    if (a < 200)
+    {
+        anim = int ((200-a) / 18);
 
-		if (anim > 20)
-			anim = 20;
+        if (anim > 20)
+            anim = 20;
 
-		AnimPhase = anim;
-	}
+        AnimPhase = anim;
+    }
 
-	// Glubschi rendern
-	//
-	pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset), 
-										  (float)(yPos-pTileEngine->YOffset), 
-										   AnimPhase, 0xFFFFFFFF);
+    // Glubschi rendern
+    //
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
+                                           (float)(yPos-pTileEngine->YOffset),
+                                           AnimPhase, 0xFFFFFFFF);
 
-	// Corona rendern
-	DirectGraphics.SetAdditiveMode ();	
-	LavaFlare.RenderSpriteScaledRotated (float (xPos - pTileEngine->XOffset - 36 + anim * 1.5f), 
-										 float (yPos - pTileEngine->YOffset - 33), 92, 92, rot, 0x60FFFFFF);
-	DirectGraphics.SetColorKeyMode();
+    // Corona rendern
+    DirectGraphics.SetAdditiveMode ();
+    LavaFlare.RenderSpriteScaledRotated (float (xPos - pTileEngine->XOffset - 36 + anim * 1.5f),
+                                         float (yPos - pTileEngine->YOffset - 33), 92, 92, rot, 0x60FFFFFF);
+    DirectGraphics.SetColorKeyMode();
 }
 
 // --------------------------------------------------------------------------------------
@@ -70,10 +70,10 @@ void GegnerGlubschi::DoDraw(void)
 
 void GegnerGlubschi::DoKI(void)
 {
-	// Corona rotieren 
-	//
-	rot += rotspeed SYNC;
-	while (rot > 360.0f) rot -= 360.0f;	
+    // Corona rotieren
+    //
+    rot += rotspeed SYNC;
+    while (rot > 360.0f) rot -= 360.0f;
 }
 
 // --------------------------------------------------------------------------------------

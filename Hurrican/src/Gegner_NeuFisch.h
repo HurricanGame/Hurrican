@@ -5,17 +5,17 @@
 #include "Gegner_Stuff.h"
 
 class GegnerNeuFisch : public GegnerClass
-{	
-	private:
-		PlayerClass*	pFest;
-		float			MoveSpeed;
-	public :
+{
+private:
+    PlayerClass*	pFest;
+    float			MoveSpeed;
+public :
 
-	GegnerNeuFisch (int  Wert1, int Wert2,				// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerNeuFisch (int  Wert1, int Wert2,				// Konstruktor
+                    bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

@@ -6,43 +6,43 @@
 
 class GegnerFlugBoss : public GegnerClass
 {
-	private:
-		DirectGraphicsSprite SchieneL;
-		DirectGraphicsSprite SchieneR;
+private:
+    DirectGraphicsSprite SchieneL;
+    DirectGraphicsSprite SchieneR;
 
-		DirectGraphicsSprite Kanone_big;
-		DirectGraphicsSprite Kanone_medium;
-		DirectGraphicsSprite Kanone_small;
-		DirectGraphicsSprite Geschuetz;
+    DirectGraphicsSprite Kanone_big;
+    DirectGraphicsSprite Kanone_medium;
+    DirectGraphicsSprite Kanone_small;
+    DirectGraphicsSprite Geschuetz;
 
-		DirectGraphicsSprite Auge;
-		DirectGraphicsSprite Hitzone[2];
+    DirectGraphicsSprite Auge;
+    DirectGraphicsSprite Hitzone[2];
 
-		float SchienePos;
-		float tempSpeed;
-		float yKanone[4];
+    float SchienePos;
+    float tempSpeed;
+    float yKanone[4];
 
-		float xKanone;
-		float Winkel [2];
+    float xKanone;
+    float Winkel [2];
 
-		float xHit;
-		float yHit;
-		float dHit;
+    float xHit;
+    float yHit;
+    float dHit;
 
-		float alphaAuge;
-		float alphaSpeed;
-		float alphaDir;
+    float alphaAuge;
+    float alphaSpeed;
+    float alphaDir;
 
-		float ShotDelay;
-		float ShotCount;
+    float ShotDelay;
+    float ShotCount;
 
-	public:
+public:
 
-	GegnerFlugBoss (int Wert1,	int Wert2,			// Konstruktor
-							  bool		  Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-	void DoDraw		   (void);							// Gegner individuell rendern
+    GegnerFlugBoss (int Wert1,	int Wert2,			// Konstruktor
+                    bool		  Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw		   (void);							// Gegner individuell rendern
 };
 
 #endif

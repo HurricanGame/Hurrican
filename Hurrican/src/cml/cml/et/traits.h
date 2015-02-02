@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -23,8 +23,10 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #define SCALAR_ARG_TYPE ScalarT
 #define ELEMENT_ARG_TYPE Element
 
-namespace cml {
-namespace et {
+namespace cml
+{
+namespace et
+{
 
 /** The expression traits class.
  *
@@ -57,22 +59,37 @@ template<typename T> struct ExprTraits
     typedef expr_leaf_tag node_tag;
 
     /** Vector-like access, just returns the value. */
-    value_type get(const_reference v, size_t) const { return v; }
+    value_type get(const_reference v, size_t) const
+    {
+        return v;
+    }
 
     /** Matrix-like access, just returns the value. */
-    value_type get(const_reference v, size_t, size_t) const { return v; }
+    value_type get(const_reference v, size_t, size_t) const
+    {
+        return v;
+    }
 
     /** Size is always 1. */
-    size_t size(const_reference) const { return 1; }
+    size_t size(const_reference) const
+    {
+        return 1;
+    }
 
     /** Size is always 1. */
-    size_t rows(double) const { return 1; }
+    size_t rows(double) const
+    {
+        return 1;
+    }
 
     /** Size is always 1. */
-    size_t cols(double) const { return 1; }
+    size_t cols(double) const
+    {
+        return 1;
+    }
 }
 #endif
-;
+    ;
 
 #if defined(CML_NO_DEFAULT_EXPR_TRAITS)
 template<> struct ExprTraits<double>
@@ -89,19 +106,34 @@ template<> struct ExprTraits<double>
     typedef expr_leaf_tag node_tag;
 
     /** Vector-like access, just returns the value. */
-    value_type get(double v, size_t) const { return v; }
+    value_type get(double v, size_t) const
+    {
+        return v;
+    }
 
     /** Matrix-like access, just returns the value. */
-    value_type get(double v, size_t, size_t) const { return v; }
+    value_type get(double v, size_t, size_t) const
+    {
+        return v;
+    }
 
     /** Size is always 1. */
-    size_t size(double) const { return 1; }
+    size_t size(double) const
+    {
+        return 1;
+    }
 
     /** Size is always 1. */
-    size_t rows(double) const { return 1; }
+    size_t rows(double) const
+    {
+        return 1;
+    }
 
     /** Size is always 1. */
-    size_t cols(double) const { return 1; }
+    size_t cols(double) const
+    {
+        return 1;
+    }
 };
 
 template<> struct ExprTraits<float>
@@ -118,19 +150,34 @@ template<> struct ExprTraits<float>
     typedef expr_leaf_tag node_tag;
 
     /** Vector-like access, just returns the value. */
-    value_type get(float v, size_t) const { return v; }
+    value_type get(float v, size_t) const
+    {
+        return v;
+    }
 
     /** Matrix-like access, just returns the value. */
-    value_type get(float v, size_t, size_t) const { return v; }
+    value_type get(float v, size_t, size_t) const
+    {
+        return v;
+    }
 
     /** Size is always 1. */
-    size_t size(float) const { return 1; }
+    size_t size(float) const
+    {
+        return 1;
+    }
 
     /** Size is always 1. */
-    size_t rows(float) const { return 1; }
+    size_t rows(float) const
+    {
+        return 1;
+    }
 
     /** Size is always 1. */
-    size_t cols(float) const { return 1; }
+    size_t cols(float) const
+    {
+        return 1;
+    }
 };
 #endif
 

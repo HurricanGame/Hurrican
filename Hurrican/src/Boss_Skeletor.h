@@ -6,28 +6,28 @@
 
 class GegnerSkeletor : public GegnerClass
 {
-	private:
-		float   SmokeDelay;
-		int		ShotCount;
-		float	ShotDelay;
-		float	GunWinkel;
-		bool	HasLaughed;
-		int		AnimOffset;
-		int		LastHandlung;
-		bool	DrawNow;
+private:
+    float   SmokeDelay;
+    int		ShotCount;
+    float	ShotDelay;
+    float	GunWinkel;
+    bool	HasLaughed;
+    int		AnimOffset;
+    int		LastHandlung;
+    bool	DrawNow;
 
-		void	CalcGunWinkel();
-		void	Laugh();
-	
-	public:
+    void	CalcGunWinkel();
+    void	Laugh();
 
-	DirectGraphicsSprite	Flamme;
+public:
 
-	GegnerSkeletor (int Wert1,	int Wert2,			// Konstruktor
-							  bool		  Light);	
-	void GegnerExplode (void);						// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-	void DoDraw		   (void);							// Gegner individuell rendern
+    DirectGraphicsSprite	Flamme;
+
+    GegnerSkeletor (int Wert1,	int Wert2,			// Konstruktor
+                    bool		  Light);
+    void GegnerExplode (void);						// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw		   (void);							// Gegner individuell rendern
 };
 
 #endif

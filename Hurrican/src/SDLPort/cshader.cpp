@@ -46,12 +46,14 @@ void CShader::Close( void )
 
     for(i=0; i<Shaders.size(); i++)
     {
-        if ( Shaders.at(i).name != GL_INVALID_VALUE) {
+        if ( Shaders.at(i).name != GL_INVALID_VALUE)
+        {
             glDeleteShader( Shaders.at(i).name );
         }
     }
 
-    if (Program != GL_INVALID_VALUE) {
+    if (Program != GL_INVALID_VALUE)
+    {
         glDeleteProgram( Program );
     }
 
@@ -83,10 +85,12 @@ int8_t CShader::LoadShader( GLenum type, const string& path )
     shader.path = path;
     shader.name = CompileShader( shader.type, shader.path );
 
-    if (shader.name == GL_INVALID_VALUE) {
+    if (shader.name == GL_INVALID_VALUE)
+    {
         return 1;
     }
-    else {
+    else
+    {
         Protokoll.WriteText( false, "Shader: Compiled %s\n", path.c_str() );
     }
 
@@ -142,9 +146,15 @@ GLuint CShader::CompileShader( GLenum type, const string& path )
         {
             switch(type)
             {
-                case GL_VERTEX_SHADER:      shadertype = "vertex"; break;
-                case GL_FRAGMENT_SHADER:    shadertype = "fragment"; break;
-                default :                   shadertype = "unknown"; break;
+            case GL_VERTEX_SHADER:
+                shadertype = "vertex";
+                break;
+            case GL_FRAGMENT_SHADER:
+                shadertype = "fragment";
+                break;
+            default :
+                shadertype = "unknown";
+                break;
             }
 
             Protokoll.WriteText( false, "ERROR Shader: Compile failure in %s shader: %s\n", shadertype.c_str(), path.c_str() );
@@ -168,7 +178,8 @@ int8_t CShader::CreateProgram( void )
 
     Program = glCreateProgram();
 
-    for(i = 0; i < Shaders.size(); i++) {
+    for(i = 0; i < Shaders.size(); i++)
+    {
         glAttachShader( Program, Shaders[i].name );
     }
 
@@ -247,7 +258,8 @@ void CShader::FindUniforms( void )
 
 GLint CShader::GetAttribute( const string& attribute )
 {
-    for (vector<pair<string, GLint> >::const_iterator itr(Attributes.begin()); itr < Attributes.end(); ++itr) {
+    for (vector<pair<string, GLint> >::const_iterator itr(Attributes.begin()); itr < Attributes.end(); ++itr)
+    {
         if (attribute == itr->first)
             return itr->second;
     }
@@ -259,7 +271,8 @@ GLint CShader::GetAttribute( const string& attribute )
 
 GLint CShader::GetUniform( const string& uniform )
 {
-    for (vector<pair<string, GLint> >::const_iterator itr(Uniforms.begin()); itr < Uniforms.end(); ++itr) {
+    for (vector<pair<string, GLint> >::const_iterator itr(Uniforms.begin()); itr < Uniforms.end(); ++itr)
+    {
         if (uniform == itr->first)
             return itr->second;
     }

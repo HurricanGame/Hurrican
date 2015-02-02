@@ -6,17 +6,17 @@
 
 class GegnerLavamann : public GegnerClass
 {
-	private:
+private:
 
-		float	FlameCount;
+    float	FlameCount;
 
-	public:
+public:
 
-	GegnerLavamann	   (int Wert1, int Wert2,			// Konstruktor
-						bool		  Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-	void DoDraw		   (void);							// Gegner individuell rendern
+    GegnerLavamann	   (int Wert1, int Wert2,			// Konstruktor
+                        bool		  Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw		   (void);							// Gegner individuell rendern
 };
 
 #endif

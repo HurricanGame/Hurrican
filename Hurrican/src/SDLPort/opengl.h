@@ -5,13 +5,13 @@
 
 // Do some sanity checks
 #if !defined(USE_GL1) && !defined(USE_GL2)
-    #error "ERROR USE_GL1 nor USE_GL2 are defined. Only one must be defined."
+#error "ERROR USE_GL1 nor USE_GL2 are defined. Only one must be defined."
 #elif defined(USE_GL1) && defined(USE_GL2)
-    #error "ERROR USE_GL1 and USE_GL2 are defined. Only one must be defined."
+#error "ERROR USE_GL1 and USE_GL2 are defined. Only one must be defined."
 #elif defined(USE_GL1) && defined(USE_GLES2)
-    #error "ERROR USE_GL1 and USE_GLES2 are defined. Replace USE_GLES2 for USE_GLES1"
+#error "ERROR USE_GL1 and USE_GLES2 are defined. Replace USE_GLES2 for USE_GLES1"
 #elif defined(USE_GL2) && defined(USE_GLES1)
-    #error "ERROR USE_GL2 and USE_GLES1 are defined. Replace USE_GLES1 for USE_GLES2"
+#error "ERROR USE_GL2 and USE_GLES1 are defined. Replace USE_GLES1 for USE_GLES2"
 #endif
 
 #if !defined(__WIN32)
@@ -21,13 +21,13 @@
 #if SDL_VERSION_ATLEAST(2,0,0)
 
 #if !defined(USE_GLES1) && !defined(USE_GLES2) && defined(USE_GLFULL)
-    #include "SDL_opengl.h"
+#include "SDL_opengl.h"
 #elif !defined(USE_GLES1) && defined(USE_GLES2) && !defined(USE_GLFULL)
-    #include "SDL_opengles2.h"
+#include "SDL_opengles2.h"
 #elif defined(USE_GLES1) && !defined(USE_GLES2) && !defined(USE_GLFULL)
-    #include "SDL_opengles.h"
+#include "SDL_opengles.h"
 #else
-    #error Invalid OpenGL Config
+#error Invalid OpenGL Config
 #endif
 
 #else /* SDL 1.2 */

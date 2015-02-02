@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -32,14 +32,16 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 //#define MATXPR_ARG_TYPE               const et::MatrixXpr<XprT>
 //#define MATXPR_ARG_TYPE_N(_N_)        const et::MatrixXpr<XprT##_N_>
 
-namespace cml {
-namespace et {
+namespace cml
+{
+namespace et
+{
 
 /** A placeholder for a matrix expression in the expression tree. */
 template<class ExprT>
 class MatrixXpr
 {
-  public:
+public:
 
     typedef MatrixXpr<ExprT> expr_type;
 
@@ -58,7 +60,7 @@ class MatrixXpr
 
     /* Get the result type: */
     typedef typename expr_traits::result_type result_type;
-    
+
     /* Get the basis type: */
     typedef typename result_type::basis_orient basis_orient;
 
@@ -69,44 +71,52 @@ class MatrixXpr
     typedef cml::et::not_assignable_tag assignable_tag;
 
 
-  public:
+public:
 
     /** Record result size as an enum (if applicable). */
     enum { array_rows = ExprT::array_rows, array_cols = ExprT::array_cols };
 
 
-  public:
+public:
 
     /** Return the expression size as a pair. */
-    matrix_size size() const {
+    matrix_size size() const
+    {
         return matrix_size(this->rows(),this->cols());
     }
 
     /** Return number of rows in the expression (same as subexpression). */
-    size_t rows() const { 
+    size_t rows() const
+    {
         return expr_traits().rows(m_expr);
     }
 
     /** Return number of columns in the expression (same as subexpression). */
-    size_t cols() const {
+    size_t cols() const
+    {
         return expr_traits().cols(m_expr);
     }
 
     /** Return reference to contained expression. */
-    expr_reference expression() const { return m_expr; }
+    expr_reference expression() const
+    {
+        return m_expr;
+    }
 
     /** Compute value at index i,j of the result matrix. */
-    value_type operator()(size_t i, size_t j) const {
+    value_type operator()(size_t i, size_t j) const
+    {
         return expr_traits().get(m_expr,i,j);
     }
-    
+
     /** Return element j of basis vector i. */
-    value_type basis_element(size_t i, size_t j) const {
+    value_type basis_element(size_t i, size_t j) const
+    {
         return basis_element(i,j,basis_orient());
     }
 
 
-  public:
+public:
 
     /** Construct from the subexpression to store. */
     explicit MatrixXpr(expr_reference expr) : m_expr(expr) {}
@@ -115,23 +125,25 @@ class MatrixXpr
     MatrixXpr(const expr_type& e) : m_expr(e.m_expr) {}
 
 
-  protected:
+protected:
 
-    value_type basis_element(size_t i, size_t j, row_basis) const {
+    value_type basis_element(size_t i, size_t j, row_basis) const
+    {
         return (*this)(i,j);
     }
 
-    value_type basis_element(size_t i, size_t j, col_basis) const {
+    value_type basis_element(size_t i, size_t j, col_basis) const
+    {
         return (*this)(j,i);
     }
 
 
-  protected:
+protected:
 
     expr_reference m_expr;
 
 
-  private:
+private:
 
     /* Cannot be assigned to: */
     expr_type& operator=(const expr_type&);
@@ -152,14 +164,24 @@ struct ExprTraits< MatrixXpr<ExprT> >
     typedef typename expr_type::assignable_tag assignable_tag;
     typedef expr_node_tag node_tag;
 
-    value_type get(const expr_type& e, size_t i, size_t j) const {
+    value_type get(const expr_type& e, size_t i, size_t j) const
+    {
         return e(i,j);
     }
 
 
-    matrix_size size(const expr_type& e) const { return e.size(); }
-    size_t rows(const expr_type& e) const { return e.rows(); }
-    size_t cols(const expr_type& e) const { return e.cols(); }
+    matrix_size size(const expr_type& e) const
+    {
+        return e.size();
+    }
+    size_t rows(const expr_type& e) const
+    {
+        return e.rows();
+    }
+    size_t cols(const expr_type& e) const
+    {
+        return e.cols();
+    }
 };
 
 
@@ -170,7 +192,7 @@ struct ExprTraits< MatrixXpr<ExprT> >
 template<class ExprT, class OpT>
 class UnaryMatrixOp
 {
-  public:
+public:
 
     typedef UnaryMatrixOp<ExprT,OpT> expr_type;
 
@@ -200,31 +222,35 @@ class UnaryMatrixOp
     typedef cml::et::not_assignable_tag assignable_tag;
 
 
-  public:
+public:
 
     /** Record result size as an enum (if applicable). */
     enum { array_rows = ExprT::array_rows, array_cols = ExprT::array_cols };
 
 
-  public:
+public:
 
     /** Return the expression size as a pair. */
-    matrix_size size() const {
+    matrix_size size() const
+    {
         return matrix_size(this->rows(),this->cols());
     }
 
     /** Return number of rows in the expression (same as argument). */
-    size_t rows() const {
+    size_t rows() const
+    {
         return expr_traits().rows(m_expr);
     }
 
     /** Return number of columns in the expression (same as argument). */
-    size_t cols() const {
+    size_t cols() const
+    {
         return expr_traits().cols(m_expr);
     }
 
     /** Compute value at index i,j of the result matrix. */
-    value_type operator()(size_t i, size_t j) const {
+    value_type operator()(size_t i, size_t j) const
+    {
 
         /* This uses the expression traits to figure out how to access the
          * i,j'th element of the subexpression:
@@ -233,7 +259,7 @@ class UnaryMatrixOp
     }
 
 
-  public:
+public:
 
     /** Construct from the subexpression. */
     explicit UnaryMatrixOp(expr_reference expr) : m_expr(expr) {}
@@ -242,12 +268,12 @@ class UnaryMatrixOp
     UnaryMatrixOp(const expr_type& e) : m_expr(e.m_expr) {}
 
 
-  protected:
+protected:
 
     expr_reference m_expr;
 
 
-  private:
+private:
 
     /* Cannot be assigned to: */
     expr_type& operator=(const expr_type&);
@@ -268,13 +294,23 @@ struct ExprTraits< UnaryMatrixOp<ExprT,OpT> >
     typedef typename expr_type::assignable_tag assignable_tag;
     typedef expr_node_tag node_tag;
 
-    value_type get(const expr_type& e, size_t i, size_t j) const {
+    value_type get(const expr_type& e, size_t i, size_t j) const
+    {
         return e(i,j);
     }
 
-    matrix_size size(const expr_type& e) const { return e.size(); }
-    size_t rows(const expr_type& e) const { return e.rows(); }
-    size_t cols(const expr_type& e) const { return e.cols(); }
+    matrix_size size(const expr_type& e) const
+    {
+        return e.size();
+    }
+    size_t rows(const expr_type& e) const
+    {
+        return e.rows();
+    }
+    size_t cols(const expr_type& e) const
+    {
+        return e.cols();
+    }
 };
 
 
@@ -282,7 +318,7 @@ struct ExprTraits< UnaryMatrixOp<ExprT,OpT> >
 template<class LeftT, class RightT, class OpT>
 class BinaryMatrixOp
 {
-  public:
+public:
 
     typedef BinaryMatrixOp<LeftT,RightT,OpT> expr_type;
 
@@ -318,22 +354,24 @@ class BinaryMatrixOp
     typedef GetCheckedSize<LeftT,RightT,size_tag> checked_size;
 
 
-  public:
+public:
 
     /** Record result size as an enum (if applicable).
      *
      * CheckExprSizes<> ensures that this works as expected.
      */
-    enum {
+    enum
+    {
         array_rows = result_type::array_rows,
         array_cols = result_type::array_cols
     };
 
 
-  public:
+public:
 
     /** Return the expression size as a pair. */
-    matrix_size size() const {
+    matrix_size size() const
+    {
         return CheckedSize(m_left,m_right,size_tag());
     }
 
@@ -343,7 +381,8 @@ class BinaryMatrixOp
      * and cols() with CML_CHECK_MATRIX_EXPR_SIZES defined will cause the size
      * checking code to be executed twice.
      */
-    size_t rows() const {
+    size_t rows() const
+    {
 #if defined(CML_CHECK_MATRIX_EXPR_SIZES)
         return this->size().first;
 #else
@@ -357,7 +396,8 @@ class BinaryMatrixOp
      * and cols() with CML_CHECK_MATRIX_EXPR_SIZES defined will cause the size
      * checking code to be executed twice.
      */
-    size_t cols() const {
+    size_t cols() const
+    {
 #if defined(CML_CHECK_MATRIX_EXPR_SIZES)
         return this->size().second;
 #else
@@ -366,18 +406,19 @@ class BinaryMatrixOp
     }
 
     /** Compute value at index i,j of the result matrix. */
-    value_type operator()(size_t i, size_t j) const {
+    value_type operator()(size_t i, size_t j) const
+    {
 
         /* This uses the expression traits to figure out how to access the
          * i'th index of the two subexpressions:
          */
         return OpT().apply(
-                left_traits().get(m_left,i,j),
-                right_traits().get(m_right,i,j));
+                   left_traits().get(m_left,i,j),
+                   right_traits().get(m_right,i,j));
     }
 
 
-  public:
+public:
 
     /** Construct from the two subexpressions.
      *
@@ -392,19 +433,19 @@ class BinaryMatrixOp
         : m_left(e.m_left), m_right(e.m_right) {}
 
 
-  protected:
+protected:
 
     left_reference m_left;
     right_reference m_right;
 
 
-  private:
+private:
 
     /* This ensures that a compile-time size check is executed: */
     typename checked_size::check_type _dummy;
 
 
-  private:
+private:
 
     /* Cannot be assigned to: */
     expr_type& operator=(const expr_type&);
@@ -426,13 +467,23 @@ struct ExprTraits< BinaryMatrixOp<LeftT,RightT,OpT> >
     typedef typename expr_type::assignable_tag assignable_tag;
     typedef expr_node_tag node_tag;
 
-    value_type get(const expr_type& e, size_t i, size_t j) const {
+    value_type get(const expr_type& e, size_t i, size_t j) const
+    {
         return e(i,j);
     }
 
-    matrix_size size(const expr_type& e) const { return e.size(); }
-    size_t rows(const expr_type& e) const { return e.rows(); }
-    size_t cols(const expr_type& e) const { return e.cols(); }
+    matrix_size size(const expr_type& e) const
+    {
+        return e.size();
+    }
+    size_t rows(const expr_type& e) const
+    {
+        return e.rows();
+    }
+    size_t cols(const expr_type& e) const
+    {
+        return e.cols();
+    }
 };
 
 /* Helper struct to verify that both arguments are matrix expressions: */
@@ -443,10 +494,12 @@ struct MatrixExpressions
     typedef typename LeftTraits::result_tag left_result;
     typedef typename RightTraits::result_tag right_result;
     enum { is_true = (same_type<left_result,et::matrix_result_tag>::is_true
-            && same_type<right_result,et::matrix_result_tag>::is_true) };
+                      && same_type<right_result,et::matrix_result_tag>::is_true)
+         };
 };
 
-namespace detail {
+namespace detail
+{
 
 /* XXX These are temporary helpers until dynamic resizing is integrated more
  * naturally into mul() and matrix transpose():
@@ -456,20 +509,22 @@ void Resize(MatT&, size_t, size_t, fixed_size_tag, MT) {}
 
 template<typename MatT> inline
 void Resize(MatT& m,
-        size_t R, size_t C, dynamic_size_tag, dynamic_memory_tag)
+            size_t R, size_t C, dynamic_size_tag, dynamic_memory_tag)
 {
     m.resize(R,C);
 }
 
 template<typename MatT> inline
-void Resize(MatT& m, size_t R, size_t C) {
+void Resize(MatT& m, size_t R, size_t C)
+{
     Resize(m, R, C, typename MatT::size_tag(), typename MatT::memory_tag());
 }
 
 template<typename MatT> inline
-void Resize(MatT& m, matrix_size N) {
+void Resize(MatT& m, matrix_size N)
+{
     Resize(m, N.first, N.second,
-            typename MatT::size_tag(), typename MatT::memory_tag());
+           typename MatT::size_tag(), typename MatT::memory_tag());
 }
 
 } // namespace detail

@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -34,8 +34,10 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 struct mvmul_expects_one_matrix_and_one_vector_arg_error;
 struct mvmul_expects_one_vector_and_one_matrix_arg_error;
 
-namespace cml {
-namespace detail {
+namespace cml
+{
+namespace detail
+{
 
 /* For choosing the proper multiplication order: */
 typedef true_type mul_Ax;
@@ -44,10 +46,10 @@ typedef false_type mul_xA;
 /** Compute y = A*x. */
 template<typename LeftT, typename RightT> inline
 typename et::MatVecPromote<
-    typename et::ExprTraits<LeftT>::result_type,
-    typename et::ExprTraits<RightT>::result_type
->::temporary_type
-mul(const LeftT& A, const RightT& x, mul_Ax)
+typename et::ExprTraits<LeftT>::result_type,
+         typename et::ExprTraits<RightT>::result_type
+         >::temporary_type
+         mul(const LeftT& A, const RightT& x, mul_Ax)
 {
     /* Shorthand: */
     typedef et::ExprTraits<LeftT> left_traits;
@@ -66,9 +68,9 @@ mul(const LeftT& A, const RightT& x, mul_Ax)
 
     /* Get result type: */
     typedef typename et::MatVecPromote<
-        typename left_traits::result_type,
-        typename right_traits::result_type
-    >::temporary_type result_type;
+    typename left_traits::result_type,
+             typename right_traits::result_type
+             >::temporary_type result_type;
 
     /* Record size type: */
     typedef typename result_type::size_tag size_tag;
@@ -77,14 +79,17 @@ mul(const LeftT& A, const RightT& x, mul_Ax)
     size_t N = et::CheckedSize(A, x, size_tag());
 
     /* Initialize the new vector: */
-    result_type y; cml::et::detail::Resize(y, N);
+    result_type y;
+    cml::et::detail::Resize(y, N);
 
     /* Compute y = A*x: */
     typedef typename result_type::value_type sum_type;
-    for(size_t i = 0; i < N; ++i) {
+    for(size_t i = 0; i < N; ++i)
+    {
         /* XXX This should be unrolled. */
         sum_type sum(A(i,0)*x[0]);
-        for(size_t k = 1; k < x.size(); ++k) {
+        for(size_t k = 1; k < x.size(); ++k)
+        {
             sum += (A(i,k)*x[k]);
         }
         y[i] = sum;
@@ -96,10 +101,10 @@ mul(const LeftT& A, const RightT& x, mul_Ax)
 /** Compute y = x*A. */
 template<typename LeftT, typename RightT> inline
 typename et::MatVecPromote<
-    typename et::ExprTraits<LeftT>::result_type,
-    typename et::ExprTraits<RightT>::result_type
->::temporary_type
-mul(const LeftT& x, const RightT& A, mul_xA)
+typename et::ExprTraits<LeftT>::result_type,
+         typename et::ExprTraits<RightT>::result_type
+         >::temporary_type
+         mul(const LeftT& x, const RightT& A, mul_xA)
 {
     /* Shorthand: */
     typedef et::ExprTraits<LeftT> left_traits;
@@ -118,9 +123,9 @@ mul(const LeftT& x, const RightT& A, mul_xA)
 
     /* Get result type: */
     typedef typename et::MatVecPromote<
-        typename left_traits::result_type,
-        typename right_traits::result_type
-    >::temporary_type result_type;
+    typename left_traits::result_type,
+             typename right_traits::result_type
+             >::temporary_type result_type;
 
     /* Record size type: */
     typedef typename result_type::size_tag size_tag;
@@ -129,14 +134,17 @@ mul(const LeftT& x, const RightT& A, mul_xA)
     size_t N = et::CheckedSize(x, A, size_tag());
 
     /* Initialize the new vector: */
-    result_type y; cml::et::detail::Resize(y, N);
+    result_type y;
+    cml::et::detail::Resize(y, N);
 
     /* Compute y = x*A: */
     typedef typename result_type::value_type sum_type;
-    for(size_t i = 0; i < N; ++i) {
+    for(size_t i = 0; i < N; ++i)
+    {
         /* XXX This should be unrolled. */
         sum_type sum(x[0]*A(0,i));
-        for(size_t k = 1; k < x.size(); ++k) {
+        for(size_t k = 1; k < x.size(); ++k)
+        {
             sum += (x[k]*A(k,i));
         }
         y[i] = sum;
@@ -152,7 +160,7 @@ mul(const LeftT& x, const RightT& A, mul_xA)
 template<typename E1, class AT1, typename BO, class L,
          typename E2, class AT2>
 inline typename et::MatVecPromote<
-    matrix<E1,AT1,BO,L>, vector<E2,AT2>
+matrix<E1,AT1,BO,L>, vector<E2,AT2>
 >::temporary_type
 operator*(const matrix<E1,AT1,BO,L>& left,
           const vector<E2,AT2>& right)
@@ -163,7 +171,7 @@ operator*(const matrix<E1,AT1,BO,L>& left,
 /** operator*() for a matrix and a VectorXpr. */
 template<typename E, class AT, class L, typename BO, typename XprT>
 inline typename et::MatVecPromote<
-    matrix<E,AT,BO,L>, typename XprT::result_type
+matrix<E,AT,BO,L>, typename XprT::result_type
 >::temporary_type
 operator*(const matrix<E,AT,BO,L>& left,
           const et::VectorXpr<XprT>& right)
@@ -179,7 +187,7 @@ operator*(const matrix<E,AT,BO,L>& left,
 /** operator*() for a MatrixXpr and a vector. */
 template<typename XprT, typename E, class AT>
 inline typename et::MatVecPromote<
-    typename XprT::result_type, vector<E,AT>
+typename XprT::result_type, vector<E,AT>
 >::temporary_type
 operator*(const et::MatrixXpr<XprT>& left,
           const vector<E,AT>& right)
@@ -195,7 +203,7 @@ operator*(const et::MatrixXpr<XprT>& left,
 /** operator*() for a MatrixXpr and a VectorXpr. */
 template<typename XprT1, typename XprT2>
 inline typename et::MatVecPromote<
-    typename XprT1::result_type, typename XprT2::result_type
+typename XprT1::result_type, typename XprT2::result_type
 >::temporary_type
 operator*(const et::MatrixXpr<XprT1>& left,
           const et::VectorXpr<XprT2>& right)
@@ -216,7 +224,7 @@ operator*(const et::MatrixXpr<XprT1>& left,
 /** operator*() for a vector and a matrix. */
 template<typename E1, class AT1, typename E2, class AT2, typename BO, class L>
 inline typename et::MatVecPromote<
-    vector<E1,AT1>, matrix<E2,AT2,BO,L>
+vector<E1,AT1>, matrix<E2,AT2,BO,L>
 >::temporary_type
 operator*(const vector<E1,AT1>& left,
           const matrix<E2,AT2,BO,L>& right)
@@ -227,7 +235,7 @@ operator*(const vector<E1,AT1>& left,
 /** operator*() for a vector and a MatrixXpr. */
 template<typename XprT, typename E, class AT>
 inline typename et::MatVecPromote<
-    typename XprT::result_type, vector<E,AT>
+typename XprT::result_type, vector<E,AT>
 >::temporary_type
 operator*(const vector<E,AT>& left,
           const et::MatrixXpr<XprT>& right)
@@ -243,7 +251,7 @@ operator*(const vector<E,AT>& left,
 /** operator*() for a VectorXpr and a matrix. */
 template<typename XprT, typename E, class AT, typename BO, class L>
 inline typename et::MatVecPromote<
-    typename XprT::result_type, matrix<E,AT,BO,L>
+typename XprT::result_type, matrix<E,AT,BO,L>
 >::temporary_type
 operator*(const et::VectorXpr<XprT>& left,
           const matrix<E,AT,BO,L>& right)
@@ -259,7 +267,7 @@ operator*(const et::VectorXpr<XprT>& left,
 /** operator*() for a VectorXpr and a MatrixXpr. */
 template<typename XprT1, typename XprT2>
 inline typename et::MatVecPromote<
-    typename XprT1::result_type, typename XprT2::result_type
+typename XprT1::result_type, typename XprT2::result_type
 >::temporary_type
 operator*(const et::VectorXpr<XprT1>& left,
           const et::MatrixXpr<XprT2>& right)

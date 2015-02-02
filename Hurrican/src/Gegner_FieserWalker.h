@@ -5,16 +5,16 @@
 #include "Gegner_Stuff.h"
 
 class GegnerFieserWalker : public GegnerClass
-{	
-	private :
-		float	ShotDelay;
+{
+private :
+    float	ShotDelay;
 
-	public :		
+public :
 
-	GegnerFieserWalker(int  Wert1, int Wert2, bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerFieserWalker(int  Wert1, int Wert2, bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

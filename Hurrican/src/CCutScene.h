@@ -1,6 +1,6 @@
 // Datei : CCutScene.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Klasse für die CutScenes zwischen zwei Stages
 //
@@ -33,19 +33,19 @@ void PlayCutScene (int nr);
 
 class CCutScene
 {
-	protected:		
-		float					m_fFadeAlpha;				// momentaner Alpha Wert fürs Fading
-		float					m_fYScroll;					// y Pos des Scrolltextes
+protected:
+    float					m_fFadeAlpha;				// momentaner Alpha Wert fürs Fading
+    float					m_fYScroll;					// y Pos des Scrolltextes
 
-	public:
-		int						m_iFading;					// -1 = fade in, 1 = fadeout, 0 = no fade
-		bool					m_bIsDone;					// CutScene beendet/abgebrochen
+public:
+    int						m_iFading;					// -1 = fade in, 1 = fadeout, 0 = no fade
+    bool					m_bIsDone;					// CutScene beendet/abgebrochen
 
-			     CCutScene	 (void);						// CutScene initialisieren
-	virtual	    ~CCutScene	 (void);						// CutScene freigeben
-	
-	virtual void RunCutScene (void) {}						// CutSCene laufen lassen, bis sie zuende ist oder
-															// abgebrochen wurde
+    CCutScene	 (void);						// CutScene initialisieren
+    virtual	    ~CCutScene	 (void);						// CutScene freigeben
+
+    virtual void RunCutScene (void) {}						// CutSCene laufen lassen, bis sie zuende ist oder
+    // abgebrochen wurde
 }; // CCutScene
 
 
@@ -61,14 +61,14 @@ class CCutScene
 
 class CCutScene1 : public CCutScene
 {
-	private:
-		DirectGraphicsSprite *BackGround;
+private:
+    DirectGraphicsSprite *BackGround;
 
-	public:
-		 CCutScene1			(void);
-		~CCutScene1			(void);
+public:
+    CCutScene1			(void);
+    ~CCutScene1			(void);
 
-		void RunCutScene	(void);
+    void RunCutScene	(void);
 
 }; // CCutScene1
 

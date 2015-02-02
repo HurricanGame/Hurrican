@@ -531,12 +531,6 @@
 			<Option target="Linux GLES2 Debug" />
 			<Option target="Pandora GLES2" />
 		</Unit>
-		<Unit filename="src/SDLPort/eglport.cpp">
-			<Option target="Linux GLES1 Debug" />
-			<Option target="Linux GLES2 Debug" />
-			<Option target="Pandora GLES1" />
-			<Option target="Pandora GLES2" />
-		</Unit>
 		<Unit filename="src/SDLPort/eglport.h">
 			<Option target="Pandora GLES1" />
 			<Option target="Linux GLES2 Debug" />

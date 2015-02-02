@@ -6,13 +6,13 @@
 
 class GegnerFadeMusic : public GegnerClass
 {
-	public:
+public:
 
-	GegnerFadeMusic	   (int Wert1,	int Wert2,			// Konstruktor
-						bool		  Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerFadeMusic	   (int Wert1,	int Wert2,			// Konstruktor
+                        bool		  Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

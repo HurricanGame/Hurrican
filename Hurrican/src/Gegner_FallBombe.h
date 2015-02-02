@@ -6,15 +6,15 @@
 
 class GegnerFallBombe : public GegnerClass
 {
-	private:
-		float	SmokeDelay;
-	public:
+private:
+    float	SmokeDelay;
+public:
 
-	GegnerFallBombe   (int  Wert1, int Wert2,			// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerFallBombe   (int  Wert1, int Wert2,			// Konstruktor
+                       bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

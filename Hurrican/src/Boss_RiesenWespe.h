@@ -6,16 +6,16 @@
 
 class GegnerRiesenWasp : public GegnerClass
 {
-	private:
-		float ShotDelay;
+private:
+    float ShotDelay;
 
-	public:
+public:
 
-	GegnerRiesenWasp(int  Wert1, int Wert2,				// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerRiesenWasp(int  Wert1, int Wert2,				// Konstruktor
+                     bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

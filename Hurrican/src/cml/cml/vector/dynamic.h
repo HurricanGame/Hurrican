@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -18,14 +18,15 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #include <cml/vector/class_ops.h>
 #include <cml/vector/vector_unroller.h>
 
-namespace cml {
+namespace cml
+{
 
 /** Resizeable, dynamic-memory vector. */
 template<typename Element, typename Alloc>
 class vector< Element, dynamic<Alloc> >
-: public dynamic_1D<Element,Alloc>
+    : public dynamic_1D<Element,Alloc>
 {
-  public:
+public:
 
     /* Shorthand for the generator: */
     typedef dynamic<> storage_type;
@@ -71,32 +72,37 @@ class vector< Element, dynamic<Alloc> >
     typedef cml::et::assignable_tag assignable_tag;
 
 
-  public:
+public:
 
     /** Return square of the length. */
-    value_type length_squared() const {
+    value_type length_squared() const
+    {
         return cml::dot(*this,*this);
     }
 
     /** Return the length. */
-    value_type length() const {
+    value_type length() const
+    {
         return std::sqrt(length_squared());
     }
 
     /** Normalize the vector. */
-    vector_type& normalize() {
+    vector_type& normalize()
+    {
         return (*this /= length());
     }
 
     /** Set this vector to [0]. */
-    vector_type& zero() {
+    vector_type& zero()
+    {
         typedef cml::et::OpAssign<Element,Element> OpT;
         cml::et::UnrollAssignment<OpT>(*this,Element(0));
         return *this;
     }
 
     /** Set this vector to a cardinal vector. */
-    vector_type& cardinal(size_t i) {
+    vector_type& cardinal(size_t i)
+    {
         zero();
         (*this)[i] = Element(1);
         return *this;
@@ -104,31 +110,37 @@ class vector< Element, dynamic<Alloc> >
 
     /** Pairwise minimum of this vector with another. */
     template<typename E, class AT>
-    void minimize(const vector<E,AT>& v) {
-      /* XXX This should probably use ScalarPromote: */
-      for (size_t i = 0; i < this->size(); ++i) {
-        (*this)[i] = std::min((*this)[i],v[i]);
-      }
+    void minimize(const vector<E,AT>& v)
+    {
+        /* XXX This should probably use ScalarPromote: */
+        for (size_t i = 0; i < this->size(); ++i)
+        {
+            (*this)[i] = std::min((*this)[i],v[i]);
+        }
     }
 
     /** Pairwise maximum of this vector with another. */
     template<typename E, class AT>
-    void maximize(const vector<E,AT>& v) {
-      /* XXX This should probably use ScalarPromote: */
-      for (size_t i = 0; i < this->size(); ++i) {
-        (*this)[i] = std::max((*this)[i],v[i]);
-      }
+    void maximize(const vector<E,AT>& v)
+    {
+        /* XXX This should probably use ScalarPromote: */
+        for (size_t i = 0; i < this->size(); ++i)
+        {
+            (*this)[i] = std::max((*this)[i],v[i]);
+        }
     }
 
     /** Fill vector with random elements. */
-    void random(value_type min, value_type max) {
-        for (size_t i = 0; i < this->size(); ++i) {
+    void random(value_type min, value_type max)
+    {
+        for (size_t i = 0; i < this->size(); ++i)
+        {
             (*this)[i] = cml::random_real(min,max);
         }
     }
 
 
-  public:
+public:
 
     /** Default constructor. */
     vector() : array_type() {}
@@ -137,7 +149,7 @@ class vector< Element, dynamic<Alloc> >
     vector(size_t N) : array_type(N) {}
 
 
-  public:
+public:
 
     /* Define common class operators: */
 

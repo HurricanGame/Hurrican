@@ -6,13 +6,13 @@
 
 class GegnerStelzSack : public GegnerClass
 {
-	public:
+public:
 
-	GegnerStelzSack   (int  Wert1, int Wert2,			// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerStelzSack   (int  Wert1, int Wert2,			// Konstruktor
+                       bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -13,7 +13,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #ifndef vector_functions_h
 #define vector_functions_h
 
-namespace cml {
+namespace cml
+{
 
 /** Squared length of a vector. */
 template<typename E, class AT>

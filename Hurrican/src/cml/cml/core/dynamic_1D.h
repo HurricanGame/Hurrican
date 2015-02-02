@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -17,7 +17,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #include <cml/core/common.h>
 #include <cml/dynamic.h>
 
-namespace cml {
+namespace cml
+{
 
 /** Dynamically-sized and allocated 1D array.
  *
@@ -29,7 +30,7 @@ namespace cml {
 template<typename Element, class Alloc>
 class dynamic_1D
 {
-  public:
+public:
 
     /* Record the allocator type: */
     typedef typename Alloc::template rebind<Element>::other allocator_type;
@@ -39,10 +40,10 @@ class dynamic_1D
 
     /* Standard: */
     typedef typename allocator_type::value_type value_type;
-    typedef typename allocator_type::pointer pointer; 
-    typedef typename allocator_type::reference reference; 
-    typedef typename allocator_type::const_reference const_reference; 
-    typedef typename allocator_type::const_pointer const_pointer; 
+    typedef typename allocator_type::pointer pointer;
+    typedef typename allocator_type::reference reference;
+    typedef typename allocator_type::const_reference const_reference;
+    typedef typename allocator_type::const_pointer const_pointer;
 
     /* For matching by memory type: */
     typedef dynamic_memory_tag memory_tag;
@@ -57,38 +58,43 @@ class dynamic_1D
     typedef oned_tag dimension_tag;
 
 
-  public:
+public:
 
     /** Dynamic arrays have no fixed size. */
     enum { array_size = -1 };
 
 
-  public:
+public:
 
     /** Construct a dynamic array with no size. */
     dynamic_1D() : m_size(0), m_data(0), m_alloc() {}
 
     /** Construct a dynamic array given the size. */
-    explicit dynamic_1D(size_t size) : m_size(0), m_data(0), m_alloc() {
-      this->resize(size);
+    explicit dynamic_1D(size_t size) : m_size(0), m_data(0), m_alloc()
+    {
+        this->resize(size);
     }
 
     /** Copy construct a dynamic array. */
     dynamic_1D(const dynamic_1D& other)
-      : m_size(0), m_data(0), m_alloc()
+        : m_size(0), m_data(0), m_alloc()
     {
-      this->copy(other);
+        this->copy(other);
     }
 
-    ~dynamic_1D() {
-      this->destroy();
+    ~dynamic_1D()
+    {
+        this->destroy();
     }
 
 
-  public:
+public:
 
     /** Return the number of elements in the array. */
-    size_t size() const { return m_size; }
+    size_t size() const
+    {
+        return m_size;
+    }
 
     /** Access to the data as a C array.
      *
@@ -97,7 +103,10 @@ class dynamic_1D
      *
      * @note This function does not range-check the argument.
      */
-    reference operator[](size_t i) { return m_data[i]; }
+    reference operator[](size_t i)
+    {
+        return m_data[i];
+    }
 
     /** Const access to the data as a C array.
      *
@@ -106,16 +115,25 @@ class dynamic_1D
      *
      * @note This function does not range-check the argument.
      */
-    const_reference operator[](size_t i) const { return m_data[i]; }
+    const_reference operator[](size_t i) const
+    {
+        return m_data[i];
+    }
 
     /** Return access to the data as a raw pointer. */
-    pointer data() { return &m_data[0]; }
+    pointer data()
+    {
+        return &m_data[0];
+    }
 
     /** Return access to the data as a raw pointer. */
-    const_pointer data() const { return &m_data[0]; }
+    const_pointer data() const
+    {
+        return &m_data[0];
+    }
 
 
-  public:
+public:
 
     /** Set the array size to the given value.  The previous contents are
      * destroyed before reallocating the array.  If s == size(),
@@ -123,66 +141,72 @@ class dynamic_1D
      *
      * @warning This is not guaranteed to preserve the original data.
      */
-    void resize(size_t s) {
+    void resize(size_t s)
+    {
 
-      /* Nothing to do if the size isn't changing: */
-      if(s == m_size) return;
+        /* Nothing to do if the size isn't changing: */
+        if(s == m_size) return;
 
-      /* Destroy the current array contents: */
-      this->destroy();
+        /* Destroy the current array contents: */
+        this->destroy();
 
-      /* Set the new size if non-zero: */
-      if(s > 0) {
-	value_type* data = m_alloc.allocate(s);
-	for(size_t i = 0; i < s; ++ i)
-	  m_alloc.construct(&data[i], value_type());
+        /* Set the new size if non-zero: */
+        if(s > 0)
+        {
+            value_type* data = m_alloc.allocate(s);
+            for(size_t i = 0; i < s; ++ i)
+                m_alloc.construct(&data[i], value_type());
 
-	/* Success, save s and data: */
-	m_size = s;
-	m_data = data;
-      }
+            /* Success, save s and data: */
+            m_size = s;
+            m_data = data;
+        }
     }
 
     /** Copy the source array. The previous contents are destroyed before
      * reallocating the array.  If other == *this, nothing happens.
      */
-    void copy(const dynamic_1D& other) {
+    void copy(const dynamic_1D& other)
+    {
 
-      /* Nothing to do if it's the same array: */
-      if(&other == this) return;
+        /* Nothing to do if it's the same array: */
+        if(&other == this) return;
 
-      /* Destroy the current array contents: */
-      this->destroy();
+        /* Destroy the current array contents: */
+        this->destroy();
 
-      /* Set the new size if non-zero: */
-      size_t s = other.size();
-      if(s > 0) {
-	value_type* data = m_alloc.allocate(s);
-	for(size_t i = 0; i < s; ++ i)
-	  m_alloc.construct(&data[i], other[i]);
+        /* Set the new size if non-zero: */
+        size_t s = other.size();
+        if(s > 0)
+        {
+            value_type* data = m_alloc.allocate(s);
+            for(size_t i = 0; i < s; ++ i)
+                m_alloc.construct(&data[i], other[i]);
 
-	/* Success, so save the new array and the size: */
-	m_size = s;
-	m_data = data;
-      }
+            /* Success, so save the new array and the size: */
+            m_size = s;
+            m_data = data;
+        }
     }
 
 
-  protected:
+protected:
 
     /** Destroy the current contents of the array. */
-    void destroy() {
-      if(m_data) {
-	for(size_t i = 0; i < m_size; ++ i)
-	  m_alloc.destroy(&m_data[i]);
-	m_alloc.deallocate(m_data, m_size);
-	m_size = 0;
-	m_data = 0;
-      }
+    void destroy()
+    {
+        if(m_data)
+        {
+            for(size_t i = 0; i < m_size; ++ i)
+                m_alloc.destroy(&m_data[i]);
+            m_alloc.deallocate(m_data, m_size);
+            m_size = 0;
+            m_data = 0;
+        }
     }
 
 
-  protected:
+protected:
 
     /** Current array size (may be 0). */
     size_t			m_size;

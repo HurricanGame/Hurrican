@@ -6,17 +6,17 @@
 
 class GegnerStampfstein : public GegnerClass
 {
-	private:
-		float	oldy;
+private:
+    float	oldy;
 
-	public:
+public:
 
-	GegnerStampfstein	   (int Wert1,	int Wert2,			// Konstruktor
-						bool		  Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
-	void DoDraw			(void);
+    GegnerStampfstein	   (int Wert1,	int Wert2,			// Konstruktor
+                            bool		  Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
+    void DoDraw			(void);
 };
 
 #endif

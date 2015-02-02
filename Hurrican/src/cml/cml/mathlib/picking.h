@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -17,13 +17,15 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 
 /* Functions for picking with rays, volumes, and drag-enclosed volumes. */
 
-namespace cml {
+namespace cml
+{
 
 /* Support function for extracting the near and far depth range values from
  * a viewport matrix.
   */
- 
-namespace detail {
+
+namespace detail
+{
 
 // NOTE: Changed 'near' and 'far' to 'n' and 'f' to work around windows.h
 // 'near' and 'far' macros.
@@ -32,7 +34,7 @@ template < class MatT, typename Real > void
 depth_range_from_viewport_matrix(const MatT& viewport, Real& n, Real& f)
 {
     detail::CheckMatHomogeneous3D(viewport);
-    
+
     n = viewport.basis_element(3,2);
     f = viewport.basis_element(2,2) + n;
 }
@@ -82,7 +84,8 @@ void make_pick_ray(
         unproject_point(
             view,projection,viewport,vector_type(pick_x,pick_y,f)
         ) - origin;
-    if (normalize) {
+    if (normalize)
+    {
         direction.normalize();
     }
 }
@@ -126,10 +129,10 @@ void make_pick_volume(
 {
     // FIXME: Should be promoted type...
     typedef matrix<
-        Real, fixed<4,4>,
-        typename MatT_1::basis_orient, typename MatT_1::layout >
-    matrix_type;
-    
+    Real, fixed<4,4>,
+          typename MatT_1::basis_orient, typename MatT_1::layout >
+          matrix_type;
+
     matrix_type pick;
     matrix_pick(
         pick, pick_x, pick_y, pick_width, pick_height,

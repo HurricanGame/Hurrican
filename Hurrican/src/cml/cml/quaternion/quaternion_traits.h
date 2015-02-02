@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -15,8 +15,10 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 
 #include <cml/et/traits.h>
 
-namespace cml {
-namespace et {
+namespace cml
+{
+namespace et
+{
 
 /** Expression traits for a quaternion<> type. */
 template<typename E, class AT, class OT, class CT>
@@ -32,8 +34,14 @@ struct ExprTraits< cml::quaternion<E,AT,OT,CT> >
     typedef expr_type result_type;
     typedef expr_leaf_tag node_tag;
 
-    value_type get(const expr_type& v, size_t i) const { return v[i]; }
-    size_t size(const expr_type& v) const { return 4; }
+    value_type get(const expr_type& v, size_t i) const
+    {
+        return v[i];
+    }
+    size_t size(const expr_type& v) const
+    {
+        return 4;
+    }
 };
 
 } // namespace et

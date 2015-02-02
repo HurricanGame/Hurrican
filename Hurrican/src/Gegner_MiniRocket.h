@@ -5,20 +5,20 @@
 #include "Gegner_Stuff.h"
 
 class GegnerMiniRocket : public GegnerClass
-{	
-	private:
-		float	SmokeDelay;
-		float	FlareSin;
-		float	rot;		
+{
+private:
+    float	SmokeDelay;
+    float	FlareSin;
+    float	rot;
 
-	public :
+public :
 
-	GegnerMiniRocket(int  Wert1, int Wert2,				// Konstruktor
-					 bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-	void DoDraw		   (void);							// Gegner individuell rendern
-														// eigenen kleinen KI bewegen
+    GegnerMiniRocket(int  Wert1, int Wert2,				// Konstruktor
+                     bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    void DoDraw		   (void);							// Gegner individuell rendern
+    // eigenen kleinen KI bewegen
 };
 
 #endif

@@ -1,6 +1,6 @@
 // Datei : CDragonHack.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Klasse für den Drache, der im Hintergrund beim Turmlevel rumfliegt
 //
@@ -30,21 +30,21 @@
 
 class CDragonHack
 {
-	private:			
-		float					m_AppearCount;
-		DirectGraphicsSprite	m_GFX;
-		float					m_xPos, m_yPos;
-		float					m_xSpeed, m_ySpeed;
-		float					m_AnimCount;
+private:
+    float					m_AppearCount;
+    DirectGraphicsSprite	m_GFX;
+    float					m_xPos, m_yPos;
+    float					m_xSpeed, m_ySpeed;
+    float					m_AnimCount;
 
-	public:		
-		int						m_State;
+public:
+    int						m_State;
 
-		 CDragonHack	 (void);						// CutScene initialisieren
-		~CDragonHack	 (void);						// CutScene freigeben
-	
-	void Run			 (void);							// laufen, pardon: "fliegen" lassen
-															// abgebrochen wurde
+    CDragonHack	 (void);						// CutScene initialisieren
+    ~CDragonHack	 (void);						// CutScene freigeben
+
+    void Run			 (void);							// laufen, pardon: "fliegen" lassen
+    // abgebrochen wurde
 }; // CDragonHack
 
 #endif

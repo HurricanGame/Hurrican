@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -24,8 +24,10 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 
 #define MATRIX_TRANSPOSE_RETURNS_TEMP
 
-namespace cml {
-namespace et {
+namespace cml
+{
+namespace et
+{
 
 /** "Transpose" the given matrix expression.
  *
@@ -35,7 +37,7 @@ namespace et {
 template<class ExprT>
 class MatrixTransposeOp
 {
-  public:
+public:
 
     typedef MatrixTransposeOp<ExprT> expr_type;
 
@@ -65,19 +67,21 @@ class MatrixTransposeOp
     typedef cml::et::not_assignable_tag assignable_tag;
 
 
-  public:
+public:
 
     /** Record result size as an enum. */
-    enum {
+    enum
+    {
         array_rows = result_type::array_rows,
         array_cols = result_type::array_cols
     };
 
 
-  public:
+public:
 
     /** Return the expression size as a pair. */
-    matrix_size size() const {
+    matrix_size size() const
+    {
         return matrix_size(this->rows(),this->cols());
     }
 
@@ -86,7 +90,8 @@ class MatrixTransposeOp
      * The tranpose has the same number of rows as the original has
      * columns.
      */
-    size_t rows() const {
+    size_t rows() const
+    {
         return expr_traits().cols(m_expr);
     }
 
@@ -95,24 +100,29 @@ class MatrixTransposeOp
      * The tranpose has the same number of columns as the original has
      * rows.
      */
-    size_t cols() const {
+    size_t cols() const
+    {
         return expr_traits().rows(m_expr);
     }
 
     /** Return reference to contained expression. */
-    expr_reference expression() const { return m_expr; }
+    expr_reference expression() const
+    {
+        return m_expr;
+    }
 
     /** Compute value at index i of the result matrix.
      *
      * Element (i,j) of the transpose is element (j,i) of the original
      * expression.
      */
-    value_type operator()(size_t i, size_t j) const {
+    value_type operator()(size_t i, size_t j) const
+    {
         return expr_traits().get(m_expr,j,i);
     }
 
 
-  public:
+public:
 
     /** Construct from the subexpression to store. */
     explicit MatrixTransposeOp(const ExprT& expr) : m_expr(expr) {}
@@ -121,12 +131,12 @@ class MatrixTransposeOp
     MatrixTransposeOp(const expr_type& e) : m_expr(e.m_expr) {}
 
 
-  protected:
+protected:
 
     expr_reference m_expr;
 
 
-  private:
+private:
 
     /* Cannot be assigned to: */
     expr_type& operator=(const expr_type&);
@@ -145,13 +155,23 @@ struct ExprTraits< MatrixTransposeOp<ExprT> >
     typedef typename expr_type::assignable_tag assignable_tag;
     typedef expr_node_tag node_tag;
 
-    value_type get(const expr_type& m, size_t i, size_t j) const {
+    value_type get(const expr_type& m, size_t i, size_t j) const
+    {
         return m(i,j);
     }
 
-    matrix_size size(const expr_type& e) const { return e.size(); }
-    size_t rows(const expr_type& e) const { return e.rows(); }
-    size_t cols(const expr_type& e) const { return e.cols(); }
+    matrix_size size(const expr_type& e) const
+    {
+        return e.size();
+    }
+    size_t rows(const expr_type& e) const
+    {
+        return e.rows();
+    }
+    size_t cols(const expr_type& e) const
+    {
+        return e.cols();
+    }
 };
 
 } // namespace et
@@ -163,7 +183,7 @@ struct ExprTraits< MatrixTransposeOp<ExprT> >
 /** Matrix transpose operator taking a matrix operand. */
 template<typename E, class AT, typename BO, typename L>
 typename et::MatrixTransposeOp<
-    matrix<E,AT,BO,L>
+matrix<E,AT,BO,L>
 >::temporary_type
 transpose(const matrix<E,AT,BO,L>& expr)
 {
@@ -175,7 +195,7 @@ transpose(const matrix<E,AT,BO,L>& expr)
 
     /* Determine the returned matrix type: */
     typedef typename et::MatrixTransposeOp<
-        matrix_type
+    matrix_type
     >::temporary_type tmp_type;
 
     /* The expression to use to assign the temporary: */
@@ -195,7 +215,7 @@ transpose(const matrix<E,AT,BO,L>& expr)
  */
 template<class XprT>
 typename et::MatrixTransposeOp<
-    XprT
+XprT
 >::temporary_type
 transpose(MATXPR_ARG_TYPE expr)
 {
@@ -221,7 +241,7 @@ transpose(MATXPR_ARG_TYPE expr)
 /** Matrix transpose operator taking a matrix operand. */
 template<typename E, class AT, typename BO, typename L>
 typename et::MatrixTransposeOp<
-    matrix<E,AT,BO,L>
+matrix<E,AT,BO,L>
 >::temporary_type
 T(const matrix<E,AT,BO,L>& expr)
 {
@@ -235,7 +255,7 @@ T(const matrix<E,AT,BO,L>& expr)
  */
 template<class XprT>
 typename et::MatrixTransposeOp<
-    XprT
+XprT
 >::temporary_type
 T(MATXPR_ARG_TYPE expr)
 {

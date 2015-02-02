@@ -6,15 +6,15 @@
 
 class GegnerSchmidtOrgie : public GegnerClass
 {
-	private:
-		float	ActionCounter;
+private:
+    float	ActionCounter;
 
-	public:
+public:
 
-	GegnerSchmidtOrgie (int Wert1,	int Wert2,			// Konstruktor
-							  bool		  Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 														// eigenen kleinen KI bewegen
+    GegnerSchmidtOrgie (int Wert1,	int Wert2,			// Konstruktor
+                        bool		  Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner 														// eigenen kleinen KI bewegen
 };
 
 #endif

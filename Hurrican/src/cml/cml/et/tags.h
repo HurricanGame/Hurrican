@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -13,8 +13,10 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #ifndef et_tags_h
 #define et_tags_h
 
-namespace cml {
-namespace et {
+namespace cml
+{
+namespace et
+{
 
 /** Tag an expression as returning a scalar. */
 struct scalar_result_tag {};

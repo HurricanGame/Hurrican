@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -24,7 +24,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
  * template code.
  */
 
-namespace cml {
+namespace cml
+{
 
 /** A fixed-size temporary 4D vector */
 #define TEMP_VEC4 vector<          \
@@ -53,15 +54,18 @@ namespace cml {
     fixed<2>                       \
 >
 
-namespace detail {
+namespace detail
+{
 
 template < class MatT, class VecT > TEMP_VEC4
-transform_vector_4D(const MatT& m, const VecT& v, row_basis) {
+transform_vector_4D(const MatT& m, const VecT& v, row_basis)
+{
     return v*m;
 }
 
 template < class MatT, class VecT > TEMP_VEC4
-transform_vector_4D(const MatT& m, const VecT& v, col_basis) {
+transform_vector_4D(const MatT& m, const VecT& v, col_basis)
+{
     return m*v;
 }
 
@@ -69,7 +73,8 @@ transform_vector_4D(const MatT& m, const VecT& v, col_basis) {
 
 /** Apply a 4x4 homogeneous transform matrix to a 4D vector */
 template < class MatT, class VecT > TEMP_VEC4
-transform_vector_4D(const MatT& m, const VecT& v) {
+transform_vector_4D(const MatT& m, const VecT& v)
+{
     return detail::transform_vector_4D(m,v,typename MatT::basis_orient());
 }
 
@@ -84,13 +89,13 @@ transform_point(const MatT& m, const VecT& v)
     detail::CheckVec3(v);
 
     return vector_type(
-        m.basis_element(0,0)*v[0]+m.basis_element(1,0)*v[1]+
-            m.basis_element(2,0)*v[2]+m.basis_element(3,0),
-        m.basis_element(0,1)*v[0]+m.basis_element(1,1)*v[1]+
-            m.basis_element(2,1)*v[2]+m.basis_element(3,1),
-        m.basis_element(0,2)*v[0]+m.basis_element(1,2)*v[1]+
-            m.basis_element(2,2)*v[2]+m.basis_element(3,2)
-    );
+               m.basis_element(0,0)*v[0]+m.basis_element(1,0)*v[1]+
+               m.basis_element(2,0)*v[2]+m.basis_element(3,0),
+               m.basis_element(0,1)*v[0]+m.basis_element(1,1)*v[1]+
+               m.basis_element(2,1)*v[2]+m.basis_element(3,1),
+               m.basis_element(0,2)*v[0]+m.basis_element(1,2)*v[1]+
+               m.basis_element(2,2)*v[2]+m.basis_element(3,2)
+           );
 }
 
 /** Apply a 3D affine transform to a 3D vector */
@@ -104,13 +109,13 @@ transform_vector(const MatT& m, const VecT& v)
     detail::CheckVec3(v);
 
     return vector_type(
-        m.basis_element(0,0)*v[0]+m.basis_element(1,0)*v[1]+
-            m.basis_element(2,0)*v[2],
-        m.basis_element(0,1)*v[0]+m.basis_element(1,1)*v[1]+
-            m.basis_element(2,1)*v[2],
-        m.basis_element(0,2)*v[0]+m.basis_element(1,2)*v[1]+
-            m.basis_element(2,2)*v[2]
-    );
+               m.basis_element(0,0)*v[0]+m.basis_element(1,0)*v[1]+
+               m.basis_element(2,0)*v[2],
+               m.basis_element(0,1)*v[0]+m.basis_element(1,1)*v[1]+
+               m.basis_element(2,1)*v[2],
+               m.basis_element(0,2)*v[0]+m.basis_element(1,2)*v[1]+
+               m.basis_element(2,2)*v[2]
+           );
 }
 
 /** Apply a 2D affine transform to a 2D point */
@@ -124,11 +129,11 @@ transform_point_2D(const MatT& m, const VecT& v)
     detail::CheckVec2(v);
 
     return vector_type(
-        m.basis_element(0,0)*v[0]+m.basis_element(1,0)*v[1]+
-            m.basis_element(2,0),
-        m.basis_element(0,1)*v[0]+m.basis_element(1,1)*v[1]+
-            m.basis_element(2,1)
-    );
+               m.basis_element(0,0)*v[0]+m.basis_element(1,0)*v[1]+
+               m.basis_element(2,0),
+               m.basis_element(0,1)*v[0]+m.basis_element(1,1)*v[1]+
+               m.basis_element(2,1)
+           );
 }
 
 /** Apply a 2D affine transform to a 2D vector */
@@ -142,9 +147,9 @@ transform_vector_2D(const MatT& m, const VecT& v)
     detail::CheckVec2(v);
 
     return vector_type(
-        m.basis_element(0,0)*v[0] + m.basis_element(1,0)*v[1],
-        m.basis_element(0,1)*v[0] + m.basis_element(1,1)*v[1]
-    );
+               m.basis_element(0,0)*v[0] + m.basis_element(1,0)*v[1],
+               m.basis_element(0,1)*v[0] + m.basis_element(1,1)*v[1]
+           );
 }
 
 #undef TEMP_VEC4

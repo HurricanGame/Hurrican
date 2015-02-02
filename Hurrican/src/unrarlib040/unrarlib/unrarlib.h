@@ -52,19 +52,19 @@ extern "C"
 #define _DEBUG_LOG                          /* generate debug messages      */
 
 #define _DO_CRC32_CHECK                     /* perform cyclical redundancy  */
-                                            /* check (CRC32) - disable this */
-                                            /* for a little speed-up        */
+/* check (CRC32) - disable this */
+/* for a little speed-up        */
 /*#define _USE_ASM*/                            /*
                                              * enable assembly extensions
                                              * x86 cpus.
                                              */
 
 /*#define _USE_MEMORY_TO_MEMORY_DECOMPRESSION*/ /* read file from memory or a   */
-                                            /* resource instead of reading  */
-                                            /* from a file. NOTE: you wont't*/
-                                            /*  be able to decompress from  */
-                                            /*  file if you enable this     */
-                                            /*  option!                     */
+/* resource instead of reading  */
+/* from a file. NOTE: you wont't*/
+/*  be able to decompress from  */
+/*  file if you enable this     */
+/*  option!                     */
 
 
 #ifdef WIN32                                /* autodetect Win32 and Linux   */
@@ -110,32 +110,34 @@ typedef unsigned long    UDWORD;
 
 /* This structure is used for listing archive content                       */
 struct RAR20_archive_entry                  /* These infos about files are  */
-{                                           /* stored in RAR v2.0 archives  */
-  char   *Name;
-  UWORD  NameSize;
-  UDWORD PackSize;
-  UDWORD UnpSize;
-  UBYTE  HostOS;                            /* MSDOS=0,OS2=1,WIN32=2,UNIX=3 */
-  UDWORD FileCRC;
-  UDWORD FileTime;
-  UBYTE  UnpVer;
-  UBYTE  Method;
-  UDWORD FileAttr;
+{
+    /* stored in RAR v2.0 archives  */
+    char   *Name;
+    UWORD  NameSize;
+    UDWORD PackSize;
+    UDWORD UnpSize;
+    UBYTE  HostOS;                            /* MSDOS=0,OS2=1,WIN32=2,UNIX=3 */
+    UDWORD FileCRC;
+    UDWORD FileTime;
+    UBYTE  UnpVer;
+    UBYTE  Method;
+    UDWORD FileAttr;
 };
 
 typedef struct  archivelist                 /* used to list archives        */
 {
-  struct RAR20_archive_entry item;
-  struct archivelist         *next;
+    struct RAR20_archive_entry item;
+    struct archivelist         *next;
 } ArchiveList_struct;
 
 
 #ifdef _USE_MEMORY_TO_MEMORY_DECOMPRESSION
 typedef struct  memory_file                 /* used to decompress files in  */
-{                                           /* memory                       */
-  void                       *data;         /* pointer to the file data     */
-  unsigned long              size;          /* total size of the file data  */
-  unsigned long              offset;        /* offset within "memory-file"  */
+{
+    /* memory                       */
+    void                       *data;         /* pointer to the file data     */
+    unsigned long              size;          /* total size of the file data  */
+    unsigned long              offset;        /* offset within "memory-file"  */
 } MemoryFile;
 #endif
 

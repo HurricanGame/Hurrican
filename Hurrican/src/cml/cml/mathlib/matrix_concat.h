@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -23,8 +23,10 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
  * matrix_rotation.h. They should be moved here.
  */
 
-namespace cml {
-namespace detail {
+namespace cml
+{
+namespace detail
+{
 
 /** A fixed-size temporary 4x4 matrix */
 #define MAT_TEMP_4X4 matrix<         \
@@ -38,19 +40,22 @@ namespace detail {
 >
 
 template < class MatT_1, class MatT_2 > MAT_TEMP_4X4
-matrix_concat_transforms_4x4(const MatT_1& m1, const MatT_2& m2, row_basis) {
+matrix_concat_transforms_4x4(const MatT_1& m1, const MatT_2& m2, row_basis)
+{
     return m1*m2;
 }
 
 /** Concatenate two 3D col-basis rotation matrices in the order m1->m2 */
 template < class MatT_1, class MatT_2 > MAT_TEMP_4X4
-matrix_concat_transforms_4x4(const MatT_1& m1, const MatT_2& m2, col_basis) {
+matrix_concat_transforms_4x4(const MatT_1& m1, const MatT_2& m2, col_basis)
+{
     return m2*m1;
 }
 
 /** Concatenate two 3D rotation matrices in the order m1->m2 */
 template < class MatT_1, class MatT_2 > MAT_TEMP_4X4
-matrix_concat_transforms_4x4(const MatT_1& m1, const MatT_2& m2) {
+matrix_concat_transforms_4x4(const MatT_1& m1, const MatT_2& m2)
+{
     return matrix_concat_transforms_4x4(m1,m2,typename MatT_1::basis_orient());
 }
 

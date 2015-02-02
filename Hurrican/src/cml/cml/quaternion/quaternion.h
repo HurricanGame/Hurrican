@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -30,7 +30,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
  */
 struct quaternion_requires_fixed_size_array_type_error;
 
-namespace cml {
+namespace cml
+{
 
 /** A configurable quaternion type.
  *
@@ -42,16 +43,16 @@ template<
     class ArrayType,
     class Order,
     class Cross
->
+    >
 class quaternion
 {
     /* The ArrayType must be fixed<> or external<>: */
     CML_STATIC_REQUIRE_M(
-            (same_type< ArrayType, fixed<> >::is_true
-             || same_type< ArrayType, external<> >::is_true),
-            quaternion_requires_fixed_size_array_type_error);
+        (same_type< ArrayType, fixed<> >::is_true
+         || same_type< ArrayType, external<> >::is_true),
+        quaternion_requires_fixed_size_array_type_error);
 
-  public:
+public:
 
     /* Shorthand for the array type generator: */
     typedef ArrayType storage_type;
@@ -79,15 +80,15 @@ class quaternion
 
     /* The quaternion type: */
     typedef quaternion<Element,storage_type,order_type,cross_type>
-        quaternion_type;
+    quaternion_type;
 
     /* For integration into the expression template code: */
     typedef quaternion_type expr_type;
 
     /* For integration into the expression template code: */
     typedef quaternion<
-        Element, typename vector_temporary::storage_type,
-        order_type, cross_type> temporary_type;
+    Element, typename vector_temporary::storage_type,
+             order_type, cross_type> temporary_type;
 
     /* For integration into the expression templates code: */
     typedef quaternion_type& expr_reference;
@@ -109,13 +110,14 @@ class quaternion
     typedef cml::et::assignable_tag assignable_tag;
 
 
-  public:
+public:
 
     /** Record result size as an enum. */
     enum { array_size = 4 };
 
     /** Localize the ordering as an enum. */
-    enum {
+    enum
+    {
         W = order_type::W,
         X = order_type::X,
         Y = order_type::Y,
@@ -123,13 +125,17 @@ class quaternion
     };
 
 
-  public:
+public:
 
     /** Return the scalar part. */
-    value_type real() const { return m_q[W]; }
+    value_type real() const
+    {
+        return m_q[W];
+    }
 
     /** Return the imaginary vector. */
-    imaginary_type imaginary() const {
+    imaginary_type imaginary() const
+    {
         /*
         imaginary_type v;
         v[0] = m_q[X]; v[1] = m_q[Y]; v[2] = m_q[Z];
@@ -139,22 +145,26 @@ class quaternion
     }
 
     /** Return the vector representing the quaternion. */
-    const vector_type& as_vector() const {
+    const vector_type& as_vector() const
+    {
         return m_q;
     }
 
     /** Return the Cayley norm of the quaternion. */
-    value_type norm() const {
+    value_type norm() const
+    {
         return length_squared();
     }
 
     /** Return square of the quaternion length. */
-    value_type length_squared() const {
+    value_type length_squared() const
+    {
         return cml::dot(*this,*this);
     }
 
     /** Return the quaternion length. */
-    value_type length() const {
+    value_type length() const
+    {
         return std::sqrt(length_squared());
     }
 
@@ -162,44 +172,51 @@ class quaternion
      *
      * @todo Make this return a QuaternionXpr.
      */
-    quaternion_type& normalize() {
+    quaternion_type& normalize()
+    {
         return (*this /= length());
     }
 
     /** Set this quaternion to the conjugate. */
-    quaternion_type& conjugate() {
+    quaternion_type& conjugate()
+    {
         return (*this) = cml::conjugate(*this);
     }
 
     /** Set this quaternion to the inverse. */
-    quaternion_type& inverse() {
+    quaternion_type& inverse()
+    {
         return (*this) = cml::inverse(*this);
     }
 
     /** Set this quaternion to the multiplicative identity. */
-    quaternion_type& identity() {
+    quaternion_type& identity()
+    {
         m_q[W] = value_type(1);
         m_q[X] = value_type(0);
         m_q[Y] = value_type(0);
         m_q[Z] = value_type(0);
         return *this;
     }
-    
+
     /** Return the log of this quaternion. */
     temporary_type log(
         value_type tolerance = epsilon<value_type>::placeholder()) const
     {
         value_type a = acos_safe(real());
         value_type s = std::sin(a);
-        
-        if (s > tolerance) {
+
+        if (s > tolerance)
+        {
             return temporary_type(value_type(0), imaginary() * (a / s));
-        } else {
+        }
+        else
+        {
             return temporary_type(value_type(0), imaginary());
         }
     }
-    
-    /** 
+
+    /**
      * Return the result of the exponential function as applied to
      * this quaternion.
      */
@@ -208,32 +225,43 @@ class quaternion
     {
         imaginary_type v = imaginary();
         value_type a = cml::length(v);
-        
-        if (a > tolerance) {
+
+        if (a > tolerance)
+        {
             return temporary_type(std::cos(a), v * (std::sin(a) / a));
-        } else {
+        }
+        else
+        {
             return temporary_type(std::cos(a), v);
         }
     }
 
 
     /** Const access to the quaternion as a vector. */
-    const_reference operator[](size_t i) const { return m_q[i]; }
+    const_reference operator[](size_t i) const
+    {
+        return m_q[i];
+    }
 
     /** Mutable access to the quaternion as a vector. */
-    reference operator[](size_t i) { return m_q[i]; }
+    reference operator[](size_t i)
+    {
+        return m_q[i];
+    }
 
     /** Fill quaternion with random elements.
      *
      * @warning This does not generate uniformly random rotations.
      */
-    void random(value_type min, value_type max) {
-        for (size_t i = 0; i < 4; ++i) {
+    void random(value_type min, value_type max)
+    {
+        for (size_t i = 0; i < 4; ++i)
+        {
             m_q[i] = random_real(min,max);
         }
     }
 
-  public:
+public:
 
     /** Default initializer.
      *
@@ -250,11 +278,12 @@ class quaternion
 
     /** Construct from a quaternion having a different array type. */
     template<typename E, class AT> quaternion(
-            const quaternion<E,AT,order_type,cross_type>& q)
+        const quaternion<E,AT,order_type,cross_type>& q)
         : m_q(q.as_vector()) {}
 
     /** Copy construct from a QuaternionXpr. */
-    template<typename XprT> quaternion(QUATXPR_ARG_TYPE e) {
+    template<typename XprT> quaternion(QUATXPR_ARG_TYPE e)
+    {
         typedef typename XprT::order_type arg_order;
         m_q[W] = e[arg_order::W];
         m_q[X] = e[arg_order::X];
@@ -288,11 +317,11 @@ class quaternion
      * is the real part.
      */
     quaternion(
-            const value_type& a, const value_type& b,
-            const value_type& c, const value_type& d)
+        const value_type& a, const value_type& b,
+        const value_type& c, const value_type& d)
     {
-      /* Call the overloaded assignment function: */
-      assign(a, b, c, d, Order());
+        /* Call the overloaded assignment function: */
+        assign(a, b, c, d, Order());
     }
 
     /** Initialize both the real and imaginary parts.
@@ -301,8 +330,12 @@ class quaternion
      * part is specified first, the proper coefficient order (vector or
      * scalar first) is maintained.
      */
-    quaternion(const value_type& s, const imaginary_type& v) {
-        m_q[W] = s; m_q[X] = v[0]; m_q[Y] = v[1]; m_q[Z] = v[2];
+    quaternion(const value_type& s, const imaginary_type& v)
+    {
+        m_q[W] = s;
+        m_q[X] = v[0];
+        m_q[Y] = v[1];
+        m_q[Z] = v[2];
     }
 
     /** Initialize both the real and imaginary parts.
@@ -311,8 +344,12 @@ class quaternion
      * part is specified second, the proper coefficient order (vector or
      * scalar first) is maintained.
      */
-    quaternion(const imaginary_type& v, const value_type& s) {
-        m_q[W] = s; m_q[X] = v[0]; m_q[Y] = v[1]; m_q[Z] = v[2];
+    quaternion(const imaginary_type& v, const value_type& s)
+    {
+        m_q[W] = s;
+        m_q[X] = v[0];
+        m_q[Y] = v[1];
+        m_q[Z] = v[2];
     }
 
     /** Initialize both the real and imaginary parts.
@@ -321,8 +358,12 @@ class quaternion
      * imaginary part is specified first, the proper coefficient order
      * (vector or scalar first) is maintained.
      */
-    quaternion(const value_type v[3], const value_type& s) {
-        m_q[W] = s; m_q[X] = v[0]; m_q[Y] = v[1]; m_q[Z] = v[2];
+    quaternion(const value_type v[3], const value_type& s)
+    {
+        m_q[W] = s;
+        m_q[X] = v[0];
+        m_q[Y] = v[1];
+        m_q[Z] = v[2];
     }
 
     /** Initialize both the real and imaginary parts.
@@ -331,29 +372,37 @@ class quaternion
      * imaginary part is specified second, the proper coefficient order
      * (vector or scalar first) is maintained.
      */
-    quaternion(const value_type& s, const value_type v[3]) {
-        m_q[W] = s; m_q[X] = v[0]; m_q[Y] = v[1]; m_q[Z] = v[2];
+    quaternion(const value_type& s, const value_type v[3])
+    {
+        m_q[W] = s;
+        m_q[X] = v[0];
+        m_q[Y] = v[1];
+        m_q[Z] = v[2];
     }
 
 
 
     /** Initialize from a VectorXpr. */
     template<typename XprT>
-        quaternion(VECXPR_ARG_TYPE e) : m_q(e) {}
+    quaternion(VECXPR_ARG_TYPE e) : m_q(e) {}
 
     /** Initialize both the real and imaginary parts.
      *
      * The imaginary part is initialized with a VectorXpr.
      */
     template<typename XprT>
-        quaternion(const value_type& s, VECXPR_ARG_TYPE e) {
-            m_q[W] = s; m_q[X] = e[0]; m_q[Y] = e[1]; m_q[Z] = e[2];
-        }
-        
+    quaternion(const value_type& s, VECXPR_ARG_TYPE e)
+    {
+        m_q[W] = s;
+        m_q[X] = e[0];
+        m_q[Y] = e[1];
+        m_q[Z] = e[2];
+    }
+
     // @todo: Are we missing:
-    
+
     // quaternion(VECXPR_ARG_TYPE e, const value_type& s) {}
-    
+
     // Or is that covered elsewhere?
 
     /** In-place op from a quaternion.
@@ -426,7 +475,8 @@ class quaternion
      * header ensures all definitions are available before any possible use
      * of this method.
      */
-    quaternion_type& operator*=(const quaternion_type& q) {
+    quaternion_type& operator*=(const quaternion_type& q)
+    {
         return (*this = *this * q);
     }
 
@@ -441,21 +491,28 @@ class quaternion
      * header ensures all definitions are available before any possible use
      * of this method.
      */
-    template<typename XprT> quaternion_type& operator*=(QUATXPR_ARG_TYPE e) {
+    template<typename XprT> quaternion_type& operator*=(QUATXPR_ARG_TYPE e)
+    {
         return (*this = *this * e);
     }
 
     /** Return access to the data as a raw pointer. */
-    typename vector_type::pointer data() { return m_q.data(); }
+    typename vector_type::pointer data()
+    {
+        return m_q.data();
+    }
 
     /** Return access to the data as a const raw pointer. */
-    const typename vector_type::pointer data() const { return m_q.data(); }
+    const typename vector_type::pointer data() const
+    {
+        return m_q.data();
+    }
 
 
     /* NOTE: Quaternion division no longer supported, but I'm leaving the
        code here for reference (Jesse) */
 
-    #if 0
+#if 0
     /** Accumulated division with a quaternion.
      *
      * Compute p = p * inverse(q).
@@ -471,7 +528,8 @@ class quaternion
      * including the main header ensures all definitions are available
      * before any possible use of this method.
      */
-    quaternion_type& operator/=(const quaternion_type& q) {
+    quaternion_type& operator/=(const quaternion_type& q)
+    {
         return (*this = *this * cml::inverse(q));
     }
 
@@ -490,30 +548,37 @@ class quaternion
      * including the main header ensures all definitions are available
      * before any possible use of this method.
      */
-    template<typename XprT> quaternion_type& operator/=(QUATXPR_ARG_TYPE e) {
+    template<typename XprT> quaternion_type& operator/=(QUATXPR_ARG_TYPE e)
+    {
         return (*this = *this * cml::inverse(e));
     }
-    #endif
+#endif
 
 
-  protected:
+protected:
 
     /** Overloaded function to assign the quaternion from 4 scalars. */
     void assign(const value_type& a, const value_type& b,
-	const value_type& c, const value_type& d, scalar_first)
+                const value_type& c, const value_type& d, scalar_first)
     {
-      m_q[W] = a; m_q[X] = b; m_q[Y] = c; m_q[Z] = d;
+        m_q[W] = a;
+        m_q[X] = b;
+        m_q[Y] = c;
+        m_q[Z] = d;
     }
 
     /** Overloaded function to assign the quaternion from 4 scalars. */
     void assign(const value_type& a, const value_type& b,
-	const value_type& c, const value_type& d, vector_first)
+                const value_type& c, const value_type& d, vector_first)
     {
-      m_q[X] = a; m_q[Y] = b; m_q[Z] = c; m_q[W] = d;
+        m_q[X] = a;
+        m_q[Y] = b;
+        m_q[Z] = c;
+        m_q[W] = d;
     }
 
 
-  protected:
+protected:
 
     vector_type                 m_q;
 };

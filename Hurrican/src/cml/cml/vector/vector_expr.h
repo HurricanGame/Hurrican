@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -29,14 +29,16 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 //#define VECXPR_ARG_TYPE         const et::VectorXpr<XprT>
 //#define VECXPR_ARG_TYPE_N(_N_)  const et::VectorXpr<XprT##_N_>
 
-namespace cml {
-namespace et {
+namespace cml
+{
+namespace et
+{
 
 /** A placeholder for a vector expression in an expression tree. */
 template<class ExprT>
 class VectorXpr
 {
-  public:
+public:
 
     typedef VectorXpr<ExprT> expr_type;
 
@@ -66,47 +68,55 @@ class VectorXpr
     typedef typename result_type::temporary_type temporary_type;
 
 
-  public:
+public:
 
     /** Record result size as an enum. */
     enum { array_size = ExprT::array_size };
 
 
-  public:
+public:
 
     /** Return square of the length. */
-    value_type length_squared() const {
+    value_type length_squared() const
+    {
         return m_expr.length_squared();
     }
 
     /** Return the length. */
-    value_type length() const {
+    value_type length() const
+    {
         return m_expr.length();
     }
 
     /** Return the result as a normalized vector. */
-    result_type normalize() const {
+    result_type normalize() const
+    {
         return m_expr.normalize();
     }
 
     /** Compute value at index i of the result vector. */
-    value_type operator[](size_t i) const {
+    value_type operator[](size_t i) const
+    {
         return m_expr[i];
     }
 
 
-  public:
+public:
 
     /** Return size of this expression (same as subexpression's size). */
-    size_t size() const {
+    size_t size() const
+    {
         return m_expr.size();
     }
 
     /** Return reference to contained expression. */
-    expr_reference expression() const { return m_expr; }
+    expr_reference expression() const
+    {
+        return m_expr;
+    }
 
 
-  public:
+public:
 
     /** Construct from the subexpression to store. */
     explicit VectorXpr(expr_reference expr) : m_expr(expr) {}
@@ -115,12 +125,12 @@ class VectorXpr
     VectorXpr(const expr_type& e) : m_expr(e.m_expr) {}
 
 
-  protected:
+protected:
 
     expr_reference m_expr;
 
 
-  private:
+private:
 
     /* Cannot be assigned to: */
     expr_type& operator=(const expr_type&);
@@ -140,8 +150,14 @@ struct ExprTraits< VectorXpr<ExprT> >
     typedef typename expr_type::assignable_tag assignable_tag;
     typedef expr_node_tag node_tag;
 
-    value_type get(const expr_type& v, size_t i) const { return v[i]; }
-    size_t size(const expr_type& e) const { return e.size(); }
+    value_type get(const expr_type& v, size_t i) const
+    {
+        return v[i];
+    }
+    size_t size(const expr_type& e) const
+    {
+        return e.size();
+    }
 };
 
 
@@ -152,7 +168,7 @@ struct ExprTraits< VectorXpr<ExprT> >
 template<class ExprT, class OpT>
 class UnaryVectorOp
 {
-  public:
+public:
 
     typedef UnaryVectorOp<ExprT,OpT> expr_type;
 
@@ -182,34 +198,38 @@ class UnaryVectorOp
     typedef typename result_type::temporary_type temporary_type;
 
 
-  public:
+public:
 
     /** Record result size as an enum. */
     enum { array_size = ExprT::array_size };
 
 
-  public:
+public:
 
     /** Return square of the length. */
-    value_type length_squared() const {
+    value_type length_squared() const
+    {
         return dot(
-                VectorXpr<expr_type>(*this),
-                VectorXpr<expr_type>(*this));
+                   VectorXpr<expr_type>(*this),
+                   VectorXpr<expr_type>(*this));
     }
 
     /** Return the length. */
-    value_type length() const {
+    value_type length() const
+    {
         return std::sqrt(length_squared());
     }
 
     /** Return the result as a normalized vector. */
-    result_type normalize() const {
+    result_type normalize() const
+    {
         result_type v(VectorXpr<expr_type>(*this));
         return v.normalize();
     }
 
     /** Compute value at index i of the result vector. */
-    value_type operator[](size_t i) const {
+    value_type operator[](size_t i) const
+    {
 
         /* This uses the expression traits to figure out how to access the
          * i'th index of the subexpression:
@@ -218,18 +238,22 @@ class UnaryVectorOp
     }
 
 
-  public:
+public:
 
     /** Return size of this expression (same as argument's size). */
-    size_t size() const {
+    size_t size() const
+    {
         return m_expr.size();
     }
 
     /** Return reference to contained expression. */
-    expr_reference expression() const { return m_expr; }
+    expr_reference expression() const
+    {
+        return m_expr;
+    }
 
 
-  public:
+public:
 
     /** Construct from the subexpression. */
     explicit UnaryVectorOp(expr_reference expr) : m_expr(expr) {}
@@ -238,12 +262,12 @@ class UnaryVectorOp
     UnaryVectorOp(const expr_type& e) : m_expr(e.m_expr) {}
 
 
-  protected:
+protected:
 
     expr_reference m_expr;
 
 
-  private:
+private:
 
     /* Cannot be assigned to: */
     expr_type& operator=(const expr_type&);
@@ -264,8 +288,14 @@ struct ExprTraits< UnaryVectorOp<ExprT,OpT> >
     typedef typename expr_type::assignable_tag assignable_tag;
     typedef expr_node_tag node_tag;
 
-    value_type get(const expr_type& v, size_t i) const { return v[i]; }
-    size_t size(const expr_type& e) const { return e.size(); }
+    value_type get(const expr_type& v, size_t i) const
+    {
+        return v[i];
+    }
+    size_t size(const expr_type& e) const
+    {
+        return e.size();
+    }
 };
 
 
@@ -276,7 +306,7 @@ struct ExprTraits< UnaryVectorOp<ExprT,OpT> >
 template<class LeftT, class RightT, class OpT>
 class BinaryVectorOp
 {
-  public:
+public:
 
     typedef BinaryVectorOp<LeftT,RightT,OpT> expr_type;
 
@@ -313,52 +343,57 @@ class BinaryVectorOp
     typedef GetCheckedSize<LeftT,RightT,size_tag> checked_size;
 
 
-  public:
+public:
 
     /** Record result size as an enum (if applicable). */
     enum { array_size = result_type::array_size };
 
 
-  public:
+public:
 
     /** Return square of the length. */
-    value_type length_squared() const {
+    value_type length_squared() const
+    {
         return dot(
-                VectorXpr<expr_type>(*this),
-                VectorXpr<expr_type>(*this));
+                   VectorXpr<expr_type>(*this),
+                   VectorXpr<expr_type>(*this));
     }
 
     /** Return the length. */
-    value_type length() const {
+    value_type length() const
+    {
         return std::sqrt(length_squared());
     }
 
     /** Return the result as a normalized vector. */
-    result_type normalize() const {
+    result_type normalize() const
+    {
         result_type v(VectorXpr<expr_type>(*this));
         return v.normalize();
     }
 
     /** Compute value at index i of the result vector. */
-    value_type operator[](size_t i) const {
+    value_type operator[](size_t i) const
+    {
 
         /* This uses the expression traits to figure out how to access the
          * i'th index of the two subexpressions:
          */
         return OpT().apply(
-                left_traits().get(m_left,i),
-                right_traits().get(m_right,i));
+                   left_traits().get(m_left,i),
+                   right_traits().get(m_right,i));
     }
 
 
-  public:
+public:
 
     /** Return the size of the vector result.
      *
      * @throws std::invalid_argument if the expressions do not have the same
      * size.
      */
-    size_t size() const {
+    size_t size() const
+    {
         /* Note: This actually does a check only if
          * CML_CHECK_VECTOR_EXPR_SIZES is set:
          */
@@ -366,13 +401,19 @@ class BinaryVectorOp
     }
 
     /** Return reference to left expression. */
-    left_reference left_expression() const { return m_left; }
+    left_reference left_expression() const
+    {
+        return m_left;
+    }
 
     /** Return reference to right expression. */
-    right_reference right_expression() const { return m_right; }
+    right_reference right_expression() const
+    {
+        return m_right;
+    }
 
 
-  public:
+public:
 
     /** Construct from the two subexpressions. */
     explicit BinaryVectorOp(left_reference left, right_reference right)
@@ -383,19 +424,19 @@ class BinaryVectorOp
         : m_left(e.m_left), m_right(e.m_right) {}
 
 
-  protected:
+protected:
 
     left_reference m_left;
     right_reference m_right;
 
 
-  private:
+private:
 
     /* This ensures that a compile-time size check is executed: */
     typename checked_size::check_type _dummy;
 
 
-  private:
+private:
 
     /* Cannot be assigned to: */
     expr_type& operator=(const expr_type&);
@@ -417,8 +458,14 @@ struct ExprTraits< BinaryVectorOp<LeftT,RightT,OpT> >
     typedef typename expr_type::assignable_tag assignable_tag;
     typedef expr_node_tag node_tag;
 
-    value_type get(const expr_type& v, size_t i) const { return v[i]; }
-    size_t size(const expr_type& e) const { return e.size(); }
+    value_type get(const expr_type& v, size_t i) const
+    {
+        return v[i];
+    }
+    size_t size(const expr_type& e) const
+    {
+        return e.size();
+    }
 };
 
 /* Helper struct to verify that both arguments are vector expressions: */
@@ -429,21 +476,25 @@ struct VectorExpressions
     typedef typename LeftTraits::result_tag left_result;
     typedef typename RightTraits::result_tag right_result;
     enum { is_true = (same_type<left_result,et::vector_result_tag>::is_true
-            && same_type<right_result,et::vector_result_tag>::is_true) };
+                      && same_type<right_result,et::vector_result_tag>::is_true)
+         };
 };
 
-namespace detail {
+namespace detail
+{
 
 template<typename VecT, typename RT, typename MT> inline
 void Resize(VecT&,size_t,RT,MT) {}
 
 template<typename VecT> inline
-void Resize(VecT& v, size_t S, resizable_tag, dynamic_memory_tag) {
+void Resize(VecT& v, size_t S, resizable_tag, dynamic_memory_tag)
+{
     v.resize(S);
 }
 
 template<typename VecT> inline
-void Resize(VecT& v, size_t S) {
+void Resize(VecT& v, size_t S)
+{
     Resize(v, S, typename VecT::resizing_tag(), typename VecT::memory_tag());
 }
 

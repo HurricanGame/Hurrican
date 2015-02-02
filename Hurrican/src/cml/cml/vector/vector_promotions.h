@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -21,8 +21,10 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #include <cml/et/scalar_promotions.h>
 #include <cml/et/array_promotions.h>
 
-namespace cml {
-namespace et {
+namespace cml
+{
+namespace et
+{
 
 /* Default vector type promotion template. */
 template<class LeftT, class RightT> struct VectorPromote;
@@ -32,15 +34,15 @@ template<typename E1, class AT1, typename E2, class AT2>
 struct VectorPromote< cml::vector<E1,AT1>, cml::vector<E2,AT2> >
 {
     typedef typename ArrayPromote<
-        typename cml::vector<E1,AT1>::array_type,
-        typename cml::vector<E2,AT2>::array_type
-    >::type promoted_array;
+    typename cml::vector<E1,AT1>::array_type,
+             typename cml::vector<E2,AT2>::array_type
+             >::type promoted_array;
 
     /* The deduced vector result type: */
     typedef cml::vector<
-        typename promoted_array::value_type,
-        typename promoted_array::generator_type
-    > type;
+    typename promoted_array::value_type,
+             typename promoted_array::generator_type
+             > type;
 
     /* The deduced temporary type: */
     typedef typename type::temporary_type temporary_type;

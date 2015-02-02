@@ -6,18 +6,18 @@
 
 class GegnerColumn2 : public GegnerClass
 {
-	private:
-		float	FallSpeed;
-		float	FallValue;
+private:
+    float	FallSpeed;
+    float	FallValue;
 
-	public:
+public:
 
-	GegnerColumn2  (int Wert1,	int Wert2,		// Konstruktor
-						bool Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
-	void DoDraw		   (void);
+    GegnerColumn2  (int Wert1,	int Wert2,		// Konstruktor
+                    bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
+    void DoDraw		   (void);
 };
 
 #endif

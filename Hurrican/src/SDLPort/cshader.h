@@ -38,12 +38,14 @@ using namespace std;
 
 #define CHECK_FLAG(X,Y) ((X & Y) == Y)
 
-enum {
+enum
+{
     SHADER  =0x01,
     PROGRAM =0x02
 };
 
-typedef struct SHADER_T {
+typedef struct SHADER_T
+{
     string  path;
     GLenum  type;
     GLuint  name;
@@ -57,37 +59,37 @@ typedef struct SHADER_T {
 
 class CShader
 {
-    public:
-        CShader();
-        virtual ~CShader();
+public:
+    CShader();
+    virtual ~CShader();
 
-        void        Close           ( void );
-        int8_t      Load            ( const string& path_vertex, const string& path_frag );
-        void        Use             ( void );
-        GLint       GetAttribute    ( const string& attribute );
-        GLint       GetUniform      ( const string& attribute );
+    void        Close           ( void );
+    int8_t      Load            ( const string& path_vertex, const string& path_frag );
+    void        Use             ( void );
+    GLint       GetAttribute    ( const string& attribute );
+    GLint       GetUniform      ( const string& attribute );
 
-        GLuint      NamePos;
-        GLuint      NameClr;
-        GLuint      NameTex;
-        GLuint      NameMvp;
+    GLuint      NamePos;
+    GLuint      NameClr;
+    GLuint      NameTex;
+    GLuint      NameMvp;
 #if defined(USE_ETC1)
-        GLuint      texUnit0;
-        GLuint      texUnit1;
+    GLuint      texUnit0;
+    GLuint      texUnit1;
 #endif
 
-    private:
-        int8_t      LoadShader      ( GLenum type, const string& path );
-        int8_t      CreateProgram   ( void );
-        GLuint      CompileShader   ( GLenum type, const string& path );
-        void        FindAttributes  ( void );
-        void        FindUniforms    ( void );
-        void        PrintLog        ( uint8_t type, GLuint shader=0 );
+private:
+    int8_t      LoadShader      ( GLenum type, const string& path );
+    int8_t      CreateProgram   ( void );
+    GLuint      CompileShader   ( GLenum type, const string& path );
+    void        FindAttributes  ( void );
+    void        FindUniforms    ( void );
+    void        PrintLog        ( uint8_t type, GLuint shader=0 );
 
-        GLuint                          Program;
-        vector<shader_t>                Shaders;
-        vector< pair<string, GLint> >   Uniforms;
-        vector< pair<string, GLint> >   Attributes;
+    GLuint                          Program;
+    vector<shader_t>                Shaders;
+    vector< pair<string, GLint> >   Uniforms;
+    vector< pair<string, GLint> >   Attributes;
 };
 
 extern cml::matrix44f_r g_matView;

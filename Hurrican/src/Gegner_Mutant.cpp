@@ -14,37 +14,37 @@
 
 GegnerMutant::GegnerMutant(int Wert1, int Wert2, bool Light)
 {
-	Handlung		= GEGNER_STEHEN;
-	HitSound		= 1;
-	Value1			= Wert1;
-	Value2			= Wert2;
-	ChangeLight		= Light;
-	Destroyable		= true;
-	Energy			= 100;
-	TestBlock		= true;
-	JumpDelay		= 0;
+    Handlung		= GEGNER_STEHEN;
+    HitSound		= 1;
+    Value1			= Wert1;
+    Value2			= Wert2;
+    ChangeLight		= Light;
+    Destroyable		= true;
+    Energy			= 100;
+    TestBlock		= true;
+    JumpDelay		= 0;
 
-	if (Value1 == 0)
-	{
-		Handlung = GEGNER_LAUFEN;
-		AnimSpeed		= 0.8f;
-		AnimStart = 4;
-		AnimPhase = 4;
-		AnimEnde = 17;
-	}
-	else
-	{
-		Handlung = GEGNER_EINFLIEGEN;
-		AnimSpeed = 3.0f;
-		AnimStart = 1;
-		AnimPhase = 1;
-		AnimEnde = 99;
-		
-		ySpeed = 2.0f;
-		yAcc   = 3.0f;
-	}
+    if (Value1 == 0)
+    {
+        Handlung = GEGNER_LAUFEN;
+        AnimSpeed		= 0.8f;
+        AnimStart = 4;
+        AnimPhase = 4;
+        AnimEnde = 17;
+    }
+    else
+    {
+        Handlung = GEGNER_EINFLIEGEN;
+        AnimSpeed = 3.0f;
+        AnimStart = 1;
+        AnimPhase = 1;
+        AnimEnde = 99;
 
-	zRot = 0.0f;
+        ySpeed = 2.0f;
+        yAcc   = 3.0f;
+    }
+
+    zRot = 0.0f;
 }
 
 // --------------------------------------------------------------------------------------
@@ -53,114 +53,117 @@ GegnerMutant::GegnerMutant(int Wert1, int Wert2, bool Light)
 
 void GegnerMutant::DoKI(void)
 {
-	switch (Handlung)
-	{
-		case GEGNER_LAUFEN:
-		{
-			if (PlayerAbstandHoriz() > 20)
-			{
-				SimpleAnimation();
-			
-				// in Richtung Spieler kriechen
-				if (xPos + 50 < pAim->xpos + 35)
-					BlickRichtung = RECHTS;
-				else
-					BlickRichtung = LINKS;
+    switch (Handlung)
+    {
+    case GEGNER_LAUFEN:
+    {
+        if (PlayerAbstandHoriz() > 20)
+        {
+            SimpleAnimation();
 
-				xSpeed = 5.0f * BlickRichtung;
-			}
-			else
-			{
-				xSpeed = 0.0f;
-				AnimPhase = 3;				
-			}
+            // in Richtung Spieler kriechen
+            if (xPos + 50 < pAim->xpos + 35)
+                BlickRichtung = RECHTS;
+            else
+                BlickRichtung = LINKS;
 
-			// Runterfallen
-			if (!(blocku & BLOCKWERT_WAND) &&
-				!(blocku & BLOCKWERT_PLATTFORM))
-			{
-				yAcc = 5.0f;
-			}
-			else
-			{				
-				ySpeed = 0.0f;
-				yAcc = 0.0f;				
+            xSpeed = 5.0f * BlickRichtung;
+        }
+        else
+        {
+            xSpeed = 0.0f;
+            AnimPhase = 3;
+        }
 
-				if (PlayerAbstand() < 400.0f)
-					JumpDelay -= 1.0f SYNC;
+        // Runterfallen
+        if (!(blocku & BLOCKWERT_WAND) &&
+                !(blocku & BLOCKWERT_PLATTFORM))
+        {
+            yAcc = 5.0f;
+        }
+        else
+        {
+            ySpeed = 0.0f;
+            yAcc = 0.0f;
 
-				if (JumpDelay <= 0.0f)
-				{
-					Handlung = GEGNER_SPRINGEN;
-					xSpeed = 15.0f * BlickRichtung;
-					AnimStart = 18;
-					AnimPhase = 18;
-					AnimEnde = 26;
-					AnimSpeed = 1.5f;
-					JumpDelay = 8.0f + rand()%5;
-					ySpeed = -30.0f;
-					yAcc = 6.0f;
+            if (PlayerAbstand() < 400.0f)
+                JumpDelay -= 1.0f SYNC;
 
-					pSoundManager->PlayWave(10, 128, 12000 + rand()%2000, SOUND_MUTANT);
-				}
-			}
+            if (JumpDelay <= 0.0f)
+            {
+                Handlung = GEGNER_SPRINGEN;
+                xSpeed = 15.0f * BlickRichtung;
+                AnimStart = 18;
+                AnimPhase = 18;
+                AnimEnde = 26;
+                AnimSpeed = 1.5f;
+                JumpDelay = 8.0f + rand()%5;
+                ySpeed = -30.0f;
+                yAcc = 6.0f;
 
-		} break;
+                pSoundManager->PlayWave(10, 128, 12000 + rand()%2000, SOUND_MUTANT);
+            }
+        }
 
-		case GEGNER_SPRINGEN:
-		{			
-			if (AnimPhase < 24)
-				SimpleAnimation();
-			else
-			{
-				AnimPhase = 24;
-				yAcc = 15.0f;
-			}
+    }
+    break;
 
-			// wieder laufen?
-			if (ySpeed > 0.0f &&
-				(blocku & BLOCKWERT_WAND ||
-				 blocku & BLOCKWERT_PLATTFORM))
-			{
-				Handlung = GEGNER_LAUFEN;
-				AnimSpeed = 0.8f;
-				AnimStart = 4;
-				AnimPhase = 4;
-				AnimEnde = 17;
-			}
-		} break;
+    case GEGNER_SPRINGEN:
+    {
+        if (AnimPhase < 24)
+            SimpleAnimation();
+        else
+        {
+            AnimPhase = 24;
+            yAcc = 15.0f;
+        }
 
-		case GEGNER_EINFLIEGEN:
-		{
-			SimpleAnimation();
+        // wieder laufen?
+        if (ySpeed > 0.0f &&
+                (blocku & BLOCKWERT_WAND ||
+                 blocku & BLOCKWERT_PLATTFORM))
+        {
+            Handlung = GEGNER_LAUFEN;
+            AnimSpeed = 0.8f;
+            AnimStart = 4;
+            AnimPhase = 4;
+            AnimEnde = 17;
+        }
+    }
+    break;
 
-			// Am Boden kurz warten
-			if (AnimPhase > 2)
-				AnimSpeed = 4.0f;
+    case GEGNER_EINFLIEGEN:
+    {
+        SimpleAnimation();
 
-			// Aufgekommen?
-			if (blocku & BLOCKWERT_WAND && 
-				ySpeed > 0.0f)
-			{		
-				pSoundManager->PlayWave(100, 128, 11025, SOUND_SCHLEIM);
-				ySpeed = 0.0f;
-				yAcc = 0.0f;
-			}
+        // Am Boden kurz warten
+        if (AnimPhase > 2)
+            AnimSpeed = 4.0f;
 
-			// Jetzt loskrabbeln
-			if (AnimPhase > 3)
-			{
-				Handlung = GEGNER_LAUFEN;
-				AnimSpeed = 0.8f;
-				AnimStart = 4;
-				AnimPhase = 4;
-				AnimEnde = 17;
-			}
-		} break;
-	}
+        // Aufgekommen?
+        if (blocku & BLOCKWERT_WAND &&
+                ySpeed > 0.0f)
+        {
+            pSoundManager->PlayWave(100, 128, 11025, SOUND_SCHLEIM);
+            ySpeed = 0.0f;
+            yAcc = 0.0f;
+        }
 
-	if (Handlung != GEGNER_EINFLIEGEN)
-		TestDamagePlayers(6.0f SYNC);
+        // Jetzt loskrabbeln
+        if (AnimPhase > 3)
+        {
+            Handlung = GEGNER_LAUFEN;
+            AnimSpeed = 0.8f;
+            AnimStart = 4;
+            AnimPhase = 4;
+            AnimEnde = 17;
+        }
+    }
+    break;
+    }
+
+    if (Handlung != GEGNER_EINFLIEGEN)
+        TestDamagePlayers(6.0f SYNC);
 }
 
 // --------------------------------------------------------------------------------------
@@ -169,17 +172,17 @@ void GegnerMutant::DoKI(void)
 
 void GegnerMutant::GegnerExplode(void)
 {
-	for (int i = 0; i < 10; i++)
-		pPartikelSystem->PushPartikel(xPos + rand()%60 - 10, yPos + rand()%60, EXPLOSION_GREEN);
+    for (int i = 0; i < 10; i++)
+        pPartikelSystem->PushPartikel(xPos + rand()%60 - 10, yPos + rand()%60, EXPLOSION_GREEN);
 
-	for (int i = 0; i < 10; i++)
-		pPartikelSystem->PushPartikel(xPos + rand()%60 + 15, yPos + 10 + rand()%60, SPIDERSPLITTER);
+    for (int i = 0; i < 10; i++)
+        pPartikelSystem->PushPartikel(xPos + rand()%60 + 15, yPos + 10 + rand()%60, SPIDERSPLITTER);
 
-	for (int i = 0; i < 15; i++)
-		pPartikelSystem->PushPartikel(xPos + rand()%60 + 15, yPos + 10 + rand()%60, SCHLEIM);
+    for (int i = 0; i < 15; i++)
+        pPartikelSystem->PushPartikel(xPos + rand()%60 + 15, yPos + 10 + rand()%60, SCHLEIM);
 
-	pSoundManager->PlayWave(75, 128, 8000 + rand()%4000, SOUND_MUTANT);
-	pSoundManager->PlayWave(40, 128, 11025, SOUND_EXPLOSION4);
-	pSoundManager->PlayWave(40, 128, 6000 + rand()%4000, SOUND_SCHLEIM);
-	pPlayer[0]->Score += 500;
+    pSoundManager->PlayWave(75, 128, 8000 + rand()%4000, SOUND_MUTANT);
+    pSoundManager->PlayWave(40, 128, 11025, SOUND_EXPLOSION4);
+    pSoundManager->PlayWave(40, 128, 6000 + rand()%4000, SOUND_SCHLEIM);
+    pPlayer[0]->Score += 500;
 }

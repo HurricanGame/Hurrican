@@ -6,17 +6,17 @@
 
 class GegnerFahrstuhl : public GegnerClass
 {
-	private:
-		float			new_ySpeed;
+private:
+    float			new_ySpeed;
 
-	public:
+public:
 
-	GegnerFahrstuhl   (int Wert1,	int Wert2,			// Konstruktor
-						bool		  Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
-	void DoDraw			(void);
+    GegnerFahrstuhl   (int Wert1,	int Wert2,			// Konstruktor
+                       bool		  Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
+    void DoDraw			(void);
 };
 
 #endif

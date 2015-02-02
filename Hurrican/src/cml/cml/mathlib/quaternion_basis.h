@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -17,7 +17,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 
 /* Functions for getting the basis vectors of a quaternion rotation. */
 
-namespace cml {
+namespace cml
+{
 
 /** Get the i'th basis vector of a quaternion rotation */
 template < class QuatT > vector< typename QuatT::value_type, fixed<3> >
@@ -34,16 +35,16 @@ quaternion_get_basis_vector(const QuatT& q, size_t i)
 
     size_t j, k;
     cyclic_permutation(i, i, j, k);
-    
+
     /* @todo: Clean this up. */
     const size_t W = order_type::W;
     const size_t I = order_type::X + i;
     const size_t J = order_type::X + j;
     const size_t K = order_type::X + k;
-    
+
     value_type j2 = q[J] + q[J];
     value_type k2 = q[K] + q[K];
-    
+
     /* @todo: use set_permuted() for the following when available. */
 
     vector_type result;
@@ -55,19 +56,22 @@ quaternion_get_basis_vector(const QuatT& q, size_t i)
 
 /** Get the x basis vector of a quaternion rotation */
 template < class QuatT > vector< typename QuatT::value_type, fixed<3> >
-quaternion_get_x_basis_vector(const QuatT& q) {
+quaternion_get_x_basis_vector(const QuatT& q)
+{
     return quaternion_get_basis_vector(q,0);
 }
 
 /** Get the y basis vector of a quaternion rotation */
 template < class QuatT > vector< typename QuatT::value_type, fixed<3> >
-quaternion_get_y_basis_vector(const QuatT& q) {
+quaternion_get_y_basis_vector(const QuatT& q)
+{
     return quaternion_get_basis_vector(q,1);
 }
 
 /** Get the z basis vector of a quaternion rotation */
 template < class QuatT > vector< typename QuatT::value_type, fixed<3> >
-quaternion_get_z_basis_vector(const QuatT& q) {
+quaternion_get_z_basis_vector(const QuatT& q)
+{
     return quaternion_get_basis_vector(q,2);
 }
 

@@ -1,6 +1,6 @@
 // Datei : lightmap.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Lightmaps für das Hurrican Level
 //
@@ -23,17 +23,17 @@
 // --------------------------------------------------------------------------------------
 
 class CLightMap
-{	
+{
 
-	public:
+public:
 
-		int			xsize, ysize;
-		D3DCOLOR*	map;
+    int			xsize, ysize;
+    D3DCOLOR*	map;
 
-			 CLightMap(void);
-			~CLightMap(void);
-	
-	void	  Load(const char *filename);
+    CLightMap(void);
+    ~CLightMap(void);
+
+    void	  Load(const char *filename);
 };
 
 #endif

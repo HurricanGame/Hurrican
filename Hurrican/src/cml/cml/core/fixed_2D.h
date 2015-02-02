@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -26,7 +26,8 @@ struct invalid_layout_type_error;
  */
 struct negative_array_size_error;
 
-namespace cml {
+namespace cml
+{
 
 /** The internal statically-allocated 2D-array implementation class.
  *
@@ -60,18 +61,18 @@ namespace cml {
 template<typename Element, int Rows, int Cols, typename Layout>
 class fixed_2D
 {
-  public:
+public:
 
     /* Require Rows > 0, Cols > 0: */
     CML_STATIC_REQUIRE_M(
-            (Rows > 0) && (Cols > 0),
-            negative_array_size_error);
+        (Rows > 0) && (Cols > 0),
+        negative_array_size_error);
 
     /* Require Layout to be row_major or col_major: */
     CML_STATIC_REQUIRE_M(
-            (same_type<Layout,row_major>::is_true
-             || same_type<Layout,col_major>::is_true),
-            invalid_layout_type_error);
+        (same_type<Layout,row_major>::is_true
+         || same_type<Layout,col_major>::is_true),
+        invalid_layout_type_error);
 
 
     /* Record the generator: */
@@ -108,21 +109,27 @@ class fixed_2D
     typedef fixed_1D<Element,Cols> col_array_type;
 
 
-  public:
+public:
 
     enum { array_rows = Rows, array_cols = Cols };
 
 
-  public:
+public:
 
     /** Return the number of rows in the array. */
-    size_t rows() const { return size_t(array_rows); }
+    size_t rows() const
+    {
+        return size_t(array_rows);
+    }
 
     /** Return the number of cols in the array. */
-    size_t cols() const { return size_t(array_cols); }
+    size_t cols() const
+    {
+        return size_t(array_cols);
+    }
 
 
-  public:
+public:
 
     /** Access element (row,col) of the matrix.
      *
@@ -132,7 +139,8 @@ class fixed_2D
      *
      * @note This function does not range-check the arguments.
      */
-    reference operator()(size_t row, size_t col) {
+    reference operator()(size_t row, size_t col)
+    {
         /* Dispatch to the right function based on layout: */
         return get_element(row,col,layout());
     }
@@ -145,43 +153,54 @@ class fixed_2D
      *
      * @note This function does not range-check the arguments.
      */
-    const_reference operator()(size_t row, size_t col) const {
+    const_reference operator()(size_t row, size_t col) const
+    {
         /* Dispatch to the right function based on layout: */
         return get_element(row,col,layout());
     }
 
     /** Return access to the data as a raw pointer. */
-    pointer data() { return &m_data[0][0]; }
+    pointer data()
+    {
+        return &m_data[0][0];
+    }
 
     /** Return access to the data as a raw pointer. */
-    const_pointer data() const { return &m_data[0][0]; }
+    const_pointer data() const
+    {
+        return &m_data[0][0];
+    }
 
 
-  public:
+public:
 
     fixed_2D() {}
 
 
-  protected:
+protected:
 
-    reference get_element(size_t row, size_t col, row_major) {
+    reference get_element(size_t row, size_t col, row_major)
+    {
         return m_data[row][col];
     }
 
-    const_reference get_element(size_t row, size_t col, row_major) const {
+    const_reference get_element(size_t row, size_t col, row_major) const
+    {
         return m_data[row][col];
     }
 
-    reference get_element(size_t row, size_t col, col_major) {
+    reference get_element(size_t row, size_t col, col_major)
+    {
         return m_data[col][row];
     }
 
-    const_reference get_element(size_t row, size_t col, col_major) const {
+    const_reference get_element(size_t row, size_t col, col_major) const
+    {
         return m_data[col][row];
     }
 
 
-  protected:
+protected:
 
     /* Typedef the possible layouts: */
     typedef Element row_major_array[Rows][Cols];
@@ -189,9 +208,9 @@ class fixed_2D
 
     /* Now, select the right layout for the current matrix: */
     typedef typename select_switch<
-        Layout, row_major, row_major_array,     /* Case 1 */
-                col_major, col_major_array      /* Case 2 */
-        >::result array_data;
+    Layout, row_major, row_major_array,     /* Case 1 */
+            col_major, col_major_array      /* Case 2 */
+            >::result array_data;
 
     /* Declare the data array: */
     array_data                  m_data;

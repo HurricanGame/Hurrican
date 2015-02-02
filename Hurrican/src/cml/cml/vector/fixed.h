@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -20,14 +20,15 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #include <cml/vector/external.h>
 #include <cml/util.h>
 
-namespace cml {
+namespace cml
+{
 
 /** Fixed-size, fixed-memory vector. */
 template<typename Element, int Size>
 class vector< Element, fixed<Size> >
-: public fixed_1D<Element,Size>
+    : public fixed_1D<Element,Size>
 {
-  public:
+public:
 
     /* Shorthand for the generator: */
     typedef fixed<> storage_type;
@@ -71,38 +72,43 @@ class vector< Element, fixed<Size> >
     typedef cml::et::assignable_tag assignable_tag;
 
 
-  public:
+public:
 
     /** Static constant containing the vector's space dimension. */
     enum { dimension = Size };
 
 
-  public:
+public:
 
     /** Return square of the length. */
-    value_type length_squared() const {
+    value_type length_squared() const
+    {
         return cml::dot(*this,*this);
     }
 
     /** Return the length. */
-    value_type length() const {
+    value_type length() const
+    {
         return std::sqrt(length_squared());
     }
 
     /** Normalize the vector. */
-    vector_type& normalize() {
+    vector_type& normalize()
+    {
         return (*this /= length());
     }
 
     /** Set this vector to [0]. */
-    vector_type& zero() {
+    vector_type& zero()
+    {
         typedef cml::et::OpAssign<Element,Element> OpT;
         cml::et::UnrollAssignment<OpT>(*this,Element(0));
         return *this;
     }
 
     /** Set this vector to a cardinal vector. */
-    vector_type& cardinal(size_t i) {
+    vector_type& cardinal(size_t i)
+    {
         zero();
         (*this)[i] = Element(1);
         return *this;
@@ -110,25 +116,31 @@ class vector< Element, fixed<Size> >
 
     /** Pairwise minimum of this vector with another. */
     template<typename E, class AT>
-    void minimize(const vector<E,AT>& v) {
-      /* XXX This should probably use ScalarPromote: */
-      for (size_t i = 0; i < this->size(); ++i) {
-        (*this)[i] = std::min((*this)[i],v[i]);
-      }
+    void minimize(const vector<E,AT>& v)
+    {
+        /* XXX This should probably use ScalarPromote: */
+        for (size_t i = 0; i < this->size(); ++i)
+        {
+            (*this)[i] = std::min((*this)[i],v[i]);
+        }
     }
 
     /** Pairwise maximum of this vector with another. */
     template<typename E, class AT>
-    void maximize(const vector<E,AT>& v) {
-      /* XXX This should probably use ScalarPromote: */
-      for (size_t i = 0; i < this->size(); ++i) {
-        (*this)[i] = std::max((*this)[i],v[i]);
-      }
+    void maximize(const vector<E,AT>& v)
+    {
+        /* XXX This should probably use ScalarPromote: */
+        for (size_t i = 0; i < this->size(); ++i)
+        {
+            (*this)[i] = std::max((*this)[i],v[i]);
+        }
     }
 
     /** Fill vector with random elements. */
-    void random(value_type min, value_type max) {
-        for (size_t i = 0; i < this->size(); ++i) {
+    void random(value_type min, value_type max)
+    {
+        for (size_t i = 0; i < this->size(); ++i)
+        {
             (*this)[i] = cml::random_real(min,max);
         }
     }
@@ -137,7 +149,8 @@ class vector< Element, fixed<Size> >
      *
      * @internal This is horribly inefficient...
      */
-    subvector_type subvector(size_t i) const {
+    subvector_type subvector(size_t i) const
+    {
         subvector_type s;
         for(size_t m = 0, n = 0; m < this->size(); ++ m)
             if(m != i) s[n++] = (*this)[m];
@@ -145,12 +158,12 @@ class vector< Element, fixed<Size> >
     };
 
 
-  public:
+public:
 
     vector() : array_type() {}
 
 
-  public:
+public:
 
     /* Define common class operators: */
 

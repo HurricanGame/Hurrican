@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -16,8 +16,10 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #include <cml/quaternion/quaternion_expr.h>
 #include <cml/quaternion/quaternion_functions.h>
 
-namespace cml {
-namespace et {
+namespace cml
+{
+namespace et
+{
 
 /** An expression node for inverting a quaternion.
  *
@@ -28,7 +30,7 @@ namespace et {
 template<class ExprT>
 class QuaternionInverseOp
 {
-  public:
+public:
 
     typedef QuaternionInverseOp<ExprT> expr_type;
 
@@ -72,13 +74,14 @@ class QuaternionInverseOp
     typedef typename result_type::order_type order_type;
 
 
-  public:
+public:
 
     /** Record result size as an enum. */
     enum { array_size = ExprT::array_size };
 
     /** Localize the ordering as an enum. */
-    enum {
+    enum
+    {
         W = order_type::W,
         X = order_type::X,
         Y = order_type::Y,
@@ -86,10 +89,11 @@ class QuaternionInverseOp
     };
 
 
-  public:
+public:
 
     /** Return the real part of the expression. */
-    value_type real() const {
+    value_type real() const
+    {
         return m_expr.real()/m_norm;
     }
 
@@ -97,29 +101,34 @@ class QuaternionInverseOp
      *
      * @todo This could be returned as a VectorXpr also.
      */
-    imaginary_type imaginary() const {
+    imaginary_type imaginary() const
+    {
         return m_expr.imaginary()/m_norm;
     }
 
     /** Return the Cayley norm of the expression. */
-    value_type norm() const {
+    value_type norm() const
+    {
         return length_squared();
     }
 
     /** Return square of the quaternion length. */
-    value_type length_squared() const {
+    value_type length_squared() const
+    {
         return dot(
-                QuaternionXpr<expr_type>(*this),
-                QuaternionXpr<expr_type>(*this));
+                   QuaternionXpr<expr_type>(*this),
+                   QuaternionXpr<expr_type>(*this));
     }
 
     /** Return the quaternion length. */
-    value_type length() const {
+    value_type length() const
+    {
         return std::sqrt(length_squared());
     }
 
     /** Return the result as a normalized quaternion. */
-    temporary_type normalize() const {
+    temporary_type normalize() const
+    {
         temporary_type q(QuaternionXpr<expr_type>(*this));
         return q.normalize();
     }
@@ -128,27 +137,32 @@ class QuaternionInverseOp
      *
      * The inverse of a quaternion p is ~p/norm(p).
      */
-    value_type operator[](size_t i) const {
+    value_type operator[](size_t i) const
+    {
         return m_expr[i]/m_norm;
     }
 
 
-  public:
+public:
 
     /** Return size of this expression (same as argument's size). */
-    size_t size() const {
+    size_t size() const
+    {
         return m_expr.size();
     }
 
     /** Return reference to contained expression. */
-    expr_reference expression() const { return m_expr; }
+    expr_reference expression() const
+    {
+        return m_expr;
+    }
 
 
-  public:
+public:
 
     /** Construct from an input expression. */
     explicit QuaternionInverseOp(arg_reference arg)
-        //: m_expr(arg), m_norm(cml::norm(arg)) {}
+    //: m_expr(arg), m_norm(cml::norm(arg)) {}
         : m_expr(arg), m_norm(arg.norm()) {}
 
     /** Copy constructor. */
@@ -156,13 +170,13 @@ class QuaternionInverseOp
         : m_expr(e.m_expr), m_norm(e.m_norm) {}
 
 
-  protected:
+protected:
 
     subexpression_type m_expr;
     value_type m_norm;
 
 
-  private:
+private:
 
     /* Cannot be assigned to: */
     expr_type& operator=(const expr_type&);
@@ -183,8 +197,14 @@ struct ExprTraits< QuaternionInverseOp<ExprT> >
     typedef typename expr_type::assignable_tag assignable_tag;
     typedef expr_node_tag node_tag;
 
-    value_type get(const expr_type& v, size_t i) const { return v[i]; }
-    size_t size(const expr_type& e) const { return e.size(); }
+    value_type get(const expr_type& v, size_t i) const
+    {
+        return v[i];
+    }
+    size_t size(const expr_type& e) const
+    {
+        return e.size();
+    }
 };
 
 } // namespace et
@@ -214,11 +234,11 @@ inverse(QUATXPR_ARG_TYPE arg)
 /** Declare div taking two quaternion operands. */
 template<typename E1, class AT1, typename E2, class AT2, class OT, class CT>
 inline typename et::QuaternionPromote<
-    quaternion<E1,AT1,OT,CT>, quaternion<E2,AT2,OT,CT>
+quaternion<E1,AT1,OT,CT>, quaternion<E2,AT2,OT,CT>
 >::temporary_type
 operator/(
-        const quaternion<E1,AT1,OT,CT>& left,
-        const quaternion<E2,AT2,OT,CT>& right)
+    const quaternion<E1,AT1,OT,CT>& left,
+    const quaternion<E2,AT2,OT,CT>& right)
 {
     return left*inverse(right);
 }
@@ -226,11 +246,11 @@ operator/(
 /** Declare div taking a quaternion and a et::QuaternionXpr. */
 template<typename E, class AT, class OT, class CT, class XprT>
 inline typename et::QuaternionPromote<
-    quaternion<E,AT,OT,CT>, typename XprT::result_type
+quaternion<E,AT,OT,CT>, typename XprT::result_type
 >::temporary_type
 operator/(
-        const quaternion<E,AT,OT,CT>& left,
-        QUATXPR_ARG_TYPE right)
+    const quaternion<E,AT,OT,CT>& left,
+    QUATXPR_ARG_TYPE right)
 {
     return left*inverse(right);
 }
@@ -238,11 +258,11 @@ operator/(
 /** Declare div taking an et::QuaternionXpr and a quaternion. */
 template<class XprT, typename E, class AT, class OT, class CT>
 inline typename et::QuaternionPromote<
-    typename XprT::result_type, quaternion<E,AT,OT,CT>
+typename XprT::result_type, quaternion<E,AT,OT,CT>
 >::temporary_type
 operator/(
-        QUATXPR_ARG_TYPE left,
-        const quaternion<E,AT,OT,CT>& right)
+    QUATXPR_ARG_TYPE left,
+    const quaternion<E,AT,OT,CT>& right)
 {
     return left*inverse(right);
 }
@@ -250,11 +270,11 @@ operator/(
 /** Declare div taking two et::QuaternionXpr operands. */
 template<class XprT1, class XprT2>
 inline typename et::QuaternionPromote<
-    typename XprT1::result_type, typename XprT2::result_type
+typename XprT1::result_type, typename XprT2::result_type
 >::temporary_type
 operator/(
-        QUATXPR_ARG_TYPE_N(1) left,
-        QUATXPR_ARG_TYPE_N(2) right)
+    QUATXPR_ARG_TYPE_N(1) left,
+    QUATXPR_ARG_TYPE_N(2) right)
 {
     return left*inverse(right);
 }

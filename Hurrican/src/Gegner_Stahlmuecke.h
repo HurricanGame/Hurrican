@@ -6,14 +6,14 @@
 
 class GegnerStahlmuecke : public GegnerClass
 {
-	public:
+public:
 
-	GegnerStahlmuecke  (int Wert1, int Wert2,			// Konstruktor
-						bool		  Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-	void DoDraw		   (void);
-														
+    GegnerStahlmuecke  (int Wert1, int Wert2,			// Konstruktor
+                        bool		  Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw		   (void);
+
 };
 
 #endif

@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -36,7 +36,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
  * L = matrix layout type
  */
 
-namespace cml {
+namespace cml
+{
 
 //////////////////////////////////////////////////////////////////////////////
 // Functions for setting the basis vectors of a 3D or 2D transform matrix
@@ -99,67 +100,77 @@ matrix_set_transposed_basis_vector_2D(
 
 /** Set the x basis vector of a 3D transform */
 template < typename E, class A, class B, class L, class VecT > void
-matrix_set_x_basis_vector(matrix<E,A,B,L>& m, const VecT& x) {
+matrix_set_x_basis_vector(matrix<E,A,B,L>& m, const VecT& x)
+{
     matrix_set_basis_vector(m,0,x);
 }
 
 /** Set the y basis vector of a 3D transform */
 template < typename E, class A, class B, class L, class VecT > void
-matrix_set_y_basis_vector(matrix<E,A,B,L>& m, const VecT& y) {
+matrix_set_y_basis_vector(matrix<E,A,B,L>& m, const VecT& y)
+{
     matrix_set_basis_vector(m,1,y);
 }
 
 /** Set the z basis vector of a 3D transform */
 template < typename E, class A, class B, class L, class VecT > void
-matrix_set_z_basis_vector(matrix<E,A,B,L>& m, const VecT& z) {
+matrix_set_z_basis_vector(matrix<E,A,B,L>& m, const VecT& z)
+{
     matrix_set_basis_vector(m,2,z);
 }
 
 /** Set the transposed x basis vector of a 3D transform */
 template < typename E, class A, class B, class L, class VecT > void
-matrix_set_transposed_x_basis_vector(matrix<E,A,B,L>& m, const VecT& x) {
+matrix_set_transposed_x_basis_vector(matrix<E,A,B,L>& m, const VecT& x)
+{
     matrix_set_transposed_basis_vector(m,0,x);
 }
 
 /** Set the transposed y basis vector of a 3D transform */
 template < typename E, class A, class B, class L, class VecT > void
-matrix_set_transposed_y_basis_vector(matrix<E,A,B,L>& m, const VecT& y) {
+matrix_set_transposed_y_basis_vector(matrix<E,A,B,L>& m, const VecT& y)
+{
     matrix_set_transposed_basis_vector(m,1,y);
 }
 
 /** Set the transposed z basis vector of a 3D transform */
 template < typename E, class A, class B, class L, class VecT > void
-matrix_set_transposed_z_basis_vector(matrix<E,A,B,L>& m, const VecT& z) {
+matrix_set_transposed_z_basis_vector(matrix<E,A,B,L>& m, const VecT& z)
+{
     matrix_set_transposed_basis_vector(m,2,z);
 }
 
 /** Set the x basis vector of a 2D transform */
 template < typename E, class A, class B, class L, class VecT > void
-matrix_set_x_basis_vector_2D(matrix<E,A,B,L>& m, const VecT& x) {
+matrix_set_x_basis_vector_2D(matrix<E,A,B,L>& m, const VecT& x)
+{
     matrix_set_basis_vector_2D(m,0,x);
 }
 
 /** Set the y basis vector of a 2D transform */
 template < typename E, class A, class B, class L, class VecT > void
-matrix_set_y_basis_vector_2D(matrix<E,A,B,L>& m, const VecT& y) {
+matrix_set_y_basis_vector_2D(matrix<E,A,B,L>& m, const VecT& y)
+{
     matrix_set_basis_vector_2D(m,1,y);
 }
 
 /** Set the transposed x basis vector of a 2D transform */
 template < typename E, class A, class B, class L, class VecT > void
-matrix_set_transposed_x_basis_vector_2D(matrix<E,A,B,L>& m,const VecT& x) {
+matrix_set_transposed_x_basis_vector_2D(matrix<E,A,B,L>& m,const VecT& x)
+{
     matrix_set_transposed_basis_vector_2D(m,0,x);
 }
 
 /** Set the transposed y basis vector of a 2D transform */
 template < typename E, class A, class B, class L, class VecT > void
-matrix_set_transposed_y_basis_vector_2D(matrix<E,A,B,L>& m,const VecT& y) {
+matrix_set_transposed_y_basis_vector_2D(matrix<E,A,B,L>& m,const VecT& y)
+{
     matrix_set_transposed_basis_vector_2D(m,1,y);
 }
 
 /** Set the basis vectors of a 3D transform */
 template < typename E, class A, class B, class L,
-    class VecT_1, class VecT_2, class VecT_3 > void
+           class VecT_1, class VecT_2, class VecT_3 > void
 matrix_set_basis_vectors(
     matrix<E,A,B,L>& m, const VecT_1& x, const VecT_2& y, const VecT_3& z)
 {
@@ -170,7 +181,7 @@ matrix_set_basis_vectors(
 
 /** Set the transposed basis vectors of a 3D transform */
 template < typename E, class A, class B, class L,
-    class VecT_1, class VecT_2, class VecT_3 > void
+           class VecT_1, class VecT_2, class VecT_3 > void
 matrix_set_transposed_basis_vectors(
     matrix<E,A,B,L>& m, const VecT_1& x, const VecT_2& y, const VecT_3& z)
 {
@@ -215,7 +226,7 @@ matrix_get_basis_vector(const MatT& m, size_t i)
     detail::CheckIndex3(i);
 
     return vector_type(
-        m.basis_element(i,0), m.basis_element(i,1), m.basis_element(i,2));
+               m.basis_element(i,0), m.basis_element(i,1), m.basis_element(i,2));
 }
 
 /** Get the i'th transposed basis vector of a 3D transform */
@@ -224,13 +235,13 @@ matrix_get_transposed_basis_vector(const MatT& m, size_t i)
 {
     typedef typename MatT::value_type value_type;
     typedef vector< value_type, fixed<3> > vector_type;
-    
+
     /* Checking */
     detail::CheckMatLinear3D(m);
     detail::CheckIndex3(i);
 
     return vector_type(
-        m.basis_element(0,i), m.basis_element(1,i), m.basis_element(2,i));
+               m.basis_element(0,i), m.basis_element(1,i), m.basis_element(2,i));
 }
 
 /** Get the i'th basis vector of a 2D transform */
@@ -261,61 +272,71 @@ matrix_get_transposed_basis_vector_2D(const MatT& m, size_t i)
 
 /** Get the x basis vector of a 3D transform */
 template < class MatT > TEMP_VEC3
-matrix_get_x_basis_vector(const MatT& m) {
+matrix_get_x_basis_vector(const MatT& m)
+{
     return matrix_get_basis_vector(m,0);
 }
 
 /** Get the y basis vector of a 3D transform */
 template < class MatT > TEMP_VEC3
-matrix_get_y_basis_vector(const MatT& m) {
+matrix_get_y_basis_vector(const MatT& m)
+{
     return matrix_get_basis_vector(m,1);
 }
 
 /** Get the z basis vector of a 3D transform */
 template < class MatT > TEMP_VEC3
-matrix_get_z_basis_vector(const MatT& m) {
+matrix_get_z_basis_vector(const MatT& m)
+{
     return matrix_get_basis_vector(m,2);
 }
 
 /** Get the transposed x basis vector of a 3D transform */
 template < class MatT > TEMP_VEC3
-matrix_get_transposed_x_basis_vector(const MatT& m) {
+matrix_get_transposed_x_basis_vector(const MatT& m)
+{
     return matrix_get_transposed_basis_vector(m,0);
 }
 
 /** Get the transposed y basis vector of a 3D transform */
 template < class MatT > TEMP_VEC3
-matrix_get_transposed_y_basis_vector(const MatT& m) {
+matrix_get_transposed_y_basis_vector(const MatT& m)
+{
     return matrix_get_transposed_basis_vector(m,1);
 }
 
 /** Get the transposed z basis vector of a 3D transform */
 template < class MatT > TEMP_VEC3
-matrix_get_transposed_z_basis_vector(const MatT& m) {
+matrix_get_transposed_z_basis_vector(const MatT& m)
+{
     return matrix_get_transposed_basis_vector(m,2);
 }
 
 /** Get the x basis vector of a 2D transform */
 template < class MatT > TEMP_VEC2
-matrix_get_x_basis_vector_2D(const MatT& m) {
+matrix_get_x_basis_vector_2D(const MatT& m)
+{
     return matrix_get_basis_vector_2D(m,0);
 }
 
 /** Get the y basis vector of a 2D transform */
 template < class MatT > TEMP_VEC2
-matrix_get_y_basis_vector_2D(const MatT& m) {
+matrix_get_y_basis_vector_2D(const MatT& m)
+{
     return matrix_get_basis_vector_2D(m,1);
 }
 
 /** Get the transposed x basis vector of a 2D transform */
 template < class MatT > TEMP_VEC2
-matrix_get_transposed_x_basis_vector_2D(const MatT& m) {
+matrix_get_transposed_x_basis_vector_2D(const MatT& m)
+{
     return matrix_get_transposed_basis_vector_2D(m,0);
 }
 
 /** Get the transposed y basis vector of a 2D transform */
 template < class MatT > TEMP_VEC2
-matrix_get_transposed_y_basis_vector_2D(const MatT& m) {
+matrix_get_transposed_y_basis_vector_2D(const MatT& m)
+{
     return matrix_get_transposed_basis_vector_2D(m,1);
 }
 

@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -46,8 +46,10 @@ struct cross_expects_vector_args_error;
 struct cross_expects_3D_vector_args_error;
 
 
-namespace cml {
-namespace detail {
+namespace cml
+{
+namespace detail
+{
 
 template<typename LeftT, typename RightT>
 struct DotPromote
@@ -61,8 +63,8 @@ struct DotPromote
     /* Deduce the promoted scalar type: */
     typedef et::OpMul<left_value, right_value> op_mul;
     typedef typename et::OpAdd<
-        typename op_mul::value_type,
-                 typename op_mul::value_type> op_add;
+    typename op_mul::value_type,
+             typename op_mul::value_type> op_add;
     typedef typename op_add::value_type promoted_scalar;
 };
 
@@ -77,7 +79,7 @@ struct CrossPromote
 
     /* Deduce the matrix result type: */
     typedef typename et::VectorPromote<
-        left_type,right_type>::temporary_type promoted_vector;
+    left_type,right_type>::temporary_type promoted_vector;
 };
 
 template<typename LeftT, typename RightT>
@@ -91,7 +93,7 @@ struct OuterPromote
 
     /* Deduce the matrix result type: */
     typedef typename et::MatrixPromote<
-        left_type,right_type>::temporary_type promoted_matrix;
+    left_type,right_type>::temporary_type promoted_matrix;
 };
 
 /** Construct a dot unroller for fixed-size arrays.
@@ -109,7 +111,7 @@ UnrollDot(const LeftT& left, const RightT& right, fixed_size_tag)
 
     /* Compile-type vector size check: */
     typedef typename et::GetCheckedSize<LeftT,RightT,fixed_size_tag>
-        ::check_type check_sizes;
+    ::check_type check_sizes;
 
     /* Get the fixed array size using the helper: */
     enum { Len = check_sizes::array_size };
@@ -118,8 +120,8 @@ UnrollDot(const LeftT& left, const RightT& right, fixed_size_tag)
     typedef typename dot_helper::op_mul op_mul;
     typedef typename dot_helper::op_add op_add;
     typedef typename et::detail::VectorAccumulateUnroller<
-        op_add,op_mul,LeftT,RightT>::template
-        Eval<0, Len-1, (Len <= CML_VECTOR_DOT_UNROLL_LIMIT)> Unroller;
+    op_add,op_mul,LeftT,RightT>::template
+    Eval<0, Len-1, (Len <= CML_VECTOR_DOT_UNROLL_LIMIT)> Unroller;
     /* Note: Len is the array size, so Len-1 is the last element. */
 
     /* Now, call the unroller: */
@@ -153,7 +155,8 @@ UnrollDot(const LeftT& left, const RightT& right, dynamic_size_tag)
      * it's okay to use array notation here:
      */
     sum_type sum(op_mul().apply(left[0],right[0]));
-    for(size_t i = 1; i < N; ++i) {
+    for(size_t i = 1; i < N; ++i)
+    {
         /* XXX This might not be optimized properly by some compilers.
          * but to do anything else requires changing the requirements
          * of a scalar operator, or requires defining a new class of scalar
@@ -169,32 +172,36 @@ UnrollDot(const LeftT& left, const RightT& right, dynamic_size_tag)
 
 /** For cross(): compile-time check for a 3D vector. */
 template<typename VecT> inline void
-Require3D(const VecT&, fixed_size_tag) {
+Require3D(const VecT&, fixed_size_tag)
+{
     CML_STATIC_REQUIRE_M(
-            ((size_t)VecT::array_size == 3),
-            cross_expects_3D_vector_args_error);
+        ((size_t)VecT::array_size == 3),
+        cross_expects_3D_vector_args_error);
 }
 
 /** For cross(): run-time check for a 3D vector. */
 template<typename VecT> inline void
-Require3D(const VecT& v, dynamic_size_tag) {
+Require3D(const VecT& v, dynamic_size_tag)
+{
     et::GetCheckedSize<VecT,VecT,dynamic_size_tag>()
-        .equal_or_fail(v.size(),size_t(3));
+    .equal_or_fail(v.size(),size_t(3));
 }
 
 /** For perp_dot(): compile-time check for a 2D vector. */
 template<typename VecT> inline void
-Require2D(const VecT& v, fixed_size_tag) {
+Require2D(const VecT& v, fixed_size_tag)
+{
     CML_STATIC_REQUIRE_M(
-            ((size_t)VecT::array_size == 2),
-            perp_dot_expects_2D_vector_args_error);
+        ((size_t)VecT::array_size == 2),
+        perp_dot_expects_2D_vector_args_error);
 }
 
 /** For perp_dot(): run-time check for a 2D vector. */
 template<typename VecT> inline void
-Require2D(const VecT& v, dynamic_size_tag) {
+Require2D(const VecT& v, dynamic_size_tag)
+{
     et::GetCheckedSize<VecT,VecT,dynamic_size_tag>()
-        .equal_or_fail(v.size(),size_t(2));
+    .equal_or_fail(v.size(),size_t(2));
 }
 
 } // namespace detail
@@ -217,8 +224,8 @@ dot(const LeftT& left, const RightT& right)
 
     /* dot() requires vector expressions: */
     CML_STATIC_REQUIRE_M(
-            (et::VectorExpressions<LeftT,RightT>::is_true),
-            dot_expects_vector_args_error);
+        (et::VectorExpressions<LeftT,RightT>::is_true),
+        dot_expects_vector_args_error);
     /* Note: parens are required here so that the preprocessor ignores the
      * commas:
      */
@@ -294,10 +301,10 @@ cross(const LeftT& left, const RightT& right)
 
     /* Now, compute and return the cross product: */
     result_type result(
-            left[1]*right[2] - left[2]*right[1],
-            left[2]*right[0] - left[0]*right[2],
-            left[0]*right[1] - left[1]*right[0]
-            );
+        left[1]*right[2] - left[2]*right[1],
+        left[2]*right[0] - left[0]*right[2],
+        left[0]*right[1] - left[1]*right[0]
+    );
     return result;
 }
 
@@ -310,8 +317,9 @@ cross(const LeftT& left, const RightT& right)
 template < class VecT_1, class VecT_2, class VecT_3 >
 typename detail::DotPromote<
     VecT_1, typename detail::CrossPromote< VecT_2, VecT_3 >::promoted_vector
->::promoted_scalar
-triple_product(const VecT_1& v1, const VecT_2& v2, const VecT_3& v3) {
+    >::promoted_scalar
+triple_product(const VecT_1& v1, const VecT_2& v2, const VecT_3& v3)
+{
     return dot(v1,cross(v2,v3));
 }
 
@@ -341,8 +349,10 @@ outer(const LeftT& left, const RightT& right)
     cml::et::detail::Resize(C, left.size(), right.size());
 
     /* Now, compute the outer product: */
-    for(size_t i = 0; i < left.size(); ++i) {
-        for(size_t j = 0; j < right.size(); ++j) {
+    for(size_t i = 0; i < left.size(); ++i)
+    {
+        for(size_t j = 0; j < right.size(); ++j)
+        {
             C(i,j) = left[i]*right[j];
             /* Note: both arguments are vectors, so array notation
              * is okay here.

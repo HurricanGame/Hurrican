@@ -6,13 +6,13 @@
 
 class GegnerSnowBomb : public GegnerClass
 {
-	public:
+public:
 
-	GegnerSnowBomb(int  Wert1, int Wert2,				// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-	void DoDraw		   (void);							// Gegner individuell rendern
+    GegnerSnowBomb(int  Wert1, int Wert2,				// Konstruktor
+                   bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw		   (void);							// Gegner individuell rendern
 };
 
 #endif

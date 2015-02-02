@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -26,7 +26,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
  * representation.
 */
 
-namespace cml {
+namespace cml
+{
 
 //////////////////////////////////////////////////////////////////////////////
 // Rotation about world axes
@@ -47,7 +48,7 @@ quaternion_rotation_world_axis(quaternion<E,A,O,C>& q, size_t axis, E angle)
 
     const size_t W = order_type::W;
     const size_t I = order_type::X + axis;
-    
+
     angle *= value_type(.5);
     q[I] = std::sin(angle);
     q[W] = std::cos(angle);
@@ -55,19 +56,22 @@ quaternion_rotation_world_axis(quaternion<E,A,O,C>& q, size_t axis, E angle)
 
 /** Build a quaternion representing a rotation about the world x axis */
 template < class E, class A, class O, class C > void
-quaternion_rotation_world_x(quaternion<E,A,O,C>& q, E angle) {
+quaternion_rotation_world_x(quaternion<E,A,O,C>& q, E angle)
+{
     quaternion_rotation_world_axis(q,0,angle);
 }
 
 /** Build a quaternion representing a rotation about the world y axis */
 template < class E, class A, class O, class C > void
-quaternion_rotation_world_y(quaternion<E,A,O,C>& q, E angle) {
+quaternion_rotation_world_y(quaternion<E,A,O,C>& q, E angle)
+{
     quaternion_rotation_world_axis(q,1,angle);
 }
 
 /** Build a quaternion representing a rotation about the world z axis */
 template < class E, class A, class O, class C > void
-quaternion_rotation_world_z(quaternion<E,A,O,C>& q, E angle) {
+quaternion_rotation_world_z(quaternion<E,A,O,C>& q, E angle)
+{
     quaternion_rotation_world_axis(q,2,angle);
 }
 
@@ -83,19 +87,20 @@ quaternion_rotation_axis_angle(
     typedef quaternion<E,A,O,C> quaternion_type;
     typedef typename quaternion_type::value_type value_type;
     typedef typename quaternion_type::order_type order_type;
-    
+
     /* Checking */
     detail::CheckVec3(axis);
 
-    enum {
+    enum
+    {
         W = order_type::W,
         X = order_type::X,
         Y = order_type::Y,
         Z = order_type::Z
     };
-    
+
     angle *= value_type(.5);
-    
+
     /* @todo: If and when we have a set() function that takes a vector and a
      * scalar, this can be written as:
      *
@@ -103,7 +108,7 @@ quaternion_rotation_axis_angle(
      *
      * In which case the enum will also not be necessary.
      */
-    
+
     q[W] = std::cos(angle);
     value_type s = std::sin(angle);
     q[X] = axis[0] * s;
@@ -126,7 +131,8 @@ quaternion_rotation_matrix(quaternion<E,A,O,C>& q, const MatT& m)
     /* Checking */
     detail::CheckMatLinear3D(m);
 
-    enum {
+    enum
+    {
         W = order_type::W,
         X = order_type::X,
         Y = order_type::Y,
@@ -134,13 +140,16 @@ quaternion_rotation_matrix(quaternion<E,A,O,C>& q, const MatT& m)
     };
 
     value_type tr = trace_3x3(m);
-    if (tr >= value_type(0)) {
+    if (tr >= value_type(0))
+    {
         q[W] = std::sqrt(tr + value_type(1)) * value_type(.5);
         value_type s = value_type(.25) / q[W];
         q[X] = (m.basis_element(1,2) - m.basis_element(2,1)) * s;
         q[Y] = (m.basis_element(2,0) - m.basis_element(0,2)) * s;
         q[Z] = (m.basis_element(0,1) - m.basis_element(1,0)) * s;
-    } else {
+    }
+    else
+    {
         size_t largest_diagonal_element =
             index_of_max(
                 m.basis_element(0,0),
@@ -183,44 +192,49 @@ quaternion_rotation_euler(
     size_t i, j, k;
     bool odd, repeat;
     detail::unpack_euler_order(order, i, j, k, odd, repeat);
-    
+
     const size_t W = order_type::W;
     const size_t I = order_type::X + i;
     const size_t J = order_type::X + j;
     const size_t K = order_type::X + k;
 
-    if (odd) {
+    if (odd)
+    {
         angle_1 = -angle_1;
     }
 
     angle_0 *= value_type(.5);
     angle_1 *= value_type(.5);
     angle_2 *= value_type(.5);
-    
+
     value_type s0 = std::sin(angle_0);
     value_type c0 = std::cos(angle_0);
     value_type s1 = std::sin(angle_1);
     value_type c1 = std::cos(angle_1);
     value_type s2 = std::sin(angle_2);
     value_type c2 = std::cos(angle_2);
-    
+
     value_type s0s2 = s0 * s2;
     value_type s0c2 = s0 * c2;
     value_type c0s2 = c0 * s2;
     value_type c0c2 = c0 * c2;
 
-    if (repeat) {
+    if (repeat)
+    {
         q[I] = c1 * (c0s2 + s0c2);
         q[J] = s1 * (c0c2 + s0s2);
         q[K] = s1 * (c0s2 - s0c2);
         q[W] = c1 * (c0c2 - s0s2);
-    } else {
+    }
+    else
+    {
         q[I] = c1 * s0c2 - s1 * c0s2;
         q[J] = c1 * s0s2 + s1 * c0c2;
         q[K] = c1 * c0s2 - s1 * s0c2;
         q[W] = c1 * c0c2 + s1 * s0s2;
     }
-    if (odd) {
+    if (odd)
+    {
         q[J] = -q[J];
     }
 }
@@ -239,7 +253,7 @@ quaternion_rotation_align(
     AxisOrder order = axis_order_zyx)
 {
     typedef matrix< E,fixed<3,3>,row_basis,row_major > matrix_type;
-    
+
     matrix_type m;
     matrix_rotation_align(m,align,reference,normalize,order);
     quaternion_rotation_matrix(q,m);
@@ -248,10 +262,10 @@ quaternion_rotation_align(
 /** See vector_ortho.h for details */
 template < typename E, class A, class O, class C, class VecT > void
 quaternion_rotation_align(quaternion<E,A,O,C>& q, const VecT& align,
-    bool normalize = true, AxisOrder order = axis_order_zyx)
+                          bool normalize = true, AxisOrder order = axis_order_zyx)
 {
     typedef matrix< E,fixed<3,3>,row_basis,row_major > matrix_type;
-    
+
     matrix_type m;
     matrix_rotation_align(m,align,normalize,order);
     quaternion_rotation_matrix(q,m);
@@ -260,11 +274,11 @@ quaternion_rotation_align(quaternion<E,A,O,C>& q, const VecT& align,
 /** See vector_ortho.h for details */
 template < typename E,class A,class O,class C,class VecT_1,class VecT_2 > void
 quaternion_rotation_align_axial(quaternion<E,A,O,C>& q, const VecT_1& align,
-    const VecT_2& axis, bool normalize = true,
-    AxisOrder order = axis_order_zyx)
+                                const VecT_2& axis, bool normalize = true,
+                                AxisOrder order = axis_order_zyx)
 {
     typedef matrix< E,fixed<3,3>,row_basis,row_major > matrix_type;
-    
+
     matrix_type m;
     matrix_rotation_align_axial(m,align,axis,normalize,order);
     quaternion_rotation_matrix(q,m);
@@ -279,7 +293,7 @@ quaternion_rotation_align_viewplane(
     AxisOrder order = axis_order_zyx)
 {
     typedef matrix< E,fixed<3,3>,row_basis,row_major > matrix_type;
-    
+
     matrix_type m;
     matrix_rotation_align_viewplane(m,view_matrix,handedness,order);
     quaternion_rotation_matrix(q,m);
@@ -293,7 +307,7 @@ quaternion_rotation_align_viewplane_LH(
     AxisOrder order = axis_order_zyx)
 {
     typedef matrix< E,fixed<3,3>,row_basis,row_major > matrix_type;
-    
+
     matrix_type m;
     matrix_rotation_align_viewplane_LH(m,view_matrix,order);
     quaternion_rotation_matrix(q,m);
@@ -307,7 +321,7 @@ quaternion_rotation_align_viewplane_RH(
     AxisOrder order = axis_order_zyx)
 {
     typedef matrix< E,fixed<3,3>,row_basis,row_major > matrix_type;
-    
+
     matrix_type m;
     matrix_rotation_align_viewplane_RH(m,view_matrix,order);
     quaternion_rotation_matrix(q,m);
@@ -319,7 +333,7 @@ quaternion_rotation_align_viewplane_RH(
 
 /** See vector_ortho.h for details */
 template < typename E, class A, class O, class C,
-    class VecT_1, class VecT_2, class VecT_3 > void
+           class VecT_1, class VecT_2, class VecT_3 > void
 quaternion_rotation_aim_at(
     quaternion<E,A,O,C>& q,
     const VecT_1& pos,
@@ -328,7 +342,7 @@ quaternion_rotation_aim_at(
     AxisOrder order = axis_order_zyx)
 {
     typedef matrix< E,fixed<3,3>,row_basis,row_major > matrix_type;
-    
+
     matrix_type m;
     matrix_rotation_aim_at(m,pos,target,reference,order);
     quaternion_rotation_matrix(q,m);
@@ -336,7 +350,7 @@ quaternion_rotation_aim_at(
 
 /** See vector_ortho.h for details */
 template < typename E, class A, class O, class C,
-    class VecT_1, class VecT_2 > void
+           class VecT_1, class VecT_2 > void
 quaternion_rotation_aim_at(
     quaternion<E,A,O,C>& q,
     const VecT_1& pos,
@@ -344,7 +358,7 @@ quaternion_rotation_aim_at(
     AxisOrder order = axis_order_zyx)
 {
     typedef matrix< E,fixed<3,3>,row_basis,row_major > matrix_type;
-    
+
     matrix_type m;
     matrix_rotation_aim_at(m,pos,target,order);
     quaternion_rotation_matrix(q,m);
@@ -352,7 +366,7 @@ quaternion_rotation_aim_at(
 
 /** See vector_ortho.h for details */
 template < typename E, class A, class O, class C,
-    class VecT_1, class VecT_2, class VecT_3 > void
+           class VecT_1, class VecT_2, class VecT_3 > void
 quaternion_rotation_aim_at_axial(
     quaternion<E,A,O,C>& q,
     const VecT_1& pos,
@@ -361,7 +375,7 @@ quaternion_rotation_aim_at_axial(
     AxisOrder order = axis_order_zyx)
 {
     typedef matrix< E,fixed<3,3>,row_basis,row_major > matrix_type;
-    
+
     matrix_type m;
     matrix_rotation_aim_at_axial(m,pos,target,axis,order);
     quaternion_rotation_matrix(q,m);
@@ -384,12 +398,12 @@ quaternion_rotate_about_world_axis(quaternion<E,A,O,C>& q,size_t axis,E angle)
 
     size_t i, j, k;
     cyclic_permutation(axis, i, j, k);
-    
+
     const size_t W = order_type::W;
     const size_t I = order_type::X + i;
     const size_t J = order_type::X + j;
     const size_t K = order_type::X + k;
-    
+
     angle *= value_type(.5);
     value_type s = value_type(std::sin(angle));
     value_type c = value_type(std::cos(angle));
@@ -404,19 +418,22 @@ quaternion_rotate_about_world_axis(quaternion<E,A,O,C>& q,size_t axis,E angle)
 
 /* Rotate a quaternion about the world x axis */
 template < class E, class A, class O, class C > void
-quaternion_rotate_about_world_x(quaternion<E,A,O,C>& q, E angle) {
+quaternion_rotate_about_world_x(quaternion<E,A,O,C>& q, E angle)
+{
     quaternion_rotate_about_world_axis(q,0,angle);
 }
 
 /* Rotate a quaternion about the world y axis */
 template < class E, class A, class O, class C > void
-quaternion_rotate_about_world_y(quaternion<E,A,O,C>& q, E angle) {
+quaternion_rotate_about_world_y(quaternion<E,A,O,C>& q, E angle)
+{
     quaternion_rotate_about_world_axis(q,1,angle);
 }
 
 /* Rotate a quaternion about the world z axis */
 template < class E, class A, class O, class C > void
-quaternion_rotate_about_world_z(quaternion<E,A,O,C>& q, E angle) {
+quaternion_rotate_about_world_z(quaternion<E,A,O,C>& q, E angle)
+{
     quaternion_rotate_about_world_axis(q,2,angle);
 }
 
@@ -437,12 +454,12 @@ quaternion_rotate_about_local_axis(quaternion<E,A,O,C>& q,size_t axis,E angle)
 
     size_t i, j, k;
     cyclic_permutation(axis, i, j, k);
-    
+
     const size_t W = order_type::W;
     const size_t I = order_type::X + i;
     const size_t J = order_type::X + j;
     const size_t K = order_type::X + k;
-    
+
     angle *= value_type(.5);
     value_type s = value_type(std::sin(angle));
     value_type c = value_type(std::cos(angle));
@@ -457,19 +474,22 @@ quaternion_rotate_about_local_axis(quaternion<E,A,O,C>& q,size_t axis,E angle)
 
 /* Rotate a quaternion about its local x axis */
 template < class E, class A, class O, class C > void
-quaternion_rotate_about_local_x(quaternion<E,A,O,C>& q, E angle) {
+quaternion_rotate_about_local_x(quaternion<E,A,O,C>& q, E angle)
+{
     quaternion_rotate_about_local_axis(q,0,angle);
 }
 
 /* Rotate a quaternion about its local y axis */
 template < class E, class A, class O, class C > void
-quaternion_rotate_about_local_y(quaternion<E,A,O,C>& q, E angle) {
+quaternion_rotate_about_local_y(quaternion<E,A,O,C>& q, E angle)
+{
     quaternion_rotate_about_local_axis(q,1,angle);
 }
 
 /* Rotate a quaternion about its local z axis */
 template < class E, class A, class O, class C > void
-quaternion_rotate_about_local_z(quaternion<E,A,O,C>& q, E angle) {
+quaternion_rotate_about_local_z(quaternion<E,A,O,C>& q, E angle)
+{
     quaternion_rotate_about_local_axis(q,2,angle);
 }
 
@@ -490,7 +510,7 @@ quaternion_rotation_vec_to_vec(
     typedef quaternion<E,A,O,C> quaternion_type;
     typedef typename quaternion_type::value_type value_type;
     typedef vector< value_type, fixed<3> > vector_type;
-    
+
     /* Checking handled by cross() */
 
     /* @todo: If at some point quaternion<> has a set() function that takes a
@@ -502,15 +522,18 @@ quaternion_rotation_vec_to_vec(
      *     q.set(std::sqrt(...)+dot(v1,v2), cross(v1,v2));
      * }
      */
-     
+
     vector_type c = cross(v1,v2);
-    if (unit_length_vectors) {
+    if (unit_length_vectors)
+    {
         q = quaternion_type(value_type(1) + dot(v1,v2), c.data());
-    } else {
+    }
+    else
+    {
         q = quaternion_type(
-            std::sqrt(v1.length_squared() * v2.length_squared()) + dot(v1,v2),
-            c/*.data()*/
-        );
+                std::sqrt(v1.length_squared() * v2.length_squared()) + dot(v1,v2),
+                c/*.data()*/
+            );
     }
     q.normalize();
 }
@@ -521,11 +544,11 @@ quaternion_rotation_vec_to_vec(
 
 template < typename E, class A, class O, class C > void
 quaternion_scale_angle(quaternion<E,A,O,C>& q, E t,
-    E tolerance = epsilon<E>::placeholder())
+                       E tolerance = epsilon<E>::placeholder())
 {
     typedef vector< E,fixed<3> > vector_type;
     typedef typename vector_type::value_type value_type;
-    
+
     vector_type axis;
     value_type angle;
     quaternion_to_axis_angle(q, axis, angle, tolerance);
@@ -536,7 +559,8 @@ quaternion_scale_angle(quaternion<E,A,O,C>& q, E t,
 // Support functions for uniform handling of pos- and neg-cross quaternions
 //////////////////////////////////////////////////////////////////////////////
 
-namespace detail {
+namespace detail
+{
 
 /** Concatenate two quaternions in the order q1->q2 */
 template < class QuatT_1, class QuatT_2 >
@@ -565,9 +589,10 @@ quaternion_rotation_difference(
 /** Return the rotational 'difference' between two quaternions */
 template < class QuatT_1, class QuatT_2 >
 typename et::QuaternionPromote2<QuatT_1,QuatT_2>::temporary_type
-quaternion_rotation_difference(const QuatT_1& q1, const QuatT_2& q2) {
+quaternion_rotation_difference(const QuatT_1& q1, const QuatT_2& q2)
+{
     return detail::quaternion_rotation_difference(
-        q1, q2, typename QuatT_1::cross_type());
+               q1, q2, typename QuatT_1::cross_type());
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -585,16 +610,19 @@ quaternion_to_axis_angle(
     typedef QuatT quaternion_type;
     typedef typename quaternion_type::value_type value_type;
     typedef typename quaternion_type::order_type order_type;
-    
+
     /* Checking */
     detail::CheckQuat(q);
 
     axis = q.imaginary();
     value_type l = length(axis);
-    if (l > tolerance) {
+    if (l > tolerance)
+    {
         axis /= l;
         angle = value_type(2) * std::atan2(l,q.real());
-    } else {
+    }
+    else
+    {
         axis.zero();
         angle = value_type(0);
     }

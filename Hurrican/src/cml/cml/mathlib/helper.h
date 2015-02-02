@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -16,17 +16,19 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #include <cstddef>
 #include <cml/constants.h>
 
-namespace cml {
+namespace cml
+{
 
 /* Helper classes for axis order, coordinate system handedness, z-clipping
  * range and spherical coordinate type.
  */
- 
+
 //////////////////////////////////////////////////////////////////////////////
 // Euler order
 //////////////////////////////////////////////////////////////////////////////
 
-enum EulerOrder {
+enum EulerOrder
+{
     euler_order_xyz, // 0x00 [0000]
     euler_order_xyx, // 0x01 [0001]
     euler_order_xzy, // 0x02 [0010]
@@ -41,7 +43,8 @@ enum EulerOrder {
     euler_order_zyz  // 0x0B [1011]
 };
 
-namespace detail {
+namespace detail
+{
 
 inline void unpack_euler_order(
     EulerOrder order,
@@ -67,7 +70,8 @@ inline void unpack_euler_order(
 // Axis order
 //////////////////////////////////////////////////////////////////////////////
 
-enum AxisOrder {
+enum AxisOrder
+{
     axis_order_xyz = euler_order_xyz, // 0x00 [0000]
     axis_order_xzy = euler_order_xzy, // 0x02 [0010]
     axis_order_yzx = euler_order_yzx, // 0x04 [0100]
@@ -76,7 +80,8 @@ enum AxisOrder {
     axis_order_zyx = euler_order_zyx, // 0x0A [1010]
 };
 
-namespace detail {
+namespace detail
+{
 
 inline void unpack_axis_order(
     AxisOrder order,
@@ -94,7 +99,8 @@ inline void unpack_axis_order(
     k = (i + 2 - offset) % 3;
 }
 
-inline AxisOrder pack_axis_order(size_t i, bool odd) {
+inline AxisOrder pack_axis_order(size_t i, bool odd)
+{
     return AxisOrder((i << 2) | (size_t(odd) << 1));
 }
 
@@ -112,12 +118,14 @@ inline AxisOrder swap_axis_order(AxisOrder order)
 // Axis order 2D
 //////////////////////////////////////////////////////////////////////////////
 
-enum AxisOrder2D {
+enum AxisOrder2D
+{
     axis_order_xy = axis_order_xyz, // 0x00 [0000]
     axis_order_yx = axis_order_yxz, // 0x06 [0110]
 };
 
-namespace detail {
+namespace detail
+{
 
 inline void unpack_axis_order_2D(
     AxisOrder2D order,

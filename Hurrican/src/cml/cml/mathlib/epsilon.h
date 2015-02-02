@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -13,7 +13,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #ifndef epsilon_h
 #define epsilon_h
 
-namespace cml {
+namespace cml
+{
 
 /* @todo: epsilon and tolerance handling.
  *
@@ -25,15 +26,16 @@ template < typename Real >
 struct epsilon
 {
     typedef Real value_type;
-    
+
 private:
 
     /** For convenience */
     typedef value_type T;
-    
+
 public:
 
-    static T placeholder() {
+    static T placeholder()
+    {
         /* Completely arbitrary placeholder value: */
         return T(0.0001);
     }

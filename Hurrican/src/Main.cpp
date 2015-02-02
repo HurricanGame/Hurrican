@@ -93,7 +93,7 @@ HINSTANCE				g_hinst;						// hinstance des Hauptfensters
 #endif
 
 bool					FixedFramerate		= false;		// true = Spiel mit 50 Frames laufen lassen
-														// false = Spiel so flüssig wie möglich laufen lassen
+// false = Spiel so flüssig wie möglich laufen lassen
 bool					Sprache;						// true == deutsch / false == englisch
 bool					GameRunning			= true;		// Spiel läuft :-)
 bool					GamePaused			= false;	// Spiel eingefroren (wenn man zb das Fenster verlässt)
@@ -158,79 +158,86 @@ char					StringBuffer[100];				// Für die Int / String Umwandlung
 #if defined(PLATFORM_DIRECTX)
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 {
-	switch(message)
-	{
-		case WM_CREATE:								// Splash Screen beim erstellen des
-		{											// Fensters laden
-			SplashScreen = LoadBitmap (g_hinst, MAKEINTRESOURCE(IDB_SPLASHSCREEN));
-			return (0);
-		} break;
+    switch(message)
+    {
+    case WM_CREATE:								// Splash Screen beim erstellen des
+    {
+        // Fensters laden
+        SplashScreen = LoadBitmap (g_hinst, MAKEINTRESOURCE(IDB_SPLASHSCREEN));
+        return (0);
+    }
+    break;
 
-		case WM_PAINT:								// Beim starten den Splash Screen anzeigen
-		{
-			if (NochKeinFullScreen == true &&
-				CommandLineParams.RunWindowMode == false)
-			{
-				PAINTSTRUCT		ps;
-				HDC				hdc, hdcMem;
+    case WM_PAINT:								// Beim starten den Splash Screen anzeigen
+    {
+        if (NochKeinFullScreen == true &&
+                CommandLineParams.RunWindowMode == false)
+        {
+            PAINTSTRUCT		ps;
+            HDC				hdc, hdcMem;
 
-				hdc = BeginPaint (g_hwnd, &ps);
+            hdc = BeginPaint (g_hwnd, &ps);
 
-				hdcMem = CreateCompatibleDC (hdc);
-				SelectObject (hdcMem, SplashScreen);
+            hdcMem = CreateCompatibleDC (hdc);
+            SelectObject (hdcMem, SplashScreen);
 
-				BitBlt (hdc, -1, -1, 450, 110, hdcMem, 0, 0, SRCCOPY);
+            BitBlt (hdc, -1, -1, 450, 110, hdcMem, 0, 0, SRCCOPY);
 
-				DeleteDC (hdcMem);
-				EndPaint (g_hwnd, &ps);
+            DeleteDC (hdcMem);
+            EndPaint (g_hwnd, &ps);
 
-				InvalidateRect (g_hwnd, NULL, false);
-			}
-		} break;
+            InvalidateRect (g_hwnd, NULL, false);
+        }
+    }
+    break;
 
-		case WM_DESTROY:								// Fenster wird geschlossen
-		{
-			GameRunning = false;						// Spiel beenden
-			PostQuitMessage(0);							// Quit-Message posten
-			return(0);									// Success zurückliefern
-		} break;
+    case WM_DESTROY:								// Fenster wird geschlossen
+    {
+        GameRunning = false;						// Spiel beenden
+        PostQuitMessage(0);							// Quit-Message posten
+        return(0);									// Success zurückliefern
+    }
+    break;
 
-		case WM_SYSCOMMAND:								// "Alt aktiviert Menu" ausschalten
-		{
-			if (wparam == SC_TASKLIST ||
-				wparam == SC_KEYMENU)
-				return (0);
-		} break;
+    case WM_SYSCOMMAND:								// "Alt aktiviert Menu" ausschalten
+    {
+        if (wparam == SC_TASKLIST ||
+                wparam == SC_KEYMENU)
+            return (0);
+    }
+    break;
 
-		case WM_ACTIVATE:
-		{
-			int Active = LOWORD(wparam);           // activation flag
+    case WM_ACTIVATE:
+    {
+        int Active = LOWORD(wparam);           // activation flag
 
-			if (Active == WA_INACTIVE)
-			{
-				if (pSoundManager != NULL)
-				{
-					pSoundManager->PausePlaying();
-					pSoundManager->StopAllSounds();
-				}
+        if (Active == WA_INACTIVE)
+        {
+            if (pSoundManager != NULL)
+            {
+                pSoundManager->PausePlaying();
+                pSoundManager->StopAllSounds();
+            }
 
-				GamePaused = true;
-			}
-			else
-			{
-				if (pSoundManager != NULL)
-					pSoundManager->PlayPaused();
+            GamePaused = true;
+        }
+        else
+        {
+            if (pSoundManager != NULL)
+                pSoundManager->PlayPaused();
 
-				GamePaused = false;
-			}
+            GamePaused = false;
+        }
 
-		} break;
+    }
+    break;
 
-		default : break;
-	}
+    default :
+        break;
+    }
 
-	//unbearbeitete Nachrichten zurückliefern
-	return(DefWindowProc(hwnd, message, wparam, lparam));
+    //unbearbeitete Nachrichten zurückliefern
+    return(DefWindowProc(hwnd, message, wparam, lparam));
 }
 #endif
 
@@ -240,101 +247,101 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 bool FileExists(char Filename[256])
 {
-	std::fstream fin;
+    std::fstream fin;
 
-	fin.open(Filename,std::ios::in);
-	if (fin.is_open())
-	{
-		fin.close();
-		return true;
-	}
+    fin.open(Filename,std::ios::in);
+    if (fin.is_open())
+    {
+        fin.close();
+        return true;
+    }
 
-	fin.close();
-	return false;
+    fin.close();
+    return false;
 }
 
 int GetStringPos(const char
- *string, const char *substr)
+                 *string, const char *substr)
 {
-	int len = strlen(string);
-	for (int i = 0; i < len; i++)
-	{
-		int index = 0;
+    int len = strlen(string);
+    for (int i = 0; i < len; i++)
+    {
+        int index = 0;
 
-		while(string[i] == substr[index])
-		{
-			i++;
-			index++;
+        while(string[i] == substr[index])
+        {
+            i++;
+            index++;
 
-			int len = strlen(substr);
-			if (index >= len)
-				return i + 1;
-		}
-	}
+            int len = strlen(substr);
+            if (index >= len)
+                return i + 1;
+        }
+    }
 
-	return -1;
+    return -1;
 }
 
 #if defined(PLATFORM_DIRECTX)
 void FillCommandLineParams(void)
 {
-	int windowpos;
-	int listpos;
-	int levelpos;
-	char buffer[256];
+    int windowpos;
+    int listpos;
+    int levelpos;
+    char buffer[256];
 //	char *temppos;
 
-	// windowmode?
-	windowpos = GetStringPos(CommandLineParams.Params, "windowmode");
-	CommandLineParams.RunWindowMode = windowpos > -1;
+    // windowmode?
+    windowpos = GetStringPos(CommandLineParams.Params, "windowmode");
+    CommandLineParams.RunWindowMode = windowpos > -1;
 
-	// own levellist?
-	listpos = GetStringPos(CommandLineParams.Params, "custom");
-	CommandLineParams.RunOwnLevelList = listpos > -1;
-	if (CommandLineParams.OwnLevelList)
-	{
-		int i = 0;
-		int len = strlen(CommandLineParams.Params);
-		for (i = 0; i < len; i++)
-		{
-			if (CommandLineParams.Params[listpos + i] == 0  ||
-				CommandLineParams.Params[listpos + i] == 32 ||
-				CommandLineParams.Params[listpos + i] == 10)
-				break;
+    // own levellist?
+    listpos = GetStringPos(CommandLineParams.Params, "custom");
+    CommandLineParams.RunOwnLevelList = listpos > -1;
+    if (CommandLineParams.OwnLevelList)
+    {
+        int i = 0;
+        int len = strlen(CommandLineParams.Params);
+        for (i = 0; i < len; i++)
+        {
+            if (CommandLineParams.Params[listpos + i] == 0  ||
+                    CommandLineParams.Params[listpos + i] == 32 ||
+                    CommandLineParams.Params[listpos + i] == 10)
+                break;
 
-			buffer[i] = CommandLineParams.Params[listpos + i];
-		}
+            buffer[i] = CommandLineParams.Params[listpos + i];
+        }
 
-		buffer[i] = 0;
-		strcpy_s(CommandLineParams.OwnLevelList, strlen(buffer) + 1, buffer);
-	}
+        buffer[i] = 0;
+        strcpy_s(CommandLineParams.OwnLevelList, strlen(buffer) + 1, buffer);
+    }
 
-	// own single level?
-	levelpos = GetStringPos(CommandLineParams.Params, "level");
-	CommandLineParams.RunUserLevel = levelpos > -1;
-	if (CommandLineParams.RunUserLevel)
-	{
-		int i = 0;
-		int len = strlen(CommandLineParams.Params);
-		for (i = 0; i < len; i++)
-		{
-			if (CommandLineParams.Params[levelpos + i] == 0  ||
-				CommandLineParams.Params[levelpos + i] == 32 ||
-				CommandLineParams.Params[levelpos + i] == 10)
-				break;
+    // own single level?
+    levelpos = GetStringPos(CommandLineParams.Params, "level");
+    CommandLineParams.RunUserLevel = levelpos > -1;
+    if (CommandLineParams.RunUserLevel)
+    {
+        int i = 0;
+        int len = strlen(CommandLineParams.Params);
+        for (i = 0; i < len; i++)
+        {
+            if (CommandLineParams.Params[levelpos + i] == 0  ||
+                    CommandLineParams.Params[levelpos + i] == 32 ||
+                    CommandLineParams.Params[levelpos + i] == 10)
+                break;
 
-			buffer[i] = CommandLineParams.Params[levelpos + i];
-		}
+            buffer[i] = CommandLineParams.Params[levelpos + i];
+        }
 
-		buffer[i] = 0;
-		strcpy_s(CommandLineParams.UserLevelName, strlen(buffer) + 1, buffer);
-	}
+        buffer[i] = 0;
+        strcpy_s(CommandLineParams.UserLevelName, strlen(buffer) + 1, buffer);
+    }
 }
 
 #elif defined(PLATFORM_SDL)
 void FillCommandLineParams( int argc, char* args[] )
 {
-	char buffer[256];
+    char buffer[256];
     uint16_t i;
     int32_t listpos;
 
@@ -383,8 +390,8 @@ void FillCommandLineParams( int argc, char* args[] )
             for (i = 0; i < len; i++)
             {
                 if (CommandLineParams.Params[listpos + i] == 0  ||
-                    CommandLineParams.Params[listpos + i] == 32 ||
-                    CommandLineParams.Params[listpos + i] == 10)
+                        CommandLineParams.Params[listpos + i] == 32 ||
+                        CommandLineParams.Params[listpos + i] == 10)
                     break;
 
                 buffer[i] = CommandLineParams.Params[listpos + i];
@@ -416,7 +423,7 @@ void FillCommandLineParams( int argc, char* args[] )
 
 #if defined(PLATFORM_DIRECTX)
 int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
-				   LPSTR lpcmdline,		int nshowcmd)
+                   LPSTR lpcmdline,		int nshowcmd)
 {
 #elif defined(PLATFORM_SDL)
 int main(int argc, char *argv[])
@@ -424,26 +431,26 @@ int main(int argc, char *argv[])
 #endif
 
 #if defined(ANDROID)
-   g_storage_ext = SDL_AndroidGetExternalStoragePath();
+    g_storage_ext = SDL_AndroidGetExternalStoragePath();
 #else
-   g_storage_ext = ".";
+    g_storage_ext = ".";
 #endif
-   Protokoll.WriteText( false, "\n--> Using external storage path '%s' <--\n", g_storage_ext );
+    Protokoll.WriteText( false, "\n--> Using external storage path '%s' <--\n", g_storage_ext );
 
-	GamePaused = false;
+    GamePaused = false;
 
 #if defined(PLATFORM_DIRECTX)
-	WNDCLASSEX			winclass;							// eigene Windows-Klasse
-	MSG					message;							// Message
-	RECT				rect;								// Grösse des Desktops
+    WNDCLASSEX			winclass;							// eigene Windows-Klasse
+    MSG					message;							// Message
+    RECT				rect;								// Grösse des Desktops
 
-	// evtle Parameter holen und Typ des Parameters rausfinden
-	strcpy_s (CommandLineParams.Params, 1, "");
+    // evtle Parameter holen und Typ des Parameters rausfinden
+    strcpy_s (CommandLineParams.Params, 1, "");
 
-	if (strlen(lpcmdline) != 0)
-		strcpy_s (CommandLineParams.Params, strlen(lpcmdline) + 1, lpcmdline);
+    if (strlen(lpcmdline) != 0)
+        strcpy_s (CommandLineParams.Params, strlen(lpcmdline) + 1, lpcmdline);
 
-	FillCommandLineParams();
+    FillCommandLineParams();
 
 #elif defined(PLATFORM_SDL)
     HWND g_hwnd = 0;
@@ -453,206 +460,212 @@ int main(int argc, char *argv[])
 
 #endif
 
-	if (CommandLineParams.RunWindowMode)
-	{
-		WINDOWWIDTH	 = 1024;
-		WINDOWHEIGHT = 768;
-	}
-	else
-	{
-		WINDOWWIDTH	 = 449;
-		WINDOWHEIGHT = 109;
-	}
+    if (CommandLineParams.RunWindowMode)
+    {
+        WINDOWWIDTH	 = 1024;
+        WINDOWHEIGHT = 768;
+    }
+    else
+    {
+        WINDOWWIDTH	 = 449;
+        WINDOWHEIGHT = 109;
+    }
 
 #if defined(PLATFORM_DIRECTX)
-	// Desktop Window holen und Grösse auslesen (damit wir unser Fenster in der Mitte des Screens
-	// positionnieren können)
-	DesktopHWND = GetDesktopWindow();
-	GetWindowRect(DesktopHWND, &rect);
+    // Desktop Window holen und Grösse auslesen (damit wir unser Fenster in der Mitte des Screens
+    // positionnieren können)
+    DesktopHWND = GetDesktopWindow();
+    GetWindowRect(DesktopHWND, &rect);
 
-	// Anfang der Logdatei mit Datum und Uhrzeit
-	Protokoll.WriteText( false, ">-------------------------<\n" );
-	Protokoll.WriteText( false, "|        Hurrican         |\n" );
-	Protokoll.WriteText( false, "|   (c) 2007 poke53280    |\n" );
-	Protokoll.WriteText( false, "|                         |\n" );
-	Protokoll.WriteText( false, "|    www.poke53280.de     |\n" );
-	Protokoll.WriteText( false, "|  www.hurrican-game.de   |\n" );
-	Protokoll.WriteText( false, ">-------------------------<\n" );
-	Protokoll.WriteText( false, "Logfile date: ", false);
-	strcpy_s(StringBuffer, __DATE__);	Protokoll.WriteText(StringBuffer, false); Protokoll.WriteText(" - ", false);
-	strcpy_s(StringBuffer, __TIME__);	Protokoll.WriteText(StringBuffer, false);
+    // Anfang der Logdatei mit Datum und Uhrzeit
+    Protokoll.WriteText( false, ">-------------------------<\n" );
+    Protokoll.WriteText( false, "|        Hurrican         |\n" );
+    Protokoll.WriteText( false, "|   (c) 2007 poke53280    |\n" );
+    Protokoll.WriteText( false, "|                         |\n" );
+    Protokoll.WriteText( false, "|    www.poke53280.de     |\n" );
+    Protokoll.WriteText( false, "|  www.hurrican-game.de   |\n" );
+    Protokoll.WriteText( false, ">-------------------------<\n" );
+    Protokoll.WriteText( false, "Logfile date: ", false);
+    strcpy_s(StringBuffer, __DATE__);
+    Protokoll.WriteText(StringBuffer, false);
+    Protokoll.WriteText(" - ", false);
+    strcpy_s(StringBuffer, __TIME__);
+    Protokoll.WriteText(StringBuffer, false);
 
-	Protokoll.WriteText( false, "\n\n>-------------<\n" );
-	Protokoll.WriteText( false,     "| Init Window |\n" );
-	Protokoll.WriteText( false,     ">-------------<\n\n" );
+    Protokoll.WriteText( false, "\n\n>-------------<\n" );
+    Protokoll.WriteText( false,     "| Init Window |\n" );
+    Protokoll.WriteText( false,     ">-------------<\n\n" );
 
-	g_hinst = hinstance;
+    g_hinst = hinstance;
 
-	// Werte für die Windows-Klasse festlegen
-	winclass.cbSize			= sizeof (WNDCLASSEX);					// Grösse der Klasse
-	winclass.style			= CS_HREDRAW | CS_VREDRAW;				// Fenster-Einstellungen
-	winclass.lpfnWndProc	= WindowProc;							// Callback Funktion
-	winclass.cbClsExtra		= 0;									// extra Klassen-Info Space
-	winclass.cbWndExtra		= 0;									// extra Fenster-Info Space
-	winclass.hInstance		= hinstance;							// Fenster-Handle
-	winclass.hIcon			= LoadIcon(hinstance, MAKEINTRESOURCE(IDI_ICON1));		// Fenster-Icon
-	winclass.hCursor		= LoadCursor(NULL, IDC_ARROW);			// Mauscursor setzen
-	winclass.hbrBackground  = CreateSolidBrush(RGB(0, 0, 0));		// Hintergrundfarbe setzen
-	winclass.lpszMenuName	= NULL;									// Menu-Name
-	winclass.lpszClassName	= WINDOWCLASSNAME;						// Name der neuen Klasse
-	winclass.hIconSm		= LoadIcon(hinstance, MAKEINTRESOURCE(IDI_ICON1));	// Task-Leiste Icon laden
+    // Werte für die Windows-Klasse festlegen
+    winclass.cbSize			= sizeof (WNDCLASSEX);					// Grösse der Klasse
+    winclass.style			= CS_HREDRAW | CS_VREDRAW;				// Fenster-Einstellungen
+    winclass.lpfnWndProc	= WindowProc;							// Callback Funktion
+    winclass.cbClsExtra		= 0;									// extra Klassen-Info Space
+    winclass.cbWndExtra		= 0;									// extra Fenster-Info Space
+    winclass.hInstance		= hinstance;							// Fenster-Handle
+    winclass.hIcon			= LoadIcon(hinstance, MAKEINTRESOURCE(IDI_ICON1));		// Fenster-Icon
+    winclass.hCursor		= LoadCursor(NULL, IDC_ARROW);			// Mauscursor setzen
+    winclass.hbrBackground  = CreateSolidBrush(RGB(0, 0, 0));		// Hintergrundfarbe setzen
+    winclass.lpszMenuName	= NULL;									// Menu-Name
+    winclass.lpszClassName	= WINDOWCLASSNAME;						// Name der neuen Klasse
+    winclass.hIconSm		= LoadIcon(hinstance, MAKEINTRESOURCE(IDI_ICON1));	// Task-Leiste Icon laden
 
-	// Fensterklasse bei Windows registrieren
-	if (!RegisterClassEx(&winclass))
-	{
-		Protokoll.WriteText( true, "RegisterClassEx error!\n" );
-		return(0);
-	}
+    // Fensterklasse bei Windows registrieren
+    if (!RegisterClassEx(&winclass))
+    {
+        Protokoll.WriteText( true, "RegisterClassEx error!\n" );
+        return(0);
+    }
 
-	Protokoll.WriteText( false, "RegisterClassEx successful!\n" );
+    Protokoll.WriteText( false, "RegisterClassEx successful!\n" );
 
-	DWORD style;
+    DWORD style;
 
-	if (CommandLineParams.RunWindowMode)
-		style = WS_OVERLAPPED	|						// Fenster Style
-				WS_CAPTION		|
-				WS_SYSMENU		|
-				WS_BORDER		|
-				WS_MINIMIZEBOX	|
-				WS_MAXIMIZEBOX	|
-				WS_SIZEBOX	    |
-				WS_VISIBLE;
-	else
-		style = WS_POPUPWINDOW;
+    if (CommandLineParams.RunWindowMode)
+        style = WS_OVERLAPPED	|						// Fenster Style
+                WS_CAPTION		|
+                WS_SYSMENU		|
+                WS_BORDER		|
+                WS_MINIMIZEBOX	|
+                WS_MAXIMIZEBOX	|
+                WS_SIZEBOX	    |
+                WS_VISIBLE;
+    else
+        style = WS_POPUPWINDOW;
 
-	// Neues Fenster mit der registrierten Klasse erstellen
-	if (!(g_hwnd = CreateWindowEx(NULL,								// Eigenschaften
-								WINDOWCLASSNAME,					// Name der neuen Klasse
-								"Hurrican",							// Titel des Fenster
-								style,								// ohne Alles =)
-								(rect.right - WINDOWWIDTH)/2,		// x und y des Fensters
-								(rect.bottom- WINDOWHEIGHT)/2,		// in der Mitte zentriert
-								WINDOWWIDTH,						// Fensterbreite
-								WINDOWHEIGHT,						// Fensterhöhe
-								NULL,								// Handle des Parentfensters
-								NULL,								// Handle des Menus
-								hinstance,							// Instance von Main
-								NULL)))								// extra creation parms
-		{
-			Protokoll.WriteText( true, "CreateWindowEx error!\n" );
-			return(0);
-		}
+    // Neues Fenster mit der registrierten Klasse erstellen
+    if (!(g_hwnd = CreateWindowEx(NULL,								// Eigenschaften
+                                  WINDOWCLASSNAME,					// Name der neuen Klasse
+                                  "Hurrican",							// Titel des Fenster
+                                  style,								// ohne Alles =)
+                                  (rect.right - WINDOWWIDTH)/2,		// x und y des Fensters
+                                  (rect.bottom- WINDOWHEIGHT)/2,		// in der Mitte zentriert
+                                  WINDOWWIDTH,						// Fensterbreite
+                                  WINDOWHEIGHT,						// Fensterhöhe
+                                  NULL,								// Handle des Parentfensters
+                                  NULL,								// Handle des Menus
+                                  hinstance,							// Instance von Main
+                                  NULL)))								// extra creation parms
+    {
+        Protokoll.WriteText( true, "CreateWindowEx error!\n" );
+        return(0);
+    }
 
-	Protokoll.WriteText( false, "CreateWindowEx	successful!\n" );
-	Protokoll.WriteText( false, "WindowSizeX : " ); Protokoll.WriteValue(WINDOWWIDTH);
-	Protokoll.WriteText( false, "WindowSizeY : " ); Protokoll.WriteValue(WINDOWHEIGHT);
+    Protokoll.WriteText( false, "CreateWindowEx	successful!\n" );
+    Protokoll.WriteText( false, "WindowSizeX : " );
+    Protokoll.WriteValue(WINDOWWIDTH);
+    Protokoll.WriteText( false, "WindowSizeY : " );
+    Protokoll.WriteValue(WINDOWHEIGHT);
 
-	if (CommandLineParams.RunWindowMode == false)
-		ShowCursor(false);
+    if (CommandLineParams.RunWindowMode == false)
+        ShowCursor(false);
 
-	Protokoll.WriteText( false, "\n-> Init Window successful!\n" );
+    Protokoll.WriteText( false, "\n-> Init Window successful!\n" );
 
-	ShowWindow(g_hwnd, nshowcmd);						// Fenster anzeigen (sicher ist sicher)
-	UpdateWindow(g_hwnd);								// Fenster-infos updaten
+    ShowWindow(g_hwnd, nshowcmd);						// Fenster anzeigen (sicher ist sicher)
+    UpdateWindow(g_hwnd);								// Fenster-infos updaten
 #endif
 
 //----- Spiel-Initialisierung
 
-	if(!GameInit(g_hwnd, hinstance))
-	{
-		Protokoll.WriteText( true, "\n-> GameInit error!\n\n" );
-		GameRunning = false;
-	}
-	else
-		Protokoll.WriteText( false, "\n-> GameInit successful!\n\n" );
+    if(!GameInit(g_hwnd, hinstance))
+    {
+        Protokoll.WriteText( true, "\n-> GameInit error!\n\n" );
+        GameRunning = false;
+    }
+    else
+        Protokoll.WriteText( false, "\n-> GameInit successful!\n\n" );
 
 //----- Main-Loop
 
-	while(GameRunning == true)
-	{
+    while(GameRunning == true)
+    {
 #if defined(PLATFORM_DIRECTX)
-		while (PeekMessage (&message, NULL, 0, 0, PM_REMOVE))	// Nachricht vom Stapel holen
-		{														// und löschen
-			TranslateMessage(&message);							// Nachricht überetzen
-			DispatchMessage(&message);							// Nachricht an WinProc weiterleiten
-			UpdateWindow(g_hwnd);
-		}
+        while (PeekMessage (&message, NULL, 0, 0, PM_REMOVE))	// Nachricht vom Stapel holen
+        {
+            // und löschen
+            TranslateMessage(&message);							// Nachricht überetzen
+            DispatchMessage(&message);							// Nachricht an WinProc weiterleiten
+            UpdateWindow(g_hwnd);
+        }
 #endif
 #if defined(PLATFORM_SDL)
-      SDL_Event event;
+        SDL_Event event;
 
-      while (SDL_PollEvent(&event))
-      {
-         if (event.type == SDL_QUIT)
-            GameRunning = false;
-      }
+        while (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_QUIT)
+                GameRunning = false;
+        }
 #endif
-		try
-		{
-			if (GamePaused == false)
-			{
-				// Main Loop
-				Heartbeat();
+        try
+        {
+            if (GamePaused == false)
+            {
+                // Main Loop
+                Heartbeat();
 
-				// Eingabegeräte updaten
-				DirectInput.UpdateTastatur  ();
-				DirectInput.UpdateJoysticks ();
-				//DirectInput.UpdateMaus(false);
+                // Eingabegeräte updaten
+                DirectInput.UpdateTastatur  ();
+                DirectInput.UpdateJoysticks ();
+                //DirectInput.UpdateMaus(false);
 
-				// Soundchannels updaten
-				pSoundManager->Update();
+                // Soundchannels updaten
+                pSoundManager->Update();
 
-				// Timer updaten
-				pTimer->update();
+                // Timer updaten
+                pTimer->update();
 
-				// Feste Framerate ? (Spiel läuft in Zeitlupe, wenn zu langsam)
-				//
-				if (FixedFramerate == true)
-				{
-					pTimer->SetMaxFPS (60);
-					SpeedFaktor = 1.0f / 60.0f * pTimer->GetMoveSpeed();
-				}
-				else
-				{
-					//pTimer->SetMaxFPS (0);
-					SpeedFaktor = pTimer->SpeedFaktor;
-				}
+                // Feste Framerate ? (Spiel läuft in Zeitlupe, wenn zu langsam)
+                //
+                if (FixedFramerate == true)
+                {
+                    pTimer->SetMaxFPS (60);
+                    SpeedFaktor = 1.0f / 60.0f * pTimer->GetMoveSpeed();
+                }
+                else
+                {
+                    //pTimer->SetMaxFPS (0);
+                    SpeedFaktor = pTimer->SpeedFaktor;
+                }
 
-				pTimer->wait();
+                pTimer->wait();
 
-				// Bei Demo immer gleichen Speedfaktor setzen
-				//
-				if (DEMORecording == true ||
-					DEMOPlaying	  == true)
-					SpeedFaktor = 0.28f;
-			}
-		}
+                // Bei Demo immer gleichen Speedfaktor setzen
+                //
+                if (DEMORecording == true ||
+                        DEMOPlaying	  == true)
+                    SpeedFaktor = 0.28f;
+            }
+        }
 
-		catch(const char *str)
-	    {
-			Protokoll.WriteText( false, "Failure! Unhandled exception\n %s", str );
-			GameRunning = false;
-		}
-	}
+        catch(const char *str)
+        {
+            Protokoll.WriteText( false, "Failure! Unhandled exception\n %s", str );
+            GameRunning = false;
+        }
+    }
 
 //----- Spiel verlassen
 
-	//pTimer->WriteLogValues();
+    //pTimer->WriteLogValues();
 
-	if(!GameExit())
-		Protokoll.WriteText( true, "-> GameExit Fehler !\n" );
+    if(!GameExit())
+        Protokoll.WriteText( true, "-> GameExit Fehler !\n" );
 
-	Protokoll.WriteText( false, "\n-> Hurrican closed !\n" );
-	Protokoll.WriteText( false, "\nhttp://www.poke53280.de\n" );
-	Protokoll.WriteText( false, "Bugreports, questions etc : information@poke53280.de\n" );
-	Protokoll.WriteText( false, "\n-> logfile end" );
+    Protokoll.WriteText( false, "\n-> Hurrican closed !\n" );
+    Protokoll.WriteText( false, "\nhttp://www.poke53280.de\n" );
+    Protokoll.WriteText( false, "Bugreports, questions etc : information@poke53280.de\n" );
+    Protokoll.WriteText( false, "\n-> logfile end" );
 
-	// Kein Fehler im Game? Dann Logfile löschen
-	if (Protokoll.delLogFile == true)
-		DeleteFile("Game_Log.txt");
+    // Kein Fehler im Game? Dann Logfile löschen
+    if (Protokoll.delLogFile == true)
+        DeleteFile("Game_Log.txt");
 
 #if defined(PLATFORM_DIRECTX)
-	return(message.wParam);										// Rückkehr zu Windows
+    return(message.wParam);										// Rückkehr zu Windows
 #elif defined(PLATFORM_SDL)
     return 0;
 #endif
@@ -664,70 +677,70 @@ int main(int argc, char *argv[])
 
 bool GameInit(HWND hwnd, HINSTANCE hinstance)
 {
-	options_Detail = DETAIL_LOW;
+    options_Detail = DETAIL_LOW;
 
 #if defined(PLATFORM_DIRECTX)
-	// Language Files
-	HWND	ComboBoxLanguageFiles	= NULL;
-	ComboBoxLanguageFiles = CreateWindow("COMBOBOX",
-			 				"",
-							WS_CHILD,
-							0, 0, 0, 0, g_hwnd, 0, g_hinst, NULL);
+    // Language Files
+    HWND	ComboBoxLanguageFiles	= NULL;
+    ComboBoxLanguageFiles = CreateWindow("COMBOBOX",
+                                         "",
+                                         WS_CHILD,
+                                         0, 0, 0, 0, g_hwnd, 0, g_hinst, NULL);
 
-	// Loadinfo Text festlegen
-	srand(GetTickCount());
+    // Loadinfo Text festlegen
+    srand(GetTickCount());
 //	DisplayHintNr = rand()%30;
 
-	// *.lng Files anfügen
-	if (SendMessage(ComboBoxLanguageFiles, CB_DIR, DDL_READWRITE, (LPARAM) "*.lng") == CB_ERR)
-	{
-		Protokoll.WriteText( false, "No language Files found!", true);
-	}
+    // *.lng Files anfügen
+    if (SendMessage(ComboBoxLanguageFiles, CB_DIR, DDL_READWRITE, (LPARAM) "*.lng") == CB_ERR)
+    {
+        Protokoll.WriteText( false, "No language Files found!", true);
+    }
 
-	LanguageFileCount = SendMessage (ComboBoxLanguageFiles, CB_GETCOUNT, 0, 0);
-	for (int i = 0; i < LanguageFileCount; i++)
-	{
-		SendMessage (ComboBoxLanguageFiles, CB_GETLBTEXT, i, (LPARAM) LanguageFiles [i]);
-	}
+    LanguageFileCount = SendMessage (ComboBoxLanguageFiles, CB_GETCOUNT, 0, 0);
+    for (int i = 0; i < LanguageFileCount; i++)
+    {
+        SendMessage (ComboBoxLanguageFiles, CB_GETLBTEXT, i, (LPARAM) LanguageFiles [i]);
+    }
 #endif
 
-	Protokoll.WriteText( false, "\n>--------------------<\n" );
-	Protokoll.WriteText( false,   "| GameInit started   |\n" );
-	Protokoll.WriteText( false,   ">--------------------<\n" );
+    Protokoll.WriteText( false, "\n>--------------------<\n" );
+    Protokoll.WriteText( false,   "| GameInit started   |\n" );
+    Protokoll.WriteText( false,   ">--------------------<\n" );
 
-	// Timer initialisieren
-	pTimer = new TimerClass();
+    // Timer initialisieren
+    pTimer = new TimerClass();
 
-	// Direct3D initialisieren
-	if(!DirectGraphics.Init(hwnd, RENDERWIDTH, RENDERHEIGHT, SCREENBPP, true))
-	{
-		Protokoll.WriteText( true, "\n-> Direct3D Initialisierung Fehler ...!\n" );
-		return false;
-	}
+    // Direct3D initialisieren
+    if(!DirectGraphics.Init(hwnd, RENDERWIDTH, RENDERHEIGHT, SCREENBPP, true))
+    {
+        Protokoll.WriteText( true, "\n-> Direct3D Initialisierung Fehler ...!\n" );
+        return false;
+    }
 
-	// DirectInput initialisieren
-	if(!DirectInput.Init(hwnd, hinstance))
-	{
-		Protokoll.WriteText( true, "\n-> DirectInput8 Initialisierung Fehler ...!\n" );
-		return false;
-	}
+    // DirectInput initialisieren
+    if(!DirectInput.Init(hwnd, hinstance))
+    {
+        Protokoll.WriteText( true, "\n-> DirectInput8 Initialisierung Fehler ...!\n" );
+        return false;
+    }
 
 #if defined(ANDROID)
     DirectInput.InitTouchBoxes( DirectGraphics.WindowView.w, DirectGraphics.WindowView.h );
 #endif
 
-	// Sound Manager initialisieren
-	pSoundManager = new CSoundManager();
+    // Sound Manager initialisieren
+    pSoundManager = new CSoundManager();
 
-	// Splash-Screen nicht mehr anzeigen
-	NochKeinFullScreen = false;
+    // Splash-Screen nicht mehr anzeigen
+    NochKeinFullScreen = false;
 
 #ifdef SHOW_CRACKTRO
-	Cracktro = new CCracktro();
-	SpielZustand = CRACKTRO;
+    Cracktro = new CCracktro();
+    SpielZustand = CRACKTRO;
 #endif
 
-	return true;
+    return true;
 }
 
 // --------------------------------------------------------------------------------------
@@ -738,83 +751,83 @@ void ConvertPlayerTexture(DirectGraphicsSprite *pTexture)
 {
     // PICKLE TODO
 #if defined(PLATFORM_DIRECTX)
-	HRESULT hr;
-	D3DLOCKED_RECT pLockedRect;
-	int width, height, r, g, b, a, col, temp;
-	BYTE  *pRow;
-	DWORD *pPixel;
+    HRESULT hr;
+    D3DLOCKED_RECT pLockedRect;
+    int width, height, r, g, b, a, col, temp;
+    BYTE  *pRow;
+    DWORD *pPixel;
 
-	// Textur locken
-	hr = pTexture->itsTexture->LockRect(0, &pLockedRect, 0, 0);
-	if (hr != D3D_OK)
-		return;
+    // Textur locken
+    hr = pTexture->itsTexture->LockRect(0, &pLockedRect, 0, 0);
+    if (hr != D3D_OK)
+        return;
 
-	// Breite, Höhe und Pitch setzen
-	width  = (int)pTexture->itsXSize;
-	height = (int)pTexture->itsYSize;
-	pRow = (BYTE*)pLockedRect.pBits;
+    // Breite, Höhe und Pitch setzen
+    width  = (int)pTexture->itsXSize;
+    height = (int)pTexture->itsYSize;
+    pRow = (BYTE*)pLockedRect.pBits;
 
-	for (int y = 0;y < height;y++)
-	{
-		pPixel = (DWORD*)pRow; //pPixel auf Zeilenstart setzen
-		pRow += pLockedRect.Pitch; //Zeilenpointer eine Zeile weiter..
+    for (int y = 0; y < height; y++)
+    {
+        pPixel = (DWORD*)pRow; //pPixel auf Zeilenstart setzen
+        pRow += pLockedRect.Pitch; //Zeilenpointer eine Zeile weiter..
 
-		for (int x = 0; x < width; x++)
-		{
-			// farbe holen
-			col = (int)*pPixel;
-			a = (col >> 24) & 255;
-			r = (col >> 16) & 255;
-			g = (col >>  8) & 255;
-			b = (col) & 255;
+        for (int x = 0; x < width; x++)
+        {
+            // farbe holen
+            col = (int)*pPixel;
+            a = (col >> 24) & 255;
+            r = (col >> 16) & 255;
+            g = (col >>  8) & 255;
+            b = (col) & 255;
 
-			// Kein Colorkey?
-			if (a > 0)
-			{
-				// Rot und Blau vertauschen
-				if (b > r)
-				{
-					temp = b;
-					b = r;
-					r = temp;
-				}
+            // Kein Colorkey?
+            if (a > 0)
+            {
+                // Rot und Blau vertauschen
+                if (b > r)
+                {
+                    temp = b;
+                    b = r;
+                    r = temp;
+                }
 
-				r = r * 3 / 2;
+                r = r * 3 / 2;
 
-				if (r > 255)
-					r = 255;
-			}
+                if (r > 255)
+                    r = 255;
+            }
 
-			temp = 0;
+            temp = 0;
 
-			*pPixel = D3DCOLOR_RGBA(b, g, r, a);
+            *pPixel = D3DCOLOR_RGBA(b, g, r, a);
 
-			*pPixel++;
-		}
-	}
+            *pPixel++;
+        }
+    }
 
-	// Textur wieder freigeben
-	pTexture->itsTexture->UnlockRect(0);
+    // Textur wieder freigeben
+    pTexture->itsTexture->UnlockRect(0);
 #endif
 }
 
 void CreatePlayer2Texture(void)
 {
-	ConvertPlayerTexture(&PlayerKucken[1]);
-	ConvertPlayerTexture(&PlayerIdle[1]);
-	ConvertPlayerTexture(&PlayerRun[1]);
-	ConvertPlayerTexture(&PlayerRide[1]);
-	ConvertPlayerTexture(&PlayerRad[1]);
-	ConvertPlayerTexture(&PlayerBlitz[1]);
-	ConvertPlayerTexture(&PlayerJump[1]);
-	ConvertPlayerTexture(&PlayerCrouch[1]);
-	ConvertPlayerTexture(&PlayerIdle2[1]);
-	ConvertPlayerTexture(&PlayerJumpUp[1]);
-	ConvertPlayerTexture(&PlayerJumpDiagonal[1]);
-	ConvertPlayerTexture(&PlayerOben[1]);
-	ConvertPlayerTexture(&PlayerPiss[1]);
-	ConvertPlayerTexture(&PlayerPiss[1]);
-	ConvertPlayerTexture(&PlayerDiagonal[1]);
+    ConvertPlayerTexture(&PlayerKucken[1]);
+    ConvertPlayerTexture(&PlayerIdle[1]);
+    ConvertPlayerTexture(&PlayerRun[1]);
+    ConvertPlayerTexture(&PlayerRide[1]);
+    ConvertPlayerTexture(&PlayerRad[1]);
+    ConvertPlayerTexture(&PlayerBlitz[1]);
+    ConvertPlayerTexture(&PlayerJump[1]);
+    ConvertPlayerTexture(&PlayerCrouch[1]);
+    ConvertPlayerTexture(&PlayerIdle2[1]);
+    ConvertPlayerTexture(&PlayerJumpUp[1]);
+    ConvertPlayerTexture(&PlayerJumpDiagonal[1]);
+    ConvertPlayerTexture(&PlayerOben[1]);
+    ConvertPlayerTexture(&PlayerPiss[1]);
+    ConvertPlayerTexture(&PlayerPiss[1]);
+    ConvertPlayerTexture(&PlayerDiagonal[1]);
 }
 
 // --------------------------------------------------------------------------------------
@@ -823,246 +836,246 @@ void CreatePlayer2Texture(void)
 
 bool GameInit2(void)
 {
-	// Player initialisieren
-	pPlayer[0] = new PlayerClass();
-	pPlayer[1] = new PlayerClass();
-	pPlayer[0]->SoundOff = 0;
-	pPlayer[1]->SoundOff = 1;
-	memset(pPlayer[0], 0, sizeof(*pPlayer[0]));
-	memset(pPlayer[1], 0, sizeof(*pPlayer[1]));
+    // Player initialisieren
+    pPlayer[0] = new PlayerClass();
+    pPlayer[1] = new PlayerClass();
+    pPlayer[0]->SoundOff = 0;
+    pPlayer[1]->SoundOff = 1;
+    memset(pPlayer[0], 0, sizeof(*pPlayer[0]));
+    memset(pPlayer[1], 0, sizeof(*pPlayer[1]));
 
-	// Konfiguration laden
-	if (LoadConfig() == false)
-	{
-		Protokoll.WriteText( false, "\n-> No config found. Creating default\n" );
-		CreateDefaultConfig ();
-	}
+    // Konfiguration laden
+    if (LoadConfig() == false)
+    {
+        Protokoll.WriteText( false, "\n-> No config found. Creating default\n" );
+        CreateDefaultConfig ();
+    }
 
-	// Menumusik laden und spielen
-	pSoundManager->LoadSong("menu.it",	MUSIC_MENU);
-	pSoundManager->SetAllSongVolumes();
-	pSoundManager->PlaySong(MUSIC_MENU, false);
+    // Menumusik laden und spielen
+    pSoundManager->LoadSong("menu.it",	MUSIC_MENU);
+    pSoundManager->SetAllSongVolumes();
+    pSoundManager->PlaySong(MUSIC_MENU, false);
 
-	// Menu initialisieren
-	pMenuFont->LoadFont("menufont.png", 448, 256, 28, 28, 16, 7);
-	pMenu = new MenuClass();
+    // Menu initialisieren
+    pMenuFont->LoadFont("menufont.png", 448, 256, 28, 28, 16, 7);
+    pMenu = new MenuClass();
 
 
-	// Fonts laden
-	pDefaultFont->LoadFont  ("smallfont.bmp", 320, 84, 10, 12, 32, 7);
+    // Fonts laden
+    pDefaultFont->LoadFont  ("smallfont.bmp", 320, 84, 10, 12, 32, 7);
 
-	LoadingScreen.LoadImage("loading.bmp",    360, 60, 360, 60, 1, 1);
-	LoadingBar.LoadImage   ("loadingbar.bmp", 318, 19, 318, 19, 1, 1);
-	LoadingProgress = 0.0f;
-	LoadingItemsToLoad = 345;
-	LoadingItemsLoaded = 0;
+    LoadingScreen.LoadImage("loading.bmp",    360, 60, 360, 60, 1, 1);
+    LoadingBar.LoadImage   ("loadingbar.bmp", 318, 19, 318, 19, 1, 1);
+    LoadingProgress = 0.0f;
+    LoadingItemsToLoad = 345;
+    LoadingItemsLoaded = 0;
 
-	// GUISystem initialiseren
-	pGUI = new CGUISystem();
-	pGUI->InitGUISystem();
+    // GUISystem initialiseren
+    pGUI = new CGUISystem();
+    pGUI->InitGUISystem();
 
-	// Partikelsystem initialisieren
-	pPartikelSystem = new(PartikelsystemClass);
+    // Partikelsystem initialisieren
+    pPartikelSystem = new(PartikelsystemClass);
 
-	// ProjectileListe initialisieren
-	pProjectiles = new(ProjectileListClass);
+    // ProjectileListe initialisieren
+    pProjectiles = new(ProjectileListClass);
 
-	// GegnerListe initialisieren
-	pGegner = new(GegnerListClass);
+    // GegnerListe initialisieren
+    pGegner = new(GegnerListClass);
 
-	// Tileengine initialisieren
-	pTileEngine = new(TileEngineClass);
-	pTileEngine->SetScrollSpeed(1.0f, 0.0f);
+    // Tileengine initialisieren
+    pTileEngine = new(TileEngineClass);
+    pTileEngine->SetScrollSpeed(1.0f, 0.0f);
 
-	// HUD initialisieren
-	pHUD = new HUDClass();
+    // HUD initialisieren
+    pHUD = new HUDClass();
 
-	InitReplacers();
+    InitReplacers();
 
-	// Sounds laden
-	pSoundManager->LoadWave("spreadshot.wav",   SOUND_SPREADSHOT, false);
-	pSoundManager->LoadWave("lasershot.wav",    SOUND_LASERSHOT, false);
-	pSoundManager->LoadWave("bounceshot.wav",   SOUND_BOUNCESHOT, false);
-	pSoundManager->LoadWave("explosion1.wav",   SOUND_EXPLOSION1, false);
-	pSoundManager->LoadWave("explosion2.wav",   SOUND_EXPLOSION2, false);
-	pSoundManager->LoadWave("explosion3.wav",   SOUND_EXPLOSION3, false);
-	pSoundManager->LoadWave("explosion4.wav",   SOUND_EXPLOSION4, false);
-	pSoundManager->LoadWave("walkergiggle.wav", SOUND_WALKERGIGGLE, false);
-	pSoundManager->LoadWave("collect.wav",		SOUND_COLLECT, false);
-	pSoundManager->LoadWave("hit.wav",		    SOUND_SPREADHIT, false);
-	pSoundManager->LoadWave("canon.wav",		SOUND_CANON, false);
-	pSoundManager->LoadWave("click.wav",		SOUND_CLICK, false);
-	pSoundManager->LoadWave("blitzstart.wav",	SOUND_BLITZSTART, false);
-	pSoundManager->LoadWave("blitzende.wav",	SOUND_BLITZENDE, false);
-	pSoundManager->LoadWave("blitz.wav",		SOUND_BLITZ, true);
-	pSoundManager->LoadWave("blitzstart.wav",	SOUND_BLITZSTART_P2, false);
-	pSoundManager->LoadWave("blitzende.wav",	SOUND_BLITZENDE_P2, false);
-	pSoundManager->LoadWave("blitz.wav",		SOUND_BLITZ_P2, true);
-	pSoundManager->LoadWave("powerline.wav",	SOUND_POWERLINE, false);
-	pSoundManager->LoadWave("landen.wav",		SOUND_LANDEN, false);
-	pSoundManager->LoadWave("waterin.wav",		SOUND_WATERIN, false);
-	pSoundManager->LoadWave("waterout.wav",		SOUND_WATEROUT, false);
-	pSoundManager->LoadWave("dive.wav",			SOUND_DIVE, false);
-	pSoundManager->LoadWave("feuerfalle.wav",	SOUND_FEUERFALLE, false);
-	pSoundManager->LoadWave("abzug.wav",		SOUND_ABZUG, false);
-	pSoundManager->LoadWave("abzug.wav",		SOUND_ABZUG_P2, false);
-	pSoundManager->LoadWave("funke.wav",		SOUND_FUNKE, false);
-	pSoundManager->LoadWave("funke2.wav",		SOUND_FUNKE2, false);
-	pSoundManager->LoadWave("funke3.wav",		SOUND_FUNKE3, false);
-	pSoundManager->LoadWave("funke4.wav",		SOUND_FUNKE4, false);
-	pSoundManager->LoadWave("granate.wav",		SOUND_GRANATE, false);
-	pSoundManager->LoadWave("stonefall.wav",	SOUND_STONEFALL, false);
-	pSoundManager->LoadWave("stoneexplode.wav",	SOUND_STONEEXPLODE, false);
-	pSoundManager->LoadWave("rocket.wav",		SOUND_ROCKET, false);
-	pSoundManager->LoadWave("presse.wav",		SOUND_PRESSE, false);
-	pSoundManager->LoadWave("ammo.wav",			SOUND_AMMO, false);
-	pSoundManager->LoadWave("kotzen.wav",		SOUND_KOTZEN, false);
-	pSoundManager->LoadWave("made.wav",			SOUND_MADE, false);
-	pSoundManager->LoadWave("droneshot.wav",	SOUND_DRONE, false);
-	pSoundManager->LoadWave("waterdrop.wav",	SOUND_DROP, false);
-	pSoundManager->LoadWave("thunder.wav",		SOUND_THUNDER, false);
-	pSoundManager->LoadWave("upgrade.wav",		SOUND_UPGRADE, false);
-	pSoundManager->LoadWave("column.wav",		SOUND_COLUMN, false);
-	pSoundManager->LoadWave("door.wav",			SOUND_DOOR, true);
-	pSoundManager->LoadWave("doorstop.wav",		SOUND_DOORSTOP, false);
-	pSoundManager->LoadWave("switch.wav",		SOUND_SWITCH, false);
-	pSoundManager->LoadWave("schleim.wav",		SOUND_SCHLEIM, false);
-	pSoundManager->LoadWave("message.wav",		SOUND_MESSAGE, false);
-	pSoundManager->LoadWave("beamload.wav",		SOUND_BEAMLOAD, true);
-	pSoundManager->LoadWave("beamload2.wav",	SOUND_BEAMLOAD2, true);
-	pSoundManager->LoadWave("beamload.wav",		SOUND_BEAMLOAD_P2, true);
-	pSoundManager->LoadWave("beamload2.wav",	SOUND_BEAMLOAD2_P2, true);
+    // Sounds laden
+    pSoundManager->LoadWave("spreadshot.wav",   SOUND_SPREADSHOT, false);
+    pSoundManager->LoadWave("lasershot.wav",    SOUND_LASERSHOT, false);
+    pSoundManager->LoadWave("bounceshot.wav",   SOUND_BOUNCESHOT, false);
+    pSoundManager->LoadWave("explosion1.wav",   SOUND_EXPLOSION1, false);
+    pSoundManager->LoadWave("explosion2.wav",   SOUND_EXPLOSION2, false);
+    pSoundManager->LoadWave("explosion3.wav",   SOUND_EXPLOSION3, false);
+    pSoundManager->LoadWave("explosion4.wav",   SOUND_EXPLOSION4, false);
+    pSoundManager->LoadWave("walkergiggle.wav", SOUND_WALKERGIGGLE, false);
+    pSoundManager->LoadWave("collect.wav",		SOUND_COLLECT, false);
+    pSoundManager->LoadWave("hit.wav",		    SOUND_SPREADHIT, false);
+    pSoundManager->LoadWave("canon.wav",		SOUND_CANON, false);
+    pSoundManager->LoadWave("click.wav",		SOUND_CLICK, false);
+    pSoundManager->LoadWave("blitzstart.wav",	SOUND_BLITZSTART, false);
+    pSoundManager->LoadWave("blitzende.wav",	SOUND_BLITZENDE, false);
+    pSoundManager->LoadWave("blitz.wav",		SOUND_BLITZ, true);
+    pSoundManager->LoadWave("blitzstart.wav",	SOUND_BLITZSTART_P2, false);
+    pSoundManager->LoadWave("blitzende.wav",	SOUND_BLITZENDE_P2, false);
+    pSoundManager->LoadWave("blitz.wav",		SOUND_BLITZ_P2, true);
+    pSoundManager->LoadWave("powerline.wav",	SOUND_POWERLINE, false);
+    pSoundManager->LoadWave("landen.wav",		SOUND_LANDEN, false);
+    pSoundManager->LoadWave("waterin.wav",		SOUND_WATERIN, false);
+    pSoundManager->LoadWave("waterout.wav",		SOUND_WATEROUT, false);
+    pSoundManager->LoadWave("dive.wav",			SOUND_DIVE, false);
+    pSoundManager->LoadWave("feuerfalle.wav",	SOUND_FEUERFALLE, false);
+    pSoundManager->LoadWave("abzug.wav",		SOUND_ABZUG, false);
+    pSoundManager->LoadWave("abzug.wav",		SOUND_ABZUG_P2, false);
+    pSoundManager->LoadWave("funke.wav",		SOUND_FUNKE, false);
+    pSoundManager->LoadWave("funke2.wav",		SOUND_FUNKE2, false);
+    pSoundManager->LoadWave("funke3.wav",		SOUND_FUNKE3, false);
+    pSoundManager->LoadWave("funke4.wav",		SOUND_FUNKE4, false);
+    pSoundManager->LoadWave("granate.wav",		SOUND_GRANATE, false);
+    pSoundManager->LoadWave("stonefall.wav",	SOUND_STONEFALL, false);
+    pSoundManager->LoadWave("stoneexplode.wav",	SOUND_STONEEXPLODE, false);
+    pSoundManager->LoadWave("rocket.wav",		SOUND_ROCKET, false);
+    pSoundManager->LoadWave("presse.wav",		SOUND_PRESSE, false);
+    pSoundManager->LoadWave("ammo.wav",			SOUND_AMMO, false);
+    pSoundManager->LoadWave("kotzen.wav",		SOUND_KOTZEN, false);
+    pSoundManager->LoadWave("made.wav",			SOUND_MADE, false);
+    pSoundManager->LoadWave("droneshot.wav",	SOUND_DRONE, false);
+    pSoundManager->LoadWave("waterdrop.wav",	SOUND_DROP, false);
+    pSoundManager->LoadWave("thunder.wav",		SOUND_THUNDER, false);
+    pSoundManager->LoadWave("upgrade.wav",		SOUND_UPGRADE, false);
+    pSoundManager->LoadWave("column.wav",		SOUND_COLUMN, false);
+    pSoundManager->LoadWave("door.wav",			SOUND_DOOR, true);
+    pSoundManager->LoadWave("doorstop.wav",		SOUND_DOORSTOP, false);
+    pSoundManager->LoadWave("switch.wav",		SOUND_SWITCH, false);
+    pSoundManager->LoadWave("schleim.wav",		SOUND_SCHLEIM, false);
+    pSoundManager->LoadWave("message.wav",		SOUND_MESSAGE, false);
+    pSoundManager->LoadWave("beamload.wav",		SOUND_BEAMLOAD, true);
+    pSoundManager->LoadWave("beamload2.wav",	SOUND_BEAMLOAD2, true);
+    pSoundManager->LoadWave("beamload.wav",		SOUND_BEAMLOAD_P2, true);
+    pSoundManager->LoadWave("beamload2.wav",	SOUND_BEAMLOAD2_P2, true);
 //	pSoundManager->LoadWave("chain.wav",		SOUND_CHAIN, true);
-	pSoundManager->LoadWave("mushroomjump.wav",	SOUND_MUSHROOMJUMP, false);
-	pSoundManager->LoadWave("golemload.wav",	SOUND_GOLEMLOAD, false);
-	pSoundManager->LoadWave("golemshot.wav",	SOUND_GOLEMSHOT, false);
-	pSoundManager->LoadWave("dampf.wav",		SOUND_STEAM, false);
-	pSoundManager->LoadWave("dampf2.wav",		SOUND_STEAM2, false);
-	pSoundManager->LoadWave("hit2.wav",		    SOUND_HIT, false);
-	pSoundManager->LoadWave("hit3.wav",		    SOUND_HIT2, false);
-	pSoundManager->LoadWave("spiderlila.wav",	SOUND_LILA, false);
-	pSoundManager->LoadWave("fireball.wav",		SOUND_FIREBALL, false);
-	pSoundManager->LoadWave("takeoff.wav",		SOUND_TAKEOFF, false);
-	pSoundManager->LoadWave("laugh.wav",		SOUND_LAUGH, false);
-	pSoundManager->LoadWave("standup.wav",		SOUND_STANDUP, false);
-	pSoundManager->LoadWave("gatling.wav",		SOUND_GATLING, false);
-	pSoundManager->LoadWave("glassbreak.wav",	SOUND_GLASSBREAK, false);
-	pSoundManager->LoadWave("mutant.wav",		SOUND_MUTANT, false);
-	pSoundManager->LoadWave("heart1.wav",		SOUND_HEART1, false);
-	pSoundManager->LoadWave("heart2.wav",		SOUND_HEART2, false);
-	pSoundManager->LoadWave("secret.wav",		SOUND_SECRET, false);
-	pSoundManager->LoadWave("mario.wav",		SOUND_MARIO, false);
-	pSoundManager->LoadWave("flamethrower.wav",	SOUND_FLAMETHROWER, true);
-	pSoundManager->LoadWave("flamethrower.wav",	SOUND_FLAMETHROWER2, true);
+    pSoundManager->LoadWave("mushroomjump.wav",	SOUND_MUSHROOMJUMP, false);
+    pSoundManager->LoadWave("golemload.wav",	SOUND_GOLEMLOAD, false);
+    pSoundManager->LoadWave("golemshot.wav",	SOUND_GOLEMSHOT, false);
+    pSoundManager->LoadWave("dampf.wav",		SOUND_STEAM, false);
+    pSoundManager->LoadWave("dampf2.wav",		SOUND_STEAM2, false);
+    pSoundManager->LoadWave("hit2.wav",		    SOUND_HIT, false);
+    pSoundManager->LoadWave("hit3.wav",		    SOUND_HIT2, false);
+    pSoundManager->LoadWave("spiderlila.wav",	SOUND_LILA, false);
+    pSoundManager->LoadWave("fireball.wav",		SOUND_FIREBALL, false);
+    pSoundManager->LoadWave("takeoff.wav",		SOUND_TAKEOFF, false);
+    pSoundManager->LoadWave("laugh.wav",		SOUND_LAUGH, false);
+    pSoundManager->LoadWave("standup.wav",		SOUND_STANDUP, false);
+    pSoundManager->LoadWave("gatling.wav",		SOUND_GATLING, false);
+    pSoundManager->LoadWave("glassbreak.wav",	SOUND_GLASSBREAK, false);
+    pSoundManager->LoadWave("mutant.wav",		SOUND_MUTANT, false);
+    pSoundManager->LoadWave("heart1.wav",		SOUND_HEART1, false);
+    pSoundManager->LoadWave("heart2.wav",		SOUND_HEART2, false);
+    pSoundManager->LoadWave("secret.wav",		SOUND_SECRET, false);
+    pSoundManager->LoadWave("mario.wav",		SOUND_MARIO, false);
+    pSoundManager->LoadWave("flamethrower.wav",	SOUND_FLAMETHROWER, true);
+    pSoundManager->LoadWave("flamethrower.wav",	SOUND_FLAMETHROWER2, true);
 
-	// Sound Trigger
-	pSoundManager->LoadWave("ambient_wasserfall.wav",	SOUND_WASSERFALL, true);
-	pSoundManager->LoadWave("ambient_wind.wav",			SOUND_WIND, true);
+    // Sound Trigger
+    pSoundManager->LoadWave("ambient_wasserfall.wav",	SOUND_WASSERFALL, true);
+    pSoundManager->LoadWave("ambient_wind.wav",			SOUND_WIND, true);
 
-	// Voices laden
-	pSoundManager->LoadWave("v_spread.wav",		SOUND_VOICE_SPREAD, false);
-	pSoundManager->LoadWave("v_laser.wav",		SOUND_VOICE_LASER, false);
-	pSoundManager->LoadWave("v_bounce.wav",		SOUND_VOICE_BOUNCE, false);
-	pSoundManager->LoadWave("v_lightning.wav",	SOUND_VOICE_LIGHTNING, false);
-	pSoundManager->LoadWave("v_shield.wav",		SOUND_VOICE_SHIELD, false);
-	pSoundManager->LoadWave("v_powerup.wav",	SOUND_VOICE_POWERUP, false);
-	pSoundManager->LoadWave("v_wheel.wav",		SOUND_VOICE_WHEELPOWER, false);
-	pSoundManager->LoadWave("v_grenade.wav",	SOUND_VOICE_GRENADE, false);
-	pSoundManager->LoadWave("v_powerline.wav",	SOUND_VOICE_POWERLINE, false);
-	pSoundManager->LoadWave("v_smartbomb.wav",	SOUND_VOICE_SMARTBOMB, false);
-	pSoundManager->LoadWave("v_rapidfire.wav",	SOUND_VOICE_RAPIDFIRE, false);
-	pSoundManager->LoadWave("v_supershot.wav",	SOUND_VOICE_SUPERSHOT, false);
-	pSoundManager->LoadWave("v_extralife.wav",	SOUND_VOICE_EXTRALIFE, false);
+    // Voices laden
+    pSoundManager->LoadWave("v_spread.wav",		SOUND_VOICE_SPREAD, false);
+    pSoundManager->LoadWave("v_laser.wav",		SOUND_VOICE_LASER, false);
+    pSoundManager->LoadWave("v_bounce.wav",		SOUND_VOICE_BOUNCE, false);
+    pSoundManager->LoadWave("v_lightning.wav",	SOUND_VOICE_LIGHTNING, false);
+    pSoundManager->LoadWave("v_shield.wav",		SOUND_VOICE_SHIELD, false);
+    pSoundManager->LoadWave("v_powerup.wav",	SOUND_VOICE_POWERUP, false);
+    pSoundManager->LoadWave("v_wheel.wav",		SOUND_VOICE_WHEELPOWER, false);
+    pSoundManager->LoadWave("v_grenade.wav",	SOUND_VOICE_GRENADE, false);
+    pSoundManager->LoadWave("v_powerline.wav",	SOUND_VOICE_POWERLINE, false);
+    pSoundManager->LoadWave("v_smartbomb.wav",	SOUND_VOICE_SMARTBOMB, false);
+    pSoundManager->LoadWave("v_rapidfire.wav",	SOUND_VOICE_RAPIDFIRE, false);
+    pSoundManager->LoadWave("v_supershot.wav",	SOUND_VOICE_SUPERSHOT, false);
+    pSoundManager->LoadWave("v_extralife.wav",	SOUND_VOICE_EXTRALIFE, false);
 
-	// Endgegner Sounds
-	pSoundManager->LoadWave("pharaoramm.wav",	SOUND_PHARAORAMM, false);
-	pSoundManager->LoadWave("pharaodie.wav",	SOUND_PHARAODIE, false);
-	pSoundManager->LoadWave("spiderscream.wav",	SOUND_SPIDERSCREAM, false);
-	pSoundManager->LoadWave("spiderwalk.wav",	SOUND_SPIDERWALK, false);
-	pSoundManager->LoadWave("spiderlaser.wav",	SOUND_SPIDERLASER, false);
-	pSoundManager->LoadWave("spidergrenade.wav",SOUND_SPIDERGRENADE, false);
-	pSoundManager->LoadWave("blitzhit.wav",     SOUND_BLITZHIT, false);
-	pSoundManager->LoadWave("blitzhit2.wav",    SOUND_BLITZHIT2, false);
-	pSoundManager->LoadWave("bratlaser.wav",    SOUND_BRATLASER, false);
-	pSoundManager->LoadWave("metal.wav",	    SOUND_KLONG, false);
+    // Endgegner Sounds
+    pSoundManager->LoadWave("pharaoramm.wav",	SOUND_PHARAORAMM, false);
+    pSoundManager->LoadWave("pharaodie.wav",	SOUND_PHARAODIE, false);
+    pSoundManager->LoadWave("spiderscream.wav",	SOUND_SPIDERSCREAM, false);
+    pSoundManager->LoadWave("spiderwalk.wav",	SOUND_SPIDERWALK, false);
+    pSoundManager->LoadWave("spiderlaser.wav",	SOUND_SPIDERLASER, false);
+    pSoundManager->LoadWave("spidergrenade.wav",SOUND_SPIDERGRENADE, false);
+    pSoundManager->LoadWave("blitzhit.wav",     SOUND_BLITZHIT, false);
+    pSoundManager->LoadWave("blitzhit2.wav",    SOUND_BLITZHIT2, false);
+    pSoundManager->LoadWave("bratlaser.wav",    SOUND_BRATLASER, false);
+    pSoundManager->LoadWave("metal.wav",	    SOUND_KLONG, false);
 
-	// restliche musiken laden
-	pSoundManager->LoadSong("flugsack.it",	MUSIC_FLUGSACK);
-	pSoundManager->LoadSong("credits.it",	MUSIC_CREDITS);
-	pSoundManager->LoadSong("stageclear.it",MUSIC_STAGECLEAR);
-	pSoundManager->LoadSong("gameover.it",	MUSIC_GAMEOVER);
-	pSoundManager->LoadSong("highscore.it",	MUSIC_HIGHSCORE);
-	pSoundManager->LoadSong("Punisher.it", MUSIC_PUNISHER);
+    // restliche musiken laden
+    pSoundManager->LoadSong("flugsack.it",	MUSIC_FLUGSACK);
+    pSoundManager->LoadSong("credits.it",	MUSIC_CREDITS);
+    pSoundManager->LoadSong("stageclear.it",MUSIC_STAGECLEAR);
+    pSoundManager->LoadSong("gameover.it",	MUSIC_GAMEOVER);
+    pSoundManager->LoadSong("highscore.it",	MUSIC_HIGHSCORE);
+    pSoundManager->LoadSong("Punisher.it", MUSIC_PUNISHER);
 
-	// Spieler grafiken laden
-	SchussFlamme[0].LoadImage("schussflamme.bmp",  76,  72,  38, 24, 2, 3);
-	SchussFlamme[1].LoadImage("schussflamme2.bmp", 80,  108,  40, 36, 2, 3);
-	SchussFlamme[2].LoadImage("schussflamme3.bmp", 48,  114,  24, 38, 2, 3);
+    // Spieler grafiken laden
+    SchussFlamme[0].LoadImage("schussflamme.bmp",  76,  72,  38, 24, 2, 3);
+    SchussFlamme[1].LoadImage("schussflamme2.bmp", 80,  108,  40, 36, 2, 3);
+    SchussFlamme[2].LoadImage("schussflamme3.bmp", 48,  114,  24, 38, 2, 3);
 
-	SchussFlammeFlare.LoadImage("schussflammeflare.bmp", 140,  140,  140, 140, 1, 1);
+    SchussFlammeFlare.LoadImage("schussflammeflare.bmp", 140,  140,  140, 140, 1, 1);
 
-	for (int p = 0; p < 2; p++)
-	{
-		// Idle
-		PlayerIdle[p].LoadImage("hurri_idle.png",  350, 320, 70, 80, 5, 4);
+    for (int p = 0; p < 2; p++)
+    {
+        // Idle
+        PlayerIdle[p].LoadImage("hurri_idle.png",  350, 320, 70, 80, 5, 4);
 
-		// Kucken
-		PlayerKucken[p].LoadImage("hurri_kucken.png",  140, 80, 70, 80, 2, 1);
+        // Kucken
+        PlayerKucken[p].LoadImage("hurri_kucken.png",  140, 80, 70, 80, 2, 1);
 
-		// Umkucken
-		PlayerIdle2[p].LoadImage("hurri_idleumkuck.png",  980,  320, 70, 80, 14, 4);
+        // Umkucken
+        PlayerIdle2[p].LoadImage("hurri_idleumkuck.png",  980,  320, 70, 80, 14, 4);
 
-		// Laufen
-		PlayerRun[p].LoadImage("hurri_laufen.png",  350,  320, 70, 80, 5, 4);
+        // Laufen
+        PlayerRun[p].LoadImage("hurri_laufen.png",  350,  320, 70, 80, 5, 4);
 
-		// Diagonal schauen/schiessen
-		PlayerDiagonal[p].LoadImage("hurri_shootdiagonal.png",  140,  80, 70, 80, 2, 1);
+        // Diagonal schauen/schiessen
+        PlayerDiagonal[p].LoadImage("hurri_shootdiagonal.png",  140,  80, 70, 80, 2, 1);
 
-		// Hoch schauen/schiessen
-		PlayerOben[p].LoadImage("hurri_shootup.png",  140,  80, 70, 80, 2, 1);
+        // Hoch schauen/schiessen
+        PlayerOben[p].LoadImage("hurri_shootup.png",  140,  80, 70, 80, 2, 1);
 
-		// Ducken
-		PlayerCrouch[p].LoadImage("hurri_crouch.png",  140,  80, 70, 80, 2, 1);
+        // Ducken
+        PlayerCrouch[p].LoadImage("hurri_crouch.png",  140,  80, 70, 80, 2, 1);
 
-		// Springen normal, diagonal und nach oben
-		PlayerJump[p].LoadImage("hurri_jump.png",  280,  240, 70, 80, 4, 3);
-		PlayerJumpDiagonal[p].LoadImage("hurri_jumpschraeg.png",  280,  240, 70, 80, 4, 3);
-		PlayerJumpUp[p].LoadImage("hurri_jumpup.png",  280,  240, 70, 80, 4, 3);
+        // Springen normal, diagonal und nach oben
+        PlayerJump[p].LoadImage("hurri_jump.png",  280,  240, 70, 80, 4, 3);
+        PlayerJumpDiagonal[p].LoadImage("hurri_jumpschraeg.png",  280,  240, 70, 80, 4, 3);
+        PlayerJumpUp[p].LoadImage("hurri_jumpup.png",  280,  240, 70, 80, 4, 3);
 
-		// Rundumschuss
-		PlayerBlitz[p].LoadImage("hurri_rundumschuss.png", 490, 480, 70, 80, 7, 6);
+        // Rundumschuss
+        PlayerBlitz[p].LoadImage("hurri_rundumschuss.png", 490, 480, 70, 80, 7, 6);
 
-		// Pissen
-		PlayerPiss[p].LoadImage("hurri_pissen.png", 490, 240, 70, 80, 7, 3);
+        // Pissen
+        PlayerPiss[p].LoadImage("hurri_pissen.png", 490, 240, 70, 80, 7, 3);
 
-		// Flugsack
-		PlayerRide[p].LoadImage  ("hurri_ride.png",   450, 480, 90,120, 5, 4);
+        // Flugsack
+        PlayerRide[p].LoadImage  ("hurri_ride.png",   450, 480, 90,120, 5, 4);
 
-		// Stachelrad
-		PlayerRad[p].LoadImage   ("hurri_rad.bmp",    140,  70, 35, 35, 4, 2);
-	}
+        // Stachelrad
+        PlayerRad[p].LoadImage   ("hurri_rad.bmp",    140,  70, 35, 35, 4, 2);
+    }
 
-	Blitzstrahl[0].LoadImage("blitzstrahl1.bmp",32,  32, 32, 32, 1, 1);
-	Blitzstrahl[1].LoadImage("blitzstrahl2.bmp",32,  32, 32, 32, 1, 1);
-	Blitzstrahl[2].LoadImage("blitzstrahl3.bmp",32,  32, 32, 32, 1, 1);
-	Blitzstrahl[3].LoadImage("blitzstrahl4.bmp",32,  32, 32, 32, 1, 1);
-	Blitzflash[0].LoadImage("blitzflash1.bmp",	66,  64, 66, 64, 1, 1);
-	Blitzflash[1].LoadImage("blitzflash2.bmp",	66,  64, 66, 64, 1, 1);
-	Blitzflash[2].LoadImage("blitzflash3.bmp",	66,  64, 66, 64, 1, 1);
-	Blitzflash[3].LoadImage("blitzflash4.bmp",	66,  64, 66, 64, 1, 1);
-	BlitzTexture.LoadImage("blitztexture.bmp", 64, 64, 64, 64, 1, 1);
+    Blitzstrahl[0].LoadImage("blitzstrahl1.bmp",32,  32, 32, 32, 1, 1);
+    Blitzstrahl[1].LoadImage("blitzstrahl2.bmp",32,  32, 32, 32, 1, 1);
+    Blitzstrahl[2].LoadImage("blitzstrahl3.bmp",32,  32, 32, 32, 1, 1);
+    Blitzstrahl[3].LoadImage("blitzstrahl4.bmp",32,  32, 32, 32, 1, 1);
+    Blitzflash[0].LoadImage("blitzflash1.bmp",	66,  64, 66, 64, 1, 1);
+    Blitzflash[1].LoadImage("blitzflash2.bmp",	66,  64, 66, 64, 1, 1);
+    Blitzflash[2].LoadImage("blitzflash3.bmp",	66,  64, 66, 64, 1, 1);
+    Blitzflash[3].LoadImage("blitzflash4.bmp",	66,  64, 66, 64, 1, 1);
+    BlitzTexture.LoadImage("blitztexture.bmp", 64, 64, 64, 64, 1, 1);
 
-	if (!GameRunning)
-		return false;
+    if (!GameRunning)
+        return false;
 
-	CreatePlayer2Texture();
+    CreatePlayer2Texture();
 
-	// Konsole initialisieren
-	pConsole = new ConsoleClass();
+    // Konsole initialisieren
+    pConsole = new ConsoleClass();
 
-	pSoundManager->SetAllSongVolumes();
+    pSoundManager->SetAllSongVolumes();
 
-	return true;
+    return true;
 }
 
 // --------------------------------------------------------------------------------------
@@ -1071,62 +1084,62 @@ bool GameInit2(void)
 
 bool GameExit(void)
 {
-	Protokoll.WriteText( false, "\n>--------------------<\n" );
-	Protokoll.WriteText( false,   "| GameExit started   |\n" );
-	Protokoll.WriteText( false,   ">--------------------<\n\n" );
+    Protokoll.WriteText( false, "\n>--------------------<\n" );
+    Protokoll.WriteText( false,   "| GameExit started   |\n" );
+    Protokoll.WriteText( false,   ">--------------------<\n\n" );
 
-	// GUI freigeben
-	delete(pGUI);
+    // GUI freigeben
+    delete(pGUI);
 
-	// Timer freigeben
-	delete(pTimer);
+    // Timer freigeben
+    delete(pTimer);
 
-	// Sprites freigeben
-	delete(pDefaultFont);
-	delete(pMenuFont);
-	Protokoll.WriteText( false, "-> Fonts released\n" );
+    // Sprites freigeben
+    delete(pDefaultFont);
+    delete(pMenuFont);
+    Protokoll.WriteText( false, "-> Fonts released\n" );
 
-	// Console beenden
-	delete (pConsole);
+    // Console beenden
+    delete (pConsole);
 
-	// Menu beenden
-	delete(pMenu);
-	Protokoll.WriteText( false, "-> Head menu released\n" );
+    // Menu beenden
+    delete(pMenu);
+    Protokoll.WriteText( false, "-> Head menu released\n" );
 
-	// HUD freigeben
-	delete(pHUD);
-	Protokoll.WriteText( false, "-> HUD released\n" );
+    // HUD freigeben
+    delete(pHUD);
+    Protokoll.WriteText( false, "-> HUD released\n" );
 
-	// Tileengine beenden
-	delete(pTileEngine);
-	Protokoll.WriteText( false, "-> TileEngine released\n" );
+    // Tileengine beenden
+    delete(pTileEngine);
+    Protokoll.WriteText( false, "-> TileEngine released\n" );
 
-	// GegnerListe beenden
-	delete(pGegner);
-	Protokoll.WriteText( false, "-> Enemy List released\n" );
+    // GegnerListe beenden
+    delete(pGegner);
+    Protokoll.WriteText( false, "-> Enemy List released\n" );
 
-	// Player freigeben
-	delete(pPlayer[0]);
-	delete(pPlayer[1]);
-	Protokoll.WriteText( false, "-> Player released\n" );
+    // Player freigeben
+    delete(pPlayer[0]);
+    delete(pPlayer[1]);
+    Protokoll.WriteText( false, "-> Player released\n" );
 
-	// Partikelsystem beenden
-	delete(pPartikelSystem);
-	Protokoll.WriteText( false, "-> Particle System released\n" );
+    // Partikelsystem beenden
+    delete(pPartikelSystem);
+    Protokoll.WriteText( false, "-> Particle System released\n" );
 
-	// ProjectileListe beenden
-	delete(pProjectiles);
-	Protokoll.WriteText( false, "-> Projectile List released\n" );
+    // ProjectileListe beenden
+    delete(pProjectiles);
+    Protokoll.WriteText( false, "-> Projectile List released\n" );
 
-	delete(pSoundManager);				// DirectSound beenden
+    delete(pSoundManager);				// DirectSound beenden
 
-	DirectInput.Exit();					// DirectInput beenden
+    DirectInput.Exit();					// DirectInput beenden
 
-	DirectGraphics.Exit();				// Direct3D    beenden
+    DirectGraphics.Exit();				// Direct3D    beenden
 
-	//PrintStatus();
+    //PrintStatus();
 
-	return true;
+    return true;
 }
 
 // --------------------------------------------------------------------------------------
@@ -1136,165 +1149,171 @@ bool GameExit(void)
 bool Heartbeat(void)
 {
 #if defined(PLATFORM_DIRECTX)
-	// Test cooperative level
+    // Test cooperative level
     HRESULT hr;
 
     // testen, ob das Device noch da ist
-	hr = lpD3DDevice->TestCooperativeLevel();
+    hr = lpD3DDevice->TestCooperativeLevel();
 
-	// device lost?
+    // device lost?
     if (hr == D3DERR_DEVICELOST)
     {
-		// 500 milliseconds
-		Sleep (500);
-		return false;
-	}
-	else
-    // Bereit für Reset des Devices nachdem wir wieder Focus haben?
-    if (hr == D3DERR_DEVICENOTRESET)
-	{
-		SafeRelease (lpBackbuffer);
+        // 500 milliseconds
+        Sleep (500);
+        return false;
+    }
+    else
+        // Bereit für Reset des Devices nachdem wir wieder Focus haben?
+        if (hr == D3DERR_DEVICENOTRESET)
+        {
+            SafeRelease (lpBackbuffer);
 
-        // device neu initialisieren
-		hr = lpD3DDevice->Reset(&DirectGraphics.d3dpp);
+            // device neu initialisieren
+            hr = lpD3DDevice->Reset(&DirectGraphics.d3dpp);
 
-		if (hr == D3D_OK)
-		{
-			DirectGraphics.SetDeviceInfo();
-		}
-		else
-		{
-			DXTRACE_ERR("lpD3DDevice->Reset", hr);
-			return false;
-		}
-	}
+            if (hr == D3D_OK)
+            {
+                DirectGraphics.SetDeviceInfo();
+            }
+            else
+            {
+                DXTRACE_ERR("lpD3DDevice->Reset", hr);
+                return false;
+            }
+        }
 
-	lpD3DDevice->BeginScene();					// Mit dem Darstellen beginnen
+    lpD3DDevice->BeginScene();					// Mit dem Darstellen beginnen
 #endif
 
-	switch (SpielZustand)
-	{
+    switch (SpielZustand)
+    {
 
-		// Cracktro
-		case CRACKTRO :
-		{
+    // Cracktro
+    case CRACKTRO :
+    {
 #ifdef SHOW_CRACKTRO
 
-				Cracktro->Run();
+        Cracktro->Run();
 
-				if (Cracktro->b_running == false)
-				{
-					delete (Cracktro);
-					SpielZustand = MAINMENU;
+        if (Cracktro->b_running == false)
+        {
+            delete (Cracktro);
+            SpielZustand = MAINMENU;
 
-					if (!GameInit2())
-						return false;
-				}
+            if (!GameInit2())
+                return false;
+        }
 #else
-				if (!GameInit2())
-					return false;
+        if (!GameInit2())
+            return false;
 
-				SpielZustand = MAINMENU;
+        SpielZustand = MAINMENU;
 
 #endif
 //		pOuttro = new OuttroClass();
 //		SpielZustand = OUTTRO;
 
 
-			goto jump;
+        goto jump;
 
-		} break;
+    }
+    break;
 
-		//----- Intro anzeigen ?
-		case INTRO :
-		{
-			// Laufen lassen, bis beendet
-			if (pIntro->Zustand != INTRO_DONE)
-			{
-				pIntro->DoIntro();
+    //----- Intro anzeigen ?
+    case INTRO :
+    {
+        // Laufen lassen, bis beendet
+        if (pIntro->Zustand != INTRO_DONE)
+        {
+            pIntro->DoIntro();
 
-				if (DirectInput.AnyKeyDown() ||
-					DirectInput.AnyButtonDown())
-					pIntro->EndIntro();
-			}
-			else
-			{
-				pSoundManager->StopSong(MUSIC_INTRO, false);
-				delete(pIntro);
-				InitNewGame();
-				InitNewGameLevel(1);
-				SpielZustand = GAMELOOP;
-			}
-		} break;
+            if (DirectInput.AnyKeyDown() ||
+                    DirectInput.AnyButtonDown())
+                pIntro->EndIntro();
+        }
+        else
+        {
+            pSoundManager->StopSong(MUSIC_INTRO, false);
+            delete(pIntro);
+            InitNewGame();
+            InitNewGameLevel(1);
+            SpielZustand = GAMELOOP;
+        }
+    }
+    break;
 
-		//----- Outtro anzeigen ?
-		case OUTTRO :
-		{
-			pOuttro->DoOuttro();
+    //----- Outtro anzeigen ?
+    case OUTTRO :
+    {
+        pOuttro->DoOuttro();
 
-			if(KeyDown(DIK_ESCAPE))			// Intro beenden ?
-			{
-				delete(pOuttro);
-				pSoundManager->StopSong(MUSIC_OUTTRO, false);
-				Stage = MAX_LEVELS;
-				pMenu->CheckForNewHighscore();
-			}
-		} break;
+        if(KeyDown(DIK_ESCAPE))			// Intro beenden ?
+        {
+            delete(pOuttro);
+            pSoundManager->StopSong(MUSIC_OUTTRO, false);
+            Stage = MAX_LEVELS;
+            pMenu->CheckForNewHighscore();
+        }
+    }
+    break;
 
-		//----- Hauptmenu
-		case MAINMENU :
-		{
-			pMenu->DoMenu();
-		} break;
+    //----- Hauptmenu
+    case MAINMENU :
+    {
+        pMenu->DoMenu();
+    }
+    break;
 
-		//---- Haupt-Gameloop
-		case GAMELOOP :
-		{
-			GameLoop();
-		} break;
+    //---- Haupt-Gameloop
+    case GAMELOOP :
+    {
+        GameLoop();
+    }
+    break;
 
-		default : break;
-	}
+    default :
+        break;
+    }
 
 #ifdef _DEBUG
 
-	// Debugmode ?
-	if (DebugMode == true)
-		ShowDebugInfo();
+    // Debugmode ?
+    if (DebugMode == true)
+        ShowDebugInfo();
 
-	// Debug-Mode ein/ausschalten
-	if (KeyDown(DIK_F10))
-	{
-		if (DebugMode == true)
-			DebugMode = false;
-		else
-			DebugMode = true;
-		while(KeyDown(DIK_F10))
-			DirectInput.UpdateTastatur();
-	}
+    // Debug-Mode ein/ausschalten
+    if (KeyDown(DIK_F10))
+    {
+        if (DebugMode == true)
+            DebugMode = false;
+        else
+            DebugMode = true;
+        while(KeyDown(DIK_F10))
+            DirectInput.UpdateTastatur();
+    }
 
 #endif
 
-	// GUI abhandeln
-	pGUI->Run();
+    // GUI abhandeln
+    pGUI->Run();
 
-	// Konsole abhandeln
-	pConsole->DoConsole();
+    // Konsole abhandeln
+    pConsole->DoConsole();
 
 jump:
 
-	DirectGraphics.DisplayBuffer ();
+    DirectGraphics.DisplayBuffer ();
 
-	// Screenshot machen
+    // Screenshot machen
 #ifdef _DEBUG
-	if(KeyDown(DIK_F12))
-		DirectGraphics.TakeScreenshot("HurricanShot", 640, 480);
+    if(KeyDown(DIK_F12))
+        DirectGraphics.TakeScreenshot("HurricanShot", 640, 480);
 
-	// Screenshot machen
-	if(KeyDown(DIK_F9))
-		pGUI->HideBox();
+    // Screenshot machen
+    if(KeyDown(DIK_F9))
+        pGUI->HideBox();
 #endif
-	return true;
+    return true;
 }
 
 // --------------------------------------------------------------------------------------
@@ -1303,59 +1322,59 @@ jump:
 
 void ShowDebugInfo(void)
 {
-	// Blaues durchsichtiges Rechteck zeichnen
-	RenderRect(0, 0, 320, 240, 0xA00000FF);
-	pDefaultFont->ShowFPS();								// FPS anzeigen
+    // Blaues durchsichtiges Rechteck zeichnen
+    RenderRect(0, 0, 320, 240, 0xA00000FF);
+    pDefaultFont->ShowFPS();								// FPS anzeigen
 
-	// Anzahl der aktuell aktiven Partikel anzeigen
-	_itoa_s(pPartikelSystem->GetNumPartikel(), StringBuffer, 10);
-	pDefaultFont->DrawText(  0, 60, "Partikel :", 0xFFFFFFFF);
-	pDefaultFont->DrawText(150, 60, StringBuffer, 0xFFFFFFFF);
+    // Anzahl der aktuell aktiven Partikel anzeigen
+    _itoa_s(pPartikelSystem->GetNumPartikel(), StringBuffer, 10);
+    pDefaultFont->DrawText(  0, 60, "Partikel :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(150, 60, StringBuffer, 0xFFFFFFFF);
 
-	// Anzahl der aktuell aktiven Schüsse anzeigen
-	_itoa_s(pProjectiles->GetNumProjectiles(), StringBuffer, 10);
-	pDefaultFont->DrawText(200, 60, "Projektile :", 0xFFFFFFFF);
-	pDefaultFont->DrawText(300, 60, StringBuffer, 0xFFFFFFFF);
+    // Anzahl der aktuell aktiven Schüsse anzeigen
+    _itoa_s(pProjectiles->GetNumProjectiles(), StringBuffer, 10);
+    pDefaultFont->DrawText(200, 60, "Projektile :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(300, 60, StringBuffer, 0xFFFFFFFF);
 
-	// Benutzte Sound-Channels angeben
-	_itoa_s(pSoundManager->ChannelsUsed, StringBuffer, 10);
-	pDefaultFont->DrawText(  0, 75, "Sound Channels :", 0xFFFFFFFF);
-	pDefaultFont->DrawText(150, 75, StringBuffer, 0xFFFFFFFF);
+    // Benutzte Sound-Channels angeben
+    _itoa_s(pSoundManager->ChannelsUsed, StringBuffer, 10);
+    pDefaultFont->DrawText(  0, 75, "Sound Channels :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(150, 75, StringBuffer, 0xFFFFFFFF);
 
-	// Anzahl der Gegner im Level angeben
-	_itoa_s(pGegner->GetNumGegner(), StringBuffer, 10);
-	pDefaultFont->DrawText(200, 75, "Gegneranzahl :", 0xFFFFFFFF);
-	pDefaultFont->DrawText(300, 75, StringBuffer, 0xFFFFFFFF);
+    // Anzahl der Gegner im Level angeben
+    _itoa_s(pGegner->GetNumGegner(), StringBuffer, 10);
+    pDefaultFont->DrawText(200, 75, "Gegneranzahl :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(300, 75, StringBuffer, 0xFFFFFFFF);
 
-	// MoveSpeed anzeigen
-	_itoa_s((int)(pTimer->GetMoveSpeed()), StringBuffer, 10);
-	pDefaultFont->DrawText(  0, 90, "Move Speed :", 0xFFFFFFFF);
-	pDefaultFont->DrawText(150, 90, StringBuffer, 0xFFFFFFFF);
+    // MoveSpeed anzeigen
+    _itoa_s((int)(pTimer->GetMoveSpeed()), StringBuffer, 10);
+    pDefaultFont->DrawText(  0, 90, "Move Speed :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(150, 90, StringBuffer, 0xFFFFFFFF);
 
-	// Blitzwinkel angeben
-	//_itoa_s((int)(pPlayer->BlitzWinkel), StringBuffer, 10);
-	pDefaultFont->DrawText(  0, 135, "Blitzwinkel :", 0xFFFFFFFF);
-	pDefaultFont->DrawText(150, 135, StringBuffer, 0xFFFFFFFF);
+    // Blitzwinkel angeben
+    //_itoa_s((int)(pPlayer->BlitzWinkel), StringBuffer, 10);
+    pDefaultFont->DrawText(  0, 135, "Blitzwinkel :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(150, 135, StringBuffer, 0xFFFFFFFF);
 
-	// Blitzwinkel angeben
-	sprintf_s (StringBuffer, "%f", pTimer->SpeedFaktor);
-	pDefaultFont->DrawText(  0, 150, "Speed :", 0xFFFFFFFF);
-	pDefaultFont->DrawText(150, 150, StringBuffer, 0xFFFFFFFF);
+    // Blitzwinkel angeben
+    sprintf_s (StringBuffer, "%f", pTimer->SpeedFaktor);
+    pDefaultFont->DrawText(  0, 150, "Speed :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(150, 150, StringBuffer, 0xFFFFFFFF);
 
-	// Blitzwinkel angeben
-	//sprintf_s (StringBuffer, "%f", pPlayer->JumpySave - pPlayer->ypos);
-	pDefaultFont->DrawText(  0, 250, "yDiff :", 0xFFFFFFFF);
-	pDefaultFont->DrawText(150, 250, StringBuffer, 0xFFFFFFFF);
+    // Blitzwinkel angeben
+    //sprintf_s (StringBuffer, "%f", pPlayer->JumpySave - pPlayer->ypos);
+    pDefaultFont->DrawText(  0, 250, "yDiff :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(150, 250, StringBuffer, 0xFFFFFFFF);
 
-	// Blitzwinkel angeben
-	//sprintf_s (StringBuffer, "%f", pPlayer->JumpAdd);
-	pDefaultFont->DrawText(  0, 270, "yAdd :", 0xFFFFFFFF);
-	pDefaultFont->DrawText(150, 270, StringBuffer, 0xFFFFFFFF);
+    // Blitzwinkel angeben
+    //sprintf_s (StringBuffer, "%f", pPlayer->JumpAdd);
+    pDefaultFont->DrawText(  0, 270, "yAdd :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(150, 270, StringBuffer, 0xFFFFFFFF);
 
-/*	for (int i=0; i<128; i++)
-		for (int j=0; j<96; j++)
-			if(pTileEngine->Tiles[i][j].BackArt > 0)
-				pDefaultFont->DrawText(300+i, 100+j, ".", 0xFFFFFF00);*/
+    /*	for (int i=0; i<128; i++)
+    		for (int j=0; j<96; j++)
+    			if(pTileEngine->Tiles[i][j].BackArt > 0)
+    				pDefaultFont->DrawText(300+i, 100+j, ".", 0xFFFFFF00);*/
 }
 
 //----------------------------------------------------------------------------
@@ -1364,9 +1383,9 @@ void ShowDebugInfo(void)
 
 void StartOuttro(void)
 {
-	Stage = -1;
-	pOuttro = new OuttroClass();
-	SpielZustand = OUTTRO;
+    Stage = -1;
+    pOuttro = new OuttroClass();
+    SpielZustand = OUTTRO;
 }
 
 //----------------------------------------------------------------------------
@@ -1375,6 +1394,6 @@ void StartOuttro(void)
 
 void StartIntro(void)
 {
-	pIntro = new IntroClass();
-	SpielZustand = INTRO;
+    pIntro = new IntroClass();
+    SpielZustand = INTRO;
 }

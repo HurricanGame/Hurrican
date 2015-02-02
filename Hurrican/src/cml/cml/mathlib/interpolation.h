@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -20,11 +20,13 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
  * @todo: This code works, but it needs a lot of cleanup.
  */
 
-namespace cml {
+namespace cml
+{
 
 struct function_expects_args_of_same_type_error;
 
-namespace detail {
+namespace detail
+{
 
 //////////////////////////////////////////////////////////////////////////////
 // Helper struct to promote vectors, quaternions, and matrices
@@ -33,17 +35,19 @@ namespace detail {
 template< class T1, class T2, class ResultT > struct TypePromote;
 
 template< class T >
-struct TypePromote< T,T,et::scalar_result_tag > {
+struct TypePromote< T,T,et::scalar_result_tag >
+{
     typedef T temporary_type;
 };
 
 template< class T1, class T2 >
-struct TypePromote< T1,T2,et::scalar_result_tag > {
+struct TypePromote< T1,T2,et::scalar_result_tag >
+{
     typedef et::ExprTraits<T1> traits_1;
     typedef et::ExprTraits<T2> traits_2;
     typedef typename traits_1::result_tag result_type_1;
     typedef typename traits_2::result_tag result_type_2;
-    
+
     /* Check that results are of the same type */
     CML_STATIC_REQUIRE_M(
         (same_type<result_type_1, result_type_2>::is_true),
@@ -53,12 +57,13 @@ struct TypePromote< T1,T2,et::scalar_result_tag > {
 };
 
 template< class T1, class T2 >
-struct TypePromote< T1,T2,et::vector_result_tag > {
+struct TypePromote< T1,T2,et::vector_result_tag >
+{
     typedef et::ExprTraits<T1> traits_1;
     typedef et::ExprTraits<T2> traits_2;
     typedef typename traits_1::result_tag result_type_1;
     typedef typename traits_2::result_tag result_type_2;
-    
+
     /* Check that results are of the same type */
     CML_STATIC_REQUIRE_M(
         (same_type<result_type_1, result_type_2>::is_true),
@@ -71,12 +76,13 @@ struct TypePromote< T1,T2,et::vector_result_tag > {
 };
 
 template< class T1, class T2 >
-struct TypePromote< T1,T2,et::matrix_result_tag > {
+struct TypePromote< T1,T2,et::matrix_result_tag >
+{
     typedef et::ExprTraits<T1> traits_1;
     typedef et::ExprTraits<T2> traits_2;
     typedef typename traits_1::result_tag result_type_1;
     typedef typename traits_2::result_tag result_type_2;
-    
+
     /* Check that results are of the same type */
     CML_STATIC_REQUIRE_M(
         (same_type<result_type_1, result_type_2>::is_true),
@@ -86,32 +92,34 @@ struct TypePromote< T1,T2,et::matrix_result_tag > {
 };
 
 template< class T1, class T2 >
-struct TypePromote< T1,T2,et::quaternion_result_tag > {
+struct TypePromote< T1,T2,et::quaternion_result_tag >
+{
     typedef et::ExprTraits<T1> traits_1;
     typedef et::ExprTraits<T2> traits_2;
     typedef typename traits_1::result_tag result_type_1;
     typedef typename traits_2::result_tag result_type_2;
-    
+
     /* Check that results are of the same type */
     CML_STATIC_REQUIRE_M(
         (same_type<result_type_1, result_type_2>::is_true),
         function_expects_args_of_same_type_error);
 
     typedef typename et::QuaternionPromote2<T1,T2>::temporary_type
-        temporary_type;
+    temporary_type;
 };
 
 template< class T1, class T2, class T3, class ResultT > struct TypePromote3;
 
 template< class T1, class T2, class T3 >
-struct TypePromote3< T1,T2,T3,et::matrix_result_tag > {
+struct TypePromote3< T1,T2,T3,et::matrix_result_tag >
+{
     typedef et::ExprTraits<T1> traits_1;
     typedef et::ExprTraits<T2> traits_2;
     typedef et::ExprTraits<T3> traits_3;
     typedef typename traits_1::result_tag result_type_1;
     typedef typename traits_2::result_tag result_type_2;
     typedef typename traits_3::result_tag result_type_3;
-    
+
     /* Check that results are of the same type */
     CML_STATIC_REQUIRE_M(
         (same_type<result_type_1, result_type_2>::is_true),
@@ -121,19 +129,20 @@ struct TypePromote3< T1,T2,T3,et::matrix_result_tag > {
         function_expects_args_of_same_type_error);
 
     typedef typename et::MatrixPromote3<T1,T2,T3>::temporary_type
-        temporary_type;
+    temporary_type;
     typedef typename temporary_type::value_type value_type;
 };
 
 template< class T1, class T2, class T3 >
-struct TypePromote3< T1,T2,T3,et::quaternion_result_tag > {
+struct TypePromote3< T1,T2,T3,et::quaternion_result_tag >
+{
     typedef et::ExprTraits<T1> traits_1;
     typedef et::ExprTraits<T2> traits_2;
     typedef et::ExprTraits<T3> traits_3;
     typedef typename traits_1::result_tag result_type_1;
     typedef typename traits_2::result_tag result_type_2;
     typedef typename traits_3::result_tag result_type_3;
-    
+
     /* Check that results are of the same type */
     CML_STATIC_REQUIRE_M(
         (same_type<result_type_1, result_type_2>::is_true),
@@ -143,16 +152,17 @@ struct TypePromote3< T1,T2,T3,et::quaternion_result_tag > {
         function_expects_args_of_same_type_error);
 
     typedef typename et::QuaternionPromote3<T1,T2,T3>::temporary_type
-        temporary_type;
+    temporary_type;
     typedef typename temporary_type::value_type value_type;
 };
 
 template <
     class T1, class T2, class T3, class T4, class ResultT
-> struct TypePromote4;
+    > struct TypePromote4;
 
 template< class T1, class T2, class T3, class T4 >
-struct TypePromote4< T1,T2,T3,T4,et::matrix_result_tag > {
+struct TypePromote4< T1,T2,T3,T4,et::matrix_result_tag >
+{
     typedef et::ExprTraits<T1> traits_1;
     typedef et::ExprTraits<T2> traits_2;
     typedef et::ExprTraits<T3> traits_3;
@@ -161,7 +171,7 @@ struct TypePromote4< T1,T2,T3,T4,et::matrix_result_tag > {
     typedef typename traits_2::result_tag result_type_2;
     typedef typename traits_3::result_tag result_type_3;
     typedef typename traits_4::result_tag result_type_4;
-    
+
     /* Check that results are of the same type */
     CML_STATIC_REQUIRE_M(
         (same_type<result_type_1, result_type_2>::is_true),
@@ -174,12 +184,13 @@ struct TypePromote4< T1,T2,T3,T4,et::matrix_result_tag > {
         function_expects_args_of_same_type_error);
 
     typedef typename et::MatrixPromote4<T1,T2,T3,T4>::temporary_type
-        temporary_type;
+    temporary_type;
     typedef typename temporary_type::value_type value_type;
 };
 
 template< class T1, class T2, class T3, class T4 >
-struct TypePromote4< T1,T2,T3,T4,et::quaternion_result_tag > {
+struct TypePromote4< T1,T2,T3,T4,et::quaternion_result_tag >
+{
     typedef et::ExprTraits<T1> traits_1;
     typedef et::ExprTraits<T2> traits_2;
     typedef et::ExprTraits<T3> traits_3;
@@ -188,7 +199,7 @@ struct TypePromote4< T1,T2,T3,T4,et::quaternion_result_tag > {
     typedef typename traits_2::result_tag result_type_2;
     typedef typename traits_3::result_tag result_type_3;
     typedef typename traits_4::result_tag result_type_4;
-    
+
     /* Check that results are of the same type */
     CML_STATIC_REQUIRE_M(
         (same_type<result_type_1, result_type_2>::is_true),
@@ -201,7 +212,7 @@ struct TypePromote4< T1,T2,T3,T4,et::quaternion_result_tag > {
         function_expects_args_of_same_type_error);
 
     typedef typename et::QuaternionPromote4<T1,T2,T3,T4>::temporary_type
-        temporary_type;
+    temporary_type;
     typedef typename temporary_type::value_type value_type;
 };
 
@@ -217,12 +228,14 @@ InterpResize(T1& t1, const T2& t2, SizeTag) {}
 // Catch vector and matrix resizes...
 
 template< typename E, class A, class VecT > void
-InterpResize(vector<E,A>& v, const VecT& target, dynamic_size_tag) {
+InterpResize(vector<E,A>& v, const VecT& target, dynamic_size_tag)
+{
     v.resize(target.size());
 }
 
 template< typename E, class A, class B, class L, class MatT > void
-InterpResize(matrix<E,A,B,L>& m, const MatT& target, dynamic_size_tag) {
+InterpResize(matrix<E,A,B,L>& m, const MatT& target, dynamic_size_tag)
+{
     m.resize(target.rows(),target.cols());
 }
 
@@ -253,14 +266,14 @@ concatenate_quaternions(
 
 template< class T1, class T2, class T3, class SizeT >
 typename detail::TypePromote3<
-    T1,T2,T3,typename et::ExprTraits<T1>::result_tag
+T1,T2,T3,typename et::ExprTraits<T1>::result_tag
 >::temporary_type
 squad_intermediate(
     const T1& t1,
     const T2& t2,
     const T3& t3,
     typename detail::TypePromote3<
-        T1, T2, T3, typename et::ExprTraits<T1>::result_tag
+    T1, T2, T3, typename et::ExprTraits<T1>::result_tag
     >::value_type tolerance,
     et::quaternion_result_tag,
     SizeT)
@@ -269,12 +282,12 @@ squad_intermediate(
     typedef typename traits_1::result_tag result_type_1;
 
     typedef typename detail::TypePromote3<T1,T2,T3,result_type_1>::temporary_type
-        temporary_type;
+    temporary_type;
     typedef typename temporary_type::value_type value_type;
     typedef typename temporary_type::cross_type cross_type;
     typedef et::ExprTraits<temporary_type> result_traits;
     typedef typename result_traits::size_tag size_tag;
-    
+
     /**
      * NOTE: It seems that the equation for computing an intermediate
      * quaternion produces the same results regardless of whether 'standard'
@@ -291,7 +304,7 @@ squad_intermediate(
     temporary_type temp1 = concatenate_quaternions(t1, t2_inverse, cross_type());
     temporary_type temp2 = concatenate_quaternions(t3, t2_inverse, cross_type());
     result = concatenate_quaternions(
-        exp(-(log(temp1) + log(temp2)) * value_type(.25)), t2, cross_type());
+                 exp(-(log(temp1) + log(temp2)) * value_type(.25)), t2, cross_type());
     return result;
 }
 
@@ -327,7 +340,7 @@ struct squad_intermediate_f<MatT_1,MatT_2,MatT_3,3>
         Real tolerance)
     {
         typedef typename et::MatrixPromote3<
-            MatT_1,MatT_2,MatT_3 >::temporary_type temporary_type;
+        MatT_1,MatT_2,MatT_3 >::temporary_type temporary_type;
         typedef typename temporary_type::value_type value_type;
         typedef quaternion< value_type > quaternion_type;
 
@@ -340,9 +353,9 @@ struct squad_intermediate_f<MatT_1,MatT_2,MatT_3,3>
 
         temporary_type m;
         et::detail::Resize(m,3,3);
-        
+
         matrix_rotation_quaternion(m, q4);
-        
+
         return m;
     }
 };
@@ -359,31 +372,31 @@ struct squad_intermediate_f<MatT_1,MatT_2,MatT_3,2>
         Real tolerance)
     {
         typedef typename et::MatrixPromote3<
-            MatT_1,MatT_2,MatT_3 >::temporary_type temporary_type;
+        MatT_1,MatT_2,MatT_3 >::temporary_type temporary_type;
         typedef typename temporary_type::value_type value_type;
         typedef quaternion< value_type > quaternion_type;
         typedef vector< value_type, fixed<3> > vector_type;
-        
+
         value_type angle1 = matrix_to_rotation_2D(m1);
         value_type angle2 = matrix_to_rotation_2D(m2);
         value_type angle3 = matrix_to_rotation_2D(m3);
         vector_type axis(value_type(0), value_type(0), value_type(1));
-        
+
         quaternion_type q1, q2, q3;
         quaternion_rotation_axis_angle(q1, axis, angle1);
         quaternion_rotation_axis_angle(q2, axis, angle2);
         quaternion_rotation_axis_angle(q3, axis, angle3);
 
         quaternion_type q4 = squad_intermediate(q1, q2, q3, tolerance);
-        
+
         value_type angle;
         quaternion_to_axis_angle(q4, axis, angle);
 
         temporary_type m;
         et::detail::Resize(m,2,2);
-        
+
         matrix_rotation_2D(m, angle);
-        
+
         return m;
     }
 };
@@ -399,7 +412,7 @@ squad_intermediate(
     fixed_size_tag)
 {
     return squad_intermediate_f<MatT_1,MatT_2,MatT_3,MatT_1::array_rows>()(
-        m1,m2,m3,tolerance);
+               m1,m2,m3,tolerance);
 }
 
 template< class MatT_1, class MatT_2, class MatT_3, typename Real >
@@ -413,22 +426,23 @@ squad_intermediate(
     dynamic_size_tag)
 {
     typedef typename et::MatrixPromote3<
-        MatT_1,MatT_2,MatT_3 >::temporary_type temporary_type;
+    MatT_1,MatT_2,MatT_3 >::temporary_type temporary_type;
 
     temporary_type m;
     et::detail::Resize(m,m1.rows(),m1.cols());
-    
-    switch (m1.rows()) {
-        case 3:
-            m = squad_intermediate_f<MatT_1,MatT_2,MatT_3,3>()(m1,m2,m3,tolerance);
-            break;
-        case 2:
-            m = squad_intermediate_f<MatT_1,MatT_2,MatT_3,2>()(m1,m2,m3,tolerance);
-            break;
-        default:
-            throw std::invalid_argument(
-                "matrix squad_intermediate_f() expects sizes 3x3 or 2x2");
-            break;
+
+    switch (m1.rows())
+    {
+    case 3:
+        m = squad_intermediate_f<MatT_1,MatT_2,MatT_3,3>()(m1,m2,m3,tolerance);
+        break;
+    case 2:
+        m = squad_intermediate_f<MatT_1,MatT_2,MatT_3,2>()(m1,m2,m3,tolerance);
+        break;
+    default:
+        throw std::invalid_argument(
+            "matrix squad_intermediate_f() expects sizes 3x3 or 2x2");
+        break;
     }
     return m;
 }
@@ -440,7 +454,7 @@ squad_intermediate(
 
 template< class VecT_1, class VecT_2, typename Real, class SizeT >
 typename detail::TypePromote<
-    VecT_1,VecT_2,typename et::ExprTraits<VecT_1>::result_tag
+VecT_1,VecT_2,typename et::ExprTraits<VecT_1>::result_tag
 >::temporary_type
 slerp(
     const VecT_1& v1,
@@ -453,22 +467,25 @@ slerp(
     typedef et::ExprTraits<VecT_1> type_traits;
     typedef typename type_traits::result_tag result_type;
     typedef typename
-        detail::TypePromote<VecT_1,VecT_2,result_type>::temporary_type
-            temporary_type;
+    detail::TypePromote<VecT_1,VecT_2,result_type>::temporary_type
+    temporary_type;
     typedef typename temporary_type::value_type value_type;
     typedef et::ExprTraits<temporary_type> result_traits;
     typedef typename result_traits::size_tag size_tag;
-            
+
     temporary_type result;
     detail::InterpResize(result, v1, size_tag());
 
     value_type omega = acos_safe(dot(v1,v2));
     value_type s = std::sin(omega);
-    if (s < tolerance) {
+    if (s < tolerance)
+    {
         result = nlerp(v1,v2,t);
-    } else {
+    }
+    else
+    {
         result = (value_type(std::sin((value_type(1)-t)*omega))*v1 +
-            value_type(std::sin(t*omega))*v2) / s;
+                  value_type(std::sin(t*omega))*v2) / s;
     }
     return result;
 }
@@ -479,7 +496,7 @@ slerp(
 
 template< class QuatT_1, class QuatT_2, typename Real, class SizeT >
 typename detail::TypePromote<
-    QuatT_1,QuatT_2,typename et::ExprTraits<QuatT_1>::result_tag
+QuatT_1,QuatT_2,typename et::ExprTraits<QuatT_1>::result_tag
 >::temporary_type
 slerp(
     const QuatT_1& q1,
@@ -492,24 +509,25 @@ slerp(
     typedef et::ExprTraits<QuatT_1> type_traits;
     typedef typename type_traits::result_tag result_type;
     typedef typename
-        detail::TypePromote<QuatT_1,QuatT_2,result_type>::temporary_type
-            temporary_type;
+    detail::TypePromote<QuatT_1,QuatT_2,result_type>::temporary_type
+    temporary_type;
     typedef typename temporary_type::value_type value_type;
 
     temporary_type q3 = q2;
     value_type c = dot(q1,q3);
-    if (c < value_type(0)) {
+    if (c < value_type(0))
+    {
         // Turning this off temporarily to test squad...
         q3 = -q3;
         c = -c;
     }
-    
+
     value_type omega = acos_safe(c);
     value_type s = std::sin(omega);
 
     return (s < tolerance) ?
-        normalize(lerp(q1,q3,t)) :
-        (value_type(std::sin((value_type(1) - t) * omega)) * q1+
+           normalize(lerp(q1,q3,t)) :
+           (value_type(std::sin((value_type(1) - t) * omega)) * q1+
             value_type(std::sin(t * omega)) * q3) / s;
 }
 
@@ -523,7 +541,7 @@ template< class MatT_1, class MatT_2 > struct slerp_f<MatT_1,MatT_2,3>
 {
     template< typename Real >
     typename detail::TypePromote<
-        MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
+    MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
     >::temporary_type
     operator()(
         const MatT_1& m1,
@@ -532,7 +550,7 @@ template< class MatT_1, class MatT_2 > struct slerp_f<MatT_1,MatT_2,3>
         Real tolerance)
     {
         typedef typename detail::TypePromote<
-            MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
+        MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
         >::temporary_type temporary_type;
 
         temporary_type m;
@@ -548,7 +566,7 @@ template< class MatT_1, class MatT_2 > struct slerp_f<MatT_1,MatT_2,2>
 {
     template< typename Real >
     typename detail::TypePromote<
-        MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
+    MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
     >::temporary_type
     operator()(
         const MatT_1& m1,
@@ -557,7 +575,7 @@ template< class MatT_1, class MatT_2 > struct slerp_f<MatT_1,MatT_2,2>
         Real tolerance)
     {
         typedef typename detail::TypePromote<
-            MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
+        MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
         >::temporary_type temporary_type;
 
         temporary_type m;
@@ -575,7 +593,7 @@ template< class MatT_1, class MatT_2 > struct slerp_f<MatT_1,MatT_2,2>
 
 template< class MatT_1, class MatT_2, typename Real >
 typename detail::TypePromote<
-    MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
+MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
 >::temporary_type
 slerp(
     const MatT_1& m1,
@@ -590,7 +608,7 @@ slerp(
 
 template< class MatT_1, class MatT_2, typename Real >
 typename detail::TypePromote<
-    MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
+MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
 >::temporary_type
 slerp(
     const MatT_1& m1,
@@ -601,23 +619,24 @@ slerp(
     dynamic_size_tag)
 {
     typedef typename detail::TypePromote<
-        MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
+    MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
     >::temporary_type temporary_type;
 
     temporary_type m;
     et::detail::Resize(m,m1.rows(),m1.cols());
-    
-    switch (m1.rows()) {
-        case 3:
-            m = slerp_f<MatT_1,MatT_2,3>()(m1,m2,t,tolerance);
-            break;
-        case 2:
-            m = slerp_f<MatT_1,MatT_2,2>()(m1,m2,t,tolerance);
-            break;
-        default:
-            throw std::invalid_argument(
-                "matrix slerp() expects sizes 3x3 or 2x2");
-            break;
+
+    switch (m1.rows())
+    {
+    case 3:
+        m = slerp_f<MatT_1,MatT_2,3>()(m1,m2,t,tolerance);
+        break;
+    case 2:
+        m = slerp_f<MatT_1,MatT_2,2>()(m1,m2,t,tolerance);
+        break;
+    default:
+        throw std::invalid_argument(
+            "matrix slerp() expects sizes 3x3 or 2x2");
+        break;
     }
     return m;
 }
@@ -628,7 +647,7 @@ slerp(
 
 template< class VecT_1, class VecT_2, typename Real, class SizeT >
 typename detail::TypePromote<
-    VecT_1,VecT_2,typename et::ExprTraits<VecT_1>::result_tag
+VecT_1,VecT_2,typename et::ExprTraits<VecT_1>::result_tag
 >::temporary_type
 nlerp(
     const VecT_1& v1,
@@ -640,12 +659,12 @@ nlerp(
     typedef et::ExprTraits<VecT_1> type_traits;
     typedef typename type_traits::result_tag result_type;
     typedef typename
-        detail::TypePromote<VecT_1,VecT_2,result_type>::temporary_type
-            temporary_type;
+    detail::TypePromote<VecT_1,VecT_2,result_type>::temporary_type
+    temporary_type;
     typedef typename temporary_type::value_type value_type;
     typedef et::ExprTraits<temporary_type> result_traits;
     typedef typename result_traits::size_tag size_tag;
-            
+
     temporary_type result;
     detail::InterpResize(result, v1, size_tag());
 
@@ -660,7 +679,7 @@ nlerp(
 
 template< class QuatT_1, class QuatT_2, typename Real, class SizeT >
 typename detail::TypePromote<
-    QuatT_1,QuatT_2,typename et::ExprTraits<QuatT_1>::result_tag
+QuatT_1,QuatT_2,typename et::ExprTraits<QuatT_1>::result_tag
 >::temporary_type
 nlerp(
     const QuatT_1& q1,
@@ -672,8 +691,8 @@ nlerp(
     typedef et::ExprTraits<QuatT_1> type_traits;
     typedef typename type_traits::result_tag result_type;
     typedef typename
-        detail::TypePromote<QuatT_1,QuatT_2,result_type>::temporary_type
-            temporary_type;
+    detail::TypePromote<QuatT_1,QuatT_2,result_type>::temporary_type
+    temporary_type;
     typedef typename temporary_type::value_type value_type;
 
     return normalize(lerp(q1, (dot(q1,q2) < value_type(0)) ? -q2 : q2, t));
@@ -689,7 +708,7 @@ template< class MatT_1, class MatT_2 > struct nlerp_f<MatT_1,MatT_2,3>
 {
     template< typename Real >
     typename detail::TypePromote<
-        MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
+    MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
     >::temporary_type
     operator()(
         const MatT_1& m1,
@@ -697,7 +716,7 @@ template< class MatT_1, class MatT_2 > struct nlerp_f<MatT_1,MatT_2,3>
         Real t)
     {
         typedef typename detail::TypePromote<
-            MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
+        MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
         >::temporary_type temporary_type;
         typedef typename temporary_type::value_type value_type;
 
@@ -713,7 +732,7 @@ template< class MatT_1, class MatT_2 > struct nlerp_f<MatT_1,MatT_2,2>
 {
     template< typename Real >
     typename detail::TypePromote<
-        MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
+    MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
     >::temporary_type
     operator()(
         const MatT_1& m1,
@@ -721,7 +740,7 @@ template< class MatT_1, class MatT_2 > struct nlerp_f<MatT_1,MatT_2,2>
         Real t)
     {
         typedef typename detail::TypePromote<
-            MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
+        MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
         >::temporary_type temporary_type;
         typedef typename temporary_type::value_type value_type;
 
@@ -739,7 +758,7 @@ template< class MatT_1, class MatT_2 > struct nlerp_f<MatT_1,MatT_2,2>
 
 template< class MatT_1, class MatT_2, typename Real >
 typename detail::TypePromote<
-    MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
+MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
 >::temporary_type
 nlerp(
     const MatT_1& m1,
@@ -753,7 +772,7 @@ nlerp(
 
 template< class MatT_1, class MatT_2, typename Real >
 typename detail::TypePromote<
-    MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
+MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
 >::temporary_type
 nlerp(
     const MatT_1& m1,
@@ -763,23 +782,24 @@ nlerp(
     dynamic_size_tag)
 {
     typedef typename detail::TypePromote<
-        MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
+    MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
     >::temporary_type temporary_type;
 
     temporary_type m;
     et::detail::Resize(m,m1.rows(),m1.cols());
-    
-    switch (m1.rows()) {
-        case 3:
-            m = nlerp_f<MatT_1,MatT_2,3>()(m1,m2,t);
-            break;
-        case 2:
-            m = nlerp_f<MatT_1,MatT_2,2>()(m1,m2,t);
-            break;
-        default:
-            throw std::invalid_argument(
-                "matrix nlerp() expects sizes 3x3 or 2x2");
-            break;
+
+    switch (m1.rows())
+    {
+    case 3:
+        m = nlerp_f<MatT_1,MatT_2,3>()(m1,m2,t);
+        break;
+    case 2:
+        m = nlerp_f<MatT_1,MatT_2,2>()(m1,m2,t);
+        break;
+    default:
+        throw std::invalid_argument(
+            "matrix nlerp() expects sizes 3x3 or 2x2");
+        break;
     }
     return m;
 }
@@ -807,19 +827,19 @@ nlerp(
 #if 0
 template< class T1, class T2, class T3 >
 typename detail::TypePromote3<
-    T1,T2,T3,typename et::ExprTraits<T1>::result_tag
+T1,T2,T3,typename et::ExprTraits<T1>::result_tag
 >::temporary_type
 squad_intermediate(
     const T1& t1,
     const T2& t2,
     const T3& t3,
     typename detail::TypePromote3<
-        T1, T2, T3, typename et::ExprTraits<T1>::result_tag
+    T1, T2, T3, typename et::ExprTraits<T1>::result_tag
     >::value_type tolerance =
-    epsilon <
+        epsilon <
         typename detail::TypePromote3<
-            T1, T2, T3, typename et::ExprTraits<T1>::result_tag
-        >::value_type
+        T1, T2, T3, typename et::ExprTraits<T1>::result_tag
+    >::value_type
     >::placeholder())
 {
     // HACK: See note above...
@@ -831,7 +851,7 @@ squad_intermediate(
     typedef typename traits_1::result_tag result_type_1;
 
     typedef typename detail::TypePromote3<T1,T2,T3,result_type_1>::temporary_type
-        temporary_type;
+    temporary_type;
     typedef et::ExprTraits<temporary_type> result_traits;
     typedef typename result_traits::size_tag size_tag;
 
@@ -839,7 +859,7 @@ squad_intermediate(
     detail::InterpResize(result, t1, size_tag());
 
     result = detail::squad_intermediate(
-        t1,t2,t3,tolerance,result_type_1(),size_tag());
+                 t1,t2,t3,tolerance,result_type_1(),size_tag());
     return result;
 }
 
@@ -870,7 +890,7 @@ squad_intermediate(
 
 template< class T1, class T2, class T3, class T4, typename Real >
 typename detail::TypePromote4<
-    T1,T2,T3,T4,typename et::ExprTraits<T1>::result_tag
+T1,T2,T3,T4,typename et::ExprTraits<T1>::result_tag
 >::temporary_type
 squad(
     const T1& t1,
@@ -890,20 +910,20 @@ squad(
     typedef typename traits_1::result_tag result_type_1;
 
     typedef typename detail::TypePromote4<
-        T1,T2,T3,T4,result_type_1>::temporary_type temporary_type;
+    T1,T2,T3,T4,result_type_1>::temporary_type temporary_type;
     typedef typename temporary_type::value_type value_type;
     typedef et::ExprTraits<temporary_type> result_traits;
     typedef typename result_traits::size_tag size_tag;
 
     temporary_type result;
     detail::InterpResize(result, t1, size_tag());
-    
+
     result = slerp(
-        slerp(t1, t2, t, tolerance),
-        slerp(t1_intermediate, t2_intermediate, t, tolerance),
-        value_type(2) * t * (value_type(1) - t),
-        tolerance
-    );
+                 slerp(t1, t2, t, tolerance),
+                 slerp(t1_intermediate, t2_intermediate, t, tolerance),
+                 value_type(2) * t * (value_type(1) - t),
+                 tolerance
+             );
 
     return result;
 }
@@ -915,7 +935,7 @@ squad(
 
 template< class T1, class T2, typename Real >
 typename detail::TypePromote<
-    T1,T2,typename et::ExprTraits<T1>::result_tag
+T1,T2,typename et::ExprTraits<T1>::result_tag
 >::temporary_type
 slerp(
     const T1& t1,
@@ -927,7 +947,7 @@ slerp(
     typedef typename traits_1::result_tag result_type_1;
 
     typedef typename detail::TypePromote<T1,T2,result_type_1>::temporary_type
-        temporary_type;
+    temporary_type;
     typedef et::ExprTraits<temporary_type> result_traits;
     typedef typename result_traits::size_tag size_tag;
 
@@ -944,7 +964,7 @@ slerp(
 
 template< class T1, class T2, typename Real >
 typename detail::TypePromote<
-    T1,T2,typename et::ExprTraits<T1>::result_tag
+T1,T2,typename et::ExprTraits<T1>::result_tag
 >::temporary_type
 nlerp(const T1& t1, const T2& t2, Real t)
 {
@@ -952,7 +972,7 @@ nlerp(const T1& t1, const T2& t2, Real t)
     typedef typename traits_1::result_tag result_type_1;
 
     typedef typename detail::TypePromote<T1,T2,result_type_1>::temporary_type
-        temporary_type;
+    temporary_type;
     typedef et::ExprTraits<temporary_type> result_traits;
     typedef typename result_traits::size_tag size_tag;
 
@@ -974,21 +994,21 @@ nlerp(const T1& t1, const T2& t2, Real t)
  */
 template< class T1, class T2, typename Scalar >
 typename detail::TypePromote<
-    T1,T2,typename et::ExprTraits<T1>::result_tag
+T1,T2,typename et::ExprTraits<T1>::result_tag
 >::temporary_type
 lerp(const T1& val0, const T2& val1, Scalar u)
 {
     typedef
-        typename detail::TypePromote<
-            T1,T2,typename et::ExprTraits<T1>::result_tag
-        >::temporary_type temporary_type;
+    typename detail::TypePromote<
+    T1,T2,typename et::ExprTraits<T1>::result_tag
+    >::temporary_type temporary_type;
 
     typedef et::ExprTraits<temporary_type> result_traits;
     typedef typename result_traits::size_tag size_tag;
 
     temporary_type result;
     detail::InterpResize(result, val1, size_tag());
-    
+
     result = (Scalar(1) - u) * val0 + u * val1;
     return result;
 }
@@ -999,28 +1019,28 @@ lerp(const T1& val0, const T2& val1, Scalar u)
 
 template < class T1, class T2, class T3, class T4, typename Scalar >
 typename detail::TypePromote<
-    typename detail::TypePromote<
-        T1,T2,typename et::ExprTraits<T1>::result_tag
-    >::temporary_type,
-    typename detail::TypePromote<
-        T3,T4,typename et::ExprTraits<T3>::result_tag
-    >::temporary_type,
-    typename et::ExprTraits<T1>::result_tag
+typename detail::TypePromote<
+T1,T2,typename et::ExprTraits<T1>::result_tag
+>::temporary_type,
+typename detail::TypePromote<
+T3,T4,typename et::ExprTraits<T3>::result_tag
+>::temporary_type,
+typename et::ExprTraits<T1>::result_tag
 >::temporary_type
 bilerp(const T1& val00, const T2& val10,
        const T3& val01, const T4& val11,
        Scalar u, Scalar v)
 {
     typedef
-        typename detail::TypePromote<
-            typename detail::TypePromote<
-                T1,T2,typename et::ExprTraits<T1>::result_tag
-            >::temporary_type,
-            typename detail::TypePromote<
-                T3,T4,typename et::ExprTraits<T1>::result_tag
-            >::temporary_type,
-            typename et::ExprTraits<T1>::result_tag
-        >::temporary_type temporary_type;
+    typename detail::TypePromote<
+    typename detail::TypePromote<
+    T1,T2,typename et::ExprTraits<T1>::result_tag
+    >::temporary_type,
+    typename detail::TypePromote<
+    T3,T4,typename et::ExprTraits<T1>::result_tag
+    >::temporary_type,
+    typename et::ExprTraits<T1>::result_tag
+    >::temporary_type temporary_type;
 
     typedef et::ExprTraits<temporary_type> result_traits;
     typedef typename result_traits::size_tag size_tag;
@@ -1030,11 +1050,11 @@ bilerp(const T1& val00, const T2& val10,
 
     Scalar uv = u * v;
     result = (
-        (Scalar(1.0) - u - v + uv) * val00 +
-                          (u - uv) * val10 +
-                          (v - uv) * val01 +
-                                uv * val11
-    );
+                 (Scalar(1.0) - u - v + uv) * val00 +
+                 (u - uv) * val10 +
+                 (v - uv) * val01 +
+                 uv * val11
+             );
     return result;
 }
 
@@ -1051,25 +1071,25 @@ template < class T1, class T2, class T3, class T4,
            class T5, class T6, class T7, class T8,
            typename Scalar >
 typename detail::TypePromote<
-    typename detail::TypePromote<
-        typename detail::TypePromote<
-            T1,T2,typename et::ExprTraits<T1>::result_tag
-        >::temporary_type,
-        typename detail::TypePromote<
-            T3,T4,typename et::ExprTraits<T3>::result_tag
-        >::temporary_type,
-        typename et::ExprTraits<T1>::result_tag
-    >::temporary_type,
-    typename detail::TypePromote<
-        typename detail::TypePromote<
-            T5,T6,typename et::ExprTraits<T5>::result_tag
-        >::temporary_type,
-        typename detail::TypePromote<
-            T7,T8,typename et::ExprTraits<T7>::result_tag
-        >::temporary_type,
-        typename et::ExprTraits<T1>::result_tag
-    >::temporary_type,
-    typename et::ExprTraits<T1>::result_tag
+typename detail::TypePromote<
+typename detail::TypePromote<
+T1,T2,typename et::ExprTraits<T1>::result_tag
+>::temporary_type,
+typename detail::TypePromote<
+T3,T4,typename et::ExprTraits<T3>::result_tag
+>::temporary_type,
+typename et::ExprTraits<T1>::result_tag
+>::temporary_type,
+typename detail::TypePromote<
+typename detail::TypePromote<
+T5,T6,typename et::ExprTraits<T5>::result_tag
+>::temporary_type,
+typename detail::TypePromote<
+T7,T8,typename et::ExprTraits<T7>::result_tag
+>::temporary_type,
+typename et::ExprTraits<T1>::result_tag
+>::temporary_type,
+typename et::ExprTraits<T1>::result_tag
 >::temporary_type
 trilerp(const T1& val000, const T2& val100,
         const T3& val010, const T4& val110,
@@ -1078,27 +1098,27 @@ trilerp(const T1& val000, const T2& val100,
         Scalar u, Scalar v, Scalar w)
 {
     typedef
-        typename detail::TypePromote<
-            typename detail::TypePromote<
-                typename detail::TypePromote<
-                    T1,T2,typename et::ExprTraits<T1>::result_tag
-                >::temporary_type,
-                typename detail::TypePromote<
-                    T3,T4,typename et::ExprTraits<T1>::result_tag
-                >::temporary_type,
-                typename et::ExprTraits<T1>::result_tag
-            >::temporary_type,
-            typename detail::TypePromote<
-                typename detail::TypePromote<
-                    T5,T6,typename et::ExprTraits<T1>::result_tag
-                >::temporary_type,
-                typename detail::TypePromote<
-                    T7,T8,typename et::ExprTraits<T1>::result_tag
-                >::temporary_type,
-                typename et::ExprTraits<T1>::result_tag
-            >::temporary_type,
-            typename et::ExprTraits<T1>::result_tag
-        >::temporary_type temporary_type;
+    typename detail::TypePromote<
+    typename detail::TypePromote<
+    typename detail::TypePromote<
+    T1,T2,typename et::ExprTraits<T1>::result_tag
+    >::temporary_type,
+    typename detail::TypePromote<
+    T3,T4,typename et::ExprTraits<T1>::result_tag
+    >::temporary_type,
+    typename et::ExprTraits<T1>::result_tag
+    >::temporary_type,
+    typename detail::TypePromote<
+    typename detail::TypePromote<
+    T5,T6,typename et::ExprTraits<T1>::result_tag
+    >::temporary_type,
+    typename detail::TypePromote<
+    T7,T8,typename et::ExprTraits<T1>::result_tag
+    >::temporary_type,
+    typename et::ExprTraits<T1>::result_tag
+    >::temporary_type,
+    typename et::ExprTraits<T1>::result_tag
+    >::temporary_type temporary_type;
 
     typedef et::ExprTraits<temporary_type> result_traits;
     typedef typename result_traits::size_tag size_tag;
@@ -1110,17 +1130,17 @@ trilerp(const T1& val000, const T2& val100,
     Scalar vw = v * w;
     Scalar wu = w * u;
     Scalar uvw = uv * w;
-    
+
     result = (
-        (Scalar(1.0) - u - v - w + uv + vw + wu - uvw) * val000 +
-                                   (u - uv - wu + uvw) * val100 +
-                                   (v - uv - vw + uvw) * val010 +
-                                            (uv - uvw) * val110 +
-                                   (w - vw - wu + uvw) * val001 +
-                                            (wu - uvw) * val101 +
-                                            (vw - uvw) * val011 +
-                                                   uvw * val111
-    );
+                 (Scalar(1.0) - u - v - w + uv + vw + wu - uvw) * val000 +
+                 (u - uv - wu + uvw) * val100 +
+                 (v - uv - vw + uvw) * val010 +
+                 (uv - uvw) * val110 +
+                 (w - vw - wu + uvw) * val001 +
+                 (wu - uvw) * val101 +
+                 (vw - uvw) * val011 +
+                 uvw * val111
+             );
     return result;
 }
 

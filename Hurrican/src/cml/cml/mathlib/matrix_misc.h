@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -17,7 +17,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 
 /* Miscellaneous matrix functions. */
 
-namespace cml {
+namespace cml
+{
 
 /** Set a (possibly non-square) matrix to represent an identity transform */
 template < typename E, class A, class B, class L > void
@@ -26,8 +27,10 @@ identity_transform(matrix<E,A,B,L>& m)
     typedef matrix<E,A,B,L> matrix_type;
     typedef typename matrix_type::value_type value_type;
 
-    for (size_t i = 0; i < m.rows(); ++i) {
-        for (size_t j = 0; j < m.cols(); ++j) {
+    for (size_t i = 0; i < m.rows(); ++i)
+    {
+        for (size_t j = 0; j < m.cols(); ++j)
+        {
             m(i,j) = value_type((i == j) ? 1 : 0);
         }
     }
@@ -38,12 +41,13 @@ template < class MatT > typename MatT::value_type
 trace(const MatT& m)
 {
     typedef typename MatT::value_type value_type;
-    
+
     /* Checking */
     detail::CheckMatSquare(m);
 
     value_type t = value_type(0);
-    for (size_t i = 0; i < m.rows(); ++i) {
+    for (size_t i = 0; i < m.rows(); ++i)
+    {
         t += m(i,i);
     }
     return t;
@@ -55,7 +59,7 @@ trace_3x3(const MatT& m)
 {
     /* Checking */
     detail::CheckMatMin3x3(m);
-    
+
     return m(0,0) + m(1,1) + m(2,2);
 }
 
@@ -65,7 +69,7 @@ trace_2x2(const MatT& m)
 {
     /* Checking */
     detail::CheckMatMin2x2(m);
-    
+
     return m(0,0) + m(1,1);
 }
 
@@ -111,7 +115,7 @@ matrix_invert_RT_only(matrix<E,A,B,L>& m)
     vector_type x, y, z;
     matrix_get_basis_vectors(m,x,y,z);
     matrix_set_transposed_basis_vectors(m,x,y,z);
-    
+
     vector_type p = matrix_get_translation(m);
     matrix_set_translation(m,-dot(p,x),-dot(p,y),-dot(p,z));
 }
@@ -125,7 +129,7 @@ matrix_invert_RT_only_2D(matrix<E,A,B,L>& m)
     vector_type x, y;
     matrix_get_basis_vectors_2D(m,x,y);
     matrix_set_transposed_basis_vectors_2D(m,x,y);
-    
+
     vector_type p = matrix_get_translation_2D(m);
     matrix_set_translation_2D(m,-dot(p,x),-dot(p,y));
 }

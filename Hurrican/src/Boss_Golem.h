@@ -11,7 +11,7 @@
 #define ARMSIZEX   193
 #define ARMSIZEY   179
 
-#define ARM_HEBEN		0	
+#define ARM_HEBEN		0
 #define ARM_SENKEN		1
 #define ARM_SENKEN2		2
 #define ARM_UEBERKOPF	3
@@ -19,31 +19,31 @@
 
 class GegnerGolem : public GegnerClass
 {
-	private:
-		DirectGraphicsSprite	arm[2];
-		DirectGraphicsSprite	load;
-		float					Wackel;
-		float					WackelDir;
-		float					rotarm1;
-		float					rotarm2;
-		float					yoff;
-		float					ShotDelay;
-		float					count;
-		int						state2;
-		int						StoneCount;
-		int						last;
+private:
+    DirectGraphicsSprite	arm[2];
+    DirectGraphicsSprite	load;
+    float					Wackel;
+    float					WackelDir;
+    float					rotarm1;
+    float					rotarm2;
+    float					yoff;
+    float					ShotDelay;
+    float					count;
+    int						state2;
+    int						StoneCount;
+    int						last;
 
-	public:
+public:
 
-	GegnerGolem   (int Wert1,	int Wert2,			// Konstruktor
-						bool		  Light);	
-	float WinkelToPlayer(void);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-	void DoDraw		   (void);							// Gegner individuell rendern
-	void Wackeln	   (void);
-	bool GoToZero(float &Value, float speed = 0.1f);
-														// wackeln lassen beim Laufen
+    GegnerGolem   (int Wert1,	int Wert2,			// Konstruktor
+                   bool		  Light);
+    float WinkelToPlayer(void);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw		   (void);							// Gegner individuell rendern
+    void Wackeln	   (void);
+    bool GoToZero(float &Value, float speed = 0.1f);
+    // wackeln lassen beim Laufen
 };
 
 #endif

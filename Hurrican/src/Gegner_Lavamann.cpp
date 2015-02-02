@@ -13,19 +13,19 @@
 
 GegnerLavamann::GegnerLavamann(int Wert1, int Wert2, bool Light)
 {
-	Handlung		= GEGNER_INIT;
-	AnimStart		= 0;
-	AnimEnde		= 20;
-	AnimSpeed		= 0.15f;
-	xSpeed			= 24.0f;
-	ySpeed			=  0.0f;
-	Energy			= 20;
-	Value1			= Wert1;
-	Value2			= Wert2;
-	ChangeLight		= false;
-	Destroyable		= true;
-	OwnDraw			= true;
-	FlameCount		= 0.0f;
+    Handlung		= GEGNER_INIT;
+    AnimStart		= 0;
+    AnimEnde		= 20;
+    AnimSpeed		= 0.15f;
+    xSpeed			= 24.0f;
+    ySpeed			=  0.0f;
+    Energy			= 20;
+    Value1			= Wert1;
+    Value2			= Wert2;
+    ChangeLight		= false;
+    Destroyable		= true;
+    OwnDraw			= true;
+    FlameCount		= 0.0f;
 }
 
 // --------------------------------------------------------------------------------------
@@ -34,19 +34,19 @@ GegnerLavamann::GegnerLavamann(int Wert1, int Wert2, bool Light)
 
 void GegnerLavamann::DoDraw(void)
 {
-	bool mirror = false;
+    bool mirror = false;
 
-	if (BlickRichtung == LINKS)
-		mirror = true;
-	else
-		mirror = false;
+    if (BlickRichtung == LINKS)
+        mirror = true;
+    else
+        mirror = false;
 
-	// gegner leuchtend rendern
-	//
-	DirectGraphics.SetAdditiveMode();
-	pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-							  			   (float)(yPos-pTileEngine->YOffset), AnimPhase, 0xFFFFFFFF, mirror);
-	DirectGraphics.SetColorKeyMode();
+    // gegner leuchtend rendern
+    //
+    DirectGraphics.SetAdditiveMode();
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
+                                           (float)(yPos-pTileEngine->YOffset), AnimPhase, 0xFFFFFFFF, mirror);
+    DirectGraphics.SetColorKeyMode();
 }
 
 // --------------------------------------------------------------------------------------
@@ -54,120 +54,123 @@ void GegnerLavamann::DoDraw(void)
 // --------------------------------------------------------------------------------------
 
 void GegnerLavamann::DoKI(void)
-{		
-	SimpleAnimation();
+{
+    SimpleAnimation();
 
-	// Schrägen checken
-	//
-	if (ySpeed >= 0.0f)
-		blocku = pTileEngine->BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed);
+    // Schrägen checken
+    //
+    if (ySpeed >= 0.0f)
+        blocku = pTileEngine->BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed);
 
-	// Flammenwand entstehen lassen
-	//
-	FlameCount -= 1.0f SYNC;
-	if (FlameCount < 0.0f)
-	{
-		FlameCount = 0.5f;
-		pProjectiles->PushProjectile(xPos - 10 - xSpeed * 0.75f, yPos, FEUERFALLE_LAVAMANN);
-	}
+    // Flammenwand entstehen lassen
+    //
+    FlameCount -= 1.0f SYNC;
+    if (FlameCount < 0.0f)
+    {
+        FlameCount = 0.5f;
+        pProjectiles->PushProjectile(xPos - 10 - xSpeed * 0.75f, yPos, FEUERFALLE_LAVAMANN);
+    }
 
-	blocku = pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+    blocku = pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
-	// In Richtung Spieler laufen, wenn angeschossen
-	//
-	if (DamageTaken > 0)
-	{
-		if (pAim->xpos < xPos)
-		{
-			BlickRichtung = LINKS;
-			xSpeed = -24.0f;
-		}
-		else
-		{
-			BlickRichtung = RECHTS;
-			xSpeed = 24.0f;
-		}
-	}
+    // In Richtung Spieler laufen, wenn angeschossen
+    //
+    if (DamageTaken > 0)
+    {
+        if (pAim->xpos < xPos)
+        {
+            BlickRichtung = LINKS;
+            xSpeed = -24.0f;
+        }
+        else
+        {
+            BlickRichtung = RECHTS;
+            xSpeed = 24.0f;
+        }
+    }
 
-	// runterfallen?
-	//
-	if (Handlung != GEGNER_STEHEN)
-	{		
-		if (!(blocku & BLOCKWERT_SCHRAEGE_R) && 
-			!(blocku & BLOCKWERT_SCHRAEGE_L))
-		{
-			blocku = pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+    // runterfallen?
+    //
+    if (Handlung != GEGNER_STEHEN)
+    {
+        if (!(blocku & BLOCKWERT_SCHRAEGE_R) &&
+                !(blocku & BLOCKWERT_SCHRAEGE_L))
+        {
+            blocku = pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
-			if (!(blocku & BLOCKWERT_WAND) && 
-				!(blocku & BLOCKWERT_PLATTFORM))
-			{
-				if (ySpeed == 0.0f)
-					ySpeed = 5.0f;
+            if (!(blocku & BLOCKWERT_WAND) &&
+                    !(blocku & BLOCKWERT_PLATTFORM))
+            {
+                if (ySpeed == 0.0f)
+                    ySpeed = 5.0f;
 
-				yAcc = 3.0f;
-			}
+                yAcc = 3.0f;
+            }
 
-			else
-			{
-				ySpeed = 0.0f;
-				yAcc   = 0.0f;
-			}
+            else
+            {
+                ySpeed = 0.0f;
+                yAcc   = 0.0f;
+            }
 
-			// Nach links bzw rechts auf Kollision prüfen und ggf umdrehen
-			if (BlickRichtung == LINKS)
-			  if (blockl & BLOCKWERT_WAND ||
-				  blockl & BLOCKWERT_GEGNERWAND)
-				{			
-					BlickRichtung = RECHTS;
-					xSpeed *= -1.0f;
-				}
+            // Nach links bzw rechts auf Kollision prüfen und ggf umdrehen
+            if (BlickRichtung == LINKS)
+                if (blockl & BLOCKWERT_WAND ||
+                        blockl & BLOCKWERT_GEGNERWAND)
+                {
+                    BlickRichtung = RECHTS;
+                    xSpeed *= -1.0f;
+                }
 
-			if (BlickRichtung == RECHTS)
-			  if (blockr & BLOCKWERT_WAND ||
-				  blockr & BLOCKWERT_GEGNERWAND)
-				{
-				  BlickRichtung = LINKS;
-					xSpeed *= -1.0f;
-				}
-		}		
-	}
+            if (BlickRichtung == RECHTS)
+                if (blockr & BLOCKWERT_WAND ||
+                        blockr & BLOCKWERT_GEGNERWAND)
+                {
+                    BlickRichtung = LINKS;
+                    xSpeed *= -1.0f;
+                }
+        }
+    }
 
 
 // Je nach Handlung richtig verhalten
-	switch (Handlung)
-	{
-		// Zum ersten mal im Screen?
-		// Dann Sound ausgeben
-		//
-		case GEGNER_INIT:
-		{
-			pSoundManager->PlayWave(100, 128, 10000 + rand()%1000, SOUND_FEUERFALLE);
-			Handlung = GEGNER_LAUFEN;
-		} break;
+    switch (Handlung)
+    {
+    // Zum ersten mal im Screen?
+    // Dann Sound ausgeben
+    //
+    case GEGNER_INIT:
+    {
+        pSoundManager->PlayWave(100, 128, 10000 + rand()%1000, SOUND_FEUERFALLE);
+        Handlung = GEGNER_LAUFEN;
+    }
+    break;
 
-		case GEGNER_FALLEN:						// Normal runterfallen
-		{
-			// Keine zu hohe Geschwindigkeit
-			if (ySpeed > 25.0f)
-				ySpeed = 25.0f;
+    case GEGNER_FALLEN:						// Normal runterfallen
+    {
+        // Keine zu hohe Geschwindigkeit
+        if (ySpeed > 25.0f)
+            ySpeed = 25.0f;
 
-			// Testen, ob der Lavamann auf den Boden kommt
-			if (blocku & BLOCKWERT_WAND ||
-				blocku & BLOCKWERT_PLATTFORM)
-			{ 
-				Handlung = GEGNER_LAUFEN;
-				yAcc	  = 0.0f;
-				ySpeed	  = 0.0f;
-			}
-		} break;
+        // Testen, ob der Lavamann auf den Boden kommt
+        if (blocku & BLOCKWERT_WAND ||
+                blocku & BLOCKWERT_PLATTFORM)
+        {
+            Handlung = GEGNER_LAUFEN;
+            yAcc	  = 0.0f;
+            ySpeed	  = 0.0f;
+        }
+    }
+    break;
 
-		default : break;
-	} // switch
+    default :
+        break;
+    } // switch
 
-	// Testen, ob der Spieler den Lavamann berührt hat
-	if (Handlung != GEGNER_WATSCHELN &&
-		Handlung != GEGNER_SPRINGEN)
-		TestDamagePlayers(35.0f, true);
+    // Testen, ob der Spieler den Lavamann berührt hat
+    if (Handlung != GEGNER_WATSCHELN &&
+            Handlung != GEGNER_SPRINGEN)
+        TestDamagePlayers(35.0f, true);
 }
 
 // --------------------------------------------------------------------------------------
@@ -176,25 +179,25 @@ void GegnerLavamann::DoKI(void)
 
 void GegnerLavamann::GegnerExplode(void)
 {
-	for (int i=0; i<8; i++)
-	{
-		pPartikelSystem->PushPartikel(float(xPos - 30 + rand()%40), 
-									  float(yPos - 30 + rand()%50), SMOKEBIG);
+    for (int i=0; i<8; i++)
+    {
+        pPartikelSystem->PushPartikel(float(xPos - 30 + rand()%40),
+                                      float(yPos - 30 + rand()%50), SMOKEBIG);
 
-		pPartikelSystem->PushPartikel(float(xPos - 10 + rand()%40), 
-									  float(yPos - 10 + rand()%50), SMOKE3);
+        pPartikelSystem->PushPartikel(float(xPos - 10 + rand()%40),
+                                      float(yPos - 10 + rand()%50), SMOKE3);
 
-		pPartikelSystem->PushPartikel(float(xPos - 60 + rand()%80), 
-									  float(yPos - 50 + rand()%60), EXPLOSIONFLARE);
+        pPartikelSystem->PushPartikel(float(xPos - 60 + rand()%80),
+                                      float(yPos - 50 + rand()%60), EXPLOSIONFLARE);
 
-		pPartikelSystem->PushPartikel(float(xPos - 40 + rand()%40), 
-									  float(yPos - 30 + rand()%50), EXPLOSION_MEDIUM2);
+        pPartikelSystem->PushPartikel(float(xPos - 40 + rand()%40),
+                                      float(yPos - 30 + rand()%50), EXPLOSION_MEDIUM2);
 
-		pPartikelSystem->PushPartikel(float(xPos - 20 + rand()%50), 
-									  float(yPos - 20 + rand()%50), MINIFLARE);		
-	}
+        pPartikelSystem->PushPartikel(float(xPos - 20 + rand()%50),
+                                      float(yPos - 20 + rand()%50), MINIFLARE);
+    }
 
-	pSoundManager->PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
+    pSoundManager->PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 
-	pPlayer[0]->Score += 350;
+    pPlayer[0]->Score += 350;
 }

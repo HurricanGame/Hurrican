@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -19,7 +19,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
  * transform.
  */
 
-namespace cml {
+namespace cml
+{
 
 //////////////////////////////////////////////////////////////////////////////
 // Functions for setting the translation of a 3D or 2D affine transform matrix
@@ -31,7 +32,7 @@ matrix_set_translation(matrix<E,A,B,L>& m, E x, E y, E z)
 {
     /* Checking */
     detail::CheckMatAffine3D(m);
-    
+
     m.set_basis_element(3,0,x);
     m.set_basis_element(3,1,y);
     m.set_basis_element(3,2,z);
@@ -43,7 +44,7 @@ matrix_set_translation(matrix<E,A,B,L>& m, E x, E y)
 {
     typedef matrix<E,A,B,L> matrix_type;
     typedef typename matrix_type::value_type value_type;
-    
+
     matrix_set_translation(m, x, y, value_type(0));
 }
 
@@ -53,11 +54,14 @@ matrix_set_translation(matrix<E,A,B,L>& m, const VecT& translation)
 {
     /* Checking */
     detail::CheckVec2Or3(translation);
-    
-    if (translation.size() == 3) {
+
+    if (translation.size() == 3)
+    {
         matrix_set_translation(
             m,translation[0], translation[1], translation[2]);
-    } else { // translation.size() == 2
+    }
+    else     // translation.size() == 2
+    {
         matrix_set_translation(m, translation[0], translation[1]);
     }
 }
@@ -68,7 +72,7 @@ matrix_set_translation_2D(matrix<E,A,B,L>& m, E x, E y)
 {
     /* Checking */
     detail::CheckMatAffine2D(m);
-    
+
     m.set_basis_element(2,0,x);
     m.set_basis_element(2,1,y);
 }
@@ -79,7 +83,7 @@ matrix_set_translation_2D(matrix<E,A,B,L>& m, const VecT& translation)
 {
     /* Checking */
     detail::CheckVec2(translation);
-    
+
     matrix_set_translation_2D(m, translation[0], translation[1]);
 }
 
@@ -96,12 +100,12 @@ matrix_get_translation(const MatT& m)
 
     /* Checking */
     detail::CheckMatAffine3D(m);
-    
+
     return vector_type(
-        m.basis_element(3,0),
-        m.basis_element(3,1),
-        m.basis_element(3,2)
-    );
+               m.basis_element(3,0),
+               m.basis_element(3,1),
+               m.basis_element(3,2)
+           );
 }
 
 /** Get the translation of a 3D affine transform */
@@ -111,14 +115,14 @@ matrix_get_translation(
     typename MatT::value_type& t1,
     typename MatT::value_type& t2,
     typename MatT::value_type& t3
-    )
+)
 {
     typedef typename MatT::value_type value_type;
     typedef vector< value_type, fixed<3> > vector_type;
 
     /* Checking */
     detail::CheckMatAffine3D(m);
-    
+
     t1 = m.basis_element(3,0);
     t2 = m.basis_element(3,1);
     t3 = m.basis_element(3,2);
@@ -133,7 +137,7 @@ matrix_get_translation_2D(const MatT& m)
 
     /* Checking */
     detail::CheckMatAffine2D(m);
-    
+
     return vector_type(m.basis_element(2,0), m.basis_element(2,1));
 }
 
@@ -143,14 +147,14 @@ matrix_get_translation_2D(
     const MatT& m,
     typename MatT::value_type& t1,
     typename MatT::value_type& t2
-    )
+)
 {
     typedef typename MatT::value_type value_type;
     typedef vector< value_type, fixed<2> > vector_type;
 
     /* Checking */
     detail::CheckMatAffine2D(m);
-    
+
     t1 = m.basis_element(2,0);
     t2 = m.basis_element(2,1);
 }
@@ -165,7 +169,7 @@ matrix_get_view_translation(const MatT& m)
 {
     typedef typename MatT::value_type value_type;
     typedef vector< value_type, fixed<3> > vector_type;
-    
+
     vector_type x, y, z;
     matrix_get_basis_vectors(m,x,y,z);
     vector_type p = matrix_get_translation(m);

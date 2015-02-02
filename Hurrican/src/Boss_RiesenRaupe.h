@@ -6,16 +6,16 @@
 
 class GegnerRiesenRaupe : public GegnerClass
 {
-	private:
-		int	ShotCount;
+private:
+    int	ShotCount;
 
-	public:
+public:
 
-	GegnerRiesenRaupe(int  Wert1, int Wert2,			// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerRiesenRaupe(int  Wert1, int Wert2,			// Konstruktor
+                      bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

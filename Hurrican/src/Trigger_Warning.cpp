@@ -13,16 +13,16 @@
 
 GegnerWarning::GegnerWarning(int Wert1, int Wert2, bool Light)
 {
-	Handlung		= GEGNER_STEHEN;
-	BlickRichtung	= LINKS;
-	Energy			= 100;
-	Value1			= Wert1;
-	Value2			= 0;
-	ChangeLight		= Light;
-	Destroyable		= false;
-	TestBlock		= false;
-	OwnDraw			= true;
-	WarningCount    = 100.0f;
+    Handlung		= GEGNER_STEHEN;
+    BlickRichtung	= LINKS;
+    Energy			= 100;
+    Value1			= Wert1;
+    Value2			= 0;
+    ChangeLight		= Light;
+    Destroyable		= false;
+    TestBlock		= false;
+    OwnDraw			= true;
+    WarningCount    = 100.0f;
 }
 
 // --------------------------------------------------------------------------------------
@@ -31,23 +31,23 @@ GegnerWarning::GegnerWarning(int Wert1, int Wert2, bool Light)
 
 void GegnerWarning::DoKI(void)
 {
-	xPos = float (pTileEngine->XOffset + 230);
-	yPos = float (pTileEngine->YOffset + 400);
+    xPos = float (pTileEngine->XOffset + 230);
+    yPos = float (pTileEngine->YOffset + 400);
 
-	WarningCount -= 8.0f SYNC;
+    WarningCount -= 8.0f SYNC;
 
-	if (WarningCount <= 0.0f)
-	{
-		Value2++;
+    if (WarningCount <= 0.0f)
+    {
+        Value2++;
 
-		if (Value2 < 3)
-			WarningCount = 100.0f;
-		else
-		{
-			WarningCount = 0.0f;
-			Energy		 = 0.0f;
-		}
-	}
+        if (Value2 < 3)
+            WarningCount = 100.0f;
+        else
+        {
+            WarningCount = 0.0f;
+            Energy		 = 0.0f;
+        }
+    }
 
 }
 

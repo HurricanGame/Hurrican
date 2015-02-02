@@ -5,14 +5,14 @@
 #include "Gegner_Stuff.h"
 
 class GegnerSpitterbombe : public GegnerClass
-{	
-	public :
+{
+public :
 
-	GegnerSpitterbombe (int  Wert1, int Wert2,			// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerSpitterbombe (int  Wert1, int Wert2,			// Konstruktor
+                        bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

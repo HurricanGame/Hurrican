@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -15,27 +15,32 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 
 #include <cml/core/common.h>
 
-namespace cml {
+namespace cml
+{
 
 // NOTE: 'scale' constant no longer used.
 
 /** Helper to specify v1^v2 multiplication order. */
-struct positive_cross {
+struct positive_cross
+{
     /*enum { scale = 1 };*/
 };
 
 /** Helper to specify v2^v1 multiplication order. */
-struct negative_cross {
+struct negative_cross
+{
     /*enum { scale = -1 };*/
 };
 
 /** Helper to specify scalar-first quaternion ordering. */
-struct scalar_first {
+struct scalar_first
+{
     enum { W, X, Y, Z };
 };
 
 /** Helper to specify vector-first quaternion ordering. */
-struct vector_first {
+struct vector_first
+{
     enum { X, Y, Z, W };
 };
 
@@ -49,7 +54,7 @@ struct vector_first {
  * expression.
  */
 template<typename Element, class ArrayType = fixed<>,
-    class Order = scalar_first, class Cross = positive_cross> class quaternion;
+         class Order = scalar_first, class Cross = positive_cross> class quaternion;
 
 } // namespace cml
 

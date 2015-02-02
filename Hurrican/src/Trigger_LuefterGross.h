@@ -5,15 +5,15 @@
 #include "Gegner_Stuff.h"
 
 class GegnerLuefterGross : public GegnerClass
-{	
-	public :
+{
+public :
 
-	GegnerLuefterGross(int  Wert1, int Wert2,					// Konstruktor
-					 bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
-	void DoDraw		   (void);
+    GegnerLuefterGross(int  Wert1, int Wert2,					// Konstruktor
+                       bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
+    void DoDraw		   (void);
 };
 
 #endif

@@ -6,16 +6,16 @@
 
 class GegnerSurfBrett : public GegnerClass
 {
-	private:
-		float	SmokeCount;
+private:
+    float	SmokeCount;
 
-	public:
+public:
 
-	GegnerSurfBrett	   (int Wert1,	int Wert2,			// Konstruktor
-						bool		  Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerSurfBrett	   (int Wert1,	int Wert2,			// Konstruktor
+                        bool		  Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

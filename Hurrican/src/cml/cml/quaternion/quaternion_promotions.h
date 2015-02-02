@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -16,8 +16,10 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #include <cml/et/scalar_promotions.h>
 #include <cml/vector/vector_promotions.h>
 
-namespace cml {
-namespace et {
+namespace cml
+{
+namespace et
+{
 
 /* Default quaternion type promotion templates. */
 template<class LeftT, class RightT> struct QuaternionPromote;
@@ -27,13 +29,13 @@ template<typename E1, class AT1, typename E2, class AT2, class OT, class CT>
 struct QuaternionPromote<
     cml::quaternion<E1,AT1,OT,CT>,
     cml::quaternion<E2,AT2,OT,CT>
->
+    >
 {
     /* The deduced vector type: */
     typedef typename VectorPromote<
-        typename cml::quaternion<E1,AT1,OT,CT>::vector_type,
-        typename cml::quaternion<E2,AT2,OT,CT>::vector_type
-        >::type promoted_vector;
+    typename cml::quaternion<E1,AT1,OT,CT>::vector_type,
+             typename cml::quaternion<E2,AT2,OT,CT>::vector_type
+             >::type promoted_vector;
 
     /* The deduced element and storage types: */
     typedef typename promoted_vector::value_type value_type;
@@ -56,7 +58,7 @@ template < class Quat1_T, class Quat2_T >
 struct QuaternionPromote2
 {
     typedef typename QuaternionPromote<
-        typename Quat1_T::temporary_type, typename Quat2_T::temporary_type
+    typename Quat1_T::temporary_type, typename Quat2_T::temporary_type
     >::temporary_type temporary_type;
     typedef typename temporary_type::value_type value_type;
 };
@@ -66,11 +68,11 @@ template < class Quat1_T, class Quat2_T, class Quat3_T >
 struct QuaternionPromote3
 {
     typedef typename QuaternionPromote<
-        typename Quat1_T::temporary_type,
-        typename QuaternionPromote<
-            typename Quat2_T::temporary_type, typename Quat3_T::temporary_type
-        >::temporary_type
-    >::temporary_type temporary_type;
+    typename Quat1_T::temporary_type,
+             typename QuaternionPromote<
+             typename Quat2_T::temporary_type, typename Quat3_T::temporary_type
+             >::temporary_type
+             >::temporary_type temporary_type;
     typedef typename temporary_type::value_type value_type;
 };
 
@@ -79,15 +81,15 @@ template < class Quat1_T, class Quat2_T, class Quat3_T, class Quat4_T >
 struct QuaternionPromote4
 {
     typedef typename QuaternionPromote<
-        typename Quat1_T::temporary_type,
-        typename QuaternionPromote<
-            typename Quat2_T::temporary_type,
-            typename QuaternionPromote<
-                typename Quat3_T::temporary_type,
-                typename Quat4_T::temporary_type
-            >::temporary_type
-        >::temporary_type
-    >::temporary_type temporary_type;
+    typename Quat1_T::temporary_type,
+             typename QuaternionPromote<
+             typename Quat2_T::temporary_type,
+             typename QuaternionPromote<
+             typename Quat3_T::temporary_type,
+             typename Quat4_T::temporary_type
+             >::temporary_type
+             >::temporary_type
+             >::temporary_type temporary_type;
     typedef typename temporary_type::value_type value_type;
 };
 
@@ -97,8 +99,8 @@ struct QuaternionPromote<cml::quaternion<E,AT,OT,CT>, S>
 {
     /* The deduced vector type: */
     typedef typename VectorPromote<
-        typename quaternion<E,AT,OT,CT>::vector_type, S
-        >::type promoted_vector;
+    typename quaternion<E,AT,OT,CT>::vector_type, S
+    >::type promoted_vector;
 
     /* The deduced element and storage types: */
     typedef typename promoted_vector::value_type value_type;
@@ -117,8 +119,8 @@ struct QuaternionPromote<S, cml::quaternion<E,AT,OT,CT> >
 {
     /* The deduced vector type: */
     typedef typename VectorPromote<
-        S, typename quaternion<E,AT,OT,CT>::vector_type
-        >::type promoted_vector;
+    S, typename quaternion<E,AT,OT,CT>::vector_type
+    >::type promoted_vector;
 
     /* The deduced element and storage types: */
     typedef typename promoted_vector::value_type value_type;

@@ -23,12 +23,12 @@
 
 struct sCommandLineParams
 {
-	bool RunWindowMode;
-	bool RunOwnLevelList;
-	bool RunUserLevel;
-	char UserLevelName[256];
-	char OwnLevelList[256];
-	char Params[256];
+    bool RunWindowMode;
+    bool RunOwnLevelList;
+    bool RunUserLevel;
+    char UserLevelName[256];
+    char OwnLevelList[256];
+    char Params[256];
 #if defined(PLATFORM_SDL)
     uint16_t TexFactor;
     uint16_t TexSizeMin;

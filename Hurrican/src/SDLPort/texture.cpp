@@ -135,7 +135,8 @@ GLuint load_texture( image_t& image )
 
 #if defined(DEBUG)
         int error = glGetError();
-        if (error != 0) {
+        if (error != 0)
+        {
             Protokoll.WriteText( false, "GL load_texture Error %X\n", error );
             Protokoll.WriteText( false, "Format %X W %d H %d S %d Data %X + %d\n", image.format, image.tex_w, image.tex_h, image.size, image.data, image.offset );
         }
@@ -177,9 +178,9 @@ bool loadImageETC1( image_t& image, const char* path, const char* ext )
     if (image.data != NULL)
     {
         if ((image.data[0] == 'P') &&
-            (image.data[1] == 'K') &&
-            (image.data[2] == 'M') &&
-            (image.data[3] == ' ')
+                (image.data[1] == 'K') &&
+                (image.data[2] == 'M') &&
+                (image.data[3] == ' ')
            )
         {
             image.format = GL_ETC1_RGB8_OES;
@@ -194,9 +195,9 @@ bool loadImageETC1( image_t& image, const char* path, const char* ext )
 
 #if defined(DEBUG)
             Protokoll.WriteText( false, "Header %c%c%c%c\nVersion %X\nType %d\nExt Width %d\nExt Height %d\nWidth %d\nHeight %d\n",
-                    image.data[0], image.data[1], image.data[2], image.data[3],
-                    (image.data[4]<<8)+image.data[5], (image.data[6]<<8)+image.data[7], (image.data[8]<<8)+image.data[9],
-                    (image.data[10]<<8)+image.data[11], (image.data[12]<<8)+image.data[13], (image.data[14]<<8)+image.data[15] );
+                                 image.data[0], image.data[1], image.data[2], image.data[3],
+                                 (image.data[4]<<8)+image.data[5], (image.data[6]<<8)+image.data[7], (image.data[8]<<8)+image.data[9],
+                                 (image.data[10]<<8)+image.data[11], (image.data[12]<<8)+image.data[13], (image.data[14]<<8)+image.data[15] );
 #endif
         }
         else
@@ -228,22 +229,22 @@ bool loadImagePVRTC( image_t& image, const char* path )
 
         switch ( pvrtc_buffer32[2] )
         {
-            case PVRTC_RGB_2BPP:
-                image.format = GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
-            case PVRTC_RGBA_2BPP:
-                image.format = GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
-                pvrtc_bitperpixel = 2;
-                break;
-            case PVRTC_RGB_4BPP:
-                image.format = GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
-            case PVRTC_RGBA_4BPP:
-                image.format = GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
-                pvrtc_bitperpixel = 4;
-                break;
-            default:
-                Protokoll.WriteText( false, "ERROR Unknown PVRTC format %X\n",  pvrtc_buffer32[2] );
-                delete [] image.data;
-                return false;
+        case PVRTC_RGB_2BPP:
+            image.format = GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
+        case PVRTC_RGBA_2BPP:
+            image.format = GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
+            pvrtc_bitperpixel = 2;
+            break;
+        case PVRTC_RGB_4BPP:
+            image.format = GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
+        case PVRTC_RGBA_4BPP:
+            image.format = GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
+            pvrtc_bitperpixel = 4;
+            break;
+        default:
+            Protokoll.WriteText( false, "ERROR Unknown PVRTC format %X\n",  pvrtc_buffer32[2] );
+            delete [] image.data;
+            return false;
         }
 
         image.h = image.tex_h = pvrtc_buffer32[6];
@@ -258,8 +259,8 @@ bool loadImagePVRTC( image_t& image, const char* path )
 
 #if defined(DEBUG)
         Protokoll.WriteText( false, "Version %X\nFlags %d\nPFormatA %d\nPFormatB %d\nColorS %d\nChanType %d\nHeight %d\nWidth %d\nDepth %d\nNumSurf %d\nNumFaces %d\nMipmap %d\nMeta %d\n", pvrtc_buffer32[0], pvrtc_buffer32[1], pvrtc_buffer32[2], pvrtc_buffer32[3],
-                pvrtc_buffer32[4], pvrtc_buffer32[5], pvrtc_buffer32[6], pvrtc_buffer32[7], pvrtc_buffer32[8],
-                pvrtc_buffer32[9], pvrtc_buffer32[10], pvrtc_buffer32[11], pvrtc_buffer32[12] );
+                             pvrtc_buffer32[4], pvrtc_buffer32[5], pvrtc_buffer32[6], pvrtc_buffer32[7], pvrtc_buffer32[8],
+                             pvrtc_buffer32[9], pvrtc_buffer32[10], pvrtc_buffer32[11], pvrtc_buffer32[12] );
 #endif
 
         return true;
@@ -348,7 +349,7 @@ bool loadImageSDL( image_t& image, const char* path, uint32_t size )
         SDL_FreeSurface( rawSurf );
 
         if (((finSurf->w >= CommandLineParams.TexSizeMin) || (finSurf->h >= CommandLineParams.TexSizeMin))
-             && (CommandLineParams.TexFactor > 1))
+                && (CommandLineParams.TexFactor > 1))
         {
             factor = CommandLineParams.TexFactor;
         }

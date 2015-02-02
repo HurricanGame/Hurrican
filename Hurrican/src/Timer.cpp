@@ -29,35 +29,35 @@
 
 TimerClass::TimerClass(void)
 {
-   aktuelleZeit				= 0;							// Aktuelle Zeit auf 0 setzen
-   letzterFrame				= 0;							// die des letzten Frames auch
-   maxFPS					= 0;							// best mögliche Peformance fordern
-   vergangeneZeit			= 1.0f;
-   vergangeneFrames			= 0;							// Gesamtzahl der Frames
-   FPSMinimum				= 10000.0f;						// kleinste Framerate setzen
-   FPSMaximum				= 0.0f;							// grösste Framerate setzen
-   DurchschnittFramerate	= 0;							// durchscnittliche Framerate
-   MoveSpeed				= 10.0f;						// so moven wie bei 60 fps
-   SpeedFaktor				= 1.0f;
+    aktuelleZeit				= 0;							// Aktuelle Zeit auf 0 setzen
+    letzterFrame				= 0;							// die des letzten Frames auch
+    maxFPS					= 0;							// best mögliche Peformance fordern
+    vergangeneZeit			= 1.0f;
+    vergangeneFrames			= 0;							// Gesamtzahl der Frames
+    FPSMinimum				= 10000.0f;						// kleinste Framerate setzen
+    FPSMaximum				= 0.0f;							// grösste Framerate setzen
+    DurchschnittFramerate	= 0;							// durchscnittliche Framerate
+    MoveSpeed				= 10.0f;						// so moven wie bei 60 fps
+    SpeedFaktor				= 1.0f;
 
 #if defined(PLATFORM_DIRECTX)
-   // testen, ob ein PerformanceCounter exisitert
-   if(QueryPerformanceFrequency((LARGE_INTEGER *) &Frequenz))
-   {
-	   PerformanceCounter=true;
-	   QueryPerformanceCounter((LARGE_INTEGER *) &letzterFrame);
-	   ZeitFaktor=1.0f/Frequenz;
-	   //Protokoll.WriteValue(Frequenz);
-   }
-   // wenn nicht, dann timeGetTime verwenden
-   else
-   {
+    // testen, ob ein PerformanceCounter exisitert
+    if(QueryPerformanceFrequency((LARGE_INTEGER *) &Frequenz))
+    {
+        PerformanceCounter=true;
+        QueryPerformanceCounter((LARGE_INTEGER *) &letzterFrame);
+        ZeitFaktor=1.0f/Frequenz;
+        //Protokoll.WriteValue(Frequenz);
+    }
+    // wenn nicht, dann timeGetTime verwenden
+    else
+    {
 #endif
-     PerformanceCounter=false;
-	 letzterFrame=timeGetTime();
-	 ZeitFaktor=0.001f;
+        PerformanceCounter=false;
+        letzterFrame=timeGetTime();
+        ZeitFaktor=0.001f;
 #if defined(PLATFORM_DIRECTX)
-   }
+    }
 #endif
 }
 
@@ -75,8 +75,9 @@ TimerClass::~TimerClass(void)
 
 void  TimerClass::update(void)
 {
-	vergangeneFrames++;												// für die Schnittberechnung
-    if(PerformanceCounter) {     									// Counter vorhanden ?
+    vergangeneFrames++;												// für die Schnittberechnung
+    if(PerformanceCounter)       									// Counter vorhanden ?
+    {
 #if defined(PLATFORM_DIRECTX)
         QueryPerformanceCounter((LARGE_INTEGER *) &aktuelleZeit);   // dann beutzen
 #endif
@@ -87,23 +88,23 @@ void  TimerClass::update(void)
     vergangeneZeit=(MAX(0,aktuelleZeit-letzterFrame))*ZeitFaktor;			// vergangene Zeit neu setzen
     letzterFrame=aktuelleZeit;										// letzten Frame aktualisieren
 
-	aktuelleFramerate=1/vergangeneZeit;								// Framerate berechnen
-	if(aktuelleFramerate>FPSMaximum)								// neue Maximale Framerate ?
-		FPSMaximum = aktuelleFramerate;
-	if(aktuelleFramerate<FPSMinimum)								// neue Minimale Framerate ?
-		FPSMinimum = aktuelleFramerate;
+    aktuelleFramerate=1/vergangeneZeit;								// Framerate berechnen
+    if(aktuelleFramerate>FPSMaximum)								// neue Maximale Framerate ?
+        FPSMaximum = aktuelleFramerate;
+    if(aktuelleFramerate<FPSMinimum)								// neue Minimale Framerate ?
+        FPSMinimum = aktuelleFramerate;
 
-	// Durschnitt der Framerates berechnen
-	DurchschnittFramerate = (vergangeneFrames*DurchschnittFramerate+aktuelleFramerate)
-				  		   /(vergangeneFrames+1);
+    // Durschnitt der Framerates berechnen
+    DurchschnittFramerate = (vergangeneFrames*DurchschnittFramerate+aktuelleFramerate)
+                            /(vergangeneFrames+1);
 
-	// Speedfaktor errechnen
-	SpeedFaktor = (float)(MoveSpeed * vergangeneZeit);
+    // Speedfaktor errechnen
+    SpeedFaktor = (float)(MoveSpeed * vergangeneZeit);
 
-	// begrenzen
-	#define MAX_FACTOR 2.0f
-	if (SpeedFaktor > MAX_FACTOR)
-		SpeedFaktor = MAX_FACTOR;
+    // begrenzen
+#define MAX_FACTOR 2.0f
+    if (SpeedFaktor > MAX_FACTOR)
+        SpeedFaktor = MAX_FACTOR;
 }
 
 // --------------------------------------------------------------------------------------
@@ -112,21 +113,23 @@ void  TimerClass::update(void)
 
 void  TimerClass::wait(void)
 {
-	if(maxFPS==0)							// bei Framerate = 0 gleich wieder zurück
-		return;								// da wir da nichts abwarten müssen :-)
+    if(maxFPS==0)							// bei Framerate = 0 gleich wieder zurück
+        return;								// da wir da nichts abwarten müssen :-)
 
-	// Diese Schleife wird solange durchlaufen, bis die gewünschte Framerate erreicht ist
-	do
-	{	// Zeit holen
-		if(PerformanceCounter) {			// mit PerformanceCounter
+    // Diese Schleife wird solange durchlaufen, bis die gewünschte Framerate erreicht ist
+    do
+    {
+        // Zeit holen
+        if(PerformanceCounter)  			// mit PerformanceCounter
+        {
 #if defined(PLATFORM_DIRECTX)
-			QueryPerformanceCounter((LARGE_INTEGER *) &aktuelleZeit);
+            QueryPerformanceCounter((LARGE_INTEGER *) &aktuelleZeit);
 #endif
-		}
-		else								// oder timeGetTime, je nach dem
-			aktuelleZeit=timeGetTime();
-	}
-	while(maxFPS<(int)1/((aktuelleZeit-letzterFrame)*ZeitFaktor));
+        }
+        else								// oder timeGetTime, je nach dem
+            aktuelleZeit=timeGetTime();
+    }
+    while(maxFPS<(int)1/((aktuelleZeit-letzterFrame)*ZeitFaktor));
 }
 
 // --------------------------------------------------------------------------------------
@@ -135,17 +138,19 @@ void  TimerClass::wait(void)
 
 void  TimerClass::wait(int Wert)
 {
-	do
-	{	// Zeit holen
-		if(PerformanceCounter) {						// mit PerformanceCounter
+    do
+    {
+        // Zeit holen
+        if(PerformanceCounter)  						// mit PerformanceCounter
+        {
 #if defined(PLATFORM_DIRECTX)
-			QueryPerformanceCounter((LARGE_INTEGER *) &aktuelleZeit);
+            QueryPerformanceCounter((LARGE_INTEGER *) &aktuelleZeit);
 #endif
-		}
-		else										// oder timeGetTime, je nach dem
-			aktuelleZeit=timeGetTime();
-	}
-	while(Wert>(aktuelleZeit-letzterFrame)*ZeitFaktor*1000);
+        }
+        else										// oder timeGetTime, je nach dem
+            aktuelleZeit=timeGetTime();
+    }
+    while(Wert>(aktuelleZeit-letzterFrame)*ZeitFaktor*1000);
 }
 
 // --------------------------------------------------------------------------------------
@@ -154,7 +159,7 @@ void  TimerClass::wait(int Wert)
 
 void TimerClass::SetMoveSpeed(float Wert)
 {
-	MoveSpeed = Wert;
+    MoveSpeed = Wert;
 }
 
 // --------------------------------------------------------------------------------------
@@ -163,7 +168,7 @@ void TimerClass::SetMoveSpeed(float Wert)
 
 float TimerClass::GetMoveSpeed(void)
 {
-	return MoveSpeed;
+    return MoveSpeed;
 }
 
 // --------------------------------------------------------------------------------------
@@ -172,7 +177,7 @@ float TimerClass::GetMoveSpeed(void)
 
 void  TimerClass::SetMaxFPS(int Wert)
 {
-	maxFPS=Wert;									// Wert setzen
+    maxFPS=Wert;									// Wert setzen
 }
 
 // --------------------------------------------------------------------------------------
@@ -181,7 +186,7 @@ void  TimerClass::SetMaxFPS(int Wert)
 
 double TimerClass::getElapsed()
 {
-	return vergangeneZeit;							// Den Bahnhof in die Luft jagen, was sonst ?
+    return vergangeneZeit;							// Den Bahnhof in die Luft jagen, was sonst ?
 }
 
 // --------------------------------------------------------------------------------------
@@ -190,7 +195,7 @@ double TimerClass::getElapsed()
 
 double TimerClass::getFrameRate(void)
 {
-	return(aktuelleFramerate);						// Framerate berechnen und zurückgeben
+    return(aktuelleFramerate);						// Framerate berechnen und zurückgeben
 }
 
 // --------------------------------------------------------------------------------------
@@ -199,7 +204,7 @@ double TimerClass::getFrameRate(void)
 
 double TimerClass::getMinFrameRate(void)
 {
-	return(FPSMinimum);
+    return(FPSMinimum);
 }
 
 // --------------------------------------------------------------------------------------
@@ -208,7 +213,7 @@ double TimerClass::getMinFrameRate(void)
 
 double TimerClass::getMaxFrameRate(void)
 {
-	return(FPSMaximum);
+    return(FPSMaximum);
 }
 
 // --------------------------------------------------------------------------------------
@@ -217,7 +222,7 @@ double TimerClass::getMaxFrameRate(void)
 
 double TimerClass::getAverageFPS(void)
 {
-	return DurchschnittFramerate;
+    return DurchschnittFramerate;
 }
 
 // --------------------------------------------------------------------------------------
@@ -225,7 +230,7 @@ double TimerClass::getAverageFPS(void)
 // --------------------------------------------------------------------------------------
 double TimerClass::getSpeedFactor (void)
 {
-	return vergangeneZeit;
+    return vergangeneZeit;
 }
 
 // --------------------------------------------------------------------------------------
@@ -234,9 +239,9 @@ double TimerClass::getSpeedFactor (void)
 
 void TimerClass::resetMaxMinFPS(void)
 {
-	FPSMaximum			  = 0.0f;
-	FPSMinimum			  = 10000.0f;
-	DurchschnittFramerate = aktuelleFramerate;
+    FPSMaximum			  = 0.0f;
+    FPSMinimum			  = 10000.0f;
+    DurchschnittFramerate = aktuelleFramerate;
 }
 
 // --------------------------------------------------------------------------------------
@@ -245,7 +250,10 @@ void TimerClass::resetMaxMinFPS(void)
 
 void TimerClass::WriteLogValues(void)
 {
-	Protokoll.WriteText( false, "\nMaximum  FPS : " ); Protokoll.WriteValue((int)(FPSMaximum));
-	Protokoll.WriteText( false,   "Minimum  FPS : " ); Protokoll.WriteValue((int)(FPSMinimum));
-	Protokoll.WriteText( false,   "Average  FPS : " ); Protokoll.WriteValue((int)(DurchschnittFramerate));
+    Protokoll.WriteText( false, "\nMaximum  FPS : " );
+    Protokoll.WriteValue((int)(FPSMaximum));
+    Protokoll.WriteText( false,   "Minimum  FPS : " );
+    Protokoll.WriteValue((int)(FPSMinimum));
+    Protokoll.WriteText( false,   "Average  FPS : " );
+    Protokoll.WriteValue((int)(DurchschnittFramerate));
 }

@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -25,7 +25,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 // NOTE: Changed 'near' and 'far' to 'n' and 'f' throughout to work around
 // windows.h 'near' and 'far' macros.
 
-namespace cml {
+namespace cml
+{
 
 //////////////////////////////////////////////////////////////////////////////
 // 3D perspective projection from frustum
@@ -37,8 +38,8 @@ namespace cml {
  */
 template < typename E, class A, class B, class L > void
 matrix_perspective(matrix<E,A,B,L>& m, E left, E right, E bottom, E top,
-    E n, E f, Handedness handedness,
-    ZClip z_clip)
+                   E n, E f, Handedness handedness,
+                   ZClip z_clip)
 {
     typedef matrix<E,A,B,L> matrix_type;
     typedef typename matrix_type::value_type value_type;
@@ -47,21 +48,24 @@ matrix_perspective(matrix<E,A,B,L>& m, E left, E right, E bottom, E top,
     detail::CheckMatHomogeneous3D(m);
 
     identity_transform(m);
-    
+
     value_type inv_width = value_type(1) / (right - left);
     value_type inv_height = value_type(1) / (top - bottom);
     value_type inv_depth = value_type(1) / (f - n);
     value_type near2 = value_type(2) * n;
     value_type s = handedness == left_handed ? 1 : -1;
 
-    if (z_clip == z_clip_neg_one) {
+    if (z_clip == z_clip_neg_one)
+    {
         m.set_basis_element(2,2,s * (f + n) * inv_depth);
         m.set_basis_element(3,2,value_type(-2) * f * n * inv_depth);
-    } else { // z_clip == z_clip_zero
+    }
+    else     // z_clip == z_clip_zero
+    {
         m.set_basis_element(2,2,s * f * inv_depth);
         m.set_basis_element(3,2,-s * n * m.basis_element(2,2));
     }
-    
+
     m.set_basis_element(0,0,near2 * inv_width               );
     m.set_basis_element(1,1,near2 * inv_height              );
     m.set_basis_element(2,0,-s * (right + left) * inv_width );
@@ -76,39 +80,39 @@ matrix_perspective(matrix<E,A,B,L>& m, E left, E right, E bottom, E top,
  */
 template < typename E, class A, class B, class L > void
 matrix_perspective(matrix<E,A,B,L>& m, E width, E height, E n, E f,
-    Handedness handedness, ZClip z_clip)
+                   Handedness handedness, ZClip z_clip)
 {
     typedef matrix<E,A,B,L> matrix_type;
     typedef typename matrix_type::value_type value_type;
-    
+
     value_type half_width = width * value_type(.5);
     value_type half_height = height * value_type(.5);
     matrix_perspective(m, -half_width, half_width,
-        -half_height, half_height, n, f, handedness, z_clip);
+                       -half_height, half_height, n, f, handedness, z_clip);
 }
 
 /** Build a left-handedness frustum perspective matrix */
 template < typename E, class A, class B, class L > void
 matrix_perspective_LH(matrix<E,A,B,L>& m, E left, E right, E bottom,
-    E top, E n, E f, ZClip z_clip)
+                      E top, E n, E f, ZClip z_clip)
 {
     matrix_perspective(m, left, right, bottom, top, n, f,
-        left_handed, z_clip);
+                       left_handed, z_clip);
 }
 
 /** Build a right-handedness frustum perspective matrix */
 template < typename E, class A, class B, class L > void
 matrix_perspective_RH(matrix<E,A,B,L>& m, E left, E right, E bottom,
-    E top, E n, E f, ZClip z_clip)
+                      E top, E n, E f, ZClip z_clip)
 {
     matrix_perspective(m, left, right, bottom, top, n, f,
-        right_handed, z_clip);
+                       right_handed, z_clip);
 }
 
 /** Build a left-handedness frustum perspective matrix */
 template < typename E, class A, class B, class L > void
 matrix_perspective_LH(matrix<E,A,B,L>& m, E width, E height, E n,
-    E f, ZClip z_clip)
+                      E f, ZClip z_clip)
 {
     matrix_perspective(m, width, height, n, f, left_handed, z_clip);
 }
@@ -116,7 +120,7 @@ matrix_perspective_LH(matrix<E,A,B,L>& m, E width, E height, E n,
 /** Build a right-handedness frustum perspective matrix */
 template < typename E, class A, class B, class L > void
 matrix_perspective_RH(matrix<E,A,B,L>& m, E width, E height, E n,
-    E f, ZClip z_clip)
+                      E f, ZClip z_clip)
 {
     matrix_perspective(m, width, height, n, f, right_handed, z_clip);
 }
@@ -128,20 +132,20 @@ matrix_perspective_RH(matrix<E,A,B,L>& m, E width, E height, E n,
 /** Build a perspective matrix */
 template < typename E, class A, class B, class L > void
 matrix_perspective_xfov(matrix<E,A,B,L>& m, E xfov, E aspect, E n,
-    E f, Handedness handedness, ZClip z_clip)
+                        E f, Handedness handedness, ZClip z_clip)
 {
     typedef matrix<E,A,B,L> matrix_type;
     typedef typename matrix_type::value_type value_type;
-    
+
     value_type width = value_type(2) * std::tan(xfov * value_type(.5)) * n;
     matrix_perspective(m, width, width / aspect, n, f,
-        handedness, z_clip);
+                       handedness, z_clip);
 }
 
 /** Build a left-handedness perspective matrix */
 template < typename E, class A, class B, class L > void
 matrix_perspective_xfov_LH(matrix<E,A,B,L>& m, E xfov, E aspect, E n,
-    E f, ZClip z_clip)
+                           E f, ZClip z_clip)
 {
     matrix_perspective_xfov(m,xfov,aspect,n,f,left_handed,z_clip);
 }
@@ -149,7 +153,7 @@ matrix_perspective_xfov_LH(matrix<E,A,B,L>& m, E xfov, E aspect, E n,
 /** Build a right-handedness perspective matrix */
 template < typename E, class A, class B, class L > void
 matrix_perspective_xfov_RH(matrix<E,A,B,L>& m, E xfov, E aspect, E n,
-    E f, ZClip z_clip)
+                           E f, ZClip z_clip)
 {
     matrix_perspective_xfov(m,xfov,aspect,n,f,right_handed,z_clip);
 }
@@ -161,20 +165,20 @@ matrix_perspective_xfov_RH(matrix<E,A,B,L>& m, E xfov, E aspect, E n,
 /** Build a perspective matrix */
 template < typename E, class A, class B, class L > void
 matrix_perspective_yfov(matrix<E,A,B,L>& m, E yfov, E aspect, E n,
-    E f, Handedness handedness, ZClip z_clip)
+                        E f, Handedness handedness, ZClip z_clip)
 {
     typedef matrix<E,A,B,L> matrix_type;
     typedef typename matrix_type::value_type value_type;
-    
+
     value_type height = value_type(2) * std::tan(yfov * value_type(.5)) * n;
     matrix_perspective(m, height * aspect, height, n, f,
-        handedness, z_clip);
+                       handedness, z_clip);
 }
 
 /** Build a left-handedness perspective matrix */
 template < typename E, class A, class B, class L > void
 matrix_perspective_yfov_LH(matrix<E,A,B,L>& m, E yfov, E aspect, E n,
-    E f, ZClip z_clip)
+                           E f, ZClip z_clip)
 {
     matrix_perspective_yfov(m,yfov,aspect,n,f,left_handed,z_clip);
 }
@@ -182,7 +186,7 @@ matrix_perspective_yfov_LH(matrix<E,A,B,L>& m, E yfov, E aspect, E n,
 /** Build a right-handedness perspective matrix */
 template < typename E, class A, class B, class L > void
 matrix_perspective_yfov_RH(matrix<E,A,B,L>& m, E yfov, E aspect, E n,
-    E f, ZClip z_clip)
+                           E f, ZClip z_clip)
 {
     matrix_perspective_yfov(m,yfov,aspect,n,f,right_handed,z_clip);
 }
@@ -198,8 +202,8 @@ matrix_perspective_yfov_RH(matrix<E,A,B,L>& m, E yfov, E aspect, E n,
 
 template < typename E, class A, class B, class L > void
 matrix_orthographic(matrix<E,A,B,L>& m, E left, E right, E bottom, E top,
-    E n, E f, Handedness handedness,
-    ZClip z_clip)
+                    E n, E f, Handedness handedness,
+                    ZClip z_clip)
 {
     typedef matrix<E,A,B,L> matrix_type;
     typedef typename matrix_type::value_type value_type;
@@ -208,20 +212,23 @@ matrix_orthographic(matrix<E,A,B,L>& m, E left, E right, E bottom, E top,
     detail::CheckMatHomogeneous3D(m);
 
     identity_transform(m);
-    
+
     value_type inv_width = value_type(1) / (right - left);
     value_type inv_height = value_type(1) / (top - bottom);
     value_type inv_depth = value_type(1) / (f - n);
     value_type s = handedness == left_handed ? 1 : -1;
 
-    if (z_clip == z_clip_neg_one) {
+    if (z_clip == z_clip_neg_one)
+    {
         m.set_basis_element(2,2,s * value_type(2) * inv_depth);
         m.set_basis_element(3,2,-(f + n) * inv_depth);
-    } else { // z_clip.z_clip() == 0
+    }
+    else     // z_clip.z_clip() == 0
+    {
         m.set_basis_element(2,2,s * inv_depth);
         m.set_basis_element(3,2,-n * inv_depth);
     }
-    
+
     m.set_basis_element(0,0,value_type(2) * inv_width   );
     m.set_basis_element(1,1,value_type(2) * inv_height  );
     m.set_basis_element(3,0,-(right + left) * inv_width );
@@ -231,51 +238,51 @@ matrix_orthographic(matrix<E,A,B,L>& m, E left, E right, E bottom, E top,
 /** Build an orthographic projection matrix */
 template < typename E, class A, class B, class L > void
 matrix_orthographic(matrix<E,A,B,L>& m, E width, E height, E n, E f,
-    Handedness handedness, ZClip z_clip)
+                    Handedness handedness, ZClip z_clip)
 {
     typedef matrix<E,A,B,L> matrix_type;
     typedef typename matrix_type::value_type value_type;
-    
+
     value_type half_width = width * value_type(.5);
     value_type half_height = height * value_type(.5);
     matrix_orthographic(m, -half_width, half_width,
-        -half_height, half_height, n, f, handedness, z_clip);
+                        -half_height, half_height, n, f, handedness, z_clip);
 }
 
 /** Build a left-handedness orthographic projection matrix */
 template < typename E, class A, class B, class L > void
 matrix_orthographic_LH(matrix<E,A,B,L>& m, E left, E right, E bottom,
-    E top, E n, E f, ZClip z_clip)
+                       E top, E n, E f, ZClip z_clip)
 {
     matrix_orthographic(m, left, right, bottom, top, n, f,
-        left_handed, z_clip);
+                        left_handed, z_clip);
 }
 
 /** Build a right-handedness orthographic projection matrix */
 template < typename E, class A, class B, class L > void
 matrix_orthographic_RH(matrix<E,A,B,L>& m, E left, E right, E bottom,
-    E top, E n, E f, ZClip z_clip)
+                       E top, E n, E f, ZClip z_clip)
 {
     matrix_orthographic(m, left, right, bottom, top, n, f,
-        right_handed, z_clip);
+                        right_handed, z_clip);
 }
 
 /** Build a left-handedness orthographic projection matrix */
 template < typename E, class A, class B, class L > void
 matrix_orthographic_LH(matrix<E,A,B,L>& m, E width, E height, E n,
-    E f, ZClip z_clip)
+                       E f, ZClip z_clip)
 {
     matrix_orthographic(m, width, height, n, f, left_handed,
-        z_clip);
+                        z_clip);
 }
 
 /** Build a right-handedness orthographic projection matrix */
 template < typename E, class A, class B, class L > void
 matrix_orthographic_RH(matrix<E,A,B,L>& m, E width, E height, E n,
-    E f, ZClip z_clip)
+                       E f, ZClip z_clip)
 {
     matrix_orthographic(m, width, height, n, f, right_handed,
-        z_clip);
+                        z_clip);
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -294,7 +301,7 @@ matrix_orthographic_RH(matrix<E,A,B,L>& m, E width, E height, E n,
 
 template < typename E, class A, class B, class L > void
 matrix_viewport(matrix<E,A,B,L>& m, E left, E right, E bottom,
-    E top, ZClip z_clip, E n = E(0), E f = E(1))
+                E top, ZClip z_clip, E n = E(0), E f = E(1))
 {
     matrix_orthographic_LH(m, left, right, bottom, top, n, f, z_clip);
     /* @todo: invert(m), when available */
@@ -329,16 +336,16 @@ matrix_pick(
     detail::CheckMatHomogeneous3D(m);
 
     identity_transform(m);
-    
+
     value_type inv_width = value_type(1) / pick_width;
     value_type inv_height = value_type(1) / pick_height;
-    
+
     m.set_basis_element(0,0,viewport_width*inv_width);
     m.set_basis_element(1,1,viewport_height*inv_height);
     m.set_basis_element(3,0,
-        (viewport_width+value_type(2)*(viewport_x-pick_x))*inv_width);
+                        (viewport_width+value_type(2)*(viewport_x-pick_x))*inv_width);
     m.set_basis_element(3,1,
-        (viewport_height+value_type(2)*(viewport_y-pick_y))*inv_height);
+                        (viewport_height+value_type(2)*(viewport_y-pick_y))*inv_height);
 }
 
 } // namespace cml

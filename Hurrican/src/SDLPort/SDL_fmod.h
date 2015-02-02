@@ -46,7 +46,8 @@
 extern "C" {
 #endif
 
-enum FSOUND_DEFINES {
+enum FSOUND_DEFINES
+{
     FSOUND_FREE                     = -1,
     FSOUND_LOADMEMORY               = 0x01,
     FSOUND_LOOP_OFF                 = 0x02,

@@ -174,34 +174,34 @@
 
 class ProjectileClass
 {
-	public:
-		float				xSpeed,ySpeed;				// Geschwindigkeit des Partikels
-		float				xAcc, yAcc;					// Beschleunigung des Partikels
-		int					AnimPhase, AnimEnde;		// Aktuelle Phase und Endphase
-		float				AnimSpeed, AnimCount;		// Anim-Geschwindigkeit und Counter
-		bool				BounceWalls;				// an Wänden abprallen ?
-		bool				CheckBlock;					// überhaupt Kollision mit Wand checken?
-		bool				HasGlow;					// Leuchten?
-		bool				ExplodeOnImpact;			// Schüsse, die durch Objekte durchgehen
-		int					ShotArt;					// Art des Schusses (siehe Defines)
-		float				xPos,yPos;					// Position des Partikels
-		float				xPosOld, yPosOld;			// alte X-Position
-		int					Damage;						// Wieviel Schaden verursacht der Schuss
-		bool				DamagePlayer;				// Wer bekommt Schaden ? Spieler oder Gegner
-		float				Winkel;						// nur für SpreadShots
-		float				Counter;					// Spezialcounter für Extra-Aktionen
-		bool				OwnDraw;
+public:
+    float				xSpeed,ySpeed;				// Geschwindigkeit des Partikels
+    float				xAcc, yAcc;					// Beschleunigung des Partikels
+    int					AnimPhase, AnimEnde;		// Aktuelle Phase und Endphase
+    float				AnimSpeed, AnimCount;		// Anim-Geschwindigkeit und Counter
+    bool				BounceWalls;				// an Wänden abprallen ?
+    bool				CheckBlock;					// überhaupt Kollision mit Wand checken?
+    bool				HasGlow;					// Leuchten?
+    bool				ExplodeOnImpact;			// Schüsse, die durch Objekte durchgehen
+    int					ShotArt;					// Art des Schusses (siehe Defines)
+    float				xPos,yPos;					// Position des Partikels
+    float				xPosOld, yPosOld;			// alte X-Position
+    int					Damage;						// Wieviel Schaden verursacht der Schuss
+    bool				DamagePlayer;				// Wer bekommt Schaden ? Spieler oder Gegner
+    float				Winkel;						// nur für SpreadShots
+    float				Counter;					// Spezialcounter für Extra-Aktionen
+    bool				OwnDraw;
 
-		ProjectileClass(void);							// Konstruktor
-	   ~ProjectileClass(void);							// Destruktor
-		void CreateShot(float x, float y, int Art, PlayerClass *pTemp);		// Bestimmten Schuss erzeugen
-		void Run(void);									// Schuss animieren und bewegen
-		void Render(void);								// Schuss rendern
-		void CheckCollision(void);						// Kollision checken
-		void ExplodeShot(void);							// Schuss explodiert und erzeugt Partikel
-		ProjectileClass		*pNext;						// Zeiger auf den nächsten   Schuss
-		ProjectileClass		*pPrev;						// Zeiger auf den vorherigen Schuss
-		PlayerClass			*pParent;
+    ProjectileClass(void);							// Konstruktor
+    ~ProjectileClass(void);							// Destruktor
+    void CreateShot(float x, float y, int Art, PlayerClass *pTemp);		// Bestimmten Schuss erzeugen
+    void Run(void);									// Schuss animieren und bewegen
+    void Render(void);								// Schuss rendern
+    void CheckCollision(void);						// Kollision checken
+    void ExplodeShot(void);							// Schuss explodiert und erzeugt Partikel
+    ProjectileClass		*pNext;						// Zeiger auf den nächsten   Schuss
+    ProjectileClass		*pPrev;						// Zeiger auf den vorherigen Schuss
+    PlayerClass			*pParent;
 };
 
 // --------------------------------------------------------------------------------------
@@ -210,23 +210,23 @@ class ProjectileClass
 
 class ProjectileListClass
 {
-	private:
-		int						NumProjectiles;			// aktuelle Zahl der Schüsse
+private:
+    int						NumProjectiles;			// aktuelle Zahl der Schüsse
 
-	public:
-		ProjectileClass			*pStart;				// Erstes  Element der Liste
-		ProjectileClass			*pEnd;					// Letztes Element der Liste
+public:
+    ProjectileClass			*pStart;				// Erstes  Element der Liste
+    ProjectileClass			*pEnd;					// Letztes Element der Liste
 
-		ProjectileListClass(void);						// Konstruktor
-	   ~ProjectileListClass(void);						// Destruktor
+    ProjectileListClass(void);						// Konstruktor
+    ~ProjectileListClass(void);						// Destruktor
 
-	    bool PushProjectile(float x, float y, int Art, PlayerClass* pTemp = NULL); 	// Schuss "Art" hinzufügen
-		bool PushBlitzBeam (int Size, float Richtung, PlayerClass* pSource);	// BlitzBeam hinzufügen (in verschiedenen Größen und Richtungen möglich)
-		void DelSel		(ProjectileClass *pTemp);		// Ausgewähltes Objekt entfernen
-		void ClearAll	(void);							// Alle Objekte löschen
-		void ClearType	(int type);						// Alle Objekte eines Typs löschen
-	    int  GetNumProjectiles(void);					// Zahl der Schüsse zurückliefern
-		void DoProjectiles  (void);						// Alle Schüsse der Liste animieren
+    bool PushProjectile(float x, float y, int Art, PlayerClass* pTemp = NULL); 	// Schuss "Art" hinzufügen
+    bool PushBlitzBeam (int Size, float Richtung, PlayerClass* pSource);	// BlitzBeam hinzufügen (in verschiedenen Größen und Richtungen möglich)
+    void DelSel		(ProjectileClass *pTemp);		// Ausgewähltes Objekt entfernen
+    void ClearAll	(void);							// Alle Objekte löschen
+    void ClearType	(int type);						// Alle Objekte eines Typs löschen
+    int  GetNumProjectiles(void);					// Zahl der Schüsse zurückliefern
+    void DoProjectiles  (void);						// Alle Schüsse der Liste animieren
 };
 
 // --------------------------------------------------------------------------------------

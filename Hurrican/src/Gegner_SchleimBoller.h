@@ -5,17 +5,17 @@
 #include "Gegner_Stuff.h"
 
 class GegnerSchleimBoller : public GegnerClass
-{	
-	private :
-		int Size;
+{
+private :
+    int Size;
 
-	public :
+public :
 
-	GegnerSchleimBoller(int  Wert1, int Wert2,			// Konstruktor
-					 bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-	void DoDraw		   (void);							// Gegner individuell rendern
+    GegnerSchleimBoller(int  Wert1, int Wert2,			// Konstruktor
+                        bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw		   (void);							// Gegner individuell rendern
 };
 
 #endif

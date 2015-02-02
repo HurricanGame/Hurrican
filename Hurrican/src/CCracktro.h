@@ -1,6 +1,6 @@
 // Datei : CCracktro.h
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Klasse für das Cracktro am Anfang
 //
@@ -19,8 +19,8 @@
 #include "DX8Font.h"
 #include "DX8Sprite.h"
 #include "Globals.h"
-#include "Menu.h" 
-#include "Timer.h" 
+#include "Menu.h"
+#include "Timer.h"
 
 // --------------------------------------------------------------------------------------
 // Cracktro-Klasse
@@ -28,28 +28,28 @@
 
 class CCracktro
 {
-	private:	
-		DirectGraphicsSprite Bars[3];		
-		DirectGraphicsSprite Logo[2];
-		DirectGraphicsSprite Zahlen;
-		DirectGraphicsSprite Star;
-		DirectGraphicsFont	*pFont;		
-		float				ScrollOffset, ScrollOffset2;
-		int					ScrollPos, ScrollPos2;
-		float				SinPos;
-		int					State;
+private:
+    DirectGraphicsSprite Bars[3];
+    DirectGraphicsSprite Logo[2];
+    DirectGraphicsSprite Zahlen;
+    DirectGraphicsSprite Star;
+    DirectGraphicsFont	*pFont;
+    float				ScrollOffset, ScrollOffset2;
+    int					ScrollPos, ScrollPos2;
+    float				SinPos;
+    int					State;
 
-		StarStruct	Stars[200];
+    StarStruct	Stars[200];
 
-	public:
-		bool	b_running;
+public:
+    bool	b_running;
 
-			 CCracktro(void);						// Cracktro initialisieren
-			~CCracktro(void);						// Cracktro freigeben
-	
-	void		Run(void);							// Cracktro laufen lassen
-	void		Main(void);
-	void		Load(void);
+    CCracktro(void);						// Cracktro initialisieren
+    ~CCracktro(void);						// Cracktro freigeben
+
+    void		Run(void);							// Cracktro laufen lassen
+    void		Main(void);
+    void		Load(void);
 }; // CCracktro
 
 #endif

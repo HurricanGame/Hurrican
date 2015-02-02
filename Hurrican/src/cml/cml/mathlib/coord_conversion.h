@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -29,7 +29,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
  * enumerants cml::latitude and cml::colatitude to reflect this.
  */
 
-namespace cml {
+namespace cml
+{
 
 //////////////////////////////////////////////////////////////////////////////
 // Conversion to Cartesian coordinates
@@ -49,7 +50,7 @@ cylindrical_to_cartesian(
 
     size_t i, j, k;
     cyclic_permutation(axis, i, j, k);
-    
+
     v[i] = height;
     v[j] = std::cos(theta) * radius;
     v[k] = std::sin(theta) * radius;
@@ -58,7 +59,7 @@ cylindrical_to_cartesian(
 /* Convert spherical coordinates to Cartesian coordinates in R3 */
 template < typename E, class A > void
 spherical_to_cartesian(E radius, E theta, E phi, size_t axis,
-    SphericalType type, vector<E,A>& v)
+                       SphericalType type, vector<E,A>& v)
 {
     typedef vector<E,A> vector_type;
     typedef typename vector_type::value_type value_type;
@@ -66,8 +67,9 @@ spherical_to_cartesian(E radius, E theta, E phi, size_t axis,
     /* Checking */
     detail::CheckVec3(v);
     detail::CheckIndex3(axis);
-    
-    if (type == latitude) {
+
+    if (type == latitude)
+    {
         phi = constants<value_type>::pi_over_2() - phi;
     }
 
@@ -98,7 +100,7 @@ polar_to_cartesian(E radius, E theta, vector<E,A>& v)
 /* Convert Cartesian coordinates to cylindrical coordinates in R3  */
 template < class VecT, typename Real > void
 cartesian_to_cylindrical(const VecT& v, Real& radius, Real& theta,
-    Real& height, size_t axis, Real tolerance = epsilon<Real>::placeholder())
+                         Real& height, size_t axis, Real tolerance = epsilon<Real>::placeholder())
 {
     typedef Real value_type;
 
@@ -108,7 +110,7 @@ cartesian_to_cylindrical(const VecT& v, Real& radius, Real& theta,
 
     size_t i, j, k;
     cyclic_permutation(axis, i, j, k);
-    
+
     radius = length(v[j],v[k]);
     theta = radius < tolerance ? value_type(0) : std::atan2(v[k],v[j]);
     height = v[i];
@@ -117,8 +119,8 @@ cartesian_to_cylindrical(const VecT& v, Real& radius, Real& theta,
 /* Convert Cartesian coordinates to spherical coordinates in R3 */
 template < class VecT, typename Real > void
 cartesian_to_spherical(const VecT& v, Real& radius, Real& theta, Real& phi,
-    size_t axis, SphericalType type,
-    Real tolerance = epsilon<Real>::placeholder())
+                       size_t axis, SphericalType type,
+                       Real tolerance = epsilon<Real>::placeholder())
 {
     typedef Real value_type;
 
@@ -132,12 +134,16 @@ cartesian_to_spherical(const VecT& v, Real& radius, Real& theta, Real& phi,
     value_type len = length(v[j],v[k]);
     theta = len < tolerance ? value_type(0) : std::atan2(v[k],v[j]);
     radius = length(v[i], len);
-    if (radius < tolerance) {
+    if (radius < tolerance)
+    {
         phi = value_type(0);
-    } else {
+    }
+    else
+    {
         phi = std::atan2(len,v[i]);
         //phi = type.convert(phi);
-        if (type == latitude) {
+        if (type == latitude)
+        {
             phi = constants<value_type>::pi_over_2() - phi;
         }
     }
@@ -146,7 +152,7 @@ cartesian_to_spherical(const VecT& v, Real& radius, Real& theta, Real& phi,
 /* Convert Cartesian coordinates to polar coordinates in R2 */
 template < class VecT, typename Real > void
 cartesian_to_polar(const VecT& v, Real& radius, Real& theta,
-    Real tolerance = epsilon<Real>::placeholder())
+                   Real tolerance = epsilon<Real>::placeholder())
 {
     typedef Real value_type;
 

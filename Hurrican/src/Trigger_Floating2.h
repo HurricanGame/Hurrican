@@ -6,16 +6,16 @@
 
 class GegnerFloating2 : public GegnerClass
 {
-	private :
-	bool	playeron;
+private :
+    bool	playeron;
 
-	public:
+public:
 
-	GegnerFloating2	   (int Wert1,	int Wert2,			// Konstruktor
-						bool		  Light);	
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerFloating2	   (int Wert1,	int Wert2,			// Konstruktor
+                        bool		  Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

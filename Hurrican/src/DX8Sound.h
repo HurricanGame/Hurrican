@@ -211,11 +211,11 @@
 
 struct SOUNDMANAGER_PARAMETERS
 {
-	int		GlobalMusicVolume;		// Globale Musik-Lautstärke (0-100)
-	int		GlobalSoundVolume;		// Globale Sound-Lautstärke (0-100)
-	int		Mixrate;
-	int		MaxSoftwareChannels;
-	int		Flags;
+    int		GlobalMusicVolume;		// Globale Musik-Lautstärke (0-100)
+    int		GlobalSoundVolume;		// Globale Sound-Lautstärke (0-100)
+    int		Mixrate;
+    int		MaxSoftwareChannels;
+    int		Flags;
 };
 
 //---------------------------------------------------------------------------------------
@@ -234,17 +234,17 @@ char *GetFMODErrorString(int ErrorNr);
 
 class CSong
 {
-	public :
+public :
 
-		MUSIC_MODULE	   *SongData;		// MOD-Daten
-		float				Volume;			// Lautstärke
-		float				FadingVolume;	// Aktuelle Fading Speed und Richtung
-		int					FadingEnd;		// Fading Grenze
-		bool				FadingPaused;	// Pause vor/nach Fading ?
+    MUSIC_MODULE	   *SongData;		// MOD-Daten
+    float				Volume;			// Lautstärke
+    float				FadingVolume;	// Aktuelle Fading Speed und Richtung
+    int					FadingEnd;		// Fading Grenze
+    bool				FadingPaused;	// Pause vor/nach Fading ?
 
-				CSong();					// Konstruktor
-		       ~CSong();					// Destruktor
-		bool	Update(void);				// Songs faden
+    CSong();					// Konstruktor
+    ~CSong();					// Destruktor
+    bool	Update(void);				// Songs faden
 };
 
 //---------------------------------------------------------------------------------------
@@ -253,16 +253,16 @@ class CSong
 
 class CWave
 {
-	public :
-		SOUND_SAMPLE		*SoundData;		// Daten des Sounds
-		int					Channel;		// Channel in dem es gerade gespielt wird
-		bool				isPlaying;		// Spielt der Sound gerade ?
-		bool				isLooped;
-		int					FadeMode;		// Fadet der Sound gerade ?
+public :
+    SOUND_SAMPLE		*SoundData;		// Daten des Sounds
+    int					Channel;		// Channel in dem es gerade gespielt wird
+    bool				isPlaying;		// Spielt der Sound gerade ?
+    bool				isLooped;
+    int					FadeMode;		// Fadet der Sound gerade ?
 
-				CWave();					// Konstruktor
-			   ~CWave();					// Destruktor
-	    bool	Update();					// Updaten und isPlaying checken
+    CWave();					// Konstruktor
+    ~CWave();					// Destruktor
+    bool	Update();					// Updaten und isPlaying checken
 };
 
 //---------------------------------------------------------------------------------------
@@ -271,53 +271,53 @@ class CWave
 
 class CSoundManager
 {
-	private :
-		int		its_LoadedSongs;			// Anzahl geladener Songs
-		int		its_LoadedSounds;			// Anzahl geladener Sounds
-		signed char WasPlaying[MAX_SONGS];
+private :
+    int		its_LoadedSongs;			// Anzahl geladener Songs
+    int		its_LoadedSounds;			// Anzahl geladener Sounds
+    signed char WasPlaying[MAX_SONGS];
 
-	public :
-		CSong 	*its_Songs [MAX_SONGS+1];	// Die Songs
-		CWave	*its_Sounds[MAX_SOUNDS+1];	// Die Sounds
-		float	its_GlobalMusicVolume;		// Globale Musik-Lautstärke (0-100)
-		float	its_GlobalSoundVolume;		// Globale Sound-Lautstärke (0-100)
-		int		CurrentSongNr;				// Aktueller Song
+public :
+    CSong 	*its_Songs [MAX_SONGS+1];	// Die Songs
+    CWave	*its_Sounds[MAX_SOUNDS+1];	// Die Sounds
+    float	its_GlobalMusicVolume;		// Globale Musik-Lautstärke (0-100)
+    float	its_GlobalSoundVolume;		// Globale Sound-Lautstärke (0-100)
+    int		CurrentSongNr;				// Aktueller Song
 
-		bool	InitSuccessfull;
-		int 	MaxChannels;				// Maximal nutzbare Channels
-		int		ChannelsUsed;				// Anzahl benutzter Sound-Channels
+    bool	InitSuccessfull;
+    int 	MaxChannels;				// Maximal nutzbare Channels
+    int		ChannelsUsed;				// Anzahl benutzter Sound-Channels
 
-		CSoundManager	();								// Konstruktor
-		CSoundManager	(SOUNDMANAGER_PARAMETERS smpp);	// Überladener Konstruktor
-	   ~CSoundManager	();								// Destruktor
+    CSoundManager	();								// Konstruktor
+    CSoundManager	(SOUNDMANAGER_PARAMETERS smpp);	// Überladener Konstruktor
+    ~CSoundManager	();								// Destruktor
 
-		bool InitFMOD	(SOUNDMANAGER_PARAMETERS smpp);	// FMOD Init
-		void SetVolumes (float Sound, float Musik);		// neue global Volumes setzen
-		bool LoadSong	(const char *Filename, int Nr);		// Song laden
-		bool PlaySong	(int Nr, bool Paused);			// Song abspielen (Von Pause oder neu)
-		bool StopSong	(int Nr, bool Paused);			// Song anhalten  (Pause oder ganz)
-		void StopAllSongs	(bool Paused);				// Alle Songs anhalten
-		void StopAllSounds  (void);
-		void StopAllLoopedSounds(void);
-		void SetSongVolume(int Nr, float Volume);		// Volume im Song setzen
-		void SetAbsoluteSongVolume(int Nr, float Volume);
-		void SetAllSongVolumes(void);					// Volume aller Songs setzen
-		void Update		(void);							// Channel und Fades bearbeiten
-		void FadeSong	(int Nr, float Speed, int End,	// Song ein/aus faden
-						 bool Paused);
-		void FadeWave(int Nr, int Mode);				// Fade Mode
-		bool LoadWave	(const char *Filename, int Nr,		// Sound laden
-						 bool looped);
-		bool PlayWave	(int Vol,  int Pan,				// Sound spielen
-						 int Freq, int Nr);
-		bool PlayWave3D	(int x,    int y, 				// Sound spielen abhängig von der Spieler
-						 int Freq, int Nr);				// position lauter oder leiser
-		void Update3D   (int x, int y, int Nr);			// 3D Sound updaten
-		bool StopWave	(int Nr);						// Wave anhalten
+    bool InitFMOD	(SOUNDMANAGER_PARAMETERS smpp);	// FMOD Init
+    void SetVolumes (float Sound, float Musik);		// neue global Volumes setzen
+    bool LoadSong	(const char *Filename, int Nr);		// Song laden
+    bool PlaySong	(int Nr, bool Paused);			// Song abspielen (Von Pause oder neu)
+    bool StopSong	(int Nr, bool Paused);			// Song anhalten  (Pause oder ganz)
+    void StopAllSongs	(bool Paused);				// Alle Songs anhalten
+    void StopAllSounds  (void);
+    void StopAllLoopedSounds(void);
+    void SetSongVolume(int Nr, float Volume);		// Volume im Song setzen
+    void SetAbsoluteSongVolume(int Nr, float Volume);
+    void SetAllSongVolumes(void);					// Volume aller Songs setzen
+    void Update		(void);							// Channel und Fades bearbeiten
+    void FadeSong	(int Nr, float Speed, int End,	// Song ein/aus faden
+                     bool Paused);
+    void FadeWave(int Nr, int Mode);				// Fade Mode
+    bool LoadWave	(const char *Filename, int Nr,		// Sound laden
+                     bool looped);
+    bool PlayWave	(int Vol,  int Pan,				// Sound spielen
+                     int Freq, int Nr);
+    bool PlayWave3D	(int x,    int y, 				// Sound spielen abhängig von der Spieler
+                     int Freq, int Nr);				// position lauter oder leiser
+    void Update3D   (int x, int y, int Nr);			// 3D Sound updaten
+    bool StopWave	(int Nr);						// Wave anhalten
 
-		void PauseAllSongs(bool bPause);				// Alle Songs anhalten, wieder abspielen
-		void PausePlaying(void);						// Alle spielenden Songs anhalten
-		void PlayPaused(void);							// Alle angehaltenen Songs abspielen
+    void PauseAllSongs(bool bPause);				// Alle Songs anhalten, wieder abspielen
+    void PausePlaying(void);						// Alle spielenden Songs anhalten
+    void PlayPaused(void);							// Alle angehaltenen Songs abspielen
 };
 
 //---------------------------------------------------------------------------------------

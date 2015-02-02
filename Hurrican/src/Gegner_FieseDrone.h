@@ -5,18 +5,18 @@
 #include "Gegner_Stuff.h"
 
 class GegnerFieseDrone : public GegnerClass
-{	
-	private :
-		float ShotDelay;
-		float SmokeDelay;
+{
+private :
+    float ShotDelay;
+    float SmokeDelay;
 
-	public :
+public :
 
-	GegnerFieseDrone(int  Wert1, int Wert2,					// Konstruktor
-					 bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerFieseDrone(int  Wert1, int Wert2,					// Konstruktor
+                     bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

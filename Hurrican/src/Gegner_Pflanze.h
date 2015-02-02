@@ -5,14 +5,14 @@
 #include "Gegner_Stuff.h"
 
 class GegnerPflanze : public GegnerClass
-{	
-	public :
+{
+public :
 
-	GegnerPflanze (int  Wert1, int Wert2,				// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerPflanze (int  Wert1, int Wert2,				// Konstruktor
+                   bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

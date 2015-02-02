@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -18,7 +18,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #include <cml/mathlib/vector_misc.h>
 #include <cml/mathlib/misc.h>
 
-namespace cml {
+namespace cml
+{
 
 //////////////////////////////////////////////////////////////////////////////
 // Orthonormalization in 3D and 2D
@@ -41,7 +42,7 @@ namespace cml {
  */
 template < typename E, class A > void
 orthonormalize(vector<E,A>& v0, vector<E,A>& v1, vector<E,A>& v2,
-    size_t stable_axis = 2, size_t num_iter = 0, E s = E(1))
+               size_t stable_axis = 2, size_t num_iter = 0, E s = E(1))
 {
     /* Checking */
     detail::CheckVec3(v0);
@@ -53,8 +54,9 @@ orthonormalize(vector<E,A>& v0, vector<E,A>& v1, vector<E,A>& v2,
     typedef typename vector_type::value_type value_type;
 
     /* Iterative Gram-Schmidt; this step is skipped by default. */
-    
-    for (size_t i = 0; i < num_iter; ++i) {
+
+    for (size_t i = 0; i < num_iter; ++i)
+    {
         value_type dot01 = dot(v0,v1);
         value_type dot12 = dot(v1,v2);
         value_type dot20 = dot(v2,v0);
@@ -65,7 +67,7 @@ orthonormalize(vector<E,A>& v0, vector<E,A>& v1, vector<E,A>& v2,
         vector_type temp0 = v0 - s*dot01*inv_dot11*v1 - s*dot20*inv_dot22*v2;
         vector_type temp1 = v1 - s*dot12*inv_dot22*v2 - s*dot01*inv_dot00*v0;
         vector_type temp2 = v2 - s*dot20*inv_dot00*v0 - s*dot12*inv_dot11*v1;
-        
+
         v0 = temp0;
         v1 = temp1;
         v2 = temp2;
@@ -84,7 +86,7 @@ orthonormalize(vector<E,A>& v0, vector<E,A>& v1, vector<E,A>& v2,
     v[i].normalize();
     v[j] = normalize(project_to_hplane(v[j],v[i]));
     v[k] = normalize(project_to_hplane(project_to_hplane(v[k],v[i]),v[j]));
-    
+
     v0 = v[0];
     v1 = v[1];
     v2 = v[2];
@@ -93,7 +95,7 @@ orthonormalize(vector<E,A>& v0, vector<E,A>& v1, vector<E,A>& v2,
 /** Orthonormalize 2 basis vectors in R2 */
 template < typename E, class A > void
 orthonormalize(vector<E,A>& v0, vector<E,A>& v1,
-    size_t stable_axis = 0, size_t num_iter = 0, E s = E(1))
+               size_t stable_axis = 0, size_t num_iter = 0, E s = E(1))
 {
     typedef vector< E, fixed<2> > vector_type;
     typedef typename vector_type::value_type value_type;
@@ -104,13 +106,14 @@ orthonormalize(vector<E,A>& v0, vector<E,A>& v1,
     detail::CheckIndex2(stable_axis);
 
     /* Iterative Gram-Schmidt; this step is skipped by default. */
-    
-    for (size_t i = 0; i < num_iter; ++i) {
+
+    for (size_t i = 0; i < num_iter; ++i)
+    {
         value_type dot01 = dot(v0,v1);
 
         vector_type temp0 = v0 - (s * dot01 * v1) / dot(v1,v1);
         vector_type temp1 = v1 - (s * dot01 * v0) / dot(v0,v0);
-        
+
         v0 = temp0;
         v1 = temp1;
     }
@@ -127,7 +130,7 @@ orthonormalize(vector<E,A>& v0, vector<E,A>& v1,
 
     v[i].normalize();
     v[j] = normalize(project_to_hplane(v[j],v[i]));
-    
+
     v0 = v[0];
     v1 = v[1];
 }
@@ -167,9 +170,9 @@ orthonormal_basis(
 {
     typedef vector< E,fixed<3> > vector_type;
     typedef typename vector_type::value_type value_type;
-    
+
     /* Checking handled by cross() and assignment to fixed<3>. */
-    
+
     size_t i, j, k;
     bool odd;
     detail::unpack_axis_order(order, i, j, k, odd);
@@ -179,11 +182,12 @@ orthonormal_basis(
     axis[i] = normalize_align ? normalize(align) : align;
     axis[k] = unit_cross(axis[i],reference);
     axis[j] = cross(axis[k],axis[i]);
-    
-    if (odd) {
+
+    if (odd)
+    {
         axis[k] = -axis[k];
     }
-    
+
     x = axis[0];
     y = axis[1];
     z = axis[2];
@@ -210,7 +214,7 @@ void orthonormal_basis(
     detail::CheckVec3(align);
 
     /* @todo: vector member function index_of_min_abs() would clean this up */
-    
+
     orthonormal_basis(
         align,
         axis_3D(cml::index_of_min_abs(align[0],align[1],align[2])),
@@ -271,7 +275,7 @@ void orthonormal_basis_viewplane(
 
     orthonormal_basis(
         -(handedness == left_handed ? value_type(1) : value_type(-1)) *
-            matrix_get_transposed_z_basis_vector(view_matrix),
+        matrix_get_transposed_z_basis_vector(view_matrix),
         matrix_get_transposed_y_basis_vector(view_matrix),
         x, y, z, false, order
     );
@@ -319,13 +323,14 @@ void orthonormal_basis_2D(
     size_t i, j;
     bool odd;
     detail::unpack_axis_order_2D(order, i, j, odd);
-    
+
     vector_type axis[2];
 
     axis[i] = normalize_align ? normalize(align) : align;
     axis[j] = perp(axis[i]);
 
-    if (odd) {
+    if (odd)
+    {
         axis[j] = -axis[j];
     }
 

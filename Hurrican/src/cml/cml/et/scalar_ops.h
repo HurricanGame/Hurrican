@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -78,8 +78,10 @@ template<typename LeftT, typename RightT> struct _op_name_ {             \
         return left _op_ right; }                                        \
 };
 
-namespace cml {
-namespace et {
+namespace cml
+{
+namespace et
+{
 
 /* Define the operators: */
 

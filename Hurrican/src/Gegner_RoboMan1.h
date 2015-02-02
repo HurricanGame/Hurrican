@@ -6,17 +6,17 @@
 
 class GegnerRoboMan1 : public GegnerClass
 {
-	private:
-		float ShotCount;								// Schuss Delay
-		float SmokeCount;								// Rauch  Delay
+private:
+    float ShotCount;								// Schuss Delay
+    float SmokeCount;								// Rauch  Delay
 
-	public:
+public:
 
-	GegnerRoboMan1(int  Wert1, int Wert2,				// Konstruktor
-					   bool Light);
-	void GegnerExplode (void);							// Gegner explodiert
-	void DoKI		   (void);							// Gegner individuell mit seiner 
-														// eigenen kleinen KI bewegen
+    GegnerRoboMan1(int  Wert1, int Wert2,				// Konstruktor
+                   bool Light);
+    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI		   (void);							// Gegner individuell mit seiner
+    // eigenen kleinen KI bewegen
 };
 
 #endif

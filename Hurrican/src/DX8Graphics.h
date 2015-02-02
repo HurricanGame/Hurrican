@@ -46,7 +46,8 @@
 #define WHITE_MODE	  2
 
 #if defined(USE_GL2)
-enum {
+enum
+{
     PROGRAM_COLOR=0,
     PROGRAM_TEXTURE,
     PROGRAM_TOTAL,
@@ -64,9 +65,9 @@ enum {
 
 struct VERTEX2D
 {
-	float		x, y, z;		// x,y,z Koordinaten
-	D3DCOLOR	color;			// Vertex-Color
-	float		tu, tv;			// Textur-Koordinaten
+    float		x, y, z;		// x,y,z Koordinaten
+    D3DCOLOR	color;			// Vertex-Color
+    float		tu, tv;			// Textur-Koordinaten
 };
 
 // --------------------------------------------------------------------------------------
@@ -79,69 +80,69 @@ struct VERTEX2D
 
 class DirectGraphicsClass
 {
-	private:
-		bool					useVSync;						// VSync ein/aus ?
-		bool					FilterMode;						// Linearer Filter an/aus?
+private:
+    bool					useVSync;						// VSync ein/aus ?
+    bool					FilterMode;						// Linearer Filter an/aus?
 #if defined(PLATFORM_DIRECTX)
-		D3DDISPLAYMODE			d3ddm;							// Display Mode
+    D3DDISPLAYMODE			d3ddm;							// Display Mode
 #elif defined(PLATFORM_SDL)
-        bool                    use_texture;
-		int                     MaxTextureUnits;
+    bool                    use_texture;
+    int                     MaxTextureUnits;
 #if defined(USE_GL2)
-        GLuint                  ProgramCurrent;
-		CShader                 Shaders[PROGRAM_TOTAL];
+    GLuint                  ProgramCurrent;
+    CShader                 Shaders[PROGRAM_TOTAL];
 #endif
 #endif
 
-	public:
-		int						BlendMode;						// Additiv, Colorkey oder White mode aktiviert?
+public:
+    int						BlendMode;						// Additiv, Colorkey oder White mode aktiviert?
 #if defined(PLATFORM_DIRECTX)
-		D3DPRESENT_PARAMETERS	d3dpp;							// Present Parameters
+    D3DPRESENT_PARAMETERS	d3dpp;							// Present Parameters
 #elif defined(PLATFORM_SDL)
-    #if SDL_VERSION_ATLEAST(2,0,0)
-        SDL_Window*             Window;
-        SDL_GLContext           GLcontext;
-    #else  /* SDL 1.2 */
-		SDL_Surface*            Screen;
-    #endif
-        SDL_Rect                WindowView;
-        SDL_Rect                RenderView;
-        SDL_Rect                RenderRect;
-    #if defined(USE_GL2) && defined(USE_FBO)
-        CFbo                    RenderBuffer;
-    #endif
+#if SDL_VERSION_ATLEAST(2,0,0)
+    SDL_Window*             Window;
+    SDL_GLContext           GLcontext;
+#else  /* SDL 1.2 */
+    SDL_Surface*            Screen;
 #endif
-		bool					SquareOnly;						// Nur quadratische Texturen
-		bool					PowerOfTwo;						// Nur 2er Potenz Texturen
-		void					ShowBackBuffer(void);			// Present aufrufen
+    SDL_Rect                WindowView;
+    SDL_Rect                RenderView;
+    SDL_Rect                RenderRect;
+#if defined(USE_GL2) && defined(USE_FBO)
+    CFbo                    RenderBuffer;
+#endif
+#endif
+    bool					SquareOnly;						// Nur quadratische Texturen
+    bool					PowerOfTwo;						// Nur 2er Potenz Texturen
+    void					ShowBackBuffer(void);			// Present aufrufen
 
-	     DirectGraphicsClass(void);							// Konstruktor
-		~DirectGraphicsClass(void);							// Desktruktor
+    DirectGraphicsClass(void);							// Konstruktor
+    ~DirectGraphicsClass(void);							// Desktruktor
 
-		bool Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
-                  DWORD dwZ_Bits, bool VSync);
-		bool Exit(void);										// D3D beenden
-		bool SetDeviceInfo(void);
+    bool Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
+              DWORD dwZ_Bits, bool VSync);
+    bool Exit(void);										// D3D beenden
+    bool SetDeviceInfo(void);
 
-		bool TakeScreenshot(const char Filename[100], int screenx,
-												int screeny);	// Screenshot machen
-		void SetColorKeyMode(void);								// Alpha für Colorkey oder
-		void SetAdditiveMode(void);								// Additive-Blending nutzen
-		void SetWhiteMode	(void);								// Komplett weiss rendern
-		void SetFilterMode(bool filteron);						// Linearer Textur Filter ein/aus
+    bool TakeScreenshot(const char Filename[100], int screenx,
+                        int screeny);	// Screenshot machen
+    void SetColorKeyMode(void);								// Alpha für Colorkey oder
+    void SetAdditiveMode(void);								// Additive-Blending nutzen
+    void SetWhiteMode	(void);								// Komplett weiss rendern
+    void SetFilterMode(bool filteron);						// Linearer Textur Filter ein/aus
 
-		void RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,    // Rendert in den Buffer, der am Ende
-							 UINT PrimitiveCount,				// eines jeden Frames komplett in
-							 CONST void* pVertexStreamZeroData);// den Backbuffer gerendert wird
+    void RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,    // Rendert in den Buffer, der am Ende
+                         UINT PrimitiveCount,				// eines jeden Frames komplett in
+                         CONST void* pVertexStreamZeroData);// den Backbuffer gerendert wird
 
-		void DisplayBuffer  (void);								// Render den Buffer auf den Backbuffer
+    void DisplayBuffer  (void);								// Render den Buffer auf den Backbuffer
 #if defined(PLATFORM_SDL)
-        void SetupFramebuffers( void );
-        void SetTexture( int32_t index );
-        void ClearBackBuffer( void );
-        void SelectBuffer( bool active );
-        void DrawTouchOverlay( void );
-        void DrawCircle( uint16_t x, uint16_t y, uint16_t radius );
+    void SetupFramebuffers( void );
+    void SetTexture( int32_t index );
+    void ClearBackBuffer( void );
+    void SelectBuffer( bool active );
+    void DrawTouchOverlay( void );
+    void DrawCircle( uint16_t x, uint16_t y, uint16_t radius );
 #endif
 };
 

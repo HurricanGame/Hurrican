@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -21,16 +21,19 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 #include <cml/core/cml_meta.h>
 #include <cml/et/scalar_promotions.h>
 
-namespace cml {
-namespace et {
+namespace cml
+{
+namespace et
+{
 
 #define VAL_MAX(_a_,_b_)        ( ((_a_)>(_b_))?(_a_):(_b_) )
 
-namespace detail {
+namespace detail
+{
 
 /* This is specialized for 1D and 2D promotions: */
 template<class A1, class A2, typename DTag1, typename DTag2,
-    typename PromotedSizeTag> struct promote;
+         typename PromotedSizeTag> struct promote;
 
 /* Promote 1D fixed-size arrays to a 1D fixed-size array: */
 template<class A1, class A2>
@@ -41,7 +44,7 @@ struct promote<A1,A2,oned_tag,oned_tag,fixed_size_tag>
 
     /* First, promote the scalar type: */
     typedef typename ScalarPromote<
-        left_scalar,right_scalar>::type promoted_scalar;
+    left_scalar,right_scalar>::type promoted_scalar;
 
     /* Next, deduce the array size: */
     enum { Size = VAL_MAX((size_t)A1::array_size, (size_t)A2::array_size) };
@@ -59,11 +62,11 @@ struct promote<A1,A2,oned_tag,oned_tag,dynamic_size_tag>
 
     /* First, promote the scalar type: */
     typedef typename ScalarPromote<
-        left_scalar,right_scalar>::type promoted_scalar;
+    left_scalar,right_scalar>::type promoted_scalar;
 
     /* Next, rebind to get the proper allocator: */
     typedef typename CML_DEFAULT_ARRAY_ALLOC
-        ::rebind<promoted_scalar>::other allocator;
+    ::rebind<promoted_scalar>::other allocator;
 
     /* Finally, generate the promoted array type: */
     typedef dynamic_1D<promoted_scalar,allocator> type;
@@ -78,7 +81,7 @@ struct promote<A1,A2,twod_tag,oned_tag,fixed_size_tag>
 
     /* First, promote the scalar type: */
     typedef typename ScalarPromote<
-        left_scalar,right_scalar>::type promoted_scalar;
+    left_scalar,right_scalar>::type promoted_scalar;
 
     /* Next, deduce the array size: */
     enum { Size = (size_t)A1::array_rows };
@@ -96,7 +99,7 @@ struct promote<A1,A2,oned_tag,twod_tag,fixed_size_tag>
 
     /* First, promote the scalar type: */
     typedef typename ScalarPromote<
-        left_scalar,right_scalar>::type promoted_scalar;
+    left_scalar,right_scalar>::type promoted_scalar;
 
     /* Next, deduce the array size: */
     enum { Size = (size_t)A2::array_cols };
@@ -114,11 +117,11 @@ struct promote<A1,A2,twod_tag,oned_tag,dynamic_size_tag>
 
     /* First, promote the scalar type: */
     typedef typename ScalarPromote<
-        left_scalar,right_scalar>::type promoted_scalar;
+    left_scalar,right_scalar>::type promoted_scalar;
 
     /* Next, rebind to get the proper allocator: */
     typedef typename CML_DEFAULT_ARRAY_ALLOC
-        ::rebind<promoted_scalar>::other allocator;
+    ::rebind<promoted_scalar>::other allocator;
 
     /* Finally, generate the promoted array type: */
     typedef dynamic_1D<promoted_scalar,allocator> type;
@@ -133,11 +136,11 @@ struct promote<A1,A2,oned_tag,twod_tag,dynamic_size_tag>
 
     /* First, promote the scalar type: */
     typedef typename ScalarPromote<
-        left_scalar,right_scalar>::type promoted_scalar;
+    left_scalar,right_scalar>::type promoted_scalar;
 
     /* Next, rebind to get the proper allocator: */
     typedef typename CML_DEFAULT_ARRAY_ALLOC
-        ::rebind<promoted_scalar>::other allocator;
+    ::rebind<promoted_scalar>::other allocator;
 
     /* Finally, generate the promoted array type: */
     typedef dynamic_1D<promoted_scalar,allocator> type;
@@ -145,13 +148,14 @@ struct promote<A1,A2,oned_tag,twod_tag,dynamic_size_tag>
 
 
 /* This is a helper to deduce the result of a promoted 2D array: */
-template<typename LeftL, typename RightL> struct deduce_layout {
+template<typename LeftL, typename RightL> struct deduce_layout
+{
 #if defined(CML_ALWAYS_PROMOTE_TO_DEFAULT_LAYOUT)
     typedef CML_DEFAULT_ARRAY_LAYOUT promoted_layout;
 #else
     typedef typename select_if<
-        same_type<LeftL,RightL>::is_true, LeftL,
-        CML_DEFAULT_ARRAY_LAYOUT>::result promoted_layout;
+    same_type<LeftL,RightL>::is_true, LeftL,
+              CML_DEFAULT_ARRAY_LAYOUT>::result promoted_layout;
 #endif
 };
 
@@ -167,10 +171,11 @@ struct promote<A1,A2,twod_tag,twod_tag,fixed_size_tag>
 
     /* First, promote the scalar type: */
     typedef typename ScalarPromote<
-        left_scalar,right_scalar>::type promoted_scalar;
+    left_scalar,right_scalar>::type promoted_scalar;
 
     /* Next, deduce the array size: */
-    enum {
+    enum
+    {
         Rows = (size_t)A1::array_rows,
         Cols = (size_t)A2::array_cols
     };
@@ -179,7 +184,7 @@ struct promote<A1,A2,twod_tag,twod_tag,fixed_size_tag>
     typedef typename A1::layout left_layout;
     typedef typename A2::layout right_layout;
     typedef typename deduce_layout<left_layout,right_layout>
-        ::promoted_layout promoted_layout;
+    ::promoted_layout promoted_layout;
 
     /* Finally, generate the promoted array type: */
     typedef fixed_2D<promoted_scalar,Rows,Cols,promoted_layout> type;
@@ -194,17 +199,17 @@ struct promote<A1,A2,twod_tag,twod_tag,dynamic_size_tag>
 
     /* First, promote the scalar type: */
     typedef typename ScalarPromote<
-        left_scalar,right_scalar>::type promoted_scalar;
+    left_scalar,right_scalar>::type promoted_scalar;
 
     /* Next, rebind to get the proper allocator: */
     typedef typename CML_DEFAULT_ARRAY_ALLOC
-        ::rebind<promoted_scalar>::other allocator;
+    ::rebind<promoted_scalar>::other allocator;
 
     /* Then deduce the array layout: */
     typedef typename A1::layout left_layout;
     typedef typename A2::layout right_layout;
     typedef typename deduce_layout<left_layout,right_layout>
-        ::promoted_layout promoted_layout;
+    ::promoted_layout promoted_layout;
 
     /* Finally, generate the promoted array type: */
     typedef dynamic_2D<promoted_scalar,promoted_layout,allocator> type;
@@ -265,15 +270,15 @@ struct ArrayPromote
      * array will be a fixed array, and if not, it will be a dynamic array:
      */
     typedef typename select_if<
-        (same_type<typename A1::size_tag, fixed_size_tag>::is_true
-         && same_type<typename A2::size_tag, fixed_size_tag>::is_true),
-        fixed_size_tag,         /* True */
-        dynamic_size_tag        /* False */
-    >::result promoted_size_tag;
+    (same_type<typename A1::size_tag, fixed_size_tag>::is_true
+     && same_type<typename A2::size_tag, fixed_size_tag>::is_true),
+     fixed_size_tag,         /* True */
+     dynamic_size_tag        /* False */
+     >::result promoted_size_tag;
 
     /* Deduce the promoted type: */
     typedef typename detail::promote<
-        A1, A2, left_dtag, right_dtag, promoted_size_tag>::type type;
+    A1, A2, left_dtag, right_dtag, promoted_size_tag>::type type;
 };
 
 /* Cleanup internal macros: */

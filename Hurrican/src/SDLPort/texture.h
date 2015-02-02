@@ -27,7 +27,8 @@
 
 #include "SDL_port.h"
 
-typedef struct IMAGE_T {
+typedef struct IMAGE_T
+{
     uint8_t* data;
     bool compressed;
     uint32_t w, h;

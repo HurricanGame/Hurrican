@@ -201,36 +201,36 @@
 
 class PartikelClass
 {
-	private:
-		int					red,green,blue,alpha;		// Farbwerte des Partikels
-		D3DCOLOR			Color;						// Farbe des Partikels
-		float				xSpeed,ySpeed;				// Geschwindigkeit des Partikels
-		float				xAcc, yAcc;					// Beschleunigung des Partikels
-		int					AnimPhase, AnimEnde;		// Aktuelle Phase und Endphase
-		float				AnimSpeed, AnimCount;		// Anim-Geschwindigkeit und Counter
-		bool				Rotate;						// evtl rotieren?
-		float				Rot;						// Rotation
-		float				RotDir;						// Richtung
-		bool				BounceWalls;				// an Wänden abprallen ?
-		bool				OwnDraw;					// Extrawurscht beim rendern?
-		bool				RemoveWhenOffScreen;		// verschiwnden lassen, wenn ausserhalb des Screeens?
+private:
+    int					red,green,blue,alpha;		// Farbwerte des Partikels
+    D3DCOLOR			Color;						// Farbe des Partikels
+    float				xSpeed,ySpeed;				// Geschwindigkeit des Partikels
+    float				xAcc, yAcc;					// Beschleunigung des Partikels
+    int					AnimPhase, AnimEnde;		// Aktuelle Phase und Endphase
+    float				AnimSpeed, AnimCount;		// Anim-Geschwindigkeit und Counter
+    bool				Rotate;						// evtl rotieren?
+    float				Rot;						// Rotation
+    float				RotDir;						// Richtung
+    bool				BounceWalls;				// an Wänden abprallen ?
+    bool				OwnDraw;					// Extrawurscht beim rendern?
+    bool				RemoveWhenOffScreen;		// verschiwnden lassen, wenn ausserhalb des Screeens?
 
-	public:
-		float				xPos,yPos;					// Position des Partikels
-		float				xPosOld, yPosOld;			// Alte Position
+public:
+    float				xPos,yPos;					// Position des Partikels
+    float				xPosOld, yPosOld;			// Alte Position
 
-		int					PartikelArt;				// Art des Partikels (siehe Defines)
-		float				Lebensdauer;				// Wie lange existiert das Partikel ?
+    int					PartikelArt;				// Art des Partikels (siehe Defines)
+    float				Lebensdauer;				// Wie lange existiert das Partikel ?
 
-		PartikelClass(void);							// Konstruktor
-	   ~PartikelClass(void);							// Destruktor
-		bool CreatePartikel(float x, float y, int Art,  // Bestimmten Partikel erzeugen
-							PlayerClass* pParent = NULL);
-		void Run	(void);								// Partikel animieren und bewegen
-		bool Render	(void);								// Partikel anzeigen
-		PartikelClass		*pNext;						// Zeiger auf den nächsten   Partikel
-		PartikelClass		*pPrev;						// Zeiger auf den vorherigen Partikel
-		PlayerClass			*m_pParent;
+    PartikelClass(void);							// Konstruktor
+    ~PartikelClass(void);							// Destruktor
+    bool CreatePartikel(float x, float y, int Art,  // Bestimmten Partikel erzeugen
+                        PlayerClass* pParent = NULL);
+    void Run	(void);								// Partikel animieren und bewegen
+    bool Render	(void);								// Partikel anzeigen
+    PartikelClass		*pNext;						// Zeiger auf den nächsten   Partikel
+    PartikelClass		*pPrev;						// Zeiger auf den vorherigen Partikel
+    PlayerClass			*m_pParent;
 };
 
 // --------------------------------------------------------------------------------------
@@ -239,32 +239,32 @@ class PartikelClass
 
 class PartikelsystemClass
 {
-	private:
-		int						NumPartikel;			// aktuelle Zahl der Partikel
-		int						MAX_PARTIKEL;			// was wohl
+private:
+    int						NumPartikel;			// aktuelle Zahl der Partikel
+    int						MAX_PARTIKEL;			// was wohl
 
-	public:
-		float					xtarget, ytarget;		// Zielpunkt, auf den sich bestimmte Partikel richten
-		float					ThunderAlpha;			// Alpha für Blitz
-		unsigned char			ThunderColor[3];		// Farbe des Blitzes (r, g, b)
+public:
+    float					xtarget, ytarget;		// Zielpunkt, auf den sich bestimmte Partikel richten
+    float					ThunderAlpha;			// Alpha für Blitz
+    unsigned char			ThunderColor[3];		// Farbe des Blitzes (r, g, b)
 
-		PartikelClass			*pStart;				// Erstes  Element der Liste
-		PartikelClass			*pEnd;					// Letztes Element der Liste
+    PartikelClass			*pStart;				// Erstes  Element der Liste
+    PartikelClass			*pEnd;					// Letztes Element der Liste
 
-		PartikelsystemClass(void);						// Konstruktor
-	   ~PartikelsystemClass(void);						// Destruktor
+    PartikelsystemClass(void);						// Konstruktor
+    ~PartikelsystemClass(void);						// Destruktor
 
-	    bool PushPartikel(float x, float y, int Art,
-						 PlayerClass* pParent = NULL);	// Partikel "Art" hinzufügen
-		void DelSel		(PartikelClass *pTemp);			// Ausgewähltes Objekt entfernen
-		void ClearAll	(void);							// Alle Objekte löschen
-	    int  GetNumPartikel(void);						// Zahl der Partikel zurückliefern
-		void DoPartikel(void);							// Alle Partikel der Liste animieren/anzeigen
-		void DoPartikelSpecial(bool ShowThem);			// Alle Partikel der Liste animieren/anzeigen
-		void DrawOnly(void);							// Alle Partikel der Liste nur anzeigen
-		void DoThunder (void);
-		void ClearPowerUpEffects(void);
-		void SetParticleCount(void);					// Je nach Detailstufe Maximum setzen
+    bool PushPartikel(float x, float y, int Art,
+                      PlayerClass* pParent = NULL);	// Partikel "Art" hinzufügen
+    void DelSel		(PartikelClass *pTemp);			// Ausgewähltes Objekt entfernen
+    void ClearAll	(void);							// Alle Objekte löschen
+    int  GetNumPartikel(void);						// Zahl der Partikel zurückliefern
+    void DoPartikel(void);							// Alle Partikel der Liste animieren/anzeigen
+    void DoPartikelSpecial(bool ShowThem);			// Alle Partikel der Liste animieren/anzeigen
+    void DrawOnly(void);							// Alle Partikel der Liste nur anzeigen
+    void DoThunder (void);
+    void ClearPowerUpEffects(void);
+    void SetParticleCount(void);					// Je nach Detailstufe Maximum setzen
 };
 
 // --------------------------------------------------------------------------------------

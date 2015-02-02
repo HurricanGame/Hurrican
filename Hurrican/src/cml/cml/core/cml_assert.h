@@ -1,5 +1,5 @@
 /* -*- C++ -*- ------------------------------------------------------------
- 
+
 Copyright (c) 2007 Jesse Anders and Demian Nave http://cmldev.net/
 
 The Configurable Math Library (CML) is distributed under the terms of the
@@ -18,7 +18,8 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
 
 #include <cml/core/cml_meta.h>
 
-namespace cml {
+namespace cml
+{
 
 /* Join preprocessor macros into a new preprocessor macro: */
 #define CML_JOIN(X,Y) CML_DO_JOIN(X,Y)
@@ -33,7 +34,8 @@ namespace cml {
 template<bool T> struct STATIC_ASSERTION_FAILURE;
 
 /** Struct instantiated when a true assertion is made at compile-time. */
-template<> struct STATIC_ASSERTION_FAILURE<true> {
+template<> struct STATIC_ASSERTION_FAILURE<true>
+{
     typedef true_type result;
     enum { value = true };
 };
@@ -63,12 +65,14 @@ template<> struct STATIC_ASSERTION_FAILURE<true> {
  * When used with CML_STATIC_REQUIRE_M(<expr>,M), the compiler errors will
  * contain the struct name at the point of the error.
  */
-template<bool T, typename M> struct STATIC_ASSERTION_FAILURE_M {
+template<bool T, typename M> struct STATIC_ASSERTION_FAILURE_M
+{
     typename M::bogus result;
 };
 
 /** Instantiated for true assertions. */
-template<typename M> struct STATIC_ASSERTION_FAILURE_M<true,M> {
+template<typename M> struct STATIC_ASSERTION_FAILURE_M<true,M>
+{
     typedef true_type result;
     enum { value = true };
 };
