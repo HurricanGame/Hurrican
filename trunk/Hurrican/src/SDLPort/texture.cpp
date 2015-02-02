@@ -24,6 +24,7 @@
 
 #include "texture.h"
 #include "Main.h"
+#include "DX8Graphics.h"
 
 std::vector<GLuint> textures;
 
@@ -31,8 +32,9 @@ std::vector<GLuint> textures;
 #define ETC1_HEADER_SIZE 16
 
 std::vector<GLuint> alphatexs;
+#endif
 
-#elif defined(USE_PVRTC)
+#if defined(USE_PVRTC)
 #define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG			0x8C00
 #define GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG			0x8C01
 #define GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG			0x8C02
@@ -57,7 +59,7 @@ int32_t LoadTexture( const char* path, SDL_Rect& dims, uint32_t size )
 #if defined(USE_ETC1)
     image_t alpha;
 
-    if ((loadImageETC1( image, path, ".pkm" ) == true) && (loadImageETC1( alpha, path, "_alpha.pkm" ) == true))
+    if ((DirectGraphics.SupportedETC1 == true) && (loadImageETC1( image, path, ".pkm" ) == true) && (loadImageETC1( alpha, path, "_alpha.pkm" ) == true))
     {
         texture = load_texture( alpha );
         alphatexs.push_back( texture );
@@ -68,11 +70,24 @@ int32_t LoadTexture( const char* path, SDL_Rect& dims, uint32_t size )
         textures.push_back( texture );
 
         delete [] image.data;
+
+        goto loaded;
     }
-    else
+#endif
+
+#if defined(USE_PVRTC)
+    if ((DirectGraphics.SupportedPVRTC == true) && (loadImagePVRTC( image, path ) == true))
     {
-#elif defined(USE_PVRTC)
-    if (loadImagePVRTC( image, path ) == true)
+        texture = load_texture( image );
+        textures.push_back( texture );
+
+        delete [] image.data;
+
+        goto loaded;
+    }
+#endif
+
+    if (loadImageSDL( image, path, size ) == true)
     {
         texture = load_texture( image );
         textures.push_back( texture );
@@ -81,21 +96,12 @@ int32_t LoadTexture( const char* path, SDL_Rect& dims, uint32_t size )
     }
     else
     {
-#endif
-        if (loadImageSDL( image, path, size ) == true)
-        {
-            texture = load_texture( image );
-            textures.push_back( texture );
-
-            delete [] image.data;
-        }
-        else
-        {
-            Protokoll.WriteText( false, "ERROR Image was not loaded to memory\n" );
-            return -1;
-        }
-#if defined(USE_ETC1) || defined(USE_PVRTC)
+        Protokoll.WriteText( false, "ERROR Image was not loaded to memory\n" );
+        return -1;
     }
+
+#if defined(USE_ETC1) || defined(USE_PVRTC)
+loaded:
 #endif
 
     dims.w = image.w;
@@ -210,8 +216,9 @@ bool loadImageETC1( image_t& image, const char* path, const char* ext )
 
     return true;
 }
+#endif
 
-#elif defined(USE_PVRTC)
+#if defined(USE_PVRTC)
 bool loadImagePVRTC( image_t& image, const char* path )
 {
 
@@ -462,14 +469,18 @@ uint8_t* ConvertRGBA5551( SDL_Surface* surface, uint8_t factor )
 
 void delete_texture( int32_t index )
 {
-    if (index > -1 && (uint32_t)index < textures.size())
+    if (index > -1)
     {
-        glDeleteTextures( 1, &textures.at(index) );
-        textures.at(index) = 0;
+        if (((uint32_t)index < textures.size()) && (textures.at(index) != 0)) {
+            glDeleteTextures( 1, &textures.at(index) );
+            textures.at(index) = 0;
+        }
 
 #if defined(USE_ETC1)
-        glDeleteTextures( 1, &alphatexs.at(index) );
-        alphatexs.at(index) = 0;
+        if (((uint32_t)index < alphatexs.size()) && (alphatexs.at(index) != 0)) {
+            glDeleteTextures( 1, &alphatexs.at(index) );
+            alphatexs.at(index) = 0;
+        }
 #endif
     }
 }
@@ -484,12 +495,15 @@ void delete_textures( void )
         {
             glDeleteTextures( 1, &textures.at(i) );
             textures.at(i) = 0;
+        }
 
 #if defined(USE_ETC1)
+        if ((i < alphatexs.size()) && (alphatexs.at(i) != 0))
+        {
             glDeleteTextures( 1, &alphatexs.at(i) );
             alphatexs.at(i) = 0;
-#endif
         }
+#endif
     }
 
     textures.clear();

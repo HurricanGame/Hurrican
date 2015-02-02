@@ -56,6 +56,9 @@ DirectGraphicsClass::DirectGraphicsClass(void)
 {
 #if defined(PLATFORM_DIRECTX)
     lpD3D = NULL;
+#elif defined(PLATFORM_SDL)
+    SupportedETC1 = false;
+    SupportedPVRTC = false;
 #endif
     use_texture = false;
 
@@ -452,8 +455,15 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
     output = (char*)glGetString( GL_SHADING_LANGUAGE_VERSION );
     Protokoll.WriteText( false, "GL_SHADING_LANGUAGE_VERSION: %s\n", output );
 #endif
-    output = (char*)glGetString( GL_EXTENSIONS );
-    Protokoll.WriteText( false, "GL_EXTENSIONS: %s\n", output );
+    glextentsions = (char*)glGetString( GL_EXTENSIONS );
+    Protokoll.WriteText( false, "GL_EXTENSIONS: %s\n", glextentsions );
+
+#if defined(USE_ETC1)
+    SupportedETC1 = ExtensionSupported( "GL_OES_compressed_ETC1_RGB8_texture" );
+#endif
+#if defined(USE_PVRTC)
+    SupportedPVRTC = ExtensionSupported( "GL_IMG_texture_compression_pvrtc" );
+#endif
 
     /* Init OpenGL */
     glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );                 /* Set the background black */
@@ -480,10 +490,15 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
 
     sprintf_s(vert, "%s/data/shaders/shader_texture.vert", g_storage_ext);
 #if defined(USE_ETC1)
-    sprintf_s(frag, "%s/data/shaders/shader_etc1_texture.frag", g_storage_ext);
-#else
-    sprintf_s(frag, "%s/data/shaders/shader_texture.frag", g_storage_ext);
+    if (SupportedETC1 == true) {
+        sprintf_s(frag, "%s/data/shaders/shader_etc1_texture.frag", g_storage_ext);
+    } else {
 #endif
+        sprintf_s(frag, "%s/data/shaders/shader_texture.frag", g_storage_ext);
+#if defined(USE_ETC1)
+    }
+#endif
+
 
     if (Shaders[PROGRAM_TEXTURE].Load( vert, frag ) != 0)
     {
@@ -501,8 +516,11 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
     Shaders[PROGRAM_TEXTURE].NameMvp = Shaders[PROGRAM_TEXTURE].GetUniform( "u_MVPMatrix" );
 
 #if defined(USE_ETC1)
-    Shaders[PROGRAM_TEXTURE].texUnit0 = Shaders[PROGRAM_TEXTURE].GetUniform( "u_Texture0" );
-    Shaders[PROGRAM_TEXTURE].texUnit1 = Shaders[PROGRAM_TEXTURE].GetUniform( "u_Texture1" );
+    if (SupportedETC1 == true)
+    {
+        Shaders[PROGRAM_TEXTURE].texUnit0 = Shaders[PROGRAM_TEXTURE].GetUniform( "u_Texture0" );
+        Shaders[PROGRAM_TEXTURE].texUnit1 = Shaders[PROGRAM_TEXTURE].GetUniform( "u_Texture1" );
+    }
 #endif
 #endif /* USE_GL2 */
 
@@ -787,8 +805,11 @@ void DirectGraphicsClass::RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,
     if (ProgramCurrent == PROGRAM_TEXTURE)
     {
 #if defined(USE_ETC1)
-        glUniform1i( Shaders[ProgramCurrent].texUnit0, 0);
-        glUniform1i( Shaders[ProgramCurrent].texUnit1, 1);
+        if (SupportedETC1 == true)
+        {
+            glUniform1i( Shaders[ProgramCurrent].texUnit0, 0);
+            glUniform1i( Shaders[ProgramCurrent].texUnit1, 1);
+        }
 #endif
         glEnableVertexAttribArray( Shaders[ProgramCurrent].NameTex );
         glVertexAttribPointer( Shaders[ProgramCurrent].NameTex, 2, GL_FLOAT, GL_FALSE, stride, (uint8_t*)pVertexStreamZeroData+tex_offset );
@@ -844,6 +865,18 @@ void DirectGraphicsClass::DisplayBuffer  (void)
 }
 
 #if defined(PLATFORM_SDL)
+bool DirectGraphicsClass::ExtensionSupported( const char* ext )
+{
+    if( strstr( glextentsions, ext ) != NULL)
+    {
+        Protokoll.WriteText( false, "%s is supported\n", ext );
+        return true;
+    }
+
+    Protokoll.WriteText( false, "%s is not supported\n", ext );
+    return false;
+}
+
 void DirectGraphicsClass::SetTexture( int32_t index )
 {
     if (index >= 0)
@@ -854,9 +887,12 @@ void DirectGraphicsClass::SetTexture( int32_t index )
         glEnable( GL_TEXTURE_2D );
 #endif
 #if defined(USE_ETC1)
-        glActiveTexture( GL_TEXTURE1 );
-        glBindTexture( GL_TEXTURE_2D, alphatexs.at(index) );
-        glActiveTexture( GL_TEXTURE0 );
+        if (SupportedETC1 == true)
+        {
+            glActiveTexture( GL_TEXTURE1 );
+            glBindTexture( GL_TEXTURE_2D, alphatexs.at(index) );
+            glActiveTexture( GL_TEXTURE0 );
+        }
 #endif
     }
     else
@@ -868,9 +904,12 @@ void DirectGraphicsClass::SetTexture( int32_t index )
 #endif
 
 #if defined(USE_ETC1)
-        glActiveTexture( GL_TEXTURE1 );
-        glBindTexture( GL_TEXTURE_2D, 0 );
-        glActiveTexture( GL_TEXTURE0 );
+        if (SupportedETC1 == true)
+        {
+            glActiveTexture( GL_TEXTURE1 );
+            glBindTexture( GL_TEXTURE_2D, 0 );
+            glActiveTexture( GL_TEXTURE0 );
+        }
 #endif
     }
 }

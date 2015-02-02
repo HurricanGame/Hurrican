@@ -62,7 +62,8 @@ GLuint load_texture( image_t& image );
 
 #if defined(USE_ETC1)
 bool loadImageETC1( image_t& image, const char* path, const char* ext );
-#elif defined(USE_PVRTC)
+#endif
+#if defined(USE_PVRTC)
 bool loadImagePVRTC( image_t& image, const char* path );
 #endif
 bool loadImageSDL( image_t& image, const char* path, uint32_t size=0 );
