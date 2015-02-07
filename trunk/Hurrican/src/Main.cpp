@@ -401,13 +401,11 @@ void FillCommandLineParams( int argc, char* args[] )
                 fprintf( stdout, "Screen depth (bpp) requested is %d\n", CommandLineParams.ScreenDepth);
             }
         }
-        //DKS - made vsync/doublebuff a command line parameter:
         else if ((strstr( args[i], "--novsync" ) != NULL) || (strstr( args[i], "-NV") != NULL))
         {
             fprintf( stdout, "VSync / double-buffering will disabled, if supported\n" );
             CommandLineParams.VSync = false;
         }
-        //DKS
         else if ((strstr( args[i], "--nonpot" ) != NULL) || (strstr( args[i], "-NP") != NULL))
         {
             fprintf( stdout, "Non-power-of-two textures are allowed\n" );
@@ -431,13 +429,11 @@ void FillCommandLineParams( int argc, char* args[] )
                 fprintf( stdout, "Texfactor set to %d\n", CommandLineParams.TexSizeMin );
             }
         }
-        //DKS
         else if ((strstr( args[i], "--npot" ) != NULL) || (strstr( args[i], "-NP") != NULL))
         {
             fprintf( stdout, "Non-power-of-two textures are allowed\n" );
             CommandLineParams.AllowNPotTextureSizes = true;
         }
-        //DKS - fixed custom mapping to texfactor bug
         else if (strstr( args[i], "--custom" ) != NULL)
         {
             i++;
