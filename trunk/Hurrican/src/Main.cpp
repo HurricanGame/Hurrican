@@ -336,23 +336,84 @@ void FillCommandLineParams(void)
         buffer[i] = 0;
         strcpy_s(CommandLineParams.UserLevelName, strlen(buffer) + 1, buffer);
     }
+
+    //DKS - Forced this for now for new option on Windows: (TODO: fix this to be flexible on windows too)
+    CommandLineParams.ScreenDepth = 32;
 }
 
 #elif defined(PLATFORM_SDL)
 void FillCommandLineParams( int argc, char* args[] )
 {
-    char buffer[256];
     uint16_t i;
-    int32_t listpos;
+
+    // Set some sensible defaults
+    CommandLineParams.RunWindowMode = false;
+    CommandLineParams.TexFactor = 1;
+    CommandLineParams.TexSizeMin = 1024;
+    CommandLineParams.ScreenDepth = DEFAULT_SCREENBPP;
+    CommandLineParams.VSync = true;
+    CommandLineParams.AllowNPotTextureSizes = false;
 
     for (i=1; i<argc; i++)
     {
-        if ((strstr( args[i], "--windowmode" ) != NULL) || (strstr( args[i], "-W") != NULL))
+        if ((strstr( args[i], "--help" ) != NULL) || (strstr( args[i], "-?") != NULL ) || 
+                (strstr( args[i], "-H") !=NULL))
+        {
+            Protokoll.WriteText( false, "Hurrican\n"  );
+            Protokoll.WriteText( false, "  Usage      : hurrican <arguments>\n" );
+            Protokoll.WriteText( false, "  Arguments\n" );
+            Protokoll.WriteText( false, "  -H,-?, --help           : Show this information\n" );
+            Protokoll.WriteText( false, "  -W,    --windowmode     : Run in a window, not fullsreen\n" );
+            Protokoll.WriteText( false, "  -D x,  --depth x        : Set screen pixel depth to x (16, 24, 32)\n" );
+            Protokoll.WriteText( false, "                            ( Default is %d )\n", DEFAULT_SCREENBPP );
+            Protokoll.WriteText( false, "  -NV,   --novsync        : Disable VSync / double-buffering\n" );
+            Protokoll.WriteText( false, "  -NP,   --nonpot         : Allow non-power-of-two texture sizes\n" );
+            Protokoll.WriteText( false, "                            Normally, GPUs require texture dimensions that are\n" );
+            Protokoll.WriteText( false, "                            powers of two. If your GPU does not require that,\n" );
+            Protokoll.WriteText( false, "                            you can reduce VRAM usage with this switch.\n" );
+            Protokoll.WriteText( false, "  -TF x, --texfactor x    : Division factor for textures\n" );
+            Protokoll.WriteText( false, "                            If set to 2, textures dimensions will be halved.\n" );
+            Protokoll.WriteText( false, "                            If set to 4, textures dimensions will be quartered.\n" );
+            Protokoll.WriteText( false, "                            ( Default is 1 (no resizing) )\n" );
+            Protokoll.WriteText( false, "  -TS x, --texsizemin x   : Size limitation for texture division factor\n" );
+            Protokoll.WriteText( false, "                            Only textures with widths or heights above this\n" );
+            Protokoll.WriteText( false, "                            value will be resized. MIN: 32  MAX: 1024\n" );
+            Protokoll.WriteText( false, "                            ( Default is 1024 )\n" );
+            exit(1);
+        }
+        else if ((strstr( args[i], "--windowmode" ) != NULL) || (strstr( args[i], "-W") != NULL))
         {
             CommandLineParams.RunWindowMode = true;
             fprintf( stdout, "Window mode is enabled\n" );
         }
-        if ((strstr( args[i], "--texfactor" ) != NULL) || (strstr( args[i], "-TF") != NULL))
+        else if ((strstr( args[i], "--depth" ) != NULL) || (strstr( args[i], "-D") != NULL))
+        {
+            i++;
+            if (i<argc)
+            {
+                CommandLineParams.ScreenDepth = LIM(atoi(args[i]), 16, 32);
+                if (CommandLineParams.ScreenDepth >= 32)
+                    CommandLineParams.ScreenDepth = 32;
+                else if (CommandLineParams.ScreenDepth > 24 && CommandLineParams.ScreenDepth < 32)
+                    CommandLineParams.ScreenDepth = 24;
+                else if (CommandLineParams.ScreenDepth > 16 && CommandLineParams.ScreenDepth < 24)
+                    CommandLineParams.ScreenDepth = 16;
+                fprintf( stdout, "Screen depth (bpp) requested is %d\n", CommandLineParams.ScreenDepth);
+            }
+        }
+        //DKS - made vsync/doublebuff a command line parameter:
+        else if ((strstr( args[i], "--novsync" ) != NULL) || (strstr( args[i], "-NV") != NULL))
+        {
+            fprintf( stdout, "VSync / double-buffering will disabled, if supported\n" );
+            CommandLineParams.VSync = false;
+        }
+        //DKS
+        else if ((strstr( args[i], "--nonpot" ) != NULL) || (strstr( args[i], "-NP") != NULL))
+        {
+            fprintf( stdout, "Non-power-of-two textures are allowed\n" );
+            CommandLineParams.AllowNPotTextureSizes = true;
+        }
+        else if ((strstr( args[i], "--texfactor" ) != NULL) || (strstr( args[i], "-TF") != NULL))
         {
             i++;
             if (i<argc)
@@ -361,7 +422,7 @@ void FillCommandLineParams( int argc, char* args[] )
                 fprintf( stdout, "Texfactor set to %d\n", CommandLineParams.TexFactor );
             }
         }
-        if ((strstr( args[i], "--texsizemin" ) != NULL) || (strstr( args[i], "-TS") != NULL))
+        else if ((strstr( args[i], "--texsizemin" ) != NULL) || (strstr( args[i], "-TS") != NULL))
         {
             i++;
             if (i<argc)
@@ -370,47 +431,29 @@ void FillCommandLineParams( int argc, char* args[] )
                 fprintf( stdout, "Texfactor set to %d\n", CommandLineParams.TexSizeMin );
             }
         }
-        if ((strstr( args[i], "--custom" ) != NULL) || (strstr( args[i], "-C") != NULL))
+        //DKS
+        else if ((strstr( args[i], "--npot" ) != NULL) || (strstr( args[i], "-NP") != NULL))
+        {
+            fprintf( stdout, "Non-power-of-two textures are allowed\n" );
+            CommandLineParams.AllowNPotTextureSizes = true;
+        }
+        //DKS - fixed custom mapping to texfactor bug
+        else if (strstr( args[i], "--custom" ) != NULL)
         {
             i++;
-            if (i<argc)
-            {
-                CommandLineParams.TexSizeMin = LIM(atoi(args[i]), 32, 1024);
-                fprintf( stdout, "Texfactor set to %d\n", CommandLineParams.TexSizeMin );
+            if (i < argc && strlen(args[i]) < 256) {
+                strcpy(CommandLineParams.OwnLevelList, args[i]);
+                CommandLineParams.RunOwnLevelList = true;
             }
         }
-
-
-        listpos = GetStringPos(CommandLineParams.Params, "custom");
-        CommandLineParams.RunOwnLevelList = listpos > -1;
-        if (CommandLineParams.OwnLevelList)
+        else if (strstr( args[i], "--level" ) != NULL)
         {
-            int i = 0;
-            int len = strlen(CommandLineParams.Params);
-            for (i = 0; i < len; i++)
-            {
-                if (CommandLineParams.Params[listpos + i] == 0  ||
-                        CommandLineParams.Params[listpos + i] == 32 ||
-                        CommandLineParams.Params[listpos + i] == 10)
-                    break;
-
-                buffer[i] = CommandLineParams.Params[listpos + i];
+            // own single level?
+            i++;
+            if (i < argc && strlen(args[i]) < 256) {
+                strcpy(CommandLineParams.UserLevelName, args[i]);
+                CommandLineParams.RunUserLevel = true;
             }
-
-            buffer[i] = 0;
-            strcpy_s(CommandLineParams.OwnLevelList, strlen(buffer) + 1, buffer);
-        }
-
-        else if ((strstr( args[i], "--help" ) != NULL) || (strstr( args[i], "-H") !=NULL))
-        {
-            Protokoll.WriteText( false, "Hurrican\n"  );
-            Protokoll.WriteText( false, "  Usage      : hurrican <arguments>\n" );
-            Protokoll.WriteText( false, "  Arguments\n" );
-            Protokoll.WriteText( false, "  -H,  --help        : Show this information\n" );
-            Protokoll.WriteText( false, "  -W,  --windowmode  : Run in a window, not fullsreen\n" );
-            Protokoll.WriteText( false, "  -TF, --texfactor   : Division factor for textures\n" );
-            Protokoll.WriteText( false, "  -TS, --texsizemin  : Size limitation for texture factor\n" );
-            exit(1);
         }
     }
 }
@@ -712,7 +755,7 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
     pTimer = new TimerClass();
 
     // Direct3D initialisieren
-    if(!DirectGraphics.Init(hwnd, RENDERWIDTH, RENDERHEIGHT, SCREENBPP, true))
+    if(!DirectGraphics.Init(hwnd, RENDERWIDTH, RENDERHEIGHT, CommandLineParams.ScreenDepth, CommandLineParams.VSync))
     {
         Protokoll.WriteText( true, "\n-> Direct3D Initialisierung Fehler ...!\n" );
         return false;

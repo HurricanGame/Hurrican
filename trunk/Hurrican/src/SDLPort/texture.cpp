@@ -320,13 +320,16 @@ bool loadImageSDL( image_t& image, const char* path, uint32_t size )
         rawDimensions.x = rawSurf->w;
         rawDimensions.y = rawSurf->h;
 
-#if defined(USE_GLES1) || defined(RGBA_5551) /* Since images are nearest and not mipmapped GLES2 should support NPOT */
-        //  Check if surface is PoT
-        if (!isPowerOfTwo(rawSurf->w))
-            rawDimensions.x = nextPowerOfTwo(rawSurf->w);
-        if (!isPowerOfTwo(rawSurf->h))
-            rawDimensions.y = nextPowerOfTwo(rawSurf->h);
-#endif
+        //DKS - Allowing NPOT textures is now a command line switch:
+        //      The safest thing seems to me to leave it off unless specifically requested,
+        //      since some GPUs/drivers do not play nicely with it and old GL/GLES doesn't even pretend to.
+        if (!CommandLineParams.AllowNPotTextureSizes) {
+            //  Check if surface is PoT
+            if (!isPowerOfTwo(rawSurf->w))
+                rawDimensions.x = nextPowerOfTwo(rawSurf->w);
+            if (!isPowerOfTwo(rawSurf->h))
+                rawDimensions.y = nextPowerOfTwo(rawSurf->h);
+        }
 
         finSurf = SDL_CreateRGBSurface( SDL_SWSURFACE, rawDimensions.x, rawDimensions.y, 32,
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN // OpenGL RGBA masks

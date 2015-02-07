@@ -240,7 +240,7 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
     bool isFullscreen       = !CommandLineParams.RunWindowMode;
     uint16_t ScreenWidth    = SCREENWIDTH;
     uint16_t ScreenHeight   = SCREENHEIGHT;
-    uint16_t ScreenDepth    = SCREENBPP;
+    uint16_t ScreenDepth    = CommandLineParams.ScreenDepth;
 #if SDL_VERSION_ATLEAST(2,0,0)
     uint32_t flags          = SDL_WINDOW_OPENGL;
 #else /* SDL 1.2 */
@@ -274,20 +274,29 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
         return 1;
     }
 #else
-#if defined(USE_GLES1) || defined(USE_GLES2)
-    SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 5 );
-    SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 6 );
-    SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 5 );
-#else
-    SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 8 );
-    SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 8 );
-    SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 8 );
-#endif
-    SDL_GL_SetAttribute( SDL_GL_BUFFER_SIZE, 32 );
-    SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
-    SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
-    SDL_GL_SetAttribute( SDL_GL_MULTISAMPLEBUFFERS, 1 );
+    if (CommandLineParams.ScreenDepth > 16) {               //DKS - Screen depth is now default 16 under GLES, 32 others
+        SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 8 );          //      (Can now be changed via command line switch)
+        SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 8 );
+        SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 8 );
+
+        if (CommandLineParams.ScreenDepth >= 32) {
+            SDL_GL_SetAttribute( SDL_GL_ALPHA_SIZE, 8 );
+            SDL_GL_SetAttribute( SDL_GL_BUFFER_SIZE, 32 );
+        } else {
+            SDL_GL_SetAttribute( SDL_GL_ALPHA_SIZE, 0 );
+            SDL_GL_SetAttribute( SDL_GL_BUFFER_SIZE, 24 );
+        }
+    } else {
+        SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 5 );
+        SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 6 );
+        SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 5 );
+        SDL_GL_SetAttribute( SDL_GL_BUFFER_SIZE, 16 );
+    }
+    SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 0 );         // DKS - No need for a depth buffer in this game
+    SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, VSync);    // DKS - VSync on still the default, but controlled w/ cmd switch
+    SDL_GL_SetAttribute( SDL_GL_MULTISAMPLEBUFFERS, 0 ); // DKS - Changed this to 0 (Game would not load w/ GL1.2 laptop)
     SDL_GL_SetAttribute( SDL_GL_MULTISAMPLESAMPLES, 0 );
+
 #if SDL_VERSION_ATLEAST(2,0,0)
 #if defined(USE_GLES1)
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
