@@ -32,7 +32,10 @@ struct sCommandLineParams
 #if defined(PLATFORM_SDL)
     uint16_t TexFactor;
     uint16_t TexSizeMin;
+    bool    AllowNPotTextureSizes;
 #endif
+    bool    VSync;
+    uint8_t ScreenDepth;
 };
 
 // --------------------------------------------------------------------------------------
@@ -53,7 +56,14 @@ struct sCommandLineParams
 #endif
 #define RENDERWIDTH		640
 #define RENDERHEIGHT	480
-#define SCREENBPP		16							      // Bits per Pixel
+
+// DKS - Screen depth is now configurable from the command line; Defaults to 16bpp under GLES, 32 all others
+#if defined(USE_GLES1) || defined(USE_GLES2)
+#define DEFAULT_SCREENBPP  16
+#else
+#define DEFAULT_SCREENBPP  32
+#endif
+
 #define PARAM_NONE  0
 #define PARAM_LEVEL 1
 #define PARAM_LIST  2
