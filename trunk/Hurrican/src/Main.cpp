@@ -352,18 +352,20 @@ void FillCommandLineParams( int argc, char* args[] )
     CommandLineParams.TexSizeMin = 1024;
     CommandLineParams.ScreenDepth = DEFAULT_SCREENBPP;
     CommandLineParams.VSync = true;
+    CommandLineParams.ShowFPS = false;
     CommandLineParams.AllowNPotTextureSizes = false;
 
     for (i=1; i<argc; i++)
     {
         if ((strstr( args[i], "--help" ) != NULL) || (strstr( args[i], "-?") != NULL ) || 
-                (strstr( args[i], "-H") !=NULL))
+                (strstr( args[i], "-H") !=NULL) || (strstr( args[i], "-h") != NULL))
         {
             Protokoll.WriteText( false, "Hurrican\n"  );
             Protokoll.WriteText( false, "  Usage      : hurrican <arguments>\n" );
             Protokoll.WriteText( false, "  Arguments\n" );
             Protokoll.WriteText( false, "  -H,-?, --help           : Show this information\n" );
             Protokoll.WriteText( false, "  -W,    --windowmode     : Run in a window, not fullsreen\n" );
+            Protokoll.WriteText( false, "  -F,    --showfps        : Show the current frames per second\n" );
             Protokoll.WriteText( false, "  -D x,  --depth x        : Set screen pixel depth to x (16, 24, 32)\n" );
             Protokoll.WriteText( false, "                            ( Default is %d )\n", DEFAULT_SCREENBPP );
             Protokoll.WriteText( false, "  -NV,   --novsync        : Disable VSync / double-buffering\n" );
@@ -386,6 +388,11 @@ void FillCommandLineParams( int argc, char* args[] )
         {
             CommandLineParams.RunWindowMode = true;
             fprintf( stdout, "Window mode is enabled\n" );
+        }
+        else if ((strstr( args[i], "--showfps" ) != NULL) || (strstr( args[i], "-F") != NULL))
+        {
+            CommandLineParams.ShowFPS = true;
+            fprintf( stdout, "FPS will be displayed\n" );
         }
         else if ((strstr( args[i], "--depth" ) != NULL) || (strstr( args[i], "-D") != NULL))
         {
@@ -1336,6 +1343,9 @@ bool Heartbeat(void)
 
 #endif
 
+    if (CommandLineParams.ShowFPS)
+        ShowFPS();
+
     // GUI abhandeln
     pGUI->Run();
 
@@ -1417,6 +1427,32 @@ void ShowDebugInfo(void)
     		for (int j=0; j<96; j++)
     			if(pTileEngine->Tiles[i][j].BackArt > 0)
     				pDefaultFont->DrawText(300+i, 100+j, ".", 0xFFFFFF00);*/
+}
+
+//DKS - added FPS reporting via command switch
+void ShowFPS()
+{
+    const unsigned int fps_update_freq_in_ticks = 500;
+    static unsigned int ticks_fps_last_updated = 0;
+    static int frame_ctr = 0;
+    static float avg_fps = 0;
+    static char char_buf[81] = "";
+
+    frame_ctr++;
+    unsigned int cur_ticks = timeGetTime();
+    unsigned int ticks_elapsed = cur_ticks - ticks_fps_last_updated;
+    if (ticks_elapsed > fps_update_freq_in_ticks && frame_ctr > 0) {
+        avg_fps = (float)frame_ctr * 
+            (1000.0f / (float)fps_update_freq_in_ticks) *
+            ((float)fps_update_freq_in_ticks / (float)ticks_elapsed);
+        sprintf_s(char_buf, "FPS: %.1f", avg_fps );
+        fprintf_s(stdout, char_buf);
+        fprintf_s(stdout, "\n");
+        frame_ctr = 0;
+        avg_fps = 0;
+        ticks_fps_last_updated = cur_ticks;
+    }
+    pMenuFont->DrawText(  0, 0, char_buf, 0xFFFFFFFF);
 }
 
 //----------------------------------------------------------------------------
