@@ -372,6 +372,7 @@ void FillCommandLineParams( int argc, char* args[] )
             Protokoll.WriteText( false, "                            powers of two. If your GPU does not require that,\n" );
             Protokoll.WriteText( false, "                            you can reduce VRAM usage with this switch.\n" );
             Protokoll.WriteText( false, "  -TF x, --texfactor x    : Division factor for textures\n" );
+            Protokoll.WriteText( false, "                            Valid values: 1, 2, 4\n" );
             Protokoll.WriteText( false, "                            If set to 2, textures dimensions will be halved.\n" );
             Protokoll.WriteText( false, "                            If set to 4, textures dimensions will be quartered.\n" );
             Protokoll.WriteText( false, "                            ( Default is 1 (no resizing) )\n" );
@@ -417,6 +418,8 @@ void FillCommandLineParams( int argc, char* args[] )
             if (i<argc)
             {
                 CommandLineParams.TexFactor = LIM(atoi(args[i]), 1, 4);
+                if (CommandLineParams.TexFactor == 3)
+                    CommandLineParams.TexFactor = 4;
                 fprintf( stdout, "Texfactor set to %d\n", CommandLineParams.TexFactor );
             }
         }
@@ -425,8 +428,8 @@ void FillCommandLineParams( int argc, char* args[] )
             i++;
             if (i<argc)
             {
-                CommandLineParams.TexSizeMin = LIM(atoi(args[i]), 32, 1024);
-                fprintf( stdout, "Texfactor set to %d\n", CommandLineParams.TexSizeMin );
+                CommandLineParams.TexSizeMin = LIM(atoi(args[i]), 16, 1024);
+                fprintf( stdout, "Texsizemin set to %d\n", CommandLineParams.TexSizeMin );
             }
         }
         else if ((strstr( args[i], "--npot" ) != NULL) || (strstr( args[i], "-NP") != NULL))

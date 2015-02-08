@@ -375,18 +375,21 @@ bool loadImageSDL( image_t& image, const char* path, uint32_t size )
             factor = 1;
         }
 
-        if (strstr(path, "font") == NULL)
+        // Blacklist of image filenames (sub-strings) that shouldn't be resized:
+        if (   strstr(path, "font")                     != NULL 
+            || strstr(path, "lightmap")                 != NULL 
+            || strstr(path, "hurrican_rund")            != NULL             // Menu star/nebula background (ugly)
+            || strstr(path, "roboraupe")                != NULL             // Flat spiky enemy worm-like thing (glitches)
+            || strstr(path, "enemy-walker")             != NULL             // Frog-like robotic walker (glitches)
+           )
         {
-#if defined(USE_GLES1) || defined(USE_GLES2)
-            //LowerResolution( finSurf, 0 );
-#endif
-#if defined(RGBA_5551)
-            if (strstr(path, "lightmap") == NULL)
-            {
-                image.data = ConvertRGBA5551( finSurf, factor );
-                image.type = GL_UNSIGNED_SHORT_5_5_5_1;
-            }
-#endif
+            factor = 1;
+        }
+
+        //DKS - Disabled RGBA5551 conversion, as it did not actually affect how GL stores texture in VRAM.
+        if (factor > 1)
+        {
+            image.data = LowerResolution( finSurf, factor );
         }
 
         image.w = finSurf->w;
@@ -409,47 +412,41 @@ bool loadImageSDL( image_t& image, const char* path, uint32_t size )
     return true;
 }
 
-#if defined(USE_GLES1) || defined(USE_GLES2)
-void LowerResolution( SDL_Surface* surface, int32_t dimension )
+//DKS - Assumes rgba8888 input, rgba8888 output
+uint8_t* LowerResolution( SDL_Surface* surface, int factor )
 {
-    int32_t x, y;
-    int32_t xh, yh = 0;
-    SDL_Surface* temp;
-
-    if ((surface->h >= dimension || surface->w >= dimension)  )
-    {
-        temp = surface;
-
-        surface = SDL_CreateRGBSurface(SDL_SWSURFACE, temp->w/2, temp->h/2, 32,
-#if SDL_BYTEORDER == SDL_LIL_ENDIAN // OpenGL RGBA masks
-                                       0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000
-#else
-                                       0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF
-#endif
-                                      );
-
-        xh = 0;
-        yh = 0;
-        for (y=0; y<temp->h; y+=2)
-        {
-            for (x=0; x<temp->w; x+=2)
-            {
-                if (xh < temp->w && yh < temp->h)
-                    putpixel( surface, xh, yh, getpixel( temp, x, y) );
-                else
-                    Protokoll.WriteText( false, "error tex shrink overflow\n" );
-
-                xh++;
-            }
-            yh++;
-            xh = 0;
-        }
-
-        SDL_FreeSurface( temp );
+    if (factor != 2 && factor != 4) {
+        Protokoll.WriteText( false, "ERROR call to LowerResolution() with factor not equal to 2 or 4\n");
+        return NULL;
     }
-}
-#endif
 
+    if (surface->format->BytesPerPixel != 4) {
+        Protokoll.WriteText( false, "ERROR call to LowerResolution() with source surface bpp other than 4\n");
+        return NULL;
+    }
+
+    int x, y;
+    uint8_t *dataout = new uint8_t[(surface->h / factor) * (surface->w / factor) * sizeof(uint32_t)];
+
+    if (!dataout)
+        return dataout;
+
+    uint32_t *dataout32 = (uint32_t *)dataout;
+    uint32_t *datain32 = (uint32_t *)surface->pixels;
+
+    for (y=0; y<surface->h; y+=factor) {
+        datain32 = ((uint32_t *)surface->pixels) + surface->w * y;
+        for (x=0; x<surface->w; x+=factor) {
+            *dataout32 = *datain32;
+            datain32 += factor;
+            dataout32++;
+        }
+    }
+
+    return dataout;
+}
+
+#if 0   //DKS - Disabled ConvertRGBA5551, as it did not affect how GL stores textures in VRAM.
 #if defined(RGBA_5551)
 uint8_t* ConvertRGBA5551( SDL_Surface* surface, uint8_t factor )
 {
@@ -459,8 +456,7 @@ uint8_t* ConvertRGBA5551( SDL_Surface* surface, uint8_t factor )
     uint16_t* data16 = NULL;
 
     // Create the space for the 16 bpp image
-    data = new uint8_t[(surface->w * surface->h * sizeof(uint16_t)) / factor];
-    data16 = (uint16_t*)data;
+    data = new uint8_t[(surface->w / factor) * (surface->h / factor) * sizeof(uint16_t)];
 
     for (y=0; y<surface->h; y+=factor)
     {
@@ -475,6 +471,7 @@ uint8_t* ConvertRGBA5551( SDL_Surface* surface, uint8_t factor )
 
     return data;
 }
+#endif
 #endif
 
 void delete_texture( int32_t index )
