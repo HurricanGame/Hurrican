@@ -323,6 +323,7 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
     if (FileExists(Temp))
         goto loadfile;
 
+#if defined(USE_UNRARLIB)
     // Auch nicht? Dann ist es hoffentlich im RAR file
 
     if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
@@ -332,6 +333,10 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
     }
     else
         fromrar = true;
+#else
+    Protokoll.WriteText( true, "\n-> Error loading %s!\n", Temp );
+    return false;
+#endif // USE_UNRARLIB
 
 
 loadfile:

@@ -112,6 +112,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
         }
     }
 
+#if defined(USE_UNRARLIB)
     if (image.data == NULL)
     {
         if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) != false)
@@ -120,6 +121,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
             free(pData);
         }
     }
+#endif // USE_UNRARLIB
 
     if (image.data  == NULL)
     {

@@ -126,7 +126,9 @@ GL2_FILES := SDLPort/cshader
 
 #SDLPort/cshader
 
-UNRAR_FILES := unrarlib040/unrarlib/unrarlib
+#DKS - made unrarlib optional:
+#DEFINES += -DUSE_UNRARLIB
+#UNRAR_FILES := unrarlib040/unrarlib/unrarlib
 
 FILES :=Boss_BigFish \
         Boss_Bratklops \

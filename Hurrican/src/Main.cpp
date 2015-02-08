@@ -378,7 +378,7 @@ void FillCommandLineParams( int argc, char* args[] )
             Protokoll.WriteText( false, "                            ( Default is 1 (no resizing) )\n" );
             Protokoll.WriteText( false, "  -TS x, --texsizemin x   : Size limitation for texture division factor\n" );
             Protokoll.WriteText( false, "                            Only textures with widths or heights above this\n" );
-            Protokoll.WriteText( false, "                            value will be resized. MIN: 32  MAX: 1024\n" );
+            Protokoll.WriteText( false, "                            value will be resized. MIN: 16  MAX: 1024\n" );
             Protokoll.WriteText( false, "                            ( Default is 1024 )\n" );
             exit(1);
         }

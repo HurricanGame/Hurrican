@@ -68,12 +68,14 @@ bool loadImagePVRTC( image_t& image, const char* path );
 #endif
 bool loadImageSDL( image_t& image, const char* path, uint32_t size=0 );
 
-#if defined(USE_GLES1) || defined(USE_GLES2)
-void LowerResolution( SDL_Surface* surface, int32_t dimension );
-#endif
+uint8_t* LowerResolution( SDL_Surface* surface, int factor );
+
+//DKS - disabled (RGBA5551 did not benefit how textures actually were stored in VRAM)
+/*
 #if defined(RGBA_5551)
 uint8_t* ConvertRGBA5551( SDL_Surface* surface, uint8_t factor );
 #endif
+*/
 
 void delete_texture( int32_t index );
 void delete_textures( void );

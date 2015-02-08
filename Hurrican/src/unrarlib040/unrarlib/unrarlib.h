@@ -30,6 +30,9 @@
 /* (C) 2000-2002 by Christian Scheurer aka. UniquE */
 /* multi-OS version (Win32, Linux and SUN)         */
 
+//DKS - Made unrarlib optional:
+#ifdef USE_UNRARLIB
+
 #ifndef __URARLIB_H
 #define __URARLIB_H
 
@@ -205,3 +208,4 @@ extern void urarlib_freelist(ArchiveList_struct *list);
 
 #endif
 
+#endif // USE_UNRARLIB

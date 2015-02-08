@@ -343,6 +343,7 @@ bool TileEngineClass::LoadLevel(char Filename[100])
     if (FileExists(Temp))
         goto loadfile;
 
+#if defined(USE_UNRARLIB)
     // Auch nicht? Dann ist es hoffentlich im RAR file
     if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
     {
@@ -351,6 +352,10 @@ bool TileEngineClass::LoadLevel(char Filename[100])
     }
     else
         fromrar = true;
+#else
+    Protokoll.WriteText( true, "\n-> Error loading %s!\n", Temp );
+    return false;
+#endif // USE_UNRARLIB
 
 loadfile:
 

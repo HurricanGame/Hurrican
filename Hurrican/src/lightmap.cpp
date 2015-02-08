@@ -71,11 +71,16 @@ void CLightMap::Load(const char *filename)
     if (FileExists(Temp))
         goto loadfile;
 
+#if defined(USE_UNRARLIB)
     if (urarlib_get(&pData, &Size, (char*)filename, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
     {
         Protokoll.WriteText( false, "Error loading Lightmap %s !\n", filename );
         return;
     }
+#else
+    Protokoll.WriteText( false, "Error loading Lightmap %s !\n", filename );
+    return;
+#endif // USE_UNRARLIB
 
     fopen_s (&TempFile, TEMP_FILE_PREFIX "temp.dat", "wb");	// Datei öffnen
     fwrite (pData, Size, 1, TempFile);			// speichern
