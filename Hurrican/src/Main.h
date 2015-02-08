@@ -34,6 +34,7 @@ struct sCommandLineParams
     uint16_t TexSizeMin;
     bool    AllowNPotTextureSizes;
 #endif
+    bool    ShowFPS;
     bool    VSync;
     uint8_t ScreenDepth;
 };
@@ -90,6 +91,9 @@ extern const char* g_storage_ext;
 #endif
 
 void ShowDebugInfo(void);							// Allen möglichen Kram anzeigen
+
+//DKS - Added FPS reporting:
+void ShowFPS(void);
 
 #endif
 
