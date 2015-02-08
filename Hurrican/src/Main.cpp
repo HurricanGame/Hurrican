@@ -1435,21 +1435,19 @@ void ShowFPS()
     const unsigned int fps_update_freq_in_ticks = 500;
     static unsigned int ticks_fps_last_updated = 0;
     static int frame_ctr = 0;
-    static float avg_fps = 0;
-    static char char_buf[81] = "";
+    static char char_buf[24] = "";
 
     frame_ctr++;
     unsigned int cur_ticks = timeGetTime();
     unsigned int ticks_elapsed = cur_ticks - ticks_fps_last_updated;
     if (ticks_elapsed > fps_update_freq_in_ticks && frame_ctr > 0) {
-        avg_fps = (float)frame_ctr * 
+        float avg_fps = (float)frame_ctr * 
             (1000.0f / (float)fps_update_freq_in_ticks) *
             ((float)fps_update_freq_in_ticks / (float)ticks_elapsed);
         sprintf_s(char_buf, "FPS: %.1f", avg_fps );
         fprintf_s(stdout, char_buf);
         fprintf_s(stdout, "\n");
         frame_ctr = 0;
-        avg_fps = 0;
         ticks_fps_last_updated = cur_ticks;
     }
     pMenuFont->DrawText(  0, 0, char_buf, 0xFFFFFFFF);
