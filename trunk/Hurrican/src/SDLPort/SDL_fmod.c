@@ -302,7 +302,16 @@ Mix_Chunk* SOUND_Sample_Load( int index, const char *filename, unsigned int inpu
             }
             else
             {
-                sound_loops = realloc( sound_loops, (sound_loops_total+1)*sizeof(Mix_Chunk*) );
+                //DKS - fixed compiler warning and use of realloc:
+                // sound_loops = realloc( sound_loops, (sound_loops_total+1)*sizeof(Mix_Chunk*) );
+                Mix_Chunk **orig_ptr = sound_loops;
+                sound_loops = (Mix_Chunk**)realloc( sound_loops, (sound_loops_total+1)*sizeof(Mix_Chunk*) );
+
+                if (sound_loops == NULL) {
+                    sound_loops = orig_ptr;
+                    printf("ERROR calling realloc(). File: %s Line: %d\n", __FILE__, __LINE__);
+                }
+
             }
             //printf( "Adding %X\n", chunk );
             sound_loops[sound_loops_total] = chunk;

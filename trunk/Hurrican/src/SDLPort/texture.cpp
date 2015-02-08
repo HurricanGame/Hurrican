@@ -386,7 +386,6 @@ bool loadImageSDL( image_t& image, const char* path, uint32_t size )
             factor = 1;
         }
 
-        //DKS - Disabled RGBA5551 conversion, as it did not actually affect how GL stores texture in VRAM.
         if (factor > 1)
         {
             image.data = LowerResolution( finSurf, factor );

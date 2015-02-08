@@ -134,6 +134,7 @@ loadfile:
         if (FileExists(Temp))
             goto loadfilelevel;
 
+#if defined(USE_UNRARLIB)
         // Nicht? Dann ist es hoffentlich im RAR file
         sprintf_s(Temp, "%s", "levellist.dat");
         if (urarlib_get(&pData, &Size, Temp, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
@@ -143,9 +144,14 @@ loadfile:
         }
         else
             fromrar = true;
+#else
+        Protokoll.WriteText( true, "\n-> Error loading %s!\n", Temp );
+        return false;
+#endif // USE_UNRARLIB
 
 loadfilelevel:
 
+#if defined(USE_UNRARLIB)
         // Aus RAR laden? Dann müssen wir das ganze unter temporärem Namen entpacken
         if (fromrar == true)
         {
@@ -159,6 +165,7 @@ loadfilelevel:
             sprintf_s(Temp, "%s", TEMP_FILE_PREFIX "temp.dat");			// Name anpassen
             free(pData);								// und Speicher freigeben
         }
+#endif // USE_UNRARLIB
 
         in.open(Temp); //Datei öffnen
     }
