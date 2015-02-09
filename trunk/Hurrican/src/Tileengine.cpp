@@ -1943,17 +1943,19 @@ void TileEngineClass::DrawWater(void)
                             v4.tv = WasserV [yo+1];
                         }
 
+                        //DKS - Fixed horizontal overdraw line shimmers in animated water from
+                        //      inconsistent float rounding causing tile edges to overlap 
                         if (Tiles[xLevel+i][yLevel+j].move_v1 == true)
-                            v1.y += WaterList[off + j*10 + i * 2];
+                            v1.y += float(int(WaterList[off + j*10 + i * 2] + 0.5f));
 
                         if (Tiles[xLevel+i][yLevel+j].move_v2 == true)
-                            v2.y += WaterList[off + j*10 + i * 2];
+                            v2.y += float(int(WaterList[off + j*10 + i * 2] + 0.5f));
 
                         if (Tiles[xLevel+i][yLevel+j].move_v3 == true)
-                            v3.y += WaterList[off + j*10 + i * 2 + 10];
+                            v3.y += float(int(WaterList[off + j*10 + i * 2 + 10] + 0.5f));
 
                         if (Tiles[xLevel+i][yLevel+j].move_v4 == true)
-                            v4.y += WaterList[off + j*10 + i * 2 + 10];
+                            v4.y += float(int(WaterList[off + j*10 + i * 2 + 10] + 0.5f));
 
                         // Zu rendernde Vertices ins Array schreiben
                         TilesToRender[NumToRender*6]   = v1;	// Jeweils 2 Dreicke als
