@@ -258,7 +258,9 @@ public:
     int				ColR2, ColG2, ColB2;
     int				ColR3, ColG3, ColB3, ColA3;
 
-    float			SinList[4096];							// Sinus Liste zum Schwabbeln des Alienlevels
+    //DKS - Disabled this, was only ever filled with zeroes and had no effect.
+    //float			SinList[4096];							// Sinus Liste zum Schwabbeln des Alienlevels
+
     float			SinList2[4096];							// Sinus Liste zum Schwabbeln des Wasserhintergrunds
     float			WaterList[4096];						// Sinus Liste zum Schwabbeln der Oberfläche
     RECT			TileRects[144];							// vorberechnete Tile Ausschnitte

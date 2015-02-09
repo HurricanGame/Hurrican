@@ -172,7 +172,8 @@ TileEngineClass::TileEngineClass(void)
     float w = 0.0f;
     while (i < 4000)
     {
-        SinList  [i] = 0.0f;
+        /* SinList  [i] = 0.0f; */  //DKS - Disabled this and all eliminated all uses of it, 
+                                    // as it was only ever filled with zeroes and had no effect.
         SinList2 [i] = float (sin(w)) * 5.0f;
         WaterList[i] = float (sin(w)) * 2.5f;
         w += PI / TILESIZE_X;
@@ -1157,22 +1158,22 @@ void TileEngineClass::DrawBackLevel(void)
                 v3.color = Tiles[xLevel+i][yLevel+j].Color [2];
                 v4.color = Tiles[xLevel+i][yLevel+j].Color [3];
 
-                v1.x		= l + SinList[off];						// Links oben
+                v1.x		= l;				            		// Links oben
                 v1.y		= o;
                 v1.tu		= tl;
                 v1.tv		= to;
 
-                v2.x		= r + SinList[off];						// Rechts oben
+                v2.x		= r;		            				// Rechts oben
                 v2.y		= o;
                 v2.tu		= tr;
                 v2.tv		= to;
 
-                v3.x		= l + SinList[off + 2];					// Links unten
+                v3.x		= l;			                		// Links unten
                 v3.y		= u;
                 v3.tu		= tl;
                 v3.tv		= tu;
 
-                v4.x		= r + SinList[off + 2];					// Rechts unten
+                v4.x		= r;                					// Rechts unten
                 v4.y		= u;
                 v4.tu		= tr;
                 v4.tv		= tu;
@@ -1313,22 +1314,22 @@ void TileEngineClass::DrawFrontLevel(void)
 
                 off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
 
-                v1.x		= l + SinList[off];						// Links oben
+                v1.x		= l;            						// Links oben
                 v1.y		= o;
                 v1.tu		= tl;
                 v1.tv		= to;
 
-                v2.x		= r + SinList[off];						// Rechts oben
+                v2.x		= r;						            // Rechts oben
                 v2.y		= o;
                 v2.tu		= tr;
                 v2.tv		= to;
 
-                v3.x		= l + SinList[off + 2];					// Links unten
+                v3.x		= l;				                	// Links unten
                 v3.y		= u;
                 v3.tu		= tl;
                 v3.tv		= tu;
 
-                v4.x		= r + SinList[off + 2];					// Rechts unten
+                v4.x		= r;	                				// Rechts unten
                 v4.y		= u;
                 v4.tu		= tr;
                 v4.tv		= tu;
@@ -1480,22 +1481,22 @@ void TileEngineClass::DrawBackLevelOverlay (void)
                 v3.color = Tiles[xLevel+i][yLevel+j].Color [2];
                 v4.color = Tiles[xLevel+i][yLevel+j].Color [3];
 
-                v1.x		= l + SinList[off];						// Links oben
+                v1.x		= l;						// Links oben
                 v1.y		= o;
                 v1.tu		= tl;
                 v1.tv		= to;
 
-                v2.x		= r + SinList[off];						// Rechts oben
+                v2.x		= r;						// Rechts oben
                 v2.y		= o;
                 v2.tu		= tr;
                 v2.tv		= to;
 
-                v3.x		= l + SinList[off + 2];					// Links unten
+                v3.x		= l;					// Links unten
                 v3.y		= u;
                 v3.tu		= tl;
                 v3.tv		= tu;
 
-                v4.x		= r + SinList[off + 2];					// Rechts unten
+                v4.x		= r;					// Rechts unten
                 v4.y		= u;
                 v4.tu		= tr;
                 v4.tv		= tu;
@@ -1700,22 +1701,22 @@ void TileEngineClass::DrawOverlayLevel(void)
 
                     off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
 
-                    v1.x		= l + SinList[off];						// Links oben
+                    v1.x		= l;						// Links oben
                     v1.y		= o;
                     v1.tu		= tl;
                     v1.tv		= to;
 
-                    v2.x		= r + SinList[off];						// Rechts oben
+                    v2.x		= r;						// Rechts oben
                     v2.y		= o;
                     v2.tu		= tr;
                     v2.tv		= to;
 
-                    v3.x		= l + SinList[off + 2];					// Links unten
+                    v3.x		= l;					    // Links unten
                     v3.y		= u;
                     v3.tu		= tl;
                     v3.tv		= tu;
 
-                    v4.x		= r + SinList[off + 2];					// Rechts unten
+                    v4.x		= r;					    // Rechts unten
                     v4.y		= u;
                     v4.tu		= tr;
                     v4.tv		= tu;
@@ -1812,13 +1813,13 @@ void TileEngineClass::DrawWater(void)
                     // Vertices definieren
                     v1.z	 = v2.z		= v3.z	   = v4.z	  = 0.0f;
 
-                    v1.x = l + SinList[off + j*2];						// Links oben
+                    v1.x = l;						// Links oben
                     v1.y = o;
-                    v2.x = r + SinList[off + j*2];						// Rechts oben
+                    v2.x = r;						// Rechts oben
                     v2.y = o;
-                    v3.x = l + SinList[off + j*2 + 2];					// Links unten
+                    v3.x = l;					    // Links unten
                     v3.y = u;
-                    v4.x = r + SinList[off + j*2 + 2];					// Rechts unten
+                    v4.x = r;					    // Rechts unten
                     v4.y = u;
 
                     // Farbe festlegen
@@ -1881,13 +1882,13 @@ void TileEngineClass::DrawWater(void)
 
                         // Vertices definieren
                         v1.z = v2.z		= v3.z	   = v4.z	  = 0.0f;
-                        v1.x = l + SinList[off + j*2];						// Links oben
+                        v1.x = l;						// Links oben
                         v1.y = o;
-                        v2.x = r + SinList[off + j*2];						// Rechts oben
+                        v2.x = r;						// Rechts oben
                         v2.y = o;
-                        v3.x = l + SinList[off + j*2 + 2];					// Links unten
+                        v3.x = l;					    // Links unten
                         v3.y = u;
-                        v4.x = r + SinList[off + j*2 + 2];					// Rechts unten
+                        v4.x = r;					    // Rechts unten
                         v4.y = u;
 
                         if (schicht == 0)
