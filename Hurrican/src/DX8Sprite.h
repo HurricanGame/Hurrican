@@ -97,9 +97,6 @@ public:
     bool  SetRect	  (int left,  int top,
                        int right, int bottom);				// Neuen Ausschnitt setzen
     RECT  GetRect	  (void);								// Ausschnitt holen
-    bool  RenderTexture(float x,  float y,  float w,  float h,
-                        float tl, float to, float tr, float tu,
-                        D3DCOLOR Color);
     bool  RenderSprite(float x, float y, D3DCOLOR Color);	// Sprite rendern
     bool  RenderSprite(float x, float y, int Anim,
                        D3DCOLOR c1,
