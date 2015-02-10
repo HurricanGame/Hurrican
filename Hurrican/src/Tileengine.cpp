@@ -1796,6 +1796,9 @@ void TileEngineClass::DrawWater(void)
                     o -= TEXTURE_COORD_OFFSET;
                     u += TEXTURE_COORD_OFFSET;
 
+                    //DKS - Original code was setting texture coordinates when no texture 
+                    //      is bound.. disabled the code:
+                    /* DISABLED BLOCK
                     // Textur Koordinaten setzen
                     //
                     xo = (i + xLevel) % 8;
@@ -1809,6 +1812,7 @@ void TileEngineClass::DrawWater(void)
                     v3.tv = WasserV [yo+1];
                     v4.tu = WasserU [xo+1];
                     v4.tv = WasserV [yo+1];
+                    END DISABLED BLOCK */
 
                     // Vertices definieren
                     v1.z	 = v2.z		= v3.z	   = v4.z	  = 0.0f;
