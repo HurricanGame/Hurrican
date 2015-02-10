@@ -18,6 +18,7 @@
 // --------------------------------------------------------------------------------------
 
 #if defined(PLATFORM_SDL)
+#define PLATFORM_GL
 #include "SDL_port.h"
 #include "texture.h"
 #if defined(USE_GL2)
