@@ -470,62 +470,6 @@ RECT DirectGraphicsSprite::GetRect(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Textur ganz normal zeichnen mit u und v als Texturkoordinaten
-// --------------------------------------------------------------------------------------
-
-bool DirectGraphicsSprite::RenderTexture(float x, float y, float w, float h, float tl, float to, float tr, float tu, D3DCOLOR Color)
-{
-    float l,  r,  o,  u;					// Vertice Koordinaten
-
-    x = float (int (x));
-    y = float (int (y));
-
-    l = x;		// Links
-    r = x+w;	// Rechts
-    o = y;		// Oben
-    u = y+h;	// Unten
-
-    l -= TEXTURE_COORD_OFFSET;
-    r += TEXTURE_COORD_OFFSET;
-    o -= TEXTURE_COORD_OFFSET;
-    u += TEXTURE_COORD_OFFSET;
-
-    TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
-    TriangleStrip[0].z	   = TriangleStrip[1].z		= TriangleStrip[2].z	 = TriangleStrip[3].z	  = 0.0f;
-
-    TriangleStrip[0].x		= l;		// Links oben
-    TriangleStrip[0].y		= o;
-    TriangleStrip[0].tu		= tl;
-    TriangleStrip[0].tv		= to;
-
-    TriangleStrip[1].x		= r;		// Rechts oben
-    TriangleStrip[1].y		= o;
-    TriangleStrip[1].tu		= tr;
-    TriangleStrip[1].tv		= to;
-
-    TriangleStrip[2].x		= l;		// Links unten
-    TriangleStrip[2].y		= u;
-    TriangleStrip[2].tu		= tl;
-    TriangleStrip[2].tv		= tu;
-
-    TriangleStrip[3].x		= r;		// Rechts unten
-    TriangleStrip[3].y		= u;
-    TriangleStrip[3].tu		= tr;
-    TriangleStrip[3].tv		= tu;
-
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTexture (0, itsTexture);							// Textur setzen
-#elif defined(PLATFORM_SDL)
-    DirectGraphics.SetTexture(  itsTexture );
-#endif
-
-    // Sprite zeichnen
-    DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
-
-    return true;
-}
-
-// --------------------------------------------------------------------------------------
 // Sprite ganz normal zeichnen mit aktuellem Surfaceausschnitt und Colorkey
 // --------------------------------------------------------------------------------------
 
