@@ -22,7 +22,16 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
+//DKS - Fixed OpenGL edge overdraw - Original value was 0.6f, but under OpenGL, this
+//      allows grid overdraw patterns to occur visibly in blended sprites like 
+//      waterfalls and water. Presumably, hidden overdraw also is occuring elsewhere.
+//      Using 0.5f instead of 0.6f fixes this.
+#if defined(PLATFORM_DIRECTX)
 #define TEXTURE_COORD_OFFSET  0.6f
+#else // OpenGL:
+#define TEXTURE_COORD_OFFSET  0.5f
+#endif // PLATFORM_DIRECTX
+
 #define	MAX_SPRITES		      32768    // Maximalzahl Sprites am Screen
 #define MAX_SPRITEGFX	      500      // Maximal ladbare Sprites
 
