@@ -381,6 +381,8 @@ bool loadImageSDL( image_t& image, const char* path, uint32_t size )
             || strstr(path, "hurrican_rund")            != NULL             // Menu star/nebula background (ugly)
             || strstr(path, "roboraupe")                != NULL             // Flat spiky enemy worm-like thing (glitches)
             || strstr(path, "enemy-walker")             != NULL             // Frog-like robotic walker (glitches)
+            || strstr(path, "luefter1")                 != NULL             // Rotating fan (wiggles side to side)
+            || strstr(path, "luefter2")                 != NULL             // Rotating fan (wiggles side to side)
            )
         {
             factor = 1;
