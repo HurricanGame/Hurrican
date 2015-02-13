@@ -240,6 +240,12 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
     bool isFullscreen       = !CommandLineParams.RunWindowMode;
     uint16_t ScreenWidth    = SCREENWIDTH;
     uint16_t ScreenHeight   = SCREENHEIGHT;
+    
+    if (CommandLineParams.LowRes) {
+        ScreenWidth    = LOWRES_SCREENWIDTH;
+        ScreenHeight   = LOWRES_SCREENHEIGHT;
+    }
+
     uint16_t ScreenDepth    = CommandLineParams.ScreenDepth;
 #if SDL_VERSION_ATLEAST(2,0,0)
     uint32_t flags          = SDL_WINDOW_OPENGL;
@@ -1060,11 +1066,11 @@ void DirectGraphicsClass::SetupFramebuffers( void )
 #endif
     }
 
-#ifdef USE_320_240
-    glViewport( 0, 0, 320, 240);
-#else
-    glViewport( WindowView.x, WindowView.y, WindowView.w, WindowView.h );    /* Setup our viewport. */
-#endif
+    if (CommandLineParams.LowRes) {
+        glViewport( 0, 0, LOWRES_SCREENWIDTH, LOWRES_SCREENHEIGHT);
+    } else {
+        glViewport( WindowView.x, WindowView.y, WindowView.w, WindowView.h );    /* Setup our viewport. */
+    }
     Protokoll.WriteText( false, "Window viewport: %dx%d at %dx%d\n", WindowView.w, WindowView.h, WindowView.x, WindowView.y );
 }
 

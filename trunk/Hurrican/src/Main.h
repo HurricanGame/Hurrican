@@ -37,6 +37,7 @@ struct sCommandLineParams
     bool    ShowFPS;
     bool    VSync;
     uint8_t ScreenDepth;
+    bool    LowRes;
 };
 
 // --------------------------------------------------------------------------------------
@@ -45,16 +46,17 @@ struct sCommandLineParams
 
 #define WIN_32_LEAN_AND_MEAN						   // MFC abschalten
 #define WINDOWCLASSNAME	"HurricanWindowsClass"	// Name der Windows-Klasse
-#if defined(USE_320_240)
-#define  SCREENWIDTH		320							// D3D Screen Breite
-#define	SCREENHEIGHT	240							// D3D Screen Höhe
-#elif defined(USE_GL2) && defined(USE_FBO)
-#define  SCREENWIDTH		1024
+#if defined(USE_GL2) && defined(USE_FBO)
+#define SCREENWIDTH		1024
 #define	SCREENHEIGHT	768
 #else
-#define  SCREENWIDTH		640
-#define	SCREENHEIGHT	480
+#define SCREENWIDTH     640
+#define	SCREENHEIGHT    480
 #endif
+
+#define LOWRES_SCREENWIDTH    320
+#define LOWRES_SCREENHEIGHT   240
+
 #define RENDERWIDTH		640
 #define RENDERHEIGHT	480
 

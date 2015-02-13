@@ -58,7 +58,7 @@ RM  := rm -f
 USE_EGL := yes
 USE_GL2 := yes
 
-DEFINES += -DGCW -DUSE_GL2 -DUSE_GLES2 -DUSE_ETC1 -DUSE_EGL_RAW -DUSE_320_240 
+DEFINES += -DGCW -DUSE_GL2 -DUSE_GLES2 -DUSE_ETC1 -DUSE_EGL_RAW 
 
 INCLUDES_OS := -ISDL_port \
                -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/SDL \

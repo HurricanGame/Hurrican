@@ -28,6 +28,9 @@
 
 DirectGraphicsFont::DirectGraphicsFont(void)
 {
+    //DKS - Added support for font scaling
+    mScaleFactor = 1;
+
     mTexture = NULL;
 
     // alle mit 0 initialiseren, falls ein fehlerhaftest Zeichen verwendet wird
@@ -200,6 +203,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 // Zahlenwert an xPos,yPos mit Farbe Color ausgeben
 // --------------------------------------------------------------------------------------
 
+//DKS - Note: This function does not appear to actually be used anywhere:
 bool DirectGraphicsFont::DrawValue(float x, float y, float Value, D3DCOLOR Color)
 {
     char Buf[20];
@@ -233,19 +237,39 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
 
         mTexture->SetRect(rect.left, rect.top, rect.right, rect.bottom);
 
-        if(Text[i] != 32 &&
-                Text[i] != '\n')
-            mTexture->RenderSprite(x, y, Color);
+        if (Text[i] != 32 && Text[i] != '\n') {
+            //DKS - Added support for font scaling
+            if (mScaleFactor == 1) {
+                mTexture->RenderSprite(x, y, Color);
+            } else {
+                mTexture->RenderSpriteScaled(x, y, mXCharSize * mScaleFactor - 1, mYCharSize * mScaleFactor - 1, Color);
+            }
+        }
 
         if(Text[i] == 32)
-            x += mXCharSize-3;				// Bei Space frei lassen
+            //DKS - Added support for font scaling
+            if (mScaleFactor == 1) {
+                x += float(mXCharSize-3);				// Bei Space frei lassen
+            } else {
+                x += float((mXCharSize - 3) * mScaleFactor);				// Bei Space frei lassen
+            }
         else if(Text[i] == '\n')					// Zeilenumbruch
         {
             x = oldx;
-            y += mYCharSize + 6;
+            //DKS - Added support for font scaling
+            if (mScaleFactor == 1) {
+                y += float(mYCharSize + 6);
+            } else {
+                y += float(mYCharSize * mScaleFactor + 6);
+            }
         }
         else
-            x += mCharLength[z]-1;			// Ansonsten Breite des Zeichens weiter
+            //DKS - Added support for font scaling
+            if (mScaleFactor == 1) {
+                x += float(mCharLength[z]-1);			// Ansonsten Breite des Zeichens weiter
+            } else {
+                x += float((mCharLength[z]-1) * mScaleFactor);			// Ansonsten Breite des Zeichens weiter
+            }
     }
 
     return true;
@@ -353,19 +377,39 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
 
         mTexture->SetRect(rect.left, rect.top, rect.right, rect.bottom);
 
-        if(Text[i] != 32 &&
-                Text[i] != '\n')
-            mTexture->RenderSprite(x, y, Color);
+        if (Text[i] != 32 && Text[i] != '\n') {
+            //DKS - Added support for font scaling
+            if (mScaleFactor == 1) {
+                mTexture->RenderSprite(x, y, Color);
+            } else {
+                mTexture->RenderSpriteScaled(x, y, mXCharSize * mScaleFactor - 1, mYCharSize * mScaleFactor - 1, Color);
+            }
+        }
 
         if(Text[i] == 32)
-            x += mXCharSize-3 - Spacing*2;				// Bei Space frei lassen
+            //DKS - Added support for font scaling
+            if (mScaleFactor == 1) {
+                x += float(mXCharSize-3 - Spacing*2);				// Bei Space frei lassen
+            } else {
+                x += float((mXCharSize - 3) * mScaleFactor - Spacing * 2);				// Bei Space frei lassen
+            }
         else if(Text[i] == '\n')								// Zeilenumbruch
         {
             x = oldx;
-            y += mYCharSize + 6 + Spacing;
+            //DKS - Added support for font scaling
+            if (mScaleFactor == 1) {
+                y += float(mYCharSize + 6 + Spacing);
+            } else {
+                y += float(mYCharSize * mScaleFactor + 6 + Spacing);
+            }
         }
         else
-            x += mCharLength[z]-1 + Spacing;	// Ansonsten Breite des Zeichens weiter
+            //DKS - Added support for font scaling
+            if (mScaleFactor == 1) {
+                x += float(mCharLength[z] - 1 + Spacing);	// Ansonsten Breite des Zeichens weiter
+            } else {
+                x += float((mCharLength[z] - 1) * mScaleFactor + Spacing);	// Ansonsten Breite des Zeichens weiter
+            }
     }
 
     return true;
@@ -417,10 +461,18 @@ int DirectGraphicsFont::StringLength(const char Text[])
         z = Text[i];						// Aktuell zu bearbeitendes Zeichen holen
         z -=33;								// "!" als erstes Zeichen setzen, das heisst,
         // Fontgrafik muss mit "!" beginnen
-        if(Text[i] == 32)
-            l += mXCharSize-1;				// Bei Space frei lassen
-        else
-            l += mCharLength[z]-1;			// Ansonsten Breite des Zeichens weiter
+        //DKS - Added support for font scaling
+        if (mScaleFactor == 1) {
+            if(Text[i] == 32)
+                l += mXCharSize-1;				// Bei Space frei lassen
+            else
+                l += mCharLength[z]-1;			// Ansonsten Breite des Zeichens weiter
+        } else {
+            if(Text[i] == 32)
+                l += (mXCharSize-1) * mScaleFactor;				// Bei Space frei lassen
+            else
+                l += (mCharLength[z]-1) * mScaleFactor;			// Ansonsten Breite des Zeichens weiter
+        }
     }
 
     return l;
@@ -445,10 +497,18 @@ int DirectGraphicsFont::StringLength(const char Text[], int Spacing)
             ;						// Aktuell zu bearbeitendes Zeichen holen
         z -=33;								// "!" als erstes Zeichen setzen, das heisst,
         // Fontgrafik muss mit "!" beginnen
-        if(Text[i] == 32)
-            l += mXCharSize-3 - Spacing*2;	// Bei Space frei lassen
-        else
-            l += mCharLength[z]-1+ Spacing;	// Ansonsten Breite des Zeichens weiter
+        //DKS - Added support for font scaling
+        if (mScaleFactor == 1) {
+            if(Text[i] == 32)
+                l += mXCharSize-3 - Spacing*2;	// Bei Space frei lassen
+            else
+                l += mCharLength[z]-1+ Spacing;	// Ansonsten Breite des Zeichens weiter
+        } else {
+            if(Text[i] == 32)
+                l += (mXCharSize-3) * mScaleFactor - Spacing*2;	// Bei Space frei lassen
+            else
+                l += (mCharLength[z]-1) * mScaleFactor + Spacing;	// Ansonsten Breite des Zeichens weiter
+        }
     }
 
     return l;
@@ -500,4 +560,22 @@ void DirectGraphicsFont::ShowFPS (void)
     _itoa_s((int)(Value), Buffer, 10);
     DrawText(0,   45, "Minimale FPS :", 0xFFFFFFFF);
     DrawText(150, 45, Buffer, 0xFFFFFFFF);
+}
+
+//DKS - New functions added to facilitate resized fonts:
+int DirectGraphicsFont::GetYCharSize(void)
+{
+    return mYCharSize * mScaleFactor;
+}
+
+//DKS - Added support for font scaling
+int DirectGraphicsFont::GetScaleFactor(void)
+{
+    return mScaleFactor;
+}
+
+//DKS - Added support for font scaling
+void DirectGraphicsFont::SetScaleFactor(int scale_factor)
+{
+    mScaleFactor = scale_factor;
 }
