@@ -67,6 +67,11 @@ bool LoadLanguage (char *filename)
             goto loadfile;
     }
 
+    //DKS - Fixed language loading (it did not look in lang/ folder at all)
+    sprintf_s(temp, "%s/lang/%s", g_storage_ext, filename);
+    if (FileExists(temp))
+        goto loadfile;
+
     sprintf_s(temp, "%s/%s", g_storage_ext, filename);
 
 loadfile:
@@ -76,7 +81,10 @@ loadfile:
     {
         Protokoll.WriteText( true, "-> Error opening language-file\n'%s'", temp );
         return false;
+    } else {
+        Protokoll.WriteText( false, "Using language-file '%s'\n", temp );
     }
+
 
     // Texte auslesen
     //
