@@ -98,8 +98,12 @@ void CGUISystem::RenderBox(void)
 
     // Text rendern
     //
+    //DKS - Added support for font scaling
+//    pDefaultFont->DrawText(m_xPos + TILESIZE,
+//                           m_yPos + (TILESIZE * 2 + m_BoxSize.bottom - ((pDefaultFont->mYCharSize + 6) * (m_BoxLines + 1))) / 2 + 4, m_BoxText, color);
     pDefaultFont->DrawText(m_xPos + TILESIZE,
-                           m_yPos + (TILESIZE * 2 + m_BoxSize.bottom - ((pDefaultFont->mYCharSize + 6) * (m_BoxLines + 1))) / 2 + 4, m_BoxText, color);
+            m_yPos + (TILESIZE * 2 + m_BoxSize.bottom - ((pDefaultFont->GetYCharSize() + 6) * (m_BoxLines + 1))) / 2 + 4, 
+            m_BoxText, color);
 }
 
 //
@@ -166,7 +170,9 @@ void CGUISystem::ShowBox(char Text[BOXTEXTLENGTH], int yoff, int xoff)
         strcpy_s (m_BoxText, strlen(Text) + 1, Text);
 
     m_BoxSize.right  = FontLength;
-    m_BoxSize.bottom = (m_BoxLines * (pDefaultFont->mYCharSize + 6)) / 20 * 20 + 20;
+    //DKS - Added support for font scaling
+//    m_BoxSize.bottom = (m_BoxLines * (pDefaultFont->mYCharSize + 6)) / 20 * 20 + 20;
+    m_BoxSize.bottom = (m_BoxLines * (pDefaultFont->GetYCharSize() + 6)) / 20 * 20 + 20;
 
     m_xPos = xoff - (m_BoxSize.right - 40) / 2.0f;
     m_yPos = (480 - m_BoxSize.bottom - 40) / 2.0f;

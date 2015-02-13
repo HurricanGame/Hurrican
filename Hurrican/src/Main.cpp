@@ -354,6 +354,7 @@ void FillCommandLineParams( int argc, char* args[] )
     CommandLineParams.VSync = true;
     CommandLineParams.ShowFPS = false;
     CommandLineParams.AllowNPotTextureSizes = false;
+    CommandLineParams.LowRes = false;
 
     for (i=1; i<argc; i++)
     {
@@ -368,6 +369,8 @@ void FillCommandLineParams( int argc, char* args[] )
             Protokoll.WriteText( false, "  -F,    --showfps        : Show the current frames per second\n" );
             Protokoll.WriteText( false, "  -D x,  --depth x        : Set screen pixel depth to x (16, 24, 32)\n" );
             Protokoll.WriteText( false, "                            ( Default is %d )\n", DEFAULT_SCREENBPP );
+            Protokoll.WriteText( false, "  -L,    --lowres         : Use %dx%d low-resolution screen dimensions\n",
+                                                                        LOWRES_SCREENWIDTH, LOWRES_SCREENHEIGHT );
             Protokoll.WriteText( false, "  -NV,   --novsync        : Disable VSync / double-buffering\n" );
             Protokoll.WriteText( false, "  -NP,   --nonpot         : Allow non-power-of-two texture sizes\n" );
             Protokoll.WriteText( false, "                            Normally, GPUs require texture dimensions that are\n" );
@@ -408,6 +411,11 @@ void FillCommandLineParams( int argc, char* args[] )
                     CommandLineParams.ScreenDepth = 16;
                 fprintf( stdout, "Screen depth (bpp) requested is %d\n", CommandLineParams.ScreenDepth);
             }
+        }
+        else if ((strstr( args[i], "--lowres" ) != NULL) || (strstr( args[i], "-L") != NULL))
+        {
+            fprintf( stdout, "Low-resolution 320x240 screen dimensions are requested\n" );
+            CommandLineParams.LowRes = true;
         }
         else if ((strstr( args[i], "--novsync" ) != NULL) || (strstr( args[i], "-NV") != NULL))
         {
@@ -912,6 +920,11 @@ bool GameInit2(void)
 
     // Fonts laden
     pDefaultFont->LoadFont  ("smallfont.bmp", 320, 84, 10, 12, 32, 7);
+
+    //DKS - Added support for font scaling
+    if (CommandLineParams.LowRes) {
+        pDefaultFont->SetScaleFactor(2);    // On lower res, draw smallest font twice as large so it appears 1:1
+    }
 
     LoadingScreen.LoadImage("loading.bmp",    360, 60, 360, 60, 1, 1);
     LoadingBar.LoadImage   ("loadingbar.bmp", 318, 19, 318, 19, 1, 1);

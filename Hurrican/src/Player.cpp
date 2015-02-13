@@ -272,6 +272,7 @@ void PlayerClass::runExplode(void)
         if (Grenades < NUMPLAYERS)
             Grenades = NUMPLAYERS;
 
+        //DKS - This was commented out in original source
         // SmartBombs wieder minimal auf 1 setzen
         //if (SmartBombs < 1)
         //	SmartBombs = 1;

@@ -91,6 +91,13 @@ void HUDClass::ShowHUD(void)
 
     BlitzOff  = int(BLITZ_STAT_HEIGHT  - pPlayer[0]->CurrentWeaponLevel[3]*BLITZ_STAT_HEIGHT/BLITZ_STAT_HEIGHT);
 
+    //DKS - Added support for font scaling
+    int scale_factor = pDefaultFont->GetScaleFactor();  
+
+    if (CommandLineParams.LowRes) 
+        // DKS - Note: For the HUD GUI, font scaling is limited to 2, as the numbers need to fit
+        pDefaultFont->SetScaleFactor(2); // Anything more than 2 won't fit, force it
+
     // Energy
     float off;
 
@@ -205,6 +212,7 @@ void HUDClass::ShowHUD(void)
             HUDAutoFire.RenderSprite(xpos + 263 + xoff, ypos + 61, 0, Color);
             _itoa_s(int(pPlayer[p]->AutoFireExtra), Buffer, 10);
 
+
             if (pPlayer[p]->AutoFireExtra< 10)
             {
                 pDefaultFont->DrawText(xpos + 270 + xoff, ypos+86, Buffer, D3DCOLOR_RGBA(0, 0, 0, Alpha));
@@ -220,6 +228,7 @@ void HUDClass::ShowHUD(void)
                 pDefaultFont->DrawText(xpos + 269 + xoff, ypos+86, Buffer, D3DCOLOR_RGBA(0, 0, 0, Alpha));
                 pDefaultFont->DrawText(xpos + 268 + xoff, ypos+85, Buffer, playercol);
             }
+
         }
 
         // Supershot anzeigen, wenn vorhanden (bei vorhandenem Autofire wird der Supershot tiefer angezeigt)
@@ -250,20 +259,49 @@ void HUDClass::ShowHUD(void)
             }
         }
 
-        _itoa_s(pPlayer[p]->PowerLines, Buffer, 10);
+        //DKS - Added support for font scaling 
+        if (CommandLineParams.LowRes) {
+            // Adjust this portion of the HUD for low-resolution (scaled font) 
+            // Basically, draw the two numbers for the powerlines and grenades a bit to the left and a tad higher
 
-        if (pPlayer[p]->PowerLines < 10)
-            pDefaultFont->DrawText(xpos + 353 + off + p * 10, ypos+40, Buffer, playercol);
-        else
-            pDefaultFont->DrawText(xpos + 349 + off + p * 10, ypos+40, Buffer, playercol);
+            // Only ever display a max of 9, since we've no room
+            int digit;
+            digit = pPlayer[p]->PowerLines;
+            if (digit < 0)
+                digit = 0;
+            else if (digit > 9)
+                digit = 9;
 
-        // Anzahl verbleibender Granaten anzeigen
-        _itoa_s(pPlayer[p]->Grenades, Buffer, 10);
+            _itoa_s(digit, Buffer, 10);
 
-        if (pPlayer[p]->Grenades < 10)
-            pDefaultFont->DrawText(xpos + 376 + off + p * 10, ypos+40, Buffer, playercol);
-        else
-            pDefaultFont->DrawText(xpos + 372 + off + p * 10, ypos+40, Buffer, playercol);
+            pDefaultFont->DrawText(xpos + 350 + off + p * 10, ypos+36, Buffer, playercol);
+
+            // Anzahl verbleibender Granaten anzeigen
+            digit = pPlayer[p]->Grenades;
+            if (digit < 0)
+                digit = 0;
+            else if (digit > 9)
+                digit = 9;
+            _itoa_s(digit, Buffer, 10);
+
+            pDefaultFont->DrawText(xpos + 372 + off + p * 10, ypos+36, Buffer, playercol);
+        } else {
+            //DKS - Original, normal-resolution code:
+            _itoa_s(pPlayer[p]->PowerLines, Buffer, 10);
+
+            if (pPlayer[p]->PowerLines < 10)
+                pDefaultFont->DrawText(xpos + 353 + off + p * 10, ypos+40, Buffer, playercol);
+            else
+                pDefaultFont->DrawText(xpos + 349 + off + p * 10, ypos+40, Buffer, playercol);
+
+            // Anzahl verbleibender Granaten anzeigen
+            _itoa_s(pPlayer[p]->Grenades, Buffer, 10);
+
+            if (pPlayer[p]->Grenades < 10)
+                pDefaultFont->DrawText(xpos + 376 + off + p * 10, ypos+40, Buffer, playercol);
+            else
+                pDefaultFont->DrawText(xpos + 372 + off + p * 10, ypos+40, Buffer, playercol);
+        }
 
         // Befindet sich die Smartbombe im Besitz des Spielers ?
         if (pPlayer[p]->SmartBombs > 0)
@@ -482,6 +520,10 @@ void HUDClass::ShowHUD(void)
             DirectGraphics.SetColorKeyMode();
         }
     }
+
+    //DKS - Added support for font scaling
+    // Reset font scale factor to what it was before drawing HUD:
+    pDefaultFont->SetScaleFactor(scale_factor);
 }
 
 // --------------------------------------------------------------------------------------
