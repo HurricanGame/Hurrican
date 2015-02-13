@@ -600,6 +600,8 @@ MenuClass::MenuClass(void)
     HighscoreColors[i] = D3DCOLOR_RGBA(255, 225, 225, 255);
     i++;
     HighscoreColors[i] = D3DCOLOR_RGBA(255, 195, 195, 255);
+    /* DKS - Commented out the rest of this, as it is writing past the end of the array: */
+    /*
     i++;
     HighscoreColors[i] = D3DCOLOR_RGBA(255, 165, 165, 255);
     i++;
@@ -623,6 +625,7 @@ MenuClass::MenuClass(void)
     i++;
     HighscoreColors[i] = D3DCOLOR_RGBA(255, 105,   0, 255);
     i++;
+    */
 
     BlinkOffset  = 0;
     BlinkCounter = 0.75f;
