@@ -876,19 +876,39 @@ void MenuClass::ShowMenu(void)
 
     case MENUZUSTAND_LANGUAGE :
     {
+        //DKS - Menu now displays filenames without path or extensions and supports low-resolution
+        int vertical_spacing = 16;
+        if (CommandLineParams.LowRes) {
+            vertical_spacing += 8;
+        }
+
         float d = (float)(pMenuFont->StringLength(TextArray [TEXT_SPRACHE], 2));
         pMenuFont->DrawText(320 - d/2.0f, ypos + OFFSET, TextArray [TEXT_SPRACHE], menucolor, 2);
 
+        char lang_name[256] = "";
         for (int i = 0; i < LanguageFileCount; i++)
         {
-            pDefaultFont->DrawText (320 - pDefaultFont->StringLength (LanguageFiles[i]) / 2.0f, ypos + 120 + i * 16, LanguageFiles[i], 0x88FFFFFF);
+
+            strcpy_s(lang_name, LanguageFiles[i]);
+            // Truncate the extension
+            int trunc_loc = strlen(lang_name) - 4;
+            lang_name[trunc_loc] = '\0';
+            
+            // Make first character upper-case
+            lang_name[0] = toupper( lang_name[0] );
+
+            pDefaultFont->DrawText (320 - pDefaultFont->StringLength(lang_name) / 2.0f, 
+                    ypos + 120 + i * vertical_spacing, lang_name, 0x88FFFFFF);
             if (AktuellerPunkt == i)
-                pDefaultFont->DrawText (320 - pDefaultFont->StringLength (LanguageFiles[i]) / 2.0f, ypos + 120 + i * 16, LanguageFiles[i], 0x88FFFFFF);
+                pDefaultFont->DrawText (320 - pDefaultFont->StringLength(lang_name) / 2.0f, 
+                        ypos + 120 + i * vertical_spacing, lang_name, 0x88FFFFFF);
         }
 
-        pDefaultFont->DrawText (320 - pDefaultFont->StringLength (TextArray[TEXT_ZURUECK]) / 2.0f, ypos + 136 + 16 * LanguageFileCount, (TextArray[TEXT_ZURUECK]), 0x88FFFFFF);
+        pDefaultFont->DrawText (320 - pDefaultFont->StringLength (TextArray[TEXT_ZURUECK]) / 2.0f, 
+                ypos + 136 + vertical_spacing * LanguageFileCount, (TextArray[TEXT_ZURUECK]), 0x88FFFFFF);
         if (AktuellerPunkt == LanguageFileCount)
-            pDefaultFont->DrawText (320 - pDefaultFont->StringLength (TextArray[TEXT_ZURUECK]) / 2.0f, ypos + 136 + 16 * LanguageFileCount, (TextArray[TEXT_ZURUECK]), 0x88FFFFFF);
+            pDefaultFont->DrawText (320 - pDefaultFont->StringLength (TextArray[TEXT_ZURUECK]) / 2.0f, 
+                    ypos + 136 + vertical_spacing * LanguageFileCount, (TextArray[TEXT_ZURUECK]), 0x88FFFFFF);
 
 
     }

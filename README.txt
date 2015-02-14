@@ -55,3 +55,5 @@ Definitions:
  Check the makefile for other examples.
  
  Pickle (pickle136@gmail.com)
+
+Note: For cross-platform file/directory handling, the SDL port makes use of the cross-platform 'tinydir' library. Much thanks to Cong Xu, the author. https://github.com/cxong/tinydir Copyright (c) 2013, Cong Xu  - Simplified BSD License.

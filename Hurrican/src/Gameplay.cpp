@@ -575,8 +575,15 @@ void ShakeScreen (float staerke)
 
 void CreateDefaultConfig(void)
 {
+    Protokoll.WriteText( false, "Creating new configuration file\n");
+
     strcpy_s (ActualLanguage, strlen("english.lng") + 1, "english.lng");
-    LoadLanguage (ActualLanguage);
+    bool language_loaded = LoadLanguage (ActualLanguage);
+    if (!language_loaded) {
+        Protokoll.WriteText( false, "ERROR: Failed to find default language file.\n");
+        return;
+    }
+
     pSoundManager->SetVolumes(50, 60);
 
     pPlayer[0]->AktionKeyboard [AKTION_LINKS]			= DIK_LEFT;
@@ -702,7 +709,13 @@ bool LoadConfig(void)
 
     // Spracheinstellung laden
     fread(&ActualLanguage, sizeof(ActualLanguage), 1, Datei);
-    LoadLanguage (ActualLanguage);
+    //DKS - Made language loading default back to english if saved language not found:
+    bool language_loaded = LoadLanguage (ActualLanguage);
+    if (!language_loaded) {
+        Protokoll.WriteText( false, "ERROR loading %s, reverting to default language file.\n", ActualLanguage );
+        strcpy_s(ActualLanguage, "english.lng");
+        LoadLanguage(ActualLanguage);
+    }
 
     // Daten für Sound und Musik-Lautstärke auslesen
     fread(&Sound, sizeof(Sound), 1, Datei);
@@ -1188,6 +1201,8 @@ void EndDemo (void)
 
     pTimer->SetMaxFPS(0);
 
+    //DKS - added this to ensure RNG is always properly seeded
+    srand(timeGetTime());
 } // EndDemo
 
 // --------------------------------------------------------------------------------------

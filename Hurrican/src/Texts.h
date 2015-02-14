@@ -348,6 +348,11 @@ bool LoadLanguage  (char *filename);			// Bestimmte Sprachdatei laden
 void InitReplacers (void);						// Tasten ErsetzungsStrings für die TutorialTexte initialisieren
 int	 GetDecValue(char *pair, int len);			// Dezimalwert einer Hexzahl mit Länge len
 
+//DKS - Added cross-platform language-files handling
+int FindLanguageFiles(char *path);
+#define MAX_LANGUAGE_FILES                          20
+#define MAX_LANGUAGE_FILENAME_LENGTH                256    
+
 // --------------------------------------------------------------------------------------
 // Externals
 // --------------------------------------------------------------------------------------
@@ -355,7 +360,7 @@ int	 GetDecValue(char *pair, int len);			// Dezimalwert einer Hexzahl mit Länge 
 extern char				    TextArray [TEXT_LASTTEXT][1024];
 extern char					ActualLanguage[256];
 extern int					LanguageFileCount;				// Anzahl gefundener Language Files
-extern char					LanguageFiles[20][256];			// Strings, die die Filenamen der LanguageFiles beinhalten						// Endbild der Demo
+extern char					LanguageFiles[MAX_LANGUAGE_FILES][MAX_LANGUAGE_FILENAME_LENGTH]; 
 extern char					s_Replacers[MAX_AKTIONEN * 2][256];
 extern char					Cheats[MAX_CHEATS][256];
 
