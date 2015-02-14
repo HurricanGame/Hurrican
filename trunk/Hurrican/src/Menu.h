@@ -186,6 +186,11 @@ public:
 extern MenuClass			*pMenu;
 extern const char			*Credits[];
 extern int					CreditsCount;
+//DKS - Made a version of the above credits text array meant for use on
+//      low resolution displays that use text scaling. Long lines are split,
+//      and there's less repeated blank lines.
+extern const char			*LowResCredits[];
+extern int					LowResCreditsCount;
 
 #endif
 
