@@ -2998,6 +2998,7 @@ void MenuClass::ResetHighscore(void)
 // Infos aus der Language Datei anzeigen lassen (Zeile 1 - 8)
 // --------------------------------------------------------------------------------------
 
+//DKS - Fixed displaying language info with scaled fonts, made rectangle drawing smarter and sized dynamically
 void MenuClass::ShowLanguageInfo (void)
 {
     int a1, a2;
@@ -3012,23 +3013,36 @@ void MenuClass::ShowLanguageInfo (void)
 
     a2 = int (a1 / 2);
 
-    RenderRect (320 - 152, 240 - 82, 304, 164, D3DCOLOR_RGBA(64, 128, 255, a2));
-    RenderRect (320 - 151, 240 - 81, 302, 162, D3DCOLOR_RGBA(0,   0,   64,   a2));
-    RenderRect (320 - 150, 240 - 80, 300, 160, D3DCOLOR_RGBA(0,   0,   64,   a2));
-
-    pDefaultFont->DrawText (float (320 - pDefaultFont->StringLength (TextArray[TEXT_BENUTZTES_FILE]) / 2), float (240 - 64), TextArray[TEXT_BENUTZTES_FILE], D3DCOLOR_RGBA(255, 255, 255, a1));
+    // Determine size and location of background rectangle:
+    unsigned int longest_line = 0;
+    for (int i = 0; i < 9; i++) {
+        if (strlen(TextArray[i]) > longest_line) {
+            longest_line = strlen(TextArray[i]);
+        }
+    }
+    int xoff_inc = 8 * pDefaultFont->GetScaleFactor();
+    int yoff_inc = 12 * pDefaultFont->GetScaleFactor();
+    int border = 20 / pDefaultFont->GetScaleFactor();
+    int rect_w = longest_line * xoff_inc + border*2;      
+    int rect_h = 11 * yoff_inc + border*2;                 
+    int rect_x = 320 - rect_w / 2;
+    int rect_y = 240 - rect_h / 2;
+    RenderRect (rect_x-2, rect_y-2, rect_w+4, rect_h+4, D3DCOLOR_RGBA(64, 128, 255, a2));
+    RenderRect (rect_x-1, rect_y-1, rect_w+2, rect_h+2, D3DCOLOR_RGBA(0,   0,   64,   a2));
+    RenderRect (rect_x,   rect_y,   rect_w,   rect_h,   D3DCOLOR_RGBA(0,   0,   64,   a2));
+    pDefaultFont->DrawText (float(320 - pDefaultFont->StringLength (TextArray[TEXT_BENUTZTES_FILE]) / 2), 
+                            float(rect_y+border), TextArray[TEXT_BENUTZTES_FILE], D3DCOLOR_RGBA(255, 255, 255, a1));
 
     for (int i = 0; i < 9; i++)
     {
-        int  xoff = 320 - strlen (TextArray[i])*4;
+        int  xoff = 320 - (strlen (TextArray[i])-1) * xoff_inc / 2;
         for (unsigned int j = 0; j < strlen (TextArray[i]); j++)
         {
             char c[2];
-
             c[0] = TextArray[i][j];
             c[1] = '\0';
-            pDefaultFont->DrawText (float (xoff), float (240 - 40 + i * 12), c, D3DCOLOR_RGBA(255, 255, 255, a1));
-            xoff += 8;
+            pDefaultFont->DrawText (float (xoff), float (rect_y+border+((2+i)*yoff_inc)), c, D3DCOLOR_RGBA(255, 255, 255, a1));
+            xoff += xoff_inc;
         }
     }
 } // ShowLanguageInfo
