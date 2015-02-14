@@ -26,6 +26,12 @@
 #include "Tileengine.h"
 #include "unrarlib.h"
 
+//DKS - Added cross-platform language-files handling:
+//      Uses Windows/UNIX-compatible tinydir library to parse directories
+//      https://github.com/cxong/tinydir 
+//      Copyright (c) 2013, Cong Xu  Simplified BSD License
+#include <tinydir/tinydir.h>
+
 using namespace std;
 
 extern Logdatei Protokoll;
@@ -68,11 +74,16 @@ bool LoadLanguage (char *filename)
     }
 
     //DKS - Fixed language loading (it did not look in lang/ folder at all)
+    // First, always try the lang/ folder
     sprintf_s(temp, "%s/lang/%s", g_storage_ext, filename);
+
     if (FileExists(temp))
         goto loadfile;
 
+    // If not found in the lang/ folder, try the root game folder
     sprintf_s(temp, "%s/%s", g_storage_ext, filename);
+    if (!FileExists(temp))
+        return false;
 
 loadfile:
 
@@ -212,6 +223,55 @@ loadfilelevel:
     return true;
 
 } // LoadLanguage
+
+//DKS - Added cross-platform language-files handling
+// Returns number of matched files
+int FindLanguageFiles(char *path)
+{
+    tinydir_dir dir;
+    tinydir_file file;
+    int num_matches = 0;
+
+    if (!path) {
+        Protokoll.WriteText( false, "ERROR: NULL path passed to find_language_files() in %s\n", __FILE__);
+        return 0;
+    }
+
+    Protokoll.WriteText( false, "Searching for language files in %s\n", path );
+    tinydir_open(&dir, path);
+
+    while (dir.has_next) {
+        if (tinydir_readfile(&dir, &file) != -1)
+        {
+            if (file.is_dir) {
+                Protokoll.WriteText( false, "File %s is directory, skipping\n", file.name );
+            } else {
+                if (strcasecmp(file.extension, "lng") == 0) {
+                    if (strlen(file.name) < MAX_LANGUAGE_FILENAME_LENGTH) {
+                        Protokoll.WriteText( false, "Found language file %s in path %s\n", file.name, file.path );
+
+                        // If we've found a file more than 5 characters in length, accept it..
+                        if (strlen(file.name) > 4) {
+                            // Copy filename with extension (no leading path)
+                            strcpy_s(LanguageFiles[num_matches], file.name); 
+                            num_matches++;
+                        }
+                    } else {
+                        // Either the full pathname was too long or the filename without extension was too long:
+                        Protokoll.WriteText( false, "Skipping file with too long a name or full path:\n%s\n", file.path );
+                    }
+                }
+            }
+        } else {
+            Protokoll.WriteText( false, "Error examining file, skipping\n" );
+        }
+
+        tinydir_next(&dir);
+    }
+
+    tinydir_close(&dir);
+    return num_matches;
+}
 
 // --------------------------------------------------------------------------------------
 // Tasten ErsetzungsStrings für die TutorialTexte initialisieren

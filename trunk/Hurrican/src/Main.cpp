@@ -130,7 +130,7 @@ float					LoadingItemsToLoad;				// Anzahl zu ladender Elemente
 int						LoadingItemsLoaded;				// Anzahl geladener Elemente
 
 int						LanguageFileCount;				// Anzahl gefundener Language Files
-char					LanguageFiles[20][256];			// Strings, die die Filenamen der LanguageFiles beinhalten						// Endbild der Demo
+char					LanguageFiles[MAX_LANGUAGE_FILES][MAX_LANGUAGE_FILENAME_LENGTH]; 
 char					ActualLanguage[256];			// Gewählte Language
 
 sCommandLineParams		CommandLineParams;
@@ -736,6 +736,8 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
 {
     options_Detail = DETAIL_LOW;
 
+    srand(timeGetTime());
+
 #if defined(PLATFORM_DIRECTX)
     // Language Files
     HWND	ComboBoxLanguageFiles	= NULL;
@@ -744,8 +746,10 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
                                          WS_CHILD,
                                          0, 0, 0, 0, g_hwnd, 0, g_hinst, NULL);
 
+    //DKS - Moved this outside the DirectX #ifdef
+//    srand(GetTickCount());
+
     // Loadinfo Text festlegen
-    srand(GetTickCount());
 //	DisplayHintNr = rand()%30;
 
     // *.lng Files anfügen
@@ -758,6 +762,34 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
     for (int i = 0; i < LanguageFileCount; i++)
     {
         SendMessage (ComboBoxLanguageFiles, CB_GETLBTEXT, i, (LPARAM) LanguageFiles [i]);
+    }
+#elif defined(PLATFORM_SDL)
+    //DKS - Added language-translation files support to SDL port:
+    char langfilepath[256];
+    if (g_storage_ext) {
+        strcpy(langfilepath, g_storage_ext);
+        strcat(langfilepath, "/lang");
+    } else {
+        strcpy(langfilepath, "./lang");
+    }
+
+    LanguageFileCount = FindLanguageFiles(langfilepath);
+
+    // Try again if needed
+    if (LanguageFileCount == 0) {
+        strcpy(langfilepath, "./");
+        LanguageFileCount = FindLanguageFiles(langfilepath);
+    }
+
+    // One more time if needed
+    if (LanguageFileCount == 0) {
+        strcpy(langfilepath, "./lang");
+        LanguageFileCount = FindLanguageFiles(langfilepath);
+    }
+
+    if (LanguageFileCount == 0) {
+        Protokoll.WriteText( false, "ERROR: Failed to find any language files, aborting.\n" );
+        return false;
     }
 #endif
 
