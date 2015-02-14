@@ -48,7 +48,6 @@
 
 int CreditsCount;
 const char *Credits[] =
-
 {
 
     "",
@@ -88,7 +87,7 @@ const char *Credits[] =
     "",
     "",
     "",
-    "- Hurrican- ",
+    "- Hurrican -",
     "",
     "(c) 2007",
     "poke53280",
@@ -323,6 +322,264 @@ const char *Credits[] =
     "",
     "",
     "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "#eoc"			// end of credits =)
+
+};
+
+//DKS - Made a version of the above credits text array meant for use on
+//      low resolution displays that use text scaling. Long lines are split,
+//      and there's less repeated blank lines.
+int LowResCreditsCount;
+const char *LowResCredits[] =
+{
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "- Hurrican -",
+    "",
+    "(c) 2007",
+    "poke53280",
+    "",
+    "",
+    "Jörg 'Eiswuxe' Winterstein",
+    "",
+    "Programmierung",
+    "Gamedesign",
+    "Sound & Musik",
+    "Leveldesign",
+    "",
+    "",
+    "Thomas 'Turri' Schreiter",
+    "",
+    "Grafik",
+    "Gamedesign",
+    "Gegnerdesign",
+    "Leveldesign",
+    "",
+    "",
+    "Besonderer Dank geht an",
+    "",
+    "T.R.Schmidt und Gerhard 'ScHlAuChi' Weihrauch",
+    "für zusätzliches Leveldesign und",
+    "viele Verbesserungsvorschläge"
+    "",
+    "",
+    "Spezieller Dank geht auch",
+    "an unsere fleissigen Betatester",
+    "",
+    "Wenkman, der Obertester",
+    "Gereon 'ntroPi' Bartel",
+    "Kai 'Flanderz' Schmiegelt",
+    "Michael 'Ram-Brand' Dahms",
+    "Carsten 'Jazzoid' Przyluczky",
+    "Heiko 'TheWanderer' Kalista",
+    "Matthias 'KingKiKapu' Klocke",
+    "Manuel 'Heimdall' Rülke",
+    "Friedrich 'BadData' Volmering",
+    "Christian 'Gryphon' Kleinsteinberg",
+    "Marc 'Dawn2069MS' Schmitt",
+    "",
+    "",
+    "Zudem hier nochmal ein fettes Dankeschön an alle",
+    "unsere Fans, die uns jahrelang motiviert haben",
+    "und an uns glaubten. Danke, dass ihr Hurrican nie",
+    "aufgegeben habt. Dieses Spiel ist für euch!",
+    "",
+    "",
+    "Eiswuxe's Grüße gehen an",
+    "",
+    "Thorstein",
+    "",
+    "Jens",
+    "",
+    "Herbie und Edi",
+    "",
+    "Maroff und Anna",
+    "",
+    "Der Bumsmichl",
+    "nebst Nina UND Linsensuppe",
+    "",
+    "Jarlock",
+    "",
+    "Dan und Silke",
+    "",
+    "Sebastian und Doro",
+    "",
+    "The one and only Markus Gottschalk",
+    "",
+    "Michael 'Skyrider' Matzka",
+    "",
+    "Andi, Simone und Johannes",
+    "",
+    "Stef, Margot und Reinhard",
+    "",
+    "Dalama",
+    "Manuel 'Heimdall' Rülke",
+    "Lars Kranebitter",
+    "",
+    "Windigo-Design",
+    "Friedrich 'BadData' Volmering",
+    "Carsten 'Jazzoid' Przyluczky",
+    "Andi, der alte Panner: *aufen!",
+    "",
+    "Michael 'Gargoyle' Kreft",
+    "",
+    "Martin Lassahn",
+    "der vielleicht einzige Mensch, der unseren",
+    "Leidensweg nachvollziehen kann und auch noch teilt!",
+    "Lass' dich nicht unterkriegen ;)",
+    "",
+    "Matthias Schindler, die alte Todesschlampe",
+    "",
+    "Marc Kamradt",
+    "",
+    "Peter Schraut",
+    "",
+    "Philipp Dortmann",
+    "",
+    "David Zaadstra",
+    "",
+    "Janosch Dalecke",
+    "",
+    "Florian Eisele",
+    "",
+    "Uwe Wegener mit Katrin und Vince ;)",
+    "",
+    "Der Rest der Zealkind Familie",
+    "",
+    "Nils 'Steele' Gey",
+    "",
+    "Alle bei www.modarchive.com",
+    "",
+    "ChrisCrusher",
+    "",
+    "Alexander 'Jumperone' Krug",
+    "und Softgames",
+    "",
+    "Sechsta Sinn",
+    "Haltet euch ran.... wir habens erstmal geschafft ;)",
+    "",
+    "andUp",
+    "",
+    "Nicht zu vergessen:",
+    "Steffan Kummer, der alte Hagestolz!",
+    "",
+    "Natürlich auch die Super Konrad Brothers,",
+    "Dex, Bronko, RuvF, Aky, Contra-254 und",
+    "alle anderen Turrican Fans!",
+    "",
+    "Pekaro Soft",
+    "",
+    "Steve Harris :)",
+    "",
+    "Natürlich darf auch der wahre Meister nicht fehlen",
+    "Einen fetten Gruß an den Manne!",
+    "Wer fleissig sucht, der kann ihm",
+    "Tief im Jungel seine Ehrerbietung darbringen...",
+    "",
+    "Und das Beste kommt natürlich zum Schluß...",
+    "Meine kleine Kathrin",
+    "Ei laf juh ;)",
+    "",
+    "",
+    "Und jetzt ist der Turri dran:",
+    "",
+    "ich grüße meine Mutti das wars...",
+    "",
+    "",
+    "",
+    "...noch lange nicht..",
+    "",
+    "ich grüße",
+    "",
+    "meine Schnegge, die ich über alles liebe",
+    "",
+    "meine Brüder - Carsten und Dirki -- der Lappen",
+    "",
+    "ich grüße Wenkman den Hardcore Tester",
+    "",
+    "alle aus dem Forum die viele Ideen zu Hurrican",
+    "beigetragen haben und uns über 5 Jahre begleitet",
+    "haben und uns die Treue gehalten haben.",
+    "",
+    "ich grüße die anderen Pokes Wanderer",
+    "und Skyrider und",
+    "",
+    "ich grüße Markus 'Snake' der sich immer saugut um",
+    "unsere Webseite gekümmert hat",
+    "",
+    "ich grüße Peer Draeger  Wit Wit Wit",
+    "",
+    "dann den Rest aus meiner Arbeit",
+    "Marc Schmidt, Christian Kleinsteinberg,",
+    "Uwe Wegener, Tetjana Obly Wobly ;-)",
+    "",
+    "ich grüße Boris Triebel - Schau wir habens",
+    "rausgebracht hehehe",
+    "",
+    "Marc Kamradt",
+    "",
+    "ich grüße Matthias die Todesschlampe",
+    "",
+    "Natürlich grüße ich auch Manfred Trenz",
+    "der meine Jugend mit Turrican versüsst hat",
+    "und für mich immer 'The Master' war",
+    "",
+    "ich grüße alle Jungs und Mädels die das hier lesen",
+    "und Hurrican zocken und hoffe Ihr habt Spass :-)",
+    "",
+    "ich grüße Gigi und seine Katze .. (und auch Crazy)",
+    "",
+    "ich grüße Adnan den alten Partylöwen",
+    "und guten Freund",
+    "",
+    "ich grüße alle aus rendering.de die mir oft mit Tipps",
+    "bei meinen Grafiken geholfen haben",
+    "",
+    "und ich grüße den Krapfen",
+    "",
+    "ich grüße Thorsten Mutschall und Tanja Köhler",
+    "und hoffe Sie haben Spass am spielen :-))",
+    "ich grüße Micha Black Raven",
+    "und seine verlorene seelen",
+    "",
+    "ich grüße alle vom GVC Gamevoiceclan",
+    "the Best ever .. auch wenns jetzt vorbei ist ..",
+    "",
+    "ich grüße Velociraptor",
+    "",
+    "ich grüße alle die ich jetzt vergessen habe",
+    "und das sind bestimmt ein paar :-)",
     "",
     "",
     "",
@@ -648,6 +905,13 @@ MenuClass::MenuClass(void)
     CreditsCount = 0;
     while (strcmp(Credits[CreditsCount], "#eoc") != 0)
         CreditsCount++;
+
+    //DKS - Made a version of the above credits text array meant for use on
+    //      low resolution displays that use text scaling. Long lines are split,
+    //      and there's less repeated blank lines.
+    LowResCreditsCount = 0;
+    while (strcmp(LowResCredits[LowResCreditsCount], "#eoc") != 0)
+        LowResCreditsCount++;
 }
 
 // --------------------------------------------------------------------------------------
@@ -1283,14 +1547,24 @@ void MenuClass::ShowMenu(void)
 
     case MENUPUNKT_CREDITS :
     {
-        // Credits anzeigen
+        //DKS - There are now two credits text arrays, one original, one meant for low-res display (LowResCredits[])
+        //      Altered this code to allow for displaying on low-res devices with new font-scaling:
         int i = 0;
-        for (i=0; i<40; i++)
+
+        float scale_factor = pDefaultFont->GetScaleFactor();
+        int num_lines = 40 / pDefaultFont->GetScaleFactor();
+        int yoff_inc = 12 * pDefaultFont->GetScaleFactor();
+
+        const char **credits_displayed = Credits;
+        if (CommandLineParams.LowRes) {
+            credits_displayed = LowResCredits;  // Use the low-res text instead
+        }
+
+        for (i=0; i<num_lines; i++)
         {
             D3DCOLOR Color;
 
-            // Transparenz richtig setzen
-            int alpha = int(i*12-CreditsPosition);
+            int alpha = int(i*yoff_inc-CreditsPosition);
 
             if (alpha > 360)
             {
@@ -1313,30 +1587,30 @@ void MenuClass::ShowMenu(void)
             Color = D3DCOLOR_RGBA(255, 255, 255, alpha);
 
             pDefaultFont->DrawTextCenterAlign(320.0f,
-                                              float(int(i*12-CreditsPosition)),
-                                              Credits[CreditsOffset+i], Color, 0);
+                                              float(int(i*yoff_inc-CreditsPosition)),
+                                              credits_displayed[CreditsOffset+i], Color, 0);
         }
 
         // Credits scrollen
-        CreditsCounter -= 0.7f SYNC;			// Credits-Delay veringern
+        CreditsCounter -= (0.7f * scale_factor) SYNC;			// Credits-Delay veringern
 
         // Bei Taste nach unten schneller scrollen
         //
         if (KeyDown(DIK_DOWN) ||
                 KeyDown(DIK_NUMPAD2))
-            CreditsCounter -= 2.0f SYNC;
+            CreditsCounter -= (2.0f * scale_factor) SYNC;
 
         // Bei Taste nach oben langsamer werden
         //
         if (KeyDown(DIK_UP) ||
                 KeyDown(DIK_NUMPAD8))
-            CreditsCounter = 0.5f;
+            CreditsCounter = (0.5f * scale_factor);
 
         while (CreditsCounter < 0.0f)				// Ein Pixel weiterscrollen ?
         {
-            CreditsCounter += 0.5f;				// Dann neues Delay setzen
-            CreditsPosition++;					// und Pixel weiterscrollen
-            if (CreditsPosition >= 12)			// 12 Pixelgrenze überschritten ?
+            CreditsCounter += (0.5f * scale_factor);				// Dann neues Delay setzen
+            CreditsPosition += 1.0f * scale_factor;					// und Pixel weiterscrollen
+            if (CreditsPosition >= yoff_inc)			// 12 Pixelgrenze überschritten ?
             {
                 CreditsPosition = 0;			// Dann wieder zurücksetzen
                 CreditsOffset++;				// Und im Char-Array eine zeile weiter
@@ -1344,7 +1618,7 @@ void MenuClass::ShowMenu(void)
                 // Credits zuende ?
                 // Dann von vorne beginnen
                 //
-                if (strcmp ("#eoc", Credits[CreditsOffset+i]) == 0)
+                if (strcmp ("#eoc", credits_displayed[CreditsOffset+i]) == 0)
                     CreditsOffset = 0;
             }
         }
