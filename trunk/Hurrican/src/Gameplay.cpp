@@ -886,8 +886,27 @@ bool DisplayLoadInfo(const char Text[100])
 #endif
 
     // Hint anzeigen
-    if (DisplayHintNr > -1)
-        pDefaultFont->DrawTextCenterAlign(320.0f, 270.0f,TextArray[TEXT_HINT1 + DisplayHintNr], 0xFFFFFFFF, 0);
+    //DKS - Added support for displaying hints on low-resolution devices:
+    if (DisplayHintNr > -1) {
+        if (CommandLineParams.LowRes) {
+            const char *text = TextArray[TEXT_HINT1 + DisplayHintNr];
+            float y_pos = 270.0f;
+            float y_inc = 28.0f;
+            int max_width = RENDERWIDTH-20;
+            if (pDefaultFont->StringLength(text, 0) > max_width) {
+                // Split the line in two if too long to display on low-res device:
+                char text1[255];
+                char text2[255];
+                SplitLine(text1, text2, (char *)text);
+                pDefaultFont->DrawTextCenterAlign(320.0f, y_pos, text1, 0xFFFFFFFF, 0);
+                pDefaultFont->DrawTextCenterAlign(320.0f, y_pos+y_inc, text2, 0xFFFFFFFF, 0);
+            } else {
+                pDefaultFont->DrawTextCenterAlign(320.0f, y_pos, text, 0xFFFFFFFF, 0);
+            }
+        } else {
+            pDefaultFont->DrawTextCenterAlign(320.0f, 270.0f,TextArray[TEXT_HINT1 + DisplayHintNr], 0xFFFFFFFF, 0);
+        }
+    }
 
     LoadingScreen.RenderSprite((640 - 360) / 2, (480 - 60) / 2 + 5, 0x88FFFFFF);
 
