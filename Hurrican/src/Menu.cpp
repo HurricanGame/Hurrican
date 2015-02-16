@@ -1017,16 +1017,18 @@ void MenuClass::ShowMenu(void)
 
     //DKS - Added lowres support, which has very limited room at bottom:
     if (CommandLineParams.LowRes) {
-        // Under Low-res, don't display controls message at bottom and shift other text slightly
+        // Under Low-res, don't display controls message at bottom and shift other text up a bit
         pDefaultFont->DrawText(10.0f, 458, "www.poke53280.de", menucolor, 0);
-        pDefaultFont->DrawTextRightAlign(620.0f, 458, "www.hurrican-game.de", menucolor, 0);
+        pDefaultFont->DrawText(640-pDefaultFont->StringLength("www.hurrican-game.de", 0)-10,
+                                            458, "www.hurrican-game.de", menucolor, 0);
     } else {
         if (AktuellerZustand != MENUPUNKT_CREDITS &&
                 AktuellerZustand != MENUZUSTAND_ENTERNAME)
 
             pDefaultFont->DrawTextCenterAlign(320.0f, 462, TextArray [TEXT_MENUE_ANLEITUNG], menucolor, 0);
         pDefaultFont->DrawText(10.0f, 462, "www.poke53280.de", menucolor, 0);
-        pDefaultFont->DrawTextRightAlign(620.0f, 462, "www.hurrican-game.de", menucolor, 0);
+        pDefaultFont->DrawText(640-pDefaultFont->StringLength("www.hurrican-game.de", 0)-10,
+                                            462, "www.hurrican-game.de", menucolor, 0);
     }
 
     // graue Linien
