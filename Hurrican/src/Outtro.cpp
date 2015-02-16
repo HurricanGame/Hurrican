@@ -336,7 +336,13 @@ void OuttroClass::DoOuttro(void)
 
     case OUTTRO_SCROLLER:
     {
+        //DKS - modified to support scaled fonts (used on low-res devices)
+        //      Note that, for here, we don't use the LowResCredts[] text array,
+        //      as the logic here requires lines to be at specific locations.
+        //      We end up with a little jerkiness when lines are split, but that's OK.
         char text[255];
+        char text1[255];
+        char text2[255];
 
         // Explosionen und Qualm
         SmokeDelay -= 1.0f SYNC;
@@ -352,18 +358,34 @@ void OuttroClass::DoOuttro(void)
                                           (float)(150 + TowerOffset + rand()%100), EXPLOSION_MEDIUM2);
         }
 
+        // Note: original code had each line spaced by 20.0f, 30 lines drawn total, which is more than
+        //      will fit on a screen. This code keeps this behavior, but supports low-resolution using
+        //      scaled fonts.
+        float scale_factor = pDefaultFont->GetScaleFactor();
+        int num_lines;
+        int max_draw_width = RENDERWIDTH - 20;    // Want a 10-pixel border minimum
+        int yoff_inc = 20;
+        if (CommandLineParams.LowRes) {
+            //DKS - Only increase the line spacing a bit if running low-res, as it's already spaced quite a big:
+            yoff_inc = 24;
+            num_lines = 24;
+        } else {
+            yoff_inc = 30 * pDefaultFont->GetScaleFactor();
+            num_lines = 30;
+        }
+
         Counter += 1.5f SYNC;
 
-        while (Counter >= 20.0f)
+        while (Counter >= float(yoff_inc))
         {
-            Counter -= 20.0f;
+            Counter -= float(yoff_inc);
             TextOff++;
 
-            if (TEXT_OUTTRO1 + TextOff > TEXT_SEPERATOR_MARIO + CreditsCount - 30)
+            if (TEXT_OUTTRO1 + TextOff > TEXT_SEPERATOR_MARIO + CreditsCount - num_lines)
                 TextOff = 0;
         }
 
-        for (int i = 0; i < 30; i++)
+        for (int i = 0, display_line = 0; i < num_lines; i++, display_line++)
         {
             int AnzahlCredits = CreditsCount - 65;
             int off = TextOff + i - 27;
@@ -379,8 +401,16 @@ void OuttroClass::DoOuttro(void)
                     strcpy_s(text, "");
 
                 // rendern
-                if (strcmp(text, "") != 0)
-                    pDefaultFont->DrawTextCenterAlign(320, i * 20.0f - Counter, text, 0xFFEEFFFF, 0);
+                if (CommandLineParams.LowRes && strlen(text) > 10 && pDefaultFont->StringLength(text, 0) > max_draw_width) {
+                    SplitLine(text1, text2, text);
+                    pDefaultFont->DrawTextCenterAlign(320, float(display_line * yoff_inc) - Counter, text1, 0xFFEEFFFF, 0);
+                    display_line++;
+                    pDefaultFont->DrawTextCenterAlign(320, float(display_line * yoff_inc) - Counter, text2, 0xFFEEFFFF, 0);
+
+                } else {
+                    if (strcmp(text, "") != 0)
+                        pDefaultFont->DrawTextCenterAlign(320, float(display_line * yoff_inc) - Counter, text, 0xFFEEFFFF, 0);
+                }
             }
         }
     }

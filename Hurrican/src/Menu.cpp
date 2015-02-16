@@ -1554,8 +1554,8 @@ void MenuClass::ShowMenu(void)
         float scale_factor = pDefaultFont->GetScaleFactor();
         int num_lines = 40 / pDefaultFont->GetScaleFactor();
         int yoff_inc = 12 * pDefaultFont->GetScaleFactor();
-
         const char **credits_displayed = Credits;
+
         if (CommandLineParams.LowRes) {
             credits_displayed = LowResCredits;  // Use the low-res text instead
         }
