@@ -273,6 +273,36 @@ int FindLanguageFiles(char *path)
     return num_matches;
 }
 
+//DKS - Added function to split a longer line into two shorter lines, for when
+//      running on a lower-resolution device w/ scaled font
+void SplitLine(char *dst1, char *dst2, char *source)
+{
+    if (!source || strlen(source) < 10)
+        return;
+
+    int split_point = strlen(source) / 2;   // Begin in the middle
+    int source_length = strlen(source);
+    int i;
+
+    // Find the first space past the middle
+    while (split_point < source_length && source[split_point] != ' ') {
+        split_point++;
+    }
+    
+    // Copy source string to dst1, up to the split point
+    for (i = 0; i < split_point; i++) {
+        dst1[i] = source[i];
+    }
+    dst1[i] = '\0';
+
+    // Copy rest of source string starting one char past the split-point
+    int dst2_ctr = 0;
+    for (i = split_point+1; i < source_length; i++, dst2_ctr++) {
+        dst2[dst2_ctr] = source[i];
+    }
+    dst2[dst2_ctr] = '\0';
+}
+
 // --------------------------------------------------------------------------------------
 // Tasten ErsetzungsStrings für die TutorialTexte initialisieren
 // --------------------------------------------------------------------------------------

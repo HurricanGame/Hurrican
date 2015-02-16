@@ -350,6 +350,9 @@ int	 GetDecValue(char *pair, int len);			// Dezimalwert einer Hexzahl mit Länge 
 
 //DKS - Added cross-platform language-files handling
 int FindLanguageFiles(char *path);
+//DKS - Added function to split a longer line into two shorter lines, for when
+//      running on a lower-resolution device w/ scaled font
+void SplitLine(char *dst1, char *dst2, char *source);
 #define MAX_LANGUAGE_FILES                          20
 #define MAX_LANGUAGE_FILENAME_LENGTH                256    
 
