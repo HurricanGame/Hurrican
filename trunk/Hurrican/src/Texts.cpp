@@ -142,9 +142,7 @@ loadfile:
     }
     else
     {
-        char			*pData;
         char			Temp[256];
-        unsigned long	Size;
 
         fromrar = false;
 
@@ -154,6 +152,8 @@ loadfile:
             goto loadfilelevel;
 
 #if defined(USE_UNRARLIB)
+        char			*pData;
+        unsigned long	Size;
         // Nicht? Dann ist es hoffentlich im RAR file
         sprintf_s(Temp, "%s", "levellist.dat");
         if (urarlib_get(&pData, &Size, Temp, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
@@ -301,6 +301,66 @@ void SplitLine(char *dst1, char *dst2, char *source)
         dst2[dst2_ctr] = source[i];
     }
     dst2[dst2_ctr] = '\0';
+}
+
+//DKS - Added function to split a longer line into one, dst1, sized up to
+//      width (in pixels) based on font passed, and one, dst2, is the remainder,
+//      minus any leading whitespace. Returns true if line needed to be split.
+bool ExtractStringOfLength(char *dst1, char *dst2, char *source, int width, DirectGraphicsFont *font)
+{
+
+    if (!source || !dst1 || !dst2 || !font || width <= 0)
+        return false;
+
+    if (font->StringLength(source) <= width)
+        return false;
+
+    int split_pos = 0;
+    int source_len = strlen(source);
+    dst1[0] = '\0';
+    dst2[0] = '\0';
+
+    while (split_pos < source_len && font->StringLength(dst1) <= width) {
+        dst1[split_pos] = source[split_pos];
+        dst1[split_pos+1] = '\0';
+        split_pos++;
+    }
+
+    split_pos--;
+    
+    // Now, see if we've stopped at a space and if not, backtrack to the previous space.
+    while (dst1[split_pos] != ' ' && split_pos >= 0) {
+        split_pos--;
+    }
+
+    // Replace the space with a newline and NULL terminator
+    dst1[split_pos] = '\n';
+    dst1[split_pos+1] = '\0';
+
+    // Now, copy the remainder, minus the leading space and including the NULL terminator, into dst2
+    strcpy_s(dst2, &source[split_pos+1]);
+
+    return true;
+}
+
+//DKS - Added function to replace any instance of a substring with another substring,
+//      primarily for use on gaming/phone systems where "key" should be replaced with
+//      "button"
+void ReplaceAll(std::string& str, const std::string& from, const std::string& to)
+{
+    if(from.empty())
+        return;
+    std::string new_str;
+    new_str.reserve(str.length());
+    size_t start_pos = 0, pos;
+    while((pos = str.find(from, start_pos)) != std::string::npos) {
+        new_str += str.substr(start_pos, pos - start_pos);
+        new_str += to;
+        pos += from.length();
+        start_pos = pos;
+    }
+    new_str += str.substr(start_pos);
+    str.swap(new_str); 
 }
 
 // --------------------------------------------------------------------------------------

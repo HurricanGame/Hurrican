@@ -14,6 +14,8 @@
 
 #include "Main.h"
 #include "Player.h"
+#include <string>
+#include <iostream>
 
 // --------------------------------------------------------------------------------------
 // Defines
@@ -350,15 +352,26 @@ int	 GetDecValue(char *pair, int len);			// Dezimalwert einer Hexzahl mit Länge 
 
 //DKS - Added cross-platform language-files handling
 int FindLanguageFiles(char *path);
+
 //DKS - Added function to split a longer line into two shorter lines, for when
 //      running on a lower-resolution device w/ scaled font
 void SplitLine(char *dst1, char *dst2, char *source);
-#define MAX_LANGUAGE_FILES                          20
-#define MAX_LANGUAGE_FILENAME_LENGTH                256    
+
+//DKS - Added function to split a longer line into one, dst1, sized up to
+//      width (in pixels) based on font passed, and one, dst2, is the remainder,
+//      minus any leading whitespace. Returns true if line needed to be split.
+bool ExtractStringOfLength(char *dst1, char *dst2, char *source, int width, DirectGraphicsFont *font);
+
+//DKS - Added function to replace any instance of a substring with another substring,
+//      primarily for use on gaming/phone systems where "key" should be replaced with
+//      "button"
+void ReplaceAll(std::string& str, const std::string& from, const std::string& to);
 
 // --------------------------------------------------------------------------------------
 // Externals
 // --------------------------------------------------------------------------------------
+#define MAX_LANGUAGE_FILES                          20
+#define MAX_LANGUAGE_FILENAME_LENGTH                256    
 
 extern char				    TextArray [TEXT_LASTTEXT][1024];
 extern char					ActualLanguage[256];

@@ -1,5 +1,6 @@
 #include "Timer.h"
 #include "GUISystem.h"
+#include "Main.h"
 
 //
 // Konstruktor
@@ -97,91 +98,71 @@ void CGUISystem::RenderBox(void)
                                   m_yPos + (j + 1) * TILESIZE, 4, color);
 
     // Text rendern
-    //
-    //DKS - Added support for font scaling
-//    pDefaultFont->DrawText(m_xPos + TILESIZE,
-//                           m_yPos + (TILESIZE * 2 + m_BoxSize.bottom - ((pDefaultFont->mYCharSize + 6) * (m_BoxLines + 1))) / 2 + 4, m_BoxText, color);
-    pDefaultFont->DrawText(m_xPos + TILESIZE,
-            m_yPos + (TILESIZE * 2 + m_BoxSize.bottom - ((pDefaultFont->GetYCharSize() + 6) * (m_BoxLines + 1))) / 2 + 4, 
-            m_BoxText, color);
+    int y_txt_offset = -5;
+
+    if (CommandLineParams.LowRes) {
+        // No updwards shift needed on low-res devices using scaled font:
+        y_txt_offset = 0;
+    }
+
+    pDefaultFont->DrawText(m_xPos + TILESIZE * 3 / 2 - 8,
+                            m_yPos + TILESIZE * 3 / 2 + y_txt_offset,
+                            m_BoxText, color);
 }
 
 //
 // Hinweisbox für Tutorial Level einblenden
 //
 
+//DKS - Made line splitting more flexible, centered display of boxes on-screen and added low-resolution support
 void CGUISystem::ShowBox(char Text[BOXTEXTLENGTH], int yoff, int xoff)
 {
 
-    int FontLength = 0;
-    m_BoxLines     = 0;
+    char buf1[BOXTEXTLENGTH+1], buf2[BOXTEXTLENGTH+1], srcbuf[BOXTEXTLENGTH+1];
+    bool done = false;
+    int longest_length = 0;
+    int this_length = 0;
+    const int max_length = BOXSIZEMAX - 60;
 
-    FontLength = pDefaultFont->StringLength(Text) / TILESIZE * TILESIZE;
+    // Start with a full buffer in srcbuf
+    strcpy_s(srcbuf, Text);
 
-    // Muss der Text in mehrere Zeilen aufgeteilt werden?
-    if (FontLength > BOXSIZEMAX)
-    {
-        FontLength = BOXSIZEMAX;
+    // And an empty one in m_BoxText
+    m_BoxText[0] = '\0';
+    m_BoxLines = 0;
 
-        char buffer[1000];			// buffer, der jeweils die aktuelle Zeile beinhaltet
-        int  offset       = 0;		// Offset im übergebenen Text
-        int  offsetbox	  = 0;		// Offset im BoxText (der später angezeigt wird)
-        int  offsetbuffer = 0;		// Offset im Buffer
+    while (!done) {
+        // Copy as much as will fit into buf1, remainder without leading whitespace into buf2.
+        done = !ExtractStringOfLength(buf1, buf2, srcbuf, max_length, pDefaultFont);
 
-        strcpy_s (buffer, 1, "");
-        strcpy_s (m_BoxText, 1, "");
-
-        // Text Zeichen für Zeichen durchgehen
-        while (Text[offset] != '\0')
-        {
-            // aktuelles Zeichen der Zeile kopieren
-            buffer   [offsetbuffer]     = Text[offset];
-            buffer   [offsetbuffer + 1]	= '\0';
-            m_BoxText[offsetbox]        = Text[offset];
-            m_BoxText[offsetbox + 1]    = '\0';
-
-
-            // Länge für eine Zeile überschritten und gerade ein Leerzeichen?
-            // Dann Zeilenumbruch einfügen
-            if (pDefaultFont->StringLength(buffer) > BOXSIZEMAX - 60 &&
-                    buffer[offsetbuffer] == 32)
-            {
-                // Zeilenpuffer löschen
-                strcpy_s(buffer, 1, "");
-                offsetbuffer = 0;
-
-                // Umbruch einfügen
-                offsetbox++;
-                m_BoxText[offsetbox] = '\n';
-
-                // Zeilenanzahl erhöhen
-                m_BoxLines++;
-            }
-            else
-                // ein Zeichen im Buffer weiter
-                offsetbuffer++;
-
-            // ein Zeichen im Text und im BoxText weiter
-            offset++;
-            offsetbox++;
+        if (done) {
+            // Line did not need to be split, so nothing was placed in buf1 or buf2
+            strcat_s(m_BoxText, srcbuf);    // Copy all of srcbuf into m_BoxText
+            this_length = pDefaultFont->StringLength(srcbuf);
+        } else {
+            // Line was split, part that will fit is in dst1, remainder in dst2
+            strcat_s(m_BoxText, buf1);
+            strcpy_s(srcbuf, buf2); // Use remainder as source buffer
+            this_length = pDefaultFont->StringLength(buf1);
         }
+
+        if (this_length > longest_length) {
+            longest_length = this_length;
+        }
+
+        m_BoxLines++;
     }
-    else
-        strcpy_s (m_BoxText, strlen(Text) + 1, Text);
+        
+    m_BoxSize.right  = longest_length / TILESIZE * TILESIZE + TILESIZE;
+    m_BoxSize.bottom = (m_BoxLines * (pDefaultFont->GetYCharSize() + 6)) / TILESIZE * TILESIZE + TILESIZE;
 
-    m_BoxSize.right  = FontLength;
-    //DKS - Added support for font scaling
-//    m_BoxSize.bottom = (m_BoxLines * (pDefaultFont->mYCharSize + 6)) / 20 * 20 + 20;
-    m_BoxSize.bottom = (m_BoxLines * (pDefaultFont->GetYCharSize() + 6)) / 20 * 20 + 20;
-
-    m_xPos = xoff - (m_BoxSize.right - 40) / 2.0f;
-    m_yPos = (480 - m_BoxSize.bottom - 40) / 2.0f;
+    m_xPos = xoff - m_BoxSize.right/2 - TILESIZE;
+    m_yPos = RENDERHEIGHT/2 - m_BoxSize.bottom/2 - TILESIZE;
 
     if (yoff > -1)
         m_yPos = (float) (yoff);
 
     m_FadeMode = FADEIN;
-
 }
 
 //
@@ -192,8 +173,11 @@ void CGUISystem::ShowBox(int xoff, int yoff, int w, int h)
 {
     m_BoxSize.right  = w;
     m_BoxSize.bottom = h;
-    m_xPos = (float)xoff;
-    m_yPos = (float)yoff;
+    //DKS - Fixed off-center box display
+    //    m_xPos = (float)xoff;
+    //    m_yPos = (float)yoff;
+    m_xPos = (float)xoff - TILESIZE;
+    m_yPos = (float)yoff - TILESIZE;
 
     strcpy_s(m_BoxText, 1, "");
 
