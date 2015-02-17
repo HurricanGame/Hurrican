@@ -296,11 +296,39 @@ bool DirectJoystickClass::Update(void)
 
         if (SDL_JoystickNumHats(lpDIJoystick) > 0)
         {
-            JoystickPOV = SDL_JoystickGetHat( lpDIJoystick, 0 );
-
-            if (JoystickPOV == SDL_HAT_CENTERED)
-            {
-                JoystickPOV = -1;
+            // DKS: Note - DirectX HAT values are -1 for centered, otherwise are in hundredths
+            //      of a degree, from starting at 0 (UP, north) so right is 9000, down is 18000,
+            //      left is 27000.
+            uint8_t hat_state = SDL_JoystickGetHat( lpDIJoystick, 0 );
+            switch (hat_state) {
+                case SDL_HAT_UP:
+                    JoystickPOV = 0;
+                    break;
+                case SDL_HAT_RIGHTUP:
+                    JoystickPOV = 4500;
+                    break;
+                case SDL_HAT_RIGHT:
+                    JoystickPOV = 9000;
+                    break;
+                case SDL_HAT_RIGHTDOWN:
+                    JoystickPOV = 13500;
+                    break;
+                case SDL_HAT_DOWN:
+                    JoystickPOV = 18000;
+                    break;
+                case SDL_HAT_LEFTDOWN:
+                    JoystickPOV = 22500;
+                    break;
+                case SDL_HAT_LEFT:
+                    JoystickPOV = 27000;
+                    break;
+                case SDL_HAT_LEFTUP:
+                    JoystickPOV = 31500;
+                    break;
+                case SDL_HAT_CENTERED:
+                default:
+                    JoystickPOV = -1;
+                    break;
             }
         }
     }
