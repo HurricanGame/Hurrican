@@ -385,80 +385,80 @@ void InitReplacers(void)
     strcpy_s(s_Replacers[26], strlen("KEY_WAFFE_LASER") + 1, "KEY_WAFFE_LASER");
     strcpy_s(s_Replacers[28], strlen("KEY_WAFFE_BOUNCE") + 1, "KEY_WAFFE_BOUNCE");
 
-    // TODO FIX
+    // DKS - Uncommented the replacement text fillers below, the seem to work just fine,
+    //          despite having been labelled "TODO FIX"
+    // Personal TODO: customize for GCW Zero / display button 0 as button 1 and so forth
+    //                  on other devices
+    if (pPlayer[0]->ControlType == JOYMODE_KEYBOARD)
+    {
+        strcpy (s_Replacers[1],  GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_LINKS]));
+        strcpy (s_Replacers[3],  GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_RECHTS]));
+        strcpy (s_Replacers[5],  GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_DUCKEN]));
+        strcpy (s_Replacers[7],  GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_OBEN]));
+        strcpy (s_Replacers[9],  GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_UNTEN]));
+        strcpy (s_Replacers[11], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_JUMP]));
+        strcpy (s_Replacers[13], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_SHOOT]));
+        strcpy (s_Replacers[15], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_BLITZ]));
+        strcpy (s_Replacers[17], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_POWERLINE]));
+        strcpy (s_Replacers[19], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_GRANATE]));
+        strcpy (s_Replacers[21], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_SMARTBOMB]));
+        strcpy (s_Replacers[23], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_WAFFEN_CYCLE]));
+        strcpy (s_Replacers[25], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_WAFFE_SPREAD]));
+        strcpy (s_Replacers[27], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_WAFFE_LASER]));
+        strcpy (s_Replacers[29], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_WAFFE_BOUNCE]));
+    }
+    else
+    {
+        char buf[256];
+        sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + pPlayer[0]->JoystickMode - 1], TextArray[TEXT_LEFT]);
+        strcpy (s_Replacers[1], buf);
 
-    /*
-    	if (pPlayer[0]->ControlType == JOYMODE_KEYBOARD)
-    	{
-    		strcpy (s_Replacers[1],  GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_LINKS]));
-    		strcpy (s_Replacers[3],  GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_RECHTS]));
-    		strcpy (s_Replacers[5],  GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_DUCKEN]));
-    		strcpy (s_Replacers[7],  GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_OBEN]));
-    		strcpy (s_Replacers[9],  GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_UNTEN]));
-    		strcpy (s_Replacers[11], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_JUMP]));
-    		strcpy (s_Replacers[13], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_SHOOT]));
-    		strcpy (s_Replacers[15], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_BLITZ]));
-    		strcpy (s_Replacers[17], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_POWERLINE]));
-    		strcpy (s_Replacers[19], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_GRANATE]));
-    		strcpy (s_Replacers[21], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_SMARTBOMB]));
-    		strcpy (s_Replacers[23], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_WAFFEN_CYCLE]));
-    		strcpy (s_Replacers[25], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_WAFFE_SPREAD]));
-    		strcpy (s_Replacers[27], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_WAFFE_LASER]));
-    		strcpy (s_Replacers[29], GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_WAFFE_BOUNCE]));
-    	}
-    	else
-    	{
-    		char buf[256];
-    		sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + pPlayer[0]->JoystickMode - 1], TextArray[TEXT_LEFT]);
-    		strcpy (s_Replacers[1], buf);
+        sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + pPlayer[0]->JoystickMode - 1], TextArray[TEXT_RIGHT]);
+        strcpy (s_Replacers[3], buf);
 
-    		sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + pPlayer[0]->JoystickMode - 1], TextArray[TEXT_RIGHT]);
-    		strcpy (s_Replacers[3], buf);
+        sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + pPlayer[0]->JoystickMode - 1], TextArray[TEXT_DOWN]);
+        strcpy (s_Replacers[5], buf);
 
-    		sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + pPlayer[0]->JoystickMode - 1], TextArray[TEXT_DOWN]);
-    		strcpy (s_Replacers[5], buf);
+        sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + pPlayer[0]->JoystickMode - 1], TextArray[TEXT_UP]);
+        strcpy (s_Replacers[7], buf);
 
-    		sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + pPlayer[0]->JoystickMode - 1], TextArray[TEXT_UP]);
-    		strcpy (s_Replacers[7], buf);
+        sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + pPlayer[0]->JoystickMode - 1], TextArray[TEXT_DOWN]);
+        strcpy (s_Replacers[9], buf);
 
-    		sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + pPlayer[0]->JoystickMode - 1], TextArray[TEXT_DOWN]);
-    		strcpy (s_Replacers[9], buf);
+        if (pPlayer[0]->JoystickMode == JOYMODE_STICK)
+            sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + pPlayer[0]->JoystickMode - 1], TextArray[TEXT_UP]);
+        else
+            sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_JUMP]);
 
-    		if (pPlayer[0]->JoystickMode == JOYMODE_STICK)
-    			sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + pPlayer[0]->JoystickMode - 1], TextArray[TEXT_UP]);
-    		else
-    			sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_JUMP]);
+        strcpy (s_Replacers[11], buf);
 
-    		strcpy (s_Replacers[11], buf);
+        sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_SHOOT]);
+        strcpy (s_Replacers[13], buf);
 
-    		sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_SHOOT]);
-    		strcpy (s_Replacers[13], buf);
+        sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_BLITZ]);
+        strcpy (s_Replacers[15], buf);
 
-    		sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_BLITZ]);
-    		strcpy (s_Replacers[15], buf);
+        sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_POWERLINE]);
+        strcpy (s_Replacers[17], buf);
 
-    		sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_POWERLINE]);
-    		strcpy (s_Replacers[17], buf);
+        sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_GRANATE]);
+        strcpy (s_Replacers[19], buf);
 
-    		sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_GRANATE]);
-    		strcpy (s_Replacers[19], buf);
+        sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_SMARTBOMB]);
+        strcpy (s_Replacers[21], buf);
 
-    		sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_SMARTBOMB]);
-    		strcpy (s_Replacers[21], buf);
+        sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_WAFFEN_CYCLE]);
+        strcpy (s_Replacers[23], buf);
 
-    		sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_WAFFEN_CYCLE]);
-    		strcpy (s_Replacers[23], buf);
+        sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_WAFFE_SPREAD]);
+        strcpy (s_Replacers[25], buf);
 
-    		sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_WAFFE_SPREAD]);
-    		strcpy (s_Replacers[25], buf);
+        sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_WAFFE_LASER]);
+        strcpy (s_Replacers[27], buf);
 
-    		sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_WAFFE_LASER]);
-    		strcpy (s_Replacers[27], buf);
-
-    		sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_WAFFE_BOUNCE]);
-    		strcpy (s_Replacers[29], buf);
-    	}
-    */
+        sprintf_s(buf, "%s %d", TextArray[TEXT_BUTTON], pPlayer[0]->AktionJoystick[AKTION_WAFFE_BOUNCE]);
+        strcpy (s_Replacers[29], buf);
+    }
 }
 
 // --------------------------------------------------------------------------------------
