@@ -95,7 +95,14 @@ void GegnerTutorialText::DoKI(void)
 
         c_text[i] = '\0';
 
-        pGUI->ShowBox(c_text, 100);
+        // DKS - If player 1 is controlled with joystick, replace all references to 'key' with 'button'
+        std::string displayed_text(c_text);
+
+        if (pPlayer[0]->ControlType == JOYMODE_STICK) {
+            ReplaceAll(displayed_text, "key", "button");
+        }
+
+        pGUI->ShowBox((char *)displayed_text.c_str(), 100);
         pGUI->m_TextID = Value1;
 
         pSoundManager->PlayWave (100, 128, 11025, SOUND_MESSAGE);

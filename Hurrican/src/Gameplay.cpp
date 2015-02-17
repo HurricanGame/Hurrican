@@ -979,15 +979,44 @@ void StageClear(bool PlaySong)
 // Summary Screen anzeigen
 // --------------------------------------------------------------------------------------
 
+//DKS - Fixed display on low-res scaled-font devices, and made display on
+//      normal-resolution devices be centered and spaced properly.
 void SummaryScreen(void)
 {
     bool leave      = false;
     bool keypressed = false;
+    bool reveal_cheat = (RunningTutorial == false) && (pPlayer[0]->DiamondsThisLevel == pTileEngine->MaxDiamonds);
 
     ShowSummary = true;
 
+    //DKS - Note: boxes dimensions must be multiple of TILESIZE (20) due to quirks in GUISystem.cpp
+    int box_x, box_y, box_w, box_h;
+
+    // Normal screen dimensions:
+    box_w = 360;
+    if (reveal_cheat) {
+        box_h = 140;
+    } else {
+        box_h = 120;
+    }
+
+    box_x = RENDERWIDTH/2 - box_w/2;
+    box_y = RENDERHEIGHT/2 - box_h/2;
+    
+    int title_txt_y = box_y - 10;        // Note that borders of boxes mean drawable region is a bit higher than specified
+    int pressanykey_txt_y = box_y + box_h - 8;   
+    const int sprite_spacing = 96;
+    int sprites_y = box_y + 40;
+    int sprite1_x = (RENDERWIDTH/2) - sprite_spacing - sprite_spacing/2;
+    int sprite2_x = (RENDERWIDTH/2) - sprite_spacing/2;
+    int sprite3_x = (RENDERWIDTH/2) + sprite_spacing/2;
+    int secrets_x = (RENDERWIDTH/2) + sprite_spacing + sprite_spacing/2;
+    int stats_txt_y = sprites_y + 30;
+    int cheat_txt_y = (stats_txt_y + pressanykey_txt_y) / 2;
+
     // Summary Box erzeugen
-    pGUI->ShowBox((640-250)/2, 110, 220, 100);
+    // DKS - NOTE: boxes are drawn less-than intuitively, you must use dimensions multiples of TILESIZE
+    pGUI->ShowBox(box_x, box_y, box_w, box_h);
 
     while (leave == false)
     {
@@ -1026,38 +1055,50 @@ void SummaryScreen(void)
         // Summary Screen rendern
         pGUI->Run();
         D3DCOLOR color = D3DCOLOR_RGBA(0, 255, 0, (int)(pGUI->m_FadingAlpha));
-        pDefaultFont->DrawText((float)(640 - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_TITLE]))     / 2, 120, TextArray[TEXT_SUMMARY_TITLE], color);
-        pDefaultFont->DrawText((float)(640 - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_PRESSFIRE])) / 2, 225, TextArray[TEXT_SUMMARY_PRESSFIRE], color);
+        pDefaultFont->DrawText((float)(RENDERWIDTH-pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_TITLE]))/2,
+                title_txt_y, TextArray[TEXT_SUMMARY_TITLE], color);
 
-        pGegnerGrafix[POWERBLOCK]->RenderSpriteScaled(226, 155, 32, 32, 1, color);
-        pGegnerGrafix[DIAMANT]->RenderSprite(282, 155, 0, color, false);
-        pGegnerGrafix  [ONEUP]->RenderSpriteScaled(330, 152, 36, 36, 0, color);
-        pDefaultFont->DrawText(380, 165, TextArray[TEXT_SUMMARY_SECRETS], color);
+        std::string str_pressanykey(TextArray[TEXT_SUMMARY_PRESSFIRE]);
+
+        // If player 1 is controlled with joystick, replace all references to 'key' with 'button'
+        if (pPlayer[0]->ControlType == JOYMODE_STICK) {
+            ReplaceAll(str_pressanykey, "key", "button");
+        }
+
+        pDefaultFont->DrawText((float)(RENDERWIDTH-pDefaultFont->StringLength(str_pressanykey.c_str()))/2,
+                pressanykey_txt_y, str_pressanykey.c_str(), color);
+
+        pGegnerGrafix[POWERBLOCK]->RenderSpriteScaled(sprite1_x-16, sprites_y-16, 32, 32, 1, color);
+        pGegnerGrafix[DIAMANT]->RenderSprite(sprite2_x-14, sprites_y-14, 0, color, false);
+        pGegnerGrafix  [ONEUP]->RenderSpriteScaled(sprite3_x-16, sprites_y-16, 32, 32, 0, color);
+        pDefaultFont->DrawText(float(secrets_x - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_SECRETS])/2), 
+                                float(sprites_y-pDefaultFont->GetYCharSize()/2),
+                                TextArray[TEXT_SUMMARY_SECRETS], color);
 
         char buf[100];
-
         sprintf_s(buf, "%i/%i", pPlayer[0]->BlocksThisLevel, pTileEngine->MaxBlocks);
-        pDefaultFont->DrawText((float)(240 - pDefaultFont->StringLength(buf) / 2), 195, buf, color);
+        pDefaultFont->DrawText((float)(sprite1_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
 
         sprintf_s(buf, "%i/%i", pPlayer[0]->DiamondsThisLevel, pTileEngine->MaxDiamonds);
-        pDefaultFont->DrawText((float)(292 - pDefaultFont->StringLength(buf) / 2), 195, buf, color);
+        pDefaultFont->DrawText((float)(sprite2_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
 
         sprintf_s(buf, "%i/%i", pPlayer[0]->LivesThisLevel, pTileEngine->MaxOneUps);
-        pDefaultFont->DrawText((float)(345 - pDefaultFont->StringLength(buf) / 2), 195, buf, color);
+        pDefaultFont->DrawText((float)(sprite3_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
 
         sprintf_s(buf, "%i/%i", pPlayer[0]->SecretThisLevel, pTileEngine->MaxSecrets);
-        pDefaultFont->DrawText((float)(400 - pDefaultFont->StringLength(buf) / 2), 195, buf, color);
+        pDefaultFont->DrawText((float)(secrets_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
 
         // Cheat freigespielt? -> Wenn alle Diamanten gefunden
-        if (RunningTutorial == false &&
-                pPlayer[0]->DiamondsThisLevel == pTileEngine->MaxDiamonds)
+        if (reveal_cheat)
         {
-            sprintf_s(buf, "%s", Cheats[Stage - 1]);
-            for (unsigned int p = 0; p < strlen(buf); p++)
-                buf[p] ^= 64;
+            char buf2[50];
+            strcpy_s(buf2, Cheats[Stage - 1]);
+            for (unsigned int p = 0; p < strlen(buf2); p++)
+                buf2[p] ^= 64;
 
-            pDefaultFont->DrawTextRightAlign(320, 210, TextArray[TEXT_SUMMARY_CHEATUNLOCK], color, 0);
-            pDefaultFont->DrawText(330.0f, 210, buf, color, 0);
+            sprintf_s(buf, "%s: %s", TextArray[TEXT_SUMMARY_CHEATUNLOCK], buf2);
+            pDefaultFont->DrawText(RENDERWIDTH/2-pDefaultFont->StringLength(buf, 0)/2, 
+                                    cheat_txt_y, buf, color, 0);
         }
 
         // Darstellung beenden
