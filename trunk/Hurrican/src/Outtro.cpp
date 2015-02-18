@@ -361,7 +361,6 @@ void OuttroClass::DoOuttro(void)
         // Note: original code had each line spaced by 20.0f, 30 lines drawn total, which is more than
         //      will fit on a screen. This code keeps this behavior, but supports low-resolution using
         //      scaled fonts.
-        float scale_factor = pDefaultFont->GetScaleFactor();
         int num_lines;
         int max_draw_width = RENDERWIDTH - 20;    // Want a 10-pixel border minimum
         int yoff_inc = 20;

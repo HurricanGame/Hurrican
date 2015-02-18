@@ -14,6 +14,7 @@
 
 #include "Main.h"
 #include "Player.h"
+#include "DX8Font.h"
 #include <string>
 #include <iostream>
 
