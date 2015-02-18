@@ -13,6 +13,8 @@
 // --------------------------------------------------------------------------------------
 
 #include <stdio.h>
+#include <vector>
+#include <string>
 #include "Intro.h"
 #include "DX8Sound.h"
 #include "Gameplay.h"
@@ -32,13 +34,51 @@ IntroClass::IntroClass(void)
 
     Zustand = INTRO_FADEIN;
 
-    TextOff = 0;
+    EntriesOff = 0;     // Offset into actual lines displayed on the screen (can vary based on font size)
+    TextOff = 0;        // Offset into what text would be displayed with a normal-sized font
     BildNr = 0;
+    HorizCounter = 0.0f;
     Counter = 0.0f;
     pSoundManager->LoadSong("intro.it", MUSIC_INTRO);
 
     while (DirectInput.AreAllKeysReleased() == false)
         DirectInput.UpdateTastatur();
+
+    //Generate a series of lines from the intro text that are split if too long to display:
+    for (int line_ctr = 0; line_ctr <= 23; line_ctr++) {
+        int off = TEXT_INTRO1 + line_ctr;
+        const int max_length = RENDERWIDTH - 20;
+
+        // There are two versions of one line, one after the other, depending on number of players:
+        if (off == TEXT_INTRO1 + 22 && NUMPLAYERS == 2)
+            off++;
+        else if (off >= TEXT_INTRO1 + 23)
+            off++;
+
+        char buf1[255];
+        char buf2[255];
+        char *srcbuf = TextArray[off];
+
+        // Copy as much as will fit into buf1, remainder without leading whitespace into buf2.
+        bool was_split = ExtractStringOfLength(buf1, buf2, srcbuf, max_length, pDefaultFont);
+
+        IntroEntry tmp_entry;
+        if (was_split) {
+            // Line was split, part that will fit is in dst1, remainder in dst2
+            tmp_entry.should_pause = false;     // First entry is only part of a line, don't pause on it..
+            tmp_entry.text = buf1; 
+            entries.push_back(tmp_entry);
+
+            tmp_entry.should_pause = true;  
+            tmp_entry.text = buf2;
+            entries.push_back(tmp_entry);
+        } else {
+            // Line did not need to be split, so nothing was placed in buf1 or buf2
+            tmp_entry.should_pause = true;
+            tmp_entry.text = srcbuf;
+            entries.push_back(tmp_entry);
+        }
+    }
 }
 
 // --------------------------------------------------------------------------------------
@@ -58,8 +98,9 @@ void IntroClass::EndIntro(void)
 {
     if (Zustand != INTRO_FADEOUT)
     {
-        if (Zustand != INTRO_FADEIN)
+        if (Zustand != INTRO_FADEIN) {
             Counter = 255.0f;
+        }
 
         Zustand = INTRO_FADEOUT;
         pSoundManager->FadeSong(MUSIC_INTRO, -1.5f, 0, false);
@@ -85,7 +126,8 @@ void IntroClass::DoIntro(void)
     if ((TextOff - 1) % 4 == 3 &&
             a < 5)
     {
-        D3DCOLOR fadecol = D3DCOLOR_RGBA(255, 255, 255, (int)(Counter / 1300.0f * 255.0f));
+        int alpha = (int)(Counter / 1300.0f * 255.0f);
+        D3DCOLOR fadecol = D3DCOLOR_RGBA(255, 255, 255, (uint8_t)alpha);
         Background[a+1].RenderSprite(0, 0, 0, fadecol);
     }
 
@@ -129,6 +171,9 @@ void IntroClass::DoIntro(void)
         {
             Counter = 0.0f;
             Zustand = INTRO_DONE;
+        } else if (Counter > 255.0f)
+        {
+            Counter = 255.0f;
         }
 
         D3DCOLOR col = D3DCOLOR_RGBA(0, 0, 0, 255-int(Counter));
@@ -139,13 +184,18 @@ void IntroClass::DoIntro(void)
 
     // Scroller
     case INTRO_RUN:
+    //DKS - Added low-resolution scaled-font support:
     {
-        Counter += 25.5f SYNC;
+        int scale_factor = pDefaultFont->GetScaleFactor();
 
+        Counter += 25.5f SYNC;
         if (Counter > 1300.0f)
         {
+            HorizCounter = 0.0f;
             Counter = 0.0f;
+
             TextOff++;
+            EntriesOff++;
 
             if (TextOff > 23)
             {
@@ -154,55 +204,67 @@ void IntroClass::DoIntro(void)
             }
         }
 
+        //DKS - Horizontal text scrolling now depends on an identical counter that doesn't get reset on skipped lines
+        HorizCounter += 25.5f SYNC;
+        if (HorizCounter > 1300.0f)
+        {
+            HorizCounter = 0.0f;
+        }
+
         // Text rendern
-        float xr = Counter;
+        float xr = HorizCounter;
         if (xr > 700.0f)
             xr = 700.0f;
 
         DirectGraphics.SetAdditiveMode();
 
-        for (int t = 0; t <= 23; t++)
+        const int lines_displayed = 10 / scale_factor;
+        const int line_y_off = 12 * scale_factor;
+
+        int num_entries = entries.size();
+        for (int t = 0; t <= num_entries; t++)
         {
             D3DCOLOR col;
 
-            col = D3DCOLOR_RGBA(0, 255, 0, 255 - (TextOff - t) * 25);
+            int alpha = 255 - (scale_factor * (EntriesOff - t) * 25);
+            if (alpha < 0)
+                alpha = 0;
+            else if (alpha > 255)
+                alpha = 255;
 
-            if (t <= TextOff &&
-                    t - TextOff > -10)
+            col = D3DCOLOR_RGBA(0, 255, 0, (uint8_t)alpha);
+
+            if (t <= EntriesOff && (t-EntriesOff) > -lines_displayed && t < num_entries)
             {
-                int off = TEXT_INTRO1 + t;
 
-                if (off == TEXT_INTRO1 + 22 &&
-                        NUMPLAYERS == 2)
-                    off++;
-                else if (off >= TEXT_INTRO1 + 23)
-                    off++;
-
-                pDefaultFont->DrawText(10, (float)(465 + t * 12) - TextOff * 12, TextArray[off], col);
+                const int tmp_h = 15 * scale_factor;
+                pDefaultFont->DrawText(10, (float)(RENDERHEIGHT-tmp_h + t*line_y_off) - EntriesOff * line_y_off, 
+                        entries[t].text.c_str(), col);
 
                 // Teil des Textes verdecken
-                if (t == TextOff)
+                if (t == EntriesOff)
                 {
                     DirectGraphics.SetColorKeyMode();
-                    RenderRect(xr, 464, 640.0f, 17, 0xFF000000);
+                    const int tmp_h = 17;
+                    RenderRect(xr, RENDERHEIGHT - (tmp_h-1)*scale_factor, RENDERWIDTH, tmp_h*scale_factor, 0xFF000000);
                 }
             }
         }
 
         //grüne Rechtecke rendern
-        if (TextOff <= 28)
+        if (EntriesOff < num_entries)
         {
-            //DirectGraphics.SetAdditiveMode(); // This causing over saturation with the FBO
+            int l = pDefaultFont->StringLength(entries[EntriesOff].text.c_str(), 0) + 28;
+            int tmp_h = 16;
+            tmp_h *= scale_factor;
+            if (xr < l)
             {
-                int l = pDefaultFont->StringLength(TextArray[TEXT_INTRO1 + TextOff], 0) + 28;
-                if (xr < l)
+                for (int i = 0; i < 5; i++)
                 {
-                    for (int i = 0; i < 5; i++)
-                    {
-                        D3DCOLOR col;
+                    D3DCOLOR col;
 
-                        switch(i)
-                        {
+                    switch(i)
+                    {
                         case 0:
                             col = D3DCOLOR_RGBA(255, 255, 255, 255);
                             break;
@@ -218,19 +280,24 @@ void IntroClass::DoIntro(void)
                         case 4:
                             col = D3DCOLOR_RGBA(0, 50, 0, 255);
                             break;
-                        }
-
-                        RenderRect(xr - i * 12 - 12, 464, 12, 12, col);
                     }
-                }
-                else
-                {
-                    xr = (float)l;
 
-                    // blinken lassen
-                    if ((int)(Counter / 100.0f) % 2 == 0)
-                        RenderRect(xr - 12, 464, 12, 12, 0xFFFFFFFF);
+                    RenderRect(xr - i*12 - 12, RENDERHEIGHT - tmp_h, 12, 12*scale_factor, col);
                 }
+            }
+            else
+            {
+                xr = (float)l;
+
+                // blinken lassen
+                if ((int)(Counter / 100.0f) % 2 == 0)
+                    RenderRect(xr - 12, RENDERHEIGHT-tmp_h, 12, 12 * scale_factor, 0xFFFFFFFF);
+            }
+
+            // Advance immediately to next line if the line was split:
+            if (entries[EntriesOff].should_pause == false && xr == l) {
+                HorizCounter = 0.0f;
+                EntriesOff++;
             }
         }
     }
