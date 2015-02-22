@@ -29,6 +29,15 @@
 
 const char *GetKeyName(int DIK_Code)
 {
+#if defined(PLATFORM_SDL)
+    //DKS - Now, we use SDL's names - The game originally assumed a German keyboard
+#if SDL_VERSION_ATLEAST(2,0,0)
+    return SDL_GetKeyName((SDL_Keycode)DIK_Code);
+#else
+    return SDL_GetKeyName((SDLKey)DIK_Code);
+#endif //SDL_VERSION_ATLEAST(2,0,0)
+#else
+
     const char *Text;									// Hier wird der Name der Taste gespeichert
 
     switch (DIK_Code)							// Name der Taste ermitteln
@@ -487,4 +496,5 @@ const char *GetKeyName(int DIK_Code)
 #endif
 
     return Text;								// Und den Name der Taste zurückliefern
+#endif // PLATFORM_SDL
 }
