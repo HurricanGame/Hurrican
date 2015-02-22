@@ -24,7 +24,10 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define MAX_LINES	20				// Anzahl der Zeilen in der Konsole
+//DKS - Compensating for larger line spacing, which was too tight originally and allowed
+//      only for small non-block cursor indicator:
+//#define MAX_LINES	20				// Anzahl der Zeilen in der Konsole
+#define MAX_LINES	16				// Anzahl der Zeilen in der Konsole
 #define MAX_CHARS	90				// Anzahl der Zeichen pro Zeile
 
 #if defined(ENABLE_CONSOLE_COMMANDS)
@@ -59,6 +62,9 @@ private:
     char					Buffer[MAX_CHARS];
     bool					Pressed[256];				// Für Tasten-lock
     bool					CONSOLE_CHEAT(char *cheat);
+    int                     ConsoleLines;
+    // DKS - New console joystick support - CursorChar stores the candidate character (space by default)
+    char                    CursorChar[2];             
 
 public:
     bool					Active;						// Gerade aktiv ?

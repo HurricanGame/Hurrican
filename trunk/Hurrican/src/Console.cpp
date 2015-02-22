@@ -43,6 +43,9 @@ ConsoleClass::ConsoleClass()
     Active			= false;
     Showing			= false;
     RenderBinary    = false;
+    CursorChar[0]      = ' ';      
+    CursorChar[1]      = '\0';      
+    ConsoleLines        = MAX_LINES / pDefaultFont->GetScaleFactor();
 
     // Text in der Konsole leeren
     for (int i = 0; i < MAX_LINES; i++)
@@ -51,9 +54,6 @@ ConsoleClass::ConsoleClass()
     // Text in Konsole schreiben
     for (int i = 0; i < 9; i++)
         CONSOLE_PRINT(TextArray[TEXT_CONSOLE1+i]);
-
-    for (int i = 0; i < 10; i++)
-        CONSOLE_PRINT(" ");
 
     // Lock-Puffer leeren
     for (int i = 0; i < 256; i++)
@@ -76,12 +76,14 @@ ConsoleClass::~ConsoleClass()
 
 void ConsoleClass::ShowConsole(void)
 {
+    //DKS - modified code to support scaled fonts (less lines displayed) and allow joystick input
     D3DCOLOR	Color;
     int			a;
     float		yoffset;
     static float cursorcount = 0.0f;
-
-    //a = int (its_Alpha * 8 / 9);
+    int scale_factor = pDefaultFont->GetScaleFactor();
+    int line_spacing = 12 * scale_factor;
+    //a = int (its_Alpha * 8 / 9);  //DKS - This line was commented out in original source
     a = int (its_Alpha);
 
     yoffset = - 255.0f + its_Alpha - 1.0f;
@@ -90,44 +92,51 @@ void ConsoleClass::ShowConsole(void)
     ConsoleGFX.RenderSpriteScaled(0, yoffset, 640, 256, Color);
 
     // Text anzeigen
-    for (int i=0; i<MAX_LINES; i++)
+    for (int i=MAX_LINES-ConsoleLines, line_pos=0; i<MAX_LINES; i++, line_pos++)
     {
         a = int (its_Alpha * 8 / 9);
         Color = D3DCOLOR_RGBA(128, 128, 255, a);
-
-        if (i<MAX_LINES)
-            pDefaultFont->DrawText(26, yoffset + float(10 + i * 10), Text[i], Color);
-        else
-            pDefaultFont->DrawText(20, yoffset + float(10 + i * 10), Text[i], Color);
+        pDefaultFont->DrawText(26, yoffset + float(10 + line_pos * line_spacing), Text[i], Color);
     }
 
     char Temp[105];
 
-    strcpy_s (Temp, 2, ">");
-    strcat_s (Temp, strlen(Buffer) + 1, Buffer);
+    strcpy_s(Temp, 2, ">");
+    strcat_s(Temp, Buffer);
 
     // Cursor animieren
     cursorcount += 0.3f SYNC;
-
-    switch (int (cursorcount))
-    {
-    case 0 :
-        strcat_s (Temp, 2, " ");
-        break;
-
-    case 1 :
-        strcat_s (Temp, 2, "_");
-        break;
-
-    default :
-        break;
-    }
 
     if (cursorcount >= 2.0f)
         cursorcount = 0.0f;
 
     Color = D3DCOLOR_RGBA(255, 255, 255, a);
-    pDefaultFont->DrawText(20, yoffset +  10 + (MAX_LINES) * 10, Temp, Color);
+    pDefaultFont->DrawText(26 - 6 * scale_factor, yoffset +  10 + ConsoleLines * line_spacing, Temp, Color);
+
+    // Draw cursor block
+    int text_width = pDefaultFont->StringLength(Temp);
+    int cursor_x = 20 + text_width;
+    if (scale_factor > 1) 
+        cursor_x -= 6;
+    int cursor_y = yoffset + 10 + ConsoleLines * line_spacing;
+    int cursor_h = 12 * scale_factor;
+    int cursor_w = 9 * scale_factor;
+
+    switch (int (cursorcount))
+    {
+    case 0 :
+        pDefaultFont->DrawText(cursor_x, cursor_y, CursorChar, Color);
+        RenderRect(cursor_x, cursor_y, cursor_w, cursor_h, D3DCOLOR_RGBA(255,255,255,140));
+        break;
+
+    case 1 :
+        pDefaultFont->DrawText(cursor_x, cursor_y, CursorChar, Color);
+        break;
+
+    default :
+        break;
+    }
+    
 } // ShowConsole
 
 // --------------------------------------------------------------------------------------
@@ -159,9 +168,9 @@ void ConsoleClass::CheckCommands(void)
 {
     // Hilfe
     //
-#ifdef _DEBUG
+    //DKS - Re-enabled help, as it seems to be just fine
+//#ifdef _DEBUG
     // TODO FIX
-    /*
     		if (CONSOLE_COMMAND("help"))
     		{
     			CONSOLE_PRINT(" ");
@@ -170,14 +179,12 @@ void ConsoleClass::CheckCommands(void)
     			CONSOLE_PRINT(" ");
     			CONSOLE_PRINT("clear - clear console");
     			CONSOLE_PRINT("levelinfo - show level information");
-    			CONSOLE_PRINT("maxfps x - set maximum framerate to 'x' (0 = no maximum framerate used)");
-    			CONSOLE_PRINT("setspeed x - Set Game-speed (default = 10)");
+    			CONSOLE_PRINT("maxfps x - set maximum framerate to 'x' (0=no maximum)");
+    			CONSOLE_PRINT("setspeed x - Set Game-speed (default=10)");
     			CONSOLE_PRINT("loadmap 'name' - load level 'name'");
     			CONSOLE_PRINT("minimap - save minimap to disc");
     			CONSOLE_PRINT("quit - Quit game immediately");
-    		} else*/
-
-#endif
+    		} else 
 
     // Konsole löschen
     if (CONSOLE_COMMAND("clear"))
@@ -186,6 +193,7 @@ void ConsoleClass::CheckCommands(void)
             strcpy_s(Text[i], "");
 
         strcpy_s(Buffer, "");
+        CursorChar[0] = ' ';
     }
     else
 
@@ -449,14 +457,17 @@ void ConsoleClass::CheckCommands(void)
         char name[100];
 
         strcpy_s(name, g_storage_ext );
-        strcpy_s(name, "/data/");
+        strcat_s(name, "/data/");
         strcat_s(name, dummy);
 
         // .map anhängen
         if (dummy2[strlen (dummy2) - 1] != 'p' ||
                 dummy2[strlen (dummy2) - 2] != 'a' ||
                 dummy2[strlen (dummy2) - 3] != 'm')
+        {
             strcat_s(name, ".map");
+            strcat_s(dummy, ".map");
+        }
 
         fopen_s(&Datei, name, "rb");
 
@@ -657,20 +668,108 @@ void ConsoleClass::CheckCommands(void)
 void ConsoleClass::ScrollUp(void)
 {
     // Zeilen eins hochscrollen
-    for (int i = 0; i < MAX_LINES; i++)
+    //DKS - Fixed overwriting of the lines buffer by one line:
+    /*for (int i = 0; i < MAX_LINES; i++)*/
+    for (int i = 0; i < MAX_LINES-1; i++)
         strcpy_s(Text[i], Text[i+1]);
 
     // Und unterste Zeile mit der letzten eingabe füllen
-    strcpy_s(Text[MAX_LINES], Buffer);
-    strcpy_s(Buffer, "\0");
+    /*strcpy_s(Text[MAX_LINES], Buffer);*/
+    strcpy_s(Text[MAX_LINES-1], Buffer);
+    Buffer[0] = '\0';
+    CursorChar[0] = ' ';
 } // ScrollUp
 
 // --------------------------------------------------------------------------------------
 // Checken ob was eingegeben wurde
 // --------------------------------------------------------------------------------------
 
+//DKS - Added joystick support:
 void ConsoleClass::CheckInput(void)
 {
+    static float joy_counter = 0.0f;
+    const float joy_delay = 30.0f;     // Only accept joy input once every time counter reaches this value
+
+    joy_counter += 30.0f SYNC;
+    if (joy_counter > joy_delay) {
+        joy_counter = joy_delay;
+    }
+
+    if (joy_counter >= joy_delay && pPlayer[0]->ControlType != JOYMODE_KEYBOARD && JoystickFound == true) {
+        joy_counter = 0.0f;
+        int joy_idx = 0;
+        bool up         = false;
+        bool down       = false;
+        bool left       = false;
+        bool right      = false;
+
+        if (DirectInput.Joysticks[joy_idx].JoystickPOV != -1) {
+            // HAT switch is pressed
+            if        (DirectInput.Joysticks[joy_idx].JoystickPOV >= 4500 * 1 &&
+                       DirectInput.Joysticks[joy_idx].JoystickPOV <= 4500 * 3) {
+                right = true;
+            } else if (DirectInput.Joysticks[joy_idx].JoystickPOV >= 4500 * 5 &&
+                       DirectInput.Joysticks[joy_idx].JoystickPOV <= 4500 * 7) {
+                left = true;
+            } else if (DirectInput.Joysticks[joy_idx].JoystickPOV >  4500 * 3 &&
+                       DirectInput.Joysticks[joy_idx].JoystickPOV <  4500 * 5) {
+                down = true;
+            } else if ((DirectInput.Joysticks[joy_idx].JoystickPOV >  4500 * 7 && 
+                        DirectInput.Joysticks[joy_idx].JoystickPOV <= 4500 * 8) ||
+                       (DirectInput.Joysticks[joy_idx].JoystickPOV >= 0        &&
+                        DirectInput.Joysticks[joy_idx].JoystickPOV < 4500 * 1)) {
+                up = true;
+            }
+        } else if (DirectInput.Joysticks[joy_idx].JoystickX >  pPlayer[0]->JoystickSchwelle) {
+            right = true;
+        } else if (DirectInput.Joysticks[joy_idx].JoystickX < -pPlayer[0]->JoystickSchwelle) {
+            left  = true;
+        } else if (DirectInput.Joysticks[joy_idx].JoystickY >  pPlayer[0]->JoystickSchwelle) {
+            down  = true;
+        } else if (DirectInput.Joysticks[joy_idx].JoystickY < -pPlayer[0]->JoystickSchwelle) {
+            up  = true;
+        }
+
+        if (right) {
+            strcat_s(Buffer, CursorChar);
+        } else if (left) {
+            int buf_len = strlen(Buffer);
+            if (buf_len >= 1) {
+                Buffer[buf_len-1] = '\0';
+            }
+        } else if (up) {
+            // Chars 97-122 are a..z, Chars 48-57 are 0..9, Space is 32
+            if (CursorChar[0] == ' ') {
+                CursorChar[0] = 'a';
+            } else if (CursorChar[0] == 'z') {
+                CursorChar[0] = '0';    // Number '0'
+            } else if (CursorChar[0] == '9') {
+                CursorChar[0] = ' ';
+            } else {
+                CursorChar[0]++;
+            }
+        } else if (down) {
+            // Chars 97-122 are a..z, Chars 48-57 are 0..9, Space is 32
+            if (CursorChar[0] == ' ') {
+                CursorChar[0] = '9';
+            } else if (CursorChar[0] == 'a') {
+                CursorChar[0] = ' ';    // Number '0'
+            } else if (CursorChar[0] == '0') {
+                CursorChar[0] = 'z';
+            } else {
+                CursorChar[0]--;
+            }
+        }
+
+        // Now, handle enter/return (Button 0)
+        if (DirectInput.Joysticks[joy_idx].JoystickButtons[0]) {
+            if (strlen(Buffer) > 0) {
+                CheckCommands();
+                ScrollUp();
+            }
+        }
+    }
+                
     for (int i = 0; i < 256; i++)
     {
         if (KeyDown(i) &&
@@ -745,6 +844,7 @@ void ConsoleClass::Open(void)
     Active = true;
     Showing = true;
     strcpy_s(Buffer, "");
+    CursorChar[0] = ' ';
 }
 
 // --------------------------------------------------------------------------------------
