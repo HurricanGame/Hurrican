@@ -336,3 +336,19 @@ bool DirectJoystickClass::Update(void)
     return true;
 }
 #endif
+
+//DKS-Added these three for better joystick support, esp in menus
+bool DirectJoystickClass::ButtonEnterPressed(void)
+{
+    return JoystickButtons[0];   // Default is button 0
+}
+
+bool DirectJoystickClass::ButtonEscapePressed(void)
+{
+    return JoystickButtons[1];   // Default is button 1
+}
+
+bool DirectJoystickClass::ButtonDeletePressed(void)
+{
+    return JoystickButtons[4];   // Default is button 4
+}

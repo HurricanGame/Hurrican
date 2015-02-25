@@ -72,7 +72,15 @@ public:
 #endif
 
     bool Update(void);
+
+    //DKS-Added these three for better joystick support, esp in menus
+    // Returns true if button(s) serving as Enter key  are pressed (For menus)
+    bool ButtonEnterPressed(void);
+
+    // Returns true if button(s) serving as Escape key are pressed (For menus)
+    bool ButtonEscapePressed(void);
+
+    // Returns true if button(s) serving as Delete key are pressed (For menus, esp. button mapping menu)
+    bool ButtonDeletePressed(void);
 };
-
 #endif
-
