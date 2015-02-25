@@ -93,6 +93,7 @@ public:
     bool AnyKeyDown(void);
     bool AnyButtonDown(void);
     void UpdateJoysticks(void);
+
 #if defined(ANDROID)
 #define BOX_RECT_TOTAL 12
     uint16_t Width;

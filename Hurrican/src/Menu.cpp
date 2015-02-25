@@ -912,6 +912,9 @@ MenuClass::MenuClass(void)
     LowResCreditsCount = 0;
     while (strcmp(LowResCredits[LowResCreditsCount], "#eoc") != 0)
         LowResCreditsCount++;
+
+    //DKS - Initialize NewName with just the cursor char
+    strcpy_s(NewName, "_");
 }
 
 // --------------------------------------------------------------------------------------
@@ -1709,6 +1712,22 @@ void MenuClass::ShowMenu(void)
 
 void MenuClass::DoMenu(void)
 {
+    //DKS - Modified extensively while adding joystick support and fixing navigation backwards to previous menus
+    bool joy_up         = false;
+    bool joy_down       = false;
+    bool joy_left       = false;
+    bool joy_right      = false;
+    bool joy_enter      = false;        // Mapped to joy button 0 by default
+    bool joy_escape     = false;        // Mapped to joy button 1 by default
+    bool joy_delete     = false;        // Mapped to joy button 4 by default
+    int joy_idx = pPlayer[0]->JoystickIndex;
+    static float input_counter = 0.0f;
+    const float input_delay = 40.0f;     // Only accept joy input once every time counter reaches this value
+    input_counter += 30.0f SYNC;
+    if (input_counter > input_delay) {
+        input_counter = input_delay;
+    }
+
     // Einheitsmatrix setzen, damit das Menu richtig angezeigt wird
     //
     D3DXMATRIX matView;
@@ -1748,14 +1767,6 @@ void MenuClass::DoMenu(void)
 
     ShowMenu();
 
-    //LanguageFile Info Fenster Counter runterzählen und Fenster ggf anzeigen
-    //
-    if (ShowLanguageInfoCounter > 0.0f)
-    {
-        ShowLanguageInfoCounter -= 50.0f SYNC;
-        ShowLanguageInfo();
-    }
-
     if (pConsole->Showing)
         return;
 
@@ -1765,18 +1776,51 @@ void MenuClass::DoMenu(void)
     bool anybutton = false;
 
     for (int i = 0; i < MAX_JOYSTICKBUTTONS; i++)
-        DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickButtons[i] = false;
+        DirectInput.Joysticks[joy_idx].JoystickButtons[i] = false;
 
     DirectInput.UpdateJoysticks();
 
     for (int i = 0; i < MAX_JOYSTICKBUTTONS; i++)
-        if (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickButtons[i] == true)
+        if (DirectInput.Joysticks[joy_idx].JoystickButtons[i] == true)
             anybutton = true;
 
-    if ((KeyDown(DIK_SPACE)  ||
-            KeyDown(DIK_RETURN) ||
-            anybutton == true) && AuswahlPossible == true)
+    if (input_counter >= input_delay && JoystickFound == true) {
+        if (DirectInput.Joysticks[joy_idx].JoystickPOV != -1) {
+            // HAT switch is pressed
+            if        (DirectInput.Joysticks[joy_idx].JoystickPOV >= 4500 * 1 &&
+                       DirectInput.Joysticks[joy_idx].JoystickPOV <= 4500 * 3) {
+                joy_right = true;
+            } else if (DirectInput.Joysticks[joy_idx].JoystickPOV >= 4500 * 5 &&
+                       DirectInput.Joysticks[joy_idx].JoystickPOV <= 4500 * 7) {
+                joy_left = true;
+            } else if (DirectInput.Joysticks[joy_idx].JoystickPOV >  4500 * 3 &&
+                       DirectInput.Joysticks[joy_idx].JoystickPOV <  4500 * 5) {
+                joy_down = true;
+            } else if ((DirectInput.Joysticks[joy_idx].JoystickPOV >  4500 * 7 && 
+                        DirectInput.Joysticks[joy_idx].JoystickPOV <= 4500 * 8) ||
+                       (DirectInput.Joysticks[joy_idx].JoystickPOV >= 0        &&
+                        DirectInput.Joysticks[joy_idx].JoystickPOV < 4500 * 1)) {
+                joy_up = true;
+            }
+        } else if (DirectInput.Joysticks[joy_idx].JoystickX >  pPlayer[0]->JoystickSchwelle) {
+            joy_right = true;
+        } else if (DirectInput.Joysticks[joy_idx].JoystickX < -pPlayer[0]->JoystickSchwelle) {
+            joy_left  = true;
+        } else if (DirectInput.Joysticks[joy_idx].JoystickY >  pPlayer[0]->JoystickSchwelle) {
+            joy_down  = true;
+        } else if (DirectInput.Joysticks[joy_idx].JoystickY < -pPlayer[0]->JoystickSchwelle) {
+            joy_up  = true;
+        }
+
+        joy_enter  = DirectInput.Joysticks[joy_idx].ButtonEnterPressed();
+        joy_escape = DirectInput.Joysticks[joy_idx].ButtonEscapePressed();
+        joy_delete = DirectInput.Joysticks[joy_idx].ButtonDeletePressed();
+    }
+
+    if ((KeyDown(DIK_SPACE)  || KeyDown(DIK_RETURN) || joy_enter) && AuswahlPossible == true) {
+        input_counter = 0.0f;
         selected = true;
+    }
 
     bool JoyOK, KeyOK;
 
@@ -1796,6 +1840,7 @@ void MenuClass::DoMenu(void)
             !KeyDown(DIK_ESCAPE))
         KeyOK = true;
 
+    //DKS - TODO: Figure out if we can get rid of JoyOK, it was here originally and I don't like or want it
     if (JoystickFound == false)
         JoyOK = true;
     else
@@ -1811,25 +1856,26 @@ void MenuClass::DoMenu(void)
             JoyOK == true)
         AuswahlPossible = true;
 
-    if (KeyDown(DIK_ESCAPE) && ShowLanguageInfoCounter > 256.0f)
-    {
+    if ((ShowLanguageInfoCounter > 256.0f && ShowLanguageInfoCounter < 1600.0f) && 
+            (KeyDown(DIK_ESCAPE) || KeyDown(DIK_RETURN) || joy_escape || joy_enter)) {
         ShowLanguageInfoCounter = 256.0f;
         pSoundManager->PlayWave(100, 128, 11025, SOUND_CLICK);
         AuswahlPossible = false;
+        input_counter = 0.0f;
+    }
+
+    //LanguageFile Info Fenster Counter runterzählen und Fenster ggf anzeigen
+    //
+    if (ShowLanguageInfoCounter > 0.0f) {
+        ShowLanguageInfoCounter -= 50.0f SYNC;
+        ShowLanguageInfo();
+        return; // Do not accept menu input until language counter reaches 0
     }
 
     if (AuswahlPossible == true && locked == false &&
-
-            (KeyDown(DIK_NUMPAD8) || KeyDown(DIK_UP)      ||
-
-             (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].Active &&
-
-              (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickY < -pPlayer[0]->JoystickSchwelle ||
-
-               ((DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV >= 4500 * 7 ||
-                 DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV <= 4500 * 1) &&
-                DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV > -1)))))
+            (KeyDown(DIK_NUMPAD8) || KeyDown(DIK_UP) || joy_up))
     {
+        input_counter = 0.0f;
         AuswahlPossible = false;
         AktuellerPunkt--;
         pSoundManager->PlayWave(100, 128, 11025, SOUND_CLICK);
@@ -1867,17 +1913,9 @@ void MenuClass::DoMenu(void)
     }
 
     if (AuswahlPossible == true && locked == false &&
-
-            (KeyDown(DIK_NUMPAD2) || KeyDown(DIK_DOWN)      ||
-
-             (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].Active &&
-
-              (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickY > pPlayer[0]->JoystickSchwelle ||
-
-               ((DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV >= 4500 * 3 ||
-                 DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV <= 4500 * 5) &&
-                DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV > -1)))))
+            (KeyDown(DIK_NUMPAD2) || KeyDown(DIK_DOWN) || joy_down))
     {
+        input_counter = 0.0f;
         AuswahlPossible = false;
         AktuellerPunkt++;
         pSoundManager->PlayWave(100, 128, 11025, SOUND_CLICK);
@@ -1923,8 +1961,9 @@ void MenuClass::DoMenu(void)
     case MENUZUSTAND_MAINMENU :
     {
         // zurück zum Game ?
-        if (KeyDown(DIK_ESCAPE) && AuswahlPossible == true && Stage != -1)
+        if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true && Stage != -1)
         {
+            input_counter = 0.0f;
             AktuellerPunkt = MENUPUNKT_CONTINUEGAME;
             selected = true;
 
@@ -2023,18 +2062,16 @@ void MenuClass::DoMenu(void)
         // Leiser
         bool pressed = false;
 
-        if (AktuellerPunkt <= 1)
+        if (AktuellerPunkt <= 1) {
 
-            if (KeyDown(DIK_NUMPAD4) ||
-                    KeyDown(DIK_LEFT)    ||
-                    (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].Active &&
-                     (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickX < -pPlayer[0]->JoystickSchwelle ||
-                      (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV >= 4500 * 5 && DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV <= 4500 * 7))))
+            if (KeyDown(DIK_NUMPAD4) || KeyDown(DIK_LEFT) || joy_left) {
                 pressed = true;
-        //else
-        //	pressed = false;
+            } else {
+                pressed = false;
+            }
+        }
 
-        if(pressed)
+        if (pressed)
         {
             if (AktuellerPunkt == 0)
             {
@@ -2052,11 +2089,7 @@ void MenuClass::DoMenu(void)
         }
 
         // Lauter
-        if (KeyDown(DIK_NUMPAD6) ||
-                KeyDown(DIK_RIGHT)   ||
-                (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].Active &&
-                 (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickX > pPlayer[0]->JoystickSchwelle ||
-                  (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV >= 4500 * 1 && DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV <= 4500 * 3))))
+        if (KeyDown(DIK_NUMPAD6) || KeyDown(DIK_RIGHT) || joy_right)
             pressed = true;
         else
             pressed = false;
@@ -2093,6 +2126,7 @@ void MenuClass::DoMenu(void)
                 locked			 = false;
             }
 
+            //DKS - This was already commented out:
             /*
             				// Joystick Optionen
             				//
@@ -2126,8 +2160,9 @@ void MenuClass::DoMenu(void)
         }
 
         // zurück zum Hauptmenu ?
-        if (KeyDown(DIK_ESCAPE) && AuswahlPossible == true)
+        if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true)
         {
+            input_counter = 0.0f;
             SaveConfig();							// Sound Config speichern
             AuswahlPossible = false;
             AktuellerZustand = MENUZUSTAND_MAINMENU;
@@ -2166,8 +2201,8 @@ void MenuClass::DoMenu(void)
                 else
                     Sprachgrafik = 1;		// oder doch englisch ?
 
-                AktuellerZustand = MENUZUSTAND_MAINMENU;
-                AktuellerPunkt	 = MENUZUSTAND_VOLUMES;
+                AktuellerZustand = MENUZUSTAND_VOLUMES;
+                AktuellerPunkt	 = MENUPUNKT_VOLUMES_LANGUAGE;
                 pSoundManager->PlayWave(100, 100, 11025, SOUND_CLICK);
             }
 
@@ -2175,18 +2210,19 @@ void MenuClass::DoMenu(void)
             else
             {
                 AktuellerZustand = MENUZUSTAND_VOLUMES;
-                AktuellerPunkt	 = 4;
+                AktuellerPunkt	 = MENUPUNKT_VOLUMES_LANGUAGE;
                 pSoundManager->PlayWave(100, 100, 11025, SOUND_CLICK);
             }
         }
 
         // zurück zum Hauptmenu ?
-        if (KeyDown(DIK_ESCAPE) && AuswahlPossible == true)
+        if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true)
         {
+            input_counter = 0.0f;
             SaveConfig();							// Sound Config speichern
             AuswahlPossible = false;
-            AktuellerZustand = MENUZUSTAND_MAINMENU;
-            AktuellerPunkt	 = MENUPUNKT_VOLUMES;
+            AktuellerZustand = MENUZUSTAND_VOLUMES;
+            AktuellerPunkt	 = MENUPUNKT_VOLUMES_LANGUAGE;
             pSoundManager->PlayWave(100, 100, 11025, SOUND_CLICK);
         }
 
@@ -2204,9 +2240,9 @@ void MenuClass::DoMenu(void)
 
         FillPossibleKeys();
 
-        if (KeyDown(DIK_DELETE) ||
-                KeyDown(DIK_BACK))
+        if (KeyDown(DIK_DELETE) || KeyDown(DIK_BACK) || joy_delete)
         {
+            input_counter = 0.0f;
             pCurrentPlayer->AktionJoystick[AktuellerPunkt - 3] = -1;
             pCurrentPlayer->AktionKeyboard[AktuellerPunkt - 3] = -1;
         }
@@ -2280,11 +2316,11 @@ void MenuClass::DoMenu(void)
                 else
                     pCurrentPlayer = pPlayer[1];
 
-                if (KeyDown(DIK_NUMPAD6) ||
-                        KeyDown(DIK_RIGHT)   ||
-                        DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickX > pPlayer[0]->JoystickSchwelle ||
-                        (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV >= 4500 * 1 && DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV <= 4500 * 3))
+                //DKS - TODO: allow a second joystick to adjust this
+                if (KeyDown(DIK_NUMPAD6) || KeyDown(DIK_RIGHT) || joy_right)
                 {
+                    input_counter = input_delay * 0.75f;     // Delay less than usual
+
                     // Empfindlichkeit ändern?
                     if (AktuellerPunkt == 2)
                     {
@@ -2312,11 +2348,11 @@ void MenuClass::DoMenu(void)
                     }
                 }
 
-                if (KeyDown(DIK_NUMPAD4) ||
-                        KeyDown(DIK_LEFT)    ||
-                        DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickX < -pPlayer[0]->JoystickSchwelle ||
-                        (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV >= 4500 * 5 && DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV <= 4500 * 7))
+                //DKS - TODO allow a second joystick to adjust this
+                if (KeyDown(DIK_NUMPAD4) || KeyDown(DIK_LEFT) || joy_left)
                 {
+                    input_counter = input_delay * 0.75f;     // Delay less than usual
+
                     // Empfindlichkeit ändern?
                     if (AktuellerPunkt == 2)
                     {
@@ -2402,8 +2438,9 @@ void MenuClass::DoMenu(void)
             }
 
             // zurück zum Hauptmenu ?
-            if (KeyDown(DIK_ESCAPE) && AuswahlPossible == true)
+            if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true)
             {
+                input_counter = 0.0f;
                 // Neue Tastennamen für die Tutorial-Texte übernehmen
                 InitReplacers();
 
@@ -2412,13 +2449,17 @@ void MenuClass::DoMenu(void)
 
                 AuswahlPossible = false;
                 AktuellerZustand = MENUZUSTAND_VOLUMES;
-                AktuellerPunkt	 = MENUPUNKT_VOLUMES;
+                AktuellerPunkt	 = MENUPUNKT_VOLUMES_TASTEN;
                 pSoundManager->PlayWave(100, 100, 11025, SOUND_CLICK);
             }
         }
     }
-    break; // Languages
+    break; // Tasten
 
+    //DKS - This following menu was not actually used in the code..
+    //      It appears to be a joystick-specific controls reconfiguration menu, but
+    //      the other menu (TASTEN) handles both keyboard and joysticks just fine.
+    //      TODO: perfect the section above (TASTEN)
     case MENUZUSTAND_BUTTONS:
     {
         // Button gedrückt ?
@@ -2439,32 +2480,30 @@ void MenuClass::DoMenu(void)
         {
             bool pressed = false;
 
-            if (KeyDown(DIK_NUMPAD4) ||
-                    KeyDown(DIK_LEFT)    ||
-                    DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickX < -pPlayer[0]->JoystickSchwelle ||
-                    (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV >= 4500 * 5 && DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV <= 4500 * 7))
+            //DKS - TODO: allow a second joystick to adjust this
+            if (KeyDown(DIK_NUMPAD4) || KeyDown(DIK_LEFT) || joy_left)
                 pressed = true;
             else
                 pressed = false;
 
-            if(pressed)
+            if (pressed)
             {
+                input_counter = input_delay * 0.75f;     // Delay less than usual
                 pPlayer[0]->JoystickSchwelle += 50.0f SYNC;
                 if (pPlayer[0]->JoystickSchwelle > 1000.0f-1)
                     pPlayer[0]->JoystickSchwelle = 1000.0f-1;
             }
 
             // Lauter
-            if (KeyDown(DIK_NUMPAD6) ||
-                    KeyDown(DIK_RIGHT)   ||
-                    DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickX > pPlayer[0]->JoystickSchwelle ||
-                    (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV >= 4500 * 1 && DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV <= 4500 * 3))
+            //DKS - TODO: allow a second joystick to adjust this
+            if (KeyDown(DIK_NUMPAD6) || KeyDown(DIK_RIGHT) || joy_right)
                 pressed = true;
             else
                 pressed = false;
 
-            if(pressed)
+            if (pressed)
             {
+                input_counter = input_delay * 0.75f;     // Delay less than usual
                 pPlayer[0]->JoystickSchwelle -= 50.0f SYNC;
                 if (pPlayer[0]->JoystickSchwelle < 1.0f)
                     pPlayer[0]->JoystickSchwelle = 1.0f;
@@ -2504,8 +2543,9 @@ void MenuClass::DoMenu(void)
         }
 
         // zurück zum Hauptmenu ?
-        if (KeyDown(DIK_ESCAPE) && AuswahlPossible == true)
+        if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true)
         {
+            input_counter = 0.0f;
             SaveConfig();							// Sound Config speichern
             AuswahlPossible = false;
             AktuellerZustand = MENUZUSTAND_MAINMENU;
@@ -2513,15 +2553,17 @@ void MenuClass::DoMenu(void)
             pSoundManager->PlayWave(100, 100, 11025, SOUND_CLICK);
         }
     }
-    break;
+    break;  // Buttons
 
     // Die Credits und die Highscore
     case MENUPUNKT_CREDITS  :
     case MENUPUNKT_HIGHSCORES :
     {
         // zurück zum Hauptmenu ?
-        if (KeyDown(DIK_ESCAPE) && AuswahlPossible == true)
+        if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true)
         {
+            input_counter = 0.0f;
+            
             if (AktuellerZustand == MENUPUNKT_CREDITS)
             {
                 pSoundManager->SetSongVolume(MUSIC_MENU, 0);
@@ -2548,16 +2590,69 @@ void MenuClass::DoMenu(void)
 
     case MENUZUSTAND_ENTERNAME :
     {
+        //DKS - Modified extensively to allow joystick name entry
         static unsigned char Taste;
         static bool possible = false;
 
-        if (!KeyDown(DIK_RETURN))
+        int newname_len = strlen(NewName);
+        int newname_maxlen = 16;
+
+        
+        if (joy_right) {
+            input_counter = 0.0f;
+            if (newname_len < newname_maxlen && newname_len > 0 && NewName[newname_len-1] != '_') {
+                NewName[newname_len] = '_';  // Add prompt char
+                NewName[newname_len+1] = '\0';
+                newname_len++;
+            }
+        } else if (joy_left) {
+            input_counter = 0.0f;
+            if (newname_len > 1) {
+                NewName[newname_len-2] = '_';
+                NewName[newname_len-1] = '\0';
+                newname_len--;
+            }
+        } else if (joy_up) {
+            input_counter = 0.0f;
+            if (newname_len > 0) {
+                // Chars 97-122 are a..z, Chars 48-57 are 0..9, Space is 32
+                if (NewName[newname_len-1] == 'Z') {
+                    NewName[newname_len-1] = '0';    // Number '0'
+                } else if (NewName[newname_len-1] == '9' || NewName[newname_len-1] == '_') {
+                    NewName[newname_len-1] = 'A';
+                } else {
+                    NewName[newname_len-1]++;
+                }
+            }
+        } else if (joy_down) {
+            input_counter = 0.0f;
+            if (newname_len > 0) {
+                // Chars 97-122 are a..z, Chars 48-57 are 0..9, Space is 32
+                if (NewName[newname_len-1] == 'A' || NewName[newname_len-1] == '_') {
+                    NewName[newname_len-1] = '9';    
+                } else if (NewName[newname_len-1] == '0') {
+                    NewName[newname_len-1] = 'Z';
+                } else {
+                    NewName[newname_len-1]--;
+                }
+            }
+        }
+
+        if (!KeyDown(DIK_RETURN) && !joy_enter)
             AuswahlPossible = true;
 
-        if (KeyDown(DIK_RETURN) && AuswahlPossible == true)
+        if ((KeyDown(DIK_RETURN) || joy_enter) && AuswahlPossible == true)
         {
+            input_counter = 0.0f;
+            //Strip trailing cursor char
+            if (newname_len > 0 && NewName[newname_len-1] == '_') {
+                NewName[newname_len-1] = '\0';
+                newname_len--;
+            }
+
             // Neuen Namen an die neue Position setzen
             strcpy_s(Highscores[NewRank].Name, strlen(NewName) + 1, NewName);
+
             Highscores[NewRank].Stage = NewStage;
             Highscores[NewRank].Skill = NewSkill;
 
@@ -2578,9 +2673,9 @@ void MenuClass::DoMenu(void)
             possible = true;
 
             // Testen ob die gedrückte Taste loasgelassen wurde
-            if (KeyDown(Taste) || KeyDown(DIK_BACK) || KeyDown(DIK_SPACE))
+            if (KeyDown(Taste) || KeyDown(DIK_BACK) || KeyDown(DIK_SPACE) 
+                    || joy_left || joy_right || joy_up || joy_down)
                 possible = false;
-
         }
 
         for (int i=0; i<256; i++)		// Puffer durchgehen
@@ -2590,50 +2685,60 @@ void MenuClass::DoMenu(void)
 
                 if (KeyDown(DIK_BACK))
                 {
-                    if (strlen(NewName) > 0)
-                    {
-                        // TODO FIX
-                        // String umdrehen
-                        //
-                        /*
-                        strrev(NewName);
-
-                        						char buf[30];
-                        						int  laenge;
-
-                        						laenge = strlen(NewName);
-                        						strcpy_s(buf, "");
-
-                        						for (int l=0; l<laenge; l++)
-                        							buf[l] = NewName[l+1];
-
-                        						strrev(buf);
-                        						strcpy_s(NewName, buf);*/
-
+                    //DKS - added in missing/disabled backspace support
+                    if (newname_len > 1) {
+                        pSoundManager->PlayWave(100, 128, 11025, SOUND_CLICK);
+                        NewName[newname_len-2] = '_';
+                        NewName[newname_len-1] = '\0';
+                        newname_len--;
                     }
-                    //strcpy_s(NewName, "");
                 }
                 else if (KeyDown(DIK_SPACE))
                 {
-                    // TODO FIX
-                    /*
-                    if (strlen(NewName) < 16)
-                    					strcat_s(NewName, " ");*/
+                    //DKS - added in missing/disabled space support
+                    // Only insert a space if the string is not empty
+                    if (newname_len > 1 && NewName[newname_len-1] == '_' && newname_len < newname_maxlen) {
+                        pSoundManager->PlayWave(100, 128, 11025, SOUND_CLICK);
+                        NewName[newname_len-1] = ' ';
+                        NewName[newname_len]   = '_';
+                        NewName[newname_len+1] = '\0';
+                        newname_len++;
+                    }
+                       
 
                 }
                 else
                 {
                     Taste = i;
-                    if (strlen(GetKeyName(Taste)) <= 1 &&
-                            strlen(NewName) < 16)
-                        strcat_s(NewName, strlen(GetKeyName(Taste)) + 1, GetKeyName(Taste));
+                    if (strlen(GetKeyName(Taste)) == 1 && newname_len < newname_maxlen) {
+                        char keyname[2];
+                        strcpy_s(keyname, GetKeyName(Taste));
+                        keyname[0] = toupper(keyname[0]); 
+                        if ((keyname[0] >= 'A' && keyname[0] <= 'Z') ||
+                            (keyname[0] >= '0' && keyname[0] <= '9'))
+                        {
+                            pSoundManager->PlayWave(100, 128, 11025, SOUND_CLICK);
+                            // NewName should already have a trailing underscore, indicating the cursor..
+                            //  replace it with the new char and a new underscore
+                            if (newname_len > 0) {
+                                NewName[newname_len-1] = keyname[0];
+                                NewName[newname_len]   = '_';
+                                NewName[newname_len+1] = '\0';
+                                newname_len++;
+                            } else {
+                                NewName[0] = keyname[0];
+                                NewName[1] = '_';
+                                NewName[2] = '\0';
+                                newname_len = 2;
+                            }
+                        }
+                    }
                 }
             }
 
         // Aktuellen Namen azeigen
         char Buffer[20];
-
-        sprintf_s(Buffer, "%s_", NewName);
+        sprintf_s(Buffer, "%s", NewName);
         pMenuFont->DrawTextCenterAlign(319, ypos + 230, Buffer, D3DCOLOR_RGBA(0, 0, 255, 255), 2);
         pMenuFont->DrawTextCenterAlign(321, ypos + 230, Buffer, D3DCOLOR_RGBA(0, 0, 255, 255), 2);
         pMenuFont->DrawTextCenterAlign(320, ypos + 229, Buffer, D3DCOLOR_RGBA(0, 0, 255, 255), 2);
@@ -2646,7 +2751,6 @@ void MenuClass::DoMenu(void)
     // Neues Spiel starten / Savegame laden
     case MENUZUSTAND_NEWGAME :
     {
-
         if (AktuellerPunkt < 0)
             AktuellerPunkt = 2;
 
@@ -2654,10 +2758,11 @@ void MenuClass::DoMenu(void)
             AktuellerPunkt = 0;
 
         // Zurück ins Haupt Menu ?
-        if (KeyDown(DIK_ESCAPE) && AuswahlPossible == true)
+        if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true)
         {
+            input_counter = 0.0f;
             AktuellerZustand = MENUZUSTAND_MAINMENU;
-            AktuellerPunkt	 = 0;
+            AktuellerPunkt	 = MENUPUNKT_STARTGAME;
         }
 
         // Menu-Punkt ausgewählt ?
@@ -2666,7 +2771,7 @@ void MenuClass::DoMenu(void)
             AuswahlPossible = false;
 
             // Tutorial spielen?
-            if (AktuellerPunkt == 0)
+            if (AktuellerPunkt == MENUPUNKT_NEWGAME_TUTORIAL)
             {
                 pSoundManager->PlayWave(100, 128, 11025, SOUND_CLICK);
 
@@ -2681,14 +2786,14 @@ void MenuClass::DoMenu(void)
             }
 
             // Neues Spiel starten ?
-            if (AktuellerPunkt == 1)
+            if (AktuellerPunkt == MENUPUNKT_NEWGAME_STARTNEWGAME)
             {
                 AktuellerZustand = MENUZUSTAND_PLAYERCOUNT;
                 AktuellerPunkt	 = 0;						// Auf Medium anfangen
             }
 
             // altes Spiel laden ?
-            else if (AktuellerPunkt == 2)
+            else if (AktuellerPunkt == MENUPUNKT_NEWGAME_LOADGAME)
             {
                 AktuellerZustand = MENUZUSTAND_LOADGAME;
                 AktuellerPunkt	 = 0;
@@ -2709,11 +2814,12 @@ void MenuClass::DoMenu(void)
             AktuellerPunkt = 0;
 
         // Zurück ins Haupt Menu ?
-        if (KeyDown(DIK_ESCAPE) && AuswahlPossible == true)
+        if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true)
         {
+            input_counter = 0.0f;
             AuswahlPossible = false;
             AktuellerZustand = MENUZUSTAND_NEWGAME;
-            AktuellerPunkt	 = 1;
+            AktuellerPunkt	 = MENUPUNKT_NEWGAME_STARTNEWGAME;
         }
 
         // Menu-Punkt ausgewählt ?
@@ -2740,8 +2846,9 @@ void MenuClass::DoMenu(void)
             AktuellerPunkt = 0;
 
         // Zurück ins New Game Menu ?
-        if (KeyDown(DIK_ESCAPE) && AuswahlPossible == true)
+        if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true)
         {
+            input_counter = 0.0f;
             AuswahlPossible = false;
             AktuellerZustand = MENUZUSTAND_PLAYERCOUNT;
             AktuellerPunkt	 = tempNUMPLAYERS - 1;
@@ -2778,10 +2885,11 @@ void MenuClass::DoMenu(void)
             AktuellerPunkt = 0;
 
         // Zurück ins New Game Menu ?
-        if (KeyDown(DIK_ESCAPE) && AuswahlPossible == true)
+        if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true)
         {
+            input_counter = 0.0f;
             AktuellerZustand = MENUZUSTAND_NEWGAME;
-            AktuellerPunkt	 = 0;
+            AktuellerPunkt	 = MENUPUNKT_NEWGAME_LOADGAME;
             AuswahlPossible  = false;
         }
 
@@ -3340,7 +3448,8 @@ void MenuClass::CheckForNewHighscore(void)
     NewScore = 0;
     NewRank  = 0;
     AktuellerPunkt = 0;
-    strcpy_s(NewName, "");
+    //DKS - Initialize NewName with just the cursor char
+    strcpy_s(NewName, "_");
 
     // Alle Highscores durchgehen und vergleichen
     //
@@ -3369,7 +3478,8 @@ void MenuClass::CheckForNewHighscore(void)
 
             // Werte für den neuen Eintrag löschen
             NewRank = j;
-            strcpy_s(NewName, "");
+            //DKS - Initialize NewName with just the cursor char
+            strcpy_s(NewName, "_");
             strcpy_s(Highscores[NewRank].Name, "");
             AktuellerZustand = MENUZUSTAND_ENTERNAME;
             break;

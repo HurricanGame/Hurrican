@@ -52,9 +52,17 @@
 #define MENUPUNKT_CREDITS		4
 #define MENUPUNKT_END			5
 
-#define MENUPUNKT_MUSIC			0
-#define MENUPUNKT_SOUND			1
-#define MENUPUNKT_BACK			2
+//DKS - Added missing defines (In the correct order!) for VOLUMES sub-menu, a.k.a. PREFERENCES sub-menu
+#define MENUPUNKT_VOLUMES_SOUND         0
+#define MENUPUNKT_VOLUMES_MUSIC         1
+#define MENUPUNKT_VOLUMES_TASTEN        2    // Controls  reconfiguration
+#define MENUPUNKT_VOLUMES_LANGUAGE      3
+#define MENUPUNKT_VOLUMES_DETAILS       4
+
+//DKS - Added missing defines for NEWGAME sub-menu
+#define MENUPUNKT_NEWGAME_TUTORIAL      0
+#define MENUPUNKT_NEWGAME_STARTNEWGAME  1
+#define MENUPUNKT_NEWGAME_LOADGAME      2
 
 // --------------------------------------------------------------------------------------
 // Strukturen
