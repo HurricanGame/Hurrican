@@ -1775,14 +1775,10 @@ void MenuClass::DoMenu(void)
     bool selected = false;
     bool anybutton = false;
 
-    for (int i = 0; i < MAX_JOYSTICKBUTTONS; i++)
-        DirectInput.Joysticks[joy_idx].JoystickButtons[i] = false;
-
     DirectInput.UpdateJoysticks();
 
-    for (int i = 0; i < MAX_JOYSTICKBUTTONS; i++)
-        if (DirectInput.Joysticks[joy_idx].JoystickButtons[i] == true)
-            anybutton = true;
+    if (DirectInput.AnyButtonDown())
+        anybutton = true;
 
     if (input_counter >= input_delay && JoystickFound == true) {
         if (DirectInput.Joysticks[joy_idx].JoystickPOV != -1) {

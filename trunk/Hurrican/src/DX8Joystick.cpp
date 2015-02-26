@@ -27,6 +27,7 @@ DirectJoystickClass::DirectJoystickClass(void)
     JoystickY = 0;
     JoystickPOV = -1;
     CanForceFeedback = false;
+    NumButtons = 0;
 
     for(int i = 0; i<MAX_JOYSTICKBUTTONS; i++)
         JoystickButtons[i] = false;
@@ -190,6 +191,10 @@ bool DirectJoystickClass::Init(HWND hwnd, LPDIRECTINPUT8 lpDI)
 
     Active = true;
 
+    //DKS - new code to set the number of buttons this joystick supports
+    //      NOTE: this is completely untested, not even tested to compile yet:
+    NumButtons = lpDIJoystick->Caps.NumberButtons;
+
     return true;
 }
 #elif defined(PLATFORM_SDL)
@@ -208,6 +213,7 @@ bool DirectJoystickClass::Init(int joy)
     Protokoll.WriteText( false, "Joystick : Acquire successful!\n" );
 
     Active = true;
+    NumButtons = SDL_JoystickNumButtons(lpDIJoystick);
 
     return true;
 }
@@ -259,7 +265,7 @@ bool DirectJoystickClass::Update(void)
         }
     }
 
-    for (int i = 0; i < MAX_JOYSTICKBUTTONS; i++)
+    for (int i = 0; i < NumButtons; i++)
     {
         if (js.rgbButtons [i] & 0x80)
             JoystickButtons[i] = true;
@@ -280,7 +286,7 @@ bool DirectJoystickClass::Update(void)
     {
         SDL_JoystickUpdate();
 
-        for (int i = 0; i < SDL_JoystickNumButtons( lpDIJoystick ); i++)
+        for (int i = 0; i < NumButtons; i++)
         {
             if (SDL_JoystickGetButton( lpDIJoystick, i ) >= 1)
                 JoystickButtons[i] = true;

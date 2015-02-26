@@ -984,8 +984,13 @@ void StageClear(bool PlaySong)
 void SummaryScreen(void)
 {
     bool leave      = false;
-    bool keypressed = false;
+    bool all_controls_unpressed_yet = false;
     bool reveal_cheat = (RunningTutorial == false) && (pPlayer[0]->DiamondsThisLevel == pTileEngine->MaxDiamonds);
+    
+    //DKS - Added counter to prevent accidental early-exit:
+    const float delay_can_leave = 400.0f;
+    const float delay_inc = 30.0f;
+    float delay_ctr = 0.0f;
 
     ShowSummary = true;
 
@@ -1058,15 +1063,17 @@ void SummaryScreen(void)
         pDefaultFont->DrawText((float)(RENDERWIDTH-pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_TITLE]))/2,
                 title_txt_y, TextArray[TEXT_SUMMARY_TITLE], color);
 
-        std::string str_pressanykey(TextArray[TEXT_SUMMARY_PRESSFIRE]);
+        if (delay_ctr >= delay_can_leave) {
+            std::string str_pressanykey(TextArray[TEXT_SUMMARY_PRESSFIRE]);
 
-        // If player 1 is controlled with joystick, replace all references to 'key' with 'button'
-        if (pPlayer[0]->ControlType == JOYMODE_STICK) {
-            ReplaceAll(str_pressanykey, "key", "button");
+            // If player 1 is controlled with joystick, replace all references to 'key' with 'button'
+            if (pPlayer[0]->ControlType != JOYMODE_KEYBOARD) {
+                ReplaceAll(str_pressanykey, "key", "button");
+            }
+
+            pDefaultFont->DrawText((float)(RENDERWIDTH-pDefaultFont->StringLength(str_pressanykey.c_str()))/2,
+                    pressanykey_txt_y, str_pressanykey.c_str(), color);
         }
-
-        pDefaultFont->DrawText((float)(RENDERWIDTH-pDefaultFont->StringLength(str_pressanykey.c_str()))/2,
-                pressanykey_txt_y, str_pressanykey.c_str(), color);
 
         pGegnerGrafix[POWERBLOCK]->RenderSpriteScaled(sprite1_x-16, sprites_y-16, 32, 32, 1, color);
         pGegnerGrafix[DIAMANT]->RenderSprite(sprite2_x-14, sprites_y-14, 0, color, false);
@@ -1114,18 +1121,26 @@ void SummaryScreen(void)
         SpeedFaktor = pTimer->SpeedFaktor;
 
         DirectInput.UpdateTastatur();
+        DirectInput.UpdateJoysticks();
+        bool keypressed = DirectInput.AnyKeyDown();
+        bool buttonpressed = DirectInput.AnyButtonDown();
 
-        for (int i = 0; i < 255; i++)
-            if (TastaturPuffer[i] != 0)
-                keypressed = true;
+        if (!keypressed && !buttonpressed) {
+            all_controls_unpressed_yet = true;
+        }
 
-        if (keypressed == true &&
-                DirectInput.AreAllKeysReleased())
-            leave = true;
+        if (all_controls_unpressed_yet && delay_ctr >= delay_can_leave) {
+            if (buttonpressed || keypressed)
+                leave = true;
+        }
 
         // Musik zuende ?
         if (MUSIC_IsFinished(pSoundManager->its_Songs[MUSIC_STAGECLEAR]->SongData))
             pSoundManager->StopSong(MUSIC_STAGECLEAR, false);
+
+        delay_ctr += delay_inc SYNC;
+        if (delay_ctr > delay_can_leave)
+            delay_ctr = delay_can_leave;
     }
 
 #if defined(PLATFORM_DIRECTX) /* SDL_mixer does not work this kind of check, as far as i can tell */
@@ -1133,7 +1148,8 @@ void SummaryScreen(void)
     while (!MUSIC_IsFinished(pSoundManager->its_Songs[MUSIC_STAGECLEAR]->SongData))
         ;
 #elif defined(PLATFORM_SDL)
-    SDL_Delay( 3000 );
+    //DKS - I revamped this summary screen code quite a bit so that no delay should ever be necessary
+    //    SDL_Delay( 3000 );
 #endif
 
     pSoundManager->StopSong(MUSIC_STAGECLEAR, false);
