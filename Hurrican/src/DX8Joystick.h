@@ -58,6 +58,7 @@ public:
     int   JoystickMode;								// Joypad oder Stickmode
     bool  JoystickButtons[MAX_JOYSTICKBUTTONS];		// Feuerknopf gedrückt?
     char  JoystickName[50];							// Joystick Produktname
+    int   NumButtons;                               // How many buttons joystick supports
 
     DirectJoystickClass(void);
     ~DirectJoystickClass(void);

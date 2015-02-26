@@ -687,7 +687,7 @@ bool DirectInputClass::AnyButtonDown(void)
         return false;
 
     for (int i = 0; i < JoysticksFound; i++)
-        for (int j = 0; j < MAX_JOYSTICKBUTTONS; j++)
+        for (int j = 0; j < Joysticks[i].NumButtons; j++)
             if (Joysticks[i].JoystickButtons[j])
                 return true;
 

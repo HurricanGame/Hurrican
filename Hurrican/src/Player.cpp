@@ -570,6 +570,7 @@ bool PlayerClass::GetPlayerInput(void)
     }
 
     // Spieler läuft ins Exit?
+
     if (pPlayer[0]->StageClearRunning == true)
         RunPlayerExit();
 
