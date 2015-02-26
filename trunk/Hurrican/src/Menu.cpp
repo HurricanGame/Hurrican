@@ -1677,7 +1677,15 @@ void MenuClass::ShowMenu(void)
 
     case MENUZUSTAND_LOADGAME :
     {
-        pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET, TextArray [TEXT_MENUE_ALTES_SPIEL_FORTSETZEN], menucolor, 2);
+        // "Continue saved game"
+        if (pDefaultFont->GetScaleFactor() <= 1) {
+            pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET, 
+                    TextArray [TEXT_MENUE_ALTES_SPIEL_FORTSETZEN], menucolor, 2);
+        } else {
+            //DKS - When using scaled fonts, display the text higher and using the small default font
+            pDefaultFont->DrawTextCenterAlign(320, ypos + 20,
+                    TextArray [TEXT_MENUE_ALTES_SPIEL_FORTSETZEN], menucolor, 2);
+        }
 
         ShowSavegames(AktuellerPunkt);
     }
@@ -1685,16 +1693,42 @@ void MenuClass::ShowMenu(void)
 
     case MENUZUSTAND_SAVEGAME :
     {
+        //DKS - Altered to allow scaled fonts on low-resolution devices
+        const int scale_factor = pDefaultFont->GetScaleFactor();
+        int line_off_y = 15;
+        int continue_text_off_y = ypos + 150;
+
+        if (scale_factor > 1) {
+            continue_text_off_y = ypos + 50 + 20;
+            line_off_y = 24;
+        }
+
         ShowSavegames(AktuellerPunkt);
 
-        pMenuFont->DrawTextCenterAlign(320.0f, ypos + OFFSET, TextArray[TEXT_MENUE_SPIEL_SPEICHERN], 0xFFFFFFFF, 2);
-        pMenuFont->DrawTextCenterAlign(320, ypos + 150 + (MAX_SAVEGAMES+1)*15, TextArray[TEXT_WEITER], 0x80FFFFFF, 2);
+        // "Save Game"
+        if (scale_factor <= 1) {
+            pMenuFont->DrawTextCenterAlign(320.0f, ypos + OFFSET, TextArray[TEXT_MENUE_SPIEL_SPEICHERN], 0xFFFFFFFF, 2);
+        } else {
+            // Use the smaller default font since this we're using scaled fonts and need it to fit:
+            pDefaultFont->DrawTextCenterAlign(320.0f, ypos + 20, TextArray[TEXT_MENUE_SPIEL_SPEICHERN], 0xFFFFFFFF, 2);
+        }
 
         // Aktuelle gewähltes Savegame heller anzeigen
-        //
-        if (AktuellerPunkt == MAX_SAVEGAMES)
-            pMenuFont->DrawTextCenterAlign(320, ypos + 150 + (MAX_SAVEGAMES+1)*15, TextArray[TEXT_WEITER], 0xFFFFFFFF, 2);
-
+        // "Continue"
+        if (scale_factor <= 1) {
+            pMenuFont->DrawTextCenterAlign(320, continue_text_off_y + (MAX_SAVEGAMES+1)*line_off_y, 
+                    TextArray[TEXT_WEITER], 0x80FFFFFF, 2);
+            if (AktuellerPunkt == MAX_SAVEGAMES)
+                pMenuFont->DrawTextCenterAlign(320, continue_text_off_y + (MAX_SAVEGAMES+1)*line_off_y, 
+                        TextArray[TEXT_WEITER], 0xFFFFFFFF, 2);
+        } else {
+            // If using scaled fonts, use the smaller default font:
+            pDefaultFont->DrawTextCenterAlign(320, continue_text_off_y + (MAX_SAVEGAMES+1)*line_off_y, 
+                    TextArray[TEXT_WEITER], 0x80FFFFFF, 2);
+            if (AktuellerPunkt == MAX_SAVEGAMES)
+                pDefaultFont->DrawTextCenterAlign(320, continue_text_off_y + (MAX_SAVEGAMES+1)*line_off_y, 
+                        TextArray[TEXT_WEITER], 0xFFFFFFFF, 2);
+        }
     }
     break; // Save Game
 
@@ -3148,14 +3182,33 @@ void MenuClass::LoadSavegames(void)
 // Savegames anzeigen
 // --------------------------------------------------------------------------------------
 
+//DKS - Altered to allow scaled fonts on low resolution devices
 void MenuClass::ShowSavegames(int Highlight)
 {
     char buffer[100];
     D3DCOLOR col;
+    const int scale_factor = pDefaultFont->GetScaleFactor();
+    int line_off_y = 14;
+    int title_bar_off_y = ypos + 120;
+    int savegames_off_y = ypos + 150;
+    int col1_off_x = xpos + 100;
+    int col2_off_x = xpos + 150;
+    int col3_off_x = xpos + 250;
 
-    pDefaultFont->DrawTextCenterAlign(xpos + 100, ypos + 120 , TextArray[TEXT_SAVE_STAGE], 0xFFFFFFFF, 0);
-    pDefaultFont->DrawTextCenterAlign(xpos + 150, ypos + 120 , TextArray[TEXT_SAVE_SPIELER], 0xFFFFFFFF, 0);
-    pDefaultFont->DrawTextCenterAlign(xpos + 250, ypos + 120 , TextArray[TEXT_SAVE_DATUM], 0xFFFFFFFF, 0);
+    if (scale_factor > 1) {
+        // Things get shifted higher and spaced farther when using a scaled font, so there's room for everything
+        line_off_y = 24;
+        title_bar_off_y = ypos + 50;
+        savegames_off_y = title_bar_off_y + 30;
+        col1_off_x = xpos/2 + 50;
+        col2_off_x = xpos/2 + 150;
+        col3_off_x = xpos/2 + 350;
+    }
+
+    pDefaultFont->DrawTextCenterAlign(col1_off_x, title_bar_off_y, TextArray[TEXT_SAVE_STAGE], 0xFFFFFFFF, 0);
+    pDefaultFont->DrawTextCenterAlign(col2_off_x, title_bar_off_y, TextArray[TEXT_SAVE_SPIELER], 0xFFFFFFFF, 0);
+    pDefaultFont->DrawTextCenterAlign(col3_off_x, title_bar_off_y, TextArray[TEXT_SAVE_DATUM], 0xFFFFFFFF, 0);
+
 
     // Alle Savegames anzeigen
     for (int i=0; i<MAX_SAVEGAMES; i++)
@@ -3170,7 +3223,7 @@ void MenuClass::ShowSavegames(int Highlight)
         if (Savegames[i].Stage >= 0)
         {
             _itoa_s(Savegames[i].Stage, buffer, 10);
-            pDefaultFont->DrawTextCenterAlign(xpos + 100, ypos + 150 + i*14, buffer, col, 0);
+            pDefaultFont->DrawTextCenterAlign(col1_off_x, savegames_off_y + i*line_off_y, buffer, col, 0);
         }
 
         // Spieler anzeigen
@@ -3178,9 +3231,11 @@ void MenuClass::ShowSavegames(int Highlight)
         if (Savegames[i].Stage >= 0)
         {
             _itoa_s(Savegames[i].Players, buffer, 10);
-            pDefaultFont->DrawTextCenterAlign(xpos + 150, ypos + 150 + i*14, buffer, col, 0);
+            pDefaultFont->DrawTextCenterAlign(col2_off_x, savegames_off_y + i*line_off_y, buffer, col, 0);
         }
 
+        //DKS - This was duplicate code that I removed, it did nothing different than above.. obvious bug
+        /*
         // Skill anzeigen
         //
         if (Savegames[i].Stage >= 0)
@@ -3188,18 +3243,19 @@ void MenuClass::ShowSavegames(int Highlight)
             _itoa_s(Savegames[i].Players, buffer, 10);
             pDefaultFont->DrawTextCenterAlign(xpos + 150, ypos + 150 + i*14, buffer, col, 0);
         }
+        */
 
 
         // Ist ein Savegame gefunden worden ?
         if (Savegames[i].Stage >= 0)
         {
-            pDefaultFont->DrawTextCenterAlign(xpos + 250, ypos + 150 + i*14, Savegames[i].Name, col, 0);
+            pDefaultFont->DrawTextCenterAlign(col3_off_x, savegames_off_y + i*line_off_y, Savegames[i].Name, col, 0);
         }
 
         // oder ist dort noch ein leerer Slot ?
         else
         {
-            pDefaultFont->DrawTextCenterAlign(320, ypos + 150 + i*14, TextArray[TEXT_SAVE_LEER], col, 0);
+            pDefaultFont->DrawTextCenterAlign(320, savegames_off_y + i*line_off_y, TextArray[TEXT_SAVE_LEER], col, 0);
         }
     }
 }
