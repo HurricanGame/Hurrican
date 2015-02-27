@@ -358,6 +358,8 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 
 #if defined(GCW)
             if (strcmp(Joysticks[i].JoystickName, "linkdev device (Analog 2-axis 8-button 2-hat)") == 0) {
+                // Replace GCW control's name with something that is clearer
+                strcpy_s(Joysticks[i].JoystickName, "GCW Zero");
                 InternalJoystickIndex = i;
                 Protokoll.WriteText( false, "Found GCW Zero's built-in controls.\n" );
             }
