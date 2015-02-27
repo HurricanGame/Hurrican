@@ -352,7 +352,6 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
         else
         {
             JoystickFound = true;
-            Joysticks[i].CanForceFeedback = false;
         }
     }
 #endif /* ANDROID */
