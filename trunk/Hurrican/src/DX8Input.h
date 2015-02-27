@@ -65,7 +65,10 @@ class DirectInputClass
 {
 private:
     LPDIRECTINPUT8			lpDI;					// DirectInput Hauptinterface
-
+#if defined(GCW)
+    int                     InternalJoystickIndex;  // If the system has built-in joystick controls, 
+#endif //GCW
+                                                    // this is their index, -1 otherwise.
 public:
 
 #if defined(PLATFORM_DIRECTX)
@@ -93,6 +96,14 @@ public:
     bool AnyKeyDown(void);
     bool AnyButtonDown(void);
     void UpdateJoysticks(void);
+
+#if defined(GCW)
+    // If the system has built-in joystick controls, this is their index, 0 is default.
+    // On embedded systems like GCW Zero, this is set to the device's internal controls 
+    // so that a player is never 'locked out' and also so the game is not dependent on
+    // the system always setting the internal controls to device index 0. Likely useful on other devices, too. -DKS
+    int  GetInternalJoystickIndex(void) { return InternalJoystickIndex; }
+#endif //GCW
 
 #if defined(ANDROID)
 #define BOX_RECT_TOTAL 12

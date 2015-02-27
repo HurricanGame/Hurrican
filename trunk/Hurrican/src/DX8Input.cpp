@@ -127,6 +127,9 @@ DirectInputClass::DirectInputClass(void)
 
     JoysticksFound = 0;
     UseForceFeedback = false;
+#if defined(GCW)
+    InternalJoystickIndex = 0;      // DKS: Set to the device's internal joystick controls, default is 0.
+#endif //GCW
 }
 
 // --------------------------------------------------------------------------------------
@@ -347,11 +350,18 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
     {
         if(Joysticks[i].Init(i) == false)
         {
-            Protokoll.WriteText( false, "Error opening joystick" );
+            Protokoll.WriteText( false, "Error opening joystick\n" );
         }
         else
         {
             JoystickFound = true;
+
+#if defined(GCW)
+            if (strcmp(Joysticks[i].JoystickName, "linkdev device (Analog 2-axis 8-button 2-hat)") == 0) {
+                InternalJoystickIndex = i;
+                Protokoll.WriteText( false, "Found GCW Zero's built-in controls.\n" );
+            }
+#endif //GCW
         }
     }
 #endif /* ANDROID */
