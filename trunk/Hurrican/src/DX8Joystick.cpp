@@ -212,6 +212,7 @@ bool DirectJoystickClass::Init(int joy)
 
     Active = true;
     NumButtons = SDL_JoystickNumButtons(lpDIJoystick);
+    CanForceFeedback = false;       // Forced false for now until implemented
 
     // Get joystick's name
     if (strlen(SDL_JoystickName(joy)) < sizeof(JoystickName)) {
