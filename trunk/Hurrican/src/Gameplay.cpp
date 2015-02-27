@@ -683,9 +683,21 @@ void CreateDefaultConfig(void)
     pPlayer[1]->Walk_UseAxxis = true;
     pPlayer[1]->Look_UseAxxis = true;
 
-#ifdef GCW
+    //DKS - Added missing default settings, and made player2's default joy index 1 instead of both being 0
+    pPlayer[0]->JoystickIndex = 0;
+    pPlayer[0]->JoystickSchwelle = 500.0f;
+    pPlayer[0]->JoystickMode = JOYMODE_PAD;
+    pPlayer[1]->JoystickIndex = 1;
+    pPlayer[1]->JoystickSchwelle = 500.0f;
+    pPlayer[1]->JoystickMode = JOYMODE_PAD;
+
+#if defined (GCW)
+    pPlayer[0]->ControlType = JOYMODE_PAD;
+    pPlayer[1]->ControlType = JOYMODE_PAD;
     options_Detail = DETAIL_HIGH;
 #else
+    pPlayer[0]->ControlType = JOYMODE_KEYBOARD;
+    pPlayer[1]->ControlType = JOYMODE_KEYBOARD;
     options_Detail = DETAIL_MAXIMUM;
 #endif
 
@@ -757,7 +769,7 @@ bool LoadConfig(void)
     if (DirectInput.Joysticks[pPlayer[1]->JoystickIndex].Active == false)
     {
         pPlayer[1]->ControlType = JOYMODE_KEYBOARD;
-        pPlayer[1]->JoystickIndex = 0;
+        pPlayer[1]->JoystickIndex = 1;      //DKS - Changed player 2's default joy index to 1
         pPlayer[1]->JoystickSchwelle = 500.0f;
     }
 
