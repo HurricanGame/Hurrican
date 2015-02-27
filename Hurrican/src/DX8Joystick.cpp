@@ -210,10 +210,18 @@ bool DirectJoystickClass::Init(int joy)
 
     SDL_JoystickEventState( SDL_IGNORE ); /* the joy events will be updated manually */
 
-    Protokoll.WriteText( false, "Joystick : Acquire successful!\n" );
-
     Active = true;
     NumButtons = SDL_JoystickNumButtons(lpDIJoystick);
+
+    // Get joystick's name
+    if (strlen(SDL_JoystickName(joy)) < sizeof(JoystickName)) {
+        strcpy_s(JoystickName, SDL_JoystickName(joy));
+    } else {
+        strcpy_s(JoystickName, sizeof(JoystickName)-1, SDL_JoystickName(joy));      // Truncate to fit 
+        JoystickName[sizeof(JoystickName)-1] = '\0';                                // and null-terminate 
+    }
+
+    Protokoll.WriteText( false, "Joystick %d: Acquire successful!\nButtons: %d Name: %s\n", joy, NumButtons, JoystickName );
 
     return true;
 }
