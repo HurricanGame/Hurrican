@@ -683,7 +683,11 @@ void CreateDefaultConfig(void)
     pPlayer[1]->Walk_UseAxxis = true;
     pPlayer[1]->Look_UseAxxis = true;
 
+#ifdef GCW
+    options_Detail = DETAIL_HIGH;
+#else
     options_Detail = DETAIL_MAXIMUM;
+#endif
 
     SaveConfig ();
 }
