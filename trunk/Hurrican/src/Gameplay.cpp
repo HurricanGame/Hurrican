@@ -687,19 +687,23 @@ void CreateDefaultConfig(void)
     pPlayer[0]->JoystickIndex = 0;
     pPlayer[0]->JoystickSchwelle = 500.0f;
     pPlayer[0]->JoystickMode = JOYMODE_PAD;
+    pPlayer[0]->ControlType = JOYMODE_KEYBOARD;
+
     pPlayer[1]->JoystickIndex = 1;
     pPlayer[1]->JoystickSchwelle = 500.0f;
     pPlayer[1]->JoystickMode = JOYMODE_PAD;
+    pPlayer[1]->ControlType = JOYMODE_KEYBOARD;
 
-#if defined (GCW)
+    options_Detail = DETAIL_MAXIMUM;
+
+#if defined(GCW)
+    // On GCW Zero, the Player 1 default joy index is the internal controls and both players use joystick:
+    pPlayer[0]->JoystickIndex = DirectInput.GetInternalJoystickIndex();
     pPlayer[0]->ControlType = JOYMODE_PAD;
     pPlayer[1]->ControlType = JOYMODE_PAD;
-    options_Detail = DETAIL_HIGH;
-#else
-    pPlayer[0]->ControlType = JOYMODE_KEYBOARD;
-    pPlayer[1]->ControlType = JOYMODE_KEYBOARD;
-    options_Detail = DETAIL_MAXIMUM;
-#endif
+    // Max detail is too much for GCW Zero:
+    options_Detail = DETAIL_HIGH;   
+#endif //GCW
 
     SaveConfig ();
 }
@@ -761,19 +765,34 @@ bool LoadConfig(void)
     // Joystick nicht mehr da?
     if (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].Active == false)
     {
+#if defined(GCW)
+        //GCW Zero player 1 defaults:
+        pPlayer[0]->ControlType = JOYMODE_PAD;
+        pPlayer[0]->JoystickMode = JOYMODE_PAD;
+        pPlayer[0]->JoystickIndex = DirectInput.GetInternalJoystickIndex();
+        pPlayer[0]->JoystickSchwelle = 500.0f;
+#else
         pPlayer[0]->ControlType = JOYMODE_KEYBOARD;
         pPlayer[0]->JoystickIndex = 0;
         pPlayer[0]->JoystickSchwelle = 500.0f;
+#endif //GCW
     }
 
     if (DirectInput.Joysticks[pPlayer[1]->JoystickIndex].Active == false)
     {
+#if defined(GCW)
+        //GCW Zero player 2 defaults:
+        pPlayer[1]->ControlType = JOYMODE_PAD;
+        pPlayer[1]->JoystickMode = JOYMODE_PAD;
+        pPlayer[1]->JoystickIndex = 1;
+        pPlayer[1]->JoystickSchwelle = 500.0f;
+#else
         pPlayer[1]->ControlType = JOYMODE_KEYBOARD;
         pPlayer[1]->JoystickIndex = 1;      //DKS - Changed player 2's default joy index to 1
         pPlayer[1]->JoystickSchwelle = 500.0f;
+#endif //GCW
     }
 
-    pPlayer[1]->JoystickSchwelle = 500.0f;
     fread(&pPlayer[1]->ControlType,		sizeof(pPlayer[1]->ControlType),	 1, Datei);
     fread(&pPlayer[1]->JoystickMode,	sizeof(pPlayer[1]->JoystickMode),	 1, Datei);
     fread(&pPlayer[1]->JoystickSchwelle,sizeof(pPlayer[1]->JoystickSchwelle),1, Datei);
