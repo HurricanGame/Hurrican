@@ -1280,10 +1280,10 @@ void MenuClass::ShowMenu(void)
         // Defaults, type, mode, sensitivity lines
         if (AktuellerPunkt == MENU_TASTEN_DEFAULTS_LINE)
             pDefaultFont->DrawText(col1_off_x, line1_off_y+MENU_TASTEN_DEFAULTS_LINE*line_spacing, 
-                    "Load default settings", 0xFFFFFFFF);
+                    TextArray[TEXT_DEFAULTS], 0xFFFFFFFF);
         else
             pDefaultFont->DrawText(col1_off_x, line1_off_y+MENU_TASTEN_DEFAULTS_LINE*line_spacing, 
-                    "Load default settings", 0x88FFFFFF);
+                    TextArray[TEXT_DEFAULTS], 0x88FFFFFF);
 
         if (AktuellerPunkt == MENU_TASTEN_TYPE_LINE)
             pDefaultFont->DrawTextRightAlign(col0_off_x, line1_off_y+MENU_TASTEN_TYPE_LINE*line_spacing, 
