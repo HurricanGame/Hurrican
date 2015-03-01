@@ -1259,7 +1259,6 @@ void MenuClass::ShowMenu(void)
             int border_w = 1;
 
             if (scale_factor > 1) {
-                bar_off_y += 2;
                 bar_dim = 12;
                 border_w = 2;
             }
@@ -1273,7 +1272,7 @@ void MenuClass::ShowMenu(void)
                 RenderRect(col0_off_x-border_w-bar_dim, bar_off_y+border_w, bar_dim, bar_dim, col);
 
             pDefaultFont->DrawText(col1_off_x, line1_off_y+MENU_TASTEN_FORCEFEEDBACK_LINE*line_spacing,
-                    "Force feedback", col);
+                    TextArray[TEXT_FORCEFEEDBACK], col);
         }
 
         // TODO - Provide translation for "load defaults"
