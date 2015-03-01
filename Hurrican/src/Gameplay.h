@@ -41,6 +41,7 @@ void StageClear		(bool PlaySong = true);		// Spieler aus dem Level abgehen lasse
 void SummaryScreen	(void);						// Zusammenfassung des Levels
 bool LoadConfig		(void);						// Konfigurationen laden
 void SaveConfig		(void);						// Konfigurationen speichern
+void CreateDefaultControlsConfig(int player);   // Load per-player default controls configuration
 void CreateDefaultConfig	(void);				// DefaultKonfigurationen erstellen
 bool DisplayLoadInfo(const char Text[100]);			// Text beim Loading anzeigen
 bool NewDemo		(const char Filename[]);	// Neues Demo aufzeichnen

@@ -1046,7 +1046,12 @@ void MenuClass::ShowMenu(void)
 
     RenderRect(0, 455, 640, 1, menucolor2);
 
-    MenuTitel.RenderSprite((640 - 400) / 2 + 15, 0, menucolor);
+    // DKS - Do not draw the large "HURRICAN" title graphic when using scaled fonts and the
+    //       controls reconfiguration menu is active - there is not enough room otherwise
+    if (pDefaultFont->GetScaleFactor() <= 1 || AktuellerZustand != MENUZUSTAND_TASTEN) {
+        MenuTitel.RenderSprite((640 - 400) / 2 + 15, 0, menucolor);
+    }
+
     DirectGraphics.SetAdditiveMode();
 
 
@@ -1185,67 +1190,138 @@ void MenuClass::ShowMenu(void)
 
     case MENUZUSTAND_TASTEN :
     {
-        const int TASTENLINKS = 10;
-        const int SPIELER1OFFSET = 100;
-        const int SPIELER2OFFSET = 200;
+        const int scale_factor = pDefaultFont->GetScaleFactor();
+        int off_x = xpos;
+        int off_y = ypos;
+        int col0_off_x = off_x + 30;
+        int col1_off_x = off_x + 40;
+        int col2_off_x = 230;
+        int title_off_y = off_y + OFFSET - 60;  // Configure Controls title line
+
+        int line_spacing = 16;               // Original line spacing for non-scaled fonts
+        int line1_off_y = off_y + 70;        // Top line of menu (Force Feedback line)
+
+        // Offsets for use with scaled-fonts on low-res devices:
+        if (scale_factor > 1) {
+            off_y = 5;
+            title_off_y = off_y + 10;
+            line_spacing = 24;    // Kinda tight using a scaled font, but it all needs to fit
+            col0_off_x = 270;
+            col1_off_x = col0_off_x + 10;
+            col2_off_x = 180;
+            line1_off_y = title_off_y;
+        }
+
+        int controls_off_y = line1_off_y + MENU_TASTEN_NUM_NON_CONTROLS * line_spacing;    // Controls lines Y-offset
 
         FillPossibleKeys();
 
-        float d = (float)(pMenuFont->StringLength(TextArray [TEXT_STEUERUNG], 2));
-        pMenuFont->DrawText(320 - d/2.0f, ypos + OFFSET - 60, TextArray[TEXT_STEUERUNG], menucolor, 2);
+        // "CONFIGURE CONTROLS" title - Do not draw when using scaled fonts, as there's no room
+        if (scale_factor <= 1) {
+            pMenuFont->DrawTextCenterAlign(320, title_off_y, TextArray[TEXT_STEUERUNG], menucolor, 2);
+        }
 
         // Überschrift "Spieler1" "Spieler2"
-        if (CurrentPlayer == 0)
-        {
-            RenderRect(xpos + SPIELER1OFFSET - 4, ypos + 70 - 2, (float)pDefaultFont->StringLength(TextArray[TEXT_PLAYER_ONE], 1) + 8, 16, 0x30FFFFFF);
-            pDefaultFont->DrawText (xpos + SPIELER1OFFSET, ypos + 70, TextArray[TEXT_PLAYER_ONE], 0xFFFFFFFF);
-            pDefaultFont->DrawText (xpos + SPIELER1OFFSET + SPIELER2OFFSET, ypos + 70, TextArray[TEXT_PLAYER_TWO], 0x88FFFFFF);
+        D3DCOLOR p1_col, p2_col;
+        if (AktuellerPunkt >= MENU_TASTEN_PLAYER_LINE) {
+            if (CurrentPlayer == 0) {
+                p1_col = 0xFFFFFFFF;
+                p2_col = 0x88FFFFFF;
+                RenderRect(col1_off_x - 4, line1_off_y + MENU_TASTEN_PLAYER_LINE*line_spacing - 2, 
+                        (float)pDefaultFont->StringLength(TextArray[TEXT_PLAYER_ONE]) + 10, line_spacing, 0x30FFFFFF);
+            } else {
+                p1_col = 0x88FFFFFF;
+                p2_col = 0xFFFFFFFF;
+                RenderRect(col1_off_x + col2_off_x - 4, line1_off_y+MENU_TASTEN_PLAYER_LINE*line_spacing - 2, 
+                        (float)pDefaultFont->StringLength(TextArray[TEXT_PLAYER_TWO]) + 10, line_spacing, 0x30FFFFFF);
+            }
+        } else {
+            p1_col = 0x88FFFFFF;
+            p2_col = 0x88FFFFFF;
         }
-        else
+
+        pDefaultFont->DrawText (col1_off_x, line1_off_y+MENU_TASTEN_PLAYER_LINE*line_spacing, 
+                TextArray[TEXT_PLAYER_ONE], p1_col);
+        pDefaultFont->DrawText (col1_off_x + col2_off_x, line1_off_y+MENU_TASTEN_PLAYER_LINE*line_spacing, 
+                TextArray[TEXT_PLAYER_TWO], p2_col);
+
+        // TODO - Provide translation for "force feedback"
+        // Force-feedback checkbox:
         {
-            RenderRect(xpos + SPIELER1OFFSET + SPIELER2OFFSET - 4, ypos + 70 - 2, (float)pDefaultFont->StringLength(TextArray[TEXT_PLAYER_TWO], 1) + 8, 16, 0x30FFFFFF);
-            pDefaultFont->DrawText (xpos + SPIELER1OFFSET, ypos + 70, TextArray[TEXT_PLAYER_ONE], 0x88FFFFFF);
-            pDefaultFont->DrawText (xpos + SPIELER1OFFSET + SPIELER2OFFSET, ypos + 70, TextArray[TEXT_PLAYER_TWO], 0xFFFFFFFF);
+            D3DCOLOR col;
+            if (AktuellerPunkt == MENU_TASTEN_FORCEFEEDBACK_LINE)
+                col = 0xFFFFFFFF;
+            else
+                col = 0x88FFFFFF;
+
+            int bar_off_y = line1_off_y + MENU_TASTEN_FORCEFEEDBACK_LINE*line_spacing + 1;
+            int bar_dim = 8;
+            int border_w = 1;
+
+            if (scale_factor > 1) {
+                bar_off_y += 2;
+                bar_dim = 12;
+                border_w = 2;
+            }
+
+            RenderRect(col0_off_x-border_w-bar_dim, bar_off_y, bar_dim, border_w, col);
+            RenderRect(col0_off_x-border_w-bar_dim, bar_off_y+bar_dim+border_w, bar_dim, border_w, col);
+            RenderRect(col0_off_x-border_w*2-bar_dim, bar_off_y, border_w, bar_dim+border_w*2, col);
+            RenderRect(col0_off_x-border_w, bar_off_y, border_w, bar_dim+border_w*2, col);
+
+            if (UseForceFeedback)
+                RenderRect(col0_off_x-border_w-bar_dim, bar_off_y+border_w, bar_dim, bar_dim, col);
+
+            pDefaultFont->DrawText(col1_off_x, line1_off_y+MENU_TASTEN_FORCEFEEDBACK_LINE*line_spacing,
+                    "Force feedback", col);
         }
 
-        // Typ, Modus und Empfindlichkeit
-        if (AktuellerPunkt == 0)
-            pDefaultFont->DrawTextRightAlign (xpos + TASTENLINKS, ypos + 96, TextArray[TEXT_TYP], 0xFFFFFFFF);
+        // TODO - Provide translation for "load defaults"
+
+        // Defaults, type, mode, sensitivity lines
+        if (AktuellerPunkt == MENU_TASTEN_DEFAULTS_LINE)
+            pDefaultFont->DrawText(col1_off_x, line1_off_y+MENU_TASTEN_DEFAULTS_LINE*line_spacing, 
+                    "Load default settings", 0xFFFFFFFF);
         else
-            pDefaultFont->DrawTextRightAlign (xpos + TASTENLINKS, ypos + 96, TextArray[TEXT_TYP], 0x88FFFFFF);
+            pDefaultFont->DrawText(col1_off_x, line1_off_y+MENU_TASTEN_DEFAULTS_LINE*line_spacing, 
+                    "Load default settings", 0x88FFFFFF);
 
-        if (AktuellerPunkt == 1)
-            pDefaultFont->DrawTextRightAlign (xpos + TASTENLINKS, ypos + 116, TextArray[TEXT_MODUS], 0xFFFFFFFF);
+        if (AktuellerPunkt == MENU_TASTEN_TYPE_LINE)
+            pDefaultFont->DrawTextRightAlign(col0_off_x, line1_off_y+MENU_TASTEN_TYPE_LINE*line_spacing, 
+                    TextArray[TEXT_TYP], 0xFFFFFFFF);
         else
-            pDefaultFont->DrawTextRightAlign (xpos + TASTENLINKS, ypos + 116, TextArray[TEXT_MODUS], 0x88FFFFFF);
+            pDefaultFont->DrawTextRightAlign(col0_off_x, line1_off_y+MENU_TASTEN_TYPE_LINE*line_spacing, 
+                    TextArray[TEXT_TYP], 0x88FFFFFF);
 
-        if (AktuellerPunkt == 2)
-            pDefaultFont->DrawTextRightAlign (xpos + TASTENLINKS, ypos + 134, TextArray[TEXT_EMPFINDLICHKEIT], 0xFFFFFFFF);
+        if (AktuellerPunkt == MENU_TASTEN_MODE_LINE)
+            pDefaultFont->DrawTextRightAlign(col0_off_x, line1_off_y+MENU_TASTEN_MODE_LINE*line_spacing, 
+                    TextArray[TEXT_MODUS], 0xFFFFFFFF);
         else
-            pDefaultFont->DrawTextRightAlign (xpos + TASTENLINKS, ypos + 134, TextArray[TEXT_EMPFINDLICHKEIT], 0x88FFFFFF);
+            pDefaultFont->DrawTextRightAlign(col0_off_x, line1_off_y+MENU_TASTEN_MODE_LINE*line_spacing, 
+                    TextArray[TEXT_MODUS], 0x88FFFFFF);
 
+        if (AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE)
+            pDefaultFont->DrawTextRightAlign(col0_off_x, line1_off_y+MENU_TASTEN_SENSITIVITY_LINE*line_spacing, 
+                    TextArray[TEXT_EMPFINDLICHKEIT], 0xFFFFFFFF);
+        else
+            pDefaultFont->DrawTextRightAlign(col0_off_x, line1_off_y+MENU_TASTEN_SENSITIVITY_LINE*line_spacing, 
+                    TextArray[TEXT_EMPFINDLICHKEIT], 0x88FFFFFF);
 
-        // Beschreibung links
-        for (int i = 0; i < 12; i++)
+        for (int i = 0; i < MENU_TASTEN_NUM_CONTROLS; i++)
         {
             if (PossibleKeys[CurrentPlayer][i] == false)
                 continue;
 
-            pDefaultFont->DrawTextRightAlign (xpos + TASTENLINKS, ypos + 170 + i * 16, TextArray[TEXT_TASTEN_L + i], 0x88FFFFFF);
+            pDefaultFont->DrawTextRightAlign (col0_off_x, controls_off_y + i * line_spacing, 
+                    TextArray[TEXT_TASTEN_L + i], 0x88FFFFFF);
 
-            if (AktuellerPunkt - 3 == i)
-                pDefaultFont->DrawTextRightAlign (xpos + TASTENLINKS, ypos + 170 + i * 16, TextArray[TEXT_TASTEN_L + i], 0x88FFFFFF);
+            if (AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS == i)
+                pDefaultFont->DrawTextRightAlign (col0_off_x, controls_off_y + i * line_spacing, 
+                        TextArray[TEXT_TASTEN_L + i], 0x88FFFFFF);
         }
 
-        float yoff;
-
-        if (AktuellerPunkt >= 3)
-            yoff = ypos + 120 + AktuellerPunkt * 16.0f;
-        else
-            yoff = ypos + 95 + AktuellerPunkt * 18.0f;
-
-        RenderRect(20, yoff, 600, 16, 0x24FFFFFF);
-
+        // Selection bar:
+        RenderRect(10, line1_off_y-2 + AktuellerPunkt * line_spacing, 620, line_spacing, 0x24FFFFFF);
 
         // Für beide Spieler den ganzen Klumbatsch anzeigen
         for (int j = 0; j < 2; j++)
@@ -1259,52 +1335,76 @@ void MenuClass::ShowMenu(void)
                 pCurrentPlayer = pPlayer[1];
 
             // Typ (Tastatur, Joystick (mit Name)
-            if (CurrentPlayer == j &&
-                    AktuellerPunkt == 0)
+            if (CurrentPlayer == j && AktuellerPunkt == MENU_TASTEN_TYPE_LINE)
                 col = 0xFFFFFFFF;
             else
                 col = 0x88FFFFFF;
 
             if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD)
-                pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 98, TextArray[TEXT_KEYBOARD], col);
-            else
-                pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 98, DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].JoystickName, col);
+                // Keyboard text
+                pDefaultFont->DrawText (col1_off_x + j * col2_off_x, line1_off_y+MENU_TASTEN_TYPE_LINE*line_spacing, 
+                        TextArray[TEXT_KEYBOARD], col);
+            else {
+                // Print joystick name, truncated to fit if necessary
+                char tmpbuf[120];
+                sprintf_s(tmpbuf, "%d:%s", pCurrentPlayer->JoystickIndex,
+                                              DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].JoystickName);
+                int cutoff = strlen(tmpbuf) - 1;
+                int max_w = col2_off_x - 10;
+                while (cutoff > 1 && pDefaultFont->StringLength(tmpbuf) > max_w) {
+                    tmpbuf[cutoff] = '\0';
+                    cutoff--;
+                }
+                pDefaultFont->DrawText (col1_off_x + j * col2_off_x, line1_off_y+MENU_TASTEN_TYPE_LINE*line_spacing, 
+                        tmpbuf, col);
+            }
 
             // Rechteck für Empfindlichkeit
             if (pCurrentPlayer->ControlType != JOYMODE_KEYBOARD)
             {
-                if (CurrentPlayer == j &&
-                        AktuellerPunkt == 2)
+                if (CurrentPlayer == j && AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE)
                     col = 0xFFFFFFFF;
                 else
                     col = 0x88FFFFFF;
 
-                RenderRect(xpos + SPIELER1OFFSET - 1 + j * SPIELER2OFFSET, ypos + 134, 102, 1, col);
-                RenderRect(xpos + SPIELER1OFFSET - 1 + j * SPIELER2OFFSET, ypos + 145, 102, 1, col);
-                RenderRect(xpos + SPIELER1OFFSET - 2 + j * SPIELER2OFFSET, ypos + 135, 1, 10, col);
-                RenderRect(xpos + SPIELER1OFFSET + 101 + j * SPIELER2OFFSET, ypos + 135, 1, 10, col);
+                int bar_off_y = line1_off_y + MENU_TASTEN_SENSITIVITY_LINE*line_spacing + 1;
+                int bar_height = 8;
+                int border_w = 1;
+
+                if (scale_factor > 1) {
+                    bar_off_y += 2;
+                    bar_height = 12;
+                    border_w = 2;
+                }
+
+                RenderRect(col1_off_x + border_w + j * col2_off_x, bar_off_y, 100, border_w, col);
+                RenderRect(col1_off_x + border_w + j * col2_off_x, bar_off_y + bar_height+border_w, 100, border_w, col);
+                RenderRect(col1_off_x + j * col2_off_x, bar_off_y, border_w, bar_height + border_w*2, col);
+                RenderRect(col1_off_x + 100 + border_w + j * col2_off_x, bar_off_y, border_w, bar_height + border_w*2, col);
 
                 // Aktueller Balken
-                RenderRect(xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 136, (1000.0f - (pCurrentPlayer->JoystickSchwelle + 100.0f))/8.0f, 8, col);
+                RenderRect(col1_off_x + j * col2_off_x + border_w, bar_off_y + border_w, 
+                        (1000.0f - (pCurrentPlayer->JoystickSchwelle + 100.0f))/8.0f, bar_height, col);
 
                 // Modus
-                if (CurrentPlayer == j &&
-                        AktuellerPunkt == 1)
+                if (CurrentPlayer == j && AktuellerPunkt == MENU_TASTEN_MODE_LINE)
                     col = 0xFFFFFFFF;
                 else
                     col = 0x88FFFFFF;
 
                 if (pCurrentPlayer->JoystickMode == JOYMODE_STICK)
-                    pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 116, TextArray[TEXT_JOYMODE_STICK], col);
+                    pDefaultFont->DrawText(col1_off_x + j * col2_off_x, line1_off_y+MENU_TASTEN_MODE_LINE*line_spacing, 
+                            TextArray[TEXT_JOYMODE_STICK], col);
                 else
-                    pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 116, TextArray[TEXT_JOYMODE_PAD], col);
+                    pDefaultFont->DrawText(col1_off_x + j * col2_off_x, line1_off_y+MENU_TASTEN_MODE_LINE*line_spacing,
+                            TextArray[TEXT_JOYMODE_PAD], col);
             }
 
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < MENU_TASTEN_NUM_CONTROLS; i++)
             {
                 D3DCOLOR col;
 
-                if (AktuellerPunkt -3 == i)
+                if (AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS  == i)
                     col = 0xFFFFFFFF;
                 else
                     col = 0x88FFFFFF;
@@ -1319,22 +1419,24 @@ void MenuClass::ShowMenu(void)
                     if (pCurrentPlayer->AktionKeyboard[i] == -1 &&
                             (pCurrentPlayer->AktionJoystick[i] == -1 ||
                              JoystickFound == false))
-                        pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 170 + i * 16, TextArray[TEXT_NICHT_DEFINIERT], 0x88FFFFFF);
+                        pDefaultFont->DrawText (col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
+                                TextArray[TEXT_NICHT_DEFINIERT], 0x88FFFFFF);
                     else
-
-                        // Taste anzeigen?
                         if (pCurrentPlayer->AktionKeyboard[i] != -1)
-                            pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 170 + i * 16, GetKeyName (pCurrentPlayer->AktionKeyboard[i]), 0x88FFFFFF);
+                            // Keyboard key
+                            pDefaultFont->DrawText (col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
+                                    GetKeyName (pCurrentPlayer->AktionKeyboard[i]), 0x88FFFFFF);
 
-                    // oder Button
                         else
                         {
+                            // Joystick button
                             char Buf[64];
-                            sprintf_s (Buf, "Button nr %i", pCurrentPlayer->AktionJoystick[i]);
-                            pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 170 + i * 16, Buf, 0x88FFFFFF);
+                            sprintf_s (Buf, "%s %s", TextArray[TEXT_BUTTON], 
+                                    MapButtonToString(pCurrentPlayer->AktionJoystick[i]));
+                            pDefaultFont->DrawText(col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
+                                    Buf, 0x88FFFFFF);
                         }
-                }
-                else if (locked == false || AktuellerPunkt - 3 != i)
+                } else if (locked == false || AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS != i)
                 {
                     // Bestimmte Tasten werden ausgeblendet, wenn joymode = joystick oder joypad
                     if (PossibleKeys[j][i] == false)
@@ -1344,34 +1446,42 @@ void MenuClass::ShowMenu(void)
                     if (pCurrentPlayer->AktionKeyboard[i] == -1 &&
                             (pCurrentPlayer->AktionJoystick[i] == -1 ||
                              JoystickFound == false))
-                        pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 170 + i * 16, TextArray[TEXT_NICHT_DEFINIERT], col);
-                    else
+                    {
+                        pDefaultFont->DrawText (col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
+                                TextArray[TEXT_NICHT_DEFINIERT], col);
+                    } else {
 
                         // Taste anzeigen?
-                        if (pCurrentPlayer->AktionKeyboard[i] != -1)
-                            pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 170 + i * 16, GetKeyName (pCurrentPlayer->AktionKeyboard[i]), col);
-
-                    // oder Button
-                        else
-                        {
-                            char Buf[64];
-                            sprintf_s (Buf, "Button nr %i", pCurrentPlayer->AktionJoystick[i]);
-                            pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 170 + i * 16, Buf, col);
+                        if (pCurrentPlayer->AktionKeyboard[i] != -1) {
+                            pDefaultFont->DrawText (col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
+                                    GetKeyName (pCurrentPlayer->AktionKeyboard[i]), col);
+                        } else {
+                            //Joy button
+                            char Buf[80];
+                            sprintf_s (Buf, "%s %s", TextArray[TEXT_BUTTON], 
+                                    MapButtonToString(pCurrentPlayer->AktionJoystick[i]));
+                            pDefaultFont->DrawText (col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing, 
+                                    Buf, col);
                         }
-                }
-                else
+                    }
+                } else
                 {
                     if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD)
-                        pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 170 + i * 16, TextArray[TEXT_TASTEN_NEU_T], col);
+                        pDefaultFont->DrawText(col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
+                                TextArray[TEXT_TASTEN_NEU_T], col);
                     else
-                        pDefaultFont->DrawText (xpos + SPIELER1OFFSET + j * SPIELER2OFFSET, ypos + 170 + i * 16, TextArray[TEXT_TASTEN_NEU_B], col);
-
+                        pDefaultFont->DrawText(col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing, 
+                                TextArray[TEXT_TASTEN_NEU_B], col);
                 }
             }
         }
     }
     break; // MENUZUSTAND_TASTEN
 
+    //DKS - This is code from the original game that was never used, so I am disabling it.
+    //      Apparently, their intention was to make separate keyboard and button controls 
+    //      sub-menus but stuck with just the one above 
+#if 0
     case MENUZUSTAND_BUTTONS :
     {
         const int OFFSET2 = 60;
@@ -1488,6 +1598,7 @@ void MenuClass::ShowMenu(void)
             */
         }
     } break; // MENUZUSTAND_BUTTONS
+#endif //0
 
     case MENUPUNKT_HIGHSCORES :
     {
@@ -1930,14 +2041,16 @@ void MenuClass::DoMenu(void)
             else
                 pCurrentPlayer = pPlayer[1];
 
-            if (AktuellerPunkt == 2 &&
+            //DKS - Altered to match redesigned controls submenu:
+            if ((AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE ||
+                    (AktuellerPunkt == MENU_TASTEN_MODE_LINE)) &&
                     pCurrentPlayer->ControlType == JOYMODE_KEYBOARD)
-                AktuellerPunkt = 0;
-            else if (AktuellerPunkt >= 3)
             {
-                while(PossibleKeys[CurrentPlayer][AktuellerPunkt-3] == false)
+                AktuellerPunkt = MENU_TASTEN_TYPE_LINE;
+            } else if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS)
+            {
+                while(PossibleKeys[CurrentPlayer][AktuellerPunkt-MENU_TASTEN_NUM_NON_CONTROLS] == false)
                     AktuellerPunkt--;
-
             }
         }
     }
@@ -1970,16 +2083,19 @@ void MenuClass::DoMenu(void)
             else
                 pCurrentPlayer = pPlayer[1];
 
-            if (AktuellerPunkt == 1 &&
-                    pCurrentPlayer->ControlType == JOYMODE_KEYBOARD)
-                AktuellerPunkt = 3;
-            else
-
-                if (AktuellerPunkt >= 3)
+            //DKS - Altered to match redesigned controls submenu:
+            if ((AktuellerPunkt == MENU_TASTEN_MODE_LINE || AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE) &&
+                    pCurrentPlayer->ControlType == JOYMODE_KEYBOARD) {
+                AktuellerPunkt = MENU_TASTEN_NUM_NON_CONTROLS;
+            } else {
+                if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS)
                 {
-                    while(PossibleKeys[CurrentPlayer][AktuellerPunkt-3] == false)
+                    while(PossibleKeys[CurrentPlayer][AktuellerPunkt-MENU_TASTEN_NUM_NON_CONTROLS] == false)
                         AktuellerPunkt++;
+                    if (AktuellerPunkt >= MENU_TASTEN_NUM_LINES)
+                        AktuellerPunkt = 0;
                 }
+            }
         }
     }
 
@@ -2259,6 +2375,7 @@ void MenuClass::DoMenu(void)
     }
     break; // Languages
 
+    //DKS - Significantly redesigned controls submenu:
     case MENUZUSTAND_TASTEN:
     {
         PlayerClass* pCurrentPlayer;
@@ -2270,17 +2387,18 @@ void MenuClass::DoMenu(void)
 
         FillPossibleKeys();
 
-        if (KeyDown(DIK_DELETE) || KeyDown(DIK_BACK) || joy_delete)
+        if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS && 
+                (KeyDown(DIK_DELETE) || KeyDown(DIK_BACK) || joy_delete))
         {
             input_counter = 0.0f;
-            pCurrentPlayer->AktionJoystick[AktuellerPunkt - 3] = -1;
-            pCurrentPlayer->AktionKeyboard[AktuellerPunkt - 3] = -1;
+            pCurrentPlayer->AktionJoystick[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = -1;
+            pCurrentPlayer->AktionKeyboard[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = -1;
         }
 
         // neue Taste eingeben ?
         if (locked == true)
         {
-            if (AuswahlPossible == true)
+            if (AuswahlPossible == true && AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS)
             {
                 // Neue Taste?
                 DirectInput.UpdateTastatur();
@@ -2288,8 +2406,8 @@ void MenuClass::DoMenu(void)
                 for (int i=1; i<DirectInput.NumberOfKeys; i++)		// Puffer durchgehen
                     if (KeyDown(i) && i!=DIK_NUMLOCK && i!=DIK_CAPITAL && i!=DIK_SCROLL)					// ob eine Taste gedrückt wurde
                     {
-                        pCurrentPlayer->AktionKeyboard[AktuellerPunkt - 3] = i;
-                        pCurrentPlayer->AktionJoystick[AktuellerPunkt - 3] = -1;
+                        pCurrentPlayer->AktionKeyboard[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = i;
+                        pCurrentPlayer->AktionJoystick[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = -1;
                         locked		    = false;
                         AuswahlPossible = false;
 
@@ -2302,11 +2420,12 @@ void MenuClass::DoMenu(void)
                 // Neuer Button?
                 if (DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].Active == true)
                 {
-                    for (int i = 0; i < MAX_JOYSTICKBUTTONS - 1; i++)
+                    //DKS - TODO - this seems to be where more work is needed in accepting new button input
+                    for (int i = 0; i < DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].NumButtons; i++)
                         if (DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].JoystickButtons[i] == true)
                         {
-                            pCurrentPlayer->AktionJoystick[AktuellerPunkt - 3] = i;
-                            pCurrentPlayer->AktionKeyboard[AktuellerPunkt - 3] = -1;
+                            pCurrentPlayer->AktionJoystick[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = i;
+                            pCurrentPlayer->AktionKeyboard[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = -1;
                             locked		    = false;
                             AuswahlPossible = false;
 
@@ -2331,9 +2450,9 @@ void MenuClass::DoMenu(void)
         else
         {
             if (AktuellerPunkt < 0)
-                AktuellerPunkt = 14;
+                AktuellerPunkt = MENU_TASTEN_NUM_LINES-1;
 
-            if (AktuellerPunkt > 14)
+            if (AktuellerPunkt > MENU_TASTEN_NUM_LINES-1)
                 AktuellerPunkt = 0;
 
             // Spieler wechseln
@@ -2351,29 +2470,30 @@ void MenuClass::DoMenu(void)
                 {
                     input_counter = input_delay * 0.75f;     // Delay less than usual
 
-                    // Empfindlichkeit ändern?
-                    if (AktuellerPunkt == 2)
+                    if (AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE)
                     {
                         pCurrentPlayer->JoystickSchwelle -= 100.0f SYNC;
 
                         if (pCurrentPlayer->JoystickSchwelle < 100.0f)
                             pCurrentPlayer->JoystickSchwelle = 100.0f;
                     }
-                    else
+                    else if (AktuellerPunkt >= MENU_TASTEN_PLAYER_LINE)
                     {
                         AuswahlPossible = false;
                         CurrentPlayer = 1;
+                        pCurrentPlayer = pPlayer[1];
 
-                        if (CurrentPlayer == 0)
-                            pCurrentPlayer = pPlayer[0];
-                        else
-                            pCurrentPlayer = pPlayer[1];
-
-                        while (PossibleKeys[CurrentPlayer][AktuellerPunkt-3] == false)
-                            AktuellerPunkt++;
-
-                        if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD &&
-                                AktuellerPunkt < 3)
+                        if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS) { 
+                            while (PossibleKeys[CurrentPlayer][AktuellerPunkt-MENU_TASTEN_NUM_NON_CONTROLS] == false)
+                                AktuellerPunkt++;
+                        } else {
+                            if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD &&
+                                    (AktuellerPunkt == MENU_TASTEN_MODE_LINE    ||
+                                     AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE))
+                                AktuellerPunkt = MENU_TASTEN_TYPE_LINE;
+                        }
+                            
+                        if (AktuellerPunkt >= MENU_TASTEN_NUM_LINES)
                             AktuellerPunkt = 0;
                     }
                 }
@@ -2383,30 +2503,28 @@ void MenuClass::DoMenu(void)
                 {
                     input_counter = input_delay * 0.75f;     // Delay less than usual
 
-                    // Empfindlichkeit ändern?
-                    if (AktuellerPunkt == 2)
+                    if (AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE)
                     {
                         pCurrentPlayer->JoystickSchwelle += 100.0f SYNC;
 
                         if (pCurrentPlayer->JoystickSchwelle > 900.0f)
                             pCurrentPlayer->JoystickSchwelle = 900.0f;
                     }
-                    else
+                    else if (AktuellerPunkt >= MENU_TASTEN_PLAYER_LINE)
                     {
                         AuswahlPossible = false;
                         CurrentPlayer = 0;
+                        pCurrentPlayer = pPlayer[0];
 
-                        while (PossibleKeys[CurrentPlayer][AktuellerPunkt-3] == false)
-                            AktuellerPunkt++;
-
-                        if (CurrentPlayer == 0)
-                            pCurrentPlayer = pPlayer[0];
-                        else
-                            pCurrentPlayer = pPlayer[1];
-
-                        if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD &&
-                                AktuellerPunkt < 3)
-                            AktuellerPunkt = 0;
+                        if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS) { 
+                            while (PossibleKeys[CurrentPlayer][AktuellerPunkt-MENU_TASTEN_NUM_NON_CONTROLS] == false)
+                                AktuellerPunkt++;
+                        } else {
+                            if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD &&
+                                    (AktuellerPunkt == MENU_TASTEN_MODE_LINE  ||
+                                     AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE))
+                                AktuellerPunkt = MENU_TASTEN_TYPE_LINE;
+                        }
                     }
                 }
             }
@@ -2418,7 +2536,7 @@ void MenuClass::DoMenu(void)
                 AuswahlPossible = false;
 
                 // Taste ändern?
-                if (AktuellerPunkt >= 3)
+                if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS)
                     locked = true;
                 else
                 {
@@ -2429,8 +2547,19 @@ void MenuClass::DoMenu(void)
                     else
                         pCurrentPlayer = pPlayer[1];
 
+                    if (AktuellerPunkt == MENU_TASTEN_DEFAULTS_LINE) {
+                        // Load default controls for players 1/2
+                       CreateDefaultControlsConfig(0);
+                       CreateDefaultControlsConfig(1);
+                    }
+
+                    // Game-wide force-feedback enable/disable
+                    if (AktuellerPunkt == MENU_TASTEN_FORCEFEEDBACK_LINE) {
+                       UseForceFeedback = !UseForceFeedback;
+                    } 
+
                     // Joymode ändern?
-                    if (AktuellerPunkt == 1)
+                    if (AktuellerPunkt == MENU_TASTEN_MODE_LINE)
                     {
                         if (pCurrentPlayer->JoystickMode == JOYMODE_STICK)
                             pCurrentPlayer->JoystickMode = JOYMODE_PAD;
@@ -2439,7 +2568,7 @@ void MenuClass::DoMenu(void)
                     }
 
                     // Controller Type ändern?
-                    if (AktuellerPunkt == 0)
+                    if (AktuellerPunkt == MENU_TASTEN_TYPE_LINE)
                     {
                         // Joytick dran?
                         if (JoystickFound == true)
@@ -2488,8 +2617,8 @@ void MenuClass::DoMenu(void)
 
     //DKS - This following menu was not actually used in the code..
     //      It appears to be a joystick-specific controls reconfiguration menu, but
-    //      the other menu (TASTEN) handles both keyboard and joysticks just fine.
-    //      TODO: perfect the section above (TASTEN)
+    //      the above menu handles both. I am disabling this:
+#if 0
     case MENUZUSTAND_BUTTONS:
     {
         // Button gedrückt ?
@@ -2584,6 +2713,7 @@ void MenuClass::DoMenu(void)
         }
     }
     break;  // Buttons
+#endif // 0
 
     // Die Credits und die Highscore
     case MENUPUNKT_CREDITS  :
