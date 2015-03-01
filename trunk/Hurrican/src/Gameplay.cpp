@@ -47,7 +47,7 @@ float	WackelSpeed	   = 0.0f;								// Aktuelle Wackel-Geschwindigkeit
 float	ScreenWinkel   = 0.0f;								// in welchem zWinkel steht der Screen grad (für säulen, die das Level zum Kippen bringen)
 float	WarningCount   = 0.0f;								// Counter, ob ein "Warning" angezeigt wird
 bool	JoystickFound;
-bool	UseForceFeedback;									// ForceFeedback benutzen?
+bool	UseForceFeedback = false;							// ForceFeedback benutzen?
 bool	ShowSummary = false;
 
 long    DEMOPress		= 0;								// Counter bis zum nächsten Tastendruck
@@ -572,6 +572,143 @@ void ShakeScreen (float staerke)
 // --------------------------------------------------------------------------------------
 // Default Config erstellen
 // --------------------------------------------------------------------------------------
+//DKS - New function that creates a per-player default controls configuration
+void CreateDefaultControlsConfig(int player)
+{
+    if (player < 0 || player > 1)
+        return;
+
+    if (player == 0) {
+        pPlayer[0]->AktionKeyboard [AKTION_LINKS]			= DIK_LEFT;
+        pPlayer[0]->AktionKeyboard [AKTION_RECHTS]			= DIK_RIGHT;
+        pPlayer[0]->AktionKeyboard [AKTION_DUCKEN]			= DIK_DOWN;
+        pPlayer[0]->AktionKeyboard [AKTION_OBEN]			= DIK_UP;
+        pPlayer[0]->AktionKeyboard [AKTION_UNTEN]			= DIK_DOWN;
+#if defined(PANDORA)
+        pPlayer[0]->AktionKeyboard [AKTION_JUMP]			= DIK_NEXT;
+        pPlayer[0]->AktionKeyboard [AKTION_SHOOT]			= DIK_HOME;
+        pPlayer[0]->AktionKeyboard [AKTION_BLITZ]			= DIK_PRIOR;
+        pPlayer[0]->AktionKeyboard [AKTION_POWERLINE]		= DIK_LSHIFT;
+        pPlayer[0]->AktionKeyboard [AKTION_GRANATE]		    = DIK_END;
+        pPlayer[0]->AktionKeyboard [AKTION_SMARTBOMB]		= DIK_RCONTROL;
+        pPlayer[0]->AktionKeyboard [AKTION_WAFFE_SPREAD]	= DIK_1;
+        pPlayer[0]->AktionKeyboard [AKTION_WAFFE_LASER]		= DIK_2;
+        pPlayer[0]->AktionKeyboard [AKTION_WAFFE_BOUNCE]	= DIK_3;
+        pPlayer[0]->AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_RETURN;
+#elif defined(ANDROID)
+        pPlayer[0]->AktionKeyboard [AKTION_JUMP]			= DIK_A;
+        pPlayer[0]->AktionKeyboard [AKTION_SHOOT]			= DIK_B;
+        pPlayer[0]->AktionKeyboard [AKTION_BLITZ]			= DIK_C;
+        pPlayer[0]->AktionKeyboard [AKTION_POWERLINE]		= DIK_D;
+        pPlayer[0]->AktionKeyboard [AKTION_GRANATE]		    = DIK_E;
+        pPlayer[0]->AktionKeyboard [AKTION_SMARTBOMB]		= DIK_F;
+        pPlayer[0]->AktionKeyboard [AKTION_WAFFE_SPREAD]	= DIK_G;
+        pPlayer[0]->AktionKeyboard [AKTION_WAFFE_LASER]		= DIK_H;
+        pPlayer[0]->AktionKeyboard [AKTION_WAFFE_BOUNCE]	= DIK_I;
+        pPlayer[0]->AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_J;
+#else
+        pPlayer[0]->AktionKeyboard [AKTION_JUMP]			= DIK_LALT;
+        pPlayer[0]->AktionKeyboard [AKTION_SHOOT]			= DIK_LCONTROL;
+        pPlayer[0]->AktionKeyboard [AKTION_BLITZ]			= DIK_LSHIFT;
+        pPlayer[0]->AktionKeyboard [AKTION_POWERLINE]		= DIK_SPACE;
+        pPlayer[0]->AktionKeyboard [AKTION_GRANATE]		    = DIK_RCONTROL;
+        pPlayer[0]->AktionKeyboard [AKTION_SMARTBOMB]		= DIK_RSHIFT;
+        pPlayer[0]->AktionKeyboard [AKTION_WAFFE_SPREAD]	= 0;
+        pPlayer[0]->AktionKeyboard [AKTION_WAFFE_LASER]		= 0;
+        pPlayer[0]->AktionKeyboard [AKTION_WAFFE_BOUNCE]	= 0;
+        pPlayer[0]->AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_RETURN;
+
+        pPlayer[0]->AktionJoystick [AKTION_LINKS]			= -1;
+        pPlayer[0]->AktionJoystick [AKTION_RECHTS]			= -1;
+        pPlayer[0]->AktionJoystick [AKTION_DUCKEN]			= -1;
+        pPlayer[0]->AktionJoystick [AKTION_OBEN]			= -1;
+        pPlayer[0]->AktionJoystick [AKTION_UNTEN]			= -1;
+        pPlayer[0]->AktionJoystick [AKTION_JUMP]			= 0;
+        pPlayer[0]->AktionJoystick [AKTION_SHOOT]			= 1;
+        pPlayer[0]->AktionJoystick [AKTION_BLITZ]			= 2;
+        pPlayer[0]->AktionJoystick [AKTION_POWERLINE]		= 3;
+        pPlayer[0]->AktionJoystick [AKTION_GRANATE]		    = 4;
+        pPlayer[0]->AktionJoystick [AKTION_SMARTBOMB]		= 5;
+        pPlayer[0]->AktionJoystick [AKTION_WAFFE_SPREAD]	= -1;
+        pPlayer[0]->AktionJoystick [AKTION_WAFFE_LASER]	    = -1;
+        pPlayer[0]->AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
+        pPlayer[0]->AktionJoystick [AKTION_WAFFEN_CYCLE]	= 6;
+#endif
+        pPlayer[0]->Walk_UseAxxis = true;
+        pPlayer[0]->Look_UseAxxis = true;
+
+        //DKS - Added missing default settings, and made player2's default joy index 1 instead of both being 0
+        pPlayer[0]->JoystickIndex = 0;
+        pPlayer[0]->JoystickSchwelle = 500.0f;
+        pPlayer[0]->JoystickMode = JOYMODE_PAD;
+        pPlayer[0]->ControlType = JOYMODE_KEYBOARD;
+
+#if defined(GCW)
+        // On GCW Zero, the Player 1 default joy index is the internal controls and both players use joystick:
+        pPlayer[0]->JoystickIndex = DirectInput.GetInternalJoystickIndex();
+        pPlayer[0]->ControlType = JOYMODE_PAD;
+        // Default button map for GCW Zero:
+        pPlayer[0]->AktionJoystick [AKTION_JUMP]			= 3;
+        pPlayer[0]->AktionJoystick [AKTION_SHOOT]			= 2;
+        pPlayer[0]->AktionJoystick [AKTION_BLITZ]			= 1;
+        pPlayer[0]->AktionJoystick [AKTION_POWERLINE]		= 6;
+        pPlayer[0]->AktionJoystick [AKTION_GRANATE]		    = 7;
+        pPlayer[0]->AktionJoystick [AKTION_SMARTBOMB]		= 4;
+        pPlayer[0]->AktionJoystick [AKTION_WAFFE_SPREAD]	= -1;
+        pPlayer[0]->AktionJoystick [AKTION_WAFFE_LASER]	    = -1;
+        pPlayer[0]->AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
+        pPlayer[0]->AktionJoystick [AKTION_WAFFEN_CYCLE]	= 0;
+#endif //GCW
+
+    } else {
+        pPlayer[1]->AktionKeyboard [AKTION_LINKS]			= DIK_A;
+        pPlayer[1]->AktionKeyboard [AKTION_RECHTS]			= DIK_D;
+        pPlayer[1]->AktionKeyboard [AKTION_DUCKEN]			= DIK_S;
+        pPlayer[1]->AktionKeyboard [AKTION_OBEN]			= DIK_W;
+        pPlayer[1]->AktionKeyboard [AKTION_UNTEN]			= DIK_X;
+        pPlayer[1]->AktionKeyboard [AKTION_JUMP]			= DIK_G;
+        pPlayer[1]->AktionKeyboard [AKTION_SHOOT]			= DIK_H;
+        pPlayer[1]->AktionKeyboard [AKTION_BLITZ]			= DIK_J;
+        pPlayer[1]->AktionKeyboard [AKTION_POWERLINE]		= DIK_T;
+        pPlayer[1]->AktionKeyboard [AKTION_GRANATE]			= DIK_Z;
+        pPlayer[1]->AktionKeyboard [AKTION_SMARTBOMB]		= DIK_U;
+        pPlayer[1]->AktionKeyboard [AKTION_WAFFE_SPREAD]	= 0;
+        pPlayer[1]->AktionKeyboard [AKTION_WAFFE_LASER]		= 0;
+        pPlayer[1]->AktionKeyboard [AKTION_WAFFE_BOUNCE]	= 0;
+        pPlayer[1]->AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_Q;
+
+        pPlayer[1]->AktionJoystick [AKTION_LINKS]			= -1;
+        pPlayer[1]->AktionJoystick [AKTION_RECHTS]		    = -1;
+        pPlayer[1]->AktionJoystick [AKTION_DUCKEN]		    = -1;
+        pPlayer[1]->AktionJoystick [AKTION_OBEN]			= -1;
+        pPlayer[1]->AktionJoystick [AKTION_UNTEN]			= -1;
+        pPlayer[1]->AktionJoystick [AKTION_JUMP]			= 0;
+        pPlayer[1]->AktionJoystick [AKTION_SHOOT]			= 1;
+        pPlayer[1]->AktionJoystick [AKTION_BLITZ]			= 2;
+        pPlayer[1]->AktionJoystick [AKTION_POWERLINE]		= 3;
+        pPlayer[1]->AktionJoystick [AKTION_GRANATE]		    = 4;
+        pPlayer[1]->AktionJoystick [AKTION_SMARTBOMB]		= 5;
+        pPlayer[1]->AktionJoystick [AKTION_WAFFE_SPREAD]	= -1;
+        pPlayer[1]->AktionJoystick [AKTION_WAFFE_LASER]	    = -1;
+        pPlayer[1]->AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
+        pPlayer[1]->AktionJoystick [AKTION_WAFFEN_CYCLE]	= 6;
+
+        pPlayer[1]->Walk_UseAxxis = true;
+        pPlayer[1]->Look_UseAxxis = true;
+
+        //DKS - Added missing default settings, and made player2's default joy index 1 instead of both being 0
+        pPlayer[1]->JoystickIndex = 1;
+        pPlayer[1]->JoystickSchwelle = 500.0f;
+        pPlayer[1]->JoystickMode = JOYMODE_PAD;
+        pPlayer[1]->ControlType = JOYMODE_KEYBOARD;
+
+#if defined(GCW)
+        // On GCW Zero, both players use joystick by default:
+        pPlayer[1]->ControlType = JOYMODE_PAD;
+#endif //GCW
+
+    }
+}
 
 void CreateDefaultConfig(void)
 {
@@ -586,121 +723,13 @@ void CreateDefaultConfig(void)
 
     pSoundManager->SetVolumes(50, 60);
 
-    pPlayer[0]->AktionKeyboard [AKTION_LINKS]			= DIK_LEFT;
-    pPlayer[0]->AktionKeyboard [AKTION_RECHTS]			= DIK_RIGHT;
-    pPlayer[0]->AktionKeyboard [AKTION_DUCKEN]			= DIK_DOWN;
-    pPlayer[0]->AktionKeyboard [AKTION_OBEN]			= DIK_UP;
-    pPlayer[0]->AktionKeyboard [AKTION_UNTEN]			= DIK_DOWN;
-#if defined(PANDORA)
-    pPlayer[0]->AktionKeyboard [AKTION_JUMP]			= DIK_NEXT;
-    pPlayer[0]->AktionKeyboard [AKTION_SHOOT]			= DIK_HOME;
-    pPlayer[0]->AktionKeyboard [AKTION_BLITZ]			= DIK_PRIOR;
-    pPlayer[0]->AktionKeyboard [AKTION_POWERLINE]		= DIK_LSHIFT;
-    pPlayer[0]->AktionKeyboard [AKTION_GRANATE]		    = DIK_END;
-    pPlayer[0]->AktionKeyboard [AKTION_SMARTBOMB]		= DIK_RCONTROL;
-    pPlayer[0]->AktionKeyboard [AKTION_WAFFE_SPREAD]	= DIK_1;
-    pPlayer[0]->AktionKeyboard [AKTION_WAFFE_LASER]		= DIK_2;
-    pPlayer[0]->AktionKeyboard [AKTION_WAFFE_BOUNCE]	= DIK_3;
-    pPlayer[0]->AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_RETURN;
-#elif defined(ANDROID)
-    pPlayer[0]->AktionKeyboard [AKTION_JUMP]			= DIK_A;
-    pPlayer[0]->AktionKeyboard [AKTION_SHOOT]			= DIK_B;
-    pPlayer[0]->AktionKeyboard [AKTION_BLITZ]			= DIK_C;
-    pPlayer[0]->AktionKeyboard [AKTION_POWERLINE]		= DIK_D;
-    pPlayer[0]->AktionKeyboard [AKTION_GRANATE]		    = DIK_E;
-    pPlayer[0]->AktionKeyboard [AKTION_SMARTBOMB]		= DIK_F;
-    pPlayer[0]->AktionKeyboard [AKTION_WAFFE_SPREAD]	= DIK_G;
-    pPlayer[0]->AktionKeyboard [AKTION_WAFFE_LASER]		= DIK_H;
-    pPlayer[0]->AktionKeyboard [AKTION_WAFFE_BOUNCE]	= DIK_I;
-    pPlayer[0]->AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_J;
-#else
-    pPlayer[0]->AktionKeyboard [AKTION_JUMP]			= DIK_LALT;
-    pPlayer[0]->AktionKeyboard [AKTION_SHOOT]			= DIK_LCONTROL;
-    pPlayer[0]->AktionKeyboard [AKTION_BLITZ]			= DIK_LSHIFT;
-    pPlayer[0]->AktionKeyboard [AKTION_POWERLINE]		= DIK_SPACE;
-    pPlayer[0]->AktionKeyboard [AKTION_GRANATE]		    = DIK_RCONTROL;
-    pPlayer[0]->AktionKeyboard [AKTION_SMARTBOMB]		= DIK_RSHIFT;
-    pPlayer[0]->AktionKeyboard [AKTION_WAFFE_SPREAD]	= 0;
-    pPlayer[0]->AktionKeyboard [AKTION_WAFFE_LASER]		= 0;
-    pPlayer[0]->AktionKeyboard [AKTION_WAFFE_BOUNCE]	= 0;
-    pPlayer[0]->AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_RETURN;
-#endif
-    pPlayer[1]->AktionKeyboard [AKTION_LINKS]			= DIK_A;
-    pPlayer[1]->AktionKeyboard [AKTION_RECHTS]			= DIK_D;
-    pPlayer[1]->AktionKeyboard [AKTION_DUCKEN]			= DIK_S;
-    pPlayer[1]->AktionKeyboard [AKTION_OBEN]			= DIK_W;
-    pPlayer[1]->AktionKeyboard [AKTION_UNTEN]			= DIK_X;
-    pPlayer[1]->AktionKeyboard [AKTION_JUMP]			= DIK_G;
-    pPlayer[1]->AktionKeyboard [AKTION_SHOOT]			= DIK_H;
-    pPlayer[1]->AktionKeyboard [AKTION_BLITZ]			= DIK_J;
-    pPlayer[1]->AktionKeyboard [AKTION_POWERLINE]		= DIK_T;
-    pPlayer[1]->AktionKeyboard [AKTION_GRANATE]			= DIK_Z;
-    pPlayer[1]->AktionKeyboard [AKTION_SMARTBOMB]		= DIK_U;
-    pPlayer[1]->AktionKeyboard [AKTION_WAFFE_SPREAD]	= 0;
-    pPlayer[1]->AktionKeyboard [AKTION_WAFFE_LASER]		= 0;
-    pPlayer[1]->AktionKeyboard [AKTION_WAFFE_BOUNCE]	= 0;
-    pPlayer[1]->AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_Q;
-
-    pPlayer[0]->AktionJoystick [AKTION_LINKS]			= -1;
-    pPlayer[0]->AktionJoystick [AKTION_RECHTS]			= -1;
-    pPlayer[0]->AktionJoystick [AKTION_DUCKEN]			= -1;
-    pPlayer[0]->AktionJoystick [AKTION_OBEN]			= -1;
-    pPlayer[0]->AktionJoystick [AKTION_UNTEN]			= -1;
-    pPlayer[0]->AktionJoystick [AKTION_JUMP]			= 0;
-    pPlayer[0]->AktionJoystick [AKTION_SHOOT]			= 1;
-    pPlayer[0]->AktionJoystick [AKTION_BLITZ]			= 2;
-    pPlayer[0]->AktionJoystick [AKTION_POWERLINE]		= 3;
-    pPlayer[0]->AktionJoystick [AKTION_GRANATE]		= 4;
-    pPlayer[0]->AktionJoystick [AKTION_SMARTBOMB]		= 5;
-    pPlayer[0]->AktionJoystick [AKTION_WAFFE_SPREAD]	= -1;
-    pPlayer[0]->AktionJoystick [AKTION_WAFFE_LASER]	= -1;
-    pPlayer[0]->AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
-    pPlayer[0]->AktionJoystick [AKTION_WAFFEN_CYCLE]	= -1;
-
-    pPlayer[1]->AktionJoystick [AKTION_LINKS]			= -1;
-    pPlayer[1]->AktionJoystick [AKTION_RECHTS]		= -1;
-    pPlayer[1]->AktionJoystick [AKTION_DUCKEN]		= -1;
-    pPlayer[1]->AktionJoystick [AKTION_OBEN]			= -1;
-    pPlayer[1]->AktionJoystick [AKTION_UNTEN]			= -1;
-    pPlayer[1]->AktionJoystick [AKTION_JUMP]			= 0;
-    pPlayer[1]->AktionJoystick [AKTION_SHOOT]			= 1;
-    pPlayer[1]->AktionJoystick [AKTION_BLITZ]			= 2;
-    pPlayer[1]->AktionJoystick [AKTION_POWERLINE]		= 3;
-    pPlayer[1]->AktionJoystick [AKTION_GRANATE]		= 4;
-    pPlayer[1]->AktionJoystick [AKTION_SMARTBOMB]		= 5;
-    pPlayer[1]->AktionJoystick [AKTION_WAFFE_SPREAD]	= -1;
-    pPlayer[1]->AktionJoystick [AKTION_WAFFE_LASER]	= -1;
-    pPlayer[1]->AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
-    pPlayer[1]->AktionJoystick [AKTION_WAFFEN_CYCLE]	= -1;
-
-    // TODO ?
-//	if (CanForceFeedback == true)
-    //UseForceFeedback = true;
-
-    pPlayer[0]->Walk_UseAxxis = true;
-    pPlayer[0]->Look_UseAxxis = true;
-
-    pPlayer[1]->Walk_UseAxxis = true;
-    pPlayer[1]->Look_UseAxxis = true;
-
-    //DKS - Added missing default settings, and made player2's default joy index 1 instead of both being 0
-    pPlayer[0]->JoystickIndex = 0;
-    pPlayer[0]->JoystickSchwelle = 500.0f;
-    pPlayer[0]->JoystickMode = JOYMODE_PAD;
-    pPlayer[0]->ControlType = JOYMODE_KEYBOARD;
-
-    pPlayer[1]->JoystickIndex = 1;
-    pPlayer[1]->JoystickSchwelle = 500.0f;
-    pPlayer[1]->JoystickMode = JOYMODE_PAD;
-    pPlayer[1]->ControlType = JOYMODE_KEYBOARD;
+    UseForceFeedback = false;
+    CreateDefaultControlsConfig(0);     // Load default controls for Player 1
+    CreateDefaultControlsConfig(1);     // Load default controls for Player 2
 
     options_Detail = DETAIL_MAXIMUM;
 
 #if defined(GCW)
-    // On GCW Zero, the Player 1 default joy index is the internal controls and both players use joystick:
-    pPlayer[0]->JoystickIndex = DirectInput.GetInternalJoystickIndex();
-    pPlayer[0]->ControlType = JOYMODE_PAD;
-    pPlayer[1]->ControlType = JOYMODE_PAD;
     // Max detail is too much for GCW Zero:
     options_Detail = DETAIL_HIGH;   
 #endif //GCW

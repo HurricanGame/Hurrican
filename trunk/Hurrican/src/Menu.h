@@ -64,6 +64,18 @@
 #define MENUPUNKT_NEWGAME_STARTNEWGAME  1
 #define MENUPUNKT_NEWGAME_LOADGAME      2
 
+//DKS - Controls-reconfiguration menu: (Menu "tasten")
+#define MENU_TASTEN_FORCEFEEDBACK_LINE     0
+#define MENU_TASTEN_DEFAULTS_LINE          1
+#define MENU_TASTEN_PLAYER_LINE            2
+#define MENU_TASTEN_TYPE_LINE              3
+#define MENU_TASTEN_MODE_LINE              4
+#define MENU_TASTEN_SENSITIVITY_LINE       5
+#define MENU_TASTEN_NUM_NON_CONTROLS    6       // Number of non-controls lines (before assignable controls begin)
+#define MENU_TASTEN_NUM_CONTROLS        12      // Number of assignable-controls lines
+#define MENU_TASTEN_NUM_LINES  (MENU_TASTEN_NUM_CONTROLS + MENU_TASTEN_NUM_NON_CONTROLS)
+
+
 // --------------------------------------------------------------------------------------
 // Strukturen
 // --------------------------------------------------------------------------------------
