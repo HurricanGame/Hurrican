@@ -178,7 +178,7 @@ public:
     int					NewStage;					// Neue Stage
     int					NewSkill;					// Neuer Skill
     char				NewName[30];				// Neuer Highscore Name
-    bool				locked;						// Für Tasten / Button Konfiguration
+    bool				control_reassignment_occuring;		// Für Tasten / Button Konfiguration
 
 
     float				Rotation;					// Rotationsgrad

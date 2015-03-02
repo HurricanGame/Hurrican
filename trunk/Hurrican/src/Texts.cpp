@@ -409,6 +409,7 @@ void InitReplacers(void)
     }
     else
     {
+        int joy_idx = pPlayer[0]->JoystickIndex;
         char buf[256];
         sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + pPlayer[0]->JoystickMode - 1], TextArray[TEXT_LEFT]);
         strcpy (s_Replacers[1], buf);
@@ -428,35 +429,45 @@ void InitReplacers(void)
         if (pPlayer[0]->JoystickMode == JOYMODE_STICK)
             sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + pPlayer[0]->JoystickMode - 1], TextArray[TEXT_UP]);
         else
-            sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], MapButtonToString(pPlayer[0]->AktionJoystick[AKTION_JUMP]));
+            sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], 
+                    DirectInput.MapButtonToString(joy_idx, pPlayer[0]->AktionJoystick[AKTION_JUMP]));
 
         strcpy (s_Replacers[11], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], MapButtonToString(pPlayer[0]->AktionJoystick[AKTION_SHOOT]));
+        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], 
+                DirectInput.MapButtonToString(joy_idx, pPlayer[0]->AktionJoystick[AKTION_SHOOT]));
         strcpy (s_Replacers[13], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], MapButtonToString(pPlayer[0]->AktionJoystick[AKTION_BLITZ]));
+        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], 
+                DirectInput.MapButtonToString(joy_idx, pPlayer[0]->AktionJoystick[AKTION_BLITZ]));
         strcpy (s_Replacers[15], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], MapButtonToString(pPlayer[0]->AktionJoystick[AKTION_POWERLINE]));
+        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], 
+                DirectInput.MapButtonToString(joy_idx, pPlayer[0]->AktionJoystick[AKTION_POWERLINE]));
         strcpy (s_Replacers[17], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], MapButtonToString(pPlayer[0]->AktionJoystick[AKTION_GRANATE]));
+        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], 
+                DirectInput.MapButtonToString(joy_idx, pPlayer[0]->AktionJoystick[AKTION_GRANATE]));
         strcpy (s_Replacers[19], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], MapButtonToString(pPlayer[0]->AktionJoystick[AKTION_SMARTBOMB]));
+        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], 
+                DirectInput.MapButtonToString(joy_idx, pPlayer[0]->AktionJoystick[AKTION_SMARTBOMB]));
         strcpy (s_Replacers[21], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], MapButtonToString(pPlayer[0]->AktionJoystick[AKTION_WAFFEN_CYCLE]));
+        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], 
+                DirectInput.MapButtonToString(joy_idx, pPlayer[0]->AktionJoystick[AKTION_WAFFEN_CYCLE]));
         strcpy (s_Replacers[23], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], MapButtonToString(pPlayer[0]->AktionJoystick[AKTION_WAFFE_SPREAD]));
+        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], 
+                DirectInput.MapButtonToString(joy_idx, pPlayer[0]->AktionJoystick[AKTION_WAFFE_SPREAD]));
         strcpy (s_Replacers[25], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], MapButtonToString(pPlayer[0]->AktionJoystick[AKTION_WAFFE_LASER]));
+        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], 
+                DirectInput.MapButtonToString(joy_idx, pPlayer[0]->AktionJoystick[AKTION_WAFFE_LASER]));
         strcpy (s_Replacers[27], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], MapButtonToString(pPlayer[0]->AktionJoystick[AKTION_WAFFE_BOUNCE]));
+        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], 
+                DirectInput.MapButtonToString(joy_idx, pPlayer[0]->AktionJoystick[AKTION_WAFFE_BOUNCE]));
         strcpy (s_Replacers[29], buf);
     }
 }
@@ -534,44 +545,4 @@ int GetDecValue(char *pair, int len)
     }
 
     return r;
-}
-
-//DKS - GCW Zero handheld-specific button strings
-#if defined(GCW)
-#define GCW_MAX_BUTTONS 8
-static char ButtonNumToStringMap[8][10] = {
-    "B",        // Button 0
-    "A",    
-    "Y",
-    "X",
-    "Select",
-    "Start",
-    "L",
-    "R"         // Button 7
-};
-#endif // GCW
-
-
-//DKS - Added helper function to facilitate customized naming of joystick buttons and
-//      when not customized, to report joy buttons as ranging 1..99 instead of 0..98
-char* MapButtonToString(int button)
-{
-    static char buf[60];
-    
-    if (button == -1) {
-        return TextArray[TEXT_NICHT_DEFINIERT];
-    } else {
-#ifdef GCW
-        if (button >= 0 && button < GCW_MAX_BUTTONS) {
-            return ButtonNumToStringMap[button];
-        } else 
-#endif //GCW
-
-            // Non-platform-specific generic code:
-        {
-            // Report button numbers as ranging from 1..99 instead of 0..98
-            sprintf_s(buf, "%d", button+1);
-            return buf;
-        }
-    }
 }

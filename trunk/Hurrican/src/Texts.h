@@ -351,10 +351,6 @@ bool LoadLanguage  (char *filename);			// Bestimmte Sprachdatei laden
 void InitReplacers (void);						// Tasten ErsetzungsStrings für die TutorialTexte initialisieren
 int	 GetDecValue(char *pair, int len);			// Dezimalwert einer Hexzahl mit Länge len
 
-//DKS - Added helper function to facilitate customized naming of joystick buttons and
-//      when not customized, to report joy buttons as ranging 1..99 instead of 0..98
-char* MapButtonToString(int button);
-
 //DKS - Added cross-platform language-files handling
 int FindLanguageFiles(char *path);
 

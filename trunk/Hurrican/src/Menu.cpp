@@ -899,7 +899,7 @@ MenuClass::MenuClass(void)
     LoadHighscore();
 
     ShowLanguageInfoCounter = 0.0f;
-    locked = false;
+    control_reassignment_occuring = false;
 
     // creditscount rausfinden
     CreditsCount = 0;
@@ -1245,7 +1245,6 @@ void MenuClass::ShowMenu(void)
         pDefaultFont->DrawText (col1_off_x + col2_off_x, line1_off_y+MENU_TASTEN_PLAYER_LINE*line_spacing, 
                 TextArray[TEXT_PLAYER_TWO], p2_col);
 
-        // TODO - Provide translation for "force feedback"
         // Force-feedback checkbox:
         {
             D3DCOLOR col;
@@ -1274,8 +1273,6 @@ void MenuClass::ShowMenu(void)
             pDefaultFont->DrawText(col1_off_x, line1_off_y+MENU_TASTEN_FORCEFEEDBACK_LINE*line_spacing,
                     TextArray[TEXT_FORCEFEEDBACK], col);
         }
-
-        // TODO - Provide translation for "load defaults"
 
         // Defaults, type, mode, sensitivity lines
         if (AktuellerPunkt == MENU_TASTEN_DEFAULTS_LINE)
@@ -1402,63 +1399,38 @@ void MenuClass::ShowMenu(void)
             for (int i = 0; i < MENU_TASTEN_NUM_CONTROLS; i++)
             {
                 D3DCOLOR col;
-
-                if (AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS  == i)
+                if (AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS  == i && CurrentPlayer == j)
                     col = 0xFFFFFFFF;
                 else
                     col = 0x88FFFFFF;
 
-                if (CurrentPlayer != j)
+                if (CurrentPlayer != j || AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS != i ||
+                        (AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS == i && !control_reassignment_occuring))
                 {
                     // Bestimmte Tasten werden ausgeblendet, wenn joymode = joystick oder joypad
                     if (PossibleKeys[j][i] == false)
                         continue;
 
                     // Nicht definiert?
-                    if (pCurrentPlayer->AktionKeyboard[i] == -1 &&
-                            (pCurrentPlayer->AktionJoystick[i] == -1 ||
-                             JoystickFound == false))
-                        pDefaultFont->DrawText (col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
-                                TextArray[TEXT_NICHT_DEFINIERT], 0x88FFFFFF);
-                    else
-                        if (pCurrentPlayer->AktionKeyboard[i] != -1)
-                            // Keyboard key
-                            pDefaultFont->DrawText (col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
-                                    GetKeyName (pCurrentPlayer->AktionKeyboard[i]), 0x88FFFFFF);
-
-                        else
-                        {
-                            // Joystick button
-                            char Buf[64];
-                            sprintf_s (Buf, "%s %s", TextArray[TEXT_BUTTON], 
-                                    MapButtonToString(pCurrentPlayer->AktionJoystick[i]));
-                            pDefaultFont->DrawText(col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
-                                    Buf, 0x88FFFFFF);
-                        }
-                } else if (locked == false || AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS != i)
-                {
-                    // Bestimmte Tasten werden ausgeblendet, wenn joymode = joystick oder joypad
-                    if (PossibleKeys[j][i] == false)
-                        continue;
-
-                    // Nicht definiert?
-                    if (pCurrentPlayer->AktionKeyboard[i] == -1 &&
-                            (pCurrentPlayer->AktionJoystick[i] == -1 ||
-                             JoystickFound == false))
+                    if ((pCurrentPlayer->ControlType == JOYMODE_KEYBOARD && pCurrentPlayer->AktionKeyboard[i] == -1) ||
+                        (pCurrentPlayer->ControlType != JOYMODE_KEYBOARD && pCurrentPlayer->AktionJoystick[i] == -1))
                     {
+                        // Action is not defined
                         pDefaultFont->DrawText (col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
                                 TextArray[TEXT_NICHT_DEFINIERT], col);
                     } else {
-
-                        // Taste anzeigen?
-                        if (pCurrentPlayer->AktionKeyboard[i] != -1) {
-                            pDefaultFont->DrawText (col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
-                                    GetKeyName (pCurrentPlayer->AktionKeyboard[i]), col);
-                        } else {
+                        if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD) {
+                            // Keyboard key
+                            if (pCurrentPlayer->AktionKeyboard[i] != -1)
+                                pDefaultFont->DrawText (col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
+                                        GetKeyName (pCurrentPlayer->AktionKeyboard[i]), col);
+                        } else
+                        {
                             //Joy button
                             char Buf[80];
                             sprintf_s (Buf, "%s %s", TextArray[TEXT_BUTTON], 
-                                    MapButtonToString(pCurrentPlayer->AktionJoystick[i]));
+                                    DirectInput.MapButtonToString(pCurrentPlayer->JoystickIndex, 
+                                                                  pCurrentPlayer->AktionJoystick[i]));
                             pDefaultFont->DrawText (col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing, 
                                     Buf, col);
                         }
@@ -1466,9 +1438,11 @@ void MenuClass::ShowMenu(void)
                 } else
                 {
                     if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD)
+                        // Ask for new key
                         pDefaultFont->DrawText(col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
                                 TextArray[TEXT_TASTEN_NEU_T], col);
                     else
+                        // Ask for new button
                         pDefaultFont->DrawText(col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing, 
                                 TextArray[TEXT_TASTEN_NEU_B], col);
                 }
@@ -1925,16 +1899,15 @@ void MenuClass::DoMenu(void)
         anybutton = true;
 
     if (input_counter >= input_delay && JoystickFound == true) {
+        // Normally, for menu input we only check Player 1's joystick.
         int num_joys_to_check = 1;
         int joy_idx = pPlayer[0]->JoystickIndex;
         if (joy_idx < 0 || joy_idx >= DirectInput.JoysticksFound) {
             joy_idx = 0;
         }
 #if defined(GCW)
-        // Normally, for menu input we only check Player 1's joystick.
         // However, on GCW Zero the internal controls are their own joystick
-        // and we must always check them, too since sometimes Player 1 might
-        // be assigned to a USB joystick.
+        // and we must always be sure to check them.
         if (pPlayer[0]->JoystickIndex != DirectInput.GetInternalJoystickIndex()) {
             num_joys_to_check++;
         }
@@ -1981,7 +1954,8 @@ void MenuClass::DoMenu(void)
         }
     }
 
-    if ((KeyDown(DIK_SPACE)  || KeyDown(DIK_RETURN) || joy_enter) && AuswahlPossible == true) {
+    if ((KeyDown(DIK_SPACE)  || KeyDown(DIK_RETURN) || joy_enter) && 
+            AuswahlPossible && !control_reassignment_occuring) {
         input_counter = 0.0f;
         selected = true;
     }
@@ -2035,7 +2009,7 @@ void MenuClass::DoMenu(void)
         return; // Do not accept menu input until language counter reaches 0
     }
 
-    if (AuswahlPossible == true && locked == false &&
+    if (AuswahlPossible && !control_reassignment_occuring &&
             (KeyDown(DIK_NUMPAD8) || KeyDown(DIK_UP) || joy_up))
     {
         input_counter = 0.0f;
@@ -2077,7 +2051,7 @@ void MenuClass::DoMenu(void)
         }
     }
 
-    if (AuswahlPossible == true && locked == false &&
+    if (AuswahlPossible && !control_reassignment_occuring &&
             (KeyDown(DIK_NUMPAD2) || KeyDown(DIK_DOWN) || joy_down))
     {
         input_counter = 0.0f;
@@ -2291,7 +2265,7 @@ void MenuClass::DoMenu(void)
                 CurrentPlayer	 = 0;
                 AktuellerZustand = MENUZUSTAND_TASTEN;
                 AktuellerPunkt   = 0;
-                locked			 = false;
+                control_reassignment_occuring = false;
             }
 
             //DKS - This was already commented out:
@@ -2409,51 +2383,80 @@ void MenuClass::DoMenu(void)
 
         FillPossibleKeys();
 
-        if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS && 
+        if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS && !control_reassignment_occuring &&
                 (KeyDown(DIK_DELETE) || KeyDown(DIK_BACK) || joy_delete))
         {
             input_counter = 0.0f;
-            pCurrentPlayer->AktionJoystick[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = -1;
-            pCurrentPlayer->AktionKeyboard[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = -1;
+            if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD)
+                pCurrentPlayer->AktionKeyboard[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = -1;
+            else
+                pCurrentPlayer->AktionJoystick[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = -1;
         }
 
         // neue Taste eingeben ?
-        if (locked == true)
+        if (control_reassignment_occuring && !selected)
         {
-            if (AuswahlPossible == true && AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS)
+            if (AuswahlPossible && AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS)
             {
-                // Neue Taste?
-                DirectInput.UpdateTastatur();
-
-                for (int i=1; i<DirectInput.NumberOfKeys; i++)		// Puffer durchgehen
-                    if (KeyDown(i) && i!=DIK_NUMLOCK && i!=DIK_CAPITAL && i!=DIK_SCROLL)					// ob eine Taste gedrückt wurde
-                    {
-                        pCurrentPlayer->AktionKeyboard[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = i;
-                        pCurrentPlayer->AktionJoystick[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = -1;
-                        locked		    = false;
-                        AuswahlPossible = false;
-
-                        while (KeyDown(i))
-                            DirectInput.UpdateTastatur();
-
-                        break;
-                    }
-
-                // Neuer Button?
-                if (DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].Active == true)
+                if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD) 
                 {
-                    //DKS - TODO - this seems to be where more work is needed in accepting new button input
-                    for (int i = 0; i < DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].NumButtons; i++)
-                        if (DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].JoystickButtons[i] == true)
+                    // Neue Taste?
+                    DirectInput.UpdateTastatur();
+
+                    for (int i=1; i<DirectInput.NumberOfKeys; i++)		// Puffer durchgehen
+                    {
+                        //DKS - Added exclusions for TAB and ESCAPE, as they are hard-coded to 
+                        //      be the console and main-menu activation keys, respectively.
+                        //      Also added exclusions for keys 1,2 and 3 because they are
+                        //      hard-coded in the game to be Weapon-selection keys.
+                        if (KeyDown(i)  && i!=DIK_NUMLOCK && i!=DIK_CAPITAL && i!=DIK_SCROLL
+                                && i!=DIK_TAB && i!=DIK_ESCAPE
+                                && i!=DIK_1 && i!=DIK_2 && i!=DIK_3)					// ob eine Taste gedrückt wurde
                         {
-                            pCurrentPlayer->AktionJoystick[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = i;
-                            pCurrentPlayer->AktionKeyboard[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = -1;
-                            locked		    = false;
+#if defined(GCW)
+                            //DKS - Added exclusion for the Hold Switch (Mapped to home key), as it is
+                            //      hard-coded to be the console-activation key for GCW Zero.
+                            if (i==DIK_HOME)
+                                break;
+#endif // GCW
+                            pCurrentPlayer->AktionKeyboard[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = i;
+                            control_reassignment_occuring = false;
                             AuswahlPossible = false;
 
-                            while (DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].JoystickButtons[i] == true)
-                                DirectInput.UpdateJoysticks();
+                            while (KeyDown(i))
+                                DirectInput.UpdateTastatur();
+
+                            input_counter = 0.0f;
+                            break;
                         }
+                    }
+                } else 
+                {
+                    // Neuer Button?
+                    if (DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].Active)
+                    {
+                        //DKS - TODO - this seems to be where more work is needed in accepting new button input
+                        for (int i = 0; i < DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].NumButtons; i++)
+                        {
+                            if (DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].JoystickButtons[i])
+                            {
+#if defined(GCW)
+                                //DKS - Added exclusion on GCW Zero for button 5, START, as it is hard-coded
+                                //      to be the Exit-to-Main-Menu button and thus cannot be reassigned.
+                                if (i == DirectInput.GetInternalJoystickMainMenuButton())
+                                    break;
+#endif //GCW
+                                pCurrentPlayer->AktionJoystick[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = i;
+                                control_reassignment_occuring = false;
+                                AuswahlPossible = false;
+
+                                while (DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].JoystickButtons[i])
+                                    DirectInput.UpdateJoysticks();
+
+                                input_counter = 0.0f;
+                            }
+                        }
+                    }
                 }
             }
             else
@@ -2556,11 +2559,17 @@ void MenuClass::DoMenu(void)
             if (selected)
             {
                 AuswahlPossible = false;
+                input_counter = 0.0f;
 
                 // Taste ändern?
-                if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS)
-                    locked = true;
-                else
+                if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS) {
+                    control_reassignment_occuring = true;
+                    // Do not proceed until all keys/buttons are released:
+                    while (DirectInput.AnyKeyDown() || DirectInput.AnyButtonDown()) {
+                        DirectInput.UpdateTastatur();
+                        DirectInput.UpdateJoysticks();
+                    }
+                } else
                 {
                     PlayerClass *pCurrentPlayer;
 

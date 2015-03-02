@@ -892,3 +892,43 @@ bool DirectInputClass::CheckRectCollision( SDL_Rect* boxA, SDL_Rect* boxB )
     return true;    // Collision has occured
 }
 #endif
+
+//DKS - GCW Zero handheld-specific button strings
+#if defined(GCW)
+#define GCW_MAX_BUTTONS 8
+static char InternalButtonNumToStringMap[8][10] = {
+    "B",        // Button 0
+    "A",    
+    "Y",
+    "X",
+    "Select",
+    "Start",
+    "L",
+    "R"         // Button 7
+};
+#endif // GCW
+
+//DKS - Added helper function to facilitate customized naming of joystick buttons and
+//      when not customized, to report joy buttons as ranging 1..99 instead of 0..98
+char* DirectInputClass::MapButtonToString(int joy_idx, int button)
+{
+    static char buf[60];
+    
+    if (button < 0) {
+        return TextArray[TEXT_NICHT_DEFINIERT];
+    } else {
+#ifdef GCW
+        // Special case for GCW Zero's internal controls:
+        if (joy_idx == GetInternalJoystickIndex() && button < GCW_MAX_BUTTONS)
+        {
+            return InternalButtonNumToStringMap[button];
+        } else 
+#endif //GCW
+            // Non-platform-specific generic code for all joysticks:
+        {
+            // Report button numbers as ranging from 1..99 instead of 0..98
+            sprintf_s(buf, "%d", button+1);
+            return buf;
+        }
+    }
+}

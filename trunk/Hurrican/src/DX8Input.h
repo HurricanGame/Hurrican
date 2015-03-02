@@ -96,13 +96,31 @@ public:
     bool AnyKeyDown(void);
     bool AnyButtonDown(void);
     void UpdateJoysticks(void);
+    char* MapButtonToString(int joy_idx, int button);   // Returns char string "1" for button 0, etc..
+                                                        // But when used on GCW Zero's internal controls
+                                                        // (or other special cases) will return the custom
+                                                        // string for the devices's buttons ("X", "Select", etc)
 
 #if defined(GCW)
-    // If the system has built-in joystick controls, this is their index, 0 is default.
+    // If the system has built-in joystick controls, this is their index. 0 is default.
     // On embedded systems like GCW Zero, this is set to the device's internal controls 
     // so that a player is never 'locked out' and also so the game is not dependent on
     // the system always setting the internal controls to device index 0. Likely useful on other devices, too. -DKS
     int  GetInternalJoystickIndex(void) { return InternalJoystickIndex; }
+
+    // On GCW Zero, Main menu button is permanently mapped to START (button 5):
+    int  GetInternalJoystickMainMenuButton(void) { return 5; }
+
+    bool InternalJoystickMainMenuButtonDown(void) 
+    { 
+        int joy_idx = GetInternalJoystickIndex();
+        int button_idx = GetInternalJoystickMainMenuButton();
+        if (joy_idx >= 0 && joy_idx < JoysticksFound && Joysticks[joy_idx].Active && 
+                button_idx < Joysticks[joy_idx].NumButtons)
+            return Joysticks[joy_idx].JoystickButtons[button_idx];
+        else
+            return false;
+    }
 #endif //GCW
 
 #if defined(ANDROID)
