@@ -1861,10 +1861,10 @@ void MenuClass::DoMenu(void)
     bool joy_down       = false;
     bool joy_left       = false;
     bool joy_right      = false;
-    bool joy_enter      = false;        // Mapped to joy button 0 by default
-    bool joy_escape     = false;        // Mapped to joy button 1 by default
-    bool joy_delete     = false;        // Mapped to joy button 4 by default
-    int joy_idx = pPlayer[0]->JoystickIndex;
+    bool joy_enter      = false;
+    bool joy_escape     = false;
+    bool joy_delete     = false;
+//    int joy_idx = pPlayer[0]->JoystickIndex;
     static float input_counter = 0.0f;
     const float input_delay = 40.0f;     // Only accept joy input once every time counter reaches this value
     input_counter += 30.0f SYNC;
@@ -1925,36 +1925,60 @@ void MenuClass::DoMenu(void)
         anybutton = true;
 
     if (input_counter >= input_delay && JoystickFound == true) {
-        if (DirectInput.Joysticks[joy_idx].JoystickPOV != -1) {
-            // HAT switch is pressed
-            if        (DirectInput.Joysticks[joy_idx].JoystickPOV >= 4500 * 1 &&
-                       DirectInput.Joysticks[joy_idx].JoystickPOV <= 4500 * 3) {
-                joy_right = true;
-            } else if (DirectInput.Joysticks[joy_idx].JoystickPOV >= 4500 * 5 &&
-                       DirectInput.Joysticks[joy_idx].JoystickPOV <= 4500 * 7) {
-                joy_left = true;
-            } else if (DirectInput.Joysticks[joy_idx].JoystickPOV >  4500 * 3 &&
-                       DirectInput.Joysticks[joy_idx].JoystickPOV <  4500 * 5) {
-                joy_down = true;
-            } else if ((DirectInput.Joysticks[joy_idx].JoystickPOV >  4500 * 7 && 
-                        DirectInput.Joysticks[joy_idx].JoystickPOV <= 4500 * 8) ||
-                       (DirectInput.Joysticks[joy_idx].JoystickPOV >= 0        &&
-                        DirectInput.Joysticks[joy_idx].JoystickPOV < 4500 * 1)) {
-                joy_up = true;
-            }
-        } else if (DirectInput.Joysticks[joy_idx].JoystickX >  pPlayer[0]->JoystickSchwelle) {
-            joy_right = true;
-        } else if (DirectInput.Joysticks[joy_idx].JoystickX < -pPlayer[0]->JoystickSchwelle) {
-            joy_left  = true;
-        } else if (DirectInput.Joysticks[joy_idx].JoystickY >  pPlayer[0]->JoystickSchwelle) {
-            joy_down  = true;
-        } else if (DirectInput.Joysticks[joy_idx].JoystickY < -pPlayer[0]->JoystickSchwelle) {
-            joy_up  = true;
+        int num_joys_to_check = 1;
+        int joy_idx = pPlayer[0]->JoystickIndex;
+        if (joy_idx < 0 || joy_idx >= DirectInput.JoysticksFound) {
+            joy_idx = 0;
         }
+#if defined(GCW)
+        // Normally, for menu input we only check Player 1's joystick.
+        // However, on GCW Zero the internal controls are their own joystick
+        // and we must always check them, too since sometimes Player 1 might
+        // be assigned to a USB joystick.
+        if (pPlayer[0]->JoystickIndex != DirectInput.GetInternalJoystickIndex()) {
+            num_joys_to_check++;
+        }
+#endif // GCW
 
-        joy_enter  = DirectInput.Joysticks[joy_idx].ButtonEnterPressed();
-        joy_escape = DirectInput.Joysticks[joy_idx].ButtonEscapePressed();
-        joy_delete = DirectInput.Joysticks[joy_idx].ButtonDeletePressed();
+        for (int joy_ctr=0; joy_ctr<num_joys_to_check; joy_ctr++) {
+#if defined(GCW)
+            if (joy_ctr > 0) {
+                // After first checking Player 1, check the internal GCW Zero controls:
+                joy_idx = DirectInput.GetInternalJoystickIndex();
+            }
+#endif // GCW
+
+            if (DirectInput.Joysticks[joy_idx].JoystickPOV != -1) {
+                // HAT switch is pressed
+                if        (DirectInput.Joysticks[joy_idx].JoystickPOV >= 4500 * 1 &&
+                        DirectInput.Joysticks[joy_idx].JoystickPOV <= 4500 * 3) {
+                    joy_right = true;
+                } else if (DirectInput.Joysticks[joy_idx].JoystickPOV >= 4500 * 5 &&
+                        DirectInput.Joysticks[joy_idx].JoystickPOV <= 4500 * 7) {
+                    joy_left = true;
+                } else if (DirectInput.Joysticks[joy_idx].JoystickPOV >  4500 * 3 &&
+                        DirectInput.Joysticks[joy_idx].JoystickPOV <  4500 * 5) {
+                    joy_down = true;
+                } else if ((DirectInput.Joysticks[joy_idx].JoystickPOV >  4500 * 7 && 
+                            DirectInput.Joysticks[joy_idx].JoystickPOV <= 4500 * 8) ||
+                        (DirectInput.Joysticks[joy_idx].JoystickPOV >= 0        &&
+                         DirectInput.Joysticks[joy_idx].JoystickPOV < 4500 * 1)) {
+                    joy_up = true;
+                }
+            } else if (DirectInput.Joysticks[joy_idx].JoystickX >  pPlayer[0]->JoystickSchwelle) {
+                joy_right = true;
+            } else if (DirectInput.Joysticks[joy_idx].JoystickX < -pPlayer[0]->JoystickSchwelle) {
+                joy_left  = true;
+            } else if (DirectInput.Joysticks[joy_idx].JoystickY >  pPlayer[0]->JoystickSchwelle) {
+                joy_down  = true;
+            } else if (DirectInput.Joysticks[joy_idx].JoystickY < -pPlayer[0]->JoystickSchwelle) {
+                joy_up  = true;
+            }
+
+            joy_enter  = joy_enter  || DirectInput.Joysticks[joy_idx].ButtonEnterPressed();
+            joy_escape = joy_escape || DirectInput.Joysticks[joy_idx].ButtonEscapePressed();
+            joy_delete = joy_delete || DirectInput.Joysticks[joy_idx].ButtonDeletePressed();
+        }
     }
 
     if ((KeyDown(DIK_SPACE)  || KeyDown(DIK_RETURN) || joy_enter) && AuswahlPossible == true) {
@@ -1992,8 +2016,7 @@ void MenuClass::DoMenu(void)
             JoyOK = true;
     }
 
-    if (KeyOK == true &&
-            JoyOK == true)
+    if (KeyOK == true && JoyOK == true)
         AuswahlPossible = true;
 
     if ((ShowLanguageInfoCounter > 256.0f && ShowLanguageInfoCounter < 1600.0f) && 
