@@ -152,7 +152,6 @@ private:
     bool				AuswahlPossible;			// Auswahl möglich ?
     float				ShowLanguageInfoCounter;	// Wie lange wird das Fenster mit Infos zum Language-File angezeigt ?
     D3DCOLOR			HighscoreColors[MAX_COLORS];// Farbewerte der Highscore-Blink-Farben
-    bool				PossibleKeys[2][MAX_AKTIONEN];
 
     StarStruct			Stars	  [MAX_STARS];		// Hintergrund-Sterne
     SavegameStruct		Savegames [MAX_SAVEGAMES];	// Die Savegames (für Load Game)
@@ -163,8 +162,6 @@ private:
     DirectGraphicsSprite	MenuGfx;				// Grafiken für das Menu
     DirectGraphicsSprite	MenuKasten[2];
     DirectGraphicsSprite	Skills;
-
-    void FillPossibleKeys(void);
 
 public:
     HighscoreStruct		Highscores[MAX_HIGHSCORES];	// Die Top-Twenty

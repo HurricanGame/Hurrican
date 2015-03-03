@@ -98,7 +98,7 @@ void GegnerTutorialText::DoKI(void)
         // DKS - If player 1 is controlled with joystick, replace all references to 'key' with 'button'
         std::string displayed_text(c_text);
 
-        if (pPlayer[0]->ControlType == JOYMODE_STICK) {
+        if (pPlayer[0]->ControlType == CONTROLTYPE_JOY) {
             ReplaceAll(displayed_text, "key", "button");
         }
 

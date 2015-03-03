@@ -49,9 +49,14 @@
 #define	FFE_BLITZ 3
 
 #define MAX_JOYSTICKS 4
-#define JOYMODE_KEYBOARD 0
-#define JOYMODE_PAD		 1
-#define JOYMODE_STICK	 2
+//DKS - Fixed ambiguity: The game had ControlType and JoystickMode both using this #define, but
+//      that was confusing and mixed up in the code:  Now, JoystickMode uses this define and
+//      ControlType uses the one following it:
+#define JOYMODE_JOYPAD		1       // NOTE: DO NOT change the values 1 & 2 here, Texts.cpp counts on these values.
+#define JOYMODE_JOYSTICK	2       // There originally was a 0 but it was removed for reasons in comment above.
+
+#define CONTROLTYPE_KEYBOARD    0
+#define CONTROLTYPE_JOY         1
 
 // --------------------------------------------------------------------------------------
 // Klassendeklaration

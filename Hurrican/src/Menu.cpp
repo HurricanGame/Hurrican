@@ -952,41 +952,6 @@ void MenuClass::ShowMenuBack(void)
 }
 
 // --------------------------------------------------------------------------------------
-// festlegen, welche aktionen für den spieler wählbar sind
-// abhängig vom controlmode und joymode
-// --------------------------------------------------------------------------------------
-
-void MenuClass::FillPossibleKeys(void)
-{
-    for (int p = 0; p < 2; p++)
-    {
-        for (int i = 0; i < MAX_AKTIONEN; i++)
-            PossibleKeys[p][i] = true;
-
-        PlayerClass *pCurrentPlayer;
-
-        if (p == 0)
-            pCurrentPlayer = pPlayer[0];
-        else
-            pCurrentPlayer = pPlayer[1];
-
-        // Laufen, Ducken und Hoch/Runtersehen Tasten für Joystick/Pad deaktivieren
-        if (pCurrentPlayer->ControlType == JOYMODE_STICK)
-        {
-            //PossibleKeys[p][0] = false;
-            //PossibleKeys[p][1] = false;
-            //PossibleKeys[p][2] = false;
-            //PossibleKeys[p][3] = false;
-            //PossibleKeys[p][4] = false;
-
-            // Springen für Joystick deaktivieren
-            if (pCurrentPlayer->JoystickMode == JOYMODE_STICK)
-                PossibleKeys[p][5] = false;
-        }
-    }
-}
-
-// --------------------------------------------------------------------------------------
 // Menu anzeigen
 // --------------------------------------------------------------------------------------
 
@@ -1214,8 +1179,6 @@ void MenuClass::ShowMenu(void)
 
         int controls_off_y = line1_off_y + MENU_TASTEN_NUM_NON_CONTROLS * line_spacing;    // Controls lines Y-offset
 
-        FillPossibleKeys();
-
         // "CONFIGURE CONTROLS" title - Do not draw when using scaled fonts, as there's no room
         if (scale_factor <= 1) {
             pMenuFont->DrawTextCenterAlign(320, title_off_y, TextArray[TEXT_STEUERUNG], menucolor, 2);
@@ -1305,9 +1268,6 @@ void MenuClass::ShowMenu(void)
 
         for (int i = 0; i < MENU_TASTEN_NUM_CONTROLS; i++)
         {
-            if (PossibleKeys[CurrentPlayer][i] == false)
-                continue;
-
             pDefaultFont->DrawTextRightAlign (col0_off_x, controls_off_y + i * line_spacing, 
                     TextArray[TEXT_TASTEN_L + i], 0x88FFFFFF);
 
@@ -1336,7 +1296,7 @@ void MenuClass::ShowMenu(void)
             else
                 col = 0x88FFFFFF;
 
-            if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD)
+            if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD)
                 // Keyboard text
                 pDefaultFont->DrawText (col1_off_x + j * col2_off_x, line1_off_y+MENU_TASTEN_TYPE_LINE*line_spacing, 
                         TextArray[TEXT_KEYBOARD], col);
@@ -1356,7 +1316,7 @@ void MenuClass::ShowMenu(void)
             }
 
             // Rechteck für Empfindlichkeit
-            if (pCurrentPlayer->ControlType != JOYMODE_KEYBOARD)
+            if (pCurrentPlayer->ControlType == CONTROLTYPE_JOY)
             {
                 if (CurrentPlayer == j && AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE)
                     col = 0xFFFFFFFF;
@@ -1388,7 +1348,7 @@ void MenuClass::ShowMenu(void)
                 else
                     col = 0x88FFFFFF;
 
-                if (pCurrentPlayer->JoystickMode == JOYMODE_STICK)
+                if (pCurrentPlayer->JoystickMode == JOYMODE_JOYSTICK)
                     pDefaultFont->DrawText(col1_off_x + j * col2_off_x, line1_off_y+MENU_TASTEN_MODE_LINE*line_spacing, 
                             TextArray[TEXT_JOYMODE_STICK], col);
                 else
@@ -1398,46 +1358,82 @@ void MenuClass::ShowMenu(void)
 
             for (int i = 0; i < MENU_TASTEN_NUM_CONTROLS; i++)
             {
+                bool on_move_line = (i==AKTION_LINKS || i==AKTION_RECHTS || i==AKTION_DUCKEN);
+                bool on_look_line = (i==AKTION_OBEN || i==AKTION_UNTEN);
+                bool on_jump_line = (i==AKTION_JUMP);
                 D3DCOLOR col;
                 if (AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS  == i && CurrentPlayer == j)
                     col = 0xFFFFFFFF;
                 else
                     col = 0x88FFFFFF;
 
-                if (CurrentPlayer != j || AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS != i ||
+                if (CurrentPlayer != j || 
+                        AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS != i ||
                         (AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS == i && !control_reassignment_occuring))
                 {
-                    // Bestimmte Tasten werden ausgeblendet, wenn joymode = joystick oder joypad
-                    if (PossibleKeys[j][i] == false)
-                        continue;
-
                     // Nicht definiert?
-                    if ((pCurrentPlayer->ControlType == JOYMODE_KEYBOARD && pCurrentPlayer->AktionKeyboard[i] == -1) ||
-                        (pCurrentPlayer->ControlType != JOYMODE_KEYBOARD && pCurrentPlayer->AktionJoystick[i] == -1))
+                    if ((pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD && 
+                                pCurrentPlayer->AktionKeyboard[i] == -1) ||
+                        (pCurrentPlayer->ControlType == CONTROLTYPE_JOY && 
+                         (!on_move_line && !on_look_line &&
+                             (!on_jump_line && pCurrentPlayer->JoystickMode == JOYMODE_JOYSTICK)) &&
+                                pCurrentPlayer->AktionJoystick[i] == -1)) 
                     {
-                        // Action is not defined
-                        pDefaultFont->DrawText (col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
+                            // Action is not defined
+                            pDefaultFont->DrawText (col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
                                 TextArray[TEXT_NICHT_DEFINIERT], col);
                     } else {
-                        if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD) {
+                        if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD) {
                             // Keyboard key
                             if (pCurrentPlayer->AktionKeyboard[i] != -1)
                                 pDefaultFont->DrawText (col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
                                         GetKeyName (pCurrentPlayer->AktionKeyboard[i]), col);
-                        } else
-                        {
-                            //Joy button
+                        } else {
+                            // Joy axis/hat/button
                             char Buf[80];
-                            sprintf_s (Buf, "%s %s", TextArray[TEXT_BUTTON], 
-                                    DirectInput.MapButtonToString(pCurrentPlayer->JoystickIndex, 
-                                                                  pCurrentPlayer->AktionJoystick[i]));
+                            if (on_move_line) {
+                                // The three movement assignments (Walk Left, Walk Right, Crouch) can only be 
+                                //  assigned to DPAD or X/Y-analog-axis and are a special case:
+                                if (pCurrentPlayer->Walk_UseAxxis) {
+                                    // Movement is assigned to analog stick
+                                    strcpy_s(Buf, TextArray[TEXT_JOY_ACHSE]);
+                                } else {
+                                    // Movement is assigned to D-PAD HAT
+                                    strcpy_s(Buf, TextArray[TEXT_JOY_COOLIE]);
+                                }
+                            } else if (on_look_line) {
+                                // Similarly, the two look assignments can only be assigned to DPAD or X/Y-analog-axis
+                                if (pCurrentPlayer->Look_UseAxxis) {
+                                    // Look up/down is assigned to analog stick
+                                    strcpy_s(Buf, TextArray[TEXT_JOY_ACHSE]);
+                                } else {
+                                    // Look up/down is assigned to DPAD HAT
+                                    strcpy_s(Buf, TextArray[TEXT_JOY_COOLIE]);
+                                }
+                            } else if (on_jump_line && pCurrentPlayer->JoystickMode == JOYMODE_JOYSTICK) {
+                                // When in joystick mode, jump is handled by movement (DPAD or analog axis)
+                                if (pCurrentPlayer->Walk_UseAxxis) {
+                                    // Jump/Movement is assigned to analog stick
+                                    strcpy_s(Buf, TextArray[TEXT_JOY_ACHSE]);
+                                } else {
+                                    // Jump/Movement is assigned to DPAD HAT
+                                    strcpy_s(Buf, TextArray[TEXT_JOY_COOLIE]);
+                                }
+                            } else {
+                                //Joy button
+                                sprintf_s (Buf, "%s %s", TextArray[TEXT_BUTTON], 
+                                        DirectInput.MapButtonToString(pCurrentPlayer->JoystickIndex, 
+                                            pCurrentPlayer->AktionJoystick[i]));
+                            }
+
                             pDefaultFont->DrawText (col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing, 
                                     Buf, col);
                         }
                     }
                 } else
                 {
-                    if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD)
+                    // Redefinition prompt
+                    if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD)
                         // Ask for new key
                         pDefaultFont->DrawText(col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
                                 TextArray[TEXT_TASTEN_NEU_T], col);
@@ -1450,128 +1446,6 @@ void MenuClass::ShowMenu(void)
         }
     }
     break; // MENUZUSTAND_TASTEN
-
-    //DKS - This is code from the original game that was never used, so I am disabling it.
-    //      Apparently, their intention was to make separate keyboard and button controls 
-    //      sub-menus but stuck with just the one above 
-#if 0
-    case MENUZUSTAND_BUTTONS :
-    {
-        const int OFFSET2 = 60;
-
-        //float d = (float)(pMenuFont->StringLength(TextArray [TEXT_BUTTONS], 2));
-        //pMenuFont->DrawText(320 - d/2.0f, ypos + OFFSET - OFFSET2, TextArray [TEXT_BUTTONS], menucolor, 2);
-
-        // Einstellungen für ForceFeedback und Stickmodus
-        //
-        for (int i = 0; i < 3; i++)
-        {
-            float d = (float)(pMenuFont->StringLength(TextArray [TEXT_JOYMODE+i], 2));
-
-            // forcefeedback? dann freilassen fürs Kästchen
-            //
-            if (i == 1)
-            {
-                d += 20;
-
-                // Kästchen zeichnen
-                //
-                if (UseForceFeedback == false)
-                {
-                    if (i == AktuellerPunkt)
-                        MenuKasten[0].RenderSprite(320.0f + d / 2.0f, ypos + OFFSET - OFFSET2 + (i+2) * 35 - 12, menucolor);
-                    else
-                        MenuKasten[0].RenderSprite(320.0f + d / 2.0f, ypos + OFFSET - OFFSET2 + (i+2) * 35 - 12, menucolor2);
-                }
-                else
-                {
-                    if (i == AktuellerPunkt)
-                        MenuKasten[1].RenderSprite(320.0f + d / 2.0f, ypos + OFFSET - OFFSET2 + (i+2) * 35 - 12, menucolor);
-                    else
-                        MenuKasten[1].RenderSprite(320.0f + d / 2.0f, ypos + OFFSET - OFFSET2 + (i+2) * 35 - 12, menucolor2);
-                }
-            }
-
-            // Empfindlichkeit
-            //
-            if (i == 2)
-            {
-                d += 350;
-
-                // Rahmen zeichnen
-                //
-//					LoadingBar.SetRect(0, 0, 318 - int(DirectInput.JoystickSchwelle / 1000.0f * 318.0f), 19);
-
-                if (i == AktuellerPunkt)
-                {
-                    LoadingScreen.RenderSprite (260, ypos + OFFSET - OFFSET2 + (i+2) * 35 - 18, menucolor);
-                    LoadingBar.RenderSprite    (281, ypos + OFFSET - OFFSET2 + (i+2) * 35 +2, menucolor);
-                }
-                else
-                {
-                    LoadingScreen.RenderSprite (260, ypos + OFFSET - OFFSET2 + (i+2) * 35 - 18, menucolor2);
-                    LoadingBar.RenderSprite    (281, ypos + OFFSET - OFFSET2 + (i+2) * 35 +2, menucolor2);
-                }
-            }
-
-            char buf[100];
-
-            if (i != 0)
-                strcpy_s(buf, strlen(TextArray [TEXT_JOYMODE + i]) + 1, TextArray [TEXT_JOYMODE + i]);
-            else
-            {
-                /*					if (DirectInput.Joysticks[pPlayer->JoystickIndex].JoystickMode == JOYMODE_STICK)
-                						sprintf_s (buf, "%s %s", TextArray [TEXT_JOYMODE], TextArray [TEXT_JOYMODE_STICK]);
-                					else
-                						sprintf_s (buf, "%s %s", TextArray [TEXT_JOYMODE], TextArray [TEXT_JOYMODE_PAD]);
-                */
-
-                d = (float)(pMenuFont->StringLength(buf));
-            }
-
-            if (i == AktuellerPunkt)
-                pMenuFont->DrawText(320 - d/2.0f, ypos + OFFSET - OFFSET2 + (i+2) * 35, buf, menucolor, 2);
-            else
-                pMenuFont->DrawText(320 - d/2.0f, ypos + OFFSET - OFFSET2 + (i+2) * 35, buf, menucolor2, 2);
-
-        }
-
-        // Buttons
-        //
-        for (int i = 5; i < 11; i++)
-        {
-            /*
-            				char bnr[20];
-
-            				//if (i == 5 && DirectInput.JoystickMode == JOYMODE_STICK)
-            //					continue;
-
-            				pDefaultFont->DrawText (xpos +  70, ypos + 120 + i * 16, TextArray[TEXT_TASTEN_L + i], 0x88FFFFFF);
-
-            				if (locked == false || AktuellerPunkt != i)
-            				{
-            					sprintf_s (bnr, "%i", pPlayer->AktionJoystick[i]);
-            					pDefaultFont->DrawText (xpos + 220, ypos + 120 + i * 16, "Button nr ", 0x88FFFFFF);
-            					pDefaultFont->DrawText (xpos + 285, ypos + 120 + i * 16, bnr, 0x88FFFFFF);
-            				}
-
-            				if (AktuellerPunkt == i - 2)
-            				{
-            					//pDefaultFont->DrawText (xpos + 70, ypos + 120 + i * 16, TextArray[TEXT_TASTEN_L + i], 0x88FFFFFF);
-
-            					if (locked == false)
-            					{
-            						sprintf_s (bnr, "%i", pPlayer->AktionJoystick[i]);
-            						pDefaultFont->DrawText (xpos + 220, ypos + 120 + i * 16, "Button nr ", 0x88FFFFFF);
-            						pDefaultFont->DrawText (xpos + 285, ypos + 120 + i * 16, bnr, 0x88FFFFFF);
-            					}
-
-            					pDefaultFont->DrawText (xpos + 70, ypos + 120 + i * 16, TextArray[TEXT_TASTEN_L + i], 0x88FFFFFF);
-            				}
-            */
-        }
-    } break; // MENUZUSTAND_BUTTONS
-#endif //0
 
     case MENUPUNKT_HIGHSCORES :
     {
@@ -1938,14 +1812,18 @@ void MenuClass::DoMenu(void)
                          DirectInput.Joysticks[joy_idx].JoystickPOV < 4500 * 1)) {
                     joy_up = true;
                 }
-            } else if (DirectInput.Joysticks[joy_idx].JoystickX >  pPlayer[0]->JoystickSchwelle) {
-                joy_right = true;
-            } else if (DirectInput.Joysticks[joy_idx].JoystickX < -pPlayer[0]->JoystickSchwelle) {
-                joy_left  = true;
-            } else if (DirectInput.Joysticks[joy_idx].JoystickY >  pPlayer[0]->JoystickSchwelle) {
-                joy_down  = true;
-            } else if (DirectInput.Joysticks[joy_idx].JoystickY < -pPlayer[0]->JoystickSchwelle) {
-                joy_up  = true;
+            } else {
+#if !defined(GCW)   // On GCW Zero, only accept directional input for the menu from the DPAD
+                if (DirectInput.Joysticks[joy_idx].JoystickX >  pPlayer[0]->JoystickSchwelle) {
+                    joy_right = true;
+                } else if (DirectInput.Joysticks[joy_idx].JoystickX < -pPlayer[0]->JoystickSchwelle) {
+                    joy_left  = true;
+                } else if (DirectInput.Joysticks[joy_idx].JoystickY >  pPlayer[0]->JoystickSchwelle) {
+                    joy_down  = true;
+                } else if (DirectInput.Joysticks[joy_idx].JoystickY < -pPlayer[0]->JoystickSchwelle) {
+                    joy_up  = true;
+                }
+#endif //GCW
             }
 
             joy_enter  = joy_enter  || DirectInput.Joysticks[joy_idx].ButtonEnterPressed();
@@ -2038,16 +1916,14 @@ void MenuClass::DoMenu(void)
                 pCurrentPlayer = pPlayer[1];
 
             //DKS - Altered to match redesigned controls submenu:
-            if ((AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE ||
-                    (AktuellerPunkt == MENU_TASTEN_MODE_LINE)) &&
-                    pCurrentPlayer->ControlType == JOYMODE_KEYBOARD)
+            if ((AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE || AktuellerPunkt == MENU_TASTEN_MODE_LINE) &&
+                    pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD)
             {
                 AktuellerPunkt = MENU_TASTEN_TYPE_LINE;
-            } else if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS)
-            {
-                while(PossibleKeys[CurrentPlayer][AktuellerPunkt-MENU_TASTEN_NUM_NON_CONTROLS] == false)
-                    AktuellerPunkt--;
-            }
+            } 
+
+            if (AktuellerPunkt < 0)
+                AktuellerPunkt = MENU_TASTEN_NUM_LINES-1;
         }
     }
 
@@ -2081,17 +1957,12 @@ void MenuClass::DoMenu(void)
 
             //DKS - Altered to match redesigned controls submenu:
             if ((AktuellerPunkt == MENU_TASTEN_MODE_LINE || AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE) &&
-                    pCurrentPlayer->ControlType == JOYMODE_KEYBOARD) {
+                    pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD) {
                 AktuellerPunkt = MENU_TASTEN_NUM_NON_CONTROLS;
-            } else {
-                if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS)
-                {
-                    while(PossibleKeys[CurrentPlayer][AktuellerPunkt-MENU_TASTEN_NUM_NON_CONTROLS] == false)
-                        AktuellerPunkt++;
-                    if (AktuellerPunkt >= MENU_TASTEN_NUM_LINES)
-                        AktuellerPunkt = 0;
-                }
             }
+
+            if (AktuellerPunkt >= MENU_TASTEN_NUM_LINES)
+                AktuellerPunkt = 0;
         }
     }
 
@@ -2380,17 +2251,32 @@ void MenuClass::DoMenu(void)
             pCurrentPlayer = pPlayer[0];
         else
             pCurrentPlayer = pPlayer[1];
+        
+        int action = AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS;
+        bool on_move_line = (action==AKTION_LINKS || action==AKTION_RECHTS || action==AKTION_DUCKEN);
+        bool on_look_line = (action==AKTION_OBEN || action==AKTION_UNTEN);
+        bool on_jump_line = action==AKTION_JUMP;
 
-        FillPossibleKeys();
+        // If current player is using a joystick, check if the selected joystick is available
+        // and, if not, make sure controls for it are never selected unless it is changed
+        if (pCurrentPlayer->ControlType == CONTROLTYPE_JOY && AktuellerPunkt > MENU_TASTEN_TYPE_LINE) {
+            int joy_idx = pCurrentPlayer->JoystickIndex;
+            if (joy_idx < 0 || joy_idx >= DirectInput.JoysticksFound || !DirectInput.Joysticks[joy_idx].Active) {
+                AktuellerPunkt = MENU_TASTEN_TYPE_LINE;
+            }
+        }
 
         if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS && !control_reassignment_occuring &&
                 (KeyDown(DIK_DELETE) || KeyDown(DIK_BACK) || joy_delete))
         {
             input_counter = 0.0f;
-            if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD)
-                pCurrentPlayer->AktionKeyboard[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = -1;
-            else
-                pCurrentPlayer->AktionJoystick[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = -1;
+            if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD) {
+                pCurrentPlayer->AktionKeyboard[action] = -1;
+            } else if (!on_move_line && !on_look_line &&
+                    (!on_jump_line && pCurrentPlayer->JoystickMode == JOYMODE_JOYSTICK)) {
+                // Only non-look and non-movement actions are assignable to buttons on joysticks
+                pCurrentPlayer->AktionJoystick[action] = -1;
+            }
         }
 
         // neue Taste eingeben ?
@@ -2398,8 +2284,19 @@ void MenuClass::DoMenu(void)
         {
             if (AuswahlPossible && AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS)
             {
-                if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD) 
+                if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD) 
                 {
+#if defined(GCW)
+                    // Special abort case for GCW: If the user selects keyboard controls
+                    // and tries to define a key without a keyboard actually attached,
+                    // allow them to back out with the GCW button mapped to 'menu escape'
+
+                    DirectInput.UpdateJoysticks();
+                    if (DirectInput.Joysticks[DirectInput.GetInternalJoystickIndex()].ButtonEscapePressed()) {
+                        control_reassignment_occuring = false;
+                        AuswahlPossible = false;
+                    }
+#endif // GCW
                     // Neue Taste?
                     DirectInput.UpdateTastatur();
 
@@ -2419,7 +2316,7 @@ void MenuClass::DoMenu(void)
                             if (i==DIK_HOME)
                                 break;
 #endif // GCW
-                            pCurrentPlayer->AktionKeyboard[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = i;
+                            pCurrentPlayer->AktionKeyboard[action] = i;
                             control_reassignment_occuring = false;
                             AuswahlPossible = false;
 
@@ -2430,8 +2327,7 @@ void MenuClass::DoMenu(void)
                             break;
                         }
                     }
-                } else 
-                {
+                } else {
                     // Neuer Button?
                     if (DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].Active)
                     {
@@ -2446,7 +2342,7 @@ void MenuClass::DoMenu(void)
                                 if (i == DirectInput.GetInternalJoystickMainMenuButton())
                                     break;
 #endif //GCW
-                                pCurrentPlayer->AktionJoystick[AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS] = i;
+                                pCurrentPlayer->AktionJoystick[action] = i;
                                 control_reassignment_occuring = false;
                                 AuswahlPossible = false;
 
@@ -2490,7 +2386,6 @@ void MenuClass::DoMenu(void)
                 else
                     pCurrentPlayer = pPlayer[1];
 
-                //DKS - TODO: allow a second joystick to adjust this
                 if (KeyDown(DIK_NUMPAD6) || KeyDown(DIK_RIGHT) || joy_right)
                 {
                     input_counter = input_delay * 0.75f;     // Delay less than usual
@@ -2501,25 +2396,16 @@ void MenuClass::DoMenu(void)
 
                         if (pCurrentPlayer->JoystickSchwelle < 100.0f)
                             pCurrentPlayer->JoystickSchwelle = 100.0f;
-                    }
-                    else if (AktuellerPunkt >= MENU_TASTEN_PLAYER_LINE)
+                    } else if (AktuellerPunkt >= MENU_TASTEN_PLAYER_LINE)
                     {
                         AuswahlPossible = false;
                         CurrentPlayer = 1;
                         pCurrentPlayer = pPlayer[1];
 
-                        if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS) { 
-                            while (PossibleKeys[CurrentPlayer][AktuellerPunkt-MENU_TASTEN_NUM_NON_CONTROLS] == false)
-                                AktuellerPunkt++;
-                        } else {
-                            if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD &&
-                                    (AktuellerPunkt == MENU_TASTEN_MODE_LINE    ||
-                                     AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE))
-                                AktuellerPunkt = MENU_TASTEN_TYPE_LINE;
-                        }
-                            
-                        if (AktuellerPunkt >= MENU_TASTEN_NUM_LINES)
-                            AktuellerPunkt = 0;
+                        if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD &&
+                                (AktuellerPunkt == MENU_TASTEN_MODE_LINE    ||
+                                 AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE))
+                            AktuellerPunkt = MENU_TASTEN_TYPE_LINE;
                     }
                 }
 
@@ -2534,22 +2420,16 @@ void MenuClass::DoMenu(void)
 
                         if (pCurrentPlayer->JoystickSchwelle > 900.0f)
                             pCurrentPlayer->JoystickSchwelle = 900.0f;
-                    }
-                    else if (AktuellerPunkt >= MENU_TASTEN_PLAYER_LINE)
+                    } else if (AktuellerPunkt >= MENU_TASTEN_PLAYER_LINE)
                     {
                         AuswahlPossible = false;
                         CurrentPlayer = 0;
                         pCurrentPlayer = pPlayer[0];
 
-                        if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS) { 
-                            while (PossibleKeys[CurrentPlayer][AktuellerPunkt-MENU_TASTEN_NUM_NON_CONTROLS] == false)
-                                AktuellerPunkt++;
-                        } else {
-                            if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD &&
-                                    (AktuellerPunkt == MENU_TASTEN_MODE_LINE  ||
-                                     AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE))
-                                AktuellerPunkt = MENU_TASTEN_TYPE_LINE;
-                        }
+                        if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD &&
+                                (AktuellerPunkt == MENU_TASTEN_MODE_LINE  ||
+                                 AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE))
+                            AktuellerPunkt = MENU_TASTEN_TYPE_LINE;
                     }
                 }
             }
@@ -2562,15 +2442,28 @@ void MenuClass::DoMenu(void)
                 input_counter = 0.0f;
 
                 // Taste ändern?
-                if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS) {
-                    control_reassignment_occuring = true;
-                    // Do not proceed until all keys/buttons are released:
-                    while (DirectInput.AnyKeyDown() || DirectInput.AnyButtonDown()) {
-                        DirectInput.UpdateTastatur();
-                        DirectInput.UpdateJoysticks();
-                    }
-                } else
+                if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS)
                 {
+                    if (pCurrentPlayer->ControlType == CONTROLTYPE_JOY && 
+                            (on_move_line || on_look_line || 
+                             (on_jump_line && pCurrentPlayer->JoystickMode == JOYMODE_JOYSTICK))) {
+                        // If control mode is joystick/joypad, movement and look up/down can only be
+                        //  assigned to either the DPAD HAT or the analog stick:
+                        pCurrentPlayer->Walk_UseAxxis = !pCurrentPlayer->Walk_UseAxxis;
+                        pCurrentPlayer->Look_UseAxxis = !pCurrentPlayer->Look_UseAxxis;
+                        // Make sure the walk and look assignments remain different from one another
+                        //  (normally this always be the case if defaults are being assigned correctly)
+                        if (pCurrentPlayer->Walk_UseAxxis == pCurrentPlayer->Look_UseAxxis)
+                            pCurrentPlayer->Walk_UseAxxis = !pCurrentPlayer->Look_UseAxxis;
+                    } else {
+                        control_reassignment_occuring = true;
+                        // Do not proceed until all keys/buttons are released:
+                        while (DirectInput.AnyKeyDown() || DirectInput.AnyButtonDown()) {
+                            DirectInput.UpdateTastatur();
+                            DirectInput.UpdateJoysticks();
+                        }
+                    }
+                } else {
                     PlayerClass *pCurrentPlayer;
 
                     if (CurrentPlayer == 0)
@@ -2592,10 +2485,10 @@ void MenuClass::DoMenu(void)
                     // Joymode ändern?
                     if (AktuellerPunkt == MENU_TASTEN_MODE_LINE)
                     {
-                        if (pCurrentPlayer->JoystickMode == JOYMODE_STICK)
-                            pCurrentPlayer->JoystickMode = JOYMODE_PAD;
+                        if (pCurrentPlayer->JoystickMode == JOYMODE_JOYSTICK)
+                            pCurrentPlayer->JoystickMode = JOYMODE_JOYPAD;
                         else
-                            pCurrentPlayer->JoystickMode = JOYMODE_STICK;
+                            pCurrentPlayer->JoystickMode = JOYMODE_JOYSTICK;
                     }
 
                     // Controller Type ändern?
@@ -2605,9 +2498,9 @@ void MenuClass::DoMenu(void)
                         if (JoystickFound == true)
                         {
                             // Von Keyboard auf Joystick wechseln?
-                            if (pCurrentPlayer->ControlType == JOYMODE_KEYBOARD)
+                            if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD)
                             {
-                                pCurrentPlayer->ControlType = JOYMODE_STICK;
+                                pCurrentPlayer->ControlType = CONTROLTYPE_JOY;
                                 pCurrentPlayer->JoystickIndex = 0;
                             }
 
@@ -2618,7 +2511,7 @@ void MenuClass::DoMenu(void)
 
                                 if (pCurrentPlayer->JoystickIndex >= DirectInput.JoysticksFound)
                                 {
-                                    pCurrentPlayer->ControlType = JOYMODE_KEYBOARD;
+                                    pCurrentPlayer->ControlType = CONTROLTYPE_KEYBOARD;
                                     pCurrentPlayer->JoystickIndex = 0;
                                 }
                             }
@@ -2645,106 +2538,6 @@ void MenuClass::DoMenu(void)
         }
     }
     break; // Tasten
-
-    //DKS - This following menu was not actually used in the code..
-    //      It appears to be a joystick-specific controls reconfiguration menu, but
-    //      the above menu handles both. I am disabling this:
-#if 0
-    case MENUZUSTAND_BUTTONS:
-    {
-        // Button gedrückt ?
-        //
-        if (AktuellerPunkt > 2)
-        {
-            for (int i = 0; i < MAX_JOYSTICKBUTTONS; i++)
-                if (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickButtons[i] == true)
-                    pPlayer[0]->AktionJoystick[AktuellerPunkt+2] = i;
-
-            float d = (float)(pMenuFont->StringLength(TextArray[TEXT_TASTEN_NEU_B], 2));
-            pMenuFont->DrawText (320 - d / 2.0f, ypos + 310.0f, TextArray[TEXT_TASTEN_NEU_B], 0xFFFFFFFF, 2);
-        }
-
-        // Empfindlichkeit geändert
-        //
-        if (AktuellerPunkt == 2)
-        {
-            bool pressed = false;
-
-            //DKS - TODO: allow a second joystick to adjust this
-            if (KeyDown(DIK_NUMPAD4) || KeyDown(DIK_LEFT) || joy_left)
-                pressed = true;
-            else
-                pressed = false;
-
-            if (pressed)
-            {
-                input_counter = input_delay * 0.75f;     // Delay less than usual
-                pPlayer[0]->JoystickSchwelle += 50.0f SYNC;
-                if (pPlayer[0]->JoystickSchwelle > 1000.0f-1)
-                    pPlayer[0]->JoystickSchwelle = 1000.0f-1;
-            }
-
-            // Lauter
-            //DKS - TODO: allow a second joystick to adjust this
-            if (KeyDown(DIK_NUMPAD6) || KeyDown(DIK_RIGHT) || joy_right)
-                pressed = true;
-            else
-                pressed = false;
-
-            if (pressed)
-            {
-                input_counter = input_delay * 0.75f;     // Delay less than usual
-                pPlayer[0]->JoystickSchwelle -= 50.0f SYNC;
-                if (pPlayer[0]->JoystickSchwelle < 1.0f)
-                    pPlayer[0]->JoystickSchwelle = 1.0f;
-            }
-        }
-
-        if (AktuellerPunkt < 0)
-            AktuellerPunkt = 8;
-
-        if (AktuellerPunkt > 8)
-            AktuellerPunkt = 0;
-
-
-        // Punkt gewählt
-        //
-        if (selected)
-        {
-            AuswahlPossible = false;
-
-            // Joypad Mode
-            //
-            if (AktuellerPunkt == 0)
-            {
-                if (pPlayer[0]->ControlType == JOYMODE_STICK)
-                    pPlayer[0]->ControlType = JOYMODE_PAD;
-                else
-                    pPlayer[0]->ControlType = JOYMODE_STICK;
-            }
-
-            // ForceFeedback
-            //
-            if (AktuellerPunkt == 1 &&
-                    DirectInput.Joysticks[pPlayer[0]->JoystickIndex].CanForceFeedback == true)
-            {
-                UseForceFeedback = !UseForceFeedback;
-            }
-        }
-
-        // zurück zum Hauptmenu ?
-        if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true)
-        {
-            input_counter = 0.0f;
-            SaveConfig();							// Sound Config speichern
-            AuswahlPossible = false;
-            AktuellerZustand = MENUZUSTAND_MAINMENU;
-            AktuellerPunkt	 = MENUPUNKT_VOLUMES;
-            pSoundManager->PlayWave(100, 100, 11025, SOUND_CLICK);
-        }
-    }
-    break;  // Buttons
-#endif // 0
 
     // Die Credits und die Highscore
     case MENUPUNKT_CREDITS  :

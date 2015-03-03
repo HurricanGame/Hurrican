@@ -389,7 +389,7 @@ void InitReplacers(void)
     //          despite having been labelled "TODO FIX"
     // Personal TODO: customize for GCW Zero / display button 0 as button 1 and so forth
     //                  on other devices
-    if (pPlayer[0]->ControlType == JOYMODE_KEYBOARD)
+    if (pPlayer[0]->ControlType == CONTROLTYPE_KEYBOARD)
     {
         strcpy (s_Replacers[1],  GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_LINKS]));
         strcpy (s_Replacers[3],  GetKeyName(pPlayer[0]->AktionKeyboard[AKTION_RECHTS]));
@@ -426,7 +426,7 @@ void InitReplacers(void)
         sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + pPlayer[0]->JoystickMode - 1], TextArray[TEXT_DOWN]);
         strcpy (s_Replacers[9], buf);
 
-        if (pPlayer[0]->JoystickMode == JOYMODE_STICK)
+        if (pPlayer[0]->JoystickMode == JOYMODE_JOYSTICK)
             sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + pPlayer[0]->JoystickMode - 1], TextArray[TEXT_UP]);
         else
             sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON], 
