@@ -476,7 +476,12 @@ void LeaveGameLoop(void)
     // Ins Hauptmenu wechseln
     SpielZustand = MAINMENU;
     pMenu->AktuellerZustand = MENUZUSTAND_MAINMENU;
-    pMenu->AktuellerPunkt	= 0;
+    if (pPlayer[0]->Lives == -1 && pPlayer[1]->Lives == -1)
+        //DKS - If game is over, make main menu selection be "Start New Game"
+        pMenu->AktuellerPunkt = MENUPUNKT_STARTGAME;
+    else
+        //DKS - If the game was not over yet, make the main menu selection be "Back To Game"
+        pMenu->AktuellerPunkt = MENUPUNKT_CONTINUEGAME;
 
     // Musik pausieren
     pSoundManager->StopSong(MUSIC_STAGEMUSIC, true);
