@@ -80,8 +80,8 @@ PlayerClass::PlayerClass(void)
     NewStage = -1;
     StageClearRunning = false;
     JoystickSchwelle = 500.0f;
-    ControlType = JOYMODE_KEYBOARD;
-    JoystickMode = JOYMODE_PAD;
+    ControlType = CONTROLTYPE_KEYBOARD;
+    JoystickMode = JOYMODE_JOYPAD;
     JoystickIndex = 0;
     GodMode = false;
     WheelMode = false;
@@ -503,8 +503,14 @@ bool PlayerClass::GetPlayerInput(void)
         // oder Spieler spielt ?
         else
         {
+            //DKS - Cleaned a lot of this up and made the joystick support more complete,
+            //      especially in regards to Walk_UseAxxis and Look_UseAxxis,
+            //      along with safeguarding against checking button inputs on actions that
+            //      are undefined, and not checking the keyboard for actions unless the
+            //      player is set to use it as the control method.
+
             // Keyboard
-            //if (ControlType == JOYMODE_KEYBOARD)
+            if (ControlType == CONTROLTYPE_KEYBOARD)
             {
                 for (int i=0; i<MAX_AKTIONEN; i++)
                     if (KeyDown(AktionKeyboard[i]))
@@ -512,54 +518,94 @@ bool PlayerClass::GetPlayerInput(void)
                         Aktion[i] = true;
                         BronsonCounter = 0.0f;
                     }
-            }
-            //else
-            if (ControlType != JOYMODE_KEYBOARD &&
-                    JoystickFound == true)
+            } else if (JoystickIndex >= 0 && JoystickIndex < DirectInput.JoysticksFound &&
+                        DirectInput.Joysticks[JoystickIndex].Active)
             {
+                bool stick_right = DirectInput.Joysticks[JoystickIndex].JoystickX >  JoystickSchwelle;
+                bool stick_left  = DirectInput.Joysticks[JoystickIndex].JoystickX < -JoystickSchwelle;
+                bool stick_up    = DirectInput.Joysticks[JoystickIndex].JoystickY < -JoystickSchwelle;
+                bool stick_down  = DirectInput.Joysticks[JoystickIndex].JoystickY >  JoystickSchwelle;
+                bool hat_right = false;
+                bool hat_left  = false;
+                bool hat_up    = false;
+                bool hat_down  = false;
+
+                if (DirectInput.Joysticks[JoystickIndex].JoystickPOV != -1) {
+                    // HAT switch is pressed
+                    if     (DirectInput.Joysticks[JoystickIndex].JoystickPOV     >= 4500 * 1 &&
+                            DirectInput.Joysticks[JoystickIndex].JoystickPOV     <= 4500 * 3) {
+                        hat_right = true;
+                    } else if (DirectInput.Joysticks[JoystickIndex].JoystickPOV  >= 4500 * 5 &&
+                            DirectInput.Joysticks[JoystickIndex].JoystickPOV     <= 4500 * 7) {
+                        hat_left = true;
+                    }
+
+                    if (DirectInput.Joysticks[JoystickIndex].JoystickPOV         >= 4500 * 3 &&
+                            DirectInput.Joysticks[JoystickIndex].JoystickPOV     <= 4500 * 5) {
+                        hat_down = true;
+                    } else if ((DirectInput.Joysticks[JoystickIndex].JoystickPOV >= 4500 * 7 && 
+                                DirectInput.Joysticks[JoystickIndex].JoystickPOV <= 4500 * 8) ||
+                            (DirectInput.Joysticks[JoystickIndex].JoystickPOV    >= 0        &&
+                             DirectInput.Joysticks[JoystickIndex].JoystickPOV    <= 4500 * 1)) {
+                        hat_up = true;
+                    }
+                }
+
                 // Zum laufen die Achse links/rechts auslesen
-                if (DirectInput.Joysticks[JoystickIndex].JoystickX >  JoystickSchwelle) Aktion[AKTION_RECHTS] = true;
-                if (DirectInput.Joysticks[JoystickIndex].JoystickX < -JoystickSchwelle) Aktion[AKTION_LINKS]  = true;
-                if (DirectInput.Joysticks[JoystickIndex].JoystickY >  JoystickSchwelle) Aktion[AKTION_DUCKEN] = true;
+                if (Walk_UseAxxis) {
+                    // Analog stick input used for walking:
+                    if (stick_right) Aktion[AKTION_RECHTS] = true;
+                    if (stick_left)  Aktion[AKTION_LINKS]  = true;
+                    if (stick_down)  Aktion[AKTION_DUCKEN] = true;
 
-                if (DirectInput.Joysticks[JoystickIndex].JoystickPOV >= 4500 * 1 &&	DirectInput.Joysticks[JoystickIndex].JoystickPOV <= 4500 * 3) Aktion[AKTION_RECHTS] = true;
-                if (DirectInput.Joysticks[JoystickIndex].JoystickPOV >= 4500 * 5 &&	DirectInput.Joysticks[JoystickIndex].JoystickPOV <= 4500 * 7) Aktion[AKTION_LINKS]  = true;
-                if (DirectInput.Joysticks[JoystickIndex].JoystickPOV >  4500 * 3 &&	DirectInput.Joysticks[JoystickIndex].JoystickPOV <  4500 * 5) Aktion[AKTION_DUCKEN] = true;
+                    if (stick_up) {
+                        if (JoystickMode == JOYMODE_JOYSTICK) {
+                        // Analog stick up-input used for jumping (when in "joystick" mode):
+                        // Spieler kann im Joystick Mode nicht mit dem Button springen
+                        //
+                            Aktion[AKTION_JUMP] = true;
+                        } else {
+                        // Analog stick up-input used for looking up (when in "joypad" mode)
+                            Aktion[AKTION_OBEN] = true;
+                        }
+                    }
 
-                // Zum umsehen die Achsen hoch/runter auslesen (nur mit Joypad)
-                //
-                if (JoystickMode == JOYMODE_PAD)
-                {
-                    if (DirectInput.Joysticks[JoystickIndex].JoystickY >  JoystickSchwelle &&
-                            AktionJoystick [AKTION_UNTEN] == -1)
+                    // HAT/DPAD used for looking:
+                    if (hat_down)
                         Aktion[AKTION_UNTEN] = true;
-
-                    if (DirectInput.Joysticks[JoystickIndex].JoystickY < -JoystickSchwelle) Aktion[AKTION_OBEN]  = true;
-
-                    if (DirectInput.Joysticks[JoystickIndex].JoystickPOV >= 4500 * 7 ||
-                            (DirectInput.Joysticks[JoystickIndex].JoystickPOV <= 4500 * 1 && DirectInput.Joysticks[JoystickIndex].JoystickPOV >= 0))
+                    else if (hat_up)
                         Aktion[AKTION_OBEN]  = true;
+                } else {
+                    // HAT/DPAD used for walking:
+                    if (hat_right) Aktion[AKTION_RECHTS] = true;
+                    if (hat_left)  Aktion[AKTION_LINKS]  = true;
+                    if (hat_down)  Aktion[AKTION_DUCKEN] = true;
 
-                    //if (DirectInput.Joysticks[JoystickIndex].JoystickPOV >  4500 * 3 &&	DirectInput.Joysticks[JoystickIndex].JoystickPOV <  4500 * 5) Aktion[AKTION_UNTEN] = true;
+                    if (hat_up) {
+                        if (JoystickMode == JOYMODE_JOYSTICK)
+                        // HAT/DPAD up-input used for jumping (when in "joystick" mode):
+                        // Spieler kann im Joystick Mode nicht mit dem Button springen
+                        //
+                            Aktion[AKTION_JUMP] = true;
+                        else
+                        // HAT/DPAD up-input used for looking up (when in "joypad" mode)
+                            Aktion[AKTION_OBEN] = true;
+                    }
+
+                    // Analog stick used for looking:
+                    if (stick_down)
+                        Aktion[AKTION_UNTEN] = true;
+                    else if (stick_up)
+                        Aktion[AKTION_OBEN]  = true;
                 }
 
                 // Joystick buttons auslesen
-                for (int i = AKTION_LINKS; i <= AKTION_WAFFEN_CYCLE; i++)
-                    if (DirectInput.Joysticks[JoystickIndex].JoystickButtons[AktionJoystick [i]] == true)
-                        Aktion[i] = true;
-
-                // Mit Joystick springt man, indem man nach oben drückt
-                //
-                if (JoystickMode == JOYMODE_STICK)
-                {
-                    // Spieler kann im Joystick Mode nicht mit dem Button springen
-                    //
-                    Aktion[AKTION_JUMP] = false;
-
-                    if (DirectInput.Joysticks[JoystickIndex].JoystickY < -JoystickSchwelle ||
-                            DirectInput.Joysticks[JoystickIndex].JoystickPOV >= 4500 * 7 ||
-                            (DirectInput.Joysticks[JoystickIndex].JoystickPOV <= 4500 * 1 && DirectInput.Joysticks[JoystickIndex].JoystickPOV >= 0))
-                        Aktion[AKTION_JUMP] = true;
+                for (int i = AKTION_LINKS; i <= AKTION_WAFFEN_CYCLE; i++) {
+                    if (AktionJoystick[i] != -1 &&
+                            DirectInput.Joysticks[JoystickIndex].JoystickButtons[AktionJoystick[i]]) {
+                        if (!(i == AKTION_JUMP && JoystickMode == JOYMODE_JOYSTICK)) 
+                            Aktion[i] = true;
+                    }
                 }
             }
 

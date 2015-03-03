@@ -634,19 +634,20 @@ void CreateDefaultControlsConfig(int player)
         pPlayer[0]->AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
         pPlayer[0]->AktionJoystick [AKTION_WAFFEN_CYCLE]	= 6;
 #endif
-        pPlayer[0]->Walk_UseAxxis = true;
-        pPlayer[0]->Look_UseAxxis = true;
+        //DKS - Note: these two should always remain opposite values of one another:
+        pPlayer[0]->Walk_UseAxxis = false;      // By default, use the HAT switch (DPAD) for movement..
+        pPlayer[0]->Look_UseAxxis = true;       //  and the analog stick for looking
 
         //DKS - Added missing default settings, and made player2's default joy index 1 instead of both being 0
         pPlayer[0]->JoystickIndex = 0;
         pPlayer[0]->JoystickSchwelle = 500.0f;
-        pPlayer[0]->JoystickMode = JOYMODE_PAD;
-        pPlayer[0]->ControlType = JOYMODE_KEYBOARD;
+        pPlayer[0]->JoystickMode = JOYMODE_JOYPAD;
+        pPlayer[0]->ControlType = CONTROLTYPE_KEYBOARD;
 
 #if defined(GCW)
         // On GCW Zero, the Player 1 default joy index is the internal controls and both players use joystick:
         pPlayer[0]->JoystickIndex = DirectInput.GetInternalJoystickIndex();
-        pPlayer[0]->ControlType = JOYMODE_PAD;
+        pPlayer[0]->ControlType = CONTROLTYPE_JOY;
         // Default button map for GCW Zero:
         pPlayer[0]->AktionJoystick [AKTION_JUMP]			= 3;
         pPlayer[0]->AktionJoystick [AKTION_SHOOT]			= 2;
@@ -693,20 +694,20 @@ void CreateDefaultControlsConfig(int player)
         pPlayer[1]->AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
         pPlayer[1]->AktionJoystick [AKTION_WAFFEN_CYCLE]	= 6;
 
-        pPlayer[1]->Walk_UseAxxis = true;
-        pPlayer[1]->Look_UseAxxis = true;
+        //DKS - Note: these two should always remain opposite values of one another:
+        pPlayer[1]->Walk_UseAxxis = false;      // By default, use the HAT switch (DPAD) for movement
+        pPlayer[1]->Look_UseAxxis = true;       // and the analog stick for looking    -DKS
 
         //DKS - Added missing default settings, and made player2's default joy index 1 instead of both being 0
         pPlayer[1]->JoystickIndex = 1;
         pPlayer[1]->JoystickSchwelle = 500.0f;
-        pPlayer[1]->JoystickMode = JOYMODE_PAD;
-        pPlayer[1]->ControlType = JOYMODE_KEYBOARD;
+        pPlayer[1]->JoystickMode = JOYMODE_JOYPAD;
+        pPlayer[1]->ControlType = CONTROLTYPE_KEYBOARD;
 
 #if defined(GCW)
         // On GCW Zero, both players use joystick by default:
-        pPlayer[1]->ControlType = JOYMODE_PAD;
+        pPlayer[1]->ControlType = CONTROLTYPE_JOY;
 #endif //GCW
-
     }
 }
 
@@ -796,12 +797,12 @@ bool LoadConfig(void)
     {
 #if defined(GCW)
         //GCW Zero player 1 defaults:
-        pPlayer[0]->ControlType = JOYMODE_PAD;
-        pPlayer[0]->JoystickMode = JOYMODE_PAD;
+        pPlayer[0]->ControlType = CONTROLTYPE_JOY;
+        pPlayer[0]->JoystickMode = JOYMODE_JOYPAD;
         pPlayer[0]->JoystickIndex = DirectInput.GetInternalJoystickIndex();
         pPlayer[0]->JoystickSchwelle = 500.0f;
 #else
-        pPlayer[0]->ControlType = JOYMODE_KEYBOARD;
+        pPlayer[0]->ControlType = CONTROLTYPE_KEYBOARD;
         pPlayer[0]->JoystickIndex = 0;
         pPlayer[0]->JoystickSchwelle = 500.0f;
 #endif //GCW
@@ -811,12 +812,12 @@ bool LoadConfig(void)
     {
 #if defined(GCW)
         //GCW Zero player 2 defaults:
-        pPlayer[1]->ControlType = JOYMODE_PAD;
-        pPlayer[1]->JoystickMode = JOYMODE_PAD;
+        pPlayer[1]->ControlType = CONTROLTYPE_JOY;
+        pPlayer[1]->JoystickMode = JOYMODE_JOYPAD;
         pPlayer[1]->JoystickIndex = 1;
         pPlayer[1]->JoystickSchwelle = 500.0f;
 #else
-        pPlayer[1]->ControlType = JOYMODE_KEYBOARD;
+        pPlayer[1]->ControlType = CONTROLTYPE_KEYBOARD;
         pPlayer[1]->JoystickIndex = 1;      //DKS - Changed player 2's default joy index to 1
         pPlayer[1]->JoystickSchwelle = 500.0f;
 #endif //GCW
@@ -835,8 +836,8 @@ bool LoadConfig(void)
 
     if (JoystickFound == false)
     {
-        pPlayer[0]->ControlType = JOYMODE_KEYBOARD;
-        pPlayer[1]->ControlType = JOYMODE_KEYBOARD;
+        pPlayer[0]->ControlType = CONTROLTYPE_KEYBOARD;
+        pPlayer[1]->ControlType = CONTROLTYPE_KEYBOARD;
     }
 
     if (pPlayer[0]->JoystickSchwelle < 1.0f)
@@ -1131,7 +1132,7 @@ void SummaryScreen(void)
             std::string str_pressanykey(TextArray[TEXT_SUMMARY_PRESSFIRE]);
 
             // If player 1 is controlled with joystick, replace all references to 'key' with 'button'
-            if (pPlayer[0]->ControlType != JOYMODE_KEYBOARD) {
+            if (pPlayer[0]->ControlType == CONTROLTYPE_JOY) {
                 ReplaceAll(str_pressanykey, "key", "button");
             }
 

@@ -695,9 +695,9 @@ void ConsoleClass::CheckInput(void)
         joy_counter = joy_delay;
     }
 
-    if (joy_counter >= joy_delay && pPlayer[0]->ControlType != JOYMODE_KEYBOARD && JoystickFound == true) {
+    if (joy_counter >= joy_delay && pPlayer[0]->ControlType == CONTROLTYPE_JOY && JoystickFound) {
         joy_counter = 0.0f;
-        int joy_idx = 0;
+        int joy_idx = pPlayer[0]->JoystickIndex;
         bool up         = false;
         bool down       = false;
         bool left       = false;
