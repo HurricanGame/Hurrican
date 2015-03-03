@@ -932,3 +932,17 @@ char* DirectInputClass::MapButtonToString(int joy_idx, int button)
         }
     }
 }
+
+// DKS - Convenience function for when in the actual game
+#if defined(GCW)
+bool DirectInputClass::InternalJoystickMainMenuButtonDown(void) 
+{ 
+    int joy_idx = GetInternalJoystickIndex();
+    int button_idx = GetInternalJoystickMainMenuButton();
+    if (joy_idx >= 0 && joy_idx < JoysticksFound && Joysticks[joy_idx].Active && 
+            button_idx < Joysticks[joy_idx].NumButtons)
+        return Joysticks[joy_idx].JoystickButtons[button_idx];
+    else
+        return false;
+}
+#endif //GCW

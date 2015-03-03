@@ -863,6 +863,25 @@ void ConsoleClass::Hide(void)
 
 bool ConsoleClass::DoConsole(void)
 {
+#if defined(GCW)
+    // On GCW Zero, the Home key (Power Slider switch) is mapped to the console as well as the Tab key.
+    // Konsole ist aktivierbar
+    if (!KeyDown(DIK_TAB) && !KeyDown(DIK_HOME))
+        Activate = true;
+
+    // Konsole wird aktiviert oder deaktiviert ?
+    if ((KeyDown(DIK_TAB) || KeyDown(DIK_HOME)) && Activate == true)
+    {
+        Activate = false;
+
+        if (Active == true)
+            Hide();
+        else
+
+            if (Active == false)
+                Open();
+    }
+#else
     // Konsole ist aktivierbar
     if (!KeyDown(DIK_TAB))
         Activate = true;
@@ -879,6 +898,7 @@ bool ConsoleClass::DoConsole(void)
             if (Active == false)
                 Open();
     }
+#endif //GCW
 
     // Konsole fadet gerade ?
     if (Fade != 0)
