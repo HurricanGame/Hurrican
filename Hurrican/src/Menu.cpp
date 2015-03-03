@@ -1376,7 +1376,7 @@ void MenuClass::ShowMenu(void)
                                 pCurrentPlayer->AktionKeyboard[i] == -1) ||
                         (pCurrentPlayer->ControlType == CONTROLTYPE_JOY && 
                          (!on_move_line && !on_look_line &&
-                             (!on_jump_line && pCurrentPlayer->JoystickMode == JOYMODE_JOYSTICK)) &&
+                             !(on_jump_line && pCurrentPlayer->JoystickMode == JOYMODE_JOYSTICK)) &&
                                 pCurrentPlayer->AktionJoystick[i] == -1)) 
                     {
                             // Action is not defined
@@ -1432,15 +1432,22 @@ void MenuClass::ShowMenu(void)
                     }
                 } else
                 {
+                    char Buf[80];
                     // Redefinition prompt
-                    if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD)
-                        // Ask for new key
-                        pDefaultFont->DrawText(col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
-                                TextArray[TEXT_TASTEN_NEU_T], col);
-                    else
-                        // Ask for new button
-                        pDefaultFont->DrawText(col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing, 
-                                TextArray[TEXT_TASTEN_NEU_B], col);
+                    if (scale_factor <= 1) {
+                        if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD)
+                            // Ask for new key
+                            strcpy_s(Buf, TextArray[TEXT_TASTEN_NEU_T]);
+                        else
+                            // Ask for new button
+                            strcpy_s(Buf, TextArray[TEXT_TASTEN_NEU_B]);
+                    } else {
+                        // When using scaled fonts (low-res device), there's not enough room for the text prompt
+                        strcpy_s(Buf, "???");
+                    }
+
+                    pDefaultFont->DrawText(col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing, 
+                            Buf, col);
                 }
             }
         }
@@ -2273,7 +2280,7 @@ void MenuClass::DoMenu(void)
             if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD) {
                 pCurrentPlayer->AktionKeyboard[action] = -1;
             } else if (!on_move_line && !on_look_line &&
-                    (!on_jump_line && pCurrentPlayer->JoystickMode == JOYMODE_JOYSTICK)) {
+                    !(on_jump_line && pCurrentPlayer->JoystickMode == JOYMODE_JOYSTICK)) {
                 // Only non-look and non-movement actions are assignable to buttons on joysticks
                 pCurrentPlayer->AktionJoystick[action] = -1;
             }
