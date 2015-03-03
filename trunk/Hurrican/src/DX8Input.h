@@ -116,16 +116,7 @@ public:
     // On GCW Zero, Main menu button is permanently mapped to START (button 5):
     int  GetInternalJoystickMainMenuButton(void) { return 5; }
 
-    bool InternalJoystickMainMenuButtonDown(void) 
-    { 
-        int joy_idx = GetInternalJoystickIndex();
-        int button_idx = GetInternalJoystickMainMenuButton();
-        if (joy_idx >= 0 && joy_idx < JoysticksFound && Joysticks[joy_idx].Active && 
-                button_idx < Joysticks[joy_idx].NumButtons)
-            return Joysticks[joy_idx].JoystickButtons[button_idx];
-        else
-            return false;
-    }
+    bool InternalJoystickMainMenuButtonDown(void);  
 #endif //GCW
 
 #if defined(ANDROID)

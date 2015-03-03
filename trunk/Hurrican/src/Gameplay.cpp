@@ -432,6 +432,12 @@ void GameLoop(void)
     if (KeyDown(DIK_ESCAPE) && pPlayer[0]->GameOverTimer == 0.0f)
         LeaveGameLoop();
 
+#if defined(GCW)
+    // On GCW Zero, same check as above, but using the internal controls
+    if (DirectInput.InternalJoystickMainMenuButtonDown() && pPlayer[0]->GameOverTimer == 0.0f)
+        LeaveGameLoop();
+#endif //GCW
+
     /*
     	if (KeyDown(DIK_F1)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 1;
     	if (KeyDown(DIK_F2)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 2;
