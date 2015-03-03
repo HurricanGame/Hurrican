@@ -1,5 +1,9 @@
 DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS -DUSE_MODPLUG
 
+# PLATFORM-WIDE OPTIONAL DEFINES:
+# Extremely fast random-number-generator (can be over 100 times faster than rand() on some platforms)
+#DEFINES += -DUSE_FAST_RNG
+
 TARGET = linux
 
 ifeq ($(TARGET),aros)
@@ -261,6 +265,7 @@ FILES :=Boss_BigFish \
         Intro \
         Logdatei \
         Main \
+        Math \
         Menu \
         Outtro \
         Partikelsystem \

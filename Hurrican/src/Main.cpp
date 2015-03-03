@@ -56,6 +56,7 @@
 #include "resource.h"
 #include "Tileengine.h"
 #include "Timer.h"
+#include "Math.h"
 #include "unrarlib.h"
 
 #if defined(ANDROID)
@@ -738,6 +739,11 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
 
     srand(timeGetTime());
 
+    //DKS - added fast RNG:
+#ifdef USE_FAST_RNG
+    seed_fast_rand(timeGetTime());
+#endif //USE_FAST_RNG
+
 #if defined(PLATFORM_DIRECTX)
     // Language Files
     HWND	ComboBoxLanguageFiles	= NULL;
@@ -745,9 +751,6 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
                                          "",
                                          WS_CHILD,
                                          0, 0, 0, 0, g_hwnd, 0, g_hinst, NULL);
-
-    //DKS - Moved this outside the DirectX #ifdef
-//    srand(GetTickCount());
 
     // Loadinfo Text festlegen
 //	DisplayHintNr = rand()%30;
