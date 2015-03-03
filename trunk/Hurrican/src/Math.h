@@ -1,4 +1,4 @@
-// Datei : mymath.h
+// Datei : Math.h
 
 // --------------------------------------------------------------------------------------
 //
@@ -10,15 +10,17 @@
 //
 // --------------------------------------------------------------------------------------
 
-#ifndef _MYMATH_
-#define _MYMATH_
+#ifndef __Math_h__
+#define __Math_h__
+#include <stdint.h>
 
 // --------------------------------------------------------------------------------------
 // Defines
 // --------------------------------------------------------------------------------------
 
+//DKS - Disabled:
 // Schnelle Float to Int Konvertierung
-
+#if 0
 #if defined(USE_X86)
 
 #define MYMATH_FTOL(fx,x)\
@@ -30,6 +32,15 @@
 #define MYMATH_FTOL(fx,x)  (x) = (long)(fx)
 
 #endif /* defined(USE_X86) */
+#endif //0
 
-#endif
+#define MYMATH_FTOL(fx,x)  (x) = (long)(fx)
 
+// When the following is defined, all calls to rand() end up calling fast_rand()
+#ifdef USE_FAST_RNG
+extern void seed_fast_rand(uint32_t seed);
+extern int fast_rand(void);
+#define rand() fast_rand()
+#endif //USE_FAST_RNG
+
+#endif // __Math_h__
