@@ -989,6 +989,11 @@ void MenuClass::ShowMenu(void)
         pDefaultFont->DrawText(10.0f, 458, "www.poke53280.de", menucolor, 0);
         pDefaultFont->DrawText(640-pDefaultFont->StringLength("www.hurrican-game.de", 0)-10,
                                             458, "www.hurrican-game.de", menucolor, 0);
+#if defined(GCW)
+        // Draw port credit text for Pickle & Senquack
+        if (AktuellerZustand == MENUZUSTAND_MAINMENU)
+            pDefaultFont->DrawTextCenterAlign(320.0f, 428, "OpenGL and GCW Zero port by Pickle & Senquack", menucolor, 0);
+#endif
     } else {
         if (AktuellerZustand != MENUPUNKT_CREDITS &&
                 AktuellerZustand != MENUZUSTAND_ENTERNAME)
