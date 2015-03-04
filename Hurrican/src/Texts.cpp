@@ -68,7 +68,7 @@ bool LoadLanguage (char *filename)
 
     if (CommandLineParams.RunOwnLevelList == true)
     {
-        sprintf_s(temp, "levels/%s/custom.lng", CommandLineParams.OwnLevelList);
+        sprintf_s(temp, "%s/levels/%s/custom.lng", g_storage_ext, CommandLineParams.OwnLevelList);
         if (FileExists(temp))
             goto loadfile;
     }
@@ -129,7 +129,7 @@ loadfile:
     {
         char buf[256];
 
-        sprintf_s(buf, "levels/%s/levellist.dat", CommandLineParams.OwnLevelList);
+        sprintf_s(buf, "%s/levels/%s/levellist.dat", g_storage_ext, CommandLineParams.OwnLevelList);
 
         fopen_s (&Datei, buf, "rt");							// Reihenfolge Level laden
         if (Datei == NULL)

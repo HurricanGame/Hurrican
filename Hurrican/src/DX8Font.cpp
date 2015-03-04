@@ -99,7 +99,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 
     if (CommandLineParams.RunOwnLevelList == true)
     {
-        sprintf_s(Temp, "levels/%s/%s", CommandLineParams.OwnLevelList, Filename);
+        sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
         if (FileExists(Temp))
         {
             loadImageSDL(image, Temp);

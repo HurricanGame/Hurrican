@@ -334,7 +334,7 @@ bool TileEngineClass::LoadLevel(char Filename[100])
     // Zuerst checken, ob sich das Level in einem MOD-Ordner befindet
     if (CommandLineParams.RunOwnLevelList == true)
     {
-        sprintf_s(Temp, "levels/%s/%s", CommandLineParams.OwnLevelList, Filename);
+        sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
         if (FileExists(Temp))
             goto loadfile;
     }

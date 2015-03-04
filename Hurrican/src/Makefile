@@ -1,7 +1,11 @@
 DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS -DUSE_MODPLUG
 
-# PLATFORM-WIDE OPTIONAL DEFINES:
-# Extremely fast random-number-generator (can be over 100 times faster than rand() on some platforms)
+# *** OPTIONAL DEFINES: *** 
+####### Use the $HOME dir as a location for any writing (settings, high-scores, log, save-games):
+#DEFINES += -DUSE_HOME_DIR
+####### Specify a storage location for the read-only data files (graphics, sound, languages, etc) 
+#DEFINES += -DUSE_STORAGE_PATH="\"PATH_TO_STORAGE\""
+####### Extremely fast random-number-generator (can be over 100 times faster than rand() on some platforms):
 #DEFINES += -DUSE_FAST_RNG
 
 TARGET = linux
@@ -62,7 +66,7 @@ RM  := rm -f
 USE_EGL := yes
 USE_GL2 := yes
 
-DEFINES += -DGCW -DUSE_GL2 -DUSE_GLES2 -DUSE_ETC1 -DUSE_EGL_RAW 
+DEFINES += -DGCW -DUSE_HOME_DIR -DUSE_GL2 -DUSE_GLES2 -DUSE_ETC1 -DUSE_EGL_RAW
 
 INCLUDES_OS := -ISDL_port \
                -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/SDL \
@@ -108,7 +112,7 @@ RM  := rm -f
 USE_EGL := yes
 USE_GL2 := yes
 
-DEFINES += -DLINUX -DUSE_GL2 -DUSE_GLES2 -DUSE_EGL_SDL -DUSE_PVRTC -DUSE_ETC1
+DEFINES += -DLINUX -DUSE_HOME_DIR -DUSE_GL2 -DUSE_GLES2 -DUSE_EGL_SDL -DUSE_PVRTC -DUSE_ETC1
 
 INCLUDES_OS := -I/usr/include -I/usr/include/SDL -I/usr/include/GLES2 -I/usr/include/libmodplug
 
