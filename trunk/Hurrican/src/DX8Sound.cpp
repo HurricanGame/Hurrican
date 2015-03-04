@@ -464,7 +464,7 @@ bool CSoundManager::LoadSong(const char *Filename, int Nr)
     // Zuerst checken, ob sich der Song in einem MOD-Ordner befindet
     if (CommandLineParams.RunOwnLevelList == true)
     {
-        sprintf_s(Temp, "levels/%s/%s", CommandLineParams.OwnLevelList, Filename);
+        sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
         if (FileExists(Temp))
             goto loadfile;
     }
@@ -808,7 +808,7 @@ bool CSoundManager::LoadWave(const char *Filename, int Nr, bool looped)
     // Zuerst checken, ob sich der Sound in einem MOD-Ordner befindet
     if (CommandLineParams.RunOwnLevelList == true)
     {
-        sprintf_s(Temp, "levels/%s/%s", CommandLineParams.OwnLevelList, Filename);
+        sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
         if (FileExists(Temp))
             goto loadfile;
     }

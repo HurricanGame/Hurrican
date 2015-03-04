@@ -29,6 +29,8 @@ struct sCommandLineParams
     char UserLevelName[256];
     char OwnLevelList[256];
     char Params[256];
+    char *DataPath;
+    char *SavePath;
 #if defined(PLATFORM_SDL)
     uint16_t TexFactor;
     uint16_t TexSizeMin;
@@ -79,6 +81,8 @@ bool GameInit (HWND hwnd, HINSTANCE hinstance);		// Spiel vor  dem Cracktro init
 bool GameInit2(void);								// Spiel nach dem Cracktro initialisieren
 bool GameExit   (void);								// Spiel de-initialisieren
 bool Heartbeat  (void);								// Haupt Game Loop
+int  CreateDir(const char *dir); //DKS - Added function to create a directory if it doesn't already exist (1 on success)
+int  FindDir(const char *dir);   //DKS - Added function to check if a directory exists (1 on success)
 bool FileExists(char Filename[256]);
 void ConvertPlayerTexture(DirectGraphicsSprite *pTexture);
 void CreatePlayer2Texture(void);
@@ -88,9 +92,9 @@ void StartIntro(void);
 extern int WINDOWWIDTH;
 extern int WINDOWHEIGHT;
 extern sCommandLineParams CommandLineParams;			// Externer Paramter?
-#if defined(PLATFORM_SDL)
-extern const char* g_storage_ext;
-#endif
+
+extern char* g_storage_ext;   // Where data files (levels, graphics, music, etc) for the game are stored (read)
+extern char* g_save_ext;      // Where configuration files, logs, and save games are written (-DKS) (write)
 
 void ShowDebugInfo(void);							// Allen möglichen Kram anzeigen
 

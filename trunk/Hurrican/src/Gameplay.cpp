@@ -762,7 +762,7 @@ bool LoadConfig(void)
     FILE *Datei = NULL;
     char temp[100];
 
-    snprintf( temp, sizeof(temp), "%s/%s", g_storage_ext, CONFIGFILE );
+    snprintf( temp, sizeof(temp), "%s/%s", g_save_ext, CONFIGFILE );
     fopen_s(&Datei, temp, "rb");		// versuchen Datei zu öffnen
 
     if (Datei == NULL)
@@ -871,7 +871,7 @@ void SaveConfig(void)
     FILE *Datei = NULL;
     char temp[100];
 
-    snprintf( temp, sizeof(temp), "%s/%s", g_storage_ext, CONFIGFILE );
+    snprintf( temp, sizeof(temp), "%s/%s", g_save_ext, CONFIGFILE );
     fopen_s(&Datei, temp, "wb");
     if (Datei == NULL)
     {
@@ -1244,7 +1244,7 @@ bool NewDemo (const char Filename[])
 {
     char temp[100];
 
-    snprintf( temp, sizeof(temp), "%s/%s", g_storage_ext, Filename );
+    snprintf( temp, sizeof(temp), "%s/%s", g_save_ext, Filename );
     fopen_s(&DEMOFile, temp, "wb");
 
     if(!DEMOFile)
@@ -1298,7 +1298,7 @@ bool LoadDemo (const char Filename[])
     // File öffnen
     char temp[100];
 
-    snprintf( temp, sizeof(100), "%s/%s", g_storage_ext, Filename );
+    snprintf( temp, sizeof(100), "%s/%s", g_save_ext, Filename );
     fopen_s(&DEMOFile, temp, "rb");
 
     if(!DEMOFile)

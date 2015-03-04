@@ -30,6 +30,8 @@
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include "Main.h"
 #include "Texts.h"
@@ -69,6 +71,15 @@ using namespace std;
 
 //#include <stdlib.h>
 //#include <crtdbg.h>
+
+// DKS - Determine correct directory separator character and mkdir arguments for the platform:
+#if defined(PLATFORM_DIRECTX)
+#define	DIRSEP_CHAR	'\\'
+#define	createdir(name)	(mkdir(name) == 0)
+#else
+#define	DIRSEP_CHAR	'/'
+#define	createdir(name)	(mkdir(name, 0755) == 0)
+#endif
 
 // --------------------------------------------------------------------------------------
 // externe Variablen
@@ -133,6 +144,10 @@ int						LoadingItemsLoaded;				// Anzahl geladener Elemente
 int						LanguageFileCount;				// Anzahl gefundener Language Files
 char					LanguageFiles[MAX_LANGUAGE_FILES][MAX_LANGUAGE_FILENAME_LENGTH]; 
 char					ActualLanguage[256];			// Gewählte Language
+char                    *g_storage_ext = NULL;          // Where data files (levels, graphics, music, etc) 
+                                                        //      for the game are stored (read)
+char                    *g_save_ext = NULL;             // Where configuration files, logs, and save games 
+                                                        //      are written (-DKS) (write)
 
 sCommandLineParams		CommandLineParams;
 
@@ -261,6 +276,41 @@ bool FileExists(char Filename[256])
     return false;
 }
 
+//DKS - Added function:
+// Create the directory dir if it doesn't already exist. Return 1 if created/found, 0 on failure.
+int CreateDir(const char *dir)
+{
+    if (!dir) 
+        return 0;
+
+#if defined (PLATFORM_DIRECTX)
+	struct _stat	st;
+	return _stat(dir, &st) ? createdir(dir) : _S_ISDIR(st.st_mode);
+#else
+	struct stat	st;
+	return stat(dir, &st) ? createdir(dir) : S_ISDIR(st.st_mode);
+#endif
+}
+
+//DKS - Added function:
+// If directory exists (and is indeed a directory), return 1, or 0 on failure
+int FindDir(const char *dir)
+{
+#if defined (PLATFORM_DIRECTX)
+    struct _stat st;
+    if (!dir || _stat(dir, &st) != 0)
+        return 0;
+    else 
+        return _S_ISDIR(st.st_mode);
+#else
+    struct stat st;
+    if (!dir || stat(dir, &st) != 0)
+        return 0;
+    else 
+        return S_ISDIR(st.st_mode);
+#endif
+}
+
 int GetStringPos(const char
                  *string, const char *substr)
 {
@@ -290,6 +340,8 @@ void FillCommandLineParams(void)
     int listpos;
     int levelpos;
     char buffer[256];
+    CommandLineParams.DataPath = NULL;
+    CommandLinesParams.SavePath = NULL;
 //	char *temppos;
 
     // windowmode?
@@ -356,6 +408,8 @@ void FillCommandLineParams( int argc, char* args[] )
     CommandLineParams.ShowFPS = false;
     CommandLineParams.AllowNPotTextureSizes = false;
     CommandLineParams.LowRes = false;
+    CommandLineParams.DataPath = NULL;
+    CommandLineParams.SavePath = NULL;
 
     for (i=1; i<argc; i++)
     {
@@ -386,6 +440,10 @@ void FillCommandLineParams( int argc, char* args[] )
             Protokoll.WriteText( false, "                            Only textures with widths or heights above this\n" );
             Protokoll.WriteText( false, "                            value will be resized. MIN: 16  MAX: 1024\n" );
             Protokoll.WriteText( false, "                            ( Default is 1024 )\n" );
+            Protokoll.WriteText( false, "  -PD x, --pathdata x     : Look in this path for the game's read-only data\n" );
+            Protokoll.WriteText( false, "                            i.e. music, sound, graphics, levels, etc.\n" );
+            Protokoll.WriteText( false, "  -PS x, --pathsave x     : Use this path for the game's save data\n ");
+            Protokoll.WriteText( false, "                            i.e. save-games, settings, high-scores, etc.\n" );
             exit(1);
         }
         else if ((strstr( args[i], "--windowmode" ) != NULL) || (strstr( args[i], "-W") != NULL))
@@ -448,6 +506,40 @@ void FillCommandLineParams( int argc, char* args[] )
                 fprintf( stdout, "Texsizemin set to %d\n", CommandLineParams.TexSizeMin );
             }
         }
+        else if ((strstr( args[i], "--pathdata" ) != NULL) || (strstr( args[i], "-PD") != NULL))
+        {
+            i++;
+            if (i<argc) {
+                if (args[i] && strlen(args[i]) > 0 && !CommandLineParams.DataPath) {
+                    CommandLineParams.DataPath = (char*)malloc(strlen(args[i] + 1));
+                    strcpy_s(CommandLineParams.DataPath, args[i]);
+                    if (FindDir(CommandLineParams.DataPath)) {
+                        fprintf( stdout, "Data path set to %s\n", CommandLineParams.DataPath );
+                    } else {
+                        fprintf( stdout, "ERROR: could not find data path %s\n", CommandLineParams.DataPath );
+                        free(CommandLineParams.DataPath);
+                        CommandLineParams.DataPath = NULL;
+                    }
+                }
+            }
+        }
+        else if ((strstr( args[i], "--pathsave" ) != NULL) || (strstr( args[i], "-PS") != NULL))
+        {
+            i++;
+            if (i<argc) {
+                if (args[i] && strlen(args[i]) > 0 && !CommandLineParams.SavePath) {
+                    CommandLineParams.SavePath = (char*)malloc(strlen(args[i] + 1));
+                    strcpy_s(CommandLineParams.SavePath, args[i]);
+                    if (CreateDir(CommandLineParams.SavePath)) {
+                        fprintf( stdout, "Save path set to %s\n", CommandLineParams.SavePath );
+                    } else {
+                        fprintf( stdout, "ERROR: could not find save path %s\n", CommandLineParams.SavePath );
+                        free(CommandLineParams.SavePath);
+                        CommandLineParams.SavePath = NULL;
+                    }
+                }
+            }
+        }
         else if ((strstr( args[i], "--npot" ) != NULL) || (strstr( args[i], "-NP") != NULL))
         {
             fprintf( stdout, "Non-power-of-two textures are allowed\n" );
@@ -488,12 +580,6 @@ int main(int argc, char *argv[])
 {
 #endif
 
-#if defined(ANDROID)
-    g_storage_ext = SDL_AndroidGetExternalStoragePath();
-#else
-    g_storage_ext = ".";
-#endif
-    Protokoll.WriteText( false, "\n--> Using external storage path '%s' <--\n", g_storage_ext );
 
     GamePaused = false;
 
@@ -528,6 +614,90 @@ int main(int argc, char *argv[])
         WINDOWWIDTH	 = 449;
         WINDOWHEIGHT = 109;
     }
+
+    // Set game's data path:
+    g_storage_ext = NULL;
+    // First, see if a command line parameter was passed:
+    if (CommandLineParams.DataPath) {
+        g_storage_ext = (char*)malloc(strlen(CommandLineParams.DataPath+1));
+        strcpy_s(g_storage_ext, CommandLineParams.DataPath);
+        free(CommandLineParams.DataPath);
+        CommandLineParams.DataPath = NULL;
+    } else
+    {
+#if defined(ANDROID)
+        g_storage_ext = (char*)malloc(strlen(SDL_AndroidGetExternalStoragePath() + 1));
+        strcpy_s(g_storage_ext, SDL_AndroidGetExternalStoragePath());
+#else // NON-ANDROID:
+#ifdef USE_STORAGE_PATH
+        // A data-files storage path has been specified in the Makefile:
+        g_storage_ext = (char*)malloc(strlen(USE_STORAGE_PATH) + 1);
+        strcpy_s(g_storage_ext, USE_STORAGE_PATH);
+        // Attempt to locate the dir
+        if (!FindDir(g_storage_ext)) {
+            // Failed, print message and use "." folder as fall-back
+            Protokoll.WriteText( false, "ERROR: Failed to locate data directory %s\n", g_storage_ext );
+            Protokoll.WriteText( false, "\tUsing '.' folder as fallback.\n" );
+            g_storage_ext = (char*)malloc(strlen(".") + 1);
+            strcpy_s(g_storage_ext, ".");
+        }
+#else
+        g_storage_ext = (char*)malloc(strlen(".") + 1);
+        strcpy_s(g_storage_ext, ".");
+#endif
+#endif //ANDROID
+    }
+
+    // Set game's save path (save games, settings, logs, high-scores, etc)
+    g_save_ext = NULL;
+    if (CommandLineParams.SavePath) {
+        g_save_ext = (char*)malloc(strlen(CommandLineParams.SavePath+1));
+        strcpy_s(g_save_ext, CommandLineParams.SavePath);
+        free(CommandLineParams.SavePath);
+        CommandLineParams.SavePath = NULL;
+    } else
+    {
+#if defined(ANDROID)
+        g_save_ext = (char*)malloc(strlen(SDL_AndroidGetExternalStoragePath() + 1));
+        strcpy_s(g_save_ext, SDL_AndroidGetExternalStoragePath());
+#else // NON-ANDROID:
+#ifdef USE_HOME_DIR
+    // Makefile is specifying this is a UNIX machine and we should write saves,settings,etc to $HOME/.hurrican/ dir
+        char *homedir = getenv("HOME");
+        bool success = false;
+        if (homedir) {
+            const char *subdir = "/.hurrican";
+            g_save_ext = (char*)malloc(strlen(homedir) + strlen(subdir) + 1);
+            strcpy_s(g_save_ext, homedir);
+            strcat_s(g_save_ext, subdir);
+            success = CreateDir(g_save_ext);
+            if (!success) {
+                // We weren't able to create the $HOME/.turrican directory, or if it exists, it is
+                // not a directory or is not accessible somehow.. 
+                Protokoll.WriteText( false, "ERROR: unable to create or access $HOME/.hurrican/ directory.\n" );
+                Protokoll.WriteText( false, "\tFull path that was tried: %s\n", g_save_ext );
+                free(g_save_ext);
+            }
+        } else {
+            // We weren't able to find the $HOME env var
+            Protokoll.WriteText( false, "ERROR: unable to find $HOME environment variable\n" );
+            success = false;
+        }
+
+        if (!success) {
+            Protokoll.WriteText( false, "\tUsing '.' folder as fallback.\n" );
+            g_save_ext = (char*)malloc(strlen(".") + 1);
+            strcpy_s(g_save_ext, ".");
+        }
+#else
+        g_save_ext = (char*)malloc(strlen(".") + 1);
+        strcpy_s(g_save_ext, ".");
+#endif //USE_HOME_DIR
+#endif //ANDROID
+    }
+
+    Protokoll.WriteText( false, "--> Using external storage path '%s' <--\n", g_storage_ext );
+    Protokoll.WriteText( false, "--> Using save path '%s' <--\n\n", g_save_ext );
 
 #if defined(PLATFORM_DIRECTX)
     // Desktop Window holen und Grösse auslesen (damit wir unser Fenster in der Mitte des Screens
@@ -721,6 +891,9 @@ int main(int argc, char *argv[])
     // Kein Fehler im Game? Dann Logfile löschen
     if (Protokoll.delLogFile == true)
         DeleteFile("Game_Log.txt");
+
+    free(g_storage_ext);
+    free(g_save_ext);
 
 #if defined(PLATFORM_DIRECTX)
     return(message.wParam);										// Rückkehr zu Windows
