@@ -115,7 +115,7 @@ void CGUISystem::RenderBox(void)
 //
 
 //DKS - Made line splitting more flexible, centered display of boxes on-screen and added low-resolution support
-void CGUISystem::ShowBox(char Text[BOXTEXTLENGTH], int yoff, int xoff)
+void CGUISystem::ShowBox(char Text[BOXTEXTLENGTH], int yoff, int xoff /* = 320 */)
 {
 
     char buf1[BOXTEXTLENGTH+1], buf2[BOXTEXTLENGTH+1], srcbuf[BOXTEXTLENGTH+1];

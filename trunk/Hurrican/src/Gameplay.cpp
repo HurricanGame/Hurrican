@@ -1435,9 +1435,17 @@ void ShowPissText(void)
     {
         int TextNr = int ((pPlayer[0]->BronsonCounter - 220.0f) / 50.0f);
 
+        //DKS - Trying to get the infamous "piss text" centered on the player..
+        //      I had gotten the boxes centered in the tutorial, only to find
+        //      them off-centered here. I had to offset by TILESIZE*2 to get
+        //      them centered properly horizontally, which I found frustrating.
+        //      Oh well..
+//        pGUI->ShowBox(TextArray[TEXT_PISS_1 + TextNr],
+//                      (int)(pPlayer[0]->ypos - 70 - pTileEngine->YOffset),
+//                      (int)(pPlayer[0]->xpos - pTileEngine->XOffset) - 10);
         pGUI->ShowBox(TextArray[TEXT_PISS_1 + TextNr],
                       (int)(pPlayer[0]->ypos - 70 - pTileEngine->YOffset),
-                      (int)(pPlayer[0]->xpos - pTileEngine->XOffset) - 10);
+                      (int)(pPlayer[0]->xpos - pTileEngine->XOffset + TILESIZE*2));
 
         if (pPlayer[0]->BronsonCounter > 220.0f + 50.0f * 18)
             pPlayer[0]->BronsonCounter = 270.0f;
