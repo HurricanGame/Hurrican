@@ -8,8 +8,6 @@
 //+------------------------------------------------------------------------------+
 //|                               FPBENCH SUMMARY                                |
 //+-------------------------------------+-------------------+--------------------+
-//| Iterations: 10000                   | Math ops per iteration: 1024           |
-//+-------------------------------------+-------------------+--------------------+
 //| Benchmark description               | ns per operation  | millions of op / s |
 //|                                     | (lower = better)  |  (higher = better) |
 //+-------------------------------------+-------------------+--------------------+
@@ -31,3 +29,18 @@ int fast_rand(void)
    return (int)((fast_rand_seed_val>>16)&0x7FFF);
 }
 #endif // USE_FAST_RNG
+
+
+//DKS - Added trig-lookup table with 1/4-deg resolution for speedup:
+#ifdef USE_TRIG_LOOKUP_TABLE
+float sin_table[SIN_TABLE_ELEMS];
+
+void populate_sin_table(void)
+{
+   float x = 0;
+   int i;
+   for (i=0; i < SIN_TABLE_ELEMS; i++, x += 0.25f) {
+      sin_table[i] = sinf(x * D3DX_PI / 180.0f);
+   }
+}
+#endif //USE_TRIG_LOOKUP_TABLE

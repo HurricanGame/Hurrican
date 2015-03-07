@@ -7,6 +7,8 @@ DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS -DUSE_MODPLUG
 #DEFINES += -DUSE_STORAGE_PATH="\"PATH_TO_STORAGE\""
 ####### Extremely fast random-number-generator (can be over 100 times faster than rand() on some platforms):
 #DEFINES += -DUSE_FAST_RNG
+####### Fast Sin/Cos trig lookup table (can be over 15 times faster than libm on some platforms):
+#DEFINES += -DUSE_TRIG_LOOKUP_TABLE
 
 TARGET = linux
 
