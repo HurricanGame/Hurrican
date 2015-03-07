@@ -580,6 +580,10 @@ int main(int argc, char *argv[])
 {
 #endif
 
+    //DKS - Added optional Sin/Cos lookup table
+#ifdef USE_TRIG_LOOKUP_TABLE
+   populate_sin_table();
+#endif //USE_TRIG_LOOKUP_TABLE
 
     GamePaused = false;
 
