@@ -128,7 +128,7 @@ COMMON_CFLAGS := -Wall -Wno-unused-local-typedefs -fsingle-precision-constant -c
 
 ifdef _DEBUG
 # Debug CFLAGS:
-CFLAGS := -g -O0 $(COMMON_CFLAGS)
+CFLAGS := -g -O0 -D_DEBUG $(COMMON_CFLAGS)
 else
 # Normal CFLAGS:
 CFLAGS := -O2 $(COMMON_CFLAGS)
