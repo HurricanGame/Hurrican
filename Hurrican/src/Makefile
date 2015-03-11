@@ -124,7 +124,15 @@ endif
 
 INCLUDES := -I. -I./SDLPort -Icml -I./unrarlib040/unrarlib $(INCLUDES_OS)
 
-CFLAGS := -g -Wall -Wno-unused-local-typedefs -O0 -c $(INCLUDES) $(DEFINES)
+COMMON_CFLAGS := -Wall -Wno-unused-local-typedefs -fsingle-precision-constant -c $(INCLUDES) $(DEFINES)
+
+ifdef _DEBUG
+# Debug CFLAGS:
+CFLAGS := -g -O0 $(COMMON_CFLAGS)
+else
+# Normal CFLAGS:
+CFLAGS := -O2 $(COMMON_CFLAGS)
+endif
 
 SDL_FILES := SDLPort/SDL_fmod \
              SDLPort/SDL_port \
