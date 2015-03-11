@@ -41,7 +41,10 @@ GegnerSchleimMaul::GegnerSchleimMaul (float x, float y, int  Wert1, int Wert2, b
         r1 = float (rand()%40) + 30;
         r2 = float (rand()%40) + 30;
 
-        pGegner->PushGegner (x + (float)(sin(r)) * r1, y + (float)(cos(r)) * r2, SCHLEIMALIEN, 0, 0, ChangeLight);
+        //DKS - Obvious bug I am fixing here: passing a value between 0-359 to sin()/cos(), which take 
+        //      radian inputs, while also adding support of deg/rad cos/sin w/ lookup table support:
+        //pGegner->PushGegner (x + (float)(sin(r)) * r1, y + (float)(cos(r)) * r2, SCHLEIMALIEN, 0, 0, ChangeLight);
+        pGegner->PushGegner (x + sin_deg(r) * r1, y + cos_deg(r) * r2, SCHLEIMALIEN, 0, 0, ChangeLight);
         pChildren[i] = pGegner->pEnd;
     }
 }
@@ -81,7 +84,10 @@ void GegnerSchleimMaul::DoKI(void)
             r1 = float (rand()%40) + 30;
             r2 = float (rand()%40) + 30;
 
-            pGegner->PushGegner (xPos + (float)(sin(r)) * r1, yPos + (float)(cos(r)) * r2, SCHLEIMALIEN, 20, 0, ChangeLight);
+            //DKS - Obvious bug I am fixing here: passing a value between 0-359 to sin()/cos(), which take 
+            //      radian inputs, while also adding support of deg/rad cos/sin w/ lookup table support:
+            //pGegner->PushGegner (xPos + (float)(sin(r)) * r1, yPos + (float)(cos(r)) * r2, SCHLEIMALIEN, 20, 0, ChangeLight);
+            pGegner->PushGegner (xPos + sin_deg(r) * r1, yPos + cos_deg(r) * r2, SCHLEIMALIEN, 20, 0, ChangeLight);
             pChildren[i] = pGegner->pEnd;
         }
     }
