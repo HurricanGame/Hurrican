@@ -149,14 +149,14 @@ void GegnerSchneeKoenig::NextAction(int NewAction)
 
     Handlung = GEGNER_EINFLIEGEN;
 
-    // Neuen Angriff festgelegt?
+    // Neuen Angriff festgelegt?    //DKS - "Set new attack?"
     if (NewAction != -1)
         NextAttack = NewAction;
 
-    // oder per Zufall?
+    // oder per Zufall?             //DKS - "Or by accident?"
     else
     {
-        //if (Value1 > 0)
+        //if (Value1 > 0)           //DKS - This was already commented out in original source
         NextAttack = LastAttack + 1;
 
         if ( NextAttack > 3 ||
@@ -545,7 +545,7 @@ void GegnerSchneeKoenig::DoKI(void)
             if (yPos < pTileEngine->YOffset - 300.0f)
                 Energy = 0.0f;
 
-            // Auf der Hälfte explodieren lassen?
+            // Auf der Hälfte explodieren lassen?   //DKS - "Explode on the half"
             if (Value1 >= 2 &&
                     yPos < pTileEngine->YOffset + 150.0f)
             {
@@ -626,11 +626,26 @@ void GegnerSchneeKoenig::DoKI(void)
                 KnarreWinkel = aim;
         }
 
+        //DKS - Fixed show-stopper bug in original code:
+        //      In the Ice level (eis.map), only the first "Snow-King" boss is beatable. The player must
+        //      stand on the boss and allow his cannon-shots to hit his body. Only this can cause damage
+        //      to him; no weapons can do damage. On the first of three bosses, this works 
+        //      fine, but on the two later Snow-Kings, he retracts his cannon the moment you get close
+        //      to him. This made him unbeatable and hence, the game as well.
+        //      Note that Value1 is 0 for the first snow-king and is 1 and 2 for the 2nd and 3rd kings, respectively.
+        //ORIGINAL BUGGY CODE:
+        /*
         if (PlayerAbstandHoriz() < 100 &&
                 Value1 > 0)
             ShotCount--;
         else if(abs((int)(aim - KnarreWinkel)) < 10.0f)
             ShotDelay -= 1.0f SYNC;
+        */
+
+        //REPLACEMENT CODE: 
+        if (abs((int)(aim - KnarreWinkel)) < 10)    //DKS - Note: the move from 10.0f to 10 was just simple optimization
+            ShotDelay -= 1.0f SYNC;
+        //DKS - End bug-fix.
 
         if (ShotDelay <= 0.0f)
         {
@@ -663,6 +678,7 @@ void GegnerSchneeKoenig::DoKI(void)
             GunSlide = 5.0f;
 
             // Boss kommt nicht zum ersten mal? Dann Shusscount abziehen
+            //DKS - "Boss does not come for the first time? Then pull shotcount"
             if (Value1 > 0)
                 ShotCount--;
         }
