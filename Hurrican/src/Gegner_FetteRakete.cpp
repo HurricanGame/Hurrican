@@ -63,8 +63,13 @@ void GegnerFetteRakete::DoKI(void)
     {
         // Rakete kam nicht vom Drachen? Dann
         // enthält Wert1 den Winkel, in den die Raketen fliegen sollen
-        xSpeed =  float (sin (Value1 * PI / 180.0f) * 35);
-        ySpeed = -float (cos (Value1 * PI / 180.0f) * 35);
+
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed =  float (sin (Value1 * PI / 180.0f) * 35);
+        //ySpeed = -float (cos (Value1 * PI / 180.0f) * 35);
+        xSpeed =  sin_deg(Value1) * 35.0f;
+        ySpeed = -cos_deg(Value1) * 35.0f;
+
         Handlung = GEGNER_LAUFEN;
     }
     break;
@@ -86,9 +91,13 @@ void GegnerFetteRakete::DoKI(void)
         if (dy == 0.0f)
             dy = 0.01f;
 
-        float w, winkel;
+        //DKS - fixed uninitialized var warning:
+        //float w, winkel;
 
-        w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+        //DKS - Use new Rad/Deg macros, converted to float:
+        //w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+        float w = RadToDeg(atanf(dx / dy));
+        float winkel = w;
 
         if (dx >= 0 && dy >= 0) winkel = w;
         else if (dx > 0  && dy < 0 ) winkel = 180 + w;
@@ -108,8 +117,11 @@ void GegnerFetteRakete::DoKI(void)
 
             xAcc = 0;
             yAcc = 0;
-            xSpeed =  float (sin (rot * PI / 180.0f) * 35);
-            ySpeed = -float (cos (rot * PI / 180.0f) * 35);
+            //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+            //xSpeed =  float (sin (rot * PI / 180.0f) * 35);
+            //ySpeed = -float (cos (rot * PI / 180.0f) * 35);
+            xSpeed =  sin_deg(rot) * 35.0f;
+            ySpeed = -cos_deg(rot) * 35.0f;
         }
     }
     break;

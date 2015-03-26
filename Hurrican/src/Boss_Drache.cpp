@@ -187,9 +187,12 @@ void GegnerDrache::DoDraw(void)
         else
             winkel = 180.0f - HeadWinkel;
 
-        render   = (int) sqrt(HeadX * HeadX + HeadY * HeadY) / 10;
+        //DKS - converted to float:
+        //render   = (int) sqrt(HeadX * HeadX + HeadY * HeadY) / 10;
+        //float dist = (float)sqrt(HeadX * HeadX + HeadY * HeadY);
+        render   = (int) sqrtf(HeadX * HeadX + HeadY * HeadY) / 10;
+        float dist = sqrtf(HeadX * HeadX + HeadY * HeadY);
 
-        float dist = (float)sqrt(HeadX * HeadX + HeadY * HeadY);
         float xadd = HeadX / dist * 10.0f;
         float yadd = HeadY / dist * 10.0f;
         while (render-- > 0)
@@ -325,12 +328,16 @@ void GegnerDrache::ComputeHeadWinkel(void)
     if (BlickRichtung == 1)
     {
         xdiv = (pAim->xpos + 35) - (xPos + 210);
-        HeadWinkel = (float)atan(xdiv / ydiv) * 180.0f / PI - 90.0f;
+        //DKS - converted to float:
+        //HeadWinkel = (float)atan(xdiv / ydiv) * 180.0f / PI - 90.0f;
+        HeadWinkel = RadToDeg(atanf(xdiv / ydiv)) - 90.0f;
     }
     else
     {
         xdiv = (pAim->xpos + 35) - (xPos - 80);
-        HeadWinkel = -(float)atan(xdiv / ydiv) * 180.0f / PI - 82.0f;
+        //DKS - converted to float:
+        //HeadWinkel = -(float)atan(xdiv / ydiv) * 180.0f / PI - 82.0f;
+        HeadWinkel = -RadToDeg(atanf(xdiv / ydiv)) - 82.0f;
     }
 
     if (HeadWinkel < -90.0f)  HeadWinkel = -90.0f;
@@ -1069,8 +1076,11 @@ void GegnerDrache::DoKI(void)
 
                 HeadLocked = true;
 
-                HeadXSpeed =  (float)cos(HeadWinkel / 180.0f * PI) * (40.0f + 10.0f * (Skill)) * Position;
-                HeadYSpeed = -(float)sin(HeadWinkel / 180.0f * PI) * (30.0f +  8.0f * (Skill));
+                //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+                //HeadXSpeed =  (float)cos(HeadWinkel / 180.0f * PI) * (40.0f + 10.0f * (Skill)) * Position;
+                //HeadYSpeed = -(float)sin(HeadWinkel / 180.0f * PI) * (30.0f +  8.0f * (Skill));
+                HeadXSpeed =  cos_deg(HeadWinkel) * (40.0f + 10.0f * (Skill)) * Position;
+                HeadYSpeed = -sin_deg(HeadWinkel) * (30.0f +  8.0f * (Skill));
 
                 if (Position == LINKS &&
                         HeadXSpeed > -0.1f)

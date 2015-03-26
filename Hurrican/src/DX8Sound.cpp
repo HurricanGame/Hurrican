@@ -965,7 +965,8 @@ bool CSoundManager::PlayWave3D(int x, int y, int Freq, int Nr)
     xdiff = ((pPlayer[0]->xpos + 45)  - x);
     ydiff = ((pPlayer[0]->ypos + 45)  - y);
 
-    Abstand = float(sqrt((xdiff * xdiff) + (ydiff * ydiff)));
+    //DKS - converted to float:
+    Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
     vol = int(100-float(Abstand/6.0f));
     if (vol < 0)
@@ -1004,7 +1005,8 @@ void CSoundManager::Update3D (int x, int y, int Nr)
     xdiff = ((pPlayer[0]->xpos + 45)  - x);
     ydiff = ((pPlayer[0]->ypos + 45)  - y);
 
-    Abstand = float(sqrt((xdiff * xdiff) + (ydiff * ydiff)));
+    //DKS - converted to float:
+    Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
     vol = (int)((100-float(Abstand/6.0f)) / 100.0f * pSoundManager->its_GlobalSoundVolume);
 

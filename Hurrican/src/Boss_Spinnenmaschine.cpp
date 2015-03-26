@@ -91,7 +91,9 @@ void GegnerSpinnenmaschine::DoDraw(void)
         }
 
         // Oberteil
-        DeckelOffset = -((float)(cos(DeckelCount) * 20.0f) + (float)(cos(PI) * 20));
+        //DKS - Optimized cos(PI) to be a constant (-1):
+        //DeckelOffset = -((float)(cos(DeckelCount) * 20.0f) + (float)(cos(PI) * 20));
+        DeckelOffset = -((float)(cos(DeckelCount) * 20.0f) - 20.0f);
         pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos - pTileEngine->XOffset),
                                                (float)(yPos - pTileEngine->YOffset) - (int)DeckelOffset,
                                                0, Color, true);

@@ -110,7 +110,9 @@ bool					Sprache;						// true == deutsch / false == englisch
 bool					GameRunning			= true;		// Spiel läuft :-)
 bool					GamePaused			= false;	// Spiel eingefroren (wenn man zb das Fenster verlässt)
 bool					NochKeinFullScreen	= true;		// Logo noch anzeigen in Paint ?
+#ifdef _DEBUG
 bool					DebugMode			= false;	// Debug Mode ein/aus
+#endif //_DEBUG
 float					SpeedFaktor = 1.0f;				// Faktor, mit dem alle Bewegungen verrechnet werden
 DirectGraphicsClass		DirectGraphics;					// Grafik-Objekt
 DirectInputClass		DirectInput;					// Input-Objekt

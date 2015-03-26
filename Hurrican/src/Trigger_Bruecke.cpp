@@ -66,8 +66,11 @@ void GegnerBruecke::DoKI(void)
                 float dx, dy;
                 float   w, h;
 
-                w = (GegnerRect[pTemp->GegnerArt].right  - GegnerRect[pTemp->GegnerArt].left) / 2.0f;
-                h = (GegnerRect[pTemp->GegnerArt].bottom - GegnerRect[pTemp->GegnerArt].top)  / 2.0f;
+                //DKS - Optimized
+                //w = (GegnerRect[pTemp->GegnerArt].right  - GegnerRect[pTemp->GegnerArt].left) / 2.0f;
+                //h = (GegnerRect[pTemp->GegnerArt].bottom - GegnerRect[pTemp->GegnerArt].top)  / 2.0f;
+                w = (GegnerRect[pTemp->GegnerArt].right  - GegnerRect[pTemp->GegnerArt].left) * 0.5f;
+                h = (GegnerRect[pTemp->GegnerArt].bottom - GegnerRect[pTemp->GegnerArt].top)  * 0.5f;
 
                 if (pTemp->GegnerArt == DIAMANT)
                     h = 2;
@@ -75,7 +78,9 @@ void GegnerBruecke::DoKI(void)
                 dx = pTemp->xPos + w - (xPos + 5);
                 dy = pTemp->yPos + h - (yPos + 5);
 
-                double a = sqrt ((dx * dx) + (dy * dy));
+                //DKS - converted to float:
+                //double a = sqrt ((dx * dx) + (dy * dy));
+				float a = sqrtf((dx * dx) + (dy * dy));
 
                 if (a > 40.0f)
                     a = 40.0f;
@@ -83,7 +88,9 @@ void GegnerBruecke::DoKI(void)
                 if (pTemp->GegnerArt == SPITTER)
                     a += 13.0f;
 
-                yPos = float (pTemp->yPos + GegnerRect[pTemp->GegnerArt].bottom - a / 2.5f + 13.0f);
+                //DKS - Optimized
+                //yPos = float (pTemp->yPos + GegnerRect[pTemp->GegnerArt].bottom - a / 2.5f + 13.0f);
+                yPos = pTemp->yPos + float(GegnerRect[pTemp->GegnerArt].bottom) - a * (1.0f/2.5f) + 13.0f;
             }
 
             pTemp = pTemp->pNext;				// Nächsten Gegner durchgehen
@@ -104,9 +111,11 @@ void GegnerBruecke::DoKI(void)
                 dx = (pPlayer[p]->xpos + 35) - (xPos + 5);
                 dy = (pPlayer[p]->ypos + 40) - (yPos + 5);
 
-                double a = sqrt ((dx * dx) + (dy * dy));
-
-                yPos = float (Value1 + (32 - a / 1.5f));
+                //DKS - converted to float, optimized:
+                //double a = sqrt ((dx * dx) + (dy * dy));
+                //yPos = float (Value1 + (32 - a / 1.5f));
+                float a = sqrtf((dx * dx) + (dy * dy));
+                yPos = float(Value1) + (32.0f - a * (1.0f/1.5f));
             }
     }
     else

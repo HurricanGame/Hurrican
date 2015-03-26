@@ -102,9 +102,13 @@ void GegnerClimber::DoKI(void)
             if (dy == 0.0f)
                 dy = 0.01f;
 
-            float w, winkel;
+            //DKS - fixed uninitialized var warning:
+            //float w, winkel;
 
-            w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+            //DKS - converted to float, macro:
+            //w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+            float w = RadToDeg(atanf(dx / dy));
+            float winkel = w;
 
             if (dx >= 0 && dy >= 0) winkel = w;
             else if (dx > 0  && dy < 0 ) winkel = 180 + w;
@@ -136,9 +140,13 @@ void GegnerClimber::DoKI(void)
         if (dy == 0.0f)
             dy = 0.01f;
 
-        float w, winkel;
+        //DKS - fixed uninitialized var warning:
+        //float w, winkel;
 
-        w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+        //DKS - converted to float:
+        //w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+        float w = RadToDeg(atanf(dx / dy));
+        float winkel = w;
 
         if (dx >= 0 && dy >= 0) winkel = w;
         else if (dx > 0  && dy < 0 ) winkel = 180 + w;
@@ -181,8 +189,11 @@ void GegnerClimber::DoKI(void)
         if (PlayerAbstand() < 1000)
 
         {
-            xSpeed = float ( sin(rot * D3DX_PI / 180.0f) * 7.5f);
-            ySpeed = float (-cos(rot * D3DX_PI / 180.0f) * 7.5f);
+            //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+            //xSpeed = float ( sin(rot * D3DX_PI / 180.0f) * 7.5f);
+            //ySpeed = float (-cos(rot * D3DX_PI / 180.0f) * 7.5f);
+            xSpeed =  sin_deg(rot) * 7.5f;
+            ySpeed = -cos_deg(rot) * 7.5f;
         }
         else
         {

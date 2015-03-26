@@ -307,7 +307,8 @@ void GameLoop(void)
     pTileEngine->DrawBackground();
 
     // Drache zb
-    pTileEngine->DrawSpecialLayer();
+    //DKS - this was an empty function in the original code, disabling it:
+    //pTileEngine->DrawSpecialLayer();
 
     // Evtl. rotieren, wenn Screen wackelt
     if (WackelMaximum > 0.0f)

@@ -54,17 +54,24 @@ void GegnerRollmops::CalcGunWinkel(void)
     if (ydiv == 0.0f)
         ydiv  = 0.00001f;
 
-    if (xPos < Value1 + 320.0f)
-    {
-        xdiv = (pAim->xpos + 35) - (xPos + 50);
-        neww = (float)atan(ydiv / xdiv) * 180.0f / PI;
-    }
-    else
-    {
-        xdiv = (pAim->xpos + 35) - (xPos + 50);
-        neww = -(float)atan(ydiv / xdiv) * 180.0f / PI;
-    }
+    //DKS - Optimized this a bit and converted atan to atanf:
+	/* if (xPos < Value1 + 320.0f)
+	{
+		xdiv = (pAim->xpos + 35) - (xPos + 50);
+		neww = (float)atan(ydiv / xdiv) * 180.0f / PI;
+	}
+	else
+	{
+		xdiv = (pAim->xpos + 35) - (xPos + 50);
+		neww = -(float)atan(ydiv / xdiv) * 180.0f / PI;
+	} */
+    xdiv = (pAim->xpos + 35) - (xPos + 50);
+    neww = RadToDeg(atanf(ydiv / xdiv));
 
+    if (xPos >= ( Value1 + 320.0f))
+    {
+        neww *= -1.0f;
+    }
 
     if (neww < -30.0f)  neww = -30.0f;
     if (neww >  90.0f)  neww =  90.0f;
@@ -102,7 +109,9 @@ void GegnerRollmops::DoDraw(void)
             pKettenTeile[i]->yPos = HookY + i * y;
 
             // Winkel setzen
-            pKettenTeile[i]->AnimCount = 360.0f - (Schwung * 180.0f / PI);
+            //DKS - used new macros:
+            //pKettenTeile[i]->AnimCount = 360.0f - (Schwung * 180.0f / PI);
+            pKettenTeile[i]->AnimCount = 360.0f - RadToDeg(Schwung);
         }
 
         Rollen.RenderSprite((float)(xPos-pTileEngine->XOffset),
@@ -269,9 +278,11 @@ void GegnerRollmops::RoundShot(bool single)
     if (single)
     {
         WinkelUebergabe = WinkelCount;
-        pProjectiles->PushProjectile(xPos + 50 + (float)sin(WinkelCount / 180.0f * PI) * 40.0f,
-                                     yPos + 50 - (float)cos(WinkelCount / 180.0f * PI) * 40.0f, EISZAPFENSHOT);
-
+        //DKS - support sin/cos lookup table & deg/rad versions of sin/cos
+        /* pProjectiles->PushProjectile(xPos + 50 + (float)sin(WinkelCount / 180.0f * PI) * 40.0f,
+                                     yPos + 50 - (float)cos(WinkelCount / 180.0f * PI) * 40.0f, EISZAPFENSHOT); */
+		pProjectiles->PushProjectile(xPos + 50.0f + sin_deg(WinkelCount) * 40.0f,
+									 yPos + 50.0f - cos_deg(WinkelCount) * 40.0f, EISZAPFENSHOT);
         WinkelCount += 30;
 
         if (WinkelCount >= 360)
@@ -281,8 +292,11 @@ void GegnerRollmops::RoundShot(bool single)
         for (WinkelCount = (float)(rand()%30); WinkelCount < 360.0f; WinkelCount += 30)
         {
             WinkelUebergabe = WinkelCount;
-            pProjectiles->PushProjectile(xPos + 50 + (float)sin(WinkelCount / 180.0f * PI) * 50.0f,
-                                         yPos + 50 - (float)cos(WinkelCount / 180.0f * PI) * 50.0f, EISZAPFENSHOT);
+            //DKS - support sin/cos lookup table & deg/rad versions of sin/cos
+            /* pProjectiles->PushProjectile(xPos + 50 + (float)sin(WinkelCount / 180.0f * PI) * 50.0f,
+                                         yPos + 50 - (float)cos(WinkelCount / 180.0f * PI) * 50.0f, EISZAPFENSHOT); */
+            pProjectiles->PushProjectile(xPos + 50.0f + sin_deg(WinkelCount) * 50.0f,
+                                         yPos + 50.0f - cos_deg(WinkelCount) * 50.0f, EISZAPFENSHOT);
         }
 
     pSoundManager->PlayWave(50, 128, 16000 + rand()%2000, SOUND_STONEFALL);
@@ -398,7 +412,10 @@ void GegnerRollmops::DoKI(void)
 
                 HookY = (float)Value2 + 20;
 
+                //DKS - This was already commented out in original source:
                 //xPos = pPlayer->xpos;
+
+
                 xPos = (float)(Value1 + 320.0f - 65.0f + sin(Schwung) * 300.0f);
                 yPos = (float)(Value2 - 500.0f + cos(Schwung * 0.75f) * 830.0f);
 
@@ -747,11 +764,17 @@ void GegnerRollmops::DoKI(void)
                     xoff = -70.0f;
                 }
 
+                //DKS - support sin/cos lookup table & deg/rad versions of sin/cos
+                /*
                 pPartikelSystem->PushPartikel(xPos + xoff + 85 + (float)sin(WinkelUebergabe / 180.0f * PI) * 105.0f,
                                               yPos + 46 - (float)cos(WinkelUebergabe / 180.0f * PI) * 90.0f, SNOWFLUSH);
-
                 pProjectiles->PushProjectile(xPos + xoff + 90 + (float)sin(WinkelUebergabe / 180.0f * PI) * 105.0f,
                                              yPos + 46 - (float)cos(WinkelUebergabe / 180.0f * PI) * 90.0f, EISZAPFENSHOT);
+                */
+				pPartikelSystem->PushPartikel(xPos + xoff + 85.0f + sin_deg(WinkelUebergabe) * 105.0f,
+											 yPos + 46.0f - cos_deg(WinkelUebergabe) * 90.0f, SNOWFLUSH);
+				pProjectiles->PushProjectile(xPos + xoff + 90.0f + sin_deg(WinkelUebergabe) * 105.0f,
+											 yPos + 46.0f - cos_deg(WinkelUebergabe) * 90.0f, EISZAPFENSHOT);
 
                 ShotDelay = 3.0f;
                 ShotCount -= 1.0f;

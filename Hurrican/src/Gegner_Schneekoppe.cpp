@@ -21,8 +21,11 @@ GegnerSchneekoppe::GegnerSchneekoppe(int Wert1, int Wert2, bool Light)
     ChangeLight		= Light;
     Destroyable		= true;
 
-    xSpeed = (float)sin(Wert1 * PI / 180.0f) * Value2;
-    ySpeed = (float)cos(Wert1 * PI / 180.0f) * Value2;
+    //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+    //xSpeed = (float)sin(Wert1 * PI / 180.0f) * Value2;
+    //ySpeed = (float)cos(Wert1 * PI / 180.0f) * Value2;
+	xSpeed = sin_deg(Wert1) * (float)Value2;
+	ySpeed = cos_deg(Wert1) * (float)Value2;
 
     yAcc   = 6.0f;
 //	AnimSpeed = 0.5f;
@@ -39,7 +42,9 @@ void GegnerSchneekoppe::DoDraw(void)
 {
     // Drehwinkel aus der Geschwindigkeit errechnen
 
-    float w = 180.0f - float(atan(xSpeed / ySpeed) * 360.0f / (D3DX_PI * 2));
+    //DKS - converted to float, optimized:
+    //float w = 180.0f - float(atan(xSpeed / ySpeed) * 360.0f / (D3DX_PI * 2));
+	float w = 180.0f - RadToDeg(atanf(xSpeed / ySpeed));
 
     if (xSpeed >= 0 && ySpeed >= 0) w = w;
     else if (xSpeed > 0  && ySpeed < 0 ) w = 180 + w;

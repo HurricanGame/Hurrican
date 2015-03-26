@@ -94,7 +94,9 @@ void GegnerDeckenturm::DoKI(void)
         d2 = (pAim->xpos + pAim->CollideRect.left + (pAim->CollideRect.right - pAim->CollideRect.left)/2)
              - (xPos + GegnerRect[GegnerArt].right/2);
 
-        Winkel = (d2/d1)*180/PI;
+        //DKS - Use new Rad/Deg macros:
+        //Winkel = (d2/d1)*180/PI;
+        Winkel = RadToDeg(d2/d1);
 
         AnimPhase = int(16 - Winkel/12);
 
@@ -110,10 +112,12 @@ void GegnerDeckenturm::DoKI(void)
         // Schiessen
         if (AnimCount == 0.0f)
         {
-            float w = Winkel * PI / 180.0f;
-
-            pProjectiles->PushProjectile(xPos + 10 + (float)(sin(w) * 20.0f),
-                                         yPos + 5 + (float)(cos(w) * 30.0f), SUCHSCHUSS);
+            //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+            //float w = Winkel * PI / 180.0f;
+            //pProjectiles->PushProjectile(xPos + 10 + (float)(sin(w) * 20.0f),
+            //                             yPos + 5 + (float)(cos(w) * 30.0f), SUCHSCHUSS);
+            pProjectiles->PushProjectile(xPos + 10.0f + (sin_deg(Winkel) * 20.0f),
+                                         yPos + 5.0f + (cos_deg(Winkel) * 30.0f), SUCHSCHUSS);
         }
 
         if (PlayerAbstand() > Value2 ||	// Spieler ausserhalb der Sichtweite ? Dann zumachen

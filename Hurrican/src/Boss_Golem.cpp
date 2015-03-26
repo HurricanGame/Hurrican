@@ -52,7 +52,9 @@ float GegnerGolem::WinkelToPlayer(void)
         ydiv  = 0.00001f;
 
     xdiv = (pAim->xpos + 35) - (xPos + 50);
-    w = 90.0f + (float)atan(ydiv / xdiv) * 180.0f / PI;
+    //DKS - converted to float, used new macros:
+    //w = 90.0f + (float)atan(ydiv / xdiv) * 180.0f / PI;
+	w = 90.0f + RadToDeg(atanf(ydiv / xdiv));
 
     return w;
 }
