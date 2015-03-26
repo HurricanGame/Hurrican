@@ -45,6 +45,7 @@ _asm fistp x
 extern void seed_fast_rand(uint32_t seed);
 extern int fast_rand(void);
 #define rand() fast_rand()
+#define srand(x) seed_fast_rand(x)
 #endif //USE_FAST_RNG
 
 #ifndef M_PI

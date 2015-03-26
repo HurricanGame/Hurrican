@@ -918,7 +918,7 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
 
     srand(timeGetTime());
 
-    //DKS - added fast RNG:
+    //DKS - added fast RNG, this is to ensure it always gets seeded, though the above should already do so:
 #ifdef USE_FAST_RNG
     seed_fast_rand(timeGetTime());
 #endif //USE_FAST_RNG
