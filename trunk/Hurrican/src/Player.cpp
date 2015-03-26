@@ -910,7 +910,9 @@ void PlayerClass::PullItems(void)
             absx = (pTemp->xPos+10)-(xpos+35);		// Differenz der x
             absy = (pTemp->yPos+10)-(ypos+40);		// und y Strecke
 
-            speed = (float)(1.0f/sqrt(absx*absx + absy*absy));	// Länge der Strecke berechnen
+            //DKS - converted to float:
+            //speed = (float)(1.0f/sqrt(absx*absx + absy*absy));	// Länge der Strecke berechnen
+            speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
             speed = speed * 0.1f * BlitzStart;				// Geschwindigkeit ist 4 fach
 
             pTemp->xSpeed = -speed * 10.0f * absx SYNC;
@@ -3835,8 +3837,11 @@ bool PlayerClass::DoLightning(void)
     float xstart = float(xpos+20);
     float ystart = float(ypos+21);
 
-    xstart += float(36*cos(PI * (BlitzWinkel-90) / 180));
-    ystart += float(36*sin(PI * (BlitzWinkel-90) / 180));
+    //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+    //xstart += float(36*cos(PI * (BlitzWinkel-90) / 180));
+    //ystart += float(36*sin(PI * (BlitzWinkel-90) / 180));
+	xstart += 36.0f*cos_deg(BlitzWinkel-90.0f);
+	ystart += 36.0f*sin_deg(BlitzWinkel-90.0f);
 
     if (BlitzStart < PLAYER_BLITZ_START)
     {
@@ -3880,8 +3885,10 @@ bool PlayerClass::DoLightning(void)
     }
 
     // Startpunkt der Kollisionsabfrage auch schon mit ein wenig Abstand zum Spieler
-    xstart -= float(20*cos(PI * (BlitzWinkel-90) / 180));
-    ystart -= float(20*sin(PI * (BlitzWinkel-90) / 180));
+    //xstart -= float(20*cos(PI * (BlitzWinkel-90) / 180));
+    //ystart -= float(20*sin(PI * (BlitzWinkel-90) / 180));
+	xstart -= 20.0f*cos_deg(BlitzWinkel-90);
+	ystart -= 20.0f*sin_deg(BlitzWinkel-90);
 
     RECT	Rect;							// Rechteck für die Kollisionserkennung
     // ein Blitz-Stück wird grob durch
@@ -3895,11 +3902,14 @@ bool PlayerClass::DoLightning(void)
     // Rechtecke für die Kollisionsabfrage rotieren lassen
     for (int i=0; i<BlitzLength+1; i++)
     {
+        //DKS - #ifdef'd this check
+#ifdef _DEBUG
         // Zum anzeigen der Rects, die geprüft werden
         if (DebugMode == true)
             RenderRect(float(xstart-pTileEngine->XOffset),
                        float(ystart-pTileEngine->YOffset),
                        31, 31, 0x80FFFFFF);
+#endif //DEBUG
 
         xs = xstart;
         ys = ystart;
@@ -3974,19 +3984,28 @@ bool PlayerClass::DoLightning(void)
         {
             if (BlitzCount == 0.0f && BlitzAnim%2 == 0)
                 pPartikelSystem->PushPartikel(xs+12, ys+12, LASERFUNKE);	// Funken sprühen
-            xstart += float(32*cos(PI * (BlitzWinkel-90) / 180));
-            ystart += float(32*sin(PI * (BlitzWinkel-90) / 180));
+            //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+            //xstart += float(32*cos(PI * (BlitzWinkel-90) / 180));
+            //ystart += float(32*sin(PI * (BlitzWinkel-90) / 180));
+			xstart += 32.0f*cos_deg(BlitzWinkel-90);
+			ystart += 32.0f*sin_deg(BlitzWinkel-90);
             DrawLength = i-1;										// Blitz "kürzen"
             break;													// und Schleife verlassen
         }
 
-        xstart += float(32*cos(PI * (BlitzWinkel-90) / 180));
-        ystart += float(32*sin(PI * (BlitzWinkel-90) / 180));
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xstart += float(32*cos(PI * (BlitzWinkel-90) / 180));
+        //ystart += float(32*sin(PI * (BlitzWinkel-90) / 180));
+		xstart += 32.0f*cos_deg(BlitzWinkel-90);
+		ystart += 32.0f*sin_deg(BlitzWinkel-90);
     }
 
     // Position für das Ende des Blitzes wieder ein wenig zurückverschieben
-    xstart -= float(16*cos(PI * (BlitzWinkel-90) / 180));
-    ystart -= float(16*sin(PI * (BlitzWinkel-90) / 180));
+    //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+    //xstart -= float(16*cos(PI * (BlitzWinkel-90) / 180));
+    //ystart -= float(16*sin(PI * (BlitzWinkel-90) / 180));
+	xstart -= 16.0f*cos_deg(BlitzWinkel-90);
+	ystart -= 16.0f*sin_deg(BlitzWinkel-90);
 
     // Ende des Blitzes leuchten lassen
     Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-pTileEngine->XOffset),
@@ -4136,8 +4155,11 @@ bool PlayerClass::LoadBeam (void)
     float	xstart = float(xpos+20);
     float	ystart = float(ypos+21);
 
-    xstart += float(28*cos(PI * (BlitzWinkel-90) / 180));
-    ystart += float(28*sin(PI * (BlitzWinkel-90) / 180));
+    //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+    //xstart += float(28*cos(PI * (BlitzWinkel-90) / 180));
+    //ystart += float(28*sin(PI * (BlitzWinkel-90) / 180));
+	xstart += 28.0f*cos_deg(BlitzWinkel-90);
+	ystart += 28.0f*sin_deg(BlitzWinkel-90);
 
     // Ende des Blitzes leuchten lassen
     Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-pTileEngine->XOffset),
@@ -4157,8 +4179,13 @@ bool PlayerClass::LoadBeam (void)
             BeamCount = 0.1f;
 
             int j = rand ()%360;
-            pPartikelSystem->PushPartikel (float (BeamX + sin ((float)j) * 50),
-                                           float (BeamY + cos ((float)j) * 50), BEAMSMOKE2, this);
+            //DKS - pretty obviously a bug, they mean to convert to degrees before calling sin (which takes radians)
+            //      When I fixed this, I went ahead and added support for trig lookup table, and support for 
+            //      rad/deg versions of sin/cos
+            //pPartikelSystem->PushPartikel (float (BeamX + sin ((float)j) * 50),
+            //                               float (BeamY + cos ((float)j) * 50), BEAMSMOKE2, this);
+			pPartikelSystem->PushPartikel (BeamX + sin_deg(j) * 50.0f,
+										   BeamY + cos_deg(j) * 50.0f, BEAMSMOKE2, this);
         }
     }
 

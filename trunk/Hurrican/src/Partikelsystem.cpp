@@ -1308,7 +1308,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case BEAMSMOKE2:	// Rauch beim Aufladen des Blitzbeams
         {
-            double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
+            //DKS - converted to float:
+            float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
 
             AnimPhase = rand()%3;
 
@@ -1318,7 +1319,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 absx = m_pParent->BeamX-xPos;				// Differenz der x
                 absy = m_pParent->BeamY-yPos;				// und y Strecke
 
-                speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+                //DKS - converted to float:
+                speed = 1/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
                 speed = speed*(4+AnimPhase * 2);		// Geschwindigkeit
 
                 absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -1352,10 +1354,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             AnimPhase = rand()%3;
 
             float mul = (float)(rand()%100 + 10) / 10.0f;
-            float arc = (float)(rand()%360) * PI / 180.0f;
 
-            xSpeed		= (float)(sin(arc) * mul);
-            ySpeed		= (float)(cos(arc) * mul);
+            //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+            //float arc = (float)(rand()%360) * PI / 180.0f;
+            //xSpeed		= (float)(sin(arc) * mul);
+            //ySpeed		= (float)(cos(arc) * mul);
+			int arc = rand()%360;
+			xSpeed		= sin_deg(arc) * mul;
+			ySpeed		= cos_deg(arc) * mul;
 
             Lebensdauer = float (rand()%200 + 55);
         }
@@ -1369,10 +1375,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             alpha = 255;
 
             float mul = (float)(rand()%50 + 10) / 10.0f;
-            float arc = (float)(rand()%360) * PI / 180.0f;
 
-            xSpeed		= (float)(sin(arc) * mul);
-            ySpeed		= (float)(cos(arc) * mul);
+            //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+            //float arc = (float)(rand()%360) * PI / 180.0f;
+            //xSpeed		= (float)(sin(arc) * mul);
+            //ySpeed		= (float)(cos(arc) * mul);
+			int arc = rand()%360;
+			xSpeed		= sin_deg(arc) * mul;
+			ySpeed		= cos_deg(arc) * mul;
 
             Rotate = true;
             RotDir = (float)(rand()%10 + 15);
@@ -1719,10 +1729,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             BounceWalls = false;
 
             float mul = (float)(rand()%60 + 40) / 8.0f;
-            float arc = (float)(rand()%360) * PI / 180.0f;
 
-            xSpeed		= (float)(sin(arc) * mul);
-            ySpeed		= (float)(cos(arc) * mul);
+            //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+            //float arc = (float)(rand()%360) * PI / 180.0f;
+            //xSpeed		= (float)(sin(arc) * mul);
+            //ySpeed		= (float)(cos(arc) * mul);
+            int arc = rand()%360;
+            xSpeed		= sin_deg(arc) * mul;
+            ySpeed		= cos_deg(arc) * mul;
 
             xPos += xSpeed;
             yPos += ySpeed;
@@ -1740,12 +1754,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             BounceWalls = false;
             PartikelArt = KRINGEL;
 
-            double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
+            //DKS - converted to float:
+            float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
             // berechnung
             absx = m_pParent->xpos+35-(xPos+4);		// Differenz der x
             absy = m_pParent->ypos+40-(yPos+4);		// und y Strecke
 
-            speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+            //DKS - converted to float:
+            speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
             speed = speed*(8+AnimPhase);			// Geschwindigkeit ist 4 fach
 
             absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -1767,12 +1783,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             BounceWalls = false;
             PartikelArt = KRINGEL;
 
-            double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
+            //DKS - converted to float:
+            float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
             // berechnung
             absx = m_pParent->xpos+35-(xPos+4);		// Differenz der x
             absy = m_pParent->ypos+40-(yPos+4);		// und y Strecke
 
-            speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+            //DKS - converted to float:
+            speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
             speed = speed*(8+AnimPhase);			// Geschwindigkeit ist 4 fach
 
             absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -1794,12 +1812,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             BounceWalls = false;
             PartikelArt = KRINGEL;
 
-            double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
+            //DKS - converted to float:
+            float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
             // berechnung
             absx = m_pParent->xpos+35-(xPos+4);		// Differenz der x
             absy = m_pParent->ypos+40-(yPos+4);		// und y Strecke
 
-            speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+            //DKS - converted to float:
+            speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
             speed = speed*(8+AnimPhase);			// Geschwindigkeit ist 4 fach
 
             absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -1821,12 +1841,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             BounceWalls = false;
             PartikelArt = KRINGEL;
 
-            double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
+            //DKS - converted to float:
+            float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
             // berechnung
             absx = m_pParent->xpos+35-(xPos+4);		// Differenz der x
             absy = m_pParent->ypos+40-(yPos+4);		// und y Strecke
 
-            speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+            //DKS - converted to float:
+            speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
             speed = speed*(8+AnimPhase);			// Geschwindigkeit ist 4 fach
 
             absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -1990,12 +2012,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             Lebensdauer = 255;
             BounceWalls = false;
 
-            double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
+            //DKS - converted to float:
+            float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
             // berechnung
             absx = pPartikelSystem->xtarget-xPos;	// Differenz der x
             absy = pPartikelSystem->ytarget-yPos;	// und y Strecke
 
-            speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+            //DKS - converted to float:
+            speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
             speed = speed*(8+AnimPhase);			// Geschwindigkeit ist 4 fach
 
             absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -2694,7 +2718,8 @@ void PartikelClass::Run(void)
                 xdiff = ((m_pParent->xpos + 45)  - xPos);
                 ydiff = ((m_pParent->ypos + 45)  - yPos);
 
-                Abstand = float(sqrt((xdiff * xdiff) + (ydiff * ydiff)));
+                //DKS - converted to float:
+                Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
                 vol = int((100-float(Abstand/6.0f)) * 1.5f);
                 if (vol < 0)
@@ -3106,10 +3131,12 @@ void PartikelClass::Run(void)
             if (m_pParent != NULL)
             {
                 // Bewegungsrichtung anpassen
-                double absx = m_pParent->BeamX-xPos;				// Differenz der x
-                double absy = m_pParent->BeamY-yPos;				// und y Strecke
+                //DKS - converted to float:
+                float absx = m_pParent->BeamX-xPos;				// Differenz der x
+                float absy = m_pParent->BeamY-yPos;				// und y Strecke
 
-                double speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+                //DKS - converted to float:
+                float speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
                 speed = speed*(4+AnimPhase * 2);				// Geschwindigkeit
 
                 absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -3344,12 +3371,14 @@ void PartikelClass::Run(void)
 
             // Richtung neu berechnen
             //
-            double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
+            //DKS - converted to float:
+            float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
             // berechnung
             absx = m_pParent->xpos+35-(xPos+4);		// Differenz der x
             absy = m_pParent->ypos+40-(yPos+4);		// und y Strecke
 
-            speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+            //DKS - converted to float:
+            speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
             speed = speed*(8+AnimPhase);			// Geschwindigkeit ist 4 fach
 
             absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -3367,12 +3396,14 @@ void PartikelClass::Run(void)
 
             // Richtung neu berechnen
             //
-            double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
+            //DKS - converted to float:
+            float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
             // berechnung
             absx = pPartikelSystem->xtarget-xPos;	// Differenz der x
             absy = pPartikelSystem->ytarget-yPos;	// und y Strecke
 
-            speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+            //DKS - converted to float:
+            speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
             speed = speed*(15+AnimPhase*2);			// Geschwindigkeit ist 4 fach
 
             absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -3777,9 +3808,13 @@ bool PartikelClass::Render(void)
         DirectGraphics.SetTexture( pPartikelGrafix[PartikelArt]->itsTexture );
 #endif
 
+        //DKS-new rad/deg macros:
+        //pPartikelGrafix[PartikelArt]->RenderSpriteRotated (float (xPos - pTileEngine->XOffset),
+        //        float (yPos - pTileEngine->YOffset),
+        //        AnimCount / PI * 180.0f, D3DCOLOR_RGBA(red, green, blue, alpha));
         pPartikelGrafix[PartikelArt]->RenderSpriteRotated (float (xPos - pTileEngine->XOffset),
                 float (yPos - pTileEngine->YOffset),
-                AnimCount / PI * 180.0f, D3DCOLOR_RGBA(red, green, blue, alpha));
+                RadToDeg(AnimCount), D3DCOLOR_RGBA(red, green, blue, alpha));
 
         CurrentPartikelTexture = PartikelArt;
     }

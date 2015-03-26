@@ -108,10 +108,14 @@ void GegnerSchneeKoenig::RenderLaser(void)
 {
     float w;
 
-    w = (KnarreWinkel + 180.0f) * PI / 180.0f;
-
-    Laser.RenderSpriteRotatedOffset((float)(xPos - pTileEngine->XOffset) + 90.0f + (float)sin(w) * 70.0f,
-                                    (float)(yPos - pTileEngine->YOffset) + 5.0f + (float)cos(w) * 70.0f,
+    //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+    //w = (KnarreWinkel + 180.0f) * PI / 180.0f;
+    //Laser.RenderSpriteRotatedOffset((float)(xPos - pTileEngine->XOffset) + 90.0f + (float)sin(w) * 70.0f,
+    //                                (float)(yPos - pTileEngine->YOffset) + 5.0f + (float)cos(w) * 70.0f,
+    //                                KnarreWinkel, 0, 0, 0xFFFFFFFF);
+    w = KnarreWinkel + 180.0f;
+    Laser.RenderSpriteRotatedOffset((float)(xPos - pTileEngine->XOffset) + 90.0f + sin_deg(w) * 70.0f,
+                                    (float)(yPos - pTileEngine->YOffset) + 5.0f + cos_deg(w) * 70.0f,
                                     KnarreWinkel, 0, 0, 0xFFFFFFFF);
 }
 
@@ -639,12 +643,20 @@ void GegnerSchneeKoenig::DoKI(void)
             else
                 w = KnarreWinkel - 180;
 
-            for (int p = 0; p < 2; p++)
-                pPartikelSystem->PushPartikel(xPos + (float)sin((KnarreWinkel + 180.0f) * PI / 180.0f) * 70.0f + 80,
-                                              yPos + (float)cos((KnarreWinkel + 180.0f) * PI / 180.0f) * 60.0f + KnarreY + yOffset, SMOKEBIG);
+            //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+            //for (int p = 0; p < 2; p++)
+            //    pPartikelSystem->PushPartikel(xPos + (float)sin((KnarreWinkel + 180.0f) * PI / 180.0f) * 70.0f + 80,
+            //                                  yPos + (float)cos((KnarreWinkel + 180.0f) * PI / 180.0f) * 60.0f + KnarreY + yOffset, SMOKEBIG);
 
-            pGegner->PushGegner(xPos + (float)sin((KnarreWinkel + 180.0f) * PI / 180.0f) * 70.0f + 100,
-                                yPos + (float)cos((KnarreWinkel + 180.0f) * PI / 180.0f) * 60.0f + KnarreY + 5.0f + yOffset, SCHNEEKOPPE, -(int)(w) - 3 + rand()%7 , 40, false);
+            //pGegner->PushGegner(xPos + (float)sin((KnarreWinkel + 180.0f) * PI / 180.0f) * 70.0f + 100,
+            //                    yPos + (float)cos((KnarreWinkel + 180.0f) * PI / 180.0f) * 60.0f + KnarreY + 5.0f + yOffset, SCHNEEKOPPE, -(int)(w) - 3 + rand()%7 , 40, false);
+            for (int p = 0; p < 2; p++)
+                pPartikelSystem->PushPartikel(xPos + sin_deg(KnarreWinkel + 180.0f) * 70.0f + 80.0f,
+                                              yPos + cos_deg(KnarreWinkel + 180.0f) * 60.0f + KnarreY + yOffset, SMOKEBIG);
+
+            pGegner->PushGegner(xPos + sin_deg(KnarreWinkel + 180.0f) * 70.0f + 100.0f,
+                                yPos + cos_deg(KnarreWinkel + 180.0f) * 60.0f + KnarreY + 5.0f + yOffset, SCHNEEKOPPE, -(int)(w) - 3 + rand()%7 , 40, false);
+
 
             pSoundManager->PlayWave(100, 128, 8000 + rand()%1000, SOUND_GRANATE);
 

@@ -23,8 +23,6 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define PI				3.14159265358979f			// Pi =)
-
 //----- Spielzustände
 
 #define CRACKTRO		0
@@ -63,7 +61,9 @@
 
 extern bool	Sprache;								// true == deutsch / false == englisch (nur für Menugrafiken)
 extern bool	GameRunning;							// Spiel läuft :-)
+#ifdef _DEBUG
 extern bool	DebugMode;								// Debug Mode ein/aus
+#endif
 extern HWND	g_hwnd;									// Handle des Hauptfensters
 extern bool FlameThrower;
 extern bool HasCheated;

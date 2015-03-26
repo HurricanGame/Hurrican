@@ -330,7 +330,8 @@ public:
     void DrawFrontLevel			(void);							// Level vordergrund anzeigen
     void DrawBackLevelOverlay	(void);							// Boden Tiles, die verdecken
     void DrawOverlayLevel		(void);							// Sonstige, die verdecken
-    void DrawSpecialLayer		(void);							// Spezielle Sachen wie der Drache
+    //DKS - this was an empty function in the original code, disabling it:
+    //void DrawSpecialLayer		(void);							// Spezielle Sachen wie der Drache
     void DrawWater				(void);							// Wasser Planes rendern
     void CheckBounds			(void);
     void UpdateLevel			(void);							// Level evtl scrollen usw

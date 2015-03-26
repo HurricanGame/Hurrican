@@ -65,7 +65,9 @@ void GegnerSkeletor::CalcGunWinkel()
         ydiv  = 0.00001f;
 
     xdiv = (pAim->xpos + 35) - (xPos + 60);
-    GunWinkel = 90.0f + (float)atan(ydiv / xdiv) * 180.0f / PI;
+    //DKS - converted to float:
+    //GunWinkel = 90.0f + (float)atan(ydiv / xdiv) * 180.0f / PI;
+    GunWinkel = 90.0f + RadToDeg(atanf(ydiv / xdiv));
 
     if (GunWinkel > 120) GunWinkel = 120;
     if (GunWinkel < 50)  GunWinkel = 50;

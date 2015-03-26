@@ -48,7 +48,8 @@ void GegnerSoundTrigger::DoKI(void)
             xdiff = ((pPlayer[0]->xpos + 45)  - xPos);
             ydiff = ((pPlayer[0]->ypos + 45)  - yPos);
 
-            Abstand = float(sqrt((xdiff * xdiff) + (ydiff * ydiff)));
+            //DKS - Converted to float:
+            Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
             vol = int(100-float(Abstand/6.0f)) * 2;
             vol = int (vol * pSoundManager->its_GlobalSoundVolume /100.0f);

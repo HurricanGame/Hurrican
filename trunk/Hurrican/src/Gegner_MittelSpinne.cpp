@@ -41,7 +41,9 @@ void GegnerMittelSpinne::DoDraw(void)
     //
     float light, lightred;
 
-    light = (yPos - 20) - yStart / 1.0f;
+    //DKS - Removed superfluous "/1.0f"
+    //light = (yPos - 20) - yStart / 1.0f;
+    light = (yPos - 20) - yStart;
     if (light < 0.0f)	light = 0.0;
     if (light > 255.0f)	light = 255.0;
 
@@ -90,9 +92,13 @@ void GegnerMittelSpinne::DoKI(void)
         if (dy == 0.0f)
             dy = 0.01f;
 
-        float w, winkel;
+        //DKS - fixed uninitialized var warning:
+        //float w, winkel;
 
-        w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+        //DKS - converted to float, optimized:
+        //w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+        float w = RadToDeg(atanf(dx / dy));
+        float winkel = w;
 
         if (dx >= 0 && dy >= 0) winkel = w;
         else if (dx > 0  && dy < 0 ) winkel = 180 + w;
@@ -113,8 +119,11 @@ void GegnerMittelSpinne::DoKI(void)
 
         // Bewegen
         //
-        xSpeed = float ( sin(rot * D3DX_PI / 180.0f) * 15.0f * (5.0f - AnimSpeed) SYNC);
-        ySpeed = float (-cos(rot * D3DX_PI / 180.0f) * 15.0f * (5.0f - AnimSpeed) SYNC);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed = float ( sin(rot * D3DX_PI / 180.0f) * 15.0f * (5.0f - AnimSpeed) SYNC);
+        //ySpeed = float (-cos(rot * D3DX_PI / 180.0f) * 15.0f * (5.0f - AnimSpeed) SYNC);
+        xSpeed =  sin_deg(rot) * 15.0f * (5.0f - AnimSpeed) SYNC;
+        ySpeed = -cos_deg(rot) * 15.0f * (5.0f - AnimSpeed) SYNC;			
 
     }
     break;

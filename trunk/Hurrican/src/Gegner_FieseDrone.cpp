@@ -113,7 +113,9 @@ void GegnerFieseDrone::DoKI(void)
 
             xdiv = (pAim->xpos + 35) - (xPos + 20);
 
-            newwinkel = (float)atan(xdiv / ydiv) * 180.0f / D3DX_PI + 180.0f;
+            //DKS - Use new Rad/Deg macros - converted to float:
+            //newwinkel = (float)atan(xdiv / ydiv) * 180.0f / D3DX_PI + 180.0f;
+            newwinkel = RadToDeg(atanf(xdiv / ydiv)) + 180.0f;
 
             if (xdiv >= 0 && ydiv >= 0) newwinkel = newwinkel;
             else if (xdiv > 0  && ydiv < 0 ) newwinkel = 180 + newwinkel;

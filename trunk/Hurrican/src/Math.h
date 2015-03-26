@@ -13,6 +13,7 @@
 #ifndef __Math_h__
 #define __Math_h__
 #include <stdint.h>
+#include <cmath>
 #ifdef PLATFORM_SDL
 #include "SDLPort/SDL_port.h"
 #endif
@@ -27,8 +28,8 @@
 #if defined(USE_X86)
 
 #define MYMATH_FTOL(fx,x)\
-		_asm fld fx\
-		_asm fistp x
+    _asm fld fx\
+_asm fistp x
 
 #else
 
@@ -46,20 +47,32 @@ extern int fast_rand(void);
 #define rand() fast_rand()
 #endif //USE_FAST_RNG
 
+#ifndef M_PI
+#define M_PI 3.1415926535897932384626433832795
+#endif
+
+#define PI				3.14159265358979f			// Pi =)
+
+//DKS - RAD/DEG conversions:
+// Multiply by a constant ratio (these save a division):
+#define DegToRad(x) ((x) * float(double(M_PI) / double(180.0)))
+#define RadToDeg(x) ((x) * float(double(180.0) / double(M_PI)))
 
 #ifdef USE_TRIG_LOOKUP_TABLE
 //DKS - New sin-lookup table has enough elements to easily handle cos + sin together:
 //      It has 1/4-degree increments.
-// Benchmark comparison running on 1GHz GCW Zero w/ Linux+ucLibc:
+// Benchmark comparison running on 1GHz 32-bit MIPS GCW Zero w/ Linux+ucLibc:
+// NOTE: On Intel, results are less impressive and the lookup table is therefore
+//       not helpful nor recommended.
 //+------------------------------------------------------------------------------+
 //|                               FPBENCH SUMMARY                                |
 //+-------------------------------------+-------------------+--------------------+
 //| Benchmark description               | ns per operation  | millions of op / s |
 //|                                     | (lower = better)  |  (higher = better) |
 //+-------------------------------------+-------------------+--------------------+
-//| SIN LIBM (float sinf())             |           462.6650|            2.161391|
-//| SIN LIBM (double sin())             |           421.9306|            2.370058|
-//| SIN LOOKUP (float)                  |            29.1242|           34.335693|
+//| SIN LIBM (float sinf())             |           468.5492|            2.134247|
+//| SIN LIBM (double sin())             |           445.6858|            2.243733|
+//| SIN LOOKUP (float 1/4-degree acc.)  |            83.7235|           11.944071|
 //+-------------------------------------+-------------------+--------------------+
 
 // Override libm's sin/cos (but not sinf/cosf, keep those for when we need accuracy)
@@ -67,103 +80,46 @@ extern int fast_rand(void);
 #define cos(X) cos_rad((X))
 #define SIN_TABLE_ELEMS ((360+90+1)*4)
 extern float sin_table[SIN_TABLE_ELEMS];
-extern void populate_sin_table(void);
-
-static inline float cos_deg(int deg)
-{
-//DKS - TODO remove the range check if we can
-   while (deg > 360) {
-      deg -= 360;
-   }
-   while (deg < 0) {
-      deg += 360;
-   }
-
-   deg += 90; // Read from sin table starting at 90 deg to get cos
-   deg *= 4;  // Expand to quarter-deg increments
-
-   return sin_table[deg];
-}
-
-static inline float sin_deg(int deg)
-{
-//DKS - TODO remove the range check if we can
-   while (deg > 360) {
-      deg -= 360;
-   }
-   while (deg < 0) {
-      deg += 360;
-   }
-
-   deg *= 4;  // Expand to quarter-deg increments
-   return sin_table[deg];
-}
-
-static inline float cos_deg(float deg)
-{
-//DKS - TODO remove the range check if we can
-   while (deg > 360.0f) {
-      deg -= 360.0f;
-   }
-   while (deg < 0.0f) {
-      deg += 360.0f;
-   }
-
-   deg += 90.0f; // Read from sin table starting at 90 deg to get cos
-   deg *= 4.0f;  // Expand to quarter-deg increments
-   int idx = (int)(deg + 0.5f); // Round to nearest int
-   return sin_table[idx];
-}
-
-static inline float sin_deg(float deg)
-{
-//DKS - TODO remove the range check if we can
-   while (deg > 360.0f) {
-      deg -= 360.0f;
-   }
-   while (deg < 0.0f) {
-      deg += 360.0f;
-   }
-
-   deg *= 4.0f;  // Expand to quarter-deg increments
-   int idx = (int)(deg + 0.5f); // Round to nearest int
-   return sin_table[idx];
-}
+extern void  populate_sin_table(void);
+extern float cos_deg(int deg);
+extern float sin_deg(int deg);
+extern float cos_deg(float deg);
+extern float sin_deg(float deg);
 
 static inline float cos_rad(float rad)
 {
-   float deg = rad * (180.0f / (float)D3DX_PI);
-   return cos_deg(deg);
+    float deg = RadToDeg(rad);
+    return cos_deg(deg);
 }
 
 static inline float sin_rad(float rad)
 {
-   float deg = rad * (180.0f / (float)D3DX_PI);
-   return sin_deg(deg);
+    float deg = RadToDeg(rad);
+    return sin_deg(deg);
 }
 
 #else
 // Use libm/libc for trig:
 static inline float cos_deg(float deg)
 {
-   deg *= ((float)D3DX_PI / 180.0f);   
-   return cosf(deg); 
+    float rad = DegToRad(deg);
+    return cosf(rad); 
 }
 
 static inline float sin_deg(float deg)
 {
-   deg *= ((float)D3DX_PI / 180.0f);
-   return sinf(deg); 
+    float rad = DegToRad(deg);
+    return sinf(rad); 
 }
 
 static inline float cos_rad(float rad)
 {
-   return cosf(rad);
+    return cosf(rad);
 }
 
 static inline float sin_rad(float rad)
 {
-   return sinf(rad);
+    return sinf(rad);
 }
 #endif //USE_TRIG_LOOKUP_TABLE
 

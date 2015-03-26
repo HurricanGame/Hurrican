@@ -68,9 +68,11 @@ void GegnerFadeMusic::DoKI(void)
         }
     }
 
+#ifdef _DEBUG
     if (DebugMode)
         RenderCircle((float)(xPos + 20 - pTileEngine->XOffset),
                      (float)(yPos + 20 - pTileEngine->YOffset), 150, 0xFFFFFFFF);
+#endif //_DEBUG
 
 }
 

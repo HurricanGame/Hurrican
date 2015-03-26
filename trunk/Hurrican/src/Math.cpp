@@ -37,10 +37,71 @@ float sin_table[SIN_TABLE_ELEMS];
 
 void populate_sin_table(void)
 {
-   float x = 0;
+   double x = 0.0;
    int i;
-   for (i=0; i < SIN_TABLE_ELEMS; i++, x += 0.25f) {
-      sin_table[i] = sinf(x * D3DX_PI / 180.0f);
+   for (i=0; i < SIN_TABLE_ELEMS; i++, x += (double)0.25) {
+      sin_table[i] = sinf(float(x * double(M_PI) / double(180.0)));
    }
+}
+
+float cos_deg(int deg)
+{
+    //DKS - TODO remove the range check if we can
+    while (deg > 360) {
+        deg -= 360;
+    }
+    while (deg < 0) {
+        deg += 360;
+    }
+
+    deg += 90; // Read from sin table starting at 90 deg to get cos
+    deg *= 4;  // Expand to quarter-deg increments
+
+    return sin_table[deg];
+}
+
+float sin_deg(int deg)
+{
+    //DKS - TODO remove the range check if we can
+    while (deg > 360) {
+        deg -= 360;
+    }
+    while (deg < 0) {
+        deg += 360;
+    }
+
+    deg *= 4;  // Expand to quarter-deg increments
+    return sin_table[deg];
+}
+
+float cos_deg(float deg)
+{
+    //DKS - TODO remove the range check if we can
+    while (deg > 360.0f) {
+        deg -= 360.0f;
+    }
+    while (deg < 0.0f) {
+        deg += 360.0f;
+    }
+
+    deg += 90.0f; // Read from sin table starting at 90 deg to get cos
+    deg *= 4.0f;  // Expand to quarter-deg increments
+    int idx = (int)(deg + 0.5f); // Round to nearest int
+    return sin_table[idx];
+}
+
+float sin_deg(float deg)
+{
+    //DKS - TODO remove the range check if we can
+    while (deg > 360.0f) {
+        deg -= 360.0f;
+    }
+    while (deg < 0.0f) {
+        deg += 360.0f;
+    }
+
+    deg *= 4.0f;  // Expand to quarter-deg increments
+    int idx = (int)(deg + 0.5f); // Round to nearest int
+    return sin_table[idx];
 }
 #endif //USE_TRIG_LOOKUP_TABLE

@@ -243,7 +243,9 @@ void GegnerMetalHead::WinkelToPlayer(void)
         ydiv  = 0.00001f;
 
     xdiv = (pAim->xpos + 35) - (xPos + 100);
-    neww = (float)atan(ydiv / xdiv) * 180.0f / PI;
+    //DKS - converted to float, used new macros:
+    //neww = (float)atan(ydiv / xdiv) * 180.0f / PI;
+	neww = RadToDeg(atanf(ydiv / xdiv));
 
     if (neww < -20.0f)  neww = -20.0f;
     if (neww >  50.0f)  neww =  50.0f;
@@ -683,10 +685,15 @@ void GegnerMetalHead::DoKI(void)
 
             case GEGNER_SCHIESSEN:
             {
-                if (TurbineOff < (float)sin(PI / 2.0f) * 30.0f)
+                //DKS - sin(pi/2) is 1.0, so I am optimizing this math:
+                //if (TurbineOff < (float)sin(PI / 2.0f) * 30.0f)
+                //    TurbineOff += 5.0f SYNC;
+                //else
+                //    TurbineOff = (float)sin(PI / 2.0f) * 30.0f;
+                if (TurbineOff < 30.0f)
                     TurbineOff += 5.0f SYNC;
                 else
-                    TurbineOff = (float)sin(PI / 2.0f) * 30.0f;
+                    TurbineOff = 30.0f;
 
                 ShotDelay -= 1.0f SYNC;
 
@@ -709,11 +716,16 @@ void GegnerMetalHead::DoKI(void)
                             {
                                 WinkelUebergabe = GunWinkel + 90;
 
-                                float w = (450.0f - GunWinkel) / 180.0f * PI;
-
-                                pProjectiles->PushProjectile(xPos + 110 + (float)sin(w) * 70.0f,
-                                                             yPos + 195 + (float)cos(w) * 70.0f,
+                                //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+                                //float w = (450.0f - GunWinkel) / 180.0f * PI;
+                                //pProjectiles->PushProjectile(xPos + 110 + (float)sin(w) * 70.0f,
+                                //                             yPos + 195 + (float)cos(w) * 70.0f,
+                                //                             FIREBALL_BIG);
+                                float w = 450.0f - GunWinkel;
+                                pProjectiles->PushProjectile(xPos + 110.0f + sin_deg(w) * 70.0f,
+                                                             yPos + 195.0f + cos_deg(w) * 70.0f,
                                                              FIREBALL_BIG);
+
                             }
 
                             if (ShotArt == 1)
@@ -722,11 +734,15 @@ void GegnerMetalHead::DoKI(void)
 
                                 for (int i = -40; i <= 40; i+= 40)
                                 {
-                                    float w = (450.0f - GunWinkel) / 180.0f * PI;
-
                                     WinkelUebergabe = GunWinkel + 90 + i;
-                                    pProjectiles->PushProjectile(xPos + 130 + (float)sin(w) * 70.0f,
-                                                                 yPos + 200 + (float)cos(w) * 70.0f,
+                                    //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+                                    //float w = (450.0f - GunWinkel) / 180.0f * PI;
+                                    //pProjectiles->PushProjectile(xPos + 130 + (float)sin(w) * 70.0f,
+                                    //                             yPos + 200 + (float)cos(w) * 70.0f,
+                                    //                             FIREBALL);
+                                    float w = 450.0f - GunWinkel;
+                                    pProjectiles->PushProjectile(xPos + 130.0f + sin_deg(w) * 70.0f,
+                                                                 yPos + 200.0f + cos_deg(w) * 70.0f,
                                                                  FIREBALL);
                                 }
 

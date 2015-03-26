@@ -64,7 +64,9 @@ void GegnerRotzpott::CalcKnarreWinkel(void)
 
         float w;
 
-        w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+        //DKS - converted to float, used rad/cos macros:
+        //w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+        w = RadToDeg(atanf(dx / dy));
 
         if (dx >= 0 && dy >= 0) NewWinkel = w;
         else if (dx > 0  && dy < 0 ) NewWinkel = 180 + w;
@@ -152,8 +154,11 @@ void GegnerRotzpott::DoKI(void)
 
     if (ShotDelay <= 0.0f)
     {
-        pPartikelSystem->PushPartikel(xPos - (float)sin((180 - GunWinkel) / 180.0f * PI) * 30.0f,
-                                      yPos - 18.0f + (float)cos((180 - GunWinkel) / 180.0f * PI) * 38.0f, LASERFLAMEPHARAO);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //pPartikelSystem->PushPartikel(xPos - (float)sin((180 - GunWinkel) / 180.0f * PI) * 30.0f,
+        //                              yPos - 18.0f + (float)cos((180 - GunWinkel) / 180.0f * PI) * 38.0f, LASERFLAMEPHARAO);
+        pPartikelSystem->PushPartikel(xPos - sin_deg(180.0f - GunWinkel) * 30.0f,
+                                      yPos - 18.0f + cos_deg(180.0f - GunWinkel) * 38.0f, LASERFLAMEPHARAO);
 
         // Wie schiesst er? Im Bogen oder direkt?
         if (pAim->ypos > yPos + 30)
@@ -161,16 +166,22 @@ void GegnerRotzpott::DoKI(void)
             ShotDelay = 9.0f;
             pSoundManager->PlayWave(100, 128, 16000 + rand()%500, SOUND_LASERSHOT);
             WinkelUebergabe = 360.0f - GunWinkel + ((float)(rand()%10 - 5)) / 2.0f;
-            pProjectiles->PushProjectile(xPos + 20.0f - (float)sin((180 - GunWinkel) / 180.0f * PI) * 25.0f,
-                                         yPos - 12.0f + (float)cos((180 - GunWinkel) / 180.0f * PI) * 20.0f, ROTZSHOT);
+            //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+            //pProjectiles->PushProjectile(xPos + 20.0f - (float)sin((180 - GunWinkel) / 180.0f * PI) * 25.0f,
+            //                             yPos - 12.0f + (float)cos((180 - GunWinkel) / 180.0f * PI) * 20.0f, ROTZSHOT);
+            pProjectiles->PushProjectile(xPos + 20.0f - sin_deg(180.0f - GunWinkel) * 25.0f,
+                                         yPos - 12.0f + cos_deg(180.0f - GunWinkel) * 20.0f, ROTZSHOT);
         }
         else
         {
             ShotDelay = 7.0f;
             pSoundManager->PlayWave(100, 128, 24000 + rand()%500, SOUND_LASERSHOT);
             WinkelUebergabe = 360.0f - GunWinkel;
-            pProjectiles->PushProjectile(xPos + 24.0f - (float)sin((180 - GunWinkel) / 180.0f * PI) * 45.0f,
-                                         yPos - 12.0f + (float)cos((180 - GunWinkel) / 180.0f * PI) * 45.0f, FLUGLASER);
+            //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+            //pProjectiles->PushProjectile(xPos + 24.0f - (float)sin((180 - GunWinkel) / 180.0f * PI) * 45.0f,
+            //                             yPos - 12.0f + (float)cos((180 - GunWinkel) / 180.0f * PI) * 45.0f, FLUGLASER);
+            pProjectiles->PushProjectile(xPos + 24.0f - sin_deg(180.0f - GunWinkel) * 45.0f,
+                                         yPos - 12.0f + cos_deg(180.0f - GunWinkel) * 45.0f, FLUGLASER);
         }
 
     }

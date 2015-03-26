@@ -171,6 +171,8 @@ void GegnerClass::Render(void)
                 DamageTaken = 0.0f;
         }
 
+//DKS - made compilation dependent
+#ifdef _DEBUG
     // Im Debug Mode noch den Abstand zum Spieler anzeigen
     if (DebugMode == true)
     {
@@ -179,6 +181,7 @@ void GegnerClass::Render(void)
         pMenuFont->DrawText(float(xPos-pTileEngine->XOffset),
                             float(yPos-pTileEngine->YOffset), Buffer, 0xFFFFFFFF);
     }
+#endif //_DEBUG
 }
 
 // --------------------------------------------------------------------------------------
@@ -333,7 +336,9 @@ int GegnerClass::PlayerAbstand(bool both)
             xdiff = (pPlayer[p]->xpos + 35) - (xPos + GegnerRect[GegnerArt].right/2);
             ydiff = (pPlayer[p]->ypos + 40) - (yPos + GegnerRect[GegnerArt].bottom/2);
 
-            Abstand = MIN(Abstand, float(sqrt((xdiff * xdiff) + (ydiff * ydiff))));
+            //DKS - converted to float:
+            //Abstand = MIN(Abstand, float(sqrt((xdiff * xdiff) + (ydiff * ydiff))));
+            Abstand = MIN(Abstand, sqrtf((xdiff * xdiff) + (ydiff * ydiff)));
         }
 
     }
@@ -342,7 +347,9 @@ int GegnerClass::PlayerAbstand(bool both)
         xdiff = (pAim->xpos + 35) - (xPos + GegnerRect[GegnerArt].right/2);
         ydiff = (pAim->ypos + 40) - (yPos + GegnerRect[GegnerArt].bottom/2);
 
-        Abstand = float(sqrt((xdiff * xdiff) + (ydiff * ydiff)));
+        //DKS - converted to float:
+        //Abstand = float(sqrt((xdiff * xdiff) + (ydiff * ydiff)));
+        Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
     }
 
     int a;
@@ -2677,7 +2684,7 @@ void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage)
     {
         float ax = x - pTemp->xPos;
         float ay = y - pTemp->yPos;
-        float dx = float (sqrt ((ax * ax) + (ay * ay)));
+        float dx = sqrtf((ax * ax) + (ay * ay));
 
         pNext = pTemp->pNext;				// Nächsten sichern
 

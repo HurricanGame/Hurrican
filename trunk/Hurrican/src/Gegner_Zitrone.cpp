@@ -44,7 +44,9 @@ void GegnerZitrone::CalcKnarreWinkel(void)
 
     xdiv = (pAim->xpos + 35) - (xPos + 60);
 
-    newwinkel = (float)atan(xdiv / ydiv) * 180.0f / D3DX_PI + 180.0f;
+    //DKS-converting to float, new rad/deg macros:
+    //newwinkel = (float)atan(xdiv / ydiv) * 180.0f / D3DX_PI + 180.0f;
+    newwinkel = RadToDeg(atanf(xdiv / ydiv)) + 180.0f;
 
     if (xdiv >= 0 && ydiv >= 0) newwinkel = newwinkel;
     else if (xdiv > 0  && ydiv < 0 ) newwinkel = 180 + newwinkel;
@@ -213,8 +215,11 @@ void GegnerZitrone::DoKI(void)
             ShotDelay = 5.0f;
 
             WinkelUebergabe = 360.0f - KnarreWinkel;
-            pProjectiles->PushProjectile(xPos + 53.0f - (float)sin((180 - KnarreWinkel) / 180.0f * PI) * 45.0f,
-                                         yPos + 56.0f + (float)cos((180 - KnarreWinkel) / 180.0f * PI) * 45.0f + (float)(sin(WackelOffset) * 10.0f), FLUGLASER);
+            //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+            //pProjectiles->PushProjectile(xPos + 53.0f - (float)sin((180 - KnarreWinkel) / 180.0f * PI) * 45.0f,
+            //                             yPos + 56.0f + (float)cos((180 - KnarreWinkel) / 180.0f * PI) * 45.0f + (float)(sin(WackelOffset) * 10.0f), FLUGLASER);
+            pProjectiles->PushProjectile(xPos + 53.0f - sin_deg(180.0f - KnarreWinkel) * 45.0f,
+                                         yPos + 56.0f + cos_deg(180.0f - KnarreWinkel) * 45.0f + (float)(sin(WackelOffset) * 10.0f), FLUGLASER);
 
             pSoundManager->PlayWave(100, 128, 24000 + rand()%500, SOUND_LASERSHOT);
         }

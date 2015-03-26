@@ -36,14 +36,22 @@ void GegnerMiniRocket::DoDraw(void)
     //
     DirectGraphics.SetAdditiveMode();
 
-    float xoff = (float)(sin((360 - rot) / 180.0f * PI) * 12.0f);
-    float yoff = (float)(cos((360 - rot) / 180.0f * PI) * 12.0f);
-
-    LavaFlare.RenderSpriteScaled ((float)(xPos-pTileEngine->XOffset) - 15.0f - (float)(sin(FlareSin) * 1.0f) + xoff,
-                                  (float)(yPos-pTileEngine->YOffset) - 15.0f - (float)(sin(FlareSin) * 1.0f) + yoff,
-                                  (int)(40.0f + (float)sin(FlareSin) * 2.0f),
-                                  (int)(40.0f + (float)sin(FlareSin) * 2.0f),
-                                  0, 0xFFFF8822);
+    //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos, optimized:
+    //float xoff = (float)(sin((360 - rot) / 180.0f * PI) * 12.0f);
+    //float yoff = (float)(cos((360 - rot) / 180.0f * PI) * 12.0f);
+    //LavaFlare.RenderSpriteScaled ((float)(xPos-pTileEngine->XOffset) - 15.0f - (float)(sin(FlareSin) * 1.0f) + xoff,
+    //                              (float)(yPos-pTileEngine->YOffset) - 15.0f - (float)(sin(FlareSin) * 1.0f) + yoff,
+    //                              (int)(40.0f + (float)sin(FlareSin) * 2.0f),
+    //                              (int)(40.0f + (float)sin(FlareSin) * 2.0f),
+    //                              0, 0xFFFF8822);
+	float xoff = sin_deg(360.0f - rot) * 12.0f;
+	float yoff = cos_deg(360.0f - rot) * 12.0f;
+    float sin_FlareSin = sin_rad(FlareSin);
+	LavaFlare.RenderSpriteScaled (xPos-pTileEngine->XOffset - 15.0f - sin_FlareSin + xoff, 
+								  yPos-pTileEngine->YOffset - 15.0f - sin_FlareSin + yoff, 
+								 (int)(40.0f + sin_FlareSin * 2.0f),
+								 (int)(40.0f + sin_FlareSin * 2.0f),
+								 0, 0xFFFF8822);
 
     DirectGraphics.SetColorKeyMode();
 
@@ -89,7 +97,9 @@ void GegnerMiniRocket::DoKI(void)
 
         float w;
 
-        w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+        //DKS - converted to float, optimized:
+        //w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+        w = RadToDeg(atanf(dx / dy));
 
         if (dx >= 0 && dy >= 0) rot = w;
         else if (dx > 0  && dy < 0 ) rot = 180 + w;
@@ -121,8 +131,11 @@ void GegnerMiniRocket::DoKI(void)
     while (SmokeDelay < 0.0f)
     {
         SmokeDelay += 0.5f;
-        pPartikelSystem->PushPartikel(xPos - 8 + float(sin((360 - rot) / 180.0f * PI) * 15.0f),
-                                      yPos - 8 + float(cos((360 - rot) / 180.0f * PI) * 15.0f), SMOKE);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //pPartikelSystem->PushPartikel(xPos - 8 + float(sin((360 - rot) / 180.0f * PI) * 15.0f),
+        //                              yPos - 8 + float(cos((360 - rot) / 180.0f * PI) * 15.0f), SMOKE);
+		pPartikelSystem->PushPartikel(xPos - 8.0f + (sin_deg(360.0f - rot) * 15.0f), 
+									  yPos - 8.0f + (cos_deg(360.0f - rot) * 15.0f), SMOKE);
     }
 
     // Spieler getroffen?

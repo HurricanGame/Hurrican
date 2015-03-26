@@ -203,10 +203,12 @@ void GegnerBratklops::DoDraw()
             for (int i=0; i<25; i++)
             {
                 // Zum anzeigen der Rects, die geprüft werden
+#ifdef _DEBUG
                 if (DebugMode == true)
                     RenderRect(float(xstart-pTileEngine->XOffset),
                                float(ystart-pTileEngine->YOffset),
                                24, 24, 0x80FFFFFF);
+#endif //_DEBUG
 
                 // Laser auf Kollision mit dem Spieler prüfen
                 //
@@ -223,8 +225,11 @@ void GegnerBratklops::DoDraw()
 
                 // Und nächstes Rechteck
                 //
-                xstart += float(24*cos(PI * (360 - Winkel + 90) / 180));
-                ystart += float(24*sin(PI * (360 - Winkel + 90) / 180));
+                //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+                //xstart += float(24*cos(PI * (360 - Winkel + 90) / 180));
+                //ystart += float(24*sin(PI * (360 - Winkel + 90) / 180));
+                xstart += 24.0f*cos_deg(360 - Winkel + 90);
+                ystart += 24.0f*sin_deg(360 - Winkel + 90);
 
                 if (pTileEngine->BlockUnten (xs, ys, xs, ys, Rect) & BLOCKWERT_WAND)
                 {

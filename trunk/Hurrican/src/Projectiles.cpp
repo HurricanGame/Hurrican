@@ -101,9 +101,10 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     {
     case DIAMONDSHOT:		// Diamant, der auf den Punisher fliegt
     {
-        GegnerClass *pAim, *pTemp;
-
-        pTemp = pGegner->pStart;
+        //DKS - Fixed uninitialized variable:
+        //GegnerClass *pAim, *pTemp;
+        GegnerClass *pAim = NULL;
+        GegnerClass *pTemp = pGegner->pStart;
 
         while (pTemp != NULL)
         {
@@ -119,12 +120,14 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         if (pAim == NULL)
             return;
 
-        double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
+        //DKS - Converted to float:
+        float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
         // berechnung
         absx = pAim->xPos+85-xPos;			// Differenz der x
         absy = pAim->yPos+40-yPos;			// und y Strecke
 
-        speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+        //DKS - Converted to float:
+        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
         speed = speed*85;						// Geschwindigkeit ist 4 fach
 
         absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -149,8 +152,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 100);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 100);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 100);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 100);
+        xSpeed	  = cos_deg(w) * 100.0f;
+        ySpeed	  = sin_deg(w) * 100.0f;
 
     }
     break;
@@ -167,8 +173,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 50);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 50);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 50);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 50);
+        xSpeed	  = cos_deg(w) * 50.0f;
+        ySpeed	  = sin_deg(w) * 50.0f;
 
         if (w == -90)
             xSpeed = 0.0f;
@@ -190,8 +199,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 50);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 50);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 50);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 50);
+        xSpeed	  = cos_deg(w) * 50.0f;
+        ySpeed	  = sin_deg(w) * 50.0f;
 
         if (w == -90)
             xSpeed = 0.0f;
@@ -212,8 +224,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 50);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 50);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 50);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 50);
+        xSpeed	  = cos_deg(w) * 50.0f;
+        ySpeed	  = sin_deg(w) * 50.0f;
 
         if (w == -90)
             xSpeed = 0.0f;
@@ -236,8 +251,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 50);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 50);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 50);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 50);
+        xSpeed	  = cos_deg(w) * 50.0f;
+        ySpeed	  = sin_deg(w) * 50.0f;
 
         if (w == -90)
             xSpeed = 0.0f;
@@ -258,8 +276,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 60);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 60);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 60);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 60);
+        xSpeed	  = cos_deg(w) * 60.0f;
+        ySpeed	  = sin_deg(w) * 60.0f;
 
         if (w == -90)
             xSpeed = 0.0f;
@@ -281,8 +302,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 60);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 60);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 60);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 60);
+        xSpeed	  = cos_deg(w) * 60.0f;
+        ySpeed	  = sin_deg(w) * 60.0f;
 
         if (w == -90)
             xSpeed = 0.0f;
@@ -307,8 +331,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 60);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 60);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 60);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 60);
+        xSpeed	  = cos_deg(w) * 60.0f;
+        ySpeed	  = sin_deg(w) * 60.0f;
 
         if (w == -90)
             xSpeed = 0.0f;
@@ -330,8 +357,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 60);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 60);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 60);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 60);
+        xSpeed	  = cos_deg(w) * 60.0f;
+        ySpeed	  = sin_deg(w) * 60.0f;
 
         if (w == -90)
             xSpeed = 0.0f;
@@ -353,8 +383,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 65);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 65);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 65);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 65);
+        xSpeed	  = cos_deg(w) * 65.0f;
+        ySpeed	  = sin_deg(w) * 65.0f;
 
         if (w == -90)
             xSpeed = 0.01f;
@@ -389,8 +422,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 65);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 65);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 65);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 65);
+        xSpeed	  = cos_deg(w) * 65.0f;
+        ySpeed	  = sin_deg(w) * 65.0f;
 
         if (w == -90)
             xSpeed = 0.01f;
@@ -413,8 +449,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 65);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 65);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 65);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 65);
+        xSpeed	  = cos_deg(w) * 65.0f;
+        ySpeed	  = sin_deg(w) * 65.0f;
 
         if (w == -90)
             xSpeed = 0.01f;
@@ -441,8 +480,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 65);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 65);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 65);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 65);
+        xSpeed	  = cos_deg(w) * 65.0f;
+        ySpeed	  = sin_deg(w) * 65.0f;
 
         if (w == -90)
             xSpeed = 0.01f;
@@ -466,8 +508,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 65);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 65);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 65);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 65);
+        xSpeed	  = cos_deg(w) * 65.0f;
+        ySpeed	  = sin_deg(w) * 65.0f;
 
         if (w == -90)
             xSpeed = 0.01f;
@@ -491,8 +536,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 65);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 65);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 65);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 65);
+        xSpeed	  = cos_deg(w) * 65.0f;
+        ySpeed	  = sin_deg(w) * 65.0f;
 
         if (w == -90)
             xSpeed = 0.01f;
@@ -583,12 +631,14 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         else
             pAim = pParent;
 
-        double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
+        //DKS - Converted to float:
+        float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
         // berechnung
         absx = pAim->xpos+35-xPos;			// Differenz der x
         absy = pAim->ypos+40-yPos;			// und y Strecke
 
-        speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+        //DKS - Converted to float:
+        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
         speed = speed*20;						// Geschwindigkeit ist 4 fach
 
         absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -707,12 +757,14 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     {
         PlayerClass *pAim = ChooseAim();
 
-        double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
+        //DKS - Converted to float:
+        float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
         // berechnung
         absx = pAim->xpos+35-xPos-20;		// Differenz der x
         absy = pAim->ypos+40-yPos-20;		// und y Strecke
 
-        speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+        //DKS - Converted to float:
+        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
         speed = speed*20;						// Geschwindigkeit setzen
 
         absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -775,12 +827,14 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     {
         PlayerClass *pAim = ChooseAim();
 
-        double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
+        //DKS - Converted to float:
+        float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
         // berechnung
         absx = pAim->xpos+35-xPos-20;		// Differenz der x
         absy = pAim->ypos+40-yPos-20;		// und y Strecke
 
-        speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+        //DKS - Converted to float:
+        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
         speed = speed*20;						// Geschwindigkeit setzen
 
         absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -822,8 +876,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = -float (sin (w * PI / 180.0f) * 50);
-        ySpeed	  = float (cos (w * PI / 180.0f) * 50);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = -float (sin (w * PI / 180.0f) * 50);
+        //ySpeed	  = float (cos (w * PI / 180.0f) * 50);
+		xSpeed	  = -sin_deg(w) * 50.0f;
+		ySpeed	  =  cos_deg(w) * 50.0f;
 
         Damage    =   10;
         DamagePlayer = true;
@@ -838,8 +895,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = -float (sin (w * PI / 180.0f) * 25);
-        ySpeed	  = float (cos (w * PI / 180.0f) * 25);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = -float (sin (w * PI / 180.0f) * 25);
+        //ySpeed	  = float (cos (w * PI / 180.0f) * 25);
+		xSpeed	  = -sin_deg(w) * 25.0f;
+		ySpeed	  =  cos_deg(w) * 25.0f;
 
         Damage    =   10;
         DamagePlayer = true;
@@ -882,12 +942,14 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     {
         PlayerClass *pAim = ChooseAim();
 
-        double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
+        //DKS - Converted to float:
+        float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
         // berechnung
         absx = pAim->xpos+35-(xPos+24);		// Differenz der x
         absy = pAim->ypos+40-(yPos+24);		// und y Strecke
 
-        speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+        //DKS - Converted to float:
+        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
         speed = speed*40;
 
         absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -1003,8 +1065,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 50);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 50);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 50);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 50);
+        xSpeed	  = cos_deg(w) * 50.0f;
+        ySpeed	  = sin_deg(w) * 50.0f;
     }
     break;
 
@@ -1018,8 +1083,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 50);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 50);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 50);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 50);
+        xSpeed	  = cos_deg(w) * 50.0f;
+        ySpeed	  = sin_deg(w) * 50.0f;
     }
     break;
 
@@ -1049,8 +1117,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 40);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 30);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 40);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 30);
+		xSpeed	  = cos_deg(w) * 40.0f;
+		ySpeed	  = sin_deg(w) * 30.0f;
 
         yAcc = 5.0f;
         AnimEnde = 25;
@@ -1132,12 +1203,14 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         Damage       = 1;
         DamagePlayer = true;
 
-        double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
+        //DKS - Converted to float:
+        float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
         // berechnung
         absx = pParent->xpos+35-xPos;			// Differenz der x
         absy = pParent->ypos+40-yPos;			// und y Strecke
 
-        speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+        //DKS - Converted to float:
+        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
         speed = speed*20;						// Geschwindigkeit
 
         absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -1145,7 +1218,8 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         xSpeed = float(absx);
         ySpeed = float(absy);
 
-        CheckBlock	 = true;
+        //DKS - BUG here, two settings of CheckBlock, disabling first of two:
+        //CheckBlock	 = true;
         Damage       = 4;
         CheckBlock   = false;
         ExplodeOnImpact = false;
@@ -1161,12 +1235,14 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         Damage       = 1;
         DamagePlayer = true;
 
-        double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
+        //DKS - Converted to float:
+        float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
         // berechnung
         absx = pParent->xpos+35-xPos;			// Differenz der x
         absy = pParent->ypos+5-yPos;			// und y Strecke
 
-        speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+        //DKS - Converted to float:
+        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
         speed = speed*22;						// Geschwindigkeit ist 4 fach
 
         absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -1238,8 +1314,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 35);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 35);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 35);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 35);
+        xSpeed	  = cos_deg(w) * 35.0f;
+        ySpeed	  = sin_deg(w) * 35.0f;
 
         Winkel = (float)(rand()%360);
 
@@ -1288,8 +1367,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 60);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 60) - 6.0f;
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 60);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 60) - 6.0f;
+        xSpeed	  = cos_deg(w) * 60.0f;
+        ySpeed	  = sin_deg(w) * 60.0f - 6.0f;
 
         yPos   -= 2;
         yAcc   = 5.0f;
@@ -1676,12 +1758,14 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
 
     case BRATKLOPSSHOT:			// Suchschuss des Bratklopses
     {
-        double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
+        //DKS - Converted to float:
+        float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
         // berechnung
         absx = pParent->xpos+35-(xPos+30);			// Differenz der x
         absy = pParent->ypos+40-(yPos+30);			// und y Strecke
 
-        speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+        //DKS - Converted to float:
+        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
         speed = speed*20;						// Geschwindigkeit ist 4 fach
 
         absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -1721,12 +1805,14 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
 
     case SCHLEIMSHOT:							// Schuss der Drone
     {
-        double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
+        //DKS - Converted to float:
+        float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
         // berechnung
         absx = pParent->xpos+35-xPos;			// Differenz der x
         absy = pParent->ypos+40-yPos;			// und y Strecke
 
-        speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+        //DKS - Converted to float:
+        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
         speed = speed*20;						// Geschwindigkeit ist 4 fach
 
         absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -1763,8 +1849,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 40);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 40);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 40);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 40);
+        xSpeed	  = cos_deg(w) * 40.0f;
+        ySpeed	  = sin_deg(w) * 40.0f;
     }
     break;
 
@@ -1777,8 +1866,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         int w = int (Winkel) - 90;
         w = w % 360;
 
-        xSpeed	  = float (cos (w * PI / 180.0f) * 40);
-        ySpeed	  = float (sin (w * PI / 180.0f) * 40);
+        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+        //xSpeed	  = float (cos (w * PI / 180.0f) * 40);
+        //ySpeed	  = float (sin (w * PI / 180.0f) * 40);
+        xSpeed	  = cos_deg(w) * 40.0f;
+        ySpeed	  = sin_deg(w) * 40.0f;
     }
     break;
 
@@ -2133,11 +2225,13 @@ void ProjectileClass::Render(void)
             DirectGraphics.SetFilterMode (false);
         }
 
+#ifdef _DEBUG
         if (DebugMode == true)
             RenderRect (float (xPos - pTileEngine->XOffset + ShotRect[ShotArt].left),
                         float (yPos - pTileEngine->YOffset + ShotRect[ShotArt].top),
                         float (ShotRect[ShotArt].right  - ShotRect[ShotArt].left),
                         float (ShotRect[ShotArt].bottom - ShotRect[ShotArt].top), 0x88FFFFFF);
+#endif //_DEBUG
 
     }
 
@@ -2875,12 +2969,14 @@ void ProjectileClass::Run(void)
                     else
                         pAim = pParent;
 
-                    double	absx, absy, speed;				// Variablen für die Geschwindigkeits-
+                    //DKS - Converted to float:
+                    float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
                     // berechnung
                     absx = pAim->xpos+35-xPos;			// Differenz der x
                     absy = pAim->ypos+40-yPos;			// und y Strecke
 
-                    speed = 1/sqrt(absx*absx + absy*absy);	// Länge der Strecke berechnen
+                    //DKS - Converted to float:
+                    speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
                     speed = speed*35;						// Geschwindigkeit ist 4 fach
 
                     absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -3405,7 +3501,9 @@ void ProjectileClass::Run(void)
     case SKELETORGRANATE:
     {
         // Drehwinkel aus der Geschwindigkeit errechnen
-        float w = 90 + float(atan(ySpeed / xSpeed) * 360.0f / (D3DX_PI * 2));
+        //DKS - Converted to float, new Rad/Deg macros:
+        //float w = 90 + float(atan(ySpeed / xSpeed) * 360.0f / (D3DX_PI * 2));
+        float w = 90.0f + RadToDeg(atanf(ySpeed / xSpeed));
         Winkel = w;
 
         if (xSpeed < 0.0f)
@@ -3685,13 +3783,19 @@ void ProjectileClass::Run(void)
         if (pParent->Handlung != RADELN &&
                 pParent->Handlung != RADELN_FALL)
         {
-            xPos = float (pParent->xpos + 28 + sin (ySpeed) * 40);
-            yPos = float (pParent->ypos + 38 + cos (ySpeed) * 40);
+            //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+            //xPos = float (pParent->xpos + 28 + sin (ySpeed) * 40);
+            //yPos = float (pParent->ypos + 38 + cos (ySpeed) * 40);
+            xPos = float(pParent->xpos) + 28.0f + sin_rad(ySpeed) * 40.0f;
+            yPos = float(pParent->ypos) + 38.0f + cos_rad(ySpeed) * 40.0f;
         }
         else
         {
-            xPos = float (pParent->xpos + 28 + sin (ySpeed) * 30);
-            yPos = float (pParent->ypos + 55 + cos (ySpeed) * 30);
+            //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+            //xPos = float (pParent->xpos + 28 + sin (ySpeed) * 30);
+            //yPos = float (pParent->ypos + 55 + cos (ySpeed) * 30);
+            xPos = float(pParent->xpos) + 28.0f + sin_rad(ySpeed) * 30.0f;
+            yPos = float(pParent->ypos) + 55.0f + cos_rad(ySpeed) * 30.0f;
         }
 
         // Schild Partikel spawnen
@@ -4289,6 +4393,7 @@ void ProjectileClass::ExplodeShot(void)
 
     case BLITZBEAM:
     {
+        //DKS - After testing, I do not believe this case of the switch() ever gets called (BLITZBEAM):
         // Wirkung ähnlich einer schwachen Granate (Damage = 0 - 100)
         //
         pGegner->DamageEnemiesonScreen(xPos, yPos, Damage);
@@ -4560,7 +4665,8 @@ void ProjectileClass::ExplodeShot(void)
             ydiff = (yPos + ShotRect[ShotArt].top + (ShotRect[ShotArt].bottom - ShotRect[ShotArt].top)/2)
                     - (pEnemy->yPos + GegnerRect[pEnemy->GegnerArt].bottom/2);
 
-            Abstand = float(sqrt((xdiff * xdiff) + (ydiff * ydiff)));
+            //DKS - Converted to float:
+            Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
             if (pEnemy->Active == true		 &&	// Ist der Gegner überhaupt aktiv ?
                     pEnemy->Destroyable == true  &&	// und zerstörbar ?
@@ -4587,7 +4693,8 @@ void ProjectileClass::ExplodeShot(void)
             ydiff = (yPos + ShotRect[ShotArt].top + (ShotRect[ShotArt].bottom - ShotRect[ShotArt].top)/2)
                     - (pPlayer[p]->ypos + pPlayer[p]->CollideRect.bottom/2);
 
-            Abstand = float(sqrt((xdiff * xdiff) + (ydiff * ydiff)));
+            //DKS - Converted to float:
+            Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
             if (((ShotArt == BOMBE    && Abstand <= 60) ||
                     (ShotArt == BOMBEBIG && Abstand <= 80)) &&
@@ -5334,16 +5441,23 @@ bool ProjectileListClass::PushBlitzBeam (int Size, float Richtung, PlayerClass* 
     if (Richtung > 360.0f)
         Richtung -= 360.0f;
 
+    //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
     // In Rad umwandeln
-    Richtung = PI * Richtung / 180.0f;
+    //Richtung = PI * Richtung / 180.0f;
+    //pNew->xSpeed	= float(-40.0f * sin(Richtung));
+    //pNew->ySpeed	= float( 40.0f * cos(Richtung));
+	pNew->xSpeed	= -40.0f * sin_deg(Richtung);
+	pNew->ySpeed	=  40.0f * cos_deg(Richtung);
 
-    pNew->xSpeed	= float(-40.0f * sin(Richtung));
-    pNew->ySpeed	= float( 40.0f * cos(Richtung));
-
-    ShotRect[BLITZBEAM].left   = int(Size / 4.0f),
-                        ShotRect[BLITZBEAM].top    = int(Size / 4.0f),
-                                            ShotRect[BLITZBEAM].right  = ShotRect[BLITZBEAM].left + int(Size / 2.0f);
-    ShotRect[BLITZBEAM].bottom = ShotRect[BLITZBEAM].top  + int(Size / 2.0f);
+    //DKS - Dividing an int by a float and then casting to an int again makes no sense at all:
+    //ShotRect[BLITZBEAM].left   = int(Size / 4.0f),
+    //                    ShotRect[BLITZBEAM].top    = int(Size / 4.0f),
+    //                                        ShotRect[BLITZBEAM].right  = ShotRect[BLITZBEAM].left + int(Size / 2.0f);
+    //ShotRect[BLITZBEAM].bottom = ShotRect[BLITZBEAM].top  + int(Size / 2.0f);
+	ShotRect[BLITZBEAM].left   = Size / 4;
+	ShotRect[BLITZBEAM].top    = Size / 4;
+	ShotRect[BLITZBEAM].right  = ShotRect[BLITZBEAM].left + Size / 2;
+	ShotRect[BLITZBEAM].bottom = ShotRect[BLITZBEAM].top  + Size / 2;
 
     if(pStart==NULL)						// Liste leer ?
     {

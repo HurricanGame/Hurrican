@@ -63,9 +63,13 @@ void GegnerFireSpider::DoKI(void)
     if (dy == 0.0f)
         dy = 0.01f;
 
-    float w, winkel;
+    //DKS - fixed uninitialized var warning:
+    //float w, winkel;
 
-    w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+    //DKS - converted to float, used new macros:
+    //w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+    float w = RadToDeg(atanf(dx / dy));
+    float winkel = w;
 
     if (dx >= 0 && dy >= 0) winkel = w;
     else if (dx > 0  && dy < 0 ) winkel = 180 + w;
@@ -94,8 +98,11 @@ void GegnerFireSpider::DoKI(void)
         //
         if (PlayerAbstand() < 1000)
         {
-            xSpeed = float ( sin(rot * D3DX_PI / 180.0f) * 7.5f);
-            ySpeed = float (-cos(rot * D3DX_PI / 180.0f) * 7.5f);
+            //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+            //xSpeed = float ( sin(rot * D3DX_PI / 180.0f) * 7.5f);
+            //ySpeed = float (-cos(rot * D3DX_PI / 180.0f) * 7.5f);
+            xSpeed =  sin_deg(rot) * 7.5f;
+            ySpeed = -cos_deg(rot) * 7.5f;
         }
         else
         {
@@ -141,9 +148,12 @@ void GegnerFireSpider::DoKI(void)
             if (r < 0.0f)
                 r += 360.0f;
 
-            r  = r * D3DX_PI / 180.0f;
-            xs = float (xs + sin (r) * 30.0f);
-            ys = float (ys + cos (r) * 30.0f);
+            //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+            //r  = r * D3DX_PI / 180.0f;
+            //xs = float (xs + sin (r) * 30.0f);
+            //ys = float (ys + cos (r) * 30.0f);
+            xs = xs + sin_deg(r) * 30.0f;
+            ys = ys + cos_deg(r) * 30.0f;
 
             pProjectiles->PushProjectile  (xs, ys, SPIDERFIRE, pAim);
             shotdelay = 0.5f;

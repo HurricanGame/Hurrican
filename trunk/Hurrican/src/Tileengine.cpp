@@ -174,8 +174,11 @@ TileEngineClass::TileEngineClass(void)
     {
         /* SinList  [i] = 0.0f; */  //DKS - Disabled this and all eliminated all uses of it, 
                                     // as it was only ever filled with zeroes and had no effect.
-        SinList2 [i] = float (sin(w)) * 5.0f;
-        WaterList[i] = float (sin(w)) * 2.5f;
+        //DKS - This is to ensure libm should explicitly be called here and not the lookup table:
+        //SinList2 [i] = float (sin(w)) * 5.0f;
+        //WaterList[i] = float (sin(w)) * 2.5f;
+        SinList2 [i] = sinf(w) * 5.0f;
+        WaterList[i] = sinf(w) * 2.5f;
         w += PI / TILESIZE_X;
         i++;
     }
@@ -1048,10 +1051,11 @@ void TileEngineClass::DrawBackground(void)
 // zb der Drache im Turm Level
 // --------------------------------------------------------------------------------------
 
-void TileEngineClass::DrawSpecialLayer(void)
-{
-
-}
+//DKS - this was an empty function in the original code, disabling it:
+//void TileEngineClass::DrawSpecialLayer(void)
+//{
+//
+//}
 
 // --------------------------------------------------------------------------------------
 // Level Hintergrund anzeigen

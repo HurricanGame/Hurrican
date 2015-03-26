@@ -71,7 +71,7 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
     }
     else
     {
-//		xp = x + (float(sin(winkel + PI / 2.0f) * 20.0f));
+//		xp = x + (float(sin(winkel + PI / 2.0f) * 20.0f));  //DKS - Was already commented out in original source
         xp = x + (winkel - PI) * 10.0f - 16;
         yp = y;
     }
@@ -686,8 +686,11 @@ void GegnerRiesenSpinne::DoKI(void)
             // Böller abschiessen
             pSoundManager->PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
             WinkelUebergabe = 180 - HeadWinkel * 1.5f;
-            pProjectiles->PushProjectile(xPos - (float)cos(HeadWinkel * PI / 180.0f) * 10.0f,
-                                         yPos + (float)sin(HeadWinkel * PI / 180.0f) * 140.0f + 90.0f + yBody, SPIDERSHOT);
+            //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+            //pProjectiles->PushProjectile(xPos - (float)cos(HeadWinkel * PI / 180.0f) * 10.0f,
+            //                             yPos + (float)sin(HeadWinkel * PI / 180.0f) * 140.0f + 90.0f + yBody, SPIDERSHOT);
+            pProjectiles->PushProjectile(xPos - cos_deg(HeadWinkel) * 10.0f,
+                                         yPos + sin_deg(HeadWinkel) * 140.0f + 90.0f + yBody, SPIDERSHOT);
 
             // Kopf zurückschnellen lassen
             HeadXOffset = 2 * PI;
