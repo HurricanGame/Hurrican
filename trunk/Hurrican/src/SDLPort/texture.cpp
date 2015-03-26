@@ -375,7 +375,8 @@ bool loadImageSDL( image_t& image, const char* path, uint32_t size )
             factor = 1;
         }
 
-        // Blacklist of image filenames (sub-strings) that shouldn't be resized:
+        // Blacklist of image filenames (sub-strings) that shouldn't ever be resized, because of
+        // resulting graphics glitches
         if (   strstr(path, "font")                     != NULL 
             || strstr(path, "lightmap")                 != NULL 
             || strstr(path, "hurrican_rund")            != NULL             // Menu star/nebula background (ugly)
@@ -383,6 +384,7 @@ bool loadImageSDL( image_t& image, const char* path, uint32_t size )
             || strstr(path, "enemy-walker")             != NULL             // Frog-like robotic walker (glitches)
             || strstr(path, "luefter1")                 != NULL             // Rotating fan (wiggles side to side)
             || strstr(path, "luefter2")                 != NULL             // Rotating fan (wiggles side to side)
+            || strstr(path, "stelzsack")                != NULL             // Stilt-walker enemy on elevator level
            )
         {
             factor = 1;
