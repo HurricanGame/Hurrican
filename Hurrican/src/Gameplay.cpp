@@ -761,10 +761,15 @@ bool LoadConfig(void)
     float Sound, Musik;
 
     FILE *Datei = NULL;
-    char temp[100];
 
-    snprintf( temp, sizeof(temp), "%s/%s", g_save_ext, CONFIGFILE );
+    //DKS - Full paths can now be longer:
+    //char temp[100];
+    //snprintf( temp, sizeof(temp), "%s/%s", g_save_ext, CONFIGFILE );
+    char *temp = (char *)malloc(strlen(g_save_ext) + 1 + strlen(CONFIGFILE) + 1);
+    sprintf_s( temp, "%s/%s", g_save_ext, CONFIGFILE );
+
     fopen_s(&Datei, temp, "rb");		// versuchen Datei zu öffnen
+    free((void *)temp);
 
     if (Datei == NULL)
         return false;
@@ -870,10 +875,16 @@ void SaveConfig(void)
     float	Sound, Musik;
 
     FILE *Datei = NULL;
-    char temp[100];
 
-    snprintf( temp, sizeof(temp), "%s/%s", g_save_ext, CONFIGFILE );
+    //DKS - Full paths can now be longer:
+    //char temp[100];
+    //snprintf( temp, sizeof(temp), "%s/%s", g_save_ext, CONFIGFILE );
+    char *temp = (char *)malloc(strlen(g_save_ext) + 1 + strlen(CONFIGFILE) + 1);
+    sprintf_s( temp, "%s/%s", g_save_ext, CONFIGFILE );
+
     fopen_s(&Datei, temp, "wb");
+    free((void *)temp);
+
     if (Datei == NULL)
     {
         Protokoll.WriteText( false, "Config file saving failed !\n" );
@@ -1243,10 +1254,14 @@ void SummaryScreen(void)
 
 bool NewDemo (const char Filename[])
 {
-    char temp[100];
+    //DKS - Full paths can now be longer:
+    //char temp[100];
+    //snprintf( temp, sizeof(temp), "%s/%s", g_save_ext, Filename );
+    char *temp = (char *)malloc(strlen(g_save_ext) + 1 + strlen(Filename) + 1);
+    sprintf_s( temp, "%s/%s", g_save_ext, Filename );
 
-    snprintf( temp, sizeof(temp), "%s/%s", g_save_ext, Filename );
     fopen_s(&DEMOFile, temp, "wb");
+    free((void *)temp);
 
     if(!DEMOFile)
     {
@@ -1296,11 +1311,18 @@ bool LoadDemo (const char Filename[])
     pTileEngine->XOffset = 0;
     pTileEngine->YOffset = 0;
 
-    // File öffnen
-    char temp[100];
+    //DKS - Fixed bug in handling size of full demo path: sizeof(100) returns something very different than 100
+    //      (Thank you to Alexander Troosh for the bug report.)
+    //DKS - Full paths can also now be longer:
+    //// File öffnen
+    //char temp[100];
+    //snprintf( temp, sizeof(100), "%s/%s", g_save_ext, Filename );
 
-    snprintf( temp, sizeof(100), "%s/%s", g_save_ext, Filename );
+    char *temp = (char *)malloc(strlen(g_save_ext) + 1 + strlen(Filename) + 1);
+    sprintf_s(temp, "%s/%s", g_save_ext, Filename );
+
     fopen_s(&DEMOFile, temp, "rb");
+    free((void *)temp);
 
     if(!DEMOFile)
         return false;
@@ -1356,6 +1378,7 @@ void EndDemo (void)
 
     //DKS - added this to ensure RNG is always properly seeded
     srand(timeGetTime());
+
 } // EndDemo
 
 // --------------------------------------------------------------------------------------
