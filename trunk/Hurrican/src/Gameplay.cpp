@@ -647,7 +647,7 @@ void CreateDefaultControlsConfig(int player)
         pPlayer[0]->AktionJoystick [AKTION_WAFFEN_CYCLE]	= 6;
 #endif
         pPlayer[0]->Walk_UseAxxis = false;      // By default, use the HAT switch (DPAD) for movement..
-        pPlayer[0]->Look_UseAxxis = true;       //  and the analog stick for looking
+        pPlayer[0]->Look_UseAxxis = false;      // and also looking.
 
         //DKS - Added missing default settings, and made player2's default joy index 1 instead of both being 0
         pPlayer[0]->JoystickIndex = 0;
@@ -706,7 +706,7 @@ void CreateDefaultControlsConfig(int player)
         pPlayer[1]->AktionJoystick [AKTION_WAFFEN_CYCLE]	= 6;
 
         pPlayer[1]->Walk_UseAxxis = false;      // By default, use the HAT switch (DPAD) for movement
-        pPlayer[1]->Look_UseAxxis = true;       // and the analog stick for looking    -DKS
+        pPlayer[1]->Look_UseAxxis = false;      // and the analog stick for looking    -DKS
 
         //DKS - Added missing default settings, and made player2's default joy index 1 instead of both being 0
         pPlayer[1]->JoystickIndex = 1;
