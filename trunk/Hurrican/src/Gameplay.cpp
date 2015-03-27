@@ -646,7 +646,6 @@ void CreateDefaultControlsConfig(int player)
         pPlayer[0]->AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
         pPlayer[0]->AktionJoystick [AKTION_WAFFEN_CYCLE]	= 6;
 #endif
-        //DKS - Note: these two should always remain opposite values of one another:
         pPlayer[0]->Walk_UseAxxis = false;      // By default, use the HAT switch (DPAD) for movement..
         pPlayer[0]->Look_UseAxxis = true;       //  and the analog stick for looking
 
@@ -706,7 +705,6 @@ void CreateDefaultControlsConfig(int player)
         pPlayer[1]->AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
         pPlayer[1]->AktionJoystick [AKTION_WAFFEN_CYCLE]	= 6;
 
-        //DKS - Note: these two should always remain opposite values of one another:
         pPlayer[1]->Walk_UseAxxis = false;      // By default, use the HAT switch (DPAD) for movement
         pPlayer[1]->Look_UseAxxis = true;       // and the analog stick for looking    -DKS
 

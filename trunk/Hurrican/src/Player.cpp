@@ -569,12 +569,6 @@ bool PlayerClass::GetPlayerInput(void)
                             Aktion[AKTION_OBEN] = true;
                         }
                     }
-
-                    // HAT/DPAD used for looking:
-                    if (hat_down)
-                        Aktion[AKTION_UNTEN] = true;
-                    else if (hat_up)
-                        Aktion[AKTION_OBEN]  = true;
                 } else {
                     // HAT/DPAD used for walking:
                     if (hat_right) Aktion[AKTION_RECHTS] = true;
@@ -591,11 +585,19 @@ bool PlayerClass::GetPlayerInput(void)
                         // HAT/DPAD up-input used for looking up (when in "joypad" mode)
                             Aktion[AKTION_OBEN] = true;
                     }
+                }
 
+                if (Look_UseAxxis) {
                     // Analog stick used for looking:
                     if (stick_down)
                         Aktion[AKTION_UNTEN] = true;
                     else if (stick_up)
+                        Aktion[AKTION_OBEN]  = true;
+                } else {
+                    // HAT/DPAD used for looking:
+                    if (hat_down)
+                        Aktion[AKTION_UNTEN] = true;
+                    else if (hat_up)
                         Aktion[AKTION_OBEN]  = true;
                 }
 

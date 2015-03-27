@@ -2457,16 +2457,13 @@ void MenuClass::DoMenu(void)
                 if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS)
                 {
                     if (pCurrentPlayer->ControlType == CONTROLTYPE_JOY && 
-                            (on_move_line || on_look_line || 
+                            (on_move_line || 
                              (on_jump_line && pCurrentPlayer->JoystickMode == JOYMODE_JOYSTICK))) {
                         // If control mode is joystick/joypad, movement and look up/down can only be
                         //  assigned to either the DPAD HAT or the analog stick:
                         pCurrentPlayer->Walk_UseAxxis = !pCurrentPlayer->Walk_UseAxxis;
+                    } else if (pCurrentPlayer->ControlType == CONTROLTYPE_JOY && on_look_line) {
                         pCurrentPlayer->Look_UseAxxis = !pCurrentPlayer->Look_UseAxxis;
-                        // Make sure the walk and look assignments remain different from one another
-                        //  (normally this always be the case if defaults are being assigned correctly)
-                        if (pCurrentPlayer->Walk_UseAxxis == pCurrentPlayer->Look_UseAxxis)
-                            pCurrentPlayer->Walk_UseAxxis = !pCurrentPlayer->Look_UseAxxis;
                     } else {
                         control_reassignment_occuring = true;
                         // Do not proceed until all keys/buttons are released:
