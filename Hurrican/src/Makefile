@@ -1,21 +1,34 @@
 DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS -DUSE_MODPLUG
 
 # *** OPTIONAL DEFINES: *** 
+
 ####### Use the $HOME dir as a location for any writing (settings, high-scores, log, save-games):
 #DEFINES += -DUSE_HOME_DIR
+
 ####### Specify a storage location for the read-only data files (graphics, sound, languages, etc) 
 #DEFINES += -DUSE_STORAGE_PATH="\"PATH_TO_STORAGE\""
+
 ####### Extremely fast random-number-generator (can be over 100 times faster than rand() on some platforms):
 #DEFINES += -DUSE_FAST_RNG
+
 ####### Fast Sin/Cos trig lookup table (can be over 15 times faster than libm on some platforms):
 #DEFINES += -DUSE_TRIG_LOOKUP_TABLE
+
+####### C++ exceptions can be turned off, reducing unnecessary code bloat and speed-hit:
+#DEFINES += -DUSE_NO_EXCEPTIONS
+
+####### Use the Unrarlib library, for support of packing of data files
+#DEFINES += -DUSE_UNRARLIB
+#UNRAR_FILES := unrarlib040/unrarlib/unrarlib
+
+# *** END OPTIONAL DEFINES ***
 
 TARGET = linux
 
 ifeq ($(TARGET),aros)
 
 EXE := ../hurricanaros
-CCP := i386-aros-gcc
+CXX := i386-aros-g++
 CC  := i386-aros-gcc
 LD  := i386-aros-g++
 RM  := rm -f
@@ -38,7 +51,7 @@ endif
 ifeq ($(TARGET),rpi)
 
 EXE := ../hurrican
-CCP := g++
+CXX := g++
 CC  := gcc
 LD  := g++
 RM  := rm -f
@@ -60,7 +73,7 @@ endif
 ifeq ($(TARGET),gcw)
 
 EXE := ../hurrican
-CCP := $(GCWSDK)/bin/mipsel-gcw0-linux-uclibc-g++
+CXX := $(GCWSDK)/bin/mipsel-gcw0-linux-uclibc-g++
 CC  := $(GCWSDK)/bin/mipsel-gcw0-linux-uclibc-gcc
 LD  := $(GCWSDK)/bin/mipsel-gcw0-linux-uclibc-g++
 RM  := rm -f
@@ -72,6 +85,7 @@ DEFINES += -DGCW -DUSE_GL2 -DUSE_GLES2 -DUSE_ETC1 -DUSE_EGL_RAW
 DEFINES += -DUSE_HOME_DIR
 DEFINES += -DUSE_TRIG_LOOKUP_TABLE
 DEFINES += -DUSE_FAST_RNG
+DEFINES += -DUSE_NO_EXCEPTIONS
 
 INCLUDES_OS := -ISDL_port \
                -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/SDL \
@@ -85,7 +99,7 @@ endif
 ifeq ($(TARGET),pandora)
 
 EXE := ../hurrican
-CCP := $(PNDSDK)/bin/arm-none-linux-gnueabi-g++
+CXX := $(PNDSDK)/bin/arm-none-linux-gnueabi-g++
 CC  := $(PNDSDK)/bin/arm-none-linux-gnueabi-gcc
 LD  := $(PNDSDK)/bin/arm-none-linux-gnueabi-g++
 RM  := rm -f
@@ -109,7 +123,7 @@ endif
 ifeq ($(TARGET),linux)
 
 EXE := ../hurricanlinux
-CCP := gcc
+CXX := g++
 CC  := gcc
 LD  := g++
 RM  := rm -f
@@ -137,6 +151,8 @@ else
 CFLAGS := -O2 $(COMMON_CFLAGS)
 endif
 
+CXXFLAGS := $(CFLAGS) -fno-rtti
+
 SDL_FILES := SDLPort/SDL_fmod \
              SDLPort/SDL_port \
              SDLPort/texture
@@ -146,10 +162,6 @@ EGL_FILES := SDLPort/eglport
 GL2_FILES := SDLPort/cshader
 
 #SDLPort/cshader
-
-#DKS - made unrarlib optional:
-#DEFINES += -DUSE_UNRARLIB
-#UNRAR_FILES := unrarlib040/unrarlib/unrarlib
 
 FILES :=Boss_BigFish \
         Boss_Bratklops \
@@ -349,7 +361,7 @@ $(EXE) : $(ALL_OBJS)
 	$(LD) $^ $(LDFLAGS) -o $@
 	
 %.o : %.cpp
-	$(CCP) $(CFLAGS) $< -o $@
+	$(CXX) $(CXXFLAGS) $< -o $@
 	
 %.o : %.c
 	$(CC) $(CFLAGS) $< -o $@
