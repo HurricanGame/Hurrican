@@ -834,7 +834,11 @@ int main(int argc, char *argv[])
                 GameRunning = false;
         }
 #endif
-        try
+
+        //DKS - Exceptions can now be disabled, reducing unnecessary code-bloat:
+#ifndef USE_NO_EXCEPTIONS
+		try
+#endif // USE_NO_EXCEPTIONS
         {
             if (GamePaused == false)
             {
@@ -874,12 +878,14 @@ int main(int argc, char *argv[])
                     SpeedFaktor = 0.28f;
             }
         }
-
+        //DKS - Exceptions can now be disabled, reducing unnecessary code-bloat:
+#ifndef USE_NO_EXCEPTIONS
         catch(const char *str)
         {
             Protokoll.WriteText( false, "Failure! Unhandled exception\n %s", str );
             GameRunning = false;
         }
+#endif // USE_NO_EXCEPTIONS
     }
 
 //----- Spiel verlassen
