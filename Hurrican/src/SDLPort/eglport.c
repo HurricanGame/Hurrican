@@ -284,7 +284,8 @@ int8_t FindAppropriateEGLConfigs( void )
     ConfigAttribs[attrib++] = EGL_BLUE_SIZE;
     ConfigAttribs[attrib++] = 5;
     ConfigAttribs[attrib++] = EGL_DEPTH_SIZE;
-    ConfigAttribs[attrib++] = 16;
+    //DKS - Changing this from 16 to 0, since we do not need a depth buffer in this game:
+    ConfigAttribs[attrib++] = 0;
     ConfigAttribs[attrib++] = EGL_STENCIL_SIZE;
     ConfigAttribs[attrib++] = 0;
     ConfigAttribs[attrib++] = EGL_SURFACE_TYPE;

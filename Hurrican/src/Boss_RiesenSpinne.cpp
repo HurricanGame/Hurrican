@@ -101,7 +101,6 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
         TriangleStrip[1].color =
             TriangleStrip[2].color =
                 TriangleStrip[3].color = col;
-    TriangleStrip[0].z	   = TriangleStrip[1].z		= TriangleStrip[2].z	 = TriangleStrip[3].z	  = 0.0f;
 
     TriangleStrip[0].x		= l;		// Links oben
     TriangleStrip[0].y		= o + yoff;
@@ -185,7 +184,6 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
         TriangleStrip[1].color =
             TriangleStrip[2].color =
                 TriangleStrip[3].color = col;
-    TriangleStrip[0].z	   = TriangleStrip[1].z		= TriangleStrip[2].z	 = TriangleStrip[3].z	  = 0.0f;
 
     TriangleStrip[0].x		= l;		// Links oben
     TriangleStrip[0].y		= o;

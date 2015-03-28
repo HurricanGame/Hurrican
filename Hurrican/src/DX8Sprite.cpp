@@ -497,7 +497,6 @@ bool DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
     tu = itsRect.bottom/itsYSize;	// Unten
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
-    TriangleStrip[0].z	   = TriangleStrip[1].z		= TriangleStrip[2].z	 = TriangleStrip[3].z	  = 0.0f;
 
     TriangleStrip[0].x		= l;		// Links oben
     TriangleStrip[0].y		= o;
@@ -573,7 +572,6 @@ bool DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR c1,
     TriangleStrip[1].color = c2;
     TriangleStrip[2].color = c3;
     TriangleStrip[3].color = c4;
-    TriangleStrip[0].z	   = TriangleStrip[1].z		= TriangleStrip[2].z	 = TriangleStrip[3].z	  = 0.0f;
 
     TriangleStrip[0].x		= l;		// Links oben
     TriangleStrip[0].y		= o;
@@ -648,7 +646,6 @@ bool DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
     //tl = 0; tr = 0.5f; to = 0; tu = 0.5f;
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
-    TriangleStrip[0].z	   = TriangleStrip[1].z		= TriangleStrip[2].z     = TriangleStrip[3].z	  = 0.0f;
 
     TriangleStrip[0].x		= l;		// Links oben
     TriangleStrip[0].y		= o;
@@ -712,7 +709,6 @@ bool DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
     //tl = 0; tr = 0.5f; to = 0; tu = 0.5f;
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
-    TriangleStrip[0].z	   = TriangleStrip[1].z		= TriangleStrip[2].z     = TriangleStrip[3].z	  = 0.0f;
 
     TriangleStrip[0].x		= l;		// Links oben
     TriangleStrip[0].y		= o;
@@ -806,7 +802,6 @@ bool DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int he
     tu = itsRect.bottom/itsYSize;	// Unten
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = col;
-    TriangleStrip[0].z	   = TriangleStrip[1].z		= TriangleStrip[2].z	 = TriangleStrip[3].z	  = 0.0f;
 
     TriangleStrip[0].x		= l;		// Links oben
     TriangleStrip[0].y		= o;
@@ -869,7 +864,6 @@ bool DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int he
     tu = ((Anim/itsXFrameCount) * itsYFrameSize + itsYFrameSize) / itsYSize;	// Unten
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = col;
-    TriangleStrip[0].z	   = TriangleStrip[1].z		= TriangleStrip[2].z	 = TriangleStrip[3].z	  = 0.0f;
 
     TriangleStrip[0].x		= l;		// Links oben
     TriangleStrip[0].y		= o;
@@ -932,7 +926,6 @@ bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
     tu = itsRect.bottom/itsYSize;	// Unten
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
-    TriangleStrip[0].z     = TriangleStrip[1].z		= TriangleStrip[2].z	 = TriangleStrip[3].z	  = 0.0f;
 
     TriangleStrip[0].x		= l;		// Links oben
     TriangleStrip[0].y		= o;
@@ -1070,7 +1063,6 @@ bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
     tr = itsRect.right /itsXSize;	// Rechts
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
-    TriangleStrip[0].z     = TriangleStrip[1].z		= TriangleStrip[2].z	 = TriangleStrip[3].z	  = 0.0f;
 
     TriangleStrip[0].x		= l;		// Links oben
     TriangleStrip[0].y		= o;
@@ -1185,7 +1177,6 @@ bool DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
     tr = itsRect.right /itsXSize;	// Rechts
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
-    TriangleStrip[0].z     = TriangleStrip[1].z		= TriangleStrip[2].z	 = TriangleStrip[3].z	  = 0.0f;
 
     TriangleStrip[0].x		= l;		// Links oben
     TriangleStrip[0].y		= o;
@@ -1293,7 +1284,6 @@ bool DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
     tu = itsRect.bottom/itsYSize;	// Unten
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
-    TriangleStrip[0].z	   = TriangleStrip[1].z		= TriangleStrip[2].z	 = TriangleStrip[3].z	  = 0.0f;
 
     TriangleStrip[0].x		= l;		// Links oben
     TriangleStrip[0].y		= o;
@@ -1441,8 +1431,6 @@ void RenderRect4(float x, float y, float width, float height,
     o -= TEXTURE_COORD_OFFSET;
     u += TEXTURE_COORD_OFFSET;
 
-    TriangleStrip[0].z = TriangleStrip[1].z = TriangleStrip[2].z = TriangleStrip[3].z = 0.0f;
-
     TriangleStrip[0].color = c1;
     TriangleStrip[0].x		= l;		// Links oben
     TriangleStrip[0].y		= o;
@@ -1476,7 +1464,6 @@ void RenderRect4(float x, float y, float width, float height,
 void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2,	D3DCOLOR Color)
 {
     TriangleStrip[0].color = TriangleStrip[1].color = Color;
-    TriangleStrip[0].z     = TriangleStrip[1].z	    = 0.0f;
 
     TriangleStrip[0].x		= p1.x;		// p1
     TriangleStrip[0].y		= p1.y;
@@ -1506,8 +1493,6 @@ void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2,	D3DCOLOR Color1, D3DCOLOR Color2
 {
     TriangleStrip[0].color = Color1;
     TriangleStrip[1].color = Color2;
-
-    TriangleStrip[0].z     = TriangleStrip[1].z	    = 0.0f;
 
     TriangleStrip[0].x		= p1.x;		// p1
     TriangleStrip[0].y		= p1.y;

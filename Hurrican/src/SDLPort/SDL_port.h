@@ -107,35 +107,11 @@ typedef enum D3DPRIMITIVETYPE
     D3DPT_FORCE_DWORD     = 0x7fffffff
 } D3DPRIMITIVETYPE, *LPD3DPRIMITIVETYPE;
 
-class D3DXVECTOR2
+//DKS - No need for construction or destruction or virtual types, changed to struct:
+struct D3DXVECTOR2
 {
-public:
     FLOAT x;
     FLOAT y;
-
-    D3DXVECTOR2() : x(0), y(0) {};
-    D3DXVECTOR2(FLOAT X, FLOAT Y) : x(X), y(Y) {};
-    virtual ~D3DXVECTOR2() {};
-};
-
-class D3DXVECTOR3 : public D3DXVECTOR2
-{
-public:
-    FLOAT z;
-
-    D3DXVECTOR3() : D3DXVECTOR2(0,0), z(0) {};
-    D3DXVECTOR3(FLOAT X, FLOAT Y, FLOAT Z) : D3DXVECTOR2(X,Y),  z(Z) {};
-    virtual ~D3DXVECTOR3() {};
-};
-
-class D3DXVECTOR4 : public D3DXVECTOR3
-{
-public:
-    FLOAT w;
-
-    D3DXVECTOR4() : D3DXVECTOR3(0,0,0), w(0) {};
-    D3DXVECTOR4(FLOAT X, FLOAT Y, FLOAT Z, FLOAT W) : D3DXVECTOR3(X,Y,Z), w(W) {};
-    virtual ~D3DXVECTOR4() {};
 };
 
 #define sprintf_s   sprintf

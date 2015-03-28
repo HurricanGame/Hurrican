@@ -104,7 +104,9 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
 
     d3dpp.Windowed							= CommandLineParams.RunWindowMode;	// Fenster Modus ?
     d3dpp.BackBufferCount					= 1;							// 1 Backbuffer setzen
-    d3dpp.EnableAutoDepthStencil			= true;
+    //DKS - Since I removed all use of the Z-coordinate, this should be changed too. Note: DirectX is entirely untested.
+    //d3dpp.EnableAutoDepthStencil			= true;
+    d3dpp.EnableAutoDepthStencil			= false;
     d3dpp.AutoDepthStencilFormat			= D3DFMT_D16;
     d3dpp.hDeviceWindow						= hwnd;							// Fenster Handle
     d3dpp.BackBufferWidth					= dwBreite;					    // ScreenBreite
@@ -740,7 +742,8 @@ void DirectGraphicsClass::RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,
     lpD3DDevice->DrawPrimitiveUP(PrimitiveType, PrimitiveCount, pVertexStreamZeroData, sizeof(VERTEX2D));
 #elif defined(PLATFORM_SDL)
     int stride      = sizeof(VERTEX2D);
-    int clr_offset  = sizeof(float)*3;
+    //DKS - Changed multiplier from 3 to 2, since I removed the unnecessary Z coordinate:
+    int clr_offset  = sizeof(float)*2;
     int tex_offset  = clr_offset + sizeof(D3DCOLOR);
 
 #if defined(USE_GL2)
@@ -957,7 +960,6 @@ void DirectGraphicsClass::ShowBackBuffer(void)
         vertices[2].y = RenderRect.y+RenderRect.h; /* lower right */
         vertices[3].x = RenderRect.x+RenderRect.w;
         vertices[3].y = RenderRect.y;   /* upper right */
-        vertices[0].z = vertices[1].z = vertices[2].z = vertices[3].z = 0.0f;
         vertices[0].color = vertices[1].color = vertices[2].color = vertices[3].color = 0xFFFFFFFF;
 
         vertices[0].tu = 0;
@@ -1127,7 +1129,6 @@ void DirectGraphicsClass::DrawTouchOverlay( void )
         vertices[2].y = box->y+box->h; /* lower right */
         vertices[3].x = box->x+box->w;
         vertices[3].y = box->y;   /* upper right */
-        vertices[0].z = vertices[1].z = vertices[2].z = vertices[3].z = 0.0f;
         vertices[0].color = vertices[1].color = vertices[2].color = vertices[3].color = 0x4000FF00;
 
 #if 0
@@ -1159,12 +1160,10 @@ void DirectGraphicsClass::DrawCircle( uint16_t x, uint16_t y, uint16_t radius )
 
         vtx[i].x = x + (radius * cosf(cml::rad(radians)));
         vtx[i].y = y + (radius * sinf(cml::rad(radians)));
-        vtx[i].z = 0;
         radians += (360/SECTORS);
     }
     vtx[SECTORS+1].x = vtx[0].x;
     vtx[SECTORS+1].y = vtx[0].y;
-    vtx[SECTORS+1].z = 0;
     vtx[SECTORS+1].color = 0x8000FF00;
 
     glLineWidth( 3 );

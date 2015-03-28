@@ -1156,7 +1156,6 @@ void TileEngineClass::DrawBackLevel(void)
                 off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
 
                 // Vertices definieren
-                v1.z	 = v2.z		= v3.z	   = v4.z	  = 0.0f;
                 v1.color = Tiles[xLevel+i][yLevel+j].Color [0];
                 v2.color = Tiles[xLevel+i][yLevel+j].Color [1];
                 v3.color = Tiles[xLevel+i][yLevel+j].Color [2];
@@ -1296,9 +1295,6 @@ void TileEngineClass::DrawFrontLevel(void)
                 tr = Rect.right /TILESETSIZE_X;				// Rechts
                 to = Rect.top   /TILESETSIZE_Y;				// Oben
                 tu = Rect.bottom/TILESETSIZE_Y;				// Unten
-
-                // Vertices definieren
-                v1.z	 = v2.z		= v3.z	   = v4.z	  = 0.0f;
 
                 // Licht setzen (prüfen auf Overlay light, wegen hellen Kanten)
                 if (Tiles[xLevel+i][yLevel+j].Block & BLOCKWERT_OVERLAY_LIGHT)
@@ -1478,8 +1474,6 @@ void TileEngineClass::DrawBackLevelOverlay (void)
 
                 off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
 
-                // Vertices definieren
-                v1.z	 = v2.z		= v3.z	   = v4.z	  = 0.0f;
                 v1.color = Tiles[xLevel+i][yLevel+j].Color [0];
                 v2.color = Tiles[xLevel+i][yLevel+j].Color [1];
                 v3.color = Tiles[xLevel+i][yLevel+j].Color [2];
@@ -1688,9 +1682,6 @@ void TileEngineClass::DrawOverlayLevel(void)
 
                     //al = Tiles[xLevel+i][yLevel+j].Alpha;
 
-                    // Vertices definieren
-                    v1.z	 = v2.z		= v3.z	   = v4.z	  = 0.0f;
-
                     if (Tiles[xLevel+i][yLevel+j].Block & BLOCKWERT_OVERLAY_LIGHT)
                     {
                         v1.color = Tiles[xLevel+i][yLevel+j].Color [0];
@@ -1818,9 +1809,6 @@ void TileEngineClass::DrawWater(void)
                     v4.tv = WasserV [yo+1];
                     END DISABLED BLOCK */
 
-                    // Vertices definieren
-                    v1.z	 = v2.z		= v3.z	   = v4.z	  = 0.0f;
-
                     v1.x = l;						// Links oben
                     v1.y = o;
                     v2.x = r;						// Rechts oben
@@ -1889,7 +1877,6 @@ void TileEngineClass::DrawWater(void)
                         u += TEXTURE_COORD_OFFSET;
 
                         // Vertices definieren
-                        v1.z = v2.z		= v3.z	   = v4.z	  = 0.0f;
                         v1.x = l;						// Links oben
                         v1.y = o;
                         v2.x = r;						// Rechts oben
