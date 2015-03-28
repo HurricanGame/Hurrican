@@ -1,6 +1,6 @@
 /* Input */
 uniform mat4 u_MVPMatrix;   /* A constant representing the combined model/view/projection matrix. */
-attribute vec3 a_Position;  /* Per-vertex position information */
+attribute vec2 a_Position;  /* Per-vertex position information - DKS: Note I changed this from 3D to 2D */
 attribute vec4 a_Color;     /* Per-vertex color information */
 attribute vec2 a_Texcoord0; /* Per-vertex texcoord information */
 /* Output */
@@ -15,5 +15,5 @@ void main()
     v_Texcoord0 = a_Texcoord0;
     /* gl_Position is a special variable used to store the final position. */
     /* Multiply the vertex by the matrix to get the final point in normalized screen coordinates. */
-    gl_Position = u_MVPMatrix * vec4(a_Position, 1.0);
+    gl_Position = u_MVPMatrix * vec4(a_Position, 0.0, 1.0); /* DKS: Note I changed a_Position from 3D to 2D */
 }
