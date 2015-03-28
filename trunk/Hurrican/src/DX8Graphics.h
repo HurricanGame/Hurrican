@@ -63,9 +63,10 @@ enum
 // Struktur für einen 2D Vertex
 // --------------------------------------------------------------------------------------
 
+//DKS - Removed unnecessary z-coordinate:
 struct VERTEX2D
 {
-    float		x, y, z;		// x,y,z Koordinaten
+    float		x, y;		// x,y Koordinaten
     D3DCOLOR	color;			// Vertex-Color
     float		tu, tv;			// Textur-Koordinaten
 };

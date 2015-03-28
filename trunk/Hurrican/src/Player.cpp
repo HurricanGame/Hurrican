@@ -3565,8 +3565,6 @@ void PlayerClass::DrawNormalLightning(int DrawLength)
     if (tu == 0.0f)
         tu =  1.0f;
 
-    TriangleStrip[0].z	 = TriangleStrip[1].z		= TriangleStrip[2].z	   = TriangleStrip[3].z	  = 0.0f;
-
     TriangleStrip[0].x		= l;		// Links oben
     TriangleStrip[0].y		= o;
     TriangleStrip[0].tu		= tl;
@@ -3753,8 +3751,6 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul)
                 strahlen[n][i + 1].x = (float)(xstrahl + size + xstart);
                 strahlen[n][i + 0].y = (float)(ystrahl + ystart);
                 strahlen[n][i + 1].y = (float)(ystrahl + ystart);
-                strahlen[n][i + 0].z = 0.0f;
-                strahlen[n][i + 1].z = 0.0f;
 
                 // texturkoordinaten setzen
                 strahlen[n][i + 0].tu = 0.0f;

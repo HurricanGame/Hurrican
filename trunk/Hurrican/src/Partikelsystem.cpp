@@ -3706,7 +3706,6 @@ bool PartikelClass::Render(void)
         tu = Rect.bottom/ys;	// Unten
 
         v1.color = v2.color = v3.color = v4.color = D3DCOLOR_RGBA(red, green, blue, alpha);
-        v1.z	 = v2.z		= v3.z	   = v4.z	  = 0.0f;
 
         v1.x		= l;		// Links oben
         v1.y		= o;

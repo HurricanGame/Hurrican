@@ -2132,7 +2132,6 @@ void ProjectileClass::Render(void)
         Color = 0xFFFFFFFF;
 
         v1.color = v2.color = v3.color = v4.color = Color;
-        v1.z	 = v2.z		= v3.z	   = v4.z	  = 0.0f;
 
         v1.x		= l;		// Links oben
         v1.y		= o;
