@@ -59,6 +59,10 @@ extern int fast_rand(void);
 #define DegToRad(x) ((x) * float(double(M_PI) / double(180.0)))
 #define RadToDeg(x) ((x) * float(double(180.0) / double(M_PI)))
 
+// Override libm's double sin/cos (but not sinf/cosf, keep those for when we need accuracy)
+#define sin(X) sin_rad(X)
+#define cos(X) cos_rad(X)
+
 #ifdef USE_TRIG_LOOKUP_TABLE
 //DKS - New sin-lookup table has enough elements to easily handle cos + sin together:
 //      It has 1/4-degree increments.
@@ -76,9 +80,6 @@ extern int fast_rand(void);
 //| SIN LOOKUP (float 1/4-degree acc.)  |            83.7235|           11.944071|
 //+-------------------------------------+-------------------+--------------------+
 
-// Override libm's sin/cos (but not sinf/cosf, keep those for when we need accuracy)
-#define sin(X) sin_rad((X))
-#define cos(X) cos_rad((X))
 #define SIN_TABLE_ELEMS ((360+90+1)*4)
 extern float sin_table[SIN_TABLE_ELEMS];
 extern void  populate_sin_table(void);
@@ -123,5 +124,107 @@ static inline float sin_rad(float rad)
     return sinf(rad);
 }
 #endif //USE_TRIG_LOOKUP_TABLE
+
+
+//DKS - BEGIN NEW CUSTOM MATRIX MATH:
+//      Since the game is purely 2D, and all rotations are around the Z axis, matrix math can be greatly
+//      simplified and it's now done on the CPU. Only perspective math is done in the GPU now.
+//      This way, you don't need to send a whole new 4x4 matrix every time you draw something.
+//      Because all transformations are now on the CPU, huge batches of primitives can now be drawn with one
+//      GL call, as long as they share the same texture and blend mode, greatly reducing graphics API overhead.
+
+// This struct holds all that we ever need to do vertex transforms using matrices. No humongous 4x4 matrix required.
+struct ReducedMatrix {
+    float row0_col0;        float row0_col1;     // X row
+    float row1_col0;        float row1_col1;     // Y row
+    float row3_col0;        float row3_col1;     // Affine translation X, Y 
+};
+
+// Translation:
+static inline void RM_Trans(ReducedMatrix &mat, float x, float y)
+{
+   mat.row0_col0 = 1.0f;    mat.row0_col1 = 0.0f;
+   mat.row1_col0 = 0.0f;    mat.row1_col1 = 1.0f;
+   mat.row3_col0 = x;       mat.row3_col1 = y;
+}
+
+// Identity:
+static inline void RM_Ident(ReducedMatrix &mat)
+{
+   mat.row0_col0 = 1.0f;    mat.row0_col1 = 0.0f;
+   mat.row1_col0 = 0.0f;    mat.row1_col1 = 1.0f;
+   mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f; //Note: row2_col2 is always assumed to be 1.0 in our reduced matrices
+}
+
+// Rotation by radians around Z axis:
+static inline void RM_RotZRad(ReducedMatrix &mat, float rad)
+{
+   float s = sin_rad(rad);
+   float c = cos_rad(rad);
+   mat.row0_col0 = c;       mat.row0_col1 = s;
+   mat.row1_col0 = -s;      mat.row1_col1 = c;
+   mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
+}
+
+// Rotation by integer degrees around Z axis:
+static inline void RM_RotZDeg(ReducedMatrix &mat, int deg)
+{
+   float s = sin_deg(deg);
+   float c = cos_deg(deg);
+   mat.row0_col0 = c;       mat.row0_col1 = s;
+   mat.row1_col0 = -s;      mat.row1_col1 = c;
+   mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
+}
+
+// Rotation by float degrees around Z axis:
+static inline void RM_RotZDeg(ReducedMatrix &mat, float deg)
+{
+   float s = sin_deg(deg);
+   float c = cos_deg(deg);
+   mat.row0_col0 = c;       mat.row0_col1 = s;
+   mat.row1_col0 = -s;      mat.row1_col1 = c;
+   mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
+}
+
+// Version of above that forces bypassing of trig lookup table (for edge cases like slow-moving menu background)
+static inline void RM_RotZDegAccurate(ReducedMatrix &mat, float deg)
+{
+   float s = sinf(DegToRad(deg));
+   float c = cosf(DegToRad(deg));
+   mat.row0_col0 = c;       mat.row0_col1 = s;
+   mat.row1_col0 = -s;      mat.row1_col1 = c;
+   mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
+}
+
+// Matrix multiply: dst = lh * rh
+static inline void RM_Mult(ReducedMatrix &dst, ReducedMatrix &lh, ReducedMatrix &rh)
+{
+   ReducedMatrix res;
+
+   res.row0_col0 = lh.row0_col0 * rh.row0_col0 + lh.row0_col1 * rh.row1_col0;
+   res.row0_col1 = lh.row0_col0 * rh.row0_col1 + lh.row0_col1 * rh.row1_col1;
+
+   res.row1_col0 = lh.row1_col0 * rh.row0_col0 + lh.row1_col1 * rh.row1_col0;
+   res.row1_col1 = lh.row1_col0 * rh.row0_col1 + lh.row1_col1 * rh.row1_col1;
+
+   res.row3_col0 = lh.row3_col0 * rh.row0_col0 + lh.row3_col1 * rh.row1_col0 + rh.row3_col0;
+   res.row3_col1 = lh.row3_col0 * rh.row0_col1 + lh.row3_col1 * rh.row1_col1 + rh.row3_col1;
+
+   dst = res;
+}
+
+// Macros to transform X, Y coordinates when multiplying by a 2x3 'reduced matrix'
+// These are for convenience when dealing with code where RM_Mult() above is not practical.
+#define RM_X(X,Y,MV_MAT) (((X) * (MV_MAT).row0_col0) + ((Y) * (MV_MAT).row1_col0) + (MV_MAT).row3_col0)
+#define RM_Y(X,Y,MV_MAT) (((X) * (MV_MAT).row0_col1) + ((Y) * (MV_MAT).row1_col1) + (MV_MAT).row3_col1)
+
+// Scaling in this game is done manually, no need for this, kept for posterity:
+static inline void RM_Scale(ReducedMatrix &mat, float scale)
+{
+   mat.row0_col0 = scale;   mat.row0_col1 = 0.0f;
+   mat.row1_col0 = 0.0f;    mat.row1_col1 = scale;
+   mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
+}
+//DKS - END CUSTOM MATRIX MATH
 
 #endif // __Math_h__
