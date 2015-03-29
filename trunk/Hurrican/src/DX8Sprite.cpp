@@ -1364,3 +1364,26 @@ void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2,	D3DCOLOR Color1, D3DCOLOR Color2
     DirectGraphics.RendertoBuffer (D3DPT_LINELIST, 1, &TriangleStrip[0]);
 #endif
 }
+
+// --------------------------------------------------------------------------------------
+// Kreis an x/y zeichnen mit Radius r und Farbe col
+// --------------------------------------------------------------------------------------
+//DKS - disabled this as it was only used in a single debug code block in Trigger_FadeMusic.cpp
+/*
+void RenderCircle(float x, float y, float r, D3DCOLOR col)
+{
+	#define step 0.2f
+
+	D3DXVECTOR2 p1, p2;
+	for (float i = 0; i < 2*PI; i += step)
+	{
+      //SKD - converted sin/cos to sinf/cosf:
+		p1.x = x + (float)sinf(i) * r;
+		p1.y = y + (float)cosf(i) * r;
+
+		p2.x = x + (float)sinf(i + step) * r;
+		p2.y = y + (float)cosf(i + step) * r;
+
+		RenderLine(p1, p2, col);
+	}
+}
