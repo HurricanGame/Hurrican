@@ -60,12 +60,13 @@ typedef uint32_t    LPDIRECTINPUT8;
 #ifndef __WIN32__
 typedef uint32_t HINSTANCE, HANDLE, HWND, HRESULT;
 
+//DKS - Changed the members from LONG to int16_t:
 typedef struct tagRECT
 {
-    LONG left;
-    LONG top;
-    LONG right;
-    LONG bottom;
+    int16_t left;
+    int16_t top;
+    int16_t right;
+    int16_t bottom;
 } RECT;
 #endif
 typedef uint32_t LPDIRECT3D8, LPDIRECT3D9, LPDIRECT3DDEVICE8, LPDIRECT3DDEVICE9, LPDIRECTSOUND8, D3DCOLOR;
