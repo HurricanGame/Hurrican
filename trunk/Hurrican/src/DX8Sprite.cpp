@@ -32,37 +32,8 @@ extern bool					GameRunning;				// Läuft das Spiel noch ?
 // Variablen
 // --------------------------------------------------------------------------------------
 
-RECT					ClippingArea;						// Ränder für das Clipping
-VERTEX2D				TriangleStrip[4];					// Strip für ein Sprite
-VERTEX2D				v1, v2, v3, v4;						// Für Sprites =)
 int						LoadedTextures = 0;					// Wieviele Texturen geladen ?
 int						ActualTexture  = -1;				// aktuelle Textur (damit wir uns ein paar
-// "SetTextures" sparen können
-
-// --------------------------------------------------------------------------------------
-// Globale Spritefunktionen ausserhalb der Klassen
-// --------------------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------------------
-// Neue ClippingArea setzen
-// --------------------------------------------------------------------------------------
-
-void SetClippingArea(int Left, int Top, int Right, int Bottom)
-{
-    ClippingArea.left	= Left;
-    ClippingArea.top	= Top;
-    ClippingArea.right	= Right;
-    ClippingArea.bottom = Bottom;
-}
-
-// --------------------------------------------------------------------------------------
-// Aktuelle Clipping Area abfragen
-// --------------------------------------------------------------------------------------
-
-RECT GetClippingArea(void)
-{
-    return ClippingArea;
-}
 
 // --------------------------------------------------------------------------------------
 // Klassenfunktionen
@@ -156,28 +127,6 @@ bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize
 }
 
 // --------------------------------------------------------------------------------------
-// Neuen Ausschnitt setzen
-// --------------------------------------------------------------------------------------
-
-bool DirectGraphicsSurface::SetRect(int left,  int top, int right, int bottom)
-{
-    itsRect.left   = left;										// Linker  Rand
-    itsRect.right  = right;										// Rechter Rand
-    itsRect.top    = top;										// Oberer  Rand
-    itsRect.bottom = bottom;									// Unterer Rand
-    return true;
-}
-
-// --------------------------------------------------------------------------------------
-// Ausschnitt holen
-// --------------------------------------------------------------------------------------
-
-RECT DirectGraphicsSurface::GetRect(void)
-{
-    return itsRect;
-}
-
-// --------------------------------------------------------------------------------------
 // Bild auf Surface anzeigen
 // --------------------------------------------------------------------------------------
 
@@ -196,25 +145,18 @@ bool DirectGraphicsSurface::DrawSurface(LPDIRECT3DSURFACE8 &Temp, int xPos, int 
 // --------------------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------------------
-// Konstruktor (leer)
-// --------------------------------------------------------------------------------------
-
-DirectGraphicsSprite::DirectGraphicsSprite(void)
-{
-#if defined(PLATFORM_DIRECTX)
-    itsTexture = (LPDIRECT3DTEXTURE8)NULL;
-#elif defined(PLATFORM_SDL)
-    itsTexture = -1;
-#endif
-}
-
-// --------------------------------------------------------------------------------------
 // Desktruktor gibt die Textur wieder frei
 // --------------------------------------------------------------------------------------
 
 DirectGraphicsSprite::~DirectGraphicsSprite(void)
 {
-    char	Buffer[10];
+    //DKS - itsPreCalcedRects array is now dynamically allocated:
+    if (itsPreCalcedRects != NULL) {
+        free(itsPreCalcedRects);
+        itsPreCalcedRects = NULL;
+    }
+
+    //char	Buffer[10]; //DKS - Disabled unused var
 
     if(itsTexture != 0)
     {
@@ -228,7 +170,7 @@ DirectGraphicsSprite::~DirectGraphicsSprite(void)
         LoadedTextures--;
 //		Protokoll.WriteText( false, "-> Sprite texture successfully released ! \n" );
 
-        _itoa_s(LoadedTextures, Buffer, 10);
+//        _itoa_s(LoadedTextures, Buffer, 10);
 //		Protokoll.WriteText( false, Buffer );
 //		Protokoll.WriteText( false, " Sprite Textur(en) übrig !\n" );
     }
@@ -424,6 +366,11 @@ loadfile:
     itsRect.bottom	= (int)itsYSize;
 
     // Ausschnitte vorberechnen
+    //DKS - array is now dynamically allocated
+    if (itsPreCalcedRects != NULL) 
+        free(itsPreCalcedRects);
+    itsPreCalcedRects = (RECT*)malloc(xfc * yfc * sizeof(RECT));
+
     for (int i = 0; i < xfc * yfc; i++)
     {
         itsPreCalcedRects[i].top	= (i/itsXFrameCount) * itsYFrameSize;
@@ -448,32 +395,10 @@ loadfile:
 }
 
 // --------------------------------------------------------------------------------------
-// Neuen Ausschnitt setzen
-// --------------------------------------------------------------------------------------
-
-bool DirectGraphicsSprite::SetRect(int left,  int top, int right, int bottom)
-{
-    itsRect.left   = left;										// Linker  Rand
-    itsRect.right  = right;										// Rechter Rand
-    itsRect.top    = top;										// Oberer  Rand
-    itsRect.bottom = bottom;									// Unterer Rand
-    return true;
-}
-
-// --------------------------------------------------------------------------------------
-// aktuellen Ausschnitt holen
-// --------------------------------------------------------------------------------------
-
-RECT DirectGraphicsSprite::GetRect(void)
-{
-    return itsRect;
-}
-
-// --------------------------------------------------------------------------------------
 // Sprite ganz normal zeichnen mit aktuellem Surfaceausschnitt und Colorkey
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
+void DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
 {
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
@@ -495,6 +420,8 @@ bool DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
     tr = itsRect.right /itsXSize;	// Rechts
     to = itsRect.top   /itsYSize;	// Oben
     tu = itsRect.bottom/itsYSize;	// Unten
+
+    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
 
@@ -530,8 +457,6 @@ bool DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
 
     // Sprite zeichnen
     DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
-
-    return true;
 }
 
 // --------------------------------------------------------------------------------------
@@ -539,7 +464,7 @@ bool DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
 // alle vier Eckpunkte anders einfärben
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR c1, D3DCOLOR c2, D3DCOLOR c3, D3DCOLOR c4)
+void DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR c1, D3DCOLOR c2, D3DCOLOR c3, D3DCOLOR c4)
 {
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
@@ -568,28 +493,29 @@ bool DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR c1,
     to = itsRect.top   /itsYSize;	// Oben
     tu = itsRect.bottom/itsYSize;	// Unten
 
-    TriangleStrip[0].color = c1;
-    TriangleStrip[1].color = c2;
-    TriangleStrip[2].color = c3;
-    TriangleStrip[3].color = c4;
+    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 
     TriangleStrip[0].x		= l;		// Links oben
     TriangleStrip[0].y		= o;
+    TriangleStrip[0].color  = c1;
     TriangleStrip[0].tu		= tl;
     TriangleStrip[0].tv		= to;
 
     TriangleStrip[1].x		= r;		// Rechts oben
     TriangleStrip[1].y		= o;
+    TriangleStrip[1].color  = c2;
     TriangleStrip[1].tu		= tr;
     TriangleStrip[1].tv		= to;
 
     TriangleStrip[2].x		= l;		// Links unten
     TriangleStrip[2].y		= u;
+    TriangleStrip[2].color  = c3;
     TriangleStrip[2].tu		= tl;
     TriangleStrip[2].tv		= tu;
 
     TriangleStrip[3].x		= r;		// Rechts unten
     TriangleStrip[3].y		= u;
+    TriangleStrip[3].color  = c4;
     TriangleStrip[3].tu		= tr;
     TriangleStrip[3].tv		= tu;
 
@@ -601,14 +527,12 @@ bool DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR c1,
 
     // Sprite zeichnen
     DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
-
-    return true;
 }
 
 // --------------------------------------------------------------------------------------
 // Sprite vertikal spiegelverkehrt zeichnen
 // --------------------------------------------------------------------------------------
-bool DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color, bool h, bool v)
+void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color, bool h, bool v)
 {
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
@@ -645,6 +569,8 @@ bool DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
 
     //tl = 0; tr = 0.5f; to = 0; tu = 0.5f;
 
+    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
+
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
 
     TriangleStrip[0].x		= l;		// Links oben
@@ -675,15 +601,13 @@ bool DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
 
     // Sprite zeichnen
     DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
-
-    return true;
 }
 
 // --------------------------------------------------------------------------------------
 // Sprite spiegelverkehrt zeichnen mit aktuellem Surfaceausschnitt und Colorkey
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color)
+void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color)
 {
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
@@ -706,7 +630,10 @@ bool DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
     to = itsRect.top   /itsYSize;	// Oben
     tu = itsRect.bottom/itsYSize;	// Unten
 
+    //DKS - Was already commented out in original code:
     //tl = 0; tr = 0.5f; to = 0; tu = 0.5f;
+
+    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
 
@@ -738,50 +665,13 @@ bool DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
 
     // Sprite zeichnen
     DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
-
-    return true;
-}
-
-// --------------------------------------------------------------------------------------
-// Sprite mit bestimmter Animationsphase rendern
-// --------------------------------------------------------------------------------------
-
-bool DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR Color)
-{
-    // Ausschnitt einstellen
-    Anim %= 255;
-    itsRect = itsPreCalcedRects [Anim];
-
-    // Und Sprite rendern
-    RenderSprite(x, y, Color);
-
-    return true;
-}
-
-// --------------------------------------------------------------------------------------
-// Sprite mit bestimmter Animationsphase rendern, wahlweise spiegelverkehrt
-// --------------------------------------------------------------------------------------
-
-bool DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR Color, bool mirrored)
-{
-    // Ausschnitt einstellen
-    Anim %= 255;
-    itsRect = itsPreCalcedRects [Anim];
-
-    // Und Sprite rendern
-    if (mirrored == false)
-        RenderSprite(x, y, Color);
-    else
-        RenderMirroredSprite(x, y, Color);
-
-    return true;
 }
 
 // --------------------------------------------------------------------------------------
 // Sprite skaliert zeichnen mit aktuellem Surfaceausschnitt (mit textur Filter)
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int height, D3DCOLOR col)
+void DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int height, D3DCOLOR col)
 {
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
@@ -800,6 +690,8 @@ bool DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int he
     tr = itsRect.right /itsXSize;	// Rechts
     to = itsRect.top   /itsYSize;	// Oben
     tu = itsRect.bottom/itsYSize;	// Unten
+
+    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = col;
 
@@ -835,15 +727,13 @@ bool DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int he
     DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
 
     DirectGraphics.SetFilterMode (false);
-
-    return true;
 }
 
 // --------------------------------------------------------------------------------------
 // Sprite skaliert zeichnen mit angegebener Animationsphase (mit textur Filter)
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int height, int Anim, D3DCOLOR col)
+void DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int height, int Anim, D3DCOLOR col)
 {
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
@@ -863,6 +753,8 @@ bool DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int he
     to = ((Anim/itsXFrameCount) * itsYFrameSize)				 / itsYSize;	// Oben
     tu = ((Anim/itsXFrameCount) * itsYFrameSize + itsYFrameSize) / itsYSize;	// Unten
 
+    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
+
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = col;
 
     TriangleStrip[0].x		= l;		// Links oben
@@ -897,15 +789,13 @@ bool DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int he
     DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
 
     DirectGraphics.SetFilterMode (false);
-
-    return true;
 }
 
 // --------------------------------------------------------------------------------------
 // Sprite mit übergebenem Winkel rotiert darstellen
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D3DCOLOR Color)
+void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D3DCOLOR Color)
 {
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
@@ -925,6 +815,8 @@ bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
     to = itsRect.top   /itsYSize;	// Oben
     tu = itsRect.bottom/itsYSize;	// Unten
 
+    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
+
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
 
     TriangleStrip[0].x		= l;		// Links oben
@@ -1001,33 +893,13 @@ bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
     load_matrix( GL_MODELVIEW, g_matModelView.data() );
 #endif
 #endif
-
-    return true;
-}
-
-// --------------------------------------------------------------------------------------
-// Sprite mit übergebenem Winkel rotiert darstellen (Animationsphase)
-// --------------------------------------------------------------------------------------
-
-bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, int Anim, D3DCOLOR Color)
-{
-    // Ausschnitt einstellen
-    Anim %= 255;
-    itsRect = itsPreCalcedRects [Anim];
-
-    // Und Sprite rendern
-    RenderSpriteScaledRotated (x, y,
-                               float (itsRect.right  - itsRect.left),
-                               float (itsRect.bottom - itsRect.top), Winkel, Color);
-
-    return true;
 }
 
 // --------------------------------------------------------------------------------------
 // Sprite mit übergebenem Winkel rotiert darstellen
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, int Anim, D3DCOLOR Color, bool mirror)
+void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, int Anim, D3DCOLOR Color, bool mirror)
 {
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
@@ -1036,12 +908,17 @@ bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
     Anim %= 255;
     itsRect = itsPreCalcedRects [Anim];
 
+    //DKS - Pulled duplicated math out of logic below:
+    float height = itsRect.bottom - itsRect.top;
+    float width = itsRect.right - itsRect.left;
+
     // normal
     //
     if (mirror == false)
     {
         l = x-0.5f;									// Links
-        r = x+(itsRect.right-itsRect.left-1)+0.5f;	// Rechts
+        //r = x+(itsRect.right-itsRect.left-1)+0.5f;	// Rechts   //DKS
+		r = x+(width-1)+0.5f;	// Rechts
 
         Winkel = 360 - Winkel;
     }
@@ -1051,16 +928,20 @@ bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
     else
     {
         r = x+0.5f;									// Links
-        l = x+(itsRect.right-itsRect.left-1)-0.5f;	// Rechts
+        //l = x+(itsRect.right-itsRect.left-1)-0.5f;	// Rechts   //DKS
+		l = x+(width-1)-0.5f;	// Rechts
     }
 
     o = y-0.5f;									// Oben
-    u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten
+    //u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten    //DKS
+	u = y+(height-1)+0.5f;	// Unten
 
     to = itsRect.top   /itsYSize;	// Oben
     tu = itsRect.bottom/itsYSize;	// Unten
     tl = itsRect.left  /itsXSize;	// Links
     tr = itsRect.right /itsXSize;	// Rechts
+
+    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
 
@@ -1138,23 +1019,26 @@ bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
     load_matrix( GL_MODELVIEW, g_matModelView.data() );
 #endif
 #endif
-
-    return true;
 }
 
 // --------------------------------------------------------------------------------------
 // Sprite rotiert darstellen mit Verschiebung
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Winkel, float offx, float offy, D3DCOLOR Color, bool mirrored)
+void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Winkel, float offx, float offy, D3DCOLOR Color, bool mirrored)
 {
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
 
-//	itsRect = itsPreCalcedRects [0];
+//	itsRect = itsPreCalcedRects [0];    //DKS - This was commented out already in original source
+
+    //DKS - Pulled duplicated math out of logic below:
+    float height = itsRect.bottom - itsRect.top;
+    float width = itsRect.right - itsRect.left;
 
     l = x-0.5f;									// Links
-    r = x+(itsRect.right-itsRect.left-1)+0.5f;	// Rechts
+    //r = x+(itsRect.right-itsRect.left-1)+0.5f;	// Rechts       //DKS
+	r = x+(width-1)+0.5f;	// Rechts
 
     if (mirrored)
     {
@@ -1169,12 +1053,15 @@ bool DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
     Winkel = 360 - Winkel;
 
     o = y-0.5f;									// Oben
-    u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten
+    //u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten        //DKS
+	u = y+(height-1)+0.5f;	// Unten
 
     to = itsRect.top   /itsYSize;	// Oben
     tu = itsRect.bottom/itsYSize;	// Unten
     tl = itsRect.left  /itsXSize;	// Links
     tr = itsRect.right /itsXSize;	// Rechts
+
+    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
 
@@ -1253,15 +1140,13 @@ bool DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
     load_matrix( GL_MODELVIEW, g_matModelView.data() );
 #endif
 #endif
-
-    return true;
 }
 
 // --------------------------------------------------------------------------------------
 // Sprite mit übergebenem Winkel rotiert darstellen in beliebiger Grösse
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
+void DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
         float width, float height,
         float Winkel, D3DCOLOR Color)
 {
@@ -1282,6 +1167,8 @@ bool DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
     tr = itsRect.right /itsXSize;	// Rechts
     to = itsRect.top   /itsYSize;	// Oben
     tu = itsRect.bottom/itsYSize;	// Unten
+
+    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
 
@@ -1361,43 +1248,6 @@ bool DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
     load_matrix( GL_MODELVIEW, g_matModelView.data() );
 #endif
 #endif
-
-    return true;
-}
-
-// --------------------------------------------------------------------------------------
-// Memberfunktionen zum Abfragen der Membervariablen
-// --------------------------------------------------------------------------------------
-
-float DirectGraphicsSprite::GetXSize(void)
-{
-    return itsXSize;
-}
-
-float DirectGraphicsSprite::GetYSize(void)
-{
-    return itsYSize;
-
-}
-
-int DirectGraphicsSprite::GetXFrameSize(void)
-{
-    return itsXFrameSize;
-}
-
-int DirectGraphicsSprite::GetYFrameSize(void)
-{
-    return itsYFrameSize;
-}
-
-int DirectGraphicsSprite::GetXFrameCount(void)
-{
-    return itsXFrameCount;
-}
-
-int DirectGraphicsSprite::GetYFrameCount(void)
-{
-    return itsYFrameCount;
 }
 
 // --------------------------------------------------------------------------------------
@@ -1407,11 +1257,6 @@ int DirectGraphicsSprite::GetYFrameCount(void)
 // --------------------------------------------------------------------------------------
 // Rechteck enzeigen
 // --------------------------------------------------------------------------------------
-
-void RenderRect(float x, float y, float width, float height, D3DCOLOR Color)
-{
-    RenderRect4(x, y , width, height, Color, Color, Color, Color);
-}
 
 void RenderRect4(float x, float y, float width, float height,
                  D3DCOLOR c1,
@@ -1430,6 +1275,8 @@ void RenderRect4(float x, float y, float width, float height,
     r += TEXTURE_COORD_OFFSET;
     o -= TEXTURE_COORD_OFFSET;
     u += TEXTURE_COORD_OFFSET;
+
+    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 
     TriangleStrip[0].color = c1;
     TriangleStrip[0].x		= l;		// Links oben
@@ -1463,6 +1310,8 @@ void RenderRect4(float x, float y, float width, float height,
 
 void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2,	D3DCOLOR Color)
 {
+    VERTEX2D TriangleStrip[2]; //DKS - Added local declaration
+
     TriangleStrip[0].color = TriangleStrip[1].color = Color;
 
     TriangleStrip[0].x		= p1.x;		// p1
@@ -1491,6 +1340,8 @@ void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2,	D3DCOLOR Color)
 
 void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2,	D3DCOLOR Color1, D3DCOLOR Color2)
 {
+    VERTEX2D TriangleStrip[2]; //DKS - Added local declaration
+
     TriangleStrip[0].color = Color1;
     TriangleStrip[1].color = Color2;
 
@@ -1512,43 +1363,4 @@ void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2,	D3DCOLOR Color1, D3DCOLOR Color2
 #elif defined(PLATFORM_SDL)
     DirectGraphics.RendertoBuffer (D3DPT_LINELIST, 1, &TriangleStrip[0]);
 #endif
-}
-
-// --------------------------------------------------------------------------------------
-// Kreis an x/y zeichnen mit Radius r und Farbe col
-// --------------------------------------------------------------------------------------
-
-void RenderCircle(float x, float y, float r, D3DCOLOR col)
-{
-#define step 0.2f
-
-    D3DXVECTOR2 p1, p2;
-    for (float i = 0; i < 2*PI; i += step)
-    {
-        p1.x = x + (float)sin(i) * r;
-        p1.y = y + (float)cos(i) * r;
-
-        p2.x = x + (float)sin(i + step) * r;
-        p2.y = y + (float)cos(i + step) * r;
-
-        RenderLine(p1, p2, col);
-    }
-}
-
-// --------------------------------------------------------------------------------------
-// Kollision zwischen zwei Sprites ermitteln (bisher nur Bounding-Box)
-// --------------------------------------------------------------------------------------
-
-
-bool  SpriteCollision(float x1, float y1, RECT rect1,
-                      float x2, float y2, RECT rect2)
-{
-    // Kollision der Bounding-Boxes ?
-    if (x1 + rect1.left < x2 + rect2.right   &&
-            x2 + rect2.left < x1 + rect1.right   &&
-            y1 + rect1.top  < y2 + rect2.bottom  &&
-            y2 + rect2.top  < y1 + rect1.bottom)
-        return true;
-
-    return false;
 }

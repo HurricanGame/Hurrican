@@ -68,12 +68,12 @@ void GegnerFadeMusic::DoKI(void)
         }
     }
 
-#ifdef _DEBUG
-    if (DebugMode)
-        RenderCircle((float)(xPos + 20 - pTileEngine->XOffset),
-                     (float)(yPos + 20 - pTileEngine->YOffset), 150, 0xFFFFFFFF);
-#endif //_DEBUG
-
+    //DKS - Disabled, as RenderCircle is only used this once here and what is the point?
+//#ifdef _DEBUG
+//    if (DebugMode)
+//        RenderCircle((float)(xPos + 20 - pTileEngine->XOffset),
+//                     (float)(yPos + 20 - pTileEngine->YOffset), 150, 0xFFFFFFFF);
+//#endif //_DEBUG
 }
 
 // --------------------------------------------------------------------------------------

@@ -2131,32 +2131,30 @@ void ProjectileClass::Render(void)
 
         Color = 0xFFFFFFFF;
 
-        v1.color = v2.color = v3.color = v4.color = Color;
+        QUAD2D TriangleStrip; //DKS - Added local declaration
+        
+        //DKS - Altered this code to assign to TriangleStrip directly:
+        TriangleStrip.v1.color = TriangleStrip.v2.color = TriangleStrip.v3.color = TriangleStrip.v4.color = Color;
 
-        v1.x		= l;		// Links oben
-        v1.y		= o;
-        v1.tu		= tl;
-        v1.tv		= to;
+        TriangleStrip.v1.x		= l;		// Links oben
+        TriangleStrip.v1.y		= o;
+        TriangleStrip.v1.tu		= tl;
+        TriangleStrip.v1.tv		= to;
 
-        v2.x		= r;		// Rechts oben
-        v2.y		= o;
-        v2.tu		= tr;
-        v2.tv		= to;
+        TriangleStrip.v2.x		= r;		// Rechts oben
+        TriangleStrip.v2.y		= o;
+        TriangleStrip.v2.tu		= tr;
+        TriangleStrip.v2.tv		= to;
 
-        v3.x		= l;		// Links unten
-        v3.y		= u;
-        v3.tu		= tl;
-        v3.tv		= tu;
+        TriangleStrip.v3.x		= l;		// Links unten
+        TriangleStrip.v3.y		= u;
+        TriangleStrip.v3.tu		= tl;
+        TriangleStrip.v3.tv		= tu;
 
-        v4.x		= r;		// Rechts unten
-        v4.y		= u;
-        v4.tu		= tr;
-        v4.tv		= tu;
-
-        TriangleStrip[0] = v1;
-        TriangleStrip[1] = v2;
-        TriangleStrip[2] = v3;
-        TriangleStrip[3] = v4;
+        TriangleStrip.v4.x		= r;		// Rechts unten
+        TriangleStrip.v4.y		= u;
+        TriangleStrip.v4.tu		= tr;
+        TriangleStrip.v4.tv		= tu;
 
         // Schuss gedreht rendern?
         //
@@ -2206,7 +2204,8 @@ void ProjectileClass::Render(void)
         }
 
         // Sprite zeichnen
-        DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
+        //DKS - Altered to match new QUAD2D strips:
+        DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2, &TriangleStrip);
 
         if (Winkel > -10000.0f)
         {
