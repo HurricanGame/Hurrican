@@ -242,7 +242,7 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
     bool isFullscreen       = !CommandLineParams.RunWindowMode;
     uint16_t ScreenWidth    = SCREENWIDTH;
     uint16_t ScreenHeight   = SCREENHEIGHT;
-    
+
     if (CommandLineParams.LowRes) {
         ScreenWidth    = LOWRES_SCREENWIDTH;
         ScreenHeight   = LOWRES_SCREENHEIGHT;
@@ -973,9 +973,13 @@ void DirectGraphicsClass::ShowBackBuffer(void)
 
         SelectBuffer( false );
 
-        DirectGraphics.SetTexture( RenderBuffer.texture );
+        use_texture = true;
+        RenderBuffer.BindTexture( use_texture );
+
         RendertoBuffer( D3DPT_TRIANGLESTRIP, 2, &vertices[0] );
-        DirectGraphics.SetTexture( -1 );
+
+        use_texture = false;
+        RenderBuffer.BindTexture( use_texture );
 
 #if defined(ANDROID)
         DrawTouchOverlay();

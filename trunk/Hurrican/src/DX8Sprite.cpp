@@ -1369,7 +1369,7 @@ void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2,	D3DCOLOR Color1, D3DCOLOR Color2
 // Kreis an x/y zeichnen mit Radius r und Farbe col
 // --------------------------------------------------------------------------------------
 //DKS - disabled this as it was only used in a single debug code block in Trigger_FadeMusic.cpp
-/*
+#if 0
 void RenderCircle(float x, float y, float r, D3DCOLOR col)
 {
 	#define step 0.2f
@@ -1387,3 +1387,4 @@ void RenderCircle(float x, float y, float r, D3DCOLOR col)
 		RenderLine(p1, p2, col);
 	}
 }
+#endif
