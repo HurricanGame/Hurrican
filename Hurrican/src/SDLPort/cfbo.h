@@ -36,6 +36,7 @@ class CFbo
 
         bool Enabled;
         bool Open( uint16_t w, uint16_t h );
+        void BindTexture( bool active );
         void Close( void );
         GLuint texture;
         GLuint framebuffer;

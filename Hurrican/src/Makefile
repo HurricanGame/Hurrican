@@ -58,6 +58,7 @@ RM  := rm -f
 
 USE_EGL := yes
 USE_GL2 := yes
+USE_FBO := no
 
 DEFINES += -DRPI -DUSE_GL2 -DUSE_GLES2 -DUSE_EGL_RPI -DRGBA_5551
 
@@ -80,6 +81,7 @@ RM  := rm -f
 
 USE_EGL := yes
 USE_GL2 := yes
+USE_FBO := no
 
 DEFINES += -DGCW -DUSE_GL2 -DUSE_GLES2 -DUSE_ETC1 -DUSE_EGL_RAW
 DEFINES += -DUSE_HOME_DIR
@@ -96,6 +98,33 @@ LDFLAGS := -L$(GCWSDK)/lib -g -lpthread -lmodplug -lSDL_mixer -lSDL_image -lSDL 
 
 endif
 
+ifeq ($(TARGET),rdu)
+
+EXE := ../hurrican
+CXX := $(RDUSDK)/bin/armv7l-ims-linux-gnueabi-g++
+CC  := $(RDUSDK)/bin/armv7l-ims-linux-gnueabi-gcc
+LD  := $(RDUSDK)/bin/armv7l-ims-linux-gnueabi-g++
+RM  := rm -f
+
+USE_EGL := yes
+USE_GL2 := yes
+USE_FBO := yes
+
+DEFINES += -DRDU -DUSE_GL2 -DUSE_GLES2 -DUSE_FBO -DUSE_ETC1 -DUSE_EGL_RAW
+DEFINES += -DUSE_HOME_DIR
+DEFINES += -DUSE_TRIG_LOOKUP_TABLE
+DEFINES += -DUSE_FAST_RNG
+DEFINES += -DUSE_NO_EXCEPTIONS
+
+INCLUDES_OS := -ISDL_port \
+               -I$(RDUSDK)/include/SDL \
+               -I$(RDUSDK)/include/libmodplug \
+               -I$(RDUSDK)/include/GLES2 -I$(RDUSDK)/include/EGL
+
+LDFLAGS := -L$(RDUSDK)/lib -g -lpthread -lmodplug -lSDL_mixer -lSDL_image -lSDL -lGLESv2 -lEGL
+
+endif
+
 ifeq ($(TARGET),pandora)
 
 EXE := ../hurrican
@@ -106,6 +135,7 @@ RM  := rm -f
 
 USE_EGL := yes
 USE_GL2 := yes
+USE_FBO := no
 
 DEFINES += -DPANDORA -DUSE_GL2 -DUSE_GLES2 -DUSE_EGL_RAW -DUSE_PVRTC
 
@@ -130,8 +160,9 @@ RM  := rm -f
 
 USE_EGL := yes
 USE_GL2 := yes
+USE_FBO := yes
 
-DEFINES += -DLINUX -DUSE_HOME_DIR -DUSE_GL2 -DUSE_GLES2 -DUSE_EGL_SDL -DUSE_PVRTC -DUSE_ETC1
+DEFINES += -DLINUX -DUSE_HOME_DIR -DUSE_GL2 -DUSE_GLES2 -DUSE_FBO -DUSE_EGL_SDL -DUSE_PVRTC -DUSE_ETC1 -Wno-unused-local-typedefs
 
 INCLUDES_OS := -I/usr/include -I/usr/include/SDL -I/usr/include/GLES2 -I/usr/include/libmodplug
 
@@ -141,7 +172,7 @@ endif
 
 INCLUDES := -I. -I./SDLPort -Icml -I./unrarlib040/unrarlib $(INCLUDES_OS)
 
-COMMON_CFLAGS := -Wall -Wno-unused-local-typedefs -fsingle-precision-constant -c $(INCLUDES) $(DEFINES)
+COMMON_CFLAGS := -Wall -c $(INCLUDES) $(DEFINES)
 
 ifdef _DEBUG
 # Debug CFLAGS:
@@ -161,7 +192,7 @@ EGL_FILES := SDLPort/eglport
 
 GL2_FILES := SDLPort/cshader
 
-#SDLPort/cshader
+FBO_FILES := SDLPort/cfbo
 
 FILES :=Boss_BigFish \
         Boss_Bratklops \
@@ -353,6 +384,10 @@ endif
 
 ifeq ($(USE_GL2),yes)
 ALL_FILES += $(GL2_FILES)
+endif
+
+ifeq ($(USE_FBO),yes)
+ALL_FILES += $(FBO_FILES)
 endif
 
 ALL_OBJS := $(addsuffix .o, $(ALL_FILES))
