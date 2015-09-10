@@ -276,12 +276,7 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
     }
     Protokoll.WriteText( false, "SDL initialized.\n" );
 
-#if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
-    if (EGL_Open() != 0)
-    {
-        return 1;
-    }
-#else
+#if !defined(USE_EGL_SDL) && !defined(USE_EGL_RAW) && !defined(USE_EGL_RPI)
     if (CommandLineParams.ScreenDepth > 16) {               //DKS - Screen depth is now default 16 under GLES, 32 others
         SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 8 );          //      (Can now be changed via command line switch)
         SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 8 );
@@ -351,7 +346,15 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
     SDL_ShowCursor(SDL_DISABLE);
 
 #if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
-    if (EGL_Init() != 0)
+    uint16_t actual_w, actual_h;
+#if SDL_VERSION_ATLEAST(2,0,0)
+    SDL_GetWindowSize( Window, &actual_w, &actual_h );
+#else
+    actual_w = Screen->w;
+    actual_h = Screen->h;
+#endif
+
+    if (EGL_Open( actual_w, actual_h ) != 0)
     {
         return 1;
     }
