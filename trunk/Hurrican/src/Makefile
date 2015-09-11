@@ -172,7 +172,7 @@ endif
 
 INCLUDES := -I. -I./SDLPort -Icml -I./unrarlib040/unrarlib $(INCLUDES_OS)
 
-COMMON_CFLAGS := -Wall -c $(INCLUDES) $(DEFINES)
+COMMON_CFLAGS := -Wall -fsingle-precision-constant -c $(INCLUDES) $(DEFINES)
 
 ifdef _DEBUG
 # Debug CFLAGS:
