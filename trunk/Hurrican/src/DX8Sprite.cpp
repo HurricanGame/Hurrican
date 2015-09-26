@@ -130,15 +130,16 @@ bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize
 // Bild auf Surface anzeigen
 // --------------------------------------------------------------------------------------
 
-#if defined(PLATFORM_DIRECTX)
-bool DirectGraphicsSurface::DrawSurface(LPDIRECT3DSURFACE8 &Temp, int xPos, int yPos)
-{
-    POINT Dest = {(int)(xPos), (int)(yPos)};						// Zielkoordinaten
-    lpD3DDevice->CopyRects(itsSurface, &itsRect, 1, Temp, &Dest);	// anzeigen
-
-    return true;
-}
-#endif
+//DKS - This was never used anywhere, disabled:
+//#if defined(PLATFORM_DIRECTX)
+//bool DirectGraphicsSurface::DrawSurface(LPDIRECT3DSURFACE8 &Temp, int xPos, int yPos)
+//{
+//    POINT Dest = {(int)(xPos), (int)(yPos)};						// Zielkoordinaten
+//    lpD3DDevice->CopyRects(itsSurface, &itsRect, 1, Temp, &Dest);	// anzeigen
+//
+//    return true;
+//}
+//#endif
 
 // --------------------------------------------------------------------------------------
 // DirectGraphicsSprite Funktionen
