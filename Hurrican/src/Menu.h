@@ -95,43 +95,48 @@ struct StarStruct
 // Struktur zum Speichern eines Highscore Eintrages
 // --------------------------------------------------------------------------------------
 
+//DKS - Changed size of Name[] char array from 30 to 32 here, to reflect actual padding
+//      that always occurred inside the struct. Also changed data types to explicitly
+//      match their original binary representation to make loading/saving files robust.
 struct HighscoreStruct
 {
-    char		Name[30];									// Name
-    long		Score;										// Punkte
-    int			Stage;										// Level
-    int			Skill;										// Schwierigkeitsgrad
-    long		Pruefsumme;
+    char        Name[32];                                   // Name
+    int32_t     Score;                                      // Punkte
+    int32_t     Stage;                                      // Level
+    int32_t     Skill;                                      // Schwierigkeitsgrad
+    int32_t     Pruefsumme;
 };
 
 // --------------------------------------------------------------------------------------
 // Struktur zum Speichern und laden eines Savegames
 // --------------------------------------------------------------------------------------
 
+//DKS - Made data types explicitly represent their binary size
+//      to make loading/saving files more robust:
 struct SavegameStruct
 {
-    char	Name[40];					// Name des Savegames
-    float	Energy[2];					// Energie
-    float	Armour[2];					// Rad Energie
-    float	Shield[2];					// Noch Schild ?
-    float	AutoFire[2];				// Noch Dauerfeuer?
-    float	RiesenShot[2];				// Noch Fettboller?
-    int		Players;					// Playercount
-    long	Score;						// Punkte des Spielers
-    int		Stage;						// Aktuelles Level
-    int		Skill;						// 0 = easy, 1 = medium, 2 = hard
-    int		NewStage;					// Neues Level
-    int		CollectedDiamonds;			// Anzahl gesammelter Edelsteine
-    int		Lives[2];					// Wieviele Leben noch ?
-    int		SelectedWeapon[2];			// gewählte Waffe
-    int		CurrentWeaponLevel[2][4];	// Aktuelles Level		 der Waffen 1-4
-    int		CollectedPowerUps[2][4];	// Gesammelt Powerups    der Waffen 1-4
-    int		NextWeaponLevel[2][4];		// Nächste   Waffenstufe der Waffen 1-4
-    int		BlitzLength[2];				// Länge des Blitzes
-    int		PowerLines;					// Anzahl an Powerlines
-    int		Grenades;					// Anzahl an Granaten
-    int		SmartBombs;					// Anzahl an SmartBomben (Druckwellen)
-    long    Pruefsumme;					// Prüfsumme für die Savegames
+    char    Name[40];                   // Name des Savegames
+    float   Energy[2];                  // Energie
+    float   Armour[2];                  // Rad Energie
+    float   Shield[2];                  // Noch Schild ?
+    float   AutoFire[2];                // Noch Dauerfeuer?
+    float   RiesenShot[2];              // Noch Fettboller?
+    int32_t Players;                    // Playercount
+    int32_t Score;                      // Punkte des Spielers
+    int32_t Stage;                      // Aktuelles Level
+    int32_t Skill;                      // 0 = easy, 1 = medium, 2 = hard
+    int32_t NewStage;                   // Neues Level
+    int32_t CollectedDiamonds;          // Anzahl gesammelter Edelsteine
+    int32_t Lives[2];                   // Wieviele Leben noch ?
+    int32_t SelectedWeapon[2];          // gewählte Waffe
+    int32_t CurrentWeaponLevel[2][4];   // Aktuelles Level       der Waffen 1-4
+    int32_t CollectedPowerUps[2][4];    // Gesammelt Powerups    der Waffen 1-4
+    int32_t NextWeaponLevel[2][4];      // Nächste   Waffenstufe der Waffen 1-4
+    int32_t BlitzLength[2];             // Länge des Blitzes
+    int32_t PowerLines;                 // Anzahl an Powerlines
+    int32_t Grenades;                   // Anzahl an Granaten
+    int32_t SmartBombs;                 // Anzahl an SmartBomben (Druckwellen)
+    int32_t Pruefsumme;                 // Prüfsumme für die Savegames
 };
 
 // --------------------------------------------------------------------------------------

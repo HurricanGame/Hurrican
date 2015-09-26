@@ -73,6 +73,7 @@ endif
 
 ifeq ($(TARGET),gcw)
 
+GCWSDK := /opt/gcw0-toolchain/usr
 EXE := ../hurrican
 CXX := $(GCWSDK)/bin/mipsel-gcw0-linux-uclibc-g++
 CC  := $(GCWSDK)/bin/mipsel-gcw0-linux-uclibc-gcc
