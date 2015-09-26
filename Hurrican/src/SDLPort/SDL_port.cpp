@@ -46,34 +46,34 @@ void fopen_s( FILE** file, const char* path, const char* mode )
     *file = fopen( path, mode );
 }
 
-void strcat_s( const char* dst, const char* src )
+void strcat_s( char* dst, const char* src )
 {
-    strcat( (char*)dst, src );
+    strcat( dst, src );
 }
 
-void strcat_s( const char* dst, uint32_t size, const char* src )
+void strcat_s( char* dst, uint32_t size, const char* src )
 {
-    strncat( (char*)dst, src, size );
+    strncat( dst, src, size );
 }
 
-void strncat_s( const char* dst, const char* src, uint32_t size )
+void strncat_s( char* dst, const char* src, uint32_t size )
 {
-    strncat( (char*)dst, src, size );
+    strncat( dst, src, size );
 }
 
-void strcpy_s( const char* dst, int size, const char* src )
+void strcpy_s( char* dst, int size, const char* src )
 {
-    strncpy( (char*)dst, src, size);
+    strncpy( dst, src, size);
 }
 
-void strcpy_s( const char* dst, const char* src )
+void strcpy_s( char* dst, const char* src )
 {
-    strcpy( (char*)dst, src );
+    strcpy( dst, src );
 }
 
-void strncpy_s( const char* dst, const char* src, int size )
+void strncpy_s( char* dst, const char* src, int size )
 {
-    strncpy( (char*)dst, src, size );
+    strncpy( dst, src, size );
 }
 
 void fprintf_s( FILE* file, const char* src)
@@ -81,7 +81,7 @@ void fprintf_s( FILE* file, const char* src)
     fprintf( file, "%s", src );
 }
 
-void _itoa_s( int value, const char* dst, int size )
+void _itoa_s( int value, char* dst, int size )
 {
     sprintf( (char*)dst, "%d", value );
 }

@@ -117,14 +117,14 @@ struct D3DXVECTOR2
 
 #define sprintf_s   sprintf
 void fopen_s        ( FILE** file, const char* path, const char* mode );
-void strcat_s       ( const char* dst, const char* src );
-void strcat_s       ( const char* dst, uint32_t size, const char* src );
-void strncat_s      ( const char* dst, const char* src, uint32_t size );
-void strcpy_s       ( const char* dst, int size, const char* src );
-void strcpy_s       ( const char* dst, const char* src );
-void strncpy_s      ( const char* dst, const char* src, int size );
+void strcat_s       ( char* dst, const char* src );
+void strcat_s       ( char* dst, uint32_t size, const char* src );
+void strncat_s      ( char* dst, const char* src, uint32_t size );
+void strcpy_s       ( char* dst, int size, const char* src );
+void strcpy_s       ( char* dst, const char* src );
+void strncpy_s      ( char* dst, const char* src, int size );
 void fprintf_s      ( FILE* file, const char* src );
-void _itoa_s        ( int value, const char* dst, int size );
+void _itoa_s        ( int value, char* dst, int size );
 char* _strrev       ( char *);
 
 #ifndef __WIN32__
