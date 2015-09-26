@@ -63,10 +63,12 @@ public:
     //bool  SetRect	  (int left,  int top,
     //                   int right, int bottom);				// Neuen Ausschnitt setzen
     //RECT  GetRect	  (void);								// Ausschnitt holen
-#if defined(PLATFORM_DIRECTX)
-    bool  DrawSurface (LPDIRECT3DSURFACE8 &Temp,			// Bild auf Surface Temp anzeigen
-                       int xPos, int yPos);					// an Position xPos/yPos
-#endif
+
+    //DKS - This was never used anywhere, disabled:
+    //#if defined(PLATFORM_DIRECTX)
+    //bool  DrawSurface (LPDIRECT3DSURFACE8 &Temp,			// Bild auf Surface Temp anzeigen
+    //                   int xPos, int yPos);					// an Position xPos/yPos
+    //#endif
 };
 
 // --------------------------------------------------------------------------------------
