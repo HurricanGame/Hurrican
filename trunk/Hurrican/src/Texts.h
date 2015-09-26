@@ -349,14 +349,14 @@ typedef enum Textenum
 
 bool LoadLanguage  (char *filename);			// Bestimmte Sprachdatei laden
 void InitReplacers (void);						// Tasten ErsetzungsStrings für die TutorialTexte initialisieren
-int	 GetDecValue(char *pair, int len);			// Dezimalwert einer Hexzahl mit Länge len
+int	 GetDecValue(const char *pair, int len);			// Dezimalwert einer Hexzahl mit Länge len
 
 //DKS - Added cross-platform language-files handling
-int FindLanguageFiles(char *path);
+int FindLanguageFiles(const char *path);
 
 //DKS - Added function to split a longer line into two shorter lines, for when
 //      running on a lower-resolution device w/ scaled font
-void SplitLine(char *dst1, char *dst2, char *source);
+void SplitLine(char *dst1, char *dst2, const char *source);
 
 //DKS - Added function to split a longer line into one, dst1, sized up to
 //      width (in pixels) based on font passed, and one, dst2, is the remainder,

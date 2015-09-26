@@ -72,15 +72,6 @@ using namespace std;
 //#include <stdlib.h>
 //#include <crtdbg.h>
 
-// DKS - Determine correct directory separator character and mkdir arguments for the platform:
-#if defined(PLATFORM_DIRECTX)
-#define	DIRSEP_CHAR	'\\'
-#define	createdir(name)	(mkdir(name) == 0)
-#else
-#define	DIRSEP_CHAR	'/'
-#define	createdir(name)	(mkdir(name, 0755) == 0)
-#endif
-
 // --------------------------------------------------------------------------------------
 // externe Variablen
 // --------------------------------------------------------------------------------------
@@ -279,37 +270,36 @@ bool FileExists(char Filename[256])
 }
 
 //DKS - Added function:
-// Create the directory dir if it doesn't already exist. Return 1 if created/found, 0 on failure.
-int CreateDir(const char *dir)
+// Create the directory dir if it doesn't already exist. Return true if created or already exists.
+bool CreateDir(const char *dir)
 {
-    if (!dir) 
-        return 0;
+    if (!dir) return false;
 
 #if defined (PLATFORM_DIRECTX)
 	struct _stat	st;
-	return _stat(dir, &st) ? createdir(dir) : _S_ISDIR(st.st_mode);
+	return (_stat(dir, &st) != 0) ? (mkdir(dir) == 0) : (_S_ISDIR(st.st_mode) != 0);
 #else
 	struct stat	st;
-	return stat(dir, &st) ? createdir(dir) : S_ISDIR(st.st_mode);
+	return (stat(dir, &st) != 0) ? (mkdir(dir, 0755) == 0) : (S_ISDIR(st.st_mode) != 0);
 #endif
 }
 
 //DKS - Added function:
-// If directory exists (and is indeed a directory), return 1, or 0 on failure
-int FindDir(const char *dir)
+// If directory exists (and is indeed a directory), return true
+bool FindDir(const char *dir)
 {
 #if defined (PLATFORM_DIRECTX)
     struct _stat st;
     if (!dir || _stat(dir, &st) != 0)
-        return 0;
+        return false;
     else 
-        return _S_ISDIR(st.st_mode);
+        return _S_ISDIR(st.st_mode) != 0;
 #else
     struct stat st;
     if (!dir || stat(dir, &st) != 0)
-        return 0;
+        return false;
     else 
-        return S_ISDIR(st.st_mode);
+        return S_ISDIR(st.st_mode) != 0;
 #endif
 }
 

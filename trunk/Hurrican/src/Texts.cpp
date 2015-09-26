@@ -226,7 +226,7 @@ loadfilelevel:
 
 //DKS - Added cross-platform language-files handling
 // Returns number of matched files
-int FindLanguageFiles(char *path)
+int FindLanguageFiles(const char *path)
 {
     tinydir_dir dir;
     tinydir_file file;
@@ -275,7 +275,7 @@ int FindLanguageFiles(char *path)
 
 //DKS - Added function to split a longer line into two shorter lines, for when
 //      running on a lower-resolution device w/ scaled font
-void SplitLine(char *dst1, char *dst2, char *source)
+void SplitLine(char *dst1, char *dst2, const char *source)
 {
     if (!source || strlen(source) < 10)
         return;
@@ -476,7 +476,7 @@ void InitReplacers(void)
 // Dec Value einer Hex zahl ermitteln
 // --------------------------------------------------------------------------------------
 
-int GetDecValue(char *pair, int len)
+int GetDecValue(const char *pair, int len)
 {
     int r = 0;
     int f = 0;

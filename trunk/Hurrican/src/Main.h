@@ -81,8 +81,8 @@ bool GameInit (HWND hwnd, HINSTANCE hinstance);		// Spiel vor  dem Cracktro init
 bool GameInit2(void);								// Spiel nach dem Cracktro initialisieren
 bool GameExit   (void);								// Spiel de-initialisieren
 bool Heartbeat  (void);								// Haupt Game Loop
-int  CreateDir(const char *dir); //DKS - Added function to create a directory if it doesn't already exist (1 on success)
-int  FindDir(const char *dir);   //DKS - Added function to check if a directory exists (1 on success)
+bool CreateDir(const char *dir); //DKS - Added function to create a directory if it doesn't already exist (1 on success)
+bool FindDir(const char *dir);   //DKS - Added function to check if a directory exists (1 on success)
 bool FileExists(char Filename[256]);
 void ConvertPlayerTexture(DirectGraphicsSprite *pTexture);
 void CreatePlayer2Texture(void);
@@ -100,6 +100,30 @@ void ShowDebugInfo(void);							// Allen möglichen Kram anzeigen
 
 //DKS - Added FPS reporting:
 void ShowFPS(void);
+
+// --------------------------------------------------------------------------------------
+// Endianess handling
+// We will Swap values only for Big_Endian, Little_Endian should be unchanged
+// --------------------------------------------------------------------------------------
+static inline uint32_t FixEndian(uint32_t x)
+{
+#if defined(PLATFORM_SDL) && (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+    return SDL_Swap32(x);
+#else
+    return x;
+#endif
+}
+
+static inline int32_t FixEndian(int32_t x)
+{
+#if defined(PLATFORM_SDL) && (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+    uint32_t val = SDL_Swap32(*reinterpret_cast<uint32_t*>(&x));
+    return *reinterpret_cast<int32_t*>(&val);
+#else
+    return x;
+#endif
+}
+
 
 #endif
 

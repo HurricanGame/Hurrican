@@ -113,14 +113,15 @@
 
 // Struktur für ein Level Tile wie es aus dem Level geladen wird
 //
+//DKS - Made binary sizes of member vars explicit here to make loading/saving binary files more robust:
 struct LevelTileLoadStruct
 {
-    unsigned char	TileSetBack;						// Back  aus welchem Tileset ?
-    unsigned char	TileSetFront;						// Front aus welchem Tileset ?
-    unsigned char   BackArt;							// Tile im Hintergrund
-    unsigned char	FrontArt;							// Tile im Vordergrund
-    unsigned char	Red, Green, Blue, Alpha;			// Farbwert des Tiles
-    unsigned int	Block;								// Blockierungsart (siehe #defines)
+    uint8_t  TileSetBack;              // Back  aus welchem Tileset ?
+    uint8_t  TileSetFront;             // Front aus welchem Tileset ?
+    uint8_t  BackArt;                  // Tile im Hintergrund
+    uint8_t  FrontArt;                 // Tile im Vordergrund
+    uint8_t  Red, Green, Blue, Alpha;  // Farbwert des Tiles
+    uint32_t Block;                    // Blockierungsart (siehe #defines)
 };
 
 // Struktur für die Farbwerte von einem Level Tile
@@ -149,35 +150,43 @@ struct LevelTileStruct
 // Struktur für ein aus dem Level zu ladendes Objekte
 // --------------------------------------------------------------------------------------
 
+//DKS - Made binary sizes of member vars and padding bytes explicit here to make
+//      loading/saving binary files more robust:
 struct LevelObjectStruct
 {
-    unsigned int	ObjectID;					// Welche Objekt ID ?
-    int				XPos;						// x-Position
-    int				YPos;						// y-Position
-    bool			ChangeLight;				// Umgebungslicht annehmen ?
-    unsigned char	Skill;						// 0 = Easy, 1 = Medium, 2 = Hard
-    int				Value1;						// Werte für diverse Trigger
-    int				Value2;						// Werte für diverse Trigger
+    uint32_t ObjectID;               // Welche Objekt ID ?
+    int32_t  XPos;                   // x-Position
+    int32_t  YPos;                   // y-Position
+    uint8_t  ChangeLight;            // Umgebungslicht annehmen ?
+    uint8_t  Skill;                  // 0 = Easy, 1 = Medium, 2 = Hard
+    uint8_t  PADDING_CHUNK_1[2];     // 2 PADDING BYTES
+    int32_t  Value1;                 // Werte für diverse Trigger
+    int32_t  Value2;                 // Werte für diverse Trigger
 };
 
 // --------------------------------------------------------------------------------------
 // Level-Datei Header
 // --------------------------------------------------------------------------------------
 
+//DKS - Made binary sizes of member vars and padding bytes explicit here to make
+//      loading/saving binary files more robust:
 struct FileHeader
 {
-    char			Kennung[46];					// Level-Kennung
-    char			Beschreibung[100];				// Level-Beschreibung
-    char			BackgroundFile[24];				// Dateiname des Hintergrundes
-    char			ParallaxAFile [24];				// Dateiname des 1. Parallax Layers
-    char			ParallaxBFile [24];				// Dateiname des 2. Parallax Layers
-    char			CloudFile     [24];				// Dateiname des WolkenLayers
-    unsigned int	Timelimit;						// aktuelles Zeitlimit des Levels
-    unsigned char	UsedTilesets;					// Anzahl der Tilesets
-    char			SetNames[64][16];				// Namen der benutzten Sets
-    unsigned int	SizeX, SizeY;					// Größe des Levels
-    unsigned int	NumObjects;						// Anzahl der Objekte
-    bool			ScrollBackground;				// Hintergrundbild srollen oder statisch ?
+    char            Kennung[46];                    // Level-Kennung
+    char            Beschreibung[100];              // Level-Beschreibung
+    char            BackgroundFile[24];             // Dateiname des Hintergrundes
+    char            ParallaxAFile [24];             // Dateiname des 1. Parallax Layers
+    char            ParallaxBFile [24];             // Dateiname des 2. Parallax Layers
+    char            CloudFile     [24];             // Dateiname des WolkenLayers
+    uint8_t         PADDING_CHUNK_1[2];             // 2 PADDING  BYTES
+    uint32_t        Timelimit;                      // aktuelles Zeitlimit des Levels
+    uint8_t         UsedTilesets;                   // Anzahl der Tilesets
+    char            SetNames[64][16];               // Namen der benutzten Sets
+    uint8_t         PADDING_CHUNK_2[3];             // 3 PADDING BYTES
+    uint32_t        SizeX, SizeY;                   // Größe des Levels
+    uint32_t        NumObjects;                     // Anzahl der Objekte
+    uint8_t         ScrollBackground;               // Hintergrundbild srollen oder statisch ?
+    uint8_t         PADDING_CHUNK_3[3];             // 3 PADDING BYTES
 };
 
 // --------------------------------------------------------------------------------------
@@ -186,12 +195,15 @@ struct FileHeader
 // noch ins level format reinmüssen, dahinter =)
 // --------------------------------------------------------------------------------------
 
+//DKS - Made binary sizes of member vars and padding bytes explicit here to make
+//      loading/saving binary files more robust:
 struct FileAppendix
 {
-    char			Songs[2][30];					// Namen der benutzten Songs (Stage und Boss)
-    int				UsedPowerblock;					// ID der benutzten Powerblock Art
-    char			Col1[8], Col2[8];				// Farben für Liquid
-    bool			Taschenlampe;
+    char    Songs[2][30];             // Namen der benutzten Songs (Stage und Boss)
+    int32_t UsedPowerblock;           // ID der benutzten Powerblock Art
+    char    Col1[8], Col2[8];         // Farben für Liquid
+    uint8_t Taschenlampe;
+    uint8_t PADDING_CHUNK_1[3];       // 3 padding bytes
 };
 
 // --------------------------------------------------------------------------------------
@@ -274,7 +286,8 @@ public:
     int				MaxSecrets;
     int				MaxDiamonds;
 
-    float			SinPos;									// Position in der SinusListe für das AlienLevel
+    //DKS - See above note regarding SinList: disabled SinPos (unused)
+    //float			SinPos;									// Position in der SinusListe für das AlienLevel
     float			SinPos2;								// Position in der SinusListe für den Wasserhintergrund
 
     bool							bScrollBackground;		// Hintegrundbild scrollen ?

@@ -34,16 +34,6 @@
 #include "Main.h"
 
 // --------------------------------------------------------------------------------------
-// Endianess handling
-// We will Swap values only for Big_Endian, Little_Endian should be unchanged
-// --------------------------------------------------------------------------------------
-#if SDL_BYTEORDER == SDL_LIL_ENDIAN
-#define SWAP32(X) (X)
-#else
-#define SWAP32(X) SDL_Swap32(X)
-#endif
-
-// --------------------------------------------------------------------------------------
 // externe Variablen
 // --------------------------------------------------------------------------------------
 
@@ -183,7 +173,7 @@ TileEngineClass::TileEngineClass(void)
         i++;
     }
 
-    SinPos   = 0.0f;
+    //SinPos   = 0.0f;      //DKS - unused; disabled
     SinPos2  = 0.0f;
     WaterPos = 0.0f;
 
@@ -260,7 +250,7 @@ void TileEngineClass::InitNewLevel(int xSize, int ySize)
 
     memset(&Tiles, 0, sizeof(Tiles));
 
-    SinPos   = 0.0f;
+    //SinPos   = 0.0f;
     SinPos2  = 0.0f;
     WaterPos = 0.0f;
 
@@ -403,8 +393,8 @@ loadfile:
     fread(&DateiHeader, sizeof(DateiHeader), 1, Datei);
 
     // und Werte übertragen
-    LEVELSIZE_X		 = SWAP32(DateiHeader.SizeX);
-    LEVELSIZE_Y		 = SWAP32(DateiHeader.SizeY);
+    LEVELSIZE_X		 = FixEndian(DateiHeader.SizeX);
+    LEVELSIZE_Y		 = FixEndian(DateiHeader.SizeY);
     LEVELPIXELSIZE_X = (float)LEVELSIZE_X*TILESIZE_X;
     LEVELPIXELSIZE_Y = (float)LEVELSIZE_Y*TILESIZE_Y;
     LoadedTilesets   = DateiHeader.UsedTilesets;
@@ -423,11 +413,8 @@ loadfile:
     ParallaxLayer[0].LoadImage(DateiHeader.ParallaxAFile, 640, 480, 640, 480, 1, 1);
     ParallaxLayer[1].LoadImage(DateiHeader.ParallaxBFile, 640, 480, 640, 480, 1, 1);
     CloudLayer.LoadImage(DateiHeader.CloudFile, 640, 240, 640, 240, 1, 1);
-    Timelimit = (double) SWAP32(DateiHeader.Timelimit);
-
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    DateiHeader.NumObjects = SWAP32(DateiHeader.NumObjects);
-#endif
+    Timelimit = (double) FixEndian(DateiHeader.Timelimit);
+    DateiHeader.NumObjects = FixEndian(DateiHeader.NumObjects);
 
     if (Timelimit <= 0)
         Timelimit = 500;
@@ -461,7 +448,7 @@ loadfile:
             //
             Tiles[i][j].Alpha			= LoadTile.Alpha;
             Tiles[i][j].BackArt		= LoadTile.BackArt;
-            Tiles[i][j].Block			= SWAP32(LoadTile.Block);
+            Tiles[i][j].Block			= FixEndian(LoadTile.Block);
             Tiles[i][j].Blue			= LoadTile.Blue;
             Tiles[i][j].FrontArt		= LoadTile.FrontArt;
             Tiles[i][j].Green			= LoadTile.Green;
@@ -557,13 +544,11 @@ loadfile:
         {
             fread(&LoadObject, sizeof(LoadObject), 1, Datei);				// Objekt laden
 
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-            LoadObject.ObjectID = SWAP32(LoadObject.ObjectID);
-            LoadObject.XPos = SWAP32(LoadObject.XPos);
-            LoadObject.YPos = SWAP32(LoadObject.YPos);
-            LoadObject.Value1 = SWAP32(LoadObject.Value1);
-            LoadObject.Value2 = SWAP32(LoadObject.Value2);
-#endif
+            LoadObject.ObjectID = FixEndian(LoadObject.ObjectID);
+            LoadObject.XPos     = FixEndian(LoadObject.XPos);
+            LoadObject.YPos     = FixEndian(LoadObject.YPos);
+            LoadObject.Value1   = FixEndian(LoadObject.Value1);
+            LoadObject.Value2   = FixEndian(LoadObject.Value2);
 
             // Startposition des Spielers
             if(LoadObject.ObjectID == 0)
@@ -822,9 +807,7 @@ loadfile:
 
     fread(&pTileEngine->DateiAppendix, sizeof(pTileEngine->DateiAppendix), 1, Datei);
 
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    pTileEngine->DateiAppendix.UsedPowerblock = SWAP32(pTileEngine->DateiAppendix.UsedPowerblock);
-#endif
+    pTileEngine->DateiAppendix.UsedPowerblock = FixEndian(pTileEngine->DateiAppendix.UsedPowerblock);
 
     bDrawShadow = pTileEngine->DateiAppendix.Taschenlampe;
     ShadowAlpha = 255.0f;
@@ -2361,11 +2344,11 @@ void TileEngineClass::UpdateLevel(void)
         WasserfallOffset -= 120.0f;
 
     // Schwabbeln des Levels animieren
-    SinPos   += 3.0f SYNC;
+    //SinPos   += 3.0f SYNC;    //DKS - unused; disabled
     SinPos2  += 2.0f SYNC;
     WaterPos += 2.0f SYNC;
 
-    while (SinPos   >= 40.0f) SinPos   -= 40.0f;
+    //while (SinPos   >= 40.0f) SinPos   -= 40.0f;  //DKS - unused; disabled
     while (SinPos2  >= 40.0f) SinPos2  -= 40.0f;
     while (WaterPos >= 40.0f) WaterPos -= 40.0f;
 
