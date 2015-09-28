@@ -21,7 +21,7 @@
 #endif
 #include "DX8Graphics.h"
 #include "DX8Sprite.h"
-#include "lightmap.h"
+//#include "lightmap.h"     //DKS - all light-map related code disabled
 #include "CDragonHack.h"
 
 // --------------------------------------------------------------------------------------
@@ -99,13 +99,13 @@
 #define ZUSTAND_LOCKED			5		// Level sitzt an bestimmter Position fest
 
 //--- LiightMaps
-
-#define MAX_LIGHTMAPS			5
-
-#define LIGHTMAP_BLITZ			0
-#define LIGHTMAP_EXPLOSION		1
-#define LIGHTMAP_GOLEMSHOT		2
-#define LIGHTMAP_LILA			3
+//DKS - all light-map related code disabled:
+//#define MAX_LIGHTMAPS			5
+//
+//#define LIGHTMAP_BLITZ			0
+//#define LIGHTMAP_EXPLOSION		1
+//#define LIGHTMAP_GOLEMSHOT		2
+//#define LIGHTMAP_LILA			3
 
 // --------------------------------------------------------------------------------------
 // Strukturen
