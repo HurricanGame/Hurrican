@@ -38,8 +38,8 @@ GegnerFahrstuhlBoss::GegnerFahrstuhlBoss(int Wert1, int Wert2, bool Light)
     yPos			= 0.0f;
 
     // Zusätzliche Grafiken für die Kanone und den Kopf laden
-    Head.LoadImage ("fahrstuhlboss_head.bmp",    140, 186, 140, 186, 1, 1);
-    Canon.LoadImage("fahrstuhlboss_canon.bmp",   177, 240,  59, 120, 3, 2);
+    Head.LoadImage ("fahrstuhlboss_head.png",    140, 186, 140, 186, 1, 1);
+    Canon.LoadImage("fahrstuhlboss_canon.png",   177, 240,  59, 120, 3, 2);
 }
 
 // --------------------------------------------------------------------------------------

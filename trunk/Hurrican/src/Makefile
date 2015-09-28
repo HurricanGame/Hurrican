@@ -373,7 +373,6 @@ FILES :=Boss_BigFish \
         Trigger_Tube \
         Trigger_TutorialText \
         Trigger_Warning \
-        lightmap \
         stdafx \
         tracealloc
 

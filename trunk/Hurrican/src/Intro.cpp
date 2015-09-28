@@ -25,12 +25,12 @@
 
 IntroClass::IntroClass(void)
 {
-    Background[0].LoadImage("intro1.bmp", 640, 480, 640, 480, 1, 1);
-    Background[1].LoadImage("intro2.bmp", 640, 480, 640, 480, 1, 1);
-    Background[2].LoadImage("intro3.bmp", 640, 480, 640, 480, 1, 1);
-    Background[3].LoadImage("intro4.bmp", 640, 480, 640, 480, 1, 1);
-    Background[4].LoadImage("intro5.bmp", 640, 480, 640, 480, 1, 1);
-    Background[5].LoadImage("intro6.bmp", 640, 480, 640, 480, 1, 1);
+    Background[0].LoadImage("intro1.png", 640, 480, 640, 480, 1, 1);
+    Background[1].LoadImage("intro2.png", 640, 480, 640, 480, 1, 1);
+    Background[2].LoadImage("intro3.png", 640, 480, 640, 480, 1, 1);
+    Background[3].LoadImage("intro4.png", 640, 480, 640, 480, 1, 1);
+    Background[4].LoadImage("intro5.png", 640, 480, 640, 480, 1, 1);
+    Background[5].LoadImage("intro6.png", 640, 480, 640, 480, 1, 1);
 
     Zustand = INTRO_FADEIN;
 

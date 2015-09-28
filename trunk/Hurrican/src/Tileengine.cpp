@@ -120,11 +120,11 @@ TileEngineClass::TileEngineClass(void)
         TileGfx[i].itsTexture = (LPDIRECT3DTEXTURE8)NULL;
 
     // Wasserfall Textur laden
-    Wasserfall[0].LoadImage("wasserfall.bmp",  60,  240, 60,  240, 1, 1);
-    Wasserfall[1].LoadImage("wasserfall2.bmp", 640, 480, 640, 480, 1, 1);
+    Wasserfall[0].LoadImage("wasserfall.png",  60,  240, 60,  240, 1, 1);
+    Wasserfall[1].LoadImage("wasserfall2.png", 640, 480, 640, 480, 1, 1);
 
-    LiquidGfx[0].LoadImage("water.bmp", 128, 128, 128, 128, 1, 1);
-    LiquidGfx[1].LoadImage("water2.bmp", 128, 128, 128, 128, 1, 1);
+    LiquidGfx[0].LoadImage("water.png", 128, 128, 128, 128, 1, 1);
+    LiquidGfx[1].LoadImage("water2.png", 128, 128, 128, 128, 1, 1);
 
     // Texturkoordinaten für das Wasser vorberechnen
     float fx, fy;
@@ -177,11 +177,12 @@ TileEngineClass::TileEngineClass(void)
     SinPos2  = 0.0f;
     WaterPos = 0.0f;
 
-    // LightMaps laden
-    lightmaps[LIGHTMAP_BLITZ].Load("lightmap_blitz.bmp");
-    lightmaps[LIGHTMAP_EXPLOSION].Load("lightmap_explosion.bmp");
-    lightmaps[LIGHTMAP_GOLEMSHOT].Load("lightmap_golem.bmp");
-    lightmaps[LIGHTMAP_LILA].Load("lightmap_lila.bmp");
+    //DKS - Lightmap code in original game was never used and all related code has now been disabled:
+    //// LightMaps laden
+    //lightmaps[LIGHTMAP_BLITZ].Load("lightmap_blitz.bmp");
+    //lightmaps[LIGHTMAP_EXPLOSION].Load("lightmap_explosion.bmp");
+    //lightmaps[LIGHTMAP_GOLEMSHOT].Load("lightmap_golem.bmp");
+    //lightmaps[LIGHTMAP_LILA].Load("lightmap_lila.bmp");
 
     pDragonHack = NULL;
 }
@@ -332,8 +333,9 @@ bool TileEngineClass::LoadLevel(char Filename[100])
             goto loadfile;
     }
 
+    //DKS - Levels have now been moved to their own subdir, data/levels/
     // Dann checken, ob sich das File im Standard Ordner befindet
-    sprintf_s(Temp, "%s/data/%s", g_storage_ext,  Filename);
+    sprintf_s(Temp, "%s/data/levels/%s", g_storage_ext,  Filename);
     if (FileExists(Temp))
         goto loadfile;
 
@@ -3019,6 +3021,8 @@ D3DCOLOR TileEngineClass::LightValue(float x, float y, RECT rect, bool forced)
 // Jedes Tile hat an allen vier Ecken die selbe Farbe -> Keine Übergänge -> Scheisse
 // --------------------------------------------------------------------------------------
 
+//DKS - This function was never actually used in the original game and is now disabled:
+#if 0
 void TileEngineClass::ComputeShitLight (void)
 {
     for (int i=0; i< LEVELSIZE_X; i += 1)
@@ -3033,6 +3037,7 @@ void TileEngineClass::ComputeShitLight (void)
                                                Tiles[i][j].Alpha);
         }
 } // ComputeShitLight
+#endif //0
 
 // --------------------------------------------------------------------------------------
 // Neue Lichtberechnung
@@ -3312,10 +3317,11 @@ void TileEngineClass::ComputeCoolLight (void)
 
             Tiles[i][j].Color[3] = D3DCOLOR_RGBA (rn, gn, bn, al);
 
-            OriginalTiles[i][j].Color[0] = Tiles[i][j].Color[0];
-            OriginalTiles[i][j].Color[1] = Tiles[i][j].Color[1];
-            OriginalTiles[i][j].Color[2] = Tiles[i][j].Color[2];
-            OriginalTiles[i][j].Color[3] = Tiles[i][j].Color[3];
+            //DKS - Lightmap code in original game was never used and all related code has now been disabled:
+            //OriginalTiles[i][j].Color[0] = Tiles[i][j].Color[0];
+            //OriginalTiles[i][j].Color[1] = Tiles[i][j].Color[1];
+            //OriginalTiles[i][j].Color[2] = Tiles[i][j].Color[2];
+            //OriginalTiles[i][j].Color[3] = Tiles[i][j].Color[3];
         }
 
 } // ComputeCoolLight
@@ -3437,6 +3443,9 @@ void TileEngineClass::ExplodeWalls (int x, int y)
 // Alle LightMaps auf dem Screen löschen und Ursprungszustand wieder herstellen
 // --------------------------------------------------------------------------------------
 
+//DKS - See note for function below this one for DrawLightmap() as to why this was
+//      disabled.
+#if 0
 void TileEngineClass::ClearLightMaps(void)
 {
     unsigned int xoff, yoff;
@@ -3449,19 +3458,25 @@ void TileEngineClass::ClearLightMaps(void)
             for (int i = 0; i < 4; i++)
                 Tiles[x][y].Color[i] = OriginalTiles[x][y].Color[i];
 }
+#endif //0
 
 // --------------------------------------------------------------------------------------
 // Lightmap an x/y mit alpha zum Level dazuaddieren
 // Gilt nur einen Frame lang, danach wird der Originalzustand wieder hergestellt
 // --------------------------------------------------------------------------------------
 
+//DKS - The original code had a return as line 5 of this function, making it a stub.
+//      When I tried removing it, I saw why: the lightmaps colors' don't match what
+//      you'd expect and they appear in places off-center from where they should be.
+//      I have now disabled the function and all four calls to it elsewhere in the code.
+#if 0
 void TileEngineClass::DrawLightmap (int Map, float x, float y, int alpha)
 {
     // keine Lightmap Effekte?
     if (options_Detail < DETAIL_HIGH)
         return;
 
-    return;
+    return; // DKS - This is the return that was in the original code (see note above)
 
     if (x < 0 || y < 0 ||
             x > LEVELPIXELSIZE_X ||
@@ -3559,3 +3574,4 @@ void TileEngineClass::DrawLightmap (int Map, float x, float y, int alpha)
                 }
     }
 }
+#endif //0

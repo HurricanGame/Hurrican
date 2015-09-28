@@ -2893,7 +2893,9 @@ void ProjectileClass::Run(void)
 
     case SPIDERSHOT:
     {
-        pTileEngine->DrawLightmap(LIGHTMAP_LILA, xPos + 65.0f, yPos + 40.0f, 255);
+        //DKS - Lightmaps have been disabled (never worked originally, see Tileengine.cpp's
+        //      comments for DrawLightmap()):
+        //pTileEngine->DrawLightmap(LIGHTMAP_LILA, xPos + 65.0f, yPos + 40.0f, 255);
 
         if (bl & BLOCKWERT_WAND ||
                 br & BLOCKWERT_WAND ||
@@ -4825,42 +4827,42 @@ ProjectileListClass::ProjectileListClass(void)
         pProjectileGrafix[i] = new(DirectGraphicsSprite);
 
     // Diamant schuss
-    pProjectileGrafix[DIAMONDSHOT]->LoadImage("diamant.bmp", 261, 29, 29, 29, 9, 1);
+    pProjectileGrafix[DIAMONDSHOT]->LoadImage("diamant.png", 261, 29, 29, 29, 9, 1);
     ShotRect[DIAMONDSHOT].left = 5;
     ShotRect[DIAMONDSHOT].right  = 24;
     ShotRect[DIAMONDSHOT].top  = 5;
     ShotRect[DIAMONDSHOT].bottom = 24;
 
     // Skeletor Schuss
-    pProjectileGrafix[SKELETOR_SHOT]->LoadImage("skeletor_shot.bmp", 5, 40, 5, 40, 1, 1);
+    pProjectileGrafix[SKELETOR_SHOT]->LoadImage("skeletor_shot.png", 5, 40, 5, 40, 1, 1);
     ShotRect[SKELETOR_SHOT].left = 10;
     ShotRect[SKELETOR_SHOT].right  = 30;
     ShotRect[SKELETOR_SHOT].top  = 10;
     ShotRect[SKELETOR_SHOT].bottom = 30;
 
     // Spreadshot
-    pProjectileGrafix[SPREADSHOT]->LoadImage("spreadshot.bmp", 16, 16, 16, 16, 1, 1);
+    pProjectileGrafix[SPREADSHOT]->LoadImage("spreadshot.png", 16, 16, 16, 16, 1, 1);
     ShotRect[SPREADSHOT].left = 4;
     ShotRect[SPREADSHOT].right  = 12;
     ShotRect[SPREADSHOT].top  = 4;
     ShotRect[SPREADSHOT].bottom = 12;
 
     // Spreadshot2
-    pProjectileGrafix[SPREADSHOT2]->LoadImage("spreadshot2.bmp", 20, 20, 20, 20, 1, 1);
+    pProjectileGrafix[SPREADSHOT2]->LoadImage("spreadshot2.png", 20, 20, 20, 20, 1, 1);
     ShotRect[SPREADSHOT2].left = 2;
     ShotRect[SPREADSHOT2].right  = 16;
     ShotRect[SPREADSHOT2].top  = 2;
     ShotRect[SPREADSHOT2].bottom = 16;
 
     // Riesen Spreadshot
-    pProjectileGrafix[SPREADSHOTBIG]->LoadImage("spreadshot_big.bmp", 32, 32, 32, 32, 1, 1);
+    pProjectileGrafix[SPREADSHOTBIG]->LoadImage("spreadshot_big.png", 32, 32, 32, 32, 1, 1);
     ShotRect[SPREADSHOTBIG].left = 4;
     ShotRect[SPREADSHOTBIG].right  = 28;
     ShotRect[SPREADSHOTBIG].top  = 4;
     ShotRect[SPREADSHOTBIG].bottom = 28;
 
     // Riesen Spreadshot doppelt
-    pProjectileGrafix[SPREADSHOTBIG2]->LoadImage("spreadshot_big2.bmp", 40, 40, 40, 40, 1, 1);
+    pProjectileGrafix[SPREADSHOTBIG2]->LoadImage("spreadshot_big2.png", 40, 40, 40, 40, 1, 1);
     ShotRect[SPREADSHOTBIG2].left = 6;
     ShotRect[SPREADSHOTBIG2].right  = 34;
     ShotRect[SPREADSHOTBIG2].top  = 6;
@@ -4933,251 +4935,251 @@ ProjectileListClass::ProjectileListClass(void)
     ShotRect[LASERSHOTBIG2].bottom = 50;
 
     // Walker Laser
-    pProjectileGrafix[WALKER_LASER]->LoadImage("walker-laser.bmp", 32, 3, 32, 3, 1, 1);
+    pProjectileGrafix[WALKER_LASER]->LoadImage("walker-laser.png", 32, 3, 32, 3, 1, 1);
     ShotRect[WALKER_LASER].left = 0;
     ShotRect[WALKER_LASER].right  = 32;
     ShotRect[WALKER_LASER].top  = 0;
     ShotRect[WALKER_LASER].bottom = 3;
 
     // Geschützturm Kugel
-    pProjectileGrafix[CANONBALL]->LoadImage("canonball.bmp", 8, 8, 8, 8, 1, 1);
+    pProjectileGrafix[CANONBALL]->LoadImage("canonball.png", 8, 8, 8, 8, 1, 1);
     ShotRect[CANONBALL].left = 0;
     ShotRect[CANONBALL].right  = 8;
     ShotRect[CANONBALL].top  = 0;
     ShotRect[CANONBALL].bottom = 8;
 
     // Powerline
-    pProjectileGrafix[POWERLINE]->LoadImage("powerline.bmp", 80, 20, 40, 20, 2, 1);
+    pProjectileGrafix[POWERLINE]->LoadImage("powerline.png", 80, 20, 40, 20, 2, 1);
     ShotRect[POWERLINE].left = 0;
     ShotRect[POWERLINE].right  = 20;
     ShotRect[POWERLINE].top  = 0;
     ShotRect[POWERLINE].bottom = 20;
 
     // Deckenturm Kugel
-    pProjectileGrafix[SUCHSCHUSS]->LoadImage("suchschuss.bmp", 8, 8, 8, 8, 1, 1);
+    pProjectileGrafix[SUCHSCHUSS]->LoadImage("suchschuss.png", 8, 8, 8, 8, 1, 1);
     ShotRect[SUCHSCHUSS].left = 0;
     ShotRect[SUCHSCHUSS].right  = 8;
     ShotRect[SUCHSCHUSS].top  = 0;
     ShotRect[SUCHSCHUSS].bottom = 8;
 
     // Blauer Schuss der Riesenwepse
-    pProjectileGrafix[SUCHSCHUSS2]->LoadImage("suchschuss2.bmp", 64, 16, 16, 16, 4, 1);
+    pProjectileGrafix[SUCHSCHUSS2]->LoadImage("suchschuss2.png", 64, 16, 16, 16, 4, 1);
     ShotRect[SUCHSCHUSS2].left = 1;
     ShotRect[SUCHSCHUSS2].right  = 15;
     ShotRect[SUCHSCHUSS2].top  = 1;
     ShotRect[SUCHSCHUSS2].bottom = 15;
 
     // Grüner Golemschuss
-    pProjectileGrafix[GOLEMSCHUSS]->LoadImage("golemschuss.bmp", 100, 100, 20, 20, 5, 5);
+    pProjectileGrafix[GOLEMSCHUSS]->LoadImage("golemschuss.png", 100, 100, 20, 20, 5, 5);
     ShotRect[GOLEMSCHUSS].left = 2;
     ShotRect[GOLEMSCHUSS].right  = 18;
     ShotRect[GOLEMSCHUSS].top  = 2;
     ShotRect[GOLEMSCHUSS].bottom = 18;
 
     // Grüner Skeletor Schuss
-    pProjectileGrafix[TURRIEXTRAWURST]->LoadImage("golemschuss.bmp", 100, 100, 20, 20, 5, 5);
+    pProjectileGrafix[TURRIEXTRAWURST]->LoadImage("golemschuss.png", 100, 100, 20, 20, 5, 5);
     ShotRect[TURRIEXTRAWURST].left = 2;
     ShotRect[TURRIEXTRAWURST].right  = 18;
     ShotRect[TURRIEXTRAWURST].top  = 2;
     ShotRect[TURRIEXTRAWURST].bottom = 18;
 
     // Lilaner langsamer Spinnenschuss
-    pProjectileGrafix[SPIDERSLOW]->LoadImage("spiderslow.bmp", 200, 200, 40, 40, 5, 5);
+    pProjectileGrafix[SPIDERSLOW]->LoadImage("spiderslow.png", 200, 200, 40, 40, 5, 5);
     ShotRect[SPIDERSLOW].left = 5;
     ShotRect[SPIDERSLOW].right  = 35;
     ShotRect[SPIDERSLOW].top  = 5;
     ShotRect[SPIDERSLOW].bottom = 35;
 
     // Lilaner Spinnenlaser
-    pProjectileGrafix[SPIDERLASER]->LoadImage("fetterspinnenlaser.bmp", 64, 128, 64, 128, 1, 1);
+    pProjectileGrafix[SPIDERLASER]->LoadImage("fetterspinnenlaser.png", 64, 128, 64, 128, 1, 1);
     ShotRect[SPIDERLASER].left = 0;
     ShotRect[SPIDERLASER].right  = 500;
     ShotRect[SPIDERLASER].top  = 0;
     ShotRect[SPIDERLASER].bottom = 10;
 
     // Spinnenschuss
-    pProjectileGrafix[SPIDERSHOT]->LoadImage("spidershot.bmp", 96, 48, 96, 48, 1, 1);
+    pProjectileGrafix[SPIDERSHOT]->LoadImage("spidershot.png", 96, 48, 96, 48, 1, 1);
     ShotRect[SPIDERSHOT].left = 24;
     ShotRect[SPIDERSHOT].right  = 72;
     ShotRect[SPIDERSHOT].top  = 12;
     ShotRect[SPIDERSHOT].bottom = 36;
 
     // Spinnenschuss2
-    pProjectileGrafix[SPIDERSHOT2]->LoadImage("spidershot2.bmp", 48, 48, 48, 48, 1, 1);
+    pProjectileGrafix[SPIDERSHOT2]->LoadImage("spidershot2.png", 48, 48, 48, 48, 1, 1);
     ShotRect[SPIDERSHOT2].left = 16;
     ShotRect[SPIDERSHOT2].right  = 32;
     ShotRect[SPIDERSHOT2].top  = 16;
     ShotRect[SPIDERSHOT2].bottom = 32;
 
     // Bombe des Spieler-Rads
-    pProjectileGrafix[BOMBE]->LoadImage("bombe_small.bmp", 128, 32, 16, 16, 8, 2);
+    pProjectileGrafix[BOMBE]->LoadImage("bombe_small.png", 128, 32, 16, 16, 8, 2);
     ShotRect[BOMBE].left = 0;
     ShotRect[BOMBE].right  = 16;
     ShotRect[BOMBE].top  = 0;
     ShotRect[BOMBE].bottom = 12;
 
     // Bombe des Spieler-Rads
-    pProjectileGrafix[BOMBEBIG]->LoadImage("bombe_big.bmp", 192, 48, 24, 24, 8, 2);
+    pProjectileGrafix[BOMBEBIG]->LoadImage("bombe_big.png", 192, 48, 24, 24, 8, 2);
     ShotRect[BOMBEBIG].left = 0;
     ShotRect[BOMBEBIG].right  = 24;
     ShotRect[BOMBEBIG].top  = 0;
     ShotRect[BOMBEBIG].bottom = 20;
 
     // Flammen-Splitter
-    pProjectileGrafix[FLAMME]->LoadImage("flamme.bmp", 192, 96, 48, 48, 4, 2);
+    pProjectileGrafix[FLAMME]->LoadImage("flamme.png", 192, 96, 48, 48, 4, 2);
     ShotRect[FLAMME].left = 16;
     ShotRect[FLAMME].right  = 32;
     ShotRect[FLAMME].top  = 16;
     ShotRect[FLAMME].bottom = 32;
 
     // Flamme des Wand-Flammenwerfers
-    pProjectileGrafix[FEUERFALLE]->LoadImage("flame.bmp", 504, 500, 84, 100, 6, 5);
+    pProjectileGrafix[FEUERFALLE]->LoadImage("flame.png", 504, 500, 84, 100, 6, 5);
     ShotRect[FEUERFALLE].left = 30;
     ShotRect[FEUERFALLE].right  = 54;
     ShotRect[FEUERFALLE].top  = 30;
     ShotRect[FEUERFALLE].bottom = 70;
 
     // Feuerball des Minidrachen
-    pProjectileGrafix[FIREBALL]->LoadImage("fireball.bmp", 24, 48, 24, 48, 1, 1);
+    pProjectileGrafix[FIREBALL]->LoadImage("fireball.png", 24, 48, 24, 48, 1, 1);
     ShotRect[FIREBALL].left = 0;
     ShotRect[FIREBALL].right  = 24;
     ShotRect[FIREBALL].top  = 12;
     ShotRect[FIREBALL].bottom = 36;
 
     // Feuerball des Riesendrachen
-    pProjectileGrafix[FIREBALL_BIG]->LoadImage("fireball_big.bmp", 60, 54, 60, 54, 1, 1);
+    pProjectileGrafix[FIREBALL_BIG]->LoadImage("fireball_big.png", 60, 54, 60, 54, 1, 1);
     ShotRect[FIREBALL_BIG].left = 8;
     ShotRect[FIREBALL_BIG].right  = 52;
     ShotRect[FIREBALL_BIG].top  = 8;
     ShotRect[FIREBALL_BIG].bottom = 46;
 
     // Feuerball des Riesendrachen
-    pProjectileGrafix[FIREBALL_BOMB]->LoadImage("fireball_big.bmp", 60, 54, 60, 54, 1, 1);
+    pProjectileGrafix[FIREBALL_BOMB]->LoadImage("fireball_big.png", 60, 54, 60, 54, 1, 1);
     ShotRect[FIREBALL_BOMB].left = 8;
     ShotRect[FIREBALL_BOMB].right  = 52;
     ShotRect[FIREBALL_BOMB].top  = 8;
     ShotRect[FIREBALL_BOMB].bottom = 46;
 
     // Rotzschuss des Rotzpotts
-    pProjectileGrafix[ROTZSHOT]->LoadImage("rotzshot.bmp", 80, 80, 16, 16, 5, 5);
+    pProjectileGrafix[ROTZSHOT]->LoadImage("rotzshot.png", 80, 80, 16, 16, 5, 5);
     ShotRect[ROTZSHOT].left = 2;
     ShotRect[ROTZSHOT].right  = 14;
     ShotRect[ROTZSHOT].top  = 2;
     ShotRect[ROTZSHOT].bottom = 14;
 
     // Flamme des Wand-Flammenwerfers
-    pProjectileGrafix[GOLEMSAEULE]->LoadImage("flame.bmp", 504, 500, 84, 100, 6, 5);
+    pProjectileGrafix[GOLEMSAEULE]->LoadImage("flame.png", 504, 500, 84, 100, 6, 5);
     ShotRect[GOLEMSAEULE].left = 30;
     ShotRect[GOLEMSAEULE].right  = 54;
     ShotRect[GOLEMSAEULE].top  = 30;
     ShotRect[GOLEMSAEULE].bottom = 70;
 
     // Flamme des Lavamanns
-    pProjectileGrafix[FEUERFALLE_LAVAMANN]->LoadImage("flame.bmp", 504, 500, 84, 100, 6, 5);
+    pProjectileGrafix[FEUERFALLE_LAVAMANN]->LoadImage("flame.png", 504, 500, 84, 100, 6, 5);
     ShotRect[FEUERFALLE_LAVAMANN].left = 30;
     ShotRect[FEUERFALLE_LAVAMANN].right  = 54;
     ShotRect[FEUERFALLE_LAVAMANN].top  = 30;
     ShotRect[FEUERFALLE_LAVAMANN].bottom = 70;
 
     // Flamme der Feuer Spinne
-    pProjectileGrafix[PLAYERFIRE]->LoadImage("flame.bmp", 504, 500, 84, 100, 6, 5);
+    pProjectileGrafix[PLAYERFIRE]->LoadImage("flame.png", 504, 500, 84, 100, 6, 5);
     ShotRect[PLAYERFIRE].left = 30;
     ShotRect[PLAYERFIRE].right  = 54;
     ShotRect[PLAYERFIRE].top  = 30;
     ShotRect[PLAYERFIRE].bottom = 70;
 
     // Flamme der Feuer Spinne
-    pProjectileGrafix[SPIDERFIRE]->LoadImage("flame.bmp", 504, 500, 84, 100, 6, 5);
+    pProjectileGrafix[SPIDERFIRE]->LoadImage("flame.png", 504, 500, 84, 100, 6, 5);
     ShotRect[SPIDERFIRE].left = 30;
     ShotRect[SPIDERFIRE].right  = 54;
     ShotRect[SPIDERFIRE].top  = 30;
     ShotRect[SPIDERFIRE].bottom = 70;
 
     // Laser des Deckenkrabblers
-    pProjectileGrafix[KRABBLERLASER1]->LoadImage("krabblerlaser1.bmp", 4, 48, 4, 48, 1, 1);
+    pProjectileGrafix[KRABBLERLASER1]->LoadImage("krabblerlaser1.png", 4, 48, 4, 48, 1, 1);
     ShotRect[KRABBLERLASER1].left = 0;
     ShotRect[KRABBLERLASER1].right  = 4;
     ShotRect[KRABBLERLASER1].top  = 0;
     ShotRect[KRABBLERLASER1].bottom = 48;
 
     // Laser des Wandkrabblers links
-    pProjectileGrafix[KRABBLERLASER2]->LoadImage("krabblerlaser2.bmp", 48, 4, 48, 4, 1, 1);
+    pProjectileGrafix[KRABBLERLASER2]->LoadImage("krabblerlaser2.png", 48, 4, 48, 4, 1, 1);
     ShotRect[KRABBLERLASER2].left = 0;
     ShotRect[KRABBLERLASER2].right  = 48;
     ShotRect[KRABBLERLASER2].top  = 0;
     ShotRect[KRABBLERLASER2].bottom = 4;
 
     // Laser des Wandkrabblers rechts
-    pProjectileGrafix[KRABBLERLASER3]->LoadImage("krabblerlaser2.bmp", 48, 4, 48, 4, 1, 1);
+    pProjectileGrafix[KRABBLERLASER3]->LoadImage("krabblerlaser2.png", 48, 4, 48, 4, 1, 1);
     ShotRect[KRABBLERLASER3].left = 0;
     ShotRect[KRABBLERLASER3].right  = 48;
     ShotRect[KRABBLERLASER3].top  = 0;
     ShotRect[KRABBLERLASER3].bottom = 4;
 
     // Schuss des Pharao Kopfes
-    pProjectileGrafix[PHARAOLASER]->LoadImage("pharaolaser.bmp", 96, 96, 48, 48, 2, 2);
+    pProjectileGrafix[PHARAOLASER]->LoadImage("pharaolaser.png", 96, 96, 48, 48, 2, 2);
     ShotRect[PHARAOLASER].left = 0;
     ShotRect[PHARAOLASER].right  = 48;
     ShotRect[PHARAOLASER].top  = 0;
     ShotRect[PHARAOLASER].bottom = 48;
 
     // Granate
-    pProjectileGrafix[GRENADE]->LoadImage("grenade.bmp", 11, 14, 11, 14, 1, 1);
+    pProjectileGrafix[GRENADE]->LoadImage("grenade.png", 11, 14, 11, 14, 1, 1);
     ShotRect[GRENADE].left = 0;
     ShotRect[GRENADE].right  = 11;
     ShotRect[GRENADE].top  = 0;
     ShotRect[GRENADE].bottom = 14;
 
     // Rakete
-    pProjectileGrafix[ROCKET]->LoadImage("rocket.bmp", 225, 225, 75, 75, 3, 3);
+    pProjectileGrafix[ROCKET]->LoadImage("rocket.png", 225, 225, 75, 75, 3, 3);
     ShotRect[ROCKET].left = 20;
     ShotRect[ROCKET].right  = 55;
     ShotRect[ROCKET].top  = 20;
     ShotRect[ROCKET].bottom = 55;
 
-    pProjectileGrafix[ROCKETSPIDER]->LoadImage("rocket.bmp", 225, 225, 75, 75, 3, 3);
+    pProjectileGrafix[ROCKETSPIDER]->LoadImage("rocket.png", 225, 225, 75, 75, 3, 3);
     ShotRect[ROCKETSPIDER].left = 20;
     ShotRect[ROCKETSPIDER].right  = 55;
     ShotRect[ROCKETSPIDER].top  = 20;
     ShotRect[ROCKETSPIDER].bottom = 55;
 
     // Rakete
-    pProjectileGrafix[ROCKETWERFER]->LoadImage("rocketwerfer.bmp", 45, 24, 45, 12, 1, 2);
+    pProjectileGrafix[ROCKETWERFER]->LoadImage("rocketwerfer.png", 45, 24, 45, 12, 1, 2);
     ShotRect[ROCKETWERFER].left = 0;
     ShotRect[ROCKETWERFER].right  = 45;
     ShotRect[ROCKETWERFER].top  = 0;
     ShotRect[ROCKETWERFER].bottom = 12;
 
     // Torpedo
-    pProjectileGrafix[TORPEDO]->LoadImage("torpedo.bmp", 33, 20, 33, 10, 1, 2);
+    pProjectileGrafix[TORPEDO]->LoadImage("torpedo.png", 33, 20, 33, 10, 1, 2);
     ShotRect[TORPEDO].left = 0;
     ShotRect[TORPEDO].right  = 33;
     ShotRect[TORPEDO].top  = 0;
     ShotRect[TORPEDO].bottom = 10;
 
     // EvilShot
-    pProjectileGrafix[EVILSHOT]->LoadImage("evilshot.bmp", 32, 16, 32, 16, 1, 1);
+    pProjectileGrafix[EVILSHOT]->LoadImage("evilshot.png", 32, 16, 32, 16, 1, 1);
     ShotRect[EVILSHOT].left = 0;
     ShotRect[EVILSHOT].right  = 32;
     ShotRect[EVILSHOT].top  = 0;
     ShotRect[EVILSHOT].bottom = 16;
 
     // EvilShot2
-    pProjectileGrafix[EVILSHOT2]->LoadImage("evilshot2.bmp", 32, 16, 32, 16, 1, 1);
+    pProjectileGrafix[EVILSHOT2]->LoadImage("evilshot2.png", 32, 16, 32, 16, 1, 1);
     ShotRect[EVILSHOT2].left = 0;
     ShotRect[EVILSHOT2].right  = 32;
     ShotRect[EVILSHOT2].top  = 0;
     ShotRect[EVILSHOT2].bottom = 16;
 
     // EvilBlitz
-    pProjectileGrafix[EVILBLITZ]->LoadImage("evilblitz.bmp", 140, 100, 70, 100, 2, 1);
+    pProjectileGrafix[EVILBLITZ]->LoadImage("evilblitz.png", 140, 100, 70, 100, 2, 1);
     ShotRect[EVILBLITZ].left = 0;
     ShotRect[EVILBLITZ].right  = 70;
     ShotRect[EVILBLITZ].top  = 0;
     ShotRect[EVILBLITZ].bottom = 100;
 
     // BeamBlitz
-    pProjectileGrafix[BLITZBEAM]->LoadImage("blitzbeam.bmp", 320, 320, 160, 160, 2, 2);
+    pProjectileGrafix[BLITZBEAM]->LoadImage("blitzbeam.png", 320, 320, 160, 160, 2, 2);
     ShotRect[BLITZBEAM].left = 40;
     ShotRect[BLITZBEAM].right  = 120;
     ShotRect[BLITZBEAM].top  = 40;
@@ -5191,14 +5193,14 @@ ProjectileListClass::ProjectileListClass(void)
     ShotRect[UFOLASER].bottom = 90;
 
     // Stelzlaser
-    pProjectileGrafix[STELZLASER]->LoadImage("stelzlaser.bmp", 120, 43, 60, 43, 2, 1);
+    pProjectileGrafix[STELZLASER]->LoadImage("stelzlaser.png", 120, 43, 60, 43, 2, 1);
     ShotRect[STELZLASER].left = 5;
     ShotRect[STELZLASER].right  = 55;
     ShotRect[STELZLASER].top  = 5;
     ShotRect[STELZLASER].bottom = 38;
 
     // Pflanzenschuss
-    pProjectileGrafix[PFLANZESHOT]->LoadImage("pflanzeschuss.bmp", 64, 16, 16, 16, 4, 1);
+    pProjectileGrafix[PFLANZESHOT]->LoadImage("pflanzeschuss.png", 64, 16, 16, 16, 4, 1);
     ShotRect[PFLANZESHOT].left = 1;
     ShotRect[PFLANZESHOT].right  = 15;
     ShotRect[PFLANZESHOT].top  = 1;
@@ -5212,14 +5214,14 @@ ProjectileListClass::ProjectileListClass(void)
     ShotRect[BRATKLOPSSHOT].bottom = 50;
 
     // Dronebullet
-    pProjectileGrafix[DRONEBULLET]->LoadImage("dronebullet.bmp", 48, 12, 12, 12, 4, 1);
+    pProjectileGrafix[DRONEBULLET]->LoadImage("dronebullet.png", 48, 12, 12, 12, 4, 1);
     ShotRect[DRONEBULLET].left = 2;
     ShotRect[DRONEBULLET].right  = 10;
     ShotRect[DRONEBULLET].top  = 2;
     ShotRect[DRONEBULLET].bottom = 10;
 
     // SchleimShot
-    pProjectileGrafix[SCHLEIMSHOT]->LoadImage("schleimshot.bmp", 12, 12, 12, 12, 1, 1);
+    pProjectileGrafix[SCHLEIMSHOT]->LoadImage("schleimshot.png", 12, 12, 12, 12, 1, 1);
     ShotRect[SCHLEIMSHOT].left = 2;
     ShotRect[SCHLEIMSHOT].right  = 10;
     ShotRect[SCHLEIMSHOT].top  = 2;
@@ -5233,7 +5235,7 @@ ProjectileListClass::ProjectileListClass(void)
     ShotRect[LAFASSSHOT].bottom = 73;
 
     // EvilBlitz2
-    pProjectileGrafix[EVILBLITZ2]->LoadImage("evilblitz2.bmp", 140, 400, 70, 400, 2, 1);
+    pProjectileGrafix[EVILBLITZ2]->LoadImage("evilblitz2.png", 140, 400, 70, 400, 2, 1);
     ShotRect[EVILBLITZ2].left = 0;
     ShotRect[EVILBLITZ2].right  = 70;
     ShotRect[EVILBLITZ2].top  = 0;
@@ -5254,97 +5256,97 @@ ProjectileListClass::ProjectileListClass(void)
     ShotRect[EISZAPFENSHOT].bottom = 48;
 
     // Schuss der im Bogen fliegt
-    pProjectileGrafix[ARCSHOT]->LoadImage("arcshot.bmp", 8, 8, 8, 8, 1, 1);
+    pProjectileGrafix[ARCSHOT]->LoadImage("arcshot.png", 8, 8, 8, 8, 1, 1);
     ShotRect[ARCSHOT].left = 0;
     ShotRect[ARCSHOT].right  = 8;
     ShotRect[ARCSHOT].top  = 0;
     ShotRect[ARCSHOT].bottom = 8;
 
     // SchneeBombe
-    pProjectileGrafix[SNOWBOMB]->LoadImage("snowbomb.bmp", 480, 320, 80, 80, 6, 4);
+    pProjectileGrafix[SNOWBOMB]->LoadImage("snowbomb.png", 480, 320, 80, 80, 6, 4);
     ShotRect[SNOWBOMB].left = 10;
     ShotRect[SNOWBOMB].right  = 70;
     ShotRect[SNOWBOMB].top  = 10;
     ShotRect[SNOWBOMB].bottom = 70;
 
     // SchneeBombe klein
-    pProjectileGrafix[SNOWBOMBSMALL]->LoadImage("snowbombsmall.bmp", 120, 80, 20, 20, 6, 4);
+    pProjectileGrafix[SNOWBOMBSMALL]->LoadImage("snowbombsmall.png", 120, 80, 20, 20, 6, 4);
     ShotRect[SNOWBOMBSMALL].left = 5;
     ShotRect[SNOWBOMBSMALL].right  = 15;
     ShotRect[SNOWBOMBSMALL].top  = 5;
     ShotRect[SNOWBOMBSMALL].bottom = 15;
 
     // Schuss der fetten Spinne
-    pProjectileGrafix[FETTESPINNESHOT]->LoadImage("fettespinneshot.bmp", 160, 50, 40, 50, 4, 1);
+    pProjectileGrafix[FETTESPINNESHOT]->LoadImage("fettespinneshot.png", 160, 50, 40, 50, 4, 1);
     ShotRect[FETTESPINNESHOT].left = 5;
     ShotRect[FETTESPINNESHOT].right  = 35;
     ShotRect[FETTESPINNESHOT].top  = 5;
     ShotRect[FETTESPINNESHOT].bottom = 45;
 
     // Schuss der fetten Spinne
-    pProjectileGrafix[FETTESPINNESHOT2]->LoadImage("fettespinneshot2.bmp", 160, 50, 40, 50, 4, 1);
+    pProjectileGrafix[FETTESPINNESHOT2]->LoadImage("fettespinneshot2.png", 160, 50, 40, 50, 4, 1);
     ShotRect[FETTESPINNESHOT2].left = 5;
     ShotRect[FETTESPINNESHOT2].right  = 35;
     ShotRect[FETTESPINNESHOT2].top  = 5;
     ShotRect[FETTESPINNESHOT2].bottom = 45;
 
     // Eierbombe des Eiermanns
-    pProjectileGrafix[EIERBOMBE]->LoadImage("eierbombe.bmp", 125, 100, 25, 25, 5, 4);
+    pProjectileGrafix[EIERBOMBE]->LoadImage("eierbombe.png", 125, 100, 25, 25, 5, 4);
     ShotRect[EIERBOMBE].left = 5;
     ShotRect[EIERBOMBE].right  = 20;
     ShotRect[EIERBOMBE].top  = 5;
     ShotRect[EIERBOMBE].bottom = 20;
 
     // Rundumschuss des evil hurri
-    pProjectileGrafix[EVILROUND1]->LoadImage("evilround.bmp", 10, 10, 10, 10, 1, 1);
+    pProjectileGrafix[EVILROUND1]->LoadImage("evilround.png", 10, 10, 10, 10, 1, 1);
     ShotRect[EVILROUND1].left = 0;
     ShotRect[EVILROUND1].right  = 10;
     ShotRect[EVILROUND1].top  = 0;
     ShotRect[EVILROUND1].bottom = 10;
 
     // SmartBomb laden
-    pProjectileGrafix[SMARTBOMB]->LoadImage("druckwelle.bmp", 256, 256, 256, 256, 1, 1);
+    pProjectileGrafix[SMARTBOMB]->LoadImage("druckwelle.png", 256, 256, 256, 256, 1, 1);
     ShotRect[SMARTBOMB].left = 0;
     ShotRect[SMARTBOMB].right  = 256;
     ShotRect[SMARTBOMB].top  = 0;
     ShotRect[SMARTBOMB].bottom = 256;
 
     // Schutzschild Generator laden
-    pProjectileGrafix[SHIELDSPAWNER]->LoadImage("shieldspawner.bmp", 120, 12, 12, 12, 10, 1);
+    pProjectileGrafix[SHIELDSPAWNER]->LoadImage("shieldspawner.png", 120, 12, 12, 12, 10, 1);
     ShotRect[SHIELDSPAWNER].left = 0;
     ShotRect[SHIELDSPAWNER].right  = 12;
     ShotRect[SHIELDSPAWNER].top  = 0;
     ShotRect[SHIELDSPAWNER].bottom = 12;
 
     // Blaue Bombe laden
-    pProjectileGrafix[BLUEBOMB]->LoadImage("blauebombe.bmp", 150, 120, 30, 30, 5, 4);
+    pProjectileGrafix[BLUEBOMB]->LoadImage("blauebombe.png", 150, 120, 30, 30, 5, 4);
     ShotRect[BLUEBOMB].left = 4;
     ShotRect[BLUEBOMB].right  = 26;
     ShotRect[BLUEBOMB].top  = 4;
     ShotRect[BLUEBOMB].bottom = 26;
 
     // Blaue Bombe laden
-    pProjectileGrafix[SKELETORGRANATE]->LoadImage("skeletor_granate.bmp", 100, 60, 20, 30, 5, 2);
+    pProjectileGrafix[SKELETORGRANATE]->LoadImage("skeletor_granate.png", 100, 60, 20, 30, 5, 2);
     ShotRect[SKELETORGRANATE].left = 4;
     ShotRect[SKELETORGRANATE].right  = 16;
     ShotRect[SKELETORGRANATE].top  = 4;
     ShotRect[SKELETORGRANATE].bottom = 15;
 
     // Grafiken für das Leuchten diverser Schüsse laden
-    SpreadShotSmoke.LoadImage   ("spreadshotsmoke.bmp",   64, 64, 64, 64, 1, 1);
-    LaserSmoke.LoadImage		("lasersmoke.bmp",	    128, 128, 128, 128, 1, 1);
-    LaserSmokeBig.LoadImage		("lasersmoke_big.bmp",	256, 256, 256, 256, 1, 1);
-    PowerlineSmoke.LoadImage	("powerlinesmoke.bmp",	 160, 20, 80, 20, 2, 1);
+    SpreadShotSmoke.LoadImage   ("spreadshotsmoke.png",   64, 64, 64, 64, 1, 1);
+    LaserSmoke.LoadImage		("lasersmoke.png",	    128, 128, 128, 128, 1, 1);
+    LaserSmokeBig.LoadImage		("lasersmoke_big.png",	256, 256, 256, 256, 1, 1);
+    PowerlineSmoke.LoadImage	("powerlinesmoke.png",	 160, 20, 80, 20, 2, 1);
 
     // Blaue Bombe laden
-    pProjectileGrafix[ELEKTROPAMPE]->LoadImage("elektropampe.bmp", 640, 640, 640, 128, 1, 5);
+    pProjectileGrafix[ELEKTROPAMPE]->LoadImage("elektropampe.png", 640, 640, 640, 128, 1, 5);
     ShotRect[ELEKTROPAMPE].left = 0;
     ShotRect[ELEKTROPAMPE].right  = 640;
     ShotRect[ELEKTROPAMPE].top  = 0;
     ShotRect[ELEKTROPAMPE].bottom = 128;
 
     // Blaue Bombe laden
-    pProjectileGrafix[ELEKTROSCHUSS]->LoadImage("spidershot2.bmp", 48, 48, 48, 48, 1, 1);
+    pProjectileGrafix[ELEKTROSCHUSS]->LoadImage("spidershot2.png", 48, 48, 48, 48, 1, 1);
     ShotRect[ELEKTROSCHUSS].left = 16;
     ShotRect[ELEKTROSCHUSS].right  = 32;
     ShotRect[ELEKTROSCHUSS].top  = 16;

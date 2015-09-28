@@ -146,8 +146,10 @@ loadfile:
 
         fromrar = false;
 
+        //DKS - levellist.dat now resides in its new subfolder, data/levels/levellist.dat, along with
+        //      the rest of the level data.
         // Checken, ob sich das File im Standard Ordner befindet
-        sprintf_s(Temp, "%s/%s", g_storage_ext, "data/levellist.dat");
+        sprintf_s(Temp, "%s/%s", g_storage_ext, "data/levels/levellist.dat");
         if (FileExists(Temp))
             goto loadfilelevel;
 

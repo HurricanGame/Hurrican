@@ -25,7 +25,7 @@ CGUISystem::~CGUISystem(void)
 
 void CGUISystem::InitGUISystem(void)
 {
-    m_Rahmen.LoadImage("guiback.bmp", 60, 60, 20, 20, 3, 3);
+    m_Rahmen.LoadImage("guiback.png", 60, 60, 20, 20, 3, 3);
 
     m_BoxSize.top	 = 0;
     m_BoxSize.left	 = 0;

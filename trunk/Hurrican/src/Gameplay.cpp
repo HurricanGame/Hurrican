@@ -321,9 +321,10 @@ void GameLoop(void)
     pTileEngine->DrawBackLevel();
     pTileEngine->DrawFrontLevel();
 
-    // LighMaps löschen
-    if (options_Detail >= DETAIL_HIGH)
-        pTileEngine->ClearLightMaps();
+    //DKS - Lightmap code in original game was never used and all related code has now been disabled:
+    //// LighMaps löschen
+    //if (options_Detail >= DETAIL_HIGH)
+    //    pTileEngine->ClearLightMaps();
 
     // Gegner anzeigen
     pGegner->RenderAll();

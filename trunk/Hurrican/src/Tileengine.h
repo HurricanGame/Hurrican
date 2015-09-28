@@ -260,7 +260,9 @@ private:
     VERTEX2D		v1, v2, v3, v4;							// Vertices zum Sprite rendern
     unsigned char	LoadedTilesets;							// Anzahl geladener Sets
     float			WaterPos;								// Position in der WaterListe für die Wasseroberfläche
-    CLightMap		lightmaps[MAX_LIGHTMAPS];
+
+    //DKS - Lightmap code in original game was never used and all related code has now been disabled:
+    //CLightMap		lightmaps[MAX_LIGHTMAPS];
 
 public:
     FileAppendix	DateiAppendix;							// Anhang der Level-Datei
@@ -294,8 +296,10 @@ public:
     LevelTileStruct					Tiles[MAX_LEVELSIZE_X]  // Array mit Leveldaten
     [MAX_LEVELSIZE_Y];
 
-    LevelTileSaveStruct				OriginalTiles[MAX_LEVELSIZE_X]  // Array mit Leveldaten merken (für Lightmaps)
-    [MAX_LEVELSIZE_Y];
+    //DKS - Lightmap code in original game was never used and all related code has now been disabled:
+    //LevelTileSaveStruct				OriginalTiles[MAX_LEVELSIZE_X]  // Array mit Leveldaten merken (für Lightmaps)
+    //[MAX_LEVELSIZE_Y];
+
     DirectGraphicsSprite			TileGfx[MAX_TILESETS];	// Tilegrafiken
     DirectGraphicsSprite			Background;				// Hintergrund
     DirectGraphicsSprite			ParallaxLayer[6];		// Anzahl der Layer
@@ -376,10 +380,22 @@ public:
     D3DCOLOR LightValue(float x, float y, RECT rect, bool forced);	// Helligkeit an Stelle x/y
 
     void ComputeCoolLight (void);							// Coole   Lightberechnung
-    void ComputeShitLight (void);							// Billige Lightberechnung
+
+    //DKS - This function was never actually used in the original game and is now disabled:
+    //      (Only place was as a console command in Console.cpp)
+    //void ComputeShitLight (void);							// Billige Lightberechnung
+
     void DrawShadow		  (void);							// Schatten im Alien Level zeichnen
-    void ClearLightMaps	  (void);							// alle LightMaps entfernen und Ursprungshelligkeit wieder herstellen
-    void DrawLightmap	  (int Map, float x, float y, int alpha);	// LightMap an x/y mit alpha addieren
+
+
+    //DKS - The original code had a return as line 5 of DrawLightmap, making it a stub.
+    //      When I tried removing it, I saw why: the lightmaps colors' don't match what
+    //      you'd expect and they appear in places off-center from where they should be.
+    //      I have now disabled the function and all four calls to it elsewhere in the code,
+    //      and all related code.
+    //void ClearLightMaps	  (void);							// alle LightMaps entfernen und Ursprungshelligkeit wieder herstellen
+    //void DrawLightmap	  (int Map, float x, float y, int alpha);	// LightMap an x/y mit alpha addieren
+
     void WertAngleichen	  (float &nachx, float &nachy, float vonx, float vony);
     bool LineHitsLine(const Vector2D p,
                       const Vector2D u,

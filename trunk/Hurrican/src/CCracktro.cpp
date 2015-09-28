@@ -127,17 +127,17 @@ CCracktro::CCracktro()
 {
     b_running = true;
     pFont = new(DirectGraphicsFont);
-    pFont->LoadFont("demofont.bmp", 288, 256, 18, 16, 16, 8);
+    pFont->LoadFont("demofont.png", 288, 256, 18, 16, 16, 8);
 
-    Bars[0].LoadImage("copper1.bmp", 32, 36, 32, 36, 1, 1);
-    Bars[1].LoadImage("copper2.bmp", 32, 18, 32, 18, 1, 1);
-    Bars[2].LoadImage("copper3.bmp", 32, 100, 32, 100, 1, 1);
+    Bars[0].LoadImage("copper1.png", 32, 36, 32, 36, 1, 1);
+    Bars[1].LoadImage("copper2.png", 32, 18, 32, 18, 1, 1);
+    Bars[2].LoadImage("copper3.png", 32, 100, 32, 100, 1, 1);
 
-    Zahlen.LoadImage("demozahlen.bmp", 160, 40, 32, 40, 5, 1);
+    Zahlen.LoadImage("demozahlen.png", 160, 40, 32, 40, 5, 1);
 
-    Logo[0].LoadImage("demologo.bmp", 341, 80, 341, 80, 1, 1);
+    Logo[0].LoadImage("demologo.png", 341, 80, 341, 80, 1, 1);
 
-    Star.LoadImage("star.bmp", 5, 5, 5, 5, 1, 1);
+    Star.LoadImage("star.png", 5, 5, 5, 5, 1, 1);
 
     ScrollOffset  = 0.0f;
     ScrollOffset2 = 0.0f;

@@ -35,7 +35,7 @@
 
 ConsoleClass::ConsoleClass()
 {
-    ConsoleGFX.LoadImage("console.bmp", 512, 256, 512, 256, 1, 1);	// Grafik laden
+    ConsoleGFX.LoadImage("console.png", 512, 256, 512, 256, 1, 1);	// Grafik laden
 
     its_Alpha		= 0.0f;
     Fade			= 0.0f;
@@ -641,10 +641,11 @@ void ConsoleClass::CheckCommands(void)
         pTileEngine->ComputeCoolLight();
     }
 
-    if (CONSOLE_COMMAND("light shit"))
-    {
-        pTileEngine->ComputeShitLight();
-    }
+    //DKS - ComputeShitLight() was never used in the original game except for here; disabling it.
+    //if (CONSOLE_COMMAND("light shit"))
+    //{
+    //    pTileEngine->ComputeShitLight();
+    //}
 
     if (CONSOLE_COMMAND("lamp"))
     {

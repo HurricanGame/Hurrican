@@ -469,8 +469,9 @@ bool CSoundManager::LoadSong(const char *Filename, int Nr)
             goto loadfile;
     }
 
+    //DKS - Music files now reside in new subdir data/music/
     // Dann checken, ob sich das File im Standard Ordner befindet
-    sprintf_s(Temp, "%s/data/%s", g_storage_ext, Filename);
+    sprintf_s(Temp, "%s/data/music/%s", g_storage_ext, Filename);
     if (FileExists(Temp))
         goto loadfile;
 
@@ -813,8 +814,9 @@ bool CSoundManager::LoadWave(const char *Filename, int Nr, bool looped)
             goto loadfile;
     }
 
+    //DKS - Sound effects files now reside in new subdir data/sfx/
     // Dann checken, ob sich das File im Standard Ordner befindet
-    sprintf_s(Temp, "%s/data/%s", g_storage_ext, Filename);
+    sprintf_s(Temp, "%s/data/sfx/%s", g_storage_ext, Filename);
     if (FileExists(Temp))
         goto loadfile;
 

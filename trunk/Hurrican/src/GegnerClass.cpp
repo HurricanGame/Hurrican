@@ -641,10 +641,10 @@ GegnerListClass::GegnerListClass(void)
 
     pGegnerGrafix[POWERBLOCK]->LoadImage("powerblock.png", 440, 40, 40, 40, 11, 1);
     pGegnerGrafix[ONEUP]->LoadImage		("oneup.png", 200, 160, 40, 40, 5, 4);
-    pGegnerGrafix[DIAMANT]->LoadImage	("diamant.bmp", 261, 29, 29, 29, 9, 1);
+    pGegnerGrafix[DIAMANT]->LoadImage	("diamant.png", 261, 29, 29, 29, 9, 1);
     pGegnerGrafix[EXTRAS]->LoadImage	("extras.png", 312, 24, 24, 24, 13, 1);
     pGegnerGrafix[PUNISHER]->LoadImage	("punisher.png", 1020, 850, 170, 170, 6, 5);
-    LavaFlare.LoadImage ("lavaflare.bmp", 120, 120, 120, 120, 1, 1);
+    LavaFlare.LoadImage ("lavaflare.png", 120, 120, 120, 120, 1, 1);
 
     // Gegner-Rects festlegen
     // BonusBlock
@@ -658,7 +658,7 @@ GegnerListClass::GegnerListClass(void)
     if (pDroneFlame == NULL)
     {
         pDroneFlame = new DirectGraphicsSprite();
-        pDroneFlame->LoadImage("droneflame.bmp", 164, 46, 82, 46, 2, 1);
+        pDroneFlame->LoadImage("droneflame.png", 164, 46, 82, 46, 2, 1);
     }
 
     // Knarre der Zitrone laden

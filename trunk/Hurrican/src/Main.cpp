@@ -1129,15 +1129,15 @@ bool GameInit2(void)
 
 
     // Fonts laden
-    pDefaultFont->LoadFont  ("smallfont.bmp", 320, 84, 10, 12, 32, 7);
+    pDefaultFont->LoadFont  ("smallfont.png", 320, 84, 10, 12, 32, 7);
 
     //DKS - Added support for font scaling
     if (CommandLineParams.LowRes) {
         pDefaultFont->SetScaleFactor(2);    // On lower res, draw smallest font twice as large so it appears 1:1
     }
 
-    LoadingScreen.LoadImage("loading.bmp",    360, 60, 360, 60, 1, 1);
-    LoadingBar.LoadImage   ("loadingbar.bmp", 318, 19, 318, 19, 1, 1);
+    LoadingScreen.LoadImage("loading.png",    360, 60, 360, 60, 1, 1);
+    LoadingBar.LoadImage   ("loadingbar.png", 318, 19, 318, 19, 1, 1);
     LoadingProgress = 0.0f;
     LoadingItemsToLoad = 345;
     LoadingItemsLoaded = 0;
@@ -1280,11 +1280,11 @@ bool GameInit2(void)
     pSoundManager->LoadSong("Punisher.it", MUSIC_PUNISHER);
 
     // Spieler grafiken laden
-    SchussFlamme[0].LoadImage("schussflamme.bmp",  76,  72,  38, 24, 2, 3);
-    SchussFlamme[1].LoadImage("schussflamme2.bmp", 80,  108,  40, 36, 2, 3);
-    SchussFlamme[2].LoadImage("schussflamme3.bmp", 48,  114,  24, 38, 2, 3);
+    SchussFlamme[0].LoadImage("schussflamme.png",  76,  72,  38, 24, 2, 3);
+    SchussFlamme[1].LoadImage("schussflamme2.png", 80,  108,  40, 36, 2, 3);
+    SchussFlamme[2].LoadImage("schussflamme3.png", 48,  114,  24, 38, 2, 3);
 
-    SchussFlammeFlare.LoadImage("schussflammeflare.bmp", 140,  140,  140, 140, 1, 1);
+    SchussFlammeFlare.LoadImage("schussflammeflare.png", 140,  140,  140, 140, 1, 1);
 
     for (int p = 0; p < 2; p++)
     {
@@ -1324,18 +1324,18 @@ bool GameInit2(void)
         PlayerRide[p].LoadImage  ("hurri_ride.png",   450, 480, 90,120, 5, 4);
 
         // Stachelrad
-        PlayerRad[p].LoadImage   ("hurri_rad.bmp",    140,  70, 35, 35, 4, 2);
+        PlayerRad[p].LoadImage   ("hurri_rad.png",    140,  70, 35, 35, 4, 2);
     }
 
-    Blitzstrahl[0].LoadImage("blitzstrahl1.bmp",32,  32, 32, 32, 1, 1);
-    Blitzstrahl[1].LoadImage("blitzstrahl2.bmp",32,  32, 32, 32, 1, 1);
-    Blitzstrahl[2].LoadImage("blitzstrahl3.bmp",32,  32, 32, 32, 1, 1);
-    Blitzstrahl[3].LoadImage("blitzstrahl4.bmp",32,  32, 32, 32, 1, 1);
-    Blitzflash[0].LoadImage("blitzflash1.bmp",	66,  64, 66, 64, 1, 1);
-    Blitzflash[1].LoadImage("blitzflash2.bmp",	66,  64, 66, 64, 1, 1);
-    Blitzflash[2].LoadImage("blitzflash3.bmp",	66,  64, 66, 64, 1, 1);
-    Blitzflash[3].LoadImage("blitzflash4.bmp",	66,  64, 66, 64, 1, 1);
-    BlitzTexture.LoadImage("blitztexture.bmp", 64, 64, 64, 64, 1, 1);
+    Blitzstrahl[0].LoadImage("blitzstrahl1.png",32,  32, 32, 32, 1, 1);
+    Blitzstrahl[1].LoadImage("blitzstrahl2.png",32,  32, 32, 32, 1, 1);
+    Blitzstrahl[2].LoadImage("blitzstrahl3.png",32,  32, 32, 32, 1, 1);
+    Blitzstrahl[3].LoadImage("blitzstrahl4.png",32,  32, 32, 32, 1, 1);
+    Blitzflash[0].LoadImage("blitzflash1.png",	66,  64, 66, 64, 1, 1);
+    Blitzflash[1].LoadImage("blitzflash2.png",	66,  64, 66, 64, 1, 1);
+    Blitzflash[2].LoadImage("blitzflash3.png",	66,  64, 66, 64, 1, 1);
+    Blitzflash[3].LoadImage("blitzflash4.png",	66,  64, 66, 64, 1, 1);
+    BlitzTexture.LoadImage("blitztexture.png", 64, 64, 64, 64, 1, 1);
 
     if (!GameRunning)
         return false;
