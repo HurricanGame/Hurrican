@@ -1,3 +1,7 @@
+//DKS - Lightmaps have been disabled (never worked originally, see Tileengine.cpp's
+//      comments for DrawLightmap()), so all the following is commented out now:
+#if 0
+
 // Datei : lightmap.cpp
 
 // --------------------------------------------------------------------------------------
@@ -170,3 +174,5 @@ loadfile:
     delete [] hbm;
 #endif
 }
+
+#endif //0

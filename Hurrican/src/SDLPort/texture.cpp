@@ -346,21 +346,25 @@ bool loadImageSDL( image_t& image, const char* path, uint32_t size )
 #endif
                                       );
 
+        //DKS - Many of the original game's textures used magenta for a colorkey, instead
+        //      of using an alpha channel. All those textures have been converted to
+        //      now use an alpha channel, so SDL_SetColorKey() below is no longer necessary.  
         //  check if original image uses an alpha channel
-        //if (!(rawSurf->flags & SDL_SRCALPHA))
-        if (rawSurf->format->BytesPerPixel <= 3 )
-        {
-            // if no alpha use MAGENTA and key it out.
-            SDL_SetColorKey( rawSurf, flags, SDL_MapRGB( rawSurf->format, 255, 0, 255 ) );
-        }
-        else
-        {
+
+        ////if (!(rawSurf->flags & SDL_SRCALPHA))
+        //if (rawSurf->format->BytesPerPixel <= 3 )
+        //{
+        //    // if no alpha use MAGENTA and key it out.
+        //    SDL_SetColorKey( rawSurf, flags, SDL_MapRGB( rawSurf->format, 255, 0, 255 ) );
+        //}
+        //else
+        //{
 #if SDL_VERSION_ATLEAST(2,0,0)
             SDL_SetSurfaceAlphaMod( rawSurf, 255 );
 #else /* SDL 1.2 */
             SDL_SetAlpha( rawSurf, 0, 0 );
 #endif
-        }
+        //}
 
         SDL_BlitSurface( rawSurf, 0, finSurf, 0 );
         SDL_FreeSurface( rawSurf );

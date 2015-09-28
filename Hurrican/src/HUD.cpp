@@ -29,21 +29,21 @@
 
 HUDClass::HUDClass(void)
 {
-    HUDGfx.LoadImage		("hud.bmp", 548, 69, 548, 69, 1, 1);
-    HUDBlitz.LoadImage		("hudblitz.bmp",6, 18, 6, 18, 1, 1);
-    HUDBomb.LoadImage		("hudbomb.bmp", 18, 18, 18, 18, 1, 1);
-    HUDSuperShot.LoadImage	("hudsupershot.bmp", 24, 24, 24, 24, 1, 1);
-    HUDAutoFire.LoadImage	("hudautofire.bmp",24, 24, 24, 24, 1, 1);
-    HUDBall[0].LoadImage	("hudenergy.bmp", 69, 69, 69, 69, 1, 1);
-    HUDBall[1].LoadImage	("hudrad.bmp", 69, 69, 69, 69, 1, 1);
-    HUDFontBig.LoadImage	("hudfontbig.bmp", 128, 32, 12, 22, 10, 1);
-    SelectedWeapon.LoadImage("hudselected.bmp", 68, 17, 17, 17, 4, 1);
-    WeaponRahmen.LoadImage	("hudbalken.bmp", 9, 18, 9, 18, 1, 1);
-    WeaponPunkt.LoadImage	("hudbalken_full.bmp",7, 2, 7, 2, 1, 1);
-    Arrow.LoadImage			("hudarrow.bmp",24, 33, 24, 33, 1, 1);
+    HUDGfx.LoadImage		("hud.png", 548, 69, 548, 69, 1, 1);
+    HUDBlitz.LoadImage		("hudblitz.png",6, 18, 6, 18, 1, 1);
+    HUDBomb.LoadImage		("hudbomb.png", 18, 18, 18, 18, 1, 1);
+    HUDSuperShot.LoadImage	("hudsupershot.png", 24, 24, 24, 24, 1, 1);
+    HUDAutoFire.LoadImage	("hudautofire.png",24, 24, 24, 24, 1, 1);
+    HUDBall[0].LoadImage	("hudenergy.png", 69, 69, 69, 69, 1, 1);
+    HUDBall[1].LoadImage	("hudrad.png", 69, 69, 69, 69, 1, 1);
+    HUDFontBig.LoadImage	("hudfontbig.png", 128, 32, 12, 22, 10, 1);
+    SelectedWeapon.LoadImage("hudselected.png", 68, 17, 17, 17, 4, 1);
+    WeaponRahmen.LoadImage	("hudbalken.png", 9, 18, 9, 18, 1, 1);
+    WeaponPunkt.LoadImage	("hudbalken_full.png",7, 2, 7, 2, 1, 1);
+    Arrow.LoadImage			("hudarrow.png",24, 33, 24, 33, 1, 1);
 
-    BossHUD.LoadImage		("bosshud.bmp", 130, 41, 130, 41, 1, 1);
-    BossBar.LoadImage		("bossbar.bmp", 113, 24, 113, 24, 1, 1);
+    BossHUD.LoadImage		("bosshud.png", 130, 41, 130, 41, 1, 1);
+    BossBar.LoadImage		("bossbar.png", 113, 24, 113, 24, 1, 1);
 
     // HUD Werte initialisieren
     Alpha			= 192;

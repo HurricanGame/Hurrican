@@ -3912,9 +3912,11 @@ bool PlayerClass::DoLightning(void)
         xs = xstart;
         ys = ystart;
 
+        //DKS - Lightmaps have been disabled (never worked originally, see Tileengine.cpp's
+        //      comments for DrawLightmap())
         // Blitz-LightMap rendern
-        if (options_Detail >= DETAIL_MEDIUM)
-            pTileEngine->DrawLightmap(LIGHTMAP_BLITZ, xs + 16, ys + 16, 255);
+        //if (options_Detail >= DETAIL_MEDIUM)
+        //    pTileEngine->DrawLightmap(LIGHTMAP_BLITZ, xs + 16, ys + 16, 255);
 
         // Blitz auf Kollision mit den Gegnern prüfen
         pEnemy = pGegner->pStart;			// Anfang der Gegnerliste

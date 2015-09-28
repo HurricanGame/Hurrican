@@ -108,7 +108,8 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 
     if (image.data == NULL)
     {
-        sprintf_s(Temp, "%s/data/%s", g_storage_ext, Filename);
+        //DKS - All textures are now stored in their own data/textures/ subdir:
+        sprintf_s(Temp, "%s/data/textures/%s", g_storage_ext, Filename);
         if (FileExists(Temp))
         {
             loadImageSDL(image, Temp);

@@ -30,7 +30,7 @@ GegnerFahrstuhl::GegnerFahrstuhl(int Wert1, int Wert2, bool Light)
 
     if (Value1 == 0)
     {
-        pTileEngine->ParallaxLayer[2].LoadImage("fahrstuhl_parallax.bmp", 400, 480, 400, 480, 1, 1);
+        pTileEngine->ParallaxLayer[2].LoadImage("fahrstuhl_parallax.png", 400, 480, 400, 480, 1, 1);
         pTileEngine->IsElevatorLevel = true;
     }
 }

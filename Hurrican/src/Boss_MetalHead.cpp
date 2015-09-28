@@ -48,12 +48,12 @@ GegnerMetalHead::GegnerMetalHead(int Wert1, int Wert2, bool Light)
 
     // Zusätzliche Grafiken laden
     //
-    Kiefer.LoadImage  ("metalhead_kiefer.bmp",   102,  153, 102,  153, 1, 1);
-    Kiefer2.LoadImage ("metalhead_kiefer2.bmp",  131, 88, 131, 88, 1, 1);
-    Turbine.LoadImage ("metalhead_turbine.bmp",  98,  49, 98, 49, 1, 1);
-    Turbine2.LoadImage("metalhead_turbine2.bmp", 98,  49, 98, 49, 1, 1);
+    Kiefer.LoadImage  ("metalhead_kiefer.png",   102,  153, 102,  153, 1, 1);
+    Kiefer2.LoadImage ("metalhead_kiefer2.png",  131, 88, 131, 88, 1, 1);
+    Turbine.LoadImage ("metalhead_turbine.png",  98,  49, 98, 49, 1, 1);
+    Turbine2.LoadImage("metalhead_turbine2.png", 98,  49, 98, 49, 1, 1);
     HalsGfx.LoadImage    ("metalhead_halsteil.png",  56,  16,  56,  16, 1, 1);
-    Flare.LoadImage   ("giantspiderflare.bmp", 128, 128, 128, 128, 1, 1);
+    Flare.LoadImage   ("giantspiderflare.png", 128, 128, 128, 128, 1, 1);
 }
 
 // --------------------------------------------------------------------------------------

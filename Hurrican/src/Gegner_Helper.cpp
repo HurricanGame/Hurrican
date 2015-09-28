@@ -51,152 +51,152 @@ void LoadGegnerGrafik(int Nr)
     switch (Nr)
     {
     case SPITTER:
-        pGegnerGrafix[SPITTER]->LoadImage("spitter.bmp", 110,  23, 22, 23, 5,1);
+        pGegnerGrafix[SPITTER]->LoadImage("spitter.png", 110,  23, 22, 23, 5,1);
         break;
 
     case WALKER:
-        pGegnerGrafix[WALKER]->LoadImage("enemy-walker.bmp", 360, 180, 45, 45, 8, 4);
+        pGegnerGrafix[WALKER]->LoadImage("enemy-walker.png", 360, 180, 45, 45, 8, 4);
         break;
 
     case GUNTOWER:
-        pGegnerGrafix[GUNTOWER]->LoadImage("enemy-guntower.bmp", 300, 120, 60, 40, 5, 3);
+        pGegnerGrafix[GUNTOWER]->LoadImage("enemy-guntower.png", 300, 120, 60, 40, 5, 3);
         break;
 
     case SPIDERBOMB:
-        pGegnerGrafix[SPIDERBOMB]->LoadImage("spiderbomb.bmp", 350, 34, 50, 34, 7, 1);
+        pGegnerGrafix[SPIDERBOMB]->LoadImage("spiderbomb.png", 350, 34, 50, 34, 7, 1);
         break;
 
     case PIRANHA:
-        pGegnerGrafix[PIRANHA]->LoadImage("piranha.bmp", 225, 232, 45, 29, 5, 8);
+        pGegnerGrafix[PIRANHA]->LoadImage("piranha.png", 225, 232, 45, 29, 5, 8);
         break;
 
     case STAHLMUECKE:
-        pGegnerGrafix[STAHLMUECKE]->LoadImage("stahlmuecke.bmp", 170, 70, 34, 35, 5, 2);
+        pGegnerGrafix[STAHLMUECKE]->LoadImage("stahlmuecke.png", 170, 70, 34, 35, 5, 2);
         break;
 
     case DECKENTURM:
-        pGegnerGrafix[DECKENTURM]->LoadImage("deckenturm.bmp", 190, 240, 38, 40, 5, 6);
+        pGegnerGrafix[DECKENTURM]->LoadImage("deckenturm.png", 190, 240, 38, 40, 5, 6);
         break;
 
     case DECKENKRABBE:
-        pGegnerGrafix[DECKENKRABBE]->LoadImage("lavakrabbe.bmp", 280, 136, 70, 34, 4,4);
+        pGegnerGrafix[DECKENKRABBE]->LoadImage("lavakrabbe.png", 280, 136, 70, 34, 4,4);
         break;
 
     case KUGELKLEIN:
-        pGegnerGrafix[KUGELKLEIN]->LoadImage("kugel4.bmp", 150, 120, 30, 30, 5, 4);
+        pGegnerGrafix[KUGELKLEIN]->LoadImage("kugel4.png", 150, 120, 30, 30, 5, 4);
         break;
 
     case KUGELMEDIUM:
-        pGegnerGrafix[KUGELMEDIUM]->LoadImage("kugel3.bmp", 225, 180, 45, 45, 5, 4);
+        pGegnerGrafix[KUGELMEDIUM]->LoadImage("kugel3.png", 225, 180, 45, 45, 5, 4);
         break;
 
     case KUGELGROSS:
-        pGegnerGrafix[KUGELGROSS]->LoadImage("kugel2.bmp", 300, 240, 60, 60, 5, 4);
+        pGegnerGrafix[KUGELGROSS]->LoadImage("kugel2.png", 300, 240, 60, 60, 5, 4);
         break;
 
     case KUGELRIESIG:
-        pGegnerGrafix[KUGELRIESIG]->LoadImage("kugel1.bmp", 450, 360, 90, 90, 5, 4);
+        pGegnerGrafix[KUGELRIESIG]->LoadImage("kugel1.png", 450, 360, 90, 90, 5, 4);
         break;
 
     case KRABBLEROBEN:
-        pGegnerGrafix[KRABBLEROBEN]->LoadImage("krabbleroben.bmp", 250, 225, 50, 75, 5, 3);
+        pGegnerGrafix[KRABBLEROBEN]->LoadImage("krabbleroben.png", 250, 225, 50, 75, 5, 3);
         break;
 
     case KRABBLERLINKS:
-        pGegnerGrafix[KRABBLERLINKS]->LoadImage("krabblerlinks.bmp", 225, 250, 75, 50, 3, 5);
+        pGegnerGrafix[KRABBLERLINKS]->LoadImage("krabblerlinks.png", 225, 250, 75, 50, 3, 5);
         break;
 
     case KRABBLERRECHTS:
-        pGegnerGrafix[KRABBLERRECHTS]->LoadImage("krabblerrechts.bmp", 225, 250, 75, 50, 3, 5);
+        pGegnerGrafix[KRABBLERRECHTS]->LoadImage("krabblerrechts.png", 225, 250, 75, 50, 3, 5);
         break;
 
     case AUGE:
-        pGegnerGrafix[AUGE]->LoadImage("auge.bmp", 360, 26, 60, 26, 6, 1);
+        pGegnerGrafix[AUGE]->LoadImage("auge.png", 360, 26, 60, 26, 6, 1);
         break;
 
     case QUALLE:
-        pGegnerGrafix[QUALLE]->LoadImage("qualle.bmp", 240, 180, 40, 60, 6, 3);
+        pGegnerGrafix[QUALLE]->LoadImage("qualle.png", 240, 180, 40, 60, 6, 3);
         break;
 
     case FALLINGROCK:
-        pGegnerGrafix[FALLINGROCK]->LoadImage("fallingstone.bmp", 80, 40, 80, 40, 1, 1);
+        pGegnerGrafix[FALLINGROCK]->LoadImage("fallingstone.png", 80, 40, 80, 40, 1, 1);
         break;
 
     case BROCKELROCK:
-        pGegnerGrafix[BROCKELROCK]->LoadImage("fallingstone2.bmp", 160, 40, 80, 40, 2, 1);
+        pGegnerGrafix[BROCKELROCK]->LoadImage("fallingstone2.png", 160, 40, 80, 40, 2, 1);
         break;
 
     case ROBORAUPE:
-        pGegnerGrafix[ROBORAUPE]->LoadImage("roboraupe.bmp", 360, 105, 90, 35, 4, 3);
+        pGegnerGrafix[ROBORAUPE]->LoadImage("roboraupe.png", 360, 105, 90, 35, 4, 3);
         break;
 
     case STALAGTIT:
-        pGegnerGrafix[STALAGTIT]->LoadImage("stalagtit.bmp", 40, 80, 40, 80, 1, 1);
+        pGegnerGrafix[STALAGTIT]->LoadImage("stalagtit.png", 40, 80, 40, 80, 1, 1);
         break;
 
     case RAKETENWERFER:
-        pGegnerGrafix[RAKETENWERFER]->LoadImage("raketenwerfer.bmp", 225, 50, 45, 25, 5, 2);
+        pGegnerGrafix[RAKETENWERFER]->LoadImage("raketenwerfer.png", 225, 50, 45, 25, 5, 2);
         break;
 
     case SWIMWALKER:
-        pGegnerGrafix[SWIMWALKER]->LoadImage("swimwalker.bmp", 260, 135, 65, 45, 4, 3);
+        pGegnerGrafix[SWIMWALKER]->LoadImage("swimwalker.png", 260, 135, 65, 45, 4, 3);
         break;
 
     case FLUGSACK:
-        pGegnerGrafix[FLUGSACK]->LoadImage("flugsack.bmp", 320, 210, 80, 70, 4, 3);
+        pGegnerGrafix[FLUGSACK]->LoadImage("flugsack.png", 320, 210, 80, 70, 4, 3);
         break;
 
     case REITFLUGSACK:
-        pGegnerGrafix[REITFLUGSACK]->LoadImage("flugsack.bmp", 320, 210, 80, 70, 4, 3);
+        pGegnerGrafix[REITFLUGSACK]->LoadImage("flugsack.png", 320, 210, 80, 70, 4, 3);
         break;
 
     case EISSTACHEL:
-        pGegnerGrafix[EISSTACHEL]->LoadImage("eisstachel.bmp", 420, 390, 105, 78, 4, 5);
+        pGegnerGrafix[EISSTACHEL]->LoadImage("eisstachel.png", 420, 390, 105, 78, 4, 5);
         break;
 
     case SKIWALKER:
-        pGegnerGrafix[SKIWALKER]->LoadImage("skiwalker.bmp", 195, 152, 65, 38, 3,4);
+        pGegnerGrafix[SKIWALKER]->LoadImage("skiwalker.png", 195, 152, 65, 38, 3,4);
         break;
 
     case FLUGKANONE:
-        pGegnerGrafix[FLUGKANONE]->LoadImage("flugkanone.bmp", 260, 225, 65, 45, 4,5);
+        pGegnerGrafix[FLUGKANONE]->LoadImage("flugkanone.png", 260, 225, 65, 45, 4,5);
         break;
 
     case SNOWBOMBE:
-        pGegnerGrafix[SNOWBOMBE]->LoadImage("snowbomb.bmp", 480, 320, 80, 80, 6,4);
+        pGegnerGrafix[SNOWBOMBE]->LoadImage("snowbomb.png", 480, 320, 80, 80, 6,4);
         break;
 
     case ROBOMAN1:
-        pGegnerGrafix[ROBOMAN1]->LoadImage("roboman1.bmp", 450, 300, 90, 100, 5,3);
+        pGegnerGrafix[ROBOMAN1]->LoadImage("roboman1.png", 450, 300, 90, 100, 5,3);
         break;
 
     case BOULDER:
-        pGegnerGrafix[BOULDER]->LoadImage("boulder.bmp", 300, 165, 60, 55, 5,3);
+        pGegnerGrafix[BOULDER]->LoadImage("boulder.png", 300, 165, 60, 55, 5,3);
         break;
 
     case STELZSACK:
-        pGegnerGrafix[STELZSACK]->LoadImage("stelzsack.bmp", 500, 441, 100, 147, 5,4);
+        pGegnerGrafix[STELZSACK]->LoadImage("stelzsack.png", 500, 441, 100, 147, 5,4);
         break;
 
     case FALLBOMBE:
-        pGegnerGrafix[FALLBOMBE]->LoadImage("fallbombe.bmp", 138, 59, 23, 59, 6,1);
+        pGegnerGrafix[FALLBOMBE]->LoadImage("fallbombe.png", 138, 59, 23, 59, 6,1);
         break;
 
     case POKENUKE:
-        pGegnerGrafix[POKENUKE]->LoadImage("pokenuke.bmp", 81, 217, 81, 217, 1,1);
+        pGegnerGrafix[POKENUKE]->LoadImage("pokenuke.png", 81, 217, 81, 217, 1,1);
         break;
 
     case LAVAKRABBE:
-        pGegnerGrafix[LAVAKRABBE]->LoadImage("lavakrabbe.bmp", 280, 136, 70, 34, 4,4);
+        pGegnerGrafix[LAVAKRABBE]->LoadImage("lavakrabbe.png", 280, 136, 70, 34, 4,4);
         break;
 
     case LAVABALLSPAWNER:
-        pGegnerGrafix[LAVABALLSPAWNER]->LoadImage("lavaball.bmp", 300, 240, 60, 60, 5,4);
+        pGegnerGrafix[LAVABALLSPAWNER]->LoadImage("lavaball.png", 300, 240, 60, 60, 5,4);
         break;
 
     case LAVABALL:
     {
-        pGegnerGrafix[LAVABALL]->LoadImage("lavaball.bmp", 300, 240, 60, 60, 5,4);
+        pGegnerGrafix[LAVABALL]->LoadImage("lavaball.png", 300, 240, 60, 60, 5,4);
     }
     break;
 
@@ -205,75 +205,75 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case EIERMANN:
-        pGegnerGrafix[EIERMANN]->LoadImage("eiermann.bmp", 310, 132, 62, 66, 5,2);
+        pGegnerGrafix[EIERMANN]->LoadImage("eiermann.png", 310, 132, 62, 66, 5,2);
         break;
 
     case WANDKANNONE:
-        pGegnerGrafix[WANDKANNONE]->LoadImage("wandcannon.bmp", 141, 32, 47, 32, 3,1);
+        pGegnerGrafix[WANDKANNONE]->LoadImage("wandcannon.png", 141, 32, 47, 32, 3,1);
         break;
 
     case STARSMALL:
-        pGegnerGrafix[STARSMALL]->LoadImage("starsmall.bmp", 80, 80, 40, 40, 2,2);
+        pGegnerGrafix[STARSMALL]->LoadImage("starsmall.png", 80, 80, 40, 40, 2,2);
         break;
 
     case STARBIG:
-        pGegnerGrafix[STARBIG]->LoadImage("starbig.bmp", 160, 160, 80, 80, 2,2);
+        pGegnerGrafix[STARBIG]->LoadImage("starbig.png", 160, 160, 80, 80, 2,2);
         break;
 
     case MADE:
-        pGegnerGrafix[MADE]->LoadImage("made.bmp", 200, 40, 20, 20, 10,2);
+        pGegnerGrafix[MADE]->LoadImage("made.png", 200, 40, 20, 20, 10,2);
         break;
 
     case DRONE:
-        pGegnerGrafix[DRONE]->LoadImage("drone.bmp", 280, 240, 70, 80, 4,3);
+        pGegnerGrafix[DRONE]->LoadImage("drone.png", 280, 240, 70, 80, 4,3);
         break;
 
     case NEUFISCH:
-        pGegnerGrafix[NEUFISCH]->LoadImage("neufisch.bmp", 360, 292, 90, 73, 4,4);
+        pGegnerGrafix[NEUFISCH]->LoadImage("neufisch.png", 360, 292, 90, 73, 4,4);
         break;
 
     case PFLANZE:
-        pGegnerGrafix[PFLANZE]->LoadImage("pflanze.bmp", 440, 450, 110, 90, 4,5);
+        pGegnerGrafix[PFLANZE]->LoadImage("pflanze.png", 440, 450, 110, 90, 4,5);
         break;
 
     case SPITTERBOMBE:
-        pGegnerGrafix[SPITTERBOMBE]->LoadImage("spitterbombe.bmp", 174, 50, 29, 50, 6,1);
+        pGegnerGrafix[SPITTERBOMBE]->LoadImage("spitterbombe.png", 174, 50, 29, 50, 6,1);
         break;
 
     case NEST:
-        pGegnerGrafix[NEST]->LoadImage("nest.bmp", 43, 60, 43, 60, 1,1);
+        pGegnerGrafix[NEST]->LoadImage("nest.png", 43, 60, 43, 60, 1,1);
         break;
 
     case SCHIENENVIECH:
-        pGegnerGrafix[SCHIENENVIECH]->LoadImage("schienenviech.bmp", 245, 40, 49, 40, 5,1);
+        pGegnerGrafix[SCHIENENVIECH]->LoadImage("schienenviech.png", 245, 40, 49, 40, 5,1);
         break;
 
     case WASSERMINE:
-        pGegnerGrafix[WASSERMINE]->LoadImage("wassermine.bmp", 300, 190, 60, 90, 5,2);
+        pGegnerGrafix[WASSERMINE]->LoadImage("wassermine.png", 300, 190, 60, 90, 5,2);
         break;
 
     case FLEDERMAUS:
-        pGegnerGrafix[FLEDERMAUS]->LoadImage("fledermaus.bmp", 500, 174, 50, 58, 10,3);
+        pGegnerGrafix[FLEDERMAUS]->LoadImage("fledermaus.png", 500, 174, 50, 58, 10,3);
         break;
 
     case CLIMBSPIDER:
-        pGegnerGrafix[CLIMBSPIDER]->LoadImage("climbspider.bmp", 250, 105, 50, 35, 5,3);
+        pGegnerGrafix[CLIMBSPIDER]->LoadImage("climbspider.png", 250, 105, 50, 35, 5,3);
         break;
 
     case FIRESPIDER:
-        pGegnerGrafix[FIRESPIDER]->LoadImage("feuerspinne.bmp", 480, 110, 80, 55, 6,2);
+        pGegnerGrafix[FIRESPIDER]->LoadImage("feuerspinne.png", 480, 110, 80, 55, 6,2);
         break;
 
     case BALLERDRONE:
-        pGegnerGrafix[BALLERDRONE]->LoadImage("ballerdrone.bmp", 450, 195, 90, 65, 5,3);
+        pGegnerGrafix[BALLERDRONE]->LoadImage("ballerdrone.png", 450, 195, 90, 65, 5,3);
         break;
 
     case SCHWABBEL:
-        pGegnerGrafix[SCHWABBEL]->LoadImage("schwabbel.bmp", 300, 240, 60, 60, 5,4);
+        pGegnerGrafix[SCHWABBEL]->LoadImage("schwabbel.png", 300, 240, 60, 60, 5,4);
         break;
 
     case BIGROCKET:
-        pGegnerGrafix[BIGROCKET]->LoadImage("bigrocket.bmp", 578, 600, 73, 300, 8,2);
+        pGegnerGrafix[BIGROCKET]->LoadImage("bigrocket.png", 578, 600, 73, 300, 8,2);
         break;
 
     case EISZAPFEN:
@@ -281,19 +281,19 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case WANDKRABBE:
-        pGegnerGrafix[WANDKRABBE]->LoadImage("wandkrabbe.bmp", 136, 192, 34, 64, 4,3);
+        pGegnerGrafix[WANDKRABBE]->LoadImage("wandkrabbe.png", 136, 192, 34, 64, 4,3);
         break;
 
     case JAEGER:
-        pGegnerGrafix[JAEGER]->LoadImage("jaeger.bmp", 280, 212, 70, 53, 4,4);
+        pGegnerGrafix[JAEGER]->LoadImage("jaeger.png", 280, 212, 70, 53, 4,4);
         break;
 
     case SIDEROCKET:
-        pGegnerGrafix[SIDEROCKET]->LoadImage("siderocket.bmp", 40, 18, 40, 18, 1, 1);
+        pGegnerGrafix[SIDEROCKET]->LoadImage("siderocket.png", 40, 18, 40, 18, 1, 1);
         break;
 
     case FIESEDRONE:
-        pGegnerGrafix[FIESEDRONE]->LoadImage("fiesedrone.bmp", 200, 250, 50, 50, 4, 5);
+        pGegnerGrafix[FIESEDRONE]->LoadImage("fiesedrone.png", 200, 250, 50, 50, 4, 5);
         break;
 
     case SCHLEIMBOLLER:
@@ -309,11 +309,11 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case FIESERWALKER:
-        pGegnerGrafix[FIESERWALKER]->LoadImage("fieserwalker.bmp", 264, 240, 66, 60, 4, 4);
+        pGegnerGrafix[FIESERWALKER]->LoadImage("fieserwalker.png", 264, 240, 66, 60, 4, 4);
         break;
 
     case FIESERWALKER2:
-        pGegnerGrafix[FIESERWALKER2]->LoadImage("fieserwalker2.bmp", 264, 240, 66, 60, 4, 4);
+        pGegnerGrafix[FIESERWALKER2]->LoadImage("fieserwalker2.png", 264, 240, 66, 60, 4, 4);
         break;
 
     case MITTELSPINNE:
@@ -325,7 +325,7 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case LAVAMANN:
-        pGegnerGrafix[LAVAMANN]->LoadImage("lavamann.bmp", 280, 150, 40, 50, 7, 3);
+        pGegnerGrafix[LAVAMANN]->LoadImage("lavamann.png", 280, 150, 40, 50, 7, 3);
         break;
 
     case PUNISHER:
@@ -333,19 +333,19 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case SMALLWESPE:
-        pGegnerGrafix[SMALLWESPE]->LoadImage("smallwespe.bmp", 200, 40, 50, 40, 4, 1);
+        pGegnerGrafix[SMALLWESPE]->LoadImage("smallwespe.png", 200, 40, 50, 40, 4, 1);
         break;
 
     case RIESENPIRANHA:
-        pGegnerGrafix[RIESENPIRANHA]->LoadImage("riesenpiranha.bmp", 1024, 420, 256, 210, 4, 2);
+        pGegnerGrafix[RIESENPIRANHA]->LoadImage("riesenpiranha.png", 1024, 420, 256, 210, 4, 2);
         break;
 
     case RIESENQUALLE:
-        pGegnerGrafix[RIESENQUALLE]->LoadImage("riesenqualle.bmp", 390, 480, 130, 240, 3, 2);
+        pGegnerGrafix[RIESENQUALLE]->LoadImage("riesenqualle.png", 390, 480, 130, 240, 3, 2);
         break;
 
     case RIESENRAUPE:
-        pGegnerGrafix[RIESENRAUPE]->LoadImage("riesenraupe.bmp", 540, 290, 180, 58, 3, 5);
+        pGegnerGrafix[RIESENRAUPE]->LoadImage("riesenraupe.png", 540, 290, 180, 58, 3, 5);
         break;
 
     case RIESENWASP:
@@ -353,11 +353,11 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case STAHLFAUST:
-        pGegnerGrafix[STAHLFAUST]->LoadImage("stahlfaust.bmp", 512, 264, 256, 264, 2, 1);
+        pGegnerGrafix[STAHLFAUST]->LoadImage("stahlfaust.png", 512, 264, 256, 264, 2, 1);
         break;
 
     case PHARAOKOPF:
-        pGegnerGrafix[PHARAOKOPF]->LoadImage("pharaokopf.bmp", 448, 448, 224, 224, 2, 2);
+        pGegnerGrafix[PHARAOKOPF]->LoadImage("pharaokopf.png", 448, 448, 224, 224, 2, 2);
         break;
 
     case RIESENSPINNE:
@@ -368,11 +368,11 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case UFO:
-        pGegnerGrafix[UFO]->LoadImage("ufo.bmp",   600, 658,200, 94, 3, 7);
+        pGegnerGrafix[UFO]->LoadImage("ufo.png",   600, 658,200, 94, 3, 7);
         break;
 
     case FAHRSTUHLBOSS:
-        pGegnerGrafix[FAHRSTUHLBOSS]->LoadImage("fahrstuhlboss_rahmen.bmp",   420, 280,420, 280, 1, 1);
+        pGegnerGrafix[FAHRSTUHLBOSS]->LoadImage("fahrstuhlboss_rahmen.png",   420, 280,420, 280, 1, 1);
         break;
 
     case FLUGBOSS:
@@ -380,7 +380,7 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case BRATKLOPS:
-        pGegnerGrafix[BRATKLOPS]->LoadImage("bratklops0000.bmp",   323, 400, 323, 400, 1, 1);
+        pGegnerGrafix[BRATKLOPS]->LoadImage("bratklops0000.png",   323, 400, 323, 400, 1, 1);
         break;
 
     case PARTIKELSPAWN:
@@ -390,7 +390,7 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case METALHEAD:
-        pGegnerGrafix[METALHEAD]->LoadImage("metalhead_birne.bmp",   204, 242, 204, 242, 1, 1);
+        pGegnerGrafix[METALHEAD]->LoadImage("metalhead_birne.png",   204, 242, 204, 242, 1, 1);
         break;
 
     case SKELETOR:
@@ -402,11 +402,11 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case EISFAUST:
-        pGegnerGrafix[EISFAUST]->LoadImage("stahlfaust_eis.bmp", 512, 264, 256, 264, 2, 1);
+        pGegnerGrafix[EISFAUST]->LoadImage("stahlfaust_eis.png", 512, 264, 256, 264, 2, 1);
         break;
 
     case FAHRSTUHL:
-        pGegnerGrafix[FAHRSTUHL]->LoadImage("fahrstuhl.bmp", 400, 134, 400, 134, 1, 1);
+        pGegnerGrafix[FAHRSTUHL]->LoadImage("fahrstuhl.png", 400, 134, 400, 134, 1, 1);
         break;
 
     case FASS:
@@ -414,7 +414,7 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case FEUERSPUCKER:
-        pGegnerGrafix[FEUERSPUCKER]->LoadImage("flammenwerfer.bmp", 120, 120, 60, 60, 2, 2);
+        pGegnerGrafix[FEUERSPUCKER]->LoadImage("flammenwerfer.png", 120, 120, 60, 60, 2, 2);
         break;
 
     case FADEMUSIC:
@@ -424,75 +424,75 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case PLATTFORM:
-        pGegnerGrafix[PLATTFORM]->LoadImage("plattform.bmp", 128, 64, 128, 32, 1, 2);
+        pGegnerGrafix[PLATTFORM]->LoadImage("plattform.png", 128, 64, 128, 32, 1, 2);
         break;
 
     case PRESSE:
-        pGegnerGrafix[PRESSE]->LoadImage("presse.bmp", 100, 256, 100, 256, 1, 1);
+        pGegnerGrafix[PRESSE]->LoadImage("presse.png", 100, 256, 100, 256, 1, 1);
         break;
 
     case SHRINE:
-        pGegnerGrafix[SHRINE]->LoadImage("trenzshrine.bmp", 120, 180, 120, 180, 1, 1);
+        pGegnerGrafix[SHRINE]->LoadImage("trenzshrine.png", 120, 180, 120, 180, 1, 1);
         break;
 
     case BRUECKE:
-        pGegnerGrafix[BRUECKE]->LoadImage("bruecke.bmp", 10, 6, 10, 6, 1, 1);
+        pGegnerGrafix[BRUECKE]->LoadImage("bruecke.png", 10, 6, 10, 6, 1, 1);
         break;
 
     case FLOATING:
-        pGegnerGrafix[FLOATING]->LoadImage("floating.bmp", 39, 14, 39, 14, 1, 1);
+        pGegnerGrafix[FLOATING]->LoadImage("floating.png", 39, 14, 39, 14, 1, 1);
         break;
 
     case FLOATING2:
-        pGegnerGrafix[FLOATING2]->LoadImage("floating2.bmp", 110, 18, 110, 18, 1, 1);
+        pGegnerGrafix[FLOATING2]->LoadImage("floating2.png", 110, 18, 110, 18, 1, 1);
         break;
 
     case FLOATING3:
-        pGegnerGrafix[FLOATING3]->LoadImage("floating3.bmp", 100, 54, 100, 27, 1, 2);
+        pGegnerGrafix[FLOATING3]->LoadImage("floating3.png", 100, 54, 100, 27, 1, 2);
         break;
 
     case SURFBRETT:
-        pGegnerGrafix[SURFBRETT]->LoadImage("surfbrett.bmp", 52, 35, 52, 35, 1, 1);
+        pGegnerGrafix[SURFBRETT]->LoadImage("surfbrett.png", 52, 35, 52, 35, 1, 1);
         break;
 
     case SHOOTBUTTON:
-        pGegnerGrafix[SHOOTBUTTON]->LoadImage("shootplattformbutton.bmp", 32, 9, 16, 9, 2, 1);
+        pGegnerGrafix[SHOOTBUTTON]->LoadImage("shootplattformbutton.png", 32, 9, 16, 9, 2, 1);
         break;
 
     case SHOOTPLATTFORM:
-        pGegnerGrafix[SHOOTPLATTFORM]->LoadImage("shootplattform.bmp", 100, 54, 100, 54, 1, 1);
+        pGegnerGrafix[SHOOTPLATTFORM]->LoadImage("shootplattform.png", 100, 54, 100, 54, 1, 1);
         break;
 
     case GLUBSCHI:
-        pGegnerGrafix[GLUBSCHI]->LoadImage("glubschi.bmp", 510, 350, 51, 120, 10, 3);
+        pGegnerGrafix[GLUBSCHI]->LoadImage("glubschi.png", 510, 350, 51, 120, 10, 3);
         break;
 
     case GLUBSCHI2:
-        pGegnerGrafix[GLUBSCHI2]->LoadImage("glubschi2.bmp", 510, 350, 51, 120, 10, 3);
+        pGegnerGrafix[GLUBSCHI2]->LoadImage("glubschi2.png", 510, 350, 51, 120, 10, 3);
         break;
 
     case COLUMN:
-        pGegnerGrafix[COLUMN]->LoadImage("column.bmp", 40, 100, 40, 100, 1, 1);
+        pGegnerGrafix[COLUMN]->LoadImage("column.png", 40, 100, 40, 100, 1, 1);
         break;
 
     case COLUMN2:
-        pGegnerGrafix[COLUMN2]->LoadImage("column.bmp", 40, 100, 40, 100, 1, 1);
+        pGegnerGrafix[COLUMN2]->LoadImage("column.png", 40, 100, 40, 100, 1, 1);
         break;
 
     case LIFT:
-        pGegnerGrafix[LIFT]->LoadImage("lift.bmp", 80, 230, 80, 23, 1, 10);
+        pGegnerGrafix[LIFT]->LoadImage("lift.png", 80, 230, 80, 23, 1, 10);
         break;
 
     case SCHLEUSEH:
-        pGegnerGrafix[SCHLEUSEH]->LoadImage("schleuse.bmp", 200, 40, 200, 40, 1, 1);
+        pGegnerGrafix[SCHLEUSEH]->LoadImage("schleuse.png", 200, 40, 200, 40, 1, 1);
         break;
 
     case SCHLEUSEV:
-        pGegnerGrafix[SCHLEUSEV]->LoadImage("schleuse2.bmp", 40, 200, 40, 200, 1, 1);
+        pGegnerGrafix[SCHLEUSEV]->LoadImage("schleuse2.png", 40, 200, 40, 200, 1, 1);
         break;
 
     case SWITCH:
-        pGegnerGrafix[SWITCH]->LoadImage("switch.bmp", 48, 32, 24, 32, 2, 1);
+        pGegnerGrafix[SWITCH]->LoadImage("switch.png", 48, 32, 24, 32, 2, 1);
         break;
 
     case WARNING:
@@ -518,7 +518,7 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case LIGHTFLARE:
-        pGegnerGrafix[LIGHTFLARE]->LoadImage("lavaflare.bmp", 120, 120, 120, 120, 1,1);
+        pGegnerGrafix[LIGHTFLARE]->LoadImage("lavaflare.png", 120, 120, 120, 120, 1,1);
         break;
 
     case MUSHROOM:
@@ -546,7 +546,7 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case GESCHUETZ:
-        pGegnerGrafix[GESCHUETZ]->LoadImage("geschuetz.bmp", 300, 300, 60, 60, 5,5);
+        pGegnerGrafix[GESCHUETZ]->LoadImage("geschuetz.png", 300, 300, 60, 60, 5,5);
         break;
 
     case LAFASSSPAWNER:
@@ -558,11 +558,11 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case MINIROCKET:
-        pGegnerGrafix[MINIROCKET]->LoadImage("minirocket.bmp", 12, 12, 12, 12, 1,1);
+        pGegnerGrafix[MINIROCKET]->LoadImage("minirocket.png", 12, 12, 12, 12, 1,1);
         break;
 
     case SCHABE:
-        pGegnerGrafix[SCHABE]->LoadImage("schabe.bmp", 80, 60, 20, 20, 4,3);
+        pGegnerGrafix[SCHABE]->LoadImage("schabe.png", 80, 60, 20, 20, 4,3);
         break;
 
     case MINIDRAGON:
@@ -570,7 +570,7 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case SPIKELIFT:
-        pGegnerGrafix[SPIKELIFT]->LoadImage("spikelift.bmp", 460, 80, 460, 40, 1, 2);
+        pGegnerGrafix[SPIKELIFT]->LoadImage("spikelift.png", 460, 80, 460, 40, 1, 2);
         break;
 
     case DRACHE:
@@ -578,7 +578,7 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case ROLLMOPS:
-        pGegnerGrafix[ROLLMOPS]->LoadImage("snowbomb.bmp", 480, 320, 80, 80, 6,4);
+        pGegnerGrafix[ROLLMOPS]->LoadImage("snowbomb.png", 480, 320, 80, 80, 6,4);
         break;
 
     case SCHNEEKOENIG:
@@ -586,7 +586,7 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case SCHNEEKOPPE:
-        pGegnerGrafix[SCHNEEKOPPE]->LoadImage("schneekoppe.bmp", 14, 28, 14, 28, 1, 1);
+        pGegnerGrafix[SCHNEEKOPPE]->LoadImage("schneekoppe.png", 14, 28, 14, 28, 1, 1);
         break;
 
     case ZITRONE:
@@ -598,7 +598,7 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case BIGFISH:
-        pGegnerGrafix[BIGFISH]->LoadImage("bigfish.bmp", 208, 157, 208, 157, 1,1);
+        pGegnerGrafix[BIGFISH]->LoadImage("bigfish.png", 208, 157, 208, 157, 1,1);
         break;
 
     case KETTENGLIED:
@@ -614,7 +614,7 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case MUTANT:
-        pGegnerGrafix[MUTANT]->LoadImage("mutant.bmp", 500, 450, 100, 90, 5, 5);
+        pGegnerGrafix[MUTANT]->LoadImage("mutant.png", 500, 450, 100, 90, 5, 5);
         break;
 
 

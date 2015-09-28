@@ -32,7 +32,7 @@ GegnerSkeletor::GegnerSkeletor(int Wert1, int Wert2, bool Light)
 
     // Zusätzliche Grafiken laden
     //
-    Flamme.LoadImage ("skeletor_flame.bmp",  160, 140, 160, 70, 1, 2);
+    Flamme.LoadImage ("skeletor_flame.png",  160, 140, 160, 70, 1, 2);
 }
 
 // --------------------------------------------------------------------------------------

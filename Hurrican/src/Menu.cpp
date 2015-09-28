@@ -597,12 +597,12 @@ int tempNUMPLAYERS;
 
 MenuClass::MenuClass(void)
 {
-    MenuNebel.LoadImage("hurrican_rund.bmp", 512, 512, 512, 512, 1, 1);
-    MenuTitel.LoadImage("hurrican-logo.bmp", 400, 90, 400, 90, 1, 1);
+    MenuNebel.LoadImage("hurrican_rund.png", 512, 512, 512, 512, 1, 1);
+    MenuTitel.LoadImage("hurrican-logo.png", 400, 90, 400, 90, 1, 1);
 
     Skills.LoadImage("skills.png", 200, 200, 100, 100, 2, 2);
 
-    MenuStar.LoadImage("star.bmp", 5, 5, 5, 5, 1, 1);
+    MenuStar.LoadImage("star.png", 5, 5, 5, 5, 1, 1);
     MenuStar.SetRect(0, 0, 5, 5);
 
     // Menu Werte initialisieren

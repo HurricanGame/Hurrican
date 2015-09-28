@@ -41,15 +41,15 @@ GegnerBratklops::GegnerBratklops(int Wert1, int Wert2, bool Light)
     pFlare = new DirectGraphicsSprite();
 
 
-    pGfx[0]->LoadImage ("bratklops0000.bmp", 232, 400, 232, 400, 1, 1);
-    pGfx[1]->LoadImage ("bratklops0001.bmp", 232, 400, 232, 400, 1, 1);
-    pGfx[2]->LoadImage ("bratklops0002.bmp", 232, 400, 232, 400, 1, 1);
-    pGfx[3]->LoadImage ("bratklops0003.bmp", 232, 400, 232, 400, 1, 1);
-    pGfx[4]->LoadImage ("bratklops0004.bmp", 232, 400, 232, 400, 1, 1);
-    pGfx[5]->LoadImage ("bratklops0005.bmp", 232, 400, 232, 400, 1, 1);
+    pGfx[0]->LoadImage ("bratklops0000.png", 232, 400, 232, 400, 1, 1);
+    pGfx[1]->LoadImage ("bratklops0001.png", 232, 400, 232, 400, 1, 1);
+    pGfx[2]->LoadImage ("bratklops0002.png", 232, 400, 232, 400, 1, 1);
+    pGfx[3]->LoadImage ("bratklops0003.png", 232, 400, 232, 400, 1, 1);
+    pGfx[4]->LoadImage ("bratklops0004.png", 232, 400, 232, 400, 1, 1);
+    pGfx[5]->LoadImage ("bratklops0005.png", 232, 400, 232, 400, 1, 1);
 
-    pLaser->LoadImage ("bratklopslaser.bmp", 16, 16, 16, 16, 1, 1);
-    pFlare->LoadImage ("bratklopsshot2.bmp", 180, 180, 180, 180, 1, 1);
+    pLaser->LoadImage ("bratklopslaser.png", 16, 16, 16, 16, 1, 1);
+    pFlare->LoadImage ("bratklopsshot2.png", 180, 180, 180, 180, 1, 1);
 
     pFlare->SetRect (0, 0, 180, 180);
 }

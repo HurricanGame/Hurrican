@@ -239,14 +239,15 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
     }
 
     // Dann checken, ob sich das File im Standard Ordner befindet
-    sprintf_s(Temp, "%s/data/%s", g_storage_ext, Filename);
+    //DKS - All textures are now stored in their own data/textures/ subdir:
+    sprintf_s(Temp, "%s/data/textures/%s", g_storage_ext, Filename);
 
 #if defined(USE_ETC1)
     if (DirectGraphics.SupportedETC1 == true) {
-        sprintf_s( compresstex, "%s/data/etc1/%s.pkm", g_storage_ext, Filename );
+        sprintf_s( compresstex, "%s/data/textures/etc1/%s.pkm", g_storage_ext, Filename );
         if (FileExists(compresstex))
         {
-            sprintf_s( Temp, "%s/data/etc1/%s", g_storage_ext, Filename );
+            sprintf_s( Temp, "%s/data/textures/etc1/%s", g_storage_ext, Filename );
             goto loadfile;
         }
     }
@@ -254,10 +255,10 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
 
 #if defined(USE_PVRTC)
     if (DirectGraphics.SupportedPVRTC == true) {
-        sprintf_s( compresstex, "%s/data/pvr/%s.pvr", g_storage_ext, Filename );
+        sprintf_s( compresstex, "%s/data/textures/pvr/%s.pvr", g_storage_ext, Filename );
         if (FileExists(compresstex))
         {
-            sprintf_s( Temp, "%s/data/pvr/%s", g_storage_ext, Filename );
+            sprintf_s( Temp, "%s/data/textures/pvr/%s", g_storage_ext, Filename );
             goto loadfile;
         }
     }
