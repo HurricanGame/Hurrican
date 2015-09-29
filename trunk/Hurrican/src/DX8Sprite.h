@@ -43,6 +43,9 @@
 // Klassendeklaration
 // --------------------------------------------------------------------------------------
 
+//DKS - DirectGraphicsSurface class was never used anywhere in the game, even in the
+//      original DirectX release, so disabled it:
+#if 0
 // --------------------------------------------------------------------------------------
 // Surface Klasse für das Laden und Anzeigen (copyrects)
 // von Bildern (ohne Colorkey und anderen Effekten)
@@ -59,17 +62,16 @@ public:
     ~DirectGraphicsSurface(void);						// Surface freigeben
     bool LoadImage(const char *Filename,					// Laden des Bildes "Filename"
                    int xSize, int ySize);					// mit Grösse xSize, ySize
-    //DKS - these are never used anywhere, disabled:
-    //bool  SetRect	  (int left,  int top,
-    //                   int right, int bottom);				// Neuen Ausschnitt setzen
-    //RECT  GetRect	  (void);								// Ausschnitt holen
+    bool  SetRect	  (int left,  int top,
+                       int right, int bottom);				// Neuen Ausschnitt setzen
+    RECT  GetRect	  (void);								// Ausschnitt holen
 
-    //DKS - This was never used anywhere, disabled:
-    //#if defined(PLATFORM_DIRECTX)
-    //bool  DrawSurface (LPDIRECT3DSURFACE8 &Temp,			// Bild auf Surface Temp anzeigen
-    //                   int xPos, int yPos);					// an Position xPos/yPos
-    //#endif
+    #if defined(PLATFORM_DIRECTX)
+    bool  DrawSurface (LPDIRECT3DSURFACE8 &Temp,			// Bild auf Surface Temp anzeigen
+                       int xPos, int yPos);					// an Position xPos/yPos
+    #endif
 };
+#endif //0
 
 // --------------------------------------------------------------------------------------
 // Sprite Klasse für das Laden und Anzeigen
