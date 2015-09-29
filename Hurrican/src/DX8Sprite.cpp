@@ -39,6 +39,9 @@ int						ActualTexture  = -1;				// aktuelle Textur (damit wir uns ein paar
 // Klassenfunktionen
 // --------------------------------------------------------------------------------------
 
+//DKS - DirectGraphicsSurface class was never used anywhere in the game, even in the
+//      original DirectX release, so disabled it:
+#if 0
 // --------------------------------------------------------------------------------------
 // DirectGraphicsSurface Funktionen
 // --------------------------------------------------------------------------------------
@@ -130,16 +133,16 @@ bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize
 // Bild auf Surface anzeigen
 // --------------------------------------------------------------------------------------
 
-//DKS - This was never used anywhere, disabled:
-//#if defined(PLATFORM_DIRECTX)
-//bool DirectGraphicsSurface::DrawSurface(LPDIRECT3DSURFACE8 &Temp, int xPos, int yPos)
-//{
-//    POINT Dest = {(int)(xPos), (int)(yPos)};						// Zielkoordinaten
-//    lpD3DDevice->CopyRects(itsSurface, &itsRect, 1, Temp, &Dest);	// anzeigen
-//
-//    return true;
-//}
-//#endif
+#if defined(PLATFORM_DIRECTX)
+bool DirectGraphicsSurface::DrawSurface(LPDIRECT3DSURFACE8 &Temp, int xPos, int yPos)
+{
+    POINT Dest = {(int)(xPos), (int)(yPos)};						// Zielkoordinaten
+    lpD3DDevice->CopyRects(itsSurface, &itsRect, 1, Temp, &Dest);	// anzeigen
+
+    return true;
+}
+#endif
+#endif //0
 
 // --------------------------------------------------------------------------------------
 // DirectGraphicsSprite Funktionen
