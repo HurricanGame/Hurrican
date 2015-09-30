@@ -5207,7 +5207,11 @@ ProjectileListClass::ProjectileListClass(void)
     ShotRect[PFLANZESHOT].bottom = 15;
 
     // Bratklopsshot
-    pProjectileGrafix[BRATKLOPSSHOT]->LoadImage("bratklopsshot.png", 60, 60, 60, 60, 2, 2);
+    //DKS - There was only one frame in this image file, but four are specified here:
+    //      I've changed it from 2,2 to 1,1. Also see my notes in Boss_Bratklops.cpp.
+    //      I've also fixed the right and bottom coordinates of ShotRect:
+    //pProjectileGrafix[BRATKLOPSSHOT]->LoadImage("bratklopsshot.png", 60, 60, 60, 60, 2, 2);
+    pProjectileGrafix[BRATKLOPSSHOT]->LoadImage("bratklopsshot.png", 60, 60, 60, 60, 1, 1);
     ShotRect[BRATKLOPSSHOT].left = 10;
     ShotRect[BRATKLOPSSHOT].right  = 50;
     ShotRect[BRATKLOPSSHOT].top  = 10;
@@ -5228,7 +5232,8 @@ ProjectileListClass::ProjectileListClass(void)
     ShotRect[SCHLEIMSHOT].bottom = 10;
 
     // LaFass
-    pProjectileGrafix[LAFASSSHOT]->LoadImage("lafass_fall.png", 264, 334, 66, 83, 4, 4);
+    //DKS - Corrected dimensions from 264x334 to 264x332, to match actual image file:
+    pProjectileGrafix[LAFASSSHOT]->LoadImage("lafass_fall.png", 264, 332, 66, 83, 4, 4);
     ShotRect[LAFASSSHOT].left = 10;
     ShotRect[LAFASSSHOT].right  = 56;
     ShotRect[LAFASSSHOT].top  = 10;

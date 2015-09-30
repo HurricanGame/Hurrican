@@ -3980,7 +3980,8 @@ PartikelsystemClass::PartikelsystemClass(void)
     PartikelRect[EXPLOSION_ALIEN].bottom = 60;
 
     // Grosse Explosion
-    pPartikelGrafix[EXPLOSION_BIG]->LoadImage("explosion-big.png", 512, 512, 100, 100, 5, 5);
+    //DKS - Corrected dimensions from 512x512 to 500x500, to match actual image file:
+    pPartikelGrafix[EXPLOSION_BIG]->LoadImage("explosion-big.png", 500, 500, 100, 100, 5, 5);
     PartikelRect[EXPLOSION_BIG].left = 0;
     PartikelRect[EXPLOSION_BIG].right  = 100;
     PartikelRect[EXPLOSION_BIG].top  = 0;
@@ -4370,7 +4371,8 @@ PartikelsystemClass::PartikelsystemClass(void)
     PartikelRect[SCHNEEFLOCKE_END].bottom = 3;
 
     // HurriTeile
-    pPartikelGrafix[HURRITEILE]->LoadImage("hurri-teile.png", 217, 32, 32, 32, 7, 1);
+    //DKS - Corrected xfs parameter from 32 to 31, to match actual image file:
+    pPartikelGrafix[HURRITEILE]->LoadImage("hurri-teile.png", 217, 32, 31, 32, 7, 1);
     PartikelRect[HURRITEILE].left = 10;
     PartikelRect[HURRITEILE].right  = 22;
     PartikelRect[HURRITEILE].top  = 10;
@@ -4391,11 +4393,13 @@ PartikelsystemClass::PartikelsystemClass(void)
     PartikelRect[WASSER_SPRITZER].bottom = 128;
 
     // Der Wasserspritzer, wenn der Spieler ins Wasser hopst
-    pPartikelGrafix[WASSER_SPRITZER2]->LoadImage("wasserspritzer.png", 40, 142, 40, 142, 1, 1);
+    //DKS - Corrected dimensions from 40x142 to 64x128, to match actual image file:
+    //      NOTE: This particle type does not appear to be used, looking at Player.cpp
+    pPartikelGrafix[WASSER_SPRITZER2]->LoadImage("wasserspritzer.png", 64, 128, 40, 142, 1, 1);
     PartikelRect[WASSER_SPRITZER2].left = 0;
-    PartikelRect[WASSER_SPRITZER2].right  = 40;
+    PartikelRect[WASSER_SPRITZER2].right  = 64;
     PartikelRect[WASSER_SPRITZER2].top  = 0;
-    PartikelRect[WASSER_SPRITZER2].bottom = 142;
+    PartikelRect[WASSER_SPRITZER2].bottom = 128;
 
     // Schrott der Lava Krabbe
     pPartikelGrafix[LAVAKRABBE_KOPF]->LoadImage("lavakrabbe_teile.png", 80, 40, 40, 40, 2, 1);
@@ -4629,7 +4633,8 @@ PartikelsystemClass::PartikelsystemClass(void)
     PartikelRect[LAVADUST].bottom = 10;
 
     // Schrott
-    pPartikelGrafix[SCHROTT1]->LoadImage("schrott1.png", 200, 200, 40, 40, 5, 4);
+    //DKS - Corrected dimensions from 200x200 to 200x160, to match actual image file:
+    pPartikelGrafix[SCHROTT1]->LoadImage("schrott1.png", 200, 160, 40, 40, 5, 4);
     PartikelRect[SCHROTT1].left = 10;
     PartikelRect[SCHROTT1].right  = 30;
     PartikelRect[SCHROTT1].top  = 10;

@@ -175,7 +175,9 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case STELZSACK:
-        pGegnerGrafix[STELZSACK]->LoadImage("stelzsack.png", 500, 441, 100, 147, 5,4);
+        //DKS - Corrected yfc parameter (Y frame count) from 4 to 3, to match actual
+        //      image file:
+        pGegnerGrafix[STELZSACK]->LoadImage("stelzsack.png", 500, 441, 100, 147, 5,3);
         break;
 
     case FALLBOMBE:
@@ -209,7 +211,8 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case WANDKANNONE:
-        pGegnerGrafix[WANDKANNONE]->LoadImage("wandcannon.png", 141, 32, 47, 32, 3,1);
+        //DKS - Corrected dimensions from 141x32 to 141x31, to match actual image file:
+        pGegnerGrafix[WANDKANNONE]->LoadImage("wandcannon.png", 141, 31, 47, 32, 3,1);
         break;
 
     case STARSMALL:
@@ -249,7 +252,8 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case WASSERMINE:
-        pGegnerGrafix[WASSERMINE]->LoadImage("wassermine.png", 300, 190, 60, 90, 5,2);
+        //DKS - Corrected dimensions from 300x190 to 300x180, to match actual image file:
+        pGegnerGrafix[WASSERMINE]->LoadImage("wassermine.png", 300, 180, 60, 90, 5,2);
         break;
 
     case FLEDERMAUS:
@@ -273,7 +277,9 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case BIGROCKET:
-        pGegnerGrafix[BIGROCKET]->LoadImage("bigrocket.png", 578, 600, 73, 300, 8,2);
+        //DKS - Corrected dimensions from 578x600 to 584x600,as image file had
+        //      misaligned spritesheet. Image has also been corrected.
+        pGegnerGrafix[BIGROCKET]->LoadImage("bigrocket.png", 584, 600, 73, 300, 8,2);
         break;
 
     case EISZAPFEN:
@@ -380,7 +386,9 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case BRATKLOPS:
-        pGegnerGrafix[BRATKLOPS]->LoadImage("bratklops0000.png",   323, 400, 323, 400, 1, 1);
+        //DKS - Corrected dimensions from 323x400 to 232x400, to match actual image file:
+        //      NOTE: also see my notes in Boss_Bratklops.cpp regarding this and other sprites. (TODO)
+        pGegnerGrafix[BRATKLOPS]->LoadImage("bratklops0000.png",   232, 400, 232, 400, 1, 1);
         break;
 
     case PARTIKELSPAWN:
@@ -464,11 +472,13 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case GLUBSCHI:
-        pGegnerGrafix[GLUBSCHI]->LoadImage("glubschi.png", 510, 350, 51, 120, 10, 3);
+        //DKS - Corrected dimensions from 510x350 to 510x360, to match actual image file:
+        pGegnerGrafix[GLUBSCHI]->LoadImage("glubschi.png", 510, 360, 51, 120, 10, 3);
         break;
 
     case GLUBSCHI2:
-        pGegnerGrafix[GLUBSCHI2]->LoadImage("glubschi2.png", 510, 350, 51, 120, 10, 3);
+        //DKS - Corrected dimensions from 510x350 to 510x360, to match actual image file:
+        pGegnerGrafix[GLUBSCHI2]->LoadImage("glubschi2.png", 510, 360, 51, 120, 10, 3);
         break;
 
     case COLUMN:
@@ -507,11 +517,15 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case LUEFTER_KLEIN:
-        pGegnerGrafix[LUEFTER_KLEIN]->LoadImage("luefter1.png",	 453,  343, 113,114, 4,3);
+        //DKS - Corrected dimensions from 453x343 to 452x342, to match actual image file:
+        //      NOTE: image file was cropped to 452x342, to match frames inside it.
+        pGegnerGrafix[LUEFTER_KLEIN]->LoadImage("luefter1.png",	 452,  342, 113,114, 4,3);
         break;
 
     case LUEFTER_KLEIN2:
-        pGegnerGrafix[LUEFTER_KLEIN2]->LoadImage("luefter2.png",	 453,  343, 113,114, 4,3);
+        //DKS - Corrected dimensions from 453x343 to 452x342, to match actual image file:
+        //      NOTE: image file was cropped to 452x342, to match frames inside it.
+        pGegnerGrafix[LUEFTER_KLEIN2]->LoadImage("luefter2.png",	 452,  342, 113,114, 4,3);
         break;
 
     case TUTORIALTEXT:
@@ -598,7 +612,8 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case BIGFISH:
-        pGegnerGrafix[BIGFISH]->LoadImage("bigfish.png", 208, 157, 208, 157, 1,1);
+        //DKS - Corrected dimensions from 208x157 to 208x156, to match actual image file
+        pGegnerGrafix[BIGFISH]->LoadImage("bigfish.png", 208, 156, 208, 156, 1,1);
         break;
 
     case KETTENGLIED:

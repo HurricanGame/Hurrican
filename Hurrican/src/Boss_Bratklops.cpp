@@ -8,6 +8,15 @@
 #include "stdafx.h"
 #include "Boss_Bratklops.h"
 
+//DKS - Note: I am not sure if this boss ever actually made it into the final game.
+//      I recall encountering it on my test play-throughs. Perhaps this is the reason
+//      the bratklopslaser.png sprite below had unusual dimensions compared to its
+//      on-disk dimensions (16x16 vs. 30x60 on-disk). Furthermore, bratklopsshot had
+//      two frames in its sprite in code, but on-disk only one frame. Even further,
+//      in Gegner_Helper.cpp, bratklops0000.png is loaded with 323x400 dimensions
+//      but its on-disk dimensions are 232x400. All in all, I think this points to
+//      the entire Bratklops enemy being a candidate for removal from the game (TODO).
+
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
@@ -48,6 +57,8 @@ GegnerBratklops::GegnerBratklops(int Wert1, int Wert2, bool Light)
     pGfx[4]->LoadImage ("bratklops0004.png", 232, 400, 232, 400, 1, 1);
     pGfx[5]->LoadImage ("bratklops0005.png", 232, 400, 232, 400, 1, 1);
 
+    //DKS - Corrected dimensions from 16x16 to 30x60, to match actual image file.
+    //      Also see my notes in comments at top of this file.
     pLaser->LoadImage ("bratklopslaser.png", 16, 16, 16, 16, 1, 1);
     pFlare->LoadImage ("bratklopsshot2.png", 180, 180, 180, 180, 1, 1);
 
