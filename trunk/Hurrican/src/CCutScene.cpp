@@ -119,7 +119,8 @@ CCutScene::~CCutScene()
 CCutScene1::CCutScene1 (void)
 {
     BackGround = new DirectGraphicsSprite ();
-    BackGround->LoadImage ("static_jungle.png", 640, 480, 640, 480, 1, 0);
+    //DKS - Corrected Y frame-count from 0 to 1 here:
+    BackGround->LoadImage ("static_jungle.png", 640, 480, 640, 480, 1, 1);
 
 } // CCutScene1 Konstruktor
 
