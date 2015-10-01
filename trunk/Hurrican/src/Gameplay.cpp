@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 #include <stdio.h>
-#include "CCutScene.h"
+//#include "CCutScene.h"    //DKS - CCutScene code was never used in original game; disabled it
 #include "Gameplay.h"
 #include "Console.h"
 #include "DX8Font.h"

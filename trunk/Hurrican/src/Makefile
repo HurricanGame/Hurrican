@@ -221,7 +221,6 @@ FILES :=Boss_BigFish \
         Boss_Ufo \
         Boss_WuxeSpinnen \
         CCracktro \
-        CCutScene \
         CDragonHack \
         Console \
         DX8Enum \
