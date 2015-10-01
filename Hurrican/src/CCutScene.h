@@ -8,6 +8,10 @@
 //
 // --------------------------------------------------------------------------------------
 
+//DKS - This code was never used in the original game, so I've commented it out to make
+//      that clear:
+#if 0
+
 #ifndef _CutScene_h_
 #define _CutScene_h_
 
@@ -73,3 +77,5 @@ public:
 }; // CCutScene1
 
 #endif // _CutScene_h_
+
+#endif //0

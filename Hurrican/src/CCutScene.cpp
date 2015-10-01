@@ -8,6 +8,10 @@
 //
 // --------------------------------------------------------------------------------------
 
+//DKS - This code was never used in the original game, so I've commented it out to make
+//      that clear:
+#if 0
+
 // --------------------------------------------------------------------------------------
 // Includes
 // --------------------------------------------------------------------------------------
@@ -174,3 +178,5 @@ CCutScene1::~CCutScene1 (void)
     delete (BackGround);
 
 } // CCutScene1 Destruktor
+
+#endif //0
