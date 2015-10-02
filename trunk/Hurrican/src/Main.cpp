@@ -48,7 +48,6 @@
 #include "Globals.h"
 #include "HUD.h"
 #include "Intro.h"
-#include "Intro.h"
 #include "Outtro.h"
 #include "Logdatei.h"
 #include "Menu.h"
@@ -1272,12 +1271,22 @@ bool GameInit2(void)
     pSoundManager->LoadWave("metal.wav",	    SOUND_KLONG, false);
 
     // restliche musiken laden
-    pSoundManager->LoadSong("flugsack.it",	MUSIC_FLUGSACK);
+
+    //DKS - "flugsack.it" is now loaded on-demand in Gegner_ReitFlugsack.cpp:
+    //pSoundManager->LoadSong("flugsack.it",	MUSIC_FLUGSACK);
+
     pSoundManager->LoadSong("credits.it",	MUSIC_CREDITS);
-    pSoundManager->LoadSong("stageclear.it",MUSIC_STAGECLEAR);
-    pSoundManager->LoadSong("gameover.it",	MUSIC_GAMEOVER);
+
+    //DKS - New parameter specifies whether to loop, and stage-clear music shouldn't:
+    pSoundManager->LoadSong("stageclear.it",MUSIC_STAGECLEAR, false);
+
+    //DKS - New parameter specifies whether to loop, and game-over music shouldn't:
+    pSoundManager->LoadSong("gameover.it",	MUSIC_GAMEOVER, false);
+
     pSoundManager->LoadSong("highscore.it",	MUSIC_HIGHSCORE);
-    pSoundManager->LoadSong("Punisher.it", MUSIC_PUNISHER);
+
+    //DKS - Punisher music is now loaded on-demand in Gegner_Punisher.cpp
+    //pSoundManager->LoadSong("Punisher.it", MUSIC_PUNISHER);
 
     // Spieler grafiken laden
     SchussFlamme[0].LoadImage("schussflamme.png",  76,  72,  38, 24, 2, 3);

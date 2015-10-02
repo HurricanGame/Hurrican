@@ -88,6 +88,9 @@ IntroClass::IntroClass(void)
 IntroClass::~IntroClass(void)
 {
     MUSIC_StopAllSongs();
+
+    //DKS - Game was not freeing music data, added this:
+    pSoundManager->UnloadSong(MUSIC_INTRO);
 }
 
 // --------------------------------------------------------------------------------------

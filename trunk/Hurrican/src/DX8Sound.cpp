@@ -89,6 +89,9 @@ char *GetFMODErrorString(int ErrorNr)
 CSong::CSong()
 {
     SongData = NULL;
+
+    //DKS - Added loop boolean to specify if the song plays looped or not:
+     isLooped = true;
 } // Konstruktor
 
 //---------------------------------------------------------------------------------------
@@ -147,6 +150,13 @@ bool CSong::Update(void)
             Volume		 = float(FadingEnd);
         }
         MUSIC_SetMasterVolume(SongData, (int)(Volume*pSoundManager->its_GlobalMusicVolume/100.0f*2.55f));
+    } else {
+#ifndef USE_MODPLUG
+        //DKS - Added this, because when SDL_mixer loops a music file, at least in some versions or
+        //      configurations, it resets the song's volume to a default value. So, we must
+        //      set the volume continuously. 
+        MUSIC_SetMasterVolume(SongData, (int)(pSoundManager->its_GlobalMusicVolume*2.55f));
+#endif //USE_MODPLUG
     }
 
     return true;
@@ -437,7 +447,9 @@ void CSoundManager::SetVolumes(float Sound, float Musik)
 // Parameter	: Filename	Name des zu ladenden Songs
 //---------------------------------------------------------------------------------------
 
-bool CSoundManager::LoadSong(const char *Filename, int Nr)
+//DKS - Added default parameter loop to specify if the song should loop:
+//bool CSoundManager::LoadSong(const char *Filename, int Nr)
+bool CSoundManager::LoadSong(const char *Filename, int Nr, bool loop /*=true*/)
 {
     if (false == InitSuccessfull)
     {
@@ -494,11 +506,17 @@ loadfile:
     int Nummer = Nr;
     if (its_Songs[Nummer] != NULL)
     {
+        //DKS - Added stopping of the song, just to be cautious
+        StopSong(Nummer, false);
+
         delete(its_Songs[Nummer]);
         its_Songs[Nummer] = NULL;
     }
 
     its_Songs[Nummer] = new CSong();
+
+    //DKS - Added loop boolean to specify if the song plays looped or not:
+    its_Songs[Nummer]->isLooped = loop;
 
     if (fromrar == false)
         its_Songs[Nummer]->SongData = MUSIC_LoadSong(Temp);
@@ -557,7 +575,8 @@ bool CSoundManager::PlaySong(int Nr, bool Paused)
 
     if (Paused == false)
     {
-        MUSIC_PlaySong(its_Songs[Nr]->SongData);			// Von vorne abspielen ?
+        //DKS - Added loop parameter to specify if the song plays looped or not:
+        MUSIC_PlaySong(its_Songs[Nr]->SongData, its_Songs[Nr]->isLooped);			// Von vorne abspielen ?
         its_Songs[Nr]->FadingVolume = 0.0f;
         SetSongVolume(Nr, its_GlobalMusicVolume);
     }
@@ -594,6 +613,18 @@ bool CSoundManager::StopSong(int Nr, bool Paused)
 
     return true;
 } // StopSong
+
+//DKS - Added function to unload a song (game was leaving some songs loaded, like the
+//      Cracktro and Intro music, credits music, etc)
+void CSoundManager::UnloadSong(int Nr)
+{
+    if (its_Songs[Nr] == NULL)
+        return;
+    
+    MUSIC_StopSong(its_Songs[Nr]->SongData);
+    MUSIC_FreeSong(its_Songs[Nr]->SongData);
+    its_Songs[Nr] = NULL;
+}
 
 //---------------------------------------------------------------------------------------
 // Name			: StopAllSongs

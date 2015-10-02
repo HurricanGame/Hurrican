@@ -23,32 +23,63 @@
  */
 
 #include "SDL_fmod.h"
+#include "string.h"
 
-int g_allocated = 0;
-int g_music_loops;
-int g_volume;
-MUSIC_MODULE* g_music_current = NULL;
+static int  g_allocated = 0;
+static bool g_music_loops = true;
+static int  g_volume;
+static MUSIC_MODULE* g_music_current = NULL;
 
-int sound_loops_total = 0;
-Mix_Chunk** sound_loops;
+static int sound_loops_total = 0;
+static Mix_Chunk** sound_loops;
 
 #if defined(USE_MODPLUG)
-ModPlug_Settings settings;
+static ModPlug_Settings settings;
 #endif
 
 signed char SOUND_Init( int mixrate, int maxsoftwarechannels, unsigned int flags )
 {
     g_allocated = 0;
 
-    if (Mix_OpenAudio( mixrate, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
+    int chunksize = 2048;
+    if (Mix_OpenAudio( mixrate, MIX_DEFAULT_FORMAT, 2, chunksize) == -1)
     {
         printf("Mix_OpenAudio: %s\n", Mix_GetError());
         return 0;
-    }
-
+    } else {
+        //DKS - Check what we actually received:
+        int      cur_freq = 0, cur_channels = 0;
+        uint16_t cur_format = 0;
+        Mix_QuerySpec(&cur_freq, &cur_format, &cur_channels);
+        printf("SDL_mixer initialized. Buffer size:%d, Freq:%d, Channels:%d\n", chunksize, cur_freq, cur_channels);
+        switch (cur_format) {
+            case AUDIO_U8:
+                printf("Unsigned 8-bit samples\n");
+                break;
+            case AUDIO_S8:
+                printf("Signed 8-bit samples\n");
+                break;
+            case AUDIO_U16LSB:
+                printf("Unsigned 16-bit samples (little-endian)\n");
+                break;
+            case AUDIO_S16LSB:
+                printf("Signed 16-bit samples (little-endian)\n");
+                break;
+            case AUDIO_U16MSB:
+                printf("Unsigned 16-bit samples (big-endian)\n");
+                break;
+            case AUDIO_S16MSB:
+                printf("Signed 16-bit samples (big-endian)\n");
+                break;
+            default:
+                printf("Unrecognized SDL_mixer sample format.\n");
+                break;
+        }
+    }   
     g_allocated = Mix_AllocateChannels(maxsoftwarechannels);
 
 #if defined(USE_MODPLUG)
+    printf("Using libModPlug directly for ImpulseTracker music file decoding.\n");
     ModPlug_GetSettings( &settings );
 
     settings.mFlags             = MODPLUG_ENABLE_OVERSAMPLING | MODPLUG_ENABLE_NOISE_REDUCTION;
@@ -66,6 +97,8 @@ signed char SOUND_Init( int mixrate, int maxsoftwarechannels, unsigned int flags
     //settings.mMaxMixChannels    = g_allocated;
 
     ModPlug_SetSettings( &settings );
+#else
+    printf("Using SDL_mixer's default decoder for ImpulseTracker music file decoding.\n");
 #endif
 
     return 1;
@@ -146,7 +179,9 @@ MUSIC_MODULE* MUSIC_LoadSongEx( const char* filename, int offset, int length, un
 #endif
 }
 
-signed char MUSIC_PlaySong( MUSIC_MODULE* music )
+//DKS - Added default parameter to specify if a song should loop ('gameover.it' and 'stageclear.it' songs shouldn't):
+//signed char MUSIC_PlaySong( MUSIC_MODULE* music )
+signed char MUSIC_PlaySong( MUSIC_MODULE* music, bool loop /*=true*/)
 {
     //printf( "%8X MUSIC_PlaySong\n", music );
 #if defined(USE_MODPLUG)
@@ -154,9 +189,9 @@ signed char MUSIC_PlaySong( MUSIC_MODULE* music )
     ModPlug_Seek( music, 0 );
     Mix_HookMusic( &hookmusic, music );
 #else
-    Mix_PlayMusic( music, -1 );
+    Mix_PlayMusic( music, (loop ? -1 : 0));
 #endif
-    g_music_loops   = 1;
+    g_music_loops   = loop;
     g_music_current = music;
 
     return 0;
@@ -263,11 +298,27 @@ void hookmusic( void* ptr, uint8_t* buffer, int size )
     ModPlugFile* music = (ModPlugFile*)ptr;
 
 	rsize = ModPlug_Read( music, (void*)buffer, size );
-    if (g_volume > 0 || (rsize < size))
-    {
-        if (rsize < size)
-        {
+
+    //DKS - Added support for non-looped music files (i.e. gameover.it shouldn't loop)
+    //      NOTE: I don't see the reason for the volume check, setting the volume to
+    //            should be checked elsewhere, and music should be disabled entirely.
+    //if (g_volume > 0 || (rsize < size))
+    //{
+    //    if (rsize < size)
+    //    {
+    //        ModPlug_Seek( music, 0 );
+    //    }
+    //}
+    if (rsize < size) {
+        if (g_music_loops) {
+            // The song is over and it loops, so re-seek to beginning and fill rest of buffer
             ModPlug_Seek( music, 0 );
+            ModPlug_Read( music, (void*)(buffer+rsize), size - rsize );
+
+        } else {
+            // The song is over and doesn't loop, so fill remaining part of the buffer with zeroes and stop it
+            memset( (void*)(buffer+rsize), 0, size - rsize ); 
+            MUSIC_StopSong( music );
         }
     }
 }

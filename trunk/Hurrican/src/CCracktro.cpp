@@ -172,6 +172,9 @@ CCracktro::CCracktro()
 
 CCracktro::~CCracktro()
 {
+    //DKS - Game was not freeing music data, added this:
+    pSoundManager->UnloadSong(MUSIC_CRACKTRO);
+
     delete (pFont);
 } // Destruktor
 

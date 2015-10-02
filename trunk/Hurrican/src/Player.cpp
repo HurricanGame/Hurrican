@@ -295,9 +295,13 @@ void PlayerClass::runExplode(void)
             pPlayer[0]->Lives = -1;
             pPlayer[1]->Lives = -1;
             pPlayer[0]->GameOverTimer = 50.0f;
-            pSoundManager->StopSong(MUSIC_STAGEMUSIC, false);
-            pSoundManager->StopSong(MUSIC_FLUGSACK, false);
-            pSoundManager->StopSong(MUSIC_BOSS, false);
+
+            //DKS - We should really just stop all songs (it was missing MUSIC_PUNISHER from this list anyway)
+            //pSoundManager->StopSong(MUSIC_STAGEMUSIC, false);
+            //pSoundManager->StopSong(MUSIC_FLUGSACK, false);
+            //pSoundManager->StopSong(MUSIC_BOSS, false);
+            pSoundManager->StopAllSongs(false); //DKS - Added this to replace above 3 lines
+
             pSoundManager->PlaySong(MUSIC_GAMEOVER, false);
             pMenu->AktuellerZustand = 0;
         }
@@ -4606,9 +4610,11 @@ void PlayerClass::PlayerInExit(void)
 
 void PlayerClass::RunPlayerExit(void)
 {
-    // Musik zuende ?
-    if (MUSIC_IsFinished(pSoundManager->its_Songs[MUSIC_STAGECLEAR]->SongData))
-        pSoundManager->StopSong(MUSIC_STAGECLEAR, false);
+    //DKS - Added support for non-looped music, so this is no longer necessary..
+    //      This was causing stage-clear music to never be heard in the SDL port.
+    //// Musik zuende ?
+    //if (MUSIC_IsFinished(pSoundManager->its_Songs[MUSIC_STAGECLEAR]->SongData))
+    //    pSoundManager->StopSong(MUSIC_STAGECLEAR, false);
 
     if (CheckLevelExit() == true)
         PlayerInExit();

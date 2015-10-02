@@ -2014,10 +2014,16 @@ void MenuClass::DoMenu(void)
 
                 if (MUSIC_GetPaused(pSoundManager->its_Songs[MUSIC_BOSS]->SongData))
                     pSoundManager->PlaySong(MUSIC_BOSS, true);
-                else if (pPlayer[0]->PunisherActive == true)
+                else if (pPlayer[0]->PunisherActive == true) {
+                    //DKS - "Punisher.it" music is now loaded on-demand
+                    pSoundManager->LoadSong("Punisher.it", MUSIC_PUNISHER);
                     pSoundManager->PlaySong(MUSIC_PUNISHER, true);
-                else if (pPlayer[0]->Riding())
+                }
+                else if (pPlayer[0]->Riding()) {
+                    //DKS - "flugsack.it" music is now loaded on-demand 
+                    pSoundManager->LoadSong("flugsack.it",	MUSIC_FLUGSACK);
                     pSoundManager->PlaySong(MUSIC_FLUGSACK, true);
+                }
                 else
                     pSoundManager->PlaySong(MUSIC_STAGEMUSIC, true);
 

@@ -64,7 +64,9 @@ signed char     SOUND_SetPan            ( int channel, int pan );
 
 MUSIC_MODULE*   MUSIC_LoadSong          ( const char* filename );
 MUSIC_MODULE*   MUSIC_LoadSongEx        ( const char* filename, int offset, int length, unsigned int mode, const int *samplelist, int samplelistnum );
-signed char     MUSIC_PlaySong          ( MUSIC_MODULE* music );
+//DKS - Added parameter to specify if a song should loop (to fix gameover.it music):
+//signed char     MUSIC_PlaySong          ( MUSIC_MODULE* music );
+signed char     MUSIC_PlaySong          ( MUSIC_MODULE* music, bool loop=true);
 signed char     MUSIC_IsPlaying         ( MUSIC_MODULE* music );
 signed char     MUSIC_FreeSong          ( MUSIC_MODULE* music );
 signed char     MUSIC_StopSong          ( MUSIC_MODULE* music );

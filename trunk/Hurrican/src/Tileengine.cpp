@@ -300,6 +300,17 @@ void TileEngineClass::ClearLevel()
 
     XOffset = 0.0f;
     YOffset = 0.0f;
+
+    //DKS - Added:
+    pSoundManager->StopAllSongs(false);
+
+    //DKS - Added unloading of Punisher.it music (it is now loaded on-demand in Gegner_Punisher.cpp)
+    pSoundManager->UnloadSong(MUSIC_PUNISHER);
+    //DKS - Added unloading of flugsack.it music (it is now loaded on-demand in Gegner_ReitFlugsack.cpp)
+    pSoundManager->UnloadSong(MUSIC_FLUGSACK);
+    //DKS - Might as well unload stage & boss music too, although LoadSong() will free any old songs for us
+    pSoundManager->UnloadSong(MUSIC_STAGEMUSIC);
+    pSoundManager->UnloadSong(MUSIC_BOSS);
 }
 
 // --------------------------------------------------------------------------------------

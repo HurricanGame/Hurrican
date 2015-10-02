@@ -187,9 +187,12 @@ void InitNewGameLevel(int Nr)
 
 void ShowGameOver(void)
 {
-    // Game Over Musik anhalten wenn sie beendet wurde
-    if (MUSIC_IsFinished(pSoundManager->its_Songs[MUSIC_GAMEOVER]->SongData))
-        pSoundManager->StopSong(MUSIC_GAMEOVER, false);
+    //DKS - This is not needed, and SDLPort/SDL_fmod.cpp now supports specifying if a song
+    //      is to be played looped in a new parameter to PlaySong(). This was causing
+    //      game-over music to never be heard in the SDL port.
+    //// Game Over Musik anhalten wenn sie beendet wurde
+    //if (MUSIC_IsFinished(pSoundManager->its_Songs[MUSIC_GAMEOVER]->SongData))
+    //    pSoundManager->StopSong(MUSIC_GAMEOVER, false);
 
     int col;
 
@@ -1054,14 +1057,18 @@ void StageClear(bool PlaySong)
 
     pGUI->HideBoxFast();
 
-    pSoundManager->StopSong(MUSIC_STAGEMUSIC, false);
+    //DKS - Stop all songs instead of just individual ones..
+    //pSoundManager->StopSong(MUSIC_STAGEMUSIC, false);
+
+    //// Punisher Musik stoppen
+    //if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_PUNISHER]->SongData)) {
+    //    pSoundManager->StopSong(MUSIC_PUNISHER, false);
+    //}
+
+    pSoundManager->StopAllSongs(false); //DKS - Added, see above
 
     if (PlaySong)
         pSoundManager->PlaySong(MUSIC_STAGECLEAR, false);
-
-    // Punisher Musik stoppen
-    if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_PUNISHER]->SongData))
-        pSoundManager->StopSong(MUSIC_PUNISHER, false);
 
 }
 
