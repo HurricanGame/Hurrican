@@ -63,6 +63,9 @@ OuttroClass::OuttroClass(void)
 OuttroClass::~OuttroClass(void)
 {
     MUSIC_StopAllSongs();
+
+    //DKS - Game was not freeing music data, added this:
+    pSoundManager->UnloadSong(MUSIC_OUTTRO);
 }
 
 // --------------------------------------------------------------------------------------

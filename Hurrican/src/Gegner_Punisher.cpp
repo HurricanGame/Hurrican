@@ -108,6 +108,10 @@ void GegnerPunisher::DoKI(void)
         Handlung = GEGNER_INIT2;
 
         pSoundManager->StopSong(MUSIC_STAGEMUSIC, true);
+
+        //DKS - Punisher music is now loaded on-demand:
+        pSoundManager->LoadSong("Punisher.it", MUSIC_PUNISHER);
+
         pSoundManager->PlaySong(MUSIC_PUNISHER, false);
 
     }

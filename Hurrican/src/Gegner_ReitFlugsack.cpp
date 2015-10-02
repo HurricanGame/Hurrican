@@ -174,9 +174,15 @@ void GegnerReitFlugsack::DoKI(void)
                 if (Value1 == 1 &&
                         pPlayer[0]->Riding())
                 {
-                    pSoundManager->StopSong(MUSIC_STAGEMUSIC, true);
-                    pSoundManager->StopSong(MUSIC_BOSS, false);
-                    pSoundManager->StopSong(MUSIC_PUNISHER, false);
+                    //DKS - Really, we should stop all music
+                    //pSoundManager->StopSong(MUSIC_STAGEMUSIC, true);
+                    //pSoundManager->StopSong(MUSIC_BOSS, false);
+                    //pSoundManager->StopSong(MUSIC_PUNISHER, false);
+                    pSoundManager->StopAllSongs(false); //DKS - Added this to replace above 3 lines
+
+                    //DKS - flugsack.it is now loaded on-demand
+                    pSoundManager->LoadSong("flugsack.it",	MUSIC_FLUGSACK);
+
                     pSoundManager->PlaySong(MUSIC_FLUGSACK, false);
                 }
             }

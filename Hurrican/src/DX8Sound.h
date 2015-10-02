@@ -242,6 +242,9 @@ public :
     int					FadingEnd;		// Fading Grenze
     bool				FadingPaused;	// Pause vor/nach Fading ?
 
+    //DKS - Added boolean to specify if the song plays looped or not:
+    bool                isLooped;
+
     CSong();					// Konstruktor
     ~CSong();					// Destruktor
     bool	Update(void);				// Songs faden
@@ -293,9 +296,18 @@ public :
 
     bool InitFMOD	(SOUNDMANAGER_PARAMETERS smpp);	// FMOD Init
     void SetVolumes (float Sound, float Musik);		// neue global Volumes setzen
-    bool LoadSong	(const char *Filename, int Nr);		// Song laden
+
+    //DKS - Added default parameter loop to specify if the song should loop:
+    //bool LoadSong	(const char *Filename, int Nr);		// Song laden
+    bool LoadSong	(const char *Filename, int Nr, bool loop=true);		// Song laden
+
     bool PlaySong	(int Nr, bool Paused);			// Song abspielen (Von Pause oder neu)
     bool StopSong	(int Nr, bool Paused);			// Song anhalten  (Pause oder ganz)
+
+    //DKS - Added function to unload a song (game was leaving some songs loaded, like the
+    //      Cracktro,Outtro and Intro music)
+    void UnloadSong(int Nr);                        // Free a song's data (stopping it first)
+
     void StopAllSongs	(bool Paused);				// Alle Songs anhalten
     void StopAllSounds  (void);
     void StopAllLoopedSounds(void);
