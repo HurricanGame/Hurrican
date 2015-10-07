@@ -14,16 +14,20 @@
 
 GegnerAuge::GegnerAuge(int Wert1, int Wert2, bool Light)
 {
-    Handlung		= GEGNER_LAUFEN;
-    Energy			= 1;
-    Value1			= Wert1;
-    Value2			= Wert2;
-
+    //DKS - Moved the Wert1 check check to the top, it was having no effect in its original
+    //      position here:
+    //      I discovered that GegnerExtras were being pushed with Value1 parameters that were
+    //      outside their valid range, causing AnimPhase to be set to 40, when its only has
+    //      13 animation frames.
     // Powerline ist Standard
     //
     if (Wert1 < 0 || Wert1 > 11)
         Wert1 = 7;
 
+    Handlung		= GEGNER_LAUFEN;
+    Energy			= 1;
+    Value1			= Wert1;
+    Value2			= Wert2;
 
     smokedelay = 0.2f;
     ChangeLight		= Light;
