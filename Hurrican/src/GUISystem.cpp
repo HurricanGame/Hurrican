@@ -46,7 +46,8 @@ void CGUISystem::InitGUISystem(void)
 
 void CGUISystem::ExitGUISystem(void)
 {
-    m_Rahmen.~DirectGraphicsSprite();
+    //DKS - There is no need call this explicitly, it leads to a double-free:
+    //m_Rahmen.~DirectGraphicsSprite();
 }
 
 //

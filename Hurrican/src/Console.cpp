@@ -67,7 +67,8 @@ ConsoleClass::ConsoleClass()
 
 ConsoleClass::~ConsoleClass()
 {
-    ConsoleGFX.~DirectGraphicsSprite();	// Grafik freigeben
+    //DKS - There is no need call this explicitly, it leads to a double-free:
+    //ConsoleGFX.~DirectGraphicsSprite();	// Grafik freigeben
 } // Destruktor
 
 // --------------------------------------------------------------------------------------
