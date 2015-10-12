@@ -107,9 +107,9 @@ void InitNewGameLevel(int Nr)
 
     pSoundManager->StopSong(MUSIC_STAGEMUSIC, false);
 
-    LoadingItemsLoaded	= 0;
-    LoadingItemsToLoad	= 75.0f;
-    LoadingProgress		= 0.0f;
+    pMenu->LoadingItemsLoaded	= 0;
+    pMenu->LoadingItemsToLoad	= 75.0f;
+    pMenu->LoadingProgress		= 0.0f;
     WarningCount		= 0.0f;
     ScreenWinkel		= 0.0f;
 
@@ -148,7 +148,7 @@ void InitNewGameLevel(int Nr)
 
     pSoundManager->SetAllSongVolumes();
 
-    LoadingProgress = 320.0f;
+    pMenu->LoadingProgress = 320.0f;
     DisplayLoadInfo ("");
     pTimer->wait  (1000);
     pTimer->update();
@@ -970,12 +970,15 @@ bool DisplayLoadInfo(const char Text[100])
 
     // Anzahl anzeigen
 #ifdef _DEBUG
+    //DKS - Disabled this, it was causing crashes when _DEBUG was enabled (perhaps font was
+    //      not loaded at this point)
+#if 0
     char buf[5];
 
     sprintf_s(buf, "%d", LoadingItemsLoaded);
     pDefaultFont->DrawText((700 - pDefaultFont->StringLength(TextArray[TEXT_MENUE_LOADING])) / 2.0f, 220,
                            buf, 0xFFFFFFFF);
-
+#endif //0
 #endif
 
     // Hint anzeigen
@@ -1001,10 +1004,10 @@ bool DisplayLoadInfo(const char Text[100])
         }
     }
 
-    LoadingScreen.RenderSprite((640 - 360) / 2, (480 - 60) / 2 + 5, 0x88FFFFFF);
+    pMenu->LoadingScreen.RenderSprite((640 - 360) / 2, (480 - 60) / 2 + 5, 0x88FFFFFF);
 
-    LoadingBar.SetRect (0, 0, int (LoadingProgress), 19);
-    LoadingBar.RenderSprite((640 - 318) / 2, (480 - 19) / 2 + 5, 0x88FFFFFF);
+    pMenu->LoadingBar.SetRect (0, 0, int (pMenu->LoadingProgress), 19);
+    pMenu->LoadingBar.RenderSprite((640 - 318) / 2, (480 - 19) / 2 + 5, 0x88FFFFFF);
 
     /*for (i=0; i<24; i++)
     	pDefaultFont->DrawText(10, float(230+i*10), LoadInfoText[i], D3DCOLOR_RGBA(0, 255, 0, i*10));*/
@@ -1017,10 +1020,10 @@ bool DisplayLoadInfo(const char Text[100])
     lpD3DDevice->BeginScene();
 #endif
 
-    LoadingItemsLoaded++;
-    LoadingProgress += 318.0f / LoadingItemsToLoad;
-    if (LoadingProgress > 318.0f)
-        LoadingProgress = 318.0f;
+    pMenu->LoadingItemsLoaded++;
+    pMenu->LoadingProgress += 318.0f / pMenu->LoadingItemsToLoad;
+    if (pMenu->LoadingProgress > 318.0f)
+        pMenu->LoadingProgress = 318.0f;
 
     pTimer->wait (1);
     pTimer->update();

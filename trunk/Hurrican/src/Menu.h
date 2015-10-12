@@ -167,8 +167,14 @@ private:
     DirectGraphicsSprite	MenuGfx;				// Grafiken für das Menu
     DirectGraphicsSprite	MenuKasten[2];
     DirectGraphicsSprite	Skills;
-
 public:
+    //DKS - These are now members here instead of being globals in Main.cpp:
+    DirectGraphicsSprite	LoadingScreen;					// Splash Screen im Fullscreen
+    DirectGraphicsSprite	LoadingBar;						// Fortschrittsbalken
+    float				LoadingProgress;
+    float				LoadingItemsToLoad;
+    int					LoadingItemsLoaded;
+
     HighscoreStruct		Highscores[MAX_HIGHSCORES];	// Die Top-Twenty
 
     int					AktuellerPunkt;				// Aktuell gewählter Menupunkt

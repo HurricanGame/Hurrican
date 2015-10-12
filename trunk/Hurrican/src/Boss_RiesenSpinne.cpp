@@ -92,10 +92,10 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
     o = y + 55.0f - 0.5f - (Legs[2].itsRect.bottom - Legs[2].itsRect.top) + yoff2 + yBody;	// Oben
     u = y + 30.0f + 0.5f + yoff + tempdamage + yBody;										// unten
 
-    tl = Legs[2].itsRect.left  /Legs[2].itsXSize;	// Links
-    tr = Legs[2].itsRect.right /Legs[2].itsXSize;	// Rechts
-    to = Legs[2].itsRect.top   /Legs[2].itsYSize;	// Oben
-    tu = Legs[2].itsRect.bottom/Legs[2].itsYSize;	// Unten
+    tl = Legs[2].itsRect.left   * Legs[2].itsXTexScale;	// Links
+    tr = Legs[2].itsRect.right  * Legs[2].itsXTexScale;	// Rechts
+    to = Legs[2].itsRect.top    * Legs[2].itsYTexScale;	// Oben
+    tu = Legs[2].itsRect.bottom * Legs[2].itsYTexScale;	// Unten
 
     TriangleStrip[0].color =
         TriangleStrip[1].color =
@@ -159,11 +159,7 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
         break;
     }
 
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTexture (0, Legs[2].itsTexture);
-#elif defined(PLATFORM_SDL)
-    DirectGraphics.SetTexture(  Legs[2].itsTexture );
-#endif
+    DirectGraphics.SetTexture( Legs[2].itsTexIdx );
     DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
 
 //----- Unterteil des Beines rendern
@@ -175,10 +171,10 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
     o = y + 20.0f - 0.5f - (Legs[1].itsRect.bottom - Legs[1].itsRect.top) + yoff2 + yBody;	// Oben
     u = yp + + 20.0f + 0.5f;													// unten
 
-    tl = Legs[1].itsRect.left  /Legs[1].itsXSize;	// Links
-    tr = Legs[1].itsRect.right /Legs[1].itsXSize;	// Rechts
-    to = Legs[1].itsRect.top   /Legs[1].itsYSize;	// Oben
-    tu = Legs[1].itsRect.bottom/Legs[1].itsYSize;	// Unten
+    tl = Legs[1].itsRect.left   * Legs[1].itsXTexScale;	// Links
+    tr = Legs[1].itsRect.right  * Legs[1].itsXTexScale;	// Rechts
+    to = Legs[1].itsRect.top    * Legs[1].itsYTexScale;	// Oben
+    tu = Legs[1].itsRect.bottom * Legs[1].itsYTexScale;	// Unten
 
     TriangleStrip[0].color =
         TriangleStrip[1].color =
@@ -232,11 +228,7 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
         break;
     }
 
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTexture (0, Legs[1].itsTexture);
-#elif defined(PLATFORM_SDL)
-    DirectGraphics.SetTexture(  Legs[1].itsTexture );
-#endif
+    DirectGraphics.SetTexture( Legs[1].itsTexIdx );
     DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
 
 
@@ -317,10 +309,10 @@ void GegnerRiesenSpinne::DoDraw(void)
 
         DirectGraphics.SetAdditiveMode();
 
-        LavaFlare.RenderSprite((float)(xPos-pTileEngine->XOffset) - 10.0f + (float)(sin(HeadXOffset) * 10.0f),
+        pProjectiles->LavaFlare.RenderSprite((float)(xPos-pTileEngine->XOffset) - 10.0f + (float)(sin(HeadXOffset) * 10.0f),
                                (float)(yPos-pTileEngine->YOffset) + 50.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, D3DCOLOR_RGBA(255, 0, 255, a));
 
-        LavaFlare.RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) + 30.0f + (float)(sin(HeadXOffset) * 10.0f),
+        pProjectiles->LavaFlare.RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) + 30.0f + (float)(sin(HeadXOffset) * 10.0f),
                                      (float)(yPos-pTileEngine->YOffset) + 90.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 40, 40, D3DCOLOR_RGBA(255, 255, 255, a));
     }
 
@@ -331,10 +323,10 @@ void GegnerRiesenSpinne::DoDraw(void)
 
         DirectGraphics.SetAdditiveMode();
 
-        LavaFlare.RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) - 20.0f + (float)(sin(HeadXOffset) * 10.0f),
+        pProjectiles->LavaFlare.RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) - 20.0f + (float)(sin(HeadXOffset) * 10.0f),
                                      (float)(yPos-pTileEngine->YOffset) + 60.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 100, 100, D3DCOLOR_RGBA(255, 255, 255, a));
 
-        LavaFlare.RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) - 90.0f + (float)(sin(HeadXOffset) * 10.0f),
+        pProjectiles->LavaFlare.RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) - 90.0f + (float)(sin(HeadXOffset) * 10.0f),
                                      (float)(yPos-pTileEngine->YOffset) - 10.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 240, 240, D3DCOLOR_RGBA(255, 255, 255, a));
     }
 

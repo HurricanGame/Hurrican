@@ -22,6 +22,7 @@
 #include "Logdatei.h"
 #include "Main.h"
 #include "DX8Font.h"
+#include "DX8Texture.h"
 #include "DX8Graphics.h"
 #if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
 #include "eglport.h"
@@ -399,7 +400,6 @@ bool DirectGraphicsClass::Exit(void)
 #if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
     EGL_Close();
 #endif
-    delete_textures();
     SDL_Quit();
     Protokoll.WriteText( false, "-> SDL/OpenGL shutdown successfully completed !\n" );
 #endif
@@ -897,7 +897,11 @@ bool DirectGraphicsClass::ExtensionSupported( const char* ext )
     Protokoll.WriteText( false, "%s is not supported\n", ext );
     return false;
 }
+#endif
 
+//DKS - Supports new TexturesystemClass and is now used for both GL and DirectX
+#if 0
+#if defined(PLATFORM_SDL)
 void DirectGraphicsClass::SetTexture( int32_t index )
 {
     if (index >= 0)
@@ -935,6 +939,58 @@ void DirectGraphicsClass::SetTexture( int32_t index )
     }
 }
 #endif
+#endif //0
+void DirectGraphicsClass::SetTexture( int idx )
+{
+    if (idx >= 0)
+    {
+        use_texture = true;
+        TextureHandle &th = Textures[idx];
+
+#if defined(PLATFORM_DIRECTX)
+#else   // BEGIN GL CODE
+        glBindTexture( GL_TEXTURE_2D, th.tex);
+#if defined(USE_ETC1)
+        if (SupportedETC1 == true)
+        {
+            // Bind the alpha-channel texture when using ETC1-compressed textures:
+            glActiveTexture( GL_TEXTURE1 );
+            glBindTexture( GL_TEXTURE_2D, th.alphatex );
+            glActiveTexture( GL_TEXTURE0 );
+        }
+#endif
+
+#if defined(USE_GL1)
+        glEnable( GL_TEXTURE_2D );
+#endif
+#endif  // END GL CODE
+    }
+    else
+    {
+        use_texture = false;
+#if defined(PLATFORM_DIRECTX)
+        lpD3DDevice->SetTexture (0, NULL);							// Textur setzen
+#else // BEGIN GL CODE
+        //DKS - There is no need to call glBindTexture():
+        //glBindTexture( GL_TEXTURE_2D, 0 );
+#if defined(USE_GL1)
+        glDisable( GL_TEXTURE_2D );
+#endif
+
+        //DKS - There is no need to call glBindTexture():
+#if 0
+#if defined(USE_ETC1)
+        if (SupportedETC1 == true)
+        {
+            glActiveTexture( GL_TEXTURE1 );
+            glBindTexture( GL_TEXTURE_2D, 0 );
+            glActiveTexture( GL_TEXTURE0 );
+        }
+#endif
+#endif //0
+#endif // END GL CODE
+    }
+}
 
 // --------------------------------------------------------------------------------------
 // Present aufrufen

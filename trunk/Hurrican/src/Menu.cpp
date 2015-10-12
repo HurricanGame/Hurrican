@@ -605,6 +605,13 @@ MenuClass::MenuClass(void)
     MenuStar.LoadImage("star.png", 5, 5, 5, 5, 1, 1);
     MenuStar.SetRect(0, 0, 5, 5);
 
+    //DKS - Made these members of MenuClass instead of globals in Main.cpp:
+    LoadingScreen.LoadImage("loading.png",    360, 60, 360, 60, 1, 1);
+    LoadingBar.LoadImage("loadingbar.png", 318, 19, 318, 19, 1, 1);
+    LoadingProgress = 0;
+    LoadingItemsToLoad = 1;
+    LoadingItemsLoaded = 0;
+
     // Menu Werte initialisieren
     ScrollPos = 0.0f;
 

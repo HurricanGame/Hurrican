@@ -60,7 +60,7 @@ void GegnerGlubschi2::DoDraw(void)
     // Corona rendern
     //
     DirectGraphics.SetAdditiveMode ();
-    LavaFlare.RenderSpriteScaledRotated (float (xPos - pTileEngine->XOffset - 36 + anim * 1.5f),
+    pProjectiles->LavaFlare.RenderSpriteScaledRotated (float (xPos - pTileEngine->XOffset - 36 + anim * 1.5f),
                                          float (yPos - pTileEngine->YOffset - 60 + GegnerRect[GegnerArt].bottom), 92, 92, rot, 0x60FFFFFF);
     DirectGraphics.SetColorKeyMode();
 }

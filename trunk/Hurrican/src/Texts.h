@@ -366,7 +366,7 @@ bool ExtractStringOfLength(char *dst1, char *dst2, char *source, int width, Dire
 //DKS - Added function to replace any instance of a substring with another substring,
 //      primarily for use on gaming/phone systems where "key" should be replaced with
 //      "button"
-void ReplaceAll(std::string& str, const std::string& from, const std::string& to);
+void ReplaceAll(std::string& str, const std::string &from, const std::string &to);
 
 // --------------------------------------------------------------------------------------
 // Externals

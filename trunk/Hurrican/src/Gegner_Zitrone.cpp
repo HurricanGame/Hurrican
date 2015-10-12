@@ -7,8 +7,6 @@
 #include "stdafx.h"
 #include "Gegner_Zitrone.h"
 
-extern DirectGraphicsSprite	*pDroneGun;					// Flamme der Zitrone
-
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
@@ -87,17 +85,17 @@ void GegnerZitrone::DoDraw(void)
     {
         DirectGraphics.SetAdditiveMode();
         if (AnimPhase >= 5)
-            LavaFlare.RenderSprite ((float)-pTileEngine->XOffset + xPos - 60 + a * 4,
+            pProjectiles->LavaFlare.RenderSprite ((float)-pTileEngine->XOffset + xPos - 60 + a * 4,
                                     (float)-pTileEngine->YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
 
         if (AnimPhase <= 5)
-            LavaFlare.RenderSprite ((float)-pTileEngine->XOffset + xPos + 40 + (a - 5) * 4,
+            pProjectiles->LavaFlare.RenderSprite ((float)-pTileEngine->XOffset + xPos + 40 + (a - 5) * 4,
                                     (float)-pTileEngine->YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
         DirectGraphics.SetColorKeyMode();
     }
 
     // Knarre
-    pDroneGun->RenderSpriteRotatedOffset((float)-pTileEngine->XOffset + xPos + 73.0f - (a) * 5,
+    pGegner->DroneGun.RenderSpriteRotatedOffset((float)-pTileEngine->XOffset + xPos + 73.0f - (a) * 5,
                                          (float)-pTileEngine->YOffset + yPos + 48.0f + yoff, KnarreWinkel,
                                          0, 0, 0xFFFFFFFF);
 
@@ -111,11 +109,11 @@ void GegnerZitrone::DoDraw(void)
     {
         DirectGraphics.SetAdditiveMode();
         if (AnimPhase < 5)
-            LavaFlare.RenderSprite ((float)-pTileEngine->XOffset + xPos - 70 + a * 4,
+            pProjectiles->LavaFlare.RenderSprite ((float)-pTileEngine->XOffset + xPos - 70 + a * 4,
                                     (float)-pTileEngine->YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
 
         if (AnimPhase > 5)
-            LavaFlare.RenderSprite ((float)-pTileEngine->XOffset + xPos + 60 - (a - 5) * 4,
+            pProjectiles->LavaFlare.RenderSprite ((float)-pTileEngine->XOffset + xPos + 60 - (a - 5) * 4,
                                     (float)-pTileEngine->YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
         DirectGraphics.SetColorKeyMode();
     }

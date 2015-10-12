@@ -43,11 +43,12 @@ void GegnerUfo::DoDraw(void)
     if (AlreadyDrawn == false)
     {
         DirectGraphics.SetAdditiveMode();
-        LavaFlare.RenderSpriteRotated(xPos + 40.0f - (float)pTileEngine->XOffset,
+        pProjectiles->LavaFlare.RenderSpriteRotated(xPos + 40.0f - (float)pTileEngine->XOffset,
                                       yPos + 20.0f - (float)pTileEngine->YOffset,
                                       xPos * 0.5f, 0xFFFF2288);
 
-//		LavaFlare.RenderSpriteRotated(xPos + 40.0f - (float)pTileEngine->XOffset,
+        //DKS - This was commented out in original source code:
+//		pProjectiles->LavaFlare.RenderSpriteRotated(xPos + 40.0f - (float)pTileEngine->XOffset,
 //									  yPos + 30.0f - (float)pTileEngine->YOffset,
 //									  360.0f - xPos * 0.5f, 0x88FFFF88);
 

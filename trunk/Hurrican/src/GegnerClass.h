@@ -96,6 +96,11 @@ private:
     int					NumGegner;				// aktuelle Zahl der Gegner
 
 public:
+    //DKS - Moved these three here, they used to be dynamic globals in Gegner_Helper.cpp:
+    //      (Moved so they would always get destructed in a place we had control over)
+    DirectGraphicsSprite	DroneFlame;        // Flamme der Drone
+    DirectGraphicsSprite	DroneGun;          // Flamme der Zitrone
+
     GegnerClass			*pStart;				// Erstes  Element der Liste
     GegnerClass			*pEnd;					// Letztes Element der Liste
 

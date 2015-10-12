@@ -17,6 +17,8 @@
 // --------------------------------------------------------------------------------------
 
 #include "DX8Graphics.h"
+#include <map>
+#include <string>
 
 // --------------------------------------------------------------------------------------
 // Defines
@@ -85,51 +87,90 @@ public:
     //DKS - Moved itsRect to the top, since it is used most-frequently:
     RECT				itsRect;							// zu zeigender Ausschnitt
 
-private:
     //DKS - Made these shorts instead of ints:
     int16_t				itsXFrameCount;						// Frameanzahl in X-Richtung
     int16_t				itsYFrameCount;						// Frameanzahl in Y-Richtung
-
-public:
-    float				itsXSize;							// x-Grösse der Textur
-    float				itsYSize;							// y-Grösse der Textur
-    //DKS - Made these shorts instead of ints:
     int16_t				itsXFrameSize;						// Framegrösse in X-Richtung
     int16_t				itsYFrameSize;						// Framegrösse in Y-Richtung
 
+    //DKS - Textures are now accessed through an index passed to TexturesystemClass:
+    int16_t             itsTexIdx;                          // Index to pass to SetTexture()
 
-    //DKS - these are now dynamically allocated:
+    //DKS - Added these.. Instead of each sprite needing to divide each of its four
+    //      texture-coordinates by itsXSize or itsYSize each time it is drawn, it simply
+    //      multiplies them by these factors, which is 1/total_tex_size in each dimension. It
+    //      also corrects for any nearest-power-of-two resizing that was done when loading it,
+    //      allowing the flexibility to load textures from disk that are resized. In
+    //      other words, itsXTexScale = (1 / x-dimen-in-game) * (x-dimen-on-disk / x-dimen-after-npot-resize)
+    float               itsXTexScale;                       // Scale factor for X-dimension
+    float               itsYTexScale;                       // Scale factor for Y-dimension
+     
+
+    //DKS - This array is now dynamically allocated, instead of wasting
+    //      lots of RAM needlessly. Also, when in debug-mode, it is a bounds-
+    //      checked wrapper to a vector, as I found the game was accessing
+    //      past its end in Projectiles.cpp and Partikelsystem.cpp
     //RECT				itsPreCalcedRects[256];				// vorberechnete Ausschnitte für die Frames
+#ifdef _DEBUG
+    class BoundCheckedArray {
+    public:
+        RECT& operator[](int i)
+        {
+            if (i < 0 || i >= (int)rects.size()) {
+                Protokoll.WriteText( true, "Error: index %d out of bounds of itsPreCalcedRects[] (size:%d)\n", i, rects.size());
+                abort();
+            }
+
+            return rects[i];
+        }
+
+        void PushBack(RECT &r)
+        {
+            rects.push_back(r);
+        }
+
+        void Clear()
+        {
+            rects.clear();
+        }
+    private:
+        std::vector<RECT> rects;
+    };
+    BoundCheckedArray itsPreCalcedRects;
+#else
+    //DKS - When not in debug-mode, this is the pointer to the dynamically allocated array of RECTs
     RECT				*itsPreCalcedRects;				// vorberechnete Ausschnitte für die Frames
-
-    LPDIRECT3DTEXTURE8	itsTexture;							// Textur mit Grafikdaten
-
-    //DKS - inlined
-    DirectGraphicsSprite(void)
-    {
-#if defined(PLATFORM_DIRECTX)
-        itsTexture = (LPDIRECT3DTEXTURE8)NULL;
-#elif defined(PLATFORM_SDL)
-        itsTexture = -1;
 #endif
-        itsPreCalcedRects = NULL;
+
+    DirectGraphicsSprite(void):
+        itsXFrameCount(0), itsYFrameCount(0),
+        itsXFrameSize(0),  itsYFrameSize(0),
+        itsTexIdx(-1),
+        itsXTexScale(1.0), itsYTexScale(1.0)
+#ifndef _DEBUG
+        //DKS - When not in debug-mode, this is the pointer to the dynamically allocated array of RECTs
+        ,itsPreCalcedRects(NULL)
+#endif
+    {
+        itsRect.top = itsRect.bottom = itsRect.left = itsRect.right = 0;
     }
 
     ~DirectGraphicsSprite(void);						// Textur freigeben
 
     bool  LoadImage(const char *Filename,							// Laden des Bildes "Filename"
-                    int xs, int ys, int xfs, int yfs,		// x/y Size und Framegrösse
-                    int xfc,  int yfc);						// Frameanzahl
+                    uint16_t xs, uint16_t ys, uint16_t xfs, uint16_t yfs,		// x/y Size und Framegrösse
+                    uint16_t xfc,  uint16_t yfc);						// Frameanzahl
 
     //DKS - Made inline
-    void SetRect	  (int left,  int top,
-                       int right, int bottom)				// Neuen Ausschnitt setzen
+    void SetRect	  (const int32_t left,  const int32_t top,
+                       const int32_t right, const int32_t bottom)				// Neuen Ausschnitt setzen
     {
         itsRect.left   = left;										// Linker  Rand
         itsRect.right  = right;										// Rechter Rand
         itsRect.top    = top;										// Oberer  Rand
         itsRect.bottom = bottom;									// Unterer Rand
     }
+
     //DKS - this is never used anywhere, disabled:
     //RECT  GetRect	  (void);								// Ausschnitt holen
 
@@ -151,7 +192,6 @@ public:
     void RenderSprite(float x, float y, int Anim, D3DCOLOR Color)
     {
         // Ausschnitt einstellen
-        //DKS - TODO: can this be changed to a '& 0xFF'?
         Anim %= 255;
         itsRect = itsPreCalcedRects [Anim];
 
@@ -163,7 +203,6 @@ public:
     void  RenderSprite(float x, float y, int Anim, D3DCOLOR Color, bool mirrored)
     {
         // Ausschnitt einstellen
-        //DKS - can we change this to '& 0xFF'?
         Anim %= 255;
         itsRect = itsPreCalcedRects [Anim];
 
@@ -210,13 +249,6 @@ public:
     void  RenderSpriteRotatedOffset(float x, float y, float Winkel,	// Sprite rotiert darstellen mit Verschiebung
                                     float offx, float offy, D3DCOLOR Color, bool mirrored = false);
 
-    //DKS - inlined these:
-    float GetXSize(void)        { return itsXSize; }
-    float GetYSize(void)        { return itsYSize; }
-    int   GetXFrameSize(void)   { return itsXFrameSize; }
-    int   GetYFrameSize(void)   { return itsYFrameSize; }
-    int   GetXFrameCount(void)  { return itsXFrameCount; }
-    int   GetYFrameCount(void)  { return itsYFrameCount; }
 };
 
 // --------------------------------------------------------------------------------------
@@ -246,10 +278,8 @@ void RenderLine (D3DXVECTOR2 p1, D3DXVECTOR2 p2,								// Linie rendern (zwei f
 
 
 //DKS - Inlined this, since it is simple and used extremely frequently and takes many parameters:
-//bool  SpriteCollision(float x1, float y1, RECT rect1,							// Kollision zwischen zwei Sprites
-//                      float x2, float y2, RECT rect2);
-static inline bool  SpriteCollision(float x1, float y1, RECT &rect1,
-                                    float x2, float y2, RECT &rect2)
+static inline bool SpriteCollision(const float x1, const float y1, const RECT &rect1,
+                                    const float x2, const float y2, const RECT &rect2)
 {
     // Kollision der Bounding-Boxes ?
     if (x1 + rect1.left < x2 + rect2.right   &&
@@ -265,14 +295,6 @@ static inline bool  SpriteCollision(float x1, float y1, RECT &rect1,
 // Externals
 // --------------------------------------------------------------------------------------
 
-extern DirectGraphicsSprite LoadingScreen;
-extern DirectGraphicsSprite LoadingBar;
-extern float				LoadingProgress;
-extern float				LoadingItemsToLoad;
-extern int					LoadingItemsLoaded;
-extern DirectGraphicsSprite Preview;
-extern DirectGraphicsSprite	LavaFlare;							// Leuchten des lava Balles
-
-
-
+//DKS - never actually used:
+//extern DirectGraphicsSprite Preview;
 #endif
