@@ -7,8 +7,6 @@
 #include "stdafx.h"
 #include "Gegner_Drone.h"
 
-extern DirectGraphicsSprite	*pDroneFlame;						// Flamme der Drone
-
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
@@ -196,7 +194,7 @@ void GegnerDrone::DoKI(void)
             else
                 anim = 1;
 
-            pDroneFlame->RenderSprite((float)(xPos-pTileEngine->XOffset) + BlickRichtung * 56 - 5,
+            pGegner->DroneFlame.RenderSprite((float)(xPos-pTileEngine->XOffset) + BlickRichtung * 56 - 5,
                                       (float)(yPos-pTileEngine->YOffset) + 60,
                                       anim, 0xFFFFFFFF);
             DirectGraphics.SetColorKeyMode ();

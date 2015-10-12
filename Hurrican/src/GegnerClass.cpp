@@ -115,7 +115,9 @@ void GegnerClass::Render(void)
         {
             DirectGraphics.SetColorKeyMode();
 
-            if (pGegnerGrafix[GegnerArt]->itsTexture != 0)
+            //DKS - Adapted to new TexturesystemClass
+            //if (pGegnerGrafix[GegnerArt]->itsTexture != 0)
+            if (pGegnerGrafix[GegnerArt]->itsTexIdx != -1)
                 pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
                                                        (float)(yPos-pTileEngine->YOffset),
                                                        Anim, Color, mirrored);
@@ -144,7 +146,9 @@ void GegnerClass::Render(void)
                 if (OwnDraw  == false &&
                         DontMove == false)
                 {
-                    if (pGegnerGrafix[GegnerArt]->itsTexture != 0)
+                    //DKS - Adapted to new TexturesystemClass
+                    //if (pGegnerGrafix[GegnerArt]->itsTexture != 0)
+                    if (pGegnerGrafix[GegnerArt]->itsTexIdx != -1)
                         for (int i = 0; i < 2; i++)
                             pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
                                                                    (float)(yPos-pTileEngine->YOffset),
@@ -627,6 +631,13 @@ GegnerListClass::GegnerListClass(void)
     pEnd		= NULL;
     NumGegner	= 0;
 
+    // Flamme der Drone laden
+    DroneFlame.LoadImage("droneflame.png", 164, 46, 82, 46, 2, 1);
+
+    // Knarre der Zitrone laden
+    DroneGun.LoadImage("Zitronestiel.png", 15, 63, 15, 63, 1, 1);
+
+
     // Zu Beginn kein Gegner geladen (werden dann jeweils fürs Level geladen)
     for(int i=0; i<MAX_GEGNERGFX; i++)
         pGegnerGrafix[i] = NULL;
@@ -644,7 +655,6 @@ GegnerListClass::GegnerListClass(void)
     pGegnerGrafix[DIAMANT]->LoadImage	("diamant.png", 261, 29, 29, 29, 9, 1);
     pGegnerGrafix[EXTRAS]->LoadImage	("extras.png", 312, 24, 24, 24, 13, 1);
     pGegnerGrafix[PUNISHER]->LoadImage	("punisher.png", 1020, 850, 170, 170, 6, 5);
-    LavaFlare.LoadImage ("lavaflare.png", 120, 120, 120, 120, 1, 1);
 
     // Gegner-Rects festlegen
     // BonusBlock
@@ -652,22 +662,6 @@ GegnerListClass::GegnerListClass(void)
     GegnerRect[POWERBLOCK].right  = 40;
     GegnerRect[POWERBLOCK].top  = 0;
     GegnerRect[POWERBLOCK].bottom = 40;
-
-    // Flamme der Drone laden
-    //
-    if (pDroneFlame == NULL)
-    {
-        pDroneFlame = new DirectGraphicsSprite();
-        pDroneFlame->LoadImage("droneflame.png", 164, 46, 82, 46, 2, 1);
-    }
-
-    // Knarre der Zitrone laden
-    //
-    if (pDroneGun == NULL)
-    {
-        pDroneGun = new DirectGraphicsSprite();
-        pDroneGun->LoadImage("Zitronestiel.png", 15, 63, 15, 63, 1, 1);
-    }
 
     // Extra-Leben
     GegnerRect[ONEUP].left = 0;
@@ -1551,12 +1545,6 @@ GegnerListClass::~GegnerListClass(void)
             delete(pGegnerGrafix[i]);
             pGegnerGrafix[i] = NULL;
         }
-
-    delete(pDroneFlame);
-    pDroneFlame = NULL;
-
-    delete(pDroneGun);
-    pDroneGun = NULL;
 }
 
 // --------------------------------------------------------------------------------------

@@ -217,6 +217,15 @@ public:
     ProjectileClass			*pStart;				// Erstes  Element der Liste
     ProjectileClass			*pEnd;					// Letztes Element der Liste
 
+    //DKS - All of these 5 sprites are no longer globals, I moved them here cleaning up big messes
+    //      and fixing ambiguous orders of calls to destructors.
+    DirectGraphicsSprite	LaserSmoke;							// Leuchten des Lasers
+    DirectGraphicsSprite	LaserSmokeBig;						// Leuchten des Riesen Lasers
+    DirectGraphicsSprite	SpreadShotSmoke;					// Leuchten des Riesen Spreadshots
+    DirectGraphicsSprite	PowerlineSmoke;						// Leuchten der Powerline
+    //DKS - Moved this here from being a global in a Gegner file (cleaning up big mess)
+    DirectGraphicsSprite	LavaFlare;                          // Leuchten des lava Balles
+
     ProjectileListClass(void);						// Konstruktor
     ~ProjectileListClass(void);						// Destruktor
 

@@ -43,12 +43,12 @@ void GegnerShootPlattform::DoDraw(void)
     {
         // Lighflare rendern, wenn angeschossen
         DirectGraphics.SetAdditiveMode ();
-        LavaFlare.RenderSprite (float (xPos - 9 - pTileEngine->XOffset),
+        pProjectiles->LavaFlare.RenderSprite (float (xPos - 9 - pTileEngine->XOffset),
                                 float (yPos - 5 - pTileEngine->YOffset), 0, 0xAAFFFFFF);
 
-        LavaFlare.RenderSprite (float (xPos - 9 - pTileEngine->XOffset),
+        pProjectiles->LavaFlare.RenderSprite (float (xPos - 9 - pTileEngine->XOffset),
                                 float (yPos - 5 - pTileEngine->YOffset), 0, 0x88AAAA00);
-        LavaFlare.RenderSprite (float (xPos - 9 - pTileEngine->XOffset),
+        pProjectiles->LavaFlare.RenderSprite (float (xPos - 9 - pTileEngine->XOffset),
                                 float (yPos - 5 - pTileEngine->YOffset), 0, 0x88AA0000);
         DirectGraphics.SetColorKeyMode ();
 

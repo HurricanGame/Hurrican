@@ -285,10 +285,10 @@ void GegnerDrache::DoDraw(void)
                     Attack == GEGNER_LAUFEN)
             {
                 DirectGraphics.SetAdditiveMode();
-                LavaFlare.RenderSpriteScaledRotated (float (xPos - 100 - pTileEngine->XOffset) - mirrorOffset * 230,
+                pProjectiles->LavaFlare.RenderSpriteScaledRotated (float (xPos - 100 - pTileEngine->XOffset) - mirrorOffset * 230,
                                                      float (yPos -  55 - pTileEngine->YOffset) + DrawYOffset, 180, 180, FlareRot, 0xFF66FF66);
 
-                LavaFlare.RenderSpriteScaledRotated (float (xPos - 40 - pTileEngine->XOffset) - mirrorOffset * 230,
+                pProjectiles->LavaFlare.RenderSpriteScaledRotated (float (xPos - 40 - pTileEngine->XOffset) - mirrorOffset * 230,
                                                      float (yPos - 10 - pTileEngine->YOffset) + DrawYOffset, 90, 90, FlareRot*2, 0xFF88AAFF);
                 DirectGraphics.SetColorKeyMode();
             }

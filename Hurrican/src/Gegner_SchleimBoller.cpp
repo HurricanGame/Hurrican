@@ -64,7 +64,7 @@ void GegnerSchleimBoller::DoDraw(void)
         if (options_Detail >= DETAIL_HIGH)
         {
             DirectGraphics.SetAdditiveMode ();
-            LavaFlare.RenderSpriteScaled ((float)(xPos-pTileEngine->XOffset) + 30 - Size,
+            pProjectiles->LavaFlare.RenderSpriteScaled ((float)(xPos-pTileEngine->XOffset) + 30 - Size,
                                           (float)(yPos-pTileEngine->YOffset) + 40 - Size,
                                           Size * 2, Size * 2, 0x8888FF88);
             DirectGraphics.SetColorKeyMode ();

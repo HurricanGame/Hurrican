@@ -9,8 +9,6 @@
 #include "stdafx.h"
 #include "Gegner_Rotzpott.h"
 
-extern DirectGraphicsSprite	*pDroneGun;					// Flamme der Zitrone
-
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
@@ -119,7 +117,7 @@ void GegnerRotzpott::CalcKnarreWinkel(void)
 void GegnerRotzpott::DoDraw(void)
 {
     // Knarre
-    pDroneGun->RenderSpriteRotatedOffset((float)-pTileEngine->XOffset + xPos + 20.0f,
+    pGegner->DroneGun.RenderSpriteRotatedOffset((float)-pTileEngine->XOffset + xPos + 20.0f,
                                          (float)-pTileEngine->YOffset + yPos - 28.0f, GunWinkel,
                                          0, 0, 0xFFFFFFFF);
 

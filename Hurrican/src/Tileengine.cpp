@@ -16,6 +16,7 @@
 
 #include <stdio.h>
 #include "Tileengine.h"
+#include "DX8Texture.h"
 #include "DX8Graphics.h"
 #include "DX8Sprite.h"
 #include "DX8Input.h"
@@ -117,7 +118,8 @@ TileEngineClass::TileEngineClass(void)
         }
 
     for(int i=0; i<MAX_TILESETS; i++)
-        TileGfx[i].itsTexture = (LPDIRECT3DTEXTURE8)NULL;
+        //DKS - Adapted to new TexturesystemClass
+        TileGfx[i].itsTexIdx = -1;
 
     // Wasserfall Textur laden
     Wasserfall[0].LoadImage("wasserfall.png",  60,  240, 60,  240, 1, 1);
@@ -284,6 +286,8 @@ void TileEngineClass::ClearLevel()
 
     for(int i=0; i<MAX_TILESETS; i++)
     {
+        //DKS - Adapted to new TexturesystemClass
+#if 0
 #if defined(PLATFORM_DIRECTX)
         SafeRelease(TileGfx[i].itsTexture);
 #elif defined(PLATFORM_SDL)
@@ -293,6 +297,9 @@ void TileEngineClass::ClearLevel()
             TileGfx[i].itsTexture = 0;
         }
 #endif
+#endif //0
+        Textures.UnloadTexture( TileGfx[i].itsTexIdx );
+        TileGfx[i].itsTexIdx = -1;
     }
 
     pProjectiles->ClearAll();
@@ -1113,11 +1120,7 @@ void TileEngineClass::DrawBackLevel(void)
                         DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, NumToRender*2, &TilesToRender[0]);
 
                     // Neue aktuelle Textur setzen
-#if defined(PLATFORM_DIRECTX)
-                    lpD3DDevice->SetTexture (0, TileGfx[ActualTexture].itsTexture);
-#elif defined(PLATFORM_SDL)
-                    DirectGraphics.SetTexture( TileGfx[ActualTexture].itsTexture );
-#endif
+                    DirectGraphics.SetTexture( TileGfx[ActualTexture].itsTexIdx );
 
                     // Und beim rendern wieder von vorne anfangen
                     NumToRender = 0;
@@ -1256,11 +1259,7 @@ void TileEngineClass::DrawFrontLevel(void)
                                                        &TilesToRender[0]);
 
                     // Neue aktuelle Textur setzen
-#if defined(PLATFORM_DIRECTX)
-                    lpD3DDevice->SetTexture (0, TileGfx[ActualTexture].itsTexture);
-#elif defined(PLATFORM_SDL)
-                    DirectGraphics.SetTexture( TileGfx[ActualTexture].itsTexture );
-#endif
+                    DirectGraphics.SetTexture( TileGfx[ActualTexture].itsTexIdx );
 
                     // Und beim rendern wieder von vorne anfangen
                     NumToRender = 0;
@@ -1429,12 +1428,7 @@ void TileEngineClass::DrawBackLevelOverlay (void)
                         DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, NumToRender*2, &TilesToRender[0]);
 
                     // Neue aktuelle Textur setzen
-#if defined(PLATFORM_DIRECTX)
-                    lpD3DDevice->SetTexture (0, TileGfx[ActualTexture].itsTexture);
-#elif defined(PLATFORM_SDL)
-                    DirectGraphics.SetTexture( TileGfx[ActualTexture].itsTexture );
-#endif
-
+                    DirectGraphics.SetTexture( TileGfx[ActualTexture].itsTexIdx );
 
                     // Und beim rendern wieder von vorne anfangen
                     NumToRender = 0;
@@ -1629,11 +1623,7 @@ void TileEngineClass::DrawOverlayLevel(void)
                             DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, NumToRender*2, &TilesToRender[0]);
 
                         // Neue aktuelle Textur setzen
-#if defined(PLATFORM_DIRECTX)
-                        lpD3DDevice->SetTexture (0, TileGfx[ActualTexture].itsTexture);
-#elif defined(PLATFORM_SDL)
-                        DirectGraphics.SetTexture( TileGfx[ActualTexture].itsTexture );
-#endif
+                        DirectGraphics.SetTexture( TileGfx[ActualTexture].itsTexIdx );
 
                         // Und beim rendern wieder von vorne anfangen
                         NumToRender = 0;
@@ -1761,11 +1751,7 @@ void TileEngineClass::DrawWater(void)
     if (options_Detail < DETAIL_MEDIUM)
     {
 
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->SetTexture (0, 0);
-#elif defined(PLATFORM_SDL)
         DirectGraphics.SetTexture( -1 );
-#endif
 
         for(int j = RenderPosY; j<RenderPosYTo; j++)
         {
@@ -1969,20 +1955,11 @@ void TileEngineClass::DrawWater(void)
                 if (schicht > 0)
                 {
                     DirectGraphics.SetAdditiveMode();
-#if defined(PLATFORM_DIRECTX)
-                    lpD3DDevice->SetTexture (0, LiquidGfx[1].itsTexture);
-#elif defined(PLATFORM_SDL)
-                    DirectGraphics.SetTexture( LiquidGfx[1].itsTexture );
-#endif
-
+                    DirectGraphics.SetTexture( LiquidGfx[1].itsTexIdx );
                 }
                 else
                 {
-#if defined(PLATFORM_DIRECTX)
-                    lpD3DDevice->SetTexture (0, LiquidGfx[0].itsTexture);
-#elif defined(PLATFORM_SDL)
-                    DirectGraphics.SetTexture( LiquidGfx[0].itsTexture );
-#endif
+                    DirectGraphics.SetTexture( LiquidGfx[0].itsTexIdx );
                 }
 
                 DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, NumToRender*2, &TilesToRender[0]);

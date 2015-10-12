@@ -15,9 +15,10 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#ifndef _DEBUG
+//DKS - Always show cracktro when debugging
+//#ifndef _DEBUG
 #define SHOW_CRACKTRO
-#endif
+//#endif
 
 // --------------------------------------------------------------------------------------
 // Includes
@@ -37,6 +38,7 @@
 #include "Texts.h"
 #include "Console.h"
 #include "CCracktro.h"
+#include "DX8Texture.h"
 #include "DX8Graphics.h"
 #include "DX8Sprite.h"
 #include "DX8Input.h"
@@ -104,6 +106,7 @@ bool					NochKeinFullScreen	= true;		// Logo noch anzeigen in Paint ?
 bool					DebugMode			= false;	// Debug Mode ein/aus
 #endif //_DEBUG
 float					SpeedFaktor = 1.0f;				// Faktor, mit dem alle Bewegungen verrechnet werden
+TexturesystemClass      Textures;                       // DKS - Added Texturesystem class (see DX8Sprite.cpp)
 DirectGraphicsClass		DirectGraphics;					// Grafik-Objekt
 DirectInputClass		DirectInput;					// Input-Objekt
 TimerClass				*pTimer;						// Timer Klasse für die Framerate
@@ -126,12 +129,6 @@ ConsoleClass			*pConsole;						// Konsolen-Objekt
 CGUISystem				*pGUI;							// GUI System
 CCracktro				*Cracktro;
 RECT					srcrect, destrect;
-
-DirectGraphicsSprite	LoadingScreen;					// Splash Screen im Fullscreen
-DirectGraphicsSprite	LoadingBar;						// Fortschrittsbalken
-float					LoadingProgress;				// Fortschritt des Loading Balkens
-float					LoadingItemsToLoad;				// Anzahl zu ladender Elemente
-int						LoadingItemsLoaded;				// Anzahl geladener Elemente
 
 int						LanguageFileCount;				// Anzahl gefundener Language Files
 char					LanguageFiles[MAX_LANGUAGE_FILES][MAX_LANGUAGE_FILENAME_LENGTH]; 
@@ -253,8 +250,11 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 // File Exists Funktion
 // --------------------------------------------------------------------------------------
 
-bool FileExists(char Filename[256])
+bool FileExists(const char* Filename)
 {
+    if (!Filename)
+        return false;
+
     std::fstream fin;
 
     fin.open(Filename,std::ios::in);
@@ -887,7 +887,7 @@ int main(int argc, char *argv[])
     Protokoll.WriteText( false, "\n-> Hurrican closed !\n" );
     Protokoll.WriteText( false, "\nhttp://www.poke53280.de\n" );
     Protokoll.WriteText( false, "Bugreports, questions etc : information@poke53280.de\n" );
-    Protokoll.WriteText( false, "\n-> logfile end" );
+    Protokoll.WriteText( false, "\n-> logfile end\n" );
 
     // Kein Fehler im Game? Dann Logfile löschen
     if (Protokoll.delLogFile == true)
@@ -991,6 +991,9 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
         return false;
     }
 
+    // DKS - Read texture scale factor files
+    Textures.ReadScaleFactorsFiles();
+
 #if defined(ANDROID)
     DirectInput.InitTouchBoxes( DirectGraphics.WindowView.w, DirectGraphics.WindowView.h );
 #endif
@@ -1016,6 +1019,9 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
 void ConvertPlayerTexture(DirectGraphicsSprite *pTexture)
 {
     // PICKLE TODO
+    //DKS - TODO: generate separate sprite sheet for player-2 that has red/blue swapped
+    //            because textures are now shared by filename, and this code would
+    //            no longer work with that.
 #if defined(PLATFORM_DIRECTX)
     HRESULT hr;
     D3DLOCKED_RECT pLockedRect;
@@ -1024,11 +1030,15 @@ void ConvertPlayerTexture(DirectGraphicsSprite *pTexture)
     DWORD *pPixel;
 
     // Textur locken
-    hr = pTexture->itsTexture->LockRect(0, &pLockedRect, 0, 0);
+    //DKS - Adapted to new TexturesystemClass
+    //hr = pTexture->itsTexture->LockRect(0, &pLockedRect, 0, 0);
+    TextureHandle &th = Textures[pTexture->itsTexIdx];
+    hr = th.tex->LockRect(0, &pLockedRect, 0, 0);
     if (hr != D3D_OK)
         return;
 
     // Breite, Höhe und Pitch setzen
+    //DKS - TODO: adapt this to use new texturing system (make a separate texture for P2)
     width  = (int)pTexture->itsXSize;
     height = (int)pTexture->itsYSize;
     pRow = (BYTE*)pLockedRect.pBits;
@@ -1073,7 +1083,9 @@ void ConvertPlayerTexture(DirectGraphicsSprite *pTexture)
     }
 
     // Textur wieder freigeben
-    pTexture->itsTexture->UnlockRect(0);
+    //DKS - Adapted to new TexturesystemClass
+    //pTexture->itsTexture->UnlockRect(0);
+    th.tex->UnlockRect(0);
 #endif
 }
 
@@ -1123,23 +1135,22 @@ bool GameInit2(void)
     pSoundManager->PlaySong(MUSIC_MENU, false);
 
     // Menu initialisieren
-    pMenuFont->LoadFont("menufont.png", 448, 256, 28, 28, 16, 7);
+    //DKS - Resized menufont.png and added missing glyphs to make Swedish translation work:
+    //pMenuFont->LoadFont("menufont.png", 448, 256, 28, 28, 16, 7);
+    pMenuFont->LoadFont("menufont.png", 448, 336, 28, 28, 16, 12, menufont_charwidths);
     pMenu = new MenuClass();
 
-
     // Fonts laden
-    pDefaultFont->LoadFont  ("smallfont.png", 320, 84, 10, 12, 32, 7);
+    pDefaultFont->LoadFont  ("smallfont.png", 320, 84, 10, 12, 32, 7, smallfont_charwidths);
 
     //DKS - Added support for font scaling
     if (CommandLineParams.LowRes) {
         pDefaultFont->SetScaleFactor(2);    // On lower res, draw smallest font twice as large so it appears 1:1
     }
 
-    LoadingScreen.LoadImage("loading.png",    360, 60, 360, 60, 1, 1);
-    LoadingBar.LoadImage   ("loadingbar.png", 318, 19, 318, 19, 1, 1);
-    LoadingProgress = 0.0f;
-    LoadingItemsToLoad = 345;
-    LoadingItemsLoaded = 0;
+    pMenu->LoadingProgress = 0.0f;
+    pMenu->LoadingItemsToLoad = 345;
+    pMenu->LoadingItemsLoaded = 0;
 
     // GUISystem initialiseren
     pGUI = new CGUISystem();
@@ -1413,6 +1424,7 @@ bool GameExit(void)
     Protokoll.WriteText( false, "-> Projectile List released\n" );
 
     delete(pSoundManager);				// DirectSound beenden
+    Protokoll.WriteText( false, "-> Sound system released\n" );
 
     DirectInput.Exit();					// DirectInput beenden
 

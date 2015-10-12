@@ -31,10 +31,7 @@
 // Variablen
 // --------------------------------------------------------------------------------------
 
-DirectGraphicsSprite	LavaFlare;							// Leuchten des lava Balles
 DirectGraphicsSprite	*pGegnerGrafix[MAX_GEGNERGFX];		// Grafiken der Gegner
-DirectGraphicsSprite	*pDroneFlame = NULL;				// Flamme der Drone
-DirectGraphicsSprite	*pDroneGun = NULL;					// Flamme der Zitrone
 RECT					 GegnerRect	  [MAX_GEGNERGFX];		// Rechtecke für Kollision
 float					g_Fahrstuhl_yPos;					// yPosition des Fahrstuhls
 float					g_Fahrstuhl_Offset;					// Scrollposition relativ zum Farhstuhl

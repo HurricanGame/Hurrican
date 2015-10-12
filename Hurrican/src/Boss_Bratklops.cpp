@@ -149,15 +149,9 @@ void GegnerBratklops::DoDraw()
             TriangleStrip[3].tv = tu;
 
             // Textur setzen
-            //
-#if defined(PLATFORM_DIRECTX)
-            lpD3DDevice->SetTexture (0, pLaser->itsTexture);
-#elif defined(PLATFORM_SDL)
-            DirectGraphics.SetTexture(  pLaser->itsTexture );
-#endif
+            DirectGraphics.SetTexture( pLaser->itsTexIdx );
 
             // Blitz rotieren lassen
-            //
             D3DXMATRIX	matRot, matTrans, matTrans2;
 
             D3DXMatrixRotationZ  (&matRot, DegreetoRad[360 - Winkel]);	// Rotationsmatrix

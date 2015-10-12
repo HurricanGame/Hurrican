@@ -3591,11 +3591,7 @@ void PlayerClass::DrawNormalLightning(int DrawLength)
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = 0xFFFFFFFF;
 
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTexture (0, Blitzstrahl[BlitzAnim].itsTexture);		// Textur setzen
-#elif defined(PLATFORM_SDL)
-    DirectGraphics.SetTexture(  Blitzstrahl[BlitzAnim].itsTexture );
-#endif
+    DirectGraphics.SetTexture(  Blitzstrahl[BlitzAnim].itsTexIdx );
 
     // Blitz rotieren lassen
     D3DXMATRIX	matRot, matTrans, matTrans2;
@@ -3772,12 +3768,7 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul)
     }
 
     // Strahlen rendern
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTexture (0, BlitzTexture.itsTexture);
-#elif defined(PLATFORM_SDL)
-    DirectGraphics.SetTexture(  BlitzTexture.itsTexture );
-#endif
-
+    DirectGraphics.SetTexture(  BlitzTexture.itsTexIdx );
 
     for (int n = 0; n < 12; n ++)
     {

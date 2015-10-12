@@ -83,7 +83,7 @@ bool GameExit   (void);								// Spiel de-initialisieren
 bool Heartbeat  (void);								// Haupt Game Loop
 bool CreateDir(const char *dir); //DKS - Added function to create a directory if it doesn't already exist (1 on success)
 bool FindDir(const char *dir);   //DKS - Added function to check if a directory exists (1 on success)
-bool FileExists(char Filename[256]);
+bool FileExists(const char *Filename);
 void ConvertPlayerTexture(DirectGraphicsSprite *pTexture);
 void CreatePlayer2Texture(void);
 void StartOuttro(void);

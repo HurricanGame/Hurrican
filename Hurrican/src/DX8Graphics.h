@@ -19,7 +19,6 @@
 
 #if defined(PLATFORM_SDL)
 #include "SDL_port.h"
-#include "texture.h"
 #if defined(USE_GL2)
 #include "cshader.h"
 #if defined(USE_FBO)
@@ -145,10 +144,11 @@ public:
                          CONST void* pVertexStreamZeroData);// den Backbuffer gerendert wird
 
     void DisplayBuffer  (void);								// Render den Buffer auf den Backbuffer
+    //DKS - SetTexture is now used for both GL and DirectX, and uses new TexturesystemClass:
+    void SetTexture( int idx );
 #if defined(PLATFORM_SDL)
     bool ExtensionSupported( const char* ext );
     void SetupFramebuffers( void );
-    void SetTexture( int32_t index );
     void ClearBackBuffer( void );
     void SelectBuffer( bool active );
     void DrawTouchOverlay( void );

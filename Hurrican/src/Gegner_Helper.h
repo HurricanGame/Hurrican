@@ -185,8 +185,6 @@ void LoadGegnerGrafik(int Nr);							// Bestimmten Gegner laden
 
 extern GegnerListClass		*pGegner;
 extern DirectGraphicsSprite	*pGegnerGrafix[MAX_GEGNERGFX];		// Grafiken der Gegner
-extern DirectGraphicsSprite	*pDroneFlame;						// Flamme der Drone
-extern DirectGraphicsSprite	*pDroneGun;							// Knarre der Zitrone
 extern RECT					 GegnerRect	  [MAX_GEGNERGFX];		// Rechtecke für Kollision
 extern float				 g_Fahrstuhl_yPos;					// yPosition des Fahrstuhls
 extern float				 g_Fahrstuhl_Offset;				// Scrollposition relativ zum Farhstuhl

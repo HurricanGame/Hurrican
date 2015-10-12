@@ -35,8 +35,10 @@
 // Tasten Abfragen (simple Methode)
 #define SimpleKeydown(vk_code) ((GetAsyncKeyState(vk_code) & 0x8000) ? 1 : 0)
 
+#if defined(PLATFORM_DIRECTX)
 // Schnittstellen erst prüfen, ob sie existieren, und dann freigeben
 #define SafeRelease(x) if (x != NULL) { x->Release(); x=NULL; }
+#endif //PLATFORM_DIRECTX
 
 // --------------------------------------------------------------------------------------
 // Definitionen für den Spielablauf

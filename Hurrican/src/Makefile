@@ -230,6 +230,7 @@ FILES :=Boss_BigFish \
         DX8Joystick \
         DX8Sound \
         DX8Sprite \
+        DX8Texture \
         GUISystem \
         Gameplay \
         GegnerClass \

@@ -42,7 +42,7 @@ void GegnerBallerdrone::DoDraw(void)
     if (AlreadyDrawn == false)
     {
         DirectGraphics.SetAdditiveMode ();
-        LavaFlare.RenderSprite (float (xPos - pTileEngine->XOffset - 15),
+        pProjectiles->LavaFlare.RenderSprite (float (xPos - pTileEngine->XOffset - 15),
                                 float (yPos - pTileEngine->YOffset - 45), 0,
                                 0xFFFF0000);
         DirectGraphics.SetColorKeyMode ();

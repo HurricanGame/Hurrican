@@ -127,7 +127,7 @@ CCracktro::CCracktro()
 {
     b_running = true;
     pFont = new(DirectGraphicsFont);
-    pFont->LoadFont("demofont.png", 288, 256, 18, 16, 16, 8);
+    pFont->LoadFont("demofont.png", 288, 256, 18, 16, 16, 8, demofont_charwidths);
 
     //DKS - Corrected dimensions from 32x36 to 32x34, to match actual image file:
     Bars[0].LoadImage("copper1.png", 32, 34, 32, 34, 1, 1);

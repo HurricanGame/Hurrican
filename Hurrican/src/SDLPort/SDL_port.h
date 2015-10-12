@@ -60,13 +60,13 @@ typedef uint32_t    LPDIRECTINPUT8;
 #ifndef __WIN32__
 typedef uint32_t HINSTANCE, HANDLE, HWND, HRESULT;
 
-//DKS - Changed the members from LONG to int16_t:
+//DKS - Converted to int32_t from LONG:
 typedef struct tagRECT
 {
-    int16_t left;
-    int16_t top;
-    int16_t right;
-    int16_t bottom;
+    int32_t left;
+    int32_t top;
+    int32_t right;
+    int32_t bottom;
 } RECT;
 #endif
 typedef uint32_t LPDIRECT3D8, LPDIRECT3D9, LPDIRECT3DDEVICE8, LPDIRECT3DDEVICE9, LPDIRECTSOUND8, D3DCOLOR;
@@ -75,7 +75,7 @@ typedef uint32_t LPDIRECT3D8, LPDIRECT3D9, LPDIRECT3DDEVICE8, LPDIRECT3DDEVICE9,
 #define MIN(a,b)    ((a)<(b)?(a):(b))
 #define LIM(a,b,c)  MAX(MIN(a,c),b)
 
-#define D3DX_PI M_PI
+#define D3DX_PI ((float)(M_PI))
 
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
 #define D3DCOLOR_RGBA(r,g,b,a)  (((a)<<24) + ((r)<<16) + ((g)<<8) + (b))

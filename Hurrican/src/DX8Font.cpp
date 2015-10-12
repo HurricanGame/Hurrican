@@ -14,17 +14,36 @@
 // --------------------------------------------------------------------------------------
 
 #include <stdio.h>
+#include <string>
 #include "Globals.h"
 #include "Logdatei.h"
 #include "Timer.h"
+#include "DX8Texture.h"
+#if defined(PLATFORM_SDL)
+#include "SDLPort/texture.h"
+#endif //PLATFORM_SDL
 #include "DX8Font.h"
 #include "DX8Graphics.h"
 #include "Gameplay.h"
 #include "unrarlib.h"
 
+#include <string>
+
+//DKS - Added these includes temporarily so LoadFont() could output character widths to
+//      text files. The text was imported here to initialize the charwidths arrays below.
+//      I've left them here in case fonts ever need to be altered and new width lists be made.
+//#include <iostream>
+//#include <fstream>
+//#include <sstream>
+
+using namespace std;
+
 // --------------------------------------------------------------------------------------
 // Konstruktor (leer)
 // --------------------------------------------------------------------------------------
+uint8_t demofont_charwidths[256] = { 10, 10, 12, 14, 14, 12, 2, 8, 6, 10, 10, 4, 6, 2, 12, 14, 8, 14, 14, 14, 14, 14, 16, 14, 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 16, 16, 16, 16, 16, 16, 14, 14, 6, 14, 14, 14, 14, 14, 14, 16, 14, 16, 14, 14, 14, 14, 14, 14, 14, 16, 1, 1, 1, 1, 1, 1, 16, 16, 16, 16, 16, 16, 14, 14, 6, 14, 14, 14, 14, 14, 14, 16, 14, 16, 14, 14, 14, 14, 14, 14, 14, 16, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+uint8_t menufont_charwidths[256] = { 4, 8, 28, 19, 26, 23, 3, 6, 7, 28, 16, 4, 8, 3, 19, 18, 11, 17, 18, 19, 17, 18, 17, 18, 17, 3, 4, 15, 16, 15, 15, 19, 21, 18, 18, 20, 15, 14, 19, 18, 3, 15, 19, 15, 25, 20, 20, 18, 22, 18, 18, 18, 18, 19, 28, 20, 18, 18, 1, 1, 1, 1, 16, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 21, 21, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 20, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+uint8_t smallfont_charwidths[256] = { 4, 5, 8, 7, 10, 10, 3, 5, 5, 7, 7, 4, 5, 3, 5, 7, 5, 7, 7, 7, 7, 7, 7, 7, 7, 3, 4, 7, 7, 7, 6, 9, 8, 8, 8, 9, 8, 8, 9, 8, 5, 7, 8, 8, 10, 9, 9, 8, 9, 8, 7, 9, 8, 9, 10, 9, 9, 8, 5, 5, 5, 7, 8, 3, 8, 7, 7, 7, 7, 7, 7, 7, 3, 6, 7, 4, 9, 7, 7, 7, 7, 6, 7, 5, 7, 7, 9, 7, 7, 7, 5, 3, 5, 6, 8, 8, 7, 7, 8, 8, 8, 8, 7, 7, 7, 7, 5, 5, 4, 8, 7, 8, 9, 10, 7, 7, 7, 7, 7, 9, 8, 7, 8, 9, 7, 8, 8, 4, 7, 7, 7, 9, 1, 5, 6, 10, 1, 7, 7, 3, 1, 1, 1, 1, 1, 1, 1, 8, 7, 8, 1, 1, 1, 1, 1, 1, 1, 8, 1, 1, 1, 1, 1, 8, 8, 8, 1, 1, 10, 7, 1, 10, 1, 1, 1, 10, 8, 8, 8, 1, 1, 9, 1, 1, 1, 1, 1, 8, 1, 1, 7, 1, 1, 1, 1, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
 DirectGraphicsFont::DirectGraphicsFont(void)
 {
@@ -33,9 +52,11 @@ DirectGraphicsFont::DirectGraphicsFont(void)
 
     mTexture = NULL;
 
-    // alle mit 0 initialiseren, falls ein fehlerhaftest Zeichen verwendet wird
-    for (int i = 0; i < 256; i++)
-        mCharLength[i] = 0;
+    //DKS - Character widths are now hard-coded arrays we merely point to:
+    //// alle mit 0 initialiseren, falls ein fehlerhaftest Zeichen verwendet wird
+    //for (int i = 0; i < 256; i++)
+    //    mCharLength[i] = 1;
+    mCharLength = NULL;
 }
 
 // --------------------------------------------------------------------------------------
@@ -57,20 +78,33 @@ DirectGraphicsFont::~DirectGraphicsFont(void)
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
-                                  int xCharsize, int yCharsize, int xChars,int yChars)
+                                  int xCharsize, int yCharsize, int xChars, int yChars,
+                                  uint8_t *charwidths)
+                                  
 {
     mTexture = new (DirectGraphicsSprite);
-    if (!mTexture->LoadImage(Filename, xts, yts, xCharsize, yCharsize, xChars, 0))
+
+    //DKS - Why is last parameter 0? That would cause problems in memory allocation:
+    //if (!mTexture->LoadImage(Filename, xts, yts, xCharsize, yCharsize, xChars, 0))
+    if (!mTexture->LoadImage(Filename, xts, yts, xCharsize, yCharsize, xChars, yChars)) {
+        Protokoll.WriteText(true, "Error loading font: %s\n", Filename);
         return false;
+    } else {
+        Protokoll.WriteText(false, "Loading font: %s\n", Filename);
+    }
 
     // Grösse setzen
     //
     mXCharSize		= xCharsize;
     mYCharSize		= yCharsize;
     mXChars			= xChars;
-    mXTextureSize	= xts;
-    mYTextureSize	= yts;
 
+    //DKS - We no longer read the font directly, as character widths are now defined in hard-coded arrays,
+    //      so most of the rest of the function is now disabled and mCharLength just points to one
+    //      of the three new hard-coded charwidths arrays defined at the top of this file.
+    mCharLength = charwidths;
+
+#if 0
     // Länge der einzelnen Zeichen aus der Grafik bestimmen
     //
 
@@ -79,40 +113,50 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 #if defined(PLATFORM_DIRECTX)
     D3DSURFACE_DESC d3dsd;
     D3DLOCKED_RECT  d3dlr;
-
     HRESULT hresult;
 
-    mTexture->itsTexture->GetLevelDesc(0, &d3dsd);
-    hresult = mTexture->itsTexture->LockRect    (0, &d3dlr, 0, 0 );
+    //DKS - Adapted to new TexturesystemClass
+    //mTexture->itsTexture->GetLevelDesc(0, &d3dsd);
+    //hresult = mTexture->itsTexture->LockRect    (0, &d3dlr, 0, 0 );
+    TextureHandle &th = Textures[mTexture->itsTexIdx];
+    th.tex->GetLevelDesc(0, &d3dsd);
 
     // Fehler beim Locken ?
     if (hresult != D3D_OK)
         Protokoll.WriteText(true, "error locking font texture!");
 
-    // Colorkey feststellen
-    DWORD key = ((DWORD*)d3dlr.pBits)[0];
 #elif defined(PLATFORM_SDL)
     image_t image;
-    char Temp[256];
+    string fullpath;
     char *pData;
     unsigned long Size;
 
     if (CommandLineParams.RunOwnLevelList == true)
     {
-        sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
-        if (FileExists(Temp))
+        //sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
+        fullpath = string(g_storage_ext) + "/levels/" + string(CommandLineParams.OwnLevelList) + string(Filename);
+        if (FileExists(fullpath.c_str()))
         {
-            loadImageSDL(image, Temp);
+            if (!loadImageSDL(image, fullpath, NULL, 0)) {
+                delete [] image.data;
+                Protokoll.WriteText(true, "Error in LoadFont(): loadImageSDL() returned error loading %s\n", fullpath.c_str() );
+                return false;
+            }
         }
     }
 
     if (image.data == NULL)
     {
         //DKS - All textures are now stored in their own data/textures/ subdir:
-        sprintf_s(Temp, "%s/data/textures/%s", g_storage_ext, Filename);
-        if (FileExists(Temp))
+        //sprintf_s(Temp, "%s/data/textures/%s", g_storage_ext, Filename);
+        fullpath = string(g_storage_ext) + "/data/textures/" + string(Filename);
+        if (FileExists(fullpath.c_str()))
         {
-            loadImageSDL(image, Temp);
+            if (!loadImageSDL(image, fullpath, NULL, 0)) {
+                delete [] image.data;
+                Protokoll.WriteText(true, "Error in LoadFont(): loadImageSDL() returned error loading %s\n", fullpath.c_str() );
+                return false;
+            }
         }
     }
 
@@ -121,29 +165,40 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
     {
         if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) != false)
         {
-            loadImageSDL(image, pData, Size);
+            if (!loadImageSDL(image, NULL, pData, Size))
+                delete [] image.data;
+                free(pData);
+                Protokoll.WriteText(true, "Error in LoadFont(): loadImageSDL() returned error loading %s from buffer\n", Filename );
+                return false;
+            }
             free(pData);
         }
     }
 #endif // USE_UNRARLIB
 
-    if (image.data  == NULL)
-    {
-        return true;
+    if (image.data  == NULL) {
+        Protokoll.WriteText(true, "Error in LoadFont(): image.data is NULL\n" );
+        return false;
     }
 
+    // Colorkey feststellen
+    //DWORD key = ((DWORD*)d3dlr.pBits)[0];
 #if 1
     /* menufont.png: pixel at (0,0) (upper left corner) is part of a char/glyph,
        so pick key from lower left corner. Maybe in DirectX image is flipped
        vertically? */
 
-    DWORD key = (((DWORD*)image.data )[image.w * (image.h - 1)]);
+    //DKS - All textures are now using a proper alpha channel, and shouldn't have any
+    //      color information where their alpha is 0, so the key can now just be 0:
+    //DWORD key = (((DWORD*)image.data )[image.w * (image.h - 1)]);
+    DWORD key = 0;
 #else
     DWORD key = ((DWORD*)image.data )[0];
 #endif
 
     /* // PICKLE Not OpenGLES compat, left for info
         int textureWidth, textureHeight;
+        //DKS - Note: I did not bother updating this for the new TexturesystemClass
         glBindTexture( GL_TEXTURE_2D, mTexture->itsTexture );
         glGetTexLevelParameteriv( GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &textureWidth );
         glGetTexLevelParameteriv( GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &textureHeight );
@@ -190,14 +245,27 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
             mCharLength[j * xChars + i] = last+1;
         }
 
+    //DKS - I used this code to output the character widths to a text file, and they now reside in
+    //      hard-coded arrays. This was so we can use compressed font images and not have to always
+    //      have a .PNG image present.
+    //string outfile_str = string(Filename) + ".txt";
+    //ofstream outfile(outfile_str.c_str());
+    //for (int i=0; i < 256; ++i) {
+    //    ostringstream ostr;
+    //    ostr << (int)mCharLength[i];
+    //    outfile << ostr.str() << ", ";
+    //}
+    //outfile.close();
+
 #if defined(PLATFORM_DIRECTX)
     // Unlocken
-    mTexture->itsTexture->UnlockRect(0);
+    th.tex->UnlockRect(0);  //DKS - Adapted to new TexturesystemClass
 #elif defined(PLATFORM_SDL)
     delete [] image.data;
 #endif
+#endif //0
 
-    return false;
+    return true;
 }
 
 // --------------------------------------------------------------------------------------
@@ -224,6 +292,10 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
     RECT rect;
     unsigned char z;
     float oldx = x;
+
+    //DKS - Added:
+    if (!Text || strlen(Text) == 0)
+        return true;
 
     for(unsigned int i=0; i<strlen(Text); i++)
     {

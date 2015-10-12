@@ -36,11 +36,6 @@ int						bo, bu, bl, br;						// Blockwerte um den aktuellen Schuss herum
 
 float					WinkelUebergabe;					// Extra "Parameter" für PushProjectile
 
-DirectGraphicsSprite	LaserSmoke;							// Leuchten des Lasers
-DirectGraphicsSprite	LaserSmokeBig;						// Leuchten des Riesen Lasers
-DirectGraphicsSprite	SpreadShotSmoke;					// Leuchten des Riesen Spreadshots
-DirectGraphicsSprite	PowerlineSmoke;						// Leuchten der Powerline
-
 
 // --------------------------------------------------------------------------------------
 // ProjectileKlasse Funktionen
@@ -135,7 +130,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
 
         xSpeed = float(absx);
         ySpeed = float(absy);
-        AnimEnde = 9;
+        //DKS - off-by-one error:
+        //AnimEnde = 9;
+        AnimEnde = 8;
         AnimSpeed = 0.75f;
 
         Damage       = 1000;
@@ -311,7 +308,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         if (w == -90)
             xSpeed = 0.0f;
 
-        AnimEnde = 10;
+        //DKS - off-by-one error:
+        //AnimEnde = 10;
+        AnimEnde = 9;
         AnimSpeed = 0.25f;
 
         ExplodeOnImpact = false;
@@ -366,7 +365,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         if (w == -90)
             xSpeed = 0.0f;
 
-        AnimEnde = 10;
+        //DKS - off-by-one error:
+        //AnimEnde = 10;
+        AnimEnde = 9;
         AnimSpeed = 0.25f;
 
         ExplodeOnImpact = false;
@@ -606,7 +607,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
 
     case BOMBE :			// Spieler Bombe
     {
-        AnimEnde	 = 16;
+        //DKS - off-by-one error:
+        //AnimEnde	 = 16;
+        AnimEnde	 = 15;
         AnimSpeed    = 0.5f;
         Damage       = 30;
         DamagePlayer = false;
@@ -615,7 +618,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
 
     case BOMBEBIG :		// Fette Spieler Bombe
     {
-        AnimEnde	 = 16;
+        //DKS - off-by-one error:
+        //AnimEnde	 = 16;
+        AnimEnde	 = 15;
         AnimSpeed    = 0.5f;
         Damage       = 90;
         DamagePlayer = false;
@@ -734,7 +739,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         DamagePlayer = false;
         ySpeed = 0.0f;
         xSpeed = 1.0f;
-        AnimEnde = 10;
+        //DKS - off-by-one error:
+        //AnimEnde = 10;
+        AnimEnde = 9;
         AnimSpeed = 1.0f;
         ExplodeOnImpact = false;
     }
@@ -747,7 +754,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         ySpeed = D3DX_PI;
         xSpeed = 1.0f;
         ShotArt = SHIELDSPAWNER;
-        AnimEnde = 10;
+        //DKS - off-by-one error:
+        //AnimEnde = 10;
+        AnimEnde = 9;
         AnimSpeed = 1.0f;
         ExplodeOnImpact = false;
     }
@@ -776,7 +785,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         Damage       = 12;
         DamagePlayer = true;
 
-        AnimEnde	 = 4;
+        //DKS - off-by-one error:
+        //AnimEnde	 = 4;
+        AnimEnde	 = 3;
         AnimSpeed	 = 0.5f;
         HasGlow = true;
     }
@@ -792,7 +803,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         Damage       = 50;
         DamagePlayer = true;
 
-        AnimEnde    = 25;
+        //DKS - off-by-one error:
+        //AnimEnde    = 25;
+        AnimEnde    = 24;
         AnimSpeed   = 0.5f;
     }
     break;
@@ -818,7 +831,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         Damage       = 50;
         DamagePlayer = true;
 
-        AnimEnde    = 25;
+        //DKS - off-by-one error:
+        //AnimEnde    = 25;
+        AnimEnde    = 24;
         AnimSpeed   = 0.5f;
     }
     break;
@@ -846,7 +861,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         Damage       = 30;
         DamagePlayer = true;
 
-        AnimEnde    = 25;
+        //DKS - off-by-one error:
+        //AnimEnde    = 25;
+        AnimEnde    = 24;
         AnimSpeed   = 0.5f;
     }
     break;
@@ -961,11 +978,14 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         Damage       = 40;
         DamagePlayer = true;
 
-        AnimEnde  = 4;
+        //DKS - off-by-one error:
+        //AnimEnde  = 4;
+        AnimEnde  = 3;
         AnimSpeed = 0.5f;
     }
     break;
 
+    //DKS - NOTE: this projectile was never actually used in the game (commented out in Partikelsystem.cpp)
     case FLAMEWALL :		// Aufsteigende Feuerwand die aus der Spinne Granate entsteht
     {
         xSpeed =  40.0f;
@@ -1016,7 +1036,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         ySpeed	  = -(float)(rand()% 60+30)/2;
         yAcc	  = 4.0f;
         Damage    =   50;
-        AnimEnde  = 8;
+        //DKS - off-by-one error:
+        //AnimEnde  = 8;
+        AnimEnde  = 7;
         AnimSpeed = (float)(rand()%20+20)/100;
         DamagePlayer = false;
     }
@@ -1024,7 +1046,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
 
     case FEUERFALLE_LAVAMANN :		// Flamme des Lavamannes
     {
-        AnimEnde	 = 30;
+        //DKS - off-by-one error:
+        //AnimEnde	 = 30;
+        AnimEnde	 = 29;
         AnimPhase    = 6 + rand()%3;
         AnimSpeed    = float((rand()%3+10)/20.0f);
         Damage       = 1;
@@ -1040,7 +1064,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
 
     case FEUERFALLE :		// Flamme des Wandflammenwerfers oben
     {
-        AnimEnde	 = 30;
+        //DKS - off-by-one error:
+        //AnimEnde	 = 30;
+        AnimEnde	 = 29;
         AnimSpeed    = float((rand()%3+10)/20.0f);
         Damage       = 1;
         DamagePlayer = true;
@@ -1124,7 +1150,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
 		ySpeed	  = sin_deg(w) * 30.0f;
 
         yAcc = 5.0f;
-        AnimEnde = 25;
+        //DKS - off-by-one error:
+        //AnimEnde = 25;
+        AnimEnde = 24;
         AnimSpeed = 0.2f;
 
         Counter = 0.2f;
@@ -1146,7 +1174,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     case FEUERFALLE2 :		// Flamme des Wandflammenwerfers rechts
     {
         ShotArt		 = FEUERFALLE;
-        AnimEnde	 = 30;
+        //DKS - off-by-one error:
+        //AnimEnde	 = 30;
+        AnimEnde	 = 29;
         AnimSpeed    = float((rand()%3+10)/20.0f);
         Damage       = 1;
         DamagePlayer = true;
@@ -1164,7 +1194,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     case FEUERFALLE3 :		// Flamme des Wandflammenwerfers unten
     {
         ShotArt		 = FEUERFALLE;
-        AnimEnde	 = 30;
+        //DKS - off-by-one error:
+        //AnimEnde	 = 30;
+        AnimEnde	 = 29;
         AnimSpeed    = float((rand()%3+10)/20.0f);
         Damage       = 1;
         DamagePlayer = true;
@@ -1181,7 +1213,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     case FEUERFALLE4 :		// Flamme des Wandflammenwerfers links
     {
         ShotArt		 = FEUERFALLE;
-        AnimEnde	 = 30;
+        //DKS - off-by-one error:
+        //AnimEnde	 = 30;
+        AnimEnde	 = 29;
         AnimSpeed    = float((rand()%3+10)/20.0f);
         Damage       = 1;
         DamagePlayer = true;
@@ -1198,7 +1232,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
 
     case SPIDERFIRE :		// Flamme der Feuer Spinne (wie Suchschuss)
     {
-        AnimEnde	 = 30;
+        //DKS - off-by-one error:
+        //AnimEnde	 = 30;
+        AnimEnde	 = 29;
         AnimSpeed    = float((rand()%3+10)/30.0f);
         Damage       = 1;
         DamagePlayer = true;
@@ -1230,7 +1266,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
 
     case WALKERFIRE :		// Flamme des Feuer Walkers
     {
-        AnimEnde	 = 30;
+        //DKS - off-by-one error:
+        //AnimEnde	 = 30;
+        AnimEnde	 = 29;
         AnimSpeed    = float((rand()%3+10)/30.0f);
         Damage       = 1;
         DamagePlayer = true;
@@ -1288,7 +1326,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     case ELEKTROPAMPE:
     {
         Counter = 1500;
-        AnimEnde	 = 5;
+        //DKS - off-by-one error:
+        //AnimEnde	 = 5;
+        AnimEnde	 = 4;
         AnimSpeed    = 0.5f;
         DamagePlayer = true;
 
@@ -1300,7 +1340,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     case PLAYERFIRE :		// Flamme des Spielers
     {
         Counter = 255;
-        AnimEnde	 = 30;
+        //DKS - off-by-one error:
+        //AnimEnde	 = 30;
+        AnimEnde	 = 29;
         AnimSpeed    = float((rand()%3+10)/40.0f);
         DamagePlayer = false;
 
@@ -1580,7 +1622,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         ySpeed =   26.0f;
         Damage =   40;
         DamagePlayer = true;
-        AnimEnde  = 20;
+        //DKS - off-by-one error:
+        //AnimEnde  = 20;
+        AnimEnde  = 19;
         AnimSpeed = 0.7f;
     }
     break;
@@ -1590,7 +1634,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         xSpeed =  30.0f;
         Damage =   20;
         DamagePlayer = true;
-        AnimEnde  = 4;
+        //DKS - off-by-one error:
+        //AnimEnde  = 4;
+        AnimEnde  = 3;
         AnimSpeed = 0.5f;
         HasGlow = true;
     }
@@ -1601,7 +1647,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         xSpeed =  -30.0f;
         Damage =   20;
         DamagePlayer = true;
-        AnimEnde  = 4;
+        //DKS - off-by-one error:
+        //AnimEnde  = 4;
+        AnimEnde  = 3;
         AnimSpeed = 0.5f;
         HasGlow = true;
     }
@@ -1621,8 +1669,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         // Linksrum oder rechtsrum rollen lassen
         if (xSpeed < 0.0f)
         {
-            AnimPhase = 19;
-            AnimEnde  = 20;
+            //DKS - off-by-one error:
+            //AnimPhase = 19;
+            //AnimEnde  = 20;
+            AnimPhase = 18;
+            AnimEnde  = 19;
         }
         else
         {
@@ -1640,7 +1691,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         yAcc   =   5.0f;
         Damage =   15;
         DamagePlayer = true;
-        AnimEnde  = 20;
+        //DKS - off-by-one error:
+        //AnimEnde  = 20;
+        AnimEnde  = 19;
         AnimSpeed = 0.7f;
     }
     break;
@@ -1683,7 +1736,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
 
     case EVILBLITZ:				// Blitz des bösen Hurris hoch
     {
-        AnimEnde  = 2;
+        //DKS - off-by-one error:
+        //AnimEnde  = 2;
+        AnimEnde  = 1;
         AnimSpeed = 0.7f;
         Damage =   50;
         ySpeed = -20.0f;
@@ -1697,7 +1752,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     {
         Damage = 100;
         AnimSpeed = 0.5f;
-        AnimEnde  = 2;
+        //DKS - off-by-one error:
+        //AnimEnde  = 2;
+        AnimEnde  = 1;
         ySpeed = 30;
         DamagePlayer = true;
         ExplodeOnImpact = false;
@@ -1707,7 +1764,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     case UFOLASER:				// Laser des Ufos
     {
         HasGlow      = true;
-        AnimEnde     = 10;
+        //DKS - off-by-one error:
+        //AnimEnde     = 10;
+        AnimEnde     = 9;
         AnimSpeed	 = 0.25f;
         Damage       =  20;
         ySpeed       = 20.0f;
@@ -1750,7 +1809,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         ySpeed		 = absy / 10.0f;
         yAcc		 = 3.25f;
         DamagePlayer = true;
-        AnimEnde	 = 4;
+        //DKS - off-by-one error:
+        //AnimEnde	 = 4;
+        AnimEnde	 = 3;
         AnimSpeed	 = 0.25f;
         HasGlow = true;
     }
@@ -1832,7 +1893,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         ySpeed = 0.0f;
         yAcc   = 5.0f;
 
-        AnimEnde = 20;
+        //DKS - This was way off, there's only 15 frames of animation in the spritesheet image.
+        //AnimEnde = 20;
+        AnimEnde = 14;
         AnimSpeed = 1.0f;
 
         Damage = 8000;
@@ -1913,7 +1976,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         AnimSpeed = 0.5f;
         DamagePlayer = true;
         Damage = 20;
-        AnimEnde = 20;
+        //DKS - off-by-one error:
+        //AnimEnde = 20;
+        AnimEnde = 19;
         ySpeed = 10.0f;
         yAcc = 10.0f;
     }
@@ -1921,7 +1986,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
 
     case SKELETORGRANATE:
     {
-        AnimEnde	 = 10;
+        //DKS - off-by-one error:
+        //AnimEnde	 = 10;
+        AnimEnde	 = 9;
         AnimSpeed    = 0.5f;
         Damage		 = 40;
         Counter		 = 1.0f;
@@ -2100,34 +2167,34 @@ void ProjectileClass::Render(void)
         float l,  r,  o,  u;					// Vertice Koordinaten
         float tl, tr, to, tu;					// Textur Koordinaten
 
-        float xs, ys;
-        int   xfs, yfs, xfc;
-
         D3DXMATRIX	matRot, matTrans, matTrans2;
 
-        xs  = pProjectileGrafix[ShotArt]->GetXSize();
-        ys  = pProjectileGrafix[ShotArt]->GetYSize();
-        xfs = pProjectileGrafix[ShotArt]->GetXFrameSize();
-        yfs = pProjectileGrafix[ShotArt]->GetYFrameSize();
-        xfc = pProjectileGrafix[ShotArt]->GetXFrameCount();
+        float xts = pProjectileGrafix[ShotArt]->itsXTexScale;
+        float yts = pProjectileGrafix[ShotArt]->itsYTexScale;
 
-        RECT Rect;
+        //DKS - There is no need to compute this, it's already in the sprite's itsPreCalcedRects array:
+        //int xfs, yfs, xfc
+        //xfs = pProjectileGrafix[ShotArt]->itsXFrameSize;
+        //yfs = pProjectileGrafix[ShotArt]->itsYFrameSize;
+        //xfc = pProjectileGrafix[ShotArt]->itsXFrameCount;
+        //RECT Rect;
+        //// Ausschnitt berechnen
+        //Rect.top	= (AnimPhase/xfc) * yfs;
+        //Rect.left	= (AnimPhase%xfc) * xfs;
+        //Rect.right  = Rect.left + xfs;
+        //Rect.bottom = Rect.top  + yfs;
 
-        // Ausschnitt berechnen
-        Rect.top	= (AnimPhase/xfc) * yfs;
-        Rect.left	= (AnimPhase%xfc) * xfs;
-        Rect.right  = Rect.left + xfs;
-        Rect.bottom = Rect.top  + yfs;
+        RECT &Rect = pProjectileGrafix[ShotArt]->itsPreCalcedRects[AnimPhase];
 
         l = float(-pTileEngine->XOffset+xPos-0.5f);								// Links
         r = float(-pTileEngine->XOffset+xPos+(Rect.right -Rect.left-1)+0.5f);	// Rechts
         o = float(-pTileEngine->YOffset+yPos-0.5f);								// Oben
         u = float(-pTileEngine->YOffset+yPos+(Rect.bottom-Rect.top-1) +0.5f);	// Unten
 
-        tl = Rect.left  /xs;	// Links
-        tr = Rect.right /xs;	// Rechts
-        to = Rect.top   /ys;	// Oben
-        tu = Rect.bottom/ys;	// Unten
+        tl = Rect.left   * xts;	// Links
+        tr = Rect.right  * xts;	// Rechts
+        to = Rect.top    * yts;	// Oben
+        tu = Rect.bottom * yts;	// Unten
 
         Color = 0xFFFFFFFF;
 
@@ -2167,8 +2234,8 @@ void ProjectileClass::Render(void)
 
             float x = float (-pTileEngine->XOffset + xPos);
             float y = float (-pTileEngine->YOffset + yPos);
-            float mx = pProjectileGrafix[ShotArt]->GetXFrameSize () / 2.0f;
-            float my = pProjectileGrafix[ShotArt]->GetYFrameSize () / 2.0f;
+            float mx = pProjectileGrafix[ShotArt]->itsXFrameSize / 2.0f;
+            float my = pProjectileGrafix[ShotArt]->itsYFrameSize / 2.0f;
 
             // Transformation zum Ursprung
             D3DXMatrixTranslation(&matTrans,-x-mx,
@@ -2195,11 +2262,7 @@ void ProjectileClass::Render(void)
 
         if (ShotArt != CurrentShotTexture)
         {
-#if defined(PLATFORM_DIRECTX)
-            lpD3DDevice->SetTexture (0, pProjectileGrafix[ShotArt]->itsTexture);	// Textur setzen
-#elif defined(PLATFORM_SDL)
-            DirectGraphics.SetTexture(  pProjectileGrafix[ShotArt]->itsTexture );
-#endif
+            DirectGraphics.SetTexture(  pProjectileGrafix[ShotArt]->itsTexIdx );
             CurrentShotTexture = ShotArt;
         }
 
@@ -2399,7 +2462,7 @@ void ProjectileClass::Render(void)
         }
         else if (ShotArt == ELEKTROSCHUSS)
         {
-            LavaFlare.RenderSpriteScaled(xPos-28-float(pTileEngine->XOffset),
+            pProjectiles->LavaFlare.RenderSpriteScaled(xPos-28-float(pTileEngine->XOffset),
                                          yPos-28-float(pTileEngine->YOffset), 100, 100, 0xFFFF22BB);
         }
         else if (ShotArt == LASERSHOT ||
@@ -2408,27 +2471,27 @@ void ProjectileClass::Render(void)
             switch (int (Winkel))
             {
             case 0 :
-                LaserSmoke.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 60 + (ShotArt - LASERSHOT) * 5,
+                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 60 + (ShotArt - LASERSHOT) * 5,
                                                yPos-float(pTileEngine->YOffset) - 40, Winkel, 0xBB1188FF);
                 break;
 
             case 45 :
-                LaserSmoke.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 60,
+                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 60,
                                                yPos-float(pTileEngine->YOffset) - 40, Winkel, 0xBB1188FF);
                 break;
 
             case 90 :
-                LaserSmoke.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 53,
+                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 53,
                                                yPos-float(pTileEngine->YOffset) - 40, Winkel, 0xBB1188FF);
                 break;
 
             case 270 :
-                LaserSmoke.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 52,
+                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 52,
                                                yPos-float(pTileEngine->YOffset) - 40, Winkel, 0xBB1188FF);
                 break;
 
             case 315 :
-                LaserSmoke.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 60,
+                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 60,
                                                yPos-float(pTileEngine->YOffset) - 40, Winkel, 0xBB1188FF);
                 break;
 
@@ -2443,27 +2506,27 @@ void ProjectileClass::Render(void)
             switch (int (Winkel))
             {
             case 0 :
-                LaserSmokeBig.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 120,
+                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 120,
                                                   yPos-float(pTileEngine->YOffset) - 80, Winkel, 0xBB1188FF);
                 break;
 
             case 45 :
-                LaserSmokeBig.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 120,
+                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 120,
                                                   yPos-float(pTileEngine->YOffset) - 85, Winkel, 0xBB1188FF);
                 break;
 
             case 90 :
-                LaserSmokeBig.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 120,
+                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 120,
                                                   yPos-float(pTileEngine->YOffset) - 85, Winkel, 0xBB1188FF);
                 break;
 
             case 270 :
-                LaserSmokeBig.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 105,
+                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 105,
                                                   yPos-float(pTileEngine->YOffset) - 85, Winkel, 0xBB1188FF);
                 break;
 
             case 315 :
-                LaserSmokeBig.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 120,
+                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 120,
                                                   yPos-float(pTileEngine->YOffset) - 85, Winkel, 0xBB1188FF);
                 break;
 
@@ -2475,40 +2538,40 @@ void ProjectileClass::Render(void)
         else if (ShotArt == SPREADSHOTBIG ||
                  ShotArt == SPREADSHOTBIG2)
         {
-            SpreadShotSmoke.RenderSprite(xPos-16-float(pTileEngine->XOffset),
+            pProjectiles->SpreadShotSmoke.RenderSprite(xPos-16-float(pTileEngine->XOffset),
                                          yPos-18-float(pTileEngine->YOffset), 0, 0xAAFFFFFF);
         }
 
         else if (ShotArt == PFLANZESHOT)
         {
-            SpreadShotSmoke.RenderSprite(xPos-24-float(pTileEngine->XOffset),
+            pProjectiles->SpreadShotSmoke.RenderSprite(xPos-24-float(pTileEngine->XOffset),
                                          yPos-24-float(pTileEngine->YOffset), 0, 0xAAFFFFFF);
         }
 
         else if (ShotArt == SUCHSCHUSS2)
         {
-            LavaFlare.RenderSpriteScaled(xPos-24-float(pTileEngine->XOffset),
+            pProjectiles->LavaFlare.RenderSpriteScaled(xPos-24-float(pTileEngine->XOffset),
                                          yPos-24-float(pTileEngine->YOffset), 64, 64, 0xCC0088FF);
         }
 
         else if (ShotArt == WALKER_LASER)
-            LavaFlare.RenderSprite(xPos-45-float(pTileEngine->XOffset),
+            pProjectiles->LavaFlare.RenderSprite(xPos-45-float(pTileEngine->XOffset),
                                    yPos-60-float(pTileEngine->YOffset), 0, 0xAAFF3300);
 
         else if (ShotArt == FETTESPINNESHOT ||
                  ShotArt == FETTESPINNESHOT2)		// Laser der fetten Spinne
         {
-            SpreadShotSmoke.RenderSprite(xPos-12-float(pTileEngine->XOffset),
+            pProjectiles->SpreadShotSmoke.RenderSprite(xPos-12-float(pTileEngine->XOffset),
                                          yPos- 7-float(pTileEngine->YOffset), 0, 0xFFFF0000);
         }
 
         if (ShotArt == POWERLINE)				// Powerline leuchten lassen ?
         {
             if (xSpeed < 0.0f)
-                PowerlineSmoke.RenderSprite(xPos-10-float(pTileEngine->XOffset),
+                pProjectiles->PowerlineSmoke.RenderSprite(xPos-10-float(pTileEngine->XOffset),
                                             yPos   -float(pTileEngine->YOffset), 0, 0xFFFFFFFF);
             else
-                PowerlineSmoke.RenderSprite(xPos-28-float(pTileEngine->XOffset),
+                pProjectiles->PowerlineSmoke.RenderSprite(xPos-28-float(pTileEngine->XOffset),
                                             yPos   -float(pTileEngine->YOffset), 1, 0xFFFFFFFF);
         }
 
@@ -2522,7 +2585,9 @@ void ProjectileClass::Render(void)
         {
             AnimCount = AnimCount - AnimSpeed;	// Dann wieder auf Null setzen
             AnimPhase++;						// Und nächste Animationsphase
-            if (AnimPhase == AnimEnde)			// Animation von zu Ende	?
+            //DKS - off-by-one error:
+            //if (AnimPhase == AnimEnde)			// Animation von zu Ende	?
+            if (AnimPhase > AnimEnde)			// Animation von zu Ende	?
                 AnimPhase = 0;					// Dann wieder von vorne beginnen
         }
     }
@@ -2681,7 +2746,9 @@ void ProjectileClass::Run(void)
     case LASERSHOTBIG:
     case LASERSHOTBIG2:
     {
-        if (AnimPhase >= AnimEnde)
+        //DKS - off-by-one error:
+        //if (AnimPhase >= AnimEnde)
+        if (AnimPhase > AnimEnde)
             AnimPhase = 0;
 
         if (bl & BLOCKWERT_WAND ||
@@ -2933,7 +3000,7 @@ void ProjectileClass::Run(void)
     case GOLEMSCHUSS:				// Suchschuss des Golems
     {
         DirectGraphics.SetAdditiveMode();
-        LavaFlare.RenderSpriteScaled((float)(xPos - pTileEngine->XOffset) - 21,
+        pProjectiles->LavaFlare.RenderSpriteScaled((float)(xPos - pTileEngine->XOffset) - 21,
                                      (float)(yPos - pTileEngine->YOffset) - 21, 62, 62,
                                      0xAA88FF00);
         DirectGraphics.SetColorKeyMode();
@@ -3070,8 +3137,11 @@ void ProjectileClass::Run(void)
             }
         }
 
-        if (AnimPhase == AnimEnde-1)
+        //DKS - off-by-one error:
+        //if (AnimPhase == AnimEnde-1)
+        if (AnimPhase == AnimEnde)
         {
+            //DKS - These two lines were already commented out in original source:
             //AnimEnde--;
             //if (AnimEnde <= 0)
             {
@@ -3155,7 +3225,9 @@ void ProjectileClass::Run(void)
 
     case ELEKTROPAMPE:
     {
-        if (AnimPhase >= AnimEnde)
+        //DKS - off-by-one error:
+        //if (AnimPhase >= AnimEnde)
+        if (AnimPhase > AnimEnde)
             AnimPhase = 0;
 
         Counter -= 70.0f SYNC;
@@ -3622,7 +3694,9 @@ void ProjectileClass::Run(void)
     case FETTESPINNESHOT:
     case FETTESPINNESHOT2:
     {
-        if (AnimPhase >= AnimEnde)
+        //DKS - off-by-one error:
+        //if (AnimPhase >= AnimEnde)
+        if (AnimPhase > AnimEnde)
             AnimPhase = 0;
 
         if (bl & BLOCKWERT_WAND ||
@@ -3648,8 +3722,12 @@ void ProjectileClass::Run(void)
                 AnimPhase--;						// Und nächste Animationsphase
                 if (AnimPhase < 0)					// Animation von zu Ende	?
                 {
-                    AnimPhase = 19;
-                    AnimEnde  = 20;
+                    //DKS - off-by-one error:
+                    //DKS - TODO double check I got this right
+                    //AnimPhase = 19;
+                    //AnimEnde  = 20;
+                    AnimPhase = 18;
+                    AnimEnde  = 19;
                 }
             }
 
@@ -3657,7 +3735,13 @@ void ProjectileClass::Run(void)
             else
             {
                 AnimPhase++;						// Und nächste Animationsphase
-                if (AnimPhase > 19)					// Animation von zu Ende	?
+                //DKS - off-by-one error:
+                //if (AnimPhase > 19)					// Animation von zu Ende	?
+                //{
+                //    AnimPhase = 0;
+                //    AnimEnde  = 19;
+                //}
+                if (AnimPhase > AnimEnde)					// Animation von zu Ende	?
                 {
                     AnimPhase = 0;
                     AnimEnde  = 19;
@@ -4823,6 +4907,15 @@ ProjectileListClass::ProjectileListClass(void)
     pEnd			= NULL;
     NumProjectiles	= 0;
 
+    //DKS - All of these 5 sprites are no longer globals, I moved them here cleaning up big messes
+    //      and fixing ambiguous orders of calls to destructors.
+    // Grafiken für das Leuchten diverser Schüsse laden
+    LaserSmoke.LoadImage     ("lasersmoke.png",	    128, 128, 128, 128, 1, 1);
+    LaserSmokeBig.LoadImage  ("lasersmoke_big.png",	256, 256, 256, 256, 1, 1);
+    SpreadShotSmoke.LoadImage("spreadshotsmoke.png",   64, 64, 64, 64, 1, 1);
+    PowerlineSmoke.LoadImage ("powerlinesmoke.png",	 160, 20, 80, 20, 2, 1);
+    LavaFlare.LoadImage      ("lavaflare.png", 120, 120, 120, 120, 1, 1);
+
     for(int i=0; i<MAX_SHOTGFX; i++)
         pProjectileGrafix[i] = new(DirectGraphicsSprite);
 
@@ -5337,12 +5430,6 @@ ProjectileListClass::ProjectileListClass(void)
     ShotRect[SKELETORGRANATE].top  = 4;
     ShotRect[SKELETORGRANATE].bottom = 15;
 
-    // Grafiken für das Leuchten diverser Schüsse laden
-    SpreadShotSmoke.LoadImage   ("spreadshotsmoke.png",   64, 64, 64, 64, 1, 1);
-    LaserSmoke.LoadImage		("lasersmoke.png",	    128, 128, 128, 128, 1, 1);
-    LaserSmokeBig.LoadImage		("lasersmoke_big.png",	256, 256, 256, 256, 1, 1);
-    PowerlineSmoke.LoadImage	("powerlinesmoke.png",	 160, 20, 80, 20, 2, 1);
-
     // Blaue Bombe laden
     pProjectileGrafix[ELEKTROPAMPE]->LoadImage("elektropampe.png", 640, 640, 640, 128, 1, 5);
     ShotRect[ELEKTROPAMPE].left = 0;
@@ -5374,11 +5461,6 @@ ProjectileListClass::~ProjectileListClass(void)
             delete(pProjectileGrafix[i]);
             pProjectileGrafix[i] = NULL;
         }
-
-    LaserSmoke.~DirectGraphicsSprite ();
-    LaserSmokeBig.~DirectGraphicsSprite ();
-    SpreadShotSmoke.~DirectGraphicsSprite ();
-    PowerlineSmoke.~DirectGraphicsSprite ();
 }
 
 // --------------------------------------------------------------------------------------
@@ -5433,7 +5515,9 @@ bool ProjectileListClass::PushBlitzBeam (int Size, float Richtung, PlayerClass* 
     pNew->yPosOld	   = pNew->yPos;
     pNew->AnimPhase    = 0;
     pNew->AnimCount    = 0.0f;
-    pNew->AnimEnde     = 4;
+    //DKS - off-by-one error:
+    //pNew->AnimEnde     = 4;
+    pNew->AnimEnde     = 3;
     pNew->AnimSpeed    = 0.5f;
     pNew->Damage	   = Size;
     pNew->DamagePlayer = false;

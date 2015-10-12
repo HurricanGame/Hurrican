@@ -39,7 +39,7 @@ void GegnerMiniRocket::DoDraw(void)
     //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos, optimized:
     //float xoff = (float)(sin((360 - rot) / 180.0f * PI) * 12.0f);
     //float yoff = (float)(cos((360 - rot) / 180.0f * PI) * 12.0f);
-    //LavaFlare.RenderSpriteScaled ((float)(xPos-pTileEngine->XOffset) - 15.0f - (float)(sin(FlareSin) * 1.0f) + xoff,
+    //pProjectiles->LavaFlare.RenderSpriteScaled ((float)(xPos-pTileEngine->XOffset) - 15.0f - (float)(sin(FlareSin) * 1.0f) + xoff,
     //                              (float)(yPos-pTileEngine->YOffset) - 15.0f - (float)(sin(FlareSin) * 1.0f) + yoff,
     //                              (int)(40.0f + (float)sin(FlareSin) * 2.0f),
     //                              (int)(40.0f + (float)sin(FlareSin) * 2.0f),
@@ -47,7 +47,7 @@ void GegnerMiniRocket::DoDraw(void)
 	float xoff = sin_deg(360.0f - rot) * 12.0f;
 	float yoff = cos_deg(360.0f - rot) * 12.0f;
     float sin_FlareSin = sin_rad(FlareSin);
-	LavaFlare.RenderSpriteScaled (xPos-pTileEngine->XOffset - 15.0f - sin_FlareSin + xoff, 
+	pProjectiles->LavaFlare.RenderSpriteScaled (xPos-pTileEngine->XOffset - 15.0f - sin_FlareSin + xoff, 
 								  yPos-pTileEngine->YOffset - 15.0f - sin_FlareSin + yoff, 
 								 (int)(40.0f + sin_FlareSin * 2.0f),
 								 (int)(40.0f + sin_FlareSin * 2.0f),

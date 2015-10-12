@@ -26,15 +26,17 @@
 #define _TEXTURE_H_
 
 #include "SDL_port.h"
+#include <string>
 
 typedef struct IMAGE_T
 {
     uint8_t* data;
     bool compressed;
     uint32_t w, h;
-    uint32_t tex_w, tex_h;
     uint32_t size;
     uint32_t offset;
+    double   npot_scalex, npot_scaley;    //DKS - Correction factors to compensate for any 
+                                          //      nearest-power-of-two size expansions.
     GLenum type;
     GLenum format;
 
@@ -43,30 +45,35 @@ typedef struct IMAGE_T
         compressed  (false),
         w           (0),
         h           (0),
-        tex_w       (0),
-        tex_h       (0),
         size        (0),
         offset      (0),
+        npot_scalex (1.0),
+        npot_scaley (1.0),
         type        (GL_UNSIGNED_BYTE),
         format      (GL_RGBA)
     { }
 } image_t;
 
-extern std::vector<GLuint> textures;
-#if defined(USE_ETC1)
-extern std::vector<GLuint> alphatexs;
-#endif
+//DKS - Textures are now managed in DX8Texture.cpp in new TexturesystemClass.
+//      This function now takes a reference to a TextureHandle object,
+//      returning true on success.
+//      Through TextureHandle data members npot_scalex and npot_scaley, it returns a
+//      factor to apply to each dimension to compensate for any increases in size
+//      from power-of-two expansion (each will be 1.0f if none occurred).
+bool SDL_LoadTexture( const std::string &path, const std::string &filename,
+                      void *buf, unsigned int buf_size, TextureHandle &th );
+void SDL_UnloadTexture( TextureHandle &th );
 
-int32_t LoadTexture( const char* path, SDL_Rect& dims, uint32_t size );
-GLuint load_texture( image_t& image );
+bool load_texture( image_t& image, GLuint &new_texture);
 
 #if defined(USE_ETC1)
-bool loadImageETC1( image_t& image, const char* path, const char* ext );
+bool loadImageETC1( image_t& image, const std::string &fullpath );
 #endif
 #if defined(USE_PVRTC)
-bool loadImagePVRTC( image_t& image, const char* path );
+bool loadImagePVRTC( image_t& image, const std::string &fullpath );
 #endif
-bool loadImageSDL( image_t& image, const char* path, uint32_t size=0 );
+
+bool loadImageSDL( image_t& image, const std::string &fullpath, void *buf, unsigned int buf_size );
 
 uint8_t* LowerResolution( SDL_Surface* surface, int factor );
 
@@ -76,8 +83,5 @@ uint8_t* LowerResolution( SDL_Surface* surface, int factor );
 uint8_t* ConvertRGBA5551( SDL_Surface* surface, uint8_t factor );
 #endif
 */
-
-void delete_texture( int32_t index );
-void delete_textures( void );
 
 #endif /* _TEXTURE_H_ */

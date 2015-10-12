@@ -33,18 +33,18 @@ class DirectGraphicsFont
 {
 private:
     DirectGraphicsSprite	*mTexture;						// Textur mit Font-Grafikdaten
-    int						mXTextureSize;					// x-Grösse der gesamten Textur
-    int						mYTextureSize;					// y-Grösse der gesamten Textur
     int						mXChars;						// Anzahl Zeichen in X-Richtung
 
 public:
-    char					mCharLength[256];				// Länge der Zeichen in Pixel
+    //DKS - Character widths are now hard-coded arrays we merely point to:
+    //char					mCharLength[256];				// Länge der Zeichen in Pixel
+    uint8_t					*mCharLength;				// Länge der Zeichen in Pixel
     int						mXCharSize;						// X-Grösse eines Zeichens
     int						mYCharSize;						// Y-Grösse eines Zeichens
 
 
     //DKS - Added support for font scaling
-    int                   mScaleFactor;               // Font will be scaled this much (default is 1, no scaling)
+    int                   mScaleFactor;                 // Font will be scaled this much (default is 1, no scaling)
 
     DirectGraphicsFont(void);							// Konstruktor (leer)
     ~DirectGraphicsFont(void);							// Textur freigeben
@@ -54,7 +54,11 @@ public:
                   int xCharsize,							// x-Grösse eines Zeichens
                   int yCharsize,							// y-Grösse eines Zeichens
                   int xChars,								// Anzahl der Zeichen pro Zeile
-                  int yChars);								// Anzahl der Zeichen pro Spalte
+                  int yChars,								// Anzahl der Zeichen pro Spalte
+                  uint8_t *width_values);                   // DKS - Array of character widths to use
+                                                            // (Added this so that we can use compressed
+                                                            //  font textures and not need to read PNGs
+                                                            //  directly)
     bool DrawText(float x, float y,							// Text an xPos,yPos mit Farbe
                   const char Text[], D3DCOLOR Color);				// Color ausgeben
     bool DrawValue(float x, float y,						// Zahlenwert an xPos,yPos mit Farbe
@@ -89,6 +93,10 @@ public:
 extern DirectGraphicsFont *pMenuFont;
 extern DirectGraphicsFont *pDefaultFont;
 extern DirectGraphicsFont *pFont;
+//DKS - Added these three hard-coded lists of character widths for the fonts:
+extern uint8_t demofont_charwidths[256];
+extern uint8_t menufont_charwidths[256];
+extern uint8_t smallfont_charwidths[256];
 
 #endif
 
