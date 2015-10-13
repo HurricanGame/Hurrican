@@ -226,6 +226,14 @@ public:
     //DKS - Moved this here from being a global in a Gegner file (cleaning up big mess)
     DirectGraphicsSprite	LavaFlare;                          // Leuchten des lava Balles
 
+    //DKS - Moved these five here from being globals in Player.cpp (same reasoning as above notes)
+    DirectGraphicsSprite	Blitzstrahl[4];         // Grafik   des Blitzes
+    DirectGraphicsSprite	Blitzflash[4];          // Grafik   des Leuchtens beim Blitz
+    DirectGraphicsSprite	BlitzTexture;           // Textur auf den Blitzen drauf
+    //DKS - SchussFlamme here had 4 elements originally, but only three were used, so reduced its size to 3:
+    DirectGraphicsSprite	SchussFlamme[3];		// Grafiken für die SchussFlamme, für alle 3 Waffen
+    DirectGraphicsSprite	SchussFlammeFlare;		// Grafiken für das Leuchten der SchussFlamme
+
     ProjectileListClass(void);						// Konstruktor
     ~ProjectileListClass(void);						// Destruktor
 

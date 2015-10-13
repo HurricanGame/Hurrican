@@ -4477,7 +4477,6 @@ void ProjectileClass::ExplodeShot(void)
 
     case BLITZBEAM:
     {
-        //DKS - After testing, I do not believe this case of the switch() ever gets called (BLITZBEAM):
         // Wirkung ähnlich einer schwachen Granate (Damage = 0 - 100)
         //
         pGegner->DamageEnemiesonScreen(xPos, yPos, Damage);
@@ -4915,6 +4914,23 @@ ProjectileListClass::ProjectileListClass(void)
     SpreadShotSmoke.LoadImage("spreadshotsmoke.png",   64, 64, 64, 64, 1, 1);
     PowerlineSmoke.LoadImage ("powerlinesmoke.png",	 160, 20, 80, 20, 2, 1);
     LavaFlare.LoadImage      ("lavaflare.png", 120, 120, 120, 120, 1, 1);
+
+    //DKS - Moved these three here from being globals in Player.cpp (same reasoning as above note)
+    Blitzstrahl[0].LoadImage("blitzstrahl1.png",32,  32, 32, 32, 1, 1);
+    Blitzstrahl[1].LoadImage("blitzstrahl2.png",32,  32, 32, 32, 1, 1);
+    Blitzstrahl[2].LoadImage("blitzstrahl3.png",32,  32, 32, 32, 1, 1);
+    Blitzstrahl[3].LoadImage("blitzstrahl4.png",32,  32, 32, 32, 1, 1);
+    Blitzflash[0].LoadImage ("blitzflash1.png",	66,  64, 66, 64, 1, 1);
+    Blitzflash[1].LoadImage ("blitzflash2.png",	66,  64, 66, 64, 1, 1);
+    Blitzflash[2].LoadImage ("blitzflash3.png",	66,  64, 66, 64, 1, 1);
+    Blitzflash[3].LoadImage ("blitzflash4.png",	66,  64, 66, 64, 1, 1);
+    BlitzTexture.LoadImage  ("blitztexture.png", 64, 64, 64, 64, 1, 1);
+    // Spieler grafiken laden
+    SchussFlamme[0].LoadImage("schussflamme.png",  76,  72,  38, 24, 2, 3);
+    SchussFlamme[1].LoadImage("schussflamme2.png", 80,  108,  40, 36, 2, 3);
+    SchussFlamme[2].LoadImage("schussflamme3.png", 48,  114,  24, 38, 2, 3);
+    SchussFlammeFlare.LoadImage("schussflammeflare.png", 140,  140,  140, 140, 1, 1);
+
 
     for(int i=0; i<MAX_SHOTGFX; i++)
         pProjectileGrafix[i] = new(DirectGraphicsSprite);

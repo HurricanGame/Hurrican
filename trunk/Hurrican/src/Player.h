@@ -262,8 +262,6 @@ public:
 // --------------------------------------------------------------------------------------
 
 extern PlayerClass			*pPlayer[2];
-extern DirectGraphicsSprite	SchussFlamme[4];		// Grafiken für die SchussFlamme, für alle 3 Waffen
-extern DirectGraphicsSprite	SchussFlammeFlare;		// Grafiken für das Leuchten der SchussFlamme
 extern DirectGraphicsSprite	PlayerKucken[2];
 extern DirectGraphicsSprite	PlayerBlitz[2];
 extern DirectGraphicsSprite	PlayerCrouch[2];
@@ -278,9 +276,6 @@ extern DirectGraphicsSprite	PlayerOben[2];
 extern DirectGraphicsSprite	PlayerPiss[2];			// Grafiken für das Pissen, wenn man lange nix macht =)
 extern DirectGraphicsSprite	PlayerRide[2];			// Grafiken für das Reiten auf dem FlugSack
 extern DirectGraphicsSprite	PlayerRad[2];			// Grafiken für das Rad
-extern DirectGraphicsSprite	Blitzstrahl[4];			// Grafik   des Blitzes
-extern DirectGraphicsSprite	Blitzflash[4];			// Grafik   des Leuchtens beim Blitz
-extern DirectGraphicsSprite	BlitzTexture;			// Textur auf den Blitzen drauf
 extern int Stage;									// Aktuelles Level
 extern int NewStage;								// Neues Level
 extern int	Skill;									// 0 = easy, 1 = medium, 2 = hard, 3 = Hurrican
