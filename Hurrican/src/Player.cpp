@@ -48,8 +48,6 @@ int	Skill;				// 0 = easy, 1 = medium, 2 = hard, 3 = Hurrican
 // Player-Klasse
 // --------------------------------------------------------------------------------------
 
-DirectGraphicsSprite	SchussFlamme[4];		// Grafiken für die SchussFlamme, für alle 3 Waffen
-DirectGraphicsSprite	SchussFlammeFlare;		// Grafiken für das Leuchten der SchussFlamme
 DirectGraphicsSprite	PlayerBlitz[2];
 DirectGraphicsSprite	PlayerCrouch[2];
 DirectGraphicsSprite	PlayerKucken[2];
@@ -66,9 +64,6 @@ DirectGraphicsSprite	PlayerSurf[2];
 DirectGraphicsSprite	PlayerPiss[2];				// Grafiken für das Pissen, wenn man lange nix macht =)
 DirectGraphicsSprite	PlayerRide[2];				// Grafiken für das Reiten auf dem FlugSack
 DirectGraphicsSprite	PlayerRad[2];				// Grafiken für das Rad
-DirectGraphicsSprite	Blitzstrahl[4];			// Grafik   des Blitzes
-DirectGraphicsSprite	Blitzflash[4];			// Grafik   des Leuchtens beim Blitz
-DirectGraphicsSprite	BlitzTexture;			// Textur auf den Blitzen drauf
 
 // --------------------------------------------------------------------------------------
 // Konstruktor : Spieler initialisieren und Grafiken laden
@@ -2806,10 +2801,15 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
         if (FlameThrower)
             FlameOff = 1;
 
-        if (Blickrichtung == RECHTS)
-            SchussFlamme[AustrittAnim].RenderSprite(xpos + AustrittX, ypos + AustrittY, FlameAnim+FlameOff*2, 0xFFFFFFFF);
-        else
-            SchussFlamme[AustrittAnim].RenderSprite(xpos + AustrittX, ypos + AustrittY, FlameAnim+FlameOff*2, 0xFFFFFFFF, true);
+        //DKS - Added check that AustrittAnim was between 0-2, because in the original code,
+        //      SchussFlamme[] had 4 elements, but only the first 3 elements actually were
+        //      ever loaded with textures.
+        if (AustrittAnim >= 0 && AustrittAnim < 3) {
+            if (Blickrichtung == RECHTS)
+                pProjectiles->SchussFlamme[AustrittAnim].RenderSprite(xpos + AustrittX, ypos + AustrittY, FlameAnim+FlameOff*2, 0xFFFFFFFF);
+            else
+                pProjectiles->SchussFlamme[AustrittAnim].RenderSprite(xpos + AustrittX, ypos + AustrittY, FlameAnim+FlameOff*2, 0xFFFFFFFF, true);
+        }
 
         CalcAustrittsPunkt();
 
@@ -2822,17 +2822,17 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
             switch (FlameOff)
             {
             case 0 :
-                SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)pTileEngine->XOffset,
+                pProjectiles->SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)pTileEngine->XOffset,
                                                ypos + AustrittY - 70 - (float)pTileEngine->YOffset, 0, 0x88FFCC99);
                 break;
 
             case 1 :
-                SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)pTileEngine->XOffset,
+                pProjectiles->SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)pTileEngine->XOffset,
                                                ypos + AustrittY - 70 - (float)pTileEngine->YOffset, 0, 0x8899CCFF);
                 break;
 
             case 2 :
-                SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)pTileEngine->XOffset,
+                pProjectiles->SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)pTileEngine->XOffset,
                                                ypos + AustrittY - 70 - (float)pTileEngine->YOffset, 0, 0x8899FFCC);
                 break;
             }
@@ -3591,7 +3591,7 @@ void PlayerClass::DrawNormalLightning(int DrawLength)
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = 0xFFFFFFFF;
 
-    DirectGraphics.SetTexture(  Blitzstrahl[BlitzAnim].itsTexIdx );
+    DirectGraphics.SetTexture(  pProjectiles->Blitzstrahl[BlitzAnim].itsTexIdx );
 
     // Blitz rotieren lassen
     D3DXMATRIX	matRot, matTrans, matTrans2;
@@ -3768,7 +3768,7 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul)
     }
 
     // Strahlen rendern
-    DirectGraphics.SetTexture(  BlitzTexture.itsTexIdx );
+    DirectGraphics.SetTexture(  pProjectiles->BlitzTexture.itsTexIdx );
 
     for (int n = 0; n < 12; n ++)
     {
@@ -3851,12 +3851,12 @@ bool PlayerClass::DoLightning(void)
             Color2 = D3DCOLOR_RGBA(255, 255, 255, 48);
         }
 
-        Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-pTileEngine->XOffset),
+        pProjectiles->Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-pTileEngine->XOffset),
                                            float(ystart-18-pTileEngine->YOffset), Color);
 
         // noch glow um die blitzenden?
         if (options_Detail >= DETAIL_HIGH)
-            Blitzflash[3-BlitzAnim].RenderSpriteScaled(float(xstart-58-pTileEngine->XOffset),
+            pProjectiles->Blitzflash[3-BlitzAnim].RenderSpriteScaled(float(xstart-58-pTileEngine->XOffset),
                     float(ystart-58-pTileEngine->YOffset), 144, 144, 0, Color2);
 
         DirectGraphics.SetColorKeyMode();
@@ -3867,13 +3867,13 @@ bool PlayerClass::DoLightning(void)
 //		d.h., ob er eine Wand getroffen hat
 
     // Anfang des Blitzes leuchten lassen
-    Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-pTileEngine->XOffset),
+    pProjectiles->Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-pTileEngine->XOffset),
                                        float(ystart-18-pTileEngine->YOffset), 0xFFFFFFFF);
 
     // noch glow um die blitzenden?
     if (options_Detail >= DETAIL_HIGH)
     {
-        Blitzflash[3-BlitzAnim].RenderSpriteScaled(float(xstart-58-pTileEngine->XOffset),
+        pProjectiles->Blitzflash[3-BlitzAnim].RenderSpriteScaled(float(xstart-58-pTileEngine->XOffset),
                 float(ystart-58-pTileEngine->YOffset), 144, 144, 0, 0x30FFFFFF);
     }
 
@@ -4003,13 +4003,13 @@ bool PlayerClass::DoLightning(void)
 	ystart -= 16.0f*sin_deg(BlitzWinkel-90);
 
     // Ende des Blitzes leuchten lassen
-    Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-pTileEngine->XOffset),
+    pProjectiles->Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-pTileEngine->XOffset),
                                        float(ystart-18-pTileEngine->YOffset), 0xFFFFFFFF);
 
     // noch glow um die blitzenden?
     if (options_Detail >= DETAIL_HIGH)
     {
-        Blitzflash[3-BlitzAnim].RenderSpriteScaled(float(xstart-58-pTileEngine->XOffset),
+        pProjectiles->Blitzflash[3-BlitzAnim].RenderSpriteScaled(float(xstart-58-pTileEngine->XOffset),
                 float(ystart-58-pTileEngine->YOffset), 144, 144, 0, 0x30FFFFFF);
     }
 
@@ -4157,7 +4157,7 @@ bool PlayerClass::LoadBeam (void)
 	ystart += 28.0f*sin_deg(BlitzWinkel-90);
 
     // Ende des Blitzes leuchten lassen
-    Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-pTileEngine->XOffset),
+    pProjectiles->Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-pTileEngine->XOffset),
                                        float(ystart-18-pTileEngine->YOffset), Color);
 
     BeamX = xstart+12;

@@ -1427,6 +1427,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 AnimPhase = 20;
             else
                 AnimPhase = 40;
+
             Lebensdauer = 255;
             OwnDraw		= true;
         }
@@ -3655,10 +3656,6 @@ void PartikelClass::Run(void)
 
         } // switch >= Additiv Grenze
 
-    //DKS - Added this to ensure we never go out of bounds of texture or itsPreCalcedRects when drawing:
-    if (AnimPhase > AnimEnde)
-        AnimPhase = AnimEnde;
-
 
     // alte Position für Kollisionsabfrage sichern
     xPosOld = xPos;
@@ -3740,7 +3737,10 @@ bool PartikelClass::Render(void)
         }
 
     // Normaler Partikel (aus Grafik) zeichnen
-    if (OwnDraw == false)
+    //DKS - Added a check to ensure we never draw without a valid animation phase, to ensure
+    //      we never step outside itsPreCalcedRects boundaries
+    //if (OwnDraw == false)
+    if (OwnDraw == false && AnimPhase <= AnimEnde)
     {
         float l,  r,  o,  u;					// Vertice Koordinaten
         float tl, tr, to, tu;					// Textur Koordinaten
@@ -3818,7 +3818,10 @@ bool PartikelClass::Render(void)
     }
 
     // Langer Funke (Linie)
-    else if (PartikelArt == EXPLOSION_TRACE_END)
+    //DKS - Added a check to ensure we never draw without a valid animation phase, to ensure
+    //      we never step outside itsPreCalcedRects boundaries
+    //else if (PartikelArt == EXPLOSION_TRACE_END)
+    else if (PartikelArt == EXPLOSION_TRACE_END && AnimPhase <= AnimEnde)
     {
         D3DCOLOR col = D3DCOLOR_RGBA(255, 255, 255, (int)(Lebensdauer));
         pPartikelGrafix[PartikelArt]->itsRect = pPartikelGrafix[PartikelArt]->itsPreCalcedRects[AnimPhase];

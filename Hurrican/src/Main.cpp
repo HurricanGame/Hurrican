@@ -1299,13 +1299,6 @@ bool GameInit2(void)
     //DKS - Punisher music is now loaded on-demand in Gegner_Punisher.cpp
     //pSoundManager->LoadSong("Punisher.it", MUSIC_PUNISHER);
 
-    // Spieler grafiken laden
-    SchussFlamme[0].LoadImage("schussflamme.png",  76,  72,  38, 24, 2, 3);
-    SchussFlamme[1].LoadImage("schussflamme2.png", 80,  108,  40, 36, 2, 3);
-    SchussFlamme[2].LoadImage("schussflamme3.png", 48,  114,  24, 38, 2, 3);
-
-    SchussFlammeFlare.LoadImage("schussflammeflare.png", 140,  140,  140, 140, 1, 1);
-
     for (int p = 0; p < 2; p++)
     {
         // Idle
@@ -1346,16 +1339,6 @@ bool GameInit2(void)
         // Stachelrad
         PlayerRad[p].LoadImage   ("hurri_rad.png",    140,  70, 35, 35, 4, 2);
     }
-
-    Blitzstrahl[0].LoadImage("blitzstrahl1.png",32,  32, 32, 32, 1, 1);
-    Blitzstrahl[1].LoadImage("blitzstrahl2.png",32,  32, 32, 32, 1, 1);
-    Blitzstrahl[2].LoadImage("blitzstrahl3.png",32,  32, 32, 32, 1, 1);
-    Blitzstrahl[3].LoadImage("blitzstrahl4.png",32,  32, 32, 32, 1, 1);
-    Blitzflash[0].LoadImage("blitzflash1.png",	66,  64, 66, 64, 1, 1);
-    Blitzflash[1].LoadImage("blitzflash2.png",	66,  64, 66, 64, 1, 1);
-    Blitzflash[2].LoadImage("blitzflash3.png",	66,  64, 66, 64, 1, 1);
-    Blitzflash[3].LoadImage("blitzflash4.png",	66,  64, 66, 64, 1, 1);
-    BlitzTexture.LoadImage("blitztexture.png", 64, 64, 64, 64, 1, 1);
 
     if (!GameRunning)
         return false;
