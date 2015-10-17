@@ -32,9 +32,11 @@ OuttroClass::OuttroClass(void)
     Background.LoadImage("endscreen_background.png", 640, 480, 640, 480, 1, 1);
     Tower.LoadImage("endscreen_turm.png", 199, 315, 199, 315, 1, 1);
     Henry.LoadImage("endscreen_henry.png", 237, 88, 237, 88, 1, 1);
-    Reiter[0].LoadImage("endritt.png", 760, 520, 190, 260, 4, 2);
-    Reiter[1].LoadImage("endritt.png", 760, 520, 190, 260, 4, 2);
-    ConvertPlayerTexture(&Reiter[1]);
+    Reiter[0].LoadImage("p1_endritt.png", 760, 520, 190, 260, 4, 2);
+    Reiter[1].LoadImage("p2_endritt.png", 760, 520, 190, 260, 4, 2);
+
+    //DKS - Player 2 textures are now loaded from disk already-converted
+    //ConvertPlayerTexture(&Reiter[1]);
 
     Zustand		 = OUTTRO_FADEIN;
 

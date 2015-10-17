@@ -458,7 +458,7 @@ void ConsoleClass::CheckCommands(void)
         char name[100];
 
         strcpy_s(name, g_storage_ext );
-        strcat_s(name, "/data/");
+        strcat_s(name, "/data/levels/");    //DKS - Changed from /data/ to /data/levels/
         strcat_s(name, dummy);
 
         // .map anhängen

@@ -1012,16 +1012,15 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
     return true;
 }
 
+//DKS - I made a separate set of spritesheets with blue coloring for Player 2, so these
+//      are no longer necessary and have been disabled:
+#if 0
 // --------------------------------------------------------------------------------------
 // Textur von Spieler 2 anpassen
 // --------------------------------------------------------------------------------------
 
 void ConvertPlayerTexture(DirectGraphicsSprite *pTexture)
 {
-    // PICKLE TODO
-    //DKS - TODO: generate separate sprite sheet for player-2 that has red/blue swapped
-    //            because textures are now shared by filename, and this code would
-    //            no longer work with that.
 #if defined(PLATFORM_DIRECTX)
     HRESULT hr;
     D3DLOCKED_RECT pLockedRect;
@@ -1038,7 +1037,6 @@ void ConvertPlayerTexture(DirectGraphicsSprite *pTexture)
         return;
 
     // Breite, Höhe und Pitch setzen
-    //DKS - TODO: adapt this to use new texturing system (make a separate texture for P2)
     width  = (int)pTexture->itsXSize;
     height = (int)pTexture->itsYSize;
     pRow = (BYTE*)pLockedRect.pBits;
@@ -1107,6 +1105,7 @@ void CreatePlayer2Texture(void)
     ConvertPlayerTexture(&PlayerPiss[1]);
     ConvertPlayerTexture(&PlayerDiagonal[1]);
 }
+#endif //0
 
 // --------------------------------------------------------------------------------------
 // GameInit2, initialisiert den Rest nach dem Cracktro
@@ -1115,12 +1114,19 @@ void CreatePlayer2Texture(void)
 bool GameInit2(void)
 {
     // Player initialisieren
-    pPlayer[0] = new PlayerClass();
-    pPlayer[1] = new PlayerClass();
-    pPlayer[0]->SoundOff = 0;
-    pPlayer[1]->SoundOff = 1;
-    memset(pPlayer[0], 0, sizeof(*pPlayer[0]));
-    memset(pPlayer[1], 0, sizeof(*pPlayer[1]));
+    pPlayer[0] = new PlayerClass(0);
+    pPlayer[1] = new PlayerClass(1);
+
+    //DKS - Now that the player sprites are stored in the class, I've disabled this
+    //      in favor of actual constructors:
+    //pPlayer[0]->SoundOff = 0;
+    //pPlayer[1]->SoundOff = 1;
+    //memset(pPlayer[0], 0, sizeof(*pPlayer[0]));
+    //memset(pPlayer[1], 0, sizeof(*pPlayer[1]));
+
+    //DKS - Player sprites are now members of their class, not globals, so load
+    //      the first players' sprites. Player 2's sprites will be loaded on-demand.
+    pPlayer[0]->LoadSprites();
 
     // Konfiguration laden
     if (LoadConfig() == false)
@@ -1299,51 +1305,12 @@ bool GameInit2(void)
     //DKS - Punisher music is now loaded on-demand in Gegner_Punisher.cpp
     //pSoundManager->LoadSong("Punisher.it", MUSIC_PUNISHER);
 
-    for (int p = 0; p < 2; p++)
-    {
-        // Idle
-        PlayerIdle[p].LoadImage("hurri_idle.png",  350, 320, 70, 80, 5, 4);
-
-        // Kucken
-        PlayerKucken[p].LoadImage("hurri_kucken.png",  140, 80, 70, 80, 2, 1);
-
-        // Umkucken
-        PlayerIdle2[p].LoadImage("hurri_idleumkuck.png",  980,  320, 70, 80, 14, 4);
-
-        // Laufen
-        PlayerRun[p].LoadImage("hurri_laufen.png",  350,  320, 70, 80, 5, 4);
-
-        // Diagonal schauen/schiessen
-        PlayerDiagonal[p].LoadImage("hurri_shootdiagonal.png",  140,  80, 70, 80, 2, 1);
-
-        // Hoch schauen/schiessen
-        PlayerOben[p].LoadImage("hurri_shootup.png",  140,  80, 70, 80, 2, 1);
-
-        // Ducken
-        PlayerCrouch[p].LoadImage("hurri_crouch.png",  140,  80, 70, 80, 2, 1);
-
-        // Springen normal, diagonal und nach oben
-        PlayerJump[p].LoadImage("hurri_jump.png",  280,  240, 70, 80, 4, 3);
-        PlayerJumpDiagonal[p].LoadImage("hurri_jumpschraeg.png",  280,  240, 70, 80, 4, 3);
-        PlayerJumpUp[p].LoadImage("hurri_jumpup.png",  280,  240, 70, 80, 4, 3);
-
-        // Rundumschuss
-        PlayerBlitz[p].LoadImage("hurri_rundumschuss.png", 490, 480, 70, 80, 7, 6);
-
-        // Pissen
-        PlayerPiss[p].LoadImage("hurri_pissen.png", 490, 240, 70, 80, 7, 3);
-
-        // Flugsack
-        PlayerRide[p].LoadImage  ("hurri_ride.png",   450, 480, 90,120, 5, 4);
-
-        // Stachelrad
-        PlayerRad[p].LoadImage   ("hurri_rad.png",    140,  70, 35, 35, 4, 2);
-    }
-
     if (!GameRunning)
         return false;
 
-    CreatePlayer2Texture();
+    //DKS - I made a separate set of spritesheets with blue coloring for Player 2, so this
+    //      is no longer necessary and has been disabled:
+    //CreatePlayer2Texture();
 
     // Konsole initialisieren
     pConsole = new ConsoleClass();

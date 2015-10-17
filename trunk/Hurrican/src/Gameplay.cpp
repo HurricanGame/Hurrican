@@ -95,6 +95,10 @@ void InitNewGame(void)
     }
 
     pHUD->BossHUDActive = 0.0f;
+
+    //DKS - Player 2 sprites are loaded on-demand:
+    if (NUMPLAYERS > 1) 
+        pPlayer[1]->LoadSprites();
 }
 
 // --------------------------------------------------------------------------------------

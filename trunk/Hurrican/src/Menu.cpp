@@ -2907,9 +2907,14 @@ void MenuClass::DoMenu(void)
             // bzw die Werte aus den schon geladenen Savegames übernehmen
             if (Savegames[AktuellerPunkt].Stage >= 0)
             {
-                InitNewGame();
+                //DKS - Original order was like so:
+                //InitNewGame();
+                //NUMPLAYERS = Savegames[AktuellerPunkt].Players;
 
+                //DKS - But I have reversed it here, because InitNewGame() depended on
+                //      NUMPLAYERS being set correctly.
                 NUMPLAYERS = Savegames[AktuellerPunkt].Players;
+                InitNewGame();
 
                 // Werte von Spieler auf das Savegame übertragen
                 pPlayer[0]->Score				= Savegames[AktuellerPunkt].Score;

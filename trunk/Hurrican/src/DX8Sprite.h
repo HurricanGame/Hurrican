@@ -157,7 +157,7 @@ public:
 
     ~DirectGraphicsSprite(void);						// Textur freigeben
 
-    bool  LoadImage(const char *Filename,							// Laden des Bildes "Filename"
+    bool  LoadImage(const std::string &filename,							// Laden des Bildes "Filename"
                     uint16_t xs, uint16_t ys, uint16_t xfs, uint16_t yfs,		// x/y Size und Framegrösse
                     uint16_t xfc,  uint16_t yfc);						// Frameanzahl
 

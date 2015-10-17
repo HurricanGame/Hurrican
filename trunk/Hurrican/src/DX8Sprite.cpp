@@ -14,6 +14,8 @@
 // --------------------------------------------------------------------------------------
 
 #include <stdio.h>
+#include <string>
+
 #if defined(PLATFORM_DIRECTX)
 #include <d3dx8.h>										// Für die Texturen
 #include <d3dx8math.h>									// Für D3DXVECTOR2
@@ -410,10 +412,10 @@ loadfile:
     return true;
 }
 #endif //0 // END REFERENCE COPY OF ORIGINAL LoadImage()
-bool DirectGraphicsSprite::LoadImage(const char *Filename, uint16_t xs, uint16_t ys, uint16_t xfs, uint16_t yfs,
+bool DirectGraphicsSprite::LoadImage(const std::string &filename, uint16_t xs, uint16_t ys, uint16_t xfs, uint16_t yfs,
                                      uint16_t xfc,  uint16_t yfc)
 {
-    if (GameRunning == false || !Filename)
+    if (GameRunning == false || filename.empty())
         return false;
 
     if (xfc == 0 || yfc == 0) {
@@ -427,10 +429,10 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, uint16_t xs, uint16_t
         itsTexIdx = -1;
     }
 
-    itsTexIdx = Textures.LoadTexture(Filename);
+    itsTexIdx = Textures.LoadTexture(filename);
     
     if (itsTexIdx == -1) {
-        Protokoll.WriteText( true, "Textures.LoadTexture() returned error loading file %s\n", Filename );
+        Protokoll.WriteText( true, "Textures.LoadTexture() returned error loading file %s\n", filename.c_str() );
         return false;       
     }
 
@@ -473,10 +475,16 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, uint16_t xs, uint16_t
 
     itsRect = itsPreCalcedRects[0];
 
-    char Temp[255];
-    sprintf_s(Temp, "%s %s %s %s", TextArray [TEXT_LADE_BITMAP], Filename, TextArray [TEXT_LADEN_ERFOLGREICH], "\n");
-    Protokoll.WriteText( false, Temp );
-    DisplayLoadInfo(Temp);
+    //char Temp[255];
+    //sprintf_s(Temp, "%s %s %s %s", TextArray [TEXT_LADE_BITMAP], filename.c_str(), TextArray [TEXT_LADEN_ERFOLGREICH], "\n");
+    //Protokoll.WriteText( false, Temp );
+    //DisplayLoadInfo(Temp);
+
+    std::string msg(filename);
+    ReplaceAll(msg, ".png", "");
+    msg = "Loaded texture " + msg + "\n";
+    Protokoll.WriteText( false, msg.c_str() );
+    DisplayLoadInfo("");
 
     return true;
 }
