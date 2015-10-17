@@ -15,6 +15,7 @@
 // --------------------------------------------------------------------------------------
 
 #include <stdio.h>
+#include <string>
 #include "Console.h"
 #include "GUISystem.h"
 #include "Player.h"
@@ -48,29 +49,117 @@ int	Skill;				// 0 = easy, 1 = medium, 2 = hard, 3 = Hurrican
 // Player-Klasse
 // --------------------------------------------------------------------------------------
 
-DirectGraphicsSprite	PlayerBlitz[2];
-DirectGraphicsSprite	PlayerCrouch[2];
-DirectGraphicsSprite	PlayerKucken[2];
-DirectGraphicsSprite	PlayerIdle[2];
-DirectGraphicsSprite	PlayerIdle2[2];
-DirectGraphicsSprite	PlayerJump[2];
-DirectGraphicsSprite	PlayerJumpUp[2];
-DirectGraphicsSprite	PlayerJumpDiagonal[2];
-DirectGraphicsSprite	PlayerRun[2];
-//DirectGraphicsSprite	PlayerRunDiagonal[2][FRAMES_RUN];
-DirectGraphicsSprite	PlayerDiagonal[2];
-DirectGraphicsSprite	PlayerOben[2];
-DirectGraphicsSprite	PlayerSurf[2];
-DirectGraphicsSprite	PlayerPiss[2];				// Grafiken für das Pissen, wenn man lange nix macht =)
-DirectGraphicsSprite	PlayerRide[2];				// Grafiken für das Reiten auf dem FlugSack
-DirectGraphicsSprite	PlayerRad[2];				// Grafiken für das Rad
-
 // --------------------------------------------------------------------------------------
 // Konstruktor : Spieler initialisieren und Grafiken laden
 // --------------------------------------------------------------------------------------
 
-PlayerClass::PlayerClass(void)
+//DKS - Added paramter to specify if the player being initialized is player 1 (0) or player 2 (1):
+PlayerClass::PlayerClass(int player_num)
 {
+    if (player_num == 1) {
+        PlayerNumber = 1;
+        SoundOff = 1;
+    } else {
+        PlayerNumber = 0;
+        SoundOff = 0;
+    }
+
+    //DKS - Added initialization of member vars here, since Main.cpp was just doing a memset to
+    //      fill the entire class with 0's and that won't do now that we have the sprites as
+    //      member vars.
+    AnimCount = 0;
+    BlitzStart = 0;
+    FlameTime = 0;
+    AustrittX = AustrittY = 0;
+    AustrittAnim = 0;
+    FlameAnim = 0;
+    randomwert = 0;
+    changecount = 0;
+    weaponswitchlock = false;
+    GegnerDran = false;
+    AlreadyDrawn = false;
+    memset(Aktion, 0, sizeof(Aktion));
+    memset(AktionKeyboard, 0, sizeof(AktionKeyboard));
+    memset(AktionJoystick, 0, sizeof(AktionJoystick));
+    Walk_UseAxxis = false;
+    Look_UseAxxis = false;
+    CanBeDamaged = false;
+    GodMode = false;
+    WheelMode = false;
+    WasDamaged = false;
+    memset(&CollideRect, 0, sizeof(CollideRect));
+    AufPlattform = NULL;
+    InLiquid = false;
+    JumpPossible = false;
+    JumpedOnSurfboard = false;
+    PowerLinePossible = false;
+    PunisherActive = false;
+    WalkLock = false;
+    AnimPhase = 0;
+    AnimEnde = 0;
+    GameOverTimer = 0;
+    ShotDelay = 0;
+    AutoFireCount = 0;
+    AutoFireExtra = 0;
+    RiesenShotExtra = 0;
+    xposold = yposold = 0;
+    xpos = ypos = 0;
+    xspeed = yspeed = 0;
+    xadd = yadd = 0;
+    BeamX = BeamY = 0;
+    BeamCount = 0;
+    AutoScrollspeed = 0;
+    JumpySave = 0;
+    JumpxSave = 0;
+    JumpStart = 0;
+    JumpAdd = 0;
+    SmokeCount = 0;
+    BlitzWinkel = 0;
+    BlitzCount = 0;
+    BlitzAnim = 0;
+    Handlung = 0;
+    Blickrichtung = 0;
+    Energy = 0;
+    Armour = 0;
+    Shield = 0;
+    DamageCounter = 0;
+    BlinkCounter = 0;
+    BlinkColor = 0;
+    CurrentColor = 0;
+    Score = 0;
+    CollectedDiamonds = 0;
+    DiamondsThisLevel = 0;
+    DiamondsFullGame = 0;
+    LivesThisLevel = 0;
+    LivesFullGame = 0;
+    BlocksThisLevel = 0;
+    BlocksFullGame = 0;
+    Lives = 0;
+    SelectedWeapon = 0;
+    memset(CurrentWeaponLevel, 0, sizeof(CurrentWeaponLevel));
+    BlitzLength = 0;
+    PowerLines = 0;
+    Grenades = 0;
+    SmartBombs = 0;
+    SecretThisLevel = 0;
+    SecretFullGame = 0;
+    BronsonCounter = 0;
+    FesteAktion = 0;
+    DoFesteAktion = false;
+    StageClearRunning = false;
+    JoystickIndex = 0;
+    JoystickSchwelle = 0;
+    ControlType = 0;
+    JoystickMode = 0;
+    ExplodingTimer = 0;
+
+    SpritesLoaded = false;      //DKS - Added this bool so sprites can be loaded on-demand
+
+    //DKS - All the rest of the following were already present in the constructor, but
+    //      likely having no effect at all because the game was memsetting each player
+    //      class to 0 after allocating each player with new(). I hope there are no
+    //      unintended consequences of leaving these at the bottom of the constructor,
+    //      where they will now have an effect.
     Stage    = -1;				// Es läuft noch kein Spiel
     NewStage = -1;
     StageClearRunning = false;
@@ -83,11 +172,7 @@ PlayerClass::PlayerClass(void)
     ExplodingTimer = 0.0f;
     BeamCount = 0.0f;
     changecount = 0.0f;
-#if defined(PLATFORM_DIRECTX)
-    ZeroMemory();
-#elif defined(PLATFORM_SDL)
     memset( &strahlen, 0, sizeof(strahlen));
-#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -390,12 +475,15 @@ void PlayerClass::checkShoot(void)
                 xadd -= 2.0f;
         }
 
+        //DKS - This appears never to have been implemented (no image for it) so disabled it:
+#if 0
         // Beim Surfen genauso ;)
         //
         if (Handlung == SURFEN     ||
                 Handlung == SURFENJUMP ||
                 Handlung == SURFENCROUCH)
             xadd -= 2.0f;
+#endif //0
     }
 
     // Granate abfeuern ?
@@ -828,13 +916,25 @@ void PlayerClass::CheckForExplode(void)
         pPartikelSystem->PushPartikel (xpos + 35, ypos + 40, SHOCKEXPLOSION);
         pPartikelSystem->PushPartikel (xpos - 20, ypos - 20, EXPLOSIONFLARE);
 
-        pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_KOPF);
-        pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_ARM1);
-        pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_ARM2);
-        pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_BEIN1);
-        pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_BEIN2);
-        pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_WAFFE);
-        pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_TORSO);
+        //DKS - Player 2 sprite is blue, so I added separate particles and particle art for them
+        //      that are colored blue, and PlayerClass now tracks which player it is assigned to.
+        if (PlayerNumber == 0) {
+            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_KOPF);
+            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_ARM1);
+            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_ARM2);
+            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_BEIN1);
+            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_BEIN2);
+            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_WAFFE);
+            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_TORSO);
+        } else {
+            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_KOPF);
+            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_ARM1);
+            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_ARM2);
+            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_BEIN1);
+            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_BEIN2);
+            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_WAFFE);
+            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_TORSO);
+        }
 
         pPartikelSystem->PushPartikel (xpos - 88, ypos - 88, GRENADEFLARE);
 
@@ -1998,6 +2098,8 @@ void PlayerClass::AnimatePlayer(void)
     // Auf dem SurfBrett stehen
     //-------------------------
 
+    //DKS - This appears never to have been implemented (no image for it) so disabled it:
+#if 0
     if (Handlung == SURFEN     ||
             Handlung == SURFENJUMP ||
             Handlung == SURFENCROUCH)
@@ -2064,6 +2166,7 @@ void PlayerClass::AnimatePlayer(void)
 
         xspeed = xadd;
     }
+#endif //0
 
     //----------------------
     // Powerline schiessen ?
@@ -2496,6 +2599,43 @@ void PlayerClass::AnimatePlayer(void)
         if(xpos-pTileEngine->XOffset <  20) pTileEngine->XOffset = xpos - 20;
         if(xpos-pTileEngine->XOffset > 550)	pTileEngine->XOffset = xpos - 550;
     }
+
+    //DKS - By using a bounds-checked array for itsPreCalcedRects[] when debugging,
+    //      I found AnimPhase was going out of bounds of the number of frames when
+    //      Handlung==LAUFEN (running), at times. So, I've added some checks here
+    //      to ensure that never happens:
+    switch(Handlung)
+    {
+        case RADELN:
+        case RADELN_FALL:
+            if (AnimPhase >= 8)
+                AnimPhase = 0;
+            break;
+        case LAUFEN:
+            //DKS - This was the problematic one causing out-of-bounds access to itsPreCalcedRects
+            if (AnimPhase >= FRAMES_RUN)
+                AnimPhase = 0;
+            break;
+        case BLITZEN :
+        case BEAMLADEN:
+            if (AnimPhase >= 36)
+                AnimPhase = 0;
+            break;
+        case DREHEN :
+            if (AnimPhase >= 20)
+                AnimPhase = 0;
+            break;
+        case SPRINGEN:
+            if (AnimPhase >= 12)
+                AnimPhase = 0;
+            break;
+        case PISSEN:
+            if (AnimPhase >= 18)
+                AnimPhase = 0;
+            break;
+        default:
+            break;
+    }
 }
 
 // --------------------------------------------------------------------------------------
@@ -2606,7 +2746,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
     case RADELN:
     case RADELN_FALL:
     {
-        PlayerRad[SoundOff].RenderSprite(xdraw+17, ydraw+45, AnimPhase, Color, blick);
+        PlayerRad.RenderSprite(xdraw+17, ydraw+45, AnimPhase, Color, blick);
     }
     break;
 
@@ -2616,7 +2756,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
         if (Aktion[AKTION_UNTEN] &&
                 !Aktion[AKTION_SHOOT] &&
                 !Aktion[AKTION_GRANATE])
-            PlayerKucken[SoundOff].RenderSprite(xdraw, ydraw, 1, Color, !blick);
+            PlayerKucken.RenderSprite(xdraw, ydraw, 1, Color, !blick);
         else
         {
             int a;
@@ -2627,14 +2767,14 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
 
                 if (ShotDelay > 0.25f &&
                         FlameThrower == false)
-                    PlayerIdle[SoundOff].RenderSprite(xdraw, ydraw, FRAMES_IDLE, Color, !blick);
+                    PlayerIdle.RenderSprite(xdraw, ydraw, FRAMES_IDLE, Color, !blick);
                 else
-                    PlayerIdle[SoundOff].RenderSprite(xdraw, ydraw, a, Color, !blick);
+                    PlayerIdle.RenderSprite(xdraw, ydraw, a, Color, !blick);
             }
             else
             {
                 a = AnimPhase - FRAMES_IDLE * 3;
-                PlayerIdle2[SoundOff].RenderSprite(xdraw, ydraw, a, Color, !blick);
+                PlayerIdle2.RenderSprite(xdraw, ydraw, a, Color, !blick);
             }
         }
 
@@ -2649,12 +2789,12 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
         {
             if (ShotDelay > 0.25f &&
                     FlameThrower == false)
-                PlayerOben[SoundOff].RenderSprite(xdraw, ydraw, 1, Color, !blick);
+                PlayerOben.RenderSprite(xdraw, ydraw, 1, Color, !blick);
             else
-                PlayerOben[SoundOff].RenderSprite(xdraw, ydraw, 0, Color, !blick);
+                PlayerOben.RenderSprite(xdraw, ydraw, 0, Color, !blick);
         }
         else
-            PlayerKucken[SoundOff].RenderSprite(xdraw, ydraw, 0, Color, !blick);
+            PlayerKucken.RenderSprite(xdraw, ydraw, 0, Color, !blick);
     }
     break;
 
@@ -2667,9 +2807,9 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
         {
             if (ShotDelay > 0.25f &&
                     FlameThrower == false)
-                PlayerDiagonal[SoundOff].RenderSprite(xdraw, ydraw, 1, Color, !blick);
+                PlayerDiagonal.RenderSprite(xdraw, ydraw, 1, Color, !blick);
             else
-                PlayerDiagonal[SoundOff].RenderSprite(xdraw, ydraw, 0, Color, !blick);
+                PlayerDiagonal.RenderSprite(xdraw, ydraw, 0, Color, !blick);
         }
 
         /*
@@ -2677,9 +2817,9 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
         			else
         			{
         				if (ShotDelay > 0.25f)
-        					PlayerRunDiagonal[SoundOff][AnimPhase].RenderSprite(xdraw, ydraw, 0, Color, !blick);
+        					PlayerRunDiagonal[AnimPhase].RenderSprite(xdraw, ydraw, 0, Color, !blick);
         				else
-        					PlayerRunDiagonal[SoundOff][AnimPhase].RenderSprite(xdraw, ydraw, 0, Color, !blick);
+        					PlayerRunDiagonal[AnimPhase].RenderSprite(xdraw, ydraw, 0, Color, !blick);
         			}
         */
     }
@@ -2692,26 +2832,29 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
     			PlayerBlitz.RenderSprite(xdraw, ydraw, 4, Color, blick);
     		} break;*/
 
+    //DKS - This "surfing" appears never to have been implemented (no image for it) so disabled it:
+#if 0
 // Spieler surft
     case SURFEN :
     {
-        PlayerSurf[SoundOff].RenderSprite(xdraw, ydraw, 0, Color, false);
+        PlayerSurf.RenderSprite(xdraw, ydraw, 0, Color, false);
     }
     break;
 
 // Spieler springt bei surfen
     case SURFENJUMP :
     {
-        PlayerSurf[SoundOff].RenderSprite(xdraw, ydraw, 0, Color, false);
+        PlayerSurf.RenderSprite(xdraw, ydraw, 0, Color, false);
     }
     break;
 
 // Spieler surft im Kien
     case SURFENCROUCH :
     {
-        PlayerSurf[SoundOff].RenderSprite(xdraw, ydraw, 1, Color, false);
+        PlayerSurf.RenderSprite(xdraw, ydraw, 1, Color, false);
     }
     break;
+#endif //0
 
 
 // Spieler springt
@@ -2721,12 +2864,12 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
         {
             if (Aktion[AKTION_LINKS] ||
                     Aktion[AKTION_RECHTS])
-                PlayerJumpDiagonal[SoundOff].RenderSprite(xdraw, ydraw, AnimPhase, Color, !blick);
+                PlayerJumpDiagonal.RenderSprite(xdraw, ydraw, AnimPhase, Color, !blick);
             else
-                PlayerJumpUp[SoundOff].RenderSprite(xdraw, ydraw, AnimPhase, Color, !blick);
+                PlayerJumpUp.RenderSprite(xdraw, ydraw, AnimPhase, Color, !blick);
         }
         else
-            PlayerJump[SoundOff].RenderSprite(xdraw, ydraw, AnimPhase, Color, !blick);
+            PlayerJump.RenderSprite(xdraw, ydraw, AnimPhase, Color, !blick);
 
     }
     break;
@@ -2734,14 +2877,14 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
 // Spieler läuft
     case LAUFEN :
     {
-        PlayerRun[SoundOff].RenderSprite(xdraw, ydraw, AnimPhase, Color, !blick);
+        PlayerRun.RenderSprite(xdraw, ydraw, AnimPhase, Color, !blick);
     }
     break;
 
 // Spieler muss brutal pullern ?
     case PISSEN:
     {
-        PlayerPiss[SoundOff].RenderSprite(xdraw, ydraw, AnimPhase, Color, !blick);
+        PlayerPiss.RenderSprite(xdraw, ydraw, AnimPhase, Color, !blick);
     }
     break;
 
@@ -2749,7 +2892,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
     case BLITZEN :
     case BEAMLADEN:
     {
-        PlayerBlitz[SoundOff].RenderSprite(xdraw, ydraw, AnimPhase, Color, !blick);
+        PlayerBlitz.RenderSprite(xdraw, ydraw, AnimPhase, Color, !blick);
     }
     break;
 
@@ -2757,9 +2900,9 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
     case DUCKEN :
     {
         if (ShotDelay > 0.25f)
-            PlayerCrouch[SoundOff].RenderSprite(xdraw, ydraw, 1, Color, !blick);
+            PlayerCrouch.RenderSprite(xdraw, ydraw, 1, Color, !blick);
         else
-            PlayerCrouch[SoundOff].RenderSprite(xdraw, ydraw, 0, Color, !blick);
+            PlayerCrouch.RenderSprite(xdraw, ydraw, 0, Color, !blick);
     }
     break;
 
@@ -2767,15 +2910,15 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
     case SACKREITEN :
     {
         if (Blickrichtung == LINKS)
-            PlayerRide[SoundOff].RenderSprite(xdraw, ydraw, 0, Color);
+            PlayerRide.RenderSprite(xdraw, ydraw, 0, Color);
         else if (Blickrichtung == RECHTS)
-            PlayerRide[SoundOff].RenderSprite(xdraw, ydraw, 10, Color);
+            PlayerRide.RenderSprite(xdraw, ydraw, 10, Color);
     }
     break;
 
     case DREHEN :
     {
-        PlayerRide[SoundOff].RenderSprite(xdraw, ydraw,    AnimPhase,    Color);
+        PlayerRide.RenderSprite(xdraw, ydraw,    AnimPhase,    Color);
     }
     break;
 
@@ -2973,6 +3116,8 @@ void PlayerClass::PlayerShoot(void)
 
     //----- Y-Offset der Patronenhülse ausrechnen
 
+    //DKS - This appears never to have been implemented (no image for it) so disabled it:
+#if 0
     // surfen
     if (Handlung == SURFEN ||
             Handlung == SURFENJUMP)
@@ -2982,6 +3127,7 @@ void PlayerClass::PlayerShoot(void)
 
     // andere Handlung
     else
+#endif //0
     {
         if (Handlung == DUCKEN)
             yoff = 23;
@@ -4273,6 +4419,8 @@ void PlayerClass::CalcFlamePos (void)
             xoff = -35;
     }
 
+    //DKS - This appears never to have been implemented (no image for it) so disabled it:
+#if 0
     // Surfen
     else if (Handlung == SURFEN ||
              Handlung == SURFENJUMP)
@@ -4286,6 +4434,7 @@ void PlayerClass::CalcFlamePos (void)
         xoff = 51;
         yoff = -2;
     }
+#endif //0
 
     // alle anderen Handlugen
     else
@@ -4666,4 +4815,59 @@ void PlayerClass::checkWeaponSwitch(void)
         if (SelectedWeapon >= 3)
             SelectedWeapon = 0;
     }
+}
+
+//DKS - Player sprites are no longer static globals, but instead class member vars:
+//      This function will load the sprites specific to each player. If
+//      player_num is 0, it will load Player 1's sprites, or Player 2's otherwise.
+void PlayerClass::LoadSprites()
+{
+    if (SpritesLoaded)
+        return;
+
+    SpritesLoaded = true;
+    std::string prefix;
+
+    if (PlayerNumber == 1)
+        prefix = "p2_";
+    else
+        prefix = "p1_";
+
+    // Idle
+    PlayerIdle.LoadImage( prefix + "hurri_idle.png",  350, 320, 70, 80, 5, 4);
+
+    // Kucken
+    PlayerKucken.LoadImage( prefix + "hurri_kucken.png",  140, 80, 70, 80, 2, 1);
+
+    // Umkucken
+    PlayerIdle2.LoadImage( prefix + "hurri_idleumkuck.png",  980,  320, 70, 80, 14, 4);
+
+    // Laufen
+    PlayerRun.LoadImage( prefix + "hurri_laufen.png",  350,  320, 70, 80, 5, 4);
+
+    // Diagonal schauen/schiessen
+    PlayerDiagonal.LoadImage( prefix + "hurri_shootdiagonal.png",  140,  80, 70, 80, 2, 1);
+
+    // Hoch schauen/schiessen
+    PlayerOben.LoadImage( prefix + "hurri_shootup.png",  140,  80, 70, 80, 2, 1);
+
+    // Ducken
+    PlayerCrouch.LoadImage( prefix + "hurri_crouch.png",  140,  80, 70, 80, 2, 1);
+
+    // Springen normal, diagonal und nach oben
+    PlayerJump.LoadImage( prefix + "hurri_jump.png",  280,  240, 70, 80, 4, 3);
+    PlayerJumpDiagonal.LoadImage( prefix + "hurri_jumpschraeg.png",  280,  240, 70, 80, 4, 3);
+    PlayerJumpUp.LoadImage( prefix + "hurri_jumpup.png",  280,  240, 70, 80, 4, 3);
+
+    // Rundumschuss
+    PlayerBlitz.LoadImage( prefix + "hurri_rundumschuss.png", 490, 480, 70, 80, 7, 6);
+
+    // Pissen
+    PlayerPiss.LoadImage( prefix + "hurri_pissen.png", 490, 240, 70, 80, 7, 3);
+
+    // Flugsack
+    PlayerRide.LoadImage( prefix + "hurri_ride.png",   450, 480, 90,120, 5, 4);
+
+    // Stachelrad
+    PlayerRad.LoadImage( prefix + "hurri_rad.png",    140,  70, 35, 35, 4, 2);
 }

@@ -40,20 +40,20 @@ void GegnerEvilHurri::DoDraw(void)
         DirectGraphics.SetAdditiveMode();
         if (BlickRichtung == LINKS)
         {
-            PlayerRun[0].RenderSprite((float)(xPos-pTileEngine->XOffset),
+            pPlayer[0]->PlayerRun.RenderSprite((float)(xPos-pTileEngine->XOffset),
                                       (float)(yPos-pTileEngine->YOffset),
                                       AnimPhase, 0xAA444444, true);
-            PlayerRun[0].RenderSprite((float)(xPos-pTileEngine->XOffset),
+            pPlayer[0]->PlayerRun.RenderSprite((float)(xPos-pTileEngine->XOffset),
                                       (float)(yPos-pTileEngine->YOffset),
                                       AnimPhase, 0xFF0022FF, true);
         }
         else
         {
-            PlayerRun[0].RenderSprite((float)(xPos-pTileEngine->XOffset),
+            pPlayer[0]->PlayerRun.RenderSprite((float)(xPos-pTileEngine->XOffset),
                                       (float)(yPos-pTileEngine->YOffset),
                                       AnimPhase, 0xAA444444);
 
-            PlayerRun[0].RenderSprite((float)(xPos-pTileEngine->XOffset),
+            pPlayer[0]->PlayerRun.RenderSprite((float)(xPos-pTileEngine->XOffset),
                                       (float)(yPos-pTileEngine->YOffset),
                                       AnimPhase, 0xFF0022FF);
         }

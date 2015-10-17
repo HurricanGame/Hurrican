@@ -82,6 +82,9 @@
 #define	HALSWIRBEL				48						// Halswirbel des MetalHead Bosses
 #define	KAPUTTETURBINE			49						// Kaputte Turbine des MetalHead Bosses
 #define SCHNEEFLOCKE			50						// Eine Schneeflocke
+//DKS - NOTE: the game originally had only one type of particle art for when the player
+//            blue up, which is HURRITEILE. I added a HURRITEILE_P2 set of particles further
+//            below colored blue for when player 2 blows up.
 #define HURRITEILE				51						// Teile vom Hurri, wenn er explodiert ist =)
 #define BOULDER_SMALL			52						// Kleiner blauer Boulder
 
@@ -117,6 +120,17 @@
 #define HURRITEILE_KOPF			84
 #define HURRITEILE_WAFFE		85
 #define HURRITEILE_TORSO		86
+
+//DKS - Player 2 sprite is blue, so I added separate particles and particle art for them
+//      that are colored blue, using some unused space between particles 86-100
+#define HURRITEILE_P2           87						// Teile vom Hurri, wenn er explodiert ist =)
+#define HURRITEILE_P2_ARM1      88
+#define HURRITEILE_P2_ARM2      89
+#define HURRITEILE_P2_BEIN1     90
+#define HURRITEILE_P2_BEIN2     91
+#define HURRITEILE_P2_KOPF      92
+#define HURRITEILE_P2_WAFFE     93
+#define HURRITEILE_P2_TORSO     94
 
 //----- Partikel, die mit additivem Alphablending gerendert werden
 

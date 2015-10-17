@@ -220,7 +220,34 @@ public:
     int						JoystickMode;
     float					ExplodingTimer;
 
-    PlayerClass(void);								// Spieler initlaisieren
+    //DKS - Moved the player sprites into the class (they were static globals and
+    //      therefore we had no control over the order of their construction/
+    //      deconstruction)
+    bool                    SpritesLoaded;          //DKS - Added this to indicate if all the
+                                                    //textures below are loaded yet. Player 2's
+                                                    //textures get loaded on-demand.
+    int                     PlayerNumber;           //DKS - Added this that indicates whether this
+                                                    //player class is for player 1 (0) or 2 (1)
+    DirectGraphicsSprite	PlayerBlitz;
+    DirectGraphicsSprite	PlayerCrouch;
+    DirectGraphicsSprite	PlayerKucken;
+    DirectGraphicsSprite	PlayerIdle;
+    DirectGraphicsSprite	PlayerIdle2;
+    DirectGraphicsSprite	PlayerJump;
+    DirectGraphicsSprite	PlayerJumpUp;
+    DirectGraphicsSprite	PlayerJumpDiagonal;
+    DirectGraphicsSprite	PlayerRun;
+    //DirectGraphicsSprite	PlayerRunDiagonal[FRAMES_RUN];  //DKS - This was commented out in original list of sprites
+    DirectGraphicsSprite	PlayerDiagonal;
+    DirectGraphicsSprite	PlayerOben;
+    //DKS - This appears never to have been implemented (no image for it) so disabled it:
+    //DirectGraphicsSprite	PlayerSurf;
+    DirectGraphicsSprite	PlayerPiss;				// Grafiken für das Pissen, wenn man lange nix macht =)
+    DirectGraphicsSprite	PlayerRide;				// Grafiken für das Reiten auf dem FlugSack
+    DirectGraphicsSprite	PlayerRad;				// Grafiken für das Rad
+
+    //DKS - Added paramter to specify if the player being initialized is player 1 (0) or player 2 (1):
+    PlayerClass(int player_num);					// Spieler initlaisieren
     ~PlayerClass(void);								// Spieler freigeben
     void InitPlayer(void);							// Auf neues Spiel vorbereiten
     void InitNewLevel(void);						// Auf neues Level vorbereiten
@@ -255,6 +282,11 @@ public:
     void PlayerInExit		(void);					// Spieler aus dem Level rausgelaufen?
     bool Riding				(void);					// Alle Spieler auf einem Flugsack?
     void ScrollFlugsack	    (void);					// Im Flugsacklevel scrollen?
+
+    //DKS - Player sprites are no longer static globals, but instead class member vars:
+    //      This function will load the sprites specific to each player based on
+    //      value of new member var PlayerNumber.
+    void LoadSprites();
 };
 
 // --------------------------------------------------------------------------------------
@@ -262,23 +294,8 @@ public:
 // --------------------------------------------------------------------------------------
 
 extern PlayerClass			*pPlayer[2];
-extern DirectGraphicsSprite	PlayerKucken[2];
-extern DirectGraphicsSprite	PlayerBlitz[2];
-extern DirectGraphicsSprite	PlayerCrouch[2];
-extern DirectGraphicsSprite	PlayerIdle[2];
-extern DirectGraphicsSprite	PlayerIdle2[2];
-extern DirectGraphicsSprite	PlayerJump[2];
-extern DirectGraphicsSprite	PlayerJumpUp[2];
-extern DirectGraphicsSprite	PlayerJumpDiagonal[2];
-extern DirectGraphicsSprite	PlayerRun[2];
-extern DirectGraphicsSprite	PlayerDiagonal[2];
-extern DirectGraphicsSprite	PlayerOben[2];
-extern DirectGraphicsSprite	PlayerPiss[2];			// Grafiken für das Pissen, wenn man lange nix macht =)
-extern DirectGraphicsSprite	PlayerRide[2];			// Grafiken für das Reiten auf dem FlugSack
-extern DirectGraphicsSprite	PlayerRad[2];			// Grafiken für das Rad
 extern int Stage;									// Aktuelles Level
 extern int NewStage;								// Neues Level
 extern int	Skill;									// 0 = easy, 1 = medium, 2 = hard, 3 = Hurrican
-
 
 #endif

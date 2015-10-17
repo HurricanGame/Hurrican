@@ -84,8 +84,14 @@ bool Heartbeat  (void);								// Haupt Game Loop
 bool CreateDir(const char *dir); //DKS - Added function to create a directory if it doesn't already exist (1 on success)
 bool FindDir(const char *dir);   //DKS - Added function to check if a directory exists (1 on success)
 bool FileExists(const char *Filename);
+
+//DKS - I made a separate set of spritesheets with blue coloring for Player 2, so these
+//      are no longer necessary and have been disabled:
+#if 0
 void ConvertPlayerTexture(DirectGraphicsSprite *pTexture);
 void CreatePlayer2Texture(void);
+#endif //0
+
 void StartOuttro(void);
 void StartIntro(void);
 

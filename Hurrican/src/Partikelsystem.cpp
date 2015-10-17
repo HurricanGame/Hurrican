@@ -1271,6 +1271,34 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
         }
         break;
 
+        //DKS - Player 2 sprite is blue, so I added separate particles and particle art for them
+        //      that are colored blue, using some unused space between particles 86-100
+        case HURRITEILE_P2_ARM1  :
+        case HURRITEILE_P2_ARM2  :
+        case HURRITEILE_P2_BEIN1 :
+        case HURRITEILE_P2_BEIN2 :
+        case HURRITEILE_P2_KOPF  :
+        case HURRITEILE_P2_WAFFE :
+        case HURRITEILE_P2_TORSO :
+        {
+            red	= 255;
+            green = 255;
+            blue = 255;
+            alpha = 255;
+
+            Lebensdauer = 255;
+            AnimPhase	= PartikelArt - HURRITEILE_P2_ARM1;
+            xSpeed		= ((float)(rand()%80-40)/4.0f);
+            ySpeed		=-15.0f*(AnimPhase+2)/6.0f;
+            yAcc		= 2.0f;
+            BounceWalls = true;
+            PartikelArt = HURRITEILE_P2;
+
+            Rotate = true;
+
+        }
+        break;
+
         case REGENTROPFEN :			// Regentropfen
         {
             red	= 220;
@@ -2584,6 +2612,7 @@ void PartikelClass::Run(void)
         break;
 
         case HURRITEILE:					// Teile des explodierten Hurris
+        case HURRITEILE_P2:                 //DKS - Added blue-colored hurrican piece particles for player 2
         {
             Lebensdauer -= 5.0f SYNC;	// langsam ausfaden lassen
             alpha		 = (int)Lebensdauer;
@@ -4439,11 +4468,20 @@ PartikelsystemClass::PartikelsystemClass(void)
 
     // HurriTeile
     //DKS - Corrected xfs parameter from 32 to 31, to match actual image file:
-    pPartikelGrafix[HURRITEILE]->LoadImage("hurri-teile.png", 217, 32, 31, 32, 7, 1);
+    pPartikelGrafix[HURRITEILE]->LoadImage("p1_hurri-teile.png", 217, 32, 31, 32, 7, 1);
     PartikelRect[HURRITEILE].left = 10;
     PartikelRect[HURRITEILE].right  = 22;
     PartikelRect[HURRITEILE].top  = 10;
     PartikelRect[HURRITEILE].bottom = 22;
+
+    // HurriTeile for Player 2
+    //DKS - Player 2 sprite is blue, so I added separate particles and particle art for them
+    //      that are colored blue, using some unused space between particles 86-100
+    pPartikelGrafix[HURRITEILE_P2]->LoadImage("p2_hurri-teile.png", 217, 32, 31, 32, 7, 1);
+    PartikelRect[HURRITEILE_P2].left = 10;
+    PartikelRect[HURRITEILE_P2].right  = 22;
+    PartikelRect[HURRITEILE_P2].top  = 10;
+    PartikelRect[HURRITEILE_P2].bottom = 22;
 
     // Kleiner blauer Boulder
     pPartikelGrafix[BOULDER_SMALL]->LoadImage("boulder_small.png", 60, 33, 12, 11, 5, 3);
