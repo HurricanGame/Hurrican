@@ -2019,20 +2019,20 @@ void MenuClass::DoMenu(void)
                 pSoundManager->StopSong(MUSIC_MENU, false);
                 SpielZustand = GAMELOOP;
 
+                //DKS - We now use the sound manager's already-present pause functions here:
+#if 0
                 if (MUSIC_GetPaused(pSoundManager->its_Songs[MUSIC_BOSS]->SongData))
                     pSoundManager->PlaySong(MUSIC_BOSS, true);
                 else if (pPlayer[0]->PunisherActive == true) {
-                    //DKS - "Punisher.it" music is now loaded on-demand
-                    pSoundManager->LoadSong("Punisher.it", MUSIC_PUNISHER);
                     pSoundManager->PlaySong(MUSIC_PUNISHER, true);
                 }
                 else if (pPlayer[0]->Riding()) {
-                    //DKS - "flugsack.it" music is now loaded on-demand 
-                    pSoundManager->LoadSong("flugsack.it",	MUSIC_FLUGSACK);
                     pSoundManager->PlaySong(MUSIC_FLUGSACK, true);
                 }
                 else
                     pSoundManager->PlaySong(MUSIC_STAGEMUSIC, true);
+#endif //0
+                pSoundManager->PlayPaused();
 
                 pPlayer[0]->PowerLinePossible = false;
                 pPlayer[0]->ShotDelay = 2.0f;

@@ -239,10 +239,18 @@ signed char MUSIC_SetPaused( MUSIC_MODULE* music, signed char pause )
             Mix_PauseMusic();
         else
             Mix_ResumeMusic();
-    }
-    else if (!pause)
+    } else if (!pause)
     {
+#if defined(USE_MODPLUG)
+        //DKS - When using modplug, we can handle pausing and unpausing various songs:
+        g_music_current = music;
+        Mix_HookMusic( &hookmusic, music ); //DKS - Be sure to reload our hook in case StopSong() was called
+        Mix_ResumeMusic();
+#else
+        //DKS - Whereas with SDL_mixer, it can only handle one song at a time so if another
+        //      gets played after a song was paused, we have to start the paused song over again:
         MUSIC_PlaySong( music );
+#endif
     }
     return 0;
 }
@@ -263,7 +271,9 @@ signed char MUSIC_SetMasterVolume( MUSIC_MODULE* music, int volume )
     if (g_music_current == music)
     {
 #if defined(USE_MODPLUG)
-        ModPlug_SetMasterVolume( music, volume );
+        //DKS - Range of volumes for ModPlug is 0-512, not 0-255
+        //ModPlug_SetMasterVolume( music, volume );
+        ModPlug_SetMasterVolume( music, volume*2 );
         g_volume = volume;
 #else
         Mix_VolumeMusic( volume/2 );

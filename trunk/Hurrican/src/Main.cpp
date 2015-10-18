@@ -1492,8 +1492,8 @@ bool Heartbeat(void)
 
         if(KeyDown(DIK_ESCAPE))			// Intro beenden ?
         {
-            delete(pOuttro);
             pSoundManager->StopSong(MUSIC_OUTTRO, false);
+            delete(pOuttro);
             Stage = MAX_LEVELS;
             pMenu->CheckForNewHighscore();
         }

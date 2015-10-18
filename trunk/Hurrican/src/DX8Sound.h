@@ -245,6 +245,9 @@ public :
     //DKS - Added boolean to specify if the song plays looped or not:
     bool                isLooped;
 
+    //DKS - Added boolean to specify if a song is paused or not:
+    bool                isPaused;
+
     CSong();					// Konstruktor
     ~CSong();					// Destruktor
     bool	Update(void);				// Songs faden
@@ -327,9 +330,17 @@ public :
     void Update3D   (int x, int y, int Nr);			// 3D Sound updaten
     bool StopWave	(int Nr);						// Wave anhalten
 
-    void PauseAllSongs(bool bPause);				// Alle Songs anhalten, wieder abspielen
+    //DKS - PauseAllSongs() was never used and I've disabled it.
+    //      The game seems to use PausePlaying and PlayPaused() for this purpose instead.
+    //void PauseAllSongs(bool bPause);				// Alle Songs anhalten, wieder abspielen
+
     void PausePlaying(void);						// Alle spielenden Songs anhalten
     void PlayPaused(void);							// Alle angehaltenen Songs abspielen
+
+    //DKS - Added new function to check if a song is playing. Before, many parts of the
+    //      game were calling MUSIC_IsPlaying() directly against SoundData, which would
+    //      segfault if music wasn't initialized or a specific song wasn't loaded.
+    bool SongIsPlaying(int Nr);
 };
 
 //---------------------------------------------------------------------------------------
