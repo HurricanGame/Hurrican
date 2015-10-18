@@ -91,7 +91,11 @@ CSong::CSong()
     SongData = NULL;
 
     //DKS - Added loop boolean to specify if the song plays looped or not:
-     isLooped = true;
+    isLooped = true;
+
+    //DKS - Added boolean to specify if a song is paused or not:
+    isPaused = false;
+
 } // Konstruktor
 
 //---------------------------------------------------------------------------------------
@@ -104,10 +108,10 @@ CSong::CSong()
 CSong::~CSong()
 {
     // Freigeben
-    if (SongData != NULL)
+    if (SongData != NULL) {
         MUSIC_FreeSong(SongData);
-
-    SongData = NULL;
+        SongData = NULL;
+    }
 } // Destruktor
 
 //---------------------------------------------------------------------------------------
@@ -121,8 +125,12 @@ bool CSong::Update(void)
 {
     // Spielt der Song garnicht ? Dann brauchen wir ihn auch nicht zu bearbeiten =)
     //
-    if (!MUSIC_IsPlaying(SongData))
+
+    //DKS - Added check for NULL on SongData:
+    if (!SongData || !MUSIC_IsPlaying(SongData)) {
         return false;
+    }
+
 
     // Fadet der Song grade ?
     //
@@ -144,6 +152,9 @@ bool CSong::Update(void)
                     MUSIC_StopSong(SongData);			// Ganz anhalten ?
                 else
                     MUSIC_SetPaused(SongData, true);	// oder nur pausieren ?
+
+                //DKS - Added boolean to specify if a song is paused or not:
+                isPaused = FadingPaused;
             }
 
             FadingVolume = 0.0f;
@@ -567,12 +578,13 @@ loadfile:
 
 bool CSoundManager::PlaySong(int Nr, bool Paused)
 {
-    if (false == InitSuccessfull)
+    //DKS - Added check for NULL on SongData:
+    if (false == InitSuccessfull || its_Songs[Nr] == NULL || its_Songs[Nr]->SongData == NULL)
         return false;
 
-    if (its_Songs[Nr] == NULL)
-        return false;
-
+    //DKS - Added boolean to specify if a song is paused or not:
+    its_Songs[Nr]->isPaused = false;
+        
     if (Paused == false)
     {
         //DKS - Added loop parameter to specify if the song plays looped or not:
@@ -582,8 +594,8 @@ bool CSoundManager::PlaySong(int Nr, bool Paused)
     }
     else
     {
-        SetSongVolume(Nr, its_Songs[Nr]->Volume);
         MUSIC_SetPaused(its_Songs[Nr]->SongData, false);	// oder Pause aufheben ?
+        SetSongVolume(Nr, its_Songs[Nr]->Volume);
     }
 
     CurrentSongNr = Nr;
@@ -601,15 +613,23 @@ bool CSoundManager::PlaySong(int Nr, bool Paused)
 
 bool CSoundManager::StopSong(int Nr, bool Paused)
 {
-    if (its_Songs[Nr] == NULL)
+    //DKS - Added check for InitSuccessfull and NULL on SongData
+    //if (its_Songs[Nr] == NULL)
+    if (false == InitSuccessfull || its_Songs[Nr] == NULL || its_Songs[Nr]->SongData == NULL)
         return false;
 
     SetSongVolume(Nr, its_Songs[Nr]->Volume);
 
-    if (Paused == false)
-        MUSIC_StopSong(its_Songs[Nr]->SongData);			// Ganz anhalten ?
-    else
-        MUSIC_SetPaused(its_Songs[Nr]->SongData, true);		// oder nur pausieren ?
+    //DKS - Added check for IsPlaying:
+    if (MUSIC_IsPlaying(its_Songs[Nr]->SongData)) {
+        if (Paused == false)
+            MUSIC_StopSong(its_Songs[Nr]->SongData);			// Ganz anhalten ?
+        else
+            MUSIC_SetPaused(its_Songs[Nr]->SongData, true);		// oder nur pausieren ?
+
+        //DKS - Added boolean to specify if a song is paused or not:
+        its_Songs[Nr]->isPaused = Paused;
+    }
 
     return true;
 } // StopSong
@@ -618,11 +638,14 @@ bool CSoundManager::StopSong(int Nr, bool Paused)
 //      Cracktro and Intro music, credits music, etc)
 void CSoundManager::UnloadSong(int Nr)
 {
-    if (its_Songs[Nr] == NULL)
+    //DKS - Added check for NULL on SongData:
+    if (!InitSuccessfull || !its_Songs[Nr] || !its_Songs[Nr]->SongData)
         return;
     
-    MUSIC_StopSong(its_Songs[Nr]->SongData);
-    MUSIC_FreeSong(its_Songs[Nr]->SongData);
+    if (MUSIC_IsPlaying(its_Songs[Nr]->SongData))
+        MUSIC_StopSong(its_Songs[Nr]->SongData);
+
+    delete(its_Songs[Nr]);
     its_Songs[Nr] = NULL;
 }
 
@@ -634,9 +657,13 @@ void CSoundManager::UnloadSong(int Nr)
 
 void CSoundManager::StopAllSongs(bool Paused)
 {
+    //DKS - Added check for InitSuccessfull:
+    if (InitSuccessfull == false)
+        return;
+
     for (int i = 0; i < MAX_SONGS; i++)
-        if (its_Songs[i] != NULL &&
-                MUSIC_IsPlaying(its_Songs[i]->SongData))
+        //DKS - Added check for NULL on SongData:
+        if (its_Songs[i] != NULL && its_Songs[i]->SongData != NULL)
             StopSong(i, Paused);
 }
 
@@ -648,6 +675,9 @@ void CSoundManager::StopAllSongs(bool Paused)
 
 void CSoundManager::StopAllLoopedSounds(void)
 {
+    if (InitSuccessfull == false)
+        return;
+
     for (int i = 0; i < MAX_SOUNDS; i++)
         if (its_Sounds[i] != NULL &&
                 its_Sounds[i]->isLooped == true)
@@ -662,6 +692,10 @@ void CSoundManager::StopAllLoopedSounds(void)
 
 void CSoundManager::StopAllSounds(void)
 {
+    //DKS - added check for InitSuccessfull:
+    if (InitSuccessfull == false)
+        return;
+
     for (int i = 0; i < MAX_SOUNDS; i++)
         if (its_Sounds[i] != NULL)
             StopWave(i);
@@ -677,7 +711,8 @@ void CSoundManager::StopAllSounds(void)
 
 void CSoundManager::SetSongVolume(int Nr, float Volume)
 {
-    if (false == InitSuccessfull)
+    //DKS - Added checks for NULLness:
+    if (false == InitSuccessfull || its_Songs[Nr] == NULL || its_Songs[Nr]->SongData == NULL)
         return;
 
     its_Songs[Nr]->Volume = Volume;
@@ -694,7 +729,8 @@ void CSoundManager::SetSongVolume(int Nr, float Volume)
 
 void CSoundManager::SetAbsoluteSongVolume(int Nr, float Volume)
 {
-    if (false == InitSuccessfull)
+    //DKS - Added checks for NULLness:
+    if (false == InitSuccessfull || its_Songs[Nr] == NULL || its_Songs[Nr]->SongData == NULL)
         return;
 
     its_Songs[Nr]->Volume = Volume;
@@ -710,6 +746,10 @@ void CSoundManager::SetAbsoluteSongVolume(int Nr, float Volume)
 
 void CSoundManager::SetAllSongVolumes(void)
 {
+    //DKS - added check for InitSuccessfull:
+    if (InitSuccessfull == false)
+        return;
+
     for (int i=0; i<MAX_SONGS; i++)
         if (its_Songs[i] != NULL)
             SetSongVolume(i, its_GlobalMusicVolume);
@@ -760,7 +800,8 @@ void CSoundManager::Update(void)
 
 void CSoundManager::FadeSong(int Nr, float Speed, int End, bool Paused)
 {
-    if (false == InitSuccessfull)
+    //DKS - Added check for NULLness:
+    if (false == InitSuccessfull || its_Songs[Nr] == NULL)
         return;
 
     its_Songs[Nr]->FadingVolume	= Speed;
@@ -784,6 +825,10 @@ void CSoundManager::FadeSong(int Nr, float Speed, int End, bool Paused)
 
 void CSoundManager::FadeWave(int Nr, int Mode)
 {
+    //DKS - Added check for NULLness:
+    if (false == InitSuccessfull || its_Sounds[Nr] == NULL)
+        return;
+
     // Sound soll eingefadet werden?
     if (Mode == FADEMODE_IN)
     {
@@ -958,7 +1003,8 @@ bool CSoundManager::PlayWave(int Vol, int Pan, int Freq, int Nr)
             its_GlobalSoundVolume == 0)
         return false;
 
-    if(its_Sounds[Nr] == NULL)
+    //DKS - Added check for NULL on SoundData:
+    if (its_Sounds[Nr] == NULL || its_Sounds[Nr]->SoundData == NULL)
         return false;
 
     // Sound spielen
@@ -1032,6 +1078,10 @@ bool CSoundManager::PlayWave3D(int x, int y, int Freq, int Nr)
 
 void CSoundManager::Update3D (int x, int y, int Nr)
 {
+    //DKS - Added check for NULLness:
+    if (false == InitSuccessfull || its_Sounds[Nr] == NULL)
+        return;
+
     int   vol, pan;
     float xdiff, ydiff, Abstand;
 
@@ -1076,7 +1126,8 @@ void CSoundManager::Update3D (int x, int y, int Nr)
 
 bool CSoundManager::StopWave(int Nr)
 {
-    if (its_Sounds[Nr] == NULL)
+    //DKS - added check for InitSuccessfull:
+    if (InitSuccessfull == false || its_Sounds[Nr] == NULL)
         return false;
 
     if (its_Sounds[Nr]->isPlaying == false)
@@ -1090,12 +1141,19 @@ bool CSoundManager::StopWave(int Nr)
     return true;
 }
 
+//DKS - PauseAllSongs() was never used and I've disabled it.
+//      The game seems to use PausePlaying and PlayPaused() for this purpose instead.
+#if 0
 // --------------------------------------------------------------------------------------
 // Alle Songs anhalten (Pause == true) oder wieder abspielen (Pause == false)
 // --------------------------------------------------------------------------------------
 
 void CSoundManager::PauseAllSongs(bool bPause)
 {
+    //DKS - added check for InitSuccessfull:
+    if (InitSuccessfull == false)
+        return;
+
     // alle pausieren
     //
     if (bPause == true)
@@ -1129,6 +1187,7 @@ void CSoundManager::PauseAllSongs(bool bPause)
             }
     }
 }
+#endif //0
 
 // --------------------------------------------------------------------------------------
 // Alle Songs anhalten, die gerade spielen und diese merken
@@ -1136,15 +1195,24 @@ void CSoundManager::PauseAllSongs(bool bPause)
 
 void CSoundManager::PausePlaying(void)
 {
-    for (int i = 0; i < MAX_SONGS; i++)
-        if (its_Songs[i] != NULL)
-        {
-            WasPlaying[i] = (MUSIC_IsPlaying(its_Songs[i]->SongData) &&
-                             MUSIC_GetPaused(its_Songs[i]->SongData) == false);
+    //DKS - added check for InitSuccessfull:
+    if (InitSuccessfull == false)
+        return;
+
+    for (int i = 0; i < MAX_SONGS; i++) {
+        WasPlaying[i] = false;
+
+        //DKS - Added check for NULL for SongData:
+        if (its_Songs[i] != NULL && its_Songs[i]->SongData != NULL) {
+            //DKS - Added boolean to specify if a song is paused or not:
+            //WasPlaying[i] = (MUSIC_IsPlaying(its_Songs[i]->SongData) &&
+            //                 MUSIC_GetPaused(its_Songs[i]->SongData) == false);
+            WasPlaying[i] = MUSIC_IsPlaying(its_Songs[i]->SongData) && !its_Songs[i]->isPaused;
 
             if (WasPlaying[i])
-                MUSIC_SetPaused(its_Songs[i]->SongData, true);
+                StopSong(i, true);
         }
+    }
 }
 
 // --------------------------------------------------------------------------------------
@@ -1153,10 +1221,27 @@ void CSoundManager::PausePlaying(void)
 
 void CSoundManager::PlayPaused(void)
 {
+    //DKS - added check for InitSuccessfull:
+    if (InitSuccessfull == false)
+        return;
+
     for (int i = 0; i < MAX_SONGS; i++)
-        if (its_Songs[i] != NULL)
+        if (WasPlaying[i] && its_Songs[i] != NULL && its_Songs[i]->SongData != NULL)
         {
-            if (WasPlaying[i])
-                MUSIC_SetPaused(its_Songs[i]->SongData, false);
+            //DKS - Now it uses PlaySong() so new boolean isPlaying is handled:
+            //MUSIC_SetPaused(its_Songs[i]->SongData, false);
+            PlaySong(i, true);
         }
+}
+
+//DKS - Added new function to check if a song is playing. Before, many parts of the
+//      game were calling MUSIC_IsPlaying() directly against SoundData, which would
+//      segfault if music wasn't initialized or a specific song wasn't loaded and
+//      SoundData was thus NULL.
+bool CSoundManager::SongIsPlaying(int Nr)
+{
+    if ( !InitSuccessfull || !its_Songs[Nr] || !its_Songs[Nr]->SongData )
+        return false;
+
+    return MUSIC_IsPlaying(its_Songs[Nr]->SongData);
 }

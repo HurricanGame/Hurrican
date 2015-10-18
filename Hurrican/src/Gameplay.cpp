@@ -110,6 +110,8 @@ void InitNewGameLevel(int Nr)
     char Name[100];
 
     pSoundManager->StopSong(MUSIC_STAGEMUSIC, false);
+    //DKS - Might as well stop any boss music too:
+    pSoundManager->StopSong(MUSIC_BOSS, false);
 
     pMenu->LoadingItemsLoaded	= 0;
     pMenu->LoadingItemsToLoad	= 75.0f;
@@ -496,9 +498,12 @@ void LeaveGameLoop(void)
         pMenu->AktuellerPunkt = MENUPUNKT_CONTINUEGAME;
 
     // Musik pausieren
-    pSoundManager->StopSong(MUSIC_STAGEMUSIC, true);
-    pSoundManager->StopSong(MUSIC_FLUGSACK, true);
-    pSoundManager->StopAllSongs(true);
+    //DKS - Now we use use the sound manager's already-present pause functions:
+    //pSoundManager->StopSong(MUSIC_STAGEMUSIC, true);
+    //pSoundManager->StopSong(MUSIC_FLUGSACK, true);
+    //pSoundManager->StopAllSongs(true);
+    pSoundManager->PausePlaying();
+
     pSoundManager->StopAllSounds();
 
     // Loop Sounds stoppen
