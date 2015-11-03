@@ -231,7 +231,7 @@ void GegnerStahlmuecke::GegnerExplode(void)
                                       float(yPos + 20), SPLITTER);
 
 
-    pSoundManager->PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 
     pPlayer[0]->Score += 200;
 }

@@ -148,7 +148,7 @@ void GegnerDeckenturm::GegnerExplode(void)
     pPartikelSystem->PushPartikel(float(xPos - 10),
                                   float(yPos - 10), EXPLOSION_MEDIUM2);
 
-    pSoundManager->PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 
     pPlayer[0]->Score += 200;
 }

@@ -45,7 +45,7 @@ void GegnerRaketenwerfer::DoKI(void)
         // Rakete schiessen
         if (AnimPhase == 6)
         {
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_GRANATE);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_GRANATE);
             pProjectiles->PushProjectile(xPos + 2, yPos + 5, ROCKETWERFER, pAim);
         }
 
@@ -70,7 +70,7 @@ void GegnerRaketenwerfer::GegnerExplode(void)
         pPartikelSystem->PushPartikel(xPos + rand()%40-8, yPos + rand()%20 - 8, SMOKE);
     }
 
-    pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION4);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION4);	// Sound ausgeben
 
     pPlayer[0]->Score += 400;
 }

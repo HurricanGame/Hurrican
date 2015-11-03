@@ -155,5 +155,5 @@ void GegnerDiamant::DoKI(void)
 
 void GegnerDiamant::GegnerExplode(void)
 {
-    pSoundManager->PlayWave(100, 128, 11025, SOUND_COLLECT);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);	// Sound ausgeben
 }

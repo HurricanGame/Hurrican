@@ -153,7 +153,7 @@ bool ConsoleClass::CONSOLE_CHEAT(char *cheat)
 
     if (result)
     {
-        pSoundManager->PlayWave(100, 128, 15000, SOUND_MESSAGE);
+        SoundManager.PlayWave(100, 128, 15000, SOUND_MESSAGE);
         pPlayer[0]->Score = 0;
         HasCheated = true;
     }
@@ -777,7 +777,7 @@ void ConsoleClass::CheckInput(void)
         if (KeyDown(i) &&
                 Pressed[i] == false)
         {
-            pSoundManager->PlayWave(100, 128, 15000, SOUND_CLICK);
+            SoundManager.PlayWave(100, 128, 15000, SOUND_CLICK);
 
             Pressed[i] = true;
 

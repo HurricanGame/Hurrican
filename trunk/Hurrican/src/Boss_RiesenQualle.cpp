@@ -134,7 +134,7 @@ void GegnerRiesenQualle::GegnerExplode(void)
         pPartikelSystem->PushPartikel(float(xPos - 10  + rand()%256),
                                       float(yPos + 10  + rand()%210), PIRANHABLUT);
 
-    //pSoundManager->PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
+    //SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 
     pPlayer[0]->Score += 4000;
 }

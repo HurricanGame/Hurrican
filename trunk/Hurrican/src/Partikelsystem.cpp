@@ -35,7 +35,6 @@ extern DirectGraphicsFont   *pFont;
 extern PartikelsystemClass	*pPartikelSystem;
 extern TileEngineClass		*pTileEngine;
 extern ProjectileListClass	*pProjectiles;
-extern CSoundManager		*pSoundManager;
 extern ConsoleClass			*pConsole;
 extern LPDIRECT3DDEVICE8	lpD3DDevice;				// Direct3D Device-Objekt
 
@@ -2801,8 +2800,9 @@ void PartikelClass::Run(void)
                 if (vol < 0)
                     vol = 0;
 
-                if (pSoundManager->its_Sounds[SOUND_DROP]->isPlaying == false)
-                    pSoundManager->PlayWave (vol, 128, 6000 + rand ()%6000, SOUND_DROP);
+                //DKS - Added function WaveIsPlaying() to SoundManagerClass:
+                if (!SoundManager.WaveIsPlaying(SOUND_DROP))
+                    SoundManager.PlayWave (vol, 128, 6000 + rand ()%6000, SOUND_DROP);
             }
 
         }

@@ -79,7 +79,7 @@ void GegnerEvilHurri::DoKI(void)
         pTileEngine->ScrollLevel((float)Value1,
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf die Faust zentrieren
 
-        pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
@@ -125,13 +125,13 @@ void GegnerEvilHurri::DoKI(void)
         yAcc   = 0.0f;
         xAcc   = 0.0f;
 
-        pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+        SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
         Handlung  = GEGNER_EXPLODIEREN;
         ActionDelay = 0.0f;
 
         // Endboss-Musik ausfaden und abschalten
-        pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
     }
 
     // EvilHurri blinken lassen
@@ -152,8 +152,9 @@ void GegnerEvilHurri::DoKI(void)
         if (pTileEngine->Zustand == ZUSTAND_LOCKED)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-            if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
-                pSoundManager->PlaySong(MUSIC_BOSS, false);
+            //DKS - Added function SongIsPlaying() to SoundManagerClass:
+            if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
+                SoundManager.PlaySong(MUSIC_BOSS, false);
 
             // Und Boss erscheinen lassen
             Handlung = GEGNER_EINFLIEGEN;
@@ -319,7 +320,7 @@ void GegnerEvilHurri::DoKI(void)
             ActionDelay   = 0.0f;
             xSpeed		  = 0.0f;
 
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_BLITZSTART);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_BLITZSTART);
         }
     }
     break;
@@ -335,7 +336,7 @@ void GegnerEvilHurri::DoKI(void)
 
             //pPartikelSystem->PushPartikel(xPos+30, yPos+28, BULLET);
 
-            pSoundManager->PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_CANON);
+            SoundManager.PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_CANON);
 
             if (BlickRichtung == RECHTS)
             {
@@ -395,7 +396,7 @@ void GegnerEvilHurri::DoKI(void)
 
 //				pPartikelSystem->PushPartikel(xPos+30, yPos+28, BULLET);
 
-            pSoundManager->PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_CANON);
+            SoundManager.PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_CANON);
 
             if (BlickRichtung == RECHTS)
             {
@@ -418,7 +419,7 @@ void GegnerEvilHurri::DoKI(void)
             ActionDelay   = 0.0f;
             xSpeed		  = 0.0f;
 
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_BLITZSTART);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_BLITZSTART);
         }
     }
     break;
@@ -430,7 +431,7 @@ void GegnerEvilHurri::DoKI(void)
 
         if (ActionDelay < 0.0f)
         {
-            pSoundManager->PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_CANON);
+            SoundManager.PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_CANON);
             pPartikelSystem->PushPartikel(xPos + (AnimPhase - 36) * 5, yPos - 23 + abs(AnimPhase - 41) * 8, SMOKE);
 //				pPartikelSystem->PushPartikel(xPos+30, yPos+28, BULLET);
 
@@ -465,7 +466,7 @@ void GegnerEvilHurri::DoKI(void)
                 pPartikelSystem->PushPartikel(xPos + 30 + rand()%10, yPos + rand()%10, LASERFUNKE2);
 
             pProjectiles->PushProjectile(xPos, yPos - 20, EVILBLITZ);
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_SPIDERGRENADE);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_SPIDERGRENADE);
         }
 
         // Screen blinken
@@ -549,7 +550,7 @@ void GegnerEvilHurri::DoKI(void)
                 pProjectiles->PushProjectile(xPos + 20, yPos + 10, ARCSHOT);
                 pProjectiles->PushProjectile(xPos + 20, yPos + 10, ARCSHOTLEFT);
                 pProjectiles->PushProjectile(xPos + 20, yPos + 10, ARCSHOTRIGHT);
-                pSoundManager->PlayWave(100, 128, 11025, SOUND_SPIDERGRENADE);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_SPIDERGRENADE);
 
                 ActionDelay = 3.0f;
             }
@@ -590,7 +591,7 @@ void GegnerEvilHurri::DoKI(void)
                 AnimEnde  = 0;
                 AnimPhase = 40;
                 pProjectiles->PushProjectile(xPos, yPos + 10, ROCKETSPIDER);
-                pSoundManager->PlayWave(100, 128, 11025, SOUND_ROCKET);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_ROCKET);
 
                 ActionDelay = 4.0f;
             }
@@ -620,7 +621,7 @@ void GegnerEvilHurri::DoKI(void)
         {
             AnimCount = 2.0f;
 
-            pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+            SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
             pPartikelSystem->PushPartikel(xPos - 20 + rand()%70, yPos + rand()%80, EXPLOSION_MEDIUM);
             pPartikelSystem->PushPartikel(xPos - 20 + rand()%70, yPos + rand()%80, EXPLOSION_MEDIUM2);
             pPartikelSystem->PushPartikel(xPos - 50 + rand()%70, yPos - 30 + rand()%80, EXPLOSION_BIG);
@@ -648,7 +649,7 @@ void GegnerEvilHurri::GegnerExplode(void)
         pPartikelSystem->PushPartikel(xPos - 20 + rand()%70, yPos + rand()%80, EXPLOSION_MEDIUM2);
 
 
-    pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
     ScrolltoPlayeAfterBoss();
 

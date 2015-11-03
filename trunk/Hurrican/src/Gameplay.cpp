@@ -109,9 +109,9 @@ void InitNewGameLevel(int Nr)
 {
     char Name[100];
 
-    pSoundManager->StopSong(MUSIC_STAGEMUSIC, false);
+    SoundManager.StopSong(MUSIC_STAGEMUSIC, false);
     //DKS - Might as well stop any boss music too:
-    pSoundManager->StopSong(MUSIC_BOSS, false);
+    SoundManager.StopSong(MUSIC_BOSS, false);
 
     pMenu->LoadingItemsLoaded	= 0;
     pMenu->LoadingItemsToLoad	= 75.0f;
@@ -149,10 +149,12 @@ void InitNewGameLevel(int Nr)
     }
 
     // Songs mit Namen aus dem Levelfile Laden
-    pSoundManager->LoadSong(pTileEngine->DateiAppendix.Songs[0], MUSIC_STAGEMUSIC);
-    pSoundManager->LoadSong(pTileEngine->DateiAppendix.Songs[1], MUSIC_BOSS);
+    SoundManager.LoadSong(pTileEngine->DateiAppendix.Songs[0], MUSIC_STAGEMUSIC);
+    SoundManager.LoadSong(pTileEngine->DateiAppendix.Songs[1], MUSIC_BOSS);
 
-    pSoundManager->SetAllSongVolumes();
+    //DKS - Renamed
+    //SoundManager.ResetAllSongVolumes();
+    SoundManager.ResetAllSoundVolumes();
 
     pMenu->LoadingProgress = 320.0f;
     DisplayLoadInfo ("");
@@ -160,27 +162,30 @@ void InitNewGameLevel(int Nr)
     pTimer->update();
 
     // Menu Musik ausfaden
-    //
-    //pSoundManager->FadeSong (MUSIC_LOADING, -10.0f, 0, false);
-    if (true == pSoundManager->InitSuccessfull &&
-            MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_MENU]->SongData))
-    {
-        pSoundManager->FadeSong (MUSIC_MENU, -10.0f, 0, false);
+    //DKS - Was already commented out:
+    //SoundManager.FadeSong (MUSIC_LOADING, -10.0f, 0, false);
 
-        while (pSoundManager->its_Songs[MUSIC_MENU]->FadingVolume != 0.0f)
+    //DKS - Added function SongIsPlaying() to SoundManagerClass:
+    if (SoundManager.SongIsPlaying(MUSIC_MENU))
+    {
+        SoundManager.FadeSong (MUSIC_MENU, -10.0f, 0, false);
+
+        //DKS - FadeSong above will stop the song once fade is complete, with its false parameter (last one)
+        //while (SoundManager.its_Songs[MUSIC_MENU]->FadingVolume != 0.0f)
+        while (SoundManager.SongIsPlaying(MUSIC_MENU))
         {
             // Timer updaten
             pTimer->update();
             pTimer->wait();
             SpeedFaktor = pTimer->SpeedFaktor;
 
-            pSoundManager->Update();
+            SoundManager.Update();
         }
     }
 
     // Level-Musik abspielen
     if (StopStageMusicAtStart == false)
-        pSoundManager->PlaySong(MUSIC_STAGEMUSIC, false);
+        SoundManager.PlaySong(MUSIC_STAGEMUSIC, false);
 
     FahrstuhlPos = -1.0f;
 
@@ -197,8 +202,8 @@ void ShowGameOver(void)
     //      is to be played looped in a new parameter to PlaySong(). This was causing
     //      game-over music to never be heard in the SDL port.
     //// Game Over Musik anhalten wenn sie beendet wurde
-    //if (MUSIC_IsFinished(pSoundManager->its_Songs[MUSIC_GAMEOVER]->SongData))
-    //    pSoundManager->StopSong(MUSIC_GAMEOVER, false);
+    //if (MUSIC_IsFinished(SoundManager.its_Songs[MUSIC_GAMEOVER]->SongData))
+    //    SoundManager.StopSong(MUSIC_GAMEOVER, false);
 
     int col;
 
@@ -499,18 +504,18 @@ void LeaveGameLoop(void)
 
     // Musik pausieren
     //DKS - Now we use use the sound manager's already-present pause functions:
-    //pSoundManager->StopSong(MUSIC_STAGEMUSIC, true);
-    //pSoundManager->StopSong(MUSIC_FLUGSACK, true);
-    //pSoundManager->StopAllSongs(true);
-    pSoundManager->PausePlaying();
+    //SoundManager.StopSong(MUSIC_STAGEMUSIC, true);
+    //SoundManager.StopSong(MUSIC_FLUGSACK, true);
+    //SoundManager.StopAllSongs(true);
+    SoundManager.PauseSongs();
+    SoundManager.PauseSounds();
 
-    pSoundManager->StopAllSounds();
-
+    //DKS
     // Loop Sounds stoppen
-    pSoundManager->StopAllLoopedSounds();
+    //SoundManager.StopAllLoopedSounds();
 
     // Menu Musik spielen
-    pSoundManager->PlaySong(MUSIC_MENU, false);
+    SoundManager.PlaySong(MUSIC_MENU, false);
 
     // TODO
     // Alle Joysticks anhalten
@@ -748,7 +753,7 @@ void CreateDefaultConfig(void)
         return;
     }
 
-    pSoundManager->SetVolumes(50, 60);
+    SoundManager.SetVolumes(50, 60);
 
     UseForceFeedback = false;
     CreateDefaultControlsConfig(0);     // Load default controls for Player 1
@@ -801,7 +806,7 @@ bool LoadConfig(void)
     // Daten für Sound und Musik-Lautstärke auslesen
     fread(&Sound, sizeof(Sound), 1, Datei);
     fread(&Musik, sizeof(Musik), 1, Datei);
-    pSoundManager->SetVolumes(Sound, Musik);
+    SoundManager.SetVolumes(Sound, Musik);
 
     // Daten für Keyboard und Joystick auslesen
     fread(&pPlayer[0]->AktionKeyboard, sizeof(pPlayer[0]->AktionKeyboard), 1, Datei);
@@ -909,8 +914,8 @@ void SaveConfig(void)
     fwrite(&ActualLanguage, sizeof(ActualLanguage), 1, Datei);
 
     // Daten für Sound und Musik-Lautstärke schreiben
-    Sound = float(pSoundManager->its_GlobalSoundVolume);
-    Musik = float(pSoundManager->its_GlobalMusicVolume);
+    Sound = float(SoundManager.g_sound_vol);
+    Musik = float(SoundManager.g_music_vol);
 
     fwrite(&Sound, sizeof(Sound), 1, Datei);
     fwrite(&Musik, sizeof(Musik), 1, Datei);
@@ -1070,17 +1075,17 @@ void StageClear(bool PlaySong)
     pGUI->HideBoxFast();
 
     //DKS - Stop all songs instead of just individual ones..
-    //pSoundManager->StopSong(MUSIC_STAGEMUSIC, false);
+    //SoundManager.StopSong(MUSIC_STAGEMUSIC, false);
 
     //// Punisher Musik stoppen
-    //if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_PUNISHER]->SongData)) {
-    //    pSoundManager->StopSong(MUSIC_PUNISHER, false);
+    //if (MUSIC_IsPlaying(SoundManager.its_Songs[MUSIC_PUNISHER]->SongData)) {
+    //    SoundManager.StopSong(MUSIC_PUNISHER, false);
     //}
 
-    pSoundManager->StopAllSongs(false); //DKS - Added, see above
+    SoundManager.StopSongs(); //DKS - Added, see above
 
     if (PlaySong)
-        pSoundManager->PlaySong(MUSIC_STAGECLEAR, false);
+        SoundManager.PlaySong(MUSIC_STAGECLEAR, false);
 
 }
 
@@ -1244,24 +1249,28 @@ void SummaryScreen(void)
         }
 
         // Musik zuende ?
-        if (MUSIC_IsFinished(pSoundManager->its_Songs[MUSIC_STAGECLEAR]->SongData))
-            pSoundManager->StopSong(MUSIC_STAGECLEAR, false);
+        //DKS - Theere's no need to stop the song, as it isn't looped
+        //if (MUSIC_IsFinished(SoundManager.its_Songs[MUSIC_STAGECLEAR]->SongData))
+        //    SoundManager.StopSong(MUSIC_STAGECLEAR, false);
 
         delay_ctr += delay_inc SYNC;
         if (delay_ctr > delay_can_leave)
             delay_ctr = delay_can_leave;
     }
 
-#if defined(PLATFORM_DIRECTX) /* SDL_mixer does not work this kind of check, as far as i can tell */
-    // Musik noch nicht zu Ende ? Dann nochmal warten
-    while (!MUSIC_IsFinished(pSoundManager->its_Songs[MUSIC_STAGECLEAR]->SongData))
+//#if defined(PLATFORM_DIRECTX) /* SDL_mixer does not work this kind of check, as far as i can tell */
+//    // Musik noch nicht zu Ende ? Dann nochmal warten
+//    while (!MUSIC_IsFinished(SoundManager.its_Songs[MUSIC_STAGECLEAR]->SongData))
+//        ;
+//#elif defined(PLATFORM_SDL)
+//    //DKS - I revamped this summary screen code quite a bit so that no delay should ever be necessary
+//    //    SDL_Delay( 3000 );
+//#endif
+    while (SoundManager.SongIsPlaying(MUSIC_STAGECLEAR))
         ;
-#elif defined(PLATFORM_SDL)
-    //DKS - I revamped this summary screen code quite a bit so that no delay should ever be necessary
-    //    SDL_Delay( 3000 );
-#endif
 
-    pSoundManager->StopSong(MUSIC_STAGECLEAR, false);
+    //DKS - There's no need to stop it, it will stop on its own as it's not looped:
+    //SoundManager.StopSong(MUSIC_STAGECLEAR, false);
 
     pGUI->HideBoxFast();
 
@@ -1467,7 +1476,7 @@ void ScrolltoPlayeAfterBoss(void)
     pTileEngine->MustCenterPlayer = true;
 
     // Level Musik wieder einfaden lassen (aus Pause Zustand)
-    pSoundManager->FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);
+    SoundManager.FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);
 }
 
 // --------------------------------------------------------------------------------------

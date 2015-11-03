@@ -87,7 +87,7 @@ void GegnerFass::DoKI(void)
 
 void GegnerFass::GegnerExplode(void)
 {
-    pSoundManager->PlayWave(25, 128, 11025, SOUND_EXPLOSION1);
+    SoundManager.PlayWave(25, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i=0; i<5; i++)
         pPartikelSystem->PushPartikel(xPos-50+rand()%48, yPos-50+rand()%56, EXPLOSION_BIG);

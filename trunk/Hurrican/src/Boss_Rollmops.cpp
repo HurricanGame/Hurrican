@@ -202,7 +202,7 @@ void GegnerRollmops::GunAusfahren(bool Auf)
     xAcc   = 0.0f;
     yAcc   = 0.0f;
 
-    pSoundManager->PlayWave(100, 128, 14000, SOUND_STEAM);
+    SoundManager.PlayWave(100, 128, 14000, SOUND_STEAM);
 
     if (Auf == true)
     {
@@ -246,10 +246,10 @@ void GegnerRollmops::Abhopsen(float mul)
     {
         yPos = (float)(Value2 + 480.0f - 100.0f - 40.0f);
 
-        pSoundManager->PlayWave(100, 128, 8000 + rand()%2000, SOUND_LANDEN);
+        SoundManager.PlayWave(100, 128, 8000 + rand()%2000, SOUND_LANDEN);
 
         if (mul != -0.6f)
-            pSoundManager->PlayWave(40, 128, 10000 + rand()%1000, SOUND_KLONG);
+            SoundManager.PlayWave(40, 128, 10000 + rand()%1000, SOUND_KLONG);
 
         ySpeed *= mul;
 
@@ -299,7 +299,7 @@ void GegnerRollmops::RoundShot(bool single)
                                          yPos + 50.0f - cos_deg(WinkelCount) * 50.0f, EISZAPFENSHOT);
         }
 
-    pSoundManager->PlayWave(50, 128, 16000 + rand()%2000, SOUND_STONEFALL);
+    SoundManager.PlayWave(50, 128, 16000 + rand()%2000, SOUND_STONEFALL);
 }
 
 // --------------------------------------------------------------------------------------
@@ -322,7 +322,7 @@ void GegnerRollmops::DoKI(void)
         // Mops aus Screen bringen
         xPos = Value1 + 640.0f;
         //yPos = Value2 + 100.0f;
-        pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
 
     // Boss blinkt nicht so lange wie die restlichen Gegner
@@ -354,8 +354,9 @@ void GegnerRollmops::DoKI(void)
 //				NeueAktion();
 
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-                if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
-                    pSoundManager->PlaySong(MUSIC_BOSS, false);
+                //DKS - Added function SongIsPlaying() to SoundManagerClass:
+                if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
+                    SoundManager.PlaySong(MUSIC_BOSS, false);
             }
         }
         break;
@@ -446,8 +447,9 @@ void GegnerRollmops::DoKI(void)
                                                   yPos + 100.0f,
                                                   FUNKE);
 
-                    if (pSoundManager->its_Sounds[SOUND_KLONG]->isPlaying == false)
-                        pSoundManager->PlayWave(50, 128, 14000 + rand()%2000, SOUND_KLONG);
+                    //DKS - Added function WaveIsPlaying() to SoundManagerClass:
+                    if (!SoundManager.WaveIsPlaying(SOUND_KLONG))
+                        SoundManager.PlayWave(50, 128, 14000 + rand()%2000, SOUND_KLONG);
 
                 }
             }
@@ -618,10 +620,10 @@ void GegnerRollmops::DoKI(void)
                 AnimSpeed = 0.5f;
 //				xSpeed = -5.0f;
 
-                pSoundManager->PlayWave(100, 128, 7000, SOUND_LANDEN);
-                pSoundManager->PlayWave(100, 128, 9000, SOUND_LANDEN);
+                SoundManager.PlayWave(100, 128, 7000, SOUND_LANDEN);
+                SoundManager.PlayWave(100, 128, 9000, SOUND_LANDEN);
 
-                pSoundManager->PlayWave(80, 128, 11025, SOUND_STEAM);
+                SoundManager.PlayWave(80, 128, 11025, SOUND_STEAM);
 
                 int i;
                 for (i = 0; i < 30; i++)
@@ -752,7 +754,7 @@ void GegnerRollmops::DoKI(void)
             ShotDelay -= 1.0f SYNC;
             if (ShotDelay < 0.0f)
             {
-                pSoundManager->PlayWave(50, 128, 16000 + rand()%2000, SOUND_STONEFALL);
+                SoundManager.PlayWave(50, 128, 16000 + rand()%2000, SOUND_STONEFALL);
 
                 float xoff = 0.0f;
 
@@ -846,7 +848,7 @@ void GegnerRollmops::DoKI(void)
 
             while (AnimCount > AnimSpeed)
             {
-                pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
+                SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
 
                 pPartikelSystem->PushPartikel(xPos - 20 + rand()%140, yPos - 20 + rand()%140, EXPLOSION_MEDIUM2 + rand()%1);
 
@@ -914,7 +916,7 @@ void GegnerRollmops::DoKI(void)
         AnimStart = 0;
 
         // Endboss-Musik ausfaden und abschalten
-        pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
     }
 }
 
@@ -924,7 +926,7 @@ void GegnerRollmops::DoKI(void)
 
 void GegnerRollmops::GegnerExplode(void)
 {
-    pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION2);
 
     int i;
     for (i = 0; i < 5; i++)

@@ -10,6 +10,17 @@
 //
 // --------------------------------------------------------------------------------------
 
+
+/********************************************************************************
+  DKS - IMPORTANT NOTE:
+  I overhauled this and DX8Sound.h, cleaning up and adding class interfaces,
+  fixing bugs, and improving SDL support throughout. The most fundamental
+  change is that SoundManagerClass now monitors sound channels individually.
+********************************************************************************/
+
+
+using namespace std;
+
 // --------------------------------------------------------------------------------------
 // Include Dateien
 // --------------------------------------------------------------------------------------
@@ -22,386 +33,14 @@
 #include "Main.h"
 #include "Player.h"
 #include "Timer.h"
+
+#ifdef USE_UNRARLIB
 #include "unrarlib.h"
+#endif
 
 //---------------------------------------------------------------------------------------
 // Funktionsdefinitionen
 //---------------------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------
-// Name			: GetFMODErrorString
-// Aufgabe		: FMOD Error-Wert in String umwandeln
-// Rückgabewert	: String mit Error-Text
-// Parameter	: FMOD Error-Wert
-//-----------------------------------------------------------------------------
-
-char *GetFMODErrorString(int ErrorNr)
-{
-    char ErrorString[100];
-    char *ReturnString;
-
-    strcpy_s(ErrorString, strlen("Unknown Error") + 1, "Unknown Error");
-
-    /*switch(ErrorNr)
-    {
-    	case FMOD_ERR_NONE				: strcpy_s(ErrorString, "No errors"); break;
-    	case FMOD_ERR_BUSY				: strcpy_s(ErrorString, "Cannot call this command after FSOUND_Init. Call FSOUND_Close first. "); break;
-    	case FMOD_ERR_UNINITIALIZED		: strcpy_s(ErrorString, "This command failed because FSOUND_Init or FSOUND_SetOutput was not called "); break;
-    	case FMOD_ERR_INIT				: strcpy_s(ErrorString, "Error initializing output device. "); break;
-    	case FMOD_ERR_ALLOCATED			: strcpy_s(ErrorString, "Error initializing output device, but more specifically, the output device is already in use and cannot be reused. "); break;
-    	case FMOD_ERR_PLAY				: strcpy_s(ErrorString, "Playing the sound failed. "); break;
-    	case FMOD_ERR_OUTPUT_FORMAT		: strcpy_s(ErrorString, "Soundcard does not support the features needed for this soundsystem (16bit stereo output) "); break;
-    	case FMOD_ERR_COOPERATIVELEVEL	: strcpy_s(ErrorString, "Error setting cooperative level for hardware. "); break;
-    	case FMOD_ERR_CREATEBUFFER		: strcpy_s(ErrorString, "Error creating hardware sound buffer. "); break;
-    	case FMOD_ERR_FILE_NOTFOUND		: strcpy_s(ErrorString, "File not found "); break;
-    	case FMOD_ERR_FILE_FORMAT		: strcpy_s(ErrorString, "Unknown file format "); break;
-    	case FMOD_ERR_FILE_BAD			: strcpy_s(ErrorString, "Error loading file "); break;
-    	case FMOD_ERR_MEMORY			: strcpy_s(ErrorString, "Not enough memory or resources "); break;
-    	case FMOD_ERR_VERSION			: strcpy_s(ErrorString, "The version number of this file format is not supported "); break;
-    	case FMOD_ERR_INVALID_PARAM		: strcpy_s(ErrorString, "An invalid parameter was passed to this function "); break;
-    	case FMOD_ERR_NO_EAX			: strcpy_s(ErrorString, "Tried to use an EAX command on a non EAX enabled channel or output. "); break;
-    	case FMOD_ERR_CHANNEL_ALLOC		: strcpy_s(ErrorString, "Failed to allocate a new channel "); break;
-    	case FMOD_ERR_RECORD			: strcpy_s(ErrorString, "Recording is not supported on this machine "); break;
-    	case FMOD_ERR_MEDIAPLAYER		: strcpy_s(ErrorString, "Windows Media Player not installed so cannot play wma or use internet : streaming. "); break;
-    	default							: strcpy_s(ErrorString, "Unknown Error"); break;
-    } // switch(ErrorNr)*/
-
-#if defined(PLATFORM_DIRECTX)
-    ReturnString = ErrorString;
-#elif defined(PLATFORM_SDL)
-    ReturnString = (char*)Mix_GetError();
-#endif
-
-    return ReturnString;
-} // GetFMODErrorString
-
-//---------------------------------------------------------------------------------------
-// Klassen-Definition (CSong)
-//---------------------------------------------------------------------------------------
-
-//---------------------------------------------------------------------------------------
-// Name			: CSong (Konstruktor)
-// Aufgabe		: Song initialisieren
-// Rückgabewert	: Keiner
-// Parameter	: Keine
-//---------------------------------------------------------------------------------------
-
-CSong::CSong()
-{
-    SongData = NULL;
-
-    //DKS - Added loop boolean to specify if the song plays looped or not:
-    isLooped = true;
-
-    //DKS - Added boolean to specify if a song is paused or not:
-    isPaused = false;
-
-} // Konstruktor
-
-//---------------------------------------------------------------------------------------
-// Name			: CSong (Destruktor)
-// Aufgabe		: Song initialisieren
-// Rückgabewert	: Keiner
-// Parameter	: Keine
-//---------------------------------------------------------------------------------------
-
-CSong::~CSong()
-{
-    // Freigeben
-    if (SongData != NULL) {
-        MUSIC_FreeSong(SongData);
-        SongData = NULL;
-    }
-} // Destruktor
-
-//---------------------------------------------------------------------------------------
-// Name			: Update
-// Aufgabe		: Songs ggf faden
-// Rückgabewert	: Keiner
-// Parameter	: Keine
-//---------------------------------------------------------------------------------------
-
-bool CSong::Update(void)
-{
-    // Spielt der Song garnicht ? Dann brauchen wir ihn auch nicht zu bearbeiten =)
-    //
-
-    //DKS - Added check for NULL on SongData:
-    if (!SongData || !MUSIC_IsPlaying(SongData)) {
-        return false;
-    }
-
-
-    // Fadet der Song grade ?
-    //
-    if (FadingVolume != 0.0f)
-    {
-        Volume += FadingVolume SYNC;
-
-        // Grenze Überschritten ?
-        if ((FadingVolume > 0.0f &&
-                Volume >= FadingEnd) ||
-
-                (FadingVolume < 0.0f &&
-                 Volume <= FadingEnd))
-        {
-            // Beim Anhalten des Songs ausschalten oder pausieren ?
-            if (FadingVolume < 0.0f)
-            {
-                if (FadingPaused == false)
-                    MUSIC_StopSong(SongData);			// Ganz anhalten ?
-                else
-                    MUSIC_SetPaused(SongData, true);	// oder nur pausieren ?
-
-                //DKS - Added boolean to specify if a song is paused or not:
-                isPaused = FadingPaused;
-            }
-
-            FadingVolume = 0.0f;
-            Volume		 = float(FadingEnd);
-        }
-        MUSIC_SetMasterVolume(SongData, (int)(Volume*pSoundManager->its_GlobalMusicVolume/100.0f*2.55f));
-    } else {
-#ifndef USE_MODPLUG
-        //DKS - Added this, because when SDL_mixer loops a music file, at least in some versions or
-        //      configurations, it resets the song's volume to a default value. So, we must
-        //      set the volume continuously. 
-        MUSIC_SetMasterVolume(SongData, (int)(pSoundManager->its_GlobalMusicVolume*2.55f));
-#endif //USE_MODPLUG
-    }
-
-    return true;
-} // Update
-
-//---------------------------------------------------------------------------------------
-// Klassen-Definition (CWave)
-//---------------------------------------------------------------------------------------
-
-//---------------------------------------------------------------------------------------
-// Name			: CWave (Konstruktor)
-// Aufgabe		: Sound initialisieren
-// Rückgabewert	: Keiner
-// Parameter	: Keine
-//---------------------------------------------------------------------------------------
-
-CWave::CWave()
-{
-    isPlaying = false;
-    isLooped  = false;
-    FadeMode = FADEMODE_NON;
-    Channel   = -1;
-    SoundData = NULL;
-} // Konstruktor
-
-//---------------------------------------------------------------------------------------
-// Name			: ~CWave (Destruktor)
-// Aufgabe		: Sound löschen
-// Rückgabewert	: Keiner
-// Parameter	: Keine
-//---------------------------------------------------------------------------------------
-
-CWave::~CWave()
-{
-    // Freigeben
-    if (SoundData != NULL)
-        SOUND_Sample_Free(SoundData);
-
-    SoundData = NULL;
-} // Destruktor
-
-//---------------------------------------------------------------------------------------
-// Name			: Update
-// Aufgabe		: Channel prüfen
-// Rückgabewert	: Keiner
-// Parameter	: Keine
-//---------------------------------------------------------------------------------------
-
-bool CWave::Update()
-{
-    if (SOUND_IsPlaying(Channel) == false)
-    {
-        isPlaying = false;
-        FadeMode = FADEMODE_NON;
-    }
-
-    float vol = (float)SOUND_GetVolume(Channel);
-
-    // fading?
-    //
-    switch (FadeMode)
-    {
-    // momentan nicht faden
-    //
-    case FADEMODE_NON:
-        break;
-
-    // einfaden
-    //
-    case FADEMODE_IN:
-    {
-        // Volume erhöhen
-        //
-        vol += 30.0f SYNC;
-
-        // maximum? Dann fading anhalten
-        //
-        if (vol > pSoundManager->its_GlobalSoundVolume * 2.55f)
-        {
-            vol = pSoundManager->its_GlobalSoundVolume * 2.55f;
-            FadeMode = FADEMODE_FULL;
-        }
-
-        // Lautstärke setzen
-        //
-        SOUND_SetVolume(Channel, (int)vol);
-    }
-    break;
-
-    // ausfaden
-    //
-    case FADEMODE_OUT:
-    {
-        // Volume verringern
-        //
-        vol -= 30.0f SYNC;
-
-        // < 0 ? Dann anhalten
-        //
-        if (vol < 0.0f)
-        {
-            SOUND_StopSound(Channel);
-            isPlaying = false;
-            Channel = -1;
-            FadeMode = FADEMODE_NON;
-        }
-        else
-            SOUND_SetVolume(Channel, (int)vol);
-    }
-    break;
-
-    default:
-        break;
-    }
-
-    return true;
-} // Update
-
-//---------------------------------------------------------------------------------------
-// Klassen-Definition (SoundManager)
-//---------------------------------------------------------------------------------------
-
-//---------------------------------------------------------------------------------------
-// Name			: CSoundManager (Konstruktor)
-// Aufgabe		: Standardmässige Initialisierung
-// Rückgabewert	: Keiner
-// Parameter	: Keine
-//---------------------------------------------------------------------------------------
-
-CSoundManager::CSoundManager()
-{
-    SOUNDMANAGER_PARAMETERS smpp;
-
-    InitSuccessfull = false;
-
-    its_LoadedSongs  = 0;
-    its_LoadedSounds = 0;
-    its_GlobalMusicVolume		= 100;
-    its_GlobalSoundVolume		= 100;
-
-    smpp.MaxSoftwareChannels	= 64;
-    smpp.Mixrate				= 44100;
-    smpp.Flags					= FSOUND_INIT_USEDEFAULTMIDISYNTH;
-
-    // Sounds auf NULL setzen
-    for (int i=0; i<MAX_SOUNDS; i++)
-        its_Sounds[i] = NULL;
-
-    // Songs auf NULL setzen
-    for (int i=0; i<MAX_SONGS; i++)
-        its_Songs[i] = NULL;
-
-    InitSuccessfull = InitFMOD(smpp);
-
-    if (true == InitSuccessfull)
-        Protokoll.WriteText( false, "Sound Manager created\n" );
-    else
-        Protokoll.WriteText( false, "\n-> Create Sound Manager failed !\n" );
-}; // Konstruktor
-
-//---------------------------------------------------------------------------------------
-// Name			: CSoundManager (Überladener Konstruktor)
-// Aufgabe		: Initialisierung mit übergebenen Parametern
-// Rückgabewert	: Keiner
-// Parameter	: Keine
-//---------------------------------------------------------------------------------------
-
-CSoundManager::CSoundManager   (SOUNDMANAGER_PARAMETERS smpp)
-{
-    InitSuccessfull = false;
-
-    its_LoadedSongs  = 0;
-    its_LoadedSounds = 0;
-    its_GlobalMusicVolume	= float(smpp.GlobalMusicVolume);
-    its_GlobalSoundVolume	= float(smpp.GlobalSoundVolume);
-
-    // Sounds auf NULL setzen
-    for (int i=0; i<MAX_SOUNDS; i++)
-        its_Sounds[i] = NULL;
-
-    // Songs auf NULL setzen
-    for (int i=0; i<MAX_SONGS; i++)
-        its_Songs[i] = NULL;
-
-    if (InitFMOD(smpp) == true)
-    {
-        Protokoll.WriteText( false, "Sound Manager created\n" );
-    }
-    else
-    {
-        Protokoll.WriteText( true, "\n-> Create Sound Manager failed !\n" );
-    }
-}; // Überladener Konstruktor
-
-
-//---------------------------------------------------------------------------------------
-// Name			: ~CSoundManager (Destruktor)
-// Aufgabe		: Songs freigeben
-// Rückgabewert	: Keiner
-// Parameter	: Keine
-//---------------------------------------------------------------------------------------
-
-CSoundManager::~CSoundManager()
-{
-    Protokoll.WriteText( false, "-> Shutting down Sound Manager\n" );
-
-    MUSIC_StopAllSongs();
-
-    // Songs freigeben
-    //
-    for (int i=0; i<MAX_SONGS; i++)
-        if (its_Songs[i] != NULL)
-        {
-            delete(its_Songs[i]);	// Freigeben
-            its_Songs[i] = NULL;
-        }
-
-    its_LoadedSongs = 0;
-
-    // Sounds freigeben
-    for (int i=0; i<MAX_SOUNDS; i++)
-        if (its_Sounds[i] != NULL)
-        {
-            delete(its_Sounds[i]);	// Freigeben
-            its_Sounds[i] = NULL;
-        }
-
-    its_LoadedSounds = 0;
-
-    // FSOUND beenden
-    //
-    SOUND_Close();
-
-}; // Desktruktor
 
 //---------------------------------------------------------------------------------------
 // Name			: InitFMOD
@@ -409,33 +48,254 @@ CSoundManager::~CSoundManager()
 // Rückgabewert	: true bei Erfolg, false bei nicht-Erfolg
 // Parameter	: keine
 //---------------------------------------------------------------------------------------
-
-bool CSoundManager::InitFMOD(SOUNDMANAGER_PARAMETERS smpp)
+bool SoundManagerClass::InitFMOD(SOUNDMANAGER_PARAMETERS smpp)
 {
 #if defined(PLATFORM_DIRECTX)
     Protokoll.WriteText( false, "Initializing FMOD\n" );
-
     FSOUND_SetOutput(FSOUND_OUTPUT_DSOUND);					// Output-Mode setzen
     FSOUND_SetDriver(0);									// Default-Soundkarte setzen
     FSOUND_SetMixer(FSOUND_MIXER_QUALITY_AUTODETECT);		// Mixer-Quality setzen
+
+    FMOD_RESULT result = SOUND_Init(smpp.Mixrate, smpp.MaxSoftwareChannels, smpp.Flags);
+    bool success = (result == FMOD_OK);
+    if (!success)
+        Protokoll.WriteText( false, "->ERROR: %s\n", GetFMODErrorString(SOUND_GetError()) );
 #elif defined(PLATFORM_SDL)
     Protokoll.WriteText( false, "Initializing SDL_mixer\n" );
+    bool success = SOUND_Init(smpp.Mixrate, smpp.MaxSoftwareChannels, smpp.Flags);
 #endif
 
-    InitSuccessfull = (TRUE == SOUND_Init(smpp.Mixrate, smpp.MaxSoftwareChannels, smpp.Flags));
+    return success;
+}
 
-    if (false == InitSuccessfull)
+//DKS - Added:
+void SoundManagerClass::UpdateChannels()
+{
+    // Only update 3D channels every other call, to limit CPU usage:
+    static bool updated_3D_channels_last_call = false;
+
+    for (int i=0; i < num_channels; ++i)
     {
-        Protokoll.WriteText( false, "\n->" );
-        Protokoll.WriteText( false, GetFMODErrorString(SOUND_GetError()) );
-        return false;
+        if (channels[i].sound_num != -1)
+        {
+            if ( !SOUND_IsPlaying(i) && !channels[i].paused )
+            {
+                channels[i].sound_num = -1;
+                StopChannel(i);     // StopChannel() will reset the channel's values even if sound_num == -1
+            } else 
+            {
+                // If channel is a 3D sound, update its vol/pan based on player position:
+                if (!updated_3D_channels_last_call && channels[i].is3D)
+                    Update3DChannel(i);
+
+                if (channels[i].pending_vol >= 0) {
+                    if (channels[i].pending_vol > 100)
+                        channels[i].pending_vol = 100;
+
+                    if (channels[i].pending_vol == 0) {
+                        StopChannel(i);
+                    } else {
+                        if (channels[i].vol != (float)channels[i].pending_vol)
+                            SetChannelVolume(i, channels[i].pending_vol);
+
+                        if (channels[i].panning != channels[i].pending_pan)
+                            SetChannelPanning(i, channels[i].pending_pan);
+                    }
+
+                    channels[i].pending_vol = -1;
+                    channels[i].pending_pan = 128;
+                }
+
+                switch (channels[i].fade_mode) {
+                    // einfaden
+                    case FADEMODE_IN:
+                    {
+                        // Volume erhöhen
+                        float new_vol = channels[i].vol;
+
+                        //DKS - In the place where this is used (mainly wind sound in 4th level,
+                        //      the sounded faded much too fast compared to the song fade rate,
+                        //      2.5 seems a better value than 30 here:)
+                        //      See Trigger_FadeMusic.cpp and its fade-rate of just 1.0 for the song)
+                        //channels[i].vol += 30.0f SYNC;
+                        new_vol += 2.5f SYNC;
+
+                        // maximum? Dann fading anhalten
+                        //
+                        if (new_vol > 100.0f) {
+                            new_vol = 100.0f;
+                            channels[i].fade_mode = FADEMODE_NON;
+                        }
+
+                        // Lautstärke setzen
+                        SetChannelVolume(i, new_vol);
+                    }
+                    break;
+
+                    // ausfaden
+                    case FADEMODE_OUT:
+                    {
+                        // Volume verringern
+
+                        float new_vol = channels[i].vol;
+                        //DKS - In the place where this is used (mainly wind sound in 4th level,
+                        //      the sounded faded much too fast compared to the song fade rate,
+                        //      2.5 seems a better value than 30 here:)
+                        //      See Trigger_FadeMusic.cpp and its fade-rate of just 1.0 for the song)
+                        //new_vol -= 30.0f SYNC;
+                        new_vol -= 2.5f SYNC;
+
+                        // < 0 ? Dann anhalten
+                        if (new_vol < 0.0f) {
+                            StopChannel(i);
+                        } else {
+                            SetChannelVolume(i, new_vol);
+                        }
+                    }
+                    break;
+
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
-    MaxChannels = SOUND_GetMaxChannels();
-    Protokoll.WriteText( false, "Successfull\n" );
+    updated_3D_channels_last_call = !updated_3D_channels_last_call;
+}
 
-    return true;
-} // InitFMOD
+//DKS - Added:
+void SoundManagerClass::Update3DChannel(int ch)
+{
+    int   vol, pan;
+    float xdiff, ydiff, Abstand;
+
+    xdiff = ((pPlayer[0]->xpos + 45)  - channels[ch].xpos);
+    ydiff = ((pPlayer[0]->ypos + 45)  - channels[ch].ypos);
+
+    Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
+
+    vol = int(100-float(Abstand/6.0f));
+    if (vol < 0)
+        vol = 0;
+    else
+    {
+        // Sound links oder rechts vom Spieler ?
+        if (channels[ch].xpos < pPlayer[0]->xpos + 45)
+        {
+            pan = 128 - (100 - vol);
+            if (pan < 0)
+                pan = 0;
+        }
+        else
+        {
+            pan = 128 + (100 - vol);
+            if (pan > 255)
+                pan = 255;
+        }
+
+        if (channels[ch].vol != vol)
+            SetChannelVolume(ch, vol);
+
+        if (channels[ch].panning != pan)
+            SetChannelPanning(ch, pan);
+    }
+}
+
+//DKS - Added:
+void SoundManagerClass::UpdateSongs()
+{
+    // Songs durchgehen und bei Bedarf faden
+    for (int i=0; i<MAX_SONGS; ++i)
+    {
+        // Spielt der Song garnicht ? Dann brauchen wir ihn auch nicht zu bearbeiten =)
+
+        // Fadet der Song grade ?
+        if (songs[i].fade_speed != 0.0f)
+        {
+            if (SongIsPlaying(i))
+            {
+                songs[i].vol += songs[i].fade_speed SYNC;
+
+                // Grenze Überschritten ?
+                if ((songs[i].fade_speed > 0.0f && songs[i].vol >= songs[i].fade_end_vol) ||
+                        (songs[i].fade_speed < 0.0f && songs[i].vol <= songs[i].fade_end_vol))
+                {
+                    // Beim Anhalten des Songs ausschalten oder pausieren ?
+                    if (songs[i].fade_speed < 0.0f)
+                        StopSong(i, songs[i].pause_when_fade_ends);
+
+                    songs[i].fade_speed = 0.0f;
+                    songs[i].vol = songs[i].fade_end_vol;
+                    songs[i].fade_end_vol = 100;
+                    songs[i].pause_when_fade_ends = false;
+                }
+                SetSongVolume(i, songs[i].vol);
+                //MUSIC_SetMasterVolume(songs[i].data, (int)(songs[i].vol * g_music_vol * (2.55f/100.0f)));
+            } else {
+                // If a song is fading and is now over, reset its values: 
+                songs[i].fade_speed = 0.0f;
+                songs[i].fade_end_vol = 100;
+                songs[i].paused = songs[i].pause_when_fade_ends;
+                songs[i].pause_when_fade_ends = false;
+            }
+        } else if (SongIsPlaying(i)) {
+#ifndef USE_MODPLUG
+            //DKS - Added this, because when SDL_mixer loops a music file, at least in some versions or
+            //      configurations, it resets the song's volume to a default value. So, we must
+            //      set the volume continuously. 
+            SetSongVolume(i, songs[i].vol);
+#endif // !USE_MODPLUG
+        }
+
+    }
+}
+
+//---------------------------------------------------------------------------------------
+// Klassen-Definition (SoundManager)
+//---------------------------------------------------------------------------------------
+
+//DKS - added
+void SoundManagerClass::Init()
+{
+    SOUNDMANAGER_PARAMETERS smpp;
+
+    //DKS - 64 is a very high number of channels, reducing to something more sensible:
+    //smpp.MaxSoftwareChannels	= 64;
+    smpp.MaxSoftwareChannels	= 24;
+
+    smpp.Mixrate				= 44100;
+    smpp.Flags					= FSOUND_INIT_USEDEFAULTMIDISYNTH;
+
+    if (InitFMOD(smpp)) {
+        num_channels = SOUND_GetMaxChannels();
+        Protokoll.WriteText( false, "Requested %d sound channels and got %d\n", smpp.MaxSoftwareChannels, num_channels );
+        channels.resize(num_channels);
+    } else {
+        Protokoll.WriteText( true, "-> ERROR: Create Sound Manager failed !\n" );
+    }
+}
+
+//DKS - Added:
+void SoundManagerClass::Exit()
+{
+    Protokoll.WriteText( false, "-> Shutting down Sound Manager\n" );
+
+    StopSongs();
+    StopSounds();
+
+    // Songs freigeben
+    for (int i=0; i<MAX_SONGS; ++i)
+        UnloadSong(i);
+
+    // Sounds freigeben
+    for (int i=0; i<MAX_SOUNDS; ++i)
+        UnloadWave(i);
+
+    // FSOUND beenden
+    SOUND_Close();
+}
+
 
 //---------------------------------------------------------------------------------------
 // Name			: SetVolumes
@@ -445,11 +305,24 @@ bool CSoundManager::InitFMOD(SOUNDMANAGER_PARAMETERS smpp)
 //				  Musik		neue Musik-Lautstärke
 //---------------------------------------------------------------------------------------
 
-void CSoundManager::SetVolumes(float Sound, float Musik)
+void SoundManagerClass::SetVolumes(float sound_vol, float music_vol)
 {
-    its_GlobalSoundVolume = Sound;
-    its_GlobalMusicVolume = Musik;
-} // SetVolumes
+    if (sound_vol < 0.0f)
+        sound_vol = 0.0f;
+    else if (sound_vol > 100.0f)
+        sound_vol = 100.0f;
+
+    if (music_vol < 0.0f)
+        music_vol = 0.0f;
+    else if (music_vol > 100.0f)
+        music_vol = 100.0f;
+
+    g_sound_vol = sound_vol;
+    g_music_vol = music_vol;
+
+    //DKS - added to ensure all channels / songs playing reflect the new volume change:
+    ResetAllSoundVolumes();
+}
 
 //---------------------------------------------------------------------------------------
 // Name			: LoadSong
@@ -458,150 +331,104 @@ void CSoundManager::SetVolumes(float Sound, float Musik)
 // Parameter	: Filename	Name des zu ladenden Songs
 //---------------------------------------------------------------------------------------
 
-//DKS - Added default parameter loop to specify if the song should loop:
-//bool CSoundManager::LoadSong(const char *Filename, int Nr)
-bool CSoundManager::LoadSong(const char *Filename, int Nr, bool loop /*=true*/)
+//DKS - Added default parameter 'loop' to specify if the song should loop, and
+//      converted to use strings:
+void SoundManagerClass::LoadSong(const string &filename, int nr, bool loop /*=true*/)
 {
-    if (false == InitSuccessfull)
-    {
-        /* Need this even if sound output not possible, because lots of code
-           accesses its_Songs[] */
-
-        if (its_Songs[Nr] != NULL)
-        {
-            delete(its_Songs[Nr]);
-        }
-        its_Songs[Nr] = new CSong();
-
-        return false;
+    if (songs[nr].data) {
+        StopSong(nr, false);
+        UnloadSong(nr);
     }
 
-    bool			fromrar;
-    char			*pData;
-    char			Temp[256];
-    unsigned long	Size;
-    char Buffer[100];
-
-    fromrar = false;
+    bool         fromrar  = false;
+    char         *pData   = NULL;
+    unsigned int buf_size = 0;
+    string       fullpath;
 
     // Zuerst checken, ob sich der Song in einem MOD-Ordner befindet
-    if (CommandLineParams.RunOwnLevelList == true)
-    {
-        sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
-        if (FileExists(Temp))
+    if (CommandLineParams.RunOwnLevelList) {
+        //sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
+        fullpath = string(g_storage_ext) + "/levels/" + string(CommandLineParams.OwnLevelList) + "/" + filename;
+        if (FileExists(fullpath.c_str()))
             goto loadfile;
     }
 
     //DKS - Music files now reside in new subdir data/music/
     // Dann checken, ob sich das File im Standard Ordner befindet
-    sprintf_s(Temp, "%s/data/music/%s", g_storage_ext, Filename);
-    if (FileExists(Temp))
+    //sprintf_s(Temp, "%s/data/music/%s", g_storage_ext, Filename);
+    fullpath = string(g_storage_ext) + "/data/music/" + filename;
+    if (FileExists(fullpath.c_str()))
         goto loadfile;
 
 #if defined(USE_UNRARLIB)
     // Auch nicht? Dann ist es hoffentlich im RAR file
-    if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
-    {
-        Protokoll.WriteText( true, "\n-> Error loading %s from Archive !\n", Filename );
-        return false;
-    }
-    else
+    if (urarlib_get(&pData, &buf_size, filename.c_str(), RARFILENAME, convertText(RARFILEPASSWORD)) == false) {
+        Protokoll.WriteText( false, "\n-> Error loading song file %s from Archive !\n", filename.c_str() );
+        return;
+    } else
         fromrar = true;
 #else
-    Protokoll.WriteText( true, "\n-> Error loading %s!\n", Temp );
-    return false;
+    Protokoll.WriteText( true, "\n-> Error: Could not locate song file %s\n", fullpath.c_str() );
+    return;
 #endif // USE_UNRARLIB
 
 loadfile:
-
-    int Nummer = Nr;
-    if (its_Songs[Nummer] != NULL)
-    {
-        //DKS - Added stopping of the song, just to be cautious
-        StopSong(Nummer, false);
-
-        delete(its_Songs[Nummer]);
-        its_Songs[Nummer] = NULL;
-    }
-
-    its_Songs[Nummer] = new CSong();
-
     //DKS - Added loop boolean to specify if the song plays looped or not:
-    its_Songs[Nummer]->isLooped = loop;
+    songs[nr].looped = loop;
 
-    if (fromrar == false)
-        its_Songs[Nummer]->SongData = MUSIC_LoadSong(Temp);
-    else
-    {
-        its_Songs[Nummer]->SongData = MUSIC_LoadSongEx(pData, 0, Size, FSOUND_LOADMEMORY, NULL, 0);
+    if (fromrar) {
+        songs[nr].data = MUSIC_LoadSongEx(pData, 0, buf_size, FSOUND_LOADMEMORY, NULL, 0);
         free(pData);
+    } else {
+        songs[nr].data = MUSIC_LoadSong(fullpath.c_str());
     }
 
     // Fehler beim Laden ?
     //
-    if (its_Songs[Nummer]->SongData == NULL)
-    {
-        strcpy_s(Buffer, strlen("\n-> Error loading ") + 1, "\n-> Error loading ");
-        strcat_s(Buffer, strlen(Filename) + 1, Filename);
-        strcat_s(Buffer, 3, "\n");
-        Protokoll.WriteText( true, Buffer );
-
-        //return (-1);
-        return false;
+    if (!songs[nr].data) {
+        Protokoll.WriteText( false, "\n-> NULL ptr returned from MUSIC_LoadSong() loading song file\n\t%s\n", fullpath.c_str() );
+        return;
     }
 
-    its_LoadedSongs++;
+    Protokoll.WriteText( false, "Loaded song file %s\n", fullpath.c_str() );
 
-    //its_Songs[Nummer].Name = Filename;
-    its_Songs[Nummer]->Volume = 100;
-    its_Songs[Nummer]->FadingVolume = 0.0f;
-
-    // TODO FIX
-    /*
-    strcpy_s(Buffer, "Load Song : ");
-    strcat_s(Buffer, Filename);
-    strcat_s(Buffer, " successful\n");
-    Protokoll.WriteText( false, Buffer );
-    */
-
-    //return Nummer;
-    return true;
-} // LoadSong
+    // Set some sensible defaults
+    songs[nr].vol = 100;
+    songs[nr].fade_speed = 0;
+    songs[nr].fade_end_vol = 0;
+    songs[nr].pause_when_fade_ends = false;
+    songs[nr].paused = false;
+    songs[nr].was_playing = false;
+}
 
 //---------------------------------------------------------------------------------------
 // Name			: PlaySong
 // Aufgabe		: Song abspielen
 // Rückgabewert	: keiner
-// Parameter	: Nr		Array-Nummer des Songs
-//				  Paused	Neu starten oder Pause aufheben
+// Parameter	: nr		Array-Nummer des Songs
+//				  resuming_paused_song      Neu starten oder Pause aufheben
 //---------------------------------------------------------------------------------------
 
-bool CSoundManager::PlaySong(int Nr, bool Paused)
+void SoundManagerClass::PlaySong(int nr, bool resuming_paused_song)
 {
-    //DKS - Added check for NULL on SongData:
-    if (false == InitSuccessfull || its_Songs[Nr] == NULL || its_Songs[Nr]->SongData == NULL)
-        return false;
+    if (!songs[nr].data)
+        return;
 
-    //DKS - Added boolean to specify if a song is paused or not:
-    its_Songs[Nr]->isPaused = false;
-        
-    if (Paused == false)
-    {
-        //DKS - Added loop parameter to specify if the song plays looped or not:
-        MUSIC_PlaySong(its_Songs[Nr]->SongData, its_Songs[Nr]->isLooped);			// Von vorne abspielen ?
-        its_Songs[Nr]->FadingVolume = 0.0f;
-        SetSongVolume(Nr, its_GlobalMusicVolume);
+    songs[nr].paused = false;
+
+    if (resuming_paused_song) {
+        MUSIC_SetPaused(songs[nr].data, false);	// oder Pause aufheben ?
+        SetSongVolume(nr, songs[nr].vol);
+    } else {
+#if defined(PLATFORM_DIRECTX)
+        MUSIC_PlaySong(songs[nr].data);			// Von vorne abspielen ?
+#else
+        //DKS - Added looped parameter under SDL to specify if the song plays looped or not:
+        MUSIC_PlaySong(songs[nr].data, songs[nr].looped);			// Von vorne abspielen ?
+#endif
+        SetSongVolume(nr, 100.0f);
     }
-    else
-    {
-        MUSIC_SetPaused(its_Songs[Nr]->SongData, false);	// oder Pause aufheben ?
-        SetSongVolume(Nr, its_Songs[Nr]->Volume);
-    }
-
-    CurrentSongNr = Nr;
-
-    return true;
-} // PlaySong
+}
 
 //---------------------------------------------------------------------------------------
 // Name			: StopSong
@@ -611,42 +438,36 @@ bool CSoundManager::PlaySong(int Nr, bool Paused)
 //				  Paused	Ganz anhalten oder pausieren
 //---------------------------------------------------------------------------------------
 
-bool CSoundManager::StopSong(int Nr, bool Paused)
+void SoundManagerClass::StopSong(int nr, bool paused)
 {
-    //DKS - Added check for InitSuccessfull and NULL on SongData
-    //if (its_Songs[Nr] == NULL)
-    if (false == InitSuccessfull || its_Songs[Nr] == NULL || its_Songs[Nr]->SongData == NULL)
-        return false;
+    if (!songs[nr].data)
+        return;
 
-    SetSongVolume(Nr, its_Songs[Nr]->Volume);
+    SetSongVolume(nr, songs[nr].vol);
 
-    //DKS - Added check for IsPlaying:
-    if (MUSIC_IsPlaying(its_Songs[Nr]->SongData)) {
-        if (Paused == false)
-            MUSIC_StopSong(its_Songs[Nr]->SongData);			// Ganz anhalten ?
+    //DKS - Added check for SongIsPlaying:
+    if (SongIsPlaying(nr)) {
+        if (paused)
+            MUSIC_SetPaused(songs[nr].data, true);		// oder nur pausieren ?
         else
-            MUSIC_SetPaused(its_Songs[Nr]->SongData, true);		// oder nur pausieren ?
-
-        //DKS - Added boolean to specify if a song is paused or not:
-        its_Songs[Nr]->isPaused = Paused;
+            MUSIC_StopSong(songs[nr].data);			// Ganz anhalten ?
     }
 
-    return true;
-} // StopSong
+    //DKS - Added boolean to specify if a song is paused or not:
+    songs[nr].paused = paused;
+}
 
 //DKS - Added function to unload a song (game was leaving some songs loaded, like the
 //      Cracktro and Intro music, credits music, etc)
-void CSoundManager::UnloadSong(int Nr)
+void SoundManagerClass::UnloadSong(int nr)
 {
-    //DKS - Added check for NULL on SongData:
-    if (!InitSuccessfull || !its_Songs[Nr] || !its_Songs[Nr]->SongData)
-        return;
-    
-    if (MUSIC_IsPlaying(its_Songs[Nr]->SongData))
-        MUSIC_StopSong(its_Songs[Nr]->SongData);
+    if (songs[nr].data) {
+        if (SongIsPlaying(nr))
+            StopSong(nr, false);
 
-    delete(its_Songs[Nr]);
-    its_Songs[Nr] = NULL;
+        MUSIC_FreeSong(songs[nr].data);
+        songs[nr].data = NULL;
+    }
 }
 
 //---------------------------------------------------------------------------------------
@@ -655,50 +476,27 @@ void CSoundManager::UnloadSong(int Nr)
 // Rückgabewert	: keiner
 //---------------------------------------------------------------------------------------
 
-void CSoundManager::StopAllSongs(bool Paused)
+void SoundManagerClass::StopSongs()
 {
-    //DKS - Added check for InitSuccessfull:
-    if (InitSuccessfull == false)
-        return;
-
-    for (int i = 0; i < MAX_SONGS; i++)
-        //DKS - Added check for NULL on SongData:
-        if (its_Songs[i] != NULL && its_Songs[i]->SongData != NULL)
-            StopSong(i, Paused);
+    for (int i=0; i < MAX_SONGS; ++i)
+        StopSong(i, false);
 }
 
 //---------------------------------------------------------------------------------------
-// Name			: StopAllLoopedSounds
-// Aufgabe		: Alle geloopten Sounds stoppen
+// Name			: StopAllSounds
+// Aufgabe		: Alle Sounds stoppen
 // Rückgabewert	: keiner
 //---------------------------------------------------------------------------------------
 
-void CSoundManager::StopAllLoopedSounds(void)
+void SoundManagerClass::StopSounds()
 {
-    if (InitSuccessfull == false)
-        return;
+    //DKS - Now, we iterate over channels instead:
+    //for (int i = 0; i < MAX_SOUNDS; i++)
+    //    if (its_Sounds[i] != NULL)
+    //        StopWave(i);
 
-    for (int i = 0; i < MAX_SOUNDS; i++)
-        if (its_Sounds[i] != NULL &&
-                its_Sounds[i]->isLooped == true)
-            StopWave(i);
-}
-
-//---------------------------------------------------------------------------------------
-// Name			: StopAllLoopedSounds
-// Aufgabe		: Alle geloopten Sounds stoppen
-// Rückgabewert	: keiner
-//---------------------------------------------------------------------------------------
-
-void CSoundManager::StopAllSounds(void)
-{
-    //DKS - added check for InitSuccessfull:
-    if (InitSuccessfull == false)
-        return;
-
-    for (int i = 0; i < MAX_SOUNDS; i++)
-        if (its_Sounds[i] != NULL)
-            StopWave(i);
+    for (int i = 0; i < num_channels; ++i)
+        StopChannel(i);
 }
 
 //---------------------------------------------------------------------------------------
@@ -709,15 +507,14 @@ void CSoundManager::StopAllSounds(void)
 //				  Volume	Zu setzende Lautstärke
 //---------------------------------------------------------------------------------------
 
-void CSoundManager::SetSongVolume(int Nr, float Volume)
+void SoundManagerClass::SetSongVolume(int nr, float volume)
 {
-    //DKS - Added checks for NULLness:
-    if (false == InitSuccessfull || its_Songs[Nr] == NULL || its_Songs[Nr]->SongData == NULL)
+    if (!songs[nr].data)
         return;
 
-    its_Songs[Nr]->Volume = Volume;
-    MUSIC_SetMasterVolume(its_Songs[Nr]->SongData, (int)(Volume*its_GlobalMusicVolume/100.0f*2.55f));
-} // SetSongVolume
+    songs[nr].vol = volume;
+    MUSIC_SetMasterVolume(songs[nr].data, (int)(volume*g_music_vol*(2.55f/100.0f)));
+}
 
 //---------------------------------------------------------------------------------------
 // Name			: SetAbsoluteSongVolume
@@ -727,33 +524,24 @@ void CSoundManager::SetSongVolume(int Nr, float Volume)
 //				  Volume	Zu setzende Lautstärke
 //---------------------------------------------------------------------------------------
 
-void CSoundManager::SetAbsoluteSongVolume(int Nr, float Volume)
+void SoundManagerClass::SetAbsoluteSongVolume(int nr, float volume)
 {
-    //DKS - Added checks for NULLness:
-    if (false == InitSuccessfull || its_Songs[Nr] == NULL || its_Songs[Nr]->SongData == NULL)
+    if (!songs[nr].data)
         return;
 
-    its_Songs[Nr]->Volume = Volume;
-    MUSIC_SetMasterVolume(its_Songs[Nr]->SongData, (int)(Volume));
-} // SetSongVolume
+    songs[nr].vol = volume;
+    MUSIC_SetMasterVolume(songs[nr].data, (int)(volume));
+}
 
-//---------------------------------------------------------------------------------------
-// Name			: SetAllSongVolumes
-// Aufgabe		: Lautstärke aller Songs setzen
-// Rückgabewert	: keiner
-// Parameter	: keine
-//---------------------------------------------------------------------------------------
-
-void CSoundManager::SetAllSongVolumes(void)
+//DKS - Added:
+void SoundManagerClass::ResetAllSoundVolumes(void)
 {
-    //DKS - added check for InitSuccessfull:
-    if (InitSuccessfull == false)
-        return;
-
     for (int i=0; i<MAX_SONGS; i++)
-        if (its_Songs[i] != NULL)
-            SetSongVolume(i, its_GlobalMusicVolume);
-} // SetAllSongVolumes
+        SetSongVolume(i, 100.0f);
+
+    for (int i=0; i < num_channels; ++i)
+        SetChannelVolume(i, channels[i].vol);
+}
 
 //---------------------------------------------------------------------------------------
 // Name			: Update
@@ -762,32 +550,23 @@ void CSoundManager::SetAllSongVolumes(void)
 // Parameter	: keine
 //---------------------------------------------------------------------------------------
 
-void CSoundManager::Update(void)
+void SoundManagerClass::Update(void)
 {
-    if (false == InitSuccessfull)
-        return;
+    UpdateChannels();
+    UpdateSongs();
 
-    // Sounds durchgehen und updaten
-    //
-    for (int i=0; i<MAX_SOUNDS; i++)
-        if (its_Sounds[i] != NULL)
-            its_Sounds[i]->Update();
-
-    // Songs durchgehen und bei Bedarf faden
-    //
-    for (int i=0; i<MAX_SONGS; i++)
-        if (its_Songs[i] != NULL)
-            its_Songs[i]->Update();
-
+#ifdef _DEBUG
     // Anzahl benutzter Channels zählen
     //
-    ChannelsUsed = 0;
+    int channels_in_use = 0;
+    for (int i=0; i < num_channels; ++i)
+        if (channels[i].sound_num != -1)
+            channels_in_use++;
 
-    for (int i=0; i < MaxChannels; i++)
-        if (SOUND_IsPlaying(i))
-            ChannelsUsed++;
-
-} // Update
+    if (channels_in_use > most_channels_used)
+        most_channels_used = channels_in_use;
+#endif
+}
 
 //---------------------------------------------------------------------------------------
 // Name			: FadeSong
@@ -797,23 +576,23 @@ void CSoundManager::Update(void)
 //				  Speed			Geschwindigkeit und Richtung des Fades
 //				  End			Grenze des Fadens
 //---------------------------------------------------------------------------------------
-
-void CSoundManager::FadeSong(int Nr, float Speed, int End, bool Paused)
+//DKS - Added parameter pause_when_fade_ends
+void SoundManagerClass::FadeSong(int nr, float speed, int end, bool pause_when_fade_ends)
 {
-    //DKS - Added check for NULLness:
-    if (false == InitSuccessfull || its_Songs[Nr] == NULL)
-        return;
-
-    its_Songs[Nr]->FadingVolume	= Speed;
-    its_Songs[Nr]->FadingEnd	= (int)(its_GlobalMusicVolume * End / 100.0f);
-    its_Songs[Nr]->FadingPaused = Paused;
-
     // Einfaden ? Dann ggf den Song erst mal starten, je nach Angabe
     // neu von Anfang an oder Pausierung aufheben
-    if (Speed > 0.0f)
-        PlaySong(Nr, Paused);
 
-} // FadeSong
+    //DKS - If speed of fade is positive, that indicates a song is fading back in and it
+    //      must either be paused or restarted:
+    if (speed > 0.0f && !SongIsPlaying(nr)) {
+        PlaySong(nr, songs[nr].paused);
+        SetSongVolume(nr, 1.0f);
+    }
+
+    songs[nr].fade_speed = speed;
+    songs[nr].fade_end_vol = end;
+    songs[nr].pause_when_fade_ends = (speed < 0.0f) ? pause_when_fade_ends : false;
+}
 
 //---------------------------------------------------------------------------------------
 // Name			: FadeWave
@@ -822,211 +601,183 @@ void CSoundManager::FadeSong(int Nr, float Speed, int End, bool Paused)
 // Parameter	: Nr			Nummer des Waves
 //				  Mode			FadeMode
 //---------------------------------------------------------------------------------------
-
-void CSoundManager::FadeWave(int Nr, int Mode)
+//DKS - altered extensively, it now fades waves of specified "nr" on all channels:
+void SoundManagerClass::FadeWave(int nr, int mode)
 {
-    //DKS - Added check for NULLness:
-    if (false == InitSuccessfull || its_Sounds[Nr] == NULL)
+    int channel = -1;
+
+    if (mode == FADEMODE_IN) {
+        // First, find if the sound is already playing
+        for (int i=0; i < num_channels; ++i) {
+            if (channels[i].sound_num == nr)
+                channel = i;
+        }
+
+        if (channel == -1) {
+            // The sound is not yet playing, so start it with a volume of 1
+            channel = PlayWave(1, 128, 11025, nr);
+        }
+
+        if (channel >= 0)
+            channels[channel].fade_mode = mode;
+    } else {
+        // We are fading out a wave, so find any channels it's currently playing on
+        //  and set their mode:
+        for (int i=0; i < num_channels; ++i) {
+            if (channels[i].sound_num == nr)
+                channels[i].fade_mode = mode;
+        }
+    }
+}
+
+//DKS - Altered extensively, added string support:
+void SoundManagerClass::LoadWave(const string &filename, int nr, bool looped)
+{
+    if (!GameRunning)
         return;
 
-    // Sound soll eingefadet werden?
-    if (Mode == FADEMODE_IN)
-    {
-        // Fadet gerade garnicht? Dann abspielen
-        if (its_Sounds[Nr]->FadeMode == FADEMODE_NON)
-            PlayWave(1, 128, 11025, Nr);
-    }
+    bool         fromrar = false;
+    char         *pData = NULL;
+    unsigned int buf_size = 0;
+    string       fullpath;
 
-    // Sound soll ausgefadet werden?
-    else if (Mode == FADEMODE_OUT)
-    {
-    }
-
-    its_Sounds[Nr]->FadeMode = Mode;
-
-} // FadeWave
-
-//---------------------------------------------------------------------------------------
-// Name			: LoadWave
-// Aufgabe		: Lädt eine Wave Datei
-// Rückgabewert	: Nr der Wavedatei im Array
-// Parameter	: Filename		Dateiname der Wave
-//---------------------------------------------------------------------------------------
-
-bool CSoundManager::LoadWave(const char *Filename, int Nr, bool looped)
-{
-    if(GameRunning == false)
-        return false;
-
-    bool			fromrar;
-    char			*pData;
-    char			Temp[256];
-    unsigned long	Size;
-    char Buffer[100];
-
-    fromrar = false;
-
-    int Nummer = Nr;
-    if (its_Sounds[Nummer] != NULL)
-    {
-        delete(its_Sounds[Nummer]);
-        its_Sounds[Nummer] = NULL;
-    }
-
-    if (false == InitSuccessfull)
-    {
-        /* Need this even if sound output not possible, because lots of code
-           accesses its_Sounds[] */
-        its_Sounds[Nummer] = new CWave();
-
-        return false;
-    }
+    if (sounds[nr].data)
+        UnloadWave(nr);
 
     // Zuerst checken, ob sich der Sound in einem MOD-Ordner befindet
-    if (CommandLineParams.RunOwnLevelList == true)
-    {
-        sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
-        if (FileExists(Temp))
+    if (CommandLineParams.RunOwnLevelList) {
+        //sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
+        fullpath = string(g_storage_ext) + "/levels/" + string(CommandLineParams.OwnLevelList) + "/" + filename;
+
+        if (FileExists(fullpath.c_str()))
             goto loadfile;
     }
 
     //DKS - Sound effects files now reside in new subdir data/sfx/
-    // Dann checken, ob sich das File im Standard Ordner befindet
-    sprintf_s(Temp, "%s/data/sfx/%s", g_storage_ext, Filename);
-    if (FileExists(Temp))
+    //sprintf_s(Temp, "%s/data/sfx/%s", g_storage_ext, Filename);
+    fullpath = string(g_storage_ext) + "/data/sfx/" + filename;
+    if (FileExists(fullpath.c_str()))
         goto loadfile;
 
 #if defined(USE_UNRARLIB)
     // Auch nicht? Dann ist es hoffentlich im RAR file
-    if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
-    {
-        Protokoll.WriteText( true, "\n-> Error loading %s from Archive !\n", Filename );
-        return false;
-    }
-    else
+    if (urarlib_get(&pData, &buf_size, filename.c_str(), RARFILENAME, convertText(RARFILEPASSWORD)) == false) {
+        Protokoll.WriteText( true, "\n-> Error loading %s from Archive !\n", filename.c_str() );
+        return;
+    } else
         fromrar = true;
 #else
-    Protokoll.WriteText( true, "\n-> Error loading %s!\n", Temp );
-    return false;
+    Protokoll.WriteText( true, "\n-> Error: could not find WAV file %s!\n", fullpath.c_str() );
+    return;
 #endif // USE_UNRARLIB
 
 loadfile:
 
-    its_Sounds[Nummer] = new CWave();
-
-    // von Platte laden
-    if (fromrar == false)
-    {
-        if (looped == false)
-            its_Sounds[Nummer]->SoundData = SOUND_Sample_Load(Nr, Temp, FSOUND_LOOP_OFF, 0, Size);
-        else // mit Loop laden
-            its_Sounds[Nummer]->SoundData = SOUND_Sample_Load(Nr, Temp, FSOUND_LOOP_NORMAL, 0, Size);
-    }
-    // aus Rarfile laden
-    else
-    {
-        if (looped == false)
-            its_Sounds[Nummer]->SoundData = SOUND_Sample_Load(Nr, pData, FSOUND_LOADMEMORY | FSOUND_LOOP_OFF, 0, Size);
-        else // mit Loop laden
-            its_Sounds[Nummer]->SoundData = SOUND_Sample_Load(Nr, pData, FSOUND_LOADMEMORY | FSOUND_LOOP_NORMAL, 0, Size);
-
+    if (fromrar) {
+        sounds[nr].data = SOUND_Sample_Load(nr, pData, 
+                (looped ? FSOUND_LOOP_NORMAL : FSOUND_LOOP_OFF) | FSOUND_LOADMEMORY, 0, buf_size);
         free(pData);
+    } else {
+        sounds[nr].data = SOUND_Sample_Load(nr, fullpath.c_str(), 
+                (looped ? FSOUND_LOOP_NORMAL : FSOUND_LOOP_OFF), 0, 0);
     }
 
+    //DKS - This was already commented out in original source:
+#if 0
     // Temp Datei wieder löschen und Speicher freigeben
-    //DeleteFile("temp.dat");
-    //free(pData);
+    DeleteFile("temp.dat");
+    free(pData);
 
     // Und bei bedarf den loop ausschalten
-    //if (looped == false)
-    //	FSOUND_Sample_SetLoopMode(its_Sounds[Nummer]->SoundData, FSOUND_LOOP_OFF);
-
-    // Fehler beim Laden ?
-    //
-    if (its_Sounds[Nummer]->SoundData == NULL)
-    {
-        // TODO FIX
-        /*
-        		strcpy_s(Buffer, "\n-> Error loading ");
-        		strcat_s(Buffer, Filename);
-        		strcat_s(Buffer, "\n");
-        		Protokoll.WriteText( true, Buffer );
-        */
-
-        //	return (-1);
-        return false;
-    }
-
-    its_Sounds[Nummer]->isLooped = looped;
-
-    its_LoadedSounds++;
+    if (looped == false)
+      FSOUND_Sample_SetLoopMode(its_Sounds[Nummer]->SoundData, FSOUND_LOOP_OFF);
 
     //its_Sounds[Nummer].Name = Filename;
+#endif //0
 
+    // Fehler beim Laden ?
+    if (!sounds[nr].data)
+        Protokoll.WriteText( false, "\n-> Error: NULL returned from SOUND_Sample_Load, loading %s\n", filename.c_str() );
+
+    sounds[nr].looped = looped;
+
+    //DKS - No idea why the game did this, I am disabling this:
+#if 0
     // kurz anspielen und wieder stoppen
     int Channel = SOUND_PlaySound   (FSOUND_FREE, its_Sounds[Nr]->SoundData);
     SOUND_SetVolume(Channel, 0);
     SOUND_StopSound(Channel);
+#endif // 0
 
+    //DKS - Already commented out in original source:
+#if 0
     // TODO FIX
     /*
-    		strcpy_s(Buffer, TextArray [TEXT_LADE_WAVE]);
-    		strcat_s(Buffer, Filename);
-    		strcat_s(Buffer, TextArray [TEXT_LADEN_ERFOLGREICH]);
-    		strcat_s(Buffer, " \n");
-    		Protokoll.WriteText( false, Buffer );*/
+            strcpy_s(Buffer, TextArray [TEXT_LADE_WAVE]);
+            strcat_s(Buffer, Filename);
+            strcat_s(Buffer, TextArray [TEXT_LADEN_ERFOLGREICH]);
+            strcat_s(Buffer, " \n");
+            Protokoll.WriteText( false, Buffer );*/
+#endif //0
 
+    //DisplayLoadInfo(Buffer);
+    string loadinfo_str = string(TextArray[TEXT_LADE_WAVE]) + filename +
+                            string(TextArray[TEXT_LADEN_ERFOLGREICH]) + string("\n");
+    DisplayLoadInfo(loadinfo_str.c_str());
+}
 
-    DisplayLoadInfo(Buffer);
-
-    //return Nummer;
-    return true;
-} // LoadWave
-
-//---------------------------------------------------------------------------------------
-// Name			: PlayWave
-// Aufgabe		: Spielt eine Wave Datei
-// Rückgabewert	: true, wenn der Sound gespielt wurde, sonst false
-// Parameter	: Nr des Sounds im Array
-//---------------------------------------------------------------------------------------
-
-bool CSoundManager::PlayWave(int Vol, int Pan, int Freq, int Nr)
+//DKS - Altered extensively:
+int SoundManagerClass::PlayWave(int vol, int pan, int freq, int nr)
 {
-    if (false == InitSuccessfull)
-        return false;
-
-    int Channel;		// Benutzter Channel
-
     // hört man den Sound überhaupt ?
-    //
-    if(Vol == 0 ||
-            its_GlobalSoundVolume == 0)
-        return false;
-
-    //DKS - Added check for NULL on SoundData:
-    if (its_Sounds[Nr] == NULL || its_Sounds[Nr]->SoundData == NULL)
-        return false;
+    if (g_sound_vol == 0 || !sounds[nr].data)
+        return -1;
 
     // Sound spielen
-    //
-    Channel = SOUND_PlaySound   (FSOUND_FREE, its_Sounds[Nr]->SoundData);
+    // DKS - Added looped boolean parameter for SDL port's fmod wrapper, so that
+    //       it no longer has to keep track of which sounds are looped:
+#if defined(PLATFORM_DIRECTX)
+    int channel = SOUND_PlaySound(FSOUND_FREE, sounds[nr].data);
+#else
+    int channel = SOUND_PlaySound(FSOUND_FREE, sounds[nr].data, sounds[nr].looped);
+#endif
 
-    // Kein freier Channel gefunden ?
-    //
-    if (Channel == -1)
-        return false;
-
-    its_Sounds[Nr]->Channel   = Channel;
-    its_Sounds[Nr]->isPlaying = true;;
+    if (channel < 0) {
+#ifdef _DEBUG
+        Protokoll.WriteText( false, "Warning: could not find free channel to play sound #%d\n", nr );
+#endif
+        return -1;
+    } else if (channel >= num_channels) {
+#ifdef _DEBUG
+        Protokoll.WriteText( false, "Warning: SOUND_PlaySound returned channel %d, >= num_channels (%d)\n", channel, num_channels );
+#endif
+        channels.resize(channel+1);       // We should never have to do this if the sound library we're using
+                                          //  numbers channels contiguously & starting at 0, but let's be safe.
+        num_channels = channel+1;
+    }
 
     // Und Werte für den Channel, in dem er gespielt wird, setzen
-    //
-    SOUND_SetFrequency(Channel, Freq);
-    SOUND_SetVolume   (Channel, int(its_GlobalSoundVolume*Vol/100.0f*2.55f));
-    SOUND_SetPan	  (Channel, Pan);
+    // DKS - SetFrequency not supported under SDL:
+#if defined(PLATFORM_DIRECTX)
+    SOUND_SetFrequency(channel, freq);
+#endif
 
-    return true;
-} // PlayWave
+    channels[channel].paused = false;
+    channels[channel].sound_num = nr;
+    channels[channel].fade_mode = FADEMODE_NON;
+    channels[channel].pending_vol = -1;
+    channels[channel].pending_pan = 128;
+    channels[channel].paused = false;
+    channels[channel].is3D = false;     // This will be set to true after returning, if called by PlayWave3D()
+
+    if (channels[channel].vol != vol)
+        SetChannelVolume(channel, vol);
+
+    if (channels[channel].panning != pan)
+        SetChannelPanning(channel, pan);
+
+    return channel;
+}
 
 //---------------------------------------------------------------------------------------
 // Name			: PlayWave3D
@@ -1035,9 +786,11 @@ bool CSoundManager::PlayWave(int Vol, int Pan, int Freq, int Nr)
 // Rückgabewert	: true, wenn der Sound gespielt wurde, sonst false
 // Parameter	: Nr des Sounds im Array
 //---------------------------------------------------------------------------------------
-
-bool CSoundManager::PlayWave3D(int x, int y, int Freq, int Nr)
+int SoundManagerClass::PlayWave3D(int x, int y, int freq, int nr)
 {
+    int   channel = -1;
+
+    //DKS - Functionality here also copied into Update3DChannel()
     int   vol, pan;
     float xdiff, ydiff, Abstand;
 
@@ -1066,182 +819,197 @@ bool CSoundManager::PlayWave3D(int x, int y, int Freq, int Nr)
                 pan = 255;
         }
 
-        PlayWave(vol, pan, Freq, Nr);
+        channel = PlayWave(vol, pan, freq, nr);
     }
 
-    return true;
-} // PlaySound
-
-// --------------------------------------------------------------------------------------
-// Lautstärke eines 3D sounds ändern
-// --------------------------------------------------------------------------------------
-
-void CSoundManager::Update3D (int x, int y, int Nr)
-{
-    //DKS - Added check for NULLness:
-    if (false == InitSuccessfull || its_Sounds[Nr] == NULL)
-        return;
-
-    int   vol, pan;
-    float xdiff, ydiff, Abstand;
-
-    xdiff = ((pPlayer[0]->xpos + 45)  - x);
-    ydiff = ((pPlayer[0]->ypos + 45)  - y);
-
-    //DKS - converted to float:
-    Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
-
-    vol = (int)((100-float(Abstand/6.0f)) / 100.0f * pSoundManager->its_GlobalSoundVolume);
-
-    if (vol < 0)
-        vol = 0;
-    else
-
-        // neuer Wert ist nicht leiser als der alte?
-
-    {
-        // Sound links oder rechts vom Spieler ?
-        if (x < pPlayer[0]->xpos + 45)
-        {
-            pan = 128 - (100 - vol);
-            if (pan < 0)
-                pan = 0;
-        }
-        else
-        {
-            pan = 128 + (100 - vol);
-            if (pan > 255)
-                pan = 255;
-        }
-
-
-        SOUND_SetVolume (its_Sounds[Nr]->Channel, vol);
-        SOUND_SetPan	 (its_Sounds[Nr]->Channel, 128);
+    if (channel != -1) {
+        channels[channel].is3D = true;
+        channels[channel].xpos = x;
+        channels[channel].ypos = y;
     }
+
+    return channel;
 }
 
 // --------------------------------------------------------------------------------------
 // Wavedatei anhalten (falls sie geloopt wird zb)
 // --------------------------------------------------------------------------------------
-
-bool CSoundManager::StopWave(int Nr)
+void SoundManagerClass::StopWave(int nr)
 {
-    //DKS - added check for InitSuccessfull:
-    if (InitSuccessfull == false || its_Sounds[Nr] == NULL)
-        return false;
-
-    if (its_Sounds[Nr]->isPlaying == false)
-        return false;
-
-    SOUND_StopSound(its_Sounds[Nr]->Channel);
-
-    its_Sounds[Nr]->isPlaying = false;
-    its_Sounds[Nr]->Channel	 = -1;
-
-    return true;
+    for (int i=0; i < num_channels; ++i)
+        if (channels[i].sound_num == nr)
+            StopChannel(i);
 }
 
-//DKS - PauseAllSongs() was never used and I've disabled it.
-//      The game seems to use PausePlaying and PlayPaused() for this purpose instead.
-#if 0
-// --------------------------------------------------------------------------------------
-// Alle Songs anhalten (Pause == true) oder wieder abspielen (Pause == false)
-// --------------------------------------------------------------------------------------
-
-void CSoundManager::PauseAllSongs(bool bPause)
+//DKS - Added:
+void SoundManagerClass::UnloadWave(int nr)
 {
-    //DKS - added check for InitSuccessfull:
-    if (InitSuccessfull == false)
-        return;
-
-    // alle pausieren
-    //
-    if (bPause == true)
-    {
-        // Musik stoppen
-        //
-        for (int i = 0; i < MAX_SONGS; i++)
-            if (its_Songs[i] != NULL)
-            {
-                if (MUSIC_IsPlaying(its_Songs[i]->SongData))
-                    MUSIC_SetPaused(its_Songs[i]->SongData, true);
-            }
-
-        // Sounds stoppen
-        //
-        for (int i = 0; i < MAX_SOUNDS; i++)
-            if (its_Sounds[i] != NULL)
-                StopWave(i);
-    }
-
-    // alle wieder spielen lassen
-    //
-    else
-    {
-        // Musik weiter spielen
-        //
-        for (int i = 0; i < MAX_SONGS; i++)
-            if (its_Songs[i] != NULL)
-            {
-                MUSIC_SetPaused(its_Songs[i]->SongData, false);
-            }
+    if (sounds[nr].data) {
+        SOUND_Sample_Free(sounds[nr].data);
+        sounds[nr].data = NULL;
     }
 }
-#endif //0
+
+//DKS - Added:
+void SoundManagerClass::PauseSounds()
+{
+    for (int i = 0; i < num_channels; ++i) {
+        channels[i].paused = channels[i].sound_num != -1 && SOUND_IsPlaying(i);
+
+        if (channels[i].paused)
+            SOUND_SetPaused(i, true);
+    }
+}
+
+//DKS - Added:
+void SoundManagerClass::UnpauseSounds()
+{
+    for (int i = 0; i < num_channels; ++i) {
+        if (channels[i].paused) {
+            //DKS - In case sound levels were adjusted after this channel had been paused:
+            SOUND_SetVolume(i, int(g_sound_vol*channels[i].vol*(2.55f/100.0f)));
+            SOUND_SetPaused(i, false);
+            channels[i].paused = false;
+        }
+    }
+}
 
 // --------------------------------------------------------------------------------------
 // Alle Songs anhalten, die gerade spielen und diese merken
 // --------------------------------------------------------------------------------------
-
-void CSoundManager::PausePlaying(void)
+void SoundManagerClass::PauseSongs()
 {
-    //DKS - added check for InitSuccessfull:
-    if (InitSuccessfull == false)
-        return;
+    for (int i = 0; i < MAX_SONGS; ++i) {
+        songs[i].was_playing = !songs[i].paused && SongIsPlaying(i);
 
-    for (int i = 0; i < MAX_SONGS; i++) {
-        WasPlaying[i] = false;
-
-        //DKS - Added check for NULL for SongData:
-        if (its_Songs[i] != NULL && its_Songs[i]->SongData != NULL) {
-            //DKS - Added boolean to specify if a song is paused or not:
-            //WasPlaying[i] = (MUSIC_IsPlaying(its_Songs[i]->SongData) &&
-            //                 MUSIC_GetPaused(its_Songs[i]->SongData) == false);
-            WasPlaying[i] = MUSIC_IsPlaying(its_Songs[i]->SongData) && !its_Songs[i]->isPaused;
-
-            if (WasPlaying[i])
-                StopSong(i, true);
-        }
+        if (songs[i].was_playing)
+            StopSong(i, true);      //DKS - Pause the song (2nd param to StopSong() is true)
     }
 }
 
 // --------------------------------------------------------------------------------------
 // Alle Songs wieder spielen, die vorher angehalten wurden
 // --------------------------------------------------------------------------------------
-
-void CSoundManager::PlayPaused(void)
+void SoundManagerClass::UnpauseSongs()
 {
-    //DKS - added check for InitSuccessfull:
-    if (InitSuccessfull == false)
-        return;
-
-    for (int i = 0; i < MAX_SONGS; i++)
-        if (WasPlaying[i] && its_Songs[i] != NULL && its_Songs[i]->SongData != NULL)
-        {
-            //DKS - Now it uses PlaySong() so new boolean isPlaying is handled:
-            //MUSIC_SetPaused(its_Songs[i]->SongData, false);
-            PlaySong(i, true);
-        }
+    for (int i=0; i < MAX_SONGS; ++i)
+        if (songs[i].was_playing)
+            PlaySong(i, true);      //DKS - Unpause the song (2nd param to PlaySong() is true)
 }
 
 //DKS - Added new function to check if a song is playing. Before, many parts of the
 //      game were calling MUSIC_IsPlaying() directly against SoundData, which would
 //      segfault if music wasn't initialized or a specific song wasn't loaded and
 //      SoundData was thus NULL.
-bool CSoundManager::SongIsPlaying(int Nr)
+bool SoundManagerClass::SongIsPlaying(int nr)
 {
-    if ( !InitSuccessfull || !its_Songs[Nr] || !its_Songs[Nr]->SongData )
+    return songs[nr].data && !songs[nr].paused && MUSIC_IsPlaying(songs[nr].data);
+}
+
+//DKS - Added:
+bool SoundManagerClass::SongIsPaused(int nr)
+{
+    return songs[nr].paused;
+}
+
+//DKS - Added:
+void SoundManagerClass::StopChannel(int ch)
+{
+    if (channels[ch].sound_num != -1) {
+        SOUND_StopSound(ch);
+        channels[ch].sound_num = -1;
+    }
+
+    channels[ch].fade_mode = FADEMODE_NON;
+    channels[ch].pending_vol = -1;
+    channels[ch].pending_pan = 128;
+    channels[ch].paused = false;
+    channels[ch].is3D = false;
+}
+
+//DKS - Added:
+void SoundManagerClass::SetChannelVolume(int ch, float new_vol)
+{
+    channels[ch].vol = new_vol;
+    SOUND_SetVolume(ch, int(g_sound_vol*new_vol*(2.55f/100.0f)));
+}
+
+//DKS - Added:
+void SoundManagerClass::SetChannelPanning(int ch, int pan)
+{
+    channels[ch].panning = pan;
+    SOUND_SetPan(ch, pan);
+}
+
+//DKS - Added:
+bool SoundManagerClass::WaveIsPlaying(int nr)
+{
+    for (int i=0; i < num_channels; ++i)
+        if (channels[i].sound_num == nr)
+            return true;
+    return false;
+}
+
+//DKS - Added, primarily to allow Trigger_Stampfstein to have its chain sound.
+bool SoundManagerClass::WaveIsPlayingOnChannel(int nr, int ch)
+{
+    if (ch == -1 || nr == -1)
         return false;
 
-    return MUSIC_IsPlaying(its_Songs[Nr]->SongData);
+    return channels[ch].sound_num == nr && SOUND_IsPlaying(ch);
 }
+
+
+//DKS - Added:
+int  SoundManagerClass::GetChannelWaveIsPlayingOn(int nr)
+{
+    int channel = -1;
+
+    for (int i=0; i < num_channels; ++i)
+        if (channels[i].sound_num == nr)
+            channel = i;
+
+    return channel;
+}
+
+//DKS - There are often multiple sound triggers close to one another and they
+//      interfere with one another. (An example being dozens of triggers leading
+//      to a single waterfall, or several waterfalls being close together).
+//      I added this function that will accept these multiple requests
+//      and create an averaged result from all of them.
+void SoundManagerClass::SetPendingChannelVolumeAndPanning(int ch, int new_vol, int new_pan)
+{
+    static int num_pans = 0;
+    static int accumulated_pan = 0;
+
+    // pending_vol is set to -1 in UpdateChannels(), and remains so until this function
+    //  gets called at least once:
+    if (channels[ch].pending_vol < 0) {
+        channels[ch].pending_vol = 0;
+
+        // This is the first vol/pan request for this channel since channels were last updated,
+        //  so reset the pan-request counter and any accumulated value:
+        num_pans = 0;
+        accumulated_pan = 0;
+    }
+    
+    if (new_vol > channels[ch].pending_vol)
+        channels[ch].pending_vol = new_vol;
+
+    if (channels[ch].pending_vol > 0) {
+        // If this pan request had a non-zero volume, average the total pans together with it:
+        num_pans++;
+        accumulated_pan += new_pan;
+        channels[ch].pending_pan = (int)((float)accumulated_pan / (float)num_pans);
+    }
+}
+
+//DKS - added.. (Playing waves and varying freq's not supported under SDL, for now anyway)
+#if defined(PLATFORM_DIRECTX)
+void SoundManagerClass::SetWaveFrequency(int nr, int freq)
+{
+    for (int i=0; i < num_channels; ++i)
+        if (channels[i].sound_num == nr)
+            SOUND_SetFrequency(i, freq);
+}
+#endif

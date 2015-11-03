@@ -65,7 +65,7 @@ void GegnerSideRocket::DoKI(void)
         {
             AnimCount = 0.1f;
             Handlung  = GEGNER_LAUFEN;
-            pSoundManager->PlayWave(75, 128, 8000 + rand ()%4000, SOUND_ROCKET);
+            SoundManager.PlayWave(75, 128, 8000 + rand ()%4000, SOUND_ROCKET);
 
             if (Value1 == 0)
             {
@@ -132,7 +132,7 @@ void GegnerSideRocket::DoKI(void)
 
 void GegnerSideRocket::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 8000 + rand ()%4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave (100, 128, 8000 + rand ()%4000, SOUND_EXPLOSION1);
 
     pPartikelSystem->PushPartikel (xPos - 10, yPos - 20, EXPLOSION_MEDIUM2);
 

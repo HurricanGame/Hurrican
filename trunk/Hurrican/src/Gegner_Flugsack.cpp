@@ -88,7 +88,7 @@ void GegnerFlugsack::DoKI(void)
             ShotCount -= 1.0f SYNC;
             if (ShotCount < 0.0f)
             {
-                pSoundManager->PlayWave(100, 128, 11025, SOUND_CANON);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_CANON);
 
                 if (BlickRichtung == LINKS)
                 {
@@ -135,7 +135,7 @@ void GegnerFlugsack::DoKI(void)
                 AnimCount == 0.0f && AnimPhase%2 == 0 && rand()%2 == 0)
         {
             pPartikelSystem->PushPartikel(xPos+rand()%80-30, yPos+rand()%70-30, EXPLOSION_MEDIUM2);
-            pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION1);
+            SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION1);
         }
     }
     break;
@@ -181,7 +181,7 @@ void GegnerFlugsack::GegnerExplode(void)
     for (int i=0; i<5; i++)
         pPartikelSystem->PushPartikel(xPos+rand()%40+20, yPos+rand()%30+20, SPLITTER);
 
-    pSoundManager->PlayWave(75, 128, 11025 + rand()%2000, SOUND_EXPLOSION4);	// Sound ausgeben
+    SoundManager.PlayWave(75, 128, 11025 + rand()%2000, SOUND_EXPLOSION4);	// Sound ausgeben
 
     pPlayer[0]->Score += 225;
 }

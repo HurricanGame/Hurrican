@@ -187,7 +187,7 @@ void GegnerFledermaus::GegnerExplode(void)
 
     pPartikelSystem->PushPartikel(xPos - 5, yPos - 5, EXPLOSION_MEDIUM2);
 
-    pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
     pPlayer[0]->Score += 100;
 }

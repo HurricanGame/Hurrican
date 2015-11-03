@@ -68,7 +68,7 @@ void GegnerRiesenRaupe::DoKI(void)
                 pProjectiles->PushProjectile(xPos + 30,   yPos - 2, PFLANZESHOT, pAim);
                 pProjectiles->PushProjectile(xPos + 120,  yPos - 2, PFLANZESHOT, pAim);
 
-                pSoundManager->PlayWave(100, 128, 11025, SOUND_ROCKET);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_ROCKET);
             }
         }
     }
@@ -136,7 +136,7 @@ void GegnerRiesenRaupe::GegnerExplode(void)
     for (int i=0; i<300; i++)
         pPartikelSystem->PushPartikel(xPos + rand()%180-10, yPos + rand()%50, ROCKETSMOKE);
 
-    pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION3);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION3);	// Sound ausgeben
 
     pPlayer[0]->Score += 250;
 }

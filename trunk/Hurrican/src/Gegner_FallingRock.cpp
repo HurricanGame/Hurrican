@@ -68,7 +68,7 @@ void GegnerFallingRock::DoKI(void)
                 }
 
                 // Sound ausgeben
-                pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEFALL);
+                SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEFALL);
 
                 Handlung = GEGNER_FALLEN;
                 ySpeed =  0.0f;
@@ -95,7 +95,7 @@ void GegnerFallingRock::GegnerExplode(void)
         pPartikelSystem->PushPartikel(xPos + rand()%80-12, yPos + rand()%40, ROCKSPLITTER);
         pPartikelSystem->PushPartikel(xPos + rand()%80-12, yPos + rand()%40, ROCKSPLITTERSMALL);
     }
-    pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEEXPLODE);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEEXPLODE);	// Sound ausgeben
 
     pPlayer[0]->Score += 100;
 }

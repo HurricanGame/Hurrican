@@ -67,7 +67,7 @@ void GegnerKrabblerOben::DoKI(void)
             Handlung = GEGNER_SCHIESSEN;
             pProjectiles->PushProjectile(xPos + 24, yPos + 48, KRABBLERLASER1);
             pPartikelSystem->PushPartikel(xPos - 1, yPos + 44, LASERFLAME);
-            pSoundManager->PlayWave3D(int(xPos + 25), int(yPos + 37), 44100, SOUND_LASERSHOT);
+            SoundManager.PlayWave3D(int(xPos + 25), int(yPos + 37), 44100, SOUND_LASERSHOT);
             AnimPhase = 10;
             AnimEnde  = 14;
             AnimStart = 0;
@@ -105,7 +105,7 @@ void GegnerKrabblerOben::GegnerExplode(void)
         pPartikelSystem->PushPartikel(float(xPos - 15) + rand()%20,
                                       float(yPos - 15) + rand()%40, EXPLOSION_MEDIUM3);
 
-    pSoundManager->PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 
     pPlayer[0]->Score += 300;
 }

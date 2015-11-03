@@ -79,7 +79,7 @@ void GegnerBrockelRock::DoKI(void)
 
             // Sound ausgeben
             //
-            pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEFALL);
+            SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEFALL);
             Handlung = GEGNER_FALLEN;
             yAcc     =  4.0f;
         }
@@ -126,5 +126,5 @@ void GegnerBrockelRock::GegnerExplode(void)
         pPartikelSystem->PushPartikel(xPos + rand()%80-12, yPos + rand()%40, ROCKSPLITTERSMALL);
     }
 
-    pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEEXPLODE);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEEXPLODE);	// Sound ausgeben
 }

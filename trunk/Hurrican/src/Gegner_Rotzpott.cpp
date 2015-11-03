@@ -162,7 +162,7 @@ void GegnerRotzpott::DoKI(void)
         if (pAim->ypos > yPos + 30)
         {
             ShotDelay = 9.0f;
-            pSoundManager->PlayWave(100, 128, 16000 + rand()%500, SOUND_LASERSHOT);
+            SoundManager.PlayWave(100, 128, 16000 + rand()%500, SOUND_LASERSHOT);
             WinkelUebergabe = 360.0f - GunWinkel + ((float)(rand()%10 - 5)) / 2.0f;
             //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
             //pProjectiles->PushProjectile(xPos + 20.0f - (float)sin((180 - GunWinkel) / 180.0f * PI) * 25.0f,
@@ -173,7 +173,7 @@ void GegnerRotzpott::DoKI(void)
         else
         {
             ShotDelay = 7.0f;
-            pSoundManager->PlayWave(100, 128, 24000 + rand()%500, SOUND_LASERSHOT);
+            SoundManager.PlayWave(100, 128, 24000 + rand()%500, SOUND_LASERSHOT);
             WinkelUebergabe = 360.0f - GunWinkel;
             //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
             //pProjectiles->PushProjectile(xPos + 24.0f - (float)sin((180 - GunWinkel) / 180.0f * PI) * 45.0f,
@@ -192,7 +192,7 @@ void GegnerRotzpott::DoKI(void)
 
 void GegnerRotzpott::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
     //int i = 0;
     for (int i = 0; i < 8; i++)

@@ -90,7 +90,7 @@ void GegnerStarSmall::GegnerExplode(void)
     for (int i = 0; i < 8; i++)
         pPartikelSystem->PushPartikel (xPos+rand()%40, yPos+rand()%40, LONGFUNKE);
 
-    pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
     pPlayer[0]->Score += 150;		// Punkte geben
 }

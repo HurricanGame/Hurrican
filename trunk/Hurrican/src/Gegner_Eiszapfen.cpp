@@ -28,7 +28,7 @@ GegnerEiszapfen::GegnerEiszapfen(int Wert1, int Wert2, bool Light)
         ySpeed = 30.0f;
         yAcc   = 5.0f;
 
-        pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEFALL);
+        SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEFALL);
     }
 }
 
@@ -52,7 +52,7 @@ void GegnerEiszapfen::DoKI(void)
             ySpeed = 30.0f;
             yAcc   = 5.0f;
 
-            pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEFALL);
+            SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEFALL);
 
 
             for (int i=0; i < 15; i++)
@@ -92,7 +92,7 @@ void GegnerEiszapfen::DoKI(void)
 
 void GegnerEiszapfen::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
+    SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i=0; i < 30; i++)
     {

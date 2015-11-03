@@ -183,7 +183,7 @@ void GegnerExtras::DoKI(void)
                                 pCollector->ypos + 40.0f - 6.0f + cos_deg(p)*r, KRINGELR + Value1, pCollector);
                     }
 
-                    pSoundManager->PlayWave (100, 128, 11025, SOUND_UPGRADE);
+                    SoundManager.PlayWave (100, 128, 11025, SOUND_UPGRADE);
                     pCollector->BlinkCounter = 9.5f;
                     pCollector->BlinkColor = Value1+1;
                 }
@@ -232,7 +232,7 @@ void GegnerExtras::DoKI(void)
                                 pCollector->ypos + 40.0f - 6.0f + cos_deg(p)*r, KRINGELHB, pCollector);
                     }
 
-                    pSoundManager->PlayWave (100, 128, 11025, SOUND_UPGRADE);
+                    SoundManager.PlayWave (100, 128, 11025, SOUND_UPGRADE);
                     pCollector->BlinkCounter = 9.5f;
                     pCollector->BlinkColor = 4;
                 }
@@ -287,7 +287,7 @@ void GegnerExtras::DoKI(void)
 
         Energy = 0.0f;
 
-        pSoundManager->PlayWave(100, 128, 11025, SOUND_VOICE_SPREAD + Value1);	// Sound ausgeben
+        SoundManager.PlayWave(100, 128, 11025, SOUND_VOICE_SPREAD + Value1);	// Sound ausgeben
 
         switch (Value1)
         {
@@ -295,21 +295,21 @@ void GegnerExtras::DoKI(void)
         case 1 :
         case 2 :
         case 4 :
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_COLLECT);	// Sound ausgeben
+            SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);	// Sound ausgeben
             break;
 
         case 8  :
         case 9  :
         case 10 :
-            pSoundManager->PlayWave(100, 128, 11000 + rand ()%1000, SOUND_AMMO);	// Sound ausgeben
+            SoundManager.PlayWave(100, 128, 11000 + rand ()%1000, SOUND_AMMO);	// Sound ausgeben
             break;
 
         default :
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_COLLECT);	// Sound ausgeben
+            SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);	// Sound ausgeben
             break;
         }
 
-        pSoundManager->PlayWave(100, 128, 11025, SOUND_COLLECT);	// Sound ausgeben
+        SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);	// Sound ausgeben
     }
 }
 

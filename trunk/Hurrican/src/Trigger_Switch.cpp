@@ -47,7 +47,7 @@ void GegnerSwitch::DoKI(void)
             AnimPhase = 1;
             Handlung = GEGNER_LAUFEN;
 
-            pSoundManager->PlayWave (100, 128, 11025, SOUND_SWITCH);
+            SoundManager.PlayWave (100, 128, 11025, SOUND_SWITCH);
 
             // Und prüfen, ob ein Objekt aktiviert wird
             GegnerClass *pTemp = pGegner->pStart;			// Anfang der Liste

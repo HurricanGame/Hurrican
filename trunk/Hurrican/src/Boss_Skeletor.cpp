@@ -42,7 +42,7 @@ GegnerSkeletor::GegnerSkeletor(int Wert1, int Wert2, bool Light)
 void GegnerSkeletor::Laugh()
 {
     AnimPhase = 2;
-    pSoundManager->PlayWave(100, 128, 11025, SOUND_LAUGH);
+    SoundManager.PlayWave(100, 128, 11025, SOUND_LAUGH);
 
     xSpeed = 0.0f;
     ySpeed = 0.0f;
@@ -177,7 +177,7 @@ void GegnerSkeletor::DoKI(void)
         pTileEngine->ScrollLevel((float)Value1,
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
-        pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
 
     // Je nach Handlung richtig verhalten
@@ -202,7 +202,7 @@ void GegnerSkeletor::DoKI(void)
         if (AnimCount > 10.0f &&
                 AnimPhase == 0)
         {
-            //pSoundManager->PlayWave(100, 128, 11025, SOUND_STANDUP);
+            //SoundManager.PlayWave(100, 128, 11025, SOUND_STANDUP);
             AnimPhase = 1;
         }
 
@@ -212,7 +212,7 @@ void GegnerSkeletor::DoKI(void)
             AnimPhase = 2;
 
             if (HasLaughed == false)
-                pSoundManager->PlayWave(100, 128, 11025, SOUND_LAUGH);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_LAUGH);
         }
 
         if (AnimCount > 25.0f)
@@ -221,7 +221,7 @@ void GegnerSkeletor::DoKI(void)
             if (HasLaughed == false)
             {
                 HasLaughed = true;
-                pSoundManager->PlaySong(MUSIC_BOSS, false);
+                SoundManager.PlaySong(MUSIC_BOSS, false);
             }
         }
 
@@ -297,7 +297,7 @@ void GegnerSkeletor::DoKI(void)
         if (ShotDelay < 0.0f)
         {
             WinkelUebergabe = 2.0f * ShotCount + 8.0f;
-            pSoundManager->PlayWave(100, 128, 10000 + rand()%2000, SOUND_ROCKET);
+            SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_ROCKET);
             pProjectiles->PushProjectile(xPos + 50.0f, yPos + 80.0f, TURRIEXTRAWURST);
 
             ShotDelay = 3.0f;
@@ -373,7 +373,7 @@ void GegnerSkeletor::DoKI(void)
             if (xPos + 62.0f>  Value1 + 300 &&
                     xPos + 62.0f < Value1 + 340)
             {
-                pSoundManager->PlayWave(100, 128, 8000 + rand()%2000, SOUND_FIREBALL);
+                SoundManager.PlayWave(100, 128, 8000 + rand()%2000, SOUND_FIREBALL);
                 ShotCount = 0;
 
                 for (int i = 0; i < 5; i++)
@@ -406,7 +406,7 @@ void GegnerSkeletor::DoKI(void)
                 pPartikelSystem->PushPartikel(xPos + rand()%100, yPos + 180 + rand()%10, SPIDERSPLITTER);
 
             ShakeScreen(5.0f);
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_DOORSTOP);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_DOORSTOP);
         }
     }
     break;
@@ -433,7 +433,7 @@ void GegnerSkeletor::DoKI(void)
                     off = -95;
 
                 AnimCount = 1.5f;
-                pSoundManager->PlayWave(100, 128, 6000 + rand()%2000, SOUND_GRANATE);
+                SoundManager.PlayWave(100, 128, 6000 + rand()%2000, SOUND_GRANATE);
                 pPartikelSystem->PushPartikel(xPos + 50 + off, yPos + 35, EXPLOSIONFLARE);
                 pPartikelSystem->PushPartikel(xPos + 50 + off, yPos + 35, EXPLOSIONFLARE);
 
@@ -495,7 +495,7 @@ void GegnerSkeletor::DoKI(void)
             pPartikelSystem->PushPartikel(xPos + off, yPos + 75, BULLET_SKELETOR);
 
             // Sound
-            pSoundManager->PlayWave(100, 128, 10000 + rand()%400, SOUND_GATLING);
+            SoundManager.PlayWave(100, 128, 10000 + rand()%400, SOUND_GATLING);
 
             // Schuss
             WinkelUebergabe = GunWinkel + rand()%4 - 2;
@@ -523,7 +523,7 @@ void GegnerSkeletor::DoKI(void)
         {
             // Boss erscheinen lassen
             //
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_STONEFALL);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_STONEFALL);
             Handlung = GEGNER_EINFLIEGEN;
             xSpeed = 0.0f;
             ySpeed = 80.0f;
@@ -551,7 +551,7 @@ void GegnerSkeletor::DoKI(void)
                 pPartikelSystem->PushPartikel(xPos + rand()%100, yPos + 180 + rand()%10, SPIDERSPLITTER);
 
             ShakeScreen(5.0f);
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_DOORSTOP);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_DOORSTOP);
         }
     }
     break;
@@ -605,12 +605,12 @@ void GegnerSkeletor::DoKI(void)
                                           EXPLOSION_MEDIUM2);
 
         pPartikelSystem->PushPartikel (xPos + 62, yPos + 100, SHOCKEXPLOSION);
-        pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+        SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
         pPlayer[0]->Score += 12500;
         ShakeScreen(5.0f);
 
         // Endboss-Musik ausfaden und abschalten
-        pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
     }
 
     TestDamagePlayers(10.0f SYNC);

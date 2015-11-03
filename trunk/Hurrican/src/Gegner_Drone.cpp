@@ -133,7 +133,7 @@ void GegnerDrone::DoKI(void)
 
             ShotDelay = 20.0f;
 
-            pSoundManager->PlayWave3D (int (xPos), int (yPos), 12000, SOUND_DRONE);
+            SoundManager.PlayWave3D (int (xPos), int (yPos), 12000, SOUND_DRONE);
 
             pPartikelSystem->PushPartikel (xPos + 33, yPos + 60, BULLET, pPlayer[0]);
 
@@ -170,7 +170,7 @@ void GegnerDrone::DoKI(void)
         //
         if (ShotDelay <= 0.0f && PlayerAbstand() < 600)
         {
-            pSoundManager->PlayWave3D (int (xPos), int (yPos), 12000, SOUND_DRONE);
+            SoundManager.PlayWave3D (int (xPos), int (yPos), 12000, SOUND_DRONE);
             ShotDelay = 20.0f;
             ShotCount--;
 
@@ -248,7 +248,7 @@ void GegnerDrone::DoKI(void)
 
 void GegnerDrone::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
+    SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
 
     for (int i = 0; i < 5; i++)
     {

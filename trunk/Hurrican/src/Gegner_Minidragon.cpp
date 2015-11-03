@@ -144,7 +144,7 @@ void GegnerMiniDragon::DoKI(void)
             AnimEnde = 0;
             AnimPhase = 0;
 
-            pSoundManager->PlayWave (100, 128, 8000 + rand()%8000, SOUND_EXPLOSION1);
+            SoundManager.PlayWave (100, 128, 8000 + rand()%8000, SOUND_EXPLOSION1);
 
             //int i = 0;
             for (int i = 0; i < 10; i++)
@@ -191,11 +191,12 @@ void GegnerMiniDragon::DoKI(void)
                     yAcc   =  2.0f;
                 }
 
-                if (pSoundManager->its_Sounds[SOUND_STEAM]->isPlaying == false &&
-                        pSoundManager->its_Sounds[SOUND_SPIDERSCREAM]->isPlaying == false)
+                //DKS - Added function WaveIsPlaying() to SoundManagerClass:
+                if (!SoundManager.WaveIsPlaying(SOUND_STEAM) &&
+                        !SoundManager.WaveIsPlaying(SOUND_SPIDERSCREAM))
                 {
-                    pSoundManager->PlayWave(80, 128, 11025, SOUND_STEAM);
-                    pSoundManager->PlayWave(80, 128, 18000, SOUND_SPIDERSCREAM);
+                    SoundManager.PlayWave(80, 128, 11025, SOUND_STEAM);
+                    SoundManager.PlayWave(80, 128, 18000, SOUND_SPIDERSCREAM);
                 }
 
                 Destroyable = true;
@@ -234,7 +235,7 @@ void GegnerMiniDragon::DoKI(void)
             else
                 WinkelUebergabe = 1.0f;
 
-            pSoundManager->PlayWave(100, 128, 11000 + rand()%2000, SOUND_FIREBALL);
+            SoundManager.PlayWave(100, 128, 11000 + rand()%2000, SOUND_FIREBALL);
 
             WinkelUebergabe = 90.0f * BlickRichtung;
             pProjectiles->PushProjectile(xPos + BlickRichtung * 10.0f, yPos, FIREBALL);
@@ -287,7 +288,7 @@ void GegnerMiniDragon::DoKI(void)
             muly = (OldY - yPos) / 6.0f;
             mulx = (OldX - xPos) / 6.0f;
 
-            pSoundManager->PlayWave (100, 128, 8000 + rand()%8000, SOUND_EXPLOSION1);
+            SoundManager.PlayWave (100, 128, 8000 + rand()%8000, SOUND_EXPLOSION1);
             pPartikelSystem->PushPartikel(xPos + (6 - Segments) * mulx,
                                           yPos + (6 - Segments) * muly, EXPLOSION_MEDIUM2);
 
@@ -321,7 +322,7 @@ void GegnerMiniDragon::DoKI(void)
         xAcc = 0.0f;
         yAcc = 0.0f;
 
-        pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
+        SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
         pPartikelSystem->PushPartikel(xPos - 26,
                                       yPos - 22, EXPLOSION_BIG);
     }

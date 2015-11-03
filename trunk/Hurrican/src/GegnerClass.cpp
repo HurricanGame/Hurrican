@@ -270,9 +270,9 @@ bool GegnerClass::Run(void)
                     pPlayer[p]->Armour -= float(3.0 SYNC);	// Spieler verliert Rad Energie
 
                 // Hit Sound
-                if (true == pSoundManager->InitSuccessfull &&
-                        !(pSoundManager->its_Sounds[SOUND_HIT + HitSound]->isPlaying))
-                    pSoundManager->PlayWave(100, 128, 22050, SOUND_HIT + HitSound);
+                //DKS - Added function WaveIsPlaying() to SoundManagerClass:
+                if (!SoundManager.WaveIsPlaying(SOUND_HIT + HitSound))
+                    SoundManager.PlayWave(100, 128, 22050, SOUND_HIT + HitSound);
             }
         }
     }
@@ -2690,8 +2690,9 @@ void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage)
             pTemp->ySpeed   = 20.0f;
             pTemp->yAcc     = 15.0f;
 
-            if (pSoundManager->its_Sounds[SOUND_STONEFALL]->isPlaying == false)
-                pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_STONEFALL);
+            //DKS - Added function WaveIsPlaying() to SoundManagerClass:
+            if (!SoundManager.WaveIsPlaying(SOUND_STONEFALL))
+                SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_STONEFALL);
         }
 
         // Gegner in der Nähe? Dann Energie abziehen

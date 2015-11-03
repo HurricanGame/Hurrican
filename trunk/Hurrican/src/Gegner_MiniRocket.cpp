@@ -157,7 +157,7 @@ void GegnerMiniRocket::DoKI(void)
 
 void GegnerMiniRocket::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 8000 + rand ()%4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave (100, 128, 8000 + rand ()%4000, SOUND_EXPLOSION1);
 
     int i = 0;
     for (i=0; i < 5; i++)

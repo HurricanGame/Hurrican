@@ -96,7 +96,7 @@ void GegnerPresswurst::DoKI(void)
                 yAcc = 2.5f;
 
                 if (PlayerAbstand(true) < 600)
-                    pSoundManager->PlayWave3D((int)(xPos + 90), (int)(yPos + 330), 11025, SOUND_PRESSE);
+                    SoundManager.PlayWave3D((int)(xPos + 90), (int)(yPos + 330), 11025, SOUND_PRESSE);
             }
     }
     break;
@@ -149,7 +149,7 @@ void GegnerPresswurst::DoKI(void)
             SmokeCount = 5.0f;
 
             if (PlayerAbstand() < 600)
-                pSoundManager->PlayWave3D((int)(xPos + 90), (int)(yPos + 330), 11025, SOUND_DOORSTOP);
+                SoundManager.PlayWave3D((int)(xPos + 90), (int)(yPos + 330), 11025, SOUND_DOORSTOP);
 
             ShakeScreen(2.0f);
 
@@ -180,7 +180,7 @@ void GegnerPresswurst::DoKI(void)
             Handlung  = GEGNER_SPECIAL2;
             AnimCount = 28.0f;
             if (PlayerAbstand() < 600)
-                pSoundManager->PlayWave3D((int)(xPos + 90), (int)(yPos + 330), 13000, SOUND_STEAM2);
+                SoundManager.PlayWave3D((int)(xPos + 90), (int)(yPos + 330), 13000, SOUND_STEAM2);
         }
     }
     break;
@@ -211,7 +211,7 @@ void GegnerPresswurst::DoKI(void)
             yAcc     = 0.2f;
 
             if (PlayerAbstand() < 600)
-                pSoundManager->PlayWave3D((int)(xPos + 90), (int)(yPos + 330), 11025, SOUND_PRESSE);
+                SoundManager.PlayWave3D((int)(xPos + 90), (int)(yPos + 330), 11025, SOUND_PRESSE);
         }
     }
     break;

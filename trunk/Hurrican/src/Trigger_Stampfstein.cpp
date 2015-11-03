@@ -23,6 +23,13 @@ GegnerStampfstein::GegnerStampfstein(int Wert1, int Wert2, bool Light)
     Destroyable		= true;
     OwnDraw			= true;
     oldy			= 0.0f;
+
+    //DKS - The chain retracting sound was disabled in the original code, but I've
+    //      added it back in. In order to allow this, we must keep track of which
+    //      channel this particular stampfstein's chain sound is playing on, so that
+    //      multiple stampfsteins can play and the correct one will be stopped when
+    //      fully retracted. (-1 means it is not playing)
+    sfx_chain_channel = -1;
 }
 
 // --------------------------------------------------------------------------------------
@@ -93,7 +100,7 @@ void GegnerStampfstein::DoKI(void)
                 ySpeed   = 20.0f;
                 yAcc     = 15.0f;
 
-                pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_STONEFALL);
+                SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_STONEFALL);
             }
         }
     }
@@ -133,7 +140,7 @@ void GegnerStampfstein::DoKI(void)
             for (int i=0; i < 20; i++)
                 pPartikelSystem->PushPartikel (xPos + i * 5 - 10, yPos + 236, ROCKSPLITTER + rand()%2);
 
-            pSoundManager->PlayWave(175, 128, 8000 + rand()%4000, SOUND_PHARAORAMM);
+            SoundManager.PlayWave(175, 128, 8000 + rand()%4000, SOUND_PHARAORAMM);
 
             ySpeed = 0.0f;
             yAcc   = 0.0f;
@@ -172,8 +179,15 @@ void GegnerStampfstein::DoKI(void)
             Handlung = GEGNER_SPRINGEN;
 
             // Hochzieh Sound
-//				if (pSoundManager->its_Sounds[SOUND_CHAIN]->isPlaying == false)
-//					pSoundManager->PlayWave(100, 128, 11000 + rand()%50, SOUND_CHAIN);
+//				if (SoundManager.its_Sounds[SOUND_CHAIN]->isPlaying == false)
+//					SoundManager.PlayWave(100, 128, 11000 + rand()%50, SOUND_CHAIN);
+
+            //DKS - Chain retracting sound was commented out (above) in the original code,
+            //      but I've added support for it. Since multiple trigger stampfsteins
+            //      (falling blocks on chains) can be retracting at once, each one must
+            //      keep track of which channel its chain sound is playing on, so when it
+            //      is fully retracted, the correct sound channel is halted:
+            sfx_chain_channel = SoundManager.PlayWave3D((int)xPos + 40, (int)yPos + 20, 11025, SOUND_CHAIN);
         }
     }
     break;
@@ -184,14 +198,20 @@ void GegnerStampfstein::DoKI(void)
     {
         PlattformTest(GegnerRect[GegnerArt]);
 
-//			pSoundManager->Update3D((int)(xPos + 40), (int)(yPos + 20), SOUND_CHAIN);
+//			SoundManager.Update3D((int)(xPos + 40), (int)(yPos + 20), SOUND_CHAIN);
 
         if (blocko & BLOCKWERT_WAND)
         {
             Handlung = GEGNER_STEHEN;
             ySpeed   = 0.0f;
 
-//				pSoundManager->StopWave(SOUND_CHAIN);
+//				SoundManager.StopWave(SOUND_CHAIN);
+
+            //DKS - Added support for chain retracting sound back into original source:
+            if (sfx_chain_channel != -1 && SoundManager.WaveIsPlayingOnChannel(SOUND_CHAIN, sfx_chain_channel)) {
+                SoundManager.StopChannel(sfx_chain_channel);
+                sfx_chain_channel = -1;
+            }
         }
 
         // Spieler zwischen Decke und Stein eingeklemmt?

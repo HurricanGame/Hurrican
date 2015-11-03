@@ -109,7 +109,7 @@ void GegnerRoboMan1::DoKI(void)
 
         if (ShotCount <= 0.0f)
         {
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_GRANATE);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_GRANATE);
 
             if (BlickRichtung == LINKS)
                 pProjectiles->PushProjectile(xPos - 20, yPos + 75, ROBOROCKET, pAim);
@@ -199,7 +199,7 @@ void GegnerRoboMan1::DoKI(void)
 
 void GegnerRoboMan1::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
+    SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
 
     int i;
 

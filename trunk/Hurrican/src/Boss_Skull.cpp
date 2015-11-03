@@ -110,10 +110,8 @@ void GegnerSkull::DoKI(void)
         {
             AnimCount = 0.8f;
 
-            if (pSoundManager->its_Sounds[SOUND_EXPLOSION2]->isPlaying)
-                pSoundManager->StopWave(SOUND_EXPLOSION2);
-
-            pSoundManager->PlayWave(75, 128, 8000 + (int)(endwert * 800), SOUND_EXPLOSION2);
+            SoundManager.StopWave(SOUND_EXPLOSION2);
+            SoundManager.PlayWave(75, 128, 8000 + (int)(endwert * 800), SOUND_EXPLOSION2);
 
             pPartikelSystem->PushPartikel(xPos + rand()%30 - 30, yPos + rand()%30 - 30, EXPLOSION_MEDIUM2);
 
@@ -139,12 +137,12 @@ void GegnerSkull::DoKI(void)
         if (Disappear < 0.0f)
         {
             // explodieren lassen
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
-            pSoundManager->PlayWave(100, 128, 9000, SOUND_EXPLOSION3);
-            pSoundManager->PlayWave(100, 128, 7000, SOUND_EXPLOSION1);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+            SoundManager.PlayWave(100, 128, 9000, SOUND_EXPLOSION3);
+            SoundManager.PlayWave(100, 128, 7000, SOUND_EXPLOSION1);
             ShakeScreen(10.0f);
             Energy = 0.0f;
-            pSoundManager->PlayWave(100, 128, 7000, SOUND_MUTANT);
+            SoundManager.PlayWave(100, 128, 7000, SOUND_MUTANT);
 
             pPartikelSystem->PushPartikel (xPos + 20, yPos + 20, SHOCKEXPLOSION);
             pPartikelSystem->PushPartikel (xPos + 20, yPos + 20, SHOCKEXPLOSION);
@@ -271,10 +269,11 @@ void GegnerSkull::DoKI(void)
             Energy = 0.0f;
             pMachine->Value1 = 1;
 
-            pSoundManager->PlayWave(50, 128, 15000, SOUND_KLONG);
+            SoundManager.PlayWave(50, 128, 15000, SOUND_KLONG);
 
-            if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
-                pSoundManager->PlaySong(MUSIC_BOSS, false);
+            //DKS - Added function SongIsPlaying() to SoundManagerClass:
+            if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
+                SoundManager.PlaySong(MUSIC_BOSS, false);
         }
     }
     break;
@@ -293,7 +292,7 @@ void GegnerSkull::DoKI(void)
         {
             ShotDelay = 15.0f;
             pProjectiles->PushProjectile(xPos - 10, yPos, SUCHSCHUSS2, pAim);
-            pSoundManager->PlayWave(50, 128, 14000 + rand()%2000, SOUND_GOLEMSHOT);
+            SoundManager.PlayWave(50, 128, 14000 + rand()%2000, SOUND_GOLEMSHOT);
         }
     }
 

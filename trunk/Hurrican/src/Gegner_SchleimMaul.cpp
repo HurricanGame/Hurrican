@@ -116,7 +116,7 @@ void GegnerSchleimMaul::GegnerExplode(void)
         pPartikelSystem->PushPartikel(xPos + 15 + rand ()% 20,
                                       yPos + 15 + rand ()% 20, SCHLEIM2);
 
-    pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_SCHLEIM);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_SCHLEIM);	// Sound ausgeben
 
     pPlayer[0]->Score += 120;
 }

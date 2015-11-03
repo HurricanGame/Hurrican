@@ -61,7 +61,7 @@ void GegnerStalagtit::DoKI(void)
             }
 
             // Sound ausgeben
-            pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEFALL);
+            SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEFALL);
 
             Handlung = GEGNER_FALLEN;
             ySpeed =  0.0f;
@@ -87,7 +87,7 @@ void GegnerStalagtit::GegnerExplode(void)
         pPartikelSystem->PushPartikel(xPos + rand()%40-8, yPos + rand()%80 - 8, SMOKE);
         pPartikelSystem->PushPartikel(xPos + rand()%40-8, yPos + rand()%80 - 8, ROCKSPLITTERSMALLBLUE);
     }
-    pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEEXPLODE);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEEXPLODE);	// Sound ausgeben
 
     pPlayer[0]->Score += 100;
 }

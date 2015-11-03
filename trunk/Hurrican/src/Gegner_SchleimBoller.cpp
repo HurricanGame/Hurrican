@@ -170,8 +170,9 @@ void GegnerSchleimBoller::GegnerExplode(void)
         pPartikelSystem->PushPartikel(xPos + 15 + rand ()% 20,
                                       yPos + 15 + rand ()% 20, SCHLEIM);
 
-    if (pSoundManager->its_Sounds[SOUND_SCHLEIM]->isPlaying == false)
-        pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_SCHLEIM);	// Sound ausgeben
+    //DKS - Added function WaveIsPlaying() to SoundManagerClass:
+    if (!SoundManager.WaveIsPlaying(SOUND_SCHLEIM))
+        SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_SCHLEIM);	// Sound ausgeben
 
     pPlayer[0]->Score += 150;
 

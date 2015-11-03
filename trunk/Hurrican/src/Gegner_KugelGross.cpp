@@ -126,7 +126,7 @@ void GegnerKugelGross::GegnerExplode(void)
     pPartikelSystem->PushPartikel(float(xPos - 20),
                                   float(yPos - 20), EXPLOSION_BIG);
 
-    pSoundManager->PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION4);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION4);	// Sound ausgeben
 
     pPlayer[0]->Score += 300;
 }

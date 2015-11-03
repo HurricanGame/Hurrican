@@ -66,7 +66,7 @@ void GegnerRoboRaupe::DoKI(void)
                     pProjectiles->PushProjectile(xPos + 70, yPos + 10, ARCSHOTRIGHT);
                 }
 
-                pSoundManager->PlayWave(100, 128, 11025, SOUND_GRANATE);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_GRANATE);
             }
         }
 
@@ -108,7 +108,7 @@ void GegnerRoboRaupe::GegnerExplode(void)
     for (int i=0; i<300; i++)
         pPartikelSystem->PushPartikel(xPos + rand()%90-10, yPos + rand()%25 + 5, ROCKETSMOKEBLUE);
 
-    pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION3);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION3);	// Sound ausgeben
 
     pPlayer[0]->Score += 250;
 }

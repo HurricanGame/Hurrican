@@ -218,8 +218,8 @@ void GegnerSchneeKoenig::DoKI(void)
     if (Active == true &&
             pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
     {
-        pSoundManager->StopSong(MUSIC_STAGEMUSIC, true);  // Ausfaden und pausieren
-        pSoundManager->PlaySong(MUSIC_BOSS, false);
+        SoundManager.StopSong(MUSIC_STAGEMUSIC, true);  // Ausfaden und pausieren
+        SoundManager.PlaySong(MUSIC_BOSS, false);
         ySave = yPos;
 
         // kommt von oben in der mitte des screens runter
@@ -260,7 +260,7 @@ void GegnerSchneeKoenig::DoKI(void)
 
             pTileEngine->ScrollLevel((float)pTileEngine->XOffset, yPos - 320.0f, ZUSTAND_SCROLLTOLOCK);
 
-            pSoundManager->PlayWave(50, 128, 11025, SOUND_DOORSTOP);
+            SoundManager.PlayWave(50, 128, 11025, SOUND_DOORSTOP);
         }
     }
     break;
@@ -277,7 +277,7 @@ void GegnerSchneeKoenig::DoKI(void)
             AnimEnde  = 12;
             AnimSpeed = 1.0f;
 
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_STEAM);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
         }
     }
     break;
@@ -337,7 +337,7 @@ void GegnerSchneeKoenig::DoKI(void)
                 AnimCount = 1.0f;
                 ShotCount = 6;
 
-                pSoundManager->PlayWave(100, 128, 11025, SOUND_STEAM);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
 
                 for (int p = 0; p < NUMPLAYERS; p++)
                     if (pPlayer[p]->AufPlattform == this)
@@ -360,7 +360,7 @@ void GegnerSchneeKoenig::DoKI(void)
                 ShotCount = 6;
                 ShotDelay = 1.5f;
 
-                pSoundManager->PlayWave(100, 128, 11025, SOUND_STEAM);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
 
                 for (int p = 0; p < NUMPLAYERS; p++)
                     if (pPlayer[p]->AufPlattform == this)
@@ -508,7 +508,7 @@ void GegnerSchneeKoenig::DoKI(void)
                         // Spieler zerquetscht?
                         TestDamagePlayers(500.0f);
 
-                        pSoundManager->PlayWave(50, 128, 11025, SOUND_DOORSTOP);
+                        SoundManager.PlayWave(50, 128, 11025, SOUND_DOORSTOP);
                     }
                 }
             }
@@ -549,7 +549,7 @@ void GegnerSchneeKoenig::DoKI(void)
             if (Value1 >= 2 &&
                     yPos < pTileEngine->YOffset + 150.0f)
             {
-                pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
                 ShakeScreen(5.0f);
 
                 for (int i = 0; i < 50; i++)
@@ -586,7 +586,7 @@ void GegnerSchneeKoenig::DoKI(void)
                 if (Value1 >= 2 &&
                         rand()%2 == 0)
                 {
-                    pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+                    SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
                     pPartikelSystem->PushPartikel(xPos + rand()%150, yPos + rand()%100, EXPLOSION_MEDIUM2);
                 }
             }
@@ -658,7 +658,7 @@ void GegnerSchneeKoenig::DoKI(void)
                                 yPos + cos_deg(KnarreWinkel + 180.0f) * 60.0f + KnarreY + 5.0f + yOffset, SCHNEEKOPPE, -(int)(w) - 3 + rand()%7 , 40, false);
 
 
-            pSoundManager->PlayWave(100, 128, 8000 + rand()%1000, SOUND_GRANATE);
+            SoundManager.PlayWave(100, 128, 8000 + rand()%1000, SOUND_GRANATE);
 
             GunSlide = 5.0f;
 
@@ -739,10 +739,10 @@ void GegnerSchneeKoenig::DoKI(void)
         xAcc   = 0.0f;
         yAcc   = 0.0f;
 
-        pSoundManager->PlayWave(100, 128, 11025, SOUND_TAKEOFF);
+        SoundManager.PlayWave(100, 128, 11025, SOUND_TAKEOFF);
 
         // Endboss-Musik ausfaden und abschalten
-        pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
     }
 }
 
@@ -753,7 +753,7 @@ void GegnerSchneeKoenig::DoKI(void)
 void GegnerSchneeKoenig::GegnerExplode(void)
 {
     // Endboss-Musik ausfaden und abschalten
-    pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+    SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
 
     for (int p = 0; p < NUMPLAYERS; p++)
         if (pPlayer[p]->AufPlattform == this)

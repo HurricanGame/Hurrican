@@ -81,7 +81,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
     // Boss aktivieren und Mucke laufen lassen
     if (Active == true && Activated == false)
     {
-        pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
         Activated = true;
         Value1 = int (pTileEngine->YOffset + 100.0f);
     }
@@ -107,7 +107,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
                                  pPlayer[0]->ypos - 280, ZUSTAND_SCROLLTOPLAYER, 10.0f, 50.0f);
 
         // Endboss-Musik ausfaden und abschalten
-        pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
     }
 
     static float smokecount = 0.0f;
@@ -171,11 +171,20 @@ void GegnerFahrstuhlBoss::DoKI(void)
     case GEGNER_NOTVISIBLE:			// Boss einfliegen lassen
     {
         // Warten bis die Level Mucke ausgefadet ist
-        if (pSoundManager->its_Songs[MUSIC_STAGEMUSIC]->Volume == pSoundManager->its_Songs[MUSIC_STAGEMUSIC]->FadingEnd)
+        //DKS - Overhauled SoundManagerClass:
+        //if (SoundManager.its_Songs[MUSIC_STAGEMUSIC]->Volume == SoundManager.its_Songs[MUSIC_STAGEMUSIC]->FadingEnd)
+        //{
+        //    // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
+        //    if (MUSIC_IsPlaying(SoundManager.its_Songs[MUSIC_BOSS]->SongData) == false)
+        //        SoundManager.PlaySong(MUSIC_BOSS, false);
+
+        //    Handlung = GEGNER_EINFLIEGEN2;				// Und Boss erscheinen lassen
+        //}
+        if (SoundManager.SongIsPaused(MUSIC_STAGEMUSIC))
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-            if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
-                pSoundManager->PlaySong(MUSIC_BOSS, false);
+            if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
+                SoundManager.PlaySong(MUSIC_BOSS, false);
 
             Handlung = GEGNER_EINFLIEGEN2;				// Und Boss erscheinen lassen
         }
@@ -321,7 +330,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
         {
             ShotDelay = 6.0f;
 
-            pSoundManager->PlayWave(100, 128, 44100, SOUND_LASERSHOT);
+            SoundManager.PlayWave(100, 128, 44100, SOUND_LASERSHOT);
 
             pProjectiles->PushProjectile (xPos + x2 + 28,      yPos + y2 + 95,     KRABBLERLASER1);
             pPartikelSystem->PushPartikel(xPos + x2 + 28 - 25, yPos + y2 + 95 - 4, LASERFLAME);
@@ -384,7 +393,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
         {
             ShotDelay = 8.0f;
 
-            pSoundManager->PlayWave (100, 128, 10000 + rand()%2000, SOUND_LASERSHOT);
+            SoundManager.PlayWave (100, 128, 10000 + rand()%2000, SOUND_LASERSHOT);
 
             pProjectiles->PushProjectile  (xPos + x1 + 80 - 28, yPos + y1 + 155, UFOLASER);
             pPartikelSystem->PushPartikel (xPos + x1 + 80 - 90, yPos + y1 + 110, UFOLASERFLARE);
@@ -444,7 +453,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
         {
             ShotDelay = 5.0f;
 
-            pSoundManager->PlayWave(100, 128, 8000 + rand ()%4000, SOUND_CANON);
+            SoundManager.PlayWave(100, 128, 8000 + rand ()%4000, SOUND_CANON);
 
             pProjectiles->PushProjectile (xPos + x2 + 28,      yPos + y2 + 95+5, SUCHSCHUSS);
             pPartikelSystem->PushPartikel(xPos + x2 + 28 - 10, yPos + y2 + 95,   SMOKE);
@@ -484,7 +493,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
         if (ShotDelay < 0.0f)
         {
             ShotDelay = 0.5f;
-            pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+            SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
             pPartikelSystem->PushPartikel (xPos -30 + rand()%400, yPos + rand()%280, EXPLOSION_MEDIUM2);
             pPartikelSystem->PushPartikel (xPos -50 + rand()%400, yPos + rand()%280, EXPLOSION_BIG);
@@ -608,11 +617,11 @@ void GegnerFahrstuhlBoss::DoKI(void)
 void GegnerFahrstuhlBoss::GegnerExplode(void)
 {
     ShakeScreen (10);
-    pSoundManager->PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
     pPlayer[0]->Score += 9000;
 
     // Level Musik wieder einfaden lassen (aus Pause Zustand)
-    pSoundManager->FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);
+    SoundManager.FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);
 
     //pTileEngine->YOffset = float (Value1);
 }

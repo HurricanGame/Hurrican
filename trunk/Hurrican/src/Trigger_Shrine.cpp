@@ -58,7 +58,7 @@ void GegnerShrine::DoKI(void)
     								 pPlayer[1]->ypos - 50,
     								 FALLINGROCK, 0, 0, true);
 
-    			pSoundManager->PlayWave (100, 128, 11025, SOUND_PHARAODIE);
+    			SoundManager.PlayWave (100, 128, 11025, SOUND_PHARAODIE);
 
     			AnimCount = 5.0f;
     		}
@@ -79,12 +79,12 @@ void GegnerShrine::DoKI(void)
             for (int i = 0; i < 8; i++)
                 pGegner->PushGegner (xPos + rand()%100, yPos - 50 + rand()%100, EXTRAS, 3, 0, true);
 
-            pSoundManager->PlayWave (100, 128, 11025, SOUND_COLLECT);
-            pSoundManager->PlayWave (100, 128, 11025, SOUND_COLLECT);
-            pSoundManager->PlayWave (100, 128, 11025, SOUND_COLLECT);
-            pSoundManager->PlayWave (100, 128, 11025, SOUND_COLLECT);
-            pSoundManager->PlayWave (100, 128, 11025, SOUND_COLLECT);
-            pSoundManager->PlayWave (100, 128, 11025, SOUND_COLLECT);
+            SoundManager.PlayWave (100, 128, 11025, SOUND_COLLECT);
+            SoundManager.PlayWave (100, 128, 11025, SOUND_COLLECT);
+            SoundManager.PlayWave (100, 128, 11025, SOUND_COLLECT);
+            SoundManager.PlayWave (100, 128, 11025, SOUND_COLLECT);
+            SoundManager.PlayWave (100, 128, 11025, SOUND_COLLECT);
+            SoundManager.PlayWave (100, 128, 11025, SOUND_COLLECT);
         }
 }
 

@@ -71,8 +71,9 @@ void GegnerSchleuseV::DoKI(void)
         Handlung = GEGNER_LAUFEN;
         Value1   = int (yPos);
         yAcc     = -0.5f;
-        if (pSoundManager->its_Sounds [SOUND_DOOR]->isPlaying == false)
-            pSoundManager->PlayWave (100, 128, 11025, SOUND_DOOR);
+        //DKS - Added function WaveIsPlaying() to SoundManagerClass:
+        if (!SoundManager.WaveIsPlaying(SOUND_DOOR))
+            SoundManager.PlayWave (100, 128, 11025, SOUND_DOOR);
     }
     break;
 
@@ -92,8 +93,8 @@ void GegnerSchleuseV::DoKI(void)
             ySpeed   = 0.0f;
             yAcc	 = 0.0f;
             Handlung = GEGNER_STEHEN;
-            pSoundManager->PlayWave (100, 128, 11025, SOUND_DOORSTOP);
-            pSoundManager->StopWave (SOUND_DOOR);
+            SoundManager.StopWave (SOUND_DOOR);
+            SoundManager.PlayWave (100, 128, 11025, SOUND_DOORSTOP);
         }
     }
     break;

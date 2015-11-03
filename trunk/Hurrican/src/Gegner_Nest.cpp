@@ -57,7 +57,7 @@ void GegnerNest::DoKI(void)
 
 void GegnerNest::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);
+    SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);
 
     for (int i = 0; i < 5; i++)
         pPartikelSystem->PushPartikel(xPos - 25 + rand()%20, yPos - 30 + rand()%50, EXPLOSION_MEDIUM2);

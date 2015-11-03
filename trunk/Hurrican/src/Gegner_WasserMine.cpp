@@ -41,8 +41,8 @@ void GegnerWasserMine::DoKI(void)
 
 void GegnerWasserMine::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 8000, SOUND_EXPLOSION3);
-    pSoundManager->PlayWave (100, 128,14000, SOUND_EXPLOSION4);
+    SoundManager.PlayWave (100, 128, 8000, SOUND_EXPLOSION3);
+    SoundManager.PlayWave (100, 128,14000, SOUND_EXPLOSION4);
 
     ShakeScreen(5.0f);
 

@@ -57,7 +57,7 @@ void GegnerGunTower::DoKI(void)
                 pPartikelSystem->PushPartikel(xPos+35, yPos+6, SMOKE);
                 pProjectiles->PushProjectile (xPos+35, yPos+15, CANONBALL2);
             }
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_CANON);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_CANON);
             Handlung  = GEGNER_SCHIESSEN;
             AnimCount = 1.0f;
             AnimPhase = 1;
@@ -130,7 +130,7 @@ void GegnerGunTower::GegnerExplode(void)
         pPartikelSystem->PushPartikel(float(xPos - 10 + rand()%60),
                                       float(yPos - 40 + rand()%20), EXPLOSION_MEDIUM2);
 
-    pSoundManager->PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 
     pPlayer[0]->Score += 200;
 }

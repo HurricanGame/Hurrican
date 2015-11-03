@@ -271,7 +271,7 @@ void GegnerDeckenKrabbe::DoKI(void)
 
 void GegnerDeckenKrabbe::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 9000 + rand()%2000, SOUND_EXPLOSION3);
+    SoundManager.PlayWave (100, 128, 9000 + rand()%2000, SOUND_EXPLOSION3);
 
     pPartikelSystem->PushPartikel (xPos + 15, yPos + 10, LAVAKRABBE_KOPF);
 

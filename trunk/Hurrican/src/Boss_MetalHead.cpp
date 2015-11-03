@@ -353,7 +353,7 @@ void GegnerMetalHead::DoKI(void)
                 ySpeed = 50.0f;
                 Handlung = GEGNER_CRUSHEN;
 
-                pSoundManager->PlayWave(100, 128, 11025, SOUND_STONEFALL);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_STONEFALL);
                 yAcc = 10.0f;
 
                 Moving = false;
@@ -371,7 +371,7 @@ void GegnerMetalHead::DoKI(void)
         pTileEngine->ScrollLevel((float)Value1,
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
-        pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
@@ -392,7 +392,7 @@ void GegnerMetalHead::DoKI(void)
 
                 pPartikelSystem->PushPartikel (xPos + 85 + TurbineOff, yPos + 202, KAPUTTETURBINE);
 
-                pSoundManager->PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
+                SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
                 ShakeScreen (3.0f);
             }
         }
@@ -428,7 +428,7 @@ void GegnerMetalHead::DoKI(void)
                 pPartikelSystem->PushPartikel (xPos + 30 + rand()%20, yPos + 140, LASERFLAME);
                 pPartikelSystem->PushPartikel (xPos + 5, yPos + 110, EXPLOSIONFLARE);
                 pPartikelSystem->PushPartikel (xPos + 5, yPos + 110, EXPLOSIONFLARE);
-                pSoundManager->PlayWave (100, 128, 11025, SOUND_FUNKE);
+                SoundManager.PlayWave (100, 128, 11025, SOUND_FUNKE);
             }
         }
     }
@@ -456,7 +456,7 @@ void GegnerMetalHead::DoKI(void)
                 pPlayer[p]->AufPlattform = NULL;
 
         // Endboss-Musik ausfaden und abschalten
-        pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
 
         // Kopf fliegt wech (mit Explosion)
         for (int i = 0; i < 60; i++)
@@ -465,7 +465,7 @@ void GegnerMetalHead::DoKI(void)
 
         pPartikelSystem->PushPartikel (xPos - 40, yPos + 40, EXPLOSION_GIANT);
 
-        pSoundManager->PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
+        SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
     }
 
     // Corona des Auges drehen
@@ -486,7 +486,7 @@ void GegnerMetalHead::DoKI(void)
                 KieferSpeed < 0.0f)
         {
             KieferSpeed = 10.0f;
-            pSoundManager->PlayWave (25, 128, 10000 + rand ()% 2000, SOUND_KLONG);
+            SoundManager.PlayWave (25, 128, 10000 + rand ()% 2000, SOUND_KLONG);
 
             for (int i = 0; i < 10; i++)
                 pPartikelSystem->PushPartikel (xPos + 130 + i * 4, yPos + 160, LONGFUNKE);
@@ -523,7 +523,7 @@ void GegnerMetalHead::DoKI(void)
                 yAcc = -1.0f;
 
                 ShakeScreen(5.0f);
-                pSoundManager->PlayWave(100, 128, 11025, SOUND_STONEEXPLODE);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_STONEEXPLODE);
 
                 // Schleimboller spawnen?
                 if (Handlung == GEGNER_CRUSHEN2)
@@ -593,9 +593,10 @@ void GegnerMetalHead::DoKI(void)
             {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 //
-                if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+                //DKS - Added function SongIsPlaying() to SoundManagerClass:
+                if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
                 {
-                    pSoundManager->PlaySong(MUSIC_BOSS, false);
+                    SoundManager.PlaySong(MUSIC_BOSS, false);
 
                     // Und Boss erscheinen lassen
                     //
@@ -708,7 +709,7 @@ void GegnerMetalHead::DoKI(void)
                     {
                         if (Turbine_dran)
                         {
-                            pSoundManager->PlayWave(100, 128, 8000 + rand()%2000, SOUND_FIREBALL);
+                            SoundManager.PlayWave(100, 128, 8000 + rand()%2000, SOUND_FIREBALL);
 
                             ShotDelay = 9.0f;
 
@@ -730,7 +731,7 @@ void GegnerMetalHead::DoKI(void)
 
                             if (ShotArt == 1)
                             {
-                                pSoundManager->PlayWave(100, 128, 14000 + rand()%2000, SOUND_FIREBALL);
+                                SoundManager.PlayWave(100, 128, 14000 + rand()%2000, SOUND_FIREBALL);
 
                                 for (int i = -40; i <= 40; i+= 40)
                                 {
@@ -752,7 +753,7 @@ void GegnerMetalHead::DoKI(void)
 
                             if (ShotArt == 2)
                             {
-                                pSoundManager->PlayWave(100, 128, 14000 + rand()%2000, SOUND_FIREBALL);
+                                SoundManager.PlayWave(100, 128, 14000 + rand()%2000, SOUND_FIREBALL);
                                 pProjectiles->PushProjectile(xPos + 180,
                                                              yPos + 195,
                                                              FIREBALL_BOMB, pAim);
@@ -838,7 +839,7 @@ void GegnerMetalHead::DoKI(void)
                         ySpeed = 50.0f;
                         Handlung = GEGNER_CRUSHEN2;
 
-                        pSoundManager->PlayWave(100, 128, 11025, SOUND_STONEFALL);
+                        SoundManager.PlayWave(100, 128, 11025, SOUND_STONEFALL);
                         yAcc = 10.0f;
 
                         Moving = false;
@@ -904,7 +905,7 @@ void GegnerMetalHead::DoKI(void)
                     pPartikelSystem->PushPartikel (float (Hals[AnimEnde].x - 20 + rand ()% 20) + (float)pTileEngine->XOffset,
                                                    float (Hals[AnimEnde].y - 20 + rand ()% 20), FUNKE);
 
-                pSoundManager->PlayWave (100, 128, 10000 + rand()%2000, SOUND_EXPLOSION1);
+                SoundManager.PlayWave (100, 128, 10000 + rand()%2000, SOUND_EXPLOSION1);
                 AnimCount = 2.5f;
                 AnimEnde--;
 
@@ -932,7 +933,7 @@ void GegnerMetalHead::DoKI(void)
                         pPartikelSystem->PushPartikel (xPos + 30 + rand ()% 160,
                                                        yPos + 50 + rand ()% 80, SMOKE3);
 
-                    pSoundManager->PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
+                    SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
                 }
 
                 if (AnimEnde <= 0)
@@ -979,7 +980,7 @@ void GegnerMetalHead::DoKI(void)
 
 void GegnerMetalHead::GegnerExplode(void)
 {
-    pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
     pPlayer[0]->Score += 12500;
 

@@ -77,12 +77,20 @@ void            MUSIC_StopAllSongs      ( void );
 signed char     MUSIC_IsFinished        ( MUSIC_MODULE* music );
 
 Mix_Chunk*      SOUND_Sample_Load       ( int index, const char *filename, unsigned int inputmode, int offset, int length );
-int             SOUND_PlaySound         ( int channel, Mix_Chunk* chunk );
+
+//DKS - Added looped boolean parameter, so we no longer have to keep track of which
+//      sounds are looped (DX8Sound.cpp already does that):
+int             SOUND_PlaySound         ( int channel, Mix_Chunk* chunk, bool looped );
+
 void            SOUND_Sample_Free       ( Mix_Chunk* chunk );
 signed char     SOUND_IsPlaying         ( int channel );
 int             SOUND_GetVolume         ( int channel );
 signed char     SOUND_SetVolume         ( int channel, int volume );
 signed char     SOUND_StopSound         ( int channel );
+
+//DKS - Added:
+signed char SOUND_SetPaused(int channel, signed char paused);
+signed char SOUND_GetPaused(int channel);
 
 void            hookmusic               (void* ptr, uint8_t* buffer, int size);
 

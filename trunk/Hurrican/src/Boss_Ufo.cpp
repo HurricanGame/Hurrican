@@ -91,7 +91,7 @@ void GegnerUfo::DoKI(void)
         yPos -= 300;												// und Boss aus dem Screen setzen
         Handlung = GEGNER_INIT;
 
-        pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
@@ -116,7 +116,7 @@ void GegnerUfo::DoKI(void)
         AnimCount = 1.0f;
 
         // Endboss-Musik ausfaden und abschalten
-        pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
     }
 
     // Über dem Spieler schweben
@@ -139,8 +139,9 @@ void GegnerUfo::DoKI(void)
         if (pTileEngine->Zustand == ZUSTAND_LOCKED)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-            if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
-                pSoundManager->PlaySong(MUSIC_BOSS, false);
+            //DKS - Added function SongIsPlaying() to SoundManagerClass:
+            if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
+                SoundManager.PlaySong(MUSIC_BOSS, false);
 
             // Und Boss erscheinen lassen
             Handlung = GEGNER_EINFLIEGEN;
@@ -179,7 +180,7 @@ void GegnerUfo::DoKI(void)
                 pGegner->PushGegner(xPos + 45.0f, yPos + 40.0f, FETTERAKETE, 360, 99, false);
                 pGegner->PushGegner(xPos + 135.0f, yPos + 40.0f, FETTERAKETE, 0, 99, false);
                 ShotDelay = 18.0f;
-                pSoundManager->PlayWave(100, 128, 8000 + rand()%1000, SOUND_GRANATE);
+                SoundManager.PlayWave(100, 128, 8000 + rand()%1000, SOUND_GRANATE);
             }
         }
 
@@ -234,7 +235,7 @@ void GegnerUfo::DoKI(void)
 
         if (ShotDelay <= 0.0f)
         {
-            pSoundManager->PlayWave(50, 128, 14000 + rand()%2000, SOUND_GOLEMSHOT);
+            SoundManager.PlayWave(50, 128, 14000 + rand()%2000, SOUND_GOLEMSHOT);
             pProjectiles->PushProjectile(xPos + 20.0f, yPos + 40.0f, SUCHSCHUSS2);
             pProjectiles->PushProjectile(xPos + 165.0f, yPos + 40.0f, SUCHSCHUSS2);
             ShotDelay = 5.0f;
@@ -265,7 +266,7 @@ void GegnerUfo::DoKI(void)
         {
             ShotDelay = 4.0f;
 
-            pSoundManager->PlayWave (100, 128, 10000 + rand()%500, SOUND_LASERSHOT);
+            SoundManager.PlayWave (100, 128, 10000 + rand()%500, SOUND_LASERSHOT);
 
             pProjectiles->PushProjectile  (xPos + 100 - 21, yPos + 60, UFOLASER);
             pPartikelSystem->PushPartikel (xPos + 100 - 80, yPos + 30, UFOLASERFLARE);
@@ -295,7 +296,7 @@ void GegnerUfo::DoKI(void)
         if (AnimCount < 0.0f)
         {
             pPartikelSystem->PushPartikel(xPos + rand()%180, yPos + rand()%70+20, EXPLOSION_MEDIUM2);
-            pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+            SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
             if (rand()%4 == 0)
                 pPartikelSystem->PushPartikel(xPos + rand()%180 - 40, yPos + rand()%40, EXPLOSION_BIG);
@@ -331,7 +332,7 @@ void GegnerUfo::DoKI(void)
 
 void GegnerUfo::GegnerExplode(void)
 {
-    pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
     ShakeScreen(5.0f);
 
     // Splitter

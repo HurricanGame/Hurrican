@@ -50,7 +50,7 @@ void GegnerPresse::DoKI(void)
                 pPartikelSystem->PushPartikel (xPos + i * 10, yPos + 244, SMOKE);
 
             if (PlayerAbstand() < 600)
-                pSoundManager->PlayWave(100, 128, 11025, SOUND_PRESSE);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_PRESSE);
         }
 
         // An der Decke angekommen ? Dann warten
@@ -77,7 +77,7 @@ void GegnerPresse::DoKI(void)
             ySpeed    = float(Value2);
 
             if (PlayerAbstand() < 600)
-                pSoundManager->PlayWave(100, 128, 11025, SOUND_PRESSE);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_PRESSE);
 
             pPartikelSystem->PushPartikel (xPos + 14, yPos + 230, SMOKE);
             pPartikelSystem->PushPartikel (xPos + 54, yPos + 230, SMOKE);

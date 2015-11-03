@@ -107,7 +107,7 @@ void GegnerBallerdrone::DoKI(void)
                 shotdelay = 15.0f;
                 pProjectiles->PushProjectile(xPos + 12, yPos + 50, SUCHSCHUSS2);
                 pProjectiles->PushProjectile(xPos + 64, yPos + 50, SUCHSCHUSS2);
-                pSoundManager->PlayWave(50, 128, 14000 + rand()%2000, SOUND_GOLEMSHOT);
+                SoundManager.PlayWave(50, 128, 14000 + rand()%2000, SOUND_GOLEMSHOT);
             }
         }
     }
@@ -153,7 +153,7 @@ void GegnerBallerdrone::DoKI(void)
         Energy   = 100.0f;
         Handlung = GEGNER_FALLEN;
         yAcc     = 3.0f;
-        pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+        SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
         pPartikelSystem->PushPartikel (xPos - 20, yPos - 40, EXPLOSION_BIG);
         shotdelay = 1.0f;
     }
@@ -165,7 +165,7 @@ void GegnerBallerdrone::DoKI(void)
 
 void GegnerBallerdrone::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
+    SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
 
     int i;
 

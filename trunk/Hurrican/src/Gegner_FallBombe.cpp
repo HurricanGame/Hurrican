@@ -81,7 +81,7 @@ void GegnerFallBombe::DoKI(void)
 
 void GegnerFallBombe::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 8000 + rand ()%4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave (100, 128, 8000 + rand ()%4000, SOUND_EXPLOSION1);
     pPartikelSystem->PushPartikel (xPos - 40, yPos, EXPLOSION_BIG);
 
     for (int i = 0; i < 40; i++)

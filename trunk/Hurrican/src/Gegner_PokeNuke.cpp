@@ -70,7 +70,7 @@ void GegnerPokeNuke::DoKI(void)
 
 void GegnerPokeNuke::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 8000 + rand ()%4000, SOUND_EXPLOSION2);
+    SoundManager.PlayWave (100, 128, 8000 + rand ()%4000, SOUND_EXPLOSION2);
     ShakeScreen (7);
 
     pAim = pPlayer[0];

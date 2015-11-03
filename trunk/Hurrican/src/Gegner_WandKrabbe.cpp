@@ -286,7 +286,7 @@ void GegnerWandKrabbe::DoKI(void)
 
         Handlung = GEGNER_EXPLODIEREN;
 
-        pSoundManager->PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
+        SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
         pPartikelSystem->PushPartikel (xPos - 20, yPos, EXPLOSION_MEDIUM2);
     }
 
@@ -302,7 +302,7 @@ void GegnerWandKrabbe::DoKI(void)
 
 void GegnerWandKrabbe::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
+    SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i=0; i < 6; i++)
         pPartikelSystem->PushPartikel (xPos - 20 + rand ()%10, yPos + rand()%30, EXPLOSION_MEDIUM2);

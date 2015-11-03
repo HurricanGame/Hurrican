@@ -137,7 +137,7 @@ void GegnerReitFlugsack::DoKI(void)
         if (AnimCount == 0.0f && AnimPhase%2 == 0 && rand()%2 == 0)
         {
             pPartikelSystem->PushPartikel(xPos+rand()%80-30, yPos+rand()%70-30, EXPLOSION_MEDIUM2);
-            pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION1);
+            SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION1);
         }
 
     }
@@ -175,15 +175,11 @@ void GegnerReitFlugsack::DoKI(void)
                         pPlayer[0]->Riding())
                 {
                     //DKS - Really, we should stop all music
-                    //pSoundManager->StopSong(MUSIC_STAGEMUSIC, true);
-                    //pSoundManager->StopSong(MUSIC_BOSS, false);
-                    //pSoundManager->StopSong(MUSIC_PUNISHER, false);
-                    pSoundManager->StopAllSongs(false); //DKS - Added this to replace above 3 lines
-
-                    //DKS - flugsack.it is now loaded on-demand
-                    pSoundManager->LoadSong("flugsack.it",	MUSIC_FLUGSACK);
-
-                    pSoundManager->PlaySong(MUSIC_FLUGSACK, false);
+                    //SoundManager.StopSong(MUSIC_STAGEMUSIC, true);
+                    //SoundManager.StopSong(MUSIC_BOSS, false);
+                    //SoundManager.StopSong(MUSIC_PUNISHER, false);
+                    SoundManager.StopSongs(); //DKS - Added this to replace above 3 lines
+                    SoundManager.PlaySong(MUSIC_FLUGSACK, false);
                 }
             }
 

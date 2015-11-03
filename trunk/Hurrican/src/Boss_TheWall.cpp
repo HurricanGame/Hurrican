@@ -175,12 +175,12 @@ void GegnerTheWall::NeueAktion(void)
         CountOpen = 1;
         AnimCount = 50.0f;
         Handlung = GEGNER_OEFFNEN;
-        pSoundManager->PlayWave(100, 128, 10000 + rand()%1000, SOUND_DOOR);
+        SoundManager.PlayWave(100, 128, 10000 + rand()%1000, SOUND_DOOR);
 
         // Laser beenden
         pProjectiles->ClearType(SPIDERLASER);
-        pSoundManager->StopWave(SOUND_SPIDERLASER);
-        pSoundManager->StopWave(SOUND_BEAMLOAD2);
+        SoundManager.StopWave(SOUND_SPIDERLASER);
+        SoundManager.StopWave(SOUND_BEAMLOAD2);
 
         // Schädel rumfliegen lassen
         Value1 = -1;
@@ -241,7 +241,7 @@ void GegnerTheWall::NeueAktion(void)
     }
 
     Laughing = 10.0f;
-    pSoundManager->PlayWave(100, 128, 10000 + rand()%2000, SOUND_LAUGH);
+    SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_LAUGH);
 }
 
 // --------------------------------------------------------------------------------------
@@ -278,7 +278,7 @@ void GegnerTheWall::DoKI(void)
         {
             SkullShotDelay = 15.0f;
             pProjectiles->PushProjectile(xPos, yPos + 240.0f, SUCHSCHUSS2, pAim);
-            pSoundManager->PlayWave(50, 128, 14000 + rand()%2000, SOUND_GOLEMSHOT);
+            SoundManager.PlayWave(50, 128, 14000 + rand()%2000, SOUND_GOLEMSHOT);
         }
     }
 
@@ -370,7 +370,7 @@ void GegnerTheWall::DoKI(void)
 
                 if (Handlung == GEGNER_OEFFNEN ||
                         Handlung == GEGNER_SCHLIESSEN)
-                    pSoundManager->PlayWave(100, 128, 11025, SOUND_HEART2);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND_HEART2);
             }
             else
             {
@@ -379,7 +379,7 @@ void GegnerTheWall::DoKI(void)
 
                 if (Handlung == GEGNER_OEFFNEN ||
                         Handlung == GEGNER_SCHLIESSEN)
-                    pSoundManager->PlayWave(100, 128, 11025, SOUND_HEART1);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND_HEART1);
             }
         }
 
@@ -432,7 +432,7 @@ void GegnerTheWall::DoKI(void)
             {
                 pTileEngine->ScrollLevel(xPos - 355,
                                          yPos, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
-                pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+                SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
             }
         }
 
@@ -465,11 +465,14 @@ void GegnerTheWall::DoKI(void)
             pTimer->SetMoveSpeed(1.0f);
 
             // Musiken anhalten
-            pSoundManager->StopAllSongs(true);
-            pSoundManager->StopAllSounds();
+            //DKS - SoundManagerClass has new functions for this:
+            //SoundManager.StopAllSongs(true);
+            //SoundManager.StopAllSounds();
+            SoundManager.PauseSongs();
+            SoundManager.StopSounds();
 
             // Glassplitter
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_GLASSBREAK);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_GLASSBREAK);
 
             int i;
             for (i = 0; i < 20; i++)
@@ -520,7 +523,7 @@ void GegnerTheWall::DoKI(void)
             {
                 Value1 = -2;
                 ReturnSkull();
-                pSoundManager->PlayWave(100, 128, 10000 + rand()%2000, SOUND_LAUGH);
+                SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_LAUGH);
             }
 
             // und loslegen (nach kurzer Pause)
@@ -542,7 +545,7 @@ void GegnerTheWall::DoKI(void)
         {
             WinkelUebergabe = dummy;
 
-            pSoundManager->PlayWave(50, 128, 8000 + rand()%2000, SOUND_GOLEMSHOT);
+            SoundManager.PlayWave(50, 128, 8000 + rand()%2000, SOUND_GOLEMSHOT);
 
             pProjectiles->PushProjectile(xPos, yPos + 332, GOLEMSCHUSS);
             pPartikelSystem->PushPartikel(xPos - 30, yPos + 295, EXPLOSIONFLARE);
@@ -564,7 +567,7 @@ void GegnerTheWall::DoKI(void)
 
         if (ShotDelay < 0.0f)
         {
-            pSoundManager->PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
+            SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
             pProjectiles->PushProjectile(xPos, yPos + 332, SPIDERSHOT2);
             pPartikelSystem->PushPartikel(xPos - 30, yPos + 295, EXPLOSIONFLARE);
             pPartikelSystem->PushPartikel(xPos, yPos + 320, SMOKEBIG);
@@ -587,8 +590,8 @@ void GegnerTheWall::DoKI(void)
         {
             if (ShotCount > 1)
             {
-                pSoundManager->PlayWave(128, 100, 11025, SOUND_LILA);
-                pSoundManager->PlayWave(128, 100, 25050, SOUND_GOLEMLOAD);
+                SoundManager.PlayWave(128, 128, 11025, SOUND_LILA);
+                SoundManager.PlayWave(128, 128, 25050, SOUND_GOLEMLOAD);
                 pProjectiles->PushProjectile(xPos + 220.0f,
                                              yPos + 210.0f,
                                              ELEKTROSCHUSS);
@@ -614,7 +617,7 @@ void GegnerTheWall::DoKI(void)
             {
                 pProjectiles->PushProjectile((float) pTileEngine->XOffset - 40.0f,
                                              yPos + 240.0f, SPIDERLASER);
-                pSoundManager->PlayWave (100, 128, 11025, SOUND_BEAMLOAD2);
+                SoundManager.PlayWave (100, 128, 11025, SOUND_BEAMLOAD2);
             }
 
             ShotDelay = 60.0f;
@@ -645,16 +648,17 @@ void GegnerTheWall::DoKI(void)
             DoorOffset = PI / 2.0f;
 
             // Tür öffnen Sound anhalten
-            if (pSoundManager->its_Sounds[SOUND_DOOR]->isPlaying)
+            //DKS - Added function WaveIsPlaying() to SoundManagerClass:
+            if (SoundManager.WaveIsPlaying(SOUND_DOOR))
             {
-                pSoundManager->StopWave(SOUND_DOOR);
-                pSoundManager->PlayWave(100, 128, 22000, SOUND_STEAM2);
+                SoundManager.StopWave(SOUND_DOOR);
+                SoundManager.PlayWave(100, 128, 22000, SOUND_STEAM2);
             }
 
             AnimCount -= 1.0f SYNC;
             if (AnimCount < 0.0f)
             {
-                pSoundManager->PlayWave(100, 128, 10000 + rand()%1000, SOUND_DOOR);
+                SoundManager.PlayWave(100, 128, 10000 + rand()%1000, SOUND_DOOR);
                 Handlung = GEGNER_SCHLIESSEN;
             }
         }
@@ -672,11 +676,10 @@ void GegnerTheWall::DoKI(void)
         {
             DoorOffset = 0.0f;
             ShakeScreen(2.0f);
-            pSoundManager->PlayWave(100, 128, 11000 + rand()%1500, SOUND_DOORSTOP);
+            SoundManager.PlayWave(100, 128, 11000 + rand()%1500, SOUND_DOORSTOP);
 
             // Tür öffnen Sound anhalten
-            if (pSoundManager->its_Sounds[SOUND_DOOR]->isPlaying)
-                pSoundManager->StopWave(SOUND_DOOR);
+            SoundManager.StopWave(SOUND_DOOR);
 
             for (int i = 0; i < 36; i++)
                 pPartikelSystem->PushPartikel(xPos + TunnelOffx + 110 + rand()%30,

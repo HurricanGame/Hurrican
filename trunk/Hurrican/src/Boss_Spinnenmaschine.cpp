@@ -252,7 +252,7 @@ void GegnerSpinnenmaschine::DoHoch(void)
             HochCounter  = 0.0f;
             HochStatus = OEFFNEN;
 
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_STEAM);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
         }
     }
     break;
@@ -269,7 +269,7 @@ void GegnerSpinnenmaschine::DoHoch(void)
             HochCounter = TIME_TILL_HOCH * 2;
             ShotDelay = 10.0f;
 
-            pSoundManager->PlayWave(50, 128, 14000, SOUND_DOORSTOP);
+            SoundManager.PlayWave(50, 128, 14000, SOUND_DOORSTOP);
         }
 
         if (DeckelCount < PI)
@@ -296,7 +296,7 @@ void GegnerSpinnenmaschine::DoHoch(void)
             HochCounter  = 0.0f;
             HochStatus = SCHLIESSEN;
 
-            pSoundManager->PlayWave(50, 128, 11025, SOUND_STEAM);
+            SoundManager.PlayWave(50, 128, 11025, SOUND_STEAM);
         }
 
         ShotDelay -= 1.0f SYNC;
@@ -309,8 +309,8 @@ void GegnerSpinnenmaschine::DoHoch(void)
             pProjectiles->PushProjectile(xPos + 230, yPos + 310, PHARAOLASER, pAim);
 
             // Sound ausgeben
-            pSoundManager->PlayWave(50, 128, 22050, SOUND_PHARAODIE);
-            pSoundManager->PlayWave(70, 128, 11025, SOUND_LASERSHOT);
+            SoundManager.PlayWave(50, 128, 22050, SOUND_PHARAODIE);
+            SoundManager.PlayWave(70, 128, 11025, SOUND_LASERSHOT);
         }
     }
     break;
@@ -330,7 +330,7 @@ void GegnerSpinnenmaschine::DoHoch(void)
             for (int i = 1; i < 10; i++)
                 pPartikelSystem->PushPartikel(xPos + i * 25.0f, yPos + 330, SMOKEBIG);
 
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_DOORSTOP);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_DOORSTOP);
 
             AktionFertig = true;
         }
@@ -362,7 +362,7 @@ void GegnerSpinnenmaschine::DoKI(void)
         {
             pTileEngine->ScrollLevel((float)Value1,
                                      (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
-            pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+            SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
         }
     }
 
@@ -390,7 +390,7 @@ void GegnerSpinnenmaschine::DoKI(void)
         pTileEngine->MaxOneUps++;
 
         // Endboss-Musik ausfaden und abschalten
-        pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
     }
 
 
@@ -442,9 +442,10 @@ void GegnerSpinnenmaschine::DoKI(void)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
             //
-            if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+            //DKS - Added function SongIsPlaying() to SoundManagerClass:
+            if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
             {
-                pSoundManager->PlaySong(MUSIC_BOSS, false);
+                SoundManager.PlaySong(MUSIC_BOSS, false);
 
                 // Und Boss erscheinen lassen
                 //
@@ -544,7 +545,7 @@ void GegnerSpinnenmaschine::DoKI(void)
 
             // ggf. Sound
             if (rand()%3 == 0)
-                pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3 + rand()%2);
+                SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3 + rand()%2);
 
             // ggf. Splitter erzeugen
             if (yo > 100 && rand()%5 == 0)
@@ -562,7 +563,7 @@ void GegnerSpinnenmaschine::DoKI(void)
             Destroyable = false;
             pPlayer[0]->Score += 8000;
 
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
             ScrolltoPlayeAfterBoss();
 
             ShakeScreen(5.0f);

@@ -163,7 +163,7 @@ void GegnerFahrstuhl::GegnerExplode(void)
     FahrstuhlPos = -1.0f;
 
     ShakeScreen (10);
-    pSoundManager->PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
 
     for (int j=0; j < 100; j++)
         pPartikelSystem->PushPartikel(xPos + rand()%400, yPos + rand()%100, SPIDERSPLITTER);

@@ -159,7 +159,7 @@ void GegnerSchienenViech::DoKI(void)
 
 void GegnerSchienenViech::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
+    SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
 
     for (int i = 0; i < 5; i++)
         pPartikelSystem->PushPartikel(xPos - 30 + rand()%30, yPos - 30 + rand()%40, EXPLOSION_MEDIUM2);

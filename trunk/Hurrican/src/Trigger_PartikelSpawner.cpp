@@ -188,7 +188,7 @@ void GegnerPartikelSpawner::DoKI(void)
                 pPartikelSystem->ThunderColor [0] = 228;
                 pPartikelSystem->ThunderColor [1] = 242;
                 pPartikelSystem->ThunderColor [2] = 255;
-                pSoundManager->PlayWave (20 + rand()%60, 128, 8000 + rand()%4000, SOUND_THUNDER);
+                SoundManager.PlayWave (20 + rand()%60, 128, 8000 + rand()%4000, SOUND_THUNDER);
 
                 Value2 = rand()%80 + 10;
             }
@@ -208,7 +208,7 @@ void GegnerPartikelSpawner::DoKI(void)
                 pPartikelSystem->ThunderColor [0] = 0;
                 pPartikelSystem->ThunderColor [1] = 0;
                 pPartikelSystem->ThunderColor [2] = 0;
-                pSoundManager->PlayWave (80, 128, 11025 + rand()%2000, SOUND_FUNKE + rand ()%4);
+                SoundManager.PlayWave (80, 128, 11025 + rand()%2000, SOUND_FUNKE + rand ()%4);
 
                 Value2 = rand()%20 + 10;
             }
@@ -300,7 +300,7 @@ void GegnerPartikelSpawner::DoKI(void)
                 {
                     // mit Sound?
                     if (Value1 == 3)
-                        pSoundManager->PlayWave3D(int(xPos), int(yPos), 11025 + rand()%1000, SOUND_FUNKE);
+                        SoundManager.PlayWave3D(int(xPos), int(yPos), 11025 + rand()%1000, SOUND_FUNKE);
 
                     pPartikelSystem->PushPartikel(xPos, yPos-24, LASERFLAME);
 

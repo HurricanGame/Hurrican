@@ -167,7 +167,7 @@ void GegnerMittelSpinne::DoKI(void)
 
 void GegnerMittelSpinne::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
     pPartikelSystem->PushPartikel (xPos + 5, yPos, EXPLOSION_MEDIUM3);
 
     for (int i=0; i < 10; i++)

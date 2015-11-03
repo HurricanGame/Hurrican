@@ -45,7 +45,7 @@ void GegnerStahlfaust::DoKI(void)
         yPos -= 300;												// und Faust aus dem Screen setzen
         Handlung = GEGNER_INIT;
 
-        pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
@@ -71,7 +71,7 @@ void GegnerStahlfaust::DoKI(void)
         SmokeDelay = 1.0f;
 
         // Endboss-Musik ausfaden und abschalten
-        pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
     }
 
 // Je nach Handlung richtig verhalten
@@ -82,8 +82,9 @@ void GegnerStahlfaust::DoKI(void)
         if (pTileEngine->Zustand == ZUSTAND_LOCKED)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-            if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
-                pSoundManager->PlaySong(MUSIC_BOSS, false);
+            //DKS - Added function SongIsPlaying() to SoundManagerClass:
+            if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
+                SoundManager.PlaySong(MUSIC_BOSS, false);
 
             // Und Boss erscheinen lassen
             Handlung = GEGNER_EINFLIEGEN2;
@@ -169,8 +170,8 @@ void GegnerStahlfaust::DoKI(void)
         if (blocku & BLOCKWERT_WAND)
         {
             // Sound ausgeben
-            pSoundManager->PlayWave(100, 128, 6000, SOUND_EXPLOSION1);
-            pSoundManager->PlayWave(100, 128, 6000, SOUND_LANDEN);
+            SoundManager.PlayWave(100, 128, 6000, SOUND_EXPLOSION1);
+            SoundManager.PlayWave(100, 128, 6000, SOUND_LANDEN);
 
             // Rauch am Boden erzeugen
             for (int i=0; i<25; i++)
@@ -228,8 +229,8 @@ void GegnerStahlfaust::DoKI(void)
         if (blocku & BLOCKWERT_WAND)
         {
             // Sound ausgeben
-            pSoundManager->PlayWave(100, 128, 6000, SOUND_EXPLOSION1);
-            pSoundManager->PlayWave(100, 128, 6000, SOUND_LANDEN);
+            SoundManager.PlayWave(100, 128, 6000, SOUND_EXPLOSION1);
+            SoundManager.PlayWave(100, 128, 6000, SOUND_LANDEN);
 
             // Rauch am Boden erzeugen
             for (int i=0; i<25; i++)
@@ -281,7 +282,7 @@ void GegnerStahlfaust::DoKI(void)
             SmokeDelay = 1.0f;
 
             pPartikelSystem->PushPartikel(xPos + rand()%200, yPos + rand()%200+20, EXPLOSION_MEDIUM2);
-            pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+            SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
             if (rand()%8 == 0)
                 pPartikelSystem->PushPartikel(xPos + rand()%200, yPos + rand()%200+20, EXPLOSION_BIG);
@@ -311,7 +312,7 @@ void GegnerStahlfaust::DoKI(void)
 
 void GegnerStahlfaust::GegnerExplode(void)
 {
-    pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
     // Splitter
     for (int i=0; i<20; i++)

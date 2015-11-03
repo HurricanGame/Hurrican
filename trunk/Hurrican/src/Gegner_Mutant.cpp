@@ -101,7 +101,10 @@ void GegnerMutant::DoKI(void)
                 ySpeed = -30.0f;
                 yAcc = 6.0f;
 
-                pSoundManager->PlayWave(10, 128, 12000 + rand()%2000, SOUND_MUTANT);
+                //DKS - Sound was barely audible with volume of 10, pretty sure this was a typo..
+                //      I went ahead and added 3D panning effect while fixing volume problem:
+                //SoundManager.PlayWave(10, 128, 12000 + rand()%2000, SOUND_MUTANT);
+                SoundManager.PlayWave3D((int)xPos+50, int(yPos)+45, 12000 + rand()%2000, SOUND_MUTANT);
             }
         }
 
@@ -144,7 +147,9 @@ void GegnerMutant::DoKI(void)
         if (blocku & BLOCKWERT_WAND &&
                 ySpeed > 0.0f)
         {
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_SCHLEIM);
+            //DKS - While fixing volume of jumping (look at note further above), made this 3D too:
+            //SoundManager.PlayWave(100, 128, 11025, SOUND_SCHLEIM);
+            SoundManager.PlayWave3D((int)xPos+50, int(yPos)+45, 11025, SOUND_SCHLEIM);
             ySpeed = 0.0f;
             yAcc = 0.0f;
         }
@@ -181,8 +186,12 @@ void GegnerMutant::GegnerExplode(void)
     for (int i = 0; i < 15; i++)
         pPartikelSystem->PushPartikel(xPos + rand()%60 + 15, yPos + 10 + rand()%60, SCHLEIM);
 
-    pSoundManager->PlayWave(75, 128, 8000 + rand()%4000, SOUND_MUTANT);
-    pSoundManager->PlayWave(40, 128, 11025, SOUND_EXPLOSION4);
-    pSoundManager->PlayWave(40, 128, 6000 + rand()%4000, SOUND_SCHLEIM);
+    //DKS - While fixing volume of jumping (look at note further above), made this 3D too:
+    //SoundManager.PlayWave(75, 128, 8000 + rand()%4000, SOUND_MUTANT);
+    SoundManager.PlayWave3D((int)xPos+50, (int)yPos+45, 8000 + rand()%4000, SOUND_MUTANT);
+
+    SoundManager.PlayWave(40, 128, 11025, SOUND_EXPLOSION4);
+    SoundManager.PlayWave(40, 128, 6000 + rand()%4000, SOUND_SCHLEIM);
+
     pPlayer[0]->Score += 500;
 }

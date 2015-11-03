@@ -377,12 +377,12 @@ void PlayerClass::runExplode(void)
             pPlayer[0]->GameOverTimer = 50.0f;
 
             //DKS - We should really just stop all songs (it was missing MUSIC_PUNISHER from this list anyway)
-            //pSoundManager->StopSong(MUSIC_STAGEMUSIC, false);
-            //pSoundManager->StopSong(MUSIC_FLUGSACK, false);
-            //pSoundManager->StopSong(MUSIC_BOSS, false);
-            pSoundManager->StopAllSongs(false); //DKS - Added this to replace above 3 lines
+            //SoundManager.StopSong(MUSIC_STAGEMUSIC, false);
+            //SoundManager.StopSong(MUSIC_FLUGSACK, false);
+            //SoundManager.StopSong(MUSIC_BOSS, false);
+            SoundManager.StopSongs(); //DKS - Added this to replace above 3 lines
 
-            pSoundManager->PlaySong(MUSIC_GAMEOVER, false);
+            SoundManager.PlaySong(MUSIC_GAMEOVER, false);
             pMenu->AktuellerZustand = 0;
         }
 
@@ -432,10 +432,13 @@ void PlayerClass::runExplode(void)
 
 void PlayerClass::checkShoot(void)
 {
-    if (!Aktion[AKTION_SHOOT] &&
-            FlameThrower == true &&
-            pSoundManager->its_Sounds[SOUND_FLAMETHROWER + SoundOff]->isPlaying)
-        pSoundManager->StopWave(SOUND_FLAMETHROWER + SoundOff);
+    //DKS - No need to check if sound is playing, just ask to stop it:
+    //if (!Aktion[AKTION_SHOOT] &&
+    //        FlameThrower == true &&
+    //        SoundManager.its_Sounds[SOUND_FLAMETHROWER + SoundOff]->isPlaying)
+    //    SoundManager.StopWave(SOUND_FLAMETHROWER + SoundOff);
+    if (!Aktion[AKTION_SHOOT] && FlameThrower == true)
+        SoundManager.StopWave(SOUND_FLAMETHROWER + SoundOff);
 
     // Normaler Schuss mit Primärwaffe?
     //
@@ -803,7 +806,7 @@ void PlayerClass::DoStuffWhenDamaged(void)
                 pPartikelSystem->PushPartikel(x + rand()%4, y + rand()%4, FUNKE);
 
             pPartikelSystem->PushPartikel(x - 20, y - 20, LASERFLAME);
-            pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_FUNKE);
+            SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_FUNKE);
         }
         break;
 
@@ -818,7 +821,7 @@ void PlayerClass::DoStuffWhenDamaged(void)
                 pPartikelSystem->PushPartikel(x + rand()%4, y + rand()%4, LONGFUNKE);
 
             pPartikelSystem->PushPartikel(x - 20, y - 20, LASERFLAME);
-            pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_FUNKE);
+            SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_FUNKE);
         }
         break;
 
@@ -860,14 +863,18 @@ void PlayerClass::CheckForExplode(void)
             Handlung	  != EXPLODIEREN &&
             GameOverTimer  == 0.0f)
     {
-        if (pSoundManager->its_Sounds[SOUND_ABZUG + SoundOff]->isPlaying == true)
-            pSoundManager->StopWave(SOUND_ABZUG + SoundOff);
+        //DKS - No need to check if the sounds are playing, just request they stop:
+        //if (SoundManager.its_Sounds[SOUND_ABZUG + SoundOff]->isPlaying == true)
+        //    SoundManager.StopWave(SOUND_ABZUG + SoundOff);
 
-        if (pSoundManager->its_Sounds[SOUND_BLITZ + SoundOff]->isPlaying == true)
-            pSoundManager->StopWave(SOUND_BLITZ + SoundOff);
+        //if (SoundManager.its_Sounds[SOUND_BLITZ + SoundOff]->isPlaying == true)
+        //    SoundManager.StopWave(SOUND_BLITZ + SoundOff);
 
-        if (pSoundManager->its_Sounds[SOUND_BEAMLOAD + SoundOff]->isPlaying == true)
-            pSoundManager->StopWave(SOUND_BEAMLOAD + SoundOff);
+        //if (SoundManager.its_Sounds[SOUND_BEAMLOAD + SoundOff]->isPlaying == true)
+        //    SoundManager.StopWave(SOUND_BEAMLOAD + SoundOff);
+        SoundManager.StopWave(SOUND_ABZUG + SoundOff);
+        SoundManager.StopWave(SOUND_BLITZ + SoundOff);
+        SoundManager.StopWave(SOUND_BEAMLOAD + SoundOff);
 
         DirectInput.Joysticks[JoystickIndex].StopForceFeedbackEffect(FFE_BLITZ);
 
@@ -892,7 +899,7 @@ void PlayerClass::CheckForExplode(void)
 
         // Spieler explodieren lassen und Gegnern dabei Schaden zufügen
         //
-        pSoundManager->PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
+        SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
         pGegner->DamageEnemiesonScreen (xpos + 35, ypos + 40, 400);
 
         // Piss-Meldung verschwinden lassen
@@ -968,7 +975,7 @@ void PlayerClass::CheckForExplode(void)
             }
 
             ExplodingTimer = 0.0f;
-            pSoundManager->PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
+            SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
 
             for (int i = 0; i < 15; i++)
                 pPartikelSystem->PushPartikel(xpos - 10 + rand()%80,
@@ -1344,7 +1351,7 @@ void PlayerClass::AnimatePlayer(void)
         {
             int save = AnimPhase;				// Für Sumpf
 
-            pSoundManager->StopWave (SOUND_BEAMLOAD + SoundOff);
+            SoundManager.StopWave (SOUND_BEAMLOAD + SoundOff);
             JumpPossible = false;
             AnimPhase = 2;						// das springen starten
             Handlung  = SPRINGEN;
@@ -1374,9 +1381,12 @@ void PlayerClass::AnimatePlayer(void)
             }
 
             // Blubbersound noch beim Springen im Wasser
-            if (InLiquid == true &&
-                    pSoundManager->its_Sounds[SOUND_DIVE]->isPlaying == false)
-                pSoundManager->PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_DIVE);
+            //DKS - Added function WaveIsPlaying() to SoundManagerClass:
+            //if (InLiquid == true &&
+            //        SoundManager.its_Sounds[SOUND_DIVE]->isPlaying == false)
+            //    SoundManager.PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_DIVE);
+            if (InLiquid == true && !SoundManager.WaveIsPlaying(SOUND_DIVE))
+                SoundManager.PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_DIVE);
 
             // Im Sumpf? Dann ein paar Pixel anheben und wieder runterfallen
             if (bu & BLOCKWERT_SUMPF)
@@ -1418,7 +1428,7 @@ void PlayerClass::AnimatePlayer(void)
 
                     // stehen bleiben
                     yspeed = 0.0f;
-                    pSoundManager->PlayWave(100, 128, 11025, SOUND_LANDEN);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND_LANDEN);
                     pPartikelSystem->PushPartikel(xpos+20, ypos+60, SMOKE);
                 }
             }
@@ -1510,7 +1520,7 @@ void PlayerClass::AnimatePlayer(void)
             // Blitz aufladen?
             if (Aktion[AKTION_SHOOT] && Handlung != BEAMLADEN)
             {
-                pSoundManager->PlayWave (100, 128, 9000, SOUND_BEAMLOAD + SoundOff);
+                SoundManager.PlayWave (100, 128, 9000, SOUND_BEAMLOAD + SoundOff);
 
                 DirectInput.Joysticks[JoystickIndex].ForceFeedbackEffect(FFE_BLITZ);
 
@@ -1540,7 +1550,7 @@ void PlayerClass::AnimatePlayer(void)
                     changecount = 0.0f;
 
                     // Blitz Startsound ausgeben
-                    pSoundManager->PlayWave(100, 128, rand()%500+18025, SOUND_BLITZSTART + SoundOff);
+                    SoundManager.PlayWave(100, 128, rand()%500+18025, SOUND_BLITZSTART + SoundOff);
 
                     if (Blickrichtung == LINKS)			// Blitz je nach Blickrichtung neu
                         BlitzWinkel = 270;				// geradeaus richten
@@ -1593,19 +1603,24 @@ void PlayerClass::AnimatePlayer(void)
         if (Handlung == BLITZEN)
         {
             // Blitz Sound abspielen, wenn er nicht schon abgespielt wird
+            //DKS - Added function WaveIsPlaying() to SoundManagerClass:
+            //if (BlitzStart >= PLAYER_BLITZ_START &&
+            //        true == SoundManager.InitSuccessfull &&
+            //        SoundManager.its_Sounds[SOUND_BLITZ + SoundOff]->isPlaying == false)
             if (BlitzStart >= PLAYER_BLITZ_START &&
-                    true == pSoundManager->InitSuccessfull &&
-                    pSoundManager->its_Sounds[SOUND_BLITZ + SoundOff]->isPlaying == false)
+                    !SoundManager.WaveIsPlaying(SOUND_BLITZ + SoundOff))
             {
-                pSoundManager->PlayWave(100, 128, 11025, SOUND_BLITZ + SoundOff);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_BLITZ + SoundOff);
                 DirectInput.Joysticks[JoystickIndex].ForceFeedbackEffect(FFE_BLITZ);
             }
         }
-        else if (true == pSoundManager->InitSuccessfull &&
-                 pSoundManager->its_Sounds[SOUND_BLITZ + SoundOff]->isPlaying == true)
+        //DKS - Added function WaveIsPlaying() to SoundManagerClass:
+        //else if (true == SoundManager.InitSuccessfull &&
+        //         SoundManager.its_Sounds[SOUND_BLITZ + SoundOff]->isPlaying == true)
+        else if (SoundManager.WaveIsPlaying(SOUND_BLITZ + SoundOff))
         {
-            pSoundManager->StopWave(SOUND_BLITZ + SoundOff);
-            pSoundManager->PlayWave(100, 128, rand()%1000+11025, SOUND_BLITZENDE + SoundOff);
+            SoundManager.StopWave(SOUND_BLITZ + SoundOff);
+            SoundManager.PlayWave(100, 128, rand()%1000+11025, SOUND_BLITZENDE + SoundOff);
             DirectInput.Joysticks[JoystickIndex].StopForceFeedbackEffect(FFE_BLITZ);
         }
 
@@ -1637,11 +1652,16 @@ void PlayerClass::AnimatePlayer(void)
         //
         if (Handlung == BEAMLADEN)
         {
+            //PullItems();  //DKS - was already commented out
+
+            //DKS - Added check for NULLness and DirectX, since SDL port doesn't support SetFrequency.
+            //      Also added function SetWaveFrequency()
+#if defined(PLATFORM_DIRECTX)
             int Freq = 9000 + (int)(BlitzStart / 20.0f * 2000);
-
-            //PullItems();
-
-            SOUND_SetFrequency(pSoundManager->its_Sounds[SOUND_BEAMLOAD + SoundOff]->Channel, Freq);
+            //if (SoundManager.its_Sounds[SOUND_BEAMLOAD + SoundOff] != NULL)
+            //    SOUND_SetFrequency(SoundManager.its_Sounds[SOUND_BEAMLOAD + SoundOff]->Channel, Freq);
+            SetWaveFrequency((SOUND_BEAMLOAD + SoundOff), Freq);
+#endif
 
             // Beam aufladen. Je länger der Blitz desto schneller lädt der Beam
             if (BlitzStart < PLAYER_BEAM_MAX)
@@ -1665,15 +1685,15 @@ void PlayerClass::AnimatePlayer(void)
             if (!Aktion[AKTION_BLITZ] || !Aktion[AKTION_SHOOT])
             {
                 Handlung = STEHEN;
-                pSoundManager->StopWave(SOUND_BEAMLOAD + SoundOff);
+                SoundManager.StopWave(SOUND_BEAMLOAD + SoundOff);
                 DirectInput.Joysticks[JoystickIndex].StopForceFeedbackEffect(FFE_BLITZ);
 
                 if (BlitzStart >= 20.0f)
                 {
                     pProjectiles->PushBlitzBeam(int(BlitzStart), BlitzWinkel, this);
-                    pSoundManager->PlayWave(100, 128, 7000, SOUND_BLITZENDE + SoundOff);
-                    pSoundManager->PlayWave(100, 128, 10000 + rand()%2000, SOUND_BLITZENDE + SoundOff);
-                    pSoundManager->PlayWave(100, 128, 10000, SOUND_EXPLOSION3);
+                    SoundManager.PlayWave(100, 128, 7000, SOUND_BLITZENDE + SoundOff);
+                    SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_BLITZENDE + SoundOff);
+                    SoundManager.PlayWave(100, 128, 10000, SOUND_EXPLOSION3);
                 }
 
                 // je nach Ausrichtung der Waffe in die richtige Richtung kucken
@@ -1728,7 +1748,7 @@ void PlayerClass::AnimatePlayer(void)
             if (Aktion[AKTION_POWERLINE] == true  &&
                     PowerLinePossible		 == true  && PowerLines > 0)
             {
-                pSoundManager->PlayWave(100, 128, 11025, SOUND_POWERLINE);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_POWERLINE);
                 PowerLinePossible = false;			// Taste einrasten
                 PowerLines--;						// Powerlines verringern
 
@@ -1743,7 +1763,7 @@ void PlayerClass::AnimatePlayer(void)
             if (Aktion[AKTION_SMARTBOMB] == true  &&
                     PowerLinePossible == true && SmartBombs > 0)
             {
-                pSoundManager->PlayWave(100, 128, 8000, SOUND_POWERLINE);
+                SoundManager.PlayWave(100, 128, 8000, SOUND_POWERLINE);
                 PowerLinePossible = false;			// Taste einrasten
                 SmartBombs--;						// SmartBombs verringern
 
@@ -1820,7 +1840,7 @@ void PlayerClass::AnimatePlayer(void)
                     else
                     {
                         AufPlattform = NULL;
-                        pSoundManager->PlayWave(100, 128, 11025, SOUND_LANDEN);
+                        SoundManager.PlayWave(100, 128, 11025, SOUND_LANDEN);
                     }
                 }
             }
@@ -1898,7 +1918,7 @@ void PlayerClass::AnimatePlayer(void)
                 // unten rausgeflogen ? Dann wieder zurücksetzen
                 if (ypos > pTileEngine->YOffset + 475.0f)
                 {
-                    pSoundManager->PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
+                    SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
                     xpos    = JumpxSave;	// Alte Position wieder herstellen, wenn der
                     ypos    = JumpySave;	// der Spieler zB einen Abgrund runterfiel
                     xposold = JumpxSave;
@@ -2089,8 +2109,8 @@ void PlayerClass::AnimatePlayer(void)
                     FlugsackFliesFree = true;
                     pTileEngine->Zustand = ZUSTAND_SCROLLBAR;
 
-                    pSoundManager->FadeSong(MUSIC_FLUGSACK, -2.0f, 0, true);
-                    pSoundManager->FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);
+                    SoundManager.FadeSong(MUSIC_FLUGSACK, -2.0f, 0, true);
+                    SoundManager.FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);
                 }
             }
 
@@ -2176,7 +2196,7 @@ void PlayerClass::AnimatePlayer(void)
             Aktion[AKTION_DUCKEN]    == false &&
             PowerLinePossible		 == true  && PowerLines > 0)
     {
-        pSoundManager->PlayWave(100, 128, 11025, SOUND_POWERLINE);
+        SoundManager.PlayWave(100, 128, 11025, SOUND_POWERLINE);
         PowerLinePossible = false;			// Taste einrasten
         PowerLines--;						// Powerlines verringern
 
@@ -2194,7 +2214,7 @@ void PlayerClass::AnimatePlayer(void)
     if (Aktion[AKTION_SMARTBOMB] == true  &&
             PowerLinePossible == true && SmartBombs > 0)
     {
-        pSoundManager->PlayWave(100, 128, 8000, SOUND_POWERLINE);
+        SoundManager.PlayWave(100, 128, 8000, SOUND_POWERLINE);
         PowerLinePossible = false;			// Taste einrasten
         SmartBombs--;						// SmartBombs verringern
 
@@ -2384,7 +2404,7 @@ void PlayerClass::AnimatePlayer(void)
             }
 
             InLiquid = true;
-            pSoundManager->PlayWave(100, 128, 10000 + rand()%2050, SOUND_WATERIN);
+            SoundManager.PlayWave(100, 128, 10000 + rand()%2050, SOUND_WATERIN);
         }
     }
     else
@@ -2404,7 +2424,7 @@ void PlayerClass::AnimatePlayer(void)
                     pPartikelSystem->PushPartikel(xpos+10+rand()%20, ypos + CollideRect.bottom-25, spritzertype);
             }
 
-            pSoundManager->PlayWave(100, 128, 10000 + rand()%2050, SOUND_WATEROUT);
+            SoundManager.PlayWave(100, 128, 10000 + rand()%2050, SOUND_WATEROUT);
             InLiquid = false;
         }
     }
@@ -2413,13 +2433,21 @@ void PlayerClass::AnimatePlayer(void)
     if (InLiquid   == true)
     {
         //Blubberblasen entstehen lassen
-        if (rand()%500 == 0)
-            pPartikelSystem->PushPartikel(xpos+30, ypos+20, BUBBLE);
+        //DKS - No need to do two separate rand()%500 calculations, also added 
+        //      function WaveIsPlaying to SoundManagerClass:
+        //if (rand()%500 == 0)
+        //    pPartikelSystem->PushPartikel(xpos+30, ypos+20, BUBBLE);
 
-        // ggf noch Tauchgeräusche abspielen
-        if (rand()%500 == 0 &&
-                pSoundManager->its_Sounds[SOUND_DIVE]->isPlaying == false)
-            pSoundManager->PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_DIVE);
+        //// ggf noch Tauchgeräusche abspielen
+        //if (rand()%500 == 0 &&
+        //        SoundManager.its_Sounds[SOUND_DIVE]->isPlaying == false)
+        //    SoundManager.PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_DIVE);
+        if (rand()%500 == 0) {
+            pPartikelSystem->PushPartikel(xpos+30, ypos+20, BUBBLE);
+            // ggf noch Tauchgeräusche abspielen
+            if (!SoundManager.WaveIsPlaying(SOUND_DIVE))
+                SoundManager.PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_DIVE);
+        }
     }
 
     // schräg laufen?
@@ -2713,10 +2741,13 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
     else
         DamageCounter = 0.0f;
 
-    if (DamageCounter == 0.0f &&
-            true == pSoundManager->InitSuccessfull &&
-            pSoundManager->its_Sounds[SOUND_ABZUG + SoundOff]->isPlaying == true)
-        pSoundManager->StopWave(SOUND_ABZUG + SoundOff);
+    //DKS - No need to check if it is playing, just ask it to stop:
+    //if (DamageCounter == 0.0f &&
+    //        true == SoundManager.InitSuccessfull &&
+    //        SoundManager.its_Sounds[SOUND_ABZUG + SoundOff]->isPlaying == true)
+    //    SoundManager.StopWave(SOUND_ABZUG + SoundOff);
+    if (DamageCounter == 0.0f)
+        SoundManager.StopWave(SOUND_ABZUG + SoundOff);
 
     Color = pTileEngine->LightValue(xpos, ypos, CollideRect, false);
 
@@ -3182,8 +3213,9 @@ void PlayerClass::PlayerShoot(void)
             pProjectiles->PushProjectile(xpos-tempadd+AustrittX - 29, ypos-tempadd+AustrittY - 33, PLAYERFIRE, this);
             ShotDelay = PLAYER_SHOTDELAY / 5.0f;
 
-            if (pSoundManager->its_Sounds[SOUND_FLAMETHROWER + SoundOff]->isPlaying == false)
-                pSoundManager->PlayWave(100, 128, 11025, SOUND_FLAMETHROWER + SoundOff);
+            //DKS - Added function WaveIsPlaying() to SoundManagerClass:
+            if (!SoundManager.WaveIsPlaying(SOUND_FLAMETHROWER + SoundOff))
+                SoundManager.PlayWave(100, 128, 11025, SOUND_FLAMETHROWER + SoundOff);
         }
         else
             switch (SelectedWeapon)
@@ -3199,13 +3231,13 @@ void PlayerClass::PlayerShoot(void)
                 {
                     tempadd = 8;
                     tempshot = SPREADSHOT;
-                    pSoundManager->PlayWave(100, 128, 11025, SOUND_SPREADSHOT);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND_SPREADSHOT);
                 }
                 else
                 {
                     tempadd = 16;
                     tempshot = SPREADSHOTBIG;
-                    pSoundManager->PlayWave(100, 128, 8000, SOUND_SPREADSHOT);
+                    SoundManager.PlayWave(100, 128, 8000, SOUND_SPREADSHOT);
                 }
 
                 WinkelUebergabe = 90.0f + wadd;
@@ -3289,14 +3321,14 @@ void PlayerClass::PlayerShoot(void)
                     tempaddx = 8;
                     tempaddy = 24;
                     tempshot = LASERSHOT;
-                    pSoundManager->PlayWave(100, 128, 11025, SOUND_LASERSHOT);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND_LASERSHOT);
                 }
                 else
                 {
                     tempaddx = 12;
                     tempaddy = 40;
                     tempshot = LASERSHOTBIG;
-                    pSoundManager->PlayWave(100, 128, 8000, SOUND_LASERSHOT);
+                    SoundManager.PlayWave(100, 128, 8000, SOUND_LASERSHOT);
                 }
 
                 WinkelUebergabe = 90.0f + wadd;
@@ -3497,13 +3529,13 @@ void PlayerClass::PlayerShoot(void)
                     tempadd = 12;
                     tempshot = BOUNCESHOT1;
 
-                    pSoundManager->PlayWave(100, 128, 11025, SOUND_BOUNCESHOT);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND_BOUNCESHOT);
                 }
                 else
                 {
                     tempadd = 24;
                     tempshot = BOUNCESHOTBIG1;
-                    pSoundManager->PlayWave(100, 128, 8000, SOUND_BOUNCESHOT);
+                    SoundManager.PlayWave(100, 128, 8000, SOUND_BOUNCESHOT);
                 }
 
                 WinkelUebergabe = 90.0f + wadd;
@@ -3676,7 +3708,7 @@ void PlayerClass::PlayerGrenadeShoot (void)
     WinkelUebergabe = 90.0f + wadd;
     pProjectiles->PushProjectile(xpos+AustrittX-4, ypos+AustrittY-4, GRENADE, this);
 
-    pSoundManager->PlayWave(100, 128, 11025, SOUND_GRANATE);
+    SoundManager.PlayWave(100, 128, 11025, SOUND_GRANATE);
     PowerLinePossible = false;			// Taste einrasten
     Grenades--;							// Granaten verringern
 
@@ -4084,8 +4116,9 @@ bool PlayerClass::DoLightning(void)
                     pEnemy->Energy = pEnemy->Energy - BLITZ_POWER SYNC;
 
                     // Hit Sound
-                    if (!(pSoundManager->its_Sounds[SOUND_HIT + pEnemy->HitSound]->isPlaying))
-                        pSoundManager->PlayWave(100, 128, 21000 + rand()%1000, SOUND_HIT + pEnemy->HitSound);
+                    //DKS - Added function WaveIsPlaying() to SoundManagerClass:
+                    if (!SoundManager.WaveIsPlaying(SOUND_HIT + pEnemy->HitSound))
+                        SoundManager.PlayWave(100, 128, 21000 + rand()%1000, SOUND_HIT + pEnemy->HitSound);
 
                     // PlattForm ShootButton getroffen ? Dann Blitz kürzen
                     //
@@ -4355,11 +4388,12 @@ void PlayerClass::DamagePlayer (float Ammount,
     if (Skill == 3) Ammount *= 2.2f;
 
     // Sound starten
+    //DKS - Added function WaveIsPlaying() to SoundManagerClass:
     if (DamageCounter == 0.0f   &&
             Handlung != RADELN		&&
             Handlung != RADELN_FALL &&
-            pSoundManager->its_Sounds[SOUND_ABZUG + SoundOff]->isPlaying == false)
-        pSoundManager->PlayWave(100, 128, 11025, SOUND_ABZUG + SoundOff);
+            !SoundManager.WaveIsPlaying(SOUND_ABZUG + SoundOff))
+        SoundManager.PlayWave(100, 128, 11025, SOUND_ABZUG + SoundOff);
 
     // Nur verwunden, wenn kein Rad, denn als Rad ist man unverwundbar
     if ((Handlung != RADELN &&
@@ -4710,7 +4744,7 @@ void PlayerClass::PlayerInExit(void)
         Stage    = -1;
         pMenu->AktuellerZustand = MENUZUSTAND_MAINMENU;
         pGUI->HideBoxFast();
-        pSoundManager->StopSong(MUSIC_STAGECLEAR, false);
+        SoundManager.StopSong(MUSIC_STAGECLEAR, false);
     }
 
     // Alle Levels durch? Dann Outtro starten
@@ -4753,8 +4787,8 @@ void PlayerClass::RunPlayerExit(void)
     //DKS - Added support for non-looped music, so this is no longer necessary..
     //      This was causing stage-clear music to never be heard in the SDL port.
     //// Musik zuende ?
-    //if (MUSIC_IsFinished(pSoundManager->its_Songs[MUSIC_STAGECLEAR]->SongData))
-    //    pSoundManager->StopSong(MUSIC_STAGECLEAR, false);
+    //if (MUSIC_IsFinished(SoundManager.its_Songs[MUSIC_STAGECLEAR]->SongData))
+    //    SoundManager.StopSong(MUSIC_STAGECLEAR, false);
 
     if (CheckLevelExit() == true)
         PlayerInExit();

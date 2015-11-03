@@ -182,7 +182,7 @@ void GegnerFlugBoss::DoKI(void)
     		pTileEngine->ScrollLevel((float)Value1,
     								 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
-    		pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+    		SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
 
     		yPos -= 480;
     	}
@@ -200,7 +200,7 @@ void GegnerFlugBoss::DoKI(void)
     		Handlung  = GEGNER_EXPLODIEREN;
 
     		// Endboss-Musik ausfaden und abschalten
-    		pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+    		SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
     	}
 
     	// Je nach Handlung richtig verhalten
@@ -214,8 +214,8 @@ void GegnerFlugBoss::DoKI(void)
     				tempSpeed = 35.0f;
     				Handlung  = GEGNER_INIT2;
 
-    				pSoundManager->PlayWave (100, 128, 3500, SOUND_ROCKET);
-    				pSoundManager->PlayWave (100, 128, 4500, SOUND_ROCKET);
+    				SoundManager.PlayWave (100, 128, 3500, SOUND_ROCKET);
+    				SoundManager.PlayWave (100, 128, 4500, SOUND_ROCKET);
     			}
     		} break;
 
@@ -239,9 +239,9 @@ void GegnerFlugBoss::DoKI(void)
     				tempSpeed = 15.0f;
     				Handlung  = GEGNER_INIT3;
 
-    				pSoundManager->StopWave (SOUND_ROCKET);
-    				pSoundManager->PlayWave (100, 128, 11025, SOUND_DOORSTOP);
-    				pSoundManager->PlayWave (100, 128, 11025, SOUND_DOOR);
+    				SoundManager.StopWave (SOUND_ROCKET);
+    				SoundManager.PlayWave (100, 128, 11025, SOUND_DOORSTOP);
+    				SoundManager.PlayWave (100, 128, 11025, SOUND_DOOR);
     			}
 
     		} break;
@@ -263,15 +263,15 @@ void GegnerFlugBoss::DoKI(void)
     				AnimCount  = 10.0f;
     				Handlung   = GEGNER_LAUFEN;
     				SchienePos = 0.0f;
-    				pSoundManager->StopWave (SOUND_DOOR);
-    				pSoundManager->PlayWave (100, 128, 13000, SOUND_DOORSTOP);
-    				pSoundManager->PlayWave (100, 128, 11000, SOUND_ROCKET);
+    				SoundManager.StopWave (SOUND_DOOR);
+    				SoundManager.PlayWave (100, 128, 13000, SOUND_DOORSTOP);
+    				SoundManager.PlayWave (100, 128, 11000, SOUND_ROCKET);
     				tempSpeed = 12.0f;
 
     				// Boss-Musik abspielen, sofern diese noch nicht gespielt wird
     				//
-    				if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
-    					pSoundManager->PlaySong(MUSIC_BOSS, false);
+    				if (MUSIC_IsPlaying(SoundManager.its_Songs[MUSIC_BOSS]->SongData) == false)
+    					SoundManager.PlaySong(MUSIC_BOSS, false);
     			}
 
     		} break;
@@ -294,7 +294,7 @@ void GegnerFlugBoss::DoKI(void)
     				ShotDelay  = 1.0f;
     				ShotCount  = 20.0f;
     				xKanone	   = 110.0f;
-    				pSoundManager->PlayWave (100, 128, 15000, SOUND_DOORSTOP);
+    				SoundManager.PlayWave (100, 128, 15000, SOUND_DOORSTOP);
     			}
 
     		} break;
@@ -316,9 +316,9 @@ void GegnerFlugBoss::DoKI(void)
     				Handlung   = GEGNER_EINFAHREN;
     				xKanone	   = 0.0f;
     				tempSpeed  = 12.0f;
-    				pSoundManager->StopWave (SOUND_DOOR);
-    				pSoundManager->PlayWave (100, 128, 15000, SOUND_DOORSTOP);
-    				pSoundManager->PlayWave (100, 128, 11000, SOUND_ROCKET);
+    				SoundManager.StopWave (SOUND_DOOR);
+    				SoundManager.PlayWave (100, 128, 15000, SOUND_DOORSTOP);
+    				SoundManager.PlayWave (100, 128, 11000, SOUND_ROCKET);
     			}
 
     		} break;
@@ -387,7 +387,7 @@ void GegnerFlugBoss::DoKI(void)
     				ShotDelay += 0.2f;
     				ShotCount -= 1.0f;
 
-    				pSoundManager->PlayWave (100, 128, 8000 + rand()%1000, SOUND_CANON);
+    				SoundManager.PlayWave (100, 128, 8000 + rand()%1000, SOUND_CANON);
 
     				if (int (ShotCount) % 2 == 0)
     				{
@@ -416,7 +416,7 @@ void GegnerFlugBoss::DoKI(void)
     			if (AnimCount < 0.0f)
     			{
     				pPartikelSystem->PushPartikel(xPos + rand()%500, yPos + rand()%300, EXPLOSION_MEDIUM2);
-    				pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+    				SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
     				AnimCount = 1.0f;
     			}
@@ -459,7 +459,7 @@ void GegnerFlugBoss::DoKI(void)
     						AnimCount  = 10.0f;
     						Handlung   = GEGNER_EINFAHREN;
     						SchienePos = 0.0f;
-    						pSoundManager->PlayWave (100, 128, 11000, SOUND_ROCKET);
+    						SoundManager.PlayWave (100, 128, 11000, SOUND_ROCKET);
     						tempSpeed = 12.0f;
     					} break;
 
@@ -481,7 +481,7 @@ void GegnerFlugBoss::DoKI(void)
     				{
     					ShotDelay += 3.0f;
 
-    					pSoundManager->PlayWave (100, 128, 15000, SOUND_LASERSHOT);
+    					SoundManager.PlayWave (100, 128, 15000, SOUND_LASERSHOT);
     					ShotCount -= 1.0f;
 
     					if (int (ShotCount) % 2 == 0)
@@ -584,5 +584,5 @@ void GegnerFlugBoss::GegnerExplode(void)
     								 */
 
     // Level Musik wieder einfaden lassen (aus Pause Zustand)
-    pSoundManager->FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);
+    SoundManager.FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);
 }
