@@ -42,7 +42,7 @@ void GegnerSoundTrigger::DoKI(void)
         //
         if (PlayerAbstand() < 700)
         {
-            int   vol, pan;
+            int   vol = 0, pan = 128;
             float xdiff, ydiff, Abstand;
 
             xdiff = ((pPlayer[0]->xpos + 45)  - xPos);
@@ -51,12 +51,16 @@ void GegnerSoundTrigger::DoKI(void)
             //DKS - Converted to float:
             Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
-            vol = int(100-float(Abstand/6.0f)) * 2;
-            vol = int (vol * pSoundManager->its_GlobalSoundVolume /100.0f);
+            //DKS - Sound is twice as loud here as it should be, and volume is
+            //      adjusted against the global sound volume in the sound manager itself:
+            //vol = int(100-float(Abstand/6.0f)) * 2;
+            //vol = int (vol * SoundManager.g_sound_vol /100.0f);
+            vol = int(100-float(Abstand/6.0f));
             if (vol < 0)
-                vol = 0;
-            else
             {
+                vol = 0;
+            } else {
+
                 // Sound links oder rechts vom Spieler ?
                 //
                 if (xPos < pPlayer[0]->xpos + 45)
@@ -71,16 +75,25 @@ void GegnerSoundTrigger::DoKI(void)
                     if (pan > 255)
                         pan = 255;
                 }
-
-                // Sound abspielen, wenn er noch nicht läuft bzw im Menu gestoppt wurde
-                //
-                if (pSoundManager->its_Sounds [SOUND_TRIGGER_START + Value1]->isPlaying == false)
-                    pSoundManager->PlayWave(100, 128, 11025, SOUND_TRIGGER_START + Value1);
-
-                int channel = pSoundManager->its_Sounds [SOUND_TRIGGER_START + Value1]->Channel;
-                SOUND_SetVolume (channel, vol);
-                SOUND_SetPan	 (channel, 128);
             }
+
+            // Sound abspielen, wenn er noch nicht läuft bzw im Menu gestoppt wurde
+            //
+            //DKS - Added function GetChannelWaveIsPlayingOn() to SoundManagerClass:
+            int channel = SoundManager.GetChannelWaveIsPlayingOn(SOUND_TRIGGER_START + Value1);
+
+            if (channel == -1 && vol > 0)
+                channel = SoundManager.PlayWave(vol, pan, 11025, SOUND_TRIGGER_START + Value1);
+
+            //DKS - There are often multiple sound triggers close to one another and they
+            //      often interfere with one another. I added a function
+            //      SetPendingChannelVolumeAndPanning() that will accept these multiple
+            //      requests and create a single result from all of them.
+            //int channel = SoundManager.its_Sounds [SOUND_TRIGGER_START + Value1]->Channel;
+            //SOUND_SetVolume (channel, vol);
+            //SOUND_SetPan	 (channel, 128);
+            if (channel >= 0)
+                SoundManager.SetPendingChannelVolumeAndPanning(channel, vol, pan);
         }
 
     }
@@ -92,7 +105,9 @@ void GegnerSoundTrigger::DoKI(void)
     {
         if (PlayerAbstand() < 100)
         {
-            pSoundManager->PlayWave (100, 128, 11025, SOUND_TRIGGER_START + Value1);
+            //DKS - added check for WaveIsPlaying:
+            if (!SoundManager.WaveIsPlaying(SOUND_TRIGGER_START + Value1))
+                SoundManager.PlayWave (100, 128, 11025, SOUND_TRIGGER_START + Value1);
             Energy = 0.0f;
         }
     }
@@ -104,7 +119,9 @@ void GegnerSoundTrigger::DoKI(void)
     {
         if (PlayerAbstand() < 100)
         {
-            pSoundManager->PlayWave (100, 128, 11025, SOUND_TRIGGER_START + Value1);
+            //DKS - added check for WaveIsPlaying:
+            if (!SoundManager.WaveIsPlaying(SOUND_TRIGGER_START + Value1))
+                SoundManager.PlayWave (100, 128, 11025, SOUND_TRIGGER_START + Value1);
             Energy = 0.0f;
         }
     }

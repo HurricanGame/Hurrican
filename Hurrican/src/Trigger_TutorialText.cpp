@@ -105,7 +105,7 @@ void GegnerTutorialText::DoKI(void)
         pGUI->ShowBox((char *)displayed_text.c_str(), 100);
         pGUI->m_TextID = Value1;
 
-        pSoundManager->PlayWave (100, 128, 11025, SOUND_MESSAGE);
+        SoundManager.PlayWave (100, 128, 11025, SOUND_MESSAGE);
     }
 
     // Spieler weg und Trigger auf dem Screen? Dann ausfaden

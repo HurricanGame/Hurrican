@@ -102,7 +102,7 @@ void GegnerFieserFireWalker::DoKI(void)
             xSpeed    = 0.0f;
             AnimEnde  = 0;
 
-            pSoundManager->PlayWave (100, 128, 11025, SOUND_FEUERFALLE);
+            SoundManager.PlayWave (100, 128, 11025, SOUND_FEUERFALLE);
         }
 
         if (ShotDelay > 0.0f)
@@ -189,7 +189,7 @@ void GegnerFieserFireWalker::GegnerExplode(void)
                                       yPos + rand ()% 50, SPIDERSPLITTER);
 
 
-    pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);	// Sound ausgeben
 
     pPlayer[0]->Score += 80;
 }

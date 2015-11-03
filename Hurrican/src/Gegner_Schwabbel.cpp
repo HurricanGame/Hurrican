@@ -55,7 +55,7 @@ void GegnerSchwabbel::DoKI(void)
                     Handlung = GEGNER_SCHIESSEN;
                     shotdelay = 40.0f;
                     AnimCount = 1.0f;
-                    pSoundManager->PlayWave (100, 128, 13000, SOUND_KOTZEN);
+                    SoundManager.PlayWave (100, 128, 13000, SOUND_KOTZEN);
                 }
             }
 
@@ -102,8 +102,8 @@ void GegnerSchwabbel::DoKI(void)
 
 void GegnerSchwabbel::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 11025, SOUND_MADE);
-    pSoundManager->PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
+    SoundManager.PlayWave (100, 128, 11025, SOUND_MADE);
+    SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i=0; i < 80; i++)
         pPartikelSystem->PushPartikel (xPos + rand ()%40, yPos - 10 + rand()%60, MADEBLUT);

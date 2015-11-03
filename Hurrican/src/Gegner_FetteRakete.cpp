@@ -113,7 +113,7 @@ void GegnerFetteRakete::DoKI(void)
         if (AnimCount < 0.0f)
         {
             Handlung = GEGNER_LAUFEN;
-            pSoundManager->PlayWave(100, 128, 9000 + rand()%2000, SOUND_ROCKET);
+            SoundManager.PlayWave(100, 128, 9000 + rand()%2000, SOUND_ROCKET);
 
             xAcc = 0;
             yAcc = 0;
@@ -170,7 +170,7 @@ void GegnerFetteRakete::DoKI(void)
 
 void GegnerFetteRakete::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 8000 + rand ()%4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave (100, 128, 8000 + rand ()%4000, SOUND_EXPLOSION1);
 
     pPartikelSystem->PushPartikel (xPos - 10, yPos - 20, EXPLOSION_MEDIUM2);
 

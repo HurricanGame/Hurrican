@@ -141,7 +141,7 @@ void GegnerLavamann::DoKI(void)
     //
     case GEGNER_INIT:
     {
-        pSoundManager->PlayWave(100, 128, 10000 + rand()%1000, SOUND_FEUERFALLE);
+        SoundManager.PlayWave(100, 128, 10000 + rand()%1000, SOUND_FEUERFALLE);
         Handlung = GEGNER_LAUFEN;
     }
     break;
@@ -197,7 +197,7 @@ void GegnerLavamann::GegnerExplode(void)
                                       float(yPos - 20 + rand()%50), MINIFLARE);
     }
 
-    pSoundManager->PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 
     pPlayer[0]->Score += 350;
 }

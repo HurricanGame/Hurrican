@@ -107,8 +107,9 @@ void GegnerBratklops::DoDraw()
                   int (FlareDelay) % 90 < 60) ||
                  Handlung == GEGNER_SPECIAL3))
         {
-            if (pSoundManager->its_Sounds[SOUND_BRATLASER]->isPlaying == false)
-                pSoundManager->PlayWave (100, 128, 11025, SOUND_BRATLASER);
+            //DKS - Added function WaveIsPlaying() to SoundManagerClass:
+            if (!SoundManager.WaveIsPlaying(SOUND_BRATLASER))
+                SoundManager.PlayWave (100, 128, 11025, SOUND_BRATLASER);
 
             VERTEX2D				TriangleStrip[4];					// Strip für ein Sprite
             int Winkel;
@@ -245,7 +246,7 @@ void GegnerBratklops::DoDraw()
             }
         }
         else
-            pSoundManager->StopWave (SOUND_BRATLASER);
+            SoundManager.StopWave (SOUND_BRATLASER);
 
         if (FlareDelay > 800.0f)
         {
@@ -303,7 +304,7 @@ void GegnerBratklops::DoKI(void)
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
         xPos -= 232;												// und Boss aus dem Screen setzen
 
-        pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
@@ -319,7 +320,7 @@ void GegnerBratklops::DoKI(void)
         FlareDelay = 0.0f;
 
         // Endboss-Musik ausfaden und abschalten
-        pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
     }
 
 // Je nach Handlung richtig verhalten
@@ -333,9 +334,10 @@ void GegnerBratklops::DoKI(void)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
             //
-            if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+            //DKS - Added function SongIsPlaying() to SoundManagerClass:
+            if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
             {
-                pSoundManager->PlaySong(MUSIC_BOSS, false);
+                SoundManager.PlaySong(MUSIC_BOSS, false);
 
                 // Und Boss erscheinen lassen
                 //
@@ -390,7 +392,7 @@ void GegnerBratklops::DoKI(void)
                 Handlung = GEGNER_BOMBARDIEREN;
                 ActionDelay = 8.0f;
                 pProjectiles->PushProjectile (xPos + 146, yPos + 186, BRATKLOPSSHOT);
-                pSoundManager->PlayWave (100, 128, 8000, SOUND_GRANATE);
+                SoundManager.PlayWave (100, 128, 8000, SOUND_GRANATE);
                 Shots = rand()%3 + 3;
             }
 
@@ -400,7 +402,7 @@ void GegnerBratklops::DoKI(void)
             {
                 Handlung = GEGNER_SCHIESSEN;
                 ShotDelay = 1.0f;
-                pSoundManager->PlayWave (100, 128, 11025, SOUND_KOTZEN);
+                SoundManager.PlayWave (100, 128, 11025, SOUND_KOTZEN);
             }
             else
 
@@ -410,7 +412,7 @@ void GegnerBratklops::DoKI(void)
                 {
                     Handlung = GEGNER_SPECIAL;
                     FlareDelay = 0.0f;
-                    pSoundManager->PlayWave (100, 128, 8000, SOUND_SPIDERSCREAM);
+                    SoundManager.PlayWave (100, 128, 8000, SOUND_SPIDERSCREAM);
                 }
             // FettBoller
             //
@@ -418,7 +420,7 @@ void GegnerBratklops::DoKI(void)
                 {
                     Handlung = GEGNER_SPECIAL2;
                     FlareDelay = 0.0f;
-                    pSoundManager->PlayWave (100, 128, 8000, SOUND_SPIDERSCREAM);
+                    SoundManager.PlayWave (100, 128, 8000, SOUND_SPIDERSCREAM);
                 }
 
             // Laser von Rechts nach Links
@@ -427,7 +429,7 @@ void GegnerBratklops::DoKI(void)
                 {
                     Handlung = GEGNER_SPECIAL3;
                     FlareDelay = 800.0f;
-                    pSoundManager->PlayWave (100, 128, 8000, SOUND_SPIDERSCREAM);
+                    SoundManager.PlayWave (100, 128, 8000, SOUND_SPIDERSCREAM);
                 }
 
             // Pause
@@ -450,7 +452,7 @@ void GegnerBratklops::DoKI(void)
         {
             ActionDelay = 8.0f;
             pProjectiles->PushProjectile (xPos + 146, yPos + 186, BRATKLOPSSHOT);
-            pSoundManager->PlayWave (100, 128, 8000, SOUND_GRANATE);
+            SoundManager.PlayWave (100, 128, 8000, SOUND_GRANATE);
             Shots--;
             if (Shots == 0)
                 Handlung = GEGNER_STEHEN;
@@ -501,9 +503,9 @@ void GegnerBratklops::DoKI(void)
             pProjectiles->PushProjectile (xPos +  84, yPos + 290, BRATKLOPSSHOT);
             pProjectiles->PushProjectile (xPos +  60, yPos + 320, BRATKLOPSSHOT);
 
-            pSoundManager->PlayWave (100, 128,  8000, SOUND_GRANATE);
-            pSoundManager->PlayWave (100, 128, 11025, SOUND_GRANATE);
-            pSoundManager->PlayWave (100, 128, 11025, SOUND_BRATLASER);
+            SoundManager.PlayWave (100, 128,  8000, SOUND_GRANATE);
+            SoundManager.PlayWave (100, 128, 11025, SOUND_GRANATE);
+            SoundManager.PlayWave (100, 128, 11025, SOUND_BRATLASER);
         }
     }
     break;
@@ -516,7 +518,7 @@ void GegnerBratklops::DoKI(void)
         //
         if (rand()%5 == 0) pPartikelSystem->PushPartikel(xPos + rand()%180, yPos + rand()%500, EXPLOSION_GREEN);
         if (rand()%3 == 0) pPartikelSystem->PushPartikel(xPos + rand()%150, yPos + rand()%200 + 100, MADEBLUT);
-        if (rand()%8 == 0) pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+        if (rand()%8 == 0) SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
         xPos -= 3.0f SYNC;
 
@@ -531,7 +533,9 @@ void GegnerBratklops::DoKI(void)
     {
         // Aktion vorbei ?
         //
-        if (pSoundManager->its_Sounds [SOUND_KOTZEN]->isPlaying == false)
+        //DKS - Added function WaveIsPlaying() to SoundManagerClass:
+        //if (SoundManager.its_Sounds [SOUND_KOTZEN]->isPlaying == false)
+        if (!SoundManager.WaveIsPlaying(SOUND_KOTZEN))
         {
             ActionDelay = 10.0f;
             Handlung    = GEGNER_STEHEN;
@@ -582,7 +586,7 @@ void GegnerBratklops::DoKI(void)
 
 void GegnerBratklops::GegnerExplode(void)
 {
-    pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
     // Zusäzliche Grafiken freigeben
     //

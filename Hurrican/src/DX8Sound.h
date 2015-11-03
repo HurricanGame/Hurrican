@@ -9,12 +9,23 @@
 //
 // --------------------------------------------------------------------------------------
 
+
+/********************************************************************************
+  DKS - IMPORTANT NOTE:
+  I overhauled this and DX8Sound.h, cleaning up and adding class interfaces,
+  fixing bugs, and improving SDL support throughout. The most fundamental
+  change is that SoundManagerClass now monitors sound channels individually.
+********************************************************************************/
+
+
 #ifndef __DX8Sound_h__
 #define __DX8Sound_h__
 
 // --------------------------------------------------------------------------------------
 // Include Dateien
 // --------------------------------------------------------------------------------------
+#include <vector>
+#include <string>
 
 #if defined(PLATFORM_DIRECTX)
 #include <dsound.h>
@@ -48,6 +59,10 @@
 #define SOUND_GetVolume         FSOUND_GetVolume
 #define SOUND_SetVolume         FSOUND_SetVolume
 #define SOUND_StopSound         FSOUND_StopSound
+
+//DKS - Added:
+#define SOUND_SetPaused         FSOUND_SetPaused
+#define SOUND_GetPaused         FSOUND_GetPaused
 
 #elif defined(PLATFORM_SDL)
 #include "SDL_fmod.h"
@@ -218,12 +233,6 @@ struct SOUNDMANAGER_PARAMETERS
     int		Flags;
 };
 
-//---------------------------------------------------------------------------------------
-// Funktionsdeklarationen
-//---------------------------------------------------------------------------------------
-
-char *GetFMODErrorString(int ErrorNr);
-
 // --------------------------------------------------------------------------------------
 // Klassendeklaration
 // --------------------------------------------------------------------------------------
@@ -232,121 +241,158 @@ char *GetFMODErrorString(int ErrorNr);
 // Klassen-Deklaration (Song)
 //---------------------------------------------------------------------------------------
 
-class CSong
+//DKS - Added:
+class SongClass
 {
-public :
-
-    MUSIC_MODULE	   *SongData;		// MOD-Daten
-    float				Volume;			// Lautstärke
-    float				FadingVolume;	// Aktuelle Fading Speed und Richtung
-    int					FadingEnd;		// Fading Grenze
-    bool				FadingPaused;	// Pause vor/nach Fading ?
+public:
+    MUSIC_MODULE       *data;                  // MOD-Daten
+    float               vol;                   // Lautstärke
+    float               fade_speed;            // Aktuelle Fading Speed und Richtung
+    int                 fade_end_vol;          // Fading Grenze
+    bool                pause_when_fade_ends;  // Pause vor/nach Fading ?
 
     //DKS - Added boolean to specify if the song plays looped or not:
-    bool                isLooped;
+    bool                looped;
 
     //DKS - Added boolean to specify if a song is paused or not:
-    bool                isPaused;
+    bool                paused;
 
-    CSong();					// Konstruktor
-    ~CSong();					// Destruktor
-    bool	Update(void);				// Songs faden
+    bool                was_playing;    // Was this song playing before calling PausePlaying()?
+
+    SongClass() : data(NULL), vol(100), fade_speed(0), fade_end_vol(0), pause_when_fade_ends(false), 
+                  looped(true), paused(false), was_playing(false) {}
+    ~SongClass() {}
 };
 
 //---------------------------------------------------------------------------------------
 // Klassen-Deklaration (Soundeffect Wave Datei)
 //---------------------------------------------------------------------------------------
 
-class CWave
+//DKS - Added:
+class SampleClass
 {
-public :
-    SOUND_SAMPLE		*SoundData;		// Daten des Sounds
-    int					Channel;		// Channel in dem es gerade gespielt wird
-    bool				isPlaying;		// Spielt der Sound gerade ?
-    bool				isLooped;
-    int					FadeMode;		// Fadet der Sound gerade ?
+public:
+    SOUND_SAMPLE    *data;
+    bool            looped;
+    SampleClass() : data(NULL), looped(false) {}
+    ~SampleClass() {}
+};
 
-    CWave();					// Konstruktor
-    ~CWave();					// Destruktor
-    bool	Update();					// Updaten und isPlaying checken
+//DKS - Added:
+class ChannelClass
+{
+public:
+    uint8_t sound_num;      // If sound_num is -1, the channel is not in use.
+    uint8_t panning;
+    uint8_t fade_mode;		// Fadet der Sound gerade ?
+    uint8_t pending_pan;
+    int16_t pending_vol;    // If -1, there is no pending volume/pan changes (from Trigger_SoundTrigger.cpp presumably)
+    bool    paused;
+    bool    is3D;           // Is this a channel whose panning/volume gets updated based on distance to player?
+    float   vol;
+    int     xpos, ypos;     // If this is a 3D channel, this stores its origin point
+
+    ChannelClass() : sound_num(-1), panning(128), fade_mode(FADEMODE_NON),
+                     pending_pan(128), pending_vol(-1), 
+                     paused(false), is3D(false), vol(100.0f), xpos(0), ypos(0) {}
 };
 
 //---------------------------------------------------------------------------------------
 // Klassen-Deklaration (SoundManager)
 //---------------------------------------------------------------------------------------
 
-class CSoundManager
+class SoundManagerClass
 {
 private :
-    int		its_LoadedSongs;			// Anzahl geladener Songs
-    int		its_LoadedSounds;			// Anzahl geladener Sounds
-    signed char WasPlaying[MAX_SONGS];
+    //DKS - Added a vector to that tracks channel usage:
+    std::vector<ChannelClass> channels;
+
+    SongClass                 songs[MAX_SONGS];
+    SampleClass               sounds[MAX_SOUNDS];
+
+    bool InitFMOD(SOUNDMANAGER_PARAMETERS smpp);	// FMOD Init
+
+    //DKS - Added these:
+    void UpdateChannels();
+    void Update3DChannel(int ch);
+    void UpdateSongs();
 
 public :
-    CSong 	*its_Songs [MAX_SONGS+1];	// Die Songs
-    CWave	*its_Sounds[MAX_SOUNDS+1];	// Die Sounds
-    float	its_GlobalMusicVolume;		// Globale Musik-Lautstärke (0-100)
-    float	its_GlobalSoundVolume;		// Globale Sound-Lautstärke (0-100)
-    int		CurrentSongNr;				// Aktueller Song
+    float	g_music_vol;		// Globale Musik-Lautstärke (0-100)
+    float	g_sound_vol;		// Globale Sound-Lautstärke (0-100)
 
-    bool	InitSuccessfull;
-    int 	MaxChannels;				// Maximal nutzbare Channels
-    int		ChannelsUsed;				// Anzahl benutzter Sound-Channels
+    int 	num_channels;           // Number of sound channels sound library actually gave us
+    int		most_channels_used;				// Anzahl benutzter Sound-Channels
 
-    CSoundManager	();								// Konstruktor
-    CSoundManager	(SOUNDMANAGER_PARAMETERS smpp);	// Überladener Konstruktor
-    ~CSoundManager	();								// Destruktor
+    SoundManagerClass() : g_music_vol(100), g_sound_vol(100), num_channels(0), most_channels_used(0) {}
 
-    bool InitFMOD	(SOUNDMANAGER_PARAMETERS smpp);	// FMOD Init
-    void SetVolumes (float Sound, float Musik);		// neue global Volumes setzen
+    //DKS - Class longer needs a destructor, it now uses Init() and Exit()
+    //~SoundManagerClass	();								// Destruktor
+
+    //DKS - Added these two to support a single, static global SoundManagerClass:
+    void Init();
+    void Exit();
+
+    void SetVolumes (float sound_vol, float music_vol);		// neue global Volumes setzen
 
     //DKS - Added default parameter loop to specify if the song should loop:
     //bool LoadSong	(const char *Filename, int Nr);		// Song laden
-    bool LoadSong	(const char *Filename, int Nr, bool loop=true);		// Song laden
+    void LoadSong	(const std::string &filename, int nr, bool loop=true);		// Song laden
 
-    bool PlaySong	(int Nr, bool Paused);			// Song abspielen (Von Pause oder neu)
-    bool StopSong	(int Nr, bool Paused);			// Song anhalten  (Pause oder ganz)
+    void PlaySong	(int nr, bool resuming_paused_song);			// Song abspielen (Von Pause oder neu)
+    void StopSong	(int nr, bool paused);			// Song anhalten  (Pause oder ganz)
 
     //DKS - Added function to unload a song (game was leaving some songs loaded, like the
     //      Cracktro,Outtro and Intro music)
-    void UnloadSong(int Nr);                        // Free a song's data (stopping it first)
+    void UnloadSong(int nr);                        // Free a song's data (stopping it first)
 
-    void StopAllSongs	(bool Paused);				// Alle Songs anhalten
-    void StopAllSounds  (void);
-    void StopAllLoopedSounds(void);
-    void SetSongVolume(int Nr, float Volume);		// Volume im Song setzen
-    void SetAbsoluteSongVolume(int Nr, float Volume);
-    void SetAllSongVolumes(void);					// Volume aller Songs setzen
-    void Update		(void);							// Channel und Fades bearbeiten
-    void FadeSong	(int Nr, float Speed, int End,	// Song ein/aus faden
-                     bool Paused);
-    void FadeWave(int Nr, int Mode);				// Fade Mode
-    bool LoadWave	(const char *Filename, int Nr,		// Sound laden
-                     bool looped);
-    bool PlayWave	(int Vol,  int Pan,				// Sound spielen
-                     int Freq, int Nr);
-    bool PlayWave3D	(int x,    int y, 				// Sound spielen abhängig von der Spieler
-                     int Freq, int Nr);				// position lauter oder leiser
-    void Update3D   (int x, int y, int Nr);			// 3D Sound updaten
-    bool StopWave	(int Nr);						// Wave anhalten
+    void StopSongs();                                   // Alle Songs anhalten
+    void StopSounds();
+    void SetSongVolume(int nr, float volume);           // Volume im Song setzen
+    void SetAbsoluteSongVolume(int nr, float volume);
 
-    //DKS - PauseAllSongs() was never used and I've disabled it.
-    //      The game seems to use PausePlaying and PlayPaused() for this purpose instead.
-    //void PauseAllSongs(bool bPause);				// Alle Songs anhalten, wieder abspielen
+    //DKS - Added:
+    void ResetAllSoundVolumes();
 
-    void PausePlaying(void);						// Alle spielenden Songs anhalten
-    void PlayPaused(void);							// Alle angehaltenen Songs abspielen
+    void Update();                                      // Channel und Fades bearbeiten
+    void FadeSong(int nr, float speed, int end,         // Song ein/aus faden
+                  bool pause_when_fade_ends);
+    void FadeWave(int nr, int mode);                    // Fade Mode
+    void LoadWave(const std::string &filename, int nr,  // Sound laden
+                  bool looped);
+    int  PlayWave(int vol, int pan,                 // Sound spielen
+                  int freq, int nr);
+    int  PlayWave3D(int x, int y,                   // Sound spielen abhängig von der Spieler
+                     int freq, int nr);             // position lauter oder leiser
+    void StopWave(int nr);                          // Wave anhalten
 
-    //DKS - Added new function to check if a song is playing. Before, many parts of the
-    //      game were calling MUSIC_IsPlaying() directly against SoundData, which would
-    //      segfault if music wasn't initialized or a specific song wasn't loaded.
-    bool SongIsPlaying(int Nr);
+    //DKS - Added these:
+    void UnloadWave(int nr);
+    void PauseSounds();
+    void UnpauseSounds();
+
+    void PauseSongs();                              // Alle spielenden Songs anhalten
+    void UnpauseSongs();                            // Alle angehaltenen Songs abspielen
+
+    //DKS - Added all these, primarily to prevent the rest of the game from having to
+    //      call the underlying sound API directly, as it was before.
+    bool SongIsPlaying(int nr);
+    bool SongIsPaused(int nr);
+    void StopChannel(int ch);
+    void SetChannelVolume(int ch, float new_vol);
+    void SetChannelPanning(int ch, int pan);
+    bool WaveIsPlaying(int nr);
+    bool WaveIsPlayingOnChannel(int nr, int ch);
+    int  GetChannelWaveIsPlayingOn(int nr);
+    void SetPendingChannelVolumeAndPanning(int ch, int new_vol, int new_pan);
+
+    //DKS - added.. (Playing waves and varying freq's not supported under SDL, for now anyway)
+#if defined(PLATFORM_DIRECTX)
+    void SetWaveFrequency(int nr, int freq);
+#endif
+
 };
 
-//---------------------------------------------------------------------------------------
-// Externals
-//---------------------------------------------------------------------------------------
-
-extern CSoundManager		*pSoundManager;
-
+//Externs
+extern SoundManagerClass SoundManager;
 #endif

@@ -108,6 +108,6 @@ void GegnerOneUp::DoKI(void)
 
 void GegnerOneUp::GegnerExplode(void)
 {
-    pSoundManager->PlayWave(100, 128, 11025, SOUND_COLLECT);		// Sound ausgeben
-    pSoundManager->PlayWave(100, 128, 11025, SOUND_VOICE_EXTRALIFE);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);		// Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025, SOUND_VOICE_EXTRALIFE);	// Sound ausgeben
 }

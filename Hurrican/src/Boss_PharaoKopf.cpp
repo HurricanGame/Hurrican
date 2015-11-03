@@ -81,7 +81,7 @@ void GegnerPharaoKopf::DoKI(void)
         pTileEngine->ScrollLevel((float)Value1,
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf die Faust zentrieren
 
-        pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
@@ -100,11 +100,11 @@ void GegnerPharaoKopf::DoKI(void)
         yAcc      = 0.0f;
         AnimCount = 20.0f;
 
-        pSoundManager->PlayWave(100, 128, 11024, SOUND_EXPLOSION1);
-        pSoundManager->PlayWave(100, 128, 11025, SOUND_PHARAODIE);
+        SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
+        SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAODIE);
 
         // Endboss-Musik ausfaden und abschalten
-        pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
     }
 
     // Kopf zieht dem Spieler Energie an wenn er ihn berührt
@@ -126,8 +126,8 @@ void GegnerPharaoKopf::DoKI(void)
             pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + rand()%224, ROCKSPLITTERSMALL);
         }
 
-        pSoundManager->PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
-        pSoundManager->PlayWave(100, 128, 11025, SOUND_PHARAODIE);
+        SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
+        SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAODIE);
     }
 
 // Je nach Handlung richtig verhalten
@@ -138,8 +138,9 @@ void GegnerPharaoKopf::DoKI(void)
         if (pTileEngine->Zustand == ZUSTAND_LOCKED)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-            if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
-                pSoundManager->PlaySong(MUSIC_BOSS, false);
+            //DKS - Added function SongIsPlaying() to SoundManagerClass:
+            if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
+                SoundManager.PlaySong(MUSIC_BOSS, false);
 
             // Und Boss erscheinen lassen
             Handlung = GEGNER_EINFLIEGEN;
@@ -190,7 +191,7 @@ void GegnerPharaoKopf::DoKI(void)
             }
 _weiter:
             yPos = (float)Value2 + 480 - BORDER2 - GegnerRect[GegnerArt].bottom;
-            pSoundManager->PlayWave(100, 128, 8000, SOUND_STONEFALL);
+            SoundManager.PlayWave(100, 128, 8000, SOUND_STONEFALL);
 
             Handlung = GEGNER_LAUFEN;
         }
@@ -271,7 +272,7 @@ _weiter2:
                     pPartikelSystem->PushPartikel(xPos-10, yPos + rand()%224, ROCKSPLITTERSMALL);
                 }
 
-                pSoundManager->PlayWave(100, 128, 11024, SOUND_PHARAORAMM);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
                 Handlung  = GEGNER_CRUSHENERHOLEN;
                 AnimCount = 10.0f;
 
@@ -310,7 +311,7 @@ _weiter2:
                     pPartikelSystem->PushPartikel(xPos+212, yPos + rand()%224, ROCKSPLITTERSMALL);
                 }
 
-                pSoundManager->PlayWave(100, 128, 11024, SOUND_PHARAORAMM);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
                 Handlung  = GEGNER_CRUSHENERHOLEN;
                 AnimCount = 10.0f;
 
@@ -334,7 +335,7 @@ _weiter2:
                     pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + 10, ROCKSPLITTERSMALL);
                 }
 
-                pSoundManager->PlayWave(100, 128, 11024, SOUND_PHARAORAMM);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
                 yPos	= (float)Value2;
                 ySpeed  = 5.0f;
                 yAcc	= 10.0f;
@@ -383,7 +384,7 @@ _weiter2:
                         pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + 220, ROCKSPLITTERSMALL);
                     }
 
-                    pSoundManager->PlayWave(100, 128, 11024, SOUND_PHARAORAMM);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
                     pTileEngine->BlockUnten(xPos, yPos, xPos, yPos, GegnerRect[GegnerArt]);
                     AnimCount = 20.0f;
                     Handlung  = GEGNER_CRUSHENERHOLEN;
@@ -442,7 +443,7 @@ _weiter2:
                 Handlung = GEGNER_LAUFEN;
 
                 if (j == 2)
-                    pSoundManager->PlayWave(100, 128, 8000, SOUND_STONEFALL);
+                    SoundManager.PlayWave(100, 128, 8000, SOUND_STONEFALL);
             }
         }
     }
@@ -463,7 +464,7 @@ _weiter2:
                 pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + 220, ROCKSPLITTERSMALL);
             }
 
-            pSoundManager->PlayWave(100, 128, 11024, SOUND_PHARAORAMM);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
 
             ySpeed    = 0.0f;
             yAcc      = 0.0f;
@@ -496,8 +497,8 @@ _weiter2:
             pProjectiles->PushProjectile(xPos + 112, yPos + 77, PHARAOLASER, pAim);
 
             // Sound ausgeben
-            pSoundManager->PlayWave(50, 128, 22050, SOUND_PHARAODIE);
-            pSoundManager->PlayWave(70, 128, 11025, SOUND_LASERSHOT);
+            SoundManager.PlayWave(50, 128, 22050, SOUND_PHARAODIE);
+            SoundManager.PlayWave(70, 128, 11025, SOUND_LASERSHOT);
 
             // Je nach SchwierigkeitsGrad die Schuss Frequenz setzen
             if (Skill == 0)	AnimCount = 10.0f;
@@ -559,8 +560,8 @@ void GegnerPharaoKopf::GegnerExplode(void)
 
     pPlayer[0]->Score += 8000;
 
-    pSoundManager->PlayWave(100, 128, 11024, SOUND_EXPLOSION2);
-    pSoundManager->PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
+    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
 
     ShakeScreen(4);
 

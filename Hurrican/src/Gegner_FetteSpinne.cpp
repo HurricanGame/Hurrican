@@ -241,7 +241,7 @@ void GegnerFetteSpinne::GegnerExplode(void)
     for (int i = 0; i < 16; i++)
         pPartikelSystem->PushPartikel (xPos+rand()%100, yPos+rand()%30, SPIDERSPLITTER);
 
-    pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
+    SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
 
     pPlayer[0]->Score += 800;		// Punkte geben
 }

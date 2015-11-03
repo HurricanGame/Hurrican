@@ -67,7 +67,7 @@ void GegnerSwimWalker::DoKI(void)
                 ((BlickRichtung == LINKS  && pAim->xpos+45 <= xPos) ||
                  (BlickRichtung == RECHTS && pAim->xpos-45 >= xPos)))
         {
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_ROCKET);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_ROCKET);
 
             if (BlickRichtung == LINKS)
                 pProjectiles->PushProjectile(xPos - 25, yPos+10, TORPEDO, pAim);
@@ -110,7 +110,7 @@ void GegnerSwimWalker::GegnerExplode(void)
         pPartikelSystem->PushPartikel(xPos - 10 + rand()%85, yPos - 10 + rand()%65, BUBBLE);
     }
 
-    pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION1);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION1);	// Sound ausgeben
 
     pPlayer[0]->Score += 100;
 }

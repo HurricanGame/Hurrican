@@ -69,7 +69,7 @@ void GegnerFlugKanone::DoKI(void)
         {
             pProjectiles->PushProjectile(xPos + 30, yPos + 40, FLUGLASER);
             pPartikelSystem->PushPartikel(xPos + 24, yPos + 30, SMOKE);
-            pSoundManager->PlayWave(50, 128, 30000, SOUND_LASERSHOT);
+            SoundManager.PlayWave(50, 128, 30000, SOUND_LASERSHOT);
         }
     }
 
@@ -106,7 +106,7 @@ void GegnerFlugKanone::GegnerExplode(void)
         pPartikelSystem->PushPartikel(float(xPos + rand()%65),
                                       float(yPos + rand()%35), LASERFUNKE2);
 
-    pSoundManager->PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 
     pPlayer[0]->Score += 150;
 }

@@ -154,7 +154,7 @@ void GegnerMade::DoKI(void)
 
 void GegnerMade::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, rand ()%200 + 20, 8000 + rand()%4000, SOUND_MADE);
+    SoundManager.PlayWave (100, rand ()%200 + 20, 8000 + rand()%4000, SOUND_MADE);
 
     for (int i = 0; i < 10; i++)
         pPartikelSystem->PushPartikel(float(xPos - 10 + rand()%24),

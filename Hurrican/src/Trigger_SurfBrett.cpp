@@ -43,8 +43,8 @@ void GegnerSurfBrett::DoKI(void)
     // LevelMusik beeinflussen ?
     // Denn in stage xx geht die Musik erst los, wenn der Spieler auf das SurfBrett springt !
     //
-    if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_STAGEMUSIC]->SongData))
-    	pSoundManager->StopSong(MUSIC_STAGEMUSIC, true);
+    if (MUSIC_IsPlaying(SoundManager.its_Songs[MUSIC_STAGEMUSIC]->SongData))
+    	SoundManager.StopSong(MUSIC_STAGEMUSIC, true);
 
     // Draufgesprungen, dann gehts los
     //
@@ -59,7 +59,7 @@ void GegnerSurfBrett::DoKI(void)
     	//
     	yPos = float (Value1);
     	pPlayer->JumpedOnSurfboard = true;
-    	pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
+    	SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
     	pPartikelSystem->PushPartikel (xPos - 20, yPos - 20, EXPLOSION_MEDIUM2);
     }
 

@@ -66,7 +66,7 @@ void GegnerEndLevel::DoKI(void)
 
                 if (RunningTutorial && Value1 <= 9)
                 {
-                    pSoundManager->PlayWave(100, 128, 11025, SOUND_MARIO);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND_MARIO);
                     StageClear(false);
                 }
                 else

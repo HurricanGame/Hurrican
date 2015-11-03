@@ -194,7 +194,7 @@ void GegnerNeuFisch::DoKI(void)
 
 void GegnerNeuFisch::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 10; i++)
     {

@@ -365,7 +365,7 @@ void GegnerDrache::DoKI(void)
 
         // Drache aus Screen bringen
         xPos = Value1 - 500.0f;
-        pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
 
     // Boss blinkt nicht so lange wie die restlichen Gegner
@@ -400,7 +400,7 @@ void GegnerDrache::DoKI(void)
         }
 
         // Endboss-Musik ausfaden und abschalten
-        pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
     }
 
     if (!(Handlung == GEGNER_EINFLIEGEN &&
@@ -459,9 +459,9 @@ void GegnerDrache::DoKI(void)
 
         if (alledrauf == true)
         {
-            pSoundManager->PlayWave(100, 128, 6000,  SOUND_EXPLOSION1);
-            pSoundManager->PlayWave(100, 128, 8000,  SOUND_ROCKET);
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_ROCKET);
+            SoundManager.PlayWave(100, 128, 6000,  SOUND_EXPLOSION1);
+            SoundManager.PlayWave(100, 128, 8000,  SOUND_ROCKET);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_ROCKET);
             Handlung = GEGNER_AUSFAHREN;
             xAcc = -2.0f;
             yAcc = -0.2f;
@@ -545,7 +545,7 @@ void GegnerDrache::DoKI(void)
                 pPartikelSystem->PushPartikel(xPos - 120 + rand()%300,
                                               yPos +  rand()%100 + DrawYOffset,
                                               EXPLOSION_MEDIUM2);
-                pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
             }
         }
 
@@ -635,7 +635,7 @@ void GegnerDrache::DoKI(void)
                 for (int p = 0; p < NUMPLAYERS; p++)
                     pPlayer[p]->DoFesteAktion = false;
 
-                pSoundManager->PlaySong(MUSIC_STAGEMUSIC, false);
+                SoundManager.PlaySong(MUSIC_STAGEMUSIC, false);
             }
         }
         break;
@@ -672,7 +672,7 @@ void GegnerDrache::DoKI(void)
         {
             ShotDelay = 0.5f;
 
-            pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+            SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
             pPartikelSystem->PushPartikel(xPos - 100 + rand()%500, yPos + 20 + rand()%80, EXPLOSION_MEDIUM2);
 
             if (rand()%3 == 0)
@@ -725,7 +725,7 @@ void GegnerDrache::DoKI(void)
                     pPartikelSystem->PushPartikel(xPos - 120 +  rand()%300, yPos + 80.0f, SMOKEBIG);
 
                 ShakeScreen(5.0f);
-                pSoundManager->PlayWave(100, 128, 10000, SOUND_DOORSTOP);
+                SoundManager.PlayWave(100, 128, 10000, SOUND_DOORSTOP);
 
                 xSpeed = 0.0f;
                 ySpeed = 0.0f;
@@ -747,8 +747,9 @@ void GegnerDrache::DoKI(void)
         if (pTileEngine->Zustand == ZUSTAND_LOCKED)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-            if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
-                pSoundManager->PlaySong(MUSIC_BOSS, false);
+            //DKS - Added function SongIsPlaying() to SoundManagerClass:
+            if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
+                SoundManager.PlaySong(MUSIC_BOSS, false);
 
             // Und Boss erscheinen lassen
             Handlung = GEGNER_EINFLIEGEN2;
@@ -929,7 +930,7 @@ void GegnerDrache::DoKI(void)
                                                  yPos +  50.0f - HeadWinkel/2.0f,  FIREBALL_BIG);
                 }
 
-                pSoundManager->PlayWave(100, 128, 8000 + rand()%2000, SOUND_FIREBALL);
+                SoundManager.PlayWave(100, 128, 8000 + rand()%2000, SOUND_FIREBALL);
             }
 
         }
@@ -1126,7 +1127,7 @@ void GegnerDrache::DoKI(void)
                 Attack = GEGNER_SCHLIESSEN;
                 AnimCount = 4.0f;
                 KieferWinkel = PI / 2.0f;
-                pSoundManager->PlayWave(100, 128, 10000 + rand()%1000, SOUND_KLONG);
+                SoundManager.PlayWave(100, 128, 10000 + rand()%1000, SOUND_KLONG);
                 HeadYSpeed *= -1;
                 HeadXSpeed *= -1;
 

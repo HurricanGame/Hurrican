@@ -79,7 +79,7 @@ void GegnerWandKannone::DoKI(void)
             //
             if (PlayerAbstand() < 600)
             {
-                pSoundManager->PlayWave (100, 128, 22050, SOUND_LASERSHOT);
+                SoundManager.PlayWave (100, 128, 22050, SOUND_LASERSHOT);
                 if (BlickRichtung == LINKS)
                 {
                     pProjectiles->PushProjectile(xPos - 18, yPos + 15, WALKER_LASER);
@@ -111,7 +111,7 @@ void GegnerWandKannone::GegnerExplode(void)
     for (int i = 0; i < 10; i++)
         pPartikelSystem->PushPartikel (xPos-30+rand()%42, yPos-30+rand()%32, EXPLOSION_MEDIUM2);
 
-    pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
     pPlayer[0]->Score += 150;		// Punkte geben
 }

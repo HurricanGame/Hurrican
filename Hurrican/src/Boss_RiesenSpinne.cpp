@@ -397,7 +397,7 @@ void GegnerRiesenSpinne::RandomHandlung(void)
     {
         Handlung = GEGNER_SPECIAL2;
         pProjectiles->PushProjectile((float) Value1, yPos + yBody + 110.0f, SPIDERLASER);
-        pSoundManager->PlayWave (100, 128, 11025, SOUND_BEAMLOAD2);
+        SoundManager.PlayWave (100, 128, 11025, SOUND_BEAMLOAD2);
         AnimCount = 140;
         ShotDelay = 0.0f;
     }
@@ -421,7 +421,7 @@ void GegnerRiesenSpinne::DoKI(void)
         pTileEngine->ScrollLevel((float)Value1,
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf die Spinne zentrieren
 
-        pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
 
     // Je nach Handlung richtig verhalten
@@ -432,8 +432,9 @@ void GegnerRiesenSpinne::DoKI(void)
         if (pTileEngine->Zustand == ZUSTAND_LOCKED)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-            if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
-                pSoundManager->PlaySong(MUSIC_BOSS, false);
+            //DKS - Added function SongIsPlaying() to SoundManagerClass:
+            if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
+                SoundManager.PlaySong(MUSIC_BOSS, false);
 
             // Und Boss erscheinen lassen
             Handlung = GEGNER_EINFLIEGEN;
@@ -449,7 +450,7 @@ void GegnerRiesenSpinne::DoKI(void)
 
 //			if (xPos <= Value1 + 460)			// Weit genug eingelaufen ?
         {
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_SPIDERSCREAM);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_SPIDERSCREAM);
             Handlung = GEGNER_LAUFEN_LINKS;
             ShotDelay = 1.0f;
             ShotMode = rand()%2;
@@ -528,7 +529,7 @@ void GegnerRiesenSpinne::DoKI(void)
                 {
                     ShotDelay = 12.0f;
 
-                    pSoundManager->PlayWave(100, 128, 8000 + rand()%1000, SOUND_LILA);
+                    SoundManager.PlayWave(100, 128, 8000 + rand()%1000, SOUND_LILA);
                     pPartikelSystem->PushPartikel(xPos + 30.0f - 50.0f, yPos + yBody + 85.0f - 35.0f, EXPLOSIONFLARE2);
 
                     if (ShotMode == 0)
@@ -608,7 +609,7 @@ void GegnerRiesenSpinne::DoKI(void)
                 pPartikelSystem->PushPartikel(xPos + rand()%400, yPos + rand()%100, SMOKEBIG);
 
                 if (rand()%5 == 0)
-                    pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3 + rand()%2);
+                    SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3 + rand()%2);
             }
 
             if (xPos > Value1 + 640)
@@ -637,7 +638,7 @@ void GegnerRiesenSpinne::DoKI(void)
             ShotDelay = 4.0f;
 
             // Rakete abschiessen
-            pSoundManager->PlayWave(100, 128, 10000 + rand()%2000, SOUND_ROCKET);
+            SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_ROCKET);
             pGegner->PushGegner(xPos + 35.0f, yPos + 95.0f, FETTERAKETE, rand()%60 - 130, 0, false);
 
             // Kopf zurückschnellen lassen
@@ -674,7 +675,7 @@ void GegnerRiesenSpinne::DoKI(void)
             ShotDelay = 3.5f;
 
             // Böller abschiessen
-            pSoundManager->PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
+            SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
             WinkelUebergabe = 180 - HeadWinkel * 1.5f;
             //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
             //pProjectiles->PushProjectile(xPos - (float)cos(HeadWinkel * PI / 180.0f) * 10.0f,
@@ -735,7 +736,7 @@ void GegnerRiesenSpinne::DoKI(void)
             ShotDelay = 10.0f;
 
             // Böller abschiessen
-            pSoundManager->PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
+            SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
             pProjectiles->PushProjectile(xPos + 20.0f, yPos + 80.0f + yBody, SPIDERSHOT2);
             pProjectiles->PushProjectile(xPos + 20.0f, yPos + 100.0f + yBody, SPIDERSHOT2);
 
@@ -753,7 +754,7 @@ void GegnerRiesenSpinne::DoKI(void)
         if (yBody > 50.0f)
         {
             Handlung = GEGNER_CRUSHEN;
-            pSoundManager->PlayWave(100, 128, 11025, SOUND_SPIDERSCREAM);
+            SoundManager.PlayWave(100, 128, 11025, SOUND_SPIDERSCREAM);
         }
     }
     break;
@@ -779,7 +780,7 @@ void GegnerRiesenSpinne::DoKI(void)
             ShotDelay = 10.0f;
 
             // Böller abschiessen
-            pSoundManager->PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
+            SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
             WinkelUebergabe = PlayerAbstandHoriz() / 10.0f;
             pProjectiles->PushProjectile(xPos + 20.0f, yPos + 80.0f + yBody, SPIDERSHOT2);
             pProjectiles->PushProjectile(xPos + 20.0f, yPos + 100.0f + yBody, SPIDERSHOT2);
@@ -810,7 +811,7 @@ void GegnerRiesenSpinne::DoKI(void)
             if (Handlung != GEGNER_SPECIAL2)
                 DamageWackel = PI;
 
-            pSoundManager->PlayWave(100, 128, 15000, SOUND_SPIDERSCREAM);
+            SoundManager.PlayWave(100, 128, 15000, SOUND_SPIDERSCREAM);
 
             if (Handlung == GEGNER_SCHIESSEN ||
                     Handlung == GEGNER_SPECIAL   ||
@@ -849,7 +850,7 @@ void GegnerRiesenSpinne::DoKI(void)
         pProjectiles->ClearType(SPIDERLASER);
 
         // Endboss-Musik ausfaden und abschalten
-        pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
     }
 }
 
@@ -860,7 +861,7 @@ void GegnerRiesenSpinne::DoKI(void)
 void GegnerRiesenSpinne::GegnerExplode(void)
 {
     pPlayer[0]->Score += 15000;
-    pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
     ShakeScreen(5.0f);
 
     ScrolltoPlayeAfterBoss();

@@ -61,7 +61,7 @@ void GegnerSecret::DoKI(void)
                 pPlayer[0]->SecretFullGame++;
                 Handlung = GEGNER_FALLEN;
 
-                pSoundManager->PlayWave(100, 128, 11025, SOUND_SECRET);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_SECRET);
 
                 for (int i = 0; i < 200; i++)
                     pPartikelSystem->PushPartikel(xPos + 20, yPos + 20, KRINGELSECRET);

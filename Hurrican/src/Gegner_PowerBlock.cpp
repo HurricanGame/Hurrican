@@ -224,5 +224,5 @@ void GegnerPowerBlock::GegnerExplode(void)
     // Explosion erzeugen
     pPartikelSystem->PushPartikel(xPos-30, yPos-30, EXPLOSION_BIG);
 
-    pSoundManager->PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 }

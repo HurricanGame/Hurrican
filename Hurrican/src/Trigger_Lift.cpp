@@ -59,7 +59,7 @@ void GegnerLift::DoKI(void)
                 for (int p = 0; p < NUMPLAYERS; p++)
                     pPlayer[p]->AufPlattform = NULL;
 
-                pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
             }
         }
     } // animieren

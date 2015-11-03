@@ -293,7 +293,7 @@ void GegnerBigFish::DoKI(void)
     {
         pTileEngine->ScrollLevel((float)Value1,
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf die Faust zentrieren
-        pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
         xPos  += 400;
     }
 
@@ -312,7 +312,7 @@ void GegnerBigFish::DoKI(void)
     if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN)
     {
         // Endboss-Musik ausfaden und abschalten
-        pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
 
         // zum Spieler scrollen
         ScrolltoPlayeAfterBoss();
@@ -338,8 +338,8 @@ void GegnerBigFish::DoKI(void)
             if (pTileEngine->Zustand == ZUSTAND_LOCKED)
             {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-                if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
-                    pSoundManager->PlaySong(MUSIC_BOSS, false);
+                if (SoundManager.SongIsPlaying(MUSIC_BOSS) == false)
+                    SoundManager.PlaySong(MUSIC_BOSS, false);
 
                 // Und Boss erscheinen lassen
                 Handlung = GEGNER_EINFLIEGEN;
@@ -387,7 +387,7 @@ void GegnerBigFish::DoKI(void)
             {
                 shot = false;
                 MaulWinkel = 0.0f;
-                pSoundManager->PlayWave(50, 128, 6000 + rand()%500, SOUND_KLONG);
+                SoundManager.PlayWave(50, 128, 6000 + rand()%500, SOUND_KLONG);
 
                 if (ShotCount <= 0)
                     NewAction();
@@ -419,7 +419,7 @@ void GegnerBigFish::DoKI(void)
             {
                 shot = false;
                 MaulWinkel = 0.0f;
-                pSoundManager->PlayWave(50, 128, 6000 + rand()%500, SOUND_KLONG);
+                SoundManager.PlayWave(50, 128, 6000 + rand()%500, SOUND_KLONG);
 
                 if (ShotCount <= 0)
                     NewAction();
@@ -462,7 +462,7 @@ void GegnerBigFish::DoKI(void)
 
 void GegnerBigFish::GegnerExplode(void)
 {
-    pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
     // Blut
     for (int i=0; i<80; i++)

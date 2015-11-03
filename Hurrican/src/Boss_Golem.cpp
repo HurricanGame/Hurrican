@@ -85,7 +85,7 @@ void GegnerGolem::Wackeln(void)
                 Handlung == GEGNER_LAUFEN4)
         {
             ShakeScreen(4.0f);
-            pSoundManager->PlayWave(100, 128, 15000 + rand()%2000, SOUND_DOORSTOP);
+            SoundManager.PlayWave(100, 128, 15000 + rand()%2000, SOUND_DOORSTOP);
         }
     }
 }
@@ -288,7 +288,7 @@ void GegnerGolem::DoKI(void)
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);
 
         // Ausfaden und pausieren
-        pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);
+        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);
     }
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
@@ -310,7 +310,7 @@ void GegnerGolem::DoKI(void)
         ShotDelay = 30.0f;
 
         // Endboss-Musik ausfaden und abschalten
-        pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
     }
 
 // Je nach Handlung richtig verhalten
@@ -321,12 +321,13 @@ void GegnerGolem::DoKI(void)
         if (pTileEngine->Zustand == ZUSTAND_LOCKED)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-            if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
-                pSoundManager->PlaySong(MUSIC_BOSS, false);
+            //DKS - Added function SongIsPlaying() to SoundManagerClass:
+            if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
+                SoundManager.PlaySong(MUSIC_BOSS, false);
 
             // Und Boss erscheinen lassen
             Handlung = GEGNER_EINFLIEGEN;
-            pSoundManager->PlayWave(100, 128, 7000, SOUND_MUTANT);
+            SoundManager.PlayWave(100, 128, 7000, SOUND_MUTANT);
         }
     }
     break;
@@ -436,7 +437,7 @@ void GegnerGolem::DoKI(void)
             {
                 state2 = ARM_HEBEN;
                 ShakeScreen(3.0f);
-                pSoundManager->PlayWave(75, 128, 15000 + rand()%2000, SOUND_DOORSTOP);
+                SoundManager.PlayWave(75, 128, 15000 + rand()%2000, SOUND_DOORSTOP);
 
                 pGegner->PushGegner((float)(pTileEngine->XOffset + 100.0f + rand()%540),
                                     (float)(pTileEngine->YOffset + 480), LAVABALL, 50 + rand()%10, 0, false);
@@ -458,7 +459,7 @@ void GegnerGolem::DoKI(void)
             {
                 state2 = ARM_SENKEN;
                 ShakeScreen(3.0f);
-                pSoundManager->PlayWave(75, 128, 15000 + rand()%2000, SOUND_DOORSTOP);
+                SoundManager.PlayWave(75, 128, 15000 + rand()%2000, SOUND_DOORSTOP);
 
                 pGegner->PushGegner((float)(pAim->xpos - 20.0f + rand()%70),
                                     (float)(pTileEngine->YOffset + 480), LAVABALL, 50 + rand()%10, 0, false);
@@ -574,7 +575,7 @@ void GegnerGolem::DoKI(void)
             pPartikelSystem->PushPartikel(xPos - 60.0f, yPos + yoff - 70.0f, GRENADEFLARE);
 
             // Sound ausgeben
-            pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_FIREBALL);
+            SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_FIREBALL);
 
             ShotDelay = 80.0f;
 
@@ -649,7 +650,7 @@ void GegnerGolem::DoKI(void)
             if (Wackel >= 0.35f)
             {
                 state2 = ARM_WERFEN;
-                pSoundManager->PlayWave(100, 128, 6000 + rand()%2000, SOUND_MUTANT);
+                SoundManager.PlayWave(100, 128, 6000 + rand()%2000, SOUND_MUTANT);
             }
         }
         break;
@@ -668,7 +669,7 @@ void GegnerGolem::DoKI(void)
             {
                 pGegner->PushGegner(xPos - 40, yPos + 30, BOULDER, -(rand()%80 + 10), -(rand()%20 + 10), true);
                 pGegner->PushGegner(xPos - 40, yPos + 30, BOULDER, -(rand()%40 + 10), -(rand()%10 + 10), true);
-                pSoundManager->PlayWave(100, 128, 14000 + rand()%4000, SOUND_STONEFALL);
+                SoundManager.PlayWave(100, 128, 14000 + rand()%4000, SOUND_STONEFALL);
                 state2 = ARM_SENKEN2;
             }
         }
@@ -720,7 +721,7 @@ void GegnerGolem::DoKI(void)
         {
             // einmalig Sound abspielen
             if (ShotDelay == 3.0f)
-                pSoundManager->PlayWave (100, 128, 11025, SOUND_FEUERFALLE);
+                SoundManager.PlayWave (100, 128, 11025, SOUND_FEUERFALLE);
 
             Wackel = 10.0f;
             ShotDelay -= 1.0f SYNC;
@@ -775,7 +776,7 @@ void GegnerGolem::DoKI(void)
                 for (int i=0; i<48; i++)
                     pPartikelSystem->PushPartikel(xPos-80+rand()%50, yPos + 245, LAVA_SPRITZER2);
 
-                pSoundManager->PlayWave3D((int)xPos + 30, (int)yPos + 30, 10000 + rand()%2050, SOUND_WATERIN);
+                SoundManager.PlayWave3D((int)xPos + 30, (int)yPos + 30, 10000 + rand()%2050, SOUND_WATERIN);
 
                 pProjectiles->PushProjectile(xPos - 90, yPos + 300, GOLEMSAEULE);
             }
@@ -818,7 +819,7 @@ void GegnerGolem::DoKI(void)
 
             // brodeln lassen
             pPartikelSystem->PushPartikel(xPos + rand()%160, yPos + rand()%300 + yoff, EXPLOSION_MEDIUM2);
-            pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+            SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
             if (rand()%2 == 0)
                 pPartikelSystem->PushPartikel(xPos + rand()%160, yPos + rand()%300 + yoff, SMOKEBIG);
@@ -846,7 +847,7 @@ void GegnerGolem::DoKI(void)
 
 void GegnerGolem::GegnerExplode(void)
 {
-    pSoundManager->PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
     for (int p = 0; p < NUMPLAYERS; p++)
         DirectInput.Joysticks[pPlayer[p]->JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);

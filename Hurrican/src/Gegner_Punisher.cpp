@@ -107,12 +107,12 @@ void GegnerPunisher::DoKI(void)
         alpha = 0.0f;
         Handlung = GEGNER_INIT2;
 
-        pSoundManager->StopSong(MUSIC_STAGEMUSIC, true);
+        SoundManager.StopSong(MUSIC_STAGEMUSIC, true);
 
         //DKS - Punisher music is now loaded on-demand:
-        pSoundManager->LoadSong("Punisher.it", MUSIC_PUNISHER);
+        SoundManager.LoadSong("Punisher.it", MUSIC_PUNISHER);
 
-        pSoundManager->PlaySong(MUSIC_PUNISHER, false);
+        SoundManager.PlaySong(MUSIC_PUNISHER, false);
 
     }
     break;
@@ -221,9 +221,9 @@ void GegnerPunisher::DoKI(void)
 void GegnerPunisher::Vanish(void)
 {
     if (ShowSummary == true)
-        pSoundManager->StopSong(MUSIC_PUNISHER, false);
+        SoundManager.StopSong(MUSIC_PUNISHER, false);
     else
-        pSoundManager->FadeSong(MUSIC_PUNISHER, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC_PUNISHER, -2.0f, 0, false);
 
     Handlung = GEGNER_SPECIAL;
     Energy = 1.0f;
@@ -241,6 +241,6 @@ void GegnerPunisher::GegnerExplode(void)
     pPlayer[0]->PunisherActive = false;
     pPlayer[1]->PunisherActive = false;
 
-    pSoundManager->SetSongVolume(MUSIC_STAGEMUSIC, 0);
-    pSoundManager->FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);
+    SoundManager.SetSongVolume(MUSIC_STAGEMUSIC, 0);
+    SoundManager.FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);
 }

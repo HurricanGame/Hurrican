@@ -139,7 +139,7 @@ void GegnerWalker::DoKI(void)
         if (AnimPhase == 17	&&
                 AnimCount == 0.0f)
         {
-            pSoundManager->PlayWave(100, 128, 18000 + rand()%2000, SOUND_LASERSHOT);
+            SoundManager.PlayWave(100, 128, 18000 + rand()%2000, SOUND_LASERSHOT);
 
             if (BlickRichtung == LINKS)
                 pProjectiles->PushProjectile(xPos-18, yPos + 23, WALKER_LASER);
@@ -228,7 +228,7 @@ void GegnerWalker::DoKI(void)
                 ySpeed	  = -30.0f;
                 yAcc	  =   5.0f;
 
-                pSoundManager->PlayWave(100, 128, 11025, SOUND_WALKERGIGGLE);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_WALKERGIGGLE);
                 blocku = pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
                 yPos -= 5.0f;
             }
@@ -250,7 +250,7 @@ void GegnerWalker::GegnerExplode(void)
         pPartikelSystem->PushPartikel(float(xPos - 20 + rand()%45),
                                       float(yPos - 20 + rand()%45), EXPLOSION_MEDIUM2);
 
-    pSoundManager->PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 
     pPlayer[0]->Score += 100;
 }

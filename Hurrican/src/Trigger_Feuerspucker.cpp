@@ -49,7 +49,7 @@ void GegnerFeuerspucker::DoKI(void)
             Handlung = GEGNER_SCHIESSEN;
 
             // Sound abspielen, je nach Player Abstand lauter oder leiser
-            pSoundManager->PlayWave3D(int(xPos+20), int(yPos+20), 11025, SOUND_FEUERFALLE);
+            SoundManager.PlayWave3D(int(xPos+20), int(yPos+20), 11025, SOUND_FEUERFALLE);
         }
     }
     break;
@@ -108,7 +108,7 @@ void GegnerFeuerspucker::DoKI(void)
 
 void GegnerFeuerspucker::GegnerExplode(void)
 {
-    pSoundManager->PlayWave(25, 128, 11025, SOUND_EXPLOSION1);
+    SoundManager.PlayWave(25, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i=0; i<5; i++)
         pPartikelSystem->PushPartikel(xPos-50+rand()%48, yPos-50+rand()%56, EXPLOSION_BIG);

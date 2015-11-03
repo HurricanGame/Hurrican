@@ -84,7 +84,7 @@ void GegnerEierMann::GegnerExplode(void)
     for (int i = 0; i < 4; i++)
         pPartikelSystem->PushPartikel (xPos+rand()%80, yPos+rand()%80, SPLITTER);
 
-    pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);
+    SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);
 
     pPlayer[0]->Score += 1500;		// Punkte geben
 }

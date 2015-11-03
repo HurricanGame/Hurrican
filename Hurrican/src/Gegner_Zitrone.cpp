@@ -219,7 +219,7 @@ void GegnerZitrone::DoKI(void)
             pProjectiles->PushProjectile(xPos + 53.0f - sin_deg(180.0f - KnarreWinkel) * 45.0f,
                                          yPos + 56.0f + cos_deg(180.0f - KnarreWinkel) * 45.0f + (float)(sin(WackelOffset) * 10.0f), FLUGLASER);
 
-            pSoundManager->PlayWave(100, 128, 24000 + rand()%500, SOUND_LASERSHOT);
+            SoundManager.PlayWave(100, 128, 24000 + rand()%500, SOUND_LASERSHOT);
         }
     }
     break;
@@ -328,7 +328,7 @@ void GegnerZitrone::DoKI(void)
         if (rand()%2 == 0)
             xSpeed *= -1;
 
-        pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);
+        SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);
 
         for (int i = 0; i < 8; i++)
         {
@@ -345,7 +345,7 @@ void GegnerZitrone::DoKI(void)
 
 void GegnerZitrone::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);
+    SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);
 
     for (int i = 0; i < 12; i++)
     {

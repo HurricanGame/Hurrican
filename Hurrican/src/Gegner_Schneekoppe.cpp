@@ -95,5 +95,5 @@ void GegnerSchneekoppe::GegnerExplode(void)
         pPartikelSystem->PushPartikel(xPos - 10 + rand ()%20,
                                       yPos - 10 + rand ()%20, BLUE_EXPLOSION);
 
-    pSoundManager->PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 }

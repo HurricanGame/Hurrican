@@ -39,7 +39,7 @@ IntroClass::IntroClass(void)
     BildNr = 0;
     HorizCounter = 0.0f;
     Counter = 0.0f;
-    pSoundManager->LoadSong("intro.it", MUSIC_INTRO);
+    SoundManager.LoadSong("intro.it", MUSIC_INTRO);
 
     while (DirectInput.AreAllKeysReleased() == false)
         DirectInput.UpdateTastatur();
@@ -87,10 +87,12 @@ IntroClass::IntroClass(void)
 
 IntroClass::~IntroClass(void)
 {
-    MUSIC_StopAllSongs();
+    //DKS
+    //MUSIC_StopAllSongs();
+    SoundManager.StopSongs();
 
     //DKS - Game was not freeing music data, added this:
-    pSoundManager->UnloadSong(MUSIC_INTRO);
+    SoundManager.UnloadSong(MUSIC_INTRO);
 }
 
 // --------------------------------------------------------------------------------------
@@ -106,7 +108,7 @@ void IntroClass::EndIntro(void)
         }
 
         Zustand = INTRO_FADEOUT;
-        pSoundManager->FadeSong(MUSIC_INTRO, -1.5f, 0, false);
+        SoundManager.FadeSong(MUSIC_INTRO, -1.5f, 0, false);
     }
 }
 
@@ -145,9 +147,9 @@ void IntroClass::DoIntro(void)
     case INTRO_FADEIN :						// Text scrollen
     {
         // Mucke spielen
-        if (pSoundManager->InitSuccessfull &&
-                MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_INTRO]->SongData) == false)
-            pSoundManager->PlaySong(MUSIC_INTRO, false);
+        //DKS - Added function SongIsPlaying() to SoundManagerClass:
+        if (!SoundManager.SongIsPlaying(MUSIC_INTRO))
+            SoundManager.PlaySong(MUSIC_INTRO, false);
 
         // und einfaden
         Counter += 10.0f SYNC;

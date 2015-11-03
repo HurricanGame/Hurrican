@@ -37,34 +37,36 @@ void GegnerFadeMusic::DoKI(void)
         if (Value1 == 0)
         {
             // Spielt die Levelmusik überhaupt oder fadet nicht (oder ein) ?
-            //if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_STAGEMUSIC]->SongData))// &&
-            //pSoundManager->its_Songs[MUSIC_STAGEMUSIC]->FadingVolume >= 0.0f)
-            pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -1.0f, 0, true);
+            //DKS - No need to check for this, overhauled sound manager:
+            //if (MUSIC_IsPlaying(SoundManager.its_Songs[MUSIC_STAGEMUSIC]->SongData))// &&
+            //SoundManager.its_Songs[MUSIC_STAGEMUSIC]->FadingVolume >= 0.0f)
+            SoundManager.FadeSong(MUSIC_STAGEMUSIC, -1.0f, 0, true);
         }
 
         // Musik Einfaden
         if (Value1 == 1)
         {
             // Ist die LevelMusik aus oder fadet nicht schon oder gerade aus ?
-            //if (FMUSIC_GetPaused(pSoundManager->its_Songs[MUSIC_STAGEMUSIC]->SongData)) //&&
-            //pSoundManager->its_Songs[MUSIC_STAGEMUSIC]->FadingVolume <= 0.0f)
-            pSoundManager->FadeSong(MUSIC_STAGEMUSIC,  1.0f, 100, true);
+            //DKS - No need to check for this, overhauled sound manager:
+            //if (FMUSIC_GetPaused(SoundManager.its_Songs[MUSIC_STAGEMUSIC]->SongData)) //&&
+            //SoundManager.its_Songs[MUSIC_STAGEMUSIC]->FadingVolume <= 0.0f)
+            SoundManager.FadeSong(MUSIC_STAGEMUSIC,  1.0f, 100, true);
         }
 
         // SoundTrigger Ausfaden
         if (Value1 == 2)
         {
             // Ist der Sound an und fadet noch nicht ?
-            //if (pSoundManager->its_Sounds[Value2]->FadeMode != FADEMODE_OUT)
-            pSoundManager->FadeWave(Value2, FADEMODE_OUT);
+            //if (SoundManager.its_Sounds[Value2]->FadeMode != FADEMODE_OUT)
+            SoundManager.FadeWave(Value2, FADEMODE_OUT);
         }
 
         // SoundTrigger Einfaden
         if (Value1 == 3)
         {
             // Ist der Sound aus und fadet nicht?
-            //if (pSoundManager->its_Sounds[Value2]->FadeMode != FADEMODE_IN)
-            pSoundManager->FadeWave(Value2, FADEMODE_IN);
+            //if (SoundManager.its_Sounds[Value2]->FadeMode != FADEMODE_IN)
+            SoundManager.FadeWave(Value2, FADEMODE_IN);
         }
     }
 

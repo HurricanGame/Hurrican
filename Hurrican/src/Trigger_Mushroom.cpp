@@ -56,7 +56,7 @@ void GegnerMushroom::PlayerJumps (PlayerClass *pPlayer)
         pPlayer->yadd   = PLAYER_JUMPADDSPEED;
         pPlayer->Handlung = SPRINGEN;
 
-        pSoundManager->PlayWave(100, 128, int(11000), SOUND_MUSHROOMJUMP);
+        SoundManager.PlayWave(100, 128, int(11000), SOUND_MUSHROOMJUMP);
     }
 }
 

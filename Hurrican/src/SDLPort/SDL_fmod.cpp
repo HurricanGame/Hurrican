@@ -27,11 +27,11 @@
 
 static int  g_allocated = 0;
 static bool g_music_loops = true;
-static int  g_volume;
-static MUSIC_MODULE* g_music_current = NULL;
 
-static int sound_loops_total = 0;
-static Mix_Chunk** sound_loops;
+//DKS - no need for this:
+//static int  g_volume;
+
+static MUSIC_MODULE* g_music_current = NULL;
 
 #if defined(USE_MODPLUG)
 static ModPlug_Settings settings;
@@ -44,7 +44,7 @@ signed char SOUND_Init( int mixrate, int maxsoftwarechannels, unsigned int flags
     int chunksize = 2048;
     if (Mix_OpenAudio( mixrate, MIX_DEFAULT_FORMAT, 2, chunksize) == -1)
     {
-        printf("Mix_OpenAudio: %s\n", Mix_GetError());
+        printf("->ERROR: Mix_OpenAudio: %s\n", Mix_GetError());
         return 0;
     } else {
         //DKS - Check what we actually received:
@@ -123,12 +123,19 @@ int SOUND_GetMaxChannels( void )
 signed char SOUND_SetFrequency( int channel, int freq )
 {
     // Do nothing
-    return 0;
+    return 1;
 }
 
 signed char SOUND_SetPan( int channel, int pan )
 {
-    return Mix_SetPanning( channel, 255-pan, pan );
+    //DKS - If pan is 128, disable panning effect on the channel:
+    if (pan == 128) {
+        Mix_SetPanning( channel, 255, 255 );
+    } else {
+        Mix_SetPanning( channel, 255-pan, pan );
+    }
+
+    return 1;
 }
 
 MUSIC_MODULE* MUSIC_LoadSong( const char* filename )
@@ -268,17 +275,21 @@ signed char MUSIC_GetPaused( MUSIC_MODULE* music )
 signed char MUSIC_SetMasterVolume( MUSIC_MODULE* music, int volume )
 {
     //printf( "%8X MUSIC_SetMasterVolume %d\n", music, volume );
-    if (g_music_current == music)
-    {
 #if defined(USE_MODPLUG)
-        //DKS - Range of volumes for ModPlug is 0-512, not 0-255
+    //DKS - Modplug supports setting volume for individual tracks
+    if (music) {
+        //DKS - Range of volumes for libmodplug is 0-512, not 0-255:
         //ModPlug_SetMasterVolume( music, volume );
-        ModPlug_SetMasterVolume( music, volume*2 );
-        g_volume = volume;
+        //DKS - I decided 3/2 of libmodplug's max was a better balance of the music's volume vs. sound effects:
+        //ModPlug_SetMasterVolume( music, volume*2 );
+        ModPlug_SetMasterVolume( music, volume*3/2 );
+        //DKS - no need for this:
+        //g_volume = volume;
+    }
 #else
+    if (g_music_current == music)
         Mix_VolumeMusic( volume/2 );
 #endif
-    }
     return 0;
 }
 
@@ -310,7 +321,7 @@ void hookmusic( void* ptr, uint8_t* buffer, int size )
 	rsize = ModPlug_Read( music, (void*)buffer, size );
 
     //DKS - Added support for non-looped music files (i.e. gameover.it shouldn't loop)
-    //      NOTE: I don't see the reason for the volume check, setting the volume to
+    //      NOTE: I don't see the reason for the volume check, setting the volume to 0
     //            should be checked elsewhere, and music should be disabled entirely.
     //if (g_volume > 0 || (rsize < size))
     //{
@@ -353,53 +364,14 @@ Mix_Chunk* SOUND_Sample_Load( int index, const char *filename, unsigned int inpu
         chunk = Mix_LoadWAV( filename );
     }
 
-    if (chunk != NULL)
-    {
-        if ((inputmode & FSOUND_LOOP_NORMAL) == FSOUND_LOOP_NORMAL)
-        {
-            if (sound_loops_total==0)
-            {
-                sound_loops = (Mix_Chunk**)calloc( 1, sizeof(Mix_Chunk*) );
-            }
-            else
-            {
-                //DKS - fixed compiler warning and use of realloc:
-                // sound_loops = realloc( sound_loops, (sound_loops_total+1)*sizeof(Mix_Chunk*) );
-                Mix_Chunk **orig_ptr = sound_loops;
-                sound_loops = (Mix_Chunk**)realloc( sound_loops, (sound_loops_total+1)*sizeof(Mix_Chunk*) );
-
-                if (sound_loops == NULL) {
-                    sound_loops = orig_ptr;
-                    printf("ERROR calling realloc(). File: %s Line: %d\n", __FILE__, __LINE__);
-                }
-
-            }
-            //printf( "Adding %X\n", chunk );
-            sound_loops[sound_loops_total] = chunk;
-
-            sound_loops_total++;
-        }
-    }
-
     return chunk;
 }
 
-int SOUND_PlaySound( int channel, Mix_Chunk* chunk )
+//DKS - Added looped boolean parameter, so we no longer have to keep track of which
+//      sounds are looped (DX8Sound.cpp already does that)
+int SOUND_PlaySound( int channel, Mix_Chunk* chunk, bool looped)
 {
-    int i;
-    int loops = 0;
-
-    for( i=0; i<sound_loops_total; i++)
-    {
-        //printf( "Checking %d, %X\n", i, sound_loops[i] );
-        if (sound_loops[i] == chunk)
-        {
-            loops = -1;
-            break;
-        }
-    }
-
-    return Mix_PlayChannel( channel, chunk, loops );
+    return Mix_PlayChannel( channel, chunk, looped ? -1 : 0 );
 }
 
 void SOUND_Sample_Free( Mix_Chunk* chunk )
@@ -418,7 +390,9 @@ int SOUND_GetVolume( int channel )
 {
     if (channel < 0) return 0;
 
-    return Mix_Volume( channel, -1 );
+    float vol = (float)Mix_Volume( channel, -1 ) / 128.0f;
+    //DKS - SDL volumes are 0-128, while fmod's are 0-255:
+    return (int)(vol * 255.0f);
 }
 
 signed char SOUND_SetVolume( int channel, int volume )
@@ -431,4 +405,21 @@ signed char SOUND_SetVolume( int channel, int volume )
 signed char SOUND_StopSound( int channel )
 {
     return Mix_HaltChannel( channel );
+}
+
+//DKS - Added:
+signed char SOUND_SetPaused(int channel, signed char paused)
+{
+    if (paused)
+        Mix_Pause(channel);
+    else
+        Mix_Resume(channel);
+
+    return 1;  
+}
+
+//DKS - Added:
+signed char SOUND_GetPaused(int channel)
+{
+    return Mix_Paused(channel);
 }

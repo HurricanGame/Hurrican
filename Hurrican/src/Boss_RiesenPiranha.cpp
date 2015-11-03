@@ -191,7 +191,7 @@ void GegnerRiesenPiranha::GegnerExplode(void)
     // und Extra Leben rauslassen
     pGegner->PushGegner(xPos + 110, yPos + 100, ONEUP, 0, 0, ChangeLight);
 
-    //pSoundManager->PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
+    //SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 
     pPlayer[0]->Score += 4000;
 }

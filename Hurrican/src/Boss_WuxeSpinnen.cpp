@@ -45,7 +45,7 @@ void GegnerWuxeSpinnen::DoKI(void)
         pTileEngine->ScrollLevel((float)Value1,
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
-        pSoundManager->FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
         pGegner->PushGegner (xPos, yPos - 40, EXTRAS, 10, 0, false);
     }
 
@@ -55,7 +55,7 @@ void GegnerWuxeSpinnen::DoKI(void)
         Handlung   = GEGNER_EXPLODIEREN;
 
         // Endboss-Musik ausfaden und abschalten
-        pSoundManager->FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
     }
 
 // Je nach Handlung richtig verhalten
@@ -67,9 +67,10 @@ void GegnerWuxeSpinnen::DoKI(void)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
             //
-            if (MUSIC_IsPlaying(pSoundManager->its_Songs[MUSIC_BOSS]->SongData) == false)
+            //DKS - Added function SongIsPlaying() to SoundManagerClass:
+            if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
             {
-                pSoundManager->PlaySong(MUSIC_BOSS, false);
+                SoundManager.PlaySong(MUSIC_BOSS, false);
 
                 // Und Boss erscheinen lassen
                 //

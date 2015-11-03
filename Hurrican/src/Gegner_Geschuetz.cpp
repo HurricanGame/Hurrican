@@ -60,7 +60,7 @@ void GegnerGeschuetz::DoKI(void)
         if (AnimPhase == AnimStart)
         {
             pProjectiles->PushProjectile(xPos + 27, yPos + 36, KRABBLERLASER1);
-            pSoundManager->PlayWave3D((int)(xPos + 30), (int)(yPos + 30), 44000, SOUND_LASERSHOT);
+            SoundManager.PlayWave3D((int)(xPos + 30), (int)(yPos + 30), 44000, SOUND_LASERSHOT);
             Handlung  = GEGNER_SCHLIESSEN;
             AnimEnde  = 25;
             AnimStart = 0;
@@ -107,7 +107,7 @@ void GegnerGeschuetz::GegnerExplode(void)
 
 
 
-    pSoundManager->PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 
     pPlayer[0]->Score += 200;
 }

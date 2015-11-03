@@ -167,7 +167,7 @@ void GegnerStachelbeere::DoKI(void)
             if (BlickRichtung == LINKS)
                 off = -60;
 
-            pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_GRANATE);
+            SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_GRANATE);
 
             pGegner->PushGegner(xPos + ShotCount * 15.0f + off,
                                 yPos + 10.0f,
@@ -232,7 +232,7 @@ void GegnerStachelbeere::DoKI(void)
             AnimPhase = 0;
             AnimEnde = 16;
             AnimSpeed = 1.0f;
-            pSoundManager->PlayWave(50, 128, 12000 + rand()%1000, SOUND_STEAM);
+            SoundManager.PlayWave(50, 128, 12000 + rand()%1000, SOUND_STEAM);
         }
     }
     break;
@@ -312,7 +312,7 @@ void GegnerStachelbeere::GegnerExplode(void)
     pPartikelSystem->PushPartikel(float(xPos - 15),
                                   float(yPos - 15), EXPLOSION_BIG);
 
-    pSoundManager->PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION4);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION4);	// Sound ausgeben
 
     pPlayer[0]->Score += 300;
 

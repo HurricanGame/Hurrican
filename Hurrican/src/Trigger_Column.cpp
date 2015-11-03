@@ -100,8 +100,8 @@ void GegnerColumn::DoKI(void)
 
         FallSpeed = 2.0f;
 
-        pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEFALL);
-        pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_COLUMN);
+        SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEFALL);
+        SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_COLUMN);
         pPartikelSystem->ThunderAlpha = 255;
         pPartikelSystem->ThunderColor [0] = 255;
         pPartikelSystem->ThunderColor [1] = 255;
@@ -157,7 +157,7 @@ void GegnerColumn::GegnerExplode(void)
         pPartikelSystem->PushPartikel (xPos + rand ()%90 + 10, yPos + 60 + rand()%40, ROCKSPLITTER);
     }
 
-    pSoundManager->PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEEXPLODE);
+    SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEEXPLODE);
 
     ShakeScreen (2.0f);
 }

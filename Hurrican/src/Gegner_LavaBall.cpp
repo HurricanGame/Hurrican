@@ -76,7 +76,7 @@ void GegnerLavaBall::DoKI(void)
             for (int i=0; i<12; i++)
                 pPartikelSystem->PushPartikel(xPos+16+rand()%20, yPos + GegnerRect[GegnerArt].bottom+8, LAVA_SPRITZER2);
 
-            pSoundManager->PlayWave3D((int)xPos + 30, (int)yPos + 30, 10000 + rand()%2050, SOUND_WATERIN);
+            SoundManager.PlayWave3D((int)xPos + 30, (int)yPos + 30, 10000 + rand()%2050, SOUND_WATERIN);
         }
 
         InLava = true;
@@ -90,7 +90,7 @@ void GegnerLavaBall::DoKI(void)
             for (int i=0; i<12; i++)
                 pPartikelSystem->PushPartikel(xPos+16+rand()%20, yPos + GegnerRect[GegnerArt].bottom+8, LAVA_SPRITZER);
 
-            pSoundManager->PlayWave3D((int)xPos + 30, (int)yPos + 30, 10000 + rand()%2050, SOUND_WATEROUT);
+            SoundManager.PlayWave3D((int)xPos + 30, (int)yPos + 30, 10000 + rand()%2050, SOUND_WATEROUT);
         }
 
         InLava = false;
@@ -137,7 +137,7 @@ void GegnerLavaBall::DoKI(void)
             pPlayer[i]->DamagePlayer(50.0f);
             Energy = 0.0f;
 
-            pSoundManager->PlayWave (100, 128, 9000 + rand()%2000, SOUND_EXPLOSION1);
+            SoundManager.PlayWave (100, 128, 9000 + rand()%2000, SOUND_EXPLOSION1);
 
             pPartikelSystem->PushPartikel (xPos - 10, yPos - 30, EXPLOSION_GIANT);
 

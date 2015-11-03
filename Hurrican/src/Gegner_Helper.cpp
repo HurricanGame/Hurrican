@@ -144,6 +144,9 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case REITFLUGSACK:
+        //DKS - Flugsack song is now loaded on-demand here instead of globally in Main.cpp:
+        SoundManager.LoadSong("flugsack.it",	MUSIC_FLUGSACK);
+
         pGegnerGrafix[REITFLUGSACK]->LoadImage("flugsack.png", 320, 210, 80, 70, 4, 3);
         break;
 

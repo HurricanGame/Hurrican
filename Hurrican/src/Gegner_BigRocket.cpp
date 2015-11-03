@@ -122,8 +122,8 @@ void GegnerBigRocket::GegnerExplode(void)
     {
         ShakeScreen (5.0f);
 
-        pSoundManager->PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
-        pSoundManager->PlayWave (100, 128, 11025, SOUND_EXPLOSION3);
+        SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
+        SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION3);
 
         for (int i=0; i < 30; i++)
         {

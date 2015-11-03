@@ -108,7 +108,7 @@ void GegnerSnowBomb::DoKI(void)
             for (int i = 0; i < 10; i++)
                 pPartikelSystem->PushPartikel(xPos + rand()%50, yPos + rand()%20 + 50, WATERFLUSH2);
 
-            pSoundManager->PlayWave(100, 128, 6000 + rand()%2000, SOUND_LANDEN);
+            SoundManager.PlayWave(100, 128, 6000 + rand()%2000, SOUND_LANDEN);
 
         }
 
@@ -153,7 +153,7 @@ void GegnerSnowBomb::GegnerExplode(void)
     for (int i=0; i < 20; i++)
         pPartikelSystem->PushPartikel(xPos + rand()%70 - 10, yPos + rand()%70 - 10, SNOWFLUSH);
 
-    pSoundManager->PlayWave(100, 128, 6000 + rand()%2000, SOUND_LANDEN);
+    SoundManager.PlayWave(100, 128, 6000 + rand()%2000, SOUND_LANDEN);
 
     for (int i = 0; i < NUMPLAYERS; i++)
         if (pPlayer[i]->AufPlattform == this)

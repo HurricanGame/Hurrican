@@ -93,7 +93,7 @@ void GegnerBlueBoulder::DoKI(void)
 
 void GegnerBlueBoulder::GegnerExplode(void)
 {
-    pSoundManager->PlayWave(100, 128, 8000 + rand()%4000, SOUND_STONEEXPLODE);
+    SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_STONEEXPLODE);
 
     for (int i = 0; i < 16; i++)
         pPartikelSystem->PushPartikel(xPos - 10 + rand()%60, yPos + 5 + rand()%30, BOULDER_SMALL);

@@ -48,9 +48,15 @@ OuttroClass::OuttroClass(void)
     Snow = 0.0f;
 
     pPartikelSystem->ClearAll();
-    pSoundManager->LoadSong("outtro.it", MUSIC_OUTTRO);
-    pSoundManager->StopAllSongs(false);
-    MUSIC_StopAllSongs();
+    SoundManager.LoadSong("outtro.it", MUSIC_OUTTRO);
+
+    //DKS -
+    //SoundManager.StopAllSongs(false);
+    //DKS - Why is this here? Commenting it out
+    //MUSIC_StopAllSongs();
+    SoundManager.StopSongs();
+    SoundManager.StopSounds();
+
     pTileEngine->ClearLevel();
 
     // Ein paar Schneepartikel adden
@@ -64,10 +70,12 @@ OuttroClass::OuttroClass(void)
 
 OuttroClass::~OuttroClass(void)
 {
-    MUSIC_StopAllSongs();
+    //DKS
+    //MUSIC_StopAllSongs();
+    SoundManager.StopSongs();
 
     //DKS - Game was not freeing music data, added this:
-    pSoundManager->UnloadSong(MUSIC_OUTTRO);
+    SoundManager.UnloadSong(MUSIC_OUTTRO);
 }
 
 // --------------------------------------------------------------------------------------
@@ -202,10 +210,11 @@ void OuttroClass::DoOuttro(void)
     {
     case OUTTRO_FADEIN :						// Text scrollen
     {
-        if (pSoundManager->its_Sounds[SOUND_TAKEOFF]->isPlaying == false)
+        //DKS - Added function WaveIsPlaying() to SoundManagerClass:
+        if (!SoundManager.WaveIsPlaying(SOUND_TAKEOFF))
         {
-            pSoundManager->PlayWave(100, 128, 5000, SOUND_TAKEOFF);
-            pSoundManager->PlayWave(50, 128, 8000, SOUND_WIND);
+            SoundManager.PlayWave(100, 128, 5000, SOUND_TAKEOFF);
+            SoundManager.PlayWave(50, 128, 8000, SOUND_WIND);
         }
 
         Counter += 10.0f SYNC;
@@ -260,7 +269,7 @@ void OuttroClass::DoOuttro(void)
             {
                 Counter = 0.0f;
                 Zustand = OUTTRO_PLAYER_FLEES;
-                pSoundManager->PlayWave(100, 128, 10000, SOUND_TAKEOFF);
+                SoundManager.PlayWave(100, 128, 10000, SOUND_TAKEOFF);
                 InitPlayerPos();
             }
         }
@@ -330,10 +339,10 @@ void OuttroClass::DoOuttro(void)
                 TextOff = 0;
                 Counter = 0.0f;
 
-                pSoundManager->StopWave(SOUND_WIND);
-                pSoundManager->PlayWave(100, 128, 6000, SOUND_DOORSTOP);
-                pSoundManager->PlayWave(100, 128, 8000, SOUND_EXPLOSION2);
-                pSoundManager->PlaySong(MUSIC_OUTTRO, false);
+                SoundManager.StopWave(SOUND_WIND);
+                SoundManager.PlayWave(100, 128, 6000, SOUND_DOORSTOP);
+                SoundManager.PlayWave(100, 128, 8000, SOUND_EXPLOSION2);
+                SoundManager.PlaySong(MUSIC_OUTTRO, false);
             }
         }
     }

@@ -143,7 +143,7 @@ void GegnerJaeger::DoKI(void)
 
 void GegnerJaeger::GegnerExplode(void)
 {
-    pSoundManager->PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
+    SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i=0; i < 6; i++)
         pPartikelSystem->PushPartikel (xPos - 10 + rand ()%30, yPos - 8 + rand()%30, EXPLOSION_MEDIUM2);

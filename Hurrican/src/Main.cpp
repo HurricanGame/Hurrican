@@ -115,7 +115,7 @@ Logdatei				Protokoll("T:Game_Log.txt");		// Protokoll Datei
 #else
 Logdatei				Protokoll("Game_Log.txt");		// Protokoll Datei
 #endif
-CSoundManager			*pSoundManager =  NULL;			// Sound Manager
+SoundManagerClass       SoundManager;                   // Sound Manager
 DirectGraphicsFont		*pDefaultFont = new(DirectGraphicsFont);
 DirectGraphicsFont		*pMenuFont	  = new(DirectGraphicsFont);
 TileEngineClass			*pTileEngine;					// Tile Engine
@@ -218,18 +218,15 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
         if (Active == WA_INACTIVE)
         {
-            if (pSoundManager != NULL)
-            {
-                pSoundManager->PausePlaying();
-                pSoundManager->StopAllSounds();
-            }
+            SoundManager.PauseSongs();
+            SoundManager.PauseSounds();
 
             GamePaused = true;
         }
         else
         {
-            if (pSoundManager != NULL)
-                pSoundManager->PlayPaused();
+            SoundManager.UnpauseSongs();
+            SoundManager.UnpauseSounds();
 
             GamePaused = false;
         }
@@ -840,7 +837,7 @@ int main(int argc, char *argv[])
                 //DirectInput.UpdateMaus(false);
 
                 // Soundchannels updaten
-                pSoundManager->Update();
+                SoundManager.Update();
 
                 // Timer updaten
                 pTimer->update();
@@ -998,8 +995,10 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
     DirectInput.InitTouchBoxes( DirectGraphics.WindowView.w, DirectGraphics.WindowView.h );
 #endif
 
+    //DKS - Sound manager is now a static global, and initialized with Init()
     // Sound Manager initialisieren
-    pSoundManager = new CSoundManager();
+    //pSoundManager = new CSoundManager();
+    SoundManager.Init();
 
     // Splash-Screen nicht mehr anzeigen
     NochKeinFullScreen = false;
@@ -1136,9 +1135,13 @@ bool GameInit2(void)
     }
 
     // Menumusik laden und spielen
-    pSoundManager->LoadSong("menu.it",	MUSIC_MENU);
-    pSoundManager->SetAllSongVolumes();
-    pSoundManager->PlaySong(MUSIC_MENU, false);
+    SoundManager.LoadSong("menu.it",	MUSIC_MENU);
+
+    //DKS - Renamed:
+    //SoundManager.ResetAllSongVolumes();
+    SoundManager.ResetAllSoundVolumes();
+
+    SoundManager.PlaySong(MUSIC_MENU, false);
 
     // Menu initialisieren
     //DKS - Resized menufont.png and added missing glyphs to make Swedish translation work:
@@ -1181,129 +1184,132 @@ bool GameInit2(void)
     InitReplacers();
 
     // Sounds laden
-    pSoundManager->LoadWave("spreadshot.wav",   SOUND_SPREADSHOT, false);
-    pSoundManager->LoadWave("lasershot.wav",    SOUND_LASERSHOT, false);
-    pSoundManager->LoadWave("bounceshot.wav",   SOUND_BOUNCESHOT, false);
-    pSoundManager->LoadWave("explosion1.wav",   SOUND_EXPLOSION1, false);
-    pSoundManager->LoadWave("explosion2.wav",   SOUND_EXPLOSION2, false);
-    pSoundManager->LoadWave("explosion3.wav",   SOUND_EXPLOSION3, false);
-    pSoundManager->LoadWave("explosion4.wav",   SOUND_EXPLOSION4, false);
-    pSoundManager->LoadWave("walkergiggle.wav", SOUND_WALKERGIGGLE, false);
-    pSoundManager->LoadWave("collect.wav",		SOUND_COLLECT, false);
-    pSoundManager->LoadWave("hit.wav",		    SOUND_SPREADHIT, false);
-    pSoundManager->LoadWave("canon.wav",		SOUND_CANON, false);
-    pSoundManager->LoadWave("click.wav",		SOUND_CLICK, false);
-    pSoundManager->LoadWave("blitzstart.wav",	SOUND_BLITZSTART, false);
-    pSoundManager->LoadWave("blitzende.wav",	SOUND_BLITZENDE, false);
-    pSoundManager->LoadWave("blitz.wav",		SOUND_BLITZ, true);
-    pSoundManager->LoadWave("blitzstart.wav",	SOUND_BLITZSTART_P2, false);
-    pSoundManager->LoadWave("blitzende.wav",	SOUND_BLITZENDE_P2, false);
-    pSoundManager->LoadWave("blitz.wav",		SOUND_BLITZ_P2, true);
-    pSoundManager->LoadWave("powerline.wav",	SOUND_POWERLINE, false);
-    pSoundManager->LoadWave("landen.wav",		SOUND_LANDEN, false);
-    pSoundManager->LoadWave("waterin.wav",		SOUND_WATERIN, false);
-    pSoundManager->LoadWave("waterout.wav",		SOUND_WATEROUT, false);
-    pSoundManager->LoadWave("dive.wav",			SOUND_DIVE, false);
-    pSoundManager->LoadWave("feuerfalle.wav",	SOUND_FEUERFALLE, false);
-    pSoundManager->LoadWave("abzug.wav",		SOUND_ABZUG, false);
-    pSoundManager->LoadWave("abzug.wav",		SOUND_ABZUG_P2, false);
-    pSoundManager->LoadWave("funke.wav",		SOUND_FUNKE, false);
-    pSoundManager->LoadWave("funke2.wav",		SOUND_FUNKE2, false);
-    pSoundManager->LoadWave("funke3.wav",		SOUND_FUNKE3, false);
-    pSoundManager->LoadWave("funke4.wav",		SOUND_FUNKE4, false);
-    pSoundManager->LoadWave("granate.wav",		SOUND_GRANATE, false);
-    pSoundManager->LoadWave("stonefall.wav",	SOUND_STONEFALL, false);
-    pSoundManager->LoadWave("stoneexplode.wav",	SOUND_STONEEXPLODE, false);
-    pSoundManager->LoadWave("rocket.wav",		SOUND_ROCKET, false);
-    pSoundManager->LoadWave("presse.wav",		SOUND_PRESSE, false);
-    pSoundManager->LoadWave("ammo.wav",			SOUND_AMMO, false);
-    pSoundManager->LoadWave("kotzen.wav",		SOUND_KOTZEN, false);
-    pSoundManager->LoadWave("made.wav",			SOUND_MADE, false);
-    pSoundManager->LoadWave("droneshot.wav",	SOUND_DRONE, false);
-    pSoundManager->LoadWave("waterdrop.wav",	SOUND_DROP, false);
-    pSoundManager->LoadWave("thunder.wav",		SOUND_THUNDER, false);
-    pSoundManager->LoadWave("upgrade.wav",		SOUND_UPGRADE, false);
-    pSoundManager->LoadWave("column.wav",		SOUND_COLUMN, false);
-    pSoundManager->LoadWave("door.wav",			SOUND_DOOR, true);
-    pSoundManager->LoadWave("doorstop.wav",		SOUND_DOORSTOP, false);
-    pSoundManager->LoadWave("switch.wav",		SOUND_SWITCH, false);
-    pSoundManager->LoadWave("schleim.wav",		SOUND_SCHLEIM, false);
-    pSoundManager->LoadWave("message.wav",		SOUND_MESSAGE, false);
-    pSoundManager->LoadWave("beamload.wav",		SOUND_BEAMLOAD, true);
-    pSoundManager->LoadWave("beamload2.wav",	SOUND_BEAMLOAD2, true);
-    pSoundManager->LoadWave("beamload.wav",		SOUND_BEAMLOAD_P2, true);
-    pSoundManager->LoadWave("beamload2.wav",	SOUND_BEAMLOAD2_P2, true);
-//	pSoundManager->LoadWave("chain.wav",		SOUND_CHAIN, true);
-    pSoundManager->LoadWave("mushroomjump.wav",	SOUND_MUSHROOMJUMP, false);
-    pSoundManager->LoadWave("golemload.wav",	SOUND_GOLEMLOAD, false);
-    pSoundManager->LoadWave("golemshot.wav",	SOUND_GOLEMSHOT, false);
-    pSoundManager->LoadWave("dampf.wav",		SOUND_STEAM, false);
-    pSoundManager->LoadWave("dampf2.wav",		SOUND_STEAM2, false);
-    pSoundManager->LoadWave("hit2.wav",		    SOUND_HIT, false);
-    pSoundManager->LoadWave("hit3.wav",		    SOUND_HIT2, false);
-    pSoundManager->LoadWave("spiderlila.wav",	SOUND_LILA, false);
-    pSoundManager->LoadWave("fireball.wav",		SOUND_FIREBALL, false);
-    pSoundManager->LoadWave("takeoff.wav",		SOUND_TAKEOFF, false);
-    pSoundManager->LoadWave("laugh.wav",		SOUND_LAUGH, false);
-    pSoundManager->LoadWave("standup.wav",		SOUND_STANDUP, false);
-    pSoundManager->LoadWave("gatling.wav",		SOUND_GATLING, false);
-    pSoundManager->LoadWave("glassbreak.wav",	SOUND_GLASSBREAK, false);
-    pSoundManager->LoadWave("mutant.wav",		SOUND_MUTANT, false);
-    pSoundManager->LoadWave("heart1.wav",		SOUND_HEART1, false);
-    pSoundManager->LoadWave("heart2.wav",		SOUND_HEART2, false);
-    pSoundManager->LoadWave("secret.wav",		SOUND_SECRET, false);
-    pSoundManager->LoadWave("mario.wav",		SOUND_MARIO, false);
-    pSoundManager->LoadWave("flamethrower.wav",	SOUND_FLAMETHROWER, true);
-    pSoundManager->LoadWave("flamethrower.wav",	SOUND_FLAMETHROWER2, true);
+    SoundManager.LoadWave("spreadshot.wav",   SOUND_SPREADSHOT, false);
+    SoundManager.LoadWave("lasershot.wav",    SOUND_LASERSHOT, false);
+    SoundManager.LoadWave("bounceshot.wav",   SOUND_BOUNCESHOT, false);
+    SoundManager.LoadWave("explosion1.wav",   SOUND_EXPLOSION1, false);
+    SoundManager.LoadWave("explosion2.wav",   SOUND_EXPLOSION2, false);
+    SoundManager.LoadWave("explosion3.wav",   SOUND_EXPLOSION3, false);
+    SoundManager.LoadWave("explosion4.wav",   SOUND_EXPLOSION4, false);
+    SoundManager.LoadWave("walkergiggle.wav", SOUND_WALKERGIGGLE, false);
+    SoundManager.LoadWave("collect.wav",		SOUND_COLLECT, false);
+    SoundManager.LoadWave("hit.wav",		    SOUND_SPREADHIT, false);
+    SoundManager.LoadWave("canon.wav",		SOUND_CANON, false);
+    SoundManager.LoadWave("click.wav",		SOUND_CLICK, false);
+    SoundManager.LoadWave("blitzstart.wav",	SOUND_BLITZSTART, false);
+    SoundManager.LoadWave("blitzende.wav",	SOUND_BLITZENDE, false);
+    SoundManager.LoadWave("blitz.wav",		SOUND_BLITZ, true);
+    SoundManager.LoadWave("blitzstart.wav",	SOUND_BLITZSTART_P2, false);
+    SoundManager.LoadWave("blitzende.wav",	SOUND_BLITZENDE_P2, false);
+    SoundManager.LoadWave("blitz.wav",		SOUND_BLITZ_P2, true);
+    SoundManager.LoadWave("powerline.wav",	SOUND_POWERLINE, false);
+    SoundManager.LoadWave("landen.wav",		SOUND_LANDEN, false);
+    SoundManager.LoadWave("waterin.wav",		SOUND_WATERIN, false);
+    SoundManager.LoadWave("waterout.wav",		SOUND_WATEROUT, false);
+    SoundManager.LoadWave("dive.wav",			SOUND_DIVE, false);
+    SoundManager.LoadWave("feuerfalle.wav",	SOUND_FEUERFALLE, false);
+    SoundManager.LoadWave("abzug.wav",		SOUND_ABZUG, false);
+    SoundManager.LoadWave("abzug.wav",		SOUND_ABZUG_P2, false);
+    SoundManager.LoadWave("funke.wav",		SOUND_FUNKE, false);
+    SoundManager.LoadWave("funke2.wav",		SOUND_FUNKE2, false);
+    SoundManager.LoadWave("funke3.wav",		SOUND_FUNKE3, false);
+    SoundManager.LoadWave("funke4.wav",		SOUND_FUNKE4, false);
+    SoundManager.LoadWave("granate.wav",		SOUND_GRANATE, false);
+    SoundManager.LoadWave("stonefall.wav",	SOUND_STONEFALL, false);
+    SoundManager.LoadWave("stoneexplode.wav",	SOUND_STONEEXPLODE, false);
+    SoundManager.LoadWave("rocket.wav",		SOUND_ROCKET, false);
+    SoundManager.LoadWave("presse.wav",		SOUND_PRESSE, false);
+    SoundManager.LoadWave("ammo.wav",			SOUND_AMMO, false);
+    SoundManager.LoadWave("kotzen.wav",		SOUND_KOTZEN, false);
+    SoundManager.LoadWave("made.wav",			SOUND_MADE, false);
+    SoundManager.LoadWave("droneshot.wav",	SOUND_DRONE, false);
+    SoundManager.LoadWave("waterdrop.wav",	SOUND_DROP, false);
+    SoundManager.LoadWave("thunder.wav",		SOUND_THUNDER, false);
+    SoundManager.LoadWave("upgrade.wav",		SOUND_UPGRADE, false);
+    SoundManager.LoadWave("column.wav",		SOUND_COLUMN, false);
+    SoundManager.LoadWave("door.wav",			SOUND_DOOR, true);
+    SoundManager.LoadWave("doorstop.wav",		SOUND_DOORSTOP, false);
+    SoundManager.LoadWave("switch.wav",		SOUND_SWITCH, false);
+    SoundManager.LoadWave("schleim.wav",		SOUND_SCHLEIM, false);
+    SoundManager.LoadWave("message.wav",		SOUND_MESSAGE, false);
+    SoundManager.LoadWave("beamload.wav",		SOUND_BEAMLOAD, true);
+    SoundManager.LoadWave("beamload2.wav",	SOUND_BEAMLOAD2, true);
+    SoundManager.LoadWave("beamload.wav",		SOUND_BEAMLOAD_P2, true);
+    SoundManager.LoadWave("beamload2.wav",	SOUND_BEAMLOAD2_P2, true);
+
+    //DKS - This was commented out in original code, but I've added support for
+    //      Trigger_Stampfstein.cpp's chain retraction sound back in:
+	SoundManager.LoadWave("chain.wav",		SOUND_CHAIN, true);
+
+    SoundManager.LoadWave("mushroomjump.wav",	SOUND_MUSHROOMJUMP, false);
+    SoundManager.LoadWave("golemload.wav",	SOUND_GOLEMLOAD, false);
+    SoundManager.LoadWave("golemshot.wav",	SOUND_GOLEMSHOT, false);
+    SoundManager.LoadWave("dampf.wav",		SOUND_STEAM, false);
+    SoundManager.LoadWave("dampf2.wav",		SOUND_STEAM2, false);
+    SoundManager.LoadWave("hit2.wav",		    SOUND_HIT, false);
+    SoundManager.LoadWave("hit3.wav",		    SOUND_HIT2, false);
+    SoundManager.LoadWave("spiderlila.wav",	SOUND_LILA, false);
+    SoundManager.LoadWave("fireball.wav",		SOUND_FIREBALL, false);
+    SoundManager.LoadWave("takeoff.wav",		SOUND_TAKEOFF, false);
+    SoundManager.LoadWave("laugh.wav",		SOUND_LAUGH, false);
+    SoundManager.LoadWave("standup.wav",		SOUND_STANDUP, false);
+    SoundManager.LoadWave("gatling.wav",		SOUND_GATLING, false);
+    SoundManager.LoadWave("glassbreak.wav",	SOUND_GLASSBREAK, false);
+    SoundManager.LoadWave("mutant.wav",		SOUND_MUTANT, false);
+    SoundManager.LoadWave("heart1.wav",		SOUND_HEART1, false);
+    SoundManager.LoadWave("heart2.wav",		SOUND_HEART2, false);
+    SoundManager.LoadWave("secret.wav",		SOUND_SECRET, false);
+    SoundManager.LoadWave("mario.wav",		SOUND_MARIO, false);
+    SoundManager.LoadWave("flamethrower.wav",	SOUND_FLAMETHROWER, true);
+    SoundManager.LoadWave("flamethrower.wav",	SOUND_FLAMETHROWER2, true);
 
     // Sound Trigger
-    pSoundManager->LoadWave("ambient_wasserfall.wav",	SOUND_WASSERFALL, true);
-    pSoundManager->LoadWave("ambient_wind.wav",			SOUND_WIND, true);
+    SoundManager.LoadWave("ambient_wasserfall.wav",	SOUND_WASSERFALL, true);
+    SoundManager.LoadWave("ambient_wind.wav",			SOUND_WIND, true);
 
     // Voices laden
-    pSoundManager->LoadWave("v_spread.wav",		SOUND_VOICE_SPREAD, false);
-    pSoundManager->LoadWave("v_laser.wav",		SOUND_VOICE_LASER, false);
-    pSoundManager->LoadWave("v_bounce.wav",		SOUND_VOICE_BOUNCE, false);
-    pSoundManager->LoadWave("v_lightning.wav",	SOUND_VOICE_LIGHTNING, false);
-    pSoundManager->LoadWave("v_shield.wav",		SOUND_VOICE_SHIELD, false);
-    pSoundManager->LoadWave("v_powerup.wav",	SOUND_VOICE_POWERUP, false);
-    pSoundManager->LoadWave("v_wheel.wav",		SOUND_VOICE_WHEELPOWER, false);
-    pSoundManager->LoadWave("v_grenade.wav",	SOUND_VOICE_GRENADE, false);
-    pSoundManager->LoadWave("v_powerline.wav",	SOUND_VOICE_POWERLINE, false);
-    pSoundManager->LoadWave("v_smartbomb.wav",	SOUND_VOICE_SMARTBOMB, false);
-    pSoundManager->LoadWave("v_rapidfire.wav",	SOUND_VOICE_RAPIDFIRE, false);
-    pSoundManager->LoadWave("v_supershot.wav",	SOUND_VOICE_SUPERSHOT, false);
-    pSoundManager->LoadWave("v_extralife.wav",	SOUND_VOICE_EXTRALIFE, false);
+    SoundManager.LoadWave("v_spread.wav",		SOUND_VOICE_SPREAD, false);
+    SoundManager.LoadWave("v_laser.wav",		SOUND_VOICE_LASER, false);
+    SoundManager.LoadWave("v_bounce.wav",		SOUND_VOICE_BOUNCE, false);
+    SoundManager.LoadWave("v_lightning.wav",	SOUND_VOICE_LIGHTNING, false);
+    SoundManager.LoadWave("v_shield.wav",		SOUND_VOICE_SHIELD, false);
+    SoundManager.LoadWave("v_powerup.wav",	SOUND_VOICE_POWERUP, false);
+    SoundManager.LoadWave("v_wheel.wav",		SOUND_VOICE_WHEELPOWER, false);
+    SoundManager.LoadWave("v_grenade.wav",	SOUND_VOICE_GRENADE, false);
+    SoundManager.LoadWave("v_powerline.wav",	SOUND_VOICE_POWERLINE, false);
+    SoundManager.LoadWave("v_smartbomb.wav",	SOUND_VOICE_SMARTBOMB, false);
+    SoundManager.LoadWave("v_rapidfire.wav",	SOUND_VOICE_RAPIDFIRE, false);
+    SoundManager.LoadWave("v_supershot.wav",	SOUND_VOICE_SUPERSHOT, false);
+    SoundManager.LoadWave("v_extralife.wav",	SOUND_VOICE_EXTRALIFE, false);
 
     // Endgegner Sounds
-    pSoundManager->LoadWave("pharaoramm.wav",	SOUND_PHARAORAMM, false);
-    pSoundManager->LoadWave("pharaodie.wav",	SOUND_PHARAODIE, false);
-    pSoundManager->LoadWave("spiderscream.wav",	SOUND_SPIDERSCREAM, false);
-    pSoundManager->LoadWave("spiderwalk.wav",	SOUND_SPIDERWALK, false);
-    pSoundManager->LoadWave("spiderlaser.wav",	SOUND_SPIDERLASER, false);
-    pSoundManager->LoadWave("spidergrenade.wav",SOUND_SPIDERGRENADE, false);
-    pSoundManager->LoadWave("blitzhit.wav",     SOUND_BLITZHIT, false);
-    pSoundManager->LoadWave("blitzhit2.wav",    SOUND_BLITZHIT2, false);
-    pSoundManager->LoadWave("bratlaser.wav",    SOUND_BRATLASER, false);
-    pSoundManager->LoadWave("metal.wav",	    SOUND_KLONG, false);
+    SoundManager.LoadWave("pharaoramm.wav",	SOUND_PHARAORAMM, false);
+    SoundManager.LoadWave("pharaodie.wav",	SOUND_PHARAODIE, false);
+    SoundManager.LoadWave("spiderscream.wav",	SOUND_SPIDERSCREAM, false);
+    SoundManager.LoadWave("spiderwalk.wav",	SOUND_SPIDERWALK, false);
+    SoundManager.LoadWave("spiderlaser.wav",	SOUND_SPIDERLASER, false);
+    SoundManager.LoadWave("spidergrenade.wav",SOUND_SPIDERGRENADE, false);
+    SoundManager.LoadWave("blitzhit.wav",     SOUND_BLITZHIT, false);
+    SoundManager.LoadWave("blitzhit2.wav",    SOUND_BLITZHIT2, false);
+    SoundManager.LoadWave("bratlaser.wav",    SOUND_BRATLASER, false);
+    SoundManager.LoadWave("metal.wav",	    SOUND_KLONG, false);
 
     // restliche musiken laden
+    //DKS - Flugsack song is now loaded on-demand in Gegner_Helper.cpp:
+    //SoundManager.LoadSong("flugsack.it",	MUSIC_FLUGSACK);
 
-    //DKS - "flugsack.it" is now loaded on-demand in Gegner_ReitFlugsack.cpp:
-    //pSoundManager->LoadSong("flugsack.it",	MUSIC_FLUGSACK);
-
-    pSoundManager->LoadSong("credits.it",	MUSIC_CREDITS);
+    SoundManager.LoadSong("credits.it",	MUSIC_CREDITS);
 
     //DKS - New parameter specifies whether to loop, and stage-clear music shouldn't:
-    pSoundManager->LoadSong("stageclear.it",MUSIC_STAGECLEAR, false);
+    SoundManager.LoadSong("stageclear.it",MUSIC_STAGECLEAR, false);
 
     //DKS - New parameter specifies whether to loop, and game-over music shouldn't:
-    pSoundManager->LoadSong("gameover.it",	MUSIC_GAMEOVER, false);
+    SoundManager.LoadSong("gameover.it",	MUSIC_GAMEOVER, false);
 
-    pSoundManager->LoadSong("highscore.it",	MUSIC_HIGHSCORE);
+    SoundManager.LoadSong("highscore.it",	MUSIC_HIGHSCORE);
 
     //DKS - Punisher music is now loaded on-demand in Gegner_Punisher.cpp
-    //pSoundManager->LoadSong("Punisher.it", MUSIC_PUNISHER);
+    //SoundManager.LoadSong("Punisher.it", MUSIC_PUNISHER);
 
     if (!GameRunning)
         return false;
@@ -1315,7 +1321,9 @@ bool GameInit2(void)
     // Konsole initialisieren
     pConsole = new ConsoleClass();
 
-    pSoundManager->SetAllSongVolumes();
+    //DKS - renamed:
+    //SoundManager.ResetAllSongVolumes();
+    SoundManager.ResetAllSoundVolumes();
 
     return true;
 }
@@ -1373,7 +1381,8 @@ bool GameExit(void)
     delete(pProjectiles);
     Protokoll.WriteText( false, "-> Projectile List released\n" );
 
-    delete(pSoundManager);				// DirectSound beenden
+    //DKS - Sound manager is now a static global, and we use new Exit() method:
+    SoundManager.Exit();
     Protokoll.WriteText( false, "-> Sound system released\n" );
 
     DirectInput.Exit();					// DirectInput beenden
@@ -1476,7 +1485,7 @@ bool Heartbeat(void)
         }
         else
         {
-            pSoundManager->StopSong(MUSIC_INTRO, false);
+            SoundManager.StopSong(MUSIC_INTRO, false);
             delete(pIntro);
             InitNewGame();
             InitNewGameLevel(1);
@@ -1492,7 +1501,7 @@ bool Heartbeat(void)
 
         if(KeyDown(DIK_ESCAPE))			// Intro beenden ?
         {
-            pSoundManager->StopSong(MUSIC_OUTTRO, false);
+            SoundManager.StopSong(MUSIC_OUTTRO, false);
             delete(pOuttro);
             Stage = MAX_LEVELS;
             pMenu->CheckForNewHighscore();
@@ -1566,6 +1575,7 @@ jump:
 // So Firlefanz wie FPS usw anzeigen
 // --------------------------------------------------------------------------------------
 
+#ifdef _DEBUG
 void ShowDebugInfo(void)
 {
     // Blaues durchsichtiges Rechteck zeichnen
@@ -1583,8 +1593,8 @@ void ShowDebugInfo(void)
     pDefaultFont->DrawText(300, 60, StringBuffer, 0xFFFFFFFF);
 
     // Benutzte Sound-Channels angeben
-    _itoa_s(pSoundManager->ChannelsUsed, StringBuffer, 10);
-    pDefaultFont->DrawText(  0, 75, "Sound Channels :", 0xFFFFFFFF);
+    _itoa_s(SoundManager.most_channels_used, StringBuffer, 10);
+    pDefaultFont->DrawText(  0, 75, "MaxChannels :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 75, StringBuffer, 0xFFFFFFFF);
 
     // Anzahl der Gegner im Level angeben
@@ -1622,6 +1632,7 @@ void ShowDebugInfo(void)
     			if(pTileEngine->Tiles[i][j].BackArt > 0)
     				pDefaultFont->DrawText(300+i, 100+j, ".", 0xFFFFFF00);*/
 }
+#endif //_DEBUG
 
 //DKS - added FPS reporting via command switch
 void ShowFPS()

@@ -52,7 +52,7 @@ void GegnerSchabe::DoKI(void)
     {
         ShotDelay = 8.0f + (4.0f - Skill) * 2;
 
-        pSoundManager->PlayWave (50, 128, 10000 + rand()%4000, SOUND_CANON);
+        SoundManager.PlayWave (50, 128, 10000 + rand()%4000, SOUND_CANON);
         pProjectiles->PushProjectile(xPos + 5.0f, yPos + 5.0f, SUCHSCHUSS);
     }
 
@@ -376,7 +376,7 @@ void GegnerSchabe::GegnerExplode(void)
                                       float(yPos+5) + rand()%10, SPIDERSPLITTER);
     }
 
-    pSoundManager->PlayWave(100, 128, -rand()%2000+13000, SOUND_EXPLOSION1);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, -rand()%2000+13000, SOUND_EXPLOSION1);	// Sound ausgeben
 
     pPlayer[0]->Score += 10;
 }

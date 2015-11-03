@@ -64,7 +64,7 @@ void GegnerStarBig::DoKI(void)
             if (ShotCount > Skill+2)
             {
                 ShotCount = 0;
-                pSoundManager->PlayWave (100, 128, 15000 + rand()%4000, SOUND_CANON);
+                SoundManager.PlayWave (100, 128, 15000 + rand()%4000, SOUND_CANON);
                 pProjectiles->PushProjectile (xPos + 36, yPos + 36, SUCHSCHUSS);
             }
         }
@@ -113,7 +113,7 @@ void GegnerStarBig::GegnerExplode(void)
     for (int i = 0; i < 15; i++)
         pPartikelSystem->PushPartikel (xPos+rand()%80, yPos+rand()%80, LONGFUNKE);
 
-    pSoundManager->PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
+    SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
 
     pPlayer[0]->Score += 150;		// Punkte geben
 }
