@@ -8,7 +8,6 @@
 
 #include <string>
 #include <map>
-#include <utility>
 
 class TextureHandle
 {
@@ -40,11 +39,19 @@ class TexturesystemClass
 public:
     TexturesystemClass() {}
     ~TexturesystemClass() {}
-    void    ReadScaleFactorsFiles();
+    void    Exit();
     int16_t LoadTexture(const std::string &filename);
-    void    UnloadTexture(const int16_t idx);
+    void    UnloadTexture(const int idx);
+    void    ReadScaleFactorsFiles();
+
     TextureHandle& operator[](int idx)
     {
+#ifdef _DEBUG
+        if (idx < 0 || idx >= _loaded_textures.size()) {
+            Protokoll.WriteText( true, "-> Error: Out of bounds index for Texturesystemclass::operator[]: %d\n\
+                                        \tLower bound is 0, Upper bound is %d\n", idx, _loaded_textures.size()-1 );
+        }
+#endif
         return _loaded_textures[idx];
     }
 

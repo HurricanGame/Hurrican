@@ -19,35 +19,51 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <map>
 
-using namespace std;
+const std::string TexturesystemClass::scalefactors_filename("scalefactors.txt");
 
 // --------------------------------------------------------------------------------------
 // TexturesystemClass functions
 // --------------------------------------------------------------------------------------
 
-const string TexturesystemClass::scalefactors_filename("scalefactors.txt");
+void TexturesystemClass::Exit()
+{
+    // If there are any remaining textures in memory that have not already been
+    // unloaded through DirectGraphicsSprite destructors, mop them up now:
+    //   A good example would be textures that are member sprites of
+    // global static objects, whose order of destruction can't be guaranteed,
+    // such as PlayerClass.
+
+    for (unsigned int i=0; i < _loaded_textures.size(); ++i) {
+        // Force unloading of the texture if it's still loaded, by making its
+        //  instances equal 1 and calling UnloadTexture():
+        if (_loaded_textures[i].instances > 0) {
+            _loaded_textures[i].instances = 1;
+            UnloadTexture(i);
+        }
+    }
+}
+
 
 //DKS - This largely replaces and expands on a lot of the code
 //      DirectGraphicsSprite::LoadImage used to handle.
-int16_t TexturesystemClass::LoadTexture( const string &filename )
+int16_t TexturesystemClass::LoadTexture( const std::string &filename )
 {
-//    if (!filename) return -1;
-    
-//    string filename_str(filename);
     if (filename.empty())
-            return -1;
+        return -1;
 
     int16_t idx = -1;
 
-    //DKS - Check to see if the texture was previously loaded at some point
-    map<string, int16_t>::iterator it = _texture_map.find(filename);
+    // Check to see if the texture was previously loaded at some point
+    std::map<std::string, int16_t>::iterator it = _texture_map.find(filename);
     if (it != _texture_map.end()) {
         // Texture has been loaded previously, so it at least has a slot in _loaded_textures,
         //  but if its instances == 0, it will need to be re-loaded from disk.
         idx = (*it).second;
 #ifdef _DEBUG
-        if (idx < 0 || idx >= (int16_t)_loaded_textures.size()) {
+        if (idx < 0 || (int)idx >= (int)_loaded_textures.size()) {
             Protokoll.WriteText( false, "-> Error: texture handle idx %d acquired from _texture_map is outside\n"
                     "\t_loaded_textures array bounds. Lower bound: %d  Upper bound: %d\n"
                     "\tfilename: %s\n", idx, 0, _loaded_textures.size()-1, filename.c_str());
@@ -86,9 +102,9 @@ int16_t TexturesystemClass::LoadTexture( const string &filename )
 
     // If we have loaded npot scale factors from an external file, see if we have some for this texture:
     if (!_scalefactors_map.empty()) {
-        string filename_sans_ext(filename);
+        std::string filename_sans_ext(filename);
         ReplaceAll( filename_sans_ext, ".png", "" );
-        map< string, pair<double,double> >::iterator it = _scalefactors_map.find(filename_sans_ext);
+        std::map< std::string, std::pair<double,double> >::iterator it = _scalefactors_map.find(filename_sans_ext);
         if ( it != _scalefactors_map.end() ) {
             th.npot_scalex = (*it).second.first;
             th.npot_scaley = (*it).second.second;
@@ -101,9 +117,9 @@ int16_t TexturesystemClass::LoadTexture( const string &filename )
     return idx;
 }
 
-void TexturesystemClass::UnloadTexture(const int16_t idx)
+void TexturesystemClass::UnloadTexture(const int idx)
 {
-    if (idx >= 0 && idx < (int16_t)_loaded_textures.size()) {
+    if (idx >= 0 && idx < (int)_loaded_textures.size()) {
         TextureHandle &th = _loaded_textures[idx];
         if (th.instances > 0) {
             --th.instances;
@@ -121,19 +137,19 @@ void TexturesystemClass::UnloadTexture(const int16_t idx)
     }
 }
 
-void TexturesystemClass::ReadScaleFactorsFile( const string &fullpath )
+void TexturesystemClass::ReadScaleFactorsFile( const std::string &fullpath )
 {
-    ifstream file(fullpath.c_str(), ios::in);
+    std::ifstream file(fullpath.c_str(), std::ios::in);
     if (!file.is_open())
         return;
 
     Protokoll.WriteText( false, "Reading texture NPOT scale factors from %s\n", fullpath.c_str() );
 
-    string name;
+    std::string name;
     double xscale = 0, yscale = 0;
     while (file >> name >> xscale >> yscale) {
         if (!name.empty() && xscale != 0.0 && yscale != 0.0) {
-            _scalefactors_map[name] = make_pair(xscale, yscale);
+            _scalefactors_map[name] = std::make_pair(xscale, yscale);
 #ifdef _DEBUG
             Protokoll.WriteText( false, "Read name=%s xscale=%f yscale=%f\n", name.c_str(), xscale, yscale );
 #endif
@@ -145,12 +161,13 @@ void TexturesystemClass::ReadScaleFactorsFile( const string &fullpath )
 
 void TexturesystemClass::ReadScaleFactorsFiles()
 {
-    string path, fullpath;
+    std::string path, fullpath;
 
     if (CommandLineParams.RunOwnLevelList) {
-        path = string(g_storage_ext) + "/levels/" + string(CommandLineParams.OwnLevelList) + "/data/textures/";
+        path = std::string(g_storage_ext) + "/levels/" +
+               std::string(CommandLineParams.OwnLevelList) + "/data/textures/";
     } else {
-        path = string(g_storage_ext) + "/data/textures/";
+        path = std::string(g_storage_ext) + "/data/textures/";
     }
 
     // First, see if there is a file in data/textures/ where plain old .PNG files are and load its data:
@@ -173,19 +190,19 @@ void TexturesystemClass::ReadScaleFactorsFiles()
 #endif
 }
 
-bool TexturesystemClass::LoadTextureFromFile( const string &filename, TextureHandle &th )
+bool TexturesystemClass::LoadTextureFromFile( const std::string &filename, TextureHandle &th )
 {
     if (filename.empty()) {
         Protokoll.WriteText( false, "Error: empty filename passed to LoadTextureFromFile()\n" );
         return false;
     }
 
-    string path = string(g_storage_ext);      // Path to look in for file "filename" (default is data/textures/)
+    std::string path = std::string(g_storage_ext);
 
     //DKS - All textures are now stored in their own data/textures/ subdir:
     // Are we using a custom level set?
     if (CommandLineParams.RunOwnLevelList) {
-        path += "/levels/" + string(CommandLineParams.OwnLevelList);
+        path += "/levels/" + std::string(CommandLineParams.OwnLevelList);
     }
 
     path += "/data/textures";
@@ -231,24 +248,11 @@ loaded:
     if (!success) {
         Protokoll.WriteText( true, "Error loading texture %s\n", filename.c_str() );
     } else {
-//        // Bild korrekt geladen
-        char Temp[256];
-        sprintf_s(Temp, "%s %s %s %s", TextArray [TEXT_LADE_BITMAP], filename.c_str(), TextArray [TEXT_LADEN_ERFOLGREICH], "\n");
-//        Protokoll.WriteText( false, Temp );
-//
-//        Protokoll.WriteText( false, "loaded texture %s\n", filename.c_str() );
-
-        //DKS - Does not actually use its parameter, made it blank here:
-        DisplayLoadInfo(Temp);
-//        DisplayLoadInfo("");
-
-        //DKS
-        //LoadedTextures++;							// Anzahl der geladenen Texturen erhöhen
+        std::string tmpstr( std::string(TextArray[TEXT_LADE_BITMAP]) + ' ' + filename +
+                ' ' + std::string(TextArray[TEXT_LADEN_ERFOLGREICH]) + '\n' );
+        DisplayLoadInfo(tmpstr.c_str());
     }
         
-    //_itoa_s(LoadedTextures, Temp, 10);
-//	Protokoll.WriteText( false, Temp );
-//	Protokoll.WriteText( false, " Sprite Textur(en) loaded !\n" );
     return success;
 }
 
@@ -257,12 +261,12 @@ loaded:
 //      It should be more flexible than the original game's DirectX texture support, in that
 //      it allows for loading textures from disk that are arbitrarily resized.
 #if defined(PLATFORM_DIRECTX)
-bool TexturesystemClass::DX8_LoadTexture( const string &path, const string &filename, 
+bool TexturesystemClass::DX8_LoadTexture( const std::string &path, const std::string &filename, 
                                           void *buf, unsigned int buf_size, TextureHandle &th )
 {
     HRESULT  hresult;
     bool     load_from_memory = buf_size > 0;
-    string   fullpath = path + "/" + filename;
+    std::string   fullpath = path + "/" + filename;
 
 
     if (load_from_memory && !buf) {

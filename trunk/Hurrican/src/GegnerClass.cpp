@@ -155,6 +155,7 @@ void GegnerClass::Render(void)
                                                                    Anim, Color, mirrored);
                 }
 
+                //DKS - TODO: Why is DoDraw() being called twice??
                 // Wieder Extrawurst
                 else if (OwnDraw  == true)
                     for (int i = 0; i < 2; i++)

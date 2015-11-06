@@ -1385,6 +1385,10 @@ bool GameExit(void)
     SoundManager.Exit();
     Protokoll.WriteText( false, "-> Sound system released\n" );
 
+    //DKS - Free any straggling textures in VRAM before closing down graphics:
+    Textures.Exit();
+    Protokoll.WriteText( false, "-> Texture system released\n" );
+
     DirectInput.Exit();					// DirectInput beenden
 
     DirectGraphics.Exit();				// Direct3D    beenden
