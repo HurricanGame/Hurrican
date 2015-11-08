@@ -517,15 +517,19 @@ void LoadGegnerGrafik(int Nr)
         break;
 
     case LUEFTER_KLEIN:
-        //DKS - Corrected dimensions from 453x343 to 452x342, to match actual image file:
-        //      NOTE: image file was cropped to 452x342, to match frames inside it.
-        pGegnerGrafix[LUEFTER_KLEIN]->LoadImage("luefter1.png",	 452,  342, 113,114, 4,3);
+        //DKS - Original dimensions in code here were 453x343, with frame size of 113x114, which not only
+        //      did not match what the true dimensions should be, but also caused problems with
+        //      resized textures. When using resized textures (new feature), fan image would jiggle.
+        //      I resized the image and its frames to have a one-pixel transparent border on X-axis,
+        //      giving overall dimension of 456x342 with frame size of 114x114. Resizing issues fixed.
+        //pGegnerGrafix[LUEFTER_KLEIN]->LoadImage("luefter1.png", 453, 342, 113, 114, 4, 3);
+        pGegnerGrafix[LUEFTER_KLEIN]->LoadImage("luefter1.png",	456, 342, 114, 114, 4, 3);
         break;
 
     case LUEFTER_KLEIN2:
-        //DKS - Corrected dimensions from 453x343 to 452x342, to match actual image file:
-        //      NOTE: image file was cropped to 452x342, to match frames inside it.
-        pGegnerGrafix[LUEFTER_KLEIN2]->LoadImage("luefter2.png",	 452,  342, 113,114, 4,3);
+        //DKS - See note above
+        //pGegnerGrafix[LUEFTER_KLEIN2]->LoadImage("luefter2.png", 453, 342, 113, 114, 4,3);
+        pGegnerGrafix[LUEFTER_KLEIN2]->LoadImage("luefter2.png", 456, 342, 114, 114, 4, 3);
         break;
 
     case TUTORIALTEXT:

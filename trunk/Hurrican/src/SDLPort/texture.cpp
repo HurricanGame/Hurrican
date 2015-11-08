@@ -445,8 +445,6 @@ bool loadImageSDL( image_t& image, const std::string &fullpath, void *buf, unsig
             || fullpath.find("hurrican_rund")  != string::npos             // Menu star/nebula background (ugly)
             || fullpath.find("roboraupe")      != string::npos             // Flat spiky enemy worm-like thing (glitches)
             || fullpath.find("enemy-walker")   != string::npos             // Frog-like robotic walker (glitches)
-            || fullpath.find("luefter1")       != string::npos             // Rotating fan (wiggles side to side)
-            || fullpath.find("luefter2")       != string::npos             // Rotating fan (wiggles side to side)
             || fullpath.find("stelzsack")      != string::npos             // Stilt-walker enemy on elevator level
            )
         {
