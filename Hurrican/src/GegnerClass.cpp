@@ -1367,17 +1367,21 @@ GegnerListClass::GegnerListClass(void)
     GegnerRect[LUEFTER_GROSS].top  = 0;
     GegnerRect[LUEFTER_GROSS].bottom = 223;
 
+    //DKS - For both LUEFTER_KLEIN and LUEFTER_KLEIN2 here, original values were 0,112,0,113, but
+    //      the original texture didn't match these values, and not only that overall spritesheet
+    //      size was wrong. See notes in Gegner_Helper.cpp for these two sprites. I've changed
+    //      the values here to be 0,114,0,114:
     // Luefter Klein 1
     GegnerRect[LUEFTER_KLEIN].left = 0;
-    GegnerRect[LUEFTER_KLEIN].right  = 112;
+    GegnerRect[LUEFTER_KLEIN].right  = 114;
     GegnerRect[LUEFTER_KLEIN].top  = 0;
-    GegnerRect[LUEFTER_KLEIN].bottom = 113;
+    GegnerRect[LUEFTER_KLEIN].bottom = 114;
 
     // Luefter Klein 2
     GegnerRect[LUEFTER_KLEIN2].left = 0;
-    GegnerRect[LUEFTER_KLEIN2].right  = 112;
+    GegnerRect[LUEFTER_KLEIN2].right  = 114;
     GegnerRect[LUEFTER_KLEIN2].top  = 0;
-    GegnerRect[LUEFTER_KLEIN2].bottom = 113;
+    GegnerRect[LUEFTER_KLEIN2].bottom = 114;
 
     // LightFlare
     GegnerRect[LIGHTFLARE].left = 0;
