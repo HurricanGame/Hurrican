@@ -32,8 +32,8 @@ GegnerBigRocket::GegnerBigRocket(int Wert1, int Wert2, bool Light)
 
 void GegnerBigRocket::DoDraw(void)
 {
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                           (float)(yPos-pTileEngine->YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                                           (float)(yPos-TileEngine.YOffset),
                                            AnimPhase, 0xFFFFFFFF, false);
 
     // Noch warten?
@@ -46,12 +46,12 @@ void GegnerBigRocket::DoDraw(void)
     if (options_Detail >= DETAIL_HIGH)
     {
         DirectGraphics.SetAdditiveMode ();
-        pProjectiles->LavaFlare.RenderSprite (float (xPos - 27 - pTileEngine->XOffset),
-                                float (yPos + 237 - pTileEngine->YOffset), 0, 0xCCFFFFFF);
-        pProjectiles->LavaFlare.RenderSprite (float (xPos - 27 - pTileEngine->XOffset),
-                                float (yPos + 237 - pTileEngine->YOffset), 0, 0xCCAAAA00);
-        pProjectiles->LavaFlare.RenderSprite (float (xPos - 27 - pTileEngine->XOffset),
-                                float (yPos + 237 - pTileEngine->YOffset), 0, 0xCCAA0000);
+        pProjectiles->LavaFlare.RenderSprite (float (xPos - 27 - TileEngine.XOffset),
+                                float (yPos + 237 - TileEngine.YOffset), 0, 0xCCFFFFFF);
+        pProjectiles->LavaFlare.RenderSprite (float (xPos - 27 - TileEngine.XOffset),
+                                float (yPos + 237 - TileEngine.YOffset), 0, 0xCCAAAA00);
+        pProjectiles->LavaFlare.RenderSprite (float (xPos - 27 - TileEngine.XOffset),
+                                float (yPos + 237 - TileEngine.YOffset), 0, 0xCCAA0000);
         DirectGraphics.SetColorKeyMode ();
     }
 }
@@ -92,10 +92,10 @@ void GegnerBigRocket::DoKI(void)
             pPartikelSystem->PushPartikel (xPos + 20 + rand ()%13, yPos + 290 + rand()%5, ROCKETSMOKE);
         }
 
-        blocko = pTileEngine->BlockOben (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+        blocko = TileEngine.BlockOben (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
         // ausserhalb des Screens? Dann verschwinden lassen
-        if (yPos + 350.0f < pTileEngine->YOffset ||
+        if (yPos + 350.0f < TileEngine.YOffset ||
                 blocko & BLOCKWERT_WAND)
             Energy = 0.0f;
 
@@ -118,7 +118,7 @@ void GegnerBigRocket::GegnerExplode(void)
 {
     // Nur explodieren lassen, wenn Rakete zu sehen ist
     //
-    if (!(yPos + 350.0f < pTileEngine->YOffset))
+    if (!(yPos + 350.0f < TileEngine.YOffset))
     {
         ShakeScreen (5.0f);
 

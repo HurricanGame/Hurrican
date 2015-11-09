@@ -53,8 +53,8 @@ void GegnerPunisher::DoDraw(void)
         for (int i = 0; i < 170; i++)
         {
             pGegnerGrafix[GegnerArt]->SetRect(3 * 170, 2 * 170 + i, 4 * 170, 2 * 170 + i+1);
-            pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset + (float)(sin((alpha / 20.0f) + i / 10.0f) * ((255.0f - alpha) / 255.0f * 200.0f))),
-                                                   (float)(yPos-pTileEngine->YOffset + i),
+            pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset + (float)(sin((alpha / 20.0f) + i / 10.0f) * ((255.0f - alpha) / 255.0f * 200.0f))),
+                                                   (float)(yPos-TileEngine.YOffset + i),
                                                    D3DCOLOR_RGBA (255, 255, 255, (int)alpha));
         }
     }
@@ -63,8 +63,8 @@ void GegnerPunisher::DoDraw(void)
     // normal rendern
     case GEGNER_LAUFEN:
     {
-        pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                               (float)(yPos-pTileEngine->YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                                               (float)(yPos-TileEngine.YOffset),
                                                AnimPhase, D3DCOLOR_RGBA (255, 255, 255, 255), false);
     }
     break;
@@ -101,8 +101,8 @@ void GegnerPunisher::DoKI(void)
     case GEGNER_INIT:
     {
         // zentrieren
-        xPos = (float)(pTileEngine->XOffset + 320 - 100/2.0f);
-        yPos = (float)(pTileEngine->YOffset + 240 - 95/2.0f);
+        xPos = (float)(TileEngine.XOffset + 320 - 100/2.0f);
+        yPos = (float)(TileEngine.YOffset + 240 - 95/2.0f);
 
         alpha = 0.0f;
         Handlung = GEGNER_INIT2;
@@ -155,7 +155,7 @@ void GegnerPunisher::DoKI(void)
                 pPlayer[p]->CalcWeaponLevels();
 
                 // bekommt dafür aber wieder Zeit
-                pTileEngine->Timelimit = pTileEngine->TimelimitSave;
+                TileEngine.Timelimit = TileEngine.TimelimitSave;
 
                 // ausfaden
                 Energy = 0.0f;
@@ -236,7 +236,7 @@ void GegnerPunisher::Vanish(void)
 
 void GegnerPunisher::GegnerExplode(void)
 {
-    pTileEngine->Timelimit += 100;
+    TileEngine.Timelimit += 100;
 
     pPlayer[0]->PunisherActive = false;
     pPlayer[1]->PunisherActive = false;

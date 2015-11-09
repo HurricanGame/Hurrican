@@ -118,7 +118,7 @@ Logdatei				Protokoll("Game_Log.txt");		// Protokoll Datei
 SoundManagerClass       SoundManager;                   // Sound Manager
 DirectGraphicsFont		*pDefaultFont = new(DirectGraphicsFont);
 DirectGraphicsFont		*pMenuFont	  = new(DirectGraphicsFont);
-TileEngineClass			*pTileEngine;					// Tile Engine
+TileEngineClass			TileEngine;                     // Tile Engine
 PartikelsystemClass		*pPartikelSystem;				// Das coole Partikelsystem
 ProjectileListClass		*pProjectiles;					// Liste mit Schüssen
 GegnerListClass			*pGegner;						// Liste mit Gegner
@@ -151,7 +151,7 @@ int WINDOWHEIGHT;
 #if defined(PLATFORM_DIRECTX)
 HBITMAP					SplashScreen = NULL;			// SplashScreen Grafik
 #endif
-PlayerClass				*pPlayer[2];					// Werte der Spieler
+PlayerClass				Player[2];					// Werte der Spieler
 HUDClass				*pHUD;							// Das HUD
 unsigned char			SpielZustand = CRACKTRO;		// Aktueller Zustand des Spieles
 char					StringBuffer[100];				// Für die Int / String Umwandlung
@@ -1112,20 +1112,21 @@ void CreatePlayer2Texture(void)
 
 bool GameInit2(void)
 {
+    //DKS-Player[] is a static global now:
     // Player initialisieren
-    pPlayer[0] = new PlayerClass(0);
-    pPlayer[1] = new PlayerClass(1);
+    //Player[0] = new PlayerClass(0);
+    //Player[1] = new PlayerClass(1);
 
     //DKS - Now that the player sprites are stored in the class, I've disabled this
     //      in favor of actual constructors:
-    //pPlayer[0]->SoundOff = 0;
-    //pPlayer[1]->SoundOff = 1;
-    //memset(pPlayer[0], 0, sizeof(*pPlayer[0]));
-    //memset(pPlayer[1], 0, sizeof(*pPlayer[1]));
+    //Player[0]->SoundOff = 0;
+    //Player[1]->SoundOff = 1;
+    //memset(Player[0], 0, sizeof(*Player[0]));
+    //memset(Player[1], 0, sizeof(*Player[1]));
 
     //DKS - Player sprites are now members of their class, not globals, so load
     //      the first players' sprites. Player 2's sprites will be loaded on-demand.
-    pPlayer[0]->LoadSprites();
+    Player[0]->LoadSprites();
 
     // Konfiguration laden
     if (LoadConfig() == false)
@@ -1175,8 +1176,8 @@ bool GameInit2(void)
     pGegner = new(GegnerListClass);
 
     // Tileengine initialisieren
-    pTileEngine = new(TileEngineClass);
-    pTileEngine->SetScrollSpeed(1.0f, 0.0f);
+    TileEngine.LoadSprites();   //DKS - Added this function to TileEngineClass
+    TileEngine.SetScrollSpeed(1.0f, 0.0f);
 
     // HUD initialisieren
     pHUD = new HUDClass();
@@ -1360,17 +1361,13 @@ bool GameExit(void)
     delete(pHUD);
     Protokoll.WriteText( false, "-> HUD released\n" );
 
-    // Tileengine beenden
-    delete(pTileEngine);
-    Protokoll.WriteText( false, "-> TileEngine released\n" );
-
     // GegnerListe beenden
     delete(pGegner);
     Protokoll.WriteText( false, "-> Enemy List released\n" );
 
     // Player freigeben
-    delete(pPlayer[0]);
-    delete(pPlayer[1]);
+    delete(Player[0]);
+    delete(Player[1]);
     Protokoll.WriteText( false, "-> Player released\n" );
 
     // Partikelsystem beenden
@@ -1386,6 +1383,15 @@ bool GameExit(void)
     Protokoll.WriteText( false, "-> Sound system released\n" );
 
     //DKS - Free any straggling textures in VRAM before closing down graphics:
+    //      NOTE: this is important! Global systems that contain their own
+    //      sprites might get destructed after graphics has been shut down.
+    //      In the original code, many systems like TileEngineClass were accessed
+    //      through global pointers to dynamically allocated classes, in the
+    //      interest of speed and code-compactness, if not clarity.
+    //      I changed them to be globally allocated static vars. Since some contain
+    //      sprite variables, their destructors would then possible end up freeing
+    //      textures after the graphics system already closed. Textures::Exit()
+    //      below will prevent that.
     Textures.Exit();
     Protokoll.WriteText( false, "-> Texture system released\n" );
 
@@ -1612,7 +1618,7 @@ void ShowDebugInfo(void)
     pDefaultFont->DrawText(150, 90, StringBuffer, 0xFFFFFFFF);
 
     // Blitzwinkel angeben
-    //_itoa_s((int)(pPlayer->BlitzWinkel), StringBuffer, 10);
+    //_itoa_s((int)(Player->BlitzWinkel), StringBuffer, 10);
     pDefaultFont->DrawText(  0, 135, "Blitzwinkel :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 135, StringBuffer, 0xFFFFFFFF);
 
@@ -1622,18 +1628,18 @@ void ShowDebugInfo(void)
     pDefaultFont->DrawText(150, 150, StringBuffer, 0xFFFFFFFF);
 
     // Blitzwinkel angeben
-    //sprintf_s (StringBuffer, "%f", pPlayer->JumpySave - pPlayer->ypos);
+    //sprintf_s (StringBuffer, "%f", Player->JumpySave - Player->ypos);
     pDefaultFont->DrawText(  0, 250, "yDiff :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 250, StringBuffer, 0xFFFFFFFF);
 
     // Blitzwinkel angeben
-    //sprintf_s (StringBuffer, "%f", pPlayer->JumpAdd);
+    //sprintf_s (StringBuffer, "%f", Player->JumpAdd);
     pDefaultFont->DrawText(  0, 270, "yAdd :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 270, StringBuffer, 0xFFFFFFFF);
 
     /*	for (int i=0; i<128; i++)
     		for (int j=0; j<96; j++)
-    			if(pTileEngine->Tiles[i][j].BackArt > 0)
+    			if(TileEngineTiles[i][j].BackArt > 0)
     				pDefaultFont->DrawText(300+i, 100+j, ".", 0xFFFFFF00);*/
 }
 #endif //_DEBUG

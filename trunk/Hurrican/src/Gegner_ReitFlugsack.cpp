@@ -40,8 +40,8 @@ void GegnerReitFlugsack::DoDraw(void)
 {
     bool mirror = BlickRichtung != LINKS;
 
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos - pTileEngine->XOffset),
-                                           (float)(yPos - pTileEngine->YOffset), AnimPhase, 0xFFFFFFFF, mirror);
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos - TileEngine.XOffset),
+                                           (float)(yPos - TileEngine.YOffset), AnimPhase, 0xFFFFFFFF, mirror);
 
     if (Handlung == GEGNER_SPECIAL)
     {
@@ -50,8 +50,8 @@ void GegnerReitFlugsack::DoDraw(void)
             ArrowCount = 2.0f;
 
         if ((int)(ArrowCount) % 2 == 0)
-            pHUD->Arrow.RenderMirroredSprite((float)(xPos - pTileEngine->XOffset) + 35,
-                                             (float)(yPos - pTileEngine->YOffset) - 40,
+            pHUD->Arrow.RenderMirroredSprite((float)(xPos - TileEngine.XOffset) + 35,
+                                             (float)(yPos - TileEngine.YOffset) - 40,
                                              0xFF00FF00,
                                              false, true);
     }

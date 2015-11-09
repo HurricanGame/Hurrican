@@ -357,7 +357,7 @@ void PlayerClass::runExplode(void)
         //if (SmartBombs < 1)
         //	SmartBombs = 1;
 
-        if (pTileEngine->Zustand == ZUSTAND_SCROLLBAR &&
+        if (TileEngine.Zustand == ZUSTAND_SCROLLBAR &&
                 Handlung != SACKREITEN &&
                 Handlung != DREHEN)
         {
@@ -404,7 +404,7 @@ void PlayerClass::runExplode(void)
             //
             if (g_Fahrstuhl_yPos > -1.0f)
             {
-                xpos = (float)(pTileEngine->XOffset) + 320.0f - 35;
+                xpos = (float)(TileEngine.XOffset) + 320.0f - 35;
                 ypos = (float)(g_Fahrstuhl_yPos) - CollideRect.bottom - 1;
                 xposold = xpos;	// Alte Position wieder herstellen, wenn der
                 yposold = ypos;	// der Spieler zB einen Abgrund runterfiel
@@ -568,7 +568,7 @@ bool PlayerClass::GetPlayerInput(void)
 
     // und Bewegungsgeschwindigkeit für den nächsten Frame auf 0 setzen,
     // es sei denn, man läuft auf Eis
-    if (pTileEngine->BlockUntenNormal	  (xpos, ypos, xposold, yposold, CollideRect) & BLOCKWERT_EIS)
+    if (TileEngine.BlockUntenNormal	  (xpos, ypos, xposold, yposold, CollideRect) & BLOCKWERT_EIS)
     {
         xspeed *= PLAYER_ICESSLOWDOWN;
     }
@@ -578,7 +578,7 @@ bool PlayerClass::GetPlayerInput(void)
     // Aktionen nach Keyboard-Input abfragen falls der
     // Spieler sich gerade bewegen darf =)
     //
-//	if (pTileEngine->Zustand != ZUSTAND_SCROLLTOPLAYER)
+//	if (TileEngine.Zustand != ZUSTAND_SCROLLTOPLAYER)
     {
         // Demo läuft ?
         if (DEMOPlaying == true)
@@ -968,9 +968,9 @@ void PlayerClass::CheckForExplode(void)
                 Handlung == DREHEN)
         {
             // Von unten wieder hochkommen ?
-            if (ypos >= pTileEngine->YOffset + 475.0f)
+            if (ypos >= TileEngine.YOffset + 475.0f)
             {
-                ypos = float (pTileEngine->YOffset + 470.0f);
+                ypos = float (TileEngine.YOffset + 470.0f);
                 yadd   = -25.0f;
             }
 
@@ -1047,20 +1047,20 @@ void PlayerClass::AnimatePlayer(void)
 
     bu = 0;
 
-    bl = pTileEngine->BlockLinks	  (xpos, ypos, xposold, yposold, CollideRect, yspeed >= 0.0f);
-    br = pTileEngine->BlockRechts	  (xpos, ypos, xposold, yposold, CollideRect, yspeed >= 0.0f);
+    bl = TileEngine.BlockLinks	  (xpos, ypos, xposold, yposold, CollideRect, yspeed >= 0.0f);
+    br = TileEngine.BlockRechts	  (xpos, ypos, xposold, yposold, CollideRect, yspeed >= 0.0f);
 
     // auf schrägen laufen/gelandet?
     //
     if (yspeed   >= 0.0f)
-        bu = pTileEngine->BlockSlopes     (xpos, ypos, xposold, yposold, CollideRect, yspeed);
+        bu = TileEngine.BlockSlopes     (xpos, ypos, xposold, yposold, CollideRect, yspeed);
 
     if (Handlung == RADELN)
     {
         if ((Blickrichtung == LINKS   && bu & BLOCKWERT_SCHRAEGE_R) ||
                 (Blickrichtung == RECHTS  && bu & BLOCKWERT_SCHRAEGE_L))
         {
-            bu = pTileEngine->BlockUnten (xpos, ypos, xposold, yposold, CollideRect, yspeed >= 0.0f);
+            bu = TileEngine.BlockUnten (xpos, ypos, xposold, yposold, CollideRect, yspeed >= 0.0f);
             yspeed = -2.0f;
             ypos -= 1.0f;
 
@@ -1072,8 +1072,8 @@ void PlayerClass::AnimatePlayer(void)
     if (!(bu & BLOCKWERT_SCHRAEGE_L) &&
             !(bu & BLOCKWERT_SCHRAEGE_R))
     {
-        bu = pTileEngine->BlockUnten	  (xpos, ypos, xposold, yposold, CollideRect, yspeed >= 0.0f);
-        bu = pTileEngine->BlockUntenNormal(xpos, ypos, xposold, yposold, CollideRect);
+        bu = TileEngine.BlockUnten	  (xpos, ypos, xposold, yposold, CollideRect, yspeed >= 0.0f);
+        bu = TileEngine.BlockUntenNormal(xpos, ypos, xposold, yposold, CollideRect);
     }
     else
     {
@@ -1085,13 +1085,13 @@ void PlayerClass::AnimatePlayer(void)
         }
     }
 
-    bo = pTileEngine->BlockOben		  (xpos, ypos, xposold, yposold, CollideRect, true);
+    bo = TileEngine.BlockOben		  (xpos, ypos, xposold, yposold, CollideRect, true);
 
     // Spieler unter Wasserfall ? Dann Wassertropfen entstehen lassen
     //
     for (int i = int (xpos + CollideRect.left) + 5; i < int (xpos + CollideRect.right) - 5; i+=2)
     {
-        if (pTileEngine->Tiles [int (i / 20)][int (ypos + CollideRect.top + 10) / 20].Block & BLOCKWERT_WASSERFALL)
+        if (TileEngine.Tiles [int (i / 20)][int (ypos + CollideRect.top + 10) / 20].Block & BLOCKWERT_WASSERFALL)
         {
             if (rand()%50 == 0)
                 pPartikelSystem->PushPartikel (float (i) + rand()%4, ypos + CollideRect.top + rand()%4 + 10, WASSERTROPFEN);
@@ -1162,8 +1162,8 @@ void PlayerClass::AnimatePlayer(void)
 
         // Richtung umkehren wenn an die Decke gestossen ?
         if(bo & BLOCKWERT_WAND ||
-                (pTileEngine->Zustand == ZUSTAND_LOCKED &&
-                 ypos <= (float)pTileEngine->YOffset))
+                (TileEngine.Zustand == ZUSTAND_LOCKED &&
+                 ypos <= (float)TileEngine.YOffset))
         {
             if (yspeed < 0.0f)
                 yspeed = 0.0f;
@@ -1328,7 +1328,7 @@ void PlayerClass::AnimatePlayer(void)
         }
 
         // im Sumpf langsam einsinken
-        int busumpf = pTileEngine->BlockUnten(xpos, ypos, xposold, yposold, CollideRect, yspeed >= 0.0f);
+        int busumpf = TileEngine.BlockUnten(xpos, ypos, xposold, yposold, CollideRect, yspeed >= 0.0f);
         if (busumpf & BLOCKWERT_SUMPF ||
                 bl & BLOCKWERT_SUMPF ||
                 br & BLOCKWERT_SUMPF)
@@ -1394,7 +1394,7 @@ void PlayerClass::AnimatePlayer(void)
                 ypos -= 15.0f;
 
                 // noch nicht aus dem Sumpf draussen? Dann gleich wieder runterfallen
-                bu = pTileEngine->BlockSlopes     (xpos, ypos, xposold, yposold, CollideRect, yspeed);
+                bu = TileEngine.BlockSlopes     (xpos, ypos, xposold, yposold, CollideRect, yspeed);
                 if (bu & BLOCKWERT_SUMPF)
                 {
                     //yspeed = 0.0f;
@@ -1433,7 +1433,7 @@ void PlayerClass::AnimatePlayer(void)
                 }
             }
             else
-                bu = pTileEngine->BlockSlopes     (xpos, ypos, xposold, yposold, CollideRect, yspeed);
+                bu = TileEngine.BlockSlopes     (xpos, ypos, xposold, yposold, CollideRect, yspeed);
 
             if (JumpPossible		== false &&
                     Aktion[AKTION_JUMP] == false &&
@@ -1493,7 +1493,7 @@ void PlayerClass::AnimatePlayer(void)
         if (Handlung == DUCKEN)
         {
             float ypos2 = ypos - 48.0f;
-            int bo2 = pTileEngine->BlockOben  (xpos, ypos2, xposold, yposold, CollideRect, true);
+            int bo2 = TileEngine.BlockOben  (xpos, ypos2, xposold, yposold, CollideRect, true);
 
             if (!(bo  & BLOCKWERT_WAND) &&
                     !(bo2 & BLOCKWERT_WAND))
@@ -1754,8 +1754,8 @@ void PlayerClass::AnimatePlayer(void)
 
                 for (int i=-1; i<25; i++)			// Powerlines schiessen
                 {
-                    pProjectiles->PushProjectile (xpos+20, float(int(pTileEngine->YOffset/20)*20 + i*20), POWERLINE, this);
-                    pProjectiles->PushProjectile (xpos+20, float(int(pTileEngine->YOffset/20)*20 + i*20), POWERLINE2, this);
+                    pProjectiles->PushProjectile (xpos+20, float(int(TileEngine.YOffset/20)*20 + i*20), POWERLINE, this);
+                    pProjectiles->PushProjectile (xpos+20, float(int(TileEngine.YOffset/20)*20 + i*20), POWERLINE2, this);
                 }
             }
 
@@ -1835,7 +1835,7 @@ void PlayerClass::AnimatePlayer(void)
                         yspeed    = 0.0f;
                         JumpAdd   = 0.0f;
                         Handlung  = RADELN;
-                        pTileEngine->BlockUnten(xpos, ypos, xposold, yposold, CollideRect, true);
+                        TileEngine.BlockUnten(xpos, ypos, xposold, yposold, CollideRect, true);
                     }
                     else
                     {
@@ -1861,7 +1861,7 @@ void PlayerClass::AnimatePlayer(void)
             // das Rad hoch ist, damit man den Zustand prüft, als wenn der Spieler wieder stehen würde
 
             float ypos2 = ypos - 20.0f;
-            int   bo2 = pTileEngine->BlockOben  (xpos, ypos2, xposold, yposold, CollideRect, true);
+            int   bo2 = TileEngine.BlockOben  (xpos, ypos2, xposold, yposold, CollideRect, true);
 
             if ((Armour <= 0.0f ||
                     Aktion[AKTION_JUMP])   &&
@@ -1916,7 +1916,7 @@ void PlayerClass::AnimatePlayer(void)
                 JumpxSave = xpos;
 
                 // unten rausgeflogen ? Dann wieder zurücksetzen
-                if (ypos > pTileEngine->YOffset + 475.0f)
+                if (ypos > TileEngine.YOffset + 475.0f)
                 {
                     SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
                     xpos    = JumpxSave;	// Alte Position wieder herstellen, wenn der
@@ -1927,7 +1927,7 @@ void PlayerClass::AnimatePlayer(void)
                 }
 
                 // An der Decke anstoßen
-                if (ypos < pTileEngine->YOffset &&
+                if (ypos < TileEngine.YOffset &&
                         BeideFrei)
                 {
                     if (yadd < 0.0f)
@@ -2094,7 +2094,7 @@ void PlayerClass::AnimatePlayer(void)
 
                 // Wendepunkt erreicht? Dann automatisch abspringen
                 float ytemp = ypos - 1;
-                bu = pTileEngine->BlockUntenNormal(xpos, ypos, xposold, ytemp, CollideRect);
+                bu = TileEngine.BlockUntenNormal(xpos, ypos, xposold, ytemp, CollideRect);
                 if (bu & BLOCKWERT_WENDEPUNKT)
                 {
                     Handlung = SPRINGEN;
@@ -2107,7 +2107,7 @@ void PlayerClass::AnimatePlayer(void)
                     pGegner->PushGegner(xpos, ypos + 20, FLUGSACK, 99, 0, false);
 
                     FlugsackFliesFree = true;
-                    pTileEngine->Zustand = ZUSTAND_SCROLLBAR;
+                    TileEngine.Zustand = ZUSTAND_SCROLLBAR;
 
                     SoundManager.FadeSong(MUSIC_FLUGSACK, -2.0f, 0, true);
                     SoundManager.FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);
@@ -2136,7 +2136,7 @@ void PlayerClass::AnimatePlayer(void)
         // Spieler und Level bewegen (wenn nicht beim Endboss bzw wenn Level scrollbar)
         //
         xpos			     += AutoScrollspeed SYNC;
-        pTileEngine->XOffset += AutoScrollspeed SYNC;
+        TileEngine.XOffset += AutoScrollspeed SYNC;
 
         if (Handlung == SURFENCROUCH)
             Handlung = SURFEN;
@@ -2202,8 +2202,8 @@ void PlayerClass::AnimatePlayer(void)
 
         for (int i=-1; i<25; i++)			// Powerlines schiessen
         {
-            pProjectiles->PushProjectile (xpos+20, float(int(pTileEngine->YOffset/20)*20 + i*20), POWERLINE, this);
-            pProjectiles->PushProjectile (xpos+20, float(int(pTileEngine->YOffset/20)*20 + i*20), POWERLINE2, this);
+            pProjectiles->PushProjectile (xpos+20, float(int(TileEngine.YOffset/20)*20 + i*20), POWERLINE, this);
+            pProjectiles->PushProjectile (xpos+20, float(int(TileEngine.YOffset/20)*20 + i*20), POWERLINE2, this);
         }
     }
 
@@ -2261,10 +2261,10 @@ void PlayerClass::AnimatePlayer(void)
     if ((!Aktion[AKTION_OBEN]	&&
             !Aktion[AKTION_UNTEN]) ||
             NUMPLAYERS ==2 ||
-            pTileEngine->Zustand != ZUSTAND_SCROLLBAR)
+            TileEngine.Zustand != ZUSTAND_SCROLLBAR)
         look = 0.0f;
 
-    if (pTileEngine->Zustand == ZUSTAND_SCROLLBAR	  &&
+    if (TileEngine.Zustand == ZUSTAND_SCROLLBAR	  &&
             NUMPLAYERS < 2 &&
             Handlung != SACKREITEN &&
             Handlung != DREHEN &&
@@ -2284,10 +2284,10 @@ void PlayerClass::AnimatePlayer(void)
 
                 if (look > 5.0f)
                 {
-                    if (pTileEngine->YOffset > ypos - 400.0f)
-                        pTileEngine->YOffset -= 19.0f SYNC;
+                    if (TileEngine.YOffset > ypos - 400.0f)
+                        TileEngine.YOffset -= 19.0f SYNC;
                     else
-                        pTileEngine->YOffset = ypos - 400.0f;
+                        TileEngine.YOffset = ypos - 400.0f;
                 }
             }
 
@@ -2299,38 +2299,38 @@ void PlayerClass::AnimatePlayer(void)
                 if (look > 5.0f ||
                         AktionKeyboard[AKTION_UNTEN] != AktionKeyboard[AKTION_DUCKEN])
                 {
-                    if (pTileEngine->YOffset < ypos - 40.0f)
-                        pTileEngine->YOffset += 19.0f SYNC;
+                    if (TileEngine.YOffset < ypos - 40.0f)
+                        TileEngine.YOffset += 19.0f SYNC;
                     else
-                        pTileEngine->YOffset = ypos - 40.0f;
+                        TileEngine.YOffset = ypos - 40.0f;
                 }
             }
         }
 
         else
         {
-            if (ypos-pTileEngine->YOffset < SCROLL_BORDER_EXTREME_TOP)
-                pTileEngine->YOffset = ypos - SCROLL_BORDER_EXTREME_TOP;
+            if (ypos-TileEngine.YOffset < SCROLL_BORDER_EXTREME_TOP)
+                TileEngine.YOffset = ypos - SCROLL_BORDER_EXTREME_TOP;
 
-            if (ypos-pTileEngine->YOffset > SCROLL_BORDER_EXTREME_BOTTOM &&
+            if (ypos-TileEngine.YOffset > SCROLL_BORDER_EXTREME_BOTTOM &&
                     yspeed > 0.0f)
-                pTileEngine->YOffset = ypos - SCROLL_BORDER_EXTREME_BOTTOM;
+                TileEngine.YOffset = ypos - SCROLL_BORDER_EXTREME_BOTTOM;
         }
 
         // extrem Rand trotzdem nochmal checken
         if (Handlung != SACKREITEN &&
                 Handlung != DREHEN)
         {
-            if (ypos-pTileEngine->YOffset < 40)  pTileEngine->YOffset = ypos - 40;
-            if (ypos-pTileEngine->YOffset > 380) pTileEngine->YOffset = ypos - 380;
+            if (ypos-TileEngine.YOffset < 40)  TileEngine.YOffset = ypos - 40;
+            if (ypos-TileEngine.YOffset > 380) TileEngine.YOffset = ypos - 380;
         }
     }
 
     // Fahrstuhl hat andere Grenzen
     if (Riding() == false &&
-            pTileEngine->IsElevatorLevel == true &&
-            ypos-pTileEngine->YOffset > 300)
-        pTileEngine->YOffset = ypos - 300;
+            TileEngine.IsElevatorLevel == true &&
+            ypos-TileEngine.YOffset > 300)
+        TileEngine.YOffset = ypos - 300;
 
     // -----------------
     // Spieler animieren
@@ -2379,7 +2379,7 @@ void PlayerClass::AnimatePlayer(void)
     //-----------------------------------------------
     // Testen, ob sich der Spieler im Wasser befindet
     //
-    int middle = pTileEngine->Tiles[(int)(xpos + 35) / TILESIZE_X][(int)(ypos + 40) / TILESIZE_Y].Block;
+    int middle = TileEngine.Tiles[(int)(xpos + 35) / TILESIZE_X][(int)(ypos + 40) / TILESIZE_Y].Block;
     int spritzertype = 0;
     if ((bu & BLOCKWERT_LIQUID) ||
             (br & BLOCKWERT_LIQUID) ||
@@ -2610,22 +2610,22 @@ void PlayerClass::AnimatePlayer(void)
         if (NUMPLAYERS == 2 &&
                 StageClearRunning == false)
         {
-            if (xpos < pTileEngine->XOffset)  xpos = (float)pTileEngine->XOffset;
-            if (xpos > pTileEngine->XOffset + 570) xpos = (float)pTileEngine->XOffset + 570;
+            if (xpos < TileEngine.XOffset)  xpos = (float)TileEngine.XOffset;
+            if (xpos > TileEngine.XOffset + 570) xpos = (float)TileEngine.XOffset + 570;
         }
     }
 
     /*if (Handlung != SPRINGEN	&&
     	Handlung != RADELN_FALL &&
     	yspeed <= 0.0f)
-    	pTileEngine->YOffset -= PLAYER_MAXJUMPSPEED SYNC;*/
+    	TileEngine.YOffset -= PLAYER_MAXJUMPSPEED SYNC;*/
 
 
     if (NUMPLAYERS == 1 &&
-            pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
+            TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        if(xpos-pTileEngine->XOffset <  20) pTileEngine->XOffset = xpos - 20;
-        if(xpos-pTileEngine->XOffset > 550)	pTileEngine->XOffset = xpos - 550;
+        if(xpos-TileEngine.XOffset <  20) TileEngine.XOffset = xpos - 20;
+        if(xpos-TileEngine.XOffset > 550)	TileEngine.XOffset = xpos - 550;
     }
 
     //DKS - By using a bounds-checked array for itsPreCalcedRects[] when debugging,
@@ -2721,8 +2721,8 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
     if (leuchten)
         DirectGraphics.SetAdditiveMode();
 
-    xdraw = (float)((int)(xpos) - (int)(pTileEngine->XOffset));
-    ydraw = ypos - pTileEngine->YOffset;
+    xdraw = (float)((int)(xpos) - (int)(TileEngine.XOffset));
+    ydraw = ypos - TileEngine.YOffset;
 
     // Im Wasser? Dann schwabbeln lassen
     if (InLiquid == true &&
@@ -2730,9 +2730,9 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
             bu & BLOCKWERT_PLATTFORM)
     {
         int yLevel = (int)(ypos + 80.0f) / 20;
-        int off = (int)(pTileEngine->SinPos2 + yLevel) % 40;
+        int off = (int)(TileEngine.SinPos2 + yLevel) % 40;
 
-        xdraw -= pTileEngine->SinList2[off];
+        xdraw -= TileEngine.SinList2[off];
     }
 
     // Schaden genommen ? Dann Spieler blinken lassen
@@ -2749,7 +2749,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
     if (DamageCounter == 0.0f)
         SoundManager.StopWave(SOUND_ABZUG + SoundOff);
 
-    Color = pTileEngine->LightValue(xpos, ypos, CollideRect, false);
+    Color = TileEngine.LightValue(xpos, ypos, CollideRect, false);
 
     if (Handlung == BLITZEN)
         Color = Color | 0xFF0000FF;
@@ -2996,18 +2996,18 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
             switch (FlameOff)
             {
             case 0 :
-                pProjectiles->SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)pTileEngine->XOffset,
-                                               ypos + AustrittY - 70 - (float)pTileEngine->YOffset, 0, 0x88FFCC99);
+                pProjectiles->SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)TileEngine.XOffset,
+                                               ypos + AustrittY - 70 - (float)TileEngine.YOffset, 0, 0x88FFCC99);
                 break;
 
             case 1 :
-                pProjectiles->SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)pTileEngine->XOffset,
-                                               ypos + AustrittY - 70 - (float)pTileEngine->YOffset, 0, 0x8899CCFF);
+                pProjectiles->SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)TileEngine.XOffset,
+                                               ypos + AustrittY - 70 - (float)TileEngine.YOffset, 0, 0x8899CCFF);
                 break;
 
             case 2 :
-                pProjectiles->SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)pTileEngine->XOffset,
-                                               ypos + AustrittY - 70 - (float)pTileEngine->YOffset, 0, 0x8899FFCC);
+                pProjectiles->SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)TileEngine.XOffset,
+                                               ypos + AustrittY - 70 - (float)TileEngine.YOffset, 0, 0x8899FFCC);
                 break;
             }
         }
@@ -3058,11 +3058,11 @@ void PlayerClass::MovePlayer(void)
         xpos = 0.0f;
 
     // rechts raus
-    if (xpos > pTileEngine->LEVELPIXELSIZE_X - 80.0f)
-        xpos = float(pTileEngine->LEVELPIXELSIZE_X - 80.0f);
+    if (xpos > TileEngine.LEVELPIXELSIZE_X - 80.0f)
+        xpos = float(TileEngine.LEVELPIXELSIZE_X - 80.0f);
 
     // unten raus
-    if (ypos > pTileEngine->LEVELPIXELSIZE_Y)
+    if (ypos > TileEngine.LEVELPIXELSIZE_Y)
         Energy = 0.0f;
 
     // im 2 Spieler-Mode: Ein Spieler fällt aus dem Screen?
@@ -3109,10 +3109,10 @@ void PlayerClass::MovePlayer(void)
     }
 
     // Ränder für gelockten Screen prüfen
-    if (pTileEngine->Zustand != ZUSTAND_SCROLLBAR)
+    if (TileEngine.Zustand != ZUSTAND_SCROLLBAR)
     {
-        if (xpos < pTileEngine->XOffset)	 xpos = float(pTileEngine->XOffset);
-        if (xpos > pTileEngine->XOffset+580) xpos = float(pTileEngine->XOffset+580);
+        if (xpos < TileEngine.XOffset)	 xpos = float(TileEngine.XOffset);
+        if (xpos > TileEngine.XOffset+580) xpos = float(TileEngine.XOffset+580);
 
         // Im Fahrstuhllevel?
         //
@@ -3121,14 +3121,14 @@ void PlayerClass::MovePlayer(void)
             // ja, dann checken ob Spieler ausserhalb des Screens, und wenn ja, dann
             // lassen wir ihn halt mal einfach so sterben. Das gehört sich ja auch nicht ;)
             //
-            if (ypos + CollideRect.bottom < pTileEngine->YOffset ||
-                    ypos > pTileEngine->YOffset + 480.0f)
+            if (ypos + CollideRect.bottom < TileEngine.YOffset ||
+                    ypos > TileEngine.YOffset + 480.0f)
                 Energy = 0.0f;
         }
         else
         {
-            if (ypos < pTileEngine->YOffset)
-                ypos = float(pTileEngine->YOffset);
+            if (ypos < TileEngine.YOffset)
+                ypos = float(TileEngine.YOffset);
         }
 
     }
@@ -3729,8 +3729,8 @@ void PlayerClass::DrawNormalLightning(int DrawLength)
     float tl, tr, to, tu;					// Textur Koordinaten
     float x, y;
 
-    x = (float)(xpos - pTileEngine->XOffset+60);		// Position errechnen
-    y = (float)(ypos - pTileEngine->YOffset+36);
+    x = (float)(xpos - TileEngine.XOffset+60);		// Position errechnen
+    y = (float)(ypos - TileEngine.YOffset+36);
 
     if (Blickrichtung == LINKS)
         x -= 56;
@@ -3908,20 +3908,20 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul)
             for (int i = 0; i < maxintersections * 2; i += 2)
             {
                 // zwei neue Punkte zwischen letztem Punkt und Endpunkt per Zufall setzen
-                xstrahl = (int)((xpos - pTileEngine->XOffset + xstart) + (rand()%32 - 16) * mul);
-                ystrahl = (int)(ypos - pTileEngine->YOffset + ystart - yoff);
+                xstrahl = (int)((xpos - TileEngine.XOffset + xstart) + (rand()%32 - 16) * mul);
+                ystrahl = (int)(ypos - TileEngine.YOffset + ystart - yoff);
 
                 // Am End- und Austrittspunkt gebündelt
                 if (i == 0)
                 {
-                    xstrahl = (int)(xpos - pTileEngine->XOffset + xstart) + rand()%6 - 2;
-                    ystrahl = (int)(ypos - pTileEngine->YOffset + ystart);
+                    xstrahl = (int)(xpos - TileEngine.XOffset + xstart) + rand()%6 - 2;
+                    ystrahl = (int)(ypos - TileEngine.YOffset + ystart);
                 }
 
                 if (i >= (maxintersections - 1) * 2)
                 {
-                    xstrahl = (int)(xpos - pTileEngine->XOffset + xstart) + rand()%6 - 2;
-                    ystrahl = (int)(ypos - pTileEngine->YOffset + ystart - (DrawLength + 1)*32);
+                    xstrahl = (int)(xpos - TileEngine.XOffset + xstart) + rand()%6 - 2;
+                    ystrahl = (int)(ypos - TileEngine.YOffset + ystart - (DrawLength + 1)*32);
                 }
 
                 // Position setzen
@@ -3981,8 +3981,8 @@ bool PlayerClass::DoLightning(void)
 
     float x, y;
 
-    x = (float)(xpos - pTileEngine->XOffset+35);		// Position errechnen
-    y = (float)(ypos - pTileEngine->YOffset+35);
+    x = (float)(xpos - TileEngine.XOffset+35);		// Position errechnen
+    y = (float)(ypos - TileEngine.YOffset+35);
 
     //if (Blickrichtung == LINKS)
     //	x -= 56;
@@ -4029,13 +4029,13 @@ bool PlayerClass::DoLightning(void)
             Color2 = D3DCOLOR_RGBA(255, 255, 255, 48);
         }
 
-        pProjectiles->Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-pTileEngine->XOffset),
-                                           float(ystart-18-pTileEngine->YOffset), Color);
+        pProjectiles->Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-TileEngine.XOffset),
+                                           float(ystart-18-TileEngine.YOffset), Color);
 
         // noch glow um die blitzenden?
         if (options_Detail >= DETAIL_HIGH)
-            pProjectiles->Blitzflash[3-BlitzAnim].RenderSpriteScaled(float(xstart-58-pTileEngine->XOffset),
-                    float(ystart-58-pTileEngine->YOffset), 144, 144, 0, Color2);
+            pProjectiles->Blitzflash[3-BlitzAnim].RenderSpriteScaled(float(xstart-58-TileEngine.XOffset),
+                    float(ystart-58-TileEngine.YOffset), 144, 144, 0, Color2);
 
         DirectGraphics.SetColorKeyMode();
         return true;
@@ -4045,14 +4045,14 @@ bool PlayerClass::DoLightning(void)
 //		d.h., ob er eine Wand getroffen hat
 
     // Anfang des Blitzes leuchten lassen
-    pProjectiles->Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-pTileEngine->XOffset),
-                                       float(ystart-18-pTileEngine->YOffset), 0xFFFFFFFF);
+    pProjectiles->Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-TileEngine.XOffset),
+                                       float(ystart-18-TileEngine.YOffset), 0xFFFFFFFF);
 
     // noch glow um die blitzenden?
     if (options_Detail >= DETAIL_HIGH)
     {
-        pProjectiles->Blitzflash[3-BlitzAnim].RenderSpriteScaled(float(xstart-58-pTileEngine->XOffset),
-                float(ystart-58-pTileEngine->YOffset), 144, 144, 0, 0x30FFFFFF);
+        pProjectiles->Blitzflash[3-BlitzAnim].RenderSpriteScaled(float(xstart-58-TileEngine.XOffset),
+                float(ystart-58-TileEngine.YOffset), 144, 144, 0, 0x30FFFFFF);
     }
 
     // Startpunkt der Kollisionsabfrage auch schon mit ein wenig Abstand zum Spieler
@@ -4077,8 +4077,8 @@ bool PlayerClass::DoLightning(void)
 #ifdef _DEBUG
         // Zum anzeigen der Rects, die geprüft werden
         if (DebugMode == true)
-            RenderRect(float(xstart-pTileEngine->XOffset),
-                       float(ystart-pTileEngine->YOffset),
+            RenderRect(float(xstart-TileEngine.XOffset),
+                       float(ystart-TileEngine.YOffset),
                        31, 31, 0x80FFFFFF);
 #endif //DEBUG
 
@@ -4089,7 +4089,7 @@ bool PlayerClass::DoLightning(void)
         //      comments for DrawLightmap())
         // Blitz-LightMap rendern
         //if (options_Detail >= DETAIL_MEDIUM)
-        //    pTileEngine->DrawLightmap(LIGHTMAP_BLITZ, xs + 16, ys + 16, 255);
+        //    TileEngine.DrawLightmap(LIGHTMAP_BLITZ, xs + 16, ys + 16, 255);
 
         // Blitz auf Kollision mit den Gegnern prüfen
         pEnemy = pGegner->pStart;			// Anfang der Gegnerliste
@@ -4137,24 +4137,24 @@ bool PlayerClass::DoLightning(void)
         }
 
         // Zerstörbare Wände ?
-        pTileEngine->CheckDestroyableWalls(xs,  ys, 0, 0, Rect);
-        pTileEngine->BlockDestroyRechts(xs, ys, xs, ys, Rect);
-        pTileEngine->BlockDestroyLinks (xs, ys, xs, ys, Rect);
-        pTileEngine->BlockDestroyOben  (xs, ys, xs, ys, Rect);
-        pTileEngine->BlockDestroyUnten (xs, ys, xs, ys, Rect);
+        TileEngine.CheckDestroyableWalls(xs,  ys, 0, 0, Rect);
+        TileEngine.BlockDestroyRechts(xs, ys, xs, ys, Rect);
+        TileEngine.BlockDestroyLinks (xs, ys, xs, ys, Rect);
+        TileEngine.BlockDestroyOben  (xs, ys, xs, ys, Rect);
+        TileEngine.BlockDestroyUnten (xs, ys, xs, ys, Rect);
 
-        if (pTileEngine->BlockLinks (xs, ys, xs, ys, Rect) & BLOCKWERT_WASSER &&	// Im Wasser blitzen ?
-                pTileEngine->BlockRechts(xs, ys, xs, ys, Rect) & BLOCKWERT_WASSER &&
-                pTileEngine->BlockOben  (xs, ys, xs, ys, Rect) & BLOCKWERT_WASSER &&
-                pTileEngine->BlockUnten (xs, ys, xs, ys, Rect) & BLOCKWERT_WASSER &&
+        if (TileEngine.BlockLinks (xs, ys, xs, ys, Rect) & BLOCKWERT_WASSER &&	// Im Wasser blitzen ?
+                TileEngine.BlockRechts(xs, ys, xs, ys, Rect) & BLOCKWERT_WASSER &&
+                TileEngine.BlockOben  (xs, ys, xs, ys, Rect) & BLOCKWERT_WASSER &&
+                TileEngine.BlockUnten (xs, ys, xs, ys, Rect) & BLOCKWERT_WASSER &&
                 rand()%80 == 0)
             pPartikelSystem->PushPartikel(xs+rand()%32, ys+rand()%32, BUBBLE);		// Dann blubbern
 
 
-        if (pTileEngine->BlockLinks (xs, ys, xs, ys, Rect) & BLOCKWERT_WAND  ||	// Eine Wand getroffen ?
-                pTileEngine->BlockRechts(xs, ys, xs, ys, Rect) & BLOCKWERT_WAND  ||
-                pTileEngine->BlockOben  (xs, ys, xs, ys, Rect) & BLOCKWERT_WAND  ||
-                pTileEngine->BlockUnten (xs, ys, xs, ys, Rect) & BLOCKWERT_WAND)
+        if (TileEngine.BlockLinks (xs, ys, xs, ys, Rect) & BLOCKWERT_WAND  ||	// Eine Wand getroffen ?
+                TileEngine.BlockRechts(xs, ys, xs, ys, Rect) & BLOCKWERT_WAND  ||
+                TileEngine.BlockOben  (xs, ys, xs, ys, Rect) & BLOCKWERT_WAND  ||
+                TileEngine.BlockUnten (xs, ys, xs, ys, Rect) & BLOCKWERT_WAND)
         {
             if (BlitzCount == 0.0f && BlitzAnim%2 == 0)
                 pPartikelSystem->PushPartikel(xs+12, ys+12, LASERFUNKE);	// Funken sprühen
@@ -4182,14 +4182,14 @@ bool PlayerClass::DoLightning(void)
 	ystart -= 16.0f*sin_deg(BlitzWinkel-90);
 
     // Ende des Blitzes leuchten lassen
-    pProjectiles->Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-pTileEngine->XOffset),
-                                       float(ystart-18-pTileEngine->YOffset), 0xFFFFFFFF);
+    pProjectiles->Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-TileEngine.XOffset),
+                                       float(ystart-18-TileEngine.YOffset), 0xFFFFFFFF);
 
     // noch glow um die blitzenden?
     if (options_Detail >= DETAIL_HIGH)
     {
-        pProjectiles->Blitzflash[3-BlitzAnim].RenderSpriteScaled(float(xstart-58-pTileEngine->XOffset),
-                float(ystart-58-pTileEngine->YOffset), 144, 144, 0, 0x30FFFFFF);
+        pProjectiles->Blitzflash[3-BlitzAnim].RenderSpriteScaled(float(xstart-58-TileEngine.XOffset),
+                float(ystart-58-TileEngine.YOffset), 144, 144, 0, 0x30FFFFFF);
     }
 
     // Blitz rotieren lassen
@@ -4305,8 +4305,8 @@ bool PlayerClass::LoadBeam (void)
     float x;
     //float y;
 
-    x = (float)(xpos - pTileEngine->XOffset+60);		// Position errechnen
-    //y = (float)(ypos - pTileEngine->YOffset+36);
+    x = (float)(xpos - TileEngine.XOffset+60);		// Position errechnen
+    //y = (float)(ypos - TileEngine.YOffset+36);
 
     if (Blickrichtung == LINKS)
         x -= 56;
@@ -4336,8 +4336,8 @@ bool PlayerClass::LoadBeam (void)
 	ystart += 28.0f*sin_deg(BlitzWinkel-90);
 
     // Ende des Blitzes leuchten lassen
-    pProjectiles->Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-pTileEngine->XOffset),
-                                       float(ystart-18-pTileEngine->YOffset), Color);
+    pProjectiles->Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-TileEngine.XOffset),
+                                       float(ystart-18-TileEngine.YOffset), Color);
 
     BeamX = xstart+12;
     BeamY = ystart+12;
@@ -4417,8 +4417,8 @@ void PlayerClass::DamagePlayer (float Ammount,
 
 void PlayerClass::CenterLevel(void)
 {
-    pTileEngine->XOffset = xpos - 300;
-    pTileEngine->YOffset = ypos - 280;
+    TileEngine.XOffset = xpos - 300;
+    TileEngine.YOffset = ypos - 280;
 }
 
 // --------------------------------------------------------------------------------------
@@ -4485,8 +4485,8 @@ void PlayerClass::CalcFlamePos (void)
     }
 
     // X-Offset richtig berechnen
-    xoff -= (int)(pTileEngine->XOffset);
-    yoff -= (int)(pTileEngine->YOffset);
+    xoff -= (int)(TileEngine.XOffset);
+    yoff -= (int)(TileEngine.YOffset);
 
     // Und dann je nach Blickrichtung die Flamme und den Flare dazu setzen
     if (Blickrichtung == RECHTS)
@@ -4657,8 +4657,8 @@ void PlayerClass::CalcAustrittsPunkt(void)
     //----- Genauen Pixel am Anfang derFlamme finden
     //
     CalcFlamePos();
-    AustrittX += (float)pTileEngine->XOffset;
-    AustrittY += (float)pTileEngine->YOffset;
+    AustrittX += (float)TileEngine.XOffset;
+    AustrittY += (float)TileEngine.YOffset;
     switch (AustrittAnim)
     {
     // gerade flamme
@@ -4709,10 +4709,10 @@ void PlayerClass::CalcAustrittsPunkt(void)
 bool PlayerClass::CheckLevelExit(void)
 {
     // Spieler aus Level draussen?
-    if (xpos + pPlayer[0]->CollideRect.right  < pTileEngine->XOffset	    ||
-            xpos + pPlayer[0]->CollideRect.left   > pTileEngine->XOffset + 640 ||
-            ypos + pPlayer[0]->CollideRect.bottom < pTileEngine->YOffset	    ||
-            ypos + pPlayer[0]->CollideRect.top    > pTileEngine->YOffset + 480)
+    if (xpos + pPlayer[0]->CollideRect.right  < TileEngine.XOffset	    ||
+            xpos + pPlayer[0]->CollideRect.left   > TileEngine.XOffset + 640 ||
+            ypos + pPlayer[0]->CollideRect.bottom < TileEngine.YOffset	    ||
+            ypos + pPlayer[0]->CollideRect.top    > TileEngine.YOffset + 480)
         return true;
 
     return false;
@@ -4823,7 +4823,7 @@ void PlayerClass::ScrollFlugsack(void)
     if (!FlugsackFliesFree &&
             Riding() &&
             BeideFrei == true)
-        pTileEngine->YOffset -= (float)(PLAYER_FLUGSACKSPEED SYNC);
+        TileEngine.YOffset -= (float)(PLAYER_FLUGSACKSPEED SYNC);
 }
 
 // --------------------------------------------------------------------------------------

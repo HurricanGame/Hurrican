@@ -44,8 +44,8 @@ void GegnerClimber::DoDraw(void)
 {
     // Spinne rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-pTileEngine->XOffset),
-            (float)(yPos-pTileEngine->YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-TileEngine.XOffset),
+            (float)(yPos-TileEngine.YOffset),
             rot, AnimPhase, 0xFFFFFFFF);
 }
 
@@ -55,7 +55,7 @@ void GegnerClimber::DoDraw(void)
 
 void GegnerClimber::DoKI(void)
 {
-    blocku = pTileEngine->BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+    blocku = TileEngine.BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
     // Animationscounter weiterzählen
     AnimCount += SpeedFaktor;
@@ -158,7 +158,7 @@ void GegnerClimber::DoKI(void)
         // Spinne aus der Spinnenmaschine erst ein stück nach rechts laufen lassen
         if (Value1 == 99)
         {
-            if (xPos - pTileEngine->XOffset < 250 &&
+            if (xPos - TileEngine.XOffset < 250 &&
                     winkel > 75)
                 winkel = 75;
         }

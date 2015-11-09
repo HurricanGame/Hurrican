@@ -35,8 +35,8 @@ GegnerShootButton::GegnerShootButton  (GegnerClass *Plattform)
 void GegnerShootButton::DoDraw(void)
 {
     // Button rendern
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(pPlattForm->xPos-pTileEngine->XOffset + 41),
-                                           (float)(pPlattForm->yPos-pTileEngine->YOffset - 8),
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(pPlattForm->xPos-TileEngine.XOffset + 41),
+                                           (float)(pPlattForm->yPos-TileEngine.YOffset - 8),
                                            AnimPhase, 0xFFFFFFFF);
 }
 

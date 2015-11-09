@@ -71,21 +71,21 @@ void GegnerMetalHead::DoDraw(void)
         // Kopf wirbelt herum
         //
         if (AnimEnde > MAXWIRBEL-5)
-            pGegnerGrafix [GegnerArt]->RenderSpriteRotated  (float (xPos - pTileEngine->XOffset),
-                    float (yPos - pTileEngine->YOffset),
+            pGegnerGrafix [GegnerArt]->RenderSpriteRotated  (float (xPos - TileEngine.XOffset),
+                    float (yPos - TileEngine.YOffset),
                     Eye_Alpha / PI * 180.0f, 0xFFFFFFFF);
         else
         {
             xSpeed = 0.0f;
             ySpeed = 0.0f;
-            xPos = pTileEngine->XOffset;
-            yPos = pTileEngine->YOffset;
+            xPos = TileEngine.XOffset;
+            yPos = TileEngine.YOffset;
         }
 
         // Halsteile rendern
         for (int i = 0; i < AnimEnde; i++)
             HalsGfx.RenderSpriteRotated (Hals[i].x,
-                                         Hals[i].y - (float)pTileEngine->YOffset,
+                                         Hals[i].y - (float)TileEngine.YOffset,
                                          Hals[i].w, 0xFFFFFFFF);
 
         return;
@@ -100,8 +100,8 @@ void GegnerMetalHead::DoDraw(void)
     else
         Color = D3DCOLOR_RGBA(255, 255, 255, 255);
 
-    Kiefer.RenderSprite  (float (xPos - pTileEngine->XOffset) + 87,
-                          float (yPos - pTileEngine->YOffset) + 107 + KieferPos, Color);
+    Kiefer.RenderSprite  (float (xPos - TileEngine.XOffset) + 87,
+                          float (yPos - TileEngine.YOffset) + 107 + KieferPos, Color);
 
     // Hals rendern ... uiuiu =)
     // Zuerst die Wirbel richtig positionieren
@@ -117,7 +117,7 @@ void GegnerMetalHead::DoDraw(void)
     // Halsteile an richtige Position setzen
     for (int i = 0; i < MAXWIRBEL; i++)
     {
-        Hals[i].x = float (Value1 - 40 + i * dx / (MAXWIRBEL-1) - pTileEngine->XOffset);
+        Hals[i].x = float (Value1 - 40 + i * dx / (MAXWIRBEL-1) - TileEngine.XOffset);
         Hals[i].y = float (Value2 + 400);
 
         float dummy;
@@ -147,7 +147,7 @@ void GegnerMetalHead::DoDraw(void)
     // Halsteile rendern
     for (int i = 0; i < MAXWIRBEL-1; i++)
         HalsGfx.RenderSpriteRotated (Hals[i].x,
-                                     Hals[i].y - (float)pTileEngine->YOffset,
+                                     Hals[i].y - (float)TileEngine.YOffset,
                                      Hals[i].w, 0xFFFFFFFF);
 
     // Turbine läuft? Dann Orange leuchten lassen
@@ -171,19 +171,19 @@ void GegnerMetalHead::DoDraw(void)
             a = 255;
 
         DirectGraphics.SetAdditiveMode();
-        Turbine2.RenderSprite (float (xPos - pTileEngine->XOffset) + 20,
-                               float (yPos - pTileEngine->YOffset) + 130, D3DCOLOR_RGBA(255, 144, 80, a));
+        Turbine2.RenderSprite (float (xPos - TileEngine.XOffset) + 20,
+                               float (yPos - TileEngine.YOffset) + 130, D3DCOLOR_RGBA(255, 144, 80, a));
         DirectGraphics.SetColorKeyMode();
     }
 
-    pGegnerGrafix [GegnerArt]->RenderSprite  (float (xPos - pTileEngine->XOffset),
-            float (yPos - pTileEngine->YOffset), Color);
+    pGegnerGrafix [GegnerArt]->RenderSprite  (float (xPos - TileEngine.XOffset),
+            float (yPos - TileEngine.YOffset), Color);
 
     if (Turbine_dran == true)
     {
         Color = D3DCOLOR_RGBA(255, Wert, Wert, 255);
-        Turbine.RenderSpriteRotatedOffset(float (xPos - pTileEngine->XOffset) + 85 + TurbineOff,
-                                          float (yPos - pTileEngine->YOffset) + 202,
+        Turbine.RenderSpriteRotatedOffset(float (xPos - TileEngine.XOffset) + 85 + TurbineOff,
+                                          float (yPos - TileEngine.YOffset) + 202,
                                           360 - GunWinkel,
                                           -30, 0, Color);
     }
@@ -191,16 +191,16 @@ void GegnerMetalHead::DoDraw(void)
     if (Turbine_dran == true)
         Color = D3DCOLOR_RGBA(255, 255, 255, 255);
 
-    Kiefer2.RenderSprite (float (xPos - pTileEngine->XOffset) + 78,
-                          float (yPos - pTileEngine->YOffset) + 180 + KieferPos, Color);
+    Kiefer2.RenderSprite (float (xPos - TileEngine.XOffset) + 78,
+                          float (yPos - TileEngine.YOffset) + 180 + KieferPos, Color);
 
     // Corona des Auges rendern
     if (AlreadyDrawn == false)
     {
         int a = int (Eye_Alpha);
         DirectGraphics.SetAdditiveMode();
-        Flare.RenderSpriteRotated (float (xPos + 100 - pTileEngine->XOffset),
-                                   float (yPos +  50 - pTileEngine->YOffset),
+        Flare.RenderSpriteRotated (float (xPos + 100 - TileEngine.XOffset),
+                                   float (yPos +  50 - TileEngine.YOffset),
                                    Eye_Winkel, D3DCOLOR_RGBA(255, 255, 255, a));
         AlreadyDrawn = true;
     }
@@ -366,9 +366,9 @@ void GegnerMetalHead::DoKI(void)
 
     // Boss aktivieren und Mucke laufen lassen
     //
-    if (Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
+    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        pTileEngine->ScrollLevel((float)Value1,
+        TileEngine.ScrollLevel((float)Value1,
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
@@ -589,7 +589,7 @@ void GegnerMetalHead::DoKI(void)
 
         case GEGNER_INIT:			// Warten bis der Screen zentriert wurde
         {
-            if (pTileEngine->Zustand == ZUSTAND_LOCKED)
+            if (TileEngine.Zustand == ZUSTAND_LOCKED)
             {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 //
@@ -895,14 +895,14 @@ void GegnerMetalHead::DoKI(void)
             //
             if (AnimCount < 0.0f)
             {
-                pPartikelSystem->PushPartikel (Hals[AnimEnde].x + (float)pTileEngine->XOffset,
+                pPartikelSystem->PushPartikel (Hals[AnimEnde].x + (float)TileEngine.XOffset,
                                                Hals[AnimEnde].y, HALSWIRBEL);
 
-                pPartikelSystem->PushPartikel (float (Hals[AnimEnde].x - 20) + (float)pTileEngine->XOffset,
+                pPartikelSystem->PushPartikel (float (Hals[AnimEnde].x - 20) + (float)TileEngine.XOffset,
                                                float (Hals[AnimEnde].y - Hals[AnimEnde].w / 3.0f), EXPLOSION_MEDIUM2);
 
                 for (int i = 0; i < 30; i++)
-                    pPartikelSystem->PushPartikel (float (Hals[AnimEnde].x - 20 + rand ()% 20) + (float)pTileEngine->XOffset,
+                    pPartikelSystem->PushPartikel (float (Hals[AnimEnde].x - 20 + rand ()% 20) + (float)TileEngine.XOffset,
                                                    float (Hals[AnimEnde].y - 20 + rand ()% 20), FUNKE);
 
                 SoundManager.PlayWave (100, 128, 10000 + rand()%2000, SOUND_EXPLOSION1);

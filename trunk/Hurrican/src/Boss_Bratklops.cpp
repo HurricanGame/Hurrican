@@ -81,7 +81,7 @@ void GegnerBratklops::DoDraw()
     if (a > 5)
         a = 10 - a;
 
-    pGfx[a]->RenderSprite  (float (xPos - pTileEngine->XOffset), float (yPos - pTileEngine->YOffset), 0xFFFFFFFF);
+    pGfx[a]->RenderSprite  (float (xPos - TileEngine.XOffset), float (yPos - TileEngine.YOffset), 0xFFFFFFFF);
 
     // Laser rendern ?
     //
@@ -97,8 +97,8 @@ void GegnerBratklops::DoDraw()
 
         DirectGraphics.SetAdditiveMode();
         D3DCOLOR Color = D3DCOLOR_RGBA (255, 255, 255, c);
-        pFlare->RenderSpriteRotated  (float (xPos - pTileEngine->XOffset) + 64.0f, float (yPos - pTileEngine->YOffset) + 122.0f, FlareDelay*2, Color);
-        pFlare->RenderSpriteRotated  (float (xPos - pTileEngine->XOffset) + 64.0f, float (yPos - pTileEngine->YOffset) + 122.0f, FlareDelay*2, Color);
+        pFlare->RenderSpriteRotated  (float (xPos - TileEngine.XOffset) + 64.0f, float (yPos - TileEngine.YOffset) + 122.0f, FlareDelay*2, Color);
+        pFlare->RenderSpriteRotated  (float (xPos - TileEngine.XOffset) + 64.0f, float (yPos - TileEngine.YOffset) + 122.0f, FlareDelay*2, Color);
 
         // Laser rendern
         //
@@ -121,10 +121,10 @@ void GegnerBratklops::DoDraw()
             float l,  r,  o,  u;					// Vertice Koordinaten
             float tl, tr, to, tu;					// Textur Koordinaten
 
-            l = float (xPos - pTileEngine->XOffset + 140.0f-0.5f);			// Links
-            o = float (yPos - pTileEngine->YOffset + 215.0f-0.5f);			// Oben
-            r = float (xPos - pTileEngine->XOffset + 170.0f+0.5f);			// Rechts
-            u = float (yPos - pTileEngine->YOffset + 800.0f+0.5f);			// Unten
+            l = float (xPos - TileEngine.XOffset + 140.0f-0.5f);			// Links
+            o = float (yPos - TileEngine.YOffset + 215.0f-0.5f);			// Oben
+            r = float (xPos - TileEngine.XOffset + 170.0f+0.5f);			// Rechts
+            u = float (yPos - TileEngine.YOffset + 800.0f+0.5f);			// Unten
 
             tl = 0.0f;
             tr = 1.0f;
@@ -210,8 +210,8 @@ void GegnerBratklops::DoDraw()
                 // Zum anzeigen der Rects, die geprüft werden
 #ifdef _DEBUG
                 if (DebugMode == true)
-                    RenderRect(float(xstart-pTileEngine->XOffset),
-                               float(ystart-pTileEngine->YOffset),
+                    RenderRect(float(xstart-TileEngine.XOffset),
+                               float(ystart-TileEngine.YOffset),
                                24, 24, 0x80FFFFFF);
 #endif //_DEBUG
 
@@ -236,7 +236,7 @@ void GegnerBratklops::DoDraw()
                 xstart += 24.0f*cos_deg(360 - Winkel + 90);
                 ystart += 24.0f*sin_deg(360 - Winkel + 90);
 
-                if (pTileEngine->BlockUnten (xs, ys, xs, ys, Rect) & BLOCKWERT_WAND)
+                if (TileEngine.BlockUnten (xs, ys, xs, ys, Rect) & BLOCKWERT_WAND)
                 {
                     // Funken und Rauch am Boden
                     //
@@ -298,9 +298,9 @@ void GegnerBratklops::DoKI(void)
 
     // Boss aktivieren und Mucke laufen lassen
     //
-    if (Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
+    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        pTileEngine->ScrollLevel((float)Value1,
+        TileEngine.ScrollLevel((float)Value1,
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
         xPos -= 232;												// und Boss aus dem Screen setzen
 
@@ -330,7 +330,7 @@ void GegnerBratklops::DoKI(void)
     {
         //xPos = Value1 - 232;
 
-        if (pTileEngine->Zustand == ZUSTAND_LOCKED)
+        if (TileEngine.Zustand == ZUSTAND_LOCKED)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
             //
@@ -524,7 +524,7 @@ void GegnerBratklops::DoKI(void)
 
         // Fertig explodiert ? Dann wird der Spacko ganz zerlegt
         //
-        if (xPos - pTileEngine->XOffset <= - 300)
+        if (xPos - TileEngine.XOffset <= - 300)
             Energy = 0.0f;
     }
     break;

@@ -65,8 +65,8 @@ void GegnerMade::DoDraw(void)
     {
     case GEGNER_LAUFEN:
     {
-        pGegnerGrafix[GegnerArt]->RenderSpriteScaled((float)(xPos - pTileEngine->XOffset) - (int)(sin(movesin) * 2.5f),
-                (float)(yPos - pTileEngine->YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSpriteScaled((float)(xPos - TileEngine.XOffset) - (int)(sin(movesin) * 2.5f),
+                (float)(yPos - TileEngine.YOffset),
                 20 + (int)(sin(movesin) * 5.0f),
                 20, 15, 0xFFFFFFFF);
 
@@ -75,8 +75,8 @@ void GegnerMade::DoDraw(void)
 
     default:
     {
-        pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos - pTileEngine->XOffset),
-                                               (float)(yPos - pTileEngine->YOffset), AnimPhase,
+        pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos - TileEngine.XOffset),
+                                               (float)(yPos - TileEngine.YOffset), AnimPhase,
                                                0xFFFFFFFF);
     }
     break;

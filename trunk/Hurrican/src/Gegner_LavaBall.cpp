@@ -38,15 +38,15 @@ GegnerLavaBall::GegnerLavaBall(int Wert1, int Wert2, bool Light)
 void GegnerLavaBall::DoDraw(void)
 {
     // Render
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                           (float)(yPos-pTileEngine->YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                                           (float)(yPos-TileEngine.YOffset),
                                            AnimPhase, 0xFFFFFFFF);
 
     // Flare rendern
     DirectGraphics.SetAdditiveMode ();
     float w = yPos/4;
-    pProjectiles->LavaFlare.RenderSpriteScaledRotated (float (xPos - 60 - pTileEngine->XOffset),
-                                         float (yPos - 60 - pTileEngine->YOffset), 180, 180, w, 0xFFFFCC88);
+    pProjectiles->LavaFlare.RenderSpriteScaledRotated (float (xPos - 60 - TileEngine.XOffset),
+                                         float (yPos - 60 - TileEngine.YOffset), 180, 180, w, 0xFFFFCC88);
     DirectGraphics.SetColorKeyMode ();
 }
 
@@ -67,7 +67,7 @@ void GegnerLavaBall::DoKI(void)
         return;
     }
 
-    if (pTileEngine->BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_LIQUID)
+    if (TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_LIQUID)
     {
         // eben erst reingefallen?
         //

@@ -53,14 +53,14 @@ void GegnerGlubschi::DoDraw(void)
 
     // Glubschi rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                           (float)(yPos-pTileEngine->YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                                           (float)(yPos-TileEngine.YOffset),
                                            AnimPhase, 0xFFFFFFFF);
 
     // Corona rendern
     DirectGraphics.SetAdditiveMode ();
-    pProjectiles->LavaFlare.RenderSpriteScaledRotated (float (xPos - pTileEngine->XOffset - 36 + anim * 1.5f),
-                                         float (yPos - pTileEngine->YOffset - 33), 92, 92, rot, 0x60FFFFFF);
+    pProjectiles->LavaFlare.RenderSpriteScaledRotated (float (xPos - TileEngine.XOffset - 36 + anim * 1.5f),
+                                         float (yPos - TileEngine.YOffset - 33), 92, 92, rot, 0x60FFFFFF);
     DirectGraphics.SetColorKeyMode();
 }
 

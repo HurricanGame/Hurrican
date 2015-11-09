@@ -58,8 +58,8 @@ void GegnerLavaKrabbe::DoDraw(void)
         size = 70.0f - size;
 
         pGegnerGrafix[GegnerArt]->SetRect (0, 0, 70, 34);
-        pGegnerGrafix[GegnerArt]->RenderSpriteScaledRotated((float)(xPos-pTileEngine->XOffset + size / 2),
-                (float)(yPos-pTileEngine->YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSpriteScaledRotated((float)(xPos-TileEngine.XOffset + size / 2),
+                (float)(yPos-TileEngine.YOffset),
                 70 - size, 34 - size / 2.0f, zPos*4.0f, Color);
     }
 
@@ -76,8 +76,8 @@ void GegnerLavaKrabbe::DoDraw(void)
             mirrored = false;
 
         D3DCOLOR Color = D3DCOLOR_RGBA(255, a, a, 255);
-        pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                               (float)(yPos-pTileEngine->YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                                               (float)(yPos-TileEngine.YOffset),
                                                AnimPhase, Color, mirrored);
     }
 }
@@ -100,7 +100,7 @@ void GegnerLavaKrabbe::DoKI(void)
     case GEGNER_NOTVISIBLE:
     {
         Handlung = GEGNER_FALLEN;
-        yPos = (float)(pTileEngine->YOffset) + 200.0f;
+        yPos = (float)(TileEngine.YOffset) + 200.0f;
         yAcc = 1.0f;
         ySpeed = g_Fahrstuhl_Speed - 15.05f;
     }

@@ -62,7 +62,7 @@ void GegnerDiamant::DoKI(void)
         if (blocku & BLOCKWERT_WAND ||
                 blocku & BLOCKWERT_PLATTFORM)
         {
-            //blocku = pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+            //blocku = TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
             if (ySpeed > 0.0f)
             {
@@ -85,8 +85,8 @@ void GegnerDiamant::DoKI(void)
         // Value1 == 0? Dann runterfallen lassen
         //
         if (Value1 == 0)
-            if (!(pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_WAND) &&
-                    !(pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_PLATTFORM))
+            if (!(TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_WAND) &&
+                    !(TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_PLATTFORM))
             {
                 yAcc	 = 2.0f;
                 Handlung = GEGNER_FALLEN;
@@ -120,10 +120,10 @@ void GegnerDiamant::DoKI(void)
                     >= DIAMONDS_FOR_EXTRALIFE)
             {
                 pPlayer[0]->CollectedDiamonds = 0;		// Dann auf 0 setzen
-                pTileEngine->Timelimit += 100.0f;
+                TileEngine.Timelimit += 100.0f;
 
-                if (pTileEngine->Timelimit > 999.0f)
-                    pTileEngine->Timelimit = 999.0f;
+                if (TileEngine.Timelimit > 999.0f)
+                    TileEngine.Timelimit = 999.0f;
 
                 // Punisher ggf verschwinden lassen
                 pPlayer[0]->PunisherActive = false;

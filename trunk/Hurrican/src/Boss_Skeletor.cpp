@@ -100,20 +100,20 @@ void GegnerSkeletor::DoDraw(void)
     if (Handlung == GEGNER_SPRINGEN)
     {
     	DirectGraphics.SetAdditiveMode();
-    	LavaFlare.RenderSpriteScaled(xPos - (float)pTileEngine->XOffset - 90,
-    								 yPos - (float)pTileEngine->YOffset - 50,
+    	LavaFlare.RenderSpriteScaled(xPos - (float)TileEngine.XOffset - 90,
+    								 yPos - (float)TileEngine.YOffset - 50,
     								 300, 300, 0, 0x88FF8822);
 
-    	LavaFlare.RenderSpriteScaled(xPos - (float)pTileEngine->XOffset - 40,
-    								 yPos - (float)pTileEngine->YOffset,
+    	LavaFlare.RenderSpriteScaled(xPos - (float)TileEngine.XOffset - 40,
+    								 yPos - (float)TileEngine.YOffset,
     								 200, 200, 0, 0x88FFCC66);
 
     	DirectGraphics.SetColorKeyMode();
     }
     */
 
-    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - (float)pTileEngine->XOffset,
-                                           yPos - (float)pTileEngine->YOffset + yoff,
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - (float)TileEngine.XOffset,
+                                           yPos - (float)TileEngine.YOffset + yoff,
                                            AnimPhase, Color, mirror);
 
     if (Handlung == GEGNER_SPECIAL2)
@@ -121,8 +121,8 @@ void GegnerSkeletor::DoDraw(void)
         for (int i = 0; i < 4; i++)
         {
             D3DCOLOR col = D3DCOLOR_RGBA(255, 255, 255, 200 - i * 30);
-            pGegnerGrafix[GegnerArt]->RenderSprite(xPos - (float)pTileEngine->XOffset - (xSpeed * i * 2),
-                                                   yPos - (float)pTileEngine->YOffset + yoff,
+            pGegnerGrafix[GegnerArt]->RenderSprite(xPos - (float)TileEngine.XOffset - (xSpeed * i * 2),
+                                                   yPos - (float)TileEngine.YOffset + yoff,
                                                    AnimPhase, col, mirror);
         }
     }
@@ -140,12 +140,12 @@ void GegnerSkeletor::DoDraw(void)
         Flamme.itsRect = Flamme.itsPreCalcedRects[ShotCount % 2];
 
         if (BlickRichtung == RECHTS)
-            Flamme.RenderSpriteRotatedOffset(xPos - (float)pTileEngine->XOffset + foff,
-                                             yPos - (float)pTileEngine->YOffset + 60, 90 - GunWinkel,
+            Flamme.RenderSpriteRotatedOffset(xPos - (float)TileEngine.XOffset + foff,
+                                             yPos - (float)TileEngine.YOffset + 60, 90 - GunWinkel,
                                              -50, 0, 0xFFFFFFFF, !mirror);
         else
-            Flamme.RenderSpriteRotatedOffset(xPos - (float)pTileEngine->XOffset + foff,
-                                             yPos - (float)pTileEngine->YOffset + 60, GunWinkel - 90,
+            Flamme.RenderSpriteRotatedOffset(xPos - (float)TileEngine.XOffset + foff,
+                                             yPos - (float)TileEngine.YOffset + 60, GunWinkel - 90,
                                              -50, 0, 0xFFFFFFFF, !mirror);
 
         DirectGraphics.SetColorKeyMode();
@@ -167,14 +167,14 @@ void GegnerSkeletor::DoKI(void)
 
     // Boss aktivieren und Stagemusik ausfaden
     //
-    if (Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
+    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
         // Ausserhalb des Screens setzen
-        xPos = (float)pTileEngine->XOffset + 100.0f;
-        yPos = (float)pTileEngine->YOffset - 250.0f;
+        xPos = (float)TileEngine.XOffset + 100.0f;
+        yPos = (float)TileEngine.YOffset - 250.0f;
         DrawNow = true;
 
-        pTileEngine->ScrollLevel((float)Value1,
+        TileEngine.ScrollLevel((float)Value1,
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
@@ -319,13 +319,13 @@ void GegnerSkeletor::DoKI(void)
 
         if (xPos + 60 < Value1 + 320)
         {
-            a = (int)(xPos - pTileEngine->XOffset) / 56;
+            a = (int)(xPos - TileEngine.XOffset) / 56;
             BlickRichtung = RECHTS;
             AnimPhase = 10 + a;
         }
         else
         {
-            a = (int)(xPos - pTileEngine->XOffset - 320 + 60) / 56;
+            a = (int)(xPos - TileEngine.XOffset - 320 + 60) / 56;
             BlickRichtung = LINKS;
             AnimPhase = 15 - a;
         }
@@ -356,13 +356,13 @@ void GegnerSkeletor::DoKI(void)
 
         if (xPos + 60 < Value1 + 320)
         {
-            a = (int)(xPos - pTileEngine->XOffset) / 56;
+            a = (int)(xPos - TileEngine.XOffset) / 56;
             BlickRichtung = RECHTS;
             AnimPhase = 10 + a;
         }
         else
         {
-            a = (int)(xPos - pTileEngine->XOffset - 320 + 60) / 56;
+            a = (int)(xPos - TileEngine.XOffset - 320 + 60) / 56;
             BlickRichtung = LINKS;
             AnimPhase = 15 - a;
         }
@@ -519,7 +519,7 @@ void GegnerSkeletor::DoKI(void)
 
     case GEGNER_NOTVISIBLE:			// Warten bis der Screen zentriert wurde
     {
-        if (pTileEngine->Zustand == ZUSTAND_LOCKED)
+        if (TileEngine.Zustand == ZUSTAND_LOCKED)
         {
             // Boss erscheinen lassen
             //

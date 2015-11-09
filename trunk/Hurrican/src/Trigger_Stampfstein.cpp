@@ -43,8 +43,8 @@ void GegnerStampfstein::DoDraw(void)
     DirectGraphics.SetColorKeyMode();
     int size = (int)(oldy - yPos) + 165;
     pGegnerGrafix[GegnerArt]->SetRect(0, size, 80, 256);
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                           (float)(yPos-pTileEngine->YOffset) + size, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                                           (float)(yPos-TileEngine.YOffset) + size, 0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------
@@ -218,7 +218,7 @@ void GegnerStampfstein::DoKI(void)
         //
         for (int p = 0; p < NUMPLAYERS; p++)
             if (pPlayer[p]->AufPlattform == this &&
-                    pTileEngine->BlockOben(pPlayer[p]->xpos, pPlayer[p]->ypos,
+                    TileEngine.BlockOben(pPlayer[p]->xpos, pPlayer[p]->ypos,
                                            pPlayer[p]->xposold, pPlayer[p]->yposold,
                                            pPlayer[p]->CollideRect) & BLOCKWERT_WAND)
             {

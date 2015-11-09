@@ -120,12 +120,12 @@ TileEngineClass::TileEngineClass(void)
         //DKS - Adapted to new TexturesystemClass
         TileGfx[i].itsTexIdx = -1;
 
-    // Wasserfall Textur laden
-    Wasserfall[0].LoadImage("wasserfall.png",  60,  240, 60,  240, 1, 1);
-    Wasserfall[1].LoadImage("wasserfall2.png", 640, 480, 640, 480, 1, 1);
-
-    LiquidGfx[0].LoadImage("water.png", 128, 128, 128, 128, 1, 1);
-    LiquidGfx[1].LoadImage("water2.png", 128, 128, 128, 128, 1, 1);
+    //DKS - Moved these to the new TileEngineClass::LoadSprites() function (see note there)
+    //// Wasserfall Textur laden
+    //Wasserfall[0].LoadImage("wasserfall.png",  60,  240, 60,  240, 1, 1);
+    //Wasserfall[1].LoadImage("wasserfall2.png", 640, 480, 640, 480, 1, 1);
+    //LiquidGfx[0].LoadImage("water.png", 128, 128, 128, 128, 1, 1);
+    //LiquidGfx[1].LoadImage("water2.png", 128, 128, 128, 128, 1, 1);
 
     // Texturkoordinaten für das Wasser vorberechnen
     float fx, fy;
@@ -139,11 +139,11 @@ TileEngineClass::TileEngineClass(void)
         WasserV[i] = fy;
     }
 
-    // GameOver Schriftzug laden
-    GameOver.LoadImage("gameover.png", 400, 90, 400, 90, 1, 1);
-
-    // Shatten für das Alien Level laden
-    Shadow.LoadImage ("shadow.png", 512, 512, 512, 512, 1, 1);
+    //DKS - Moved these to the new TileEngineClass::LoadSprites() function (see note there)
+    //// GameOver Schriftzug laden
+    //GameOver.LoadImage("gameover.png", 400, 90, 400, 90, 1, 1);
+    //// Shatten für das Alien Level laden
+    //Shadow.LoadImage ("shadow.png", 512, 512, 512, 512, 1, 1);
 
     WasserfallOffset = 0.0f;
 
@@ -196,6 +196,30 @@ TileEngineClass::~TileEngineClass(void)
 {
     if (pDragonHack != NULL)
         delete pDragonHack;
+}
+
+//DKS - Added initialization function that will load the sprites.
+//      This was necessary since making TileEngineClass a global
+//      static in Main.cpp instead of a dyanmically-allocated pointer.
+//      The class constructor therefore should never load sprites by
+//      itself, since graphics system should be initialized first.
+//      All textures here will be automatically freed by Textures::Exit(),
+//      so no need to worry about the sprite destructors being called in
+//      any specific order (i.e. after graphics system has been shutdown.
+void TileEngineClass::LoadSprites()
+{
+    // Wasserfall Textur laden
+    Wasserfall[0].LoadImage("wasserfall.png",  60,  240, 60,  240, 1, 1);
+    Wasserfall[1].LoadImage("wasserfall2.png", 640, 480, 640, 480, 1, 1);
+
+    LiquidGfx[0].LoadImage("water.png", 128, 128, 128, 128, 1, 1);
+    LiquidGfx[1].LoadImage("water2.png", 128, 128, 128, 128, 1, 1);
+
+    // GameOver Schriftzug laden
+    GameOver.LoadImage("gameover.png", 400, 90, 400, 90, 1, 1);
+
+    // Shatten für das Alien Level laden
+    Shadow.LoadImage ("shadow.png", 512, 512, 512, 512, 1, 1);
 }
 
 // --------------------------------------------------------------------------------------
@@ -826,11 +850,11 @@ loadfile:
         pPlayer[1]->JumpySave = pPlayer[1]->ypos;
     }
 
-    fread(&pTileEngine->DateiAppendix, sizeof(pTileEngine->DateiAppendix), 1, Datei);
+    fread(&DateiAppendix, sizeof(DateiAppendix), 1, Datei);
 
-    pTileEngine->DateiAppendix.UsedPowerblock = FixEndian(pTileEngine->DateiAppendix.UsedPowerblock);
+    DateiAppendix.UsedPowerblock = FixEndian(DateiAppendix.UsedPowerblock);
 
-    bDrawShadow = pTileEngine->DateiAppendix.Taschenlampe;
+    bDrawShadow = DateiAppendix.Taschenlampe;
     ShadowAlpha = 255.0f;
 
     // Datei schliessen
@@ -840,19 +864,19 @@ loadfile:
     DeleteFile(TEMP_FILE_PREFIX "temp.map");
 
     // Liquid Farben setzen
-    ColR1 = GetDecValue(&pTileEngine->DateiAppendix.Col1[0], 2);
-    ColG1 = GetDecValue(&pTileEngine->DateiAppendix.Col1[2], 2);
-    ColB1 = GetDecValue(&pTileEngine->DateiAppendix.Col1[4], 2);
+    ColR1 = GetDecValue(&DateiAppendix.Col1[0], 2);
+    ColG1 = GetDecValue(&DateiAppendix.Col1[2], 2);
+    ColB1 = GetDecValue(&DateiAppendix.Col1[4], 2);
 
-    ColR2 = GetDecValue(&pTileEngine->DateiAppendix.Col2[0], 2);
-    ColG2 = GetDecValue(&pTileEngine->DateiAppendix.Col2[2], 2);
-    ColB2 = GetDecValue(&pTileEngine->DateiAppendix.Col2[4], 2);
+    ColR2 = GetDecValue(&DateiAppendix.Col2[0], 2);
+    ColG2 = GetDecValue(&DateiAppendix.Col2[2], 2);
+    ColB2 = GetDecValue(&DateiAppendix.Col2[4], 2);
 
     Col1 = D3DCOLOR_RGBA(ColR1, ColG1, ColB1,
-                         GetDecValue(&pTileEngine->DateiAppendix.Col1[6], 2));
+                         GetDecValue(&DateiAppendix.Col1[6], 2));
 
     Col2 = D3DCOLOR_RGBA(ColR2, ColG2, ColB2,
-                         GetDecValue(&pTileEngine->DateiAppendix.Col2[6], 2));
+                         GetDecValue(&DateiAppendix.Col2[6], 2));
 
     ColR3 = ColR1 + ColR2 + 32;
     if (ColR3 > 255) ColR3 = 255;
@@ -861,8 +885,8 @@ loadfile:
     ColB3 = ColB1 + ColB2 + 32;
     if (ColB3 > 255) ColB3 = 255;
 
-    ColA3 = GetDecValue(&pTileEngine->DateiAppendix.Col1[6], 2) +
-            GetDecValue(&pTileEngine->DateiAppendix.Col2[6], 2);
+    ColA3 = GetDecValue(&DateiAppendix.Col1[6], 2) +
+            GetDecValue(&DateiAppendix.Col2[6], 2);
     if (ColA3 > 255) ColA3 = 255;
 
     Col3 = D3DCOLOR_RGBA(ColR3, ColG3, ColB3, ColA3);
@@ -2282,30 +2306,30 @@ void TileEngineClass::UpdateLevel(void)
         if (newx < 0) newx = 0;
         if (newy < 0) newy = 0;
 
-        angleichx = pTileEngine->XOffset;
-        angleichy = pTileEngine->YOffset;
+        angleichx = XOffset;
+        angleichy = YOffset;
 
         // Nach Boss wieder auf Spieler zentrieren?
 //		if (MustCenterPlayer == true)
         {
             bool CenterDone = true;
 
-            if (newx < pTileEngine->XOffset + 320.0f - SCROLL_BORDER_HORIZ)
+            if (newx < XOffset + 320.0f - SCROLL_BORDER_HORIZ)
             {
                 CenterDone = false;
                 angleichx = newx - 320.0f + SCROLL_BORDER_HORIZ;
             }
-            if (newx > pTileEngine->XOffset + 320.0f + SCROLL_BORDER_HORIZ)
+            if (newx > XOffset + 320.0f + SCROLL_BORDER_HORIZ)
             {
                 CenterDone = false;
                 angleichx = newx - 320.0f + SCROLL_BORDER_HORIZ;
             }
-            if (newy < pTileEngine->YOffset + 240.0f - SCROLL_BORDER_TOP)
+            if (newy < YOffset + 240.0f - SCROLL_BORDER_TOP)
             {
                 CenterDone = false;
                 angleichy = newy - 240.0f + SCROLL_BORDER_TOP;
             }
-            if (newy > pTileEngine->YOffset + 240.0f + SCROLL_BORDER_BOTTOM)
+            if (newy > YOffset + 240.0f + SCROLL_BORDER_BOTTOM)
             {
                 CenterDone = false;
                 angleichy = newy - 240.0f - SCROLL_BORDER_BOTTOM;
@@ -2320,10 +2344,10 @@ void TileEngineClass::UpdateLevel(void)
         		// oder einfach Kanten checken?
         		else
         		{
-        			if (newx < pTileEngine->XOffset + 320.0f - SCROLL_BORDER_HORIZ)	 pTileEngine->XOffset = newx - 320.0f + SCROLL_BORDER_HORIZ;
-        			if (newx > pTileEngine->XOffset + 320.0f + SCROLL_BORDER_HORIZ)	 pTileEngine->XOffset = newx - 320.0f - SCROLL_BORDER_HORIZ;
-        			if (newy < pTileEngine->YOffset + 240.0f - SCROLL_BORDER_TOP)	 pTileEngine->YOffset = newy - 240.0f + SCROLL_BORDER_TOP;
-        			if (newy > pTileEngine->YOffset + 240.0f + SCROLL_BORDER_BOTTOM) pTileEngine->YOffset = newy - 240.0f - SCROLL_BORDER_TOP;
+        			if (newx < XOffset + 320.0f - SCROLL_BORDER_HORIZ)	 XOffset = newx - 320.0f + SCROLL_BORDER_HORIZ;
+        			if (newx > XOffset + 320.0f + SCROLL_BORDER_HORIZ)	 XOffset = newx - 320.0f - SCROLL_BORDER_HORIZ;
+        			if (newy < YOffset + 240.0f - SCROLL_BORDER_TOP)	 YOffset = newy - 240.0f + SCROLL_BORDER_TOP;
+        			if (newy > YOffset + 240.0f + SCROLL_BORDER_BOTTOM) YOffset = newy - 240.0f - SCROLL_BORDER_TOP;
         		}
         		*/
     }
@@ -3328,13 +3352,13 @@ void TileEngineClass::DrawShadow (void)
 
     if (NUMPLAYERS == 1)
     {
-        x = (float)(int)(pPlayer[0]->xpos + 35 - 512 - pTileEngine->XOffset);
-        y = (float)(int)(pPlayer[0]->ypos + 40 - 512 - pTileEngine->YOffset);
+        x = (float)(int)(pPlayer[0]->xpos + 35 - 512 - XOffset);
+        y = (float)(int)(pPlayer[0]->ypos + 40 - 512 - YOffset);
     }
     else
     {
-        x = (float)(int)(pTileEngine->XOffset + 320.0f);
-        y = (float)(int)(pTileEngine->YOffset + 240.0f);
+        x = (float)(int)(XOffset + 320.0f);
+        y = (float)(int)(YOffset + 240.0f);
     }
 
     D3DCOLOR col;
@@ -3365,8 +3389,8 @@ void TileEngineClass::ExplodeWall (int x, int y)
     // ausserhalb des Levels nicht testen ;)
     if (x<1 ||
             y<1 ||
-            x>(int)pTileEngine->LEVELSIZE_X-1 ||
-            y>(int)pTileEngine->LEVELSIZE_Y-1)
+            x>(int)LEVELSIZE_X-1 ||
+            y>(int)LEVELSIZE_Y-1)
         return;
 
     // keine zerstörbare Wand?
@@ -3439,8 +3463,8 @@ void TileEngineClass::ClearLightMaps(void)
 {
     unsigned int xoff, yoff;
 
-    xoff = (int)(pTileEngine->XOffset * 0.05f);
-    yoff = (int)(pTileEngine->YOffset * 0.05f);
+    xoff = (int)(XOffset * 0.05f);
+    yoff = (int)(YOffset * 0.05f);
 
     for (unsigned int x = xoff; x < xoff + SCREENSIZE_X + 1; x++)
         for (unsigned int y = yoff; y < yoff + SCREENSIZE_Y + 1; y++)

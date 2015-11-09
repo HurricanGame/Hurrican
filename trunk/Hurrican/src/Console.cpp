@@ -209,24 +209,24 @@ void ConsoleClass::CheckCommands(void)
             CONSOLE_PRINT("-------------");
             CONSOLE_PRINT(" ");
 
-            CONSOLE_PRINT(pTileEngine->Beschreibung);
+            CONSOLE_PRINT(TileEngine.Beschreibung);
 
-            _itoa_s((int)(pTileEngine->XOffset), temp, 10);
+            _itoa_s((int)(TileEngine.XOffset), temp, 10);
             strcpy_s(StringBuffer, "Level Offset X : ");
             strcat_s(StringBuffer, temp);
             CONSOLE_PRINT(StringBuffer);
 
-            _itoa_s((int)(pTileEngine->YOffset), temp, 10);
+            _itoa_s((int)(TileEngine.YOffset), temp, 10);
             strcpy_s(StringBuffer, "Level Offset Y : ");
             strcat_s(StringBuffer, temp);
             CONSOLE_PRINT(StringBuffer);
 
-            _itoa_s((int)(pTileEngine->LEVELSIZE_X), temp, 10);
+            _itoa_s((int)(TileEngine.LEVELSIZE_X), temp, 10);
             strcpy_s(StringBuffer, "Level Size X : ");
             strcat_s(StringBuffer, temp);
             CONSOLE_PRINT(StringBuffer);
 
-            _itoa_s((int)(pTileEngine->LEVELSIZE_Y), temp, 10);
+            _itoa_s((int)(TileEngine.LEVELSIZE_Y), temp, 10);
             strcpy_s(StringBuffer, "Level Size Y : ");
             strcat_s(StringBuffer, temp);
             CONSOLE_PRINT(StringBuffer);
@@ -259,7 +259,7 @@ void ConsoleClass::CheckCommands(void)
                     // Volle Zeit
                     if (CONSOLE_CHEAT(Cheats[CHEAT_ZEIT]))
                     {
-                        pTileEngine->Timelimit = 999;
+                        TileEngine.Timelimit = 999;
 
                         CONSOLE_PRINT("-> knowing that there's no rhyme...");
                     }
@@ -481,7 +481,7 @@ void ConsoleClass::CheckCommands(void)
             fclose(Datei);
 
             CONSOLE_PRINT("found.");
-            pTileEngine->LoadLevel(dummy);
+            TileEngine.LoadLevel(dummy);
             Protokoll.WriteText(false, dummy);
         }
 
@@ -511,13 +511,13 @@ void ConsoleClass::CheckCommands(void)
         RenderRect(0, 0, 640, 480, 0xFF000000);
 
         // Mini Map anzeigen
-        for (int i=0; i < pTileEngine->LEVELSIZE_X; i++)
-            for (int j=0; j < pTileEngine->LEVELSIZE_Y; j++)
+        for (int i=0; i < TileEngine.LEVELSIZE_X; i++)
+            for (int j=0; j < TileEngine.LEVELSIZE_Y; j++)
             {
-                if (pTileEngine->Tiles[i][j].Block & BLOCKWERT_WAND)		  RenderRect((float)i, (float)j, 1, 1, 0xFFFFFFFF);
-                if (pTileEngine->Tiles[i][j].Block & BLOCKWERT_DESTRUCTIBLE) RenderRect((float)i, (float)j, 1, 1, 0xFFFFFF00);
-                if (pTileEngine->Tiles[i][j].Block & BLOCKWERT_PLATTFORM)	  RenderRect((float)i, (float)j, 1, 1, 0xFF888888);
-                if (pTileEngine->Tiles[i][j].Block & BLOCKWERT_WASSER)		  RenderRect((float)i, (float)j, 1, 1, 0xFF0000FF);
+                if (TileEngine.Tiles[i][j].Block & BLOCKWERT_WAND)		  RenderRect((float)i, (float)j, 1, 1, 0xFFFFFFFF);
+                if (TileEngine.Tiles[i][j].Block & BLOCKWERT_DESTRUCTIBLE) RenderRect((float)i, (float)j, 1, 1, 0xFFFFFF00);
+                if (TileEngine.Tiles[i][j].Block & BLOCKWERT_PLATTFORM)	  RenderRect((float)i, (float)j, 1, 1, 0xFF888888);
+                if (TileEngine.Tiles[i][j].Block & BLOCKWERT_WASSER)		  RenderRect((float)i, (float)j, 1, 1, 0xFF0000FF);
             }
 
         char buf[100], buf2[100];
@@ -527,7 +527,7 @@ void ConsoleClass::CheckCommands(void)
         strcat_s(buf, buf2);
 
         pDefaultFont->DrawText(3, 458, buf, 0xFF00FF00);
-        pDefaultFont->DrawText(3, 470, pTileEngine->Beschreibung, 0xFF00FF00);
+        pDefaultFont->DrawText(3, 470, TileEngine.Beschreibung, 0xFF00FF00);
 
 #if defined(PLATFORM_DIRECTX)
         lpD3DDevice->EndScene();						// Darstellung beenden
@@ -639,24 +639,24 @@ void ConsoleClass::CheckCommands(void)
 
     if (CONSOLE_COMMAND("light cool"))
     {
-        pTileEngine->ComputeCoolLight();
+        TileEngine.ComputeCoolLight();
     }
 
     //DKS - ComputeShitLight() was never used in the original game except for here; disabling it.
     //if (CONSOLE_COMMAND("light shit"))
     //{
-    //    pTileEngine->ComputeShitLight();
+    //    TileEngine.ComputeShitLight();
     //}
 
     if (CONSOLE_COMMAND("lamp"))
     {
-        if (pTileEngine->bDrawShadow == false)
+        if (TileEngine.bDrawShadow == false)
         {
-            pTileEngine->bDrawShadow = true;
+            TileEngine.bDrawShadow = true;
             ShadowAlpha = 255.0f;
         }
         else
-            pTileEngine->bDrawShadow = false;
+            TileEngine.bDrawShadow = false;
     }
 
     //strcpy_s(Buffer, "Error : Unknown Command !");

@@ -39,8 +39,8 @@ void GegnerPresswurst::DoDraw(void)
     //
     int size = (int)(oldy - yPos) + GegnerRect[GegnerArt].top;
     pGegnerGrafix[GegnerArt]->SetRect(0, size, 185, 357);
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                           (float)(yPos-pTileEngine->YOffset) + size, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                                           (float)(yPos-TileEngine.YOffset) + size, 0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------
@@ -67,8 +67,8 @@ void GegnerPresswurst::DoKI(void)
     // Kollisionsrechteck für das Unterteil
     GegnerRect[GegnerArt].top = 251;
 
-    blocko = pTileEngine->BlockOben		  (xPos, yPos, yPosOld, yPosOld, GegnerRect[GegnerArt]);
-    blocku = pTileEngine->BlockUntenNormal(xPos, yPos, yPosOld, yPosOld, GegnerRect[GegnerArt]);
+    blocko = TileEngine.BlockOben		  (xPos, yPos, yPosOld, yPosOld, GegnerRect[GegnerArt]);
+    blocku = TileEngine.BlockUntenNormal(xPos, yPos, yPosOld, yPosOld, GegnerRect[GegnerArt]);
 
     // Ja nach Handlung richtig verhalten
     switch (Handlung)
@@ -142,7 +142,7 @@ void GegnerPresswurst::DoKI(void)
                         pPlayer[p]->ypos > yPos)
                     pPlayer[p]->DamagePlayer(500.0f);
 
-            pTileEngine->BlockUnten(xPos, yPos, yPosOld, yPosOld, GegnerRect[GegnerArt]);
+            TileEngine.BlockUnten(xPos, yPos, yPosOld, yPosOld, GegnerRect[GegnerArt]);
 
             ySpeed = 0.0f;
             yAcc   = 0.0f;

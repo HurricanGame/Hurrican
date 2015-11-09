@@ -107,10 +107,10 @@ void GegnerPartikelSpawner::DoKI(void)
                 float sx, sy;
 
                 sx = xPos-320 + rand()%640;
-                sy = (float)(pTileEngine->YOffset) - 16 - rand ()%64;
+                sy = (float)(TileEngine.YOffset) - 16 - rand ()%64;
 
-                if (sx + 20 < pTileEngine->XOffset ||
-                        sx - 180 > pTileEngine->XOffset + 640.0f)
+                if (sx + 20 < TileEngine.XOffset ||
+                        sx - 180 > TileEngine.XOffset + 640.0f)
                     break;
 
                 pPartikelSystem->PushPartikel(sx , sy, REGENTROPFEN);
@@ -123,7 +123,7 @@ void GegnerPartikelSpawner::DoKI(void)
             // Schneeflocke
             case 1 :
             {
-                pPartikelSystem->PushPartikel(xPos-320 + rand()%640 , (float)(pTileEngine->YOffset) - 16 - rand ()%64, SCHNEEFLOCKE);
+                pPartikelSystem->PushPartikel(xPos-320 + rand()%640 , (float)(TileEngine.YOffset) - 16 - rand ()%64, SCHNEEFLOCKE);
                 AnimCount = 0.5f;
             }
             break;
@@ -168,10 +168,10 @@ void GegnerPartikelSpawner::DoKI(void)
             {
                 float xdrop = xPos + rand()%40;
 
-                if (xdrop < pTileEngine->XOffset ||
-                        xdrop > pTileEngine->XOffset + 640.0f ||
-                        yPos  < pTileEngine->YOffset - 240.0f ||
-                        yPos  > pTileEngine->YOffset + 480.0f)
+                if (xdrop < TileEngine.XOffset ||
+                        xdrop > TileEngine.XOffset + 640.0f ||
+                        yPos  < TileEngine.YOffset - 240.0f ||
+                        yPos  > TileEngine.YOffset + 480.0f)
                 {
                 }
                 else
@@ -230,13 +230,13 @@ void GegnerPartikelSpawner::DoKI(void)
 
                 if (Value2 == 0)
                 {
-                    pPartikelSystem->PushPartikel((float)(pTileEngine->XOffset + 640.0f),
+                    pPartikelSystem->PushPartikel((float)(TileEngine.XOffset + 640.0f),
                                                   (float)(yPos - 240.0f + rand()%480), BLATT2);
                     AnimCount = (rand()%5 + 1) / 5.0f;
                 }
                 else
                 {
-                    pPartikelSystem->PushPartikel((float)(pTileEngine->XOffset + 640.0f),
+                    pPartikelSystem->PushPartikel((float)(TileEngine.XOffset + 640.0f),
                                                   (float)(yPos - 240.0f + rand()%480), DUST);
                     AnimCount = (rand()%5 + 1) / 2.0f;
                 }
@@ -277,10 +277,10 @@ void GegnerPartikelSpawner::DoKI(void)
 
         // Partikel, die nur gespwant werden, wenn der Trigger im Bild ist
         // Ist der Trigger im Bild ?
-        if (xPos + 40 > pTileEngine->XOffset	   &&
-                xPos	  < pTileEngine->XOffset + 640 &&
-                yPos + 40 > pTileEngine->YOffset	   &&
-                yPos	  < pTileEngine->YOffset + 480)
+        if (xPos + 40 > TileEngine.XOffset	   &&
+                xPos	  < TileEngine.XOffset + 640 &&
+                yPos + 40 > TileEngine.YOffset	   &&
+                yPos	  < TileEngine.YOffset + 480)
         {
             // Richtigen Partikel Spawnen
             switch (Value1)

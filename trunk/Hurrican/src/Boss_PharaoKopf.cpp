@@ -76,9 +76,9 @@ void GegnerPharaoKopf::DoKI(void)
 //----- Pharao Bewegungs Code
 
     // Levelausschnitt auf den PharaoKopf zentrieren, sobald dieser sichtbar wird
-    if (Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
+    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        pTileEngine->ScrollLevel((float)Value1,
+        TileEngine.ScrollLevel((float)Value1,
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf die Faust zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
@@ -135,7 +135,7 @@ void GegnerPharaoKopf::DoKI(void)
     {
     case GEGNER_NOTVISIBLE:			// Warten bis der Screen zentriert wurde
     {
-        if (pTileEngine->Zustand == ZUSTAND_LOCKED)
+        if (TileEngine.Zustand == ZUSTAND_LOCKED)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
             //DKS - Added function SongIsPlaying() to SoundManagerClass:
@@ -253,7 +253,7 @@ _weiter2:
             for (int p = 0; p < NUMPLAYERS; p++)
                 if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
                                     pPlayer[p]->xpos, pPlayer[p]->ypos, pPlayer[p]->CollideRect) == true &&
-                        !(pTileEngine->BlockLinks(pPlayer[p]->xpos, pPlayer[p]->ypos, pPlayer[p]->xposold, pPlayer[p]->yposold, pPlayer[p]->CollideRect) & BLOCKWERT_WAND))
+                        !(TileEngine.BlockLinks(pPlayer[p]->xpos, pPlayer[p]->ypos, pPlayer[p]->xposold, pPlayer[p]->yposold, pPlayer[p]->CollideRect) & BLOCKWERT_WAND))
                     pPlayer[p]->xpos += xSpeed SYNC;
 
             // an die Wand gekommen?
@@ -385,7 +385,7 @@ _weiter2:
                     }
 
                     SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
-                    pTileEngine->BlockUnten(xPos, yPos, xPos, yPos, GegnerRect[GegnerArt]);
+                    TileEngine.BlockUnten(xPos, yPos, xPos, yPos, GegnerRect[GegnerArt]);
                     AnimCount = 20.0f;
                     Handlung  = GEGNER_CRUSHENERHOLEN;
                 }
@@ -428,7 +428,7 @@ _weiter2:
                     AnimPhase = 3;
 
                 Handlung = GEGNER_SPECIAL;
-                pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+                TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
             }
 
             // Wieder zerquetschen

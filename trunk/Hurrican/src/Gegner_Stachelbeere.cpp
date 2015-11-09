@@ -44,8 +44,8 @@ void GegnerStachelbeere::DoDraw(void)
     case GEGNER_LAUFEN2:
     {
         pGegnerGrafix[GegnerArt]->SetRect(AnimPhase * 60, 0, (AnimPhase + 1) * 60, 60);
-        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - (float)pTileEngine->XOffset,
-                                               yPos - (float)pTileEngine->YOffset,
+        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - (float)TileEngine.XOffset,
+                                               yPos - (float)TileEngine.YOffset,
                                                AnimPhase, color, mirrored);
 
     }
@@ -59,12 +59,12 @@ void GegnerStachelbeere::DoDraw(void)
                                           (AnimPhase % 3) * 120 + 120, (AnimPhase / 3 + 2) * 60);
 
         if (!mirrored)
-            pGegnerGrafix[GegnerArt]->RenderMirroredSprite(xPos - (float)pTileEngine->XOffset - 60.0f,
-                    yPos - (float)pTileEngine->YOffset,
+            pGegnerGrafix[GegnerArt]->RenderMirroredSprite(xPos - (float)TileEngine.XOffset - 60.0f,
+                    yPos - (float)TileEngine.YOffset,
                     color);
         else
-            pGegnerGrafix[GegnerArt]->RenderSprite(xPos - (float)pTileEngine->XOffset,
-                                                   yPos - (float)pTileEngine->YOffset,
+            pGegnerGrafix[GegnerArt]->RenderSprite(xPos - (float)TileEngine.XOffset,
+                                                   yPos - (float)TileEngine.YOffset,
                                                    color);
     }
     break;
@@ -80,13 +80,13 @@ void GegnerStachelbeere::DoKI(void)
     // Schrägen checken
     //
     if (ySpeed >= 0.0f)
-        blocku = pTileEngine->BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed);
+        blocku = TileEngine.BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed);
 
     // Runterfallen?
     if (!(blocku & BLOCKWERT_SCHRAEGE_R) &&
             !(blocku & BLOCKWERT_SCHRAEGE_L))
     {
-        blocku = pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+        blocku = TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
         if (!(blocku & BLOCKWERT_WAND) &&
                 !(blocku & BLOCKWERT_PLATTFORM))
@@ -257,13 +257,13 @@ void GegnerStachelbeere::DoKI(void)
 
         // an der Wand umdrehen
         // oder am Screenrand, wenn der Screen gelockt ist
-        if ((pTileEngine->Zustand == ZUSTAND_LOCKED &&
+        if ((TileEngine.Zustand == ZUSTAND_LOCKED &&
                 BlickRichtung == LINKS &&
-                xPos < pTileEngine->XOffset) ||
+                xPos < TileEngine.XOffset) ||
 
-                (pTileEngine->Zustand == ZUSTAND_LOCKED &&
+                (TileEngine.Zustand == ZUSTAND_LOCKED &&
                  BlickRichtung == RECHTS &&
-                 xPos > pTileEngine->XOffset + 640 - 50) ||
+                 xPos > TileEngine.XOffset + 640 - 50) ||
 
                 (BlickRichtung == LINKS &&
                  (blockl & BLOCKWERT_WAND ||

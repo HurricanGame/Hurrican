@@ -36,14 +36,14 @@ void GegnerJaeger::DoDraw(void)
     // beim Hoch fliegen
     //
     if (Handlung == GEGNER_DREHEN)
-        pGegnerGrafix[GegnerArt]->RenderSpriteScaled((float)(xPos-pTileEngine->XOffset),
-                (float)(yPos-pTileEngine->YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSpriteScaled((float)(xPos-TileEngine.XOffset),
+                (float)(yPos-TileEngine.YOffset),
                 35, 26, AnimPhase, 0xFFFFFFFF);
     // und beim runterfliegen
     //
     else if (Handlung == GEGNER_DREHEN2)
-        pGegnerGrafix[GegnerArt]->RenderSpriteRotated((float)(xPos-pTileEngine->XOffset),
-                (float)(yPos-pTileEngine->YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSpriteRotated((float)(xPos-TileEngine.XOffset),
+                (float)(yPos-TileEngine.YOffset),
                 180, AnimPhase, 0xFFFFFFFF);
 }
 
@@ -74,7 +74,7 @@ void GegnerJaeger::DoKI(void)
 
         // Gegner oben aus dem Screeb raus? Dann kurz in Pausemodus setzen
         //
-        if (yPos - pTileEngine->YOffset < - 53)
+        if (yPos - TileEngine.YOffset < - 53)
         {
             Handlung    = GEGNER_STEHEN;
             smokeDelay	= 50.0f;
@@ -89,7 +89,7 @@ void GegnerJaeger::DoKI(void)
     {
         // Gegner unten aus dem Screen raus? Dann explodieren lassen
         //
-        if (yPos - pTileEngine->YOffset > 480)
+        if (yPos - TileEngine.YOffset > 480)
         {
             Energy			= 0.0f;
         }

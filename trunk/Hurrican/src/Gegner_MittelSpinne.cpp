@@ -26,7 +26,7 @@ GegnerMittelSpinne::GegnerMittelSpinne(int Wert1, int Wert2, bool Light)
     TestBlock		= false;
     shotdelay		= 0.0f;
     Active			= true;
-    yStart			= (float)(pTileEngine->YOffset);
+    yStart			= (float)(TileEngine.YOffset);
 }
 
 // --------------------------------------------------------------------------------------
@@ -56,14 +56,14 @@ void GegnerMittelSpinne::DoDraw(void)
 
     // Schatten rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-pTileEngine->XOffset) + 6,
-            (float)(yPos-pTileEngine->YOffset) + 6,
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-TileEngine.XOffset) + 6,
+            (float)(yPos-TileEngine.YOffset) + 6,
             rot, AnimPhase, 0x55000000);
 
     // Spinne rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-pTileEngine->XOffset),
-            (float)(yPos-pTileEngine->YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-TileEngine.XOffset),
+            (float)(yPos-TileEngine.YOffset),
             rot, AnimPhase, Color);
 }
 

@@ -46,15 +46,15 @@ void GegnerWandKrabbe::DoDraw(void)
     if (Handlung == GEGNER_DREHEN ||
             Handlung == GEGNER_FALLEN ||
             Handlung == GEGNER_EXPLODIEREN)
-        pGegnerGrafix[GegnerArt]->RenderSpriteRotated((float)(xPos-pTileEngine->XOffset),
-                (float)(yPos-pTileEngine->YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSpriteRotated((float)(xPos-TileEngine.XOffset),
+                (float)(yPos-TileEngine.YOffset),
                 rot, AnimPhase, 0xFFFFFFFF);
     // andernfalls normal an der Wand entlang rendern
     else
     {
         pGegnerGrafix[GegnerArt]->itsRect = pGegnerGrafix[GegnerArt]->itsPreCalcedRects[AnimPhase];
-        pGegnerGrafix[GegnerArt]->RenderMirroredSprite ((float)(xPos-pTileEngine->XOffset),
-                (float)(yPos-pTileEngine->YOffset),
+        pGegnerGrafix[GegnerArt]->RenderMirroredSprite ((float)(xPos-TileEngine.XOffset),
+                (float)(yPos-TileEngine.YOffset),
                 0xFFFFFFFF, mirrored, ySpeed < 0.0f);
     }
 }
@@ -69,8 +69,8 @@ void GegnerWandKrabbe::DoKI(void)
             Handlung != GEGNER_EXPLODIEREN)
         SimpleAnimation();
 
-    blockl = pTileEngine->BlockLinks (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
-    blockr = pTileEngine->BlockRechts(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
+    blockl = TileEngine.BlockLinks (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
+    blockr = TileEngine.BlockRechts(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
 
     if (blockl & BLOCKWERT_WAND)
         BlickRichtung = RECHTS;
@@ -292,7 +292,7 @@ void GegnerWandKrabbe::DoKI(void)
 
     // untem aus dem Screen raus? Dann explodieren
     //
-    if (yPos > pTileEngine->YOffset + 550.0f)
+    if (yPos > TileEngine.YOffset + 550.0f)
         Energy = 0.0f;
 }
 

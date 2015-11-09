@@ -57,8 +57,8 @@ void GegnerSchleimMaul::DoDraw(void)
 {
     // etwas durchsichtig rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                           (float)(yPos-pTileEngine->YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                                           (float)(yPos-TileEngine.YOffset),
                                            AnimPhase, 0xAAFFFFFF);
 }
 

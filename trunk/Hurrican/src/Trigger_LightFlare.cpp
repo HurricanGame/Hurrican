@@ -81,8 +81,8 @@ void GegnerLightFlare::DoDraw(void)
 
     D3DCOLOR Color = D3DCOLOR_RGBA(r, g, b, int (Alpha));
 
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotatedOffset (float (xPos - pTileEngine->XOffset),
-            float (yPos - pTileEngine->YOffset), rot,
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotatedOffset (float (xPos - TileEngine.XOffset),
+            float (yPos - TileEngine.YOffset), rot,
             -4, -4,
             Color);
     DirectGraphics.SetColorKeyMode();

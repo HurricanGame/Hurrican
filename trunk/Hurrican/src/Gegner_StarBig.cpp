@@ -84,8 +84,8 @@ void GegnerStarBig::DoKI(void)
 
         if ((ySpeed < 0.0f && blocko & BLOCKWERT_WAND) ||
                 (ySpeed > 0.0f && blocku & BLOCKWERT_WAND) ||
-                (ySpeed < 0.0f && yPos - pTileEngine->YOffset < 0.0f) ||
-                (ySpeed > 0.0f && yPos - pTileEngine->YOffset > 400.0f))
+                (ySpeed < 0.0f && yPos - TileEngine.YOffset < 0.0f) ||
+                (ySpeed > 0.0f && yPos - TileEngine.YOffset > 400.0f))
             ySpeed *= -1.0f;
     }
     break;

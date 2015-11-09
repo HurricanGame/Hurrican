@@ -51,8 +51,8 @@ void GegnerSchneekoppe::DoDraw(void)
     else if (xSpeed < 0  && ySpeed > 0 ) w = 360 + w;
     else if (xSpeed < 0  && ySpeed < 0 ) w = 180 + w;
 
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated((float)(xPos-pTileEngine->XOffset),
-            (float)(yPos-pTileEngine->YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated((float)(xPos-TileEngine.XOffset),
+            (float)(yPos-TileEngine.YOffset),
             w, AnimPhase, 0xFFFFFFFF);
 }
 

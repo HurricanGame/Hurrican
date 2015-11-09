@@ -32,10 +32,10 @@ GegnerRoboMan1::GegnerRoboMan1(int Wert1, int Wert2, bool Light)
 
 void GegnerRoboMan1::DoKI(void)
 {
-    blocko = pTileEngine->BlockOben(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
-    blocku = pTileEngine->BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
-    blockl = pTileEngine->BlockLinks(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
-    blockr = pTileEngine->BlockRechts(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
+    blocko = TileEngine.BlockOben(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
+    blocku = TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
+    blockl = TileEngine.BlockLinks(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
+    blockr = TileEngine.BlockRechts(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
 
     // Animieren
     if (AnimEnde > 0)						// Soll überhaupt anmiert werden ?

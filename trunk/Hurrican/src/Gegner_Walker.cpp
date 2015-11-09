@@ -62,7 +62,7 @@ void GegnerWalker::DoKI(void)
                 Energy = 0;
         }
 
-    blocku = pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+    blocku = TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
     // In Richtung Spieler laufen, wenn angeschossen
     //
@@ -229,7 +229,7 @@ void GegnerWalker::DoKI(void)
                 yAcc	  =   5.0f;
 
                 SoundManager.PlayWave(100, 128, 11025, SOUND_WALKERGIGGLE);
-                blocku = pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+                blocku = TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
                 yPos -= 5.0f;
             }
         }

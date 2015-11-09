@@ -34,14 +34,14 @@ void GegnerSpikelift::DoDraw(void)
 {
     // Unterteil rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-pTileEngine->XOffset),
-                                            (float)(yPos-pTileEngine->YOffset) + 40.0f,
+    pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-TileEngine.XOffset),
+                                            (float)(yPos-TileEngine.YOffset) + 40.0f,
                                             1, 0xFFFFFFFF);
 
     // Oberteil (Spikes) rendern
     if (Value1 == 0)
-        pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-pTileEngine->XOffset),
-                                                (float)(yPos-pTileEngine->YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-TileEngine.XOffset),
+                                                (float)(yPos-TileEngine.YOffset),
                                                 0, 0xFFFFFFFF);
 }
 
@@ -97,7 +97,7 @@ void GegnerSpikelift::DoKI(void)
 
         // Hurri eingeklemmt, dann anhalten
         if (pPlayer->AufPlattform == this &&
-                pTileEngine->BlockOben(pPlayer->xpos,	 pPlayer->ypos,
+                TileEngine.BlockOben(pPlayer->xpos,	 pPlayer->ypos,
                                        pPlayer->xposold, pPlayer->yposold,
                                        pPlayer->CollideRect) & BLOCKWERT_WAND)
             ySpeed = 0.0f;

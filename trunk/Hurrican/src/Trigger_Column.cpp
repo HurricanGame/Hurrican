@@ -43,8 +43,8 @@ void GegnerColumn::DoDraw(void)
     if (Winkel < 0)	  Winkel += 360;
     D3DXMatrixRotationZ  (&matRot, DegreetoRad[Winkel]);
 
-    D3DXMatrixTranslation(&matTrans, float (-(xPos-pTileEngine->XOffset+40)),float (-(yPos-pTileEngine->YOffset+100)), 0.0f);		// Transformation zum Ursprung
-    D3DXMatrixTranslation(&matTrans2,float   (xPos-pTileEngine->XOffset+40), float (  yPos-pTileEngine->YOffset+100),  0.0f);		// Transformation wieder zurück
+    D3DXMatrixTranslation(&matTrans, float (-(xPos-TileEngine.XOffset+40)),float (-(yPos-TileEngine.YOffset+100)), 0.0f);		// Transformation zum Ursprung
+    D3DXMatrixTranslation(&matTrans2,float   (xPos-TileEngine.XOffset+40), float (  yPos-TileEngine.YOffset+100),  0.0f);		// Transformation wieder zurück
 
     D3DXMatrixIdentity	 (&matWorld);
     D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans);		// Verschieben
@@ -62,8 +62,8 @@ void GegnerColumn::DoDraw(void)
 #endif
 
 
-    pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-pTileEngine->XOffset),
-                                            (float)(yPos-pTileEngine->YOffset), 0, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-TileEngine.XOffset),
+                                            (float)(yPos-TileEngine.YOffset), 0, 0xFFFFFFFF);
 
     // Normale Projektions-Matrix wieder herstellen
     D3DXMatrixRotationZ (&matWorld, 0.0f);

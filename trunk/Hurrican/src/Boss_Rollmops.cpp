@@ -114,8 +114,8 @@ void GegnerRollmops::DoDraw(void)
             pKettenTeile[i]->AnimCount = 360.0f - RadToDeg(Schwung);
         }
 
-        Rollen.RenderSprite((float)(xPos-pTileEngine->XOffset),
-                            (float)(yPos-pTileEngine->YOffset), AnimPhase, 0xFFFFFFFF, mirrored);
+        Rollen.RenderSprite((float)(xPos-TileEngine.XOffset),
+                            (float)(yPos-TileEngine.YOffset), AnimPhase, 0xFFFFFFFF, mirrored);
 
     }
     break;
@@ -131,16 +131,16 @@ void GegnerRollmops::DoDraw(void)
     case GEGNER_WARTEN:
     case GEGNER_EXPLODIEREN:
     {
-        Rollen.RenderSprite((float)(xPos-pTileEngine->XOffset),
-                            (float)(yPos-pTileEngine->YOffset), AnimPhase, 0xFFFFFFFF, mirrored);
+        Rollen.RenderSprite((float)(xPos-TileEngine.XOffset),
+                            (float)(yPos-TileEngine.YOffset), AnimPhase, 0xFFFFFFFF, mirrored);
     }
     break;
 
     case GEGNER_INIT:
     case GEGNER_STEHEN:
     {
-        pGegnerGrafix[GegnerArt]->RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) + 16.0f,
-                (float)(yPos-pTileEngine->YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSpriteScaled((float)(xPos-TileEngine.XOffset) + 16.0f,
+                (float)(yPos-TileEngine.YOffset),
                 120, 120,
                 AnimPhase, 0xFFFFFFFF);
     }
@@ -151,8 +151,8 @@ void GegnerRollmops::DoDraw(void)
     {
         mirrored = (xPos < Value1 + 320.0f);
 
-        Aufklappen.RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                (float)(yPos-pTileEngine->YOffset),
+        Aufklappen.RenderSprite((float)(xPos-TileEngine.XOffset),
+                                (float)(yPos-TileEngine.YOffset),
                                 AnimPhase, 0xFFFFFFFF, mirrored);
     }
     break;
@@ -167,14 +167,14 @@ void GegnerRollmops::DoDraw(void)
             xoff = 65.0f;
 
         // Knarre rendern
-        Gun.RenderSpriteRotatedOffset((float)(xPos-pTileEngine->XOffset) + 6.0f + xoff,
-                                      (float)(yPos-pTileEngine->YOffset) + 38.0f,
+        Gun.RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset) + 6.0f + xoff,
+                                      (float)(yPos-TileEngine.YOffset) + 38.0f,
                                       GunWinkel,
                                       53, 20, 0xFFFFFFFF, mirrored);
 
         // Mops ohne Knarre rendern
-        Aufklappen.RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                (float)(yPos-pTileEngine->YOffset),
+        Aufklappen.RenderSprite((float)(xPos-TileEngine.XOffset),
+                                (float)(yPos-TileEngine.YOffset),
                                 8, 0xFFFFFFFF, mirrored);
     }
     break;
@@ -314,9 +314,9 @@ void GegnerRollmops::DoKI(void)
         pHUD->ShowBossHUD(4000, Energy);
 
     // Levelausschnitt auf den Mops zentrieren, sobald dieser sichtbar wird
-    if (pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
+    if (TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        pTileEngine->ScrollLevel((float)Value1,
+        TileEngine.ScrollLevel((float)Value1,
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);
 
         // Mops aus Screen bringen
@@ -343,7 +343,7 @@ void GegnerRollmops::DoKI(void)
         case GEGNER_EINFLIEGEN:
         {
             // Kamera an der richtigen Position?
-            if (pTileEngine->Zustand == ZUSTAND_LOCKED)
+            if (TileEngine.Zustand == ZUSTAND_LOCKED)
             {
                 // dann reinhopsen
                 xSpeed = -10.0f;

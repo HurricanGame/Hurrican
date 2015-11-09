@@ -27,7 +27,7 @@ GegnerUfo::GegnerUfo(int Wert1, int Wert2, bool Light)
     OwnDraw			= true;
     LastAction		= -1;
 
-    pTileEngine->MaxOneUps++;
+    TileEngine.MaxOneUps++;
 }
 
 // --------------------------------------------------------------------------------------
@@ -36,20 +36,20 @@ GegnerUfo::GegnerUfo(int Wert1, int Wert2, bool Light)
 
 void GegnerUfo::DoDraw(void)
 {
-    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - (float)pTileEngine->XOffset,
-                                           yPos - (float)pTileEngine->YOffset,
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - (float)TileEngine.XOffset,
+                                           yPos - (float)TileEngine.YOffset,
                                            AnimPhase, 0xFFFFFFFF);
 
     if (AlreadyDrawn == false)
     {
         DirectGraphics.SetAdditiveMode();
-        pProjectiles->LavaFlare.RenderSpriteRotated(xPos + 40.0f - (float)pTileEngine->XOffset,
-                                      yPos + 20.0f - (float)pTileEngine->YOffset,
+        pProjectiles->LavaFlare.RenderSpriteRotated(xPos + 40.0f - (float)TileEngine.XOffset,
+                                      yPos + 20.0f - (float)TileEngine.YOffset,
                                       xPos * 0.5f, 0xFFFF2288);
 
         //DKS - This was commented out in original source code:
-//		pProjectiles->LavaFlare.RenderSpriteRotated(xPos + 40.0f - (float)pTileEngine->XOffset,
-//									  yPos + 30.0f - (float)pTileEngine->YOffset,
+//		pProjectiles->LavaFlare.RenderSpriteRotated(xPos + 40.0f - (float)TileEngine.XOffset,
+//									  yPos + 30.0f - (float)TileEngine.YOffset,
 //									  360.0f - xPos * 0.5f, 0x88FFFF88);
 
         DirectGraphics.SetColorKeyMode();
@@ -84,9 +84,9 @@ void GegnerUfo::DoKI(void)
     } // animieren
 
     // Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
-    if (Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
+    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        pTileEngine->ScrollLevel((float)Value1,
+        TileEngine.ScrollLevel((float)Value1,
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
         yPos -= 300;												// und Boss aus dem Screen setzen
         Handlung = GEGNER_INIT;
@@ -136,7 +136,7 @@ void GegnerUfo::DoKI(void)
     {
     case GEGNER_INIT:			// Warten bis der Screen zentriert wurde
     {
-        if (pTileEngine->Zustand == ZUSTAND_LOCKED)
+        if (TileEngine.Zustand == ZUSTAND_LOCKED)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
             //DKS - Added function SongIsPlaying() to SoundManagerClass:
@@ -155,9 +155,9 @@ void GegnerUfo::DoKI(void)
         DamageTaken = 0.0f;
 
         yPos += float(8.0 SYNC);					// Ufo nach unten bewegen
-        if (yPos >= pTileEngine->ScrolltoY + 100)	// Weit genug unten ?
+        if (yPos >= TileEngine.ScrolltoY + 100)	// Weit genug unten ?
         {
-            yPos	 = float (pTileEngine->ScrolltoY + 100);
+            yPos	 = float (TileEngine.ScrolltoY + 100);
             Handlung = GEGNER_LAUFEN;
             xSpeed	 = - 35.0f;
         }

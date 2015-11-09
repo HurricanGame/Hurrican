@@ -56,9 +56,9 @@ void GegnerSchmidtOrgie::DoKI(void)
     //
     if (Active == true				 &&
             Handlung != GEGNER_VERFOLGEN &&
-            pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
+            TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        pTileEngine->ScrollLevel((float)Value1,
+        TileEngine.ScrollLevel((float)Value1,
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
@@ -79,7 +79,7 @@ void GegnerSchmidtOrgie::DoKI(void)
     {
     case GEGNER_INIT:			// Warten bis der Screen zentriert wurde
     {
-        if (pTileEngine->Zustand == ZUSTAND_LOCKED)
+        if (TileEngine.Zustand == ZUSTAND_LOCKED)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
             //

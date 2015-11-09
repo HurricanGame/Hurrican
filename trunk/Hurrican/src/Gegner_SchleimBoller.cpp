@@ -53,8 +53,8 @@ void GegnerSchleimBoller::DoDraw(void)
 {
     // Je nach Größe anders gestrecht rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteScaled ((float)(xPos-pTileEngine->XOffset) + (30 - Size/2),
-            (float)(yPos-pTileEngine->YOffset) + (60 - Size),
+    pGegnerGrafix[GegnerArt]->RenderSpriteScaled ((float)(xPos-TileEngine.XOffset) + (30 - Size/2),
+            (float)(yPos-TileEngine.YOffset) + (60 - Size),
             Size, Size, AnimPhase, 0xFFFFFFFF);
 
     // Leuchten noch dazurendern?
@@ -64,8 +64,8 @@ void GegnerSchleimBoller::DoDraw(void)
         if (options_Detail >= DETAIL_HIGH)
         {
             DirectGraphics.SetAdditiveMode ();
-            pProjectiles->LavaFlare.RenderSpriteScaled ((float)(xPos-pTileEngine->XOffset) + 30 - Size,
-                                          (float)(yPos-pTileEngine->YOffset) + 40 - Size,
+            pProjectiles->LavaFlare.RenderSpriteScaled ((float)(xPos-TileEngine.XOffset) + 30 - Size,
+                                          (float)(yPos-TileEngine.YOffset) + 40 - Size,
                                           Size * 2, Size * 2, 0x8888FF88);
             DirectGraphics.SetColorKeyMode ();
         }

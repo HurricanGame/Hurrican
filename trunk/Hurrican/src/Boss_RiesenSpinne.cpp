@@ -262,8 +262,8 @@ void GegnerRiesenSpinne::DoDraw(void)
         if (w > 2*PI)
             w -= 2*PI;
 
-        DrawLeg((float)(xPos-pTileEngine->XOffset - 70 + a * 110),
-                (float)(yPos-pTileEngine->YOffset + 130),
+        DrawLeg((float)(xPos-TileEngine.XOffset - 70 + a * 110),
+                (float)(yPos-TileEngine.YOffset + 130),
                 w, a, 10, 0xFF888888);
     }
 
@@ -276,12 +276,12 @@ void GegnerRiesenSpinne::DoDraw(void)
         tempwinkel -= 360.0f;
 
     // Rumpf
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                           (float)(yPos-pTileEngine->YOffset) + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 0, Color);
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                                           (float)(yPos-TileEngine.YOffset) + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 0, Color);
 
     // Kopf
-    Head.RenderSpriteRotatedOffset((float)(xPos-pTileEngine->XOffset - 90 + 120) + (float)(sin(HeadXOffset) * 10.0f),
-                                   (float)(yPos-pTileEngine->YOffset + 60) + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody,
+    Head.RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset - 90 + 120) + (float)(sin(HeadXOffset) * 10.0f),
+                                   (float)(yPos-TileEngine.YOffset + 60) + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody,
                                    tempwinkel, 127, 0,
                                    Color);
 
@@ -295,8 +295,8 @@ void GegnerRiesenSpinne::DoDraw(void)
         if (i == 2) a = 3;
         if (i == 3) a = 2;
 
-        DrawLeg((float)(xPos-pTileEngine->XOffset - 70 + a * 110),
-                (float)(yPos-pTileEngine->YOffset + 130),
+        DrawLeg((float)(xPos-TileEngine.XOffset - 70 + a * 110),
+                (float)(yPos-TileEngine.YOffset + 130),
                 LegsAnim[a], a, 0, 0xFFFFFFFF);
     }
 
@@ -309,11 +309,11 @@ void GegnerRiesenSpinne::DoDraw(void)
 
         DirectGraphics.SetAdditiveMode();
 
-        pProjectiles->LavaFlare.RenderSprite((float)(xPos-pTileEngine->XOffset) - 10.0f + (float)(sin(HeadXOffset) * 10.0f),
-                               (float)(yPos-pTileEngine->YOffset) + 50.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, D3DCOLOR_RGBA(255, 0, 255, a));
+        pProjectiles->LavaFlare.RenderSprite((float)(xPos-TileEngine.XOffset) - 10.0f + (float)(sin(HeadXOffset) * 10.0f),
+                               (float)(yPos-TileEngine.YOffset) + 50.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, D3DCOLOR_RGBA(255, 0, 255, a));
 
-        pProjectiles->LavaFlare.RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) + 30.0f + (float)(sin(HeadXOffset) * 10.0f),
-                                     (float)(yPos-pTileEngine->YOffset) + 90.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 40, 40, D3DCOLOR_RGBA(255, 255, 255, a));
+        pProjectiles->LavaFlare.RenderSpriteScaled((float)(xPos-TileEngine.XOffset) + 30.0f + (float)(sin(HeadXOffset) * 10.0f),
+                                     (float)(yPos-TileEngine.YOffset) + 90.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 40, 40, D3DCOLOR_RGBA(255, 255, 255, a));
     }
 
     // Evtl. Lila Leuchten vor kopf
@@ -323,11 +323,11 @@ void GegnerRiesenSpinne::DoDraw(void)
 
         DirectGraphics.SetAdditiveMode();
 
-        pProjectiles->LavaFlare.RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) - 20.0f + (float)(sin(HeadXOffset) * 10.0f),
-                                     (float)(yPos-pTileEngine->YOffset) + 60.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 100, 100, D3DCOLOR_RGBA(255, 255, 255, a));
+        pProjectiles->LavaFlare.RenderSpriteScaled((float)(xPos-TileEngine.XOffset) - 20.0f + (float)(sin(HeadXOffset) * 10.0f),
+                                     (float)(yPos-TileEngine.YOffset) + 60.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 100, 100, D3DCOLOR_RGBA(255, 255, 255, a));
 
-        pProjectiles->LavaFlare.RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) - 90.0f + (float)(sin(HeadXOffset) * 10.0f),
-                                     (float)(yPos-pTileEngine->YOffset) - 10.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 240, 240, D3DCOLOR_RGBA(255, 255, 255, a));
+        pProjectiles->LavaFlare.RenderSpriteScaled((float)(xPos-TileEngine.XOffset) - 90.0f + (float)(sin(HeadXOffset) * 10.0f),
+                                     (float)(yPos-TileEngine.YOffset) - 10.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 240, 240, D3DCOLOR_RGBA(255, 255, 255, a));
     }
 
     DirectGraphics.SetFilterMode(false);
@@ -416,9 +416,9 @@ void GegnerRiesenSpinne::DoKI(void)
         pHUD->ShowBossHUD(100000, Energy);
 
     // Levelausschnitt auf die RiesenSpinne zentrieren, sobald diese sichtbar wird
-    if (Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
+    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        pTileEngine->ScrollLevel((float)Value1,
+        TileEngine.ScrollLevel((float)Value1,
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf die Spinne zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
@@ -429,7 +429,7 @@ void GegnerRiesenSpinne::DoKI(void)
     {
     case GEGNER_NOTVISIBLE:			// Warten bis der Screen zentriert wurde
     {
-        if (pTileEngine->Zustand == ZUSTAND_LOCKED)
+        if (TileEngine.Zustand == ZUSTAND_LOCKED)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
             //DKS - Added function SongIsPlaying() to SoundManagerClass:

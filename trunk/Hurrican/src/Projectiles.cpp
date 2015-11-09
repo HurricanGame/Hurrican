@@ -2186,10 +2186,10 @@ void ProjectileClass::Render(void)
 
         RECT &Rect = pProjectileGrafix[ShotArt]->itsPreCalcedRects[AnimPhase];
 
-        l = float(-pTileEngine->XOffset+xPos-0.5f);								// Links
-        r = float(-pTileEngine->XOffset+xPos+(Rect.right -Rect.left-1)+0.5f);	// Rechts
-        o = float(-pTileEngine->YOffset+yPos-0.5f);								// Oben
-        u = float(-pTileEngine->YOffset+yPos+(Rect.bottom-Rect.top-1) +0.5f);	// Unten
+        l = float(-TileEngine.XOffset+xPos-0.5f);								// Links
+        r = float(-TileEngine.XOffset+xPos+(Rect.right -Rect.left-1)+0.5f);	// Rechts
+        o = float(-TileEngine.YOffset+yPos-0.5f);								// Oben
+        u = float(-TileEngine.YOffset+yPos+(Rect.bottom-Rect.top-1) +0.5f);	// Unten
 
         tl = Rect.left   * xts;	// Links
         tr = Rect.right  * xts;	// Rechts
@@ -2232,8 +2232,8 @@ void ProjectileClass::Render(void)
             // Rotationsmatrix
             D3DXMatrixRotationZ  (&matRot, DegreetoRad[int (Winkel)]);
 
-            float x = float (-pTileEngine->XOffset + xPos);
-            float y = float (-pTileEngine->YOffset + yPos);
+            float x = float (-TileEngine.XOffset + xPos);
+            float y = float (-TileEngine.YOffset + yPos);
             float mx = pProjectileGrafix[ShotArt]->itsXFrameSize / 2.0f;
             float my = pProjectileGrafix[ShotArt]->itsYFrameSize / 2.0f;
 
@@ -2288,8 +2288,8 @@ void ProjectileClass::Render(void)
 
 #ifdef _DEBUG
         if (DebugMode == true)
-            RenderRect (float (xPos - pTileEngine->XOffset + ShotRect[ShotArt].left),
-                        float (yPos - pTileEngine->YOffset + ShotRect[ShotArt].top),
+            RenderRect (float (xPos - TileEngine.XOffset + ShotRect[ShotArt].left),
+                        float (yPos - TileEngine.YOffset + ShotRect[ShotArt].top),
                         float (ShotRect[ShotArt].right  - ShotRect[ShotArt].left),
                         float (ShotRect[ShotArt].bottom - ShotRect[ShotArt].top), 0x88FFFFFF);
 #endif //_DEBUG
@@ -2302,8 +2302,8 @@ void ProjectileClass::Render(void)
         int size = (pParent->CurrentWeaponLevel[2] * 2 + 12);
         if (size < 20)
             size = 20;
-        pProjectileGrafix[ShotArt]->RenderSpriteScaled((float)(xPos-pTileEngine->XOffset) + 12 - size / 2.0f,
-                (float)(yPos-pTileEngine->YOffset) + 12 - size / 2.0f, size, size, 0xFFFFFFFF);
+        pProjectileGrafix[ShotArt]->RenderSpriteScaled((float)(xPos-TileEngine.XOffset) + 12 - size / 2.0f,
+                (float)(yPos-TileEngine.YOffset) + 12 - size / 2.0f, size, size, 0xFFFFFFFF);
     }
     else if (ShotArt == ELEKTROPAMPE)
     {
@@ -2315,8 +2315,8 @@ void ProjectileClass::Render(void)
             Color = D3DCOLOR_RGBA(255, 255, 255, (int)(Counter));
 
         pProjectileGrafix[ShotArt]->itsRect = pProjectileGrafix[ShotArt]->itsPreCalcedRects[AnimPhase];
-        pProjectileGrafix[ShotArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                (float)(yPos-pTileEngine->YOffset), Color);
+        pProjectileGrafix[ShotArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                (float)(yPos-TileEngine.YOffset), Color);
 
         DirectGraphics.SetColorKeyMode();
     }
@@ -2333,8 +2333,8 @@ void ProjectileClass::Render(void)
 
         pProjectileGrafix[ShotArt]->itsRect = pProjectileGrafix[ShotArt]->itsPreCalcedRects[AnimPhase];
 
-        pProjectileGrafix[ShotArt]->RenderSpriteScaledRotated (46+(float)(xPos-pTileEngine->XOffset)-(AnimPhase+30),
-                54+(float)(yPos-pTileEngine->YOffset)-(AnimPhase+30),
+        pProjectileGrafix[ShotArt]->RenderSpriteScaledRotated (46+(float)(xPos-TileEngine.XOffset)-(AnimPhase+30),
+                54+(float)(yPos-TileEngine.YOffset)-(AnimPhase+30),
                 AnimPhase*2.2f+20, AnimPhase*2.2f+20, Winkel, Color);
         DirectGraphics.SetColorKeyMode();
     }
@@ -2348,8 +2348,8 @@ void ProjectileClass::Render(void)
 
         int a = 30 - AnimPhase;
 
-        pProjectileGrafix[ShotArt]->RenderSpriteScaled (46+(float)(xPos-pTileEngine->XOffset)-(a+30),
-                54+(float)(yPos-pTileEngine->YOffset)-(a+30),
+        pProjectileGrafix[ShotArt]->RenderSpriteScaled (46+(float)(xPos-TileEngine.XOffset)-(a+30),
+                54+(float)(yPos-TileEngine.YOffset)-(a+30),
                 int (a*2.2f+20), int (a*2.2f+20), AnimPhase, Color);
         DirectGraphics.SetColorKeyMode();
     }
@@ -2362,13 +2362,13 @@ void ProjectileClass::Render(void)
         ShotRect[ShotArt].right  = (255-int(Damage/2))*2;
 
         Color = D3DCOLOR_RGBA(255, 255, 255, int(Damage/2));
-        pProjectileGrafix[ShotArt]->RenderSpriteScaled ((float)(xPos-pTileEngine->XOffset),
-                (float)(yPos-pTileEngine->YOffset),
+        pProjectileGrafix[ShotArt]->RenderSpriteScaled ((float)(xPos-TileEngine.XOffset),
+                (float)(yPos-TileEngine.YOffset),
                 (255-int(Damage/2))*2, (255-int(Damage/2))*2, Color);
 
         Color = D3DCOLOR_RGBA(255, 255, 255, int(Damage/4));
-        pProjectileGrafix[ShotArt]->RenderSpriteScaled ((float)(xPos-pTileEngine->XOffset),
-                (float)(yPos-pTileEngine->YOffset),
+        pProjectileGrafix[ShotArt]->RenderSpriteScaled ((float)(xPos-TileEngine.XOffset),
+                (float)(yPos-TileEngine.YOffset),
                 (255-int(Damage/2))*2, (255-int(Damage/2))*2, Color);
 
         DirectGraphics.SetColorKeyMode();
@@ -2378,8 +2378,8 @@ void ProjectileClass::Render(void)
         DirectGraphics.SetAdditiveMode();
         Color = 0xFFFFFFFF;
 
-        pProjectileGrafix[ShotArt]->RenderSpriteScaled ((float)(xPos-pTileEngine->XOffset),
-                (float)(yPos-pTileEngine->YOffset),
+        pProjectileGrafix[ShotArt]->RenderSpriteScaled ((float)(xPos-TileEngine.XOffset),
+                (float)(yPos-TileEngine.YOffset),
                 Damage, Damage, AnimPhase, Color);
 
         DirectGraphics.SetColorKeyMode();
@@ -2424,8 +2424,8 @@ void ProjectileClass::Render(void)
             Damage = 500;
         }
 
-        pProjectileGrafix[ShotArt]->RenderSpriteScaled ((float)(xPos-pTileEngine->XOffset) - 10.0f,
-                (float)(yPos-pTileEngine->YOffset) - size / 2.0f,
+        pProjectileGrafix[ShotArt]->RenderSpriteScaled ((float)(xPos-TileEngine.XOffset) - 10.0f,
+                (float)(yPos-TileEngine.YOffset) - size / 2.0f,
                 length, int(size), 0, col);
         DirectGraphics.SetColorKeyMode();
     }
@@ -2433,12 +2433,12 @@ void ProjectileClass::Render(void)
     {
         DirectGraphics.SetAdditiveMode();
 
-        pProjectileGrafix[ShotArt]->RenderSpriteRotated((float)(xPos-pTileEngine->XOffset),
-                (float)(yPos-pTileEngine->YOffset),
+        pProjectileGrafix[ShotArt]->RenderSpriteRotated((float)(xPos-TileEngine.XOffset),
+                (float)(yPos-TileEngine.YOffset),
                 (xPos + yPos) / 2, 0x88FFFFFF);
 
-        pProjectileGrafix[ShotArt]->RenderSpriteRotated((float)(xPos-pTileEngine->XOffset),
-                (float)(yPos-pTileEngine->YOffset),
+        pProjectileGrafix[ShotArt]->RenderSpriteRotated((float)(xPos-TileEngine.XOffset),
+                (float)(yPos-TileEngine.YOffset),
                 (xPos + yPos) / 2, 0x88FFFFFF);
 
         DirectGraphics.SetColorKeyMode();
@@ -2457,13 +2457,13 @@ void ProjectileClass::Render(void)
 
         if (ShotArt == UFOLASER)
         {
-            pPartikelGrafix[UFOLASERFLARE]->RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 63,
-                    yPos-float(pTileEngine->YOffset) - 30, yPos * 0.5f, 0xFFFF22EE);
+            pPartikelGrafix[UFOLASERFLARE]->RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 63,
+                    yPos-float(TileEngine.YOffset) - 30, yPos * 0.5f, 0xFFFF22EE);
         }
         else if (ShotArt == ELEKTROSCHUSS)
         {
-            pProjectiles->LavaFlare.RenderSpriteScaled(xPos-28-float(pTileEngine->XOffset),
-                                         yPos-28-float(pTileEngine->YOffset), 100, 100, 0xFFFF22BB);
+            pProjectiles->LavaFlare.RenderSpriteScaled(xPos-28-float(TileEngine.XOffset),
+                                         yPos-28-float(TileEngine.YOffset), 100, 100, 0xFFFF22BB);
         }
         else if (ShotArt == LASERSHOT ||
                  ShotArt == LASERSHOT2)
@@ -2471,28 +2471,28 @@ void ProjectileClass::Render(void)
             switch (int (Winkel))
             {
             case 0 :
-                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 60 + (ShotArt - LASERSHOT) * 5,
-                                               yPos-float(pTileEngine->YOffset) - 40, Winkel, 0xBB1188FF);
+                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 60 + (ShotArt - LASERSHOT) * 5,
+                                               yPos-float(TileEngine.YOffset) - 40, Winkel, 0xBB1188FF);
                 break;
 
             case 45 :
-                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 60,
-                                               yPos-float(pTileEngine->YOffset) - 40, Winkel, 0xBB1188FF);
+                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 60,
+                                               yPos-float(TileEngine.YOffset) - 40, Winkel, 0xBB1188FF);
                 break;
 
             case 90 :
-                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 53,
-                                               yPos-float(pTileEngine->YOffset) - 40, Winkel, 0xBB1188FF);
+                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 53,
+                                               yPos-float(TileEngine.YOffset) - 40, Winkel, 0xBB1188FF);
                 break;
 
             case 270 :
-                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 52,
-                                               yPos-float(pTileEngine->YOffset) - 40, Winkel, 0xBB1188FF);
+                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 52,
+                                               yPos-float(TileEngine.YOffset) - 40, Winkel, 0xBB1188FF);
                 break;
 
             case 315 :
-                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 60,
-                                               yPos-float(pTileEngine->YOffset) - 40, Winkel, 0xBB1188FF);
+                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 60,
+                                               yPos-float(TileEngine.YOffset) - 40, Winkel, 0xBB1188FF);
                 break;
 
             default:
@@ -2506,28 +2506,28 @@ void ProjectileClass::Render(void)
             switch (int (Winkel))
             {
             case 0 :
-                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 120,
-                                                  yPos-float(pTileEngine->YOffset) - 80, Winkel, 0xBB1188FF);
+                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 120,
+                                                  yPos-float(TileEngine.YOffset) - 80, Winkel, 0xBB1188FF);
                 break;
 
             case 45 :
-                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 120,
-                                                  yPos-float(pTileEngine->YOffset) - 85, Winkel, 0xBB1188FF);
+                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 120,
+                                                  yPos-float(TileEngine.YOffset) - 85, Winkel, 0xBB1188FF);
                 break;
 
             case 90 :
-                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 120,
-                                                  yPos-float(pTileEngine->YOffset) - 85, Winkel, 0xBB1188FF);
+                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 120,
+                                                  yPos-float(TileEngine.YOffset) - 85, Winkel, 0xBB1188FF);
                 break;
 
             case 270 :
-                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 105,
-                                                  yPos-float(pTileEngine->YOffset) - 85, Winkel, 0xBB1188FF);
+                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 105,
+                                                  yPos-float(TileEngine.YOffset) - 85, Winkel, 0xBB1188FF);
                 break;
 
             case 315 :
-                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(pTileEngine->XOffset) - 120,
-                                                  yPos-float(pTileEngine->YOffset) - 85, Winkel, 0xBB1188FF);
+                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 120,
+                                                  yPos-float(TileEngine.YOffset) - 85, Winkel, 0xBB1188FF);
                 break;
 
             default:
@@ -2538,41 +2538,41 @@ void ProjectileClass::Render(void)
         else if (ShotArt == SPREADSHOTBIG ||
                  ShotArt == SPREADSHOTBIG2)
         {
-            pProjectiles->SpreadShotSmoke.RenderSprite(xPos-16-float(pTileEngine->XOffset),
-                                         yPos-18-float(pTileEngine->YOffset), 0, 0xAAFFFFFF);
+            pProjectiles->SpreadShotSmoke.RenderSprite(xPos-16-float(TileEngine.XOffset),
+                                         yPos-18-float(TileEngine.YOffset), 0, 0xAAFFFFFF);
         }
 
         else if (ShotArt == PFLANZESHOT)
         {
-            pProjectiles->SpreadShotSmoke.RenderSprite(xPos-24-float(pTileEngine->XOffset),
-                                         yPos-24-float(pTileEngine->YOffset), 0, 0xAAFFFFFF);
+            pProjectiles->SpreadShotSmoke.RenderSprite(xPos-24-float(TileEngine.XOffset),
+                                         yPos-24-float(TileEngine.YOffset), 0, 0xAAFFFFFF);
         }
 
         else if (ShotArt == SUCHSCHUSS2)
         {
-            pProjectiles->LavaFlare.RenderSpriteScaled(xPos-24-float(pTileEngine->XOffset),
-                                         yPos-24-float(pTileEngine->YOffset), 64, 64, 0xCC0088FF);
+            pProjectiles->LavaFlare.RenderSpriteScaled(xPos-24-float(TileEngine.XOffset),
+                                         yPos-24-float(TileEngine.YOffset), 64, 64, 0xCC0088FF);
         }
 
         else if (ShotArt == WALKER_LASER)
-            pProjectiles->LavaFlare.RenderSprite(xPos-45-float(pTileEngine->XOffset),
-                                   yPos-60-float(pTileEngine->YOffset), 0, 0xAAFF3300);
+            pProjectiles->LavaFlare.RenderSprite(xPos-45-float(TileEngine.XOffset),
+                                   yPos-60-float(TileEngine.YOffset), 0, 0xAAFF3300);
 
         else if (ShotArt == FETTESPINNESHOT ||
                  ShotArt == FETTESPINNESHOT2)		// Laser der fetten Spinne
         {
-            pProjectiles->SpreadShotSmoke.RenderSprite(xPos-12-float(pTileEngine->XOffset),
-                                         yPos- 7-float(pTileEngine->YOffset), 0, 0xFFFF0000);
+            pProjectiles->SpreadShotSmoke.RenderSprite(xPos-12-float(TileEngine.XOffset),
+                                         yPos- 7-float(TileEngine.YOffset), 0, 0xFFFF0000);
         }
 
         if (ShotArt == POWERLINE)				// Powerline leuchten lassen ?
         {
             if (xSpeed < 0.0f)
-                pProjectiles->PowerlineSmoke.RenderSprite(xPos-10-float(pTileEngine->XOffset),
-                                            yPos   -float(pTileEngine->YOffset), 0, 0xFFFFFFFF);
+                pProjectiles->PowerlineSmoke.RenderSprite(xPos-10-float(TileEngine.XOffset),
+                                            yPos   -float(TileEngine.YOffset), 0, 0xFFFFFFFF);
             else
-                pProjectiles->PowerlineSmoke.RenderSprite(xPos-28-float(pTileEngine->XOffset),
-                                            yPos   -float(pTileEngine->YOffset), 1, 0xFFFFFFFF);
+                pProjectiles->PowerlineSmoke.RenderSprite(xPos-28-float(TileEngine.XOffset),
+                                            yPos   -float(TileEngine.YOffset), 1, 0xFFFFFFFF);
         }
 
         DirectGraphics.SetColorKeyMode();
@@ -2618,10 +2618,10 @@ void ProjectileClass::Run(void)
             ShotArt != EVILBLITZ2   &&
             ShotArt != SNOWBOMB     &&
             ShotArt != EIERBOMBE    &&
-            (yPos-pTileEngine->YOffset						    > 480 + 100 ||
-             yPos-pTileEngine->YOffset+ShotRect[ShotArt].bottom < 0   - 100 ||
-             xPos-pTileEngine->XOffset						    > 640 + 100 ||
-             xPos-pTileEngine->XOffset+ShotRect[ShotArt].right  < 0   - 100))
+            (yPos-TileEngine.YOffset						    > 480 + 100 ||
+             yPos-TileEngine.YOffset+ShotRect[ShotArt].bottom < 0   - 100 ||
+             xPos-TileEngine.XOffset						    > 640 + 100 ||
+             xPos-TileEngine.XOffset+ShotRect[ShotArt].right  < 0   - 100))
         Damage = 0;
 
     // Level verlassen ?
@@ -2630,8 +2630,8 @@ void ProjectileClass::Run(void)
             ShotArt == EIERBOMBE ||
             ShotArt == EVILBLITZ ||
             ShotArt == EVILBLITZ2) &&
-            (yPos > pTileEngine->LEVELPIXELSIZE_Y||
-             xPos > pTileEngine->LEVELPIXELSIZE_X||
+            (yPos > TileEngine.LEVELPIXELSIZE_Y||
+             xPos > TileEngine.LEVELPIXELSIZE_X||
              yPos < 0							 ||
              xPos < 0))
         Damage = 0;
@@ -2646,10 +2646,10 @@ void ProjectileClass::Run(void)
             ShotArt != BOMBE &&
             ShotArt != BOMBEBIG &&
             ShotArt != SHIELDSPAWNER)
-        if (pTileEngine->BlockDestroyRechts(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) ||
-                pTileEngine->BlockDestroyLinks (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) ||
-                pTileEngine->BlockDestroyOben  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) ||
-                pTileEngine->BlockDestroyUnten (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]))
+        if (TileEngine.BlockDestroyRechts(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) ||
+                TileEngine.BlockDestroyLinks (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) ||
+                TileEngine.BlockDestroyOben  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) ||
+                TileEngine.BlockDestroyUnten (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]))
         {
             // Alle Schüsse ausser dem Beam (und dem Schutzschild, welches auch ein Schuss ist) exlodieren
             // an der zerschiessbaren Wand
@@ -2661,15 +2661,15 @@ void ProjectileClass::Run(void)
                 Damage = 0;
             }
             else
-                pTileEngine->CheckDestroyableWalls(xPos, yPos, xSpeed, ySpeed, ShotRect[ShotArt]);
+                TileEngine.CheckDestroyableWalls(xPos, yPos, xSpeed, ySpeed, ShotRect[ShotArt]);
         }
 
     if (CheckBlock == true)
     {
-        bo = pTileEngine->BlockOben			(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
-        bu = pTileEngine->BlockUntenNormal  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
-        bl = pTileEngine->BlockLinks		(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
-        br = pTileEngine->BlockRechts		(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
+        bo = TileEngine.BlockOben			(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
+        bu = TileEngine.BlockUntenNormal  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
+        bl = TileEngine.BlockLinks		(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
+        br = TileEngine.BlockRechts		(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
     }
 
     // Auf Kollision mit dem Level Testen (nur bei Bounce-fähigen Schüssen)
@@ -2721,7 +2721,7 @@ void ProjectileClass::Run(void)
     case SPREADSHOTBIG:
     case SPREADSHOTBIG2:
     {
-        if ((pTileEngine->BlockUntenNormal  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) & BLOCKWERT_WAND &&
+        if ((TileEngine.BlockUntenNormal  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) & BLOCKWERT_WAND &&
                 ySpeed > 0.0f) ||
                 bo & BLOCKWERT_WAND ||
                 bl & BLOCKWERT_WAND ||
@@ -2820,8 +2820,8 @@ void ProjectileClass::Run(void)
         if (bl & BLOCKWERT_WAND ||
                 br & BLOCKWERT_WAND ||
                 bo & BLOCKWERT_WAND ||
-                pTileEngine->BlockUntenNormal  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) & BLOCKWERT_WAND ||
-                pTileEngine->BlockUntenNormal  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) & BLOCKWERT_PLATTFORM)
+                TileEngine.BlockUntenNormal  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) & BLOCKWERT_WAND ||
+                TileEngine.BlockUntenNormal  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) & BLOCKWERT_PLATTFORM)
         {
             Damage		 = 0;
             ExplodeShot();
@@ -2839,7 +2839,7 @@ void ProjectileClass::Run(void)
         if (bl & BLOCKWERT_WAND ||
                 br & BLOCKWERT_WAND ||
                 bo & BLOCKWERT_WAND ||
-                pTileEngine->BlockUntenNormal  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) & BLOCKWERT_WAND)
+                TileEngine.BlockUntenNormal  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) & BLOCKWERT_WAND)
         {
             Damage		 = 0;
             ExplodeShot();
@@ -2961,12 +2961,12 @@ void ProjectileClass::Run(void)
     {
         //DKS - Lightmaps have been disabled (never worked originally, see Tileengine.cpp's
         //      comments for DrawLightmap()):
-        //pTileEngine->DrawLightmap(LIGHTMAP_LILA, xPos + 65.0f, yPos + 40.0f, 255);
+        //TileEngine.DrawLightmap(LIGHTMAP_LILA, xPos + 65.0f, yPos + 40.0f, 255);
 
         if (bl & BLOCKWERT_WAND ||
                 br & BLOCKWERT_WAND ||
                 bo & BLOCKWERT_WAND ||
-                pTileEngine->BlockUntenNormal  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) & BLOCKWERT_WAND)
+                TileEngine.BlockUntenNormal  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) & BLOCKWERT_WAND)
         {
             Damage		 = 0;
             ExplodeShot();
@@ -2987,7 +2987,7 @@ void ProjectileClass::Run(void)
         if (bl & BLOCKWERT_WAND ||
                 br & BLOCKWERT_WAND ||
                 bo & BLOCKWERT_WAND ||
-                pTileEngine->BlockUntenNormal  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) & BLOCKWERT_WAND)
+                TileEngine.BlockUntenNormal  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) & BLOCKWERT_WAND)
         {
             Damage		 = 0;
             ExplodeShot();
@@ -2999,8 +2999,8 @@ void ProjectileClass::Run(void)
     case GOLEMSCHUSS:				// Suchschuss des Golems
     {
         DirectGraphics.SetAdditiveMode();
-        pProjectiles->LavaFlare.RenderSpriteScaled((float)(xPos - pTileEngine->XOffset) - 21,
-                                     (float)(yPos - pTileEngine->YOffset) - 21, 62, 62,
+        pProjectiles->LavaFlare.RenderSpriteScaled((float)(xPos - TileEngine.XOffset) - 21,
+                                     (float)(yPos - TileEngine.YOffset) - 21, 62, 62,
                                      0xAA88FF00);
         DirectGraphics.SetColorKeyMode();
         CurrentShotTexture = -1;
@@ -3092,9 +3092,9 @@ void ProjectileClass::Run(void)
     {
         bool fahrstuhlunten = false;
 
-        bu = pTileEngine->BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
+        bu = TileEngine.BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
 
-        if (pTileEngine->IsElevatorLevel &&
+        if (TileEngine.IsElevatorLevel &&
                 yPos + ShotRect[ShotArt].bottom + 4 > g_Fahrstuhl_yPos)
             fahrstuhlunten = true;
 
@@ -3529,10 +3529,10 @@ void ProjectileClass::Run(void)
                                                 ShotRect[BLITZBEAM].right  = ShotRect[BLITZBEAM].left + int(Damage / 2.0f);
         ShotRect[BLITZBEAM].bottom = ShotRect[BLITZBEAM].top  + int(Damage / 2.0f);
 
-        bo = pTileEngine->BlockOben			(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
-        bu = pTileEngine->BlockUntenNormal  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
-        bl = pTileEngine->BlockLinks		(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
-        br = pTileEngine->BlockRechts		(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
+        bo = TileEngine.BlockOben			(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
+        bu = TileEngine.BlockUntenNormal  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
+        bl = TileEngine.BlockLinks		(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
+        br = TileEngine.BlockRechts		(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
 
         if (bl & BLOCKWERT_WAND ||
                 br & BLOCKWERT_WAND ||
@@ -3770,7 +3770,7 @@ void ProjectileClass::Run(void)
                 ySpeed	 = 0.0f;
                 yAcc	 = 0.0f;
 
-                pTileEngine->BlockUnten(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
+                TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
             }
         }
 
@@ -3834,7 +3834,7 @@ void ProjectileClass::Run(void)
             pPartikelSystem->PushPartikel (xPos - 4, yPos - 4 + float (rand ()% 3), SMOKE2);
         }
 
-        if (pTileEngine->BlockUntenNormal  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) & BLOCKWERT_WAND ||
+        if (TileEngine.BlockUntenNormal  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) & BLOCKWERT_WAND ||
                 bo & BLOCKWERT_WAND ||
                 bl & BLOCKWERT_WAND ||
                 br & BLOCKWERT_WAND)
@@ -4332,8 +4332,8 @@ void ProjectileClass::ExplodeShot(void)
         SoundManager.PlayWave(100, 128, 9000, SOUND_BLITZENDE);
         SoundManager.PlayWave(100, 128, 9000, SOUND_BLITZENDE);
 
-        pProjectiles->PushProjectile((float)pTileEngine->XOffset - 60,
-                                     (float)pTileEngine->YOffset + 480.0f - 128.0f,
+        pProjectiles->PushProjectile((float)TileEngine.XOffset - 60,
+                                     (float)TileEngine.YOffset + 480.0f - 128.0f,
                                      ELEKTROPAMPE);
     }
     break;
@@ -4699,7 +4699,7 @@ void ProjectileClass::ExplodeShot(void)
 
         // Prüfen, ob die Bombe eine zerstörbare Wand getroffen hat
         //
-        pTileEngine->ExplodeWalls((int)xPos / 20, (int)yPos / 20);
+        TileEngine.ExplodeWalls((int)xPos / 20, (int)yPos / 20);
 
         // Explodieren lassen
         SoundManager.PlayWave(80, 128, 11025, SOUND_EXPLOSION1);
@@ -4855,7 +4855,7 @@ void ProjectileClass::ExplodeShot(void)
 
         ShakeScreen(5);
         pGegner->DamageEnemiesonScreen(xPos, yPos, 400);
-        pTileEngine->ExplodeWalls((int)xPos / 20, (int)yPos / 20);
+        TileEngine.ExplodeWalls((int)xPos / 20, (int)yPos / 20);
 
         for (int p = 0; p < NUMPLAYERS; p++)
             DirectInput.Joysticks[pPlayer[p]->JoystickIndex].ForceFeedbackEffect(FFE_MEDIUMRUMBLE);
