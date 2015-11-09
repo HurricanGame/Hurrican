@@ -498,13 +498,14 @@ void DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
 
-    x = float (int (x));
-    y = float (int (y));
+    //DKS - unnecessary:
+    //x = float (int (x));
+    //y = float (int (y));
 
     l = x;									// Links
-    r = x+(itsRect.right-itsRect.left) - 1;	// Rechts
+    r = x+(itsRect.right-itsRect.left-1);	// Rechts
     o = y;									// Oben
-    u = y+(itsRect.bottom-itsRect.top) - 1;	// Unten
+    u = y+(itsRect.bottom-itsRect.top-1);	// Unten
 
     l -= TEXTURE_COORD_OFFSET;
     r += TEXTURE_COORD_OFFSET;
@@ -562,8 +563,9 @@ void DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR c1,
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
 
-    x = float (int (x));
-    y = float (int (y));
+    //DKS - unnecessary:
+    //x = float (int (x));
+    //y = float (int (y));
 
     // Ausschnitt einstellen
     Anim %= 255;
@@ -572,9 +574,9 @@ void DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR c1,
         itsRect = itsPreCalcedRects [Anim];
 
     l = x;									// Links
-    r = x+(itsRect.right-itsRect.left) - 1;	// Rechts
+    r = x+(itsRect.right-itsRect.left-1);	// Rechts
     o = y;									// Oben
-    u = y+(itsRect.bottom-itsRect.top) - 1;	// Unten
+    u = y+(itsRect.bottom-itsRect.top-1);	// Unten
 
     l -= TEXTURE_COORD_OFFSET;
     r += TEXTURE_COORD_OFFSET;
@@ -626,8 +628,9 @@ void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
 
-    x = float (int (x));
-    y = float (int (y));
+    //DKS - unnecessary:
+    //x = float (int (x));
+    //y = float (int (y));
 
     if (v == false)
     {
@@ -697,13 +700,14 @@ void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
     float l,  r,  o,  u;					// Vertice Koordinaten
     float tl, tr, to, tu;					// Textur Koordinaten
 
-    x = float (int (x));
-    y = float (int (y));
+    //DKS - unnecessary:
+    //x = float (int (x));
+    //y = float (int (y));
 
     r = x;									// Links
-    l = x+(itsRect.right-itsRect.left) - 1;	// Rechts
+    l = x+(itsRect.right-itsRect.left-1);	// Rechts
     o = y;									// Oben
-    u = y+(itsRect.bottom-itsRect.top) - 1;	// Unten
+    u = y+(itsRect.bottom-itsRect.top-1);	// Unten
 
     l += TEXTURE_COORD_OFFSET;
     r -= TEXTURE_COORD_OFFSET;
@@ -874,9 +878,9 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
     float tl, tr, to, tu;					// Textur Koordinaten
 
     l = x;									// Links
-    r = x+(itsRect.right-itsRect.left) - 1;	// Rechts
+    r = x+(itsRect.right-itsRect.left-1);	// Rechts
     o = y;									// Oben
-    u = y+(itsRect.bottom-itsRect.top) - 1;	// Unten
+    u = y+(itsRect.bottom-itsRect.top-1);	// Unten
 
     l -= TEXTURE_COORD_OFFSET;
     r += TEXTURE_COORD_OFFSET;
