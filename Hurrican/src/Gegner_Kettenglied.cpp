@@ -46,8 +46,8 @@ void GegnerKettenglied::DoDraw(void)
         Color = D3DCOLOR_RGBA(255, 255, 255, Wert);
     }
 
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-pTileEngine->XOffset),
-            (float)(yPos-pTileEngine->YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-TileEngine.XOffset),
+            (float)(yPos-TileEngine.YOffset),
             AnimCount, AnimPhase, Color);
 }
 
@@ -97,7 +97,7 @@ void GegnerKettenglied::DoKI(void)
 
     case GEGNER_SPECIAL2:
     {
-        int bu = pTileEngine->BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+        int bu = TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
         if (bu & BLOCKWERT_WAND &&
                 ySpeed > 0.0f)

@@ -33,7 +33,7 @@
 extern Logdatei				Protokoll;
 extern DirectGraphicsFont   *pFont;
 extern PartikelsystemClass	*pPartikelSystem;
-extern TileEngineClass		*pTileEngine;
+extern TileEngineClass		TileEngine;
 extern ProjectileListClass	*pProjectiles;
 extern ConsoleClass			*pConsole;
 extern LPDIRECT3DDEVICE8	lpD3DDevice;				// Direct3D Device-Objekt
@@ -1144,9 +1144,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             else
             {
                 count = 0;
-                red   = pTileEngine->ColR3;
-                green = pTileEngine->ColG3;
-                blue  = pTileEngine->ColB3;
+                red   = TileEngine.ColR3;
+                green = TileEngine.ColG3;
+                blue  = TileEngine.ColB3;
             }
 
             if (rand()%2 == 0)
@@ -1174,9 +1174,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             else
             {
                 count = 0;
-                red   = pTileEngine->ColR3;
-                green = pTileEngine->ColG3;
-                blue  = pTileEngine->ColB3;
+                red   = TileEngine.ColR3;
+                green = TileEngine.ColG3;
+                blue  = TileEngine.ColB3;
             }
 
             if (rand()%2 == 0)
@@ -1492,9 +1492,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             else
             {
                 count = 0;
-                red   = pTileEngine->ColR3;
-                green = pTileEngine->ColG3;
-                blue  = pTileEngine->ColB3;
+                red   = TileEngine.ColR3;
+                green = TileEngine.ColG3;
+                blue  = TileEngine.ColB3;
             }
 
             xSpeed		= ((float)(rand()%80-40)/20);
@@ -1522,9 +1522,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             else
             {
                 count = 0;
-                red   = pTileEngine->ColR3;
-                green = pTileEngine->ColG3;
-                blue  = pTileEngine->ColB3;
+                red   = TileEngine.ColR3;
+                green = TileEngine.ColG3;
+                blue  = TileEngine.ColB3;
             }
 
             xSpeed		= ((float)(rand()%80-40)/20);
@@ -1553,9 +1553,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             else
             {
                 count = 0;
-                red   = pTileEngine->ColR3;
-                green = pTileEngine->ColG3;
-                blue  = pTileEngine->ColB3;
+                red   = TileEngine.ColR3;
+                green = TileEngine.ColG3;
+                blue  = TileEngine.ColB3;
             }
 
             xSpeed		=  ((float)(rand()%80-40)/2.0f);
@@ -1583,9 +1583,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             else
             {
                 count = 0;
-                red   = pTileEngine->ColR3;
-                green = pTileEngine->ColG3;
-                blue  = pTileEngine->ColB3;
+                red   = TileEngine.ColR3;
+                green = TileEngine.ColG3;
+                blue  = TileEngine.ColB3;
             }
 
             xSpeed		=  ((float)(rand()%40-20)/4.0f);
@@ -2416,10 +2416,10 @@ void PartikelClass::Run(void)
     //
     if (RemoveWhenOffScreen == true)
     {
-        if (yPos-pTileEngine->YOffset > 480 + 20 ||
-                yPos-pTileEngine->YOffset+PartikelRect[PartikelArt].bottom < 20 ||
-                xPos-pTileEngine->XOffset > 640 + 20 ||
-                xPos-pTileEngine->XOffset+PartikelRect[PartikelArt].right < 20)
+        if (yPos-TileEngine.YOffset > 480 + 20 ||
+                yPos-TileEngine.YOffset+PartikelRect[PartikelArt].bottom < 20 ||
+                xPos-TileEngine.XOffset > 640 + 20 ||
+                xPos-TileEngine.XOffset+PartikelRect[PartikelArt].right < 20)
             Lebensdauer = 0.0f;
     }
 
@@ -2439,16 +2439,16 @@ void PartikelClass::Run(void)
 
     if (BounceWalls == true)
     {
-        bo = pTileEngine->BlockOben		   (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
-        bl = pTileEngine->BlockLinks	   (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
-        br = pTileEngine->BlockRechts	   (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
-        bu = pTileEngine->BlockUnten       (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+        bo = TileEngine.BlockOben		   (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+        bl = TileEngine.BlockLinks	   (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+        br = TileEngine.BlockRechts	   (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+        bu = TileEngine.BlockUnten       (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
     }
 
     else
     {
         bo = bl = br = 0;
-        bu = pTileEngine->BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+        bu = TileEngine.BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
     }
 
     // Auf Kollision mit dem Level Testen
@@ -2516,10 +2516,10 @@ void PartikelClass::Run(void)
         case BULLET_SKELETOR:
         case BULLET:						// Patronenhülse
         {
-            bo = pTileEngine->BlockOben		   (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
-            bl = pTileEngine->BlockLinks	   (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
-            br = pTileEngine->BlockRechts	   (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
-            bu = pTileEngine->BlockUnten       (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+            bo = TileEngine.BlockOben		   (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+            bl = TileEngine.BlockLinks	   (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+            br = TileEngine.BlockRechts	   (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+            bu = TileEngine.BlockUnten       (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
 
             // Testen,ob der Partikel sich in einer Wand verfangen hat, wenn ja
             // dann verschwinden lassen
@@ -2649,10 +2649,10 @@ void PartikelClass::Run(void)
 
         case SPIDERPARTS:				// Spinnenstücke auf dem Fliessband
         {
-            bo = pTileEngine->BlockOben		   (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
-            bl = pTileEngine->BlockLinks	   (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
-            br = pTileEngine->BlockRechts	   (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
-            bu = pTileEngine->BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+            bo = TileEngine.BlockOben		   (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+            bl = TileEngine.BlockLinks	   (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+            br = TileEngine.BlockRechts	   (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+            bu = TileEngine.BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
 
             // an der Wand abprallen oder aufhören und verschwinden
             if (bl & BLOCKWERT_WAND ||
@@ -2689,7 +2689,7 @@ void PartikelClass::Run(void)
             }
 
             // unten aus dem Screen raus? Dann verschwinden lassen
-            if (yPos > pTileEngine->YOffset + 500)
+            if (yPos > TileEngine.YOffset + 500)
                 Lebensdauer = 0.0f;
 
         }
@@ -2698,7 +2698,7 @@ void PartikelClass::Run(void)
         case PIRANHATEILE  :					// Teile eines kaputten Piranhas
         case PIRANHATEILE2 :					// Teile eines kaputten Riesen Piranhas
         {
-            bo = pTileEngine->BlockOben (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+            bo = TileEngine.BlockOben (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
 
             if (ySpeed < -2.0f)
                 ySpeed = -2.0f;
@@ -2735,7 +2735,7 @@ void PartikelClass::Run(void)
 
         case PIRANHABLUT :					// Blut eines kaputten Piranhas
         {
-            bo = pTileEngine->BlockOben (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+            bo = TileEngine.BlockOben (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
 
             Lebensdauer -= 5.0f SYNC;	// langsam ausfaden lassen
             alpha = (int)Lebensdauer;
@@ -2774,7 +2774,7 @@ void PartikelClass::Run(void)
 
             // Im Wasser oder auf dem Boden gelandet ?
             //
-            int blocku = pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+            int blocku = TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
 
             if (blocku & BLOCKWERT_WAND		||
                     blocku & BLOCKWERT_PLATTFORM ||
@@ -2813,7 +2813,7 @@ void PartikelClass::Run(void)
             if (ySpeed > 6.0f)
                 ySpeed = 6.0f;
 
-            int bu = pTileEngine->BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+            int bu = TileEngine.BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
 
             if (bu & BLOCKWERT_WAND ||bu & BLOCKWERT_PLATTFORM)
             {
@@ -2855,7 +2855,7 @@ void PartikelClass::Run(void)
             while(Rot > 360.0f)
                 Rot -= 360.0f;
 
-            int bu = pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+            int bu = TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
 
             if (yAcc != 0.0f &&
                     (bu & BLOCKWERT_WAND ||
@@ -3047,7 +3047,7 @@ void PartikelClass::Run(void)
 
             // Rauch im Wasser ? Dann zur Blubberblase werden lassen
             //
-            if (pTileEngine->Tiles[(int)((xPos + 5) / TILESIZE_X)][(int)((yPos + 5) / TILESIZE_Y)].Block & BLOCKWERT_LIQUID)
+            if (TileEngine.Tiles[(int)((xPos + 5) / TILESIZE_X)][(int)((yPos + 5) / TILESIZE_Y)].Block & BLOCKWERT_LIQUID)
             {
                 int off = 0;
 
@@ -3063,7 +3063,7 @@ void PartikelClass::Run(void)
         case REGENTROPFEN:							// Verschwindet wenn Wand oder Boden getroffen
         {
             // Aus dem Level rausgeflogen ?
-            if (yPos > pTileEngine->LEVELPIXELSIZE_Y)
+            if (yPos > TileEngine.LEVELPIXELSIZE_Y)
                 Lebensdauer = 0;
 
             // Auf den Boden gekommen oder an die Wand geklatscht ? Dann verschwinden zerplatzen
@@ -3133,7 +3133,7 @@ void PartikelClass::Run(void)
                 xAcc = -0.2f;
 
             // Aus dem Level rausgeflogen ?
-            if (yPos > pTileEngine->LEVELPIXELSIZE_Y)
+            if (yPos > TileEngine.LEVELPIXELSIZE_Y)
                 Lebensdauer = 0;
 
             // Auf den Boden gekommen ? Dann langsam ausfaden
@@ -3239,7 +3239,7 @@ void PartikelClass::Run(void)
             Lebensdauer -= 8.0f SYNC;
 
             // Im Wasser gelandet ?
-            if (pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) & BLOCKWERT_LIQUID)
+            if (TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) & BLOCKWERT_LIQUID)
                 Lebensdauer -= 20.0f SYNC;
 
             alpha		 = (int)Lebensdauer;
@@ -3253,9 +3253,9 @@ void PartikelClass::Run(void)
             Lebensdauer -= 1.5f SYNC;
 
             // Im Wasser gelandet ?
-            if (pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) & BLOCKWERT_LIQUID    ||
-                    pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) & BLOCKWERT_PLATTFORM ||
-                    pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) & BLOCKWERT_WAND)
+            if (TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) & BLOCKWERT_LIQUID    ||
+                    TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) & BLOCKWERT_PLATTFORM ||
+                    TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) & BLOCKWERT_WAND)
                 Lebensdauer -= 4.0f SYNC;
 
             alpha		 = (int)Lebensdauer;
@@ -3393,7 +3393,7 @@ void PartikelClass::Run(void)
 
             if (ySpeed < 0.0f)
             {
-                bo = pTileEngine->BlockOben(xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt], false);
+                bo = TileEngine.BlockOben(xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt], false);
                 if (!(bo & BLOCKWERT_LIQUID) ||
                         (bo & BLOCKWERT_WAND))
 
@@ -3539,9 +3539,9 @@ void PartikelClass::Run(void)
             //if (a > 255)
             //    a = 255;
             //if (PartikelArt == EXPLOSIONFLARE)
-            //    pTileEngine->DrawLightmap(LIGHTMAP_EXPLOSION, xPos + 80, yPos + 80, a);
+            //    TileEngine.DrawLightmap(LIGHTMAP_EXPLOSION, xPos + 80, yPos + 80, a);
             //else if (PartikelArt == EXPLOSIONFLARE2)
-            //    pTileEngine->DrawLightmap(LIGHTMAP_LILA, xPos + 80, yPos + 80, a);
+            //    TileEngine.DrawLightmap(LIGHTMAP_LILA, xPos + 80, yPos + 80, a);
 
         }
         break;
@@ -3718,8 +3718,8 @@ bool PartikelClass::Render(void)
         // Rotationsmatrix
         D3DXMatrixRotationZ  (&matRot, DegreetoRad[int(Rot)]);
 
-        float x = (float)(xPos - pTileEngine->XOffset);
-        float y = (float)(yPos - pTileEngine->YOffset);
+        float x = (float)(xPos - TileEngine.XOffset);
+        float y = (float)(yPos - TileEngine.YOffset);
 
         // Transformation zum Ursprung
         D3DXMatrixTranslation(&matTrans,-x-(width) /2,
@@ -3790,10 +3790,10 @@ bool PartikelClass::Render(void)
 
         RECT &Rect = pPartikelGrafix[PartikelArt]->itsPreCalcedRects[AnimPhase];
 
-        l = float(-pTileEngine->XOffset+xPos-0.5f);								// Links
-        r = float(-pTileEngine->XOffset+xPos+(Rect.right -Rect.left-1)+0.5f);	// Rechts
-        o = float(-pTileEngine->YOffset+yPos-0.5f);								// Oben
-        u = float(-pTileEngine->YOffset+yPos+(Rect.bottom-Rect.top-1) +0.5f);	// Unten
+        l = float(-TileEngine.XOffset+xPos-0.5f);								// Links
+        r = float(-TileEngine.XOffset+xPos+(Rect.right -Rect.left-1)+0.5f);	// Rechts
+        o = float(-TileEngine.YOffset+yPos-0.5f);								// Oben
+        u = float(-TileEngine.YOffset+yPos+(Rect.bottom-Rect.top-1) +0.5f);	// Unten
 
         tl = Rect.left   * xts;	// Links
         tr = Rect.right  * xts;	// Rechts
@@ -3839,8 +3839,8 @@ bool PartikelClass::Render(void)
     else if (PartikelArt == TEXTSECRET)
     {
         D3DCOLOR col = D3DCOLOR_RGBA(255, 224, 64, alpha);
-        pMenuFont->DrawTextCenterAlign((float)(xPos - pTileEngine->XOffset),
-                                       (float)(yPos - pTileEngine->YOffset),
+        pMenuFont->DrawTextCenterAlign((float)(xPos - TileEngine.XOffset),
+                                       (float)(yPos - TileEngine.YOffset),
                                        TextArray[TEXT_SECRET], col);
 
         CurrentPartikelTexture = -1;
@@ -3865,8 +3865,8 @@ bool PartikelClass::Render(void)
 
         D3DXVECTOR2 pos, dir;
 
-        pos.x = float (xPos - pTileEngine->XOffset);
-        pos.y = float (yPos - pTileEngine->YOffset);
+        pos.x = float (xPos - TileEngine.XOffset);
+        pos.y = float (yPos - TileEngine.YOffset);
         dir.x = pos.x - xSpeed;
         dir.y = pos.y - ySpeed;
 
@@ -3878,8 +3878,8 @@ bool PartikelClass::Render(void)
             dir.x = pos.x - xSpeed * 0.5f;
             dir.y = pos.y - ySpeed * 0.5f;
 
-            RenderLine (dir, pos, D3DCOLOR_RGBA(pTileEngine->ColR1, pTileEngine->ColG1, pTileEngine->ColB1, int (Lebensdauer / 3.0f)),
-                        D3DCOLOR_RGBA(pTileEngine->ColR2, pTileEngine->ColG2, pTileEngine->ColB2, int (Lebensdauer)));
+            RenderLine (dir, pos, D3DCOLOR_RGBA(TileEngine.ColR1, TileEngine.ColG1, TileEngine.ColB1, int (Lebensdauer / 3.0f)),
+                        D3DCOLOR_RGBA(TileEngine.ColR2, TileEngine.ColG2, TileEngine.ColB2, int (Lebensdauer)));
         }
 
         CurrentPartikelTexture = -1;
@@ -3892,11 +3892,11 @@ bool PartikelClass::Render(void)
         DirectGraphics.SetTexture( pPartikelGrafix[PartikelArt]->itsTexIdx );
 
         //DKS-new rad/deg macros:
-        //pPartikelGrafix[PartikelArt]->RenderSpriteRotated (float (xPos - pTileEngine->XOffset),
-        //        float (yPos - pTileEngine->YOffset),
+        //pPartikelGrafix[PartikelArt]->RenderSpriteRotated (float (xPos - TileEngine.XOffset),
+        //        float (yPos - TileEngine.YOffset),
         //        AnimCount / PI * 180.0f, D3DCOLOR_RGBA(red, green, blue, alpha));
-        pPartikelGrafix[PartikelArt]->RenderSpriteRotated (float (xPos - pTileEngine->XOffset),
-                float (yPos - pTileEngine->YOffset),
+        pPartikelGrafix[PartikelArt]->RenderSpriteRotated (float (xPos - TileEngine.XOffset),
+                float (yPos - TileEngine.YOffset),
                 RadToDeg(AnimCount), D3DCOLOR_RGBA(red, green, blue, alpha));
 
         CurrentPartikelTexture = PartikelArt;
@@ -3907,8 +3907,8 @@ bool PartikelClass::Render(void)
     {
         float a = (float)(255 - alpha + 64);
 
-        pPartikelGrafix[PartikelArt]->RenderSpriteScaledRotated (float (xPos - a / 2.0f - pTileEngine->XOffset) + 30,
-                float (yPos - a / 2.0f - pTileEngine->YOffset) + 30,
+        pPartikelGrafix[PartikelArt]->RenderSpriteScaledRotated (float (xPos - a / 2.0f - TileEngine.XOffset) + 30,
+                float (yPos - a / 2.0f - TileEngine.YOffset) + 30,
                 a, a, Rot, D3DCOLOR_RGBA(255, 255, 255, alpha));
 
         CurrentPartikelTexture = PartikelArt;
@@ -3919,8 +3919,8 @@ bool PartikelClass::Render(void)
     {
         //int a = 255 - alpha + 64;
 
-        pPartikelGrafix[PartikelArt]->RenderSpriteScaled (float (xPos - AnimCount / 2.0f - pTileEngine->XOffset),
-                float (yPos - AnimCount / 2.0f - pTileEngine->YOffset),
+        pPartikelGrafix[PartikelArt]->RenderSpriteScaled (float (xPos - AnimCount / 2.0f - TileEngine.XOffset),
+                float (yPos - AnimCount / 2.0f - TileEngine.YOffset),
                 (int)(AnimCount), (int)(AnimCount), D3DCOLOR_RGBA(red, green, blue, alpha));
 
         CurrentPartikelTexture = PartikelArt;
@@ -3929,8 +3929,8 @@ bool PartikelClass::Render(void)
     // Leuchten beim Extra Einsammeln
     else if (PartikelArt == EXTRACOLLECTED)
     {
-        pPartikelGrafix[PartikelArt]->RenderSpriteScaled (float (xPos + 16 - AnimCount / 2.0f - pTileEngine->XOffset),
-                float (yPos + 16 - AnimCount / 2.0f - pTileEngine->YOffset),
+        pPartikelGrafix[PartikelArt]->RenderSpriteScaled (float (xPos + 16 - AnimCount / 2.0f - TileEngine.XOffset),
+                float (yPos + 16 - AnimCount / 2.0f - TileEngine.YOffset),
                 (int)(AnimCount), (int)(AnimCount), D3DCOLOR_RGBA(red, green, blue, alpha));
 
         CurrentPartikelTexture = PartikelArt;
@@ -3941,8 +3941,8 @@ bool PartikelClass::Render(void)
     {
         DirectGraphics.SetAdditiveMode();
 
-        pPartikelGrafix[PartikelArt]->RenderSpriteScaled (float (xPos + 15 - AnimCount / 2.0f - pTileEngine->XOffset),
-                float (yPos + 15 - AnimCount / 2.0f - pTileEngine->YOffset),
+        pPartikelGrafix[PartikelArt]->RenderSpriteScaled (float (xPos + 15 - AnimCount / 2.0f - TileEngine.XOffset),
+                float (yPos + 15 - AnimCount / 2.0f - TileEngine.YOffset),
                 (int)(AnimCount), (int)(AnimCount), D3DCOLOR_RGBA(red, green, blue, alpha));
 
         CurrentPartikelTexture = PartikelArt;
@@ -3960,16 +3960,16 @@ bool PartikelClass::Render(void)
         else
             b = (int)(AnimCount * 30);
 
-        pPartikelGrafix[PartikelArt]->RenderSpriteScaled (float (xPos - pTileEngine->XOffset) - b/4,
-                float (yPos - pTileEngine->YOffset) - h/2,
+        pPartikelGrafix[PartikelArt]->RenderSpriteScaled (float (xPos - TileEngine.XOffset) - b/4,
+                float (yPos - TileEngine.YOffset) - h/2,
                 b, h, D3DCOLOR_RGBA(red, green, blue, alpha));
 
         CurrentPartikelTexture = PartikelArt;
     }
     else if (PartikelArt == BEAMSMOKE)
     {
-        pPartikelGrafix[PartikelArt]->RenderSpriteScaledRotated (float (xPos - pTileEngine->XOffset) - AnimCount / 2.0f,
-                float (yPos - pTileEngine->YOffset) - AnimCount / 2.0f,
+        pPartikelGrafix[PartikelArt]->RenderSpriteScaledRotated (float (xPos - TileEngine.XOffset) - AnimCount / 2.0f,
+                float (yPos - TileEngine.YOffset) - AnimCount / 2.0f,
                 AnimCount, AnimCount, (float)Rot, D3DCOLOR_RGBA(red, green, blue, alpha));
 
         CurrentPartikelTexture = PartikelArt;

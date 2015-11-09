@@ -337,6 +337,14 @@ public:
 
     TileEngineClass(void);									// Konstruktor
     ~TileEngineClass(void);									// Destruktor
+
+    //DKS - Added initialization function that will load the sprites.
+    //      This was necessary since making TileEngineClass a global
+    //      static in Main.cpp instead of a dyanmically-allocated pointer.
+    //      The class constructor therefore should never load sprites by
+    //      itself, since graphics system should be initialized first.
+    void LoadSprites();
+
     void ClearLevel(void);									// Level freigeben
     bool LoadLevel(char Filename[100]);						// Level laden
     void InitNewLevel(int xSize, int ySize);				// Neues Level initialisieren
@@ -408,7 +416,7 @@ public:
 // Externals
 // --------------------------------------------------------------------------------------
 
-extern	TileEngineClass		*pTileEngine;
+extern	TileEngineClass		TileEngine;
 extern	D3DCOLOR			Col1, Col2, Col3;
 extern  bool				DrawDragon;
 extern  float				ShadowAlpha;

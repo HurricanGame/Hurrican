@@ -118,8 +118,8 @@ void GegnerGolem::DoDraw(void)
     // Körper
     int offx = 0;
     int offy = 80;
-    float x = (float)(xPos - pTileEngine->XOffset);
-    float y = (float)(yPos - pTileEngine->YOffset);
+    float x = (float)(xPos - TileEngine.XOffset);
+    float y = (float)(yPos - TileEngine.YOffset);
 
     itsRect = GegnerRect[GegnerArt];
     D3DXMatrixRotationZ  (&matRotBody,  Wackel);
@@ -135,8 +135,8 @@ void GegnerGolem::DoDraw(void)
     // arm bewegen
     offx = 0;
     offy = 80;
-    x = (float)(xPos + ARMX - pTileEngine->XOffset);
-    y = (float)(yPos + ARMY - pTileEngine->YOffset);
+    x = (float)(xPos + ARMX - TileEngine.XOffset);
+    y = (float)(yPos + ARMY - TileEngine.YOffset);
     D3DXMatrixTranslation(&matTransArm,-x-205, -y-10, 0.0f);
 
     // Transformation wieder zurück
@@ -160,8 +160,8 @@ void GegnerGolem::DoDraw(void)
 
 
     // Arm hinten zeichnen
-    arm[0].RenderSprite((float)(xPos - pTileEngine->XOffset) + wackel,
-                        (float)(yPos - pTileEngine->YOffset) + yoff, Color);
+    arm[0].RenderSprite((float)(xPos - TileEngine.XOffset) + wackel,
+                        (float)(yPos - TileEngine.YOffset) + yoff, Color);
 
     // Körper zeichnen
     D3DXMatrixIdentity	 (&matWorld);
@@ -177,14 +177,14 @@ void GegnerGolem::DoDraw(void)
 #endif
 #endif
 
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos - pTileEngine->XOffset) + wackel,
-                                           (float)(yPos - pTileEngine->YOffset) + yoff, Color);
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos - TileEngine.XOffset) + wackel,
+                                           (float)(yPos - TileEngine.YOffset) + yoff, Color);
 
     // Arm
     offx = 0;
     offy = 0;
-    x = (float)(xPos + ARMX - pTileEngine->XOffset);
-    y = (float)(yPos + ARMY - pTileEngine->YOffset);
+    x = (float)(xPos + ARMX - TileEngine.XOffset);
+    y = (float)(yPos + ARMY - TileEngine.YOffset);
 
     itsRect.left = 0;
     itsRect.top = 0;
@@ -216,8 +216,8 @@ void GegnerGolem::DoDraw(void)
 #endif
 
     // Arm zeichnen
-    arm[1].RenderSprite((float)(xPos - pTileEngine->XOffset) + wackel,
-                        (float)(yPos - pTileEngine->YOffset) + yoff, Color);
+    arm[1].RenderSprite((float)(xPos - TileEngine.XOffset) + wackel,
+                        (float)(yPos - TileEngine.YOffset) + yoff, Color);
 
     // Normale Projektions-Matrix wieder herstellen
     D3DXMatrixRotationZ (&matWorld, 0.0f);
@@ -278,13 +278,13 @@ void GegnerGolem::DoKI(void)
         pHUD->ShowBossHUD(8000, Energy);
 
     // Levelausschnitt auf den Golem zentrieren, sobald dieser sichtbar wird
-    if (Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
+    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
         // verstecken
         xPos += 400;
 
         // hinscrollen
-        pTileEngine->ScrollLevel((float)Value1,
+        TileEngine.ScrollLevel((float)Value1,
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);
 
         // Ausfaden und pausieren
@@ -318,7 +318,7 @@ void GegnerGolem::DoKI(void)
     {
     case GEGNER_NOTVISIBLE:			// Warten bis der Screen zentriert wurde
     {
-        if (pTileEngine->Zustand == ZUSTAND_LOCKED)
+        if (TileEngine.Zustand == ZUSTAND_LOCKED)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
             //DKS - Added function SongIsPlaying() to SoundManagerClass:
@@ -342,9 +342,9 @@ void GegnerGolem::DoKI(void)
         rotarm1 -= WackelDir * 0.2f SYNC;
         rotarm2 += WackelDir * 0.2f SYNC;
         Wackeln();
-        if (xPos <= pTileEngine->ScrolltoX + 380)	// Weit genug oben ?
+        if (xPos <= TileEngine.ScrolltoX + 380)	// Weit genug oben ?
         {
-            xPos = (float)(pTileEngine->ScrolltoX + 380);
+            xPos = (float)(TileEngine.ScrolltoX + 380);
             Handlung = GEGNER_SPECIAL;
         }
     }
@@ -358,9 +358,9 @@ void GegnerGolem::DoKI(void)
         rotarm1 -= WackelDir * 0.2f SYNC;
         rotarm2 += WackelDir * 0.2f SYNC;
         Wackeln();
-        if (xPos <= pTileEngine->ScrolltoX + 380)	// Weit genug in Mitte  ?
+        if (xPos <= TileEngine.ScrolltoX + 380)	// Weit genug in Mitte  ?
         {
-            xPos = (float)(pTileEngine->ScrolltoX + 380);
+            xPos = (float)(TileEngine.ScrolltoX + 380);
             Handlung = GEGNER_SPECIAL;
         }
     }
@@ -374,10 +374,10 @@ void GegnerGolem::DoKI(void)
         rotarm1 -= WackelDir * 0.2f SYNC;
         rotarm2 += WackelDir * 0.2f SYNC;
         Wackeln();
-        if (xPos >= pTileEngine->ScrolltoX + 540)	// Weit genug rechts ?
+        if (xPos >= TileEngine.ScrolltoX + 540)	// Weit genug rechts ?
         {
             // zurücklaufen?
-            xPos = (float)(pTileEngine->ScrolltoX + 540);
+            xPos = (float)(TileEngine.ScrolltoX + 540);
             Handlung = GEGNER_SPECIAL;
         }
     }
@@ -391,9 +391,9 @@ void GegnerGolem::DoKI(void)
         rotarm1 -= WackelDir * 0.2f SYNC;
         rotarm2 += WackelDir * 0.2f SYNC;
         Wackeln();
-        if (xPos <= pTileEngine->ScrolltoX + 100)	// Weit genug links ?
+        if (xPos <= TileEngine.ScrolltoX + 100)	// Weit genug links ?
         {
-            xPos = (float)(pTileEngine->ScrolltoX + 100);
+            xPos = (float)(TileEngine.ScrolltoX + 100);
             Handlung = GEGNER_SPECIAL2;
             last = GEGNER_SPECIAL2;
             state2 = ARM_SENKEN;
@@ -410,9 +410,9 @@ void GegnerGolem::DoKI(void)
         rotarm1 -= WackelDir * 0.2f SYNC;
         rotarm2 += WackelDir * 0.2f SYNC;
         Wackeln();
-        if (xPos >= pTileEngine->ScrolltoX + 380)	// Weit genug in Mitte  ?
+        if (xPos >= TileEngine.ScrolltoX + 380)	// Weit genug in Mitte  ?
         {
-            xPos = (float)(pTileEngine->ScrolltoX + 380);
+            xPos = (float)(TileEngine.ScrolltoX + 380);
             Handlung = GEGNER_SPECIAL;
         }
     }
@@ -439,8 +439,8 @@ void GegnerGolem::DoKI(void)
                 ShakeScreen(3.0f);
                 SoundManager.PlayWave(75, 128, 15000 + rand()%2000, SOUND_DOORSTOP);
 
-                pGegner->PushGegner((float)(pTileEngine->XOffset + 100.0f + rand()%540),
-                                    (float)(pTileEngine->YOffset + 480), LAVABALL, 50 + rand()%10, 0, false);
+                pGegner->PushGegner((float)(TileEngine.XOffset + 100.0f + rand()%540),
+                                    (float)(TileEngine.YOffset + 480), LAVABALL, 50 + rand()%10, 0, false);
             }
         }
         break;
@@ -462,7 +462,7 @@ void GegnerGolem::DoKI(void)
                 SoundManager.PlayWave(75, 128, 15000 + rand()%2000, SOUND_DOORSTOP);
 
                 pGegner->PushGegner((float)(pAim->xpos - 20.0f + rand()%70),
-                                    (float)(pTileEngine->YOffset + 480), LAVABALL, 50 + rand()%10, 0, false);
+                                    (float)(TileEngine.YOffset + 480), LAVABALL, 50 + rand()%10, 0, false);
 
                 StoneCount--;
 
@@ -494,7 +494,7 @@ void GegnerGolem::DoKI(void)
             //int j = 0; // PICKLE not used
 
             // Golem steht gerade rechts?
-            if (xPos > pTileEngine->ScrolltoX + 400)
+            if (xPos > TileEngine.ScrolltoX + 400)
             {
                 // Dann Steine werfen
                 if (rand()%2 == 0)
@@ -515,7 +515,7 @@ void GegnerGolem::DoKI(void)
             }
 
             // Golem steht gerade in der Mitte?
-            else if (xPos > pTileEngine->ScrolltoX + 120)
+            else if (xPos > TileEngine.ScrolltoX + 120)
             {
                 // Weiterlaufen?
                 if (rand()%3 > 0)
@@ -538,7 +538,7 @@ void GegnerGolem::DoKI(void)
             }
 
             // Golem steht schon links? Dann zurück zur Mitte
-            else if (xPos <= pTileEngine->ScrolltoX + 120)
+            else if (xPos <= TileEngine.ScrolltoX + 120)
             {
                 Handlung = GEGNER_LAUFEN4;
             }

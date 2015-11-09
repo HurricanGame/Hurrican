@@ -30,8 +30,8 @@ GegnerFahrstuhl::GegnerFahrstuhl(int Wert1, int Wert2, bool Light)
 
     if (Value1 == 0)
     {
-        pTileEngine->ParallaxLayer[2].LoadImage("fahrstuhl_parallax.png", 400, 480, 400, 480, 1, 1);
-        pTileEngine->IsElevatorLevel = true;
+        TileEngine.ParallaxLayer[2].LoadImage("fahrstuhl_parallax.png", 400, 480, 400, 480, 1, 1);
+        TileEngine.IsElevatorLevel = true;
     }
 }
 
@@ -44,9 +44,9 @@ void GegnerFahrstuhl::DoDraw(void)
     DirectGraphics.SetFilterMode (true);
 
     // Schatten rendern
-    float l = (float) (g_Fahrstuhl_yPos - pTileEngine->YOffset) - 80;
-    pGegnerGrafix[GegnerArt]->RenderSpriteScaled((float)(xPos-pTileEngine->XOffset - 10),
-            (float)(g_Fahrstuhl_yPos-pTileEngine->YOffset),
+    float l = (float) (g_Fahrstuhl_yPos - TileEngine.YOffset) - 80;
+    pGegnerGrafix[GegnerArt]->RenderSpriteScaled((float)(xPos-TileEngine.XOffset - 10),
+            (float)(g_Fahrstuhl_yPos-TileEngine.YOffset),
             GegnerRect[GegnerArt].right  + 20,
             int (GegnerRect[GegnerArt].bottom + l / 5.0f),
             AnimPhase, 0x99000000);
@@ -54,8 +54,8 @@ void GegnerFahrstuhl::DoDraw(void)
     DirectGraphics.SetFilterMode (false);
 
     // Fahrstuhl rendern
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                           (float)(g_Fahrstuhl_yPos-pTileEngine->YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                                           (float)(g_Fahrstuhl_yPos-TileEngine.YOffset),
                                            AnimPhase, 0xFFFFFFFF);
 }
 
@@ -66,7 +66,7 @@ void GegnerFahrstuhl::DoDraw(void)
 void GegnerFahrstuhl::DoKI(void)
 {
     if (Value1 == 0)
-        pTileEngine->XOffset = xPos + 200 - 320.0f;
+        TileEngine.XOffset = xPos + 200 - 320.0f;
 
     // Feststellen ob der Hurri auf dem Fahrstuhl steht
     PlattformTest(GegnerRect[GegnerArt]);
@@ -78,10 +78,10 @@ void GegnerFahrstuhl::DoKI(void)
             {
                 if (Value1 == 0)
                 {
-                    pTileEngine->Zustand = ZUSTAND_LOCKED;
+                    TileEngine.Zustand = ZUSTAND_LOCKED;
                 }
-                else if (pTileEngine->Zustand != ZUSTAND_SCROLLTOPLAYER)
-                    pTileEngine->ScrollLevel (xPos - 50, yPos - 400, ZUSTAND_SCROLLTOLOCK);
+                else if (TileEngine.Zustand != ZUSTAND_SCROLLTOPLAYER)
+                    TileEngine.ScrollLevel (xPos - 50, yPos - 400, ZUSTAND_SCROLLTOLOCK);
             }
 
             Handlung = GEGNER_FALLEN;				// Fahrstuhl fährt los
@@ -100,7 +100,7 @@ void GegnerFahrstuhl::DoKI(void)
     case GEGNER_FALLEN:
     {
         if (Value1 == 0)
-            pTileEngine->NewYOffset = yPos-320.0f-g_Fahrstuhl_Offset;
+            TileEngine.NewYOffset = yPos-320.0f-g_Fahrstuhl_Offset;
 
         // Spieler "auf" den Fahrstuhl setzen
         if (Value1 != 0)
@@ -111,7 +111,7 @@ void GegnerFahrstuhl::DoKI(void)
                 pPlayer[p]->ypos = yPos - pPlayer[p]->CollideRect.bottom;
             }
 
-            if (pTileEngine->Zustand == ZUSTAND_LOCKED)
+            if (TileEngine.Zustand == ZUSTAND_LOCKED)
                 new_ySpeed =  8.0f;
         }
         else
@@ -177,7 +177,7 @@ void GegnerFahrstuhl::GegnerExplode(void)
     for (int j=0; j < 20; j++)
         pPartikelSystem->PushPartikel(xPos + rand()%400, yPos + rand()%100, SPLITTER);
 
-    pTileEngine->Zustand = ZUSTAND_SCROLLBAR;
+    TileEngine.Zustand = ZUSTAND_SCROLLBAR;
 
     // Spieler springt ab
     //

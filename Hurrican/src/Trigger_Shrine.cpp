@@ -24,7 +24,7 @@ GegnerShrine::GegnerShrine(int Wert1, int Wert2, bool Light)
     Value1			= 1;
     AnimCount	    = 0.0f;
 
-    pTileEngine->MaxOneUps += 2;
+    TileEngine.MaxOneUps += 2;
 }
 
 // --------------------------------------------------------------------------------------

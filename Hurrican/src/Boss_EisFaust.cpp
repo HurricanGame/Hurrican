@@ -37,9 +37,9 @@ void GegnerEisFaust::DoKI(void)
         pHUD->ShowBossHUD(7000, Energy);
 
     // Levelausschnitt auf die Faust zentrieren, sobald dieses sichtbar wird
-    if (Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
+    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        pTileEngine->ScrollLevel((float)Value1,
+        TileEngine.ScrollLevel((float)Value1,
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf die Faust zentrieren
         yPos -= 300;												// und Faust aus dem Screen setzen
 
@@ -76,7 +76,7 @@ void GegnerEisFaust::DoKI(void)
     {
     case GEGNER_NOTVISIBLE:			// Warten bis der Screen zentriert wurde
     {
-        if (pTileEngine->Zustand == ZUSTAND_LOCKED)
+        if (TileEngine.Zustand == ZUSTAND_LOCKED)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
             //DKS - Added function SongIsPlaying() to SoundManagerClass:
@@ -95,7 +95,7 @@ void GegnerEisFaust::DoKI(void)
         DamageTaken = 0.0f;
 
         yPos += float(8.0 SYNC);					// Faust nach unten bewegen
-        if (yPos >= pTileEngine->ScrolltoY)			// Weit genug unten ?
+        if (yPos >= TileEngine.ScrolltoY)			// Weit genug unten ?
         {
             Handlung = GEGNER_LAUFEN;
             xAcc	 = -8.0f;
@@ -106,7 +106,7 @@ void GegnerEisFaust::DoKI(void)
     case GEGNER_EINFLIEGEN:		// Gegner kommt in den Screen geflogen
     {
         yPos += float(8.0 SYNC);					// Faust nach unten bewegen
-        if (yPos >= pTileEngine->ScrolltoY)			// Weit genug unten ?
+        if (yPos >= TileEngine.ScrolltoY)			// Weit genug unten ?
         {
             Handlung = GEGNER_LAUFEN;
             xAcc	 = -8.0f;
@@ -120,12 +120,12 @@ void GegnerEisFaust::DoKI(void)
 
         // Rechts vom Spieler oder zu nahe am rechten Rand ?
         if (pAim->xpos + pAim->CollideRect.right < xPos ||
-                xPos > pTileEngine->ScrolltoX + 480)
+                xPos > TileEngine.ScrolltoX + 480)
             xAcc = -8.0f;							// Dann nach Links fliegen
 
         // Links vom Spieler oder zu nahe am linken Rand ?
         if (pAim->xpos > xPos + GegnerRect[GegnerArt].right ||
-                xPos < pTileEngine->ScrolltoX - 90)
+                xPos < TileEngine.ScrolltoX - 90)
             xAcc = 8.0f;							// Dann nach Rechts fliegen
 
         // Speed nicht zu hoch werde lassen
@@ -189,12 +189,12 @@ void GegnerEisFaust::DoKI(void)
     {
         // Nach dem nach oben fliegen wieder ganz oben ?
         if (ySpeed < 0.0f &&
-                yPos <= pTileEngine->ScrolltoY)
+                yPos <= TileEngine.ScrolltoY)
         {
             Handlung = GEGNER_LAUFEN;
             ySpeed = 0.0f;
             yAcc   = 0.0f;
-            yPos   = float(pTileEngine->ScrolltoY);
+            yPos   = float(TileEngine.ScrolltoY);
             xAcc   = -8.0f;
         }
     }
@@ -204,7 +204,7 @@ void GegnerEisFaust::DoKI(void)
     case GEGNER_SPRINGEN:
     {
         // Oben umkehren neue Aktion machen?
-        if (yPos <= pTileEngine->ScrolltoY - 280.0f)
+        if (yPos <= TileEngine.ScrolltoY - 280.0f)
         {
             if (rand()%2 == 0)
             {
@@ -244,10 +244,10 @@ void GegnerEisFaust::DoKI(void)
         {
             AnimCount += 4.0f;
 
-            if (xPos + 100 > pTileEngine->XOffset		   &&
-                    xPos + 100 < pTileEngine->XOffset + 620.0f &&
-                    yPos + 220 > pTileEngine->XOffset		   &&
-                    yPos + 220 < pTileEngine->XOffset + 440.0f)
+            if (xPos + 100 > TileEngine.XOffset		   &&
+                    xPos + 100 < TileEngine.XOffset + 620.0f &&
+                    yPos + 220 > TileEngine.XOffset		   &&
+                    yPos + 220 < TileEngine.XOffset + 440.0f)
                 pGegner->PushGegner (xPos + 100, yPos + 220, EISZAPFEN, 1, 0, false);
         }
 
@@ -271,7 +271,7 @@ void GegnerEisFaust::DoKI(void)
             xAcc   = 0.0f;
             ySpeed = 0.0f;
             yAcc   = 0.0f;
-            yPos   = float(pTileEngine->ScrolltoY - 400.0f);
+            yPos   = float(TileEngine.ScrolltoY - 400.0f);
             xPos   = float (Value1) + 200;
         }
 
@@ -309,13 +309,13 @@ void GegnerEisFaust::DoKI(void)
     case GEGNER_STEHEN:
     {
         // Nach dem nach oben fliegen wieder ganz oben ?
-        if (yPos <= pTileEngine->ScrolltoY - 280.0f)
+        if (yPos <= TileEngine.ScrolltoY - 280.0f)
         {
             AnimPhase = 0;					// Wieder Faust von der Seite
             Handlung = GEGNER_EINFLIEGEN;
             ySpeed = 0.0f;
             yAcc   = 0.0f;
-            yPos   = float(pTileEngine->ScrolltoY - 250.0f);
+            yPos   = float(TileEngine.ScrolltoY - 250.0f);
         }
     }
     break;

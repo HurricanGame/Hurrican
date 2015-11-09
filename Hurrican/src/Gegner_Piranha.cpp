@@ -77,8 +77,8 @@ void GegnerPiranha::DoDraw(void)
     else
         off = 20;
 
-    pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-pTileEngine->XOffset),
-                                            (float)(yPos-pTileEngine->YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-TileEngine.XOffset),
+                                            (float)(yPos-TileEngine.YOffset),
                                             off+AnimPhase, 0xFFFFFFFF, mirror);
 }
 
@@ -121,8 +121,8 @@ void GegnerPiranha::DoKI(void)
             yPos -= 4.0f SYNC;
 
         if (pAim->ypos+4+Value2 > yPos &&	// unterhalb des Piranhas
-                !(pTileEngine->BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_WAND) &&
-                !(pTileEngine->BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_GEGNERWAND))
+                !(TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_WAND) &&
+                !(TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_GEGNERWAND))
             yPos += 4.0f SYNC;			// Dann auf ihn zu schwimmen
     }
 

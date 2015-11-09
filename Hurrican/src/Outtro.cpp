@@ -57,7 +57,7 @@ OuttroClass::OuttroClass(void)
     SoundManager.StopSongs();
     SoundManager.StopSounds();
 
-    pTileEngine->ClearLevel();
+    TileEngine.ClearLevel();
 
     // Ein paar Schneepartikel adden
     for (int i = 0; i < 100; i++)

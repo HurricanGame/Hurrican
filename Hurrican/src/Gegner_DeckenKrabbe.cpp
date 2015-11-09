@@ -37,8 +37,8 @@ void GegnerDeckenKrabbe::DoDraw(void)
     else
         mirror = true;
 
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated((float)(xPos-pTileEngine->XOffset),
-            (float)(yPos-pTileEngine->YOffset), zRot, AnimPhase, 0xFFFFFFFF, mirror);
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated((float)(xPos-TileEngine.XOffset),
+            (float)(yPos-TileEngine.YOffset), zRot, AnimPhase, 0xFFFFFFFF, mirror);
 
     // Testen, ob der Spieler die Krabbe berührt hat
     TestDamagePlayers(8.0f SYNC);
@@ -60,7 +60,7 @@ void GegnerDeckenKrabbe::DoKI(void)
         if (!(blocku & BLOCKWERT_SCHRAEGE_R) &&
                 !(blocku & BLOCKWERT_SCHRAEGE_L))
         {
-            blocku = pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+            blocku = TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
             if (!(blocku & BLOCKWERT_WAND) &&
                     !(blocku & BLOCKWERT_PLATTFORM))
@@ -86,7 +86,7 @@ void GegnerDeckenKrabbe::DoKI(void)
         // Schrägen checken
         //
         if (ySpeed >= 0.0f)
-            blocku = pTileEngine->BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed, true);
+            blocku = TileEngine.BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed, true);
     }
 
     switch (Handlung)
@@ -104,11 +104,11 @@ void GegnerDeckenKrabbe::DoKI(void)
             // Rotationsspeed errechnen, je nachdem, wie weit der Boden entfernt ist
             //
             int a = 0;
-            int b = pTileEngine->Tiles[(int)(xPos / TILESIZE_X)][(int)(yPos / TILESIZE_Y) + a].Block;
+            int b = TileEngine.Tiles[(int)(xPos / TILESIZE_X)][(int)(yPos / TILESIZE_Y) + a].Block;
 
             while (a < 20 && !(b & BLOCKWERT_WAND))
             {
-                b = pTileEngine->Tiles[(int)(xPos / TILESIZE_X)][(int)(yPos / TILESIZE_Y) + a].Block;
+                b = TileEngine.Tiles[(int)(xPos / TILESIZE_X)][(int)(yPos / TILESIZE_Y) + a].Block;
                 a++;
             }
 

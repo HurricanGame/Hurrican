@@ -64,11 +64,11 @@ void GegnerSpiderBomb::DoKI(void)
         }
 
     if (ySpeed >= 0.0f)
-        blocku = pTileEngine->BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed, true);
+        blocku = TileEngine.BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed, true);
 
     if (!(blocku & BLOCKWERT_SCHRAEGE_R) &&
             !(blocku & BLOCKWERT_SCHRAEGE_L))
-        blocku = pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+        blocku = TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
 
 // Je nach Handlung richtig verhalten

@@ -102,7 +102,7 @@ void GegnerClass::Render(void)
     else
     {
         if (ChangeLight == true)
-            Color = pTileEngine->LightValue(xPos, yPos, GegnerRect[GegnerArt], ForceLight);
+            Color = TileEngine.LightValue(xPos, yPos, GegnerRect[GegnerArt], ForceLight);
         else
             Color = 0xFFFFFFFF;
     }
@@ -118,8 +118,8 @@ void GegnerClass::Render(void)
             //DKS - Adapted to new TexturesystemClass
             //if (pGegnerGrafix[GegnerArt]->itsTexture != 0)
             if (pGegnerGrafix[GegnerArt]->itsTexIdx != -1)
-                pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                                       (float)(yPos-pTileEngine->YOffset),
+                pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                                                       (float)(yPos-TileEngine.YOffset),
                                                        Anim, Color, mirrored);
         }
         // DAS ist die Extrawurst =)
@@ -149,15 +149,20 @@ void GegnerClass::Render(void)
                     //DKS - Adapted to new TexturesystemClass
                     //if (pGegnerGrafix[GegnerArt]->itsTexture != 0)
                     if (pGegnerGrafix[GegnerArt]->itsTexIdx != -1)
+                        //DKS - TODO: I didn't really find it necessary to draw the
+                        //      sprite atop itself additively twice here, after experimenting.
+                        //      I've left it as it was originally for now, however:
                         for (int i = 0; i < 2; i++)
-                            pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                                                   (float)(yPos-pTileEngine->YOffset),
+                            pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                                                                   (float)(yPos-TileEngine.YOffset),
                                                                    Anim, Color, mirrored);
                 }
 
-                //DKS - TODO: Why is DoDraw() being called twice??
                 // Wieder Extrawurst
                 else if (OwnDraw  == true)
+                    //DKS - TODO: I didn't really find it necessary to draw the
+                    //      sprite atop itself additively twice here, after experimenting.
+                    //      I've left it as it was originally for now, however:
                     for (int i = 0; i < 2; i++)
                         DoDraw();
 
@@ -183,8 +188,8 @@ void GegnerClass::Render(void)
     {
         char Buffer[10];
         _itoa_s(PlayerAbstand(), Buffer, 10);
-        pMenuFont->DrawText(float(xPos-pTileEngine->XOffset),
-                            float(yPos-pTileEngine->YOffset), Buffer, 0xFFFFFFFF);
+        pMenuFont->DrawText(float(xPos-TileEngine.XOffset),
+                            float(yPos-TileEngine.YOffset), Buffer, 0xFFFFFFFF);
     }
 #endif //_DEBUG
 }
@@ -221,10 +226,10 @@ bool GegnerClass::Run(void)
         // Feststellen welche Blockarten um den Gegner herum existieren
         if (TestBlock == true)
         {
-            blockl = pTileEngine->BlockLinks	   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
-            blockr = pTileEngine->BlockRechts	   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
-            blocko = pTileEngine->BlockOben		   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
-            blocku = pTileEngine->BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+            blockl = TileEngine.BlockLinks	   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+            blockr = TileEngine.BlockRechts	   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+            blocko = TileEngine.BlockOben		   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+            blocku = TileEngine.BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
         }
         else
             blockl = blockr = blocko = blocku = 0;
@@ -248,8 +253,8 @@ bool GegnerClass::Run(void)
         if (GegnerArt != FAHRSTUHL &&
                 (xPos + GegnerRect[GegnerArt].right  < 0.0f ||
                  yPos + GegnerRect[GegnerArt].bottom < 0.0f ||
-                 xPos > pTileEngine->LEVELPIXELSIZE_X ||
-                 yPos > pTileEngine->LEVELPIXELSIZE_Y))
+                 xPos > TileEngine.LEVELPIXELSIZE_X ||
+                 yPos > TileEngine.LEVELPIXELSIZE_Y))
             Energy = 0.0f;
 
         // Gegner Energie abziehen, wenn der Spieler ein Rad ist
@@ -282,10 +287,10 @@ bool GegnerClass::Run(void)
         // Taucht der Gegner im Screen auf und wird dadurch aktiviert ?
         // Dann auch in Richtung Spieler blicken lassen
         //
-        if (yPos-pTileEngine->YOffset < 480 &&
-                yPos-pTileEngine->YOffset > 0 - GegnerRect[GegnerArt].bottom   &&
-                xPos-pTileEngine->XOffset < 640 &&
-                xPos-pTileEngine->XOffset > 0 - GegnerRect[GegnerArt].right)
+        if (yPos-TileEngine.YOffset < 480 &&
+                yPos-TileEngine.YOffset > 0 - GegnerRect[GegnerArt].bottom   &&
+                xPos-TileEngine.XOffset < 640 &&
+                xPos-TileEngine.XOffset > 0 - GegnerRect[GegnerArt].right)
         {
             Active = true;
 
@@ -302,10 +307,10 @@ bool GegnerClass::Run(void)
 
             if (TestBlock == true)
             {
-                blockl = pTileEngine->BlockLinks	   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
-                blockr = pTileEngine->BlockRechts	   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
-                blocko = pTileEngine->BlockOben		   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
-                blocku = pTileEngine->BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+                blockl = TileEngine.BlockLinks	   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+                blockr = TileEngine.BlockRechts	   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+                blocko = TileEngine.BlockOben		   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+                blocku = TileEngine.BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
             }
             else
                 blockl = blockr = blocko = blocku = 0;
@@ -422,8 +427,8 @@ void GegnerClass::PlattformTest(RECT rect)
             float x = pPlayer[p]->xpos;
             float y = pPlayer[p]->ypos;
 
-            int br = pTileEngine->BlockRechts(x, y, x, y, pPlayer[p]->CollideRect);
-            int bl = pTileEngine->BlockLinks (x, y, x, y, pPlayer[p]->CollideRect);
+            int br = TileEngine.BlockRechts(x, y, x, y, pPlayer[p]->CollideRect);
+            int bl = TileEngine.BlockLinks (x, y, x, y, pPlayer[p]->CollideRect);
 
             if ((xSpeed > 0.0f && !(br & BLOCKWERT_WAND)) ||
                     (xSpeed < 0.0f && !(bl & BLOCKWERT_WAND)))
@@ -452,8 +457,8 @@ void GegnerClass::PlattformTest(RECT rect)
             // eingestellt, weil man beim pharao boss am anfang nicht draufsteht, wenn er rauskommt
             // bringt das nachteile, wenn man das blockunten nicht abgfragt? bitte testen ;)
             if (pPlayer[p]->yspeed >= 0.0f)//       &&
-                //!(pTileEngine->BlockUntenNormal(pPlayer->xpos, pPlayer->ypos, pPlayer->xposold, pPlayer->yposold, pPlayer->CollideRect) & BLOCKWERT_WAND) &&
-                //!(pTileEngine->BlockUntenNormal(pPlayer->xpos, pPlayer->ypos, pPlayer->xposold, pPlayer->yposold, pPlayer->CollideRect) & BLOCKWERT_PLATTFORM))
+                //!(TileEngine.BlockUntenNormal(pPlayer->xpos, pPlayer->ypos, pPlayer->xposold, pPlayer->yposold, pPlayer->CollideRect) & BLOCKWERT_WAND) &&
+                //!(TileEngine.BlockUntenNormal(pPlayer->xpos, pPlayer->ypos, pPlayer->xposold, pPlayer->yposold, pPlayer->CollideRect) & BLOCKWERT_PLATTFORM))
 
                 for (int i=0; i < laenge; i++)
                     if (pPlayer[p]->yposold+pPlayer[p]->CollideRect.bottom+i+1 >= yPos + rect.top      &&
@@ -495,13 +500,13 @@ void GegnerClass::Wegschieben(RECT rect, float dam)
 
                 // Spieler wegschieben
                 if   (pPlayer[i]->xpos + 35 < xPos + rect.left + (rect.right - rect.left) / 2 &&
-                        !(pTileEngine->BlockLinks(pPlayer[i]->xpos, pPlayer[i]->ypos,
+                        !(TileEngine.BlockLinks(pPlayer[i]->xpos, pPlayer[i]->ypos,
                                                   pPlayer[i]->xpos, pPlayer[i]->ypos,
                                                   pPlayer[i]->CollideRect) & BLOCKWERT_WAND))
                     pPlayer[i]->xpos -= (PLAYER_MOVESPEED + 1) SYNC;
 
                 if   (pPlayer[i]->xpos + 35 >= xPos + rect.left + (rect.right - rect.left) / 2 &&
-                        !(pTileEngine->BlockRechts(pPlayer[i]->xpos, pPlayer[i]->ypos,
+                        !(TileEngine.BlockRechts(pPlayer[i]->xpos, pPlayer[i]->ypos,
                                                    pPlayer[i]->xpos, pPlayer[i]->ypos,
                                                    pPlayer[i]->CollideRect) & BLOCKWERT_WAND))
                     pPlayer[i]->xpos += (PLAYER_MOVESPEED + 1) SYNC;
@@ -609,10 +614,10 @@ bool GegnerClass::IsOnScreen(void)
     }
 
 
-    if (xPos + xsize < pTileEngine->XOffset ||
-            xPos + off > pTileEngine->XOffset + 640.0f ||
-            yPos + ysize < pTileEngine->YOffset ||
-            yPos > pTileEngine->YOffset + 480.0f)
+    if (xPos + xsize < TileEngine.XOffset ||
+            xPos + off > TileEngine.XOffset + 640.0f ||
+            yPos + ysize < TileEngine.YOffset ||
+            yPos > TileEngine.YOffset + 480.0f)
         return false;
 
     return true;
@@ -2686,10 +2691,10 @@ void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage)
                 pTemp->GegnerArt   == STAMPFSTEIN &&
                 pTemp->Handlung    == GEGNER_STEHEN &&
                 dx < 300						  &&
-                pTemp->xPos + GegnerRect[pTemp->GegnerArt].right  > pTileEngine->XOffset		  &&
-                pTemp->xPos + GegnerRect[pTemp->GegnerArt].left   < pTileEngine->XOffset + 640	  &&
-                pTemp->yPos + GegnerRect[pTemp->GegnerArt].bottom > pTileEngine->YOffset		  &&
-                pTemp->yPos + GegnerRect[pTemp->GegnerArt].top    < pTileEngine->YOffset + 480)
+                pTemp->xPos + GegnerRect[pTemp->GegnerArt].right  > TileEngine.XOffset		  &&
+                pTemp->xPos + GegnerRect[pTemp->GegnerArt].left   < TileEngine.XOffset + 640	  &&
+                pTemp->yPos + GegnerRect[pTemp->GegnerArt].bottom > TileEngine.YOffset		  &&
+                pTemp->yPos + GegnerRect[pTemp->GegnerArt].top    < TileEngine.YOffset + 480)
         {
             pTemp->Handlung = GEGNER_FALLEN;
             pTemp->ySpeed   = 20.0f;
@@ -2706,10 +2711,10 @@ void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage)
                 pTemp->Destroyable == true		    &&
                 pTemp->GegnerArt   != POWERBLOCK	&&
                 pTemp->GegnerArt < RIESENPIRANHA    &&
-                pTemp->xPos + GegnerRect[pTemp->GegnerArt].right  > pTileEngine->XOffset		  &&
-                pTemp->xPos + GegnerRect[pTemp->GegnerArt].left   < pTileEngine->XOffset + 640	  &&
-                pTemp->yPos + GegnerRect[pTemp->GegnerArt].bottom > pTileEngine->YOffset		  &&
-                pTemp->yPos + GegnerRect[pTemp->GegnerArt].top    < pTileEngine->YOffset + 480)
+                pTemp->xPos + GegnerRect[pTemp->GegnerArt].right  > TileEngine.XOffset		  &&
+                pTemp->xPos + GegnerRect[pTemp->GegnerArt].left   < TileEngine.XOffset + 640	  &&
+                pTemp->yPos + GegnerRect[pTemp->GegnerArt].bottom > TileEngine.YOffset		  &&
+                pTemp->yPos + GegnerRect[pTemp->GegnerArt].top    < TileEngine.YOffset + 480)
         {
             int amount = (int)(MaxDamage - dx);
 

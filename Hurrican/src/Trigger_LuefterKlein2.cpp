@@ -34,9 +34,9 @@ GegnerLuefterKlein2::GegnerLuefterKlein2(int Wert1, int Wert2, bool Light)
 
 void GegnerLuefterKlein2::DoDraw(void)
 {
-    D3DCOLOR Color = pTileEngine->LightValue(xPos, yPos, GegnerRect[GegnerArt], ForceLight);
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                           (float)(yPos-pTileEngine->YOffset),
+    D3DCOLOR Color = TileEngine.LightValue(xPos, yPos, GegnerRect[GegnerArt], ForceLight);
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                                           (float)(yPos-TileEngine.YOffset),
                                            AnimPhase, Color, false);
 }
 

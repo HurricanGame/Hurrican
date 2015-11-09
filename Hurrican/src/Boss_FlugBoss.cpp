@@ -71,41 +71,41 @@ void GegnerFlugBoss::DoDraw(void)
 {
     // Schienen
     SchieneL.RenderSprite(-SchienePos,
-                          (float)(yPos-pTileEngine->YOffset) + 161,
+                          (float)(yPos-TileEngine.YOffset) + 161,
                           0xFFFFFFFF);
 
     SchieneR.RenderSprite(320 + SchienePos,
-                          (float)(yPos-pTileEngine->YOffset) + 161,
+                          (float)(yPos-TileEngine.YOffset) + 161,
                           0xFFFFFFFF);
 
     // Fette Kanone
-    Kanone_big.RenderSprite((float) (- pTileEngine->XOffset + xPos + 121),
-                            (float) (- pTileEngine->YOffset + yPos + 249 - yKanone[0]),
+    Kanone_big.RenderSprite((float) (- TileEngine.XOffset + xPos + 121),
+                            (float) (- TileEngine.YOffset + yPos + 249 - yKanone[0]),
                             0xFFFFFFFF);
 
     // Medium Kanone
-    Kanone_medium.RenderSprite((float) (- pTileEngine->XOffset + xPos + 148),
-                               (float) (- pTileEngine->YOffset + yPos + 254 - yKanone[1]),
+    Kanone_medium.RenderSprite((float) (- TileEngine.XOffset + xPos + 148),
+                               (float) (- TileEngine.YOffset + yPos + 254 - yKanone[1]),
                                0xFFFFFFFF);
 
     // Mini Kanone 1
-    Kanone_small.RenderSprite((float) (- pTileEngine->XOffset + xPos + 68),
-                              (float) (- pTileEngine->YOffset + yPos + 261 - yKanone[2]),
+    Kanone_small.RenderSprite((float) (- TileEngine.XOffset + xPos + 68),
+                              (float) (- TileEngine.YOffset + yPos + 261 - yKanone[2]),
                               0xFFFFFFFF);
 
     // Mini Kanone 2
-    Kanone_small.RenderSprite((float) (- pTileEngine->XOffset + xPos + 78),
-                              (float) (- pTileEngine->YOffset + yPos + 251 - yKanone[3]),
+    Kanone_small.RenderSprite((float) (- TileEngine.XOffset + xPos + 78),
+                              (float) (- TileEngine.YOffset + yPos + 251 - yKanone[3]),
                               0xFFFFFFFF);
 
     // Schatten
-    RenderRect ((float)(xPos-pTileEngine->XOffset + 255),
-                (float)(yPos-pTileEngine->YOffset + 161),
+    RenderRect ((float)(xPos-TileEngine.XOffset + 255),
+                (float)(yPos-TileEngine.YOffset + 161),
                 18, 80, 0x88000000);
 
     // Main
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                           (float)(yPos-pTileEngine->YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                                           (float)(yPos-TileEngine.YOffset),
                                            AnimPhase, 0xFFFFFFFF);
 
     //int a = int (alphaAuge); // PICKLE not used
@@ -114,19 +114,19 @@ void GegnerFlugBoss::DoDraw(void)
     Hitzone[0].RenderSprite(xHit, 380.0f + yHit, 0, 0xFFFFFFFF);
     Hitzone[1].RenderSprite(xHit, 401.0f + yHit, 0, 0xFFFFFFFF);
 
-    GegnerRect[GegnerArt].left   = int (xHit + pTileEngine->XOffset - xPos);
+    GegnerRect[GegnerArt].left   = int (xHit + TileEngine.XOffset - xPos);
     GegnerRect[GegnerArt].right  = int (GegnerRect[GegnerArt].left + 52);
-    GegnerRect[GegnerArt].top    = int (380 + pTileEngine->YOffset - yPos + yHit);
+    GegnerRect[GegnerArt].top    = int (380 + TileEngine.YOffset - yPos + yHit);
     GegnerRect[GegnerArt].bottom = int (GegnerRect[GegnerArt].top + 100);
 
     // Geschuetz
     Geschuetz.RenderSpriteRotated(xKanone - 62,
-                                  (float) (- pTileEngine->YOffset + yPos + 160), Winkel[0], 0,
+                                  (float) (- TileEngine.YOffset + yPos + 160), Winkel[0], 0,
                                   0xFFFFFFFF);
 
     // Geschuetz
     Geschuetz.RenderSpriteRotated(640 - xKanone,
-                                  (float) (- pTileEngine->YOffset + yPos + 160), Winkel[1], 0,
+                                  (float) (- TileEngine.YOffset + yPos + 160), Winkel[1], 0,
                                   0xFFFFFFFF);
 
     // Auge
@@ -145,8 +145,8 @@ void GegnerFlugBoss::DoDraw(void)
         alphaDir  = 1.0f;
     }
 
-    Auge.RenderSprite((float) (- pTileEngine->XOffset + xPos + 175),
-                      (float) (- pTileEngine->YOffset + yPos + 182), 0,
+    Auge.RenderSprite((float) (- TileEngine.XOffset + xPos + 175),
+                      (float) (- TileEngine.YOffset + yPos + 182), 0,
                       0xFFFFFFFF);
 }
 
@@ -177,9 +177,9 @@ void GegnerFlugBoss::DoKI(void)
     	} // animieren
 
     	// Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
-    	if (Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
+    	if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     	{
-    		pTileEngine->ScrollLevel((float)Value1,
+    		TileEngine.ScrollLevel((float)Value1,
     								 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
     		SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
@@ -209,7 +209,7 @@ void GegnerFlugBoss::DoKI(void)
     	{
     		case GEGNER_INIT:			// Warten bis der Screen zentriert wurde
     		{
-    			if (pTileEngine->Zustand == ZUSTAND_LOCKED)
+    			if (TileEngine.Zustand == ZUSTAND_LOCKED)
     			{
     				tempSpeed = 35.0f;
     				Handlung  = GEGNER_INIT2;
@@ -505,8 +505,8 @@ void GegnerFlugBoss::DoKI(void)
     					}
     				}
 
-    				if ((xSpeed < 0.0f && xPos - pTileEngine->XOffset < 100) ||
-    					(xSpeed > 0.0f && xPos - pTileEngine->XOffset > 640 - 280 - 100))
+    				if ((xSpeed < 0.0f && xPos - TileEngine.XOffset < 100) ||
+    					(xSpeed > 0.0f && xPos - TileEngine.XOffset > 640 - 280 - 100))
     					xSpeed *= -1.0f;
 
     			} break;
@@ -575,11 +575,11 @@ void GegnerFlugBoss::GegnerExplode(void)
     	// negativen liegt, da sonst das Spiel hängenbleibt =)
     	//
     	if (pPlayer->xpos - 300 <= 0)
-    		pTileEngine->ScrollLevel(0,
+    		TileEngine.ScrollLevel(0,
     								 pPlayer->ypos - 280, ZUSTAND_SCROLLTOPLAYER);
     	else
 
-    		pTileEngine->ScrollLevel(pPlayer->xpos - 300,
+    		TileEngine.ScrollLevel(pPlayer->xpos - 300,
     								 pPlayer->ypos - 280, ZUSTAND_SCROLLTOPLAYER);
     								 */
 

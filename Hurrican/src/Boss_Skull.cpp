@@ -119,12 +119,12 @@ void GegnerSkull::DoKI(void)
                 pPartikelSystem->PushPartikel(xPos + rand()%30 - 10, yPos + rand()%20 - 10, SPIDERSPLITTER);
         }
 
-        if (xPos + 16 > pTileEngine->XOffset + 320.0f)
+        if (xPos + 16 > TileEngine.XOffset + 320.0f)
             xAcc = -4.0f;
         else
             xAcc = 4.0f;
 
-        if (yPos + 20 > pTileEngine->YOffset + 200.0f)
+        if (yPos + 20 > TileEngine.YOffset + 200.0f)
             yAcc = -4.0f;
         else
             yAcc = 4.0f;
@@ -172,13 +172,13 @@ void GegnerSkull::DoKI(void)
             pTimer->SetMoveSpeed(10.0f);
 
             // Flugsäcke spawnen
-            pGegner->PushGegner((float)(pTileEngine->XOffset + 200.0f),
-                                (float)(pTileEngine->YOffset - 40.0f),
+            pGegner->PushGegner((float)(TileEngine.XOffset + 200.0f),
+                                (float)(TileEngine.YOffset - 40.0f),
                                 REITFLUGSACK, 1, 0, false);
 
             if (NUMPLAYERS ==2 )
-                pGegner->PushGegner((float)(pTileEngine->XOffset + 300.0f),
-                                    (float)(pTileEngine->YOffset - 50.0f),
+                pGegner->PushGegner((float)(TileEngine.XOffset + 300.0f),
+                                    (float)(TileEngine.YOffset - 50.0f),
                                     REITFLUGSACK, 1, 0, false);
         }
     }
@@ -208,12 +208,12 @@ void GegnerSkull::DoKI(void)
             if (ySpeed >  15.0f) ySpeed =  15.0f;
             if (ySpeed < -15.0f) ySpeed = -15.0f;
 
-            if ((xSpeed < 0.0f && xPos < pTileEngine->XOffset) ||
-                    (xSpeed > 0.0f && xPos > pTileEngine->XOffset + 640.0f))
+            if ((xSpeed < 0.0f && xPos < TileEngine.XOffset) ||
+                    (xSpeed > 0.0f && xPos > TileEngine.XOffset + 640.0f))
                 xSpeed *= -1.0f;
 
-            if ((ySpeed < 0.0f && yPos < pTileEngine->YOffset) ||
-                    (ySpeed > 0.0f && yPos > pTileEngine->YOffset + 640.0f))
+            if ((ySpeed < 0.0f && yPos < TileEngine.YOffset) ||
+                    (ySpeed > 0.0f && yPos > TileEngine.YOffset + 640.0f))
                 ySpeed *= -1.0f;
         }
     }

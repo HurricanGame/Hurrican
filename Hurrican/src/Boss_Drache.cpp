@@ -158,14 +158,14 @@ void GegnerDrache::DoDraw(void)
 
     // Hinteres Bein rendern
     //
-    Leg.RenderSpriteRotatedOffset((float)(xPos-pTileEngine->XOffset) - 140 - mirrorOffset * 270,
-                                  (float)(yPos-pTileEngine->YOffset) + 95 + DrawYOffset,
+    Leg.RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset) - 140 - mirrorOffset * 270,
+                                  (float)(yPos-TileEngine.YOffset) + 95 + DrawYOffset,
                                   (float)(cos(AnimWinkel)) * 10.0f, 87, -25, 0xFF888888, (mirrored < 0));
 
     // Hinterer Arm rendern
     //
-    Arm.RenderSpriteRotatedOffset((float)(xPos-pTileEngine->XOffset) + 140 + mirrorOffset * 210,
-                                  (float)(yPos-pTileEngine->YOffset) + 100 + DrawYOffset,
+    Arm.RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset) + 140 + mirrorOffset * 210,
+                                  (float)(yPos-TileEngine.YOffset) + 100 + DrawYOffset,
                                   (float)(sin(AnimWinkel)) * 10.0f, -42, -35, 0xFF888888, (mirrored < 0));
 
     // Halswirbel?
@@ -197,8 +197,8 @@ void GegnerDrache::DoDraw(void)
         float yadd = HeadY / dist * 10.0f;
         while (render-- > 0)
         {
-            Tail.RenderSpriteRotated((float)(xPos-pTileEngine->XOffset) + 200 + mirrorOffset * 220 + xoff * Position,
-                                     (float)(yPos-pTileEngine->YOffset) + 60 + yoff + DrawYOffset, winkel, 0xFFFFFFFF);
+            Tail.RenderSpriteRotated((float)(xPos-TileEngine.XOffset) + 200 + mirrorOffset * 220 + xoff * Position,
+                                     (float)(yPos-TileEngine.YOffset) + 60 + yoff + DrawYOffset, winkel, 0xFFFFFFFF);
             // ein wirbel weiter
             if (Position == LINKS)
             {
@@ -219,23 +219,23 @@ void GegnerDrache::DoDraw(void)
 
     // Körper rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-pTileEngine->XOffset),
-            (float)(yPos-pTileEngine->YOffset) + DrawYOffset,
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-TileEngine.XOffset),
+            (float)(yPos-TileEngine.YOffset) + DrawYOffset,
             0, 0, 0xFFFFFFFF, (mirrored < 0));
 
     // Knubbel am Hals rendern
-    pGegnerGrafix[MINIDRAGON]->RenderSprite((float)(xPos-pTileEngine->XOffset) + 170 + mirrorOffset * 210,
-                                            (float)(yPos-pTileEngine->YOffset) + 55 + DrawYOffset, 4, 0xFFFFFFFF);
+    pGegnerGrafix[MINIDRAGON]->RenderSprite((float)(xPos-TileEngine.XOffset) + 170 + mirrorOffset * 210,
+                                            (float)(yPos-TileEngine.YOffset) + 55 + DrawYOffset, 4, 0xFFFFFFFF);
 
     // Schwanz rendern
     //
     int i = 0;
-    float tempx = (float)(xPos-pTileEngine->XOffset) + 10.0f - mirrorOffset * 165;
+    float tempx = (float)(xPos-TileEngine.XOffset) + 10.0f - mirrorOffset * 165;
 
     for (i = 0; i < NUM_TAILS; i++)
     {
         Tail.RenderSpriteScaled(tempx,
-                                (float)(yPos-pTileEngine->YOffset) + 20.0f + (float)(sin(TailSinus + i / 7.0f) * i) + 42.0f + DrawYOffset,
+                                (float)(yPos-TileEngine.YOffset) + 20.0f + (float)(sin(TailSinus + i / 7.0f) * i) + 42.0f + DrawYOffset,
                                 12 - i / 4, 29  - i / 2, 0, 0xFFFFFFFF);
         tempx -= (12 - i / 4) * mirrored;
     }
@@ -245,33 +245,33 @@ void GegnerDrache::DoDraw(void)
     bool isMirrored = false;
     isMirrored = (mirrored < 0);
     Spitze.RenderSprite(tempx - 37 - mirrorOffset * 37.0f,
-                        (float)(yPos-pTileEngine->YOffset) + 17.0f + (float)(sin((float)(TailSinus + i / 7.0f)) * i) + 36.0f + DrawYOffset,
+                        (float)(yPos-TileEngine.YOffset) + 17.0f + (float)(sin((float)(TailSinus + i / 7.0f)) * i) + 36.0f + DrawYOffset,
                         0, 0xFFFFFFFF, isMirrored);
 
     // Unterkiefer
     //
-    Head[1].RenderSpriteRotatedOffset((float)(xPos-pTileEngine->XOffset) + 190 + mirrorOffset * 276 + HeadX,
-                                      (float)(yPos-pTileEngine->YOffset) + 50 + HeadY + DrawYOffset,
+    Head[1].RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset) + 190 + mirrorOffset * 276 + HeadX,
+                                      (float)(yPos-TileEngine.YOffset) + 50 + HeadY + DrawYOffset,
                                       (float)(HeadWinkel + sin(KieferWinkel) * 10.0f) - 10.0f,
                                       -40, -10, 0xFFFFFFFF, (mirrored < 0));
     // Kopf
     //
-    Head[0].RenderSpriteRotatedOffset((float)(xPos-pTileEngine->XOffset) + 180 + mirrorOffset * 276 + HeadX,
-                                      (float)(yPos-pTileEngine->YOffset) + 15 + HeadY + DrawYOffset,
+    Head[0].RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset) + 180 + mirrorOffset * 276 + HeadX,
+                                      (float)(yPos-TileEngine.YOffset) + 15 + HeadY + DrawYOffset,
                                       (float)(HeadWinkel - sin(KieferWinkel) * 10.0f) + 10.0f,
                                       -35, 15, 0xFFFFFFFF, (mirrored < 0));
 
     // Vorderes Bein rendern
     //
-    Leg.RenderSpriteRotatedOffset((float)(xPos-pTileEngine->XOffset) - 140 - mirrorOffset * 270,
-                                  (float)(yPos-pTileEngine->YOffset) + 85 + DrawYOffset,
+    Leg.RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset) - 140 - mirrorOffset * 270,
+                                  (float)(yPos-TileEngine.YOffset) + 85 + DrawYOffset,
                                   (float)(sin(AnimWinkel)) * 12.0f, 87, -25, 0xFFFFFFFF, (mirrored < 0));
 
 
     // Vorderer Arm rendern
     //
-    Arm.RenderSpriteRotatedOffset((float)(xPos-pTileEngine->XOffset) + 140 + mirrorOffset * 210,
-                                  (float)(yPos-pTileEngine->YOffset) + 90 + DrawYOffset,
+    Arm.RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset) + 140 + mirrorOffset * 210,
+                                  (float)(yPos-TileEngine.YOffset) + 90 + DrawYOffset,
                                   (float)(cos(AnimWinkel)) * 12.0f, -42, -35, 0xFFFFFFFF, (mirrored < 0));
 
 
@@ -285,11 +285,11 @@ void GegnerDrache::DoDraw(void)
                     Attack == GEGNER_LAUFEN)
             {
                 DirectGraphics.SetAdditiveMode();
-                pProjectiles->LavaFlare.RenderSpriteScaledRotated (float (xPos - 100 - pTileEngine->XOffset) - mirrorOffset * 230,
-                                                     float (yPos -  55 - pTileEngine->YOffset) + DrawYOffset, 180, 180, FlareRot, 0xFF66FF66);
+                pProjectiles->LavaFlare.RenderSpriteScaledRotated (float (xPos - 100 - TileEngine.XOffset) - mirrorOffset * 230,
+                                                     float (yPos -  55 - TileEngine.YOffset) + DrawYOffset, 180, 180, FlareRot, 0xFF66FF66);
 
-                pProjectiles->LavaFlare.RenderSpriteScaledRotated (float (xPos - 40 - pTileEngine->XOffset) - mirrorOffset * 230,
-                                                     float (yPos - 10 - pTileEngine->YOffset) + DrawYOffset, 90, 90, FlareRot*2, 0xFF88AAFF);
+                pProjectiles->LavaFlare.RenderSpriteScaledRotated (float (xPos - 40 - TileEngine.XOffset) - mirrorOffset * 230,
+                                                     float (yPos - 10 - TileEngine.YOffset) + DrawYOffset, 90, 90, FlareRot*2, 0xFF88AAFF);
                 DirectGraphics.SetColorKeyMode();
             }
 
@@ -301,8 +301,8 @@ void GegnerDrache::DoDraw(void)
             ArrowCount = 2.0f;
 
         if ((int)(ArrowCount) % 2 == 0)
-            pHUD->Arrow.RenderMirroredSprite((float)(xPos - pTileEngine->XOffset) + 50,
-                                             (float)(yPos - pTileEngine->YOffset) - 30,
+            pHUD->Arrow.RenderMirroredSprite((float)(xPos - TileEngine.XOffset) + 50,
+                                             (float)(yPos - TileEngine.YOffset) - 30,
                                              0xFF00FF00,
                                              false, true);
     }
@@ -358,9 +358,9 @@ void GegnerDrache::DoKI(void)
 
     // Levelausschnitt auf den Drache zentrieren, sobald dieser sichtbar wird
     if (Value2 == 0 &&
-            Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
+            Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        pTileEngine->ScrollLevel((float)Value1,
+        TileEngine.ScrollLevel((float)Value1,
                                  yPos, ZUSTAND_SCROLLTOLOCK);		// Level auf den Drache zentrieren
 
         // Drache aus Screen bringen
@@ -582,7 +582,7 @@ void GegnerDrache::DoKI(void)
                 DrawYOffset = 0.0f;
 
             if (ySpeed > 0.0f &&
-                    pTileEngine->BlockUnten(xPos,	 yPos,
+                    TileEngine.BlockUnten(xPos,	 yPos,
                                             xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_WAND)
             {
                 ySpeed *= -0.3f;
@@ -744,7 +744,7 @@ void GegnerDrache::DoKI(void)
     case GEGNER_NOTVISIBLE:			// Warten bis der Screen zentriert wurde
     {
         StartPosY = yPos - 25.0f;
-        if (pTileEngine->Zustand == ZUSTAND_LOCKED)
+        if (TileEngine.Zustand == ZUSTAND_LOCKED)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
             //DKS - Added function SongIsPlaying() to SoundManagerClass:
@@ -765,15 +765,15 @@ void GegnerDrache::DoKI(void)
         DamageTaken = 0.0f;
 
         // mindestens einmal vorbeigeflogen?
-        if (pTileEngine->pDragonHack->m_State == STATE_FLY)
+        if (TileEngine.pDragonHack->m_State == STATE_FLY)
             drachevorbei = true;
 
         // Hinten vorbeigeflogen?
-        if (pTileEngine->pDragonHack->m_State == STATE_WAIT &&
+        if (TileEngine.pDragonHack->m_State == STATE_WAIT &&
                 drachevorbei == true)
         {
-            delete pTileEngine->pDragonHack;
-            pTileEngine->pDragonHack = NULL;
+            delete TileEngine.pDragonHack;
+            TileEngine.pDragonHack = NULL;
 
             Handlung = GEGNER_AUSWAHL;
         }
@@ -939,8 +939,8 @@ void GegnerDrache::DoKI(void)
         // Feuerbälle schiessen
         case GEGNER_BOMBARDIEREN :
         {
-            if (xPos + 100.0f - mirrorOffset > pTileEngine->XOffset + 0.0f &&
-                    xPos + 100.0f - mirrorOffset < pTileEngine->XOffset + 640.0f)
+            if (xPos + 100.0f - mirrorOffset > TileEngine.XOffset + 0.0f &&
+                    xPos + 100.0f - mirrorOffset < TileEngine.XOffset + 640.0f)
                 AnimCount -= 1.0f SYNC;
 
             if (AnimCount < 0.0f)
@@ -973,8 +973,8 @@ void GegnerDrache::DoKI(void)
         case GEGNER_BOMBARDIEREN :
         {
             // Raketen gegner abwerfen
-            if (xPos + 100.0f - mirrorOffset > pTileEngine->XOffset + 50.0f &&
-                    xPos + 100.0f - mirrorOffset < pTileEngine->XOffset + 600.0f)
+            if (xPos + 100.0f - mirrorOffset > TileEngine.XOffset + 50.0f &&
+                    xPos + 100.0f - mirrorOffset < TileEngine.XOffset + 600.0f)
                 ShotDelay -= 1.0f SYNC;
 
             if (ShotDelay < 0.0f)
@@ -993,9 +993,9 @@ void GegnerDrache::DoKI(void)
                 {
                     WinkelUebergabe = 180.0f;
 
-                    if (xPos > (float)pTileEngine->XOffset)
-                        pPartikelSystem->PushPartikel((float) pTileEngine->XOffset + 10.0f,
-                                                      (float)(pTileEngine->YOffset + rand()%480),
+                    if (xPos > (float)TileEngine.XOffset)
+                        pPartikelSystem->PushPartikel((float) TileEngine.XOffset + 10.0f,
+                                                      (float)(TileEngine.YOffset + rand()%480),
                                                       BLATT2);
 
                     for (int p = 0; p < NUMPLAYERS; p++)
@@ -1005,9 +1005,9 @@ void GegnerDrache::DoKI(void)
                 {
                     WinkelUebergabe = 0.0f;
 
-                    if (xPos < (float)pTileEngine->XOffset + 550.0f)
-                        pPartikelSystem->PushPartikel((float)(pTileEngine->XOffset + 640.0f),
-                                                      (float)(pTileEngine->YOffset + rand()%480),
+                    if (xPos < (float)TileEngine.XOffset + 550.0f)
+                        pPartikelSystem->PushPartikel((float)(TileEngine.XOffset + 640.0f),
+                                                      (float)(TileEngine.YOffset + rand()%480),
                                                       BLATT2);
 
                     for (int p = 0; p < NUMPLAYERS; p++)

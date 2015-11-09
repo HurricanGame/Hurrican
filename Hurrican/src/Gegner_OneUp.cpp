@@ -52,8 +52,8 @@ void GegnerOneUp::DoKI(void)
         if (ySpeed > 50.0f)			// Fall-Limit nicht überschreiten
             ySpeed = 50.0f;
         // Am Boden abhopfen ?
-        if (pTileEngine->BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_WAND ||
-                pTileEngine->BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_PLATTFORM)
+        if (TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_WAND ||
+                TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_PLATTFORM)
         {
             yPos  -= 1.0f;
             ySpeed = -ySpeed * 0.2f;
@@ -72,8 +72,8 @@ void GegnerOneUp::DoKI(void)
     {
         // Wieder runterfallen
         //
-        if (!(pTileEngine->BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_WAND) &&
-                !(pTileEngine->BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_PLATTFORM))
+        if (!(TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_WAND) &&
+                !(TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_PLATTFORM))
         {
             Handlung = GEGNER_FALLEN;
             yAcc	 = 2.0f;

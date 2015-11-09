@@ -37,8 +37,8 @@ void GegnerFireSpider::DoDraw(void)
 {
     // Spinne rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-pTileEngine->XOffset),
-            (float)(yPos-pTileEngine->YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-TileEngine.XOffset),
+            (float)(yPos-TileEngine.YOffset),
             rot, AnimPhase, 0xFFFFFFFF);
 }
 
@@ -48,7 +48,7 @@ void GegnerFireSpider::DoDraw(void)
 
 void GegnerFireSpider::DoKI(void)
 {
-    blocku = pTileEngine->BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+    blocku = TileEngine.BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
     SimpleAnimation();
 
     // Gegner auf Spieler ausrichten

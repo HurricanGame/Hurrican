@@ -40,21 +40,21 @@ void GegnerEvilHurri::DoDraw(void)
         DirectGraphics.SetAdditiveMode();
         if (BlickRichtung == LINKS)
         {
-            pPlayer[0]->PlayerRun.RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                      (float)(yPos-pTileEngine->YOffset),
+            pPlayer[0]->PlayerRun.RenderSprite((float)(xPos-TileEngine.XOffset),
+                                      (float)(yPos-TileEngine.YOffset),
                                       AnimPhase, 0xAA444444, true);
-            pPlayer[0]->PlayerRun.RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                      (float)(yPos-pTileEngine->YOffset),
+            pPlayer[0]->PlayerRun.RenderSprite((float)(xPos-TileEngine.XOffset),
+                                      (float)(yPos-TileEngine.YOffset),
                                       AnimPhase, 0xFF0022FF, true);
         }
         else
         {
-            pPlayer[0]->PlayerRun.RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                      (float)(yPos-pTileEngine->YOffset),
+            pPlayer[0]->PlayerRun.RenderSprite((float)(xPos-TileEngine.XOffset),
+                                      (float)(yPos-TileEngine.YOffset),
                                       AnimPhase, 0xAA444444);
 
-            pPlayer[0]->PlayerRun.RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                      (float)(yPos-pTileEngine->YOffset),
+            pPlayer[0]->PlayerRun.RenderSprite((float)(xPos-TileEngine.XOffset),
+                                      (float)(yPos-TileEngine.YOffset),
                                       AnimPhase, 0xFF0022FF);
         }
     }
@@ -74,9 +74,9 @@ void GegnerEvilHurri::DoKI(void)
         pHUD->ShowBossHUD(6000, Energy);
 
     // Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
-    if (Active == true && pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
+    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        pTileEngine->ScrollLevel((float)Value1,
+        TileEngine.ScrollLevel((float)Value1,
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf die Faust zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
@@ -149,7 +149,7 @@ void GegnerEvilHurri::DoKI(void)
     {
     case GEGNER_INIT:			// Warten bis der Screen zentriert wurde
     {
-        if (pTileEngine->Zustand == ZUSTAND_LOCKED)
+        if (TileEngine.Zustand == ZUSTAND_LOCKED)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
             //DKS - Added function SongIsPlaying() to SoundManagerClass:
@@ -373,7 +373,7 @@ void GegnerEvilHurri::DoKI(void)
                 AnimEnde		= 21;
                 AnimSpeed		= 0.4f;
 
-                pTileEngine->BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+                TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
             }
         }
 

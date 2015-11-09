@@ -50,12 +50,12 @@ void GegnerFahrstuhlBoss::DoDraw(void)
 {
     // Gegner mit Kopf und Kanonen rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSprite(float (xPos-pTileEngine->XOffset),
-                                           float (yPos-pTileEngine->YOffset), 0, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite(float (xPos-TileEngine.XOffset),
+                                           float (yPos-TileEngine.YOffset), 0, 0xFFFFFFFF);
 
-    Head.RenderSprite  (float (xPos + x1 - pTileEngine->XOffset), float (yPos + y1 - pTileEngine->YOffset), 0xFFFFFFFF);
-    Canon.RenderSprite (float (xPos + x2 - pTileEngine->XOffset), float (yPos + y2 - pTileEngine->YOffset), int (CanonAnim), 0xFFFFFFFF);
-    Canon.RenderSprite (float (xPos + x3 - pTileEngine->XOffset), float (yPos + y2 - pTileEngine->YOffset), 5 - int (CanonAnim), 0xFFFFFFFF);
+    Head.RenderSprite  (float (xPos + x1 - TileEngine.XOffset), float (yPos + y1 - TileEngine.YOffset), 0xFFFFFFFF);
+    Canon.RenderSprite (float (xPos + x2 - TileEngine.XOffset), float (yPos + y2 - TileEngine.YOffset), int (CanonAnim), 0xFFFFFFFF);
+    Canon.RenderSprite (float (xPos + x3 - TileEngine.XOffset), float (yPos + y2 - TileEngine.YOffset), 5 - int (CanonAnim), 0xFFFFFFFF);
 
     GegnerRect[FAHRSTUHLBOSS].left   = int (x1 + 60);
     GegnerRect[FAHRSTUHLBOSS].right  = int (x1 + 60 + 25);
@@ -83,7 +83,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
     {
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
         Activated = true;
-        Value1 = int (pTileEngine->YOffset + 100.0f);
+        Value1 = int (TileEngine.YOffset + 100.0f);
     }
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
@@ -103,7 +103,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 
         // Level wieder auf Spieler zentrieren
         //
-        pTileEngine->ScrollLevel(pPlayer[0]->xpos - 300,
+        TileEngine.ScrollLevel(pPlayer[0]->xpos - 300,
                                  pPlayer[0]->ypos - 280, ZUSTAND_SCROLLTOPLAYER, 10.0f, 50.0f);
 
         // Endboss-Musik ausfaden und abschalten
@@ -574,7 +574,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
     const int A = 2 * 24 * 20;
     if (yPos > Value1 + A)
     {
-        pTileEngine->YOffset -= A;
+        TileEngine.YOffset -= A;
 
         for (int p = 0; p < NUMPLAYERS; p++)
             pPlayer[p]->ypos -= A;
@@ -623,5 +623,5 @@ void GegnerFahrstuhlBoss::GegnerExplode(void)
     // Level Musik wieder einfaden lassen (aus Pause Zustand)
     SoundManager.FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);
 
-    //pTileEngine->YOffset = float (Value1);
+    //TileEngine.YOffset = float (Value1);
 }

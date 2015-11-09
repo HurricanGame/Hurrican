@@ -490,7 +490,7 @@ void HUDClass::ShowHUD(void)
     }
 
     // Verbleibende Zeit anzeigen
-    _itoa_s(int(pTileEngine->Timelimit), Buffer, 10);
+    _itoa_s(int(TileEngine.Timelimit), Buffer, 10);
 
     for(unsigned int i=0; i<strlen(Buffer); i++)
     {
@@ -501,15 +501,15 @@ void HUDClass::ShowHUD(void)
 
         // Zeit wird knapp? Dann Rote Zahlen rendern
         if (BossHUDActive <= 0.0f &&
-                pTileEngine->Timelimit < 10.0f &&
-                pTileEngine->Timelimit >  0.0f)
+                TileEngine.Timelimit < 10.0f &&
+                TileEngine.Timelimit >  0.0f)
         {
             DirectGraphics.SetAdditiveMode();
 
-            float size = (float)((int)(pTileEngine->Timelimit + 1) - pTileEngine->Timelimit) * 255.0f;
+            float size = (float)((int)(TileEngine.Timelimit + 1) - TileEngine.Timelimit) * 255.0f;
 
             float xoff = 0.0f;
-            if ((int)(pTileEngine->Timelimit) == 1)
+            if ((int)(TileEngine.Timelimit) == 1)
                 xoff = -size / 2.4f;
 
             HUDFontBig.RenderSpriteScaled(320 - size / 2.0f + xoff,

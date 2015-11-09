@@ -38,8 +38,8 @@ void GegnerSnowBomb::DoDraw(void)
     // Nur rendern, wenn die Kugel auch rollt
     //
     if (Handlung != GEGNER_INIT)
-        pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                               (float)(yPos-pTileEngine->YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                                               (float)(yPos-TileEngine.YOffset),
                                                anim, 0xFFFFFFFF);
 }
 
@@ -102,7 +102,7 @@ void GegnerSnowBomb::DoKI(void)
 
                 // Position "begradigen"
                 //
-                blocku = pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+                blocku = TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
             }
 
             for (int i = 0; i < 10; i++)

@@ -60,18 +60,18 @@ void GegnerPowerBlock::DoDraw(void)
     //normal
     if (AnimPhase > 0)
     {
-        pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-pTileEngine->XOffset),
-                                                (float)(yPos-pTileEngine->YOffset),
-                                                1 + pTileEngine->DateiAppendix.UsedPowerblock * 2, 0xFFFFFFFF, false);
+        pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-TileEngine.XOffset),
+                                                (float)(yPos-TileEngine.YOffset),
+                                                1 + TileEngine.DateiAppendix.UsedPowerblock * 2, 0xFFFFFFFF, false);
     }
 
     // nochmal leuchtend drüber (ausfadend)
     if (AnimPhase == 2)
     {
         D3DCOLOR col = D3DCOLOR_RGBA(255, 255, 255, int(DamageTaken));
-        pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-pTileEngine->XOffset),
-                                                (float)(yPos-pTileEngine->YOffset),
-                                                AnimPhase + pTileEngine->DateiAppendix.UsedPowerblock * 2, col, false);
+        pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-TileEngine.XOffset),
+                                                (float)(yPos-TileEngine.YOffset),
+                                                AnimPhase + TileEngine.DateiAppendix.UsedPowerblock * 2, col, false);
     }
 }
 

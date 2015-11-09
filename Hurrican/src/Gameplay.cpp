@@ -139,7 +139,7 @@ void InitNewGameLevel(int Nr)
         strcpy_s (Name, strlen(CommandLineParams.UserLevelName) + 1, CommandLineParams.UserLevelName);
 
     // und Level endlich laden
-    if (pTileEngine->LoadLevel(Name) == false)
+    if (TileEngine.LoadLevel(Name) == false)
     {
         SpielZustand = MAINMENU;
         pMenu->AktuellerZustand = MENUPUNKT_STARTGAME;
@@ -149,8 +149,8 @@ void InitNewGameLevel(int Nr)
     }
 
     // Songs mit Namen aus dem Levelfile Laden
-    SoundManager.LoadSong(pTileEngine->DateiAppendix.Songs[0], MUSIC_STAGEMUSIC);
-    SoundManager.LoadSong(pTileEngine->DateiAppendix.Songs[1], MUSIC_BOSS);
+    SoundManager.LoadSong(TileEngine.DateiAppendix.Songs[0], MUSIC_STAGEMUSIC);
+    SoundManager.LoadSong(TileEngine.DateiAppendix.Songs[1], MUSIC_BOSS);
 
     //DKS - Renamed
     //SoundManager.ResetAllSongVolumes();
@@ -212,7 +212,7 @@ void ShowGameOver(void)
     if (col > 255)							// Obergrenze checken
         col = 255;
 
-    pTileEngine->GameOver.RenderSprite((640 - 400) * 0.5f, (480 - 90) * 0.5f, D3DCOLOR_RGBA(255, 255, 255, col));
+    TileEngine.GameOver.RenderSprite((640 - 400) * 0.5f, (480 - 90) * 0.5f, D3DCOLOR_RGBA(255, 255, 255, col));
 
     pPlayer[0]->GameOverTimer -= 0.75f SYNC;
 
@@ -247,8 +247,8 @@ void GameLoop(void)
     DirectGraphics.ClearBackBuffer();
 #endif
 
-    pTileEngine->NewXOffset = -1;
-    pTileEngine->NewYOffset = -1;
+    TileEngine.NewXOffset = -1;
+    TileEngine.NewYOffset = -1;
 
 #define SPD_INC 0.3f
     float i = 0;
@@ -309,9 +309,9 @@ void GameLoop(void)
 
         // Level checken
         if (pConsole->Showing == false)
-            pTileEngine->UpdateLevel();
+            TileEngine.UpdateLevel();
 
-        pTileEngine->CheckBounds();
+        TileEngine.CheckBounds();
     }
     SpeedFaktor = SpeedFaktorMax;   // Restore the factor so other logic can stay in sync
 
@@ -320,25 +320,25 @@ void GameLoop(void)
 
     // Hintergrund und Parallax Layer anzeigen
     DirectGraphics.SetColorKeyMode();
-    pTileEngine->CalcRenderRange();
-    pTileEngine->DrawBackground();
+    TileEngine.CalcRenderRange();
+    TileEngine.DrawBackground();
 
     // Drache zb
     //DKS - this was an empty function in the original code, disabling it:
-    //pTileEngine->DrawSpecialLayer();
+    //TileEngine.DrawSpecialLayer();
 
     // Evtl. rotieren, wenn Screen wackelt
     if (WackelMaximum > 0.0f)
         ScreenWackeln();
 
     // Level anzeigen
-    pTileEngine->DrawBackLevel();
-    pTileEngine->DrawFrontLevel();
+    TileEngine.DrawBackLevel();
+    TileEngine.DrawFrontLevel();
 
     //DKS - Lightmap code in original game was never used and all related code has now been disabled:
     //// LighMaps löschen
     //if (options_Detail >= DETAIL_HIGH)
-    //    pTileEngine->ClearLightMaps();
+    //    TileEngine.ClearLightMaps();
 
     // Gegner anzeigen
     pGegner->RenderAll();
@@ -382,10 +382,10 @@ void GameLoop(void)
     // Overlay Tiles des Levels zeigen und Spieler und Objekte verdecken
     DirectGraphics.SetColorKeyMode();
 
-    pTileEngine->DrawWater();
-    pTileEngine->DrawBackLevelOverlay();
-    pTileEngine->DrawOverlayLevel();
-    pTileEngine->DrawShadow();
+    TileEngine.DrawWater();
+    TileEngine.DrawBackLevelOverlay();
+    TileEngine.DrawOverlayLevel();
+    TileEngine.DrawShadow();
 
     // HUD anhandeln
     pHUD->DoHUD();
@@ -1099,7 +1099,7 @@ void SummaryScreen(void)
 {
     bool leave      = false;
     bool all_controls_unpressed_yet = false;
-    bool reveal_cheat = (RunningTutorial == false) && (pPlayer[0]->DiamondsThisLevel == pTileEngine->MaxDiamonds);
+    bool reveal_cheat = (RunningTutorial == false) && (pPlayer[0]->DiamondsThisLevel == TileEngine.MaxDiamonds);
     
     //DKS - Added counter to prevent accidental early-exit:
     const float delay_can_leave = 400.0f;
@@ -1149,22 +1149,22 @@ void SummaryScreen(void)
         lpD3DDevice->BeginScene();
 #endif
 
-        pTileEngine->DrawBackground	();				// Level abhandeln
-        pTileEngine->DrawBackLevel	();
-        pTileEngine->DrawFrontLevel	();
+        TileEngine.DrawBackground	();				// Level abhandeln
+        TileEngine.DrawBackLevel	();
+        TileEngine.DrawFrontLevel	();
 
         pGegner->RunAll();
         pGegner->RenderAll();
         pProjectiles->DoProjectiles	();				// Schüsse abhandeln
 
         // Overlay Tiles des Levels zeigen und Spieler und Objekte verdecken
-        pTileEngine->DrawOverlayLevel();
+        TileEngine.DrawOverlayLevel();
         pPartikelSystem->DoPartikel();				// Partikel abhandeln
 
-        pTileEngine->DrawWater();
-        pTileEngine->DrawBackLevelOverlay();
-        pTileEngine->DrawOverlayLevel();
-        pTileEngine->DrawShadow();
+        TileEngine.DrawWater();
+        TileEngine.DrawBackLevelOverlay();
+        TileEngine.DrawOverlayLevel();
+        TileEngine.DrawShadow();
 
         pHUD->DoHUD();								// HUD anhandeln
 
@@ -1197,16 +1197,16 @@ void SummaryScreen(void)
                                 TextArray[TEXT_SUMMARY_SECRETS], color);
 
         char buf[100];
-        sprintf_s(buf, "%i/%i", pPlayer[0]->BlocksThisLevel, pTileEngine->MaxBlocks);
+        sprintf_s(buf, "%i/%i", pPlayer[0]->BlocksThisLevel, TileEngine.MaxBlocks);
         pDefaultFont->DrawText((float)(sprite1_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
 
-        sprintf_s(buf, "%i/%i", pPlayer[0]->DiamondsThisLevel, pTileEngine->MaxDiamonds);
+        sprintf_s(buf, "%i/%i", pPlayer[0]->DiamondsThisLevel, TileEngine.MaxDiamonds);
         pDefaultFont->DrawText((float)(sprite2_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
 
-        sprintf_s(buf, "%i/%i", pPlayer[0]->LivesThisLevel, pTileEngine->MaxOneUps);
+        sprintf_s(buf, "%i/%i", pPlayer[0]->LivesThisLevel, TileEngine.MaxOneUps);
         pDefaultFont->DrawText((float)(sprite3_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
 
-        sprintf_s(buf, "%i/%i", pPlayer[0]->SecretThisLevel, pTileEngine->MaxSecrets);
+        sprintf_s(buf, "%i/%i", pPlayer[0]->SecretThisLevel, TileEngine.MaxSecrets);
         pDefaultFont->DrawText((float)(secrets_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
 
         // Cheat freigespielt? -> Wenn alle Diamanten gefunden
@@ -1338,8 +1338,8 @@ bool LoadDemo (const char Filename[])
 {
     char Kennung[20];
 
-    pTileEngine->XOffset = 0;
-    pTileEngine->YOffset = 0;
+    TileEngine.XOffset = 0;
+    TileEngine.YOffset = 0;
 
     //DKS - Fixed bug in handling size of full demo path: sizeof(100) returns something very different than 100
     //      (Thank you to Alexander Troosh for the bug report.)
@@ -1472,8 +1472,8 @@ void PlayDemo (void)
 void ScrolltoPlayeAfterBoss(void)
 {
     // Level wieder zum Spieler scrollen und dann weiterscrollen lassen
-    pTileEngine->Zustand = ZUSTAND_SCROLLBAR;
-    pTileEngine->MustCenterPlayer = true;
+    TileEngine.Zustand = ZUSTAND_SCROLLBAR;
+    TileEngine.MustCenterPlayer = true;
 
     // Level Musik wieder einfaden lassen (aus Pause Zustand)
     SoundManager.FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);
@@ -1495,11 +1495,11 @@ void ShowPissText(void)
         //      them centered properly horizontally, which I found frustrating.
         //      Oh well..
 //        pGUI->ShowBox(TextArray[TEXT_PISS_1 + TextNr],
-//                      (int)(pPlayer[0]->ypos - 70 - pTileEngine->YOffset),
-//                      (int)(pPlayer[0]->xpos - pTileEngine->XOffset) - 10);
+//                      (int)(pPlayer[0]->ypos - 70 - TileEngine.YOffset),
+//                      (int)(pPlayer[0]->xpos - TileEngine.XOffset) - 10);
         pGUI->ShowBox(TextArray[TEXT_PISS_1 + TextNr],
-                      (int)(pPlayer[0]->ypos - 70 - pTileEngine->YOffset),
-                      (int)(pPlayer[0]->xpos - pTileEngine->XOffset + TILESIZE*2));
+                      (int)(pPlayer[0]->ypos - 70 - TileEngine.YOffset),
+                      (int)(pPlayer[0]->xpos - TileEngine.XOffset + TILESIZE*2));
 
         if (pPlayer[0]->BronsonCounter > 220.0f + 50.0f * 18)
             pPlayer[0]->BronsonCounter = 270.0f;

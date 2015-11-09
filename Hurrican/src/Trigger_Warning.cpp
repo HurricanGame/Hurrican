@@ -31,8 +31,8 @@ GegnerWarning::GegnerWarning(int Wert1, int Wert2, bool Light)
 
 void GegnerWarning::DoKI(void)
 {
-    xPos = float (pTileEngine->XOffset + 230);
-    yPos = float (pTileEngine->YOffset + 400);
+    xPos = float (TileEngine.XOffset + 230);
+    yPos = float (TileEngine.YOffset + 400);
 
     WarningCount -= 8.0f SYNC;
 

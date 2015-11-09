@@ -35,21 +35,21 @@ GegnerShootPlattform::GegnerShootPlattform(int Wert1, int Wert2, bool Light)
 void GegnerShootPlattform::DoDraw(void)
 {
     // Button rendern
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                           (float)(yPos-pTileEngine->YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                                           (float)(yPos-TileEngine.YOffset),
                                            AnimPhase, 0xFFFFFFFF);
 
     if (Value2 == 1)
     {
         // Lighflare rendern, wenn angeschossen
         DirectGraphics.SetAdditiveMode ();
-        pProjectiles->LavaFlare.RenderSprite (float (xPos - 9 - pTileEngine->XOffset),
-                                float (yPos - 5 - pTileEngine->YOffset), 0, 0xAAFFFFFF);
+        pProjectiles->LavaFlare.RenderSprite (float (xPos - 9 - TileEngine.XOffset),
+                                float (yPos - 5 - TileEngine.YOffset), 0, 0xAAFFFFFF);
 
-        pProjectiles->LavaFlare.RenderSprite (float (xPos - 9 - pTileEngine->XOffset),
-                                float (yPos - 5 - pTileEngine->YOffset), 0, 0x88AAAA00);
-        pProjectiles->LavaFlare.RenderSprite (float (xPos - 9 - pTileEngine->XOffset),
-                                float (yPos - 5 - pTileEngine->YOffset), 0, 0x88AA0000);
+        pProjectiles->LavaFlare.RenderSprite (float (xPos - 9 - TileEngine.XOffset),
+                                float (yPos - 5 - TileEngine.YOffset), 0, 0x88AAAA00);
+        pProjectiles->LavaFlare.RenderSprite (float (xPos - 9 - TileEngine.XOffset),
+                                float (yPos - 5 - TileEngine.YOffset), 0, 0x88AA0000);
         DirectGraphics.SetColorKeyMode ();
 
         Value2 = 0;
@@ -87,7 +87,7 @@ void GegnerShootPlattform::DoKI(void)
     for (int p = 0; p < NUMPLAYERS; p++)
         if (pPlayer[p]->AufPlattform == this)
         {
-            int bo = pTileEngine->BlockOben(pPlayer[p]->xpos, pPlayer[p]->ypos,
+            int bo = TileEngine.BlockOben(pPlayer[p]->xpos, pPlayer[p]->ypos,
                                             pPlayer[p]->xposold,  pPlayer[p]->yposold, pPlayer[p]->CollideRect);
 
             if (ySpeed < 0.0f &&

@@ -83,8 +83,8 @@ void GegnerSpinnenmaschine::DoDraw(void)
         if (DeckelStatus != ZU)
         {
             DirectGraphics.SetAdditiveMode();
-            Strahl.RenderSpriteScaled((float)(xPos - pTileEngine->XOffset) - LightRayCount * 8.0f + 170,
-                                      (float)(yPos - pTileEngine->YOffset),
+            Strahl.RenderSpriteScaled((float)(xPos - TileEngine.XOffset) - LightRayCount * 8.0f + 170,
+                                      (float)(yPos - TileEngine.YOffset),
                                       (int)(LightRayCount * 16.0f),
                                       190, 0xFFFF8822);
             DirectGraphics.SetColorKeyMode();
@@ -94,24 +94,24 @@ void GegnerSpinnenmaschine::DoDraw(void)
         //DKS - Optimized cos(PI) to be a constant (-1):
         //DeckelOffset = -((float)(cos(DeckelCount) * 20.0f) + (float)(cos(PI) * 20));
         DeckelOffset = -((float)(cos(DeckelCount) * 20.0f) - 20.0f);
-        pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos - pTileEngine->XOffset),
-                                               (float)(yPos - pTileEngine->YOffset) - (int)DeckelOffset,
+        pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos - TileEngine.XOffset),
+                                               (float)(yPos - TileEngine.YOffset) - (int)DeckelOffset,
                                                0, Color, true);
 
         // Anzeige
-        Display.RenderSprite((float)(xPos - pTileEngine->XOffset) + 133,
-                             (float)(yPos - pTileEngine->YOffset) + 263 - (int)DeckelOffset,
+        Display.RenderSprite((float)(xPos - TileEngine.XOffset) + 133,
+                             (float)(yPos - TileEngine.YOffset) + 263 - (int)DeckelOffset,
                              DisplayState, Color, true);
 
         // Topfdeckel
-        Deckel.RenderSprite((float)(xPos - pTileEngine->XOffset) + 75,
-                            (float)(yPos - pTileEngine->YOffset) - (int)DeckelOffset + 159,
+        Deckel.RenderSprite((float)(xPos - TileEngine.XOffset) + 75,
+                            (float)(yPos - TileEngine.YOffset) - (int)DeckelOffset + 159,
                             DeckelPhase, Color, true);
     }
 
     // Unterteil
-    Unten[AnimUnten].RenderSprite((float)(xPos - pTileEngine->XOffset) + 45,
-                                  (float)(yPos - pTileEngine->YOffset) + 352,
+    Unten[AnimUnten].RenderSprite((float)(xPos - TileEngine.XOffset) + 45,
+                                  (float)(yPos - TileEngine.YOffset) + 352,
                                   0, 0xFFFFFFFF, true);
 }
 
@@ -356,11 +356,11 @@ void GegnerSpinnenmaschine::DoKI(void)
     //
     if (Active == true &&
             Handlung != GEGNER_SPECIAL &&
-            pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
+            TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
         if (PlayerAbstandHoriz() < 450)
         {
-            pTileEngine->ScrollLevel((float)Value1,
+            TileEngine.ScrollLevel((float)Value1,
                                      (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
             SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
         }
@@ -387,7 +387,7 @@ void GegnerSpinnenmaschine::DoKI(void)
 
         pGegner->PushGegner(140, 820, ONEUP, 0, 0, false);
 
-        pTileEngine->MaxOneUps++;
+        TileEngine.MaxOneUps++;
 
         // Endboss-Musik ausfaden und abschalten
         SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
@@ -438,7 +438,7 @@ void GegnerSpinnenmaschine::DoKI(void)
     // Warten bis der Screen zentriert wurde
     case GEGNER_INIT:
     {
-        if (pTileEngine->Zustand == ZUSTAND_LOCKED)
+        if (TileEngine.Zustand == ZUSTAND_LOCKED)
         {
             // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
             //

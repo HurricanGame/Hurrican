@@ -58,8 +58,8 @@ void GegnerMiniDragon::DoDraw(void)
 
     int i = 0;
     for (int i = 0; i < Segments; i++)
-        pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-pTileEngine->XOffset) + (6-i) * mulx,
-                                                (float)(yPos-pTileEngine->YOffset) + (6-i) * muly,
+        pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-TileEngine.XOffset) + (6-i) * mulx,
+                                                (float)(yPos-TileEngine.YOffset) + (6-i) * muly,
                                                 4, 0xFFFFFFFF);
 
     // Kopf
@@ -99,8 +99,8 @@ void GegnerMiniDragon::DoDraw(void)
     if (Segments == 6)
     {
         i++;
-        pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-pTileEngine->XOffset) + BlickRichtung * 15.0f,
-                                                (float)(yPos-pTileEngine->YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-TileEngine.XOffset) + BlickRichtung * 15.0f,
+                                                (float)(yPos-TileEngine.YOffset),
                                                 a, 0xFFFFFFFF, mirrored);
     }
 }
@@ -132,7 +132,7 @@ void GegnerMiniDragon::DoKI(void)
             ySpeed = 40.0f;
 
         // Am Boden angekommen?
-        blocku = pTileEngine->BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+        blocku = TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
         if (blocku & BLOCKWERT_WAND)
         {
             xSpeed = 0.0f;

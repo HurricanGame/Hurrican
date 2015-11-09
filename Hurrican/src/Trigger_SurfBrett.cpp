@@ -53,7 +53,7 @@ void GegnerSurfBrett::DoKI(void)
     {
     	Handlung = GEGNER_LAUFEN;
     	pPlayer->Handlung = SURFEN;
-    	pTileEngine->ScrollLevel (xPos - 150, yPos - 350,  ZUSTAND_SCROLLTOLOCK);
+    	TileEngine.ScrollLevel (xPos - 150, yPos - 350,  ZUSTAND_SCROLLTOLOCK);
 
     	// Kurz abgehen
     	//

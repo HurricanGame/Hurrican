@@ -31,9 +31,9 @@ GegnerSpitter::GegnerSpitter(int Wert1, int Wert2, bool Light)
 
 void GegnerSpitter::DoKI(void)
 {
-    blockl = pTileEngine->BlockLinks	   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
-    blockr = pTileEngine->BlockRechts	   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
-    blocko = pTileEngine->BlockOben		   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+    blockl = TileEngine.BlockLinks	   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+    blockr = TileEngine.BlockRechts	   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+    blocko = TileEngine.BlockOben		   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
     // Animieren
     if (AnimEnde > 0)						// Soll überhaupt anmiert werden ?
@@ -87,7 +87,7 @@ void GegnerSpitter::DoKI(void)
     }
 
     if (ySpeed >= 0.0f)
-        blocku = pTileEngine->BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed);
+        blocku = TileEngine.BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed);
 
     // runterfallen?
     //
@@ -95,7 +95,7 @@ void GegnerSpitter::DoKI(void)
     if (!(blocku & BLOCKWERT_SCHRAEGE_R) &&
             !(blocku & BLOCKWERT_SCHRAEGE_L))
     {
-        blocku = pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+        blocku = TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
         if (!(blocku & BLOCKWERT_WAND) &&
                 !(blocku & BLOCKWERT_PLATTFORM))

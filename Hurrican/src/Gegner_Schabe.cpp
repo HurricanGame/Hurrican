@@ -74,11 +74,11 @@ void GegnerSchabe::DoKI(void)
         // ..xx
         // ..xx
 
-        if (!(pTileEngine->Tiles[xl-0][yl+1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl+1][yl-1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND) &&
-                (pTileEngine->Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND))
+        if (!(TileEngine.Tiles[xl-0][yl+1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl+1][yl-1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND) &&
+                (TileEngine.Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND))
         {
             xSpeed = 0.0f;
             ySpeed = SPEED;
@@ -93,11 +93,11 @@ void GegnerSchabe::DoKI(void)
         // ....
 
 
-        if (!(pTileEngine->Tiles[xl-0][yl-1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND) &&
-                (pTileEngine->Tiles[xl+1][yl-1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND))
+        if (!(TileEngine.Tiles[xl-0][yl-1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND) &&
+                (TileEngine.Tiles[xl+1][yl-1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND))
         {
             xSpeed =  0.0f;
             ySpeed = -SPEED;
@@ -116,11 +116,11 @@ void GegnerSchabe::DoKI(void)
         // xx..
         // xx..
 
-        if (!(pTileEngine->Tiles[xl+0][yl+1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl+1][yl-1].Block & BLOCKWERT_WAND) &&
-                (pTileEngine->Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND))
+        if (!(TileEngine.Tiles[xl+0][yl+1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl+1][yl-1].Block & BLOCKWERT_WAND) &&
+                (TileEngine.Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND))
         {
             xSpeed = 0.0f;
             ySpeed = SPEED;
@@ -135,11 +135,11 @@ void GegnerSchabe::DoKI(void)
         // ....
 
 
-        if (!(pTileEngine->Tiles[xl+0][yl-1].Block & BLOCKWERT_WAND) &&
-                (pTileEngine->Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl+1][yl-1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND))
+        if (!(TileEngine.Tiles[xl+0][yl-1].Block & BLOCKWERT_WAND) &&
+                (TileEngine.Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl+1][yl-1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND))
         {
             xSpeed = 0.0f;
             ySpeed = -SPEED;
@@ -157,11 +157,11 @@ void GegnerSchabe::DoKI(void)
         // ..xx
         // ..xx
 
-        if (!(pTileEngine->Tiles[xl+1][yl+0].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND) &&
-                (pTileEngine->Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl+1][yl-1].Block & BLOCKWERT_WAND))
+        if (!(TileEngine.Tiles[xl+1][yl+0].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND) &&
+                (TileEngine.Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl+1][yl-1].Block & BLOCKWERT_WAND))
         {
             xSpeed = SPEED;
             ySpeed = 0.0f;
@@ -175,11 +175,11 @@ void GegnerSchabe::DoKI(void)
         // xx..
         // xx..
 
-        if (!(pTileEngine->Tiles[xl-1][yl+0].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl+1][yl-1].Block & BLOCKWERT_WAND) &&
-                (pTileEngine->Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND))
+        if (!(TileEngine.Tiles[xl-1][yl+0].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl+1][yl-1].Block & BLOCKWERT_WAND) &&
+                (TileEngine.Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND))
         {
             xSpeed = -SPEED;
             ySpeed =  0.0f;
@@ -197,11 +197,11 @@ void GegnerSchabe::DoKI(void)
         // .o..
         // ....
 
-        if (!(pTileEngine->Tiles[xl+1][yl+0].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND) &&
-                (pTileEngine->Tiles[xl+1][yl-1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND))
+        if (!(TileEngine.Tiles[xl+1][yl+0].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND) &&
+                (TileEngine.Tiles[xl+1][yl-1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND))
         {
             xSpeed = SPEED;
             ySpeed = 0.0f;
@@ -215,11 +215,11 @@ void GegnerSchabe::DoKI(void)
         // ..o.
         // ....
 
-        if (!(pTileEngine->Tiles[xl-1][yl+0].Block & BLOCKWERT_WAND) &&
-                (pTileEngine->Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl+1][yl-1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND) &&
-                !(pTileEngine->Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND))
+        if (!(TileEngine.Tiles[xl-1][yl+0].Block & BLOCKWERT_WAND) &&
+                (TileEngine.Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl+1][yl-1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND) &&
+                !(TileEngine.Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND))
         {
             xSpeed = -SPEED;
             ySpeed =  0.0f;
@@ -233,17 +233,17 @@ void GegnerSchabe::DoKI(void)
 //----- An die Wand gestoﬂen?
 //
     if ((xSpeed < 0.0f &&
-            pTileEngine->Tiles[xl-1][yl-0].Block & BLOCKWERT_WAND) ||
+            TileEngine.Tiles[xl-1][yl-0].Block & BLOCKWERT_WAND) ||
 
             (xSpeed > 0.0f &&
-             pTileEngine->Tiles[xl+1][yl-0].Block & BLOCKWERT_WAND))
+             TileEngine.Tiles[xl+1][yl-0].Block & BLOCKWERT_WAND))
     {
         xSpeed = 0.0f;
 
         xPos = (float)xl*20.0f;
         yPos = (float)yl*20.0f;
 
-        if (pTileEngine->Tiles[xl-0][yl-1].Block & BLOCKWERT_WAND)
+        if (TileEngine.Tiles[xl-0][yl-1].Block & BLOCKWERT_WAND)
             ySpeed =  SPEED;
         else
             ySpeed = -SPEED;
@@ -253,17 +253,17 @@ void GegnerSchabe::DoKI(void)
 //----- An die Decke/Boden gestoﬂen?
 //
     else if ((ySpeed > 0.0f &&
-              pTileEngine->Tiles[xl+0][yl+1].Block & BLOCKWERT_WAND) ||
+              TileEngine.Tiles[xl+0][yl+1].Block & BLOCKWERT_WAND) ||
 
              (ySpeed < 0.0f &&
-              pTileEngine->Tiles[xl+0][yl-1].Block & BLOCKWERT_WAND))
+              TileEngine.Tiles[xl+0][yl-1].Block & BLOCKWERT_WAND))
     {
         ySpeed = 0.0f;
 
         xPos = (float)xl*20.0f;
         yPos = (float)yl*20.0f;
 
-        if (pTileEngine->Tiles[xl-1][yl-0].Block & BLOCKWERT_WAND)
+        if (TileEngine.Tiles[xl-1][yl-0].Block & BLOCKWERT_WAND)
             xSpeed =  SPEED;
         else
             xSpeed = -SPEED;
@@ -276,15 +276,15 @@ void GegnerSchabe::DoKI(void)
     {
         winkel = 90.0f;
 
-        if (pTileEngine->Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND ||
-                pTileEngine->Tiles[xl-1][yl-0].Block & BLOCKWERT_WAND ||
-                pTileEngine->Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND)
+        if (TileEngine.Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND ||
+                TileEngine.Tiles[xl-1][yl-0].Block & BLOCKWERT_WAND ||
+                TileEngine.Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND)
             mirror = true;
         else
             mirror = false;
 
         // umdrehen?
-        if (pTileEngine->Tiles[xl-0][yl-1].Block & BLOCKWERT_WENDEPUNKT)
+        if (TileEngine.Tiles[xl-0][yl-1].Block & BLOCKWERT_WENDEPUNKT)
             ySpeed = SPEED;
     }
 
@@ -292,23 +292,23 @@ void GegnerSchabe::DoKI(void)
     {
         winkel = 270.0f;
 
-        if (pTileEngine->Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND ||
-                pTileEngine->Tiles[xl-1][yl-0].Block & BLOCKWERT_WAND ||
-                pTileEngine->Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND)
+        if (TileEngine.Tiles[xl-1][yl-1].Block & BLOCKWERT_WAND ||
+                TileEngine.Tiles[xl-1][yl-0].Block & BLOCKWERT_WAND ||
+                TileEngine.Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND)
             mirror = false;
         else
             mirror = true;
 
         // umdrehen?
-        if (pTileEngine->Tiles[xl-0][yl+1].Block & BLOCKWERT_WENDEPUNKT)
+        if (TileEngine.Tiles[xl-0][yl+1].Block & BLOCKWERT_WENDEPUNKT)
             ySpeed = -SPEED;
     }
 
     if (xSpeed > 0.0f)
     {
-        if (pTileEngine->Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND ||
-                pTileEngine->Tiles[xl+0][yl+1].Block & BLOCKWERT_WAND ||
-                pTileEngine->Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND)
+        if (TileEngine.Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND ||
+                TileEngine.Tiles[xl+0][yl+1].Block & BLOCKWERT_WAND ||
+                TileEngine.Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND)
         {
             winkel = 0.0f;
             mirror = false;
@@ -320,14 +320,14 @@ void GegnerSchabe::DoKI(void)
         }
 
         // umdrehen?
-        if (pTileEngine->Tiles[xl+1][yl+0].Block & BLOCKWERT_WENDEPUNKT)
+        if (TileEngine.Tiles[xl+1][yl+0].Block & BLOCKWERT_WENDEPUNKT)
             xSpeed = -SPEED;
     }
     else if (xSpeed < 0.0f)
     {
-        if (pTileEngine->Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND ||
-                pTileEngine->Tiles[xl+0][yl+1].Block & BLOCKWERT_WAND ||
-                pTileEngine->Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND)
+        if (TileEngine.Tiles[xl-1][yl+1].Block & BLOCKWERT_WAND ||
+                TileEngine.Tiles[xl+0][yl+1].Block & BLOCKWERT_WAND ||
+                TileEngine.Tiles[xl+1][yl+1].Block & BLOCKWERT_WAND)
         {
             winkel = 0.0f;
             mirror = true;
@@ -339,7 +339,7 @@ void GegnerSchabe::DoKI(void)
         }
 
         // umdrehen?
-        if (pTileEngine->Tiles[xl-1][yl+0].Block & BLOCKWERT_WENDEPUNKT)
+        if (TileEngine.Tiles[xl-1][yl+0].Block & BLOCKWERT_WENDEPUNKT)
             xSpeed = SPEED;
     }
 
@@ -352,8 +352,8 @@ void GegnerSchabe::DoKI(void)
 
 void GegnerSchabe::DoDraw(void)
 {
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-pTileEngine->XOffset),
-            (float)(yPos-pTileEngine->YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-TileEngine.XOffset),
+            (float)(yPos-TileEngine.YOffset),
             winkel, AnimPhase, 0xFFFFFFFF, mirror);
 }
 

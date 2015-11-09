@@ -44,8 +44,8 @@ void GegnerLavamann::DoDraw(void)
     // gegner leuchtend rendern
     //
     DirectGraphics.SetAdditiveMode();
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                           (float)(yPos-pTileEngine->YOffset), AnimPhase, 0xFFFFFFFF, mirror);
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                                           (float)(yPos-TileEngine.YOffset), AnimPhase, 0xFFFFFFFF, mirror);
     DirectGraphics.SetColorKeyMode();
 }
 
@@ -60,7 +60,7 @@ void GegnerLavamann::DoKI(void)
     // Schrägen checken
     //
     if (ySpeed >= 0.0f)
-        blocku = pTileEngine->BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed);
+        blocku = TileEngine.BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed);
 
     // Flammenwand entstehen lassen
     //
@@ -71,7 +71,7 @@ void GegnerLavamann::DoKI(void)
         pProjectiles->PushProjectile(xPos - 10 - xSpeed * 0.75f, yPos, FEUERFALLE_LAVAMANN);
     }
 
-    blocku = pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+    blocku = TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
     // In Richtung Spieler laufen, wenn angeschossen
     //
@@ -96,7 +96,7 @@ void GegnerLavamann::DoKI(void)
         if (!(blocku & BLOCKWERT_SCHRAEGE_R) &&
                 !(blocku & BLOCKWERT_SCHRAEGE_L))
         {
-            blocku = pTileEngine->BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+            blocku = TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
             if (!(blocku & BLOCKWERT_WAND) &&
                     !(blocku & BLOCKWERT_PLATTFORM))

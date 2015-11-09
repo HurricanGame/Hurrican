@@ -78,8 +78,8 @@ void GegnerSchneeKoenig::DoDraw(void)
     else
         GunMod = -1.0f;
 
-    Knarre.RenderSpriteRotatedOffset((float)(xPos - pTileEngine->XOffset) + 95.0f + (float)sin(xoff) * 1.5f,
-                                     (float)(yPos - pTileEngine->YOffset) + yOffset - 36 + KnarreY,
+    Knarre.RenderSpriteRotatedOffset((float)(xPos - TileEngine.XOffset) + 95.0f + (float)sin(xoff) * 1.5f,
+                                     (float)(yPos - TileEngine.YOffset) + yOffset - 36 + KnarreY,
                                      KnarreWinkel, GunSlide * GunMod, 10,
                                      Color, false);
 
@@ -93,8 +93,8 @@ void GegnerSchneeKoenig::DoDraw(void)
             AnimPhase = 10;
     }
 
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos - pTileEngine->XOffset) + (float)sin(xoff) * 5.0f,
-                                           (float)(yPos - pTileEngine->YOffset) + yOffset,
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos - TileEngine.XOffset) + (float)sin(xoff) * 5.0f,
+                                           (float)(yPos - TileEngine.YOffset) + yOffset,
                                            AnimPhase, Color, false);
 
 //	RenderLaser();
@@ -110,12 +110,12 @@ void GegnerSchneeKoenig::RenderLaser(void)
 
     //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
     //w = (KnarreWinkel + 180.0f) * PI / 180.0f;
-    //Laser.RenderSpriteRotatedOffset((float)(xPos - pTileEngine->XOffset) + 90.0f + (float)sin(w) * 70.0f,
-    //                                (float)(yPos - pTileEngine->YOffset) + 5.0f + (float)cos(w) * 70.0f,
+    //Laser.RenderSpriteRotatedOffset((float)(xPos - TileEngine.XOffset) + 90.0f + (float)sin(w) * 70.0f,
+    //                                (float)(yPos - TileEngine.YOffset) + 5.0f + (float)cos(w) * 70.0f,
     //                                KnarreWinkel, 0, 0, 0xFFFFFFFF);
     w = KnarreWinkel + 180.0f;
-    Laser.RenderSpriteRotatedOffset((float)(xPos - pTileEngine->XOffset) + 90.0f + sin_deg(w) * 70.0f,
-                                    (float)(yPos - pTileEngine->YOffset) + 5.0f + cos_deg(w) * 70.0f,
+    Laser.RenderSpriteRotatedOffset((float)(xPos - TileEngine.XOffset) + 90.0f + sin_deg(w) * 70.0f,
+                                    (float)(yPos - TileEngine.YOffset) + 5.0f + cos_deg(w) * 70.0f,
                                     KnarreWinkel, 0, 0, 0xFFFFFFFF);
 }
 
@@ -216,18 +216,18 @@ void GegnerSchneeKoenig::DoKI(void)
     // Boss aktivieren und Mucke laufen lassen
     //
     if (Active == true &&
-            pTileEngine->Zustand == ZUSTAND_SCROLLBAR)
+            TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
         SoundManager.StopSong(MUSIC_STAGEMUSIC, true);  // Ausfaden und pausieren
         SoundManager.PlaySong(MUSIC_BOSS, false);
         ySave = yPos;
 
         // kommt von oben in der mitte des screens runter
-        xPos = (float)pTileEngine->XOffset + (640 - 140) / 2.0f;
-        yPos = (float)pTileEngine->YOffset - 300;
+        xPos = (float)TileEngine.XOffset + (640 - 140) / 2.0f;
+        yPos = (float)TileEngine.YOffset - 300;
         ySpeed = 50.0f;
         DrawNow = true;
-        pTileEngine->Zustand = ZUSTAND_LOCKED;
+        TileEngine.Zustand = ZUSTAND_LOCKED;
     }
 
 
@@ -258,7 +258,7 @@ void GegnerSchneeKoenig::DoKI(void)
             for (int i = 0; i < 10; i++)
                 pPartikelSystem->PushPartikel(xPos + rand()%130 - 10, yPos + rand()%40 + 60, SMOKEBIG);
 
-            pTileEngine->ScrollLevel((float)pTileEngine->XOffset, yPos - 320.0f, ZUSTAND_SCROLLTOLOCK);
+            TileEngine.ScrollLevel((float)TileEngine.XOffset, yPos - 320.0f, ZUSTAND_SCROLLTOLOCK);
 
             SoundManager.PlayWave(50, 128, 11025, SOUND_DOORSTOP);
         }
@@ -415,14 +415,14 @@ void GegnerSchneeKoenig::DoKI(void)
                         {
                             float target;
 
-                            if (xPos + 100 > pTileEngine->XOffset + 320.0f)
-                                target = (float)pTileEngine->XOffset + 100.0f;
+                            if (xPos + 100 > TileEngine.XOffset + 320.0f)
+                                target = (float)TileEngine.XOffset + 100.0f;
                             else
-                                target = (float)pTileEngine->XOffset + 540.0f;
+                                target = (float)TileEngine.XOffset + 540.0f;
 
                             // zurück zur Mitte springen
                             if (ShotCount == 1)
-                                target = (float)pTileEngine->XOffset + 320.0f;
+                                target = (float)TileEngine.XOffset + 320.0f;
 
                             Action = GEGNER_AUSSPUCKEN;
                             ySpeed = -110.0f;
@@ -542,12 +542,12 @@ void GegnerSchneeKoenig::DoKI(void)
                 yAcc = -0.6f;
             }
 
-            if (yPos < pTileEngine->YOffset - 300.0f)
+            if (yPos < TileEngine.YOffset - 300.0f)
                 Energy = 0.0f;
 
             // Auf der Hälfte explodieren lassen?
             if (Value1 >= 2 &&
-                    yPos < pTileEngine->YOffset + 150.0f)
+                    yPos < TileEngine.YOffset + 150.0f)
             {
                 SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
                 ShakeScreen(5.0f);
@@ -593,7 +593,7 @@ void GegnerSchneeKoenig::DoKI(void)
 
             int a;
 
-            a = (int)((yPos - pTileEngine->YOffset - 200.0f) / 10.0f);
+            a = (int)((yPos - TileEngine.YOffset - 200.0f) / 10.0f);
 
             if (a > 10) a = 10;
             if (a <  0) a = 0;

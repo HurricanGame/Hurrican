@@ -44,8 +44,8 @@ void GegnerFetteRakete::DoDraw(void)
 {
     // Rakete rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-pTileEngine->XOffset),
-            (float)(yPos-pTileEngine->YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-TileEngine.XOffset),
+            (float)(yPos-TileEngine.YOffset),
             (float)rot, AnimPhase, 0xFFFFFFFF);
 }
 

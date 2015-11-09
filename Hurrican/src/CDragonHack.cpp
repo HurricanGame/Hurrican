@@ -67,16 +67,16 @@ void CDragonHack::Run(void)
             // von links
             if (rand()%2 == 0)
             {
-                m_xPos = (float)(pTileEngine->XOffset) - 160;
-                m_yPos = (float)(pTileEngine->YOffset) + 200;
+                m_xPos = (float)(TileEngine.XOffset) - 160;
+                m_yPos = (float)(TileEngine.YOffset) + 200;
                 m_xSpeed = 10.0f;
             }
 
             // von rechts
             else
             {
-                m_xPos = (float)(pTileEngine->XOffset) + 640.0f + 160.0f;
-                m_yPos = (float)(pTileEngine->YOffset) + 200;
+                m_xPos = (float)(TileEngine.XOffset) + 640.0f + 160.0f;
+                m_yPos = (float)(TileEngine.YOffset) + 200;
                 m_xSpeed = -10.0f;
             }
 
@@ -90,17 +90,17 @@ void CDragonHack::Run(void)
     {
         bool mirrored = m_xSpeed > 0.0f;
 
-        m_GFX.RenderSprite((float)(m_xPos - pTileEngine->XOffset),
-                           (float)(m_yPos - pTileEngine->YOffset), (int)m_AnimCount, 0xDDFFFFFF, mirrored);
+        m_GFX.RenderSprite((float)(m_xPos - TileEngine.XOffset),
+                           (float)(m_yPos - TileEngine.YOffset), (int)m_AnimCount, 0xDDFFFFFF, mirrored);
 
         m_xPos += m_xSpeed SYNC;
         m_yPos += m_ySpeed SYNC;
 
         // Ausserhalb des sichtbaren Bereichs? Dann verschwinden lassen
-        if (m_xPos + 260.0f < pTileEngine->XOffset ||
-                m_xPos - 260.0f > pTileEngine->XOffset + 640.0f ||
-                m_yPos + 240.0f < pTileEngine->YOffset ||
-                m_yPos - 240.0f > pTileEngine->YOffset + 480.0f)
+        if (m_xPos + 260.0f < TileEngine.XOffset ||
+                m_xPos - 260.0f > TileEngine.XOffset + 640.0f ||
+                m_yPos + 240.0f < TileEngine.YOffset ||
+                m_yPos - 240.0f > TileEngine.YOffset + 480.0f)
         {
             m_State = STATE_WAIT;
             m_AppearCount = rand()%100 + 50.0f;

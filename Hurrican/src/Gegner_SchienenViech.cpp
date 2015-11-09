@@ -35,8 +35,8 @@ void GegnerSchienenViech::DoDraw(void)
     col = 0xFFCCCCCC;
 
     // Draw kommt jetzt erst hier, damit der Gegner über allen Leveltiles gerendert wird
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-pTileEngine->XOffset),
-                                           (float)(yPos-pTileEngine->YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+                                           (float)(yPos-TileEngine.YOffset),
                                            AnimPhase, col);
 
     AlreadyDrawn = true;
@@ -53,8 +53,8 @@ void GegnerSchienenViech::DoKI(void)
     //
     float x = xPos;
     float y = yPos;
-    blockl = pTileEngine->BlockLinks  (x, y, x, y, GegnerRect[GegnerArt]);
-    blockr = pTileEngine->BlockRechts (x, y, x, y, GegnerRect[GegnerArt]);
+    blockl = TileEngine.BlockLinks  (x, y, x, y, GegnerRect[GegnerArt]);
+    blockr = TileEngine.BlockRechts (x, y, x, y, GegnerRect[GegnerArt]);
 
     if ((((blockl & BLOCKWERT_GEGNERWAND) || (blockl & BLOCKWERT_WAND)) && xSpeed < 0.0f) ||
             (((blockr & BLOCKWERT_GEGNERWAND) || (blockl & BLOCKWERT_WAND)) && xSpeed > 0.0f))

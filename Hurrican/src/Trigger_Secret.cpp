@@ -32,10 +32,10 @@ void GegnerSecret::DoKI(void)
 {
     // Secret nicht im Bild ?
     //
-    if (xPos + 10 < pTileEngine->XOffset		||
-            xPos	  > pTileEngine->XOffset + 640	||
-            yPos + 10 < pTileEngine->YOffset		||
-            yPos	  > pTileEngine->YOffset + 480)
+    if (xPos + 10 < TileEngine.XOffset		||
+            xPos	  > TileEngine.XOffset + 640	||
+            yPos + 10 < TileEngine.YOffset		||
+            yPos	  > TileEngine.YOffset + 480)
     {
         return;
     }

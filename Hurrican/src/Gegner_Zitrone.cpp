@@ -85,36 +85,36 @@ void GegnerZitrone::DoDraw(void)
     {
         DirectGraphics.SetAdditiveMode();
         if (AnimPhase >= 5)
-            pProjectiles->LavaFlare.RenderSprite ((float)-pTileEngine->XOffset + xPos - 60 + a * 4,
-                                    (float)-pTileEngine->YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
+            pProjectiles->LavaFlare.RenderSprite ((float)-TileEngine.XOffset + xPos - 60 + a * 4,
+                                    (float)-TileEngine.YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
 
         if (AnimPhase <= 5)
-            pProjectiles->LavaFlare.RenderSprite ((float)-pTileEngine->XOffset + xPos + 40 + (a - 5) * 4,
-                                    (float)-pTileEngine->YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
+            pProjectiles->LavaFlare.RenderSprite ((float)-TileEngine.XOffset + xPos + 40 + (a - 5) * 4,
+                                    (float)-TileEngine.YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
         DirectGraphics.SetColorKeyMode();
     }
 
     // Knarre
-    pGegner->DroneGun.RenderSpriteRotatedOffset((float)-pTileEngine->XOffset + xPos + 73.0f - (a) * 5,
-                                         (float)-pTileEngine->YOffset + yPos + 48.0f + yoff, KnarreWinkel,
+    pGegner->DroneGun.RenderSpriteRotatedOffset((float)-TileEngine.XOffset + xPos + 73.0f - (a) * 5,
+                                         (float)-TileEngine.YOffset + yPos + 48.0f + yoff, KnarreWinkel,
                                          0, 0, 0xFFFFFFFF);
 
 
     // Körper
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)-pTileEngine->XOffset + xPos,
-                                           (float)-pTileEngine->YOffset + yPos + yoff,
+    pGegnerGrafix[GegnerArt]->RenderSprite((float)-TileEngine.XOffset + xPos,
+                                           (float)-TileEngine.YOffset + yPos + yoff,
                                            AnimPhase, 0xFFFFFFFF);
 
     if (AlreadyDrawn == false)
     {
         DirectGraphics.SetAdditiveMode();
         if (AnimPhase < 5)
-            pProjectiles->LavaFlare.RenderSprite ((float)-pTileEngine->XOffset + xPos - 70 + a * 4,
-                                    (float)-pTileEngine->YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
+            pProjectiles->LavaFlare.RenderSprite ((float)-TileEngine.XOffset + xPos - 70 + a * 4,
+                                    (float)-TileEngine.YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
 
         if (AnimPhase > 5)
-            pProjectiles->LavaFlare.RenderSprite ((float)-pTileEngine->XOffset + xPos + 60 - (a - 5) * 4,
-                                    (float)-pTileEngine->YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
+            pProjectiles->LavaFlare.RenderSprite ((float)-TileEngine.XOffset + xPos + 60 - (a - 5) * 4,
+                                    (float)-TileEngine.YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
         DirectGraphics.SetColorKeyMode();
     }
 
@@ -127,10 +127,10 @@ void GegnerZitrone::DoDraw(void)
 
 void GegnerZitrone::DoKI(void)
 {
-    blocko = pTileEngine->BlockOben(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
-    blocku = pTileEngine->BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
-    blockl = pTileEngine->BlockLinks(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
-    blockr = pTileEngine->BlockRechts(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
+    blocko = TileEngine.BlockOben(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
+    blocku = TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
+    blockl = TileEngine.BlockLinks(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
+    blockr = TileEngine.BlockRechts(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
 
     CalcKnarreWinkel();
 

@@ -44,8 +44,8 @@ void GegnerSchleimAlien::DoDraw(void)
 {
     // Je nach Größe anders gestrecht rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteScaled ((float)(xPos-pTileEngine->XOffset) + 30 - Size/2.0f,
-            (float)(yPos-pTileEngine->YOffset) + 30 - Size/2.0f,
+    pGegnerGrafix[GegnerArt]->RenderSpriteScaled ((float)(xPos-TileEngine.XOffset) + 30 - Size/2.0f,
+            (float)(yPos-TileEngine.YOffset) + 30 - Size/2.0f,
             (int)(Size), (int)(Size), AnimPhase, 0xAAFFFFFF);
 }
 
