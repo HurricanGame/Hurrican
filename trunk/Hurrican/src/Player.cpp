@@ -196,6 +196,10 @@ void PlayerClass::InitPlayer(int player_num)
         SoundOff = 0;
     }
 
+    //DKS - Load each player's individual set of sprites (Player 1's has red highlights,
+    //      Player 2 has blue highlights).
+    LoadSprites();
+
     BronsonCounter			= 0.0f;
     Score					= 0;
     Stage					= 1;

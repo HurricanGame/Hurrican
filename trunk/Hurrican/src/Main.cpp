@@ -1128,10 +1128,6 @@ bool GameInit2(void)
     //memset(Player[0], 0, sizeof(*Player[0]));
     //memset(Player[1], 0, sizeof(*Player[1]));
 
-    //DKS - Player sprites are now members of their class, not globals, so load
-    //      the first players' sprites. Player 2's sprites will be loaded on-demand.
-    Player[0].LoadSprites();
-
     // Konfiguration laden
     if (LoadConfig() == false)
     {
