@@ -54,7 +54,7 @@ void GegnerBrockelRock::DoKI(void)
     case GEGNER_STEHEN:
     {
         for (int i = 0; i < NUMPLAYERS; i++)
-            if (pPlayer[i]->AufPlattform == this)
+            if (Player[i].AufPlattform == this)
                 Handlung = GEGNER_SPRINGEN;
     }
     break;
@@ -115,8 +115,8 @@ void GegnerBrockelRock::DoKI(void)
 void GegnerBrockelRock::GegnerExplode(void)
 {
     for (int i = 0; i < NUMPLAYERS; i++)
-        if (pPlayer[i]->AufPlattform == this)
-            pPlayer[i]->AufPlattform = NULL;
+        if (Player[i].AufPlattform == this)
+            Player[i].AufPlattform = NULL;
 
     // Splitter erzeugen Rauch
     for (int i = 0; i<10; i++)

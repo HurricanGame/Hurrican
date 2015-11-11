@@ -135,7 +135,7 @@ void GegnerDrone::DoKI(void)
 
             SoundManager.PlayWave3D (int (xPos), int (yPos), 12000, SOUND_DRONE);
 
-            pPartikelSystem->PushPartikel (xPos + 33, yPos + 60, BULLET, pPlayer[0]);
+            pPartikelSystem->PushPartikel (xPos + 33, yPos + 60, BULLET, &Player[0]);
 
             if (BlickRichtung == RECHTS)
                 pProjectiles->PushProjectile  (xPos + 58, yPos + 68, DRONEBULLET);
@@ -174,7 +174,7 @@ void GegnerDrone::DoKI(void)
             ShotDelay = 20.0f;
             ShotCount--;
 
-            pPartikelSystem->PushPartikel (xPos + 36, yPos + 57, BULLET, pPlayer[0]);
+            pPartikelSystem->PushPartikel (xPos + 36, yPos + 57, BULLET, &Player[0]);
 
             if (BlickRichtung == RECHTS)
                 pProjectiles->PushProjectile  (xPos + 58, yPos + 68, DRONEBULLET);
@@ -261,5 +261,5 @@ void GegnerDrone::GegnerExplode(void)
 
     pPartikelSystem->PushPartikel (xPos-24, yPos-16, EXPLOSION_GIANT);
 
-    pPlayer[0]->Score += 300;
+    Player[0].Score += 300;
 }

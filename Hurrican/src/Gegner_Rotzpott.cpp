@@ -204,5 +204,5 @@ void GegnerRotzpott::GegnerExplode(void)
     for (int i = 0; i < 4; i++)
         pPartikelSystem->PushPartikel (xPos - 10 + rand ()%40, yPos - 10 + rand ()%20, SCHROTT1);
 
-    pPlayer[0]->Score += 350;
+    Player[0].Score += 350;
 }

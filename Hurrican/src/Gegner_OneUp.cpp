@@ -86,12 +86,12 @@ void GegnerOneUp::DoKI(void)
     // Testen, ob der Spieler das Extraleben eingesammelt hat
     for (int i = 0; i < NUMPLAYERS; i++)
         if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                            pPlayer[i]->xpos, pPlayer[i]->ypos, pPlayer[i]->CollideRect) == true)
+                            Player[i].xpos, Player[i].ypos, Player[i].CollideRect) == true)
         {
-            pPlayer[0]->Score += 1000;					// Punkte vergeben
-            pPlayer[i]->Lives++;						// Anzahl der Leben erhöhen
-            pPlayer[0]->LivesFullGame++;
-            pPlayer[0]->LivesThisLevel++;
+            Player[0].Score += 1000;					// Punkte vergeben
+            Player[i].Lives++;						// Anzahl der Leben erhöhen
+            Player[0].LivesFullGame++;
+            Player[0].LivesThisLevel++;
             Energy = 0.0f;							// Und Leben verschwinden lassen
 
             pPartikelSystem->PushPartikel(xPos - 40, yPos - 40, EXPLOSIONFLARE);

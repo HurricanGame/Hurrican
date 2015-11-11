@@ -179,5 +179,5 @@ void GegnerMittelSpinne::GegnerExplode(void)
     for (int i=0; i < 7; i++)
         pPartikelSystem->PushPartikel (xPos  - 10 + rand ()%60, yPos - 10 + rand()%60, EXPLOSION_MEDIUM2);
 
-    pPlayer[0]->Score += 250;
+    Player[0].Score += 250;
 }

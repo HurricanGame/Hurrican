@@ -150,5 +150,5 @@ void GegnerDeckenturm::GegnerExplode(void)
 
     SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 
-    pPlayer[0]->Score += 200;
+    Player[0].Score += 200;
 }

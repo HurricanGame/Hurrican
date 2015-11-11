@@ -170,8 +170,8 @@ void SoundManagerClass::Update3DChannel(int ch)
     int   vol, pan;
     float xdiff, ydiff, Abstand;
 
-    xdiff = ((pPlayer[0]->xpos + 45)  - channels[ch].xpos);
-    ydiff = ((pPlayer[0]->ypos + 45)  - channels[ch].ypos);
+    xdiff = ((Player[0].xpos + 45)  - channels[ch].xpos);
+    ydiff = ((Player[0].ypos + 45)  - channels[ch].ypos);
 
     Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
@@ -181,7 +181,7 @@ void SoundManagerClass::Update3DChannel(int ch)
     else
     {
         // Sound links oder rechts vom Spieler ?
-        if (channels[ch].xpos < pPlayer[0]->xpos + 45)
+        if (channels[ch].xpos < Player[0].xpos + 45)
         {
             pan = 128 - (100 - vol);
             if (pan < 0)
@@ -794,8 +794,8 @@ int SoundManagerClass::PlayWave3D(int x, int y, int freq, int nr)
     int   vol, pan;
     float xdiff, ydiff, Abstand;
 
-    xdiff = ((pPlayer[0]->xpos + 45)  - x);
-    ydiff = ((pPlayer[0]->ypos + 45)  - y);
+    xdiff = ((Player[0].xpos + 45)  - x);
+    ydiff = ((Player[0].ypos + 45)  - y);
 
     //DKS - converted to float:
     Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
@@ -806,7 +806,7 @@ int SoundManagerClass::PlayWave3D(int x, int y, int freq, int nr)
     else
     {
         // Sound links oder rechts vom Spieler ?
-        if (x < pPlayer[0]->xpos + 45)
+        if (x < Player[0].xpos + 45)
         {
             pan = 128 - (100 - vol);
             if (pan < 0)

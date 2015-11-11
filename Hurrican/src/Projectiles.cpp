@@ -3912,16 +3912,16 @@ void ProjectileClass::Run(void)
     for (int p = 0; p < NUMPLAYERS; p++)
         if (DamagePlayer == true &&
                 SpriteCollision(xPos, yPos, ShotRect[ShotArt],
-                                pPlayer[p]->xpos, pPlayer[p]->ypos, pPlayer[p]->CollideRect) == true)
+                                Player[p].xpos, Player[p].ypos, Player[p].CollideRect) == true)
         {
             // Schüsse, die durch den Spieler durchgehen
             if (ExplodeOnImpact == false)
-                pPlayer[p]->DamagePlayer(float (Damage SYNC));
+                Player[p].DamagePlayer(float (Damage SYNC));
 
             // Schüsse, die bei Berührung verschwinden
             else
             {
-                pPlayer[p]->DamagePlayer(float(Damage));
+                Player[p].DamagePlayer(float(Damage));
 
                 ExplodeShot();							// Schuss Explodieren lassen
                 Damage = 0;								// und verschwinden lassen
@@ -4763,26 +4763,26 @@ void ProjectileClass::ExplodeShot(void)
         for (int p = 0; p < NUMPLAYERS; p++)
         {
             xdiff = (xPos + ShotRect[ShotArt].left + (ShotRect[ShotArt].right - ShotRect[ShotArt].left)/2)
-                    - (pPlayer[p]->xpos + pPlayer[p]->CollideRect.right/2);
+                    - (Player[p].xpos + Player[p].CollideRect.right/2);
             ydiff = (yPos + ShotRect[ShotArt].top + (ShotRect[ShotArt].bottom - ShotRect[ShotArt].top)/2)
-                    - (pPlayer[p]->ypos + pPlayer[p]->CollideRect.bottom/2);
+                    - (Player[p].ypos + Player[p].CollideRect.bottom/2);
 
             //DKS - Converted to float:
             Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
             if (((ShotArt == BOMBE    && Abstand <= 60) ||
                     (ShotArt == BOMBEBIG && Abstand <= 80)) &&
-                    (pPlayer[p]->Handlung == RADELN ||
-                     pPlayer[p]->Handlung == RADELN_FALL))
+                    (Player[p].Handlung == RADELN ||
+                     Player[p].Handlung == RADELN_FALL))
             {
                 if (ShotArt == BOMBE)
-                    pPlayer[p]->yspeed  -= 45.0f;					// Bombe
+                    Player[p].yspeed  -= 45.0f;					// Bombe
                 else
-                    pPlayer[p]->yspeed  -= 75.0f;					// SuperBombe
+                    Player[p].yspeed  -= 75.0f;					// SuperBombe
 
 
-                pPlayer[p]->JumpAdd  = PLAYER_JUMPADDSPEED;	// lassen
-                pPlayer[p]->Handlung = RADELN_FALL;			// als Rad
+                Player[p].JumpAdd  = PLAYER_JUMPADDSPEED;	// lassen
+                Player[p].Handlung = RADELN_FALL;			// als Rad
             }
         }
 
@@ -4858,7 +4858,7 @@ void ProjectileClass::ExplodeShot(void)
         TileEngine.ExplodeWalls((int)xPos / 20, (int)yPos / 20);
 
         for (int p = 0; p < NUMPLAYERS; p++)
-            DirectInput.Joysticks[pPlayer[p]->JoystickIndex].ForceFeedbackEffect(FFE_MEDIUMRUMBLE);
+            DirectInput.Joysticks[Player[p].JoystickIndex].ForceFeedbackEffect(FFE_MEDIUMRUMBLE);
 
     }
     break;

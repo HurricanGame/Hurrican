@@ -37,7 +37,7 @@ void GegnerFloating::DoKI(void)
 
     playeron = false;
     for (int p = 0; p < NUMPLAYERS; p++)
-        if (pPlayer[p]->AufPlattform == this)
+        if (Player[p].AufPlattform == this)
             playeron = true;
 
     PlattformTest(GegnerRect[GegnerArt]);
@@ -45,7 +45,7 @@ void GegnerFloating::DoKI(void)
     // Spieler in diesem Frame auf die Plattform gehopst ?
     //
     for (int p = 0; p < NUMPLAYERS; p++)
-        if (pPlayer[p]->AufPlattform == this && playeron == false)
+        if (Player[p].AufPlattform == this && playeron == false)
         {
             playeron = true;
 
@@ -54,7 +54,7 @@ void GegnerFloating::DoKI(void)
             if (ySpeed == 0.0f)
             {
                 Value2 = int (yPos);
-                ySpeed = float (pPlayer[p]->yspeed) / 3;
+                ySpeed = float (Player[p].yspeed) / 3;
                 yAcc   = -3.0f;
             }
         }

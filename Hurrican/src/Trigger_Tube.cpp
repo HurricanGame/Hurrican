@@ -108,7 +108,7 @@ void GegnerTube::DoKI(void)
     {
         for (int p = 0; p < NUMPLAYERS; p++)
             if (PlayerAbstand() < 100 &&
-                    pPlayer[p]->ypos > yPos)
+                    Player[p].ypos > yPos)
             {
                 Value1 = 1;
 

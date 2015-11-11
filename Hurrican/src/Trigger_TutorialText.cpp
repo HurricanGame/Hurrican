@@ -44,7 +44,7 @@ void GegnerTutorialText::DoKI(void)
             Value1 != 9 &&
             (pGUI->m_FadeMode == INVISIBLE ||
              pGUI->m_TextID != Value1) &&
-            !(Value1 == 20 && pPlayer[0]->PowerLines == 5))
+            !(Value1 == 20 && Player[0].PowerLines == 5))
     {
         int    pos;				// Position, an der das zu ersetzende Wort steht
         string newWord = "";			// neuer Text für das zu ersetzende Wort
@@ -55,14 +55,14 @@ void GegnerTutorialText::DoKI(void)
         // eingesammelt wurden)
         //
         if (Value1 == 7 &&
-                pPlayer[0]->CollectedDiamonds < 5)
-            Value2 = pPlayer[0]->CollectedDiamonds = 5;
+                Player[0].CollectedDiamonds < 5)
+            Value2 = Player[0].CollectedDiamonds = 5;
 
         // Bei Trigger 28 dem Spieler eine SmartBomb geben
         //
         if (Value1 == 28 &&
-                pPlayer[0]->SmartBombs == 0)
-            pPlayer[0]->SmartBombs = 1;
+                Player[0].SmartBombs == 0)
+            Player[0].SmartBombs = 1;
 
         s_text = TextArray[TEXT_TUTORIAL1 + Value1];
 
@@ -98,7 +98,7 @@ void GegnerTutorialText::DoKI(void)
         // DKS - If player 1 is controlled with joystick, replace all references to 'key' with 'button'
         std::string displayed_text(c_text);
 
-        if (pPlayer[0]->ControlType == CONTROLTYPE_JOY) {
+        if (Player[0].ControlType == CONTROLTYPE_JOY) {
             ReplaceAll(displayed_text, "key", "button");
         }
 
@@ -124,7 +124,7 @@ void GegnerTutorialText::DoKI(void)
         // die ersten 5 Diamanten eingesammelt?
         //
         case 2:
-            if (pPlayer[0]->CollectedDiamonds >= 5)
+            if (Player[0].CollectedDiamonds >= 5)
             {
                 Value1 = 3;
             }
@@ -133,7 +133,7 @@ void GegnerTutorialText::DoKI(void)
         // die nächsten 3 Diamanten eingesammelt?
         //
         case 7:
-            if (pPlayer[0]->CollectedDiamonds >= 8)
+            if (Player[0].CollectedDiamonds >= 8)
             {
                 Value1 = 8;
             }
@@ -169,8 +169,8 @@ void GegnerTutorialText::DoKI(void)
         //
         case 10:
         {
-            if (pPlayer[0]->CurrentWeaponLevel[0] >= 2 &&
-                    pPlayer[0]->BlinkCounter <= 3.0f)
+            if (Player[0].CurrentWeaponLevel[0] >= 2 &&
+                    Player[0].BlinkCounter <= 3.0f)
             {
                 Value1 = 11;
             }
@@ -226,7 +226,7 @@ void GegnerTutorialText::DoKI(void)
         // alle PowerLines gesammelt?
         case 17:
         {
-            if (pPlayer[0]->PowerLines >= 5)
+            if (Player[0].PowerLines >= 5)
                 Value1 = 18;
         }
         break;
@@ -241,9 +241,9 @@ void GegnerTutorialText::DoKI(void)
         // alle Granaten gesammelt?
         case 20:
         {
-            if (pPlayer[0]->Grenades >= 2)
+            if (Player[0].Grenades >= 2)
             {
-                pPlayer[0]->PowerLines = 0;
+                Player[0].PowerLines = 0;
                 Value1 = 21;
             }
         }
@@ -259,7 +259,7 @@ void GegnerTutorialText::DoKI(void)
         // Meldung nach der Schockwaver
         case 28:
         {
-            if (pPlayer[0]->SmartBombs == 0)
+            if (Player[0].SmartBombs == 0)
                 Value1 = 29;
         }
         break;

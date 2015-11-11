@@ -64,5 +64,5 @@ void GegnerNest::GegnerExplode(void)
 
     pPartikelSystem->PushPartikel(xPos - 5, yPos - 5, NESTLUFT);
 
-    pPlayer[0]->Score += 500;
+    Player[0].Score += 500;
 }

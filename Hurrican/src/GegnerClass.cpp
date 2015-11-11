@@ -49,8 +49,8 @@ GegnerClass::GegnerClass(void)
 GegnerClass::~GegnerClass(void)
 {
     for (int p = 0; p < NUMPLAYERS; p++)
-        if (pPlayer[p]->AufPlattform == this)
-            pPlayer[p]->AufPlattform = NULL;
+        if (Player[p].AufPlattform == this)
+            Player[p].AufPlattform = NULL;
 }
 
 // --------------------------------------------------------------------------------------
@@ -61,9 +61,9 @@ void GegnerClass::TestDamagePlayers(float dam, bool destroy)
 {
     for (int i = 0; i < NUMPLAYERS; i++)
         if (SpriteCollision(xPos,  yPos,  GegnerRect[GegnerArt],
-                            pPlayer[i]->xpos, pPlayer[i]->ypos, pPlayer[i]->CollideRect))
+                            Player[i].xpos, Player[i].ypos, Player[i].CollideRect))
         {
-            pPlayer[i]->DamagePlayer(dam);
+            Player[i].DamagePlayer(dam);
 
             if (destroy == true)
                 Energy = 0.0f;
@@ -77,8 +77,8 @@ void GegnerClass::TestDamagePlayers(float dam, bool destroy)
 void GegnerClass::GegnerExplode(void)
 {
     for (int p = 0; p < NUMPLAYERS; p++)
-        if (pPlayer[p]->AufPlattform == this)
-            pPlayer[p]->AufPlattform = NULL;
+        if (Player[p].AufPlattform == this)
+            Player[p].AufPlattform = NULL;
 }
 
 // --------------------------------------------------------------------------------------
@@ -260,11 +260,11 @@ bool GegnerClass::Run(void)
         // Gegner Energie abziehen, wenn der Spieler ein Rad ist
         for (int p = 0; p < NUMPLAYERS; p++)
         {
-            if ((pPlayer[p]->Handlung == RADELN ||
-                    pPlayer[p]->Handlung == RADELN_FALL) &&
+            if ((Player[p].Handlung == RADELN ||
+                    Player[p].Handlung == RADELN_FALL) &&
                     Destroyable == true &&
                     SpriteCollision(xPos,   yPos, GegnerRect[GegnerArt],
-                                    pPlayer[p]->xpos, pPlayer[p]->ypos, pPlayer[p]->CollideRect) == true)
+                                    Player[p].xpos, Player[p].ypos, Player[p].CollideRect) == true)
             {
                 Energy	  -= 10.0f SYNC;	// Energie abziehen
 
@@ -272,8 +272,8 @@ bool GegnerClass::Run(void)
                 if (DamageTaken <= 0.0f)
                     DamageTaken = 255;
 
-                if (pPlayer[p]->WheelMode == false)
-                    pPlayer[p]->Armour -= float(3.0 SYNC);	// Spieler verliert Rad Energie
+                if (Player[p].WheelMode == false)
+                    Player[p].Armour -= float(3.0 SYNC);	// Spieler verliert Rad Energie
 
                 // Hit Sound
                 //DKS - Added function WaveIsPlaying() to SoundManagerClass:
@@ -294,7 +294,7 @@ bool GegnerClass::Run(void)
         {
             Active = true;
 
-            if (pPlayer[0]->xpos + 35 < xPos + GegnerRect[GegnerArt].left + (GegnerRect[GegnerArt].right - GegnerRect[GegnerArt].left) / 2)
+            if (Player[0].xpos + 35 < xPos + GegnerRect[GegnerArt].left + (GegnerRect[GegnerArt].right - GegnerRect[GegnerArt].left) / 2)
                 BlickRichtung = LINKS;
             else
                 BlickRichtung = RECHTS;
@@ -343,8 +343,8 @@ int GegnerClass::PlayerAbstand(bool both)
     {
         for (int p = 0; p < NUMPLAYERS; p++)
         {
-            xdiff = (pPlayer[p]->xpos + 35) - (xPos + GegnerRect[GegnerArt].right/2);
-            ydiff = (pPlayer[p]->ypos + 40) - (yPos + GegnerRect[GegnerArt].bottom/2);
+            xdiff = (Player[p].xpos + 35) - (xPos + GegnerRect[GegnerArt].right/2);
+            ydiff = (Player[p].ypos + 40) - (yPos + GegnerRect[GegnerArt].bottom/2);
 
             //DKS - converted to float:
             //Abstand = MIN(Abstand, float(sqrt((xdiff * xdiff) + (ydiff * ydiff))));
@@ -420,52 +420,52 @@ void GegnerClass::PlattformTest(RECT rect)
     // Spieler steht auf dem Gegner
     //
     for (int p = 0; p < NUMPLAYERS; p++)
-        if (pPlayer[p]->AufPlattform == this)
+        if (Player[p].AufPlattform == this)
         {
             // so bewegen wie die Plattform selber, wenn keine Wand im Weg
             //
-            float x = pPlayer[p]->xpos;
-            float y = pPlayer[p]->ypos;
+            float x = Player[p].xpos;
+            float y = Player[p].ypos;
 
-            int br = TileEngine.BlockRechts(x, y, x, y, pPlayer[p]->CollideRect);
-            int bl = TileEngine.BlockLinks (x, y, x, y, pPlayer[p]->CollideRect);
+            int br = TileEngine.BlockRechts(x, y, x, y, Player[p].CollideRect);
+            int bl = TileEngine.BlockLinks (x, y, x, y, Player[p].CollideRect);
 
             if ((xSpeed > 0.0f && !(br & BLOCKWERT_WAND)) ||
                     (xSpeed < 0.0f && !(bl & BLOCKWERT_WAND)))
-                pPlayer[p]->xpos += xSpeed SYNC;
+                Player[p].xpos += xSpeed SYNC;
 
-            pPlayer[p]->ypos  = yPos - pPlayer[p]->CollideRect.bottom + GegnerRect[GegnerArt].top + ySpeed SYNC;
+            Player[p].ypos  = yPos - Player[p].CollideRect.bottom + GegnerRect[GegnerArt].top + ySpeed SYNC;
 
             // Runtergefallen ?
             //
-            if (pPlayer[p]->xpos + pPlayer[p]->CollideRect.left  > xPos + rect.right ||
-                    pPlayer[p]->xpos + pPlayer[p]->CollideRect.right < xPos + rect.left)
-                pPlayer[p]->AufPlattform = NULL;
+            if (Player[p].xpos + Player[p].CollideRect.left  > xPos + rect.right ||
+                    Player[p].xpos + Player[p].CollideRect.right < xPos + rect.left)
+                Player[p].AufPlattform = NULL;
         }
 
-        else if (pPlayer[p]->AufPlattform == NULL &&
-                 pPlayer[p]->Handlung != SACKREITEN &&
-                 pPlayer[p]->Handlung != DREHEN)
+        else if (Player[p].AufPlattform == NULL &&
+                 Player[p].Handlung != SACKREITEN &&
+                 Player[p].Handlung != DREHEN)
         {
             // Feststellen ob der Hurri auf die Plattform gesprungen ist
             //
             int   laenge;
 
-            laenge = abs (int (pPlayer[p]->ypos - pPlayer[p]->yposold)) + 2;
+            laenge = abs (int (Player[p].ypos - Player[p].yposold)) + 2;
 
             // TODO
             // eingestellt, weil man beim pharao boss am anfang nicht draufsteht, wenn er rauskommt
             // bringt das nachteile, wenn man das blockunten nicht abgfragt? bitte testen ;)
-            if (pPlayer[p]->yspeed >= 0.0f)//       &&
+            if (Player[p].yspeed >= 0.0f)//       &&
                 //!(TileEngine.BlockUntenNormal(pPlayer->xpos, pPlayer->ypos, pPlayer->xposold, pPlayer->yposold, pPlayer->CollideRect) & BLOCKWERT_WAND) &&
                 //!(TileEngine.BlockUntenNormal(pPlayer->xpos, pPlayer->ypos, pPlayer->xposold, pPlayer->yposold, pPlayer->CollideRect) & BLOCKWERT_PLATTFORM))
 
                 for (int i=0; i < laenge; i++)
-                    if (pPlayer[p]->yposold+pPlayer[p]->CollideRect.bottom+i+1 >= yPos + rect.top      &&
-                            pPlayer[p]->yposold+pPlayer[p]->CollideRect.bottom+i+1 <= yPos + rect.top + 10 &&
-                            pPlayer[p]->xpos + pPlayer[p]->CollideRect.left  <= xPos + rect.right &&
-                            pPlayer[p]->xpos + pPlayer[p]->CollideRect.right >= xPos + rect.left)
-                        pPlayer[p]->AufPlattform = this;
+                    if (Player[p].yposold+Player[p].CollideRect.bottom+i+1 >= yPos + rect.top      &&
+                            Player[p].yposold+Player[p].CollideRect.bottom+i+1 <= yPos + rect.top + 10 &&
+                            Player[p].xpos + Player[p].CollideRect.left  <= xPos + rect.right &&
+                            Player[p].xpos + Player[p].CollideRect.right >= xPos + rect.left)
+                        Player[p].AufPlattform = this;
         }
 }
 
@@ -479,37 +479,37 @@ void GegnerClass::Wegschieben(RECT rect, float dam)
     //
     for (int i = 0; i < NUMPLAYERS; i++)
         if (SpriteCollision(xPos, yPos, rect,
-                            pPlayer[i]->xpos,
-                            pPlayer[i]->ypos,
-                            pPlayer[i]->CollideRect) == true &&
-                pPlayer[i]->AufPlattform != this)
+                            Player[i].xpos,
+                            Player[i].ypos,
+                            Player[i].CollideRect) == true &&
+                Player[i].AufPlattform != this)
         {
             // Spieler als Rad ? Dann abprallen
-            if (pPlayer[i]->Handlung == RADELN ||
-                    pPlayer[i]->Handlung == RADELN_FALL)
+            if (Player[i].Handlung == RADELN ||
+                    Player[i].Handlung == RADELN_FALL)
             {
-                if (pPlayer[i]->xpos < xPos) pPlayer[i]->Blickrichtung = -1;
-                if (pPlayer[i]->xpos > xPos) pPlayer[i]->Blickrichtung =  1;
+                if (Player[i].xpos < xPos) Player[i].Blickrichtung = -1;
+                if (Player[i].xpos > xPos) Player[i].Blickrichtung =  1;
             }
 
             // Sonst Energie abziehen
             else
             {
                 if (dam > 0.0f)
-                    pPlayer[i]->DamagePlayer(dam SYNC);
+                    Player[i].DamagePlayer(dam SYNC);
 
                 // Spieler wegschieben
-                if   (pPlayer[i]->xpos + 35 < xPos + rect.left + (rect.right - rect.left) / 2 &&
-                        !(TileEngine.BlockLinks(pPlayer[i]->xpos, pPlayer[i]->ypos,
-                                                  pPlayer[i]->xpos, pPlayer[i]->ypos,
-                                                  pPlayer[i]->CollideRect) & BLOCKWERT_WAND))
-                    pPlayer[i]->xpos -= (PLAYER_MOVESPEED + 1) SYNC;
+                if   (Player[i].xpos + 35 < xPos + rect.left + (rect.right - rect.left) / 2 &&
+                        !(TileEngine.BlockLinks(Player[i].xpos, Player[i].ypos,
+                                                  Player[i].xpos, Player[i].ypos,
+                                                  Player[i].CollideRect) & BLOCKWERT_WAND))
+                    Player[i].xpos -= (PLAYER_MOVESPEED + 1) SYNC;
 
-                if   (pPlayer[i]->xpos + 35 >= xPos + rect.left + (rect.right - rect.left) / 2 &&
-                        !(TileEngine.BlockRechts(pPlayer[i]->xpos, pPlayer[i]->ypos,
-                                                   pPlayer[i]->xpos, pPlayer[i]->ypos,
-                                                   pPlayer[i]->CollideRect) & BLOCKWERT_WAND))
-                    pPlayer[i]->xpos += (PLAYER_MOVESPEED + 1) SYNC;
+                if   (Player[i].xpos + 35 >= xPos + rect.left + (rect.right - rect.left) / 2 &&
+                        !(TileEngine.BlockRechts(Player[i].xpos, Player[i].ypos,
+                                                   Player[i].xpos, Player[i].ypos,
+                                                   Player[i].CollideRect) & BLOCKWERT_WAND))
+                    Player[i].xpos += (PLAYER_MOVESPEED + 1) SYNC;
             }
         }
 }
@@ -576,9 +576,9 @@ bool GegnerClass::TurnonShot (void)
             TurnCount <= 0.0f)
     {
         TurnCount = 20.0f;
-        if ((pPlayer[0]->xpos < xPos &&
+        if ((Player[0].xpos < xPos &&
                 BlickRichtung == RECHTS) ||
-                (pPlayer[0]->xpos > xPos &&
+                (Player[0].xpos > xPos &&
                  BlickRichtung == LINKS))
         {
             BlickRichtung *= -1;

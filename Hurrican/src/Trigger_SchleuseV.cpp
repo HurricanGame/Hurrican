@@ -36,13 +36,13 @@ void GegnerSchleuseV::DoKI(void)
     //
     for (int p = 0; p < NUMPLAYERS; p++)
         if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                            pPlayer[p]->xpos,
-                            pPlayer[p]->ypos,
-                            pPlayer[p]->CollideRect) == true)
+                            Player[p].xpos,
+                            Player[p].ypos,
+                            Player[p].CollideRect) == true)
         {
             // Spieler wegschieben
-            if (pPlayer[p]->xpos < xPos) pPlayer[p]->xpos = xPos + GegnerRect[GegnerArt].left  - pPlayer[p]->CollideRect.right;
-            if (pPlayer[p]->xpos > xPos) pPlayer[p]->xpos = xPos + GegnerRect[GegnerArt].right - pPlayer[p]->CollideRect.left;
+            if (Player[p].xpos < xPos) Player[p].xpos = xPos + GegnerRect[GegnerArt].left  - Player[p].CollideRect.right;
+            if (Player[p].xpos > xPos) Player[p].xpos = xPos + GegnerRect[GegnerArt].right - Player[p].CollideRect.left;
         }
 
     // Testen, ob ein Gegner die Schleuse berührt hat

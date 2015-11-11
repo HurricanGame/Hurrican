@@ -61,22 +61,22 @@ void GegnerSkiWalker::DoKI(void)
 
     // Spieler draufgehüpft ?
     for (int i = 0; i < NUMPLAYERS; i++)
-        if (pPlayer[i]->AufPlattform == this    &&
+        if (Player[i].AufPlattform == this    &&
                 (Handlung == GEGNER_LAUFEN        ||
                  Handlung == GEGNER_FALLEN)		 &&
-                pPlayer[i]->Handlung != RADELN      &&
-                pPlayer[i]->Handlung != RADELN_FALL &&
-                pPlayer[i]->Handlung != SACKREITEN  &&
-                pPlayer[i]->Handlung != DREHEN	     &&
-                pPlayer[i]->yspeed > 0.0f)
+                Player[i].Handlung != RADELN      &&
+                Player[i].Handlung != RADELN_FALL &&
+                Player[i].Handlung != SACKREITEN  &&
+                Player[i].Handlung != DREHEN	     &&
+                Player[i].yspeed > 0.0f)
         {
             // Spieler springen lassen
-            pPlayer[i]->JumpPossible = false;
-            pPlayer[i]->AnimPhase    = 0;
-            pPlayer[i]->Handlung     = SPRINGEN;
-            pPlayer[i]->JumpStart    = pPlayer[i]->ypos;
-            pPlayer[i]->yspeed       = -PLAYER_MAXJUMPSPEED;
-            pPlayer[i]->JumpAdd	  =  0.0f;
+            Player[i].JumpPossible = false;
+            Player[i].AnimPhase    = 0;
+            Player[i].Handlung     = SPRINGEN;
+            Player[i].JumpStart    = Player[i].ypos;
+            Player[i].yspeed       = -PLAYER_MAXJUMPSPEED;
+            Player[i].JumpAdd	  =  0.0f;
 
             AnimSpeed = 0.4f;
             Handlung  = GEGNER_SPRINGEN;
@@ -190,9 +190,9 @@ void GegnerSkiWalker::GegnerExplode(void)
 
     SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 
-    pPlayer[0]->Score += 100;
+    Player[0].Score += 100;
 
     for (int i = 0; i < NUMPLAYERS; i++)
-        if (pPlayer[i]->AufPlattform == this)
-            pPlayer[i]->AufPlattform = NULL;
+        if (Player[i].AufPlattform == this)
+            Player[i].AufPlattform = NULL;
 }

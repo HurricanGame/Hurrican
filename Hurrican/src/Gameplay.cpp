@@ -81,24 +81,24 @@ void InitNewGame(void)
 
     for (int p = 0; p < NUMPLAYERS; p++)
     {
-        pPlayer[p]->Handlung = STEHEN;
-        pPlayer[p]->InitPlayer();
-        pPlayer[p]->InitNewLevel();
-        pPlayer[p]->SecretFullGame   = 0;
-        pPlayer[p]->DiamondsFullGame = 0;
-        pPlayer[p]->LivesFullGame	  = 0;
-        pPlayer[p]->BlocksFullGame	  = 0;
+        Player[p].Handlung = STEHEN;
+        Player[p].InitPlayer(p);      // DKS: InitPlayer now takes argument specifying which
+                                        //      player number each player is.
+        Player[p].LoadSprites();      // DKS: PlayerClass now contains its own sprites, and
+                                        //      Player2's sprites are separate textures colored
+                                        //      blue instead of red.
+        Player[p].InitNewLevel();
+        Player[p].SecretFullGame   = 0;
+        Player[p].DiamondsFullGame = 0;
+        Player[p].LivesFullGame	  = 0;
+        Player[p].BlocksFullGame	  = 0;
 
         // nur im Tutorial Level
         if (RunningTutorial == true)
-            pPlayer[p]->GodMode = true;
+            Player[p].GodMode = true;
     }
 
     pHUD->BossHUDActive = 0.0f;
-
-    //DKS - Player 2 sprites are loaded on-demand:
-    if (NUMPLAYERS > 1) 
-        pPlayer[1]->LoadSprites();
 }
 
 // --------------------------------------------------------------------------------------
@@ -121,8 +121,8 @@ void InitNewGameLevel(int Nr)
 
     for (int p = 0; p < NUMPLAYERS; p++)
     {
-        pPlayer[p]->ExplodingTimer	= 0.0f;
-        pPlayer[p]->InitNewLevel();
+        Player[p].ExplodingTimer	= 0.0f;
+        Player[p].InitNewLevel();
     }
 
     // Externes Level aus Command Line laden ?
@@ -208,19 +208,19 @@ void ShowGameOver(void)
     int col;
 
     // Transparent Wert des Game Over Schriftzuges bestimmen
-    col = int ((50.0f - pPlayer[0]->GameOverTimer)*10);
+    col = int ((50.0f - Player[0].GameOverTimer)*10);
     if (col > 255)							// Obergrenze checken
         col = 255;
 
     TileEngine.GameOver.RenderSprite((640 - 400) * 0.5f, (480 - 90) * 0.5f, D3DCOLOR_RGBA(255, 255, 255, col));
 
-    pPlayer[0]->GameOverTimer -= 0.75f SYNC;
+    Player[0].GameOverTimer -= 0.75f SYNC;
 
     // GameOver vorbei ?
     // Dann schön alle löschen und auf ein neues Spiel vorbereiten
-    if (pPlayer[0]->GameOverTimer <= 0.0f)
+    if (Player[0].GameOverTimer <= 0.0f)
     {
-        pPlayer[0]->GameOverTimer = 0.0f;
+        Player[0].GameOverTimer = 0.0f;
         pMenu->CheckForNewHighscore();
 
         pConsole->Hide();
@@ -276,32 +276,32 @@ void GameLoop(void)
 
         for (int p = 0; p < NUMPLAYERS; p++)
         {
-            pPlayer[p]->WasDamaged = false;
+            Player[p].WasDamaged = false;
 
             if (pConsole->Showing == false &&
-                    pPlayer[p]->Handlung != TOT)
+                    Player[p].Handlung != TOT)
             {
-                if (pPlayer[p]->GameOverTimer == 0.0f)
+                if (Player[p].GameOverTimer == 0.0f)
                 {
                     // Spieler-Eingabe abfragen
-                    pPlayer[p]->GetPlayerInput();
-                    pPlayer[p]->AnimatePlayer();
-                    pPlayer[p]->MovePlayer();
+                    Player[p].GetPlayerInput();
+                    Player[p].AnimatePlayer();
+                    Player[p].MovePlayer();
                 }
             }
 
-            pPlayer[p]->GegnerDran = false;
+            Player[p].GegnerDran = false;
 
             // Spieler bewegen
             if (p == 0 &&
                     pConsole->Showing == false)
-                pPlayer[p]->ScrollFlugsack();
+                Player[p].ScrollFlugsack();
         }
 
         // Spieler auf einer Plattform ?
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (pPlayer[p]->AufPlattform != NULL)
-                pPlayer[p]->DoPlattformStuff();
+            if (Player[p].AufPlattform != NULL)
+                Player[p].DoPlattformStuff();
 
         // Gegner bewegen
         if (pConsole->Showing == false)
@@ -346,31 +346,31 @@ void GameLoop(void)
     // Spieler anzeigen
     for (int p = 0; p < NUMPLAYERS; p++)
     {
-        pPlayer[p]->AlreadyDrawn = false;
+        Player[p].AlreadyDrawn = false;
 
-        pPlayer[p]->DrawPlayer(false, false);
+        Player[p].DrawPlayer(false, false);
 
 
-        if (pPlayer[p]->BlinkCounter > 0.0f)			// noch farbig blinken vom PowerUp?
+        if (Player[p].BlinkCounter > 0.0f)			// noch farbig blinken vom PowerUp?
         {
-            if (pPlayer[p]->BlinkCounter < 4.0f)
+            if (Player[p].BlinkCounter < 4.0f)
             {
-                int a = int ((pPlayer[p]->BlinkCounter) * 63.0f);
+                int a = int ((Player[p].BlinkCounter) * 63.0f);
 
-                if (pPlayer[p]->BlinkColor == 1) pPlayer[p]->CurrentColor = D3DCOLOR_RGBA (255,  64,  64, a);
-                else if (pPlayer[p]->BlinkColor == 2) pPlayer[p]->CurrentColor = D3DCOLOR_RGBA ( 64,  64, 255, a);
-                else if (pPlayer[p]->BlinkColor == 3) pPlayer[p]->CurrentColor = D3DCOLOR_RGBA ( 64, 255,  64, a);
-                else if (pPlayer[p]->BlinkColor == 4) pPlayer[p]->CurrentColor = D3DCOLOR_RGBA (128, 192, 255, a);
+                if (Player[p].BlinkColor == 1) Player[p].CurrentColor = D3DCOLOR_RGBA (255,  64,  64, a);
+                else if (Player[p].BlinkColor == 2) Player[p].CurrentColor = D3DCOLOR_RGBA ( 64,  64, 255, a);
+                else if (Player[p].BlinkColor == 3) Player[p].CurrentColor = D3DCOLOR_RGBA ( 64, 255,  64, a);
+                else if (Player[p].BlinkColor == 4) Player[p].CurrentColor = D3DCOLOR_RGBA (128, 192, 255, a);
 
-                pPlayer[p]->DrawPlayer(true, true);
-                pPlayer[p]->DrawPlayer(true, true);
-                pPlayer[p]->DrawPlayer(false, true);
+                Player[p].DrawPlayer(true, true);
+                Player[p].DrawPlayer(true, true);
+                Player[p].DrawPlayer(false, true);
             }
 
-            pPlayer[p]->BlinkCounter -= 0.5f SYNC;
+            Player[p].BlinkCounter -= 0.5f SYNC;
         }
-        else if (pPlayer[p]->WasDamaged == true)
-            pPlayer[p]->DrawPlayer(true, false);
+        else if (Player[p].WasDamaged == true)
+            Player[p].DrawPlayer(true, false);
     }
 
     // Schüsse abhandeln
@@ -428,44 +428,44 @@ void GameLoop(void)
     {
         // Waffen 1-3 auswählen
         if (KeyDown(DIK_1))
-            pPlayer[0]->SelectedWeapon = 0;
+            Player[0].SelectedWeapon = 0;
 
         if (KeyDown(DIK_2) &&
-                pPlayer[0]->CurrentWeaponLevel[1] > 0)
-            pPlayer[0]->SelectedWeapon = 1;
+                Player[0].CurrentWeaponLevel[1] > 0)
+            Player[0].SelectedWeapon = 1;
 
         if (KeyDown(DIK_3) &&
-                pPlayer[0]->CurrentWeaponLevel[2] > 0)
-            pPlayer[0]->SelectedWeapon = 2;
+                Player[0].CurrentWeaponLevel[2] > 0)
+            Player[0].SelectedWeapon = 2;
 
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (pPlayer[p]->Handlung != TOT)
-                pPlayer[p]->CheckForExplode();
+            if (Player[p].Handlung != TOT)
+                Player[p].CheckForExplode();
     }
 
     // Game-Over Schrift anzeigen ?
-    if (pPlayer[0]->GameOverTimer > 0.0f)
+    if (Player[0].GameOverTimer > 0.0f)
         ShowGameOver();
 
     // Gameloop verlassen ?
-    if (KeyDown(DIK_ESCAPE) && pPlayer[0]->GameOverTimer == 0.0f)
+    if (KeyDown(DIK_ESCAPE) && Player[0].GameOverTimer == 0.0f)
         LeaveGameLoop();
 
 #if defined(GCW)
     // On GCW Zero, same check as above, but using the internal controls
-    if (DirectInput.InternalJoystickMainMenuButtonDown() && pPlayer[0]->GameOverTimer == 0.0f)
+    if (DirectInput.InternalJoystickMainMenuButtonDown() && Player[0].GameOverTimer == 0.0f)
         LeaveGameLoop();
 #endif //GCW
 
     /*
-    	if (KeyDown(DIK_F1)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 1;
-    	if (KeyDown(DIK_F2)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 2;
-    	if (KeyDown(DIK_F3)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 3;
-    	if (KeyDown(DIK_F4)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 4;
-    	if (KeyDown(DIK_F5)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 5;
-    	if (KeyDown(DIK_F6)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 6;
-    	if (KeyDown(DIK_F7)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 7;
-    	if (KeyDown(DIK_F8)) pPlayer[0]->CurrentWeaponLevel[pPlayer[0]->SelectedWeapon] = 8;
+    	if (KeyDown(DIK_F1)) Player[0].CurrentWeaponLevel[Player[0].SelectedWeapon] = 1;
+    	if (KeyDown(DIK_F2)) Player[0].CurrentWeaponLevel[Player[0].SelectedWeapon] = 2;
+    	if (KeyDown(DIK_F3)) Player[0].CurrentWeaponLevel[Player[0].SelectedWeapon] = 3;
+    	if (KeyDown(DIK_F4)) Player[0].CurrentWeaponLevel[Player[0].SelectedWeapon] = 4;
+    	if (KeyDown(DIK_F5)) Player[0].CurrentWeaponLevel[Player[0].SelectedWeapon] = 5;
+    	if (KeyDown(DIK_F6)) Player[0].CurrentWeaponLevel[Player[0].SelectedWeapon] = 6;
+    	if (KeyDown(DIK_F7)) Player[0].CurrentWeaponLevel[Player[0].SelectedWeapon] = 7;
+    	if (KeyDown(DIK_F8)) Player[0].CurrentWeaponLevel[Player[0].SelectedWeapon] = 8;
     */
 
     if (DEMORecording == true) pDefaultFont->DrawText (10, 455, "Recording demo", D3DCOLOR_RGBA (255, 255, 255, 255));
@@ -495,7 +495,7 @@ void LeaveGameLoop(void)
     // Ins Hauptmenu wechseln
     SpielZustand = MAINMENU;
     pMenu->AktuellerZustand = MENUZUSTAND_MAINMENU;
-    if (pPlayer[0]->Lives == -1 && pPlayer[1]->Lives == -1)
+    if (Player[0].Lives == -1 && Player[1].Lives == -1)
         //DKS - If game is over, make main menu selection be "Start New Game"
         pMenu->AktuellerPunkt = MENUPUNKT_STARTGAME;
     else
@@ -612,132 +612,132 @@ void CreateDefaultControlsConfig(int player)
         return;
 
     if (player == 0) {
-        pPlayer[0]->AktionKeyboard [AKTION_LINKS]			= DIK_LEFT;
-        pPlayer[0]->AktionKeyboard [AKTION_RECHTS]			= DIK_RIGHT;
-        pPlayer[0]->AktionKeyboard [AKTION_DUCKEN]			= DIK_DOWN;
-        pPlayer[0]->AktionKeyboard [AKTION_OBEN]			= DIK_UP;
-        pPlayer[0]->AktionKeyboard [AKTION_UNTEN]			= DIK_DOWN;
+        Player[0].AktionKeyboard [AKTION_LINKS]			= DIK_LEFT;
+        Player[0].AktionKeyboard [AKTION_RECHTS]			= DIK_RIGHT;
+        Player[0].AktionKeyboard [AKTION_DUCKEN]			= DIK_DOWN;
+        Player[0].AktionKeyboard [AKTION_OBEN]			= DIK_UP;
+        Player[0].AktionKeyboard [AKTION_UNTEN]			= DIK_DOWN;
 #if defined(PANDORA)
-        pPlayer[0]->AktionKeyboard [AKTION_JUMP]			= DIK_NEXT;
-        pPlayer[0]->AktionKeyboard [AKTION_SHOOT]			= DIK_HOME;
-        pPlayer[0]->AktionKeyboard [AKTION_BLITZ]			= DIK_PRIOR;
-        pPlayer[0]->AktionKeyboard [AKTION_POWERLINE]		= DIK_LSHIFT;
-        pPlayer[0]->AktionKeyboard [AKTION_GRANATE]		    = DIK_END;
-        pPlayer[0]->AktionKeyboard [AKTION_SMARTBOMB]		= DIK_RCONTROL;
-        pPlayer[0]->AktionKeyboard [AKTION_WAFFE_SPREAD]	= DIK_1;
-        pPlayer[0]->AktionKeyboard [AKTION_WAFFE_LASER]		= DIK_2;
-        pPlayer[0]->AktionKeyboard [AKTION_WAFFE_BOUNCE]	= DIK_3;
-        pPlayer[0]->AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_RETURN;
+        Player[0].AktionKeyboard [AKTION_JUMP]			= DIK_NEXT;
+        Player[0].AktionKeyboard [AKTION_SHOOT]			= DIK_HOME;
+        Player[0].AktionKeyboard [AKTION_BLITZ]			= DIK_PRIOR;
+        Player[0].AktionKeyboard [AKTION_POWERLINE]		= DIK_LSHIFT;
+        Player[0].AktionKeyboard [AKTION_GRANATE]		    = DIK_END;
+        Player[0].AktionKeyboard [AKTION_SMARTBOMB]		= DIK_RCONTROL;
+        Player[0].AktionKeyboard [AKTION_WAFFE_SPREAD]	= DIK_1;
+        Player[0].AktionKeyboard [AKTION_WAFFE_LASER]		= DIK_2;
+        Player[0].AktionKeyboard [AKTION_WAFFE_BOUNCE]	= DIK_3;
+        Player[0].AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_RETURN;
 #elif defined(ANDROID)
-        pPlayer[0]->AktionKeyboard [AKTION_JUMP]			= DIK_A;
-        pPlayer[0]->AktionKeyboard [AKTION_SHOOT]			= DIK_B;
-        pPlayer[0]->AktionKeyboard [AKTION_BLITZ]			= DIK_C;
-        pPlayer[0]->AktionKeyboard [AKTION_POWERLINE]		= DIK_D;
-        pPlayer[0]->AktionKeyboard [AKTION_GRANATE]		    = DIK_E;
-        pPlayer[0]->AktionKeyboard [AKTION_SMARTBOMB]		= DIK_F;
-        pPlayer[0]->AktionKeyboard [AKTION_WAFFE_SPREAD]	= DIK_G;
-        pPlayer[0]->AktionKeyboard [AKTION_WAFFE_LASER]		= DIK_H;
-        pPlayer[0]->AktionKeyboard [AKTION_WAFFE_BOUNCE]	= DIK_I;
-        pPlayer[0]->AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_J;
+        Player[0].AktionKeyboard [AKTION_JUMP]			= DIK_A;
+        Player[0].AktionKeyboard [AKTION_SHOOT]			= DIK_B;
+        Player[0].AktionKeyboard [AKTION_BLITZ]			= DIK_C;
+        Player[0].AktionKeyboard [AKTION_POWERLINE]		= DIK_D;
+        Player[0].AktionKeyboard [AKTION_GRANATE]		    = DIK_E;
+        Player[0].AktionKeyboard [AKTION_SMARTBOMB]		= DIK_F;
+        Player[0].AktionKeyboard [AKTION_WAFFE_SPREAD]	= DIK_G;
+        Player[0].AktionKeyboard [AKTION_WAFFE_LASER]		= DIK_H;
+        Player[0].AktionKeyboard [AKTION_WAFFE_BOUNCE]	= DIK_I;
+        Player[0].AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_J;
 #else
-        pPlayer[0]->AktionKeyboard [AKTION_JUMP]			= DIK_LALT;
-        pPlayer[0]->AktionKeyboard [AKTION_SHOOT]			= DIK_LCONTROL;
-        pPlayer[0]->AktionKeyboard [AKTION_BLITZ]			= DIK_LSHIFT;
-        pPlayer[0]->AktionKeyboard [AKTION_POWERLINE]		= DIK_SPACE;
-        pPlayer[0]->AktionKeyboard [AKTION_GRANATE]		    = DIK_RCONTROL;
-        pPlayer[0]->AktionKeyboard [AKTION_SMARTBOMB]		= DIK_RSHIFT;
-        pPlayer[0]->AktionKeyboard [AKTION_WAFFE_SPREAD]	= 0;
-        pPlayer[0]->AktionKeyboard [AKTION_WAFFE_LASER]		= 0;
-        pPlayer[0]->AktionKeyboard [AKTION_WAFFE_BOUNCE]	= 0;
-        pPlayer[0]->AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_RETURN;
+        Player[0].AktionKeyboard [AKTION_JUMP]			= DIK_LALT;
+        Player[0].AktionKeyboard [AKTION_SHOOT]			= DIK_LCONTROL;
+        Player[0].AktionKeyboard [AKTION_BLITZ]			= DIK_LSHIFT;
+        Player[0].AktionKeyboard [AKTION_POWERLINE]		= DIK_SPACE;
+        Player[0].AktionKeyboard [AKTION_GRANATE]		    = DIK_RCONTROL;
+        Player[0].AktionKeyboard [AKTION_SMARTBOMB]		= DIK_RSHIFT;
+        Player[0].AktionKeyboard [AKTION_WAFFE_SPREAD]	= 0;
+        Player[0].AktionKeyboard [AKTION_WAFFE_LASER]		= 0;
+        Player[0].AktionKeyboard [AKTION_WAFFE_BOUNCE]	= 0;
+        Player[0].AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_RETURN;
 
-        pPlayer[0]->AktionJoystick [AKTION_LINKS]			= -1;
-        pPlayer[0]->AktionJoystick [AKTION_RECHTS]			= -1;
-        pPlayer[0]->AktionJoystick [AKTION_DUCKEN]			= -1;
-        pPlayer[0]->AktionJoystick [AKTION_OBEN]			= -1;
-        pPlayer[0]->AktionJoystick [AKTION_UNTEN]			= -1;
-        pPlayer[0]->AktionJoystick [AKTION_JUMP]			= 0;
-        pPlayer[0]->AktionJoystick [AKTION_SHOOT]			= 1;
-        pPlayer[0]->AktionJoystick [AKTION_BLITZ]			= 2;
-        pPlayer[0]->AktionJoystick [AKTION_POWERLINE]		= 3;
-        pPlayer[0]->AktionJoystick [AKTION_GRANATE]		    = 4;
-        pPlayer[0]->AktionJoystick [AKTION_SMARTBOMB]		= 5;
-        pPlayer[0]->AktionJoystick [AKTION_WAFFE_SPREAD]	= -1;
-        pPlayer[0]->AktionJoystick [AKTION_WAFFE_LASER]	    = -1;
-        pPlayer[0]->AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
-        pPlayer[0]->AktionJoystick [AKTION_WAFFEN_CYCLE]	= 6;
+        Player[0].AktionJoystick [AKTION_LINKS]			= -1;
+        Player[0].AktionJoystick [AKTION_RECHTS]			= -1;
+        Player[0].AktionJoystick [AKTION_DUCKEN]			= -1;
+        Player[0].AktionJoystick [AKTION_OBEN]			= -1;
+        Player[0].AktionJoystick [AKTION_UNTEN]			= -1;
+        Player[0].AktionJoystick [AKTION_JUMP]			= 0;
+        Player[0].AktionJoystick [AKTION_SHOOT]			= 1;
+        Player[0].AktionJoystick [AKTION_BLITZ]			= 2;
+        Player[0].AktionJoystick [AKTION_POWERLINE]		= 3;
+        Player[0].AktionJoystick [AKTION_GRANATE]		    = 4;
+        Player[0].AktionJoystick [AKTION_SMARTBOMB]		= 5;
+        Player[0].AktionJoystick [AKTION_WAFFE_SPREAD]	= -1;
+        Player[0].AktionJoystick [AKTION_WAFFE_LASER]	    = -1;
+        Player[0].AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
+        Player[0].AktionJoystick [AKTION_WAFFEN_CYCLE]	= 6;
 #endif
-        pPlayer[0]->Walk_UseAxxis = false;      // By default, use the HAT switch (DPAD) for movement..
-        pPlayer[0]->Look_UseAxxis = false;      // and also looking.
+        Player[0].Walk_UseAxxis = false;      // By default, use the HAT switch (DPAD) for movement..
+        Player[0].Look_UseAxxis = false;      // and also looking.
 
         //DKS - Added missing default settings, and made player2's default joy index 1 instead of both being 0
-        pPlayer[0]->JoystickIndex = 0;
-        pPlayer[0]->JoystickSchwelle = 500.0f;
-        pPlayer[0]->JoystickMode = JOYMODE_JOYPAD;
-        pPlayer[0]->ControlType = CONTROLTYPE_KEYBOARD;
+        Player[0].JoystickIndex = 0;
+        Player[0].JoystickSchwelle = 500.0f;
+        Player[0].JoystickMode = JOYMODE_JOYPAD;
+        Player[0].ControlType = CONTROLTYPE_KEYBOARD;
 
 #if defined(GCW)
         // On GCW Zero, the Player 1 default joy index is the internal controls and both players use joystick:
-        pPlayer[0]->JoystickIndex = DirectInput.GetInternalJoystickIndex();
-        pPlayer[0]->ControlType = CONTROLTYPE_JOY;
+        Player[0].JoystickIndex = DirectInput.GetInternalJoystickIndex();
+        Player[0].ControlType = CONTROLTYPE_JOY;
         // Default button map for GCW Zero:
-        pPlayer[0]->AktionJoystick [AKTION_JUMP]			= 3;
-        pPlayer[0]->AktionJoystick [AKTION_SHOOT]			= 2;
-        pPlayer[0]->AktionJoystick [AKTION_BLITZ]			= 1;
-        pPlayer[0]->AktionJoystick [AKTION_POWERLINE]		= 6;
-        pPlayer[0]->AktionJoystick [AKTION_GRANATE]		    = 7;
-        pPlayer[0]->AktionJoystick [AKTION_SMARTBOMB]		= 4;
-        pPlayer[0]->AktionJoystick [AKTION_WAFFE_SPREAD]	= -1;
-        pPlayer[0]->AktionJoystick [AKTION_WAFFE_LASER]	    = -1;
-        pPlayer[0]->AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
-        pPlayer[0]->AktionJoystick [AKTION_WAFFEN_CYCLE]	= 0;
+        Player[0].AktionJoystick [AKTION_JUMP]			= 3;
+        Player[0].AktionJoystick [AKTION_SHOOT]			= 2;
+        Player[0].AktionJoystick [AKTION_BLITZ]			= 1;
+        Player[0].AktionJoystick [AKTION_POWERLINE]		= 6;
+        Player[0].AktionJoystick [AKTION_GRANATE]		    = 7;
+        Player[0].AktionJoystick [AKTION_SMARTBOMB]		= 4;
+        Player[0].AktionJoystick [AKTION_WAFFE_SPREAD]	= -1;
+        Player[0].AktionJoystick [AKTION_WAFFE_LASER]	    = -1;
+        Player[0].AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
+        Player[0].AktionJoystick [AKTION_WAFFEN_CYCLE]	= 0;
 #endif //GCW
 
     } else {
-        pPlayer[1]->AktionKeyboard [AKTION_LINKS]			= DIK_A;
-        pPlayer[1]->AktionKeyboard [AKTION_RECHTS]			= DIK_D;
-        pPlayer[1]->AktionKeyboard [AKTION_DUCKEN]			= DIK_S;
-        pPlayer[1]->AktionKeyboard [AKTION_OBEN]			= DIK_W;
-        pPlayer[1]->AktionKeyboard [AKTION_UNTEN]			= DIK_X;
-        pPlayer[1]->AktionKeyboard [AKTION_JUMP]			= DIK_G;
-        pPlayer[1]->AktionKeyboard [AKTION_SHOOT]			= DIK_H;
-        pPlayer[1]->AktionKeyboard [AKTION_BLITZ]			= DIK_J;
-        pPlayer[1]->AktionKeyboard [AKTION_POWERLINE]		= DIK_T;
-        pPlayer[1]->AktionKeyboard [AKTION_GRANATE]			= DIK_Z;
-        pPlayer[1]->AktionKeyboard [AKTION_SMARTBOMB]		= DIK_U;
-        pPlayer[1]->AktionKeyboard [AKTION_WAFFE_SPREAD]	= 0;
-        pPlayer[1]->AktionKeyboard [AKTION_WAFFE_LASER]		= 0;
-        pPlayer[1]->AktionKeyboard [AKTION_WAFFE_BOUNCE]	= 0;
-        pPlayer[1]->AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_Q;
+        Player[1].AktionKeyboard [AKTION_LINKS]			= DIK_A;
+        Player[1].AktionKeyboard [AKTION_RECHTS]			= DIK_D;
+        Player[1].AktionKeyboard [AKTION_DUCKEN]			= DIK_S;
+        Player[1].AktionKeyboard [AKTION_OBEN]			= DIK_W;
+        Player[1].AktionKeyboard [AKTION_UNTEN]			= DIK_X;
+        Player[1].AktionKeyboard [AKTION_JUMP]			= DIK_G;
+        Player[1].AktionKeyboard [AKTION_SHOOT]			= DIK_H;
+        Player[1].AktionKeyboard [AKTION_BLITZ]			= DIK_J;
+        Player[1].AktionKeyboard [AKTION_POWERLINE]		= DIK_T;
+        Player[1].AktionKeyboard [AKTION_GRANATE]			= DIK_Z;
+        Player[1].AktionKeyboard [AKTION_SMARTBOMB]		= DIK_U;
+        Player[1].AktionKeyboard [AKTION_WAFFE_SPREAD]	= 0;
+        Player[1].AktionKeyboard [AKTION_WAFFE_LASER]		= 0;
+        Player[1].AktionKeyboard [AKTION_WAFFE_BOUNCE]	= 0;
+        Player[1].AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_Q;
 
-        pPlayer[1]->AktionJoystick [AKTION_LINKS]			= -1;
-        pPlayer[1]->AktionJoystick [AKTION_RECHTS]		    = -1;
-        pPlayer[1]->AktionJoystick [AKTION_DUCKEN]		    = -1;
-        pPlayer[1]->AktionJoystick [AKTION_OBEN]			= -1;
-        pPlayer[1]->AktionJoystick [AKTION_UNTEN]			= -1;
-        pPlayer[1]->AktionJoystick [AKTION_JUMP]			= 0;
-        pPlayer[1]->AktionJoystick [AKTION_SHOOT]			= 1;
-        pPlayer[1]->AktionJoystick [AKTION_BLITZ]			= 2;
-        pPlayer[1]->AktionJoystick [AKTION_POWERLINE]		= 3;
-        pPlayer[1]->AktionJoystick [AKTION_GRANATE]		    = 4;
-        pPlayer[1]->AktionJoystick [AKTION_SMARTBOMB]		= 5;
-        pPlayer[1]->AktionJoystick [AKTION_WAFFE_SPREAD]	= -1;
-        pPlayer[1]->AktionJoystick [AKTION_WAFFE_LASER]	    = -1;
-        pPlayer[1]->AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
-        pPlayer[1]->AktionJoystick [AKTION_WAFFEN_CYCLE]	= 6;
+        Player[1].AktionJoystick [AKTION_LINKS]			= -1;
+        Player[1].AktionJoystick [AKTION_RECHTS]		    = -1;
+        Player[1].AktionJoystick [AKTION_DUCKEN]		    = -1;
+        Player[1].AktionJoystick [AKTION_OBEN]			= -1;
+        Player[1].AktionJoystick [AKTION_UNTEN]			= -1;
+        Player[1].AktionJoystick [AKTION_JUMP]			= 0;
+        Player[1].AktionJoystick [AKTION_SHOOT]			= 1;
+        Player[1].AktionJoystick [AKTION_BLITZ]			= 2;
+        Player[1].AktionJoystick [AKTION_POWERLINE]		= 3;
+        Player[1].AktionJoystick [AKTION_GRANATE]		    = 4;
+        Player[1].AktionJoystick [AKTION_SMARTBOMB]		= 5;
+        Player[1].AktionJoystick [AKTION_WAFFE_SPREAD]	= -1;
+        Player[1].AktionJoystick [AKTION_WAFFE_LASER]	    = -1;
+        Player[1].AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
+        Player[1].AktionJoystick [AKTION_WAFFEN_CYCLE]	= 6;
 
-        pPlayer[1]->Walk_UseAxxis = false;      // By default, use the HAT switch (DPAD) for movement
-        pPlayer[1]->Look_UseAxxis = false;      // and the analog stick for looking    -DKS
+        Player[1].Walk_UseAxxis = false;      // By default, use the HAT switch (DPAD) for movement
+        Player[1].Look_UseAxxis = false;      // and the analog stick for looking    -DKS
 
         //DKS - Added missing default settings, and made player2's default joy index 1 instead of both being 0
-        pPlayer[1]->JoystickIndex = 1;
-        pPlayer[1]->JoystickSchwelle = 500.0f;
-        pPlayer[1]->JoystickMode = JOYMODE_JOYPAD;
-        pPlayer[1]->ControlType = CONTROLTYPE_KEYBOARD;
+        Player[1].JoystickIndex = 1;
+        Player[1].JoystickSchwelle = 500.0f;
+        Player[1].JoystickMode = JOYMODE_JOYPAD;
+        Player[1].ControlType = CONTROLTYPE_KEYBOARD;
 
 #if defined(GCW)
         // On GCW Zero, both players use joystick by default:
-        pPlayer[1]->ControlType = CONTROLTYPE_JOY;
+        Player[1].ControlType = CONTROLTYPE_JOY;
 #endif //GCW
     }
 }
@@ -809,59 +809,59 @@ bool LoadConfig(void)
     SoundManager.SetVolumes(Sound, Musik);
 
     // Daten für Keyboard und Joystick auslesen
-    fread(&pPlayer[0]->AktionKeyboard, sizeof(pPlayer[0]->AktionKeyboard), 1, Datei);
-    fread(&pPlayer[0]->AktionJoystick, sizeof(pPlayer[0]->AktionJoystick), 1, Datei);
-    fread(&pPlayer[0]->Walk_UseAxxis,  sizeof(pPlayer[0]->Walk_UseAxxis), 1, Datei);
-    fread(&pPlayer[0]->Look_UseAxxis,  sizeof(pPlayer[0]->Look_UseAxxis), 1, Datei);
+    fread(&Player[0].AktionKeyboard, sizeof(Player[0].AktionKeyboard), 1, Datei);
+    fread(&Player[0].AktionJoystick, sizeof(Player[0].AktionJoystick), 1, Datei);
+    fread(&Player[0].Walk_UseAxxis,  sizeof(Player[0].Walk_UseAxxis), 1, Datei);
+    fread(&Player[0].Look_UseAxxis,  sizeof(Player[0].Look_UseAxxis), 1, Datei);
 
-    fread(&pPlayer[1]->AktionKeyboard, sizeof(pPlayer[1]->AktionKeyboard), 1, Datei);
-    fread(&pPlayer[1]->AktionJoystick, sizeof(pPlayer[1]->AktionJoystick), 1, Datei);
-    fread(&pPlayer[1]->Walk_UseAxxis,  sizeof(pPlayer[1]->Walk_UseAxxis), 1, Datei);
-    fread(&pPlayer[1]->Look_UseAxxis,  sizeof(pPlayer[1]->Look_UseAxxis), 1, Datei);
+    fread(&Player[1].AktionKeyboard, sizeof(Player[1].AktionKeyboard), 1, Datei);
+    fread(&Player[1].AktionJoystick, sizeof(Player[1].AktionJoystick), 1, Datei);
+    fread(&Player[1].Walk_UseAxxis,  sizeof(Player[1].Walk_UseAxxis), 1, Datei);
+    fread(&Player[1].Look_UseAxxis,  sizeof(Player[1].Look_UseAxxis), 1, Datei);
 
     fread(&UseForceFeedback, sizeof(UseForceFeedback), 1, Datei);
 
     // Sonstige Optionen laden
     fread(&options_Detail, sizeof(options_Detail), 1, Datei);
 
-    fread(&pPlayer[0]->ControlType,		sizeof(pPlayer[0]->ControlType),	 1, Datei);
-    fread(&pPlayer[0]->JoystickMode,    sizeof(pPlayer[0]->JoystickMode),	 1, Datei);
-    fread(&pPlayer[0]->JoystickSchwelle,sizeof(pPlayer[0]->JoystickSchwelle),1, Datei);
+    fread(&Player[0].ControlType,		sizeof(Player[0].ControlType),	 1, Datei);
+    fread(&Player[0].JoystickMode,    sizeof(Player[0].JoystickMode),	 1, Datei);
+    fread(&Player[0].JoystickSchwelle,sizeof(Player[0].JoystickSchwelle),1, Datei);
 
     // Joystick nicht mehr da?
-    if (DirectInput.Joysticks[pPlayer[0]->JoystickIndex].Active == false)
+    if (DirectInput.Joysticks[Player[0].JoystickIndex].Active == false)
     {
 #if defined(GCW)
         //GCW Zero player 1 defaults:
-        pPlayer[0]->ControlType = CONTROLTYPE_JOY;
-        pPlayer[0]->JoystickMode = JOYMODE_JOYPAD;
-        pPlayer[0]->JoystickIndex = DirectInput.GetInternalJoystickIndex();
-        pPlayer[0]->JoystickSchwelle = 500.0f;
+        Player[0].ControlType = CONTROLTYPE_JOY;
+        Player[0].JoystickMode = JOYMODE_JOYPAD;
+        Player[0].JoystickIndex = DirectInput.GetInternalJoystickIndex();
+        Player[0].JoystickSchwelle = 500.0f;
 #else
-        pPlayer[0]->ControlType = CONTROLTYPE_KEYBOARD;
-        pPlayer[0]->JoystickIndex = 0;
-        pPlayer[0]->JoystickSchwelle = 500.0f;
+        Player[0].ControlType = CONTROLTYPE_KEYBOARD;
+        Player[0].JoystickIndex = 0;
+        Player[0].JoystickSchwelle = 500.0f;
 #endif //GCW
     }
 
-    if (DirectInput.Joysticks[pPlayer[1]->JoystickIndex].Active == false)
+    if (DirectInput.Joysticks[Player[1].JoystickIndex].Active == false)
     {
 #if defined(GCW)
         //GCW Zero player 2 defaults:
-        pPlayer[1]->ControlType = CONTROLTYPE_JOY;
-        pPlayer[1]->JoystickMode = JOYMODE_JOYPAD;
-        pPlayer[1]->JoystickIndex = 1;
-        pPlayer[1]->JoystickSchwelle = 500.0f;
+        Player[1].ControlType = CONTROLTYPE_JOY;
+        Player[1].JoystickMode = JOYMODE_JOYPAD;
+        Player[1].JoystickIndex = 1;
+        Player[1].JoystickSchwelle = 500.0f;
 #else
-        pPlayer[1]->ControlType = CONTROLTYPE_KEYBOARD;
-        pPlayer[1]->JoystickIndex = 1;      //DKS - Changed player 2's default joy index to 1
-        pPlayer[1]->JoystickSchwelle = 500.0f;
+        Player[1].ControlType = CONTROLTYPE_KEYBOARD;
+        Player[1].JoystickIndex = 1;      //DKS - Changed player 2's default joy index to 1
+        Player[1].JoystickSchwelle = 500.0f;
 #endif //GCW
     }
 
-    fread(&pPlayer[1]->ControlType,		sizeof(pPlayer[1]->ControlType),	 1, Datei);
-    fread(&pPlayer[1]->JoystickMode,	sizeof(pPlayer[1]->JoystickMode),	 1, Datei);
-    fread(&pPlayer[1]->JoystickSchwelle,sizeof(pPlayer[1]->JoystickSchwelle),1, Datei);
+    fread(&Player[1].ControlType,		sizeof(Player[1].ControlType),	 1, Datei);
+    fread(&Player[1].JoystickMode,	sizeof(Player[1].JoystickMode),	 1, Datei);
+    fread(&Player[1].JoystickSchwelle,sizeof(Player[1].JoystickSchwelle),1, Datei);
 
     Protokoll.WriteText( false, "Config file loading successful !\n" );
 
@@ -872,15 +872,15 @@ bool LoadConfig(void)
 
     if (JoystickFound == false)
     {
-        pPlayer[0]->ControlType = CONTROLTYPE_KEYBOARD;
-        pPlayer[1]->ControlType = CONTROLTYPE_KEYBOARD;
+        Player[0].ControlType = CONTROLTYPE_KEYBOARD;
+        Player[1].ControlType = CONTROLTYPE_KEYBOARD;
     }
 
-    if (pPlayer[0]->JoystickSchwelle < 1.0f)
-        pPlayer[0]->JoystickSchwelle = 500.0f;
+    if (Player[0].JoystickSchwelle < 1.0f)
+        Player[0].JoystickSchwelle = 500.0f;
 
-    if (pPlayer[1]->JoystickSchwelle < 1.0f)
-        pPlayer[1]->JoystickSchwelle = 500.0f;
+    if (Player[1].JoystickSchwelle < 1.0f)
+        Player[1].JoystickSchwelle = 500.0f;
 
     return true;
 }
@@ -921,28 +921,28 @@ void SaveConfig(void)
     fwrite(&Musik, sizeof(Musik), 1, Datei);
 
     // Daten für Keyboard und Joystick schreiben
-    fwrite(&pPlayer[0]->AktionKeyboard, sizeof(pPlayer[0]->AktionKeyboard), 1, Datei);
-    fwrite(&pPlayer[0]->AktionJoystick, sizeof(pPlayer[0]->AktionJoystick), 1, Datei);
-    fwrite(&pPlayer[0]->Walk_UseAxxis,  sizeof(pPlayer[0]->Walk_UseAxxis), 1, Datei);
-    fwrite(&pPlayer[0]->Look_UseAxxis,  sizeof(pPlayer[0]->Look_UseAxxis), 1, Datei);
+    fwrite(&Player[0].AktionKeyboard, sizeof(Player[0].AktionKeyboard), 1, Datei);
+    fwrite(&Player[0].AktionJoystick, sizeof(Player[0].AktionJoystick), 1, Datei);
+    fwrite(&Player[0].Walk_UseAxxis,  sizeof(Player[0].Walk_UseAxxis), 1, Datei);
+    fwrite(&Player[0].Look_UseAxxis,  sizeof(Player[0].Look_UseAxxis), 1, Datei);
 
-    fwrite(&pPlayer[1]->AktionKeyboard, sizeof(pPlayer[1]->AktionKeyboard), 1, Datei);
-    fwrite(&pPlayer[1]->AktionJoystick, sizeof(pPlayer[1]->AktionJoystick), 1, Datei);
-    fwrite(&pPlayer[1]->Walk_UseAxxis,  sizeof(pPlayer[1]->Walk_UseAxxis), 1, Datei);
-    fwrite(&pPlayer[1]->Look_UseAxxis,  sizeof(pPlayer[1]->Look_UseAxxis), 1, Datei);
+    fwrite(&Player[1].AktionKeyboard, sizeof(Player[1].AktionKeyboard), 1, Datei);
+    fwrite(&Player[1].AktionJoystick, sizeof(Player[1].AktionJoystick), 1, Datei);
+    fwrite(&Player[1].Walk_UseAxxis,  sizeof(Player[1].Walk_UseAxxis), 1, Datei);
+    fwrite(&Player[1].Look_UseAxxis,  sizeof(Player[1].Look_UseAxxis), 1, Datei);
 
     fwrite(&UseForceFeedback, sizeof(UseForceFeedback), 1, Datei);
 
     // Sonstige Optionen sichern
     fwrite(&options_Detail, sizeof(options_Detail), 1, Datei);
 
-    fwrite(&pPlayer[0]->ControlType,		sizeof(pPlayer[0]->ControlType),	 1, Datei);
-    fwrite(&pPlayer[0]->JoystickMode,		sizeof(pPlayer[0]->JoystickMode),	 1, Datei);
-    fwrite(&pPlayer[0]->JoystickSchwelle,	sizeof(pPlayer[0]->JoystickSchwelle),1, Datei);
+    fwrite(&Player[0].ControlType,		sizeof(Player[0].ControlType),	 1, Datei);
+    fwrite(&Player[0].JoystickMode,		sizeof(Player[0].JoystickMode),	 1, Datei);
+    fwrite(&Player[0].JoystickSchwelle,	sizeof(Player[0].JoystickSchwelle),1, Datei);
 
-    fwrite(&pPlayer[1]->ControlType,		sizeof(pPlayer[1]->ControlType),	 1, Datei);
-    fwrite(&pPlayer[1]->JoystickMode,		sizeof(pPlayer[1]->JoystickMode),	 1, Datei);
-    fwrite(&pPlayer[1]->JoystickSchwelle,	sizeof(pPlayer[1]->JoystickSchwelle),1, Datei);
+    fwrite(&Player[1].ControlType,		sizeof(Player[1].ControlType),	 1, Datei);
+    fwrite(&Player[1].JoystickMode,		sizeof(Player[1].JoystickMode),	 1, Datei);
+    fwrite(&Player[1].JoystickSchwelle,	sizeof(Player[1].JoystickSchwelle),1, Datei);
 
     fclose(Datei);							// Und Datei wieder schliessen
 }
@@ -1067,9 +1067,9 @@ void StageClear(bool PlaySong)
 {
     for (int p = 0; p < NUMPLAYERS; p++)
     {
-        pPlayer[p]->StageClearRunning = true;
-        pPlayer[p]->CanBeDamaged = false;
-        pPlayer[p]->PunisherActive = false;
+        Player[p].StageClearRunning = true;
+        Player[p].CanBeDamaged = false;
+        Player[p].PunisherActive = false;
     }
 
     pGUI->HideBoxFast();
@@ -1099,7 +1099,7 @@ void SummaryScreen(void)
 {
     bool leave      = false;
     bool all_controls_unpressed_yet = false;
-    bool reveal_cheat = (RunningTutorial == false) && (pPlayer[0]->DiamondsThisLevel == TileEngine.MaxDiamonds);
+    bool reveal_cheat = (RunningTutorial == false) && (Player[0].DiamondsThisLevel == TileEngine.MaxDiamonds);
     
     //DKS - Added counter to prevent accidental early-exit:
     const float delay_can_leave = 400.0f;
@@ -1181,7 +1181,7 @@ void SummaryScreen(void)
             std::string str_pressanykey(TextArray[TEXT_SUMMARY_PRESSFIRE]);
 
             // If player 1 is controlled with joystick, replace all references to 'key' with 'button'
-            if (pPlayer[0]->ControlType == CONTROLTYPE_JOY) {
+            if (Player[0].ControlType == CONTROLTYPE_JOY) {
                 ReplaceAll(str_pressanykey, "key", "button");
             }
 
@@ -1197,16 +1197,16 @@ void SummaryScreen(void)
                                 TextArray[TEXT_SUMMARY_SECRETS], color);
 
         char buf[100];
-        sprintf_s(buf, "%i/%i", pPlayer[0]->BlocksThisLevel, TileEngine.MaxBlocks);
+        sprintf_s(buf, "%i/%i", Player[0].BlocksThisLevel, TileEngine.MaxBlocks);
         pDefaultFont->DrawText((float)(sprite1_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
 
-        sprintf_s(buf, "%i/%i", pPlayer[0]->DiamondsThisLevel, TileEngine.MaxDiamonds);
+        sprintf_s(buf, "%i/%i", Player[0].DiamondsThisLevel, TileEngine.MaxDiamonds);
         pDefaultFont->DrawText((float)(sprite2_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
 
-        sprintf_s(buf, "%i/%i", pPlayer[0]->LivesThisLevel, TileEngine.MaxOneUps);
+        sprintf_s(buf, "%i/%i", Player[0].LivesThisLevel, TileEngine.MaxOneUps);
         pDefaultFont->DrawText((float)(sprite3_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
 
-        sprintf_s(buf, "%i/%i", pPlayer[0]->SecretThisLevel, TileEngine.MaxSecrets);
+        sprintf_s(buf, "%i/%i", Player[0].SecretThisLevel, TileEngine.MaxSecrets);
         pDefaultFont->DrawText((float)(secrets_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
 
         // Cheat freigespielt? -> Wenn alle Diamanten gefunden
@@ -1311,7 +1311,7 @@ bool NewDemo (const char Filename[])
 
     // Tasten auf false setzen
     for (int i=0; i<MAX_AKTIONEN; i++)
-        pPlayer[0]->Aktion[i] = false;
+        Player[0].Aktion[i] = false;
 
     // Level neu initialisieren und dann gehts los
     int l = Stage;
@@ -1373,7 +1373,7 @@ bool LoadDemo (const char Filename[])
 
     // Tasten auf false setzen
     for (int i=0; i<MAX_AKTIONEN; i++)
-        pPlayer[0]->Aktion[i] = false;
+        Player[0].Aktion[i] = false;
 
     // Level neu initialisieren und dann gehts los
     int l = NewStage;
@@ -1424,7 +1424,7 @@ void RecordDemo (void)
     // Tasten speichern
     //
     for (int i=0; i<MAX_AKTIONEN; i++)
-        fwrite (&pPlayer[0]->Aktion[i], sizeof (pPlayer[0]->Aktion[i]), 1, DEMOFile);
+        fwrite (&Player[0].Aktion[i], sizeof (Player[0].Aktion[i]), 1, DEMOFile);
 
     // FPS speichern
     //
@@ -1448,7 +1448,7 @@ void PlayDemo (void)
     // Tasten laden
     //
     for (int i=0; i<MAX_AKTIONEN; i++)
-        fread (&pPlayer[0]->Aktion[i], sizeof (pPlayer[0]->Aktion[i]), 1, DEMOFile);
+        fread (&Player[0].Aktion[i], sizeof (Player[0].Aktion[i]), 1, DEMOFile);
 
     // FPS laden
     //
@@ -1485,9 +1485,9 @@ void ScrolltoPlayeAfterBoss(void)
 
 void ShowPissText(void)
 {
-    if (pPlayer[0]->BronsonCounter > 220.0f)
+    if (Player[0].BronsonCounter > 220.0f)
     {
-        int TextNr = int ((pPlayer[0]->BronsonCounter - 220.0f) / 50.0f);
+        int TextNr = int ((Player[0].BronsonCounter - 220.0f) / 50.0f);
 
         //DKS - Trying to get the infamous "piss text" centered on the player..
         //      I had gotten the boxes centered in the tutorial, only to find
@@ -1495,14 +1495,14 @@ void ShowPissText(void)
         //      them centered properly horizontally, which I found frustrating.
         //      Oh well..
 //        pGUI->ShowBox(TextArray[TEXT_PISS_1 + TextNr],
-//                      (int)(pPlayer[0]->ypos - 70 - TileEngine.YOffset),
-//                      (int)(pPlayer[0]->xpos - TileEngine.XOffset) - 10);
+//                      (int)(Player[0].ypos - 70 - TileEngine.YOffset),
+//                      (int)(Player[0].xpos - TileEngine.XOffset) - 10);
         pGUI->ShowBox(TextArray[TEXT_PISS_1 + TextNr],
-                      (int)(pPlayer[0]->ypos - 70 - TileEngine.YOffset),
-                      (int)(pPlayer[0]->xpos - TileEngine.XOffset + TILESIZE*2));
+                      (int)(Player[0].ypos - 70 - TileEngine.YOffset),
+                      (int)(Player[0].xpos - TileEngine.XOffset + TILESIZE*2));
 
-        if (pPlayer[0]->BronsonCounter > 220.0f + 50.0f * 18)
-            pPlayer[0]->BronsonCounter = 270.0f;
+        if (Player[0].BronsonCounter > 220.0f + 50.0f * 18)
+            Player[0].BronsonCounter = 270.0f;
     }
 }
 
@@ -1514,15 +1514,15 @@ PlayerClass* ChooseAim(void)
 {
     PlayerClass* pAim;
 
-    pAim = pPlayer[rand()%NUMPLAYERS];
+    pAim = &Player[rand()%NUMPLAYERS];
 
-    if (pAim == pPlayer[0] &&
-            pPlayer[0]->Handlung == TOT)
-        pAim = pPlayer[1];
+    if (pAim == &Player[0] &&
+            Player[0].Handlung == TOT)
+        pAim = &Player[1];
 
-    if (pAim == pPlayer[1] &&
-            pPlayer[1]->Handlung == TOT)
-        pAim = pPlayer[0];
+    if (pAim == &Player[1] &&
+            Player[1].Handlung == TOT)
+        pAim = &Player[0];
 
     return pAim;
 }

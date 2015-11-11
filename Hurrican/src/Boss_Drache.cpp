@@ -49,11 +49,11 @@ GegnerDrache::GegnerDrache(int Wert1, int Wert2, bool Light)
 
         for (int p = 0; p < NUMPLAYERS; p++)
         {
-            pPlayer[p]->xpos = xPos - p * 30;
-            pPlayer[p]->ypos = yPos;
-            pPlayer[p]->AufPlattform = this;
-            pPlayer[p]->DoFesteAktion = true;
-            pPlayer[p]->FesteAktion = -1;
+            Player[p].xpos = xPos - p * 30;
+            Player[p].ypos = yPos;
+            Player[p].AufPlattform = this;
+            Player[p].DoFesteAktion = true;
+            Player[p].FesteAktion = -1;
         }
 
         Active = true;
@@ -379,7 +379,7 @@ void GegnerDrache::DoKI(void)
             Handlung != GEGNER_EXPLODIEREN &&
             Destroyable == true)
     {
-        pPlayer[0]->Score += 10000;
+        Player[0].Score += 10000;
         Handlung  = GEGNER_EXPLODIEREN;
         Attack    = GEGNER_LAUFEN;
         yAcc      = -1.0f;
@@ -449,11 +449,11 @@ void GegnerDrache::DoKI(void)
         bool alledrauf = true;
 
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (pPlayer[p]->Handlung != TOT &&
+            if (Player[p].Handlung != TOT &&
                     (
-                        pPlayer[p]->AufPlattform != this ||
-                        pPlayer[p]->Handlung == RADELN ||
-                        pPlayer[p]->Handlung == RADELN_FALL)
+                        Player[p].AufPlattform != this ||
+                        Player[p].Handlung == RADELN ||
+                        Player[p].Handlung == RADELN_FALL)
                )
                 alledrauf = false;
 
@@ -468,9 +468,9 @@ void GegnerDrache::DoKI(void)
 
             for (int p = 0; p < NUMPLAYERS; p++)
             {
-                pPlayer[p]->DoFesteAktion = true;
-                pPlayer[p]->FesteAktion = -1;
-                pPlayer[p]->CanBeDamaged = false;
+                Player[p].DoFesteAktion = true;
+                Player[p].FesteAktion = -1;
+                Player[p].CanBeDamaged = false;
             }
         }
     }
@@ -499,8 +499,8 @@ void GegnerDrache::DoKI(void)
 
             for (int p = 0; p < NUMPLAYERS; p++)
             {
-                pPlayer[p]->FesteAktion = -1;
-                pPlayer[p]->DoFesteAktion = true;
+                Player[p].FesteAktion = -1;
+                Player[p].DoFesteAktion = true;
             }
 
             StageClear();
@@ -515,10 +515,10 @@ void GegnerDrache::DoKI(void)
         {
             for (int p = 0; p < NUMPLAYERS; p++)
             {
-                pPlayer[p]->xpos = xPos + 40.0f + p * 30.0f;
-                pPlayer[p]->ypos = yPos - 65.0f + DrawYOffset;
-                pPlayer[p]->Blickrichtung = LINKS;
-                pPlayer[p]->AufPlattform = this;
+                Player[p].xpos = xPos + 40.0f + p * 30.0f;
+                Player[p].ypos = yPos - 65.0f + DrawYOffset;
+                Player[p].Blickrichtung = LINKS;
+                Player[p].AufPlattform = this;
             }
         }
 
@@ -633,7 +633,7 @@ void GegnerDrache::DoKI(void)
                 Attack = GEGNER_STEHEN;
 
                 for (int p = 0; p < NUMPLAYERS; p++)
-                    pPlayer[p]->DoFesteAktion = false;
+                    Player[p].DoFesteAktion = false;
 
                 SoundManager.PlaySong(MUSIC_STAGEMUSIC, false);
             }
@@ -999,7 +999,7 @@ void GegnerDrache::DoKI(void)
                                                       BLATT2);
 
                     for (int p = 0; p < NUMPLAYERS; p++)
-                        pPlayer[p]->xpos += 8.0f SYNC;
+                        Player[p].xpos += 8.0f SYNC;
                 }
                 else
                 {
@@ -1011,7 +1011,7 @@ void GegnerDrache::DoKI(void)
                                                       BLATT2);
 
                     for (int p = 0; p < NUMPLAYERS; p++)
-                        pPlayer[p]->xpos -= 8.0f SYNC;
+                        Player[p].xpos -= 8.0f SYNC;
                 }
             }
         }
@@ -1111,11 +1111,11 @@ void GegnerDrache::DoKI(void)
 
             for (int p = 0; p < NUMPLAYERS; p++)
                 if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                                    pPlayer[p]->xpos, pPlayer[p]->ypos, colliderect) == true)
+                                    Player[p].xpos, Player[p].ypos, colliderect) == true)
                 {
                     ShotCount = 0;
                     PlayerHit = true;
-                    pPlayer[p]->DamagePlayer(500.0f);
+                    Player[p].DamagePlayer(500.0f);
                 }
 
             // Kopf am Boden? Dann sound, funken, speed umdrehen und kurz warten

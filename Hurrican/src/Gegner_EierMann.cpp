@@ -86,5 +86,5 @@ void GegnerEierMann::GegnerExplode(void)
 
     SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);
 
-    pPlayer[0]->Score += 1500;		// Punkte geben
+    Player[0].Score += 1500;		// Punkte geben
 }

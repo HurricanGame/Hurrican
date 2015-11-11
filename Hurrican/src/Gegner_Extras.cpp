@@ -137,8 +137,8 @@ void GegnerExtras::DoKI(void)
 
     for (int i = 0; i < NUMPLAYERS; i++)
         if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                            pPlayer[i]->xpos, pPlayer[i]->ypos, pPlayer[i]->CollideRect) == true)
-            pCollector = pPlayer[i];
+                            Player[i].xpos, Player[i].ypos, Player[i].CollideRect) == true)
+            pCollector = &Player[i];
 
     if (pCollector != NULL)// &&
         //Handlung != GEGNER_SPRINGEN)
@@ -283,7 +283,7 @@ void GegnerExtras::DoKI(void)
 
         // Score
         if (Value1 == 12)
-            pPlayer[0]->Score += 100;
+            Player[0].Score += 100;
 
         Energy = 0.0f;
 

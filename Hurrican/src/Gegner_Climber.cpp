@@ -319,5 +319,5 @@ void GegnerClimber::GegnerExplode(void)
         pPartikelSystem->PushPartikel (xPos + rand ()%40, yPos + rand()%30, FUNKE);
     }
 
-    pPlayer[0]->Score += 250;
+    Player[0].Score += 250;
 }

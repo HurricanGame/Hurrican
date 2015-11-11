@@ -357,5 +357,5 @@ void GegnerZitrone::GegnerExplode(void)
     for (int i = 0; i < 4; i++)
         pPartikelSystem->PushPartikel (xPos - 30 + rand ()%70, yPos - 30 + rand ()%80, SPLITTER);
 
-    pPlayer[0]->Score += 400;
+    Player[0].Score += 400;
 }

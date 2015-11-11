@@ -89,7 +89,7 @@ void HUDClass::ShowHUD(void)
 
     HUDGfx.RenderSprite(xpos, ypos, 0, Color);
 
-    BlitzOff  = int(BLITZ_STAT_HEIGHT  - pPlayer[0]->CurrentWeaponLevel[3]*BLITZ_STAT_HEIGHT/BLITZ_STAT_HEIGHT);
+    BlitzOff  = int(BLITZ_STAT_HEIGHT  - Player[0].CurrentWeaponLevel[3]*BLITZ_STAT_HEIGHT/BLITZ_STAT_HEIGHT);
 
     //DKS - Added support for font scaling
     int scale_factor = pDefaultFont->GetScaleFactor();  
@@ -103,12 +103,12 @@ void HUDClass::ShowHUD(void)
 
     if (NUMPLAYERS == 1)
     {
-        off = ((MAX_ENERGY - pPlayer[0]->Energy) * 69.0f / MAX_ENERGY);
+        off = ((MAX_ENERGY - Player[0].Energy) * 69.0f / MAX_ENERGY);
         HUDBall[0].SetRect(0, (int)off, 69, 69);
         HUDBall[0].RenderSprite(xpos, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));
 
         // Radenergie
-        off = ((MAX_ARMOUR - pPlayer[0]->Armour) * 69.0f / MAX_ARMOUR );
+        off = ((MAX_ARMOUR - Player[0].Armour) * 69.0f / MAX_ARMOUR );
         HUDBall[1].SetRect(0, (int)off, 69, 69);
         HUDBall[1].RenderSprite(xpos+548-69, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));
     }
@@ -119,7 +119,7 @@ void HUDClass::ShowHUD(void)
 
             if (num == 0)
             {
-                pCurrentPlayer = pPlayer[0];
+                pCurrentPlayer = &Player[0];
 
                 off = ((MAX_ENERGY - pCurrentPlayer->Energy) / MAX_ENERGY * 69);
                 HUDBall[0].SetRect(0, (int)off, 34, 69);
@@ -132,7 +132,7 @@ void HUDClass::ShowHUD(void)
             }
             else
             {
-                pCurrentPlayer = pPlayer[1];
+                pCurrentPlayer = &Player[1];
 
                 off = ((MAX_ENERGY - pCurrentPlayer->Energy) / MAX_ENERGY * 69);
                 HUDBall[0].SetRect(0, (int)off, 34, 69);
@@ -148,20 +148,20 @@ void HUDClass::ShowHUD(void)
     HUDBlitz.SetRect (0, BlitzOff, 6, 18);
 
     // Wenn geblitzt wird, die Blitzwaffe heller anzeigen
-    if (pPlayer[0]->Handlung == BLITZEN)
+    if (Player[0].Handlung == BLITZEN)
         SelectedWeapon.RenderSprite(xpos + 212 + 3 * 32,
                                     ypos + 14, 3, Color);
 
     D3DCOLOR color;
 
     // Blitz-Level anzeigen
-    if (pPlayer[0]->Handlung == BLITZEN)
+    if (Player[0].Handlung == BLITZEN)
         color = D3DCOLOR_RGBA(0, 255, 0, 192);
     else
         color = D3DCOLOR_RGBA(0, 255, 0, 64);
 
     WeaponRahmen.RenderSprite(xpos + 216 + 3*32, ypos +  35, 0, color);
-    for (int j=0; j<pPlayer[0]->CurrentWeaponLevel[3]; j++)
+    for (int j=0; j<Player[0].CurrentWeaponLevel[3]; j++)
         WeaponPunkt.RenderSprite(xpos + 217 + 3*32, ypos +  50 - j, 0, color);
 
     /*
@@ -207,18 +207,18 @@ void HUDClass::ShowHUD(void)
         }
 
         // AutoFire anzeigen, wenn vorhanden
-        if (pPlayer[p]->AutoFireExtra > 0.0f)
+        if (Player[p].AutoFireExtra > 0.0f)
         {
             HUDAutoFire.RenderSprite(xpos + 263 + xoff, ypos + 61, 0, Color);
-            _itoa_s(int(pPlayer[p]->AutoFireExtra), Buffer, 10);
+            _itoa_s(int(Player[p].AutoFireExtra), Buffer, 10);
 
 
-            if (pPlayer[p]->AutoFireExtra< 10)
+            if (Player[p].AutoFireExtra< 10)
             {
                 pDefaultFont->DrawText(xpos + 270 + xoff, ypos+86, Buffer, D3DCOLOR_RGBA(0, 0, 0, Alpha));
                 pDefaultFont->DrawText(xpos + 269 + xoff, ypos+85, Buffer, playercol);
             }
-            else if (pPlayer[p]->AutoFireExtra< 100)
+            else if (Player[p].AutoFireExtra< 100)
             {
                 pDefaultFont->DrawText(xpos + 271 + xoff, ypos+86, Buffer, D3DCOLOR_RGBA(0, 0, 0, Alpha));
                 pDefaultFont->DrawText(xpos + 270 + xoff, ypos+85, Buffer, playercol);
@@ -232,22 +232,22 @@ void HUDClass::ShowHUD(void)
         }
 
         // Supershot anzeigen, wenn vorhanden (bei vorhandenem Autofire wird der Supershot tiefer angezeigt)
-        if (pPlayer[p]->RiesenShotExtra > 0.0f)
+        if (Player[p].RiesenShotExtra > 0.0f)
         {
             int off = 0;
 
-            if (pPlayer[p]->AutoFireExtra > 0.0f)
+            if (Player[p].AutoFireExtra > 0.0f)
                 off += 37;
 
             HUDSuperShot.RenderSprite(xpos + 264 + xoff, ypos + 61 + off, 0, Color);
-            _itoa_s(int(pPlayer[p]->RiesenShotExtra), Buffer, 10);
+            _itoa_s(int(Player[p].RiesenShotExtra), Buffer, 10);
 
-            if (pPlayer[p]->RiesenShotExtra< 10)
+            if (Player[p].RiesenShotExtra< 10)
             {
                 pDefaultFont->DrawText(xpos + 270 + xoff, ypos+87+ off, Buffer, D3DCOLOR_RGBA(0, 0, 0, Alpha));
                 pDefaultFont->DrawText(xpos + 269 + xoff, ypos+86+ off, Buffer, playercol);
             }
-            else if (pPlayer[p]->RiesenShotExtra< 100)
+            else if (Player[p].RiesenShotExtra< 100)
             {
                 pDefaultFont->DrawText(xpos + 271 + xoff, ypos+87+ off, Buffer, D3DCOLOR_RGBA(0, 0, 0, Alpha));
                 pDefaultFont->DrawText(xpos + 270 + xoff, ypos+86+ off, Buffer, playercol);
@@ -266,7 +266,7 @@ void HUDClass::ShowHUD(void)
 
             // Only ever display a max of 9, since we've no room
             int digit;
-            digit = pPlayer[p]->PowerLines;
+            digit = Player[p].PowerLines;
             if (digit < 0)
                 digit = 0;
             else if (digit > 9)
@@ -277,7 +277,7 @@ void HUDClass::ShowHUD(void)
             pDefaultFont->DrawText(xpos + 350 + off + p * 10, ypos+36, Buffer, playercol);
 
             // Anzahl verbleibender Granaten anzeigen
-            digit = pPlayer[p]->Grenades;
+            digit = Player[p].Grenades;
             if (digit < 0)
                 digit = 0;
             else if (digit > 9)
@@ -287,24 +287,24 @@ void HUDClass::ShowHUD(void)
             pDefaultFont->DrawText(xpos + 372 + off + p * 10, ypos+36, Buffer, playercol);
         } else {
             //DKS - Original, normal-resolution code:
-            _itoa_s(pPlayer[p]->PowerLines, Buffer, 10);
+            _itoa_s(Player[p].PowerLines, Buffer, 10);
 
-            if (pPlayer[p]->PowerLines < 10)
+            if (Player[p].PowerLines < 10)
                 pDefaultFont->DrawText(xpos + 353 + off + p * 10, ypos+40, Buffer, playercol);
             else
                 pDefaultFont->DrawText(xpos + 349 + off + p * 10, ypos+40, Buffer, playercol);
 
             // Anzahl verbleibender Granaten anzeigen
-            _itoa_s(pPlayer[p]->Grenades, Buffer, 10);
+            _itoa_s(Player[p].Grenades, Buffer, 10);
 
-            if (pPlayer[p]->Grenades < 10)
+            if (Player[p].Grenades < 10)
                 pDefaultFont->DrawText(xpos + 376 + off + p * 10, ypos+40, Buffer, playercol);
             else
                 pDefaultFont->DrawText(xpos + 372 + off + p * 10, ypos+40, Buffer, playercol);
         }
 
         // Befindet sich die Smartbombe im Besitz des Spielers ?
-        if (pPlayer[p]->SmartBombs > 0)
+        if (Player[p].SmartBombs > 0)
         {
             if (NUMPLAYERS == 1)
                 HUDBomb.RenderSprite(xpos + 391, ypos + 19, 0, playercol);
@@ -324,28 +324,28 @@ void HUDClass::ShowHUD(void)
         }
 
         // Gewählte Waffe heller darstellen
-        if (pPlayer[p]->Handlung != BLITZEN)
+        if (Player[p].Handlung != BLITZEN)
         {
             if (NUMPLAYERS == 1)
-                SelectedWeapon.RenderSprite(xpos + 212 + pPlayer[p]->SelectedWeapon * 32,
-                                            ypos + 14, pPlayer[p]->SelectedWeapon, playercol);
+                SelectedWeapon.RenderSprite(xpos + 212 + Player[p].SelectedWeapon * 32,
+                                            ypos + 14, Player[p].SelectedWeapon, playercol);
             else
             {
                 // Anderer Spieler hat eine andere Waffe? Dann ganz rendern
-                if (pPlayer[p]->SelectedWeapon != pPlayer[1-p]->SelectedWeapon)
-                    SelectedWeapon.RenderSprite(xpos + 212 + pPlayer[p]->SelectedWeapon * 32,
-                                                ypos + 14, pPlayer[p]->SelectedWeapon, playercol);
+                if (Player[p].SelectedWeapon != Player[1-p].SelectedWeapon)
+                    SelectedWeapon.RenderSprite(xpos + 212 + Player[p].SelectedWeapon * 32,
+                                                ypos + 14, Player[p].SelectedWeapon, playercol);
                 // ansonsten halbieren
                 else
                 {
-                    SelectedWeapon.itsRect = SelectedWeapon.itsPreCalcedRects[pPlayer[p]->SelectedWeapon];
+                    SelectedWeapon.itsRect = SelectedWeapon.itsPreCalcedRects[Player[p].SelectedWeapon];
 
                     if (p == 0)
                         SelectedWeapon.itsRect.right -= 8;
                     else
                         SelectedWeapon.itsRect.left += 8;
 
-                    SelectedWeapon.RenderSprite(xpos + 212 + p * 8 + pPlayer[p]->SelectedWeapon * 32,
+                    SelectedWeapon.RenderSprite(xpos + 212 + p * 8 + Player[p].SelectedWeapon * 32,
                                                 ypos + 14, playercol);
                 }
             }
@@ -355,11 +355,11 @@ void HUDClass::ShowHUD(void)
         for (unsigned int i=0; i<3; i++)
         {
             if (NUMPLAYERS == 2 &&
-                    pPlayer[p]->SelectedWeapon != pPlayer[1-p]->SelectedWeapon &&
-                    pPlayer[1-p]->SelectedWeapon == (int)i)
+                    Player[p].SelectedWeapon != Player[1-p].SelectedWeapon &&
+                    Player[1-p].SelectedWeapon == (int)i)
                 continue;
 
-            if (i == (unsigned int)pPlayer[p]->SelectedWeapon)
+            if (i == (unsigned int)Player[p].SelectedWeapon)
             {
                 if (NUMPLAYERS == 1)
                     playercol = D3DCOLOR_RGBA(0, 255, 0, 224);
@@ -374,7 +374,7 @@ void HUDClass::ShowHUD(void)
             else
             {
                 if (NUMPLAYERS == 1 ||
-                        pPlayer[p]->SelectedWeapon != (int)i)
+                        Player[p].SelectedWeapon != (int)i)
                     playercol = D3DCOLOR_RGBA(0, 255, 0, 64);
                 else
                 {
@@ -386,7 +386,7 @@ void HUDClass::ShowHUD(void)
             }
 
             if (NUMPLAYERS == 1 ||
-                    pPlayer[p]->SelectedWeapon != pPlayer[1-p]->SelectedWeapon)
+                    Player[p].SelectedWeapon != Player[1-p].SelectedWeapon)
                 WeaponRahmen.RenderSprite(xpos + 216 + i*32, ypos +  35, 0, playercol);
             else
             {
@@ -406,11 +406,11 @@ void HUDClass::ShowHUD(void)
             }
 
             // Waffen Punkte
-            for (int j=0; j<pPlayer[p]->CurrentWeaponLevel[i]; j++)
+            for (int j=0; j<Player[p].CurrentWeaponLevel[i]; j++)
             {
                 if (NUMPLAYERS == 1 ||
-                        (pPlayer[p]->SelectedWeapon == (int)i &&
-                         pPlayer[p]->SelectedWeapon != pPlayer[1-p]->SelectedWeapon))
+                        (Player[p].SelectedWeapon == (int)i &&
+                         Player[p].SelectedWeapon != Player[1-p].SelectedWeapon))
 
                     WeaponPunkt.RenderSprite(xpos + 217 + i*32, ypos +  50 - j * 2 , 0, playercol);
                 else
@@ -434,7 +434,7 @@ void HUDClass::ShowHUD(void)
     // Anzahl verbleibender Leben anzeigen
     int LivesToShow;
 
-    LivesToShow = MAX(0, pPlayer[0]->Lives);
+    LivesToShow = MAX(0, Player[0].Lives);
 
     _itoa_s(LivesToShow, Buffer, 10);
 
@@ -449,9 +449,9 @@ void HUDClass::ShowHUD(void)
 
     // Punkte anzeigen
     if (HasCheated)
-        pPlayer[0]->Score = 0;
+        Player[0].Score = 0;
 
-    _itoa_s(pPlayer[0]->Score, Buffer, 10);
+    _itoa_s(Player[0].Score, Buffer, 10);
 
     int len = strlen(Buffer);
     for(int i=0; i<len; i++)
@@ -464,12 +464,12 @@ void HUDClass::ShowHUD(void)
 
     // Diamanten anzeigen
     if (NUMPLAYERS == 1)
-        _itoa_s(pPlayer[0]->CollectedDiamonds, Buffer, 10);
+        _itoa_s(Player[0].CollectedDiamonds, Buffer, 10);
 
     // oder Leben Spieler 2
     else
     {
-        LivesToShow = MAX(0, pPlayer[1]->Lives);
+        LivesToShow = MAX(0, Player[1].Lives);
         _itoa_s(LivesToShow, Buffer, 10);
     }
 
@@ -484,7 +484,7 @@ void HUDClass::ShowHUD(void)
 
     if (NUMPLAYERS == 2)
     {
-        _itoa_s(pPlayer[0]->CollectedDiamonds, Buffer, 10);
+        _itoa_s(Player[0].CollectedDiamonds, Buffer, 10);
         pGegnerGrafix[DIAMANT]->RenderSprite(xpos + 555, ypos + 15, 0, Color);
         pDefaultFont->DrawTextCenterAlign(xpos + 566, ypos + 50, Buffer, Color);
     }
@@ -577,7 +577,7 @@ void HUDClass::DoHUD(void)
     // Hud Werte aktualisieren
     //
     for (int p = 0; p < NUMPLAYERS; p++)
-        pPlayer[p]->BlitzLength = pPlayer[p]->CurrentWeaponLevel[3]+1;
+        Player[p].BlitzLength = Player[p].CurrentWeaponLevel[3]+1;
 
     UpdateValues();
 

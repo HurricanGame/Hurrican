@@ -203,20 +203,20 @@ void GegnerWalker::DoKI(void)
 
     // Spieler kann dem Walker auf den Kopf springen
     for (int i = 0; i < NUMPLAYERS; i++)
-        if (pPlayer[i]->Handlung != RADELN      &&
-                pPlayer[i]->Handlung != RADELN_FALL &&
-                pPlayer[i]->yspeed >= 0.0f)
+        if (Player[i].Handlung != RADELN      &&
+                Player[i].Handlung != RADELN_FALL &&
+                Player[i].yspeed >= 0.0f)
         {
-            if (pPlayer[i]->AufPlattform == this)
+            if (Player[i].AufPlattform == this)
             {
                 // Spieler springen lassen
-                pPlayer[i]->AufPlattform = NULL;
-                pPlayer[i]->JumpPossible = false;
-                pPlayer[i]->AnimPhase    = 2;
-                pPlayer[i]->Handlung     = SPRINGEN;
-                pPlayer[i]->JumpStart    = pPlayer[i]->ypos;
-                pPlayer[i]->yspeed       = -PLAYER_MAXJUMPSPEED;
-                pPlayer[i]->JumpAdd	  =  0.0f;
+                Player[i].AufPlattform = NULL;
+                Player[i].JumpPossible = false;
+                Player[i].AnimPhase    = 2;
+                Player[i].Handlung     = SPRINGEN;
+                Player[i].JumpStart    = Player[i].ypos;
+                Player[i].yspeed       = -PLAYER_MAXJUMPSPEED;
+                Player[i].JumpAdd	  =  0.0f;
 
                 AnimSpeed = 0.3f;
                 AnimPhase = 20;
@@ -252,5 +252,5 @@ void GegnerWalker::GegnerExplode(void)
 
     SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 
-    pPlayer[0]->Score += 100;
+    Player[0].Score += 100;
 }

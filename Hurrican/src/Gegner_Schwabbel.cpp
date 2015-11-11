@@ -111,5 +111,5 @@ void GegnerSchwabbel::GegnerExplode(void)
     for (int i=0; i < 30; i++)
         pGegner->PushGegner (xPos + rand ()%40, yPos - 10 + rand()%60, MADE, 1, 0, false);
 
-    pPlayer[0]->Score += 400;
+    Player[0].Score += 400;
 }

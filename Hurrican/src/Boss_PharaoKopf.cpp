@@ -172,7 +172,7 @@ void GegnerPharaoKopf::DoKI(void)
         if (yPos <= (float)Value2 + 480 - BORDER2 - GegnerRect[GegnerArt].bottom)			// Weit genug unten ?
         {
             for (int p = 0; p < NUMPLAYERS; p++)
-                if (pPlayer[p]->AufPlattform == this)
+                if (Player[p].AufPlattform == this)
                 {
                     ySpeed = -10.0f;
                     yAcc   = - 3.0f;
@@ -205,7 +205,7 @@ _weiter:
 
         // Spieler steht auf dem Pharao Kopf ?
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (pPlayer[p]->AufPlattform == this)
+            if (Player[p].AufPlattform == this)
             {
                 ySpeed = -10.0f;
                 yAcc   = - 3.0f;
@@ -228,7 +228,7 @@ _weiter:
 
                 for (p = 0; p < NUMPLAYERS; p++)
                     if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                                        pPlayer[p]->xpos, pPlayer[p]->ypos, pPlayer[p]->CollideRect) == true)
+                                        Player[p].xpos, Player[p].ypos, Player[p].CollideRect) == true)
                     {
                         xSpeed = -xSpeed;
                         xAcc   = -xAcc;
@@ -252,9 +252,9 @@ _weiter2:
             // Hurri verschieben
             for (int p = 0; p < NUMPLAYERS; p++)
                 if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                                    pPlayer[p]->xpos, pPlayer[p]->ypos, pPlayer[p]->CollideRect) == true &&
-                        !(TileEngine.BlockLinks(pPlayer[p]->xpos, pPlayer[p]->ypos, pPlayer[p]->xposold, pPlayer[p]->yposold, pPlayer[p]->CollideRect) & BLOCKWERT_WAND))
-                    pPlayer[p]->xpos += xSpeed SYNC;
+                                    Player[p].xpos, Player[p].ypos, Player[p].CollideRect) == true &&
+                        !(TileEngine.BlockLinks(Player[p].xpos, Player[p].ypos, Player[p].xposold, Player[p].yposold, Player[p].CollideRect) & BLOCKWERT_WAND))
+                    Player[p].xpos += xSpeed SYNC;
 
             // an die Wand gekommen?
             if (Links())
@@ -263,7 +263,7 @@ _weiter2:
                 xAcc   = 0.0f;
 
                 for (int p = 0; p < NUMPLAYERS; p++)
-                    DirectInput.Joysticks[pPlayer[p]->JoystickIndex].ForceFeedbackEffect(FFE_MEDIUMRUMBLE);
+                    DirectInput.Joysticks[Player[p].JoystickIndex].ForceFeedbackEffect(FFE_MEDIUMRUMBLE);
 
                 for (int i = 0; i < 20; i++)
                 {
@@ -290,17 +290,17 @@ _weiter2:
             // Hurri verschieben
             for (int p = 0; p < NUMPLAYERS; p++)
                 if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                                    pPlayer[p]->xpos,
-                                    pPlayer[p]->ypos,
-                                    pPlayer[p]->CollideRect) == true &&
+                                    Player[p].xpos,
+                                    Player[p].ypos,
+                                    Player[p].CollideRect) == true &&
                         !(blockr & BLOCKWERT_WAND))
-                    pPlayer[p]->xpos += xSpeed SYNC;
+                    Player[p].xpos += xSpeed SYNC;
 
             // an die Wand gekommen?
             if (Rechts())
             {
                 for (int p = 0; p < NUMPLAYERS; p++)
-                    DirectInput.Joysticks[pPlayer[p]->JoystickIndex].ForceFeedbackEffect(FFE_MEDIUMRUMBLE);
+                    DirectInput.Joysticks[Player[p].JoystickIndex].ForceFeedbackEffect(FFE_MEDIUMRUMBLE);
 
                 xSpeed = 0.0f;
                 xAcc   = 0.0f;
@@ -342,10 +342,10 @@ _weiter2:
 
                 for (int p = 0; p < NUMPLAYERS; p++)
                 {
-                    if (pPlayer[p]->AufPlattform == this)
-                        pPlayer[p]->DamagePlayer(200.0f);
+                    if (Player[p].AufPlattform == this)
+                        Player[p].DamagePlayer(200.0f);
 
-                    pPlayer[p]->AufPlattform = NULL;
+                    Player[p].AufPlattform = NULL;
                 }
 
                 // Screen Wackeln lassen
@@ -359,14 +359,14 @@ _weiter2:
             {
                 // Hurri dabei erwischt ?
                 for (int p = 0; p < NUMPLAYERS; p++)
-                    if (pPlayer[p]->Energy > 0 &&
-                            pPlayer[p]->AufPlattform == NULL &&
+                    if (Player[p].Energy > 0 &&
+                            Player[p].AufPlattform == NULL &&
                             SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                                            pPlayer[p]->xpos,
-                                            pPlayer[p]->ypos,
-                                            pPlayer[p]->CollideRect) == true)
+                                            Player[p].xpos,
+                                            Player[p].ypos,
+                                            Player[p].CollideRect) == true)
                     {
-                        pPlayer[p]->DamagePlayer(25.0f);
+                        Player[p].DamagePlayer(25.0f);
 
                         // Wieder hoch fliegen
                         ySpeed = -10.0f;
@@ -434,7 +434,7 @@ _weiter2:
             // Wieder zerquetschen
             bool PlayerOn = false;
             for (int p = 0; p < NUMPLAYERS; p++)
-                if (pPlayer[p]->AufPlattform == this)
+                if (Player[p].AufPlattform == this)
                     PlayerOn = true;
 
             if (j == 2 ||
@@ -544,10 +544,10 @@ void GegnerPharaoKopf::GegnerExplode(void)
 {
     for (int p = 0; p < NUMPLAYERS; p++)
     {
-        if (pPlayer[p]->AufPlattform == this)
-            pPlayer[p]->AufPlattform = NULL;
+        if (Player[p].AufPlattform == this)
+            Player[p].AufPlattform = NULL;
 
-        DirectInput.Joysticks[pPlayer[p]->JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);
+        DirectInput.Joysticks[Player[p].JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);
     }
 
     // Splitter
@@ -558,7 +558,7 @@ void GegnerPharaoKopf::GegnerExplode(void)
         pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + rand()%224, SMOKEBIG);
     }
 
-    pPlayer[0]->Score += 8000;
+    Player[0].Score += 8000;
 
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
     SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);

@@ -193,5 +193,5 @@ void GegnerMutant::GegnerExplode(void)
     SoundManager.PlayWave(40, 128, 11025, SOUND_EXPLOSION4);
     SoundManager.PlayWave(40, 128, 6000 + rand()%4000, SOUND_SCHLEIM);
 
-    pPlayer[0]->Score += 500;
+    Player[0].Score += 500;
 }

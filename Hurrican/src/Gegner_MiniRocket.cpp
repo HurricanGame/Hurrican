@@ -166,5 +166,5 @@ void GegnerMiniRocket::GegnerExplode(void)
     for (i=0; i < 5; i++)
         pPartikelSystem->PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, MINIFLARE);
 
-    pPlayer[0]->Score += 50;
+    Player[0].Score += 50;
 }

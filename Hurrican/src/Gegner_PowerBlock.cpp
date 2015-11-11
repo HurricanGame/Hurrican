@@ -92,8 +92,8 @@ void GegnerPowerBlock::DoKI(void)
             AnimPhase == 0)
     {
         AnimPhase = 1;
-        pPlayer[0]->BlocksFullGame++;
-        pPlayer[0]->BlocksThisLevel++;
+        Player[0].BlocksFullGame++;
+        Player[0].BlocksThisLevel++;
         Energy = 12.0f;
     }
 
@@ -110,11 +110,11 @@ void GegnerPowerBlock::DoKI(void)
     //
     for (int i = 0; i < NUMPLAYERS; i++)
         if (AnimPhase == 1    &&
-                pPlayer[i]->yspeed < 0.0f &&
-                pPlayer[i]->ypos + pPlayer[i]->CollideRect.top <= yPos + GegnerRect[GegnerArt].bottom &&
-                pPlayer[i]->ypos + pPlayer[i]->CollideRect.top >= yPos &&
-                pPlayer[i]->xpos + pPlayer[i]->CollideRect.left  <= xPos + GegnerRect[GegnerArt].right &&
-                pPlayer[i]->xpos + pPlayer[i]->CollideRect.right >= xPos)
+                Player[i].yspeed < 0.0f &&
+                Player[i].ypos + Player[i].CollideRect.top <= yPos + GegnerRect[GegnerArt].bottom &&
+                Player[i].ypos + Player[i].CollideRect.top >= yPos &&
+                Player[i].xpos + Player[i].CollideRect.left  <= xPos + GegnerRect[GegnerArt].right &&
+                Player[i].xpos + Player[i].CollideRect.right >= xPos)
         {
             Energy    = 0;					// Extra verlieren
             AnimPhase = 2;
@@ -128,7 +128,7 @@ void GegnerPowerBlock::DoKI(void)
             else if (ySpeed > 0.0f)
                 ySpeed *= -1.0f;
 
-            pPlayer[i]->yspeed = -pPlayer[i]->yspeed * 2/3;	// Spieler prallt ab
+            Player[i].yspeed = -Player[i].yspeed * 2/3;	// Spieler prallt ab
 
         }
 
@@ -147,7 +147,7 @@ void GegnerPowerBlock::DoKI(void)
     if (Energy <= 0.0f)				// Ein Extra verlieren ?
     {
         AnimPhase = 2;
-        pPlayer[0]->Score += 10;		// Punkte geben
+        Player[0].Score += 10;		// Punkte geben
 
         int r, extra;
 
@@ -208,18 +208,18 @@ void GegnerPowerBlock::DoKI(void)
 void GegnerPowerBlock::GegnerExplode(void)
 {
     for (int i = 0; i < NUMPLAYERS; i++)
-        if (pPlayer[i]->AufPlattform == this)
+        if (Player[i].AufPlattform == this)
         {
-            pPlayer[i]->AufPlattform = NULL;
-            pPlayer[i]->JumpPossible = false;
-            pPlayer[i]->Handlung  = SPRINGEN;
-            pPlayer[i]->AnimPhase = 0;
-            pPlayer[i]->yspeed    = 0.5f;
-            pPlayer[i]->JumpAdd   = PLAYER_JUMPADDSPEED;
+            Player[i].AufPlattform = NULL;
+            Player[i].JumpPossible = false;
+            Player[i].Handlung  = SPRINGEN;
+            Player[i].AnimPhase = 0;
+            Player[i].yspeed    = 0.5f;
+            Player[i].JumpAdd   = PLAYER_JUMPADDSPEED;
         }
 
     // Punkte geben
-    pPlayer[0]->Score += 100;
+    Player[0].Score += 100;
 
     // Explosion erzeugen
     pPartikelSystem->PushPartikel(xPos-30, yPos-30, EXPLOSION_BIG);

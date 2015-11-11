@@ -340,7 +340,7 @@ void GegnerUfo::GegnerExplode(void)
         pPartikelSystem->PushPartikel(xPos + rand()%190,
                                       yPos + rand()%60 + 30, SPLITTER);
 
-    pPlayer[0]->Score += 4000;
+    Player[0].Score += 4000;
     pGegner->PushGegner(xPos + 80.0f, yPos + 20.0f, ONEUP, 0, 0, false);
 
     ScrolltoPlayeAfterBoss();

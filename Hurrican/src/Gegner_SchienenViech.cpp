@@ -164,5 +164,5 @@ void GegnerSchienenViech::GegnerExplode(void)
     for (int i = 0; i < 5; i++)
         pPartikelSystem->PushPartikel(xPos - 30 + rand()%30, yPos - 30 + rand()%40, EXPLOSION_MEDIUM2);
 
-    pPlayer[0]->Score += 500;
+    Player[0].Score += 500;
 }

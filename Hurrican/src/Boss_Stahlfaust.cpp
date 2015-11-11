@@ -248,8 +248,8 @@ void GegnerStahlfaust::DoKI(void)
             // Spieler auch als Rad verwunden
             for (int i = 0; i < NUMPLAYERS; i++)
                 if (SpriteCollision(xPos,  yPos,  GegnerRect[GegnerArt],
-                                    pPlayer[i]->xpos, pPlayer[i]->ypos, pPlayer[i]->CollideRect))
-                    pPlayer[i]->DamagePlayer(100.0f, true);
+                                    Player[i].xpos, Player[i].ypos, Player[i].CollideRect))
+                    Player[i].DamagePlayer(100.0f, true);
         }
     }
     break;
@@ -324,11 +324,11 @@ void GegnerStahlfaust::GegnerExplode(void)
                                       yPos + 40 + rand()%100, SPIDERSPLITTER2);
 
     for (int p = 0; p < NUMPLAYERS; p++)
-        DirectInput.Joysticks[pPlayer[p]->JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);
+        DirectInput.Joysticks[Player[p].JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);
 
     ShakeScreen(4);
 
-    pPlayer[0]->Score += 5000;
+    Player[0].Score += 5000;
 
     ScrolltoPlayeAfterBoss();
 }

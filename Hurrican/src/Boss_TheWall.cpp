@@ -198,7 +198,7 @@ void GegnerTheWall::NeueAktion(void)
         bool DoLaser = false;
 
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (pPlayer[p]->ypos < TileEngine.YOffset + 480.0f - 20.0f * 8)
+            if (Player[p].ypos < TileEngine.YOffset + 480.0f - 20.0f * 8)
                 DoLaser = true;
 
         if (DoLaser == true)
@@ -443,15 +443,15 @@ void GegnerTheWall::DoKI(void)
             Destroyable = false;
 
             // Level wieder zum Spieler scrollen und dann weiterscrollen lassen
-            TileEngine.ScrollLevel(pPlayer[0]->xpos - 300,
-                                     pPlayer[0]->ypos - 280, ZUSTAND_SCROLLTOPLAYER);
+            TileEngine.ScrollLevel(Player[0].xpos - 300,
+                                     Player[0].ypos - 280, ZUSTAND_SCROLLTOPLAYER);
 
             // Rad checken
             for (int p = 0; p < NUMPLAYERS; p++)
             {
-                if (pPlayer[p]->Handlung == RADELN ||
-                        pPlayer[p]->Handlung == RADELN_FALL)
-                    pPlayer[p]->Handlung = LAUFEN;
+                if (Player[p].Handlung == RADELN ||
+                        Player[p].Handlung == RADELN_FALL)
+                    Player[p].Handlung = LAUFEN;
             }
 
             ShotCount = 1;

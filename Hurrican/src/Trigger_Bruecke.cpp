@@ -101,15 +101,15 @@ void GegnerBruecke::DoKI(void)
         //
         for (int p = 0; p < NUMPLAYERS; p++)
             if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                                pPlayer[p]->xpos,
-                                pPlayer[p]->ypos,
-                                pPlayer[p]->CollideRect) == true &&
-                    pPlayer[p]->yspeed >= 0.0f)
+                                Player[p].xpos,
+                                Player[p].ypos,
+                                Player[p].CollideRect) == true &&
+                    Player[p].yspeed >= 0.0f)
             {
                 float dx, dy;
 
-                dx = (pPlayer[p]->xpos + 35) - (xPos + 5);
-                dy = (pPlayer[p]->ypos + 40) - (yPos + 5);
+                dx = (Player[p].xpos + 35) - (xPos + 5);
+                dy = (Player[p].ypos + 40) - (yPos + 5);
 
                 //DKS - converted to float, optimized:
                 //double a = sqrt ((dx * dx) + (dy * dy));

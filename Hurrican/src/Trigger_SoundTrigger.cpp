@@ -45,8 +45,8 @@ void GegnerSoundTrigger::DoKI(void)
             int   vol = 0, pan = 128;
             float xdiff, ydiff, Abstand;
 
-            xdiff = ((pPlayer[0]->xpos + 45)  - xPos);
-            ydiff = ((pPlayer[0]->ypos + 45)  - yPos);
+            xdiff = ((Player[0].xpos + 45)  - xPos);
+            ydiff = ((Player[0].ypos + 45)  - yPos);
 
             //DKS - Converted to float:
             Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
@@ -63,7 +63,7 @@ void GegnerSoundTrigger::DoKI(void)
 
                 // Sound links oder rechts vom Spieler ?
                 //
-                if (xPos < pPlayer[0]->xpos + 45)
+                if (xPos < Player[0].xpos + 45)
                 {
                     pan = 128 - (100 - vol);
                     if (pan < 0)

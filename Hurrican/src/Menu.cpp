@@ -1293,9 +1293,9 @@ void MenuClass::ShowMenu(void)
             PlayerClass* pCurrentPlayer;
 
             if (j == 0)
-                pCurrentPlayer = pPlayer[0];
+                pCurrentPlayer = &Player[0];
             else
-                pCurrentPlayer = pPlayer[1];
+                pCurrentPlayer = &Player[1];
 
             // Typ (Tastatur, Joystick (mit Name)
             if (CurrentPlayer == j && AktuellerPunkt == MENU_TASTEN_TYPE_LINE)
@@ -1726,7 +1726,7 @@ void MenuClass::DoMenu(void)
     bool joy_enter      = false;
     bool joy_escape     = false;
     bool joy_delete     = false;
-//    int joy_idx = pPlayer[0]->JoystickIndex;
+//    int joy_idx = Player[0].JoystickIndex;
     static float input_counter = 0.0f;
     const float input_delay = 40.0f;     // Only accept joy input once every time counter reaches this value
     input_counter += 30.0f SYNC;
@@ -1794,14 +1794,14 @@ void MenuClass::DoMenu(void)
     if (input_counter >= input_delay && JoystickFound == true) {
         // Normally, for menu input we only check Player 1's joystick.
         int num_joys_to_check = 1;
-        int joy_idx = pPlayer[0]->JoystickIndex;
+        int joy_idx = Player[0].JoystickIndex;
         if (joy_idx < 0 || joy_idx >= DirectInput.JoysticksFound) {
             joy_idx = 0;
         }
 #if defined(GCW)
         // However, on GCW Zero the internal controls are their own joystick
         // and we must always be sure to check them.
-        if (pPlayer[0]->JoystickIndex != DirectInput.GetInternalJoystickIndex()) {
+        if (Player[0].JoystickIndex != DirectInput.GetInternalJoystickIndex()) {
             num_joys_to_check++;
         }
 #endif // GCW
@@ -1833,13 +1833,13 @@ void MenuClass::DoMenu(void)
                 }
             } else {
 #if !defined(GCW)   // On GCW Zero, only accept directional input for the menu from the DPAD
-                if (DirectInput.Joysticks[joy_idx].JoystickX >  pPlayer[0]->JoystickSchwelle) {
+                if (DirectInput.Joysticks[joy_idx].JoystickX >  Player[0].JoystickSchwelle) {
                     joy_right = true;
-                } else if (DirectInput.Joysticks[joy_idx].JoystickX < -pPlayer[0]->JoystickSchwelle) {
+                } else if (DirectInput.Joysticks[joy_idx].JoystickX < -Player[0].JoystickSchwelle) {
                     joy_left  = true;
-                } else if (DirectInput.Joysticks[joy_idx].JoystickY >  pPlayer[0]->JoystickSchwelle) {
+                } else if (DirectInput.Joysticks[joy_idx].JoystickY >  Player[0].JoystickSchwelle) {
                     joy_down  = true;
-                } else if (DirectInput.Joysticks[joy_idx].JoystickY < -pPlayer[0]->JoystickSchwelle) {
+                } else if (DirectInput.Joysticks[joy_idx].JoystickY < -Player[0].JoystickSchwelle) {
                     joy_up  = true;
                 }
 #endif //GCW
@@ -1881,9 +1881,9 @@ void MenuClass::DoMenu(void)
     else
     {
         if (anybutton == false &&
-                DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickY > -pPlayer[0]->JoystickSchwelle &&
-                DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickY <  pPlayer[0]->JoystickSchwelle &&
-                DirectInput.Joysticks[pPlayer[0]->JoystickIndex].JoystickPOV == -1)
+                DirectInput.Joysticks[Player[0].JoystickIndex].JoystickY > -Player[0].JoystickSchwelle &&
+                DirectInput.Joysticks[Player[0].JoystickIndex].JoystickY <  Player[0].JoystickSchwelle &&
+                DirectInput.Joysticks[Player[0].JoystickIndex].JoystickPOV == -1)
             JoyOK = true;
     }
 
@@ -1930,9 +1930,9 @@ void MenuClass::DoMenu(void)
             PlayerClass* pCurrentPlayer;
 
             if (CurrentPlayer == 0)
-                pCurrentPlayer = pPlayer[0];
+                pCurrentPlayer = &Player[0];
             else
-                pCurrentPlayer = pPlayer[1];
+                pCurrentPlayer = &Player[1];
 
             //DKS - Altered to match redesigned controls submenu:
             if ((AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE || AktuellerPunkt == MENU_TASTEN_MODE_LINE) &&
@@ -1970,9 +1970,9 @@ void MenuClass::DoMenu(void)
             PlayerClass* pCurrentPlayer;
 
             if (CurrentPlayer == 0)
-                pCurrentPlayer = pPlayer[0];
+                pCurrentPlayer = &Player[0];
             else
-                pCurrentPlayer = pPlayer[1];
+                pCurrentPlayer = &Player[1];
 
             //DKS - Altered to match redesigned controls submenu:
             if ((AktuellerPunkt == MENU_TASTEN_MODE_LINE || AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE) &&
@@ -2030,10 +2030,10 @@ void MenuClass::DoMenu(void)
 #if 0
                 if (MUSIC_GetPaused(SoundManager.its_Songs[MUSIC_BOSS]->SongData))
                     SoundManager.PlaySong(MUSIC_BOSS, true);
-                else if (pPlayer[0]->PunisherActive == true) {
+                else if (Player[0].PunisherActive == true) {
                     SoundManager.PlaySong(MUSIC_PUNISHER, true);
                 }
-                else if (pPlayer[0]->Riding()) {
+                else if (Player[0].Riding()) {
                     SoundManager.PlaySong(MUSIC_FLUGSACK, true);
                 }
                 else
@@ -2042,8 +2042,8 @@ void MenuClass::DoMenu(void)
                 SoundManager.UnpauseSongs();
                 SoundManager.UnpauseSounds();
 
-                pPlayer[0]->PowerLinePossible = false;
-                pPlayer[0]->ShotDelay = 2.0f;
+                Player[0].PowerLinePossible = false;
+                Player[0].ShotDelay = 2.0f;
             }
             else if (AktuellerPunkt == MENUPUNKT_CREDITS)
             {
@@ -2275,9 +2275,9 @@ void MenuClass::DoMenu(void)
         PlayerClass* pCurrentPlayer;
 
         if (CurrentPlayer == 0)
-            pCurrentPlayer = pPlayer[0];
+            pCurrentPlayer = &Player[0];
         else
-            pCurrentPlayer = pPlayer[1];
+            pCurrentPlayer = &Player[1];
         
         int action = AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS;
         bool on_move_line = (action==AKTION_LINKS || action==AKTION_RECHTS || action==AKTION_DUCKEN);
@@ -2409,9 +2409,9 @@ void MenuClass::DoMenu(void)
                 PlayerClass* pCurrentPlayer;
 
                 if (CurrentPlayer == 0)
-                    pCurrentPlayer = pPlayer[0];
+                    pCurrentPlayer = &Player[0];
                 else
-                    pCurrentPlayer = pPlayer[1];
+                    pCurrentPlayer = &Player[1];
 
                 if (KeyDown(DIK_NUMPAD6) || KeyDown(DIK_RIGHT) || joy_right)
                 {
@@ -2427,7 +2427,7 @@ void MenuClass::DoMenu(void)
                     {
                         AuswahlPossible = false;
                         CurrentPlayer = 1;
-                        pCurrentPlayer = pPlayer[1];
+                        pCurrentPlayer = &Player[1];
 
                         if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD &&
                                 (AktuellerPunkt == MENU_TASTEN_MODE_LINE    ||
@@ -2451,7 +2451,7 @@ void MenuClass::DoMenu(void)
                     {
                         AuswahlPossible = false;
                         CurrentPlayer = 0;
-                        pCurrentPlayer = pPlayer[0];
+                        pCurrentPlayer = &Player[0];
 
                         if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD &&
                                 (AktuellerPunkt == MENU_TASTEN_MODE_LINE  ||
@@ -2491,9 +2491,9 @@ void MenuClass::DoMenu(void)
                     PlayerClass *pCurrentPlayer;
 
                     if (CurrentPlayer == 0)
-                        pCurrentPlayer = pPlayer[0];
+                        pCurrentPlayer = &Player[0];
                     else
-                        pCurrentPlayer = pPlayer[1];
+                        pCurrentPlayer = &Player[1];
 
                     if (AktuellerPunkt == MENU_TASTEN_DEFAULTS_LINE) {
                         // Load default controls for players 1/2
@@ -2926,29 +2926,29 @@ void MenuClass::DoMenu(void)
                 InitNewGame();
 
                 // Werte von Spieler auf das Savegame übertragen
-                pPlayer[0]->Score				= Savegames[AktuellerPunkt].Score;
+                Player[0].Score				= Savegames[AktuellerPunkt].Score;
                 Stage = Savegames[AktuellerPunkt].Stage;
                 Skill				= Savegames[AktuellerPunkt].Skill;
                 NewStage = Savegames[AktuellerPunkt].NewStage;
-                pPlayer[0]->CollectedDiamonds	= Savegames[AktuellerPunkt].CollectedDiamonds;
-                pPlayer[0]->PowerLines	= Savegames[AktuellerPunkt].PowerLines;
-                pPlayer[0]->Grenades	= Savegames[AktuellerPunkt].Grenades;
-                pPlayer[0]->SmartBombs	= Savegames[AktuellerPunkt].SmartBombs;
+                Player[0].CollectedDiamonds	= Savegames[AktuellerPunkt].CollectedDiamonds;
+                Player[0].PowerLines	= Savegames[AktuellerPunkt].PowerLines;
+                Player[0].Grenades	= Savegames[AktuellerPunkt].Grenades;
+                Player[0].SmartBombs	= Savegames[AktuellerPunkt].SmartBombs;
 
                 for (int p = 0; p < 2; p++)
                 {
-                    pPlayer[p]->Handlung			= STEHEN;
-                    pPlayer[p]->Energy				= Savegames[AktuellerPunkt].Energy[p];
-                    pPlayer[p]->Armour				= Savegames[AktuellerPunkt].Armour[p];
-                    pPlayer[p]->Shield				= Savegames[AktuellerPunkt].Shield[p];
-                    pPlayer[p]->SelectedWeapon		= Savegames[AktuellerPunkt].SelectedWeapon[p];
-                    pPlayer[p]->BlitzLength			= Savegames[AktuellerPunkt].BlitzLength[p];
-                    pPlayer[p]->AutoFireExtra		= Savegames[AktuellerPunkt].AutoFire[p];
-                    pPlayer[p]->RiesenShotExtra		= Savegames[AktuellerPunkt].RiesenShot[p];
-                    pPlayer[p]->Lives				= Savegames[AktuellerPunkt].Lives[p];
+                    Player[p].Handlung			= STEHEN;
+                    Player[p].Energy				= Savegames[AktuellerPunkt].Energy[p];
+                    Player[p].Armour				= Savegames[AktuellerPunkt].Armour[p];
+                    Player[p].Shield				= Savegames[AktuellerPunkt].Shield[p];
+                    Player[p].SelectedWeapon		= Savegames[AktuellerPunkt].SelectedWeapon[p];
+                    Player[p].BlitzLength			= Savegames[AktuellerPunkt].BlitzLength[p];
+                    Player[p].AutoFireExtra		= Savegames[AktuellerPunkt].AutoFire[p];
+                    Player[p].RiesenShotExtra		= Savegames[AktuellerPunkt].RiesenShot[p];
+                    Player[p].Lives				= Savegames[AktuellerPunkt].Lives[p];
 
                     for (int i=0; i<4; i++)
-                        pPlayer[p]->CurrentWeaponLevel[i]	= Savegames[AktuellerPunkt].CurrentWeaponLevel[p][i];
+                        Player[p].CurrentWeaponLevel[i]	= Savegames[AktuellerPunkt].CurrentWeaponLevel[p][i];
                 }
 
                 // An der Stelle im Savegame weiterspielen
@@ -3006,47 +3006,47 @@ void MenuClass::DoMenu(void)
                 strcpy_s(Savegames[AktuellerPunkt].Name, strlen(timestr) + 1, timestr);
 
                 Savegames[AktuellerPunkt].Players			= NUMPLAYERS;
-                Savegames[AktuellerPunkt].Score				= pPlayer[0]->Score;
+                Savegames[AktuellerPunkt].Score				= Player[0].Score;
                 Savegames[AktuellerPunkt].Stage				= Stage;
                 Savegames[AktuellerPunkt].Skill				= Skill;
                 Savegames[AktuellerPunkt].NewStage			= NewStage;
-                Savegames[AktuellerPunkt].CollectedDiamonds = pPlayer[0]->CollectedDiamonds;
-                Savegames[AktuellerPunkt].PowerLines  = pPlayer[0]->PowerLines;
-                Savegames[AktuellerPunkt].Grenades    = pPlayer[0]->Grenades;
-                Savegames[AktuellerPunkt].SmartBombs  = pPlayer[0]->SmartBombs;
+                Savegames[AktuellerPunkt].CollectedDiamonds = Player[0].CollectedDiamonds;
+                Savegames[AktuellerPunkt].PowerLines  = Player[0].PowerLines;
+                Savegames[AktuellerPunkt].Grenades    = Player[0].Grenades;
+                Savegames[AktuellerPunkt].SmartBombs  = Player[0].SmartBombs;
 
                 for (int p = 0; p < 2; p++)
                 {
-                    Savegames[AktuellerPunkt].Energy[p]			= pPlayer[0]->Energy;
-                    Savegames[AktuellerPunkt].Armour[p]			= pPlayer[0]->Armour;
-                    Savegames[AktuellerPunkt].Shield[p]			= pPlayer[0]->Shield;
-                    Savegames[AktuellerPunkt].SelectedWeapon[p]	= pPlayer[0]->SelectedWeapon;
-                    Savegames[AktuellerPunkt].Lives[p]			= pPlayer[p]->Lives;
-                    Savegames[AktuellerPunkt].AutoFire[p]		= pPlayer[p]->AutoFireExtra;
-                    Savegames[AktuellerPunkt].RiesenShot[p]		= pPlayer[p]->RiesenShotExtra;
+                    Savegames[AktuellerPunkt].Energy[p]			= Player[0].Energy;
+                    Savegames[AktuellerPunkt].Armour[p]			= Player[0].Armour;
+                    Savegames[AktuellerPunkt].Shield[p]			= Player[0].Shield;
+                    Savegames[AktuellerPunkt].SelectedWeapon[p]	= Player[0].SelectedWeapon;
+                    Savegames[AktuellerPunkt].Lives[p]			= Player[p].Lives;
+                    Savegames[AktuellerPunkt].AutoFire[p]		= Player[p].AutoFireExtra;
+                    Savegames[AktuellerPunkt].RiesenShot[p]		= Player[p].RiesenShotExtra;
 
                     for (int i=0; i<4; i++)
-                        Savegames[AktuellerPunkt].CurrentWeaponLevel[p][i] = pPlayer[p]->CurrentWeaponLevel[i];
+                        Savegames[AktuellerPunkt].CurrentWeaponLevel[p][i] = Player[p].CurrentWeaponLevel[i];
 
-                    Savegames[AktuellerPunkt].BlitzLength[p] = pPlayer[p]->BlitzLength;
+                    Savegames[AktuellerPunkt].BlitzLength[p] = Player[p].BlitzLength;
                 }
 
                 // Prüfsumme gegen Savegame-Manipulation errechnen
 
                 Savegames[AktuellerPunkt].Pruefsumme =
-                    (int)pPlayer[0]->Energy + (int)pPlayer[0]->Armour + (int)pPlayer[0]->Shield +
-                    pPlayer[0]->Score  + Stage  + Skill  +
-                    NewStage + pPlayer[0]->CollectedDiamonds +
-                    pPlayer[0]->SelectedWeapon;
+                    (int)Player[0].Energy + (int)Player[0].Armour + (int)Player[0].Shield +
+                    Player[0].Score  + Stage  + Skill  +
+                    NewStage + Player[0].CollectedDiamonds +
+                    Player[0].SelectedWeapon;
 
                 for (int i=0; i<4; i++)
                     Savegames[AktuellerPunkt].Pruefsumme +=
-                        pPlayer[0]->CurrentWeaponLevel[i];
+                        Player[0].CurrentWeaponLevel[i];
 
                 Savegames[AktuellerPunkt].Pruefsumme +=
-                    pPlayer[0]->BlitzLength +
-                    pPlayer[0]->PowerLines +
-                    pPlayer[0]->Grenades + pPlayer[0]->SmartBombs +
+                    Player[0].BlitzLength +
+                    Player[0].PowerLines +
+                    Player[0].Grenades + Player[0].SmartBombs +
                     NUMPLAYERS;
 
                 // Und Savegame in Datei schreiben
@@ -3484,7 +3484,7 @@ void MenuClass::CheckForNewHighscore(void)
     bool besser = false;
 
     for (int j=0; j<MAX_HIGHSCORES; j++)
-        if (pPlayer[0]->Score >= Highscores[j].Score && besser == false)
+        if (Player[0].Score >= Highscores[j].Score && besser == false)
         {
             besser = true;
 
@@ -3498,11 +3498,11 @@ void MenuClass::CheckForNewHighscore(void)
                 strcpy_s(Highscores[k].Name, Highscores[k-1].Name);
             }
 
-            Highscores[j].Score = pPlayer[0]->Score;
-            NewScore = pPlayer[0]->Score;
+            Highscores[j].Score = Player[0].Score;
+            NewScore = Player[0].Score;
             NewStage = Stage;
             NewSkill = Skill;
-            pPlayer[0]->Score = 0;
+            Player[0].Score = 0;
 
             // Werte für den neuen Eintrag löschen
             NewRank = j;

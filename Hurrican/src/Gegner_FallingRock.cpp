@@ -53,9 +53,9 @@ void GegnerFallingRock::DoKI(void)
     case GEGNER_LAUFEN:						// Stein wartet bis der Spieler vorbeikommt
     {
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (pPlayer[p]->xpos + pPlayer[p]->CollideRect.right > xPos &&
-                    pPlayer[p]->xpos < xPos + 80 &&
-                    pPlayer[p]->ypos > yPos &&
+            if (Player[p].xpos + Player[p].CollideRect.right > xPos &&
+                    Player[p].xpos < xPos + 80 &&
+                    Player[p].ypos > yPos &&
                     PlayerAbstand() < 480)
             {
                 Active = true;
@@ -97,5 +97,5 @@ void GegnerFallingRock::GegnerExplode(void)
     }
     SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEEXPLODE);	// Sound ausgeben
 
-    pPlayer[0]->Score += 100;
+    Player[0].Score += 100;
 }

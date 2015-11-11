@@ -142,10 +142,10 @@ void GegnerNeuFisch::DoKI(void)
 
         // festgebissen?
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (SpriteCollision(pPlayer[p]->xpos, pPlayer[p]->ypos, pPlayer[p]->CollideRect,
+            if (SpriteCollision(Player[p].xpos, Player[p].ypos, Player[p].CollideRect,
                                 xPos, yPos, rect) == true)
             {
-                pFest = pPlayer[p];
+                pFest = &Player[p];
                 TestBlock = false;
                 Handlung = GEGNER_SPECIAL;
                 AnimSpeed = 0.3f;
@@ -213,5 +213,5 @@ void GegnerNeuFisch::GegnerExplode(void)
         pPartikelSystem->PushPartikel(float(xPos + rand()%60),
                                       float(yPos + rand()%40), PIRANHABLUT);
 
-    pPlayer[0]->Score += 250;
+    Player[0].Score += 250;
 }

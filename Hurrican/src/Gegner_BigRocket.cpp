@@ -137,6 +137,6 @@ void GegnerBigRocket::GegnerExplode(void)
             pPartikelSystem->PushPartikel (xPos + 10 + rand ()%50, yPos + 30 + rand()%250, LONGFUNKE);
         }
 
-        pPlayer[0]->Score += 2000;
+        Player[0].Score += 2000;
     }
 }

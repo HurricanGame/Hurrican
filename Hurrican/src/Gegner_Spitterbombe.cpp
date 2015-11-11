@@ -81,6 +81,6 @@ void GegnerSpitterbombe::GegnerExplode(void)
         pProjectiles->PushProjectile (xPos + 10, yPos + 30, SPITTERBOMBESHOTRO);
         pProjectiles->PushProjectile (xPos + 10, yPos + 30, SPITTERBOMBESHOTRM);
         pProjectiles->PushProjectile (xPos + 10, yPos + 30, SPITTERBOMBESHOTRU);
-        pPlayer[0]->Score += 200;
+        Player[0].Score += 200;
     }
 }

@@ -36,13 +36,13 @@ void GegnerFass::DoKI(void)
 
     // Fass bewegen
     for (int p = 0; p < NUMPLAYERS; p++)
-        if (SpriteCollision(pPlayer[p]->xpos,
-                            pPlayer[p]->ypos,
-                            pPlayer[p]->CollideRect,
+        if (SpriteCollision(Player[p].xpos,
+                            Player[p].ypos,
+                            Player[p].CollideRect,
                             xPos, yPos, GegnerRect[GegnerArt]) == true)
         {
-            xPos += pPlayer[p]->xspeed / 2 SYNC;
-            pPlayer[p]->xpos -= pPlayer[p]->xspeed / 2 SYNC;
+            xPos += Player[p].xspeed / 2 SYNC;
+            Player[p].xpos -= Player[p].xspeed / 2 SYNC;
 
         }
 

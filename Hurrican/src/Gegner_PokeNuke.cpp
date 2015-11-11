@@ -73,13 +73,13 @@ void GegnerPokeNuke::GegnerExplode(void)
     SoundManager.PlayWave (100, 128, 8000 + rand ()%4000, SOUND_EXPLOSION2);
     ShakeScreen (7);
 
-    pAim = pPlayer[0];
+    pAim = &Player[0];
     if (PlayerAbstand() < 160)
         pAim->DamagePlayer (50);
 
     if (NUMPLAYERS == 2)
     {
-        pAim = pPlayer[1];
+        pAim = &Player[1];
         if (PlayerAbstand() < 160)
             pAim->DamagePlayer (50);
     }

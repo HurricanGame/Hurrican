@@ -110,5 +110,5 @@ void GegnerPflanze::GegnerExplode(void)
                                       float(yPos + 10 +  rand()%50), BLATT);
 
 
-    pPlayer[0]->Score += 300;
+    Player[0].Score += 300;
 }

@@ -606,7 +606,7 @@ void GegnerSkeletor::DoKI(void)
 
         pPartikelSystem->PushPartikel (xPos + 62, yPos + 100, SHOCKEXPLOSION);
         SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
-        pPlayer[0]->Score += 12500;
+        Player[0].Score += 12500;
         ShakeScreen(5.0f);
 
         // Endboss-Musik ausfaden und abschalten

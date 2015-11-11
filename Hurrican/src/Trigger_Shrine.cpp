@@ -49,13 +49,13 @@ void GegnerShrine::DoKI(void)
 
     		if (AnimCount == 0.0f)
     		{
-    			pGegner->PushGegner (pPlayer[0]->xpos,
-    								 pPlayer[0]->ypos - 50,
+    			pGegner->PushGegner (Player[0].xpos,
+    								 Player[0].ypos - 50,
     								 FALLINGROCK, 0, 0, true);
 
     			if (NUMPLAYERS == 2)
-    			pGegner->PushGegner (pPlayer[1]->xpos,
-    								 pPlayer[1]->ypos - 50,
+    			pGegner->PushGegner (Player[1].xpos,
+    								 Player[1].ypos - 50,
     								 FALLINGROCK, 0, 0, true);
 
     			SoundManager.PlayWave (100, 128, 11025, SOUND_PHARAODIE);
@@ -68,8 +68,8 @@ void GegnerShrine::DoKI(void)
     //
     for (int p = 0; p < NUMPLAYERS; p++)
         if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                            pPlayer[p]->xpos, pPlayer[p]->ypos, pPlayer[p]->CollideRect) == true &&
-                pPlayer[p]->Handlung == DUCKEN &&
+                            Player[p].xpos, Player[p].ypos, Player[p].CollideRect) == true &&
+                Player[p].Handlung == DUCKEN &&
                 Value1 == 1)
         {
             Value1 = 0;

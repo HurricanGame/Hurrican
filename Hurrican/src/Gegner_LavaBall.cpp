@@ -132,9 +132,9 @@ void GegnerLavaBall::DoKI(void)
     //
     for (int i = 0; i < NUMPLAYERS; i++)
         if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                            pPlayer[i]->xpos, pPlayer[i]->ypos, pPlayer[i]->CollideRect) == true)
+                            Player[i].xpos, Player[i].ypos, Player[i].CollideRect) == true)
         {
-            pPlayer[i]->DamagePlayer(50.0f);
+            Player[i].DamagePlayer(50.0f);
             Energy = 0.0f;
 
             SoundManager.PlayWave (100, 128, 9000 + rand()%2000, SOUND_EXPLOSION1);

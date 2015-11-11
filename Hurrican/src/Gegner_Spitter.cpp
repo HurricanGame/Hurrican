@@ -145,7 +145,7 @@ void GegnerSpitter::DoKI(void)
 
 void GegnerSpitter::GegnerExplode(void)
 {
-    pPlayer[0]->Score += 50;
+    Player[0].Score += 50;
 
     pPartikelSystem->PushPartikel(float(xPos - 10),
                                   float(yPos - 10), EXPLOSION_MEDIUM);

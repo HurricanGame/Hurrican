@@ -137,8 +137,8 @@ void GegnerSnowBomb::DoKI(void)
     // Spieler seitlich verschieben, wenn auf Kugel drauf
     //
     //for (int i = 0; i < NUMPLAYERS; i++)
-    //	if (pPlayer[i]->AufPlattform == this)
-    //		pPlayer[i]->xpos += xSpeed / 2.0f SYNC;
+    //	if (Player[i].AufPlattform == this)
+    //		Player[i].xpos += xSpeed / 2.0f SYNC;
 }
 
 // --------------------------------------------------------------------------------------
@@ -156,6 +156,6 @@ void GegnerSnowBomb::GegnerExplode(void)
     SoundManager.PlayWave(100, 128, 6000 + rand()%2000, SOUND_LANDEN);
 
     for (int i = 0; i < NUMPLAYERS; i++)
-        if (pPlayer[i]->AufPlattform == this)
-            pPlayer[i]->AufPlattform = NULL;
+        if (Player[i].AufPlattform == this)
+            Player[i].AufPlattform = NULL;
 }

@@ -35,7 +35,7 @@ GegnerPartikelSpawner::GegnerPartikelSpawner(int Wert1, int Wert2, bool Light)
     Aussetzer		= 0.0f;			// für aussetzenden, auftreibenden Rauch
     AnimCount		= float (Value2);
     Active			= true;
-    pAim			= pPlayer[0];
+    pAim			= &Player[0];
 
     // Tropfen per Zufall anfangen
     //
@@ -66,16 +66,16 @@ void GegnerPartikelSpawner::DoKI(void)
               ( Value1 == 6 && Aussetzer > 6.0f)) && Value2 == 0))
     {
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (pPlayer[p]->yspeed != 0.0f &&
-                    pPlayer[p]->xpos + pPlayer[p]->CollideRect.left < xPos + 40  &&
-                    xPos < pPlayer[p]->xpos + pPlayer[p]->CollideRect.right   &&
-                    pPlayer[p]->ypos + pPlayer[p]->CollideRect.top  < yPos + 40	&&
-                    yPos - 300 < pPlayer[p]->ypos + pPlayer[p]->CollideRect.bottom)
+            if (Player[p].yspeed != 0.0f &&
+                    Player[p].xpos + Player[p].CollideRect.left < xPos + 40  &&
+                    xPos < Player[p].xpos + Player[p].CollideRect.right   &&
+                    Player[p].ypos + Player[p].CollideRect.top  < yPos + 40	&&
+                    yPos - 300 < Player[p].ypos + Player[p].CollideRect.bottom)
             {
                 if (Value1 == 19)
-                    pPlayer[p]->yspeed -= Value2 SYNC;
+                    Player[p].yspeed -= Value2 SYNC;
                 else
-                    pPlayer[p]->yspeed -= 6.0f SYNC;
+                    Player[p].yspeed -= 6.0f SYNC;
             }
     }
 
@@ -175,7 +175,7 @@ void GegnerPartikelSpawner::DoKI(void)
                 {
                 }
                 else
-                    pPartikelSystem->PushPartikel(xdrop, yPos, SPAWNDROP, pPlayer[0]);
+                    pPartikelSystem->PushPartikel(xdrop, yPos, SPAWNDROP, &Player[0]);
 
                 AnimCount -= rand()%5;
             }
@@ -316,7 +316,7 @@ void GegnerPartikelSpawner::DoKI(void)
             // Scrollspeed setzen und danach Trigger entfernen
             case 10 :
             {
-                pPlayer[0]->AutoScrollspeed = float (Value2);
+                Player[0].AutoScrollspeed = float (Value2);
                 Energy = 0.0f;
             }
             break;

@@ -85,10 +85,10 @@ void GegnerShootPlattform::DoKI(void)
 
     // An der Decke abprallen
     for (int p = 0; p < NUMPLAYERS; p++)
-        if (pPlayer[p]->AufPlattform == this)
+        if (Player[p].AufPlattform == this)
         {
-            int bo = TileEngine.BlockOben(pPlayer[p]->xpos, pPlayer[p]->ypos,
-                                            pPlayer[p]->xposold,  pPlayer[p]->yposold, pPlayer[p]->CollideRect);
+            int bo = TileEngine.BlockOben(Player[p].xpos, Player[p].ypos,
+                                            Player[p].xposold,  Player[p].yposold, Player[p].CollideRect);
 
             if (ySpeed < 0.0f &&
                     bo & BLOCKWERT_WAND)

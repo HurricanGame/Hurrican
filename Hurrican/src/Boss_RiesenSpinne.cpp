@@ -860,7 +860,7 @@ void GegnerRiesenSpinne::DoKI(void)
 
 void GegnerRiesenSpinne::GegnerExplode(void)
 {
-    pPlayer[0]->Score += 15000;
+    Player[0].Score += 15000;
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
     ShakeScreen(5.0f);
 

@@ -72,5 +72,5 @@ void GegnerRaketenwerfer::GegnerExplode(void)
 
     SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION4);	// Sound ausgeben
 
-    pPlayer[0]->Score += 400;
+    Player[0].Score += 400;
 }

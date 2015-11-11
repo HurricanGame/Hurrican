@@ -92,5 +92,5 @@ void GegnerStarSmall::GegnerExplode(void)
 
     SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
-    pPlayer[0]->Score += 150;		// Punkte geben
+    Player[0].Score += 150;		// Punkte geben
 }

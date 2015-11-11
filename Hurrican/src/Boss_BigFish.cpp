@@ -475,9 +475,9 @@ void GegnerBigFish::GegnerExplode(void)
                             yPos + 30 + rand()%80, PIRANHA, 99, 0, false);
 
     for (int i = 0; i < NUMPLAYERS; i++)
-        DirectInput.Joysticks[pPlayer[i]->JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);
+        DirectInput.Joysticks[Player[i].JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);
 
     ShakeScreen(4);
 
-    pPlayer[0]->Score += 5000;
+    Player[0].Score += 5000;
 }

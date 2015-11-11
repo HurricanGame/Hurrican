@@ -62,13 +62,13 @@ void GegnerStampfstein::DoKI(void)
     // Spieler kann von unten nicht durchspringen
     //
     for (int p = 0; p < NUMPLAYERS; p++)
-        if (SpriteCollision(pPlayer[p]->xpos,
-                            pPlayer[p]->ypos,
-                            pPlayer[p]->CollideRect,
+        if (SpriteCollision(Player[p].xpos,
+                            Player[p].ypos,
+                            Player[p].CollideRect,
                             xPos, yPos, GegnerRect[GegnerArt]) == true &&
-                yPos < pPlayer[p]->ypos					   &&
-                pPlayer[p]->yspeed < 0.0f)
-            pPlayer[p]->yspeed *= -0.25f;
+                yPos < Player[p].ypos					   &&
+                Player[p].yspeed < 0.0f)
+            Player[p].yspeed *= -0.25f;
 
     // Ja nach Handlung richtig verhalten
     switch (Handlung)
@@ -90,11 +90,11 @@ void GegnerStampfstein::DoKI(void)
         //
         for (int p = 0; p < NUMPLAYERS; p++)
         {
-            pAim = pPlayer[p];
+            pAim = &Player[p];
 
             if (PlayerAbstandHoriz() < 50 &&
                     PlayerAbstandVert()  < 600 &&
-                    pPlayer[p]->ypos > yPos)
+                    Player[p].ypos > yPos)
             {
                 Handlung = GEGNER_FALLEN;
                 ySpeed   = 20.0f;
@@ -120,10 +120,10 @@ void GegnerStampfstein::DoKI(void)
         //
         for (int p = 0; p < NUMPLAYERS; p++)
         {
-            if (pPlayer[p]->AufPlattform != this &&
-                    SpriteCollision(pPlayer[p]->xpos, pPlayer[p]->ypos, pPlayer[p]->CollideRect,
+            if (Player[p].AufPlattform != this &&
+                    SpriteCollision(Player[p].xpos, Player[p].ypos, Player[p].CollideRect,
                                     xPos, yPos, GegnerRect[GegnerArt]) == true &&
-                    pPlayer[p]->ypos + pPlayer[p]->CollideRect.bottom >= yPos)
+                    Player[p].ypos + Player[p].CollideRect.bottom >= yPos)
                 TestDamagePlayers(500.0f);
         }
 
@@ -217,15 +217,15 @@ void GegnerStampfstein::DoKI(void)
         // Spieler zwischen Decke und Stein eingeklemmt?
         //
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (pPlayer[p]->AufPlattform == this &&
-                    TileEngine.BlockOben(pPlayer[p]->xpos, pPlayer[p]->ypos,
-                                           pPlayer[p]->xposold, pPlayer[p]->yposold,
-                                           pPlayer[p]->CollideRect) & BLOCKWERT_WAND)
+            if (Player[p].AufPlattform == this &&
+                    TileEngine.BlockOben(Player[p].xpos, Player[p].ypos,
+                                           Player[p].xposold, Player[p].yposold,
+                                           Player[p].CollideRect) & BLOCKWERT_WAND)
             {
-                pPlayer[p]->DamagePlayer(500.0f, true);
-                pPlayer[p]->AufPlattform = NULL;
-                pPlayer[p]->ypos += 10.0f;
-                pPlayer[p]->yspeed = 10.0f;
+                Player[p].DamagePlayer(500.0f, true);
+                Player[p].AufPlattform = NULL;
+                Player[p].ypos += 10.0f;
+                Player[p].yspeed = 10.0f;
             }
     }
     break;
@@ -235,12 +235,12 @@ void GegnerStampfstein::DoKI(void)
     // Spieler hat Stein von unten berührt (an den Stacheln) ?
     //
     for (int p = 0; p < NUMPLAYERS; p++)
-        if (SpriteCollision(pPlayer[p]->xpos,
-                            pPlayer[p]->ypos,
-                            pPlayer[p]->CollideRect,
+        if (SpriteCollision(Player[p].xpos,
+                            Player[p].ypos,
+                            Player[p].CollideRect,
                             xPos, yPos, GegnerRect[GegnerArt]) == true &&
-                pPlayer[p]->ypos > yPos)
-            pPlayer[p]->DamagePlayer(20.0f SYNC);
+                Player[p].ypos > yPos)
+            Player[p].DamagePlayer(20.0f SYNC);
 }
 
 // --------------------------------------------------------------------------------------

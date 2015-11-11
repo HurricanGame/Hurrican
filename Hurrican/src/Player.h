@@ -246,10 +246,10 @@ public:
     DirectGraphicsSprite	PlayerRide;				// Grafiken für das Reiten auf dem FlugSack
     DirectGraphicsSprite	PlayerRad;				// Grafiken für das Rad
 
-    //DKS - Added paramter to specify if the player being initialized is player 1 (0) or player 2 (1):
-    PlayerClass(int player_num);					// Spieler initlaisieren
+    PlayerClass();                                  // Spieler initlaisieren
     ~PlayerClass(void);								// Spieler freigeben
-    void InitPlayer(void);							// Auf neues Spiel vorbereiten
+    //DKS - Added paramter to specify if the player being initialized is player 1 (0) or player 2 (1):
+    void InitPlayer(int player_num);							// Auf neues Spiel vorbereiten
     void InitNewLevel(void);						// Auf neues Level vorbereiten
     bool GetPlayerInput(void);						// Eingabegeräte abfragen
     void PlayerShoot  (void);						// Spieler schiesst
@@ -293,7 +293,10 @@ public:
 // Externals
 // --------------------------------------------------------------------------------------
 
-extern PlayerClass			*pPlayer[2];
+//DKS - PlayerClass array is now static, not dynamically-allocated:
+//extern PlayerClass			*pPlayer[2];
+extern PlayerClass			Player[2];
+
 extern int Stage;									// Aktuelles Level
 extern int NewStage;								// Neues Level
 extern int	Skill;									// 0 = easy, 1 = medium, 2 = hard, 3 = Hurrican

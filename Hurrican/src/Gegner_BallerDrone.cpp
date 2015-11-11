@@ -178,5 +178,5 @@ void GegnerBallerdrone::GegnerExplode(void)
     for (i=0; i < 40; i++)
         pPartikelSystem->PushPartikel (xPos + rand ()%90, yPos + rand()%60, FUNKE);
 
-    pPlayer[0]->Score += 300;
+    Player[0].Score += 300;
 }
