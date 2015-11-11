@@ -83,10 +83,9 @@ void InitNewGame(void)
     {
         Player[p].Handlung = STEHEN;
         Player[p].InitPlayer(p);      // DKS: InitPlayer now takes argument specifying which
-                                        //      player number each player is.
-        Player[p].LoadSprites();      // DKS: PlayerClass now contains its own sprites, and
-                                        //      Player2's sprites are separate textures colored
-                                        //      blue instead of red.
+                                      //      player number each player is. InitPlayer will
+                                      //      also load each player's set of sprites if they
+                                      //      haven't been already.
         Player[p].InitNewLevel();
         Player[p].SecretFullGame   = 0;
         Player[p].DiamondsFullGame = 0;
