@@ -41,15 +41,15 @@ void GegnerEndLevel::DoKI(void)
         // Ausgang berührt ? Dann Nächsten Level laden
         for (int p = 0; p < NUMPLAYERS; p++)
             if (SpriteCollision(xPos,		   yPos,		  GegnerRect[GegnerArt],
-                                pPlayer[p]->xpos,
-                                pPlayer[p]->ypos,
-                                pPlayer[p]->CollideRect) == true)
+                                Player[p].xpos,
+                                Player[p].ypos,
+                                Player[p].CollideRect) == true)
 
             {
                 // Spieler zentrieren
                 if (NUMPLAYERS == 0)
-                    TileEngine.ScrollLevel(pPlayer[0]->xpos - 300,
-                                             pPlayer[0]->ypos - 280, ZUSTAND_SCROLLTOLOCK);
+                    TileEngine.ScrollLevel(Player[0].xpos - 300,
+                                             Player[0].ypos - 280, ZUSTAND_SCROLLTOLOCK);
                 else
                     TileEngine.ScrollLevel(TileEngine.XOffset,
                                              TileEngine.YOffset, ZUSTAND_SCROLLTOLOCK);
@@ -58,8 +58,8 @@ void GegnerEndLevel::DoKI(void)
 
                 for (int p2 = 0; p2 < NUMPLAYERS; p2++)
                 {
-                    pPlayer[p2]->FesteAktion   = Value2;		// Art wie der Spieler den Screen verlässt
-                    pPlayer[p2]->DoFesteAktion = true;
+                    Player[p2].FesteAktion   = Value2;		// Art wie der Spieler den Screen verlässt
+                    Player[p2].DoFesteAktion = true;
                 }
 
                 NewStage = Value1;

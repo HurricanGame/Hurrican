@@ -151,7 +151,11 @@ int WINDOWHEIGHT;
 #if defined(PLATFORM_DIRECTX)
 HBITMAP					SplashScreen = NULL;			// SplashScreen Grafik
 #endif
+
+//DKS - PlayerClass array is now static, not dynamically-allocated:
+//PlayerClass				*pPlayer[2];					// Werte der Spieler
 PlayerClass				Player[2];					// Werte der Spieler
+
 HUDClass				*pHUD;							// Das HUD
 unsigned char			SpielZustand = CRACKTRO;		// Aktueller Zustand des Spieles
 char					StringBuffer[100];				// Für die Int / String Umwandlung
@@ -1126,7 +1130,7 @@ bool GameInit2(void)
 
     //DKS - Player sprites are now members of their class, not globals, so load
     //      the first players' sprites. Player 2's sprites will be loaded on-demand.
-    Player[0]->LoadSprites();
+    Player[0].LoadSprites();
 
     // Konfiguration laden
     if (LoadConfig() == false)
@@ -1365,10 +1369,11 @@ bool GameExit(void)
     delete(pGegner);
     Protokoll.WriteText( false, "-> Enemy List released\n" );
 
+    //DKS - Player array is now static global instead of dynamically allocated:
     // Player freigeben
-    delete(Player[0]);
-    delete(Player[1]);
-    Protokoll.WriteText( false, "-> Player released\n" );
+    //delete(pPlayer[0]);
+    //delete(pPlayer[1]);
+    //Protokoll.WriteText( false, "-> Player released\n" );
 
     // Partikelsystem beenden
     delete(pPartikelSystem);

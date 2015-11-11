@@ -374,7 +374,7 @@ void GegnerEisFaust::GegnerExplode(void)
                                       yPos + 80 + rand()%40, WATERFLUSH2);
     }
 
-    pPlayer[0]->Score += 5000;
+    Player[0].Score += 5000;
 
     ScrolltoPlayeAfterBoss();
 }

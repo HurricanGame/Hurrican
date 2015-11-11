@@ -163,24 +163,24 @@ void GegnerSmallWespe::DoKI(void)
     if (Handlung != GEGNER_FALLEN)
         for (int p = 0; p < NUMPLAYERS; p++)
             if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                                pPlayer[p]->xpos,
-                                pPlayer[p]->ypos,
-                                pPlayer[p]->CollideRect) == true)
+                                Player[p].xpos,
+                                Player[p].ypos,
+                                Player[p].CollideRect) == true)
             {
                 //Wegschieben(GegnerRect[GegnerArt], 0.0f);
-                if (xPos + 25 > pPlayer[p]->xpos + 35 &&
+                if (xPos + 25 > Player[p].xpos + 35 &&
                         BlickRichtung == LINKS &&
                         xSpeed < -4.0f)
                 {
                     xSpeed = 16.0f;
-                    pPlayer[p]->DamagePlayer(8.0f);
+                    Player[p].DamagePlayer(8.0f);
                 }
-                else if (xPos + 25 < pPlayer[p]->xpos + 35 &&
+                else if (xPos + 25 < Player[p].xpos + 35 &&
                          BlickRichtung == RECHTS &&
                          xSpeed > 4.0f)
                 {
                     xSpeed = -16.0f;
-                    pPlayer[p]->DamagePlayer(8.0f);
+                    Player[p].DamagePlayer(8.0f);
                 }
             }
 
@@ -230,5 +230,5 @@ void GegnerSmallWespe::GegnerExplode(void)
 
     SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 
-    pPlayer[0]->Score += 200;
+    Player[0].Score += 200;
 }

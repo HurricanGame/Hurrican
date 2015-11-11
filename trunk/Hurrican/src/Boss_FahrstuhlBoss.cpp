@@ -103,8 +103,8 @@ void GegnerFahrstuhlBoss::DoKI(void)
 
         // Level wieder auf Spieler zentrieren
         //
-        TileEngine.ScrollLevel(pPlayer[0]->xpos - 300,
-                                 pPlayer[0]->ypos - 280, ZUSTAND_SCROLLTOPLAYER, 10.0f, 50.0f);
+        TileEngine.ScrollLevel(Player[0].xpos - 300,
+                                 Player[0].ypos - 280, ZUSTAND_SCROLLTOPLAYER, 10.0f, 50.0f);
 
         // Endboss-Musik ausfaden und abschalten
         SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
@@ -539,11 +539,11 @@ void GegnerFahrstuhlBoss::DoKI(void)
     // abdriften wegen der FahrstuhlGeschwindigkeit
 
     for (int i = 0; i < NUMPLAYERS; i++)
-        if (pPlayer[i]->AufPlattform == NULL)
+        if (Player[i].AufPlattform == NULL)
         {
-            pPlayer[i]->ypos	  += 40.0f SYNC;
-            pPlayer[i]->yposold   += 40.0f SYNC;
-            pPlayer[i]->JumpStart += 40.0f SYNC;
+            Player[i].ypos	  += 40.0f SYNC;
+            Player[i].yposold   += 40.0f SYNC;
+            Player[i].JumpStart += 40.0f SYNC;
         }
 
     PartikelClass *pTemp = pPartikelSystem->pStart; // Zeiger auf den ersten Partikel
@@ -577,7 +577,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
         TileEngine.YOffset -= A;
 
         for (int p = 0; p < NUMPLAYERS; p++)
-            pPlayer[p]->ypos -= A;
+            Player[p].ypos -= A;
 
         GegnerClass *pTemp    = pGegner->pStart;		// Zeiger auf den ersten Gegner
         while (pTemp != NULL)							// Ende der Liste erreicht ?
@@ -618,7 +618,7 @@ void GegnerFahrstuhlBoss::GegnerExplode(void)
 {
     ShakeScreen (10);
     SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
-    pPlayer[0]->Score += 9000;
+    Player[0].Score += 9000;
 
     // Level Musik wieder einfaden lassen (aus Pause Zustand)
     SoundManager.FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);

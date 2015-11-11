@@ -57,7 +57,7 @@ void GegnerLift::DoKI(void)
                 yAcc      = 0.0f;
 
                 for (int p = 0; p < NUMPLAYERS; p++)
-                    pPlayer[p]->AufPlattform = NULL;
+                    Player[p].AufPlattform = NULL;
 
                 SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
             }
@@ -74,7 +74,7 @@ void GegnerLift::DoKI(void)
         Value2 = int (yPos);
 
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (pPlayer[p]->AufPlattform == this)
+            if (Player[p].AufPlattform == this)
             {
                 Handlung  = GEGNER_LAUFEN;
                 ySpeed    = -3.0f;

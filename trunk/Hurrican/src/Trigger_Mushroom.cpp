@@ -78,7 +78,7 @@ void GegnerMushroom::DoKI(void)
             ySize = 61.0f;
 
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (pPlayer[p]->AufPlattform == this)
+            if (Player[p].AufPlattform == this)
             {
                 Handlung = GEGNER_SPRINGEN;
                 count = 2.0f;
@@ -98,7 +98,7 @@ void GegnerMushroom::DoKI(void)
         // Keiner mehr drauf? Dann wieder normalzustand
         bool beideweg = true;
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (pPlayer[p]->AufPlattform == this)
+            if (Player[p].AufPlattform == this)
                 beideweg = false;
 
         if (beideweg)

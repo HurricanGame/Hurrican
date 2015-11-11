@@ -340,8 +340,8 @@ void GegnerSchneeKoenig::DoKI(void)
                 SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
 
                 for (int p = 0; p < NUMPLAYERS; p++)
-                    if (pPlayer[p]->AufPlattform == this)
-                        pPlayer[p]->AufPlattform = NULL;
+                    if (Player[p].AufPlattform == this)
+                        Player[p].AufPlattform = NULL;
             }
         }
         break;
@@ -363,8 +363,8 @@ void GegnerSchneeKoenig::DoKI(void)
                 SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
 
                 for (int p = 0; p < NUMPLAYERS; p++)
-                    if (pPlayer[p]->AufPlattform == this)
-                        pPlayer[p]->AufPlattform = NULL;
+                    if (Player[p].AufPlattform == this)
+                        Player[p].AufPlattform = NULL;
             }
         }
         break;
@@ -726,8 +726,8 @@ void GegnerSchneeKoenig::DoKI(void)
     {
         // Spieler fliegt runter
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (pPlayer[p]->AufPlattform == this)
-                pPlayer[p]->AufPlattform = NULL;
+            if (Player[p].AufPlattform == this)
+                Player[p].AufPlattform = NULL;
 
         Energy = 100;
         Destroyable = false;
@@ -756,10 +756,10 @@ void GegnerSchneeKoenig::GegnerExplode(void)
     SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
 
     for (int p = 0; p < NUMPLAYERS; p++)
-        if (pPlayer[p]->AufPlattform == this)
-            pPlayer[p]->AufPlattform = NULL;
+        if (Player[p].AufPlattform == this)
+            Player[p].AufPlattform = NULL;
 
-    pPlayer[0]->Score += 2000 * Value1;
+    Player[0].Score += 2000 * Value1;
     pHUD->BossHUDActive = false;
 
     ScrolltoPlayeAfterBoss();

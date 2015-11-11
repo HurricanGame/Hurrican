@@ -53,16 +53,13 @@ int	Skill;				// 0 = easy, 1 = medium, 2 = hard, 3 = Hurrican
 // Konstruktor : Spieler initialisieren und Grafiken laden
 // --------------------------------------------------------------------------------------
 
-//DKS - Added paramter to specify if the player being initialized is player 1 (0) or player 2 (1):
-PlayerClass::PlayerClass(int player_num)
+PlayerClass::PlayerClass()
 {
-    if (player_num == 1) {
-        PlayerNumber = 1;
-        SoundOff = 1;
-    } else {
-        PlayerNumber = 0;
-        SoundOff = 0;
-    }
+    //DKS - New variable PlayerNumber represents which player a class instance
+    //      represents. PlayerNumber will be set to 1 if InitPlayer(1) is called,
+    //      or will remain 0 as it is here when InitPlayer(0) is called.
+    PlayerNumber = 0;       // This will be set to 1 if InitPlayer(1) is called on a class instance.
+    SoundOff = 0;           // This will be set to 1 if InitPlayer(1) is called on a class instance.
 
     //DKS - Added initialization of member vars here, since Main.cpp was just doing a memset to
     //      fill the entire class with 0's and that won't do now that we have the sprites as
@@ -187,8 +184,18 @@ PlayerClass::~PlayerClass(void)
 // Spieler auf neues Spiel vorbereiten
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::InitPlayer(void)
+//DKS - InitPlayer now takes an argument the class uses to set which player number
+//      a specific class instance is. 0 for Player1, 1 for Player2.
+void PlayerClass::InitPlayer(int player_num)
 {
+    if (player_num == 1) {
+        PlayerNumber = 1;
+        SoundOff = 1;
+    } else {
+        PlayerNumber = 0;
+        SoundOff = 0;
+    }
+
     BronsonCounter			= 0.0f;
     Score					= 0;
     Stage					= 1;
@@ -368,13 +375,13 @@ void PlayerClass::runExplode(void)
         }
 
         // Spieler hat Game Over ?
-        if (pPlayer[0]->Lives < 0 &&
+        if (Player[0].Lives < 0 &&
                 (NUMPLAYERS == 1 ||
-                 pPlayer[1]->Lives < 0))
+                 Player[1].Lives < 0))
         {
-            pPlayer[0]->Lives = -1;
-            pPlayer[1]->Lives = -1;
-            pPlayer[0]->GameOverTimer = 50.0f;
+            Player[0].Lives = -1;
+            Player[1].Lives = -1;
+            Player[0].GameOverTimer = 50.0f;
 
             //DKS - We should really just stop all songs (it was missing MUSIC_PUNISHER from this list anyway)
             //SoundManager.StopSong(MUSIC_STAGEMUSIC, false);
@@ -709,7 +716,7 @@ bool PlayerClass::GetPlayerInput(void)
 
     // Spieler läuft ins Exit?
 
-    if (pPlayer[0]->StageClearRunning == true)
+    if (Player[0].StageClearRunning == true)
         RunPlayerExit();
 
     // Spieler schiesst?
@@ -1904,7 +1911,7 @@ void PlayerClass::AnimatePlayer(void)
                 bool BeideFrei = true;
 
                 for (int p = 0; p < NUMPLAYERS; p++)
-                    if (pPlayer[p]->FesteAktion > -1)
+                    if (Player[p].FesteAktion > -1)
                         BeideFrei = false;
 
                 if (FlugsackFliesFree == false &&
@@ -2762,7 +2769,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
     if (farbe)
         Color = CurrentColor;
 
-//	if (this == pPlayer[1])
+//	if (this == Player[1])
 //		Color = 0xFFBBFFBB;
 
     bool blick = false;
@@ -3069,24 +3076,24 @@ void PlayerClass::MovePlayer(void)
     // Geht nur, wenn beide noch leben
     //
     if (NUMPLAYERS == 2 &&
-            pPlayer[0]->Handlung != TOT &&
-            pPlayer[1]->Handlung != TOT)
+            Player[0].Handlung != TOT &&
+            Player[1].Handlung != TOT)
     {
         PlayerClass *pVictim = NULL;
         PlayerClass *pSurvivor = NULL;
 
         // Spieler 1 fällt unten raus?
-        if (pPlayer[0]->ypos > pPlayer[1]->ypos + 480.0f)
+        if (Player[0].ypos > Player[1].ypos + 480.0f)
         {
-            pVictim   = pPlayer[0];
-            pSurvivor = pPlayer[1];
+            pVictim   = &Player[0];
+            pSurvivor = &Player[1];
         }
 
         // Spieler 2 fällt unten raus?
-        if (pPlayer[1]->ypos > pPlayer[0]->ypos + 480.0f)
+        if (Player[1].ypos > Player[0].ypos + 480.0f)
         {
-            pVictim   = pPlayer[1];
-            pSurvivor = pPlayer[0];
+            pVictim   = &Player[1];
+            pSurvivor = &Player[0];
         }
 
         // Einer der Spieler fällt raus
@@ -4709,10 +4716,10 @@ void PlayerClass::CalcAustrittsPunkt(void)
 bool PlayerClass::CheckLevelExit(void)
 {
     // Spieler aus Level draussen?
-    if (xpos + pPlayer[0]->CollideRect.right  < TileEngine.XOffset	    ||
-            xpos + pPlayer[0]->CollideRect.left   > TileEngine.XOffset + 640 ||
-            ypos + pPlayer[0]->CollideRect.bottom < TileEngine.YOffset	    ||
-            ypos + pPlayer[0]->CollideRect.top    > TileEngine.YOffset + 480)
+    if (xpos + Player[0].CollideRect.right  < TileEngine.XOffset	    ||
+            xpos + Player[0].CollideRect.left   > TileEngine.XOffset + 640 ||
+            ypos + Player[0].CollideRect.bottom < TileEngine.YOffset	    ||
+            ypos + Player[0].CollideRect.top    > TileEngine.YOffset + 480)
         return true;
 
     return false;
@@ -4765,7 +4772,7 @@ void PlayerClass::PlayerInExit(void)
     else
     {
         for (int p = 0; p < NUMPLAYERS; p++)
-            pPlayer[p]->GodMode = false;
+            Player[p].GodMode = false;
 
         Grenades = 3;
         PowerLines = 3;
@@ -4801,9 +4808,9 @@ void PlayerClass::RunPlayerExit(void)
 bool PlayerClass::Riding(void)
 {
     for (int p = 0; p < NUMPLAYERS; p++)
-        if (pPlayer[p]->Handlung != SACKREITEN &&
-                pPlayer[p]->Handlung != DREHEN &&
-                pPlayer[p]->Handlung != TOT)
+        if (Player[p].Handlung != SACKREITEN &&
+                Player[p].Handlung != DREHEN &&
+                Player[p].Handlung != TOT)
             return false;
 
     return true;
@@ -4818,7 +4825,7 @@ void PlayerClass::ScrollFlugsack(void)
     bool BeideFrei = true;
 
     for (int p = 0; p < NUMPLAYERS; p++)
-        if (pPlayer[p]->FesteAktion > -1)
+        if (Player[p].FesteAktion > -1)
             BeideFrei = false;
     if (!FlugsackFliesFree &&
             Riding() &&

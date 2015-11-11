@@ -174,7 +174,7 @@ void GegnerSchleimBoller::GegnerExplode(void)
     if (!SoundManager.WaveIsPlaying(SOUND_SCHLEIM))
         SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_SCHLEIM);	// Sound ausgeben
 
-    pPlayer[0]->Score += 150;
+    Player[0].Score += 150;
 
     // Zwei kleinere Bobbel spawnen, wenn noch groﬂ genug
     //

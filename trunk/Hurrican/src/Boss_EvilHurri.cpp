@@ -40,20 +40,20 @@ void GegnerEvilHurri::DoDraw(void)
         DirectGraphics.SetAdditiveMode();
         if (BlickRichtung == LINKS)
         {
-            pPlayer[0]->PlayerRun.RenderSprite((float)(xPos-TileEngine.XOffset),
+            Player[0].PlayerRun.RenderSprite((float)(xPos-TileEngine.XOffset),
                                       (float)(yPos-TileEngine.YOffset),
                                       AnimPhase, 0xAA444444, true);
-            pPlayer[0]->PlayerRun.RenderSprite((float)(xPos-TileEngine.XOffset),
+            Player[0].PlayerRun.RenderSprite((float)(xPos-TileEngine.XOffset),
                                       (float)(yPos-TileEngine.YOffset),
                                       AnimPhase, 0xFF0022FF, true);
         }
         else
         {
-            pPlayer[0]->PlayerRun.RenderSprite((float)(xPos-TileEngine.XOffset),
+            Player[0].PlayerRun.RenderSprite((float)(xPos-TileEngine.XOffset),
                                       (float)(yPos-TileEngine.YOffset),
                                       AnimPhase, 0xAA444444);
 
-            pPlayer[0]->PlayerRun.RenderSprite((float)(xPos-TileEngine.XOffset),
+            Player[0].PlayerRun.RenderSprite((float)(xPos-TileEngine.XOffset),
                                       (float)(yPos-TileEngine.YOffset),
                                       AnimPhase, 0xFF0022FF);
         }
@@ -91,24 +91,24 @@ void GegnerEvilHurri::DoKI(void)
     // Testen, ob der Spieler den Boss berührt hat
     for (int p = 0; p < NUMPLAYERS; p++)
         if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                            pPlayer[p]->xpos, pPlayer[p]->ypos, pPlayer[p]->CollideRect) == true)
+                            Player[p].xpos, Player[p].ypos, Player[p].CollideRect) == true)
         {
             // Spieler als Rad ? Dann abprallen
-            if (pPlayer[p]->Handlung == RADELN ||
-                    pPlayer[p]->Handlung == RADELN_FALL)
+            if (Player[p].Handlung == RADELN ||
+                    Player[p].Handlung == RADELN_FALL)
             {
-                if (pPlayer[p]->xpos < xPos) pPlayer[p]->Blickrichtung = -1;
-                if (pPlayer[p]->xpos > xPos) pPlayer[p]->Blickrichtung =  1;
+                if (Player[p].xpos < xPos) Player[p].Blickrichtung = -1;
+                if (Player[p].xpos > xPos) Player[p].Blickrichtung =  1;
             }
 
             // Sonst Energie abziehen
             else
             {
-                pPlayer[p]->DamagePlayer(float(10.0 SYNC));
+                Player[p].DamagePlayer(float(10.0 SYNC));
 
                 // Spieler wegschieben
-                if (pPlayer[p]->xpos < xPos) pPlayer[p]->xpos = xPos + GegnerRect[GegnerArt].left  - pPlayer[p]->CollideRect.right;
-                if (pPlayer[p]->xpos > xPos) pPlayer[p]->xpos = xPos + GegnerRect[GegnerArt].right - pPlayer[p]->CollideRect.left;
+                if (Player[p].xpos < xPos) Player[p].xpos = xPos + GegnerRect[GegnerArt].left  - Player[p].CollideRect.right;
+                if (Player[p].xpos > xPos) Player[p].xpos = xPos + GegnerRect[GegnerArt].right - Player[p].CollideRect.left;
             }
         }
 
@@ -640,7 +640,7 @@ void GegnerEvilHurri::DoKI(void)
 
 void GegnerEvilHurri::GegnerExplode(void)
 {
-    pPlayer[0]->Score += 9000;
+    Player[0].Score += 9000;
 
     for (int i=0; i < 10; i++)
         pPartikelSystem->PushPartikel(xPos - 20 + rand()%70, yPos + rand()%80, SPLITTER);

@@ -567,7 +567,7 @@ void GegnerFlugBoss::GegnerExplode(void)
         pPartikelSystem->PushPartikel(xPos + rand()%500 + 30,
                                       yPos + rand()%2000 + 30, SPLITTER);
 
-    pPlayer[0]->Score += 6000;
+    Player[0].Score += 6000;
 
     /*
     	// Level wieder zum Spieler scrollen und dann weiterscrollen lassen

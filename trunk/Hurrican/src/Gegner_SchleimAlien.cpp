@@ -73,7 +73,7 @@ void GegnerSchleimAlien::DoKI(void)
         PlattformTest(GegnerRect[GegnerArt]);
 
         for (int i = 0; i < NUMPLAYERS; i++)
-            if (pPlayer[i]->AufPlattform == this)
+            if (Player[i].AufPlattform == this)
             {
                 int off;
 
@@ -82,7 +82,7 @@ void GegnerSchleimAlien::DoKI(void)
                 else
                     off = AnimPhase - 15;
 
-                pPlayer[i]->ypos = yPos - pPlayer[i]->CollideRect.bottom + GegnerRect[GegnerArt].top - off;
+                Player[i].ypos = yPos - Player[i].CollideRect.bottom + GegnerRect[GegnerArt].top - off;
             }
             else
                 Wegschieben(GegnerRect[GegnerArt], 0.0f);
@@ -99,8 +99,8 @@ void GegnerSchleimAlien::DoKI(void)
 void GegnerSchleimAlien::GegnerExplode(void)
 {
     for (int i = 0; i < NUMPLAYERS; i++)
-        if (pPlayer[i]->AufPlattform == this)
-            pPlayer[i]->AufPlattform = NULL;
+        if (Player[i].AufPlattform == this)
+            Player[i].AufPlattform = NULL;
 
     pPartikelSystem->PushPartikel(xPos, yPos, EXPLOSION_ALIEN);
 
@@ -110,5 +110,5 @@ void GegnerSchleimAlien::GegnerExplode(void)
 
     SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_SCHLEIM);	// Sound ausgeben
 
-    pPlayer[0]->Score += 120;
+    Player[0].Score += 120;
 }

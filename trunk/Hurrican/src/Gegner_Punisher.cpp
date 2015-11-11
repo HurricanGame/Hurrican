@@ -142,17 +142,17 @@ void GegnerPunisher::DoKI(void)
         // Testen, ob der Spieler den Punisher berührt hat
         for (int p = 0; p < NUMPLAYERS; p++)
             if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                                pPlayer[p]->xpos, pPlayer[p]->ypos, pPlayer[p]->CollideRect) == true)
+                                Player[p].xpos, Player[p].ypos, Player[p].CollideRect) == true)
             {
                 // Spieler stirbt
-                pPlayer[p]->Energy = 0.0f;
+                Player[p].Energy = 0.0f;
 
                 // und verliert Waffen
                 for (int i = 0; i < 4; i++)
-                    if (pPlayer[p]->CurrentWeaponLevel[i] > 1)
-                        pPlayer[p]->CurrentWeaponLevel[i]--;
+                    if (Player[p].CurrentWeaponLevel[i] > 1)
+                        Player[p].CurrentWeaponLevel[i]--;
 
-                pPlayer[p]->CalcWeaponLevels();
+                Player[p].CalcWeaponLevels();
 
                 // bekommt dafür aber wieder Zeit
                 TileEngine.Timelimit = TileEngine.TimelimitSave;
@@ -238,8 +238,8 @@ void GegnerPunisher::GegnerExplode(void)
 {
     TileEngine.Timelimit += 100;
 
-    pPlayer[0]->PunisherActive = false;
-    pPlayer[1]->PunisherActive = false;
+    Player[0].PunisherActive = false;
+    Player[1].PunisherActive = false;
 
     SoundManager.SetSongVolume(MUSIC_STAGEMUSIC, 0);
     SoundManager.FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);

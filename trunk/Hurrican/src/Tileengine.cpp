@@ -464,11 +464,11 @@ loadfile:
     if (Timelimit <= 0)
         Timelimit = 500;
 
-    pPlayer[0]->PunisherActive = false;
-    pPlayer[1]->PunisherActive = false;
+    Player[0].PunisherActive = false;
+    Player[1].PunisherActive = false;
 
-    pPlayer[1]->xpos = 0.0f;
-    pPlayer[1]->ypos = 0.0f;
+    Player[1].xpos = 0.0f;
+    Player[1].ypos = 0.0f;
 
     TimelimitSave = Timelimit;
     MaxSecrets  = 0;
@@ -599,17 +599,17 @@ loadfile:
             if(LoadObject.ObjectID == 0)
             {
                 if (LoadObject.Value1 == 0)									// Anfängliche
-                    pPlayer[LoadObject.Value2]->Blickrichtung = RECHTS;		// Blickrichtung auch
+                    Player[LoadObject.Value2].Blickrichtung = RECHTS;		// Blickrichtung auch
                 else														// aus Leveldatei
-                    pPlayer[LoadObject.Value2]->Blickrichtung = LINKS;		// lesen
+                    Player[LoadObject.Value2].Blickrichtung = LINKS;		// lesen
 
-                pPlayer[LoadObject.Value2]->xpos = (float)(LoadObject.XPos);
-                pPlayer[LoadObject.Value2]->ypos = (float)(LoadObject.YPos);
-                pPlayer[LoadObject.Value2]->xposold = pPlayer[LoadObject.Value2]->xpos;
-                pPlayer[LoadObject.Value2]->yposold = pPlayer[LoadObject.Value2]->ypos;
-                pPlayer[LoadObject.Value2]->JumpxSave = pPlayer[LoadObject.Value2]->xpos;
-                pPlayer[LoadObject.Value2]->JumpySave = pPlayer[LoadObject.Value2]->ypos;
-                pPlayer[LoadObject.Value2]->CenterLevel();
+                Player[LoadObject.Value2].xpos = (float)(LoadObject.XPos);
+                Player[LoadObject.Value2].ypos = (float)(LoadObject.YPos);
+                Player[LoadObject.Value2].xposold = Player[LoadObject.Value2].xpos;
+                Player[LoadObject.Value2].yposold = Player[LoadObject.Value2].ypos;
+                Player[LoadObject.Value2].JumpxSave = Player[LoadObject.Value2].xpos;
+                Player[LoadObject.Value2].JumpySave = Player[LoadObject.Value2].ypos;
+                Player[LoadObject.Value2].CenterLevel();
                 UpdateLevel ();
             }
 
@@ -838,16 +838,16 @@ loadfile:
         }
 
     // Kein Startpunkt für Spieler 2 gefunden? Dann von Spieler 1 kopieren
-    if (pPlayer[1]->xpos == 0.0f &&
-            pPlayer[1]->ypos == 0.0f)
+    if (Player[1].xpos == 0.0f &&
+            Player[1].ypos == 0.0f)
     {
-        pPlayer[1]->Blickrichtung = pPlayer[0]->Blickrichtung;
-        pPlayer[1]->xpos = pPlayer[0]->xpos + 40.0f;
-        pPlayer[1]->ypos = pPlayer[0]->ypos;
-        pPlayer[1]->xposold = pPlayer[1]->xpos;
-        pPlayer[1]->yposold = pPlayer[1]->ypos;
-        pPlayer[1]->JumpxSave = pPlayer[1]->xpos;
-        pPlayer[1]->JumpySave = pPlayer[1]->ypos;
+        Player[1].Blickrichtung = Player[0].Blickrichtung;
+        Player[1].xpos = Player[0].xpos + 40.0f;
+        Player[1].ypos = Player[0].ypos;
+        Player[1].xposold = Player[1].xpos;
+        Player[1].yposold = Player[1].ypos;
+        Player[1].JumpxSave = Player[1].xpos;
+        Player[1].JumpySave = Player[1].ypos;
     }
 
     fread(&DateiAppendix, sizeof(DateiAppendix), 1, Datei);
@@ -1398,8 +1398,8 @@ void TileEngineClass::ScrollLevel(float x, float y, int neu, float sx, float sy)
     SpeedX	  = sx;
     SpeedY	  = sy;
     Zustand	  = neu;
-    pPlayer[0]->BronsonCounter = 0.0f;
-    pPlayer[1]->BronsonCounter = 0.0f;
+    Player[0].BronsonCounter = 0.0f;
+    Player[1].BronsonCounter = 0.0f;
 }
 
 // --------------------------------------------------------------------------------------
@@ -2093,10 +2093,10 @@ void TileEngineClass::WertAngleichen(float &nachx, float &nachy, float vonx, flo
     /*
     if (NUMPLAYERS == 1 &&
     	(FlugsackFliesFree == false ||
-    	 pPlayer[0]->Riding() == false)
+    	 Player[0].Riding() == false)
     	&&
-    	(pPlayer[0]->Aktion[AKTION_OBEN] ||
-    	 pPlayer[0]->Aktion[AKTION_UNTEN]))
+    	(Player[0].Aktion[AKTION_OBEN] ||
+    	 Player[0].Aktion[AKTION_UNTEN]))
     {
     	int a;
     	a = 0;
@@ -2134,11 +2134,11 @@ void TileEngineClass::UpdateLevel(void)
     //
     if (Timelimit < 0.0f)
     {
-        if (pPlayer[0]->PunisherActive == false &&
+        if (Player[0].PunisherActive == false &&
                 pHUD->BossHUDActive == 0.0f)
         {
             pGegner->PushGegner(0, 0, PUNISHER, 0, 0, false);
-            pPlayer[0]->PunisherActive = true;
+            Player[0].PunisherActive = true;
             pPartikelSystem->ThunderAlpha = 255.0f;
             pPartikelSystem->ThunderColor[0] = 0;
             pPartikelSystem->ThunderColor[1] = 0;
@@ -2213,28 +2213,28 @@ void TileEngineClass::UpdateLevel(void)
     {
         if (NUMPLAYERS == 1)
         {
-            ScrolltoX = pPlayer[0]->xpos;
-            ScrolltoY = pPlayer[0]->ypos;
+            ScrolltoX = Player[0].xpos;
+            ScrolltoY = Player[0].ypos;
         }
         else
         {
-            if (pPlayer[0]->Lives <= 0)
+            if (Player[0].Lives <= 0)
             {
-                ScrolltoX = pPlayer[1]->xpos;
-                ScrolltoY = pPlayer[1]->ypos;
+                ScrolltoX = Player[1].xpos;
+                ScrolltoY = Player[1].ypos;
             }
-            else if (pPlayer[1]->Lives <= 0)
+            else if (Player[1].Lives <= 0)
             {
-                ScrolltoX = pPlayer[0]->xpos;
-                ScrolltoY = pPlayer[0]->ypos;
+                ScrolltoX = Player[0].xpos;
+                ScrolltoY = Player[0].ypos;
             }
             else
             {
-                float xdist = (float)(pPlayer[1]->xpos - pPlayer[0]->xpos);
-                float ydist = (float)(pPlayer[1]->ypos - pPlayer[0]->ypos);
+                float xdist = (float)(Player[1].xpos - Player[0].xpos);
+                float ydist = (float)(Player[1].ypos - Player[0].ypos);
 
-                ScrolltoX = (pPlayer[0]->xpos + 35) + xdist / 2.0f - 320.0f;
-                ScrolltoY = (pPlayer[0]->ypos + 40) + ydist / 2.0f - 240.0f;
+                ScrolltoX = (Player[0].xpos + 35) + xdist / 2.0f - 320.0f;
+                ScrolltoY = (Player[0].ypos + 40) + ydist / 2.0f - 240.0f;
             }
         }
 
@@ -2276,31 +2276,31 @@ void TileEngineClass::UpdateLevel(void)
 
         if (NUMPLAYERS == 2)
         {
-            if (pPlayer[0]->Handlung == TOT)
+            if (Player[0].Handlung == TOT)
             {
-                newx = pPlayer[1]->xpos + 35;
-                newy = pPlayer[1]->ypos;
+                newx = Player[1].xpos + 35;
+                newy = Player[1].ypos;
             }
-            else if (pPlayer[1]->Handlung == TOT)
+            else if (Player[1].Handlung == TOT)
             {
-                newx = pPlayer[0]->xpos + 35;
-                newy = pPlayer[0]->ypos;
+                newx = Player[0].xpos + 35;
+                newy = Player[0].ypos;
             }
             else
             {
                 float xdist, ydist;
 
-                xdist = (float)(pPlayer[1]->xpos - pPlayer[0]->xpos);
-                newx = (pPlayer[0]->xpos + 35) + xdist / 2.0f;
+                xdist = (float)(Player[1].xpos - Player[0].xpos);
+                newx = (Player[0].xpos + 35) + xdist / 2.0f;
 
-                ydist = (float)(pPlayer[1]->ypos - pPlayer[0]->ypos);
-                newy = (pPlayer[0]->ypos) + ydist / 2.0f;
+                ydist = (float)(Player[1].ypos - Player[0].ypos);
+                newy = (Player[0].ypos) + ydist / 2.0f;
             }
         }
         else
         {
-            newx = pPlayer[0]->xpos + 35;
-            newy = pPlayer[0]->ypos;
+            newx = Player[0].xpos + 35;
+            newy = Player[0].ypos;
         }
 
         if (newx < 0) newx = 0;
@@ -3352,8 +3352,8 @@ void TileEngineClass::DrawShadow (void)
 
     if (NUMPLAYERS == 1)
     {
-        x = (float)(int)(pPlayer[0]->xpos + 35 - 512 - XOffset);
-        y = (float)(int)(pPlayer[0]->ypos + 40 - 512 - YOffset);
+        x = (float)(int)(Player[0].xpos + 35 - 512 - XOffset);
+        y = (float)(int)(Player[0].ypos + 40 - 512 - YOffset);
     }
     else
     {

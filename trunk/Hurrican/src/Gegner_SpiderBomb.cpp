@@ -192,5 +192,5 @@ void GegnerSpiderBomb::GegnerExplode(void)
 
     SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION3);	// Sound ausgeben
 
-    pPlayer[0]->Score += 250;
+    Player[0].Score += 250;
 }

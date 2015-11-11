@@ -180,5 +180,5 @@ void GegnerFetteRakete::GegnerExplode(void)
         pPartikelSystem->PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, SPIDERSPLITTER);
     }
 
-    pPlayer[0]->Score += 50;
+    Player[0].Score += 50;
 }

@@ -164,8 +164,8 @@ void GegnerMiniDragon::DoKI(void)
 
         // Spieler nah genug dran?
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (PlayerAbstandHoriz(pPlayer[p]) < 300 &&
-                    PlayerAbstandVert(pPlayer[p]) < 300)
+            if (PlayerAbstandHoriz(&Player[p]) < 300 &&
+                    PlayerAbstandVert(&Player[p]) < 300)
             {
                 Handlung = GEGNER_INIT2;
 
@@ -339,5 +339,5 @@ void GegnerMiniDragon::DoKI(void)
 
 void GegnerMiniDragon::GegnerExplode(void)
 {
-    pPlayer[0]->Score += 250;
+    Player[0].Score += 250;
 }

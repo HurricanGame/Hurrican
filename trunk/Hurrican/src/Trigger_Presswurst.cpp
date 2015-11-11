@@ -52,13 +52,13 @@ void GegnerPresswurst::DoKI(void)
     // Spieler kann von unten nicht durchspringen
     //
     for (int p = 0; p < NUMPLAYERS; p++)
-        if (SpriteCollision(pPlayer[p]->xpos,
-                            pPlayer[p]->ypos,
-                            pPlayer[p]->CollideRect,
+        if (SpriteCollision(Player[p].xpos,
+                            Player[p].ypos,
+                            Player[p].CollideRect,
                             xPos, yPos, GegnerRect[GegnerArt]) == true &&
-                yPos < pPlayer[p]->ypos					   &&
-                pPlayer[p]->yspeed < 0.0f)
-            pPlayer[p]->yspeed *= -0.25f;
+                yPos < Player[p].ypos					   &&
+                Player[p].yspeed < 0.0f)
+            Player[p].yspeed *= -0.25f;
 
     // Kollisionsrechteck fürs Wegschieben
     GegnerRect[GegnerArt].top = 0;
@@ -87,9 +87,9 @@ void GegnerPresswurst::DoKI(void)
     case GEGNER_INIT2:
     {
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (pPlayer[p]->ypos > yPos		&&
-                    PlayerAbstandHoriz(pPlayer[p]) < 200  &&
-                    PlayerAbstandVert(pPlayer[p])  < 500)
+            if (Player[p].ypos > yPos		&&
+                    PlayerAbstandHoriz(&Player[p]) < 200  &&
+                    PlayerAbstandVert(&Player[p])  < 500)
             {
                 Handlung = GEGNER_LAUFEN;
                 ySpeed = 10.0f;
@@ -107,22 +107,22 @@ void GegnerPresswurst::DoKI(void)
         // Spieler beim Runterfallen berührt? Dann stirbt er leider ;)
         //
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (SpriteCollision(pPlayer[p]->xpos,
-                                pPlayer[p]->ypos,
-                                pPlayer[p]->CollideRect,
+            if (SpriteCollision(Player[p].xpos,
+                                Player[p].ypos,
+                                Player[p].CollideRect,
                                 xPos, yPos, GegnerRect[GegnerArt]) == true &&
-                    pPlayer[p]->ypos > yPos)
+                    Player[p].ypos > yPos)
             {
                 // wenn er steht, dann gleich zerquetschen
-                if (pPlayer[p]->Handlung != SPRINGEN)
-                    pPlayer[p]->DamagePlayer(500.0f);
+                if (Player[p].Handlung != SPRINGEN)
+                    Player[p].DamagePlayer(500.0f);
 
                 // wenn er springt, dann runterdrücken
                 else
                 {
                     //pPlayer->yspeed = 0.0f;
                     //pPlayer->yadd = 0.0f;
-                    pPlayer[p]->ypos = yPos + GegnerRect[PRESSWURST].bottom;
+                    Player[p].ypos = yPos + GegnerRect[PRESSWURST].bottom;
                 }
             }
 
@@ -135,12 +135,12 @@ void GegnerPresswurst::DoKI(void)
             // Spieler beim Runterfallen berührt? Dann stirbt er leider ;)
             //
             for (int p = 0; p < NUMPLAYERS; p++)
-                if (SpriteCollision(pPlayer[p]->xpos,
-                                    pPlayer[p]->ypos,
-                                    pPlayer[p]->CollideRect,
+                if (SpriteCollision(Player[p].xpos,
+                                    Player[p].ypos,
+                                    Player[p].CollideRect,
                                     xPos, yPos, GegnerRect[GegnerArt]) == true &&
-                        pPlayer[p]->ypos > yPos)
-                    pPlayer[p]->DamagePlayer(500.0f);
+                        Player[p].ypos > yPos)
+                    Player[p].DamagePlayer(500.0f);
 
             TileEngine.BlockUnten(xPos, yPos, yPosOld, yPosOld, GegnerRect[GegnerArt]);
 

@@ -222,10 +222,10 @@ void GegnerBratklops::DoDraw()
                 ys = float (ystart);
 
                 for (int i = 0; i < NUMPLAYERS; i++)
-                    if (SpriteCollision (pPlayer[i]->xpos, pPlayer[i]->ypos, pPlayer[i]->CollideRect,
+                    if (SpriteCollision (Player[i].xpos, Player[i].ypos, Player[i].CollideRect,
                                          xs, ys, Rect) == true)
                     {
-                        pPlayer[i]->DamagePlayer (10.0f SYNC);
+                        Player[i].DamagePlayer (10.0f SYNC);
                     }
 
                 // Und nächstes Rechteck

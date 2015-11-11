@@ -100,10 +100,10 @@ void GegnerDiamant::DoKI(void)
     // Testen, ob der Spieler den Diamant eingesammelt hat
     for (int i = 0; i < NUMPLAYERS; i++)
         if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                            pPlayer[i]->xpos, pPlayer[i]->ypos, pPlayer[i]->CollideRect) == true)
+                            Player[i].xpos, Player[i].ypos, Player[i].CollideRect) == true)
         {
             // Partikel erzeugen
-            if (pPlayer[0]->PunisherActive == false)
+            if (Player[0].PunisherActive == false)
                 pPartikelSystem->PushPartikel(xPos, yPos, DIAMANTCOLLECTED);
 
             // Punisher anschiessen
@@ -112,22 +112,22 @@ void GegnerDiamant::DoKI(void)
                 pProjectiles->PushProjectile(xPos, yPos, DIAMONDSHOT);
             }
 
-            pPlayer[0]->Score += 100;					// Punkte erhöhen
-            pPlayer[0]->CollectedDiamonds++;			// Zahl gesammelter Diamanten erhöhen
-            pPlayer[0]->DiamondsThisLevel++;
-            pPlayer[0]->DiamondsFullGame++;
-            if (pPlayer[0]->CollectedDiamonds			// Limit überchritten ?
+            Player[0].Score += 100;					// Punkte erhöhen
+            Player[0].CollectedDiamonds++;			// Zahl gesammelter Diamanten erhöhen
+            Player[0].DiamondsThisLevel++;
+            Player[0].DiamondsFullGame++;
+            if (Player[0].CollectedDiamonds			// Limit überchritten ?
                     >= DIAMONDS_FOR_EXTRALIFE)
             {
-                pPlayer[0]->CollectedDiamonds = 0;		// Dann auf 0 setzen
+                Player[0].CollectedDiamonds = 0;		// Dann auf 0 setzen
                 TileEngine.Timelimit += 100.0f;
 
                 if (TileEngine.Timelimit > 999.0f)
                     TileEngine.Timelimit = 999.0f;
 
                 // Punisher ggf verschwinden lassen
-                pPlayer[0]->PunisherActive = false;
-                pPlayer[1]->PunisherActive = false;
+                Player[0].PunisherActive = false;
+                Player[1].PunisherActive = false;
 
                 GegnerClass *pTemp;
                 GegnerPunisher *pPunisher;

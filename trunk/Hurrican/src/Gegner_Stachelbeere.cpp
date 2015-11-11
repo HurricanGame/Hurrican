@@ -314,7 +314,7 @@ void GegnerStachelbeere::GegnerExplode(void)
 
     SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION4);	// Sound ausgeben
 
-    pPlayer[0]->Score += 300;
+    Player[0].Score += 300;
 
     // noch einm paar Raketen spawnen
     pGegner->PushGegner(xPos + 15.0f,

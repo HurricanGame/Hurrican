@@ -37,11 +37,11 @@ void GegnerSwitch::DoKI(void)
     //
     for (int p = 0; p < NUMPLAYERS; p++)
         if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                            pPlayer[p]->xpos,
-                            pPlayer[p]->ypos,
-                            pPlayer[p]->CollideRect) == true &&
+                            Player[p].xpos,
+                            Player[p].ypos,
+                            Player[p].CollideRect) == true &&
                 Handlung == GEGNER_STEHEN &&
-                pPlayer[p]->Aktion [AKTION_OBEN] == true)
+                Player[p].Aktion [AKTION_OBEN] == true)
         {
             // Schalter umlegen
             AnimPhase = 1;

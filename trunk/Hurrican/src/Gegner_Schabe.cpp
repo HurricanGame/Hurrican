@@ -378,5 +378,5 @@ void GegnerSchabe::GegnerExplode(void)
 
     SoundManager.PlayWave(100, 128, -rand()%2000+13000, SOUND_EXPLOSION1);	// Sound ausgeben
 
-    pPlayer[0]->Score += 10;
+    Player[0].Score += 10;
 }

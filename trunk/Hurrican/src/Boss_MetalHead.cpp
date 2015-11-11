@@ -348,7 +348,7 @@ void GegnerMetalHead::DoKI(void)
             yPos < (float)(Value2 + 230.0f))
         for (int p = 0; p < NUMPLAYERS; p++)
         {
-            if (pPlayer[p]->xpos + 35 < xPos + 200)
+            if (Player[p].xpos + 35 < xPos + 200)
             {
                 ySpeed = 50.0f;
                 Handlung = GEGNER_CRUSHEN;
@@ -452,8 +452,8 @@ void GegnerMetalHead::DoKI(void)
         Eye_Alpha  = 2 * PI;
 
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (pPlayer[p]->AufPlattform == this)
-                pPlayer[p]->AufPlattform = NULL;
+            if (Player[p].AufPlattform == this)
+                Player[p].AufPlattform = NULL;
 
         // Endboss-Musik ausfaden und abschalten
         SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
@@ -561,8 +561,8 @@ void GegnerMetalHead::DoKI(void)
 
                 // Spieler noch drunter? Dann wars das
                 for (int p = 0; p < NUMPLAYERS; p++)
-                    if (pPlayer[p]->xpos + 35 < xPos + 200)
-                        pPlayer[p]->DamagePlayer(500.0f);
+                    if (Player[p].xpos + 35 < xPos + 200)
+                        Player[p].DamagePlayer(500.0f);
             }
         }
         break;
@@ -958,19 +958,19 @@ void GegnerMetalHead::DoKI(void)
     for (int p = 0; p < NUMPLAYERS; p++)
         if (Handlung != GEGNER_EXPLODIEREN &&
                 SpriteCollision(xPos + 50, yPos + 130, r,
-                                pPlayer[p]->xpos, pPlayer[p]->ypos, pPlayer[p]->CollideRect) == true)
+                                Player[p].xpos, Player[p].ypos, Player[p].CollideRect) == true)
         {
             // Beim Ansaugen gleich viel abziehen und Ansaugen beenden
             //
             if (Handlung == GEGNER_SPECIAL2 &&
-                    pPlayer[p]->Handlung != RADELN &&
-                    pPlayer[p]->Handlung != RADELN_FALL)
+                    Player[p].Handlung != RADELN &&
+                    Player[p].Handlung != RADELN_FALL)
             {
-                pPlayer[p]->DamagePlayer(500.0f);
+                Player[p].DamagePlayer(500.0f);
                 AnimPhase = 1600;
             }
             else
-                pPlayer[p]->DamagePlayer(float(4.0 SYNC));
+                Player[p].DamagePlayer(float(4.0 SYNC));
         }
 }
 
@@ -982,7 +982,7 @@ void GegnerMetalHead::GegnerExplode(void)
 {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
-    pPlayer[0]->Score += 12500;
+    Player[0].Score += 12500;
 
     ScrolltoPlayeAfterBoss();
 }

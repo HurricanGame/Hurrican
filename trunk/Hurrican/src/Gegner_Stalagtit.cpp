@@ -89,5 +89,5 @@ void GegnerStalagtit::GegnerExplode(void)
     }
     SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEEXPLODE);	// Sound ausgeben
 
-    pPlayer[0]->Score += 100;
+    Player[0].Score += 100;
 }

@@ -156,23 +156,23 @@ void GegnerReitFlugsack::DoKI(void)
 
         // Spieler steht drauf ?
         for (int i = 0; i < NUMPLAYERS; i++)
-            if (pPlayer[i]->AufPlattform == this &&
-                    pPlayer[i]->Handlung != SACKREITEN &&
-                    pPlayer[i]->Handlung != DREHEN)
+            if (Player[i].AufPlattform == this &&
+                    Player[i].Handlung != SACKREITEN &&
+                    Player[i].Handlung != DREHEN)
             {
-                pPlayer[i]->Handlung = SACKREITEN;
-                pPlayer[i]->CollideRect.left   = 15;		// Kollisionsrechteck anpassen
-                pPlayer[i]->CollideRect.right  = 75;
-                pPlayer[i]->CollideRect.top    = 10;
-                pPlayer[i]->CollideRect.bottom = 80;
-                pPlayer[i]->SmokeCount = 1.0f;
+                Player[i].Handlung = SACKREITEN;
+                Player[i].CollideRect.left   = 15;		// Kollisionsrechteck anpassen
+                Player[i].CollideRect.right  = 75;
+                Player[i].CollideRect.top    = 10;
+                Player[i].CollideRect.bottom = 80;
+                Player[i].SmokeCount = 1.0f;
                 Energy = 0.0f;
 
                 FlugsackFliesFree = (Value1 != 1);
 
                 // Flugsack Musik spielen
                 if (Value1 == 1 &&
-                        pPlayer[0]->Riding())
+                        Player[0].Riding())
                 {
                     //DKS - Really, we should stop all music
                     //SoundManager.StopSong(MUSIC_STAGEMUSIC, true);

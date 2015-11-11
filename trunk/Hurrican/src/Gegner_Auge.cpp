@@ -151,7 +151,7 @@ void GegnerAuge::GegnerExplode(void)
 
     SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 
-    pPlayer[0]->Score += 100;
+    Player[0].Score += 100;
 
     // Extra spawnen
     pGegner->PushGegner(xPos + 12, yPos + 12, EXTRAS, Value1, 0, true);

@@ -561,7 +561,7 @@ void GegnerSpinnenmaschine::DoKI(void)
             Handlung = GEGNER_SPECIAL;
             Energy = 1.0f;
             Destroyable = false;
-            pPlayer[0]->Score += 8000;
+            Player[0].Score += 8000;
 
             SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
             ScrolltoPlayeAfterBoss();
@@ -635,16 +635,16 @@ void GegnerSpinnenmaschine::DoKI(void)
     // Spieler kommt nicht dran vorbei
     if (Handlung != GEGNER_SPECIAL)
         for (int p = 0; p < NUMPLAYERS; p++)
-            if(pPlayer[p]->xpos < xPos + 250)
+            if(Player[p].xpos < xPos + 250)
             {
-                if (pPlayer[p]->Handlung == RADELN ||
-                        pPlayer[p]->Handlung == RADELN_FALL)
+                if (Player[p].Handlung == RADELN ||
+                        Player[p].Handlung == RADELN_FALL)
                 {
-                    if (pPlayer[p]->Blickrichtung == LINKS)
-                        pPlayer[p]->Blickrichtung = RECHTS;
+                    if (Player[p].Blickrichtung == LINKS)
+                        Player[p].Blickrichtung = RECHTS;
                 }
                 else
-                    pPlayer[p]->xpos = xPos + 250;
+                    Player[p].xpos = xPos + 250;
             }
 
 }

@@ -154,5 +154,5 @@ void GegnerJaeger::GegnerExplode(void)
         pPartikelSystem->PushPartikel (xPos + rand ()%25, yPos + rand()%50, SPIDERSPLITTER);
     }
 
-    pPlayer[0]->Score += 100;
+    Player[0].Score += 100;
 }

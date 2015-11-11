@@ -72,7 +72,7 @@ void GegnerFahrstuhl::DoKI(void)
     PlattformTest(GegnerRect[GegnerArt]);
 
     for (int p = 0; p < NUMPLAYERS; p++)
-        if (pPlayer[p]->AufPlattform == this)
+        if (Player[p].AufPlattform == this)
         {
             if (Handlung != GEGNER_FALLEN)
             {
@@ -107,15 +107,15 @@ void GegnerFahrstuhl::DoKI(void)
         {
             for (int p = 0; p < NUMPLAYERS; p++)
             {
-                pPlayer[p]->JumpPossible = false;
-                pPlayer[p]->ypos = yPos - pPlayer[p]->CollideRect.bottom;
+                Player[p].JumpPossible = false;
+                Player[p].ypos = yPos - Player[p].CollideRect.bottom;
             }
 
             if (TileEngine.Zustand == ZUSTAND_LOCKED)
                 new_ySpeed =  8.0f;
         }
         else
-            new_ySpeed = pPlayer[0]->AutoScrollspeed;
+            new_ySpeed = Player[0].AutoScrollspeed;
 
         // Speed angleichen
         if (ySpeed < new_ySpeed) ySpeed += 0.3f SYNC;
@@ -183,12 +183,12 @@ void GegnerFahrstuhl::GegnerExplode(void)
     //
     for (int p = 0; p < NUMPLAYERS; p++)
     {
-        pPlayer[p]->JumpPossible = false;
-        pPlayer[p]->AnimPhase = 0;
-        pPlayer[p]->Handlung  = SPRINGEN;
-        pPlayer[p]->JumpStart = pPlayer[p]->ypos;
-        pPlayer[p]->yspeed    = -PLAYER_MAXJUMPSPEED;
-        pPlayer[p]->JumpAdd	  =  0.0f;
-        pPlayer[p]->AufPlattform = NULL;
+        Player[p].JumpPossible = false;
+        Player[p].AnimPhase = 0;
+        Player[p].Handlung  = SPRINGEN;
+        Player[p].JumpStart = Player[p].ypos;
+        Player[p].yspeed    = -PLAYER_MAXJUMPSPEED;
+        Player[p].JumpAdd	  =  0.0f;
+        Player[p].AufPlattform = NULL;
     }
 }

@@ -850,7 +850,7 @@ void GegnerGolem::GegnerExplode(void)
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
     for (int p = 0; p < NUMPLAYERS; p++)
-        DirectInput.Joysticks[pPlayer[p]->JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);
+        DirectInput.Joysticks[Player[p].JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);
 
     int i;
 
@@ -868,7 +868,7 @@ void GegnerGolem::GegnerExplode(void)
 
     ShakeScreen(4);
 
-    pPlayer[0]->Score += 8000;
+    Player[0].Score += 8000;
 
     // Plattform spawnen, damit der Spieler weiterkommt =)
     pGegner->PushGegner(6760, 2500, PLATTFORM, 6, 0, false);

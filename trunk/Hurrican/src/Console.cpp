@@ -154,7 +154,7 @@ bool ConsoleClass::CONSOLE_CHEAT(char *cheat)
     if (result)
     {
         SoundManager.PlayWave(100, 128, 15000, SOUND_MESSAGE);
-        pPlayer[0]->Score = 0;
+        Player[0].Score = 0;
         HasCheated = true;
     }
 
@@ -247,9 +247,9 @@ void ConsoleClass::CheckCommands(void)
                 {
                     for (int p = 0; p < NUMPLAYERS; p++)
                     {
-                        pPlayer[p]->PowerLines = 999;
-                        pPlayer[p]->Grenades   = 999;
-                        pPlayer[p]->SmartBombs = 999;
+                        Player[p].PowerLines = 999;
+                        Player[p].Grenades   = 999;
+                        Player[p].SmartBombs = 999;
                     }
 
                     CONSOLE_PRINT("-> Let's rock!");
@@ -270,10 +270,10 @@ void ConsoleClass::CheckCommands(void)
                         {
                             for (int p = 0; p < NUMPLAYERS; p++)
                             {
-                                pPlayer[p]->CurrentWeaponLevel[3] = 16;
+                                Player[p].CurrentWeaponLevel[3] = 16;
 
                                 for (int w = 0; w <= 2; w++)
-                                    pPlayer[p]->CurrentWeaponLevel[w] = 8;
+                                    Player[p].CurrentWeaponLevel[w] = 8;
                             }
 
                             CONSOLE_PRINT("-> Blast Off and Strike The Evil Bydo Empire!");
@@ -286,16 +286,16 @@ void ConsoleClass::CheckCommands(void)
                                 for (int i = 0; i < NUMPLAYERS; i++)
                                 {
                                     /*
-                                    if (pPlayer[i]->Shield <= 0.0f)
+                                    if (Player[i].Shield <= 0.0f)
                                     {
-                                    	pProjectiles->PushProjectile (pPlayer[i]->xpos, pPlayer[i]->ypos, SHIELDSPAWNER, pPlayer[i]);
-                                    	pProjectiles->PushProjectile (pPlayer[i]->xpos, pPlayer[i]->ypos, SHIELDSPAWNER2, pPlayer[i]);
+                                    	pProjectiles->PushProjectile (Player[i].xpos, Player[i].ypos, SHIELDSPAWNER, Player[i]);
+                                    	pProjectiles->PushProjectile (Player[i].xpos, Player[i].ypos, SHIELDSPAWNER2, Player[i]);
                                     }
 
                                     // Schild setzen
-                                    pPlayer[i]->Shield = 500.0f;*/
+                                    Player[i].Shield = 500.0f;*/
 
-                                    pPlayer[i]->Lives = 99;
+                                    Player[i].Lives = 99;
 
                                 }
 
@@ -307,7 +307,7 @@ void ConsoleClass::CheckCommands(void)
                                 if (CONSOLE_CHEAT(Cheats[CHEAT_SUPERSHOT]))
                                 {
                                     for (int i = 0; i < NUMPLAYERS; i++)
-                                        pPlayer[i]->RiesenShotExtra += 500;
+                                        Player[i].RiesenShotExtra += 500;
 
                                     strcpy_s(Buffer, "-> Supershot");
                                 }
@@ -317,7 +317,7 @@ void ConsoleClass::CheckCommands(void)
                                     if (CONSOLE_CHEAT(Cheats[CHEAT_AUTOFIRE]))
                                     {
                                         for (int i = 0; i < NUMPLAYERS; i++)
-                                            pPlayer[i]->AutoFireExtra += 500;
+                                            Player[i].AutoFireExtra += 500;
 
                                         strcpy_s(Buffer, "-> Autofire");
                                     }
@@ -342,16 +342,16 @@ void ConsoleClass::CheckCommands(void)
     // GodMode
     if (CONSOLE_CHEAT(Cheats[CHEAT_GOD]))
     {
-        if (pPlayer[0]->GodMode == false)
+        if (Player[0].GodMode == false)
         {
-            pPlayer[0]->GodMode = true;
-            pPlayer[1]->GodMode = true;
+            Player[0].GodMode = true;
+            Player[1].GodMode = true;
             CONSOLE_PRINT("-> Godmode on");
         }
         else
         {
-            pPlayer[0]->GodMode = false;
-            pPlayer[1]->GodMode = false;
+            Player[0].GodMode = false;
+            Player[1].GodMode = false;
             CONSOLE_PRINT("-> Godmode off");
         }
     } //else
@@ -359,16 +359,16 @@ void ConsoleClass::CheckCommands(void)
     // GodMode
     if (CONSOLE_CHEAT(Cheats[CHEAT_RAD]))
     {
-        if (pPlayer[0]->WheelMode == false)
+        if (Player[0].WheelMode == false)
         {
-            pPlayer[0]->WheelMode = true;
-            pPlayer[1]->WheelMode = true;
+            Player[0].WheelMode = true;
+            Player[1].WheelMode = true;
             CONSOLE_PRINT("-> WheelMode on");
         }
         else
         {
-            pPlayer[0]->WheelMode = false;
-            pPlayer[1]->WheelMode = false;
+            Player[0].WheelMode = false;
+            Player[1].WheelMode = false;
             CONSOLE_PRINT("-> WheelMode off");
         }
     } //else
@@ -476,7 +476,7 @@ void ConsoleClass::CheckCommands(void)
         if (Datei)
         {
             for (int i = 0; i < NUMPLAYERS; i++)
-                pPlayer[i]->InitNewLevel();
+                Player[i].InitNewLevel();
 
             fclose(Datei);
 
@@ -626,7 +626,7 @@ void ConsoleClass::CheckCommands(void)
             for (int p = 0; p < NUMPLAYERS; p++)
             {
                 for (int i=0; i<MAX_AKTIONEN; i++)
-                    pPlayer[p]->Aktion[i] = false;
+                    Player[p].Aktion[i] = false;
 
                 Stage    = g_test;
                 NewStage = g_test;
@@ -697,9 +697,9 @@ void ConsoleClass::CheckInput(void)
         joy_counter = joy_delay;
     }
 
-    if (joy_counter >= joy_delay && pPlayer[0]->ControlType == CONTROLTYPE_JOY && JoystickFound) {
+    if (joy_counter >= joy_delay && Player[0].ControlType == CONTROLTYPE_JOY && JoystickFound) {
         joy_counter = 0.0f;
-        int joy_idx = pPlayer[0]->JoystickIndex;
+        int joy_idx = Player[0].JoystickIndex;
         bool up         = false;
         bool down       = false;
         bool left       = false;
@@ -722,13 +722,13 @@ void ConsoleClass::CheckInput(void)
                         DirectInput.Joysticks[joy_idx].JoystickPOV < 4500 * 1)) {
                 up = true;
             }
-        } else if (DirectInput.Joysticks[joy_idx].JoystickX >  pPlayer[0]->JoystickSchwelle) {
+        } else if (DirectInput.Joysticks[joy_idx].JoystickX >  Player[0].JoystickSchwelle) {
             right = true;
-        } else if (DirectInput.Joysticks[joy_idx].JoystickX < -pPlayer[0]->JoystickSchwelle) {
+        } else if (DirectInput.Joysticks[joy_idx].JoystickX < -Player[0].JoystickSchwelle) {
             left  = true;
-        } else if (DirectInput.Joysticks[joy_idx].JoystickY >  pPlayer[0]->JoystickSchwelle) {
+        } else if (DirectInput.Joysticks[joy_idx].JoystickY >  Player[0].JoystickSchwelle) {
             down  = true;
-        } else if (DirectInput.Joysticks[joy_idx].JoystickY < -pPlayer[0]->JoystickSchwelle) {
+        } else if (DirectInput.Joysticks[joy_idx].JoystickY < -Player[0].JoystickSchwelle) {
             up  = true;
         }
 

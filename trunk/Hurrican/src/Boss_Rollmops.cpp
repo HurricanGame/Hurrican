@@ -937,7 +937,7 @@ void GegnerRollmops::GegnerExplode(void)
 
     ShakeScreen(5.0f);
 
-    pPlayer[0]->Score += 5000;
+    Player[0].Score += 5000;
 
     ScrolltoPlayeAfterBoss();
 }

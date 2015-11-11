@@ -100,5 +100,5 @@ void GegnerEiszapfen::GegnerExplode(void)
         pPartikelSystem->PushPartikel (xPos - 20 + rand ()%35, yPos - 10 + rand()%60, SMOKE);
     }
 
-    pPlayer[0]->Score += 100;
+    Player[0].Score += 100;
 }

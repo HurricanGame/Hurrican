@@ -53,12 +53,12 @@ void GegnerSecret::DoKI(void)
 
         for (int p = 0; p < NUMPLAYERS; p++)
             if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                                pPlayer[p]->xpos,
-                                pPlayer[p]->ypos,
-                                pPlayer[p]->CollideRect) == true)
+                                Player[p].xpos,
+                                Player[p].ypos,
+                                Player[p].CollideRect) == true)
             {
-                pPlayer[0]->SecretThisLevel++;
-                pPlayer[0]->SecretFullGame++;
+                Player[0].SecretThisLevel++;
+                Player[0].SecretFullGame++;
                 Handlung = GEGNER_FALLEN;
 
                 SoundManager.PlayWave(100, 128, 11025, SOUND_SECRET);
