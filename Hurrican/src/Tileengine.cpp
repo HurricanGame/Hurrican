@@ -1069,7 +1069,7 @@ void TileEngineClass::DrawBackground(void)
 //----- Dragon Hack
 
     if (pDragonHack != NULL &&
-            pConsole->Showing == false)
+            Console.Showing == false)
         pDragonHack->Run();
 }
 
@@ -2113,14 +2113,14 @@ void TileEngineClass::WertAngleichen(float &nachx, float &nachy, float vonx, flo
 
 void TileEngineClass::UpdateLevel(void)
 {
-    if (pConsole->Showing)
+    if (Console.Showing)
         return;
 
     // Zeit ablaufen lassen
     if (RunningTutorial == false &&
             Timelimit > 0.0f &&
             HUD.BossHUDActive == 0.0f &&
-            pConsole->Showing == false)
+            Console.Showing == false)
     {
         if (Skill == 0)
             Timelimit -= 0.05f SYNC;
