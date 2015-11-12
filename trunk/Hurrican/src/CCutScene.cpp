@@ -72,9 +72,9 @@ void PlayCutScene (int nr)
         if (KeyDown(DIK_ESCAPE))
             pScene->m_iFading = 1;
 
-        pTimer->update();
-        SpeedFaktor = pTimer->SpeedFaktor;
-        pTimer->wait();
+        Timer.update();
+        SpeedFaktor = Timer.SpeedFaktor;
+        Timer.wait();
 
     }
     while (pScene->m_bIsDone == false);

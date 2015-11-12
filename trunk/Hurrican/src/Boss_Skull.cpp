@@ -101,7 +101,7 @@ void GegnerSkull::DoKI(void)
         if (endwert < 1.0f)
             endwert = 1.0f;
 
-        pTimer->SetMoveSpeed(endwert);
+        Timer.SetMoveSpeed(endwert);
 
         // Explosionen
         if (AnimCount > 0.0f)
@@ -169,7 +169,7 @@ void GegnerSkull::DoKI(void)
             pPartikelSystem->PushPartikel(xPos-80,
                                           yPos-80, EXPLOSION_GIGA);
 
-            pTimer->SetMoveSpeed(10.0f);
+            Timer.SetMoveSpeed(10.0f);
 
             // Flugsäcke spawnen
             pGegner->PushGegner((float)(TileEngine.XOffset + 200.0f),

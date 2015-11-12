@@ -605,7 +605,7 @@ void DirectGraphicsFont::ShowFPS (void)
     if(updateFPS>FPS/2)
     {
         updateFPS = 0;
-        FPS = pTimer->getFrameRate();
+        FPS = Timer.getFrameRate();
     }
 
     // Aktuelle FPS
@@ -614,24 +614,24 @@ void DirectGraphicsFont::ShowFPS (void)
     DrawText(150, 0, Buffer, 0xFFFFFFFF);
 
     // FPS Grenze
-    _itoa_s((int)(pTimer->maxFPS), Buffer, 10);
+    _itoa_s((int)(Timer.maxFPS), Buffer, 10);
     DrawText(200,   0, "FPS Grenze :", 0xFFFFFFFF);
     DrawText(300, 0, Buffer, 0xFFFFFFFF);
 
     // Durchschnittliche FPS
-    Value = pTimer->getAverageFPS();
+    Value = Timer.getAverageFPS();
     _itoa_s((int)(Value), Buffer, 10);
     DrawText(0,   15, "Durchschnitt FPS :", 0xFFFFFFFF);
     DrawText(150, 15, Buffer, 0xFFFFFFFF);
 
     // Maximale FPS
-    Value = pTimer->getMaxFrameRate();
+    Value = Timer.getMaxFrameRate();
     _itoa_s((int)(Value), Buffer, 10);
     DrawText(0,   30, "Maximale FPS :", 0xFFFFFFFF);
     DrawText(150, 30, Buffer, 0xFFFFFFFF);
 
     // Minimale FPS
-    Value = pTimer->getMinFrameRate();
+    Value = Timer.getMinFrameRate();
     _itoa_s((int)(Value), Buffer, 10);
     DrawText(0,   45, "Minimale FPS :", 0xFFFFFFFF);
     DrawText(150, 45, Buffer, 0xFFFFFFFF);

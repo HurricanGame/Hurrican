@@ -40,7 +40,7 @@
 
 extern Logdatei				Protokoll;
 extern DirectInputClass		DirectInput;
-extern TimerClass			*pTimer;
+extern TimerClass			Timer;
 extern GegnerListClass		*pGegner;
 extern HUDClass				*pHUD;
 extern PartikelsystemClass  *pPartikelSystem;

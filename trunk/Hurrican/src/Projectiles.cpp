@@ -3301,7 +3301,7 @@ void ProjectileClass::Run(void)
         if (pParent->ypos + 40 < yPos + 24)	yAcc = -5.0f;
         else if (pParent->ypos + 40 > yPos + 24)	yAcc =  5.0f;
 
-        for (int i=0; i < int(200 * pTimer->getElapsed())+1; i++)
+        for (int i=0; i < int(200 * Timer.getElapsed())+1; i++)
             pPartikelSystem->PushPartikel(xPos + 18, yPos + 18, PHARAOSMOKE);
 
         if (bu & BLOCKWERT_WAND && ySpeed > 0.0f)
@@ -3320,7 +3320,7 @@ void ProjectileClass::Run(void)
     case ROCKETSPIDER:
     {
         // Flamme erzeugen
-        for (int i=0; i < int(200 * pTimer->getElapsed())+1; i++)
+        for (int i=0; i < int(200 * Timer.getElapsed())+1; i++)
         {
             switch (AnimPhase)
             {
@@ -3389,7 +3389,7 @@ void ProjectileClass::Run(void)
 
         {
             // Flamme erzeugen
-            for (int i=0; i < int(200 * pTimer->getElapsed())+1; i++)
+            for (int i=0; i < int(200 * Timer.getElapsed())+1; i++)
             {
                 switch (AnimPhase)
                 {
@@ -3471,7 +3471,7 @@ void ProjectileClass::Run(void)
 
     case EVILBLITZ:
     {
-        for (int i=0; i < int(200 * pTimer->getElapsed())+1; i++)
+        for (int i=0; i < int(200 * Timer.getElapsed())+1; i++)
             pPartikelSystem->PushPartikel(xPos + 10 + rand()%50, yPos + 60 + rand()%20, EVILFUNKE);
 
         if (ySpeed < -45.0f)
@@ -3651,7 +3651,7 @@ void ProjectileClass::Run(void)
     case SNOWBOMB:
     {
         // Rauch erzeugen
-//			for (int i=0; i < int(50 * pTimer->getElapsed())+1; i++)
+//			for (int i=0; i < int(50 * Timer.getElapsed())+1; i++)
 //				pPartikelSystem->PushPartikel(xPos - 2, yPos - 2, ROCKETSMOKEBLUE);
 
         if (bl & BLOCKWERT_WAND ||

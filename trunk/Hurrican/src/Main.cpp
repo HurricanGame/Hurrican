@@ -109,7 +109,7 @@ float					SpeedFaktor = 1.0f;				// Faktor, mit dem alle Bewegungen verrechnet w
 TexturesystemClass      Textures;                       // DKS - Added Texturesystem class (see DX8Sprite.cpp)
 DirectGraphicsClass		DirectGraphics;					// Grafik-Objekt
 DirectInputClass		DirectInput;					// Input-Objekt
-TimerClass				*pTimer;						// Timer Klasse für die Framerate
+TimerClass				Timer;						    // Timer Klasse für die Framerate
 #if defined(__AROS__)
 Logdatei				Protokoll("T:Game_Log.txt");		// Protokoll Datei
 #else
@@ -844,22 +844,22 @@ int main(int argc, char *argv[])
                 SoundManager.Update();
 
                 // Timer updaten
-                pTimer->update();
+                Timer.update();
 
                 // Feste Framerate ? (Spiel läuft in Zeitlupe, wenn zu langsam)
                 //
                 if (FixedFramerate == true)
                 {
-                    pTimer->SetMaxFPS (60);
-                    SpeedFaktor = 1.0f / 60.0f * pTimer->GetMoveSpeed();
+                    Timer.SetMaxFPS (60);
+                    SpeedFaktor = 1.0f / 60.0f * Timer.GetMoveSpeed();
                 }
                 else
                 {
-                    //pTimer->SetMaxFPS (0);
-                    SpeedFaktor = pTimer->SpeedFaktor;
+                    //Timer.SetMaxFPS (0);
+                    SpeedFaktor = Timer.SpeedFaktor;
                 }
 
-                pTimer->wait();
+                Timer.wait();
 
                 // Bei Demo immer gleichen Speedfaktor setzen
                 //
@@ -880,7 +880,7 @@ int main(int argc, char *argv[])
 
 //----- Spiel verlassen
 
-    //pTimer->WriteLogValues();
+    //Timer.WriteLogValues();
 
     if(!GameExit())
         Protokoll.WriteText( true, "-> GameExit Fehler !\n" );
@@ -974,9 +974,6 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
     Protokoll.WriteText( false, "\n>--------------------<\n" );
     Protokoll.WriteText( false,   "| GameInit started   |\n" );
     Protokoll.WriteText( false,   ">--------------------<\n" );
-
-    // Timer initialisieren
-    pTimer = new TimerClass();
 
     // Direct3D initialisieren
     if(!DirectGraphics.Init(hwnd, RENDERWIDTH, RENDERHEIGHT, CommandLineParams.ScreenDepth, CommandLineParams.VSync))
@@ -1342,9 +1339,6 @@ bool GameExit(void)
     // GUI freigeben
     delete(pGUI);
 
-    // Timer freigeben
-    delete(pTimer);
-
     // Sprites freigeben
     delete(pDefaultFont);
     delete(pMenuFont);
@@ -1364,12 +1358,6 @@ bool GameExit(void)
     // GegnerListe beenden
     delete(pGegner);
     Protokoll.WriteText( false, "-> Enemy List released\n" );
-
-    //DKS - Player array is now static global instead of dynamically allocated:
-    // Player freigeben
-    //delete(pPlayer[0]);
-    //delete(pPlayer[1]);
-    //Protokoll.WriteText( false, "-> Player released\n" );
 
     // Partikelsystem beenden
     delete(pPartikelSystem);
@@ -1614,7 +1602,7 @@ void ShowDebugInfo(void)
     pDefaultFont->DrawText(300, 75, StringBuffer, 0xFFFFFFFF);
 
     // MoveSpeed anzeigen
-    _itoa_s((int)(pTimer->GetMoveSpeed()), StringBuffer, 10);
+    _itoa_s((int)(Timer.GetMoveSpeed()), StringBuffer, 10);
     pDefaultFont->DrawText(  0, 90, "Move Speed :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 90, StringBuffer, 0xFFFFFFFF);
 
@@ -1624,7 +1612,7 @@ void ShowDebugInfo(void)
     pDefaultFont->DrawText(150, 135, StringBuffer, 0xFFFFFFFF);
 
     // Blitzwinkel angeben
-    sprintf_s (StringBuffer, "%f", pTimer->SpeedFaktor);
+    sprintf_s (StringBuffer, "%f", Timer.SpeedFaktor);
     pDefaultFont->DrawText(  0, 150, "Speed :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 150, StringBuffer, 0xFFFFFFFF);
 
