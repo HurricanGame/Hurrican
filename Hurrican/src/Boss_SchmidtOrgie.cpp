@@ -62,7 +62,7 @@ void GegnerSchmidtOrgie::DoKI(void)
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
-        pGegner->PushGegner (xPos, yPos - 40, EXTRAS, 10, 0, false);
+        Gegner.PushGegner (xPos, yPos - 40, EXTRAS, 10, 0, false);
     }
 
     // Hat der Boss keine Energie mehr ? Dann explodiert er
@@ -117,10 +117,10 @@ void GegnerSchmidtOrgie::DoKI(void)
             int spawn = rand()%2;
 
             if (spawn == 0)
-                pGegner->PushGegner (float (Value1) + x, float (Value2) + 50 + rand ()%200, FLEDERMAUS, 0, 1, false);
+                Gegner.PushGegner (float (Value1) + x, float (Value2) + 50 + rand ()%200, FLEDERMAUS, 0, 1, false);
 
             if (spawn == 1)
-                pGegner->PushGegner (float (Value1) + x, float (Value2) + 200 + rand ()%50, SCHLEIMBOLLER, 24, 0, false);
+                Gegner.PushGegner (float (Value1) + x, float (Value2) + 200 + rand ()%50, SCHLEIMBOLLER, 24, 0, false);
 
             Energy -= 10;
 
@@ -128,8 +128,8 @@ void GegnerSchmidtOrgie::DoKI(void)
             //
             if (int (Energy) % 1000 == 0)
             {
-                pGegner->PushGegner (float (Value1) - 20,  float (Value2) + 130, AUGE, rand()%10, 0, false);
-                pGegner->PushGegner (float (Value1) + 620, float (Value2) + 200, AUGE, rand()%10, 0, false);
+                Gegner.PushGegner (float (Value1) - 20,  float (Value2) + 130, AUGE, rand()%10, 0, false);
+                Gegner.PushGegner (float (Value1) + 620, float (Value2) + 200, AUGE, rand()%10, 0, false);
             }
 
             // oder eine Stachelkugel, einen Firewalker oder ein großer Schleimboller;)
@@ -141,15 +141,15 @@ void GegnerSchmidtOrgie::DoKI(void)
                 switch(j)
                 {
                 case 0:
-                    pGegner->PushGegner (float (Value1) + x,  float (Value2) + 100, STACHELBEERE, 0, 0, false);
+                    Gegner.PushGegner (float (Value1) + x,  float (Value2) + 100, STACHELBEERE, 0, 0, false);
                     break;
 
                 case 1:
-                    pGegner->PushGegner (float (Value1) + x, float (Value2) + 100, SCHLEIMBOLLER, 46, 0, false);
+                    Gegner.PushGegner (float (Value1) + x, float (Value2) + 100, SCHLEIMBOLLER, 46, 0, false);
                     break;
 
                 case 2:
-                    pGegner->PushGegner (float (Value1) + x, float (Value2) + 250, FIESERWALKER2, 0, 0, false);
+                    Gegner.PushGegner (float (Value1) + x, float (Value2) + 250, FIESERWALKER2, 0, 0, false);
                     break;
                 }
             }
@@ -188,7 +188,7 @@ void GegnerSchmidtOrgie::DoKI(void)
 void GegnerSchmidtOrgie::GegnerExplode(void)
 {
     // Extra Leben
-    pGegner->PushGegner (xPos, yPos - 250, ONEUP, 10, 0, false);
+    Gegner.PushGegner (xPos, yPos - 250, ONEUP, 10, 0, false);
 
     ScrolltoPlayeAfterBoss();
 }

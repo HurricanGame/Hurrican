@@ -551,7 +551,7 @@ void GegnerBratklops::DoKI(void)
             else
                 ShotDelay = 0.20f;
 
-            pGegner->PushGegner (xPos + 121 + rand ()%6, yPos + 105 + rand ()%6, MADE, 0, 0, false);
+            Gegner.PushGegner (xPos + 121 + rand ()%6, yPos + 105 + rand ()%6, MADE, 0, 0, false);
         }
     }
     break;

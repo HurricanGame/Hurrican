@@ -50,7 +50,7 @@ void GegnerSwitch::DoKI(void)
             SoundManager.PlayWave (100, 128, 11025, SOUND_SWITCH);
 
             // Und prüfen, ob ein Objekt aktiviert wird
-            GegnerClass *pTemp = pGegner->pStart;			// Anfang der Liste
+            GegnerClass *pTemp = Gegner.pStart;			// Anfang der Liste
 
             while (pTemp != NULL)							// noch nicht alle durch ?
             {

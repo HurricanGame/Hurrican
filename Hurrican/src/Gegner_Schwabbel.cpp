@@ -76,7 +76,7 @@ void GegnerSchwabbel::DoKI(void)
         {
             AnimCount += 1.0f;
 
-            pGegner->PushGegner (float (xPos + 16 + rand ()%6),
+            Gegner.PushGegner (float (xPos + 16 + rand ()%6),
                                  float (yPos - 10 + rand ()%4), MADE, 1, 0, false);
         }
 
@@ -109,7 +109,7 @@ void GegnerSchwabbel::GegnerExplode(void)
         PartikelSystem.PushPartikel (xPos + rand ()%40, yPos - 10 + rand()%60, MADEBLUT);
 
     for (int i=0; i < 30; i++)
-        pGegner->PushGegner (xPos + rand ()%40, yPos - 10 + rand()%60, MADE, 1, 0, false);
+        Gegner.PushGegner (xPos + rand ()%40, yPos - 10 + rand()%60, MADE, 1, 0, false);
 
     Player[0].Score += 400;
 }

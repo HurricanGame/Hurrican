@@ -360,7 +360,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
             ShakeScreen(3);
             dx1 *= -1.0f;
 
-            pGegner->PushGegner (xPos + 10 + rand ()%360, yPos+480, BOULDER, 40+rand()%20, 0, false);
+            Gegner.PushGegner (xPos + 10 + rand ()%360, yPos+480, BOULDER, 40+rand()%20, 0, false);
 
             // aufhören damit ?
             Shots--;
@@ -423,7 +423,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
         {
             ShotDelay = 35.0f;
 
-            pGegner->PushGegner (xPos + 10 + rand ()%360, yPos+480, STELZSACK, 80, 0, false);
+            Gegner.PushGegner (xPos + 10 + rand ()%360, yPos+480, STELZSACK, 80, 0, false);
 
             // Genug losgelassen ?
             Shots--;
@@ -579,7 +579,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
         for (int p = 0; p < NUMPLAYERS; p++)
             Player[p].ypos -= A;
 
-        GegnerClass *pTemp    = pGegner->pStart;		// Zeiger auf den ersten Gegner
+        GegnerClass *pTemp    = Gegner.pStart;		// Zeiger auf den ersten Gegner
         while (pTemp != NULL)							// Ende der Liste erreicht ?
         {
             if (pTemp->GegnerArt >= SPITTER &&

@@ -570,7 +570,7 @@ void GegnerRiesenSpinne::DoKI(void)
                 {
                     ShotDelay = 15.0f;
 
-                    pGegner->PushGegner(xPos + 400, yPos + 100.0f + yBody, SPIDERBOMB, 0, 0, false);
+                    Gegner.PushGegner(xPos + 400, yPos + 100.0f + yBody, SPIDERBOMB, 0, 0, false);
                 }
             }
 
@@ -639,7 +639,7 @@ void GegnerRiesenSpinne::DoKI(void)
 
             // Rakete abschiessen
             SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_ROCKET);
-            pGegner->PushGegner(xPos + 35.0f, yPos + 95.0f, FETTERAKETE, rand()%60 - 130, 0, false);
+            Gegner.PushGegner(xPos + 35.0f, yPos + 95.0f, FETTERAKETE, rand()%60 - 130, 0, false);
 
             // Kopf zurückschnellen lassen
             HeadXOffset = 2 * PI;

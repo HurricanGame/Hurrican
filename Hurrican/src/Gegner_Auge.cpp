@@ -154,5 +154,5 @@ void GegnerAuge::GegnerExplode(void)
     Player[0].Score += 100;
 
     // Extra spawnen
-    pGegner->PushGegner(xPos + 12, yPos + 12, EXTRAS, Value1, 0, true);
+    Gegner.PushGegner(xPos + 12, yPos + 12, EXTRAS, Value1, 0, true);
 }

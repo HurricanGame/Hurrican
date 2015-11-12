@@ -636,17 +636,25 @@ GegnerListClass::GegnerListClass(void)
     pStart		= NULL;
     pEnd		= NULL;
     NumGegner	= 0;
+}
 
+// --------------------------------------------------------------------------------------
+// Destruktor : Löschen der ganzen Liste und Freigabe der Gegner-Grafiken
+// --------------------------------------------------------------------------------------
+
+GegnerListClass::~GegnerListClass(void)
+{
+    // Gegner-Liste komplett leeren
+    ClearAll();
+}
+
+void GegnerListClass::LoadSprites(void)
+{
     // Flamme der Drone laden
     DroneFlame.LoadImage("droneflame.png", 164, 46, 82, 46, 2, 1);
 
     // Knarre der Zitrone laden
     DroneGun.LoadImage("Zitronestiel.png", 15, 63, 15, 63, 1, 1);
-
-
-    // Zu Beginn kein Gegner geladen (werden dann jeweils fürs Level geladen)
-    for(int i=0; i<MAX_GEGNERGFX; i++)
-        pGegnerGrafix[i] = NULL;
 
     // Gegner, die in jedem Level vorkommen, laden
     //
@@ -1537,24 +1545,6 @@ GegnerListClass::GegnerListClass(void)
     GegnerRect[MUTANT].right  = 90;
     GegnerRect[MUTANT].top  = 60;
     GegnerRect[MUTANT].bottom = 85;
-}
-
-// --------------------------------------------------------------------------------------
-// Destruktor : Löschen der ganzen Liste und Freigabe der Gegner-Grafiken
-// --------------------------------------------------------------------------------------
-
-GegnerListClass::~GegnerListClass(void)
-{
-    // Gegner-Liste komplett leeren
-    ClearAll();
-
-    // Gegner Grafiken freigeben
-    for(int i=0; i<MAX_GEGNERGFX; i++)
-        if(pGegnerGrafix[i] != NULL)
-        {
-            delete(pGegnerGrafix[i]);
-            pGegnerGrafix[i] = NULL;
-        }
 }
 
 // --------------------------------------------------------------------------------------
@@ -2520,7 +2510,7 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
     if (Art == SHOOTPLATTFORM)
     {
         // Button anfügen
-        pGegner->PushGegner (pNew->xPos + 42, pNew->yPos - 9, SHOOTBUTTON, 0, 0, Light);
+        Gegner.PushGegner (pNew->xPos + 42, pNew->yPos - 9, SHOOTBUTTON, 0, 0, Light);
     }
 
     return true;
@@ -2618,7 +2608,7 @@ void GegnerListClass::RenderAll(void)
     // Danach alle anderen "richtigen" Gegner rendern
     //
 
-    pTemp = pGegner->pStart;
+    pTemp = Gegner.pStart;
 
     while (pTemp != NULL)					// noch nicht alle durch ?
     {

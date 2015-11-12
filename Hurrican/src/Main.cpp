@@ -121,7 +121,7 @@ DirectGraphicsFont		*pMenuFont	  = new(DirectGraphicsFont);
 TileEngineClass			TileEngine;                     // Tile Engine
 PartikelsystemClass		PartikelSystem;				    // Das coole Partikelsystem
 ProjectileListClass		Projectiles;					// Liste mit Schüssen
-GegnerListClass			*pGegner;						// Liste mit Gegner
+GegnerListClass			Gegner;						// Liste mit Gegner
 IntroClass				*pIntro;						// Intro-Objekt
 OuttroClass				*pOuttro;						// Outtro-Objekt
 MenuClass				*pMenu = NULL;					// Hauptmenu-Objekt
@@ -1166,7 +1166,8 @@ bool GameInit2(void)
     PartikelSystem.LoadSprites();
 
     // GegnerListe initialisieren
-    pGegner = new(GegnerListClass);
+    // DKS - Load GegnerListClass sprites:
+    Gegner.LoadSprites();
 
     // Tileengine initialisieren
     TileEngine.LoadSprites();   //DKS - Added this function to TileEngineClass
@@ -1346,10 +1347,6 @@ bool GameExit(void)
     // Menu beenden
     delete(pMenu);
     Protokoll.WriteText( false, "-> Head menu released\n" );
-
-    // GegnerListe beenden
-    delete(pGegner);
-    Protokoll.WriteText( false, "-> Enemy List released\n" );
 
     //DKS - Sound manager is now a static global, and we use new Exit() method:
     SoundManager.Exit();
@@ -1581,7 +1578,7 @@ void ShowDebugInfo(void)
     pDefaultFont->DrawText(150, 75, StringBuffer, 0xFFFFFFFF);
 
     // Anzahl der Gegner im Level angeben
-    _itoa_s(pGegner->GetNumGegner(), StringBuffer, 10);
+    _itoa_s(Gegner.GetNumGegner(), StringBuffer, 10);
     pDefaultFont->DrawText(200, 75, "Gegneranzahl :", 0xFFFFFFFF);
     pDefaultFont->DrawText(300, 75, StringBuffer, 0xFFFFFFFF);
 

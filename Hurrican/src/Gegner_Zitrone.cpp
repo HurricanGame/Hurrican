@@ -95,7 +95,7 @@ void GegnerZitrone::DoDraw(void)
     }
 
     // Knarre
-    pGegner->DroneGun.RenderSpriteRotatedOffset((float)-TileEngine.XOffset + xPos + 73.0f - (a) * 5,
+    Gegner.DroneGun.RenderSpriteRotatedOffset((float)-TileEngine.XOffset + xPos + 73.0f - (a) * 5,
                                          (float)-TileEngine.YOffset + yPos + 48.0f + yoff, KnarreWinkel,
                                          0, 0, 0xFFFFFFFF);
 

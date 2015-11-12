@@ -184,7 +184,7 @@ void GegnerTheWall::NeueAktion(void)
 
         // Schädel rumfliegen lassen
         Value1 = -1;
-        pGegner->PushGegner(xPos + 3,
+        Gegner.PushGegner(xPos + 3,
                             yPos + 228, SKULL, 99, 0, false);
     }
     else
@@ -251,7 +251,7 @@ void GegnerTheWall::NeueAktion(void)
 void GegnerTheWall::ReturnSkull(void)
 {
     GegnerClass *pTemp;
-    pTemp = pGegner->pStart;
+    pTemp = Gegner.pStart;
 
     while (pTemp != NULL)
     {
@@ -488,7 +488,7 @@ void GegnerTheWall::DoKI(void)
 
             // Den Schädel verschwinden lassen
             GegnerClass *pTemp;
-            pTemp = pGegner->pStart;
+            pTemp = Gegner.pStart;
 
             while (pTemp != NULL)
             {

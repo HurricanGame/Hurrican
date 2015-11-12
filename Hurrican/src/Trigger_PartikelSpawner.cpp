@@ -324,7 +324,7 @@ void GegnerPartikelSpawner::DoKI(void)
             // Maden
             case 17:
             {
-                pGegner->PushGegner((float)(xPos + rand()%20 - 10),
+                Gegner.PushGegner((float)(xPos + rand()%20 - 10),
                                     (float)(yPos + 16), MADE, 0, 0, false, false);
             }
             break;

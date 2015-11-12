@@ -454,7 +454,7 @@ _weiter2:
         if (Unten() && ySpeed > 0.0f)
         {
             // Stein erscheinen lassen
-            pGegner->PushGegner(pAim->xpos, float(Value2), FALLINGROCK, 0, 0, false);
+            Gegner.PushGegner(pAim->xpos, float(Value2), FALLINGROCK, 0, 0, false);
 
             // Partikel unter Boss
             for (int i = 0; i < 20; i++)

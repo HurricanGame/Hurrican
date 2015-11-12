@@ -47,7 +47,7 @@ void GegnerSchleuseV::DoKI(void)
 
     // Testen, ob ein Gegner die Schleuse berührt hat
     //
-    GegnerClass *pTemp = pGegner->pStart;			// Anfang der Liste
+    GegnerClass *pTemp = Gegner.pStart;			// Anfang der Liste
 
     while (pTemp != NULL)							// noch nicht alle durch ?
     {

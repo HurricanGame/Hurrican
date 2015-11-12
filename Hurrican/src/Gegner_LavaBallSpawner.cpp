@@ -42,7 +42,7 @@ void GegnerLavaBallSpawner::DoKI(void)
     if (Delay <= 0.0f)
     {
         Delay = float (Value2 + rand()%20);
-        pGegner->PushGegner (xPos, yPos, LAVABALL, Value1, Value2, ChangeLight);
+        Gegner.PushGegner (xPos, yPos, LAVABALL, Value1, Value2, ChangeLight);
     }
 }
 

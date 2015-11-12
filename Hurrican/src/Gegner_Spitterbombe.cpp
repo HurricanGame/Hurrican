@@ -52,7 +52,7 @@ void GegnerSpitterbombe::DoKI(void)
             (blocku & BLOCKWERT_PLATTFORM))
     {
         Energy = 0.0f;
-        pGegner->PushGegner (xPos + 4, yPos + 20, SPITTER, 0, 0, false);
+        Gegner.PushGegner (xPos + 4, yPos + 20, SPITTER, 0, 0, false);
     }
 }
 

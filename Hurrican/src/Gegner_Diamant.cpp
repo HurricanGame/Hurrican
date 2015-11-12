@@ -132,7 +132,7 @@ void GegnerDiamant::DoKI(void)
                 GegnerClass *pTemp;
                 GegnerPunisher *pPunisher;
 
-                pTemp = pGegner->pStart;
+                pTemp = Gegner.pStart;
 
                 while (pTemp != NULL)
                 {

@@ -145,7 +145,7 @@ void GegnerTutorialText::DoKI(void)
         {
             GegnerClass* pTemp;
 
-            pTemp = pGegner->pStart;
+            pTemp = Gegner.pStart;
 
             while (pTemp != NULL)
             {
@@ -196,7 +196,7 @@ void GegnerTutorialText::DoKI(void)
         {
             GegnerClass* pTemp;
 
-            pTemp = pGegner->pStart;
+            pTemp = Gegner.pStart;
 
             while (pTemp != NULL)
             {
@@ -212,7 +212,7 @@ void GegnerTutorialText::DoKI(void)
                             pPower->AnimPhase == 1)
                     {
                         Value1 = 17;
-                        pTemp = pGegner->pEnd;
+                        pTemp = Gegner.pEnd;
                     }
                     else
                         pTemp = pTemp->pNext;

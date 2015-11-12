@@ -248,7 +248,7 @@ void GegnerEisFaust::DoKI(void)
                     xPos + 100 < TileEngine.XOffset + 620.0f &&
                     yPos + 220 > TileEngine.XOffset		   &&
                     yPos + 220 < TileEngine.XOffset + 440.0f)
-                pGegner->PushGegner (xPos + 100, yPos + 220, EISZAPFEN, 1, 0, false);
+                Gegner.PushGegner (xPos + 100, yPos + 220, EISZAPFEN, 1, 0, false);
         }
 
         if (xSpeed > 0.0f &&

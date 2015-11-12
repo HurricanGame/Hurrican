@@ -191,7 +191,7 @@ void GegnerPowerBlock::DoKI(void)
             AlreadySpawned[extra] = true;
         }
 
-        pGegner->PushGegner(xPos + 10, yPos, EXTRAS, extra, 0, true);
+        Gegner.PushGegner(xPos + 10, yPos, EXTRAS, extra, 0, true);
 
         Value1--;					// Extra-Speicher eins verringern
         if (Value1 > 0)				// und wenn noch eins drin ist,
