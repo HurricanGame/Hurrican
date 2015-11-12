@@ -50,7 +50,7 @@ void GegnerRiesenPiranha::DoKI(void)
 
 // Per Zufall Bläschen erzeugen
     if (rand()%10 == 0)
-        pPartikelSystem->PushPartikel(xPos + 10 + rand()%230, yPos + 10 + rand ()%190, BUBBLE);
+        PartikelSystem.PushPartikel(xPos + 10 + rand()%230, yPos + 10 + rand ()%190, BUBBLE);
 
 // Nach links bzw rechts auf Kollision prüfen und dann ggf umkehren
     if (BlickRichtung == LINKS)
@@ -174,18 +174,18 @@ void GegnerRiesenPiranha::GegnerExplode(void)
     // Fetzen erzeugen
     int i = 0;
     for (int i=0; i<8; i++)
-        pPartikelSystem->PushPartikel(float(xPos + 64 + rand()%64),
+        PartikelSystem.PushPartikel(float(xPos + 64 + rand()%64),
                                       float(yPos + 64 + rand()%64), PIRANHATEILE2);
 
 
     // und noch n paar Luftblässchen dazu
     for (i=0; i<100; i++)
-        pPartikelSystem->PushPartikel(float(xPos - 10  + rand()%256),
+        PartikelSystem.PushPartikel(float(xPos - 10  + rand()%256),
                                       float(yPos + 10  + rand()%210), BUBBLE);
 
     // Blutwolken dazu
     for (i=0; i<70; i++)
-        pPartikelSystem->PushPartikel(float(xPos - 10  + rand()%256),
+        PartikelSystem.PushPartikel(float(xPos - 10  + rand()%256),
                                       float(yPos + 10  + rand()%210), PIRANHABLUT);
 
     // und Extra Leben rauslassen

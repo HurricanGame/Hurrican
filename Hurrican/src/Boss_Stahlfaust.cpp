@@ -57,7 +57,7 @@ void GegnerStahlfaust::DoKI(void)
     // Schon schwer angeschlagen ? Dann raucht die Faust =)
     if (Energy < 2000 &&
             rand()%2 == 0)
-        pPartikelSystem->PushPartikel(xPos + rand()%200+20, yPos + rand()%200+60, SMOKE);
+        PartikelSystem.PushPartikel(xPos + rand()%200+20, yPos + rand()%200+60, SMOKE);
 
     // Hat die Faust keine Energie mehr ? Dann explodiert sie
     if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN)
@@ -175,7 +175,7 @@ void GegnerStahlfaust::DoKI(void)
 
             // Rauch am Boden erzeugen
             for (int i=0; i<25; i++)
-                pPartikelSystem->PushPartikel(xPos + rand()%200, yPos + GegnerRect[GegnerArt].bottom-20, SMOKE);
+                PartikelSystem.PushPartikel(xPos + rand()%200, yPos + GegnerRect[GegnerArt].bottom-20, SMOKE);
 
             // Beschleunigung und Geschwindigkeit wieder richtig setzen um hochzufliegen
             yAcc   = -1.5f;
@@ -234,7 +234,7 @@ void GegnerStahlfaust::DoKI(void)
 
             // Rauch am Boden erzeugen
             for (int i=0; i<25; i++)
-                pPartikelSystem->PushPartikel(xPos + 30 + rand()%180, yPos + GegnerRect[GegnerArt].bottom-20, SMOKE);
+                PartikelSystem.PushPartikel(xPos + 30 + rand()%180, yPos + GegnerRect[GegnerArt].bottom-20, SMOKE);
 
             // Beschleunigung und Geschwindigkeit wieder richtig setzen um hochzufliegen
             yAcc   = -0.5f;
@@ -281,14 +281,14 @@ void GegnerStahlfaust::DoKI(void)
         {
             SmokeDelay = 1.0f;
 
-            pPartikelSystem->PushPartikel(xPos + rand()%200, yPos + rand()%200+20, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos + rand()%200, yPos + rand()%200+20, EXPLOSION_MEDIUM2);
             SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
             if (rand()%8 == 0)
-                pPartikelSystem->PushPartikel(xPos + rand()%200, yPos + rand()%200+20, EXPLOSION_BIG);
+                PartikelSystem.PushPartikel(xPos + rand()%200, yPos + rand()%200+20, EXPLOSION_BIG);
 
             if (rand()%20 == 0)
-                pPartikelSystem->PushPartikel(xPos + rand()%100+60, yPos + rand()%100+60, SPLITTER);
+                PartikelSystem.PushPartikel(xPos + rand()%100+60, yPos + rand()%100+60, SPLITTER);
         }
 
         // Fertig explodiert ? Dann wird sie ganz zerlegt
@@ -316,11 +316,11 @@ void GegnerStahlfaust::GegnerExplode(void)
 
     // Splitter
     for (int i=0; i<20; i++)
-        pPartikelSystem->PushPartikel(xPos + 60 + rand()%60,
+        PartikelSystem.PushPartikel(xPos + 60 + rand()%60,
                                       yPos + 80 + rand()%40, SPLITTER);
 
     for (int i=0; i<60; i++)
-        pPartikelSystem->PushPartikel(xPos + 20 + rand()%100,
+        PartikelSystem.PushPartikel(xPos + 20 + rand()%100,
                                       yPos + 40 + rand()%100, SPIDERSPLITTER2);
 
     for (int p = 0; p < NUMPLAYERS; p++)

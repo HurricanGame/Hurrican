@@ -93,19 +93,19 @@ void GegnerColumn2::DoKI(void)
         Handlung = GEGNER_EXPLODIEREN;
 
         for (int i = 0; i < 20; i++)
-            pPartikelSystem->PushPartikel (xPos + rand ()%40, yPos + rand()%15 - 20, SMOKE);
+            PartikelSystem.PushPartikel (xPos + rand ()%40, yPos + rand()%15 - 20, SMOKE);
 
         for (int i = 0; i < 10; i++)
-            pPartikelSystem->PushPartikel (xPos + rand ()%40, yPos + rand()%10 - 5, ROCKSPLITTERSMALL);
+            PartikelSystem.PushPartikel (xPos + rand ()%40, yPos + rand()%10 - 5, ROCKSPLITTERSMALL);
 
         FallSpeed = 2.0f;
 
         SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEFALL);
         SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_COLUMN);
-        pPartikelSystem->ThunderColor [0] = 255;
-        pPartikelSystem->ThunderColor [1] = 255;
-        pPartikelSystem->ThunderColor [2] = 255;
-        pPartikelSystem->ThunderAlpha = 255;
+        PartikelSystem.ThunderColor [0] = 255;
+        PartikelSystem.ThunderColor [1] = 255;
+        PartikelSystem.ThunderColor [2] = 255;
+        PartikelSystem.ThunderAlpha = 255;
     }
 
     switch (Handlung)
@@ -148,12 +148,12 @@ void GegnerColumn2::DoKI(void)
 void GegnerColumn2::GegnerExplode(void)
 {
     for (int i = 0; i < 30; i++)
-        pPartikelSystem->PushPartikel (xPos + rand ()%100, yPos + 80 + rand()%40, SMOKE);
+        PartikelSystem.PushPartikel (xPos + rand ()%100, yPos + 80 + rand()%40, SMOKE);
 
     for (int i = 0; i < 40; i++)
     {
-        pPartikelSystem->PushPartikel (xPos + rand ()%90 + 10, yPos + 60 + rand()%40, ROCKSPLITTERSMALL);
-        pPartikelSystem->PushPartikel (xPos + rand ()%90 + 10, yPos + 60 + rand()%40, ROCKSPLITTER);
+        PartikelSystem.PushPartikel (xPos + rand ()%90 + 10, yPos + 60 + rand()%40, ROCKSPLITTERSMALL);
+        PartikelSystem.PushPartikel (xPos + rand ()%90 + 10, yPos + 60 + rand()%40, ROCKSPLITTER);
     }
 
     SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEEXPLODE);

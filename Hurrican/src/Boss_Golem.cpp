@@ -572,7 +572,7 @@ void GegnerGolem::DoKI(void)
             WinkelUebergabe = WinkelToPlayer() + 180.0f;
             Projectiles.PushProjectile(xPos + 35.0f, yPos + yoff + 35.0f, FIREBALL_BIG, pAim);
 
-            pPartikelSystem->PushPartikel(xPos - 60.0f, yPos + yoff - 70.0f, GRENADEFLARE);
+            PartikelSystem.PushPartikel(xPos - 60.0f, yPos + yoff - 70.0f, GRENADEFLARE);
 
             // Sound ausgeben
             SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_FIREBALL);
@@ -774,7 +774,7 @@ void GegnerGolem::DoKI(void)
 
                 // Spritzer
                 for (int i=0; i<48; i++)
-                    pPartikelSystem->PushPartikel(xPos-80+rand()%50, yPos + 245, LAVA_SPRITZER2);
+                    PartikelSystem.PushPartikel(xPos-80+rand()%50, yPos + 245, LAVA_SPRITZER2);
 
                 SoundManager.PlayWave3D((int)xPos + 30, (int)yPos + 30, 10000 + rand()%2050, SOUND_WATERIN);
 
@@ -818,11 +818,11 @@ void GegnerGolem::DoKI(void)
             AnimCount = 0.5f;
 
             // brodeln lassen
-            pPartikelSystem->PushPartikel(xPos + rand()%160, yPos + rand()%300 + yoff, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos + rand()%160, yPos + rand()%300 + yoff, EXPLOSION_MEDIUM2);
             SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
             if (rand()%2 == 0)
-                pPartikelSystem->PushPartikel(xPos + rand()%160, yPos + rand()%300 + yoff, SMOKEBIG);
+                PartikelSystem.PushPartikel(xPos + rand()%160, yPos + rand()%300 + yoff, SMOKEBIG);
         }
 
         ShotDelay -= 1.0f SYNC;
@@ -855,16 +855,16 @@ void GegnerGolem::GegnerExplode(void)
     int i;
 
     for (i = 0; i < 100; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%200 - 50, yPos + yoff + rand()%300, ROCKSPLITTER);
+        PartikelSystem.PushPartikel(xPos + rand()%200 - 50, yPos + yoff + rand()%300, ROCKSPLITTER);
 
     for (i = 0; i < 80; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%200 - 50, yPos + yoff + rand()%300, SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos + rand()%200 - 50, yPos + yoff + rand()%300, SMOKEBIG);
 
     for (i = 0; i < 40; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%200 - 50, yPos + yoff + rand()%300, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + rand()%200 - 50, yPos + yoff + rand()%300, EXPLOSION_MEDIUM2);
 
     for (i = 0; i < 10; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%200 - 50, yPos + yoff + rand()%300, EXPLOSION_BIG);
+        PartikelSystem.PushPartikel(xPos + rand()%200 - 50, yPos + yoff + rand()%300, EXPLOSION_BIG);
 
     ShakeScreen(4);
 

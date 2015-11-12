@@ -60,7 +60,7 @@ void GegnerSurfBrett::DoKI(void)
     	yPos = float (Value1);
     	pPlayer->JumpedOnSurfboard = true;
     	SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
-    	pPartikelSystem->PushPartikel (xPos - 20, yPos - 20, EXPLOSION_MEDIUM2);
+    	PartikelSystem.PushPartikel (xPos - 20, yPos - 20, EXPLOSION_MEDIUM2);
     }
 
     // Je nach Handlung richtig verhalten
@@ -127,10 +127,10 @@ void GegnerSurfBrett::DoKI(void)
     		{
     			SmokeCount += 0.5f;
 
-    			pPartikelSystem->PushPartikel(xPos - 25 + rand()%20, yPos + 12, WATERFLUSH2);
+    			PartikelSystem.PushPartikel(xPos - 25 + rand()%20, yPos + 12, WATERFLUSH2);
 
     			for (int i = 0; i < 5; i++)
-    				pPartikelSystem->PushPartikel(xPos  + rand()%50, yPos+30, WASSERTROPFEN);
+    				PartikelSystem.PushPartikel(xPos  + rand()%50, yPos+30, WASSERTROPFEN);
     		}
 
     		// Springen

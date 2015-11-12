@@ -62,8 +62,8 @@ void GegnerRoboMan1::DoKI(void)
     {
         SmokeCount += 0.1f;
 
-        pPartikelSystem->PushPartikel(xPos + 29 + rand()%5, yPos+90, ROBOMANSMOKE);
-        pPartikelSystem->PushPartikel(xPos + 40 + rand()%5, yPos+90, ROBOMANSMOKE);
+        PartikelSystem.PushPartikel(xPos + 29 + rand()%5, yPos+90, ROBOMANSMOKE);
+        PartikelSystem.PushPartikel(xPos + 40 + rand()%5, yPos+90, ROBOMANSMOKE);
     }
 
     // Immer den Spieler im Auge behalten
@@ -164,7 +164,7 @@ void GegnerRoboMan1::DoKI(void)
         ShotCount -= 3.0f SYNC;
         if (ShotCount <= 0.0f)
         {
-            pPartikelSystem->PushPartikel(xPos+rand()%80, yPos+rand()%90, SMOKE);
+            PartikelSystem.PushPartikel(xPos+rand()%80, yPos+rand()%90, SMOKE);
             ShotCount = 1.0f;
         }
     }
@@ -203,8 +203,8 @@ void GegnerRoboMan1::GegnerExplode(void)
 
     int i;
 
-    for (i=0; i <  3; i++)	pPartikelSystem->PushPartikel (xPos - 40 + rand ()%70, yPos + rand()%40, EXPLOSION_BIG);
-    for (i=0; i < 10; i++)	pPartikelSystem->PushPartikel (xPos - 10 + rand ()%70, yPos + rand()%60, EXPLOSION_MEDIUM2);
-    for (i=0; i < 10; i++)	pPartikelSystem->PushPartikel (xPos + rand ()%70, yPos + 20 + rand()%60, SPIDERSPLITTER);
+    for (i=0; i <  3; i++)	PartikelSystem.PushPartikel (xPos - 40 + rand ()%70, yPos + rand()%40, EXPLOSION_BIG);
+    for (i=0; i < 10; i++)	PartikelSystem.PushPartikel (xPos - 10 + rand ()%70, yPos + rand()%60, EXPLOSION_MEDIUM2);
+    for (i=0; i < 10; i++)	PartikelSystem.PushPartikel (xPos + rand ()%70, yPos + 20 + rand()%60, SPIDERSPLITTER);
 
 }

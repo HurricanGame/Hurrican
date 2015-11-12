@@ -199,18 +199,18 @@ void GegnerNeuFisch::GegnerExplode(void)
     for (int i = 0; i < 10; i++)
     {
         // Fetzen erzeugen
-        pPartikelSystem->PushPartikel(float(xPos - 20 + rand()%90),
+        PartikelSystem.PushPartikel(float(xPos - 20 + rand()%90),
                                       float(yPos - 5  + rand()%70), PIRANHATEILE);
 
         // und noch n paar Luftblässchen dazu
-        pPartikelSystem->PushPartikel(float(xPos - 10  + rand()%90),
+        PartikelSystem.PushPartikel(float(xPos - 10  + rand()%90),
                                       float(yPos + 10  + rand()%70), BUBBLE);
     }
 
     // Blutwolke dazu
     //
     for (int i = 0; i < 5; i++)
-        pPartikelSystem->PushPartikel(float(xPos + rand()%60),
+        PartikelSystem.PushPartikel(float(xPos + rand()%60),
                                       float(yPos + rand()%40), PIRANHABLUT);
 
     Player[0].Score += 250;

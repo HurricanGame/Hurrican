@@ -391,29 +391,29 @@ void GegnerTheWall::DoKI(void)
             SmokeDelay = 0.2f;
 
             if (Energy < 3500)
-                pPartikelSystem->PushPartikel(xPos + 82, yPos + 260, SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 82, yPos + 260, SMOKE3);
 
             if (Energy < 3000)
-                pPartikelSystem->PushPartikel(xPos + 180, yPos + 250, SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 180, yPos + 250, SMOKE3);
 
             if (Energy < 2500)
-                pPartikelSystem->PushPartikel(xPos + 110, yPos + 320, SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 110, yPos + 320, SMOKE3);
 
             if (Energy < 2000)
-                pPartikelSystem->PushPartikel(xPos + 255, yPos + 130, SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 255, yPos + 130, SMOKE3);
 
             if (Energy < 1500)
                 if (rand()%20 == 0)
                 {
-                    pPartikelSystem->PushPartikel(xPos - 10 + rand()%10,
+                    PartikelSystem.PushPartikel(xPos - 10 + rand()%10,
                                                   yPos + 220 + rand()%10, LASERFLAME);
 
                     for (int i = 0; i < 10; i++)
-                        pPartikelSystem->PushPartikel(xPos + 10 + rand()%10,
+                        PartikelSystem.PushPartikel(xPos + 10 + rand()%10,
                                                       yPos + 240 + rand()%10, FUNKE);
 
                     for (int i = 0; i < 10; i++)
-                        pPartikelSystem->PushPartikel(xPos + 20 + rand()%2,
+                        PartikelSystem.PushPartikel(xPos + 20 + rand()%2,
                                                       yPos + 240 + rand()%10, LASERFUNKE2);
                 }
         }
@@ -476,11 +476,11 @@ void GegnerTheWall::DoKI(void)
 
             int i;
             for (i = 0; i < 20; i++)
-                pPartikelSystem->PushPartikel(xPos + TunnelOffx + 114 + rand()%30,
+                PartikelSystem.PushPartikel(xPos + TunnelOffx + 114 + rand()%30,
                                               yPos + TunnelOffY +  59 + rand()%45, SCHLEIM);
 
             for (i = 0; i < 80; i++)
-                pPartikelSystem->PushPartikel(xPos + TunnelOffx + 114 + rand()%30,
+                PartikelSystem.PushPartikel(xPos + TunnelOffx + 114 + rand()%30,
                                               yPos + TunnelOffY +  59 + rand()%45, GLASSPLITTER);
 
             // Wie lange warten?
@@ -548,8 +548,8 @@ void GegnerTheWall::DoKI(void)
             SoundManager.PlayWave(50, 128, 8000 + rand()%2000, SOUND_GOLEMSHOT);
 
             Projectiles.PushProjectile(xPos, yPos + 332, GOLEMSCHUSS);
-            pPartikelSystem->PushPartikel(xPos - 30, yPos + 295, EXPLOSIONFLARE);
-            pPartikelSystem->PushPartikel(xPos, yPos + 320, SMOKEBIG);
+            PartikelSystem.PushPartikel(xPos - 30, yPos + 295, EXPLOSIONFLARE);
+            PartikelSystem.PushPartikel(xPos, yPos + 320, SMOKEBIG);
             ShotDelay = 1.2f;
             VorneX = 5.0f;
             ShotCount--;
@@ -569,8 +569,8 @@ void GegnerTheWall::DoKI(void)
         {
             SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
             Projectiles.PushProjectile(xPos, yPos + 332, SPIDERSHOT2);
-            pPartikelSystem->PushPartikel(xPos - 30, yPos + 295, EXPLOSIONFLARE);
-            pPartikelSystem->PushPartikel(xPos, yPos + 320, SMOKEBIG);
+            PartikelSystem.PushPartikel(xPos - 30, yPos + 295, EXPLOSIONFLARE);
+            PartikelSystem.PushPartikel(xPos, yPos + 320, SMOKEBIG);
             ShotDelay = 5.0f;
             VorneX = 5.0f;
             ShotCount--;
@@ -682,11 +682,11 @@ void GegnerTheWall::DoKI(void)
             SoundManager.StopWave(SOUND_DOOR);
 
             for (int i = 0; i < 36; i++)
-                pPartikelSystem->PushPartikel(xPos + TunnelOffx + 110 + rand()%30,
+                PartikelSystem.PushPartikel(xPos + TunnelOffx + 110 + rand()%30,
                                               yPos + TunnelOffY + rand()%10 + i * 5 - 25, SMOKE);
 
             for (int i = 0; i < 15; i++)
-                pPartikelSystem->PushPartikel(xPos + TunnelOffx + 95 + rand()%30,
+                PartikelSystem.PushPartikel(xPos + TunnelOffx + 95 + rand()%30,
                                               yPos + TunnelOffY + rand()%10 + i * 10 - 25, SMOKEBIG);
 
             Handlung = GEGNER_STEHEN;

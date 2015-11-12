@@ -91,7 +91,7 @@ void GegnerRiesenWasp::DoKI(void)
             Projectiles.PushProjectile  (xPos + 25 + BlickRichtung * 56, yPos + 51, SUCHSCHUSS2);
 
             for (int i = 0; i < 5; i++)
-                pPartikelSystem->PushPartikel (xPos + rand ()%5 +  50 + BlickRichtung * 60, yPos + 75 + rand ()% 5, SMOKE3);
+                PartikelSystem.PushPartikel (xPos + rand ()%5 +  50 + BlickRichtung * 60, yPos + 75 + rand ()% 5, SMOKE3);
         }
     }
 
@@ -119,8 +119,8 @@ void GegnerRiesenWasp::DoKI(void)
         if (AnimCount >= 0.5f)
         {
             AnimCount = 0.0f;
-            pPartikelSystem->PushPartikel(xPos+rand()%80 + 30, yPos+30+rand()%50, SMOKE);
-            pPartikelSystem->PushPartikel(xPos+rand()%80 + 30, yPos+30+rand()%50, SMOKE3);
+            PartikelSystem.PushPartikel(xPos+rand()%80 + 30, yPos+30+rand()%50, SMOKE);
+            PartikelSystem.PushPartikel(xPos+rand()%80 + 30, yPos+30+rand()%50, SMOKE3);
         }
     }
     break;
@@ -150,16 +150,16 @@ void GegnerRiesenWasp::GegnerExplode(void)
 {
     // Explosionen erzeugen
     for (int i=0; i<10; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%110-30, yPos + rand()%60 - 30, EXPLOSION_BIG);
+        PartikelSystem.PushPartikel(xPos + rand()%110-30, yPos + rand()%60 - 30, EXPLOSION_BIG);
 
     for (int i=0; i<20; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%110-10, yPos + rand()%60 - 10, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + rand()%110-10, yPos + rand()%60 - 10, EXPLOSION_MEDIUM2);
 
     for (int i=0; i<200; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%110-10, yPos + rand()%50, ROCKETSMOKE);
+        PartikelSystem.PushPartikel(xPos + rand()%110-10, yPos + rand()%50, ROCKETSMOKE);
 
     for (int i = 0; i < 10; i++)
-        pPartikelSystem->PushPartikel (xPos + rand ()%100, yPos + 30 + rand ()%50, SPLITTER);
+        PartikelSystem.PushPartikel (xPos + rand ()%100, yPos + 30 + rand ()%50, SPLITTER);
 
     SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION1);	// Sound ausgeben
 

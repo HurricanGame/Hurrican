@@ -104,7 +104,7 @@ void GegnerDiamant::DoKI(void)
         {
             // Partikel erzeugen
             if (Player[0].PunisherActive == false)
-                pPartikelSystem->PushPartikel(xPos, yPos, DIAMANTCOLLECTED);
+                PartikelSystem.PushPartikel(xPos, yPos, DIAMANTCOLLECTED);
 
             // Punisher anschiessen
             else

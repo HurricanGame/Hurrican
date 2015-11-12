@@ -434,7 +434,7 @@ void GegnerDrache::DoKI(void)
         if (AnimCount < 0.0f)
         {
             AnimCount = 5.0f;
-            pPartikelSystem->PushPartikel(xPos - 100 + rand()%300,
+            PartikelSystem.PushPartikel(xPos - 100 + rand()%300,
                                           yPos +  rand()%100 + DrawYOffset,
                                           SMOKEBIG);
         }
@@ -535,14 +535,14 @@ void GegnerDrache::DoKI(void)
         if (AnimCount < 0.0f)
         {
             AnimCount = 15.0f;
-            pPartikelSystem->PushPartikel(xPos - 120 + rand()%300,
+            PartikelSystem.PushPartikel(xPos - 120 + rand()%300,
                                           yPos +  rand()%100 + DrawYOffset,
                                           SMOKEBIG);
 
             if (Attack != GEGNER_STEHEN &&
                     rand()%4 == 0)
             {
-                pPartikelSystem->PushPartikel(xPos - 120 + rand()%300,
+                PartikelSystem.PushPartikel(xPos - 120 + rand()%300,
                                               yPos +  rand()%100 + DrawYOffset,
                                               EXPLOSION_MEDIUM2);
                 SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
@@ -588,7 +588,7 @@ void GegnerDrache::DoKI(void)
                 ySpeed *= -0.3f;
 
                 for (int i = 0; i < 30; i++)
-                    pPartikelSystem->PushPartikel(xPos - 100 +  rand()%260, yPos + 120.0f - rand()%10, SNOWFLUSH);
+                    PartikelSystem.PushPartikel(xPos - 100 +  rand()%260, yPos + 120.0f - rand()%10, SNOWFLUSH);
 
                 // nicht weiter abspringen?
                 if (ySpeed > -0.5f)
@@ -622,7 +622,7 @@ void GegnerDrache::DoKI(void)
             if (SmokeCount < 0.0f)
             {
                 SmokeCount = 0.2f;
-                pPartikelSystem->PushPartikel(xPos - 100 +  rand()%260, yPos + 120.0f, SNOWFLUSH);
+                PartikelSystem.PushPartikel(xPos - 100 +  rand()%260, yPos + 120.0f, SNOWFLUSH);
             }
 
             // liegenbleiben?
@@ -673,10 +673,10 @@ void GegnerDrache::DoKI(void)
             ShotDelay = 0.5f;
 
             SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
-            pPartikelSystem->PushPartikel(xPos - 100 + rand()%500, yPos + 20 + rand()%80, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos - 100 + rand()%500, yPos + 20 + rand()%80, EXPLOSION_MEDIUM2);
 
             if (rand()%3 == 0)
-                pPartikelSystem->PushPartikel(xPos - 100 + rand()%500, yPos + 20 + rand()%80, EXPLOSION_BIG);
+                PartikelSystem.PushPartikel(xPos - 100 + rand()%500, yPos + 20 + rand()%80, EXPLOSION_BIG);
         }
 
         switch(Attack)
@@ -722,7 +722,7 @@ void GegnerDrache::DoKI(void)
                     ySpeed > 0.0f)
             {
                 for (int i = 0; i < 30; i++)
-                    pPartikelSystem->PushPartikel(xPos - 120 +  rand()%300, yPos + 80.0f, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos - 120 +  rand()%300, yPos + 80.0f, SMOKEBIG);
 
                 ShakeScreen(5.0f);
                 SoundManager.PlayWave(100, 128, 10000, SOUND_DOORSTOP);
@@ -994,7 +994,7 @@ void GegnerDrache::DoKI(void)
                     WinkelUebergabe = 180.0f;
 
                     if (xPos > (float)TileEngine.XOffset)
-                        pPartikelSystem->PushPartikel((float) TileEngine.XOffset + 10.0f,
+                        PartikelSystem.PushPartikel((float) TileEngine.XOffset + 10.0f,
                                                       (float)(TileEngine.YOffset + rand()%480),
                                                       BLATT2);
 
@@ -1006,7 +1006,7 @@ void GegnerDrache::DoKI(void)
                     WinkelUebergabe = 0.0f;
 
                     if (xPos < (float)TileEngine.XOffset + 550.0f)
-                        pPartikelSystem->PushPartikel((float)(TileEngine.XOffset + 640.0f),
+                        PartikelSystem.PushPartikel((float)(TileEngine.XOffset + 640.0f),
                                                       (float)(TileEngine.YOffset + rand()%480),
                                                       BLATT2);
 
@@ -1132,7 +1132,7 @@ void GegnerDrache::DoKI(void)
                 HeadXSpeed *= -1;
 
                 for (int i = 0; i < 30; i++)
-                    pPartikelSystem->PushPartikel(xPos + HeadX + 220.0f + rand()%20 + mirrorOffset * 275.0f,
+                    PartikelSystem.PushPartikel(xPos + HeadX + 220.0f + rand()%20 + mirrorOffset * 275.0f,
                                                   yPos + HeadY + 70.0f + rand()%20, FUNKE);
             }
 
@@ -1226,12 +1226,12 @@ void GegnerDrache::DoKI(void)
                 if (BlickRichtung == -1)
                 {
                     WinkelUebergabe = 1.0f;
-                    pPartikelSystem->PushPartikel(xPos + 180, yPos + 9 + DrawYOffset, DRACHE_SMOKE);
+                    PartikelSystem.PushPartikel(xPos + 180, yPos + 9 + DrawYOffset, DRACHE_SMOKE);
                 }
                 else
                 {
                     WinkelUebergabe = 0.0f;
-                    pPartikelSystem->PushPartikel(xPos - 40, yPos + 9 + DrawYOffset, DRACHE_SMOKE);
+                    PartikelSystem.PushPartikel(xPos - 40, yPos + 9 + DrawYOffset, DRACHE_SMOKE);
                 }
             }
 

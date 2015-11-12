@@ -265,7 +265,7 @@ void GegnerClimber::DoKI(void)
         if (shotdelay < 0.0f)
         {
             shotdelay = 0.2f SYNC;
-            pPartikelSystem->PushPartikel (xPos + 20 + rand()%5, yPos + 15 + rand ()%5, ROCKETSMOKE);
+            PartikelSystem.PushPartikel (xPos + 20 + rand()%5, yPos + 15 + rand ()%5, ROCKETSMOKE);
         }
     }
     break;
@@ -297,7 +297,7 @@ void GegnerClimber::DoKI(void)
             Value2 *= -1;
 
         SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
-        pPartikelSystem->PushPartikel (xPos + 5, yPos, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel (xPos + 5, yPos, EXPLOSION_MEDIUM2);
 
         shotdelay = 1.0f;
     }
@@ -311,12 +311,12 @@ void GegnerClimber::DoKI(void)
 void GegnerClimber::GegnerExplode(void)
 {
     SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
-    pPartikelSystem->PushPartikel (xPos + 5, yPos, EXPLOSION_MEDIUM2);
+    PartikelSystem.PushPartikel (xPos + 5, yPos, EXPLOSION_MEDIUM2);
 
     for (int i=0; i < 10; i++)
     {
-        pPartikelSystem->PushPartikel (xPos + rand ()%40, yPos + rand()%30, SPIDERSPLITTER);
-        pPartikelSystem->PushPartikel (xPos + rand ()%40, yPos + rand()%30, FUNKE);
+        PartikelSystem.PushPartikel (xPos + rand ()%40, yPos + rand()%30, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel (xPos + rand ()%40, yPos + rand()%30, FUNKE);
     }
 
     Player[0].Score += 250;

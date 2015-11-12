@@ -135,7 +135,7 @@ void GegnerDrone::DoKI(void)
 
             SoundManager.PlayWave3D (int (xPos), int (yPos), 12000, SOUND_DRONE);
 
-            pPartikelSystem->PushPartikel (xPos + 33, yPos + 60, BULLET, &Player[0]);
+            PartikelSystem.PushPartikel (xPos + 33, yPos + 60, BULLET, &Player[0]);
 
             if (BlickRichtung == RECHTS)
                 Projectiles.PushProjectile  (xPos + 58, yPos + 68, DRONEBULLET);
@@ -174,7 +174,7 @@ void GegnerDrone::DoKI(void)
             ShotDelay = 20.0f;
             ShotCount--;
 
-            pPartikelSystem->PushPartikel (xPos + 36, yPos + 57, BULLET, &Player[0]);
+            PartikelSystem.PushPartikel (xPos + 36, yPos + 57, BULLET, &Player[0]);
 
             if (BlickRichtung == RECHTS)
                 Projectiles.PushProjectile  (xPos + 58, yPos + 68, DRONEBULLET);
@@ -221,8 +221,8 @@ void GegnerDrone::DoKI(void)
         if (AnimCount >= 0.5f)
         {
             AnimCount = 0.0f;
-            pPartikelSystem->PushPartikel(xPos+rand()%30 + 20, yPos+10+rand()%40, SMOKE);
-            pPartikelSystem->PushPartikel(xPos+rand()%30 + 20, yPos+10+rand()%40, SMOKE3);
+            PartikelSystem.PushPartikel(xPos+rand()%30 + 20, yPos+10+rand()%40, SMOKE);
+            PartikelSystem.PushPartikel(xPos+rand()%30 + 20, yPos+10+rand()%40, SMOKE3);
         }
     }
     break;
@@ -252,14 +252,14 @@ void GegnerDrone::GegnerExplode(void)
 
     for (int i = 0; i < 5; i++)
     {
-        pPartikelSystem->PushPartikel (xPos - 30 + rand ()%70, yPos - 30 + rand ()%80, EXPLOSION_MEDIUM2);
-        pPartikelSystem->PushPartikel (xPos - 30 + rand ()%70, yPos - 30 + rand ()%80, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel (xPos - 30 + rand ()%70, yPos - 30 + rand ()%80, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel (xPos - 30 + rand ()%70, yPos - 30 + rand ()%80, SPIDERSPLITTER);
     }
 
     for (int i = 0; i < 10; i++)
-        pPartikelSystem->PushPartikel (xPos - 30 + rand ()%70, yPos - 30 + rand ()%80, SPLITTER);
+        PartikelSystem.PushPartikel (xPos - 30 + rand ()%70, yPos - 30 + rand ()%80, SPLITTER);
 
-    pPartikelSystem->PushPartikel (xPos-24, yPos-16, EXPLOSION_GIANT);
+    PartikelSystem.PushPartikel (xPos-24, yPos-16, EXPLOSION_GIANT);
 
     Player[0].Score += 300;
 }

@@ -88,8 +88,8 @@ void GegnerBigRocket::DoKI(void)
         {
             smokedelay += 0.2f;
 
-            pPartikelSystem->PushPartikel (xPos + 20 + rand ()%10, yPos + 290 + rand()%5, SMOKE3_U);
-            pPartikelSystem->PushPartikel (xPos + 20 + rand ()%13, yPos + 290 + rand()%5, ROCKETSMOKE);
+            PartikelSystem.PushPartikel (xPos + 20 + rand ()%10, yPos + 290 + rand()%5, SMOKE3_U);
+            PartikelSystem.PushPartikel (xPos + 20 + rand ()%13, yPos + 290 + rand()%5, ROCKETSMOKE);
         }
 
         blocko = TileEngine.BlockOben (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
@@ -127,14 +127,14 @@ void GegnerBigRocket::GegnerExplode(void)
 
         for (int i=0; i < 30; i++)
         {
-            pPartikelSystem->PushPartikel (xPos + rand ()%60, yPos + 30 + rand()%250, EXPLOSION_MEDIUM2);
-            pPartikelSystem->PushPartikel (xPos + 10 + rand ()%50, yPos + 30 + rand()%250, SPIDERSPLITTER);
+            PartikelSystem.PushPartikel (xPos + rand ()%60, yPos + 30 + rand()%250, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel (xPos + 10 + rand ()%50, yPos + 30 + rand()%250, SPIDERSPLITTER);
         }
 
         for (int i=0; i < 80; i++)
         {
-            pPartikelSystem->PushPartikel (xPos + 10 + rand ()%50, yPos + 30 + rand()%250, MINIFLARE);
-            pPartikelSystem->PushPartikel (xPos + 10 + rand ()%50, yPos + 30 + rand()%250, LONGFUNKE);
+            PartikelSystem.PushPartikel (xPos + 10 + rand ()%50, yPos + 30 + rand()%250, MINIFLARE);
+            PartikelSystem.PushPartikel (xPos + 10 + rand ()%50, yPos + 30 + rand()%250, LONGFUNKE);
         }
 
         Player[0].Score += 2000;

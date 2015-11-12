@@ -153,9 +153,9 @@ void GegnerRotzpott::DoKI(void)
     if (ShotDelay <= 0.0f)
     {
         //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
-        //pPartikelSystem->PushPartikel(xPos - (float)sin((180 - GunWinkel) / 180.0f * PI) * 30.0f,
+        //PartikelSystem.PushPartikel(xPos - (float)sin((180 - GunWinkel) / 180.0f * PI) * 30.0f,
         //                              yPos - 18.0f + (float)cos((180 - GunWinkel) / 180.0f * PI) * 38.0f, LASERFLAMEPHARAO);
-        pPartikelSystem->PushPartikel(xPos - sin_deg(180.0f - GunWinkel) * 30.0f,
+        PartikelSystem.PushPartikel(xPos - sin_deg(180.0f - GunWinkel) * 30.0f,
                                       yPos - 18.0f + cos_deg(180.0f - GunWinkel) * 38.0f, LASERFLAMEPHARAO);
 
         // Wie schiesst er? Im Bogen oder direkt?
@@ -197,12 +197,12 @@ void GegnerRotzpott::GegnerExplode(void)
     //int i = 0;
     for (int i = 0; i < 8; i++)
     {
-        pPartikelSystem->PushPartikel (xPos + rand ()%40-10, yPos - 10 + rand ()%20, EXPLOSION_MEDIUM2);
-        pPartikelSystem->PushPartikel (xPos + rand ()%40-10, yPos - 10 + rand ()%20, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel (xPos + rand ()%40-10, yPos - 10 + rand ()%20, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel (xPos + rand ()%40-10, yPos - 10 + rand ()%20, SPIDERSPLITTER);
     }
 
     for (int i = 0; i < 4; i++)
-        pPartikelSystem->PushPartikel (xPos - 10 + rand ()%40, yPos - 10 + rand ()%20, SCHROTT1);
+        PartikelSystem.PushPartikel (xPos - 10 + rand ()%40, yPos - 10 + rand ()%20, SCHROTT1);
 
     Player[0].Score += 350;
 }

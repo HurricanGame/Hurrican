@@ -148,10 +148,10 @@ void GegnerMiniDragon::DoKI(void)
 
             //int i = 0;
             for (int i = 0; i < 10; i++)
-                pPartikelSystem->PushPartikel(xPos + 10 + rand()%30, yPos + rand()%10, SPIDERSPLITTER);
+                PartikelSystem.PushPartikel(xPos + 10 + rand()%30, yPos + rand()%10, SPIDERSPLITTER);
 
             for (int i = 0; i < 3; i++)
-                pPartikelSystem->PushPartikel(xPos - 10 + rand()%30, yPos - 20 + rand()%20, EXPLOSION_MEDIUM3);
+                PartikelSystem.PushPartikel(xPos - 10 + rand()%30, yPos - 20 + rand()%20, EXPLOSION_MEDIUM3);
         }
     }
     break;
@@ -289,16 +289,16 @@ void GegnerMiniDragon::DoKI(void)
             mulx = (OldX - xPos) / 6.0f;
 
             SoundManager.PlayWave (100, 128, 8000 + rand()%8000, SOUND_EXPLOSION1);
-            pPartikelSystem->PushPartikel(xPos + (6 - Segments) * mulx,
+            PartikelSystem.PushPartikel(xPos + (6 - Segments) * mulx,
                                           yPos + (6 - Segments) * muly, EXPLOSION_MEDIUM2);
 
 
             for (int i=0; i < 3; i++)
-                pPartikelSystem->PushPartikel (xPos + (6 - Segments) * mulx + rand ()%40,
+                PartikelSystem.PushPartikel (xPos + (6 - Segments) * mulx + rand ()%40,
                                                yPos + (6 - Segments) * muly + rand()%30, SPIDERSPLITTER);
 
             for (int i=0; i < 10; i++)
-                pPartikelSystem->PushPartikel (xPos + (6 - Segments) * mulx + rand ()%40,
+                PartikelSystem.PushPartikel (xPos + (6 - Segments) * mulx + rand ()%40,
                                                yPos + (6 - Segments) * muly + rand()%30, FUNKE);
 
             ShotDelay = 2.0f;
@@ -323,7 +323,7 @@ void GegnerMiniDragon::DoKI(void)
         yAcc = 0.0f;
 
         SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
-        pPartikelSystem->PushPartikel(xPos - 26,
+        PartikelSystem.PushPartikel(xPos - 26,
                                       yPos - 22, EXPLOSION_BIG);
     }
 

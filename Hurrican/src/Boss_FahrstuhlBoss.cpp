@@ -119,20 +119,20 @@ void GegnerFahrstuhlBoss::DoKI(void)
     {
         smokecount = 1.0f;
 
-        pPartikelSystem->PushPartikel(xPos + rand()%10 - 15, yPos,  SMOKEBIG);
-        pPartikelSystem->PushPartikel(xPos + rand()%10 - 15, yPos + 210, SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos + rand()%10 - 15, yPos,  SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos + rand()%10 - 15, yPos + 210, SMOKEBIG);
 
-        pPartikelSystem->PushPartikel(xPos + rand()%10 + 375, yPos,  SMOKEBIG);
-        pPartikelSystem->PushPartikel(xPos + rand()%10 + 375, yPos + 210, SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos + rand()%10 + 375, yPos,  SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos + rand()%10 + 375, yPos + 210, SMOKEBIG);
 
         // Wunden Punkt rauchen lassen bei wenig Energy
         if (Energy <= 1500.0f)
         {
-            pPartikelSystem->PushPartikel(xPos + x1 + 35 + rand()%20, yPos + y1 + rand()%15,  SMOKEBIG);
+            PartikelSystem.PushPartikel(xPos + x1 + 35 + rand()%20, yPos + y1 + rand()%15,  SMOKEBIG);
 
             if (rand()%10 == 0)
             {
-                pPartikelSystem->PushPartikel(xPos + x1 + 50 + rand()%20, yPos + y1 + 35 + rand()%15, LASERFLAME);
+                PartikelSystem.PushPartikel(xPos + x1 + 50 + rand()%20, yPos + y1 + 35 + rand()%15, LASERFLAME);
             }
         }
     }
@@ -333,10 +333,10 @@ void GegnerFahrstuhlBoss::DoKI(void)
             SoundManager.PlayWave(100, 128, 44100, SOUND_LASERSHOT);
 
             Projectiles.PushProjectile (xPos + x2 + 28,      yPos + y2 + 95,     KRABBLERLASER1);
-            pPartikelSystem->PushPartikel(xPos + x2 + 28 - 25, yPos + y2 + 95 - 4, LASERFLAME);
+            PartikelSystem.PushPartikel(xPos + x2 + 28 - 25, yPos + y2 + 95 - 4, LASERFLAME);
 
             Projectiles.PushProjectile (xPos + x3 + 28,      yPos + y2 + 95,     KRABBLERLASER1);
-            pPartikelSystem->PushPartikel(xPos + x3 + 28 - 25, yPos + y2 + 95 - 4, LASERFLAME);
+            PartikelSystem.PushPartikel(xPos + x3 + 28 - 25, yPos + y2 + 95 - 4, LASERFLAME);
 
             y2 = 75;
 
@@ -396,7 +396,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
             SoundManager.PlayWave (100, 128, 10000 + rand()%2000, SOUND_LASERSHOT);
 
             Projectiles.PushProjectile  (xPos + x1 + 80 - 28, yPos + y1 + 155, UFOLASER);
-            pPartikelSystem->PushPartikel (xPos + x1 + 80 - 90, yPos + y1 + 110, UFOLASERFLARE);
+            PartikelSystem.PushPartikel (xPos + x1 + 80 - 90, yPos + y1 + 110, UFOLASERFLARE);
 
             y1 = 155;
 
@@ -456,10 +456,10 @@ void GegnerFahrstuhlBoss::DoKI(void)
             SoundManager.PlayWave(100, 128, 8000 + rand ()%4000, SOUND_CANON);
 
             Projectiles.PushProjectile (xPos + x2 + 28,      yPos + y2 + 95+5, SUCHSCHUSS);
-            pPartikelSystem->PushPartikel(xPos + x2 + 28 - 10, yPos + y2 + 95,   SMOKE);
+            PartikelSystem.PushPartikel(xPos + x2 + 28 - 10, yPos + y2 + 95,   SMOKE);
 
             Projectiles.PushProjectile (xPos + x3 + 28,      yPos + y2 + 95+5, SUCHSCHUSS);
-            pPartikelSystem->PushPartikel(xPos + x3 + 28 - 10, yPos + y2 + 95,   SMOKE);
+            PartikelSystem.PushPartikel(xPos + x3 + 28 - 10, yPos + y2 + 95,   SMOKE);
 
             y2 = 77;
 
@@ -495,11 +495,11 @@ void GegnerFahrstuhlBoss::DoKI(void)
             ShotDelay = 0.5f;
             SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
-            pPartikelSystem->PushPartikel (xPos -30 + rand()%400, yPos + rand()%280, EXPLOSION_MEDIUM2);
-            pPartikelSystem->PushPartikel (xPos -50 + rand()%400, yPos + rand()%280, EXPLOSION_BIG);
+            PartikelSystem.PushPartikel (xPos -30 + rand()%400, yPos + rand()%280, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel (xPos -50 + rand()%400, yPos + rand()%280, EXPLOSION_BIG);
 
             if (rand ()%2 == 0)
-                pPartikelSystem->PushPartikel (xPos + rand()%400, yPos + rand()%280, SPLITTER);
+                PartikelSystem.PushPartikel (xPos + rand()%400, yPos + rand()%280, SPLITTER);
         }
 
         Energy = 100.0f;
@@ -546,7 +546,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
             Player[i].JumpStart += 40.0f SYNC;
         }
 
-    PartikelClass *pTemp = pPartikelSystem->pStart; // Zeiger auf den ersten Partikel
+    PartikelClass *pTemp = PartikelSystem.pStart; // Zeiger auf den ersten Partikel
     while (pTemp != NULL)						 	// Ende der Liste erreicht ?
     {
         if (pTemp->PartikelArt != FUNKE  &&
@@ -600,7 +600,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
             pTemp2 = pTemp2->pNext;						// Zeiger auf das nächste Element
         }
 
-        PartikelClass *pTemp3 = pPartikelSystem->pStart;// Zeiger auf den ersten Partikel
+        PartikelClass *pTemp3 = PartikelSystem.pStart;// Zeiger auf den ersten Partikel
         while (pTemp3 != NULL)							// Ende der Liste erreicht ?
         {
             pTemp3->yPos	-= A;				// Nach oben bewegen

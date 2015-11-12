@@ -240,8 +240,8 @@ void GegnerBratklops::DoDraw()
                 {
                     // Funken und Rauch am Boden
                     //
-                    if (rand()%2 == 0) pPartikelSystem->PushPartikel (xs + rand()%24, ys + rand()%24, FUNKE2);
-                    if (rand()%2 == 0) pPartikelSystem->PushPartikel (xs + rand()%24 - 15, ys + rand()%8 - 40, SMOKE2);
+                    if (rand()%2 == 0) PartikelSystem.PushPartikel (xs + rand()%24, ys + rand()%24, FUNKE2);
+                    if (rand()%2 == 0) PartikelSystem.PushPartikel (xs + rand()%24 - 15, ys + rand()%8 - 40, SMOKE2);
                 }
             }
         }
@@ -516,8 +516,8 @@ void GegnerBratklops::DoKI(void)
 
         // Explodieren
         //
-        if (rand()%5 == 0) pPartikelSystem->PushPartikel(xPos + rand()%180, yPos + rand()%500, EXPLOSION_GREEN);
-        if (rand()%3 == 0) pPartikelSystem->PushPartikel(xPos + rand()%150, yPos + rand()%200 + 100, MADEBLUT);
+        if (rand()%5 == 0) PartikelSystem.PushPartikel(xPos + rand()%180, yPos + rand()%500, EXPLOSION_GREEN);
+        if (rand()%3 == 0) PartikelSystem.PushPartikel(xPos + rand()%150, yPos + rand()%200 + 100, MADEBLUT);
         if (rand()%8 == 0) SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
         xPos -= 3.0f SYNC;

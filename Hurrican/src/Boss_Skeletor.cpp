@@ -400,10 +400,10 @@ void GegnerSkeletor::DoKI(void)
             AnimCount = 0.0f;
 
             for (int i = 0; i < 10; i++)
-                pPartikelSystem->PushPartikel(xPos + rand()%100 - 20, yPos + rand()%20 + 130, SMOKEBIG);
+                PartikelSystem.PushPartikel(xPos + rand()%100 - 20, yPos + rand()%20 + 130, SMOKEBIG);
 
             for (int i = 0; i < 10; i++)
-                pPartikelSystem->PushPartikel(xPos + rand()%100, yPos + 180 + rand()%10, SPIDERSPLITTER);
+                PartikelSystem.PushPartikel(xPos + rand()%100, yPos + 180 + rand()%10, SPIDERSPLITTER);
 
             ShakeScreen(5.0f);
             SoundManager.PlayWave(100, 128, 11025, SOUND_DOORSTOP);
@@ -434,8 +434,8 @@ void GegnerSkeletor::DoKI(void)
 
                 AnimCount = 1.5f;
                 SoundManager.PlayWave(100, 128, 6000 + rand()%2000, SOUND_GRANATE);
-                pPartikelSystem->PushPartikel(xPos + 50 + off, yPos + 35, EXPLOSIONFLARE);
-                pPartikelSystem->PushPartikel(xPos + 50 + off, yPos + 35, EXPLOSIONFLARE);
+                PartikelSystem.PushPartikel(xPos + 50 + off, yPos + 35, EXPLOSIONFLARE);
+                PartikelSystem.PushPartikel(xPos + 50 + off, yPos + 35, EXPLOSIONFLARE);
 
                 WinkelUebergabe = 40.0f - (float)(AnimPhase) * 4 - rand()%8;
 
@@ -492,7 +492,7 @@ void GegnerSkeletor::DoKI(void)
             if (BlickRichtung == LINKS)
                 off = 30;
 
-            pPartikelSystem->PushPartikel(xPos + off, yPos + 75, BULLET_SKELETOR);
+            PartikelSystem.PushPartikel(xPos + off, yPos + 75, BULLET_SKELETOR);
 
             // Sound
             SoundManager.PlayWave(100, 128, 10000 + rand()%400, SOUND_GATLING);
@@ -545,10 +545,10 @@ void GegnerSkeletor::DoKI(void)
             AnimCount = 0.0f;
 
             for (int i = 0; i < 50; i++)
-                pPartikelSystem->PushPartikel(xPos + rand()%100, yPos + rand()%150 + 30, SMOKEBIG);
+                PartikelSystem.PushPartikel(xPos + rand()%100, yPos + rand()%150 + 30, SMOKEBIG);
 
             for (int i = 0; i < 20; i++)
-                pPartikelSystem->PushPartikel(xPos + rand()%100, yPos + 180 + rand()%10, SPIDERSPLITTER);
+                PartikelSystem.PushPartikel(xPos + rand()%100, yPos + 180 + rand()%10, SPIDERSPLITTER);
 
             ShakeScreen(5.0f);
             SoundManager.PlayWave(100, 128, 11025, SOUND_DOORSTOP);
@@ -585,26 +585,26 @@ void GegnerSkeletor::DoKI(void)
         //int i = 0;	// PICKLE not used
 
         for (int i = 0; i < 15; i++)
-            pPartikelSystem->PushPartikel(xPos + rand()% 100,
+            PartikelSystem.PushPartikel(xPos + rand()% 100,
                                           yPos + rand()% 200,
                                           SPLITTER);
 
         for (int i = 0; i < 40; i++)
-            pPartikelSystem->PushPartikel(xPos + rand()% 200 - 50,
+            PartikelSystem.PushPartikel(xPos + rand()% 200 - 50,
                                           yPos + rand()% 250 - 20,
                                           SPIDERSPLITTER);
 
         for (int i = 0; i < 40; i++)
-            pPartikelSystem->PushPartikel(xPos + rand()% 200 - 50,
+            PartikelSystem.PushPartikel(xPos + rand()% 200 - 50,
                                           yPos + rand()% 250 - 20,
                                           SCHROTT1);
 
         for (int i = 0; i < 60; i++)
-            pPartikelSystem->PushPartikel(xPos + rand()% 200 - 50,
+            PartikelSystem.PushPartikel(xPos + rand()% 200 - 50,
                                           yPos + rand()% 200 - 50,
                                           EXPLOSION_MEDIUM2);
 
-        pPartikelSystem->PushPartikel (xPos + 62, yPos + 100, SHOCKEXPLOSION);
+        PartikelSystem.PushPartikel (xPos + 62, yPos + 100, SHOCKEXPLOSION);
         SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
         Player[0].Score += 12500;
         ShakeScreen(5.0f);

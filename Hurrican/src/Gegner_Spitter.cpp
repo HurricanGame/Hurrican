@@ -47,7 +47,7 @@ void GegnerSpitter::DoKI(void)
             if (AnimPhase == 2)
             {
                 Projectiles.PushProjectile (xPos + 8, yPos,   STRAIGHTSCHUSS);
-                pPartikelSystem->PushPartikel(xPos,     yPos-8, SMOKE);
+                PartikelSystem.PushPartikel(xPos,     yPos-8, SMOKE);
             }
 
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
@@ -147,7 +147,7 @@ void GegnerSpitter::GegnerExplode(void)
 {
     Player[0].Score += 50;
 
-    pPartikelSystem->PushPartikel(float(xPos - 10),
+    PartikelSystem.PushPartikel(float(xPos - 10),
                                   float(yPos - 10), EXPLOSION_MEDIUM);
 
     SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben

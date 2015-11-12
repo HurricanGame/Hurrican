@@ -57,7 +57,7 @@ void GegnerStalagtit::DoKI(void)
             // Partikel erzeugen wo der Stein die Decke verlässt
             for (int i=0; i<3; i++)
             {
-                pPartikelSystem->PushPartikel(xPos+i*10, yPos + 30, ROCKSPLITTERSMALLBLUE);
+                PartikelSystem.PushPartikel(xPos+i*10, yPos + 30, ROCKSPLITTERSMALLBLUE);
             }
 
             // Sound ausgeben
@@ -84,8 +84,8 @@ void GegnerStalagtit::GegnerExplode(void)
 // und Splitter erzeugen Rauch
     for (int i=0; i<20; i++)
     {
-        pPartikelSystem->PushPartikel(xPos + rand()%40-8, yPos + rand()%80 - 8, SMOKE);
-        pPartikelSystem->PushPartikel(xPos + rand()%40-8, yPos + rand()%80 - 8, ROCKSPLITTERSMALLBLUE);
+        PartikelSystem.PushPartikel(xPos + rand()%40-8, yPos + rand()%80 - 8, SMOKE);
+        PartikelSystem.PushPartikel(xPos + rand()%40-8, yPos + rand()%80 - 8, ROCKSPLITTERSMALLBLUE);
     }
     SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEEXPLODE);	// Sound ausgeben
 

@@ -79,11 +79,11 @@ void GegnerSkull::DoKI(void)
     {
         SmokeDelay = 5.0f;
 
-//		pPartikelSystem->PushPartikel(xPos, yPos + 20, SMOKE);
+//		PartikelSystem.PushPartikel(xPos, yPos + 20, SMOKE);
 
         if (rand()%20 == 0)
             for (int i = 0; i < 10; i++)
-                pPartikelSystem->PushPartikel(xPos + 10, yPos + 40, FUNKE);
+                PartikelSystem.PushPartikel(xPos + 10, yPos + 40, FUNKE);
     }
 
     // Je nach Handlung richtig verhalten
@@ -113,10 +113,10 @@ void GegnerSkull::DoKI(void)
             SoundManager.StopWave(SOUND_EXPLOSION2);
             SoundManager.PlayWave(75, 128, 8000 + (int)(endwert * 800), SOUND_EXPLOSION2);
 
-            pPartikelSystem->PushPartikel(xPos + rand()%30 - 30, yPos + rand()%30 - 30, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos + rand()%30 - 30, yPos + rand()%30 - 30, EXPLOSION_MEDIUM2);
 
             for (int i = 0; i < 3; i++)
-                pPartikelSystem->PushPartikel(xPos + rand()%30 - 10, yPos + rand()%20 - 10, SPIDERSPLITTER);
+                PartikelSystem.PushPartikel(xPos + rand()%30 - 10, yPos + rand()%20 - 10, SPIDERSPLITTER);
         }
 
         if (xPos + 16 > TileEngine.XOffset + 320.0f)
@@ -144,29 +144,29 @@ void GegnerSkull::DoKI(void)
             Energy = 0.0f;
             SoundManager.PlayWave(100, 128, 7000, SOUND_MUTANT);
 
-            pPartikelSystem->PushPartikel (xPos + 20, yPos + 20, SHOCKEXPLOSION);
-            pPartikelSystem->PushPartikel (xPos + 20, yPos + 20, SHOCKEXPLOSION);
-            pPartikelSystem->PushPartikel (xPos + 20, yPos + 20, SHOCKEXPLOSION);
+            PartikelSystem.PushPartikel (xPos + 20, yPos + 20, SHOCKEXPLOSION);
+            PartikelSystem.PushPartikel (xPos + 20, yPos + 20, SHOCKEXPLOSION);
+            PartikelSystem.PushPartikel (xPos + 20, yPos + 20, SHOCKEXPLOSION);
 
             int i;
             for (i = 0; i < 20; i++)
-                pPartikelSystem->PushPartikel(xPos + rand()%30,
+                PartikelSystem.PushPartikel(xPos + rand()%30,
                                               yPos + rand()%30,
                                               SPIDERSPLITTER);
 
             for (i = 0; i < 20; i++)
-                pPartikelSystem->PushPartikel(xPos - 50 + rand()%100,
+                PartikelSystem.PushPartikel(xPos - 50 + rand()%100,
                                               yPos - 50 + rand()%100, EXPLOSION_BIG);
 
             for (i = 0; i < 20; i++)
-                pPartikelSystem->PushPartikel(xPos - 50 + rand()%100,
+                PartikelSystem.PushPartikel(xPos - 50 + rand()%100,
                                               yPos - 50 + rand()%100, SPLITTER);
 
             for (int i = 0; i < 20; i++)
-                pPartikelSystem->PushPartikel(xPos - 50 + rand()%100,
+                PartikelSystem.PushPartikel(xPos - 50 + rand()%100,
                                               yPos - 50 + rand()%100, SCHROTT1);
 
-            pPartikelSystem->PushPartikel(xPos-80,
+            PartikelSystem.PushPartikel(xPos-80,
                                           yPos-80, EXPLOSION_GIGA);
 
             Timer.SetMoveSpeed(10.0f);

@@ -69,7 +69,7 @@ void GegnerQualle::DoKI(void)
                 yPos-20 > pAim->ypos)
         {
             // Bläschen erzeugen
-            pPartikelSystem->PushPartikel(xPos + 20, yPos + 30, BUBBLE);
+            PartikelSystem.PushPartikel(xPos + 20, yPos + 30, BUBBLE);
 
             // rechts / links bewegen
             if (xPos < pAim->xpos)
@@ -138,12 +138,12 @@ void GegnerQualle::GegnerExplode(void)
     for (int i=0; i<5; i++)
     {
         // ein paar Luftblässchen erzeugen
-        pPartikelSystem->PushPartikel(float(xPos - 10  + rand()%45),
+        PartikelSystem.PushPartikel(float(xPos - 10  + rand()%45),
                                       float(yPos + 10  + rand()%30), BUBBLE);
     }
 
     // Blutwolke dazu
-    pPartikelSystem->PushPartikel(float(xPos + 2),
+    PartikelSystem.PushPartikel(float(xPos + 2),
                                   float(yPos - 5), PIRANHABLUT);
 
     SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben

@@ -47,7 +47,7 @@ OuttroClass::OuttroClass(void)
     PlayerSmoke = 0.0f;
     Snow = 0.0f;
 
-    pPartikelSystem->ClearAll();
+    PartikelSystem.ClearAll();
     SoundManager.LoadSong("outtro.it", MUSIC_OUTTRO);
 
     //DKS -
@@ -61,7 +61,7 @@ OuttroClass::OuttroClass(void)
 
     // Ein paar Schneepartikel adden
     for (int i = 0; i < 100; i++)
-        pPartikelSystem->PushPartikel((float)(rand()%640), (float)(rand()%480), SCHNEEFLOCKE_END);
+        PartikelSystem.PushPartikel((float)(rand()%640), (float)(rand()%480), SCHNEEFLOCKE_END);
 }
 
 // --------------------------------------------------------------------------------------
@@ -117,7 +117,7 @@ void OuttroClass::DoOuttro(void)
                               TowerOffset / 10.0f, 0xFFFFFFFF);
 
     // Partikel
-    pPartikelSystem->DoPartikelSpecial(false);
+    PartikelSystem.DoPartikelSpecial(false);
 
     // Den Henry, die alte Maske, rendern
     DirectGraphics.SetFilterMode(false);
@@ -128,7 +128,7 @@ void OuttroClass::DoOuttro(void)
     Background.RenderSprite(0, 360, 0xFFFFFFFF);
 
     // Auspuff Partikel =)
-    pPartikelSystem->DoPartikelSpecial(true);
+    PartikelSystem.DoPartikelSpecial(true);
 
     // Spieler, der rausfliegt
     if (Zustand == OUTTRO_PLAYER_FLEES)
@@ -203,7 +203,7 @@ void OuttroClass::DoOuttro(void)
     {
         Snow = 1.0f;
 
-        pPartikelSystem->PushPartikel((float)(rand()%640), -8, SCHNEEFLOCKE_END);
+        PartikelSystem.PushPartikel((float)(rand()%640), -8, SCHNEEFLOCKE_END);
     }
 
     switch(Zustand)
@@ -234,10 +234,10 @@ void OuttroClass::DoOuttro(void)
         if (SmokeDelay < 0.0f)
         {
             SmokeDelay = 1.5f;
-            pPartikelSystem->PushPartikel((float)(280 + rand()%180),
+            PartikelSystem.PushPartikel((float)(280 + rand()%180),
                                           (float)(320 + rand()%10), SMOKEBIG_OUTTRO);
 
-            pPartikelSystem->PushPartikel((float)(280 + rand()%180),
+            PartikelSystem.PushPartikel((float)(280 + rand()%180),
                                           (float)(150 + TowerOffset + rand()%100), EXPLOSION_MEDIUM2);
         }
 
@@ -256,10 +256,10 @@ void OuttroClass::DoOuttro(void)
         {
             SmokeDelay = 0.5f;
 
-            pPartikelSystem->PushPartikel((float)(280 + rand()%180),
+            PartikelSystem.PushPartikel((float)(280 + rand()%180),
                                           (float)(320 + rand()%10), SMOKEBIG_OUTTRO);
 
-            pPartikelSystem->PushPartikel((float)(280 + rand()%180),
+            PartikelSystem.PushPartikel((float)(280 + rand()%180),
                                           (float)(150 + TowerOffset + rand()%100), EXPLOSION_MEDIUM2);
         }
 
@@ -283,8 +283,8 @@ void OuttroClass::DoOuttro(void)
                 WinkelUebergabe = (Counter) / 2.0f;
                 if (WinkelUebergabe >= 1.0f)
                 {
-                    pPartikelSystem->PushPartikel(px[0] + Counter / 2.0f, py[0] + Counter / 1.5f, EXPLOSION_TRACE_END);
-                    pPartikelSystem->PushPartikel(px[0] - Counter / 2.0f, py[0] + Counter / 1.5f, EXPLOSION_TRACE_END);
+                    PartikelSystem.PushPartikel(px[0] + Counter / 2.0f, py[0] + Counter / 1.5f, EXPLOSION_TRACE_END);
+                    PartikelSystem.PushPartikel(px[0] - Counter / 2.0f, py[0] + Counter / 1.5f, EXPLOSION_TRACE_END);
                 }
 
                 if (NUMPLAYERS == 2)
@@ -292,8 +292,8 @@ void OuttroClass::DoOuttro(void)
                     WinkelUebergabe = (Counter - 5.0f) / 2.0f;
                     if (WinkelUebergabe >= 1.0f)
                     {
-                        pPartikelSystem->PushPartikel(px[1], py[1] + Counter / 5.0f, EXPLOSION_TRACE_END);
-                        pPartikelSystem->PushPartikel(px[1] - Counter / 2.0f, py[1] + Counter / 5.0f, EXPLOSION_TRACE_END);
+                        PartikelSystem.PushPartikel(px[1], py[1] + Counter / 5.0f, EXPLOSION_TRACE_END);
+                        PartikelSystem.PushPartikel(px[1] - Counter / 2.0f, py[1] + Counter / 5.0f, EXPLOSION_TRACE_END);
                     }
                 }
 
@@ -365,10 +365,10 @@ void OuttroClass::DoOuttro(void)
             SmokeDelay = (float)(rand()%10) + 5.0f;
 
             for (int i = 0; i < 10; i++)
-                pPartikelSystem->PushPartikel((float)(280 + rand()%180),
+                PartikelSystem.PushPartikel((float)(280 + rand()%180),
                                               (float)(340 + rand()%10), SMOKEBIG_OUTTRO);
 
-            pPartikelSystem->PushPartikel((float)(280 + rand()%180),
+            PartikelSystem.PushPartikel((float)(280 + rand()%180),
                                           (float)(150 + TowerOffset + rand()%100), EXPLOSION_MEDIUM2);
         }
 

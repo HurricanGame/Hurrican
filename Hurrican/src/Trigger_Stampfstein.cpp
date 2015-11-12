@@ -134,11 +134,11 @@ void GegnerStampfstein::DoKI(void)
         {
             // Staub erzeugen
             for (int i=0; i < 20; i++)
-                pPartikelSystem->PushPartikel (xPos + i * 5 - 30, yPos + 220, SMOKEBIG);
+                PartikelSystem.PushPartikel (xPos + i * 5 - 30, yPos + 220, SMOKEBIG);
 
             // Trümmer erzeugen
             for (int i=0; i < 20; i++)
-                pPartikelSystem->PushPartikel (xPos + i * 5 - 10, yPos + 236, ROCKSPLITTER + rand()%2);
+                PartikelSystem.PushPartikel (xPos + i * 5 - 10, yPos + 236, ROCKSPLITTER + rand()%2);
 
             SoundManager.PlayWave(175, 128, 8000 + rand()%4000, SOUND_PHARAORAMM);
 

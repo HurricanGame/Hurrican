@@ -194,8 +194,8 @@ void GegnerPresswurst::DoKI(void)
         {
             SmokeCount = 0.2f;
 
-            pPartikelSystem->PushPartikel(xPos + 30.0f, yPos + 300.0f, SMOKE3_LU);
-            pPartikelSystem->PushPartikel(xPos + 135.0f, yPos + 300.0f, SMOKE3_RU);
+            PartikelSystem.PushPartikel(xPos + 30.0f, yPos + 300.0f, SMOKE3_LU);
+            PartikelSystem.PushPartikel(xPos + 135.0f, yPos + 300.0f, SMOKE3_RU);
         }
 
         // Spinne spawnen

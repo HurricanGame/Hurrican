@@ -110,12 +110,12 @@ void GegnerStelzSack::DoKI(void)
 
             if (BlickRichtung == LINKS)
             {
-                pPartikelSystem->PushPartikel (xPos - 50, yPos, STELZFLARE);
+                PartikelSystem.PushPartikel (xPos - 50, yPos, STELZFLARE);
                 Projectiles.PushProjectile  (xPos - 30, yPos + 25, STELZLASER);
             }
             else
             {
-                pPartikelSystem->PushPartikel (xPos + 40, yPos, STELZFLARE);
+                PartikelSystem.PushPartikel (xPos + 40, yPos, STELZFLARE);
                 Projectiles.PushProjectile  (xPos + 50, yPos + 25, STELZLASER2);
             }
 
@@ -180,10 +180,10 @@ void GegnerStelzSack::DoKI(void)
 
 void GegnerStelzSack::GegnerExplode(void)
 {
-    pPartikelSystem->PushPartikel (xPos, yPos, STELZHEAD);
+    PartikelSystem.PushPartikel (xPos, yPos, STELZHEAD);
 
-    pPartikelSystem->PushPartikel (xPos-20, yPos-10, STELZE);
-    pPartikelSystem->PushPartikel (xPos+20, yPos-20, STELZE);
+    PartikelSystem.PushPartikel (xPos-20, yPos-10, STELZE);
+    PartikelSystem.PushPartikel (xPos+20, yPos-20, STELZE);
 
     SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);
 

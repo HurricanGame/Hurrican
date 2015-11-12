@@ -74,7 +74,7 @@ void GegnerLavaBall::DoKI(void)
         if (InLava == false)
         {
             for (int i=0; i<12; i++)
-                pPartikelSystem->PushPartikel(xPos+16+rand()%20, yPos + GegnerRect[GegnerArt].bottom+8, LAVA_SPRITZER2);
+                PartikelSystem.PushPartikel(xPos+16+rand()%20, yPos + GegnerRect[GegnerArt].bottom+8, LAVA_SPRITZER2);
 
             SoundManager.PlayWave3D((int)xPos + 30, (int)yPos + 30, 10000 + rand()%2050, SOUND_WATERIN);
         }
@@ -88,7 +88,7 @@ void GegnerLavaBall::DoKI(void)
         if (InLava == true)
         {
             for (int i=0; i<12; i++)
-                pPartikelSystem->PushPartikel(xPos+16+rand()%20, yPos + GegnerRect[GegnerArt].bottom+8, LAVA_SPRITZER);
+                PartikelSystem.PushPartikel(xPos+16+rand()%20, yPos + GegnerRect[GegnerArt].bottom+8, LAVA_SPRITZER);
 
             SoundManager.PlayWave3D((int)xPos + 30, (int)yPos + 30, 10000 + rand()%2050, SOUND_WATEROUT);
         }
@@ -105,7 +105,7 @@ void GegnerLavaBall::DoKI(void)
         SmokeDelay = 0.5f;
 
         if (InLava == false)
-            pPartikelSystem->PushPartikel (xPos - 20 + rand ()%50, yPos + rand ()%40, SMOKEBIG);
+            PartikelSystem.PushPartikel (xPos - 20 + rand ()%50, yPos + rand ()%40, SMOKEBIG);
     }
 
     FlareDelay -= 1.0f SYNC;
@@ -113,7 +113,7 @@ void GegnerLavaBall::DoKI(void)
     if (FlareDelay < 0.0f)
     {
         FlareDelay = 2.0f;
-        //pPartikelSystem->PushPartikel (xPos - 16 + rand ()%56, yPos  - 16 + rand ()%56, MINIFLARE);
+        //PartikelSystem.PushPartikel (xPos - 16 + rand ()%56, yPos  - 16 + rand ()%56, MINIFLARE);
     }
 
     // Maximale Fall-Geschwindigkeit
@@ -139,16 +139,16 @@ void GegnerLavaBall::DoKI(void)
 
             SoundManager.PlayWave (100, 128, 9000 + rand()%2000, SOUND_EXPLOSION1);
 
-            pPartikelSystem->PushPartikel (xPos - 10, yPos - 30, EXPLOSION_GIANT);
+            PartikelSystem.PushPartikel (xPos - 10, yPos - 30, EXPLOSION_GIANT);
 
             for (int i = 0; i < 4; i++)
-                pPartikelSystem->PushPartikel (xPos - 10 + rand ()%40, yPos - 10 + rand ()%40, EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel (xPos - 10 + rand ()%40, yPos - 10 + rand ()%40, EXPLOSION_MEDIUM2);
 
             for (int i = 0; i < 20; i++)
-                pPartikelSystem->PushPartikel (xPos - 10 + rand ()%50, yPos  - 16 + rand ()%56, MINIFLARE);
+                PartikelSystem.PushPartikel (xPos - 10 + rand ()%50, yPos  - 16 + rand ()%56, MINIFLARE);
 
             for (int i = 0; i < 20; i++)
-                pPartikelSystem->PushPartikel (xPos + rand ()%40, yPos + rand ()%40, SMOKE2);
+                PartikelSystem.PushPartikel (xPos + rand ()%40, yPos + rand ()%40, SMOKE2);
         }
 }
 

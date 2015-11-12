@@ -70,12 +70,12 @@ void GegnerLaFass::GegnerExplode(void)
         WinkelUebergabe = xSpeed;
 
         // Kettenteile
-        pPartikelSystem->PushPartikel(xPos, yPos + 78, KETTENTEILE);
-        pPartikelSystem->PushPartikel(xPos + 39, yPos + 78, KETTENTEILE2);
-        pPartikelSystem->PushPartikel(xPos + 16, yPos + 43, KETTENTEILE3);
+        PartikelSystem.PushPartikel(xPos, yPos + 78, KETTENTEILE);
+        PartikelSystem.PushPartikel(xPos + 39, yPos + 78, KETTENTEILE2);
+        PartikelSystem.PushPartikel(xPos + 16, yPos + 43, KETTENTEILE3);
 
         for (int i = 0; i < 3; i++)
-            pPartikelSystem->PushPartikel(xPos + 33, yPos + i*18, KETTENTEILE4);
+            PartikelSystem.PushPartikel(xPos + 33, yPos + i*18, KETTENTEILE4);
 
         // Fass
         Projectiles.PushProjectile(xPos + 7, yPos + 90, LAFASSSHOT);

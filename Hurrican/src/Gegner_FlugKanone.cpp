@@ -68,7 +68,7 @@ void GegnerFlugKanone::DoKI(void)
         if (abs(int(pAim->xpos - xPos)) < 100 &&	PlayerAbstand() < 300)
         {
             Projectiles.PushProjectile(xPos + 30, yPos + 40, FLUGLASER);
-            pPartikelSystem->PushPartikel(xPos + 24, yPos + 30, SMOKE);
+            PartikelSystem.PushPartikel(xPos + 24, yPos + 30, SMOKE);
             SoundManager.PlayWave(50, 128, 30000, SOUND_LASERSHOT);
         }
     }
@@ -100,10 +100,10 @@ void GegnerFlugKanone::DoKI(void)
 void GegnerFlugKanone::GegnerExplode(void)
 {
     for (int i=0; i<5; i++)
-        pPartikelSystem->PushPartikel(float(xPos - 20 + rand()%45),
+        PartikelSystem.PushPartikel(float(xPos - 20 + rand()%45),
                                       float(yPos - 20 + rand()%45), EXPLOSION_MEDIUM2);
     for (int i=0; i<20; i++)
-        pPartikelSystem->PushPartikel(float(xPos + rand()%65),
+        PartikelSystem.PushPartikel(float(xPos + rand()%65),
                                       float(yPos + rand()%35), LASERFUNKE2);
 
     SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben

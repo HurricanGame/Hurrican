@@ -254,7 +254,7 @@ void GegnerRollmops::Abhopsen(float mul)
         ySpeed *= mul;
 
         for (int i = 0; i < 10; i++)
-            pPartikelSystem->PushPartikel(xPos + 10 + rand()%80,
+            PartikelSystem.PushPartikel(xPos + 10 + rand()%80,
                                           yPos + 100, SNOWFLUSH);
 
         if (ySpeed > -1.0f)
@@ -439,11 +439,11 @@ void GegnerRollmops::DoKI(void)
                         rand()%2 == 0)
                 {
                     shot = false;
-                    pPartikelSystem->PushPartikel(xPos + 60 + rand()%20,
+                    PartikelSystem.PushPartikel(xPos + 60 + rand()%20,
                                                   yPos + 120.0f,
                                                   LONGFUNKE);
 
-                    pPartikelSystem->PushPartikel(xPos + 60 + rand()%20,
+                    PartikelSystem.PushPartikel(xPos + 60 + rand()%20,
                                                   yPos + 100.0f,
                                                   FUNKE);
 
@@ -627,7 +627,7 @@ void GegnerRollmops::DoKI(void)
 
                 int i;
                 for (i = 0; i < 30; i++)
-                    pPartikelSystem->PushPartikel(xPos + 10 + rand()%80, yPos + 10 + rand()%80, SNOWFLUSH);
+                    PartikelSystem.PushPartikel(xPos + 10 + rand()%80, yPos + 10 + rand()%80, SNOWFLUSH);
 
                 for (i = 0; i < 8; i++)
                     Projectiles.PushProjectile(xPos + 10 + rand()%80, yPos + 10 + rand()%80, SNOWBOMBSMALL);
@@ -768,12 +768,12 @@ void GegnerRollmops::DoKI(void)
 
                 //DKS - support sin/cos lookup table & deg/rad versions of sin/cos
                 /*
-                pPartikelSystem->PushPartikel(xPos + xoff + 85 + (float)sin(WinkelUebergabe / 180.0f * PI) * 105.0f,
+                PartikelSystem.PushPartikel(xPos + xoff + 85 + (float)sin(WinkelUebergabe / 180.0f * PI) * 105.0f,
                                               yPos + 46 - (float)cos(WinkelUebergabe / 180.0f * PI) * 90.0f, SNOWFLUSH);
                 Projectiles.PushProjectile(xPos + xoff + 90 + (float)sin(WinkelUebergabe / 180.0f * PI) * 105.0f,
                                              yPos + 46 - (float)cos(WinkelUebergabe / 180.0f * PI) * 90.0f, EISZAPFENSHOT);
                 */
-				pPartikelSystem->PushPartikel(xPos + xoff + 85.0f + sin_deg(WinkelUebergabe) * 105.0f,
+				PartikelSystem.PushPartikel(xPos + xoff + 85.0f + sin_deg(WinkelUebergabe) * 105.0f,
 											 yPos + 46.0f - cos_deg(WinkelUebergabe) * 90.0f, SNOWFLUSH);
 				Projectiles.PushProjectile(xPos + xoff + 90.0f + sin_deg(WinkelUebergabe) * 105.0f,
 											 yPos + 46.0f - cos_deg(WinkelUebergabe) * 90.0f, EISZAPFENSHOT);
@@ -850,10 +850,10 @@ void GegnerRollmops::DoKI(void)
             {
                 SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
 
-                pPartikelSystem->PushPartikel(xPos - 20 + rand()%140, yPos - 20 + rand()%140, EXPLOSION_MEDIUM2 + rand()%1);
+                PartikelSystem.PushPartikel(xPos - 20 + rand()%140, yPos - 20 + rand()%140, EXPLOSION_MEDIUM2 + rand()%1);
 
                 if (rand()%3 == 0)
-                    pPartikelSystem->PushPartikel(xPos + rand()%100, yPos + rand()%100, SPLITTER);
+                    PartikelSystem.PushPartikel(xPos + rand()%100, yPos + rand()%100, SPLITTER);
 
                 AnimCount -= AnimSpeed;
                 AnimSpeed -= 0.01f;
@@ -884,7 +884,7 @@ void GegnerRollmops::DoKI(void)
 
         if (SmokeCount < 0.0f)
         {
-            pPartikelSystem->PushPartikel(xPos + 10 + rand()%80, yPos + 80 + rand()%10, SNOWFLUSH);
+            PartikelSystem.PushPartikel(xPos + 10 + rand()%80, yPos + 80 + rand()%10, SNOWFLUSH);
             SmokeCount = 0.8f;
         }
     }
@@ -930,10 +930,10 @@ void GegnerRollmops::GegnerExplode(void)
 
     int i;
     for (i = 0; i < 5; i++)
-        pPartikelSystem->PushPartikel(xPos - 20 + rand()%140, yPos - 20 + rand()%140, EXPLOSION_TRACE);
+        PartikelSystem.PushPartikel(xPos - 20 + rand()%140, yPos - 20 + rand()%140, EXPLOSION_TRACE);
 
     for (i = 0; i < 150; i++)
-        pPartikelSystem->PushPartikel(xPos - 20 + rand()%140, yPos - 20 + rand()%140, WATERFLUSH_HIGH);
+        PartikelSystem.PushPartikel(xPos - 20 + rand()%140, yPos - 20 + rand()%140, WATERFLUSH_HIGH);
 
     ShakeScreen(5.0f);
 

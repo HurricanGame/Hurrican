@@ -122,8 +122,8 @@ void GegnerPharaoKopf::DoKI(void)
         // Brocken
         for (int i=0; i<100; i++)
         {
-            pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + rand()%224, ROCKSPLITTER);
-            pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + rand()%224, ROCKSPLITTERSMALL);
+            PartikelSystem.PushPartikel(xPos + rand()%224, yPos + rand()%224, ROCKSPLITTER);
+            PartikelSystem.PushPartikel(xPos + rand()%224, yPos + rand()%224, ROCKSPLITTERSMALL);
         }
 
         SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
@@ -162,9 +162,9 @@ void GegnerPharaoKopf::DoKI(void)
         // Boden brodeln lassen wo er auftaucht
         if (AnimCount <= 0.0f)
         {
-            pPartikelSystem->PushPartikel(xPos + float(rand()%230)-30, float(Value2 + 400 + rand()%12), SMOKEBIG);
-            pPartikelSystem->PushPartikel(xPos + float(rand()%230)-12, float(Value2 + 405 + rand()%12), ROCKSPLITTER);
-            pPartikelSystem->PushPartikel(xPos + float(rand()%230)-12, float(Value2 + 410 + rand()%12), ROCKSPLITTERSMALL);
+            PartikelSystem.PushPartikel(xPos + float(rand()%230)-30, float(Value2 + 400 + rand()%12), SMOKEBIG);
+            PartikelSystem.PushPartikel(xPos + float(rand()%230)-12, float(Value2 + 405 + rand()%12), ROCKSPLITTER);
+            PartikelSystem.PushPartikel(xPos + float(rand()%230)-12, float(Value2 + 410 + rand()%12), ROCKSPLITTERSMALL);
 
             AnimCount += 0.2f;
         }
@@ -244,7 +244,7 @@ _weiter2:
     {
         // Partikel am Boden
         if (ySpeed == 0)
-            pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + 210, ROCKSPLITTERSMALL);
+            PartikelSystem.PushPartikel(xPos + rand()%224, yPos + 210, ROCKSPLITTERSMALL);
 
         // Links an die Wand rutschen ?
         if (xSpeed < 0)
@@ -267,9 +267,9 @@ _weiter2:
 
                 for (int i = 0; i < 20; i++)
                 {
-                    pPartikelSystem->PushPartikel(xPos-10, yPos - 30 + rand()%224, SMOKEBIG);
-                    pPartikelSystem->PushPartikel(xPos-10, yPos + rand()%224, ROCKSPLITTER);
-                    pPartikelSystem->PushPartikel(xPos-10, yPos + rand()%224, ROCKSPLITTERSMALL);
+                    PartikelSystem.PushPartikel(xPos-10, yPos - 30 + rand()%224, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos-10, yPos + rand()%224, ROCKSPLITTER);
+                    PartikelSystem.PushPartikel(xPos-10, yPos + rand()%224, ROCKSPLITTERSMALL);
                 }
 
                 SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
@@ -306,9 +306,9 @@ _weiter2:
                 xAcc   = 0.0f;
                 for (int i = 0; i < 20; i++)
                 {
-                    pPartikelSystem->PushPartikel(xPos+175, yPos + rand()%224 - 30, SMOKEBIG);
-                    pPartikelSystem->PushPartikel(xPos+212, yPos + rand()%224, ROCKSPLITTER);
-                    pPartikelSystem->PushPartikel(xPos+212, yPos + rand()%224, ROCKSPLITTERSMALL);
+                    PartikelSystem.PushPartikel(xPos+175, yPos + rand()%224 - 30, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos+212, yPos + rand()%224, ROCKSPLITTER);
+                    PartikelSystem.PushPartikel(xPos+212, yPos + rand()%224, ROCKSPLITTERSMALL);
                 }
 
                 SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
@@ -330,9 +330,9 @@ _weiter2:
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    pPartikelSystem->PushPartikel(xPos - 30 + rand()%224, yPos, SMOKEBIG);
-                    pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + 10, ROCKSPLITTER);
-                    pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + 10, ROCKSPLITTERSMALL);
+                    PartikelSystem.PushPartikel(xPos - 30 + rand()%224, yPos, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + rand()%224, yPos + 10, ROCKSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + rand()%224, yPos + 10, ROCKSPLITTERSMALL);
                 }
 
                 SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
@@ -379,9 +379,9 @@ _weiter2:
                     yAcc   = 0.0f;
                     for (int i = 0; i < 20; i++)
                     {
-                        pPartikelSystem->PushPartikel(xPos - 30 + rand()%224, yPos + 170, SMOKEBIG);
-                        pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + 220, ROCKSPLITTER);
-                        pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + 220, ROCKSPLITTERSMALL);
+                        PartikelSystem.PushPartikel(xPos - 30 + rand()%224, yPos + 170, SMOKEBIG);
+                        PartikelSystem.PushPartikel(xPos + rand()%224, yPos + 220, ROCKSPLITTER);
+                        PartikelSystem.PushPartikel(xPos + rand()%224, yPos + 220, ROCKSPLITTERSMALL);
                     }
 
                     SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
@@ -459,9 +459,9 @@ _weiter2:
             // Partikel unter Boss
             for (int i = 0; i < 20; i++)
             {
-                pPartikelSystem->PushPartikel(xPos - 30 + rand()%224, yPos + 170, SMOKEBIG);
-                pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + 220, ROCKSPLITTER);
-                pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + 220, ROCKSPLITTERSMALL);
+                PartikelSystem.PushPartikel(xPos - 30 + rand()%224, yPos + 170, SMOKEBIG);
+                PartikelSystem.PushPartikel(xPos + rand()%224, yPos + 220, ROCKSPLITTER);
+                PartikelSystem.PushPartikel(xPos + rand()%224, yPos + 220, ROCKSPLITTERSMALL);
             }
 
             SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
@@ -487,10 +487,10 @@ _weiter2:
         if (AnimCount <= 0)
         {
             // Augen leuchten lassen
-            pPartikelSystem->PushPartikel(xPos +  68, yPos + 77, LASERFLAMEPHARAO);
-            pPartikelSystem->PushPartikel(xPos +  68, yPos + 77, LASERFLAMEPHARAO);
-            pPartikelSystem->PushPartikel(xPos + 112, yPos + 77, LASERFLAMEPHARAO);
-            pPartikelSystem->PushPartikel(xPos + 112, yPos + 77, LASERFLAMEPHARAO);
+            PartikelSystem.PushPartikel(xPos +  68, yPos + 77, LASERFLAMEPHARAO);
+            PartikelSystem.PushPartikel(xPos +  68, yPos + 77, LASERFLAMEPHARAO);
+            PartikelSystem.PushPartikel(xPos + 112, yPos + 77, LASERFLAMEPHARAO);
+            PartikelSystem.PushPartikel(xPos + 112, yPos + 77, LASERFLAMEPHARAO);
 
             // Schüsse erzeugen
             Projectiles.PushProjectile(xPos +  68, yPos + 77, PHARAOLASER, pAim);
@@ -522,8 +522,8 @@ _weiter2:
         Energy = 100.0f;
 
         // brodeln lassen
-        pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + rand()%224, ROCKSPLITTER);
-        pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + rand()%224, ROCKSPLITTERSMALL);
+        PartikelSystem.PushPartikel(xPos + rand()%224, yPos + rand()%224, ROCKSPLITTER);
+        PartikelSystem.PushPartikel(xPos + rand()%224, yPos + rand()%224, ROCKSPLITTERSMALL);
 
         // Fertig explodiert ? Dann wird er ganz zerlegt
         if (AnimCount <= 0.0f)
@@ -553,9 +553,9 @@ void GegnerPharaoKopf::GegnerExplode(void)
     // Splitter
     for (int i=0; i<50; i++)
     {
-        pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + rand()%224, ROCKSPLITTER);
-        pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + rand()%224, ROCKSPLITTERSMALL);
-        pPartikelSystem->PushPartikel(xPos + rand()%224, yPos + rand()%224, SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos + rand()%224, yPos + rand()%224, ROCKSPLITTER);
+        PartikelSystem.PushPartikel(xPos + rand()%224, yPos + rand()%224, ROCKSPLITTERSMALL);
+        PartikelSystem.PushPartikel(xPos + rand()%224, yPos + rand()%224, SMOKEBIG);
     }
 
     Player[0].Score += 8000;

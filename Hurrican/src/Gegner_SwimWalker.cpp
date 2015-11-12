@@ -101,13 +101,13 @@ void GegnerSwimWalker::DoKI(void)
 void GegnerSwimWalker::GegnerExplode(void)
 {
 // blubbern
-    pPartikelSystem->PushPartikel(xPos + rand()%20, yPos + rand()%20, EXPLOSION_MEDIUM3);
+    PartikelSystem.PushPartikel(xPos + rand()%20, yPos + rand()%20, EXPLOSION_MEDIUM3);
 
-    pPartikelSystem->PushPartikel(xPos, yPos, EXPLOSION_MEDIUM2);
+    PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_MEDIUM2);
 
     for (int i=0; i<30; i++)
     {
-        pPartikelSystem->PushPartikel(xPos - 10 + rand()%85, yPos - 10 + rand()%65, BUBBLE);
+        PartikelSystem.PushPartikel(xPos - 10 + rand()%85, yPos - 10 + rand()%65, BUBBLE);
     }
 
     SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION1);	// Sound ausgeben

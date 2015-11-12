@@ -179,13 +179,13 @@ void GegnerFieserFireWalker::DoKI(void)
 
 void GegnerFieserFireWalker::GegnerExplode(void)
 {
-    pPartikelSystem->PushPartikel(xPos - 30, yPos - 30, EXPLOSION_BIG);
+    PartikelSystem.PushPartikel(xPos - 30, yPos - 30, EXPLOSION_BIG);
 
     for (int i = 0; i < 8; i++)
-        pPartikelSystem->PushPartikel(xPos - 30 + rand ()% 60,
+        PartikelSystem.PushPartikel(xPos - 30 + rand ()% 60,
                                       yPos - 30 + rand ()% 60, EXPLOSION_MEDIUM2);
     for (int i = 0; i < 12; i++)
-        pPartikelSystem->PushPartikel(xPos + rand ()% 50,
+        PartikelSystem.PushPartikel(xPos + rand ()% 50,
                                       yPos + rand ()% 50, SPIDERSPLITTER);
 
 

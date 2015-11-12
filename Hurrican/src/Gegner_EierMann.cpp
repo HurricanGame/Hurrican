@@ -73,16 +73,16 @@ void GegnerEierMann::DoKI(void)
 
 void GegnerEierMann::GegnerExplode(void)
 {
-    pPartikelSystem->PushPartikel (xPos, yPos, EXPLOSION_GIANT);
+    PartikelSystem.PushPartikel (xPos, yPos, EXPLOSION_GIANT);
 
     for (int i = 0; i < 10; i++)
     {
-        pPartikelSystem->PushPartikel (xPos-30+rand()%100, yPos-30+rand()%80, EXPLOSION_MEDIUM2);
-        pPartikelSystem->PushPartikel (xPos+10+rand()%40, yPos+10+rand()%40,  SPIDERSPLITTER);
+        PartikelSystem.PushPartikel (xPos-30+rand()%100, yPos-30+rand()%80, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel (xPos+10+rand()%40, yPos+10+rand()%40,  SPIDERSPLITTER);
     }
 
     for (int i = 0; i < 4; i++)
-        pPartikelSystem->PushPartikel (xPos+rand()%80, yPos+rand()%80, SPLITTER);
+        PartikelSystem.PushPartikel (xPos+rand()%80, yPos+rand()%80, SPLITTER);
 
     SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);
 

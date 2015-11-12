@@ -83,13 +83,13 @@ void GegnerWandKannone::DoKI(void)
                 if (BlickRichtung == LINKS)
                 {
                     Projectiles.PushProjectile(xPos - 18, yPos + 15, WALKER_LASER);
-                    pPartikelSystem->PushPartikel(xPos - 24, yPos - 10, LASERFLAME);
+                    PartikelSystem.PushPartikel(xPos - 24, yPos - 10, LASERFLAME);
 
                 }
                 else
                 {
                     Projectiles.PushProjectile(xPos + 30, yPos + 15, WALKER_LASER2);
-                    pPartikelSystem->PushPartikel(xPos + 21, yPos - 10, LASERFLAME);
+                    PartikelSystem.PushPartikel(xPos + 21, yPos - 10, LASERFLAME);
                 }
             }
         }
@@ -109,7 +109,7 @@ void GegnerWandKannone::DoKI(void)
 void GegnerWandKannone::GegnerExplode(void)
 {
     for (int i = 0; i < 10; i++)
-        pPartikelSystem->PushPartikel (xPos-30+rand()%42, yPos-30+rand()%32, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel (xPos-30+rand()%42, yPos-30+rand()%32, EXPLOSION_MEDIUM2);
 
     SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 

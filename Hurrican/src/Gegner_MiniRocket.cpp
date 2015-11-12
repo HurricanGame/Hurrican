@@ -132,9 +132,9 @@ void GegnerMiniRocket::DoKI(void)
     {
         SmokeDelay += 0.5f;
         //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
-        //pPartikelSystem->PushPartikel(xPos - 8 + float(sin((360 - rot) / 180.0f * PI) * 15.0f),
+        //PartikelSystem.PushPartikel(xPos - 8 + float(sin((360 - rot) / 180.0f * PI) * 15.0f),
         //                              yPos - 8 + float(cos((360 - rot) / 180.0f * PI) * 15.0f), SMOKE);
-		pPartikelSystem->PushPartikel(xPos - 8.0f + (sin_deg(360.0f - rot) * 15.0f), 
+		PartikelSystem.PushPartikel(xPos - 8.0f + (sin_deg(360.0f - rot) * 15.0f), 
 									  yPos - 8.0f + (cos_deg(360.0f - rot) * 15.0f), SMOKE);
     }
 
@@ -161,10 +161,10 @@ void GegnerMiniRocket::GegnerExplode(void)
 
     int i = 0;
     for (i=0; i < 5; i++)
-        pPartikelSystem->PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, SMOKE);
+        PartikelSystem.PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, SMOKE);
 
     for (i=0; i < 5; i++)
-        pPartikelSystem->PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, MINIFLARE);
+        PartikelSystem.PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, MINIFLARE);
 
     Player[0].Score += 50;
 }

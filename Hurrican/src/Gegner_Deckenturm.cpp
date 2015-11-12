@@ -145,7 +145,7 @@ void GegnerDeckenturm::DoKI(void)
 void GegnerDeckenturm::GegnerExplode(void)
 {
     // Explosion
-    pPartikelSystem->PushPartikel(float(xPos - 10),
+    PartikelSystem.PushPartikel(float(xPos - 10),
                                   float(yPos - 10), EXPLOSION_MEDIUM2);
 
     SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben

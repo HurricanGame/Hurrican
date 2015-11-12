@@ -63,8 +63,8 @@ void GegnerFallingRock::DoKI(void)
                 // Rauch erzeugen wo der Stein die Decke verlässt
                 for (int i=0; i<3; i++)
                 {
-                    pPartikelSystem->PushPartikel(xPos-10, yPos + i*10, SMOKE);
-                    pPartikelSystem->PushPartikel(xPos+63, yPos + i*10, SMOKE);
+                    PartikelSystem.PushPartikel(xPos-10, yPos + i*10, SMOKE);
+                    PartikelSystem.PushPartikel(xPos+63, yPos + i*10, SMOKE);
                 }
 
                 // Sound ausgeben
@@ -91,9 +91,9 @@ void GegnerFallingRock::GegnerExplode(void)
     // und Splitter erzeugen Rauch
     for (int i=0; i<10; i++)
     {
-        pPartikelSystem->PushPartikel(xPos + rand()%80-12, yPos + rand()%20 + 20, SMOKE);
-        pPartikelSystem->PushPartikel(xPos + rand()%80-12, yPos + rand()%40, ROCKSPLITTER);
-        pPartikelSystem->PushPartikel(xPos + rand()%80-12, yPos + rand()%40, ROCKSPLITTERSMALL);
+        PartikelSystem.PushPartikel(xPos + rand()%80-12, yPos + rand()%20 + 20, SMOKE);
+        PartikelSystem.PushPartikel(xPos + rand()%80-12, yPos + rand()%40, ROCKSPLITTER);
+        PartikelSystem.PushPartikel(xPos + rand()%80-12, yPos + rand()%40, ROCKSPLITTERSMALL);
     }
     SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEEXPLODE);	// Sound ausgeben
 

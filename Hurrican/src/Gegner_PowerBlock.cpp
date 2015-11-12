@@ -222,7 +222,7 @@ void GegnerPowerBlock::GegnerExplode(void)
     Player[0].Score += 100;
 
     // Explosion erzeugen
-    pPartikelSystem->PushPartikel(xPos-30, yPos-30, EXPLOSION_BIG);
+    PartikelSystem.PushPartikel(xPos-30, yPos-30, EXPLOSION_BIG);
 
     SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 }

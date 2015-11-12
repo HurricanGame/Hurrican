@@ -164,10 +164,10 @@ void GegnerSchleimBoller::DoKI(void)
 
 void GegnerSchleimBoller::GegnerExplode(void)
 {
-    //pPartikelSystem->PushPartikel(xPos, yPos, EXPLOSION_GREEN);
+    //PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_GREEN);
 
     for (int i = 0; i < 3 + int (Size/8); i++)
-        pPartikelSystem->PushPartikel(xPos + 15 + rand ()% 20,
+        PartikelSystem.PushPartikel(xPos + 15 + rand ()% 20,
                                       yPos + 15 + rand ()% 20, SCHLEIM);
 
     //DKS - Added function WaveIsPlaying() to SoundManagerClass:

@@ -63,11 +63,11 @@ void GegnerRaketenwerfer::DoKI(void)
 
 void GegnerRaketenwerfer::GegnerExplode(void)
 {
-    pPartikelSystem->PushPartikel(xPos-20 , yPos - 15, EXPLOSION_BIG);
+    PartikelSystem.PushPartikel(xPos-20 , yPos - 15, EXPLOSION_BIG);
 
     for (int i=0; i<20; i++)
     {
-        pPartikelSystem->PushPartikel(xPos + rand()%40-8, yPos + rand()%20 - 8, SMOKE);
+        PartikelSystem.PushPartikel(xPos + rand()%40-8, yPos + rand()%20 - 8, SMOKE);
     }
 
     SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION4);	// Sound ausgeben

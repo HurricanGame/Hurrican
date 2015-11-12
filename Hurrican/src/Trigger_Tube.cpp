@@ -113,7 +113,7 @@ void GegnerTube::DoKI(void)
                 Value1 = 1;
 
                 for (int i = 0; i < 100; i++)
-                    pPartikelSystem->PushPartikel(xPos + 5 + rand()%55,
+                    PartikelSystem.PushPartikel(xPos + 5 + rand()%55,
                                                   yPos + 70 + rand()%60,
                                                   GLASSPLITTER);
 

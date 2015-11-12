@@ -388,9 +388,9 @@ void GegnerMetalHead::DoKI(void)
                 Turbine_dran = false;
 
                 for (int i = 0; i < 20; i++)
-                    pPartikelSystem->PushPartikel (xPos + 20 + rand () % 80, yPos + 130 + rand () % 20, EXPLOSION_MEDIUM2);
+                    PartikelSystem.PushPartikel (xPos + 20 + rand () % 80, yPos + 130 + rand () % 20, EXPLOSION_MEDIUM2);
 
-                pPartikelSystem->PushPartikel (xPos + 85 + TurbineOff, yPos + 202, KAPUTTETURBINE);
+                PartikelSystem.PushPartikel (xPos + 85 + TurbineOff, yPos + 202, KAPUTTETURBINE);
 
                 SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
                 ShakeScreen (3.0f);
@@ -411,31 +411,31 @@ void GegnerMetalHead::DoKI(void)
         {
             SmokeCount += 0.8f;
 
-            pPartikelSystem->PushPartikel (xPos + 50 + rand ()%15, yPos + 160 + rand ()%4, SMOKE3);
+            PartikelSystem.PushPartikel (xPos + 50 + rand ()%15, yPos + 160 + rand ()%4, SMOKE3);
 
             if (rand()%3 == 0)
-                pPartikelSystem->PushPartikel (xPos + 40 + rand ()%10, yPos + 140 + rand ()%4, SMOKEBIG);
+                PartikelSystem.PushPartikel (xPos + 40 + rand ()%10, yPos + 140 + rand ()%4, SMOKEBIG);
 
             // Zufällig funken sprühen
             if (rand()% 10 == 0)
             {
                 for (int i = 0; i < 16; i++)
                 {
-                    pPartikelSystem->PushPartikel (xPos + 55 + rand ()% 15, yPos + 160 + rand ()% 15, FUNKE);
-                    pPartikelSystem->PushPartikel (xPos + 55 + rand ()% 15, yPos + 160 + rand ()% 15, LASERFUNKE2);
+                    PartikelSystem.PushPartikel (xPos + 55 + rand ()% 15, yPos + 160 + rand ()% 15, FUNKE);
+                    PartikelSystem.PushPartikel (xPos + 55 + rand ()% 15, yPos + 160 + rand ()% 15, LASERFUNKE2);
                 }
 
-                pPartikelSystem->PushPartikel (xPos + 30 + rand()%20, yPos + 140, LASERFLAME);
-                pPartikelSystem->PushPartikel (xPos + 5, yPos + 110, EXPLOSIONFLARE);
-                pPartikelSystem->PushPartikel (xPos + 5, yPos + 110, EXPLOSIONFLARE);
+                PartikelSystem.PushPartikel (xPos + 30 + rand()%20, yPos + 140, LASERFLAME);
+                PartikelSystem.PushPartikel (xPos + 5, yPos + 110, EXPLOSIONFLARE);
+                PartikelSystem.PushPartikel (xPos + 5, yPos + 110, EXPLOSIONFLARE);
                 SoundManager.PlayWave (100, 128, 11025, SOUND_FUNKE);
             }
         }
     }
 
     // Zielpunkt für die Turbine-Partikel setzen
-    pPartikelSystem->xtarget = xPos + 20 + 110;
-    pPartikelSystem->ytarget = yPos + 130 + 55;
+    PartikelSystem.xtarget = xPos + 20 + 110;
+    PartikelSystem.ytarget = yPos + 130 + 55;
 
     // Hat der Boss keine Energie mehr ? Dann explodiert er
     if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN)
@@ -460,10 +460,10 @@ void GegnerMetalHead::DoKI(void)
 
         // Kopf fliegt wech (mit Explosion)
         for (int i = 0; i < 60; i++)
-            pPartikelSystem->PushPartikel (xPos + rand ()% 10,
+            PartikelSystem.PushPartikel (xPos + rand ()% 10,
                                            yPos + 90 + rand ()% 10, FUNKE);
 
-        pPartikelSystem->PushPartikel (xPos - 40, yPos + 40, EXPLOSION_GIANT);
+        PartikelSystem.PushPartikel (xPos - 40, yPos + 40, EXPLOSION_GIANT);
 
         SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
     }
@@ -489,7 +489,7 @@ void GegnerMetalHead::DoKI(void)
             SoundManager.PlayWave (25, 128, 10000 + rand ()% 2000, SOUND_KLONG);
 
             for (int i = 0; i < 10; i++)
-                pPartikelSystem->PushPartikel (xPos + 130 + i * 4, yPos + 160, LONGFUNKE);
+                PartikelSystem.PushPartikel (xPos + 130 + i * 4, yPos + 160, LONGFUNKE);
         }
     }
 
@@ -557,7 +557,7 @@ void GegnerMetalHead::DoKI(void)
                 Handlung = GEGNER_CRUSHENERHOLEN;
 
                 for (int i = 0; i < 20; i++)
-                    pPartikelSystem->PushPartikel(xPos + rand()%180, yPos + 200, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + rand()%180, yPos + 200, SMOKEBIG);
 
                 // Spieler noch drunter? Dann wars das
                 for (int p = 0; p < NUMPLAYERS; p++)
@@ -774,11 +774,11 @@ void GegnerMetalHead::DoKI(void)
                                 {
                                     Projectiles.PushProjectile(xPos + 100, yPos + 213 + rand()%5, PFLANZESHOT, pAim);
 
-                                    pPartikelSystem->PushPartikel(xPos + 80,
+                                    PartikelSystem.PushPartikel(xPos + 80,
                                                                   yPos + 150,
                                                                   EXPLOSIONFLARE);
 
-                                    pPartikelSystem->PushPartikel(xPos + 80,
+                                    PartikelSystem.PushPartikel(xPos + 80,
                                                                   yPos + 150,
                                                                   EXPLOSIONFLARE);
                                 }
@@ -895,14 +895,14 @@ void GegnerMetalHead::DoKI(void)
             //
             if (AnimCount < 0.0f)
             {
-                pPartikelSystem->PushPartikel (Hals[AnimEnde].x + (float)TileEngine.XOffset,
+                PartikelSystem.PushPartikel (Hals[AnimEnde].x + (float)TileEngine.XOffset,
                                                Hals[AnimEnde].y, HALSWIRBEL);
 
-                pPartikelSystem->PushPartikel (float (Hals[AnimEnde].x - 20) + (float)TileEngine.XOffset,
+                PartikelSystem.PushPartikel (float (Hals[AnimEnde].x - 20) + (float)TileEngine.XOffset,
                                                float (Hals[AnimEnde].y - Hals[AnimEnde].w / 3.0f), EXPLOSION_MEDIUM2);
 
                 for (int i = 0; i < 30; i++)
-                    pPartikelSystem->PushPartikel (float (Hals[AnimEnde].x - 20 + rand ()% 20) + (float)TileEngine.XOffset,
+                    PartikelSystem.PushPartikel (float (Hals[AnimEnde].x - 20 + rand ()% 20) + (float)TileEngine.XOffset,
                                                    float (Hals[AnimEnde].y - 20 + rand ()% 20), FUNKE);
 
                 SoundManager.PlayWave (100, 128, 10000 + rand()%2000, SOUND_EXPLOSION1);
@@ -914,23 +914,23 @@ void GegnerMetalHead::DoKI(void)
                 if (AnimEnde == MAXWIRBEL - 5)
                 {
                     for (int i = 0; i < 20; i++)
-                        pPartikelSystem->PushPartikel (xPos + 10 + rand ()% 160,
+                        PartikelSystem.PushPartikel (xPos + 10 + rand ()% 160,
                                                        yPos + 20 + rand ()% 80, EXPLOSION_MEDIUM2);
 
                     for (int i = 0; i < 5; i++)
-                        pPartikelSystem->PushPartikel (xPos + rand ()% 160,
+                        PartikelSystem.PushPartikel (xPos + rand ()% 160,
                                                        yPos + 40 + rand ()% 80, EXPLOSION_BIG);
 
                     for (int i = 0; i < 40; i++)
-                        pPartikelSystem->PushPartikel (xPos + rand ()% 180,
+                        PartikelSystem.PushPartikel (xPos + rand ()% 180,
                                                        yPos + rand ()% 140, SCHROTT1);
 
                     for (int i = 0; i < 10; i++)
-                        pPartikelSystem->PushPartikel (xPos + 30 + rand ()% 160,
+                        PartikelSystem.PushPartikel (xPos + 30 + rand ()% 160,
                                                        yPos + 50 + rand ()% 80, SPLITTER);
 
                     for (int i = 0; i < 100; i++)
-                        pPartikelSystem->PushPartikel (xPos + 30 + rand ()% 160,
+                        PartikelSystem.PushPartikel (xPos + 30 + rand ()% 160,
                                                        yPos + 50 + rand ()% 80, SMOKE3);
 
                     SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);

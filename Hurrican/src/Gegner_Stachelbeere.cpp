@@ -119,10 +119,10 @@ void GegnerStachelbeere::DoKI(void)
             // Partikel erzeugen
             //int i = 0;
             for (int i = 0; i < 10; i++)
-                pPartikelSystem->PushPartikel(xPos + rand()%60, yPos + 50, FUNKE);
+                PartikelSystem.PushPartikel(xPos + rand()%60, yPos + 50, FUNKE);
 
             for (int i = 0; i < 5; i++)
-                pPartikelSystem->PushPartikel(xPos + rand()%40, yPos + 40, SMOKE);
+                PartikelSystem.PushPartikel(xPos + rand()%40, yPos + 40, SMOKE);
 
             // Geschwindigkeit umdrehen
             ySpeed *= -0.5f;
@@ -305,11 +305,11 @@ void GegnerStachelbeere::DoKI(void)
 void GegnerStachelbeere::GegnerExplode(void)
 {
     for (int i = 0; i < 5; i++)
-        pPartikelSystem->PushPartikel(float(xPos - 30 + rand()%60),
+        PartikelSystem.PushPartikel(float(xPos - 30 + rand()%60),
                                       float(yPos - 30 + rand()%60), EXPLOSION_MEDIUM2);
 
     // Explosion
-    pPartikelSystem->PushPartikel(float(xPos - 15),
+    PartikelSystem.PushPartikel(float(xPos - 15),
                                   float(yPos - 15), EXPLOSION_BIG);
 
     SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION4);	// Sound ausgeben

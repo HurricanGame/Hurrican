@@ -181,19 +181,19 @@ void GegnerLavamann::GegnerExplode(void)
 {
     for (int i=0; i<8; i++)
     {
-        pPartikelSystem->PushPartikel(float(xPos - 30 + rand()%40),
+        PartikelSystem.PushPartikel(float(xPos - 30 + rand()%40),
                                       float(yPos - 30 + rand()%50), SMOKEBIG);
 
-        pPartikelSystem->PushPartikel(float(xPos - 10 + rand()%40),
+        PartikelSystem.PushPartikel(float(xPos - 10 + rand()%40),
                                       float(yPos - 10 + rand()%50), SMOKE3);
 
-        pPartikelSystem->PushPartikel(float(xPos - 60 + rand()%80),
+        PartikelSystem.PushPartikel(float(xPos - 60 + rand()%80),
                                       float(yPos - 50 + rand()%60), EXPLOSIONFLARE);
 
-        pPartikelSystem->PushPartikel(float(xPos - 40 + rand()%40),
+        PartikelSystem.PushPartikel(float(xPos - 40 + rand()%40),
                                       float(yPos - 30 + rand()%50), EXPLOSION_MEDIUM2);
 
-        pPartikelSystem->PushPartikel(float(xPos - 20 + rand()%50),
+        PartikelSystem.PushPartikel(float(xPos - 20 + rand()%50),
                                       float(yPos - 20 + rand()%50), MINIFLARE);
     }
 

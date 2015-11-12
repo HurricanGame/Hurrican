@@ -103,10 +103,10 @@ void GegnerRoboRaupe::GegnerExplode(void)
 {
     // blaue Explosionen erzeugen
     for (int i=0; i<50; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%90-10, yPos + rand()%40 - 10, BLUE_EXPLOSION);
+        PartikelSystem.PushPartikel(xPos + rand()%90-10, yPos + rand()%40 - 10, BLUE_EXPLOSION);
 
     for (int i=0; i<300; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%90-10, yPos + rand()%25 + 5, ROCKETSMOKEBLUE);
+        PartikelSystem.PushPartikel(xPos + rand()%90-10, yPos + rand()%25 + 5, ROCKETSMOKEBLUE);
 
     SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION3);	// Sound ausgeben
 

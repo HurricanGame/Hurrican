@@ -102,10 +102,10 @@ void GegnerSchleimAlien::GegnerExplode(void)
         if (Player[i].AufPlattform == this)
             Player[i].AufPlattform = NULL;
 
-    pPartikelSystem->PushPartikel(xPos, yPos, EXPLOSION_ALIEN);
+    PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_ALIEN);
 
     for (int i = 0; i < 16; i++)
-        pPartikelSystem->PushPartikel(xPos + 15 + rand ()% 20,
+        PartikelSystem.PushPartikel(xPos + 15 + rand ()% 20,
                                       yPos + 15 + rand ()% 20, SCHLEIM2);
 
     SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_SCHLEIM);	// Sound ausgeben

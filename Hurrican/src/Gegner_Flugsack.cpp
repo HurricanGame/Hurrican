@@ -75,9 +75,9 @@ void GegnerFlugsack::DoKI(void)
             SmokeCount += 0.1f;
 
             if (BlickRichtung == LINKS)
-                pPartikelSystem->PushPartikel(xPos + 66, yPos+50, FLUGSACKSMOKE2);
+                PartikelSystem.PushPartikel(xPos + 66, yPos+50, FLUGSACKSMOKE2);
             else
-                pPartikelSystem->PushPartikel(xPos, yPos+50, FLUGSACKSMOKE);
+                PartikelSystem.PushPartikel(xPos, yPos+50, FLUGSACKSMOKE);
         }
 
         // Bei bestimmten Mindestabstand schiessen lassen
@@ -92,12 +92,12 @@ void GegnerFlugsack::DoKI(void)
 
                 if (BlickRichtung == LINKS)
                 {
-                    pPartikelSystem->PushPartikel(xPos + 10, yPos+2, SMOKE);
+                    PartikelSystem.PushPartikel(xPos + 10, yPos+2, SMOKE);
                     Projectiles.PushProjectile(xPos + 17, yPos+10, SUCHSCHUSS);
                 }
                 else
                 {
-                    pPartikelSystem->PushPartikel(xPos + 45, yPos+2, SMOKE);
+                    PartikelSystem.PushPartikel(xPos + 45, yPos+2, SMOKE);
                     Projectiles.PushProjectile(xPos + 53, yPos+10, SUCHSCHUSS);
                 }
 
@@ -128,13 +128,13 @@ void GegnerFlugsack::DoKI(void)
         // FlugSack rauchen lassen
         if (AnimCount == 0.0f)
         {
-            pPartikelSystem->PushPartikel(xPos+20+rand()%40, yPos+20+rand()%30, SMOKE);
+            PartikelSystem.PushPartikel(xPos+20+rand()%40, yPos+20+rand()%30, SMOKE);
         }
 
         if (PlayerAbstand() <= 600 &&
                 AnimCount == 0.0f && AnimPhase%2 == 0 && rand()%2 == 0)
         {
-            pPartikelSystem->PushPartikel(xPos+rand()%80-30, yPos+rand()%70-30, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos+rand()%80-30, yPos+rand()%70-30, EXPLOSION_MEDIUM2);
             SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION1);
         }
     }
@@ -176,10 +176,10 @@ void GegnerFlugsack::GegnerExplode(void)
 {
 
     for (int i=0; i<10; i++)
-        pPartikelSystem->PushPartikel(xPos+rand()%80-30, yPos+rand()%70-30, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos+rand()%80-30, yPos+rand()%70-30, EXPLOSION_MEDIUM2);
 
     for (int i=0; i<5; i++)
-        pPartikelSystem->PushPartikel(xPos+rand()%40+20, yPos+rand()%30+20, SPLITTER);
+        PartikelSystem.PushPartikel(xPos+rand()%40+20, yPos+rand()%30+20, SPLITTER);
 
     SoundManager.PlayWave(75, 128, 11025 + rand()%2000, SOUND_EXPLOSION4);	// Sound ausgeben
 
