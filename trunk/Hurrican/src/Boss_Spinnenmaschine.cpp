@@ -182,7 +182,7 @@ void GegnerSpinnenmaschine::DoDeckel(void)
             case 1 :
             {
                 SpawnDelay = 6.0f;
-                pGegner->PushGegner(xPos + 100 + rand()%60 , yPos + 190 - DeckelOffset, CLIMBSPIDER, 99, 0, false, false);
+                Gegner.PushGegner(xPos + 100 + rand()%60 , yPos + 190 - DeckelOffset, CLIMBSPIDER, 99, 0, false, false);
             }
             break;
 
@@ -190,7 +190,7 @@ void GegnerSpinnenmaschine::DoDeckel(void)
             case 2 :
             {
                 SpawnDelay = 20.0f;
-                pGegner->PushGegner(xPos + 135, yPos + 190 - DeckelOffset, DRONE, 99, 0, false, false);
+                Gegner.PushGegner(xPos + 135, yPos + 190 - DeckelOffset, DRONE, 99, 0, false, false);
             }
             break;
 
@@ -198,7 +198,7 @@ void GegnerSpinnenmaschine::DoDeckel(void)
             case 3 :
             {
                 SpawnDelay = 15.0f;
-                pGegner->PushGegner(xPos + 100 + rand()%80 , yPos + 180 - DeckelOffset, SPIDERBOMB, 99, 0, false, false);
+                Gegner.PushGegner(xPos + 100 + rand()%80 , yPos + 180 - DeckelOffset, SPIDERBOMB, 99, 0, false, false);
             }
             break;
             }
@@ -385,7 +385,7 @@ void GegnerSpinnenmaschine::DoKI(void)
         yAcc       = 0.0f;
         DeathCount = 40.0f;
 
-        pGegner->PushGegner(140, 820, ONEUP, 0, 0, false);
+        Gegner.PushGegner(140, 820, ONEUP, 0, 0, false);
 
         TileEngine.MaxOneUps++;
 

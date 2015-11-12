@@ -117,8 +117,8 @@ void GegnerTube::DoKI(void)
                                                   yPos + 70 + rand()%60,
                                                   GLASSPLITTER);
 
-                pGegner->PushGegner(xPos - 1, yPos + 60, MUTANT, 1, 0, false);
-                pGegner->PushGegner(xPos + 50 - 10, yPos + 150, PARTIKELSPAWN, 11, 80, false);
+                Gegner.PushGegner(xPos - 1, yPos + 60, MUTANT, 1, 0, false);
+                Gegner.PushGegner(xPos + 50 - 10, yPos + 150, PARTIKELSPAWN, 11, 80, false);
 
                 SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_GLASSBREAK);
             }

@@ -83,7 +83,7 @@ void GegnerRiesenPiranha::DoKI(void)
         // ggf kleinen Piranha ausspucken
         if (AnimPhase == 0 && AnimCount == 0.0f && rand()%2 == 0)
         {
-            pGegner->PushGegner(xPos + 110, yPos + 100, PIRANHA, 0, 0, ChangeLight);
+            Gegner.PushGegner(xPos + 110, yPos + 100, PIRANHA, 0, 0, ChangeLight);
         }
 
         if (pAim->ypos-70 < yPos &&	// Spieler oberhalb oder
@@ -189,7 +189,7 @@ void GegnerRiesenPiranha::GegnerExplode(void)
                                       float(yPos + 10  + rand()%210), PIRANHABLUT);
 
     // und Extra Leben rauslassen
-    pGegner->PushGegner(xPos + 110, yPos + 100, ONEUP, 0, 0, ChangeLight);
+    Gegner.PushGegner(xPos + 110, yPos + 100, ONEUP, 0, 0, ChangeLight);
 
     //SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 

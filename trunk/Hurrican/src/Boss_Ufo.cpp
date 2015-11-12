@@ -177,8 +177,8 @@ void GegnerUfo::DoKI(void)
 
             if (ShotDelay < 0.0f)
             {
-                pGegner->PushGegner(xPos + 45.0f, yPos + 40.0f, FETTERAKETE, 360, 99, false);
-                pGegner->PushGegner(xPos + 135.0f, yPos + 40.0f, FETTERAKETE, 0, 99, false);
+                Gegner.PushGegner(xPos + 45.0f, yPos + 40.0f, FETTERAKETE, 360, 99, false);
+                Gegner.PushGegner(xPos + 135.0f, yPos + 40.0f, FETTERAKETE, 0, 99, false);
                 ShotDelay = 18.0f;
                 SoundManager.PlayWave(100, 128, 8000 + rand()%1000, SOUND_GRANATE);
             }
@@ -341,7 +341,7 @@ void GegnerUfo::GegnerExplode(void)
                                       yPos + rand()%60 + 30, SPLITTER);
 
     Player[0].Score += 4000;
-    pGegner->PushGegner(xPos + 80.0f, yPos + 20.0f, ONEUP, 0, 0, false);
+    Gegner.PushGegner(xPos + 80.0f, yPos + 20.0f, ONEUP, 0, 0, false);
 
     ScrolltoPlayeAfterBoss();
 }

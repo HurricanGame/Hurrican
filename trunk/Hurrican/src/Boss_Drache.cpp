@@ -390,7 +390,7 @@ void GegnerDrache::DoKI(void)
 
         // Alle übrigen Mini-Drachen zerstören
         GegnerClass* pTemp;
-        pTemp = pGegner->pStart;
+        pTemp = Gegner.pStart;
         while(pTemp != NULL)
         {
             if (pTemp->GegnerArt == MINIDRAGON)
@@ -946,7 +946,7 @@ void GegnerDrache::DoKI(void)
             if (AnimCount < 0.0f)
             {
                 AnimCount = 25.0f;
-                pGegner->PushGegner(xPos + 100.0f - mirrorOffset,
+                Gegner.PushGegner(xPos + 100.0f - mirrorOffset,
                                     yPos +  80.0f, MINIDRAGON, 0, 99, false, false);
             }
         }
@@ -980,7 +980,7 @@ void GegnerDrache::DoKI(void)
             if (ShotDelay < 0.0f)
             {
                 ShotDelay = 3.0f;
-                pGegner->PushGegner(xPos + 100.0f - mirrorOffset,
+                Gegner.PushGegner(xPos + 100.0f - mirrorOffset,
                                     yPos +  80.0f, FETTERAKETE, 0, 99, false, false);
             }
 

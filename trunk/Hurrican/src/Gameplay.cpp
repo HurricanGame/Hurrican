@@ -304,7 +304,7 @@ void GameLoop(void)
 
         // Gegner bewegen
         if (pConsole->Showing == false)
-            pGegner->RunAll();
+            Gegner.RunAll();
 
         // Level checken
         if (pConsole->Showing == false)
@@ -340,7 +340,7 @@ void GameLoop(void)
     //    TileEngine.ClearLightMaps();
 
     // Gegner anzeigen
-    pGegner->RenderAll();
+    Gegner.RenderAll();
 
     // Spieler anzeigen
     for (int p = 0; p < NUMPLAYERS; p++)
@@ -1151,8 +1151,8 @@ void SummaryScreen(void)
         TileEngine.DrawBackLevel	();
         TileEngine.DrawFrontLevel	();
 
-        pGegner->RunAll();
-        pGegner->RenderAll();
+        Gegner.RunAll();
+        Gegner.RenderAll();
         Projectiles.DoProjectiles	();				// Schüsse abhandeln
 
         // Overlay Tiles des Levels zeigen und Spieler und Objekte verdecken

@@ -150,7 +150,7 @@ void GegnerStampfstein::DoKI(void)
             // Checken, ob Gegner darunter waren
             GegnerClass *pTemp;
 
-            pTemp = pGegner->pStart;
+            pTemp = Gegner.pStart;
 
             while (pTemp != NULL)
             {

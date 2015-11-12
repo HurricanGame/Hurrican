@@ -235,7 +235,7 @@
 
 //----- Externals
 
-extern GegnerListClass		*pGegner;
+extern GegnerListClass		Gegner;
 extern DirectGraphicsSprite	*pGegnerGrafix[MAX_GEGNERGFX];		// Grafiken der Gegner
 extern RECT					 GegnerRect	  [MAX_GEGNERGFX];		// Rechtecke für Kollision	
 extern float				 g_Fahrstuhl_yPos;					// yPosition des Fahrstuhls

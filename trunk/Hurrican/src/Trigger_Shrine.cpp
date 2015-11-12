@@ -49,12 +49,12 @@ void GegnerShrine::DoKI(void)
 
     		if (AnimCount == 0.0f)
     		{
-    			pGegner->PushGegner (Player[0].xpos,
+    			Gegner.PushGegner (Player[0].xpos,
     								 Player[0].ypos - 50,
     								 FALLINGROCK, 0, 0, true);
 
     			if (NUMPLAYERS == 2)
-    			pGegner->PushGegner (Player[1].xpos,
+    			Gegner.PushGegner (Player[1].xpos,
     								 Player[1].ypos - 50,
     								 FALLINGROCK, 0, 0, true);
 
@@ -74,10 +74,10 @@ void GegnerShrine::DoKI(void)
         {
             Value1 = 0;
             for (int i = 0; i < 2; i++)
-                pGegner->PushGegner (float (xPos - 20 + i * 110), yPos - 100, ONEUP, 0, 0, true);
+                Gegner.PushGegner (float (xPos - 20 + i * 110), yPos - 100, ONEUP, 0, 0, true);
 
             for (int i = 0; i < 8; i++)
-                pGegner->PushGegner (xPos + rand()%100, yPos - 50 + rand()%100, EXTRAS, 3, 0, true);
+                Gegner.PushGegner (xPos + rand()%100, yPos - 50 + rand()%100, EXTRAS, 3, 0, true);
 
             SoundManager.PlayWave (100, 128, 11025, SOUND_COLLECT);
             SoundManager.PlayWave (100, 128, 11025, SOUND_COLLECT);

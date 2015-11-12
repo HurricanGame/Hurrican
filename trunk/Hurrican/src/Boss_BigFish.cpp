@@ -266,10 +266,10 @@ void GegnerBigFish::DoKI(void)
             LeftOrRight *= -1;
 
         if (IsKugel)
-            pGegner->PushGegner((float)TileEngine.XOffset + 300.0f + 300 * LeftOrRight,
+            Gegner.PushGegner((float)TileEngine.XOffset + 300.0f + 300 * LeftOrRight,
                                 (float)TileEngine.YOffset + 200, KUGELKLEIN + Art, 5, 0, false);
         else
-            pGegner->PushGegner((float)TileEngine.XOffset + 300.0f + 320 * LeftOrRight,
+            Gegner.PushGegner((float)TileEngine.XOffset + 300.0f + 320 * LeftOrRight,
                                 (float)TileEngine.YOffset + 350, SWIMWALKER, 5, 0, false);
         IsKugel = !IsKugel;
 
@@ -379,7 +379,7 @@ void GegnerBigFish::DoKI(void)
                     shot == false)
             {
                 shot = true;
-                pGegner->PushGegner(xPos + 80.0f, yPos + 90.0f, PIRANHA, 99, 1, true);
+                Gegner.PushGegner(xPos + 80.0f, yPos + 90.0f, PIRANHA, 99, 1, true);
                 ShotCount--;
             }
 
@@ -410,7 +410,7 @@ void GegnerBigFish::DoKI(void)
                 shot = true;
 
                 for (int i = 0; i < 9; i++)
-                    pGegner->PushGegner(xPos + 80.0f, yPos + 90.0f, PIRANHA, 98, i-4, true);
+                    Gegner.PushGegner(xPos + 80.0f, yPos + 90.0f, PIRANHA, 98, i-4, true);
 
                 ShotCount--;
             }
@@ -471,7 +471,7 @@ void GegnerBigFish::GegnerExplode(void)
                                       PIRANHABLUT);
 
     for (int i=0; i<20; i++)
-        pGegner->PushGegner(xPos + rand()%200+40,
+        Gegner.PushGegner(xPos + rand()%200+40,
                             yPos + 30 + rand()%80, PIRANHA, 99, 0, false);
 
     for (int i = 0; i < NUMPLAYERS; i++)

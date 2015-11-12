@@ -41,7 +41,7 @@
 extern Logdatei				Protokoll;
 extern DirectInputClass		DirectInput;
 extern TimerClass			Timer;
-extern GegnerListClass		*pGegner;
+extern GegnerListClass		Gegner;
 extern HUDClass				HUD;
 extern PartikelsystemClass  PartikelSystem;
 extern ProjectileListClass  Projectiles;
@@ -817,7 +817,7 @@ loadfile:
                 // Gegner bei aktuellem Skill level überhaupt erzeugen ?
                 if (LoadObject.Skill <= Skill)
                 {
-                    pGegner->PushGegner(float(LoadObject.XPos),
+                    Gegner.PushGegner(float(LoadObject.XPos),
                                         float(LoadObject.YPos),
                                         LoadObject.ObjectID,
                                         LoadObject.Value1,
@@ -826,7 +826,7 @@ loadfile:
 
                     if (LoadObject.ObjectID == REITFLUGSACK &&
                             NUMPLAYERS == 2)
-                        pGegner->PushGegner(float(LoadObject.XPos) + 60,
+                        Gegner.PushGegner(float(LoadObject.XPos) + 60,
                                             float(LoadObject.YPos) + 40,
                                             LoadObject.ObjectID,
                                             LoadObject.Value1,
@@ -2137,7 +2137,7 @@ void TileEngineClass::UpdateLevel(void)
         if (Player[0].PunisherActive == false &&
                 HUD.BossHUDActive == 0.0f)
         {
-            pGegner->PushGegner(0, 0, PUNISHER, 0, 0, false);
+            Gegner.PushGegner(0, 0, PUNISHER, 0, 0, false);
             Player[0].PunisherActive = true;
             PartikelSystem.ThunderAlpha = 255.0f;
             PartikelSystem.ThunderColor[0] = 0;

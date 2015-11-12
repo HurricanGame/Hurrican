@@ -35,7 +35,7 @@ GegnerSkull::GegnerSkull(int Wert1, int Wert2, bool Light)
 
     // Position der Endboss Wand rausfinden
     GegnerClass *pTemp;
-    pTemp = pGegner->pStart;
+    pTemp = Gegner.pStart;
     while (pTemp != NULL)
     {
         if (pTemp->GegnerArt == THEWALL)
@@ -172,12 +172,12 @@ void GegnerSkull::DoKI(void)
             Timer.SetMoveSpeed(10.0f);
 
             // Flugsäcke spawnen
-            pGegner->PushGegner((float)(TileEngine.XOffset + 200.0f),
+            Gegner.PushGegner((float)(TileEngine.XOffset + 200.0f),
                                 (float)(TileEngine.YOffset - 40.0f),
                                 REITFLUGSACK, 1, 0, false);
 
             if (NUMPLAYERS ==2 )
-                pGegner->PushGegner((float)(TileEngine.XOffset + 300.0f),
+                Gegner.PushGegner((float)(TileEngine.XOffset + 300.0f),
                                     (float)(TileEngine.YOffset - 50.0f),
                                     REITFLUGSACK, 1, 0, false);
         }

@@ -48,11 +48,11 @@ void GegnerLaFassSpawner::DoKI(void)
         // in die richtige Richtung schubsen
         if (Value1 == 0)
         {
-            pGegner->PushGegner(xPos, yPos, LAFASS, -5, 0, false);
+            Gegner.PushGegner(xPos, yPos, LAFASS, -5, 0, false);
         }
         else
         {
-            pGegner->PushGegner(xPos, yPos, LAFASS, 5, 0, false);
+            Gegner.PushGegner(xPos, yPos, LAFASS, 5, 0, false);
         }
     }
 }

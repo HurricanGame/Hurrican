@@ -99,7 +99,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         //DKS - Fixed uninitialized variable:
         //GegnerClass *pAim, *pTemp;
         GegnerClass *pAim = NULL;
-        GegnerClass *pTemp = pGegner->pStart;
+        GegnerClass *pTemp = Gegner.pStart;
 
         while (pTemp != NULL)
         {
@@ -2017,7 +2017,7 @@ void ProjectileClass::CheckCollision(void)
 {
     GegnerClass *pEnemy = NULL;
 
-    pEnemy = pGegner->pStart;			// Anfang der Gegnerliste
+    pEnemy = Gegner.pStart;			// Anfang der Gegnerliste
     while (pEnemy != NULL)				// Noch nicht alle durch ?
     {
         if (pEnemy->Active		== true &&	// Ist der Gegner überhaupt aktiv ?
@@ -4470,7 +4470,7 @@ void ProjectileClass::ExplodeShot(void)
     {
         // Wirkung ähnlich einer schwachen Granate (Damage = 0 - 100)
         //
-        pGegner->DamageEnemiesonScreen(xPos, yPos, Damage);
+        Gegner.DamageEnemiesonScreen(xPos, yPos, Damage);
 
         // Partikel
         //
@@ -4731,7 +4731,7 @@ void ProjectileClass::ExplodeShot(void)
         if (ShotArt == BOMBEBIG)
             schaden = 250;
 
-        pEnemy = pGegner->pStart;			// Anfang der Gegnerliste
+        pEnemy = Gegner.pStart;			// Anfang der Gegnerliste
         while (pEnemy != NULL)				// Noch nicht alle durch ?
         {
             xdiff = (xPos + ShotRect[ShotArt].left + (ShotRect[ShotArt].right - ShotRect[ShotArt].left)/2)
@@ -4854,7 +4854,7 @@ void ProjectileClass::ExplodeShot(void)
 
 
         ShakeScreen(5);
-        pGegner->DamageEnemiesonScreen(xPos, yPos, 400);
+        Gegner.DamageEnemiesonScreen(xPos, yPos, 400);
         TileEngine.ExplodeWalls((int)xPos / 20, (int)yPos / 20);
 
         for (int p = 0; p < NUMPLAYERS; p++)

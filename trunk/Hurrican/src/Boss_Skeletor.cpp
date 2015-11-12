@@ -579,7 +579,7 @@ void GegnerSkeletor::DoKI(void)
         ShotDelay = 20.0f;
 
         // Schädel spawnen
-        pGegner->PushGegner(xPos + 50, yPos + 50, SKULL, 0, 99, false);
+        Gegner.PushGegner(xPos + 50, yPos + 50, SKULL, 0, 99, false);
 
         // Explosionen
         //int i = 0;	// PICKLE not used

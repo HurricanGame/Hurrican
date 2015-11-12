@@ -185,7 +185,7 @@ void GegnerSchleimBoller::GegnerExplode(void)
         if (xPos + 30 - Size / 2 > pAim->xpos + 35)
             mul = -1;
 
-        pGegner->PushGegner (xPos + 20 * mul, yPos, SCHLEIMBOLLER, int (Size - 8),  5, ChangeLight);
-        pGegner->PushGegner (xPos - 20 * mul, yPos, SCHLEIMBOLLER, int (Size - 8), -5, ChangeLight);
+        Gegner.PushGegner (xPos + 20 * mul, yPos, SCHLEIMBOLLER, int (Size - 8),  5, ChangeLight);
+        Gegner.PushGegner (xPos - 20 * mul, yPos, SCHLEIMBOLLER, int (Size - 8), -5, ChangeLight);
     }
 }

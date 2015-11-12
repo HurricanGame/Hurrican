@@ -549,7 +549,7 @@ void GegnerMetalHead::DoKI(void)
                         break;
                     }
 
-                    pGegner->PushGegner((float)Value1 + 50 + rand()%550,
+                    Gegner.PushGegner((float)Value1 + 50 + rand()%550,
                                         (float)Value2 - 40,
                                         SCHLEIMBOLLER, size, 0, false);
                 }

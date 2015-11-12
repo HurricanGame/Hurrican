@@ -46,7 +46,7 @@ void GegnerWuxeSpinnen::DoKI(void)
                                  (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
-        pGegner->PushGegner (xPos, yPos - 40, EXTRAS, 10, 0, false);
+        Gegner.PushGegner (xPos, yPos - 40, EXTRAS, 10, 0, false);
     }
 
     // Hat der Boss keine Energie mehr ? Dann explodiert er
@@ -96,7 +96,7 @@ void GegnerWuxeSpinnen::DoKI(void)
             {
                 float x = (float)(rand()%520);
 
-                pGegner->PushGegner (float (Value1) + x, float (Value2) - 100, MITTELSPINNE, 0, 1, false);
+                Gegner.PushGegner (float (Value1) + x, float (Value2) - 100, MITTELSPINNE, 0, 1, false);
             }
 
             Energy -= 20;
@@ -107,8 +107,8 @@ void GegnerWuxeSpinnen::DoKI(void)
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    pGegner->PushGegner (float (Value1) - 20,  float (Value2) + i * 60 + 150, AUGE, rand()%10, 0, false);
-                    pGegner->PushGegner (float (Value1) + 620, float (Value2) + i * 60 + 180, AUGE, rand()%10, 0, false);
+                    Gegner.PushGegner (float (Value1) - 20,  float (Value2) + i * 60 + 150, AUGE, rand()%10, 0, false);
+                    Gegner.PushGegner (float (Value1) + 620, float (Value2) + i * 60 + 180, AUGE, rand()%10, 0, false);
                 }
             }
 
@@ -116,7 +116,7 @@ void GegnerWuxeSpinnen::DoKI(void)
             //
             if (int (Energy+500) % 600 == 0)
             {
-                pGegner->PushGegner (xPos, yPos - 40, EXTRAS, 10, 0, false);
+                Gegner.PushGegner (xPos, yPos - 40, EXTRAS, 10, 0, false);
             }
         }
     }
@@ -151,7 +151,7 @@ void GegnerWuxeSpinnen::DoKI(void)
 void GegnerWuxeSpinnen::GegnerExplode(void)
 {
     // Extra Leben
-    pGegner->PushGegner (xPos, yPos - 250, ONEUP, 10, 0, false);
+    Gegner.PushGegner (xPos, yPos - 250, ONEUP, 10, 0, false);
 
     ScrolltoPlayeAfterBoss();
 }

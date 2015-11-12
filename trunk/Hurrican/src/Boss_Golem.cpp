@@ -439,7 +439,7 @@ void GegnerGolem::DoKI(void)
                 ShakeScreen(3.0f);
                 SoundManager.PlayWave(75, 128, 15000 + rand()%2000, SOUND_DOORSTOP);
 
-                pGegner->PushGegner((float)(TileEngine.XOffset + 100.0f + rand()%540),
+                Gegner.PushGegner((float)(TileEngine.XOffset + 100.0f + rand()%540),
                                     (float)(TileEngine.YOffset + 480), LAVABALL, 50 + rand()%10, 0, false);
             }
         }
@@ -461,7 +461,7 @@ void GegnerGolem::DoKI(void)
                 ShakeScreen(3.0f);
                 SoundManager.PlayWave(75, 128, 15000 + rand()%2000, SOUND_DOORSTOP);
 
-                pGegner->PushGegner((float)(pAim->xpos - 20.0f + rand()%70),
+                Gegner.PushGegner((float)(pAim->xpos - 20.0f + rand()%70),
                                     (float)(TileEngine.YOffset + 480), LAVABALL, 50 + rand()%10, 0, false);
 
                 StoneCount--;
@@ -667,8 +667,8 @@ void GegnerGolem::DoKI(void)
 
             if (rotarm1 <= 2.0f)
             {
-                pGegner->PushGegner(xPos - 40, yPos + 30, BOULDER, -(rand()%80 + 10), -(rand()%20 + 10), true);
-                pGegner->PushGegner(xPos - 40, yPos + 30, BOULDER, -(rand()%40 + 10), -(rand()%10 + 10), true);
+                Gegner.PushGegner(xPos - 40, yPos + 30, BOULDER, -(rand()%80 + 10), -(rand()%20 + 10), true);
+                Gegner.PushGegner(xPos - 40, yPos + 30, BOULDER, -(rand()%40 + 10), -(rand()%10 + 10), true);
                 SoundManager.PlayWave(100, 128, 14000 + rand()%4000, SOUND_STONEFALL);
                 state2 = ARM_SENKEN2;
             }
@@ -871,7 +871,7 @@ void GegnerGolem::GegnerExplode(void)
     Player[0].Score += 8000;
 
     // Plattform spawnen, damit der Spieler weiterkommt =)
-    pGegner->PushGegner(6760, 2500, PLATTFORM, 6, 0, false);
+    Gegner.PushGegner(6760, 2500, PLATTFORM, 6, 0, false);
 
     ScrolltoPlayeAfterBoss();
 }

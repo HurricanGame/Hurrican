@@ -51,7 +51,7 @@ void GegnerBruecke::DoKI(void)
 
         // Irgendein Gegner steht auf der Brücke
         //
-        GegnerClass *pTemp = pGegner->pStart;			// Anfang der Liste
+        GegnerClass *pTemp = Gegner.pStart;			// Anfang der Liste
 
         while (pTemp != NULL)							// noch nicht alle durch ?
         {

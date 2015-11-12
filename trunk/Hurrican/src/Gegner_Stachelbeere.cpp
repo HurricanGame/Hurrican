@@ -169,7 +169,7 @@ void GegnerStachelbeere::DoKI(void)
 
             SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_GRANATE);
 
-            pGegner->PushGegner(xPos + ShotCount * 15.0f + off,
+            Gegner.PushGegner(xPos + ShotCount * 15.0f + off,
                                 yPos + 10.0f,
                                 MINIROCKET, 0, 99, false, false);
 
@@ -317,15 +317,15 @@ void GegnerStachelbeere::GegnerExplode(void)
     Player[0].Score += 300;
 
     // noch einm paar Raketen spawnen
-    pGegner->PushGegner(xPos + 15.0f,
+    Gegner.PushGegner(xPos + 15.0f,
                         yPos + 35.0f,
                         MINIROCKET, 0, 99, false, false);
 
-    pGegner->PushGegner(xPos + 45.0f,
+    Gegner.PushGegner(xPos + 45.0f,
                         yPos + 35.0f,
                         MINIROCKET, 0, 99, false, false);
 
-    pGegner->PushGegner(xPos + 30.0f,
+    Gegner.PushGegner(xPos + 30.0f,
                         yPos + 20,
                         MINIROCKET, 0, 99, false, false);
 }

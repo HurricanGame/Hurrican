@@ -107,6 +107,11 @@ public:
     GegnerListClass(void);						// Konstruktor
     ~GegnerListClass(void);						// Destruktor
 
+    //DKS - GegnerListClass is now a static global, instead of dynamically allocated
+    //      pointer, so moved the loading of sprites from its constructor to this new
+    //      function:
+    void LoadSprites(void);
+
     bool PushGegner(float x, float y, int Art,	// Gegner "Art" hinzufügen
                     int Value1,
                     int Value2,

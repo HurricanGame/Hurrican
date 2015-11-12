@@ -317,7 +317,7 @@ void PlayerClass::InitNewLevel()
 
     // Zu Beginn des Levels werden alle Listen mit Gegner, Schüssen und Partikeln gelöscht
     PartikelSystem.ClearAll();
-    pGegner->ClearAll();
+    Gegner.ClearAll();
     Projectiles.ClearAll();
 }
 
@@ -911,7 +911,7 @@ void PlayerClass::CheckForExplode(void)
         // Spieler explodieren lassen und Gegnern dabei Schaden zufügen
         //
         SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
-        pGegner->DamageEnemiesonScreen (xpos + 35, ypos + 40, 400);
+        Gegner.DamageEnemiesonScreen (xpos + 35, ypos + 40, 400);
 
         // Piss-Meldung verschwinden lassen
         GUI.HideBoxFast();
@@ -962,7 +962,7 @@ void PlayerClass::CheckForExplode(void)
         GegnerClass *pTemp;
         GegnerPunisher *pPunisher;
 
-        pTemp = pGegner->pStart;
+        pTemp = Gegner.pStart;
 
         while (pTemp != NULL)
         {
@@ -1015,7 +1015,7 @@ void PlayerClass::PullItems(void)
 {
     GegnerClass* pTemp;
 
-    pTemp = pGegner->pStart;
+    pTemp = Gegner.pStart;
 
     while (pTemp != NULL)
     {
@@ -2115,7 +2115,7 @@ void PlayerClass::AnimatePlayer(void)
                     AufPlattform = NULL;
 
                     // abstürzenden Flugsack adden
-                    pGegner->PushGegner(xpos, ypos + 20, FLUGSACK, 99, 0, false);
+                    Gegner.PushGegner(xpos, ypos + 20, FLUGSACK, 99, 0, false);
 
                     FlugsackFliesFree = true;
                     TileEngine.Zustand = ZUSTAND_SCROLLBAR;
@@ -4103,7 +4103,7 @@ bool PlayerClass::DoLightning(void)
         //    TileEngine.DrawLightmap(LIGHTMAP_BLITZ, xs + 16, ys + 16, 255);
 
         // Blitz auf Kollision mit den Gegnern prüfen
-        pEnemy = pGegner->pStart;			// Anfang der Gegnerliste
+        pEnemy = Gegner.pStart;			// Anfang der Gegnerliste
         while (pEnemy != NULL)				// Noch nicht alle durch ?
         {
             if (pEnemy->Active == true &&		// Ist der Gegner überhaupt aktiv ?
