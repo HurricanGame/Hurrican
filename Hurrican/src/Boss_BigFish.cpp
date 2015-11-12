@@ -283,7 +283,7 @@ void GegnerBigFish::DoKI(void)
 
     // Energie anzeigen
     if (Handlung != GEGNER_INIT && Handlung != GEGNER_EXPLODIEREN)
-        pHUD->ShowBossHUD(2000, Energy);
+        HUD.ShowBossHUD(2000, Energy);
 
     // Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
     if (Active == true &&

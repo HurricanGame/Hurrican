@@ -64,6 +64,10 @@ public:
     HUDClass		 (void);					// HUD initialisieren und Grafiken laden
     ~HUDClass		 (void);					// HUD freigeben
 
+    //DKS - Added LoadSprites() function and moved these here from class constructor,
+    //      to allow statically-allocated HUD global var (used to be dynamically allocated)
+    void LoadSprites(void);
+
     void UpdateValues  (void);						// Werte im HUD ändern
     void ShowHUD	   (void);						// HUD anzeigen
     void RenderBossHUD (void);						// Boss HUD anzeigen
@@ -77,6 +81,6 @@ public:
 // Externals
 // --------------------------------------------------------------------------------------
 
-extern HUDClass				*pHUD;
+extern HUDClass				HUD;
 
 #endif

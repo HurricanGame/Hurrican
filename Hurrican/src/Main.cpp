@@ -156,7 +156,7 @@ HBITMAP					SplashScreen = NULL;			// SplashScreen Grafik
 //PlayerClass				*pPlayer[2];					// Werte der Spieler
 PlayerClass				Player[2];					// Werte der Spieler
 
-HUDClass				*pHUD;							// Das HUD
+HUDClass				HUD;							// Das HUD
 unsigned char			SpielZustand = CRACKTRO;		// Aktueller Zustand des Spieles
 char					StringBuffer[100];				// Für die Int / String Umwandlung
 
@@ -1176,8 +1176,8 @@ bool GameInit2(void)
     // DKS Load projectile sprites:
     Projectiles.LoadSprites();
 
-    // HUD initialisieren
-    pHUD = new HUDClass();
+    // DKS - Load HUD sprites:
+    HUD.LoadSprites();
 
     InitReplacers();
 
@@ -1350,10 +1350,6 @@ bool GameExit(void)
     // Menu beenden
     delete(pMenu);
     Protokoll.WriteText( false, "-> Head menu released\n" );
-
-    // HUD freigeben
-    delete(pHUD);
-    Protokoll.WriteText( false, "-> HUD released\n" );
 
     // GegnerListe beenden
     delete(pGegner);

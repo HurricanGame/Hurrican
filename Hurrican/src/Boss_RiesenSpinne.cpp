@@ -413,7 +413,7 @@ void GegnerRiesenSpinne::DoKI(void)
 {
     // Energie anzeigen
     if (Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_EXPLODIEREN)
-        pHUD->ShowBossHUD(100000, Energy);
+        HUD.ShowBossHUD(100000, Energy);
 
     // Levelausschnitt auf die RiesenSpinne zentrieren, sobald diese sichtbar wird
     if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)

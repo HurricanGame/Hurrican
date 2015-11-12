@@ -35,7 +35,7 @@ void GegnerStahlfaust::DoKI(void)
 {
     // Energie anzeigen
     if (Handlung != GEGNER_INIT && Handlung != GEGNER_EXPLODIEREN)
-        pHUD->ShowBossHUD(4000, Energy);
+        HUD.ShowBossHUD(4000, Energy);
 
     // Levelausschnitt auf die Faust zentrieren, sobald dieses sichtbar wird
     if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)

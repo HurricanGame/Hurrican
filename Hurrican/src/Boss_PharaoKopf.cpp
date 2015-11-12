@@ -68,7 +68,7 @@ void GegnerPharaoKopf::DoKI(void)
 {
     // Energie anzeigen
     if (Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_EXPLODIEREN)
-        pHUD->ShowBossHUD(6000, Energy);
+        HUD.ShowBossHUD(6000, Energy);
 
 //----- Pharao dient auch als Plattform
     PlattformTest(GegnerRect[GegnerArt]);
@@ -565,7 +565,7 @@ void GegnerPharaoKopf::GegnerExplode(void)
 
     ShakeScreen(4);
 
-    pHUD->BossHUDActive = false;
+    HUD.BossHUDActive = false;
 
     ScrolltoPlayeAfterBoss();
 }

@@ -163,7 +163,7 @@ void GegnerSkeletor::DoKI(void)
 
     // Energie anzeigen
     if (Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_EXPLODIEREN)
-        pHUD->ShowBossHUD(7000, Energy);
+        HUD.ShowBossHUD(7000, Energy);
 
     // Boss aktivieren und Stagemusik ausfaden
     //

@@ -42,7 +42,7 @@ extern Logdatei				Protokoll;
 extern DirectInputClass		DirectInput;
 extern TimerClass			Timer;
 extern GegnerListClass		*pGegner;
-extern HUDClass				*pHUD;
+extern HUDClass				HUD;
 extern PartikelsystemClass  PartikelSystem;
 extern ProjectileListClass  Projectiles;
 
@@ -2119,7 +2119,7 @@ void TileEngineClass::UpdateLevel(void)
     // Zeit ablaufen lassen
     if (RunningTutorial == false &&
             Timelimit > 0.0f &&
-            pHUD->BossHUDActive == 0.0f &&
+            HUD.BossHUDActive == 0.0f &&
             pConsole->Showing == false)
     {
         if (Skill == 0)
@@ -2135,7 +2135,7 @@ void TileEngineClass::UpdateLevel(void)
     if (Timelimit < 0.0f)
     {
         if (Player[0].PunisherActive == false &&
-                pHUD->BossHUDActive == 0.0f)
+                HUD.BossHUDActive == 0.0f)
         {
             pGegner->PushGegner(0, 0, PUNISHER, 0, 0, false);
             Player[0].PunisherActive = true;

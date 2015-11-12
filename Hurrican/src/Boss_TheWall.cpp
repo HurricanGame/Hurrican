@@ -420,7 +420,7 @@ void GegnerTheWall::DoKI(void)
 
         // Energie anzeigen
         if (Handlung != GEGNER_INIT)
-            pHUD->ShowBossHUD(4000, Energy);
+            HUD.ShowBossHUD(4000, Energy);
 
         // Boss aktivieren und Mucke laufen lassen
         //

@@ -211,7 +211,7 @@ void GegnerSchneeKoenig::DoKI(void)
 {
     // Energie anzeigen
     if (Handlung != GEGNER_INIT && Handlung != GEGNER_EXPLODIEREN)
-        pHUD->ShowBossHUD(50000, Energy);
+        HUD.ShowBossHUD(50000, Energy);
 
     // Boss aktivieren und Mucke laufen lassen
     //
@@ -760,7 +760,7 @@ void GegnerSchneeKoenig::GegnerExplode(void)
             Player[p].AufPlattform = NULL;
 
     Player[0].Score += 2000 * Value1;
-    pHUD->BossHUDActive = false;
+    HUD.BossHUDActive = false;
 
     ScrolltoPlayeAfterBoss();
 }

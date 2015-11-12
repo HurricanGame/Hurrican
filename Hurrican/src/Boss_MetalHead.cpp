@@ -362,7 +362,7 @@ void GegnerMetalHead::DoKI(void)
 
     // Energie anzeigen
     if (Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_EXPLODIEREN)
-        pHUD->ShowBossHUD(4000, Energy);
+        HUD.ShowBossHUD(4000, Energy);
 
     // Boss aktivieren und Mucke laufen lassen
     //

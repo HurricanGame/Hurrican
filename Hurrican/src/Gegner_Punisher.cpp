@@ -204,7 +204,7 @@ void GegnerPunisher::DoKI(void)
     } // switch
 
     // Boss oder SummaryScreen ? Dann verschwinden
-    if (pHUD->BossHUDActive != 0.0f ||
+    if (HUD.BossHUDActive != 0.0f ||
             ShowSummary == true)
         Energy = 0.0f;
 

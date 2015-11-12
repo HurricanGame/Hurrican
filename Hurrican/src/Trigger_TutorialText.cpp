@@ -180,14 +180,14 @@ void GegnerTutorialText::DoKI(void)
         // Pfeil auf Spreadshot Stufe anzeigen
         case 11:
         {
-            pHUD->ShowArrow (256, 60);
+            HUD.ShowArrow (256, 60);
         }
         break;
 
         // Pfeil auf Blitz Stufe anzeigen
         case 15:
         {
-            pHUD->ShowArrow (351, 60);
+            HUD.ShowArrow (351, 60);
         }
         break;
 
@@ -234,7 +234,7 @@ void GegnerTutorialText::DoKI(void)
         // Pfeil auf PowerLines
         case 18:
         {
-            pHUD->ShowArrow (391, 60);
+            HUD.ShowArrow (391, 60);
         }
         break;
 
@@ -252,7 +252,7 @@ void GegnerTutorialText::DoKI(void)
         // Pfeil auf Rad-Energie
         case 24:
         {
-            pHUD->ShowArrow (548, 70);
+            HUD.ShowArrow (548, 70);
         }
         break;
 
@@ -267,7 +267,7 @@ void GegnerTutorialText::DoKI(void)
         // Pfeil auf Shockwave
         case 29:
         {
-            pHUD->ShowArrow (434, 42);
+            HUD.ShowArrow (434, 42);
         }
         break;
 

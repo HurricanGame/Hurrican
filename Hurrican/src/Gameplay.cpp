@@ -97,7 +97,7 @@ void InitNewGame(void)
             Player[p].GodMode = true;
     }
 
-    pHUD->BossHUDActive = 0.0f;
+    HUD.BossHUDActive = 0.0f;
 }
 
 // --------------------------------------------------------------------------------------
@@ -233,7 +233,7 @@ void ShowGameOver(void)
 
 void GameLoop(void)
 {
-    pHUD->bShowArrow = false;
+    HUD.bShowArrow = false;
 
     // Total löschen
 #if defined(PLATFORM_DIRECTX)
@@ -387,10 +387,10 @@ void GameLoop(void)
     TileEngine.DrawShadow();
 
     // HUD anhandeln
-    pHUD->DoHUD();
+    HUD.DoHUD();
 
     // ggf. BossHUD anzeigen
-    pHUD->RenderBossHUD();
+    HUD.RenderBossHUD();
 
     // Pisstext anzeigen
     ShowPissText();
@@ -1164,7 +1164,7 @@ void SummaryScreen(void)
         TileEngine.DrawOverlayLevel();
         TileEngine.DrawShadow();
 
-        pHUD->DoHUD();								// HUD anhandeln
+        HUD.DoHUD();								// HUD anhandeln
 
         // Blitz und andere Partikel rendern, die alles überlagern
         PartikelSystem.DoThunder ();

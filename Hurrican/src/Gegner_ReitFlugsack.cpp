@@ -50,7 +50,7 @@ void GegnerReitFlugsack::DoDraw(void)
             ArrowCount = 2.0f;
 
         if ((int)(ArrowCount) % 2 == 0)
-            pHUD->Arrow.RenderMirroredSprite((float)(xPos - TileEngine.XOffset) + 35,
+            HUD.Arrow.RenderMirroredSprite((float)(xPos - TileEngine.XOffset) + 35,
                                              (float)(yPos - TileEngine.YOffset) - 40,
                                              0xFF00FF00,
                                              false, true);
