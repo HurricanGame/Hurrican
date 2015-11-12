@@ -530,7 +530,7 @@ void GegnerRiesenSpinne::DoKI(void)
                     ShotDelay = 12.0f;
 
                     SoundManager.PlayWave(100, 128, 8000 + rand()%1000, SOUND_LILA);
-                    pPartikelSystem->PushPartikel(xPos + 30.0f - 50.0f, yPos + yBody + 85.0f - 35.0f, EXPLOSIONFLARE2);
+                    PartikelSystem.PushPartikel(xPos + 30.0f - 50.0f, yPos + yBody + 85.0f - 35.0f, EXPLOSIONFLARE2);
 
                     if (ShotMode == 0)
                         Projectiles.PushProjectile(xPos + 30.0f, yPos + yBody + 85.0f, SPIDERSLOW);
@@ -605,8 +605,8 @@ void GegnerRiesenSpinne::DoKI(void)
             {
                 AnimCount = 0.4f;
 
-                pPartikelSystem->PushPartikel(xPos + rand()%400, yPos + rand()%100, EXPLOSION_MEDIUM + rand()%2);
-                pPartikelSystem->PushPartikel(xPos + rand()%400, yPos + rand()%100, SMOKEBIG);
+                PartikelSystem.PushPartikel(xPos + rand()%400, yPos + rand()%100, EXPLOSION_MEDIUM + rand()%2);
+                PartikelSystem.PushPartikel(xPos + rand()%400, yPos + rand()%100, SMOKEBIG);
 
                 if (rand()%5 == 0)
                     SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3 + rand()%2);

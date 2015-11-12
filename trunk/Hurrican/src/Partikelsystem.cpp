@@ -32,7 +32,7 @@
 
 extern Logdatei				Protokoll;
 extern DirectGraphicsFont   *pFont;
-extern PartikelsystemClass	*pPartikelSystem;
+extern PartikelsystemClass	PartikelSystem;
 extern TileEngineClass		TileEngine;
 extern ProjectileListClass	Projectiles;
 extern ConsoleClass			*pConsole;
@@ -42,7 +42,7 @@ extern LPDIRECT3DDEVICE8	lpD3DDevice;				// Direct3D Device-Objekt
 // Variablen
 // --------------------------------------------------------------------------------------
 
-DirectGraphicsSprite	*pPartikelGrafix[MAX_PARTIKELGFX];	// Grafiken der Partikel
+DirectGraphicsSprite	PartikelGrafix[MAX_PARTIKELGFX];	// Grafiken der Partikel
 RECT					PartikelRect[MAX_PARTIKELGFX];		// Rechtecke für Level Kollision
 int						CurrentPartikelTexture;				// Aktuelle Textur der Partikel
 int						DrawMode;							// normale oder rotierte Partikel?
@@ -193,7 +193,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             AnimEnde	= 19;
             AnimSpeed	= float((rand()%6+3)/20.0f);
 
-            pPartikelSystem->PushPartikel (x - 30, y - 30, EXPLOSIONFLARE);
+            PartikelSystem.PushPartikel (x - 30, y - 30, EXPLOSIONFLARE);
 
             Rotate = true;
 
@@ -214,7 +214,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             AnimEnde	= 19;
             AnimSpeed	= float((rand()%6+3)/20.0f);
 
-            pPartikelSystem->PushPartikel (x - 30, y - 30, EXPLOSIONFLARE);
+            PartikelSystem.PushPartikel (x - 30, y - 30, EXPLOSIONFLARE);
 
             Rotate = true;
 
@@ -235,7 +235,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             AnimEnde	= 19;
             AnimSpeed	= float((rand()%6+3)/20.0f);
 
-            pPartikelSystem->PushPartikel (x - 30, y - 30, EXPLOSIONFLARE);
+            PartikelSystem.PushPartikel (x - 30, y - 30, EXPLOSIONFLARE);
 
             if (rand()%2 == 0)
                 PartikelArt = EXPLOSION_MEDIUM3_ADD;
@@ -258,13 +258,13 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             AnimEnde	= 19;
             AnimSpeed	= float((rand()%2+5)/10.0f);
 
-            pPartikelSystem->PushPartikel (x + 30, y + 30, EXPLOSIONFLARE);
+            PartikelSystem.PushPartikel (x + 30, y + 30, EXPLOSIONFLARE);
 
             for (int i = 0; i < 20; i++)
             {
-                pPartikelSystem->PushPartikel (x + 60 + rand()%40,
+                PartikelSystem.PushPartikel (x + 60 + rand()%40,
                                                y + 60 + rand()%40, FUNKE);
-                pPartikelSystem->PushPartikel (x + 60 + rand()%40,
+                PartikelSystem.PushPartikel (x + 60 + rand()%40,
                                                y + 60 + rand()%40, LONGFUNKE);
             }
 
@@ -300,7 +300,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             AnimEnde	= 24;
             AnimSpeed	= float((rand()%5+10)/80.0f);
 
-            pPartikelSystem->PushPartikel (x - 30, y - 30, EXPLOSIONFLARE);
+            PartikelSystem.PushPartikel (x - 30, y - 30, EXPLOSIONFLARE);
 
         }
         break;
@@ -315,13 +315,13 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             Lebensdauer = 224;
             AnimEnde	= 19;
             AnimSpeed	= float((rand()%5+10)/30.0f);
-            pPartikelSystem->PushPartikel (x + 32, y + 32, EXPLOSION_KRINGEL);
+            PartikelSystem.PushPartikel (x + 32, y + 32, EXPLOSION_KRINGEL);
 
             if (options_Detail >= DETAIL_MAXIMUM)
                 for (int i = 0; i < 10; i++)
-                    pPartikelSystem->PushPartikel (x + 32, y + 32, SMOKEBIG2);
+                    PartikelSystem.PushPartikel (x + 32, y + 32, SMOKEBIG2);
 
-            pPartikelSystem->PushPartikel (x - 10, y - 10, EXPLOSIONFLARE);
+            PartikelSystem.PushPartikel (x - 10, y - 10, EXPLOSIONFLARE);
         }
         break;
 
@@ -2077,8 +2077,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             //DKS - converted to float:
             float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
             // berechnung
-            absx = pPartikelSystem->xtarget-xPos;	// Differenz der x
-            absy = pPartikelSystem->ytarget-yPos;	// und y Strecke
+            absx = PartikelSystem.xtarget-xPos;	// Differenz der x
+            absy = PartikelSystem.ytarget-yPos;	// und y Strecke
 
             //DKS - converted to float:
             speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
@@ -2605,7 +2605,7 @@ void PartikelClass::Run(void)
                 AnimPhase = 0;				// Dann von vorne beginnen lassen
 
             if (AnimCount == 0.0f)
-                pPartikelSystem->PushPartikel(xPos - 12, yPos - 14, SMOKE);
+                PartikelSystem.PushPartikel(xPos - 12, yPos - 14, SMOKE);
 
         }
         break;
@@ -2783,7 +2783,7 @@ void PartikelClass::Run(void)
                 Lebensdauer = 0;
 
                 for (int i = 0; i < 3; i++)
-                    pPartikelSystem->PushPartikel(xPos, yPos, WATERFUNKE);
+                    PartikelSystem.PushPartikel(xPos, yPos, WATERFUNKE);
 
                 // Platschen im Wasser
                 //
@@ -2981,7 +2981,7 @@ void PartikelClass::Run(void)
             if (AnimCount < 0.0f)
             {
                 AnimCount = 0.5f;
-                pPartikelSystem->PushPartikel (xPos - 20 + rand()%40, yPos - 20 + rand()%40, EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel (xPos - 20 + rand()%40, yPos - 20 + rand()%40, EXPLOSION_MEDIUM2);
             }
         }
         break;
@@ -3055,7 +3055,7 @@ void PartikelClass::Run(void)
                     off = 7;
 
                 Lebensdauer = 0;
-                pPartikelSystem->PushPartikel (xPos + 5, yPos + off, BUBBLE);
+                PartikelSystem.PushPartikel (xPos + 5, yPos + off, BUBBLE);
             }
         }
         break;
@@ -3078,7 +3078,7 @@ void PartikelClass::Run(void)
                 // Ein paar Spritzer erzeugen
                 if (options_Detail >= DETAIL_HIGH)
                     for (int i=0; i<2; i++)
-                        pPartikelSystem->PushPartikel(xPos+8, yPos+16, WASSERTROPFEN);
+                        PartikelSystem.PushPartikel(xPos+8, yPos+16, WASSERTROPFEN);
             }
 
         }
@@ -3399,7 +3399,7 @@ void PartikelClass::Run(void)
 
                 {
                     for (int i=0; i<3; i++)
-                        pPartikelSystem->PushPartikel(xPos, yPos, WATERFUNKE);
+                        PartikelSystem.PushPartikel(xPos, yPos, WATERFUNKE);
 
                     // Und Luftblase verschwinden lassen
                     Lebensdauer = 0;
@@ -3487,8 +3487,8 @@ void PartikelClass::Run(void)
             //DKS - converted to float:
             float	absx, absy, speed;				// Variablen für die Geschwindigkeits-
             // berechnung
-            absx = pPartikelSystem->xtarget-xPos;	// Differenz der x
-            absy = pPartikelSystem->ytarget-yPos;	// und y Strecke
+            absx = PartikelSystem.xtarget-xPos;	// Differenz der x
+            absy = PartikelSystem.ytarget-yPos;	// und y Strecke
 
             //DKS - converted to float:
             speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
@@ -3678,7 +3678,7 @@ void PartikelClass::Run(void)
             if (AnimCount < 0.0f)
             {
                 AnimCount = 0.4f;
-                pPartikelSystem->PushPartikel(xPos + 30, yPos + 30, EXPLOSION_REGULAR);
+                PartikelSystem.PushPartikel(xPos + 30, yPos + 30, EXPLOSION_REGULAR);
             }
         }
         break;
@@ -3712,8 +3712,8 @@ bool PartikelClass::Render(void)
         DirectGraphics.SetFilterMode (true);
 
         D3DXMATRIX	matRot, matTrans, matTrans2;
-        int width  = pPartikelGrafix[PartikelArt]->itsXFrameSize;
-        int height = pPartikelGrafix[PartikelArt]->itsYFrameSize;
+        int width  = PartikelGrafix[PartikelArt].itsXFrameSize;
+        int height = PartikelGrafix[PartikelArt].itsYFrameSize;
 
         // Rotationsmatrix
         D3DXMatrixRotationZ  (&matRot, DegreetoRad[int(Rot)]);
@@ -3773,14 +3773,14 @@ bool PartikelClass::Render(void)
     {
         float l,  r,  o,  u;					// Vertice Koordinaten
         float tl, tr, to, tu;					// Textur Koordinaten
-        float xts = pPartikelGrafix[PartikelArt]->itsXTexScale;
-        float yts = pPartikelGrafix[PartikelArt]->itsYTexScale;
+        float xts = PartikelGrafix[PartikelArt].itsXTexScale;
+        float yts = PartikelGrafix[PartikelArt].itsYTexScale;
 
         //DKS - There is no need to compute this, it's already in the sprite's itsPreCalcedRects array:
         //int   xfs, yfs, xfc;
-        //xfs = pPartikelGrafix[PartikelArt]->itsXFrameSize;
-        //yfs = pPartikelGrafix[PartikelArt]->itsYFrameSize;
-        //xfc = pPartikelGrafix[PartikelArt]->itsXFrameCount;
+        //xfs = PartikelGrafix[PartikelArt].itsXFrameSize;
+        //yfs = PartikelGrafix[PartikelArt].itsYFrameSize;
+        //xfc = PartikelGrafix[PartikelArt].itsXFrameCount;
         //RECT Rect;
         //// Ausschnitt berechnen
         //Rect.top	= (AnimPhase/xfc) * yfs;
@@ -3788,7 +3788,7 @@ bool PartikelClass::Render(void)
         //Rect.right  = Rect.left + xfs;
         //Rect.bottom = Rect.top  + yfs;
 
-        RECT &Rect = pPartikelGrafix[PartikelArt]->itsPreCalcedRects[AnimPhase];
+        RECT &Rect = PartikelGrafix[PartikelArt].itsPreCalcedRects[AnimPhase];
 
         l = float(-TileEngine.XOffset+xPos-0.5f);								// Links
         r = float(-TileEngine.XOffset+xPos+(Rect.right -Rect.left-1)+0.5f);	// Rechts
@@ -3827,7 +3827,7 @@ bool PartikelClass::Render(void)
 
         if (PartikelArt != CurrentPartikelTexture)
         {
-            DirectGraphics.SetTexture( pPartikelGrafix[PartikelArt]->itsTexIdx );
+            DirectGraphics.SetTexture( PartikelGrafix[PartikelArt].itsTexIdx );
             CurrentPartikelTexture = PartikelArt;
         }
 
@@ -3853,8 +3853,8 @@ bool PartikelClass::Render(void)
     else if (PartikelArt == EXPLOSION_TRACE_END && AnimPhase <= AnimEnde)
     {
         D3DCOLOR col = D3DCOLOR_RGBA(255, 255, 255, (int)(Lebensdauer));
-        pPartikelGrafix[PartikelArt]->itsRect = pPartikelGrafix[PartikelArt]->itsPreCalcedRects[AnimPhase];
-        pPartikelGrafix[PartikelArt]->RenderSpriteScaledRotated(xPos, yPos,
+        PartikelGrafix[PartikelArt].itsRect = PartikelGrafix[PartikelArt].itsPreCalcedRects[AnimPhase];
+        PartikelGrafix[PartikelArt].RenderSpriteScaledRotated(xPos, yPos,
                 (float)blue, (float)blue,  Rot, col);
         CurrentPartikelTexture = EXPLOSION_TRACE_END;
     }
@@ -3889,13 +3889,13 @@ bool PartikelClass::Render(void)
     else if (PartikelArt == HALSWIRBEL	  ||
              PartikelArt == KAPUTTETURBINE)
     {
-        DirectGraphics.SetTexture( pPartikelGrafix[PartikelArt]->itsTexIdx );
+        DirectGraphics.SetTexture( PartikelGrafix[PartikelArt].itsTexIdx );
 
         //DKS-new rad/deg macros:
-        //pPartikelGrafix[PartikelArt]->RenderSpriteRotated (float (xPos - TileEngine.XOffset),
+        //PartikelGrafix[PartikelArt].RenderSpriteRotated (float (xPos - TileEngine.XOffset),
         //        float (yPos - TileEngine.YOffset),
         //        AnimCount / PI * 180.0f, D3DCOLOR_RGBA(red, green, blue, alpha));
-        pPartikelGrafix[PartikelArt]->RenderSpriteRotated (float (xPos - TileEngine.XOffset),
+        PartikelGrafix[PartikelArt].RenderSpriteRotated (float (xPos - TileEngine.XOffset),
                 float (yPos - TileEngine.YOffset),
                 RadToDeg(AnimCount), D3DCOLOR_RGBA(red, green, blue, alpha));
 
@@ -3907,7 +3907,7 @@ bool PartikelClass::Render(void)
     {
         float a = (float)(255 - alpha + 64);
 
-        pPartikelGrafix[PartikelArt]->RenderSpriteScaledRotated (float (xPos - a / 2.0f - TileEngine.XOffset) + 30,
+        PartikelGrafix[PartikelArt].RenderSpriteScaledRotated (float (xPos - a / 2.0f - TileEngine.XOffset) + 30,
                 float (yPos - a / 2.0f - TileEngine.YOffset) + 30,
                 a, a, Rot, D3DCOLOR_RGBA(255, 255, 255, alpha));
 
@@ -3919,7 +3919,7 @@ bool PartikelClass::Render(void)
     {
         //int a = 255 - alpha + 64;
 
-        pPartikelGrafix[PartikelArt]->RenderSpriteScaled (float (xPos - AnimCount / 2.0f - TileEngine.XOffset),
+        PartikelGrafix[PartikelArt].RenderSpriteScaled (float (xPos - AnimCount / 2.0f - TileEngine.XOffset),
                 float (yPos - AnimCount / 2.0f - TileEngine.YOffset),
                 (int)(AnimCount), (int)(AnimCount), D3DCOLOR_RGBA(red, green, blue, alpha));
 
@@ -3929,7 +3929,7 @@ bool PartikelClass::Render(void)
     // Leuchten beim Extra Einsammeln
     else if (PartikelArt == EXTRACOLLECTED)
     {
-        pPartikelGrafix[PartikelArt]->RenderSpriteScaled (float (xPos + 16 - AnimCount / 2.0f - TileEngine.XOffset),
+        PartikelGrafix[PartikelArt].RenderSpriteScaled (float (xPos + 16 - AnimCount / 2.0f - TileEngine.XOffset),
                 float (yPos + 16 - AnimCount / 2.0f - TileEngine.YOffset),
                 (int)(AnimCount), (int)(AnimCount), D3DCOLOR_RGBA(red, green, blue, alpha));
 
@@ -3941,7 +3941,7 @@ bool PartikelClass::Render(void)
     {
         DirectGraphics.SetAdditiveMode();
 
-        pPartikelGrafix[PartikelArt]->RenderSpriteScaled (float (xPos + 15 - AnimCount / 2.0f - TileEngine.XOffset),
+        PartikelGrafix[PartikelArt].RenderSpriteScaled (float (xPos + 15 - AnimCount / 2.0f - TileEngine.XOffset),
                 float (yPos + 15 - AnimCount / 2.0f - TileEngine.YOffset),
                 (int)(AnimCount), (int)(AnimCount), D3DCOLOR_RGBA(red, green, blue, alpha));
 
@@ -3960,7 +3960,7 @@ bool PartikelClass::Render(void)
         else
             b = (int)(AnimCount * 30);
 
-        pPartikelGrafix[PartikelArt]->RenderSpriteScaled (float (xPos - TileEngine.XOffset) - b/4,
+        PartikelGrafix[PartikelArt].RenderSpriteScaled (float (xPos - TileEngine.XOffset) - b/4,
                 float (yPos - TileEngine.YOffset) - h/2,
                 b, h, D3DCOLOR_RGBA(red, green, blue, alpha));
 
@@ -3968,7 +3968,7 @@ bool PartikelClass::Render(void)
     }
     else if (PartikelArt == BEAMSMOKE)
     {
-        pPartikelGrafix[PartikelArt]->RenderSpriteScaledRotated (float (xPos - TileEngine.XOffset) - AnimCount / 2.0f,
+        PartikelGrafix[PartikelArt].RenderSpriteScaledRotated (float (xPos - TileEngine.XOffset) - AnimCount / 2.0f,
                 float (yPos - TileEngine.YOffset) - AnimCount / 2.0f,
                 AnimCount, AnimCount, (float)Rot, D3DCOLOR_RGBA(red, green, blue, alpha));
 
@@ -3995,46 +3995,55 @@ PartikelsystemClass::PartikelsystemClass(void)
     MAX_PARTIKEL = 2000;
     SetParticleCount();
 
-    for(int i=0; i<MAX_PARTIKELGFX; i++)
-        pPartikelGrafix[i] = new(DirectGraphicsSprite);
+    ThunderAlpha = 0.0f;
+    for (int i = 0; i < 3; i++)
+        ThunderColor [i] = 0;
 
+    DrawMode = MODE_NORMAL;
+}
+
+//DKS - PartikelsystemClass is now a static global, instead of dynamically allocated
+//      pointer, so moved the loading of sprites from its constructor to this new
+//      function:
+void PartikelsystemClass::LoadSprites(void)
+{
     // Patronenhülse
-    pPartikelGrafix[BULLET]->LoadImage("bullet.png", 8, 8, 8, 8, 1, 1);
+    PartikelGrafix[BULLET].LoadImage("bullet.png", 8, 8, 8, 8, 1, 1);
     PartikelRect[BULLET].left = 2;
     PartikelRect[BULLET].right  = 6;
     PartikelRect[BULLET].top  = 2;
     PartikelRect[BULLET].bottom = 6;
 
     // Patronenhülse vom Skeletor
-    pPartikelGrafix[BULLET_SKELETOR]->LoadImage("skeletor_bullet.png", 15, 6, 15, 6, 1, 1);
+    PartikelGrafix[BULLET_SKELETOR].LoadImage("skeletor_bullet.png", 15, 6, 15, 6, 1, 1);
     PartikelRect[BULLET_SKELETOR].left = 2;
     PartikelRect[BULLET_SKELETOR].right  = 13;
     PartikelRect[BULLET_SKELETOR].top  = 1;
     PartikelRect[BULLET_SKELETOR].bottom = 5;
 
     // Glassplitter
-    pPartikelGrafix[GLASSPLITTER]->LoadImage("glassplitter.png", 100, 80, 20, 20, 5, 4);
+    PartikelGrafix[GLASSPLITTER].LoadImage("glassplitter.png", 100, 80, 20, 20, 5, 4);
     PartikelRect[GLASSPLITTER].left = 8;
     PartikelRect[GLASSPLITTER].right  = 12;
     PartikelRect[GLASSPLITTER].top  = 8;
     PartikelRect[GLASSPLITTER].bottom = 12;
 
     // Mittlere Explosion
-    pPartikelGrafix[EXPLOSION_MEDIUM]->LoadImage("explosion-medium.png", 300, 240, 60, 60, 5, 4);
+    PartikelGrafix[EXPLOSION_MEDIUM].LoadImage("explosion-medium.png", 300, 240, 60, 60, 5, 4);
     PartikelRect[EXPLOSION_MEDIUM].left = 0;
     PartikelRect[EXPLOSION_MEDIUM].right  = 60;
     PartikelRect[EXPLOSION_MEDIUM].top  = 0;
     PartikelRect[EXPLOSION_MEDIUM].bottom = 60;
 
     // Mittlere Explosion2
-    pPartikelGrafix[EXPLOSION_MEDIUM2]->LoadImage("explosion-medium2.png", 300, 240, 60, 60, 5, 4);
+    PartikelGrafix[EXPLOSION_MEDIUM2].LoadImage("explosion-medium2.png", 300, 240, 60, 60, 5, 4);
     PartikelRect[EXPLOSION_MEDIUM2].left = 0;
     PartikelRect[EXPLOSION_MEDIUM2].right  = 60;
     PartikelRect[EXPLOSION_MEDIUM2].top  = 0;
     PartikelRect[EXPLOSION_MEDIUM2].bottom = 60;
 
     // Mittlere Explosion2
-    pPartikelGrafix[EXPLOSION_MEDIUM2_ADD]->LoadImage("explosion-medium2.png", 300, 240, 60, 60, 5, 4);
+    PartikelGrafix[EXPLOSION_MEDIUM2_ADD].LoadImage("explosion-medium2.png", 300, 240, 60, 60, 5, 4);
     PartikelRect[EXPLOSION_MEDIUM2_ADD].left = 0;
     PartikelRect[EXPLOSION_MEDIUM2_ADD].right  = 60;
     PartikelRect[EXPLOSION_MEDIUM2_ADD].top  = 0;
@@ -4044,8 +4053,8 @@ PartikelsystemClass::PartikelsystemClass(void)
     //DKS - This now uses explosion-medium.png just like EXPLOSION_MEDIUM does, because their
     //      image files were 100% identical. Saves a bit of VRAM with the new intelligent
     //      TexturesystemClass I added, as it shares identical textures between sprites.
-    //pPartikelGrafix[EXPLOSION_MEDIUM3]->LoadImage("explosion-medium3.png", 300, 240, 60, 60, 5, 4);
-    pPartikelGrafix[EXPLOSION_MEDIUM3]->LoadImage("explosion-medium.png", 300, 240, 60, 60, 5, 4);
+    //PartikelGrafix[EXPLOSION_MEDIUM3].LoadImage("explosion-medium3.png", 300, 240, 60, 60, 5, 4);
+    PartikelGrafix[EXPLOSION_MEDIUM3].LoadImage("explosion-medium.png", 300, 240, 60, 60, 5, 4);
     PartikelRect[EXPLOSION_MEDIUM3].left = 0;
     PartikelRect[EXPLOSION_MEDIUM3].right  = 60;
     PartikelRect[EXPLOSION_MEDIUM3].top  = 0;
@@ -4053,22 +4062,22 @@ PartikelsystemClass::PartikelsystemClass(void)
 
     // Mittlere Explosion3
     //DKS - See note directly above
-    //pPartikelGrafix[EXPLOSION_MEDIUM3_ADD]->LoadImage("explosion-medium3.png", 300, 240, 60, 60, 5, 4);
-    pPartikelGrafix[EXPLOSION_MEDIUM3_ADD]->LoadImage("explosion-medium.png", 300, 240, 60, 60, 5, 4);
+    //PartikelGrafix[EXPLOSION_MEDIUM3_ADD].LoadImage("explosion-medium3.png", 300, 240, 60, 60, 5, 4);
+    PartikelGrafix[EXPLOSION_MEDIUM3_ADD].LoadImage("explosion-medium.png", 300, 240, 60, 60, 5, 4);
     PartikelRect[EXPLOSION_MEDIUM3_ADD].left = 0;
     PartikelRect[EXPLOSION_MEDIUM3_ADD].right  = 60;
     PartikelRect[EXPLOSION_MEDIUM3_ADD].top  = 0;
     PartikelRect[EXPLOSION_MEDIUM3_ADD].bottom = 60;
 
     // Grüne Explosion
-    pPartikelGrafix[EXPLOSION_GREEN]->LoadImage("explosion-green.png", 300, 300, 60, 60, 5, 5);
+    PartikelGrafix[EXPLOSION_GREEN].LoadImage("explosion-green.png", 300, 300, 60, 60, 5, 5);
     PartikelRect[EXPLOSION_GREEN].left = 0;
     PartikelRect[EXPLOSION_GREEN].right  = 60;
     PartikelRect[EXPLOSION_GREEN].top  = 0;
     PartikelRect[EXPLOSION_GREEN].bottom = 60;
 
     // Alien Explosion
-    pPartikelGrafix[EXPLOSION_ALIEN]->LoadImage("alienexplosion.png", 300, 300, 60, 60, 5, 5);
+    PartikelGrafix[EXPLOSION_ALIEN].LoadImage("alienexplosion.png", 300, 300, 60, 60, 5, 5);
     PartikelRect[EXPLOSION_ALIEN].left = 0;
     PartikelRect[EXPLOSION_ALIEN].right  = 60;
     PartikelRect[EXPLOSION_ALIEN].top  = 0;
@@ -4077,256 +4086,256 @@ PartikelsystemClass::PartikelsystemClass(void)
     // Grosse Explosion
     //DKS - Corrected dimensions from 512x512 to 500x400, to match actual image file:
     //      Also corrected yfc from 5 to 4 here:
-    pPartikelGrafix[EXPLOSION_BIG]->LoadImage("explosion-big.png", 500, 400, 100, 100, 5, 4);
+    PartikelGrafix[EXPLOSION_BIG].LoadImage("explosion-big.png", 500, 400, 100, 100, 5, 4);
     PartikelRect[EXPLOSION_BIG].left = 0;
     PartikelRect[EXPLOSION_BIG].right  = 100;
     PartikelRect[EXPLOSION_BIG].top  = 0;
     PartikelRect[EXPLOSION_BIG].bottom = 100;
 
     // Grosse Explosion
-    pPartikelGrafix[EXPLOSION_GIANT]->LoadImage("explosion-big2.png", 480, 480, 120, 120, 4, 4);
+    PartikelGrafix[EXPLOSION_GIANT].LoadImage("explosion-big2.png", 480, 480, 120, 120, 4, 4);
     PartikelRect[EXPLOSION_GIANT].left = 0;
     PartikelRect[EXPLOSION_GIANT].right  = 120;
     PartikelRect[EXPLOSION_GIANT].top  = 0;
     PartikelRect[EXPLOSION_GIANT].bottom = 120;
 
     // Explosions Trace
-    pPartikelGrafix[EXPLOSION_TRACE]->LoadImage("explosion-trace.png", 120, 120, 120, 120, 1, 1);
+    PartikelGrafix[EXPLOSION_TRACE].LoadImage("explosion-trace.png", 120, 120, 120, 120, 1, 1);
     PartikelRect[EXPLOSION_TRACE].left = 0;
     PartikelRect[EXPLOSION_TRACE].right  = 120;
     PartikelRect[EXPLOSION_TRACE].top  = 0;
     PartikelRect[EXPLOSION_TRACE].bottom = 120;
 
     // Kleine blaue Explosion
-    pPartikelGrafix[BLUE_EXPLOSION]->LoadImage("blue-explosion.png", 96, 72, 24, 24, 4, 3);
+    PartikelGrafix[BLUE_EXPLOSION].LoadImage("blue-explosion.png", 96, 72, 24, 24, 4, 3);
     PartikelRect[BLUE_EXPLOSION].left = 0;
     PartikelRect[BLUE_EXPLOSION].right  = 24;
     PartikelRect[BLUE_EXPLOSION].top  = 0;
     PartikelRect[BLUE_EXPLOSION].bottom = 24;
 
     // Riesen fette Explosion
-    pPartikelGrafix[EXPLOSION_GIGA]->LoadImage("explosion-giga.png", 1000, 800, 200, 200, 5, 4);
+    PartikelGrafix[EXPLOSION_GIGA].LoadImage("explosion-giga.png", 1000, 800, 200, 200, 5, 4);
     PartikelRect[EXPLOSION_GIGA].left = 0;
     PartikelRect[EXPLOSION_GIGA].right  = 200;
     PartikelRect[EXPLOSION_GIGA].top  = 0;
     PartikelRect[EXPLOSION_GIGA].bottom = 200;
 
     // Kleine animierter Splitter
-    pPartikelGrafix[SPLITTER]->LoadImage("splitter.png", 32, 32, 8, 8, 4, 4);
+    PartikelGrafix[SPLITTER].LoadImage("splitter.png", 32, 32, 8, 8, 4, 4);
     PartikelRect[SPLITTER].left = 0;
     PartikelRect[SPLITTER].right  = 8;
     PartikelRect[SPLITTER].top  = 0;
     PartikelRect[SPLITTER].bottom = 8;
 
     // Fetzen eines kaputten Piranhas
-    pPartikelGrafix[PIRANHATEILE]->LoadImage("piranhateile.png", 100, 16, 20, 16, 5, 1);
+    PartikelGrafix[PIRANHATEILE].LoadImage("piranhateile.png", 100, 16, 20, 16, 5, 1);
     PartikelRect[PIRANHATEILE].left = 0;
     PartikelRect[PIRANHATEILE].right  = 20;
     PartikelRect[PIRANHATEILE].top  = 0;
     PartikelRect[PIRANHATEILE].bottom = 16;
 
     // Fetzen eines kaputten Riesen Piranhas
-    pPartikelGrafix[PIRANHATEILE2]->LoadImage("piranhateile2.png", 240, 180, 120, 90, 2, 2);
+    PartikelGrafix[PIRANHATEILE2].LoadImage("piranhateile2.png", 240, 180, 120, 90, 2, 2);
     PartikelRect[PIRANHATEILE2].left = 0;
     PartikelRect[PIRANHATEILE2].right  = 120;
     PartikelRect[PIRANHATEILE2].top  = 0;
     PartikelRect[PIRANHATEILE2].bottom = 90;
 
     // Blut eines kaputten Piranhas
-    pPartikelGrafix[PIRANHABLUT]->LoadImage("piranhablut.png", 160, 40, 40, 40, 4, 1);
+    PartikelGrafix[PIRANHABLUT].LoadImage("piranhablut.png", 160, 40, 40, 40, 4, 1);
     PartikelRect[PIRANHABLUT].left = 0;
     PartikelRect[PIRANHABLUT].right  = 40;
     PartikelRect[PIRANHABLUT].top  = 0;
     PartikelRect[PIRANHABLUT].bottom = 40;
 
     // Blut einer kaputten Made
-    pPartikelGrafix[MADEBLUT]->LoadImage("madeblut.png", 48, 12, 12, 12, 4, 1);
+    PartikelGrafix[MADEBLUT].LoadImage("madeblut.png", 48, 12, 12, 12, 4, 1);
     PartikelRect[MADEBLUT].left = 0;
     PartikelRect[MADEBLUT].right  = 12;
     PartikelRect[MADEBLUT].top  = 0;
     PartikelRect[MADEBLUT].bottom = 12;
 
     // Wassertropfen der vom Spawner kommt
-    pPartikelGrafix[SPAWNDROP]->LoadImage("tropfen.png", 5, 5, 5, 5, 1, 1);
+    PartikelGrafix[SPAWNDROP].LoadImage("tropfen.png", 5, 5, 5, 5, 1, 1);
     PartikelRect[SPAWNDROP].left = 0;
     PartikelRect[SPAWNDROP].right  = 5;
     PartikelRect[SPAWNDROP].top  = 0;
     PartikelRect[SPAWNDROP].bottom = 5;
 
     // Blatt
-    pPartikelGrafix[BLATT]->LoadImage("blatt.png", 32, 10, 16, 10, 2, 1);
+    PartikelGrafix[BLATT].LoadImage("blatt.png", 32, 10, 16, 10, 2, 1);
     PartikelRect[BLATT].left = 0;
     PartikelRect[BLATT].right  = 16;
     PartikelRect[BLATT].top  = 0;
     PartikelRect[BLATT].bottom = 8;
 
     // Blatt2
-    pPartikelGrafix[BLATT2]->LoadImage("blatt.png", 32, 10, 16, 10, 2, 1);
+    PartikelGrafix[BLATT2].LoadImage("blatt.png", 32, 10, 16, 10, 2, 1);
     PartikelRect[BLATT2].left = 0;
     PartikelRect[BLATT2].right  = 16;
     PartikelRect[BLATT2].top  = 0;
     PartikelRect[BLATT2].bottom = 8;
 
     // Wespennest nach Abschuss
-    pPartikelGrafix[NESTLUFT]->LoadImage("nest.png", 43, 60, 43, 60, 1, 1);
+    PartikelGrafix[NESTLUFT].LoadImage("nest.png", 43, 60, 43, 60, 1, 1);
     PartikelRect[NESTLUFT].left = 0;
     PartikelRect[NESTLUFT].right  = 43;
     PartikelRect[NESTLUFT].top  = 0;
     PartikelRect[NESTLUFT].bottom = 60;
 
     // Fels-Splitter
-    pPartikelGrafix[ROCKSPLITTER]->LoadImage("rocksplitter.png", 96, 48, 24, 24, 4, 2);
+    PartikelGrafix[ROCKSPLITTER].LoadImage("rocksplitter.png", 96, 48, 24, 24, 4, 2);
     PartikelRect[ROCKSPLITTER].left = 0;
     PartikelRect[ROCKSPLITTER].right  = 24;
     PartikelRect[ROCKSPLITTER].top  = 0;
     PartikelRect[ROCKSPLITTER].bottom = 24;
 
     // kleine Fels-Splitter
-    pPartikelGrafix[ROCKSPLITTERSMALL]->LoadImage("rocksplittersmall.png", 48, 24, 12, 12, 4, 2);
+    PartikelGrafix[ROCKSPLITTERSMALL].LoadImage("rocksplittersmall.png", 48, 24, 12, 12, 4, 2);
     PartikelRect[ROCKSPLITTERSMALL].left = 0;
     PartikelRect[ROCKSPLITTERSMALL].right  = 12;
     PartikelRect[ROCKSPLITTERSMALL].top  = 0;
     PartikelRect[ROCKSPLITTERSMALL].bottom = 12;
 
     // kleine Stalagtit-Splitter
-    pPartikelGrafix[ROCKSPLITTERSMALLBLUE]->LoadImage("rocksplittersmallblue.png", 48, 24, 12, 12, 4, 2);
+    PartikelGrafix[ROCKSPLITTERSMALLBLUE].LoadImage("rocksplittersmallblue.png", 48, 24, 12, 12, 4, 2);
     PartikelRect[ROCKSPLITTERSMALLBLUE].left = 0;
     PartikelRect[ROCKSPLITTERSMALLBLUE].right  = 12;
     PartikelRect[ROCKSPLITTERSMALLBLUE].top  = 0;
     PartikelRect[ROCKSPLITTERSMALLBLUE].bottom = 12;
 
     // Spinnen Splitter
-    pPartikelGrafix[SPIDERSPLITTER]->LoadImage("spidersplitter.png", 64, 64, 16, 16, 4, 4);
+    PartikelGrafix[SPIDERSPLITTER].LoadImage("spidersplitter.png", 64, 64, 16, 16, 4, 4);
     PartikelRect[SPIDERSPLITTER].left = 2;
     PartikelRect[SPIDERSPLITTER].right  = 14;
     PartikelRect[SPIDERSPLITTER].top  = 2;
     PartikelRect[SPIDERSPLITTER].bottom = 14;
 
-    pPartikelGrafix[SPIDERSPLITTER2]->LoadImage("spidersplitter2.png", 64, 64, 16, 16, 4, 4);
+    PartikelGrafix[SPIDERSPLITTER2].LoadImage("spidersplitter2.png", 64, 64, 16, 16, 4, 4);
     PartikelRect[SPIDERSPLITTER2].left = 2;
     PartikelRect[SPIDERSPLITTER2].right  = 14;
     PartikelRect[SPIDERSPLITTER2].top  = 2;
     PartikelRect[SPIDERSPLITTER2].bottom = 14;
 
     // Granate der Spinne
-    pPartikelGrafix[SPIDERGRENADE]->LoadImage("spidergrenade.png", 64, 16, 16, 16, 4, 1);
+    PartikelGrafix[SPIDERGRENADE].LoadImage("spidergrenade.png", 64, 16, 16, 16, 4, 1);
     PartikelRect[SPIDERGRENADE].left = 0;
     PartikelRect[SPIDERGRENADE].right  = 16;
     PartikelRect[SPIDERGRENADE].top  = 0;
     PartikelRect[SPIDERGRENADE].bottom = 16;
 
     // Schatten des Evil Hurri
-    pPartikelGrafix[EVILSMOKE]->LoadImage("evil-smoke.png", 70, 80, 70, 80, 1, 1);
+    PartikelGrafix[EVILSMOKE].LoadImage("evil-smoke.png", 70, 80, 70, 80, 1, 1);
     PartikelRect[EVILSMOKE].left = 0;
     PartikelRect[EVILSMOKE].right  = 70;
     PartikelRect[EVILSMOKE].top  = 0;
     PartikelRect[EVILSMOKE].bottom = 80;
-    pPartikelGrafix[EVILSMOKE2]->LoadImage("evil-smoke2.png", 70, 80, 70, 80, 1, 1);
+    PartikelGrafix[EVILSMOKE2].LoadImage("evil-smoke2.png", 70, 80, 70, 80, 1, 1);
     PartikelRect[EVILSMOKE2].left = 0;
     PartikelRect[EVILSMOKE2].right  = 70;
     PartikelRect[EVILSMOKE2].top  = 0;
     PartikelRect[EVILSMOKE2].bottom = 80;
 
     // Stelze eines StelzSacks
-    pPartikelGrafix[STELZE]->LoadImage("stelze.png", 400, 200, 100, 100, 4, 2);
+    PartikelGrafix[STELZE].LoadImage("stelze.png", 400, 200, 100, 100, 4, 2);
     PartikelRect[STELZE].left = 30;
     PartikelRect[STELZE].right  = 70;
     PartikelRect[STELZE].top  = 30;
     PartikelRect[STELZE].bottom = 70;
 
     // Kopf eines StelzSacks
-    pPartikelGrafix[STELZHEAD]->LoadImage("stelzhead.png", 64, 60, 64, 60, 1, 1);
+    PartikelGrafix[STELZHEAD].LoadImage("stelzhead.png", 64, 60, 64, 60, 1, 1);
     PartikelRect[STELZHEAD].left = 0;
     PartikelRect[STELZHEAD].right  = 64;
     PartikelRect[STELZHEAD].top  = 0;
     PartikelRect[STELZHEAD].bottom = 60;
 
     // Smoke2
-    pPartikelGrafix[SMOKE2]->LoadImage("smoke2.png", 24, 24, 24, 24, 1, 1);
+    PartikelGrafix[SMOKE2].LoadImage("smoke2.png", 24, 24, 24, 24, 1, 1);
     PartikelRect[SMOKE2].left = 0;
     PartikelRect[SMOKE2].right  = 24;
     PartikelRect[SMOKE2].top  = 0;
     PartikelRect[SMOKE2].bottom = 24;
 
     // Smoke3
-    pPartikelGrafix[SMOKE3]->LoadImage("smoke2.png", 24, 24, 24, 24, 1, 1);
+    PartikelGrafix[SMOKE3].LoadImage("smoke2.png", 24, 24, 24, 24, 1, 1);
     PartikelRect[SMOKE3].left = 0;
     PartikelRect[SMOKE3].right  = 24;
     PartikelRect[SMOKE3].top  = 0;
     PartikelRect[SMOKE3].bottom = 24;
 
     // Riesen Rauch
-    pPartikelGrafix[SMOKEBIG]->LoadImage("smokebig.png", 240, 60, 60, 60, 4, 1);
+    PartikelGrafix[SMOKEBIG].LoadImage("smokebig.png", 240, 60, 60, 60, 4, 1);
     PartikelRect[SMOKEBIG].left = 0;
     PartikelRect[SMOKEBIG].right  = 60;
     PartikelRect[SMOKEBIG].top  = 0;
     PartikelRect[SMOKEBIG].bottom = 60;
 
     // Riesen Rauch
-    pPartikelGrafix[SMOKEBIG2]->LoadImage("smokebig.png", 240, 60, 60, 60, 4, 1);
+    PartikelGrafix[SMOKEBIG2].LoadImage("smokebig.png", 240, 60, 60, 60, 4, 1);
     PartikelRect[SMOKEBIG2].left = 0;
     PartikelRect[SMOKEBIG2].right  = 60;
     PartikelRect[SMOKEBIG2].top  = 0;
     PartikelRect[SMOKEBIG2].bottom = 60;
 
     // Riesen Rauch
-    pPartikelGrafix[SMOKEBIG_OUTTRO]->LoadImage("smokebig.png", 240, 60, 60, 60, 4, 1);
+    PartikelGrafix[SMOKEBIG_OUTTRO].LoadImage("smokebig.png", 240, 60, 60, 60, 4, 1);
     PartikelRect[SMOKEBIG_OUTTRO].left = 0;
     PartikelRect[SMOKEBIG_OUTTRO].right  = 60;
     PartikelRect[SMOKEBIG_OUTTRO].top  = 0;
     PartikelRect[SMOKEBIG_OUTTRO].bottom = 60;
 
     // Rauch des Blitzbeams
-    pPartikelGrafix[BEAMSMOKE]->LoadImage("beamsmoke.png", 24, 24, 24, 24, 1, 1);
+    PartikelGrafix[BEAMSMOKE].LoadImage("beamsmoke.png", 24, 24, 24, 24, 1, 1);
     PartikelRect[BEAMSMOKE].left = 0;
     PartikelRect[BEAMSMOKE].right  = 24;
     PartikelRect[BEAMSMOKE].top  = 0;
     PartikelRect[BEAMSMOKE].bottom = 24;
 
     // Rauch des Blitzbeams
-    pPartikelGrafix[BEAMSMOKE4]->LoadImage("beamsmoke.png", 24, 24, 24, 24, 1, 1);
+    PartikelGrafix[BEAMSMOKE4].LoadImage("beamsmoke.png", 24, 24, 24, 24, 1, 1);
     PartikelRect[BEAMSMOKE4].left = 0;
     PartikelRect[BEAMSMOKE4].right  = 24;
     PartikelRect[BEAMSMOKE4].top  = 0;
     PartikelRect[BEAMSMOKE4].bottom = 24;
 
     // Rauch beim Aufladen des Blitzbeams
-    pPartikelGrafix[BEAMSMOKE2]->LoadImage("beamsmoke2.png", 24, 8, 8, 8, 3, 1);
+    PartikelGrafix[BEAMSMOKE2].LoadImage("beamsmoke2.png", 24, 8, 8, 8, 3, 1);
     PartikelRect[BEAMSMOKE2].left = 0;
     PartikelRect[BEAMSMOKE2].right  = 8;
     PartikelRect[BEAMSMOKE2].top  = 0;
     PartikelRect[BEAMSMOKE2].bottom = 8;
 
     // Rauch beim Aufladen des Blitzbeams
-    pPartikelGrafix[BEAMSMOKE3]->LoadImage("beamsmoke2.png", 24, 8, 8, 8, 3, 1);
+    PartikelGrafix[BEAMSMOKE3].LoadImage("beamsmoke2.png", 24, 8, 8, 8, 3, 1);
     PartikelRect[BEAMSMOKE3].left = 0;
     PartikelRect[BEAMSMOKE3].right  = 8;
     PartikelRect[BEAMSMOKE3].top  = 0;
     PartikelRect[BEAMSMOKE3].bottom = 8;
 
     // Druckwelle bei der Explosion des Beams
-    pPartikelGrafix[BEAMSMOKE5]->LoadImage("beamsmoke5.png", 64, 64, 64, 64, 1, 1);
+    PartikelGrafix[BEAMSMOKE5].LoadImage("beamsmoke5.png", 64, 64, 64, 64, 1, 1);
     PartikelRect[BEAMSMOKE5].left = 0;
     PartikelRect[BEAMSMOKE5].right  = 64;
     PartikelRect[BEAMSMOKE5].top  = 0;
     PartikelRect[BEAMSMOKE5].bottom = 64;
 
     // Schneegestöber
-    pPartikelGrafix[SNOWFLUSH]->LoadImage("snowflush.png", 32, 32, 32, 32, 1, 1);
+    PartikelGrafix[SNOWFLUSH].LoadImage("snowflush.png", 32, 32, 32, 32, 1, 1);
     PartikelRect[SNOWFLUSH].left = 0;
     PartikelRect[SNOWFLUSH].right  = 32;
     PartikelRect[SNOWFLUSH].top  = 0;
     PartikelRect[SNOWFLUSH].bottom = 32;
 
     // Wasserfall Dampf
-    pPartikelGrafix[WATERFLUSH]->LoadImage("snowflush.png", 32, 32, 32, 32, 1, 1);
+    PartikelGrafix[WATERFLUSH].LoadImage("snowflush.png", 32, 32, 32, 32, 1, 1);
     PartikelRect[WATERFLUSH].left = 0;
     PartikelRect[WATERFLUSH].right  = 32;
     PartikelRect[WATERFLUSH].top  = 0;
     PartikelRect[WATERFLUSH].bottom = 32;
 
     // Ufo Laser Flare
-    pPartikelGrafix[UFOLASERFLARE]->LoadImage("ufolaserflare.png", 160, 160, 160, 160, 1, 1);
+    PartikelGrafix[UFOLASERFLARE].LoadImage("ufolaserflare.png", 160, 160, 160, 160, 1, 1);
     PartikelRect[UFOLASERFLARE].left = 0;
     PartikelRect[UFOLASERFLARE].right  = 160;
     PartikelRect[UFOLASERFLARE].top  = 0;
@@ -4335,14 +4344,14 @@ PartikelsystemClass::PartikelsystemClass(void)
     // Additive Partikel
     //
     // Roter Funken
-    pPartikelGrafix[FUNKE]->LoadImage("funke.png", 3, 3, 3, 3, 1, 1);
+    PartikelGrafix[FUNKE].LoadImage("funke.png", 3, 3, 3, 3, 1, 1);
     PartikelRect[FUNKE].left = 0;
     PartikelRect[FUNKE].right  = 3;
     PartikelRect[FUNKE].top  = 0;
     PartikelRect[FUNKE].bottom = 2;
 
     // Langer Funken
-    pPartikelGrafix[LONGFUNKE]->LoadImage("funke.png", 3, 3, 3, 3, 1, 1);
+    PartikelGrafix[LONGFUNKE].LoadImage("funke.png", 3, 3, 3, 3, 1, 1);
     PartikelRect[LONGFUNKE].left = 0;
     PartikelRect[LONGFUNKE].right  = 3;
     PartikelRect[LONGFUNKE].top  = 0;
@@ -4355,112 +4364,112 @@ PartikelsystemClass::PartikelsystemClass(void)
     PartikelRect[WATERFUNKE].bottom = 2;
 
     // Grüner Funken
-    pPartikelGrafix[FUNKE2]->LoadImage("funke2.png", 3, 3, 3, 3, 1, 1);
+    PartikelGrafix[FUNKE2].LoadImage("funke2.png", 3, 3, 3, 3, 1, 1);
     PartikelRect[FUNKE2].left = 0;
     PartikelRect[FUNKE2].right  = 3;
     PartikelRect[FUNKE2].top  = 0;
     PartikelRect[FUNKE2].bottom = 2;
 
     // Laserfunke
-    pPartikelGrafix[LASERFUNKE]->LoadImage("laserfunke.png", 9, 9, 9, 9, 1, 1);
+    PartikelGrafix[LASERFUNKE].LoadImage("laserfunke.png", 9, 9, 9, 9, 1, 1);
     PartikelRect[LASERFUNKE].left = 0;
     PartikelRect[LASERFUNKE].right  = 9;
     PartikelRect[LASERFUNKE].top  = 0;
     PartikelRect[LASERFUNKE].bottom = 9;
 
     // Laserfunke2
-    pPartikelGrafix[LASERFUNKE2]->LoadImage("laserfunke2.png", 27, 9, 9, 9, 3, 1);
+    PartikelGrafix[LASERFUNKE2].LoadImage("laserfunke2.png", 27, 9, 9, 9, 3, 1);
     PartikelRect[LASERFUNKE2].left = 0;
     PartikelRect[LASERFUNKE2].right  = 9;
     PartikelRect[LASERFUNKE2].top  = 0;
     PartikelRect[LASERFUNKE2].bottom = 9;
 
     // Rauchwolke
-    pPartikelGrafix[SMOKE]->LoadImage("smoke.png", 30, 30, 30, 30, 1, 1);
+    PartikelGrafix[SMOKE].LoadImage("smoke.png", 30, 30, 30, 30, 1, 1);
     PartikelRect[SMOKE].left = 0;
     PartikelRect[SMOKE].right  = 30;
     PartikelRect[SMOKE].top  = 0;
     PartikelRect[SMOKE].bottom = 30;
 
     // Rauch für den Pharao Schuss
-    pPartikelGrafix[PHARAOSMOKE]->LoadImage("pharaosmoke.png", 12, 12, 12, 12, 1, 1);
+    PartikelGrafix[PHARAOSMOKE].LoadImage("pharaosmoke.png", 12, 12, 12, 12, 1, 1);
     PartikelRect[PHARAOSMOKE].left = 0;
     PartikelRect[PHARAOSMOKE].right  = 12;
     PartikelRect[PHARAOSMOKE].top  = 0;
     PartikelRect[PHARAOSMOKE].bottom = 12;
 
     // Rauch einer Rakete
-    pPartikelGrafix[ROCKETSMOKE]->LoadImage("rocketsmoke.png", 12, 12, 12, 12, 1, 1);
+    PartikelGrafix[ROCKETSMOKE].LoadImage("rocketsmoke.png", 12, 12, 12, 12, 1, 1);
     PartikelRect[ROCKETSMOKE].left = 0;
     PartikelRect[ROCKETSMOKE].right  = 12;
     PartikelRect[ROCKETSMOKE].top  = 0;
     PartikelRect[ROCKETSMOKE].bottom = 12;
 
     // Rauch einer Rakete in blau
-    pPartikelGrafix[ROCKETSMOKEBLUE]->LoadImage("rocketsmokeblue.png", 12, 12, 12, 12, 1, 1);
+    PartikelGrafix[ROCKETSMOKEBLUE].LoadImage("rocketsmokeblue.png", 12, 12, 12, 12, 1, 1);
     PartikelRect[ROCKETSMOKEBLUE].left = 0;
     PartikelRect[ROCKETSMOKEBLUE].right  = 12;
     PartikelRect[ROCKETSMOKEBLUE].top  = 0;
     PartikelRect[ROCKETSMOKEBLUE].bottom = 12;
 
     // Rauch einer Rakete in grün
-    pPartikelGrafix[ROCKETSMOKEGREEN]->LoadImage("rocketsmokegreen.png", 12, 12, 12, 12, 1, 1);
+    PartikelGrafix[ROCKETSMOKEGREEN].LoadImage("rocketsmokegreen.png", 12, 12, 12, 12, 1, 1);
     PartikelRect[ROCKETSMOKEGREEN].left = 0;
     PartikelRect[ROCKETSMOKEGREEN].right  = 12;
     PartikelRect[ROCKETSMOKEGREEN].top  = 0;
     PartikelRect[ROCKETSMOKEGREEN].bottom = 12;
 
     // Rauch des Flugsacks
-    pPartikelGrafix[FLUGSACKSMOKE]->LoadImage("flugsacksmoke.png", 64, 64, 16, 16, 4, 4);
+    PartikelGrafix[FLUGSACKSMOKE].LoadImage("flugsacksmoke.png", 64, 64, 16, 16, 4, 4);
     PartikelRect[FLUGSACKSMOKE].left = 0;
     PartikelRect[FLUGSACKSMOKE].right  = 16;
     PartikelRect[FLUGSACKSMOKE].top  = 0;
     PartikelRect[FLUGSACKSMOKE].bottom = 16;
 
     // Funke des Evil Blitzes
-    pPartikelGrafix[EVILFUNKE]->LoadImage("evilfunke.png", 8, 8, 8, 8, 1, 1);
+    PartikelGrafix[EVILFUNKE].LoadImage("evilfunke.png", 8, 8, 8, 8, 1, 1);
     PartikelRect[EVILFUNKE].left = 0;
     PartikelRect[EVILFUNKE].right  = 8;
     PartikelRect[EVILFUNKE].top  = 0;
     PartikelRect[EVILFUNKE].bottom = 8;
 
     // Wassertropfen
-    pPartikelGrafix[WASSERTROPFEN]->LoadImage("tropfen2.png", 3, 3, 3, 3, 1, 1);
+    PartikelGrafix[WASSERTROPFEN].LoadImage("tropfen2.png", 3, 3, 3, 3, 1, 1);
     PartikelRect[WASSERTROPFEN].left = 0;
     PartikelRect[WASSERTROPFEN].right  = 3;
     PartikelRect[WASSERTROPFEN].top  = 0;
     PartikelRect[WASSERTROPFEN].bottom = 3;
 
     // Säuretropfen
-    pPartikelGrafix[WASSERTROPFEN2]->LoadImage("wassertropfen2.png", 16, 4, 4, 4, 4, 1);
+    PartikelGrafix[WASSERTROPFEN2].LoadImage("wassertropfen2.png", 16, 4, 4, 4, 4, 1);
     PartikelRect[WASSERTROPFEN2].left = 0;
     PartikelRect[WASSERTROPFEN2].right  = 4;
     PartikelRect[WASSERTROPFEN2].top  = 0;
     PartikelRect[WASSERTROPFEN2].bottom = 4;
 
     // Leuchteffekt für den Krabblerlaser
-    pPartikelGrafix[LASERFLAME]->LoadImage("laserflame.png", 48, 48, 48, 48, 1, 1);
+    PartikelGrafix[LASERFLAME].LoadImage("laserflame.png", 48, 48, 48, 48, 1, 1);
     PartikelRect[LASERFLAME].left = 0;
     PartikelRect[LASERFLAME].right  = 48;
     PartikelRect[LASERFLAME].top  = 0;
     PartikelRect[LASERFLAME].bottom = 48;
 
     // Luftblase
-    pPartikelGrafix[BUBBLE]->LoadImage("bubble.png", 6, 6, 6, 6, 1, 1);
+    PartikelGrafix[BUBBLE].LoadImage("bubble.png", 6, 6, 6, 6, 1, 1);
     PartikelRect[BUBBLE].left = 0;
     PartikelRect[BUBBLE].right  = 6;
     PartikelRect[BUBBLE].top  = 0;
     PartikelRect[BUBBLE].bottom = 6;
 
     // Schneeflocke
-    pPartikelGrafix[SCHNEEFLOCKE]->LoadImage("snow.png", 30, 10, 10, 10, 3, 1);
+    PartikelGrafix[SCHNEEFLOCKE].LoadImage("snow.png", 30, 10, 10, 10, 3, 1);
     PartikelRect[SCHNEEFLOCKE].left = 0;
     PartikelRect[SCHNEEFLOCKE].right  = 10;
     PartikelRect[SCHNEEFLOCKE].top  = 0;
     PartikelRect[SCHNEEFLOCKE].bottom = 3;
 
     // Schneeflocke
-    pPartikelGrafix[SCHNEEFLOCKE_END]->LoadImage("snow.png", 30, 10, 10, 10, 3, 1);
+    PartikelGrafix[SCHNEEFLOCKE_END].LoadImage("snow.png", 30, 10, 10, 10, 3, 1);
     PartikelRect[SCHNEEFLOCKE_END].left = 0;
     PartikelRect[SCHNEEFLOCKE_END].right  = 10;
     PartikelRect[SCHNEEFLOCKE_END].top  = 0;
@@ -4468,7 +4477,7 @@ PartikelsystemClass::PartikelsystemClass(void)
 
     // HurriTeile
     //DKS - Corrected xfs parameter from 32 to 31, to match actual image file:
-    pPartikelGrafix[HURRITEILE]->LoadImage("p1_hurri-teile.png", 217, 32, 31, 32, 7, 1);
+    PartikelGrafix[HURRITEILE].LoadImage("p1_hurri-teile.png", 217, 32, 31, 32, 7, 1);
     PartikelRect[HURRITEILE].left = 10;
     PartikelRect[HURRITEILE].right  = 22;
     PartikelRect[HURRITEILE].top  = 10;
@@ -4477,21 +4486,21 @@ PartikelsystemClass::PartikelsystemClass(void)
     // HurriTeile for Player 2
     //DKS - Player 2 sprite is blue, so I added separate particles and particle art for them
     //      that are colored blue, using some unused space between particles 86-100
-    pPartikelGrafix[HURRITEILE_P2]->LoadImage("p2_hurri-teile.png", 217, 32, 31, 32, 7, 1);
+    PartikelGrafix[HURRITEILE_P2].LoadImage("p2_hurri-teile.png", 217, 32, 31, 32, 7, 1);
     PartikelRect[HURRITEILE_P2].left = 10;
     PartikelRect[HURRITEILE_P2].right  = 22;
     PartikelRect[HURRITEILE_P2].top  = 10;
     PartikelRect[HURRITEILE_P2].bottom = 22;
 
     // Kleiner blauer Boulder
-    pPartikelGrafix[BOULDER_SMALL]->LoadImage("boulder_small.png", 60, 33, 12, 11, 5, 3);
+    PartikelGrafix[BOULDER_SMALL].LoadImage("boulder_small.png", 60, 33, 12, 11, 5, 3);
     PartikelRect[BOULDER_SMALL].left = 0;
     PartikelRect[BOULDER_SMALL].right  = 12;
     PartikelRect[BOULDER_SMALL].top  = 0;
     PartikelRect[BOULDER_SMALL].bottom = 11;
 
     // Der Wasserspritzer, wenn der Spieler aus dem Wasser hopst
-    pPartikelGrafix[WASSER_SPRITZER]->LoadImage("wasserspritzer.png", 64, 128, 40, 128, 1, 1);
+    PartikelGrafix[WASSER_SPRITZER].LoadImage("wasserspritzer.png", 64, 128, 40, 128, 1, 1);
     PartikelRect[WASSER_SPRITZER].left = 0;
     PartikelRect[WASSER_SPRITZER].right  = 40;
     PartikelRect[WASSER_SPRITZER].top  = 0;
@@ -4500,238 +4509,238 @@ PartikelsystemClass::PartikelsystemClass(void)
     // Der Wasserspritzer, wenn der Spieler ins Wasser hopst
     //DKS - Corrected dimensions from 40x142 to 64x128, to match actual image file:
     //      NOTE: This particle type does not appear to be used, looking at Player.cpp
-    pPartikelGrafix[WASSER_SPRITZER2]->LoadImage("wasserspritzer.png", 64, 128, 40, 142, 1, 1);
+    PartikelGrafix[WASSER_SPRITZER2].LoadImage("wasserspritzer.png", 64, 128, 40, 142, 1, 1);
     PartikelRect[WASSER_SPRITZER2].left = 0;
     PartikelRect[WASSER_SPRITZER2].right  = 64;
     PartikelRect[WASSER_SPRITZER2].top  = 0;
     PartikelRect[WASSER_SPRITZER2].bottom = 128;
 
     // Schrott der Lava Krabbe
-    pPartikelGrafix[LAVAKRABBE_KOPF]->LoadImage("lavakrabbe_teile.png", 80, 40, 40, 40, 2, 1);
+    PartikelGrafix[LAVAKRABBE_KOPF].LoadImage("lavakrabbe_teile.png", 80, 40, 40, 40, 2, 1);
     PartikelRect[LAVAKRABBE_KOPF].left = 12;
     PartikelRect[LAVAKRABBE_KOPF].right  = 28;
     PartikelRect[LAVAKRABBE_KOPF].top  = 12;
     PartikelRect[LAVAKRABBE_KOPF].bottom = 28;
 
     // Spinnenteile
-    pPartikelGrafix[SPIDERPARTS]->LoadImage("spiderparts.png", 192, 40, 48, 40, 4, 1);
+    PartikelGrafix[SPIDERPARTS].LoadImage("spiderparts.png", 192, 40, 48, 40, 4, 1);
     PartikelRect[SPIDERPARTS].left = 0;
     PartikelRect[SPIDERPARTS].right  = 48;
     PartikelRect[SPIDERPARTS].top  = 0;
     PartikelRect[SPIDERPARTS].bottom = 36;
 
     // Kettenteile
-    pPartikelGrafix[KETTENTEILE]->LoadImage("kettenteile.png", 126, 50, 42, 50, 3, 1);
+    PartikelGrafix[KETTENTEILE].LoadImage("kettenteile.png", 126, 50, 42, 50, 3, 1);
     PartikelRect[KETTENTEILE].left = 10;
     PartikelRect[KETTENTEILE].right  = 40;
     PartikelRect[KETTENTEILE].top  = 10;
     PartikelRect[KETTENTEILE].bottom = 32;
 
     // Kettenteile 4
-    pPartikelGrafix[KETTENTEILE4]->LoadImage("kettenteil2.png", 11, 21, 11, 21, 1, 1);
+    PartikelGrafix[KETTENTEILE4].LoadImage("kettenteil2.png", 11, 21, 11, 21, 1, 1);
     PartikelRect[KETTENTEILE4].left = 0;
     PartikelRect[KETTENTEILE4].right  = 11;
     PartikelRect[KETTENTEILE4].top  = 0;
     PartikelRect[KETTENTEILE4].bottom = 21;
 
     // Regentropfen
-    pPartikelGrafix[REGENTROPFEN]->LoadImage("rain.png", 16, 32, 16, 32, 1, 1);
+    PartikelGrafix[REGENTROPFEN].LoadImage("rain.png", 16, 32, 16, 32, 1, 1);
     PartikelRect[REGENTROPFEN].left = 0;
     PartikelRect[REGENTROPFEN].right  = 16;
     PartikelRect[REGENTROPFEN].top  = 0;
     PartikelRect[REGENTROPFEN].bottom = 28;
 
     // Schutzschild
-    pPartikelGrafix[SHIELD]->LoadImage("shield.png", 48, 48, 48, 48, 1, 1);
+    PartikelGrafix[SHIELD].LoadImage("shield.png", 48, 48, 48, 48, 1, 1);
     PartikelRect[SHIELD].left = 0;
     PartikelRect[SHIELD].right  = 48;
     PartikelRect[SHIELD].top  = 0;
     PartikelRect[SHIELD].bottom = 48;
 
     // Rauch des Rundumschusses des evil hurri
-    pPartikelGrafix[EVILROUNDSMOKE]->LoadImage("evilroundsmoke.png", 12, 12, 12, 12, 1, 1);
+    PartikelGrafix[EVILROUNDSMOKE].LoadImage("evilroundsmoke.png", 12, 12, 12, 12, 1, 1);
     PartikelRect[EVILROUNDSMOKE].left = 0;
     PartikelRect[EVILROUNDSMOKE].right  = 12;
     PartikelRect[EVILROUNDSMOKE].top  = 0;
     PartikelRect[EVILROUNDSMOKE].bottom = 12;
 
     // Leuchteffekt für den Stelsack laser
-    pPartikelGrafix[STELZFLARE]->LoadImage("giantspiderflare.png", 128, 128, 128, 128, 1, 1);
+    PartikelGrafix[STELZFLARE].LoadImage("giantspiderflare.png", 128, 128, 128, 128, 1, 1);
     PartikelRect[STELZFLARE].left = 0;
     PartikelRect[STELZFLARE].right  = 128;
     PartikelRect[STELZFLARE].top  = 0;
     PartikelRect[STELZFLARE].bottom = 128;
 
     // Kringel laden
-    pPartikelGrafix[KRINGELSECRET]->LoadImage("kringel.png", 48, 12, 12, 12, 4, 1);
+    PartikelGrafix[KRINGELSECRET].LoadImage("kringel.png", 48, 12, 12, 12, 4, 1);
     PartikelRect[KRINGELSECRET].left = 0;
     PartikelRect[KRINGELSECRET].right  = 12;
     PartikelRect[KRINGELSECRET].top  = 0;
     PartikelRect[KRINGELSECRET].bottom = 12;
 
     // Kringel laden
-    pPartikelGrafix[KRINGEL]->LoadImage("kringel.png", 48, 12, 12, 12, 4, 1);
+    PartikelGrafix[KRINGEL].LoadImage("kringel.png", 48, 12, 12, 12, 4, 1);
     PartikelRect[KRINGEL].left = 0;
     PartikelRect[KRINGEL].right  = 12;
     PartikelRect[KRINGEL].top  = 0;
     PartikelRect[KRINGEL].bottom = 12;
 
     // Fog laden
-    pPartikelGrafix[FOG]->LoadImage("dust.png", 30, 10, 10, 10, 3, 1);
+    PartikelGrafix[FOG].LoadImage("dust.png", 30, 10, 10, 10, 3, 1);
     PartikelRect[FOG].left = 0;
     PartikelRect[FOG].right  = 10;
     PartikelRect[FOG].top  = 0;
     PartikelRect[FOG].bottom = 10;
 
     // Partikel für die Turbine
-    pPartikelGrafix[TURBINESMOKE]->LoadImage("turbinesmoke.png", 24, 8, 8, 8, 3, 1);
+    PartikelGrafix[TURBINESMOKE].LoadImage("turbinesmoke.png", 24, 8, 8, 8, 3, 1);
     PartikelRect[TURBINESMOKE].left = 0;
     PartikelRect[TURBINESMOKE].right  = 8;
     PartikelRect[TURBINESMOKE].top  = 0;
     PartikelRect[TURBINESMOKE].bottom = 8;
 
     // MiniFlare
-    pPartikelGrafix[MINIFLARE]->LoadImage("miniflare.png", 32, 32, 32, 32, 1, 1);
+    PartikelGrafix[MINIFLARE].LoadImage("miniflare.png", 32, 32, 32, 32, 1, 1);
     PartikelRect[MINIFLARE].left = 0;
     PartikelRect[MINIFLARE].right  = 32;
     PartikelRect[MINIFLARE].top  = 0;
     PartikelRect[MINIFLARE].bottom = 32;
 
     // Leuchten bei Granateneinschlag
-    pPartikelGrafix[GRENADEFLARE]->LoadImage("grenadeflare.png", 256, 256, 256, 256, 1, 1);
+    PartikelGrafix[GRENADEFLARE].LoadImage("grenadeflare.png", 256, 256, 256, 256, 1, 1);
     PartikelRect[GRENADEFLARE].left = 0;
     PartikelRect[GRENADEFLARE].right  = 256;
     PartikelRect[GRENADEFLARE].top  = 0;
     PartikelRect[GRENADEFLARE].bottom = 256;
 
     // Leuchten bei Explosion
-    pPartikelGrafix[EXPLOSIONFLARE]->LoadImage("lavaflare.png", 120, 120, 120, 120, 1, 1);
+    PartikelGrafix[EXPLOSIONFLARE].LoadImage("lavaflare.png", 120, 120, 120, 120, 1, 1);
     PartikelRect[EXPLOSIONFLARE].left = 0;
     PartikelRect[EXPLOSIONFLARE].right  = 120;
     PartikelRect[EXPLOSIONFLARE].top  = 0;
     PartikelRect[EXPLOSIONFLARE].bottom = 120;
 
     // Leuchten bei Explosion2
-    pPartikelGrafix[EXPLOSIONFLARE2]->LoadImage("lavaflare.png", 120, 120, 120, 120, 1, 1);
+    PartikelGrafix[EXPLOSIONFLARE2].LoadImage("lavaflare.png", 120, 120, 120, 120, 1, 1);
     PartikelRect[EXPLOSIONFLARE2].left = 0;
     PartikelRect[EXPLOSIONFLARE2].right  = 120;
     PartikelRect[EXPLOSIONFLARE2].top  = 0;
     PartikelRect[EXPLOSIONFLARE2].bottom = 120;
 
     // Halswirbel des MetalHead laden
-    pPartikelGrafix[HALSWIRBEL]->LoadImage("metalhead_halsteil.png", 64, 16, 64, 16, 1, 1);
+    PartikelGrafix[HALSWIRBEL].LoadImage("metalhead_halsteil.png", 64, 16, 64, 16, 1, 1);
     PartikelRect[HALSWIRBEL].left = 0;
     PartikelRect[HALSWIRBEL].right  = 64;
     PartikelRect[HALSWIRBEL].top  = 0;
     PartikelRect[HALSWIRBEL].bottom = 64;
 
     // Kaputte Turbine des MetalHead laden
-    pPartikelGrafix[KAPUTTETURBINE]->LoadImage("metalhead_turbine.png",  98,  49, 98, 49, 1, 1);
+    PartikelGrafix[KAPUTTETURBINE].LoadImage("metalhead_turbine.png",  98,  49, 98, 49, 1, 1);
     PartikelRect[KAPUTTETURBINE].left = 0;
     PartikelRect[KAPUTTETURBINE].right  = 98;
     PartikelRect[KAPUTTETURBINE].top  = 0;
     PartikelRect[KAPUTTETURBINE].bottom = 49;
 
     // Schleim
-    pPartikelGrafix[SCHLEIM]->LoadImage("schleim.png", 32, 8, 8, 8, 4, 1);
+    PartikelGrafix[SCHLEIM].LoadImage("schleim.png", 32, 8, 8, 8, 4, 1);
     PartikelRect[SCHLEIM].left = 1;
     PartikelRect[SCHLEIM].right  = 7;
     PartikelRect[SCHLEIM].top  = 1;
     PartikelRect[SCHLEIM].bottom = 7;
 
     // Schleim2
-    pPartikelGrafix[SCHLEIM2]->LoadImage("schleim2.png", 32, 8, 8, 8, 4, 1);
+    PartikelGrafix[SCHLEIM2].LoadImage("schleim2.png", 32, 8, 8, 8, 4, 1);
     PartikelRect[SCHLEIM2].left = 1;
     PartikelRect[SCHLEIM2].right  = 7;
     PartikelRect[SCHLEIM2].top  = 1;
     PartikelRect[SCHLEIM2].bottom = 7;
 
     // ShockWelle bei Spieler Explosion
-    pPartikelGrafix[SHOCKEXPLOSION]->LoadImage("shockexplosion.png", 128, 128, 128, 128, 1, 1);
+    PartikelGrafix[SHOCKEXPLOSION].LoadImage("shockexplosion.png", 128, 128, 128, 128, 1, 1);
     PartikelRect[SHOCKEXPLOSION].left = 0;
     PartikelRect[SHOCKEXPLOSION].right  = 128;
     PartikelRect[SHOCKEXPLOSION].top  = 0;
     PartikelRect[SHOCKEXPLOSION].bottom = 128;
 
     // Leuchten bei Aufprall des Schusses
-    pPartikelGrafix[SHOTFLARE]->LoadImage("shotflare.png", 16, 16, 16, 16, 1, 1);
+    PartikelGrafix[SHOTFLARE].LoadImage("shotflare.png", 16, 16, 16, 16, 1, 1);
     PartikelRect[SHOTFLARE].left = 0;
     PartikelRect[SHOTFLARE].right  = 16;
     PartikelRect[SHOTFLARE].top  = 0;
     PartikelRect[SHOTFLARE].bottom = 16;
 
     // Leuchten bei Aufprall des Schusses
-    pPartikelGrafix[SHOTFLARE2]->LoadImage("shotflare.png", 16, 16, 16, 16, 1, 1);
+    PartikelGrafix[SHOTFLARE2].LoadImage("shotflare.png", 16, 16, 16, 16, 1, 1);
     PartikelRect[SHOTFLARE2].left = 0;
     PartikelRect[SHOTFLARE2].right  = 16;
     PartikelRect[SHOTFLARE2].top  = 0;
     PartikelRect[SHOTFLARE2].bottom = 16;
 
     // Leuchten beim Einsammeln eines Extras
-    pPartikelGrafix[EXTRACOLLECTED]->LoadImage("extracollected.png", 32, 32, 32, 32, 1, 1);
+    PartikelGrafix[EXTRACOLLECTED].LoadImage("extracollected.png", 32, 32, 32, 32, 1, 1);
     PartikelRect[EXTRACOLLECTED].left = 0;
     PartikelRect[EXTRACOLLECTED].right  = 32;
     PartikelRect[EXTRACOLLECTED].top  = 0;
     PartikelRect[EXTRACOLLECTED].bottom = 32;
 
     // Leuchten beim Einsammeln eines Diamants
-    pPartikelGrafix[DIAMANTCOLLECTED]->LoadImage("diamantcollected.png", 29, 29, 29, 29, 1, 1);
+    PartikelGrafix[DIAMANTCOLLECTED].LoadImage("diamantcollected.png", 29, 29, 29, 29, 1, 1);
     PartikelRect[DIAMANTCOLLECTED].left = 0;
     PartikelRect[DIAMANTCOLLECTED].right  = 29;
     PartikelRect[DIAMANTCOLLECTED].top  = 0;
     PartikelRect[DIAMANTCOLLECTED].bottom = 29;
 
     // Lila
-    pPartikelGrafix[LILA]->LoadImage("spidershotsmoke.png", 24, 24, 24, 24, 1, 1);
+    PartikelGrafix[LILA].LoadImage("spidershotsmoke.png", 24, 24, 24, 24, 1, 1);
     PartikelRect[LILA].left = 0;
     PartikelRect[LILA].right  = 29;
     PartikelRect[LILA].top  = 0;
     PartikelRect[LILA].bottom = 29;
 
     // Rauch des Drachen
-    pPartikelGrafix[DRACHE_SMOKE]->LoadImage("drache_smoke.png", 60, 60, 60, 60, 1, 1);
+    PartikelGrafix[DRACHE_SMOKE].LoadImage("drache_smoke.png", 60, 60, 60, 60, 1, 1);
     PartikelRect[DRACHE_SMOKE].left = 0;
     PartikelRect[DRACHE_SMOKE].right  = 60;
     PartikelRect[DRACHE_SMOKE].top  = 0;
     PartikelRect[DRACHE_SMOKE].bottom = 60;
 
     // Rauch des Feuerballs
-    pPartikelGrafix[FIREBALL_SMOKE]->LoadImage("fireball_smoke.png", 24, 24, 24, 24, 1, 1);
+    PartikelGrafix[FIREBALL_SMOKE].LoadImage("fireball_smoke.png", 24, 24, 24, 24, 1, 1);
     PartikelRect[FIREBALL_SMOKE].left = 0;
     PartikelRect[FIREBALL_SMOKE].right  = 24;
     PartikelRect[FIREBALL_SMOKE].top  = 0;
     PartikelRect[FIREBALL_SMOKE].bottom = 24;
 
     // Leuchten beim Einsammeln eines Extras
-    pPartikelGrafix[LASERFLARE]->LoadImage("lavaflare.png", 120, 120, 120, 120, 1, 1);
+    PartikelGrafix[LASERFLARE].LoadImage("lavaflare.png", 120, 120, 120, 120, 1, 1);
     PartikelRect[LASERFLARE].left = 0;
     PartikelRect[LASERFLARE].right  = 120;
     PartikelRect[LASERFLARE].top  = 0;
     PartikelRect[LASERFLARE].bottom = 120;
 
     // Reguläre Explosion
-    pPartikelGrafix[EXPLOSION_REGULAR]->LoadImage("explosion-regular.png", 380, 304, 76, 76, 5, 4);
+    PartikelGrafix[EXPLOSION_REGULAR].LoadImage("explosion-regular.png", 380, 304, 76, 76, 5, 4);
     PartikelRect[EXPLOSION_REGULAR].left = 0;
     PartikelRect[EXPLOSION_REGULAR].right  = 76;
     PartikelRect[EXPLOSION_REGULAR].top  = 0;
     PartikelRect[EXPLOSION_REGULAR].bottom = 76;
 
     // Reguläre Explosion
-    pPartikelGrafix[EXPLOSION_TRACE_END]->LoadImage("explosion-regular.png", 380, 304, 76, 76, 5, 4);
+    PartikelGrafix[EXPLOSION_TRACE_END].LoadImage("explosion-regular.png", 380, 304, 76, 76, 5, 4);
     PartikelRect[EXPLOSION_TRACE_END].left = 0;
     PartikelRect[EXPLOSION_TRACE_END].right  = 76;
     PartikelRect[EXPLOSION_TRACE_END].top  = 0;
     PartikelRect[EXPLOSION_TRACE_END].bottom = 76;
 
     // Staub
-    pPartikelGrafix[DUST]->LoadImage("dust.png", 30, 10, 10, 10, 3, 1);
+    PartikelGrafix[DUST].LoadImage("dust.png", 30, 10, 10, 10, 3, 1);
     PartikelRect[DUST].left = 0;
     PartikelRect[DUST].right  = 10;
     PartikelRect[DUST].top  = 0;
     PartikelRect[DUST].bottom = 10;
 
     // Staub
-    pPartikelGrafix[LAVADUST]->LoadImage("dust.png", 30, 10, 10, 10, 3, 1);
+    PartikelGrafix[LAVADUST].LoadImage("dust.png", 30, 10, 10, 10, 3, 1);
     PartikelRect[LAVADUST].left = 0;
     PartikelRect[LAVADUST].right  = 10;
     PartikelRect[LAVADUST].top  = 0;
@@ -4739,24 +4748,18 @@ PartikelsystemClass::PartikelsystemClass(void)
 
     // Schrott
     //DKS - Corrected dimensions from 200x200 to 200x160, to match actual image file:
-    pPartikelGrafix[SCHROTT1]->LoadImage("schrott1.png", 200, 160, 40, 40, 5, 4);
+    PartikelGrafix[SCHROTT1].LoadImage("schrott1.png", 200, 160, 40, 40, 5, 4);
     PartikelRect[SCHROTT1].left = 10;
     PartikelRect[SCHROTT1].right  = 30;
     PartikelRect[SCHROTT1].top  = 10;
     PartikelRect[SCHROTT1].bottom = 30;
 
-    pPartikelGrafix[SCHROTT2]->LoadImage("schrott2.png", 150, 120, 30, 30, 5, 4);
+    PartikelGrafix[SCHROTT2].LoadImage("schrott2.png", 150, 120, 30, 30, 5, 4);
     PartikelRect[SCHROTT2].left = 5;
     PartikelRect[SCHROTT2].right  = 25;
     PartikelRect[SCHROTT2].top  = 5;
     PartikelRect[SCHROTT2].bottom = 25;
 
-    ThunderAlpha = 0.0f;
-
-    for (int i = 0; i < 3; i++)
-        ThunderColor [i] = 0;
-
-    DrawMode = MODE_NORMAL;
 }
 
 // --------------------------------------------------------------------------------------
@@ -4767,14 +4770,6 @@ PartikelsystemClass::~PartikelsystemClass(void)
 {
     // Partikel-Liste komplett leeren
     ClearAll();
-
-    // Partikel Grafiken freigeben
-    for(int i=0; i<MAX_PARTIKELGFX; i++)
-        if(pPartikelGrafix[i] != NULL)
-        {
-            delete(pPartikelGrafix[i]);
-            pPartikelGrafix[i] = NULL;
-        }
 }
 
 // --------------------------------------------------------------------------------------
@@ -5103,14 +5098,14 @@ void PartikelsystemClass::ClearPowerUpEffects(void)
     PartikelClass* pTemp;
     PartikelClass* pNext;
 
-    pTemp = pPartikelSystem->pStart;
+    pTemp = PartikelSystem.pStart;
 
     while (pTemp != NULL)
     {
         pNext = pTemp->pNext;
 
         if (pTemp->PartikelArt == KRINGEL)
-            pPartikelSystem->DelSel(pTemp);
+            PartikelSystem.DelSel(pTemp);
 
         pTemp = pNext;
     }

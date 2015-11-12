@@ -306,7 +306,7 @@ void GegnerBigFish::DoKI(void)
     // Schon schwer angeschlagen ? Dann blutet der Fish
     if (Energy < 1000 &&
             rand()%20 == 0)
-        pPartikelSystem->PushPartikel(xPos + rand()%200+40, yPos + 50 + rand()%100, PIRANHABLUT);
+        PartikelSystem.PushPartikel(xPos + rand()%200+40, yPos + 50 + rand()%100, PIRANHABLUT);
 
     // Hat der Boss keine Energie mehr ? Dann explodiert er
     if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN)
@@ -466,7 +466,7 @@ void GegnerBigFish::GegnerExplode(void)
 
     // Blut
     for (int i=0; i<80; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%200+40,
+        PartikelSystem.PushPartikel(xPos + rand()%200+40,
                                       yPos + 50 + rand()%100,
                                       PIRANHABLUT);
 

@@ -164,8 +164,8 @@ void GegnerWandKrabbe::DoKI(void)
         {
             AnimCount += 0.2f;
 
-            pPartikelSystem->PushPartikel (xPos + 8 + rand ()% 5, yPos + 25 + rand()%5, SMOKE3);
-            pPartikelSystem->PushPartikel (xPos + 8 + rand ()% 5, yPos + 28 + rand()%5, FUNKE);
+            PartikelSystem.PushPartikel (xPos + 8 + rand ()% 5, yPos + 25 + rand()%5, SMOKE3);
+            PartikelSystem.PushPartikel (xPos + 8 + rand ()% 5, yPos + 28 + rand()%5, FUNKE);
         }
 
         // bei Aufprall explodieren lassen
@@ -287,7 +287,7 @@ void GegnerWandKrabbe::DoKI(void)
         Handlung = GEGNER_EXPLODIEREN;
 
         SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
-        pPartikelSystem->PushPartikel (xPos - 20, yPos, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel (xPos - 20, yPos, EXPLOSION_MEDIUM2);
     }
 
     // untem aus dem Screen raus? Dann explodieren
@@ -305,12 +305,12 @@ void GegnerWandKrabbe::GegnerExplode(void)
     SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i=0; i < 6; i++)
-        pPartikelSystem->PushPartikel (xPos - 20 + rand ()%10, yPos + rand()%30, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel (xPos - 20 + rand ()%10, yPos + rand()%30, EXPLOSION_MEDIUM2);
 
     for (int i=0; i < 20; i++)
     {
-        pPartikelSystem->PushPartikel (xPos + rand ()%30, yPos + rand()%64, FUNKE);
-        pPartikelSystem->PushPartikel (xPos + rand ()%25, yPos + rand()%50, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel (xPos + rand ()%30, yPos + rand()%64, FUNKE);
+        PartikelSystem.PushPartikel (xPos + rand ()%25, yPos + rand()%50, SPIDERSPLITTER);
     }
 
     Player[0].Score += 100;

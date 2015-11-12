@@ -113,7 +113,7 @@ void GegnerPartikelSpawner::DoKI(void)
                         sx - 180 > TileEngine.XOffset + 640.0f)
                     break;
 
-                pPartikelSystem->PushPartikel(sx , sy, REGENTROPFEN);
+                PartikelSystem.PushPartikel(sx , sy, REGENTROPFEN);
                 AnimCount = Value2 / 4.0f;
                 if (AnimCount == 0.0f)
                     AnimCount = 1.0f;
@@ -123,7 +123,7 @@ void GegnerPartikelSpawner::DoKI(void)
             // Schneeflocke
             case 1 :
             {
-                pPartikelSystem->PushPartikel(xPos-320 + rand()%640 , (float)(TileEngine.YOffset) - 16 - rand ()%64, SCHNEEFLOCKE);
+                PartikelSystem.PushPartikel(xPos-320 + rand()%640 , (float)(TileEngine.YOffset) - 16 - rand ()%64, SCHNEEFLOCKE);
                 AnimCount = 0.5f;
             }
             break;
@@ -132,14 +132,14 @@ void GegnerPartikelSpawner::DoKI(void)
             case 4 :
             {
                 if (PlayerAbstand() < 800)
-                    pPartikelSystem->PushPartikel(xPos + 12 , yPos + 26, BUBBLE);
+                    PartikelSystem.PushPartikel(xPos + 12 , yPos + 26, BUBBLE);
             }
             break;
 
             // Aufsteigender Rauch
             case 5 :
             {
-                pPartikelSystem->PushPartikel(xPos + 8 + rand ()%10 , yPos + 24 + rand ()%10, SMOKE3 + Value2);
+                PartikelSystem.PushPartikel(xPos + 8 + rand ()%10 , yPos + 24 + rand ()%10, SMOKE3 + Value2);
                 AnimCount = 0.25f;
             }
             break;
@@ -148,7 +148,7 @@ void GegnerPartikelSpawner::DoKI(void)
             case 6 :
             {
                 if (Aussetzer > 4.0f)
-                    pPartikelSystem->PushPartikel(xPos + 8 + rand ()%10 , yPos + 24 + rand ()%10, SMOKE3 + Value2);
+                    PartikelSystem.PushPartikel(xPos + 8 + rand ()%10 , yPos + 24 + rand ()%10, SMOKE3 + Value2);
 
                 AnimCount = 0.25f;
             }
@@ -158,7 +158,7 @@ void GegnerPartikelSpawner::DoKI(void)
             case 7 :
             {
                 for (int i = 0; i < 3; i++)
-                    pPartikelSystem->PushPartikel(xPos - 26 + rand ()%50 , yPos - 26 + rand ()%40, WATERFLUSH);
+                    PartikelSystem.PushPartikel(xPos - 26 + rand ()%50 , yPos - 26 + rand ()%40, WATERFLUSH);
 
             }
             break; // Wasserdampf
@@ -175,7 +175,7 @@ void GegnerPartikelSpawner::DoKI(void)
                 {
                 }
                 else
-                    pPartikelSystem->PushPartikel(xdrop, yPos, SPAWNDROP, &Player[0]);
+                    PartikelSystem.PushPartikel(xdrop, yPos, SPAWNDROP, &Player[0]);
 
                 AnimCount -= rand()%5;
             }
@@ -184,10 +184,10 @@ void GegnerPartikelSpawner::DoKI(void)
             // Blitz (und Donner)
             case 9 :
             {
-                pPartikelSystem->ThunderAlpha = 128;
-                pPartikelSystem->ThunderColor [0] = 228;
-                pPartikelSystem->ThunderColor [1] = 242;
-                pPartikelSystem->ThunderColor [2] = 255;
+                PartikelSystem.ThunderAlpha = 128;
+                PartikelSystem.ThunderColor [0] = 228;
+                PartikelSystem.ThunderColor [1] = 242;
+                PartikelSystem.ThunderColor [2] = 255;
                 SoundManager.PlayWave (20 + rand()%60, 128, 8000 + rand()%4000, SOUND_THUNDER);
 
                 Value2 = rand()%80 + 10;
@@ -197,17 +197,17 @@ void GegnerPartikelSpawner::DoKI(void)
             // Nebel
             case 11 :
             {
-                pPartikelSystem->PushPartikel(xPos - Value2 + rand()%(Value2 * 2), yPos - 20 + rand()%40, FOG);
+                PartikelSystem.PushPartikel(xPos - Value2 + rand()%(Value2 * 2), yPos - 20 + rand()%40, FOG);
             }
             break;
 
             // Licht flackert (wie blitz, nur in schwarz)
             case 13 :
             {
-                pPartikelSystem->ThunderAlpha = 160;
-                pPartikelSystem->ThunderColor [0] = 0;
-                pPartikelSystem->ThunderColor [1] = 0;
-                pPartikelSystem->ThunderColor [2] = 0;
+                PartikelSystem.ThunderAlpha = 160;
+                PartikelSystem.ThunderColor [0] = 0;
+                PartikelSystem.ThunderColor [1] = 0;
+                PartikelSystem.ThunderColor [2] = 0;
                 SoundManager.PlayWave (80, 128, 11025 + rand()%2000, SOUND_FUNKE + rand ()%4);
 
                 Value2 = rand()%20 + 10;
@@ -217,7 +217,7 @@ void GegnerPartikelSpawner::DoKI(void)
             // Spinnenteil
             case 14 :
             {
-                pPartikelSystem->PushPartikel(xPos + 4, yPos + 4, SPIDERPARTS);
+                PartikelSystem.PushPartikel(xPos + 4, yPos + 4, SPIDERPARTS);
 
                 AnimCount = (float)(rand()%5 + 10);
             }
@@ -230,13 +230,13 @@ void GegnerPartikelSpawner::DoKI(void)
 
                 if (Value2 == 0)
                 {
-                    pPartikelSystem->PushPartikel((float)(TileEngine.XOffset + 640.0f),
+                    PartikelSystem.PushPartikel((float)(TileEngine.XOffset + 640.0f),
                                                   (float)(yPos - 240.0f + rand()%480), BLATT2);
                     AnimCount = (rand()%5 + 1) / 5.0f;
                 }
                 else
                 {
-                    pPartikelSystem->PushPartikel((float)(TileEngine.XOffset + 640.0f),
+                    PartikelSystem.PushPartikel((float)(TileEngine.XOffset + 640.0f),
                                                   (float)(yPos - 240.0f + rand()%480), DUST);
                     AnimCount = (rand()%5 + 1) / 2.0f;
                 }
@@ -247,7 +247,7 @@ void GegnerPartikelSpawner::DoKI(void)
             // Staub
             case 16:
             {
-                pPartikelSystem->PushPartikel((float)(xPos + rand()%200 - 100),
+                PartikelSystem.PushPartikel((float)(xPos + rand()%200 - 100),
                                               (float)(yPos + rand()%200 - 100), DUST);
 
                 AnimCount = (rand()%5 + 1) / 5.0f;
@@ -257,7 +257,7 @@ void GegnerPartikelSpawner::DoKI(void)
             case 18:
             {
                 AnimCount = 3.0f;
-                pPartikelSystem->PushPartikel(xPos - (Value2) + rand()%(Value2 * 2),
+                PartikelSystem.PushPartikel(xPos - (Value2) + rand()%(Value2 * 2),
                                               yPos, LAVADUST);
             }
             break;
@@ -266,9 +266,9 @@ void GegnerPartikelSpawner::DoKI(void)
             case 19:
             {
                 if (rand()%3 == 0)
-                    pPartikelSystem->PushPartikel(xPos - 10, yPos - 20, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos - 10, yPos - 20, SMOKEBIG);
                 else
-                    pPartikelSystem->PushPartikel(xPos + 8 + rand ()%10 , yPos + 24 + rand ()%10, SMOKE3);
+                    PartikelSystem.PushPartikel(xPos + 8 + rand ()%10 , yPos + 24 + rand ()%10, SMOKE3);
 
                 AnimCount = 0.25f;
             }
@@ -288,7 +288,7 @@ void GegnerPartikelSpawner::DoKI(void)
             // Rauch
             case 2 :
             {
-                pPartikelSystem->PushPartikel(xPos + rand()%5, yPos+24, SMOKE);
+                PartikelSystem.PushPartikel(xPos + rand()%5, yPos+24, SMOKE);
             }
             break;
 
@@ -302,12 +302,12 @@ void GegnerPartikelSpawner::DoKI(void)
                     if (Value1 == 3)
                         SoundManager.PlayWave3D(int(xPos), int(yPos), 11025 + rand()%1000, SOUND_FUNKE);
 
-                    pPartikelSystem->PushPartikel(xPos, yPos-24, LASERFLAME);
+                    PartikelSystem.PushPartikel(xPos, yPos-24, LASERFLAME);
 
                     for (int i=0; i<10; i++)
                     {
-                        pPartikelSystem->PushPartikel(xPos+19, yPos, FUNKE);
-                        pPartikelSystem->PushPartikel(xPos+19, yPos, LASERFUNKE2);
+                        PartikelSystem.PushPartikel(xPos+19, yPos, FUNKE);
+                        PartikelSystem.PushPartikel(xPos+19, yPos, LASERFUNKE2);
                     }
                 }
             }

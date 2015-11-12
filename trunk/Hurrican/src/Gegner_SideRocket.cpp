@@ -100,9 +100,9 @@ void GegnerSideRocket::DoKI(void)
             AnimCount += 0.05f;
 
             if (Value1 == 0)
-                pPartikelSystem->PushPartikel (xPos + 35, yPos + 3, ROCKETSMOKE);
+                PartikelSystem.PushPartikel (xPos + 35, yPos + 3, ROCKETSMOKE);
             else
-                pPartikelSystem->PushPartikel (xPos - 5, yPos + 3, ROCKETSMOKE);
+                PartikelSystem.PushPartikel (xPos - 5, yPos + 3, ROCKETSMOKE);
         }
 
         // Gegen die Wand geflogen? Dann explodieren lassen
@@ -134,12 +134,12 @@ void GegnerSideRocket::GegnerExplode(void)
 {
     SoundManager.PlayWave (100, 128, 8000 + rand ()%4000, SOUND_EXPLOSION1);
 
-    pPartikelSystem->PushPartikel (xPos - 10, yPos - 20, EXPLOSION_MEDIUM2);
+    PartikelSystem.PushPartikel (xPos - 10, yPos - 20, EXPLOSION_MEDIUM2);
 
     for (int i=0; i < 10; i++)
     {
-        pPartikelSystem->PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, MINIFLARE);
-        pPartikelSystem->PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, MINIFLARE);
+        PartikelSystem.PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, SPIDERSPLITTER);
     }
 
     Player[0].Score += 50;

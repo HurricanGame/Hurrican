@@ -180,14 +180,14 @@ void GegnerSpiderBomb::GegnerExplode(void)
     ShakeScreen(5);
 
     for (int i=0; i<6; i++)
-        pPartikelSystem->PushPartikel(float(xPos - 60 + rand()%80),
+        PartikelSystem.PushPartikel(float(xPos - 60 + rand()%80),
                                       float(yPos - 40 + rand()%30), EXPLOSION_MEDIUM2);
 
-    pPartikelSystem->PushPartikel(float(xPos - 20),
+    PartikelSystem.PushPartikel(float(xPos - 20),
                                   float(yPos - 40), EXPLOSION_BIG);
 
     for (int i=0; i<4; i++)
-        pPartikelSystem->PushPartikel(float(xPos + 10),
+        PartikelSystem.PushPartikel(float(xPos + 10),
                                       float(yPos + 10), SPLITTER);
 
     SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION3);	// Sound ausgeben

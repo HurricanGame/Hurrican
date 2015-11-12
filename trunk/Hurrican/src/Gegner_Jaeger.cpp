@@ -102,8 +102,8 @@ void GegnerJaeger::DoKI(void)
         {
             smokeDelay += 0.1f;
 
-            pPartikelSystem->PushPartikel (xPos + 18, yPos - 8, ROCKETSMOKE);
-            pPartikelSystem->PushPartikel (xPos + 40, yPos - 8, ROCKETSMOKE);
+            PartikelSystem.PushPartikel (xPos + 18, yPos - 8, ROCKETSMOKE);
+            PartikelSystem.PushPartikel (xPos + 40, yPos - 8, ROCKETSMOKE);
         }
 
     }
@@ -146,12 +146,12 @@ void GegnerJaeger::GegnerExplode(void)
     SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i=0; i < 6; i++)
-        pPartikelSystem->PushPartikel (xPos - 10 + rand ()%30, yPos - 8 + rand()%30, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel (xPos - 10 + rand ()%30, yPos - 8 + rand()%30, EXPLOSION_MEDIUM2);
 
     for (int i=0; i < 20; i++)
     {
-        pPartikelSystem->PushPartikel (xPos + rand ()%30, yPos + rand()%64, MINIFLARE);
-        pPartikelSystem->PushPartikel (xPos + rand ()%25, yPos + rand()%50, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel (xPos + rand ()%30, yPos + rand()%64, MINIFLARE);
+        PartikelSystem.PushPartikel (xPos + rand ()%25, yPos + rand()%50, SPIDERSPLITTER);
     }
 
     Player[0].Score += 100;

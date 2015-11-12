@@ -415,7 +415,7 @@ void GegnerFlugBoss::DoKI(void)
 
     			if (AnimCount < 0.0f)
     			{
-    				pPartikelSystem->PushPartikel(xPos + rand()%500, yPos + rand()%300, EXPLOSION_MEDIUM2);
+    				PartikelSystem.PushPartikel(xPos + rand()%500, yPos + rand()%300, EXPLOSION_MEDIUM2);
     				SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
     				AnimCount = 1.0f;
@@ -564,7 +564,7 @@ void GegnerFlugBoss::GegnerExplode(void)
 {
     // Splitter
     for (int i=0; i<20; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%500 + 30,
+        PartikelSystem.PushPartikel(xPos + rand()%500 + 30,
                                       yPos + rand()%2000 + 30, SPLITTER);
 
     Player[0].Score += 6000;

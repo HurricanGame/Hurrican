@@ -268,6 +268,11 @@ public:
     PartikelsystemClass(void);						// Konstruktor
     ~PartikelsystemClass(void);						// Destruktor
 
+    //DKS - PartikelsystemClass is now a static global, instead of dynamically allocated
+    //      pointer, so moved the loading of sprites from its constructor to this new
+    //      function:
+    void LoadSprites(void);
+
     bool PushPartikel(float x, float y, int Art,
                       PlayerClass* pParent = NULL);	// Partikel "Art" hinzufügen
     void DelSel		(PartikelClass *pTemp);			// Ausgewähltes Objekt entfernen
@@ -285,8 +290,8 @@ public:
 // Externals
 // --------------------------------------------------------------------------------------
 
-extern PartikelsystemClass	*pPartikelSystem;
-extern DirectGraphicsSprite	*pPartikelGrafix[MAX_PARTIKELGFX];	// Grafiken der Partikel
+extern PartikelsystemClass	PartikelSystem;
+extern DirectGraphicsSprite	PartikelGrafix[MAX_PARTIKELGFX];	// Grafiken der Partikel
 extern int					CurrentPartikelTexture;
 
 #endif

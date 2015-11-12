@@ -305,8 +305,8 @@ void GegnerZitrone::DoKI(void)
         if (SmokeDelay <= 0.0f)
         {
             SmokeDelay = 0.1f;
-            pPartikelSystem->PushPartikel(xPos+rand()%30 + 20, yPos+10+rand()%40, SMOKE);
-            pPartikelSystem->PushPartikel(xPos+rand()%30 + 20, yPos+10+rand()%40, SMOKE3);
+            PartikelSystem.PushPartikel(xPos+rand()%30 + 20, yPos+10+rand()%40, SMOKE);
+            PartikelSystem.PushPartikel(xPos+rand()%30 + 20, yPos+10+rand()%40, SMOKE3);
         }
     }
     break;
@@ -332,8 +332,8 @@ void GegnerZitrone::DoKI(void)
 
         for (int i = 0; i < 8; i++)
         {
-            pPartikelSystem->PushPartikel (xPos + rand ()%80, yPos - 10 + rand ()%90, EXPLOSION_MEDIUM2);
-            pPartikelSystem->PushPartikel (xPos + rand ()%80, yPos - 10 + rand ()%90, SPIDERSPLITTER);
+            PartikelSystem.PushPartikel (xPos + rand ()%80, yPos - 10 + rand ()%90, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel (xPos + rand ()%80, yPos - 10 + rand ()%90, SPIDERSPLITTER);
         }
 
     }
@@ -349,13 +349,13 @@ void GegnerZitrone::GegnerExplode(void)
 
     for (int i = 0; i < 12; i++)
     {
-        pPartikelSystem->PushPartikel (xPos + rand ()%80, yPos - 10 + rand ()%90, EXPLOSION_MEDIUM2);
-        pPartikelSystem->PushPartikel (xPos + rand ()%80, yPos - 10 + rand ()%90, SPIDERSPLITTER);
-        pPartikelSystem->PushPartikel (xPos + 10 + rand ()%80, yPos - 10 + rand ()%90, SCHROTT1);
+        PartikelSystem.PushPartikel (xPos + rand ()%80, yPos - 10 + rand ()%90, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel (xPos + rand ()%80, yPos - 10 + rand ()%90, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel (xPos + 10 + rand ()%80, yPos - 10 + rand ()%90, SCHROTT1);
     }
 
     for (int i = 0; i < 4; i++)
-        pPartikelSystem->PushPartikel (xPos - 30 + rand ()%70, yPos - 30 + rand ()%80, SPLITTER);
+        PartikelSystem.PushPartikel (xPos - 30 + rand ()%70, yPos - 30 + rand ()%80, SPLITTER);
 
     Player[0].Score += 400;
 }

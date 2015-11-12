@@ -130,11 +130,11 @@ void GegnerFahrstuhl::DoKI(void)
         {
             sparkcount = 0.05f;
 
-            pPartikelSystem->PushPartikel(xPos + rand()%5, yPos + rand()%5, FUNKE);
-            pPartikelSystem->PushPartikel(xPos + rand()%5+GegnerRect[GegnerArt].right, yPos + rand()%5, FUNKE);
+            PartikelSystem.PushPartikel(xPos + rand()%5, yPos + rand()%5, FUNKE);
+            PartikelSystem.PushPartikel(xPos + rand()%5+GegnerRect[GegnerArt].right, yPos + rand()%5, FUNKE);
 
-            if (rand()%20 == 0) pPartikelSystem->PushPartikel(xPos - 20,	yPos - 10, SMOKEBIG);
-            if (rand()%20 == 0) pPartikelSystem->PushPartikel(xPos - 20 +GegnerRect[GegnerArt].right, yPos - 10, SMOKEBIG);
+            if (rand()%20 == 0) PartikelSystem.PushPartikel(xPos - 20,	yPos - 10, SMOKEBIG);
+            if (rand()%20 == 0) PartikelSystem.PushPartikel(xPos - 20 +GegnerRect[GegnerArt].right, yPos - 10, SMOKEBIG);
         }
 
     }
@@ -166,16 +166,16 @@ void GegnerFahrstuhl::GegnerExplode(void)
     SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
 
     for (int j=0; j < 100; j++)
-        pPartikelSystem->PushPartikel(xPos + rand()%400, yPos + rand()%100, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + rand()%400, yPos + rand()%100, SPIDERSPLITTER);
 
     for (int j=0; j < 50; j++)
     {
-        pPartikelSystem->PushPartikel(xPos + rand()%400, yPos + rand()%100, ROCKETSMOKE);
-        pPartikelSystem->PushPartikel(xPos - 30 + rand()%400, yPos - 30 + rand()%100, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + rand()%400, yPos + rand()%100, ROCKETSMOKE);
+        PartikelSystem.PushPartikel(xPos - 30 + rand()%400, yPos - 30 + rand()%100, EXPLOSION_MEDIUM2);
     }
 
     for (int j=0; j < 20; j++)
-        pPartikelSystem->PushPartikel(xPos + rand()%400, yPos + rand()%100, SPLITTER);
+        PartikelSystem.PushPartikel(xPos + rand()%400, yPos + rand()%100, SPLITTER);
 
     TileEngine.Zustand = ZUSTAND_SCROLLBAR;
 

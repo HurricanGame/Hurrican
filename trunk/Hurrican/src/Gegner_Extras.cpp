@@ -147,7 +147,7 @@ void GegnerExtras::DoKI(void)
         pCollector->Score += 10;
 
         // "Einsammel" Effekt anzeigen
-        pPartikelSystem->PushPartikel (xPos - 4, yPos - 4, EXTRACOLLECTED);
+        PartikelSystem.PushPartikel (xPos - 4, yPos - 4, EXTRACOLLECTED);
 
         // Waffen-Upgrade eingesammelt ?
         if (Value1 < 3)
@@ -167,7 +167,7 @@ void GegnerExtras::DoKI(void)
 
                     // PowerUp Effekt erzeugen
                     //
-                    pPartikelSystem->ClearPowerUpEffects();
+                    PartikelSystem.ClearPowerUpEffects();
 
                     for (int i = 0; i < 300; i++)
                     {
@@ -177,9 +177,9 @@ void GegnerExtras::DoKI(void)
                         //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
                         //DKS BUGFIX - why did the original code use radian sin/cos with random numbers within
                         //       huge ranges.. above values look like they were meant to be degrees - switched to deg..
-                        //pPartikelSystem->PushPartikel (float (pCollector->xpos + 40 - 6 + sin ((float)p)*r), 
+                        //PartikelSystem.PushPartikel (float (pCollector->xpos + 40 - 6 + sin ((float)p)*r), 
                         //	      float (pCollector->ypos + 40 - 6 + cos ((float)p)*r), KRINGELR + Value1, pCollector);
-                        pPartikelSystem->PushPartikel (pCollector->xpos + 40.0f - 6.0f + sin_deg(p)*r,
+                        PartikelSystem.PushPartikel (pCollector->xpos + 40.0f - 6.0f + sin_deg(p)*r,
                                 pCollector->ypos + 40.0f - 6.0f + cos_deg(p)*r, KRINGELR + Value1, pCollector);
                     }
 
@@ -216,7 +216,7 @@ void GegnerExtras::DoKI(void)
 
                     // PowerUp Effekt erzeugen
                     //
-                    pPartikelSystem->ClearPowerUpEffects();
+                    PartikelSystem.ClearPowerUpEffects();
 
                     for (int i = 0; i < 300; i++)
                     {
@@ -226,9 +226,9 @@ void GegnerExtras::DoKI(void)
                         //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
                         //DKS BUGFIX - why did the original code use radian sin/cos with random numbers within
                         //       huge ranges.. above values look like they were meant to be degrees - switched to deg..
-                        //pPartikelSystem->PushPartikel (float (pCollector->xpos + 40 - 6 + sin ((float)p)*r),
+                        //PartikelSystem.PushPartikel (float (pCollector->xpos + 40 - 6 + sin ((float)p)*r),
                         //                               float (pCollector->ypos + 40 - 6 + cos ((float)p)*r), KRINGELHB, pCollector);
-						pPartikelSystem->PushPartikel (pCollector->xpos + 40.0f - 6.0f + sin_deg(p)*r, 
+						PartikelSystem.PushPartikel (pCollector->xpos + 40.0f - 6.0f + sin_deg(p)*r, 
                                 pCollector->ypos + 40.0f - 6.0f + cos_deg(p)*r, KRINGELHB, pCollector);
                     }
 

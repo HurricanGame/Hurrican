@@ -57,8 +57,8 @@ void GegnerEiszapfen::DoKI(void)
 
             for (int i=0; i < 15; i++)
             {
-                pPartikelSystem->PushPartikel (xPos - 20 + rand ()%35, yPos - 10 + rand()%20, WATERFLUSH2);
-                pPartikelSystem->PushPartikel (xPos - 20 + rand ()%35, yPos - 10 + rand()%20, SMOKE);
+                PartikelSystem.PushPartikel (xPos - 20 + rand ()%35, yPos - 10 + rand()%20, WATERFLUSH2);
+                PartikelSystem.PushPartikel (xPos - 20 + rand ()%35, yPos - 10 + rand()%20, SMOKE);
             }
         }
     }
@@ -96,8 +96,8 @@ void GegnerEiszapfen::GegnerExplode(void)
 
     for (int i=0; i < 30; i++)
     {
-        pPartikelSystem->PushPartikel (xPos - 20 + rand ()%35, yPos - 10 + rand()%60, WATERFLUSH2);
-        pPartikelSystem->PushPartikel (xPos - 20 + rand ()%35, yPos - 10 + rand()%60, SMOKE);
+        PartikelSystem.PushPartikel (xPos - 20 + rand ()%35, yPos - 10 + rand()%60, WATERFLUSH2);
+        PartikelSystem.PushPartikel (xPos - 20 + rand ()%35, yPos - 10 + rand()%60, SMOKE);
     }
 
     Player[0].Score += 100;

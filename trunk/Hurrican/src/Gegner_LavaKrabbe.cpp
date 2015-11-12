@@ -221,11 +221,11 @@ void GegnerLavaKrabbe::GegnerExplode(void)
 {
     SoundManager.PlayWave (100, 128, 9000 + rand()%2000, SOUND_EXPLOSION3);
 
-    pPartikelSystem->PushPartikel (xPos + 15, yPos + 10, LAVAKRABBE_KOPF);
+    PartikelSystem.PushPartikel (xPos + 15, yPos + 10, LAVAKRABBE_KOPF);
 
     for (int i = 0; i < 4; i++)
-        pPartikelSystem->PushPartikel (xPos - 10 + rand ()%30, yPos - 10 + rand ()%10, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel (xPos - 10 + rand ()%30, yPos - 10 + rand ()%10, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 4; i++)
-        pPartikelSystem->PushPartikel (xPos - 10 + rand ()%30, yPos - 10 + rand ()%10, LAVAKRABBE_BEIN);
+        PartikelSystem.PushPartikel (xPos - 10 + rand ()%30, yPos - 10 + rand ()%10, LAVAKRABBE_BEIN);
 }

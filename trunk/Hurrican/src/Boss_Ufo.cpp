@@ -102,7 +102,7 @@ void GegnerUfo::DoKI(void)
 
     // Schon schwer angeschlagen ? Dann raucht das Ufo =)
     if (Energy < 700 && rand()%5 == 0)
-        pPartikelSystem->PushPartikel(xPos + rand()%190, yPos + rand()%60+25, SMOKE);
+        PartikelSystem.PushPartikel(xPos + rand()%190, yPos + rand()%60+25, SMOKE);
 
     // Hat der Boss keine Energie mehr ? Dann explodiert er
     if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN)
@@ -269,7 +269,7 @@ void GegnerUfo::DoKI(void)
             SoundManager.PlayWave (100, 128, 10000 + rand()%500, SOUND_LASERSHOT);
 
             Projectiles.PushProjectile  (xPos + 100 - 21, yPos + 60, UFOLASER);
-            pPartikelSystem->PushPartikel (xPos + 100 - 80, yPos + 30, UFOLASERFLARE);
+            PartikelSystem.PushPartikel (xPos + 100 - 80, yPos + 30, UFOLASERFLARE);
         }
     }
     break;
@@ -295,11 +295,11 @@ void GegnerUfo::DoKI(void)
 
         if (AnimCount < 0.0f)
         {
-            pPartikelSystem->PushPartikel(xPos + rand()%180, yPos + rand()%70+20, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos + rand()%180, yPos + rand()%70+20, EXPLOSION_MEDIUM2);
             SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
             if (rand()%4 == 0)
-                pPartikelSystem->PushPartikel(xPos + rand()%180 - 40, yPos + rand()%40, EXPLOSION_BIG);
+                PartikelSystem.PushPartikel(xPos + rand()%180 - 40, yPos + rand()%40, EXPLOSION_BIG);
 
             AnimCount = 2.0f;
         }
@@ -337,7 +337,7 @@ void GegnerUfo::GegnerExplode(void)
 
     // Splitter
     for (int i=0; i<20; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%190,
+        PartikelSystem.PushPartikel(xPos + rand()%190,
                                       yPos + rand()%60 + 30, SPLITTER);
 
     Player[0].Score += 4000;

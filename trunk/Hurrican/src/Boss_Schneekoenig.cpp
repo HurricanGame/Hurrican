@@ -253,10 +253,10 @@ void GegnerSchneeKoenig::DoKI(void)
             AnimCount = 20.0f;
 
             for (int i = 0; i < 30; i++)
-                pPartikelSystem->PushPartikel(xPos + rand()%180 - 30, yPos + rand()%40 + 70, SNOWFLUSH);
+                PartikelSystem.PushPartikel(xPos + rand()%180 - 30, yPos + rand()%40 + 70, SNOWFLUSH);
 
             for (int i = 0; i < 10; i++)
-                pPartikelSystem->PushPartikel(xPos + rand()%130 - 10, yPos + rand()%40 + 60, SMOKEBIG);
+                PartikelSystem.PushPartikel(xPos + rand()%130 - 10, yPos + rand()%40 + 60, SMOKEBIG);
 
             TileEngine.ScrollLevel((float)TileEngine.XOffset, yPos - 320.0f, ZUSTAND_SCROLLTOLOCK);
 
@@ -490,7 +490,7 @@ void GegnerSchneeKoenig::DoKI(void)
                     if (yPos > (ySave - 40.0f))
                     {
                         for (int i = 0; i < 30; i++)
-                            pPartikelSystem->PushPartikel(xPos + 10 + rand()%140, yPos + rand()%40 + 110, SNOWFLUSH);
+                            PartikelSystem.PushPartikel(xPos + 10 + rand()%140, yPos + rand()%40 + 110, SNOWFLUSH);
 
                         yPos = ySave - 40.0f;
                         ShakeScreen(3.0f);
@@ -553,19 +553,19 @@ void GegnerSchneeKoenig::DoKI(void)
                 ShakeScreen(5.0f);
 
                 for (int i = 0; i < 50; i++)
-                    pPartikelSystem->PushPartikel(xPos  - 20 + rand()%150, yPos + rand()%70, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos  - 20 + rand()%150, yPos + rand()%70, SMOKEBIG);
 
                 for (int i = 0; i < 20; i++)
-                    pPartikelSystem->PushPartikel(xPos - 40 + rand()%200, yPos + rand()%100, EXPLOSION_MEDIUM2);
+                    PartikelSystem.PushPartikel(xPos - 40 + rand()%200, yPos + rand()%100, EXPLOSION_MEDIUM2);
 
                 for (int i = 0; i < 20; i++)
-                    pPartikelSystem->PushPartikel(xPos + rand()%150, yPos + rand()%70, SCHROTT1);
+                    PartikelSystem.PushPartikel(xPos + rand()%150, yPos + rand()%70, SCHROTT1);
 
                 for (int i = 0; i < 5; i++)
-                    pPartikelSystem->PushPartikel(xPos - 40 + rand()%180, yPos + rand()%100, EXPLOSION_BIG);
+                    PartikelSystem.PushPartikel(xPos - 40 + rand()%180, yPos + rand()%100, EXPLOSION_BIG);
 
                 for (int i = 0; i < 5; i++)
-                    pPartikelSystem->PushPartikel(xPos + rand()%200, yPos + 70 + rand()%20, SPLITTER);
+                    PartikelSystem.PushPartikel(xPos + rand()%200, yPos + 70 + rand()%20, SPLITTER);
 
                 Energy = 0.0f;
             }
@@ -577,8 +577,8 @@ void GegnerSchneeKoenig::DoKI(void)
             if (SmokeDelay < 0.0f)
             {
                 SmokeDelay = 0.5f;
-                pPartikelSystem->PushPartikel(xPos + 60 + rand()%20, yPos + 120 + yOffset, SMOKEBIG);
-                pPartikelSystem->PushPartikel(xPos + 95 + rand()%20, yPos + 140 + yOffset, FUNKE);
+                PartikelSystem.PushPartikel(xPos + 60 + rand()%20, yPos + 120 + yOffset, SMOKEBIG);
+                PartikelSystem.PushPartikel(xPos + 95 + rand()%20, yPos + 140 + yOffset, FUNKE);
 
                 Projectiles.PushProjectile(xPos + 75 + rand()%4, yPos + 80 + yOffset, FEUERFALLE3);
 
@@ -587,7 +587,7 @@ void GegnerSchneeKoenig::DoKI(void)
                         rand()%2 == 0)
                 {
                     SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
-                    pPartikelSystem->PushPartikel(xPos + rand()%150, yPos + rand()%100, EXPLOSION_MEDIUM2);
+                    PartikelSystem.PushPartikel(xPos + rand()%150, yPos + rand()%100, EXPLOSION_MEDIUM2);
                 }
             }
 
@@ -645,13 +645,13 @@ void GegnerSchneeKoenig::DoKI(void)
 
             //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
             //for (int p = 0; p < 2; p++)
-            //    pPartikelSystem->PushPartikel(xPos + (float)sin((KnarreWinkel + 180.0f) * PI / 180.0f) * 70.0f + 80,
+            //    PartikelSystem.PushPartikel(xPos + (float)sin((KnarreWinkel + 180.0f) * PI / 180.0f) * 70.0f + 80,
             //                                  yPos + (float)cos((KnarreWinkel + 180.0f) * PI / 180.0f) * 60.0f + KnarreY + yOffset, SMOKEBIG);
 
             //pGegner->PushGegner(xPos + (float)sin((KnarreWinkel + 180.0f) * PI / 180.0f) * 70.0f + 100,
             //                    yPos + (float)cos((KnarreWinkel + 180.0f) * PI / 180.0f) * 60.0f + KnarreY + 5.0f + yOffset, SCHNEEKOPPE, -(int)(w) - 3 + rand()%7 , 40, false);
             for (int p = 0; p < 2; p++)
-                pPartikelSystem->PushPartikel(xPos + sin_deg(KnarreWinkel + 180.0f) * 70.0f + 80.0f,
+                PartikelSystem.PushPartikel(xPos + sin_deg(KnarreWinkel + 180.0f) * 70.0f + 80.0f,
                                               yPos + cos_deg(KnarreWinkel + 180.0f) * 60.0f + KnarreY + yOffset, SMOKEBIG);
 
             pGegner->PushGegner(xPos + sin_deg(KnarreWinkel + 180.0f) * 70.0f + 100.0f,

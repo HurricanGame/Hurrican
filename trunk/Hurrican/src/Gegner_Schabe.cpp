@@ -366,13 +366,13 @@ void GegnerSchabe::GegnerExplode(void)
     // Explosion
     for (int i=0; i<2; i++)
     {
-        pPartikelSystem->PushPartikel(float(xPos - 20) + rand()%10,
+        PartikelSystem.PushPartikel(float(xPos - 20) + rand()%10,
                                       float(yPos - 20) + rand()%10, EXPLOSION_MEDIUM2);
 
-        pPartikelSystem->PushPartikel(float(xPos+5) + rand()%10,
+        PartikelSystem.PushPartikel(float(xPos+5) + rand()%10,
                                       float(yPos+5) + rand()%10, FUNKE);
 
-        pPartikelSystem->PushPartikel(float(xPos+5) + rand()%10,
+        PartikelSystem.PushPartikel(float(xPos+5) + rand()%10,
                                       float(yPos+5) + rand()%10, SPIDERSPLITTER);
     }
 

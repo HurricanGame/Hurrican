@@ -105,13 +105,13 @@ void GegnerStarBig::DoKI(void)
 
 void GegnerStarBig::GegnerExplode(void)
 {
-    pPartikelSystem->PushPartikel (xPos-20, yPos-20, EXPLOSION_GIANT);
+    PartikelSystem.PushPartikel (xPos-20, yPos-20, EXPLOSION_GIANT);
 
     for (int i = 0; i < 10; i++)
-        pPartikelSystem->PushPartikel (xPos-30+rand()%80, yPos-30+rand()%80, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel (xPos-30+rand()%80, yPos-30+rand()%80, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 15; i++)
-        pPartikelSystem->PushPartikel (xPos+rand()%80, yPos+rand()%80, LONGFUNKE);
+        PartikelSystem.PushPartikel (xPos+rand()%80, yPos+rand()%80, LONGFUNKE);
 
     SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
 

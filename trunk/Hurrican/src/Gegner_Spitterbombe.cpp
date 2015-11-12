@@ -37,7 +37,7 @@ void GegnerSpitterbombe::DoKI(void)
         AnimCount = 0;					// Dann wieder auf Null setzen
         AnimPhase++;					// Und nächste Animationsphase
 
-        pPartikelSystem->PushPartikel (xPos - 5 + rand()%10, yPos, SMOKE);
+        PartikelSystem.PushPartikel (xPos - 5 + rand()%10, yPos, SMOKE);
 
         if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
             AnimPhase = AnimStart;
@@ -66,10 +66,10 @@ void GegnerSpitterbombe::GegnerExplode(void)
     SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 5; i++)
-        pPartikelSystem->PushPartikel(xPos - 25 + rand()%20, yPos - 30 + rand()%50, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 25 + rand()%20, yPos - 30 + rand()%50, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 5; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%20, yPos + rand()%40, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + rand()%20, yPos + rand()%40, SPIDERSPLITTER);
 
     // Nicht am Boden explodiert ? Dann wurde er abgeschossen
     if (!(blocku & BLOCKWERT_WAND) &&

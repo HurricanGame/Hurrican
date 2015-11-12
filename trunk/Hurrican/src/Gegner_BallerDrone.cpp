@@ -64,7 +64,7 @@ void GegnerBallerdrone::DoKI(void)
     {
         AnimCount += 0.2f;
 
-        pPartikelSystem->PushPartikel (xPos + 37 + rand()%3, yPos + 35, ROBOMANSMOKE);
+        PartikelSystem.PushPartikel (xPos + 37 + rand()%3, yPos + 35, ROBOMANSMOKE);
     }
 
     if (xSpeed >  20.0f) xSpeed =  20.0f;
@@ -131,9 +131,9 @@ void GegnerBallerdrone::DoKI(void)
         if (shotdelay < 0.0f)
         {
             shotdelay = 5.0f SYNC;
-            pPartikelSystem->PushPartikel (xPos + 35 + rand()%5, yPos + 20 + rand ()%5, ROCKETSMOKE);
-            pPartikelSystem->PushPartikel (xPos + 30 + rand()%5, yPos + 20 + rand ()%5, SMOKE3);
-            pPartikelSystem->PushPartikel (xPos + 30 + rand()%5, yPos + 20 + rand ()%5, FUNKE);
+            PartikelSystem.PushPartikel (xPos + 35 + rand()%5, yPos + 20 + rand ()%5, ROCKETSMOKE);
+            PartikelSystem.PushPartikel (xPos + 30 + rand()%5, yPos + 20 + rand ()%5, SMOKE3);
+            PartikelSystem.PushPartikel (xPos + 30 + rand()%5, yPos + 20 + rand ()%5, FUNKE);
         }
     }
     break;
@@ -154,7 +154,7 @@ void GegnerBallerdrone::DoKI(void)
         Handlung = GEGNER_FALLEN;
         yAcc     = 3.0f;
         SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
-        pPartikelSystem->PushPartikel (xPos - 20, yPos - 40, EXPLOSION_BIG);
+        PartikelSystem.PushPartikel (xPos - 20, yPos - 40, EXPLOSION_BIG);
         shotdelay = 1.0f;
     }
 }
@@ -170,13 +170,13 @@ void GegnerBallerdrone::GegnerExplode(void)
     int i;
 
     for (i=0; i < 10; i++)
-        pPartikelSystem->PushPartikel (xPos - 30 + rand ()%90, yPos - 30 + rand()%60, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel (xPos - 30 + rand ()%90, yPos - 30 + rand()%60, EXPLOSION_MEDIUM2);
 
     for (i=0; i < 30; i++)
-        pPartikelSystem->PushPartikel (xPos - 40 + rand ()%90, yPos - 30 + rand()%60, SMOKEBIG);
+        PartikelSystem.PushPartikel (xPos - 40 + rand ()%90, yPos - 30 + rand()%60, SMOKEBIG);
 
     for (i=0; i < 40; i++)
-        pPartikelSystem->PushPartikel (xPos + rand ()%90, yPos + rand()%60, FUNKE);
+        PartikelSystem.PushPartikel (xPos + rand ()%90, yPos + rand()%60, FUNKE);
 
     Player[0].Score += 300;
 }

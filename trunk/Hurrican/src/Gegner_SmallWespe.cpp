@@ -151,7 +151,7 @@ void GegnerSmallWespe::DoKI(void)
 
         // Wespe rauchen lassen
         if (AnimCount == 0.0f && AnimPhase%2 == 0)
-            pPartikelSystem->PushPartikel(xPos+12, yPos+5, SMOKE);
+            PartikelSystem.PushPartikel(xPos+12, yPos+5, SMOKE);
     }
     break;
 
@@ -200,10 +200,10 @@ void GegnerSmallWespe::DoKI(void)
         xAcc	 = 0.0f;
         yAcc	 = 2.0f;
 
-        pPartikelSystem->PushPartikel(float(xPos + 2), float(yPos - 10), EXPLOSION_MEDIUM);
+        PartikelSystem.PushPartikel(float(xPos + 2), float(yPos - 10), EXPLOSION_MEDIUM);
 
         for (int i = 0; i < 5; i++)
-            pPartikelSystem->PushPartikel(float(xPos + 2) + rand()%20, float(yPos - 10) + rand()%10, SMOKE2);
+            PartikelSystem.PushPartikel(float(xPos + 2) + rand()%20, float(yPos - 10) + rand()%10, SMOKE2);
 
         if (BlickRichtung == LINKS)
             xSpeed = -5.0f;
@@ -219,12 +219,12 @@ void GegnerSmallWespe::DoKI(void)
 void GegnerSmallWespe::GegnerExplode(void)
 {
     // Explosion
-    pPartikelSystem->PushPartikel(float(xPos + 2),
+    PartikelSystem.PushPartikel(float(xPos + 2),
                                   float(yPos - 10), EXPLOSION_MEDIUM);
 
     // Rauchende Splitter
     for (int i=0; i<3; i++)
-        pPartikelSystem->PushPartikel(float(xPos + 15),
+        PartikelSystem.PushPartikel(float(xPos + 15),
                                       float(yPos + 20), SPLITTER);
 
 

@@ -106,7 +106,7 @@ void GegnerSchwabbel::GegnerExplode(void)
     SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i=0; i < 80; i++)
-        pPartikelSystem->PushPartikel (xPos + rand ()%40, yPos - 10 + rand()%60, MADEBLUT);
+        PartikelSystem.PushPartikel (xPos + rand ()%40, yPos - 10 + rand()%60, MADEBLUT);
 
     for (int i=0; i < 30; i++)
         pGegner->PushGegner (xPos + rand ()%40, yPos - 10 + rand()%60, MADE, 1, 0, false);

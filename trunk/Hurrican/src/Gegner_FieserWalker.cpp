@@ -84,7 +84,7 @@ void GegnerFieserWalker::DoKI(void)
 
             SoundManager.PlayWave (100, 128, 10000 + rand()%2000, SOUND_LASERSHOT);
 
-            pPartikelSystem->PushPartikel (xPos + 10 + BlickRichtung * 40, yPos + 6, LASERFLAME);
+            PartikelSystem.PushPartikel (xPos + 10 + BlickRichtung * 40, yPos + 6, LASERFLAME);
             Projectiles.PushProjectile  (xPos + 26 + BlickRichtung * 40, yPos + 23, SUCHSCHUSS);
 
         }
@@ -125,13 +125,13 @@ void GegnerFieserWalker::DoKI(void)
 
 void GegnerFieserWalker::GegnerExplode(void)
 {
-    pPartikelSystem->PushPartikel(xPos - 30, yPos - 30, EXPLOSION_BIG);
+    PartikelSystem.PushPartikel(xPos - 30, yPos - 30, EXPLOSION_BIG);
 
     for (int i = 0; i < 8; i++)
-        pPartikelSystem->PushPartikel(xPos - 30 + rand ()% 60,
+        PartikelSystem.PushPartikel(xPos - 30 + rand ()% 60,
                                       yPos - 30 + rand ()% 60, EXPLOSION_MEDIUM2);
     for (int i = 0; i < 12; i++)
-        pPartikelSystem->PushPartikel(xPos + rand ()% 50,
+        PartikelSystem.PushPartikel(xPos + rand ()% 50,
                                       yPos + rand ()% 50, SPIDERSPLITTER);
 
     SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);	// Sound ausgeben

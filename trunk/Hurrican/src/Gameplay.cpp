@@ -376,7 +376,7 @@ void GameLoop(void)
     Projectiles.DoProjectiles();
 
     // Partikel abhandeln
-    pPartikelSystem->DoPartikel();
+    PartikelSystem.DoPartikel();
 
     // Overlay Tiles des Levels zeigen und Spieler und Objekte verdecken
     DirectGraphics.SetColorKeyMode();
@@ -421,7 +421,7 @@ void GameLoop(void)
     }
 
     // Blitz und andere Partikel rendern, die alles überlagern
-    pPartikelSystem->DoThunder ();
+    PartikelSystem.DoThunder ();
 
     if (pConsole->Showing == false)
     {
@@ -866,8 +866,7 @@ bool LoadConfig(void)
 
     fclose(Datei);							// Und Datei wieder schliessen
 
-    if (pPartikelSystem)
-        pPartikelSystem->SetParticleCount();
+    PartikelSystem.SetParticleCount();
 
     if (JoystickFound == false)
     {
@@ -1158,7 +1157,7 @@ void SummaryScreen(void)
 
         // Overlay Tiles des Levels zeigen und Spieler und Objekte verdecken
         TileEngine.DrawOverlayLevel();
-        pPartikelSystem->DoPartikel();				// Partikel abhandeln
+        PartikelSystem.DoPartikel();				// Partikel abhandeln
 
         TileEngine.DrawWater();
         TileEngine.DrawBackLevelOverlay();
@@ -1168,7 +1167,7 @@ void SummaryScreen(void)
         pHUD->DoHUD();								// HUD anhandeln
 
         // Blitz und andere Partikel rendern, die alles überlagern
-        pPartikelSystem->DoThunder ();
+        PartikelSystem.DoThunder ();
 
         // Summary Screen rendern
         pGUI->Run();

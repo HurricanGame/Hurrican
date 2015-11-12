@@ -282,9 +282,9 @@ void GegnerEvilHurri::DoKI(void)
             ActionDelay = 1.0f;
 
             if (BlickRichtung == RECHTS)
-                pPartikelSystem->PushPartikel(xPos, yPos, EVILSMOKE2);
+                PartikelSystem.PushPartikel(xPos, yPos, EVILSMOKE2);
             else
-                pPartikelSystem->PushPartikel(xPos, yPos, EVILSMOKE);
+                PartikelSystem.PushPartikel(xPos, yPos, EVILSMOKE);
         }
 
         if ((BlickRichtung == RECHTS && xPos     > pAim->xpos+140) ||
@@ -306,9 +306,9 @@ void GegnerEvilHurri::DoKI(void)
             ActionDelay = 1.0f;
 
             if (BlickRichtung == RECHTS)
-                pPartikelSystem->PushPartikel(xPos, yPos, EVILSMOKE2);
+                PartikelSystem.PushPartikel(xPos, yPos, EVILSMOKE2);
             else
-                pPartikelSystem->PushPartikel(xPos, yPos, EVILSMOKE);
+                PartikelSystem.PushPartikel(xPos, yPos, EVILSMOKE);
         }
 
         if ((BlickRichtung == RECHTS && xPos + 35 > Value1+320) ||
@@ -334,18 +334,18 @@ void GegnerEvilHurri::DoKI(void)
         {
             ActionDelay = 2.5f;
 
-            //pPartikelSystem->PushPartikel(xPos+30, yPos+28, BULLET);
+            //PartikelSystem.PushPartikel(xPos+30, yPos+28, BULLET);
 
             SoundManager.PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_CANON);
 
             if (BlickRichtung == RECHTS)
             {
-                pPartikelSystem->PushPartikel  (xPos+50, yPos+20, SMOKE);
+                PartikelSystem.PushPartikel  (xPos+50, yPos+20, SMOKE);
                 Projectiles.PushProjectile(xPos+55, yPos+30, EVILSHOT);
             }
             else
             {
-                pPartikelSystem->PushPartikel  (xPos+10, yPos+20, SMOKE);
+                PartikelSystem.PushPartikel  (xPos+10, yPos+20, SMOKE);
                 Projectiles.PushProjectile(xPos, yPos+30, EVILSHOT2);
             }
         }
@@ -394,18 +394,18 @@ void GegnerEvilHurri::DoKI(void)
         {
             ActionDelay = 2.5f;
 
-//				pPartikelSystem->PushPartikel(xPos+30, yPos+28, BULLET);
+//				PartikelSystem.PushPartikel(xPos+30, yPos+28, BULLET);
 
             SoundManager.PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_CANON);
 
             if (BlickRichtung == RECHTS)
             {
-                pPartikelSystem->PushPartikel  (xPos+50, yPos+20, SMOKE);
+                PartikelSystem.PushPartikel  (xPos+50, yPos+20, SMOKE);
                 Projectiles.PushProjectile(xPos+55, yPos+30, EVILSHOT);
             }
             else
             {
-                pPartikelSystem->PushPartikel  (xPos+10, yPos+20, SMOKE);
+                PartikelSystem.PushPartikel  (xPos+10, yPos+20, SMOKE);
                 Projectiles.PushProjectile(xPos, yPos+30, EVILSHOT2);
             }
         }
@@ -432,8 +432,8 @@ void GegnerEvilHurri::DoKI(void)
         if (ActionDelay < 0.0f)
         {
             SoundManager.PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_CANON);
-            pPartikelSystem->PushPartikel(xPos + (AnimPhase - 36) * 5, yPos - 23 + abs(AnimPhase - 41) * 8, SMOKE);
-//				pPartikelSystem->PushPartikel(xPos+30, yPos+28, BULLET);
+            PartikelSystem.PushPartikel(xPos + (AnimPhase - 36) * 5, yPos - 23 + abs(AnimPhase - 41) * 8, SMOKE);
+//				PartikelSystem.PushPartikel(xPos+30, yPos+28, BULLET);
 
             Projectiles.PushProjectile(xPos + 5 + (AnimPhase - 36) * 5, yPos - 10 + abs(AnimPhase - 41) * 8, EVILROUND1 + (AnimPhase - 35));
 
@@ -463,7 +463,7 @@ void GegnerEvilHurri::DoKI(void)
             AnimPhase = 0;
 
             for (int i=0; i < 30; i++)
-                pPartikelSystem->PushPartikel(xPos + 30 + rand()%10, yPos + rand()%10, LASERFUNKE2);
+                PartikelSystem.PushPartikel(xPos + 30 + rand()%10, yPos + rand()%10, LASERFUNKE2);
 
             Projectiles.PushProjectile(xPos, yPos - 20, EVILBLITZ);
             SoundManager.PlayWave(100, 128, 11025, SOUND_SPIDERGRENADE);
@@ -622,9 +622,9 @@ void GegnerEvilHurri::DoKI(void)
             AnimCount = 2.0f;
 
             SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
-            pPartikelSystem->PushPartikel(xPos - 20 + rand()%70, yPos + rand()%80, EXPLOSION_MEDIUM);
-            pPartikelSystem->PushPartikel(xPos - 20 + rand()%70, yPos + rand()%80, EXPLOSION_MEDIUM2);
-            pPartikelSystem->PushPartikel(xPos - 50 + rand()%70, yPos - 30 + rand()%80, EXPLOSION_BIG);
+            PartikelSystem.PushPartikel(xPos - 20 + rand()%70, yPos + rand()%80, EXPLOSION_MEDIUM);
+            PartikelSystem.PushPartikel(xPos - 20 + rand()%70, yPos + rand()%80, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos - 50 + rand()%70, yPos - 30 + rand()%80, EXPLOSION_BIG);
         }
     }
     break;
@@ -643,10 +643,10 @@ void GegnerEvilHurri::GegnerExplode(void)
     Player[0].Score += 9000;
 
     for (int i=0; i < 10; i++)
-        pPartikelSystem->PushPartikel(xPos - 20 + rand()%70, yPos + rand()%80, SPLITTER);
+        PartikelSystem.PushPartikel(xPos - 20 + rand()%70, yPos + rand()%80, SPLITTER);
 
     for (int i=0; i < 10; i++)
-        pPartikelSystem->PushPartikel(xPos - 20 + rand()%70, yPos + rand()%80, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 20 + rand()%70, yPos + rand()%80, EXPLOSION_MEDIUM2);
 
 
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);

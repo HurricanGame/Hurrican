@@ -79,7 +79,7 @@ using namespace std;
 
 extern bool						DEMORecording;
 extern bool						DEMOPlaying;
-extern DirectGraphicsSprite		*PartikelGrafix[MAX_PARTIKELGFX];	// Grafiken der Partikel
+extern DirectGraphicsSprite		PartikelGrafix[MAX_PARTIKELGFX];	// Grafiken der Partikel
 
 // --------------------------------------------------------------------------------------
 // globale Variablen
@@ -119,7 +119,7 @@ SoundManagerClass       SoundManager;                   // Sound Manager
 DirectGraphicsFont		*pDefaultFont = new(DirectGraphicsFont);
 DirectGraphicsFont		*pMenuFont	  = new(DirectGraphicsFont);
 TileEngineClass			TileEngine;                     // Tile Engine
-PartikelsystemClass		*pPartikelSystem;				// Das coole Partikelsystem
+PartikelsystemClass		PartikelSystem;				    // Das coole Partikelsystem
 ProjectileListClass		Projectiles;					// Liste mit Schüssen
 GegnerListClass			*pGegner;						// Liste mit Gegner
 IntroClass				*pIntro;						// Intro-Objekt
@@ -1163,8 +1163,8 @@ bool GameInit2(void)
     pGUI = new CGUISystem();
     pGUI->InitGUISystem();
 
-    // Partikelsystem initialisieren
-    pPartikelSystem = new(PartikelsystemClass);
+    // DKS Load PartikelsystemClass sprites:
+    PartikelSystem.LoadSprites();
 
     // GegnerListe initialisieren
     pGegner = new(GegnerListClass);
@@ -1358,10 +1358,6 @@ bool GameExit(void)
     // GegnerListe beenden
     delete(pGegner);
     Protokoll.WriteText( false, "-> Enemy List released\n" );
-
-    // Partikelsystem beenden
-    delete(pPartikelSystem);
-    Protokoll.WriteText( false, "-> Particle System released\n" );
 
     //DKS - Sound manager is now a static global, and we use new Exit() method:
     SoundManager.Exit();
@@ -1578,7 +1574,7 @@ void ShowDebugInfo(void)
     pDefaultFont->ShowFPS();								// FPS anzeigen
 
     // Anzahl der aktuell aktiven Partikel anzeigen
-    _itoa_s(pPartikelSystem->GetNumPartikel(), StringBuffer, 10);
+    _itoa_s(PartikelSystem.GetNumPartikel(), StringBuffer, 10);
     pDefaultFont->DrawText(  0, 60, "Partikel :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 60, StringBuffer, 0xFFFFFFFF);
 

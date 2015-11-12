@@ -47,7 +47,7 @@ void GegnerLift::DoKI(void)
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
             {
                 for (int i = 0; i < 10; i++)
-                    pPartikelSystem->PushPartikel (xPos - 30 + rand ()% 80, yPos - 20 + rand()%20, EXPLOSION_MEDIUM2);
+                    PartikelSystem.PushPartikel (xPos - 30 + rand ()% 80, yPos - 20 + rand()%20, EXPLOSION_MEDIUM2);
 
                 Handlung  = GEGNER_STEHEN;
                 AnimPhase = 0;

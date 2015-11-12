@@ -95,14 +95,14 @@ void GegnerGeschuetz::DoKI(void)
 void GegnerGeschuetz::GegnerExplode(void)
 {
     // Explosion
-    pPartikelSystem->PushPartikel(float(xPos - 10),
+    PartikelSystem.PushPartikel(float(xPos - 10),
                                   float(yPos - 10), EXPLOSION_MEDIUM2);
 
-    pPartikelSystem->PushPartikel(float(xPos - 10),
+    PartikelSystem.PushPartikel(float(xPos - 10),
                                   float(yPos - 10), SMOKEBIG);
 
     for (int i = 0; i < 10; i++)
-        pPartikelSystem->PushPartikel(float(xPos + 10 + rand()%40),
+        PartikelSystem.PushPartikel(float(xPos + 10 + rand()%40),
                                       float(yPos + rand()%40), LONGFUNKE);
 
 

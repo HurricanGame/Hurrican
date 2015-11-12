@@ -102,11 +102,11 @@ void GegnerPflanze::GegnerExplode(void)
     SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 5; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%50, yPos + rand()%40, EXPLOSION_GREEN);
+        PartikelSystem.PushPartikel(xPos + rand()%50, yPos + rand()%40, EXPLOSION_GREEN);
 
     for (int i = 0; i < 30; i++)
         // Blätter erzeugen
-        pPartikelSystem->PushPartikel(float(xPos + rand()%100),
+        PartikelSystem.PushPartikel(float(xPos + rand()%100),
                                       float(yPos + 10 +  rand()%50), BLATT);
 
 

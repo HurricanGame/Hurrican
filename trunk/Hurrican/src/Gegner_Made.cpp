@@ -157,6 +157,6 @@ void GegnerMade::GegnerExplode(void)
     SoundManager.PlayWave (100, rand ()%200 + 20, 8000 + rand()%4000, SOUND_MADE);
 
     for (int i = 0; i < 10; i++)
-        pPartikelSystem->PushPartikel(float(xPos - 10 + rand()%24),
+        PartikelSystem.PushPartikel(float(xPos - 10 + rand()%24),
                                       float(yPos - 12 + rand()%22), MADEBLUT);
 }

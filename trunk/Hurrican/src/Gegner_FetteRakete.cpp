@@ -138,8 +138,8 @@ void GegnerFetteRakete::DoKI(void)
         {
             SmokeDelay = 0.3f;
 
-            pPartikelSystem->PushPartikel(xPos + 2, yPos + 5, SMOKE);
-            //pPartikelSystem->PushPartikel(xPos + 8, yPos + 12, ROCKETSMOKE);
+            PartikelSystem.PushPartikel(xPos + 2, yPos + 5, SMOKE);
+            //PartikelSystem.PushPartikel(xPos + 8, yPos + 12, ROCKETSMOKE);
         }
 
         // Gegen die Wand geflogen? Dann explodieren lassen
@@ -172,12 +172,12 @@ void GegnerFetteRakete::GegnerExplode(void)
 {
     SoundManager.PlayWave (100, 128, 8000 + rand ()%4000, SOUND_EXPLOSION1);
 
-    pPartikelSystem->PushPartikel (xPos - 10, yPos - 20, EXPLOSION_MEDIUM2);
+    PartikelSystem.PushPartikel (xPos - 10, yPos - 20, EXPLOSION_MEDIUM2);
 
     for (int i=0; i < 5; i++)
     {
-        pPartikelSystem->PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, MINIFLARE);
-        pPartikelSystem->PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, MINIFLARE);
+        PartikelSystem.PushPartikel (xPos + rand ()%20, yPos - 10 + rand()%20, SPIDERSPLITTER);
     }
 
     Player[0].Score += 50;

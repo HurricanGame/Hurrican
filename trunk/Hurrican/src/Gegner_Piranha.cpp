@@ -228,15 +228,15 @@ void GegnerPiranha::GegnerExplode(void)
     // Fetzen und Blasen erzeugen
     int i;
     for (i=0; i<3; i++)
-        pPartikelSystem->PushPartikel(float(xPos - 20 + rand()%45),
+        PartikelSystem.PushPartikel(float(xPos - 20 + rand()%45),
                                       float(yPos - 5  + rand()%30), PIRANHATEILE);
 
     for (i=0; i<3; i++)
-        pPartikelSystem->PushPartikel(float(xPos - 10  + rand()%45),
+        PartikelSystem.PushPartikel(float(xPos - 10  + rand()%45),
                                       float(yPos + 10  + rand()%30), BUBBLE);
 
     // Blutwolke dazu
-    pPartikelSystem->PushPartikel(float(xPos + 2),
+    PartikelSystem.PushPartikel(float(xPos + 2),
                                   float(yPos - 5), PIRANHABLUT);
 
     SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben

@@ -97,9 +97,9 @@ void GegnerReitFlugsack::DoKI(void)
             SmokeCount += 0.1f;
 
             if (BlickRichtung == LINKS)
-                pPartikelSystem->PushPartikel(xPos + 66, yPos+50, FLUGSACKSMOKE2);
+                PartikelSystem.PushPartikel(xPos + 66, yPos+50, FLUGSACKSMOKE2);
             else
-                pPartikelSystem->PushPartikel(xPos, yPos+50, FLUGSACKSMOKE);
+                PartikelSystem.PushPartikel(xPos, yPos+50, FLUGSACKSMOKE);
         }
     }
     break;
@@ -131,12 +131,12 @@ void GegnerReitFlugsack::DoKI(void)
         // FlugSack rauchen lassen
         if (AnimCount == 0.0f)
         {
-            pPartikelSystem->PushPartikel(xPos+20+rand()%40, yPos+20+rand()%30, SMOKE);
+            PartikelSystem.PushPartikel(xPos+20+rand()%40, yPos+20+rand()%30, SMOKE);
         }
 
         if (AnimCount == 0.0f && AnimPhase%2 == 0 && rand()%2 == 0)
         {
-            pPartikelSystem->PushPartikel(xPos+rand()%80-30, yPos+rand()%70-30, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos+rand()%80-30, yPos+rand()%70-30, EXPLOSION_MEDIUM2);
             SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION1);
         }
 
@@ -148,7 +148,7 @@ void GegnerReitFlugsack::DoKI(void)
         // FlugSack rauchen lassen
         if (AnimCount == 0.0f)
         {
-            pPartikelSystem->PushPartikel(xPos+20+rand()%40, yPos+20+rand()%30, SMOKE);
+            PartikelSystem.PushPartikel(xPos+20+rand()%40, yPos+20+rand()%30, SMOKE);
         }
 
         // Testen, ob der Spieler den Sack berührt hat

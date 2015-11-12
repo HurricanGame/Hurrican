@@ -279,8 +279,8 @@ void GegnerSpinnenmaschine::DoHoch(void)
             if (SmokeDelay < 0.0f)
             {
                 SmokeDelay = 0.4f;
-                pPartikelSystem->PushPartikel(xPos + 55.0f, yPos + 375, SMOKE3_LU);
-                pPartikelSystem->PushPartikel(xPos + 245.0f, yPos + 375, SMOKE3_RU);
+                PartikelSystem.PushPartikel(xPos + 55.0f, yPos + 375, SMOKE3_LU);
+                PartikelSystem.PushPartikel(xPos + 245.0f, yPos + 375, SMOKE3_RU);
             }
         }
     }
@@ -328,7 +328,7 @@ void GegnerSpinnenmaschine::DoHoch(void)
 
             // Rauch
             for (int i = 1; i < 10; i++)
-                pPartikelSystem->PushPartikel(xPos + i * 25.0f, yPos + 330, SMOKEBIG);
+                PartikelSystem.PushPartikel(xPos + i * 25.0f, yPos + 330, SMOKEBIG);
 
             SoundManager.PlayWave(100, 128, 11025, SOUND_DOORSTOP);
 
@@ -404,32 +404,32 @@ void GegnerSpinnenmaschine::DoKI(void)
 
         // Links oben rausdampfen lassen
         if (Energy < 3800)
-            pPartikelSystem->PushPartikel(xPos + 45.0f, yPos + 200.0f - DeckelOffset, SMOKE3_LO);
+            PartikelSystem.PushPartikel(xPos + 45.0f, yPos + 200.0f - DeckelOffset, SMOKE3_LO);
 
         // Am Schlauch dampfen lassen
         if (Energy < 3600)
-            pPartikelSystem->PushPartikel(xPos + 247.0f, yPos + 278.0f - DeckelOffset, SMOKE3_RO);
+            PartikelSystem.PushPartikel(xPos + 247.0f, yPos + 278.0f - DeckelOffset, SMOKE3_RO);
 
         if (Energy < 3400)
-            pPartikelSystem->PushPartikel(xPos + 228.0f, yPos + 202.0f - DeckelOffset, SMOKE3_RO);
+            PartikelSystem.PushPartikel(xPos + 228.0f, yPos + 202.0f - DeckelOffset, SMOKE3_RO);
 
         if (Energy < 3100)
-            pPartikelSystem->PushPartikel(xPos + 40.0f, yPos + 228.0f - DeckelOffset, SMOKE3_LO);
+            PartikelSystem.PushPartikel(xPos + 40.0f, yPos + 228.0f - DeckelOffset, SMOKE3_LO);
 
         if (Energy < 2600)
-            pPartikelSystem->PushPartikel(xPos + 270.0f, yPos + 310.0f - DeckelOffset, SMOKE3_R);
+            PartikelSystem.PushPartikel(xPos + 270.0f, yPos + 310.0f - DeckelOffset, SMOKE3_R);
 
         if (Energy < 2200)
-            pPartikelSystem->PushPartikel(xPos + 178.0f, yPos + 205.0f - DeckelOffset, SMOKE3);
+            PartikelSystem.PushPartikel(xPos + 178.0f, yPos + 205.0f - DeckelOffset, SMOKE3);
 
         if (Energy < 1800)
-            pPartikelSystem->PushPartikel(xPos + 178.0f, yPos + 205.0f - DeckelOffset, SMOKE3);
+            PartikelSystem.PushPartikel(xPos + 178.0f, yPos + 205.0f - DeckelOffset, SMOKE3);
 
         if (Energy < 1400)
-            pPartikelSystem->PushPartikel(xPos + 73.0f, yPos + 280.0f - DeckelOffset, SMOKE3_L);
+            PartikelSystem.PushPartikel(xPos + 73.0f, yPos + 280.0f - DeckelOffset, SMOKE3_L);
 
         if (Energy < 1000)
-            pPartikelSystem->PushPartikel(xPos + 108.0f, yPos + 389.0f, SMOKE3_LU);
+            PartikelSystem.PushPartikel(xPos + 108.0f, yPos + 389.0f, SMOKE3_LU);
     }
 
 // Je nach Handlung richtig verhalten
@@ -514,7 +514,7 @@ void GegnerSpinnenmaschine::DoKI(void)
             if (SmokeDelay < 0.0f)
             {
                 SmokeDelay = 1.0f;
-                pPartikelSystem->PushPartikel(xPos + rand()%250, yPos + 300 + rand()%100, SMOKEBIG);
+                PartikelSystem.PushPartikel(xPos + rand()%250, yPos + 300 + rand()%100, SMOKEBIG);
             }
         }
     }
@@ -533,15 +533,15 @@ void GegnerSpinnenmaschine::DoKI(void)
             int xo = rand()%300;
             int yo = rand()%400;
 
-            pPartikelSystem->PushPartikel(xPos + xo, yPos + yo, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos + xo, yPos + yo, EXPLOSION_MEDIUM2);
 
             // ggf. Rauch
             if (rand()%2 == 0)
-                pPartikelSystem->PushPartikel(xPos + rand()%300, yPos + rand()%400, SMOKEBIG);
+                PartikelSystem.PushPartikel(xPos + rand()%300, yPos + rand()%400, SMOKEBIG);
 
             // ggf Explosion Traces
             if (rand()%10 == 0)
-                pPartikelSystem->PushPartikel(xPos + 100 + rand()%100, yPos + 200 + rand()%200, EXPLOSION_TRACE);
+                PartikelSystem.PushPartikel(xPos + 100 + rand()%100, yPos + 200 + rand()%200, EXPLOSION_TRACE);
 
             // ggf. Sound
             if (rand()%3 == 0)
@@ -550,7 +550,7 @@ void GegnerSpinnenmaschine::DoKI(void)
             // ggf. Splitter erzeugen
             if (yo > 100 && rand()%5 == 0)
                 for (int i = 0; i < 10; i++)
-                    pPartikelSystem->PushPartikel(xPos + xo - 10 + rand()%20, yPos + yo - 10 + rand()%20, SPIDERSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + xo - 10 + rand()%20, yPos + yo - 10 + rand()%20, SPIDERSPLITTER);
         }
 
         DeathCount -= 1.0f SYNC;
@@ -571,20 +571,20 @@ void GegnerSpinnenmaschine::DoKI(void)
             // Splitter und Groﬂe Explosionen
             for (int i = 0; i < 10; i++)
             {
-                pPartikelSystem->PushPartikel(xPos + rand()%300, yPos + rand()%400, SPIDERSPLITTER);
-                pPartikelSystem->PushPartikel(xPos + 50 + rand()%200, yPos + 100 + rand()%300, EXPLOSION_TRACE);
+                PartikelSystem.PushPartikel(xPos + rand()%300, yPos + rand()%400, SPIDERSPLITTER);
+                PartikelSystem.PushPartikel(xPos + 50 + rand()%200, yPos + 100 + rand()%300, EXPLOSION_TRACE);
             }
 
             // Explosionen und Rauch
             for (int i = 0; i < 50; i++)
             {
-                pPartikelSystem->PushPartikel(xPos + rand()%300, yPos + rand()%300 + 100, EXPLOSION_MEDIUM2);
-                pPartikelSystem->PushPartikel(xPos + rand()%300, yPos + rand()%300 + 100, SMOKEBIG);
+                PartikelSystem.PushPartikel(xPos + rand()%300, yPos + rand()%300 + 100, EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(xPos + rand()%300, yPos + rand()%300 + 100, SMOKEBIG);
             }
 
             // Funken
             for (int i = 0; i < 300; i++)
-                pPartikelSystem->PushPartikel(xPos + rand()%300, yPos + rand()%300 + 100, FUNKE);
+                PartikelSystem.PushPartikel(xPos + rand()%300, yPos + rand()%300 + 100, FUNKE);
 
             // Unterteilanim == kaputt
             AnimUnten  = 1;

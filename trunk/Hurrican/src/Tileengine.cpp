@@ -43,7 +43,7 @@ extern DirectInputClass		DirectInput;
 extern TimerClass			Timer;
 extern GegnerListClass		*pGegner;
 extern HUDClass				*pHUD;
-extern PartikelsystemClass  *pPartikelSystem;
+extern PartikelsystemClass  PartikelSystem;
 extern ProjectileListClass  Projectiles;
 
 extern DirectGraphicsSprite	*pGegnerGrafix[MAX_GEGNERGFX];		// Grafiken  der Gegner
@@ -326,7 +326,7 @@ void TileEngineClass::ClearLevel()
     }
 
     Projectiles.ClearAll();
-    pPartikelSystem->ClearAll();
+    PartikelSystem.ClearAll();
 
     XOffset = 0.0f;
     YOffset = 0.0f;
@@ -2139,10 +2139,10 @@ void TileEngineClass::UpdateLevel(void)
         {
             pGegner->PushGegner(0, 0, PUNISHER, 0, 0, false);
             Player[0].PunisherActive = true;
-            pPartikelSystem->ThunderAlpha = 255.0f;
-            pPartikelSystem->ThunderColor[0] = 0;
-            pPartikelSystem->ThunderColor[1] = 0;
-            pPartikelSystem->ThunderColor[2] = 0;
+            PartikelSystem.ThunderAlpha = 255.0f;
+            PartikelSystem.ThunderColor[0] = 0;
+            PartikelSystem.ThunderColor[1] = 0;
+            PartikelSystem.ThunderColor[2] = 0;
         }
 
         Timelimit = 0.0f;
@@ -3402,12 +3402,12 @@ void TileEngineClass::ExplodeWall (int x, int y)
     Tiles[x][y].FrontArt = 0;
 
     for (int i = 0; i < 2; i++)
-        pPartikelSystem->PushPartikel((float)(x * TILESIZE_X + rand()%10), (float)(y * TILESIZE_Y + rand()%10), ROCKSPLITTERSMALL);
+        PartikelSystem.PushPartikel((float)(x * TILESIZE_X + rand()%10), (float)(y * TILESIZE_Y + rand()%10), ROCKSPLITTERSMALL);
 
     for (int k=0; k<4; k++)
-        pPartikelSystem->PushPartikel(float(x*TILESIZE_X+8), float(y*TILESIZE_Y+8), FUNKE);
+        PartikelSystem.PushPartikel(float(x*TILESIZE_X+8), float(y*TILESIZE_Y+8), FUNKE);
 
-    pPartikelSystem->PushPartikel((float) x*TILESIZE_X - TILESIZE_X, (float) y*TILESIZE_Y - TILESIZE_Y, SMOKEBIG);
+    PartikelSystem.PushPartikel((float) x*TILESIZE_X - TILESIZE_X, (float) y*TILESIZE_Y - TILESIZE_Y, SMOKEBIG);
 
     SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION1);
 }

@@ -62,8 +62,8 @@ void GegnerRiesenRaupe::DoKI(void)
                 AnimEnde  = 13;
                 AnimSpeed = 1.5f;
 
-                pPartikelSystem->PushPartikel(xPos + 30,  yPos - 2, SMOKE);
-                pPartikelSystem->PushPartikel(xPos + 120, yPos - 2, SMOKE);
+                PartikelSystem.PushPartikel(xPos + 30,  yPos - 2, SMOKE);
+                PartikelSystem.PushPartikel(xPos + 120, yPos - 2, SMOKE);
 
                 Projectiles.PushProjectile(xPos + 30,   yPos - 2, PFLANZESHOT, pAim);
                 Projectiles.PushProjectile(xPos + 120,  yPos - 2, PFLANZESHOT, pAim);
@@ -126,15 +126,15 @@ void GegnerRiesenRaupe::GegnerExplode(void)
     // Explosionen erzeugen
     for (int i=0; i<10; i++)
     {
-        pPartikelSystem->PushPartikel(xPos + rand()%180-30, yPos + rand()%60 - 30, EXPLOSION_BIG);
-        pPartikelSystem->PushPartikel(xPos + rand()%180-30, yPos + rand()%60 - 30, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + rand()%180-30, yPos + rand()%60 - 30, EXPLOSION_BIG);
+        PartikelSystem.PushPartikel(xPos + rand()%180-30, yPos + rand()%60 - 30, SPIDERSPLITTER);
     }
 
     for (int i=0; i<20; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%180-10, yPos + rand()%60 - 10, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + rand()%180-10, yPos + rand()%60 - 10, EXPLOSION_MEDIUM2);
 
     for (int i=0; i<300; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%180-10, yPos + rand()%50, ROCKETSMOKE);
+        PartikelSystem.PushPartikel(xPos + rand()%180-10, yPos + rand()%50, ROCKETSMOKE);
 
     SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION3);	// Sound ausgeben
 

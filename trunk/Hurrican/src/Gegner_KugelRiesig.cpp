@@ -119,7 +119,7 @@ void GegnerKugelRiesig::GegnerExplode(void)
     pGegner->PushGegner(xPos + 16, yPos + 16, KUGELGROSS,  8, 0, ChangeLight);
 
     // Explosion
-    pPartikelSystem->PushPartikel(float(xPos - 5),
+    PartikelSystem.PushPartikel(float(xPos - 5),
                                   float(yPos - 5), EXPLOSION_BIG);
 
     SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION4);	// Sound ausgeben

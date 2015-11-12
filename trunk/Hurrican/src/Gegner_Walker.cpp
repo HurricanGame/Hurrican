@@ -247,7 +247,7 @@ void GegnerWalker::DoKI(void)
 void GegnerWalker::GegnerExplode(void)
 {
     for (int i=0; i<5; i++)
-        pPartikelSystem->PushPartikel(float(xPos - 20 + rand()%45),
+        PartikelSystem.PushPartikel(float(xPos - 20 + rand()%45),
                                       float(yPos - 20 + rand()%45), EXPLOSION_MEDIUM2);
 
     SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben

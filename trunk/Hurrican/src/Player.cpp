@@ -316,7 +316,7 @@ void PlayerClass::InitNewLevel()
 
 
     // Zu Beginn des Levels werden alle Listen mit Gegner, Schüssen und Partikeln gelöscht
-    pPartikelSystem->ClearAll();
+    PartikelSystem.ClearAll();
     pGegner->ClearAll();
     Projectiles.ClearAll();
 }
@@ -814,9 +814,9 @@ void PlayerClass::DoStuffWhenDamaged(void)
             float y = ypos + (float)(20 + rand()%40);
 
             for (int i = 0; i < 5; i++)
-                pPartikelSystem->PushPartikel(x + rand()%4, y + rand()%4, FUNKE);
+                PartikelSystem.PushPartikel(x + rand()%4, y + rand()%4, FUNKE);
 
-            pPartikelSystem->PushPartikel(x - 20, y - 20, LASERFLAME);
+            PartikelSystem.PushPartikel(x - 20, y - 20, LASERFLAME);
             SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_FUNKE);
         }
         break;
@@ -829,9 +829,9 @@ void PlayerClass::DoStuffWhenDamaged(void)
             float y = ypos + (float)(20 + rand()%40);
 
             for (int i = 0; i < 5; i++)
-                pPartikelSystem->PushPartikel(x + rand()%4, y + rand()%4, LONGFUNKE);
+                PartikelSystem.PushPartikel(x + rand()%4, y + rand()%4, LONGFUNKE);
 
-            pPartikelSystem->PushPartikel(x - 20, y - 20, LASERFLAME);
+            PartikelSystem.PushPartikel(x - 20, y - 20, LASERFLAME);
             SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_FUNKE);
         }
         break;
@@ -851,12 +851,12 @@ void PlayerClass::DoStuffWhenDamaged(void)
         //
         if (Energy < MAX_ENERGY / 3 + 5.0f)
             if (rand()%2 == 0)
-                pPartikelSystem->PushPartikel(xpos + 10 + rand()%30, ypos + 20 + rand()%40, SMOKE2);
+                PartikelSystem.PushPartikel(xpos + 10 + rand()%30, ypos + 20 + rand()%40, SMOKE2);
 
         // Rauchsäule
         //
         if (Energy < MAX_ENERGY / 4 + 5.0f)
-            pPartikelSystem->PushPartikel(xpos + 26 + Blickrichtung * 4 + rand()%4, ypos + 20 + rand()%4, SMOKE3);
+            PartikelSystem.PushPartikel(xpos + 26 + Blickrichtung * 4 + rand()%4, ypos + 20 + rand()%4, SMOKE3);
 
     }
 
@@ -922,39 +922,39 @@ void PlayerClass::CheckForExplode(void)
         ShakeScreen (5);
 
         for (int i = 0; i < 3; i++)
-            pPartikelSystem->PushPartikel (xpos + 10 + rand () % 50,
+            PartikelSystem.PushPartikel (xpos + 10 + rand () % 50,
                                            ypos + 10 + rand () % 50, SPLITTER);
 
         for (int i = 0; i < 10; i++)
-            pPartikelSystem->PushPartikel (xpos + 10 + rand () % 50,
+            PartikelSystem.PushPartikel (xpos + 10 + rand () % 50,
                                            ypos + 10 + rand () % 50, SPIDERSPLITTER);
 
 
-        pPartikelSystem->PushPartikel (xpos + 35 - 90, ypos + 40 - 90, EXPLOSION_GIGA);
-        pPartikelSystem->PushPartikel (xpos + 35, ypos + 40, SHOCKEXPLOSION);
-        pPartikelSystem->PushPartikel (xpos - 20, ypos - 20, EXPLOSIONFLARE);
+        PartikelSystem.PushPartikel (xpos + 35 - 90, ypos + 40 - 90, EXPLOSION_GIGA);
+        PartikelSystem.PushPartikel (xpos + 35, ypos + 40, SHOCKEXPLOSION);
+        PartikelSystem.PushPartikel (xpos - 20, ypos - 20, EXPLOSIONFLARE);
 
         //DKS - Player 2 sprite is blue, so I added separate particles and particle art for them
         //      that are colored blue, and PlayerClass now tracks which player it is assigned to.
         if (PlayerNumber == 0) {
-            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_KOPF);
-            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_ARM1);
-            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_ARM2);
-            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_BEIN1);
-            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_BEIN2);
-            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_WAFFE);
-            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_TORSO);
+            PartikelSystem.PushPartikel (xpos + 20, ypos + 10, HURRITEILE_KOPF);
+            PartikelSystem.PushPartikel (xpos + 20, ypos + 10, HURRITEILE_ARM1);
+            PartikelSystem.PushPartikel (xpos + 20, ypos + 10, HURRITEILE_ARM2);
+            PartikelSystem.PushPartikel (xpos + 20, ypos + 10, HURRITEILE_BEIN1);
+            PartikelSystem.PushPartikel (xpos + 20, ypos + 10, HURRITEILE_BEIN2);
+            PartikelSystem.PushPartikel (xpos + 20, ypos + 10, HURRITEILE_WAFFE);
+            PartikelSystem.PushPartikel (xpos + 20, ypos + 10, HURRITEILE_TORSO);
         } else {
-            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_KOPF);
-            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_ARM1);
-            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_ARM2);
-            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_BEIN1);
-            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_BEIN2);
-            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_WAFFE);
-            pPartikelSystem->PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_TORSO);
+            PartikelSystem.PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_KOPF);
+            PartikelSystem.PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_ARM1);
+            PartikelSystem.PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_ARM2);
+            PartikelSystem.PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_BEIN1);
+            PartikelSystem.PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_BEIN2);
+            PartikelSystem.PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_WAFFE);
+            PartikelSystem.PushPartikel (xpos + 20, ypos + 10, HURRITEILE_P2_TORSO);
         }
 
-        pPartikelSystem->PushPartikel (xpos - 88, ypos - 88, GRENADEFLARE);
+        PartikelSystem.PushPartikel (xpos - 88, ypos - 88, GRENADEFLARE);
 
         ExplodingTimer = 30.0f;
 
@@ -989,12 +989,12 @@ void PlayerClass::CheckForExplode(void)
             SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
 
             for (int i = 0; i < 15; i++)
-                pPartikelSystem->PushPartikel(xpos - 10 + rand()%80,
+                PartikelSystem.PushPartikel(xpos - 10 + rand()%80,
                                               ypos - 10 + rand()%80,
                                               EXPLOSION_MEDIUM2);
 
             for (int i = 0; i < 40; i++)
-                pPartikelSystem->PushPartikel(xpos + rand()%90,
+                PartikelSystem.PushPartikel(xpos + rand()%90,
                                               ypos + rand()%90,
                                               LONGFUNKE);
             runExplode();
@@ -1105,13 +1105,13 @@ void PlayerClass::AnimatePlayer(void)
         if (TileEngine.Tiles [int (i / 20)][int (ypos + CollideRect.top + 10) / 20].Block & BLOCKWERT_WASSERFALL)
         {
             if (rand()%50 == 0)
-                pPartikelSystem->PushPartikel (float (i) + rand()%4, ypos + CollideRect.top + rand()%4 + 10, WASSERTROPFEN);
+                PartikelSystem.PushPartikel (float (i) + rand()%4, ypos + CollideRect.top + rand()%4 + 10, WASSERTROPFEN);
 
             if (rand()%200 == 0)
-                pPartikelSystem->PushPartikel (float (i) + rand()%4, ypos + CollideRect.top + rand()%4 + 10, WATERFUNKE);
+                PartikelSystem.PushPartikel (float (i) + rand()%4, ypos + CollideRect.top + rand()%4 + 10, WATERFUNKE);
 
             if (rand()%200 == 0)
-                pPartikelSystem->PushPartikel (float (i) + rand()%4 - 16, ypos + CollideRect.top + rand()%4 + 10 - 16, WATERFLUSH);
+                PartikelSystem.PushPartikel (float (i) + rand()%4 - 16, ypos + CollideRect.top + rand()%4 + 10 - 16, WATERFLUSH);
         }
     }
 
@@ -1440,7 +1440,7 @@ void PlayerClass::AnimatePlayer(void)
                     // stehen bleiben
                     yspeed = 0.0f;
                     SoundManager.PlayWave(100, 128, 11025, SOUND_LANDEN);
-                    pPartikelSystem->PushPartikel(xpos+20, ypos+60, SMOKE);
+                    PartikelSystem.PushPartikel(xpos+20, ypos+60, SMOKE);
                 }
             }
             else
@@ -1834,7 +1834,7 @@ void PlayerClass::AnimatePlayer(void)
                      (bu & BLOCKWERT_PLATTFORM)))
             {
                 if (yspeed > 2.0f)
-                    pPartikelSystem->PushPartikel(xpos+20, ypos+60, SMOKE);
+                    PartikelSystem.PushPartikel(xpos+20, ypos+60, SMOKE);
 
                 if (yspeed > 0.0f)
                 {
@@ -1961,9 +1961,9 @@ void PlayerClass::AnimatePlayer(void)
                     if (Handlung == SACKREITEN)
                     {
                         if (Blickrichtung == LINKS)
-                            pPartikelSystem->PushPartikel(xpos + 72, ypos + 100, FLUGSACKSMOKE2);
+                            PartikelSystem.PushPartikel(xpos + 72, ypos + 100, FLUGSACKSMOKE2);
                         else
-                            pPartikelSystem->PushPartikel(xpos - 2,  ypos + 100, FLUGSACKSMOKE);
+                            PartikelSystem.PushPartikel(xpos - 2,  ypos + 100, FLUGSACKSMOKE);
                     }
 
                     // oder beim Drehen
@@ -1971,13 +1971,13 @@ void PlayerClass::AnimatePlayer(void)
                     {
                         if (Blickrichtung == LINKS)
                         {
-                            pPartikelSystem->PushPartikel(xpos + 70 - AnimPhase * 10, ypos + 100, FLUGSACKSMOKE2);
-                            pPartikelSystem->PushPartikel(xpos + 87 - AnimPhase * 10, ypos + 100, FLUGSACKSMOKE);
+                            PartikelSystem.PushPartikel(xpos + 70 - AnimPhase * 10, ypos + 100, FLUGSACKSMOKE2);
+                            PartikelSystem.PushPartikel(xpos + 87 - AnimPhase * 10, ypos + 100, FLUGSACKSMOKE);
                         }
                         else
                         {
-                            pPartikelSystem->PushPartikel(xpos + 4  + (AnimPhase-10) * 10,  ypos + 100, FLUGSACKSMOKE);
-                            pPartikelSystem->PushPartikel(xpos - 20 + (AnimPhase-10) * 10,  ypos + 100, FLUGSACKSMOKE2);
+                            PartikelSystem.PushPartikel(xpos + 4  + (AnimPhase-10) * 10,  ypos + 100, FLUGSACKSMOKE);
+                            PartikelSystem.PushPartikel(xpos - 20 + (AnimPhase-10) * 10,  ypos + 100, FLUGSACKSMOKE2);
                         }
                     }
                 }
@@ -2183,7 +2183,7 @@ void PlayerClass::AnimatePlayer(void)
             //
             if (Antrieb < 0.0f)
             {
-                pPartikelSystem->PushPartikel (xpos - 10, ypos + 60 + rand()%6, ROCKETSMOKE);
+                PartikelSystem.PushPartikel (xpos - 10, ypos + 60 + rand()%6, ROCKETSMOKE);
                 Antrieb += 0.1f;
             }
         }
@@ -2407,11 +2407,11 @@ void PlayerClass::AnimatePlayer(void)
                     Handlung == RADELN_FALL)
             {
                 for (int i=0; i<12; i++)
-                    pPartikelSystem->PushPartikel(xpos+18+rand()%20, ypos + CollideRect.bottom-25, spritzertype);
+                    PartikelSystem.PushPartikel(xpos+18+rand()%20, ypos + CollideRect.bottom-25, spritzertype);
 
                 WinkelUebergabe = -1.0f;
                 for (int i=0; i<15; i++)
-                    pPartikelSystem->PushPartikel(xpos+10+rand()%40, ypos + CollideRect.bottom + rand()%20, BUBBLE);
+                    PartikelSystem.PushPartikel(xpos+10+rand()%40, ypos + CollideRect.bottom + rand()%20, BUBBLE);
             }
 
             InLiquid = true;
@@ -2432,7 +2432,7 @@ void PlayerClass::AnimatePlayer(void)
                     Handlung == RADELN_FALL)
             {
                 for (int i=0; i<12; i++)
-                    pPartikelSystem->PushPartikel(xpos+10+rand()%20, ypos + CollideRect.bottom-25, spritzertype);
+                    PartikelSystem.PushPartikel(xpos+10+rand()%20, ypos + CollideRect.bottom-25, spritzertype);
             }
 
             SoundManager.PlayWave(100, 128, 10000 + rand()%2050, SOUND_WATEROUT);
@@ -2447,14 +2447,14 @@ void PlayerClass::AnimatePlayer(void)
         //DKS - No need to do two separate rand()%500 calculations, also added 
         //      function WaveIsPlaying to SoundManagerClass:
         //if (rand()%500 == 0)
-        //    pPartikelSystem->PushPartikel(xpos+30, ypos+20, BUBBLE);
+        //    PartikelSystem.PushPartikel(xpos+30, ypos+20, BUBBLE);
 
         //// ggf noch Tauchgeräusche abspielen
         //if (rand()%500 == 0 &&
         //        SoundManager.its_Sounds[SOUND_DIVE]->isPlaying == false)
         //    SoundManager.PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_DIVE);
         if (rand()%500 == 0) {
-            pPartikelSystem->PushPartikel(xpos+30, ypos+20, BUBBLE);
+            PartikelSystem.PushPartikel(xpos+30, ypos+20, BUBBLE);
             // ggf noch Tauchgeräusche abspielen
             if (!SoundManager.WaveIsPlaying(SOUND_DIVE))
                 SoundManager.PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_DIVE);
@@ -3641,18 +3641,18 @@ void PlayerClass::PlayerShoot(void)
         {
             // Patronenhülse auswerfen bei SpreadShot
             if (SelectedWeapon == 0)
-                pPartikelSystem->PushPartikel(xpos+30, ypos+24+yoff, BULLET, this);
+                PartikelSystem.PushPartikel(xpos+30, ypos+24+yoff, BULLET, this);
             else
 
                 // Rauchwolke bei Laser
                 if (SelectedWeapon == 1)
-                    pPartikelSystem->PushPartikel(xpos+30, ypos+24+yoff, SMOKE3);
+                    PartikelSystem.PushPartikel(xpos+30, ypos+24+yoff, SMOKE3);
                 else
 
                     // Grüne Funken beim Bounce
                     if (SelectedWeapon == 2)
                         for (int i = 0; i < 2; i++)
-                            pPartikelSystem->PushPartikel(xpos+30 + rand ()%4, ypos+28+yoff + rand ()%4, FUNKE2);
+                            PartikelSystem.PushPartikel(xpos+30 + rand ()%4, ypos+28+yoff + rand ()%4, FUNKE2);
         }
 
         // Schussflamme
@@ -4118,7 +4118,7 @@ bool PlayerClass::DoLightning(void)
                 {
                     // Funken sprühen
                     if (BlitzCount == 0.0f && BlitzAnim%2 == 0)
-                        pPartikelSystem->PushPartikel(xs+12, ys+12, LASERFUNKE);
+                        PartikelSystem.PushPartikel(xs+12, ys+12, LASERFUNKE);
 
                     // Gegner blinken lassen
                     pEnemy->DamageTaken = 255;
@@ -4136,7 +4136,7 @@ bool PlayerClass::DoLightning(void)
                     if (pEnemy->GegnerArt == SHOOTBUTTON)
                     {
                         if (BlitzCount == 0.0f && BlitzAnim%2 == 0)
-                            pPartikelSystem->PushPartikel(xs+12, ys+12, LASERFUNKE);	// Funken sprühen
+                            PartikelSystem.PushPartikel(xs+12, ys+12, LASERFUNKE);	// Funken sprühen
                         DrawLength = i-1;											// Blitz "kürzen"
                         i = BlitzLength + 2;
                         break;														// Und Schleife verlassen
@@ -4159,7 +4159,7 @@ bool PlayerClass::DoLightning(void)
                 TileEngine.BlockOben  (xs, ys, xs, ys, Rect) & BLOCKWERT_WASSER &&
                 TileEngine.BlockUnten (xs, ys, xs, ys, Rect) & BLOCKWERT_WASSER &&
                 rand()%80 == 0)
-            pPartikelSystem->PushPartikel(xs+rand()%32, ys+rand()%32, BUBBLE);		// Dann blubbern
+            PartikelSystem.PushPartikel(xs+rand()%32, ys+rand()%32, BUBBLE);		// Dann blubbern
 
 
         if (TileEngine.BlockLinks (xs, ys, xs, ys, Rect) & BLOCKWERT_WAND  ||	// Eine Wand getroffen ?
@@ -4168,7 +4168,7 @@ bool PlayerClass::DoLightning(void)
                 TileEngine.BlockUnten (xs, ys, xs, ys, Rect) & BLOCKWERT_WAND)
         {
             if (BlitzCount == 0.0f && BlitzAnim%2 == 0)
-                pPartikelSystem->PushPartikel(xs+12, ys+12, LASERFUNKE);	// Funken sprühen
+                PartikelSystem.PushPartikel(xs+12, ys+12, LASERFUNKE);	// Funken sprühen
             //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
             //xstart += float(32*cos(PI * (BlitzWinkel-90) / 180));
             //ystart += float(32*sin(PI * (BlitzWinkel-90) / 180));
@@ -4367,9 +4367,9 @@ bool PlayerClass::LoadBeam (void)
             //DKS - pretty obviously a bug, they mean to convert to degrees before calling sin (which takes radians)
             //      When I fixed this, I went ahead and added support for trig lookup table, and support for 
             //      rad/deg versions of sin/cos
-            //pPartikelSystem->PushPartikel (float (BeamX + sin ((float)j) * 50),
+            //PartikelSystem.PushPartikel (float (BeamX + sin ((float)j) * 50),
             //                               float (BeamY + cos ((float)j) * 50), BEAMSMOKE2, this);
-			pPartikelSystem->PushPartikel (BeamX + sin_deg(j) * 50.0f,
+			PartikelSystem.PushPartikel (BeamX + sin_deg(j) * 50.0f,
 										   BeamY + cos_deg(j) * 50.0f, BEAMSMOKE2, this);
         }
     }

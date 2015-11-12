@@ -178,13 +178,13 @@ void GegnerMutant::DoKI(void)
 void GegnerMutant::GegnerExplode(void)
 {
     for (int i = 0; i < 10; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%60 - 10, yPos + rand()%60, EXPLOSION_GREEN);
+        PartikelSystem.PushPartikel(xPos + rand()%60 - 10, yPos + rand()%60, EXPLOSION_GREEN);
 
     for (int i = 0; i < 10; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%60 + 15, yPos + 10 + rand()%60, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + rand()%60 + 15, yPos + 10 + rand()%60, SPIDERSPLITTER);
 
     for (int i = 0; i < 15; i++)
-        pPartikelSystem->PushPartikel(xPos + rand()%60 + 15, yPos + 10 + rand()%60, SCHLEIM);
+        PartikelSystem.PushPartikel(xPos + rand()%60 + 15, yPos + 10 + rand()%60, SCHLEIM);
 
     //DKS - While fixing volume of jumping (look at note further above), made this 3D too:
     //SoundManager.PlayWave(75, 128, 8000 + rand()%4000, SOUND_MUTANT);

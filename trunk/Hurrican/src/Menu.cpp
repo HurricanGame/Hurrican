@@ -2195,7 +2195,7 @@ void MenuClass::DoMenu(void)
                 if (options_Detail > DETAIL_MAXIMUM)
                     options_Detail = DETAIL_LOW;
 
-                pPartikelSystem->SetParticleCount();
+                PartikelSystem.SetParticleCount();
             }
         }
 

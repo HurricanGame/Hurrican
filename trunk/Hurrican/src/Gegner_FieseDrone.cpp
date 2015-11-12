@@ -125,7 +125,7 @@ void GegnerFieseDrone::DoKI(void)
             WinkelUebergabe = 360.0f - newwinkel;
 
             Projectiles.PushProjectile(xPos + 20, yPos + 20, FLUGLASER);
-            pPartikelSystem->PushPartikel(xPos + 20, yPos + 20, SMOKE);
+            PartikelSystem.PushPartikel(xPos + 20, yPos + 20, SMOKE);
             SoundManager.PlayWave(50, 128, 25000 + rand()%5000, SOUND_LASERSHOT);
         }
     }
@@ -181,7 +181,7 @@ void GegnerFieseDrone::DoKI(void)
     {
         SmokeDelay += 0.7f;
 
-        pPartikelSystem->PushPartikel (xPos + flamex, yPos + 28, SMOKE);
+        PartikelSystem.PushPartikel (xPos + flamex, yPos + 28, SMOKE);
     }
 
     // Testen, ob der Spieler die Drone berührt hat
@@ -195,10 +195,10 @@ void GegnerFieseDrone::DoKI(void)
 void GegnerFieseDrone::GegnerExplode(void)
 {
     for (int i=0; i<5; i++)
-        pPartikelSystem->PushPartikel(float(xPos - 25 + rand()%40),
+        PartikelSystem.PushPartikel(float(xPos - 25 + rand()%40),
                                       float(yPos - 25 + rand()%40), EXPLOSION_MEDIUM2);
     for (int i=0; i<20; i++)
-        pPartikelSystem->PushPartikel(float(xPos + 10 + rand()%30),
+        PartikelSystem.PushPartikel(float(xPos + 10 + rand()%30),
                                       float(yPos + 10 + rand()%30), LASERFUNKE2);
 
     SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
