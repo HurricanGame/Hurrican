@@ -41,7 +41,6 @@ public:
     ~CGUISystem(void);
 
     void InitGUISystem(void);
-    void ExitGUISystem(void);
 
     void Run();
     void RenderBox();
@@ -55,6 +54,6 @@ public:
 // Externals
 // --------------------------------------------------------------------------------------
 
-extern CGUISystem *pGUI;
+extern CGUISystem GUI;
 
 #endif

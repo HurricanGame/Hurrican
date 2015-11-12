@@ -42,8 +42,8 @@ void GegnerTutorialText::DoKI(void)
     // Spieler nahe genug? Dann einfaden
     if (PlayerAbstand() < 120 &&
             Value1 != 9 &&
-            (pGUI->m_FadeMode == INVISIBLE ||
-             pGUI->m_TextID != Value1) &&
+            (GUI.m_FadeMode == INVISIBLE ||
+             GUI.m_TextID != Value1) &&
             !(Value1 == 20 && Player[0].PowerLines == 5))
     {
         int    pos;				// Position, an der das zu ersetzende Wort steht
@@ -102,18 +102,18 @@ void GegnerTutorialText::DoKI(void)
             ReplaceAll(displayed_text, "key", "button");
         }
 
-        pGUI->ShowBox((char *)displayed_text.c_str(), 100);
-        pGUI->m_TextID = Value1;
+        GUI.ShowBox((char *)displayed_text.c_str(), 100);
+        GUI.m_TextID = Value1;
 
         SoundManager.PlayWave (100, 128, 11025, SOUND_MESSAGE);
     }
 
     // Spieler weg und Trigger auf dem Screen? Dann ausfaden
-    if (pGUI->m_TextID == Value1 &&
+    if (GUI.m_TextID == Value1 &&
             IsOnScreen() &&
-            pGUI->m_FadeMode == VISIBLE &&
+            GUI.m_FadeMode == VISIBLE &&
             PlayerAbstand() > 120)
-        pGUI->HideBox();
+        GUI.HideBox();
 
     bool stillAlive = false;
 
