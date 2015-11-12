@@ -74,6 +74,11 @@ public:
     ConsoleClass	 (void);						// Menu initialisieren und Grafiken laden
     ~ConsoleClass	 (void);						// Menu freigeben
 
+    //DKS - ConsoleClass is now a static global, instead of dynamically allocated
+    //      pointer, so moved the loading of sprites from its constructor to this new
+    //      function:
+    void LoadSprites(void);
+
     void ShowConsole	 (void);						// Menu anzeigen
     void Open			 (void);						// öffnen
     void Hide			 (void);						// verstecken
@@ -87,7 +92,7 @@ public:
 // Externals
 // --------------------------------------------------------------------------------------
 
-extern ConsoleClass			*pConsole;
+extern ConsoleClass			Console;
 
 #endif
 

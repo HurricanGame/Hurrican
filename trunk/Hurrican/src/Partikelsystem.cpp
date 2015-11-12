@@ -35,7 +35,7 @@ extern DirectGraphicsFont   *pFont;
 extern PartikelsystemClass	PartikelSystem;
 extern TileEngineClass		TileEngine;
 extern ProjectileListClass	Projectiles;
-extern ConsoleClass			*pConsole;
+extern ConsoleClass			Console;
 extern LPDIRECT3DDEVICE8	lpD3DDevice;				// Direct3D Device-Objekt
 
 // --------------------------------------------------------------------------------------
@@ -4923,7 +4923,7 @@ void PartikelsystemClass::DrawOnly(void)
 
 void PartikelsystemClass::DoPartikelSpecial(bool ShowThem)
 {
-    if (pConsole->Showing == true)
+    if (Console.Showing == true)
     {
         DrawOnly();
         return;
@@ -5006,7 +5006,7 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem)
 
 void PartikelsystemClass::DoPartikel(void)
 {
-    if (pConsole->Showing == true)
+    if (Console.Showing == true)
     {
         DrawOnly();
         return;

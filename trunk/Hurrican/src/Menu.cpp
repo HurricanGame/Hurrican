@@ -1778,7 +1778,7 @@ void MenuClass::DoMenu(void)
 
     ShowMenu();
 
-    if (pConsole->Showing)
+    if (Console.Showing)
         return;
 
 //----- Tasten abfragen

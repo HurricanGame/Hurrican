@@ -222,7 +222,7 @@ void ShowGameOver(void)
         Player[0].GameOverTimer = 0.0f;
         pMenu->CheckForNewHighscore();
 
-        pConsole->Hide();
+        Console.Hide();
         Stage = -1;
     }
 }
@@ -277,7 +277,7 @@ void GameLoop(void)
         {
             Player[p].WasDamaged = false;
 
-            if (pConsole->Showing == false &&
+            if (Console.Showing == false &&
                     Player[p].Handlung != TOT)
             {
                 if (Player[p].GameOverTimer == 0.0f)
@@ -293,7 +293,7 @@ void GameLoop(void)
 
             // Spieler bewegen
             if (p == 0 &&
-                    pConsole->Showing == false)
+                    Console.Showing == false)
                 Player[p].ScrollFlugsack();
         }
 
@@ -303,11 +303,11 @@ void GameLoop(void)
                 Player[p].DoPlattformStuff();
 
         // Gegner bewegen
-        if (pConsole->Showing == false)
+        if (Console.Showing == false)
             Gegner.RunAll();
 
         // Level checken
-        if (pConsole->Showing == false)
+        if (Console.Showing == false)
             TileEngine.UpdateLevel();
 
         TileEngine.CheckBounds();
@@ -423,7 +423,7 @@ void GameLoop(void)
     // Blitz und andere Partikel rendern, die alles überlagern
     PartikelSystem.DoThunder ();
 
-    if (pConsole->Showing == false)
+    if (Console.Showing == false)
     {
         // Waffen 1-3 auswählen
         if (KeyDown(DIK_1))
@@ -485,7 +485,7 @@ void LeaveGameLoop(void)
     GUI.HideBoxFast();
 
     // Console verstecken
-    pConsole->Hide();
+    Console.Hide();
 
     // Schrift im Menu neu einfaden
     pMenu->Rotation	   = 0.0f;
@@ -569,7 +569,7 @@ void ScreenWackeln(void)
 {
     // Weiterwackeln
     //
-    if (pConsole->Active == false)
+    if (Console.Active == false)
     {
         WackelValue += WackelDir SYNC * WackelSpeed;
 

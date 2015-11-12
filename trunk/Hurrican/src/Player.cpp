@@ -780,7 +780,7 @@ bool PlayerClass::GetPlayerInput(void)
 
 void PlayerClass::DoStuffWhenDamaged(void)
 {
-    if (pConsole->Showing == true ||
+    if (Console.Showing == true ||
             Handlung == EXPLODIEREN)
         return;
 
@@ -3041,7 +3041,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
 
     // Funken und so Kram, wenn der Spieler verwundet ist
     //
-    if (pConsole->Showing == false)
+    if (Console.Showing == false)
         DoStuffWhenDamaged();
 
     CurrentShotTexture = 0;
@@ -3885,7 +3885,7 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul)
     maxintersections = DrawLength + 2;
 
     // Blitze neu zusammensetzen?
-    if (pConsole->Showing == false)
+    if (Console.Showing == false)
         changecount -= 1.0f SYNC;
 
     if (changecount <= 0.0f)
@@ -4002,7 +4002,7 @@ bool PlayerClass::DoLightning(void)
 
 //----- Blitz animieren
 
-    if (pConsole->Showing == false)
+    if (Console.Showing == false)
         BlitzCount += SpeedFaktor;				// Counter erhöhen
 
     if (BlitzCount > PLAYER_BLITZ_SPEED)	// Animationsgrenze überschritten ?
@@ -4744,7 +4744,7 @@ void PlayerClass::PlayerInExit(void)
     Stage = NewStage;		// Anpassen dass wir im neuen Level sind
 
     SpielZustand = MAINMENU;
-    pConsole->Hide();
+    Console.Hide();
 
     // Tutorial Level zuende? Dann normal zurück ins Hauptmenu
     //

@@ -5659,7 +5659,7 @@ void ProjectileListClass::DoProjectiles(void)
 
     while (pTemp != NULL)					// Noch nicht alle durch ?
     {
-        if (pConsole->Showing == false)
+        if (Console.Showing == false)
             pTemp->Run();
 
         if (pTemp->Damage > 0)
@@ -5667,7 +5667,7 @@ void ProjectileListClass::DoProjectiles(void)
 
         pNext = pTemp->pNext;				// Nächsten sichern
 
-        if (pConsole->Showing == false)
+        if (Console.Showing == false)
         {
             if (pTemp->Damage <= 0)			 	// ggf Schuss löschen (bei Damage <= 0)
                 DelSel(pTemp);

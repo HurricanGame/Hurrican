@@ -35,8 +35,6 @@
 
 ConsoleClass::ConsoleClass()
 {
-    ConsoleGFX.LoadImage("console.png", 512, 256, 512, 256, 1, 1);	// Grafik laden
-
     its_Alpha		= 0.0f;
     Fade			= 0.0f;
     Activate		= true;
@@ -70,6 +68,11 @@ ConsoleClass::~ConsoleClass()
     //DKS - There is no need call this explicitly, it leads to a double-free:
     //ConsoleGFX.~DirectGraphicsSprite();	// Grafik freigeben
 } // Destruktor
+
+void ConsoleClass::LoadSprites(void)
+{
+    ConsoleGFX.LoadImage("console.png", 512, 256, 512, 256, 1, 1);	// Grafik laden
+}
 
 // --------------------------------------------------------------------------------------
 // Konsole anzeigen

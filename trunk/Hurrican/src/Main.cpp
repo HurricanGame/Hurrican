@@ -125,7 +125,7 @@ GegnerListClass			Gegner;						// Liste mit Gegner
 IntroClass				*pIntro;						// Intro-Objekt
 OuttroClass				*pOuttro;						// Outtro-Objekt
 MenuClass				*pMenu = NULL;					// Hauptmenu-Objekt
-ConsoleClass			*pConsole;						// Konsolen-Objekt
+ConsoleClass			Console;						// Konsolen-Objekt
 CGUISystem				GUI;							// GUI System
 CCracktro				*Cracktro;
 RECT					srcrect, destrect;
@@ -1317,7 +1317,8 @@ bool GameInit2(void)
     //CreatePlayer2Texture();
 
     // Konsole initialisieren
-    pConsole = new ConsoleClass();
+    //DKS - Load console sprites:
+    Console.LoadSprites();
 
     //DKS - renamed:
     //SoundManager.ResetAllSongVolumes();
@@ -1340,9 +1341,6 @@ bool GameExit(void)
     delete(pDefaultFont);
     delete(pMenuFont);
     Protokoll.WriteText( false, "-> Fonts released\n" );
-
-    // Console beenden
-    delete (pConsole);
 
     // Menu beenden
     delete(pMenu);
@@ -1533,7 +1531,7 @@ bool Heartbeat(void)
     GUI.Run();
 
     // Konsole abhandeln
-    pConsole->DoConsole();
+    Console.DoConsole();
 
 jump:
 

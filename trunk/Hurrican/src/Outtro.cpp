@@ -193,7 +193,7 @@ void OuttroClass::DoOuttro(void)
         DirectGraphics.SetFilterMode(false);
     }
 
-    if (pConsole->Showing)
+    if (Console.Showing)
         return;
 
     // Schnee
