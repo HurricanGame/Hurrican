@@ -341,12 +341,12 @@ void GegnerEvilHurri::DoKI(void)
             if (BlickRichtung == RECHTS)
             {
                 pPartikelSystem->PushPartikel  (xPos+50, yPos+20, SMOKE);
-                pProjectiles->PushProjectile(xPos+55, yPos+30, EVILSHOT);
+                Projectiles.PushProjectile(xPos+55, yPos+30, EVILSHOT);
             }
             else
             {
                 pPartikelSystem->PushPartikel  (xPos+10, yPos+20, SMOKE);
-                pProjectiles->PushProjectile(xPos, yPos+30, EVILSHOT2);
+                Projectiles.PushProjectile(xPos, yPos+30, EVILSHOT2);
             }
         }
 
@@ -401,12 +401,12 @@ void GegnerEvilHurri::DoKI(void)
             if (BlickRichtung == RECHTS)
             {
                 pPartikelSystem->PushPartikel  (xPos+50, yPos+20, SMOKE);
-                pProjectiles->PushProjectile(xPos+55, yPos+30, EVILSHOT);
+                Projectiles.PushProjectile(xPos+55, yPos+30, EVILSHOT);
             }
             else
             {
                 pPartikelSystem->PushPartikel  (xPos+10, yPos+20, SMOKE);
-                pProjectiles->PushProjectile(xPos, yPos+30, EVILSHOT2);
+                Projectiles.PushProjectile(xPos, yPos+30, EVILSHOT2);
             }
         }
 
@@ -435,7 +435,7 @@ void GegnerEvilHurri::DoKI(void)
             pPartikelSystem->PushPartikel(xPos + (AnimPhase - 36) * 5, yPos - 23 + abs(AnimPhase - 41) * 8, SMOKE);
 //				pPartikelSystem->PushPartikel(xPos+30, yPos+28, BULLET);
 
-            pProjectiles->PushProjectile(xPos + 5 + (AnimPhase - 36) * 5, yPos - 10 + abs(AnimPhase - 41) * 8, EVILROUND1 + (AnimPhase - 35));
+            Projectiles.PushProjectile(xPos + 5 + (AnimPhase - 36) * 5, yPos - 10 + abs(AnimPhase - 41) * 8, EVILROUND1 + (AnimPhase - 35));
 
             ActionDelay = 3.0f;
             AnimPhase++;
@@ -465,7 +465,7 @@ void GegnerEvilHurri::DoKI(void)
             for (int i=0; i < 30; i++)
                 pPartikelSystem->PushPartikel(xPos + 30 + rand()%10, yPos + rand()%10, LASERFUNKE2);
 
-            pProjectiles->PushProjectile(xPos, yPos - 20, EVILBLITZ);
+            Projectiles.PushProjectile(xPos, yPos - 20, EVILBLITZ);
             SoundManager.PlayWave(100, 128, 11025, SOUND_SPIDERGRENADE);
         }
 
@@ -547,9 +547,9 @@ void GegnerEvilHurri::DoKI(void)
                 xSpeed = 0.0f;
                 AnimEnde  = 0;
                 AnimPhase = 40;
-                pProjectiles->PushProjectile(xPos + 20, yPos + 10, ARCSHOT);
-                pProjectiles->PushProjectile(xPos + 20, yPos + 10, ARCSHOTLEFT);
-                pProjectiles->PushProjectile(xPos + 20, yPos + 10, ARCSHOTRIGHT);
+                Projectiles.PushProjectile(xPos + 20, yPos + 10, ARCSHOT);
+                Projectiles.PushProjectile(xPos + 20, yPos + 10, ARCSHOTLEFT);
+                Projectiles.PushProjectile(xPos + 20, yPos + 10, ARCSHOTRIGHT);
                 SoundManager.PlayWave(100, 128, 11025, SOUND_SPIDERGRENADE);
 
                 ActionDelay = 3.0f;
@@ -590,7 +590,7 @@ void GegnerEvilHurri::DoKI(void)
                 xSpeed = 0.0f;
                 AnimEnde  = 0;
                 AnimPhase = 40;
-                pProjectiles->PushProjectile(xPos, yPos + 10, ROCKETSPIDER);
+                Projectiles.PushProjectile(xPos, yPos + 10, ROCKETSPIDER);
                 SoundManager.PlayWave(100, 128, 11025, SOUND_ROCKET);
 
                 ActionDelay = 4.0f;

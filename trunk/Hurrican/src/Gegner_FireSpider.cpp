@@ -155,7 +155,7 @@ void GegnerFireSpider::DoKI(void)
             xs = xs + sin_deg(r) * 30.0f;
             ys = ys + cos_deg(r) * 30.0f;
 
-            pProjectiles->PushProjectile  (xs, ys, SPIDERFIRE, pAim);
+            Projectiles.PushProjectile  (xs, ys, SPIDERFIRE, pAim);
             shotdelay = 0.5f;
         }
 

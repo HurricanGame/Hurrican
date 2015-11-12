@@ -34,7 +34,7 @@ extern Logdatei				Protokoll;
 extern DirectGraphicsFont   *pFont;
 extern PartikelsystemClass	*pPartikelSystem;
 extern TileEngineClass		TileEngine;
-extern ProjectileListClass	*pProjectiles;
+extern ProjectileListClass	Projectiles;
 extern ConsoleClass			*pConsole;
 extern LPDIRECT3DDEVICE8	lpD3DDevice;				// Direct3D Device-Objekt
 
@@ -2949,7 +2949,7 @@ void PartikelClass::Run(void)
             if (bu & BLOCKWERT_WAND)
             {
                 Lebensdauer = 0;
-//				pProjectiles->PushProjectile(xPos - 30, yPos, FLAMEWALL);
+//				Projectiles.PushProjectile(xPos - 30, yPos, FLAMEWALL);
             }
         }
         break;

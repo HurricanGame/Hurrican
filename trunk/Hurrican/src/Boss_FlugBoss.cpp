@@ -399,10 +399,10 @@ void GegnerFlugBoss::DoKI(void)
     					xo += float (60 * sin (PI * winkel / 180.0f));
     					yo += float (60 * cos (PI * winkel / 180.0f));
 
-    					pProjectiles->PushProjectile (xo, yo, SUCHSCHUSS);
+    					Projectiles.PushProjectile (xo, yo, SUCHSCHUSS);
     				}
     				else
-    					pProjectiles->PushProjectile (xPos + 370, yPos + 210, SUCHSCHUSS);
+    					Projectiles.PushProjectile (xPos + 370, yPos + 210, SUCHSCHUSS);
     			}
 
 
@@ -488,14 +488,14 @@ void GegnerFlugBoss::DoKI(void)
     					{
     						yKanone[2] = 20;
 
-    						pProjectiles->PushProjectile (xPos + 68,
+    						Projectiles.PushProjectile (xPos + 68,
     													  yPos + 261 + 30, FLUGLASER);
     					}
     					else
     					{
     						yKanone[3] = 20;
 
-    						pProjectiles->PushProjectile (xPos + 78,
+    						Projectiles.PushProjectile (xPos + 78,
     													  yPos + 251 + 30, FLUGLASER);
     					}
 

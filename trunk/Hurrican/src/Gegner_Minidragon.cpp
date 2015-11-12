@@ -238,7 +238,7 @@ void GegnerMiniDragon::DoKI(void)
             SoundManager.PlayWave(100, 128, 11000 + rand()%2000, SOUND_FIREBALL);
 
             WinkelUebergabe = 90.0f * BlickRichtung;
-            pProjectiles->PushProjectile(xPos + BlickRichtung * 10.0f, yPos, FIREBALL);
+            Projectiles.PushProjectile(xPos + BlickRichtung * 10.0f, yPos, FIREBALL);
         }
 
         float xdiv = (pAim->xpos + 30.0f) - (OldX + 30.0f);

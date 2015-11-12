@@ -138,9 +138,9 @@ void GegnerDrone::DoKI(void)
             pPartikelSystem->PushPartikel (xPos + 33, yPos + 60, BULLET, &Player[0]);
 
             if (BlickRichtung == RECHTS)
-                pProjectiles->PushProjectile  (xPos + 58, yPos + 68, DRONEBULLET);
+                Projectiles.PushProjectile  (xPos + 58, yPos + 68, DRONEBULLET);
             else
-                pProjectiles->PushProjectile  (xPos  - 10, yPos + 68, DRONEBULLET2);
+                Projectiles.PushProjectile  (xPos  - 10, yPos + 68, DRONEBULLET2);
         }
         break;
 
@@ -177,9 +177,9 @@ void GegnerDrone::DoKI(void)
             pPartikelSystem->PushPartikel (xPos + 36, yPos + 57, BULLET, &Player[0]);
 
             if (BlickRichtung == RECHTS)
-                pProjectiles->PushProjectile  (xPos + 58, yPos + 68, DRONEBULLET);
+                Projectiles.PushProjectile  (xPos + 58, yPos + 68, DRONEBULLET);
             else
-                pProjectiles->PushProjectile  (xPos  - 10, yPos + 68, DRONEBULLET2);
+                Projectiles.PushProjectile  (xPos  - 10, yPos + 68, DRONEBULLET2);
         }
 
         // Flamme anzeigen

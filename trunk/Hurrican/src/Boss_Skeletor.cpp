@@ -298,7 +298,7 @@ void GegnerSkeletor::DoKI(void)
         {
             WinkelUebergabe = 2.0f * ShotCount + 8.0f;
             SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_ROCKET);
-            pProjectiles->PushProjectile(xPos + 50.0f, yPos + 80.0f, TURRIEXTRAWURST);
+            Projectiles.PushProjectile(xPos + 50.0f, yPos + 80.0f, TURRIEXTRAWURST);
 
             ShotDelay = 3.0f;
             ShotCount--;
@@ -380,7 +380,7 @@ void GegnerSkeletor::DoKI(void)
                 {
                     WinkelUebergabe = 180.0f - 50 + i * 25;
 
-                    pProjectiles->PushProjectile(xPos + 50, yPos + 70, FIREBALL_BIG);
+                    Projectiles.PushProjectile(xPos + 50, yPos + 70, FIREBALL_BIG);
                 }
             }
         }
@@ -447,7 +447,7 @@ void GegnerSkeletor::DoKI(void)
 
                 WinkelUebergabe *= BlickRichtung;
 
-                pProjectiles->PushProjectile(xPos + 100 + off, yPos + 80, SKELETORGRANATE);
+                Projectiles.PushProjectile(xPos + 100 + off, yPos + 80, SKELETORGRANATE);
 
                 ShotCount--;
             }
@@ -508,7 +508,7 @@ void GegnerSkeletor::DoKI(void)
             if (BlickRichtung == LINKS)
                 off = 20;
 
-            pProjectiles->PushProjectile(xPos + off, yPos + 75, SKELETOR_SHOT);
+            Projectiles.PushProjectile(xPos + off, yPos + 75, SKELETOR_SHOT);
 
             // fertig?
             if (ShotCount < 0)

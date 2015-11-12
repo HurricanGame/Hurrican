@@ -570,7 +570,7 @@ void GegnerGolem::DoKI(void)
         {
             // Suchschuss erzeugen
             WinkelUebergabe = WinkelToPlayer() + 180.0f;
-            pProjectiles->PushProjectile(xPos + 35.0f, yPos + yoff + 35.0f, FIREBALL_BIG, pAim);
+            Projectiles.PushProjectile(xPos + 35.0f, yPos + yoff + 35.0f, FIREBALL_BIG, pAim);
 
             pPartikelSystem->PushPartikel(xPos - 60.0f, yPos + yoff - 70.0f, GRENADEFLARE);
 
@@ -730,7 +730,7 @@ void GegnerGolem::DoKI(void)
         if (ShotDelay <= 0.0f)
         {
             ShotDelay = 0.5f;
-            pProjectiles->PushProjectile  (xPos - 10, yPos + 80, WALKERFIRE, pAim);
+            Projectiles.PushProjectile  (xPos - 10, yPos + 80, WALKERFIRE, pAim);
         }
 
         if (count > 30.0f)
@@ -778,7 +778,7 @@ void GegnerGolem::DoKI(void)
 
                 SoundManager.PlayWave3D((int)xPos + 30, (int)yPos + 30, 10000 + rand()%2050, SOUND_WATERIN);
 
-                pProjectiles->PushProjectile(xPos - 90, yPos + 300, GOLEMSAEULE);
+                Projectiles.PushProjectile(xPos - 90, yPos + 300, GOLEMSAEULE);
             }
 
         }

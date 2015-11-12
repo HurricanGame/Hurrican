@@ -285,10 +285,10 @@ void GegnerDrache::DoDraw(void)
                     Attack == GEGNER_LAUFEN)
             {
                 DirectGraphics.SetAdditiveMode();
-                pProjectiles->LavaFlare.RenderSpriteScaledRotated (float (xPos - 100 - TileEngine.XOffset) - mirrorOffset * 230,
+                Projectiles.LavaFlare.RenderSpriteScaledRotated (float (xPos - 100 - TileEngine.XOffset) - mirrorOffset * 230,
                                                      float (yPos -  55 - TileEngine.YOffset) + DrawYOffset, 180, 180, FlareRot, 0xFF66FF66);
 
-                pProjectiles->LavaFlare.RenderSpriteScaledRotated (float (xPos - 40 - TileEngine.XOffset) - mirrorOffset * 230,
+                Projectiles.LavaFlare.RenderSpriteScaledRotated (float (xPos - 40 - TileEngine.XOffset) - mirrorOffset * 230,
                                                      float (yPos - 10 - TileEngine.YOffset) + DrawYOffset, 90, 90, FlareRot*2, 0xFF88AAFF);
                 DirectGraphics.SetColorKeyMode();
             }
@@ -920,13 +920,13 @@ void GegnerDrache::DoKI(void)
                 if (BlickRichtung == 1)
                 {
                     WinkelUebergabe = 90 - HeadWinkel;
-                    pProjectiles->PushProjectile(xPos + 240.0f + HeadWinkel/2.0f,
+                    Projectiles.PushProjectile(xPos + 240.0f + HeadWinkel/2.0f,
                                                  yPos +  50.0f - HeadWinkel/2.0f,  FIREBALL_BIG);
                 }
                 else
                 {
                     WinkelUebergabe = 270.0f + HeadWinkel;
-                    pProjectiles->PushProjectile(xPos - 110.0f - HeadWinkel/2.0f,
+                    Projectiles.PushProjectile(xPos - 110.0f - HeadWinkel/2.0f,
                                                  yPos +  50.0f - HeadWinkel/2.0f,  FIREBALL_BIG);
                 }
 

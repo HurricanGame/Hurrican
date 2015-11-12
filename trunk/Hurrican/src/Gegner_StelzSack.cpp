@@ -111,12 +111,12 @@ void GegnerStelzSack::DoKI(void)
             if (BlickRichtung == LINKS)
             {
                 pPartikelSystem->PushPartikel (xPos - 50, yPos, STELZFLARE);
-                pProjectiles->PushProjectile  (xPos - 30, yPos + 25, STELZLASER);
+                Projectiles.PushProjectile  (xPos - 30, yPos + 25, STELZLASER);
             }
             else
             {
                 pPartikelSystem->PushPartikel (xPos + 40, yPos, STELZFLARE);
-                pProjectiles->PushProjectile  (xPos + 50, yPos + 25, STELZLASER2);
+                Projectiles.PushProjectile  (xPos + 50, yPos + 25, STELZLASER2);
             }
 
         }

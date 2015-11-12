@@ -67,7 +67,7 @@ void GegnerFlugKanone::DoKI(void)
 
         if (abs(int(pAim->xpos - xPos)) < 100 &&	PlayerAbstand() < 300)
         {
-            pProjectiles->PushProjectile(xPos + 30, yPos + 40, FLUGLASER);
+            Projectiles.PushProjectile(xPos + 30, yPos + 40, FLUGLASER);
             pPartikelSystem->PushPartikel(xPos + 24, yPos + 30, SMOKE);
             SoundManager.PlayWave(50, 128, 30000, SOUND_LASERSHOT);
         }

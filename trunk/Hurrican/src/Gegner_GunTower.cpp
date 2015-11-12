@@ -50,12 +50,12 @@ void GegnerGunTower::DoKI(void)
             if (BlickRichtung == LINKS)			// Schuss Links
             {
                 pPartikelSystem->PushPartikel(xPos-10, yPos+6, SMOKE);
-                pProjectiles->PushProjectile (xPos, yPos+15, CANONBALL);
+                Projectiles.PushProjectile (xPos, yPos+15, CANONBALL);
             }
             else								// Schuss Rechts
             {
                 pPartikelSystem->PushPartikel(xPos+35, yPos+6, SMOKE);
-                pProjectiles->PushProjectile (xPos+35, yPos+15, CANONBALL2);
+                Projectiles.PushProjectile (xPos+35, yPos+15, CANONBALL2);
             }
             SoundManager.PlayWave(100, 128, 11025, SOUND_CANON);
             Handlung  = GEGNER_SCHIESSEN;

@@ -29,7 +29,7 @@
 // Variablen
 // --------------------------------------------------------------------------------------
 
-DirectGraphicsSprite	*pProjectileGrafix[MAX_SHOTGFX];	// Grafiken der Schüsse
+DirectGraphicsSprite	ProjectileGrafix[MAX_SHOTGFX];	    // Grafiken der Schüsse
 RECT					ShotRect[MAX_SHOTGFX];				// Rechtecke für Level Kollision
 int						CurrentShotTexture;					// Aktuelle Textur der Schüsse
 int						bo, bu, bl, br;						// Blockwerte um den aktuellen Schuss herum
@@ -2169,14 +2169,14 @@ void ProjectileClass::Render(void)
 
         D3DXMATRIX	matRot, matTrans, matTrans2;
 
-        float xts = pProjectileGrafix[ShotArt]->itsXTexScale;
-        float yts = pProjectileGrafix[ShotArt]->itsYTexScale;
+        float xts = ProjectileGrafix[ShotArt].itsXTexScale;
+        float yts = ProjectileGrafix[ShotArt].itsYTexScale;
 
         //DKS - There is no need to compute this, it's already in the sprite's itsPreCalcedRects array:
         //int xfs, yfs, xfc
-        //xfs = pProjectileGrafix[ShotArt]->itsXFrameSize;
-        //yfs = pProjectileGrafix[ShotArt]->itsYFrameSize;
-        //xfc = pProjectileGrafix[ShotArt]->itsXFrameCount;
+        //xfs = ProjectileGrafix[ShotArt].itsXFrameSize;
+        //yfs = ProjectileGrafix[ShotArt].itsYFrameSize;
+        //xfc = ProjectileGrafix[ShotArt].itsXFrameCount;
         //RECT Rect;
         //// Ausschnitt berechnen
         //Rect.top	= (AnimPhase/xfc) * yfs;
@@ -2184,7 +2184,7 @@ void ProjectileClass::Render(void)
         //Rect.right  = Rect.left + xfs;
         //Rect.bottom = Rect.top  + yfs;
 
-        RECT &Rect = pProjectileGrafix[ShotArt]->itsPreCalcedRects[AnimPhase];
+        RECT &Rect = ProjectileGrafix[ShotArt].itsPreCalcedRects[AnimPhase];
 
         l = float(-TileEngine.XOffset+xPos-0.5f);								// Links
         r = float(-TileEngine.XOffset+xPos+(Rect.right -Rect.left-1)+0.5f);	// Rechts
@@ -2234,8 +2234,8 @@ void ProjectileClass::Render(void)
 
             float x = float (-TileEngine.XOffset + xPos);
             float y = float (-TileEngine.YOffset + yPos);
-            float mx = pProjectileGrafix[ShotArt]->itsXFrameSize / 2.0f;
-            float my = pProjectileGrafix[ShotArt]->itsYFrameSize / 2.0f;
+            float mx = ProjectileGrafix[ShotArt].itsXFrameSize / 2.0f;
+            float my = ProjectileGrafix[ShotArt].itsYFrameSize / 2.0f;
 
             // Transformation zum Ursprung
             D3DXMatrixTranslation(&matTrans,-x-mx,
@@ -2262,7 +2262,7 @@ void ProjectileClass::Render(void)
 
         if (ShotArt != CurrentShotTexture)
         {
-            DirectGraphics.SetTexture(  pProjectileGrafix[ShotArt]->itsTexIdx );
+            DirectGraphics.SetTexture(  ProjectileGrafix[ShotArt].itsTexIdx );
             CurrentShotTexture = ShotArt;
         }
 
@@ -2302,7 +2302,7 @@ void ProjectileClass::Render(void)
         int size = (pParent->CurrentWeaponLevel[2] * 2 + 12);
         if (size < 20)
             size = 20;
-        pProjectileGrafix[ShotArt]->RenderSpriteScaled((float)(xPos-TileEngine.XOffset) + 12 - size / 2.0f,
+        ProjectileGrafix[ShotArt].RenderSpriteScaled((float)(xPos-TileEngine.XOffset) + 12 - size / 2.0f,
                 (float)(yPos-TileEngine.YOffset) + 12 - size / 2.0f, size, size, 0xFFFFFFFF);
     }
     else if (ShotArt == ELEKTROPAMPE)
@@ -2314,8 +2314,8 @@ void ProjectileClass::Render(void)
         else
             Color = D3DCOLOR_RGBA(255, 255, 255, (int)(Counter));
 
-        pProjectileGrafix[ShotArt]->itsRect = pProjectileGrafix[ShotArt]->itsPreCalcedRects[AnimPhase];
-        pProjectileGrafix[ShotArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
+        ProjectileGrafix[ShotArt].itsRect = ProjectileGrafix[ShotArt].itsPreCalcedRects[AnimPhase];
+        ProjectileGrafix[ShotArt].RenderSprite((float)(xPos-TileEngine.XOffset),
                 (float)(yPos-TileEngine.YOffset), Color);
 
         DirectGraphics.SetColorKeyMode();
@@ -2331,9 +2331,9 @@ void ProjectileClass::Render(void)
         else
             Color = D3DCOLOR_RGBA(255, 192, 128, 192 - (AnimPhase * 6));
 
-        pProjectileGrafix[ShotArt]->itsRect = pProjectileGrafix[ShotArt]->itsPreCalcedRects[AnimPhase];
+        ProjectileGrafix[ShotArt].itsRect = ProjectileGrafix[ShotArt].itsPreCalcedRects[AnimPhase];
 
-        pProjectileGrafix[ShotArt]->RenderSpriteScaledRotated (46+(float)(xPos-TileEngine.XOffset)-(AnimPhase+30),
+        ProjectileGrafix[ShotArt].RenderSpriteScaledRotated (46+(float)(xPos-TileEngine.XOffset)-(AnimPhase+30),
                 54+(float)(yPos-TileEngine.YOffset)-(AnimPhase+30),
                 AnimPhase*2.2f+20, AnimPhase*2.2f+20, Winkel, Color);
         DirectGraphics.SetColorKeyMode();
@@ -2348,7 +2348,7 @@ void ProjectileClass::Render(void)
 
         int a = 30 - AnimPhase;
 
-        pProjectileGrafix[ShotArt]->RenderSpriteScaled (46+(float)(xPos-TileEngine.XOffset)-(a+30),
+        ProjectileGrafix[ShotArt].RenderSpriteScaled (46+(float)(xPos-TileEngine.XOffset)-(a+30),
                 54+(float)(yPos-TileEngine.YOffset)-(a+30),
                 int (a*2.2f+20), int (a*2.2f+20), AnimPhase, Color);
         DirectGraphics.SetColorKeyMode();
@@ -2362,12 +2362,12 @@ void ProjectileClass::Render(void)
         ShotRect[ShotArt].right  = (255-int(Damage/2))*2;
 
         Color = D3DCOLOR_RGBA(255, 255, 255, int(Damage/2));
-        pProjectileGrafix[ShotArt]->RenderSpriteScaled ((float)(xPos-TileEngine.XOffset),
+        ProjectileGrafix[ShotArt].RenderSpriteScaled ((float)(xPos-TileEngine.XOffset),
                 (float)(yPos-TileEngine.YOffset),
                 (255-int(Damage/2))*2, (255-int(Damage/2))*2, Color);
 
         Color = D3DCOLOR_RGBA(255, 255, 255, int(Damage/4));
-        pProjectileGrafix[ShotArt]->RenderSpriteScaled ((float)(xPos-TileEngine.XOffset),
+        ProjectileGrafix[ShotArt].RenderSpriteScaled ((float)(xPos-TileEngine.XOffset),
                 (float)(yPos-TileEngine.YOffset),
                 (255-int(Damage/2))*2, (255-int(Damage/2))*2, Color);
 
@@ -2378,7 +2378,7 @@ void ProjectileClass::Render(void)
         DirectGraphics.SetAdditiveMode();
         Color = 0xFFFFFFFF;
 
-        pProjectileGrafix[ShotArt]->RenderSpriteScaled ((float)(xPos-TileEngine.XOffset),
+        ProjectileGrafix[ShotArt].RenderSpriteScaled ((float)(xPos-TileEngine.XOffset),
                 (float)(yPos-TileEngine.YOffset),
                 Damage, Damage, AnimPhase, Color);
 
@@ -2424,7 +2424,7 @@ void ProjectileClass::Render(void)
             Damage = 500;
         }
 
-        pProjectileGrafix[ShotArt]->RenderSpriteScaled ((float)(xPos-TileEngine.XOffset) - 10.0f,
+        ProjectileGrafix[ShotArt].RenderSpriteScaled ((float)(xPos-TileEngine.XOffset) - 10.0f,
                 (float)(yPos-TileEngine.YOffset) - size / 2.0f,
                 length, int(size), 0, col);
         DirectGraphics.SetColorKeyMode();
@@ -2433,11 +2433,11 @@ void ProjectileClass::Render(void)
     {
         DirectGraphics.SetAdditiveMode();
 
-        pProjectileGrafix[ShotArt]->RenderSpriteRotated((float)(xPos-TileEngine.XOffset),
+        ProjectileGrafix[ShotArt].RenderSpriteRotated((float)(xPos-TileEngine.XOffset),
                 (float)(yPos-TileEngine.YOffset),
                 (xPos + yPos) / 2, 0x88FFFFFF);
 
-        pProjectileGrafix[ShotArt]->RenderSpriteRotated((float)(xPos-TileEngine.XOffset),
+        ProjectileGrafix[ShotArt].RenderSpriteRotated((float)(xPos-TileEngine.XOffset),
                 (float)(yPos-TileEngine.YOffset),
                 (xPos + yPos) / 2, 0x88FFFFFF);
 
@@ -2462,7 +2462,7 @@ void ProjectileClass::Render(void)
         }
         else if (ShotArt == ELEKTROSCHUSS)
         {
-            pProjectiles->LavaFlare.RenderSpriteScaled(xPos-28-float(TileEngine.XOffset),
+            Projectiles.LavaFlare.RenderSpriteScaled(xPos-28-float(TileEngine.XOffset),
                                          yPos-28-float(TileEngine.YOffset), 100, 100, 0xFFFF22BB);
         }
         else if (ShotArt == LASERSHOT ||
@@ -2471,27 +2471,27 @@ void ProjectileClass::Render(void)
             switch (int (Winkel))
             {
             case 0 :
-                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 60 + (ShotArt - LASERSHOT) * 5,
+                Projectiles.LaserSmoke.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 60 + (ShotArt - LASERSHOT) * 5,
                                                yPos-float(TileEngine.YOffset) - 40, Winkel, 0xBB1188FF);
                 break;
 
             case 45 :
-                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 60,
+                Projectiles.LaserSmoke.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 60,
                                                yPos-float(TileEngine.YOffset) - 40, Winkel, 0xBB1188FF);
                 break;
 
             case 90 :
-                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 53,
+                Projectiles.LaserSmoke.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 53,
                                                yPos-float(TileEngine.YOffset) - 40, Winkel, 0xBB1188FF);
                 break;
 
             case 270 :
-                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 52,
+                Projectiles.LaserSmoke.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 52,
                                                yPos-float(TileEngine.YOffset) - 40, Winkel, 0xBB1188FF);
                 break;
 
             case 315 :
-                pProjectiles->LaserSmoke.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 60,
+                Projectiles.LaserSmoke.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 60,
                                                yPos-float(TileEngine.YOffset) - 40, Winkel, 0xBB1188FF);
                 break;
 
@@ -2506,27 +2506,27 @@ void ProjectileClass::Render(void)
             switch (int (Winkel))
             {
             case 0 :
-                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 120,
+                Projectiles.LaserSmokeBig.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 120,
                                                   yPos-float(TileEngine.YOffset) - 80, Winkel, 0xBB1188FF);
                 break;
 
             case 45 :
-                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 120,
+                Projectiles.LaserSmokeBig.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 120,
                                                   yPos-float(TileEngine.YOffset) - 85, Winkel, 0xBB1188FF);
                 break;
 
             case 90 :
-                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 120,
+                Projectiles.LaserSmokeBig.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 120,
                                                   yPos-float(TileEngine.YOffset) - 85, Winkel, 0xBB1188FF);
                 break;
 
             case 270 :
-                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 105,
+                Projectiles.LaserSmokeBig.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 105,
                                                   yPos-float(TileEngine.YOffset) - 85, Winkel, 0xBB1188FF);
                 break;
 
             case 315 :
-                pProjectiles->LaserSmokeBig.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 120,
+                Projectiles.LaserSmokeBig.RenderSpriteRotated(xPos-float(TileEngine.XOffset) - 120,
                                                   yPos-float(TileEngine.YOffset) - 85, Winkel, 0xBB1188FF);
                 break;
 
@@ -2538,40 +2538,40 @@ void ProjectileClass::Render(void)
         else if (ShotArt == SPREADSHOTBIG ||
                  ShotArt == SPREADSHOTBIG2)
         {
-            pProjectiles->SpreadShotSmoke.RenderSprite(xPos-16-float(TileEngine.XOffset),
+            Projectiles.SpreadShotSmoke.RenderSprite(xPos-16-float(TileEngine.XOffset),
                                          yPos-18-float(TileEngine.YOffset), 0, 0xAAFFFFFF);
         }
 
         else if (ShotArt == PFLANZESHOT)
         {
-            pProjectiles->SpreadShotSmoke.RenderSprite(xPos-24-float(TileEngine.XOffset),
+            Projectiles.SpreadShotSmoke.RenderSprite(xPos-24-float(TileEngine.XOffset),
                                          yPos-24-float(TileEngine.YOffset), 0, 0xAAFFFFFF);
         }
 
         else if (ShotArt == SUCHSCHUSS2)
         {
-            pProjectiles->LavaFlare.RenderSpriteScaled(xPos-24-float(TileEngine.XOffset),
+            Projectiles.LavaFlare.RenderSpriteScaled(xPos-24-float(TileEngine.XOffset),
                                          yPos-24-float(TileEngine.YOffset), 64, 64, 0xCC0088FF);
         }
 
         else if (ShotArt == WALKER_LASER)
-            pProjectiles->LavaFlare.RenderSprite(xPos-45-float(TileEngine.XOffset),
+            Projectiles.LavaFlare.RenderSprite(xPos-45-float(TileEngine.XOffset),
                                    yPos-60-float(TileEngine.YOffset), 0, 0xAAFF3300);
 
         else if (ShotArt == FETTESPINNESHOT ||
                  ShotArt == FETTESPINNESHOT2)		// Laser der fetten Spinne
         {
-            pProjectiles->SpreadShotSmoke.RenderSprite(xPos-12-float(TileEngine.XOffset),
+            Projectiles.SpreadShotSmoke.RenderSprite(xPos-12-float(TileEngine.XOffset),
                                          yPos- 7-float(TileEngine.YOffset), 0, 0xFFFF0000);
         }
 
         if (ShotArt == POWERLINE)				// Powerline leuchten lassen ?
         {
             if (xSpeed < 0.0f)
-                pProjectiles->PowerlineSmoke.RenderSprite(xPos-10-float(TileEngine.XOffset),
+                Projectiles.PowerlineSmoke.RenderSprite(xPos-10-float(TileEngine.XOffset),
                                             yPos   -float(TileEngine.YOffset), 0, 0xFFFFFFFF);
             else
-                pProjectiles->PowerlineSmoke.RenderSprite(xPos-28-float(TileEngine.XOffset),
+                Projectiles.PowerlineSmoke.RenderSprite(xPos-28-float(TileEngine.XOffset),
                                             yPos   -float(TileEngine.YOffset), 1, 0xFFFFFFFF);
         }
 
@@ -2999,7 +2999,7 @@ void ProjectileClass::Run(void)
     case GOLEMSCHUSS:				// Suchschuss des Golems
     {
         DirectGraphics.SetAdditiveMode();
-        pProjectiles->LavaFlare.RenderSpriteScaled((float)(xPos - TileEngine.XOffset) - 21,
+        Projectiles.LavaFlare.RenderSpriteScaled((float)(xPos - TileEngine.XOffset) - 21,
                                      (float)(yPos - TileEngine.YOffset) - 21, 62, 62,
                                      0xAA88FF00);
         DirectGraphics.SetColorKeyMode();
@@ -3176,7 +3176,7 @@ void ProjectileClass::Run(void)
             SoundManager.PlayWave(100, 128, 11025, SOUND_FEUERFALLE);
 
             for (int i = 0; i < 25; i++)
-                pProjectiles->PushProjectile(xPos, yPos + i * 5.0f, FEUERFALLE);
+                Projectiles.PushProjectile(xPos, yPos + i * 5.0f, FEUERFALLE);
         }
 
     }
@@ -4010,7 +4010,7 @@ void ProjectileClass::ExplodeShot(void)
             pPartikelSystem->PushPartikel(xPos + rand()%20 - 10, yPos-5+rand()%10, SMOKEBIG);
 
         for (int i = 0; i < 8; i++)
-            pProjectiles->PushProjectile(xPos - 20 + rand()%30, yPos + 20 + rand()%30, FEUERFALLE);
+            Projectiles.PushProjectile(xPos - 20 + rand()%30, yPos + 20 + rand()%30, FEUERFALLE);
 
 
     }
@@ -4124,30 +4124,30 @@ void ProjectileClass::ExplodeShot(void)
             if (bl & BLOCKWERT_WAND)
             {
                 WinkelUebergabe = 45;
-                pProjectiles->PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
+                Projectiles.PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
                 WinkelUebergabe = 135;
-                pProjectiles->PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
+                Projectiles.PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
             }
             else if (br & BLOCKWERT_WAND)
             {
                 WinkelUebergabe = 315;
-                pProjectiles->PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
+                Projectiles.PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
                 WinkelUebergabe = 225;
-                pProjectiles->PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
+                Projectiles.PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
             }
             else if (bo & BLOCKWERT_WAND)
             {
                 WinkelUebergabe = 225;
-                pProjectiles->PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
+                Projectiles.PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
                 WinkelUebergabe = 135;
-                pProjectiles->PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
+                Projectiles.PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
             }
             else
             {
                 WinkelUebergabe = 315;
-                pProjectiles->PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
+                Projectiles.PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
                 WinkelUebergabe = 45;
-                pProjectiles->PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
+                Projectiles.PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
             }
         }
 
@@ -4170,30 +4170,30 @@ void ProjectileClass::ExplodeShot(void)
             if (bl & BLOCKWERT_WAND)
             {
                 WinkelUebergabe = 45;
-                pProjectiles->PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
+                Projectiles.PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
                 WinkelUebergabe = 135;
-                pProjectiles->PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
+                Projectiles.PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
             }
             else if (br & BLOCKWERT_WAND)
             {
                 WinkelUebergabe = 315;
-                pProjectiles->PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
+                Projectiles.PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
                 WinkelUebergabe = 225;
-                pProjectiles->PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
+                Projectiles.PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
             }
             else if (bo & BLOCKWERT_WAND)
             {
                 WinkelUebergabe = 225;
-                pProjectiles->PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
+                Projectiles.PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
                 WinkelUebergabe = 135;
-                pProjectiles->PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
+                Projectiles.PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
             }
             else
             {
                 WinkelUebergabe = 315;
-                pProjectiles->PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
+                Projectiles.PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
                 WinkelUebergabe = 45;
-                pProjectiles->PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
+                Projectiles.PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
             }
         }
 
@@ -4227,30 +4227,30 @@ void ProjectileClass::ExplodeShot(void)
             if (bl & BLOCKWERT_WAND)
             {
                 WinkelUebergabe = 45;
-                pProjectiles->PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
                 WinkelUebergabe = 135;
-                pProjectiles->PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
             }
             else if (br & BLOCKWERT_WAND)
             {
                 WinkelUebergabe = 315;
-                pProjectiles->PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
                 WinkelUebergabe = 225;
-                pProjectiles->PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
             }
             else if (bo & BLOCKWERT_WAND)
             {
                 WinkelUebergabe = 225;
-                pProjectiles->PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
                 WinkelUebergabe = 135;
-                pProjectiles->PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
             }
             else
             {
                 WinkelUebergabe = 315;
-                pProjectiles->PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
                 WinkelUebergabe = 45;
-                pProjectiles->PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
             }
         }
 
@@ -4273,30 +4273,30 @@ void ProjectileClass::ExplodeShot(void)
             if (bl & BLOCKWERT_WAND)
             {
                 WinkelUebergabe = 45;
-                pProjectiles->PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
                 WinkelUebergabe = 135;
-                pProjectiles->PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
             }
             else if (br & BLOCKWERT_WAND)
             {
                 WinkelUebergabe = 315;
-                pProjectiles->PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
                 WinkelUebergabe = 225;
-                pProjectiles->PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
             }
             else if (bo & BLOCKWERT_WAND)
             {
                 WinkelUebergabe = 225;
-                pProjectiles->PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
                 WinkelUebergabe = 135;
-                pProjectiles->PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
             }
             else
             {
                 WinkelUebergabe = 315;
-                pProjectiles->PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
                 WinkelUebergabe = 45;
-                pProjectiles->PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
             }
         }
 
@@ -4332,7 +4332,7 @@ void ProjectileClass::ExplodeShot(void)
         SoundManager.PlayWave(100, 128, 9000, SOUND_BLITZENDE);
         SoundManager.PlayWave(100, 128, 9000, SOUND_BLITZENDE);
 
-        pProjectiles->PushProjectile((float)TileEngine.XOffset - 60,
+        Projectiles.PushProjectile((float)TileEngine.XOffset - 60,
                                      (float)TileEngine.YOffset + 480.0f - 128.0f,
                                      ELEKTROPAMPE);
     }
@@ -4341,7 +4341,7 @@ void ProjectileClass::ExplodeShot(void)
     /*
     		case SPIDERSHOT :
     		{
-    			//pProjectiles->PushProjectile(xPos, yPos, SPIDERSHOT3);
+    			//Projectiles.PushProjectile(xPos, yPos, SPIDERSHOT3);
     		} break;
     */
 
@@ -4457,10 +4457,10 @@ void ProjectileClass::ExplodeShot(void)
 
     case EVILBLITZ:
     {
-        pProjectiles->PushProjectile(xPos-290, yPos-300, EVILBLITZ2);
-        pProjectiles->PushProjectile(xPos-100, yPos-200, EVILBLITZ2);
-        pProjectiles->PushProjectile(xPos+100, yPos-100, EVILBLITZ2);
-        pProjectiles->PushProjectile(xPos+290, yPos,     EVILBLITZ2);
+        Projectiles.PushProjectile(xPos-290, yPos-300, EVILBLITZ2);
+        Projectiles.PushProjectile(xPos-100, yPos-200, EVILBLITZ2);
+        Projectiles.PushProjectile(xPos+100, yPos-100, EVILBLITZ2);
+        Projectiles.PushProjectile(xPos+290, yPos,     EVILBLITZ2);
 
         SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
     }
@@ -4580,7 +4580,7 @@ void ProjectileClass::ExplodeShot(void)
 
 
         for (int i = 0; i < 15; i++)
-            pProjectiles->PushProjectile(xPos - 20, yPos + i * 9, FEUERFALLE);
+            Projectiles.PushProjectile(xPos - 20, yPos + i * 9, FEUERFALLE);
     }
     break;
 
@@ -4629,7 +4629,7 @@ void ProjectileClass::ExplodeShot(void)
     case SNOWBOMB:
     {
         for (int i=0; i < 8; i++)
-            pProjectiles->PushProjectile(xPos + rand()%60, yPos + rand()%50 , SNOWBOMBSMALL);
+            Projectiles.PushProjectile(xPos + rand()%60, yPos + rand()%50 , SNOWBOMBSMALL);
 
         for (int i=0; i < 20; i++)
             pPartikelSystem->PushPartikel(xPos + rand()%70 - 10, yPos + rand()%70 - 10, SNOWFLUSH);
@@ -4890,13 +4890,15 @@ void ProjectileClass::ExplodeShot(void)
 // --------------------------------------------------------------------------------------
 // Konstruktor : laden der Projektil Grafiken
 // --------------------------------------------------------------------------------------
-
 ProjectileListClass::ProjectileListClass(void)
 {
     pStart			= NULL;
     pEnd			= NULL;
     NumProjectiles	= 0;
+}
 
+void ProjectileListClass::LoadSprites(void)
+{
     //DKS - All of these 5 sprites are no longer globals, I moved them here cleaning up big messes
     //      and fixing ambiguous orders of calls to destructors.
     // Grafiken für das Leuchten diverser Schüsse laden
@@ -4922,385 +4924,381 @@ ProjectileListClass::ProjectileListClass(void)
     SchussFlamme[2].LoadImage("schussflamme3.png", 48,  114,  24, 38, 2, 3);
     SchussFlammeFlare.LoadImage("schussflammeflare.png", 140,  140,  140, 140, 1, 1);
 
-
-    for(int i=0; i<MAX_SHOTGFX; i++)
-        pProjectileGrafix[i] = new(DirectGraphicsSprite);
-
     // Diamant schuss
-    pProjectileGrafix[DIAMONDSHOT]->LoadImage("diamant.png", 261, 29, 29, 29, 9, 1);
+    ProjectileGrafix[DIAMONDSHOT].LoadImage("diamant.png", 261, 29, 29, 29, 9, 1);
     ShotRect[DIAMONDSHOT].left = 5;
     ShotRect[DIAMONDSHOT].right  = 24;
     ShotRect[DIAMONDSHOT].top  = 5;
     ShotRect[DIAMONDSHOT].bottom = 24;
 
     // Skeletor Schuss
-    pProjectileGrafix[SKELETOR_SHOT]->LoadImage("skeletor_shot.png", 5, 40, 5, 40, 1, 1);
+    ProjectileGrafix[SKELETOR_SHOT].LoadImage("skeletor_shot.png", 5, 40, 5, 40, 1, 1);
     ShotRect[SKELETOR_SHOT].left = 10;
     ShotRect[SKELETOR_SHOT].right  = 30;
     ShotRect[SKELETOR_SHOT].top  = 10;
     ShotRect[SKELETOR_SHOT].bottom = 30;
 
     // Spreadshot
-    pProjectileGrafix[SPREADSHOT]->LoadImage("spreadshot.png", 16, 16, 16, 16, 1, 1);
+    ProjectileGrafix[SPREADSHOT].LoadImage("spreadshot.png", 16, 16, 16, 16, 1, 1);
     ShotRect[SPREADSHOT].left = 4;
     ShotRect[SPREADSHOT].right  = 12;
     ShotRect[SPREADSHOT].top  = 4;
     ShotRect[SPREADSHOT].bottom = 12;
 
     // Spreadshot2
-    pProjectileGrafix[SPREADSHOT2]->LoadImage("spreadshot2.png", 20, 20, 20, 20, 1, 1);
+    ProjectileGrafix[SPREADSHOT2].LoadImage("spreadshot2.png", 20, 20, 20, 20, 1, 1);
     ShotRect[SPREADSHOT2].left = 2;
     ShotRect[SPREADSHOT2].right  = 16;
     ShotRect[SPREADSHOT2].top  = 2;
     ShotRect[SPREADSHOT2].bottom = 16;
 
     // Riesen Spreadshot
-    pProjectileGrafix[SPREADSHOTBIG]->LoadImage("spreadshot_big.png", 32, 32, 32, 32, 1, 1);
+    ProjectileGrafix[SPREADSHOTBIG].LoadImage("spreadshot_big.png", 32, 32, 32, 32, 1, 1);
     ShotRect[SPREADSHOTBIG].left = 4;
     ShotRect[SPREADSHOTBIG].right  = 28;
     ShotRect[SPREADSHOTBIG].top  = 4;
     ShotRect[SPREADSHOTBIG].bottom = 28;
 
     // Riesen Spreadshot doppelt
-    pProjectileGrafix[SPREADSHOTBIG2]->LoadImage("spreadshot_big2.png", 40, 40, 40, 40, 1, 1);
+    ProjectileGrafix[SPREADSHOTBIG2].LoadImage("spreadshot_big2.png", 40, 40, 40, 40, 1, 1);
     ShotRect[SPREADSHOTBIG2].left = 6;
     ShotRect[SPREADSHOTBIG2].right  = 34;
     ShotRect[SPREADSHOTBIG2].top  = 6;
     ShotRect[SPREADSHOTBIG2].bottom = 34;
 
     // Bounceshot
-    pProjectileGrafix[BOUNCESHOT1]->LoadImage("bounce1.png", 24, 24, 24, 24, 1, 1);
+    ProjectileGrafix[BOUNCESHOT1].LoadImage("bounce1.png", 24, 24, 24, 24, 1, 1);
     ShotRect[BOUNCESHOT1].left = 4;
     ShotRect[BOUNCESHOT1].right  = 20;
     ShotRect[BOUNCESHOT1].top  = 4;
     ShotRect[BOUNCESHOT1].bottom = 20;
 
-    pProjectileGrafix[BOUNCESHOT2]->LoadImage("bounce2.png", 16, 16, 16, 16, 1, 1);
+    ProjectileGrafix[BOUNCESHOT2].LoadImage("bounce2.png", 16, 16, 16, 16, 1, 1);
     ShotRect[BOUNCESHOT2].left = 4;
     ShotRect[BOUNCESHOT2].right  = 12;
     ShotRect[BOUNCESHOT2].top  = 4;
     ShotRect[BOUNCESHOT2].bottom = 12;
 
-    pProjectileGrafix[BOUNCESHOT3]->LoadImage("bounce3.png", 10, 10, 10, 10, 1, 1);
+    ProjectileGrafix[BOUNCESHOT3].LoadImage("bounce3.png", 10, 10, 10, 10, 1, 1);
     ShotRect[BOUNCESHOT3].left = 0;
     ShotRect[BOUNCESHOT3].right  = 10;
     ShotRect[BOUNCESHOT3].top  = 0;
     ShotRect[BOUNCESHOT3].bottom = 10;
 
     // Riesen Bounceshot
-    pProjectileGrafix[BOUNCESHOTBIG1]->LoadImage("bounce_big1.png", 48, 48, 48, 48, 1, 1);
+    ProjectileGrafix[BOUNCESHOTBIG1].LoadImage("bounce_big1.png", 48, 48, 48, 48, 1, 1);
     ShotRect[BOUNCESHOTBIG1].left = 8;
     ShotRect[BOUNCESHOTBIG1].right  = 40;
     ShotRect[BOUNCESHOTBIG1].top  = 8;
     ShotRect[BOUNCESHOTBIG1].bottom = 40;
 
-    pProjectileGrafix[BOUNCESHOTBIG2]->LoadImage("bounce_big2.png", 32, 32, 32, 32, 1, 1);
+    ProjectileGrafix[BOUNCESHOTBIG2].LoadImage("bounce_big2.png", 32, 32, 32, 32, 1, 1);
     ShotRect[BOUNCESHOTBIG2].left = 4;
     ShotRect[BOUNCESHOTBIG2].right  = 28;
     ShotRect[BOUNCESHOTBIG2].top  = 4;
     ShotRect[BOUNCESHOTBIG2].bottom = 28;
 
-    pProjectileGrafix[BOUNCESHOTBIG3]->LoadImage("bounce_big3.png", 20, 20, 20, 20, 1, 1);
+    ProjectileGrafix[BOUNCESHOTBIG3].LoadImage("bounce_big3.png", 20, 20, 20, 20, 1, 1);
     ShotRect[BOUNCESHOTBIG3].left = 2;
     ShotRect[BOUNCESHOTBIG3].right  = 18;
     ShotRect[BOUNCESHOTBIG3].top  = 2;
     ShotRect[BOUNCESHOTBIG3].bottom = 18;
 
     // Lasershot
-    pProjectileGrafix[LASERSHOT]->LoadImage("laser.png", 9, 48, 9, 48, 1, 1);
+    ProjectileGrafix[LASERSHOT].LoadImage("laser.png", 9, 48, 9, 48, 1, 1);
     ShotRect[LASERSHOT].left = -4;
     ShotRect[LASERSHOT].right  = 15;
     ShotRect[LASERSHOT].top  = 18;
     ShotRect[LASERSHOT].bottom = 30;
 
     // Lasershot2
-    pProjectileGrafix[LASERSHOT2]->LoadImage("laser2.png", 160, 48, 16, 48, 10, 1);
+    ProjectileGrafix[LASERSHOT2].LoadImage("laser2.png", 160, 48, 16, 48, 10, 1);
     ShotRect[LASERSHOT2].left = 0;
     ShotRect[LASERSHOT2].right  = 20;
     ShotRect[LASERSHOT2].top  = 12;
     ShotRect[LASERSHOT2].bottom = 38;
 
     // Riesen Lasershot
-    pProjectileGrafix[LASERSHOTBIG]->LoadImage("laserbig.png", 16, 80, 16, 80, 1, 1);
+    ProjectileGrafix[LASERSHOTBIG].LoadImage("laserbig.png", 16, 80, 16, 80, 1, 1);
     ShotRect[LASERSHOTBIG].left = 0;
     ShotRect[LASERSHOTBIG].right  = 30;
     ShotRect[LASERSHOTBIG].top  = 30;
     ShotRect[LASERSHOTBIG].bottom = 50;
 
     // Riesen Lasershot
-    pProjectileGrafix[LASERSHOTBIG2]->LoadImage("laserbig2.png", 280, 80, 28, 80, 10, 1);
+    ProjectileGrafix[LASERSHOTBIG2].LoadImage("laserbig2.png", 280, 80, 28, 80, 10, 1);
     ShotRect[LASERSHOTBIG2].left = 0;
     ShotRect[LASERSHOTBIG2].right  = 30;
     ShotRect[LASERSHOTBIG2].top  = 30;
     ShotRect[LASERSHOTBIG2].bottom = 50;
 
     // Walker Laser
-    pProjectileGrafix[WALKER_LASER]->LoadImage("walker-laser.png", 32, 3, 32, 3, 1, 1);
+    ProjectileGrafix[WALKER_LASER].LoadImage("walker-laser.png", 32, 3, 32, 3, 1, 1);
     ShotRect[WALKER_LASER].left = 0;
     ShotRect[WALKER_LASER].right  = 32;
     ShotRect[WALKER_LASER].top  = 0;
     ShotRect[WALKER_LASER].bottom = 3;
 
     // Geschützturm Kugel
-    pProjectileGrafix[CANONBALL]->LoadImage("canonball.png", 8, 8, 8, 8, 1, 1);
+    ProjectileGrafix[CANONBALL].LoadImage("canonball.png", 8, 8, 8, 8, 1, 1);
     ShotRect[CANONBALL].left = 0;
     ShotRect[CANONBALL].right  = 8;
     ShotRect[CANONBALL].top  = 0;
     ShotRect[CANONBALL].bottom = 8;
 
     // Powerline
-    pProjectileGrafix[POWERLINE]->LoadImage("powerline.png", 80, 20, 40, 20, 2, 1);
+    ProjectileGrafix[POWERLINE].LoadImage("powerline.png", 80, 20, 40, 20, 2, 1);
     ShotRect[POWERLINE].left = 0;
     ShotRect[POWERLINE].right  = 20;
     ShotRect[POWERLINE].top  = 0;
     ShotRect[POWERLINE].bottom = 20;
 
     // Deckenturm Kugel
-    pProjectileGrafix[SUCHSCHUSS]->LoadImage("suchschuss.png", 8, 8, 8, 8, 1, 1);
+    ProjectileGrafix[SUCHSCHUSS].LoadImage("suchschuss.png", 8, 8, 8, 8, 1, 1);
     ShotRect[SUCHSCHUSS].left = 0;
     ShotRect[SUCHSCHUSS].right  = 8;
     ShotRect[SUCHSCHUSS].top  = 0;
     ShotRect[SUCHSCHUSS].bottom = 8;
 
     // Blauer Schuss der Riesenwepse
-    pProjectileGrafix[SUCHSCHUSS2]->LoadImage("suchschuss2.png", 64, 16, 16, 16, 4, 1);
+    ProjectileGrafix[SUCHSCHUSS2].LoadImage("suchschuss2.png", 64, 16, 16, 16, 4, 1);
     ShotRect[SUCHSCHUSS2].left = 1;
     ShotRect[SUCHSCHUSS2].right  = 15;
     ShotRect[SUCHSCHUSS2].top  = 1;
     ShotRect[SUCHSCHUSS2].bottom = 15;
 
     // Grüner Golemschuss
-    pProjectileGrafix[GOLEMSCHUSS]->LoadImage("golemschuss.png", 100, 100, 20, 20, 5, 5);
+    ProjectileGrafix[GOLEMSCHUSS].LoadImage("golemschuss.png", 100, 100, 20, 20, 5, 5);
     ShotRect[GOLEMSCHUSS].left = 2;
     ShotRect[GOLEMSCHUSS].right  = 18;
     ShotRect[GOLEMSCHUSS].top  = 2;
     ShotRect[GOLEMSCHUSS].bottom = 18;
 
     // Grüner Skeletor Schuss
-    pProjectileGrafix[TURRIEXTRAWURST]->LoadImage("golemschuss.png", 100, 100, 20, 20, 5, 5);
+    ProjectileGrafix[TURRIEXTRAWURST].LoadImage("golemschuss.png", 100, 100, 20, 20, 5, 5);
     ShotRect[TURRIEXTRAWURST].left = 2;
     ShotRect[TURRIEXTRAWURST].right  = 18;
     ShotRect[TURRIEXTRAWURST].top  = 2;
     ShotRect[TURRIEXTRAWURST].bottom = 18;
 
     // Lilaner langsamer Spinnenschuss
-    pProjectileGrafix[SPIDERSLOW]->LoadImage("spiderslow.png", 200, 200, 40, 40, 5, 5);
+    ProjectileGrafix[SPIDERSLOW].LoadImage("spiderslow.png", 200, 200, 40, 40, 5, 5);
     ShotRect[SPIDERSLOW].left = 5;
     ShotRect[SPIDERSLOW].right  = 35;
     ShotRect[SPIDERSLOW].top  = 5;
     ShotRect[SPIDERSLOW].bottom = 35;
 
     // Lilaner Spinnenlaser
-    pProjectileGrafix[SPIDERLASER]->LoadImage("fetterspinnenlaser.png", 64, 128, 64, 128, 1, 1);
+    ProjectileGrafix[SPIDERLASER].LoadImage("fetterspinnenlaser.png", 64, 128, 64, 128, 1, 1);
     ShotRect[SPIDERLASER].left = 0;
     ShotRect[SPIDERLASER].right  = 500;
     ShotRect[SPIDERLASER].top  = 0;
     ShotRect[SPIDERLASER].bottom = 10;
 
     // Spinnenschuss
-    pProjectileGrafix[SPIDERSHOT]->LoadImage("spidershot.png", 96, 48, 96, 48, 1, 1);
+    ProjectileGrafix[SPIDERSHOT].LoadImage("spidershot.png", 96, 48, 96, 48, 1, 1);
     ShotRect[SPIDERSHOT].left = 24;
     ShotRect[SPIDERSHOT].right  = 72;
     ShotRect[SPIDERSHOT].top  = 12;
     ShotRect[SPIDERSHOT].bottom = 36;
 
     // Spinnenschuss2
-    pProjectileGrafix[SPIDERSHOT2]->LoadImage("spidershot2.png", 48, 48, 48, 48, 1, 1);
+    ProjectileGrafix[SPIDERSHOT2].LoadImage("spidershot2.png", 48, 48, 48, 48, 1, 1);
     ShotRect[SPIDERSHOT2].left = 16;
     ShotRect[SPIDERSHOT2].right  = 32;
     ShotRect[SPIDERSHOT2].top  = 16;
     ShotRect[SPIDERSHOT2].bottom = 32;
 
     // Bombe des Spieler-Rads
-    pProjectileGrafix[BOMBE]->LoadImage("bombe_small.png", 128, 32, 16, 16, 8, 2);
+    ProjectileGrafix[BOMBE].LoadImage("bombe_small.png", 128, 32, 16, 16, 8, 2);
     ShotRect[BOMBE].left = 0;
     ShotRect[BOMBE].right  = 16;
     ShotRect[BOMBE].top  = 0;
     ShotRect[BOMBE].bottom = 12;
 
     // Bombe des Spieler-Rads
-    pProjectileGrafix[BOMBEBIG]->LoadImage("bombe_big.png", 192, 48, 24, 24, 8, 2);
+    ProjectileGrafix[BOMBEBIG].LoadImage("bombe_big.png", 192, 48, 24, 24, 8, 2);
     ShotRect[BOMBEBIG].left = 0;
     ShotRect[BOMBEBIG].right  = 24;
     ShotRect[BOMBEBIG].top  = 0;
     ShotRect[BOMBEBIG].bottom = 20;
 
     // Flammen-Splitter
-    pProjectileGrafix[FLAMME]->LoadImage("flamme.png", 192, 96, 48, 48, 4, 2);
+    ProjectileGrafix[FLAMME].LoadImage("flamme.png", 192, 96, 48, 48, 4, 2);
     ShotRect[FLAMME].left = 16;
     ShotRect[FLAMME].right  = 32;
     ShotRect[FLAMME].top  = 16;
     ShotRect[FLAMME].bottom = 32;
 
     // Flamme des Wand-Flammenwerfers
-    pProjectileGrafix[FEUERFALLE]->LoadImage("flame.png", 504, 500, 84, 100, 6, 5);
+    ProjectileGrafix[FEUERFALLE].LoadImage("flame.png", 504, 500, 84, 100, 6, 5);
     ShotRect[FEUERFALLE].left = 30;
     ShotRect[FEUERFALLE].right  = 54;
     ShotRect[FEUERFALLE].top  = 30;
     ShotRect[FEUERFALLE].bottom = 70;
 
     // Feuerball des Minidrachen
-    pProjectileGrafix[FIREBALL]->LoadImage("fireball.png", 24, 48, 24, 48, 1, 1);
+    ProjectileGrafix[FIREBALL].LoadImage("fireball.png", 24, 48, 24, 48, 1, 1);
     ShotRect[FIREBALL].left = 0;
     ShotRect[FIREBALL].right  = 24;
     ShotRect[FIREBALL].top  = 12;
     ShotRect[FIREBALL].bottom = 36;
 
     // Feuerball des Riesendrachen
-    pProjectileGrafix[FIREBALL_BIG]->LoadImage("fireball_big.png", 60, 54, 60, 54, 1, 1);
+    ProjectileGrafix[FIREBALL_BIG].LoadImage("fireball_big.png", 60, 54, 60, 54, 1, 1);
     ShotRect[FIREBALL_BIG].left = 8;
     ShotRect[FIREBALL_BIG].right  = 52;
     ShotRect[FIREBALL_BIG].top  = 8;
     ShotRect[FIREBALL_BIG].bottom = 46;
 
     // Feuerball des Riesendrachen
-    pProjectileGrafix[FIREBALL_BOMB]->LoadImage("fireball_big.png", 60, 54, 60, 54, 1, 1);
+    ProjectileGrafix[FIREBALL_BOMB].LoadImage("fireball_big.png", 60, 54, 60, 54, 1, 1);
     ShotRect[FIREBALL_BOMB].left = 8;
     ShotRect[FIREBALL_BOMB].right  = 52;
     ShotRect[FIREBALL_BOMB].top  = 8;
     ShotRect[FIREBALL_BOMB].bottom = 46;
 
     // Rotzschuss des Rotzpotts
-    pProjectileGrafix[ROTZSHOT]->LoadImage("rotzshot.png", 80, 80, 16, 16, 5, 5);
+    ProjectileGrafix[ROTZSHOT].LoadImage("rotzshot.png", 80, 80, 16, 16, 5, 5);
     ShotRect[ROTZSHOT].left = 2;
     ShotRect[ROTZSHOT].right  = 14;
     ShotRect[ROTZSHOT].top  = 2;
     ShotRect[ROTZSHOT].bottom = 14;
 
     // Flamme des Wand-Flammenwerfers
-    pProjectileGrafix[GOLEMSAEULE]->LoadImage("flame.png", 504, 500, 84, 100, 6, 5);
+    ProjectileGrafix[GOLEMSAEULE].LoadImage("flame.png", 504, 500, 84, 100, 6, 5);
     ShotRect[GOLEMSAEULE].left = 30;
     ShotRect[GOLEMSAEULE].right  = 54;
     ShotRect[GOLEMSAEULE].top  = 30;
     ShotRect[GOLEMSAEULE].bottom = 70;
 
     // Flamme des Lavamanns
-    pProjectileGrafix[FEUERFALLE_LAVAMANN]->LoadImage("flame.png", 504, 500, 84, 100, 6, 5);
+    ProjectileGrafix[FEUERFALLE_LAVAMANN].LoadImage("flame.png", 504, 500, 84, 100, 6, 5);
     ShotRect[FEUERFALLE_LAVAMANN].left = 30;
     ShotRect[FEUERFALLE_LAVAMANN].right  = 54;
     ShotRect[FEUERFALLE_LAVAMANN].top  = 30;
     ShotRect[FEUERFALLE_LAVAMANN].bottom = 70;
 
     // Flamme der Feuer Spinne
-    pProjectileGrafix[PLAYERFIRE]->LoadImage("flame.png", 504, 500, 84, 100, 6, 5);
+    ProjectileGrafix[PLAYERFIRE].LoadImage("flame.png", 504, 500, 84, 100, 6, 5);
     ShotRect[PLAYERFIRE].left = 30;
     ShotRect[PLAYERFIRE].right  = 54;
     ShotRect[PLAYERFIRE].top  = 30;
     ShotRect[PLAYERFIRE].bottom = 70;
 
     // Flamme der Feuer Spinne
-    pProjectileGrafix[SPIDERFIRE]->LoadImage("flame.png", 504, 500, 84, 100, 6, 5);
+    ProjectileGrafix[SPIDERFIRE].LoadImage("flame.png", 504, 500, 84, 100, 6, 5);
     ShotRect[SPIDERFIRE].left = 30;
     ShotRect[SPIDERFIRE].right  = 54;
     ShotRect[SPIDERFIRE].top  = 30;
     ShotRect[SPIDERFIRE].bottom = 70;
 
     // Laser des Deckenkrabblers
-    pProjectileGrafix[KRABBLERLASER1]->LoadImage("krabblerlaser1.png", 4, 48, 4, 48, 1, 1);
+    ProjectileGrafix[KRABBLERLASER1].LoadImage("krabblerlaser1.png", 4, 48, 4, 48, 1, 1);
     ShotRect[KRABBLERLASER1].left = 0;
     ShotRect[KRABBLERLASER1].right  = 4;
     ShotRect[KRABBLERLASER1].top  = 0;
     ShotRect[KRABBLERLASER1].bottom = 48;
 
     // Laser des Wandkrabblers links
-    pProjectileGrafix[KRABBLERLASER2]->LoadImage("krabblerlaser2.png", 48, 4, 48, 4, 1, 1);
+    ProjectileGrafix[KRABBLERLASER2].LoadImage("krabblerlaser2.png", 48, 4, 48, 4, 1, 1);
     ShotRect[KRABBLERLASER2].left = 0;
     ShotRect[KRABBLERLASER2].right  = 48;
     ShotRect[KRABBLERLASER2].top  = 0;
     ShotRect[KRABBLERLASER2].bottom = 4;
 
     // Laser des Wandkrabblers rechts
-    pProjectileGrafix[KRABBLERLASER3]->LoadImage("krabblerlaser2.png", 48, 4, 48, 4, 1, 1);
+    ProjectileGrafix[KRABBLERLASER3].LoadImage("krabblerlaser2.png", 48, 4, 48, 4, 1, 1);
     ShotRect[KRABBLERLASER3].left = 0;
     ShotRect[KRABBLERLASER3].right  = 48;
     ShotRect[KRABBLERLASER3].top  = 0;
     ShotRect[KRABBLERLASER3].bottom = 4;
 
     // Schuss des Pharao Kopfes
-    pProjectileGrafix[PHARAOLASER]->LoadImage("pharaolaser.png", 96, 96, 48, 48, 2, 2);
+    ProjectileGrafix[PHARAOLASER].LoadImage("pharaolaser.png", 96, 96, 48, 48, 2, 2);
     ShotRect[PHARAOLASER].left = 0;
     ShotRect[PHARAOLASER].right  = 48;
     ShotRect[PHARAOLASER].top  = 0;
     ShotRect[PHARAOLASER].bottom = 48;
 
     // Granate
-    pProjectileGrafix[GRENADE]->LoadImage("grenade.png", 11, 14, 11, 14, 1, 1);
+    ProjectileGrafix[GRENADE].LoadImage("grenade.png", 11, 14, 11, 14, 1, 1);
     ShotRect[GRENADE].left = 0;
     ShotRect[GRENADE].right  = 11;
     ShotRect[GRENADE].top  = 0;
     ShotRect[GRENADE].bottom = 14;
 
     // Rakete
-    pProjectileGrafix[ROCKET]->LoadImage("rocket.png", 225, 225, 75, 75, 3, 3);
+    ProjectileGrafix[ROCKET].LoadImage("rocket.png", 225, 225, 75, 75, 3, 3);
     ShotRect[ROCKET].left = 20;
     ShotRect[ROCKET].right  = 55;
     ShotRect[ROCKET].top  = 20;
     ShotRect[ROCKET].bottom = 55;
 
-    pProjectileGrafix[ROCKETSPIDER]->LoadImage("rocket.png", 225, 225, 75, 75, 3, 3);
+    ProjectileGrafix[ROCKETSPIDER].LoadImage("rocket.png", 225, 225, 75, 75, 3, 3);
     ShotRect[ROCKETSPIDER].left = 20;
     ShotRect[ROCKETSPIDER].right  = 55;
     ShotRect[ROCKETSPIDER].top  = 20;
     ShotRect[ROCKETSPIDER].bottom = 55;
 
     // Rakete
-    pProjectileGrafix[ROCKETWERFER]->LoadImage("rocketwerfer.png", 45, 24, 45, 12, 1, 2);
+    ProjectileGrafix[ROCKETWERFER].LoadImage("rocketwerfer.png", 45, 24, 45, 12, 1, 2);
     ShotRect[ROCKETWERFER].left = 0;
     ShotRect[ROCKETWERFER].right  = 45;
     ShotRect[ROCKETWERFER].top  = 0;
     ShotRect[ROCKETWERFER].bottom = 12;
 
     // Torpedo
-    pProjectileGrafix[TORPEDO]->LoadImage("torpedo.png", 33, 20, 33, 10, 1, 2);
+    ProjectileGrafix[TORPEDO].LoadImage("torpedo.png", 33, 20, 33, 10, 1, 2);
     ShotRect[TORPEDO].left = 0;
     ShotRect[TORPEDO].right  = 33;
     ShotRect[TORPEDO].top  = 0;
     ShotRect[TORPEDO].bottom = 10;
 
     // EvilShot
-    pProjectileGrafix[EVILSHOT]->LoadImage("evilshot.png", 32, 16, 32, 16, 1, 1);
+    ProjectileGrafix[EVILSHOT].LoadImage("evilshot.png", 32, 16, 32, 16, 1, 1);
     ShotRect[EVILSHOT].left = 0;
     ShotRect[EVILSHOT].right  = 32;
     ShotRect[EVILSHOT].top  = 0;
     ShotRect[EVILSHOT].bottom = 16;
 
     // EvilShot2
-    pProjectileGrafix[EVILSHOT2]->LoadImage("evilshot2.png", 32, 16, 32, 16, 1, 1);
+    ProjectileGrafix[EVILSHOT2].LoadImage("evilshot2.png", 32, 16, 32, 16, 1, 1);
     ShotRect[EVILSHOT2].left = 0;
     ShotRect[EVILSHOT2].right  = 32;
     ShotRect[EVILSHOT2].top  = 0;
     ShotRect[EVILSHOT2].bottom = 16;
 
     // EvilBlitz
-    pProjectileGrafix[EVILBLITZ]->LoadImage("evilblitz.png", 140, 100, 70, 100, 2, 1);
+    ProjectileGrafix[EVILBLITZ].LoadImage("evilblitz.png", 140, 100, 70, 100, 2, 1);
     ShotRect[EVILBLITZ].left = 0;
     ShotRect[EVILBLITZ].right  = 70;
     ShotRect[EVILBLITZ].top  = 0;
     ShotRect[EVILBLITZ].bottom = 100;
 
     // BeamBlitz
-    pProjectileGrafix[BLITZBEAM]->LoadImage("blitzbeam.png", 320, 320, 160, 160, 2, 2);
+    ProjectileGrafix[BLITZBEAM].LoadImage("blitzbeam.png", 320, 320, 160, 160, 2, 2);
     ShotRect[BLITZBEAM].left = 40;
     ShotRect[BLITZBEAM].right  = 120;
     ShotRect[BLITZBEAM].top  = 40;
     ShotRect[BLITZBEAM].bottom = 120;
 
     // Ufolaser
-    pProjectileGrafix[UFOLASER]->LoadImage("ufolaser.png", 340, 100, 34, 100, 10, 1);
+    ProjectileGrafix[UFOLASER].LoadImage("ufolaser.png", 340, 100, 34, 100, 10, 1);
     ShotRect[UFOLASER].left = 5;
     ShotRect[UFOLASER].right  = 29;
     ShotRect[UFOLASER].top  = 10;
     ShotRect[UFOLASER].bottom = 90;
 
     // Stelzlaser
-    pProjectileGrafix[STELZLASER]->LoadImage("stelzlaser.png", 120, 43, 60, 43, 2, 1);
+    ProjectileGrafix[STELZLASER].LoadImage("stelzlaser.png", 120, 43, 60, 43, 2, 1);
     ShotRect[STELZLASER].left = 5;
     ShotRect[STELZLASER].right  = 55;
     ShotRect[STELZLASER].top  = 5;
     ShotRect[STELZLASER].bottom = 38;
 
     // Pflanzenschuss
-    pProjectileGrafix[PFLANZESHOT]->LoadImage("pflanzeschuss.png", 64, 16, 16, 16, 4, 1);
+    ProjectileGrafix[PFLANZESHOT].LoadImage("pflanzeschuss.png", 64, 16, 16, 16, 4, 1);
     ShotRect[PFLANZESHOT].left = 1;
     ShotRect[PFLANZESHOT].right  = 15;
     ShotRect[PFLANZESHOT].top  = 1;
@@ -5310,22 +5308,22 @@ ProjectileListClass::ProjectileListClass(void)
     //DKS - There was only one frame in this image file, but four are specified here:
     //      I've changed it from 2,2 to 1,1. Also see my notes in Boss_Bratklops.cpp.
     //      I've also fixed the right and bottom coordinates of ShotRect:
-    //pProjectileGrafix[BRATKLOPSSHOT]->LoadImage("bratklopsshot.png", 60, 60, 60, 60, 2, 2);
-    pProjectileGrafix[BRATKLOPSSHOT]->LoadImage("bratklopsshot.png", 60, 60, 60, 60, 1, 1);
+    //ProjectileGrafix[BRATKLOPSSHOT].LoadImage("bratklopsshot.png", 60, 60, 60, 60, 2, 2);
+    ProjectileGrafix[BRATKLOPSSHOT].LoadImage("bratklopsshot.png", 60, 60, 60, 60, 1, 1);
     ShotRect[BRATKLOPSSHOT].left = 10;
     ShotRect[BRATKLOPSSHOT].right  = 50;
     ShotRect[BRATKLOPSSHOT].top  = 10;
     ShotRect[BRATKLOPSSHOT].bottom = 50;
 
     // Dronebullet
-    pProjectileGrafix[DRONEBULLET]->LoadImage("dronebullet.png", 48, 12, 12, 12, 4, 1);
+    ProjectileGrafix[DRONEBULLET].LoadImage("dronebullet.png", 48, 12, 12, 12, 4, 1);
     ShotRect[DRONEBULLET].left = 2;
     ShotRect[DRONEBULLET].right  = 10;
     ShotRect[DRONEBULLET].top  = 2;
     ShotRect[DRONEBULLET].bottom = 10;
 
     // SchleimShot
-    pProjectileGrafix[SCHLEIMSHOT]->LoadImage("schleimshot.png", 12, 12, 12, 12, 1, 1);
+    ProjectileGrafix[SCHLEIMSHOT].LoadImage("schleimshot.png", 12, 12, 12, 12, 1, 1);
     ShotRect[SCHLEIMSHOT].left = 2;
     ShotRect[SCHLEIMSHOT].right  = 10;
     ShotRect[SCHLEIMSHOT].top  = 2;
@@ -5333,119 +5331,119 @@ ProjectileListClass::ProjectileListClass(void)
 
     // LaFass
     //DKS - Corrected dimensions from 264x334 to 264x332, to match actual image file:
-    pProjectileGrafix[LAFASSSHOT]->LoadImage("lafass_fall.png", 264, 332, 66, 83, 4, 4);
+    ProjectileGrafix[LAFASSSHOT].LoadImage("lafass_fall.png", 264, 332, 66, 83, 4, 4);
     ShotRect[LAFASSSHOT].left = 10;
     ShotRect[LAFASSSHOT].right  = 56;
     ShotRect[LAFASSSHOT].top  = 10;
     ShotRect[LAFASSSHOT].bottom = 73;
 
     // EvilBlitz2
-    pProjectileGrafix[EVILBLITZ2]->LoadImage("evilblitz2.png", 140, 400, 70, 400, 2, 1);
+    ProjectileGrafix[EVILBLITZ2].LoadImage("evilblitz2.png", 140, 400, 70, 400, 2, 1);
     ShotRect[EVILBLITZ2].left = 0;
     ShotRect[EVILBLITZ2].right  = 70;
     ShotRect[EVILBLITZ2].top  = 0;
     ShotRect[EVILBLITZ2].bottom = 400;
 
     // FlugLaser
-    pProjectileGrafix[FLUGLASER]->LoadImage("flugkanonelaser.png", 8, 32, 8, 32, 1, 1);
+    ProjectileGrafix[FLUGLASER].LoadImage("flugkanonelaser.png", 8, 32, 8, 32, 1, 1);
     ShotRect[FLUGLASER].left = 0;
     ShotRect[FLUGLASER].right  = 8;
     ShotRect[FLUGLASER].top  = 0;
     ShotRect[FLUGLASER].bottom = 32;
 
     // Eiszapfengeschoss
-    pProjectileGrafix[EISZAPFENSHOT]->LoadImage("eiszapfenshot.png", 12, 48, 12, 48, 1, 1);
+    ProjectileGrafix[EISZAPFENSHOT].LoadImage("eiszapfenshot.png", 12, 48, 12, 48, 1, 1);
     ShotRect[EISZAPFENSHOT].left = 2;
     ShotRect[EISZAPFENSHOT].right  = 10;
     ShotRect[EISZAPFENSHOT].top  = 0;
     ShotRect[EISZAPFENSHOT].bottom = 48;
 
     // Schuss der im Bogen fliegt
-    pProjectileGrafix[ARCSHOT]->LoadImage("arcshot.png", 8, 8, 8, 8, 1, 1);
+    ProjectileGrafix[ARCSHOT].LoadImage("arcshot.png", 8, 8, 8, 8, 1, 1);
     ShotRect[ARCSHOT].left = 0;
     ShotRect[ARCSHOT].right  = 8;
     ShotRect[ARCSHOT].top  = 0;
     ShotRect[ARCSHOT].bottom = 8;
 
     // SchneeBombe
-    pProjectileGrafix[SNOWBOMB]->LoadImage("snowbomb.png", 480, 320, 80, 80, 6, 4);
+    ProjectileGrafix[SNOWBOMB].LoadImage("snowbomb.png", 480, 320, 80, 80, 6, 4);
     ShotRect[SNOWBOMB].left = 10;
     ShotRect[SNOWBOMB].right  = 70;
     ShotRect[SNOWBOMB].top  = 10;
     ShotRect[SNOWBOMB].bottom = 70;
 
     // SchneeBombe klein
-    pProjectileGrafix[SNOWBOMBSMALL]->LoadImage("snowbombsmall.png", 120, 80, 20, 20, 6, 4);
+    ProjectileGrafix[SNOWBOMBSMALL].LoadImage("snowbombsmall.png", 120, 80, 20, 20, 6, 4);
     ShotRect[SNOWBOMBSMALL].left = 5;
     ShotRect[SNOWBOMBSMALL].right  = 15;
     ShotRect[SNOWBOMBSMALL].top  = 5;
     ShotRect[SNOWBOMBSMALL].bottom = 15;
 
     // Schuss der fetten Spinne
-    pProjectileGrafix[FETTESPINNESHOT]->LoadImage("fettespinneshot.png", 160, 50, 40, 50, 4, 1);
+    ProjectileGrafix[FETTESPINNESHOT].LoadImage("fettespinneshot.png", 160, 50, 40, 50, 4, 1);
     ShotRect[FETTESPINNESHOT].left = 5;
     ShotRect[FETTESPINNESHOT].right  = 35;
     ShotRect[FETTESPINNESHOT].top  = 5;
     ShotRect[FETTESPINNESHOT].bottom = 45;
 
     // Schuss der fetten Spinne
-    pProjectileGrafix[FETTESPINNESHOT2]->LoadImage("fettespinneshot2.png", 160, 50, 40, 50, 4, 1);
+    ProjectileGrafix[FETTESPINNESHOT2].LoadImage("fettespinneshot2.png", 160, 50, 40, 50, 4, 1);
     ShotRect[FETTESPINNESHOT2].left = 5;
     ShotRect[FETTESPINNESHOT2].right  = 35;
     ShotRect[FETTESPINNESHOT2].top  = 5;
     ShotRect[FETTESPINNESHOT2].bottom = 45;
 
     // Eierbombe des Eiermanns
-    pProjectileGrafix[EIERBOMBE]->LoadImage("eierbombe.png", 125, 100, 25, 25, 5, 4);
+    ProjectileGrafix[EIERBOMBE].LoadImage("eierbombe.png", 125, 100, 25, 25, 5, 4);
     ShotRect[EIERBOMBE].left = 5;
     ShotRect[EIERBOMBE].right  = 20;
     ShotRect[EIERBOMBE].top  = 5;
     ShotRect[EIERBOMBE].bottom = 20;
 
     // Rundumschuss des evil hurri
-    pProjectileGrafix[EVILROUND1]->LoadImage("evilround.png", 10, 10, 10, 10, 1, 1);
+    ProjectileGrafix[EVILROUND1].LoadImage("evilround.png", 10, 10, 10, 10, 1, 1);
     ShotRect[EVILROUND1].left = 0;
     ShotRect[EVILROUND1].right  = 10;
     ShotRect[EVILROUND1].top  = 0;
     ShotRect[EVILROUND1].bottom = 10;
 
     // SmartBomb laden
-    pProjectileGrafix[SMARTBOMB]->LoadImage("druckwelle.png", 256, 256, 256, 256, 1, 1);
+    ProjectileGrafix[SMARTBOMB].LoadImage("druckwelle.png", 256, 256, 256, 256, 1, 1);
     ShotRect[SMARTBOMB].left = 0;
     ShotRect[SMARTBOMB].right  = 256;
     ShotRect[SMARTBOMB].top  = 0;
     ShotRect[SMARTBOMB].bottom = 256;
 
     // Schutzschild Generator laden
-    pProjectileGrafix[SHIELDSPAWNER]->LoadImage("shieldspawner.png", 120, 12, 12, 12, 10, 1);
+    ProjectileGrafix[SHIELDSPAWNER].LoadImage("shieldspawner.png", 120, 12, 12, 12, 10, 1);
     ShotRect[SHIELDSPAWNER].left = 0;
     ShotRect[SHIELDSPAWNER].right  = 12;
     ShotRect[SHIELDSPAWNER].top  = 0;
     ShotRect[SHIELDSPAWNER].bottom = 12;
 
     // Blaue Bombe laden
-    pProjectileGrafix[BLUEBOMB]->LoadImage("blauebombe.png", 150, 120, 30, 30, 5, 4);
+    ProjectileGrafix[BLUEBOMB].LoadImage("blauebombe.png", 150, 120, 30, 30, 5, 4);
     ShotRect[BLUEBOMB].left = 4;
     ShotRect[BLUEBOMB].right  = 26;
     ShotRect[BLUEBOMB].top  = 4;
     ShotRect[BLUEBOMB].bottom = 26;
 
     // Blaue Bombe laden
-    pProjectileGrafix[SKELETORGRANATE]->LoadImage("skeletor_granate.png", 100, 60, 20, 30, 5, 2);
+    ProjectileGrafix[SKELETORGRANATE].LoadImage("skeletor_granate.png", 100, 60, 20, 30, 5, 2);
     ShotRect[SKELETORGRANATE].left = 4;
     ShotRect[SKELETORGRANATE].right  = 16;
     ShotRect[SKELETORGRANATE].top  = 4;
     ShotRect[SKELETORGRANATE].bottom = 15;
 
     // Blaue Bombe laden
-    pProjectileGrafix[ELEKTROPAMPE]->LoadImage("elektropampe.png", 640, 640, 640, 128, 1, 5);
+    ProjectileGrafix[ELEKTROPAMPE].LoadImage("elektropampe.png", 640, 640, 640, 128, 1, 5);
     ShotRect[ELEKTROPAMPE].left = 0;
     ShotRect[ELEKTROPAMPE].right  = 640;
     ShotRect[ELEKTROPAMPE].top  = 0;
     ShotRect[ELEKTROPAMPE].bottom = 128;
 
     // Blaue Bombe laden
-    pProjectileGrafix[ELEKTROSCHUSS]->LoadImage("spidershot2.png", 48, 48, 48, 48, 1, 1);
+    ProjectileGrafix[ELEKTROSCHUSS].LoadImage("spidershot2.png", 48, 48, 48, 48, 1, 1);
     ShotRect[ELEKTROSCHUSS].left = 16;
     ShotRect[ELEKTROSCHUSS].right  = 32;
     ShotRect[ELEKTROSCHUSS].top  = 16;
@@ -5460,14 +5458,6 @@ ProjectileListClass::~ProjectileListClass(void)
 {
     // Schuss-Liste komplett leeren
     ClearAll();
-
-    // Schuss Grafiken freigeben
-    for(int i=0; i<MAX_SHOTGFX; i++)
-        if(pProjectileGrafix[i] != NULL)
-        {
-            delete(pProjectileGrafix[i]);
-            pProjectileGrafix[i] = NULL;
-        }
 }
 
 // --------------------------------------------------------------------------------------

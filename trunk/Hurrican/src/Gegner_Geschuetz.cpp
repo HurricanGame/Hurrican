@@ -59,7 +59,7 @@ void GegnerGeschuetz::DoKI(void)
         // Schuss abgeben?
         if (AnimPhase == AnimStart)
         {
-            pProjectiles->PushProjectile(xPos + 27, yPos + 36, KRABBLERLASER1);
+            Projectiles.PushProjectile(xPos + 27, yPos + 36, KRABBLERLASER1);
             SoundManager.PlayWave3D((int)(xPos + 30), (int)(yPos + 30), 44000, SOUND_LASERSHOT);
             Handlung  = GEGNER_SCHLIESSEN;
             AnimEnde  = 25;

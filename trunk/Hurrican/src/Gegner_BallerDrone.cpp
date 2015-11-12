@@ -42,7 +42,7 @@ void GegnerBallerdrone::DoDraw(void)
     if (AlreadyDrawn == false)
     {
         DirectGraphics.SetAdditiveMode ();
-        pProjectiles->LavaFlare.RenderSprite (float (xPos - TileEngine.XOffset - 15),
+        Projectiles.LavaFlare.RenderSprite (float (xPos - TileEngine.XOffset - 15),
                                 float (yPos - TileEngine.YOffset - 45), 0,
                                 0xFFFF0000);
         DirectGraphics.SetColorKeyMode ();
@@ -105,8 +105,8 @@ void GegnerBallerdrone::DoKI(void)
             */
             {
                 shotdelay = 15.0f;
-                pProjectiles->PushProjectile(xPos + 12, yPos + 50, SUCHSCHUSS2);
-                pProjectiles->PushProjectile(xPos + 64, yPos + 50, SUCHSCHUSS2);
+                Projectiles.PushProjectile(xPos + 12, yPos + 50, SUCHSCHUSS2);
+                Projectiles.PushProjectile(xPos + 64, yPos + 50, SUCHSCHUSS2);
                 SoundManager.PlayWave(50, 128, 14000 + rand()%2000, SOUND_GOLEMSHOT);
             }
         }

@@ -82,13 +82,13 @@ void GegnerWandKannone::DoKI(void)
                 SoundManager.PlayWave (100, 128, 22050, SOUND_LASERSHOT);
                 if (BlickRichtung == LINKS)
                 {
-                    pProjectiles->PushProjectile(xPos - 18, yPos + 15, WALKER_LASER);
+                    Projectiles.PushProjectile(xPos - 18, yPos + 15, WALKER_LASER);
                     pPartikelSystem->PushPartikel(xPos - 24, yPos - 10, LASERFLAME);
 
                 }
                 else
                 {
-                    pProjectiles->PushProjectile(xPos + 30, yPos + 15, WALKER_LASER2);
+                    Projectiles.PushProjectile(xPos + 30, yPos + 15, WALKER_LASER2);
                     pPartikelSystem->PushPartikel(xPos + 21, yPos - 10, LASERFLAME);
                 }
             }

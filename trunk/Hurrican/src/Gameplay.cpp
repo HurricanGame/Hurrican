@@ -373,7 +373,7 @@ void GameLoop(void)
     }
 
     // Schüsse abhandeln
-    pProjectiles->DoProjectiles();
+    Projectiles.DoProjectiles();
 
     // Partikel abhandeln
     pPartikelSystem->DoPartikel();
@@ -1154,7 +1154,7 @@ void SummaryScreen(void)
 
         pGegner->RunAll();
         pGegner->RenderAll();
-        pProjectiles->DoProjectiles	();				// Schüsse abhandeln
+        Projectiles.DoProjectiles	();				// Schüsse abhandeln
 
         // Overlay Tiles des Levels zeigen und Spieler und Objekte verdecken
         TileEngine.DrawOverlayLevel();

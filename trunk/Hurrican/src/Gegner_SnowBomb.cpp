@@ -148,7 +148,7 @@ void GegnerSnowBomb::DoKI(void)
 void GegnerSnowBomb::GegnerExplode(void)
 {
     for (int i=0; i < 8; i++)
-        pProjectiles->PushProjectile(xPos + rand()%60, yPos + rand()%50 , SNOWBOMBSMALL);
+        Projectiles.PushProjectile(xPos + rand()%60, yPos + rand()%50 , SNOWBOMBSMALL);
 
     for (int i=0; i < 20; i++)
         pPartikelSystem->PushPartikel(xPos + rand()%70 - 10, yPos + rand()%70 - 10, SNOWFLUSH);

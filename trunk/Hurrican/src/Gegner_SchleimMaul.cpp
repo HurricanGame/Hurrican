@@ -98,7 +98,7 @@ void GegnerSchleimMaul::DoKI(void)
     {
         ShotDelay = 5.0f + (4 - Skill) * 3.0f;
 
-        pProjectiles->PushProjectile(xPos + 30, yPos + 18, SCHLEIMSHOT);
+        Projectiles.PushProjectile(xPos + 30, yPos + 18, SCHLEIMSHOT);
     }
 
     Wegschieben(GegnerRect[GegnerArt], 4.0f);

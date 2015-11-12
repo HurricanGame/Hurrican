@@ -46,7 +46,7 @@ void GegnerRaketenwerfer::DoKI(void)
         if (AnimPhase == 6)
         {
             SoundManager.PlayWave(100, 128, 11025, SOUND_GRANATE);
-            pProjectiles->PushProjectile(xPos + 2, yPos + 5, ROCKETWERFER, pAim);
+            Projectiles.PushProjectile(xPos + 2, yPos + 5, ROCKETWERFER, pAim);
         }
 
         if (AnimPhase > AnimEnde)		// Animation von Vorne ?

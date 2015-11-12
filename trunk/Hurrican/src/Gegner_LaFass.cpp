@@ -78,6 +78,6 @@ void GegnerLaFass::GegnerExplode(void)
             pPartikelSystem->PushPartikel(xPos + 33, yPos + i*18, KETTENTEILE4);
 
         // Fass
-        pProjectiles->PushProjectile(xPos + 7, yPos + 90, LAFASSSHOT);
+        Projectiles.PushProjectile(xPos + 7, yPos + 90, LAFASSSHOT);
     }
 }

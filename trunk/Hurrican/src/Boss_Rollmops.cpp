@@ -279,9 +279,9 @@ void GegnerRollmops::RoundShot(bool single)
     {
         WinkelUebergabe = WinkelCount;
         //DKS - support sin/cos lookup table & deg/rad versions of sin/cos
-        /* pProjectiles->PushProjectile(xPos + 50 + (float)sin(WinkelCount / 180.0f * PI) * 40.0f,
+        /* Projectiles.PushProjectile(xPos + 50 + (float)sin(WinkelCount / 180.0f * PI) * 40.0f,
                                      yPos + 50 - (float)cos(WinkelCount / 180.0f * PI) * 40.0f, EISZAPFENSHOT); */
-		pProjectiles->PushProjectile(xPos + 50.0f + sin_deg(WinkelCount) * 40.0f,
+		Projectiles.PushProjectile(xPos + 50.0f + sin_deg(WinkelCount) * 40.0f,
 									 yPos + 50.0f - cos_deg(WinkelCount) * 40.0f, EISZAPFENSHOT);
         WinkelCount += 30;
 
@@ -293,9 +293,9 @@ void GegnerRollmops::RoundShot(bool single)
         {
             WinkelUebergabe = WinkelCount;
             //DKS - support sin/cos lookup table & deg/rad versions of sin/cos
-            /* pProjectiles->PushProjectile(xPos + 50 + (float)sin(WinkelCount / 180.0f * PI) * 50.0f,
+            /* Projectiles.PushProjectile(xPos + 50 + (float)sin(WinkelCount / 180.0f * PI) * 50.0f,
                                          yPos + 50 - (float)cos(WinkelCount / 180.0f * PI) * 50.0f, EISZAPFENSHOT); */
-            pProjectiles->PushProjectile(xPos + 50.0f + sin_deg(WinkelCount) * 50.0f,
+            Projectiles.PushProjectile(xPos + 50.0f + sin_deg(WinkelCount) * 50.0f,
                                          yPos + 50.0f - cos_deg(WinkelCount) * 50.0f, EISZAPFENSHOT);
         }
 
@@ -630,7 +630,7 @@ void GegnerRollmops::DoKI(void)
                     pPartikelSystem->PushPartikel(xPos + 10 + rand()%80, yPos + 10 + rand()%80, SNOWFLUSH);
 
                 for (i = 0; i < 8; i++)
-                    pProjectiles->PushProjectile(xPos + 10 + rand()%80, yPos + 10 + rand()%80, SNOWBOMBSMALL);
+                    Projectiles.PushProjectile(xPos + 10 + rand()%80, yPos + 10 + rand()%80, SNOWBOMBSMALL);
             }
         }
         break;
@@ -770,12 +770,12 @@ void GegnerRollmops::DoKI(void)
                 /*
                 pPartikelSystem->PushPartikel(xPos + xoff + 85 + (float)sin(WinkelUebergabe / 180.0f * PI) * 105.0f,
                                               yPos + 46 - (float)cos(WinkelUebergabe / 180.0f * PI) * 90.0f, SNOWFLUSH);
-                pProjectiles->PushProjectile(xPos + xoff + 90 + (float)sin(WinkelUebergabe / 180.0f * PI) * 105.0f,
+                Projectiles.PushProjectile(xPos + xoff + 90 + (float)sin(WinkelUebergabe / 180.0f * PI) * 105.0f,
                                              yPos + 46 - (float)cos(WinkelUebergabe / 180.0f * PI) * 90.0f, EISZAPFENSHOT);
                 */
 				pPartikelSystem->PushPartikel(xPos + xoff + 85.0f + sin_deg(WinkelUebergabe) * 105.0f,
 											 yPos + 46.0f - cos_deg(WinkelUebergabe) * 90.0f, SNOWFLUSH);
-				pProjectiles->PushProjectile(xPos + xoff + 90.0f + sin_deg(WinkelUebergabe) * 105.0f,
+				Projectiles.PushProjectile(xPos + xoff + 90.0f + sin_deg(WinkelUebergabe) * 105.0f,
 											 yPos + 46.0f - cos_deg(WinkelUebergabe) * 90.0f, EISZAPFENSHOT);
 
                 ShotDelay = 3.0f;

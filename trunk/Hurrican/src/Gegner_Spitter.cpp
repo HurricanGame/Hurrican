@@ -46,7 +46,7 @@ void GegnerSpitter::DoKI(void)
 
             if (AnimPhase == 2)
             {
-                pProjectiles->PushProjectile (xPos + 8, yPos,   STRAIGHTSCHUSS);
+                Projectiles.PushProjectile (xPos + 8, yPos,   STRAIGHTSCHUSS);
                 pPartikelSystem->PushPartikel(xPos,     yPos-8, SMOKE);
             }
 

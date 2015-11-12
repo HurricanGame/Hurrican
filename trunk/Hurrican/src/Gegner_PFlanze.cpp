@@ -41,9 +41,9 @@ void GegnerPflanze::DoKI(void)
         if (AnimPhase == 14)			// Schuss abgeben
         {
             if (BlickRichtung == RECHTS)
-                pProjectiles->PushProjectile (xPos + 84, yPos + 16, PFLANZESHOT, pAim);
+                Projectiles.PushProjectile (xPos + 84, yPos + 16, PFLANZESHOT, pAim);
             else
-                pProjectiles->PushProjectile (xPos + 12, yPos + 16, PFLANZESHOT, pAim);
+                Projectiles.PushProjectile (xPos + 12, yPos + 16, PFLANZESHOT, pAim);
         }
 
         if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?

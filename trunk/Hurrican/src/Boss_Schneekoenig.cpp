@@ -480,7 +480,7 @@ void GegnerSchneeKoenig::DoKI(void)
                     {
                         ShotDelay = 2.0f;
 
-                        pProjectiles->PushProjectile(xPos + 100.0f, yPos + 140.0f, BLUEBOMB);
+                        Projectiles.PushProjectile(xPos + 100.0f, yPos + 140.0f, BLUEBOMB);
                     }
                 }
 
@@ -580,7 +580,7 @@ void GegnerSchneeKoenig::DoKI(void)
                 pPartikelSystem->PushPartikel(xPos + 60 + rand()%20, yPos + 120 + yOffset, SMOKEBIG);
                 pPartikelSystem->PushPartikel(xPos + 95 + rand()%20, yPos + 140 + yOffset, FUNKE);
 
-                pProjectiles->PushProjectile(xPos + 75 + rand()%4, yPos + 80 + yOffset, FEUERFALLE3);
+                Projectiles.PushProjectile(xPos + 75 + rand()%4, yPos + 80 + yOffset, FEUERFALLE3);
 
                 // Explodieren?
                 if (Value1 >= 2 &&

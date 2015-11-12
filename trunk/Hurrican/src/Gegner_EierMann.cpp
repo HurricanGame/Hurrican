@@ -48,7 +48,7 @@ void GegnerEierMann::DoKI(void)
                 AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
 
                 if (PlayerAbstand () <= 700)
-                    pProjectiles->PushProjectile (xPos + 16, yPos + 40, EIERBOMBE, pAim);
+                    Projectiles.PushProjectile (xPos + 16, yPos + 40, EIERBOMBE, pAim);
             }
         }
     } // animieren

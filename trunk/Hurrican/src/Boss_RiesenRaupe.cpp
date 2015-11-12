@@ -65,8 +65,8 @@ void GegnerRiesenRaupe::DoKI(void)
                 pPartikelSystem->PushPartikel(xPos + 30,  yPos - 2, SMOKE);
                 pPartikelSystem->PushPartikel(xPos + 120, yPos - 2, SMOKE);
 
-                pProjectiles->PushProjectile(xPos + 30,   yPos - 2, PFLANZESHOT, pAim);
-                pProjectiles->PushProjectile(xPos + 120,  yPos - 2, PFLANZESHOT, pAim);
+                Projectiles.PushProjectile(xPos + 30,   yPos - 2, PFLANZESHOT, pAim);
+                Projectiles.PushProjectile(xPos + 120,  yPos - 2, PFLANZESHOT, pAim);
 
                 SoundManager.PlayWave(100, 128, 11025, SOUND_ROCKET);
             }

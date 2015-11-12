@@ -75,12 +75,12 @@ void GegnerSpitterbombe::GegnerExplode(void)
     if (!(blocku & BLOCKWERT_WAND) &&
             !(blocku & BLOCKWERT_PLATTFORM))
     {
-        pProjectiles->PushProjectile (xPos + 10, yPos + 30, SPITTERBOMBESHOTLO);
-        pProjectiles->PushProjectile (xPos + 10, yPos + 30, SPITTERBOMBESHOTLM);
-        pProjectiles->PushProjectile (xPos + 10, yPos + 30, SPITTERBOMBESHOTLU);
-        pProjectiles->PushProjectile (xPos + 10, yPos + 30, SPITTERBOMBESHOTRO);
-        pProjectiles->PushProjectile (xPos + 10, yPos + 30, SPITTERBOMBESHOTRM);
-        pProjectiles->PushProjectile (xPos + 10, yPos + 30, SPITTERBOMBESHOTRU);
+        Projectiles.PushProjectile (xPos + 10, yPos + 30, SPITTERBOMBESHOTLO);
+        Projectiles.PushProjectile (xPos + 10, yPos + 30, SPITTERBOMBESHOTLM);
+        Projectiles.PushProjectile (xPos + 10, yPos + 30, SPITTERBOMBESHOTLU);
+        Projectiles.PushProjectile (xPos + 10, yPos + 30, SPITTERBOMBESHOTRO);
+        Projectiles.PushProjectile (xPos + 10, yPos + 30, SPITTERBOMBESHOTRM);
+        Projectiles.PushProjectile (xPos + 10, yPos + 30, SPITTERBOMBESHOTRU);
         Player[0].Score += 200;
     }
 }

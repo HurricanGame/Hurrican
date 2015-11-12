@@ -217,7 +217,7 @@ void GegnerBigFish::DoDraw(void)
         col = D3DCOLOR_RGBA(255, 224, 80, a);
 
         for (int i = 0; i < 2; i++)
-            pProjectiles->LavaFlare.RenderSprite((float)(xPos-TileEngine.XOffset) - 49,
+            Projectiles.LavaFlare.RenderSprite((float)(xPos-TileEngine.XOffset) - 49,
                                    (float)(yPos-TileEngine.YOffset) - 22 + YOff,
                                    0, col, false);
 

@@ -70,9 +70,9 @@ void GegnerSwimWalker::DoKI(void)
             SoundManager.PlayWave(100, 128, 11025, SOUND_ROCKET);
 
             if (BlickRichtung == LINKS)
-                pProjectiles->PushProjectile(xPos - 25, yPos+10, TORPEDO, pAim);
+                Projectiles.PushProjectile(xPos - 25, yPos+10, TORPEDO, pAim);
             else
-                pProjectiles->PushProjectile(xPos + 55, yPos+10, TORPEDO, pAim);
+                Projectiles.PushProjectile(xPos + 55, yPos+10, TORPEDO, pAim);
 
             Handlung = GEGNER_SCHIESSEN;
         }

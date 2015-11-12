@@ -68,7 +68,7 @@ void GegnerLavamann::DoKI(void)
     if (FlameCount < 0.0f)
     {
         FlameCount = 0.5f;
-        pProjectiles->PushProjectile(xPos - 10 - xSpeed * 0.75f, yPos, FEUERFALLE_LAVAMANN);
+        Projectiles.PushProjectile(xPos - 10 - xSpeed * 0.75f, yPos, FEUERFALLE_LAVAMANN);
     }
 
     blocku = TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
