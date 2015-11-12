@@ -462,7 +462,7 @@ void GegnerTheWall::DoKI(void)
             pProjectiles->ClearAll();
 
             // Zeitlupe
-            pTimer->SetMoveSpeed(1.0f);
+            Timer.SetMoveSpeed(1.0f);
 
             // Musiken anhalten
             //DKS - SoundManagerClass has new functions for this:

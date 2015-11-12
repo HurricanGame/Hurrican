@@ -157,8 +157,8 @@ void InitNewGameLevel(int Nr)
 
     pMenu->LoadingProgress = 320.0f;
     DisplayLoadInfo ("");
-    pTimer->wait  (1000);
-    pTimer->update();
+    Timer.wait  (1000);
+    Timer.update();
 
     // Menu Musik ausfaden
     //DKS - Was already commented out:
@@ -174,9 +174,9 @@ void InitNewGameLevel(int Nr)
         while (SoundManager.SongIsPlaying(MUSIC_MENU))
         {
             // Timer updaten
-            pTimer->update();
-            pTimer->wait();
-            SpeedFaktor = pTimer->SpeedFaktor;
+            Timer.update();
+            Timer.wait();
+            SpeedFaktor = Timer.SpeedFaktor;
 
             SoundManager.Update();
         }
@@ -479,7 +479,7 @@ void GameLoop(void)
 void LeaveGameLoop(void)
 {
     // Movespeed wieder richtig setzen
-    pTimer->SetMoveSpeed(10.0f);
+    Timer.SetMoveSpeed(10.0f);
 
     // Message Box verstecken
     pGUI->HideBoxFast();
@@ -1038,8 +1038,8 @@ bool DisplayLoadInfo(const char Text[100])
     if (pMenu->LoadingProgress > 318.0f)
         pMenu->LoadingProgress = 318.0f;
 
-    pTimer->wait (1);
-    pTimer->update();
+    Timer.wait (1);
+    Timer.update();
 
     return true;
 }
@@ -1229,9 +1229,9 @@ void SummaryScreen(void)
         // Backbuffer mit Frontbuffer tauschen
         DirectGraphics.ShowBackBuffer();
 
-        pTimer->update();
-        pTimer->wait();
-        SpeedFaktor = pTimer->SpeedFaktor;
+        Timer.update();
+        Timer.wait();
+        SpeedFaktor = Timer.SpeedFaktor;
 
         DirectInput.UpdateTastatur();
         DirectInput.UpdateJoysticks();
@@ -1323,7 +1323,7 @@ bool NewDemo (const char Filename[])
     InitNewGameLevel (Stage);
 
     // Timer auf 60 fps für Demo setzen
-    pTimer->SetMaxFPS(40);
+    Timer.SetMaxFPS(40);
 
     return true;
 
@@ -1385,7 +1385,7 @@ bool LoadDemo (const char Filename[])
     InitNewGameLevel (Stage);
 
     // Timer auf 60 fps für Demo setzen
-    pTimer->SetMaxFPS(40);
+    Timer.SetMaxFPS(40);
 
     return true;
 
@@ -1403,7 +1403,7 @@ void EndDemo (void)
     DEMOPlaying   = false;
     DEMORecording = false;
 
-    pTimer->SetMaxFPS(0);
+    Timer.SetMaxFPS(0);
 
     //DKS - added this to ensure RNG is always properly seeded
     srand(timeGetTime());
@@ -1429,7 +1429,7 @@ void RecordDemo (void)
     //
     int fps;
 
-    fps = int (pTimer->getFrameRate());
+    fps = int (Timer.getFrameRate());
     fwrite (&fps, sizeof (fps), 1, DEMOFile);
 
 } // RecordDemo
@@ -1454,7 +1454,7 @@ void PlayDemo (void)
     int fps;
 
     fread (&fps, sizeof (fps), 1, DEMOFile);
-    pTimer->SetMaxFPS (fps);
+    Timer.SetMaxFPS (fps);
 
     // Demo Ende ?
     if (feof (DEMOFile))

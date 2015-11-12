@@ -81,7 +81,7 @@ public:
 // --------------------------------------------------------------------------------------
 
 extern float		SpeedFaktor;
-extern TimerClass	*pTimer;
+extern TimerClass	Timer;
 
 #endif
 

@@ -401,7 +401,7 @@ void ConsoleClass::CheckCommands(void)
         CONSOLE_PRINT(Buffer);
 
         // und FPS Setzen
-        pTimer->SetMaxFPS(g_test);
+        Timer.SetMaxFPS(g_test);
     }
 
 //#ifdef _DEBUG
@@ -432,7 +432,7 @@ void ConsoleClass::CheckCommands(void)
         CONSOLE_PRINT(Buffer);
 
         // und Speed Setzen
-        pTimer->SetMoveSpeed(float(atoi(dummy)));
+        Timer.SetMoveSpeed(float(atoi(dummy)));
     }
 //#endif
 
