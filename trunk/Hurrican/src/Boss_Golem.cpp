@@ -275,7 +275,7 @@ void GegnerGolem::DoKI(void)
 {
     // Energie anzeigen
     if (Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_EXPLODIEREN)
-        pHUD->ShowBossHUD(8000, Energy);
+        HUD.ShowBossHUD(8000, Energy);
 
     // Levelausschnitt auf den Golem zentrieren, sobald dieser sichtbar wird
     if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)

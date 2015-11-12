@@ -50,7 +50,7 @@ void GegnerSchmidtOrgie::DoKI(void)
     if (Handlung != GEGNER_INIT		 &&
             Handlung != GEGNER_VERFOLGEN &&
             Handlung != GEGNER_EXPLODIEREN)
-        pHUD->ShowBossHUD(4500, Energy);
+        HUD.ShowBossHUD(4500, Energy);
 
     // Boss aktivieren und Mucke laufen lassen
     //

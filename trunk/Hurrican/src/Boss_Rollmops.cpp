@@ -311,7 +311,7 @@ void GegnerRollmops::DoKI(void)
     // Energie anzeigen
     if (Handlung != GEGNER_INIT &&
             Handlung != GEGNER_EXPLODIEREN)
-        pHUD->ShowBossHUD(4000, Energy);
+        HUD.ShowBossHUD(4000, Energy);
 
     // Levelausschnitt auf den Mops zentrieren, sobald dieser sichtbar wird
     if (TileEngine.Zustand == ZUSTAND_SCROLLBAR)

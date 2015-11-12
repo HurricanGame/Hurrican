@@ -350,7 +350,7 @@ void GegnerSpinnenmaschine::DoKI(void)
     if (Handlung != GEGNER_INIT &&
             Handlung != GEGNER_SPECIAL &&
             Handlung != GEGNER_EXPLODIEREN)
-        pHUD->ShowBossHUD(4000, Energy);
+        HUD.ShowBossHUD(4000, Energy);
 
     // Boss aktivieren und Mucke laufen lassen
     //

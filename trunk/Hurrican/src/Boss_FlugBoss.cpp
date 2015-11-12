@@ -161,7 +161,7 @@ void GegnerFlugBoss::DoKI(void)
 
     	// Energie anzeigen
     	if (Handlung != GEGNER_INIT && Handlung != GEGNER_EXPLODIEREN)
-    		pHUD->ShowBossHUD(6000, Energy);
+    		HUD.ShowBossHUD(6000, Energy);
 
     	// Animieren
     	if (AnimEnde > 0)						// Soll überhaupt anmiert werden ?

@@ -76,7 +76,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 
     // Energie anzeigen
     if (Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_EXPLODIEREN)
-        pHUD->ShowBossHUD(6000, Energy);
+        HUD.ShowBossHUD(6000, Energy);
 
     // Boss aktivieren und Mucke laufen lassen
     if (Active == true && Activated == false)

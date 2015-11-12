@@ -301,7 +301,7 @@ void GegnerDrache::DoDraw(void)
             ArrowCount = 2.0f;
 
         if ((int)(ArrowCount) % 2 == 0)
-            pHUD->Arrow.RenderMirroredSprite((float)(xPos - TileEngine.XOffset) + 50,
+            HUD.Arrow.RenderMirroredSprite((float)(xPos - TileEngine.XOffset) + 50,
                                              (float)(yPos - TileEngine.YOffset) - 30,
                                              0xFF00FF00,
                                              false, true);
@@ -354,7 +354,7 @@ void GegnerDrache::DoKI(void)
     if (Value2 == 0 &&
             Handlung != GEGNER_NOTVISIBLE &&
             Handlung != GEGNER_EXPLODIEREN)
-        pHUD->ShowBossHUD(7000, Energy);
+        HUD.ShowBossHUD(7000, Energy);
 
     // Levelausschnitt auf den Drache zentrieren, sobald dieser sichtbar wird
     if (Value2 == 0 &&

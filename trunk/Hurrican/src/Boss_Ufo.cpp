@@ -68,7 +68,7 @@ void GegnerUfo::DoKI(void)
 
     // Energie anzeigen
     if (Handlung != GEGNER_INIT && Handlung != GEGNER_EXPLODIEREN)
-        pHUD->ShowBossHUD(4000, Energy);
+        HUD.ShowBossHUD(4000, Energy);
 
     // Animieren
     if (AnimEnde > 0)						// Soll überhaupt anmiert werden ?

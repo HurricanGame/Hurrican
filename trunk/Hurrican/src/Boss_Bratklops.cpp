@@ -294,7 +294,7 @@ void GegnerBratklops::DoKI(void)
 
     // Energie anzeigen
     if (Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_EXPLODIEREN)
-        pHUD->ShowBossHUD(8000, Energy);
+        HUD.ShowBossHUD(8000, Energy);
 
     // Boss aktivieren und Mucke laufen lassen
     //

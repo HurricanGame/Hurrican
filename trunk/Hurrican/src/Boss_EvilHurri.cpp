@@ -71,7 +71,7 @@ void GegnerEvilHurri::DoKI(void)
 
     // Energie anzeigen
     if (Handlung != GEGNER_INIT && Handlung != GEGNER_EXPLODIEREN)
-        pHUD->ShowBossHUD(6000, Energy);
+        HUD.ShowBossHUD(6000, Energy);
 
     // Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
     if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
@@ -653,5 +653,5 @@ void GegnerEvilHurri::GegnerExplode(void)
 
     ScrolltoPlayeAfterBoss();
 
-    pHUD->BossHUDActive = false;
+    HUD.BossHUDActive = false;
 }
