@@ -16,7 +16,6 @@ CGUISystem::CGUISystem(void)
 
 CGUISystem::~CGUISystem(void)
 {
-    ExitGUISystem();
 }
 
 //
@@ -38,16 +37,6 @@ void CGUISystem::InitGUISystem(void)
     m_BoxLines = 0;
 
     m_TextID = -1;
-}
-
-//
-// GUISystem beenden
-//
-
-void CGUISystem::ExitGUISystem(void)
-{
-    //DKS - There is no need call this explicitly, it leads to a double-free:
-    //m_Rahmen.~DirectGraphicsSprite();
 }
 
 //

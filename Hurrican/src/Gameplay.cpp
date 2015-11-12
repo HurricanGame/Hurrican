@@ -482,7 +482,7 @@ void LeaveGameLoop(void)
     Timer.SetMoveSpeed(10.0f);
 
     // Message Box verstecken
-    pGUI->HideBoxFast();
+    GUI.HideBoxFast();
 
     // Console verstecken
     pConsole->Hide();
@@ -1070,7 +1070,7 @@ void StageClear(bool PlaySong)
         Player[p].PunisherActive = false;
     }
 
-    pGUI->HideBoxFast();
+    GUI.HideBoxFast();
 
     //DKS - Stop all songs instead of just individual ones..
     //SoundManager.StopSong(MUSIC_STAGEMUSIC, false);
@@ -1133,7 +1133,7 @@ void SummaryScreen(void)
 
     // Summary Box erzeugen
     // DKS - NOTE: boxes are drawn less-than intuitively, you must use dimensions multiples of TILESIZE
-    pGUI->ShowBox(box_x, box_y, box_w, box_h);
+    GUI.ShowBox(box_x, box_y, box_w, box_h);
 
     while (leave == false)
     {
@@ -1170,8 +1170,8 @@ void SummaryScreen(void)
         PartikelSystem.DoThunder ();
 
         // Summary Screen rendern
-        pGUI->Run();
-        D3DCOLOR color = D3DCOLOR_RGBA(0, 255, 0, (int)(pGUI->m_FadingAlpha));
+        GUI.Run();
+        D3DCOLOR color = D3DCOLOR_RGBA(0, 255, 0, (int)(GUI.m_FadingAlpha));
         pDefaultFont->DrawText((float)(RENDERWIDTH-pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_TITLE]))/2,
                 title_txt_y, TextArray[TEXT_SUMMARY_TITLE], color);
 
@@ -1270,7 +1270,7 @@ void SummaryScreen(void)
     //DKS - There's no need to stop it, it will stop on its own as it's not looped:
     //SoundManager.StopSong(MUSIC_STAGECLEAR, false);
 
-    pGUI->HideBoxFast();
+    GUI.HideBoxFast();
 
     ShowSummary = false;
 }
@@ -1492,10 +1492,10 @@ void ShowPissText(void)
         //      them off-centered here. I had to offset by TILESIZE*2 to get
         //      them centered properly horizontally, which I found frustrating.
         //      Oh well..
-//        pGUI->ShowBox(TextArray[TEXT_PISS_1 + TextNr],
+//        GUI.ShowBox(TextArray[TEXT_PISS_1 + TextNr],
 //                      (int)(Player[0].ypos - 70 - TileEngine.YOffset),
 //                      (int)(Player[0].xpos - TileEngine.XOffset) - 10);
-        pGUI->ShowBox(TextArray[TEXT_PISS_1 + TextNr],
+        GUI.ShowBox(TextArray[TEXT_PISS_1 + TextNr],
                       (int)(Player[0].ypos - 70 - TileEngine.YOffset),
                       (int)(Player[0].xpos - TileEngine.XOffset + TILESIZE*2));
 

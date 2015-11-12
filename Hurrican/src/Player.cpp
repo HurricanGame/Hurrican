@@ -740,7 +740,7 @@ bool PlayerClass::GetPlayerInput(void)
         {
             if (Handlung == PISSEN)
             {
-                pGUI->HideBoxFast();
+                GUI.HideBoxFast();
                 BronsonCounter = 0.0f;
                 Handlung = STEHEN;
             }
@@ -914,7 +914,7 @@ void PlayerClass::CheckForExplode(void)
         pGegner->DamageEnemiesonScreen (xpos + 35, ypos + 40, 400);
 
         // Piss-Meldung verschwinden lassen
-        pGUI->HideBoxFast();
+        GUI.HideBoxFast();
         BronsonCounter = 0.0f;
 
         Shield = 0.0f;
@@ -4754,7 +4754,7 @@ void PlayerClass::PlayerInExit(void)
         NewStage = -1;
         Stage    = -1;
         pMenu->AktuellerZustand = MENUZUSTAND_MAINMENU;
-        pGUI->HideBoxFast();
+        GUI.HideBoxFast();
         SoundManager.StopSong(MUSIC_STAGECLEAR, false);
     }
 

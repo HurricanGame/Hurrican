@@ -126,7 +126,7 @@ IntroClass				*pIntro;						// Intro-Objekt
 OuttroClass				*pOuttro;						// Outtro-Objekt
 MenuClass				*pMenu = NULL;					// Hauptmenu-Objekt
 ConsoleClass			*pConsole;						// Konsolen-Objekt
-CGUISystem				*pGUI;							// GUI System
+CGUISystem				GUI;							// GUI System
 CCracktro				*Cracktro;
 RECT					srcrect, destrect;
 
@@ -1160,8 +1160,7 @@ bool GameInit2(void)
     pMenu->LoadingItemsLoaded = 0;
 
     // GUISystem initialiseren
-    pGUI = new CGUISystem();
-    pGUI->InitGUISystem();
+    GUI.InitGUISystem();
 
     // DKS Load PartikelsystemClass sprites:
     PartikelSystem.LoadSprites();
@@ -1335,9 +1334,6 @@ bool GameExit(void)
     Protokoll.WriteText( false, "\n>--------------------<\n" );
     Protokoll.WriteText( false,   "| GameExit started   |\n" );
     Protokoll.WriteText( false,   ">--------------------<\n\n" );
-
-    // GUI freigeben
-    delete(pGUI);
 
     // Sprites freigeben
     delete(pDefaultFont);
@@ -1537,7 +1533,7 @@ bool Heartbeat(void)
         ShowFPS();
 
     // GUI abhandeln
-    pGUI->Run();
+    GUI.Run();
 
     // Konsole abhandeln
     pConsole->DoConsole();
@@ -1553,7 +1549,7 @@ jump:
 
     // Screenshot machen
     if(KeyDown(DIK_F9))
-        pGUI->HideBox();
+        GUI.HideBox();
 #endif
     return true;
 }
