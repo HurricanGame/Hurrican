@@ -318,7 +318,7 @@ void PlayerClass::InitNewLevel()
     // Zu Beginn des Levels werden alle Listen mit Gegner, Schüssen und Partikeln gelöscht
     pPartikelSystem->ClearAll();
     pGegner->ClearAll();
-    pProjectiles->ClearAll();
+    Projectiles.ClearAll();
 }
 
 // --------------------------------------------------------------------------------------
@@ -402,8 +402,8 @@ void PlayerClass::runExplode(void)
         {
             // Spieler hat kurze Zeit lang Schild
             //if (Shield <= 0.0f)
-            pProjectiles->PushProjectile (xpos, ypos, SHIELDSPAWNER, this);
-            pProjectiles->PushProjectile (xpos, ypos, SHIELDSPAWNER2, this);
+            Projectiles.PushProjectile (xpos, ypos, SHIELDSPAWNER, this);
+            Projectiles.PushProjectile (xpos, ypos, SHIELDSPAWNER2, this);
 
             Shield += 20.0f;
 
@@ -1701,7 +1701,7 @@ void PlayerClass::AnimatePlayer(void)
 
                 if (BlitzStart >= 20.0f)
                 {
-                    pProjectiles->PushBlitzBeam(int(BlitzStart), BlitzWinkel, this);
+                    Projectiles.PushBlitzBeam(int(BlitzStart), BlitzWinkel, this);
                     SoundManager.PlayWave(100, 128, 7000, SOUND_BLITZENDE + SoundOff);
                     SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_BLITZENDE + SoundOff);
                     SoundManager.PlayWave(100, 128, 10000, SOUND_EXPLOSION3);
@@ -1765,8 +1765,8 @@ void PlayerClass::AnimatePlayer(void)
 
                 for (int i=-1; i<25; i++)			// Powerlines schiessen
                 {
-                    pProjectiles->PushProjectile (xpos+20, float(int(TileEngine.YOffset/20)*20 + i*20), POWERLINE, this);
-                    pProjectiles->PushProjectile (xpos+20, float(int(TileEngine.YOffset/20)*20 + i*20), POWERLINE2, this);
+                    Projectiles.PushProjectile (xpos+20, float(int(TileEngine.YOffset/20)*20 + i*20), POWERLINE, this);
+                    Projectiles.PushProjectile (xpos+20, float(int(TileEngine.YOffset/20)*20 + i*20), POWERLINE2, this);
                 }
             }
 
@@ -1778,7 +1778,7 @@ void PlayerClass::AnimatePlayer(void)
                 PowerLinePossible = false;			// Taste einrasten
                 SmartBombs--;						// SmartBombs verringern
 
-                pProjectiles->PushProjectile (xpos+40-32, ypos+55-32, SMARTBOMB, this);
+                Projectiles.PushProjectile (xpos+40-32, ypos+55-32, SMARTBOMB, this);
             }
 
             // Taste losgelassen ? Dann können wir wieder eine Powerline schiessen
@@ -2213,8 +2213,8 @@ void PlayerClass::AnimatePlayer(void)
 
         for (int i=-1; i<25; i++)			// Powerlines schiessen
         {
-            pProjectiles->PushProjectile (xpos+20, float(int(TileEngine.YOffset/20)*20 + i*20), POWERLINE, this);
-            pProjectiles->PushProjectile (xpos+20, float(int(TileEngine.YOffset/20)*20 + i*20), POWERLINE2, this);
+            Projectiles.PushProjectile (xpos+20, float(int(TileEngine.YOffset/20)*20 + i*20), POWERLINE, this);
+            Projectiles.PushProjectile (xpos+20, float(int(TileEngine.YOffset/20)*20 + i*20), POWERLINE2, this);
         }
     }
 
@@ -2229,7 +2229,7 @@ void PlayerClass::AnimatePlayer(void)
         PowerLinePossible = false;			// Taste einrasten
         SmartBombs--;						// SmartBombs verringern
 
-        pProjectiles->PushProjectile (xpos+40-32, ypos+35-32, SMARTBOMB, this);
+        Projectiles.PushProjectile (xpos+40-32, ypos+35-32, SMARTBOMB, this);
     }
 
     //--------------------------------------------------------------------
@@ -2991,9 +2991,9 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
         //      ever loaded with textures.
         if (AustrittAnim >= 0 && AustrittAnim < 3) {
             if (Blickrichtung == RECHTS)
-                pProjectiles->SchussFlamme[AustrittAnim].RenderSprite(xpos + AustrittX, ypos + AustrittY, FlameAnim+FlameOff*2, 0xFFFFFFFF);
+                Projectiles.SchussFlamme[AustrittAnim].RenderSprite(xpos + AustrittX, ypos + AustrittY, FlameAnim+FlameOff*2, 0xFFFFFFFF);
             else
-                pProjectiles->SchussFlamme[AustrittAnim].RenderSprite(xpos + AustrittX, ypos + AustrittY, FlameAnim+FlameOff*2, 0xFFFFFFFF, true);
+                Projectiles.SchussFlamme[AustrittAnim].RenderSprite(xpos + AustrittX, ypos + AustrittY, FlameAnim+FlameOff*2, 0xFFFFFFFF, true);
         }
 
         CalcAustrittsPunkt();
@@ -3007,17 +3007,17 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
             switch (FlameOff)
             {
             case 0 :
-                pProjectiles->SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)TileEngine.XOffset,
+                Projectiles.SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)TileEngine.XOffset,
                                                ypos + AustrittY - 70 - (float)TileEngine.YOffset, 0, 0x88FFCC99);
                 break;
 
             case 1 :
-                pProjectiles->SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)TileEngine.XOffset,
+                Projectiles.SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)TileEngine.XOffset,
                                                ypos + AustrittY - 70 - (float)TileEngine.YOffset, 0, 0x8899CCFF);
                 break;
 
             case 2 :
-                pProjectiles->SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)TileEngine.XOffset,
+                Projectiles.SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)TileEngine.XOffset,
                                                ypos + AustrittY - 70 - (float)TileEngine.YOffset, 0, 0x8899FFCC);
                 break;
             }
@@ -3221,7 +3221,7 @@ void PlayerClass::PlayerShoot(void)
         if (FlameThrower)
         {
             WinkelUebergabe = 90.0f + wadd;
-            pProjectiles->PushProjectile(xpos-tempadd+AustrittX - 29, ypos-tempadd+AustrittY - 33, PLAYERFIRE, this);
+            Projectiles.PushProjectile(xpos-tempadd+AustrittX - 29, ypos-tempadd+AustrittY - 33, PLAYERFIRE, this);
             ShotDelay = PLAYER_SHOTDELAY / 5.0f;
 
             //DKS - Added function WaveIsPlaying() to SoundManagerClass:
@@ -3254,66 +3254,66 @@ void PlayerClass::PlayerShoot(void)
                 WinkelUebergabe = 90.0f + wadd;
 
                 if (CurrentWeaponLevel[SelectedWeapon] < 5)
-                    pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot, this);
+                    Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot, this);
 
                 if (CurrentWeaponLevel[SelectedWeapon] >= 5)
-                    pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
+                    Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
 
                 if (CurrentWeaponLevel[SelectedWeapon] > 1 &&
                         CurrentWeaponLevel[SelectedWeapon] < 6)
                 {
                     WinkelUebergabe = 82.0f + wadd;
-                    pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot, this);
+                    Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot, this);
 
                     WinkelUebergabe = 98.0f + wadd;
-                    pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot, this);
+                    Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot, this);
                 }
 
                 if (CurrentWeaponLevel[SelectedWeapon] >= 6)
                 {
                     WinkelUebergabe = 82.0f + wadd;
-                    pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
+                    Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
 
                     WinkelUebergabe = 98.0f + wadd;
-                    pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
+                    Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
                 }
 
                 if (CurrentWeaponLevel[SelectedWeapon] > 2 &&
                         CurrentWeaponLevel[SelectedWeapon] < 7)
                 {
                     WinkelUebergabe = 74.0f + wadd;
-                    pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot, this);
+                    Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot, this);
 
                     WinkelUebergabe = 106.0f + wadd;
-                    pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot, this);
+                    Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot, this);
                 }
 
                 if (CurrentWeaponLevel[SelectedWeapon] >= 7)
                 {
                     WinkelUebergabe = 74.0f + wadd;
-                    pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
+                    Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
 
                     WinkelUebergabe = 106.0f + wadd;
-                    pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
+                    Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
                 }
 
                 if (CurrentWeaponLevel[SelectedWeapon] > 3 &&
                         CurrentWeaponLevel[SelectedWeapon] < 8)
                 {
                     WinkelUebergabe = 66.0f + wadd;
-                    pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot, this);
+                    Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot, this);
 
                     WinkelUebergabe = 114.0f + wadd;
-                    pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot, this);
+                    Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot, this);
                 }
 
                 if (CurrentWeaponLevel[SelectedWeapon] >= 8)
                 {
                     WinkelUebergabe = 66.0f + wadd;
-                    pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
+                    Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
 
                     WinkelUebergabe = 114.0f + wadd;
-                    pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
+                    Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
                 }
             }
             break;
@@ -3346,38 +3346,38 @@ void PlayerClass::PlayerShoot(void)
 
                 if (CurrentWeaponLevel[SelectedWeapon] == 4 ||
                         CurrentWeaponLevel[SelectedWeapon] == 6)
-                    pProjectiles->PushProjectile(xpos-tempaddx+AustrittX - 4, ypos-tempaddy+AustrittY, tempshot + 1, this);
+                    Projectiles.PushProjectile(xpos-tempaddx+AustrittX - 4, ypos-tempaddy+AustrittY, tempshot + 1, this);
 
                 if (CurrentWeaponLevel[SelectedWeapon] == 1 ||
                         CurrentWeaponLevel[SelectedWeapon] == 3 ||
                         CurrentWeaponLevel[SelectedWeapon] == 5)
-                    pProjectiles->PushProjectile(xpos-tempaddx+AustrittX, ypos-tempaddy+AustrittY, tempshot, this);
+                    Projectiles.PushProjectile(xpos-tempaddx+AustrittX, ypos-tempaddy+AustrittY, tempshot, this);
 
                 if (CurrentWeaponLevel[SelectedWeapon] == 2)
                 {
                     if (wadd == 0.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx+AustrittX, ypos-tempaddy+AustrittY-tempaddx*mul1, tempshot, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx+AustrittX, ypos-tempaddy+AustrittY+tempaddx*mul1, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+AustrittX, ypos-tempaddy+AustrittY-tempaddx*mul1, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+AustrittX, ypos-tempaddy+AustrittY+tempaddx*mul1, tempshot, this);
                     }
 
                     if (wadd == 45.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx+tempaddx*mul1+AustrittX - 2, ypos-tempaddy+AustrittY-tempaddx*mul1, tempshot, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx-tempaddx*mul1+AustrittX + 2, ypos-tempaddy+AustrittY+tempaddx*mul1, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+tempaddx*mul1+AustrittX - 2, ypos-tempaddy+AustrittY-tempaddx*mul1, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx-tempaddx*mul1+AustrittX + 2, ypos-tempaddy+AustrittY+tempaddx*mul1, tempshot, this);
                     }
 
                     if (wadd == -45.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx-tempaddx*mul1+AustrittX+6, ypos-tempaddy+AustrittY-tempaddx*mul1, tempshot, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx+tempaddx*mul1+AustrittX+2, ypos-tempaddy+AustrittY+tempaddx*mul1, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx-tempaddx*mul1+AustrittX+6, ypos-tempaddy+AustrittY-tempaddx*mul1, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+tempaddx*mul1+AustrittX+2, ypos-tempaddy+AustrittY+tempaddx*mul1, tempshot, this);
                     }
 
                     if (wadd ==  90.0f ||
                             wadd == -90.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx+AustrittX-tempaddx*mul1, ypos-tempaddy+AustrittY, tempshot, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx+AustrittX+tempaddx*mul1, ypos-tempaddy+AustrittY, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+AustrittX-tempaddx*mul1, ypos-tempaddy+AustrittY, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+AustrittX+tempaddx*mul1, ypos-tempaddy+AustrittY, tempshot, this);
                     }
                 }
 
@@ -3385,27 +3385,27 @@ void PlayerClass::PlayerShoot(void)
                 {
                     if (wadd == 0.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx+AustrittX, ypos-tempaddy+AustrittY-tempaddx*mul1, tempshot + 1, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx+AustrittX, ypos-tempaddy+AustrittY+tempaddx*mul1, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+AustrittX, ypos-tempaddy+AustrittY-tempaddx*mul1, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+AustrittX, ypos-tempaddy+AustrittY+tempaddx*mul1, tempshot + 1, this);
                     }
 
                     if (wadd == 45.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx+tempaddx*mul1*0.75f+AustrittX, ypos-tempaddy+AustrittY-tempaddx*mul1*0.75f, tempshot + 1, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx-tempaddx*mul1*0.75f+AustrittX, ypos-tempaddy+AustrittY+tempaddx*mul1*0.75f, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+tempaddx*mul1*0.75f+AustrittX, ypos-tempaddy+AustrittY-tempaddx*mul1*0.75f, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx-tempaddx*mul1*0.75f+AustrittX, ypos-tempaddy+AustrittY+tempaddx*mul1*0.75f, tempshot + 1, this);
                     }
 
                     if (wadd == -45.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx-tempaddx*mul1*0.75f+AustrittX, ypos-tempaddy+AustrittY-tempaddx*mul1*0.75f, tempshot + 1, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx+tempaddx*mul1*0.75f+AustrittX, ypos-tempaddy+AustrittY+tempaddx*mul1*0.75f, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx-tempaddx*mul1*0.75f+AustrittX, ypos-tempaddy+AustrittY-tempaddx*mul1*0.75f, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+tempaddx*mul1*0.75f+AustrittX, ypos-tempaddy+AustrittY+tempaddx*mul1*0.75f, tempshot + 1, this);
                     }
 
                     if (wadd ==  90.0f ||
                             wadd == -90.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx+AustrittX-tempaddx*mul1, ypos-tempaddy+AustrittY, tempshot + 1, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx+AustrittX+tempaddx*mul1, ypos-tempaddy+AustrittY, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+AustrittX-tempaddx*mul1, ypos-tempaddy+AustrittY, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+AustrittX+tempaddx*mul1, ypos-tempaddy+AustrittY, tempshot + 1, this);
                     }
                 }
 
@@ -3414,27 +3414,27 @@ void PlayerClass::PlayerShoot(void)
                 {
                     if (wadd == 0.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx+AustrittX-tempaddx*Blickrichtung, ypos-tempaddy-tempaddx*mul1*2.3f+AustrittY, tempshot, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx+AustrittX-tempaddx*Blickrichtung, ypos-tempaddy+tempaddx*mul1*2.3f+AustrittY, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+AustrittX-tempaddx*Blickrichtung, ypos-tempaddy-tempaddx*mul1*2.3f+AustrittY, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+AustrittX-tempaddx*Blickrichtung, ypos-tempaddy+tempaddx*mul1*2.3f+AustrittY, tempshot, this);
                     }
 
                     if (wadd == 90.0f ||
                             wadd ==-90.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx-tempaddx*mul1*2.3f+AustrittX, ypos-tempaddy/2+AustrittY, tempshot, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx+tempaddx*mul1*2.3f+AustrittX, ypos-tempaddy/2+AustrittY, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx-tempaddx*mul1*2.3f+AustrittX, ypos-tempaddy/2+AustrittY, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+tempaddx*mul1*2.3f+AustrittX, ypos-tempaddy/2+AustrittY, tempshot, this);
                     }
 
                     if (wadd == 45.0f)
                     {
-                        pProjectiles->PushProjectile(xpos+tempaddx*mul1*2.3f+AustrittX, ypos-tempaddy+AustrittY, tempshot, this);
-                        pProjectiles->PushProjectile(xpos+tempaddx-tempaddx*mul1*2.3f+AustrittX, ypos-tempaddy+tempaddx*3+AustrittY, tempshot, this);
+                        Projectiles.PushProjectile(xpos+tempaddx*mul1*2.3f+AustrittX, ypos-tempaddy+AustrittY, tempshot, this);
+                        Projectiles.PushProjectile(xpos+tempaddx-tempaddx*mul1*2.3f+AustrittX, ypos-tempaddy+tempaddx*3+AustrittY, tempshot, this);
                     }
 
                     if (wadd == -45.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx*mul1*4+AustrittX, ypos-tempaddy+AustrittY, tempshot, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx*2+tempaddx*mul1*2.3f+AustrittX, ypos-tempaddy+tempaddx*2+AustrittY, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx*mul1*4+AustrittX, ypos-tempaddy+AustrittY, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx*2+tempaddx*mul1*2.3f+AustrittX, ypos-tempaddy+tempaddx*2+AustrittY, tempshot, this);
                     }
                 }
 
@@ -3443,27 +3443,27 @@ void PlayerClass::PlayerShoot(void)
                 {
                     if (wadd == 0.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx+AustrittX-tempaddx*Blickrichtung*2, ypos-tempaddy+AustrittY-tempaddx*mul1*2, tempshot + 1, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx+AustrittX-tempaddx*Blickrichtung*2, ypos-tempaddy+AustrittY+tempaddx*mul1*2, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+AustrittX-tempaddx*Blickrichtung*2, ypos-tempaddy+AustrittY-tempaddx*mul1*2, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+AustrittX-tempaddx*Blickrichtung*2, ypos-tempaddy+AustrittY+tempaddx*mul1*2, tempshot + 1, this);
                     }
 
                     if (wadd == 90.0f ||
                             wadd ==-90.0f)
                     {
-                        pProjectiles->PushProjectile(xpos+tempaddx*mul1*2-tempaddx+AustrittX - 4, ypos-tempaddy+AustrittY+tempaddx, tempshot + 1, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx*mul1*2-tempaddx+AustrittX - 4, ypos-tempaddy+AustrittY+tempaddx, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos+tempaddx*mul1*2-tempaddx+AustrittX - 4, ypos-tempaddy+AustrittY+tempaddx, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx*mul1*2-tempaddx+AustrittX - 4, ypos-tempaddy+AustrittY+tempaddx, tempshot + 1, this);
                     }
 
                     if (wadd == 45.0f)
                     {
-                        pProjectiles->PushProjectile(xpos+tempaddx+AustrittX-4, ypos-tempaddy+AustrittY, tempshot + 1, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx+AustrittX-4, ypos-tempaddy+tempaddx*2+AustrittY, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos+tempaddx+AustrittX-4, ypos-tempaddy+AustrittY, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+AustrittX-4, ypos-tempaddy+tempaddx*2+AustrittY, tempshot + 1, this);
                     }
 
                     if (wadd == -45.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx*3+AustrittX-6, ypos-tempaddy+AustrittY, tempshot + 1, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx+AustrittX-4, ypos-tempaddy+tempaddx*2+AustrittY, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx*3+AustrittX-6, ypos-tempaddy+AustrittY, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+AustrittX-4, ypos-tempaddy+tempaddx*2+AustrittY, tempshot + 1, this);
                     }
                 }
 
@@ -3472,27 +3472,27 @@ void PlayerClass::PlayerShoot(void)
                 {
                     if (wadd == 0.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx+AustrittX-tempaddx*Blickrichtung*2, ypos-tempaddy+AustrittY-tempaddx*mul1*3, tempshot, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx+AustrittX-tempaddx*Blickrichtung*2, ypos-tempaddy+AustrittY+tempaddx*mul1*3, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+AustrittX-tempaddx*Blickrichtung*2, ypos-tempaddy+AustrittY-tempaddx*mul1*3, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+AustrittX-tempaddx*Blickrichtung*2, ypos-tempaddy+AustrittY+tempaddx*mul1*3, tempshot, this);
                     }
 
                     if (wadd == 45.0f)
                     {
-                        pProjectiles->PushProjectile(xpos+tempaddx*2+AustrittX+6, ypos-tempaddy+AustrittY, tempshot, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx*2+AustrittX+4, ypos-tempaddy+tempaddx*5/2+AustrittY, tempshot, this);
+                        Projectiles.PushProjectile(xpos+tempaddx*2+AustrittX+6, ypos-tempaddy+AustrittY, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx*2+AustrittX+4, ypos-tempaddy+tempaddx*5/2+AustrittY, tempshot, this);
                     }
 
                     if (wadd == -45.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx*4+AustrittX+2, ypos-tempaddy+AustrittY, tempshot, this);
-                        pProjectiles->PushProjectile(xpos+AustrittX+4, ypos-tempaddy+tempaddx*5/2+AustrittY, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx*4+AustrittX+2, ypos-tempaddy+AustrittY, tempshot, this);
+                        Projectiles.PushProjectile(xpos+AustrittX+4, ypos-tempaddy+tempaddx*5/2+AustrittY, tempshot, this);
                     }
 
                     if (wadd ==  90.0f ||
                             wadd == -90.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx-tempaddy*mul1+AustrittX+3, ypos-tempaddy/2+AustrittY, tempshot, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx+tempaddy*mul1+AustrittX+4, ypos-tempaddy/2+AustrittY, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx-tempaddy*mul1+AustrittX+3, ypos-tempaddy/2+AustrittY, tempshot, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+tempaddy*mul1+AustrittX+4, ypos-tempaddy/2+AustrittY, tempshot, this);
                     }
                 }
 
@@ -3500,27 +3500,27 @@ void PlayerClass::PlayerShoot(void)
                 {
                     if (wadd == 0.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx+AustrittX-tempaddx*Blickrichtung*2, ypos-tempaddy+AustrittY-tempaddx*3, tempshot + 1, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx+AustrittX-tempaddx*Blickrichtung*2, ypos-tempaddy+AustrittY+tempaddx*3, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+AustrittX-tempaddx*Blickrichtung*2, ypos-tempaddy+AustrittY-tempaddx*3, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+AustrittX-tempaddx*Blickrichtung*2, ypos-tempaddy+AustrittY+tempaddx*3, tempshot + 1, this);
                     }
 
                     if (wadd == 45.0f)
                     {
-                        pProjectiles->PushProjectile(xpos+tempaddx*3+AustrittX, ypos-tempaddy+AustrittY, tempshot + 1, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx*2+AustrittX, ypos-tempaddy+tempaddx*3+AustrittY, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos+tempaddx*3+AustrittX, ypos-tempaddy+AustrittY, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx*2+AustrittX, ypos-tempaddy+tempaddx*3+AustrittY, tempshot + 1, this);
                     }
 
                     if (wadd == -45.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx*4.5f+AustrittX, ypos-tempaddy+AustrittY, tempshot + 1, this);
-                        pProjectiles->PushProjectile(xpos+AustrittX, ypos-tempaddy+tempaddx*3+AustrittY, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx*4.5f+AustrittX, ypos-tempaddy+AustrittY, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos+AustrittX, ypos-tempaddy+tempaddx*3+AustrittY, tempshot + 1, this);
                     }
 
                     if (wadd ==  90.0f ||
                             wadd == -90.0f)
                     {
-                        pProjectiles->PushProjectile(xpos-tempaddx-tempaddy*mul1+AustrittX, ypos-tempaddy/2+AustrittY, tempshot + 1, this);
-                        pProjectiles->PushProjectile(xpos-tempaddx+tempaddy*mul1+AustrittX, ypos-tempaddy/2+AustrittY, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx-tempaddy*mul1+AustrittX, ypos-tempaddy/2+AustrittY, tempshot + 1, this);
+                        Projectiles.PushProjectile(xpos-tempaddx+tempaddy*mul1+AustrittX, ypos-tempaddy/2+AustrittY, tempshot + 1, this);
                     }
                 }
 
@@ -3552,34 +3552,34 @@ void PlayerClass::PlayerShoot(void)
                 WinkelUebergabe = 90.0f + wadd;
 
                 //if (CurrentWeaponLevel[SelectedWeapon] <= 5)
-                pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot, this);
+                Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot, this);
 
                 /*
                 if (CurrentWeaponLevel[SelectedWeapon] == 5)
                 {
                 	if (wadd == 0.0f)
                 	{
-                		pProjectiles->PushProjectile(xpos-tempadd+AustrittX + 4, ypos-tempadd+AustrittY-11, tempshot+1, this);
-                		pProjectiles->PushProjectile(xpos-tempadd+AustrittX + 4, ypos-tempadd+AustrittY+19, tempshot+1, this);
+                		Projectiles.PushProjectile(xpos-tempadd+AustrittX + 4, ypos-tempadd+AustrittY-11, tempshot+1, this);
+                		Projectiles.PushProjectile(xpos-tempadd+AustrittX + 4, ypos-tempadd+AustrittY+19, tempshot+1, this);
                 	}
                 	else
                 	if (wadd ==  90.0f ||
                 		wadd == -90.0f)
                 	{
-                		pProjectiles->PushProjectile(xpos-tempadd+AustrittX-11, ypos-tempadd+AustrittY+4, tempshot+1, this);
-                		pProjectiles->PushProjectile(xpos-tempadd+AustrittX+19, ypos-tempadd+AustrittY+4, tempshot+1, this);
+                		Projectiles.PushProjectile(xpos-tempadd+AustrittX-11, ypos-tempadd+AustrittY+4, tempshot+1, this);
+                		Projectiles.PushProjectile(xpos-tempadd+AustrittX+19, ypos-tempadd+AustrittY+4, tempshot+1, this);
                 	}
                 	else
                 	if (wadd == 45.0f)
                 	{
-                		pProjectiles->PushProjectile(xpos-tempadd+AustrittX-7, ypos-tempadd+AustrittY+17, tempshot+1, this);
-                		pProjectiles->PushProjectile(xpos-tempadd+AustrittX+17, ypos-tempadd+AustrittY-7, tempshot+1, this);
+                		Projectiles.PushProjectile(xpos-tempadd+AustrittX-7, ypos-tempadd+AustrittY+17, tempshot+1, this);
+                		Projectiles.PushProjectile(xpos-tempadd+AustrittX+17, ypos-tempadd+AustrittY-7, tempshot+1, this);
                 	}
                 	else
                 	if (wadd == -45.0f)
                 	{
-                		pProjectiles->PushProjectile(xpos-tempadd+AustrittX-7, ypos-tempadd+AustrittY-7, tempshot+1, this);
-                		pProjectiles->PushProjectile(xpos-tempadd+AustrittX+17, ypos-tempadd+AustrittY+15, tempshot+1, this);
+                		Projectiles.PushProjectile(xpos-tempadd+AustrittX-7, ypos-tempadd+AustrittY-7, tempshot+1, this);
+                		Projectiles.PushProjectile(xpos-tempadd+AustrittX+17, ypos-tempadd+AustrittY+15, tempshot+1, this);
                 	}
                 }
 
@@ -3587,46 +3587,46 @@ void PlayerClass::PlayerShoot(void)
                 {
                 	if (wadd ==  0.0f)
                 	{
-                		pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY-10, tempshot, this);
-                		pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY+10, tempshot, this);
+                		Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY-10, tempshot, this);
+                		Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY+10, tempshot, this);
                 	}
                 	else
                 	if (wadd ==  90.0f ||
                 		wadd == -90.0f)
                 	{
-                		pProjectiles->PushProjectile(xpos-tempadd+AustrittX-10, ypos-tempadd+AustrittY, tempshot, this);
-                		pProjectiles->PushProjectile(xpos-tempadd+AustrittX+10, ypos-tempadd+AustrittY, tempshot, this);
+                		Projectiles.PushProjectile(xpos-tempadd+AustrittX-10, ypos-tempadd+AustrittY, tempshot, this);
+                		Projectiles.PushProjectile(xpos-tempadd+AustrittX+10, ypos-tempadd+AustrittY, tempshot, this);
                 	}
 
                 	if (wadd == -45.0f)
                 	{
-                		pProjectiles->PushProjectile(xpos-tempadd+AustrittX-7, ypos-tempadd+AustrittY-7, tempshot, this);
-                		pProjectiles->PushProjectile(xpos-tempadd+AustrittX+7, ypos-tempadd+AustrittY+7, tempshot, this);
+                		Projectiles.PushProjectile(xpos-tempadd+AustrittX-7, ypos-tempadd+AustrittY-7, tempshot, this);
+                		Projectiles.PushProjectile(xpos-tempadd+AustrittX+7, ypos-tempadd+AustrittY+7, tempshot, this);
                 	}
                 	else
                 	if (wadd == 45.0f)
                 	{
-                		pProjectiles->PushProjectile(xpos-tempadd+AustrittX+7, ypos-tempadd+AustrittY-7, tempshot, this);
-                		pProjectiles->PushProjectile(xpos-tempadd+AustrittX-7, ypos-tempadd+AustrittY+7, tempshot, this);
+                		Projectiles.PushProjectile(xpos-tempadd+AustrittX+7, ypos-tempadd+AustrittY-7, tempshot, this);
+                		Projectiles.PushProjectile(xpos-tempadd+AustrittX-7, ypos-tempadd+AustrittY+7, tempshot, this);
                 	}
                 }
 
                 if (CurrentWeaponLevel[SelectedWeapon] == 7)
                 {
                 	WinkelUebergabe = 60.0f + wadd;
-                	pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+2, this);
+                	Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+2, this);
 
                 	WinkelUebergabe = 120.0f + wadd;
-                	pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+2, this);
+                	Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+2, this);
                 }
 
                 if (CurrentWeaponLevel[SelectedWeapon] == 8)
                 {
                 	WinkelUebergabe = 60.0f + wadd;
-                	pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
+                	Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
 
                 	WinkelUebergabe = 120.0f + wadd;
-                	pProjectiles->PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
+                	Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
                 }
                 */
 
@@ -3664,11 +3664,11 @@ void PlayerClass::PlayerShoot(void)
     {
         // Riesen Bombe?
         if (RiesenShotExtra > 0.0f)
-            pProjectiles->PushProjectile(xpos+26, ypos+46, BOMBEBIG, this);
+            Projectiles.PushProjectile(xpos+26, ypos+46, BOMBEBIG, this);
 
         // oder normal
         else
-            pProjectiles->PushProjectile(xpos+30, ypos+56, BOMBE, this);
+            Projectiles.PushProjectile(xpos+30, ypos+56, BOMBE, this);
     }
 }
 
@@ -3717,7 +3717,7 @@ void PlayerClass::PlayerGrenadeShoot (void)
                 wadd = -45.0f;
 
     WinkelUebergabe = 90.0f + wadd;
-    pProjectiles->PushProjectile(xpos+AustrittX-4, ypos+AustrittY-4, GRENADE, this);
+    Projectiles.PushProjectile(xpos+AustrittX-4, ypos+AustrittY-4, GRENADE, this);
 
     SoundManager.PlayWave(100, 128, 11025, SOUND_GRANATE);
     PowerLinePossible = false;			// Taste einrasten
@@ -3780,7 +3780,7 @@ void PlayerClass::DrawNormalLightning(int DrawLength)
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = 0xFFFFFFFF;
 
-    DirectGraphics.SetTexture(  pProjectiles->Blitzstrahl[BlitzAnim].itsTexIdx );
+    DirectGraphics.SetTexture(  Projectiles.Blitzstrahl[BlitzAnim].itsTexIdx );
 
     // Blitz rotieren lassen
     D3DXMATRIX	matRot, matTrans, matTrans2;
@@ -3957,7 +3957,7 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul)
     }
 
     // Strahlen rendern
-    DirectGraphics.SetTexture(  pProjectiles->BlitzTexture.itsTexIdx );
+    DirectGraphics.SetTexture(  Projectiles.BlitzTexture.itsTexIdx );
 
     for (int n = 0; n < 12; n ++)
     {
@@ -4040,12 +4040,12 @@ bool PlayerClass::DoLightning(void)
             Color2 = D3DCOLOR_RGBA(255, 255, 255, 48);
         }
 
-        pProjectiles->Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-TileEngine.XOffset),
+        Projectiles.Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-TileEngine.XOffset),
                                            float(ystart-18-TileEngine.YOffset), Color);
 
         // noch glow um die blitzenden?
         if (options_Detail >= DETAIL_HIGH)
-            pProjectiles->Blitzflash[3-BlitzAnim].RenderSpriteScaled(float(xstart-58-TileEngine.XOffset),
+            Projectiles.Blitzflash[3-BlitzAnim].RenderSpriteScaled(float(xstart-58-TileEngine.XOffset),
                     float(ystart-58-TileEngine.YOffset), 144, 144, 0, Color2);
 
         DirectGraphics.SetColorKeyMode();
@@ -4056,13 +4056,13 @@ bool PlayerClass::DoLightning(void)
 //		d.h., ob er eine Wand getroffen hat
 
     // Anfang des Blitzes leuchten lassen
-    pProjectiles->Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-TileEngine.XOffset),
+    Projectiles.Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-TileEngine.XOffset),
                                        float(ystart-18-TileEngine.YOffset), 0xFFFFFFFF);
 
     // noch glow um die blitzenden?
     if (options_Detail >= DETAIL_HIGH)
     {
-        pProjectiles->Blitzflash[3-BlitzAnim].RenderSpriteScaled(float(xstart-58-TileEngine.XOffset),
+        Projectiles.Blitzflash[3-BlitzAnim].RenderSpriteScaled(float(xstart-58-TileEngine.XOffset),
                 float(ystart-58-TileEngine.YOffset), 144, 144, 0, 0x30FFFFFF);
     }
 
@@ -4193,13 +4193,13 @@ bool PlayerClass::DoLightning(void)
 	ystart -= 16.0f*sin_deg(BlitzWinkel-90);
 
     // Ende des Blitzes leuchten lassen
-    pProjectiles->Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-TileEngine.XOffset),
+    Projectiles.Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-TileEngine.XOffset),
                                        float(ystart-18-TileEngine.YOffset), 0xFFFFFFFF);
 
     // noch glow um die blitzenden?
     if (options_Detail >= DETAIL_HIGH)
     {
-        pProjectiles->Blitzflash[3-BlitzAnim].RenderSpriteScaled(float(xstart-58-TileEngine.XOffset),
+        Projectiles.Blitzflash[3-BlitzAnim].RenderSpriteScaled(float(xstart-58-TileEngine.XOffset),
                 float(ystart-58-TileEngine.YOffset), 144, 144, 0, 0x30FFFFFF);
     }
 
@@ -4347,7 +4347,7 @@ bool PlayerClass::LoadBeam (void)
 	ystart += 28.0f*sin_deg(BlitzWinkel-90);
 
     // Ende des Blitzes leuchten lassen
-    pProjectiles->Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-TileEngine.XOffset),
+    Projectiles.Blitzflash[BlitzAnim].RenderSprite(float(xstart-18-TileEngine.XOffset),
                                        float(ystart-18-TileEngine.YOffset), Color);
 
     BeamX = xstart+12;

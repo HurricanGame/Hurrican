@@ -100,5 +100,5 @@ void GegnerFass::GegnerExplode(void)
 
     // Flammen-Splitter auswerfen
     for (int i=0; i<16; i++)
-        pProjectiles->PushProjectile(xPos-24+rand()%48, yPos+rand()%20, FLAMME);
+        Projectiles.PushProjectile(xPos-24+rand()%48, yPos+rand()%20, FLAMME);
 }

@@ -142,9 +142,9 @@ void GegnerWalker::DoKI(void)
             SoundManager.PlayWave(100, 128, 18000 + rand()%2000, SOUND_LASERSHOT);
 
             if (BlickRichtung == LINKS)
-                pProjectiles->PushProjectile(xPos-18, yPos + 23, WALKER_LASER);
+                Projectiles.PushProjectile(xPos-18, yPos + 23, WALKER_LASER);
             else
-                pProjectiles->PushProjectile(xPos+30, yPos + 23, WALKER_LASER2);
+                Projectiles.PushProjectile(xPos+30, yPos + 23, WALKER_LASER2);
         }
     }
     break;

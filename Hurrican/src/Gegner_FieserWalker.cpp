@@ -85,7 +85,7 @@ void GegnerFieserWalker::DoKI(void)
             SoundManager.PlayWave (100, 128, 10000 + rand()%2000, SOUND_LASERSHOT);
 
             pPartikelSystem->PushPartikel (xPos + 10 + BlickRichtung * 40, yPos + 6, LASERFLAME);
-            pProjectiles->PushProjectile  (xPos + 26 + BlickRichtung * 40, yPos + 23, SUCHSCHUSS);
+            Projectiles.PushProjectile  (xPos + 26 + BlickRichtung * 40, yPos + 23, SUCHSCHUSS);
 
         }
 

@@ -112,9 +112,9 @@ void GegnerRoboMan1::DoKI(void)
             SoundManager.PlayWave(100, 128, 11025, SOUND_GRANATE);
 
             if (BlickRichtung == LINKS)
-                pProjectiles->PushProjectile(xPos - 20, yPos + 75, ROBOROCKET, pAim);
+                Projectiles.PushProjectile(xPos - 20, yPos + 75, ROBOROCKET, pAim);
             else
-                pProjectiles->PushProjectile(xPos + 70, yPos + 75, ROBOROCKET, pAim);
+                Projectiles.PushProjectile(xPos + 70, yPos + 75, ROBOROCKET, pAim);
 
             ShotCount = 15.0f;
             AnimEnde  = 3;

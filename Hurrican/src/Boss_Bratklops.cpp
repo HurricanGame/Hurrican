@@ -391,7 +391,7 @@ void GegnerBratklops::DoKI(void)
             {
                 Handlung = GEGNER_BOMBARDIEREN;
                 ActionDelay = 8.0f;
-                pProjectiles->PushProjectile (xPos + 146, yPos + 186, BRATKLOPSSHOT);
+                Projectiles.PushProjectile (xPos + 146, yPos + 186, BRATKLOPSSHOT);
                 SoundManager.PlayWave (100, 128, 8000, SOUND_GRANATE);
                 Shots = rand()%3 + 3;
             }
@@ -451,7 +451,7 @@ void GegnerBratklops::DoKI(void)
         if (ActionDelay <= 0.0f)
         {
             ActionDelay = 8.0f;
-            pProjectiles->PushProjectile (xPos + 146, yPos + 186, BRATKLOPSSHOT);
+            Projectiles.PushProjectile (xPos + 146, yPos + 186, BRATKLOPSSHOT);
             SoundManager.PlayWave (100, 128, 8000, SOUND_GRANATE);
             Shots--;
             if (Shots == 0)
@@ -493,15 +493,15 @@ void GegnerBratklops::DoKI(void)
             Handlung = GEGNER_STEHEN;
             ActionDelay = 8.0f;
 
-            pProjectiles->PushProjectile (xPos +  60, yPos + 50,  BRATKLOPSSHOT);
-            pProjectiles->PushProjectile (xPos +  84, yPos + 80,  BRATKLOPSSHOT);
-            pProjectiles->PushProjectile (xPos + 108, yPos + 115, BRATKLOPSSHOT);
-            pProjectiles->PushProjectile (xPos + 130, yPos + 150, BRATKLOPSSHOT);
-            pProjectiles->PushProjectile (xPos + 145, yPos + 185, BRATKLOPSSHOT);
-            pProjectiles->PushProjectile (xPos + 130, yPos + 220, BRATKLOPSSHOT);
-            pProjectiles->PushProjectile (xPos + 108, yPos + 255, BRATKLOPSSHOT);
-            pProjectiles->PushProjectile (xPos +  84, yPos + 290, BRATKLOPSSHOT);
-            pProjectiles->PushProjectile (xPos +  60, yPos + 320, BRATKLOPSSHOT);
+            Projectiles.PushProjectile (xPos +  60, yPos + 50,  BRATKLOPSSHOT);
+            Projectiles.PushProjectile (xPos +  84, yPos + 80,  BRATKLOPSSHOT);
+            Projectiles.PushProjectile (xPos + 108, yPos + 115, BRATKLOPSSHOT);
+            Projectiles.PushProjectile (xPos + 130, yPos + 150, BRATKLOPSSHOT);
+            Projectiles.PushProjectile (xPos + 145, yPos + 185, BRATKLOPSSHOT);
+            Projectiles.PushProjectile (xPos + 130, yPos + 220, BRATKLOPSSHOT);
+            Projectiles.PushProjectile (xPos + 108, yPos + 255, BRATKLOPSSHOT);
+            Projectiles.PushProjectile (xPos +  84, yPos + 290, BRATKLOPSSHOT);
+            Projectiles.PushProjectile (xPos +  60, yPos + 320, BRATKLOPSSHOT);
 
             SoundManager.PlayWave (100, 128,  8000, SOUND_GRANATE);
             SoundManager.PlayWave (100, 128, 11025, SOUND_GRANATE);

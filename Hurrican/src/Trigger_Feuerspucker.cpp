@@ -78,16 +78,16 @@ void GegnerFeuerspucker::DoKI(void)
                 switch (Value1)
                 {
                 case 0  :
-                    pProjectiles->PushProjectile(xPos, yPos, FEUERFALLE);
+                    Projectiles.PushProjectile(xPos, yPos, FEUERFALLE);
                     break;
                 case 1  :
-                    pProjectiles->PushProjectile(xPos, yPos, FEUERFALLE2);
+                    Projectiles.PushProjectile(xPos, yPos, FEUERFALLE2);
                     break;
                 case 2  :
-                    pProjectiles->PushProjectile(xPos, yPos, FEUERFALLE3);
+                    Projectiles.PushProjectile(xPos, yPos, FEUERFALLE3);
                     break;
                 case 3  :
-                    pProjectiles->PushProjectile(xPos, yPos, FEUERFALLE4);
+                    Projectiles.PushProjectile(xPos, yPos, FEUERFALLE4);
                     break;
                 default :
                     break;

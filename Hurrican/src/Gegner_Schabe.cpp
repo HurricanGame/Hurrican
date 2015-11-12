@@ -53,7 +53,7 @@ void GegnerSchabe::DoKI(void)
         ShotDelay = 8.0f + (4.0f - Skill) * 2;
 
         SoundManager.PlayWave (50, 128, 10000 + rand()%4000, SOUND_CANON);
-        pProjectiles->PushProjectile(xPos + 5.0f, yPos + 5.0f, SUCHSCHUSS);
+        Projectiles.PushProjectile(xPos + 5.0f, yPos + 5.0f, SUCHSCHUSS);
     }
 
     // Animieren

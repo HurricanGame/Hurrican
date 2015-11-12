@@ -81,9 +81,9 @@ void GegnerSchienenViech::DoKI(void)
                 // Schiessen
                 //
                 if (pAim->ypos < yPos)
-                    pProjectiles->PushProjectile (xPos+18, yPos - 8, STRAIGHTSCHUSS);
+                    Projectiles.PushProjectile (xPos+18, yPos - 8, STRAIGHTSCHUSS);
                 else
-                    pProjectiles->PushProjectile (xPos+18, yPos + 48,STRAIGHTSCHUSS2);
+                    Projectiles.PushProjectile (xPos+18, yPos + 48,STRAIGHTSCHUSS2);
             }
         }
         else
@@ -96,9 +96,9 @@ void GegnerSchienenViech::DoKI(void)
                 // Schiessen
                 //
                 if (pAim->ypos < yPos)
-                    pProjectiles->PushProjectile (xPos+18, yPos - 8, STRAIGHTSCHUSS);
+                    Projectiles.PushProjectile (xPos+18, yPos - 8, STRAIGHTSCHUSS);
                 else
-                    pProjectiles->PushProjectile (xPos+18, yPos + 48,STRAIGHTSCHUSS2);
+                    Projectiles.PushProjectile (xPos+18, yPos + 48,STRAIGHTSCHUSS2);
             }
         }
     } // animieren

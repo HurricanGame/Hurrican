@@ -120,7 +120,7 @@ DirectGraphicsFont		*pDefaultFont = new(DirectGraphicsFont);
 DirectGraphicsFont		*pMenuFont	  = new(DirectGraphicsFont);
 TileEngineClass			TileEngine;                     // Tile Engine
 PartikelsystemClass		*pPartikelSystem;				// Das coole Partikelsystem
-ProjectileListClass		*pProjectiles;					// Liste mit Schüssen
+ProjectileListClass		Projectiles;					// Liste mit Schüssen
 GegnerListClass			*pGegner;						// Liste mit Gegner
 IntroClass				*pIntro;						// Intro-Objekt
 OuttroClass				*pOuttro;						// Outtro-Objekt
@@ -1166,15 +1166,15 @@ bool GameInit2(void)
     // Partikelsystem initialisieren
     pPartikelSystem = new(PartikelsystemClass);
 
-    // ProjectileListe initialisieren
-    pProjectiles = new(ProjectileListClass);
-
     // GegnerListe initialisieren
     pGegner = new(GegnerListClass);
 
     // Tileengine initialisieren
     TileEngine.LoadSprites();   //DKS - Added this function to TileEngineClass
     TileEngine.SetScrollSpeed(1.0f, 0.0f);
+
+    // DKS Load projectile sprites:
+    Projectiles.LoadSprites();
 
     // HUD initialisieren
     pHUD = new HUDClass();
@@ -1362,10 +1362,6 @@ bool GameExit(void)
     // Partikelsystem beenden
     delete(pPartikelSystem);
     Protokoll.WriteText( false, "-> Particle System released\n" );
-
-    // ProjectileListe beenden
-    delete(pProjectiles);
-    Protokoll.WriteText( false, "-> Projectile List released\n" );
 
     //DKS - Sound manager is now a static global, and we use new Exit() method:
     SoundManager.Exit();
@@ -1587,7 +1583,7 @@ void ShowDebugInfo(void)
     pDefaultFont->DrawText(150, 60, StringBuffer, 0xFFFFFFFF);
 
     // Anzahl der aktuell aktiven Schüsse anzeigen
-    _itoa_s(pProjectiles->GetNumProjectiles(), StringBuffer, 10);
+    _itoa_s(Projectiles.GetNumProjectiles(), StringBuffer, 10);
     pDefaultFont->DrawText(200, 60, "Projektile :", 0xFFFFFFFF);
     pDefaultFont->DrawText(300, 60, StringBuffer, 0xFFFFFFFF);
 

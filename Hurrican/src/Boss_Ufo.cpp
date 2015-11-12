@@ -43,12 +43,12 @@ void GegnerUfo::DoDraw(void)
     if (AlreadyDrawn == false)
     {
         DirectGraphics.SetAdditiveMode();
-        pProjectiles->LavaFlare.RenderSpriteRotated(xPos + 40.0f - (float)TileEngine.XOffset,
+        Projectiles.LavaFlare.RenderSpriteRotated(xPos + 40.0f - (float)TileEngine.XOffset,
                                       yPos + 20.0f - (float)TileEngine.YOffset,
                                       xPos * 0.5f, 0xFFFF2288);
 
         //DKS - This was commented out in original source code:
-//		pProjectiles->LavaFlare.RenderSpriteRotated(xPos + 40.0f - (float)TileEngine.XOffset,
+//		Projectiles.LavaFlare.RenderSpriteRotated(xPos + 40.0f - (float)TileEngine.XOffset,
 //									  yPos + 30.0f - (float)TileEngine.YOffset,
 //									  360.0f - xPos * 0.5f, 0x88FFFF88);
 
@@ -236,8 +236,8 @@ void GegnerUfo::DoKI(void)
         if (ShotDelay <= 0.0f)
         {
             SoundManager.PlayWave(50, 128, 14000 + rand()%2000, SOUND_GOLEMSHOT);
-            pProjectiles->PushProjectile(xPos + 20.0f, yPos + 40.0f, SUCHSCHUSS2);
-            pProjectiles->PushProjectile(xPos + 165.0f, yPos + 40.0f, SUCHSCHUSS2);
+            Projectiles.PushProjectile(xPos + 20.0f, yPos + 40.0f, SUCHSCHUSS2);
+            Projectiles.PushProjectile(xPos + 165.0f, yPos + 40.0f, SUCHSCHUSS2);
             ShotDelay = 5.0f;
         }
     }
@@ -268,7 +268,7 @@ void GegnerUfo::DoKI(void)
 
             SoundManager.PlayWave (100, 128, 10000 + rand()%500, SOUND_LASERSHOT);
 
-            pProjectiles->PushProjectile  (xPos + 100 - 21, yPos + 60, UFOLASER);
+            Projectiles.PushProjectile  (xPos + 100 - 21, yPos + 60, UFOLASER);
             pPartikelSystem->PushPartikel (xPos + 100 - 80, yPos + 30, UFOLASERFLARE);
         }
     }

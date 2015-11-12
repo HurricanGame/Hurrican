@@ -53,7 +53,7 @@ void GegnerFieserFireWalker::DoDraw(void)
         // Leuchten beim Schiessen rendern
         //
         DirectGraphics.SetAdditiveMode ();
-        pProjectiles->LavaFlare.RenderSprite (float (xPos - TileEngine.XOffset - 30) + 6 + BlickRichtung * 36,
+        Projectiles.LavaFlare.RenderSprite (float (xPos - TileEngine.XOffset - 30) + 6 + BlickRichtung * 36,
                                 float (yPos - TileEngine.YOffset - 30), 0,
                                 0xFFFF8822);
         DirectGraphics.SetColorKeyMode ();
@@ -126,7 +126,7 @@ void GegnerFieserFireWalker::DoKI(void)
             ShotDelay2 = 0.4f;
             ShotDelay -= 1.0f;
 
-            pProjectiles->PushProjectile  (xPos + 5 + BlickRichtung * 38, yPos - 7, WALKERFIRE, pAim);
+            Projectiles.PushProjectile  (xPos + 5 + BlickRichtung * 38, yPos - 7, WALKERFIRE, pAim);
         }
 
         // Spieler nicht mehr vor dem Walker? Dann auch nicht mehr schiessen

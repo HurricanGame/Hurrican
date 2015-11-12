@@ -719,11 +719,11 @@ void GegnerMetalHead::DoKI(void)
 
                                 //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
                                 //float w = (450.0f - GunWinkel) / 180.0f * PI;
-                                //pProjectiles->PushProjectile(xPos + 110 + (float)sin(w) * 70.0f,
+                                //Projectiles.PushProjectile(xPos + 110 + (float)sin(w) * 70.0f,
                                 //                             yPos + 195 + (float)cos(w) * 70.0f,
                                 //                             FIREBALL_BIG);
                                 float w = 450.0f - GunWinkel;
-                                pProjectiles->PushProjectile(xPos + 110.0f + sin_deg(w) * 70.0f,
+                                Projectiles.PushProjectile(xPos + 110.0f + sin_deg(w) * 70.0f,
                                                              yPos + 195.0f + cos_deg(w) * 70.0f,
                                                              FIREBALL_BIG);
 
@@ -738,11 +738,11 @@ void GegnerMetalHead::DoKI(void)
                                     WinkelUebergabe = GunWinkel + 90 + i;
                                     //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
                                     //float w = (450.0f - GunWinkel) / 180.0f * PI;
-                                    //pProjectiles->PushProjectile(xPos + 130 + (float)sin(w) * 70.0f,
+                                    //Projectiles.PushProjectile(xPos + 130 + (float)sin(w) * 70.0f,
                                     //                             yPos + 200 + (float)cos(w) * 70.0f,
                                     //                             FIREBALL);
                                     float w = 450.0f - GunWinkel;
-                                    pProjectiles->PushProjectile(xPos + 130.0f + sin_deg(w) * 70.0f,
+                                    Projectiles.PushProjectile(xPos + 130.0f + sin_deg(w) * 70.0f,
                                                                  yPos + 200.0f + cos_deg(w) * 70.0f,
                                                                  FIREBALL);
                                 }
@@ -754,7 +754,7 @@ void GegnerMetalHead::DoKI(void)
                             if (ShotArt == 2)
                             {
                                 SoundManager.PlayWave(100, 128, 14000 + rand()%2000, SOUND_FIREBALL);
-                                pProjectiles->PushProjectile(xPos + 180,
+                                Projectiles.PushProjectile(xPos + 180,
                                                              yPos + 195,
                                                              FIREBALL_BOMB, pAim);
                             }
@@ -767,12 +767,12 @@ void GegnerMetalHead::DoKI(void)
                             ShotDelay = 0.5f;
 
                             if (ShotArt == 1)
-                                pProjectiles->PushProjectile(xPos + 95, yPos + 185 + rand()%5, WALKERFIRE, pAim);
+                                Projectiles.PushProjectile(xPos + 95, yPos + 185 + rand()%5, WALKERFIRE, pAim);
                             else
                             {
                                 if (ShotCount % 12 == 0)
                                 {
-                                    pProjectiles->PushProjectile(xPos + 100, yPos + 213 + rand()%5, PFLANZESHOT, pAim);
+                                    Projectiles.PushProjectile(xPos + 100, yPos + 213 + rand()%5, PFLANZESHOT, pAim);
 
                                     pPartikelSystem->PushPartikel(xPos + 80,
                                                                   yPos + 150,

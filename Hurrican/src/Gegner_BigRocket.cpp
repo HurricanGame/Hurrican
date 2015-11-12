@@ -46,11 +46,11 @@ void GegnerBigRocket::DoDraw(void)
     if (options_Detail >= DETAIL_HIGH)
     {
         DirectGraphics.SetAdditiveMode ();
-        pProjectiles->LavaFlare.RenderSprite (float (xPos - 27 - TileEngine.XOffset),
+        Projectiles.LavaFlare.RenderSprite (float (xPos - 27 - TileEngine.XOffset),
                                 float (yPos + 237 - TileEngine.YOffset), 0, 0xCCFFFFFF);
-        pProjectiles->LavaFlare.RenderSprite (float (xPos - 27 - TileEngine.XOffset),
+        Projectiles.LavaFlare.RenderSprite (float (xPos - 27 - TileEngine.XOffset),
                                 float (yPos + 237 - TileEngine.YOffset), 0, 0xCCAAAA00);
-        pProjectiles->LavaFlare.RenderSprite (float (xPos - 27 - TileEngine.XOffset),
+        Projectiles.LavaFlare.RenderSprite (float (xPos - 27 - TileEngine.XOffset),
                                 float (yPos + 237 - TileEngine.YOffset), 0, 0xCCAA0000);
         DirectGraphics.SetColorKeyMode ();
     }

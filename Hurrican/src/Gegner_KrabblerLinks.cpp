@@ -61,7 +61,7 @@ void GegnerKrabblerLinks::DoKI(void)
         {
             ShotDelay = float(Value1);
             Handlung = GEGNER_SCHIESSEN;
-            pProjectiles->PushProjectile(xPos + 24, yPos + 23, KRABBLERLASER2);
+            Projectiles.PushProjectile(xPos + 24, yPos + 23, KRABBLERLASER2);
             pPartikelSystem->PushPartikel(xPos + 48, yPos + 3, LASERFLAME);
             SoundManager.PlayWave3D(int(xPos + 25), int(yPos + 37), 44100, SOUND_LASERSHOT);
             AnimPhase = 10;

@@ -51,19 +51,19 @@ void GegnerRoboRaupe::DoKI(void)
             {
                 if (BlickRichtung == RECHTS)
                 {
-                    pProjectiles->PushProjectile(xPos + 31, yPos + 10, ARCSHOT);
+                    Projectiles.PushProjectile(xPos + 31, yPos + 10, ARCSHOT);
 
                     WinkelUebergabe = 1.5f;
-                    pProjectiles->PushProjectile(xPos + 15, yPos + 10, ARCSHOTLEFT);
-                    pProjectiles->PushProjectile(xPos + 51, yPos + 10, ARCSHOTRIGHT);
+                    Projectiles.PushProjectile(xPos + 15, yPos + 10, ARCSHOTLEFT);
+                    Projectiles.PushProjectile(xPos + 51, yPos + 10, ARCSHOTRIGHT);
                 }
                 else
                 {
-                    pProjectiles->PushProjectile(xPos + 50, yPos + 10, ARCSHOT);
+                    Projectiles.PushProjectile(xPos + 50, yPos + 10, ARCSHOT);
 
                     WinkelUebergabe = 1.5f;
-                    pProjectiles->PushProjectile(xPos + 32, yPos + 10, ARCSHOTLEFT);
-                    pProjectiles->PushProjectile(xPos + 70, yPos + 10, ARCSHOTRIGHT);
+                    Projectiles.PushProjectile(xPos + 32, yPos + 10, ARCSHOTLEFT);
+                    Projectiles.PushProjectile(xPos + 70, yPos + 10, ARCSHOTRIGHT);
                 }
 
                 SoundManager.PlayWave(100, 128, 11025, SOUND_GRANATE);

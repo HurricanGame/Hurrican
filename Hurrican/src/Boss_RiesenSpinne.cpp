@@ -309,10 +309,10 @@ void GegnerRiesenSpinne::DoDraw(void)
 
         DirectGraphics.SetAdditiveMode();
 
-        pProjectiles->LavaFlare.RenderSprite((float)(xPos-TileEngine.XOffset) - 10.0f + (float)(sin(HeadXOffset) * 10.0f),
+        Projectiles.LavaFlare.RenderSprite((float)(xPos-TileEngine.XOffset) - 10.0f + (float)(sin(HeadXOffset) * 10.0f),
                                (float)(yPos-TileEngine.YOffset) + 50.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, D3DCOLOR_RGBA(255, 0, 255, a));
 
-        pProjectiles->LavaFlare.RenderSpriteScaled((float)(xPos-TileEngine.XOffset) + 30.0f + (float)(sin(HeadXOffset) * 10.0f),
+        Projectiles.LavaFlare.RenderSpriteScaled((float)(xPos-TileEngine.XOffset) + 30.0f + (float)(sin(HeadXOffset) * 10.0f),
                                      (float)(yPos-TileEngine.YOffset) + 90.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 40, 40, D3DCOLOR_RGBA(255, 255, 255, a));
     }
 
@@ -323,10 +323,10 @@ void GegnerRiesenSpinne::DoDraw(void)
 
         DirectGraphics.SetAdditiveMode();
 
-        pProjectiles->LavaFlare.RenderSpriteScaled((float)(xPos-TileEngine.XOffset) - 20.0f + (float)(sin(HeadXOffset) * 10.0f),
+        Projectiles.LavaFlare.RenderSpriteScaled((float)(xPos-TileEngine.XOffset) - 20.0f + (float)(sin(HeadXOffset) * 10.0f),
                                      (float)(yPos-TileEngine.YOffset) + 60.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 100, 100, D3DCOLOR_RGBA(255, 255, 255, a));
 
-        pProjectiles->LavaFlare.RenderSpriteScaled((float)(xPos-TileEngine.XOffset) - 90.0f + (float)(sin(HeadXOffset) * 10.0f),
+        Projectiles.LavaFlare.RenderSpriteScaled((float)(xPos-TileEngine.XOffset) - 90.0f + (float)(sin(HeadXOffset) * 10.0f),
                                      (float)(yPos-TileEngine.YOffset) - 10.0f + (float)(sin(WalkCount) * 2.0f) + tempdamage + yBody, 240, 240, D3DCOLOR_RGBA(255, 255, 255, a));
     }
 
@@ -396,7 +396,7 @@ void GegnerRiesenSpinne::RandomHandlung(void)
     case 5:
     {
         Handlung = GEGNER_SPECIAL2;
-        pProjectiles->PushProjectile((float) Value1, yPos + yBody + 110.0f, SPIDERLASER);
+        Projectiles.PushProjectile((float) Value1, yPos + yBody + 110.0f, SPIDERLASER);
         SoundManager.PlayWave (100, 128, 11025, SOUND_BEAMLOAD2);
         AnimCount = 140;
         ShotDelay = 0.0f;
@@ -533,13 +533,13 @@ void GegnerRiesenSpinne::DoKI(void)
                     pPartikelSystem->PushPartikel(xPos + 30.0f - 50.0f, yPos + yBody + 85.0f - 35.0f, EXPLOSIONFLARE2);
 
                     if (ShotMode == 0)
-                        pProjectiles->PushProjectile(xPos + 30.0f, yPos + yBody + 85.0f, SPIDERSLOW);
+                        Projectiles.PushProjectile(xPos + 30.0f, yPos + yBody + 85.0f, SPIDERSLOW);
                     else
                     {
                         for (int i = 0; i < 5; i++)
                         {
                             WinkelUebergabe = 212 - i * 15.0f;
-                            pProjectiles->PushProjectile(xPos, yPos + yBody + 85.0f, SPIDERSHOTLANGSAM);
+                            Projectiles.PushProjectile(xPos, yPos + yBody + 85.0f, SPIDERSHOTLANGSAM);
                         }
 
                     }
@@ -678,9 +678,9 @@ void GegnerRiesenSpinne::DoKI(void)
             SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
             WinkelUebergabe = 180 - HeadWinkel * 1.5f;
             //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
-            //pProjectiles->PushProjectile(xPos - (float)cos(HeadWinkel * PI / 180.0f) * 10.0f,
+            //Projectiles.PushProjectile(xPos - (float)cos(HeadWinkel * PI / 180.0f) * 10.0f,
             //                             yPos + (float)sin(HeadWinkel * PI / 180.0f) * 140.0f + 90.0f + yBody, SPIDERSHOT);
-            pProjectiles->PushProjectile(xPos - cos_deg(HeadWinkel) * 10.0f,
+            Projectiles.PushProjectile(xPos - cos_deg(HeadWinkel) * 10.0f,
                                          yPos + sin_deg(HeadWinkel) * 140.0f + 90.0f + yBody, SPIDERSHOT);
 
             // Kopf zurückschnellen lassen
@@ -737,8 +737,8 @@ void GegnerRiesenSpinne::DoKI(void)
 
             // Böller abschiessen
             SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
-            pProjectiles->PushProjectile(xPos + 20.0f, yPos + 80.0f + yBody, SPIDERSHOT2);
-            pProjectiles->PushProjectile(xPos + 20.0f, yPos + 100.0f + yBody, SPIDERSHOT2);
+            Projectiles.PushProjectile(xPos + 20.0f, yPos + 80.0f + yBody, SPIDERSHOT2);
+            Projectiles.PushProjectile(xPos + 20.0f, yPos + 100.0f + yBody, SPIDERSHOT2);
 
             // Kopf zurückschnellen lassen
             HeadXOffset = 3 * PI;
@@ -782,8 +782,8 @@ void GegnerRiesenSpinne::DoKI(void)
             // Böller abschiessen
             SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
             WinkelUebergabe = PlayerAbstandHoriz() / 10.0f;
-            pProjectiles->PushProjectile(xPos + 20.0f, yPos + 80.0f + yBody, SPIDERSHOT2);
-            pProjectiles->PushProjectile(xPos + 20.0f, yPos + 100.0f + yBody, SPIDERSHOT2);
+            Projectiles.PushProjectile(xPos + 20.0f, yPos + 80.0f + yBody, SPIDERSHOT2);
+            Projectiles.PushProjectile(xPos + 20.0f, yPos + 100.0f + yBody, SPIDERSHOT2);
 
             // Kopf zurückschnellen lassen
             HeadXOffset = 3 * PI;
@@ -847,7 +847,7 @@ void GegnerRiesenSpinne::DoKI(void)
         Energy = 100.0f;
         Handlung  = GEGNER_EXPLODIEREN;
         AnimCount = 1.0f;
-        pProjectiles->ClearType(SPIDERLASER);
+        Projectiles.ClearType(SPIDERLASER);
 
         // Endboss-Musik ausfaden und abschalten
         SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);

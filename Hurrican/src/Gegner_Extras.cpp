@@ -245,8 +245,8 @@ void GegnerExtras::DoKI(void)
             // Schutzuschild Spawner erzeugen
             if (pCollector->Shield <= 0.0f)
             {
-                pProjectiles->PushProjectile (pCollector->xpos, pCollector->ypos, SHIELDSPAWNER, pCollector);
-                pProjectiles->PushProjectile (pCollector->xpos, pCollector->ypos, SHIELDSPAWNER2, pCollector);
+                Projectiles.PushProjectile (pCollector->xpos, pCollector->ypos, SHIELDSPAWNER, pCollector);
+                Projectiles.PushProjectile (pCollector->xpos, pCollector->ypos, SHIELDSPAWNER2, pCollector);
             }
 
             // Schild setzen

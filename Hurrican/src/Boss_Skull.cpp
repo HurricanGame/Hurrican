@@ -291,7 +291,7 @@ void GegnerSkull::DoKI(void)
         if (ShotDelay < 0.0f)
         {
             ShotDelay = 15.0f;
-            pProjectiles->PushProjectile(xPos - 10, yPos, SUCHSCHUSS2, pAim);
+            Projectiles.PushProjectile(xPos - 10, yPos, SUCHSCHUSS2, pAim);
             SoundManager.PlayWave(50, 128, 14000 + rand()%2000, SOUND_GOLEMSHOT);
         }
     }

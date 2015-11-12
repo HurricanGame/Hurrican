@@ -124,7 +124,7 @@ void GegnerFieseDrone::DoKI(void)
 
             WinkelUebergabe = 360.0f - newwinkel;
 
-            pProjectiles->PushProjectile(xPos + 20, yPos + 20, FLUGLASER);
+            Projectiles.PushProjectile(xPos + 20, yPos + 20, FLUGLASER);
             pPartikelSystem->PushPartikel(xPos + 20, yPos + 20, SMOKE);
             SoundManager.PlayWave(50, 128, 25000 + rand()%5000, SOUND_LASERSHOT);
         }

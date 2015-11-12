@@ -239,7 +239,7 @@ void GegnerClimber::DoKI(void)
             xSpeed	  = 0.0f;
             ySpeed	  = 0.0f;
 
-            pProjectiles->PushProjectile (xPos + 21, yPos + 13, SUCHSCHUSS);
+            Projectiles.PushProjectile (xPos + 21, yPos + 13, SUCHSCHUSS);
             SoundManager.PlayWave(100, 128, 15000+rand()%2000, SOUND_CANON);
         }
     }

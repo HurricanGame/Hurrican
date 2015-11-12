@@ -65,7 +65,7 @@ void GegnerStarBig::DoKI(void)
             {
                 ShotCount = 0;
                 SoundManager.PlayWave (100, 128, 15000 + rand()%4000, SOUND_CANON);
-                pProjectiles->PushProjectile (xPos + 36, yPos + 36, SUCHSCHUSS);
+                Projectiles.PushProjectile (xPos + 36, yPos + 36, SUCHSCHUSS);
             }
         }
     } // animieren

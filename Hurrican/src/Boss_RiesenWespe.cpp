@@ -88,7 +88,7 @@ void GegnerRiesenWasp::DoKI(void)
             ShotDelay = 10.0f;
 
             SoundManager.PlayWave (100, 128, 8000 + rand()%1000, SOUND_CANON);
-            pProjectiles->PushProjectile  (xPos + 25 + BlickRichtung * 56, yPos + 51, SUCHSCHUSS2);
+            Projectiles.PushProjectile  (xPos + 25 + BlickRichtung * 56, yPos + 51, SUCHSCHUSS2);
 
             for (int i = 0; i < 5; i++)
                 pPartikelSystem->PushPartikel (xPos + rand ()%5 +  50 + BlickRichtung * 60, yPos + 75 + rand ()% 5, SMOKE3);

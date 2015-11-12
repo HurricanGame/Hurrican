@@ -306,7 +306,7 @@ void GegnerSpinnenmaschine::DoHoch(void)
         {
             ShotDelay = 15.0f;
 
-            pProjectiles->PushProjectile(xPos + 230, yPos + 310, PHARAOLASER, pAim);
+            Projectiles.PushProjectile(xPos + 230, yPos + 310, PHARAOLASER, pAim);
 
             // Sound ausgeben
             SoundManager.PlayWave(50, 128, 22050, SOUND_PHARAODIE);

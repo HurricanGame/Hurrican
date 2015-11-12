@@ -178,7 +178,7 @@ void GegnerTheWall::NeueAktion(void)
         SoundManager.PlayWave(100, 128, 10000 + rand()%1000, SOUND_DOOR);
 
         // Laser beenden
-        pProjectiles->ClearType(SPIDERLASER);
+        Projectiles.ClearType(SPIDERLASER);
         SoundManager.StopWave(SOUND_SPIDERLASER);
         SoundManager.StopWave(SOUND_BEAMLOAD2);
 
@@ -277,7 +277,7 @@ void GegnerTheWall::DoKI(void)
         if (SkullShotDelay < 0.0f)
         {
             SkullShotDelay = 15.0f;
-            pProjectiles->PushProjectile(xPos, yPos + 240.0f, SUCHSCHUSS2, pAim);
+            Projectiles.PushProjectile(xPos, yPos + 240.0f, SUCHSCHUSS2, pAim);
             SoundManager.PlayWave(50, 128, 14000 + rand()%2000, SOUND_GOLEMSHOT);
         }
     }
@@ -459,7 +459,7 @@ void GegnerTheWall::DoKI(void)
             Laughing = 0.0f;
 
             // Alle Schüsse löschen
-            pProjectiles->ClearAll();
+            Projectiles.ClearAll();
 
             // Zeitlupe
             Timer.SetMoveSpeed(1.0f);
@@ -547,7 +547,7 @@ void GegnerTheWall::DoKI(void)
 
             SoundManager.PlayWave(50, 128, 8000 + rand()%2000, SOUND_GOLEMSHOT);
 
-            pProjectiles->PushProjectile(xPos, yPos + 332, GOLEMSCHUSS);
+            Projectiles.PushProjectile(xPos, yPos + 332, GOLEMSCHUSS);
             pPartikelSystem->PushPartikel(xPos - 30, yPos + 295, EXPLOSIONFLARE);
             pPartikelSystem->PushPartikel(xPos, yPos + 320, SMOKEBIG);
             ShotDelay = 1.2f;
@@ -568,7 +568,7 @@ void GegnerTheWall::DoKI(void)
         if (ShotDelay < 0.0f)
         {
             SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
-            pProjectiles->PushProjectile(xPos, yPos + 332, SPIDERSHOT2);
+            Projectiles.PushProjectile(xPos, yPos + 332, SPIDERSHOT2);
             pPartikelSystem->PushPartikel(xPos - 30, yPos + 295, EXPLOSIONFLARE);
             pPartikelSystem->PushPartikel(xPos, yPos + 320, SMOKEBIG);
             ShotDelay = 5.0f;
@@ -592,7 +592,7 @@ void GegnerTheWall::DoKI(void)
             {
                 SoundManager.PlayWave(128, 128, 11025, SOUND_LILA);
                 SoundManager.PlayWave(128, 128, 25050, SOUND_GOLEMLOAD);
-                pProjectiles->PushProjectile(xPos + 220.0f,
+                Projectiles.PushProjectile(xPos + 220.0f,
                                              yPos + 210.0f,
                                              ELEKTROSCHUSS);
             }
@@ -615,7 +615,7 @@ void GegnerTheWall::DoKI(void)
         {
             if (ShotCount > 1)
             {
-                pProjectiles->PushProjectile((float) TileEngine.XOffset - 40.0f,
+                Projectiles.PushProjectile((float) TileEngine.XOffset - 40.0f,
                                              yPos + 240.0f, SPIDERLASER);
                 SoundManager.PlayWave (100, 128, 11025, SOUND_BEAMLOAD2);
             }

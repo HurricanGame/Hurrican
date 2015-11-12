@@ -288,8 +288,8 @@ void ConsoleClass::CheckCommands(void)
                                     /*
                                     if (Player[i].Shield <= 0.0f)
                                     {
-                                    	pProjectiles->PushProjectile (Player[i].xpos, Player[i].ypos, SHIELDSPAWNER, Player[i]);
-                                    	pProjectiles->PushProjectile (Player[i].xpos, Player[i].ypos, SHIELDSPAWNER2, Player[i]);
+                                    	Projectiles.PushProjectile (Player[i].xpos, Player[i].ypos, SHIELDSPAWNER, Player[i]);
+                                    	Projectiles.PushProjectile (Player[i].xpos, Player[i].ypos, SHIELDSPAWNER2, Player[i]);
                                     }
 
                                     // Schild setzen

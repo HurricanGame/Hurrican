@@ -237,6 +237,11 @@ public:
     ProjectileListClass(void);						// Konstruktor
     ~ProjectileListClass(void);						// Destruktor
 
+    //DKS - ProjectileListClass is now a static global, instead of dynamically allocated
+    //      pointer, so moved the loading of sprites from its constructor to this new
+    //      function:
+    void LoadSprites(void);
+
     bool PushProjectile(float x, float y, int Art, PlayerClass* pTemp = NULL); 	// Schuss "Art" hinzufügen
     bool PushBlitzBeam (int Size, float Richtung, PlayerClass* pSource);	// BlitzBeam hinzufügen (in verschiedenen Größen und Richtungen möglich)
     void DelSel		(ProjectileClass *pTemp);		// Ausgewähltes Objekt entfernen
@@ -250,7 +255,7 @@ public:
 // Externals
 // --------------------------------------------------------------------------------------
 
-extern ProjectileListClass  *pProjectiles;
+extern ProjectileListClass  Projectiles;
 extern int					CurrentShotTexture;
 extern float				WinkelUebergabe;
 

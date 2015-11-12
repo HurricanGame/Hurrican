@@ -45,7 +45,7 @@ void GegnerLavaBall::DoDraw(void)
     // Flare rendern
     DirectGraphics.SetAdditiveMode ();
     float w = yPos/4;
-    pProjectiles->LavaFlare.RenderSpriteScaledRotated (float (xPos - 60 - TileEngine.XOffset),
+    Projectiles.LavaFlare.RenderSpriteScaledRotated (float (xPos - 60 - TileEngine.XOffset),
                                          float (yPos - 60 - TileEngine.YOffset), 180, 180, w, 0xFFFFCC88);
     DirectGraphics.SetColorKeyMode ();
 }

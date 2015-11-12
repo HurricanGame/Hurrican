@@ -121,7 +121,7 @@ void GegnerQualle::DoKI(void)
         else
         {
             ShotDelay = 20.0f + rand ()% 10;
-            pProjectiles->PushProjectile(xPos + 10, yPos + 10, SUCHSCHUSS);
+            Projectiles.PushProjectile(xPos + 10, yPos + 10, SUCHSCHUSS);
         }
     }
 

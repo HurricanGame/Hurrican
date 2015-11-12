@@ -114,9 +114,9 @@ void GegnerDeckenturm::DoKI(void)
         {
             //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
             //float w = Winkel * PI / 180.0f;
-            //pProjectiles->PushProjectile(xPos + 10 + (float)(sin(w) * 20.0f),
+            //Projectiles.PushProjectile(xPos + 10 + (float)(sin(w) * 20.0f),
             //                             yPos + 5 + (float)(cos(w) * 30.0f), SUCHSCHUSS);
-            pProjectiles->PushProjectile(xPos + 10.0f + (sin_deg(Winkel) * 20.0f),
+            Projectiles.PushProjectile(xPos + 10.0f + (sin_deg(Winkel) * 20.0f),
                                          yPos + 5.0f + (cos_deg(Winkel) * 30.0f), SUCHSCHUSS);
         }
 

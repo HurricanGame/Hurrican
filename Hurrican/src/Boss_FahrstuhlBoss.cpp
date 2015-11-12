@@ -332,10 +332,10 @@ void GegnerFahrstuhlBoss::DoKI(void)
 
             SoundManager.PlayWave(100, 128, 44100, SOUND_LASERSHOT);
 
-            pProjectiles->PushProjectile (xPos + x2 + 28,      yPos + y2 + 95,     KRABBLERLASER1);
+            Projectiles.PushProjectile (xPos + x2 + 28,      yPos + y2 + 95,     KRABBLERLASER1);
             pPartikelSystem->PushPartikel(xPos + x2 + 28 - 25, yPos + y2 + 95 - 4, LASERFLAME);
 
-            pProjectiles->PushProjectile (xPos + x3 + 28,      yPos + y2 + 95,     KRABBLERLASER1);
+            Projectiles.PushProjectile (xPos + x3 + 28,      yPos + y2 + 95,     KRABBLERLASER1);
             pPartikelSystem->PushPartikel(xPos + x3 + 28 - 25, yPos + y2 + 95 - 4, LASERFLAME);
 
             y2 = 75;
@@ -395,7 +395,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 
             SoundManager.PlayWave (100, 128, 10000 + rand()%2000, SOUND_LASERSHOT);
 
-            pProjectiles->PushProjectile  (xPos + x1 + 80 - 28, yPos + y1 + 155, UFOLASER);
+            Projectiles.PushProjectile  (xPos + x1 + 80 - 28, yPos + y1 + 155, UFOLASER);
             pPartikelSystem->PushPartikel (xPos + x1 + 80 - 90, yPos + y1 + 110, UFOLASERFLARE);
 
             y1 = 155;
@@ -455,10 +455,10 @@ void GegnerFahrstuhlBoss::DoKI(void)
 
             SoundManager.PlayWave(100, 128, 8000 + rand ()%4000, SOUND_CANON);
 
-            pProjectiles->PushProjectile (xPos + x2 + 28,      yPos + y2 + 95+5, SUCHSCHUSS);
+            Projectiles.PushProjectile (xPos + x2 + 28,      yPos + y2 + 95+5, SUCHSCHUSS);
             pPartikelSystem->PushPartikel(xPos + x2 + 28 - 10, yPos + y2 + 95,   SMOKE);
 
-            pProjectiles->PushProjectile (xPos + x3 + 28,      yPos + y2 + 95+5, SUCHSCHUSS);
+            Projectiles.PushProjectile (xPos + x3 + 28,      yPos + y2 + 95+5, SUCHSCHUSS);
             pPartikelSystem->PushPartikel(xPos + x3 + 28 - 10, yPos + y2 + 95,   SMOKE);
 
             y2 = 77;
@@ -559,7 +559,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
         pTemp = pTemp->pNext;						// Zeiger auf das nächste Element
     }
 
-    ProjectileClass *pTemp2 = pProjectiles->pStart;	// Zeiger auf den ersten Schuss
+    ProjectileClass *pTemp2 = Projectiles.pStart;	// Zeiger auf den ersten Schuss
     while (pTemp2 != NULL)							// Ende der Liste erreicht ?
     {
         if (pTemp2->ShotArt != STELZLASER)
@@ -592,7 +592,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
             pTemp = pTemp->pNext;						// Zeiger auf das nächste Element
         }
 
-        ProjectileClass *pTemp2 = pProjectiles->pStart;	// Zeiger auf den ersten Schuss
+        ProjectileClass *pTemp2 = Projectiles.pStart;	// Zeiger auf den ersten Schuss
         while (pTemp2 != NULL)							// Ende der Liste erreicht ?
         {
             pTemp2->yPos	-= A;				// Nach oben bewegen

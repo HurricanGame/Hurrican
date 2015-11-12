@@ -93,12 +93,12 @@ void GegnerFlugsack::DoKI(void)
                 if (BlickRichtung == LINKS)
                 {
                     pPartikelSystem->PushPartikel(xPos + 10, yPos+2, SMOKE);
-                    pProjectiles->PushProjectile(xPos + 17, yPos+10, SUCHSCHUSS);
+                    Projectiles.PushProjectile(xPos + 17, yPos+10, SUCHSCHUSS);
                 }
                 else
                 {
                     pPartikelSystem->PushPartikel(xPos + 45, yPos+2, SMOKE);
-                    pProjectiles->PushProjectile(xPos + 53, yPos+10, SUCHSCHUSS);
+                    Projectiles.PushProjectile(xPos + 53, yPos+10, SUCHSCHUSS);
                 }
 
                 if (Skill == 0) ShotCount += 20.0f;

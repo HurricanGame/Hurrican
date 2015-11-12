@@ -493,8 +493,8 @@ _weiter2:
             pPartikelSystem->PushPartikel(xPos + 112, yPos + 77, LASERFLAMEPHARAO);
 
             // Schüsse erzeugen
-            pProjectiles->PushProjectile(xPos +  68, yPos + 77, PHARAOLASER, pAim);
-            pProjectiles->PushProjectile(xPos + 112, yPos + 77, PHARAOLASER, pAim);
+            Projectiles.PushProjectile(xPos +  68, yPos + 77, PHARAOLASER, pAim);
+            Projectiles.PushProjectile(xPos + 112, yPos + 77, PHARAOLASER, pAim);
 
             // Sound ausgeben
             SoundManager.PlayWave(50, 128, 22050, SOUND_PHARAODIE);

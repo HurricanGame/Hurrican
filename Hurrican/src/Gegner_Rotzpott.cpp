@@ -165,9 +165,9 @@ void GegnerRotzpott::DoKI(void)
             SoundManager.PlayWave(100, 128, 16000 + rand()%500, SOUND_LASERSHOT);
             WinkelUebergabe = 360.0f - GunWinkel + ((float)(rand()%10 - 5)) / 2.0f;
             //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
-            //pProjectiles->PushProjectile(xPos + 20.0f - (float)sin((180 - GunWinkel) / 180.0f * PI) * 25.0f,
+            //Projectiles.PushProjectile(xPos + 20.0f - (float)sin((180 - GunWinkel) / 180.0f * PI) * 25.0f,
             //                             yPos - 12.0f + (float)cos((180 - GunWinkel) / 180.0f * PI) * 20.0f, ROTZSHOT);
-            pProjectiles->PushProjectile(xPos + 20.0f - sin_deg(180.0f - GunWinkel) * 25.0f,
+            Projectiles.PushProjectile(xPos + 20.0f - sin_deg(180.0f - GunWinkel) * 25.0f,
                                          yPos - 12.0f + cos_deg(180.0f - GunWinkel) * 20.0f, ROTZSHOT);
         }
         else
@@ -176,9 +176,9 @@ void GegnerRotzpott::DoKI(void)
             SoundManager.PlayWave(100, 128, 24000 + rand()%500, SOUND_LASERSHOT);
             WinkelUebergabe = 360.0f - GunWinkel;
             //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
-            //pProjectiles->PushProjectile(xPos + 24.0f - (float)sin((180 - GunWinkel) / 180.0f * PI) * 45.0f,
+            //Projectiles.PushProjectile(xPos + 24.0f - (float)sin((180 - GunWinkel) / 180.0f * PI) * 45.0f,
             //                             yPos - 12.0f + (float)cos((180 - GunWinkel) / 180.0f * PI) * 45.0f, FLUGLASER);
-            pProjectiles->PushProjectile(xPos + 24.0f - sin_deg(180.0f - GunWinkel) * 45.0f,
+            Projectiles.PushProjectile(xPos + 24.0f - sin_deg(180.0f - GunWinkel) * 45.0f,
                                          yPos - 12.0f + cos_deg(180.0f - GunWinkel) * 45.0f, FLUGLASER);
         }
 

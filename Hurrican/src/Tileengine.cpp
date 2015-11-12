@@ -44,7 +44,7 @@ extern TimerClass			Timer;
 extern GegnerListClass		*pGegner;
 extern HUDClass				*pHUD;
 extern PartikelsystemClass  *pPartikelSystem;
-extern ProjectileListClass  *pProjectiles;
+extern ProjectileListClass  Projectiles;
 
 extern DirectGraphicsSprite	*pGegnerGrafix[MAX_GEGNERGFX];		// Grafiken  der Gegner
 
@@ -325,7 +325,7 @@ void TileEngineClass::ClearLevel()
         TileGfx[i].itsTexIdx = -1;
     }
 
-    pProjectiles->ClearAll();
+    Projectiles.ClearAll();
     pPartikelSystem->ClearAll();
 
     XOffset = 0.0f;

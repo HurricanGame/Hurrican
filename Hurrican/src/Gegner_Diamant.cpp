@@ -109,7 +109,7 @@ void GegnerDiamant::DoKI(void)
             // Punisher anschiessen
             else
             {
-                pProjectiles->PushProjectile(xPos, yPos, DIAMONDSHOT);
+                Projectiles.PushProjectile(xPos, yPos, DIAMONDSHOT);
             }
 
             Player[0].Score += 100;					// Punkte erhöhen
