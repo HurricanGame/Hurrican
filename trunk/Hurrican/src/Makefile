@@ -8,6 +8,10 @@ DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS -DUSE_MODPLUG
 ####### Specify a storage location for the read-only data files (graphics, sound, languages, etc) 
 #DEFINES += -DUSE_STORAGE_PATH="\"PATH_TO_STORAGE\""
 
+####### Simple and fast pooled memory manager that eliminates new/delete/malloc/free overhead
+#       (See Datastructures.h)
+#DEFINES += -DUSE_MEMPOOL
+
 ####### Extremely fast random-number-generator (can be over 100 times faster than rand() on some platforms):
 #DEFINES += -DUSE_FAST_RNG
 
