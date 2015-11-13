@@ -45,6 +45,13 @@ float					WinkelUebergabe;					// Extra "Parameter" für PushProjectile
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
+//DKS - Moved constructor assignments to CreateShot(), since there's no need to have 
+//      a constructor when CreateShot was always called immediately after allocating a shot.
+//      Constructor is now empty inline in header. The original constructor was performing
+//      redundant or unnecessary assignments.
+//      Note that PushBlitzBeam() is an an exception and has been modified to account
+//      for this change.
+#if 0
 ProjectileClass::ProjectileClass(void)
 {
     xPos	= 0.0f;
@@ -56,14 +63,7 @@ ProjectileClass::ProjectileClass(void)
     Counter = 0.0f;
     Winkel  = -10000.0f;					// wird von den wenigsten Schüssen verwendet
 }
-
-// --------------------------------------------------------------------------------------
-// Destruktor
-// --------------------------------------------------------------------------------------
-
-ProjectileClass::~ProjectileClass(void)
-{
-}
+#endif //0
 
 // --------------------------------------------------------------------------------------
 // Schuss vom Typ "Art" erzeugen
@@ -85,6 +85,15 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     HasGlow			= false;
     ExplodeOnImpact = true;
     OwnDraw			= false;
+
+    //DKS - Moved the class's constructor assignments here, since there's no need to
+    //      have a constructor when CreateShot() is always called immediately after
+    //      allocating a new shot. PushBlitzBeam() is an exception and has been
+    //      modified accordingly.
+	xSpeed	= 0.0f;	ySpeed	= 0.0f;
+	xAcc	= 0.0f;	yAcc	= 0.0f;
+	Counter = 0.0f;
+	Winkel  = -10000.0f;					// wird von den wenigsten Schüssen verwendet
 
     // Winkel zwischen 0 und 360
     while (WinkelUebergabe > 360.0f) WinkelUebergabe -= 360.0f;
@@ -2015,9 +2024,8 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
 
 void ProjectileClass::CheckCollision(void)
 {
-    GegnerClass *pEnemy = NULL;
+    GegnerClass *pEnemy = Gegner.pStart;			// Anfang der Gegnerliste
 
-    pEnemy = Gegner.pStart;			// Anfang der Gegnerliste
     while (pEnemy != NULL)				// Noch nicht alle durch ?
     {
         if (pEnemy->Active		== true &&	// Ist der Gegner überhaupt aktiv ?
@@ -2029,9 +2037,10 @@ void ProjectileClass::CheckCollision(void)
             // Beim BlitzBeam die größe vom Rect dynamisch anpassen
             if (ShotArt == BLITZBEAM)
             {
-                ShotRect[BLITZBEAM].left   = int(Damage / 4.0f),
-                                    ShotRect[BLITZBEAM].top    = int(Damage / 4.0f),
-                                                        ShotRect[BLITZBEAM].right  = ShotRect[BLITZBEAM].left + int(Damage / 2.0f);
+                //DKS - Fixed ending commas on next two lines, changed to semicolons. No idea why they were commas.
+                ShotRect[BLITZBEAM].left   = int(Damage / 4.0f);
+                ShotRect[BLITZBEAM].top    = int(Damage / 4.0f);
+                ShotRect[BLITZBEAM].right  = ShotRect[BLITZBEAM].left + int(Damage / 2.0f);
                 ShotRect[BLITZBEAM].bottom = ShotRect[BLITZBEAM].top  + int(Damage / 2.0f);
             }
 
@@ -3524,9 +3533,10 @@ void ProjectileClass::Run(void)
 
         // Wand getroffen?
         //
-        ShotRect[BLITZBEAM].left   = int(Damage / 4.0f),
-                            ShotRect[BLITZBEAM].top    = int(Damage / 4.0f),
-                                                ShotRect[BLITZBEAM].right  = ShotRect[BLITZBEAM].left + int(Damage / 2.0f);
+        // DKS - Fixed indentation / replaced commas with semicolons on first two lines here:
+        ShotRect[BLITZBEAM].left   = int(Damage / 4.0f);
+        ShotRect[BLITZBEAM].top    = int(Damage / 4.0f);
+        ShotRect[BLITZBEAM].right  = ShotRect[BLITZBEAM].left + int(Damage / 2.0f);
         ShotRect[BLITZBEAM].bottom = ShotRect[BLITZBEAM].top  + int(Damage / 2.0f);
 
         bo = TileEngine.BlockOben			(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
@@ -5464,6 +5474,9 @@ ProjectileListClass::~ProjectileListClass(void)
 // Schuss "Art" hinzufügen
 // --------------------------------------------------------------------------------------
 
+//DKS - Modified to support new pooled memory manager as well as the fact that
+//      projectile list is now singly-linked
+#if 0
 bool ProjectileListClass::PushProjectile(float x, float y, int Art, PlayerClass* pTemp)
 {
     if(NumProjectiles >= MAX_SHOTS)					// Grenze überschritten ?
@@ -5493,6 +5506,32 @@ bool ProjectileListClass::PushProjectile(float x, float y, int Art, PlayerClass*
     NumProjectiles++;							// Projektilanzahl erhöhen
     return true;
 }
+#endif //0
+bool ProjectileListClass::PushProjectile(float x, float y, int Art, PlayerClass* pTemp)
+{
+    if(NumProjectiles >= MAX_SHOTS)
+        return false;
+
+    //DKS - added support for new, fast pooled mem-manager:
+#if USE_MEMPOOL
+    ProjectileClass *pNew = projectile_pool.alloc();
+#else
+    ProjectileClass *pNew = new ProjectileClass;
+#endif
+
+    pNew->CreateShot(x, y, Art, pTemp);
+    pNew->pNext = NULL;
+
+    if (pEnd)
+        pEnd->pNext = pNew;     // If list isn't empty, insert this projectile on the end.
+    else
+        pStart = pNew;          // Or, if list is empty, make this the new head of the list.
+
+    pEnd = pNew;                // Update end-of-list pointer
+
+    NumProjectiles++;
+    return true;
+}
 
 // --------------------------------------------------------------------------------------
 // BlitzBeam hinzufügen
@@ -5503,7 +5542,12 @@ bool ProjectileListClass::PushBlitzBeam (int Size, float Richtung, PlayerClass* 
     if(NumProjectiles >= MAX_SHOTS)					// Grenze überschritten ?
         return false;
 
+    //DKS - added support for new, fast pooled mem-manager
+#if USE_MEMPOOL
+    ProjectileClass *pNew = projectile_pool.alloc();
+#else
     ProjectileClass *pNew = new ProjectileClass;	// Neues zu erstellendes Projectile
+#endif
 
     pNew->ShotArt = BLITZBEAM;
     pNew->xPos = pSource->xpos - Size / 2 + 20;
@@ -5535,6 +5579,14 @@ bool ProjectileListClass::PushBlitzBeam (int Size, float Richtung, PlayerClass* 
 	pNew->xSpeed	= -40.0f * sin_deg(Richtung);
 	pNew->ySpeed	=  40.0f * cos_deg(Richtung);
 
+    //DKS - Since our ProjectileClass constructor is now empty, and the BLITZBEAM projectile
+    //      does not use CreateShot(), we must insert the missing four pieces of the old
+    //      constructor here:
+    pNew->xAcc	= 0.0f;
+    pNew->yAcc	= 0.0f;
+    pNew->Counter = 0.0f;
+    pNew->Winkel  = -10000.0f;					// wird von den wenigsten Schüssen verwendet
+
     //DKS - Dividing an int by a float and then casting to an int again makes no sense at all:
     //ShotRect[BLITZBEAM].left   = int(Size / 4.0f),
     //                    ShotRect[BLITZBEAM].top    = int(Size / 4.0f),
@@ -5545,6 +5597,8 @@ bool ProjectileListClass::PushBlitzBeam (int Size, float Richtung, PlayerClass* 
 	ShotRect[BLITZBEAM].right  = ShotRect[BLITZBEAM].left + Size / 2;
 	ShotRect[BLITZBEAM].bottom = ShotRect[BLITZBEAM].top  + Size / 2;
 
+    //DKS - Projectile list is now singly-linked:
+#if 0
     if(pStart==NULL)						// Liste leer ?
     {
         pStart = pNew;						// Ja, dann neues projektil gleich das erste
@@ -5561,6 +5615,17 @@ bool ProjectileListClass::PushBlitzBeam (int Size, float Richtung, PlayerClass* 
         pNew->pNext = NULL;					// Nach dem neuen Projektil kommt keines mehr
         pEnd		= pNew;					// da es jetzt das letzte in der Liste ist
     }
+#endif //0
+    //DKS - New version of above supporting singly-linked list:
+    pNew->pNext = NULL;
+
+    if (pEnd)
+        pEnd->pNext = pNew;     // If list isn't empty, insert this projectile on the end.
+    else
+        pStart = pNew;          // Or, if list is empty, make this the new head of the list.
+
+    pEnd = pNew;                // Update end-of-list pointer
+
 
     NumProjectiles++;							// Projektilanzahl erhöhen
     return true;
@@ -5570,6 +5635,9 @@ bool ProjectileListClass::PushBlitzBeam (int Size, float Richtung, PlayerClass* 
 // Bestimmtes Projektil der Liste löschen
 // --------------------------------------------------------------------------------------
 
+//DKS - Replaced with new DelNode() function that supports a singly-linked list and
+//      new pooled memory manager. (see next function below this )
+#if 0
 void ProjectileListClass::DelSel(ProjectileClass *pTemp)
 {
     ProjectileClass  *pN;
@@ -5596,11 +5664,40 @@ void ProjectileListClass::DelSel(ProjectileClass *pTemp)
         NumProjectiles--;				// Projectilezahl verringern
     }
 }
+#endif //0
+
+//DKS - Replaced DelSel() with DelNode(), which supports the now-singly-linked-list. It operates
+//      a bit differently:
+//      It is now up to the caller to splice the list, this blindly deletes what is passed to it
+//      and returns the pointer that was in pPtr->pNext, or NULL if pPtr was NULL.
+ProjectileClass* ProjectileListClass::DelNode(ProjectileClass *pPtr)
+{
+    ProjectileClass  *pNext = NULL;
+    if (pPtr!=NULL)	
+    {
+        pNext = pPtr->pNext;
+
+        if (pStart == pPtr)             // Are we deleting the first node in the list?
+            pStart = pNext;
+
+        //DKS - added support for new, fast pooled mem-manager:
+#if USE_MEMPOOL
+        projectile_pool.free(pPtr);
+#else
+        delete (pPtr);
+#endif
+
+        NumProjectiles--;
+    }
+    return pNext;
+}
 
 // --------------------------------------------------------------------------------------
 // Alle Projectile der Liste löschen
 // --------------------------------------------------------------------------------------
-
+//DKS - Converted ProjectileListClass to a singly-linked list (depends on DelNode() now).
+//      and added support for new pooled memory manager.
+#if 0
 void ProjectileListClass::ClearAll(void)
 {
     ProjectileClass *pTemp    = pStart;				// Zeiger auf das erste    Proectile
@@ -5616,11 +5713,40 @@ void ProjectileListClass::ClearAll(void)
     pStart = NULL;
     pEnd   = NULL;
 }
+#endif //0
+void ProjectileListClass::ClearAll(void)
+{
+    if (pStart) {
+        ProjectileClass *pNext = pStart->pNext;
+
+        while (pNext)           // Delete everything but the head of the list
+            pNext = DelNode(pNext); 
+
+        DelNode(pStart);        // Finally, delete the head of the list
+    }
+    pStart = pEnd = NULL;
+
+#ifdef _DEBUG
+    if (NumProjectiles != 0) 
+        Protokoll.WriteText( false, "ERROR: poss. mem leak / corruption in linked list of projectiles\n" );
+#endif
+
+    //DKS - added support for new, fast pooled mem-manager:
+#ifdef USE_MEMPOOL
+    projectile_pool.reinit();
+#endif
+
+    // Just to be safe:
+    NumProjectiles = 0;
+}
+
 
 // --------------------------------------------------------------------------------------
 // Alle Projectiles eines Typs löschen
 // --------------------------------------------------------------------------------------
 
+//DKS - Adapted after converting ProjectileListClass to a singly-linked list:
+#if 0
 void ProjectileListClass::ClearType(int Type)
 {
     ProjectileClass *pTemp    = pStart;				// Zeiger auf das erste    Proectile
@@ -5634,6 +5760,31 @@ void ProjectileListClass::ClearType(int Type)
             DelSel(pTemp);								// Das aktuelle löschen
 
         pTemp = pNaechst;							// und das nächste bearbeiten
+    }
+}
+#endif //0
+void ProjectileListClass::ClearType(int Type)
+{
+    ProjectileClass *pPrev = NULL;
+    ProjectileClass *pCurr = pStart;
+
+    while (pCurr != NULL) 
+    {
+        if (pCurr->ShotArt == Type) {
+            // If this is the last node in the list, update the main class's pEnd pointer
+            if (pEnd == pCurr)
+                pEnd = pPrev;
+
+            pCurr = DelNode(pCurr); //pCurr now points to the node after the one deleted
+
+            if (pPrev) {
+                // This is not the first node in the list, so splice this node onto the previous one
+                pPrev->pNext = pCurr;
+            }
+        } else {
+            pPrev = pCurr;
+            pCurr = pCurr->pNext;
+        }
     }
 }
 
@@ -5650,6 +5801,8 @@ int ProjectileListClass::GetNumProjectiles(void)
 // Alle Proectile der Liste animieren und bewegen
 // --------------------------------------------------------------------------------------
 
+//DKS - Adapted after converting projectile list to singly-linked one
+#if 0
 void ProjectileListClass::DoProjectiles(void)
 {
     ProjectileClass *pTemp = pStart;		// Anfang der Liste
@@ -5676,5 +5829,47 @@ void ProjectileListClass::DoProjectiles(void)
         }
 
         pTemp = pNext;						// Und Schuss Partikel anhandeln
+    }
+}
+#endif //0
+void ProjectileListClass::DoProjectiles(void)
+{
+    ProjectileClass *pPrev = NULL;
+    ProjectileClass *pCurr = pStart;
+
+    CurrentShotTexture = -1;				// Aktuelle Textur gibt es noch keine
+
+    while (pCurr != NULL)
+    {
+        if (Console.Showing == false)
+            pCurr->Run();
+
+        if (pCurr->Damage > 0)
+            pCurr->Render();
+
+        if (Console.Showing == false)
+        {
+            if (pCurr->Damage <= 0)			 	// ggf Schuss löschen (bei Damage <= 0)
+            {
+                // Projectile's time to die..
+                // If this is the last node in the list, update the class's pEnd pointer
+                if (pEnd == pCurr)
+                    pEnd = pPrev;
+
+                pCurr = DelNode(pCurr); //pCurr now points to the node after the one deleted
+
+                // If this is not the first node in the list, splice this node onto the previous one:
+                if (pPrev)
+                    pPrev->pNext = pCurr;
+            } else
+            {
+                pCurr->CheckCollision();
+                pPrev = pCurr;
+                pCurr = pCurr->pNext;
+            }
+        } else {
+            pPrev = pCurr;
+            pCurr = pCurr->pNext;
+        }
     }
 }
