@@ -21,6 +21,9 @@
 #include "DX8Sprite.h"
 #include "Player.h"
 
+//DKS - For new pooled memory manager and grouped drawlists of projectiles to render:
+#include "DataStructures.h"
+
 // --------------------------------------------------------------------------------------
 // Defines
 // --------------------------------------------------------------------------------------
@@ -162,7 +165,10 @@
 #define TURRIEXTRAWURST			128						// Schuss des Golems
 
 #define MAX_SHOTS				1024					// Maximale Anzahl an Schüssen
-#define MAX_SHOTGFX				300						// Maximale Anzahl verschiedener Grafiken
+
+//DKS - This was unnecessarily high. Changed to the correct figure:
+//#define MAX_SHOTGFX				300						// Maximale Anzahl verschiedener Grafiken
+#define MAX_SHOTGFX				264						// Maximale Anzahl verschiedener Grafiken
 
 // --------------------------------------------------------------------------------------
 // Klassendeklaration
@@ -192,15 +198,22 @@ public:
     float				Counter;					// Spezialcounter für Extra-Aktionen
     bool				OwnDraw;
 
-    ProjectileClass(void);							// Konstruktor
-    ~ProjectileClass(void);							// Destruktor
+    //DKS - Constructor is now empty, destructor explicitlu so.
+    //      Duties of constructor have now been moved to CreateShot()
+    //      and PushBlitzBeam() functions, as constructor was setting
+    //      values redundantly and those functions are the only
+    //      two that ultimately create projectiles.
+    ProjectileClass(void) {}							// Konstruktor
+    ~ProjectileClass(void) {}							// Destruktor
+
     void CreateShot(float x, float y, int Art, PlayerClass *pTemp);		// Bestimmten Schuss erzeugen
     void Run(void);									// Schuss animieren und bewegen
     void Render(void);								// Schuss rendern
     void CheckCollision(void);						// Kollision checken
     void ExplodeShot(void);							// Schuss explodiert und erzeugt Partikel
     ProjectileClass		*pNext;						// Zeiger auf den nächsten   Schuss
-    ProjectileClass		*pPrev;						// Zeiger auf den vorherigen Schuss
+    //DKS - Made a singly-linked list, there's no need or benefit for a doubly-linked list here.
+    //ProjectileClass		*pPrev;						// Zeiger auf den vorherigen Schuss
     PlayerClass			*pParent;
 };
 
@@ -212,6 +225,11 @@ class ProjectileListClass
 {
 private:
     int						NumProjectiles;			// aktuelle Zahl der Schüsse
+
+    //DKS - New, very simple pooled memory manager decreases alloc/dealloc overhead: (see DataStructures.h)
+#ifdef USE_MEMPOOL
+    MemPool<ProjectileClass, MAX_SHOTS> projectile_pool;
+#endif
 
 public:
     ProjectileClass			*pStart;				// Erstes  Element der Liste
@@ -244,7 +262,14 @@ public:
 
     bool PushProjectile(float x, float y, int Art, PlayerClass* pTemp = NULL); 	// Schuss "Art" hinzufügen
     bool PushBlitzBeam (int Size, float Richtung, PlayerClass* pSource);	// BlitzBeam hinzufügen (in verschiedenen Größen und Richtungen möglich)
-    void DelSel		(ProjectileClass *pTemp);		// Ausgewähltes Objekt entfernen
+
+    //DKS - Converted projectile linked-list to be singly-linked:
+    // DelNode() is new and takes the place of DelSel(), but operates a bit differently.
+    // It is now up to the caller to splice the list: DelNode() blindly deletes the node
+    // passed to it and returns the pointer that was in pPtr->pNext, or NULL if pPtr was NULL.
+    //void DelSel		(ProjectileClass *pTemp);		// Ausgewähltes Objekt entfernen
+    ProjectileClass* DelNode (ProjectileClass *pPtr);
+
     void ClearAll	(void);							// Alle Objekte löschen
     void ClearType	(int type);						// Alle Objekte eines Typs löschen
     int  GetNumProjectiles(void);					// Zahl der Schüsse zurückliefern
