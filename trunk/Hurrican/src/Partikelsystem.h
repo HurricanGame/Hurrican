@@ -22,6 +22,9 @@
 #include "DX8Sprite.h"
 #include "Player.h"
 
+//DKS - For new pooled memory manager and grouped drawlists of particles to render:
+#include "DataStructures.h"
+
 // --------------------------------------------------------------------------------------
 // Defines
 // --------------------------------------------------------------------------------------
@@ -216,11 +219,18 @@
 class PartikelClass
 {
 private:
-    int					red,green,blue,alpha;		// Farbwerte des Partikels
-    D3DCOLOR			Color;						// Farbe des Partikels
+    //DKS - Changed from int to uint8_t:
+    uint8_t				red,green,blue,alpha;		// Farbwerte des Partikels
+
+    //DKS - Never used, disabled:
+    //D3DCOLOR			Color;						// Farbe des Partikels
+
     float				xSpeed,ySpeed;				// Geschwindigkeit des Partikels
     float				xAcc, yAcc;					// Beschleunigung des Partikels
-    int					AnimPhase, AnimEnde;		// Aktuelle Phase und Endphase
+
+    //DKS - Changed from int to int16_t:
+    uint16_t			AnimPhase, AnimEnde;		// Aktuelle Phase und Endphase
+
     float				AnimSpeed, AnimCount;		// Anim-Geschwindigkeit und Counter
     bool				Rotate;						// evtl rotieren?
     float				Rot;						// Rotation
@@ -233,17 +243,67 @@ public:
     float				xPos,yPos;					// Position des Partikels
     float				xPosOld, yPosOld;			// Alte Position
 
-    int					PartikelArt;				// Art des Partikels (siehe Defines)
+    //DKS - Changed from int to int16_t:
+    int16_t				PartikelArt;				// Art des Partikels (siehe Defines)
+
     float				Lebensdauer;				// Wie lange existiert das Partikel ?
 
-    PartikelClass(void);							// Konstruktor
-    ~PartikelClass(void);							// Destruktor
-    bool CreatePartikel(float x, float y, int Art,  // Bestimmten Partikel erzeugen
+    
+    //DKS - Moved construction duties into CreatePartikel(), since all partikels are
+    //      created there anyway and constructor was doing unnecessary work.
+    //      NOTE: The primary reason construction has been eliminated is to support the new
+    //      pooled memory manager (see DataStructures.h), which stores an array of
+    //      pre-constructed objects from which it assigns new ones.
+    //PartikelClass(void);							// Konstruktor
+    PartikelClass(void) {};							// Konstruktor
+    ~PartikelClass(void) {};							// Destruktor
+    void CreatePartikel(float x, float y, int Art,  // Bestimmten Partikel erzeugen
                         PlayerClass* pParent = NULL);
     void Run	(void);								// Partikel animieren und bewegen
     bool Render	(void);								// Partikel anzeigen
+
+    //DKS: Found that colors were getting set unsafely in Run() and elsewhere, and I
+    //      also converted the r,g,b,a member vars to uint8_t; these ensure safety:
+    void SetRed(int value)
+    {
+        if (value > 255) 
+            value = 255;
+        else if (value < 0)
+            value = 0;
+        red = (uint8_t)value;
+    }
+
+    void SetGreen(int value)
+    {
+        if (value > 255) 
+            value = 255;
+        else if (value < 0)
+            value = 0;
+        green = (uint8_t)value;
+    }
+
+    void SetBlue(int value)
+    {
+        if (value > 255) 
+            value = 255;
+        else if (value < 0)
+            value = 0;
+        blue = (uint8_t)value;
+    }
+
+    void SetAlpha(int value)
+    {
+        if (value > 255) 
+            value = 255;
+        else if (value < 0)
+            value = 0;
+        alpha = (uint8_t)value;
+    }
+
     PartikelClass		*pNext;						// Zeiger auf den nächsten   Partikel
-    PartikelClass		*pPrev;						// Zeiger auf den vorherigen Partikel
+    //DKS - Particle list is now singly-linked, disabled *pPrev:
+    //PartikelClass		*pPrev;						// Zeiger auf den vorherigen Partikel
+
     PlayerClass			*m_pParent;
 };
 
@@ -257,6 +317,11 @@ private:
     int						NumPartikel;			// aktuelle Zahl der Partikel
     int						MAX_PARTIKEL;			// was wohl
 
+    //DKS - New, simple pooled memory manager decreases alloc/dealloc overhead: (see DataStructures.h)
+#ifdef USE_MEMPOOL
+    MemPool<PartikelClass, 5000> particle_pool;
+#endif
+
 public:
     float					xtarget, ytarget;		// Zielpunkt, auf den sich bestimmte Partikel richten
     float					ThunderAlpha;			// Alpha für Blitz
@@ -265,8 +330,8 @@ public:
     PartikelClass			*pStart;				// Erstes  Element der Liste
     PartikelClass			*pEnd;					// Letztes Element der Liste
 
-    PartikelsystemClass(void);						// Konstruktor
-    ~PartikelsystemClass(void);						// Destruktor
+    PartikelsystemClass(void);					// Konstruktor
+    ~PartikelsystemClass(void);					// Destruktor
 
     //DKS - PartikelsystemClass is now a static global, instead of dynamically allocated
     //      pointer, so moved the loading of sprites from its constructor to this new
@@ -275,7 +340,14 @@ public:
 
     bool PushPartikel(float x, float y, int Art,
                       PlayerClass* pParent = NULL);	// Partikel "Art" hinzufügen
-    void DelSel		(PartikelClass *pTemp);			// Ausgewähltes Objekt entfernen
+
+    //DKS - Converted particle linked-list to be singly-linked so this DelNode()
+    //      is a new function that replaces the old DelSel().
+    //      It is now up to the caller to splice the list, this blindly deletes what is passed
+    //      to it and returns the pointer that was in pPtr->pNext, or NULL if pPtr was NULL
+    //void DelSel		(PartikelClass *pTemp);			// Ausgewähltes Objekt entfernen
+    PartikelClass* DelNode	(PartikelClass *pPtr);		
+
     void ClearAll	(void);							// Alle Objekte löschen
     int  GetNumPartikel(void);						// Zahl der Partikel zurückliefern
     void DoPartikel(void);							// Alle Partikel der Liste animieren/anzeigen

@@ -365,10 +365,21 @@ void GegnerEisFaust::GegnerExplode(void)
         PartikelSystem.PushPartikel(xPos + 60 + rand()%60,
                                       yPos + 80 + rand()%40, SPLITTER);
 
+    //DKS - In the course of optimizing PartikelsystemClass, I discovered that
+    //      SPIDERSPLITTER2 was not handled in CreatePartikel(), and that
+    //      the SPIDERSPLITTER2 particles here were never being seen in the
+    //      original code. When this was corrected and they were visible, they
+    //      remained stationary in position since their acceleration variables
+    //      were never being initialized. Since here and Boss_EisFaust.cpp are
+    //      the only places SPIDERSPLITTER2 particles were ever being created,
+    //      and since 50% of SPIDERSPLITTER particles become SPIDERSPLITTER2
+    //      artwork, I've replaced SPIDERSPLITTER2 here with SPIDERSPLITTER:
     for (int i=0; i<60; i++)
     {
+        //PartikelSystem.PushPartikel(xPos + 20 + rand()%100,
+        //                              yPos + 40 + rand()%100, SPIDERSPLITTER2);
         PartikelSystem.PushPartikel(xPos + 20 + rand()%100,
-                                      yPos + 40 + rand()%100, SPIDERSPLITTER2);
+                                      yPos + 40 + rand()%100, SPIDERSPLITTER);
 
         PartikelSystem.PushPartikel(xPos + 60 + rand()%60,
                                       yPos + 80 + rand()%40, WATERFLUSH2);

@@ -26,6 +26,8 @@
 #include "Projectiles.h"
 #include "Timer.h"
 
+#include "DataStructures.h"     //DKS - Added for new MemPool class and GroupedForwardList class
+
 // --------------------------------------------------------------------------------------
 // externe Variablen
 // --------------------------------------------------------------------------------------
@@ -55,6 +57,12 @@ int						DrawMode;							// normale oder rotierte Partikel?
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
+//DKS - Moved construction duties into CreatePartikel(), since all partikels are
+//      created there anyway and constructor was doing unnecessary work.
+//      NOTE: The primary reason construction has been eliminated is to support the new
+//      pooled memory manager (see DataStructures.h), which stores an array of
+//      pre-constructed objects from which it assigns new ones.
+#if 0
 PartikelClass::PartikelClass(void)
 {
     // Partikelwerte auf Null setzen (zur Sicherheit)
@@ -76,31 +84,47 @@ PartikelClass::PartikelClass(void)
 
     (rand()%2 == 0) ? (RotDir = 1) : (RotDir = -1);
 }
-
-// --------------------------------------------------------------------------------------
-// Destruktor
-// --------------------------------------------------------------------------------------
-
-PartikelClass::~PartikelClass(void)
-{
-}
+#endif //0
 
 // --------------------------------------------------------------------------------------
 // Partikel vom Typ "Art" erzeugen
 // --------------------------------------------------------------------------------------
 
-bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pParent)
+void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pParent)
 {
     // leucht-Partikel nur im Glow-Modus anzeigen
     // d.h., im nicht-Glow Modus gleich wieder aussteigen, sobald ein
     // solcher Partikel erzeugt werden soll
     //
+    //DKS - Moved this check to PushPartikel() to fix potential memory leak there:
+    //      (CreatePartikel() function now has void return type, not bool)
+#if 0
     if (options_Detail < DETAIL_HIGH &&
             (Art == GRENADEFLARE ||
              Art == SHOTFLARE    ||
              Art == SHOTFLARE2   ||
              Art == EXPLOSIONFLARE))
         return false;
+#endif //0
+
+    //DKS - Added initializer for colors to their most commonly-set values,
+    //      (code de-duplication in rest of function)
+	red = green = blue = alpha = 255;
+
+    //DKS - Added initializer for lebensdauer to its most commonly-set value,
+    //      (code de-duplication in rest of function)
+    Lebensdauer = 255.0f;
+    
+    //DKS - Moved parts of class constructor that weren't redundant here, and made
+    //      class constructor empty, since all particles are created through this
+    //      function anyway:
+	xSpeed	= 0.0f;	ySpeed	= 0.0f;
+	xAcc	= 0.0f;	yAcc	= 0.0f;
+	OwnDraw				= false;
+	Rotate				= false;
+	Rot					= 0.0f;
+	RemoveWhenOffScreen = true;
+	(rand()%2 == 0) ? (RotDir = 1) : (RotDir = -1);
 
     m_pParent = pParent;
     xPos = x;
@@ -121,16 +145,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
         {
         case BULLET :	// Leere Patronenhülse
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             xSpeed		= (float(rand()%40+20)/5) * float(-m_pParent->Blickrichtung);
             ySpeed		= -float(rand()%40+20)/5;
             xAcc		= 0.0f;
             yAcc		= 5.0f;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = false;
             //DKS - This was commented out in original source:
             //AnimEnde	= 8;
@@ -143,16 +165,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case BULLET_SKELETOR :	// Leere Patronenhülse vom Skeletor
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             xSpeed		= (float(rand()%40-20)/3);
             ySpeed		= -float(rand()%8+14);
             xAcc		= 0.0f;
             yAcc		= 10.0f;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = true;
             AnimSpeed	= 0.0f;
 
@@ -163,16 +183,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case GLASSPLITTER:
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             xSpeed		= (float(rand()%40-20)) / 2;
             ySpeed		= -float(rand()%10+20) / 2;
             xAcc		= 0.0f;
             yAcc		= 5.0f;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = true;
             AnimPhase = rand()%20;
 
@@ -180,14 +198,10 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
         }
         break;
 
-
-
         case EXPLOSION_MEDIUM :	// Mittelgrosse Explosion
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             Lebensdauer = 192;
             AnimEnde	= 19;
@@ -205,10 +219,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case EXPLOSION_MEDIUM2 :	// Mittelgrosse Explosion Nr 2
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             Lebensdauer = 192;
             AnimEnde	= 19;
@@ -226,10 +238,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case EXPLOSION_MEDIUM3 :	// Mittelgrosse Explosion Nr 2
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             Lebensdauer = 192;
             AnimEnde	= 19;
@@ -249,10 +259,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
         {
             x -= 10;
             y -= 10;
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             Lebensdauer = 192;
             AnimEnde	= 19;
@@ -273,10 +281,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case EXPLOSION_GREEN :	// Grüne Explosion
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             Lebensdauer = 192;
             //DKS - This sprite actually has 25 frames, so increased this to 24:
@@ -289,10 +295,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case EXPLOSION_ALIEN :	// Lilane Alien Explosion
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             Lebensdauer = 224;
             //DKS - This sprite actually has 25 frames, so increased this to 24:
@@ -307,10 +311,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case EXPLOSION_BIG :	// Grosse Explosion
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             Lebensdauer = 224;
             AnimEnde	= 19;
@@ -327,10 +329,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case EXPLOSION_GIANT :	// Riesen Explosion
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             Lebensdauer = 192;
             AnimEnde	= 15;
@@ -341,10 +341,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case BLUE_EXPLOSION :	// Kleine blaue Explosion
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             Lebensdauer = 224;
             //DKS - Changed value to 11 ( it has 12 frames of animation)
@@ -358,10 +356,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case SPLITTER :			// Kleiner animierter Splitter
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             Lebensdauer = 200;
             //DKS - Changed value from 16 to 15, this is an off-by-one error:
@@ -379,12 +375,10 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
         case PIRANHATEILE  :		// Fetzen eines kaputten Piranhas
         case PIRANHATEILE2 :		// Fetzen eines kaputten Riesen Piranhas
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             AnimPhase   = rand()%5;
             if (rand()%2 == 0)
             {
@@ -404,9 +398,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case PIRANHABLUT :		// Blut eines kaputten Piranhas
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255;
             alpha = 192;
 
             Lebensdauer = 192;
@@ -421,9 +414,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case MADEBLUT :		// Blut der Made
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255;
             alpha = 192;
 
             Lebensdauer = 128;
@@ -450,12 +442,10 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case BLATT :			// Blatt von kaputter Pflanze
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             ySpeed	    = - float ((rand()%40) + 25) / 3.0f;
             yAcc	    = 5.0f;
             xSpeed	    = float ((rand()%40) - 20) / 2.0f;
@@ -469,12 +459,10 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case BLATT2:			// Blatt vom Spawner
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             ySpeed	    = - float ((rand()%20) - 10) / 10.0f;
             yAcc	    = - float ((rand()%20) - 10) / 20.0f;
             xSpeed	    = - float (rand()%50 + 30);
@@ -491,12 +479,10 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case NESTLUFT :			// Wespennest nach dem Abschuss
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             yAcc	    = 5.0f;
             xSpeed	    =  float ((rand()%40) - 20) / 2.0f;
             ySpeed	    = -float ((rand()%10) + 20);
@@ -522,7 +508,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
             if (rand()%2 == 0) xSpeed *= -1.0f;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             AnimPhase = rand()%2;
 
             RemoveWhenOffScreen = false;
@@ -532,14 +518,13 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case HALSWIRBEL :	// Halswirbel des MetalHead Bosses
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255;
             alpha = 0;
             xSpeed		=   (float)(rand()%20+20)/2.0f;
             ySpeed		= - (float)(rand()%20+30);
             yAcc		= 5.0f;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             AnimCount   = float (rand()%100);
             OwnDraw		= true;
         }
@@ -547,14 +532,13 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case KAPUTTETURBINE :	// Kaputte Turbine des MetalHead Bosses
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255;
             alpha = 0;
             xSpeed		= 18.0f;
             ySpeed		= -30.0f;
             yAcc		= 5.0f;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             AnimCount   = 0.0f;
             OwnDraw		= true;
         }
@@ -562,16 +546,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case ROCKSPLITTER :	// Splitter eines Felsblocks
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             xSpeed		= (float(rand()%80-40)/4);
             ySpeed		= -float(rand()%30+15)/4;
             xAcc		= 0.0f;
             yAcc		= 2.8f;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = true;
             //DKS - off-by-one error:
             //AnimEnde	= 8;
@@ -582,16 +564,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case ROCKSPLITTERSMALL :	// kleine Splitter eines Felsblocks
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             xSpeed		= (float(rand()%80-40)/4);
             ySpeed		= -float(rand()%40+20)/3;
             xAcc		= 0.0f;
             yAcc		= 2.8f;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = true;
             //DKS - off-by-one error:
             //AnimEnde	= 8;
@@ -602,16 +582,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case ROCKSPLITTERSMALLBLUE :	// kleine Splitter eines Stalagtits
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             xSpeed		= (float(rand()%80-40)/4);
             ySpeed		= -float(rand()%40+20)/3;
             xAcc		= 0.0f;
             yAcc		= 2.8f;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = true;
             //DKS - off-by-one error:
             //AnimEnde	= 8;
@@ -620,6 +598,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
         }
         break;
 
+        //DKS - Added missing SPIDERSPLITTER2 case:
+#if 0
         case SPIDERSPLITTER :	// Splitter der Spinne
         {
             PartikelArt += rand()%2;
@@ -631,7 +611,29 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             ySpeed		= -float(rand()%30+15)/2.0f;
             xAcc		= 0.0f;
             yAcc		= 3.0f;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
+            BounceWalls = true;
+            //DKS - off-by-one error:
+            //AnimEnde	= 16;
+            AnimEnde	= 15;
+            AnimSpeed	= float((rand()%10+5)/12.0f);
+        }
+        break;
+#endif //0
+        case SPIDERSPLITTER :	// Splitter der Spinne
+        case SPIDERSPLITTER2:
+        {
+            if (PartikelArt == SPIDERSPLITTER)
+                PartikelArt += rand()%2;
+            int r = rand()%128 + 128;
+            red	= green = blue = r;
+            alpha = 255;
+
+            xSpeed		= (float(rand()%80-40)/3.0f);
+            ySpeed		= -float(rand()%30+15)/2.0f;
+            xAcc		= 0.0f;
+            yAcc		= 3.0f;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = true;
             //DKS - off-by-one error:
             //AnimEnde	= 16;
@@ -642,15 +644,13 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case SPIDERGRENADE :	// Granate der Spinne
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             xSpeed		= -14.0f;
             ySpeed		= -15.0f;
             yAcc		=   5.0f;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = false;
             //DKS - off-by-one error:
             //AnimEnde	= 4;
@@ -661,9 +661,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case EVILSMOKE:			// Schatten des EvilHurri links
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255;
             alpha = 128;
 
             Lebensdauer = 200;
@@ -673,9 +672,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case EVILSMOKE2:		// Schatten des EvilHurri rechts
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255;
             alpha = 128;
 
             Lebensdauer = 200;
@@ -685,12 +683,10 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case STELZE:			// Stelze eines Stelzsacks
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             xSpeed		= (float(rand()%40-20)/3.0f);
             ySpeed		= -float(rand()%80+40)/3.0f;
             yAcc		= 5.0f;
@@ -701,12 +697,10 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case STELZHEAD:			// Kopf eines Stelzsacks
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             xSpeed		= (float(rand()%40-20)/5.0f);
             ySpeed		= -float(rand()%80+40)/4.0f;
             yAcc		= 4.0f;
@@ -716,14 +710,12 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case SMOKE:			// Rauchwolke
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
             ySpeed		= -(float)(rand()%10)/10.0f;
             yAcc		= -0.1f;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             Rotate = true;
             Rot = (float)(rand()%360);
 
@@ -732,9 +724,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case SMOKE2:			// Rauch bei zB Lava Bällen
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255;
             alpha = 128;
 
             Lebensdauer = 80;
@@ -759,9 +750,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
         case SMOKE3_L:			// links
         case SMOKE3_LO:			// links oben
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255;
             alpha = 64;
 
             Lebensdauer = 128;
@@ -851,9 +841,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case SMOKEBIG:			// Riesen Rauchwolke
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255;
             alpha = 140;
 
             Lebensdauer = 140;
@@ -886,9 +875,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case FLOATSMOKE :		// Rauch der kleinen floating Plattform
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255;
             alpha = 144;
             xSpeed		= ((float)(rand()%40-20)/40);
             ySpeed		= float(rand()%10+40)/5;
@@ -917,7 +905,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 yAcc   =  0.8f;
             }
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             AnimPhase = rand()%3;
 
             xSpeed = -5.0f * (AnimPhase + 1);
@@ -926,7 +914,6 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case SCHROTT1:
         {
-            Lebensdauer = 255;
             //DKS - off-by-one error:
             //AnimEnde = 20;
             AnimEnde = 19;
@@ -936,7 +923,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             ySpeed		= -float(rand()%10+8);
             xAcc		= 0.0f;
             yAcc		= 3.0f;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = true;
 
             if (rand()%2 == 0)
@@ -947,9 +934,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
         case SCHNEEFLOCKE :		// Schneeflocke
         case SCHNEEFLOCKE_END:
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255;
             alpha = 60;
             xSpeed =  0.0f;
 
@@ -975,16 +961,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case BOULDER_SMALL :	// kleiner blauer Boulder
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             xSpeed		=  (float(rand()%80-40)/3.0f);
             ySpeed		= -(float(rand()%80-20)/3.0f);
             xAcc		= 0.0f;
             yAcc		= 5.0f;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = true;
             //DKS - off-by-one error:
             //AnimEnde	= 15;
@@ -996,16 +980,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case LAVAKRABBE_KOPF :	// Kopf der Lava Krabbe
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             xSpeed		=  (float(rand()%80-40)/3.0f);
             ySpeed		= -(float(rand()%60+20)/2.0f);
             xAcc		= 0.0f;
             yAcc		= 5.0f;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = true;
             Rotate		= true;
             Rot			= float (rand()%360);
@@ -1015,16 +997,14 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case LAVAKRABBE_BEIN :	// Bein der Lava Krabbe
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             xSpeed		=  (float(rand()%80-40)/3.0f);
             ySpeed		= -(float(rand()%60+20)/2.0f);
             xAcc		= 0.0f;
             yAcc		= 5.0f;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = true;
             Rotate		= true;
             Rot			= float (rand()%360);
@@ -1036,11 +1016,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case SPIDERPARTS :	// Spinnenstücke auf dem Fliessband
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
-            Lebensdauer = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             AnimPhase = rand()%4;
             RemoveWhenOffScreen = false;
 
@@ -1049,11 +1027,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case KETTENTEILE:
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
-            Lebensdauer = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             AnimPhase = 0;
 
             xSpeed		=  (float(rand()%80-40)/3.0f);
@@ -1069,11 +1045,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case KETTENTEILE2:
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
-            Lebensdauer = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             AnimPhase = 1;
 
             xSpeed		=  (float(rand()%80-40)/3.0f);
@@ -1091,11 +1065,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case KETTENTEILE3:
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
-            Lebensdauer = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             AnimPhase = 2;
 
             xSpeed		=  (float(rand()%80-40)/3.0f);
@@ -1113,11 +1085,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case KETTENTEILE4:
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
-            Lebensdauer = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
 
             xSpeed		=  (float(rand()%80-40)/3.0f);
             ySpeed		= -(float(rand()%30+10)/2.0f);
@@ -1207,7 +1177,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 alpha = 255;
             }
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
 
             AnimSpeed = (float)(rand()%20 + 30);
             AnimCount = (float)(rand()%25 + 5) / 10.0f;
@@ -1234,7 +1204,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 alpha = 255;
             }
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
 
             AnimSpeed = (float)(rand()%15 + 25);
             AnimCount = (float)(rand()%25 + 5) / 8.0f;
@@ -1252,12 +1222,10 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
         case HURRITEILE_WAFFE :
         case HURRITEILE_TORSO :
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             AnimPhase	= PartikelArt - HURRITEILE_ARM1;
             xSpeed		= ((float)(rand()%80-40)/4.0f);
             ySpeed		=-15.0f*(AnimPhase+2)/6.0f;
@@ -1280,12 +1248,10 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
         case HURRITEILE_P2_WAFFE :
         case HURRITEILE_P2_TORSO :
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             AnimPhase	= PartikelArt - HURRITEILE_P2_ARM1;
             xSpeed		= ((float)(rand()%80-40)/4.0f);
             ySpeed		=-15.0f*(AnimPhase+2)/6.0f;
@@ -1306,7 +1272,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             alpha = 192;
             xSpeed =  -24.0f;
             ySpeed =  44.0f;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             RemoveWhenOffScreen = false;
         }
         break;
@@ -1325,10 +1291,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case EVILROUNDSMOKE:	// Rauch des Rundumschusses des evil hurri
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             xSpeed		= ((float)(rand()%60-30)/10);
             ySpeed		= ((float)(rand()%60-30)/10);
@@ -1340,10 +1304,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case BEAMSMOKE:		// Rauch des Blitzbeams
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             xSpeed		= ((float)(rand()%20-10)/20);
             ySpeed		= ((float)(rand()%20-10)/20);
@@ -1388,21 +1350,17 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 ySpeed = (float)(rand()%20 - 10) / 2.0f;
             }
 
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
         }
         break;
 
         case BEAMSMOKE3:	// Rauch des Blitzbeams beim Explodieren
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             AnimPhase = rand()%3;
 
@@ -1422,10 +1380,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case BEAMSMOKE4:		// Rauch des Blitzbeams
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             float mul = (float)(rand()%50 + 10) / 10.0f;
 
@@ -1445,27 +1401,23 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case BEAMSMOKE5:		// Druckwelle beim Beam Explodieren
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             if (int (xPos) % 2 == 0)
                 AnimPhase = 20;
             else
                 AnimPhase = 40;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             OwnDraw		= true;
         }
         break;
 
         case SNOWFLUSH:		// SchneeGestöber und Wasserfall Rauch
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             xSpeed		= ((float)(rand()%60-30)/20);
             ySpeed		= ((float)(rand()%60-30)/20);
@@ -1605,64 +1557,56 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             green = 64;
             blue = 224;
             alpha = 255;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
         }
         break;
 
         case FUNKE :			// Roter Funken
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
             xSpeed		= ((float)(rand()%80-40)/5);
             ySpeed		= -(float)(rand()%40+20)/5;
             yAcc		= 5.0f;
             BounceWalls = true;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
 
         }
         break;
 
         case FUNKE2 :			// Grüner Funken
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
             xSpeed		= ((float)(rand()%80-40)/5);
             ySpeed		= -(float)(rand()%40+20)/5;
             yAcc		= 5.0f;
             BounceWalls = true;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
 
         }
         break;
 
         case LASERFUNKE :		// Laser-Funken blau
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
             xSpeed		= ((float)(rand()%80-40)/2);
             ySpeed		= -(float)(rand()%40+20)/5;
             yAcc		= 5.0f;
             BounceWalls = true;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
 
         }
         break;
 
         case LASERFUNKE2 :		// Laser-Funken rot
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
             xSpeed		= ((float)(rand()%20-10)/2);
             ySpeed		= -(float)(rand()%40+20)/5;
             yAcc		= 5.0f;
@@ -1672,20 +1616,18 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             AnimEnde	= 2;
             AnimSpeed   = 0.75f;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
 
         }
         break;
 
         case PHARAOSMOKE :		// Roter Rauch für den Pharaokopf schuss
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
             xSpeed		= ((float)(rand()%80-40)/40);
             ySpeed		= -(float)(rand()%80-40)/40;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
 
         }
         break;
@@ -1694,9 +1636,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
         case ROCKETSMOKEBLUE :	// auch in blau =)
         case ROCKETSMOKEGREEN :	// und das selbe nochmal in grün :D
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255;
             alpha = 150;
             xSpeed		= ((float)(rand()%40-20)*0.025f);
             ySpeed		= -(float)(rand()%40-20)*0.025f;
@@ -1707,9 +1648,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case FLUGSACKSMOKE :	// Rauch des FlugSacks links
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255;
             alpha = 128;
             xSpeed		= - (8.0f + ((float)(rand()%20)/10));
             ySpeed		= 15.0f;
@@ -1727,9 +1667,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
         case FLUGSACKSMOKE2 :	// Rauch des FlugSacks rechts
         {
             PartikelArt = FLUGSACKSMOKE;
-            red	= 255;
-            green = 255;
-            blue = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255;
             alpha = 128;
             xSpeed		= 8.0f + ((float)(rand()%20)/10);
             ySpeed		= 15.0f;
@@ -1746,9 +1685,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
         case ROBOMANSMOKE :	// Rauch des RoboMans
         {
             PartikelArt = FLUGSACKSMOKE;
-            red	= 255;
-            green = 255;
-            blue = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255;
             alpha = 128;
             ySpeed		= 15.0f + ((float)(rand()%20)/5);
             Lebensdauer = float(150 + rand()%10);
@@ -1763,18 +1701,16 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case STELZFLARE :		// Flare des Stelzsack smokes
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
-            Lebensdauer = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = false;
         }
         break;
 
         case TEXTSECRET:
         {
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             OwnDraw = true;
             ySpeed = -1.0f;
         }
@@ -1787,7 +1723,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             blue = 32;
             alpha = 255;
             AnimPhase = rand()%4;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = false;
 
             float mul = (float)(rand()%60 + 40) / 8.0f;
@@ -1812,7 +1748,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             blue = 0;
             alpha = 255;
             AnimPhase = rand()%4;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = false;
             PartikelArt = KRINGEL;
 
@@ -1841,7 +1777,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             blue = 0;
             alpha = 255;
             AnimPhase = rand()%4;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = false;
             PartikelArt = KRINGEL;
 
@@ -1870,7 +1806,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             blue = 255;
             alpha = 255;
             AnimPhase = rand()%4;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = false;
             PartikelArt = KRINGEL;
 
@@ -1899,7 +1835,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             blue = 255;
             alpha = 255;
             AnimPhase = rand()%4;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = false;
             PartikelArt = KRINGEL;
 
@@ -1933,7 +1869,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             BounceWalls = true;
             OwnDraw		= true;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
 
         }
         break;
@@ -1951,7 +1887,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             BounceWalls = true;
             OwnDraw		= true;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
 
         }
         break;
@@ -1985,10 +1921,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case BUBBLE :		// Luftbläschen im Wasser
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
             xSpeed =  0.0f;
 
             if (rand()%2 == 0)
@@ -2006,18 +1940,16 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 yAcc = -1.0f;
             }
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             RemoveWhenOffScreen = false;
         }
         break;
 
         case LASERFLAME :			// Leuchteffekt für den Krabbler
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
-            Lebensdauer = 255.0f;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
 
         }
         break;
@@ -2043,16 +1975,16 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             if (amount > 100.0f)
                 amount = 100.0f;
 
-            red   = 255 - int(amount*2.55f);
-            blue  = 	  int(amount*2.55f);
-            green =	0;
-
-            if (red < 0)	 red = 0;
-            if (red > 255)	 red = 255;
-            if (blue < 0)    blue = 0;
-            if (blue > 255)  blue = 255;
+            //DKS - Use new color-setting functions to check range:
+            //red   = 255 - int(amount*2.55f);
+            //blue  = 	  int(amount*2.55f);
+            //if (red < 0)	 red = 0;
+            //if (red > 255)	 red = 255;
+            //if (blue < 0)    blue = 0;
+            //if (blue > 255)  blue = 255;
+			SetRed(255 - int(amount*2.55f));
+			SetBlue(amount*2.55f);
             green = int (blue / 2);
-
 
             alpha = 128;
             Lebensdauer = 128.0f;
@@ -2066,12 +1998,10 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case TURBINESMOKE :			// Partikel für die Turbine des Metalhead Bosses
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
             AnimPhase = rand()%3;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             BounceWalls = false;
 
             //DKS - converted to float:
@@ -2117,7 +2047,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             green = 224;
             blue = 192;
             alpha = 255;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             Rotate = true;
         }
         break;
@@ -2145,9 +2075,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
         case SCHLEIM:			// kleiner Schleimbollen
         case SCHLEIM2:
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255;
             alpha = 224;
             xSpeed		= ((float)(rand()%80-40)/3);
             ySpeed		= -(float)(rand()%40+40)/3;
@@ -2158,7 +2087,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             AnimEnde    = 3;
             AnimSpeed	= float((rand()%2+3)/10.0f);
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
         }
         break;
 
@@ -2169,7 +2098,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             blue = 64;
             alpha = 255;
             AnimCount = 4.0f;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             OwnDraw = true;
         }
         break;
@@ -2180,7 +2109,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             green = 128;
             blue = 32;
             alpha = 255;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
         }
         break;
 
@@ -2190,17 +2119,15 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             green = 255;
             blue = 32;
             alpha = 255;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
         }
         break;
 
         case EXTRACOLLECTED:
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
-            Lebensdauer = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
 
             OwnDraw = true;
             AnimCount = 1.0f;
@@ -2215,7 +2142,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             green = 240;
             blue = 128;
             alpha = 255;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
 
             OwnDraw = true;
             AnimCount = 5.0f;
@@ -2231,11 +2158,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case DIAMANTCOLLECTED:
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
-            Lebensdauer = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
 
             OwnDraw = true;
             AnimCount = 16.0f;
@@ -2245,21 +2170,17 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case LILA:
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
-            Lebensdauer = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
         }
         break;
 
         case LILA2:
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
-            Lebensdauer = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
 
             ySpeed = -(float)(rand()%30 + 10) / 2.0f;
             xSpeed =  (float)(rand()%40 - 20) / 2.0f;
@@ -2270,11 +2191,9 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case LILA3:
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
-            Lebensdauer = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
 
             xSpeed = -(float)(rand()%20 + 120);
             PartikelArt = LILA;
@@ -2283,11 +2202,10 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case DRACHE_SMOKE:
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255;
             alpha = 128;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             xSpeed = -(float)(rand()%20 + 120) / 4.0f;
             ySpeed = (float)(rand()%20 - 10) / 5.0f;
 
@@ -2300,11 +2218,10 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case FIREBALL_SMOKE:
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255;
             alpha = 128;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             xSpeed = (float)(rand()%10 - 5) / 10.0f;
             ySpeed = (float)(rand()%10 - 5) / 10.0f;
 
@@ -2319,23 +2236,23 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             green = 192;
             blue = 255;
             alpha = 255;
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
         }
         break;
 
         case EXPLOSION_TRACE_END:
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             Lebensdauer = 150;
             AnimEnde	= 17;
             AnimPhase	= 5;
             AnimSpeed	= 3.0f;
 
-            blue = (int)WinkelUebergabe;
+            //DKS - Use new range-checked SetBlue() function:
+            //blue = (int)WinkelUebergabe;
+            SetBlue((int)WinkelUebergabe);
             OwnDraw = true;
 
             Rotate = true;
@@ -2355,7 +2272,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             else
                 xAcc = -0.4f;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
             AnimPhase = rand()%3;
 
             ySpeed = -3.0f * (AnimPhase + 1);
@@ -2365,12 +2282,10 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case EXPLOSION_TRACE:
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
-            Lebensdauer = 255;
+            //Lebensdauer = 255;      //DKS - now redundant
 
             xPos -= 60;
             yPos -= 60;
@@ -2384,10 +2299,8 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
         case EXPLOSION_REGULAR:
         {
-            red	= 255;
-            green = 255;
-            blue = 255;
-            alpha = 255;
+            //DKS - now redundant:
+            //red	= 255; green = 255; blue = 255; alpha = 255;
 
             Lebensdauer = 128;
             AnimEnde	= 17;
@@ -2401,7 +2314,7 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             break;
         } // switch >= Additiv Grenze
 
-    return true;
+    //return true;  //DKS - Function now has void return type
 }
 
 // --------------------------------------------------------------------------------------
@@ -2411,6 +2324,10 @@ bool PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 void PartikelClass::Run(void)
 {
     int bo, bu, bl, br;
+
+    //DKS - alpha color was getting set outside its range, so set
+    //      a temp value and fix at the end:
+    int tmp_alpha = alpha;
 
     // Screen verlassen oder eh schon weg wegen der Lebensdauer ?
     //
@@ -2509,7 +2426,7 @@ void PartikelClass::Run(void)
             Rot += xSpeed * 10.0f SYNC;
 
             Lebensdauer -= 20.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
@@ -2556,7 +2473,7 @@ void PartikelClass::Run(void)
             Rot += xSpeed * 10.0f SYNC;
 
             Lebensdauer -= 5.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
         }
         break;
@@ -2571,7 +2488,7 @@ void PartikelClass::Run(void)
         case EXPLOSION_GIANT:					// Grosse Explosion
         {
             Lebensdauer -= 5.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
             //DKS - off-by-one error:
             //if (AnimPhase >= AnimEnde)		// Animation zu Ende	?
             if (AnimPhase > AnimEnde)		// Animation zu Ende	?
@@ -2586,7 +2503,7 @@ void PartikelClass::Run(void)
         case BLUE_EXPLOSION:				// Kleine blaue Explosion
         {
             Lebensdauer -= 12.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
             //DKS - off-by-one error:
             //if (AnimPhase >= AnimEnde)		// Animation zu Ende	?
             if (AnimPhase > AnimEnde)		// Animation zu Ende	?
@@ -2598,7 +2515,7 @@ void PartikelClass::Run(void)
         case SPLITTER:						// Kleiner animierter Splitter
         {
             Lebensdauer -= 7.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
             //DKS - we weren't getting our full animation
             //if (AnimPhase == AnimEnde)		// Animation zu Ende	?
             if (AnimPhase > AnimEnde)		// Animation zu Ende	?
@@ -2614,7 +2531,7 @@ void PartikelClass::Run(void)
         case HURRITEILE_P2:                 //DKS - Added blue-colored hurrican piece particles for player 2
         {
             Lebensdauer -= 5.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             // Partikel drehen
             Rot   += (float)(AnimPhase+1) * 8.0f SYNC;
@@ -2625,7 +2542,7 @@ void PartikelClass::Run(void)
         case LAVAKRABBE_KOPF:				// Teile der explodierten Lavakrabbe
         {
             Lebensdauer -= 10.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             // Partikel drehen
             Rot   += 32.0f SYNC;
@@ -2639,7 +2556,7 @@ void PartikelClass::Run(void)
         case KETTENTEILE4:
         {
             Lebensdauer -= 10.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             // Partikel drehen
             Rot += 40.0f SYNC;
@@ -2705,7 +2622,7 @@ void PartikelClass::Run(void)
 
             if (ySpeed == 0.0f)				// an der Oberfläche langsam ausfaden lassen
                 Lebensdauer -= 7.0f SYNC;
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             if ((xAcc > 0.0f && xSpeed > 0.0f) ||
                     (xAcc < 0.0f && xSpeed < 0.0f))
@@ -2738,7 +2655,7 @@ void PartikelClass::Run(void)
             bo = TileEngine.BlockOben (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
 
             Lebensdauer -= 5.0f SYNC;	// langsam ausfaden lassen
-            alpha = (int)Lebensdauer;
+            tmp_alpha = (int)Lebensdauer;
 
             // Nicht mehr im Wasser ? Dann gleich verschwinden lassen
             if(!(bo & BLOCKWERT_LIQUID))
@@ -2757,7 +2674,7 @@ void PartikelClass::Run(void)
         case MADEBLUT :					// Blut einer kaputten Made
         {
             Lebensdauer -= 15.0f SYNC;	// ausfaden lassen
-            alpha = (int)Lebensdauer;
+            tmp_alpha = (int)Lebensdauer;
 
             // Animation von vorne beginnen
             //DKS - we weren't getting our full animation
@@ -2821,7 +2738,7 @@ void PartikelClass::Run(void)
                 xAcc     = 0.0f;
 
                 Lebensdauer -= 10.0f SYNC;
-                alpha = int (Lebensdauer);
+                tmp_alpha = int (Lebensdauer);
             }
 
             if (xSpeed > 0.0f)
@@ -2832,7 +2749,7 @@ void PartikelClass::Run(void)
             Rot += RotDir * ySpeed * 8.0f SYNC;
 
             Lebensdauer -= 5.0f SYNC;
-            alpha = int (Lebensdauer);
+            tmp_alpha = int (Lebensdauer);
 
         }
         break;
@@ -2846,7 +2763,7 @@ void PartikelClass::Run(void)
         case NESTLUFT:
         {
             Lebensdauer -= 5.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             // drehen
             if (yAcc != 0.0f)
@@ -2883,11 +2800,11 @@ void PartikelClass::Run(void)
             // Fadet ein ?
             //
             if (AnimCount < 128.0f)
-                alpha = int (AnimCount);
+                tmp_alpha = int (AnimCount);
 
             // oder aus ?
             else
-                alpha = 256 - int (AnimCount);
+                tmp_alpha = 256 - int (AnimCount);
 
             if (AnimCount >= 256.0f)
                 Lebensdauer = 0;
@@ -2905,14 +2822,14 @@ void PartikelClass::Run(void)
                 AnimPhase = 0;				// Dann wieder von vorne beginnen
 
             Lebensdauer -= 6.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
         case WASSER_SPRITZER:
         {
             Lebensdauer -= (float)(AnimSpeed) SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
             OwnDraw		 = true;
         }
         break;
@@ -2920,7 +2837,7 @@ void PartikelClass::Run(void)
         case WASSER_SPRITZER2:
         {
             Lebensdauer -= (float)(AnimSpeed) SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
             OwnDraw		 = true;
         }
         break;
@@ -2934,7 +2851,7 @@ void PartikelClass::Run(void)
                 AnimPhase = 0;				// Dann wieder von vorne beginnen
 
             Lebensdauer -= 6.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
@@ -2959,7 +2876,7 @@ void PartikelClass::Run(void)
         case EVILROUNDSMOKE:
         {
             Lebensdauer -= 25.0f SYNC;		// schnell ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
@@ -2989,7 +2906,7 @@ void PartikelClass::Run(void)
         case SMOKEBIG:						// Riesen Rauch
         {
             Lebensdauer -= 4.5f SYNC;		// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             Rot += RotDir * ySpeed * 3.0f SYNC;
 
@@ -2999,7 +2916,7 @@ void PartikelClass::Run(void)
         case SMOKEBIG2:						// Riesen Rauch
         {
             Lebensdauer -= 4.5f SYNC;		// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             Rot += RotDir * ySpeed SYNC;
 
@@ -3021,7 +2938,7 @@ void PartikelClass::Run(void)
         case SMOKEBIG_OUTTRO:				// Riesen Rauch
         {
             Lebensdauer -= 1.0f SYNC;		// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             Rot += RotDir * ySpeed * 1.0f SYNC;
 
@@ -3031,7 +2948,7 @@ void PartikelClass::Run(void)
         case SMOKE:							// Rauchwolke
         {
             Lebensdauer -= 30.0f SYNC;		// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             Rot += RotDir * ySpeed * 5.0f SYNC;
         }
@@ -3041,7 +2958,7 @@ void PartikelClass::Run(void)
         case SMOKE3:
         {
             Lebensdauer -= 4.5f SYNC;		// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             Rot += RotDir * ySpeed * 3.0f SYNC;
 
@@ -3088,7 +3005,7 @@ void PartikelClass::Run(void)
         case KAPUTTETURBINE:
         {
             Lebensdauer -= 5.0f SYNC;		// schnell ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
             AnimCount   += 0.8f SYNC;
 
             while (AnimCount > 2 * PI)
@@ -3099,7 +3016,7 @@ void PartikelClass::Run(void)
         case DUST:
         {
             Lebensdauer -= 1.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             // Richtung umdrehen ?
             if (ySpeed < -4.0f)
@@ -3114,7 +3031,7 @@ void PartikelClass::Run(void)
         case SCHROTT2:
         {
             Lebensdauer -= 5.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             //DKS - we weren't getting our full animation
             //if (AnimPhase >= AnimEnde)
@@ -3151,7 +3068,7 @@ void PartikelClass::Run(void)
             if (ySpeed == 0.0f)
             {
                 Lebensdauer -= float(10.0 SYNC);
-                alpha = int(Lebensdauer);
+                tmp_alpha = int(Lebensdauer);
             }
 
         }
@@ -3185,7 +3102,7 @@ void PartikelClass::Run(void)
         case BEAMSMOKE:
         {
             Lebensdauer -= 15.0f SYNC;		// langsam
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             AnimCount += 3.0f SYNC;
 
@@ -3198,21 +3115,21 @@ void PartikelClass::Run(void)
         {
             Rot += RotDir SYNC;
             Lebensdauer -= 10.0f SYNC;		// langsam
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
         case BEAMSMOKE5:
         {
             Lebensdauer -= AnimPhase SYNC;		// langsam
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
         case BEAMSMOKE2:
         {
             Lebensdauer -= 20.0f SYNC;		// langsam
-            alpha = (int)Lebensdauer;
+            tmp_alpha = (int)Lebensdauer;
 
             if (m_pParent != NULL)
             {
@@ -3242,7 +3159,7 @@ void PartikelClass::Run(void)
             if (TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) & BLOCKWERT_LIQUID)
                 Lebensdauer -= 20.0f SYNC;
 
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             Rot += RotDir * 10.0f SYNC;
         }
@@ -3258,7 +3175,7 @@ void PartikelClass::Run(void)
                     TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) & BLOCKWERT_WAND)
                 Lebensdauer -= 4.0f SYNC;
 
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             Rot += RotDir * 10.0f SYNC;
         }
@@ -3267,28 +3184,28 @@ void PartikelClass::Run(void)
         case UFOLASERFLARE:
         {
             Lebensdauer -= 20.0f SYNC;
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
         case FUNKE:							// RoterFunken
         {
             Lebensdauer -= 14.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
         case FUNKE2:						// Grüner Funken
         {
             Lebensdauer -= 16.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
         case LONGFUNKE:
         {
             Lebensdauer -= 12.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             // steckt in der Wand?
             //
@@ -3309,21 +3226,21 @@ void PartikelClass::Run(void)
 
             // langsam ausfaden lassen
             Lebensdauer -= 18.0f SYNC;
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
         case LASERFUNKE:					// Laser-Funken
         {
             Lebensdauer -= 16.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
         case LASERFUNKE2:					// Laser-Funken
         {
             Lebensdauer -= 16.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
             //DKS - we weren't getting our full animation
             //if (AnimPhase >= AnimEnde)
             if (AnimPhase > AnimEnde)
@@ -3334,7 +3251,7 @@ void PartikelClass::Run(void)
         case PHARAOSMOKE:					// Rauch des Pharao-Schusses
         {
             Lebensdauer -= 20.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
@@ -3342,28 +3259,28 @@ void PartikelClass::Run(void)
         case ROCKETSMOKEBLUE:				// in blau
         {
             Lebensdauer -= 50.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
         case ROCKETSMOKEGREEN:				// in grün
         {
             Lebensdauer -= 20.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
         case FLUGSACKSMOKE:
         {
             Lebensdauer -= 30.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
         case EVILFUNKE:
         {
             Lebensdauer -= 30.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
@@ -3372,9 +3289,9 @@ void PartikelClass::Run(void)
             Lebensdauer -= 16.0f SYNC;	// langsam ausfaden lassen
 
             if (Lebensdauer > 255.0f)
-                alpha = 0;
+                tmp_alpha = 0;
             else
-                alpha = (int)Lebensdauer;
+                tmp_alpha = (int)Lebensdauer;
 
             if (bu & BLOCKWERT_LIQUID &&
                     ySpeed > 0.0f)
@@ -3412,7 +3329,7 @@ void PartikelClass::Run(void)
         case STELZFLARE:
         {
             Lebensdauer -= float(50.0 SYNC);
-            alpha = int (Lebensdauer);
+            tmp_alpha = int (Lebensdauer);
 
         }
         break;
@@ -3420,7 +3337,7 @@ void PartikelClass::Run(void)
         case SHIELD:				// Verschwindet nach Ablauf der Animation
         {
             Lebensdauer -= 20.0f SYNC;
-            alpha = int (Lebensdauer);
+            tmp_alpha = int (Lebensdauer);
 
             // an Spieler anpassen
             xPos = m_pParent->xpos + xSpeed + 37;
@@ -3435,14 +3352,14 @@ void PartikelClass::Run(void)
         case TEXTSECRET:
         {
             Lebensdauer -= float(10.0 SYNC);
-            alpha = int (Lebensdauer);
+            tmp_alpha = int (Lebensdauer);
         }
         break;
 
         case KRINGELSECRET:
         {
             Lebensdauer -= float(10.0 SYNC + AnimPhase);
-            alpha = int (Lebensdauer);
+            tmp_alpha = int (Lebensdauer);
 
             xSpeed -= (xSpeed * 0.1f) SYNC;
             ySpeed -= (ySpeed * 0.1f) SYNC;
@@ -3452,7 +3369,7 @@ void PartikelClass::Run(void)
         case KRINGEL:
         {
             Lebensdauer -= float(20.0 SYNC);
-            alpha = int (Lebensdauer);
+            tmp_alpha = int (Lebensdauer);
 
             xPos += m_pParent->xspeed SYNC;
             yPos += m_pParent->yspeed SYNC;
@@ -3480,7 +3397,7 @@ void PartikelClass::Run(void)
         case TURBINESMOKE:							// Partikel, die in die Turbine des Metalhead Bosses gesaugt werden
         {
             Lebensdauer -= float(10.0 SYNC);
-            alpha = int (Lebensdauer);
+            tmp_alpha = int (Lebensdauer);
 
             // Richtung neu berechnen
             //
@@ -3505,7 +3422,7 @@ void PartikelClass::Run(void)
         case MINIFLARE:								// Flare beim Lava Ball
         {
             Lebensdauer -= float(5.0 SYNC);
-            alpha = int (Lebensdauer);
+            tmp_alpha = int (Lebensdauer);
 
             if (xSpeed >  2.0f) xAcc = -1.0f;
             if (xSpeed < -2.0f) xAcc =  1.0f;
@@ -3519,7 +3436,7 @@ void PartikelClass::Run(void)
         case GRENADEFLARE:							// Flare beim Granaten Treffer
         {
             Lebensdauer -= float(20.0 SYNC);
-            alpha = int (Lebensdauer);
+            tmp_alpha = int (Lebensdauer);
             Rot += RotDir * 20.0f SYNC;
 
         }
@@ -3529,7 +3446,7 @@ void PartikelClass::Run(void)
         case EXPLOSIONFLARE2:						// Flare bei Explosion
         {
             Lebensdauer -= float(50.0 SYNC);
-            alpha = int (Lebensdauer);
+            tmp_alpha = int (Lebensdauer);
 
             //DKS - Lightmaps have been disabled (never worked originally, see Tileengine.cpp's
             //      comments for DrawLightmap()), so all the following is commented out now:
@@ -3550,7 +3467,7 @@ void PartikelClass::Run(void)
         case SCHLEIM2:						// kleiner Alien Schleimbollen
         {
             Lebensdauer -= 18.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             //DKS - we weren't getting our full animation
             //if (AnimPhase >= AnimEnde)
@@ -3562,7 +3479,7 @@ void PartikelClass::Run(void)
         case SHOCKEXPLOSION:				// Schockwelle bei Spieler Explosion
         {
             Lebensdauer -= 10.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
             AnimCount += 130.0f SYNC;
         }
         break;
@@ -3571,14 +3488,14 @@ void PartikelClass::Run(void)
         case SHOTFLARE2:
         {
             Lebensdauer -= 100.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
         case EXTRACOLLECTED:
         {
             Lebensdauer -= (100.0f - AnimPhase * 20.0f) SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             AnimCount += AnimPhase * 40.0f SYNC;
         }
@@ -3587,7 +3504,7 @@ void PartikelClass::Run(void)
         case DIAMANTCOLLECTED:
         {
             Lebensdauer -= 120.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             AnimCount += 40.0f SYNC;
         }
@@ -3596,7 +3513,7 @@ void PartikelClass::Run(void)
         case DRACHE_SMOKE:
         {
             Lebensdauer -= 25.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             Rot += RotDir * 10.0f SYNC;
         }
@@ -3605,7 +3522,7 @@ void PartikelClass::Run(void)
         case FIREBALL_SMOKE:
         {
             Lebensdauer -= 150.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             Rot += RotDir * 10.0f SYNC;
         }
@@ -3614,21 +3531,21 @@ void PartikelClass::Run(void)
         case LILA:
         {
             Lebensdauer -= 30.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
         case LASERFLARE:
         {
             Lebensdauer -= 150.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
         }
         break;
 
         case EXPLOSION_TRACE_END:
         {
             Lebensdauer -= 4.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
             //DKS - off-by-one error:
             //if (AnimPhase >= AnimEnde)		// Animation zu Ende	?
             if (AnimPhase > AnimEnde)		// Animation zu Ende	?
@@ -3642,7 +3559,7 @@ void PartikelClass::Run(void)
         case LAVADUST:
         {
             Lebensdauer -= 1.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
 
             // Richtung umdrehen ?
             if (xSpeed < -2.0f)
@@ -3658,7 +3575,7 @@ void PartikelClass::Run(void)
         case EXPLOSION_REGULAR:
         {
             Lebensdauer -= 5.0f SYNC;	// langsam ausfaden lassen
-            alpha		 = (int)Lebensdauer;
+            tmp_alpha		 = (int)Lebensdauer;
             //DKS - off-by-one error:
             //if (AnimPhase >= AnimEnde)		// Animation zu Ende	?
             if (AnimPhase > AnimEnde)		// Animation zu Ende	?
@@ -3689,6 +3606,9 @@ void PartikelClass::Run(void)
     // alte Position für Kollisionsabfrage sichern
     xPosOld = xPos;
     yPosOld = yPos;
+
+    //DKS - SetAlpha() below will ensure range 0-255 is ensured
+    SetAlpha(tmp_alpha);
 }
 
 // --------------------------------------------------------------------------------------
@@ -4776,6 +4696,12 @@ PartikelsystemClass::~PartikelsystemClass(void)
 // Partikel "Art" hinzufügen
 // --------------------------------------------------------------------------------------
 
+//DKS - Modified PushPartikel to:
+//      1.) Fix potential memory leak (called CreatePartikel() but didn't free
+//          memory if there were too many particles already.
+//      2.) Support the now-singly-linked particle list
+//      3.) Support new optional pooled memory manager
+#if 0
 bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass* pParent)
 {
     if(NumPartikel >= MAX_PARTIKEL)			// Grenze überschritten ?
@@ -4806,11 +4732,48 @@ bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass* p
     NumPartikel++;							// Partikelanzahl erhöhen
     return true;
 }
+#endif //0
+bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass* pParent)
+{
+    if (NumPartikel >= MAX_PARTIKEL)			// Grenze überschritten ?
+        return false;
+
+    //DKS - moved this detail option check here (from inside CreatePartikel) to fix potential memory leak below:
+    if (options_Detail < DETAIL_HIGH &&
+            (Art == GRENADEFLARE ||
+             Art == SHOTFLARE    ||
+             Art == SHOTFLARE2   ||
+             Art == EXPLOSIONFLARE))
+        return false;
+
+#if USE_MEMPOOL
+    PartikelClass *pNew = particle_pool.alloc();
+#else
+    PartikelClass *pNew = new PartikelClass;		// Neuer zu erstellender Partikel
+#endif
+
+    pNew->CreatePartikel(x, y, Art, pParent);	// neuen Partikel erzeugen
+    pNew->pNext = NULL;
+
+    if (pStart == NULL)
+        pStart = pNew;						
+
+    if (pEnd)
+        pEnd->pNext = pNew;		
+
+    pEnd = pNew;				
+
+    NumPartikel++;			
+    return true;
+}
 
 // --------------------------------------------------------------------------------------
 // Bestimmten Partikel der Liste löschen
 // --------------------------------------------------------------------------------------
 
+//DKS - Replaced with new DelNode() function that supports a singly-linked list and
+//      new pooled memory manager. (see next function below this )
+#if 0
 void PartikelsystemClass::DelSel(PartikelClass *pTemp)
 {
     PartikelClass  *pN;
@@ -4837,11 +4800,38 @@ void PartikelsystemClass::DelSel(PartikelClass *pTemp)
         NumPartikel--;					// Partikelzahl verringern
     }
 }
+#endif //0
+
+//DKS - Added new function DelNode() that supports new singly-linked list.
+//      It is now up to the caller to splice the list, this blindly deletes what is passed
+//      to it and returns the pointer that was in pPtr->pNext, or NULL if pPtr was NULL.
+PartikelClass* PartikelsystemClass::DelNode(PartikelClass *pPtr)
+{
+    PartikelClass  *pNext = NULL;
+    if (pPtr != NULL)						// zu löschender Partikel existiert
+    {
+        pNext = pPtr->pNext;
+
+        if (pStart == pPtr)
+            pStart = pNext;
+
+        //DKS - added support for new, fast pooled mem-manager:
+#if USE_MEMPOOL
+        particle_pool.free(pPtr);
+#else
+        delete (pPtr);					// Speicher freigeben
+#endif
+        NumPartikel--;					// Partikelzahl verringern
+    }
+    return pNext;
+}
 
 // --------------------------------------------------------------------------------------
 // Alle Partikel der Liste löschen
 // --------------------------------------------------------------------------------------
 
+//DKS - adapted to use singly-linked list
+#if 0
 void PartikelsystemClass::ClearAll(void)
 {
     PartikelClass *pTemp    = pStart;				// Zeiger auf den ersten   Partikel
@@ -4856,6 +4846,32 @@ void PartikelsystemClass::ClearAll(void)
 
     pStart = NULL;
     pEnd   = NULL;
+}
+#endif //0
+void PartikelsystemClass::ClearAll(void)
+{
+    if (pStart) {
+        PartikelClass *pNext = pStart->pNext;
+        while (pNext)
+        {
+            pNext = DelNode(pNext);
+        }
+        DelNode(pStart);
+    }
+    pStart = pEnd = NULL;
+
+#ifdef _DEBUG
+    if (NumPartikel != 0) {
+        Protokoll.WriteText( false, "ERROR: poss. mem leak / mem. corruption in linked list of particles\n" );
+    }
+#endif
+
+#ifdef USE_MEMPOOL
+    particle_pool.reinit();
+#endif
+
+    // Just to be safe:
+    NumPartikel = 0;
 }
 
 // --------------------------------------------------------------------------------------
@@ -4873,14 +4889,11 @@ int PartikelsystemClass::GetNumPartikel(void)
 
 void PartikelsystemClass::DrawOnly(void)
 {
-    PartikelClass *pTemp = pStart;			// Anfang der Liste
-
-    CurrentPartikelTexture = -1;			// Aktuelle Textur gibt es noch keine
-
-    DrawMode = MODE_NORMAL;
-
 //----- Partikel, die normal oder mit Alphablending gerendert werden, durchlaufen
 
+    PartikelClass *pTemp = pStart;			// Anfang der Liste
+    CurrentPartikelTexture = -1;			// Aktuelle Textur gibt es noch keine
+    DrawMode = MODE_NORMAL;
     DirectGraphics.SetColorKeyMode();
     while (pTemp != NULL)					// Noch nicht alle durch ?
     {
@@ -4921,6 +4934,8 @@ void PartikelsystemClass::DrawOnly(void)
 // Alle Partikel der Liste animieren und anzeigen, aber speziale
 // --------------------------------------------------------------------------------------
 
+//DKS - Adapted to now-singly-linked particle list:
+#if 0
 void PartikelsystemClass::DoPartikelSpecial(bool ShowThem)
 {
     if (Console.Showing == true)
@@ -4999,11 +5014,113 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem)
 #endif
 #endif
 }
+#endif //0
+void PartikelsystemClass::DoPartikelSpecial(bool ShowThem)
+{
+    if (Console.Showing == true)
+    {
+        DrawOnly();
+        return;
+    }
+
+	PartikelClass *pCurr = pStart;
+	PartikelClass *pPrev = NULL;
+
+    CurrentPartikelTexture = -1;			// Aktuelle Textur gibt es noch keine
+    DrawMode = MODE_NORMAL;
+
+//----- Partikel, die normal oder mit Alphablending gerendert werden, durchlaufen
+
+    DirectGraphics.SetColorKeyMode();
+
+    while (pCurr != NULL)
+    {
+        if (ShowThem == false && pCurr->PartikelArt < ADDITIV_GRENZE) {
+            pCurr->Run();
+            if (pCurr->Lebensdauer > 0.0f)
+                pCurr->Render();
+        }
+
+        if (pCurr->Lebensdauer > 0.0f) {
+            pPrev = pCurr;
+            pCurr = pCurr->pNext;
+        } else {
+            // Particle's time to die..
+
+            // If this is the last node in the list, update the main class's pEnd pointer
+            if (pEnd == pCurr)
+                pEnd = pPrev;
+
+            pCurr = DelNode(pCurr);
+            //pCurr now points to the node after the one deleted
+
+            if (pPrev) {
+                // This is not the first node in the list, so
+                // splice this node onto the previous one
+                pPrev->pNext = pCurr;
+            }
+        }
+    }
+
+//----- Partikel, die mit additivem Alphablending gerendert werden, durchlaufen
+
+	pCurr = pStart;
+	pPrev = NULL;
+    CurrentPartikelTexture = -1;			// Aktuelle Textur gibt es noch keine
+    DirectGraphics.SetAdditiveMode();
+    while (pCurr != NULL)
+    {
+        if ((ShowThem == true && 
+                    (pCurr->PartikelArt == SCHNEEFLOCKE_END || pCurr->PartikelArt == EXPLOSION_TRACE_END)) ||
+                (ShowThem == false && pCurr->PartikelArt >= ADDITIV_GRENZE))
+        {
+            pCurr->Run();		// Partikel animieren/bewegen
+
+            if (pCurr->Lebensdauer > 0.0f)
+                pCurr->Render();
+        }
+
+        if (pCurr->Lebensdauer > 0.0f) {
+            pPrev = pCurr;
+            pCurr = pCurr->pNext;
+        } else {
+            // Particle's time to die..
+
+            // If this is the last node in the list, update the main class's pEnd pointer
+            if (pEnd == pCurr)
+                pEnd = pPrev;
+
+            pCurr = DelNode(pCurr);
+            //pCurr now points to the node after the one deleted
+
+            if (pPrev != NULL) {
+                // This is not the first node in the list, so
+                // splice this node onto the previous one
+                pPrev->pNext = pCurr;
+            }
+        }
+    }
+
+    DirectGraphics.SetColorKeyMode();
+
+    // Normale Projektions-Matrix wieder herstellen
+    D3DXMatrixRotationZ (&matWorld, 0.0f);
+#if defined(PLATFORM_DIRECTX)
+    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    g_matModelView = matWorld * g_matView;
+#if defined(USE_GL1)
+    load_matrix( GL_MODELVIEW, g_matModelView.data() );
+#endif
+#endif
+}
 
 // --------------------------------------------------------------------------------------
 // Alle Partikel der Liste animieren und anzeigen
 // --------------------------------------------------------------------------------------
 
+//DKS - Adapted to now-singly-linked particle list:
+#if 0
 void PartikelsystemClass::DoPartikel(void)
 {
     if (Console.Showing == true)
@@ -5073,6 +5190,105 @@ void PartikelsystemClass::DoPartikel(void)
 #endif
 #endif
 }
+#endif //0
+void PartikelsystemClass::DoPartikel(void)
+{
+
+    if (Console.Showing == true)
+    {
+        DrawOnly();
+        return;
+    }
+
+    PartikelClass *pCurr = pStart;
+    PartikelClass *pPrev = NULL;
+	CurrentPartikelTexture = -1;			// Aktuelle Textur gibt es noch keine
+	DrawMode = MODE_NORMAL;
+
+//----- Partikel, die normal oder mit Alphablending gerendert werden, durchlaufen
+
+    DirectGraphics.SetColorKeyMode();
+    while (pCurr != NULL)
+    {
+        if (pCurr->PartikelArt < ADDITIV_GRENZE)
+        {
+            pCurr->Run();		// Partikel animieren/bewegen
+
+            if (pCurr->Lebensdauer > 0.0f) { 	// ggf Partikel löschen (bei Lebensdauer == 0)
+                //DKS - Only render if Lebensdauer > 0.0f:
+                pCurr->Render();
+            }
+        }
+
+        if (pCurr->Lebensdauer > 0.0f) { 	// ggf Partikel löschen (bei Lebensdauer == 0)
+            pPrev = pCurr;
+            pCurr = pCurr->pNext;
+        } else {
+            // Particle's time to die..
+            // If this is the last node in the list, update the main class's pEnd pointer
+            if (pEnd == pCurr) {
+                pEnd = pPrev;
+            }
+            pCurr = DelNode(pCurr);
+            //pCurr now points to the node after the one deleted
+
+            if (pPrev) {
+                // This is not the first node in the list, so
+                // splice this node onto the previous one
+                pPrev->pNext = pCurr;
+            }
+        }
+    }
+
+    pCurr = pStart;
+    pPrev = NULL;
+	CurrentPartikelTexture = -1;			// Aktuelle Textur gibt es noch keine
+	DirectGraphics.SetAdditiveMode();
+
+    while (pCurr != NULL)
+    {
+        if (pCurr->PartikelArt >= ADDITIV_GRENZE)
+        {
+            pCurr->Run();
+            if (pCurr->Lebensdauer > 0.0f)
+                pCurr->Render();
+        }
+
+
+        if (pCurr->Lebensdauer > 0.0f) { 	
+            pPrev = pCurr;
+            pCurr = pCurr->pNext;
+        } else {
+            // Particle's time to die..
+
+            // If this is the last node in the list, update the main class's pEnd pointer
+            if (pEnd == pCurr) {
+                pEnd = pPrev;
+            }
+            pCurr = DelNode(pCurr);
+            //pCurr now points to the node after the one deleted
+
+            if (pPrev != NULL) {
+                // This is not the first node in the list, so
+                // splice this node onto the previous one
+                pPrev->pNext = pCurr;
+            }
+        }
+    }
+
+	DirectGraphics.SetColorKeyMode();
+	// Normale Projektions-Matrix wieder herstellen
+	D3DXMatrixRotationZ (&matWorld, 0.0f);
+#if defined(PLATFORM_DIRECTX)
+	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+#elif defined(PLATFORM_SDL)
+    g_matModelView = matWorld * g_matView;
+#if defined(USE_GL1)
+    load_matrix( GL_MODELVIEW, g_matModelView.data() );
+#endif
+#endif
+}
+
 
 // --------------------------------------------------------------------------------------
 // Blitz und Döner zeigen ;)
@@ -5093,6 +5309,8 @@ void PartikelsystemClass::DoThunder (void)
 // damit kein so bunter bonbon scheiss entsteht, wenn mehrere extras gleichzeitig aufgepowert werden
 // --------------------------------------------------------------------------------------
 
+//DKS - Adapted to now-singly-linked particle list:
+#if 0
 void PartikelsystemClass::ClearPowerUpEffects(void)
 {
     PartikelClass* pTemp;
@@ -5108,6 +5326,33 @@ void PartikelsystemClass::ClearPowerUpEffects(void)
             PartikelSystem.DelSel(pTemp);
 
         pTemp = pNext;
+    }
+}
+#endif //0
+void PartikelsystemClass::ClearPowerUpEffects(void)
+{
+	PartikelClass *pCurr = pStart;
+	PartikelClass *pPrev = NULL;
+
+    while (pCurr != NULL)
+    {
+        if (pCurr->PartikelArt == KRINGEL) {
+            // If this is the last node in the list, update the main class's pEnd pointer
+            if (pEnd == pCurr) {
+                pEnd = pPrev;
+            }
+            pCurr = DelNode(pCurr);
+            //pCurr now points to the node after the one deleted
+
+            if (pPrev) {
+                // This is not the first node in the list, so
+                // splice this node onto the previous one
+                pPrev->pNext = pCurr;
+            }
+        } else {
+            pPrev = pCurr;
+            pCurr = pCurr->pNext;
+        }
     }
 }
 
