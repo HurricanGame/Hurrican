@@ -203,6 +203,9 @@ public:
     //      and PushBlitzBeam() functions, as constructor was setting
     //      values redundantly and those functions are the only
     //      two that ultimately create projectiles.
+    //      NOTE: The primary reason construction has been eliminated is to support the new
+    //      pooled memory manager (see DataStructures.h), which stores an array of
+    //      pre-constructed objects from which it assigns new ones.
     ProjectileClass(void) {}							// Konstruktor
     ~ProjectileClass(void) {}							// Destruktor
 
