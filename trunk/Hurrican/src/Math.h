@@ -52,7 +52,7 @@ extern int fast_rand(void);
 #define M_PI 3.1415926535897932384626433832795
 #endif
 
-#define PI				3.14159265358979f			// Pi =)
+#define PI              3.14159265358979f           // Pi =)
 
 //DKS - RAD/DEG conversions:
 // Multiply by a constant ratio (these save a division):
@@ -134,96 +134,112 @@ static inline float sin_rad(float rad)
 //      GL call, as long as they share the same texture and blend mode, greatly reducing graphics API overhead.
 
 // This struct holds all that we ever need to do vertex transforms using matrices. No humongous 4x4 matrix required.
-struct ReducedMatrix {
+struct ReducedMatrix
+{
     float row0_col0;        float row0_col1;     // X row
     float row1_col0;        float row1_col1;     // Y row
     float row3_col0;        float row3_col1;     // Affine translation X, Y 
 };
 
 // Translation:
-static inline void RM_Trans(ReducedMatrix &mat, float x, float y)
+static inline const ReducedMatrix RM_Trans(const float x, const float y)
 {
-   mat.row0_col0 = 1.0f;    mat.row0_col1 = 0.0f;
-   mat.row1_col0 = 0.0f;    mat.row1_col1 = 1.0f;
-   mat.row3_col0 = x;       mat.row3_col1 = y;
+    ReducedMatrix mat;
+    mat.row0_col0 = 1.0f;    mat.row0_col1 = 0.0f;
+    mat.row1_col0 = 0.0f;    mat.row1_col1 = 1.0f;
+    mat.row3_col0 = x;       mat.row3_col1 = y;
+    return mat;
 }
 
 // Identity:
-static inline void RM_Ident(ReducedMatrix &mat)
+static inline const ReducedMatrix RM_Ident()
 {
-   mat.row0_col0 = 1.0f;    mat.row0_col1 = 0.0f;
-   mat.row1_col0 = 0.0f;    mat.row1_col1 = 1.0f;
-   mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f; //Note: row2_col2 is always assumed to be 1.0 in our reduced matrices
+    ReducedMatrix mat;
+    mat.row0_col0 = 1.0f;    mat.row0_col1 = 0.0f;
+    mat.row1_col0 = 0.0f;    mat.row1_col1 = 1.0f;
+    mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f; //Note: row2_col2 is always assumed to be 1.0 in our reduced matrices
+    return mat;
 }
 
 // Rotation by radians around Z axis:
-static inline void RM_RotZRad(ReducedMatrix &mat, float rad)
+static inline const ReducedMatrix RM_RotZRad(float rad)
 {
-   float s = sin_rad(rad);
-   float c = cos_rad(rad);
-   mat.row0_col0 = c;       mat.row0_col1 = s;
-   mat.row1_col0 = -s;      mat.row1_col1 = c;
-   mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
+    ReducedMatrix mat;
+    float s = sin_rad(rad);
+    float c = cos_rad(rad);
+    mat.row0_col0 = c;       mat.row0_col1 = s;
+    mat.row1_col0 = -s;      mat.row1_col1 = c;
+    mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
+    return mat;
 }
 
 // Rotation by integer degrees around Z axis:
-static inline void RM_RotZDeg(ReducedMatrix &mat, int deg)
+static inline const ReducedMatrix RM_RotZDeg(const int deg)
 {
-   float s = sin_deg(deg);
-   float c = cos_deg(deg);
-   mat.row0_col0 = c;       mat.row0_col1 = s;
-   mat.row1_col0 = -s;      mat.row1_col1 = c;
-   mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
+    ReducedMatrix mat;
+    float s = sin_deg(deg);
+    float c = cos_deg(deg);
+    mat.row0_col0 = c;       mat.row0_col1 = s;
+    mat.row1_col0 = -s;      mat.row1_col1 = c;
+    mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
+    return mat;
 }
 
 // Rotation by float degrees around Z axis:
-static inline void RM_RotZDeg(ReducedMatrix &mat, float deg)
+static inline const ReducedMatrix RM_RotZDeg(const float deg)
 {
-   float s = sin_deg(deg);
-   float c = cos_deg(deg);
-   mat.row0_col0 = c;       mat.row0_col1 = s;
-   mat.row1_col0 = -s;      mat.row1_col1 = c;
-   mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
+    ReducedMatrix mat;
+    float s = sin_deg(deg);
+    float c = cos_deg(deg);
+    mat.row0_col0 = c;       mat.row0_col1 = s;
+    mat.row1_col0 = -s;      mat.row1_col1 = c;
+    mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
+    return mat;
 }
 
 // Version of above that forces bypassing of trig lookup table (for edge cases like slow-moving menu background)
-static inline void RM_RotZDegAccurate(ReducedMatrix &mat, float deg)
+static inline const ReducedMatrix RM_RotZDegAccurate(const float deg)
 {
-   float s = sinf(DegToRad(deg));
-   float c = cosf(DegToRad(deg));
-   mat.row0_col0 = c;       mat.row0_col1 = s;
-   mat.row1_col0 = -s;      mat.row1_col1 = c;
-   mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
+    ReducedMatrix mat;
+    float s = sinf(DegToRad(deg));
+    float c = cosf(DegToRad(deg));
+    mat.row0_col0 = c;       mat.row0_col1 = s;
+    mat.row1_col0 = -s;      mat.row1_col1 = c;
+    mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
+    return mat;
 }
 
-// Matrix multiply: dst = lh * rh
-static inline void RM_Mult(ReducedMatrix &dst, ReducedMatrix &lh, ReducedMatrix &rh)
+// Matrix multiply
+static inline const ReducedMatrix operator*(const ReducedMatrix &lh, const ReducedMatrix &rh)
 {
-   ReducedMatrix res;
+    ReducedMatrix mat;
 
-   res.row0_col0 = lh.row0_col0 * rh.row0_col0 + lh.row0_col1 * rh.row1_col0;
-   res.row0_col1 = lh.row0_col0 * rh.row0_col1 + lh.row0_col1 * rh.row1_col1;
+    mat.row0_col0 = lh.row0_col0 * rh.row0_col0 + lh.row0_col1 * rh.row1_col0;
+    mat.row0_col1 = lh.row0_col0 * rh.row0_col1 + lh.row0_col1 * rh.row1_col1;
 
-   res.row1_col0 = lh.row1_col0 * rh.row0_col0 + lh.row1_col1 * rh.row1_col0;
-   res.row1_col1 = lh.row1_col0 * rh.row0_col1 + lh.row1_col1 * rh.row1_col1;
+    mat.row1_col0 = lh.row1_col0 * rh.row0_col0 + lh.row1_col1 * rh.row1_col0;
+    mat.row1_col1 = lh.row1_col0 * rh.row0_col1 + lh.row1_col1 * rh.row1_col1;
 
-   res.row3_col0 = lh.row3_col0 * rh.row0_col0 + lh.row3_col1 * rh.row1_col0 + rh.row3_col0;
-   res.row3_col1 = lh.row3_col0 * rh.row0_col1 + lh.row3_col1 * rh.row1_col1 + rh.row3_col1;
+    mat.row3_col0 = lh.row3_col0 * rh.row0_col0 + lh.row3_col1 * rh.row1_col0 + rh.row3_col0;
+    mat.row3_col1 = lh.row3_col0 * rh.row0_col1 + lh.row3_col1 * rh.row1_col1 + rh.row3_col1;
 
-   dst = res;
+    return mat;
 }
 
 // Macros to transform X, Y coordinates when multiplying by a 2x3 'reduced matrix'
-// These are for convenience when dealing with code where RM_Mult() above is not practical.
+// These are for convenience when dealing with code where a full matrix-multiply
+// is not practical.
 #define RM_X(X,Y,MV_MAT) (((X) * (MV_MAT).row0_col0) + ((Y) * (MV_MAT).row1_col0) + (MV_MAT).row3_col0)
 #define RM_Y(X,Y,MV_MAT) (((X) * (MV_MAT).row0_col1) + ((Y) * (MV_MAT).row1_col1) + (MV_MAT).row3_col1)
 
 // Scaling in this game is done manually, no need for this, kept for posterity:
-static inline void RM_Scale(ReducedMatrix &mat, float scale)
+static inline const ReducedMatrix RM_Scale(float scale)
 {
-   mat.row0_col0 = scale;   mat.row0_col1 = 0.0f;
-   mat.row1_col0 = 0.0f;    mat.row1_col1 = scale;
-   mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
+    ReducedMatrix mat;
+    mat.row0_col0 = scale;   mat.row0_col1 = 0.0f;
+    mat.row1_col0 = 0.0f;    mat.row1_col1 = scale;
+    mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
+    return mat;
 }
 //DKS - END CUSTOM MATRIX MATH
 
