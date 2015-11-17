@@ -47,7 +47,7 @@ public:
     TextureHandle& operator[](int idx)
     {
 #ifdef _DEBUG
-        if (idx < 0 || idx >= _loaded_textures.size()) {
+        if (idx < 0 || idx >= (int)_loaded_textures.size()) {
             Protokoll.WriteText( true, "-> Error: Out of bounds index for Texturesystemclass::operator[]: %d\n\
                                         \tLower bound is 0, Upper bound is %d\n", idx, _loaded_textures.size()-1 );
         }
