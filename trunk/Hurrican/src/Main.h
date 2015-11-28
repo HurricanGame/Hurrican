@@ -62,10 +62,10 @@ struct sCommandLineParams
 #define RENDERWIDTH		640
 #define RENDERHEIGHT	480
 
-// DKS - Screen depth is now configurable from the command line; Defaults to 16bpp under GLES, 32 all others
-#if defined(USE_GLES1) || defined(USE_GLES2)
-#define DEFAULT_SCREENBPP  16
-#else
+//DKS - Screen depth is now configurable from the command line; if your
+//      platform does not support the default value of 32, you may define it
+//      by setting DEFAULT_SCREENBPP to correct value in Makefile.
+#ifndef DEFAULT_SCREENBPP
 #define DEFAULT_SCREENBPP  32
 #endif
 
