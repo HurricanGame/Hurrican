@@ -342,7 +342,8 @@ void SoundManagerClass::LoadSong(const string &filename, int nr, bool loop /*=tr
 
     bool         fromrar  = false;
     char         *pData   = NULL;
-    unsigned int buf_size = 0;
+    //DKS - Changed from unsigned int to unsigned long to fix unrarlib compilation error:
+    unsigned long buf_size = 0;
     string       fullpath;
 
     // Zuerst checken, ob sich der Song in einem MOD-Ordner befindet
@@ -638,7 +639,8 @@ void SoundManagerClass::LoadWave(const string &filename, int nr, bool looped)
 
     bool         fromrar = false;
     char         *pData = NULL;
-    unsigned int buf_size = 0;
+    //DKS - Changed from unsigned int to unsigned long to fix unrarlib compilation error:
+    unsigned long buf_size = 0;
     string       fullpath;
 
     if (sounds[nr].data)

@@ -1,6 +1,30 @@
+##### HOW TO BUILD:
+##    Run 'make TARGET=xxx' where xxx is one of the following:
+##    (default is linux_GL1 if TARGET= is not specified)
+
+##### Pre-configured build targets (default is linux_GL1)
+# linux_GL1   : Linux (OpenGL1)
+# linux_GL2   : Linux (OpenGLES2)
+# aros        : AROS Research Operating System (OpenGL1)
+# rpi         : Raspberry PI (OpenGLES2)
+# gcw         : GCW Zero handheld (OpenGLES2)
+# rdu         : ??? (TODO: Learn from Pickle which platform this represents)
+# pandora     : Pandora handheld (OpenGLES2)
+
+ifndef TARGET
+TARGET := linux_GL1
+endif
+
+
 DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS -DUSE_MODPLUG
 
-# *** OPTIONAL DEFINES: *** 
+#####################################
+#######  *** OPTIONAL DEFINES: ***  #
+#####################################
+
+####### When batching draw calls, use indexed triangle lists instead of
+###     degenerate triangle strips (RECOMMENDED; fastest on most platforms.)
+DEFINES += -DUSE_INDEXED_BATCH
 
 ####### Use the $HOME dir as a location for any writing (settings, high-scores, log, save-games):
 #DEFINES += -DUSE_HOME_DIR
@@ -9,25 +33,34 @@ DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS -DUSE_MODPLUG
 #DEFINES += -DUSE_STORAGE_PATH="\"PATH_TO_STORAGE\""
 
 ####### Simple and fast pooled memory manager that eliminates new/delete/malloc/free overhead
-#       (See Datastructures.h)
 #DEFINES += -DUSE_MEMPOOL
 
-####### Extremely fast random-number-generator (can be over 100 times faster than rand() on some platforms):
+####### Fast random-number-generator (can be over 100 times faster than rand() on some platforms):
 #DEFINES += -DUSE_FAST_RNG
 
 ####### Fast Sin/Cos trig lookup table (can be over 15 times faster than libm on some platforms):
 #DEFINES += -DUSE_TRIG_LOOKUP_TABLE
 
-####### C++ exceptions can be turned off, reducing unnecessary code bloat and speed-hit:
-#DEFINES += -DUSE_NO_EXCEPTIONS
+####### ETC1 texture compression support:
+#DEFINES += -DUSE_ETC1
 
-####### Use the Unrarlib library, for support of packing of data files
-#DEFINES += -DUSE_UNRARLIB
-#UNRAR_FILES := unrarlib040/unrarlib/unrarlib
+####### PVRTC texture compression support:
+#DEFINES += -DUSE_PVRTC
+
+####### FBO support (allow screen to be scaled to arbitrary dimensions)
+#USE_FBO += yes
+
+####### Use GCC compiler's link-time-optimization:
+#USE_FLTO += yes
+
+####### C++ exceptions can be turned off, reducing unnecessary code bloat and speed-hit:
+#USE_NO_EXCEPTIONS := yes
+
+####### Use the Unrarlib library, for support of packing of data files:
+#USE_UNRARLIB := yes
 
 # *** END OPTIONAL DEFINES ***
 
-TARGET = linux
 
 ifeq ($(TARGET),aros)
 
@@ -64,8 +97,7 @@ USE_EGL := yes
 USE_GL2 := yes
 USE_FBO := no
 
-DEFINES += -DRPI -DUSE_GL2 -DUSE_GLES2 -DUSE_EGL_RPI -DRGBA_5551
-
+DEFINES += -DRPI -DUSE_GLES2 -DUSE_EGL_RPI
 INCLUDES_OS := -ISDL_port \
                -I/usr/include/SDL/ \
                -I/usr/include/libmodplug \
@@ -86,20 +118,18 @@ RM  := rm -f
 
 USE_EGL := yes
 USE_GL2 := yes
-USE_FBO := no
+USE_FLTO := yes
+USE_NO_EXCEPTIONS := yes
 
-DEFINES += -DGCW -DUSE_GL2 -DUSE_GLES2 -DUSE_ETC1 -DUSE_EGL_RAW
-DEFINES += -DUSE_HOME_DIR
-DEFINES += -DUSE_TRIG_LOOKUP_TABLE
-DEFINES += -DUSE_FAST_RNG
-DEFINES += -DUSE_NO_EXCEPTIONS
-
+DEFINES += -DGCW -DUSE_GLES2 -DUSE_EGL_RAW
+DEFINES += -DUSE_HOME_DIR -DUSE_MEMPOOL -DUSE_FAST_RNG -DUSE_TRIG_LOOKUP_TABLE -DUSE_ETC1
 INCLUDES_OS := -ISDL_port \
                -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/SDL \
                -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/libmodplug \
-               -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/GLES2 -I$(GCWSDK)/include/mipsel-gcw0-linux-uclibc/sysroot/usr/include/EGL
+               -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/GLES2 \
+               -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/EGL
 
-LDFLAGS := -L$(GCWSDK)/lib -g -lpthread -lmodplug -lSDL_mixer -lSDL_image -lSDL -lGLESv2 -lEGL
+LDFLAGS := -lpthread -lmodplug -lSDL_mixer -lSDL_image -lSDL -lGLESv2 -lEGL
 
 endif
 
@@ -115,12 +145,8 @@ USE_EGL := yes
 USE_GL2 := yes
 USE_FBO := yes
 
-DEFINES += -DRDU -DUSE_GL2 -DUSE_GLES2 -DUSE_FBO -DUSE_ETC1 -DUSE_EGL_RAW
+DEFINES += -DRDU -DUSE_GLES2 -DUSE_ETC1 -DUSE_EGL_RAW
 DEFINES += -DUSE_HOME_DIR
-DEFINES += -DUSE_TRIG_LOOKUP_TABLE
-DEFINES += -DUSE_FAST_RNG
-DEFINES += -DUSE_NO_EXCEPTIONS
-
 INCLUDES_OS := -ISDL_port \
                -I$(RDUSDK)/include/SDL \
                -I$(RDUSDK)/include/libmodplug \
@@ -141,9 +167,10 @@ RM  := rm -f
 USE_EGL := yes
 USE_GL2 := yes
 USE_FBO := no
+USE_NO_EXCEPTIONS := yes
 
-DEFINES += -DPANDORA -DUSE_GL2 -DUSE_GLES2 -DUSE_EGL_RAW -DUSE_PVRTC
-
+DEFINES += -DPANDORA -DUSE_GLES2 -DUSE_EGL_RAW -DUSE_PVRTC
+DEFINES += -DUSE_MEMPOOL -DUSE_FAST_RNG -DUSE_TRIG_LOOKUP_TABLE
 INCLUDES_OS := -ISDL_port \
                -I$(PNDSDK)/usr/include \
                -I$(PNDSDK)/usr/include/SDL \
@@ -154,8 +181,22 @@ LDFLAGS := -L$(PNDSDK)/usr/lib -g -lSDL_mixer -lSDL_image -lSDL -lGLESv2 -lEGL -
 
 endif
 
+ifeq ($(TARGET),linux_GL1)
 
-ifeq ($(TARGET),linux)
+EXE := ../hurricanlinux
+CXX := g++
+CC  := gcc
+LD  := g++
+RM  := rm -f
+
+DEFINES += -DLINUX -DUSE_HOME_DIR -DUSE_GL1
+
+INCLUDES_OS := -I/usr/include -I/usr/include/SDL -I/usr/include/GL -I/usr/include/libmodplug
+LDFLAGS := -lSDL -lGL -lSDL_mixer -lSDL_image -lmodplug -lX11
+
+endif
+
+ifeq ($(TARGET),linux_GL2)
 
 EXE := ../hurricanlinux
 CXX := g++
@@ -167,37 +208,71 @@ USE_EGL := yes
 USE_GL2 := yes
 USE_FBO := yes
 
-DEFINES += -DLINUX -DUSE_HOME_DIR -DUSE_GL2 -DUSE_GLES2 -DUSE_FBO -DUSE_EGL_SDL -DUSE_PVRTC -DUSE_ETC1 -Wno-unused-local-typedefs
+DEFINES += -DLINUX -DUSE_HOME_DIR -DUSE_GLES2 -DUSE_EGL_SDL
 
 INCLUDES_OS := -I/usr/include -I/usr/include/SDL -I/usr/include/GLES2 -I/usr/include/libmodplug
-
 LDFLAGS := -g -lSDL -lGLESv2 -lSDL_mixer -lSDL_image -lmodplug -lX11 -lEGL
 
 endif
 
-INCLUDES := -I. -I./SDLPort -Icml -I./unrarlib040/unrarlib $(INCLUDES_OS)
 
-COMMON_CFLAGS := -Wall -fsingle-precision-constant -c $(INCLUDES) $(DEFINES)
 
-ifdef _DEBUG
-# Debug CFLAGS:
-CFLAGS := -g -O0 -D_DEBUG $(COMMON_CFLAGS)
-else
-# Normal CFLAGS:
-CFLAGS := -O2 $(COMMON_CFLAGS)
+INCLUDES := -I. -I./SDLPort -I./cml $(INCLUDES_OS)
+
+COMMON_CXXFLAGS := -Wall -fsingle-precision-constant -fno-rtti
+LDFLAGS += $(COMMON_CXXFLAGS)
+
+ifeq ($(USE_FLTO),yes)
+# Don't allow flto when building debug builds:
+ifndef _DEBUG
+COMMON_CXXFLAGS += -flto
+LDFLAGS += -flto
+endif
 endif
 
-CXXFLAGS := $(CFLAGS) -fno-rtti
+ifeq ($(USE_NO_EXCEPTIONS),yes)
+COMMON_CXXFLAGS += -fno-exceptions
+LDFLAGS += -fno-exceptions
+DEFINES += -DUSE_NO_EXCEPTIONS
+endif
+
+ifeq ($(USE_UNRARLIB),yes)
+DEFINES += -DUSE_UNRARLIB
+INCLUDES += -I./unrarlib040/unrarlib
+UNRAR_FILES := unrarlib040/unrarlib/unrarlib
+endif
+
+ifeq ($(USE_EGL),yes)
+EGL_FILES := SDLPort/eglport
+endif
+
+ifeq ($(USE_GL2),yes)
+DEFINES += -DUSE_GL2
+GL2_FILES := SDLPort/cshader
+endif
+
+ifeq ($(USE_FBO),yes)
+DEFINES += -DUSE_FBO
+FBO_FILES := SDLPort/cfbo
+endif
+
+COMMON_CXXFLAGS += $(INCLUDES) $(DEFINES)
+
+ifdef _DEBUG
+# Debug build:
+CXXFLAGS := -c -ggdb3 -O0 -D_DEBUG -DDEBUG $(COMMON_CXXFLAGS)
+else
+# Normal CFLAGS:
+CXXFLAGS := -c -O2 $(COMMON_CXXFLAGS)
+ifeq ($(USE_FLTO),yes)
+# If using FLTO, you must pass optimization flags to linker:
+LDFLAGS += -O2
+endif
+endif
 
 SDL_FILES := SDLPort/SDL_fmod \
              SDLPort/SDL_port \
              SDLPort/texture
-
-EGL_FILES := SDLPort/eglport
-
-GL2_FILES := SDLPort/cshader
-
-FBO_FILES := SDLPort/cfbo
 
 FILES :=Boss_BigFish \
         Boss_Bratklops \
@@ -380,19 +455,7 @@ FILES :=Boss_BigFish \
         stdafx \
         tracealloc
 
-ALL_FILES := $(FILES) $(SDL_FILES) $(UNRAR_FILES)
-
-ifeq ($(USE_EGL),yes)
-ALL_FILES += $(EGL_FILES)
-endif
-
-ifeq ($(USE_GL2),yes)
-ALL_FILES += $(GL2_FILES)
-endif
-
-ifeq ($(USE_FBO),yes)
-ALL_FILES += $(FBO_FILES)
-endif
+ALL_FILES := $(FILES) $(SDL_FILES) $(UNRAR_FILES) $(EGL_FILES) $(GL2_FILES) $(FBO_FILES)
 
 ALL_OBJS := $(addsuffix .o, $(ALL_FILES))
 

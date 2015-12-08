@@ -25,7 +25,10 @@
 #include "DX8Font.h"
 #include "DX8Graphics.h"
 #include "Gameplay.h"
+
+#ifdef USE_UNRARLIB
 #include "unrarlib.h"
+#endif
 
 #include <string>
 

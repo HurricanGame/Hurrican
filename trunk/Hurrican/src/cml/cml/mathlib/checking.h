@@ -397,7 +397,12 @@ inline void CheckValidArg(bool valid)
 {
     if (!valid)
     {
+        //DKS - Exceptions are optional in Hurrican:
+        //      Since we use only a very limited subset of its features, this
+        //      one line in CML lib is sufficient to allow their disabling:
+#ifndef USE_NO_EXCEPTIONS
         throw std::invalid_argument("invalid function argument");
+#endif
     }
 }
 
