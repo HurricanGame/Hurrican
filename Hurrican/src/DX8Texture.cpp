@@ -22,6 +22,10 @@
 #include <string>
 #include <map>
 
+#ifdef USE_UNRARLIB
+#include "unrarlib.h"
+#endif
+
 const std::string TexturesystemClass::scalefactors_filename("scalefactors.txt");
 
 // --------------------------------------------------------------------------------------
@@ -212,9 +216,9 @@ bool TexturesystemClass::LoadTextureFromFile( const std::string &filename, Textu
 #if defined(USE_UNRARLIB)
     // Are we using unrarlib to read all game data from a single RAR archive?
     void  *buf_data   = NULL;   // Memory  buffer file is read into, if using unrarlib
-    unsigned int buf_size = 0;  // Size of memory buffer file is read into, if using unrarlib
+    unsigned long buf_size = 0;  // Size of memory buffer file is read into, if using unrarlib
     if ( FileExists(RARFILENAME) &&
-            urarlib_get(&buf_data, &size, filename.c_str(), RARFILENAME, convertText(RARFILEPASSWORD)) &&
+            urarlib_get(&buf_data, &buf_size, filename.c_str(), RARFILENAME, convertText(RARFILEPASSWORD)) &&
             buf_data != NULL )
     {
         // Load the texture from the image that is now in buf_data[]

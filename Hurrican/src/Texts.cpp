@@ -24,7 +24,10 @@
 #include "GetKeyName.h"
 #include "Player.h"
 #include "Tileengine.h"
+
+#ifdef USE_UNRARLIB
 #include "unrarlib.h"
+#endif
 
 //DKS - Added cross-platform language-files handling:
 //      Uses Windows/UNIX-compatible tinydir library to parse directories

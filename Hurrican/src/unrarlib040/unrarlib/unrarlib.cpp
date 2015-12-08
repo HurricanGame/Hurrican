@@ -158,8 +158,9 @@ BOOL debug_log_first_start = TRUE;
 #define debug_log(a); debug_log_proc(a, __FILE__, __LINE__);
 #define debug_init(a); debug_init_proc(a);
 
-void debug_log_proc(char *text, char *sourcefile, int sourceline);
-void debug_init_proc(char *file_name);
+//DKS - Converted parameters to const char * to fix compilation warning:
+void debug_log_proc(const char *text, const char *sourcefile, int sourceline);
+void debug_init_proc(const char *file_name);
 
 #else
 #define debug_log(a);   /* no debug this time */
@@ -371,7 +372,9 @@ int stricomp(char *Str1,char *Str2);
 int urarlib_get(void *output,
                 unsigned long *size,
                 const char *filename,
-                const void *rarfile,
+                //DKS - Converted parameter to const char * to fix compilation warning:
+                //const void *rarfile,
+                const char *rarfile,
                 const char *libpassword)
 /* Get a file from a RAR file to the "output" buffer. The UniquE RAR FileLib
  * does everything from allocating memory, decrypting and unpacking the file
@@ -466,7 +469,9 @@ int urarlib_get(void *output,
 }
 
 
-int urarlib_list(void *rarfile, ArchiveList_struct *list)
+//DKS - Converted parameter to const char * to fix compilation warning:
+//int urarlib_list(void *rarfile, ArchiveList_struct *list)
+int urarlib_list(const char *rarfile, ArchiveList_struct *list)
 {
     ArchiveList_struct *tmp_List = NULL;
     int NoOfFilesInArchive       = 0;         /* number of files in archive   */
@@ -508,7 +513,9 @@ int urarlib_list(void *rarfile, ArchiveList_struct *list)
     }
 #endif
 
-    if ((UnpMemory=malloc(UNP_MEMORY))==NULL)
+    //DKS - Added cast to fix compiler warning 
+    //if ((UnpMemory=malloc(UNP_MEMORY))==NULL)
+    if ((UnpMemory=(UBYTE*)malloc(UNP_MEMORY))==NULL)
     {
         debug_log("Can't allocate memory for decompression!");
         return NoOfFilesInArchive;
@@ -537,7 +544,9 @@ int urarlib_list(void *rarfile, ArchiveList_struct *list)
 
         if((void*)(*(DWORD*)list) == NULL)      /* first entry                  */
         {
-            tmp_List = malloc(sizeof(ArchiveList_struct));
+            //DKS - Added cast to fix compiler warning 
+            //tmp_List = malloc(sizeof(ArchiveList_struct));
+            tmp_List = (ArchiveList_struct*)malloc(sizeof(ArchiveList_struct));
             tmp_List->next = NULL;
 
             (*(DWORD*)list) = (DWORD)tmp_List;
@@ -545,12 +554,17 @@ int urarlib_list(void *rarfile, ArchiveList_struct *list)
         }
         else                                    /* add entry                    */
         {
-            tmp_List->next = malloc(sizeof(ArchiveList_struct));
+            //DKS - Added cast to fix compiler warning 
+            //tmp_List->next = malloc(sizeof(ArchiveList_struct));
+            tmp_List->next = (ArchiveList_struct*)malloc(sizeof(ArchiveList_struct));
             tmp_List = (ArchiveList_struct*) tmp_List->next;
             tmp_List->next = NULL;
         }
 
-        tmp_List->item.Name = malloc(NewLhd.NameSize + 1);
+        //DKS - Added cast to fix compiler warning 
+        //tmp_List->item.Name = malloc(NewLhd.NameSize + 1);
+        tmp_List->item.Name = (char*)malloc(NewLhd.NameSize + 1);
+
         strcpy(tmp_List->item.Name, ArcFileName);
         tmp_List->item.NameSize = NewLhd.NameSize;
         tmp_List->item.PackSize = NewLhd.PackSize;
@@ -938,7 +952,9 @@ BOOL ExtrFile(void)
 #endif
 
 
-    if ((UnpMemory=malloc(UNP_MEMORY))==NULL)
+    //DKS - Added cast to fix compiler warning 
+    //if ((UnpMemory=malloc(UNP_MEMORY))==NULL)
+    if ((UnpMemory=(UBYTE*)malloc(UNP_MEMORY))==NULL)
     {
         debug_log("Can't allocate memory for decompression!");
         return FALSE;
@@ -980,7 +996,9 @@ BOOL ExtrFile(void)
             /* *** file found! ***                                                  */
         {
             {
-                temp_output_buffer=malloc(NewLhd.UnpSize);/* allocate memory for the*/
+                //DKS - Added cast to fix compiler warning 
+                //temp_output_buffer=malloc(NewLhd.UnpSize);/* allocate memory for the*/
+                temp_output_buffer=(unsigned char*)malloc(NewLhd.UnpSize);/* allocate memory for the*/
             }
             *temp_output_buffer_offset=0;         /* file. The default offset     */
             /* within the buffer is 0       */
@@ -2722,7 +2740,9 @@ BOOL  debug_started = FALSE;                /* debug_log writes only if     */
 
 
 /* -- global functions ---------------------------------------------------- */
-void debug_init_proc(char *file_name)
+//DKS - Converted parameter to const char * to fix compilation warning:
+//void debug_init_proc(char *file_name)
+void debug_init_proc(const char *file_name)
 /* Create/Rewrite a log file                                                */
 {
     FILE *fp;
@@ -2743,7 +2763,8 @@ void debug_init_proc(char *file_name)
 }
 
 
-void debug_log_proc(char *text, char *sourcefile, int sourceline)
+//DKS - Converted parameters to const char * to fix compilation warning:
+void debug_log_proc(const char *text, const char *sourcefile, int sourceline)
 /* add a line to the log file                                               */
 {
     FILE *fp;

@@ -36,10 +36,13 @@
 #ifndef __URARLIB_H
 #define __URARLIB_H
 
+//DKS - Unnecessary, unrarlib.c is now renamed unrarlib.cpp and compiled using c++:
+#if 0
 #ifdef __cplusplus
 extern "C"
 {
 #endif
+#endif //0
 
 
 /* ************************************************************************ */
@@ -167,7 +170,9 @@ typedef struct  memory_file                 /* used to decompress files in  */
 extern int urarlib_get(void  *output,
                        unsigned long *size,
                        const char *filename,
-                       const void *rarfile,
+                       //DKS - Converted parameter to const char * to fix compilation warning:
+                       //const void *rarfile,
+                       const char *rarfile,
                        const char *libpassword);
 
 
@@ -184,7 +189,9 @@ extern int urarlib_get(void  *output,
  *   output: int            number of files/directories within archive
  */
 
-extern int urarlib_list(void *rarfile, ArchiveList_struct *list);
+//DKS - Converted parameter to const char * to fix compilation warning:
+//extern int urarlib_list(void *rarfile, ArchiveList_struct *list);
+extern int urarlib_list(const char *rarfile, ArchiveList_struct *list);
 
 
 /* urarlib_freelist:
@@ -202,9 +209,12 @@ extern void urarlib_freelist(ArchiveList_struct *list);
 
 
 
+//DKS - Unnecessary, unrarlib.c is now renamed unrarlib.cpp and compiled using c++:
+#if 0
 #ifdef __cplusplus
 };
 #endif
+#endif //0
 
 #endif
 

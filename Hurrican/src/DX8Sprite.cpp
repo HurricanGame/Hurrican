@@ -37,7 +37,10 @@
 #include "Globals.h"
 #include "Logdatei.h"
 #include "Main.h"
+
+#ifdef USE_UNRARLIB
 #include "unrarlib.h"
+#endif
 
 extern bool					GameRunning;				// Läuft das Spiel noch ?
 

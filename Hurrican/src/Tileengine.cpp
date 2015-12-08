@@ -31,8 +31,11 @@
 #include "Projectiles.h"
 #include "Logdatei.h"
 #include "Timer.h"
-#include "unrarlib.h"
 #include "Main.h"
+
+#ifdef USE_UNRARLIB
+#include "unrarlib.h"
+#endif
 
 // --------------------------------------------------------------------------------------
 // externe Variablen
