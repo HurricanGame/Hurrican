@@ -256,6 +256,18 @@ DEFINES += -DUSE_FBO
 FBO_FILES := SDLPort/cfbo
 endif
 
+
+###### *** DETECT IF GCC VERSION IS >= 4.8 ***
+##     If GCC >= 4.8 is being used, -Wno-unused-local-typedefs must be passed
+##     to avoid numerous spurious warnings compiling against CML libary:
+##     This will convert a version number like 4.8.1 to 4*100+8 and a version
+##     number like 4.10.2 to 4*100+10, allowing direct comparison through bc.
+GCC_VER_GTE48 := $(shell echo `$(CXX) -dumpversion | cut -f1-2 -d.` \>= 4.8 | sed -e 's/\./*100+/g' | bc )
+ifeq ($(GCC_VER_GTE48),1)
+COMMON_CXXFLAGS += -Wno-unused-local-typedefs
+endif
+
+
 COMMON_CXXFLAGS += $(INCLUDES) $(DEFINES)
 
 ifdef _DEBUG
