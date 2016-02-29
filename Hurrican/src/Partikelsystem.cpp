@@ -2767,7 +2767,10 @@ void PartikelClass::Run(void)
 
             // drehen
             if (yAcc != 0.0f)
-                Rot += RotDir;
+                //DKS - Fixed bug where nests would rotate wildly if VSYNC was not enabled and framerate was high:
+                //      (Rotation rate was not tied to game timer, added SYNC factor)
+                //Rot += RotDir;        // Original code
+                Rot += RotDir SYNC;
 
             while(Rot > 360.0f)
                 Rot -= 360.0f;
