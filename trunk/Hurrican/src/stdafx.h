@@ -11,7 +11,7 @@
 #include "GUISystem.h"
 #include "HUD.h"
 #include "Logdatei.h"
-#include "Math.h"
+#include "Mathematics.h"
 #include "Partikelsystem.h"
 #include "Projectiles.h"
 #include "Player.h"
