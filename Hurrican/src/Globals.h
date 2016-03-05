@@ -17,7 +17,7 @@
 
 #include "Texts.h"
 #include "SDL_port.h"
-#include "Math.h"
+#include "Mathematics.h"
 
 // --------------------------------------------------------------------------------------
 // Defines

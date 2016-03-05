@@ -1,4 +1,4 @@
-// Datei : Math.h
+// Datei : Mathematics.h
 
 // --------------------------------------------------------------------------------------
 //
@@ -10,8 +10,8 @@
 //
 // --------------------------------------------------------------------------------------
 
-#ifndef __Math_h__
-#define __Math_h__
+#ifndef __Mathematics_h__
+#define __Mathematics_h__
 #include <stdint.h>
 #include <cmath>
 #ifdef PLATFORM_SDL
@@ -243,4 +243,4 @@ static inline const ReducedMatrix RM_Scale(float scale)
 }
 //DKS - END CUSTOM MATRIX MATH
 
-#endif // __Math_h__
+#endif // __Mathematics_h__

@@ -417,7 +417,7 @@ FILES :=Boss_BigFish \
         Intro \
         Logdatei \
         Main \
-        Math \
+        Mathematics \
         Menu \
         Outtro \
         Partikelsystem \

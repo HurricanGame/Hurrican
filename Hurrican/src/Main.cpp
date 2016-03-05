@@ -59,7 +59,7 @@
 #include "resource.h"
 #include "Tileengine.h"
 #include "Timer.h"
-#include "Math.h"
+#include "Mathematics.h"
 
 #ifdef USE_UNRARLIB
 #include "unrarlib.h"
