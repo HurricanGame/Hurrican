@@ -127,11 +127,13 @@ static inline float sin_rad(float rad)
 
 
 //DKS - BEGIN NEW CUSTOM MATRIX MATH:
-//      Since the game is purely 2D, and all rotations are around the Z axis, matrix math can be greatly
-//      simplified and it's now done on the CPU. Only perspective math is done in the GPU now.
-//      This way, you don't need to send a whole new 4x4 matrix every time you draw something.
-//      Because all transformations are now on the CPU, huge batches of primitives can now be drawn with one
-//      GL call, as long as they share the same texture and blend mode, greatly reducing graphics API overhead.
+//      Since the game is purely 2D, and all rotations are around the Z axis,
+//      matrix math can be greatly simplified and it's now done on the CPU.
+//      Only perspective math is done in the GPU now. This way, you don't 
+//      need to send a whole new 4x4 matrix every time you draw something.
+//      Because all transformations are now on the CPU, huge batches of
+//      primitives can now be drawn with one GL call, as long as they share
+//      the same texture and blend mode, greatly reducing graphics API overhead.
 
 // This struct holds all that we ever need to do vertex transforms using matrices. No humongous 4x4 matrix required.
 struct ReducedMatrix
@@ -162,7 +164,7 @@ static inline const ReducedMatrix RM_Ident()
 }
 
 // Rotation by radians around Z axis:
-static inline const ReducedMatrix RM_RotZRad(float rad)
+static inline const ReducedMatrix RM_RotZRad(const float rad)
 {
     ReducedMatrix mat;
     float s = sin_rad(rad);
@@ -233,7 +235,7 @@ static inline const ReducedMatrix operator*(const ReducedMatrix &lh, const Reduc
 #define RM_Y(X,Y,MV_MAT) (((X) * (MV_MAT).row0_col1) + ((Y) * (MV_MAT).row1_col1) + (MV_MAT).row3_col1)
 
 // Scaling in this game is done manually, no need for this, kept for posterity:
-static inline const ReducedMatrix RM_Scale(float scale)
+static inline const ReducedMatrix RM_Scale(const float scale)
 {
     ReducedMatrix mat;
     mat.row0_col0 = scale;   mat.row0_col1 = 0.0f;
