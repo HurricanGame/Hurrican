@@ -118,7 +118,7 @@ RM  := rm -f
 
 USE_EGL := yes
 USE_GL2 := yes
-USE_FLTO := yes
+USE_FLTO := no
 USE_NO_EXCEPTIONS := yes
 
 DEFINES += -DGCW -DUSE_GLES2 -DUSE_EGL_RAW
