@@ -195,7 +195,7 @@ inline float sin_rad(float rad)
 //      primitives can now be drawn with one GL call, as long as they share
 //      the same texture and blend mode, greatly reducing graphics API overhead.
 
-// This struct holds all that we ever need to do vertex transforms using matrices. No humongous 4x4 matrix required.
+// This struct holds all that we ever need for 2D vertex transforms
 struct ReducedMatrix
 {
     float row0_col0;        float row0_col1;     // X row
@@ -203,18 +203,16 @@ struct ReducedMatrix
     float row3_col0;        float row3_col1;     // Affine translation X, Y 
 };
 
-// Translation:
-static inline const ReducedMatrix RM_Trans(const float x, const float y)
+// Macros to transform X,Y coordinates using a 2x3 'reduced matrix'
+#define RM_X(X,Y,MAT) (((X) * (MAT).row0_col0) + ((Y) * (MAT).row1_col0) + (MAT).row3_col0)
+#define RM_Y(X,Y,MAT) (((X) * (MAT).row0_col1) + ((Y) * (MAT).row1_col1) + (MAT).row3_col1)
+
+// Unnamed namespace to ensure function definitions are local to a translation unit:
+namespace
 {
-    ReducedMatrix mat;
-    mat.row0_col0 = 1.0f;    mat.row0_col1 = 0.0f;
-    mat.row1_col0 = 0.0f;    mat.row1_col1 = 1.0f;
-    mat.row3_col0 = x;       mat.row3_col1 = y;
-    return mat;
-}
 
 // Identity:
-static inline const ReducedMatrix RM_Ident()
+inline const ReducedMatrix RM_Ident()
 {
     ReducedMatrix mat;
     mat.row0_col0 = 1.0f;    mat.row0_col1 = 0.0f;
@@ -223,8 +221,29 @@ static inline const ReducedMatrix RM_Ident()
     return mat;
 }
 
+//DKS - Not needed, but kept for posterity. All scaling in the
+//      game was done in individual functions in DX8Sprite.cpp.
+// Scale:
+inline const ReducedMatrix RM_Scale(const float scale)
+{
+    ReducedMatrix mat;
+    mat.row0_col0 = scale;   mat.row0_col1 = 0.0f;
+    mat.row1_col0 = 0.0f;    mat.row1_col1 = scale;
+    mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
+    return mat;
+}
+
+// Translation:
+inline const ReducedMatrix RM_Trans(const float x, const float y)
+{
+    ReducedMatrix mat;
+    mat.row0_col0 = 1.0f;    mat.row0_col1 = 0.0f;
+    mat.row1_col0 = 0.0f;    mat.row1_col1 = 1.0f;
+    mat.row3_col0 = x;       mat.row3_col1 = y;
+    return mat;
+}
 // Rotation by radians around Z axis:
-static inline const ReducedMatrix RM_RotZRad(const float rad)
+inline const ReducedMatrix RM_RotZRad(const float rad)
 {
     ReducedMatrix mat;
     float s = sin_rad(rad);
@@ -236,7 +255,7 @@ static inline const ReducedMatrix RM_RotZRad(const float rad)
 }
 
 // Rotation by integer degrees around Z axis:
-static inline const ReducedMatrix RM_RotZDeg(const int deg)
+inline const ReducedMatrix RM_RotZDeg(const int deg)
 {
     ReducedMatrix mat;
     float s = sin_deg(deg);
@@ -248,7 +267,7 @@ static inline const ReducedMatrix RM_RotZDeg(const int deg)
 }
 
 // Rotation by float degrees around Z axis:
-static inline const ReducedMatrix RM_RotZDeg(const float deg)
+inline const ReducedMatrix RM_RotZDeg(const float deg)
 {
     ReducedMatrix mat;
     float s = sin_deg(deg);
@@ -259,8 +278,9 @@ static inline const ReducedMatrix RM_RotZDeg(const float deg)
     return mat;
 }
 
-// Version of above that forces bypassing of trig lookup table (for edge cases like slow-moving menu background)
-static inline const ReducedMatrix RM_RotZDegAccurate(const float deg)
+// Version of above that forces bypassing of trig lookup table, for edge cases like the
+//  slow-moving menu background that would reveal its limited resolution.
+inline const ReducedMatrix RM_RotZDegAccurate(const float deg)
 {
     ReducedMatrix mat;
     float s = sinf(DegToRad(deg));
@@ -271,8 +291,65 @@ static inline const ReducedMatrix RM_RotZDegAccurate(const float deg)
     return mat;
 }
 
+// ** Note: the following rotation functions are all versions of the above ones, taking
+//    x,y parameters that specify the center of rotation. It is more efficient
+//    to generate a rotation matrix this way than generating a translation-to-origin
+//    matrix, multiplying it by a standard rotation matrix, and then multiplying the
+//    result by a translate-back-from-origin matrix. These are the result of working it
+//    all out by hand, cancelling terms that end up zero, and extracting common
+//    factors in final row's math.
+
+// Rotation by radians around Z axis (with center of rotation at specified point)
+inline const ReducedMatrix RM_RotZRadAt(const float rad, const float x, const float y)
+{
+    ReducedMatrix mat;
+    float s = sin_rad(rad);
+    float c = cos_rad(rad);
+    mat.row0_col0 = c;                   mat.row0_col1 = s;
+    mat.row1_col0 = -s;                  mat.row1_col1 = c;
+    mat.row3_col0 = y*s - x*(c-1.0f);    mat.row3_col1 = x*(-s) - y*(c-1.0f);
+    return mat;
+}
+
+// Rotation by integer degrees around Z axis (with center of rotation at specified point)
+inline const ReducedMatrix RM_RotZDegAt(const int deg, const float x, const float y)
+{
+    ReducedMatrix mat;
+    float s = sin_deg(deg);
+    float c = cos_deg(deg);
+    mat.row0_col0 = c;                   mat.row0_col1 = s;
+    mat.row1_col0 = -s;                  mat.row1_col1 = c;
+    mat.row3_col0 = y*s - x*(c-1.0f);    mat.row3_col1 = x*(-s) - y*(c-1.0f);
+    return mat;
+}
+
+// Rotation by float degrees around Z axis (with center of rotation at specified point)
+inline const ReducedMatrix RM_RotZDegAt(const float deg, const float x, const float y)
+{
+    ReducedMatrix mat;
+    float s = sin_deg(deg);
+    float c = cos_deg(deg);
+    mat.row0_col0 = c;                   mat.row0_col1 = s;
+    mat.row1_col0 = -s;                  mat.row1_col1 = c;
+    mat.row3_col0 = y*s - x*(c-1.0f);    mat.row3_col1 = x*(-s) - y*(c-1.0f);
+    return mat;
+}
+
+// Version of above that forces bypassing of trig lookup table, for edge cases like the
+//  slow-moving menu background that would reveal its limited resolution.
+inline const ReducedMatrix RM_RotZDegAccurateAt(const float deg, const float x, const float y)
+{
+    ReducedMatrix mat;
+    float s = sinf(DegToRad(deg));
+    float c = cosf(DegToRad(deg));
+    mat.row0_col0 = c;                   mat.row0_col1 = s;
+    mat.row1_col0 = -s;                  mat.row1_col1 = c;
+    mat.row3_col0 = y*s - x*(c-1.0f);    mat.row3_col1 = x*(-s) - y*(c-1.0f);
+    return mat;
+}
+
 // Matrix multiply
-static inline const ReducedMatrix operator*(const ReducedMatrix &lh, const ReducedMatrix &rh)
+inline const ReducedMatrix operator*(const ReducedMatrix &lh, const ReducedMatrix &rh)
 {
     ReducedMatrix mat;
 
@@ -288,21 +365,7 @@ static inline const ReducedMatrix operator*(const ReducedMatrix &lh, const Reduc
     return mat;
 }
 
-// Macros to transform X, Y coordinates when multiplying by a 2x3 'reduced matrix'
-// These are for convenience when dealing with code where a full matrix-multiply
-// is not practical.
-#define RM_X(X,Y,MV_MAT) (((X) * (MV_MAT).row0_col0) + ((Y) * (MV_MAT).row1_col0) + (MV_MAT).row3_col0)
-#define RM_Y(X,Y,MV_MAT) (((X) * (MV_MAT).row0_col1) + ((Y) * (MV_MAT).row1_col1) + (MV_MAT).row3_col1)
-
-// Scaling in this game is done manually, no need for this, kept for posterity:
-static inline const ReducedMatrix RM_Scale(const float scale)
-{
-    ReducedMatrix mat;
-    mat.row0_col0 = scale;   mat.row0_col1 = 0.0f;
-    mat.row1_col0 = 0.0f;    mat.row1_col1 = scale;
-    mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
-    return mat;
-}
+} //Unnamed namespace
 //DKS - END CUSTOM MATRIX MATH
 
 #endif // __Mathematics_h__
