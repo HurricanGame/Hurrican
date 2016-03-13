@@ -31,77 +31,29 @@ int fast_rand(void)
 #endif // USE_FAST_RNG
 
 
-//DKS - Added trig-lookup table with 1/4-deg resolution for speedup:
+//DKS - Added optional trig-lookup table with 1/4-deg resolution for use on
+//      platforms whose CPUs lack trigonometric functions:
 #ifdef USE_TRIG_LOOKUP_TABLE
-float sin_table[SIN_TABLE_ELEMS];
 
-void populate_sin_table(void)
-{
-   double x = 0.0;
-   int i;
-   for (i=0; i < SIN_TABLE_ELEMS; i++, x += (double)0.25) {
-      sin_table[i] = sinf(float(x * double(M_PI) / double(180.0)));
-   }
-}
+static TrigTableClass TrigTable;
 
 float cos_deg(int deg)
 {
-    //DKS - TODO remove the range check if we can
-    while (deg > 360) {
-        deg -= 360;
-    }
-    while (deg < 0) {
-        deg += 360;
-    }
-
-    deg += 90; // Read from sin table starting at 90 deg to get cos
-    deg *= 4;  // Expand to quarter-deg increments
-
-    return sin_table[deg];
-}
-
-float sin_deg(int deg)
-{
-    //DKS - TODO remove the range check if we can
-    while (deg > 360) {
-        deg -= 360;
-    }
-    while (deg < 0) {
-        deg += 360;
-    }
-
-    deg *= 4;  // Expand to quarter-deg increments
-    return sin_table[deg];
+    return TrigTable.cos_int(deg);
 }
 
 float cos_deg(float deg)
 {
-    //DKS - TODO remove the range check if we can
-    while (deg > 360.0f) {
-        deg -= 360.0f;
-    }
-    while (deg < 0.0f) {
-        deg += 360.0f;
-    }
+    return TrigTable.cos_float(deg);
+}
 
-    deg += 90.0f; // Read from sin table starting at 90 deg to get cos
-    deg *= 4.0f;  // Expand to quarter-deg increments
-    int idx = (int)(deg + 0.5f); // Round to nearest int
-    return sin_table[idx];
+float sin_deg(int deg)
+{
+    return TrigTable.sin_int(deg);
 }
 
 float sin_deg(float deg)
 {
-    //DKS - TODO remove the range check if we can
-    while (deg > 360.0f) {
-        deg -= 360.0f;
-    }
-    while (deg < 0.0f) {
-        deg += 360.0f;
-    }
-
-    deg *= 4.0f;  // Expand to quarter-deg increments
-    int idx = (int)(deg + 0.5f); // Round to nearest int
-    return sin_table[idx];
+    return TrigTable.sin_float(deg);
 }
 #endif //USE_TRIG_LOOKUP_TABLE

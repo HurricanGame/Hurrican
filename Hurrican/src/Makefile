@@ -38,7 +38,7 @@ DEFINES += -DUSE_INDEXED_BATCH
 ####### Fast random-number-generator (can be over 100 times faster than rand() on some platforms):
 #DEFINES += -DUSE_FAST_RNG
 
-####### Fast Sin/Cos trig lookup table (can be over 15 times faster than libm on some platforms):
+####### Fast Sin/Cos trig lookup table (For systems with CPUS lacking trig instructions i.e. ARM/MIPS):
 #DEFINES += -DUSE_TRIG_LOOKUP_TABLE
 
 ####### ETC1 texture compression support:
