@@ -63,12 +63,9 @@ extern int fast_rand(void);
 #define sin(X) sin_rad(X)
 #define cos(X) cos_rad(X)
 
-#ifdef USE_TRIG_LOOKUP_TABLE
-//DKS - New sin-lookup table has enough elements to easily handle cos + sin together:
-//      It has 1/4-degree increments.
+//DKS - Added optional trig-lookup table with 1/4-deg resolution for use on
+//      platforms whose CPUs lack trigonometric functions:
 // Benchmark comparison running on 1GHz 32-bit MIPS GCW Zero w/ Linux+ucLibc:
-// NOTE: On Intel, results are less impressive and the lookup table is therefore
-//       not helpful nor recommended.
 //+------------------------------------------------------------------------------+
 //|                               FPBENCH SUMMARY                                |
 //+-------------------------------------+-------------------+--------------------+
@@ -79,51 +76,114 @@ extern int fast_rand(void);
 //| SIN LIBM (double sin())             |           445.6858|            2.243733|
 //| SIN LOOKUP (float 1/4-degree acc.)  |            83.7235|           11.944071|
 //+-------------------------------------+-------------------+--------------------+
-
-#define SIN_TABLE_ELEMS ((360+90+1)*4)
-extern float sin_table[SIN_TABLE_ELEMS];
-extern void  populate_sin_table(void);
+#ifdef USE_TRIG_LOOKUP_TABLE
 extern float cos_deg(int deg);
-extern float sin_deg(int deg);
 extern float cos_deg(float deg);
+extern float sin_deg(int deg);
 extern float sin_deg(float deg);
+#endif //USE_TRIG_LOOKUP_TABLE
 
-static inline float cos_rad(float rad)
+// Unnamed namespace to ensure function definitions are local to a translation unit:
+namespace
 {
-    float deg = RadToDeg(rad);
-    return cos_deg(deg);
+
+#ifdef USE_TRIG_LOOKUP_TABLE
+class TrigTableClass
+{
+public:
+    TrigTableClass()
+    {
+        double deg_ctr = 0;
+        for (size_t i=0; i < SIN_TABLE_SIZE; ++i, deg_ctr += double(0.25))
+            sin_table[i] = sinf(float(deg_ctr * double(M_PI) / double(180.0)));
+    }
+
+    float sin_int(int deg)
+    {
+        int frac_deg = deg*4;                 // Expand to quarter-degree increments
+        frac_deg = restrict_domain(frac_deg);
+        return sin_table[frac_deg]; 
+    }
+
+    float sin_float(float deg)
+    {
+        int frac_deg = int(deg*4.0f + 0.5f);  // Expand to quarter-deg increments and round to nearest int
+        frac_deg = restrict_domain(frac_deg);
+        return sin_table[frac_deg]; 
+    }
+
+    float cos_int(int deg)
+    { 
+        deg += 90;                            // Read from sin table starting at 90 deg to get cos
+        int frac_deg = deg*4;                 // Expand to quarter-degree increments
+        frac_deg = restrict_domain(frac_deg);
+        return sin_table[frac_deg]; 
+    }
+
+    float cos_float(float deg)
+    {
+        deg += 90.0f;                         // Read from sine table starting at 90 deg to get cosine
+        int frac_deg = int(deg*4.0f + 0.5f);  // Expand to quarter-deg increments and round to nearest int
+        frac_deg = restrict_domain(frac_deg);
+        return sin_table[frac_deg]; 
+    }
+
+private:
+    int mod(int a, int b)
+    {
+        return (a < 0 ? (a % b + b) : (a % b));
+    }
+
+    //DKS - TODO remove the domain check if we can (will require careful
+    //      examination of all calls to sin_rad(),sin_deg(),cos_rad(),cos_deg())
+    int restrict_domain(int frac_deg)
+    {
+        if (frac_deg < 0 || frac_deg >= SIN_TABLE_SIZE)
+            frac_deg = mod(frac_deg, 360*4);                // Restrict domain to 0-359.75 degrees
+
+        return frac_deg;
+    }
+
+    static const int SIN_TABLE_SIZE = (360+90+1)*4;    // Quater-degree increments and large enough
+                                                       //  to handle both sine and cosine. Can handle
+                                                       //  inputs 0-360.75 degrees (not just 0-359).
+    float sin_table[SIN_TABLE_SIZE];
+};
+
+inline float cos_rad(float rad)
+{
+    return cos_deg(RadToDeg(rad));
 }
 
-static inline float sin_rad(float rad)
+inline float sin_rad(float rad)
 {
-    float deg = RadToDeg(rad);
-    return sin_deg(deg);
+    return sin_deg(RadToDeg(rad));
 }
 
 #else
 // Use libm/libc for trig:
-static inline float cos_deg(float deg)
+inline float cos_deg(float deg)
 {
-    float rad = DegToRad(deg);
-    return cosf(rad); 
+    return cosf(DegToRad(deg)); 
 }
 
-static inline float sin_deg(float deg)
+inline float sin_deg(float deg)
 {
-    float rad = DegToRad(deg);
-    return sinf(rad); 
+    return sinf(DegToRad(deg)); 
 }
 
-static inline float cos_rad(float rad)
+inline float cos_rad(float rad)
 {
     return cosf(rad);
 }
 
-static inline float sin_rad(float rad)
+inline float sin_rad(float rad)
 {
     return sinf(rad);
 }
+
 #endif //USE_TRIG_LOOKUP_TABLE
+} // Unnamed namespace
 
 
 //DKS - BEGIN NEW CUSTOM MATRIX MATH:
