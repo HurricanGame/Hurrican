@@ -4074,7 +4074,12 @@ void ProjectileClass::ExplodeShot(void)
         if (rand()%3 == 0)
             for(int i=0; i<3; i++)
                 if (rand()%2 == 0)
-                    PartikelSystem.PushPartikel(xPos+5, yPos-15, LONGFUNKE);
+                    //DKS - Fixed yPos offset here. If you turned off drawing of front
+                    //      and back overlay tiles, you could see that many of these
+                    //      particles were getting trapped in the wall, especially when
+                    //      firing directly upwards and hence were never seen at all.
+                    //PartikelSystem.PushPartikel(xPos+5, yPos-15, LONGFUNKE);
+                    PartikelSystem.PushPartikel(xPos+5, yPos+5, LONGFUNKE);
     }
     break;
 
