@@ -517,10 +517,10 @@ void ConsoleClass::CheckCommands(void)
         for (int i=0; i < TileEngine.LEVELSIZE_X; i++)
             for (int j=0; j < TileEngine.LEVELSIZE_Y; j++)
             {
-                if (TileEngine.Tiles[i][j].Block & BLOCKWERT_WAND)		  RenderRect((float)i, (float)j, 1, 1, 0xFFFFFFFF);
-                if (TileEngine.Tiles[i][j].Block & BLOCKWERT_DESTRUCTIBLE) RenderRect((float)i, (float)j, 1, 1, 0xFFFFFF00);
-                if (TileEngine.Tiles[i][j].Block & BLOCKWERT_PLATTFORM)	  RenderRect((float)i, (float)j, 1, 1, 0xFF888888);
-                if (TileEngine.Tiles[i][j].Block & BLOCKWERT_WASSER)		  RenderRect((float)i, (float)j, 1, 1, 0xFF0000FF);
+                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_WAND)		  RenderRect((float)i, (float)j, 1, 1, 0xFFFFFFFF);
+                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_DESTRUCTIBLE) RenderRect((float)i, (float)j, 1, 1, 0xFFFFFF00);
+                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_PLATTFORM)	  RenderRect((float)i, (float)j, 1, 1, 0xFF888888);
+                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_WASSER)		  RenderRect((float)i, (float)j, 1, 1, 0xFF0000FF);
             }
 
         char buf[100], buf2[100];

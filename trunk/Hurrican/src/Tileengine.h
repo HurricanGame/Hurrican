@@ -260,6 +260,8 @@ private:
     VERTEX2D		v1, v2, v3, v4;							// Vertices zum Sprite rendern
     unsigned char	LoadedTilesets;							// Anzahl geladener Sets
     float			WaterPos;								// Position in der WaterListe für die Wasseroberfläche
+    LevelTileStruct Tiles[MAX_LEVELSIZE_X]  // Array mit Leveldaten
+                         [MAX_LEVELSIZE_Y];
 
     //DKS - Lightmap code in original game was never used and all related code has now been disabled:
     //CLightMap		lightmaps[MAX_LIGHTMAPS];
@@ -293,8 +295,6 @@ public:
     float			SinPos2;								// Position in der SinusListe für den Wasserhintergrund
 
     bool							bScrollBackground;		// Hintegrundbild scrollen ?
-    LevelTileStruct					Tiles[MAX_LEVELSIZE_X]  // Array mit Leveldaten
-    [MAX_LEVELSIZE_Y];
 
     //DKS - Lightmap code in original game was never used and all related code has now been disabled:
     //LevelTileSaveStruct				OriginalTiles[MAX_LEVELSIZE_X]  // Array mit Leveldaten merken (für Lightmaps)
@@ -410,6 +410,21 @@ public:
                       const Vector2D q,
                       const Vector2D v,
                       Vector2D &pHit);
+    
+    //DKS - Added bounds-checked accessor for Tiles[][] array for debugging purposes:
+    LevelTileStruct& TileAt(const int i, const int j)
+    {
+#ifdef _DEBUG
+        if (i >= MAX_LEVELSIZE_X || i < 0 || j >= MAX_LEVELSIZE_Y || j < 0) {
+            Protokoll.WriteText( true, "-> Error: Out of bounds in TileEngineClass::TileAt():\n"
+                    "\tparam i: %d\tLower bound: %d\tUpper bound: %d\n"
+                    "\tparam j: %d\tLower bound: %d\tUpper bound: %d\n",
+                    i, 0, MAX_LEVELSIZE_X-1, j, 0, MAX_LEVELSIZE_Y-1 );
+            exit(1);    //WriteText above should do this for us (first param==true)
+        }
+#endif
+        return Tiles[i][j];
+    }   
 };
 
 // --------------------------------------------------------------------------------------

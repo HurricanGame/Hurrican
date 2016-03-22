@@ -1102,7 +1102,7 @@ void PlayerClass::AnimatePlayer(void)
     //
     for (int i = int (xpos + CollideRect.left) + 5; i < int (xpos + CollideRect.right) - 5; i+=2)
     {
-        if (TileEngine.Tiles [int (i / 20)][int (ypos + CollideRect.top + 10) / 20].Block & BLOCKWERT_WASSERFALL)
+        if (TileEngine.TileAt(int (i / 20), int (ypos + CollideRect.top + 10) / 20).Block & BLOCKWERT_WASSERFALL)
         {
             if (rand()%50 == 0)
                 PartikelSystem.PushPartikel (float (i) + rand()%4, ypos + CollideRect.top + rand()%4 + 10, WASSERTROPFEN);
@@ -2390,7 +2390,7 @@ void PlayerClass::AnimatePlayer(void)
     //-----------------------------------------------
     // Testen, ob sich der Spieler im Wasser befindet
     //
-    int middle = TileEngine.Tiles[(int)(xpos + 35) / TILESIZE_X][(int)(ypos + 40) / TILESIZE_Y].Block;
+    int middle = TileEngine.TileAt((int)(xpos + 35) / TILESIZE_X, (int)(ypos + 40) / TILESIZE_Y).Block;
     int spritzertype = 0;
     if ((bu & BLOCKWERT_LIQUID) ||
             (br & BLOCKWERT_LIQUID) ||
