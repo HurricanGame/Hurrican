@@ -104,11 +104,11 @@ void GegnerDeckenKrabbe::DoKI(void)
             // Rotationsspeed errechnen, je nachdem, wie weit der Boden entfernt ist
             //
             int a = 0;
-            int b = TileEngine.Tiles[(int)(xPos / TILESIZE_X)][(int)(yPos / TILESIZE_Y) + a].Block;
+            int b = TileEngine.TileAt((int)(xPos / TILESIZE_X), (int)(yPos / TILESIZE_Y) + a).Block;
 
             while (a < 20 && !(b & BLOCKWERT_WAND))
             {
-                b = TileEngine.Tiles[(int)(xPos / TILESIZE_X)][(int)(yPos / TILESIZE_Y) + a].Block;
+                b = TileEngine.TileAt((int)(xPos / TILESIZE_X), (int)(yPos / TILESIZE_Y) + a).Block;
                 a++;
             }
 

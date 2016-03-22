@@ -2967,7 +2967,7 @@ void PartikelClass::Run(void)
 
             // Rauch im Wasser ? Dann zur Blubberblase werden lassen
             //
-            if (TileEngine.Tiles[(int)((xPos + 5) / TILESIZE_X)][(int)((yPos + 5) / TILESIZE_Y)].Block & BLOCKWERT_LIQUID)
+            if (TileEngine.TileAt((int)((xPos + 5) / TILESIZE_X), (int)((yPos + 5) / TILESIZE_Y)).Block & BLOCKWERT_LIQUID)
             {
                 int off = 0;
 
