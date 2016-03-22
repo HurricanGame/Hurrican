@@ -2966,10 +2966,18 @@ void PartikelClass::Run(void)
             Rot += RotDir * ySpeed * 3.0f SYNC;
 
             // Rauch im Wasser ? Dann zur Blubberblase werden lassen
-            //
-            if (TileEngine.TileAt((int)((xPos + 5) / TILESIZE_X), (int)((yPos + 5) / TILESIZE_Y)).Block & BLOCKWERT_LIQUID)
+            //DKS - Fixed out-of-bounds access to Tiles[][] array here when particle rises to top of screen
+            //      at the top of a level (level 7, eis.map will crash when firing laser weapon at beginning)
+            // ORIGINAL LINE:
+            //if (TileEngine.TileAt((int)((xPos + 5) / TILESIZE_X), (int)((yPos + 5) / TILESIZE_Y)).Block & BLOCKWERT_LIQUID)
+            // ADDED CHECK AND CONVERTED TO FLOAT DIV-BY-RECIPROCAL:
+            int tmp_x = (int)((xPos + 5.0f) * (1.0f/TILESIZE_X));
+            int tmp_y = (int)((yPos + 5.0f) * (1.0f/TILESIZE_Y));
+            if ( tmp_x >= 0 && tmp_x < MAX_LEVELSIZE_X &&
+                 tmp_y >= 0 && tmp_y < MAX_LEVELSIZE_Y &&
+                 TileEngine.TileAt(tmp_x, tmp_y).Block & BLOCKWERT_LIQUID)
             {
-                int off = 0;
+                float off = 0;
 
                 if (PartikelArt == SMOKE2)
                     off = 7;
