@@ -231,9 +231,11 @@ endif
 endif
 
 ifeq ($(USE_NO_EXCEPTIONS),yes)
+ifndef _DEBUG
 COMMON_CXXFLAGS += -fno-exceptions
 LDFLAGS += -fno-exceptions
 DEFINES += -DUSE_NO_EXCEPTIONS
+endif
 endif
 
 ifeq ($(USE_UNRARLIB),yes)
