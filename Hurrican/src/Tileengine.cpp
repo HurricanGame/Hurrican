@@ -359,20 +359,22 @@ void TileEngineClass::ClearLevel()
 
 bool TileEngineClass::LoadLevel(char Filename[100])
 {
-    bool			fromrar;
-    char			*pData;
     char			Temp[256];
-    unsigned long	Size;
     FileHeader				DateiHeader;					// Header der Level-Datei
     FILE					*Datei = NULL;					// Level-Datei
     LevelObjectStruct		LoadObject;
+
+#if defined(USE_UNRARLIB)   //DKS - Added ifdef block
+    bool			fromrar = false;
+    char			*pData = NULL;                          //DKS - Added NULL init val
+    unsigned long	Size = 0;                               //DKS - Added init val
+#endif // USE_UNRARLIB
 
     MustCenterPlayer = false;
 
     DisplayHintNr = rand()%30;
 
     IsElevatorLevel = false;
-    fromrar = false;
     FlugsackFliesFree = true;
     g_Fahrstuhl_yPos = -1.0f;
 
@@ -406,6 +408,7 @@ bool TileEngineClass::LoadLevel(char Filename[100])
 
 loadfile:
 
+#if defined(USE_UNRARLIB)   //DKS - Added ifdef block
     // Aus RAR laden? Dann müssen wir das ganze unter temporärem Namen entpacken
     if (fromrar == true)
     {
@@ -419,6 +422,7 @@ loadfile:
         sprintf_s(Temp, "%s", TEMP_FILE_PREFIX "temp.map");			// Name anpassen
         free(pData);								// und Speicher freigeben
     }
+#endif // USE_UNRARLIB
 
     Protokoll.WriteText(false, "\n-> Loading Level <-\n\n" );
 
