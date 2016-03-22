@@ -1214,8 +1214,15 @@ void TileEngineClass::DrawBackLevel(void)
                 v4.tv		= tu;
 
                 // Hintergrund des Wasser schwabbeln lassen
-                //
-                if (TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)
+
+                //DKS - Fixed out of bounds access to Tiles[][] array on y here:
+                //      When yLevel is 1 and j is -1 (indicating that the one-tile overdraw
+                //      border is being drawn on the top screen edge), this was ending up
+                //      trying to access a row higher than the top screen border which doesn't
+                //      exist. Loading the Eis map (level 7) would crash on some machines.
+                //if (TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)                    // Original line
+                if ( yLevel+j > 0 &&    // DKS Added this check to above line
+                        TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)
                 {
                     if (TileAt(xLevel+i, yLevel+j).move_v1 == true) v1.x += SinList2[off];
                     if (TileAt(xLevel+i, yLevel+j).move_v2 == true) v2.x += SinList2[off];
@@ -1365,7 +1372,14 @@ void TileEngineClass::DrawFrontLevel(void)
                 // Hintergrund des Wasser schwabbeln lassen
                 //
 
-                if (TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)
+                //DKS - Fixed out of bounds access to Tiles[][] array on y here in ice level
+                //      (and perhaps on others). when yLevel is 1 and j is -1 (indicating
+                //      that the one-tile overdraw border is being drawn on the top screen
+                //      edge), this was ending up trying to access a row higher than the
+                //      top screen border which doesn't exist:
+                //if (TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)    //Original line
+                if (yLevel+j > 0 &&     //DKS - Added check
+                        TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)
                 {
                     if (TileAt(xLevel+i, yLevel+j).move_v1 == true) v1.x += SinList2[off];
                     if (TileAt(xLevel+i, yLevel+j).move_v2 == true) v2.x += SinList2[off];
@@ -1911,15 +1925,29 @@ void TileEngineClass::DrawWater(void)
                         }
 
                         // Oberfläche des Wassers aufhellen
-                        //
-                        if (!(TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID) &&
+                        //DKS - Fixed potential out of bounds access to Tiles[][] array here
+                        //      by adding check for yLevel+j > 0:
+                        //if (!(TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID) &&           (ORIGINAL TWO LINES)
+                        //        !(TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_WASSERFALL))
+                        if (yLevel+j > 0 &&
+                                !(TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID) &&         
                                 !(TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_WASSERFALL))
                         {
-                            if (!(TileAt(xLevel+i-1, yLevel+j-1).Block & BLOCKWERT_LIQUID) &&
+                            //DKS - Fixed potential out of bounds access to Tiles[][] array here
+                            //      by adding check for xLevel+i > 0:
+                            //if (!(TileAt(xLevel+i-1, yLevel+j-1).Block & BLOCKWERT_LIQUID) &&
+                            //        !(TileAt(xLevel+i-1, yLevel+j-1).Block & BLOCKWERT_WASSERFALL))
+                            if ( xLevel+i > 0 &&    //DKS - Added check
+                                    !(TileAt(xLevel+i-1, yLevel+j-1).Block & BLOCKWERT_LIQUID) &&
                                     !(TileAt(xLevel+i-1, yLevel+j-1).Block & BLOCKWERT_WASSERFALL))
                                 v1.color = Col3;
 
-                            if (!(TileAt(xLevel+i+1, yLevel+j-1).Block & BLOCKWERT_LIQUID) &&
+                            //DKS - Fixed potential out of bounds access to Tiles[][] array here
+                            //      by adding check for xLevel+i < MAX_LEVELSIZE_X-1:
+                            //if (!(TileAt(xLevel+i+1, yLevel+j-1).Block & BLOCKWERT_LIQUID) &&
+                            //        !(TileAt(xLevel+i+1, yLevel+j-1).Block & BLOCKWERT_WASSERFALL))
+                            if ( xLevel+i < MAX_LEVELSIZE_X-1 &&    //DKS - Added check
+                                    !(TileAt(xLevel+i+1, yLevel+j-1).Block & BLOCKWERT_LIQUID) &&
                                     !(TileAt(xLevel+i+1, yLevel+j-1).Block & BLOCKWERT_WASSERFALL))
                                 v2.color = Col3;
                         }
