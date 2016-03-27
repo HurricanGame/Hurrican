@@ -60,7 +60,9 @@ void GegnerLavamann::DoKI(void)
     // Schrägen checken
     //
     if (ySpeed >= 0.0f)
-        blocku = TileEngine.BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed);
+        //DKS - Rewrote BlockSlopes function to only take the parameters it uses:
+        //blocku = TileEngine.BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed);
+        blocku = TileEngine.BlockSlopes(xPos, yPos, GegnerRect[GegnerArt], ySpeed);
 
     // Flammenwand entstehen lassen
     //

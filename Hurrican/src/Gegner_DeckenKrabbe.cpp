@@ -86,7 +86,9 @@ void GegnerDeckenKrabbe::DoKI(void)
         // Schrägen checken
         //
         if (ySpeed >= 0.0f)
-            blocku = TileEngine.BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed, true);
+            //DKS - Rewrote BlockSlopes function to only take the parameters it uses:
+            //blocku = TileEngine.BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed, true);
+            blocku = TileEngine.BlockSlopes(xPos, yPos, GegnerRect[GegnerArt], ySpeed);
     }
 
     switch (Handlung)

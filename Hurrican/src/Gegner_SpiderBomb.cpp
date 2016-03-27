@@ -64,7 +64,9 @@ void GegnerSpiderBomb::DoKI(void)
         }
 
     if (ySpeed >= 0.0f)
-        blocku = TileEngine.BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed, true);
+        //DKS - Rewrote BlockSlopes function to only take the parameters it uses:
+        //blocku = TileEngine.BlockSlopes(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], ySpeed, true);
+        blocku = TileEngine.BlockSlopes(xPos, yPos, GegnerRect[GegnerArt], ySpeed);
 
     if (!(blocku & BLOCKWERT_SCHRAEGE_R) &&
             !(blocku & BLOCKWERT_SCHRAEGE_L))
