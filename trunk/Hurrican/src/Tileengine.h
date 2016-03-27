@@ -362,7 +362,8 @@ public:
     void UpdateLevel			(void);							// Level evtl scrollen usw
     void ScrollLevel		(float x,  float y,  int neu,
                              float sx = 10.0f, float sy = 10.0f);// Screen scrollen
-    int	 BlockSlopes		(float &x, float &y, float &xo, float &yo, RECT rect, float ySpeed, bool resolve = false);
+    void MakeBordersLookCool	(int x, int y);
+
     int	 BlockRechts		(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve = false);
     int	 BlockLinks			(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve = false);
     int	 BlockOben			(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve = false);
@@ -375,7 +376,10 @@ public:
     bool BlockDestroyLinks		(float &x, float &y, float &xo, float &yo, RECT rect);
     bool BlockDestroyOben		(float &x, float &y, float &xo, float &yo, RECT rect);
     bool BlockDestroyUnten		(float &x, float &y, float &xo, float &yo, RECT rect);
-    void MakeBordersLookCool	(int x, int y);
+
+    //DKS - Rewrote this function, see notes in Tileengine.cpp
+    //int	 BlockSlopes		(float &x, float &y, float &xo, float &yo, RECT rect, float ySpeed, bool resolve = false);
+    uint32_t BlockSlopes        (const float x, float &y, const RECT rect, const float ySpeed);
 
     //DKS - x,y parameters did not need to be references and are now value params:
     bool CheckDestroyableWalls(float x, float y,			// Schuss auf Zerstörbare

@@ -1064,7 +1064,9 @@ void PlayerClass::AnimatePlayer(void)
     // auf schrägen laufen/gelandet?
     //
     if (yspeed   >= 0.0f)
-        bu = TileEngine.BlockSlopes     (xpos, ypos, xposold, yposold, CollideRect, yspeed);
+        //DKS - Rewrote BlockSlopes function to only take the parameters it needs:
+        //bu = TileEngine.BlockSlopes     (xpos, ypos, xposold, yposold, CollideRect, yspeed);
+        bu = TileEngine.BlockSlopes     (xpos, ypos, CollideRect, yspeed);
 
     if (Handlung == RADELN)
     {
@@ -1405,7 +1407,9 @@ void PlayerClass::AnimatePlayer(void)
                 ypos -= 15.0f;
 
                 // noch nicht aus dem Sumpf draussen? Dann gleich wieder runterfallen
-                bu = TileEngine.BlockSlopes     (xpos, ypos, xposold, yposold, CollideRect, yspeed);
+                //DKS - Rewrote BlockSlopes function to only take the parameters it uses:
+                //bu = TileEngine.BlockSlopes     (xpos, ypos, xposold, yposold, CollideRect, yspeed);
+                bu = TileEngine.BlockSlopes     (xpos, ypos, CollideRect, yspeed);
                 if (bu & BLOCKWERT_SUMPF)
                 {
                     //yspeed = 0.0f;
@@ -1444,7 +1448,9 @@ void PlayerClass::AnimatePlayer(void)
                 }
             }
             else
-                bu = TileEngine.BlockSlopes     (xpos, ypos, xposold, yposold, CollideRect, yspeed);
+                //DKS - Rewrote BlockSlopes function to only take the parameters it uses:
+                //bu = TileEngine.BlockSlopes     (xpos, ypos, xposold, yposold, CollideRect, yspeed);
+                bu = TileEngine.BlockSlopes     (xpos, ypos, CollideRect, yspeed);
 
             if (JumpPossible		== false &&
                     Aktion[AKTION_JUMP] == false &&

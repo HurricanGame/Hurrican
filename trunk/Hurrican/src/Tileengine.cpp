@@ -2927,10 +2927,16 @@ bool TileEngineClass::BlockDestroyUnten(float &x, float &y, float &xo, float &yo
     return false;
 }
 
+
 // --------------------------------------------------------------------------------------
 // Auf Schrägen prüfen
 // --------------------------------------------------------------------------------------
-
+//DKS - Rewrote this function to not access Tiles[][] array out of bounds, and to be
+//      a bit more efficient and clean. It also now only take parameters that it actually
+//      needs (xo/yo params were unused) and x parameter didn't need to be a reference.
+//      It returns the correct type for Block data as well (uint32_t vs int).
+// ORIGINAL CODE:
+#if 0
 int	TileEngineClass::BlockSlopes(float &x, float &y, float &xo, float &yo, RECT rect, float ySpeed, bool resolve)
 {
     int Art	= 0;
@@ -2997,7 +3003,69 @@ int	TileEngineClass::BlockSlopes(float &x, float &y, float &xo, float &yo, RECT 
 
     return 0;
 }
+#endif //0
+//DKS - Rewritten version of above function:
+uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT rect, const float ySpeed)
+{
+    uint32_t block = 0;
+    for(int j = rect.bottom; j<rect.bottom+TILESIZE_Y; j++)
+    {
+        int ylev = int ((y + (j - 1)) * (1.0f/TILESIZE_Y));
 
+        if (ylev < 0)
+           continue;
+        else if (ylev >= LEVELSIZE_Y)
+            return 0;
+
+        // Schräge links
+        // von links anfangen mit der Block-Prüdung
+
+        //DKS - TODO see if you can get this to increment faster, by tile:
+        for(int i = rect.left; i<rect.right; i++) {
+            int xlev = int ((x + i) * (1.0f/TILESIZE_X));
+
+            if (xlev < 0)
+                continue;
+            else if (xlev >= LEVELSIZE_X)
+                break;
+
+            block = TileAt(xlev, ylev).Block;
+
+            if (block & BLOCKWERT_SCHRAEGE_L) {
+                float newy = (ylev+1) * TILESIZE_Y - rect.bottom - (TILESIZE_Y - float (int (x + i) % TILESIZE_X)) - 1;
+                if (ySpeed == 0.0f || y > newy) {
+                    y = newy;
+                    return block;
+                }
+            }
+        }
+
+        // Schräge rechts
+        // von rechts anfangen mit der Block-Prüdung
+
+        //DKS TODO: try to get this to decrement faster, by tile:
+        for(int i = rect.right; i>rect.left; i--) {
+            int xlev = int ((x + i) * (1.0f/TILESIZE_X));
+
+            if (xlev >= MAX_LEVELSIZE_X)
+                continue;
+            else if (xlev < 0)
+                break;
+
+            block = TileAt(xlev, ylev).Block;
+
+            if (block & BLOCKWERT_SCHRAEGE_R) {
+                float newy = (ylev+1) * TILESIZE_Y - rect.bottom - (float (int (x + i) % TILESIZE_X)) - 1;
+                if (ySpeed == 0.0f || y > newy) {
+                    y = newy;
+                    return block;
+                }
+            }
+        }
+    }
+
+    return 0;
+}
 
 // --------------------------------------------------------------------------------------
 // Checken ob ein Schuss eine zerstörbare Wand getroffen hat und wenn ja, diese
@@ -3071,7 +3139,6 @@ bool TileEngineClass::CheckDestroyableWalls(float x, float y, float xs, float ys
 
     return false;
 }
-
 
 // --------------------------------------------------------------------------------------
 // Zurückliefern, welcher Farbwert sich in der Mitte des RECTs an x/y im Level befindet
