@@ -3003,7 +3003,14 @@ int	TileEngineClass::BlockSlopes(float &x, float &y, float &xo, float &yo, RECT 
 // Checken ob ein Schuss eine zerstörbare Wand getroffen hat und wenn ja, diese
 // zerstören und true zurückliefern, damit der Schuss ebenfalls gelöscht wird
 // --------------------------------------------------------------------------------------
-
+//DKS - x,y parameters did not need to be references and xs,ys params were never
+//      anything but 0 in the only place this function was used, so I eliminated
+//      them as they had no effect when 0. Rewrote code to be clearer and also
+//      not allow out-of-bounds access to Tiles[][] array. Before, it was possible
+//      this happened when, say, loading the 2nd map and immediately firing the
+//      blitz-beam to the left off the edge of the screen. Also, made inline.
+// ORIGINAL VERSION:
+#if 0
 bool TileEngineClass::CheckDestroyableWalls(float &x, float &y, float xs, float ys, RECT rect)
 {
     int	  xstart, ystart;
@@ -3033,6 +3040,38 @@ bool TileEngineClass::CheckDestroyableWalls(float &x, float &y, float xs, float 
 
     return false;
 }
+#endif //0
+//DKS - Rewritten version of above function:
+bool TileEngineClass::CheckDestroyableWalls(float x, float y, float xs, float ys, RECT rect)
+{
+    int xstart = int(x * (1.0f/TILESIZE_X));
+    int ystart = int(y * (1.0f/TILESIZE_Y));
+    int xl = int(rect.right )/TILESIZE_X+2;
+    int yl = int(rect.bottom)/TILESIZE_Y+2;
+
+    // Ganzes Rect des Schusses prüfen
+    for (int i=xstart-1; i < xstart+xl; i++) {
+        if (i < 0)
+            continue;
+        else if (i >= LEVELSIZE_X)
+            break;
+
+        for (int j=ystart; j < ystart+yl; j++) {
+            if (j < 0)
+                continue;
+            else if (j >= LEVELSIZE_Y)
+                break;
+
+            if (TileAt(i, j).Block & BLOCKWERT_DESTRUCTIBLE) {
+                ExplodeWall(i, j);
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 
 // --------------------------------------------------------------------------------------
 // Zurückliefern, welcher Farbwert sich in der Mitte des RECTs an x/y im Level befindet

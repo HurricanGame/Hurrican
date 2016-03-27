@@ -377,7 +377,8 @@ public:
     bool BlockDestroyUnten		(float &x, float &y, float &xo, float &yo, RECT rect);
     void MakeBordersLookCool	(int x, int y);
 
-    bool CheckDestroyableWalls(float &x, float &y,			// Schuss auf Zerstörbare
+    //DKS - x,y parameters did not need to be references and are now value params:
+    bool CheckDestroyableWalls(float x, float y,			// Schuss auf Zerstörbare
                                float xs, float ys,			// Wände testen
                                RECT rect);
 
