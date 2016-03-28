@@ -364,18 +364,29 @@ public:
                              float sx = 10.0f, float sy = 10.0f);// Screen scrollen
     void MakeBordersLookCool	(int x, int y);
 
+    //DKS - These were all a mess and I rewrote them. See new comments in Tileengine.cpp
+#if 0
     int	 BlockRechts		(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve = false);
     int	 BlockLinks			(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve = false);
     int	 BlockOben			(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve = false);
     int	 BlockUnten			(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve = false);
     int	 BlockUntenNormal	(float &x, float &y, float &xo, float &yo, RECT rect);
-
+    //DKS - ResolveLinks() was never used anywhere, disabled and no replacement was made:
     void ResolveLinks		(float &x, float &y, float &xo, float &yo, RECT rect);
-
     bool BlockDestroyRechts		(float &x, float &y, float &xo, float &yo, RECT rect);
     bool BlockDestroyLinks		(float &x, float &y, float &xo, float &yo, RECT rect);
     bool BlockDestroyOben		(float &x, float &y, float &xo, float &yo, RECT rect);
     bool BlockDestroyUnten		(float &x, float &y, float &xo, float &yo, RECT rect);
+#endif //0
+    uint32_t BlockRechts        (float &x, float y, float &xo, float yo, RECT rect, bool resolve = false);
+    uint32_t BlockLinks         (float &x, float y, float &xo, float yo, RECT rect, bool resolve = false);
+    uint32_t BlockOben          (float x, float &y, float xo, float &yo, RECT rect, bool resolve = false);
+    uint32_t BlockUnten         (float x, float &y, float xo, float &yo, RECT rect, bool resolve = false);
+    uint32_t BlockUntenNormal   (float x, float y, float xo, float yo, RECT rect);
+    bool BlockDestroyRechts     (float x, float y, float xo, float yo, RECT rect);
+    bool BlockDestroyLinks      (float x, float y, float xo, float yo, RECT rect);
+    bool BlockDestroyOben       (float x, float y, float xo, float yo, RECT rect);
+    bool BlockDestroyUnten      (float x, float y, float xo, float yo, RECT rect);
 
     //DKS - Rewrote this function, see notes in Tileengine.cpp
     //int	 BlockSlopes		(float &x, float &y, float &xo, float &yo, RECT rect, float ySpeed, bool resolve = false);

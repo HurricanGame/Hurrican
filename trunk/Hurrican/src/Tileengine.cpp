@@ -2461,6 +2461,19 @@ void TileEngineClass::MakeBordersLookCool(int x, int y)
     	}*/
 }
 
+//DKS - After discovering some particles (LONGFUNKE particles emitted when spreadshot projectiles
+//      hit walls) get lodged inside wall tiles and stay there (only visible when drawing of 
+//      overlay tile layers is disabled), I had a look at the Block* functions below.
+//      It was clear that they were sometimes accessing the Tiles[][] array out-of-bounds, and
+//      I confirmed this through use of a new TileAt() function that does range-checking in
+//      debug-mode. Furthermore, the code was messy, returned int type and not uint32_t,
+//      and looped for no discernable reason. Also, many of parameters were marked as
+//      references, when only a few in any given function were ever modified.
+//      I have rewritten them, addressing all these issues. I have left the original functions
+//      here as a reference, inside the '#if 0' block. New ones are after.
+//      The ResolveLinks() function that was in the middle of these was never used anywhere,
+//      and I've commented it out and made no replacement.
+#if 0  // BEGIN COPY OF ORIGINAL VERSIONS THAT HAVE BEEN REWRITTEN
 // --------------------------------------------------------------------------------------
 // Zurückliefern, welche BlockArt sich Rechts vom übergebenen Rect befindet
 // --------------------------------------------------------------------------------------
@@ -2553,6 +2566,7 @@ bool TileEngineClass::BlockDestroyRechts(float &x, float &y, float  &xo, float &
     return false;
 }
 
+//DKS - Never used anywhere, so I've not made a replacement version:
 void TileEngineClass::ResolveLinks (float &x, float &y, float &xo, float &yo, RECT rect)
 {
     float laenge;
@@ -2926,7 +2940,330 @@ bool TileEngineClass::BlockDestroyUnten(float &x, float &y, float &xo, float &yo
 
     return false;
 }
+#endif //0
+// DKS - BEGIN REWRITTEN VERSIONS OF ABOVE FUNCTIONS:
+// --------------------------------------------------------------------------------------
+// Zurückliefern, welche BlockArt sich Rechts vom übergebenen Rect befindet
+// --------------------------------------------------------------------------------------
 
+uint32_t TileEngineClass::BlockRechts(float &x, float y, float &xo, float yo, RECT rect, bool resolve)
+{
+    // Nach rechts muss nicht gecheckt werden ?
+    if ( xo > x )
+        return 0;
+
+    int xlev = (int)((x+rect.right+1) * (1.0f/TILESIZE_X));
+    if (xlev < 0 || xlev >= LEVELSIZE_X)
+        return 0;
+
+    uint32_t block = 0;
+
+    for(int j=rect.top; j<rect.bottom; j+=TILESIZE_Y) {
+        int ylev = (int)((y+j) * (1.0f/TILESIZE_Y));
+
+        if (ylev < 0)
+            continue;
+        else if (ylev >= LEVELSIZE_Y)
+            return 0;
+
+        if (TileAt(xlev, ylev).Block != 0 && !(block & BLOCKWERT_WAND))
+            block = TileAt(xlev, ylev).Block;
+
+        if (block & BLOCKWERT_WAND) {
+            if (resolve) {
+                x = (float)((xlev*TILESIZE_X)-rect.right-1);
+                xo = x;
+            }
+
+            return block;
+        }
+    }
+
+    return block;
+}
+
+// --------------------------------------------------------------------------------------
+// Zurückliefern, ob sich rechts eine zerstörbare Wand befindet
+// --------------------------------------------------------------------------------------
+
+bool TileEngineClass::BlockDestroyRechts(float x, float y, float xo, float yo, RECT rect)
+{
+    // Nach rechts muss nicht gecheckt werden ?
+    if (xo > x)
+        return false;
+
+    int xlev = (int)((x+rect.right+1) * (1.0f/TILESIZE_X));
+    if (xlev < 0 || xlev >= MAX_LEVELSIZE_X)
+        return false;
+
+    for(int j=rect.top; j<rect.bottom; j+= TILESIZE_Y) {
+        int ylev = (int)((y+j) * (1.0f/TILESIZE_Y));
+
+        if (ylev < 0)
+            continue;
+        else if (ylev >= LEVELSIZE_Y)
+            return false;
+
+        if (TileAt(xlev, ylev).Block & BLOCKWERT_DESTRUCTIBLE) {
+            ExplodeWall(xlev, ylev);
+            return true;
+        }
+    }
+
+    return false;
+}
+
+// --------------------------------------------------------------------------------------
+// Zurückliefern, welche BlockArt sich Links vom übergebenen Rect befindet
+// --------------------------------------------------------------------------------------
+
+uint32_t TileEngineClass::BlockLinks(float &x, float y, float &xo, float yo, RECT rect, bool resolve)
+{
+    // Nach links muss nicht gecheckt werden ?
+    if (xo < x)
+        return 0;
+
+    int xlev = (int)((x+rect.left-1) * (1.0f/TILESIZE_X));
+    if (xlev < 0 || xlev >= LEVELSIZE_X)
+        return 0;
+
+    uint32_t block = 0;
+
+    for(int j=rect.top; j<rect.bottom; j+=TILESIZE_Y) {
+        int ylev = (int)((y+j) * (1.0f/TILESIZE_Y));
+
+        if (ylev < 0)
+            continue;
+        else if (ylev >= LEVELSIZE_Y)
+            return 0;
+
+        if (TileAt(xlev, ylev).Block != 0 && !(block & BLOCKWERT_WAND))
+            block = TileAt(xlev, ylev).Block;
+
+        if (block & BLOCKWERT_WAND) {
+            if (resolve) {
+                x = (float)((xlev*TILESIZE_X) + TILESIZE_X - rect.left);
+                xo = x;
+            }
+            return block;
+        }
+    }
+
+    return block;
+}
+
+// --------------------------------------------------------------------------------------
+// Zurückliefern, ob sich links eine zerstörbare Wand befindet
+// --------------------------------------------------------------------------------------
+
+bool TileEngineClass::BlockDestroyLinks(float x, float y, float xo, float yo, RECT rect)
+{
+    // Nach links muss nicht gecheckt werden ?
+    if (xo < x)
+        return false;
+
+    int xlev = (int)((x+rect.left-1) * (1.0f/TILESIZE_X));
+    if (xlev < 0 || xlev >= LEVELSIZE_X)
+        return false;
+
+    for(int j=rect.top; j<rect.bottom; j+=TILESIZE_Y) {
+        int ylev = (int)((y+j) * (1.0f/TILESIZE_Y));
+
+        if (ylev < 0)
+            continue;
+        else if (ylev >= LEVELSIZE_Y)
+            return false;
+
+        if (TileAt(xlev, ylev).Block & BLOCKWERT_DESTRUCTIBLE) {
+            ExplodeWall(xlev, ylev);
+            return true;
+        }
+    }
+
+    return false;
+}
+
+// --------------------------------------------------------------------------------------
+// Zurückliefern, welche Blockblock sich oberhalb vom übergebenen Rect befindet
+// --------------------------------------------------------------------------------------
+
+uint32_t TileEngineClass::BlockOben(float x, float &y, float xo, float &yo, RECT rect, bool resolve)
+{
+    // Nach oben muss nicht gecheckt werden ?
+    if (yo < y)
+        return 0;
+
+    int ylev = (int)((y+rect.top-1) * (1.0f/TILESIZE_Y));
+    if (ylev < 0 || ylev >= LEVELSIZE_Y)
+        return 0;
+
+    uint32_t block = 0;
+
+    for(int i=rect.left; i<rect.right; i+=TILESIZE_X) {
+        int xlev = (int)((x+i) * (1.0f/TILESIZE_X));
+        if (xlev < 0)
+            continue;
+        else if (xlev >= LEVELSIZE_X)
+            return 0;
+
+        if (TileAt(xlev, ylev).Block > 0 && !(block & BLOCKWERT_WAND))
+            block = TileAt(xlev, ylev).Block;
+
+        if (block & BLOCKWERT_WAND) {
+            if (resolve) {
+                y  = (float)((ylev*TILESIZE_Y) + TILESIZE_Y - rect.top);
+                yo = y;
+            }
+
+            return block;
+        }
+    }
+
+    return block;
+}
+
+// --------------------------------------------------------------------------------------
+// Zurückliefern, ob sich oben eine zerstörbare Wand befindet
+// --------------------------------------------------------------------------------------
+
+bool TileEngineClass::BlockDestroyOben(float x, float y, float xo, float yo, RECT rect)
+{
+    // Nach oben muss nicht gecheckt werden ?
+    if (yo < y)
+        return false;
+
+    int ylev = (int)((y+rect.top-1) * (1.0f/TILESIZE_Y));
+    if (ylev < 0 || ylev >= LEVELSIZE_Y)
+        return false;
+
+    for(int i=rect.left; i<rect.right; i+=TILESIZE_X) {
+        int xlev = (int)((x+i) * (1.0f/TILESIZE_X));
+
+        if (xlev < 0)
+            continue;
+        else if (xlev >= LEVELSIZE_X)
+            return false;
+
+        if (TileAt(xlev, ylev).Block & BLOCKWERT_DESTRUCTIBLE) {
+            ExplodeWall(xlev, ylev);
+            return true;
+        }
+    }
+
+    return false;
+}
+
+// --------------------------------------------------------------------------------------
+// Zurückliefern, welche Blockblock sich unterhalb vom übergebenen Rect befindet
+// und dabei nicht "begradigen" sprich die y-Position an das Tile angleichen
+// --------------------------------------------------------------------------------------
+
+uint32_t TileEngineClass::BlockUntenNormal(float x, float y, float xo, float yo, RECT rect)
+{
+    // Nach unten muss nicht gecheckt werden ?
+    if (yo > y)
+        return false;
+
+    int ylev = (int)((y+rect.bottom+1) * (1.0f/TILESIZE_Y));
+    if (ylev < 0 || ylev >= LEVELSIZE_Y)
+        return 0;
+
+    uint32_t block = 0;
+
+    // BIG TODO: see if you can make this increment by TILESIZE_X
+    for(int i=rect.left; i<rect.right; i++) {
+        int xlev = (int)((x+i) * (1.0f/TILESIZE_X));
+
+        if (xlev < 0)
+            continue;
+        else if (xlev >= LEVELSIZE_X)
+            return 0;
+
+        //DKS - TODO: might be optimized a bit:
+        if (TileAt(xlev, ylev).Block > 0 && !(block & BLOCKWERT_WAND))
+            block = TileAt(xlev, ylev).Block;
+
+        if (block & BLOCKWERT_WAND || block & BLOCKWERT_PLATTFORM)
+            return block;
+    }
+
+    return block;
+}
+
+// --------------------------------------------------------------------------------------
+// Zurückliefern, welche Blockblock sich unterhalb vom übergebenen Rect befindet
+// --------------------------------------------------------------------------------------
+
+uint32_t TileEngineClass::BlockUnten(float x, float &y, float xo, float &yo, RECT rect, bool resolve)
+{
+    // Nach unten muss nicht gecheckt werden ?
+    if (yo > y)
+        return 0;
+
+    int ylev = (int)((y+rect.bottom+1) * (1.0f/TILESIZE_Y));
+    if (ylev < 0 || ylev >= LEVELSIZE_Y)
+        return 0;
+
+    uint32_t block = 0;
+
+    // BIG TODO: see if you can make this increment by TILESIZE_X
+    for(int i=rect.left; i<rect.right; i++) {
+        int xlev = (int)((x+i) * (1.0f/TILESIZE_X));
+
+        if (xlev < 0)
+            continue;
+        else if (xlev >= LEVELSIZE_X)
+            return 0;
+
+        //DKS - TODO: might be optimized a bit
+        if (!(block & BLOCKWERT_WAND) && !(block & BLOCKWERT_PLATTFORM) &&
+                TileAt(xlev, ylev).Block > 0)
+            block = TileAt(xlev, ylev).Block;
+
+        if (block & BLOCKWERT_WAND || block & BLOCKWERT_PLATTFORM) {
+            if (resolve) {
+                y = (float)(ylev*TILESIZE_Y-rect.bottom);
+                yo = y;
+            }
+
+            return block;
+        }
+    }
+
+    return block;
+}
+
+// --------------------------------------------------------------------------------------
+// Zurückliefern, welche Blockblock sich unterhalb vom übergebenen Rect befindet
+// --------------------------------------------------------------------------------------
+
+bool TileEngineClass::BlockDestroyUnten(float x, float y, float xo, float yo, RECT rect)
+{
+    // Nach unten muss nicht gecheckt werden ?
+    if (yo > y)
+        return 0;
+
+    int ylev = (int)((y+rect.bottom+1) * (1.0f/TILESIZE_Y));
+    if (ylev < 0 || ylev >= LEVELSIZE_Y)
+        return false;
+
+    for(int i=rect.left; i<rect.right; i+=TILESIZE_X) {
+        int xlev = (int)((x+i) * (1.0f/TILESIZE_X));
+
+        if (xlev < 0)
+            continue;
+        else if (xlev >= LEVELSIZE_X)
+            return 0;
+
+        if (TileAt(xlev, ylev).Block & BLOCKWERT_DESTRUCTIBLE) {
+            ExplodeWall(xlev, ylev);
+            return true;
+        }
+    }
+
+    return false;
+}
+//DKS - END BLOCK OF NEW FUNCTIONS
 
 // --------------------------------------------------------------------------------------
 // Auf Schrägen prüfen
