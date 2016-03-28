@@ -97,7 +97,7 @@ void GegnerKettenglied::DoKI(void)
 
     case GEGNER_SPECIAL2:
     {
-        int bu = TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
+        uint32_t bu = TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
         if (bu & BLOCKWERT_WAND &&
                 ySpeed > 0.0f)

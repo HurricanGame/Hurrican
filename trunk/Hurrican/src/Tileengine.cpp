@@ -529,7 +529,7 @@ loadfile:
 
     // eventuelle Schrägen ermitteln und Ecken für die Wasseranim festlegen
     // EDIT_ME wieder reinmachen und diesmal richtig machen =)
-    int bl, br, bo, bu;
+    uint32_t bl, br, bo, bu;
 
     for(i=1; i<LEVELSIZE_X-1; i++)
         for(int j=2; j<LEVELSIZE_Y-1; j++)

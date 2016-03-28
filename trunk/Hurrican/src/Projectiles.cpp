@@ -32,7 +32,7 @@
 DirectGraphicsSprite	ProjectileGrafix[MAX_SHOTGFX];	    // Grafiken der Schüsse
 RECT					ShotRect[MAX_SHOTGFX];				// Rechtecke für Level Kollision
 int						CurrentShotTexture;					// Aktuelle Textur der Schüsse
-int						bo, bu, bl, br;						// Blockwerte um den aktuellen Schuss herum
+uint32_t                bo, bu, bl, br;						// Blockwerte um den aktuellen Schuss herum
 
 float					WinkelUebergabe;					// Extra "Parameter" für PushProjectile
 
@@ -3780,7 +3780,9 @@ void ProjectileClass::Run(void)
                 ySpeed	 = 0.0f;
                 yAcc	 = 0.0f;
 
-                TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
+                //DKS - This statement had no effect, since default parameter 'resolv' is false,
+                //      so I disabled it:
+                //TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
             }
         }
 

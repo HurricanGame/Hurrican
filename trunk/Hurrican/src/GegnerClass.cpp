@@ -427,8 +427,8 @@ void GegnerClass::PlattformTest(RECT rect)
             float x = Player[p].xpos;
             float y = Player[p].ypos;
 
-            int br = TileEngine.BlockRechts(x, y, x, y, Player[p].CollideRect);
-            int bl = TileEngine.BlockLinks (x, y, x, y, Player[p].CollideRect);
+            uint32_t br = TileEngine.BlockRechts(x, y, x, y, Player[p].CollideRect);
+            uint32_t bl = TileEngine.BlockLinks (x, y, x, y, Player[p].CollideRect);
 
             if ((xSpeed > 0.0f && !(br & BLOCKWERT_WAND)) ||
                     (xSpeed < 0.0f && !(bl & BLOCKWERT_WAND)))

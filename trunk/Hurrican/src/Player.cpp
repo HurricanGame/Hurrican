@@ -1341,7 +1341,7 @@ void PlayerClass::AnimatePlayer(void)
         }
 
         // im Sumpf langsam einsinken
-        int busumpf = TileEngine.BlockUnten(xpos, ypos, xposold, yposold, CollideRect, yspeed >= 0.0f);
+        uint32_t busumpf = TileEngine.BlockUnten(xpos, ypos, xposold, yposold, CollideRect, yspeed >= 0.0f);
         if (busumpf & BLOCKWERT_SUMPF ||
                 bl & BLOCKWERT_SUMPF ||
                 br & BLOCKWERT_SUMPF)
@@ -1510,7 +1510,7 @@ void PlayerClass::AnimatePlayer(void)
         if (Handlung == DUCKEN)
         {
             float ypos2 = ypos - 48.0f;
-            int bo2 = TileEngine.BlockOben  (xpos, ypos2, xposold, yposold, CollideRect, true);
+            uint32_t bo2 = TileEngine.BlockOben  (xpos, ypos2, xposold, yposold, CollideRect, true);
 
             if (!(bo  & BLOCKWERT_WAND) &&
                     !(bo2 & BLOCKWERT_WAND))
@@ -1878,7 +1878,7 @@ void PlayerClass::AnimatePlayer(void)
             // das Rad hoch ist, damit man den Zustand prüft, als wenn der Spieler wieder stehen würde
 
             float ypos2 = ypos - 20.0f;
-            int   bo2 = TileEngine.BlockOben  (xpos, ypos2, xposold, yposold, CollideRect, true);
+            uint32_t bo2 = TileEngine.BlockOben  (xpos, ypos2, xposold, yposold, CollideRect, true);
 
             if ((Armour <= 0.0f ||
                     Aktion[AKTION_JUMP])   &&
@@ -2396,7 +2396,7 @@ void PlayerClass::AnimatePlayer(void)
     //-----------------------------------------------
     // Testen, ob sich der Spieler im Wasser befindet
     //
-    int middle = TileEngine.TileAt((int)(xpos + 35) / TILESIZE_X, (int)(ypos + 40) / TILESIZE_Y).Block;
+    uint32_t middle = TileEngine.TileAt((int)(xpos + 35) / TILESIZE_X, (int)(ypos + 40) / TILESIZE_Y).Block;
     int spritzertype = 0;
     if ((bu & BLOCKWERT_LIQUID) ||
             (br & BLOCKWERT_LIQUID) ||
