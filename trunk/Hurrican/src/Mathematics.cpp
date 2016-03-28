@@ -1,10 +1,13 @@
 #include <stdint.h>
-#include <cmath>
 #include "Mathematics.h"
 
 #ifdef USE_FAST_RNG
 //DKS - added a very fast RNG, here is an example speed comparison on the GCW Zero:
 //      (The GCW Zero is a 1GHz 32-bit MIPS device running uclibc Dingux/Linux)
+//      The reason for the vast discrepancy in performance is that rand() on
+//      uclibc strangely locks/unlocks a mutex despite having no internal state
+//      like, say, rand_r(). Even on platforms that don't do such strange
+//      behavior, this should still be a faster RNG than rand().
 //+------------------------------------------------------------------------------+
 //|                               FPBENCH SUMMARY                                |
 //+-------------------------------------+-------------------+--------------------+
@@ -29,31 +32,3 @@ int fast_rand(void)
    return (int)((fast_rand_seed_val>>16)&0x7FFF);
 }
 #endif // USE_FAST_RNG
-
-
-//DKS - Added optional trig-lookup table with 1/4-deg resolution for use on
-//      platforms whose CPUs lack trigonometric functions:
-#ifdef USE_TRIG_LOOKUP_TABLE
-
-static TrigTableClass TrigTable;
-
-float cos_deg(int deg)
-{
-    return TrigTable.cos_int(deg);
-}
-
-float cos_deg(float deg)
-{
-    return TrigTable.cos_float(deg);
-}
-
-float sin_deg(int deg)
-{
-    return TrigTable.sin_int(deg);
-}
-
-float sin_deg(float deg)
-{
-    return TrigTable.sin_float(deg);
-}
-#endif //USE_TRIG_LOOKUP_TABLE

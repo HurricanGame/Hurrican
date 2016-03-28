@@ -48,6 +48,9 @@ extern int fast_rand(void);
 #define srand(x) seed_fast_rand(x)
 #endif //USE_FAST_RNG
 
+// --------------------------------------------------------------------------------------
+// BEGIN GENERAL TRIG SECTION
+// --------------------------------------------------------------------------------------
 #ifndef M_PI
 #define M_PI 3.1415926535897932384626433832795
 #endif
@@ -62,128 +65,148 @@ extern int fast_rand(void);
 // Override libm's double sin/cos (but not sinf/cosf, keep those for when we need accuracy)
 #define sin(X) sin_rad(X)
 #define cos(X) cos_rad(X)
+// --------------------------------------------------------------------------------------
+// END GENERAL TRIG SECTION
+// --------------------------------------------------------------------------------------
 
-//DKS - Added optional trig-lookup table with 1/4-deg resolution for use on
-//      platforms whose CPUs lack trigonometric functions:
-// Benchmark comparison running on 1GHz 32-bit MIPS GCW Zero w/ Linux+ucLibc:
-//+------------------------------------------------------------------------------+
-//|                               FPBENCH SUMMARY                                |
-//+-------------------------------------+-------------------+--------------------+
-//| Benchmark description               | ns per operation  | millions of op / s |
-//|                                     | (lower = better)  |  (higher = better) |
-//+-------------------------------------+-------------------+--------------------+
-//| SIN LIBM (float sinf())             |           468.5492|            2.134247|
-//| SIN LIBM (double sin())             |           445.6858|            2.243733|
-//| SIN LOOKUP (float 1/4-degree acc.)  |            83.7235|           11.944071|
-//+-------------------------------------+-------------------+--------------------+
-#ifdef USE_TRIG_LOOKUP_TABLE
-extern float cos_deg(int deg);
-extern float cos_deg(float deg);
-extern float sin_deg(int deg);
-extern float sin_deg(float deg);
-#endif //USE_TRIG_LOOKUP_TABLE
+// --------------------------------------------------------------------------------------
+// BEGIN FAST TRIG SECTION 
+// --------------------------------------------------------------------------------------
+#ifdef USE_FAST_TRIG
+// Remez minimax polynomial approximation of sin(x):
+// https://en.wikipedia.org/wiki/Remez_algorithm
+// Coefficients attained via:
+// http://lolengine.net/wiki/doc/maths/remez
+// Error compared to sinf():
+// MAX ERROR: 1.140833e-04   AVG ERROR: 5.777799e-05
+// Benchmark results from a 32-bit MIPS GCW Zero 1Ghz w/ hardware FPU + uclibc:
+// (Last line of results is this function)
+// +-------------------------------------+-------------------+--------------------+
+// | Benchmark description               | ns per operation  | millions of op / s |
+// |                                     | (lower = better)  |  (higher = better) |
+// +-------------------------------------+-------------------+--------------------+
+// | SIN LIBM (float sinf())             |           488.4712|            2.047203|
+// | SIN LIBM (double sin())             |           460.6874|            2.170669|
+// | SIN LOOKUP (float 1/4-degree acc.)  |           112.4062|            8.896305|
+// | SIN TINY LOOKUP (float a+b ident)   |           177.5208|            5.633143|
+// | SIN APPROX (6th-deg Taylor)         |           145.9791|            6.850294|
+// | SIN APPROX (3rd-deg Taylor)         |           124.1250|            8.056397|
+// | SIN APPROX (3rd-deg Taylor acc.)    |           126.2031|            7.923736|
+// | SIN APPROX (5th-deg Remez minimax)  |           118.1302|            8.465237|
+// +-------------------------------------+-------------------+--------------------+
+static float SineRemezRad(float x)
+{
+    const float pi_over_two = float(M_PI / 2.0L);
+    const float two_over_pi = float(2.0L / M_PI);
+    bool negate_result;
 
-// Unnamed namespace to ensure function definitions are local to a translation unit:
+    if (x < 0) {
+        x = -x;
+        negate_result = true;
+    } else {
+        negate_result = false;
+    }
+
+    if (x > pi_over_two) {
+        float x_div_half_pi = x * two_over_pi;
+        int quotient = int(x_div_half_pi);
+        float x_past_quad = x - float(quotient) * pi_over_two;
+
+        switch (quotient % 4) { 
+            default: // Default case shouldn't happen; fall through
+
+            case 0: // x is < PI/2
+                x = x_past_quad;
+                break;
+            case 1: // x is < PI
+                x = pi_over_two - x_past_quad;
+                break;
+            case 2: // x is < 3*PI/2
+                x = x_past_quad;
+                negate_result = !negate_result;
+                break;
+            case 3: // x is < 2*PI
+                x = pi_over_two - x_past_quad;
+                negate_result = !negate_result;
+                break;
+        }
+    }
+
+    // Coefficients generated using http://lolengine.net/wiki/oss/lolremez
+    // Specifically, these were generated using the method outlined on:
+    // http://lolengine.net/wiki/doc/maths/remez/tutorial-fixing-parameters
+    // whereby, the first coefficient (a1) is forced to 1.0 and eliminated
+    const float a3 = -1.660786242169313753522239789881311891420e-1;
+    const float a5 = 7.633773374658546665581958822838108771028e-3;
+    float x2 = x*x;
+    float x3 = x2*x;
+    float result = x + x3*a3 + (x2*x3)*a5;
+
+    //NOTE: results can be slightly over 1.0, i.e. 1.0004, but that is
+    //      close enough for our purposes in this game. We won't bother
+    //      clamping to +/- 1.0 here..
+
+    return negate_result ? -result : result;
+}
+
+// Unnamed namespace to ensure these are isolated to a given translation unit:
 namespace
 {
 
-#ifdef USE_TRIG_LOOKUP_TABLE
-class TrigTableClass
+inline float sin_deg(const float deg)
 {
-public:
-    TrigTableClass()
-    {
-        double deg_ctr = 0;
-        for (size_t i=0; i < SIN_TABLE_SIZE; ++i, deg_ctr += double(0.25))
-            sin_table[i] = sinf(float(deg_ctr * double(M_PI) / double(180.0)));
-    }
-
-    float sin_int(int deg)
-    {
-        int frac_deg = deg*4;                 // Expand to quarter-degree increments
-        frac_deg = restrict_domain(frac_deg);
-        return sin_table[frac_deg]; 
-    }
-
-    float sin_float(float deg)
-    {
-        int frac_deg = int(deg*4.0f + 0.5f);  // Expand to quarter-deg increments and round to nearest int
-        frac_deg = restrict_domain(frac_deg);
-        return sin_table[frac_deg]; 
-    }
-
-    float cos_int(int deg)
-    { 
-        deg += 90;                            // Read from sin table starting at 90 deg to get cos
-        int frac_deg = deg*4;                 // Expand to quarter-degree increments
-        frac_deg = restrict_domain(frac_deg);
-        return sin_table[frac_deg]; 
-    }
-
-    float cos_float(float deg)
-    {
-        deg += 90.0f;                         // Read from sine table starting at 90 deg to get cosine
-        int frac_deg = int(deg*4.0f + 0.5f);  // Expand to quarter-deg increments and round to nearest int
-        frac_deg = restrict_domain(frac_deg);
-        return sin_table[frac_deg]; 
-    }
-
-private:
-    int mod(int a, int b)
-    {
-        return (a < 0 ? (a % b + b) : (a % b));
-    }
-
-    //DKS - TODO remove the domain check if we can (will require careful
-    //      examination of all calls to sin_rad(),sin_deg(),cos_rad(),cos_deg())
-    int restrict_domain(int frac_deg)
-    {
-        if (frac_deg < 0 || frac_deg >= SIN_TABLE_SIZE)
-            frac_deg = mod(frac_deg, 360*4);                // Restrict domain to 0-359.75 degrees
-
-        return frac_deg;
-    }
-
-    static const int SIN_TABLE_SIZE = (360+90+1)*4;    // Quater-degree increments and large enough
-                                                       //  to handle both sine and cosine. Can handle
-                                                       //  inputs 0-360.75 degrees (not just 0-359).
-    float sin_table[SIN_TABLE_SIZE];
-};
-
-inline float cos_rad(float rad)
-{
-    return cos_deg(RadToDeg(rad));
+    return SineRemezRad(DegToRad(deg));
 }
 
-inline float sin_rad(float rad)
+inline float cos_deg(const float deg)
 {
-    return sin_deg(RadToDeg(rad));
+    return SineRemezRad(DegToRad(deg + 90.0f));
 }
+
+inline float sin_rad(const float rad)
+{
+    return SineRemezRad(rad);
+}
+
+inline float cos_rad(const float rad)
+{
+    return SineRemezRad(rad+float(M_PI/2.0L));
+}
+
+} // Unnamed namespace
 
 #else
-// Use libm/libc for trig:
-inline float cos_deg(float deg)
+// Don't use fast trig, use wrappers around libm:
+
+namespace
+{
+
+inline float cos_deg(const float deg)
 {
     return cosf(DegToRad(deg)); 
 }
 
-inline float sin_deg(float deg)
+inline float sin_deg(const float deg)
 {
     return sinf(DegToRad(deg)); 
 }
 
-inline float cos_rad(float rad)
+inline float cos_rad(const float rad)
 {
     return cosf(rad);
 }
 
-inline float sin_rad(float rad)
+inline float sin_rad(const float rad)
 {
     return sinf(rad);
 }
 
-#endif //USE_TRIG_LOOKUP_TABLE
 } // Unnamed namespace
+
+#endif //USE_FAST_TRIG
+// --------------------------------------------------------------------------------------
+// END FAST TRIG SECTION 
+// --------------------------------------------------------------------------------------
 
 
 //DKS - BEGIN NEW CUSTOM MATRIX MATH:

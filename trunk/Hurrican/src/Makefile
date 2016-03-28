@@ -38,8 +38,8 @@ DEFINES += -DUSE_INDEXED_BATCH
 ####### Fast random-number-generator (can be over 100 times faster than rand() on some platforms):
 #DEFINES += -DUSE_FAST_RNG
 
-####### Fast Sin/Cos trig lookup table (For systems with CPUS lacking trig instructions i.e. ARM/MIPS):
-#DEFINES += -DUSE_TRIG_LOOKUP_TABLE
+####### Fast trig approximations (For systems with CPUS lacking trig instructions i.e. ARM/MIPS)
+#DEFINES += -DUSE_FAST_TRIG
 
 ####### ETC1 texture compression support:
 #DEFINES += -DUSE_ETC1
@@ -122,7 +122,7 @@ USE_FLTO := no
 USE_NO_EXCEPTIONS := yes
 
 DEFINES += -DGCW -DUSE_GLES2 -DUSE_EGL_RAW
-DEFINES += -DUSE_HOME_DIR -DUSE_MEMPOOL -DUSE_FAST_RNG -DUSE_TRIG_LOOKUP_TABLE -DUSE_ETC1
+DEFINES += -DUSE_HOME_DIR -DUSE_MEMPOOL -DUSE_FAST_RNG -DUSE_FAST_TRIG -DUSE_ETC1
 INCLUDES_OS := -ISDL_port \
                -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/SDL \
                -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/libmodplug \
@@ -170,7 +170,7 @@ USE_FBO := no
 USE_NO_EXCEPTIONS := yes
 
 DEFINES += -DPANDORA -DUSE_GLES2 -DUSE_EGL_RAW -DUSE_PVRTC
-DEFINES += -DUSE_MEMPOOL -DUSE_FAST_RNG -DUSE_TRIG_LOOKUP_TABLE
+DEFINES += -DUSE_MEMPOOL -DUSE_FAST_RNG -DUSE_FAST_TRIG
 INCLUDES_OS := -ISDL_port \
                -I$(PNDSDK)/usr/include \
                -I$(PNDSDK)/usr/include/SDL \
