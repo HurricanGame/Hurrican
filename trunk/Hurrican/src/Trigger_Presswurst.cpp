@@ -142,7 +142,9 @@ void GegnerPresswurst::DoKI(void)
                         Player[p].ypos > yPos)
                     Player[p].DamagePlayer(500.0f);
 
-            TileEngine.BlockUnten(xPos, yPos, yPosOld, yPosOld, GegnerRect[GegnerArt]);
+            //DKS - Disabled this, as it had no effect (default paremeter resolv==false and
+            //      return value isn't used here for anything:
+            //TileEngine.BlockUnten(xPos, yPos, yPosOld, yPosOld, GegnerRect[GegnerArt]);
 
             ySpeed = 0.0f;
             yAcc   = 0.0f;
