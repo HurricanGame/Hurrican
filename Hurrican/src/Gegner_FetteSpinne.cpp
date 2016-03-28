@@ -116,7 +116,7 @@ void GegnerFetteSpinne::DoKI(void)
                 // Decke über der Spinne suchen
                 bool block = false;
                 int a = 0;
-                int b = TileEngine.TileAt((int)(xPos / TILESIZE_X), (int)(yPos / TILESIZE_Y) + a).Block;
+                uint32_t b = TileEngine.TileAt((int)(xPos / TILESIZE_X), (int)(yPos / TILESIZE_Y) + a).Block;
 
                 while (a < 10 && block == false)
                 {

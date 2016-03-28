@@ -2323,7 +2323,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
 void PartikelClass::Run(void)
 {
-    int bo, bu, bl, br;
+    uint32_t bo, bu, bl, br;
 
     //DKS - alpha color was getting set outside its range, so set
     //      a temp value and fix at the end:
@@ -2691,7 +2691,7 @@ void PartikelClass::Run(void)
 
             // Im Wasser oder auf dem Boden gelandet ?
             //
-            int blocku = TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+            uint32_t blocku = TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
 
             if (blocku & BLOCKWERT_WAND		||
                     blocku & BLOCKWERT_PLATTFORM ||
@@ -2730,7 +2730,7 @@ void PartikelClass::Run(void)
             if (ySpeed > 6.0f)
                 ySpeed = 6.0f;
 
-            int bu = TileEngine.BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+            uint32_t bu = TileEngine.BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
 
             if (bu & BLOCKWERT_WAND ||bu & BLOCKWERT_PLATTFORM)
             {
@@ -2775,7 +2775,7 @@ void PartikelClass::Run(void)
             while(Rot > 360.0f)
                 Rot -= 360.0f;
 
-            int bu = TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+            uint32_t bu = TileEngine.BlockUnten (xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
 
             if (yAcc != 0.0f &&
                     (bu & BLOCKWERT_WAND ||

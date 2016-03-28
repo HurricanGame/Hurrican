@@ -29,6 +29,7 @@ class PlayerClass;
 // Gegner Klasse (Werte für EINEN Gegner)
 // --------------------------------------------------------------------------------------
 
+//DKS - TODO: Reduce size of member vars where appropriate
 class GegnerClass
 {
 protected:											// protected wegen Ableitung
@@ -61,7 +62,7 @@ public:
     float				DamageTaken;				// Wie lange rot nach Treffer
     float				Energy;						// Energie des Gegners
     float				TimeToChange;				// pAim wechseln :)
-    int					blocku, blocko,
+    uint32_t	    	blocku, blocko,
                         blockl, blockr;				// Block links rechts über und unter dem Gegner
     PlayerClass			*pAim;						// Player to attack
 

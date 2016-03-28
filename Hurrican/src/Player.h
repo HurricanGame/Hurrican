@@ -120,7 +120,7 @@
 class PlayerClass
 {
 private:
-    int						bl, br, bo, bu;			// Blockwerte in diesem Frame, damit wir nicht jedesmal
+    uint32_t                bl, br, bo, bu;			// Blockwerte in diesem Frame, damit wir nicht jedesmal
     // die Funktion aufrufen müssen, sondern nur EINMAL pro Frame
     VERTEX2D				v1, v2, v3, v4;			// Vertices zum Blitz rendern
     VERTEX2D				TriangleStrip[4];		// Strip für ein Sprite

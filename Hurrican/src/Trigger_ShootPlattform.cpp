@@ -87,7 +87,7 @@ void GegnerShootPlattform::DoKI(void)
     for (int p = 0; p < NUMPLAYERS; p++)
         if (Player[p].AufPlattform == this)
         {
-            int bo = TileEngine.BlockOben(Player[p].xpos, Player[p].ypos,
+            uint32_t bo = TileEngine.BlockOben(Player[p].xpos, Player[p].ypos,
                                             Player[p].xposold,  Player[p].yposold, Player[p].CollideRect);
 
             if (ySpeed < 0.0f &&

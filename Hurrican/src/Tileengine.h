@@ -142,7 +142,7 @@ struct LevelTileStruct
     unsigned char	FrontArt;							// Tile im Vordergrund
     unsigned char	Red, Green, Blue, Alpha;			// Farbwert des Tiles
     D3DCOLOR		Color[4];							// Farbwert des Tiles (Alle vier Ecken)
-    unsigned int	Block;								// Blockierungsart (siehe #defines)
+    uint32_t        Block;								// Blockierungsart (siehe #defines)
     bool			move_v1, move_v2, move_v3, move_v4; // Die Ecken eines Tiles bei der Wasseranim bewegen?
 };
 
