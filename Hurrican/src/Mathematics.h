@@ -209,16 +209,21 @@ inline float sin_rad(const float rad)
 // --------------------------------------------------------------------------------------
 
 
-//DKS - BEGIN NEW CUSTOM MATRIX MATH:
-//      Since the game is purely 2D, and all rotations are around the Z axis,
-//      matrix math can be greatly simplified and it's now done on the CPU.
-//      Only perspective math is done in the GPU now. This way, you don't 
-//      need to send a whole new 4x4 matrix every time you draw something.
-//      Because all transformations are now on the CPU, huge batches of
-//      primitives can now be drawn with one GL call, as long as they share
-//      the same texture and blend mode, greatly reducing graphics API overhead.
+// --------------------------------------------------------------------------------------
+// BEGIN MATRIX MATH SECTION
+// --------------------------------------------------------------------------------------
+// - DKS -  Since the game is purely 2D, and all rotations are around the Z axis,
+//         matrix math can be greatly simplified and it's now done entirely on the CPU.
+//         Only perspective math is done in the GPU now, which never changed in the
+//         game. This means there is a grand total of one matrix uploaded to the GPU,
+//         at game startup. This results in not just a reduction in bandwidth demands:
+//          Because all vertex transformations are now done by the CPU, huge batches of
+//         primitives can now be drawn with one API call, as long as they share
+//         the same texture and blend mode, greatly reducing API overhead.
 
 // This struct holds all that we ever need for 2D vertex transforms
+// NOTE: The missing row 2 is left out on purpose. If we were doing traditional
+//       3D matrix math, it would represent the Z row.
 struct ReducedMatrix
 {
     float row0_col0;        float row0_col1;     // X row
@@ -226,13 +231,20 @@ struct ReducedMatrix
     float row3_col0;        float row3_col1;     // Affine translation X, Y 
 };
 
-// Macros to transform X,Y coordinates using a 2x3 'reduced matrix'
-#define RM_X(X,Y,MAT) (((X) * (MAT).row0_col0) + ((Y) * (MAT).row1_col0) + (MAT).row3_col0)
-#define RM_Y(X,Y,MAT) (((X) * (MAT).row0_col1) + ((Y) * (MAT).row1_col1) + (MAT).row3_col1)
-
 // Unnamed namespace to ensure function definitions are local to a translation unit:
 namespace
 {
+// Transform X coord of a pair of X,Y coordinates by given matrix
+inline float RM_X(const float x, const float y, const ReducedMatrix &mat)
+{
+    return x*mat.row0_col0 + y*mat.row1_col0 + mat.row3_col0;
+}
+
+// Transform Y coord of a pair of X,Y coordinates by given matrix
+inline float RM_Y(const float x, const float y, const ReducedMatrix &mat)
+{
+    return x*mat.row0_col1 + y*mat.row1_col1 + mat.row3_col1;
+}
 
 // Identity:
 inline const ReducedMatrix RM_Ident()
@@ -301,13 +313,13 @@ inline const ReducedMatrix RM_RotZDeg(const float deg)
     return mat;
 }
 
-// Version of above that forces bypassing of trig lookup table, for edge cases like the
-//  slow-moving menu background that would reveal its limited resolution.
+// Version of above that forces use of libm sin/cos, but isn't needed
+// now that we use Remez sin/cos polynomial approximation
 inline const ReducedMatrix RM_RotZDegAccurate(const float deg)
 {
     ReducedMatrix mat;
-    float s = sinf(DegToRad(deg));
-    float c = cosf(DegToRad(deg));
+    float s = sinf(DegToRad(deg));              // Use libm trig
+    float c = cosf(DegToRad(deg));              // Use libm trig
     mat.row0_col0 = c;       mat.row0_col1 = s;
     mat.row1_col0 = -s;      mat.row1_col1 = c;
     mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
@@ -330,7 +342,7 @@ inline const ReducedMatrix RM_RotZRadAt(const float rad, const float x, const fl
     float c = cos_rad(rad);
     mat.row0_col0 = c;                   mat.row0_col1 = s;
     mat.row1_col0 = -s;                  mat.row1_col1 = c;
-    mat.row3_col0 = y*s - x*(c-1.0f);    mat.row3_col1 = x*(-s) - y*(c-1.0f);
+    mat.row3_col0 = y*s - x*c + x;       mat.row3_col1 = x*(-s) - y*c + y;
     return mat;
 }
 
@@ -342,7 +354,7 @@ inline const ReducedMatrix RM_RotZDegAt(const int deg, const float x, const floa
     float c = cos_deg(deg);
     mat.row0_col0 = c;                   mat.row0_col1 = s;
     mat.row1_col0 = -s;                  mat.row1_col1 = c;
-    mat.row3_col0 = y*s - x*(c-1.0f);    mat.row3_col1 = x*(-s) - y*(c-1.0f);
+    mat.row3_col0 = y*s - x*c + x;       mat.row3_col1 = x*(-s) - y*c + y;
     return mat;
 }
 
@@ -354,12 +366,12 @@ inline const ReducedMatrix RM_RotZDegAt(const float deg, const float x, const fl
     float c = cos_deg(deg);
     mat.row0_col0 = c;                   mat.row0_col1 = s;
     mat.row1_col0 = -s;                  mat.row1_col1 = c;
-    mat.row3_col0 = y*s - x*(c-1.0f);    mat.row3_col1 = x*(-s) - y*(c-1.0f);
+    mat.row3_col0 = y*s - x*c + x;       mat.row3_col1 = x*(-s) - y*c + y;
     return mat;
 }
 
-// Version of above that forces bypassing of trig lookup table, for edge cases like the
-//  slow-moving menu background that would reveal its limited resolution.
+// Version of above that forces use of libm sin/cos, but isn't needed
+// now that we use Remez sin/cos polynomial approximation
 inline const ReducedMatrix RM_RotZDegAccurateAt(const float deg, const float x, const float y)
 {
     ReducedMatrix mat;
@@ -367,7 +379,7 @@ inline const ReducedMatrix RM_RotZDegAccurateAt(const float deg, const float x, 
     float c = cosf(DegToRad(deg));
     mat.row0_col0 = c;                   mat.row0_col1 = s;
     mat.row1_col0 = -s;                  mat.row1_col1 = c;
-    mat.row3_col0 = y*s - x*(c-1.0f);    mat.row3_col1 = x*(-s) - y*(c-1.0f);
+    mat.row3_col0 = y*s - x*c + x;       mat.row3_col1 = x*(-s) - y*c + y;
     return mat;
 }
 
@@ -375,20 +387,18 @@ inline const ReducedMatrix RM_RotZDegAccurateAt(const float deg, const float x, 
 inline const ReducedMatrix operator*(const ReducedMatrix &lh, const ReducedMatrix &rh)
 {
     ReducedMatrix mat;
-
     mat.row0_col0 = lh.row0_col0 * rh.row0_col0 + lh.row0_col1 * rh.row1_col0;
     mat.row0_col1 = lh.row0_col0 * rh.row0_col1 + lh.row0_col1 * rh.row1_col1;
-
     mat.row1_col0 = lh.row1_col0 * rh.row0_col0 + lh.row1_col1 * rh.row1_col0;
     mat.row1_col1 = lh.row1_col0 * rh.row0_col1 + lh.row1_col1 * rh.row1_col1;
-
     mat.row3_col0 = lh.row3_col0 * rh.row0_col0 + lh.row3_col1 * rh.row1_col0 + rh.row3_col0;
     mat.row3_col1 = lh.row3_col0 * rh.row0_col1 + lh.row3_col1 * rh.row1_col1 + rh.row3_col1;
-
     return mat;
 }
 
 } //Unnamed namespace
-//DKS - END CUSTOM MATRIX MATH
+// --------------------------------------------------------------------------------------
+// BEGIN END MATRIX MATH SECTION
+// --------------------------------------------------------------------------------------
 
 #endif // __Mathematics_h__
