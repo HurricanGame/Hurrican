@@ -319,8 +319,7 @@ inline const ReducedMatrix RM_RotZDegAccurate(const float deg)
 //    to generate a rotation matrix this way than generating a translation-to-origin
 //    matrix, multiplying it by a standard rotation matrix, and then multiplying the
 //    result by a translate-back-from-origin matrix. These are the result of working it
-//    all out by hand, cancelling terms that end up zero, and extracting common
-//    factors in final row's math.
+//    all out by hand, cancelling terms that end up zero.
 
 // Rotation by radians around Z axis (with center of rotation at specified point)
 inline const ReducedMatrix RM_RotZRadAt(const float rad, const float x, const float y)
