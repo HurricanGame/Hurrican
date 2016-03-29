@@ -135,9 +135,13 @@ void GegnerTheWall::DoDraw(void)
                        yPos - (float)TileEngine.YOffset + TunnelOffY + 2, col);
 
     // abdeckenden Kringel rendern
+    //DKS - Changed to use simple version of RenderSpriteRotated (original code was
+    //      specifying anim parameter than never changed from zero)
+    //Kringel[0].RenderSpriteRotated(xPos - (float)TileEngine.XOffset + TunnelOffx + 37,
+    //                               yPos - (float)TileEngine.YOffset + TunnelOffY - 16, 360.0f - KringelWinkel, 0,
+    //                               col);
     Kringel[0].RenderSpriteRotated(xPos - (float)TileEngine.XOffset + TunnelOffx + 37,
-                                   yPos - (float)TileEngine.YOffset + TunnelOffY - 16, 360.0f - KringelWinkel, 0,
-                                   col);
+                                   yPos - (float)TileEngine.YOffset + TunnelOffY - 16, 360.0f - KringelWinkel, col);
 
     // Türen
 
