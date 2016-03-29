@@ -32,8 +32,8 @@ DEFINES += -DUSE_INDEXED_BATCH
 ####### Specify a storage location for the read-only data files (graphics, sound, languages, etc) 
 #DEFINES += -DUSE_STORAGE_PATH="\"PATH_TO_STORAGE\""
 
-####### Simple and fast pooled memory manager that eliminates new/delete/malloc/free overhead
-#DEFINES += -DUSE_MEMPOOL
+####### Bypass pooled memory manager (for debugging purposes)
+#DEFINES += -DUSE_NO_MEMPOOLING
 
 ####### Fast random-number-generator (can be over 100 times faster than rand() on some platforms):
 #DEFINES += -DUSE_FAST_RNG
@@ -122,7 +122,7 @@ USE_FLTO := no
 USE_NO_EXCEPTIONS := yes
 
 DEFINES += -DGCW -DUSE_GLES2 -DUSE_EGL_RAW
-DEFINES += -DUSE_HOME_DIR -DUSE_MEMPOOL -DUSE_FAST_RNG -DUSE_FAST_TRIG -DUSE_ETC1
+DEFINES += -DUSE_HOME_DIR -DUSE_FAST_RNG -DUSE_FAST_TRIG -DUSE_ETC1
 INCLUDES_OS := -ISDL_port \
                -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/SDL \
                -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/libmodplug \
@@ -170,7 +170,7 @@ USE_FBO := no
 USE_NO_EXCEPTIONS := yes
 
 DEFINES += -DPANDORA -DUSE_GLES2 -DUSE_EGL_RAW -DUSE_PVRTC
-DEFINES += -DUSE_MEMPOOL -DUSE_FAST_RNG -DUSE_FAST_TRIG
+DEFINES += -DUSE_FAST_RNG -DUSE_FAST_TRIG
 INCLUDES_OS := -ISDL_port \
                -I$(PNDSDK)/usr/include \
                -I$(PNDSDK)/usr/include/SDL \

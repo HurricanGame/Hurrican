@@ -318,7 +318,7 @@ private:
     int						MAX_PARTIKEL;			// was wohl
 
     //DKS - New, simple pooled memory manager decreases alloc/dealloc overhead: (see DataStructures.h)
-#ifdef USE_MEMPOOL
+#ifndef USE_NO_MEMPOOLING
     MemPool<PartikelClass, 5000> particle_pool;
 #endif
 

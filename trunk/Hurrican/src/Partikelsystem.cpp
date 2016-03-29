@@ -26,8 +26,6 @@
 #include "Projectiles.h"
 #include "Timer.h"
 
-#include "DataStructures.h"     //DKS - Added for new MemPool class and GroupedForwardList class
-
 // --------------------------------------------------------------------------------------
 // externe Variablen
 // --------------------------------------------------------------------------------------
@@ -4757,10 +4755,10 @@ bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass* p
              Art == EXPLOSIONFLARE))
         return false;
 
-#if USE_MEMPOOL
-    PartikelClass *pNew = particle_pool.alloc();
-#else
+#ifdef USE_NO_MEMPOOLING
     PartikelClass *pNew = new PartikelClass;		// Neuer zu erstellender Partikel
+#else
+    PartikelClass *pNew = particle_pool.alloc();
 #endif
 
     pNew->CreatePartikel(x, y, Art, pParent);	// neuen Partikel erzeugen
@@ -4827,10 +4825,10 @@ PartikelClass* PartikelsystemClass::DelNode(PartikelClass *pPtr)
             pStart = pNext;
 
         //DKS - added support for new, fast pooled mem-manager:
-#if USE_MEMPOOL
-        particle_pool.free(pPtr);
-#else
+#ifdef USE_NO_MEMPOOLING
         delete (pPtr);					// Speicher freigeben
+#else
+        particle_pool.free(pPtr);
 #endif
         NumPartikel--;					// Partikelzahl verringern
     }
@@ -4877,7 +4875,7 @@ void PartikelsystemClass::ClearAll(void)
     }
 #endif
 
-#ifdef USE_MEMPOOL
+#ifndef USE_NO_MEMPOOLING
     particle_pool.reinit();
 #endif
 
