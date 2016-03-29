@@ -289,18 +289,6 @@ inline const ReducedMatrix RM_RotZRad(const float rad)
     return mat;
 }
 
-// Rotation by integer degrees around Z axis:
-inline const ReducedMatrix RM_RotZDeg(const int deg)
-{
-    ReducedMatrix mat;
-    float s = sin_deg(deg);
-    float c = cos_deg(deg);
-    mat.row0_col0 = c;       mat.row0_col1 = s;
-    mat.row1_col0 = -s;      mat.row1_col1 = c;
-    mat.row3_col0 = 0.0f;    mat.row3_col1 = 0.0f;
-    return mat;
-}
-
 // Rotation by float degrees around Z axis:
 inline const ReducedMatrix RM_RotZDeg(const float deg)
 {
@@ -340,18 +328,6 @@ inline const ReducedMatrix RM_RotZRadAt(const float rad, const float x, const fl
     ReducedMatrix mat;
     float s = sin_rad(rad);
     float c = cos_rad(rad);
-    mat.row0_col0 = c;                   mat.row0_col1 = s;
-    mat.row1_col0 = -s;                  mat.row1_col1 = c;
-    mat.row3_col0 = y*s - x*c + x;       mat.row3_col1 = x*(-s) - y*c + y;
-    return mat;
-}
-
-// Rotation by integer degrees around Z axis (with center of rotation at specified point)
-inline const ReducedMatrix RM_RotZDegAt(const int deg, const float x, const float y)
-{
-    ReducedMatrix mat;
-    float s = sin_deg(deg);
-    float c = cos_deg(deg);
     mat.row0_col0 = c;                   mat.row0_col1 = s;
     mat.row1_col0 = -s;                  mat.row1_col1 = c;
     mat.row3_col0 = y*s - x*c + x;       mat.row3_col1 = x*(-s) - y*c + y;
