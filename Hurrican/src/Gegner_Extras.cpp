@@ -169,18 +169,28 @@ void GegnerExtras::DoKI(void)
                     //
                     PartikelSystem.ClearPowerUpEffects();
 
-                    for (int i = 0; i < 300; i++)
-                    {
-                        int p = rand ()%360;
-                        int r = rand ()%30+100;
-
-                        //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
-                        //DKS BUGFIX - why did the original code use radian sin/cos with random numbers within
-                        //       huge ranges.. above values look like they were meant to be degrees - switched to deg..
-                        //PartikelSystem.PushPartikel (float (pCollector->xpos + 40 - 6 + sin ((float)p)*r), 
-                        //	      float (pCollector->ypos + 40 - 6 + cos ((float)p)*r), KRINGELR + Value1, pCollector);
-                        PartikelSystem.PushPartikel (pCollector->xpos + 40.0f - 6.0f + sin_deg(p)*r,
-                                pCollector->ypos + 40.0f - 6.0f + cos_deg(p)*r, KRINGELR + Value1, pCollector);
+                    //DKS - Original code, entirely rewritten below
+                    //for (int i = 0; i < 300; i++)
+                    //{
+                    //    int p = rand ()%360;
+                    //    int r = rand ()%30+100;
+                    //
+                    //    //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+                    //    //DKS BUGFIX - why did the original code use radian sin/cos with random numbers within
+                    //    //       huge ranges.. above values look like they were meant to be degrees - switched to deg..
+                    //    // ORIGINAL LINE:
+                    //    //PartikelSystem.PushPartikel (float (pCollector->xpos + 40 - 6 + sin ((float)p)*r), 
+                    //    //	      float (pCollector->ypos + 40 - 6 + cos ((float)p)*r), KRINGELR + Value1, pCollector);
+                    //    // FIXED LINE:
+                    //    PartikelSystem.PushPartikel (pCollector->xpos + 40.0f - 6.0f + sin_deg(p)*r,
+                    //            pCollector->ypos + 40.0f - 6.0f + cos_deg(p)*r, KRINGELR + Value1, pCollector);
+                    //}
+                    //DKS-Rewrote the above to use radians directly and allow bitwise ops to replace mod operator.
+                    for (int i = 0; i < 300; i++) {
+                        float ang = float(M_PI*2.0f) * (float(rand() % 512) * (1.0f/512.0f));
+                        float r = rand()%32 + 98;
+                        PartikelSystem.PushPartikel (pCollector->xpos + (40.0f - 6.0f) + sin_rad(ang)*r,
+                                pCollector->ypos + (40.0f - 6.0f) + cos_rad(ang)*r, KRINGELR + Value1, pCollector);
                     }
 
                     SoundManager.PlayWave (100, 128, 11025, SOUND_UPGRADE);
