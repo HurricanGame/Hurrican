@@ -60,8 +60,11 @@ void GegnerTheWall::DoDraw(void)
     if (PlayerAbstand() > 800)
         return;
 
-    D3DCOLOR Color, col;
-    int toff;
+    //DKS - Added initialization to 0 to silence compiler warning:
+    D3DCOLOR Color = 0, col = 0;
+
+    //DKS - Added initialization to 0 to silence compiler warning:
+    int toff = 0;
 
     if (AlreadyDrawn == false)
     {
