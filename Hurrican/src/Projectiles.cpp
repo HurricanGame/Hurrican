@@ -5520,10 +5520,10 @@ bool ProjectileListClass::PushProjectile(float x, float y, int Art, PlayerClass*
         return false;
 
     //DKS - added support for new, fast pooled mem-manager:
-#if USE_MEMPOOL
-    ProjectileClass *pNew = projectile_pool.alloc();
-#else
+#ifdef USE_NO_MEMPOOLING
     ProjectileClass *pNew = new ProjectileClass;
+#else
+    ProjectileClass *pNew = projectile_pool.alloc();
 #endif
 
     pNew->CreateShot(x, y, Art, pTemp);
@@ -5550,10 +5550,10 @@ bool ProjectileListClass::PushBlitzBeam (int Size, float Richtung, PlayerClass* 
         return false;
 
     //DKS - added support for new, fast pooled mem-manager
-#if USE_MEMPOOL
-    ProjectileClass *pNew = projectile_pool.alloc();
-#else
+#ifdef USE_NO_MEMPOOLING
     ProjectileClass *pNew = new ProjectileClass;	// Neues zu erstellendes Projectile
+#else
+    ProjectileClass *pNew = projectile_pool.alloc();
 #endif
 
     pNew->ShotArt = BLITZBEAM;
@@ -5688,10 +5688,10 @@ ProjectileClass* ProjectileListClass::DelNode(ProjectileClass *pPtr)
             pStart = pNext;
 
         //DKS - added support for new, fast pooled mem-manager:
-#if USE_MEMPOOL
-        projectile_pool.free(pPtr);
-#else
+#ifdef USE_NO_MEMPOOLING
         delete (pPtr);
+#else
+        projectile_pool.free(pPtr);
 #endif
 
         NumProjectiles--;
@@ -5739,7 +5739,7 @@ void ProjectileListClass::ClearAll(void)
 #endif
 
     //DKS - added support for new, fast pooled mem-manager:
-#ifdef USE_MEMPOOL
+#ifndef USE_NO_MEMPOOLING
     projectile_pool.reinit();
 #endif
 

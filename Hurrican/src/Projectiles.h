@@ -230,7 +230,7 @@ private:
     int						NumProjectiles;			// aktuelle Zahl der Schüsse
 
     //DKS - New, very simple pooled memory manager decreases alloc/dealloc overhead: (see DataStructures.h)
-#ifdef USE_MEMPOOL
+#ifndef USE_NO_MEMPOOLING
     MemPool<ProjectileClass, MAX_SHOTS> projectile_pool;
 #endif
 
