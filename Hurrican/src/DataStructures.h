@@ -1,69 +1,87 @@
 #ifndef DATASTRUCTURES_H
 #define DATASTRUCTURES_H
 
-//DKS - This is a new header I've added to Hurrican in the process of optimizing it.
-//      It introduces custom data structures I created:
-//
-//      Class MemPool is a very simple and fast pooled memory manager that can hold up to
-//      32767 objects. It was designed for use with the particle and projectile systems,
-//      to eliminate the hefty overhead of calling new/delete/malloc/free for each
-//      individual projectile/particle.
+//DKS - This is new code I've added to Hurrican in the process of optimizing it.
 
-template <class OBJECT_TYPE, int MAX_OBJECTS>
+// --------------------------------------------------------------------------------------
+// BEGIN MEMPOOL SECTION 
+// --------------------------------------------------------------------------------------
+// Class MemPool is a very simple and fast pooled memory manager. It was designed for
+//  use by the particle and projectile systems, to eliminate allocation/deallocation
+//  overhead. It does not call any ctor's or dtor's.  (Particle and projectile have
+//  been modified to not need them)
+//  NOTE: It is callers of MemPool's responsibility to ensure they do not allocate
+//   more than TPoolSize objects, or, barring that, check return value of alloc()
+//   for NULLness.
+//   Furthermore, it is callers' responsibility to not free NULL pointers.
+#ifndef USE_NO_MEMPOOLING
+template <class T, size_t TPoolSize>
 class MemPool
 {
     public:
         MemPool()  { reinit(); }
         ~MemPool() {}
 
-        OBJECT_TYPE *alloc()
+        T* alloc()
         {
-#ifdef DEBUG_MEMPOOL
-            if (head_of_free_list == -1) {
-                Protokoll.WriteText( false, "ERROR in MemPool, tried to allocate more than %d objects\n", MAX_OBJECTS );
-                Protokoll.WriteText( false, "File: %s Line: %d\n", __FILE__, __LINE__ );
-                return NULL;
-            }
-#endif // DEBUG_MEMPOOL
+            T *t_ptr = reinterpret_cast<T*>(head_of_free_list);
 
-            OBJECT_TYPE *p = &pool[head_of_free_list];
-            head_of_free_list = free_list[head_of_free_list];
-            return p;
+            if (head_of_free_list != NULL) {
+                head_of_free_list = head_of_free_list->next;
+            } else {
+#ifdef DEBUG
+                Protokoll.WriteText( false, "ERROR in MemPool, tried to alloc() more than %d objects\n", TPoolSize );
+                Protokoll.WriteText( false, "File: %s Line: %d\n", __FILE__, __LINE__ );
+#endif
+            }
+
+            return t_ptr;
         }
 
-        void free(OBJECT_TYPE *p)
+        void free(T *t_ptr)
         {
-
-            /* If, for whatever reason, your platform lacks the types ptrdiff_t or uintptr_t, you can use this:
-#if (defined(ARCHITECTURE_32BIT) && !defined(__x86_64__) && !defined(__LP64__) && !defined (__amd64__) \
-&& !defined(__aarch64__))
-int16_t idx = (int16_t)(((uint32_t)p - (uint32_t)pool) / sizeof(OBJECT_TYPE));
-#else 
-int16_t idx = (int16_t)(((uint32_t)((uint64_t)p - (uint64_t)pool)) / sizeof(OBJECT_TYPE));
+#ifdef DEBUG
+            if (t_ptr == NULL) {
+                Protokoll.WriteText( false, "ERROR in MemPool, NULL argument passed to free()\n", TPoolSize );
+                Protokoll.WriteText( false, "File: %s Line: %d\n", __FILE__, __LINE__ );
+                return;
+            }
 #endif
-             */
-            int16_t idx = (int16_t)(((ptrdiff_t)((uintptr_t)p - (uintptr_t)pool)) / sizeof(OBJECT_TYPE));
-            free_list[idx] = head_of_free_list;
-            head_of_free_list = idx;
+
+            // Freed object becomes new head of free list:
+            pool_element *pe_ptr = reinterpret_cast<pool_element*>(t_ptr);
+            pe_ptr->next = head_of_free_list;
+            head_of_free_list = pe_ptr;
         }
 
         // reinit() can be called once the game is done with a level. This reinitializes the
-        // free list to a pristine state so there is maximum cache locality and prefetching.
+        // free list to a pristine state so there is maximum locality. It *must* be called
+        // at least once, from MemPool's constructor.
         void reinit()
         {
-            for (int i=0; i < MAX_OBJECTS-1; ++i) {
-                free_list[i] = i+1;  // This entry points to next entry in free list array
-            }
+            for (size_t i=0; i < TPoolSize-1; ++i)
+                pool[i].next = &pool[i+1];      // Unused entries form a linked list of free slots
 
-            free_list[MAX_OBJECTS-1] = -1; // Terminate end of free list
-            head_of_free_list = 0;
+            pool[TPoolSize-1].next = NULL;      // Terminate end of free list
+            head_of_free_list = pool;
         }
 
     private:
-        OBJECT_TYPE pool[MAX_OBJECTS];
-        int16_t head_of_free_list;
-        int16_t free_list[MAX_OBJECTS];
+        struct pool_element {
+            // Unused elements in the pool serve as entries in a linked list of free slots:
+            union {
+                uint8_t data[sizeof(T)];        // Used slot's data
+                pool_element *next;             // Unused slot's pointer to next free node
+            };
+        };
+
+        pool_element pool[TPoolSize];
+        pool_element *head_of_free_list;
 };
+#endif //!USE_NO_MEMPOOLING
+// --------------------------------------------------------------------------------------
+// END MEMPOOL SECTION 
+// --------------------------------------------------------------------------------------
 
 /***
    GroupedForwardList class is a write-once read-many type of data structure. It is singly-linked.
