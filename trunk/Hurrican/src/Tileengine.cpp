@@ -167,6 +167,9 @@ TileEngineClass::TileEngineClass(void)
         TileRects[i].bottom = TileRects[i].top  + TILESIZE_Y;
     }
 
+    /* DKS - Replaced both SinList2 and WaterList lookup tables with new class
+       WaterSinTableClass. See its comments in Tileengine.h for more info.    */
+#if 0
     int i = 0;
     float w = 0.0f;
     while (i < 4000)
@@ -185,6 +188,7 @@ TileEngineClass::TileEngineClass(void)
     //SinPos   = 0.0f;      //DKS - unused; disabled
     SinPos2  = 0.0f;
     WaterPos = 0.0f;
+#endif //0
 
     //DKS - Lightmap code in original game was never used and all related code has now been disabled:
     //// LightMaps laden
@@ -284,9 +288,14 @@ void TileEngineClass::InitNewLevel(int xSize, int ySize)
 
     memset(&Tiles, 0, sizeof(Tiles));
 
+    /* DKS - Replaced both SinList2 and WaterList lookup tables with new class
+       WaterSinTableClass. See its comments in Tileengine.h for more info.    */
+    WaterSinTable.ResetPosition();
+#if 0
     //SinPos   = 0.0f;
     SinPos2  = 0.0f;
     WaterPos = 0.0f;
+#endif //0
 
     DrawDragon = true;
 
@@ -969,6 +978,9 @@ void TileEngineClass::CalcRenderRange(void)
     // Offsets der Tiles berechnen (0-19)
     xTileOffs = (int)(XOffset) % TILESIZE_X;
     yTileOffs = (int)(YOffset) % TILESIZE_Y;
+
+    // DKS - Update the new water sin table indexes before rendering any tiles:
+    WaterSinTable.UpdateTableIndexes(xLevel, yLevel);
 }
 
 // --------------------------------------------------------------------------------------
@@ -1133,7 +1145,9 @@ void TileEngineClass::DrawBackLevel(void)
     // Noch keine Tiles zum rendern
     NumToRender = 0;
 
-    int off  = 0;
+    //DKS - WaterList lookup table has been replaced with WaterSinTableClass,
+    //      see comments for it in Tileengine.h
+    //int off  = 0;
 
     for(int j = RenderPosY; j<RenderPosYTo; j++)
     {
@@ -1189,8 +1203,6 @@ void TileEngineClass::DrawBackLevel(void)
                 to = Rect.top   /TILESETSIZE_Y;				// Oben
                 tu = Rect.bottom/TILESETSIZE_Y;				// Unten
 
-                off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
-
                 // Vertices definieren
                 v1.color = TileAt(xLevel+i, yLevel+j).Color [0];
                 v2.color = TileAt(xLevel+i, yLevel+j).Color [1];
@@ -1219,6 +1231,11 @@ void TileEngineClass::DrawBackLevel(void)
 
                 // Hintergrund des Wasser schwabbeln lassen
 
+                //DKS - WaterList lookup table has been replaced with WaterSinTableClass,
+                //      see comments for it in Tileengine.h
+#if 0
+                off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
+
                 //DKS - Fixed out of bounds access to Tiles[][] array on y here:
                 //      When yLevel is 1 and j is -1 (indicating that the one-tile overdraw
                 //      border is being drawn on the top screen edge), this was ending up
@@ -1234,7 +1251,33 @@ void TileEngineClass::DrawBackLevel(void)
 
                 if (TileAt(xLevel+i, yLevel+j).move_v3 == true) v3.x += SinList2[off + 2];
                 if (TileAt(xLevel+i, yLevel+j).move_v4 == true) v4.x += SinList2[off + 2];
+#endif //0
 
+                if (TileAt(xLevel+i, yLevel+j).move_v1 ||
+                    TileAt(xLevel+i, yLevel+j).move_v2 ||
+                    TileAt(xLevel+i, yLevel+j).move_v3 ||
+                    TileAt(xLevel+i, yLevel+j).move_v4)
+                {
+                    float x_offs[2];
+                    WaterSinTable.GetNonWaterSin(j, x_offs);
+
+                    //DKS - Fixed out of bounds access to Tiles[][] array on y here:
+                    //      When yLevel is 1 and j is -1 (indicating that the one-tile overdraw
+                    //      border is being drawn on the top screen edge), this was ending up
+                    //      trying to access a row higher than the top screen border which doesn't
+                    //      exist. Loading the Eis map (level 7) would crash on some machines.
+                    //if (TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)                    // Original line
+                    if ( yLevel+j > 0 &&    // DKS Added this check to above line
+                            TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)
+                    {
+                        if (TileAt(xLevel+i, yLevel+j).move_v1 == true) v1.x += x_offs[0];
+                        if (TileAt(xLevel+i, yLevel+j).move_v2 == true) v2.x += x_offs[0];
+                    }
+
+                    if (TileAt(xLevel+i, yLevel+j).move_v3 == true) v3.x += x_offs[1];
+                    if (TileAt(xLevel+i, yLevel+j).move_v4 == true) v4.x += x_offs[1];
+                }
+                
                 // Zu rendernde Vertices ins Array schreiben
                 TilesToRender[NumToRender*6]   = v1;	// Jeweils 2 Dreicke als
                 TilesToRender[NumToRender*6+1] = v2;	// als ein viereckiges
@@ -1279,7 +1322,9 @@ void TileEngineClass::DrawFrontLevel(void)
     // Noch keine Tiles zum rendern
     NumToRender = 0;
 
-    int off = 0;
+    //DKS - WaterList lookup table has been replaced with WaterSinTableClass,
+    //      see comments for it in Tileengine.h
+    //int off = 0;
 
     for(int j=RenderPosY; j<RenderPosYTo; j++)
     {
@@ -1351,8 +1396,6 @@ void TileEngineClass::DrawFrontLevel(void)
                                 v4.color = D3DCOLOR_RGBA(255, 255, 255, TileAt(xLevel+i, yLevel+j).Alpha);
                 }
 
-                off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
-
                 v1.x		= l;            						// Links oben
                 v1.y		= o;
                 v1.tu		= tl;
@@ -1374,15 +1417,19 @@ void TileEngineClass::DrawFrontLevel(void)
                 v4.tv		= tu;
 
                 // Hintergrund des Wasser schwabbeln lassen
-                //
 
-                //DKS - Fixed out of bounds access to Tiles[][] array on y here in ice level
-                //      (and perhaps on others). when yLevel is 1 and j is -1 (indicating
-                //      that the one-tile overdraw border is being drawn on the top screen
-                //      edge), this was ending up trying to access a row higher than the
-                //      top screen border which doesn't exist:
-                //if (TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)    //Original line
-                if (yLevel+j > 0 &&     //DKS - Added check
+                //DKS - WaterList lookup table has been replaced with WaterSinTableClass,
+                //      see comments for it in Tileengine.h
+#if 0
+                off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
+
+                //DKS - Fixed out of bounds access to Tiles[][] array on y here:
+                //      When yLevel is 1 and j is -1 (indicating that the one-tile overdraw
+                //      border is being drawn on the top screen edge), this was ending up
+                //      trying to access a row higher than the top screen border which doesn't
+                //      exist. Loading the Eis map (level 7) would crash on some machines.
+                //if (TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)                    // Original line
+                if ( yLevel+j > 0 &&    // DKS Added this check to above line
                         TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)
                 {
                     if (TileAt(xLevel+i, yLevel+j).move_v1 == true) v1.x += SinList2[off];
@@ -1391,7 +1438,33 @@ void TileEngineClass::DrawFrontLevel(void)
 
                 if (TileAt(xLevel+i, yLevel+j).move_v3 == true) v3.x += SinList2[off + 2];
                 if (TileAt(xLevel+i, yLevel+j).move_v4 == true) v4.x += SinList2[off + 2];
+#endif //0
 
+                if (TileAt(xLevel+i, yLevel+j).move_v1 ||
+                    TileAt(xLevel+i, yLevel+j).move_v2 ||
+                    TileAt(xLevel+i, yLevel+j).move_v3 ||
+                    TileAt(xLevel+i, yLevel+j).move_v4)
+                {
+                    float x_offs[2];
+                    WaterSinTable.GetNonWaterSin(j, x_offs);
+
+                    //DKS - Fixed out of bounds access to Tiles[][] array on y here:
+                    //      When yLevel is 1 and j is -1 (indicating that the one-tile overdraw
+                    //      border is being drawn on the top screen edge), this was ending up
+                    //      trying to access a row higher than the top screen border which doesn't
+                    //      exist. Loading the Eis map (level 7) would crash on some machines.
+                    //if (TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)                    // Original line
+                    if ( yLevel+j > 0 &&    // DKS Added this check to above line
+                            TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)
+                    {
+                        if (TileAt(xLevel+i, yLevel+j).move_v1 == true) v1.x += x_offs[0];
+                        if (TileAt(xLevel+i, yLevel+j).move_v2 == true) v2.x += x_offs[0];
+                    }
+
+                    if (TileAt(xLevel+i, yLevel+j).move_v3 == true) v3.x += x_offs[1];
+                    if (TileAt(xLevel+i, yLevel+j).move_v4 == true) v4.x += x_offs[1];
+                }
+                
                 // Zu rendernde Vertices ins Array schreiben
                 TilesToRender[NumToRender*6]   = v1;	// Jeweils 2 Dreicke als
                 TilesToRender[NumToRender*6+1] = v2;	// als ein viereckiges
@@ -1453,7 +1526,8 @@ void TileEngineClass::DrawBackLevelOverlay (void)
     // Noch keine Tiles zum rendern
     NumToRender = 0;
     //int al;
-    int off = 0;
+    //DKS - Variable was unused in original source, disabled:
+    //int off = 0;
 
     for(int j = RenderPosY; j<RenderPosYTo; j++)
     {
@@ -1513,7 +1587,8 @@ void TileEngineClass::DrawBackLevelOverlay (void)
 
                 //al = TileAt(xLevel+i, yLevel+j).Alpha;
 
-                off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
+                //DKS - Variable was unused in original source, disabled:
+                //off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
 
                 v1.color = TileAt(xLevel+i, yLevel+j).Color [0];
                 v2.color = TileAt(xLevel+i, yLevel+j).Color [1];
@@ -1584,7 +1659,8 @@ void TileEngineClass::DrawOverlayLevel(void)
     // Noch keine Tiles zum rendern
     NumToRender = 0;
     //int al;
-    int off = 0;
+    //DKS - Variable was unused in original source, disabled:
+    //int off = 0;
 
     for(int j = RenderPosY; j<RenderPosYTo; j++)
     {
@@ -1731,7 +1807,8 @@ void TileEngineClass::DrawOverlayLevel(void)
                         v1.color = v2.color = v3.color = v4.color = D3DCOLOR_RGBA (255, 255, 255, TileAt(xLevel+i, yLevel+j).Alpha);
                     }
 
-                    off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
+                    //DKS - Variable was unused in original source, disabled:
+                    //off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
 
                     v1.x		= l;						// Links oben
                     v1.y		= o;
@@ -1792,7 +1869,9 @@ void TileEngineClass::DrawWater(void)
     // Noch keine Tiles zum rendern
     NumToRender = 0;
 
-    int off = (int)((WaterPos) + xLevel % 32 + (yLevel * 10) % 40) % 1024;
+    //DKS - WaterList lookup table has been replaced with WaterSinTableClass,
+    //      see comments for it in Tileengine.h
+    //int off = (int)((WaterPos) + xLevel % 32 + (yLevel * 10) % 40) % 1024;
 
     DirectGraphics.SetFilterMode (true);
     DirectGraphics.SetColorKeyMode();
@@ -1986,17 +2065,28 @@ void TileEngineClass::DrawWater(void)
                             v4.tv = WasserV [yo+1];
                         }
 
-                        if (TileAt(xLevel+i, yLevel+j).move_v1 == true)
-                            v1.y += WaterList[off + j*10 + i * 2];
-
-                        if (TileAt(xLevel+i, yLevel+j).move_v2 == true)
-                            v2.y += WaterList[off + j*10 + i * 2];
-
-                        if (TileAt(xLevel+i, yLevel+j).move_v3 == true)
-                            v3.y += WaterList[off + j*10 + i * 2 + 10];
-
-                        if (TileAt(xLevel+i, yLevel+j).move_v4 == true)
-                            v4.y += WaterList[off + j*10 + i * 2 + 10];
+                        //DKS - WaterList lookup table has been replaced with WaterSinTableClass,
+                        //      see comments for it in Tileengine.h
+                        //if (TileAt(xLevel+i, yLevel+j).move_v1 == true)
+                        //    v1.y += WaterList[off + j*10 + i * 2];
+                        //if (TileAt(xLevel+i, yLevel+j).move_v2 == true)
+                        //    v2.y += WaterList[off + j*10 + i * 2];
+                        //if (TileAt(xLevel+i, yLevel+j).move_v3 == true)
+                        //    v3.y += WaterList[off + j*10 + i * 2 + 10];
+                        //if (TileAt(xLevel+i, yLevel+j).move_v4 == true)
+                        //    v4.y += WaterList[off + j*10 + i * 2 + 10];
+                        if (TileAt(xLevel+i, yLevel+j).move_v1 ||
+                            TileAt(xLevel+i, yLevel+j).move_v2 ||
+                            TileAt(xLevel+i, yLevel+j).move_v3 ||
+                            TileAt(xLevel+i, yLevel+j).move_v4)
+                        {
+                            float y_offs[2];
+                            WaterSinTable.GetWaterSin(i, j, y_offs);
+                            if (TileAt(xLevel+i, yLevel+j).move_v1 == true) v1.y += y_offs[0];
+                            if (TileAt(xLevel+i, yLevel+j).move_v2 == true) v2.y += y_offs[0];
+                            if (TileAt(xLevel+i, yLevel+j).move_v3 == true) v3.y += y_offs[1];
+                            if (TileAt(xLevel+i, yLevel+j).move_v4 == true) v4.y += y_offs[1];
+                        }
 
                         // Zu rendernde Vertices ins Array schreiben
                         TilesToRender[NumToRender*6]   = v1;	// Jeweils 2 Dreicke als
@@ -2398,6 +2488,10 @@ void TileEngineClass::UpdateLevel(void)
     while (WasserfallOffset >= 120.0f)
         WasserfallOffset -= 120.0f;
 
+    /* DKS - Replaced both SinList2 and WaterList lookup tables with new
+             class WaterSinTableClass.  See comments in Tileengine.h */
+    WaterSinTable.AdvancePosition(SpeedFaktor);
+#if 0
     // Schwabbeln des Levels animieren
     //SinPos   += 3.0f SYNC;    //DKS - unused; disabled
     SinPos2  += 2.0f SYNC;
@@ -2406,6 +2500,7 @@ void TileEngineClass::UpdateLevel(void)
     //while (SinPos   >= 40.0f) SinPos   -= 40.0f;  //DKS - unused; disabled
     while (SinPos2  >= 40.0f) SinPos2  -= 40.0f;
     while (WaterPos >= 40.0f) WaterPos -= 40.0f;
+#endif //0
 
     // Level an vorgegebene Position anpassen
     // weil z.B. der Fahrstuhl selber scrollt?
