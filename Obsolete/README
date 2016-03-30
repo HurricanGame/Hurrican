@@ -1,0 +1,12 @@
+Originally, the game dumped all textures,songs,sfx,levels,etc together
+into the data/ subdirectory.
+
+Now, the files are sorted into individual subdirectories
+under the data/ subdirectory. Furthermore, many of the original data files
+have been converted or updated during the porting process and are no
+longer compatible.
+
+The original data files have been archived in the following file:
+original_data_files.tar.bz2
+
+They should be used for future reference ONLY and are deprecated.
