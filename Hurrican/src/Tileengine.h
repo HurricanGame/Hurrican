@@ -246,6 +246,222 @@ struct Vector2D
 // --------------------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------------------
+// WaterSinTableClass
+// --------------------------------------------------------------------------------------
+//DKS -   Animated water is now drawn using a tiny lookup table that provides the
+//      vertex offsets used for both the up/down swaying motion of the water
+//      textures as well as for the left/right swaying motion of any artwork
+//      drawn behind the water. WaterSinTableClass encapsulates it.
+//        There were  problems with the original lookup tables used for
+//      these purposes, WaterList[] and SinList2[]:
+//      Problem 1.) Tables were humongous (4096 elements each) despite repeating
+//                  every 40 elements. This was cache-unfriendly.
+//      Problem 2.) The computation of offsets into these tables was not
+//                  allowing the swaying animation to syncronize smoothly as
+//                  the screen scrolled, especially horizontally.
+//      
+//        Before, the two trig tables SinList2[] and WaterList[] had elements
+//      which stored values of sin() for successive increments of pi/20, thus
+//      repeating every 40 elements.
+//        WaterList[] stored these values multiplied by 2.5, and was used to
+//      animate the up/down swaying of the water textures.
+//        SinList2[] stored these same values multiplied by 5.0, and was used
+//      to animate the left/right swaying of any artwork laying behind water.
+//
+//        We now use a 17-element trig table that covers domain 0-pi/2, using
+//      trig symmetry to handle anything outside that. Each element x represents
+//      2.5f*sin(x * pi/32), SinTable[0] giving 2.5f*sin(0), and
+//      SinTable[16] giving 2.5f*sin(pi/2). There is a second trig table that
+//      stores the same values multiplied by 2.0 for the left/right swaying.
+//
+//        Before, each tile 'i,j' would access the sin tables like so:
+//
+//      /* BEGIN EXAMPLE OF ORIGINAL TRIG TABLE-RELATED GAME CODE FROM DrawWater() */
+//      float			WaterList[4096];         // Ridiculously large sin lookup table
+//                                               //  that repeats every 40 elements, i.e.
+//      float			SinList2[4096];          // Ridiculously large sin lookup table
+//                                               //  that repeats every 40 elements, i.e.
+//      WaterList[0]  = 0  * pi/20.0 * 2.5f;   SinList2[0]  = WaterList[0]  * 2;
+//      (..)
+//      WaterList[39] = 39 * pi/20.0 * 2.5f;   SinList2[39] = WaterList[39] * 2;
+//      WaterList[40] = 40 * pi/20.0 * 2.5f;   SinList2[40] = WaterList[40] * 2;
+//      (..)
+//      /* At this point we begin repeating over and over until end of array */
+//
+//      (...)   /* In tile rendering code .. */
+//
+//      /* BEGIN DrawWater() ORIGINAL CODE EXAMPLE USING WaterList[] */
+//      /* Vertex offset computation for tile i,j (that would not alllow water
+//         animation to smoothly move in sync when scrolling left/right):    */
+//      (...)
+//      int off = (int)(int(WaterPos) + xLevel % 32 + (yLevel * 10) % 40) % 1024;
+//      if (..) v1.y += WaterList[off + j*10 + i * 2];      // Top left vertex
+//      if (..) v2.y += WaterList[off + j*10 + i * 2];      // Top right vertex
+//      if (..) v3.y += WaterList[off + j*10 + i * 2 + 10]; // Bottom left vertex (pi/2 past pair above)
+//      if (..) v4.y += WaterList[off + j*10 + i * 2 + 10]; // Bottom right vertex (pi/2 past pair above)
+//      (...)
+//      /* END ORIGINAL WATER CODE EXAMPLE */
+//
+//      /* BEGIN ORIGINAL ARTWORK-BEHIND-WATER CODE EXAMPLE: */
+//      /* How left/right swaying was calculated for a tile i,j using
+//         SinList2[] in DrawBackLevel() and DrawFrontLevel():        */
+//      (...)
+//      int off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
+//      if (..) v1.x += SinList2[off];                      // Top left vertex
+//      if (..) v2.x += SinList2[off];                      // Top right vertex
+//      if (..) v3.x += SinList2[off + 2];                  // Bottom left vertex (pi/10 past pair above)
+//      if (..) v4.x += SinList2[off + 2];                  // Bottom right vertex (pi/10 past pair above)
+//      (...)
+//      /* END ORIGINAL ARTWORK-BEHIND-WATER CODE EXAMPLE: */
+//
+//        The new sine table has a phase of 64 increments (64 * pi / 32), so
+//      modulus of inputs is done easily with a single bitwise op. Similarly,
+//      since SinTable[16] is pi/2, conversion of values from this 64-element
+//      domain to the 17-element first-quadrant-table is also trivially done.
+//       Since our new tiny, yet more accurate sin table has increments of pi/32,
+//      not pi/10 or pi/20, it does not match precisely. However, it does have
+//      higher resolution than the original table. Using a factor of 3 in the
+//      offset calculations ends up being visually indistinguishable in
+//      comparison (3pi/32 == 0.2945  vs. pi/10 == .3142).
+//       Because the universal table offset was originally advanced 2.0 SYNC per
+//      frame, SinTablePos is instead advanced (16.0/5.0) SYNC. Thus, the overall
+//      speed of the animation remains the exact same, i.e.
+//      (2 SYNC)*(pi/20) == ((16/5) SYNC)*(pi/32)
+//      (NOTE: SYNC is a timer macro that expands to '* SpeedFaktor')
+
+class WaterSinTableClass
+{
+    public:
+        WaterSinTableClass()
+        { 
+            ResetPosition();
+            for (int i=0; i<17; ++i) {
+                SinTable[i] = 2.5f * sinf( i * M_PI / 32.0 );
+                NonWaterSinTable[i] = 2.0f * SinTable[i];
+            }
+        }
+
+        // Called in ctor and also when a level is loaded:
+        void ResetPosition()
+        {
+            SinTablePos = 0;
+            WaterSinTableIdx = 0;
+            NonWaterSinTableIdx = 0;
+        }
+
+        // Compute individual table indexes based on SinTablePos and the
+        //  current screen position within overall map. (Called from
+        //  TileEngineClass::CalcRenderRange() where xLevel/yLevel are
+        //  updated each frame before tiles are rendered)
+        void UpdateTableIndexes(const int xlev, const int ylev)
+        {
+            // This is for the two water layers that sway up/down:
+            WaterSinTableIdx = (int(SinTablePos) + xlev*3 + ylev*16) % 64;
+            // This is for any artwork that sways left/right in the water, like plants or backgrounds
+            NonWaterSinTableIdx = (int(SinTablePos) + ylev*3) % 64;
+        }
+
+        // Called once per frame in TileEngineClass::UpdateLevel()
+        void AdvancePosition(const float speed_faktor)
+        {
+            // Advance primary offset by 3.20, which is the same as
+            // advancing the original code's sin table offset by
+            // 2, which was the original position advancement, i.e.
+            // 2 * (pi/20) SYNC == (16/5) *(pi/32) SYNC
+            SinTablePos += float(16.0/5.0) * speed_faktor;
+            while (SinTablePos >= 64.0f) SinTablePos -= 64.0f;
+        }
+
+        // This is for the two layers of water textures that sway up/down.
+        // (Called from TileEngineClass::DrawWaterVectors())
+        // The top two vertices of a tile use sin_pair[0]
+        // and the bottom two vertices use sin_pair[1].
+        void GetWaterSin(const int i, const int j, float (&sin_pair)[2])
+        {
+            // Originally, every tile on a row would have specify a sin
+            //  value pi/10 past the one to the left, but we'll instead
+            //  make that 3(pi/32) past the one to the left. Close enough
+            //  to be unnoticeable.
+            int ext_idx = WaterSinTableIdx + i*3 + j*16;
+
+            for (int ctr=0; ctr < 2; ++ctr) {
+                int table_idx = ext_idx;
+                bool negate_result = ConvertToTableIndex(table_idx);
+                sin_pair[ctr] = negate_result ? -SinTable[table_idx] : SinTable[table_idx];
+                ext_idx += 16;      // Second sine value is one quadrant past first one
+            }
+        }
+
+        // This is for the two layers of water textures that sway up/down.
+        // (Called from TileEngineClass::DrawTileGroupedForwardList())
+        // The top two vertices of a tile use sin_pair[0]
+        // and the bottom two vertices use sin_pair[1].
+        void GetNonWaterSin(const int j, float (&sin_pair)[2])
+        {
+            int ext_idx = NonWaterSinTableIdx + j*3;
+
+            for (int ctr=0; ctr < 2; ++ctr) {
+                int table_idx = ext_idx;
+                bool negate_result = ConvertToTableIndex(table_idx);
+                sin_pair[ctr] = negate_result ? -NonWaterSinTable[table_idx] : NonWaterSinTable[table_idx];
+
+                ext_idx += 3;  // Second sine value originally is pi/10 past first one (2*j),but
+                               //  we'll end up moving just 3*pi/32 using new trig table. That's 
+                               //  close enough to be unnoticable. (16.87 deg instead of 18 deg)
+            }
+        }
+
+    private:
+
+        // Convert an index x representing x/64 fraction of a circle,
+        // 64 being 2*pi, to an internal table index 0-16, 16
+        // representing pi/2, using symmetric property of sine function.
+        // Boolean return value indicates if the value retrieved from the
+        // table should be negated.
+        bool ConvertToTableIndex(int &idx)
+        {
+            bool negate_result = false;
+            idx %= 64;
+            int increments_past_quad = idx % 16;
+            int quad = idx / 16;
+
+            switch (quad) {
+                default:    // Default case shouldn't happen; fall through to case 0
+
+                case 0:
+                    idx = increments_past_quad;
+                    break;
+                case 1:
+                    idx = 16 - increments_past_quad;
+                    break;
+                case 2:
+                    idx = increments_past_quad;
+                    negate_result = !negate_result;
+                    break;
+                case 3:
+                    idx = 16 - increments_past_quad;
+                    negate_result = !negate_result;
+                    break;
+            }
+
+            return negate_result;
+        }
+
+
+        float SinTablePos;           // Value 0.0-63.999 that represents current base
+                                     //  used to generate offsets of water tile vertices.
+                                     //  Represents 0*(2*pi/64) through 64*(2*pi/64).
+                                     //  Incremented through UpdatePosition() function.
+
+        // The two index vars, one for each table, are updated in UpdateTableIndexes() function:
+        int   WaterSinTableIdx;           // For the two layers of actual water that sway up/down
+        int   NonWaterSinTableIdx;        // For any artwork on a water tile like plants that sway left/right
+
+        float SinTable[17], NonWaterSinTable[17];
+};
+
+
+// --------------------------------------------------------------------------------------
 // TileEngine Klasse
 // --------------------------------------------------------------------------------------
 
@@ -259,9 +475,12 @@ private:
     VERTEX2D		TilesToRender[40*30*6];				// Alle zu rendernden Leveltiles
     VERTEX2D		v1, v2, v3, v4;							// Vertices zum Sprite rendern
     unsigned char	LoadedTilesets;							// Anzahl geladener Sets
-    float			WaterPos;								// Position in der WaterListe für die Wasseroberfläche
     LevelTileStruct Tiles[MAX_LEVELSIZE_X]  // Array mit Leveldaten
                          [MAX_LEVELSIZE_Y];
+
+    // DKS - Replaced both SinList2 and WaterList lookup tables with new class
+    //       WaterSinTableClass. See its comments for more info.
+    WaterSinTableClass WaterSinTable;
 
     //DKS - Lightmap code in original game was never used and all related code has now been disabled:
     //CLightMap		lightmaps[MAX_LIGHTMAPS];
@@ -274,11 +493,15 @@ public:
     int				ColR2, ColG2, ColB2;
     int				ColR3, ColG3, ColB3, ColA3;
 
-    //DKS - Disabled this, was only ever filled with zeroes and had no effect.
-    //float			SinList[4096];							// Sinus Liste zum Schwabbeln des Alienlevels
+    // DKS - Replaced both SinList2 and WaterList lookup tables with new class
+    //       WaterSinTableClass.  See its comments for more info.
+    //float			WaterPos;								// Position in der WaterListe für die Wasseroberfläche
+    ////DKS - Disabled this, was only ever filled with zeroes and had no effect.
+    ////float			SinList[4096];							// Sinus Liste zum Schwabbeln des Alienlevels
 
-    float			SinList2[4096];							// Sinus Liste zum Schwabbeln des Wasserhintergrunds
-    float			WaterList[4096];						// Sinus Liste zum Schwabbeln der Oberfläche
+    //float			SinList2[4096];							// Sinus Liste zum Schwabbeln des Wasserhintergrunds
+    //float			WaterList[4096];						// Sinus Liste zum Schwabbeln der Oberfläche
+
     RECT			TileRects[144];							// vorberechnete Tile Ausschnitte
     char			Beschreibung[100];						// Beschreibung des Levels
     int				Zustand;								// Aktueller Zustand
