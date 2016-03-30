@@ -2742,6 +2742,12 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
     ydraw = ypos - TileEngine.YOffset;
 
     // Im Wasser? Dann schwabbeln lassen
+    //DKS - This original block of code never had an effect because there are no platforms
+    //      underwater that I know of. Also, when I had it also execute when standing on
+    //      a BLOCKWERT_WAND tile, I discovered the left/right swaying was very ugly
+    //      and not even in coordination with other artwork lying in water. I've disabled
+    //      it entirely:
+#if 0
     if (InLiquid == true &&
             bo & BLOCKWERT_LIQUID &&
             bu & BLOCKWERT_PLATTFORM)
@@ -2751,6 +2757,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
 
         xdraw -= TileEngine.SinList2[off];
     }
+#endif //0
 
     // Schaden genommen ? Dann Spieler blinken lassen
     if (DamageCounter > 0.0f)
