@@ -196,27 +196,24 @@ loadfilelevel:
 
     // Levels auslesen
     //
-    //bool eof = false;
     MAX_LEVELS = 0;
 
-    int index = 0;
-    char* line = new char[256];
+    //DKS - Fixed mem leak, this while() block now uses temp[] char array
     while(!in.eof())
     {
-        in.getline(line, 256);
+        temp[0] = '\0';                 //DKS - Added initializer
+        in.getline(temp, 256);
 
         /* CHECKME: Removing CR from line ending (stegerg) */
-
         char *cr;
-
-        if ((cr = strchr(line, '\r')))
-        {
+        if ((cr = strchr(temp, '\r'))) {
             *cr = '\0';
         }
 
-        strcpy_s(StageReihenfolge[MAX_LEVELS], strlen(line) + 1, line);
-        MAX_LEVELS++;
-        index++;
+        if (strlen(temp) > 0) {         //DKS - Added check for strlen > 0
+            strcpy_s(StageReihenfolge[MAX_LEVELS], strlen(temp) + 1, temp);
+            MAX_LEVELS++;
+        }
     }
     in.close();
 
