@@ -1081,13 +1081,17 @@ void MenuClass::ShowMenu(void)
             {
                 pMenuFont->DrawText (xpos + OFFSET - 20 - d, ypos + OFFSET - OFFSET2 + (i+2) * 35, TextArray[TEXT_SOUND + i], menucolor, 2);
                 LoadingScreen.RenderSprite (220, ypos + OFFSET - OFFSET2 + (i+2) * 35 - 18, menucolor);
-                LoadingBar.RenderSprite    (241, ypos + OFFSET - OFFSET2 + (i+2) * 35 +2, menucolor);
+                //DKS - Fixed wobbling left/right:
+                //LoadingBar.RenderSprite    (241, ypos + OFFSET - OFFSET2 + (i+2) * 35 +2, menucolor);
+                LoadingBar.RenderSprite    (241 - 0.5f, ypos + OFFSET - OFFSET2 + (i+2) * 35 +2, menucolor);
             }
             else
             {
                 pMenuFont->DrawText (xpos + OFFSET - 20 - d, ypos + OFFSET - OFFSET2 + (i+2) * 35, TextArray[TEXT_SOUND + i], menucolor2, 2);
                 LoadingScreen.RenderSprite (220, ypos + OFFSET - OFFSET2 + (i+2) * 35 - 18, menucolor2);
-                LoadingBar.RenderSprite    (241, ypos + OFFSET - OFFSET2 + (i+2) * 35 +2, menucolor2);
+                //DKS - Fixed wobbling left/right:
+                //LoadingBar.RenderSprite    (241, ypos + OFFSET - OFFSET2 + (i+2) * 35 +2, menucolor2);
+                LoadingBar.RenderSprite    (241 - 0.5f, ypos + OFFSET - OFFSET2 + (i+2) * 35 +2, menucolor2);
             }
         }
 

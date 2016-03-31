@@ -1019,7 +1019,9 @@ bool DisplayLoadInfo(const char Text[100])
     pMenu->LoadingScreen.RenderSprite((640 - 360) / 2, (480 - 60) / 2 + 5, 0x88FFFFFF);
 
     pMenu->LoadingBar.SetRect (0, 0, int (pMenu->LoadingProgress), 19);
-    pMenu->LoadingBar.RenderSprite((640 - 318) / 2, (480 - 19) / 2 + 5, 0x88FFFFFF);
+    //DKS - Fixed wobbling left/right:
+    //pMenu->LoadingBar.RenderSprite((640 - 318) / 2, (480 - 19) / 2 + 5, 0x88FFFFFF);
+    pMenu->LoadingBar.RenderSprite(((640 - 318) / 2) - 0.5f, (480 - 19) / 2 + 5, 0x88FFFFFF);
 
     /*for (i=0; i<24; i++)
     	pDefaultFont->DrawText(10, float(230+i*10), LoadInfoText[i], D3DCOLOR_RGBA(0, 255, 0, i*10));*/
