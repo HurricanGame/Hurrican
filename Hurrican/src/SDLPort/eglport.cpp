@@ -81,6 +81,7 @@ uint32_t    fpsCount    = 0;                /** Total number of frames counted *
 uint32_t    fpsTime     = 0;                /** Start time of frame count measurment */
 
 /** Private API */
+void OpenCfg ( const char* file, uint16_t depth, bool vsync );  //DKS - Added depth,vsync params
 void        OpenCfg                 ( const char* file );
 int8_t      ConfigureEGL            ( EGLConfig config );
 int8_t      FindEGLConfigs          ( void );
@@ -149,12 +150,16 @@ void EGL_SwapBuffers( void )
     }
 }
 
+//DKS - Now takes additional parameters 'depth' and 'vsync' allowing Hurrican
+//      to pass in requested VSync and color depth.
 /** @brief Obtain the system display and initialize EGL
  * @param width : desired pixel width of the window (not used by all platforms)
  * @param height : desired pixel height of the window (not used by all platforms)
+ * @param depth : desired screen depth (should be either 16 or 32)
+ * @param vsync  : vsync enabled/disabled
  * @return : 0 if the function passed, else 1
  */
-int8_t EGL_Open( uint16_t width, uint16_t height )
+int8_t EGL_Open( uint16_t width, uint16_t height, uint16_t depth, bool vsync )
 {
     EGLint eglMajorVer, eglMinorVer;
     EGLBoolean result;
@@ -181,7 +186,9 @@ int8_t EGL_Open( uint16_t width, uint16_t height )
     }
 
     /* Check for the cfg file to alternative settings */
-    OpenCfg( "eglport.cfg" );
+    //DKS - Pass the depth and vsync requested by Hurrican so default
+    //      values match Hurrican's idea of them.
+    OpenCfg( "eglport.cfg", depth, vsync);
 
     /* Setup any platform specific bits */
     Platform_Open();
@@ -281,10 +288,17 @@ int8_t EGL_Open( uint16_t width, uint16_t height )
     return 0;
 }
 
+//DKS - Now takes additional parameters 'depth' and 'vsync' allowing Hurrican
+//      to pass in requested VSync and color depth (these are passed onto
+//      OpenCfg() from EGL_Open() function)
+//      NOTE: if eglport.cfg file is found, its settings override these
+//            parameters.
 /** @brief Read settings that configure how to use EGL
  * @param file : name of the config file
+ * @param depth : desired default screen depth, should be 16 or 32
+ * @param vsync : true == vsync, false == no vsync
  */
-void OpenCfg ( const char* file )
+void OpenCfg ( const char* file, uint16_t depth, bool vsync )
 {
     #define MAX_STRING 20
     #define MAX_SIZE 100
@@ -311,6 +325,11 @@ void OpenCfg ( const char* file )
 #else
     eglSettings[CFG_MODE]           = RENDER_RAW;
 #endif
+    //DKS - Changed defaults to use parameters passed to function. If a platform
+    //      requires different settings, they should make a custom eglport.cfg
+    //      (that overrides anything passed in), or use the game's command line
+    //      parameters to change the values for vsync/depth passed to here.
+    /* Pickle's original settings:
     eglSettings[CFG_VSYNC]          = 0;
     eglSettings[CFG_FSAA]           = 0;
     eglSettings[CFG_FPS]            = 0;
@@ -320,6 +339,17 @@ void OpenCfg ( const char* file )
     eglSettings[CFG_ALPHA_SIZE]     = 0;
     eglSettings[CFG_DEPTH_SIZE]     = 0;
     eglSettings[CFG_BUFFER_SIZE]    = 16;
+    eglSettings[CFG_STENCIL_SIZE]   = 0;
+    */
+    eglSettings[CFG_VSYNC]          = vsync;
+    eglSettings[CFG_FSAA]           = 0;
+    eglSettings[CFG_FPS]            = 0;
+    eglSettings[CFG_RED_SIZE]       = (depth == 16) ? 5 : 8;
+    eglSettings[CFG_GREEN_SIZE]     = (depth == 16) ? 6 : 8;
+    eglSettings[CFG_BLUE_SIZE]      = (depth == 16) ? 5 : 8;
+    eglSettings[CFG_ALPHA_SIZE]     = (depth == 16) ? 0 : 8;
+    eglSettings[CFG_DEPTH_SIZE]     = 0;
+    eglSettings[CFG_BUFFER_SIZE]    = (depth == 16) ? 16 : 32;
     eglSettings[CFG_STENCIL_SIZE]   = 0;
 
     /* Parse INI file */
