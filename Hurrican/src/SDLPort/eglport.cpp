@@ -82,7 +82,6 @@ uint32_t    fpsTime     = 0;                /** Start time of frame count measur
 
 /** Private API */
 void OpenCfg ( const char* file, uint16_t depth, bool vsync );  //DKS - Added depth,vsync params
-void        OpenCfg                 ( const char* file );
 int8_t      ConfigureEGL            ( EGLConfig config );
 int8_t      FindEGLConfigs          ( void );
 int8_t      CheckEGLErrors          ( const char* file, uint16_t line );
