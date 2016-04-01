@@ -473,7 +473,7 @@ void FillCommandLineParams( int argc, char* args[] )
         }
         else if ((strstr( args[i], "--novsync" ) != NULL) || (strstr( args[i], "-NV") != NULL))
         {
-            fprintf( stdout, "VSync / double-buffering will disabled, if supported\n" );
+            fprintf( stdout, "VSync / double-buffering will be disabled, if supported\n" );
             CommandLineParams.VSync = false;
         }
         else if ((strstr( args[i], "--nonpot" ) != NULL) || (strstr( args[i], "-NP") != NULL))
