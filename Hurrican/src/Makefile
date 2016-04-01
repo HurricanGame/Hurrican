@@ -485,4 +485,4 @@ $(EXE) : $(ALL_OBJS)
 .PHONY : clean
 
 clean :
-	$(RM) $(ALL_OBJS) $(EXE)
+	$(RM) *.o SDLPort/*.o unrarlib040/unrarlib/*.o $(EXE)
