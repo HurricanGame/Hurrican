@@ -301,6 +301,11 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
     SDL_GL_SetAttribute( SDL_GL_MULTISAMPLEBUFFERS, 0 ); // DKS - Changed this to 0 (Game would not load w/ GL1.2 laptop)
     SDL_GL_SetAttribute( SDL_GL_MULTISAMPLESAMPLES, 0 );
 
+    //DKS - Some SDL versions < 1.3.0 support setting vsync through a now-deprecated attribute:
+#if !SDL_VERSION_ATLEAST(1,3,0) && defined(SDL_GL_SWAP_CONTROL)
+    SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, VSync);
+#endif
+
 #if SDL_VERSION_ATLEAST(2,0,0)
 #if defined(USE_GLES1)
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
