@@ -355,7 +355,10 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
     actual_h = Screen->h;
 #endif
 
-    if (EGL_Open( actual_w, actual_h ) != 0)
+    //DKS - EGL_Open now takes additional parameters to specify desired screen
+    //      depth and vsync. If eglport.cfg file is present, it will override
+    //      whatever is passed here, however:
+    if (EGL_Open( actual_w, actual_h, CommandLineParams.ScreenDepth == 16 ? 16 : 32, CommandLineParams.VSync ) != 0 )
     {
         return 1;
     }
