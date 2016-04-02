@@ -113,8 +113,6 @@ static float SineRemezRad(float x)
         float x_past_quad = x - float(quotient) * pi_over_two;
 
         switch (quotient % 4) { 
-            default: // Default case shouldn't happen; fall through
-
             case 0: // x is < PI/2
                 x = x_past_quad;
                 break;
@@ -175,8 +173,7 @@ inline float cos_rad(const float rad)
 
 } // Unnamed namespace
 
-#else
-// Don't use fast trig, use wrappers around libm:
+#else // Normal trig (wrappers around libm sinf/cosf):
 
 namespace
 {
