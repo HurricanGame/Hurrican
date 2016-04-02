@@ -352,7 +352,7 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
     SDL_ShowCursor(SDL_DISABLE);
 
 #if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
-    uint16_t actual_w, actual_h;
+    int actual_w, actual_h;
 #if SDL_VERSION_ATLEAST(2,0,0)
     SDL_GetWindowSize( Window, &actual_w, &actual_h );
 #else
@@ -368,6 +368,92 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
         return 1;
     }
 #endif
+
+    // DKS - BEGIN VSYNC-RELATED CODE:
+    // If not using EGL, i.e. using SDL's GL handling, some more handling of
+    //  Vsync is necessary now that context has been created:
+#if !defined(USE_EGL_SDL) && !defined(USE_EGL_RAW) && !defined(USE_EGL_RPI)
+#if SDL_VERSION_ATLEAST(2,0,0)
+    {
+        int retval = -1;
+        if (VSync) {
+            // Beginning with SDL 2.0, we set vsync directly with function.
+            // First, try setting it to -1, which requests 'late swap tearing', which
+            //  will not wait for vsync if previous frame was missed:
+
+            Protokoll.WriteText( false, "-> Requesting SDL2 GL to enable VSync with 'late swap tearing' (optimal)\n" );
+            retval = SDL_GL_SetSwapInterval(-1);
+            if (retval < 0) {
+                Protokoll.WriteText( false, "-> 'Late swap tearing' VSync not supported:\n%s\n", SDL_GetError() );
+                Protokoll.WriteText( false, "-> Requesting SDL2 GL to enable standard VSync\n" );
+                retval = SDL_GL_SetSwapInterval(1);
+                if (retval < 0) {
+                    Protokoll.WriteText( false, "-> *** SDL2 GL failed to enable VSync:\n%s\n", SDL_GetError() );
+                    VSyncEnabled = false;
+                } else {
+                    Protokoll.WriteText( false, "-> VSync enabled successfully\n" );
+                    VSyncEnabled = true;
+                } 
+            } else {
+                Protokoll.WriteText( false, "-> VSync with late-swap-tearing enabled successfully\n" );
+                VSyncEnabled = true;
+            }
+        } else {
+            Protokoll.WriteText( false, "-> Requesting SDL2 GL to disable VSync\n" );
+            retval = SDL_GL_SetSwapInterval(0);
+            if (retval < 0) {
+                Protokoll.WriteText( false, "-> *** SDL2 GL failed to disable VSync:\n%s\n", SDL_GetError() );
+                VSyncEnabled = true;
+            } else {
+                VSyncEnabled = false;
+            }
+        }
+    }
+#else // SDL_VERSION < 2.0:
+    {
+        // Try to determine if VSync got set, because if not, we'll have to call
+        //  glFlush() every frame to ensure image gets displayed on all platforms
+        int status;
+        int retval = SDL_GL_GetAttribute(SDL_GL_DOUBLEBUFFER, &status);
+        if (retval >= 0) {
+            if (status == 1) {
+                if (VSync) {
+                    Protokoll.WriteText( false, "-> SDL1 GL reports VSync was enabled successfully\n" );
+                } else {
+                    // We requested no VSync, but got it anyways:
+                    Protokoll.WriteText( false, "-> *** SDL1 GL reports VSync could not be disabled. (try fullscreen?)\n" );
+                }
+
+                VSyncEnabled = true;
+            } else {
+                if (VSync) {
+                    // We requested VSync, but didn't get it:
+                    Protokoll.WriteText( false, "-> *** SDL1 GL reports VSync is unavailable. (try fullscreen?)\n" );
+                } else {
+                    Protokoll.WriteText( false, "-> SDL1 GL reports VSync was disabled successfully\n" );
+                }
+                VSyncEnabled = false;
+            }
+        } else {
+            // Call to SDL_GL_GetAttribute failed for some reason, we'll assume VSync
+            //  is not set and call glFlush() each frame
+            Protokoll.WriteText( false, "-> *** Unable to determine SDL GL VSync status:\n%s\n", SDL_GetError() );
+            Protokoll.WriteText( false, "-> *** (Will assume VSync is unavailable). )\n" );
+            VSyncEnabled = false;
+        }
+    }
+#endif  // SDL GL VERSION CHECKS
+#else   // Using EGL:
+    // TODO: If using EGL, determine if we actually are using VSync in
+    //  SDLPort/eglport.cpp and provide interface to set UsingVSync
+    //  boolean here. For now, assume we got it if we requested it,
+    //  ignoring the fact that if EGL_Open() found eglport.cfg file, its
+    //  settings will override whatever Hurrican requested.
+    //   Note that we don't actually do anything with the VSyncEnabled
+    //  boolean here one way or the other when EGL is being used, we just
+    //  let SDLPort/eglport.cpp take care of its own business.
+    VSyncEnabled = VSync;
+#endif // END VSYNC-RELATED CODE
 
     SetDeviceInfo();
 
@@ -1057,10 +1143,20 @@ void DirectGraphicsClass::ShowBackBuffer(void)
 #if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
     EGL_SwapBuffers();
 #else
+    //DKS - TODO: Test with SDL2.0 and ensure it wouldn't be better to
+    //      include this in the new VSyncEnabled test below, calling
+    //      glFlush() instead of SDL_GL_SwapWindow() when vsync is either
+    //      disabled or unavailable.
 #if SDL_VERSION_ATLEAST(2,0,0)
     SDL_GL_SwapWindow(Window);
-#else
-    SDL_GL_SwapBuffers();
+#else   // SDL1.2:
+    //DKS - Added call to glFlush when VSync is either disabled or unavailable to
+    //      fix black screen on my dev laptop when running with no vsync under GL1:
+    if (VSyncEnabled) {
+        SDL_GL_SwapBuffers();
+    } else {
+        glFlush();
+    }
 #endif
 #endif
 
@@ -1085,7 +1181,11 @@ void DirectGraphicsClass::SetupFramebuffers( void )
 {
     /* Read the current window size */
 #if SDL_VERSION_ATLEAST(2,0,0)
-    SDL_GetWindowSize( Window, &WindowView.w, &WindowView.h );
+    {
+        int tmp_w, tmp_h;
+        SDL_GetWindowSize( Window, &tmp_w, &tmp_h );
+        WindowView.w = tmp_w;  WindowView.h = tmp_h;
+    }
 #else
     WindowView.w = Screen->w;
     WindowView.h = Screen->h;

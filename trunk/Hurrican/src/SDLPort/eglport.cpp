@@ -30,8 +30,8 @@
 #include <string.h>
 
 #if defined(USE_EGL_SDL)
-#include "SDL/SDL.h"
-#include "SDL/SDL_syswm.h"
+#include "SDL.h"
+#include "SDL_syswm.h"
 SDL_SysWMinfo sysWmInfo;      /** Holds our X Display/Window information */
 #endif /* USE_EGL_SDL */
 
