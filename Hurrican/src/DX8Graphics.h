@@ -86,7 +86,7 @@ struct QUAD2D {
 class DirectGraphicsClass
 {
 private:
-    bool					useVSync;						// VSync ein/aus ?
+    bool					VSyncEnabled;                   // VSync ein/aus ?
     bool					FilterMode;						// Linearer Filter an/aus?
 #if defined(PLATFORM_DIRECTX)
     D3DDISPLAYMODE			d3ddm;							// Display Mode
