@@ -788,7 +788,10 @@ void ConsoleClass::CheckInput(void)
             //DKS - Fixed buffer overflow by adding strlen check that encompasses both
             //      single characters and spaces. Previously, only single chars had a
             //      check and, worse, it had an off-by-one error. (Caught with valgrind)
-            if (strlen(Buffer) < MAX_CHARS-1)
+            //      Also: added check of string's on-screen length drawn with current
+            //      font, to ensure line never goes off right edge of console, especially
+            //      in low-res modes using new font scaling support.
+            if (strlen(Buffer) < MAX_CHARS-1 && pDefaultFont->StringLength(Buffer) < 570)
             {
                 // Space anhängen
                 if (i == DIK_SPACE) {
