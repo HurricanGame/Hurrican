@@ -729,7 +729,15 @@ loadfile:
 }
 
 //DKS - Altered extensively:
+// NOTE: there are two versions here , one for DirectX/FMod that uses the
+//       freq parameter, and another that doesn't take the freq
+//       parameter, since SDL_mixer doesn't support pitch-changing.
+//       See new inline wrappers in DX8Sound.h
+#if defined(PLATFORM_DIRECTX)
 int SoundManagerClass::PlayWave(int vol, int pan, int freq, int nr)
+#else // SDL version:
+int SoundManagerClass::PlayWave(int vol, int pan, int nr)
+#endif
 {
     // hört man den Sound überhaupt ?
     if (g_sound_vol == 0 || !sounds[nr].data)
@@ -788,7 +796,15 @@ int SoundManagerClass::PlayWave(int vol, int pan, int freq, int nr)
 // Rückgabewert	: true, wenn der Sound gespielt wurde, sonst false
 // Parameter	: Nr des Sounds im Array
 //---------------------------------------------------------------------------------------
+// NOTE: there are two versions here , one for DirectX/FMod that uses the
+//       freq parameter, and another that doesn't take the freq
+//       parameter, since SDL_mixer doesn't support pitch-changing.
+//       See new inline wrappers in DX8Sound.h
+#if defined(PLATFORM_DIRECTX)
 int SoundManagerClass::PlayWave3D(int x, int y, int freq, int nr)
+#else // SDL version:
+int SoundManagerClass::PlayWave3D(int x, int y, int nr)
+#endif
 {
     int   channel = -1;
 
@@ -821,7 +837,12 @@ int SoundManagerClass::PlayWave3D(int x, int y, int freq, int nr)
                 pan = 255;
         }
 
+#if defined(PLATFORM_DIRECTX)
         channel = PlayWave(vol, pan, freq, nr);
+#else // SDL version:
+        channel = PlayWave(vol, pan, nr);
+#endif
+
     }
 
     if (channel != -1) {
