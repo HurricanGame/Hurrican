@@ -123,8 +123,7 @@ USE_NO_EXCEPTIONS := yes
 
 DEFINES += -DGCW -DUSE_GLES2 -DUSE_EGL_RAW
 DEFINES += -DUSE_HOME_DIR -DUSE_FAST_RNG -DUSE_FAST_TRIG -DUSE_ETC1
-INCLUDES_OS := -ISDL_port \
-               -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/SDL \
+INCLUDES_OS := -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/SDL \
                -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/libmodplug \
                -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/GLES2 \
                -I$(GCWSDK)/mipsel-gcw0-linux-uclibc/sysroot/usr/include/EGL
