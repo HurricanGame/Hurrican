@@ -62,7 +62,6 @@ private:
     char					Buffer[MAX_CHARS];
     bool					Pressed[256];				// Für Tasten-lock
     bool					CONSOLE_CHEAT(char *cheat);
-    int                     ConsoleLines;
     // DKS - New console joystick support - CursorChar stores the candidate character (space by default)
     char                    CursorChar[2];             
 

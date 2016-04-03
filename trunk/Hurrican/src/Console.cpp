@@ -43,7 +43,6 @@ ConsoleClass::ConsoleClass()
     RenderBinary    = false;
     CursorChar[0]      = ' ';      
     CursorChar[1]      = '\0';      
-    ConsoleLines        = MAX_LINES / pDefaultFont->GetScaleFactor();
 
     // Text in der Konsole leeren
     for (int i = 0; i < MAX_LINES; i++)
@@ -85,7 +84,8 @@ void ConsoleClass::ShowConsole(void)
     int			a;
     float		yoffset;
     static float cursorcount = 0.0f;
-    int scale_factor = pDefaultFont->GetScaleFactor();
+    int scale_factor = pDefaultFont->GetScaleFactor();//DKS - added font scaling support
+    int console_lines = MAX_LINES / pDefaultFont->GetScaleFactor(); //DKS - ditto
     int line_spacing = 12 * scale_factor;
     //a = int (its_Alpha * 8 / 9);  //DKS - This line was commented out in original source
     a = int (its_Alpha);
@@ -95,12 +95,24 @@ void ConsoleClass::ShowConsole(void)
     Color = D3DCOLOR_RGBA(255, 255, 255, a);
     ConsoleGFX.RenderSpriteScaled(0, yoffset, 640, 256, Color);
 
-    // Text anzeigen
-    for (int i=MAX_LINES-ConsoleLines, line_pos=0; i<MAX_LINES; i++, line_pos++)
-    {
-        a = int (its_Alpha * 8 / 9);
-        Color = D3DCOLOR_RGBA(128, 128, 255, a);
-        pDefaultFont->DrawText(26, yoffset + float(10 + line_pos * line_spacing), Text[i], Color);
+    //DKS- Fixed for low-res devices using scaled fonts:
+    //// Text anzeigen
+    //for (int i=MAX_LINES-ConsoleLines, line_pos=0; i<MAX_LINES; i++, line_pos++)
+    //{
+    //    a = int (its_Alpha * 8 / 9);
+    //    Color = D3DCOLOR_RGBA(128, 128, 255, a);
+    //    pDefaultFont->DrawText(26, yoffset + float(10 + line_pos * line_spacing), Text[i], Color);
+    //}
+
+    // DKS-Draw array of lines of text, but only draw the lines that will fit on the screen
+    //     using the current font scaling. Low-res devices like 320x240can only display
+    //     8 lines instead of 16, for example:
+    Color = D3DCOLOR_RGBA(128, 128, 255, a);
+    for (int i=0; i < console_lines; i++) {
+        int array_off = MAX_LINES-console_lines+i;
+        //DKS - Do a bounds check here just to be extra safe:
+        if (array_off >= 0 && array_off < MAX_LINES)
+            pDefaultFont->DrawText(26, yoffset + float(10 + i * line_spacing), Text[array_off], Color);
     }
 
     char Temp[105];
@@ -115,14 +127,14 @@ void ConsoleClass::ShowConsole(void)
         cursorcount = 0.0f;
 
     Color = D3DCOLOR_RGBA(255, 255, 255, a);
-    pDefaultFont->DrawText(26 - 6 * scale_factor, yoffset +  10 + ConsoleLines * line_spacing, Temp, Color);
+    pDefaultFont->DrawText(26 - 6 * scale_factor, yoffset +  10 + console_lines * line_spacing, Temp, Color);
 
     // Draw cursor block
     int text_width = pDefaultFont->StringLength(Temp);
     int cursor_x = 20 + text_width;
     if (scale_factor > 1) 
         cursor_x -= 6;
-    int cursor_y = yoffset + 10 + ConsoleLines * line_spacing;
+    int cursor_y = yoffset + 10 + console_lines * line_spacing;
     int cursor_h = 12 * scale_factor;
     int cursor_w = 9 * scale_factor;
 
