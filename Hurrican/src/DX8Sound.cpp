@@ -732,11 +732,11 @@ loadfile:
 // NOTE: there are two versions here , one for DirectX/FMod that uses the
 //       freq parameter, and another that doesn't take the freq
 //       parameter, since SDL_mixer doesn't support pitch-changing.
-//       See new inline wrappers in DX8Sound.h
+//       Macro in DX8Sound.h converts PlayWave() calls in the game.
 #if defined(PLATFORM_DIRECTX)
 int SoundManagerClass::PlayWave(int vol, int pan, int freq, int nr)
 #else // SDL version:
-int SoundManagerClass::PlayWave(int vol, int pan, int nr)
+int SoundManagerClass::PlayWave_SDL(int vol, int pan, int nr)
 #endif
 {
     // hört man den Sound überhaupt ?
@@ -799,11 +799,11 @@ int SoundManagerClass::PlayWave(int vol, int pan, int nr)
 // NOTE: there are two versions here , one for DirectX/FMod that uses the
 //       freq parameter, and another that doesn't take the freq
 //       parameter, since SDL_mixer doesn't support pitch-changing.
-//       See new inline wrappers in DX8Sound.h
+//       Macro in DX8Sound.h converts PlayWave3D() calls in the game.
 #if defined(PLATFORM_DIRECTX)
 int SoundManagerClass::PlayWave3D(int x, int y, int freq, int nr)
 #else // SDL version:
-int SoundManagerClass::PlayWave3D(int x, int y, int nr)
+int SoundManagerClass::PlayWave3D_SDL(int x, int y, int nr)
 #endif
 {
     int   channel = -1;
@@ -840,7 +840,7 @@ int SoundManagerClass::PlayWave3D(int x, int y, int nr)
 #if defined(PLATFORM_DIRECTX)
         channel = PlayWave(vol, pan, freq, nr);
 #else // SDL version:
-        channel = PlayWave(vol, pan, nr);
+        channel = PlayWave_SDL(vol, pan, nr);
 #endif
 
     }
