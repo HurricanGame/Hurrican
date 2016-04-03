@@ -233,6 +233,13 @@ struct SOUNDMANAGER_PARAMETERS
     int		Flags;
 };
 
+//DKS - SDL_mixer lacks pitch-change feature that original game used through FMOD.
+//      This macro masks-out the the many random frequency requests the game makes
+//      throughout, which otherwise would result in unnecessary calls to rand()
+//      and integer modulus.
+#define PlayWave(vol, pan, freq, nr) PlayWave_SDL(vol, pan, nr)
+#define PlayWave3D(x, y, freq, nr) PlayWave3D_SDL(x, y, nr)
+
 // --------------------------------------------------------------------------------------
 // Klassendeklaration
 // --------------------------------------------------------------------------------------
@@ -366,20 +373,11 @@ public :
                   int freq, int nr);
     int  PlayWave3D(int x, int y,                   // Sound spielen abhängig von der Spieler
                      int freq, int nr);             // position lauter oder leiser
-#else   //SDL inline wrappers that drop the unsupported freq parameter, and
-        // pass the params onto versions taking only the params actually used:
-    int  PlayWave(int vol, int pan, int freq, int nr)
-    {
-        return PlayWave(vol, pan, nr);
-    }
-
-    int  PlayWave3D(int x, int y, int freq, int nr)
-    {
-        return PlayWave3D(x, y, nr);
-    }
-
-    int  PlayWave(int vol, int pan, int nr);        // Sound spielen
-    int  PlayWave3D(int x, int y, int nr);          // Sound spielen abhängig von der Spieler
+#else   //SDL versions not taking the unsupported freq parameter, called
+        // via macro replacement of instances of PlayWave() PlayWave3D()
+        // (This masks out many unnecessary calls to rand() and int modulus)
+    int  PlayWave_SDL(int vol, int pan, int nr);    // Sound spielen
+    int  PlayWave3D_SDL(int x, int y, int nr);      // Sound spielen abhängig von der Spieler
                                                     // position lauter oder leiser
 #endif
 
@@ -405,7 +403,7 @@ public :
     int  GetChannelWaveIsPlayingOn(int nr);
     void SetPendingChannelVolumeAndPanning(int ch, int new_vol, int new_pan);
 
-    //DKS - added.. (Playing waves and varying freq's not supported under SDL, for now anyway)
+    //DKS - Added #ifdef block around features SDL_mixer lacks:
 #if defined(PLATFORM_DIRECTX)
     void SetWaveFrequency(int nr, int freq);
 #endif
