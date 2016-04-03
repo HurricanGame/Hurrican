@@ -37,6 +37,7 @@ GegnerClass::GegnerClass(void)
     HitSound     = 0;
     TimeToChange = 50.0f;
     TurnCount    = 0.0f;
+    blocko = blocku = blockl = blockr = 0;  //DKS - Added initializers
 
     // Ziel zufällig wählen
     pAim = ChooseAim();
