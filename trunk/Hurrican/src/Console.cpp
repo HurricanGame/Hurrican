@@ -785,32 +785,45 @@ void ConsoleClass::CheckInput(void)
             Pressed[i] = true;
 
             // Zeichen anhängen
-            if (strlen(GetKeyName(i)) <= 1 &&
-                    strlen(Buffer) < MAX_CHARS)
+            //DKS - Fixed buffer overflow by adding strlen check that encompasses both
+            //      single characters and spaces. Previously, only single chars had a
+            //      check and, worse, it had an off-by-one error. (Caught with valgrind)
+            if (strlen(Buffer) < MAX_CHARS-1)
             {
-                char buf[50];
-                strcpy_s(buf, GetKeyName(i));
-
-                // unwandeln in kleinbuchstaben
-                if (!KeyDown(DIK_LSHIFT))
+                // Space anhängen
+                if (i == DIK_SPACE) {
+                    strcat_s(Buffer, " ");
+                } else if (strlen(GetKeyName(i)) == 1) //DKS - Replacement line that also has saner strlen(GetKeyName) check
                 {
-                    char c;
-                    for (int i=0; i < 50; i++)
-                    {
-                        c = buf[i];
-                        if (c >= 65 &&
-                                c <= 90)
-                            c += 32;
-                        buf[i] = c;
-                    }
+                    //Single characters:
+
+                    //DKS - This original code is a bit obtuse. It was brought to my attention by
+                    //      valgrind  complaining of a conditional on uninitialized data. It
+                    //      wasn't a true problem here, but might as well get valgrind to quiet down
+                    //      while I'm here:
+                    //DKS - We already know GetKeyName(i)'s strlen was <= 1, why use a huge buffer?
+                    //char buf[50];
+                    //strcpy_s(buf, GetKeyName(i));
+                    // unwandeln in kleinbuchstaben
+                    //if (!KeyDown(DIK_LSHIFT)) {
+                    //    char c;
+                    //    for (int i=0; i < 50; i++) {
+                    //        c = buf[i];
+                    //        if (c >= 65 && c <= 90)
+                    //            c += 32;
+                    //        buf[i] = c;
+                    //    }
+                    //}
+                    //strcat_s(Buffer, buf);
+
+                    char buf[2];
+                    buf[0] = *GetKeyName(i);
+                    buf[1] = '\0';
+                    if(!KeyDown(DIK_LSHIFT))
+                        buf[0] = tolower(buf[0]);
+                    strcat_s(Buffer, buf);
                 }
-
-                strcat_s(Buffer, buf);
             }
-
-            // Space anhängen
-            if (i == DIK_SPACE)
-                strcat_s(Buffer, " ");
 
             // Backspace
             if (i == DIK_BACK && strlen(Buffer) > 0)
