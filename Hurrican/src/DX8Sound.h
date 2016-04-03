@@ -360,10 +360,29 @@ public :
     void FadeWave(int nr, int mode);                    // Fade Mode
     void LoadWave(const std::string &filename, int nr,  // Sound laden
                   bool looped);
+
+#if defined(PLATFORM_DIRECTX)
     int  PlayWave(int vol, int pan,                 // Sound spielen
                   int freq, int nr);
     int  PlayWave3D(int x, int y,                   // Sound spielen abhängig von der Spieler
                      int freq, int nr);             // position lauter oder leiser
+#else   //SDL inline wrappers that drop the unsupported freq parameter, and
+        // pass the params onto versions taking only the params actually used:
+    int  PlayWave(int vol, int pan, int freq, int nr)
+    {
+        return PlayWave(vol, pan, nr);
+    }
+
+    int  PlayWave3D(int x, int y, int freq, int nr)
+    {
+        return PlayWave3D(x, y, nr);
+    }
+
+    int  PlayWave(int vol, int pan, int nr);        // Sound spielen
+    int  PlayWave3D(int x, int y, int nr);          // Sound spielen abhängig von der Spieler
+                                                    // position lauter oder leiser
+#endif
+
     void StopWave(int nr);                          // Wave anhalten
 
     //DKS - Added these:
