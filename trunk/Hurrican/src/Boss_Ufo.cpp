@@ -27,6 +27,10 @@ GegnerUfo::GegnerUfo(int Wert1, int Wert2, bool Light)
     OwnDraw			= true;
     LastAction		= -1;
 
+    //DKS - Added initializer, after valgrind reported GEGNER_LAUFEN switch case in
+    //      DoKI() was using this uninitialized:
+    ShotDelay = 0.0f;
+
     TileEngine.MaxOneUps++;
 }
 
