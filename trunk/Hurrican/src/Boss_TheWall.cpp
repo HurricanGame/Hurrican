@@ -38,6 +38,10 @@ GegnerTheWall::GegnerTheWall(int Wert1, int Wert2, bool Light)
     dummy			= 0.0f;
     SkullShotDelay	= 0.0f;
 
+    //DKS - Added initializers after valgrind reported use of uninitialized data:
+    SmokeDelay = 0.0f;
+    ShotDelay = 0.0f;
+
     // Zusätzliche Grafiken laden
     //
     Tuer.LoadImage("endbosstuer.png", 288, 185, 288, 185, 1, 1);
