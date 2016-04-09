@@ -235,6 +235,13 @@ void GameLoop(void)
 {
     HUD.bShowArrow = false;
 
+    //DKS - There is no need to clear the screen in the game loop, as a full-screen
+    //      non-transparent background texture is always drawn first, and other
+    //      portions of the game like the Cracktro or main menu have already
+    //      cleared any larger-than-640x480 rendering textures in use if FBOs
+    //      are enabled. Disabling screen-clear here helps embedded platforms
+    //      which have very limited fill-rate.
+#if 0 //DKS-DISABLED SCREEN CLEAR IN MAIN GAME LOOP
     // Total löschen
 #if defined(PLATFORM_DIRECTX)
     //DKS - Since I removed all use of the Z-coordinate, this should be changed too. Note: DirectX is entirely untested.
@@ -245,6 +252,7 @@ void GameLoop(void)
 #elif defined(PLATFORM_SDL)
     DirectGraphics.ClearBackBuffer();
 #endif
+#endif //0
 
     TileEngine.NewXOffset = -1;
     TileEngine.NewYOffset = -1;
