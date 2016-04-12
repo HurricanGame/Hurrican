@@ -502,7 +502,6 @@ public:
     //float			SinList2[4096];							// Sinus Liste zum Schwabbeln des Wasserhintergrunds
     //float			WaterList[4096];						// Sinus Liste zum Schwabbeln der Oberfläche
 
-    RECT			TileRects[144];							// vorberechnete Tile Ausschnitte
     char			Beschreibung[100];						// Beschreibung des Levels
     int				Zustand;								// Aktueller Zustand
     float			ScrolltoX, ScrolltoY;					// Lock-Werte
@@ -523,6 +522,7 @@ public:
     //LevelTileSaveStruct				OriginalTiles[MAX_LEVELSIZE_X]  // Array mit Leveldaten merken (für Lightmaps)
     //[MAX_LEVELSIZE_Y];
 
+    RECT                            TileRects[144];         // vorberechnete Tile Ausschnitte
     DirectGraphicsSprite			TileGfx[MAX_TILESETS];	// Tilegrafiken
     DirectGraphicsSprite			Background;				// Hintergrund
     DirectGraphicsSprite			ParallaxLayer[6];		// Anzahl der Layer
@@ -653,7 +653,17 @@ public:
     //DKS - Added bounds-checked accessor for Tiles[][] array for debugging purposes:
     LevelTileStruct& TileAt(const int i, const int j)
     {
-#ifdef _DEBUG
+#ifdef _DEBUG_STRICT
+        // Stricter bounds-check I use when optimizing
+        if (i >= LEVELSIZE_X || i < 0 || j >= LEVELSIZE_Y || j < 0) {
+            Protokoll.WriteText( true, "-> Error: Out of bounds in TileEngineClass::TileAt():\n"
+                    "\tparam i: %d\tLower bound: %d\tUpper bound: %d\n"
+                    "\tparam j: %d\tLower bound: %d\tUpper bound: %d\n",
+                    i, 0, LEVELSIZE_X-1, j, 0, LEVELSIZE_Y-1 );
+            exit(1);    //WriteText above should do this for us (first param==true)
+        }
+
+#elif _DEBUG
         if (i >= MAX_LEVELSIZE_X || i < 0 || j >= MAX_LEVELSIZE_Y || j < 0) {
             Protokoll.WriteText( true, "-> Error: Out of bounds in TileEngineClass::TileAt():\n"
                     "\tparam i: %d\tLower bound: %d\tUpper bound: %d\n"
