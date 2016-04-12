@@ -113,15 +113,15 @@ TileEngineClass::TileEngineClass(void)
 //		 for (int k = 0; k < 3; k++)
 //			 TileAt(i, j).Color[k] = 0xFFFFFFFF;
 
-            TileAt(i, j).Red		  = 255;
-            TileAt(i, j).Green		  = 255;
-            TileAt(i, j).Blue		  = 255;
-            TileAt(i, j).Alpha		  = 255;
+            Tiles[i][j].Red   = 255;
+            Tiles[i][j].Green = 255;
+            Tiles[i][j].Blue  = 255;
+            Tiles[i][j].Alpha = 255;
 
-            TileAt(i, j).move_v1 =
-                TileAt(i, j).move_v2 =
-                TileAt(i, j).move_v3 =
-                TileAt(i, j).move_v4 = false;
+            Tiles[i][j].move_v1 =
+                Tiles[i][j].move_v2 =
+                Tiles[i][j].move_v3 =
+                Tiles[i][j].move_v4 = false;
         }
 
     for(int i=0; i<MAX_TILESETS; i++)
@@ -970,6 +970,12 @@ void TileEngineClass::CalcRenderRange(void)
 
     if (xo + RenderPosXTo > LEVELSIZE_X) RenderPosXTo = SCREENSIZE_X;
     if (yo + RenderPosYTo > LEVELSIZE_Y) RenderPosYTo = SCREENSIZE_Y;
+
+    //DKS - Added:
+    while (xo + RenderPosXTo > LEVELSIZE_X)
+        --RenderPosXTo;
+    while (yo + RenderPosYTo > LEVELSIZE_Y)
+        --RenderPosYTo;
 
     // Sonstige Ausgangswerte berechnen
     xLevel = (int)xo;
@@ -2009,27 +2015,27 @@ void TileEngineClass::DrawWater(void)
 
                         // Oberfläche des Wassers aufhellen
                         //DKS - Fixed potential out of bounds access to Tiles[][] array here
-                        //      by adding check for yLevel+j > 0:
+                        //      by adding check for yLevel+j-1 >= 0:
                         //if (!(TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID) &&           (ORIGINAL TWO LINES)
                         //        !(TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_WASSERFALL))
-                        if (yLevel+j > 0 &&
+                        if (yLevel+j-1 >= 0 &&
                                 !(TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID) &&         
                                 !(TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_WASSERFALL))
                         {
                             //DKS - Fixed potential out of bounds access to Tiles[][] array here
-                            //      by adding check for xLevel+i > 0:
+                            //      by adding check for xLevel+i-1 >= 0:
                             //if (!(TileAt(xLevel+i-1, yLevel+j-1).Block & BLOCKWERT_LIQUID) &&
                             //        !(TileAt(xLevel+i-1, yLevel+j-1).Block & BLOCKWERT_WASSERFALL))
-                            if ( xLevel+i > 0 &&    //DKS - Added check
+                            if ( xLevel+i-1 >= 0 &&
                                     !(TileAt(xLevel+i-1, yLevel+j-1).Block & BLOCKWERT_LIQUID) &&
                                     !(TileAt(xLevel+i-1, yLevel+j-1).Block & BLOCKWERT_WASSERFALL))
                                 v1.color = Col3;
 
                             //DKS - Fixed potential out of bounds access to Tiles[][] array here
-                            //      by adding check for xLevel+i < MAX_LEVELSIZE_X-1:
+                            //      by adding check for xLevel+i+1 < LEVELSIZE_X
                             //if (!(TileAt(xLevel+i+1, yLevel+j-1).Block & BLOCKWERT_LIQUID) &&
                             //        !(TileAt(xLevel+i+1, yLevel+j-1).Block & BLOCKWERT_WASSERFALL))
-                            if ( xLevel+i < MAX_LEVELSIZE_X-1 &&    //DKS - Added check
+                            if ( xLevel+i+1 < LEVELSIZE_X &&
                                     !(TileAt(xLevel+i+1, yLevel+j-1).Block & BLOCKWERT_LIQUID) &&
                                     !(TileAt(xLevel+i+1, yLevel+j-1).Block & BLOCKWERT_WASSERFALL))
                                 v2.color = Col3;
@@ -3088,7 +3094,7 @@ bool TileEngineClass::BlockDestroyRechts(float x, float y, float xo, float yo, R
         return false;
 
     int xlev = (int)((x+rect.right+1) * (1.0f/TILESIZE_X));
-    if (xlev < 0 || xlev >= MAX_LEVELSIZE_X)
+    if (xlev < 0 || xlev >= LEVELSIZE_X)
         return false;
 
     for(int j=rect.top; j<rect.bottom; j+= TILESIZE_Y) {
@@ -3479,7 +3485,7 @@ uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT rect, 
         for(int i = rect.right; i>rect.left; i--) {
             int xlev = int ((x + i) * (1.0f/TILESIZE_X));
 
-            if (xlev >= MAX_LEVELSIZE_X)
+            if (xlev >= LEVELSIZE_X)
                 continue;
             else if (xlev < 0)
                 break;
@@ -3586,8 +3592,13 @@ D3DCOLOR TileEngineClass::LightValue(float x, float y, RECT rect, bool forced)
     xLevel = int((x + (rect.right  - rect.left) / 2) /TILESIZE_X);		// xPosition im Level
     yLevel = int((y + (rect.bottom - rect.top)  / 2) /TILESIZE_Y);		// yPosition im Level
 
-    if (!(TileAt(xLevel, yLevel).Block & BLOCKWERT_LIGHT) &&		// Soll das Leveltile garnicht
-            forced == false)
+    //DKS - Added check for xLevel,yLevel being in bounds of levels' dimensions, also,
+    //      check forced==false before blindly looking up block value:
+    //if (!(TileAt(xLevel, yLevel).Block & BLOCKWERT_LIGHT) &&		// Soll das Leveltile garnicht
+    //        forced == false)
+    //    return 0xFFFFFFFF;										// das Licht des Objektes ändern
+    if ( (xLevel >= LEVELSIZE_X || yLevel >= LEVELSIZE_Y) ||
+         (forced == false && !(TileAt(xLevel, yLevel).Block & BLOCKWERT_LIGHT)) )		// Soll das Leveltile garnicht
         return 0xFFFFFFFF;										// das Licht des Objektes ändern
 
     r = TileAt(xLevel, yLevel).Red;
