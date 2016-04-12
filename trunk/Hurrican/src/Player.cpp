@@ -1056,6 +1056,10 @@ void PlayerClass::AnimatePlayer(void)
 
     static float	look;		// hoch / runter sehen
 
+    //DKS - Added so we can limit bounds of accesses to Tiles[][] array here
+    int levelsize_x = TileEngine.LEVELSIZE_X;
+    int levelsize_y = TileEngine.LEVELSIZE_Y;
+
     bu = 0;
 
     bl = TileEngine.BlockLinks	  (xpos, ypos, xposold, yposold, CollideRect, yspeed >= 0.0f);
@@ -1101,7 +1105,8 @@ void PlayerClass::AnimatePlayer(void)
     bo = TileEngine.BlockOben		  (xpos, ypos, xposold, yposold, CollideRect, true);
 
     // Spieler unter Wasserfall ? Dann Wassertropfen entstehen lassen
-    //
+    //DKS - Added bounds check for access to Tiles[][] array, eliminated divisions while I was here:
+#if 0
     for (int i = int (xpos + CollideRect.left) + 5; i < int (xpos + CollideRect.right) - 5; i+=2)
     {
         if (TileEngine.TileAt(int (i / 20), int (ypos + CollideRect.top + 10) / 20).Block & BLOCKWERT_WASSERFALL)
@@ -1114,6 +1119,31 @@ void PlayerClass::AnimatePlayer(void)
 
             if (rand()%200 == 0)
                 PartikelSystem.PushPartikel (float (i) + rand()%4 - 16, ypos + CollideRect.top + rand()%4 + 10 - 16, WATERFLUSH);
+        }
+    }
+#endif //0
+    //DKS - New version of above with bounds checks, divisions converted to multiplies:
+    {
+        float tmp_y = ypos + (CollideRect.top + 10);
+        int tile_y = tmp_y * (1.0f/TILESIZE_Y);
+        if (tile_y >= 0 && tile_y < levelsize_y) {
+            for (int i = int(xpos) + CollideRect.left + 5; i < int(xpos) + CollideRect.right - 5; i+=2) {
+                float tmp_x = i;
+                int tile_x = float(i) * (1.0f/TILESIZE_X);
+                if (tile_x < 0) continue;
+                else if (tile_x >= levelsize_x) break;
+
+                if (TileEngine.TileAt(tile_x, tile_y).Block & BLOCKWERT_WASSERFALL) {
+                    if (rand()%50 == 0)
+                        PartikelSystem.PushPartikel(tmp_x + rand()%4, tmp_y + rand()%4, WASSERTROPFEN);
+
+                    if (rand()%200 == 0)
+                        PartikelSystem.PushPartikel(tmp_x + rand()%4, tmp_y + rand()%4, WATERFUNKE);
+
+                    if (rand()%200 == 0)
+                        PartikelSystem.PushPartikel(tmp_x + (rand()%4 - 16), tmp_y + (rand()%4 - 16), WATERFLUSH);
+                }
+            }
         }
     }
 
@@ -2395,8 +2425,18 @@ void PlayerClass::AnimatePlayer(void)
 
     //-----------------------------------------------
     // Testen, ob sich der Spieler im Wasser befindet
-    //
-    uint32_t middle = TileEngine.TileAt((int)(xpos + 35) / TILESIZE_X, (int)(ypos + 40) / TILESIZE_Y).Block;
+
+    //DKS - Added bounds check to Tiles[][] array, eliminated divisions while I was here:
+    //uint32_t middle = TileEngine.TileAt((int)(xpos + 35) / TILESIZE_X, (int)(ypos + 40) / TILESIZE_Y).Block;
+    uint32_t middle = 0;
+    { 
+        int tile_x = (xpos + 35.0f) * (1.0f/TILESIZE_X);
+        int tile_y = (ypos + 40.0f) * (1.0f/TILESIZE_Y);
+        if (tile_x >= 0 && tile_x < levelsize_x &&
+            tile_y >= 0 && tile_y < levelsize_y)
+            middle = TileEngine.TileAt(tile_x, tile_y).Block;
+    }
+
     int spritzertype = 0;
     if ((bu & BLOCKWERT_LIQUID) ||
             (br & BLOCKWERT_LIQUID) ||
