@@ -2971,8 +2971,8 @@ void PartikelClass::Run(void)
             // ADDED CHECK AND CONVERTED TO FLOAT DIV-BY-RECIPROCAL:
             int tmp_x = (int)((xPos + 5.0f) * (1.0f/TILESIZE_X));
             int tmp_y = (int)((yPos + 5.0f) * (1.0f/TILESIZE_Y));
-            if ( tmp_x >= 0 && tmp_x < MAX_LEVELSIZE_X &&
-                 tmp_y >= 0 && tmp_y < MAX_LEVELSIZE_Y &&
+            if ( tmp_x >= 0 && tmp_x < TileEngine.LEVELSIZE_X &&
+                 tmp_y >= 0 && tmp_y < TileEngine.LEVELSIZE_Y &&
                  TileEngine.TileAt(tmp_x, tmp_y).Block & BLOCKWERT_LIQUID)
             {
                 float off = 0;
@@ -4710,6 +4710,9 @@ PartikelsystemClass::~PartikelsystemClass(void)
 //          memory if there were too many particles already.
 //      2.) Support the now-singly-linked particle list
 //      3.) Support new optional pooled memory manager
+//      4.) Not return a value
+//      5.) Increment NumPartikel *before* calling CreatePartikel(), which can
+//          sometimes push particles of its own and overflow new memory pool.
 #if 0
 bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass* pParent)
 {
@@ -4755,11 +4758,25 @@ bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass* p
              Art == EXPLOSIONFLARE))
         return false;
 
+    PartikelClass *pNew = NULL;
 #ifdef USE_NO_MEMPOOLING
-    PartikelClass *pNew = new PartikelClass;		// Neuer zu erstellender Partikel
+    pNew = new PartikelClass;		// Neuer zu erstellender Partikel
 #else
-    PartikelClass *pNew = particle_pool.alloc();
+    pNew = particle_pool.alloc();
 #endif
+
+#ifdef _DEBUG
+    if (!pNew) {
+        Protokoll.WriteText( false, "WARNING: could not allocate memory for particle in PushPartikel()\n" );
+        return false;
+    }
+#endif
+
+    //DKS - Moved this here from end of function: calling CreatePartikel() for some
+    //      particle types will push even more particles, before NumPartikel has
+    //      been updated. When using a fixed memory pool like I've added, we must
+    //      be very careful to limit total allocations.
+    NumPartikel++;			
 
     pNew->CreatePartikel(x, y, Art, pParent);	// neuen Partikel erzeugen
     pNew->pNext = NULL;
@@ -4772,7 +4789,6 @@ bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass* p
 
     pEnd = pNew;				
 
-    NumPartikel++;			
     return true;
 }
 
