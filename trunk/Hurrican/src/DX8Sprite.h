@@ -29,10 +29,10 @@
 //      waterfalls and water. Presumably, hidden overdraw also is occuring elsewhere.
 //      Using 0.5f instead of 0.6f fixes this.
 #if defined(PLATFORM_DIRECTX)
-#define TEXTURE_COORD_OFFSET  0.6f
+#define POS_COORD_OFFSET  0.6f     // DKS - Game originally used this value
 #else // OpenGL:
-#define TEXTURE_COORD_OFFSET  0.5f
-#endif // PLATFORM_DIRECTX
+#define POS_COORD_OFFSET  0.5f
+#endif
 
 #define	MAX_SPRITES		      32768    // Maximalzahl Sprites am Screen
 #define MAX_SPRITEGFX	      500      // Maximal ladbare Sprites
