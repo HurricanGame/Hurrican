@@ -510,10 +510,10 @@ void DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
     o = y;									// Oben
     u = y+(itsRect.bottom-itsRect.top-1);	// Unten
 
-    l -= TEXTURE_COORD_OFFSET;
-    r += TEXTURE_COORD_OFFSET;
-    o -= TEXTURE_COORD_OFFSET;
-    u += TEXTURE_COORD_OFFSET;
+    l -= POS_COORD_OFFSET;
+    r += POS_COORD_OFFSET;
+    o -= POS_COORD_OFFSET;
+    u += POS_COORD_OFFSET;
 
     //DKS - Converted this and all other sprite-rendering functions to use new itsXTexScale
     //      and itsYTexScale texture-coordinate-conversion factors like so:
@@ -581,10 +581,10 @@ void DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR c1,
     o = y;									// Oben
     u = y+(itsRect.bottom-itsRect.top-1);	// Unten
 
-    l -= TEXTURE_COORD_OFFSET;
-    r += TEXTURE_COORD_OFFSET;
-    o -= TEXTURE_COORD_OFFSET;
-    u += TEXTURE_COORD_OFFSET;
+    l -= POS_COORD_OFFSET;
+    r += POS_COORD_OFFSET;
+    o -= POS_COORD_OFFSET;
+    u += POS_COORD_OFFSET;
 
     tl = itsRect.left    * itsXTexScale;	// Links
     tr = itsRect.right   * itsXTexScale;	// Rechts
@@ -712,10 +712,10 @@ void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
     o = y;									// Oben
     u = y+(itsRect.bottom-itsRect.top-1);	// Unten
 
-    l += TEXTURE_COORD_OFFSET;
-    r -= TEXTURE_COORD_OFFSET;
-    o -= TEXTURE_COORD_OFFSET;
-    u += TEXTURE_COORD_OFFSET;
+    l += POS_COORD_OFFSET;
+    r -= POS_COORD_OFFSET;
+    o -= POS_COORD_OFFSET;
+    u += POS_COORD_OFFSET;
 
     tl = itsRect.left   * itsXTexScale;	// Links
     tr = itsRect.right  * itsXTexScale;	// Rechts
@@ -769,10 +769,10 @@ void DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int he
     o = y;			// Oben
     u = y+height;	// Unten
 
-    l -= TEXTURE_COORD_OFFSET;
-    r += TEXTURE_COORD_OFFSET;
-    o -= TEXTURE_COORD_OFFSET;
-    u += TEXTURE_COORD_OFFSET;
+    l -= POS_COORD_OFFSET;
+    r += POS_COORD_OFFSET;
+    o -= POS_COORD_OFFSET;
+    u += POS_COORD_OFFSET;
 
     tl = itsRect.left   * itsXTexScale;	// Links
     tr = itsRect.right  * itsXTexScale;	// Rechts
@@ -827,10 +827,10 @@ void DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int he
     o = y;			// Oben
     u = y+height;	// Unten
 
-    l -= TEXTURE_COORD_OFFSET;
-    r += TEXTURE_COORD_OFFSET;
-    o -= TEXTURE_COORD_OFFSET;
-    u += TEXTURE_COORD_OFFSET;
+    l -= POS_COORD_OFFSET;
+    r += POS_COORD_OFFSET;
+    o -= POS_COORD_OFFSET;
+    u += POS_COORD_OFFSET;
 
     tl = ((Anim%itsXFrameCount) * itsXFrameSize)                 * itsXTexScale; // Links
     tr = ((Anim%itsXFrameCount) * itsXFrameSize + itsXFrameSize) * itsXTexScale; // Rechts
@@ -885,10 +885,10 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
     o = y;									// Oben
     u = y+(itsRect.bottom-itsRect.top-1);	// Unten
 
-    l -= TEXTURE_COORD_OFFSET;
-    r += TEXTURE_COORD_OFFSET;
-    o -= TEXTURE_COORD_OFFSET;
-    u += TEXTURE_COORD_OFFSET;
+    l -= POS_COORD_OFFSET;
+    r += POS_COORD_OFFSET;
+    o -= POS_COORD_OFFSET;
+    u += POS_COORD_OFFSET;
 
     tl = itsRect.left   * itsXTexScale;	// Links
     tr = itsRect.right  * itsXTexScale;	// Rechts
@@ -1225,10 +1225,10 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
     o = y;			// Oben
     u = y+height;	// Unten
 
-    l -= TEXTURE_COORD_OFFSET;
-    r += TEXTURE_COORD_OFFSET;
-    o -= TEXTURE_COORD_OFFSET;
-    u += TEXTURE_COORD_OFFSET;
+    l -= POS_COORD_OFFSET;
+    r += POS_COORD_OFFSET;
+    o -= POS_COORD_OFFSET;
+    u += POS_COORD_OFFSET;
 
     tl = itsRect.left   * itsXTexScale;	// Links
     tr = itsRect.right  * itsXTexScale;	// Rechts
@@ -1334,10 +1334,10 @@ void RenderRect4(float x, float y, float width, float height,
     o = y;			// Oben
     u = y+height - 1;	// Unten
 
-    l -= TEXTURE_COORD_OFFSET;
-    r += TEXTURE_COORD_OFFSET;
-    o -= TEXTURE_COORD_OFFSET;
-    u += TEXTURE_COORD_OFFSET;
+    l -= POS_COORD_OFFSET;
+    r += POS_COORD_OFFSET;
+    o -= POS_COORD_OFFSET;
+    u += POS_COORD_OFFSET;
 
     VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
 
