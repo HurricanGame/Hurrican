@@ -5,8 +5,8 @@
 // schiesst mit nem fiesen Flammenwerfer
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_FireSpider.h"
+#include "stdafx.hpp"
+#include "Gegner_FireSpider.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

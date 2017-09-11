@@ -4,8 +4,8 @@
 // Spinnen krabbeln von der Decke
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_WuxeSpinnen.h"
+#include "stdafx.hpp"
+#include "Boss_WuxeSpinnen.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

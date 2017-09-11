@@ -4,8 +4,8 @@
 // Hängt in der Gegend rum und spawnt maximal 6 Baby Alien-Schleimboller
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_SchleimMaul.h"
+#include "stdafx.hpp"
+#include "Gegner_SchleimMaul.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

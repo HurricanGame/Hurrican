@@ -5,8 +5,8 @@
 // zu fallen
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_FallingRock.h"
+#include "stdafx.hpp"
+#include "Gegner_FallingRock.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

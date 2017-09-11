@@ -10,8 +10,8 @@
 // Value 2 gibt an, ob Flüssigkeit drinsteht oder nicht
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_Tube.h"
+#include "stdafx.hpp"
+#include "Trigger_Tube.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

@@ -4,8 +4,8 @@
 // Ist ein Fetter Sack, der den Spieler des öfteren nervt
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_Schneekoenig.h"
+#include "stdafx.hpp"
+#include "Boss_Schneekoenig.hpp"
 
 int DamageAnims[4] = {1, 2, 1, 0};
 

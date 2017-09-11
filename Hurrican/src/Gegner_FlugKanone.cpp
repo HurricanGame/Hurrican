@@ -4,8 +4,8 @@
 // Umkreist den Spieler und Ballert auf ihn runter
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_FlugKanone.h"
+#include "stdafx.hpp"
+#include "Gegner_FlugKanone.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

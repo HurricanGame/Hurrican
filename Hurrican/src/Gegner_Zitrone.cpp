@@ -4,8 +4,8 @@
 // Zieht dem Hurrican hinterher und ballert
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Zitrone.h"
+#include "stdafx.hpp"
+#include "Gegner_Zitrone.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

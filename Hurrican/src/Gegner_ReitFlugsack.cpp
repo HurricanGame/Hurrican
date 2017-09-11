@@ -6,8 +6,8 @@
 // den Hurri dabei Huckepack ;)
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_ReitFlugsack.h"
+#include "stdafx.hpp"
+#include "Gegner_ReitFlugsack.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

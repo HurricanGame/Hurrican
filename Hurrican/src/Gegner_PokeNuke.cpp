@@ -4,8 +4,8 @@
 // kracht am Fahrstuhl auseinander und fetzt den Hurri wenn er nicht ganz am Rand steht
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_PokeNuke.h"
+#include "stdafx.hpp"
+#include "Gegner_PokeNuke.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

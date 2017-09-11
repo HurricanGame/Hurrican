@@ -4,8 +4,8 @@
 // Wird vom Bratklops gekotzt und explodiert am Boden/Hurri oder bei Beschuss
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Made.h"
+#include "stdafx.hpp"
+#include "Gegner_Made.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

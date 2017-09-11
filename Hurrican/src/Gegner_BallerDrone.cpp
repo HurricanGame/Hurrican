@@ -3,8 +3,8 @@
 //
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_BallerDrone.h"
+#include "stdafx.hpp"
+#include "Gegner_BallerDrone.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

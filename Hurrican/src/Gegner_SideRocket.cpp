@@ -5,8 +5,8 @@
 // fliegt sie los
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_SideRocket.h"
+#include "stdafx.hpp"
+#include "Gegner_SideRocket.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

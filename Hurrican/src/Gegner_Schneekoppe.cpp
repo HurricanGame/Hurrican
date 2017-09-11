@@ -5,8 +5,8 @@
 // --------------------------------------------------------------------------------------
 
 #include "math.h"
-#include "stdafx.h"
-#include "Gegner_Schneekoppe.h"
+#include "stdafx.hpp"
+#include "Gegner_Schneekoppe.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

@@ -12,19 +12,19 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
-#include "Console.h"
-#include "DX8Font.h"
-#include "DX8Sound.h"
-#include "Gameplay.h"
-#include "Gegner_Helper.h"
-#include "Globals.h"
-#include "HUD.h"
-#include "Logdatei.h"
-#include "Partikelsystem.h"
-#include "Projectiles.h"
-#include "Player.h"
-#include "Tileengine.h"
-#include "Timer.h"
+#include "Console.hpp"
+#include "DX8Font.hpp"
+#include "DX8Sound.hpp"
+#include "Gameplay.hpp"
+#include "Gegner_Helper.hpp"
+#include "Globals.hpp"
+#include "HUD.hpp"
+#include "Logdatei.hpp"
+#include "Partikelsystem.hpp"
+#include "Projectiles.hpp"
+#include "Player.hpp"
+#include "Tileengine.hpp"
+#include "Timer.hpp"
 
 
 // --------------------------------------------------------------------------------------
@@ -387,7 +387,7 @@ void LoadGegnerGrafik(int Nr)
 
     case BRATKLOPS:
         //DKS - Corrected dimensions from 323x400 to 232x400, to match actual image file:
-        //      NOTE: also see my notes in Boss_Bratklops.cpp regarding this and other sprites. (TODO)
+        //      NOTE: also see my notes in Boss_Bratklops.cpp regarding this and o.hpper sprites. (TODO)
         pGegnerGrafix[BRATKLOPS]->LoadImage("bratklops0000.png",   232, 400, 232, 400, 1, 1);
         break;
 

@@ -13,11 +13,11 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
-#include "DX8Input.h"
-#include "Logdatei.h"
-#include "Main.h"
-#include "Globals.h"
-#include "Gameplay.h"
+#include "DX8Input.hpp"
+#include "Logdatei.hpp"
+#include "Main.hpp"
+#include "Globals.hpp"
+#include "Gameplay.hpp"
 
 // --------------------------------------------------------------------------------------
 // Variablen

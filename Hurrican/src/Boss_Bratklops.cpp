@@ -5,15 +5,15 @@
 // schiesst ab und zu grünen laser
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_Bratklops.h"
+#include "stdafx.hpp"
+#include "Boss_Bratklops.hpp"
 
 //DKS - Note: I am not sure if this boss ever actually made it into the final game.
 //      I recall encountering it on my test play-throughs. Perhaps this is the reason
 //      the bratklopslaser.png sprite below had unusual dimensions compared to its
 //      on-disk dimensions (16x16 vs. 30x60 on-disk). Furthermore, bratklopsshot had
 //      two frames in its sprite in code, but on-disk only one frame. Even further,
-//      in Gegner_Helper.cpp, bratklops0000.png is loaded with 323x400 dimensions
+//      in Gegner_Helper.cpp, bratklops0000.png is loaded wi.hpp 323x400 dimensions
 //      but its on-disk dimensions are 232x400. All in all, I think this points to
 //      the entire Bratklops enemy being a candidate for removal from the game (TODO).
 

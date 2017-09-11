@@ -4,8 +4,8 @@
 // kriecht auf den Spieler zu und schiesst in regelmässigen Abständen 3 Feuerbälle
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_RoboRaupe.h"
+#include "stdafx.hpp"
+#include "Gegner_RoboRaupe.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

@@ -4,8 +4,8 @@
 // Rennt auf den Hurri zu und explodiert dann, zieht eine Feuerspur hinter sich her
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Lavamann.h"
+#include "stdafx.hpp"
+#include "Gegner_Lavamann.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

@@ -5,8 +5,8 @@
 // geile Erklärung, oder ? ;)
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Spitterbombe.h"
+#include "stdafx.hpp"
+#include "Gegner_Spitterbombe.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

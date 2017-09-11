@@ -4,8 +4,8 @@
 // Umkreist den Spieler und Ballert auf ihn
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_FieseDrone.h"
+#include "stdafx.hpp"
+#include "Gegner_FieseDrone.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

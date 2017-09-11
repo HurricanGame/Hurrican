@@ -13,15 +13,15 @@
 // --------------------------------------------------------------------------------------
 
 #include <stdio.h>
-#include "Console.h"
-#include "Outtro.h"
-#include "DX8Sound.h"
-#include "Main.h"
-#include "Menu.h"
-#include "Gameplay.h"
-#include "Partikelsystem.h"
-#include "Projectiles.h"
-#include "Tileengine.h"
+#include "Console.hpp"
+#include "Outtro.hpp"
+#include "DX8Sound.hpp"
+#include "Main.hpp"
+#include "Menu.hpp"
+#include "Gameplay.hpp"
+#include "Partikelsystem.hpp"
+#include "Projectiles.hpp"
+#include "Tileengine.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor, lädt die Grafiken

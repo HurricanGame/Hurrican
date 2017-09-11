@@ -5,8 +5,8 @@
 // Je schneller die Fallgeschwindigkeit beim aufkommen, desto weiter geht sie nach unten
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_Floating3.h"
+#include "stdafx.hpp"
+#include "Trigger_Floating3.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

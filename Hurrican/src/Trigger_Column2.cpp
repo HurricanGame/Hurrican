@@ -4,8 +4,8 @@
 // Steht in Level rum und fällt beim abschiessen um. Dabei dreht sich das Level wieder zurück
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_Column2.h"
+#include "stdafx.hpp"
+#include "Trigger_Column2.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

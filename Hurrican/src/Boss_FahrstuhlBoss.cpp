@@ -5,8 +5,8 @@
 // riesen fetten Laser, der auf einer Schiene läuft
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_FahrstuhlBoss.h"
+#include "stdafx.hpp"
+#include "Boss_FahrstuhlBoss.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

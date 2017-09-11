@@ -13,9 +13,9 @@
 // --------------------------------------------------------------------------------------
 
 #include <stdio.h>
-#include "CCracktro.h"
-#include "DX8Input.h"
-#include "DX8Sound.h"
+#include "CCracktro.hpp"
+#include "DX8Input.hpp"
+#include "DX8Sound.hpp"
 
 char CrackText	[] = {	"                                              "
                         "yeehaaw! poke is back with another fine release of a "

@@ -2,8 +2,8 @@
 // Der kleine, kaputte Luefter
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_LuefterKlein2.h"
+#include "stdafx.hpp"
+#include "Trigger_LuefterKlein2.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

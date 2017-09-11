@@ -5,8 +5,8 @@
 // welches Extra, das steht in Value1
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Auge.h"
+#include "stdafx.hpp"
+#include "Gegner_Auge.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

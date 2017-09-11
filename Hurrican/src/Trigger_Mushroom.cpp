@@ -4,8 +4,8 @@
 // Kann vom Hurri als Trampolin benutzt werden
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_Mushroom.h"
+#include "stdafx.hpp"
+#include "Trigger_Mushroom.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

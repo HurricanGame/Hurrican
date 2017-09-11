@@ -1,3 +1,3 @@
 // vorkompilierte Header
 
-#include "stdafx.h"
+#include "stdafx.hpp"

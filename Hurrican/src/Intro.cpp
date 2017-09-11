@@ -15,9 +15,9 @@
 #include <stdio.h>
 #include <vector>
 #include <string>
-#include "Intro.h"
-#include "DX8Sound.h"
-#include "Gameplay.h"
+#include "Intro.hpp"
+#include "DX8Sound.hpp"
+#include "Gameplay.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor, lädt die Grafiken

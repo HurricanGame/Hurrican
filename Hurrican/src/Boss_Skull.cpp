@@ -5,8 +5,8 @@
 // wenn der Schädel in der Nähe der Maschine ist. Er kann ja auch vom Skeletor gespawnt werden.
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_Skull.h"
+#include "stdafx.hpp"
+#include "Boss_Skull.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

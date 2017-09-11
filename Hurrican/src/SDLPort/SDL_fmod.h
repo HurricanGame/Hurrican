@@ -31,7 +31,7 @@
 #if defined(USE_MODPLUG)
 #include "modplug.h"
 #endif
-#include "Logdatei.h"
+#include "Logdatei.hpp"
 
 #define SOUND_SAMPLE            Mix_Chunk
 #if defined(USE_MODPLUG)

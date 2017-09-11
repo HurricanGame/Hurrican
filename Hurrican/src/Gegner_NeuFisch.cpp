@@ -4,8 +4,8 @@
 // Schwimmt wie der alte Fisch im Wasser, und geht auf den Hurri los
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_NeuFisch.h"
+#include "stdafx.hpp"
+#include "Gegner_NeuFisch.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

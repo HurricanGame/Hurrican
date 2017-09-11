@@ -4,8 +4,8 @@
 // Schwimmt im Wasser rum und ballert Torpedos auf den Hurri
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_SwimWalker.h"
+#include "stdafx.hpp"
+#include "Gegner_SwimWalker.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

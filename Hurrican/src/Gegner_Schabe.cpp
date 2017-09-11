@@ -4,8 +4,8 @@
 // Krabbe an allen Wänden rum
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Schabe.h"
+#include "stdafx.hpp"
+#include "Gegner_Schabe.hpp"
 
 #define SPEED 5.0f
 

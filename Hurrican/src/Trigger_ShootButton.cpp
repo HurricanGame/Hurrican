@@ -5,8 +5,8 @@
 // je länger man schiesst, um so mehr beschleunigt die Plattform
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_ShootButton.h"
+#include "stdafx.hpp"
+#include "Trigger_ShootButton.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

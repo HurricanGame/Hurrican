@@ -5,8 +5,8 @@
 // Spuckt kleine Piranhas aus
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_BigFish.h"
+#include "stdafx.hpp"
+#include "Boss_BigFish.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

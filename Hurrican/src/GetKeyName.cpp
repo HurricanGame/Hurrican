@@ -18,8 +18,8 @@
 #if defined(PLATFORM_DIRECTX)
 #include <dinput.h>								// Wegen der Key-Code Defines
 #endif
-#include "DX8Input.h"
-#include "GetKeyName.h"							// Unser Header =)
+#include "DX8Input.hpp"
+#include "GetKeyName.hpp"							// Unser Header =)
 
 //---------------------------------------------------------------------------------------
 // Funktion		: GetKeyName

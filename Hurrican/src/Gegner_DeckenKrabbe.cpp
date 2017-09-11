@@ -4,8 +4,8 @@
 // Hängt an der Decke und fällt bei Beschuss oder wenn der Spieler drunter ist runter
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_DeckenKrabbe.h"
+#include "stdafx.hpp"
+#include "Gegner_DeckenKrabbe.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

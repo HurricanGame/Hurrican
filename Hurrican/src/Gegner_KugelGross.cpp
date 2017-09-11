@@ -7,8 +7,8 @@
 // Wird sie zerstört, zerteil sie sich in 2 kleinere Kugeln
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_KugelGross.h"
+#include "stdafx.hpp"
+#include "Gegner_KugelGross.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

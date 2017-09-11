@@ -4,8 +4,8 @@
 // hängt faul an der Decke und fällt runter, wenn der Hurri drunter vorbeikommt
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Eiszapfen.h"
+#include "stdafx.hpp"
+#include "Gegner_Eiszapfen.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

@@ -5,8 +5,8 @@
 // und wartet dann solange wie es Value2 angibt
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_Presse.h"
+#include "stdafx.hpp"
+#include "Trigger_Presse.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

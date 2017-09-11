@@ -7,8 +7,8 @@
 //			2 = Bei SpielerAbstand < 100 Sound ständig abspielen
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_SoundTrigger.h"
+#include "stdafx.hpp"
+#include "Trigger_SoundTrigger.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

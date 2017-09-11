@@ -4,8 +4,8 @@
 // wirft Steinbroken und lässt die Höhle schaukeln
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_Golem.h"
+#include "stdafx.hpp"
+#include "Boss_Golem.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

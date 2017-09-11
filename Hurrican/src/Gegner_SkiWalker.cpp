@@ -4,8 +4,8 @@
 // Rast auf Skiern durch die Gegend
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_SkiWalker.h"
+#include "stdafx.hpp"
+#include "Gegner_SkiWalker.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

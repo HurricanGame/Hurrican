@@ -4,8 +4,8 @@
 // Öffnet den Topfdeckel und lässt Gegner raus
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_Spinnenmaschine.h"
+#include "stdafx.hpp"
+#include "Boss_Spinnenmaschine.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

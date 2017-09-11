@@ -4,8 +4,8 @@
 // kriecht auf den Spieler zu und schiesst 2 Suchschüsse bei richtigem Abstand
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_RiesenRaupe.h"
+#include "stdafx.hpp"
+#include "Boss_RiesenRaupe.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

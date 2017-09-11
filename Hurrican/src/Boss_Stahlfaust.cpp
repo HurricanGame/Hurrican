@@ -5,8 +5,8 @@
 // fliegt ab und zu nach oben aus dem Screen und donnert auf den Hurri runter
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_Stahlfaust.h"
+#include "stdafx.hpp"
+#include "Boss_Stahlfaust.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

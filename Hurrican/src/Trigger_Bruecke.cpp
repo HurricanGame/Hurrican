@@ -5,8 +5,8 @@
 // Hängt je nach Abstand zum Spieler oder einem Objekt unterschiedlich weit runter
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_Bruecke.h"
+#include "stdafx.hpp"
+#include "Trigger_Bruecke.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

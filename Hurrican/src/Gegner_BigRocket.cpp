@@ -4,8 +4,8 @@
 // fliegt im Flugsack Level von unten nach oben rauf
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_BigRocket.h"
+#include "stdafx.hpp"
+#include "Gegner_BigRocket.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

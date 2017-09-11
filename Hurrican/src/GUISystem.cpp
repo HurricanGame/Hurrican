@@ -1,6 +1,6 @@
-#include "Timer.h"
-#include "GUISystem.h"
-#include "Main.h"
+#include "Timer.hpp"
+#include "GUISystem.hpp"
+#include "Main.hpp"
 
 //
 // Konstruktor

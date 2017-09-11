@@ -4,8 +4,8 @@
 // Läuft auf Schienen entlang auf den Hurri zu
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_SchienenViech.h"
+#include "stdafx.hpp"
+#include "Gegner_SchienenViech.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

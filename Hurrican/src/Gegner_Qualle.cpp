@@ -4,8 +4,8 @@
 // Schwappt unter wasser rum und schwimmt in Richtung Spieler ;)
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Qualle.h"
+#include "stdafx.hpp"
+#include "Gegner_Qualle.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

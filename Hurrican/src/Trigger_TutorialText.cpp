@@ -8,12 +8,12 @@
 
 #include <iostream>
 #include <string>
-#include "stdafx.h"
+#include "stdafx.hpp"
 using namespace std;
 
-#include "Gegner_PowerBlock.h"
-#include "Trigger_TutorialText.h"
-#include "GetKeyName.h"
+#include "Gegner_PowerBlock.hpp"
+#include "Trigger_TutorialText.hpp"
+#include "GetKeyName.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

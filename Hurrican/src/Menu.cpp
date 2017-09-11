@@ -18,19 +18,19 @@
 #endif
 #include <time.h>
 #include <stdio.h>
-#include "Main.h"
-#include "Console.h"
-#include "Menu.h"
-#include "DX8Font.h"
-#include "DX8Graphics.h"
-#include "DX8Input.h"
-#include "DX8Sound.h"
-#include "Gameplay.h"
-#include "GetKeyName.h"
-#include "Logdatei.h"
-#include "Player.h"
-#include "Partikelsystem.h"
-#include "Timer.h"
+#include "Main.hpp"
+#include "Console.hpp"
+#include "Menu.hpp"
+#include "DX8Font.hpp"
+#include "DX8Graphics.hpp"
+#include "DX8Input.hpp"
+#include "DX8Sound.hpp"
+#include "Gameplay.hpp"
+#include "GetKeyName.hpp"
+#include "Logdatei.hpp"
+#include "Player.hpp"
+#include "Partikelsystem.hpp"
+#include "Timer.hpp"
 
 // --------------------------------------------------------------------------------------
 // Die Credits

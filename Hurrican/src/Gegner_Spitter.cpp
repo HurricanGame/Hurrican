@@ -5,8 +5,8 @@
 // und schiesst in regelmässigen Abständen senkrecht nach oben
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Spitter.h"
+#include "stdafx.hpp"
+#include "Gegner_Spitter.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

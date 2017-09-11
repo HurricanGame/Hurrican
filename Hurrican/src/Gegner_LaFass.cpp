@@ -4,8 +4,8 @@
 // Gondelt hin und her, und lässt sich vom Spieler abschiessen
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_LaFass.h"
+#include "stdafx.hpp"
+#include "Gegner_LaFass.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

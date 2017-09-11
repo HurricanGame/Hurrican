@@ -4,8 +4,8 @@
 // Spawnt in bestimmten Abständen (Value2) das LaFass =)
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_LaFassSpawner.h"
+#include "stdafx.hpp"
+#include "Trigger_LaFassSpawner.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

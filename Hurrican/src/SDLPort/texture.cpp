@@ -22,11 +22,11 @@
  *
  */
 
-#include "Main.h"
-#include "DX8Texture.h"
-#include "DX8Graphics.h"
+#include "Main.hpp"
+#include "DX8Texture.hpp"
+#include "DX8Graphics.hpp"
 #include "texture.h"
-#include "Texts.h"          //For ReplaceAll() function
+#include "Texts.hpp"          //For ReplaceAll() function
 
 using namespace std;
 

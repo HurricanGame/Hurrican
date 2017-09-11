@@ -13,15 +13,15 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
-#include "HUD.h"
-#include "DX8Font.h"
-#include "DX8Graphics.h"
-#include "Gameplay.h"
-#include "GegnerClass.h"
-#include "Gegner_Stuff.h"
-#include "Player.h"
-#include "Tileengine.h"
-#include "Timer.h"
+#include "HUD.hpp"
+#include "DX8Font.hpp"
+#include "DX8Graphics.hpp"
+#include "Gameplay.hpp"
+#include "GegnerClass.hpp"
+#include "Gegner_Stuff.hpp"
+#include "Player.hpp"
+#include "Tileengine.hpp"
+#include "Timer.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor : HUD Grafiken laden und Werte initialisieren

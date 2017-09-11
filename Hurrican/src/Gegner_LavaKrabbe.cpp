@@ -4,8 +4,8 @@
 // Fliegt aus dem Hintergrund auf den Fahrstuhl
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_LavaKrabbe.h"
+#include "stdafx.hpp"
+#include "Gegner_LavaKrabbe.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

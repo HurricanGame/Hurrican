@@ -8,14 +8,14 @@
 #include "SDLPort/SDL_port.h"
 #endif
 
-#include "DX8Texture.h"
+#include "DX8Texture.hpp"
 
 #if defined(PLATFORM_SDL)
 #include "SDLPort/texture.h"
 #endif
 
-#include "Main.h"
-#include "Gameplay.h"
+#include "Main.hpp"
+#include "Gameplay.hpp"
 
 #include <iostream>
 #include <fstream>

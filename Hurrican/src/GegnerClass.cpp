@@ -2,10 +2,10 @@
 // Klasse für die Gegner und Klasse für die Linked List der Gegner
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "GegnerClass.h"
-#include "Gegner_Helper.h"
-#include "Player.h"
+#include "stdafx.hpp"
+#include "GegnerClass.hpp"
+#include "Gegner_Helper.hpp"
+#include "Player.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
@@ -1383,7 +1383,7 @@ void GegnerListClass::LoadSprites(void)
 
     //DKS - For both LUEFTER_KLEIN and LUEFTER_KLEIN2 here, original values were 0,112,0,113, but
     //      the original texture didn't match these values, and not only that overall spritesheet
-    //      size was wrong. See notes in Gegner_Helper.cpp for these two sprites. I've changed
+    //      size was wrong. See notes in Gegner_Helper.cpp for these two sprites. I've .hppanged
     //      the values here to be 0,114,0,114:
     // Luefter Klein 1
     GegnerRect[LUEFTER_KLEIN].left = 0;

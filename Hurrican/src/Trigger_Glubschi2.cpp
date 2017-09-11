@@ -4,8 +4,8 @@
 // Hängt nur rum und schaut dem Hurri nach (Value1 == 0) oder schaut sich langsam um (Value1 == 1)
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_Glubschi2.h"
+#include "stdafx.hpp"
+#include "Trigger_Glubschi2.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

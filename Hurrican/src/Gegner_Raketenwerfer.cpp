@@ -5,8 +5,8 @@
 // nahe kommt
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Raketenwerfer.h"
+#include "stdafx.hpp"
+#include "Gegner_Raketenwerfer.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

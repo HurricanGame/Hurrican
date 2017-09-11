@@ -38,7 +38,7 @@
 #include "SDL_image.h"
 #include "keymap.h"
 #include "opengl.h"
-#include "Logdatei.h"
+#include "Logdatei.hpp"
 
 #define CONST       const
 #ifndef __WIN32__

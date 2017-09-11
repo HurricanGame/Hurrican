@@ -4,8 +4,8 @@
 // Bringt beim Einsammeln ein Extra Leben, was sonst
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_OneUp.h"
+#include "stdafx.hpp"
+#include "Gegner_OneUp.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

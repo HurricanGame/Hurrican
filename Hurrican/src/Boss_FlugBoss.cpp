@@ -4,8 +4,8 @@
 // Muss noch erfunden werden ;)
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_FlugBoss.h"
+#include "stdafx.hpp"
+#include "Boss_FlugBoss.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

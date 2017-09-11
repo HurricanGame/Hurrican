@@ -17,9 +17,9 @@
 // --------------------------------------------------------------------------------------
 
 #include <stdio.h>
-#include "Gameplay.h"
+#include "Gameplay.hpp"
 #include "lightmap.h"
-#include "Logdatei.h"
+#include "Logdatei.hpp"
 #include "unrarlib.h"
 
 // --------------------------------------------------------------------------------------

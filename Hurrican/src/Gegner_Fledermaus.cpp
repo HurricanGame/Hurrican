@@ -5,8 +5,8 @@
 // oder wenn sie angeschossen wird
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Fledermaus.h"
+#include "stdafx.hpp"
+#include "Gegner_Fledermaus.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

@@ -10,8 +10,8 @@
 // Include-Dateien
 // --------------------------------------------------------------------------------------
 
-#include "Globals.h"
-#include "DX8Enum.h"
+#include "Globals.hpp"
+#include "DX8Enum.hpp"
 
 bool InitD3D()
 {

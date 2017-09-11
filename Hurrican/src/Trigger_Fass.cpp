@@ -5,8 +5,8 @@
 // explodiert und feurige Splitter veteilt, die die Gegner verletzen können
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_Fass.h"
+#include "stdafx.hpp"
+#include "Trigger_Fass.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

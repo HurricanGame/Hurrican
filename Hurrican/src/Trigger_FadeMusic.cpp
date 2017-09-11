@@ -6,8 +6,8 @@
 // Value2 : Abstand zum Spieler, ab welchem der Trigger aktiviert wird
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_FadeMusic.h"
+#include "stdafx.hpp"
+#include "Trigger_FadeMusic.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

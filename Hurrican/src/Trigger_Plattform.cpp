@@ -5,8 +5,8 @@
 // und dreht an einem WendePunkt um
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_Plattform.h"
+#include "stdafx.hpp"
+#include "Trigger_Plattform.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

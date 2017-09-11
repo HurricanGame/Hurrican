@@ -6,8 +6,8 @@
 // Bleibt immer auf x-Höhe des Spielers
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_SurfBrett.h"
+#include "stdafx.hpp"
+#include "Trigger_SurfBrett.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

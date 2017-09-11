@@ -12,18 +12,18 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
-#include "Projectiles.h"
-#include "Console.h"
-#include "DX8Font.h"
-#include "DX8Sound.h"
-#include "Gameplay.h"
-#include "Gegner_Helper.h"
-#include "Globals.h"
-#include "Logdatei.h"
-#include "Player.h"
-#include "Partikelsystem.h"
-#include "Tileengine.h"
-#include "Timer.h"
+#include "Projectiles.hpp"
+#include "Console.hpp"
+#include "DX8Font.hpp"
+#include "DX8Sound.hpp"
+#include "Gameplay.hpp"
+#include "Gegner_Helper.hpp"
+#include "Globals.hpp"
+#include "Logdatei.hpp"
+#include "Player.hpp"
+#include "Partikelsystem.hpp"
+#include "Tileengine.hpp"
+#include "Timer.hpp"
 
 // --------------------------------------------------------------------------------------
 // Variablen

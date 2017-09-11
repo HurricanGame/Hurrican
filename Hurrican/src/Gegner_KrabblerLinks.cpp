@@ -6,8 +6,8 @@
 // Hat Speed == Value2 und SchussDelay == Value1
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_KrabblerLinks.h"
+#include "stdafx.hpp"
+#include "Gegner_KrabblerLinks.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

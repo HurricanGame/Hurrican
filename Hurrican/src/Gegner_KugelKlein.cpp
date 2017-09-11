@@ -6,8 +6,8 @@
 // später umher. Springt zu Beginn in eine zufällige Richtung links/rechts
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_KugelKlein.h"
+#include "stdafx.hpp"
+#include "Gegner_KugelKlein.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

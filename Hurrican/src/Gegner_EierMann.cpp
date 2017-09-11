@@ -4,8 +4,8 @@
 // Legt Eier die auf Hurri zurollen und dann explodieren
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_EierMann.h"
+#include "stdafx.hpp"
+#include "Gegner_EierMann.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

@@ -4,8 +4,8 @@
 // Der allerletzte State des Endgegners
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_TheWall.h"
+#include "stdafx.hpp"
+#include "Boss_TheWall.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

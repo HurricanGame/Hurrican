@@ -6,8 +6,8 @@
 // Spawner weiss, wieviele children er gespawnt hat
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_SchleimAlien.h"
+#include "stdafx.hpp"
+#include "Gegner_SchleimAlien.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

@@ -17,13 +17,13 @@
 #include <string.h>
 #include <iostream>
 #include <fstream>
-#include "Texts.h"
-#include "Logdatei.h"
-#include "Main.h"
-#include "Gameplay.h"
-#include "GetKeyName.h"
-#include "Player.h"
-#include "Tileengine.h"
+#include "Texts.hpp"
+#include "Logdatei.hpp"
+#include "Main.hpp"
+#include "Gameplay.hpp"
+#include "GetKeyName.hpp"
+#include "Player.hpp"
+#include "Tileengine.hpp"
 
 #ifdef USE_UNRARLIB
 #include "unrarlib.h"

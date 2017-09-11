@@ -14,16 +14,16 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "Console.h"
-#include "DX8Graphics.h"
-#include "GetKeyName.h"
-#include "Gameplay.h"
-#include "Globals.h"
-#include "Logdatei.h"
-#include "Projectiles.h"
-#include "Player.h"
-#include "Tileengine.h"
-#include "Timer.h"
+#include "Console.hpp"
+#include "DX8Graphics.hpp"
+#include "GetKeyName.hpp"
+#include "Gameplay.hpp"
+#include "Globals.hpp"
+#include "Logdatei.hpp"
+#include "Projectiles.hpp"
+#include "Player.hpp"
+#include "Tileengine.hpp"
+#include "Timer.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konsolen-Klasse

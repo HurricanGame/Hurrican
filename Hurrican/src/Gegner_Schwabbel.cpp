@@ -4,8 +4,8 @@
 // Schwabbelt rum und ballert ab und zu Maden
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Schwabbel.h"
+#include "stdafx.hpp"
+#include "Gegner_Schwabbel.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

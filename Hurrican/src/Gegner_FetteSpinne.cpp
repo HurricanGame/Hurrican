@@ -4,8 +4,8 @@
 // Krabbelt auf den Hurri zu und ballert Laser
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_FetteSpinne.h"
+#include "stdafx.hpp"
+#include "Gegner_FetteSpinne.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

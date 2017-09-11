@@ -8,9 +8,9 @@
 // dargestellt. Hammer, was eine schweine Arbeit, echt :D
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Tileengine.h"
-#include "Boss_MetalHead.h"
+#include "stdafx.hpp"
+#include "Tileengine.hpp"
+#include "Boss_MetalHead.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

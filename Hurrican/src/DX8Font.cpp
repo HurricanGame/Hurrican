@@ -15,16 +15,16 @@
 
 #include <stdio.h>
 #include <string>
-#include "Globals.h"
-#include "Logdatei.h"
-#include "Timer.h"
-#include "DX8Texture.h"
+#include "Globals.hpp"
+#include "Logdatei.hpp"
+#include "Timer.hpp"
+#include "DX8Texture.hpp"
 #if defined(PLATFORM_SDL)
 #include "SDLPort/texture.h"
 #endif //PLATFORM_SDL
-#include "DX8Font.h"
-#include "DX8Graphics.h"
-#include "Gameplay.h"
+#include "DX8Font.hpp"
+#include "DX8Graphics.hpp"
+#include "Gameplay.hpp"
 
 #ifdef USE_UNRARLIB
 #include "unrarlib.h"

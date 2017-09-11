@@ -6,8 +6,8 @@
 // ansonsten schiesst er Laser wie die Zitrone
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Rotzpott.h"
+#include "stdafx.hpp"
+#include "Gegner_Rotzpott.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

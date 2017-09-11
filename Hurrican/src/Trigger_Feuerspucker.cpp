@@ -5,8 +5,8 @@
 // Value1 gibt die Richtung an, Value2 die Länge bis zur Feuerpause
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_Feuerspucker.h"
+#include "stdafx.hpp"
+#include "Trigger_Feuerspucker.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

@@ -4,8 +4,8 @@
 // fällt dem Hurri von oben auf die Birne
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_BlueBoulder.h"
+#include "stdafx.hpp"
+#include "Gegner_BlueBoulder.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

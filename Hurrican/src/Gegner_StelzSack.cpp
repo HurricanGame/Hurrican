@@ -4,8 +4,8 @@
 // fällt in den Fahrstuhl rein und ballert dann los
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_StelzSack.h"
+#include "stdafx.hpp"
+#include "Gegner_StelzSack.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

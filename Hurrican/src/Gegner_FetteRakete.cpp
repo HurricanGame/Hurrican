@@ -3,8 +3,8 @@
 //
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_FetteRakete.h"
+#include "stdafx.hpp"
+#include "Gegner_FetteRakete.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

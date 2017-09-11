@@ -4,8 +4,8 @@
 // Läuft in Richtung Spieler und explodiert an ihm
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_SpiderBomb.h"
+#include "stdafx.hpp"
+#include "Gegner_SpiderBomb.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

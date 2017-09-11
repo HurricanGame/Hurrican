@@ -4,8 +4,8 @@
 // Klettert hinten an der Wand rum und dreht sich in Richtung Hurri
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Climber.h"
+#include "stdafx.hpp"
+#include "Gegner_Climber.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

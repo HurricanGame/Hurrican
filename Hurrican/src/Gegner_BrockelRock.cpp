@@ -4,8 +4,8 @@
 // fängt an zu bröckeln sobald der Spieler darüber läuft und fällt dann runter
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_BrockelRock.h"
+#include "stdafx.hpp"
+#include "Gegner_BrockelRock.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

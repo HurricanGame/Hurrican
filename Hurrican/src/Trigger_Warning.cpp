@@ -4,8 +4,8 @@
 // Blinkt bei erscheinen x mal auf und verursacht Warning Stimme und typisches Hupen
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_Warning.h"
+#include "stdafx.hpp"
+#include "Trigger_Warning.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

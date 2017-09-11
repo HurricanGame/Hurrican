@@ -4,8 +4,8 @@
 // Dreht sich immer in Richtung Spieler und schiesst gerade aus
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_GunTower.h"
+#include "stdafx.hpp"
+#include "Gegner_GunTower.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

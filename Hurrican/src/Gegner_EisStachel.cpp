@@ -4,8 +4,8 @@
 // Bewegt sich sinusförmig (auf der x-achse) hin und her und dreht sich dabei
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_EisStachel.h"
+#include "stdafx.hpp"
+#include "Gegner_EisStachel.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

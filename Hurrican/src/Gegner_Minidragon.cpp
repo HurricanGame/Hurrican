@@ -4,8 +4,8 @@
 // Siehe Turrican 2 =)
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Minidragon.h"
+#include "stdafx.hpp"
+#include "Gegner_Minidragon.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

@@ -31,7 +31,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "opengl.h"
-#include "Logdatei.h"
+#include "Logdatei.hpp"
 #include "cml/cml.h"
 
 using namespace std;

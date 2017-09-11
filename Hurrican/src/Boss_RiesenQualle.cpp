@@ -4,8 +4,8 @@
 // Schwabbelt unter Wasser rum in Richtung Spieler
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_RiesenQualle.h"
+#include "stdafx.hpp"
+#include "Boss_RiesenQualle.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

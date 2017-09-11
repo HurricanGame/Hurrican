@@ -4,8 +4,8 @@
 // Prallt von der Wand ab
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_StarSmall.h"
+#include "stdafx.hpp"
+#include "Gegner_StarSmall.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

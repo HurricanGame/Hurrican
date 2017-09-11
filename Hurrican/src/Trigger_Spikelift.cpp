@@ -5,8 +5,8 @@
 // Er kann zwar drauf stehen, verliert dabei aber enorm viel energie
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_Spikelift.h"
+#include "stdafx.hpp"
+#include "Trigger_Spikelift.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

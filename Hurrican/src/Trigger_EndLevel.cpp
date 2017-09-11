@@ -5,8 +5,8 @@
 // die Stage, die bei Value1 angegeben ist
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_EndLevel.h"
+#include "stdafx.hpp"
+#include "Trigger_EndLevel.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

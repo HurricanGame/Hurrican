@@ -6,8 +6,8 @@
 // saust von links nach rechts über den screen und lässt Eiszapfen fallen
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_EisFaust.h"
+#include "stdafx.hpp"
+#include "Boss_EisFaust.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

@@ -4,8 +4,8 @@
 // hängt zb. an dem Rollmops
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Kettenglied.h"
+#include "stdafx.hpp"
+#include "Gegner_Kettenglied.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

@@ -4,8 +4,8 @@
 // fliegt ein wenig verwirrter durch die Gegend als die Wespe
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_SmallWespe.h"
+#include "stdafx.hpp"
+#include "Gegner_SmallWespe.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

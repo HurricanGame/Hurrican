@@ -34,32 +34,32 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include "Main.h"
-#include "Texts.h"
-#include "Console.h"
-#include "CCracktro.h"
-#include "DX8Texture.h"
-#include "DX8Graphics.h"
-#include "DX8Sprite.h"
-#include "DX8Input.h"
-#include "DX8Sound.h"
-#include "DX8Font.h"
-#include "Gameplay.h"
-#include "GUISystem.h"
-#include "GegnerClass.h"
-#include "Globals.h"
-#include "HUD.h"
-#include "Intro.h"
-#include "Outtro.h"
-#include "Logdatei.h"
-#include "Menu.h"
-#include "Partikelsystem.h"
-#include "Player.h"
-#include "Projectiles.h"
-#include "resource.h"
-#include "Tileengine.h"
-#include "Timer.h"
-#include "Mathematics.h"
+#include "Main.hpp"
+#include "Texts.hpp"
+#include "Console.hpp"
+#include "CCracktro.hpp"
+#include "DX8Texture.hpp"
+#include "DX8Graphics.hpp"
+#include "DX8Sprite.hpp"
+#include "DX8Input.hpp"
+#include "DX8Sound.hpp"
+#include "DX8Font.hpp"
+#include "Gameplay.hpp"
+#include "GUISystem.hpp"
+#include "GegnerClass.hpp"
+#include "Globals.hpp"
+#include "HUD.hpp"
+#include "Intro.hpp"
+#include "Outtro.hpp"
+#include "Logdatei.hpp"
+#include "Menu.hpp"
+#include "Partikelsystem.hpp"
+#include "Player.hpp"
+#include "Projectiles.hpp"
+#include "resource.hpp"
+#include "Tileengine.hpp"
+#include "Timer.hpp"
+#include "Mathematics.hpp"
 
 #ifdef USE_UNRARLIB
 #include "unrarlib.h"
@@ -1234,7 +1234,7 @@ bool GameInit2(void)
     SoundManager.LoadWave("beamload2.wav",	SOUND_BEAMLOAD2_P2, true);
 
     //DKS - This was commented out in original code, but I've added support for
-    //      Trigger_Stampfstein.cpp's chain retraction sound back in:
+    //      Trigger_Stampfstein.cpp's .hppain retraction sound back in:
 	SoundManager.LoadWave("chain.wav",		SOUND_CHAIN, true);
 
     SoundManager.LoadWave("mushroomjump.wav",	SOUND_MUSHROOMJUMP, false);
@@ -1304,7 +1304,7 @@ bool GameInit2(void)
 
     SoundManager.LoadSong("highscore.it",	MUSIC_HIGHSCORE);
 
-    //DKS - Punisher music is now loaded on-demand in Gegner_Punisher.cpp
+    //DKS - Punisher music is now loaded on-demand in Gegner_Puni.hpper.cpp
     //SoundManager.LoadSong("Punisher.it", MUSIC_PUNISHER);
 
     if (!GameRunning)

@@ -2,8 +2,8 @@
 // Die große Schnee Kugel
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_SnowBomb.h"
+#include "stdafx.hpp"
+#include "Gegner_SnowBomb.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

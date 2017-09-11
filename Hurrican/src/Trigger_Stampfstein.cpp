@@ -5,8 +5,8 @@
 // wird danach wieder hochgezogen
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_Stampfstein.h"
+#include "stdafx.hpp"
+#include "Trigger_Stampfstein.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

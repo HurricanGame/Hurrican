@@ -4,8 +4,8 @@
 // fliegt durch die Gegend und schiesst (weiss noch nicht, was)
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_RiesenWespe.h"
+#include "stdafx.hpp"
+#include "Boss_RiesenWespe.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

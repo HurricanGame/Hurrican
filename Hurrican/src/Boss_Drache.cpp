@@ -4,8 +4,8 @@
 // fliegt Links und rechts vom Screen über den Hurri und schmeisst dabei Sachen ab
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_Drache.h"
+#include "stdafx.hpp"
+#include "Boss_Drache.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

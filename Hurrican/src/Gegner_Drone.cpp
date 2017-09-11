@@ -4,8 +4,8 @@
 // Schwirrt um Hurri rum und ballert dabei
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Drone.h"
+#include "stdafx.hpp"
+#include "Gegner_Drone.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

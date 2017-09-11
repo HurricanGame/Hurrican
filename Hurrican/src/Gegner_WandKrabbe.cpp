@@ -4,8 +4,8 @@
 // krabbelt im Fluglevel an der Wand rum und springt den Hurri an
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_WandKrabbe.h"
+#include "stdafx.hpp"
+#include "Gegner_WandKrabbe.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

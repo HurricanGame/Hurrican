@@ -17,13 +17,13 @@
 #include <time.h>
 #include <stdexcept>
 #include <string>
-#include "Globals.h"
-#include "Gameplay.h"
-#include "Logdatei.h"
-#include "Main.h"
-#include "DX8Font.h"
-#include "DX8Texture.h"
-#include "DX8Graphics.h"
+#include "Globals.hpp"
+#include "Gameplay.hpp"
+#include "Logdatei.hpp"
+#include "Main.hpp"
+#include "DX8Font.hpp"
+#include "DX8Texture.hpp"
+#include "DX8Graphics.hpp"
 #if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
 #include "eglport.h"
 #endif

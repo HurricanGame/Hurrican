@@ -9,9 +9,9 @@
 // und massenhaft Extras (muss ich mir noch ausdenken, welche)
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Punisher.h"
-#include "HUD.h"
+#include "stdafx.hpp"
+#include "Gegner_Punisher.hpp"
+#include "HUD.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

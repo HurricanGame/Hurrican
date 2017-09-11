@@ -4,8 +4,8 @@
 // Bringt in unregelmässigen Abständen Wespen hervor
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Nest.h"
+#include "stdafx.hpp"
+#include "Gegner_Nest.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

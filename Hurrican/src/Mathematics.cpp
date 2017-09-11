@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include "Mathematics.h"
+#include "Mathematics.hpp"
 
 #ifdef USE_FAST_RNG
 //DKS - added a very fast RNG, here is an example speed comparison on the GCW Zero:

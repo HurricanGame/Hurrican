@@ -5,8 +5,8 @@
 // der Spieler nahe genug dransteht
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Mutant.h"
+#include "stdafx.hpp"
+#include "Gegner_Mutant.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

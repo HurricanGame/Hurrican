@@ -13,7 +13,7 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
-#include "Logdatei.h"									// Header-Datei einbinden
+#include "Logdatei.hpp"									// Header-Datei einbinden
 #if defined(PLATFORM_DIRECTX)
 #include <windows.h>									// Windowsheader für Messagebox und Beep#
 #elif defined(PLATFORM_SDL)

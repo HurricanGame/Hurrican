@@ -5,8 +5,8 @@
 // runter
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Stalagtit.h"
+#include "stdafx.hpp"
+#include "Gegner_Stalagtit.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

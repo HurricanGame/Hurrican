@@ -2,8 +2,8 @@
 // Der rollende Mops kam in die Küche, und stahl dem Turri seine Eier
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_Rollmops.h"
+#include "stdafx.hpp"
+#include "Boss_Rollmops.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

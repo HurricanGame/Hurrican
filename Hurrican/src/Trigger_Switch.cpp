@@ -7,8 +7,8 @@
 // mehrere Objekte das gleiche Value2 besitzen. Am besten Value2 > 250
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_Switch.h"
+#include "stdafx.hpp"
+#include "Trigger_Switch.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

@@ -26,13 +26,13 @@ using namespace std;
 // --------------------------------------------------------------------------------------
 
 #include <stdio.h>
-#include "DX8Sound.h"
-#include "Logdatei.h"
-#include "Globals.h"
-#include "Gameplay.h"
-#include "Main.h"
-#include "Player.h"
-#include "Timer.h"
+#include "DX8Sound.hpp"
+#include "Logdatei.hpp"
+#include "Globals.hpp"
+#include "Gameplay.hpp"
+#include "Main.hpp"
+#include "Player.hpp"
+#include "Timer.hpp"
 
 #ifdef USE_UNRARLIB
 #include "unrarlib.h"
@@ -116,7 +116,7 @@ void SoundManagerClass::UpdateChannels()
                         //DKS - In the place where this is used (mainly wind sound in 4th level,
                         //      the sounded faded much too fast compared to the song fade rate,
                         //      2.5 seems a better value than 30 here:)
-                        //      See Trigger_FadeMusic.cpp and its fade-rate of just 1.0 for the song)
+                        //      See Trigger_FadeMusic.cpp and its fade-rate of just 1.0 for .hppe song)
                         //channels[i].vol += 30.0f SYNC;
                         new_vol += 2.5f SYNC;
 
@@ -141,7 +141,7 @@ void SoundManagerClass::UpdateChannels()
                         //DKS - In the place where this is used (mainly wind sound in 4th level,
                         //      the sounded faded much too fast compared to the song fade rate,
                         //      2.5 seems a better value than 30 here:)
-                        //      See Trigger_FadeMusic.cpp and its fade-rate of just 1.0 for the song)
+                        //      See Trigger_FadeMusic.cpp and its fade-rate of just 1.0 for .hppe song)
                         //new_vol -= 30.0f SYNC;
                         new_vol -= 2.5f SYNC;
 
@@ -973,7 +973,7 @@ bool SoundManagerClass::WaveIsPlaying(int nr)
     return false;
 }
 
-//DKS - Added, primarily to allow Trigger_Stampfstein to have its chain sound.
+//DKS - Added, primarily to allow Trigger_Stampfstein to have its .hppain sound.
 bool SoundManagerClass::WaveIsPlayingOnChannel(int nr, int ch)
 {
     if (ch == -1 || nr == -1)

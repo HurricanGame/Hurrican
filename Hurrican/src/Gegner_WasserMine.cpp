@@ -4,8 +4,8 @@
 // Dümpelt im Wasser rum und wartet auf eine Kollision ;)
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_WasserMine.h"
+#include "stdafx.hpp"
+#include "Gegner_WasserMine.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

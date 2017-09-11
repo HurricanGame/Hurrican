@@ -25,18 +25,18 @@
 #include "SDLPort/SDL_port.h"
 #endif //PLATFORM_SDL
 
-#include "DX8Texture.h"
+#include "DX8Texture.hpp"
 
 #if defined(PLATFORM_SDL)
 #include "SDLPort/texture.h"
 #endif //PLATFORM_SDL
 
-#include "DX8Sprite.h"
-#include "DX8Graphics.h"
-#include "Gameplay.h"
-#include "Globals.h"
-#include "Logdatei.h"
-#include "Main.h"
+#include "DX8Sprite.hpp"
+#include "DX8Graphics.hpp"
+#include "Gameplay.hpp"
+#include "Globals.hpp"
+#include "Logdatei.hpp"
+#include "Main.hpp"
 
 #ifdef USE_UNRARLIB
 #include "unrarlib.h"

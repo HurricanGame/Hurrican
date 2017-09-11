@@ -4,8 +4,8 @@
 // fällt dem Hurri von oben auf die Birne
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_FallBombe.h"
+#include "stdafx.hpp"
+#include "Gegner_FallBombe.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

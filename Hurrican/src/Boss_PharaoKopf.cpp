@@ -5,8 +5,8 @@
 // lässt ggf Steine von der Decke rieseln
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_PharaoKopf.h"
+#include "stdafx.hpp"
+#include "Boss_PharaoKopf.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

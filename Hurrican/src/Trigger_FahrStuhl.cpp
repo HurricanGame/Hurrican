@@ -6,8 +6,8 @@
 // Value1 >  0 : Fahrtsuhl fährt ganz normal nach unten (Tempelausgang)
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_Fahrstuhl.h"
+#include "stdafx.hpp"
+#include "Trigger_Fahrstuhl.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

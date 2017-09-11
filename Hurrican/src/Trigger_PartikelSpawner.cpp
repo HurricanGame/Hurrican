@@ -16,8 +16,8 @@
 // 18 = Lavafunken
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_PartikelSpawner.h"
+#include "stdafx.hpp"
+#include "Trigger_PartikelSpawner.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

@@ -5,8 +5,8 @@
 // Value 1 wird verringert und die Energie neu gesetzt, bis Value1 == 0 ist
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_PowerBlock.h"
+#include "stdafx.hpp"
+#include "Gegner_PowerBlock.hpp"
 
 //					    	Spread Laser Bounce	Blitz Shield Energy	Rad	Powerline Granate Smartbomb Autofire Supershot   Score
 int	WaffenVerteilung[14] = {  100,   200,  300,   500,  505,   530,  550,   600,     650,     675,     680,     685,     1000,     1000};

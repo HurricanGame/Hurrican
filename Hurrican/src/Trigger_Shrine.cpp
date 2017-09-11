@@ -5,8 +5,8 @@
 // schiesst man darauf, regent es Steine
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_Shrine.h"
+#include "stdafx.hpp"
+#include "Trigger_Shrine.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

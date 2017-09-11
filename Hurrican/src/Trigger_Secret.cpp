@@ -5,8 +5,8 @@
 // wird für die "Level-Endabrechnung/Summary Screen" benötigt
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_Secret.h"
+#include "stdafx.hpp"
+#include "Trigger_Secret.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

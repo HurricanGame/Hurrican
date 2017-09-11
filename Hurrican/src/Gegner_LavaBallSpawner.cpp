@@ -4,8 +4,8 @@
 // ERZEUGT Lava Bälle, die aus der Lava hopsen
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_LavaBallSpawner.h"
+#include "stdafx.hpp"
+#include "Gegner_LavaBallSpawner.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

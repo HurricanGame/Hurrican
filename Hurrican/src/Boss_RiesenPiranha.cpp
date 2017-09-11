@@ -5,8 +5,8 @@
 // kleine Piranhas
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_RiesenPiranha.h"
+#include "stdafx.hpp"
+#include "Boss_RiesenPiranha.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

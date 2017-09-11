@@ -4,8 +4,8 @@
 // Hopst aus der Lava raus und wieder rein
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_LavaBall.h"
+#include "stdafx.hpp"
+#include "Gegner_LavaBall.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

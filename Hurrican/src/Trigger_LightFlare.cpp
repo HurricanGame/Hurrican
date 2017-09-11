@@ -4,8 +4,8 @@
 // Dreht sich langsam
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_LightFlare.h"
+#include "stdafx.hpp"
+#include "Trigger_LightFlare.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

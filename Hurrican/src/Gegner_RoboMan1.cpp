@@ -4,8 +4,8 @@
 // fliegt und schiesst Raketen
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_RoboMan1.h"
+#include "stdafx.hpp"
+#include "Gegner_RoboMan1.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

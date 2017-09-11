@@ -4,8 +4,8 @@
 // Hängt geschlossen an der Decke, und öffnet sich im Loop, wenn der Spieler in der nähe ist
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Geschuetz.h"
+#include "stdafx.hpp"
+#include "Gegner_Geschuetz.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

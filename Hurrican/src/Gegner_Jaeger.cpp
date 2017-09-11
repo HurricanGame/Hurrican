@@ -4,8 +4,8 @@
 // flieget erst im Hintergrund vorbei und saust dann von oben runter
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Jaeger.h"
+#include "stdafx.hpp"
+#include "Gegner_Jaeger.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

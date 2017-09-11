@@ -5,8 +5,8 @@
 // er in der Nähe ist
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Piranha.h"
+#include "stdafx.hpp"
+#include "Gegner_Piranha.hpp"
 
 // --------------------------------------------------------------------------------------
 // Piranha Konstruktor

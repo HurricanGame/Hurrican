@@ -4,8 +4,8 @@
 // Fliegt rum, ist fett und ballert auf den Hurri
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Flugsack.h"
+#include "stdafx.hpp"
+#include "Gegner_Flugsack.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

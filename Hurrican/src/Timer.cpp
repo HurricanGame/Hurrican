@@ -14,10 +14,10 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
-#include "Globals.h"
-#include "Timer.h"
-#include "Logdatei.h"
-#include "DX8Font.h"
+#include "Globals.hpp"
+#include "Timer.hpp"
+#include "Logdatei.hpp"
+#include "DX8Font.hpp"
 
 // --------------------------------------------------------------------------------------
 // Klassen Funktionen

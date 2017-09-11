@@ -4,8 +4,8 @@
 // Gegnermassen hopsen von der Seite rein
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_SchmidtOrgie.h"
+#include "stdafx.hpp"
+#include "Boss_SchmidtOrgie.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

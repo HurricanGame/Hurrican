@@ -5,8 +5,8 @@
 // Ist sie getroffen, stürzt sie rauchend ab und explodiert an der nächsten Wand/Boden
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Stahlmuecke.h"
+#include "stdafx.hpp"
+#include "Gegner_Stahlmuecke.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

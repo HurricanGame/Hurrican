@@ -8,8 +8,8 @@
 // Ist ein Bollen kleiner als 30, so teilt er sich nicht mehr.
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_SchleimBoller.h"
+#include "stdafx.hpp"
+#include "Gegner_SchleimBoller.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

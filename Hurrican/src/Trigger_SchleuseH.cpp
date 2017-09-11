@@ -4,8 +4,8 @@
 // Blockiert das Level
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_SchleuseH.h"
+#include "stdafx.hpp"
+#include "Trigger_SchleuseH.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

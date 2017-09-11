@@ -5,8 +5,8 @@
 // sobald der Spieler in Reichweite kommt und schiesst dann in die Richtung des Spielers
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Deckenturm.h"
+#include "stdafx.hpp"
+#include "Gegner_Deckenturm.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

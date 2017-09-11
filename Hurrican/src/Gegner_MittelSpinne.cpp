@@ -4,8 +4,8 @@
 // Klettert beim Wuxe Spinnenansturm von der Decke
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_MittelSpinne.h"
+#include "stdafx.hpp"
+#include "Gegner_MittelSpinne.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

@@ -4,8 +4,8 @@
 // Rollt durch den Cave und klappt manchmal auf, um zu ballern =)
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Stachelbeere.h"
+#include "stdafx.hpp"
+#include "Gegner_Stachelbeere.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

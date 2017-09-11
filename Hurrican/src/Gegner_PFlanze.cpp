@@ -4,8 +4,8 @@
 // Spuckt Feuerbälle, wenn der Spieler in der Nähe ist
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Pflanze.h"
+#include "stdafx.hpp"
+#include "Gegner_Pflanze.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

@@ -2,8 +2,8 @@
 // Der große Lüfter
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_LuefterGross.h"
+#include "stdafx.hpp"
+#include "Trigger_LuefterGross.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

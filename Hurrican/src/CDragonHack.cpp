@@ -10,9 +10,9 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
-#include "CDragonHack.h"
-#include "Tileengine.h"
-#include "Timer.h"
+#include "CDragonHack.hpp"
+#include "Tileengine.hpp"
+#include "Timer.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

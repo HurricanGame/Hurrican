@@ -7,8 +7,8 @@
 // Value2 speichert die Ursprungs y-Position
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_Lift.h"
+#include "stdafx.hpp"
+#include "Trigger_Lift.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

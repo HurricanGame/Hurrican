@@ -2,8 +2,8 @@
 // Der Fiese Walker mit dem Flammenwerfer
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_FieserFireWalker.h"
+#include "stdafx.hpp"
+#include "Gegner_FieserFireWalker.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

@@ -4,8 +4,8 @@
 // fliegt von links nach rechts und andersrum über dem Spieler und ballert dabei
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Boss_Ufo.h"
+#include "stdafx.hpp"
+#include "Boss_Ufo.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

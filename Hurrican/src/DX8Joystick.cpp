@@ -10,9 +10,9 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
-#include "DX8Joystick.h"
-#include "Logdatei.h"
-#include "Gameplay.h"
+#include "DX8Joystick.hpp"
+#include "Logdatei.hpp"
+#include "Gameplay.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

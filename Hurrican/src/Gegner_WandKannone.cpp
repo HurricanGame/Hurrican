@@ -6,8 +6,8 @@
 // Value1 = 1 Gegner blickt rechts
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_WandKannone.h"
+#include "stdafx.hpp"
+#include "Gegner_WandKannone.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

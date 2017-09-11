@@ -4,9 +4,9 @@
 // Bringt Punkte beim Einsammeln und aber einer gewissen Anzahl ein Extra Leben
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_Diamant.h"
-#include "Gegner_Punisher.h"
+#include "stdafx.hpp"
+#include "Gegner_Diamant.hpp"
+#include "Gegner_Punisher.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

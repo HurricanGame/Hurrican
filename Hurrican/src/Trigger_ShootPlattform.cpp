@@ -8,8 +8,8 @@
 // nach oben
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Trigger_ShootPlattform.h"
+#include "stdafx.hpp"
+#include "Trigger_ShootPlattform.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

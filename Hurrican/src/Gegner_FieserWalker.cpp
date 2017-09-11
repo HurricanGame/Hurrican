@@ -2,8 +2,8 @@
 // Der Fiese Walker mit dem Laser
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.h"
-#include "Gegner_FieserWalker.h"
+#include "stdafx.hpp"
+#include "Gegner_FieserWalker.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
