@@ -5,12 +5,12 @@
 // Value1 gibt die Partikel Art an, wobei
 // 0 = Regen, 1 = Schnee, 2 = Rauch, 3 = Funken, 4 = Luftblasen
 // 5 = Aufsteigender Rauch, 6 = Aufsteigender Rauch, der ab und zu aussetzt
-// 7 = Spritzer für den Wasserfall, 8 = Wassertropfen von der Decke
+// 7 = Spritzer fÃ¼r den Wasserfall, 8 = Wassertropfen von der Decke
 // 9 = Blitz und Donner, 10 = Scrollspeed
 // 11 = Fog, 12 = Funken ohne "bzzzzzt" Sound =)
 // 13 = Licht flackert (wie 9, nur in schwarz und mit Sound)
 // 14 = Spinnenteile
-// 15 = Blätter
+// 15 = BlÃ¤tter
 // 16 = Staub
 // 17 = Maden
 // 18 = Lavafunken
@@ -32,7 +32,7 @@ GegnerPartikelSpawner::GegnerPartikelSpawner(int Wert1, int Wert2, bool Light)
     Destroyable		= false;
     DontMove		= true;
     Energy			= 100;
-    Aussetzer		= 0.0f;			// für aussetzenden, auftreibenden Rauch
+    Aussetzer		= 0.0f;			// fÃ¼r aussetzenden, auftreibenden Rauch
     AnimCount		= float (Value2);
     Active			= true;
     pAim			= &Player[0];
@@ -103,7 +103,7 @@ void GegnerPartikelSpawner::DoKI(void)
             // Regen
             case 0 :
             {
-                // Wäre der Partikel überhaupt im Screen?
+                // WÃ¤re der Partikel Ã¼berhaupt im Screen?
                 float sx, sy;
 
                 sx = xPos-320 + rand()%640;
@@ -223,7 +223,7 @@ void GegnerPartikelSpawner::DoKI(void)
             }
             break;
 
-            // Blätter
+            // BlÃ¤tter
             case 15:
             {
                 WinkelUebergabe = 0.0f;

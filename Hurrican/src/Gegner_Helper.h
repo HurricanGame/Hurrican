@@ -2,9 +2,9 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Gegner für Hurrican
+// Gegner fÃ¼r Hurrican
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -185,7 +185,7 @@ void LoadGegnerGrafik(int Nr);							// Bestimmten Gegner laden
 
 extern GegnerListClass		Gegner;
 extern DirectGraphicsSprite	*pGegnerGrafix[MAX_GEGNERGFX];		// Grafiken der Gegner
-extern RECT					 GegnerRect	  [MAX_GEGNERGFX];		// Rechtecke für Kollision
+extern RECT					 GegnerRect	  [MAX_GEGNERGFX];		// Rechtecke fÃ¼r Kollision
 extern float				 g_Fahrstuhl_yPos;					// yPosition des Fahrstuhls
 extern float				 g_Fahrstuhl_Offset;				// Scrollposition relativ zum Farhstuhl
 extern float				 g_Fahrstuhl_Speed;					// Fahrstuhl Geschwindigkeit

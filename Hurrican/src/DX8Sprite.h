@@ -5,7 +5,7 @@
 // DX8 Sprite Klasse
 // zum laden und anzeigen von dx8 Surfaces und D3DSprites
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -49,7 +49,7 @@
 //      original DirectX release, so disabled it:
 #if 0
 // --------------------------------------------------------------------------------------
-// Surface Klasse für das Laden und Anzeigen (copyrects)
+// Surface Klasse fÃ¼r das Laden und Anzeigen (copyrects)
 // von Bildern (ohne Colorkey und anderen Effekten)
 // --------------------------------------------------------------------------------------
 
@@ -63,7 +63,7 @@ public:
     DirectGraphicsSurface(void);						// Konstruktor (leer)
     ~DirectGraphicsSurface(void);						// Surface freigeben
     bool LoadImage(const char *Filename,					// Laden des Bildes "Filename"
-                   int xSize, int ySize);					// mit Grösse xSize, ySize
+                   int xSize, int ySize);					// mit GrÃ¶sse xSize, ySize
     bool  SetRect	  (int left,  int top,
                        int right, int bottom);				// Neuen Ausschnitt setzen
     RECT  GetRect	  (void);								// Ausschnitt holen
@@ -76,9 +76,9 @@ public:
 #endif //0
 
 // --------------------------------------------------------------------------------------
-// Sprite Klasse für das Laden und Anzeigen
+// Sprite Klasse fÃ¼r das Laden und Anzeigen
 // von Sprites (MIT Colorkey und anderen Effekten, hoffentlich schnell :)
-// mit Hilfe von Vertices und Texturen drübergeklebt
+// mit Hilfe von Vertices und Texturen drÃ¼bergeklebt
 // --------------------------------------------------------------------------------------
 
 class DirectGraphicsSprite
@@ -90,8 +90,8 @@ public:
     //DKS - Made these shorts instead of ints:
     int16_t				itsXFrameCount;						// Frameanzahl in X-Richtung
     int16_t				itsYFrameCount;						// Frameanzahl in Y-Richtung
-    int16_t				itsXFrameSize;						// Framegrösse in X-Richtung
-    int16_t				itsYFrameSize;						// Framegrösse in Y-Richtung
+    int16_t				itsXFrameSize;						// FramegrÃ¶sse in X-Richtung
+    int16_t				itsYFrameSize;						// FramegrÃ¶sse in Y-Richtung
 
     //DKS - Textures are now accessed through an index passed to TexturesystemClass:
     int16_t             itsTexIdx;                          // Index to pass to SetTexture()
@@ -110,7 +110,7 @@ public:
     //      lots of RAM needlessly. Also, when in debug-mode, it is a bounds-
     //      checked wrapper to a vector, as I found the game was accessing
     //      past its end in Projectiles.cpp and Partikelsystem.cpp
-    //RECT				itsPreCalcedRects[256];				// vorberechnete Ausschnitte für die Frames
+    //RECT				itsPreCalcedRects[256];				// vorberechnete Ausschnitte fÃ¼r die Frames
 #ifdef _DEBUG
     class BoundCheckedArray {
     public:
@@ -139,7 +139,7 @@ public:
     BoundCheckedArray itsPreCalcedRects;
 #else
     //DKS - When not in debug-mode, this is the pointer to the dynamically allocated array of RECTs
-    RECT				*itsPreCalcedRects;				// vorberechnete Ausschnitte für die Frames
+    RECT				*itsPreCalcedRects;				// vorberechnete Ausschnitte fÃ¼r die Frames
 #endif
 
     DirectGraphicsSprite(void):
@@ -158,7 +158,7 @@ public:
     ~DirectGraphicsSprite(void);						// Textur freigeben
 
     bool  LoadImage(const std::string &filename,							// Laden des Bildes "Filename"
-                    uint16_t xs, uint16_t ys, uint16_t xfs, uint16_t yfs,		// x/y Size und Framegrösse
+                    uint16_t xs, uint16_t ys, uint16_t xfs, uint16_t yfs,		// x/y Size und FramegrÃ¶sse
                     uint16_t xfc,  uint16_t yfc);						// Frameanzahl
 
     //DKS - Made inline
@@ -213,11 +213,11 @@ public:
             RenderMirroredSprite(x, y, Color);
     }
 
-    void  RenderSpriteScaled(float x, float y,				// Sprite in beliebiger Grösse
+    void  RenderSpriteScaled(float x, float y,				// Sprite in beliebiger GrÃ¶sse
                              int width, int height,
                              D3DCOLOR col);
 
-    void  RenderSpriteScaled(float x, float y,				// Sprite in beliebiger Grösse mit Animationsphase
+    void  RenderSpriteScaled(float x, float y,				// Sprite in beliebiger GrÃ¶sse mit Animationsphase
                              int width, int height,
                              int Anim,
                              D3DCOLOR col);
@@ -242,7 +242,7 @@ public:
                 float (itsRect.bottom - itsRect.top), Winkel, Color);
     }
 
-    void  RenderSpriteScaledRotated(float x, float y,		// beliebige Grösse und rotiert
+    void  RenderSpriteScaledRotated(float x, float y,		// beliebige GrÃ¶sse und rotiert
                                     float width, float height,
                                     float Winkel, D3DCOLOR Color);
 

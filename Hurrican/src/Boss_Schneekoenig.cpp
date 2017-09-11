@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Der Schneekoenig
 //
-// Ist ein Fetter Sack, der den Spieler des öfteren nervt
+// Ist ein Fetter Sack, der den Spieler des Ã¶fteren nervt
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -127,7 +127,7 @@ float GegnerSchneeKoenig::WinkelToPlayer(void)
 {
     float dx;
 
-    // Abstände berechnen
+    // AbstÃ¤nde berechnen
     dx = (xPos + 100) - (pAim->xpos + 35);
 
     float winkel;
@@ -182,7 +182,7 @@ void GegnerSchneeKoenig::NextAction(int NewAction)
     }
     break;
 
-    // Knarre einziehen, von links nach rechts hopsen und wieder zurück
+    // Knarre einziehen, von links nach rechts hopsen und wieder zurÃ¼ck
     // und dabei Blaue Bomben abwerfen
     case 2:
     {
@@ -231,7 +231,7 @@ void GegnerSchneeKoenig::DoKI(void)
     }
 
 
-    // Kanone zurückfahren
+    // Kanone zurÃ¼ckfahren
     if (GunSlide > 0.0f)
         GunSlide -= 1.0f SYNC;
     else
@@ -377,7 +377,7 @@ void GegnerSchneeKoenig::DoKI(void)
 
     case GEGNER_SPRINGEN:
     {
-        // Kanone zurückfahren
+        // Kanone zurÃ¼ckfahren
         if (KnarreY < 60.0f)
             KnarreY += 5.0f SYNC;
         else
@@ -420,7 +420,7 @@ void GegnerSchneeKoenig::DoKI(void)
                             else
                                 target = (float)TileEngine.XOffset + 540.0f;
 
-                            // zurück zur Mitte springen
+                            // zurÃ¼ck zur Mitte springen
                             if (ShotCount == 1)
                                 target = (float)TileEngine.XOffset + 320.0f;
 
@@ -520,7 +520,7 @@ void GegnerSchneeKoenig::DoKI(void)
 
     case GEGNER_AUSFAHREN:
     {
-        // Kanone zurück
+        // Kanone zurÃ¼ck
         if (KnarreWinkel < 0.0f)
             KnarreWinkel += 5.0f SYNC;
 
@@ -545,7 +545,7 @@ void GegnerSchneeKoenig::DoKI(void)
             if (yPos < TileEngine.YOffset - 300.0f)
                 Energy = 0.0f;
 
-            // Auf der Hälfte explodieren lassen?
+            // Auf der HÃ¤lfte explodieren lassen?
             if (Value1 >= 2 &&
                     yPos < TileEngine.YOffset + 150.0f)
             {
@@ -680,7 +680,7 @@ void GegnerSchneeKoenig::DoKI(void)
     // Boss hat Schaden genommen?
     if (DamageTaken > 0.0f)
     {
-        // War es eine seiner eigenen Bomben? Dann zieht das ganz schön was ab =)
+        // War es eine seiner eigenen Bomben? Dann zieht das ganz schÃ¶n was ab =)
         if (LastEnergy - Energy > 5000)
         {
         }
@@ -699,7 +699,7 @@ void GegnerSchneeKoenig::DoKI(void)
         PlattformTest(GegnerRect[GegnerArt]);
     }
 
-    // Checken, ob der Schneekönig von einer Schneekoppe getroffen wurde =)
+    // Checken, ob der SchneekÃ¶nig von einer Schneekoppe getroffen wurde =)
     GegnerClass* pTemp;
     pTemp = Gegner.pStart;
 

@@ -3,7 +3,7 @@
 //
 // Wird aktiviert, sobald der Spieler daraufspringt
 // Dann raste es los, der Level scrollt mit
-// Bleibt immer auf x-Höhe des Spielers
+// Bleibt immer auf x-HÃ¶he des Spielers
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -36,7 +36,7 @@ void GegnerSurfBrett::DoKI(void)
     SimpleAnimation();
     BlickRichtung	= LINKS;
 
-    // Testen, ob der Spieler den Sack berührt hat
+    // Testen, ob der Spieler den Sack berÃ¼hrt hat
     //
     PlattformTest(GegnerRect[GegnerArt]);
 

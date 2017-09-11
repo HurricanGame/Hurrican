@@ -18,7 +18,7 @@ private:
     GegnerKettenglied		*pKettenTeile[NUM_KETTENGLIEDER];
 
     float	GunWinkel;
-    float	SmokeCount;									// Für Antriebspartikel
+    float	SmokeCount;									// FÃ¼r Antriebspartikel
     float	ShotDelay;
     float	ShotCount;
     float	HookX, HookY;

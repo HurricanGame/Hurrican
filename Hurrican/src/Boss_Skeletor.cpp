@@ -30,7 +30,7 @@ GegnerSkeletor::GegnerSkeletor(int Wert1, int Wert2, bool Light)
     LastHandlung	= -1;
     DrawNow			= false;
 
-    // Zusätzliche Grafiken laden
+    // ZusÃ¤tzliche Grafiken laden
     //
     Flamme.LoadImage ("skeletor_flame.png",  160, 140, 160, 70, 1, 2);
 }
@@ -487,7 +487,7 @@ void GegnerSkeletor::DoKI(void)
 
             ShotDelay = 1.0f;
 
-            // Hülse
+            // HÃ¼lse
             int off = 70;
             if (BlickRichtung == LINKS)
                 off = 30;
@@ -578,7 +578,7 @@ void GegnerSkeletor::DoKI(void)
         Handlung = GEGNER_EXPLODIEREN;
         ShotDelay = 20.0f;
 
-        // Schädel spawnen
+        // SchÃ¤del spawnen
         Gegner.PushGegner(xPos + 50, yPos + 50, SKULL, 0, 99, false);
 
         // Explosionen

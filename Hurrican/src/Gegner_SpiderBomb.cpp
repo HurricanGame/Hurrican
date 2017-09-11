@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Die Spinnenbombe
 //
-// Läuft in Richtung Spieler und explodiert an ihm
+// LÃ¤uft in Richtung Spieler und explodiert an ihm
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -48,7 +48,7 @@ void GegnerSpiderBomb::DoKI(void)
     if (Handlung == GEGNER_LAUFEN)
         SimpleAnimation();
 
-// Nach links bzw rechts auf Kollision prüfen und dann ggf umkehren
+// Nach links bzw rechts auf Kollision prÃ¼fen und dann ggf umkehren
     if (BlickRichtung == LINKS)
         if (blockl & BLOCKWERT_WAND)// || blockl & BLOCKWERT_GEGNERWAND)
         {
@@ -76,9 +76,9 @@ void GegnerSpiderBomb::DoKI(void)
 // Je nach Handlung richtig verhalten
     switch (Handlung)
     {
-    case GEGNER_LAUFEN:						// Spinne läuft rum
+    case GEGNER_LAUFEN:						// Spinne lÃ¤uft rum
     {
-        // Kein Boden mehr unter den Füssen ? Dann runterfallen lassen
+        // Kein Boden mehr unter den FÃ¼ssen ? Dann runterfallen lassen
         if (!(blocku & BLOCKWERT_WAND) &&
                 !(blocku & BLOCKWERT_PLATTFORM))
         {
@@ -151,9 +151,9 @@ void GegnerSpiderBomb::DoKI(void)
     {
     } break;
 
-    case GEGNER_FALLEN:						// Spinne fällt runter
+    case GEGNER_FALLEN:						// Spinne fÃ¤llt runter
     {
-        // Wieder Boden unter den Füssen ? Dann wieder normal laufen
+        // Wieder Boden unter den FÃ¼ssen ? Dann wieder normal laufen
         if (blocku & BLOCKWERT_WAND ||
                 blocku & BLOCKWERT_PLATTFORM)
         {
@@ -169,7 +169,7 @@ void GegnerSpiderBomb::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler die Bombe berührt hat
+    // Testen, ob der Spieler die Bombe berÃ¼hrt hat
     TestDamagePlayers(20.0f, true);
 }
 

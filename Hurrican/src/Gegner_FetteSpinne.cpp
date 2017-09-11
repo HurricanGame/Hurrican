@@ -61,13 +61,13 @@ void GegnerFetteSpinne::DoDraw(void)
 void GegnerFetteSpinne::DoKI(void)
 {
     // Animieren
-    if (AnimEnde > 0)						// Soll überhaupt anmiert werden ?
+    if (AnimEnde > 0)						// Soll Ã¼berhaupt anmiert werden ?
     {
-        AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+        if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und nächste Animationsphase
+            AnimPhase++;					// Und nÃ¤chste Animationsphase
 
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
                 AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
@@ -113,7 +113,7 @@ void GegnerFetteSpinne::DoKI(void)
                      BlickRichtung == RECHTS)) &&
                     pAim->Aktion[AKTION_SHOOT])
             {
-                // Decke über der Spinne suchen
+                // Decke Ã¼ber der Spinne suchen
                 bool block = false;
                 int a = 0;
                 uint32_t b = TileEngine.TileAt((int)(xPos / TILESIZE_X), (int)(yPos / TILESIZE_Y) + a).Block;
@@ -129,7 +129,7 @@ void GegnerFetteSpinne::DoKI(void)
                     a++;
                 }
 
-                // Decke drüber? Dann hochspringen
+                // Decke drÃ¼ber? Dann hochspringen
                 if (block == true)
                 {
                     Handlung = GEGNER_SPECIAL;

@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Die WasserMine
 //
-// Dümpelt im Wasser rum und wartet auf eine Kollision ;)
+// DÃ¼mpelt im Wasser rum und wartet auf eine Kollision ;)
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -31,7 +31,7 @@ void GegnerWasserMine::DoKI(void)
 {
     SimpleAnimation();
 
-    // Spieler berührt ?
+    // Spieler berÃ¼hrt ?
     TestDamagePlayers(50.0f, true);
 }
 

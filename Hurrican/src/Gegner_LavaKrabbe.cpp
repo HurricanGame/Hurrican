@@ -35,7 +35,7 @@ void GegnerLavaKrabbe::DoDraw(void)
     {
         int r, g, b, w;
 
-        // Farbe setzen (leichte orangetönung)
+        // Farbe setzen (leichte orangetÃ¶nung)
         r = 60 + int (zPos);
         g = 20 + int (zPos);
         b = 20 + int (zPos);
@@ -109,11 +109,11 @@ void GegnerLavaKrabbe::DoKI(void)
     // Krabbe ist gelandet und dreht sich in Richtung Spieler
     case GEGNER_DREHEN:
     {
-        AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+        if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
         {
             AnimCount = 0.0f;				// Dann wieder auf Null setzen
-            AnimPhase--;					// Und nächste Animationsphase
+            AnimPhase--;					// Und nÃ¤chste Animationsphase
             if (AnimPhase <= 0) 			// Animation von zu Ende	?
             {
                 AnimPhase = 0;
@@ -128,11 +128,11 @@ void GegnerLavaKrabbe::DoKI(void)
     // Krabbe ist gelandet und dreht sich in Richtung Spieler
     case GEGNER_DREHEN2:
     {
-        AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+        if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
         {
             AnimCount = 0.0f;				// Dann wieder auf Null setzen
-            AnimPhase++;					// Und nächste Animationsphase
+            AnimPhase++;					// Und nÃ¤chste Animationsphase
             if (AnimPhase >= 4) 			// Animation von zu Ende	?
             {
                 AnimPhase = 5;
@@ -148,11 +148,11 @@ void GegnerLavaKrabbe::DoKI(void)
     {
         xPos += 5.0f * BlickRichtung * -1 SYNC;
 
-        AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+        if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
         {
             AnimCount = 0.0f;				// Dann wieder auf Null setzen
-            AnimPhase++;					// Und nächste Animationsphase
+            AnimPhase++;					// Und nÃ¤chste Animationsphase
             if (AnimPhase >= 14) 			// Animation von zu Ende	?
                 AnimPhase = 5;
         }
@@ -205,7 +205,7 @@ void GegnerLavaKrabbe::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler die Krabbe berührt hat
+    // Testen, ob der Spieler die Krabbe berÃ¼hrt hat
     if (Handlung == GEGNER_STEHEN ||
             Handlung == GEGNER_DREHEN ||
             Handlung == GEGNER_DREHEN2)

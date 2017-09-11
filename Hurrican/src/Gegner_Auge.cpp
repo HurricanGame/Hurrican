@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Das Augen Extra
 //
-// fliegt Sinus fˆrmig durchs Level und hinterl‰sst nach Zerstˆrung ein Extra
+// fliegt Sinus f√∂rmig durchs Level und hinterl√§sst nach Zerst√∂rung ein Extra
 // welches Extra, das steht in Value1
 // --------------------------------------------------------------------------------------
 
@@ -62,13 +62,13 @@ void GegnerAuge::DoKI(void)
     if (Handlung != GEGNER_STEHEN)
     {
 
-        AnimCount += SpeedFaktor;			// Animationscounter weiterz‰hlen
+        AnimCount += SpeedFaktor;			// Animationscounter weiterz√§hlen
         if (Handlung == GEGNER_DREHEN)
         {
-            if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+            if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
             {
                 AnimCount = 0;					// Dann wieder auf Null setzen
-                AnimPhase++;					// Und n‰chste Animationsphase
+                AnimPhase++;					// Und n√§chste Animationsphase
                 if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
                 {
                     AnimCount = 0.0f;
@@ -79,10 +79,10 @@ void GegnerAuge::DoKI(void)
         }
         else if (Handlung == GEGNER_DREHEN2)
         {
-            if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+            if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
             {
                 AnimCount = 0;					// Dann wieder auf Null setzen
-                AnimPhase--;					// Und n‰chste Animationsphase
+                AnimPhase--;					// Und n√§chste Animationsphase
                 if (AnimPhase <= 0)				// Animation von zu Ende	?
                 {
                     AnimPhase = 0;				// Dann wieder von vorne beginnen

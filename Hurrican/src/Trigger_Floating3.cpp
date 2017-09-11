@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
-// Die große schwebende Plattform, die sich dreht, wenn man draufhopst
+// Die groÃŸe schwebende Plattform, die sich dreht, wenn man draufhopst
 //
-// Geht ein Stück nach unten, wenn der Hurri draufhopst
+// Geht ein StÃ¼ck nach unten, wenn der Hurri draufhopst
 // Je schneller die Fallgeschwindigkeit beim aufkommen, desto weiter geht sie nach unten
 // --------------------------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ GegnerFloating3::GegnerFloating3(int Wert1, int Wert2, bool Light)
 
 void GegnerFloating3::DoDraw(void)
 {
-    // Standfläche rendern
+    // StandflÃ¤che rendern
     //
     pGegnerGrafix[GegnerArt]->itsRect = pGegnerGrafix[GegnerArt]->itsPreCalcedRects[0];
     pGegnerGrafix[GegnerArt]->RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset),
@@ -96,11 +96,11 @@ void GegnerFloating3::DoKI(void)
                 }
             }
 
-        // Spieler war drauf? Dann Counter hochzählen, dass die Plattform sich bald dreht
+        // Spieler war drauf? Dann Counter hochzÃ¤hlen, dass die Plattform sich bald dreht
         if (turncount > 0.0f)
             turncount += 1.0f SYNC;
 
-        // drehen? -> Spieler fällt runter
+        // drehen? -> Spieler fÃ¤llt runter
         if (turncount > 8.0f)
         {
             // Noch drauf? Dann nochmal Drehrichtung rausfinden
@@ -147,7 +147,7 @@ void GegnerFloating3::DoKI(void)
         yPos   = float (Value2);
     }
 
-    // Counter für Partikel runterzählen
+    // Counter fÃ¼r Partikel runterzÃ¤hlen
     //
     AnimCount -= 1.0f SYNC;
 

@@ -76,7 +76,7 @@ void GegnerExtras::DoKI(void)
 
     switch(Handlung)
     {
-    case GEGNER_SPRINGEN :			// Extra fällt noch im Bogen raus
+    case GEGNER_SPRINGEN :			// Extra fÃ¤llt noch im Bogen raus
     {
         // an der Decke abprallen
         /*if (blocko & BLOCKWERT_WAND &&
@@ -143,7 +143,7 @@ void GegnerExtras::DoKI(void)
     if (pCollector != NULL)// &&
         //Handlung != GEGNER_SPRINGEN)
     {
-        // Punkte fürs Extras sammeln gebe
+        // Punkte fÃ¼rs Extras sammeln gebe
         pCollector->Score += 10;
 
         // "Einsammel" Effekt anzeigen
@@ -152,10 +152,10 @@ void GegnerExtras::DoKI(void)
         // Waffen-Upgrade eingesammelt ?
         if (Value1 < 3)
         {
-            // Upgraden überhaupt noch notwendig ?
+            // Upgraden Ã¼berhaupt noch notwendig ?
             if (pCollector->CurrentWeaponLevel[Value1] < 8)
             {
-                // Anzahl eingesammelter Powerups erhöhen
+                // Anzahl eingesammelter Powerups erhÃ¶hen
                 //pCollector->CollectedPowerUps[Value1]++;
 
                 // Maximum erreicht ? dann neuen Waffenlevel setzen
@@ -200,7 +200,7 @@ void GegnerExtras::DoKI(void)
             }
 
             // Aktuelle Waffe auf zuletzt gesammeltes Extra setzen,
-            // wenn die Waffe dadurch stärker wird
+            // wenn die Waffe dadurch stÃ¤rker wird
             //
             if (pCollector->CurrentWeaponLevel[Value1] >
                     pCollector->CurrentWeaponLevel[pCollector->SelectedWeapon] ||
@@ -211,10 +211,10 @@ void GegnerExtras::DoKI(void)
         // Blitz-Upgrade eingesammelt ?
         if (Value1 == 3)
         {
-            // Upgraden überhaupt noch notwendig ?
+            // Upgraden Ã¼berhaupt noch notwendig ?
             if (pCollector->CurrentWeaponLevel[Value1] < 16)
             {
-                // Anzahl eingesammelter Powerups erhöhen
+                // Anzahl eingesammelter Powerups erhÃ¶hen
                 //pCollector->CollectedPowerUps[Value1]++;
 
                 // Maximum erreicht ? dann neuen Waffenlevel setzen

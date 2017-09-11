@@ -2,9 +2,9 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Header Datei mit global gültigen Makros, Defines usw
+// Header Datei mit global gÃ¼ltigen Makros, Defines usw
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -23,7 +23,7 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-//----- Spielzustände
+//----- SpielzustÃ¤nde
 
 #define CRACKTRO		0
 #define VORSPANN		1
@@ -36,17 +36,17 @@
 #define SimpleKeydown(vk_code) ((GetAsyncKeyState(vk_code) & 0x8000) ? 1 : 0)
 
 #if defined(PLATFORM_DIRECTX)
-// Schnittstellen erst prüfen, ob sie existieren, und dann freigeben
+// Schnittstellen erst prÃ¼fen, ob sie existieren, und dann freigeben
 #define SafeRelease(x) if (x != NULL) { x->Release(); x=NULL; }
 #endif //PLATFORM_DIRECTX
 
 // --------------------------------------------------------------------------------------
-// Definitionen für den Spielablauf
+// Definitionen fÃ¼r den Spielablauf
 // --------------------------------------------------------------------------------------
 
-#define MAX_ENERGY				100					// Maximalwert für die Spielerenergie
-#define MAX_ARMOUR				200					// Maximalwert für das Rad
-#define DIAMONDS_FOR_EXTRALIFE	 50					// Diamanten die man für 200 Zeiteinheiten
+#define MAX_ENERGY				100					// Maximalwert fÃ¼r die Spielerenergie
+#define MAX_ARMOUR				200					// Maximalwert fÃ¼r das Rad
+#define DIAMONDS_FOR_EXTRALIFE	 50					// Diamanten die man fÃ¼r 200 Zeiteinheiten
 
 #define RARFILENAME "Hurrican.dat"
 #define RARFILEPASSWORD "+/#(%,,/"
@@ -61,8 +61,8 @@
 // Externals
 // --------------------------------------------------------------------------------------
 
-extern bool	Sprache;								// true == deutsch / false == englisch (nur für Menugrafiken)
-extern bool	GameRunning;							// Spiel läuft :-)
+extern bool	Sprache;								// true == deutsch / false == englisch (nur fÃ¼r Menugrafiken)
+extern bool	GameRunning;							// Spiel lÃ¤uft :-)
 #ifdef _DEBUG
 extern bool	DebugMode;								// Debug Mode ein/aus
 #endif

@@ -1,9 +1,9 @@
 // --------------------------------------------------------------------------------------
 // Der Lift
 //
-// Fährt nach oben, sobald der Hurri draufsteht, und explodiert, wenn der Countdown
+// FÃ¤hrt nach oben, sobald der Hurri draufsteht, und explodiert, wenn der Countdown
 // abgelaufen ist, oder wenn der Hurri runterspringt
-// Value1 gibt an, wie schnell der Countdown runterzählt
+// Value1 gibt an, wie schnell der Countdown runterzÃ¤hlt
 // Value2 speichert die Ursprungs y-Position
 // --------------------------------------------------------------------------------------
 
@@ -37,13 +37,13 @@ void GegnerLift::DoKI(void)
     BlickRichtung = LINKS;
 
     // Animieren
-    if (AnimEnde > 0)						// Soll überhaupt animiert werden ?
+    if (AnimEnde > 0)						// Soll Ã¼berhaupt animiert werden ?
     {
-        AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+        if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und nächste Animationsphase
+            AnimPhase++;					// Und nÃ¤chste Animationsphase
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
             {
                 for (int i = 0; i < 10; i++)
@@ -86,7 +86,7 @@ void GegnerLift::DoKI(void)
     }
     break;
 
-    // Lift fährt nach oben
+    // Lift fÃ¤hrt nach oben
     case GEGNER_LAUFEN:
     {
         // Max Speed

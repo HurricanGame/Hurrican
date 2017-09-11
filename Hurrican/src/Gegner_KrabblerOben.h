@@ -8,7 +8,7 @@ class GegnerKrabblerOben : public GegnerClass
 {
 public:
 
-    float				ShotDelay;						// Schussverzögerung
+    float				ShotDelay;						// SchussverzÃ¶gerung
 
     GegnerKrabblerOben(int  Wert1, int Wert2,			// Konstruktor
                        bool Light);

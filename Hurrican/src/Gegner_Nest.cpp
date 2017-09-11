@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Das Wespennest
 //
-// Bringt in unregelmässigen Abständen Wespen hervor
+// Bringt in unregelmÃ¤ssigen AbstÃ¤nden Wespen hervor
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -45,7 +45,7 @@ void GegnerNest::DoKI(void)
     }
 
 
-    // Testen, ob der Spieler das Nest berührt
+    // Testen, ob der Spieler das Nest berÃ¼hrt
     //
     TestDamagePlayers(0.5f SYNC);
 }

@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Das Fass
 //
-// Gondelt hin und her, und l‰sst sich vom Spieler abschiessen
+// Gondelt hin und her, und l√§sst sich vom Spieler abschiessen
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"

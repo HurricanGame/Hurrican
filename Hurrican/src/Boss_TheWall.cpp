@@ -42,7 +42,7 @@ GegnerTheWall::GegnerTheWall(int Wert1, int Wert2, bool Light)
     SmokeDelay = 0.0f;
     ShotDelay = 0.0f;
 
-    // Zusätzliche Grafiken laden
+    // ZusÃ¤tzliche Grafiken laden
     //
     Tuer.LoadImage("endbosstuer.png", 288, 185, 288, 185, 1, 1);
     Kringel[0].LoadImage("endbosskringel.png", 192, 191, 192, 191, 1, 1);
@@ -133,7 +133,7 @@ void GegnerTheWall::DoDraw(void)
         DirectGraphics.SetColorKeyMode();
     }
 
-    // Röhrenaufhängung rendern
+    // RÃ¶hrenaufhÃ¤ngung rendern
     Brain.SetRect(76, 0, 129, 157);
     Brain.RenderSprite(xPos - (float)TileEngine.XOffset + TunnelOffx + 110,
                        yPos - (float)TileEngine.YOffset + TunnelOffY + 2, col);
@@ -147,9 +147,9 @@ void GegnerTheWall::DoDraw(void)
     Kringel[0].RenderSpriteRotated(xPos - (float)TileEngine.XOffset + TunnelOffx + 37,
                                    yPos - (float)TileEngine.YOffset + TunnelOffY - 16, 360.0f - KringelWinkel, col);
 
-    // Türen
+    // TÃ¼ren
 
-    // Tür links
+    // TÃ¼r links
     Tuer.SetRect(toff, 0, 138, 185);
 
     // Schatten
@@ -160,7 +160,7 @@ void GegnerTheWall::DoDraw(void)
                       yPos - (float)TileEngine.YOffset + TunnelOffY - 10, -1,
                       0xFF333333, col, 0xFF333333, col);
 
-    // Tür rechts
+    // TÃ¼r rechts
     Tuer.SetRect(138, 0, 266 - toff, 185);
 
     Tuer.RenderSprite(xPos - (float)TileEngine.XOffset + TunnelOffx + 128 + toff,
@@ -193,7 +193,7 @@ void GegnerTheWall::NeueAktion(void)
         SoundManager.StopWave(SOUND_SPIDERLASER);
         SoundManager.StopWave(SOUND_BEAMLOAD2);
 
-        // Schädel rumfliegen lassen
+        // SchÃ¤del rumfliegen lassen
         Value1 = -1;
         Gegner.PushGegner(xPos + 3,
                             yPos + 228, SKULL, 99, 0, false);
@@ -256,7 +256,7 @@ void GegnerTheWall::NeueAktion(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Den Schädel wieder zurückpfeiffen
+// Den SchÃ¤del wieder zurÃ¼ckpfeiffen
 // --------------------------------------------------------------------------------------
 
 void GegnerTheWall::ReturnSkull(void)
@@ -301,13 +301,13 @@ void GegnerTheWall::DoKI(void)
 
     if (Handlung != GEGNER_EXPLODIEREN)
     {
-        // Vorderteil zurückfahren?
+        // Vorderteil zurÃ¼ckfahren?
         if (VorneX > 0.0f)
             VorneX -= 1.0f SYNC;
         else
             VorneX = 0.0f;
 
-        // getroffen? Dann dem Schädel die Energie abziehen
+        // getroffen? Dann dem SchÃ¤del die Energie abziehen
         if (Energy < OldEnergy)
         {
             if (SkullEnergy > 0.0f)
@@ -328,7 +328,7 @@ void GegnerTheWall::DoKI(void)
 
         Destroyable = false;
 
-        // Schädel kann man treffen?
+        // SchÃ¤del kann man treffen?
         if (Handlung != GEGNER_OEFFNEN &&
                 Handlung != GEGNER_SCHLIESSEN &&
                 Value1 == 1)
@@ -469,7 +469,7 @@ void GegnerTheWall::DoKI(void)
             Handlung = GEGNER_EXPLODIEREN;
             Laughing = 0.0f;
 
-            // Alle Schüsse löschen
+            // Alle SchÃ¼sse lÃ¶schen
             Projectiles.ClearAll();
 
             // Zeitlupe
@@ -497,7 +497,7 @@ void GegnerTheWall::DoKI(void)
             // Wie lange warten?
             AnimCount = 100.0f;
 
-            // Den Schädel verschwinden lassen
+            // Den SchÃ¤del verschwinden lassen
             GegnerClass *pTemp;
             pTemp = Gegner.pStart;
 
@@ -529,7 +529,7 @@ void GegnerTheWall::DoKI(void)
                 PlayerAbstandVert() < 400.0f &&
                 PlayerAbstand(true) < 600.0f)
         {
-            // Den Schädel wieder zurückpfeiffen
+            // Den SchÃ¤del wieder zurÃ¼ckpfeiffen
             if (Value1 == -1)
             {
                 Value1 = -2;
@@ -649,16 +649,16 @@ void GegnerTheWall::DoKI(void)
 
     case GEGNER_OEFFNEN:
     {
-        // Tür bewegen
+        // TÃ¼r bewegen
         if (DoorOffset < PI / 2.0f)
             DoorOffset += 0.075f SYNC;
 
-        // Tür offen? Dann countdown, bis sie wieder zugeht
+        // TÃ¼r offen? Dann countdown, bis sie wieder zugeht
         else
         {
             DoorOffset = PI / 2.0f;
 
-            // Tür öffnen Sound anhalten
+            // TÃ¼r Ã¶ffnen Sound anhalten
             //DKS - Added function WaveIsPlaying() to SoundManagerClass:
             if (SoundManager.WaveIsPlaying(SOUND_DOOR))
             {
@@ -680,7 +680,7 @@ void GegnerTheWall::DoKI(void)
 
     case GEGNER_SCHLIESSEN:
     {
-        // Tür
+        // TÃ¼r
         DoorOffset += 0.125f SYNC;
 
         if (DoorOffset > PI)
@@ -689,7 +689,7 @@ void GegnerTheWall::DoKI(void)
             ShakeScreen(2.0f);
             SoundManager.PlayWave(100, 128, 11000 + rand()%1500, SOUND_DOORSTOP);
 
-            // Tür öffnen Sound anhalten
+            // TÃ¼r Ã¶ffnen Sound anhalten
             SoundManager.StopWave(SOUND_DOOR);
 
             for (int i = 0; i < 36; i++)
@@ -705,7 +705,7 @@ void GegnerTheWall::DoKI(void)
             OldEnergy = Energy;
             SkullEnergy = 250.0f;
 
-            // Den Schädel wieder zurückpfeiffen
+            // Den SchÃ¤del wieder zurÃ¼ckpfeiffen
             ReturnSkull();
         }
     }

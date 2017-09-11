@@ -5,7 +5,7 @@
 // Font Klasse
 // zum Anzeigen von Schriften
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -37,10 +37,10 @@ private:
 
 public:
     //DKS - Character widths are now hard-coded arrays we merely point to:
-    //char					mCharLength[256];				// Länge der Zeichen in Pixel
-    uint8_t					*mCharLength;				// Länge der Zeichen in Pixel
-    int						mXCharSize;						// X-Grösse eines Zeichens
-    int						mYCharSize;						// Y-Grösse eines Zeichens
+    //char					mCharLength[256];				// LÃ¤nge der Zeichen in Pixel
+    uint8_t					*mCharLength;				// LÃ¤nge der Zeichen in Pixel
+    int						mXCharSize;						// X-GrÃ¶sse eines Zeichens
+    int						mYCharSize;						// Y-GrÃ¶sse eines Zeichens
 
 
     //DKS - Added support for font scaling
@@ -49,10 +49,10 @@ public:
     DirectGraphicsFont(void);							// Konstruktor (leer)
     ~DirectGraphicsFont(void);							// Textur freigeben
     bool LoadFont(const char *Filename,						// Laden des Bildes "Filename"
-                  int xts,									// Textur-Grösse x
-                  int yts,									// Textur-Grösse y
-                  int xCharsize,							// x-Grösse eines Zeichens
-                  int yCharsize,							// y-Grösse eines Zeichens
+                  int xts,									// Textur-GrÃ¶sse x
+                  int yts,									// Textur-GrÃ¶sse y
+                  int xCharsize,							// x-GrÃ¶sse eines Zeichens
+                  int yCharsize,							// y-GrÃ¶sse eines Zeichens
                   int xChars,								// Anzahl der Zeichen pro Zeile
                   int yChars,								// Anzahl der Zeichen pro Spalte
                   uint8_t *width_values);                   // DKS - Array of character widths to use
@@ -75,9 +75,9 @@ public:
                       const char Text[], D3DCOLOR Color);				// Color ausgeben
     bool DrawText(float x, float y,							// Text an xPos,yPos mit Farbe
                   const char Text[], D3DCOLOR Color, int Spacing);// Color ausgeben
-    int  DemoStringLength(const char Text[]);						// Länge eines Strings in Pixeln zurückliefern
-    int  StringLength(const char Text[]);							// Länge eines Strings in Pixeln zurückliefern
-    int  StringLength(const char Text[], int Spacing);			// Länge eines Strings in Pixeln zurückliefern
+    int  DemoStringLength(const char Text[]);						// LÃ¤nge eines Strings in Pixeln zurÃ¼ckliefern
+    int  StringLength(const char Text[]);							// LÃ¤nge eines Strings in Pixeln zurÃ¼ckliefern
+    int  StringLength(const char Text[], int Spacing);			// LÃ¤nge eines Strings in Pixeln zurÃ¼ckliefern
     void ShowFPS (void);									// FPS Werte anzeigen
 
     //DKS - New functions added to facilitate scaled fonts, primarily the "default" font on 320x240 devices

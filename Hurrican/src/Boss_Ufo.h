@@ -8,8 +8,8 @@ class GegnerUfo : public GegnerClass
 {
 public:
 
-    float			ShotDelay;						// Schussverzögerung
-    float			ActionDelay;					// Wie lange wird die aktuelle Aktion durchgeführt
+    float			ShotDelay;						// SchussverzÃ¶gerung
+    float			ActionDelay;					// Wie lange wird die aktuelle Aktion durchgefÃ¼hrt
     float			SmokeDelay;
 
     GegnerUfo		   (int Wert1,	int Wert2,			// Konstruktor

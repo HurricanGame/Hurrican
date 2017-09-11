@@ -57,22 +57,22 @@ void GegnerClimber::DoKI(void)
 {
     blocku = TileEngine.BlockUntenNormal (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
-    // Animationscounter weiterzählen
+    // Animationscounter weiterzÃ¤hlen
     AnimCount += SpeedFaktor;
 
-    if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+    if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
     {
         AnimCount = 0;					// Dann wieder auf Null setzen
 
         if (Handlung == GEGNER_LAUFEN)
         {
-            AnimPhase--;					// Und nächste Animationsphase
+            AnimPhase--;					// Und nÃ¤chste Animationsphase
             if (AnimPhase <= AnimStart)		// Animation von zu Ende	?
                 AnimPhase = AnimEnde;		// Dann wieder von vorne beginnen
         }
         else if (Handlung == GEGNER_SCHIESSEN)
         {
-            AnimPhase++;					// Und nächste Animationsphase
+            AnimPhase++;					// Und nÃ¤chste Animationsphase
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende? Dann wieder laufen
             {
                 Handlung = GEGNER_LAUFEN;
@@ -94,7 +94,7 @@ void GegnerClimber::DoKI(void)
         {
             float dx, dy;
 
-            // Abstände berechnen
+            // AbstÃ¤nde berechnen
             dx = (xPos + 25) - (pAim->xpos + 35);
             dy = (yPos + 18) - (pAim->ypos + 20);
 
@@ -132,7 +132,7 @@ void GegnerClimber::DoKI(void)
         //
         float dx, dy;
 
-        // Abstände berechnen
+        // AbstÃ¤nde berechnen
         dx = (xPos + 25) - (pAim->xpos + 35);
         dy = (yPos + 18) - (pAim->ypos + 40);
 
@@ -155,7 +155,7 @@ void GegnerClimber::DoKI(void)
 
         winkel = 360.0f - winkel;
 
-        // Spinne aus der Spinnenmaschine erst ein stück nach rechts laufen lassen
+        // Spinne aus der Spinnenmaschine erst ein stÃ¼ck nach rechts laufen lassen
         if (Value1 == 99)
         {
             if (xPos - TileEngine.XOffset < 250 &&
@@ -271,7 +271,7 @@ void GegnerClimber::DoKI(void)
     break;
     }
 
-    // Spieler berührt ?
+    // Spieler berÃ¼hrt ?
     //
     if (Handlung != GEGNER_FALLEN)
         TestDamagePlayers(4.0f SYNC);

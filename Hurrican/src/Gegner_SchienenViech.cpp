@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Das SchienenViech
 //
-// L‰uft auf Schienen entlang auf den Hurri zu
+// L√§uft auf Schienen entlang auf den Hurri zu
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -34,7 +34,7 @@ void GegnerSchienenViech::DoDraw(void)
 
     col = 0xFFCCCCCC;
 
-    // Draw kommt jetzt erst hier, damit der Gegner ¸ber allen Leveltiles gerendert wird
+    // Draw kommt jetzt erst hier, damit der Gegner √ºber allen Leveltiles gerendert wird
     pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
                                            (float)(yPos-TileEngine.YOffset),
                                            AnimPhase, col);
@@ -48,7 +48,7 @@ void GegnerSchienenViech::DoDraw(void)
 
 void GegnerSchienenViech::DoKI(void)
 {
-    // tempor‰re position f¸r Gegnerwand Check (Wandcheck komplett rausgenmommen, damit er nicht in der
+    // tempor√§re position f√ºr Gegnerwand Check (Wandcheck komplett rausgenmommen, damit er nicht in der
     // Schiene stecken bleibt ;)
     //
     float x = xPos;
@@ -64,16 +64,16 @@ void GegnerSchienenViech::DoKI(void)
         xAcc   *= -1.0f;
     }
 
-    AnimCount += SpeedFaktor;			// Animationscounter weiterz‰hlen
-    if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+    AnimCount += SpeedFaktor;			// Animationscounter weiterz√§hlen
+    if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
     {
         AnimCount = 0;					// Dann wieder auf Null setzen
 
-        // Vorw‰rts oder r¸ckw‰rts animieren, je nachdem, in welche Richtung das Viech gerade f‰hrt
+        // Vorw√§rts oder r√ºckw√§rts animieren, je nachdem, in welche Richtung das Viech gerade f√§hrt
         //
         if (xSpeed < 0.0f)
         {
-            AnimPhase++;					// Und n‰chste Animationsphase
+            AnimPhase++;					// Und n√§chste Animationsphase
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
             {
                 AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
@@ -131,7 +131,7 @@ void GegnerSchienenViech::DoKI(void)
     break;
     }
 
-    // Verfolgungsspeed begrenzen wenn er auf den Spieler zuf‰hrt
+    // Verfolgungsspeed begrenzen wenn er auf den Spieler zuf√§hrt
     //
     if (xSpeed > 20.0f)	xSpeed = 20.0f;
     if (xSpeed <-20.0f)	xSpeed =-20.0f;

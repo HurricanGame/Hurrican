@@ -25,7 +25,7 @@ GegnerFetteRakete::GegnerFetteRakete(int Wert1, int Wert2, bool Light)
     rot				= (float)(Wert1);
     BlickRichtung   = LINKS;
 
-    // Rakete kommt vom Drachen? Dann verhält sie sich anders
+    // Rakete kommt vom Drachen? Dann verhÃ¤lt sie sich anders
     if (Wert2 == 99)
     {
         xSpeed    =  0.0f;
@@ -62,7 +62,7 @@ void GegnerFetteRakete::DoKI(void)
     case GEGNER_INIT:
     {
         // Rakete kam nicht vom Drachen? Dann
-        // enthält Wert1 den Winkel, in den die Raketen fliegen sollen
+        // enthÃ¤lt Wert1 den Winkel, in den die Raketen fliegen sollen
 
         //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
         //xSpeed =  float (sin (Value1 * PI / 180.0f) * 35);
@@ -83,7 +83,7 @@ void GegnerFetteRakete::DoKI(void)
         //
         float dx, dy;
 
-        // Abstände berechnen
+        // AbstÃ¤nde berechnen
         dx = (xPos + 12) - (pAim->xpos + 35);
         dy = (yPos + 17) - (pAim->ypos + 40);
 

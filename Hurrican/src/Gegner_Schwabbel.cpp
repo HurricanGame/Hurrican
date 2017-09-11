@@ -36,13 +36,13 @@ void GegnerSchwabbel::DoKI(void)
     AnimSpeed = Energy / 1000.0f + 0.1f;
 
     // Animieren
-    if (Handlung == GEGNER_STEHEN)			// Soll überhaupt animiert werden ?
+    if (Handlung == GEGNER_STEHEN)			// Soll Ã¼berhaupt animiert werden ?
     {
-        AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+        if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und nächste Animationsphase
+            AnimPhase++;					// Und nÃ¤chste Animationsphase
 
             // Maden loskotzen
             //
@@ -91,7 +91,7 @@ void GegnerSchwabbel::DoKI(void)
     break;
     }
 
-    // Spieler berührt ?
+    // Spieler berÃ¼hrt ?
     //
     TestDamagePlayers(2.0f SYNC);
 }

@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Die WandKannone im FlugSack Level
 //
-// Hängt an der Wand und ballert regelmäsig (Value2)
+// HÃ¤ngt an der Wand und ballert regelmÃ¤sig (Value2)
 // Value1 = 0 Gegner blickt links
 // Value1 = 1 Gegner blickt rechts
 // --------------------------------------------------------------------------------------
@@ -41,13 +41,13 @@ void GegnerWandKannone::DoKI(void)
         BlickRichtung = RECHTS;
 
     // Animieren
-    if (AnimEnde > 0)						// Soll überhaupt anmiert werden ?
+    if (AnimEnde > 0)						// Soll Ã¼berhaupt anmiert werden ?
     {
-        AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+        if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und nächste Animationsphase
+            AnimPhase++;					// Und nÃ¤chste Animationsphase
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
             {
                 AnimPhase = AnimStart;		// Dann wieder von vorne beginnen

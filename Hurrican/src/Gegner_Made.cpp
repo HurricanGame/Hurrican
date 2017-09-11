@@ -143,7 +143,7 @@ void GegnerMade::DoKI(void)
         xSpeed *= -1;
     }
 
-    // Testen, ob der Spieler die Made berührt hat
+    // Testen, ob der Spieler die Made berÃ¼hrt hat
     //
     TestDamagePlayers(2.0f SYNC);
 }

@@ -1,8 +1,8 @@
 // --------------------------------------------------------------------------------------
 // Die Pharao-Kopf Endgegner
 //
-// rammt seitlich gegen die Wände und versucht den Hurri zu zerquetschen
-// lässt ggf Steine von der Decke rieseln
+// rammt seitlich gegen die WÃ¤nde und versucht den Hurri zu zerquetschen
+// lÃ¤sst ggf Steine von der Decke rieseln
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -22,7 +22,7 @@ GegnerPharaoKopf::GegnerPharaoKopf(int Wert1, int Wert2, bool Light)
     Value2			= Wert2;
     AnimPhase		= 0;
     ChangeLight		= Light;
-    AnimCount		= 100.0f;		// Counter für Spezial Aktion
+    AnimCount		= 100.0f;		// Counter fÃ¼r Spezial Aktion
     Destroyable		= true;
     TestBlock	    = false;
 }
@@ -107,14 +107,14 @@ void GegnerPharaoKopf::DoKI(void)
         SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
     }
 
-    // Kopf zieht dem Spieler Energie an wenn er ihn berührt
+    // Kopf zieht dem Spieler Energie an wenn er ihn berÃ¼hrt
     TestDamagePlayers(2.0f SYNC);
 
 
     if (Energy >= 3000 && AnimPhase > 1)
         AnimPhase = 0;
 
-    // Hälfte der Energie verloren ? Dann Risse Zeigen und kurz Brocken fliegen lassen
+    // HÃ¤lfte der Energie verloren ? Dann Risse Zeigen und kurz Brocken fliegen lassen
     if (Energy < 3000 && AnimPhase < 2)
     {
         AnimPhase = 2;
@@ -397,7 +397,7 @@ _weiter2:
 
     case GEGNER_CRUSHENERHOLEN:
     {
-        // ErholungsCounter runterzählen
+        // ErholungsCounter runterzÃ¤hlen
         AnimCount -= 1.0f SYNC;
 
         if (AnimCount <= 0.0f)
@@ -421,7 +421,7 @@ _weiter2:
                 ySpeed    = - 10.0f;
                 yAcc      =   2.0f;
 
-                // böse kucken
+                // bÃ¶se kucken
                 if (AnimPhase == 0)
                     AnimPhase = 1;
                 else
@@ -449,7 +449,7 @@ _weiter2:
     }
     break;
 
-    case GEGNER_SPECIAL:		// Boss hopft auf und ab und lässt Steine von der Decke rieseln
+    case GEGNER_SPECIAL:		// Boss hopft auf und ab und lÃ¤sst Steine von der Decke rieseln
     {
         if (Unten() && ySpeed > 0.0f)
         {
@@ -492,7 +492,7 @@ _weiter2:
             PartikelSystem.PushPartikel(xPos + 112, yPos + 77, LASERFLAMEPHARAO);
             PartikelSystem.PushPartikel(xPos + 112, yPos + 77, LASERFLAMEPHARAO);
 
-            // Schüsse erzeugen
+            // SchÃ¼sse erzeugen
             Projectiles.PushProjectile(xPos +  68, yPos + 77, PHARAOLASER, pAim);
             Projectiles.PushProjectile(xPos + 112, yPos + 77, PHARAOLASER, pAim);
 

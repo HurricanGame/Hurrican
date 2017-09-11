@@ -1,8 +1,8 @@
 // --------------------------------------------------------------------------------------
-// Der Button für die Shootplattform
+// Der Button fÃ¼r die Shootplattform
 //
-// Ein Button, der bei Beschuss eine ShootPlattform nach oben befördert
-// je länger man schiesst, um so mehr beschleunigt die Plattform
+// Ein Button, der bei Beschuss eine ShootPlattform nach oben befÃ¶rdert
+// je lÃ¤nger man schiesst, um so mehr beschleunigt die Plattform
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"

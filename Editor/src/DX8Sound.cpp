@@ -6,9 +6,9 @@
 // zum Abspielen von Wave-Dateien
 //
 // Wird eine Wave abgespielt, so wird erst eine Kopie von ihr erstellt und diese dann
-// gespielt, damit es möglich ist, einen Sound "überlagernd" zu spielen
+// gespielt, damit es mÃ¶glich ist, einen Sound "Ã¼berlagernd" zu spielen
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -42,7 +42,7 @@ DirectSoundClass::DirectSoundClass(void)
 {
 	lpDirectSound	 = NULL;
 
-	// Zu Beginn alle Channels "verfügbar" machen, da ja kein einziger Sound spielt
+	// Zu Beginn alle Channels "verfÃ¼gbar" machen, da ja kein einziger Sound spielt
 	for(int i=0; i<MAX_CHANNELS; i++)
 	{
 		ChannelStats[i] = 0;
@@ -122,7 +122,7 @@ void DirectSoundClass::Exit(void)
 	SafeRelease(lpDirectSound);
 	Protokoll.WriteText("-> DirectSound8 erfolgreich beendet !\n", false);
 
-	// FMOD aufräumen
+	// FMOD aufrÃ¤umen
 	FMUSIC_StopAllSongs();
 
 	for(i=0; i<MAX_SONGS; i++)
@@ -141,9 +141,9 @@ bool DirectSoundClass::LoadWave(char *filename, unsigned int nr)
 	char	Temp[140];
 	HMMIO wavefile;
 
-	// Wave-Datei öffnen
+	// Wave-Datei Ã¶ffnen
 	wavefile = mmioOpen (filename, 0, MMIO_READ | MMIO_ALLOCBUF);
-	if (wavefile == NULL)							// Fehler beim Öffnen ?
+	if (wavefile == NULL)							// Fehler beim Ã–ffnen ?
 	{
 		strcpy(Temp, "\n-> Wave laden Fehler : ");
 		strcat(Temp, filename);
@@ -192,7 +192,7 @@ bool DirectSoundClass::LoadWave(char *filename, unsigned int nr)
 		return (false);
 	} 
 
-// Zum Schluß wird der Buffer mit den Daten gefüllt:
+// Zum SchluÃŸ wird der Buffer mit den Daten gefÃ¼llt:
 
 	void *write1 = 0, *write2 = 0;
 	unsigned long length1,length2;
@@ -219,15 +219,15 @@ bool DirectSoundClass::LoadWave(char *filename, unsigned int nr)
 }
 
 // --------------------------------------------------------------------------------------
-// Wavedatei an Array-Position "nr" mit bestimmter Lautstärke und Panning spielen
+// Wavedatei an Array-Position "nr" mit bestimmter LautstÃ¤rke und Panning spielen
 // --------------------------------------------------------------------------------------
 
 bool DirectSoundClass::PlayWave(int Volume, int Panning, int nr)
 {
-	if(Volume == 0)					// hört man den Sound überhaupt ? :)
+	if(Volume == 0)					// hÃ¶rt man den Sound Ã¼berhaupt ? :)
 		return false;
 
-	// Channels durchgehen und prüfen, welcher frei ist
+	// Channels durchgehen und prÃ¼fen, welcher frei ist
 	int i=0;
 	while(i<MAX_CHANNELS+1 && ChannelStats[i] == 1)
 		i++;
@@ -239,7 +239,7 @@ bool DirectSoundClass::PlayWave(int Volume, int Panning, int nr)
 	ChannelsUsed++;					// und einen Channel mehr als "benutzt" setzten
 	
 	lpDirectSound->DuplicateSoundBuffer(Sounds[nr], &Channels[i]);	// Buffer duplizieren
-	Channels[i]->SetVolume((DWORD)(-30*(100 - Volume)));			// Lautstärke setzen
+	Channels[i]->SetVolume((DWORD)(-30*(100 - Volume)));			// LautstÃ¤rke setzen
 	Channels[i]->SetCurrentPosition (0);							// an den Anfang springen
 	Channels[i]->Play (0, 0, 0);									// und dann abgespielt
 
@@ -247,7 +247,7 @@ bool DirectSoundClass::PlayWave(int Volume, int Panning, int nr)
 }
 
 // --------------------------------------------------------------------------------------
-// Channels auf fertige Sounds prüfen und ggf. den Channel wieder freimachen
+// Channels auf fertige Sounds prÃ¼fen und ggf. den Channel wieder freimachen
 // --------------------------------------------------------------------------------------
 
 void DirectSoundClass::UpdateChannels(void)
@@ -259,7 +259,7 @@ void DirectSoundClass::UpdateChannels(void)
 			Channels[i]->GetStatus(&dwstatus);			// Zustand holen
 			if(!(dwstatus & DSBSTATUS_PLAYING))			// Fertig abgespielt ?
 			{
-				ChannelStats[i] = 0;					// Dann erneut verfügbar machen
+				ChannelStats[i] = 0;					// Dann erneut verfÃ¼gbar machen
 				if(ChannelsUsed>0)						// und ein Channel weniger in Benutzung
 					ChannelsUsed--;	
 			}
@@ -267,7 +267,7 @@ void DirectSoundClass::UpdateChannels(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Neue Lautstärke setzen
+// Neue LautstÃ¤rke setzen
 // --------------------------------------------------------------------------------------
 
 void DirectSoundClass::SetVolume(int sound, int music)
@@ -277,7 +277,7 @@ void DirectSoundClass::SetVolume(int sound, int music)
 }
 
 // --------------------------------------------------------------------------------------
-// aktuelle Sound-Lautstärke abfragen
+// aktuelle Sound-LautstÃ¤rke abfragen
 // --------------------------------------------------------------------------------------
 
 int DirectSoundClass::GetSoundVolume(void)
@@ -286,7 +286,7 @@ int DirectSoundClass::GetSoundVolume(void)
 }
 
 // --------------------------------------------------------------------------------------
-// aktuelle Musik-Lautstärke abfragen
+// aktuelle Musik-LautstÃ¤rke abfragen
 // --------------------------------------------------------------------------------------
 
 int DirectSoundClass::GetMusicVolume(void)
@@ -295,7 +295,7 @@ int DirectSoundClass::GetMusicVolume(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, wieviele Channels derzeit genutzt werden
+// ZurÃ¼ckliefern, wieviele Channels derzeit genutzt werden
 // --------------------------------------------------------------------------------------
 
 int DirectSoundClass::GetUsedChannels(void)
@@ -304,7 +304,7 @@ int DirectSoundClass::GetUsedChannels(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Alle Songs auf aktuelle Lautstärke setzen
+// Alle Songs auf aktuelle LautstÃ¤rke setzen
 // --------------------------------------------------------------------------------------
 
 void DirectSoundClass::SetAllSongVolumes(void)

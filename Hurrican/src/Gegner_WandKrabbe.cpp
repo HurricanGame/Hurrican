@@ -77,7 +77,7 @@ void GegnerWandKrabbe::DoKI(void)
     else
         BlickRichtung = LINKS;
 
-    // an Wänden oben und unten umdrehen
+    // an WÃ¤nden oben und unten umdrehen
     if (((blocko & BLOCKWERT_WAND ||
             blocko & BLOCKWERT_GEGNERWAND) &&
             ySpeed < 0.0f) ||
@@ -93,7 +93,7 @@ void GegnerWandKrabbe::DoKI(void)
     //
     case GEGNER_LAUFEN:
     {
-        // Gegner in Nähe des Spielers? Dann springen
+        // Gegner in NÃ¤he des Spielers? Dann springen
         //
         if (abs (int(pAim->ypos - yPos)) < 100.0f)
         {
@@ -124,7 +124,7 @@ void GegnerWandKrabbe::DoKI(void)
     }
     break;
 
-    // nach "Abschütteln" runterfallen
+    // nach "AbschÃ¼tteln" runterfallen
     //
     case GEGNER_FALLEN:
     {
@@ -178,7 +178,7 @@ void GegnerWandKrabbe::DoKI(void)
 
     case GEGNER_SPECIAL:
     {
-        // Gegner hängt am Spieler
+        // Gegner hÃ¤ngt am Spieler
         //
         xPos = pAim->xpos + Value1;
         yPos = pAim->ypos + Value2;
@@ -188,8 +188,8 @@ void GegnerWandKrabbe::DoKI(void)
         else
             BlickRichtung = RECHTS;
 
-        // Spieler schüttelt Gegner ab? (schnelles links/rechts drücken)
-        // nur, wenn nicht beide gleichzeitig gedrückt werden
+        // Spieler schÃ¼ttelt Gegner ab? (schnelles links/rechts drÃ¼cken)
+        // nur, wenn nicht beide gleichzeitig gedrÃ¼ckt werden
         //
         if (!(pAim->Aktion[AKTION_LINKS]  == true &&
                 pAim->Aktion[AKTION_RECHTS] == true))
@@ -206,7 +206,7 @@ void GegnerWandKrabbe::DoKI(void)
                 Value2 += rand ()%4 + 2;
             }
 
-            // Gegner abgeschüttelt?
+            // Gegner abgeschÃ¼ttelt?
             //
             if (Value2 > 80)
             {
@@ -233,8 +233,8 @@ void GegnerWandKrabbe::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler die Krabbe berührt hat
-    // Wenn ja, dann bleibt sie an ihm hängen
+    // Testen, ob der Spieler die Krabbe berÃ¼hrt hat
+    // Wenn ja, dann bleibt sie an ihm hÃ¤ngen
     if (Handlung == GEGNER_DREHEN &&
             SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
                             pAim->xpos, pAim->ypos, pAim->CollideRect) == true)
@@ -247,7 +247,7 @@ void GegnerWandKrabbe::DoKI(void)
         AnimPhase = 0;
         AnimEnde  = 0;
 
-        // Spieler Schaden zufügen
+        // Spieler Schaden zufÃ¼gen
         //
         pAim->DamagePlayer (10.0f);
 

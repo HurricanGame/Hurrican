@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Die Schabe
 //
-// Krabbe an allen W‰nden rum
+// Krabbe an allen W√§nden rum
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -66,7 +66,7 @@ void GegnerSchabe::DoKI(void)
     xl = (int)(xPos+10) / TILESIZE_X;
     yl = (int)(yPos+10) / TILESIZE_X;
 
-    // Schabe l‰uft nach links
+    // Schabe l√§uft nach links
     if (xSpeed < 0.0f)
     {
         // ....
@@ -107,7 +107,7 @@ void GegnerSchabe::DoKI(void)
         }
     }
 
-    // Schabe l‰uft nach rechts
+    // Schabe l√§uft nach rechts
     if (xSpeed > 0.0f)
     {
 
@@ -149,7 +149,7 @@ void GegnerSchabe::DoKI(void)
         }
     }
 
-    // Schabe l‰uft nach oben
+    // Schabe l√§uft nach oben
     if (ySpeed < 0.0f)
     {
         // ....
@@ -189,7 +189,7 @@ void GegnerSchabe::DoKI(void)
         }
     }
 
-    // Schabe l‰uft nach unten
+    // Schabe l√§uft nach unten
     if (ySpeed > 0.0f)
     {
         // ..xx
@@ -230,7 +230,7 @@ void GegnerSchabe::DoKI(void)
     }
 
 //
-//----- An die Wand gestoﬂen?
+//----- An die Wand gesto√üen?
 //
     if ((xSpeed < 0.0f &&
             TileEngine.TileAt(xl-1, yl-0).Block & BLOCKWERT_WAND) ||
@@ -250,7 +250,7 @@ void GegnerSchabe::DoKI(void)
     }
 
 //
-//----- An die Decke/Boden gestoﬂen?
+//----- An die Decke/Boden gesto√üen?
 //
     else if ((ySpeed > 0.0f &&
               TileEngine.TileAt(xl+0, yl+1).Block & BLOCKWERT_WAND) ||

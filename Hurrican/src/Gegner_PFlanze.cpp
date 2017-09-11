@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Die Super-Mario Pflanze
 //
-// Spuckt Feuerbälle, wenn der Spieler in der Nähe ist
+// Spuckt FeuerbÃ¤lle, wenn der Spieler in der NÃ¤he ist
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -32,11 +32,11 @@ void GegnerPflanze::DoKI(void)
 {
     // Animieren
     //
-    AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-    if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+    AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+    if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
     {
         AnimCount = 0;					// Dann wieder auf Null setzen
-        AnimPhase++;					// Und nächste Animationsphase
+        AnimPhase++;					// Und nÃ¤chste Animationsphase
 
         if (AnimPhase == 14)			// Schuss abgeben
         {
@@ -87,7 +87,7 @@ void GegnerPflanze::DoKI(void)
         break;
     }
 
-    // Testen, ob der Spieler die Pflanze berührt hat
+    // Testen, ob der Spieler die Pflanze berÃ¼hrt hat
     //
     TestDamagePlayers(1.5f SYNC);
 }
@@ -105,7 +105,7 @@ void GegnerPflanze::GegnerExplode(void)
         PartikelSystem.PushPartikel(xPos + rand()%50, yPos + rand()%40, EXPLOSION_GREEN);
 
     for (int i = 0; i < 30; i++)
-        // Blätter erzeugen
+        // BlÃ¤tter erzeugen
         PartikelSystem.PushPartikel(float(xPos + rand()%100),
                                       float(yPos + 10 +  rand()%50), BLATT);
 

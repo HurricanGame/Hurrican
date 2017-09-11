@@ -53,7 +53,7 @@ Boost Software License, v1.0 (see cml/LICENSE for details).
  *
  * @todo Allow addition of new types, a la glommable ETs (but simpler).
  * Can use ideas from "SCOOP" method: Nicolas Burrus, Alexandre Duret-Lutz,
- * Thierry G�raud, David Lesage and Rapha�l Poss. A Static C++
+ * Thierry GÃ©raud, David Lesage and RaphaÃ«l Poss. A Static C++
  * Object-Oriented Programming (SCOOP) Paradigm Mixing Benefits of
  * Traditional OOP and Generic Programming. In the Proceedings of the
  * Workshop on Multiple Paradigm with OO Languages (MPOOL'03) Anaheim, CA,

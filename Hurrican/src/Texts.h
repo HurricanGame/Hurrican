@@ -2,10 +2,10 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Beinhaltet die Defines und Funktionen für die Texte in Hurrican
-// Es ist möglich, verschiedene Language-Files zu laden
+// Beinhaltet die Defines und Funktionen fÃ¼r die Texte in Hurrican
+// Es ist mÃ¶glich, verschiedene Language-Files zu laden
 //
-// (c) 2002-2004 Jörg M. Winterstein
+// (c) 2002-2004 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -34,7 +34,7 @@
 #define CHEAT_SUPERSHOT	7
 #define CHEAT_FLAMER	8
 
-// Enum für die verschiedenen Texte
+// Enum fÃ¼r die verschiedenen Texte
 // es wird nie konkret ein String im Code angegeben, sondern immer nur eine Zahl, welche
 // einen Array-Eintrag im Text Array angibt.
 
@@ -348,8 +348,8 @@ typedef enum Textenum
 // --------------------------------------------------------------------------------------
 
 bool LoadLanguage  (char *filename);			// Bestimmte Sprachdatei laden
-void InitReplacers (void);						// Tasten ErsetzungsStrings für die TutorialTexte initialisieren
-int	 GetDecValue(const char *pair, int len);			// Dezimalwert einer Hexzahl mit Länge len
+void InitReplacers (void);						// Tasten ErsetzungsStrings fÃ¼r die TutorialTexte initialisieren
+int	 GetDecValue(const char *pair, int len);			// Dezimalwert einer Hexzahl mit LÃ¤nge len
 
 //DKS - Added cross-platform language-files handling
 int FindLanguageFiles(const char *path);

@@ -2,11 +2,11 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Funktionen für den Spieler
+// Funktionen fÃ¼r den Spieler
 // Tasteneingaben bearbeiten und Spieler entsprechend animieren
 // usw
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -157,7 +157,7 @@ PlayerClass::PlayerClass()
     //      class to 0 after allocating each player with new(). I hope there are no
     //      unintended consequences of leaving these at the bottom of the constructor,
     //      where they will now have an effect.
-    Stage    = -1;				// Es läuft noch kein Spiel
+    Stage    = -1;				// Es lÃ¤uft noch kein Spiel
     NewStage = -1;
     StageClearRunning = false;
     JoystickSchwelle = 500.0f;
@@ -234,8 +234,8 @@ void PlayerClass::InitPlayer(int player_num)
 
     // Blitz
     BlitzLength			  = 3;			// Aktuelle
-    CurrentWeaponLevel[3] = 2;			// Länge
-    //NextWeaponLevel	  [3] = 3;			// Wieviel PowerUps zum nächsten Level ?
+    CurrentWeaponLevel[3] = 2;			// LÃ¤nge
+    //NextWeaponLevel	  [3] = 3;			// Wieviel PowerUps zum nÃ¤chsten Level ?
 
     AutoFireCount   = 0.0f;
     AutoFireExtra   = 0.0f;
@@ -315,7 +315,7 @@ void PlayerClass::InitNewLevel()
     StageClearRunning = false;
 
 
-    // Zu Beginn des Levels werden alle Listen mit Gegner, Schüssen und Partikeln gelöscht
+    // Zu Beginn des Levels werden alle Listen mit Gegner, SchÃ¼ssen und Partikeln gelÃ¶scht
     PartikelSystem.ClearAll();
     Gegner.ClearAll();
     Projectiles.ClearAll();
@@ -350,7 +350,7 @@ void PlayerClass::runExplode(void)
         if (CurrentWeaponLevel[SelectedWeapon] > 1)
             CurrentWeaponLevel[SelectedWeapon]--;
 
-        // Blitz um eine Stufe verkürzen
+        // Blitz um eine Stufe verkÃ¼rzen
         //
         if (CurrentWeaponLevel[3] > 2)
             CurrentWeaponLevel[3]--;
@@ -451,7 +451,7 @@ void PlayerClass::checkShoot(void)
     if (!Aktion[AKTION_SHOOT] && FlameThrower == true)
         SoundManager.StopWave(SOUND_FLAMETHROWER + SoundOff);
 
-    // Normaler Schuss mit Primärwaffe?
+    // Normaler Schuss mit PrimÃ¤rwaffe?
     //
     if(Aktion[AKTION_SHOOT]  &&
             Handlung != BLITZEN   &&
@@ -479,7 +479,7 @@ void PlayerClass::checkShoot(void)
         if (AutoFireExtra > 0.0f)
             ShotDelay /= 2.25f;
 
-        // Beim Sackreiten den Spieler durch den Rückschlag noch bewegen
+        // Beim Sackreiten den Spieler durch den RÃ¼ckschlag noch bewegen
         //
         if (Handlung == SACKREITEN)
         {
@@ -536,7 +536,7 @@ void PlayerClass::checkShoot(void)
 
 void PlayerClass::handleAutoFire (void)
 {
-    // Eingesammeltes Autofire runterzählen
+    // Eingesammeltes Autofire runterzÃ¤hlen
     //
     if (AutoFireExtra > 0.0f)
     {
@@ -546,7 +546,7 @@ void PlayerClass::handleAutoFire (void)
     else
         AutoFireExtra = 0.0f;
 
-    // Eingesammeltes RiesenShotExtra runterzählen
+    // Eingesammeltes RiesenShotExtra runterzÃ¤hlen
     //
     if (RiesenShotExtra > 0.0f)
         RiesenShotExtra -= 0.5f SYNC;
@@ -555,7 +555,7 @@ void PlayerClass::handleAutoFire (void)
 }
 
 // --------------------------------------------------------------------------------------
-// Eingabegeräte abfragen und Spieler entsprechend reagieren lassen
+// EingabegerÃ¤te abfragen und Spieler entsprechend reagieren lassen
 // --------------------------------------------------------------------------------------
 
 bool PlayerClass::GetPlayerInput(void)
@@ -577,8 +577,8 @@ bool PlayerClass::GetPlayerInput(void)
     for (int i=0; i<MAX_AKTIONEN; i++)
         Aktion[i] = false;
 
-    // und Bewegungsgeschwindigkeit für den nächsten Frame auf 0 setzen,
-    // es sei denn, man läuft auf Eis
+    // und Bewegungsgeschwindigkeit fÃ¼r den nÃ¤chsten Frame auf 0 setzen,
+    // es sei denn, man lÃ¤uft auf Eis
     if (TileEngine.BlockUntenNormal	  (xpos, ypos, xposold, yposold, CollideRect) & BLOCKWERT_EIS)
     {
         xspeed *= PLAYER_ICESSLOWDOWN;
@@ -591,7 +591,7 @@ bool PlayerClass::GetPlayerInput(void)
     //
 //	if (TileEngine.Zustand != ZUSTAND_SCROLLTOPLAYER)
     {
-        // Demo läuft ?
+        // Demo lÃ¤uft ?
         if (DEMOPlaying == true)
             PlayDemo();
 
@@ -718,7 +718,7 @@ bool PlayerClass::GetPlayerInput(void)
         }
     }
 
-    // Spieler läuft ins Exit?
+    // Spieler lÃ¤uft ins Exit?
 
     if (Player[0].StageClearRunning == true)
         RunPlayerExit();
@@ -746,7 +746,7 @@ bool PlayerClass::GetPlayerInput(void)
             }
         }
 
-    // Bronson-Counter erhöhen
+    // Bronson-Counter erhÃ¶hen
     if ((Handlung == STEHEN ||
             Handlung == PISSEN) &&
             RunningTutorial == false)
@@ -792,7 +792,7 @@ void PlayerClass::DoStuffWhenDamaged(void)
     if (Energy > MAX_ENERGY / 2)
         return;
 
-    // Funkenzähler runterzählen
+    // FunkenzÃ¤hler runterzÃ¤hlen
     //
     if (sparkcount > 0.0f)
         sparkcount -= 1.0f SYNC;
@@ -839,7 +839,7 @@ void PlayerClass::DoStuffWhenDamaged(void)
         }
     }
 
-    // Rauchzähler runterzählen
+    // RauchzÃ¤hler runterzÃ¤hlen
     //
     if (smokecount > 0.0f)
         smokecount -= 1.0f SYNC;
@@ -853,7 +853,7 @@ void PlayerClass::DoStuffWhenDamaged(void)
             if (rand()%2 == 0)
                 PartikelSystem.PushPartikel(xpos + 10 + rand()%30, ypos + 20 + rand()%40, SMOKE2);
 
-        // Rauchsäule
+        // RauchsÃ¤ule
         //
         if (Energy < MAX_ENERGY / 4 + 5.0f)
             PartikelSystem.PushPartikel(xpos + 26 + Blickrichtung * 4 + rand()%4, ypos + 20 + rand()%4, SMOKE3);
@@ -908,7 +908,7 @@ void PlayerClass::CheckForExplode(void)
         CollideRect.top    = 0;
         CollideRect.bottom = 0;
 
-        // Spieler explodieren lassen und Gegnern dabei Schaden zufügen
+        // Spieler explodieren lassen und Gegnern dabei Schaden zufÃ¼gen
         //
         SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
         Gegner.DamageEnemiesonScreen (xpos + 35, ypos + 40, 400);
@@ -1024,14 +1024,14 @@ void PlayerClass::PullItems(void)
                 pTemp->Handlung == GEGNER_STEHEN &&
                 pTemp->IsOnScreen())
         {
-            float absx, absy, speed;				// Variablen für die Geschwindigkeits-
+            float absx, absy, speed;				// Variablen fÃ¼r die Geschwindigkeits-
             // berechnung
             absx = (pTemp->xPos+10)-(xpos+35);		// Differenz der x
             absy = (pTemp->yPos+10)-(ypos+40);		// und y Strecke
 
             //DKS - converted to float:
-            //speed = (float)(1.0f/sqrt(absx*absx + absy*absy));	// Länge der Strecke berechnen
-            speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
+            //speed = (float)(1.0f/sqrt(absx*absx + absy*absy));	// LÃ¤nge der Strecke berechnen
+            speed = 1.0f/sqrtf(absx*absx + absy*absy);	// LÃ¤nge der Strecke berechnen
             speed = speed * 0.1f * BlitzStart;				// Geschwindigkeit ist 4 fach
 
             pTemp->xSpeed = -speed * 10.0f * absx SYNC;
@@ -1065,7 +1065,7 @@ void PlayerClass::AnimatePlayer(void)
     bl = TileEngine.BlockLinks	  (xpos, ypos, xposold, yposold, CollideRect, yspeed >= 0.0f);
     br = TileEngine.BlockRechts	  (xpos, ypos, xposold, yposold, CollideRect, yspeed >= 0.0f);
 
-    // auf schrägen laufen/gelandet?
+    // auf schrÃ¤gen laufen/gelandet?
     //
     if (yspeed   >= 0.0f)
         //DKS - Rewrote BlockSlopes function to only take the parameters it needs:
@@ -1147,7 +1147,7 @@ void PlayerClass::AnimatePlayer(void)
         }
     }
 
-    // Alte Position für Kollisionsabfrage sichern
+    // Alte Position fÃ¼r Kollisionsabfrage sichern
     xposold = xpos;
     yposold = ypos;
 
@@ -1189,7 +1189,7 @@ void PlayerClass::AnimatePlayer(void)
             }
         }
 
-        // Langsam die Rad-Energie wieder auffüllen ?
+        // Langsam die Rad-Energie wieder auffÃ¼llen ?
         if (Armour < 0.0f)
             Armour = 0.0f;
 
@@ -1214,12 +1214,12 @@ void PlayerClass::AnimatePlayer(void)
         }
 
         // Nach Links laufen/springen oder blitzen
-        if (Aktion[AKTION_LINKS]  &&	// Links gedrückt ?
+        if (Aktion[AKTION_LINKS]  &&	// Links gedrÃ¼ckt ?
                 !Aktion[AKTION_RECHTS])	 	// und Rechts nicht ?
         {
             if (Handlung == BLITZEN)		// Blitzen und dabei den Blitz bewegen ?
             {
-                if (BlitzStart >= PLAYER_BLITZ_START)	// Bewegen schon möglich ?
+                if (BlitzStart >= PLAYER_BLITZ_START)	// Bewegen schon mÃ¶glich ?
                     BlitzWinkel -= 20 SYNC;
             }
             else if (Handlung == BEAMLADEN)		// Rundum bewegen und den Beam aufladen ?
@@ -1272,12 +1272,12 @@ void PlayerClass::AnimatePlayer(void)
             }
         }
         // Nach Rechts laufen/springen oder blitzen
-        if (Aktion[AKTION_RECHTS] &&		// Rechts gedrückt ?
+        if (Aktion[AKTION_RECHTS] &&		// Rechts gedrÃ¼ckt ?
                 !Aktion[AKTION_LINKS])			// und Links nicht ?
         {
             if (Handlung == BLITZEN)			// Blitzen und dabei den Blitz bewegen ?
             {
-                if (BlitzStart >= PLAYER_BLITZ_START)	// Bewegen schon möglich ?
+                if (BlitzStart >= PLAYER_BLITZ_START)	// Bewegen schon mÃ¶glich ?
                     BlitzWinkel += 20 SYNC;
             }
             else if (Handlung == BEAMLADEN)		// Rundum bewegen und den Beam aufladen ?
@@ -1344,7 +1344,7 @@ void PlayerClass::AnimatePlayer(void)
             xspeed	  = 0.0f;
         }
 
-        // Rechts/Links gedrückt ? stehenbleiben, da man ja nich rückwärts UND vorwärts gehen kann =)
+        // Rechts/Links gedrÃ¼ckt ? stehenbleiben, da man ja nich rÃ¼ckwÃ¤rts UND vorwÃ¤rts gehen kann =)
         if(Aktion[AKTION_LINKS] && Aktion[AKTION_RECHTS])
         {
             if ((Handlung != SPRINGEN || JumpPossible == true) &&
@@ -1392,7 +1392,7 @@ void PlayerClass::AnimatePlayer(void)
         if (Aktion[AKTION_JUMP] &&
                 JumpPossible == true)
         {
-            int save = AnimPhase;				// Für Sumpf
+            int save = AnimPhase;				// FÃ¼r Sumpf
 
             SoundManager.StopWave (SOUND_BEAMLOAD + SoundOff);
             JumpPossible = false;
@@ -1450,7 +1450,7 @@ void PlayerClass::AnimatePlayer(void)
             }
         }
 
-        // Ist ein Sprung möglich ? (Wenn der Spieler wieder auf den Boden aufkommt)
+        // Ist ein Sprung mÃ¶glich ? (Wenn der Spieler wieder auf den Boden aufkommt)
         if ((bu & BLOCKWERT_SUMPF)		||
                 (bu & BLOCKWERT_WAND)		||
                 (bu & BLOCKWERT_PLATTFORM)  ||
@@ -1488,7 +1488,7 @@ void PlayerClass::AnimatePlayer(void)
                 JumpPossible = true;
         }
 
-        // Kein Block unter dem Spieler und kein Lift? Dann fällt er runter
+        // Kein Block unter dem Spieler und kein Lift? Dann fÃ¤llt er runter
         if (AufPlattform == NULL     &&
                 Handlung != SPRINGEN     &&
                 yspeed >= 0.0f			 &&
@@ -1536,7 +1536,7 @@ void PlayerClass::AnimatePlayer(void)
         }
 
         // Vom Ducken aufstehen
-        // nur, wenn keine Decke über dem Spieler (wenn er grad mit ner Plattform wo drunter durchfährt z.B.)
+        // nur, wenn keine Decke Ã¼ber dem Spieler (wenn er grad mit ner Plattform wo drunter durchfÃ¤hrt z.B.)
         if (Handlung == DUCKEN)
         {
             float ypos2 = ypos - 48.0f;
@@ -1639,7 +1639,7 @@ void PlayerClass::AnimatePlayer(void)
             Handlung  = RADELN;
             AnimPhase = 0;
             AnimCount = 0.0f;
-            CollideRect.left		= 20;	// Neue Abmessungen für das Rad
+            CollideRect.left		= 20;	// Neue Abmessungen fÃ¼r das Rad
             CollideRect.top			= 40;
             CollideRect.right		= 50;
             CollideRect.bottom		= 79;
@@ -1674,14 +1674,14 @@ void PlayerClass::AnimatePlayer(void)
         // Spieler nach BlitzRichtung ausrichten
         if (Handlung == BLITZEN)
         {
-            // Verzögerung beim Blitzen
+            // VerzÃ¶gerung beim Blitzen
             if (BlitzStart < PLAYER_BLITZ_START)
                 BlitzStart += 1.0f SYNC;
             else
             {
                 float Winkel;
 
-                Winkel = BlitzWinkel - 270;		// 270° beim nach links kucken = Animphase 0
+                Winkel = BlitzWinkel - 270;		// 270Â° beim nach links kucken = Animphase 0
                 if (Winkel < 0.0f)
                     Winkel += 360.0f;
 
@@ -1710,13 +1710,13 @@ void PlayerClass::AnimatePlayer(void)
             SetWaveFrequency((SOUND_BEAMLOAD + SoundOff), Freq);
 #endif
 
-            // Beam aufladen. Je länger der Blitz desto schneller lädt der Beam
+            // Beam aufladen. Je lÃ¤nger der Blitz desto schneller lÃ¤dt der Beam
             if (BlitzStart < PLAYER_BEAM_MAX)
                 BlitzStart += CurrentWeaponLevel[3] * 1.0f SYNC;
 
             float Winkel;
 
-            Winkel = BlitzWinkel - 270;		// 270° beim nach links kucken = Animphase 0
+            Winkel = BlitzWinkel - 270;		// 270Â° beim nach links kucken = Animphase 0
             if (Winkel < 0.0f)
                 Winkel += 360.0f;
 
@@ -1817,7 +1817,7 @@ void PlayerClass::AnimatePlayer(void)
                 Projectiles.PushProjectile (xpos+40-32, ypos+55-32, SMARTBOMB, this);
             }
 
-            // Taste losgelassen ? Dann können wir wieder eine Powerline schiessen
+            // Taste losgelassen ? Dann kÃ¶nnen wir wieder eine Powerline schiessen
             if (Aktion[AKTION_POWERLINE] == false &&
                     Aktion[AKTION_SMARTBOMB] == false)
                 PowerLinePossible = true;
@@ -1839,14 +1839,14 @@ void PlayerClass::AnimatePlayer(void)
             }
 
             if (Aktion[AKTION_LINKS] == true &&		// Nach Links rollen ?
-                    (Handlung == RADELN   ||			// Nur wenn man Boden unter den Füßen hat
+                    (Handlung == RADELN   ||			// Nur wenn man Boden unter den FÃ¼ÃŸen hat
                      AufPlattform != NULL ||
                      bu & BLOCKWERT_WAND  ||
                      bu & BLOCKWERT_PLATTFORM))
                 Blickrichtung = LINKS;
 
             if (Aktion[AKTION_RECHTS] == true &&	// Nach Rechts rollen ?
-                    (Handlung == RADELN   ||			// Nur wenn man Boden unter den Füßen hat
+                    (Handlung == RADELN   ||			// Nur wenn man Boden unter den FÃ¼ÃŸen hat
                      AufPlattform != NULL ||
                      bu & BLOCKWERT_WAND  ||
                      bu & BLOCKWERT_PLATTFORM))
@@ -1903,9 +1903,9 @@ void PlayerClass::AnimatePlayer(void)
                     Blickrichtung = RECHTS;
             }
 
-            // Aufhören zu kullern und zurückverwandeln, wenn man springt oder keine Energie mehr hat
-            // funktiomiert nur, wenn über einem keine Wand ist. Dabei wird noch ein Teil mehr gecheckt, als
-            // das Rad hoch ist, damit man den Zustand prüft, als wenn der Spieler wieder stehen würde
+            // AufhÃ¶ren zu kullern und zurÃ¼ckverwandeln, wenn man springt oder keine Energie mehr hat
+            // funktiomiert nur, wenn Ã¼ber einem keine Wand ist. Dabei wird noch ein Teil mehr gecheckt, als
+            // das Rad hoch ist, damit man den Zustand prÃ¼ft, als wenn der Spieler wieder stehen wÃ¼rde
 
             float ypos2 = ypos - 20.0f;
             uint32_t bo2 = TileEngine.BlockOben  (xpos, ypos2, xposold, yposold, CollideRect, true);
@@ -1917,7 +1917,7 @@ void PlayerClass::AnimatePlayer(void)
             {
                 AnimPhase = 0;
 
-                // Am Boden zurückverwandelt ?
+                // Am Boden zurÃ¼ckverwandelt ?
                 if (Armour <= 0.0f &&
                         ((bu & BLOCKWERT_WAND) ||
                          (bu & BLOCKWERT_PLATTFORM)))
@@ -1962,7 +1962,7 @@ void PlayerClass::AnimatePlayer(void)
                 JumpySave = ypos;
                 JumpxSave = xpos;
 
-                // unten rausgeflogen ? Dann wieder zurücksetzen
+                // unten rausgeflogen ? Dann wieder zurÃ¼cksetzen
                 if (ypos > TileEngine.YOffset + 475.0f)
                 {
                     SoundManager.PlayWave (100, 128, 11025, SOUND_EXPLOSION2);
@@ -1973,7 +1973,7 @@ void PlayerClass::AnimatePlayer(void)
                     Energy  = 0.0f;
                 }
 
-                // An der Decke anstoßen
+                // An der Decke anstoÃŸen
                 if (ypos < TileEngine.YOffset &&
                         BeideFrei)
                 {
@@ -1981,7 +1981,7 @@ void PlayerClass::AnimatePlayer(void)
                         yadd *= -1.0f;
                 }
 
-                // Wände checken
+                // WÃ¤nde checken
                 if (bl & BLOCKWERT_WAND) if (xadd < 0.0f) xadd = -xadd / 2.0f;
                 if (br & BLOCKWERT_WAND) if (xadd > 0.0f) xadd = -xadd / 2.0f;
                 if (bo & BLOCKWERT_WAND) if (yadd < 0.0f) yadd = -yadd / 2.0f;
@@ -2150,7 +2150,7 @@ void PlayerClass::AnimatePlayer(void)
                     JumpAdd = PLAYER_JUMPADDSPEED;
                     AufPlattform = NULL;
 
-                    // abstürzenden Flugsack adden
+                    // abstÃ¼rzenden Flugsack adden
                     Gegner.PushGegner(xpos, ypos + 20, FLUGSACK, 99, 0, false);
 
                     FlugsackFliesFree = true;
@@ -2269,7 +2269,7 @@ void PlayerClass::AnimatePlayer(void)
     }
 
     //--------------------------------------------------------------------
-    // Taste losgelassen ? Dann können wir wieder eine Powerline schiessen
+    // Taste losgelassen ? Dann kÃ¶nnen wir wieder eine Powerline schiessen
     //--------------------------------------------------------------------
 
     if (Aktion[AKTION_POWERLINE] == false &&
@@ -2446,7 +2446,7 @@ void PlayerClass::AnimatePlayer(void)
     {
         spritzertype = WASSER_SPRITZER2;
 
-        // Gerade erst in Flüssigkeit gesprungen ?
+        // Gerade erst in FlÃ¼ssigkeit gesprungen ?
         if (InLiquid == false)
         {
             if (Handlung == SPRINGEN ||
@@ -2495,24 +2495,24 @@ void PlayerClass::AnimatePlayer(void)
         //if (rand()%500 == 0)
         //    PartikelSystem.PushPartikel(xpos+30, ypos+20, BUBBLE);
 
-        //// ggf noch Tauchgeräusche abspielen
+        //// ggf noch TauchgerÃ¤usche abspielen
         //if (rand()%500 == 0 &&
         //        SoundManager.its_Sounds[SOUND_DIVE]->isPlaying == false)
         //    SoundManager.PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_DIVE);
         if (rand()%500 == 0) {
             PartikelSystem.PushPartikel(xpos+30, ypos+20, BUBBLE);
-            // ggf noch Tauchgeräusche abspielen
+            // ggf noch TauchgerÃ¤usche abspielen
             if (!SoundManager.WaveIsPlaying(SOUND_DIVE))
                 SoundManager.PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_DIVE);
         }
     }
 
-    // schräg laufen?
+    // schrÃ¤g laufen?
     if ((Handlung == SCHIESSEN_LO ||
             Handlung == SCHIESSEN_RO) &&
             WalkLock == false)
     {
-        // Nächste Animations-Phase ?
+        // NÃ¤chste Animations-Phase ?
         AnimCount += 1.0f SYNC;
         while (AnimCount > PLAYER_ANIMSPEED)
         {
@@ -2526,9 +2526,9 @@ void PlayerClass::AnimatePlayer(void)
     }
 
     // Normal laufen oder radeln?
-    if (Handlung == LAUFEN      ||					// Spieler läuft oder
+    if (Handlung == LAUFEN      ||					// Spieler lÃ¤uft oder
             Handlung == RADELN      ||					// oder kullert
-            Handlung == RADELN_FALL ||					// oder fällt als Rad
+            Handlung == RADELN_FALL ||					// oder fÃ¤llt als Rad
             (Handlung == SPRINGEN &&						// springt, sprich, wird animiert ?
              yspeed >-PLAYER_MAXJUMPSPEED/1.5f))
     {
@@ -2603,10 +2603,10 @@ void PlayerClass::AnimatePlayer(void)
 
         if (InLiquid == false)
         {
-            if (ypos < JumpStart - PLAYER_MAXJUMP ||	// Höchster Punkt erreicht ? Dann den Fall
+            if (ypos < JumpStart - PLAYER_MAXJUMP ||	// HÃ¶chster Punkt erreicht ? Dann den Fall
                     Aktion[AKTION_JUMP] == false)			// dazu addieren
             {
-                // Der Wert, wie schnell man wieder runterkommt, wird jetzt aus der Sprunghöhe errechnet, sodass
+                // Der Wert, wie schnell man wieder runterkommt, wird jetzt aus der SprunghÃ¶he errechnet, sodass
                 // man bei einem kleinen Sprung viel schneller wieder runterkommt
                 //
                 JumpAdd = PLAYER_JUMPADDSPEED;
@@ -2618,7 +2618,7 @@ void PlayerClass::AnimatePlayer(void)
         }
         else
         {
-            if (ypos < JumpStart - (PLAYER_MAXJUMP+50) ||	// Höchster Punkt im Wasser liegt anders
+            if (ypos < JumpStart - (PLAYER_MAXJUMP+50) ||	// HÃ¶chster Punkt im Wasser liegt anders
                     Aktion[AKTION_JUMP] == false)				// dazu addieren
                 JumpAdd = PLAYER_JUMPADDSPEED;
         }
@@ -2650,12 +2650,12 @@ void PlayerClass::AnimatePlayer(void)
         }
     }
 
-    // Spieler "rutscht" weg, weil Level schräg steht?
+    // Spieler "rutscht" weg, weil Level schrÃ¤g steht?
     if (bu & BLOCKWERT_WAND ||
             bu & BLOCKWERT_PLATTFORM)
         xspeed += ScreenWinkel * 7.0f SYNC;
 
-    // Level abhängig von der Spieler-Position scrollen
+    // Level abhÃ¤ngig von der Spieler-Position scrollen
     if (xspeed != 0.0f)
     {
         // nur bewegen, wenn keine Wand im Weg ist
@@ -2663,7 +2663,7 @@ void PlayerClass::AnimatePlayer(void)
                 (xspeed > 0.0f && !(br & BLOCKWERT_WAND)))
             xpos += xspeed SYNC;								 // Spieler bewegen*/
 
-        // Zwei Spieler Mode? Dann auf Screen beschränken
+        // Zwei Spieler Mode? Dann auf Screen beschrÃ¤nken
         if (NUMPLAYERS == 2 &&
                 StageClearRunning == false)
         {
@@ -2744,7 +2744,7 @@ void PlayerClass::DoPlattformStuff(void)
     if (Aktion[AKTION_JUMP] == false)
         JumpPossible = true;
 
-    // Fahrstuhl über Boden gefahren? Dann bleibt der Spieler daran hängen
+    // Fahrstuhl Ã¼ber Boden gefahren? Dann bleibt der Spieler daran hÃ¤ngen
     if (bu & BLOCKWERT_WAND ||
             bu & BLOCKWERT_PLATTFORM)
     {
@@ -2837,7 +2837,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
     switch (Handlung)
     {
 
-// Spieler kullert (oder fällt) als Rad durch die Gegend
+// Spieler kullert (oder fÃ¤llt) als Rad durch die Gegend
     case RADELN:
     case RADELN_FALL:
     {
@@ -2969,7 +2969,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
     }
     break;
 
-// Spieler läuft
+// Spieler lÃ¤uft
     case LAUFEN :
     {
         PlayerRun.RenderSprite(xdraw, ydraw, AnimPhase, Color, !blick);
@@ -2983,7 +2983,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
     }
     break;
 
-// Spieler schiesst Blitz oder lädt den Beam
+// Spieler schiesst Blitz oder lÃ¤dt den Beam
     case BLITZEN :
     case BEAMLADEN:
     {
@@ -3111,12 +3111,12 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
 
 void PlayerClass::MovePlayer(void)
 {
-    // wenn der Spieler gerade fernegesteuert das Level verlässt dann gleich wieder raus
+    // wenn der Spieler gerade fernegesteuert das Level verlÃ¤sst dann gleich wieder raus
     if (DoFesteAktion == true ||
             Handlung == TOT)
         return;
 
-    // Ränder überprüfen
+    // RÃ¤nder Ã¼berprÃ¼fen
     // links raus
     if (xpos < 0.0f)
         xpos = 0.0f;
@@ -3129,7 +3129,7 @@ void PlayerClass::MovePlayer(void)
     if (ypos > TileEngine.LEVELPIXELSIZE_Y)
         Energy = 0.0f;
 
-    // im 2 Spieler-Mode: Ein Spieler fällt aus dem Screen?
+    // im 2 Spieler-Mode: Ein Spieler fÃ¤llt aus dem Screen?
     // Geht nur, wenn beide noch leben
     //
     if (NUMPLAYERS == 2 &&
@@ -3139,21 +3139,21 @@ void PlayerClass::MovePlayer(void)
         PlayerClass *pVictim = NULL;
         PlayerClass *pSurvivor = NULL;
 
-        // Spieler 1 fällt unten raus?
+        // Spieler 1 fÃ¤llt unten raus?
         if (Player[0].ypos > Player[1].ypos + 480.0f)
         {
             pVictim   = &Player[0];
             pSurvivor = &Player[1];
         }
 
-        // Spieler 2 fällt unten raus?
+        // Spieler 2 fÃ¤llt unten raus?
         if (Player[1].ypos > Player[0].ypos + 480.0f)
         {
             pVictim   = &Player[1];
             pSurvivor = &Player[0];
         }
 
-        // Einer der Spieler fällt raus
+        // Einer der Spieler fÃ¤llt raus
         if (pVictim != NULL)
         {
             pVictim->xpos = pSurvivor->xpos;
@@ -3172,7 +3172,7 @@ void PlayerClass::MovePlayer(void)
             ypos = 0.0f;
     }
 
-    // Ränder für gelockten Screen prüfen
+    // RÃ¤nder fÃ¼r gelockten Screen prÃ¼fen
     if (TileEngine.Zustand != ZUSTAND_SCROLLBAR)
     {
         if (xpos < TileEngine.XOffset)	 xpos = float(TileEngine.XOffset);
@@ -3183,7 +3183,7 @@ void PlayerClass::MovePlayer(void)
         if (g_Fahrstuhl_yPos > -1.0f)
         {
             // ja, dann checken ob Spieler ausserhalb des Screens, und wenn ja, dann
-            // lassen wir ihn halt mal einfach so sterben. Das gehört sich ja auch nicht ;)
+            // lassen wir ihn halt mal einfach so sterben. Das gehÃ¶rt sich ja auch nicht ;)
             //
             if (ypos + CollideRect.bottom < TileEngine.YOffset ||
                     ypos > TileEngine.YOffset + 480.0f)
@@ -3199,7 +3199,7 @@ void PlayerClass::MovePlayer(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Spieler schiesst mit Primär Waffe
+// Spieler schiesst mit PrimÃ¤r Waffe
 // --------------------------------------------------------------------------------------
 
 void PlayerClass::PlayerShoot(void)
@@ -3209,7 +3209,7 @@ void PlayerClass::PlayerShoot(void)
 
     CalcAustrittsPunkt();
 
-    //----- Y-Offset der Patronenhülse ausrechnen
+    //----- Y-Offset der PatronenhÃ¼lse ausrechnen
 
     //DKS - This appears never to have been implemented (no image for it) so disabled it:
 #if 0
@@ -3289,7 +3289,7 @@ void PlayerClass::PlayerShoot(void)
 
             case 0 :
             {
-                // Normale Schüsse
+                // Normale SchÃ¼sse
                 //
                 if (RiesenShotExtra <= 0.0f)
                 {
@@ -3378,7 +3378,7 @@ void PlayerClass::PlayerShoot(void)
                 int tempaddx, tempaddy, tempshot;
                 float mul1 = 7.0f/8.0f;
 
-                // Normale Schüsse
+                // Normale SchÃ¼sse
                 //
                 if (RiesenShotExtra <= 0.0f)
                 {
@@ -3586,7 +3586,7 @@ void PlayerClass::PlayerShoot(void)
             {
                 int tempadd, tempshot;
 
-                // Normale Schüsse
+                // Normale SchÃ¼sse
                 //
                 if (RiesenShotExtra <= 0.0f)
                 {
@@ -3692,7 +3692,7 @@ void PlayerClass::PlayerShoot(void)
 
         if (!FlameThrower)
         {
-            // Patronenhülse auswerfen bei SpreadShot
+            // PatronenhÃ¼lse auswerfen bei SpreadShot
             if (SelectedWeapon == 0)
                 PartikelSystem.PushPartikel(xpos+30, ypos+24+yoff, BULLET, this);
             else
@@ -3702,7 +3702,7 @@ void PlayerClass::PlayerShoot(void)
                     PartikelSystem.PushPartikel(xpos+30, ypos+24+yoff, SMOKE3);
                 else
 
-                    // Grüne Funken beim Bounce
+                    // GrÃ¼ne Funken beim Bounce
                     if (SelectedWeapon == 2)
                         for (int i = 0; i < 2; i++)
                             PartikelSystem.PushPartikel(xpos+30 + rand ()%4, ypos+28+yoff + rand ()%4, FUNKE2);
@@ -3842,12 +3842,12 @@ void PlayerClass::DrawNormalLightning(int DrawLength)
     D3DXMatrixTranslation(&matTrans,  -x-16, -y-56, 0.0f);		// Transformation zum Ursprung
 
     if (Blickrichtung == RECHTS)
-        D3DXMatrixTranslation(&matTrans2,  x-23,  y,    0.0f);		// Transformation wieder zurück
+        D3DXMatrixTranslation(&matTrans2,  x-23,  y,    0.0f);		// Transformation wieder zurÃ¼ck
     else
-        D3DXMatrixTranslation(&matTrans2,  x+31,  y,    0.0f);		// Transformation wieder zurück
+        D3DXMatrixTranslation(&matTrans2,  x+31,  y,    0.0f);		// Transformation wieder zurÃ¼ck
 
     D3DXMatrixMultiply	 (&matWorld, &matTrans, &matRot);		// Verschieben und rotieren
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurück
+    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurÃ¼ck
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
@@ -3888,13 +3888,13 @@ void PlayerClass::DrawNormalLightning(int DrawLength)
         // nich stehen bleibt, weil -0.99 bis +0.99
         // auf 0 gerundet wird
 
-        // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
+        // Winkel angleichen, damit er immer zwischen 0Â° und 360Â° bleibt
         if (Winkel > 360) Winkel -= 360;
         if (Winkel < 0)	  Winkel += 360;
         D3DXMatrixRotationZ  (&matRot, DegreetoRad[Winkel]);
 
         if (WackelMaximum <= 0.0f)					// Wackeln zuende ?
-            WackelMaximum = 0.0f;					// Dann aufhören damit
+            WackelMaximum = 0.0f;					// Dann aufhÃ¶ren damit
 
         // rotierte Matrix setzen
 #if defined(PLATFORM_DIRECTX)
@@ -3975,7 +3975,7 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul)
                 xstrahl = (int)((xpos - TileEngine.XOffset + xstart) + (rand()%32 - 16) * mul);
                 ystrahl = (int)(ypos - TileEngine.YOffset + ystart - yoff);
 
-                // Am End- und Austrittspunkt gebündelt
+                // Am End- und Austrittspunkt gebÃ¼ndelt
                 if (i == 0)
                 {
                     xstrahl = (int)(xpos - TileEngine.XOffset + xstart) + rand()%6 - 2;
@@ -4025,23 +4025,23 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul)
 // --------------------------------------------------------------------------------------
 // Blitz animieren und zeichnen
 //
-// Ist die Blitztaste schon lange genug gedrückt worden, wird der ganze Blitz angezeigt
+// Ist die Blitztaste schon lange genug gedrÃ¼ckt worden, wird der ganze Blitz angezeigt
 // Andernfalls nur der Blitzursprung beim Spieler
 // --------------------------------------------------------------------------------------
 
 bool PlayerClass::DoLightning(void)
 {
-    int			DrawLength;			// Länge des Blitze mit berücksichtigten Wänden im Weg
-    GegnerClass  *pEnemy;			// Für die Blitz/Gegner Kollision
+    int			DrawLength;			// LÃ¤nge des Blitze mit berÃ¼cksichtigten WÃ¤nden im Weg
+    GegnerClass  *pEnemy;			// FÃ¼r die Blitz/Gegner Kollision
 
-    DrawLength = BlitzLength-1;		// Vom Maximum ausgehen (das wird später "gekürzt")
+    DrawLength = BlitzLength-1;		// Vom Maximum ausgehen (das wird spÃ¤ter "gekÃ¼rzt")
 
     if (BlitzWinkel < 0)			// Einmal im Kreis rumgedreht ? Dann wieder
         BlitzWinkel += 360;			// von vorne beginnen mit der Rotation
     if (BlitzWinkel > 360)			// und zwar im und gegen den Uhrzeigersinn
         BlitzWinkel -= 360;
 
-    // Ende des Blitzes beim Spieler leuchten lassen, falls er ihn grade noch auflädt
+    // Ende des Blitzes beim Spieler leuchten lassen, falls er ihn grade noch auflÃ¤dt
 
     float x, y;
 
@@ -4056,12 +4056,12 @@ bool PlayerClass::DoLightning(void)
 //----- Blitz animieren
 
     if (Console.Showing == false)
-        BlitzCount += SpeedFaktor;				// Counter erhöhen
+        BlitzCount += SpeedFaktor;				// Counter erhÃ¶hen
 
-    if (BlitzCount > PLAYER_BLITZ_SPEED)	// Animationsgrenze überschritten ?
+    if (BlitzCount > PLAYER_BLITZ_SPEED)	// Animationsgrenze Ã¼berschritten ?
     {
         BlitzCount = 0.0f;					// Dann Counter wieder auf Null setzen und
-        BlitzAnim++;						// Nächste Animationsphase
+        BlitzAnim++;						// NÃ¤chste Animationsphase
         if (BlitzAnim >= 4)					// Animation von vorne beginnen ?
             BlitzAnim = 0;
     }
@@ -4125,21 +4125,21 @@ bool PlayerClass::DoLightning(void)
 	xstart -= 20.0f*cos_deg(BlitzWinkel-90);
 	ystart -= 20.0f*sin_deg(BlitzWinkel-90);
 
-    RECT	Rect;							// Rechteck für die Kollisionserkennung
-    // ein Blitz-Stück wird grob durch
-    Rect.left   = 0;						// ein 32x32 Rechteck abgeschätzt
+    RECT	Rect;							// Rechteck fÃ¼r die Kollisionserkennung
+    // ein Blitz-StÃ¼ck wird grob durch
+    Rect.left   = 0;						// ein 32x32 Rechteck abgeschÃ¤tzt
     Rect.top    = 0;
     Rect.right  = 31;
     Rect.bottom = 31;
 
     float xs, ys;
 
-    // Rechtecke für die Kollisionsabfrage rotieren lassen
+    // Rechtecke fÃ¼r die Kollisionsabfrage rotieren lassen
     for (int i=0; i<BlitzLength+1; i++)
     {
         //DKS - #ifdef'd this check
 #ifdef _DEBUG
-        // Zum anzeigen der Rects, die geprüft werden
+        // Zum anzeigen der Rects, die geprÃ¼ft werden
         if (DebugMode == true)
             RenderRect(float(xstart-TileEngine.XOffset),
                        float(ystart-TileEngine.YOffset),
@@ -4155,21 +4155,21 @@ bool PlayerClass::DoLightning(void)
         //if (options_Detail >= DETAIL_MEDIUM)
         //    TileEngine.DrawLightmap(LIGHTMAP_BLITZ, xs + 16, ys + 16, 255);
 
-        // Blitz auf Kollision mit den Gegnern prüfen
+        // Blitz auf Kollision mit den Gegnern prÃ¼fen
         pEnemy = Gegner.pStart;			// Anfang der Gegnerliste
         while (pEnemy != NULL)				// Noch nicht alle durch ?
         {
-            if (pEnemy->Active == true &&		// Ist der Gegner überhaupt aktiv ?
-                    pEnemy->Destroyable == true)	// und zerstörbar ?
+            if (pEnemy->Active == true &&		// Ist der Gegner Ã¼berhaupt aktiv ?
+                    pEnemy->Destroyable == true)	// und zerstÃ¶rbar ?
 
             {
-                // Überschneiden sich die Rechtecke ?
+                // Ãœberschneiden sich die Rechtecke ?
                 if (xstart + 31 > pEnemy->xPos &&
                         xstart < pEnemy->xPos + GegnerRect[pEnemy->GegnerArt].right &&
                         ystart + 31 > pEnemy->yPos &&
                         ystart < pEnemy->yPos + GegnerRect[pEnemy->GegnerArt].bottom)
                 {
-                    // Funken sprühen
+                    // Funken sprÃ¼hen
                     if (BlitzCount == 0.0f && BlitzAnim%2 == 0)
                         PartikelSystem.PushPartikel(xs+12, ys+12, LASERFUNKE);
 
@@ -4184,23 +4184,23 @@ bool PlayerClass::DoLightning(void)
                     if (!SoundManager.WaveIsPlaying(SOUND_HIT + pEnemy->HitSound))
                         SoundManager.PlayWave(100, 128, 21000 + rand()%1000, SOUND_HIT + pEnemy->HitSound);
 
-                    // PlattForm ShootButton getroffen ? Dann Blitz kürzen
+                    // PlattForm ShootButton getroffen ? Dann Blitz kÃ¼rzen
                     //
                     if (pEnemy->GegnerArt == SHOOTBUTTON)
                     {
                         if (BlitzCount == 0.0f && BlitzAnim%2 == 0)
-                            PartikelSystem.PushPartikel(xs+12, ys+12, LASERFUNKE);	// Funken sprühen
-                        DrawLength = i-1;											// Blitz "kürzen"
+                            PartikelSystem.PushPartikel(xs+12, ys+12, LASERFUNKE);	// Funken sprÃ¼hen
+                        DrawLength = i-1;											// Blitz "kÃ¼rzen"
                         i = BlitzLength + 2;
                         break;														// Und Schleife verlassen
                     }
                 }
             }
 
-            pEnemy = pEnemy->pNext;			// Nächsten Gegner testen
+            pEnemy = pEnemy->pNext;			// NÃ¤chsten Gegner testen
         }
 
-        // Zerstörbare Wände ?
+        // ZerstÃ¶rbare WÃ¤nde ?
         TileEngine.CheckDestroyableWalls(xs,  ys, 0, 0, Rect);
         TileEngine.BlockDestroyRechts(xs, ys, xs, ys, Rect);
         TileEngine.BlockDestroyLinks (xs, ys, xs, ys, Rect);
@@ -4221,13 +4221,13 @@ bool PlayerClass::DoLightning(void)
                 TileEngine.BlockUnten (xs, ys, xs, ys, Rect) & BLOCKWERT_WAND)
         {
             if (BlitzCount == 0.0f && BlitzAnim%2 == 0)
-                PartikelSystem.PushPartikel(xs+12, ys+12, LASERFUNKE);	// Funken sprühen
+                PartikelSystem.PushPartikel(xs+12, ys+12, LASERFUNKE);	// Funken sprÃ¼hen
             //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
             //xstart += float(32*cos(PI * (BlitzWinkel-90) / 180));
             //ystart += float(32*sin(PI * (BlitzWinkel-90) / 180));
 			xstart += 32.0f*cos_deg(BlitzWinkel-90);
 			ystart += 32.0f*sin_deg(BlitzWinkel-90);
-            DrawLength = i-1;										// Blitz "kürzen"
+            DrawLength = i-1;										// Blitz "kÃ¼rzen"
             break;													// und Schleife verlassen
         }
 
@@ -4238,7 +4238,7 @@ bool PlayerClass::DoLightning(void)
 		ystart += 32.0f*sin_deg(BlitzWinkel-90);
     }
 
-    // Position für das Ende des Blitzes wieder ein wenig zurückverschieben
+    // Position fÃ¼r das Ende des Blitzes wieder ein wenig zurÃ¼ckverschieben
     //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
     //xstart -= float(16*cos(PI * (BlitzWinkel-90) / 180));
     //ystart -= float(16*sin(PI * (BlitzWinkel-90) / 180));
@@ -4262,11 +4262,11 @@ bool PlayerClass::DoLightning(void)
     D3DXMatrixRotationZ  (&matRot, DegreetoRad[int(BlitzWinkel)]);// Rotationsmatrix
     D3DXMatrixTranslation(&matTrans, -x, -y, 0.0f);		// Transformation zum Ursprung
     if (Blickrichtung == RECHTS)
-        D3DXMatrixTranslation(&matTrans2, x, y, 0.0f);		// Transformation wieder zurück
+        D3DXMatrixTranslation(&matTrans2, x, y, 0.0f);		// Transformation wieder zurÃ¼ck
     else
-        D3DXMatrixTranslation(&matTrans2, x, y, 0.0f);		// Transformation wieder zurück
+        D3DXMatrixTranslation(&matTrans2, x, y, 0.0f);		// Transformation wieder zurÃ¼ck
     D3DXMatrixMultiply	 (&matWorld, &matTrans, &matRot);		// Verschieben und rotieren
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurück
+    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurÃ¼ck
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
@@ -4315,13 +4315,13 @@ bool PlayerClass::DoLightning(void)
         // nich stehen bleibt, weil -0.99 bis +0.99
         // auf 0 gerundet wird
 
-        // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
+        // Winkel angleichen, damit er immer zwischen 0Â° und 360Â° bleibt
         if (Winkel > 360) Winkel -= 360;
         if (Winkel < 0)	  Winkel += 360;
         D3DXMatrixRotationZ  (&matRot, DegreetoRad[Winkel]);
 
         if (WackelMaximum <= 0.0f)					// Wackeln zuende ?
-            WackelMaximum = 0.0f;					// Dann aufhören damit
+            WackelMaximum = 0.0f;					// Dann aufhÃ¶ren damit
 
         // rotierte Matrix setzen
 #if defined(PLATFORM_DIRECTX)
@@ -4343,7 +4343,7 @@ bool PlayerClass::DoLightning(void)
 // --------------------------------------------------------------------------------------
 // BeamBlitz aufladen
 //
-// Der Beam lädt sich langsam auf, je nach Blitzlänge unterschiedlich schnell
+// Der Beam lÃ¤dt sich langsam auf, je nach BlitzlÃ¤nge unterschiedlich schnell
 // --------------------------------------------------------------------------------------
 
 bool PlayerClass::LoadBeam (void)
@@ -4355,16 +4355,16 @@ bool PlayerClass::LoadBeam (void)
 
     //----- Blitz animieren
 
-    BlitzCount += SpeedFaktor;				// Counter erhöhen
-    if (BlitzCount > PLAYER_BLITZ_SPEED)	// Animationsgrenze überschritten ?
+    BlitzCount += SpeedFaktor;				// Counter erhÃ¶hen
+    if (BlitzCount > PLAYER_BLITZ_SPEED)	// Animationsgrenze Ã¼berschritten ?
     {
         BlitzCount = 0.0f;					// Dann Counter wieder auf Null setzen und
-        BlitzAnim++;						// Nächste Animationsphase
+        BlitzAnim++;						// NÃ¤chste Animationsphase
         if (BlitzAnim >= 4)					// Animation von vorne beginnen ?
             BlitzAnim = 0;
     }
 
-    // Ende des Blitzes beim Spieler leuchten lassen, falls er ihn grade noch auflädt
+    // Ende des Blitzes beim Spieler leuchten lassen, falls er ihn grade noch auflÃ¤dt
     //
     float x;
     //float y;
@@ -4445,7 +4445,7 @@ void PlayerClass::DamagePlayer (float Ammount,
             (Shield > 0.0f && Override == false))
         return;
 
-    // Skill Level berücksichtigen
+    // Skill Level berÃ¼cksichtigen
     if (Skill == 0) Ammount *= 0.3f;
     if (Skill == 1) Ammount *= 0.6f;
     if (Skill == 2) Ammount *= 1.0f;
@@ -4486,7 +4486,7 @@ void PlayerClass::CenterLevel(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Waffenlevels für die nächste Stufe berechnen
+// Waffenlevels fÃ¼r die nÃ¤chste Stufe berechnen
 // --------------------------------------------------------------------------------------
 
 void PlayerClass::CalcWeaponLevels(void)
@@ -4580,7 +4580,7 @@ void PlayerClass::CalcFlamePos (void)
                         AustrittY = yoff - 34;
                     }
 
-                    // oder schräg?
+                    // oder schrÃ¤g?
                     else
                     {
                         AustrittAnim = 1;
@@ -4658,7 +4658,7 @@ void PlayerClass::CalcFlamePos (void)
                         AustrittY = yoff - 34;
                     }
 
-                    // oder schräg?
+                    // oder schrÃ¤g?
                     else
                     {
                         AustrittAnim = 1;
@@ -4737,7 +4737,7 @@ void PlayerClass::CalcAustrittsPunkt(void)
     }
     break;
 
-    // schräg oben
+    // schrÃ¤g oben
     case 1:
     {
         if (Blickrichtung == LINKS)
@@ -4799,7 +4799,7 @@ void PlayerClass::PlayerInExit(void)
     SpielZustand = MAINMENU;
     Console.Hide();
 
-    // Tutorial Level zuende? Dann normal zurück ins Hauptmenu
+    // Tutorial Level zuende? Dann normal zurÃ¼ck ins Hauptmenu
     //
 
     if (Stage == TUTORIAL_END)
@@ -4822,7 +4822,7 @@ void PlayerClass::PlayerInExit(void)
 
     else if (RunningTutorial == false)
     {
-        pMenu->LoadSavegames();					// Slots mit aktuellen Savegames füllen
+        pMenu->LoadSavegames();					// Slots mit aktuellen Savegames fÃ¼llen
         pMenu->AktuellerPunkt = 0;
         pMenu->AktuellerZustand = MENUZUSTAND_SAVEGAME;
     }
@@ -4843,7 +4843,7 @@ void PlayerClass::PlayerInExit(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Spieler läuft grad ins Exit
+// Spieler lÃ¤uft grad ins Exit
 // --------------------------------------------------------------------------------------
 
 void PlayerClass::RunPlayerExit(void)

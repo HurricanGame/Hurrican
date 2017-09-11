@@ -2,7 +2,7 @@
 // Der Spitter
 //
 // Bewegt sich nur von links nach rechts und dreht um, wenn er an eine Wand gelangt
-// und schiesst in regelmässigen Abständen senkrecht nach oben
+// und schiesst in regelmÃ¤ssigen AbstÃ¤nden senkrecht nach oben
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -36,13 +36,13 @@ void GegnerSpitter::DoKI(void)
     blocko = TileEngine.BlockOben		   (xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
     // Animieren
-    if (AnimEnde > 0)						// Soll überhaupt anmiert werden ?
+    if (AnimEnde > 0)						// Soll Ã¼berhaupt anmiert werden ?
     {
-        AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+        if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und nächste Animationsphase
+            AnimPhase++;					// Und nÃ¤chste Animationsphase
 
             if (AnimPhase == 2)
             {
@@ -136,7 +136,7 @@ void GegnerSpitter::DoKI(void)
             xSpeed *= -1.0f;
     }
 
-    // Testen, ob der Spieler den Spitter berührt hat
+    // Testen, ob der Spieler den Spitter berÃ¼hrt hat
     //
     TestDamagePlayers(1.0f SYNC);
 }

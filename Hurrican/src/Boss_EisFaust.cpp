@@ -1,9 +1,9 @@
 // --------------------------------------------------------------------------------------
 // Die riesige Stahlfaust (im Eislevel) - Zwischenboss
 //
-// fliegt über dem Spieler und versucht, diesen zu zerquetschen
+// fliegt Ã¼ber dem Spieler und versucht, diesen zu zerquetschen
 // fliegt ab und zu nach oben aus dem Screen und donnert auf den Hurri runter
-// saust von links nach rechts über den screen und lässt Eiszapfen fallen
+// saust von links nach rechts Ã¼ber den screen und lÃ¤sst Eiszapfen fallen
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -22,7 +22,7 @@ GegnerEisFaust::GegnerEisFaust(int Wert1, int Wert2, bool Light)
     Value2			= Wert2;
     AnimPhase		= 0;
     ChangeLight		= Light;
-    AnimCount		= 50.0f;		// Counter für Spezial Aktion
+    AnimCount		= 50.0f;		// Counter fÃ¼r Spezial Aktion
     Destroyable		= true;
 }
 
@@ -114,7 +114,7 @@ void GegnerEisFaust::DoKI(void)
     }
     break;
 
-    case GEGNER_LAUFEN:			// Über dem Spieler schweben und ggf runtersausen
+    case GEGNER_LAUFEN:			// Ãœber dem Spieler schweben und ggf runtersausen
     {
         AnimCount -= SpeedFaktor;
 
@@ -147,7 +147,7 @@ void GegnerEisFaust::DoKI(void)
         // Faust Spezial Aktion und oben rausfliegen ?
         if (AnimCount <= 0.0f)
         {
-            AnimCount = 50.0f;			// Nächste Spezial Aktion planen
+            AnimCount = 50.0f;			// NÃ¤chste Spezial Aktion planen
             Handlung  = GEGNER_SPRINGEN;
             xAcc   = 0.0f;
             xSpeed = 0.0f;
@@ -279,7 +279,7 @@ void GegnerEisFaust::DoKI(void)
     }
     break;
 
-    // Faust fällt auf den Hurri drauf und fliegt dann wieder oben raus
+    // Faust fÃ¤llt auf den Hurri drauf und fliegt dann wieder oben raus
     case GEGNER_FALLEN:
     {
         // Auf den Boden gecrashed ?

@@ -47,11 +47,11 @@ void GegnerTutorialText::DoKI(void)
             !(Value1 == 20 && Player[0].PowerLines == 5))
     {
         int    pos;				// Position, an der das zu ersetzende Wort steht
-        string newWord = "";			// neuer Text für das zu ersetzende Wort
+        string newWord = "";			// neuer Text fÃ¼r das zu ersetzende Wort
         string s_text = "";			// Alter Text, in dem ersetzt wird
         char   c_text[512];		// Neuer Text, nachdem alles ersetzt wurde
 
-        // Bei Trigger 7 Anzahl der Diamanten auf fünf setzen (falls die ersten fünf nicht richtig
+        // Bei Trigger 7 Anzahl der Diamanten auf fÃ¼nf setzen (falls die ersten fÃ¼nf nicht richtig
         // eingesammelt wurden)
         //
         if (Value1 == 7 &&
@@ -66,7 +66,7 @@ void GegnerTutorialText::DoKI(void)
 
         s_text = TextArray[TEXT_TUTORIAL1 + Value1];
 
-        // die Makros für die Aktionstasten mit den Namen der aktuell eingestellten Tasten ersetzen
+        // die Makros fÃ¼r die Aktionstasten mit den Namen der aktuell eingestellten Tasten ersetzen
         //
 
         for (int i = 0; i < MAX_AKTIONEN*2; i+= 2)
@@ -85,7 +85,7 @@ void GegnerTutorialText::DoKI(void)
             while (pos != (int)string::npos);
         }
 
-        // aktualisierten Text übernehmen
+        // aktualisierten Text Ã¼bernehmen
         //
 
         int i = 0;
@@ -117,7 +117,7 @@ void GegnerTutorialText::DoKI(void)
 
     bool stillAlive = false;
 
-    // Einzelne Trigger bei bestimmter Bedingung zum nächsten Text umschalten
+    // Einzelne Trigger bei bestimmter Bedingung zum nÃ¤chsten Text umschalten
     if (PlayerAbstand() < 120)
         switch (Value1)
         {
@@ -130,7 +130,7 @@ void GegnerTutorialText::DoKI(void)
             }
             break;
 
-        // die nächsten 3 Diamanten eingesammelt?
+        // die nÃ¤chsten 3 Diamanten eingesammelt?
         //
         case 7:
             if (Player[0].CollectedDiamonds >= 8)
@@ -191,7 +191,7 @@ void GegnerTutorialText::DoKI(void)
         }
         break;
 
-        // ersten Powerblock angeschoßen?
+        // ersten Powerblock angeschoÃŸen?
         case 16:
         {
             GegnerClass* pTemp;
@@ -204,7 +204,7 @@ void GegnerTutorialText::DoKI(void)
                 {
                     GegnerPowerBlock *pPower;
 
-                    // angeschoßenen PowerBlock suchen
+                    // angeschoÃŸenen PowerBlock suchen
                     //
                     pPower = (GegnerPowerBlock*)(pTemp);
 

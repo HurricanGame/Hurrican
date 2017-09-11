@@ -42,20 +42,20 @@ void GegnerDiamant::DoKI(void)
         AnimSpeed = 1.0f;
 
     // Animieren
-    AnimCount += 1.0f SYNC;				// Animationscounter weiterzählen
-    if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+    AnimCount += 1.0f SYNC;				// Animationscounter weiterzÃ¤hlen
+    if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
     {
         AnimCount = 0;					// Dann wieder auf Null setzen
-        AnimPhase++;					// Und nächste Animationsphase
+        AnimPhase++;					// Und nÃ¤chste Animationsphase
         if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
             AnimPhase = 0;				// Dann wieder von vorne beginnen
     }
 
     switch(Handlung)
     {
-    case GEGNER_FALLEN :			// Diamant fällt runter
+    case GEGNER_FALLEN :			// Diamant fÃ¤llt runter
     {
-        if (ySpeed > 35.0f)			// Fall-Limit nicht überschreiten
+        if (ySpeed > 35.0f)			// Fall-Limit nicht Ã¼berschreiten
             ySpeed = 35.0f;
 
         // Am Boden abhopfen ?
@@ -112,11 +112,11 @@ void GegnerDiamant::DoKI(void)
                 Projectiles.PushProjectile(xPos, yPos, DIAMONDSHOT);
             }
 
-            Player[0].Score += 100;					// Punkte erhöhen
-            Player[0].CollectedDiamonds++;			// Zahl gesammelter Diamanten erhöhen
+            Player[0].Score += 100;					// Punkte erhÃ¶hen
+            Player[0].CollectedDiamonds++;			// Zahl gesammelter Diamanten erhÃ¶hen
             Player[0].DiamondsThisLevel++;
             Player[0].DiamondsFullGame++;
-            if (Player[0].CollectedDiamonds			// Limit überchritten ?
+            if (Player[0].CollectedDiamonds			// Limit Ã¼berchritten ?
                     >= DIAMONDS_FOR_EXTRALIFE)
             {
                 Player[0].CollectedDiamonds = 0;		// Dann auf 0 setzen

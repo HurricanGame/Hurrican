@@ -1,8 +1,8 @@
 // --------------------------------------------------------------------------------------
-// Die Hängebrücke
+// Die HÃ¤ngebrÃ¼cke
 //
-// Ein Teil der Brücke
-// Hängt je nach Abstand zum Spieler oder einem Objekt unterschiedlich weit runter
+// Ein Teil der BrÃ¼cke
+// HÃ¤ngt je nach Abstand zum Spieler oder einem Objekt unterschiedlich weit runter
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -31,7 +31,7 @@ GegnerBruecke::GegnerBruecke(int Wert1, int Wert2, bool Light)
 
 void GegnerBruecke::DoKI(void)
 {
-    // Brücke nicht im Bild ?
+    // BrÃ¼cke nicht im Bild ?
     //
     if (xPos + 10 < TileEngine.XOffset		||
             xPos	  > TileEngine.XOffset + 640	||
@@ -49,7 +49,7 @@ void GegnerBruecke::DoKI(void)
     if (options_Detail == DETAIL_MAXIMUM)
     {
 
-        // Irgendein Gegner steht auf der Brücke
+        // Irgendein Gegner steht auf der BrÃ¼cke
         //
         GegnerClass *pTemp = Gegner.pStart;			// Anfang der Liste
 
@@ -93,11 +93,11 @@ void GegnerBruecke::DoKI(void)
                 yPos = pTemp->yPos + float(GegnerRect[pTemp->GegnerArt].bottom) - a * (1.0f/2.5f) + 13.0f;
             }
 
-            pTemp = pTemp->pNext;				// Nächsten Gegner durchgehen
+            pTemp = pTemp->pNext;				// NÃ¤chsten Gegner durchgehen
         }
 
-        // Spieler steht auf der Brücke
-        // dann das Brückenteil je nach Entfernung zum Spieler nach unten verschieben
+        // Spieler steht auf der BrÃ¼cke
+        // dann das BrÃ¼ckenteil je nach Entfernung zum Spieler nach unten verschieben
         //
         for (int p = 0; p < NUMPLAYERS; p++)
             if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],

@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
-// Die zweite Säule
+// Die zweite SÃ¤ule
 //
-// Steht in Level rum und fällt beim abschiessen um. Dabei dreht sich das Level wieder zurück
+// Steht in Level rum und fÃ¤llt beim abschiessen um. Dabei dreht sich das Level wieder zurÃ¼ck
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -37,19 +37,19 @@ void GegnerColumn2::DoDraw(void)
 
     Winkel = int(AnimCount);
 
-    // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
+    // Winkel angleichen, damit er immer zwischen 0Â° und 360Â° bleibt
     //
     if (Winkel > 360) Winkel -= 360;
     if (Winkel < 0)	  Winkel += 360;
     D3DXMatrixRotationZ  (&matRot, DegreetoRad[Winkel]);
 
     D3DXMatrixTranslation(&matTrans, float (-(xPos-TileEngine.XOffset+40)),float (-(yPos-TileEngine.YOffset+100)), 0.0f);		// Transformation zum Ursprung
-    D3DXMatrixTranslation(&matTrans2,float   (xPos-TileEngine.XOffset+40), float (  yPos-TileEngine.YOffset+100),  0.0f);		// Transformation wieder zurück
+    D3DXMatrixTranslation(&matTrans2,float   (xPos-TileEngine.XOffset+40), float (  yPos-TileEngine.YOffset+100),  0.0f);		// Transformation wieder zurÃ¼ck
 
     D3DXMatrixIdentity	 (&matWorld);
     D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans);		// Verschieben
     D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRot);			// rotieren
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);		// und wieder zurück verschieben
+    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);		// und wieder zurÃ¼ck verschieben
 
     // rotierte Matrix setzen
 #if defined(PLATFORM_DIRECTX)
@@ -85,7 +85,7 @@ void GegnerColumn2::DoDraw(void)
 
 void GegnerColumn2::DoKI(void)
 {
-    // Säule wird umgeschossen ?
+    // SÃ¤ule wird umgeschossen ?
     //
     if (Energy < 100.0f &&
             Handlung != GEGNER_EXPLODIEREN)
@@ -114,7 +114,7 @@ void GegnerColumn2::DoKI(void)
     {
     } break;
 
-    // Säule fällt gerade um ?
+    // SÃ¤ule fÃ¤llt gerade um ?
     //
     case GEGNER_EXPLODIEREN:
     {
@@ -135,7 +135,7 @@ void GegnerColumn2::DoKI(void)
     break;
     }
 
-    // Testen, ob der Spieler die Säule berührt hat
+    // Testen, ob der Spieler die SÃ¤ule berÃ¼hrt hat
     //
     if (Handlung == GEGNER_STEHEN)
         Wegschieben(GegnerRect[GegnerArt], 0.0f);

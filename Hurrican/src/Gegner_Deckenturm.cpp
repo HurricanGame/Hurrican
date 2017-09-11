@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
-// Der Geschützturm an der Decke
+// Der GeschÃ¼tzturm an der Decke
 //
-// Hängt geschlossen und unverwundbar an der Decke, und öffnet sich,
+// HÃ¤ngt geschlossen und unverwundbar an der Decke, und Ã¶ffnet sich,
 // sobald der Spieler in Reichweite kommt und schiesst dann in die Richtung des Spielers
 // --------------------------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ void GegnerDeckenturm::DoKI(void)
 // Je nach Handlung richtig verhalten
     switch (Handlung)
     {
-    case GEGNER_UNVERWUNDBAR:			// Kanone hängt an der Decke und wartet
+    case GEGNER_UNVERWUNDBAR:			// Kanone hÃ¤ngt an der Decke und wartet
         // bis der Spieler in seine Reichweite kommt
     {
         DamageTaken = 0.0f;				// Auch nicht rot leuchten
@@ -58,7 +58,7 @@ void GegnerDeckenturm::DoKI(void)
 
     case GEGNER_OEFFNEN:
     {
-        if (AnimPhase == AnimStart)		// Fertig mit öffnen ?
+        if (AnimPhase == AnimStart)		// Fertig mit Ã¶ffnen ?
         {
             Handlung  = GEGNER_VERFOLGEN;
             AnimPhase = 10;
@@ -100,7 +100,7 @@ void GegnerDeckenturm::DoKI(void)
 
         AnimPhase = int(16 - Winkel/12);
 
-        if (AnimPhase < 10)					// Nicht über die Seitengrenze
+        if (AnimPhase < 10)					// Nicht Ã¼ber die Seitengrenze
             AnimPhase = 10;					// hinausgehen
 
         if (AnimPhase > 21)

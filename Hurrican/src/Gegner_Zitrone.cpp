@@ -100,7 +100,7 @@ void GegnerZitrone::DoDraw(void)
                                          0, 0, 0xFFFFFFFF);
 
 
-    // Körper
+    // KÃ¶rper
     pGegnerGrafix[GegnerArt]->RenderSprite((float)-TileEngine.XOffset + xPos,
                                            (float)-TileEngine.YOffset + yPos + yoff,
                                            AnimPhase, 0xFFFFFFFF);
@@ -140,7 +140,7 @@ void GegnerZitrone::DoKI(void)
         WackelOffset -= 2*PI;
 
     // Richtige Animationsphase setzen
-    // abhängig von der Position zum Spieler
+    // abhÃ¤ngig von der Position zum Spieler
     //
     float dummy;
     dummy = (pAim->xpos + 35) - (xPos + 57);
@@ -164,11 +164,11 @@ void GegnerZitrone::DoKI(void)
 
     switch (Handlung)
     {
-    // In der Luft rumdümpeln
+    // In der Luft rumdÃ¼mpeln
     //
     case GEGNER_STEHEN:
     {
-        // Abstand zu groß?
+        // Abstand zu groÃŸ?
         // Oder getroffen?
         // Dann gleich hinterherflitzen
         if (PlayerAbstand() > 300)// ||
@@ -284,7 +284,7 @@ void GegnerZitrone::DoKI(void)
     }
     break;
 
-    // Drone stürzt ab
+    // Drone stÃ¼rzt ab
     //
     case GEGNER_FALLEN:
     {
@@ -313,7 +313,7 @@ void GegnerZitrone::DoKI(void)
 
     }
 
-    // Drone stürzt ab ?
+    // Drone stÃ¼rzt ab ?
     //
     if (Energy <= 0.0f && Handlung != GEGNER_FALLEN)
     {

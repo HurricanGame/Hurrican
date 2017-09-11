@@ -59,7 +59,7 @@ void GegnerSkiWalker::DoKI(void)
     // Als Plattform dienen da man ja draufhopfen kann (man kann sogar darauf 'reiten')
     PlattformTest(GegnerRect[GegnerArt]);
 
-    // Spieler draufgehüpft ?
+    // Spieler draufgehÃ¼pft ?
     for (int i = 0; i < NUMPLAYERS; i++)
         if (Player[i].AufPlattform == this    &&
                 (Handlung == GEGNER_LAUFEN        ||
@@ -172,7 +172,7 @@ void GegnerSkiWalker::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler den Walker berührt hat
+    // Testen, ob der Spieler den Walker berÃ¼hrt hat
     if (Handlung != GEGNER_WATSCHELN &&
             Handlung != GEGNER_SPRINGEN)
         TestDamagePlayers(4.0f SYNC, false);

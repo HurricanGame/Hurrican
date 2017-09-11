@@ -110,7 +110,7 @@ void GegnerFlugsack::DoKI(void)
     }
     break;
 
-    // Sack stürzt ab
+    // Sack stÃ¼rzt ab
     case GEGNER_FALLEN:
     {
         // An die Wand gekracht ?
@@ -144,7 +144,7 @@ void GegnerFlugsack::DoKI(void)
         break;
     } // switch
 
-    // Soviel Energie verloren, dass der Spacko abstürzt ?
+    // Soviel Energie verloren, dass der Spacko abstÃ¼rzt ?
     if (Energy <= 0.0f && Handlung != GEGNER_FALLEN)
     {
         Handlung  = GEGNER_FALLEN;
@@ -163,7 +163,7 @@ void GegnerFlugsack::DoKI(void)
             xSpeed = 0.0f;
     }
 
-    // Testen, ob der Spieler den Sack berührt hat
+    // Testen, ob der Spieler den Sack berÃ¼hrt hat
     if (Handlung != GEGNER_FALLEN)
         TestDamagePlayers(4.0f SYNC);
 }

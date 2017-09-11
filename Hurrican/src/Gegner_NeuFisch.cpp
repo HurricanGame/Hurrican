@@ -34,24 +34,24 @@ void GegnerNeuFisch::DoKI(void)
 {
     // Animieren
     //
-    AnimCount += SpeedFaktor;			// Animationscounter weiterz‰hlen
+    AnimCount += SpeedFaktor;			// Animationscounter weiterz√§hlen
     if (Handlung == GEGNER_LAUFEN ||
             Handlung == GEGNER_SPECIAL)
     {
-        if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+        if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und n‰chste Animationsphase
+            AnimPhase++;					// Und n√§chste Animationsphase
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
                 AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
         }
     }
     else if (Handlung == GEGNER_DREHEN)
     {
-        if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+        if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und n‰chste Animationsphase
+            AnimPhase++;					// Und n√§chste Animationsphase
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
             {
                 AnimCount = 0.0f;
@@ -62,10 +62,10 @@ void GegnerNeuFisch::DoKI(void)
     }
     else if (Handlung == GEGNER_DREHEN2)
     {
-        if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+        if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase--;					// Und n‰chste Animationsphase
+            AnimPhase--;					// Und n√§chste Animationsphase
             if (AnimPhase <= 9)				// Animation von zu Ende	?
             {
                 AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
@@ -96,7 +96,7 @@ void GegnerNeuFisch::DoKI(void)
 
     switch (Handlung)
     {
-    // In der Suppe rumd¸mpeln
+    // In der Suppe rumd√ºmpeln
     //
     case GEGNER_LAUFEN:
     {
@@ -160,7 +160,7 @@ void GegnerNeuFisch::DoKI(void)
     }
     break;
 
-    // Fisch h‰ngt am Spieler fest
+    // Fisch h√§ngt am Spieler fest
     case GEGNER_SPECIAL:
     {
         pFest->GegnerDran = true;
@@ -202,7 +202,7 @@ void GegnerNeuFisch::GegnerExplode(void)
         PartikelSystem.PushPartikel(float(xPos - 20 + rand()%90),
                                       float(yPos - 5  + rand()%70), PIRANHATEILE);
 
-        // und noch n paar Luftbl‰sschen dazu
+        // und noch n paar Luftbl√§sschen dazu
         PartikelSystem.PushPartikel(float(xPos - 10  + rand()%90),
                                       float(yPos + 10  + rand()%70), BUBBLE);
     }

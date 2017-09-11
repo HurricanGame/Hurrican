@@ -5,7 +5,7 @@
 // Logdatei Klasse
 // zum leichten Handhaben einer Protokoll Datei
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 

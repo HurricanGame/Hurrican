@@ -2,9 +2,9 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Projektile (Schüsse) für Hurrican
+// Projektile (SchÃ¼sse) fÃ¼r Hurrican
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -28,7 +28,7 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-// Schüsse, die mit normalem Alpha gerendert werden
+// SchÃ¼sse, die mit normalem Alpha gerendert werden
 
 #define	SPREADSHOT				0						// SpreadShot des Spielers
 #define	SPREADSHOT2				1						// SpreadShot des Spielers
@@ -38,8 +38,8 @@
 #define	BOUNCESHOT1				4						// BounceShot des Spielers Stufe gross
 #define	BOUNCESHOT2				5						// BounceShot des Spielers Stufe mittel
 #define	BOUNCESHOT3				6						// BounceShot des Spielers Stufe klein
-#define	BOUNCESHOT2_LONG		7						// BounceShot des Spielers Stufe mittel, hält länger =)
-#define	BOUNCESHOT3_LONG		8						// BounceShot des Spielers Stufe mittel, hält länger =)
+#define	BOUNCESHOT2_LONG		7						// BounceShot des Spielers Stufe mittel, hÃ¤lt lÃ¤nger =)
+#define	BOUNCESHOT3_LONG		8						// BounceShot des Spielers Stufe mittel, hÃ¤lt lÃ¤nger =)
 
 #define BOUNCESHOTBIG1			9						// Riesen BounceShot des Spielers Stufe gross
 #define BOUNCESHOTBIG2			10						// Riesen BounceShot des Spielers Stufe mittel
@@ -70,8 +70,8 @@
 #define SPITTERBOMBESHOTRM		259						// Spitterbombenschuss rechts mitte
 #define SPITTERBOMBESHOTRU		260						// Spitterbombenschuss recht unten
 
-#define	SHIELDSPAWNER			261						// Schield Emitter (zerstört auch Gegner)
-#define	SHIELDSPAWNER2			262						// Schield Emitter (zerstört auch Gegner)
+#define	SHIELDSPAWNER			261						// Schield Emitter (zerstÃ¶rt auch Gegner)
+#define	SHIELDSPAWNER2			262						// Schield Emitter (zerstÃ¶rt auch Gegner)
 
 #define POWERLINE				21						// Powerline des Spielers links
 #define POWERLINE2				231						// Powerline des Spielers rechts
@@ -106,9 +106,9 @@
 #define BRATKLOPSSHOT			40						// Schuss des Bratklops Endbosses
 #define DRONEBULLET				41						// Schuss der Drone rechts
 #define DRONEBULLET2			251						// Schuss der Drone links
-#define GOLEMSAEULE				42						// Feuersäule des Golems
+#define GOLEMSAEULE				42						// FeuersÃ¤ule des Golems
 #define SCHLEIMSHOT				43						// Suchschuss des Alienmauls
-#define LAFASSSHOT				44						// Das Fass, wenn es runterfällt
+#define LAFASSSHOT				44						// Das Fass, wenn es runterfÃ¤llt
 #define FLUGLASER				45
 #define EISZAPFENSHOT			46						// Eiszapfen als Geschoss
 #define BLUEBOMB				47						// Blaue Bombe (= Ex Schneekoppe)
@@ -133,7 +133,7 @@
 #define ROBOROCKET				250						// Rakete des RoboMans
 
 
-// Schüsse, die additiv gerendert werden
+// SchÃ¼sse, die additiv gerendert werden
 
 #define FLAMME					100						// Flammen-Splitter des Fasses
 #define PHARAOLASER				101						// Schuss des Pharao Kopfes
@@ -160,11 +160,11 @@
 #define SKELETOR_SHOT			123						// Schuss vom Skeletor
 #define FIREBALL_BOMB			124						// Feuerball des Minidrachens
 #define PLAYERFIRE				125						// Flamme des Spielers :)
-#define ELEKTROSCHUSS			126						// Eletrkoschuss in der Röhre
+#define ELEKTROSCHUSS			126						// Eletrkoschuss in der RÃ¶hre
 #define ELEKTROPAMPE			127						// Elektropampe
 #define TURRIEXTRAWURST			128						// Schuss des Golems
 
-#define MAX_SHOTS				1024					// Maximale Anzahl an Schüssen
+#define MAX_SHOTS				1024					// Maximale Anzahl an SchÃ¼ssen
 
 //DKS - This was unnecessarily high. Changed to the correct figure:
 //#define MAX_SHOTGFX				300						// Maximale Anzahl verschiedener Grafiken
@@ -175,7 +175,7 @@
 // --------------------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------------------
-// Schuss Klasse (Werte für EINEN Schuss)
+// Schuss Klasse (Werte fÃ¼r EINEN Schuss)
 // --------------------------------------------------------------------------------------
 
 class ProjectileClass
@@ -185,17 +185,17 @@ public:
     float				xAcc, yAcc;					// Beschleunigung des Partikels
     int					AnimPhase, AnimEnde;		// Aktuelle Phase und Endphase
     float				AnimSpeed, AnimCount;		// Anim-Geschwindigkeit und Counter
-    bool				BounceWalls;				// an Wänden abprallen ?
-    bool				CheckBlock;					// überhaupt Kollision mit Wand checken?
+    bool				BounceWalls;				// an WÃ¤nden abprallen ?
+    bool				CheckBlock;					// Ã¼berhaupt Kollision mit Wand checken?
     bool				HasGlow;					// Leuchten?
-    bool				ExplodeOnImpact;			// Schüsse, die durch Objekte durchgehen
+    bool				ExplodeOnImpact;			// SchÃ¼sse, die durch Objekte durchgehen
     int					ShotArt;					// Art des Schusses (siehe Defines)
     float				xPos,yPos;					// Position des Partikels
     float				xPosOld, yPosOld;			// alte X-Position
     int					Damage;						// Wieviel Schaden verursacht der Schuss
     bool				DamagePlayer;				// Wer bekommt Schaden ? Spieler oder Gegner
-    float				Winkel;						// nur für SpreadShots
-    float				Counter;					// Spezialcounter für Extra-Aktionen
+    float				Winkel;						// nur fÃ¼r SpreadShots
+    float				Counter;					// Spezialcounter fÃ¼r Extra-Aktionen
     bool				OwnDraw;
 
     //DKS - Constructor is now empty, destructor explicitlu so.
@@ -214,20 +214,20 @@ public:
     void Render(void);								// Schuss rendern
     void CheckCollision(void);						// Kollision checken
     void ExplodeShot(void);							// Schuss explodiert und erzeugt Partikel
-    ProjectileClass		*pNext;						// Zeiger auf den nächsten   Schuss
+    ProjectileClass		*pNext;						// Zeiger auf den nÃ¤chsten   Schuss
     //DKS - Made a singly-linked list, there's no need or benefit for a doubly-linked list here.
     //ProjectileClass		*pPrev;						// Zeiger auf den vorherigen Schuss
     PlayerClass			*pParent;
 };
 
 // --------------------------------------------------------------------------------------
-// Projectile Klasse, Linked List, die alle Schüsse beinhaltet
+// Projectile Klasse, Linked List, die alle SchÃ¼sse beinhaltet
 // --------------------------------------------------------------------------------------
 
 class ProjectileListClass
 {
 private:
-    int						NumProjectiles;			// aktuelle Zahl der Schüsse
+    int						NumProjectiles;			// aktuelle Zahl der SchÃ¼sse
 
     //DKS - New, very simple pooled memory manager decreases alloc/dealloc overhead: (see DataStructures.h)
 #ifndef USE_NO_MEMPOOLING
@@ -252,8 +252,8 @@ public:
     DirectGraphicsSprite	Blitzflash[4];          // Grafik   des Leuchtens beim Blitz
     DirectGraphicsSprite	BlitzTexture;           // Textur auf den Blitzen drauf
     //DKS - SchussFlamme here had 4 elements originally, but only three were used, so reduced its size to 3:
-    DirectGraphicsSprite	SchussFlamme[3];		// Grafiken für die SchussFlamme, für alle 3 Waffen
-    DirectGraphicsSprite	SchussFlammeFlare;		// Grafiken für das Leuchten der SchussFlamme
+    DirectGraphicsSprite	SchussFlamme[3];		// Grafiken fÃ¼r die SchussFlamme, fÃ¼r alle 3 Waffen
+    DirectGraphicsSprite	SchussFlammeFlare;		// Grafiken fÃ¼r das Leuchten der SchussFlamme
 
     ProjectileListClass(void);						// Konstruktor
     ~ProjectileListClass(void);						// Destruktor
@@ -263,20 +263,20 @@ public:
     //      function:
     void LoadSprites(void);
 
-    bool PushProjectile(float x, float y, int Art, PlayerClass* pTemp = NULL); 	// Schuss "Art" hinzufügen
-    bool PushBlitzBeam (int Size, float Richtung, PlayerClass* pSource);	// BlitzBeam hinzufügen (in verschiedenen Größen und Richtungen möglich)
+    bool PushProjectile(float x, float y, int Art, PlayerClass* pTemp = NULL); 	// Schuss "Art" hinzufÃ¼gen
+    bool PushBlitzBeam (int Size, float Richtung, PlayerClass* pSource);	// BlitzBeam hinzufÃ¼gen (in verschiedenen GrÃ¶ÃŸen und Richtungen mÃ¶glich)
 
     //DKS - Converted projectile linked-list to be singly-linked:
     // DelNode() is new and takes the place of DelSel(), but operates a bit differently.
     // It is now up to the caller to splice the list: DelNode() blindly deletes the node
     // passed to it and returns the pointer that was in pPtr->pNext, or NULL if pPtr was NULL.
-    //void DelSel		(ProjectileClass *pTemp);		// Ausgewähltes Objekt entfernen
+    //void DelSel		(ProjectileClass *pTemp);		// AusgewÃ¤hltes Objekt entfernen
     ProjectileClass* DelNode (ProjectileClass *pPtr);
 
-    void ClearAll	(void);							// Alle Objekte löschen
-    void ClearType	(int type);						// Alle Objekte eines Typs löschen
-    int  GetNumProjectiles(void);					// Zahl der Schüsse zurückliefern
-    void DoProjectiles  (void);						// Alle Schüsse der Liste animieren
+    void ClearAll	(void);							// Alle Objekte lÃ¶schen
+    void ClearType	(int type);						// Alle Objekte eines Typs lÃ¶schen
+    int  GetNumProjectiles(void);					// Zahl der SchÃ¼sse zurÃ¼ckliefern
+    void DoProjectiles  (void);						// Alle SchÃ¼sse der Liste animieren
 };
 
 // --------------------------------------------------------------------------------------

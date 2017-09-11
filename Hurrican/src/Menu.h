@@ -2,10 +2,10 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Menu-Klasse für das
+// Menu-Klasse fÃ¼r das
 // Hurrican Hauptmenu
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -24,11 +24,11 @@
 // --------------------------------------------------------------------------------------
 
 #define MAX_STARS		300							// Anzahl scrollender Sterne im Hintergrund
-#define MAX_HIGHSCORES	10							// Anzahl der Highscore-Einträge
+#define MAX_HIGHSCORES	10							// Anzahl der Highscore-EintrÃ¤ge
 #define MAX_SAVEGAMES	10							// Anzahl der Savegame Slots
 #define MAX_COLORS		99 + MAX_HIGHSCORES			// Anzahl der Blink-Farben in der Highscore
 
-// ----- Defines für die Menu-Zustände
+// ----- Defines fÃ¼r die Menu-ZustÃ¤nde
 
 #define MENUZUSTAND_MAINMENU	0
 #define MENUZUSTAND_STARTGAME	1
@@ -43,7 +43,7 @@
 #define MENUZUSTAND_TASTEN		13
 #define MENUZUSTAND_BUTTONS		14
 
-// ----- Defines für die einzelnen Menu-Punkte
+// ----- Defines fÃ¼r die einzelnen Menu-Punkte
 
 #define MENUPUNKT_STARTGAME		0
 #define MENUPUNKT_CONTINUEGAME	1
@@ -86,7 +86,7 @@
 
 struct StarStruct
 {
-    float Count;			// Zähler von 0 bis 2 PI
+    float Count;			// ZÃ¤hler von 0 bis 2 PI
     float Abstand;			// Abstand zur Mitte
     int	  Ebene;			// Ebene (Helligkeit) = Drehgeschwindigkeit
 };
@@ -128,15 +128,15 @@ struct SavegameStruct
     int32_t NewStage;                   // Neues Level
     int32_t CollectedDiamonds;          // Anzahl gesammelter Edelsteine
     int32_t Lives[2];                   // Wieviele Leben noch ?
-    int32_t SelectedWeapon[2];          // gewählte Waffe
+    int32_t SelectedWeapon[2];          // gewÃ¤hlte Waffe
     int32_t CurrentWeaponLevel[2][4];   // Aktuelles Level       der Waffen 1-4
     int32_t CollectedPowerUps[2][4];    // Gesammelt Powerups    der Waffen 1-4
-    int32_t NextWeaponLevel[2][4];      // Nächste   Waffenstufe der Waffen 1-4
-    int32_t BlitzLength[2];             // Länge des Blitzes
+    int32_t NextWeaponLevel[2][4];      // NÃ¤chste   Waffenstufe der Waffen 1-4
+    int32_t BlitzLength[2];             // LÃ¤nge des Blitzes
     int32_t PowerLines;                 // Anzahl an Powerlines
     int32_t Grenades;                   // Anzahl an Granaten
     int32_t SmartBombs;                 // Anzahl an SmartBomben (Druckwellen)
-    int32_t Pruefsumme;                 // Prüfsumme für die Savegames
+    int32_t Pruefsumme;                 // PrÃ¼fsumme fÃ¼r die Savegames
 };
 
 // --------------------------------------------------------------------------------------
@@ -154,17 +154,17 @@ private:
     int					CreditsOffset;				// Offset der Credits im StringArray
     float				CreditsPosition;			// Offset der Credits am Screen
     float				CreditsCounter;				// Counter der Credits
-    bool				AuswahlPossible;			// Auswahl möglich ?
+    bool				AuswahlPossible;			// Auswahl mÃ¶glich ?
     float				ShowLanguageInfoCounter;	// Wie lange wird das Fenster mit Infos zum Language-File angezeigt ?
     D3DCOLOR			HighscoreColors[MAX_COLORS];// Farbewerte der Highscore-Blink-Farben
 
     StarStruct			Stars	  [MAX_STARS];		// Hintergrund-Sterne
-    SavegameStruct		Savegames [MAX_SAVEGAMES];	// Die Savegames (für Load Game)
+    SavegameStruct		Savegames [MAX_SAVEGAMES];	// Die Savegames (fÃ¼r Load Game)
 
     DirectGraphicsSprite	MenuStar;				// Stern im Hintergrund
     DirectGraphicsSprite	MenuTitel;				// Hurrican Schriftzug
     DirectGraphicsSprite	MenuNebel;				// Nebel-Hintergrund des Menus
-    DirectGraphicsSprite	MenuGfx;				// Grafiken für das Menu
+    DirectGraphicsSprite	MenuGfx;				// Grafiken fÃ¼r das Menu
     DirectGraphicsSprite	MenuKasten[2];
     DirectGraphicsSprite	Skills;
 public:
@@ -177,16 +177,16 @@ public:
 
     HighscoreStruct		Highscores[MAX_HIGHSCORES];	// Die Top-Twenty
 
-    int					AktuellerPunkt;				// Aktuell gewählter Menupunkt
+    int					AktuellerPunkt;				// Aktuell gewÃ¤hlter Menupunkt
     int					AktuellerZustand;			// Aktueller Menu-Unterpunkt
-    int					CurrentPlayer;				// Fürs Steuerung Konfigurieren
+    int					CurrentPlayer;				// FÃ¼rs Steuerung Konfigurieren
 
     int					NewRank;					// Neuer Platz in der Highscore
     int					NewScore;					// Neue Punktezahl
     int					NewStage;					// Neue Stage
     int					NewSkill;					// Neuer Skill
     char				NewName[30];				// Neuer Highscore Name
-    bool				control_reassignment_occuring;		// Für Tasten / Button Konfiguration
+    bool				control_reassignment_occuring;		// FÃ¼r Tasten / Button Konfiguration
 
 
     float				Rotation;					// Rotationsgrad
@@ -198,8 +198,8 @@ public:
     void ShowMenuBack	 (void);					// Hintergrund des Menus
     void ShowMenu		 (void);					// Menu anzeigen
     void DoMenu		     (void);					// Alles machen, was da Menu betrifft =)
-    void LoadSavegames	 (void);					// Savegame Structs mit Daten füllen
-    void ShowSavegames(int Highlight);				// Verfügbare Savegames anzeigen
+    void LoadSavegames	 (void);					// Savegame Structs mit Daten fÃ¼llen
+    void ShowSavegames(int Highlight);				// VerfÃ¼gbare Savegames anzeigen
     void LoadHighscore	 (void);					// Highscoreliste laden
     void SaveHighscore	 (void);					// Highscoreliste speichern
     void ResetHighscore	 (void);					// Highscoreliste resetten

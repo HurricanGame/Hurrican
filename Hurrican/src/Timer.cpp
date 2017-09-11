@@ -6,7 +6,7 @@
 // zum Auslesen/Berechnen der Framerate
 // und zur Synchronisierung der Bewegungen mit der Framerate
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -24,18 +24,18 @@
 // --------------------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------------------
-// Konstruktor, prüft auf den PerformanceCounter und setzt diverse Werte auf den Startwert
+// Konstruktor, prÃ¼ft auf den PerformanceCounter und setzt diverse Werte auf den Startwert
 // --------------------------------------------------------------------------------------
 
 TimerClass::TimerClass(void)
 {
     aktuelleZeit				= 0;							// Aktuelle Zeit auf 0 setzen
     letzterFrame				= 0;							// die des letzten Frames auch
-    maxFPS					= 0;							// best mögliche Peformance fordern
+    maxFPS					= 0;							// best mÃ¶gliche Peformance fordern
     vergangeneZeit			= 1.0f;
     vergangeneFrames			= 0;							// Gesamtzahl der Frames
     FPSMinimum				= 10000.0f;						// kleinste Framerate setzen
-    FPSMaximum				= 0.0f;							// grösste Framerate setzen
+    FPSMaximum				= 0.0f;							// grÃ¶sste Framerate setzen
     DurchschnittFramerate	= 0;							// durchscnittliche Framerate
     MoveSpeed				= 10.0f;						// so moven wie bei 60 fps
     SpeedFaktor				= 1.0f;
@@ -75,7 +75,7 @@ TimerClass::~TimerClass(void)
 
 void  TimerClass::update(void)
 {
-    vergangeneFrames++;												// für die Schnittberechnung
+    vergangeneFrames++;												// fÃ¼r die Schnittberechnung
     if(PerformanceCounter)       									// Counter vorhanden ?
     {
 #if defined(PLATFORM_DIRECTX)
@@ -113,10 +113,10 @@ void  TimerClass::update(void)
 
 void  TimerClass::wait(void)
 {
-    if(maxFPS==0)							// bei Framerate = 0 gleich wieder zurück
-        return;								// da wir da nichts abwarten müssen :-)
+    if(maxFPS==0)							// bei Framerate = 0 gleich wieder zurÃ¼ck
+        return;								// da wir da nichts abwarten mÃ¼ssen :-)
 
-    // Diese Schleife wird solange durchlaufen, bis die gewünschte Framerate erreicht ist
+    // Diese Schleife wird solange durchlaufen, bis die gewÃ¼nschte Framerate erreicht ist
     do
     {
         // Zeit holen
@@ -163,7 +163,7 @@ void TimerClass::SetMoveSpeed(float Wert)
 }
 
 // --------------------------------------------------------------------------------------
-// Movespeed zurückliefern
+// Movespeed zurÃ¼ckliefern
 // --------------------------------------------------------------------------------------
 
 float TimerClass::GetMoveSpeed(void)
@@ -195,7 +195,7 @@ double TimerClass::getElapsed()
 
 double TimerClass::getFrameRate(void)
 {
-    return(aktuelleFramerate);						// Framerate berechnen und zurückgeben
+    return(aktuelleFramerate);						// Framerate berechnen und zurÃ¼ckgeben
 }
 
 // --------------------------------------------------------------------------------------

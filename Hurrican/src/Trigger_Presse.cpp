@@ -34,7 +34,7 @@ void GegnerPresse::DoKI(void)
     // Ja nach Handlung richtig verhalten
     switch (Handlung)
     {
-    // Pressen (w‰hrend der Wehen ...)
+    // Pressen (w√§hrend der Wehen ...)
     case GEGNER_LAUFEN :
     {
         // Am Boden ? Dann aufstampfen und wieder nach oben fahren

@@ -31,16 +31,16 @@ GegnerRaketenwerfer::GegnerRaketenwerfer(int Wert1, int Wert2, bool Light)
 
 void GegnerRaketenwerfer::DoKI(void)
 {
-    // animieren wenn der Spieler in der N‰he ist
+    // animieren wenn der Spieler in der N√§he ist
 
     if (PlayerAbstand() < 600 &&
             pAim->ypos > yPos)
-        AnimCount += SpeedFaktor;		// Animationscounter weiterz‰hlen
+        AnimCount += SpeedFaktor;		// Animationscounter weiterz√§hlen
 
-    if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+    if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
     {
         AnimCount = 0;					// Dann wieder auf Null setzen
-        AnimPhase++;					// Und n‰chste Animationsphase
+        AnimPhase++;					// Und n√§chste Animationsphase
 
         // Rakete schiessen
         if (AnimPhase == 6)

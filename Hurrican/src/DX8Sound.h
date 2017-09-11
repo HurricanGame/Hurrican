@@ -5,7 +5,7 @@
 // DirectSound Klasse
 // zum Abspielen von Wave-Dateien
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -75,7 +75,7 @@
 // --------------------------------------------------------------------------------------
 
 #define MAX_SOUNDS				140 					// Anzahl verschiedener Soundeffekte
-#define MAX_SONGS				15						// Anzahl verschiedener Musikstücke
+#define MAX_SONGS				15						// Anzahl verschiedener MusikstÃ¼cke
 
 #define FREE					0						// Channel frei
 #define PLAYING					1						// Channel spielt gerade
@@ -99,15 +99,15 @@
 #define SOUND_WATERIN			14						// Ins Wasser springen
 #define SOUND_WATEROUT			15						// Aus dem Wasser springen
 #define SOUND_FEUERFALLE		16						// Feuerfalle geht an
-#define SOUND_DIVE				17						// Tauchgeräusch
+#define SOUND_DIVE				17						// TauchgerÃ¤usch
 #define SOUND_ABZUG				18						// Spieler verliert Energie
 #define SOUND_ABZUG_P2			19						// Spieler verliert Energie
-#define SOUND_FUNKE				20						// Bruzel Sound für die Funken Partikel
-#define SOUND_FUNKE2			21						// Bruzel Sound für die Funken Partikel
-#define SOUND_FUNKE3			22						// Bruzel Sound für die Funken Partikel
-#define SOUND_FUNKE4			23						// Bruzel Sound für die Funken Partikel
+#define SOUND_FUNKE				20						// Bruzel Sound fÃ¼r die Funken Partikel
+#define SOUND_FUNKE2			21						// Bruzel Sound fÃ¼r die Funken Partikel
+#define SOUND_FUNKE3			22						// Bruzel Sound fÃ¼r die Funken Partikel
+#define SOUND_FUNKE4			23						// Bruzel Sound fÃ¼r die Funken Partikel
 #define SOUND_GRANATE			24						// Granate schiessen
-#define SOUND_STONEFALL			25						// Stein fällt runter
+#define SOUND_STONEFALL			25						// Stein fÃ¤llt runter
 #define SOUND_STONEEXPLODE		26						// Stein geht kaputt =)
 #define SOUND_ROCKET			27						// Rakete wird abgeschossen
 #define SOUND_PRESSE			28						// Stahlpresse geht los
@@ -118,11 +118,11 @@
 #define SOUND_DROP				33						// Wassertropfen ins Wasser getropft =)
 #define SOUND_THUNDER			34						// Donner (zum Blitz)
 #define SOUND_UPGRADE			35						// Waffen Upgrade
-#define SOUND_COLUMN			36						// Säule fällt um
+#define SOUND_COLUMN			36						// SÃ¤ule fÃ¤llt um
 #define SOUND_SWITCH			37						// Schalter wird umgelegt
-#define SOUND_DOOR				38						// Tür Schleuse fährt hoch
-#define SOUND_DOORSTOP			39						// Tür ist hochgefahren
-#define SOUND_SCHLEIM			40						// Tür ist hochgefahren
+#define SOUND_DOOR				38						// TÃ¼r Schleuse fÃ¤hrt hoch
+#define SOUND_DOORSTOP			39						// TÃ¼r ist hochgefahren
+#define SOUND_SCHLEIM			40						// TÃ¼r ist hochgefahren
 #define SOUND_MESSAGE			41						// MessageBox
 #define SOUND_MUSHROOMJUMP		42						// Auf dem Pilzkopf abspringen
 #define SOUND_STEAM				43						// Dampfsound
@@ -135,7 +135,7 @@
 #define SOUND_LAUGH				50						// Fiese Lache
 #define SOUND_STANDUP			51						// Skeletor steht auf
 #define SOUND_GATLING			52						// Skeletor Gun
-#define SOUND_GLASSBREAK		53						// Mutantenröhre explodiert
+#define SOUND_GLASSBREAK		53						// MutantenrÃ¶hre explodiert
 #define SOUND_MUTANT			54						// Mutant springt / stirbt
 #define SOUND_HEART1			55						// Heartbeat
 #define SOUND_HEART2			56						// Heartbeat2 =)
@@ -162,21 +162,21 @@
 #define SOUND_PHARAORAMM		73						// Pharao Kopf rammt die Wand
 #define SOUND_PHARAODIE			74						// Pharao Kopf stirb
 #define SOUND_SPIDERSCREAM		75						// Schrei der Spinne
-#define SOUND_SPIDERWALK		76						// Spinne Laufgeräusch
-#define SOUND_SPIDERLASER		77						// Spinne Riesen Laser auflade Geräusch
+#define SOUND_SPIDERWALK		76						// Spinne LaufgerÃ¤usch
+#define SOUND_SPIDERLASER		77						// Spinne Riesen Laser auflade GerÃ¤usch
 #define SOUND_SPIDERGRENADE		78						// Riesenspinne schiesst Granate
 #define SOUND_BLITZHIT			79						// Evil Blitz trifft
 #define SOUND_BLITZHIT2			80						// Evil Blitz trifft
 #define SOUND_BRATLASER			81						// Bratklops Laser
-#define SOUND_KLONG				82						// Metall Schädel beisst zu
+#define SOUND_KLONG				82						// Metall SchÃ¤del beisst zu
 #define SOUND_GOLEMLOAD			83						// Ladesound vom Golemklops
 #define SOUND_GOLEMSHOT			84						// Schuss vom Golemklops
 
-#define SOUND_MARIO				85						// Mario Röhre im Tutorial Level
+#define SOUND_MARIO				85						// Mario RÃ¶hre im Tutorial Level
 
 
 // geloopte Sounds
-// der Blitzsound muss für beide Spieler geladen werden
+// der Blitzsound muss fÃ¼r beide Spieler geladen werden
 #define SOUND_BLITZSTART		100						// Blitzwaffe aufladen
 #define SOUND_BLITZSTART_P2		101						// Blitzwaffe aufladen
 #define SOUND_BLITZENDE			102						// Blitzwaffe losgelassen
@@ -189,7 +189,7 @@
 #define SOUND_BEAMLOAD2_P2		109
 #define SOUND_CHAIN				110
 
-// Sounds für Sound-Trigger
+// Sounds fÃ¼r Sound-Trigger
 //
 #define SOUND_TRIGGER_START		120
 
@@ -197,7 +197,7 @@
 #define SOUND_DAMPF				121						// Sound Trigger 1
 #define SOUND_WIND				122						// Sound Trigger 2
 
-// Definitionen der einzelnen Musik-Stücke
+// Definitionen der einzelnen Musik-StÃ¼cke
 #define MUSIC_STAGEMUSIC		0						// Level-Musik
 #define MUSIC_INTRO				1						// Intro-Mucke
 #define MUSIC_CREDITS			2						// Credits-Mucke
@@ -210,11 +210,11 @@
 #define MUSIC_HIGHSCORE			9						// Highscore Mucke
 #define MUSIC_BOSS				10						// Boss Musik (in jedem Level anders)
 #define MUSIC_CRACKTRO			11						// Crack Intro Musik
-#define MUSIC_PUNISHER			12						// Musik für den Punisher
-#define MUSIC_OUTTRO			13						// Musik für Abspann
-#define MUSIC_FLUGSACK			14						// Musik für Flugsack Modus
+#define MUSIC_PUNISHER			12						// Musik fÃ¼r den Punisher
+#define MUSIC_OUTTRO			13						// Musik fÃ¼r Abspann
+#define MUSIC_FLUGSACK			14						// Musik fÃ¼r Flugsack Modus
 
-// Fadezustände für in Wave
+// FadezustÃ¤nde fÃ¼r in Wave
 #define FADEMODE_NON 0
 #define FADEMODE_IN 1
 #define FADEMODE_OUT 2
@@ -226,8 +226,8 @@
 
 struct SOUNDMANAGER_PARAMETERS
 {
-    int		GlobalMusicVolume;		// Globale Musik-Lautstärke (0-100)
-    int		GlobalSoundVolume;		// Globale Sound-Lautstärke (0-100)
+    int		GlobalMusicVolume;		// Globale Musik-LautstÃ¤rke (0-100)
+    int		GlobalSoundVolume;		// Globale Sound-LautstÃ¤rke (0-100)
     int		Mixrate;
     int		MaxSoftwareChannels;
     int		Flags;
@@ -253,7 +253,7 @@ class SongClass
 {
 public:
     MUSIC_MODULE       *data;                  // MOD-Daten
-    float               vol;                   // Lautstärke
+    float               vol;                   // LautstÃ¤rke
     float               fade_speed;            // Aktuelle Fading Speed und Richtung
     int                 fade_end_vol;          // Fading Grenze
     bool                pause_when_fade_ends;  // Pause vor/nach Fading ?
@@ -325,8 +325,8 @@ private :
     void UpdateSongs();
 
 public :
-    float	g_music_vol;		// Globale Musik-Lautstärke (0-100)
-    float	g_sound_vol;		// Globale Sound-Lautstärke (0-100)
+    float	g_music_vol;		// Globale Musik-LautstÃ¤rke (0-100)
+    float	g_sound_vol;		// Globale Sound-LautstÃ¤rke (0-100)
 
     int 	num_channels;           // Number of sound channels sound library actually gave us
     int		most_channels_used;				// Anzahl benutzter Sound-Channels
@@ -371,13 +371,13 @@ public :
 #if defined(PLATFORM_DIRECTX)
     int  PlayWave(int vol, int pan,                 // Sound spielen
                   int freq, int nr);
-    int  PlayWave3D(int x, int y,                   // Sound spielen abhängig von der Spieler
+    int  PlayWave3D(int x, int y,                   // Sound spielen abhÃ¤ngig von der Spieler
                      int freq, int nr);             // position lauter oder leiser
 #else   //SDL versions not taking the unsupported freq parameter, called
         // via macro replacement of instances of PlayWave() PlayWave3D()
         // (This masks out many unnecessary calls to rand() and int modulus)
     int  PlayWave_SDL(int vol, int pan, int nr);    // Sound spielen
-    int  PlayWave3D_SDL(int x, int y, int nr);      // Sound spielen abhängig von der Spieler
+    int  PlayWave3D_SDL(int x, int y, int nr);      // Sound spielen abhÃ¤ngig von der Spieler
                                                     // position lauter oder leiser
 #endif
 

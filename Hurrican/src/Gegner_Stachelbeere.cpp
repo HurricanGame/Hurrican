@@ -77,7 +77,7 @@ void GegnerStachelbeere::DoDraw(void)
 
 void GegnerStachelbeere::DoKI(void)
 {
-    // Schrägen checken
+    // SchrÃ¤gen checken
     //
     if (ySpeed >= 0.0f)
         //DKS - Rewrote BlockSlopes function to only take the parameters it uses:
@@ -239,7 +239,7 @@ void GegnerStachelbeere::DoKI(void)
     }
     break;
 
-    case GEGNER_LAUFEN:					// Kugel hüpft im Gang rum
+    case GEGNER_LAUFEN:					// Kugel hÃ¼pft im Gang rum
     {
         if (RollCount > 0.0f)
             RollCount -= 1.0f SYNC;
@@ -295,7 +295,7 @@ void GegnerStachelbeere::DoKI(void)
         break;
     } // switch
 
-    // Berührt die Kugel den Spieler ?
+    // BerÃ¼hrt die Kugel den Spieler ?
     //
     Wegschieben(GegnerRect[GegnerArt], 4.0f);
 }

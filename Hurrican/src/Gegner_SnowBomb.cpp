@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------
-// Die große Schnee Kugel
+// Die groÃŸe Schnee Kugel
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -56,11 +56,11 @@ void GegnerSnowBomb::DoKI(void)
     //
     switch (Handlung)
     {
-    // Kommt zum ersten mal ins Bild? Dann an die gewünschte Position setzen (Value1/Value2)
+    // Kommt zum ersten mal ins Bild? Dann an die gewÃ¼nschte Position setzen (Value1/Value2)
     //
     case GEGNER_INIT:
     {
-        // Schneebombe losrollen lassen, wenn Spieler in der Nähe ist
+        // Schneebombe losrollen lassen, wenn Spieler in der NÃ¤he ist
         //
         if (pAim->xpos > xPos)
             xSpeed =  15.0f;
@@ -121,7 +121,7 @@ void GegnerSnowBomb::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler die Kugel berührt hat (nur, wenn er nicht drauf steht)
+    // Testen, ob der Spieler die Kugel berÃ¼hrt hat (nur, wenn er nicht drauf steht)
     //
     //TestDamagePlayers(4.0f SYNC);
 

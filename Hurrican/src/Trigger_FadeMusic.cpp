@@ -36,7 +36,7 @@ void GegnerFadeMusic::DoKI(void)
         // Musik Ausfaden
         if (Value1 == 0)
         {
-            // Spielt die Levelmusik überhaupt oder fadet nicht (oder ein) ?
+            // Spielt die Levelmusik Ã¼berhaupt oder fadet nicht (oder ein) ?
             //DKS - No need to check for this, overhauled sound manager:
             //if (MUSIC_IsPlaying(SoundManager.its_Songs[MUSIC_STAGEMUSIC]->SongData))// &&
             //SoundManager.its_Songs[MUSIC_STAGEMUSIC]->FadingVolume >= 0.0f)

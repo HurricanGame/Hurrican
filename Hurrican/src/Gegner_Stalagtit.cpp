@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Der Stalagtit
 //
-// Wartet wie der fallende Stein, bis der Spieler drunter vorbei läuft, und fällt dann
+// Wartet wie der fallende Stein, bis der Spieler drunter vorbei lÃ¤uft, und fÃ¤llt dann
 // runter
 // --------------------------------------------------------------------------------------
 
@@ -31,7 +31,7 @@ void GegnerStalagtit::DoKI(void)
 // Je nach Handlung richtig verhalten
     switch (Handlung)
     {
-    case GEGNER_FALLEN:						// Stein fällt runter
+    case GEGNER_FALLEN:						// Stein fÃ¤llt runter
     {
         // Maximale Geschwindigkeitsbegrenzung
         if (ySpeed > 50.0f)
@@ -54,7 +54,7 @@ void GegnerStalagtit::DoKI(void)
                 pAim->ypos > yPos &&
                 PlayerAbstand() < 640)
         {
-            // Partikel erzeugen wo der Stein die Decke verlässt
+            // Partikel erzeugen wo der Stein die Decke verlÃ¤sst
             for (int i=0; i<3; i++)
             {
                 PartikelSystem.PushPartikel(xPos+i*10, yPos + 30, ROCKSPLITTERSMALLBLUE);

@@ -182,12 +182,12 @@ void GegnerBigFish::DoDraw(void)
                                    (float)(yPos-TileEngine.YOffset) + YOff - 9.0f,
                                    88 + (int)fs2, 157, 0, 0xFFFFFFFF);
 
-    // obere Floﬂe rendern
+    // obere Flo√üe rendern
     FlosseOben.RenderSpriteScaled((float)(xPos-TileEngine.XOffset) + 151.0f,
                                   (float)(yPos-TileEngine.YOffset) + YOff - 20.0f + (int)fs2,
                                   74, 59 -  (int)fs2, 0, 0xFFFFFFFF);
 
-    // untere Floﬂe rendern
+    // untere Flo√üe rendern
     FlosseUnten.RenderSpriteScaled((float)(xPos-TileEngine.XOffset) + 140.0f,
                                    (float)(yPos-TileEngine.YOffset) + YOff + 120.0f,
                                    97, 72  + (int)fs2, 0, 0xFFFFFFFF);
@@ -197,7 +197,7 @@ void GegnerBigFish::DoDraw(void)
                                            (float)(yPos-TileEngine.YOffset) + YOff,
                                            0, 0xFFFFFFFF, false);
 
-    // kleine Floﬂe rendern
+    // kleine Flo√üe rendern
     FlosseKlein.RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset) + 184.0f,
                                           (float)(yPos-TileEngine.YOffset) + YOff + 80.0f,
                                           fs,
@@ -441,7 +441,7 @@ void GegnerBigFish::DoKI(void)
             break;
         } // switch
 
-    // Testen, ob der Fisch den Spieler ber¸hrt hat
+    // Testen, ob der Fisch den Spieler ber√ºhrt hat
     GegnerRect[BIGFISH].left   = 60;
     GegnerRect[BIGFISH].right  = 280;
     GegnerRect[BIGFISH].top    = 28   + (int)(sin(SinOff) * 5.0f);

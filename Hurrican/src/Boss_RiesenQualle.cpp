@@ -35,11 +35,11 @@ GegnerRiesenQualle::GegnerRiesenQualle(int Wert1, int Wert2, bool Light)
 void GegnerRiesenQualle::DoKI(void)
 {
     // animieren
-    AnimCount += SpeedFaktor;		// Animationscounter weiterz‰hlen
-    if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+    AnimCount += SpeedFaktor;		// Animationscounter weiterz√§hlen
+    if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
     {
         AnimCount = 0;					// Dann wieder auf Null setzen
-        AnimPhase++;					// Und n‰chste Animationsphase
+        AnimPhase++;					// Und n√§chste Animationsphase
         if (AnimPhase > AnimEnde)		// Animation von zu Ende	?
             AnimPhase = AnimStart;
     }
@@ -86,7 +86,7 @@ void GegnerRiesenQualle::DoKI(void)
                 blocku & BLOCKWERT_WAND ||
                 blocku & BLOCKWERT_GEGNERWAND)
         {
-            // Bl‰schen erzeugen
+            // Bl√§schen erzeugen
             PartikelSystem.PushPartikel(xPos + 20, yPos + 30, BUBBLE);
 
             // rechts / links bewegen
@@ -109,7 +109,7 @@ void GegnerRiesenQualle::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler die Qualle ber¸hrt hat
+    // Testen, ob der Spieler die Qualle ber√ºhrt hat
     TestDamagePlayers(5.0f SYNC);
 }
 
@@ -124,7 +124,7 @@ void GegnerRiesenQualle::GegnerExplode(void)
         PartikelSystem.PushPartikel(float(xPos + 64 + rand()%64),
                                       float(yPos + 64 + rand()%64), PIRANHATEILE2);
 
-    // und noch n paar Luftbl‰schen dazu
+    // und noch n paar Luftbl√§schen dazu
     for (int i=0; i<100; i++)
         PartikelSystem.PushPartikel(float(xPos - 10  + rand()%256),
                                       float(yPos + 10  + rand()%210), BUBBLE);

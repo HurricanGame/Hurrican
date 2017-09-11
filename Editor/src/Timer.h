@@ -6,7 +6,7 @@
 // zum Auslesen/Berechnen der Framerate
 // und zur Synchronisierung der Bewegungen mit der Framerate
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -37,17 +37,17 @@ class TimerClass
 		int			maxFPS;					// Maximum Framerate (Framebremse)
 		int			MoveSpeed;				// Wird durch die aktuelle Framerate geteilt
 		double		vergangeneZeit;			// Zeit seit dem vorherigen Frame
-		LONGLONG	vergangeneFrames;		// Vergangene Frames seit Beginn (für Schnitt)
+		LONGLONG	vergangeneFrames;		// Vergangene Frames seit Beginn (fÃ¼r Schnitt)
 		double		ZeitFaktor;				// Skalierungsfaktor
 		double		aktuelleFramerate;		// Aktuelle Framerate
 		double		DurchschnittFramerate;	// Durchschnittliche Framerate
 		double		FPSMinimum;				// kleinste gemessene Framerate
-		double		FPSMaximum;				// grösste  gemessene Framerate
+		double		FPSMaximum;				// grÃ¶sste  gemessene Framerate
 
    public:
 		float		SpeedFaktor;			// Faktor, mit dem alle Werte verrechnet werden
 
-        TimerClass   (void);				// Konstruktor, prüft auf den PerformanceCounter
+        TimerClass   (void);				// Konstruktor, prÃ¼ft auf den PerformanceCounter
        ~TimerClass   (void);				// Desktruktor
         void   update(void);				// Timer updaten und Zeiten berechnen
         void   wait  (void);				// Maximum Framrate abwarten

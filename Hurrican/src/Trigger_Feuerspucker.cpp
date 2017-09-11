@@ -2,7 +2,7 @@
 // Der Flammenwerfer an der Wand
 //
 // Erzeugt die Feuerfalle
-// Value1 gibt die Richtung an, Value2 die Länge bis zur Feuerpause
+// Value1 gibt die Richtung an, Value2 die LÃ¤nge bis zur Feuerpause
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"

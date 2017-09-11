@@ -106,7 +106,7 @@ void GegnerBigRocket::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler die Rakete berührt hat
+    // Testen, ob der Spieler die Rakete berÃ¼hrt hat
     TestDamagePlayers(30.0f, true);
 }
 

@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Der Spikelift
 //
-// Fährt dem Hurri hinterher, sobald dieser oberhalb ist
+// FÃ¤hrt dem Hurri hinterher, sobald dieser oberhalb ist
 // Er kann zwar drauf stehen, verliert dabei aber enorm viel energie
 // --------------------------------------------------------------------------------------
 
@@ -66,7 +66,7 @@ void GegnerSpikelift::DoKI(void)
         if (Value1 == 0)
             Handlung = GEGNER_STEHEN;
 
-        // oder "runterdrückbar sein"
+        // oder "runterdrÃ¼ckbar sein"
         else
         {
             yAcc = -1.0f;
@@ -75,7 +75,7 @@ void GegnerSpikelift::DoKI(void)
     }
     break;
 
-    // warten, bis der hurri oben drüber ist
+    // warten, bis der hurri oben drÃ¼ber ist
     case GEGNER_STEHEN:
     {
         if (PlayerAbstandHoriz() < 200 &&
@@ -102,7 +102,7 @@ void GegnerSpikelift::DoKI(void)
                                        pPlayer->CollideRect) & BLOCKWERT_WAND)
             ySpeed = 0.0f;
 
-        // Hurri draufgehopst, dann nach unten abstoßen
+        // Hurri draufgehopst, dann nach unten abstoÃŸen
         if (pPlayer->AufPlattform != this)
         {
             PlattformTest(GegnerRect[GegnerArt]);
@@ -112,7 +112,7 @@ void GegnerSpikelift::DoKI(void)
                 ySpeed = 7.0f;
         }
 
-        // Nicht höher als Startpunkt fahren?
+        // Nicht hÃ¶her als Startpunkt fahren?
         if (Value1 != 0 &&
                 yPos < oldypos)
             yPos = oldypos;

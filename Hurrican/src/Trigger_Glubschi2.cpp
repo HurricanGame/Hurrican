@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Das Glubschauge 2
 //
-// Hängt nur rum und schaut dem Hurri nach (Value1 == 0) oder schaut sich langsam um (Value1 == 1)
+// HÃ¤ngt nur rum und schaut dem Hurri nach (Value1 == 0) oder schaut sich langsam um (Value1 == 1)
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"

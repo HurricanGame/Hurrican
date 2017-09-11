@@ -139,7 +139,7 @@ void GegnerBallerdrone::DoKI(void)
     break;
     }
 
-    // Spieler berührt ?
+    // Spieler berÃ¼hrt ?
     //
 
     if (Handlung != GEGNER_FALLEN)

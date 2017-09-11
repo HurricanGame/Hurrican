@@ -5,7 +5,7 @@
 // Logdatei Klasse
 // zum leichten Handhaben einer Protokoll Datei
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -15,12 +15,12 @@
 
 #include "Logdatei.h"									// Header-Datei einbinden
 #if defined(PLATFORM_DIRECTX)
-#include <windows.h>									// Windowsheader für Messagebox und Beep#
+#include <windows.h>									// Windowsheader fÃ¼r Messagebox und Beep#
 #elif defined(PLATFORM_SDL)
 #include "SDL_port.h"
 #endif
-#include <string.h>										// Für String Operationen
-#include <stdio.h>										// Für Datei Operationen
+#include <string.h>										// FÃ¼r String Operationen
+#include <stdio.h>										// FÃ¼r Datei Operationen
 #if defined(ANDROID)
 #include <android/log.h>
 #endif
@@ -32,7 +32,7 @@
 FILE *Logfile;											// Logdatei
 
 extern HWND					g_hwnd;						// Fenster Handle des Hauptfensters
-extern bool					GameRunning;				// Läuft das Spiel noch ?
+extern bool					GameRunning;				// LÃ¤uft das Spiel noch ?
 
 // --------------------------------------------------------------------------------------
 // Funktionen
@@ -86,7 +86,7 @@ void Logdatei::WriteText(bool Abbruch, const char* text, ...)
     printf( "%s", buffer );
 #endif
 
-    fopen_s(&Logfile, itsFilename, "a");					// Datei zum anfügen öffnen
+    fopen_s(&Logfile, itsFilename, "a");					// Datei zum anfÃ¼gen Ã¶ffnen
     if (Logfile != NULL)
     {
         fprintf_s(Logfile, buffer);								// und Text schreiben
@@ -123,7 +123,7 @@ void Logdatei::WriteText(bool Abbruch, const char* text, ...)
 
 void Logdatei::WriteValue(int Value)
 {
-    fopen_s(&Logfile, itsFilename, "a");					// Datei zum anfügen öffnen
+    fopen_s(&Logfile, itsFilename, "a");					// Datei zum anfÃ¼gen Ã¶ffnen
     fprintf(Logfile, "%i\n", Value);					// und Wert schreiben
     fclose(Logfile);									// Datei wieder schliessen
 }

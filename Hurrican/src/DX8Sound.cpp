@@ -3,10 +3,10 @@
 // --------------------------------------------------------------------------------------
 //
 // SoundManager
-// zum Abspielen von Wave-Dateien und Musikstücken mit Hilfe der FMOD Library
+// zum Abspielen von Wave-Dateien und MusikstÃ¼cken mit Hilfe der FMOD Library
 //
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -45,7 +45,7 @@ using namespace std;
 //---------------------------------------------------------------------------------------
 // Name			: InitFMOD
 // Aufgabe		: FMOD Initialisieren
-// Rückgabewert	: true bei Erfolg, false bei nicht-Erfolg
+// RÃ¼ckgabewert	: true bei Erfolg, false bei nicht-Erfolg
 // Parameter	: keine
 //---------------------------------------------------------------------------------------
 bool SoundManagerClass::InitFMOD(SOUNDMANAGER_PARAMETERS smpp)
@@ -110,7 +110,7 @@ void SoundManagerClass::UpdateChannels()
                     // einfaden
                     case FADEMODE_IN:
                     {
-                        // Volume erhöhen
+                        // Volume erhÃ¶hen
                         float new_vol = channels[i].vol;
 
                         //DKS - In the place where this is used (mainly wind sound in 4th level,
@@ -127,7 +127,7 @@ void SoundManagerClass::UpdateChannels()
                             channels[i].fade_mode = FADEMODE_NON;
                         }
 
-                        // Lautstärke setzen
+                        // LautstÃ¤rke setzen
                         SetChannelVolume(i, new_vol);
                     }
                     break;
@@ -217,7 +217,7 @@ void SoundManagerClass::UpdateSongs()
             {
                 songs[i].vol += songs[i].fade_speed SYNC;
 
-                // Grenze Überschritten ?
+                // Grenze Ãœberschritten ?
                 if ((songs[i].fade_speed > 0.0f && songs[i].vol >= songs[i].fade_end_vol) ||
                         (songs[i].fade_speed < 0.0f && songs[i].vol <= songs[i].fade_end_vol))
                 {
@@ -300,9 +300,9 @@ void SoundManagerClass::Exit()
 //---------------------------------------------------------------------------------------
 // Name			: SetVolumes
 // Aufgabe		: neue globale Volumes setzen
-// Rückgabewert	: keiner
-// Parameter	: Sound		neue Sound-Lautstärke
-//				  Musik		neue Musik-Lautstärke
+// RÃ¼ckgabewert	: keiner
+// Parameter	: Sound		neue Sound-LautstÃ¤rke
+//				  Musik		neue Musik-LautstÃ¤rke
 //---------------------------------------------------------------------------------------
 
 void SoundManagerClass::SetVolumes(float sound_vol, float music_vol)
@@ -327,7 +327,7 @@ void SoundManagerClass::SetVolumes(float sound_vol, float music_vol)
 //---------------------------------------------------------------------------------------
 // Name			: LoadSong
 // Aufgabe		: Song laden
-// Rückgabewert	: Liefert Integer Wert der Arraypos des Songs zurück, -1 bei Fehler
+// RÃ¼ckgabewert	: Liefert Integer Wert der Arraypos des Songs zurÃ¼ck, -1 bei Fehler
 // Parameter	: Filename	Name des zu ladenden Songs
 //---------------------------------------------------------------------------------------
 
@@ -405,7 +405,7 @@ loadfile:
 //---------------------------------------------------------------------------------------
 // Name			: PlaySong
 // Aufgabe		: Song abspielen
-// Rückgabewert	: keiner
+// RÃ¼ckgabewert	: keiner
 // Parameter	: nr		Array-Nummer des Songs
 //				  resuming_paused_song      Neu starten oder Pause aufheben
 //---------------------------------------------------------------------------------------
@@ -434,7 +434,7 @@ void SoundManagerClass::PlaySong(int nr, bool resuming_paused_song)
 //---------------------------------------------------------------------------------------
 // Name			: StopSong
 // Aufgabe		: Song anhalten
-// Rückgabewert	: false, wenn der Song nicht exisitert, sonst true
+// RÃ¼ckgabewert	: false, wenn der Song nicht exisitert, sonst true
 // Parameter	: Nr		Array-Nummer des Songs
 //				  Paused	Ganz anhalten oder pausieren
 //---------------------------------------------------------------------------------------
@@ -474,7 +474,7 @@ void SoundManagerClass::UnloadSong(int nr)
 //---------------------------------------------------------------------------------------
 // Name			: StopAllSongs
 // Aufgabe		: Alle gespielten Songs werden angehalten
-// Rückgabewert	: keiner
+// RÃ¼ckgabewert	: keiner
 //---------------------------------------------------------------------------------------
 
 void SoundManagerClass::StopSongs()
@@ -486,7 +486,7 @@ void SoundManagerClass::StopSongs()
 //---------------------------------------------------------------------------------------
 // Name			: StopAllSounds
 // Aufgabe		: Alle Sounds stoppen
-// Rückgabewert	: keiner
+// RÃ¼ckgabewert	: keiner
 //---------------------------------------------------------------------------------------
 
 void SoundManagerClass::StopSounds()
@@ -502,10 +502,10 @@ void SoundManagerClass::StopSounds()
 
 //---------------------------------------------------------------------------------------
 // Name			: SetSongVolume
-// Aufgabe		: Lautstärke eines Songs setzen
-// Rückgabewert	: keiner
+// Aufgabe		: LautstÃ¤rke eines Songs setzen
+// RÃ¼ckgabewert	: keiner
 // Parameter	: Nr		Array-Nummer des Songs
-//				  Volume	Zu setzende Lautstärke
+//				  Volume	Zu setzende LautstÃ¤rke
 //---------------------------------------------------------------------------------------
 
 void SoundManagerClass::SetSongVolume(int nr, float volume)
@@ -519,10 +519,10 @@ void SoundManagerClass::SetSongVolume(int nr, float volume)
 
 //---------------------------------------------------------------------------------------
 // Name			: SetAbsoluteSongVolume
-// Aufgabe		: aboslute Lautstärke eines Songs setzen
-// Rückgabewert	: keiner
+// Aufgabe		: aboslute LautstÃ¤rke eines Songs setzen
+// RÃ¼ckgabewert	: keiner
 // Parameter	: Nr		Array-Nummer des Songs
-//				  Volume	Zu setzende Lautstärke
+//				  Volume	Zu setzende LautstÃ¤rke
 //---------------------------------------------------------------------------------------
 
 void SoundManagerClass::SetAbsoluteSongVolume(int nr, float volume)
@@ -546,8 +546,8 @@ void SoundManagerClass::ResetAllSoundVolumes(void)
 
 //---------------------------------------------------------------------------------------
 // Name			: Update
-// Aufgabe		: Songs bei Bedarf faden und benutzte Channels zählen usw
-// Rückgabewert	: keiner
+// Aufgabe		: Songs bei Bedarf faden und benutzte Channels zÃ¤hlen usw
+// RÃ¼ckgabewert	: keiner
 // Parameter	: keine
 //---------------------------------------------------------------------------------------
 
@@ -557,7 +557,7 @@ void SoundManagerClass::Update(void)
     UpdateSongs();
 
 #ifdef _DEBUG
-    // Anzahl benutzter Channels zählen
+    // Anzahl benutzter Channels zÃ¤hlen
     //
     int channels_in_use = 0;
     for (int i=0; i < num_channels; ++i)
@@ -571,8 +571,8 @@ void SoundManagerClass::Update(void)
 
 //---------------------------------------------------------------------------------------
 // Name			: FadeSong
-// Aufgabe		: Fadet einen Song ein/aus und hält danach an bzw pausiert
-// Rückgabewert	: keiner
+// Aufgabe		: Fadet einen Song ein/aus und hÃ¤lt danach an bzw pausiert
+// RÃ¼ckgabewert	: keiner
 // Parameter	: Nr			Nummer des Songs
 //				  Speed			Geschwindigkeit und Richtung des Fades
 //				  End			Grenze des Fadens
@@ -598,7 +598,7 @@ void SoundManagerClass::FadeSong(int nr, float speed, int end, bool pause_when_f
 //---------------------------------------------------------------------------------------
 // Name			: FadeWave
 // Aufgabe		: Wave ein/ausfadem
-// Rückgabewert	: keiner
+// RÃ¼ckgabewert	: keiner
 // Parameter	: Nr			Nummer des Waves
 //				  Mode			FadeMode
 //---------------------------------------------------------------------------------------
@@ -686,7 +686,7 @@ loadfile:
 
     //DKS - This was already commented out in original source:
 #if 0
-    // Temp Datei wieder löschen und Speicher freigeben
+    // Temp Datei wieder lÃ¶schen und Speicher freigeben
     DeleteFile("temp.dat");
     free(pData);
 
@@ -739,7 +739,7 @@ int SoundManagerClass::PlayWave(int vol, int pan, int freq, int nr)
 int SoundManagerClass::PlayWave_SDL(int vol, int pan, int nr)
 #endif
 {
-    // hört man den Sound überhaupt ?
+    // hÃ¶rt man den Sound Ã¼berhaupt ?
     if (g_sound_vol == 0 || !sounds[nr].data)
         return -1;
 
@@ -766,7 +766,7 @@ int SoundManagerClass::PlayWave_SDL(int vol, int pan, int nr)
         num_channels = channel+1;
     }
 
-    // Und Werte für den Channel, in dem er gespielt wird, setzen
+    // Und Werte fÃ¼r den Channel, in dem er gespielt wird, setzen
     // DKS - SetFrequency not supported under SDL:
 #if defined(PLATFORM_DIRECTX)
     SOUND_SetFrequency(channel, freq);
@@ -792,8 +792,8 @@ int SoundManagerClass::PlayWave_SDL(int vol, int pan, int nr)
 //---------------------------------------------------------------------------------------
 // Name			: PlayWave3D
 // Aufgabe		: Spielt eine Wave Datei, je nach Spieler Abstand lauter oder leiser
-//				  und setzt das panning entsprechend der Position der Geräuschquelle
-// Rückgabewert	: true, wenn der Sound gespielt wurde, sonst false
+//				  und setzt das panning entsprechend der Position der GerÃ¤uschquelle
+// RÃ¼ckgabewert	: true, wenn der Sound gespielt wurde, sonst false
 // Parameter	: Nr des Sounds im Array
 //---------------------------------------------------------------------------------------
 // NOTE: there are two versions here , one for DirectX/FMod that uses the

@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Der sich drehende Eisstachel
 //
-// Bewegt sich sinusförmig (auf der x-achse) hin und her und dreht sich dabei
+// Bewegt sich sinusfÃ¶rmig (auf der x-achse) hin und her und dreht sich dabei
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"

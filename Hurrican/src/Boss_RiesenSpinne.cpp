@@ -33,7 +33,7 @@ GegnerRiesenSpinne::GegnerRiesenSpinne(int Wert1, int Wert2, bool Light)
     yBody = 0.0f;
     ShotCount = 0;
 
-    // Zusätzliche Grafiken für die Beine
+    // ZusÃ¤tzliche Grafiken fÃ¼r die Beine
     Head.LoadImage("spiderboss_kopf.png",  127, 92, 127, 92, 1, 1);
     Legs[0].LoadImage("spiderboss_foot.png",  305, 388, 61, 97, 5, 4);
     Legs[1].LoadImage("spiderboss_leg2.png",  320, 228, 32, 114, 10, 2);
@@ -59,7 +59,7 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
 {
     float xp, yp, yoff, yoff2;
 
-    VERTEX2D	TriangleStrip[4];					// Strip für einen Schuss
+    VERTEX2D	TriangleStrip[4];					// Strip fÃ¼r einen Schuss
 
     x += 120;
 
@@ -232,7 +232,7 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
     DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
 
 
-//----- Fuß rendern
+//----- FuÃŸ rendern
     Legs[0].RenderSpriteRotated(xp, yp, 0, anim*3 + off, col);
 }
 
@@ -246,7 +246,7 @@ void GegnerRiesenSpinne::DoDraw(void)
 
     DirectGraphics.SetFilterMode(true);
 
-    // Beine hinter dem Körper
+    // Beine hinter dem KÃ¶rper
     for (int i = 0; i < 4; i++)
     {
         int a;
@@ -285,7 +285,7 @@ void GegnerRiesenSpinne::DoDraw(void)
                                    tempwinkel, 127, 0,
                                    Color);
 
-    // Beine vor dem Körper
+    // Beine vor dem KÃ¶rper
     for (int i = 0; i < 4; i++)
     {
         int a;
@@ -442,7 +442,7 @@ void GegnerRiesenSpinne::DoKI(void)
     }
     break;
 
-    case GEGNER_EINFLIEGEN:		// Spinne läuft ins Level ein
+    case GEGNER_EINFLIEGEN:		// Spinne lÃ¤uft ins Level ein
     {
         yPos -= 55;
         Energy = 100000;
@@ -458,7 +458,7 @@ void GegnerRiesenSpinne::DoKI(void)
     }
     break;
 
-    // Spinne läuft nach links oder rechts
+    // Spinne lÃ¤uft nach links oder rechts
     case GEGNER_CRUSHEN:
     case GEGNER_LAUFEN_LINKS:
     case GEGNER_LAUFEN_RECHTS:
@@ -553,7 +553,7 @@ void GegnerRiesenSpinne::DoKI(void)
         {
             WalkDir += 1.0f SYNC;
 
-            // Körper hoch, wenn er grade unten ist
+            // KÃ¶rper hoch, wenn er grade unten ist
             if (yBody > 0.0f)
             {
                 yBody -= 1.0f SYNC;
@@ -616,7 +616,7 @@ void GegnerRiesenSpinne::DoKI(void)
                 Energy = 0.0f;
         }
 
-        // AnimStufen für die einzelnen Beine setzen
+        // AnimStufen fÃ¼r die einzelnen Beine setzen
         for (int i = 0; i < 4; i++)
         {
             LegsAnim[i] = WalkCount + (PI / 3.0f) * i;
@@ -641,10 +641,10 @@ void GegnerRiesenSpinne::DoKI(void)
             SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_ROCKET);
             Gegner.PushGegner(xPos + 35.0f, yPos + 95.0f, FETTERAKETE, rand()%60 - 130, 0, false);
 
-            // Kopf zurückschnellen lassen
+            // Kopf zurÃ¼ckschnellen lassen
             HeadXOffset = 2 * PI;
 
-            // Shusscounter runterzählen
+            // Shusscounter runterzÃ¤hlen
             ShotCount--;
             if (ShotCount == 0 ||
                     pAim->xpos > xPos - 50)
@@ -658,7 +658,7 @@ void GegnerRiesenSpinne::DoKI(void)
     }
     break;
 
-    // Kopf bewegen und Schüsse abgeben
+    // Kopf bewegen und SchÃ¼sse abgeben
     case GEGNER_SPECIAL:
     {
         static float headdir = 1.0f;
@@ -674,7 +674,7 @@ void GegnerRiesenSpinne::DoKI(void)
         {
             ShotDelay = 3.5f;
 
-            // Böller abschiessen
+            // BÃ¶ller abschiessen
             SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
             WinkelUebergabe = 180 - HeadWinkel * 1.5f;
             //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -683,10 +683,10 @@ void GegnerRiesenSpinne::DoKI(void)
             Projectiles.PushProjectile(xPos - cos_deg(HeadWinkel) * 10.0f,
                                          yPos + sin_deg(HeadWinkel) * 140.0f + 90.0f + yBody, SPIDERSHOT);
 
-            // Kopf zurückschnellen lassen
+            // Kopf zurÃ¼ckschnellen lassen
             HeadXOffset = 2 * PI;
 
-            // Shusscounter runterzählen
+            // Shusscounter runterzÃ¤hlen
             ShotCount--;
             if (ShotCount == 0)
             {
@@ -707,7 +707,7 @@ void GegnerRiesenSpinne::DoKI(void)
         else
             ShotDelay = 255.0f;
 
-        // Counter runterzählen
+        // Counter runterzÃ¤hlen
         AnimCount -= 2.5f SYNC;
         if (AnimCount < 0.0f)
         {
@@ -735,12 +735,12 @@ void GegnerRiesenSpinne::DoKI(void)
         {
             ShotDelay = 10.0f;
 
-            // Böller abschiessen
+            // BÃ¶ller abschiessen
             SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
             Projectiles.PushProjectile(xPos + 20.0f, yPos + 80.0f + yBody, SPIDERSHOT2);
             Projectiles.PushProjectile(xPos + 20.0f, yPos + 100.0f + yBody, SPIDERSHOT2);
 
-            // Kopf zurückschnellen lassen
+            // Kopf zurÃ¼ckschnellen lassen
             HeadXOffset = 3 * PI;
         }
     }
@@ -779,13 +779,13 @@ void GegnerRiesenSpinne::DoKI(void)
         {
             ShotDelay = 10.0f;
 
-            // Böller abschiessen
+            // BÃ¶ller abschiessen
             SoundManager.PlayWave(100, 128, 10000 + rand()%2000, SOUND_LILA);
             WinkelUebergabe = PlayerAbstandHoriz() / 10.0f;
             Projectiles.PushProjectile(xPos + 20.0f, yPos + 80.0f + yBody, SPIDERSHOT2);
             Projectiles.PushProjectile(xPos + 20.0f, yPos + 100.0f + yBody, SPIDERSHOT2);
 
-            // Kopf zurückschnellen lassen
+            // Kopf zurÃ¼ckschnellen lassen
             HeadXOffset = 3 * PI;
         }
     }
@@ -796,7 +796,7 @@ void GegnerRiesenSpinne::DoKI(void)
         break;
     } // switch
 
-    // Kopf zurückgeschnellt?
+    // Kopf zurÃ¼ckgeschnellt?
     if (HeadXOffset > PI)
         HeadXOffset -= 0.8f SYNC;
     else
@@ -838,7 +838,7 @@ void GegnerRiesenSpinne::DoKI(void)
     GegnerRect[RIESENSPINNE].top  = 40 + int(yBody);
     GegnerRect[RIESENSPINNE].bottom = 140 + int(yBody);
 
-    // Testen, ob der Spieler den Boss berührt hat
+    // Testen, ob der Spieler den Boss berÃ¼hrt hat
     TestDamagePlayers((float) 4.0 SYNC);
 
     // Hat die Spinnen keine Energie mehr ? Dann explodiert sie

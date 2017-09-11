@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Der End Level Trigger
 //
-// Berührt ihn der Spieler so kommt er in
+// BerÃ¼hrt ihn der Spieler so kommt er in
 // die Stage, die bei Value1 angegeben ist
 // --------------------------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ void GegnerEndLevel::DoKI(void)
             yPos + 120 > TileEngine.YOffset	    &&
             yPos	   < TileEngine.YOffset + 480)
     {
-        // Ausgang berührt ? Dann Nächsten Level laden
+        // Ausgang berÃ¼hrt ? Dann NÃ¤chsten Level laden
         for (int p = 0; p < NUMPLAYERS; p++)
             if (SpriteCollision(xPos,		   yPos,		  GegnerRect[GegnerArt],
                                 Player[p].xpos,
@@ -58,7 +58,7 @@ void GegnerEndLevel::DoKI(void)
 
                 for (int p2 = 0; p2 < NUMPLAYERS; p2++)
                 {
-                    Player[p2].FesteAktion   = Value2;		// Art wie der Spieler den Screen verlässt
+                    Player[p2].FesteAktion   = Value2;		// Art wie der Spieler den Screen verlÃ¤sst
                     Player[p2].DoFesteAktion = true;
                 }
 

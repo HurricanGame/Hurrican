@@ -2,15 +2,15 @@
 
 // -------------------------------------------------------------------------------------- 
 //
-// Überlädt den "new" und den "delete" Operator
+// ÃœberlÃ¤dt den "new" und den "delete" Operator
 // New speichert zudem jeden Aufruf mit Angabe der Datei und der Zeilen Nummer im Code in
 // einer Liste.
-// Delete löscht diesen Eintrag wieder.
-// Wird also ein New ohne dazugehöriges Delete aufgerufen, wird diese Zeile nicht vermerkt
+// Delete lÃ¶scht diesen Eintrag wieder.
+// Wird also ein New ohne dazugehÃ¶riges Delete aufgerufen, wird diese Zeile nicht vermerkt
 // und bei Programmende im Debugfenster ausgegeben.
 // Auf diese Weise werden Memory Leaks mit Dateinamen und Zeilennummern gefunden.
 //
-// (c) 2004 Jörg M. Winterstein
+// (c) 2004 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@
 #include <stdlib.h>
 
 
-// Struktur, die Infos zu einem New-Aufruf entählt
+// Struktur, die Infos zu einem New-Aufruf entÃ¤hlt
 //
 typedef struct 
 {
@@ -31,7 +31,7 @@ typedef struct
     DWORD	line;
 } ALLOC_INFO;
 
-// Funktionen zum hinzufügen und entfernen von allokiertem Speicher
+// Funktionen zum hinzufÃ¼gen und entfernen von allokiertem Speicher
 //
 typedef list<ALLOC_INFO*> AllocList;
 
@@ -94,12 +94,12 @@ void DumpUnfreed()
 	OutputDebugString(buf);
 };
 
-// Operatoren überladen
+// Operatoren Ã¼berladen
 //
 
 #ifdef _DEBUG
 
-	// new überladen
+	// new Ã¼berladen
 	//
 	inline void * __cdecl operator new(unsigned int size, const char *file, int line)
 	{
@@ -108,7 +108,7 @@ void DumpUnfreed()
 		return(ptr);
     };
 
-	// delete überladen
+	// delete Ã¼berladen
 	//
     inline void __cdecl operator delete(void *p)
 	{
@@ -118,7 +118,7 @@ void DumpUnfreed()
 #endif
 
 
-// Für den Debug Modus wird ein neuer new Befehl generiert, der zusätzlich noch Dateiname und Zeilennummer
+// FÃ¼r den Debug Modus wird ein neuer new Befehl generiert, der zusÃ¤tzlich noch Dateiname und Zeilennummer
 // der Codezeile ausgibt, die die new funktion aufruft.
 #ifdef _DEBUG
 #define DEBUG_NEW new(__FILE__, __LINE__)

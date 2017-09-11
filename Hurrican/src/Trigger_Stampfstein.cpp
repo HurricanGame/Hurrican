@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Die Stampfstein
 //
-// Fällt runter, sobald der Hurri in Reichweite steht
+// FÃ¤llt runter, sobald der Hurri in Reichweite steht
 // wird danach wieder hochgezogen
 // --------------------------------------------------------------------------------------
 
@@ -86,7 +86,7 @@ void GegnerStampfstein::DoKI(void)
     {
         oldy = yPos;
 
-        // Spieler in der Nähe? Dann runterfallen lassen
+        // Spieler in der NÃ¤he? Dann runterfallen lassen
         //
         for (int p = 0; p < NUMPLAYERS; p++)
         {
@@ -107,7 +107,7 @@ void GegnerStampfstein::DoKI(void)
     break;
 
 
-    // Stein fällt gerade runter
+    // Stein fÃ¤llt gerade runter
     //
     case GEGNER_FALLEN :
     {
@@ -116,7 +116,7 @@ void GegnerStampfstein::DoKI(void)
         if (ySpeed > 40.0f)
             ySpeed = 40.0f;
 
-        // Spieler beim Runterfallen berührt? Dann stirbt er leider ;)
+        // Spieler beim Runterfallen berÃ¼hrt? Dann stirbt er leider ;)
         //
         for (int p = 0; p < NUMPLAYERS; p++)
         {
@@ -136,7 +136,7 @@ void GegnerStampfstein::DoKI(void)
             for (int i=0; i < 20; i++)
                 PartikelSystem.PushPartikel (xPos + i * 5 - 30, yPos + 220, SMOKEBIG);
 
-            // Trümmer erzeugen
+            // TrÃ¼mmer erzeugen
             for (int i=0; i < 20; i++)
                 PartikelSystem.PushPartikel (xPos + i * 5 - 10, yPos + 236, ROCKSPLITTER + rand()%2);
 
@@ -232,7 +232,7 @@ void GegnerStampfstein::DoKI(void)
 
     } // switch
 
-    // Spieler hat Stein von unten berührt (an den Stacheln) ?
+    // Spieler hat Stein von unten berÃ¼hrt (an den Stacheln) ?
     //
     for (int p = 0; p < NUMPLAYERS; p++)
         if (SpriteCollision(Player[p].xpos,

@@ -98,7 +98,7 @@ void GegnerSchmidtOrgie::DoKI(void)
 
     case GEGNER_STEHEN:
     {
-        // ActionCounter runterz‰hlen
+        // ActionCounter runterz√§hlen
         // bei null Gegner spawnen
         ActionCounter -= 1.5f SYNC;
 
@@ -112,7 +112,7 @@ void GegnerSchmidtOrgie::DoKI(void)
         {
             ActionCounter = 1.2f + Energy / 600.0f;
 
-            // Gegner per Zufall w‰hlen und spawnen
+            // Gegner per Zufall w√§hlen und spawnen
             //
             int spawn = rand()%2;
 
@@ -132,7 +132,7 @@ void GegnerSchmidtOrgie::DoKI(void)
                 Gegner.PushGegner (float (Value1) + 620, float (Value2) + 200, AUGE, rand()%10, 0, false);
             }
 
-            // oder eine Stachelkugel, einen Firewalker oder ein groﬂer Schleimboller;)
+            // oder eine Stachelkugel, einen Firewalker oder ein gro√üer Schleimboller;)
             //
             if (int (Energy) % 500 == 0)
             {
@@ -157,7 +157,7 @@ void GegnerSchmidtOrgie::DoKI(void)
     }
     break;
 
-    // warten, bis der Spieler den Gegner ber¸hrt hat, und dann aktivieren
+    // warten, bis der Spieler den Gegner ber√ºhrt hat, und dann aktivieren
     //
     case GEGNER_VERFOLGEN:
     {

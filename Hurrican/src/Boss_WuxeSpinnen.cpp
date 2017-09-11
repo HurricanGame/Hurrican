@@ -82,7 +82,7 @@ void GegnerWuxeSpinnen::DoKI(void)
 
     case GEGNER_STEHEN:
     {
-        // ActionCounter runterzählen
+        // ActionCounter runterzÃ¤hlen
         // bei null Gegner spawnen
         ActionCounter -= 0.8f SYNC;
 
@@ -122,7 +122,7 @@ void GegnerWuxeSpinnen::DoKI(void)
     }
     break;
 
-    // warten, bis der Spieler den Gegner berührt hat, und dann aktivieren
+    // warten, bis der Spieler den Gegner berÃ¼hrt hat, und dann aktivieren
     //
     case GEGNER_VERFOLGEN:
     {

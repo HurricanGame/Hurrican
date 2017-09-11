@@ -5,7 +5,7 @@
 // DirectInput Klasse
 // zum Erfassen von Eingaben durch Tastaur, Maus und Joystick/Joypad
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -97,7 +97,7 @@ public:
     bool UpdateTastatur(void);						// Tasten abfragen und im Puffer speichern
     bool UpdateMaus	   (bool gepuffert);			// Maus abfragen gepuffert/ungepuffert
     void AcquireKeyboard(void);						// Keyboard akquirierens
-    bool AreAllKeysReleased();						// Checken ob keine Taste mehr gedrückt ist
+    bool AreAllKeysReleased();						// Checken ob keine Taste mehr gedrÃ¼ckt ist
     bool AnyKeyDown(void);
     bool AnyButtonDown(void);
     void UpdateJoysticks(void);
@@ -146,7 +146,7 @@ extern char					TastaturPuffer[256];				// Tastaturpuffer des Keyboards
 #elif defined(PLATFORM_SDL)
 extern char*				TastaturPuffer;
 #endif
-extern bool					UseForceFeedback;					// ForceFeedback Fähigkeit nutzen ?
+extern bool					UseForceFeedback;					// ForceFeedback FÃ¤higkeit nutzen ?
 
 #endif
 

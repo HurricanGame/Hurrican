@@ -2,10 +2,10 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Funktionen für das Hurrican HUD
+// Funktionen fÃ¼r das Hurrican HUD
 // Werte anzeigen usw
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -69,7 +69,7 @@ void HUDClass::LoadSprites(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Werte im HUD ändern
+// Werte im HUD Ã¤ndern
 // --------------------------------------------------------------------------------------
 
 void HUDClass::UpdateValues(void)
@@ -82,8 +82,8 @@ void HUDClass::UpdateValues(void)
 
 void HUDClass::ShowHUD(void)
 {
-    char	 Buffer[100];							// Für iota Umwandlung der HUD-Werte
-    int		 BlitzOff;								// Für die Balken-Offsets
+    char	 Buffer[100];							// FÃ¼r iota Umwandlung der HUD-Werte
+    int		 BlitzOff;								// FÃ¼r die Balken-Offsets
 //	int		 StateOff;
     D3DCOLOR Color;									// Farbe des Huds
     D3DCOLOR playercol;
@@ -170,7 +170,7 @@ void HUDClass::ShowHUD(void)
         WeaponPunkt.RenderSprite(xpos + 217 + 3*32, ypos +  50 - j, 0, color);
 
     /*
-    	 // Balken anzeigen, wieviele PowerUps noch zum nächsten Waffenlevel benötigt werden
+    	 // Balken anzeigen, wieviele PowerUps noch zum nÃ¤chsten Waffenlevel benÃ¶tigt werden
     	 for (i=0; i<4; i++)
     	 {
     		 StateOff = pPlayer->CollectedPowerUps[i] * 24/pPlayer->NextWeaponLevel[i];
@@ -328,7 +328,7 @@ void HUDClass::ShowHUD(void)
             }
         }
 
-        // Gewählte Waffe heller darstellen
+        // GewÃ¤hlte Waffe heller darstellen
         if (Player[p].Handlung != BLITZEN)
         {
             if (NUMPLAYERS == 1)
@@ -564,7 +564,7 @@ void HUDClass::ShowBossHUD(float max, float act)
     if (BossHUDActive > Alpha)
         BossHUDActive = float (Alpha);
 
-    // Balken länge berechnen
+    // Balken lÃ¤nge berechnen
     int off = int((act-100)*113/(max-100));
 
     if (off < 0)
@@ -574,7 +574,7 @@ void HUDClass::ShowBossHUD(float max, float act)
 }
 
 // --------------------------------------------------------------------------------------
-// Alles machen, was da HUD betrifft, sprich, werte ändern und dann anzeigen
+// Alles machen, was da HUD betrifft, sprich, werte Ã¤ndern und dann anzeigen
 // --------------------------------------------------------------------------------------
 
 void HUDClass::DoHUD(void)

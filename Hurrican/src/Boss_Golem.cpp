@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Der Lava Golem
 //
-// wirft Steinbroken und lässt die Höhle schaukeln
+// wirft Steinbroken und lÃ¤sst die HÃ¶hle schaukeln
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -71,7 +71,7 @@ void GegnerGolem::Wackeln(void)
     else
         yoff = -Wackel * 8.0f;
 
-    // grenze überschritten?
+    // grenze Ã¼berschritten?
     if ((WackelDir > 0.0f && Wackel >  WACKELMAX) ||
             (WackelDir < 0.0f && Wackel < -WACKELMAX))
     {
@@ -115,7 +115,7 @@ void GegnerGolem::DoDraw(void)
     RECT itsRect;
     D3DXMATRIX	matRotBody, matRotArm, matTransBody, matTransArm, matTrans2Body, matTrans2Arm;
 
-    // Körper
+    // KÃ¶rper
     int offx = 0;
     int offy = 80;
     float x = (float)(xPos - TileEngine.XOffset);
@@ -126,7 +126,7 @@ void GegnerGolem::DoDraw(void)
     D3DXMatrixTranslation(&matTransBody,-x-(itsRect.right  - itsRect.left)/2.0f-offx,
                           -y-(itsRect.bottom - itsRect.top )/2.0f-offy, 0.0f);
 
-    // Transformation wieder zurück
+    // Transformation wieder zurÃ¼ck
     D3DXMatrixTranslation(&matTrans2Body,x+(itsRect.right  - itsRect.left)/2.0f+offx,
                           y+(itsRect.bottom - itsRect.top )/2.0f+offy, 0.0f);
 
@@ -139,16 +139,16 @@ void GegnerGolem::DoDraw(void)
     y = (float)(yPos + ARMY - TileEngine.YOffset);
     D3DXMatrixTranslation(&matTransArm,-x-205, -y-10, 0.0f);
 
-    // Transformation wieder zurück
+    // Transformation wieder zurÃ¼ck
     D3DXMatrixTranslation(&matTrans2Arm,x+120, y+80, 0.0f);
 
     D3DXMatrixIdentity	 (&matWorld);
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTransArm);		// rotieren (Körper)
+    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTransArm);		// rotieren (KÃ¶rper)
     D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRotArm);		// rotieren (Arm)
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2Arm);		// und wieder zurück verschieben
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTransBody);		// rotieren (Körper)
+    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2Arm);		// und wieder zurÃ¼ck verschieben
+    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTransBody);		// rotieren (KÃ¶rper)
     D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRotBody);		// rotieren (Arm)
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2Body);		// und wieder zurück verschieben
+    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2Body);		// und wieder zurÃ¼ck verschieben
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
@@ -163,11 +163,11 @@ void GegnerGolem::DoDraw(void)
     arm[0].RenderSprite((float)(xPos - TileEngine.XOffset) + wackel,
                         (float)(yPos - TileEngine.YOffset) + yoff, Color);
 
-    // Körper zeichnen
+    // KÃ¶rper zeichnen
     D3DXMatrixIdentity	 (&matWorld);
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTransBody);		// rotieren (Körper)
+    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTransBody);		// rotieren (KÃ¶rper)
     D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRotBody);		// rotieren (Arm)
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2Body);		// und wieder zurück verschieben
+    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2Body);		// und wieder zurÃ¼ck verschieben
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
@@ -196,16 +196,16 @@ void GegnerGolem::DoDraw(void)
     // arm bewegen
     D3DXMatrixTranslation(&matTransArm,-x-180, -y - 50, 0.0f);
 
-    // Transformation wieder zurück
+    // Transformation wieder zurÃ¼ck
     D3DXMatrixTranslation(&matTrans2Arm,x+175, y+95, 0.0f);
 
     D3DXMatrixIdentity	 (&matWorld);
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTransArm);		// rotieren (Körper)
+    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTransArm);		// rotieren (KÃ¶rper)
     D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRotArm);		// rotieren (Arm)
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2Arm);		// und wieder zurück verschieben
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTransBody);		// rotieren (Körper)
+    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2Arm);		// und wieder zurÃ¼ck verschieben
+    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTransBody);		// rotieren (KÃ¶rper)
     D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRotBody);		// rotieren (Arm)
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2Body);		// und wieder zurück verschieben
+    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2Body);		// und wieder zurÃ¼ck verschieben
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
@@ -332,7 +332,7 @@ void GegnerGolem::DoKI(void)
     }
     break;
 
-    // Gegner läuft am Anfang langsam nach links
+    // Gegner lÃ¤uft am Anfang langsam nach links
     case GEGNER_EINFLIEGEN:
     {
         Energy = 8000;
@@ -350,7 +350,7 @@ void GegnerGolem::DoKI(void)
     }
     break;
 
-    // Gegner läuft am Anfang langsam nach links
+    // Gegner lÃ¤uft am Anfang langsam nach links
     case GEGNER_LAUFEN:
     {
         xPos -= float(10.0 SYNC);
@@ -366,7 +366,7 @@ void GegnerGolem::DoKI(void)
     }
     break;
 
-    // Gegner läuft nach rechts
+    // Gegner lÃ¤uft nach rechts
     case GEGNER_LAUFEN2:
     {
         xPos += float(10.0 SYNC);
@@ -376,14 +376,14 @@ void GegnerGolem::DoKI(void)
         Wackeln();
         if (xPos >= TileEngine.ScrolltoX + 540)	// Weit genug rechts ?
         {
-            // zurücklaufen?
+            // zurÃ¼cklaufen?
             xPos = (float)(TileEngine.ScrolltoX + 540);
             Handlung = GEGNER_SPECIAL;
         }
     }
     break;
 
-    // Gegner läuft ganz nach links zur mauer
+    // Gegner lÃ¤uft ganz nach links zur mauer
     case GEGNER_LAUFEN3:
     {
         xPos -= float(10.0 SYNC);
@@ -418,7 +418,7 @@ void GegnerGolem::DoKI(void)
     }
     break;
 
-    // gegen die wand bollern und lavabälle spawnen
+    // gegen die wand bollern und lavabÃ¤lle spawnen
     case GEGNER_SPECIAL2 :
     {
         switch (state2)
@@ -475,7 +475,7 @@ void GegnerGolem::DoKI(void)
     }
     break;
 
-    // Ausgangsposition für Aktionen herstellen
+    // Ausgangsposition fÃ¼r Aktionen herstellen
     case GEGNER_SPECIAL:
     {
         bool fertig[3] = {true, true, true};
@@ -520,7 +520,7 @@ void GegnerGolem::DoKI(void)
                 // Weiterlaufen?
                 if (rand()%3 > 0)
                 {
-                    // Die Aktion ausführen, die eben nicht dran war
+                    // Die Aktion ausfÃ¼hren, die eben nicht dran war
                     if (last == GEGNER_SPECIAL2)
                         Handlung = GEGNER_LAUFEN2;
                     else
@@ -537,7 +537,7 @@ void GegnerGolem::DoKI(void)
                 }
             }
 
-            // Golem steht schon links? Dann zurück zur Mitte
+            // Golem steht schon links? Dann zurÃ¼ck zur Mitte
             else if (xPos <= TileEngine.ScrolltoX + 120)
             {
                 Handlung = GEGNER_LAUFEN4;
@@ -548,7 +548,7 @@ void GegnerGolem::DoKI(void)
     }
     break;
 
-    // Grüne Rotzbobel schiessen
+    // GrÃ¼ne Rotzbobel schiessen
     case GEGNER_AUSSPUCKEN:
     {
         if (ShotDelay > 10.0f)
@@ -596,7 +596,7 @@ void GegnerGolem::DoKI(void)
     }
     break;
 
-    // nach dem Schiessen kurz warten bis zur nächsten Aktion
+    // nach dem Schiessen kurz warten bis zur nÃ¤chsten Aktion
     case GEGNER_WARTEN:
     {
         ShotDelay -= 1.0f SYNC;
@@ -765,7 +765,7 @@ void GegnerGolem::DoKI(void)
             rotarm1 -= 0.8f SYNC;
             rotarm2 -= 0.7f SYNC;
 
-            // Lava berührt?
+            // Lava berÃ¼hrt?
             if (rotarm1 < 0.7f)
             {
                 rotarm1 = 0.7f;
@@ -784,7 +784,7 @@ void GegnerGolem::DoKI(void)
         }
         break;
 
-        // langsam wieder ein stück hoch federn
+        // langsam wieder ein stÃ¼ck hoch federn
         case ARM_SENKEN2:
         {
             rotarm1 += 0.25f SYNC;
@@ -836,7 +836,7 @@ void GegnerGolem::DoKI(void)
         break;
     } // switch
 
-    // Hat der Golem den Hurri berührt ?
+    // Hat der Golem den Hurri berÃ¼hrt ?
     if (Handlung != GEGNER_EXPLODIEREN)
         TestDamagePlayers(5.0f SYNC);
 }

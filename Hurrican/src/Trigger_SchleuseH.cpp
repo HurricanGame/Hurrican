@@ -35,7 +35,7 @@ void GegnerSchleuseH::DoKI(void)
 
     switch (Handlung)
     {
-    // Schleuse wird geöffnet
+    // Schleuse wird geÃ¶ffnet
     //
     case GEGNER_OEFFNEN:
     {
@@ -48,7 +48,7 @@ void GegnerSchleuseH::DoKI(void)
     }
     break;
 
-    // Schleuse öffnet sich
+    // Schleuse Ã¶ffnet sich
     //
     case GEGNER_LAUFEN:
     {
@@ -58,7 +58,7 @@ void GegnerSchleuseH::DoKI(void)
             xAcc   =   0.0f;
         }
 
-        // Ganz geöffnet?
+        // Ganz geÃ¶ffnet?
         if (xPos < float (Value1) - 201.0f)
         {
             xSpeed   = 0.0f;

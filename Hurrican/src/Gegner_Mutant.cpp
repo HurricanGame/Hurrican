@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
-// Der Mutant, der aus der Röhre kam... Ein Film von Poke53280
+// Der Mutant, der aus der RÃ¶hre kam... Ein Film von Poke53280
 //
-// Kann wahlweise ins Level gesetzt werden oder kommt aus der Röhre, wenn
+// Kann wahlweise ins Level gesetzt werden oder kommt aus der RÃ¶hre, wenn
 // der Spieler nahe genug dransteht
 // --------------------------------------------------------------------------------------
 

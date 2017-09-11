@@ -52,7 +52,7 @@ void GegnerRotzpott::CalcKnarreWinkel(void)
     }
     else
     {
-        // Abstände berechnen
+        // AbstÃ¤nde berechnen
         dx = (xPos + 27) - (pAim->xpos + 35);
         dy = (yPos + 20) - (pAim->ypos + 40);
 
@@ -92,7 +92,7 @@ void GegnerRotzpott::CalcKnarreWinkel(void)
             dir =  30.0f;
     }
 
-    // Knarre an neuen Winkel annähern
+    // Knarre an neuen Winkel annÃ¤hern
     if (dir < 0.0f)
     {
         GunWinkel += dir SYNC;
@@ -122,7 +122,7 @@ void GegnerRotzpott::DoDraw(void)
                                          0, 0, 0xFFFFFFFF);
 
 
-    // Körper
+    // KÃ¶rper
     pGegnerGrafix[GegnerArt]->RenderSprite((float)-TileEngine.XOffset + xPos,
                                            (float)-TileEngine.YOffset + yPos,
                                            0, 0xFFFFFFFF);
@@ -138,13 +138,13 @@ void GegnerRotzpott::DoKI(void)
 {
     // Knarre ausrichten
 
-    // Testen, ob der Spieler den gegner berührt hat
+    // Testen, ob der Spieler den gegner berÃ¼hrt hat
     //
     TestDamagePlayers(2.0f SYNC);
 
     CalcKnarreWinkel();
 
-    // schiessen, wenn Spieler in der Nähe und Turm kurz
+    // schiessen, wenn Spieler in der NÃ¤he und Turm kurz
     // vor finalem Winkel?
     if (PlayerAbstand() < 400 &&
             abs((int)(GunWinkel - NewWinkel)) < 10)

@@ -1,8 +1,8 @@
 // --------------------------------------------------------------------------------------
 // Secret Area
 //
-// Wird sie vom Spieler berührt, so wird der "Secret per Level" Counter erhöht
-// wird für die "Level-Endabrechnung/Summary Screen" benötigt
+// Wird sie vom Spieler berÃ¼hrt, so wird der "Secret per Level" Counter erhÃ¶ht
+// wird fÃ¼r die "Level-Endabrechnung/Summary Screen" benÃ¶tigt
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -44,7 +44,7 @@ void GegnerSecret::DoKI(void)
     {
     case GEGNER_STEHEN:
     {
-        // Spieler berührt das Secret? Dann Counter erhöhen und deaktivieren
+        // Spieler berÃ¼hrt das Secret? Dann Counter erhÃ¶hen und deaktivieren
         //
         GegnerRect[GegnerArt].left   = -Value1 / 2 + 20;
         GegnerRect[GegnerArt].right  =  Value1 / 2 + 20;

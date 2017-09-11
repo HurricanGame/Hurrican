@@ -2,11 +2,11 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Funktionen für den Spieler
+// Funktionen fÃ¼r den Spieler
 // Tasteneingaben bearbeiten und Spieler entsprechend animieren
 // usw
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -28,11 +28,11 @@
 
 #define PLAYER_MOVESPEED		20.0f						// Spieler Geschwindigkeit
 #define	PLAYER_ANIMSPEED		0.4f						// Geschwindigkeit der einzlenen Animationen
-#define	PLAYER_MAXJUMP			124.0f						// Höchster Sprung in Pixeln
+#define	PLAYER_MAXJUMP			124.0f						// HÃ¶chster Sprung in Pixeln
 #define PLAYER_MAXJUMPSPEED		43.0f						// Schnellste Bewegung beim Springen/Fallen
 #define PLAYER_JUMPADDSPEED		12.5f						// Spring-Manipulation
 #define PLAYER_ICESPEED			(PLAYER_MOVESPEED / 5.0f)	// Geschwindigkeit auf dem Eis
-#define PLAYER_ICESSLOWDOWN		0.995f						// Geschwindigkeitsänderung bei "Auslaufen" auf dem Eis
+#define PLAYER_ICESSLOWDOWN		0.995f						// GeschwindigkeitsÃ¤nderung bei "Auslaufen" auf dem Eis
 
 #define	PLAYER_MAXEXTRAS		9							// Maximale Anzahl an Granaten/Powerlines
 
@@ -55,9 +55,9 @@
 
 #define PLAYER_RAD_SPEED		0.5f						// Geschwindigkeit der Rad Animation
 #define PLAYER_BLITZ_SPEED		0.5f						// Geschwindigkeit der Blitz-Animation
-#define PLAYER_BLITZ_START		4.0f						// Zeit die man benötigt um Blitzen zu können
-#define PLAYER_BEAM_MAX			160.0f						// Maximal aufladbare Beamstärke
-#define PLAYER_SHOTDELAY		1.8f						// Verzögerung beim normalen schiessen
+#define PLAYER_BLITZ_START		4.0f						// Zeit die man benÃ¶tigt um Blitzen zu kÃ¶nnen
+#define PLAYER_BEAM_MAX			160.0f						// Maximal aufladbare BeamstÃ¤rke
+#define PLAYER_SHOTDELAY		1.8f						// VerzÃ¶gerung beim normalen schiessen
 #define BLITZ_POWER				4.0f						// Was zieht der Blitz ab ?
 
 //----- Definitionen der Aktionstasten
@@ -105,7 +105,7 @@
 #define SACKREITEN		13				// Auf dem FlugSack rumreiten
 #define DREHEN			14				// Auf dem FlugSack umdrehen
 #define BEAMLADEN		15				// Osama Beam (auf)laden ;)
-#define PISSEN   		16				// Der Spieler hat zu lange gewartet, und jetzt muss der arme Hurri übelst strullen (Auch als "Charles Bronson"-Animation bekannt)
+#define PISSEN   		16				// Der Spieler hat zu lange gewartet, und jetzt muss der arme Hurri Ã¼belst strullen (Auch als "Charles Bronson"-Animation bekannt)
 #define SURFEN   		17				// Spieler surft auf Gegner
 #define SURFENCROUCH   	18				// Ducken beim surfen
 #define SURFENJUMP   	19				// Springen beim surfen
@@ -114,25 +114,25 @@
 
 
 // --------------------------------------------------------------------------------------
-// Klasse für den Spieler
+// Klasse fÃ¼r den Spieler
 // --------------------------------------------------------------------------------------
 
 class PlayerClass
 {
 private:
     uint32_t                bl, br, bo, bu;			// Blockwerte in diesem Frame, damit wir nicht jedesmal
-    // die Funktion aufrufen müssen, sondern nur EINMAL pro Frame
+    // die Funktion aufrufen mÃ¼ssen, sondern nur EINMAL pro Frame
     VERTEX2D				v1, v2, v3, v4;			// Vertices zum Blitz rendern
-    VERTEX2D				TriangleStrip[4];		// Strip für ein Sprite
-    VERTEX2D				strahlen[NUM_COOL_LIGHTNINGS + 1][(30) * 2 + 1]; // Für den Blitz
-    float					AnimCount;				// Wann ist nächste Animation ?
+    VERTEX2D				TriangleStrip[4];		// Strip fÃ¼r ein Sprite
+    VERTEX2D				strahlen[NUM_COOL_LIGHTNINGS + 1][(30) * 2 + 1]; // FÃ¼r den Blitz
+    float					AnimCount;				// Wann ist nÃ¤chste Animation ?
     float					BlitzStart;				// Wie lange braucht man zum Blitzen ?
     float					FlameTime;				// Schussflamme zu sehen ?
     float					AustrittX, AustrittY;	// Austritspunkt des Schusses
     int						AustrittAnim;
     int						FlameAnim;				// Welche Schuss Flamme ? (Zufall)
     int						randomwert;				// aktueller srand wert
-    float					changecount;			// zähler, wann die blitze sich ändern
+    float					changecount;			// zÃ¤hler, wann die blitze sich Ã¤ndern
     bool					weaponswitchlock;
     void					checkWeaponSwitch(void);
 
@@ -140,9 +140,9 @@ public:
     bool					GegnerDran;
     bool					AlreadyDrawn;
     int						SoundOff;
-    bool					Aktion[MAX_AKTIONEN];			// Array mit Tasten für Aktionen
-    int						AktionKeyboard[MAX_AKTIONEN];	// Array mit Tasten  für Aktionen
-    int						AktionJoystick[MAX_AKTIONEN];	// Array mit Buttons für Aktionen
+    bool					Aktion[MAX_AKTIONEN];			// Array mit Tasten fÃ¼r Aktionen
+    int						AktionKeyboard[MAX_AKTIONEN];	// Array mit Tasten  fÃ¼r Aktionen
+    int						AktionJoystick[MAX_AKTIONEN];	// Array mit Buttons fÃ¼r Aktionen
     bool					Walk_UseAxxis;					// true = achsen / false = coolie hat
     bool					Look_UseAxxis;					// true = achsen / false = coolie hat
 
@@ -152,9 +152,9 @@ public:
     bool					WheelMode;				// Unendlich Rad ?
     bool					WasDamaged;				// verwundet diesen Frame?
 
-    RECT					CollideRect;			// Rechteck für die Kollision
+    RECT					CollideRect;			// Rechteck fÃ¼r die Kollision
     GegnerClass				*AufPlattform;			// Auf einem Lift etc ?
-    bool					InLiquid;				// Spieler in Einer Flüssigkeit?
+    bool					InLiquid;				// Spieler in Einer FlÃ¼ssigkeit?
     bool					JumpPossible;			// Kann man springen ?
     bool					JumpedOnSurfboard;		// Das Surfbrett geht anfangs EINmal tierisch ab
     bool					PowerLinePossible;		// Kann man eine Powerline schiessen ?
@@ -162,34 +162,34 @@ public:
     bool					WalkLock;				// Beim Stehen schon diagonal geschossen? Dann muss der Spieler stehenbleiben
     int						AnimPhase;				// Aktuelle Animationsphase
     int						AnimEnde;				// Ende der Animation
-    float					GameOverTimer;			// Timer für GameOver ?
-    float					ShotDelay;				// Schuss Verzögerung
+    float					GameOverTimer;			// Timer fÃ¼r GameOver ?
+    float					ShotDelay;				// Schuss VerzÃ¶gerung
     float					AutoFireCount;			// Wieviel 3er Autofire noch ?
     float					AutoFireExtra;			// Wieviel Sekunde Autofire Extra noch ?
-    float					RiesenShotExtra;		// Spieler hat grad die Mega riesen Power Schüsse ?
+    float					RiesenShotExtra;		// Spieler hat grad die Mega riesen Power SchÃ¼sse ?
     float					xposold, yposold;		// Position vorherigen Frame
     float					xpos,    ypos;			// Position des Spielers
     float					xspeed,  yspeed;		// Aktuelle Spieler-Geschwindigkeit
-    float					xadd,    yadd;			// Für das weiche fliegen beim "FlugSack-Reiten" :P
-    float					BeamX, BeamY;			// Position der Waffenmündung, für die Partikel beim Beam laden
-    float					BeamCount;				// Counter für Auflad-Partikel
+    float					xadd,    yadd;			// FÃ¼r das weiche fliegen beim "FlugSack-Reiten" :P
+    float					BeamX, BeamY;			// Position der WaffenmÃ¼ndung, fÃ¼r die Partikel beim Beam laden
+    float					BeamCount;				// Counter fÃ¼r Auflad-Partikel
     float					AutoScrollspeed;		// Mit welcher Speed scrollen ?
     float					JumpySave;				// Speichern der Koordinaten, falls
-    float					JumpxSave;				// der Spieler wo runterfällt
+    float					JumpxSave;				// der Spieler wo runterfÃ¤llt
     float					JumpStart;				// ypos des Startpunktes beim Sprung
-    float					JumpAdd;				// Dazuzählen beim wieder runterfallen
-    float					SmokeCount;				// Counter für das Rauchen beim FlugSack-Fliegen
+    float					JumpAdd;				// DazuzÃ¤hlen beim wieder runterfallen
+    float					SmokeCount;				// Counter fÃ¼r das Rauchen beim FlugSack-Fliegen
     float					BlitzWinkel;			// Aktuelle Richtung des Blitzes
-    float					BlitzCount;				// Zähler für die Blitzanimation
+    float					BlitzCount;				// ZÃ¤hler fÃ¼r die Blitzanimation
     int						BlitzAnim;				// Aktuelle Blitzanimation
     int						Handlung;				// Was macht der Spieler gerade ?
     int						Blickrichtung;			// Wohin kuckt der Spieler ?
     float					Energy;					// Energie
-    float					Armour;					// Rüstung
+    float					Armour;					// RÃ¼stung
     float					Shield;					// Noch Schild ?
     float					DamageCounter;			// Wie lange bei Schaden blinken ?
     float					BlinkCounter;			// Spieler leuchtet auf ?
-    int						BlinkColor;				// In welcher Farbe? 0 = keine, 1 = rot, 2 = grün, 3 = blau, 4 = hellblau
+    int						BlinkColor;				// In welcher Farbe? 0 = keine, 1 = rot, 2 = grÃ¼n, 3 = blau, 4 = hellblau
     D3DCOLOR				CurrentColor;			// In welcher Farbe?
     long					Score;					// Punkte des Spielers
     int						CollectedDiamonds;		// Anzahl gesammelter Edelsteine
@@ -197,25 +197,25 @@ public:
     int						DiamondsFullGame;		// Anzahl gesammelter Edelsteine im ganzen Spiel
     int						LivesThisLevel;			// Anzahl gesammelter OneUps in diesem Level
     int						LivesFullGame;			// Anzahl gesammelter OneUps im ganzen Spiel
-    int						BlocksThisLevel;		// Anzahl gefundener Powerblöcke in diesem Level
-    int						BlocksFullGame;			// Anzahl gefundener Powerblöcke im ganzen Spiel
+    int						BlocksThisLevel;		// Anzahl gefundener PowerblÃ¶cke in diesem Level
+    int						BlocksFullGame;			// Anzahl gefundener PowerblÃ¶cke im ganzen Spiel
     int						Lives;					// Wieviele Leben noch ?
-    int						SelectedWeapon;			// gewählte Waffe
+    int						SelectedWeapon;			// gewÃ¤hlte Waffe
     int						CurrentWeaponLevel[4];  // Aktuelles Level		 der Waffen 1-4
 //		int						CollectedPowerUps[4];	// Gesammelt Powerups    der Waffen 1-4
-//		int						NextWeaponLevel[4];		// Nächste   Waffenstufe der Waffen 1-4
-    int						BlitzLength;			// Länge des Blitzes
+//		int						NextWeaponLevel[4];		// NÃ¤chste   Waffenstufe der Waffen 1-4
+    int						BlitzLength;			// LÃ¤nge des Blitzes
     int						PowerLines;				// Anzahl an Powerlines
     int						Grenades;				// Anzahl Granaten
     int						SmartBombs;				// Anzahl Smart Bombs
     int						SecretThisLevel;		// Anzahl Secrets im Level
     int						SecretFullGame;			// Anzahl Secrets im ganzen Spiel
-    float					BronsonCounter;			// Counter, wann der Hurri anfängt zu pullern =)
+    float					BronsonCounter;			// Counter, wann der Hurri anfÃ¤ngt zu pullern =)
     int						FesteAktion;			// Was soll der Spieler von alleine Machen?
     bool					DoFesteAktion;
     bool					StageClearRunning;
     int						JoystickIndex;			// Welcher Joystick wird benutzt?
-    float					JoystickSchwelle;		// Schwellenwert für Analog Stick
+    float					JoystickSchwelle;		// Schwellenwert fÃ¼r Analog Stick
     int						ControlType;
     int						JoystickMode;
     float					ExplodingTimer;
@@ -242,16 +242,16 @@ public:
     DirectGraphicsSprite	PlayerOben;
     //DKS - This appears never to have been implemented (no image for it) so disabled it:
     //DirectGraphicsSprite	PlayerSurf;
-    DirectGraphicsSprite	PlayerPiss;				// Grafiken für das Pissen, wenn man lange nix macht =)
-    DirectGraphicsSprite	PlayerRide;				// Grafiken für das Reiten auf dem FlugSack
-    DirectGraphicsSprite	PlayerRad;				// Grafiken für das Rad
+    DirectGraphicsSprite	PlayerPiss;				// Grafiken fÃ¼r das Pissen, wenn man lange nix macht =)
+    DirectGraphicsSprite	PlayerRide;				// Grafiken fÃ¼r das Reiten auf dem FlugSack
+    DirectGraphicsSprite	PlayerRad;				// Grafiken fÃ¼r das Rad
 
     PlayerClass();                                  // Spieler initlaisieren
     ~PlayerClass(void);								// Spieler freigeben
     //DKS - Added paramter to specify if the player being initialized is player 1 (0) or player 2 (1):
     void InitPlayer(int player_num);							// Auf neues Spiel vorbereiten
     void InitNewLevel(void);						// Auf neues Level vorbereiten
-    bool GetPlayerInput(void);						// Eingabegeräte abfragen
+    bool GetPlayerInput(void);						// EingabegerÃ¤te abfragen
     void PlayerShoot  (void);						// Spieler schiesst
     void PlayerGrenadeShoot (void);					// Granate ablassen
     void AnimatePlayer(void);						// Spieler animieren
@@ -278,7 +278,7 @@ public:
     void CalcFlamePos		(void);					// Position der Flamme berechnen
     void CalcAustrittsPunkt (void);					// Austrittspunkt des Schusses berechnen
     bool CheckLevelExit		(void);					// Spieler im Ausgang?
-    void RunPlayerExit		(void);					// Spieler läuft grad ins Exit
+    void RunPlayerExit		(void);					// Spieler lÃ¤uft grad ins Exit
     void PlayerInExit		(void);					// Spieler aus dem Level rausgelaufen?
     bool Riding				(void);					// Alle Spieler auf einem Flugsack?
     void ScrollFlugsack	    (void);					// Im Flugsacklevel scrollen?

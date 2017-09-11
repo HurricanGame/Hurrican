@@ -22,7 +22,7 @@ GegnerSmallWespe::GegnerSmallWespe(int Wert1, int Wert2, bool Light)
     xAcc			= 0.0f;
     yAcc			= 0.0f;
     Energy			= 50;
-    Value1			= (int)pAim->xpos-100+rand()%200;	// Flugziel zufällig in Richtung Spieler
+    Value1			= (int)pAim->xpos-100+rand()%200;	// Flugziel zufÃ¤llig in Richtung Spieler
     Value2			= (int)pAim->ypos-100+rand()%50;		// setzen mit etwas Variation
     ChangeLight		= Light;
     Destroyable		= true;
@@ -45,7 +45,7 @@ void GegnerSmallWespe::DoKI(void)
     {
         if (PlayerAbstand() < 500)
         {
-            Value1	= (int)pAim->xpos+35-50+rand()%100;	// Flugziel zufällig in Richtung Spieler
+            Value1	= (int)pAim->xpos+35-50+rand()%100;	// Flugziel zufÃ¤llig in Richtung Spieler
             Value2	= (int)pAim->ypos+40-50+rand()%30;	// setzen mit etwas Variation
             Handlung = GEGNER_VERFOLGEN;
         }
@@ -112,12 +112,12 @@ void GegnerSmallWespe::DoKI(void)
         else
             MAXSPEED = 8.0f;
 
-        // Punkt erreicht oder Abstand zu groß ? Dann neues Ziel setzen
+        // Punkt erreicht oder Abstand zu groÃŸ ? Dann neues Ziel setzen
         if (PlayerAbstand() > 400 ||
                 (dx*dx + dy*dy) < 20*20)
 
         {
-            Value1	= (int)pAim->xpos-50+rand()%100;	// Flugziel zufällig in Richtung Spieler
+            Value1	= (int)pAim->xpos-50+rand()%100;	// Flugziel zufÃ¤llig in Richtung Spieler
             Value2	= (int)pAim->ypos-50+rand()%100;	// setzen mit etwas Variation
         }
 
@@ -128,13 +128,13 @@ void GegnerSmallWespe::DoKI(void)
                 blocku & BLOCKWERT_WAND ||
                 blocku & BLOCKWERT_PLATTFORM)
         {
-            Value1	= (int)pAim->xpos+35-50+rand()%100;	// Flugziel zufällig in Richtung Spieler
+            Value1	= (int)pAim->xpos+35-50+rand()%100;	// Flugziel zufÃ¤llig in Richtung Spieler
             Value2	= (int)pAim->ypos+40-50+rand()%30;	// setzen mit etwas Variation
         }
     }
     break;
 
-    // Wespe stürzt ab
+    // Wespe stÃ¼rzt ab
     case GEGNER_FALLEN:
     {
         // An die Wand gekracht ?
@@ -159,7 +159,7 @@ void GegnerSmallWespe::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob die Wespe einen Spieler berührt hat. Wenn ja, dann prallt sie ab und wirft den Spieler etwas zurück
+    // Testen, ob die Wespe einen Spieler berÃ¼hrt hat. Wenn ja, dann prallt sie ab und wirft den Spieler etwas zurÃ¼ck
     if (Handlung != GEGNER_FALLEN)
         for (int p = 0; p < NUMPLAYERS; p++)
             if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
@@ -185,13 +185,13 @@ void GegnerSmallWespe::DoKI(void)
             }
 
 
-    // beim Abstürzen rot
+    // beim AbstÃ¼rzen rot
     //
     if (Handlung == GEGNER_FALLEN)
         DamageTaken = 192.0f;
 
 
-    // Soviel Energie verloren, dass die Wespe abstürzt ?
+    // Soviel Energie verloren, dass die Wespe abstÃ¼rzt ?
     if (Energy <= 0.0f && Handlung != GEGNER_FALLEN)
     {
         Handlung = GEGNER_FALLEN;

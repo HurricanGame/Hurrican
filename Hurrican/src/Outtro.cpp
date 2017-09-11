@@ -2,9 +2,9 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Klasse für das Hurrican Outtro
+// Klasse fÃ¼r das Hurrican Outtro
 //
-// (c) 2006 Jörg M. Winterstein
+// (c) 2006 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -24,7 +24,7 @@
 #include "Tileengine.h"
 
 // --------------------------------------------------------------------------------------
-// Konstruktor, lädt die Grafiken
+// Konstruktor, lÃ¤dt die Grafiken
 // --------------------------------------------------------------------------------------
 
 OuttroClass::OuttroClass(void)
@@ -79,7 +79,7 @@ OuttroClass::~OuttroClass(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Wete für die beiden Spieler setzen
+// Wete fÃ¼r die beiden Spieler setzen
 // --------------------------------------------------------------------------------------
 
 void OuttroClass::InitPlayerPos(void)
@@ -123,7 +123,7 @@ void OuttroClass::DoOuttro(void)
     DirectGraphics.SetFilterMode(false);
     Henry.RenderSprite(276, 291, 0xFFFFFFFF);
 
-    // Und nochmal den unteren Teil vom Background drüber
+    // Und nochmal den unteren Teil vom Background drÃ¼ber
     Background.SetRect(0, 360, 640, 480);
     Background.RenderSprite(0, 360, 0xFFFFFFFF);
 

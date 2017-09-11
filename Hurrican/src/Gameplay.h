@@ -4,7 +4,7 @@
 //
 // Beinhaltet den Haupt Game-Loop
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -31,11 +31,11 @@
 // --------------------------------------------------------------------------------------
 
 void InitNewGame	(void);						// Neues Spiel initialisieren
-void InitNewGameLevel(int Nr);					// Alles für den Levelstart in Stage NR vorbereiten
+void InitNewGameLevel(int Nr);					// Alles fÃ¼r den Levelstart in Stage NR vorbereiten
 void GameLoop		(void);						// Haupt-Spielablauf
 void ScreenWackeln  (void);						// Screen wackeln lassen
 void ShakeScreen	(float staerke);			// Angeben wie stark der Screen wackeln soll
-void SetScreenShake (void);						// Geshakten Screen setzen bzw Matrix dafür einstellen
+void SetScreenShake (void);						// Geshakten Screen setzen bzw Matrix dafÃ¼r einstellen
 void ExplodePlayer	(void);						// Spieler explodieren lassen
 void StageClear		(bool PlaySong = true);		// Spieler aus dem Level abgehen lassen
 void SummaryScreen	(void);						// Zusammenfassung des Levels
@@ -72,7 +72,7 @@ extern float WackelMaximum;							// Maximaler Screen-Wackel Ausschlag
 extern float WackelValue;							// Aktueller Screen-Wackel Ausschlag
 extern float WackelDir;								// Aktuelle Wackel-Richtung
 extern float WackelSpeed;							// Aktuelle Wackel-Geschwindigkeit
-extern float ScreenWinkel;							// in welchem zWinkel steht der Screen grad (für Säulen, die das Level zum Kippen bringen)
+extern float ScreenWinkel;							// in welchem zWinkel steht der Screen grad (fÃ¼r SÃ¤ulen, die das Level zum Kippen bringen)
 extern float WarningCount;							// Counter, ob ein "Warning" angezeigt wird
 extern bool	 RunningTutorial;
 extern int	 options_Detail;

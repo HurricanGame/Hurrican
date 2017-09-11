@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
-// Die Rakete, die am Rand h‰ngt
+// Die Rakete, die am Rand h√§ngt
 //
-// sobald der Hurri in die N‰he kommt, l‰uft der Time ab. Steht er auf null,
+// sobald der Hurri in die N√§he kommt, l√§uft der Time ab. Steht er auf null,
 // fliegt sie los
 // --------------------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ GegnerSideRocket::GegnerSideRocket(int Wert1, int Wert2, bool Light)
     Value1			= Wert1;
 
     if (Wert2 == 0)	Value2 = 10;
-    else		// 10 = Default Wert f¸r die Verzˆgerung
+    else		// 10 = Default Wert f√ºr die Verz√∂gerung
         Value2 = Wert2;
 
 }
@@ -53,7 +53,7 @@ void GegnerSideRocket::DoKI(void)
     }
     break;
 
-    // Timer l‰uft ab
+    // Timer l√§uft ab
     //
     case GEGNER_STEHEN:
     {

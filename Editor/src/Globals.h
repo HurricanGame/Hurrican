@@ -2,9 +2,9 @@
 
 // -------------------------------------------------------------------------------------- 
 //
-// Header Datei mit global gültigen Makros, Defines usw
+// Header Datei mit global gÃ¼ltigen Makros, Defines usw
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -18,13 +18,13 @@
 #define GFXPATH ""
 
 #define SCREENWIDTH		640							// D3D Screen Breite
-#define	SCREENHEIGHT	480							// D3D Screen Höhe
+#define	SCREENHEIGHT	480							// D3D Screen HÃ¶he
 #define	RUNWINDOWMODE	true						// Fenster oder Vollbild ?
 
 // Tasten Abfragen (simple Methode)
 #define SimpleKeydown(vk_code) ((GetAsyncKeyState(vk_code) & 0x8000) ? 1 : 0)
 
-// Schnittstellen erst prüfen, ob sie existieren, und dann freigeben
+// Schnittstellen erst prÃ¼fen, ob sie existieren, und dann freigeben
 #define SafeRelease(x) if (x != NULL) { x->Release(); x=NULL; }
 
 #define RGB16BIT555(r,g,b) ((b%32) + ((g%32) << 5) + ((r%32) << 10))	// Pixelformat 555

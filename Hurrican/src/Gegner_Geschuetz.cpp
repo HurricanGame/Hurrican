@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
-// Der Geschützturm an der Decke
+// Der GeschÃ¼tzturm an der Decke
 //
-// Hängt geschlossen an der Decke, und öffnet sich im Loop, wenn der Spieler in der nähe ist
+// HÃ¤ngt geschlossen an der Decke, und Ã¶ffnet sich im Loop, wenn der Spieler in der nÃ¤he ist
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -37,7 +37,7 @@ void GegnerGeschuetz::DoKI(void)
     // Je nach Handlung richtig verhalten
     switch (Handlung)
     {
-    // Kanone hängt an der Decke und wartet bis der Spieler in seine Reichweite kommt
+    // Kanone hÃ¤ngt an der Decke und wartet bis der Spieler in seine Reichweite kommt
     case GEGNER_STEHEN:
     {
         // Spieler in Sichtweite ? Dann aufmachen

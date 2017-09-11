@@ -25,7 +25,7 @@ GegnerPowerBlock::GegnerPowerBlock(int Wert1, int Wert2, bool Light)
     for (int i = 0; i < 16; i++)
         AlreadySpawned[i] = false;
 
-    // Itemanzahl standard mässig auf 16 setzen, wenn keine Items drin sind (weil Turri das immer vergisst im Editor)
+    // Itemanzahl standard mÃ¤ssig auf 16 setzen, wenn keine Items drin sind (weil Turri das immer vergisst im Editor)
     if (Wert1 == 0)
         Value1 = 10;
     else
@@ -65,7 +65,7 @@ void GegnerPowerBlock::DoDraw(void)
                                                 1 + TileEngine.DateiAppendix.UsedPowerblock * 2, 0xFFFFFFFF, false);
     }
 
-    // nochmal leuchtend drüber (ausfadend)
+    // nochmal leuchtend drÃ¼ber (ausfadend)
     if (AnimPhase == 2)
     {
         D3DCOLOR col = D3DCOLOR_RGBA(255, 255, 255, int(DamageTaken));

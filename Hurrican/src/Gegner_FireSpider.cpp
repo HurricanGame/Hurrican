@@ -55,7 +55,7 @@ void GegnerFireSpider::DoKI(void)
     //
     float dx, dy;
 
-    // Abstände berechnen
+    // AbstÃ¤nde berechnen
     dx = (xPos + 25) - (pAim->xpos + 35);
     dy = (yPos + 18) - (pAim->ypos + 40);
 
@@ -204,7 +204,7 @@ void GegnerFireSpider::DoKI(void)
     break;
     }
 
-    // Spieler berührt ?
+    // Spieler berÃ¼hrt ?
     //
     if (Handlung != GEGNER_FALLEN)
         TestDamagePlayers(4.0f SYNC);

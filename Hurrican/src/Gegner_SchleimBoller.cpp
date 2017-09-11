@@ -2,8 +2,8 @@
 // Der Schleimboller
 //
 // Springt auf den Spieler zu
-// Wird er zerstört, so teilt er sich in zwei kleinere Bollen auf
-// Value1 gibt die größe an (0 - 60)
+// Wird er zerstÃ¶rt, so teilt er sich in zwei kleinere Bollen auf
+// Value1 gibt die grÃ¶ÃŸe an (0 - 60)
 // Value2 gibt die neue xSpeed an
 // Ist ein Bollen kleiner als 30, so teilt er sich nicht mehr.
 // --------------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ GegnerSchleimBoller::GegnerSchleimBoller(int Wert1, int Wert2, bool Light)
 
 void GegnerSchleimBoller::DoDraw(void)
 {
-    // Je nach Größe anders gestrecht rendern
+    // Je nach GrÃ¶ÃŸe anders gestrecht rendern
     //
     pGegnerGrafix[GegnerArt]->RenderSpriteScaled ((float)(xPos-TileEngine.XOffset) + (30 - Size/2),
             (float)(yPos-TileEngine.YOffset) + (60 - Size),
@@ -89,11 +89,11 @@ void GegnerSchleimBoller::DoKI(void)
     //
     else
     {
-        AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+        if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und nächste Animationsphase
+            AnimPhase++;					// Und nÃ¤chste Animationsphase
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
             {
                 Handlung  = GEGNER_FALLEN;
@@ -153,7 +153,7 @@ void GegnerSchleimBoller::DoKI(void)
 
     }
 
-    // Testen, ob der Spieler den SchleimBoller berührt hat
+    // Testen, ob der Spieler den SchleimBoller berÃ¼hrt hat
     TestDamagePlayers(2.0f SYNC);
     Wegschieben(GegnerRect[GegnerArt], 2.0f);
 }
@@ -176,7 +176,7 @@ void GegnerSchleimBoller::GegnerExplode(void)
 
     Player[0].Score += 150;
 
-    // Zwei kleinere Bobbel spawnen, wenn noch groß genug
+    // Zwei kleinere Bobbel spawnen, wenn noch groÃŸ genug
     //
     if (Size >= 30)
     {

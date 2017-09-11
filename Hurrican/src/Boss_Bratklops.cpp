@@ -2,7 +2,7 @@
 // Der eklige Bratklops
 //
 // kommt von der Seite reingefahren und kotzt maden
-// schiesst ab und zu grünen laser
+// schiesst ab und zu grÃ¼nen laser
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -41,7 +41,7 @@ GegnerBratklops::GegnerBratklops(int Wert1, int Wert2, bool Light)
     TestBlock		= false;
     OwnDraw			= true;
 
-    // Zusätzliche Grafiken laden
+    // ZusÃ¤tzliche Grafiken laden
     //
     for (int i = 0; i < 6; i++)
         pGfx[i]  = new DirectGraphicsSprite();
@@ -72,7 +72,7 @@ GegnerBratklops::GegnerBratklops(int Wert1, int Wert2, bool Light)
 void GegnerBratklops::DoDraw()
 {
     // Gegner rendern
-    // Animation existiert nur von 1-5, danach läuft sie rückwärts
+    // Animation existiert nur von 1-5, danach lÃ¤uft sie rÃ¼ckwÃ¤rts
     //
 
     int a;
@@ -111,7 +111,7 @@ void GegnerBratklops::DoDraw()
             if (!SoundManager.WaveIsPlaying(SOUND_BRATLASER))
                 SoundManager.PlayWave (100, 128, 11025, SOUND_BRATLASER);
 
-            VERTEX2D				TriangleStrip[4];					// Strip für ein Sprite
+            VERTEX2D				TriangleStrip[4];					// Strip fÃ¼r ein Sprite
             int Winkel;
             Winkel = int ((FlareDelay - 128.0f) / 4.5f) - 20;
 
@@ -157,9 +157,9 @@ void GegnerBratklops::DoDraw()
 
             D3DXMatrixRotationZ  (&matRot, DegreetoRad[360 - Winkel]);	// Rotationsmatrix
             D3DXMatrixTranslation(&matTrans, -l-15, -o, 0.0f);			// Transformation zum Ursprung
-            D3DXMatrixTranslation(&matTrans2, l+15,  o, 0.0f);			// Transformation wieder zurück
+            D3DXMatrixTranslation(&matTrans2, l+15,  o, 0.0f);			// Transformation wieder zurÃ¼ck
             D3DXMatrixMultiply	 (&matWorld, &matTrans, &matRot);		// Verschieben und rotieren
-            D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurück
+            D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurÃ¼ck
 #if defined(PLATFORM_DIRECTX)
             lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
@@ -193,9 +193,9 @@ void GegnerBratklops::DoDraw()
 
             // Kollisionsabfrage mit Spieler durch rotierte Rechtecke (wie beim Spielerblitz)
             //
-            RECT	Rect;					// Rechteck für die Kollisionserkennung
-            // ein Laser-Stück wird grob durch
-            Rect.left   = 0;				// ein 24x24 Rechteck abgeschätzt
+            RECT	Rect;					// Rechteck fÃ¼r die Kollisionserkennung
+            // ein Laser-StÃ¼ck wird grob durch
+            Rect.left   = 0;				// ein 24x24 Rechteck abgeschÃ¤tzt
             Rect.top    = 0;
             Rect.right  = 24;
             Rect.bottom = 24;
@@ -204,10 +204,10 @@ void GegnerBratklops::DoDraw()
             float xstart = float (xPos + 145.0f);
             float ystart = float (yPos + 203.0f);
 
-            // Rechtecke für die Kollisionsabfrage rotieren lassen
+            // Rechtecke fÃ¼r die Kollisionsabfrage rotieren lassen
             for (int i=0; i<25; i++)
             {
-                // Zum anzeigen der Rects, die geprüft werden
+                // Zum anzeigen der Rects, die geprÃ¼ft werden
 #ifdef _DEBUG
                 if (DebugMode == true)
                     RenderRect(float(xstart-TileEngine.XOffset),
@@ -215,7 +215,7 @@ void GegnerBratklops::DoDraw()
                                24, 24, 0x80FFFFFF);
 #endif //_DEBUG
 
-                // Laser auf Kollision mit dem Spieler prüfen
+                // Laser auf Kollision mit dem Spieler prÃ¼fen
                 //
 
                 xs = float (xstart);
@@ -228,7 +228,7 @@ void GegnerBratklops::DoDraw()
                         Player[i].DamagePlayer (10.0f SYNC);
                     }
 
-                // Und nächstes Rechteck
+                // Und nÃ¤chstes Rechteck
                 //
                 //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
                 //xstart += float(24*cos(PI * (360 - Winkel + 90) / 180));
@@ -280,13 +280,13 @@ void GegnerBratklops::DoKI(void)
     //
     AnimSpeed = Energy / 8000.0f * 1.8f;
 
-    if (AnimEnde > 0)						// Soll überhaupt anmiert werden ?
+    if (AnimEnde > 0)						// Soll Ã¼berhaupt anmiert werden ?
     {
-        AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+        if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und nächste Animationsphase
+            AnimPhase++;					// Und nÃ¤chste Animationsphase
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
                 AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
         }
@@ -368,7 +368,7 @@ void GegnerBratklops::DoKI(void)
     {
         static int oldaction = 0;
 
-        // Auf nächste Aktion warten
+        // Auf nÃ¤chste Aktion warten
         //
         ActionDelay -= 1.0f SYNC;
         if (ActionDelay <= 0.0f)
@@ -442,7 +442,7 @@ void GegnerBratklops::DoKI(void)
     }
     break;
 
-    // Gegner ballert grüne Rotzbollen
+    // Gegner ballert grÃ¼ne Rotzbollen
     //
     case GEGNER_BOMBARDIEREN:
     {
@@ -560,8 +560,8 @@ void GegnerBratklops::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler den Bratklops berührt hat
-    // dafür nehmen wir ein anderes Rect, weil das normale GegnerRect nur das Grüne Auge ist, wo man den Gegner treffen kann
+    // Testen, ob der Spieler den Bratklops berÃ¼hrt hat
+    // dafÃ¼r nehmen wir ein anderes Rect, weil das normale GegnerRect nur das GrÃ¼ne Auge ist, wo man den Gegner treffen kann
     //
     //RECT rect;
 
@@ -588,7 +588,7 @@ void GegnerBratklops::GegnerExplode(void)
 {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
-    // Zusäzliche Grafiken freigeben
+    // ZusÃ¤zliche Grafiken freigeben
     //
     for (int i=0; i < 6; i++)
         delete (pGfx[i]);

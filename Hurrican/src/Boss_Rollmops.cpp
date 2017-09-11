@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------
-// Der rollende Mops kam in die Küche, und stahl dem Turri seine Eier
+// Der rollende Mops kam in die KÃ¼che, und stahl dem Turri seine Eier
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -477,7 +477,7 @@ void GegnerRollmops::DoKI(void)
             if (xSpeed < -60.0f)
                 xSpeed = -60.0f;
 
-            // Grenze überschritten, ab der abgebremst wird?
+            // Grenze Ã¼berschritten, ab der abgebremst wird?
             if (xPos + 65 < Value1 + 135.0)
                 xAcc = 19.0f;
 
@@ -545,7 +545,7 @@ void GegnerRollmops::DoKI(void)
             if (xSpeed > 60.0f)
                 xSpeed = 60.0f;
 
-            // Grenze überschritten, ab der abgebremst wird?
+            // Grenze Ã¼berschritten, ab der abgebremst wird?
             if (xPos + 65 > Value1 + 505.0)
                 xAcc = -19.0f;
 
@@ -889,7 +889,7 @@ void GegnerRollmops::DoKI(void)
         }
     }
 
-    // Testen, ob der Spieler den Boss berührt hat
+    // Testen, ob der Spieler den Boss berÃ¼hrt hat
     GegnerRect[GegnerArt].top    = 20;
     GegnerRect[GegnerArt].left   = 20;
     GegnerRect[GegnerArt].right  = 80;

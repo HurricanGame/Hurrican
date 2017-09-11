@@ -55,7 +55,7 @@ void GegnerStarSmall::DoKI(void)
     {
     case GEGNER_LAUFEN :
     {
-        // An den Wänden umdrehen
+        // An den WÃ¤nden umdrehen
         //
         if ((xSpeed < 0.0f && blockl & BLOCKWERT_WAND) ||
                 (xSpeed > 0.0f && blockr & BLOCKWERT_WAND))
@@ -74,7 +74,7 @@ void GegnerStarSmall::DoKI(void)
 
     } // switch
 
-    // Testen, ob der Spieler den Sack berührt hat
+    // Testen, ob der Spieler den Sack berÃ¼hrt hat
     TestDamagePlayers(2.0f SYNC);
 }
 

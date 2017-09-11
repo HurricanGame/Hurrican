@@ -6,7 +6,7 @@
 // zum initialisieren von DirectX8
 // beinhaltet zudem verschiedene Grafik-Funktionen zum Speichern von Screenshots usw
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -94,7 +94,7 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
 	PresentParams.AutoDepthStencilFormat			= D3DFMT_D16;
 	PresentParams.hDeviceWindow						= hwnd;							// Fenster Handle
 	PresentParams.BackBufferWidth					= SCREENWIDTH;					// ScreenBreite
-	PresentParams.BackBufferHeight					= SCREENHEIGHT;					// Screenhöhe
+	PresentParams.BackBufferHeight					= SCREENHEIGHT;					// ScreenhÃ¶he
 	PresentParams.BackBufferFormat					= D3DFMT_X8R8G8B8;				
 
 	if(VSync == true)	PresentParams.SwapEffect	= D3DSWAPEFFECT_COPY_VSYNC;		// VSync an	
@@ -186,13 +186,13 @@ _ModeFound:
 	else
 		SquareOnly = false;
 
-	// Device kann nur Texturen mit 2er-Potenz-Grösse
+	// Device kann nur Texturen mit 2er-Potenz-GrÃ¶sse
 	if (d3dCaps.TextureCaps | D3DPTEXTURECAPS_POW2)
 		PowerOfTwo = true; 
 	else
 		PowerOfTwo = false;
 
-   // Globale Variable mit dem tatsächlichen BackBuffer füllen
+   // Globale Variable mit dem tatsÃ¤chlichen BackBuffer fÃ¼llen
    lpD3DDevice->GetBackBuffer(0, D3DBACKBUFFER_TYPE_MONO, &lpBackbuffer);
 
    // Licht, Cullmodus und Z-Buffer aktivieren
@@ -263,7 +263,7 @@ bool DirectGraphicsClass::TakeScreenshot(char Filename[100])
 									D3DFMT_A8R8G8B8, 
 									&lpSurface);
 	lpD3DDevice->GetFrontBuffer(lpSurface);						// FrontBuffer in Surface kopieren
-	Bits = new BYTE[SCREENWIDTH * SCREENHEIGHT * 3 + 1];		// Array mit Pixeldaten erstellen (für die Konvertierung in 24 bit)
+	Bits = new BYTE[SCREENWIDTH * SCREENHEIGHT * 3 + 1];		// Array mit Pixeldaten erstellen (fÃ¼r die Konvertierung in 24 bit)
 
 	if (!Bits)
 	{
@@ -321,7 +321,7 @@ bool DirectGraphicsClass::TakeScreenshot(char Filename[100])
 	bmfh.bfOffBits = sizeof(bmfh) + sizeof(bmih);
 
 
-	// BMP Datei erzeugen, wobei bereits existierende Dateien nicht überschrieben werden
+	// BMP Datei erzeugen, wobei bereits existierende Dateien nicht Ã¼berschrieben werden
 	// so entstehen dann Screenshot000 - Screenshot999
 
 	char	TempName[100];
@@ -343,7 +343,7 @@ bool DirectGraphicsClass::TakeScreenshot(char Filename[100])
 	}
 	while (f != NULL);
 
-	// Datei neu erzeugen und zum schreiben öffnen
+	// Datei neu erzeugen und zum schreiben Ã¶ffnen
 	f = fopen(TempName, "wb");
 	if (!f)
 	{
@@ -385,12 +385,12 @@ bool DirectGraphicsClass::PutPixel(int x, int y, UCHAR rot,UCHAR gruen, UCHAR bl
 {
 	int Zeilenbreite;			// Zeilenbreite
 	int DDS_Breite;				// Breite der Surface
-	int DDS_Hoehe;				// Höhe der Surface
+	int DDS_Hoehe;				// HÃ¶he der Surface
 	USHORT *Vram;				// Speicheradresse der Surface
 	D3DSURFACE_DESC d3dsd;		// SurfaceDesc Struktur
-	D3DLOCKED_RECT  rectLock;	// Enthält Speicheradresse
+	D3DLOCKED_RECT  rectLock;	// EnthÃ¤lt Speicheradresse
 
-	// Breite und Höhen stehen in SurfaceDesc
+	// Breite und HÃ¶hen stehen in SurfaceDesc
 	if (FAILED(lpDDSurf->GetDesc(&d3dsd))) 
 	{
 		Protokoll.WriteText("\n-> GetDesc() Fehler !\n", false);
@@ -410,7 +410,7 @@ bool DirectGraphicsClass::PutPixel(int x, int y, UCHAR rot,UCHAR gruen, UCHAR bl
 	Zeilenbreite = rectLock.Pitch >> 1;
     USHORT Farbe = RGB16BIT565(rot,gruen,blau);
 
-    // Prüfen, ob der Pixel überhaupt im sichtbaren Bereich
+    // PrÃ¼fen, ob der Pixel Ã¼berhaupt im sichtbaren Bereich
     // der Surface gemalt werden soll!!!
     if ( x<0 || x>(DDS_Breite-1) || y<0 || y>(DDS_Hoehe-1) )
 		return false;
@@ -422,7 +422,7 @@ bool DirectGraphicsClass::PutPixel(int x, int y, UCHAR rot,UCHAR gruen, UCHAR bl
 } 
 
 // --------------------------------------------------------------------------------------
-// Renderstates für Sprites mit ColorKey setzen
+// Renderstates fÃ¼r Sprites mit ColorKey setzen
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsClass::SetColorKeyMode(void)
@@ -432,7 +432,7 @@ void DirectGraphicsClass::SetColorKeyMode(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Renderstates für Sprites mit Additivem Alphablending setzen
+// Renderstates fÃ¼r Sprites mit Additivem Alphablending setzen
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsClass::SetAdditiveMode(void)

@@ -7,9 +7,9 @@
 class GegnerDrone : public GegnerClass
 {
 private :
-    int		ShotCount;								// Wieviele Schüsse abgeben ?
-    float	ShotDelay;								// Zeitabstand zwischen Schüssen
-    float	ActionDelay;							// Zeitabstand bis zur nächsten Salve
+    int		ShotCount;								// Wieviele SchÃ¼sse abgeben ?
+    float	ShotDelay;								// Zeitabstand zwischen SchÃ¼ssen
+    float	ActionDelay;							// Zeitabstand bis zur nÃ¤chsten Salve
 
 public :
 

@@ -2,10 +2,10 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Beinhaltet die Defines und Funktionen für die Texte in Hurrican
-// Es ist möglich, verschiedene Language-Files zu laden
+// Beinhaltet die Defines und Funktionen fÃ¼r die Texte in Hurrican
+// Es ist mÃ¶glich, verschiedene Language-Files zu laden
 //
-// (c) 2002-2004 Jörg M. Winterstein
+// (c) 2002-2004 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -90,8 +90,8 @@ bool LoadLanguage (char *filename)
 
 loadfile:
 
-    fopen_s(&Datei, temp, "r");												// Language File öffnen
-    if (Datei == NULL)															// Fehler beim öffnen ?
+    fopen_s(&Datei, temp, "r");												// Language File Ã¶ffnen
+    if (Datei == NULL)															// Fehler beim Ã¶ffnen ?
     {
         Protokoll.WriteText( true, "-> Error opening language-file\n'%s'", temp );
         return false;
@@ -108,7 +108,7 @@ loadfile:
         count = 0;
         c	  = getc (Datei);
 
-        // Zeichen für Zeichen auslesen, bis ein c==10 gelesen wird. Dies markiert das Zeilenende
+        // Zeichen fÃ¼r Zeichen auslesen, bis ein c==10 gelesen wird. Dies markiert das Zeilenende
         //
         while (c != 10 &&
                 count < 1023)
@@ -137,7 +137,7 @@ loadfile:
         fopen_s (&Datei, buf, "rt");							// Reihenfolge Level laden
         if (Datei == NULL)
         {
-            // Fehler beim öffnen ? Dann standard Liste öffnen
+            // Fehler beim Ã¶ffnen ? Dann standard Liste Ã¶ffnen
             CommandLineParams.RunOwnLevelList = false;
             Protokoll.WriteText( true, "-> Error opening level-order file\n" );
             return false;
@@ -176,13 +176,13 @@ loadfile:
 loadfilelevel:
 
 #if defined(USE_UNRARLIB)
-        // Aus RAR laden? Dann müssen wir das ganze unter temporärem Namen entpacken
+        // Aus RAR laden? Dann mÃ¼ssen wir das ganze unter temporÃ¤rem Namen entpacken
         if (fromrar == true)
         {
             // Zwischenspeichern
             //
             FILE *TempFile = NULL;
-            fopen_s (&TempFile, TEMP_FILE_PREFIX "temp.dat", "wb");	// Datei öffnen
+            fopen_s (&TempFile, TEMP_FILE_PREFIX "temp.dat", "wb");	// Datei Ã¶ffnen
             fwrite (pData, Size, 1, TempFile);			// speichern
             fclose (TempFile);							// und schliessen
 
@@ -191,7 +191,7 @@ loadfilelevel:
         }
 #endif // USE_UNRARLIB
 
-        in.open(Temp); //Datei öffnen
+        in.open(Temp); //Datei Ã¶ffnen
     }
 
     // Levels auslesen
@@ -366,7 +366,7 @@ void ReplaceAll(std::string& str, const std::string &from, const std::string &to
 }
 
 // --------------------------------------------------------------------------------------
-// Tasten ErsetzungsStrings für die TutorialTexte initialisieren
+// Tasten ErsetzungsStrings fÃ¼r die TutorialTexte initialisieren
 // --------------------------------------------------------------------------------------
 
 void InitReplacers(void)

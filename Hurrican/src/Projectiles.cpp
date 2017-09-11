@@ -2,9 +2,9 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Projektile (Sch¸sse) f¸r Hurrican
+// Projektile (Sch√ºsse) f√ºr Hurrican
 //
-// (c) 2002 Jˆrg M. Winterstein
+// (c) 2002 J√∂rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -29,12 +29,12 @@
 // Variablen
 // --------------------------------------------------------------------------------------
 
-DirectGraphicsSprite	ProjectileGrafix[MAX_SHOTGFX];	    // Grafiken der Sch¸sse
-RECT					ShotRect[MAX_SHOTGFX];				// Rechtecke f¸r Level Kollision
-int						CurrentShotTexture;					// Aktuelle Textur der Sch¸sse
+DirectGraphicsSprite	ProjectileGrafix[MAX_SHOTGFX];	    // Grafiken der Sch√ºsse
+RECT					ShotRect[MAX_SHOTGFX];				// Rechtecke f√ºr Level Kollision
+int						CurrentShotTexture;					// Aktuelle Textur der Sch√ºsse
 uint32_t                bo, bu, bl, br;						// Blockwerte um den aktuellen Schuss herum
 
-float					WinkelUebergabe;					// Extra "Parameter" f¸r PushProjectile
+float					WinkelUebergabe;					// Extra "Parameter" f√ºr PushProjectile
 
 
 // --------------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ ProjectileClass::ProjectileClass(void)
     xAcc	= 0.0f;
     yAcc	= 0.0f;
     Counter = 0.0f;
-    Winkel  = -10000.0f;					// wird von den wenigsten Sch¸ssen verwendet
+    Winkel  = -10000.0f;					// wird von den wenigsten Sch√ºssen verwendet
 }
 #endif //0
 
@@ -78,7 +78,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     ShotArt = Art;
     AnimPhase = 0;
     AnimCount = 0.0f;
-    AnimEnde  = 0;		// Standardm‰ssig von einem nicht animierten Schuss ausgehen
+    AnimEnde  = 0;		// Standardm√§ssig von einem nicht animierten Schuss ausgehen
     AnimSpeed = 0.0f;
     BounceWalls		= false;
     CheckBlock		= true;
@@ -93,7 +93,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
 	xSpeed	= 0.0f;	ySpeed	= 0.0f;
 	xAcc	= 0.0f;	yAcc	= 0.0f;
 	Counter = 0.0f;
-	Winkel  = -10000.0f;					// wird von den wenigsten Sch¸ssen verwendet
+	Winkel  = -10000.0f;					// wird von den wenigsten Sch√ºssen verwendet
 
     // Winkel zwischen 0 und 360
     while (WinkelUebergabe > 360.0f) WinkelUebergabe -= 360.0f;
@@ -125,13 +125,13 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
             return;
 
         //DKS - Converted to float:
-        float	absx, absy, speed;				// Variablen f¸r die Geschwindigkeits-
+        float	absx, absy, speed;				// Variablen f√ºr die Geschwindigkeits-
         // berechnung
         absx = pAim->xPos+85-xPos;			// Differenz der x
         absy = pAim->yPos+40-yPos;			// und y Strecke
 
         //DKS - Converted to float:
-        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L‰nge der Strecke berechnen
+        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L√§nge der Strecke berechnen
         speed = speed*85;						// Geschwindigkeit ist 4 fach
 
         absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -383,7 +383,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     }
     break;
 
-    case BOUNCESHOT1 :	// BounceShot in gross (teilt sich in 2 mittlere Sch¸sse auf)
+    case BOUNCESHOT1 :	// BounceShot in gross (teilt sich in 2 mittlere Sch√ºsse auf)
     {
         Winkel = WinkelUebergabe;
 
@@ -417,7 +417,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     {
         Winkel = WinkelUebergabe;
 
-        // je nach Waffenlevel ˆfters abspringen
+        // je nach Waffenlevel √∂fters abspringen
         Damage = pParent->CurrentWeaponLevel[pParent->SelectedWeapon] * 2 - 3;
 
         if (Damage > 8)
@@ -470,7 +470,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
 
         DamagePlayer = false;
 
-        // je nach Waffenlevel ˆfters abspringen
+        // je nach Waffenlevel √∂fters abspringen
         Damage = pParent->CurrentWeaponLevel[pParent->SelectedWeapon] - 3;
 
         if (Damage > 6)
@@ -595,7 +595,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     break;
 
 
-    case CANONBALL :		// Gech¸tzturm Kugel links
+    case CANONBALL :		// Gech√ºtzturm Kugel links
     {
         xSpeed	  =-30.0f;
         ySpeed	  =  0.0f;
@@ -604,7 +604,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     }
     break;
 
-    case CANONBALL2 :		// Gech¸tzturm Kugel rechts
+    case CANONBALL2 :		// Gech√ºtzturm Kugel rechts
     {
         ShotArt	  = CANONBALL;
         xSpeed	  = 30.0f;
@@ -646,13 +646,13 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
             pAim = pParent;
 
         //DKS - Converted to float:
-        float	absx, absy, speed;				// Variablen f¸r die Geschwindigkeits-
+        float	absx, absy, speed;				// Variablen f√ºr die Geschwindigkeits-
         // berechnung
         absx = pAim->xpos+35-xPos;			// Differenz der x
         absy = pAim->ypos+40-yPos;			// und y Strecke
 
         //DKS - Converted to float:
-        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L‰nge der Strecke berechnen
+        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L√§nge der Strecke berechnen
         speed = speed*20;						// Geschwindigkeit ist 4 fach
 
         absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -776,13 +776,13 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         PlayerClass *pAim = ChooseAim();
 
         //DKS - Converted to float:
-        float	absx, absy, speed;				// Variablen f¸r die Geschwindigkeits-
+        float	absx, absy, speed;				// Variablen f√ºr die Geschwindigkeits-
         // berechnung
         absx = pAim->xpos+35-xPos-20;		// Differenz der x
         absy = pAim->ypos+40-yPos-20;		// und y Strecke
 
         //DKS - Converted to float:
-        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L‰nge der Strecke berechnen
+        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L√§nge der Strecke berechnen
         speed = speed*20;						// Geschwindigkeit setzen
 
         absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -852,13 +852,13 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         PlayerClass *pAim = ChooseAim();
 
         //DKS - Converted to float:
-        float	absx, absy, speed;				// Variablen f¸r die Geschwindigkeits-
+        float	absx, absy, speed;				// Variablen f√ºr die Geschwindigkeits-
         // berechnung
         absx = pAim->xpos+35-xPos-20;		// Differenz der x
         absy = pAim->ypos+40-yPos-20;		// und y Strecke
 
         //DKS - Converted to float:
-        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L‰nge der Strecke berechnen
+        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L√§nge der Strecke berechnen
         speed = speed*20;						// Geschwindigkeit setzen
 
         absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -969,13 +969,13 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         PlayerClass *pAim = ChooseAim();
 
         //DKS - Converted to float:
-        float	absx, absy, speed;				// Variablen f¸r die Geschwindigkeits-
+        float	absx, absy, speed;				// Variablen f√ºr die Geschwindigkeits-
         // berechnung
         absx = pAim->xpos+35-(xPos+24);		// Differenz der x
         absy = pAim->ypos+40-(yPos+24);		// und y Strecke
 
         //DKS - Converted to float:
-        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L‰nge der Strecke berechnen
+        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L√§nge der Strecke berechnen
         speed = speed*40;
 
         absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -1169,7 +1169,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     break;
 
 
-    case GOLEMSAEULE :		// Flammens‰ule des Golems
+    case GOLEMSAEULE :		// Flammens√§ule des Golems
     {
         Damage       = 1;
         DamagePlayer = true;
@@ -1249,13 +1249,13 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         DamagePlayer = true;
 
         //DKS - Converted to float:
-        float	absx, absy, speed;				// Variablen f¸r die Geschwindigkeits-
+        float	absx, absy, speed;				// Variablen f√ºr die Geschwindigkeits-
         // berechnung
         absx = pParent->xpos+35-xPos;			// Differenz der x
         absy = pParent->ypos+40-yPos;			// und y Strecke
 
         //DKS - Converted to float:
-        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L‰nge der Strecke berechnen
+        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L√§nge der Strecke berechnen
         speed = speed*20;						// Geschwindigkeit
 
         absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -1283,13 +1283,13 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         DamagePlayer = true;
 
         //DKS - Converted to float:
-        float	absx, absy, speed;				// Variablen f¸r die Geschwindigkeits-
+        float	absx, absy, speed;				// Variablen f√ºr die Geschwindigkeits-
         // berechnung
         absx = pParent->xpos+35-xPos;			// Differenz der x
         absy = pParent->ypos+5-yPos;			// und y Strecke
 
         //DKS - Converted to float:
-        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L‰nge der Strecke berechnen
+        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L√§nge der Strecke berechnen
         speed = speed*22;						// Geschwindigkeit ist 4 fach
 
         absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -1743,7 +1743,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     }
     break;
 
-    case EVILBLITZ:				// Blitz des bˆsen Hurris hoch
+    case EVILBLITZ:				// Blitz des b√∂sen Hurris hoch
     {
         //DKS - off-by-one error:
         //AnimEnde  = 2;
@@ -1757,7 +1757,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     }
     break;
 
-    case EVILBLITZ2:			// Blitz des bˆsen Hurris runter
+    case EVILBLITZ2:			// Blitz des b√∂sen Hurris runter
     {
         Damage = 100;
         AnimSpeed = 0.5f;
@@ -1829,13 +1829,13 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     case BRATKLOPSSHOT:			// Suchschuss des Bratklopses
     {
         //DKS - Converted to float:
-        float	absx, absy, speed;				// Variablen f¸r die Geschwindigkeits-
+        float	absx, absy, speed;				// Variablen f√ºr die Geschwindigkeits-
         // berechnung
         absx = pParent->xpos+35-(xPos+30);			// Differenz der x
         absy = pParent->ypos+40-(yPos+30);			// und y Strecke
 
         //DKS - Converted to float:
-        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L‰nge der Strecke berechnen
+        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L√§nge der Strecke berechnen
         speed = speed*20;						// Geschwindigkeit ist 4 fach
 
         absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -1876,13 +1876,13 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     case SCHLEIMSHOT:							// Schuss der Drone
     {
         //DKS - Converted to float:
-        float	absx, absy, speed;				// Variablen f¸r die Geschwindigkeits-
+        float	absx, absy, speed;				// Variablen f√ºr die Geschwindigkeits-
         // berechnung
         absx = pParent->xpos+35-xPos;			// Differenz der x
         absy = pParent->ypos+40-yPos;			// und y Strecke
 
         //DKS - Converted to float:
-        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L‰nge der Strecke berechnen
+        speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L√§nge der Strecke berechnen
         speed = speed*20;						// Geschwindigkeit ist 4 fach
 
         absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -2019,7 +2019,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
 }
 
 // --------------------------------------------------------------------------------------
-// Sch¸sse auf Kollision mit den Gegnern oder Spielern testen
+// Sch√ºsse auf Kollision mit den Gegnern oder Spielern testen
 // --------------------------------------------------------------------------------------
 
 void ProjectileClass::CheckCollision(void)
@@ -2028,13 +2028,13 @@ void ProjectileClass::CheckCollision(void)
 
     while (pEnemy != NULL)				// Noch nicht alle durch ?
     {
-        if (pEnemy->Active		== true &&	// Ist der Gegner ¸berhaupt aktiv ?
-                pEnemy->Destroyable	== true &&	// und kann man ihn zerstˆren
+        if (pEnemy->Active		== true &&	// Ist der Gegner √ºberhaupt aktiv ?
+                pEnemy->Destroyable	== true &&	// und kann man ihn zerst√∂ren
                 pEnemy->Energy      > 0.0f  &&
                 ShotArt		!= BOMBE && // Und der Schuss keine Bombe ?
                 !(pEnemy->GegnerArt == POWERBLOCK && ShotArt == SHIELDSPAWNER)) // und kein powerblock + shield
         {
-            // Beim BlitzBeam die grˆﬂe vom Rect dynamisch anpassen
+            // Beim BlitzBeam die gr√∂√üe vom Rect dynamisch anpassen
             if (ShotArt == BLITZBEAM)
             {
                 //DKS - Fixed ending commas on next two lines, changed to semicolons. No idea why they were commas.
@@ -2044,7 +2044,7 @@ void ProjectileClass::CheckCollision(void)
                 ShotRect[BLITZBEAM].bottom = ShotRect[BLITZBEAM].top  + int(Damage / 2.0f);
             }
 
-            // ‹berschneiden sich die Rechtecke ?
+            // √úberschneiden sich die Rechtecke ?
             if (SpriteCollision( xPos,  yPos,
                                  ShotRect  [ShotArt],
                                  pEnemy->xPos, pEnemy->yPos,
@@ -2096,7 +2096,7 @@ void ProjectileClass::CheckCollision(void)
                 }
                 else
                 {
-                    // War es ein Laser oder ne Powerline oder ‰hnliches ?
+                    // War es ein Laser oder ne Powerline oder √§hnliches ?
                     pEnemy->Energy -= BossZiehtWenigerAb * Damage SYNC;	// Dann fliegt er
 
                     // Hit-Sound
@@ -2154,7 +2154,7 @@ void ProjectileClass::CheckCollision(void)
                 }
             }
         }
-        pEnemy = pEnemy->pNext;			// N‰chsten Gegner testen
+        pEnemy = pEnemy->pNext;			// N√§chsten Gegner testen
     }
 }
 
@@ -2250,13 +2250,13 @@ void ProjectileClass::Render(void)
             D3DXMatrixTranslation(&matTrans,-x-mx,
                                   -y-my, 0.0f);
 
-            // Transformation wieder zur¸ck
+            // Transformation wieder zur√ºck
             D3DXMatrixTranslation(&matTrans2,x+mx,
                                   y+my, 0.0f);
 
             D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans);		// Verschieben
             D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRot);		// rotieren
-            D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zur¸ck verschieben
+            D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zur√ºck verschieben
 #if defined(PLATFORM_DIRECTX)
             lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
@@ -2407,7 +2407,7 @@ void ProjectileClass::Render(void)
         float size = 0.0f;
         int length = 0;
 
-        // Grˆﬂe festlegen
+        // Gr√∂√üe festlegen
         if (AnimCount < 45.0f)
         {
             length = 480;
@@ -2588,12 +2588,12 @@ void ProjectileClass::Render(void)
     } // Leuchten bei bestimmten Schussarten anzeigen
 
     // Animieren
-    if (ShotArt != EIERBOMBE && AnimEnde > 0)						// Soll ¸berhaupt animiert werden ?
+    if (ShotArt != EIERBOMBE && AnimEnde > 0)						// Soll √ºberhaupt animiert werden ?
     {
-        if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+        if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
         {
             AnimCount = AnimCount - AnimSpeed;	// Dann wieder auf Null setzen
-            AnimPhase++;						// Und n‰chste Animationsphase
+            AnimPhase++;						// Und n√§chste Animationsphase
             //DKS - off-by-one error:
             //if (AnimPhase == AnimEnde)			// Animation von zu Ende	?
             if (AnimPhase > AnimEnde)			// Animation von zu Ende	?
@@ -2611,8 +2611,8 @@ void ProjectileClass::Run(void)
 {
     bo = bu = bl = br = 0;
 
-    if (AnimEnde > 0)						// Soll ¸berhaupt anmiert werden ?
-        AnimCount += 1.0f SYNC;				// Animationscounter weiterz‰hlen
+    if (AnimEnde > 0)						// Soll √ºberhaupt anmiert werden ?
+        AnimCount += 1.0f SYNC;				// Animationscounter weiterz√§hlen
 
     // Bewegen
     xSpeed += xAcc   SYNC;
@@ -2648,8 +2648,8 @@ void ProjectileClass::Run(void)
     if (Damage == 0)
         return;
 
-    // Testen ob ein zerstˆrbares Leveltile von einem Schuss des Spielers
-    // getroffen wurde und wenn ja, dann dieses und den Schuss zerstˆren
+    // Testen ob ein zerst√∂rbares Leveltile von einem Schuss des Spielers
+    // getroffen wurde und wenn ja, dann dieses und den Schuss zerst√∂ren
     //
     if (DamagePlayer == false &&
             ShotArt != BOMBE &&
@@ -2660,7 +2660,7 @@ void ProjectileClass::Run(void)
                 TileEngine.BlockDestroyOben  (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) ||
                 TileEngine.BlockDestroyUnten (xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]))
         {
-            // Alle Sch¸sse ausser dem Beam (und dem Schutzschild, welches auch ein Schuss ist) exlodieren
+            // Alle Sch√ºsse ausser dem Beam (und dem Schutzschild, welches auch ein Schuss ist) exlodieren
             // an der zerschiessbaren Wand
             //
             if (ShotArt != BLITZBEAM	 &&
@@ -2681,7 +2681,7 @@ void ProjectileClass::Run(void)
         br = TileEngine.BlockRechts		(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
     }
 
-    // Auf Kollision mit dem Level Testen (nur bei Bounce-f‰higen Sch¸ssen)
+    // Auf Kollision mit dem Level Testen (nur bei Bounce-f√§higen Sch√ºssen)
     if(BounceWalls == true)
     {
         int DoDamage = 0;
@@ -2721,7 +2721,7 @@ void ProjectileClass::Run(void)
         }
     }
 
-    // Verschiedene Sch¸sse unterschiedlich behandeln
+    // Verschiedene Sch√ºsse unterschiedlich behandeln
     switch(ShotArt)
     {
     case SKELETOR_SHOT:
@@ -2794,7 +2794,7 @@ void ProjectileClass::Run(void)
     }
     break;
 
-    case BOUNCESHOT2:					// Der mittlere Bounce explodiert nur, wenn er sich nochmal aufteilen w¸rde
+    case BOUNCESHOT2:					// Der mittlere Bounce explodiert nur, wenn er sich nochmal aufteilen w√ºrde
     case BOUNCESHOTBIG2:
     {
         if (pParent->CurrentWeaponLevel[pParent->SelectedWeapon] >= 3 &&
@@ -2838,7 +2838,7 @@ void ProjectileClass::Run(void)
     }
     break;
 
-    case CANONBALL:					// Kannonenkugel des Gesch¸tzturms
+    case CANONBALL:					// Kannonenkugel des Gesch√ºtzturms
     case SUCHSCHUSS:				// Kannonenkugel des Deckenturms
     case SUCHSCHUSS2:				// Blauer Schuss der Riesenwespe
     case WALKER_LASER:				// Walkerlaser
@@ -3045,13 +3045,13 @@ void ProjectileClass::Run(void)
                         pAim = pParent;
 
                     //DKS - Converted to float:
-                    float	absx, absy, speed;				// Variablen f¸r die Geschwindigkeits-
+                    float	absx, absy, speed;				// Variablen f√ºr die Geschwindigkeits-
                     // berechnung
                     absx = pAim->xpos+35-xPos;			// Differenz der x
                     absy = pAim->ypos+40-yPos;			// und y Strecke
 
                     //DKS - Converted to float:
-                    speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L‰nge der Strecke berechnen
+                    speed = 1.0f/sqrtf(absx*absx + absy*absy);	// L√§nge der Strecke berechnen
                     speed = speed*35;						// Geschwindigkeit ist 4 fach
 
                     absx = speed*absx;						// Und jeweilige Geschwindigkeit setzen
@@ -3127,7 +3127,7 @@ void ProjectileClass::Run(void)
                 (xSpeed > 0.0f && br & BLOCKWERT_WAND))
             xSpeed *= -1.0f;
 
-        // f‰llt runter?
+        // f√§llt runter?
         if (ySpeed > 0.0f)
         {
             // Am Boden abprallen
@@ -3138,7 +3138,7 @@ void ProjectileClass::Run(void)
             {
                 ySpeed *= -0.75f;
 
-                // an der Schr‰ge seitlich abprallen
+                // an der Schr√§ge seitlich abprallen
                 //
                 if (bl & BLOCKWERT_SCHRAEGE_L) xSpeed =  10.0f;
                 if (br & BLOCKWERT_SCHRAEGE_R) xSpeed = -10.0f;
@@ -3175,7 +3175,7 @@ void ProjectileClass::Run(void)
 
     case GOLEMSAEULE:
     {
-        // Counter runterz‰hlen
+        // Counter runterz√§hlen
         AnimCount -= 1.0f SYNC;
 
         if (AnimCount <= 0.0f)
@@ -3347,7 +3347,7 @@ void ProjectileClass::Run(void)
             }
         }
 
-        // Counter runzerz‰hlen wann die Rakete von oben auf den Spieler runtersaust
+        // Counter runzerz√§hlen wann die Rakete von oben auf den Spieler runtersaust
         AnimCount -= 1.0f SYNC;
 
         if (AnimCount <= 0.0f && AnimPhase == 0)
@@ -3371,7 +3371,7 @@ void ProjectileClass::Run(void)
         // Rakete fliegt noch runter bzw hoch
         if (xSpeed == 0.0f)
         {
-            // Auf richtiger Hˆhe mit dem Spieler ? Dann seitlich losfliegen
+            // Auf richtiger H√∂he mit dem Spieler ? Dann seitlich losfliegen
             if (yPos > pParent->ypos + pParent->CollideRect.top &&
                     yPos < pParent->ypos + pParent->CollideRect.bottom)
             {
@@ -3721,14 +3721,14 @@ void ProjectileClass::Run(void)
     {
         // Links oder rechts rum kullern ?
 
-        if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+        if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
         {
             AnimCount = AnimCount - AnimSpeed;	// Dann wieder auf Null setzen
 
             // linksrum
             if (xSpeed < 0.0f)
             {
-                AnimPhase--;						// Und n‰chste Animationsphase
+                AnimPhase--;						// Und n√§chste Animationsphase
                 if (AnimPhase < 0)					// Animation von zu Ende	?
                 {
                     //DKS - off-by-one error:
@@ -3743,7 +3743,7 @@ void ProjectileClass::Run(void)
             // rechtsrum
             else
             {
-                AnimPhase++;						// Und n‰chste Animationsphase
+                AnimPhase++;						// Und n√§chste Animationsphase
                 //DKS - off-by-one error:
                 //if (AnimPhase > 19)					// Animation von zu Ende	?
                 //{
@@ -3758,7 +3758,7 @@ void ProjectileClass::Run(void)
             }
         }
 
-        // Kugel f‰llt runter ?
+        // Kugel f√§llt runter ?
         //
         if (ySpeed > 30.0f)							// Maximale Fallgeschwindigkeit
             ySpeed = 30.0f;
@@ -3859,8 +3859,8 @@ void ProjectileClass::Run(void)
 
 
     // Der Satellit, der das Schutzschild erzeugt, wird immer im Kreis um den Spieler bewegt. Da die Position
-    // immer neu berechnet wird, werden xspeed und yspeed nicht benˆtigt. Daher kˆnnen sie zweckentfremdet werden,
-    // um die aktuelle Rotation zu speichern (xspeed) und den counter f¸r die shield-partikel (yspeed)
+    // immer neu berechnet wird, werden xspeed und yspeed nicht ben√∂tigt. Daher k√∂nnen sie zweckentfremdet werden,
+    // um die aktuelle Rotation zu speichern (xspeed) und den counter f√ºr die shield-partikel (yspeed)
     //
     case SHIELDSPAWNER:
     {
@@ -3926,11 +3926,11 @@ void ProjectileClass::Run(void)
                 SpriteCollision(xPos, yPos, ShotRect[ShotArt],
                                 Player[p].xpos, Player[p].ypos, Player[p].CollideRect) == true)
         {
-            // Sch¸sse, die durch den Spieler durchgehen
+            // Sch√ºsse, die durch den Spieler durchgehen
             if (ExplodeOnImpact == false)
                 Player[p].DamagePlayer(float (Damage SYNC));
 
-            // Sch¸sse, die bei Ber¸hrung verschwinden
+            // Sch√ºsse, die bei Ber√ºhrung verschwinden
             else
             {
                 Player[p].DamagePlayer(float(Damage));
@@ -3939,11 +3939,11 @@ void ProjectileClass::Run(void)
                 Damage = 0;								// und verschwinden lassen
             }
 
-            // Spieler wurde gerendert -> Textur ging flˆten =)
+            // Spieler wurde gerendert -> Textur ging fl√∂ten =)
             CurrentShotTexture = -1;
         }
 
-    // Sch¸sse Additiv rendern ?
+    // Sch√ºsse Additiv rendern ?
     if 	(ShotArt >= FLAMME)
         DirectGraphics.SetAdditiveMode();
     else
@@ -4485,7 +4485,7 @@ void ProjectileClass::ExplodeShot(void)
 
     case BLITZBEAM:
     {
-        // Wirkung ‰hnlich einer schwachen Granate (Damage = 0 - 100)
+        // Wirkung √§hnlich einer schwachen Granate (Damage = 0 - 100)
         //
         Gegner.DamageEnemiesonScreen(xPos, yPos, Damage);
 
@@ -4714,7 +4714,7 @@ void ProjectileClass::ExplodeShot(void)
     {
         float xdiff, ydiff, Abstand;
 
-        // Pr¸fen, ob die Bombe eine zerstˆrbare Wand getroffen hat
+        // Pr√ºfen, ob die Bombe eine zerst√∂rbare Wand getroffen hat
         //
         TileEngine.ExplodeWalls((int)xPos / 20, (int)yPos / 20);
 
@@ -4738,7 +4738,7 @@ void ProjectileClass::ExplodeShot(void)
         if (ShotArt == BOMBEBIG)
             PartikelSystem.PushPartikel(xPos-55, yPos-55, EXPLOSION_GIANT);
 
-        // Pr¸fen, ob ein Gegner in der N‰he war und dann je nach Abstand
+        // Pr√ºfen, ob ein Gegner in der N√§he war und dann je nach Abstand
         // Energie abziehen
         GegnerClass	    *pEnemy;				// Gegner zum Kollision testen
 
@@ -4759,8 +4759,8 @@ void ProjectileClass::ExplodeShot(void)
             //DKS - Converted to float:
             Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
-            if (pEnemy->Active == true		 &&	// Ist der Gegner ¸berhaupt aktiv ?
-                    pEnemy->Destroyable == true  &&	// und zerstˆrbar ?
+            if (pEnemy->Active == true		 &&	// Ist der Gegner √ºberhaupt aktiv ?
+                    pEnemy->Destroyable == true  &&	// und zerst√∂rbar ?
                     Abstand <= schaden	         && // Und der Abstand klein genug ?
                     pEnemy->GegnerArt != EXTRAS  &&	// Und kein Extra ?
                     pEnemy->GegnerArt != ONEUP   &&	// Und kein OneUp ?
@@ -4772,10 +4772,10 @@ void ProjectileClass::ExplodeShot(void)
 
                 pEnemy->Energy -=(schaden-Abstand)*1.5f;// Dann Energy abziehen je nach Abstand
             }
-            pEnemy = pEnemy->pNext;				// N‰chsten Gegner testen
+            pEnemy = pEnemy->pNext;				// N√§chsten Gegner testen
         }
 
-        // Pr¸fen, ob der Spieler in der N‰he war, und falls ja, dann diesen
+        // Pr√ºfen, ob der Spieler in der N√§he war, und falls ja, dann diesen
         // nach oben katapultieren
         for (int p = 0; p < NUMPLAYERS; p++)
         {
@@ -4918,7 +4918,7 @@ void ProjectileListClass::LoadSprites(void)
 {
     //DKS - All of these 5 sprites are no longer globals, I moved them here cleaning up big messes
     //      and fixing ambiguous orders of calls to destructors.
-    // Grafiken f¸r das Leuchten diverser Sch¸sse laden
+    // Grafiken f√ºr das Leuchten diverser Sch√ºsse laden
     LaserSmoke.LoadImage     ("lasersmoke.png",	    128, 128, 128, 128, 1, 1);
     LaserSmokeBig.LoadImage  ("lasersmoke_big.png",	256, 256, 256, 256, 1, 1);
     SpreadShotSmoke.LoadImage("spreadshotsmoke.png",   64, 64, 64, 64, 1, 1);
@@ -5056,7 +5056,7 @@ void ProjectileListClass::LoadSprites(void)
     ShotRect[WALKER_LASER].top  = 0;
     ShotRect[WALKER_LASER].bottom = 3;
 
-    // Gesch¸tzturm Kugel
+    // Gesch√ºtzturm Kugel
     ProjectileGrafix[CANONBALL].LoadImage("canonball.png", 8, 8, 8, 8, 1, 1);
     ShotRect[CANONBALL].left = 0;
     ShotRect[CANONBALL].right  = 8;
@@ -5084,14 +5084,14 @@ void ProjectileListClass::LoadSprites(void)
     ShotRect[SUCHSCHUSS2].top  = 1;
     ShotRect[SUCHSCHUSS2].bottom = 15;
 
-    // Gr¸ner Golemschuss
+    // Gr√ºner Golemschuss
     ProjectileGrafix[GOLEMSCHUSS].LoadImage("golemschuss.png", 100, 100, 20, 20, 5, 5);
     ShotRect[GOLEMSCHUSS].left = 2;
     ShotRect[GOLEMSCHUSS].right  = 18;
     ShotRect[GOLEMSCHUSS].top  = 2;
     ShotRect[GOLEMSCHUSS].bottom = 18;
 
-    // Gr¸ner Skeletor Schuss
+    // Gr√ºner Skeletor Schuss
     ProjectileGrafix[TURRIEXTRAWURST].LoadImage("golemschuss.png", 100, 100, 20, 20, 5, 5);
     ShotRect[TURRIEXTRAWURST].left = 2;
     ShotRect[TURRIEXTRAWURST].right  = 18;
@@ -5468,7 +5468,7 @@ void ProjectileListClass::LoadSprites(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Destruktor : Lˆschen der ganzen Liste und Freigabe der Projektil-Grafiken
+// Destruktor : L√∂schen der ganzen Liste und Freigabe der Projektil-Grafiken
 // --------------------------------------------------------------------------------------
 
 ProjectileListClass::~ProjectileListClass(void)
@@ -5478,7 +5478,7 @@ ProjectileListClass::~ProjectileListClass(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Schuss "Art" hinzuf¸gen
+// Schuss "Art" hinzuf√ºgen
 // --------------------------------------------------------------------------------------
 
 //DKS - Modified to support new pooled memory manager as well as the fact that
@@ -5486,7 +5486,7 @@ ProjectileListClass::~ProjectileListClass(void)
 #if 0
 bool ProjectileListClass::PushProjectile(float x, float y, int Art, PlayerClass* pTemp)
 {
-    if(NumProjectiles >= MAX_SHOTS)					// Grenze ¸berschritten ?
+    if(NumProjectiles >= MAX_SHOTS)					// Grenze √ºberschritten ?
         return false;
 
     ProjectileClass *pNew = new ProjectileClass;	// Neues zu erstellendes Projectile
@@ -5510,7 +5510,7 @@ bool ProjectileListClass::PushProjectile(float x, float y, int Art, PlayerClass*
         pEnd		= pNew;					// da es jetzt das letzte in der Liste ist
     }
 
-    NumProjectiles++;							// Projektilanzahl erhˆhen
+    NumProjectiles++;							// Projektilanzahl erh√∂hen
     return true;
 }
 #endif //0
@@ -5541,12 +5541,12 @@ bool ProjectileListClass::PushProjectile(float x, float y, int Art, PlayerClass*
 }
 
 // --------------------------------------------------------------------------------------
-// BlitzBeam hinzuf¸gen
+// BlitzBeam hinzuf√ºgen
 // --------------------------------------------------------------------------------------
 
 bool ProjectileListClass::PushBlitzBeam (int Size, float Richtung, PlayerClass* pSource)
 {
-    if(NumProjectiles >= MAX_SHOTS)					// Grenze ¸berschritten ?
+    if(NumProjectiles >= MAX_SHOTS)					// Grenze √ºberschritten ?
         return false;
 
     //DKS - added support for new, fast pooled mem-manager
@@ -5592,7 +5592,7 @@ bool ProjectileListClass::PushBlitzBeam (int Size, float Richtung, PlayerClass* 
     pNew->xAcc	= 0.0f;
     pNew->yAcc	= 0.0f;
     pNew->Counter = 0.0f;
-    pNew->Winkel  = -10000.0f;					// wird von den wenigsten Sch¸ssen verwendet
+    pNew->Winkel  = -10000.0f;					// wird von den wenigsten Sch√ºssen verwendet
 
     //DKS - Dividing an int by a float and then casting to an int again makes no sense at all:
     //ShotRect[BLITZBEAM].left   = int(Size / 4.0f),
@@ -5634,12 +5634,12 @@ bool ProjectileListClass::PushBlitzBeam (int Size, float Richtung, PlayerClass* 
     pEnd = pNew;                // Update end-of-list pointer
 
 
-    NumProjectiles++;							// Projektilanzahl erhˆhen
+    NumProjectiles++;							// Projektilanzahl erh√∂hen
     return true;
 }
 
 // --------------------------------------------------------------------------------------
-// Bestimmtes Projektil der Liste lˆschen
+// Bestimmtes Projektil der Liste l√∂schen
 // --------------------------------------------------------------------------------------
 
 //DKS - Replaced with new DelNode() function that supports a singly-linked list and
@@ -5650,17 +5650,17 @@ void ProjectileListClass::DelSel(ProjectileClass *pTemp)
     ProjectileClass  *pN;
     ProjectileClass  *pP;
 
-    if(pTemp!=NULL)						// zu lˆschendes Projectile existiert
+    if(pTemp!=NULL)						// zu l√∂schendes Projectile existiert
     {
         pN = pTemp->pNext;
         pP = pTemp->pPrev;
 
-        if(pP == NULL)					// Wird das erste Projectile gelˆscht ?
-            pStart = pN;				// Dann wird dessen N‰chstes zum Ersten
+        if(pP == NULL)					// Wird das erste Projectile gel√∂scht ?
+            pStart = pN;				// Dann wird dessen N√§chstes zum Ersten
         else
-            pP->pNext = pN;	   	        // ansonsten normal eins aufr¸cken
+            pP->pNext = pN;	   	        // ansonsten normal eins aufr√ºcken
 
-        if(pN == NULL)					// Wird das letzte Projectile gelˆscht ?
+        if(pN == NULL)					// Wird das letzte Projectile gel√∂scht ?
             pEnd = pP;					// Dann wir das letzte Projectile zum ersten
         else
             pN->pPrev = pP;
@@ -5700,7 +5700,7 @@ ProjectileClass* ProjectileListClass::DelNode(ProjectileClass *pPtr)
 }
 
 // --------------------------------------------------------------------------------------
-// Alle Projectile der Liste lˆschen
+// Alle Projectile der Liste l√∂schen
 // --------------------------------------------------------------------------------------
 //DKS - Converted ProjectileListClass to a singly-linked list (depends on DelNode() now).
 //      and added support for new pooled memory manager.
@@ -5708,13 +5708,13 @@ ProjectileClass* ProjectileListClass::DelNode(ProjectileClass *pPtr)
 void ProjectileListClass::ClearAll(void)
 {
     ProjectileClass *pTemp    = pStart;				// Zeiger auf das erste    Proectile
-    ProjectileClass *pNaechst;						// Zeiger auf das n‰chste  Proectile (falls
-    // das eine gelˆscht wird)
+    ProjectileClass *pNaechst;						// Zeiger auf das n√§chste  Proectile (falls
+    // das eine gel√∂scht wird)
     while (pTemp != NULL)							// Ende der Liste erreicht ?
     {
-        pNaechst = pTemp->pNext;					// Zeiger auf das n‰chste Element
-        DelSel(pTemp);								// Das aktuelle lˆschen
-        pTemp = pNaechst;							// und das n‰chste bearbeiten
+        pNaechst = pTemp->pNext;					// Zeiger auf das n√§chste Element
+        DelSel(pTemp);								// Das aktuelle l√∂schen
+        pTemp = pNaechst;							// und das n√§chste bearbeiten
     }
 
     pStart = NULL;
@@ -5749,7 +5749,7 @@ void ProjectileListClass::ClearAll(void)
 
 
 // --------------------------------------------------------------------------------------
-// Alle Projectiles eines Typs lˆschen
+// Alle Projectiles eines Typs l√∂schen
 // --------------------------------------------------------------------------------------
 
 //DKS - Adapted after converting ProjectileListClass to a singly-linked list:
@@ -5757,16 +5757,16 @@ void ProjectileListClass::ClearAll(void)
 void ProjectileListClass::ClearType(int Type)
 {
     ProjectileClass *pTemp    = pStart;				// Zeiger auf das erste    Proectile
-    ProjectileClass *pNaechst;						// Zeiger auf das n‰chste  Proectile (falls
-    // das eine gelˆscht wird)
+    ProjectileClass *pNaechst;						// Zeiger auf das n√§chste  Proectile (falls
+    // das eine gel√∂scht wird)
     while (pTemp != NULL)							// Ende der Liste erreicht ?
     {
-        pNaechst = pTemp->pNext;					// Zeiger auf das n‰chste Element
+        pNaechst = pTemp->pNext;					// Zeiger auf das n√§chste Element
 
         if (pTemp->ShotArt == Type)
-            DelSel(pTemp);								// Das aktuelle lˆschen
+            DelSel(pTemp);								// Das aktuelle l√∂schen
 
-        pTemp = pNaechst;							// und das n‰chste bearbeiten
+        pTemp = pNaechst;							// und das n√§chste bearbeiten
     }
 }
 #endif //0
@@ -5796,7 +5796,7 @@ void ProjectileListClass::ClearType(int Type)
 }
 
 // --------------------------------------------------------------------------------------
-// Zahl der Projectile zur¸ckliefern
+// Zahl der Projectile zur√ºckliefern
 // --------------------------------------------------------------------------------------
 
 int ProjectileListClass::GetNumProjectiles(void)
@@ -5813,7 +5813,7 @@ int ProjectileListClass::GetNumProjectiles(void)
 void ProjectileListClass::DoProjectiles(void)
 {
     ProjectileClass *pTemp = pStart;		// Anfang der Liste
-    ProjectileClass *pNext = NULL;			// N‰chstes projectile in der Liste
+    ProjectileClass *pNext = NULL;			// N√§chstes projectile in der Liste
 
     CurrentShotTexture = -1;				// Aktuelle Textur gibt es noch keine
 
@@ -5825,11 +5825,11 @@ void ProjectileListClass::DoProjectiles(void)
         if (pTemp->Damage > 0)
             pTemp->Render();
 
-        pNext = pTemp->pNext;				// N‰chsten sichern
+        pNext = pTemp->pNext;				// N√§chsten sichern
 
         if (Console.Showing == false)
         {
-            if (pTemp->Damage <= 0)			 	// ggf Schuss lˆschen (bei Damage <= 0)
+            if (pTemp->Damage <= 0)			 	// ggf Schuss l√∂schen (bei Damage <= 0)
                 DelSel(pTemp);
             else
                 pTemp->CheckCollision();
@@ -5856,7 +5856,7 @@ void ProjectileListClass::DoProjectiles(void)
 
         if (Console.Showing == false)
         {
-            if (pCurr->Damage <= 0)			 	// ggf Schuss lˆschen (bei Damage <= 0)
+            if (pCurr->Damage <= 0)			 	// ggf Schuss l√∂schen (bei Damage <= 0)
             {
                 // Projectile's time to die..
                 // If this is the last node in the list, update the class's pEnd pointer

@@ -9,7 +9,7 @@ class GegnerEvilHurri : public GegnerClass
 public:
 
     float					BlinkDirection;				// Animationsphase der Beine
-    float					BlinkWert;					// Y-Offset des Körpers
+    float					BlinkWert;					// Y-Offset des KÃ¶rpers
     float					ActionDelay;				// Warten
 
     GegnerEvilHurri   (int Wert1,	int Wert2,			// Konstruktor

@@ -1,8 +1,8 @@
 // --------------------------------------------------------------------------------------
-// Der Sch‰del vom Skeletor
+// Der Sch√§del vom Skeletor
 //
-// Der Counter, wann sich der Sch‰del wieder auf die Maschine setzt, darf erst abgezogen werden,
-// wenn der Sch‰del in der N‰he der Maschine ist. Er kann ja auch vom Skeletor gespawnt werden.
+// Der Counter, wann sich der Sch√§del wieder auf die Maschine setzt, darf erst abgezogen werden,
+// wenn der Sch√§del in der N√§he der Maschine ist. Er kann ja auch vom Skeletor gespawnt werden.
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -60,7 +60,7 @@ void GegnerSkull::DoKI(void)
     Energy = 100000;
     BlickRichtung = LINKS;
 
-    // Animphase abh‰ngig von Position zum Spieler setzen
+    // Animphase abh√§ngig von Position zum Spieler setzen
     //
     float dx = (float)(pAim->xpos + 35) - (xPos + 16);
     AnimPhase = (int)(dx / 30);
@@ -171,7 +171,7 @@ void GegnerSkull::DoKI(void)
 
             Timer.SetMoveSpeed(10.0f);
 
-            // Flugs‰cke spawnen
+            // Flugs√§cke spawnen
             Gegner.PushGegner((float)(TileEngine.XOffset + 200.0f),
                                 (float)(TileEngine.YOffset - 40.0f),
                                 REITFLUGSACK, 1, 0, false);
@@ -184,7 +184,7 @@ void GegnerSkull::DoKI(void)
     }
     break;
 
-    // Der Sch‰del fliegt um den Spieler herum. Darf nicht aus dem Screen gedr‰ngt werden
+    // Der Sch√§del fliegt um den Spieler herum. Darf nicht aus dem Screen gedr√§ngt werden
     // So lange, bis der Counter abgelaufen ist
     // dann setzt er sich wieder auf die Endboss Maschine
     case GEGNER_SPECIAL:
@@ -301,7 +301,7 @@ void GegnerSkull::DoKI(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Sch‰del explodiert
+// Sch√§del explodiert
 // --------------------------------------------------------------------------------------
 
 void GegnerSkull::GegnerExplode(void)

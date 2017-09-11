@@ -40,7 +40,7 @@ void GegnerPokeNuke::DoKI(void)
     }
     break;
 
-    // Stein fällt runter
+    // Stein fÃ¤llt runter
     case GEGNER_FALLEN:
     {
         if (yPos > g_Fahrstuhl_yPos - 217.0f)
@@ -60,7 +60,7 @@ void GegnerPokeNuke::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler den Stein berührt hat
+    // Testen, ob der Spieler den Stein berÃ¼hrt hat
     TestDamagePlayers(100.0f, true);
 }
 

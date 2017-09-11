@@ -2,7 +2,7 @@
 // Das Fass
 //
 // Steht rum und wartet darauf, abgeballert zu werden, worauf es
-// explodiert und feurige Splitter veteilt, die die Gegner verletzen können
+// explodiert und feurige Splitter veteilt, die die Gegner verletzen kÃ¶nnen
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -64,7 +64,7 @@ void GegnerFass::DoKI(void)
     }
     break;
 
-    // Fass fällt nach unten
+    // Fass fÃ¤llt nach unten
     case GEGNER_FALLEN:
     {
         // Auf den Boden gecrasht ? Dann explodieren lassen

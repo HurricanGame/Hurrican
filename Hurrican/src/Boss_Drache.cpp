@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Die riesige Stahldrache
 //
-// fliegt Links und rechts vom Screen über den Hurri und schmeisst dabei Sachen ab
+// fliegt Links und rechts vom Screen Ã¼ber den Hurri und schmeisst dabei Sachen ab
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -40,7 +40,7 @@ GegnerDrache::GegnerDrache(int Wert1, int Wert2, bool Light)
     DrawYOffset		= 0.0f;
     FlareRot		= 0.0f;
 
-    // Value2 != 0? Dann Starten die Spieler auf dem Rücken des Drachen!
+    // Value2 != 0? Dann Starten die Spieler auf dem RÃ¼cken des Drachen!
     if (Value2 != 0)
     {
         Handlung = GEGNER_EINFLIEGEN;
@@ -217,7 +217,7 @@ void GegnerDrache::DoDraw(void)
         }
     }
 
-    // Körper rendern
+    // KÃ¶rper rendern
     //
     pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-TileEngine.XOffset),
             (float)(yPos-TileEngine.YOffset) + DrawYOffset,
@@ -388,7 +388,7 @@ void GegnerDrache::DoKI(void)
         Energy    = 100.0f;
         HeadLocked = true;
 
-        // Alle übrigen Mini-Drachen zerstören
+        // Alle Ã¼brigen Mini-Drachen zerstÃ¶ren
         GegnerClass* pTemp;
         pTemp = Gegner.pStart;
         while(pTemp != NULL)
@@ -573,7 +573,7 @@ void GegnerDrache::DoKI(void)
         }
         break;
 
-        // abstürzen
+        // abstÃ¼rzen
         case GEGNER_LAUFEN2:
         {
             if (DrawYOffset > 0.0f)
@@ -683,7 +683,7 @@ void GegnerDrache::DoKI(void)
         {
         case GEGNER_LAUFEN:
         {
-            // Kopf nach unten und Maul öffnen
+            // Kopf nach unten und Maul Ã¶ffnen
             if (HeadWinkel > -70.0f)
                 HeadWinkel -= 5.0f SYNC;
 
@@ -780,17 +780,17 @@ void GegnerDrache::DoKI(void)
     }
     break;
 
-    // Auswählen, welche Aktion gemacht wird
+    // AuswÃ¤hlen, welche Aktion gemacht wird
     case GEGNER_AUSWAHL:
     {
         HeadLocked = false;
 
-        // Was macht unser kleiner Drache denn als Nächstes?
+        // Was macht unser kleiner Drache denn als NÃ¤chstes?
         int newmove = rand()%3;
 
         switch(newmove)
         {
-        // Spieler überfliegen und dabei eine Aktion ausfühern?
+        // Spieler Ã¼berfliegen und dabei eine Aktion ausfÃ¼hern?
         case 0 :
         {
             Handlung = GEGNER_LAUFEN;
@@ -806,7 +806,7 @@ void GegnerDrache::DoKI(void)
             ySpeed = 5.0f;
             yAcc   = -0.1f;
 
-            // Handlung festlegen, was er während dem Überfliegen macht
+            // Handlung festlegen, was er wÃ¤hrend dem Ãœberfliegen macht
             int j = rand()%2;
 
             switch(j)
@@ -848,7 +848,7 @@ void GegnerDrache::DoKI(void)
             ySpeed = 0.0f;
             yAcc   = 0.0f;
 
-            // Handlung festlegen, was er während dem Überfliegen macht
+            // Handlung festlegen, was er wÃ¤hrend dem Ãœberfliegen macht
             int j = rand()%2;
 
             // REMOVE
@@ -903,7 +903,7 @@ void GegnerDrache::DoKI(void)
         // Je nach "Unterhandlung" anders verhalten
         switch (Attack)
         {
-        // Feuerbälle schiessen
+        // FeuerbÃ¤lle schiessen
         case GEGNER_SCHIESSEN :
         {
             KieferWinkel  += 0.75f SYNC;
@@ -936,7 +936,7 @@ void GegnerDrache::DoKI(void)
         }
         break;
 
-        // Feuerbälle schiessen
+        // FeuerbÃ¤lle schiessen
         case GEGNER_BOMBARDIEREN :
         {
             if (xPos + 100.0f - mirrorOffset > TileEngine.XOffset + 0.0f &&
@@ -953,7 +953,7 @@ void GegnerDrache::DoKI(void)
         break;
         }
 
-        // Am Rand angekommen? Dann wieder neue Aktion wählen
+        // Am Rand angekommen? Dann wieder neue Aktion wÃ¤hlen
         if ((xSpeed > 0.0f &&
                 xPos > Value1 + 1000.0f) ||
                 (xSpeed < 0.0f &&
@@ -984,7 +984,7 @@ void GegnerDrache::DoKI(void)
                                     yPos +  80.0f, FETTERAKETE, 0, 99, false, false);
             }
 
-            // Blätter spawnen
+            // BlÃ¤tter spawnen
             AnimCount -= 1.0f SYNC;
             if (AnimCount < 0.0f)
             {
@@ -1018,7 +1018,7 @@ void GegnerDrache::DoKI(void)
         break;
         }
 
-        // Am Rand angekommen? Dann wieder neue Aktion wählen
+        // Am Rand angekommen? Dann wieder neue Aktion wÃ¤hlen
         if ((xSpeed > 0.0f &&
                 xPos > Value1 + 1000.0f) ||
                 (xSpeed < 0.0f &&
@@ -1064,7 +1064,7 @@ void GegnerDrache::DoKI(void)
         }
         break;
 
-        // Kiefer öffnen
+        // Kiefer Ã¶ffnen
         case GEGNER_SCHIESSEN:
         {
             KieferWinkel -= 0.5f SYNC;
@@ -1166,7 +1166,7 @@ void GegnerDrache::DoKI(void)
                     if (ShotCount > 0)
                         Attack = GEGNER_SCHIESSEN;
                     else
-                        // oder wieder zurückziehen?
+                        // oder wieder zurÃ¼ckziehen?
                     {
                         AnimCount = PI / 2.0f;
                         Attack = GEGNER_EINFLIEGEN2;
@@ -1205,11 +1205,11 @@ void GegnerDrache::DoKI(void)
     } // switch
 
     // Hat der Drache den Hurri getroffen ?
-    // Testen, ob der Spieler den Boss berührt hat
+    // Testen, ob der Spieler den Boss berÃ¼hrt hat
     if (Destroyable == true)
         TestDamagePlayers((float) 5.0 SYNC);
 
-    // Partikel an der Düse erzeugen
+    // Partikel an der DÃ¼se erzeugen
     SmokeCount -= 1.0f SYNC;
 
     if (Handlung != GEGNER_EINFLIEGEN ||

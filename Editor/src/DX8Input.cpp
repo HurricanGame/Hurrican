@@ -5,7 +5,7 @@
 // DirectInput Klasse
 // zum Erfassen von Eingaben durch Tastaur, Maus und Joystick/Joypad
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -27,7 +27,7 @@ extern Logdatei			Protokoll;					// Protokoll Datei
 // Variablen
 // --------------------------------------------------------------------------------------
 
-char					TastaturPuffer[256];	// Tastaturpuffer für Keyboardabfrage
+char					TastaturPuffer[256];	// Tastaturpuffer fÃ¼r Keyboardabfrage
 bool					Joystick;				// Joystick gefunden ?
 char					JoystickName[50];		// Joystick Produktname
 
@@ -74,7 +74,7 @@ DirectInputClass::DirectInputClass(void)
 	lpDIMaus	 = NULL;
 	lpDIJoystick = NULL;
 
-	// Zu Beginn alle Eingabegeräte zurücksetzen
+	// Zu Beginn alle EingabegerÃ¤te zurÃ¼cksetzen
 	MausX		 = 0;
 	MausY		 = 0;
 	for(int i=0; i<MAX_MOUSEBUTTONS; i++)
@@ -129,7 +129,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 	}
 	Protokoll.WriteText("Keyboard : CreateDevice				: erfolgreich !\n", false);
 
-	// Datenformat für Keyboard festlegen
+	// Datenformat fÃ¼r Keyboard festlegen
 	hresult = lpDIKeyboard->SetDataFormat(&c_dfDIKeyboard);
 	if(hresult != DI_OK)
 	{
@@ -170,7 +170,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 	}
 	Protokoll.WriteText("Maus : CreateDevice				: erfolgreich !\n", false);
 
-	// Datenformat für die Maus festlegen
+	// Datenformat fÃ¼r die Maus festlegen
 	hresult = lpDIMaus->SetDataFormat(&c_dfDIMouse);
 	if(hresult != DI_OK)
 	{
@@ -188,7 +188,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 	}
 	Protokoll.WriteText("Maus : SetCooperativeLevel			: erfolgreich !\n", false);
 
-	// Puffer für die Maus erzeugen
+	// Puffer fÃ¼r die Maus erzeugen
 	DIPROPDWORD dipdw;
 
 	dipdw.diph.dwSize		= sizeof(DIPROPDWORD);
@@ -240,7 +240,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 		}
 	}
 	else
-		Protokoll.WriteText("Joystick : kein Joystick gefunden, überspringe Initialisierung !\n", false);
+		Protokoll.WriteText("Joystick : kein Joystick gefunden, Ã¼berspringe Initialisierung !\n", false);
 
 	Protokoll.WriteText("\n-> DirectInput8 Initialisierung erfolgreich beendet !\n\n", false);
 	return true;
@@ -252,10 +252,10 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 
 bool DirectInputClass::InitJoystick(HWND hwnd)
 {
-   HRESULT             dirval;           // Rückgabewert
+   HRESULT             dirval;           // RÃ¼ckgabewert
    DIPROPRANGE         diprg;            // Joystick Eigenschaften
 
-	// Joystick für enumerierte GUID erstellen
+	// Joystick fÃ¼r enumerierte GUID erstellen
 	dirval = lpDI->CreateDevice(guidJoystickDevice,&lpDIJoystick, NULL);
 	if (dirval != DI_OK) 
 	{
@@ -264,7 +264,7 @@ bool DirectInputClass::InitJoystick(HWND hwnd)
 	}
 	Protokoll.WriteText("Joystick : CreateDevice			: erfolgreich !\n", false);
 
-	// Datenformat für Joystick festlegen
+	// Datenformat fÃ¼r Joystick festlegen
 	dirval = lpDIJoystick->SetDataFormat(&c_dfDIJoystick);
 	if (dirval != DI_OK) 
 	{
@@ -443,10 +443,10 @@ bool DirectInputClass::MausUpdate(bool gepuffert)
             return false;
 		}
          
-		if (dwElemente == 0)			// Keine Elemente wurden verändert
+		if (dwElemente == 0)			// Keine Elemente wurden verÃ¤ndert
 			fertig = true;
          
-		switch (od.dwOfs)				// Feld 'dwOfs' enthält Maus-Aktion:
+		switch (od.dwOfs)				// Feld 'dwOfs' enthÃ¤lt Maus-Aktion:
 		{		
 			case DIMOFS_X:				// Horizontale Bewegung
 				MausX += od.dwData;
@@ -458,8 +458,8 @@ bool DirectInputClass::MausUpdate(bool gepuffert)
 				fertig = true;
 				break;
          
-            case DIMOFS_BUTTON0:		// Knopf 0 gedrückt
-				if (od.dwData & 0x80)	// Knopf gedrück
+            case DIMOFS_BUTTON0:		// Knopf 0 gedrÃ¼ckt
+				if (od.dwData & 0x80)	// Knopf gedrÃ¼ck
 				{
 					MausButtons[0] = true;
 					fertig = TRUE;
@@ -471,8 +471,8 @@ bool DirectInputClass::MausUpdate(bool gepuffert)
                 }
 				break;
 
-				case DIMOFS_BUTTON1:	// Knopf 1 gedrückt
-				if (od.dwData & 0x80)	// Knopf gedrück
+				case DIMOFS_BUTTON1:	// Knopf 1 gedrÃ¼ckt
+				if (od.dwData & 0x80)	// Knopf gedrÃ¼ck
 				{
 					MausButtons[1] = true;
 					fertig = TRUE;
@@ -484,8 +484,8 @@ bool DirectInputClass::MausUpdate(bool gepuffert)
                 }
 				break;
 
-				case DIMOFS_BUTTON2:	// Knopf 2 gedrückt
-				if (od.dwData & 0x80)	// Knopf gedrück
+				case DIMOFS_BUTTON2:	// Knopf 2 gedrÃ¼ckt
+				if (od.dwData & 0x80)	// Knopf gedrÃ¼ck
 				{
 					MausButtons[2] = true;
 					fertig = TRUE;
@@ -532,7 +532,7 @@ bool DirectInputClass::MausUpdate(bool gepuffert)
 		MausX += ms.lX;
 		MausY += ms.lY;
       
-		// Buttons prüfen
+		// Buttons prÃ¼fen
 		if (ms.rgbButtons[0] & 0x80)
 			MausButtons[0] = true;
 		else

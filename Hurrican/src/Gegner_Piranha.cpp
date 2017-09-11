@@ -2,7 +2,7 @@
 // Der Piranha
 //
 // Schwimmt von einer Beckenseite zur anderen und flitzt auf den Spieler zu, wenn
-// er in der Nähe ist
+// er in der NÃ¤he ist
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -90,7 +90,7 @@ void GegnerPiranha::DoKI(void)
     if (Handlung != GEGNER_SPECIAL)
         SimpleAnimation();
 
-    // Nach links bzw rechts auf Kollision prüfen und dann ggf umkehren
+    // Nach links bzw rechts auf Kollision prÃ¼fen und dann ggf umkehren
     //
     if ((xSpeed < 0.0f &&
             (blockl & BLOCKWERT_WAND ||
@@ -216,7 +216,7 @@ void GegnerPiranha::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler den Piranha berührt hat
+    // Testen, ob der Spieler den Piranha berÃ¼hrt hat
     TestDamagePlayers(1.0f SYNC);
 }
 

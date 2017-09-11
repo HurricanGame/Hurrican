@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Der StelzSack
 //
-// f‰llt in den Fahrstuhl rein und ballert dann los
+// f√§llt in den Fahrstuhl rein und ballert dann los
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -40,14 +40,14 @@ GegnerStelzSack::GegnerStelzSack(int Wert1, int Wert2, bool Light)
 
 void GegnerStelzSack::DoKI(void)
 {
-    // y-Position auf Hˆhe des Fahrstuhls setzen
+    // y-Position auf H√∂he des Fahrstuhls setzen
     if (Handlung != GEGNER_INIT &&
             Handlung != GEGNER_FALLEN)
         yPos = g_Fahrstuhl_yPos - 147;
 
     switch (Handlung)
     {
-    // Sack wird "aktiviert" (¸ber den Hurri gesetzt damit er von dort runterfallen kann)
+    // Sack wird "aktiviert" (√ºber den Hurri gesetzt damit er von dort runterfallen kann)
     case GEGNER_NOTVISIBLE:
     {
         Handlung = GEGNER_FALLEN;
@@ -57,7 +57,7 @@ void GegnerStelzSack::DoKI(void)
     }
     break;
 
-    // Sack f‰llt runter
+    // Sack f√§llt runter
     case GEGNER_FALLEN:
     {
         if (ySpeed > 80.0f + g_Fahrstuhl_Speed)
@@ -81,11 +81,11 @@ void GegnerStelzSack::DoKI(void)
 
     case GEGNER_STEHEN:			// Aufkommen und abfedern
     {
-        AnimCount += SpeedFaktor;			// Animationscounter weiterz‰hlen
-        if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterz√§hlen
+        if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und n‰chste Animationsphase
+            AnimPhase++;					// Und n√§chste Animationsphase
             if (AnimPhase >= 9)				// Animation von zu Ende	?
             {
                 AnimPhase = 9;
@@ -133,11 +133,11 @@ void GegnerStelzSack::DoKI(void)
 
     case GEGNER_DREHEN:				// rumdrehen
     {
-        AnimCount += SpeedFaktor;			// Animationscounter weiterz‰hlen
-        if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterz√§hlen
+        if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
         {
             AnimCount = 0.0f;				// Dann wieder auf Null setzen
-            AnimPhase++;					// Und n‰chste Animationsphase
+            AnimPhase++;					// Und n√§chste Animationsphase
             if (AnimPhase >= 15)			// Animation von zu Ende	?
             {
                 AnimPhase = 13;
@@ -151,11 +151,11 @@ void GegnerStelzSack::DoKI(void)
 
     case GEGNER_DREHEN2:			// von der Mitte aus fertig rumdrehen
     {
-        AnimCount += SpeedFaktor;			// Animationscounter weiterz‰hlen
-        if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterz√§hlen
+        if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
         {
             AnimCount = 0.0f;				// Dann wieder auf Null setzen
-            AnimPhase--;					// Und n‰chste Animationsphase
+            AnimPhase--;					// Und n√§chste Animationsphase
             if (AnimPhase <= 9)				// Animation von zu Ende	?
             {
                 AnimPhase = 9;
@@ -170,7 +170,7 @@ void GegnerStelzSack::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler den Stelzsack ber¸hrt hat
+    // Testen, ob der Spieler den Stelzsack ber√ºhrt hat
     TestDamagePlayers(5.0f SYNC);
 }
 

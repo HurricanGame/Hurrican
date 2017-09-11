@@ -5,9 +5,9 @@
 // Hurrican
 //
 // Shoot em up ala Turrican
-// benutzt die DirectX8.1 API für Grafik, Sound und Input
+// benutzt die DirectX8.1 API fÃ¼r Grafik, Sound und Input
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -90,7 +90,7 @@ extern DirectGraphicsSprite		PartikelGrafix[MAX_PARTIKELGFX];	// Grafiken der Pa
 
 #if defined(PLATFORM_DIRECTX)
 D3DFORMAT				D3DFormat;						// Format der Primary Surface
-D3DCAPS8				d3dcaps;						// Möglichkeiten der Hardware
+D3DCAPS8				d3dcaps;						// MÃ¶glichkeiten der Hardware
 LPDIRECT3D8				lpD3D			= NULL;			// Direct3D Hauptobjekt
 LPDIRECT3DDEVICE8		lpD3DDevice		= NULL;			// Direct3D Device-Objekt
 LPDIRECT3DSURFACE8		lpBackbuffer	= NULL;			// Der Backbuffer
@@ -100,10 +100,10 @@ HINSTANCE				g_hinst;						// hinstance des Hauptfensters
 #endif
 
 bool					FixedFramerate		= false;		// true = Spiel mit 50 Frames laufen lassen
-// false = Spiel so flüssig wie möglich laufen lassen
+// false = Spiel so flÃ¼ssig wie mÃ¶glich laufen lassen
 bool					Sprache;						// true == deutsch / false == englisch
-bool					GameRunning			= true;		// Spiel läuft :-)
-bool					GamePaused			= false;	// Spiel eingefroren (wenn man zb das Fenster verlässt)
+bool					GameRunning			= true;		// Spiel lÃ¤uft :-)
+bool					GamePaused			= false;	// Spiel eingefroren (wenn man zb das Fenster verlÃ¤sst)
 bool					NochKeinFullScreen	= true;		// Logo noch anzeigen in Paint ?
 #ifdef _DEBUG
 bool					DebugMode			= false;	// Debug Mode ein/aus
@@ -112,7 +112,7 @@ float					SpeedFaktor = 1.0f;				// Faktor, mit dem alle Bewegungen verrechnet w
 TexturesystemClass      Textures;                       // DKS - Added Texturesystem class (see DX8Sprite.cpp)
 DirectGraphicsClass		DirectGraphics;					// Grafik-Objekt
 DirectInputClass		DirectInput;					// Input-Objekt
-TimerClass				Timer;						    // Timer Klasse für die Framerate
+TimerClass				Timer;						    // Timer Klasse fÃ¼r die Framerate
 #if defined(__AROS__)
 Logdatei				Protokoll("T:Game_Log.txt");		// Protokoll Datei
 #else
@@ -123,7 +123,7 @@ DirectGraphicsFont		*pDefaultFont = new(DirectGraphicsFont);
 DirectGraphicsFont		*pMenuFont	  = new(DirectGraphicsFont);
 TileEngineClass			TileEngine;                     // Tile Engine
 PartikelsystemClass		PartikelSystem;				    // Das coole Partikelsystem
-ProjectileListClass		Projectiles;					// Liste mit Schüssen
+ProjectileListClass		Projectiles;					// Liste mit SchÃ¼ssen
 GegnerListClass			Gegner;						// Liste mit Gegner
 IntroClass				*pIntro;						// Intro-Objekt
 OuttroClass				*pOuttro;						// Outtro-Objekt
@@ -135,7 +135,7 @@ RECT					srcrect, destrect;
 
 int						LanguageFileCount;				// Anzahl gefundener Language Files
 char					LanguageFiles[MAX_LANGUAGE_FILES][MAX_LANGUAGE_FILENAME_LENGTH]; 
-char					ActualLanguage[256];			// Gewählte Language
+char					ActualLanguage[256];			// GewÃ¤hlte Language
 char                    *g_storage_ext = NULL;          // Where data files (levels, graphics, music, etc) 
                                                         //      for the game are stored (read)
 char                    *g_save_ext = NULL;             // Where configuration files, logs, and save games 
@@ -148,7 +148,7 @@ int WINDOWHEIGHT;
 
 
 // --------------------------------------------------------------------------------------
-// Variablen für den Spielablauf
+// Variablen fÃ¼r den Spielablauf
 // --------------------------------------------------------------------------------------
 
 #if defined(PLATFORM_DIRECTX)
@@ -161,7 +161,7 @@ PlayerClass				Player[2];					// Werte der Spieler
 
 HUDClass				HUD;							// Das HUD
 unsigned char			SpielZustand = CRACKTRO;		// Aktueller Zustand des Spieles
-char					StringBuffer[100];				// Für die Int / String Umwandlung
+char					StringBuffer[100];				// FÃ¼r die Int / String Umwandlung
 
 // --------------------------------------------------------------------------------------
 // Callback Funktion
@@ -207,7 +207,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
     {
         GameRunning = false;						// Spiel beenden
         PostQuitMessage(0);							// Quit-Message posten
-        return(0);									// Success zurückliefern
+        return(0);									// Success zurÃ¼ckliefern
     }
     break;
 
@@ -245,7 +245,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
         break;
     }
 
-    //unbearbeitete Nachrichten zurückliefern
+    //unbearbeitete Nachrichten zurÃ¼ckliefern
     return(DefWindowProc(hwnd, message, wparam, lparam));
 }
 #endif
@@ -580,7 +580,7 @@ int main(int argc, char *argv[])
 #if defined(PLATFORM_DIRECTX)
     WNDCLASSEX			winclass;							// eigene Windows-Klasse
     MSG					message;							// Message
-    RECT				rect;								// Grösse des Desktops
+    RECT				rect;								// GrÃ¶sse des Desktops
 
     // evtle Parameter holen und Typ des Parameters rausfinden
     strcpy_s (CommandLineParams.Params, 1, "");
@@ -694,8 +694,8 @@ int main(int argc, char *argv[])
     Protokoll.WriteText( false, "--> Using save path '%s' <--\n\n", g_save_ext );
 
 #if defined(PLATFORM_DIRECTX)
-    // Desktop Window holen und Grösse auslesen (damit wir unser Fenster in der Mitte des Screens
-    // positionnieren können)
+    // Desktop Window holen und GrÃ¶sse auslesen (damit wir unser Fenster in der Mitte des Screens
+    // positionnieren kÃ¶nnen)
     DesktopHWND = GetDesktopWindow();
     GetWindowRect(DesktopHWND, &rect);
 
@@ -720,8 +720,8 @@ int main(int argc, char *argv[])
 
     g_hinst = hinstance;
 
-    // Werte für die Windows-Klasse festlegen
-    winclass.cbSize			= sizeof (WNDCLASSEX);					// Grösse der Klasse
+    // Werte fÃ¼r die Windows-Klasse festlegen
+    winclass.cbSize			= sizeof (WNDCLASSEX);					// GrÃ¶sse der Klasse
     winclass.style			= CS_HREDRAW | CS_VREDRAW;				// Fenster-Einstellungen
     winclass.lpfnWndProc	= WindowProc;							// Callback Funktion
     winclass.cbClsExtra		= 0;									// extra Klassen-Info Space
@@ -765,7 +765,7 @@ int main(int argc, char *argv[])
                                   (rect.right - WINDOWWIDTH)/2,		// x und y des Fensters
                                   (rect.bottom- WINDOWHEIGHT)/2,		// in der Mitte zentriert
                                   WINDOWWIDTH,						// Fensterbreite
-                                  WINDOWHEIGHT,						// Fensterhöhe
+                                  WINDOWHEIGHT,						// FensterhÃ¶he
                                   NULL,								// Handle des Parentfensters
                                   NULL,								// Handle des Menus
                                   hinstance,							// Instance von Main
@@ -807,8 +807,8 @@ int main(int argc, char *argv[])
 #if defined(PLATFORM_DIRECTX)
         while (PeekMessage (&message, NULL, 0, 0, PM_REMOVE))	// Nachricht vom Stapel holen
         {
-            // und löschen
-            TranslateMessage(&message);							// Nachricht überetzen
+            // und lÃ¶schen
+            TranslateMessage(&message);							// Nachricht Ã¼beretzen
             DispatchMessage(&message);							// Nachricht an WinProc weiterleiten
             UpdateWindow(g_hwnd);
         }
@@ -833,7 +833,7 @@ int main(int argc, char *argv[])
                 // Main Loop
                 Heartbeat();
 
-                // Eingabegeräte updaten
+                // EingabegerÃ¤te updaten
                 DirectInput.UpdateTastatur  ();
                 DirectInput.UpdateJoysticks ();
                 //DirectInput.UpdateMaus(false);
@@ -844,7 +844,7 @@ int main(int argc, char *argv[])
                 // Timer updaten
                 Timer.update();
 
-                // Feste Framerate ? (Spiel läuft in Zeitlupe, wenn zu langsam)
+                // Feste Framerate ? (Spiel lÃ¤uft in Zeitlupe, wenn zu langsam)
                 //
                 if (FixedFramerate == true)
                 {
@@ -888,7 +888,7 @@ int main(int argc, char *argv[])
     Protokoll.WriteText( false, "Bugreports, questions etc : information@poke53280.de\n" );
     Protokoll.WriteText( false, "\n-> logfile end\n" );
 
-    // Kein Fehler im Game? Dann Logfile löschen
+    // Kein Fehler im Game? Dann Logfile lÃ¶schen
     if (Protokoll.delLogFile == true)
         DeleteFile("Game_Log.txt");
 
@@ -896,7 +896,7 @@ int main(int argc, char *argv[])
     free(g_save_ext);
 
 #if defined(PLATFORM_DIRECTX)
-    return(message.wParam);										// Rückkehr zu Windows
+    return(message.wParam);										// RÃ¼ckkehr zu Windows
 #elif defined(PLATFORM_SDL)
     return 0;
 #endif
@@ -928,7 +928,7 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
     // Loadinfo Text festlegen
 //	DisplayHintNr = rand()%30;
 
-    // *.lng Files anfügen
+    // *.lng Files anfÃ¼gen
     if (SendMessage(ComboBoxLanguageFiles, CB_DIR, DDL_READWRITE, (LPARAM) "*.lng") == CB_ERR)
     {
         Protokoll.WriteText( false, "No language Files found!", true);
@@ -1034,7 +1034,7 @@ void ConvertPlayerTexture(DirectGraphicsSprite *pTexture)
     if (hr != D3D_OK)
         return;
 
-    // Breite, Höhe und Pitch setzen
+    // Breite, HÃ¶he und Pitch setzen
     width  = (int)pTexture->itsXSize;
     height = (int)pTexture->itsYSize;
     pRow = (BYTE*)pLockedRect.pBits;
@@ -1391,7 +1391,7 @@ bool Heartbeat(void)
         return false;
     }
     else
-        // Bereit für Reset des Devices nachdem wir wieder Focus haben?
+        // Bereit fÃ¼r Reset des Devices nachdem wir wieder Focus haben?
         if (hr == D3DERR_DEVICENOTRESET)
         {
             SafeRelease (lpBackbuffer);
@@ -1563,7 +1563,7 @@ void ShowDebugInfo(void)
     pDefaultFont->DrawText(  0, 60, "Partikel :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 60, StringBuffer, 0xFFFFFFFF);
 
-    // Anzahl der aktuell aktiven Schüsse anzeigen
+    // Anzahl der aktuell aktiven SchÃ¼sse anzeigen
     _itoa_s(Projectiles.GetNumProjectiles(), StringBuffer, 10);
     pDefaultFont->DrawText(200, 60, "Projektile :", 0xFFFFFFFF);
     pDefaultFont->DrawText(300, 60, StringBuffer, 0xFFFFFFFF);

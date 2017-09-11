@@ -1,10 +1,10 @@
 // --------------------------------------------------------------------------------------
 // Die Shootplattform
 //
-// ich staune immer wieder über meine geile Namensgebung...
+// ich staune immer wieder Ã¼ber meine geile Namensgebung...
 //
 // Eine Plattform mit einem Button oben drauf
-// schiesst man mit einem Blitz auf den Button (seperater Trigger) so fliegt die Plattform ein Stück
+// schiesst man mit einem Blitz auf den Button (seperater Trigger) so fliegt die Plattform ein StÃ¼ck
 // nach oben
 // --------------------------------------------------------------------------------------
 

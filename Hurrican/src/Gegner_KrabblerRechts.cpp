@@ -1,8 +1,8 @@
 // --------------------------------------------------------------------------------------
 // Der Wandkrabbler rechts
 //
-// krabbelt an der Wand entlang bis er auf eine (Gegner) Wand stösst und dreht dann um
-// Schiesst in gleichen Abständen zur Seite
+// krabbelt an der Wand entlang bis er auf eine (Gegner) Wand stÃ¶sst und dreht dann um
+// Schiesst in gleichen AbstÃ¤nden zur Seite
 // Hat Speed == Value2 und SchussDelay == Value1
 // --------------------------------------------------------------------------------------
 
@@ -48,7 +48,7 @@ void GegnerKrabblerRechts::DoKI(void)
             blocku & BLOCKWERT_GEGNERWAND)
         ySpeed = float(-Value2);
 
-    // Schuss Delay verzögern
+    // Schuss Delay verzÃ¶gern
     ShotDelay -= 1.0f SYNC;
 
 // Je nach Handlung richtig verhalten

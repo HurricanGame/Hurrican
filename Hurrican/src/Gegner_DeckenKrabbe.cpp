@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Die Decken Krabbe
 //
-// H‰ngt an der Decke und f‰llt bei Beschuss oder wenn der Spieler drunter ist runter
+// H√§ngt an der Decke und f√§llt bei Beschuss oder wenn der Spieler drunter ist runter
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -40,7 +40,7 @@ void GegnerDeckenKrabbe::DoDraw(void)
     pGegnerGrafix[GegnerArt]->RenderSpriteRotated((float)(xPos-TileEngine.XOffset),
             (float)(yPos-TileEngine.YOffset), zRot, AnimPhase, 0xFFFFFFFF, mirror);
 
-    // Testen, ob der Spieler die Krabbe ber¸hrt hat
+    // Testen, ob der Spieler die Krabbe ber√ºhrt hat
     TestDamagePlayers(8.0f SYNC);
 }
 
@@ -83,7 +83,7 @@ void GegnerDeckenKrabbe::DoKI(void)
             Handlung == GEGNER_DREHEN ||
             Handlung == GEGNER_DREHEN2)
     {
-        // Schr‰gen checken
+        // Schr√§gen checken
         //
         if (ySpeed >= 0.0f)
             //DKS - Rewrote BlockSlopes function to only take the parameters it uses:
@@ -93,7 +93,7 @@ void GegnerDeckenKrabbe::DoKI(void)
 
     switch (Handlung)
     {
-    // Krabbe h‰ngt an der Decke
+    // Krabbe h√§ngt an der Decke
     case GEGNER_STEHEN:
     {
         // angeschossen oder Spieler drunter? Dann runterfallen
@@ -126,11 +126,11 @@ void GegnerDeckenKrabbe::DoKI(void)
     case GEGNER_DREHEN:
     {
         zRot = 0.0f;
-        AnimCount += SpeedFaktor;			// Animationscounter weiterz‰hlen
-        if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterz√§hlen
+        if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
         {
             AnimCount = 0.0f;				// Dann wieder auf Null setzen
-            AnimPhase--;					// Und n‰chste Animationsphase
+            AnimPhase--;					// Und n√§chste Animationsphase
             if (AnimPhase <= 0) 			// Animation von zu Ende	?
             {
                 AnimPhase = 0;
@@ -146,11 +146,11 @@ void GegnerDeckenKrabbe::DoKI(void)
     case GEGNER_DREHEN2:
     {
         zRot = 0.0f;
-        AnimCount += SpeedFaktor;			// Animationscounter weiterz‰hlen
-        if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterz√§hlen
+        if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
         {
             AnimCount = 0.0f;				// Dann wieder auf Null setzen
-            AnimPhase++;					// Und n‰chste Animationsphase
+            AnimPhase++;					// Und n√§chste Animationsphase
             if (AnimPhase >= 4) 			// Animation von zu Ende	?
             {
                 AnimPhase = 5;
@@ -164,12 +164,12 @@ void GegnerDeckenKrabbe::DoKI(void)
     // Krabbe ist gelandet und Krabbelt auf den Spieler zu
     case GEGNER_LAUFEN:
     {
-        // an Schr‰gen drehen?
+        // an Schr√§gen drehen?
         //
         if (Handlung != GEGNER_STEHEN &&
                 Handlung != GEGNER_FALLEN)
         {
-            // schr‰ge links hochlaufen
+            // schr√§ge links hochlaufen
             if (BlickRichtung == RECHTS)
             {
                 if (blockl & BLOCKWERT_SCHRAEGE_L)
@@ -211,11 +211,11 @@ void GegnerDeckenKrabbe::DoKI(void)
 
         xPos += 7.0f * BlickRichtung * -1 SYNC;
 
-        AnimCount += SpeedFaktor;			// Animationscounter weiterz‰hlen
-        if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterz√§hlen
+        if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
         {
             AnimCount = 0.0f;				// Dann wieder auf Null setzen
-            AnimPhase++;					// Und n‰chste Animationsphase
+            AnimPhase++;					// Und n√§chste Animationsphase
             if (AnimPhase >= 14) 			// Animation von zu Ende	?
                 AnimPhase = 5;
         }

@@ -2,11 +2,11 @@
 
 // --------------------------------------------------------------------------------------
 //
-// 2D Tile-Engine für Hurrican
+// 2D Tile-Engine fÃ¼r Hurrican
 // bestehend aus einem Vordergrund-Layer in verschiedenen Helligkeitsstufen
 // und einem Overlay-Layer
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -54,8 +54,8 @@ extern DirectGraphicsSprite	*pGegnerGrafix[MAX_GEGNERGFX];		// Grafiken  der Geg
 extern float				WackelMaximum;
 extern float				WackelValue;
 
-D3DCOLOR		Col1, Col2, Col3;								// Farben für Wasser/Lava etc
-bool			DrawDragon;										// Für den Drachen im Turm Level
+D3DCOLOR		Col1, Col2, Col3;								// Farben fÃ¼r Wasser/Lava etc
+bool			DrawDragon;										// FÃ¼r den Drachen im Turm Level
 float			ShadowAlpha;
 
 // --------------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ TileEngineClass::TileEngineClass(void)
     ScrollSpeedX   = 0.0f;
     ScrollSpeedY   = 0.0f;
 
-    // Speed für "Scrollto" Funktion
+    // Speed fÃ¼r "Scrollto" Funktion
     SpeedX		   = 0.0f;
     SpeedY		   = 0.0f;
     CloudMovement  = 0.0f;
@@ -135,7 +135,7 @@ TileEngineClass::TileEngineClass(void)
     //LiquidGfx[0].LoadImage("water.png", 128, 128, 128, 128, 1, 1);
     //LiquidGfx[1].LoadImage("water2.png", 128, 128, 128, 128, 1, 1);
 
-    // Texturkoordinaten für das Wasser vorberechnen
+    // Texturkoordinaten fÃ¼r das Wasser vorberechnen
     float fx, fy;
 
     for (int i = 0; i < 9; i++)
@@ -150,7 +150,7 @@ TileEngineClass::TileEngineClass(void)
     //DKS - Moved these to the new TileEngineClass::LoadSprites() function (see note there)
     //// GameOver Schriftzug laden
     //GameOver.LoadImage("gameover.png", 400, 90, 400, 90, 1, 1);
-    //// Shatten für das Alien Level laden
+    //// Shatten fÃ¼r das Alien Level laden
     //Shadow.LoadImage ("shadow.png", 512, 512, 512, 512, 1, 1);
 
     WasserfallOffset = 0.0f;
@@ -230,7 +230,7 @@ void TileEngineClass::LoadSprites()
     // GameOver Schriftzug laden
     GameOver.LoadImage("gameover.png", 400, 90, 400, 90, 1, 1);
 
-    // Shatten für das Alien Level laden
+    // Shatten fÃ¼r das Alien Level laden
     Shadow.LoadImage ("shadow.png", 512, 512, 512, 512, 1, 1);
 }
 
@@ -253,7 +253,7 @@ bool TileEngineClass::LineHitsLine(const Vector2D p,
     // Determinante Ds berechnen
     const float Ds = (q.y - p.y) * v.x - (q.x - p.x) * v.y;
 
-    // s = Ds / D berechnen und prüfen, ob s in den Grenzen liegt
+    // s = Ds / D berechnen und prÃ¼fen, ob s in den Grenzen liegt
     const float s = Ds / D;
     if (s < 0.0f ||
             s > 1.0f)
@@ -275,7 +275,7 @@ bool TileEngineClass::LineHitsLine(const Vector2D p,
 }
 
 // --------------------------------------------------------------------------------------
-// Neues, leeres Level der Grösse xSize/ySize erstellen
+// Neues, leeres Level der GrÃ¶sse xSize/ySize erstellen
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::InitNewLevel(int xSize, int ySize)
@@ -313,14 +313,14 @@ void TileEngineClass::InitNewLevel(int xSize, int ySize)
 void TileEngineClass::ClearLevel()
 {
     // Zuerst alle Gegner-Texturen freigeben , damit
-    // nur die geladen werden, die auch benötigt werden
-    // Objekte, die immer benötigt werden, wie Extraleben, Diamanten etc.
+    // nur die geladen werden, die auch benÃ¶tigt werden
+    // Objekte, die immer benÃ¶tigt werden, wie Extraleben, Diamanten etc.
     // werden nicht released
     for (int i = 4; i < MAX_GEGNERGFX; i++)
         if (i != PUNISHER &&
                 pGegnerGrafix[i] != NULL)						// Ist eine Textur geladen ?
         {
-            delete(pGegnerGrafix[i]);						// dann diese löschen
+            delete(pGegnerGrafix[i]);						// dann diese lÃ¶schen
             pGegnerGrafix[i] = NULL;						// und auf NULL setzen
         }
 
@@ -418,13 +418,13 @@ bool TileEngineClass::LoadLevel(char Filename[100])
 loadfile:
 
 #if defined(USE_UNRARLIB)   //DKS - Added ifdef block
-    // Aus RAR laden? Dann müssen wir das ganze unter temporärem Namen entpacken
+    // Aus RAR laden? Dann mÃ¼ssen wir das ganze unter temporÃ¤rem Namen entpacken
     if (fromrar == true)
     {
         // Zwischenspeichern
         //
         FILE *TempFile = NULL;
-        fopen_s(&TempFile, TEMP_FILE_PREFIX "temp.map", "wb");	// Datei öffnen
+        fopen_s(&TempFile, TEMP_FILE_PREFIX "temp.map", "wb");	// Datei Ã¶ffnen
         fwrite (pData, Size, 1, TempFile);			// speichern
         fclose (TempFile);							// und schliessen
 
@@ -439,14 +439,14 @@ loadfile:
 
     ClearLevel();
 
-    // Drache im Hintergrund ggf. löschen
+    // Drache im Hintergrund ggf. lÃ¶schen
     if (pDragonHack != NULL)
     {
         delete pDragonHack;
         pDragonHack = NULL;
     }
 
-    // File öffnen
+    // File Ã¶ffnen
     fopen_s(&Datei, Temp, "rb");
 
     if(!Datei)
@@ -458,7 +458,7 @@ loadfile:
     // DateiHeader auslesen
     fread(&DateiHeader, sizeof(DateiHeader), 1, Datei);
 
-    // und Werte übertragen
+    // und Werte Ã¼bertragen
     LEVELSIZE_X		 = FixEndian(DateiHeader.SizeX);
     LEVELSIZE_Y		 = FixEndian(DateiHeader.SizeY);
     LEVELPIXELSIZE_X = (float)LEVELSIZE_X*TILESIZE_X;
@@ -510,7 +510,7 @@ loadfile:
             if(LoadTile.TileSetBack  > LoadedTilesets) LoadTile.TileSetBack  = LoadedTilesets;
             if(LoadTile.TileSetFront > LoadedTilesets) LoadTile.TileSetFront = LoadedTilesets;
 
-            // Geladenes Leveltile übernehmen
+            // Geladenes Leveltile Ã¼bernehmen
             //
             TileAt(i, j).Alpha			= LoadTile.Alpha;
             TileAt(i, j).BackArt		= LoadTile.BackArt;
@@ -527,8 +527,8 @@ loadfile:
             TileAt(i, j).Color [2] = D3DCOLOR_RGBA(LoadTile.Red, LoadTile.Green, LoadTile.Blue, LoadTile.Alpha);
             TileAt(i, j).Color [3] = D3DCOLOR_RGBA(LoadTile.Red, LoadTile.Green, LoadTile.Blue, LoadTile.Alpha);
 
-            // Eine Flüssigkeit als Block?
-            // damit man nicht immer auf alle vier möglichen Flüssigkeiten checken muss,
+            // Eine FlÃ¼ssigkeit als Block?
+            // damit man nicht immer auf alle vier mÃ¶glichen FlÃ¼ssigkeiten checken muss,
             // sondern nur auf BLOCKWERT_LIQUID
 
             if (TileAt(i, j).Block & BLOCKWERT_WASSER ||
@@ -536,14 +536,14 @@ loadfile:
                 TileAt(i, j).Block ^= BLOCKWERT_LIQUID;
         }
 
-    // eventuelle Schrägen ermitteln und Ecken für die Wasseranim festlegen
+    // eventuelle SchrÃ¤gen ermitteln und Ecken fÃ¼r die Wasseranim festlegen
     // EDIT_ME wieder reinmachen und diesmal richtig machen =)
     uint32_t bl, br, bo, bu;
 
     for(i=1; i<LEVELSIZE_X-1; i++)
         for(int j=2; j<LEVELSIZE_Y-1; j++)
         {
-            // Schräge links hoch
+            // SchrÃ¤ge links hoch
             if (  TileAt(i+0, j+0).Block & BLOCKWERT_WAND  &&
                     !(TileAt(i+1, j+0).Block & BLOCKWERT_WAND) &&
                     TileAt(i+1, j+1).Block & BLOCKWERT_WAND  &&
@@ -553,7 +553,7 @@ loadfile:
                     TileAt(i+1, j+0).Block ^= BLOCKWERT_SCHRAEGE_L;
             }
 
-            // Schräge rechts hoch
+            // SchrÃ¤ge rechts hoch
             if (  TileAt(i+0, j+0).Block & BLOCKWERT_WAND  &&
                     !(TileAt(i-1, j+0).Block & BLOCKWERT_WAND) &&
                     TileAt(i-1, j+1).Block & BLOCKWERT_WAND &&
@@ -619,7 +619,7 @@ loadfile:
             // Startposition des Spielers
             if(LoadObject.ObjectID == 0)
             {
-                if (LoadObject.Value1 == 0)									// Anfängliche
+                if (LoadObject.Value1 == 0)									// AnfÃ¤ngliche
                     Player[LoadObject.Value2].Blickrichtung = RECHTS;		// Blickrichtung auch
                 else														// aus Leveldatei
                     Player[LoadObject.Value2].Blickrichtung = LINKS;		// lesen
@@ -634,7 +634,7 @@ loadfile:
                 UpdateLevel ();
             }
 
-            // Anzahl Secrets, OneUps usw zählen, für Summary-Box
+            // Anzahl Secrets, OneUps usw zÃ¤hlen, fÃ¼r Summary-Box
 
             // Secret
             if (LoadObject.ObjectID == SECRET)
@@ -665,7 +665,7 @@ loadfile:
                         pGegnerGrafix[PIRANHA] == NULL)
                     LoadGegnerGrafik(PIRANHA);
 
-                // Mücke laden, wenn das Nest geladen wird
+                // MÃ¼cke laden, wenn das Nest geladen wird
                 if (LoadObject.ObjectID  == NEST &&
                         pGegnerGrafix[STAHLMUECKE] == NULL)
                     LoadGegnerGrafik(STAHLMUECKE);
@@ -732,7 +732,7 @@ loadfile:
                         pGegnerGrafix[SCHLEIMALIEN] == NULL)
                     LoadGegnerGrafik(SCHLEIMALIEN);
 
-                // Mittelgroße Spinne laden, wenn der Spinnen Ansturm geladen wird
+                // MittelgroÃŸe Spinne laden, wenn der Spinnen Ansturm geladen wird
                 if (LoadObject.ObjectID		    == WUXESPINNEN &&
                         pGegnerGrafix[MITTELSPINNE] == NULL)
                     LoadGegnerGrafik(MITTELSPINNE);
@@ -782,7 +782,7 @@ loadfile:
                         pGegnerGrafix[MINIDRAGON] == NULL)
                     LoadGegnerGrafik(MINIDRAGON);
 
-                // Schneekoppe laden, wenn der Schneekönig geladen wird
+                // Schneekoppe laden, wenn der SchneekÃ¶nig geladen wird
                 if (LoadObject.ObjectID == SCHNEEKOENIG &&
                         pGegnerGrafix[SCHNEEKOPPE] == NULL)
                     LoadGegnerGrafik(SCHNEEKOPPE);
@@ -835,7 +835,7 @@ loadfile:
                 if (pGegnerGrafix[LoadObject.ObjectID] == NULL)
                     LoadGegnerGrafik(LoadObject.ObjectID);
 
-                // Gegner bei aktuellem Skill level überhaupt erzeugen ?
+                // Gegner bei aktuellem Skill level Ã¼berhaupt erzeugen ?
                 if (LoadObject.Skill <= Skill)
                 {
                     Gegner.PushGegner(float(LoadObject.XPos),
@@ -858,7 +858,7 @@ loadfile:
             }
         }
 
-    // Kein Startpunkt für Spieler 2 gefunden? Dann von Spieler 1 kopieren
+    // Kein Startpunkt fÃ¼r Spieler 2 gefunden? Dann von Spieler 1 kopieren
     if (Player[1].xpos == 0.0f &&
             Player[1].ypos == 0.0f)
     {
@@ -881,7 +881,7 @@ loadfile:
     // Datei schliessen
     fclose(Datei);
 
-    // Temp Datei löschen und speicher freigeben
+    // Temp Datei lÃ¶schen und speicher freigeben
     DeleteFile(TEMP_FILE_PREFIX "temp.map");
 
     // Liquid Farben setzen
@@ -943,7 +943,7 @@ void TileEngineClass::CalcRenderRange(void)
 {
     long xo, yo;
 
-    // Ausschnittgröße berechnen
+    // AusschnittgrÃ¶ÃŸe berechnen
     //
     xo = (long)(XOffset * 0.05f);
     yo = (long)(YOffset * 0.05f);
@@ -1014,11 +1014,11 @@ void TileEngineClass::DrawBackground(void)
 
     if (bScrollBackground == true)				// Hintergrundbild mitscrollen
     {
-        // Linke Hälfte
+        // Linke HÃ¤lfte
         Background.SetRect(0, 0, xoff, 480);
         Background.RenderSprite(640-(float)(xoff), 0, 0xFFFFFFFF);
 
-        // Rechte Hälfte
+        // Rechte HÃ¤lfte
         Background.SetRect(xoff, 0, 640, 480);
         Background.RenderSprite(0, 0, 0xFFFFFFFF);
     }
@@ -1031,30 +1031,30 @@ void TileEngineClass::DrawBackground(void)
 //----- Layer ganz hinten (ausser im Flugsack Level)
 
     xoff = (int)(XOffset / 3) % 640;
-    yoff = (float)((LEVELSIZE_Y-SCREENSIZE_Y)*TILESIZE_Y);	// Grösse des Levels in Pixeln (-1 Screen)
+    yoff = (float)((LEVELSIZE_Y-SCREENSIZE_Y)*TILESIZE_Y);	// GrÃ¶sse des Levels in Pixeln (-1 Screen)
     yoff = (float)(220-150/yoff*YOffset);			// y-Offset des Layers berechnen
     yoff -= 40;
 
-    // Linke Hälfte
+    // Linke HÃ¤lfte
     ParallaxLayer[0].SetRect(0, 0, xoff, 480);
     ParallaxLayer[0].RenderSprite(640-(float)(xoff), yoff, 0xFFFFFFFF);
 
-    // Rechte Hälfte
+    // Rechte HÃ¤lfte
     ParallaxLayer[0].SetRect(xoff, 0, 640, 480);
     ParallaxLayer[0].RenderSprite(0, yoff, 0xFFFFFFFF);
 
 
 //----- vorletzter Layer
 
-    yoff = (float)((LEVELSIZE_Y-SCREENSIZE_Y)*TILESIZE_Y);	// Grösse des Levels in Pixeln (-1 Screen)
+    yoff = (float)((LEVELSIZE_Y-SCREENSIZE_Y)*TILESIZE_Y);	// GrÃ¶sse des Levels in Pixeln (-1 Screen)
     yoff = (float)(200-200/yoff*YOffset);			// y-Offset des Layers berechnen
     xoff = (int)(XOffset / 2) % 640;
 
-    // Linke Hälfte
+    // Linke HÃ¤lfte
     ParallaxLayer[1].SetRect(0, 0, xoff, 480);
     ParallaxLayer[1].RenderSprite(640-(float)(xoff), yoff, 0xFFFFFFFF);
 
-    // Rechte Hälfte
+    // Rechte HÃ¤lfte
     ParallaxLayer[1].SetRect(xoff, 0, 640, 480);
     ParallaxLayer[1].RenderSprite(0, yoff, 0xFFFFFFFF);
 
@@ -1064,11 +1064,11 @@ void TileEngineClass::DrawBackground(void)
     {
         yoff = float ((int)(YOffset / 1.5f) % 480);
 
-        // Obere Hälfte
+        // Obere HÃ¤lfte
         ParallaxLayer[2].SetRect(0, 0, 640, int (yoff));
         ParallaxLayer[2].RenderSprite(float (390 - XOffset), 480-(float)(yoff), 0xFFFFFFFF);
 
-        // Untere Hälfte
+        // Untere HÃ¤lfte
         ParallaxLayer[2].SetRect(0, int (yoff), 640, 480);
         ParallaxLayer[2].RenderSprite(float (390 - XOffset), 0, 0xFFFFFFFF);
     }
@@ -1083,14 +1083,14 @@ void TileEngineClass::DrawBackground(void)
     DirectGraphics.SetAdditiveMode();
 
     xoff = int(XOffset / 4 + CloudMovement) % 640;
-    yoff = float((LEVELSIZE_Y-SCREENSIZE_Y)*40);	// Grösse des Levels in Pixeln (-1 Screen)
+    yoff = float((LEVELSIZE_Y-SCREENSIZE_Y)*40);	// GrÃ¶sse des Levels in Pixeln (-1 Screen)
     yoff = float(240/yoff*YOffset);					// y-Offset des Layers berechnen
 
-    // Linke Hälfte
+    // Linke HÃ¤lfte
     CloudLayer.SetRect(0, int(yoff), int(xoff), 240);
     CloudLayer.RenderSprite(640-(float)(xoff), 0, 0xFFFFFFFF);
 
-    // Rechte Hälfte
+    // Rechte HÃ¤lfte
     CloudLayer.SetRect(int(xoff), int(yoff), 640, 240);
     CloudLayer.RenderSprite(0, 0, 0xFFFFFFFF);
 
@@ -1118,8 +1118,8 @@ void TileEngineClass::DrawBackground(void)
 // --------------------------------------------------------------------------------------
 // Level Hintergrund anzeigen
 //
-// Das Level wird Tile für Tile durchgegangen das Vertex-Array solange mit
-// Vertices gefüllt, die das selbe Tileset verwenden, bis ein anderes Tileset
+// Das Level wird Tile fÃ¼r Tile durchgegangen das Vertex-Array solange mit
+// Vertices gefÃ¼llt, die das selbe Tileset verwenden, bis ein anderes Tileset
 // gesetzt werden muss, worauf alle Vetices im Array mit der alten Textur gerendert
 // werden und alles mit der neuen Textur von vorne wieder losgeht, bis alle Tiles
 // durchgenommen wurden.
@@ -1127,7 +1127,7 @@ void TileEngineClass::DrawBackground(void)
 // So funzt das auch bei FrontLevel und (vielleicht bald) Overlay
 //
 // Hier werden alle Tiles im Back-Layer gesetzt, die KEINE Wand sind,
-// da die Wände später gesetzt werden, da sie alles verdecken, was in sie reinragt
+// da die WÃ¤nde spÃ¤ter gesetzt werden, da sie alles verdecken, was in sie reinragt
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::DrawBackLevel(void)
@@ -1139,7 +1139,7 @@ void TileEngineClass::DrawBackLevel(void)
     float			tl, tr, to, tu;				// Textur Koordinaten
     unsigned int	Type;						// TileNR des Tiles
 
-    // Am Anfang noch keine Textur gewählt
+    // Am Anfang noch keine Textur gewÃ¤hlt
     ActualTexture = -1;
 
     // x und ypos am screen errechnen
@@ -1161,7 +1161,7 @@ void TileEngineClass::DrawBackLevel(void)
 
         for(int i = RenderPosX; i<RenderPosXTo; i++)
         {
-            if   (TileAt(xLevel+i, yLevel+j).BackArt > 0 &&			// Überhaupt ein Tile drin ?
+            if   (TileAt(xLevel+i, yLevel+j).BackArt > 0 &&			// Ãœberhaupt ein Tile drin ?
                     (!(TileAt(xLevel+i, yLevel+j).Block & BLOCKWERT_WAND) ||
                      (TileAt(xLevel+i, yLevel+j).FrontArt > 0 &&
                       TileAt(xLevel+i, yLevel+j).Block & BLOCKWERT_VERDECKEN)))
@@ -1189,7 +1189,7 @@ void TileEngineClass::DrawBackLevel(void)
                 if (TileAt(xLevel+i, yLevel+j).Block & BLOCKWERT_ANIMIERT_BACK)
                     Type += 36*TileAnimPhase;
 
-                // richtigen Ausschnitt für das aktuelle Tile setzen
+                // richtigen Ausschnitt fÃ¼r das aktuelle Tile setzen
                 Rect = TileRects[Type];
 
                 // Screen-Koordinaten der Vertices
@@ -1316,7 +1316,7 @@ void TileEngineClass::DrawFrontLevel(void)
     float			tl, tr, to, tu;				// Textur Koordinaten
     unsigned int	Type;						// TileNR des Tiles
 
-    // Am Anfang noch keine Textur gewählt
+    // Am Anfang noch keine Textur gewÃ¤hlt
     ActualTexture = -1;
 
     // x und ypos am screen errechnen
@@ -1366,7 +1366,7 @@ void TileEngineClass::DrawFrontLevel(void)
                 if (TileAt(xLevel+i, yLevel+j).Block & BLOCKWERT_ANIMIERT_FRONT)
                     Type += 36*TileAnimPhase;
 
-                // richtigen Ausschnitt für das aktuelle Tile setzen
+                // richtigen Ausschnitt fÃ¼r das aktuelle Tile setzen
                 Rect = TileRects[Type];
 
                 // Screen-Koordinaten der Vertices
@@ -1386,7 +1386,7 @@ void TileEngineClass::DrawFrontLevel(void)
                 to = Rect.top   /TILESETSIZE_Y;				// Oben
                 tu = Rect.bottom/TILESETSIZE_Y;				// Unten
 
-                // Licht setzen (prüfen auf Overlay light, wegen hellen Kanten)
+                // Licht setzen (prÃ¼fen auf Overlay light, wegen hellen Kanten)
                 if (TileAt(xLevel+i, yLevel+j).Block & BLOCKWERT_OVERLAY_LIGHT)
                 {
                     v1.color = TileAt(xLevel+i, yLevel+j).Color[0];
@@ -1508,7 +1508,7 @@ void TileEngineClass::ScrollLevel(float x, float y, int neu, float sx, float sy)
 }
 
 // --------------------------------------------------------------------------------------
-// Wandstücke, die den Spieler vedecken, erneut zeichnen
+// WandstÃ¼cke, die den Spieler vedecken, erneut zeichnen
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::DrawBackLevelOverlay (void)
@@ -1520,7 +1520,7 @@ void TileEngineClass::DrawBackLevelOverlay (void)
     float			tl, tr, to, tu;				// Textur Koordinaten
     unsigned int	Type;						// TileNR des Tiles
 
-    // Am Anfang noch keine Textur gewählt
+    // Am Anfang noch keine Textur gewÃ¤hlt
     ActualTexture = -1;
 
     // x und ypos am screen errechnen
@@ -1571,7 +1571,7 @@ void TileEngineClass::DrawBackLevelOverlay (void)
                 if (TileAt(xLevel+i, yLevel+j).Block & BLOCKWERT_ANIMIERT_BACK)
                     Type += 36*TileAnimPhase;
 
-                // richtigen Ausschnitt für das aktuelle Tile setzen
+                // richtigen Ausschnitt fÃ¼r das aktuelle Tile setzen
                 Rect = TileRects[Type];
 
                 // Screen-Koordinaten der Vertices
@@ -1641,7 +1641,7 @@ void TileEngineClass::DrawBackLevelOverlay (void)
 }
 
 // --------------------------------------------------------------------------------------
-// Die Levelstücke zeigen, die den Spieler verdecken
+// Die LevelstÃ¼cke zeigen, die den Spieler verdecken
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::DrawOverlayLevel(void)
@@ -1653,7 +1653,7 @@ void TileEngineClass::DrawOverlayLevel(void)
     float			tl, tr, to, tu;				// Textur Koordinaten
     unsigned int	Type;						// TileNR des Tiles
 
-    // Am Anfang noch keine Textur gewählt
+    // Am Anfang noch keine Textur gewÃ¤hlt
     ActualTexture = -1;
 
     // x und ypos am screen errechnen
@@ -1726,7 +1726,7 @@ void TileEngineClass::DrawOverlayLevel(void)
                 					Wasserfall[0].SetRect (xoff, yoff, xoff+20, yoff+20);
                 					Wasserfall[0].RenderSprite((float)(i*20-xTileOffs), (float)(j*20-yTileOffs), Col2);
 
-                					// Glanzschicht (Schicht 3) drüber
+                					// Glanzschicht (Schicht 3) drÃ¼ber
                 					//
                 					DirectGraphics.SetAdditiveMode();
                 					Wasserfall[1].SetRect ((i*20-xTileOffs)%640, (j*20-yTileOffs)%480, (i*20-xTileOffs)%640+20, (j*20-yTileOffs)%480+20);
@@ -1769,7 +1769,7 @@ void TileEngineClass::DrawOverlayLevel(void)
                     if (TileAt(xLevel+i, yLevel+j).Block & BLOCKWERT_ANIMIERT_FRONT)
                         Type += 36*TileAnimPhase;
 
-                    // richtigen Ausschnitt für das aktuelle Tile setzen
+                    // richtigen Ausschnitt fÃ¼r das aktuelle Tile setzen
                     Rect = TileRects[Type];
 
                     // Textur-Koordinaten
@@ -1859,7 +1859,7 @@ void TileEngineClass::DrawOverlayLevel(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Die Levelstücke zeigen, die den Spieler verdecken
+// Die LevelstÃ¼cke zeigen, die den Spieler verdecken
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::DrawWater(void)
@@ -2013,7 +2013,7 @@ void TileEngineClass::DrawWater(void)
                             v1.color = v2.color = v3.color = v4.color = Col2;
                         }
 
-                        // Oberfläche des Wassers aufhellen
+                        // OberflÃ¤che des Wassers aufhellen
                         //DKS - Fixed potential out of bounds access to Tiles[][] array here
                         //      by adding check for yLevel+j-1 >= 0:
                         //if (!(TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID) &&           (ORIGINAL TWO LINES)
@@ -2163,7 +2163,7 @@ void TileEngineClass::DrawWater(void)
                     Wasserfall[0].SetRect (xoff, yoff, xoff+TILESIZE_X, yoff+TILESIZE_Y);
                     Wasserfall[0].RenderSprite((float)(i*TILESIZE_X-xTileOffs), (float)(j*TILESIZE_Y-yTileOffs), Col2);
 
-                    // Glanzschicht (Schicht 3) drüber
+                    // Glanzschicht (Schicht 3) drÃ¼ber
                     //
                     Wasserfall[1].SetRect ((i*TILESIZE_X-xTileOffs)%640,
                                            (j*TILESIZE_Y-yTileOffs)%480,
@@ -2288,12 +2288,12 @@ void TileEngineClass::UpdateLevel(void)
     YOffset += ScrollSpeedY * SpeedFaktor;
 
     // Tiles animieren
-    TileAnimCount += SpeedFaktor;				// Counter erhöhen
-    if (TileAnimCount > TILEANIM_SPEED)			// auf Maximum prüfen
-        //if (TileAnimCount > 0.5f)			// auf Maximum prüfen
+    TileAnimCount += SpeedFaktor;				// Counter erhÃ¶hen
+    if (TileAnimCount > TILEANIM_SPEED)			// auf Maximum prÃ¼fen
+        //if (TileAnimCount > 0.5f)			// auf Maximum prÃ¼fen
     {
         TileAnimCount = 0.0f;					// Counter wieder auf 0 setzen
-        TileAnimPhase++;						// und nächste Animphase setzen
+        TileAnimPhase++;						// und nÃ¤chste Animphase setzen
         if (TileAnimPhase >=4)					// Animation wieer von vorne ?
             TileAnimPhase = 0;
     }
@@ -2518,7 +2518,7 @@ void TileEngineClass::UpdateLevel(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Die Ränder bei den Overlay Tiles der zerstörbaren Wände
+// Die RÃ¤nder bei den Overlay Tiles der zerstÃ¶rbaren WÃ¤nde
 // ausfransen, indem die Alphawerte der angrenzenden Tiles auf 0 gesetzt werden
 // damit die Tiles nicht so abgeschnitten aussehen
 // --------------------------------------------------------------------------------------
@@ -2576,7 +2576,7 @@ void TileEngineClass::MakeBordersLookCool(int x, int y)
 //      and I've commented it out and made no replacement.
 #if 0  // BEGIN COPY OF ORIGINAL VERSIONS THAT HAVE BEEN REWRITTEN
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welche BlockArt sich Rechts vom übergebenen Rect befindet
+// ZurÃ¼ckliefern, welche BlockArt sich Rechts vom Ã¼bergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
 int	TileEngineClass::BlockRechts(float &x, float &y, float  &xo, float &yo, RECT rect, bool resolve)
@@ -2628,7 +2628,7 @@ int	TileEngineClass::BlockRechts(float &x, float &y, float  &xo, float &yo, RECT
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, ob sich rechts eine zerstörbare Wand befindet
+// ZurÃ¼ckliefern, ob sich rechts eine zerstÃ¶rbare Wand befindet
 // --------------------------------------------------------------------------------------
 
 bool TileEngineClass::BlockDestroyRechts(float &x, float &y, float  &xo, float &yo, RECT rect)
@@ -2695,7 +2695,7 @@ void TileEngineClass::ResolveLinks (float &x, float &y, float &xo, float &yo, RE
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welche BlockArt sich Links vom übergebenen Rect befindet
+// ZurÃ¼ckliefern, welche BlockArt sich Links vom Ã¼bergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
 int	TileEngineClass::BlockLinks(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve)
@@ -2747,7 +2747,7 @@ int	TileEngineClass::BlockLinks(float &x, float &y, float &xo, float &yo, RECT r
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, ob sich links eine zerstörbare Wand befindet
+// ZurÃ¼ckliefern, ob sich links eine zerstÃ¶rbare Wand befindet
 // --------------------------------------------------------------------------------------
 
 bool TileEngineClass::BlockDestroyLinks(float &x, float &y, float &xo, float &yo, RECT rect)
@@ -2791,7 +2791,7 @@ bool TileEngineClass::BlockDestroyLinks(float &x, float &y, float &xo, float &yo
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welche BlockArt sich oberhalb vom übergebenen Rect befindet
+// ZurÃ¼ckliefern, welche BlockArt sich oberhalb vom Ã¼bergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
 int	TileEngineClass::BlockOben(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve)
@@ -2844,7 +2844,7 @@ int	TileEngineClass::BlockOben(float &x, float &y, float &xo, float &yo, RECT re
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, ob sich oben eine zerstörbare Wand befindet
+// ZurÃ¼ckliefern, ob sich oben eine zerstÃ¶rbare Wand befindet
 // --------------------------------------------------------------------------------------
 
 bool TileEngineClass::BlockDestroyOben(float &x, float &y, float &xo, float &yo, RECT rect)
@@ -2886,7 +2886,7 @@ bool TileEngineClass::BlockDestroyOben(float &x, float &y, float &xo, float &yo,
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welche BlockArt sich unterhalb vom übergebenen Rect befindet
+// ZurÃ¼ckliefern, welche BlockArt sich unterhalb vom Ã¼bergebenen Rect befindet
 // und dabei nicht "begradigen" sprich die y-Position an das Tile angleichen
 // --------------------------------------------------------------------------------------
 
@@ -2933,7 +2933,7 @@ int	TileEngineClass::BlockUntenNormal(float &x, float &y, float &xo, float &yo, 
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welche BlockArt sich unterhalb vom übergebenen Rect befindet
+// ZurÃ¼ckliefern, welche BlockArt sich unterhalb vom Ã¼bergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
 int	TileEngineClass::BlockUnten(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve)
@@ -2997,7 +2997,7 @@ int	TileEngineClass::BlockUnten(float &x, float &y, float &xo, float &yo, RECT r
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welche BlockArt sich unterhalb vom übergebenen Rect befindet
+// ZurÃ¼ckliefern, welche BlockArt sich unterhalb vom Ã¼bergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
 bool TileEngineClass::BlockDestroyUnten(float &x, float &y, float &xo, float &yo, RECT rect)
@@ -3022,7 +3022,7 @@ bool TileEngineClass::BlockDestroyUnten(float &x, float &y, float &xo, float &yo
     //laenge = int(y - yo)+1;
     laenge = 5;
 
-    // so lange ausführen, bis kein Block mehr unter den Füßen ist
+    // so lange ausfÃ¼hren, bis kein Block mehr unter den FÃ¼ÃŸen ist
     //do
     for (int l=0; l<laenge; l++)
     {
@@ -3044,7 +3044,7 @@ bool TileEngineClass::BlockDestroyUnten(float &x, float &y, float &xo, float &yo
 #endif //0
 // DKS - BEGIN REWRITTEN VERSIONS OF ABOVE FUNCTIONS:
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welche BlockArt sich Rechts vom übergebenen Rect befindet
+// ZurÃ¼ckliefern, welche BlockArt sich Rechts vom Ã¼bergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
 uint32_t TileEngineClass::BlockRechts(float &x, float y, float &xo, float yo, RECT rect, bool resolve)
@@ -3084,7 +3084,7 @@ uint32_t TileEngineClass::BlockRechts(float &x, float y, float &xo, float yo, RE
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, ob sich rechts eine zerstörbare Wand befindet
+// ZurÃ¼ckliefern, ob sich rechts eine zerstÃ¶rbare Wand befindet
 // --------------------------------------------------------------------------------------
 
 bool TileEngineClass::BlockDestroyRechts(float x, float y, float xo, float yo, RECT rect)
@@ -3115,7 +3115,7 @@ bool TileEngineClass::BlockDestroyRechts(float x, float y, float xo, float yo, R
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welche BlockArt sich Links vom übergebenen Rect befindet
+// ZurÃ¼ckliefern, welche BlockArt sich Links vom Ã¼bergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
 uint32_t TileEngineClass::BlockLinks(float &x, float y, float &xo, float yo, RECT rect, bool resolve)
@@ -3154,7 +3154,7 @@ uint32_t TileEngineClass::BlockLinks(float &x, float y, float &xo, float yo, REC
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, ob sich links eine zerstörbare Wand befindet
+// ZurÃ¼ckliefern, ob sich links eine zerstÃ¶rbare Wand befindet
 // --------------------------------------------------------------------------------------
 
 bool TileEngineClass::BlockDestroyLinks(float x, float y, float xo, float yo, RECT rect)
@@ -3185,7 +3185,7 @@ bool TileEngineClass::BlockDestroyLinks(float x, float y, float xo, float yo, RE
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welche Blockblock sich oberhalb vom übergebenen Rect befindet
+// ZurÃ¼ckliefern, welche Blockblock sich oberhalb vom Ã¼bergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
 uint32_t TileEngineClass::BlockOben(float x, float &y, float xo, float &yo, RECT rect, bool resolve)
@@ -3224,7 +3224,7 @@ uint32_t TileEngineClass::BlockOben(float x, float &y, float xo, float &yo, RECT
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, ob sich oben eine zerstörbare Wand befindet
+// ZurÃ¼ckliefern, ob sich oben eine zerstÃ¶rbare Wand befindet
 // --------------------------------------------------------------------------------------
 
 bool TileEngineClass::BlockDestroyOben(float x, float y, float xo, float yo, RECT rect)
@@ -3255,7 +3255,7 @@ bool TileEngineClass::BlockDestroyOben(float x, float y, float xo, float yo, REC
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welche Blockblock sich unterhalb vom übergebenen Rect befindet
+// ZurÃ¼ckliefern, welche Blockblock sich unterhalb vom Ã¼bergebenen Rect befindet
 // und dabei nicht "begradigen" sprich die y-Position an das Tile angleichen
 // --------------------------------------------------------------------------------------
 
@@ -3292,7 +3292,7 @@ uint32_t TileEngineClass::BlockUntenNormal(float x, float y, float xo, float yo,
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welche Blockblock sich unterhalb vom übergebenen Rect befindet
+// ZurÃ¼ckliefern, welche Blockblock sich unterhalb vom Ã¼bergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
 uint32_t TileEngineClass::BlockUnten(float x, float &y, float xo, float &yo, RECT rect, bool resolve)
@@ -3335,7 +3335,7 @@ uint32_t TileEngineClass::BlockUnten(float x, float &y, float xo, float &yo, REC
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welche Blockblock sich unterhalb vom übergebenen Rect befindet
+// ZurÃ¼ckliefern, welche Blockblock sich unterhalb vom Ã¼bergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
 bool TileEngineClass::BlockDestroyUnten(float x, float y, float xo, float yo, RECT rect)
@@ -3367,7 +3367,7 @@ bool TileEngineClass::BlockDestroyUnten(float x, float y, float xo, float yo, RE
 //DKS - END BLOCK OF NEW FUNCTIONS
 
 // --------------------------------------------------------------------------------------
-// Auf Schrägen prüfen
+// Auf SchrÃ¤gen prÃ¼fen
 // --------------------------------------------------------------------------------------
 //DKS - Rewrote this function to not access Tiles[][] array out of bounds, and to be
 //      a bit more efficient and clean. It also now only take parameters that it actually
@@ -3387,8 +3387,8 @@ int	TileEngineClass::BlockSlopes(float &x, float &y, float &xo, float &yo, RECT 
 
     for(int j = rect.bottom; j<rect.bottom+TILESIZE_Y; j++)
     {
-        // Schräge links
-        // von links anfangen mit der Block-Prüdung
+        // SchrÃ¤ge links
+        // von links anfangen mit der Block-PrÃ¼dung
         //
         for(int i = rect.left; i<rect.right; i+=1)
         {
@@ -3412,8 +3412,8 @@ int	TileEngineClass::BlockSlopes(float &x, float &y, float &xo, float &yo, RECT 
             }
         }
 
-        // Schräge rechts
-        // von rechts anfangen mit der Block-Prüdung
+        // SchrÃ¤ge rechts
+        // von rechts anfangen mit der Block-PrÃ¼dung
         //
         for(int i = rect.right; i>rect.left; i-=1)
         {
@@ -3455,8 +3455,8 @@ uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT rect, 
         else if (ylev >= LEVELSIZE_Y)
             return 0;
 
-        // Schräge links
-        // von links anfangen mit der Block-Prüdung
+        // SchrÃ¤ge links
+        // von links anfangen mit der Block-PrÃ¼dung
 
         //DKS - TODO see if you can get this to increment faster, by tile:
         for(int i = rect.left; i<rect.right; i++) {
@@ -3478,8 +3478,8 @@ uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT rect, 
             }
         }
 
-        // Schräge rechts
-        // von rechts anfangen mit der Block-Prüdung
+        // SchrÃ¤ge rechts
+        // von rechts anfangen mit der Block-PrÃ¼dung
 
         //DKS TODO: try to get this to decrement faster, by tile:
         for(int i = rect.right; i>rect.left; i--) {
@@ -3506,8 +3506,8 @@ uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT rect, 
 }
 
 // --------------------------------------------------------------------------------------
-// Checken ob ein Schuss eine zerstörbare Wand getroffen hat und wenn ja, diese
-// zerstören und true zurückliefern, damit der Schuss ebenfalls gelöscht wird
+// Checken ob ein Schuss eine zerstÃ¶rbare Wand getroffen hat und wenn ja, diese
+// zerstÃ¶ren und true zurÃ¼ckliefern, damit der Schuss ebenfalls gelÃ¶scht wird
 // --------------------------------------------------------------------------------------
 //DKS - x,y parameters did not need to be references and xs,ys params were never
 //      anything but 0 in the only place this function was used, so I eliminated
@@ -3535,7 +3535,7 @@ bool TileEngineClass::CheckDestroyableWalls(float &x, float &y, float xs, float 
     xl = int(rect.right )/TILESIZE_X+2;
     yl = int(rect.bottom)/TILESIZE_Y+2;
 
-    // Ganzes Rect des Schusses prüfen
+    // Ganzes Rect des Schusses prÃ¼fen
     for (int i=xstart-1; i<xstart + xl; i++)
         for (int j=ystart; j<ystart + yl; j++)
             if (TileAt(i, j).Block & BLOCKWERT_DESTRUCTIBLE)
@@ -3555,7 +3555,7 @@ bool TileEngineClass::CheckDestroyableWalls(float x, float y, float xs, float ys
     int xl = int(rect.right )/TILESIZE_X+2;
     int yl = int(rect.bottom)/TILESIZE_Y+2;
 
-    // Ganzes Rect des Schusses prüfen
+    // Ganzes Rect des Schusses prÃ¼fen
     for (int i=xstart-1; i < xstart+xl; i++) {
         if (i < 0)
             continue;
@@ -3579,7 +3579,7 @@ bool TileEngineClass::CheckDestroyableWalls(float x, float y, float xs, float ys
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welcher Farbwert sich in der Mitte des RECTs an x/y im Level befindet
+// ZurÃ¼ckliefern, welcher Farbwert sich in der Mitte des RECTs an x/y im Level befindet
 // damit die Gegner entsprechend dem Licht im Editor "beleuchtet" werden
 // --------------------------------------------------------------------------------------
 
@@ -3596,20 +3596,20 @@ D3DCOLOR TileEngineClass::LightValue(float x, float y, RECT rect, bool forced)
     //      check forced==false before blindly looking up block value:
     //if (!(TileAt(xLevel, yLevel).Block & BLOCKWERT_LIGHT) &&		// Soll das Leveltile garnicht
     //        forced == false)
-    //    return 0xFFFFFFFF;										// das Licht des Objektes ändern
+    //    return 0xFFFFFFFF;										// das Licht des Objektes Ã¤ndern
     if ( (xLevel >= LEVELSIZE_X || yLevel >= LEVELSIZE_Y) ||
          (forced == false && !(TileAt(xLevel, yLevel).Block & BLOCKWERT_LIGHT)) )		// Soll das Leveltile garnicht
-        return 0xFFFFFFFF;										// das Licht des Objektes ändern
+        return 0xFFFFFFFF;										// das Licht des Objektes Ã¤ndern
 
     r = TileAt(xLevel, yLevel).Red;
     g = TileAt(xLevel, yLevel).Green;
     b = TileAt(xLevel, yLevel).Blue;
 
-    r += 48;				// Farbewerte ein wenig erhöhen, damit man selbst bei 0,0,0
+    r += 48;				// Farbewerte ein wenig erhÃ¶hen, damit man selbst bei 0,0,0
     g += 48;				// noch ein wenig was sehen kann und das Sprite nicht
     b += 48;				// KOMPLETT schwarz wird ... minimum ist 48, 48, 48
 
-    if (r > 255) r = 255;	// Grenzen überschritten ? Dann angleichen
+    if (r > 255) r = 255;	// Grenzen Ã¼berschritten ? Dann angleichen
     if (g > 255) g = 255;
     if (b > 255) b = 255;
 
@@ -3619,8 +3619,8 @@ D3DCOLOR TileEngineClass::LightValue(float x, float y, RECT rect, bool forced)
 }
 
 // --------------------------------------------------------------------------------------
-// Anfänglich verwendete Lichtberechnung herstellen
-// Jedes Tile hat an allen vier Ecken die selbe Farbe -> Keine Übergänge -> Scheisse
+// AnfÃ¤nglich verwendete Lichtberechnung herstellen
+// Jedes Tile hat an allen vier Ecken die selbe Farbe -> Keine ÃœbergÃ¤nge -> Scheisse
 // --------------------------------------------------------------------------------------
 
 //DKS - This function was never actually used in the original game and is now disabled:
@@ -3644,7 +3644,7 @@ void TileEngineClass::ComputeShitLight (void)
 // --------------------------------------------------------------------------------------
 // Neue Lichtberechnung
 // Jedes Tile hat an allen vier Ecken eine interpolierte Farbe
-// entsprechend der umliegenden Tiles -> smoothe Übergänge -> Geilomat!
+// entsprechend der umliegenden Tiles -> smoothe ÃœbergÃ¤nge -> Geilomat!
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::ComputeCoolLight (void)
@@ -3962,7 +3962,7 @@ void TileEngineClass::DrawShadow (void)
 
     col = D3DCOLOR_RGBA(0, 0, 0, (int)ShadowAlpha);
 
-    // Seitenränder
+    // SeitenrÃ¤nder
     RenderRect(x - 200,  y - 200,  1420, 200,  col);
     RenderRect(x - 200,  y + 1420, 1420, 200,  col);
     RenderRect(x - 200,  y,		   200,  1024, col);
@@ -3982,7 +3982,7 @@ void TileEngineClass::ExplodeWall (int x, int y)
             y>(int)LEVELSIZE_Y-1)
         return;
 
-    // keine zerstörbare Wand?
+    // keine zerstÃ¶rbare Wand?
     //
     if (!(TileAt(x, y).Block & BLOCKWERT_DESTRUCTIBLE))
         return;
@@ -4002,7 +4002,7 @@ void TileEngineClass::ExplodeWall (int x, int y)
 }
 
 // --------------------------------------------------------------------------------------
-// Wand an x/y und angrenzende Wände explodieren lassen
+// Wand an x/y und angrenzende WÃ¤nde explodieren lassen
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::ExplodeWalls (int x, int y)
@@ -4042,7 +4042,7 @@ void TileEngineClass::ExplodeWalls (int x, int y)
 }
 
 // --------------------------------------------------------------------------------------
-// Alle LightMaps auf dem Screen löschen und Ursprungszustand wieder herstellen
+// Alle LightMaps auf dem Screen lÃ¶schen und Ursprungszustand wieder herstellen
 // --------------------------------------------------------------------------------------
 
 //DKS - See note for function below this one for DrawLightmap() as to why this was
@@ -4113,7 +4113,7 @@ void TileEngineClass::DrawLightmap (int Map, float x, float y, int alpha)
 
                     if (!(TileAt(xo, yo).Block & BLOCKWERT_WAND))
                     {
-                        // Farben addieren (mit OR verknüpfen)
+                        // Farben addieren (mit OR verknÃ¼pfen)
                         TileAt(xo, yo).Color[0] |= lightmaps[Map].map[mapx + mapy * sx];
                         TileAt(xo, yo).Color[1] |= lightmaps[Map].map[mapx + 1 + mapy * sx];
                         TileAt(xo, yo).Color[2] |= lightmaps[Map].map[mapx + (mapy + 1) * sx];

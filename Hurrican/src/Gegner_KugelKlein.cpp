@@ -1,9 +1,9 @@
 // --------------------------------------------------------------------------------------
 // Die kleine Stachelkugel
 //
-// Hüpft nur im Gang entlang
-// Je nachdem wie hoch sie im Editor über dem Boden gesetzt wurde springt sie auch
-// später umher. Springt zu Beginn in eine zufällige Richtung links/rechts
+// HÃ¼pft nur im Gang entlang
+// Je nachdem wie hoch sie im Editor Ã¼ber dem Boden gesetzt wurde springt sie auch
+// spÃ¤ter umher. Springt zu Beginn in eine zufÃ¤llige Richtung links/rechts
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -38,16 +38,16 @@ GegnerKugelKlein::GegnerKugelKlein(int Wert1, int Wert2, bool Light)
 void GegnerKugelKlein::DoKI(void)
 {
     BlickRichtung = LINKS;
-    AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-    if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+    AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+    if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
     {
         AnimCount = 0;					// Dann wieder auf Null setzen
 
-        // Vorwärts oder rückwärts animieren, je nachdem, in welche Richtung die Kugel gerade fliegt
+        // VorwÃ¤rts oder rÃ¼ckwÃ¤rts animieren, je nachdem, in welche Richtung die Kugel gerade fliegt
         //
         if (xSpeed > 0.0f)
         {
-            AnimPhase++;					// Und nächste Animationsphase
+            AnimPhase++;					// Und nÃ¤chste Animationsphase
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
                 AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
         }
@@ -59,7 +59,7 @@ void GegnerKugelKlein::DoKI(void)
         }
     } // animieren
 
-    // Grenze für y-Bewegung setzen
+    // Grenze fÃ¼r y-Bewegung setzen
     //
     if (ySpeed > 20.0f) ySpeed = 20.0f;
 
@@ -67,9 +67,9 @@ void GegnerKugelKlein::DoKI(void)
     //
     switch (Handlung)
     {
-    case GEGNER_LAUFEN:					// Kugel hüpft im Gang rum
+    case GEGNER_LAUFEN:					// Kugel hÃ¼pft im Gang rum
     {
-        // Vertikal abhüpfen
+        // Vertikal abhÃ¼pfen
         //
         if ((ySpeed > 0.0f &&						// Boden
                 (blocku & BLOCKWERT_WAND		||
@@ -82,14 +82,14 @@ void GegnerKugelKlein::DoKI(void)
         {
             ySpeed *= -1.0f;
 
-            // Mindestsprunghöhe setzen
+            // MindestsprunghÃ¶he setzen
             //
             if (ySpeed < 0.0f &&
                     ySpeed > -10.0f)
                 ySpeed = -10.0f;
         }
 
-        // Horizontal abhüpfen
+        // Horizontal abhÃ¼pfen
         //
         if ((xSpeed < 0.0f &&						// Links
                 (blockl & BLOCKWERT_WAND		||
@@ -107,7 +107,7 @@ void GegnerKugelKlein::DoKI(void)
         break;
     } // switch
 
-    // Berührt die Kugel den Spieler ?
+    // BerÃ¼hrt die Kugel den Spieler ?
     //
     TestDamagePlayers(2.0f SYNC);
 }

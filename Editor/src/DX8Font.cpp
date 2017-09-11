@@ -5,7 +5,7 @@
 // Font Klasse
 // zum Anzeigen von Schriften
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -43,8 +43,8 @@ DirectGraphicsFont::~DirectGraphicsFont(void)
 
 // --------------------------------------------------------------------------------------
 // Laden des Bildes "Filename" mit
-// x-Grösse eines Zeichens und
-// y-Grösse eines Zeichens und
+// x-GrÃ¶sse eines Zeichens und
+// y-GrÃ¶sse eines Zeichens und
 // Anzahl der Zeichen pro Zeile
 // --------------------------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ bool DirectGraphicsFont::LoadFont(char Filename[256], int xts, int yts,
 	mTexture = new (DirectGraphicsSprite);
 	mTexture->LoadImage(Filename, xts, yts, xCharsize, yCharsize, xChars, 0);
 	
-	// Grösse setzen
+	// GrÃ¶sse setzen
 	//
 	mXCharSize		= xCharsize;
 	mYCharSize		= yCharsize;
@@ -62,7 +62,7 @@ bool DirectGraphicsFont::LoadFont(char Filename[256], int xts, int yts,
 	mXTextureSize	= xts;
 	mYTextureSize	= yts;
 
-	// Länge der einzelnen Zeichen aus der Grafik bestimmen
+	// LÃ¤nge der einzelnen Zeichen aus der Grafik bestimmen
 	//
 
 	// Geladene Font Textur locken
@@ -286,7 +286,7 @@ bool DirectGraphicsFont::DrawText(float x, float y, char Text[], D3DCOLOR Color,
 }
 
 // --------------------------------------------------------------------------------------
-// Länge eines Strings in Pixeln zurückliefern
+// LÃ¤nge eines Strings in Pixeln zurÃ¼ckliefern
 // --------------------------------------------------------------------------------------
 
 int DirectGraphicsFont::DemoStringLength(char Text[])
@@ -314,7 +314,7 @@ int DirectGraphicsFont::DemoStringLength(char Text[])
 
 
 // --------------------------------------------------------------------------------------
-// Länge eines Strings in Pixeln zurückliefern
+// LÃ¤nge eines Strings in Pixeln zurÃ¼ckliefern
 // --------------------------------------------------------------------------------------
 
 int DirectGraphicsFont::StringLength(char Text[])
@@ -341,7 +341,7 @@ int DirectGraphicsFont::StringLength(char Text[])
 }
 
 // --------------------------------------------------------------------------------------
-// Länge eines Strings in Pixeln mit "Spacing" Pixeln freiraum zwischen den Zeichen zurückliefern
+// LÃ¤nge eines Strings in Pixeln mit "Spacing" Pixeln freiraum zwischen den Zeichen zurÃ¼ckliefern
 // --------------------------------------------------------------------------------------
 
 int DirectGraphicsFont::StringLength(char Text[], int Spacing)

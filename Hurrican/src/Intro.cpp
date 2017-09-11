@@ -2,9 +2,9 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Klasse für das Hurrican Intro
+// Klasse fÃ¼r das Hurrican Intro
 //
-// (c) 2006 Jörg M. Winterstein
+// (c) 2006 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -20,7 +20,7 @@
 #include "Gameplay.h"
 
 // --------------------------------------------------------------------------------------
-// Konstruktor, lädt die Grafiken
+// Konstruktor, lÃ¤dt die Grafiken
 // --------------------------------------------------------------------------------------
 
 IntroClass::IntroClass(void)
@@ -127,7 +127,7 @@ void IntroClass::DoIntro(void)
 
     Background[a].RenderSprite(0, 0, 0, 0xFFFFFFFF);
 
-    // nächstes Bild überblenden?
+    // nÃ¤chstes Bild Ã¼berblenden?
     if ((TextOff - 1) % 4 == 3 &&
             a < 5)
     {
@@ -256,7 +256,7 @@ void IntroClass::DoIntro(void)
             }
         }
 
-        //grüne Rechtecke rendern
+        //grÃ¼ne Rechtecke rendern
         if (EntriesOff < num_entries)
         {
             int l = pDefaultFont->StringLength(entries[EntriesOff].text.c_str(), 0) + 28;

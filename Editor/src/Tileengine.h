@@ -2,10 +2,10 @@
 
 // -------------------------------------------------------------------------------------- 
 //
-// 2D Tile-Engine für Hurrican
+// 2D Tile-Engine fÃ¼r Hurrican
 // bestehend aus einem Vordergrund-Layer in verschiedenen Helligkeitsstufen
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -39,25 +39,25 @@
 
 #define TILEANIM_SPEED      2.0f
 
-//--- Werte zur Levelgrösse
+//--- Werte zur LevelgrÃ¶sse
 
-#define	TILESIZE_X			20						// Grösse eines 
+#define	TILESIZE_X			20						// GrÃ¶sse eines 
 #define	TILESIZE_Y			20						// einzelnen Tiles
 #define	TILEMUL_X			0.05f						// einzelnen Tiles
 #define	TILEMUL_Y			0.05f						// einzelnen Tiles
-#define TILESETSIZE_X		256.0f					// Grösse eines
+#define TILESETSIZE_X		256.0f					// GrÃ¶sse eines
 #define TILESETSIZE_Y		256.0f					// Tilesets
 
 #define SCREENSIZE_X		32						// Leveltiles pro Screen 
 #define SCREENSIZE_Y		24
 
-#define MAX_LEVELSIZE_X		1200					// Gesamtgrösse des Level
+#define MAX_LEVELSIZE_X		1200					// GesamtgrÃ¶sse des Level
 #define MAX_LEVELSIZE_Y		1200
 
 #define MAX_TILESETS		256						// Maximalzahl der Tilesets
 #define INCLUDE_ZEROTILE	1						// Tile 0,0 im Tileset mit verwenden ?
 
-//----- Grösse des nicht scrollbaren bereichs setzen
+//----- GrÃ¶sse des nicht scrollbaren bereichs setzen
 
 #define	SCROLL_BORDER_LEFT		240
 #define	SCROLL_BORDER_TOP		80
@@ -75,11 +75,11 @@ struct LevelTileStruct
 	unsigned char   BackArt;						// Tile im Hintergrund
 	unsigned char	FrontArt;						// Tile im Vordergrund
 	unsigned char	Red, Green, Blue, Alpha;		// Farbwert des Tiles
-	unsigned int	Block;							// Blockierungsart (siehe #defines für Flags)
+	unsigned int	Block;							// Blockierungsart (siehe #defines fÃ¼r Flags)
 };
 
 // --------------------------------------------------------------------------------------
-// Struktur für das eines Objektes
+// Struktur fÃ¼r das eines Objektes
 // --------------------------------------------------------------------------------------
 
 struct LevelObjectStruct
@@ -101,7 +101,7 @@ struct LevelObjectStruct
 class TileEngineClass
 {
 	private:
-		float			TileAnimCount;							// Animations-Zähler und
+		float			TileAnimCount;							// Animations-ZÃ¤hler und
 		float			CloudMovement;
 		int				TileAnimPhase;							// Phase der Tile Animation
 		float			ScrollSpeedX, ScrollSpeedY;				// Scrollspeed
@@ -119,10 +119,10 @@ class TileEngineClass
 		DirectGraphicsSprite			ParallaxLayer[5];		// Anzahl der Layer
 		DirectGraphicsSprite			CloudLayer;				// Wolkenlayer
 		long double						XOffset, YOffset;		// Scrolloffset des Levels		
-		unsigned int					LEVELSIZE_X;			// Grösse des Levels
+		unsigned int					LEVELSIZE_X;			// GrÃ¶sse des Levels
 		unsigned int					LEVELSIZE_Y;			// in Tiles
-		double							LEVELPIXELSIZE_X;		// Levelgrösse in Pixeln
-		double							LEVELPIXELSIZE_Y;		// (für XOffset und YOffset)
+		double							LEVELPIXELSIZE_X;		// LevelgrÃ¶sse in Pixeln
+		double							LEVELPIXELSIZE_Y;		// (fÃ¼r XOffset und YOffset)
 
 		TileEngineClass(void);									// Konstruktor
 	   ~TileEngineClass(void);									// Destruktor
@@ -134,10 +134,10 @@ class TileEngineClass
 		void DrawFrontLevel  (void);							// Level vordergrund anzeigen
 		void DrawOverlayLevel(void);							// Tiles, die verdecken
 		void UpdateLevel(void);									// Level evtl scrollen usw
-		int	 BlockRechts(float &x, float &y, RECT rect);		// Funktionen zum Überprüfen
+		int	 BlockRechts(float &x, float &y, RECT rect);		// Funktionen zum ÃœberprÃ¼fen
 		int  BlockLinksPlayer(float &x, float &y, RECT rect);	// Extra-Wurscht
 		int	 BlockLinks (float &x, float &y, RECT rect);		// welche Blockart sich l r o u
-		int	 BlockOben  (float &x, float &y, RECT rect);		// vom übergebenen Rect mit
+		int	 BlockOben  (float &x, float &y, RECT rect);		// vom Ã¼bergebenen Rect mit
 		int	 BlockUnten (float &x, float &y, RECT rect);		// x/y befindet
 		int	 BlockUntenNormal (float &x, float &y, RECT rect);	// Block unten ohne "Begradigung"
 };

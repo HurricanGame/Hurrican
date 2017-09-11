@@ -1,9 +1,9 @@
 // --------------------------------------------------------------------------------------
 // Schalter
 //
-// Lässt sich mit Druck auf die Taste "nach oben kucken" aktivieren
-// Aktiviert das Objekt, welches den gleichen Wert für Value2 eingestellt hat, wie der
-// Schalter selbst. Auch meherer Aktivierungen gleichzeitig sind möglich, falls
+// LÃ¤sst sich mit Druck auf die Taste "nach oben kucken" aktivieren
+// Aktiviert das Objekt, welches den gleichen Wert fÃ¼r Value2 eingestellt hat, wie der
+// Schalter selbst. Auch meherer Aktivierungen gleichzeitig sind mÃ¶glich, falls
 // mehrere Objekte das gleiche Value2 besitzen. Am besten Value2 > 250
 // --------------------------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ GegnerSwitch::GegnerSwitch(int Wert1, int Wert2, bool Light)
 
 void GegnerSwitch::DoKI(void)
 {
-    // Testen, ob der Spieler den Schalter berührt hat und ihn durch Druck auf die "nach oben kucken" Taste
+    // Testen, ob der Spieler den Schalter berÃ¼hrt hat und ihn durch Druck auf die "nach oben kucken" Taste
     // aktiviert
     //
     for (int p = 0; p < NUMPLAYERS; p++)
@@ -49,19 +49,19 @@ void GegnerSwitch::DoKI(void)
 
             SoundManager.PlayWave (100, 128, 11025, SOUND_SWITCH);
 
-            // Und prüfen, ob ein Objekt aktiviert wird
+            // Und prÃ¼fen, ob ein Objekt aktiviert wird
             GegnerClass *pTemp = Gegner.pStart;			// Anfang der Liste
 
             while (pTemp != NULL)							// noch nicht alle durch ?
             {
-                // Value2 stimmt mit dem des Schalters überein? Dann soll dieses Objekt vom Schalter aktiviert werden
+                // Value2 stimmt mit dem des Schalters Ã¼berein? Dann soll dieses Objekt vom Schalter aktiviert werden
                 if (pTemp != this &&
                         pTemp->Value2 == Value2)
                 {
                     pTemp->Handlung = GEGNER_OEFFNEN;
                 }
 
-                pTemp = pTemp->pNext;				// Nächsten Gegner durchgehen
+                pTemp = pTemp->pNext;				// NÃ¤chsten Gegner durchgehen
             }
         }
 }

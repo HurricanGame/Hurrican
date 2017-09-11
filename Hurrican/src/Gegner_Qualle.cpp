@@ -68,7 +68,7 @@ void GegnerQualle::DoKI(void)
         if (pAim->InLiquid == true &&
                 yPos-20 > pAim->ypos)
         {
-            // Bläschen erzeugen
+            // BlÃ¤schen erzeugen
             PartikelSystem.PushPartikel(xPos + 20, yPos + 30, BUBBLE);
 
             // rechts / links bewegen
@@ -125,7 +125,7 @@ void GegnerQualle::DoKI(void)
         }
     }
 
-    // Testen, ob der Spieler die Qualle berührt hat
+    // Testen, ob der Spieler die Qualle berÃ¼hrt hat
     TestDamagePlayers(2.0f SYNC);
 }
 
@@ -137,7 +137,7 @@ void GegnerQualle::GegnerExplode(void)
 {
     for (int i=0; i<5; i++)
     {
-        // ein paar Luftblässchen erzeugen
+        // ein paar LuftblÃ¤sschen erzeugen
         PartikelSystem.PushPartikel(float(xPos - 10  + rand()%45),
                                       float(yPos + 10  + rand()%30), BUBBLE);
     }

@@ -5,7 +5,7 @@
 // Logdatei Klasse
 // zum leichten Handhaben einer Protokoll Datei
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -14,9 +14,9 @@
 // --------------------------------------------------------------------------------------
 
 #include "Logdatei.h"									// Header-Datei einbinden
-#include <windows.h>									// Windowsheader für Messagebox und Beep
-#include <string.h>										// Für String Operationen
-#include <stdio.h>										// Für Datei Operationen
+#include <windows.h>									// Windowsheader fÃ¼r Messagebox und Beep
+#include <string.h>										// FÃ¼r String Operationen
+#include <stdio.h>										// FÃ¼r Datei Operationen
 
 // --------------------------------------------------------------------------------------
 // Variablen
@@ -56,7 +56,7 @@ Logdatei::~Logdatei()
 
 void Logdatei::WriteText(char Text[180], bool Abbruch)
 {
-	Logfile = fopen(itsFilename, "a");					// Datei zum anfügen öffnen
+	Logfile = fopen(itsFilename, "a");					// Datei zum anfÃ¼gen Ã¶ffnen
 	fprintf(Logfile, Text);								// und Text schreiben
 	fclose(Logfile);									// Datei wieder schliessen
 
@@ -74,7 +74,7 @@ void Logdatei::WriteText(char Text[180], bool Abbruch)
 
 void Logdatei::WriteValue(int Value)
 {
-	Logfile = fopen(itsFilename, "a");					// Datei zum anfügen öffnen
+	Logfile = fopen(itsFilename, "a");					// Datei zum anfÃ¼gen Ã¶ffnen
 	fprintf(Logfile, "%i\n", Value);					// und Wert schreiben
 	fclose(Logfile);									// Datei wieder schliessen
 }

@@ -2,7 +2,7 @@
 // Die Spitter Bombe
 //
 // Bombe, aus der der Spitter rauskommt.
-// geile Erklärung, oder ? ;)
+// geile ErklÃ¤rung, oder ? ;)
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -31,11 +31,11 @@ void GegnerSpitterbombe::DoKI(void)
 {
     // Animieren
     //
-    AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-    if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+    AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+    if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
     {
         AnimCount = 0;					// Dann wieder auf Null setzen
-        AnimPhase++;					// Und nächste Animationsphase
+        AnimPhase++;					// Und nÃ¤chste Animationsphase
 
         PartikelSystem.PushPartikel (xPos - 5 + rand()%10, yPos, SMOKE);
 
@@ -43,7 +43,7 @@ void GegnerSpitterbombe::DoKI(void)
             AnimPhase = AnimStart;
     }
 
-    // Testen, ob der Spieler die Bombe berührt hat
+    // Testen, ob der Spieler die Bombe berÃ¼hrt hat
     //
     TestDamagePlayers(1.0f SYNC);
 

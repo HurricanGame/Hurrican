@@ -2,7 +2,7 @@
 // Der Fahrstuhl Boss
 //
 // kommt von oben reingefahren und ballert mit zwei beweglichen Kanonen und einem
-// riesen fetten Laser, der auf einer Schiene läuft
+// riesen fetten Laser, der auf einer Schiene lÃ¤uft
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -37,7 +37,7 @@ GegnerFahrstuhlBoss::GegnerFahrstuhlBoss(int Wert1, int Wert2, bool Light)
     TempY			= 800.0f;
     yPos			= 0.0f;
 
-    // Zusätzliche Grafiken für die Kanone und den Kopf laden
+    // ZusÃ¤tzliche Grafiken fÃ¼r die Kanone und den Kopf laden
     Head.LoadImage ("fahrstuhlboss_head.png",    140, 186, 140, 186, 1, 1);
     Canon.LoadImage("fahrstuhlboss_canon.png",   177, 240,  59, 120, 3, 2);
 }
@@ -112,7 +112,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 
     static float smokecount = 0.0f;
 
-    // Füße an der Seite rauchen lassen
+    // FÃ¼ÃŸe an der Seite rauchen lassen
     //
     smokecount -= 1.0f SYNC;
     if (smokecount < 0.0f)
@@ -257,7 +257,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
     }
     break;
 
-    case GEGNER_LAUFEN:			// yPos über dem Fahrstuhl
+    case GEGNER_LAUFEN:			// yPos Ã¼ber dem Fahrstuhl
     {
     } break;
 
@@ -286,7 +286,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
     }
     break;
 
-    case GEGNER_AUFRICHTEN:		// Gegner fährt wieder hoch
+    case GEGNER_AUFRICHTEN:		// Gegner fÃ¤hrt wieder hoch
     {
         TempY += 5.0f SYNC;
 
@@ -351,7 +351,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
     }
     break;
 
-    case GEGNER_BOMBARDIEREN:		// Steine bröckeln lassen
+    case GEGNER_BOMBARDIEREN:		// Steine brÃ¶ckeln lassen
     {
         // An der Seite angekommen ? Dann ruckeln lassen und Steine werfen
         if ((x1 > 280 && dx1 > 0.0f) ||
@@ -362,7 +362,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 
             Gegner.PushGegner (xPos + 10 + rand ()%360, yPos+480, BOULDER, 40+rand()%20, 0, false);
 
-            // aufhören damit ?
+            // aufhÃ¶ren damit ?
             Shots--;
             if (Shots <= 0)
             {
@@ -400,7 +400,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
 
             y1 = 155;
 
-            // Aufhören zu ballern
+            // AufhÃ¶ren zu ballern
             Shots--;
             if (Shots <= 0)
             {
@@ -445,7 +445,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
     }
     break;
 
-    case GEGNER_CRUSHEN:				// Suchschüsse ballern
+    case GEGNER_CRUSHEN:				// SuchschÃ¼sse ballern
     {
         ShotDelay -= 1.0f SYNC;
 
@@ -523,19 +523,19 @@ void GegnerFahrstuhlBoss::DoKI(void)
         break;
     } // switch
 
-    // yPosition über dem Fahrstuhl setzen
+    // yPosition Ã¼ber dem Fahrstuhl setzen
     yPos = g_Fahrstuhl_yPos - TempY;
 
     if (yPos < 0.0f)
         yPos = 0.0f;
 
-    // Anhängsel am Fahrstuhl richtig positionieren
+    // AnhÃ¤ngsel am Fahrstuhl richtig positionieren
     if (y2 <  80.0f) y2 += 2.0f SYNC;
     else y2 =  80.0f;
     if (y1 < 160.0f) y1 += 2.0f SYNC;
     else y1 = 160.0f;
 
-    // Schüsse und Partikel jeweils anpassen, damit sie gerade fliegen und nicht nach oben
+    // SchÃ¼sse und Partikel jeweils anpassen, damit sie gerade fliegen und nicht nach oben
     // abdriften wegen der FahrstuhlGeschwindigkeit
 
     for (int i = 0; i < NUMPLAYERS; i++)
@@ -556,7 +556,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
             pTemp->yPos	   += 40.0f SYNC;			// Nach unten bewegen
             pTemp->yPosOld += 40.0f SYNC;
         }
-        pTemp = pTemp->pNext;						// Zeiger auf das nächste Element
+        pTemp = pTemp->pNext;						// Zeiger auf das nÃ¤chste Element
     }
 
     ProjectileClass *pTemp2 = Projectiles.pStart;	// Zeiger auf den ersten Schuss
@@ -567,7 +567,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
             pTemp2->yPos	+= 40.0f SYNC;			// Nach unten bewegen
             pTemp2->yPosOld += 40.0f SYNC;
         }
-        pTemp2 = pTemp2->pNext;					// Zeiger auf das nächste Element
+        pTemp2 = pTemp2->pNext;					// Zeiger auf das nÃ¤chste Element
     }
 
     // Level-Hintergrund wiederholen und alle Objekte wieder nach oben setzen
@@ -589,7 +589,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
                 pTemp->yPosOld -= A;
             }
 
-            pTemp = pTemp->pNext;						// Zeiger auf das nächste Element
+            pTemp = pTemp->pNext;						// Zeiger auf das nÃ¤chste Element
         }
 
         ProjectileClass *pTemp2 = Projectiles.pStart;	// Zeiger auf den ersten Schuss
@@ -597,7 +597,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
         {
             pTemp2->yPos	-= A;				// Nach oben bewegen
             pTemp2->yPosOld -= A;
-            pTemp2 = pTemp2->pNext;						// Zeiger auf das nächste Element
+            pTemp2 = pTemp2->pNext;						// Zeiger auf das nÃ¤chste Element
         }
 
         PartikelClass *pTemp3 = PartikelSystem.pStart;// Zeiger auf den ersten Partikel
@@ -605,7 +605,7 @@ void GegnerFahrstuhlBoss::DoKI(void)
         {
             pTemp3->yPos	-= A;				// Nach oben bewegen
             pTemp3->yPosOld -= A;
-            pTemp3 = pTemp3->pNext;						// Zeiger auf das nächste Element
+            pTemp3 = pTemp3->pNext;						// Zeiger auf das nÃ¤chste Element
         }
     }
 }

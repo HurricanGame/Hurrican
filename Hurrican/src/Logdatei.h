@@ -5,7 +5,7 @@
 // Logdatei Klasse
 // zum leichten Handhaben einer Protokoll Datei
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ private:
     char itsFilename[20];								// Dateiname der Log-Datei
 
 public:
-    bool	delLogFile;									// Logfile am Ende löschen, wenn kein Fehler auftrat
+    bool	delLogFile;									// Logfile am Ende lÃ¶schen, wenn kein Fehler auftrat
 
     Logdatei    (const char Name[20]);					// Konstruktor
     ~Logdatei    (void);							// Desktruktor;

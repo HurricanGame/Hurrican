@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Die Spinnenmaschine
 //
-// ÷ffnet den Topfdeckel und l‰sst Gegner raus
+// √ñffnet den Topfdeckel und l√§sst Gegner raus
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -29,7 +29,7 @@ GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light)
     GegnerRect[SPINNENMASCHINE].top  = 0;
     GegnerRect[SPINNENMASCHINE].bottom = 300;
 
-    // Zus‰tzliche Grafiken laden
+    // Zus√§tzliche Grafiken laden
     //
     Display.LoadImage("spinnenmaschine_states.png", 280, 84, 70, 84, 4, 1);
 
@@ -123,7 +123,7 @@ void GegnerSpinnenmaschine::DoDeckel(void)
 {
     switch (DeckelStatus)
     {
-    // deckel ist zu und Counter z‰hlt, wann er auf geht
+    // deckel ist zu und Counter z√§hlt, wann er auf geht
     case ZU :
     {
         OpenCounter -= 1.0f SYNC;
@@ -137,7 +137,7 @@ void GegnerSpinnenmaschine::DoDeckel(void)
     }
     break;
 
-    // Deckel ˆffnet sich gerade
+    // Deckel √∂ffnet sich gerade
     case OEFFNEN :
     {
         LightRayCount += 1.0f SYNC;
@@ -159,7 +159,7 @@ void GegnerSpinnenmaschine::DoDeckel(void)
     }
     break;
 
-    // deckel ist offen und Counter z‰hlt, wann er zugeht
+    // deckel ist offen und Counter z√§hlt, wann er zugeht
     case OFFEN :
     {
         OpenCounter -= 1.0f SYNC;
@@ -175,7 +175,7 @@ void GegnerSpinnenmaschine::DoDeckel(void)
         SpawnDelay -= 1.0f SYNC;
         if (SpawnDelay < 0.0f)
         {
-            // Je nach Art der gr¸nen Anzeige vorne einen anderen Gegner spawnen
+            // Je nach Art der gr√ºnen Anzeige vorne einen anderen Gegner spawnen
             switch (DisplayState)
             {
             // Climber
@@ -242,7 +242,7 @@ void GegnerSpinnenmaschine::DoHoch(void)
 {
     switch (HochStatus)
     {
-    // Kopf ist unten, Counter z‰hlt, wann er hochgeht
+    // Kopf ist unten, Counter z√§hlt, wann er hochgeht
     case ZU :
     {
         HochCounter -= 1.0f SYNC;
@@ -257,7 +257,7 @@ void GegnerSpinnenmaschine::DoHoch(void)
     }
     break;
 
-    // Kopf f‰hrt gerade hoch
+    // Kopf f√§hrt gerade hoch
     case OEFFNEN :
     {
         DeckelCount += 0.2f SYNC;
@@ -286,7 +286,7 @@ void GegnerSpinnenmaschine::DoHoch(void)
     }
     break;
 
-    // Kopf ist oben und Counter z‰hlt, wann er runtergeht
+    // Kopf ist oben und Counter z√§hlt, wann er runtergeht
     case OFFEN :
     {
         HochCounter -= 1.0f SYNC;
@@ -471,7 +471,7 @@ void GegnerSpinnenmaschine::DoKI(void)
     // Kopf hoch- /runterfahren
     case GEGNER_STEHEN:
     {
-        // Abhandeln, wann der Kopf hochf‰hrt
+        // Abhandeln, wann der Kopf hochf√§hrt
         DoHoch();
 
         if (AktionFertig == true)
@@ -490,7 +490,7 @@ void GegnerSpinnenmaschine::DoKI(void)
     }
     break;
 
-    // Deckel ˆffnen
+    // Deckel √∂ffnen
     case GEGNER_LAUFEN:
     {
         // Deckel abhandeln
@@ -568,7 +568,7 @@ void GegnerSpinnenmaschine::DoKI(void)
 
             ShakeScreen(5.0f);
 
-            // Splitter und Groﬂe Explosionen
+            // Splitter und Gro√üe Explosionen
             for (int i = 0; i < 10; i++)
             {
                 PartikelSystem.PushPartikel(xPos + rand()%300, yPos + rand()%400, SPIDERSPLITTER);
@@ -596,8 +596,8 @@ void GegnerSpinnenmaschine::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler die Spinnenmaschine ber¸hrt hat
-    // daf¸r nehmen wir ein anderes Rect, weil das normale GegnerRect nur das Auge ist, wo man den Gegner treffen kann
+    // Testen, ob der Spieler die Spinnenmaschine ber√ºhrt hat
+    // daf√ºr nehmen wir ein anderes Rect, weil das normale GegnerRect nur das Auge ist, wo man den Gegner treffen kann
     //
     //RECT rect;
 

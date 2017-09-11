@@ -5,7 +5,7 @@
 // DX8 Sprite Klasse
 // zum laden und anzeigen von dx8 Surfaces und D3DSprites
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -13,8 +13,8 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
-#include <d3dx8.h>										// Für die Texturen
-#include <d3dx8math.h>									// Für D3DXVECTOR2
+#include <d3dx8.h>										// FÃ¼r die Texturen
+#include <d3dx8math.h>									// FÃ¼r D3DXVECTOR2
 #include "Globals.h"
 #include "Logdatei.h"
 #include "DX8Graphics.h"
@@ -24,9 +24,9 @@
 // Variablen
 // --------------------------------------------------------------------------------------
 
-RECT					ClippingArea;						// Ränder für das Clipping
+RECT					ClippingArea;						// RÃ¤nder fÃ¼r das Clipping
 VERTEX2D				v1, v2, v3, v4;						// Vertices zum Sprite rendern
-VERTEX2D				TriangleStrip[4];					// Strip für ein Sprite
+VERTEX2D				TriangleStrip[4];					// Strip fÃ¼r ein Sprite
 unsigned int			LoadedTextures = 0;					// Wieviele Texturen geladen ?
 
 // --------------------------------------------------------------------------------------
@@ -37,8 +37,8 @@ extern Logdatei					Protokoll;					// Protokoll Datei
 extern LPDIRECT3DDEVICE8		lpD3DDevice;				// Direct3D Device-Objekt
 extern D3DFORMAT				D3DFormat;					// Format der Primary Surface
 extern LPDIRECT3DSURFACE8		lpBackbuffer;				// Der Backbuffer
-extern D3DCAPS8					d3dcaps;					// Möglichkeiten der Hardware
-extern LPDIRECT3DVERTEXBUFFER8	lpVBSprite;					// VertexBuffer für die Sprites
+extern D3DCAPS8					d3dcaps;					// MÃ¶glichkeiten der Hardware
+extern LPDIRECT3DVERTEXBUFFER8	lpVBSprite;					// VertexBuffer fÃ¼r die Sprites
 extern DirectGraphicsClass		DirectGraphics;				// DirectGraphics Klasse
 extern D3DXMATRIX				matProj;					// Projektionsmatrix
 extern D3DXMATRIX				matWorld;					// Weltmatrix
@@ -98,7 +98,7 @@ DirectGraphicsSurface::~DirectGraphicsSurface(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Laden des Bildes "Filename" mit Grösse xSize, ySize in die Surface
+// Laden des Bildes "Filename" mit GrÃ¶sse xSize, ySize in die Surface
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsSurface::LoadImage(char Filename[100], int xSize, int ySize)
@@ -112,7 +112,7 @@ bool DirectGraphicsSurface::LoadImage(char Filename[100], int xSize, int ySize)
 	// Fehler beim Surface erstellen ?
 	if(hresult != D3D_OK)
 	{
-		strcpy(Temp, "Fehler beim Surface-Erstellen für ");
+		strcpy(Temp, "Fehler beim Surface-Erstellen fÃ¼r ");
 		strcat(Temp, Filename);
 		strcat(Temp, " !");
 		Protokoll.WriteText(Temp, true);
@@ -133,7 +133,7 @@ bool DirectGraphicsSurface::LoadImage(char Filename[100], int xSize, int ySize)
 		return false;
 	}
 	
-	// Grösse setzen
+	// GrÃ¶sse setzen
 	itsRect.left   = 0;
 	itsRect.top    = 0;
 	itsRect.right  = xSize;
@@ -210,13 +210,13 @@ DirectGraphicsSprite::~DirectGraphicsSprite(void)
 
 		_itoa(LoadedTextures, Buffer, 10);
 //		Protokoll.WriteText(Buffer, false);
-//		Protokoll.WriteText(" Sprite Textur(en) übrig !\n", false);
+//		Protokoll.WriteText(" Sprite Textur(en) Ã¼brig !\n", false);
 	}
 }
 
 // --------------------------------------------------------------------------------------
 // Laden des Bildes "Filename" 
-// xfs, yfs Grösse eines Frames
+// xfs, yfs GrÃ¶sse eines Frames
 // xfc, yfc Anzahl der Frames
 // --------------------------------------------------------------------------------------
 
@@ -234,7 +234,7 @@ bool DirectGraphicsSprite::LoadImage(char Filename[100], int xs, int ys, int xfs
 	hresult = D3DXCreateTextureFromFileEx(
 			  lpD3DDevice,
 			  Name,
-			  NULL, NULL,				  // x und y Grösse des Sprites (aus Datei übernehmen)
+			  NULL, NULL,				  // x und y GrÃ¶sse des Sprites (aus Datei Ã¼bernehmen)
               1,                          // Nur eine Version der Textur
               0,                          // Immer 0 setzen
               D3DFMT_UNKNOWN,	          // Format aus der Datei lesen
@@ -258,14 +258,14 @@ bool DirectGraphicsSprite::LoadImage(char Filename[100], int xs, int ys, int xfs
 		return false;
 	}
 
-	// Grösse der Textur anpassen
+	// GrÃ¶sse der Textur anpassen
 	D3DSURFACE_DESC desc;
 	itsTexture->GetLevelDesc(0,&desc);
 	
 	xs = desc.Width;
 	ys = desc.Height;
 
-	// Grösse setzen
+	// GrÃ¶sse setzen
 	itsXSize		= float(xs);
 	itsYSize		= float(ys);
 	itsXFrameCount	= xfc;
@@ -282,7 +282,7 @@ bool DirectGraphicsSprite::LoadImage(char Filename[100], int xs, int ys, int xfs
 	strcat(Temp, Filename);		
 	strcat(Temp, " erfolgreich ! \n");
 	Protokoll.WriteText(Temp, false);			
-	LoadedTextures++;							// Anzahl der geladenen Texturen erhöhen	
+	LoadedTextures++;							// Anzahl der geladenen Texturen erhÃ¶hen	
 	_itoa(LoadedTextures, Temp, 10);
 //	Protokoll.WriteText(Temp, false);
 //	Protokoll.WriteText(" Sprite Textur(en) geladen !\n", false);
@@ -291,7 +291,7 @@ bool DirectGraphicsSprite::LoadImage(char Filename[100], int xs, int ys, int xfs
 
 // --------------------------------------------------------------------------------------
 // Laden des Bildes "Filename" 
-// xfs, yfs Grösse eines Frames
+// xfs, yfs GrÃ¶sse eines Frames
 // xfc, yfc Anzahl der Frames
 // --------------------------------------------------------------------------------------
 
@@ -462,7 +462,7 @@ bool DirectGraphicsSprite::RenderSpriteScaled(float x, float y,float width, floa
 }
 
 // --------------------------------------------------------------------------------------
-// Sprite mit übergebenem Winkel rotiert darstellen
+// Sprite mit Ã¼bergebenem Winkel rotiert darstellen
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, int Winkel, D3DCOLOR Color)
@@ -514,7 +514,7 @@ bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, int Winkel, D3D
 
 	D3DXMATRIX	matRot, matTrans, matTrans2;
 
-	// Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
+	// Winkel angleichen, damit er immer zwischen 0Â° und 360Â° bleibt
 	if (Winkel > 360) Winkel -= 360;
 	if (Winkel < 0)	  Winkel += 360;
 
@@ -525,14 +525,14 @@ bool DirectGraphicsSprite::RenderSpriteRotated(float x, float y, int Winkel, D3D
 	D3DXMatrixTranslation(&matTrans,-x-(itsRect.right  - itsRect.left)/2,
 									-y-(itsRect.bottom - itsRect.top) /2, 0.0f);
 
-	// Transformation wieder zurück
+	// Transformation wieder zurÃ¼ck
 	D3DXMatrixTranslation(&matTrans2,x+(itsRect.right  - itsRect.left)/2,
 									 y+(itsRect.bottom - itsRect.top) /2, 0.0f);
 
 	// Verschieben und rotieren
 	D3DXMatrixMultiply	 (&matWorld, &matTrans, &matRot);	
 
-	// und wieder zurück verschieben
+	// und wieder zurÃ¼ck verschieben
 	D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);
 	lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 

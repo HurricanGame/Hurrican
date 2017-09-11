@@ -14,18 +14,18 @@
 
 #define EXTRAS					0						// Alle Extras in einer Grafik
 #define	ONEUP					1						// Extra-Leben
-#define	DIAMANT					2						// Diamant für Punkte und Extralaben
+#define	DIAMANT					2						// Diamant fÃ¼r Punkte und Extralaben
 #define	POWERBLOCK				3						// Block mit Extras
 #define	SPITTER					4						// Kleiner "Spitter" Gegner
 #define	WALKER					5						// Typischer Walker
-#define	GUNTOWER				6						// Geschützturm
+#define	GUNTOWER				6						// GeschÃ¼tzturm
 #define	SPIDERBOMB				7						// Spinnenbombe
 #define	PIRANHA					8						// Piranha
-#define	STAHLMUECKE				9						// Stahlmücke
-#define	DECKENTURM				10						// Geschützturm an der Decke
+#define	STAHLMUECKE				9						// StahlmÃ¼cke
+#define	DECKENTURM				10						// GeschÃ¼tzturm an der Decke
 #define	KUGELKLEIN				11						// Kleine   Stachel-Kugel
 #define	KUGELMEDIUM				12						// Mittlere Stachel-Kugel
-#define	KUGELGROSS				13						// Große    Stachel-Kugel
+#define	KUGELGROSS				13						// GroÃŸe    Stachel-Kugel
 #define	KUGELRIESIG				14						// Riesige  Stachel-Kugel
 #define	KRABBLEROBEN			15						// Decken Krabbler
 #define	KRABBLERLINKS			16						// Wand Krabbler
@@ -33,13 +33,13 @@
 #define	AUGE					18						// Fliegendes Extra Auge
 #define QUALLE					19						// Die kleine Qualle
 #define FALLINGROCK				20						// Fallender   Felsblock
-#define BROCKELROCK				21						// Bröckelnder Felsblock
+#define BROCKELROCK				21						// BrÃ¶ckelnder Felsblock
 #define ROBORAUPE				22						// Robo Raupe
 #define STALAGTIT				23						// Stalagtit
 #define RAKETENWERFER			24						// Raketenwerfer der auf und zuklappt
 #define SWIMWALKER				25						// Schwimmender Walker
 #define FLUGSACK				26						// Der fliegende Fettsack =)
-#define REITFLUGSACK			27						// Der Fettsack, auf dem der Hurri später reitet
+#define REITFLUGSACK			27						// Der Fettsack, auf dem der Hurri spÃ¤ter reitet
 #define EISSTACHEL				28						// Sich drehender Eisstachel
 #define SKIWALKER				29						// Walker auf Ski
 #define FLUGKANONE				30						// Fliegende Kanone
@@ -50,16 +50,16 @@
 #define FALLBOMBE				35						// Fallende Bombe im Fahrstuhl
 #define POKENUKE				36						// Riesen Poke Nuke
 #define LAVAKRABBE				37						// Anfliegende Lava Krabbe
-#define LAVABALLSPAWNER			38						// Lava Ball Spawner, der Lava Bälle erzeugt
+#define LAVABALLSPAWNER			38						// Lava Ball Spawner, der Lava BÃ¤lle erzeugt
 #define LAVABALL				39						// Lava Ball
 #define FETTESPINNE				40						// Die fiese fette Spinne
 #define EIERMANN				41						// Der Spinnen-Eiermann, der Eier legt
 #define WANDKANNONE				42						// Kannone an der Wand (Flugsack Level)
 #define STARSMALL				43						// Kleiner Stern (Flugsack Level)
-#define STARBIG					44						// Großer  Stern (Flugsack Level)
+#define STARBIG					44						// GroÃŸer  Stern (Flugsack Level)
 #define MADE					45						// Made, die der Alienboss spuckt
 #define DRONE					46						// Drone
-#define NEUFISCH				47						// Großer Fisch
+#define NEUFISCH				47						// GroÃŸer Fisch
 #define PFLANZE					48						// Feuerball spuckende Pflanze
 #define SPITTERBOMBE			49						// Bombe, aus der der Spitter rauskommt
 #define NEST					50						// Wespennest
@@ -73,15 +73,15 @@
 #define BIGROCKET				58						// Die fette Rakete im Flugsack Level
 #define EISZAPFEN				59						// Runterfallender Eiszapfen
 #define WANDKRABBE				60						// An der Wand krabbelnde Krabbe
-#define JAEGER					61						// Abfangjäger im Flugsacklevel
+#define JAEGER					61						// AbfangjÃ¤ger im Flugsacklevel
 #define SIDEROCKET				62						// Seitliche Rakete an der Wand
 #define FIESEDRONE				63						// Die kleine fiese Drone im Space Level (und anderswo)
-#define SCHLEIMBOLLER			64						// Der grüne Schleimbollen
+#define SCHLEIMBOLLER			64						// Der grÃ¼ne Schleimbollen
 #define SCHLEIMALIEN			65						// Der Schleimbollen im Alien Level
 #define SCHLEIMMAUL				66						// Der Schleimbollen mit Maul dran
 #define FIESERWALKER			67						// Der fiese Walker mit dem Laser
 #define FIESERWALKER2			68						// Der fiese Walker mit dem Flammenwerfer
-#define MITTELSPINNE			69						// Mittelgroße Spinne beim Wuxe Spinnenangriff
+#define MITTELSPINNE			69						// MittelgroÃŸe Spinne beim Wuxe Spinnenangriff
 #define SMALLWESPE				70						// Kleine Wespe
 #define DECKENKRABBE			71						// Krabbe an der Decke
 #define STAMPFSTEIN				72						// Der stampfende Stein
@@ -91,17 +91,17 @@
 #define FETTERAKETE				76						// Fette Spinnenrakete
 #define SCHABE					77						// Wandschabe
 #define MINIDRAGON				78						// Mini Drache
-#define SCHNEEKOPPE				79						// Schuss des Schneekönigs
+#define SCHNEEKOPPE				79						// Schuss des SchneekÃ¶nigs
 #define ZITRONE					80						// Die Zieh Drone
 #define ROTZPOTT				81						// Rotzi
 #define STACHELBEERE			82						// Die aufklappende Stachelbeere
 #define MINIROCKET				83						// Kleine Rakete der Stachelbeere
-#define MUTANT					84						// Der rumspringende Mutant aus der Röhre
+#define MUTANT					84						// Der rumspringende Mutant aus der RÃ¶hre
 
 #define PUNISHER				99						// Der Punisher, der kommt, wenn der Spieler keine Zeit mehr hat
 
 // Viertel Bosse
-#define RIESENPIRANHA			100						// Der riesige grüne Piranha
+#define RIESENPIRANHA			100						// Der riesige grÃ¼ne Piranha
 #define RIESENQUALLE			101						// Die riesige fette Qualle
 #define RIESENRAUPE				102						// Die riesige Robo Raupe
 #define RIESENWASP				103						// Die riesige Robo Wespe
@@ -110,7 +110,7 @@
 #define	STAHLFAUST				120						// Riesige  Stahlfaust
 #define	PHARAOKOPF				121						// Riesiger Pharao Kopf
 #define RIESENSPINNE			122						// Die fiese ecklige Riesenspinne
-#define EVILHURRI				123						// Böser Hurrican
+#define EVILHURRI				123						// BÃ¶ser Hurrican
 #define UFO						124						// Das Ufo
 #define FAHRSTUHLBOSS			125						// Boss im Fahrstuhl
 #define FLUGBOSS				126						// Boss im Flugsack Level
@@ -138,39 +138,39 @@
 #define PLATTFORM				146						// Fliegende Plattform
 #define PRESSE					147						// Stahlpresse
 #define SHRINE					148						// Schrein mit Manfred drin =)
-#define BRUECKE					149						// Hängebrücke
+#define BRUECKE					149						// HÃ¤ngebrÃ¼cke
 #define FLOATING				150						// kleine schwebe Plattform
 #define FLOATING2				151						// mittlere schwebe Plattform
-#define FLOATING3				152						// große schwebe Plattform
+#define FLOATING3				152						// groÃŸe schwebe Plattform
 
 #define SURFBRETT				153						// Surfbrett Gegner =)
 #define SHOOTBUTTON				154						// Schwebe Plattform Button (wird im Editor nicht gesetzt, nur vom Game)
-#define SHOOTPLATTFORM			155						// Schwebe Plattform (durch Button aufzulösen)
+#define SHOOTPLATTFORM			155						// Schwebe Plattform (durch Button aufzulÃ¶sen)
 #define GLUBSCHI				156						// Glubschauge, das dem Hurri hinterherkuckt
 #define GLUBSCHI2				157						// Glubschauge von der Decke
-#define COLUMN					158						// Die Säule, die umfällt, und das ganze Level schräg stellt
+#define COLUMN					158						// Die SÃ¤ule, die umfÃ¤llt, und das ganze Level schrÃ¤g stellt
 #define LIFT					159						// Lift mit Countdown, der explodiert
-#define COLUMN2					160						// Die Säule, die umfällt, und das ganze Level wieder aufstellt
+#define COLUMN2					160						// Die SÃ¤ule, die umfÃ¤llt, und das ganze Level wieder aufstellt
 #define SCHLEUSEH				161						// Horizontale Schleuse
 #define SCHLEUSEV				162						// Vertikale Schleuse
-#define SWITCH					163						// Schalter (zum Türen öffnen)
+#define SWITCH					163						// Schalter (zum TÃ¼ren Ã¶ffnen)
 #define WARNING					164						// Warnungs Schild
 #define SOUNDTRIGGER			165						// Sound Trigger
-#define LUEFTER_GROSS			166						// Großer Luefter
+#define LUEFTER_GROSS			166						// GroÃŸer Luefter
 #define LUEFTER_KLEIN			167						// Kleiner Leufter 1
 #define LUEFTER_KLEIN2			168						// Kleiner Leufter 2
-#define TUTORIALTEXT			169						// Textbox für Tutorial
+#define TUTORIALTEXT			169						// Textbox fÃ¼r Tutorial
 #define LIGHTFLARE				170						// Wie der Name schon sagt ;)
 #define SECRET					171						// Secret Area im Level
 #define MUSHROOM				172						// Pilzkopf-Trampolin =)
 #define PRESSWURST				173						// Die Spinnen Presswurst
-#define LAFASSSPAWNER			174						// Der Trigger für das Fass, das an der Decke entlang fährt
+#define LAFASSSPAWNER			174						// Der Trigger fÃ¼r das Fass, das an der Decke entlang fÃ¤hrt
 #define SPIKELIFT				175						// Lift mit Stacheln
-#define TUBE					176						// Glasröhre
+#define TUBE					176						// GlasrÃ¶hre
 
 // Objekte, die nicht im Editor auftauchen
 #define KETTENGLIED				190						// Kettenglied z.B. vom Rollmops
-#define SKULL					191						// Schädel vom Skeletor
+#define SKULL					191						// SchÃ¤del vom Skeletor
 
 //----- Handlungen der Gegner
 
@@ -182,13 +182,13 @@
 #define GEGNER_SCHIESSEN				5
 #define GEGNER_SPRINGEN					6
 #define GEGNER_FALLEN					7
-#define GEGNER_WATSCHELN				8				// Für Walker
-#define GEGNER_DREHEN					9				// Für Geschützturm
-#define GEGNER_DREHEN2					10				// Für Stelzsack
-#define GEGNER_VERFOLGEN				11				// Für Stahlmücke
-#define GEGNER_UNVERWUNDBAR		 		12				// Für Deckenturm
-#define GEGNER_OEFFNEN			 		13				// Für Deckenturm nochmal
-#define GEGNER_SCHLIESSEN			 	14				// Für Deckenturm (einmal noch :P )
+#define GEGNER_WATSCHELN				8				// FÃ¼r Walker
+#define GEGNER_DREHEN					9				// FÃ¼r GeschÃ¼tzturm
+#define GEGNER_DREHEN2					10				// FÃ¼r Stelzsack
+#define GEGNER_VERFOLGEN				11				// FÃ¼r StahlmÃ¼cke
+#define GEGNER_UNVERWUNDBAR		 		12				// FÃ¼r Deckenturm
+#define GEGNER_OEFFNEN			 		13				// FÃ¼r Deckenturm nochmal
+#define GEGNER_SCHLIESSEN			 	14				// FÃ¼r Deckenturm (einmal noch :P )
 #define GEGNER_NOTVISIBLE				99
 
 // Zwischenbosse
@@ -237,7 +237,7 @@
 
 extern GegnerListClass		Gegner;
 extern DirectGraphicsSprite	*pGegnerGrafix[MAX_GEGNERGFX];		// Grafiken der Gegner
-extern RECT					 GegnerRect	  [MAX_GEGNERGFX];		// Rechtecke für Kollision	
+extern RECT					 GegnerRect	  [MAX_GEGNERGFX];		// Rechtecke fÃ¼r Kollision	
 extern float				 g_Fahrstuhl_yPos;					// yPosition des Fahrstuhls
 extern float				 g_Fahrstuhl_Offset;				// Scrollposition relativ zum Farhstuhl
 extern float				 g_Fahrstuhl_Speed;					// Fahrstuhl Geschwindigkeit

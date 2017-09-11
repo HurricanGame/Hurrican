@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------
-// Die mittelgroße Spinne
+// Die mittelgroÃŸe Spinne
 //
 // Klettert beim Wuxe Spinnenansturm von der Decke
 // --------------------------------------------------------------------------------------
@@ -35,8 +35,8 @@ GegnerMittelSpinne::GegnerMittelSpinne(int Wert1, int Wert2, bool Light)
 
 void GegnerMittelSpinne::DoDraw(void)
 {
-    // Helligkeit abhängig vom der Entfernung zum oberen Rand berechnen, damit
-    // es aussieht, als kämen die Spinnen aus der Dunkelheit
+    // Helligkeit abhÃ¤ngig vom der Entfernung zum oberen Rand berechnen, damit
+    // es aussieht, als kÃ¤men die Spinnen aus der Dunkelheit
     // Ich bin schon ein Fux ;)
     //
     float light, lightred;
@@ -84,7 +84,7 @@ void GegnerMittelSpinne::DoKI(void)
         //
         float dx, dy;
 
-        // Abstände berechnen
+        // AbstÃ¤nde berechnen
         dx = (xPos + 25) - (pAim->xpos + 35);
         dy = (yPos + 18) - (pAim->ypos + 40);
 
@@ -155,7 +155,7 @@ void GegnerMittelSpinne::DoKI(void)
     break;
     }
 
-    // Spieler berührt ?
+    // Spieler berÃ¼hrt ?
     //
     if (Handlung != GEGNER_FALLEN)
         TestDamagePlayers(4.0f SYNC);

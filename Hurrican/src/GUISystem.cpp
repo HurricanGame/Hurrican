@@ -101,7 +101,7 @@ void CGUISystem::RenderBox(void)
 }
 
 //
-// Hinweisbox für Tutorial Level einblenden
+// Hinweisbox fÃ¼r Tutorial Level einblenden
 //
 
 //DKS - Made line splitting more flexible, centered display of boxes on-screen and added low-resolution support
@@ -156,7 +156,7 @@ void CGUISystem::ShowBox(char Text[BOXTEXTLENGTH], int yoff, int xoff /* = 320 *
 }
 
 //
-// Hinweisbox an x/y mit breite/höhe w/h setzen
+// Hinweisbox an x/y mit breite/hÃ¶he w/h setzen
 //
 
 void CGUISystem::ShowBox(int xoff, int yoff, int w, int h)
@@ -175,7 +175,7 @@ void CGUISystem::ShowBox(int xoff, int yoff, int w, int h)
 }
 
 //
-// Hinweisbox für Tutorial Level ausblenden
+// Hinweisbox fÃ¼r Tutorial Level ausblenden
 //
 
 void CGUISystem::HideBox(void)
@@ -184,7 +184,7 @@ void CGUISystem::HideBox(void)
 }
 
 //
-// Hinweisbox für Tutorial Level gleich komplett abschalten
+// Hinweisbox fÃ¼r Tutorial Level gleich komplett abschalten
 //
 
 void CGUISystem::HideBoxFast(void)

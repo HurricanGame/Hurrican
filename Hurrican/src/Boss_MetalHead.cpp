@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------
-// Der Robo Sch‰del
+// Der Robo Sch√§del
 //
 // liegt auf dem Schrotthaufen in dem Cave Level rum erhebt sich daraus.
 // Schmeisst ab und zu die Turbine an, um Hurri einzusaugen
@@ -46,7 +46,7 @@ GegnerMetalHead::GegnerMetalHead(int Wert1, int Wert2, bool Light)
     MoveSpeed		  = 5.0f;
     g_Fahrstuhl_Speed = 0.0f;
 
-    // Zus‰tzliche Grafiken laden
+    // Zus√§tzliche Grafiken laden
     //
     Kiefer.LoadImage  ("metalhead_kiefer.png",   102,  153, 102,  153, 1, 1);
     Kiefer2.LoadImage ("metalhead_kiefer2.png",  131, 88, 131, 88, 1, 1);
@@ -150,11 +150,11 @@ void GegnerMetalHead::DoDraw(void)
                                      Hals[i].y - (float)TileEngine.YOffset,
                                      Hals[i].w, 0xFFFFFFFF);
 
-    // Turbine l‰uft? Dann Orange leuchten lassen
+    // Turbine l√§uft? Dann Orange leuchten lassen
     //
     if (Handlung ==	GEGNER_SPECIAL2)
     {
-        // Angl¸hen und abgl¸hen lassen
+        // Angl√ºhen und abgl√ºhen lassen
         //
         int a = AnimPhase;
 
@@ -416,7 +416,7 @@ void GegnerMetalHead::DoKI(void)
             if (rand()%3 == 0)
                 PartikelSystem.PushPartikel (xPos + 40 + rand ()%10, yPos + 140 + rand ()%4, SMOKEBIG);
 
-            // Zuf‰llig funken spr¸hen
+            // Zuf√§llig funken spr√ºhen
             if (rand()% 10 == 0)
             {
                 for (int i = 0; i < 16; i++)
@@ -433,7 +433,7 @@ void GegnerMetalHead::DoKI(void)
         }
     }
 
-    // Zielpunkt f¸r die Turbine-Partikel setzen
+    // Zielpunkt f√ºr die Turbine-Partikel setzen
     PartikelSystem.xtarget = xPos + 20 + 110;
     PartikelSystem.ytarget = yPos + 130 + 55;
 
@@ -857,7 +857,7 @@ void GegnerMetalHead::DoKI(void)
         // Kopf fliegt auf xto/yto zu
         case GEGNER_STEHEN:
         {
-            // Beim Headbangen den Kiefer ˆffnen
+            // Beim Headbangen den Kiefer √∂ffnen
             //
             if (Akt == SK_BANGEN)
             {
@@ -867,7 +867,7 @@ void GegnerMetalHead::DoKI(void)
                     KieferPos = 60.0f;
             }
 
-            // Beim Zur¸ckziehen in die Ausgangslage wieder schliessen
+            // Beim Zur√ºckziehen in die Ausgangslage wieder schliessen
             //
             if (Akt == SK_AUSGANG)
             {
@@ -909,7 +909,7 @@ void GegnerMetalHead::DoKI(void)
                 AnimCount = 2.5f;
                 AnimEnde--;
 
-                // Herumfliegender Kopf explodiert vollst‰ndig, nachdem 5 Halswirbel fehlen
+                // Herumfliegender Kopf explodiert vollst√§ndig, nachdem 5 Halswirbel fehlen
                 //
                 if (AnimEnde == MAXWIRBEL - 5)
                 {
@@ -947,7 +947,7 @@ void GegnerMetalHead::DoKI(void)
             break;
         } // switch
 
-    // Testen, ob der Spieler den Sch‰del ber¸hrt hat
+    // Testen, ob der Spieler den Sch√§del ber√ºhrt hat
     //
     RECT r;
     r.top    = 0;

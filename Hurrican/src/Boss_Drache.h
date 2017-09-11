@@ -16,12 +16,12 @@ private:
     DirectGraphicsSprite	Arm;
 
     bool	HeadLocked;				// Kopf ist fest und dreht nicht zu Spieler
-    float	SmokeCount;				// Für Antriebspartikel
-    float	TailSinus;				// Für das Schwanzwedeln (nicht das, was DU jetzt denkst... ;)
+    float	SmokeCount;				// FÃ¼r Antriebspartikel
+    float	TailSinus;				// FÃ¼r das Schwanzwedeln (nicht das, was DU jetzt denkst... ;)
     float	HeadWinkel;				// Kopf Ausrichtung, zeigt immer auf Spieler
     float	AnimWinkel;				// Arme und Beine Winkel
     float	KieferWinkel;			// Kiefer kann auf und zu gehen
-    bool	Growl;					// Heute schon gegröhlt? =)
+    bool	Growl;					// Heute schon gegrÃ¶hlt? =)
     int		Attack;					// Welche "Unterhandlung"
     int		mirrorOffset;			// Zum Zeichnen wenn gespiegelt
     int		Position;

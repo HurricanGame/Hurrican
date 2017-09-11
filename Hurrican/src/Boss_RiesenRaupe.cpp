@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Die Riesen Raupe
 //
-// kriecht auf den Spieler zu und schiesst 2 Suchschüsse bei richtigem Abstand
+// kriecht auf den Spieler zu und schiesst 2 SuchschÃ¼sse bei richtigem Abstand
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -32,11 +32,11 @@ GegnerRiesenRaupe::GegnerRiesenRaupe(int Wert1, int Wert2, bool Light)
 void GegnerRiesenRaupe::DoKI(void)
 {
     // animieren
-    AnimCount += SpeedFaktor;		// Animationscounter weiterzählen
-    if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+    AnimCount += SpeedFaktor;		// Animationscounter weiterzÃ¤hlen
+    if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
     {
         AnimCount = 0;					// Dann wieder auf Null setzen
-        AnimPhase++;					// Und nächste Animationsphase
+        AnimPhase++;					// Und nÃ¤chste Animationsphase
 
         if (AnimPhase > AnimEnde)		// Animation zu Ende	?
         {
@@ -113,7 +113,7 @@ void GegnerRiesenRaupe::DoKI(void)
         xSpeed *= -1;
     }
 
-    // Testen, ob der Spieler die Raupe berührt hat
+    // Testen, ob der Spieler die Raupe berÃ¼hrt hat
     TestDamagePlayers(5.0f SYNC);
 }
 

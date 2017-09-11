@@ -1,13 +1,13 @@
 // --------------------------------------------------------------------------------------
-// Die Röhre, aus der (evtl) ein Mutant hopft =)
+// Die RÃ¶hre, aus der (evtl) ein Mutant hopft =)
 // Value 1 gibt an, was genau gerendert werden soll
-//		0 : Röhre ganz
-//		1 : Röhre kaputt
-//		2 : Röhre kaputt nur unten
-//		3 : Röhre kaputt nur oben
-//		4 : Röhre ganz mit Mutant
-//		5 : Röhre ganz mit Mutant der rausspringt
-// Value 2 gibt an, ob Flüssigkeit drinsteht oder nicht
+//		0 : RÃ¶hre ganz
+//		1 : RÃ¶hre kaputt
+//		2 : RÃ¶hre kaputt nur unten
+//		3 : RÃ¶hre kaputt nur oben
+//		4 : RÃ¶hre ganz mit Mutant
+//		5 : RÃ¶hre ganz mit Mutant der rausspringt
+// Value 2 gibt an, ob FlÃ¼ssigkeit drinsteht oder nicht
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -49,7 +49,7 @@ void GegnerTube::DoDraw(void)
                                             yPos - (float)(TileEngine.YOffset) + 60 + (float)sin(SinOff) * 1.8f,
                                             0, 0xFFFFFFFF);
 
-    // Flüssigkeit drin?
+    // FlÃ¼ssigkeit drin?
     if (Value2 == 1)
     {
         DirectGraphics.SetAdditiveMode();
@@ -79,7 +79,7 @@ void GegnerTube::DoDraw(void)
         DirectGraphics.SetColorKeyMode();
     }
 
-    // Und Röhre drüber
+    // Und RÃ¶hre drÃ¼ber
     int a;
     a = Value1%4;
 

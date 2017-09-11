@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Der Lava Ball Spawner
 //
-// ERZEUGT Lava Bälle, die aus der Lava hopsen
+// ERZEUGT Lava BÃ¤lle, die aus der Lava hopsen
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"

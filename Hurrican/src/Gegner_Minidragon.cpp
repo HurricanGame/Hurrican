@@ -220,7 +220,7 @@ void GegnerMiniDragon::DoKI(void)
     }
     break;
 
-    // auf der stelle wackeln in Höhe des Hurris
+    // auf der stelle wackeln in HÃ¶he des Hurris
     case GEGNER_STEHEN:
     {
         if (PlayerAbstand() < 600)
@@ -327,7 +327,7 @@ void GegnerMiniDragon::DoKI(void)
                                       yPos - 22, EXPLOSION_BIG);
     }
 
-    // Spieler berührt ?
+    // Spieler berÃ¼hrt ?
     //
     if (Handlung != GEGNER_EXPLODIEREN)
         TestDamagePlayers(4.0f SYNC);

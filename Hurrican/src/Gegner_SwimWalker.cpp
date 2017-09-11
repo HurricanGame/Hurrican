@@ -34,7 +34,7 @@ void GegnerSwimWalker::DoKI(void)
 {
     SimpleAnimation();
 
-// Nach links bzw rechts auf Kollision prüfen und dann ggf umkehren
+// Nach links bzw rechts auf Kollision prÃ¼fen und dann ggf umkehren
     if (BlickRichtung == LINKS)
         if (blockl & BLOCKWERT_WAND ||
                 blockl & BLOCKWERT_GEGNERWAND)
@@ -90,7 +90,7 @@ void GegnerSwimWalker::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler den Walker berührt hat
+    // Testen, ob der Spieler den Walker berÃ¼hrt hat
     TestDamagePlayers(4.0f SYNC);
 }
 

@@ -1,8 +1,8 @@
 // --------------------------------------------------------------------------------------
 // Der Walker
 //
-// L‰uft bis er an eine Wand kommt und kehrt dann um und schiesst, sobald er einen
-// bestimmten Abstand zum Spiel hat, geradeaus, l‰uft einen Schritt weiter, schiesst
+// L√§uft bis er an eine Wand kommt und kehrt dann um und schiesst, sobald er einen
+// bestimmten Abstand zum Spiel hat, geradeaus, l√§uft einen Schritt weiter, schiesst
 // wieder usw
 // --------------------------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ void GegnerWalker::DoKI(void)
 {
     SimpleAnimation();
 
-    // Nach links bzw rechts auf Kollision pr¸fen und dann ggf umkehren
+    // Nach links bzw rechts auf Kollision pr√ºfen und dann ggf umkehren
     if (BlickRichtung == LINKS)
         if (blockl & BLOCKWERT_WAND ||
                 blockl & BLOCKWERT_GEGNERWAND)
@@ -93,7 +93,7 @@ void GegnerWalker::DoKI(void)
     {
     case GEGNER_LAUFEN:						// Normal laufen und dabei ab und zu schiessen
     {
-        // Testen, ob der Walker runterf‰llt
+        // Testen, ob der Walker runterf√§llt
         if (!(blocku & BLOCKWERT_WAND) &&
                 !(blocku & BLOCKWERT_PLATTFORM))
         {
@@ -121,7 +121,7 @@ void GegnerWalker::DoKI(void)
     }
     break;
 
-    case GEGNER_SCHIESSEN:					// gegner schiesst auf den Spieler und l‰uft dann
+    case GEGNER_SCHIESSEN:					// gegner schiesst auf den Spieler und l√§uft dann
     {
         xSpeed = 0.0f;
 
@@ -151,7 +151,7 @@ void GegnerWalker::DoKI(void)
 
     case GEGNER_WATSCHELN:					// Walker ist getroffen und haut ab
     {
-        // Testen, ob der Walker runterf‰llt
+        // Testen, ob der Walker runterf√§llt
         if (!(blocku & BLOCKWERT_WAND) &&
                 !(blocku & BLOCKWERT_PLATTFORM))
         {
@@ -234,7 +234,7 @@ void GegnerWalker::DoKI(void)
             }
         }
 
-    // Testen, ob der Spieler den Walker ber¸hrt hat
+    // Testen, ob der Spieler den Walker ber√ºhrt hat
     if (Handlung != GEGNER_WATSCHELN &&
             Handlung != GEGNER_SPRINGEN)
         TestDamagePlayers(4.0f SYNC, false);

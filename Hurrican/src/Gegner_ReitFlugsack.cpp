@@ -1,8 +1,8 @@
 // --------------------------------------------------------------------------------------
 // Der fliegende ReitFettsack
 //
-// Fliegt rum bis der Hurri ihn abknallt, dann stürzt er ab und bleibt liegen, bis der
-// Hurri auf ihn draufhopst. Dann geht das Fluglevel los und der Fettsack trägt
+// Fliegt rum bis der Hurri ihn abknallt, dann stÃ¼rzt er ab und bleibt liegen, bis der
+// Hurri auf ihn draufhopst. Dann geht das Fluglevel los und der Fettsack trÃ¤gt
 // den Hurri dabei Huckepack ;)
 // --------------------------------------------------------------------------------------
 
@@ -104,7 +104,7 @@ void GegnerReitFlugsack::DoKI(void)
     }
     break;
 
-    // Sack stürzt ab
+    // Sack stÃ¼rzt ab
     case GEGNER_FALLEN:
     {
         // Am Boden abhopfen ?
@@ -151,7 +151,7 @@ void GegnerReitFlugsack::DoKI(void)
             PartikelSystem.PushPartikel(xPos+20+rand()%40, yPos+20+rand()%30, SMOKE);
         }
 
-        // Testen, ob der Spieler den Sack berührt hat
+        // Testen, ob der Spieler den Sack berÃ¼hrt hat
         PlattformTest(GegnerRect[GegnerArt]);
 
         // Spieler steht drauf ?
@@ -190,7 +190,7 @@ void GegnerReitFlugsack::DoKI(void)
         break;
     } // switch
 
-    // Soviel Energie verloren, dass der Spacko abstürzt ?
+    // Soviel Energie verloren, dass der Spacko abstÃ¼rzt ?
     if (Energy <= 0.0f && Handlung != GEGNER_FALLEN && Handlung != GEGNER_SPECIAL)
     {
         Destroyable	= false;

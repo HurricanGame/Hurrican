@@ -4,9 +4,9 @@
 //
 // Hurrican Level-Editor
 // 
-// benutzt die DirectX8.1 API für Grafik und Input
+// benutzt die DirectX8.1 API fÃ¼r Grafik und Input
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -20,12 +20,12 @@
 // Defines 
 // --------------------------------------------------------------------------------------
 
-//----- Flags für den Blockwert
+//----- Flags fÃ¼r den Blockwert
 
 #define BLOCKWERT_WAND				1		// Solide Wand
-#define BLOCKWERT_GEGNERWAND		2		// Wand nur für Gegner
+#define BLOCKWERT_GEGNERWAND		2		// Wand nur fÃ¼r Gegner
 #define BLOCKWERT_PLATTFORM			4		// Plattform
-#define BLOCKWERT_LIGHT				8		// Licht bei Objekten verändern
+#define BLOCKWERT_LIGHT				8		// Licht bei Objekten verÃ¤ndern
 #define BLOCKWERT_VERDECKEN			16		// Spieler und Objekte verdecken
 #define BLOCKWERT_ANIMIERT_BACK		32		// Animiert Hintergrund
 #define BLOCKWERT_ANIMIERT_FRONT	64		// Animiert Overlay
@@ -34,7 +34,7 @@
 #define BLOCKWERT_FLIESSBANDL		512		// Fliessband Links
 #define BLOCKWERT_FLIESSBANDR		1024	// Fliessband Rechts
 #define BLOCKWERT_WENDEPUNKT		2048	// Bewegte Plattformen umdrehen lassen
-#define BLOCKWERT_DESTRUCTIBLE		4096	// Zerstörbare Wand
+#define BLOCKWERT_DESTRUCTIBLE		4096	// ZerstÃ¶rbare Wand
 #define BLOCKWERT_MOVELINKS			8192	// Textur nach links bewegen
 #define BLOCKWERT_OVERLAY_LIGHT	   16384	// Overlay nimmt Licht an
 #define BLOCKWERT_SUMPF			   32768	// Einsinken
@@ -47,10 +47,10 @@
 #define OBJECTMODE					1				// Objekte editieren
 #define SMALLLIGHTMODE				2				// Kleines Licht zum Level
 #define MEDIUMLIGHTMODE				3				// Medium  Licht zum Level
-#define LARGELIGHTMODE				4				// Großes  Licht zum Level
+#define LARGELIGHTMODE				4				// GroÃŸes  Licht zum Level
 #define SMALLSHADOWMODE				5				// Kleines Schatten vom Level abziehen
 #define MEDIUMSHADOWMODE			6				// Medium  Schatten vom Level abziehen
-#define LARGESHADOWMODE				7				// Großen  Schatten vom Level abziehen
+#define LARGESHADOWMODE				7				// GroÃŸen  Schatten vom Level abziehen
 
 #define EDIT_ID_LevelName			100
 #define EDIT_ID_Beschreibung		101
@@ -186,7 +186,7 @@ extern char						 TastaturPuffer[256];				// Tastaturpuffer des Keyboards
 // globale Variablen
 // --------------------------------------------------------------------------------------
 
-// Arrays für die Licht/Schatten Effekte
+// Arrays fÃ¼r die Licht/Schatten Effekte
 
 signed int	LightMap[6][9][9] =	   {{{ 0,  0,  0,  0,  0,  0,  0,  0,  0},		// Small Light
 									{  0,  0,  0,  2,  2,  2,  0,  0,  0},
@@ -359,19 +359,19 @@ HDC						hdc;
 
 HWND					MainHWND				= NULL;		// Fenster Handle
 
-HPEN					Pens[10];						// Pens für Linien
+HPEN					Pens[10];						// Pens fÃ¼r Linien
 														// der Block-Arten
 
 D3DFORMAT				D3DFormat;						// Format der Primary Surface
 LPDIRECT3DDEVICE8		lpD3DDevice	 = NULL;			// Direct3D Device-Objekt
 LPDIRECT3DSURFACE8		lpBackbuffer = NULL;			// Der Backbuffer
-D3DCAPS8				d3dcaps;						// Möglichkeiten der Hardware
+D3DCAPS8				d3dcaps;						// MÃ¶glichkeiten der Hardware
 
-bool					EditorPaused	= false;		// Editor eingefroren (wenn man zb das Fenster verlässt)
+bool					EditorPaused	= false;		// Editor eingefroren (wenn man zb das Fenster verlÃ¤sst)
 
 bool					MouseInTile	    = false;		// Mauscursor im Tile ?
 bool					MouseInLevel    = false;		// Mauscursor im Level ?
-bool					EditorRunning   = true;			// Editor läuft :-)
+bool					EditorRunning   = true;			// Editor lÃ¤uft :-)
 bool					RedrawLevel     = true;			// Level neu zeichnen ?
 bool					RedrawTileset   = true;			// Tileset neu zeichnen ?
 bool					bShowLevel      = true;			
@@ -384,7 +384,7 @@ bool					bShowGrid		= false;		// oder das Grid
 bool					bScrollBackground = false;		// Letzten Layer scrollen ?
 bool					bTaschenlampe	= false;		// Taschenlampeneffekt
 bool					bKeepTileOffset = false;		// Offset innerhalb des Rechtecks merken
-int						KeepX = 0;						// Dazugehörige x und y Offsets
+int						KeepX = 0;						// DazugehÃ¶rige x und y Offsets
 int						KeepY = 0;
 
 bool					bCopyBack		= true;			// Back ins Clipboard ?
@@ -392,24 +392,24 @@ bool					bCopyFront		= false;		// Front ins Clipboard ?
 bool					bCopyLight		= true;			// Light ins Clipboard ?
 bool					bCopyBlock		= true;			// Block ins Clipboard ?
 
-bool					bLightRed		= true;			// Rot Grün Blau beim
-bool					bLightGreen		= true;			// Licht/Schatten hinzufügen
-bool					bLightBlue		= true;			// berücksichtigen ?
+bool					bLightRed		= true;			// Rot GrÃ¼n Blau beim
+bool					bLightGreen		= true;			// Licht/Schatten hinzufÃ¼gen
+bool					bLightBlue		= true;			// berÃ¼cksichtigen ?
 
 HBRUSH					BlockBrush[10];
 RECT					ActRect;						// Aktueller Ausschnitt
 
 unsigned char			TilesetNummer[MAX_TILESETS];	// Nummern der Tileset in der Liste
 unsigned char			LoadedTilesets  = 0;			// Wieviele Sets im Verzeichnis gefunden ?
-unsigned char			ActualTileset   = 0;			// Gerade gewähltes Tileset
+unsigned char			ActualTileset   = 0;			// Gerade gewÃ¤hltes Tileset
 unsigned char			TilesetsUsed    = 0;
 unsigned char			LightUsed		= 0;			// Welche Lichteinstellung ?
 
 int						XOffset			= 0;			// Offset im Level
 int						YOffset			= 0;
 int						EditMode		= LEVELMODE;	// Edit-Modus
-int						LevelSizeX		= 64;			// X-Grösse des Levels
-int						LevelSizeY		= 48;			// Y-Grösse des Levels
+int						LevelSizeX		= 64;			// X-GrÃ¶sse des Levels
+int						LevelSizeY		= 48;			// Y-GrÃ¶sse des Levels
 
 DirectGraphicsClass		DirectGraphics;					// Grafik-Objekt
 DirectInputClass		DirectInput;					// Input-Objekt
@@ -418,20 +418,20 @@ Logdatei				Protokoll("Logdatei.txt");		// Protokoll Datei
 TileEngineClass			*pTileEngine;					// TileEngine
 int						FensterMausX, FensterMausY;		// Maus-Pos im Fenster
 
-Object					*pSelectedObject = new Object;	// aktuell ausgewähltes Objekt
+Object					*pSelectedObject = new Object;	// aktuell ausgewÃ¤hltes Objekt
 unsigned int			NumObjects = 0;					// Anzahl aller Objekte
 
-int						ClipX,    ClipY;				// Grösse des Clipboard-Ausschnitts
+int						ClipX,    ClipY;				// GrÃ¶sse des Clipboard-Ausschnitts
 int						ClipOffX, ClipOffY;				// Linke obere Ecke des Clipboard-Ausschnitts
 char					LevelName[100];					// Name des Levels
 char					Beschreibung[100];				// Beschreibung des Levels
 unsigned int			Timelimit;						// Zeitlimit des Levels
 LevelTileStruct			ClipBoard[SCREENSIZE_X][SCREENSIZE_Y];	// Clipboard
 
-DirectGraphicsSprite	BlockArten;						// Grafiken für Blockarten
+DirectGraphicsSprite	BlockArten;						// Grafiken fÃ¼r Blockarten
 DirectGraphicsSprite	ObjectGFX[201];					// Grafiken der Objekte
 DirectGraphicsSprite	LiquidGfx[2];
-char					Buffer[100];					// Für die häufige _itoa Umwandlung
+char					Buffer[100];					// FÃ¼r die hÃ¤ufige _itoa Umwandlung
 char					HurriPath[255];					// Pfad, in dem Hurri liegt
 
 FileHeader				BackgroundNames;				// Zum sichern der Hintergrundgrafiken
@@ -454,7 +454,7 @@ D3DCOLOR				Col1, Col2;
 DirectGraphicsFont		*pFont        = new(DirectGraphicsFont);
 
 // --------------------------------------------------------------------------------------
-// Klasse für die Objekte
+// Klasse fÃ¼r die Objekte
 // --------------------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------------------
@@ -468,7 +468,7 @@ ObjectList::ObjectList (void)
 }
 
 // --------------------------------------------------------------------------------------
-// Anzahl Objekte vom Typ "Type" zurückgeben
+// Anzahl Objekte vom Typ "Type" zurÃ¼ckgeben
 // --------------------------------------------------------------------------------------
 
 int	ObjectList::GetNumType(int Type)
@@ -482,14 +482,14 @@ int	ObjectList::GetNumType(int Type)
 		if (pTemp->ObjectID == Type)
 			count++;
 
-        pTemp = pTemp->pNext;				// Zeiger auf das nächste Objekt richten    
+        pTemp = pTemp->pNext;				// Zeiger auf das nÃ¤chste Objekt richten    
     }
 
 	return count;
 }
 
 // --------------------------------------------------------------------------------------
-// Objekt in die Liste einfügen
+// Objekt in die Liste einfÃ¼gen
 // --------------------------------------------------------------------------------------
 
 void ObjectList::Push  (int x, int y, unsigned int ObjID)
@@ -521,11 +521,11 @@ void ObjectList::Push  (int x, int y, unsigned int ObjID)
 		pEnd		= pNew;					// da es jetzt das letzte in der Liste ist
 	}
 
-	NumObjects++;							// Objekt Anzahl erhöhen
+	NumObjects++;							// Objekt Anzahl erhÃ¶hen
 }
 
 // --------------------------------------------------------------------------------------
-// Objekt in die Liste einfügen und Werte aus geladenem Objekt übernehmen
+// Objekt in die Liste einfÃ¼gen und Werte aus geladenem Objekt Ã¼bernehmen
 // --------------------------------------------------------------------------------------
 
 void ObjectList::Push(ObjectForFileAccess Temp)
@@ -557,7 +557,7 @@ void ObjectList::Push(ObjectForFileAccess Temp)
 		pEnd		= pNew;					// da es jetzt das letzte in der Liste ist
 	}
 
-	NumObjects++;							// Objekt Anzahl erhöhen
+	NumObjects++;							// Objekt Anzahl erhÃ¶hen
 }
 
 // --------------------------------------------------------------------------------------
@@ -569,17 +569,17 @@ void ObjectList::DelSel  (Object *pTemp)
 	Object  *pN;
     Object  *pP;
 
-	if(pTemp!=NULL)						// zu löschendes Objekt existiert 
+	if(pTemp!=NULL)						// zu lÃ¶schendes Objekt existiert 
 	{
 		pN = pTemp->pNext;			
 		pP = pTemp->pPrev;
   
-		if(pP == NULL)					// Wird das erste Objekt gelöscht ?
-			pStart = pN;				// Dann wird dessen Nächstes zum Ersten
+		if(pP == NULL)					// Wird das erste Objekt gelÃ¶scht ?
+			pStart = pN;				// Dann wird dessen NÃ¤chstes zum Ersten
 		else
-			pP->pNext = pN;	   	        // ansonsten normal eins aufrücken
+			pP->pNext = pN;	   	        // ansonsten normal eins aufrÃ¼cken
 
-		if(pN == NULL)					// Wird das letzte Objekt gelöscht ?
+		if(pN == NULL)					// Wird das letzte Objekt gelÃ¶scht ?
 			pEnd = pP;					// Dann wir das letzte Objekt zum ersten
 		else
 		pN->pPrev = pP;
@@ -611,7 +611,7 @@ void ObjectList::ShowAll (void)
 		if (pTemp->ObjectID == 2)
 			DiamondsPerLevel++;
 
-		if(pTemp->XPos < XOffset*20+640		// Objekt überhaupt auf dem Screen ?
+		if(pTemp->XPos < XOffset*20+640		// Objekt Ã¼berhaupt auf dem Screen ?
 		&& pTemp->YPos < YOffset*20+480
 		&& pTemp->XPos > XOffset*20
 		&& pTemp->YPos > YOffset*20)
@@ -633,7 +633,7 @@ void ObjectList::ShowAll (void)
 										   ObjectGFX[pTemp->ObjectID].itsXFrameSize * 6, 
 										   ObjectGFX[pTemp->ObjectID].itsYFrameSize * 2);
 
-		// Objekt anzeigen (momentan ausgewähltes Objekt ist ROT)
+		// Objekt anzeigen (momentan ausgewÃ¤hltes Objekt ist ROT)
 		if(pTemp != pSelectedObject)
 		{
 			DirectGraphics.SetColorKeyMode();
@@ -700,10 +700,10 @@ void ObjectList::ShowAll (void)
 		}
 
 	    
-        pTemp = pTemp->pNext;				// Zeiger auf das nächste Objekt richten    
+        pTemp = pTemp->pNext;				// Zeiger auf das nÃ¤chste Objekt richten    
     }
 
-	// Gewähltes Objekt anzeigen
+	// GewÃ¤hltes Objekt anzeigen
 	if(pSelectedObject != NULL)
 	{
 		Color = 0xFFFFFFFF;
@@ -755,19 +755,19 @@ void ObjectList::ShowAll (void)
 }
 
 // --------------------------------------------------------------------------------------
-// Alle Objekte der Liste löschen
+// Alle Objekte der Liste lÃ¶schen
 // --------------------------------------------------------------------------------------
 
 void ObjectList::ClearAll (void)
 {
     Object *pTemp    = pStart;				// Zeiger auf das erste Objekt
-	Object *pNaechst;						// Zeiger auf das nächste Objekt (falls
-											// das eine gelöscht wird)
+	Object *pNaechst;						// Zeiger auf das nÃ¤chste Objekt (falls
+											// das eine gelÃ¶scht wird)
     while (pTemp != NULL)					// Ende der Liste erreicht ?
     {
-		pNaechst = pTemp->pNext;			// Zeiger auf das nächste Element
-		DelSel(pTemp);						// Das aktuelle löschen
-        pTemp = pNaechst;				    // und das nächste bearbeiten
+		pNaechst = pTemp->pNext;			// Zeiger auf das nÃ¤chste Element
+		DelSel(pTemp);						// Das aktuelle lÃ¶schen
+        pTemp = pNaechst;				    // und das nÃ¤chste bearbeiten
     }
 
 	pStart = NULL;
@@ -790,7 +790,7 @@ void ObjectList::GetSelected (void)
 		GetCursorPos(&ptCursor);
 		ScreenToClient(MainHWND, &ptCursor);
 
-		// Gegner ausgewählt ?
+		// Gegner ausgewÃ¤hlt ?
 		int xMaus = ptCursor.x - VIEW_XOFFSET;
 		int yMaus = ptCursor.y - VIEW_YOFFSET;
 
@@ -807,7 +807,7 @@ void ObjectList::GetSelected (void)
 	}
 }
 
-//----- doppelt verkettete Liste für die Objekte
+//----- doppelt verkettete Liste fÃ¼r die Objekte
 
 ObjectList *pObjectList	= new ObjectList;		
 
@@ -850,7 +850,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 		{
 			EditorRunning = false;						// Spiel beenden
 			PostQuitMessage(0);							// Quit-Message posten
-			return(0);									// Success zurückliefern
+			return(0);									// Success zurÃ¼ckliefern
 		} break;
 
 		case WM_KEYDOWN:
@@ -925,7 +925,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 //----- Sonstige Buttons 
 
-				case BUTTON_ID_SmallLight:				// Kleines Licht wählen
+				case BUTTON_ID_SmallLight:				// Kleines Licht wÃ¤hlen
 				{
 					LightUsed = 0;
 					EditMode = SMALLLIGHTMODE;
@@ -933,7 +933,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 					SendMessage(ButtonEditMode,WM_SETTEXT,0,(long)"Small Light");
 				} break;
 
-				case BUTTON_ID_MediumLight:				// Mittleres Licht wählen
+				case BUTTON_ID_MediumLight:				// Mittleres Licht wÃ¤hlen
 				{
 					LightUsed = 1;
 					EditMode = MEDIUMLIGHTMODE;
@@ -941,7 +941,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 					SendMessage(ButtonEditMode,WM_SETTEXT,0,(long)"Med. Light");
 				} break;
 
-				case BUTTON_ID_LargeLight:				// Großes Licht wählen
+				case BUTTON_ID_LargeLight:				// GroÃŸes Licht wÃ¤hlen
 				{
 					LightUsed = 2;
 					EditMode = LARGELIGHTMODE;
@@ -974,9 +974,9 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 					SendMessage(ButtonEditMode,WM_SETTEXT,0,(long)"Large Shadow");
 				} break;
 
-				case BUTTON_ID_Bruecke:				// Brücke bauen
+				case BUTTON_ID_Bruecke:				// BrÃ¼cke bauen
 				{
-					// Brückenteile anfügen
+					// BrÃ¼ckenteile anfÃ¼gen
 					for (int i = 0; i < ClipX; i++)
 					{
 						pObjectList->Push (ActRect.left*20+XOffset*20+i*20, 
@@ -1322,7 +1322,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 					}
 				} break;
 
-				case BOX_ID_BlockWert_Wand:				// Blockwert ändern
+				case BOX_ID_BlockWert_Wand:				// Blockwert Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1340,7 +1340,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BlockWert_GegnerWand:				// Blockwert ändern
+				case BOX_ID_BlockWert_GegnerWand:				// Blockwert Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1358,7 +1358,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BlockWert_Plattform:				// Blockwert ändern
+				case BOX_ID_BlockWert_Plattform:				// Blockwert Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1376,7 +1376,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BlockWert_Light:				// Blockwert ändern
+				case BOX_ID_BlockWert_Light:				// Blockwert Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1394,7 +1394,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BlockWert_Verdecken:				// Blockwert ändern
+				case BOX_ID_BlockWert_Verdecken:				// Blockwert Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1412,7 +1412,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BlockWert_AnimiertB:			// Blockwert Back Set ändern
+				case BOX_ID_BlockWert_AnimiertB:			// Blockwert Back Set Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1430,7 +1430,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BlockWert_AnimiertF:			// Blockwert Front Set ändern
+				case BOX_ID_BlockWert_AnimiertF:			// Blockwert Front Set Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1448,7 +1448,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BlockWert_Wasser:				// Blockwert ändern
+				case BOX_ID_BlockWert_Wasser:				// Blockwert Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1466,7 +1466,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BlockWert_Schaden:				// Blockwert ändern
+				case BOX_ID_BlockWert_Schaden:				// Blockwert Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1484,7 +1484,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BlockWert_FliessBandL:				// Blockwert ändern
+				case BOX_ID_BlockWert_FliessBandL:				// Blockwert Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1502,7 +1502,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BlockWert_FliessBandR:				// Blockwert ändern
+				case BOX_ID_BlockWert_FliessBandR:				// Blockwert Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1520,7 +1520,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BlockWert_WendePunkt:				// Blockwert ändern
+				case BOX_ID_BlockWert_WendePunkt:				// Blockwert Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1538,7 +1538,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BlockWert_Destructible:				// Blockwert ändern
+				case BOX_ID_BlockWert_Destructible:				// Blockwert Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1556,7 +1556,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BlockWert_MOVELINKS:				// Blockwert ändern
+				case BOX_ID_BlockWert_MOVELINKS:				// Blockwert Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1574,7 +1574,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BlockWert_Overlay_Light:				// Blockwert ändern
+				case BOX_ID_BlockWert_Overlay_Light:				// Blockwert Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1592,7 +1592,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BlockWert_Lava:				// Blockwert ändern
+				case BOX_ID_BlockWert_Lava:				// Blockwert Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1610,7 +1610,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BlockWert_Eis:				// Blockwert ändern
+				case BOX_ID_BlockWert_Eis:				// Blockwert Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1628,7 +1628,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BLOCKWERT_MOVEVERTICAL:				// Blockwert ändern
+				case BOX_ID_BLOCKWERT_MOVEVERTICAL:				// Blockwert Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1646,7 +1646,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BlockWert_WasserFall:				// Blockwert ändern
+				case BOX_ID_BlockWert_WasserFall:				// Blockwert Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1664,7 +1664,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BOX_ID_BlockWert_TexRechts:				// Blockwert ändern
+				case BOX_ID_BlockWert_TexRechts:				// Blockwert Ã¤ndern
 				{
 					if (HIWORD(wparam) == BN_CLICKED && 
 						pTileEngine->Tiles[ActRect.left+XOffset]
@@ -1682,7 +1682,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 
 				} break;
 
-				case BUTTON_ID_NextTileSet:					// Nächstes Tileset (falls vorhanden)
+				case BUTTON_ID_NextTileSet:					// NÃ¤chstes Tileset (falls vorhanden)
 				{
 					if (ActualTileset < MAX_TILESETS-1) 
 						ActualTileset++;
@@ -1899,7 +1899,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 				SendMessage(HScrollBar, SBM_SETPOS, (int)((XOffset*(LevelSizeX-32))/32), true);
 			}
 
-	// Rotwert ändern
+	// Rotwert Ã¤ndern
 			if ((HWND) lparam == RedValue)				
 			{
 				RedrawLevel = true;
@@ -1932,7 +1932,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 				}
 			}
 
-// Grünwert ändern
+// GrÃ¼nwert Ã¤ndern
 			if ((HWND) lparam == GreenValue)				
 			{
 				RedrawLevel = true;
@@ -1965,7 +1965,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 				}
 			}
 
-// Blauwert ändern
+// Blauwert Ã¤ndern
 			if ((HWND) lparam == BlueValue)				
 			{
 				RedrawLevel = true;
@@ -1998,7 +1998,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 				}
 			}
 
-// Alphawert ändern
+// Alphawert Ã¤ndern
 			if ((HWND) lparam == AlphaValue)				
 			{
 				RedrawLevel = true;
@@ -2031,7 +2031,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 				}
 			}
 
-// Helligkeit (R G B gleichzeitig) ändern
+// Helligkeit (R G B gleichzeitig) Ã¤ndern
 			if ((HWND) lparam == AllValues)				
 			{
 				RedrawLevel = true;
@@ -2094,7 +2094,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpara
 		default : break;
 	}
 
-	// unbearbeitete Nachrichten zurückliefern
+	// unbearbeitete Nachrichten zurÃ¼ckliefern
 	return(DefWindowProc(hwnd, message, wparam, lparam));
 }
 
@@ -2132,7 +2132,7 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 		int count = 0;
 		char c = getc (Datei);
 
-		// Zeichen für Zeichen auslesen, bis ein c==10 gelesen wird. Dies markiert das Zeilenende
+		// Zeichen fÃ¼r Zeichen auslesen, bis ein c==10 gelesen wird. Dies markiert das Zeilenende
 		//
 		do
 		{
@@ -2146,7 +2146,7 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 		fclose (Datei);
 	}
 
-	// Versuchen, die Exe zu öffnen
+	// Versuchen, die Exe zu Ã¶ffnen
 	//
 	char temp[255];
 
@@ -2182,7 +2182,7 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 		fn.Flags             = OFN_READONLY | OFN_FILEMUSTEXIST;
 		fn.lpstrDefExt       = NULL;
 		
-		// File dialog öffnen und Pfad der Hurrican.exe auslesen
+		// File dialog Ã¶ffnen und Pfad der Hurrican.exe auslesen
 		//
 		GetOpenFileName(&fn);
 
@@ -2210,7 +2210,7 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 	char StringBuffer[100];
 	Protokoll.WriteText(">------------------------------<\n", false);
 	Protokoll.WriteText("|  Hurrican Level-Editor V1.0  |\n", false);
-	Protokoll.WriteText("| (c) 2002 Jörg M. Winterstein |\n", false);
+	Protokoll.WriteText("| (c) 2002 JÃ¶rg M. Winterstein |\n", false);
 	Protokoll.WriteText(">------------------------------<\n", false);
 	Protokoll.WriteText("Logdatei vom : ", false);
 	strcpy(StringBuffer, __DATE__);	Protokoll.WriteText(StringBuffer, false); Protokoll.WriteText(" - ", false);
@@ -2221,8 +2221,8 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 	Protokoll.WriteText(    ">-----------------------------------<\n\n", false);
 
 
-	// Werte für die Windows-Klasse festlegen
-	winclass.cbSize			= sizeof (WNDCLASSEX);					// Grösse der Klasse
+	// Werte fÃ¼r die Windows-Klasse festlegen
+	winclass.cbSize			= sizeof (WNDCLASSEX);					// GrÃ¶sse der Klasse
 	winclass.style			= CS_HREDRAW | CS_VREDRAW;				// Fenster-Einstellungen
 	winclass.lpfnWndProc	= WindowProc;							// Callback Funktion
 	winclass.cbClsExtra		= 0;									// extra Klassen-Info Space
@@ -2250,11 +2250,11 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 		return 0;
 	}
 
-	// checken ob 1024x768 oder höher gesetzt ist
+	// checken ob 1024x768 oder hÃ¶her gesetzt ist
 
 	if (GetDeviceCaps(hdc, HORZRES) < 1024 ||
 		GetDeviceCaps(hdc, VERTRES) < 768)
-		MessageBox(NULL, "Auflösung von mindestens 1024x768 erforderlich, um anständig zu laufen ;)", "Fehler !", MB_OK);
+		MessageBox(NULL, "AuflÃ¶sung von mindestens 1024x768 erforderlich, um anstÃ¤ndig zu laufen ;)", "Fehler !", MB_OK);
 
 	// Fensterklasse bei Windows registrieren
 	if (!RegisterClassEx(&winclass))
@@ -2278,7 +2278,7 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 								(rect.right  - 1024) / 2,			// x-Position
 								(rect.bottom -  768) / 2,			// y-Position
 								WINDOWWIDTH,						// Fensterbreite
-								WINDOWHEIGHT,						// Fensterhöhe
+								WINDOWHEIGHT,						// FensterhÃ¶he
 								NULL,								// Handle des Parentfensters
 								NULL,								// Vorerst kein Menus
 								hinstance,							// Instance von Main
@@ -2319,8 +2319,8 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 	while(EditorRunning == true)
 	{
 		while (PeekMessage (&message, NULL, 0, 0, PM_REMOVE))	// Nachricht vom Stapel holen
-		{														// und löschen
-			TranslateMessage(&message);							// Nachricht überetzen
+		{														// und lÃ¶schen
+			TranslateMessage(&message);							// Nachricht Ã¼beretzen
 			DispatchMessage(&message);							// Nachricht an WinProc weiterleiten
 		}
 
@@ -2330,7 +2330,7 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 			Heartbeat();											// Main Loop
 			ReleaseDC(MainHWND,hdc);								// Handle freigeben
 
-			// Eingabegeräte updaten
+			// EingabegerÃ¤te updaten
 			DirectInput.TastaturUpdate();
 			DirectInput.MausUpdate(false);
 			
@@ -2349,7 +2349,7 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 	Protokoll.WriteText("Bugreports, Fragen etc : Eiswuxe@Poke53280.de\n", false);
 	Protokoll.WriteText("\n-> Logdatei Ende", false);
 
-	return(message.wParam);										// Rückkehr zu Windows
+	return(message.wParam);										// RÃ¼ckkehr zu Windows
 }
 
 // -------------------------------------------------------------------------------------- 
@@ -2359,7 +2359,7 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 bool Heartbeat(void)
 {
 	DoMouse();										// Maus bewegt ?
-	DoKeys();										// Tasten gedrückt ?
+	DoKeys();										// Tasten gedrÃ¼ckt ?
 
 	MouseInTile	 = false;		// Mauscursor im Tile ?
 	MouseInLevel = false;		// Mauscursor im Level ?
@@ -2390,7 +2390,7 @@ bool Heartbeat(void)
 
 	SendMessage(BeschreibungsFeld, WM_GETTEXT, ilen+1, (long)Beschreibung);
 
-	// Farben für Liquid auslesen
+	// Farben fÃ¼r Liquid auslesen
 	ilen = SendMessage(Color1Feld, WM_GETTEXTLENGTH, 0, 0);
 	SendMessage(Color1Feld, WM_GETTEXT, ilen+1, (long)Appendix.Col1);	 
 
@@ -2407,7 +2407,7 @@ bool Heartbeat(void)
 						 GetDecValue(&Appendix.Col2[4], 2),
 						 GetDecValue(&Appendix.Col2[6], 2));
 
-	// Levelgrösse aus den Textfeldern lesen
+	// LevelgrÃ¶sse aus den Textfeldern lesen
 	ilen = SendMessage(EditSizeX, WM_GETTEXTLENGTH, 0, 0);
 	SendMessage(EditSizeX, WM_GETTEXT, ilen+1, (long)buf);
 	LevelSizeX = atoi(buf);
@@ -2479,7 +2479,7 @@ bool Heartbeat(void)
 		RedrawLevel = true;
 	}
 
-	// Aktuell gewähltes Tileset in der ComboBox auslesen
+	// Aktuell gewÃ¤hltes Tileset in der ComboBox auslesen
 	if(TilesetNummer[ActualTileset] != (int)(SendMessage(ComboBoxSelectTileset, CB_GETCURSEL, 0, 0)))
 	{
 		TilesetNummer[ActualTileset] = (int)(SendMessage(ComboBoxSelectTileset, CB_GETCURSEL, 0, 0));
@@ -2501,10 +2501,10 @@ bool Heartbeat(void)
 void DrawLevel(void)
 {
 	lpD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);			// Alpha-Blending
-	lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// für Colorkey
+	lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// fÃ¼r Colorkey
 	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);	// einschalten
 
-	// Backbuffer löschen
+	// Backbuffer lÃ¶schen
 	lpD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 
 	// Mit dem Darstellen beginnen
@@ -2533,10 +2533,10 @@ void DrawLevel(void)
 		yTileOffs = (int)(YOffset*20) % TILESIZE_Y;
 
 		lpD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);			// Alpha-Blending
-		lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// für Colorkey
+		lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// fÃ¼r Colorkey
 		lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);	// einschalten
 
-		// Alle möglichen Tilesets durchmachen
+		// Alle mÃ¶glichen Tilesets durchmachen
 		for(int k=0; k<MAX_TILESETS; k++)
 		 for(int j=0; j<SCREENSIZE_Y + 1; j++)
   		  for(int i=0; i<SCREENSIZE_X + 1; i++)
@@ -2579,10 +2579,10 @@ void DrawLevel(void)
 		yTileOffs = (int)(YOffset*20) % TILESIZE_Y;
 
 		lpD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);			// Alpha-Blending
-		lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// für Colorkey
+		lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// fÃ¼r Colorkey
 		lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);	// einschalten
 
-		// Alle möglichen Tilesets durchmachen
+		// Alle mÃ¶glichen Tilesets durchmachen
 		for(int k=0; k<MAX_TILESETS; k++)
 		 for(int j=0; j<SCREENSIZE_Y + 1; j++)
   		  for(int i=0; i<SCREENSIZE_X + 1; i++)
@@ -2711,10 +2711,10 @@ void DrawLevel(void)
 			yTileOffs = (int)(YOffset*20) % TILESIZE_Y;
 
 			lpD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);			// Alpha-Blending
-			lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// für Colorkey
+			lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// fÃ¼r Colorkey
 			lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);	// einschalten
 
-			// Alle möglichen Tilesets durchmachen
+			// Alle mÃ¶glichen Tilesets durchmachen
 			for(int k=0; k<MAX_TILESETS; k++)
 			 for(int j=0; j<ClipY; j++)
   			  for(int i=0; i<ClipX; i++)
@@ -2878,7 +2878,7 @@ void DrawLevel(void)
 void DrawTileset(void)
 {
 	lpD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);			// Alpha-Blending
-	lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// für Colorkey
+	lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// fÃ¼r Colorkey
 	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);	// einschalten
 
 	// Mit dem Darstellen beginnen
@@ -2916,7 +2916,7 @@ void DrawMiniMap(void)
 {
 	// MiniMap leeren
 	lpD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);			// Alpha-Blending
-	lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// für Colorkey
+	lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// fÃ¼r Colorkey
 	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);	// einschalten
 
 	// Mit dem Darstellen beginnen
@@ -2934,7 +2934,7 @@ void DrawMiniMap(void)
 	rectsource.bottom = 97;		rectdest.bottom = MINIMAP_YOFFSET+97;
 	lpD3DDevice->Present(&rectsource, &rectdest, 0, NULL);		// Frontbuffer anzeigen
 
-	// MiniMap füllen
+	// MiniMap fÃ¼llen
 	for (int i=0; i<128; i++)
 	 for (int j=0; j<96; j++)
 		 if (XOffset+i-48 >= 0 &&
@@ -2969,12 +2969,12 @@ void DrawMiniMap(void)
 }
 
 // -------------------------------------------------------------------------------------- 
-// Infos des ausgewählten Objekts anzeigen
+// Infos des ausgewÃ¤hlten Objekts anzeigen
 // ------------------------------------------------------------------------------------
 
 void ShowObjectInfo(void)
 {
-	// Objekt ausgewählt ? Dann Eigenschaften übernehmen
+	// Objekt ausgewÃ¤hlt ? Dann Eigenschaften Ã¼bernehmen
 	if(pSelectedObject != NULL)
 	{
 		if (pSelectedObject->Skill == 0)
@@ -3020,7 +3020,7 @@ void ShowObjectInfo(void)
 }
 
 // -------------------------------------------------------------------------------------- 
-// Maus bearbeiten, d.h. ggf Rects an der Position zeichnen oder Tiles auswählen/setzen
+// Maus bearbeiten, d.h. ggf Rects an der Position zeichnen oder Tiles auswÃ¤hlen/setzen
 // -------------------------------------------------------------------------------------- 
 
 void DoMouse(void)
@@ -3196,7 +3196,7 @@ void DoMouse(void)
 		RedrawLevel = true;
 	}
 
-	// Tilestück aussuchen im Tileset Fenster rechts oben
+	// TilestÃ¼ck aussuchen im Tileset Fenster rechts oben
 	// solange warten, bis Maus losgelassen wurde und dann den markierten
 	// Bereich ins Clipboard kopieren
 
@@ -3267,17 +3267,17 @@ void DoMouse(void)
 		LineTo  (hdc, TILE_XOFFSET+rectselect.left,  TILE_YOFFSET+rectselect.bottom);
 		LineTo  (hdc, TILE_XOFFSET+rectselect.left,  TILE_YOFFSET+rectselect.top);
 
-		// Kanten des gewählten Bereichs
+		// Kanten des gewÃ¤hlten Bereichs
 		// auf Tile-Ebene umrechnen
 		rectselect.right  /= 20;
 		rectselect.left   /= 20;
 		rectselect.top    /= 20;
 		rectselect.bottom /= 20;
 
-		ClipX = rectselect.right  - rectselect.left;	// Grösse des Clip-Bereichs 
+		ClipX = rectselect.right  - rectselect.left;	// GrÃ¶sse des Clip-Bereichs 
 		ClipY = rectselect.bottom - rectselect.top;		// errechnen
 
-		for (int i=0; i< ClipX; i++)					// Clipboard füllen
+		for (int i=0; i< ClipX; i++)					// Clipboard fÃ¼llen
 		 for (int j=0; j< ClipY; j++)
 		 {
 			 ClipBoard[i][j].BackArt	  = (unsigned char)((j+rectselect.top)*12+i+rectselect.left);
@@ -3297,8 +3297,8 @@ void DoMouse(void)
 		ActRect.right  = ActRect.left + ClipX;
 		ActRect.bottom = ActRect.top  + ClipY;
 
-		// Offsets für KeepTileOffset auf "ungesetzt" setzen, damit beim ersten Setzen des Tiles die
-		// Werte übernommen werden
+		// Offsets fÃ¼r KeepTileOffset auf "ungesetzt" setzen, damit beim ersten Setzen des Tiles die
+		// Werte Ã¼bernommen werden
 		KeepX = -1;
 		KeepY = -1;		
 
@@ -3342,7 +3342,7 @@ void DoMouse(void)
 		int xoff, xoff2;
 		int yoff, yoff2;
 
-		// Offsetwerte für KeepTileOffset beim ersten Klick ins Level neu setzen
+		// Offsetwerte fÃ¼r KeepTileOffset beim ersten Klick ins Level neu setzen
 		if (KeepX == -1 &&
 			ClipX > 0   &&
 			ClipY > 0)
@@ -3467,17 +3467,17 @@ void DoMouse(void)
 			DrawLevel();
 		}
 
-		// Kanten des gewählten Bereichs
+		// Kanten des gewÃ¤hlten Bereichs
 		// auf Level-Ebene umrechnen
 		rectselect.right  /= 20;
 		rectselect.left   /= 20;
 		rectselect.top    /= 20;
 		rectselect.bottom /= 20;
 
-		ClipX = rectselect.right  - rectselect.left;	// Grösse des Clip-Bereichs 
+		ClipX = rectselect.right  - rectselect.left;	// GrÃ¶sse des Clip-Bereichs 
 		ClipY = rectselect.bottom - rectselect.top;		// errechnen		
 
-		for (int i=0; i< ClipX; i++)					// Clipboard füllen
+		for (int i=0; i< ClipX; i++)					// Clipboard fÃ¼llen
 		 for (int j=0; j< ClipY; j++)
 		 {
 			 ClipBoard[i][j].BackArt = 
@@ -3517,7 +3517,7 @@ void DoMouse(void)
 							   [j+YOffset+rectselect.top].TileSetFront;
 		 }	
 
-		// Offsets für KeepTileOffset errechnen, damit die folgenden Tiles passend zur eben gewählten Auswahl
+		// Offsets fÃ¼r KeepTileOffset errechnen, damit die folgenden Tiles passend zur eben gewÃ¤hlten Auswahl
 		// gesetzt werden
 		 if (ClipX > 0 && ClipY > 0)
 		 {
@@ -3560,7 +3560,7 @@ void DoMouse(void)
 							  (int)(ptCursor.y) - VIEW_YOFFSET + YOffset*20,
 							  type);
 
-			// Objekt dupliziert ? Dann Eigenschaften übernehmen
+			// Objekt dupliziert ? Dann Eigenschaften Ã¼bernehmen
 			if(pSelectedObject != NULL)
 			{
 				pObjectList->pEnd->ObjectID		= pSelectedObject->ObjectID;
@@ -3588,7 +3588,7 @@ void DoMouse(void)
 	}
 
 	//
-	// Objekt auswählen (rechte Maustaste)
+	// Objekt auswÃ¤hlen (rechte Maustaste)
 	//
 
 	if (EditMode == OBJECTMODE && MouseInLevel == true && DirectInput.MausButtons[1] == true)
@@ -3612,7 +3612,7 @@ void DoMouse(void)
 void DoKeys(void)
 {
 
-	// Clipboard löschen
+	// Clipboard lÃ¶schen
 	if (KeyDown(DIK_ESCAPE))
 	{
 		ClipX = 0;
@@ -3773,7 +3773,7 @@ void DoKeys(void)
 //----- Special
 
 	
-	// F5 zum nächsten Objekt jumpen
+	// F5 zum nÃ¤chsten Objekt jumpen
 	if (KeyDown(DIK_F5) &&
 		pSelectedObject != NULL)
 	{
@@ -3791,7 +3791,7 @@ void DoKeys(void)
 					break;
 			}
 
-			// Objekt gefunden? Dann auswählen und zentrieren
+			// Objekt gefunden? Dann auswÃ¤hlen und zentrieren
 			if (pTemp->ObjectID == pSave->ObjectID)
 			{
 				pSelectedObject = pTemp;
@@ -3832,7 +3832,7 @@ void DoKeys(void)
 		while (pTemp != NULL)					// Ende der Liste erreicht ?
 		{				
 			pTemp->YPos += 20;
-			pTemp = pTemp->pNext;				// Zeiger auf das nächste Objekt richten    
+			pTemp = pTemp->pNext;				// Zeiger auf das nÃ¤chste Objekt richten    
 		}
 
 		while (KeyDown(DIK_NUMPAD2))
@@ -3852,7 +3852,7 @@ void DoKeys(void)
 		while (pTemp != NULL)					// Ende der Liste erreicht ?
 		{				
 			pTemp->YPos -= 20;
-			pTemp = pTemp->pNext;				// Zeiger auf das nächste Objekt richten    
+			pTemp = pTemp->pNext;				// Zeiger auf das nÃ¤chste Objekt richten    
 		}
 
 		while (KeyDown(DIK_NUMPAD8))
@@ -3872,7 +3872,7 @@ void DoKeys(void)
 		while (pTemp != NULL)					// Ende der Liste erreicht ?
 		{				
 			pTemp->XPos += 20;
-			pTemp = pTemp->pNext;				// Zeiger auf das nächste Objekt richten    
+			pTemp = pTemp->pNext;				// Zeiger auf das nÃ¤chste Objekt richten    
 		}
 
 		while (KeyDown(DIK_NUMPAD6))
@@ -3892,7 +3892,7 @@ void DoKeys(void)
 		while (pTemp != NULL)					// Ende der Liste erreicht ?
 		{				
 			pTemp->XPos -= 20;
-			pTemp = pTemp->pNext;				// Zeiger auf das nächste Objekt richten    
+			pTemp = pTemp->pNext;				// Zeiger auf das nÃ¤chste Objekt richten    
 		}
 
 		while (KeyDown(DIK_NUMPAD4))
@@ -3942,7 +3942,7 @@ void DoKeys(void)
 		}
 	}
 
-//----- Akuell gewählten Level-Ausschitt löschen ?
+//----- Akuell gewÃ¤hlten Level-Ausschitt lÃ¶schen ?
 
 	if(EditMode == LEVELMODE && KeyDown(DIK_DELETE))
 	{
@@ -3963,7 +3963,7 @@ void DoKeys(void)
 	}
 
 
-//----- Aktuell gewähltes Objekt bewegen ? (mit SHIFT == langsam bewegen)
+//----- Aktuell gewÃ¤hltes Objekt bewegen ? (mit SHIFT == langsam bewegen)
 
 	if(EditMode == OBJECTMODE && pSelectedObject != NULL)
 	{
@@ -3999,7 +3999,7 @@ void DoKeys(void)
 			RedrawLevel = true;
 		}
 
-//----- Objekt löschen ?
+//----- Objekt lÃ¶schen ?
 
 		if (KeyDown(DIK_DELETE))
 		{
@@ -4016,7 +4016,7 @@ void DoKeys(void)
 
 void ShowValues(void)
 {
-	// alte Werte löschen
+	// alte Werte lÃ¶schen
 	SetBkColor  (hdc, RGB(255, 255, 255));
 	SelectObject(hdc, Pens[2]);
 	SelectObject(hdc, BlockBrush[0]);
@@ -4024,7 +4024,7 @@ void ShowValues(void)
 	Rectangle(hdc, 208, 45, 250, 61);			// X-Offset im  Level
 	Rectangle(hdc, 208, 65, 250, 81);			// Y-Offset im  Level
 	Rectangle(hdc, 695, 360, 730, 376);			// Rot   Wert
-	Rectangle(hdc, 695, 380, 730, 396);			// Grün  Wert
+	Rectangle(hdc, 695, 380, 730, 396);			// GrÃ¼n  Wert
 	Rectangle(hdc, 695, 400, 730, 416);			// Blau  Wert
 	Rectangle(hdc, 695, 420, 730, 436);			// Alpha Wert
 	Rectangle(hdc, 880, 66, 915, 82);			// Tileset Nummer
@@ -4032,7 +4032,7 @@ void ShowValues(void)
 	Rectangle(hdc, 960, 25, 1000, 41);			// Back  TilesetNr
 	Rectangle(hdc, 960, 40, 1000, 56);			// Front TilesetNr
 
-	// Objekt-Werte löschen
+	// Objekt-Werte lÃ¶schen
 
 	Rectangle(hdc, 895, 615, 950, 631);			// Anzahl
 	Rectangle(hdc, 700, 651, 760, 667);			// X-Pos
@@ -4068,7 +4068,7 @@ void ShowValues(void)
 	TextOut(hdc, 845, 66, "NR :", strlen("NR :"));
 	TextOut(hdc, 890, 66, Buffer, strlen(Buffer));
 
-	// Levelgrösse anzeigen
+	// LevelgrÃ¶sse anzeigen
 	TextOut(hdc,10, 45, "X-Size :", strlen("X-Size :"));
 	TextOut(hdc,10, 65, "Y-Size :", strlen("Y-Size :"));
 
@@ -4081,7 +4081,7 @@ void ShowValues(void)
 	TextOut(hdc,130, 65, "Y-Offset :", strlen("Y-Offset :"));
 	TextOut(hdc,210, 65 , Buffer, strlen(Buffer));
 
-	// Werte für Front und Back Tileset anzeigen
+	// Werte fÃ¼r Front und Back Tileset anzeigen
 	_itoa(pTileEngine->Tiles[ActRect.left+XOffset][ActRect.top+YOffset].TileSetBack, Buffer, 10);
 	TextOut(hdc, 920, 25, "Back",  strlen("Back"));
 	TextOut(hdc, 965, 25, Buffer, strlen(Buffer));
@@ -4131,10 +4131,10 @@ bool SaveClipboard(void)
 	unsigned char			NumUsedSets = 0;					// Anzahl benutzter Tilesets	
 	FILE					*Datei;								// Level-Datei	
 	
-	// Datei zum speichern (überschreiben !) öffnen
+	// Datei zum speichern (Ã¼berschreiben !) Ã¶ffnen
 	Datei = fopen("clipboard", "wb");
 
-	// Größe speichern
+	// GrÃ¶ÃŸe speichern
 	fwrite(&ClipX, sizeof(ClipX), 1, Datei);
 	fwrite(&ClipY, sizeof(ClipY), 1, Datei);
 
@@ -4157,7 +4157,7 @@ bool LoadClipboard(void)
 {
 	FILE					*Datei = NULL;					// Level-Datei
 
-	// Prüfen, ob die Datei existiert
+	// PrÃ¼fen, ob die Datei existiert
 	Datei = fopen("clipboard", "rb");
 
 	if(!Datei)
@@ -4166,7 +4166,7 @@ bool LoadClipboard(void)
 		return false;
 	}
 
-	// Größe laden
+	// GrÃ¶ÃŸe laden
 	fread(&ClipX, sizeof(ClipX), 1, Datei);
 	fread(&ClipY, sizeof(ClipY), 1, Datei);
 
@@ -4195,7 +4195,7 @@ bool SaveLevel(bool SaveAs)
 	ObjectForFileAccess		SaveObject;
 
 	// Speichern unter oder noch kein Filename angegeben ?
-	// Dann File Dialog öffnen
+	// Dann File Dialog Ã¶ffnen
 	//
 	if (SaveAs == true ||
 		strcmp (LevelName, "") == 0)
@@ -4226,7 +4226,7 @@ bool SaveLevel(bool SaveAs)
 	}
 
 	else
-		if (MessageBox (NULL, "Die bestehende Datei wird überschrieben!\nFortfahren ?", "Achtung !", MB_YESNO) != IDYES)
+		if (MessageBox (NULL, "Die bestehende Datei wird Ã¼berschrieben!\nFortfahren ?", "Achtung !", MB_YESNO) != IDYES)
 			return false;
 
 	// Kein File angegeben ?
@@ -4234,7 +4234,7 @@ bool SaveLevel(bool SaveAs)
 	if (strcmp (LevelName, "") == 0)
 		return false;
 
-	// .map noch anhängen ?
+	// .map noch anhÃ¤ngen ?
 	//
 	if (strstr (LevelName, ".map") == NULL)
 		strcat (LevelName, ".map");
@@ -4244,10 +4244,10 @@ bool SaveLevel(bool SaveAs)
 		if(TilesetNummer[i] > 0) 
 			NumUsedSets++;
 
-	// Datei zum speichern (überschreiben !) öffnen
+	// Datei zum speichern (Ã¼berschreiben !) Ã¶ffnen
 	Datei = fopen(LevelName, "wb");
 
-	// DateiHeader füllen
+	// DateiHeader fÃ¼llen
 	strcpy(DateiHeader.Kennung, "Hurrican Level File V1.0 (c) 2002 Poke53280 - ");
 	strcpy(DateiHeader.Beschreibung, Beschreibung);
 	DateiHeader.SizeX			 = LevelSizeX;
@@ -4293,7 +4293,7 @@ bool SaveLevel(bool SaveAs)
 		// Werte speichern
 		fwrite(&SaveObject, sizeof(SaveObject), 1, Datei);
 		
-		// Zeiger auf das nächste Objekt richten    
+		// Zeiger auf das nÃ¤chste Objekt richten    
         pTemp = pTemp->pNext;				
     }
 
@@ -4339,7 +4339,7 @@ bool LoadLevel(void)
 	fn.Flags             = OFN_READONLY | OFN_FILEMUSTEXIST;
 	fn.lpstrDefExt       = NULL;
 	
-	// File dialog öffnen
+	// File dialog Ã¶ffnen
 	//
 	GetOpenFileName(&fn);
 
@@ -4348,10 +4348,10 @@ bool LoadLevel(void)
 	if (strcmp (LevelName, "") == 0)
 		return false;
 
-	// Zuerst die Objekt-Liste löschen, damit neue Objekte geladen werden können
+	// Zuerst die Objekt-Liste lÃ¶schen, damit neue Objekte geladen werden kÃ¶nnen
 	pObjectList->ClearAll();			
 
-	// geladene Tilesets löschen
+	// geladene Tilesets lÃ¶schen
 	for (int i = 0; i < MAX_TILESETS; i++)
 		TilesetNummer[i] = 0;
 
@@ -4359,7 +4359,7 @@ bool LoadLevel(void)
 	SendMessage(ComboBoxSelectTileset, CB_SETCURSEL, 0, 0);
 	RedrawTileset = true;
 
-	// Prüfen, ob die Datei existiert
+	// PrÃ¼fen, ob die Datei existiert
 	Datei = fopen(LevelName, "rb");
 
 	if(!Datei)
@@ -4373,7 +4373,7 @@ bool LoadLevel(void)
 	// DateiHeader auslesen
 	fread(&DateiHeader, sizeof(DateiHeader), 1, Datei);
 
-	// und Werte übertragen
+	// und Werte Ã¼bertragen
 	LevelSizeX    = DateiHeader.SizeX;
 	LevelSizeY    = DateiHeader.SizeY;
 	NumUsedSets   = DateiHeader.UsedTilesets;
@@ -4443,8 +4443,8 @@ bool LoadLevel(void)
 		TilesetNummer[i] = (unsigned char)(SendMessage(ComboBoxSelectTileset, CB_FINDSTRING, 0, 
 						   (LPARAM)(LPCTSTR)StringBuffer));
 
-		// Gerade geladenes Set in der Box auswählen, falls diese grade angezeigt wird 
-		// (damit es nicht zurückspringt)
+		// Gerade geladenes Set in der Box auswÃ¤hlen, falls diese grade angezeigt wird 
+		// (damit es nicht zurÃ¼ckspringt)
 		if(i == ActualTileset)
 			SendMessage(ComboBoxSelectTileset, CB_SETCURSEL, TilesetNummer[i], 0);
 	}
@@ -4491,7 +4491,7 @@ bool LoadLevel(void)
 			nr = 0;
 		SendMessage(ComboBoxSelectBossMusic, CB_SETCURSEL, nr, 0);
 
-		// Combo Boxen entsprechend des gewählten Powerblock Typs setzen
+		// Combo Boxen entsprechend des gewÃ¤hlten Powerblock Typs setzen
 		SendMessage(ComboBoxSelectPowerblock, CB_SETCURSEL, Appendix.UsedPowerblock, 0);
 
 		// Liquid Color
@@ -4551,10 +4551,10 @@ void TestLevel(void)
 		if(TilesetNummer[i] > 0) 
 			NumUsedSets++;
 
-	// Datei zum speichern (überschreiben !) öffnen
+	// Datei zum speichern (Ã¼berschreiben !) Ã¶ffnen
 	Datei = fopen(LevelFile, "wb");
 
-	// DateiHeader füllen
+	// DateiHeader fÃ¼llen
 	strcpy(DateiHeader.Kennung, "Hurrican Level File V1.0 (c) 2002 Poke53280 - ");
 	strcpy(DateiHeader.Beschreibung, Beschreibung);
 	DateiHeader.SizeX			 = LevelSizeX;
@@ -4600,7 +4600,7 @@ void TestLevel(void)
 		// Werte speichern
 		fwrite(&SaveObject, sizeof(SaveObject), 1, Datei);
 		
-		// Zeiger auf das nächste Objekt richten    
+		// Zeiger auf das nÃ¤chste Objekt richten    
         pTemp = pTemp->pNext;				
     }
 
@@ -4611,7 +4611,7 @@ void TestLevel(void)
 	// Datei schliessen
 	fclose(Datei);
 
-	// Hurrican ausführen mit Temp Level als Parameter
+	// Hurrican ausfÃ¼hren mit Temp Level als Parameter
 	//
 	char comm [255];
 
@@ -4622,7 +4622,7 @@ void TestLevel(void)
 	if (err <= 31)
 		MessageBox (NULL, "Fehler !", "Fehler !", MB_OK);
 	
-	// Und Temp Level löschen
+	// Und Temp Level lÃ¶schen
 	//DeleteFile(LevelName);
 }
 
@@ -4958,7 +4958,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								  1032,  768,
 								  MainHWND, NULL, hinstance, NULL);
 
-	// Rahmen der Hintergründe und Parallax Layer
+	// Rahmen der HintergrÃ¼nde und Parallax Layer
 	GroupBoxBackgrounds = CreateWindow("BUTTON", 
 								"Background-Layer",
 								 WS_CHILD | WS_VISIBLE | ES_LEFT | BS_GROUPBOX,
@@ -5038,7 +5038,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								 290, 116,
 								 MainHWND, (HMENU)GROUPBOX_ID_LightMode, hinstance, NULL);
 
-	// Rahmen für Misc
+	// Rahmen fÃ¼r Misc
 	GroupBoxLightMode = CreateWindow("BUTTON", 
 								"Misc",
 								 WS_CHILD | WS_VISIBLE | ES_LEFT | BS_GROUPBOX,
@@ -5046,7 +5046,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								 82, 116,
 								 MainHWND, (HMENU)GROUPBOX_ID_LightMode, hinstance, NULL);
 
-	// Button für Brücke
+	// Button fÃ¼r BrÃ¼cke
 	ButtonBruecke = CreateWindow("BUTTON",
 								  "Bridge",
 								  WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
@@ -5054,7 +5054,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								  60, 22,
 								  MainHWND, (HMENU)BUTTON_ID_Bruecke, hinstance, NULL);
 
-	// Button für "Copy from Block"
+	// Button fÃ¼r "Copy from Block"
 	ButtonCopyFromBlock = CreateWindow("BUTTON",
 								  "CfB",
 								  WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
@@ -5062,7 +5062,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								  60, 22,
 								  MainHWND, (HMENU)BUTTON_ID_CopyFromBlock, hinstance, NULL);
 
-	// Button für Level testen
+	// Button fÃ¼r Level testen
 	ButtonTestLevel = CreateWindow("BUTTON",
 								  "Test It",
 								  WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
@@ -5070,7 +5070,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								  60, 22,
 								  MainHWND, (HMENU)BUTTON_ID_TestLevel, hinstance, NULL);	
 
-	// Level X-Grösse
+	// Level X-GrÃ¶sse
 	EditSizeX = CreateWindow("EDIT",
 			 				 "64",
 							  WS_CHILD | WS_BORDER | WS_VISIBLE |
@@ -5080,7 +5080,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 							  MainHWND,(HMENU)EDIT_ID_SizeX,hinstance,NULL);
 
 
-	// Level Y-Grösse
+	// Level Y-GrÃ¶sse
 	EditSizeY = CreateWindow("EDIT",
 			 				 "48",
 							  WS_CHILD | WS_BORDER | WS_VISIBLE |
@@ -5089,7 +5089,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 							  42, 16,
 							  MainHWND,(HMENU)EDIT_ID_SizeY,hinstance,NULL);
 
-	// Namenseingabefeld für das Level
+	// Namenseingabefeld fÃ¼r das Level
 	/*LevelNamenFeld = CreateWindow("EDIT",
 			 					  "",
 								  WS_CHILD | WS_BORDER | WS_VISIBLE |
@@ -5108,7 +5108,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								  MainHWND,(HMENU)EDIT_ID_Timelimit,hinstance,NULL);
 
 
-	// Beschreibungsfeld für das Level
+	// Beschreibungsfeld fÃ¼r das Level
 	BeschreibungsFeld = CreateWindow("EDIT",
 			 					  "Description",
 								  WS_CHILD | WS_BORDER | WS_VISIBLE | 
@@ -5117,7 +5117,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								  200, 20,
 								  MainHWND,(HMENU)EDIT_ID_Beschreibung,hinstance,NULL);	
 
-	// Farbe1 für Liquid
+	// Farbe1 fÃ¼r Liquid
 	Color1Feld = CreateWindow("EDIT",
 			 					  "FFFFFFFF",
 								  WS_CHILD | WS_BORDER | WS_VISIBLE | 
@@ -5126,7 +5126,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								  80, 20,
 								  MainHWND,(HMENU)EDIT_ID_Color1,hinstance,NULL);
 
-	// Farbe2 für Liquid
+	// Farbe2 fÃ¼r Liquid
 	Color2Feld = CreateWindow("EDIT",
 			 					  "FFFFFFFF",
 								  WS_CHILD | WS_BORDER | WS_VISIBLE | 
@@ -5135,7 +5135,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								  80, 20,
 								  MainHWND,(HMENU)EDIT_ID_Color2,hinstance,NULL);
 
-	// Value1 Feld für das Objekt
+	// Value1 Feld fÃ¼r das Objekt
 	Value1Feld = CreateWindow("EDIT",
 			 				 "0",
 							  WS_CHILD | WS_BORDER | WS_VISIBLE | 
@@ -5144,7 +5144,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 							  60,  16,
 							  MainHWND,(HMENU)EDIT_ID_Value1,hinstance, NULL);
 
-	// Value2 Feld für das Objekt
+	// Value2 Feld fÃ¼r das Objekt
 	Value2Feld = CreateWindow("EDIT",
 			 				 "0",
 							  WS_CHILD | WS_BORDER | WS_VISIBLE | 
@@ -5153,7 +5153,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 							  60,  16,
 							  MainHWND,(HMENU)EDIT_ID_Value2,hinstance, NULL);
 
-	// Button für Small Light
+	// Button fÃ¼r Small Light
 	SmallLight = CreateWindow("BUTTON",
 								  "Small Light",
 								  WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
@@ -5161,7 +5161,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								  100, 24,
 								  MainHWND, (HMENU)BUTTON_ID_SmallLight, hinstance, NULL);
 
-	// Button für Medium Light
+	// Button fÃ¼r Medium Light
 	MediumLight = CreateWindow("BUTTON",
 								  "Medium Light",
 								  WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
@@ -5169,7 +5169,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								  100, 24,
 								  MainHWND, (HMENU)BUTTON_ID_MediumLight, hinstance, NULL);
 
-	// Button für Large Light
+	// Button fÃ¼r Large Light
 	LargeLight = CreateWindow("BUTTON",
 								  "Large Light",
 								  WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
@@ -5177,7 +5177,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								  100, 24,
 								  MainHWND, (HMENU)BUTTON_ID_LargeLight, hinstance, NULL);
 
-	// Button für Small Shadow
+	// Button fÃ¼r Small Shadow
 	SmallShadow = CreateWindow("BUTTON",
 								  "Small Shadow",
 								  WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
@@ -5185,7 +5185,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								  100, 24,
 								  MainHWND, (HMENU)BUTTON_ID_SmallShadow, hinstance, NULL);
 
-	// Button für Medium Shadow
+	// Button fÃ¼r Medium Shadow
 	SmallShadow = CreateWindow("BUTTON",
 								  "Med. Shadow",
 								  WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
@@ -5193,7 +5193,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								  100, 24,
 								  MainHWND, (HMENU)BUTTON_ID_MediumShadow, hinstance, NULL);
 
-	// Button für Medium Shadow
+	// Button fÃ¼r Medium Shadow
 	LargeShadow = CreateWindow("BUTTON",
 								  "Large Shadow",
 								  WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
@@ -5201,7 +5201,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								  100, 24,
 								  MainHWND, (HMENU)BUTTON_ID_LargeShadow, hinstance, NULL);
 
-	// Button für den Edit-Modus
+	// Button fÃ¼r den Edit-Modus
 	ButtonEditMode = CreateWindow("BUTTON",
 								  "Level-Mode",
 								  WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
@@ -5209,7 +5209,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								  100,  24,
 								  MainHWND, (HMENU)BUTTON_ID_EditMode, hinstance, NULL);
 
-	// Pulldown-Menu für auswählbare Tilesets
+	// Pulldown-Menu fÃ¼r auswÃ¤hlbare Tilesets
 	ComboBoxSelectTileset = CreateWindow("COMBOBOX",
 			 				   "Select Tileset",
 							    WS_CHILD | WS_VISIBLE  | WS_VSCROLL | WS_BORDER | CBS_DROPDOWNLIST,
@@ -5217,7 +5217,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								160,	280,
 								MainHWND,(HMENU)BOX_ID_SelectTileset,hinstance,NULL);
 
-	// Pulldown-Menu für auswählbaren Hintergrund
+	// Pulldown-Menu fÃ¼r auswÃ¤hlbaren Hintergrund
 	ComboBoxSelectBackground = CreateWindow("COMBOBOX",
 			 				   "Select Background",
 							    WS_CHILD | WS_VISIBLE  | WS_VSCROLL | WS_BORDER | CBS_DROPDOWNLIST,
@@ -5225,7 +5225,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								110, 280,
 								MainHWND,(HMENU)BOX_ID_SelectBackground,hinstance,NULL);
 
-	// Pulldown-Menu für auswählbaren Cloud-Layer
+	// Pulldown-Menu fÃ¼r auswÃ¤hlbaren Cloud-Layer
 	ComboBoxSelectClouds = CreateWindow("COMBOBOX",
 			 				   "Select Clouds",
 							    WS_CHILD | WS_VISIBLE  | WS_VSCROLL | WS_BORDER | CBS_DROPDOWNLIST,
@@ -5233,7 +5233,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								110, 280,
 								MainHWND,(HMENU)BOX_ID_SelectClouds, hinstance,NULL);
 
-	// Pulldown-Menu für auswählbare Stage-Music
+	// Pulldown-Menu fÃ¼r auswÃ¤hlbare Stage-Music
 	ComboBoxSelectStageMusic = CreateWindow("COMBOBOX",
 			 				   "Stage",
 							    WS_CHILD | WS_VISIBLE  | WS_VSCROLL | WS_BORDER | CBS_DROPDOWNLIST,
@@ -5241,7 +5241,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								85, 160,
 								MainHWND,(HMENU)BOX_ID_SelectStageMusic, hinstance,NULL);
 
-	// Pulldown-Menu für auswählbare Boss-Music
+	// Pulldown-Menu fÃ¼r auswÃ¤hlbare Boss-Music
 	ComboBoxSelectBossMusic = CreateWindow("COMBOBOX",
 			 				   "Boss",
 							    WS_CHILD | WS_VISIBLE  | WS_VSCROLL | WS_BORDER | CBS_DROPDOWNLIST,
@@ -5249,7 +5249,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								85, 160,
 								MainHWND,(HMENU)BOX_ID_SelectBossMusic, hinstance,NULL);
 
-	// Pulldown-Menu für auswählbaren Powerblock Typ
+	// Pulldown-Menu fÃ¼r auswÃ¤hlbaren Powerblock Typ
 	ComboBoxSelectPowerblock = CreateWindow("COMBOBOX",
 			 				   "Powerblock",
 							    WS_CHILD | WS_VISIBLE  | WS_VSCROLL | WS_BORDER | CBS_DROPDOWNLIST,
@@ -5257,7 +5257,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								85, 160,
 								MainHWND,(HMENU)BOX_ID_SelectPowerblock, hinstance,NULL);
 
-	// Pulldown-Menu für auswählbaren Parallax Layer 1
+	// Pulldown-Menu fÃ¼r auswÃ¤hlbaren Parallax Layer 1
 	ComboBoxSelectParallaxA = CreateWindow("COMBOBOX",
 			 				   "Select ParallaxA",
 							    WS_CHILD | WS_VISIBLE  | WS_VSCROLL | WS_BORDER | CBS_DROPDOWNLIST,
@@ -5265,7 +5265,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								125, 280,
 								MainHWND,(HMENU)BOX_ID_SelectParallaxA, hinstance,NULL);
 
-	// Pulldown-Menu für auswählbaren Parallax Layer 2
+	// Pulldown-Menu fÃ¼r auswÃ¤hlbaren Parallax Layer 2
 	ComboBoxSelectParallaxB = CreateWindow("COMBOBOX",
 			 				   "Select ParallaxB",
 							    WS_CHILD | WS_VISIBLE  | WS_VSCROLL | WS_BORDER | CBS_DROPDOWNLIST,
@@ -5273,7 +5273,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								125, 280,
 								MainHWND,(HMENU)BOX_ID_SelectParallaxB, hinstance,NULL);
 
-	// Button für "vorheriges Tileset"
+	// Button fÃ¼r "vorheriges Tileset"
 	PreviousTileSet = CreateWindow("BUTTON",
 			 				   "previous",
 							    WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
@@ -5281,7 +5281,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								80,		24,
 								MainHWND,(HMENU)BUTTON_ID_PreviousTileSet,hinstance,NULL);
 
-	// Button für "nächstes Tileset"
+	// Button fÃ¼r "nÃ¤chstes Tileset"
 	NextTileSet = CreateWindow("BUTTON",
 			 				   "next",
 							    WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
@@ -5297,7 +5297,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								60,  20,
 								MainHWND,(HMENU)BUTTON_ID_LightRed,hinstance,NULL);
 
-	// Checkbox , ob "Grün" beim Licht/Schatten Effekt verwendet wird
+	// Checkbox , ob "GrÃ¼n" beim Licht/Schatten Effekt verwendet wird
 	BoxLightGreen = CreateWindow("BUTTON",
 			 				   "Green",
 							    WS_CHILD | WS_VISIBLE | BS_CHECKBOX,
@@ -5427,7 +5427,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 								100,  20,
 								MainHWND,(HMENU)BUTTON_ID_CopyBlock,hinstance,NULL);
 
-	// Checkbox Button, ob sich ein Objekt im Licht des Levels verfärbt
+	// Checkbox Button, ob sich ein Objekt im Licht des Levels verfÃ¤rbt
 	BoxChangeLight = CreateWindow("BUTTON",
 			 				   "Adopt light",
 							    WS_CHILD | WS_VISIBLE | BS_CHECKBOX,
@@ -5683,7 +5683,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 	SetScrollRange(AlphaValue, SB_CTL, 0, 255, false);
 	SetScrollRange(AllValues,  SB_CTL, 0, 255, false);
 
-	// Objekt List Box mit Werten füllen
+	// Objekt List Box mit Werten fÃ¼llen
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"0  Player start");
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"1  One Up");
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"2  Diamond");
@@ -5693,7 +5693,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"6  GunTower");
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"7  SpinnenBombe");
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"8  Piranha");
-	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"9  Stahlmücke");
+	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"9  StahlmÃ¼cke");
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"10 Deckenturm");
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"11 Kugel klein");
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"12 Kugel medium");
@@ -5770,7 +5770,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"83 Minirocket");
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"84 Mutant");
 
-	// Lücken werden später noch mit anderen Gegnern gefüllt																					
+	// LÃ¼cken werden spÃ¤ter noch mit anderen Gegnern gefÃ¼llt																					
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"85 Nix");
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"86 Nix");
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"87 Nix");
@@ -5813,7 +5813,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"120 Stahlfaust Boss");
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"121 Pharao Kopf Boss");
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"122 Riesenspinne Boss");
-	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"123 Böser Hurrican");
+	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"123 BÃ¶ser Hurrican");
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"124 Ufo");
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"125 Fahrstuhlboss");
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"126 FlugBoss");
@@ -5870,10 +5870,10 @@ void CreateEnvironment(HINSTANCE hinstance)
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"175 Spikelift");	
 	SendMessage(ComboBoxObjectType, CB_ADDSTRING, 0, (LPARAM)"176 Tube");
 
-	// Objekt Nr 0 am Anfang auswählen
+	// Objekt Nr 0 am Anfang auswÃ¤hlen
 	SendMessage(ComboBoxObjectType, CB_SETCURSEL, 0, 0);
 
-	// Objekt Zustände auf "unchecked" setzen
+	// Objekt ZustÃ¤nde auf "unchecked" setzen
 	SendMessage(BoxChangeLight, BM_SETCHECK, BST_UNCHECKED, 0);
 
 	// Alle Clipboard Optionen auf true setzen
@@ -5884,7 +5884,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 
 	char temp[512];
 
-	// Tileset Liste mit Dateinamen füllen	
+	// Tileset Liste mit Dateinamen fÃ¼llen	
 	SendMessage(ComboBoxSelectTileset, CB_ADDSTRING, 0, (LPARAM)"none");
 
 	strcpy(temp, HurriPath);	strcat(temp, "data/s_*.bmp");
@@ -5893,7 +5893,7 @@ void CreateEnvironment(HINSTANCE hinstance)
 	strcpy(temp, HurriPath);	strcat(temp, "data/s_*.png");
 	SendMessage(ComboBoxSelectTileset, CB_DIR, DDL_READWRITE, (LPARAM) temp);
 
-	// Background Pulldown-Menus mit Dateinamen füllen
+	// Background Pulldown-Menus mit Dateinamen fÃ¼llen
 	strcpy(temp, HurriPath);	strcat(temp, "data/static_*.bmp");
 	SendMessage(ComboBoxSelectBackground, CB_DIR, DDL_READWRITE, (LPARAM) temp);
 
@@ -5927,10 +5927,10 @@ void CreateEnvironment(HINSTANCE hinstance)
 	LoadedTilesets = (int)(SendMessage(ComboBoxSelectTileset, CB_GETCOUNT, 0, 0));
 	pTileEngine->LoadedTilesets = LoadedTilesets-1;
 
-	// Tileset auf "keines" am Anfang auswählen
+	// Tileset auf "keines" am Anfang auswÃ¤hlen
 	SendMessage(ComboBoxSelectTileset, CB_SETCURSEL, 0, 0);
 
-	// Tileset Sprites mit den möglichen Tilesets füllen
+	// Tileset Sprites mit den mÃ¶glichen Tilesets fÃ¼llen
 	for(int i=1; i<LoadedTilesets; i++)
 	{
 		// Namen des i-ten Tilesets in der ComboBox erstellen
@@ -6082,7 +6082,7 @@ void RestoreUndoStep(bool back)
 		for (int y = 0; y < SCREENSIZE_Y; y++)
 			memcpy(&pTileEngine->Tiles[x + UndoOffsetX[CurrentUndoStep]][y + UndoOffsetY[CurrentUndoStep]], &UndoBuffer[CurrentUndoStep][x][y], sizeof(LevelTileStruct));	
 
-	// warten bis user loslässt
+	// warten bis user loslÃ¤sst
 	while (KeyDown(DIK_U))
 		DirectInput.TastaturUpdate();
 

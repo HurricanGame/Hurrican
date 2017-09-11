@@ -2,9 +2,9 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Klasse für das Hurrican Intro
+// Klasse fÃ¼r das Hurrican Intro
 //
-// (c) 2006 Jörg M. Winterstein
+// (c) 2006 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -24,7 +24,7 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-//----- Zustände
+//----- ZustÃ¤nde
 
 #define INTRO_FADEIN			0
 #define INTRO_RUN				1
@@ -32,7 +32,7 @@
 #define INTRO_DONE				3
 
 // --------------------------------------------------------------------------------------
-// Klassen Deklaration für das Intro
+// Klassen Deklaration fÃ¼r das Intro
 // --------------------------------------------------------------------------------------
 
 //DKS - Entries in a  dynamically-size vector of text that will actually be displayed on-screen, based on font size:

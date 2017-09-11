@@ -6,7 +6,7 @@
 // zum initialisieren von DirectX8
 // beinhaltet zudem verschiedene Grafik-Funktionen zum Speichern von Screenshots usw
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -31,7 +31,7 @@
 // --------------------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------------------
-// Struktur für einen 2D Vertex
+// Struktur fÃ¼r einen 2D Vertex
 // --------------------------------------------------------------------------------------
 
 struct VERTEX2D
@@ -71,7 +71,7 @@ class DirectGraphicsClass
 		bool TakeScreenshot(char Filename[100]);				// Screenshot machen
 		bool PutPixel(int x, int y, UCHAR rot,UCHAR gruen,		// Pixel setzen	
 					  UCHAR blau, LPDIRECT3DSURFACE8 lpDDSurf);
-		void SetColorKeyMode(void);								// Alpha für Colorkey oder
+		void SetColorKeyMode(void);								// Alpha fÃ¼r Colorkey oder
 		void SetAdditiveMode(void);								// Additive-Blending nutzen
 };
 

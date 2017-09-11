@@ -2,7 +2,7 @@
 // Die Stahlmuecke
 //
 // Fliegt auf den Spieler zu, sobald sie ins Bild kommt
-// Ist sie getroffen, stürzt sie rauchend ab und explodiert an der nächsten Wand/Boden
+// Ist sie getroffen, stÃ¼rzt sie rauchend ab und explodiert an der nÃ¤chsten Wand/Boden
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -23,7 +23,7 @@ GegnerStahlmuecke::GegnerStahlmuecke(int Wert1, int Wert2, bool Light)
     xAcc			= 0.0f;
     yAcc			= 0.0f;
     Energy			= 10;
-    Value1			= (int)pAim->xpos-100+rand()%200;	// Flugziel zufällig in Richtung Spieler
+    Value1			= (int)pAim->xpos-100+rand()%200;	// Flugziel zufÃ¤llig in Richtung Spieler
     Value2			= (int)pAim->ypos-100+rand()%200;	// setzen mit etwas Variation
     ChangeLight		= Light;
     Destroyable		= true;
@@ -67,16 +67,16 @@ void GegnerStahlmuecke::DoKI(void)
 
         if (PlayerAbstand() < 500)
         {
-            Value1	= (int)pAim->xpos+35-50+rand()%100;	// Flugziel zufällig in Richtung Spieler
+            Value1	= (int)pAim->xpos+35-50+rand()%100;	// Flugziel zufÃ¤llig in Richtung Spieler
             Value2	= (int)pAim->ypos+40-50+rand()%100;	// setzen mit etwas Variation
             Handlung = GEGNER_VERFOLGEN;
         }
     }
     break;
 
-    case GEGNER_VERFOLGEN:					// Mücke verfolgt den Spieler
+    case GEGNER_VERFOLGEN:					// MÃ¼cke verfolgt den Spieler
     {
-        // Punkt links von der Mücke
+        // Punkt links von der MÃ¼cke
         if (Value1 < xPos)
         {
             if(!(blockl & BLOCKWERT_WAND))
@@ -86,7 +86,7 @@ void GegnerStahlmuecke::DoKI(void)
             }
         }
 
-        // Punkt rechts von der Mücke
+        // Punkt rechts von der MÃ¼cke
         if (Value1 > xPos)
         {
             if(!(blockr & BLOCKWERT_WAND))
@@ -96,7 +96,7 @@ void GegnerStahlmuecke::DoKI(void)
             }
         }
 
-        // Punkt oben von der Mücke
+        // Punkt oben von der MÃ¼cke
         if (Value2 < yPos)
         {
             if (!(blocko & BLOCKWERT_WAND))
@@ -108,7 +108,7 @@ void GegnerStahlmuecke::DoKI(void)
             }
         }
 
-        // Punkt unterhalb von der Mücke
+        // Punkt unterhalb von der MÃ¼cke
         if (Value2 > yPos)
         {
             if (!(blocku & BLOCKWERT_WAND))
@@ -128,12 +128,12 @@ void GegnerStahlmuecke::DoKI(void)
         int dx = abs ((int) (xPos - Value1));
         int dy = abs ((int) (yPos - Value2));
 
-        // Punkt erreicht oder Abstand zu groß ? Dann neues Ziel setzen
+        // Punkt erreicht oder Abstand zu groÃŸ ? Dann neues Ziel setzen
         if (PlayerAbstand() > 400 ||
                 (dx*dx + dy*dy) < 20*20)
 
         {
-            Value1	= (int)pAim->xpos-50+rand()%100;	// Flugziel zufällig in Richtung Spieler
+            Value1	= (int)pAim->xpos-50+rand()%100;	// Flugziel zufÃ¤llig in Richtung Spieler
             Value2	= (int)pAim->ypos-50+rand()%100;	// setzen mit etwas Variation
         }
 
@@ -144,7 +144,7 @@ void GegnerStahlmuecke::DoKI(void)
                 blocku & BLOCKWERT_WAND ||
                 blocku & BLOCKWERT_PLATTFORM)
         {
-            Value1	= (int)pAim->xpos+35-50+rand()%100;	// Flugziel zufällig in Richtung Spieler
+            Value1	= (int)pAim->xpos+35-50+rand()%100;	// Flugziel zufÃ¤llig in Richtung Spieler
             Value2	= (int)pAim->ypos+40-50+rand()%100;	// setzen mit etwas Variation
         }
 
@@ -165,7 +165,7 @@ void GegnerStahlmuecke::DoKI(void)
     }
     break;
 
-    // Mücke stürzt ab
+    // MÃ¼cke stÃ¼rzt ab
     case GEGNER_FALLEN:
     {
         // An die Wand gekracht ?
@@ -180,7 +180,7 @@ void GegnerStahlmuecke::DoKI(void)
         if (ySpeed > 35.0f)
             yAcc = 0.0f;
 
-        // Mücke rauchen lassen
+        // MÃ¼cke rauchen lassen
         if (AnimCount == 0.0f && AnimPhase%2 == 0)
             PartikelSystem.PushPartikel(xPos+12, yPos+5, SMOKE);
     }
@@ -190,11 +190,11 @@ void GegnerStahlmuecke::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler die Mücke berührt hat
+    // Testen, ob der Spieler die MÃ¼cke berÃ¼hrt hat
     if (Handlung != GEGNER_FALLEN)
         TestDamagePlayers(1.5f SYNC);
 
-    // Soviel Energie verloren, dass die Mücke abstürzt ?
+    // Soviel Energie verloren, dass die MÃ¼cke abstÃ¼rzt ?
     if (Energy <= 0.0f && Handlung != GEGNER_FALLEN)
     {
         Handlung = GEGNER_FALLEN;

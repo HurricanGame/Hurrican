@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Der Eiszapfen
 //
-// hängt faul an der Decke und fällt runter, wenn der Hurri drunter vorbeikommt
+// hÃ¤ngt faul an der Decke und fÃ¤llt runter, wenn der Hurri drunter vorbeikommt
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -82,7 +82,7 @@ void GegnerEiszapfen::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler den Zapfen berührt hat
+    // Testen, ob der Spieler den Zapfen berÃ¼hrt hat
     TestDamagePlayers(30.0f, true);
 }
 

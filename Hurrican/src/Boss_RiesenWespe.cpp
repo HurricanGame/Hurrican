@@ -32,11 +32,11 @@ GegnerRiesenWasp::GegnerRiesenWasp(int Wert1, int Wert2, bool Light)
 void GegnerRiesenWasp::DoKI(void)
 {
     // animieren
-    AnimCount += SpeedFaktor;		// Animationscounter weiterzählen
-    if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+    AnimCount += SpeedFaktor;		// Animationscounter weiterzÃ¤hlen
+    if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
     {
         AnimCount = 0;					// Dann wieder auf Null setzen
-        AnimPhase++;					// Und nächste Animationsphase
+        AnimPhase++;					// Und nÃ¤chste Animationsphase
 
         if (AnimPhase > AnimEnde)		// Animation von zu Ende	?
         {
@@ -99,7 +99,7 @@ void GegnerRiesenWasp::DoKI(void)
     //
     switch (Handlung)
     {
-    // Wespe stürzt ab
+    // Wespe stÃ¼rzt ab
     //
     case GEGNER_FALLEN:
     {
@@ -126,10 +126,10 @@ void GegnerRiesenWasp::DoKI(void)
     break;
     }
 
-    // Testen, ob der Spieler die Wespe berührt hat
+    // Testen, ob der Spieler die Wespe berÃ¼hrt hat
     TestDamagePlayers(5.0f SYNC);
 
-    // Wespe stürzt ab ?
+    // Wespe stÃ¼rzt ab ?
     //
     if (Energy <= 0.0f && Handlung != GEGNER_FALLEN)
     {

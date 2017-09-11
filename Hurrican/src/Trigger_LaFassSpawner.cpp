@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Der LaFassSpawner
 //
-// Spawnt in bestimmten Abst‰nden (Value2) das LaFass =)
+// Spawnt in bestimmten Abst√§nden (Value2) das LaFass =)
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"

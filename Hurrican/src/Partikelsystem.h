@@ -2,10 +2,10 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Partikelsystem für Hurrican
-// für Funken, Rauchwolken, Patronenhülsen usw.
+// Partikelsystem fÃ¼r Hurrican
+// fÃ¼r Funken, Rauchwolken, PatronenhÃ¼lsen usw.
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -34,11 +34,11 @@
 
 //----- Partikel, die normal oder nur mit Alphablending gerendert werden
 
-#define	BULLET					0						// Patronenhülse
+#define	BULLET					0						// PatronenhÃ¼lse
 #define	EXPLOSION_MEDIUM		2						// Mittelgrosse Explosion
 #define	EXPLOSION_MEDIUM2		3						// Mittelgrosse Explosion Nr 2
 #define	EXPLOSION_MEDIUM3		4						// Mittelgrosse Explosion Nr 3
-#define	EXPLOSION_GREEN 		5						// Grüne mittelgroße Explosion
+#define	EXPLOSION_GREEN 		5						// GrÃ¼ne mittelgroÃŸe Explosion
 #define	EXPLOSION_BIG			6						// Grosse Explosion
 #define	EXPLOSION_GIANT			10						// Riesen Explosion
 #define	EXPLOSION_ALIEN			11						// Riesen Explosion
@@ -99,7 +99,7 @@
 #define LAVAKRABBE_KOPF			57						// Kopf der Lavakrabbe
 #define LAVAKRABBE_BEIN			58						// Bein der Lavakrabbe
 
-#define SPIDERPARTS				59						// Spinnenstücke auf dem Fliessband
+#define SPIDERPARTS				59						// SpinnenstÃ¼cke auf dem Fliessband
 #define KETTENTEILE				60						// Kettenteile (Arm links)
 #define KETTENTEILE2			61						// Kettenteile (Arm rechts)
 #define KETTENTEILE3			62						// Kettenteile (Arm Mitte)
@@ -109,10 +109,10 @@
 #define DUST					65						// Staub
 #define SCHROTT1				66						// Schrotteil1
 #define SCHROTT2				67						// Schrotteil1
-#define	BULLET_SKELETOR			68						// Patronenhülse vom letzten Endboss
+#define	BULLET_SKELETOR			68						// PatronenhÃ¼lse vom letzten Endboss
 #define	GLASSPLITTER			69						// Glassplitter (von der Tube)
 
-#define SCHNEEFLOCKE_END		70						// Eine Schneeflocke fürs Outtro
+#define SCHNEEFLOCKE_END		70						// Eine Schneeflocke fÃ¼rs Outtro
 
 // Teile vom explodierten Hurrican :)
 
@@ -139,19 +139,19 @@
 
 #define ADDITIV_GRENZE			100
 #define FUNKE					100						// Roter Funke
-#define FUNKE2					101						// Grüner Funke
+#define FUNKE2					101						// GrÃ¼ner Funke
 #define LASERFUNKE				103
 #define LASERFUNKE2				104
 #define WASSERTROPFEN			106						// Spritzer beim ins Wasser eintreten
-#define WASSERTROPFEN2			107						// Spritzer beim in die Säure eintreten
-#define BUBBLE					108						// Luftbläschen unter Wasser
-#define LASERFLAME				111						// Leuchteffekt für den Krabblerlaser
-#define LASERFLAMEPHARAO		112						// Leuchteffekt für die Pharaokopf Augen
-#define PHARAOSMOKE				113						// Leuchteffekt für den Pharaokopf Laser
+#define WASSERTROPFEN2			107						// Spritzer beim in die SÃ¤ure eintreten
+#define BUBBLE					108						// LuftblÃ¤schen unter Wasser
+#define LASERFLAME				111						// Leuchteffekt fÃ¼r den Krabblerlaser
+#define LASERFLAMEPHARAO		112						// Leuchteffekt fÃ¼r die Pharaokopf Augen
+#define PHARAOSMOKE				113						// Leuchteffekt fÃ¼r den Pharaokopf Laser
 #define SHIELD					114						// Schutzschild-Stern
 #define ROCKETSMOKE				115						// Rauch einer Rakete
 #define ROCKETSMOKEBLUE			116						// Blauer Rauch
-#define ROCKETSMOKEGREEN		117						// Grüner Rauch
+#define ROCKETSMOKEGREEN		117						// GrÃ¼ner Rauch
 #define FLUGSACKSMOKE			118						// Rauch des Flug Sacks links
 #define FLUGSACKSMOKE2			119						// Rauch des Flug Sacks rechts
 #define EVILFUNKE				120						// Funke des Evil Blitzes
@@ -161,7 +161,7 @@
 #define BEAMSMOKE3				124						// Rauch beim Explodieren des Blitzbeams
 #define BEAMSMOKE4				125						// Rauch beim Explodieren des Blitzbeams
 #define BEAMSMOKE5				126						// Kringel beim Explodieren des Blitzbeams
-#define SNOWFLUSH				127						// Schneegestöber
+#define SNOWFLUSH				127						// SchneegestÃ¶ber
 #define WATERFLUSH				128						// Wasserfall Rauch
 #define WATERFLUSH2				129						// Wasserfall Rauch
 #define WATERFLUSH_HIGH			130						// Wasserfall Rauch
@@ -174,7 +174,7 @@
 #define KRINGEL					137						// Die Kringelpartikel, die eine neue Waffenstufe angeben
 #define KRINGELR				138						// rot
 #define KRINGELB				139						// blau
-#define KRINGELG				140						// grün
+#define KRINGELG				140						// grÃ¼n
 #define KRINGELHB				141						// hellblau
 #define TURBINESMOKE			142						// Partikel, die in die Turbine des Metalhead Bosses gesaugt werden
 #define MINIFLARE				143						// Flare vom Lava Ball, der runtersegelt
@@ -185,25 +185,25 @@
 #define SCHLEIM2				148						// Schleim aus SchleimAlien mit Maul
 #define SHOCKEXPLOSION			149						// SchockWelle bei Spieler Explosion
 #define SHOTFLARE				150						// Leuchten bei Schuss-Explosion gelb
-#define SHOTFLARE2				151						// Leuchten bei Schuss-Explosion grün
+#define SHOTFLARE2				151						// Leuchten bei Schuss-Explosion grÃ¼n
 #define EXTRACOLLECTED			152						// Leuchten beim Einsammeln eines Extras
 #define LASERFLARE				153						// Flare beim Auftreffen des Lasers
 #define EXPLOSION_MEDIUM2_ADD	154						// Die coolste Explosion
 #define EXPLOSION_MEDIUM3_ADD	155						// Die coolste Explosion
 #define EXPLOSION_TRACE			156						// Eine Bahn von Explosionen ziehen
-#define EXPLOSION_REGULAR		157						// Kleinere Explosion in Gelb, die immer gleich abläuft
+#define EXPLOSION_REGULAR		157						// Kleinere Explosion in Gelb, die immer gleich ablÃ¤uft
 #define DIAMANTCOLLECTED		158						// Leuchten bei Diamant eingesammelt
 #define LILA					159						// Lila leuchten
 #define EXPLOSION_KRINGEL		160						// Kringel/Druckwelle bei Explosion
 #define DRACHE_SMOKE			161						// Antrieb des Drachen
 #define FIREBALL_SMOKE			162						// Rauch des Feuerballs des Minidrachens
-#define EXPLOSION_TRACE_END		163						// In der Größe veränderbar
+#define EXPLOSION_TRACE_END		163						// In der GrÃ¶ÃŸe verÃ¤nderbar
 #define LAVADUST				164						// Lavafunken
 #define KRINGELSECRET			165						// Die Kringelpartikel beim Secret
 #define TEXTSECRET				166						// Text "Secret"
 
 // Partikel ohne Grafik
-#define LILA2					167						// Lila leuchten fällt runter
+#define LILA2					167						// Lila leuchten fÃ¤llt runter
 #define LILA3					168						// Lila leuchten fliegt links
 
 #define MAX_PARTIKELGFX			169						// Maximale Anzahl verschiedener Grafiken
@@ -213,7 +213,7 @@
 // --------------------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------------------
-// Partikel Klasse (Werte für EIN Partikel)
+// Partikel Klasse (Werte fÃ¼r EIN Partikel)
 // --------------------------------------------------------------------------------------
 
 class PartikelClass
@@ -235,7 +235,7 @@ private:
     bool				Rotate;						// evtl rotieren?
     float				Rot;						// Rotation
     float				RotDir;						// Richtung
-    bool				BounceWalls;				// an Wänden abprallen ?
+    bool				BounceWalls;				// an WÃ¤nden abprallen ?
     bool				OwnDraw;					// Extrawurscht beim rendern?
     bool				RemoveWhenOffScreen;		// verschiwnden lassen, wenn ausserhalb des Screeens?
 
@@ -300,7 +300,7 @@ public:
         alpha = (uint8_t)value;
     }
 
-    PartikelClass		*pNext;						// Zeiger auf den nächsten   Partikel
+    PartikelClass		*pNext;						// Zeiger auf den nÃ¤chsten   Partikel
     //DKS - Particle list is now singly-linked, disabled *pPrev:
     //PartikelClass		*pPrev;						// Zeiger auf den vorherigen Partikel
 
@@ -324,7 +324,7 @@ private:
 
 public:
     float					xtarget, ytarget;		// Zielpunkt, auf den sich bestimmte Partikel richten
-    float					ThunderAlpha;			// Alpha für Blitz
+    float					ThunderAlpha;			// Alpha fÃ¼r Blitz
     unsigned char			ThunderColor[3];		// Farbe des Blitzes (r, g, b)
 
     PartikelClass			*pStart;				// Erstes  Element der Liste
@@ -339,17 +339,17 @@ public:
     void LoadSprites(void);
 
     bool PushPartikel(float x, float y, int Art,
-                      PlayerClass* pParent = NULL);	// Partikel "Art" hinzufügen
+                      PlayerClass* pParent = NULL);	// Partikel "Art" hinzufÃ¼gen
 
     //DKS - Converted particle linked-list to be singly-linked so this DelNode()
     //      is a new function that replaces the old DelSel().
     //      It is now up to the caller to splice the list, this blindly deletes what is passed
     //      to it and returns the pointer that was in pPtr->pNext, or NULL if pPtr was NULL
-    //void DelSel		(PartikelClass *pTemp);			// Ausgewähltes Objekt entfernen
+    //void DelSel		(PartikelClass *pTemp);			// AusgewÃ¤hltes Objekt entfernen
     PartikelClass* DelNode	(PartikelClass *pPtr);		
 
-    void ClearAll	(void);							// Alle Objekte löschen
-    int  GetNumPartikel(void);						// Zahl der Partikel zurückliefern
+    void ClearAll	(void);							// Alle Objekte lÃ¶schen
+    int  GetNumPartikel(void);						// Zahl der Partikel zurÃ¼ckliefern
     void DoPartikel(void);							// Alle Partikel der Liste animieren/anzeigen
     void DoPartikelSpecial(bool ShowThem);			// Alle Partikel der Liste animieren/anzeigen
     void DrawOnly(void);							// Alle Partikel der Liste nur anzeigen

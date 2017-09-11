@@ -5,7 +5,7 @@
 // DirectInput Klasse
 // zum Erfassen von Eingaben durch Tastaur, Maus und Joystick/Joypad
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -51,7 +51,7 @@ class DirectInputClass
 		GUID					guidJoystickDevice;		// GUID des Joystick Devices
 		int  JoystickX;									// Joystick x-Koordinaten
 		int  JoystickY;									// Joystick y-Koordinaten
-		bool JoystickButtons[MAX_JOYSTICKBUTTONS];		// Feuerknopf gedrückt?
+		bool JoystickButtons[MAX_JOYSTICKBUTTONS];		// Feuerknopf gedrÃ¼ckt?
 
 	public:
 		int						MausX;					// Koordinaten der

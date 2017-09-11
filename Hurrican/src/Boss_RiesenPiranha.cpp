@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Der Riesen Piranha
 //
-// Schwimmt von einer Beckenseite zur anderen und spuckt wenn der Spieler in der Nähe ist
+// Schwimmt von einer Beckenseite zur anderen und spuckt wenn der Spieler in der NÃ¤he ist
 // kleine Piranhas
 // --------------------------------------------------------------------------------------
 
@@ -36,23 +36,23 @@ GegnerRiesenPiranha::GegnerRiesenPiranha(int Wert1, int Wert2, bool Light)
 void GegnerRiesenPiranha::DoKI(void)
 {
 // Animieren
-    if (AnimEnde > 0)						// Soll überhaupt anmiert werden ?
+    if (AnimEnde > 0)						// Soll Ã¼berhaupt anmiert werden ?
     {
-        AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+        if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und nächste Animationsphase
+            AnimPhase++;					// Und nÃ¤chste Animationsphase
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
                 AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
         }
     } // animieren
 
-// Per Zufall Bläschen erzeugen
+// Per Zufall BlÃ¤schen erzeugen
     if (rand()%10 == 0)
         PartikelSystem.PushPartikel(xPos + 10 + rand()%230, yPos + 10 + rand ()%190, BUBBLE);
 
-// Nach links bzw rechts auf Kollision prüfen und dann ggf umkehren
+// Nach links bzw rechts auf Kollision prÃ¼fen und dann ggf umkehren
     if (BlickRichtung == LINKS)
         if (blockl & BLOCKWERT_WAND ||
                 blockl & BLOCKWERT_GEGNERWAND)
@@ -161,7 +161,7 @@ void GegnerRiesenPiranha::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler den Piranha berührt hat
+    // Testen, ob der Spieler den Piranha berÃ¼hrt hat
     TestDamagePlayers(5.0f SYNC);
 }
 
@@ -178,7 +178,7 @@ void GegnerRiesenPiranha::GegnerExplode(void)
                                       float(yPos + 64 + rand()%64), PIRANHATEILE2);
 
 
-    // und noch n paar Luftblässchen dazu
+    // und noch n paar LuftblÃ¤sschen dazu
     for (i=0; i<100; i++)
         PartikelSystem.PushPartikel(float(xPos - 10  + rand()%256),
                                       float(yPos + 10  + rand()%210), BUBBLE);

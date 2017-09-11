@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Der Alien Schleimboller
 //
-// Hängt nur in der Gegend rum als KanonenFutter
+// HÃ¤ngt nur in der Gegend rum als KanonenFutter
 // Besitzt evtl einen Pointer auf seinen Spawner, damit der
 // Spawner weiss, wieviele children er gespawnt hat
 // --------------------------------------------------------------------------------------
@@ -27,7 +27,7 @@ GegnerSchleimAlien::GegnerSchleimAlien(int Wert1, int Wert2, bool Light)
     AnimEnde		= 15;
     OwnDraw			= true;
 
-    // Hängt nur im Level rum? Dann schon Maximal Größe
+    // HÃ¤ngt nur im Level rum? Dann schon Maximal GrÃ¶ÃŸe
     if (Wert1 == 0)
         Size = 60.0f;
 
@@ -42,7 +42,7 @@ GegnerSchleimAlien::GegnerSchleimAlien(int Wert1, int Wert2, bool Light)
 
 void GegnerSchleimAlien::DoDraw(void)
 {
-    // Je nach Größe anders gestrecht rendern
+    // Je nach GrÃ¶ÃŸe anders gestrecht rendern
     //
     pGegnerGrafix[GegnerArt]->RenderSpriteScaled ((float)(xPos-TileEngine.XOffset) + 30 - Size/2.0f,
             (float)(yPos-TileEngine.YOffset) + 30 - Size/2.0f,

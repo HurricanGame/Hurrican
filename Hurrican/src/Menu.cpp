@@ -2,10 +2,10 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Menu-Klasse f¸r das
+// Menu-Klasse f√ºr das
 // Hurrican Hauptmenu
 //
-// (c) 2002 Jˆrg M. Winterstein
+// (c) 2002 J√∂rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -85,7 +85,7 @@ const char *Credits[] =
     "",
     "",
     "",
-    "Jˆrg 'Eiswuxe' Winterstein",
+    "J√∂rg 'Eiswuxe' Winterstein",
     "",
     "Programmierung",
     "Gamedesign",
@@ -106,8 +106,8 @@ const char *Credits[] =
     "Besonderer Dank geht an",
     "",
     "T.R.Schmidt und Gerhard 'ScHlAuChi' Weihrauch",
-    "f¸r zus‰tzliches Leveldesign und",
-    "viele Verbesserungsvorschl‰ge"
+    "f√ºr zus√§tzliches Leveldesign und",
+    "viele Verbesserungsvorschl√§ge"
     "",
     "",
     "",
@@ -121,21 +121,21 @@ const char *Credits[] =
     "Carsten 'Jazzoid' Przyluczky",
     "Heiko 'TheWanderer' Kalista",
     "Matthias 'KingKiKapu' Klocke",
-    "Manuel 'Heimdall' R¸lke",
+    "Manuel 'Heimdall' R√ºlke",
     "Friedrich 'BadData' Volmering",
     "Christian 'Gryphon' Kleinsteinberg",
     "Marc 'Dawn2069MS' Schmitt",
     "",
     "",
     "",
-    "Zudem hier nochmal ein fettes Dankeschˆn an alle unsere Fans,",
+    "Zudem hier nochmal ein fettes Dankesch√∂n an alle unsere Fans,",
     "die uns jahrelang motiviert haben und an uns glaubten.",
     "Danke, dass ihr Hurrican nie aufgegeben habt.",
-    "Dieses Spiel ist f¸r euch!",
+    "Dieses Spiel ist f√ºr euch!",
     "",
     "",
     "",
-    "Eiswuxe's Gr¸ﬂe gehen an",
+    "Eiswuxe's Gr√º√üe gehen an",
     "",
     "Thorstein",
     "",
@@ -163,7 +163,7 @@ const char *Credits[] =
     "Stef, Margot und Reinhard",
     "",
     "Dalama",
-    "Manuel 'Heimdall' R¸lke",
+    "Manuel 'Heimdall' R√ºlke",
     "Lars Kranebitter",
     "",
     "Windigo-Design",
@@ -213,7 +213,7 @@ const char *Credits[] =
     "Nicht zu vergessen:",
     "Steffan Kummer, der alte Hagestolz!",
     "",
-    "Nat¸rlich auch die Super Konrad Brothers,",
+    "Nat√ºrlich auch die Super Konrad Brothers,",
     "Dex, Bronko, RuvF, Aky, Contra-254 und",
     "alle anderen Turrican Fans!",
     "",
@@ -221,12 +221,12 @@ const char *Credits[] =
     "",
     "Steve Harris :)",
     "",
-    "Nat¸rlich darf auch der wahre Meister nicht fehlen",
-    "Einen fetten Gruﬂ an den Manne!",
+    "Nat√ºrlich darf auch der wahre Meister nicht fehlen",
+    "Einen fetten Gru√ü an den Manne!",
     "Wer fleissig sucht, der kann ihm",
     "Tief im Jungel seine Ehrerbietung darbringen...",
     "",
-    "Und das Beste kommt nat¸rlich zum Schluﬂ...",
+    "Und das Beste kommt nat√ºrlich zum Schlu√ü...",
     "Meine kleine Kathrin",
     "Ei laf juh ;)",
     "",
@@ -234,7 +234,7 @@ const char *Credits[] =
     "",
     "Und jetzt ist der Turri dran:",
     "",
-    "ich gr¸ﬂe meine Mutti das wars...",
+    "ich gr√º√üe meine Mutti das wars...",
     "",
     "",
     "",
@@ -244,57 +244,57 @@ const char *Credits[] =
     "",
     "...noch lange nicht..",
     "",
-    "ich gr¸ﬂe",
+    "ich gr√º√üe",
     "",
-    "meine Schnegge, die ich ¸ber alles liebe",
+    "meine Schnegge, die ich √ºber alles liebe",
     "",
-    "meine Br¸der - Carsten und Dirki -- der Lappen",
+    "meine Br√ºder - Carsten und Dirki -- der Lappen",
     "",
-    "ich gr¸ﬂe Wenkman den Hardcore Tester",
+    "ich gr√º√üe Wenkman den Hardcore Tester",
     "",
     "alle aus dem Forum die viele Ideen zu Hurrican beigetragen haben",
-    "und uns ¸ber 5 Jahre begleitet haben und uns die Treue gehalten haben."
+    "und uns √ºber 5 Jahre begleitet haben und uns die Treue gehalten haben."
     "",
-    "ich gr¸ﬂe die anderen Pokes Wanderer und Skyrider und",
+    "ich gr√º√üe die anderen Pokes Wanderer und Skyrider und",
     "",
-    "ich gr¸ﬂe Markus 'Snake' der sich immer saugut um unsere Webseite gek¸mmert hat",
+    "ich gr√º√üe Markus 'Snake' der sich immer saugut um unsere Webseite gek√ºmmert hat",
     "",
-    "ich gr¸ﬂe Peer Draeger  Wit Wit Wit",
+    "ich gr√º√üe Peer Draeger  Wit Wit Wit",
     "",
     "dann den Rest aus meiner Arbeit",
     "Marc Schmidt, Christian Kleinsteinberg, Uwe Wegener, Tetjana Obly Wobly ;-)",
     "",
-    "ich gr¸ﬂe Boris Triebel - Schau wir habens rausgebracht hehehe",
+    "ich gr√º√üe Boris Triebel - Schau wir habens rausgebracht hehehe",
     "",
     "Marc Kamradt",
     "",
-    "ich gr¸ﬂe Matthias die Todesschlampe",
+    "ich gr√º√üe Matthias die Todesschlampe",
     "",
-    "Nat¸rlich gr¸ﬂe ich auch Manfred Trenz",
-    "der meine Jugend mit Turrican vers¸sst hat und f¸r mich immer 'The Master' war",
+    "Nat√ºrlich gr√º√üe ich auch Manfred Trenz",
+    "der meine Jugend mit Turrican vers√ºsst hat und f√ºr mich immer 'The Master' war",
     "",
-    "ich gr¸ﬂe alle Jungs und M‰dels die das hier lesen",
+    "ich gr√º√üe alle Jungs und M√§dels die das hier lesen",
     "und Hurrican zocken und hoffe Ihr habt Spass :-)",
     "",
-    "ich gr¸ﬂe Gigi und seine Katze .. (und auch Crazy)",
+    "ich gr√º√üe Gigi und seine Katze .. (und auch Crazy)",
     "",
-    "ich gr¸ﬂe Adnan den alten Partylˆwen und guten Freund",
+    "ich gr√º√üe Adnan den alten Partyl√∂wen und guten Freund",
     "",
-    "ich gr¸ﬂe alle aus rendering.de die mir oft mit Tipps",
+    "ich gr√º√üe alle aus rendering.de die mir oft mit Tipps",
     "bei meinen Grafiken geholfen haben",
     "",
-    "und ich gr¸ﬂe den Krapfen",
+    "und ich gr√º√üe den Krapfen",
     "",
-    "ich gr¸ﬂe Thorsten Mutschall und Tanja Kˆhler",
+    "ich gr√º√üe Thorsten Mutschall und Tanja K√∂hler",
     "und hoffe Sie haben Spass am spielen :-))",
-    "ich gr¸ﬂe Micha Black Raven und seine verlorene seelen",
+    "ich gr√º√üe Micha Black Raven und seine verlorene seelen",
     "",
-    "ich gr¸ﬂe alle vom GVC Gamevoiceclan",
+    "ich gr√º√üe alle vom GVC Gamevoiceclan",
     "the Best ever .. auch wenns jetzt vorbei ist ..",
     "",
-    "ich gr¸ﬂe Velociraptor",
+    "ich gr√º√üe Velociraptor",
     "",
-    "ich gr¸ﬂe alle die ich jetzt vergessen habe",
+    "ich gr√º√üe alle die ich jetzt vergessen habe",
     "und das sind bestimmt ein paar :-)",
     "",
     "",
@@ -361,7 +361,7 @@ const char *LowResCredits[] =
     "poke53280",
     "",
     "",
-    "Jˆrg 'Eiswuxe' Winterstein",
+    "J√∂rg 'Eiswuxe' Winterstein",
     "",
     "Programmierung",
     "Gamedesign",
@@ -380,8 +380,8 @@ const char *LowResCredits[] =
     "Besonderer Dank geht an",
     "",
     "T.R.Schmidt und Gerhard 'ScHlAuChi' Weihrauch",
-    "f¸r zus‰tzliches Leveldesign und",
-    "viele Verbesserungsvorschl‰ge"
+    "f√ºr zus√§tzliches Leveldesign und",
+    "viele Verbesserungsvorschl√§ge"
     "",
     "",
     "Spezieller Dank geht auch",
@@ -394,19 +394,19 @@ const char *LowResCredits[] =
     "Carsten 'Jazzoid' Przyluczky",
     "Heiko 'TheWanderer' Kalista",
     "Matthias 'KingKiKapu' Klocke",
-    "Manuel 'Heimdall' R¸lke",
+    "Manuel 'Heimdall' R√ºlke",
     "Friedrich 'BadData' Volmering",
     "Christian 'Gryphon' Kleinsteinberg",
     "Marc 'Dawn2069MS' Schmitt",
     "",
     "",
-    "Zudem hier nochmal ein fettes Dankeschˆn an alle",
+    "Zudem hier nochmal ein fettes Dankesch√∂n an alle",
     "unsere Fans, die uns jahrelang motiviert haben",
     "und an uns glaubten. Danke, dass ihr Hurrican nie",
-    "aufgegeben habt. Dieses Spiel ist f¸r euch!",
+    "aufgegeben habt. Dieses Spiel ist f√ºr euch!",
     "",
     "",
-    "Eiswuxe's Gr¸ﬂe gehen an",
+    "Eiswuxe's Gr√º√üe gehen an",
     "",
     "Thorstein",
     "",
@@ -434,7 +434,7 @@ const char *LowResCredits[] =
     "Stef, Margot und Reinhard",
     "",
     "Dalama",
-    "Manuel 'Heimdall' R¸lke",
+    "Manuel 'Heimdall' R√ºlke",
     "Lars Kranebitter",
     "",
     "Windigo-Design",
@@ -484,7 +484,7 @@ const char *LowResCredits[] =
     "Nicht zu vergessen:",
     "Steffan Kummer, der alte Hagestolz!",
     "",
-    "Nat¸rlich auch die Super Konrad Brothers,",
+    "Nat√ºrlich auch die Super Konrad Brothers,",
     "Dex, Bronko, RuvF, Aky, Contra-254 und",
     "alle anderen Turrican Fans!",
     "",
@@ -492,83 +492,83 @@ const char *LowResCredits[] =
     "",
     "Steve Harris :)",
     "",
-    "Nat¸rlich darf auch der wahre Meister nicht fehlen",
-    "Einen fetten Gruﬂ an den Manne!",
+    "Nat√ºrlich darf auch der wahre Meister nicht fehlen",
+    "Einen fetten Gru√ü an den Manne!",
     "Wer fleissig sucht, der kann ihm",
     "Tief im Jungel seine Ehrerbietung darbringen...",
     "",
-    "Und das Beste kommt nat¸rlich zum Schluﬂ...",
+    "Und das Beste kommt nat√ºrlich zum Schlu√ü...",
     "Meine kleine Kathrin",
     "Ei laf juh ;)",
     "",
     "",
     "Und jetzt ist der Turri dran:",
     "",
-    "ich gr¸ﬂe meine Mutti das wars...",
+    "ich gr√º√üe meine Mutti das wars...",
     "",
     "",
     "",
     "...noch lange nicht..",
     "",
-    "ich gr¸ﬂe",
+    "ich gr√º√üe",
     "",
-    "meine Schnegge, die ich ¸ber alles liebe",
+    "meine Schnegge, die ich √ºber alles liebe",
     "",
-    "meine Br¸der - Carsten und Dirki -- der Lappen",
+    "meine Br√ºder - Carsten und Dirki -- der Lappen",
     "",
-    "ich gr¸ﬂe Wenkman den Hardcore Tester",
+    "ich gr√º√üe Wenkman den Hardcore Tester",
     "",
     "alle aus dem Forum die viele Ideen zu Hurrican",
-    "beigetragen haben und uns ¸ber 5 Jahre begleitet",
+    "beigetragen haben und uns √ºber 5 Jahre begleitet",
     "haben und uns die Treue gehalten haben.",
     "",
-    "ich gr¸ﬂe die anderen Pokes Wanderer",
+    "ich gr√º√üe die anderen Pokes Wanderer",
     "und Skyrider und",
     "",
-    "ich gr¸ﬂe Markus 'Snake' der sich immer saugut um",
-    "unsere Webseite gek¸mmert hat",
+    "ich gr√º√üe Markus 'Snake' der sich immer saugut um",
+    "unsere Webseite gek√ºmmert hat",
     "",
-    "ich gr¸ﬂe Peer Draeger  Wit Wit Wit",
+    "ich gr√º√üe Peer Draeger  Wit Wit Wit",
     "",
     "dann den Rest aus meiner Arbeit",
     "Marc Schmidt, Christian Kleinsteinberg,",
     "Uwe Wegener, Tetjana Obly Wobly ;-)",
     "",
-    "ich gr¸ﬂe Boris Triebel - Schau wir habens",
+    "ich gr√º√üe Boris Triebel - Schau wir habens",
     "rausgebracht hehehe",
     "",
     "Marc Kamradt",
     "",
-    "ich gr¸ﬂe Matthias die Todesschlampe",
+    "ich gr√º√üe Matthias die Todesschlampe",
     "",
-    "Nat¸rlich gr¸ﬂe ich auch Manfred Trenz",
-    "der meine Jugend mit Turrican vers¸sst hat",
-    "und f¸r mich immer 'The Master' war",
+    "Nat√ºrlich gr√º√üe ich auch Manfred Trenz",
+    "der meine Jugend mit Turrican vers√ºsst hat",
+    "und f√ºr mich immer 'The Master' war",
     "",
-    "ich gr¸ﬂe alle Jungs und M‰dels die das hier lesen",
+    "ich gr√º√üe alle Jungs und M√§dels die das hier lesen",
     "und Hurrican zocken und hoffe Ihr habt Spass :-)",
     "",
-    "ich gr¸ﬂe Gigi und seine Katze .. (und auch Crazy)",
+    "ich gr√º√üe Gigi und seine Katze .. (und auch Crazy)",
     "",
-    "ich gr¸ﬂe Adnan den alten Partylˆwen",
+    "ich gr√º√üe Adnan den alten Partyl√∂wen",
     "und guten Freund",
     "",
-    "ich gr¸ﬂe alle aus rendering.de die mir oft mit Tipps",
+    "ich gr√º√üe alle aus rendering.de die mir oft mit Tipps",
     "bei meinen Grafiken geholfen haben",
     "",
-    "und ich gr¸ﬂe den Krapfen",
+    "und ich gr√º√üe den Krapfen",
     "",
-    "ich gr¸ﬂe Thorsten Mutschall und Tanja Kˆhler",
+    "ich gr√º√üe Thorsten Mutschall und Tanja K√∂hler",
     "und hoffe Sie haben Spass am spielen :-))",
-    "ich gr¸ﬂe Micha Black Raven",
+    "ich gr√º√üe Micha Black Raven",
     "und seine verlorene seelen",
     "",
-    "ich gr¸ﬂe alle vom GVC Gamevoiceclan",
+    "ich gr√º√üe alle vom GVC Gamevoiceclan",
     "the Best ever .. auch wenns jetzt vorbei ist ..",
     "",
-    "ich gr¸ﬂe Velociraptor",
+    "ich gr√º√üe Velociraptor",
     "",
-    "ich gr¸ﬂe alle die ich jetzt vergessen habe",
+    "ich gr√º√üe alle die ich jetzt vergessen habe",
     "und das sind bestimmt ein paar :-)",
     "",
     "",
@@ -632,7 +632,7 @@ MenuClass::MenuClass(void)
         Stars[i].Ebene   = rand()%120+20;
     }
 
-    // Farben f¸r die Highscore erstellen, in der die Namen aufblinken
+    // Farben f√ºr die Highscore erstellen, in der die Namen aufblinken
     int i = 0;
     HighscoreColors[i] = D3DCOLOR_RGBA( 75,  75,  75, 255);
     i++;
@@ -885,7 +885,7 @@ MenuClass::MenuClass(void)
     BlinkCounter = 0.75f;
 
 
-    // Sprache feststellen und schauen, welche Grafik wir anzeigen m¸ssen
+    // Sprache feststellen und schauen, welche Grafik wir anzeigen m√ºssen
     if (strcmp (TextArray[TEXT_BENUTZTE_GRAFIK], "0") == 0)
         Sprachgrafik = 0;		// deutsch ?
     else
@@ -926,8 +926,8 @@ MenuClass::~MenuClass(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Hintergrund der Men¸s anzeigen
-// wird auch f¸r den Progressbar benutzt
+// Hintergrund der Men√ºs anzeigen
+// wird auch f√ºr den Progressbar benutzt
 // --------------------------------------------------------------------------------------
 
 void MenuClass::ShowMenuBack(void)
@@ -969,7 +969,7 @@ void MenuClass::ShowMenu(void)
     if (ScrollPos > 360.0f)
         ScrollPos -= 360.0f;
 
-    // Total lˆschen
+    // Total l√∂schen
 
 #if defined(PLATFORM_DIRECTX)
     //DKS - Since I removed all use of the Z-coordinate, this should be changed too. Note: DirectX is entirely untested.
@@ -1067,7 +1067,7 @@ void MenuClass::ShowMenu(void)
         float d = (float)(pMenuFont->StringLength(TextArray [TEXT_MENUE_EINSTELLUNGEN], 2));
         pMenuFont->DrawText(320 - d/2.0f, ypos + OFFSET - OFFSET2, TextArray [TEXT_MENUE_EINSTELLUNGEN], menucolor, 2);
 
-        // Sound / Musik Lautst‰rke
+        // Sound / Musik Lautst√§rke
         for (int i=0; i<2; i++)
         {
             float d = (float)(pMenuFont->StringLength(TextArray [TEXT_SOUND + i], 2));
@@ -1195,7 +1195,7 @@ void MenuClass::ShowMenu(void)
             pMenuFont->DrawTextCenterAlign(320, title_off_y, TextArray[TEXT_STEUERUNG], menucolor, 2);
         }
 
-        // ‹berschrift "Spieler1" "Spieler2"
+        // √úberschrift "Spieler1" "Spieler2"
         D3DCOLOR p1_col, p2_col;
         if (AktuellerPunkt >= MENU_TASTEN_PLAYER_LINE) {
             if (CurrentPlayer == 0) {
@@ -1290,7 +1290,7 @@ void MenuClass::ShowMenu(void)
         // Selection bar:
         RenderRect(10, line1_off_y-2 + AktuellerPunkt * line_spacing, 620, line_spacing, 0x24FFFFFF);
 
-        // F¸r beide Spieler den ganzen Klumbatsch anzeigen
+        // F√ºr beide Spieler den ganzen Klumbatsch anzeigen
         for (int j = 0; j < 2; j++)
         {
             D3DCOLOR col;
@@ -1326,7 +1326,7 @@ void MenuClass::ShowMenu(void)
                         tmpbuf, col);
             }
 
-            // Rechteck f¸r Empfindlichkeit
+            // Rechteck f√ºr Empfindlichkeit
             if (pCurrentPlayer->ControlType == CONTROLTYPE_JOY)
             {
                 if (CurrentPlayer == j && AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE)
@@ -1467,7 +1467,7 @@ void MenuClass::ShowMenu(void)
 
     case MENUPUNKT_HIGHSCORES :
     {
-        char Buffer[100];		// F¸r itoa
+        char Buffer[100];		// F√ºr itoa
 
         float d = (float)(pMenuFont->StringLength(TextArray [TEXT_MENUE_HIGHSCORES], 2));
         pMenuFont->DrawText(320 - d/2.0f, ypos, TextArray [TEXT_MENUE_HIGHSCORES], menucolor, 2);
@@ -1513,7 +1513,7 @@ void MenuClass::ShowMenu(void)
 
     case MENUZUSTAND_ENTERNAME :
     {
-        char Buffer[100];		// F¸r itoa
+        char Buffer[100];		// F√ºr itoa
 
         pMenuFont->DrawTextCenterAlign(320, ypos + 90, TextArray[TEXT_WAHNSINN], D3DCOLOR_RGBA(255, 255, 255, 255), 2);
 
@@ -1591,9 +1591,9 @@ void MenuClass::ShowMenu(void)
         {
             CreditsCounter += (0.5f * scale_factor);				// Dann neues Delay setzen
             CreditsPosition += 1.0f * scale_factor;					// und Pixel weiterscrollen
-            if (CreditsPosition >= yoff_inc)			// 12 Pixelgrenze ¸berschritten ?
+            if (CreditsPosition >= yoff_inc)			// 12 Pixelgrenze √ºberschritten ?
             {
-                CreditsPosition = 0;			// Dann wieder zur¸cksetzen
+                CreditsPosition = 0;			// Dann wieder zur√ºcksetzen
                 CreditsOffset++;				// Und im Char-Array eine zeile weiter
 
                 // Credits zuende ?
@@ -1689,7 +1689,7 @@ void MenuClass::ShowMenu(void)
             pDefaultFont->DrawTextCenterAlign(320.0f, ypos + 20, TextArray[TEXT_MENUE_SPIEL_SPEICHERN], 0xFFFFFFFF, 2);
         }
 
-        // Aktuelle gew‰hltes Savegame heller anzeigen
+        // Aktuelle gew√§hltes Savegame heller anzeigen
         // "Continue"
         if (scale_factor <= 1) {
             pMenuFont->DrawTextCenterAlign(320, continue_text_off_y + (MAX_SAVEGAMES+1)*line_off_y, 
@@ -1717,7 +1717,7 @@ void MenuClass::ShowMenu(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Alles machen, was da Menu betrifft, sprich, werte ‰ndern und dann anzeigen
+// Alles machen, was da Menu betrifft, sprich, werte √§ndern und dann anzeigen
 // --------------------------------------------------------------------------------------
 
 void MenuClass::DoMenu(void)
@@ -1902,7 +1902,7 @@ void MenuClass::DoMenu(void)
         input_counter = 0.0f;
     }
 
-    //LanguageFile Info Fenster Counter runterz‰hlen und Fenster ggf anzeigen
+    //LanguageFile Info Fenster Counter runterz√§hlen und Fenster ggf anzeigen
     //
     if (ShowLanguageInfoCounter > 0.0f) {
         ShowLanguageInfoCounter -= 50.0f SYNC;
@@ -1918,7 +1918,7 @@ void MenuClass::DoMenu(void)
         AktuellerPunkt--;
         SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
 
-        // Spieler will auf "spiel fortsetzen" wechseln, aber es l‰uft noch kein spiel
+        // Spieler will auf "spiel fortsetzen" wechseln, aber es l√§uft noch kein spiel
         //
         if (Stage   == -1				     &&
                 AktuellerZustand == MENUZUSTAND_MAINMENU &&
@@ -1927,7 +1927,7 @@ void MenuClass::DoMenu(void)
             AktuellerPunkt = 0;
         }
 
-        // Checken, ob bei der Tastenwahl ein leeres Feld ¸bersprungen werden muss
+        // Checken, ob bei der Tastenwahl ein leeres Feld √ºbersprungen werden muss
         //
         if (AktuellerZustand == MENUZUSTAND_TASTEN)
         {
@@ -1958,7 +1958,7 @@ void MenuClass::DoMenu(void)
         AktuellerPunkt++;
         SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
 
-        // Spieler will auf "spiel fortsetzen" wechseln, aber es l‰uft noch kein spiel
+        // Spieler will auf "spiel fortsetzen" wechseln, aber es l√§uft noch kein spiel
         //
         if (Stage   == -1				     &&
                 AktuellerZustand == MENUZUSTAND_MAINMENU &&
@@ -1967,7 +1967,7 @@ void MenuClass::DoMenu(void)
             AktuellerPunkt = 2;
         }
 
-        // Checken, ob bei der Tastenwahl ein leeres Feld ¸bersprungen werden muss
+        // Checken, ob bei der Tastenwahl ein leeres Feld √ºbersprungen werden muss
         //
         if (AktuellerZustand == MENUZUSTAND_TASTEN)
         {
@@ -1996,7 +1996,7 @@ void MenuClass::DoMenu(void)
     // Haupt-Menu
     case MENUZUSTAND_MAINMENU :
     {
-        // zur¸ck zum Game ?
+        // zur√ºck zum Game ?
         if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true && Stage != -1)
         {
             input_counter = 0.0f;
@@ -2013,7 +2013,7 @@ void MenuClass::DoMenu(void)
         if (AktuellerPunkt > MENUPUNKT_END)
             AktuellerPunkt = MENUPUNKT_STARTGAME;
 
-        // Menu-Punkt im Hauptmenu ausgew‰hlt ?
+        // Menu-Punkt im Hauptmenu ausgew√§hlt ?
         if (selected)
         {
             AuswahlPossible = false;
@@ -2093,7 +2093,7 @@ void MenuClass::DoMenu(void)
     }
     break;	// MAINMENU
 
-    // Sound / Musik Lautst‰rke w‰hlen
+    // Sound / Musik Lautst√§rke w√§hlen
     case MENUZUSTAND_VOLUMES :
     {
         if (AktuellerPunkt < 0)
@@ -2102,7 +2102,7 @@ void MenuClass::DoMenu(void)
         if (AktuellerPunkt > 4)
             AktuellerPunkt = 0;
 
-        // Volumes ge‰ndert ?
+        // Volumes ge√§ndert ?
         // Leiser
         bool pressed = false;
 
@@ -2154,7 +2154,7 @@ void MenuClass::DoMenu(void)
             }
         }
 
-        // Punkt gew‰hlt
+        // Punkt gew√§hlt
         //
         if (selected)
         {
@@ -2182,7 +2182,7 @@ void MenuClass::DoMenu(void)
             				}
             */
 
-            // Sprache w‰hlen
+            // Sprache w√§hlen
             //
             if (AktuellerPunkt == 3)
             {
@@ -2190,7 +2190,7 @@ void MenuClass::DoMenu(void)
                 AktuellerPunkt   = 0;
             }
 
-            // Sprache w‰hlen
+            // Sprache w√§hlen
             //
             if (AktuellerPunkt == 4)
             {
@@ -2203,7 +2203,7 @@ void MenuClass::DoMenu(void)
             }
         }
 
-        // zur¸ck zum Hauptmenu ?
+        // zur√ºck zum Hauptmenu ?
         if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true)
         {
             input_counter = 0.0f;
@@ -2214,7 +2214,7 @@ void MenuClass::DoMenu(void)
             SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
         }
     }
-    break;	// Sound / Musik Lautst‰rke
+    break;	// Sound / Musik Lautst√§rke
 
     case MENUZUSTAND_LANGUAGE:
     {
@@ -2225,13 +2225,13 @@ void MenuClass::DoMenu(void)
             AktuellerPunkt = 0;
 
 
-        // Punkt gew‰hlt
+        // Punkt gew√§hlt
         //
         if (selected)
         {
             AuswahlPossible = false;
 
-            // Language File gew‰hlt ?
+            // Language File gew√§hlt ?
             if (AktuellerPunkt < LanguageFileCount)
             {
                 strcpy_s (ActualLanguage, strlen(LanguageFiles [AktuellerPunkt]) + 1, LanguageFiles [AktuellerPunkt]);
@@ -2239,7 +2239,7 @@ void MenuClass::DoMenu(void)
                 SaveConfig();
                 ShowLanguageInfoCounter = 2000.0f;
 
-                // Sprache feststellen und schauen, welche Grafik wir anzeigen m¸ssen
+                // Sprache feststellen und schauen, welche Grafik wir anzeigen m√ºssen
                 if (strcmp (TextArray[TEXT_BENUTZTE_GRAFIK], "0") == 0)
                     Sprachgrafik = 0;		// deutsch ?
                 else
@@ -2250,7 +2250,7 @@ void MenuClass::DoMenu(void)
                 SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
             }
 
-            // oder nur zur¸ck ?
+            // oder nur zur√ºck ?
             else
             {
                 AktuellerZustand = MENUZUSTAND_VOLUMES;
@@ -2259,7 +2259,7 @@ void MenuClass::DoMenu(void)
             }
         }
 
-        // zur¸ck zum Hauptmenu ?
+        // zur√ºck zum Hauptmenu ?
         if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true)
         {
             input_counter = 0.0f;
@@ -2339,7 +2339,7 @@ void MenuClass::DoMenu(void)
                         //      hard-coded in the game to be Weapon-selection keys.
                         if (KeyDown(i)  && i!=DIK_NUMLOCK && i!=DIK_CAPITAL && i!=DIK_SCROLL
                                 && i!=DIK_TAB && i!=DIK_ESCAPE
-                                && i!=DIK_1 && i!=DIK_2 && i!=DIK_3)					// ob eine Taste gedr¸ckt wurde
+                                && i!=DIK_1 && i!=DIK_2 && i!=DIK_3)					// ob eine Taste gedr√ºckt wurde
                         {
 #if defined(GCW)
                             //DKS - Added exclusion for the Hold Switch (Mapped to home key), as it is
@@ -2465,14 +2465,14 @@ void MenuClass::DoMenu(void)
                 }
             }
 
-            // Punkt gew‰hlt
+            // Punkt gew√§hlt
             //
             if (selected)
             {
                 AuswahlPossible = false;
                 input_counter = 0.0f;
 
-                // Taste ‰ndern?
+                // Taste √§ndern?
                 if (AktuellerPunkt >= MENU_TASTEN_NUM_NON_CONTROLS)
                 {
                     if (pCurrentPlayer->ControlType == CONTROLTYPE_JOY && 
@@ -2510,7 +2510,7 @@ void MenuClass::DoMenu(void)
                        UseForceFeedback = !UseForceFeedback;
                     } 
 
-                    // Joymode ‰ndern?
+                    // Joymode √§ndern?
                     if (AktuellerPunkt == MENU_TASTEN_MODE_LINE)
                     {
                         if (pCurrentPlayer->JoystickMode == JOYMODE_JOYSTICK)
@@ -2519,7 +2519,7 @@ void MenuClass::DoMenu(void)
                             pCurrentPlayer->JoystickMode = JOYMODE_JOYSTICK;
                     }
 
-                    // Controller Type ‰ndern?
+                    // Controller Type √§ndern?
                     if (AktuellerPunkt == MENU_TASTEN_TYPE_LINE)
                     {
                         // Joytick dran?
@@ -2548,11 +2548,11 @@ void MenuClass::DoMenu(void)
                 }
             }
 
-            // zur¸ck zum Hauptmenu ?
+            // zur√ºck zum Hauptmenu ?
             if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true)
             {
                 input_counter = 0.0f;
-                // Neue Tastennamen f¸r die Tutorial-Texte ¸bernehmen
+                // Neue Tastennamen f√ºr die Tutorial-Texte √ºbernehmen
                 InitReplacers();
 
                 // Sound Config speichern
@@ -2571,7 +2571,7 @@ void MenuClass::DoMenu(void)
     case MENUPUNKT_CREDITS  :
     case MENUPUNKT_HIGHSCORES :
     {
-        // zur¸ck zum Hauptmenu ?
+        // zur√ºck zum Hauptmenu ?
         if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true)
         {
             input_counter = 0.0f;
@@ -2668,7 +2668,7 @@ void MenuClass::DoMenu(void)
             Highscores[NewRank].Stage = NewStage;
             Highscores[NewRank].Skill = NewSkill;
 
-            // Und zur¸ck ins Hauptmenu und dort die Highscores anzeigen
+            // Und zur√ºck ins Hauptmenu und dort die Highscores anzeigen
             SpielZustand	 = MAINMENU;
             AktuellerZustand = MENUPUNKT_HIGHSCORES;
 
@@ -2684,7 +2684,7 @@ void MenuClass::DoMenu(void)
         {
             possible = true;
 
-            // Testen ob die gedr¸ckte Taste loasgelassen wurde
+            // Testen ob die gedr√ºckte Taste loasgelassen wurde
             if (KeyDown(Taste) || KeyDown(DIK_BACK) || KeyDown(DIK_SPACE) 
                     || joy_left || joy_right || joy_up || joy_down)
                 possible = false;
@@ -2769,7 +2769,7 @@ void MenuClass::DoMenu(void)
         if (AktuellerPunkt > 2)
             AktuellerPunkt = 0;
 
-        // Zur¸ck ins Haupt Menu ?
+        // Zur√ºck ins Haupt Menu ?
         if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true)
         {
             input_counter = 0.0f;
@@ -2777,7 +2777,7 @@ void MenuClass::DoMenu(void)
             AktuellerPunkt	 = MENUPUNKT_STARTGAME;
         }
 
-        // Menu-Punkt ausgew‰hlt ?
+        // Menu-Punkt ausgew√§hlt ?
         if (selected)
         {
             AuswahlPossible = false;
@@ -2825,7 +2825,7 @@ void MenuClass::DoMenu(void)
         if (AktuellerPunkt > 1)
             AktuellerPunkt = 0;
 
-        // Zur¸ck ins Haupt Menu ?
+        // Zur√ºck ins Haupt Menu ?
         if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true)
         {
             input_counter = 0.0f;
@@ -2834,7 +2834,7 @@ void MenuClass::DoMenu(void)
             AktuellerPunkt	 = MENUPUNKT_NEWGAME_STARTNEWGAME;
         }
 
-        // Menu-Punkt ausgew‰hlt ?
+        // Menu-Punkt ausgew√§hlt ?
         if (selected)
         {
             tempNUMPLAYERS = AktuellerPunkt + 1;
@@ -2848,7 +2848,7 @@ void MenuClass::DoMenu(void)
     }
     break;	// SPIEL VERLASSEN
 
-    // Skill ausw‰hlen
+    // Skill ausw√§hlen
     case MENUZUSTAND_SELECTSKILL :
     {
         if (AktuellerPunkt < 0)
@@ -2857,7 +2857,7 @@ void MenuClass::DoMenu(void)
         if (AktuellerPunkt > 3)
             AktuellerPunkt = 0;
 
-        // Zur¸ck ins New Game Menu ?
+        // Zur√ºck ins New Game Menu ?
         if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true)
         {
             input_counter = 0.0f;
@@ -2866,7 +2866,7 @@ void MenuClass::DoMenu(void)
             AktuellerPunkt	 = tempNUMPLAYERS - 1;
         }
 
-        // Menu-Punkt ausgew‰hlt ?
+        // Menu-Punkt ausgew√§hlt ?
         if (selected)
         {
             NUMPLAYERS = tempNUMPLAYERS;
@@ -2875,7 +2875,7 @@ void MenuClass::DoMenu(void)
             SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
 
             // Game starten
-            // mit gew‰hltem Skill
+            // mit gew√§hltem Skill
             Skill = AktuellerPunkt;
 
             // Intro initialisieren
@@ -2887,7 +2887,7 @@ void MenuClass::DoMenu(void)
     }
     break;	// Select Skill
 
-    // Savegame zum Laden w‰hlen
+    // Savegame zum Laden w√§hlen
     case MENUZUSTAND_LOADGAME :
     {
         if (AktuellerPunkt < 0)
@@ -2896,7 +2896,7 @@ void MenuClass::DoMenu(void)
         if (AktuellerPunkt > MAX_SAVEGAMES-1)
             AktuellerPunkt = 0;
 
-        // Zur¸ck ins New Game Menu ?
+        // Zur√ºck ins New Game Menu ?
         if ((KeyDown(DIK_ESCAPE) || joy_escape) && AuswahlPossible == true)
         {
             input_counter = 0.0f;
@@ -2905,8 +2905,8 @@ void MenuClass::DoMenu(void)
             AuswahlPossible  = false;
         }
 
-        // Menu-Punkt ausgew‰hlt ?
-        // Dann pr¸fen ob das aktuelle Savegame ein leerer Slot ist
+        // Menu-Punkt ausgew√§hlt ?
+        // Dann pr√ºfen ob das aktuelle Savegame ein leerer Slot ist
         // und wenn das nicht der Fall ist, dann das Savegame laden und
         // das Spiel starten
         if (selected)
@@ -2916,8 +2916,8 @@ void MenuClass::DoMenu(void)
             AuswahlPossible = false;
             SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
 
-            // Aktuell gew‰hltes Savegame laden, wenn es existiert
-            // bzw die Werte aus den schon geladenen Savegames ¸bernehmen
+            // Aktuell gew√§hltes Savegame laden, wenn es existiert
+            // bzw die Werte aus den schon geladenen Savegames √ºbernehmen
             if (Savegames[AktuellerPunkt].Stage >= 0)
             {
                 //DKS - Original order was like so:
@@ -2929,7 +2929,7 @@ void MenuClass::DoMenu(void)
                 NUMPLAYERS = Savegames[AktuellerPunkt].Players;
                 InitNewGame();
 
-                // Werte von Spieler auf das Savegame ¸bertragen
+                // Werte von Spieler auf das Savegame √ºbertragen
                 Player[0].Score				= Savegames[AktuellerPunkt].Score;
                 Stage = Savegames[AktuellerPunkt].Stage;
                 Skill				= Savegames[AktuellerPunkt].Skill;
@@ -2966,7 +2966,7 @@ void MenuClass::DoMenu(void)
     }
     break;	// Load Game
 
-    // Savegame zum Speichern w‰hlen
+    // Savegame zum Speichern w√§hlen
     case MENUZUSTAND_SAVEGAME :
     {
         if (AktuellerPunkt < 0)
@@ -2975,19 +2975,19 @@ void MenuClass::DoMenu(void)
         if (AktuellerPunkt > MAX_SAVEGAMES)
             AktuellerPunkt = 0;
 
-        // Menu-Punkt ausgew‰hlt ?
-        // Dann das Spiel an dem aktuell gew‰hlten Slot speichern
+        // Menu-Punkt ausgew√§hlt ?
+        // Dann das Spiel an dem aktuell gew√§hlten Slot speichern
         // oder weiterspielen ohne zu speichern (je nach Auswahl)
         if (selected)
         {
             AuswahlPossible = false;
             SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
 
-            // Bestimmtes Savegame ausgew‰hlt
+            // Bestimmtes Savegame ausgew√§hlt
             // Dann hier speichern
             if (AktuellerPunkt < MAX_SAVEGAMES)
             {
-                // Werte von Spieler auf das Savegame ¸bertragen
+                // Werte von Spieler auf das Savegame √ºbertragen
                 // Name des Save games aus aktuellem Datum und aktueller Zeit erstelen
 
                 char   timestr[20];
@@ -3035,7 +3035,7 @@ void MenuClass::DoMenu(void)
                     Savegames[AktuellerPunkt].BlitzLength[p] = Player[p].BlitzLength;
                 }
 
-                // Pr¸fsumme gegen Savegame-Manipulation errechnen
+                // Pr√ºfsumme gegen Savegame-Manipulation errechnen
 
                 Savegames[AktuellerPunkt].Pruefsumme =
                     (int)Player[0].Energy + (int)Player[0].Armour + (int)Player[0].Shield +
@@ -3054,8 +3054,8 @@ void MenuClass::DoMenu(void)
                     NUMPLAYERS;
 
                 // Und Savegame in Datei schreiben
-                char Name  [100];		// F¸r die Dateinamen
-                char Buffer[5];			// F¸r _itoa
+                char Name  [100];		// F√ºr die Dateinamen
+                char Buffer[5];			// F√ºr _itoa
                 FILE *Datei = NULL;		// Savegame Datei
 
                 // Name des Savegames erstellen
@@ -3066,7 +3066,7 @@ void MenuClass::DoMenu(void)
                 snprintf( Name, sizeof(Name), "%s/Savegame%s.save", g_save_ext, Buffer );
                 fopen_s(&Datei, Name, "wb");
 
-                // Fehler beim ÷ffnen ? Dann leeren Slot erzeugen
+                // Fehler beim √ñffnen ? Dann leeren Slot erzeugen
                 if (Datei == NULL)
                 {
                 }
@@ -3102,8 +3102,8 @@ void MenuClass::DoMenu(void)
 
 void MenuClass::LoadSavegames(void)
 {
-    char Name  [100];		// F¸r die Dateinamen
-    char Buffer[5];			// F¸r _itoa
+    char Name  [100];		// F√ºr die Dateinamen
+    char Buffer[5];			// F√ºr _itoa
     FILE *Datei;			// Savegame Datei
 
     // Versuchen, die einzelnen Savegames zu laden
@@ -3113,13 +3113,13 @@ void MenuClass::LoadSavegames(void)
         _itoa_s(i, Buffer, 10);
         snprintf( Name, sizeof(Name), "%s/Savegame%s.save", g_save_ext, Buffer );
 
-        // Versuchen, die Datei zu ˆffnen
+        // Versuchen, die Datei zu √∂ffnen
         // falls sie nicht existiert oder es eine Fehler gibt, ist der Slot noch leer
         fopen_s(&Datei, Name, "rb");
 
         Protokoll.WriteText(  false, "save games loaded\n" );
 
-        // Fehler beim ÷ffnen ? Dann leeren Slot erzeugen
+        // Fehler beim √ñffnen ? Dann leeren Slot erzeugen
         //
         if (Datei == NULL)
             Savegames[i].Stage = -1;
@@ -3134,8 +3134,8 @@ void MenuClass::LoadSavegames(void)
             //
             fclose(Datei);
             // Checken ob die Pruefsumme noch stimmt
-            // Pr¸fsumme gegen Savegame-Manipulation errechnen
-            // und nur wenn diese stimmt das Savegame ¸bernehmen
+            // Pr√ºfsumme gegen Savegame-Manipulation errechnen
+            // und nur wenn diese stimmt das Savegame √ºbernehmen
             long Pruefsumme;
 
             Pruefsumme =
@@ -3256,14 +3256,14 @@ void MenuClass::LoadHighscore(void)
     FILE *Datei;			// Savegame Datei
     char name[256];
 
-    // Versuchen, die Highscore Datei zu ˆffnen
+    // Versuchen, die Highscore Datei zu √∂ffnen
     // falls sie nicht existiert oder es eine Fehler gibt, wird die Standard
     // Highscore gesetzt
     sprintf_s(name, "%s/Hurrican.hsl", g_save_ext);
     fopen_s(&Datei, name, "rb");
 
 
-    // Fehler beim ÷ffnen ? Dann standard Highscore setzen
+    // Fehler beim √ñffnen ? Dann standard Highscore setzen
     //
     if (Datei == NULL)
         ResetHighscore();
@@ -3280,7 +3280,7 @@ void MenuClass::LoadHighscore(void)
         fclose(Datei);
 
         // Checken ob die Pruefsumme noch stimmt
-        // und nur wenn diese stimmt die Highscore ¸bernehmen
+        // und nur wenn diese stimmt die Highscore √ºbernehmen
         // ansonsten wieder standard Highscore setzen
         long Pruefsumme;
 
@@ -3321,11 +3321,11 @@ void MenuClass::SaveHighscore(void)
     FILE *Datei;			// Savegame Datei
     char name[256];
 
-    // Highscore Datei ˆffnen
+    // Highscore Datei √∂ffnen
     sprintf_s(name, "%s/Hurrican.hsl", g_save_ext);
     fopen_s(&Datei, name, "wb");
 
-    // Fehler beim ÷ffnen ? Dann standard Highscore setzen
+    // Fehler beim √ñffnen ? Dann standard Highscore setzen
     //
     if (Datei == NULL)
         ResetHighscore();
@@ -3336,7 +3336,7 @@ void MenuClass::SaveHighscore(void)
         //
         for (int i=0; i<MAX_HIGHSCORES; i++)
         {
-            // Pr¸fsumme erstellen
+            // Pr√ºfsumme erstellen
             //
             Highscores[i].Pruefsumme = 0;
 
@@ -3465,7 +3465,7 @@ void MenuClass::ShowLanguageInfo (void)
 } // ShowLanguageInfo
 
 // --------------------------------------------------------------------------------------
-// Pr¸fen obs eine neue Highscore gibt
+// Pr√ºfen obs eine neue Highscore gibt
 // --------------------------------------------------------------------------------------
 
 void MenuClass::CheckForNewHighscore(void)
@@ -3492,7 +3492,7 @@ void MenuClass::CheckForNewHighscore(void)
         {
             besser = true;
 
-            // Ab der Stelle wo ein Namen eingef¸gt wird eine Zeile runterscrollen
+            // Ab der Stelle wo ein Namen eingef√ºgt wird eine Zeile runterscrollen
             //
             for (int k=MAX_HIGHSCORES-1; k>j; k--)
             {
@@ -3508,7 +3508,7 @@ void MenuClass::CheckForNewHighscore(void)
             NewSkill = Skill;
             Player[0].Score = 0;
 
-            // Werte f¸r den neuen Eintrag lˆschen
+            // Werte f√ºr den neuen Eintrag l√∂schen
             NewRank = j;
             //DKS - Initialize NewName with just the cursor char
             strcpy_s(NewName, "_");

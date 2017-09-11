@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Die Plattform
 //
-// Fährt mit x und y Geschwindigkeit die den Values entsprechen in der Luft rum
+// FÃ¤hrt mit x und y Geschwindigkeit die den Values entsprechen in der Luft rum
 // und dreht an einem WendePunkt um
 // --------------------------------------------------------------------------------------
 

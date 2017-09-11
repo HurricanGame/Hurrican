@@ -4,7 +4,7 @@
 //
 // Beinhaltet den Haupt Game-Loop
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -44,13 +44,13 @@ float	WackelMaximum  = 0.0f;								// Maximaler Screen-Wackel Ausschlag
 float	WackelValue    = 0.0f;								// Aktueller Screen-Wackel Ausschlag
 float	WackelDir	   = 0.0f;								// Aktuelle Wackel-Richtung
 float	WackelSpeed	   = 0.0f;								// Aktuelle Wackel-Geschwindigkeit
-float	ScreenWinkel   = 0.0f;								// in welchem zWinkel steht der Screen grad (für säulen, die das Level zum Kippen bringen)
+float	ScreenWinkel   = 0.0f;								// in welchem zWinkel steht der Screen grad (fÃ¼r sÃ¤ulen, die das Level zum Kippen bringen)
 float	WarningCount   = 0.0f;								// Counter, ob ein "Warning" angezeigt wird
 bool	JoystickFound;
 bool	UseForceFeedback = false;							// ForceFeedback benutzen?
 bool	ShowSummary = false;
 
-long    DEMOPress		= 0;								// Counter bis zum nächsten Tastendruck
+long    DEMOPress		= 0;								// Counter bis zum nÃ¤chsten Tastendruck
 bool	DEMORecording	= false;							// demo wird grad aufgenommen
 bool	DEMOPlaying		= false;							// demo spielt gradf ab
 FILE   *DEMOFile		= NULL;								// Datei in der das Demo gespeichert wird
@@ -216,7 +216,7 @@ void ShowGameOver(void)
     Player[0].GameOverTimer -= 0.75f SYNC;
 
     // GameOver vorbei ?
-    // Dann schön alle löschen und auf ein neues Spiel vorbereiten
+    // Dann schÃ¶n alle lÃ¶schen und auf ein neues Spiel vorbereiten
     if (Player[0].GameOverTimer <= 0.0f)
     {
         Player[0].GameOverTimer = 0.0f;
@@ -242,7 +242,7 @@ void GameLoop(void)
     //      are enabled. Disabling screen-clear here helps embedded platforms
     //      which have very limited fill-rate.
 #if 0 //DKS-DISABLED SCREEN CLEAR IN MAIN GAME LOOP
-    // Total löschen
+    // Total lÃ¶schen
 #if defined(PLATFORM_DIRECTX)
     //DKS - Since I removed all use of the Z-coordinate, this should be changed too. Note: DirectX is entirely untested.
     //lpD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
@@ -343,7 +343,7 @@ void GameLoop(void)
     TileEngine.DrawFrontLevel();
 
     //DKS - Lightmap code in original game was never used and all related code has now been disabled:
-    //// LighMaps löschen
+    //// LighMaps lÃ¶schen
     //if (options_Detail >= DETAIL_HIGH)
     //    TileEngine.ClearLightMaps();
 
@@ -380,7 +380,7 @@ void GameLoop(void)
             Player[p].DrawPlayer(true, false);
     }
 
-    // Schüsse abhandeln
+    // SchÃ¼sse abhandeln
     Projectiles.DoProjectiles();
 
     // Partikel abhandeln
@@ -428,12 +428,12 @@ void GameLoop(void)
         DirectGraphics.SetColorKeyMode();
     }
 
-    // Blitz und andere Partikel rendern, die alles überlagern
+    // Blitz und andere Partikel rendern, die alles Ã¼berlagern
     PartikelSystem.DoThunder ();
 
     if (Console.Showing == false)
     {
-        // Waffen 1-3 auswählen
+        // Waffen 1-3 auswÃ¤hlen
         if (KeyDown(DIK_1))
             Player[0].SelectedWeapon = 0;
 
@@ -547,19 +547,19 @@ void SetScreenShake (void)
 
     MYMATH_FTOL(f, Winkel);
 
-    // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
+    // Winkel angleichen, damit er immer zwischen 0Â° und 360Â° bleibt
     //
     if (Winkel > 360) Winkel -= 360;
     if (Winkel < 0)	  Winkel += 360;
     D3DXMatrixRotationZ  (&matRot, DegreetoRad[Winkel]);
 
     D3DXMatrixTranslation(&matTrans, -320.0f,-240.0f, 0.0f);			// Transformation zum Ursprung
-    D3DXMatrixTranslation(&matTrans2, 320.0f, 240.0f, 0.0f);			// Transformation wieder zurück
+    D3DXMatrixTranslation(&matTrans2, 320.0f, 240.0f, 0.0f);			// Transformation wieder zurÃ¼ck
 
     D3DXMatrixIdentity	 (&matView);
     D3DXMatrixMultiply	 (&matView, &matView, &matTrans);		// Verschieben
     D3DXMatrixMultiply	 (&matView, &matView, &matRot);			// rotieren
-    D3DXMatrixMultiply	 (&matView, &matView, &matTrans2);		// und wieder zurück verschieben
+    D3DXMatrixMultiply	 (&matView, &matView, &matTrans2);		// und wieder zurÃ¼ck verschieben
 
     // rotierte Matrix setzen
 #if defined(PLATFORM_DIRECTX)
@@ -590,7 +590,7 @@ void ScreenWackeln(void)
         }
 
         if (WackelMaximum <= 0.0f)					// Wackeln zuende ?
-            WackelMaximum  = 0.0f;					// Dann aufhören damit
+            WackelMaximum  = 0.0f;					// Dann aufhÃ¶ren damit
     }
 
     SetScreenShake();
@@ -602,7 +602,7 @@ void ScreenWackeln(void)
 
 void ShakeScreen (float staerke)
 {
-    // Werte für das Screenwackeln setzen, um den Screen leicht zu schütteln
+    // Werte fÃ¼r das Screenwackeln setzen, um den Screen leicht zu schÃ¼tteln
     WackelMaximum =  staerke;
     WackelValue   =  0.0f;
     WackelDir	  =  1.0f;
@@ -777,8 +777,8 @@ void CreateDefaultConfig(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Konfiguration mit den Sound-Lautstärken laden
-// Existiert diese Datei nicht, so werden die Lautstärken auf den
+// Konfiguration mit den Sound-LautstÃ¤rken laden
+// Existiert diese Datei nicht, so werden die LautstÃ¤rken auf den
 // Defaut Wert gesetzt
 // --------------------------------------------------------------------------------------
 
@@ -794,7 +794,7 @@ bool LoadConfig(void)
     char *temp = (char *)malloc(strlen(g_save_ext) + 1 + strlen(CONFIGFILE) + 1);
     sprintf_s( temp, "%s/%s", g_save_ext, CONFIGFILE );
 
-    fopen_s(&Datei, temp, "rb");		// versuchen Datei zu öffnen
+    fopen_s(&Datei, temp, "rb");		// versuchen Datei zu Ã¶ffnen
     free((void *)temp);
 
     if (Datei == NULL)
@@ -810,12 +810,12 @@ bool LoadConfig(void)
         LoadLanguage(ActualLanguage);
     }
 
-    // Daten für Sound und Musik-Lautstärke auslesen
+    // Daten fÃ¼r Sound und Musik-LautstÃ¤rke auslesen
     fread(&Sound, sizeof(Sound), 1, Datei);
     fread(&Musik, sizeof(Musik), 1, Datei);
     SoundManager.SetVolumes(Sound, Musik);
 
-    // Daten für Keyboard und Joystick auslesen
+    // Daten fÃ¼r Keyboard und Joystick auslesen
     fread(&Player[0].AktionKeyboard, sizeof(Player[0].AktionKeyboard), 1, Datei);
     fread(&Player[0].AktionJoystick, sizeof(Player[0].AktionJoystick), 1, Datei);
     fread(&Player[0].Walk_UseAxxis,  sizeof(Player[0].Walk_UseAxxis), 1, Datei);
@@ -892,7 +892,7 @@ bool LoadConfig(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Aktuelle Konfiguration mit den Sound-Lautstärken speichern
+// Aktuelle Konfiguration mit den Sound-LautstÃ¤rken speichern
 // --------------------------------------------------------------------------------------
 
 void SaveConfig(void)
@@ -919,14 +919,14 @@ void SaveConfig(void)
     // Spracheinstellung speichern
     fwrite(&ActualLanguage, sizeof(ActualLanguage), 1, Datei);
 
-    // Daten für Sound und Musik-Lautstärke schreiben
+    // Daten fÃ¼r Sound und Musik-LautstÃ¤rke schreiben
     Sound = float(SoundManager.g_sound_vol);
     Musik = float(SoundManager.g_music_vol);
 
     fwrite(&Sound, sizeof(Sound), 1, Datei);
     fwrite(&Musik, sizeof(Musik), 1, Datei);
 
-    // Daten für Keyboard und Joystick schreiben
+    // Daten fÃ¼r Keyboard und Joystick schreiben
     fwrite(&Player[0].AktionKeyboard, sizeof(Player[0].AktionKeyboard), 1, Datei);
     fwrite(&Player[0].AktionJoystick, sizeof(Player[0].AktionJoystick), 1, Datei);
     fwrite(&Player[0].Walk_UseAxxis,  sizeof(Player[0].Walk_UseAxxis), 1, Datei);
@@ -966,7 +966,7 @@ bool DisplayLoadInfo(const char Text[100])
     // TODO FIX
     /*
     	strrev (Text);				// String umdrehen
-    	strnset(Text, ' ', 2);		// Ersten zwei (vorher letzten Zwei = \n) Buchstaben löschen
+    	strnset(Text, ' ', 2);		// Ersten zwei (vorher letzten Zwei = \n) Buchstaben lÃ¶schen
     	strrev (Text);				// Wieder richtig herum drehen
     	*/
 
@@ -1068,7 +1068,7 @@ void ExplodePlayer(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Stage Clear Musik dudelt und Spieler läuft aus dem Screen raus
+// Stage Clear Musik dudelt und Spieler lÃ¤uft aus dem Screen raus
 // --------------------------------------------------------------------------------------
 
 void StageClear(bool PlaySong)
@@ -1163,7 +1163,7 @@ void SummaryScreen(void)
 
         Gegner.RunAll();
         Gegner.RenderAll();
-        Projectiles.DoProjectiles	();				// Schüsse abhandeln
+        Projectiles.DoProjectiles	();				// SchÃ¼sse abhandeln
 
         // Overlay Tiles des Levels zeigen und Spieler und Objekte verdecken
         TileEngine.DrawOverlayLevel();
@@ -1176,7 +1176,7 @@ void SummaryScreen(void)
 
         HUD.DoHUD();								// HUD anhandeln
 
-        // Blitz und andere Partikel rendern, die alles überlagern
+        // Blitz und andere Partikel rendern, die alles Ã¼berlagern
         PartikelSystem.DoThunder ();
 
         // Summary Screen rendern
@@ -1331,7 +1331,7 @@ bool NewDemo (const char Filename[])
     NewStage = l;
     InitNewGameLevel (Stage);
 
-    // Timer auf 60 fps für Demo setzen
+    // Timer auf 60 fps fÃ¼r Demo setzen
     Timer.SetMaxFPS(40);
 
     return true;
@@ -1352,7 +1352,7 @@ bool LoadDemo (const char Filename[])
     //DKS - Fixed bug in handling size of full demo path: sizeof(100) returns something very different than 100
     //      (Thank you to Alexander Troosh for the bug report.)
     //DKS - Full paths can also now be longer:
-    //// File öffnen
+    //// File Ã¶ffnen
     //char temp[100];
     //snprintf( temp, sizeof(100), "%s/%s", g_save_ext, Filename );
 
@@ -1393,7 +1393,7 @@ bool LoadDemo (const char Filename[])
     NewStage = l;
     InitNewGameLevel (Stage);
 
-    // Timer auf 60 fps für Demo setzen
+    // Timer auf 60 fps fÃ¼r Demo setzen
     Timer.SetMaxFPS(40);
 
     return true;
@@ -1515,7 +1515,7 @@ void ShowPissText(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Zufällig ein Ziel aussuchen
+// ZufÃ¤llig ein Ziel aussuchen
 // --------------------------------------------------------------------------------------
 
 PlayerClass* ChooseAim(void)

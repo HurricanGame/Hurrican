@@ -2,10 +2,10 @@
 
 // -------------------------------------------------------------------------------------- 
 //
-// 2D Tile-Engine für Hurrican
+// 2D Tile-Engine fÃ¼r Hurrican
 // bestehend aus einem Vordergrund-Layer in verschiedenen Helligkeitsstufen
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -87,7 +87,7 @@ TileEngineClass::~TileEngineClass(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Neues, leeres Level der Grösse xSize/ySize erstellen
+// Neues, leeres Level der GrÃ¶sse xSize/ySize erstellen
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::InitNewLevel(int xSize, int ySize)
@@ -123,7 +123,7 @@ bool TileEngineClass::LoadLevel(char Filename[100])
 	FILE					*Datei = NULL;					// Level-Datei
 	LevelObjectStruct		LoadObject;
 
-	// Prüfen, ob die Datei existiert
+	// PrÃ¼fen, ob die Datei existiert
 	Datei = fopen(Filename, "rb");
 
 	if(!Datei)
@@ -135,7 +135,7 @@ bool TileEngineClass::LoadLevel(char Filename[100])
 	// DateiHeader auslesen
 	fread(&DateiHeader, sizeof(DateiHeader), 1, Datei);
 
-	// und Werte übertragen
+	// und Werte Ã¼bertragen
 	LEVELSIZE_X		 = DateiHeader.SizeX;
 	LEVELSIZE_Y		 = DateiHeader.SizeY;
 	LEVELPIXELSIZE_X = LEVELSIZE_X*20;
@@ -155,7 +155,7 @@ bool TileEngineClass::LoadLevel(char Filename[100])
 	 {
 		 fread(&Tiles[i][j], sizeof(Tiles[i][j]), 1, Datei);
 
-		// TileSets angleichen, da diese im Editor um eins erhöht
+		// TileSets angleichen, da diese im Editor um eins erhÃ¶ht
 		// gespeichert werden, da TileSet[0] == kein TileSet im Editor
 
 //		if(Tiles[i][j].TileSetBack  > 0) Tiles[i][j].TileSetBack--;
@@ -214,11 +214,11 @@ void TileEngineClass::DrawBackground(void)
 
 	if (bScrollBackground == true)				// Hintergrundbild mitscrollen
 	{
-		// Linke Hälfte
+		// Linke HÃ¤lfte
 		Background.SetRect(0, 0, xoff, 480);
 		Background.RenderSprite(640-(float)(xoff), 0, 0xFFFFFFFF);
 
-		// Rechte Hälfte
+		// Rechte HÃ¤lfte
 		Background.SetRect(xoff, 0, 640, 480);
 		Background.RenderSprite(0, 0, 0xFFFFFFFF);
 	}
@@ -232,30 +232,30 @@ void TileEngineClass::DrawBackground(void)
 
 
 	xoff = (int)(XOffset / 3) % 640;
-	yoff = (float)((LEVELSIZE_Y-SCREENSIZE_Y)*20);	// Grösse des Levels in Pixeln (-1 Screen)
+	yoff = (float)((LEVELSIZE_Y-SCREENSIZE_Y)*20);	// GrÃ¶sse des Levels in Pixeln (-1 Screen)
 	yoff = (float)(220-150/yoff*YOffset);			// y-Offset des Layers berechnen
 	yoff -= 40;
 
-	// Linke Hälfte
+	// Linke HÃ¤lfte
 	ParallaxLayer[0].SetRect(0, 0, xoff, 480);
 	ParallaxLayer[0].RenderSprite(640-(float)(xoff), yoff, 0xFFFFFFFF);
 
-	// Rechte Hälfte
+	// Rechte HÃ¤lfte
 	ParallaxLayer[0].SetRect(xoff, 0, 640, 480);
 	ParallaxLayer[0].RenderSprite(0, yoff, 0xFFFFFFFF);
 
 
 //----- vorletzter Layer 
 
-	yoff = (float)((LEVELSIZE_Y-SCREENSIZE_Y)*20);	// Grösse des Levels in Pixeln (-1 Screen)
+	yoff = (float)((LEVELSIZE_Y-SCREENSIZE_Y)*20);	// GrÃ¶sse des Levels in Pixeln (-1 Screen)
 	yoff = (float)(200-200/yoff*YOffset);			// y-Offset des Layers berechnen
 	xoff = (int)(XOffset / 2) % 640;
 
-	// Linke Hälfte
+	// Linke HÃ¤lfte
 	ParallaxLayer[1].SetRect(0, 0, xoff, 480);
 	ParallaxLayer[1].RenderSprite(640-(float)(xoff), yoff, 0xFFFFFFFF);
 
-	// Rechte Hälfte
+	// Rechte HÃ¤lfte
 	ParallaxLayer[1].SetRect(xoff, 0, 640, 480);
 	ParallaxLayer[1].RenderSprite(0, yoff, 0xFFFFFFFF);
 
@@ -271,14 +271,14 @@ void TileEngineClass::DrawBackground(void)
 	DirectGraphics.SetAdditiveMode();
 
 	xoff = int(XOffset / 4 + CloudMovement) % 640;
-	yoff = float((LEVELSIZE_Y-SCREENSIZE_Y)*20);	// Grösse des Levels in Pixeln (-1 Screen)
+	yoff = float((LEVELSIZE_Y-SCREENSIZE_Y)*20);	// GrÃ¶sse des Levels in Pixeln (-1 Screen)
 	yoff = float(320/yoff*YOffset);					// y-Offset des Layers berechnen
 
-	// Linke Hälfte
+	// Linke HÃ¤lfte
 	CloudLayer.SetRect(0, int(yoff), int(xoff), 240);
 	CloudLayer.RenderSprite(640-(float)(xoff), 0, 0xFFFFFFFF);
 
-	// Rechte Hälfte
+	// Rechte HÃ¤lfte
 	CloudLayer.SetRect(int(xoff), int(yoff), 640, 240);
 	CloudLayer.RenderSprite(0, 0, 0xFFFFFFFF);
 
@@ -304,7 +304,7 @@ void TileEngineClass::DrawBackLevel(void)
 	D3DCOLOR		Color;						// Farbe des Tiles
 	unsigned int	Type;						// TileNR des Tiles
 
-	// Am Anfang noch keine Textur gewählt
+	// Am Anfang noch keine Textur gewÃ¤hlt
 	ActualTexture = -1;
 
 	// Position im Level Array errechnen
@@ -319,7 +319,7 @@ void TileEngineClass::DrawBackLevel(void)
 	yScreen = (float)(-yTileOffs);
 
 	lpD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);			// Alpha-Blending
-	lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// für Colorkey
+	lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// fÃ¼r Colorkey
 	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);	// einschalten
 
 	// Noch keine Tiles zum rendern
@@ -369,7 +369,7 @@ void TileEngineClass::DrawBackLevel(void)
 				if (Tiles[xLevel+i][yLevel+j].Block == ANIMATED_WALL)
 					Type += 36*TileAnimPhase;
 			
-				// richtigen Ausschnitt für das aktuelle Tile berechnen
+				// richtigen Ausschnitt fÃ¼r das aktuelle Tile berechnen
 				Rect.top	= (Type/12) * 20;
 				Rect.left	= (Type%12) * 20;
 				Rect.right  = Rect.left + 20;
@@ -454,10 +454,10 @@ void TileEngineClass::DrawBackLevel(void)
 	yScreen = (float)(-yTileOffs);
 
 	lpD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);			// Alpha-Blending
-	lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// für Colorkey
+	lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// fÃ¼r Colorkey
 	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);	// einschalten
 
-	// Alle möglichen Tilesets durchmachen
+	// Alle mÃ¶glichen Tilesets durchmachen
 	for(unsigned int k=0; k<LoadedTilesets; k++)
 	{
 		NumToRender = 0;
@@ -485,7 +485,7 @@ void TileEngineClass::DrawBackLevel(void)
 					if (Tiles[xLevel+i][yLevel+j].Block == ANIMATED_WALL)
 						Type += 36*TileAnimPhase;
 			
-					// richtigen Ausschnitt für das aktuelle Tile berechnen
+					// richtigen Ausschnitt fÃ¼r das aktuelle Tile berechnen
 					Rect.top	= (Type/12) * 20;
 					Rect.left	= (Type%12) * 20;
 					Rect.right  = Rect.left + 20;
@@ -577,10 +577,10 @@ void TileEngineClass::DrawFrontLevel(void)
 	yScreen = (float)(-yTileOffs);
 
 	lpD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);			// Alpha-Blending
-	lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// für Colorkey
+	lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// fÃ¼r Colorkey
 	lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);	// einschalten
 
-	// Alle möglichen Tilesets durchmachen
+	// Alle mÃ¶glichen Tilesets durchmachen
 	for(unsigned int k=0; k<LoadedTilesets; k++)
 	{
 		NumToRender = 0;
@@ -609,7 +609,7 @@ void TileEngineClass::DrawFrontLevel(void)
 
 					Type = Tiles[xLevel+i][yLevel+j].FrontArt - INCLUDE_ZEROTILE;
 			
-					// richtigen Ausschnitt für das aktuelle Tile berechnen
+					// richtigen Ausschnitt fÃ¼r das aktuelle Tile berechnen
 					Rect.top	= (Type/12) * 20;
 					Rect.left	= (Type%12) * 20;
 					Rect.right  = Rect.left + 20;
@@ -673,7 +673,7 @@ void TileEngineClass::DrawFrontLevel(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Die Levelstücke zeigen, die den Spieler verdecken
+// Die LevelstÃ¼cke zeigen, die den Spieler verdecken
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::DrawOverlayLevel(void)
@@ -745,18 +745,18 @@ void TileEngineClass::UpdateLevel(void)
 	YOffset += ScrollSpeedY * SpeedFaktor;
 
 	// Tiles animieren
-	TileAnimCount += SpeedFaktor;				// Counter erhöhen
-	if (TileAnimCount > TILEANIM_SPEED)			// auf Maximum prüfen
+	TileAnimCount += SpeedFaktor;				// Counter erhÃ¶hen
+	if (TileAnimCount > TILEANIM_SPEED)			// auf Maximum prÃ¼fen
 	{
 		TileAnimCount = 0.0f;					// Counter wieder auf 0 setzen
-		TileAnimPhase++;						// und nächste Animphase setzen
+		TileAnimPhase++;						// und nÃ¤chste Animphase setzen
 		if (TileAnimPhase >=4)					// Animation wieer von vorne ?
 			TileAnimPhase = 0;
 	}
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welche BlockArt sich Rechts vom übergebenen Rect befindet
+// ZurÃ¼ckliefern, welche BlockArt sich Rechts vom Ã¼bergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
 int	TileEngineClass::BlockRechts(float &x, float &y, RECT rect)
@@ -781,7 +781,7 @@ int	TileEngineClass::BlockRechts(float &x, float &y, RECT rect)
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welche BlockArt sich Links vom übergebenen Rect befindet
+// ZurÃ¼ckliefern, welche BlockArt sich Links vom Ã¼bergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
 int	TileEngineClass::BlockLinks(float &x, float &y, RECT rect)
@@ -806,10 +806,10 @@ int	TileEngineClass::BlockLinks(float &x, float &y, RECT rect)
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welche BlockArt sich Links vom übergebenen Rect befindet (beim Spieler)
+// ZurÃ¼ckliefern, welche BlockArt sich Links vom Ã¼bergebenen Rect befindet (beim Spieler)
 // Komischerweise versetzt es den Spieler beim Linksblocke und einer "+21 Begradigung"
-// zu weit nach rechts, während es bei anderen Objekten funzt, daher eine Extra Funtkion
-// für den Spieler
+// zu weit nach rechts, wÃ¤hrend es bei anderen Objekten funzt, daher eine Extra Funtkion
+// fÃ¼r den Spieler
 // --------------------------------------------------------------------------------------
 
 int	TileEngineClass::BlockLinksPlayer(float &x, float &y, RECT rect)
@@ -834,7 +834,7 @@ int	TileEngineClass::BlockLinksPlayer(float &x, float &y, RECT rect)
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welche BlockArt sich oberhalb vom übergebenen Rect befindet
+// ZurÃ¼ckliefern, welche BlockArt sich oberhalb vom Ã¼bergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
 int	TileEngineClass::BlockOben(float &x, float &y, RECT rect)
@@ -855,7 +855,7 @@ int	TileEngineClass::BlockOben(float &x, float &y, RECT rect)
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welche BlockArt sich unterhalb vom übergebenen Rect befindet
+// ZurÃ¼ckliefern, welche BlockArt sich unterhalb vom Ã¼bergebenen Rect befindet
 // und dabei nicht "begradigen" sprich die y-Position an das Tile angleichen
 // --------------------------------------------------------------------------------------
 
@@ -878,7 +878,7 @@ int	TileEngineClass::BlockUntenNormal(float &x, float &y, RECT rect)
 }
 
 // --------------------------------------------------------------------------------------
-// Zurückliefern, welche BlockArt sich unterhalb vom übergebenen Rect befindet
+// ZurÃ¼ckliefern, welche BlockArt sich unterhalb vom Ã¼bergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
 int	TileEngineClass::BlockUnten(float &x, float &y, RECT rect)

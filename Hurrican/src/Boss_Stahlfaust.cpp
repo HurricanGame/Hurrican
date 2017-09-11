@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Die riesige Stahlfaust - Zwischenboss
 //
-// fliegt über dem Spieler und versucht, diesen zu zerquetschen
+// fliegt Ã¼ber dem Spieler und versucht, diesen zu zerquetschen
 // fliegt ab und zu nach oben aus dem Screen und donnert auf den Hurri runter
 // --------------------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ GegnerStahlfaust::GegnerStahlfaust(int Wert1, int Wert2, bool Light)
     Value2			= Wert2;
     AnimPhase		= 0;
     ChangeLight		= Light;
-    AnimCount		= 70.0f;		// Counter für Spezial Aktion
+    AnimCount		= 70.0f;		// Counter fÃ¼r Spezial Aktion
     Destroyable		= true;
     TestBlock		= false;
     SmokeDelay		= 0.0f;
@@ -117,7 +117,7 @@ void GegnerStahlfaust::DoKI(void)
     }
     break;
 
-    case GEGNER_LAUFEN:			// Über dem Spieler schweben und ggf runtersausen
+    case GEGNER_LAUFEN:			// Ãœber dem Spieler schweben und ggf runtersausen
     {
         AnimCount -= SpeedFaktor;
 
@@ -150,7 +150,7 @@ void GegnerStahlfaust::DoKI(void)
         // Faust Spezial Aktion und oben rausfliegen ?
         if (AnimCount <= 0.0f)
         {
-            AnimCount = 70.0f;			// Nächste Spezial Aktion planen
+            AnimCount = 70.0f;			// NÃ¤chste Spezial Aktion planen
             Handlung  = GEGNER_SPRINGEN;
             xAcc   = 0.0f;
             xSpeed = 0.0f;
@@ -220,7 +220,7 @@ void GegnerStahlfaust::DoKI(void)
     }
     break;
 
-    // Faust fällt auf den Hurri drauf und fliegt dann wieder oben raus
+    // Faust fÃ¤llt auf den Hurri drauf und fliegt dann wieder oben raus
     case GEGNER_FALLEN:
     {
         blocku = TileEngine.BlockUnten(xPos, yPos, xPos, yPos, GegnerRect[GegnerArt]);

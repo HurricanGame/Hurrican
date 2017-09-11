@@ -2,7 +2,7 @@
 
 // -------------------------------------------------------------------------------------- 
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -16,7 +16,7 @@
 #define WIN_32_LEAN_AND_MEAN						// MFC abschalten
 #define WINDOWCLASSNAME	"myWindowsClass"			// Name der Windows-Klasse
 #define WINDOWWIDTH		1024						// Fensterbreite
-#define WINDOWHEIGHT	768							// Fensterhöhe
+#define WINDOWHEIGHT	768							// FensterhÃ¶he
 #define VIEW_XOFFSET    10							// X-Pos des Levels im Fenster
 #define VIEW_YOFFSET    210							// Y-Pos des Levels im Fenster
 #define TILE_XOFFSET	760							// X-Pos des Tilesets zur Auswahl
@@ -44,27 +44,27 @@ struct FileHeader
 	unsigned int	Timelimit;						// Zeitlimit des Levels
 	unsigned char	UsedTilesets;					// Anzahl der Tilesets
 	char			SetNames[64][16];				// Namen der benutzten Sets
-	unsigned int	SizeX, SizeY;					// Größe des Levels
+	unsigned int	SizeX, SizeY;					// GrÃ¶ÃŸe des Levels
 	unsigned int	NumObjects;						// Anzahl der Objekte
 	bool			ScrollBackground;				// Hintergrund scrollen ?
 };
 
 // --------------------------------------------------------------------------------------
 // Anhang am File nach den Level Daten
-// damit nicht alle levels nochmal konvertiert werden, hänge ich einfach alle dinge, die
-// noch ins level format reinmüssen, dahinter =)
+// damit nicht alle levels nochmal konvertiert werden, hÃ¤nge ich einfach alle dinge, die
+// noch ins level format reinmÃ¼ssen, dahinter =)
 // --------------------------------------------------------------------------------------
 
 struct FileAppendix
 {
 	char			Songs[2][30];					// Namen der benutzten Songs (Stage und Boss)
 	int				UsedPowerblock;					// ID der benutzten Powerblock Art
-	char			Col1[8], Col2[8];				// Farben für Liquid
+	char			Col1[8], Col2[8];				// Farben fÃ¼r Liquid
 	bool			Taschenlampe;					// Taschenlampeneffekt
 };
 
 // --------------------------------------------------------------------------------------
-// Struktur für das Speichern und Laden eines Objektes
+// Struktur fÃ¼r das Speichern und Laden eines Objektes
 // --------------------------------------------------------------------------------------
 
 struct ObjectForFileAccess
@@ -74,8 +74,8 @@ struct ObjectForFileAccess
 	int				YPos;						// y-Position
 	bool			ChangeLight;				// Umgebungslicht annehmen ?
 	unsigned char	Skill;						// 0 = Easy, 1 = Medium, 2 = Hard
-	int				Value1;						// Werte für diverse Trigger
-	int				Value2;						// Werte für diverse Trigger
+	int				Value1;						// Werte fÃ¼r diverse Trigger
+	int				Value2;						// Werte fÃ¼r diverse Trigger
 };
 
 // --------------------------------------------------------------------------------------
@@ -90,11 +90,11 @@ class Object
 		int				YPos;						// y-Position
 		bool			ChangeLight;				// Umgebungslicht annehmen ?
 		unsigned char	Skill;						// 0 = Easy, 1 = Medium, 2 = Hard
-		int				Value1;						// Werte für diverse Trigger
-		int				Value2;						// Werte für diverse Trigger
+		int				Value1;						// Werte fÃ¼r diverse Trigger
+		int				Value2;						// Werte fÃ¼r diverse Trigger
 
 		Object			*pPrev;						// Vorheriges Listen-Objekt
-		Object			*pNext;						// Nächstes Listen-Objekt
+		Object			*pNext;						// NÃ¤chstes Listen-Objekt
 };
 
 // --------------------------------------------------------------------------------------
@@ -109,12 +109,12 @@ class ObjectList
  
         ObjectList			(void);					// Konstruktor
 	   ~ObjectList			(void);					// Desktruktor
-        void    Push		(int x, int y,	    	// Neues Objekt zur Liste hinzufügen
+        void    Push		(int x, int y,	    	// Neues Objekt zur Liste hinzufÃ¼gen
 						     unsigned int ObjID);
-		void	Push		(ObjectForFileAccess Temp); // Für das Objekt Laden
-		void    DelSel		(Object *pTemp);		// Ausgewähltes Objekt entfernen
+		void	Push		(ObjectForFileAccess Temp); // FÃ¼r das Objekt Laden
+		void    DelSel		(Object *pTemp);		// AusgewÃ¤hltes Objekt entfernen
 		void    ShowAll		(void);					// Alle Objekts anzeigen
-		void    ClearAll	(void);					// Alle Objekts löschen
+		void    ClearAll	(void);					// Alle Objekts lÃ¶schen
 		void    GetSelected (void);					// Das mit der Maus selektierte Objekt suchen
 		int		GetNumType	(int Type);				// Anzahl Objekte eines bestimmten Typs holen
 };
@@ -142,6 +142,6 @@ void CopyFromBlock		(void);
 void ShowObjectInfo	    (void);
 void SaveUndoStep		(bool reset);
 void RestoreUndoStep	(bool back);
-int	 GetDecValue(char *pair, int len);			// Dezimalwert einer Hexzahl mit Länge len
+int	 GetDecValue(char *pair, int len);			// Dezimalwert einer Hexzahl mit LÃ¤nge len
 
 #endif

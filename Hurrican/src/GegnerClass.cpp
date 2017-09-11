@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------
-// Klasse für die Gegner und Klasse für die Linked List der Gegner
+// Klasse fÃ¼r die Gegner und Klasse fÃ¼r die Linked List der Gegner
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -39,7 +39,7 @@ GegnerClass::GegnerClass(void)
     TurnCount    = 0.0f;
     blocko = blocku = blockl = blockr = 0;  //DKS - Added initializers
 
-    // Ziel zufällig wählen
+    // Ziel zufÃ¤llig wÃ¤hlen
     pAim = ChooseAim();
 }
 
@@ -55,7 +55,7 @@ GegnerClass::~GegnerClass(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Testen, ob der Gegner die Spieler berührt hat
+// Testen, ob der Gegner die Spieler berÃ¼hrt hat
 // --------------------------------------------------------------------------------------
 
 void GegnerClass::TestDamagePlayers(float dam, bool destroy)
@@ -201,12 +201,12 @@ void GegnerClass::Render(void)
 
 bool GegnerClass::Run(void)
 {
-    // Ist der Gegner überhaupt schon aktiviert worden, also im Screen gewesen ?
+    // Ist der Gegner Ã¼berhaupt schon aktiviert worden, also im Screen gewesen ?
     // Oder ist es ein Eisstachel, der sich immer bewegt
     if (Active    == true ||
             GegnerArt == EISSTACHEL)
     {
-        // "KI" kann man es zwar nicht nennen, aber wir führen es trotzdem aus ;)
+        // "KI" kann man es zwar nicht nennen, aber wir fÃ¼hren es trotzdem aus ;)
         DoKI();
 
         // Muss der Gegner garnicht bewegt oder angezeigt werden, weil es zB ein Trigger ist ?
@@ -331,7 +331,7 @@ bool GegnerClass::Run(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Abstand zwischen Gegner und Spieler berechnen und zurückliefern
+// Abstand zwischen Gegner und Spieler berechnen und zurÃ¼ckliefern
 // --------------------------------------------------------------------------------------
 
 int GegnerClass::PlayerAbstand(bool both)
@@ -371,7 +371,7 @@ int GegnerClass::PlayerAbstand(bool both)
 }
 
 // --------------------------------------------------------------------------------------
-// Horizontaler Abstand zwischen Gegner und Spieler berechnen und zurückliefern
+// Horizontaler Abstand zwischen Gegner und Spieler berechnen und zurÃ¼ckliefern
 // --------------------------------------------------------------------------------------
 
 int GegnerClass::PlayerAbstandHoriz(PlayerClass *pTarget)
@@ -392,7 +392,7 @@ int GegnerClass::PlayerAbstandHoriz(PlayerClass *pTarget)
 }
 
 // --------------------------------------------------------------------------------------
-// Vertikaler Abstand zwischen Gegner und Spieler berechnen und zurückliefern
+// Vertikaler Abstand zwischen Gegner und Spieler berechnen und zurÃ¼ckliefern
 // --------------------------------------------------------------------------------------
 
 int GegnerClass::PlayerAbstandVert(PlayerClass *pTarget)
@@ -476,7 +476,7 @@ void GegnerClass::PlattformTest(RECT rect)
 
 void GegnerClass::Wegschieben(RECT rect, float dam)
 {
-    // Testen, ob der Spieler den Gegner berührt hat
+    // Testen, ob der Spieler den Gegner berÃ¼hrt hat
     //
     for (int i = 0; i < NUMPLAYERS; i++)
         if (SpriteCollision(xPos, yPos, rect,
@@ -522,22 +522,22 @@ void GegnerClass::Wegschieben(RECT rect, float dam)
 void GegnerClass::SimpleAnimation (bool backward)
 {
     // Animieren
-    if (AnimEnde > 0)						// Soll überhaupt animiert werden ?
+    if (AnimEnde > 0)						// Soll Ã¼berhaupt animiert werden ?
     {
-        AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+        if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
 
             if (backward)
             {
-                AnimPhase--;					// Und nächste Animationsphase
+                AnimPhase--;					// Und nÃ¤chste Animationsphase
                 if (AnimPhase <= AnimStart)		// Animation von zu Ende	?
                     AnimPhase = AnimEnde;		// Dann wieder von vorne beginnen
             }
             else
             {
-                AnimPhase++;					// Und nächste Animationsphase
+                AnimPhase++;					// Und nÃ¤chste Animationsphase
                 if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
                     AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
             }
@@ -565,7 +565,7 @@ void GegnerClass::TurnonWall (void)
 } // TurnonWall
 
 // --------------------------------------------------------------------------------------
-// Umdrehen, wenn angeschoßen
+// Umdrehen, wenn angeschoÃŸen
 // --------------------------------------------------------------------------------------
 
 bool GegnerClass::TurnonShot (void)
@@ -640,7 +640,7 @@ GegnerListClass::GegnerListClass(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Destruktor : Löschen der ganzen Liste und Freigabe der Gegner-Grafiken
+// Destruktor : LÃ¶schen der ganzen Liste und Freigabe der Gegner-Grafiken
 // --------------------------------------------------------------------------------------
 
 GegnerListClass::~GegnerListClass(void)
@@ -708,7 +708,7 @@ void GegnerListClass::LoadSprites(void)
     GegnerRect[WALKER].top  = 10;
     GegnerRect[WALKER].bottom = 45;
 
-    // Geschützturm
+    // GeschÃ¼tzturm
     GegnerRect[GUNTOWER].left = 0;
     GegnerRect[GUNTOWER].right  = 60;
     GegnerRect[GUNTOWER].top  = 0;
@@ -774,7 +774,7 @@ void GegnerListClass::LoadSprites(void)
     GegnerRect[KUGELMEDIUM].top  = 8;
     GegnerRect[KUGELMEDIUM].bottom = 37;
 
-    // Stachel-Kugel groß
+    // Stachel-Kugel groÃŸ
     GegnerRect[KUGELGROSS].left = 12;
     GegnerRect[KUGELGROSS].right  = 48;
     GegnerRect[KUGELGROSS].top  = 12;
@@ -822,7 +822,7 @@ void GegnerListClass::LoadSprites(void)
     GegnerRect[FALLINGROCK].top  = 0;
     GegnerRect[FALLINGROCK].bottom = 40;
 
-    // Bröckelnder Felsblock
+    // BrÃ¶ckelnder Felsblock
     GegnerRect[BROCKELROCK].left = 0;
     GegnerRect[BROCKELROCK].right  = 80;
     GegnerRect[BROCKELROCK].top  = 0;
@@ -960,7 +960,7 @@ void GegnerListClass::LoadSprites(void)
     GegnerRect[STARSMALL].top  = 2;
     GegnerRect[STARSMALL].bottom = 38;
 
-    // Großer Stern
+    // GroÃŸer Stern
     GegnerRect[STARBIG].left = 10;
     GegnerRect[STARBIG].right  = 70;
     GegnerRect[STARBIG].top  = 10;
@@ -1110,7 +1110,7 @@ void GegnerListClass::LoadSprites(void)
     GegnerRect[FIESERWALKER2].top  = 8;
     GegnerRect[FIESERWALKER2].bottom = 55;
 
-    // Die mittelgroße Spinne
+    // Die mittelgroÃŸe Spinne
     GegnerRect[MITTELSPINNE].left = 10;
     GegnerRect[MITTELSPINNE].right  = 97;
     GegnerRect[MITTELSPINNE].top  = 10;
@@ -1207,7 +1207,7 @@ void GegnerListClass::LoadSprites(void)
     GegnerRect[SKELETOR].top  = 20;
     GegnerRect[SKELETOR].bottom = 200;
 
-    // Schädel vom Boss
+    // SchÃ¤del vom Boss
     GegnerRect[SKULL].left = 4;
     GegnerRect[SKULL].right  = 28;
     GegnerRect[SKULL].top  = 4;
@@ -1375,7 +1375,7 @@ void GegnerListClass::LoadSprites(void)
     GegnerRect[WARNING].top  = 0;
     GegnerRect[WARNING].bottom = 40;
 
-    // Luefter Groß
+    // Luefter GroÃŸ
     GegnerRect[LUEFTER_GROSS].left = 0;
     GegnerRect[LUEFTER_GROSS].right  = 224;
     GegnerRect[LUEFTER_GROSS].top  = 0;
@@ -1493,7 +1493,7 @@ void GegnerListClass::LoadSprites(void)
     GegnerRect[ROLLMOPS].top  = 20;
     GegnerRect[ROLLMOPS].bottom = 80;
 
-    // SchneeKönig
+    // SchneeKÃ¶nig
     GegnerRect[SCHNEEKOENIG].left = 60;
     GegnerRect[SCHNEEKOENIG].right  = 145;
     GegnerRect[SCHNEEKOENIG].top  = 50;
@@ -1549,17 +1549,17 @@ void GegnerListClass::LoadSprites(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Gegner "Art" hinzufügen
+// Gegner "Art" hinzufÃ¼gen
 // --------------------------------------------------------------------------------------
 
 bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Value2, bool Light, bool atEnd)
 {
     GegnerClass *pNew;							// Das wird der neue Gegner;
 
-    if(NumGegner >= MAX_GEGNER)					// Grenze überschritten ?
+    if(NumGegner >= MAX_GEGNER)					// Grenze Ã¼berschritten ?
         return false;
 
-    // Unterscheiden, was für ein Gegner erstellt wird
+    // Unterscheiden, was fÃ¼r ein Gegner erstellt wird
     switch(Art)
     {
     case POWERBLOCK:
@@ -2483,7 +2483,7 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
     }
     else										// Liste ist NICHT leer
     {
-        // Gegner am Ende einfügen?
+        // Gegner am Ende einfÃ¼gen?
         if (atEnd == true)
         {
             pEnd->pNext = pNew;						// Letzter Gegner zeigt auf den neuen
@@ -2493,7 +2493,7 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
             pEnd		= pNew;						// da er jetzt der letzte in der Liste ist
         }
 
-        // Gegner am Anfag einfügen?
+        // Gegner am Anfag einfÃ¼gen?
         else
         {
             pStart->pPrev = pNew;					// Erster Gegner zeigt auf den neuen
@@ -2504,13 +2504,13 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
         }
     }
 
-    NumGegner++;								// Gegneranzahl erhöhen
+    NumGegner++;								// Gegneranzahl erhÃ¶hen
 
-    // Bei der ShootPlattform noch den Button anfügen
+    // Bei der ShootPlattform noch den Button anfÃ¼gen
     //
     if (Art == SHOOTPLATTFORM)
     {
-        // Button anfügen
+        // Button anfÃ¼gen
         Gegner.PushGegner (pNew->xPos + 42, pNew->yPos - 9, SHOOTBUTTON, 0, 0, Light);
     }
 
@@ -2518,7 +2518,7 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
 }
 
 // --------------------------------------------------------------------------------------
-// Bestimmten Gegner der Liste löschen
+// Bestimmten Gegner der Liste lÃ¶schen
 // --------------------------------------------------------------------------------------
 
 void GegnerListClass::DelSel(GegnerClass *pTemp)
@@ -2526,17 +2526,17 @@ void GegnerListClass::DelSel(GegnerClass *pTemp)
     GegnerClass  *pN;
     GegnerClass  *pP;
 
-    if(pTemp!=NULL)						// zu löschender Gegner existiert
+    if(pTemp!=NULL)						// zu lÃ¶schender Gegner existiert
     {
         pN = pTemp->pNext;
         pP = pTemp->pPrev;
 
-        if(pP == NULL)					// Wird der erste Gegner gelöscht ?
-            pStart = pN;				// Dann wird dessen Nächster zum Ersten
+        if(pP == NULL)					// Wird der erste Gegner gelÃ¶scht ?
+            pStart = pN;				// Dann wird dessen NÃ¤chster zum Ersten
         else
-            pP->pNext = pN;	   	        // ansonsten normal eins aufrücken
+            pP->pNext = pN;	   	        // ansonsten normal eins aufrÃ¼cken
 
-        if(pN == NULL)					// Wird der letzte Gegner gelöscht ?
+        if(pN == NULL)					// Wird der letzte Gegner gelÃ¶scht ?
             pEnd = pP;					// Dann wir der letzte Gegner zum ersten
         else
             pN->pPrev = pP;
@@ -2549,19 +2549,19 @@ void GegnerListClass::DelSel(GegnerClass *pTemp)
 }
 
 // --------------------------------------------------------------------------------------
-// Alle Gegner der Liste löschen
+// Alle Gegner der Liste lÃ¶schen
 // --------------------------------------------------------------------------------------
 
 void GegnerListClass::ClearAll(void)
 {
     GegnerClass *pTemp    = pStart;					// Zeiger auf den ersten   Gegner
-    GegnerClass *pNaechst;							// Zeiger auf den nächsten Gegner (falls
-    // der eine gelöscht wird)
+    GegnerClass *pNaechst;							// Zeiger auf den nÃ¤chsten Gegner (falls
+    // der eine gelÃ¶scht wird)
     while (pTemp != NULL)							// Ende der Liste erreicht ?
     {
-        pNaechst = pTemp->pNext;					// Zeiger auf das nächste Element
-        DelSel(pTemp);								// Das aktuelle löschen
-        pTemp = pNaechst;							// und das nächste bearbeiten
+        pNaechst = pTemp->pNext;					// Zeiger auf das nÃ¤chste Element
+        DelSel(pTemp);								// Das aktuelle lÃ¶schen
+        pTemp = pNaechst;							// und das nÃ¤chste bearbeiten
     }
 
     pStart = NULL;
@@ -2569,7 +2569,7 @@ void GegnerListClass::ClearAll(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Zahl der Gegner zurückliefern
+// Zahl der Gegner zurÃ¼ckliefern
 // --------------------------------------------------------------------------------------
 
 int GegnerListClass::GetNumGegner(void)
@@ -2586,11 +2586,11 @@ void GegnerListClass::RenderAll(void)
     GegnerClass *pTemp = pStart;			// Anfang der Liste
 
     // Zuerst die "Gegner" rendern, die als Background fungieren
-    // z.B. der große Lüfter, damit diese nicht die anderen Gegner verdecken können
+    // z.B. der groÃŸe LÃ¼fter, damit diese nicht die anderen Gegner verdecken kÃ¶nnen
     //
     while (pTemp != NULL)					// noch nicht alle durch ?
     {
-        if (pTemp->BackGround == false)		// kein Background? Dann nächsten
+        if (pTemp->BackGround == false)		// kein Background? Dann nÃ¤chsten
         {
             pTemp = pTemp->pNext;
             continue;
@@ -2603,7 +2603,7 @@ void GegnerListClass::RenderAll(void)
             pTemp->Render();
         }
 
-        pTemp = pTemp->pNext;				// Nächsten durchgehen
+        pTemp = pTemp->pNext;				// NÃ¤chsten durchgehen
     }
 
     // Danach alle anderen "richtigen" Gegner rendern
@@ -2613,7 +2613,7 @@ void GegnerListClass::RenderAll(void)
 
     while (pTemp != NULL)					// noch nicht alle durch ?
     {
-        if (pTemp->BackGround == true)		// Background? Dann nächsten
+        if (pTemp->BackGround == true)		// Background? Dann nÃ¤chsten
         {
             pTemp = pTemp->pNext;
             continue;
@@ -2626,7 +2626,7 @@ void GegnerListClass::RenderAll(void)
             pTemp->Render();
         }
 
-        pTemp = pTemp->pNext;				// Und nächsten Gegner rendern
+        pTemp = pTemp->pNext;				// Und nÃ¤chsten Gegner rendern
     }
 }
 
@@ -2639,7 +2639,7 @@ void GegnerListClass::RunAll(void)
     GegnerClass *pTemp = pStart;			// Anfang der Liste
     GegnerClass *pNext = NULL;
 
-    // Alle Einträge der Gegnerliste durchgehen
+    // Alle EintrÃ¤ge der Gegnerliste durchgehen
     //
     while (pTemp != NULL)					// noch nicht alle durch ?
     {
@@ -2647,11 +2647,11 @@ void GegnerListClass::RunAll(void)
 
         pTemp->Run();
 
-        // ggf Gegner löschen (bei Energy <= 0)
+        // ggf Gegner lÃ¶schen (bei Energy <= 0)
         if (pTemp->Energy <= 0.0f)
         {
             pTemp->GegnerExplode();			// Jeder Gegner explodiert anders
-            DelSel(pTemp);					// Gegner aus der Liste löschen
+            DelSel(pTemp);					// Gegner aus der Liste lÃ¶schen
         }
 
 
@@ -2660,14 +2660,14 @@ void GegnerListClass::RunAll(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Alle Gegner auf dem Screen (ausser Endbosse) zerstören (Granate)
+// Alle Gegner auf dem Screen (ausser Endbosse) zerstÃ¶ren (Granate)
 // --------------------------------------------------------------------------------------
 
 void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage)
 {
-    // Gegner durchgehen und die auf dem Screen löschen
+    // Gegner durchgehen und die auf dem Screen lÃ¶schen
     GegnerClass *pTemp = pStart;			// Anfang der Liste
-    GegnerClass *pNext = NULL;				// Nächster Gegner in der Liste
+    GegnerClass *pNext = NULL;				// NÃ¤chster Gegner in der Liste
 
     while (pTemp != NULL)					// Noch nicht alle durch ?
     {
@@ -2675,9 +2675,9 @@ void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage)
         float ay = y - pTemp->yPos;
         float dx = sqrtf((ax * ax) + (ay * ay));
 
-        pNext = pTemp->pNext;				// Nächsten sichern
+        pNext = pTemp->pNext;				// NÃ¤chsten sichern
 
-        // Stampfstein? Fällt runter bei Wackeln
+        // Stampfstein? FÃ¤llt runter bei Wackeln
         if (pTemp->Active	   == true		  &&
                 pTemp->GegnerArt   == STAMPFSTEIN &&
                 pTemp->Handlung    == GEGNER_STEHEN &&
@@ -2696,7 +2696,7 @@ void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage)
                 SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_STONEFALL);
         }
 
-        // Gegner in der Nähe? Dann Energie abziehen
+        // Gegner in der NÃ¤he? Dann Energie abziehen
         if (pTemp->Active	   == true		    &&
                 dx < 300							&&
                 pTemp->Destroyable == true		    &&
@@ -2715,6 +2715,6 @@ void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage)
             pTemp->Energy -= amount;
         }
 
-        pTemp = pNext;						// Und nächsten Gegner anhandeln
+        pTemp = pNext;						// Und nÃ¤chsten Gegner anhandeln
     }
 }

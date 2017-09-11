@@ -38,13 +38,13 @@ void GegnerRoboMan1::DoKI(void)
     blockr = TileEngine.BlockRechts(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
 
     // Animieren
-    if (AnimEnde > 0)						// Soll überhaupt anmiert werden ?
+    if (AnimEnde > 0)						// Soll Ã¼berhaupt anmiert werden ?
     {
-        AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+        if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und nächste Animationsphase
+            AnimPhase++;					// Und nÃ¤chste Animationsphase
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
             {
                 if (AnimPhase == 14)
@@ -145,7 +145,7 @@ void GegnerRoboMan1::DoKI(void)
 
     switch (Handlung)
     {
-    // Robo stürzt ab
+    // Robo stÃ¼rzt ab
     case GEGNER_FALLEN:
     {
         // An die Wand gekracht ?
@@ -174,11 +174,11 @@ void GegnerRoboMan1::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler den Robo berührt hat
+    // Testen, ob der Spieler den Robo berÃ¼hrt hat
     if (Handlung != GEGNER_FALLEN)
         TestDamagePlayers(4.0f SYNC);
 
-    // Soviel Energie verloren, dass der Robo abstürzt ?
+    // Soviel Energie verloren, dass der Robo abstÃ¼rzt ?
     if (Energy <= 0.0f && Handlung != GEGNER_FALLEN)
     {
         Handlung = GEGNER_FALLEN;

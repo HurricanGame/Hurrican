@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------
-// Der große Stern im Flugsack level
+// Der groÃŸe Stern im Flugsack level
 //
 // Prallt von der Wand ab und schiesst ab und zu
 // --------------------------------------------------------------------------------------
@@ -49,11 +49,11 @@ void GegnerStarBig::DoKI(void)
         BlickRichtung = LINKS;
 
     // Animieren
-    AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-    if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+    AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+    if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
     {
         AnimCount = 0;					// Dann wieder auf Null setzen
-        AnimPhase++;					// Und nächste Animationsphase
+        AnimPhase++;					// Und nÃ¤chste Animationsphase
         if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
         {
             AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
@@ -76,7 +76,7 @@ void GegnerStarBig::DoKI(void)
     {
     case GEGNER_LAUFEN :
     {
-        // An den Wänden umdrehen
+        // An den WÃ¤nden umdrehen
         //
         if ((xSpeed < 0.0f && blockl & BLOCKWERT_WAND) ||
                 (xSpeed > 0.0f && blockr & BLOCKWERT_WAND))
@@ -95,7 +95,7 @@ void GegnerStarBig::DoKI(void)
 
     } // switch
 
-    // Testen, ob der Spieler den Sack berührt hat
+    // Testen, ob der Spieler den Sack berÃ¼hrt hat
     TestDamagePlayers(2.0f SYNC);
 }
 

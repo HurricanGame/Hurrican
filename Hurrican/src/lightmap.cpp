@@ -6,9 +6,9 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Lightmaps für das Hurrican Level
+// Lightmaps fÃ¼r das Hurrican Level
 //
-// (c) 2005 Jörg M. Winterstein
+// (c) 2005 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -86,7 +86,7 @@ void CLightMap::Load(const char *filename)
     return;
 #endif // USE_UNRARLIB
 
-    fopen_s (&TempFile, TEMP_FILE_PREFIX "temp.dat", "wb");	// Datei öffnen
+    fopen_s (&TempFile, TEMP_FILE_PREFIX "temp.dat", "wb");	// Datei Ã¶ffnen
     fwrite (pData, Size, 1, TempFile);			// speichern
     fclose (TempFile);							// und schliessen
 
@@ -124,7 +124,7 @@ loadfile:
     SelectObject(hdcImage, hbm);
 
 
-    // Größe korrigieren (für 2er Potenz Texturen)
+    // GrÃ¶ÃŸe korrigieren (fÃ¼r 2er Potenz Texturen)
     //
     xsize = bm.bmWidth;
     ysize = bm.bmHeight;

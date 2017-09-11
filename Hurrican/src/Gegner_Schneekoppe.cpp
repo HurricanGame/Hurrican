@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
-// Der Schuss des Schneekönigs
+// Der Schuss des SchneekÃ¶nigs
 //
-// kann vom Spieler angeschossen werden und ändert dann die Richtung
+// kann vom Spieler angeschossen werden und Ã¤ndert dann die Richtung
 // --------------------------------------------------------------------------------------
 
 #include "math.h"

@@ -1,8 +1,8 @@
 // --------------------------------------------------------------------------------------
 // Die Deckenkrabbler
 //
-// krabbelt an der Decke entlang bis er auf eine (Gegner) Wand stösst und dreht dann um
-// Schiesst in gleichen Abständen auf den Boden
+// krabbelt an der Decke entlang bis er auf eine (Gegner) Wand stÃ¶sst und dreht dann um
+// Schiesst in gleichen AbstÃ¤nden auf den Boden
 // Hat Speed == Value2 und SchussDelay == Value1
 // --------------------------------------------------------------------------------------
 
@@ -52,7 +52,7 @@ void GegnerKrabblerOben::DoKI(void)
         BlickRichtung = LINKS;
     }
 
-    // Schuss Delay verzögern
+    // Schuss Delay verzÃ¶gern
     ShotDelay -= 1.0f SYNC;
 
 // Je nach Handlung richtig verhalten

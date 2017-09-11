@@ -2,10 +2,10 @@
 // Der Punisher
 //
 // Erscheint, wenn die Zeit abgelaufen ist.
-// Der Punisher verfolgt den Spieler ständig, dafür recht langsam.
-// Er ist nahezu unbesiegbar, und bei Berührung verliert der Spieler ein Leben und alle
-// Waffen-Powerups, erhält dafür aber wieder volle Zeit
-// Besiegt der Spieler den Punisher, so erhält er dafür ein Extraleben, voll Zeit
+// Der Punisher verfolgt den Spieler stÃ¤ndig, dafÃ¼r recht langsam.
+// Er ist nahezu unbesiegbar, und bei BerÃ¼hrung verliert der Spieler ein Leben und alle
+// Waffen-Powerups, erhÃ¤lt dafÃ¼r aber wieder volle Zeit
+// Besiegt der Spieler den Punisher, so erhÃ¤lt er dafÃ¼r ein Extraleben, voll Zeit
 // und massenhaft Extras (muss ich mir noch ausdenken, welche)
 // --------------------------------------------------------------------------------------
 
@@ -139,7 +139,7 @@ void GegnerPunisher::DoKI(void)
         // Spieler verfolgen
         FollowPlayer();
 
-        // Testen, ob der Spieler den Punisher berührt hat
+        // Testen, ob der Spieler den Punisher berÃ¼hrt hat
         for (int p = 0; p < NUMPLAYERS; p++)
             if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
                                 Player[p].xpos, Player[p].ypos, Player[p].CollideRect) == true)
@@ -154,7 +154,7 @@ void GegnerPunisher::DoKI(void)
 
                 Player[p].CalcWeaponLevels();
 
-                // bekommt dafür aber wieder Zeit
+                // bekommt dafÃ¼r aber wieder Zeit
                 TileEngine.Timelimit = TileEngine.TimelimitSave;
 
                 // ausfaden

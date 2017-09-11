@@ -126,9 +126,9 @@ void GegnerLavaBall::DoKI(void)
     if (ySpeed > 0.0f && yPos > yStart)
         Energy = 0.0f;
 
-    // Spieler berührt
+    // Spieler berÃ¼hrt
     // Explosion passiert schon hier und nicht erst im Destruktor, da der Ball auch, wenn er wieder in die Lava
-    // zurückfliegt, zerstört wird, aber dabei nicht explodieren soll
+    // zurÃ¼ckfliegt, zerstÃ¶rt wird, aber dabei nicht explodieren soll
     //
     for (int i = 0; i < NUMPLAYERS; i++)
         if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],

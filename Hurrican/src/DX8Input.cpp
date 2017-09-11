@@ -5,7 +5,7 @@
 // DirectInput Klasse
 // zum Erfassen von Eingaben durch Tastaur, Maus und Joystick/Joypad
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------------------
 
 #if defined(PLATFORM_DIRECTX)
-char        TastaturPuffer[MAX_KEYS];	// Tastaturpuffer für Keyboardabfrage
+char        TastaturPuffer[MAX_KEYS];	// Tastaturpuffer fÃ¼r Keyboardabfrage
 #elif defined(PLATFORM_SDL)
 char*       TastaturPuffer;
 #endif
@@ -48,7 +48,7 @@ bool CALLBACK EnumForceFeedbackDevices(LPDIDEVICEINSTANCE lpddi, LPVOID pv)
     DirectInput.Joysticks[DirectInput.JoysticksFound].guidJoystickDevice = DirectInput.guidJoystickDevice;
     strcpy_s(DirectInput.Joysticks[DirectInput.JoysticksFound].JoystickName, strlen((char*)lpddi->tszProductName) + 1, (char*)lpddi->tszProductName);
 
-    // Counter erhöhen
+    // Counter erhÃ¶hen
     DirectInput.JoysticksFound++;
 
     // Genug Joysticks? Dann halte die EnumDevices() Funktion an
@@ -82,7 +82,7 @@ bool CALLBACK EnumJoystickDevices(LPDIDEVICEINSTANCE lpddi, LPVOID pv)
     DirectInput.Joysticks[DirectInput.JoysticksFound].CanForceFeedback = false;
     strcpy_s(DirectInput.Joysticks[DirectInput.JoysticksFound].JoystickName, strlen((char*)lpddi->tszProductName) + 1, (char*)lpddi->tszProductName);
 
-    // Counter erhöhen
+    // Counter erhÃ¶hen
     DirectInput.JoysticksFound++;
 
     // Genug Joysticks? Dann halte die EnumDevices() Funktion an
@@ -119,7 +119,7 @@ DirectInputClass::DirectInputClass(void)
     NumberOfKeys = MAX_KEYS;
 #endif
 
-    // Zu Beginn alle Eingabegeräte zurücksetzen
+    // Zu Beginn alle EingabegerÃ¤te zurÃ¼cksetzen
     MausX		 = 0;
     MausY		 = 0;
     for(int i=0; i<MAX_MOUSEBUTTONS; i++)
@@ -175,7 +175,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
     }
     Protokoll.WriteText( false, "Keyboard : CreateDevice successful!\n" );
 
-    // Datenformat für Keyboard festlegen
+    // Datenformat fÃ¼r Keyboard festlegen
     hresult = lpDIKeyboard->SetDataFormat(&c_dfDIKeyboard);
     if(hresult != DI_OK)
     {
@@ -501,10 +501,10 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
                 return false;
             }
 
-            if (dwElemente == 0)			// Keine Elemente wurden verändert
+            if (dwElemente == 0)			// Keine Elemente wurden verÃ¤ndert
                 fertig = true;
 
-            switch (od.dwOfs)				// Feld 'dwOfs' enthält Maus-Aktion:
+            switch (od.dwOfs)				// Feld 'dwOfs' enthÃ¤lt Maus-Aktion:
             {
             case DIMOFS_X:				// Horizontale Bewegung
                 MausX += od.dwData;
@@ -516,8 +516,8 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
                 fertig = true;
                 break;
 
-            case DIMOFS_BUTTON0:		// Knopf 0 gedrückt
-                if (od.dwData & 0x80)	// Knopf gedrück
+            case DIMOFS_BUTTON0:		// Knopf 0 gedrÃ¼ckt
+                if (od.dwData & 0x80)	// Knopf gedrÃ¼ck
                 {
                     MausButtons[0] = true;
                     fertig = TRUE;
@@ -529,8 +529,8 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
                 }
                 break;
 
-            case DIMOFS_BUTTON1:	// Knopf 1 gedrückt
-                if (od.dwData & 0x80)	// Knopf gedrück
+            case DIMOFS_BUTTON1:	// Knopf 1 gedrÃ¼ckt
+                if (od.dwData & 0x80)	// Knopf gedrÃ¼ck
                 {
                     MausButtons[1] = true;
                     fertig = TRUE;
@@ -542,8 +542,8 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
                 }
                 break;
 
-            case DIMOFS_BUTTON2:	// Knopf 2 gedrückt
-                if (od.dwData & 0x80)	// Knopf gedrück
+            case DIMOFS_BUTTON2:	// Knopf 2 gedrÃ¼ckt
+                if (od.dwData & 0x80)	// Knopf gedrÃ¼ck
                 {
                     MausButtons[2] = true;
                     fertig = TRUE;
@@ -590,7 +590,7 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
         MausX += ms.lX;
         MausY += ms.lY;
 
-        // Buttons prüfen
+        // Buttons prÃ¼fen
         if (ms.rgbButtons[0] & 0x80)
             MausButtons[0] = true;
         else
@@ -663,7 +663,7 @@ void DirectInputClass::UpdateJoysticks(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Checken ob keine Taste mehr gedrückt ist
+// Checken ob keine Taste mehr gedrÃ¼ckt ist
 // --------------------------------------------------------------------------------------
 
 bool DirectInputClass::AreAllKeysReleased()
@@ -676,7 +676,7 @@ bool DirectInputClass::AreAllKeysReleased()
 }
 
 // --------------------------------------------------------------------------------------
-// Checken ob irgendeine Taste gedrückt ist
+// Checken ob irgendeine Taste gedrÃ¼ckt ist
 // --------------------------------------------------------------------------------------
 
 bool DirectInputClass::AnyKeyDown(void)
@@ -689,7 +689,7 @@ bool DirectInputClass::AnyKeyDown(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Checken ob irgendein Button gedrückt ist
+// Checken ob irgendein Button gedrÃ¼ckt ist
 // --------------------------------------------------------------------------------------
 
 bool DirectInputClass::AnyButtonDown(void)

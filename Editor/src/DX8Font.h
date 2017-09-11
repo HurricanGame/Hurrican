@@ -5,7 +5,7 @@
 // Font Klasse
 // zum Anzeigen von Schriften
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -31,22 +31,22 @@ class DirectGraphicsFont
 {
 	private:
 		DirectGraphicsSprite	*mTexture;						// Textur mit Font-Grafikdaten
-		int						mXTextureSize;					// x-Grösse der gesamten Textur
-		int						mYTextureSize;					// y-Grösse der gesamten Textur		
+		int						mXTextureSize;					// x-GrÃ¶sse der gesamten Textur
+		int						mYTextureSize;					// y-GrÃ¶sse der gesamten Textur		
 		int						mXChars;						// Anzahl Zeichen in X-Richtung		
 
 	public:
-		char					mCharLength[256];				// Länge der Zeichen in Pixel
-		int						mXCharSize;						// X-Grösse eines Zeichens
-		int						mYCharSize;						// Y-Grösse eines Zeichens
+		char					mCharLength[256];				// LÃ¤nge der Zeichen in Pixel
+		int						mXCharSize;						// X-GrÃ¶sse eines Zeichens
+		int						mYCharSize;						// Y-GrÃ¶sse eines Zeichens
 
 			  DirectGraphicsFont(void);							// Konstruktor (leer)
 			 ~DirectGraphicsFont(void);							// Textur freigeben
 		bool LoadFont(char Filename[256],						// Laden des Bildes "Filename"
-					  int xts,									// Textur-Grösse x
-					  int yts,									// Textur-Grösse y
-					  int xCharsize,							// x-Grösse eines Zeichens
-					  int yCharsize,							// y-Grösse eines Zeichens
+					  int xts,									// Textur-GrÃ¶sse x
+					  int yts,									// Textur-GrÃ¶sse y
+					  int xCharsize,							// x-GrÃ¶sse eines Zeichens
+					  int yCharsize,							// y-GrÃ¶sse eines Zeichens
 					  int xChars,								// Anzahl der Zeichen pro Zeile
 					  int yChars);								// Anzahl der Zeichen pro Spalte
 		bool DrawText(float x, float y,							// Text an xPos,yPos mit Farbe
@@ -61,9 +61,9 @@ class DirectGraphicsFont
 					  char Text[], D3DCOLOR Color);				// Color ausgeben
 		bool DrawText(float x, float y,							// Text an xPos,yPos mit Farbe
 					  char Text[], D3DCOLOR Color, int Spacing);// Color ausgeben
-		int  DemoStringLength(char Text[]);						// Länge eines Strings in Pixeln zurückliefern
-		int  StringLength(char Text[]);							// Länge eines Strings in Pixeln zurückliefern
-		int  StringLength(char Text[], int Spacing);			// Länge eines Strings in Pixeln zurückliefern
+		int  DemoStringLength(char Text[]);						// LÃ¤nge eines Strings in Pixeln zurÃ¼ckliefern
+		int  StringLength(char Text[]);							// LÃ¤nge eines Strings in Pixeln zurÃ¼ckliefern
+		int  StringLength(char Text[], int Spacing);			// LÃ¤nge eines Strings in Pixeln zurÃ¼ckliefern
 };
 
 // --------------------------------------------------------------------------------------

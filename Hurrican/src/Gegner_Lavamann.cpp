@@ -57,7 +57,7 @@ void GegnerLavamann::DoKI(void)
 {
     SimpleAnimation();
 
-    // Schrägen checken
+    // SchrÃ¤gen checken
     //
     if (ySpeed >= 0.0f)
         //DKS - Rewrote BlockSlopes function to only take the parameters it uses:
@@ -115,7 +115,7 @@ void GegnerLavamann::DoKI(void)
                 yAcc   = 0.0f;
             }
 
-            // Nach links bzw rechts auf Kollision prüfen und ggf umdrehen
+            // Nach links bzw rechts auf Kollision prÃ¼fen und ggf umdrehen
             if (BlickRichtung == LINKS)
                 if (blockl & BLOCKWERT_WAND ||
                         blockl & BLOCKWERT_GEGNERWAND)
@@ -169,7 +169,7 @@ void GegnerLavamann::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler den Lavamann berührt hat
+    // Testen, ob der Spieler den Lavamann berÃ¼hrt hat
     if (Handlung != GEGNER_WATSCHELN &&
             Handlung != GEGNER_SPRINGEN)
         TestDamagePlayers(35.0f, true);

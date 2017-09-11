@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Die kleine schwebende Plattform
 //
-// Geht ein Stück nach unten, wenn der Hurri draufhopst
+// Geht ein StÃ¼ck nach unten, wenn der Hurri draufhopst
 // Je schneller die Fallgeschwindigkeit beim aufkommen, desto weiter geht sie nach unten
 // --------------------------------------------------------------------------------------
 
@@ -69,7 +69,7 @@ void GegnerFloating::DoKI(void)
     }
 
 
-    // Counter für Partikel runterzählen
+    // Counter fÃ¼r Partikel runterzÃ¤hlen
     //
     AnimCount -= 1.0f SYNC;
 

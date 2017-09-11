@@ -72,7 +72,7 @@ void GegnerMushroom::DoKI(void)
     {
     case GEGNER_STEHEN:
     {
-        // Pilz wieder vergrößern
+        // Pilz wieder vergrÃ¶ÃŸern
         ySize += 10.0f SYNC;
         if (ySize > 61.0f)
             ySize = 61.0f;

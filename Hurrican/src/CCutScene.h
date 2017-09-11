@@ -2,9 +2,9 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Klasse für die CutScenes zwischen zwei Stages
+// Klasse fÃ¼r die CutScenes zwischen zwei Stages
 //
-// (c) 2004 Jörg M. Winterstein
+// (c) 2004 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -26,7 +26,7 @@
 #include "Timer.h"
 
 // --------------------------------------------------------------------------------------
-// Funktionen für die CutScenes
+// Funktionen fÃ¼r die CutScenes
 // --------------------------------------------------------------------------------------
 
 void PlayCutScene (int nr);
@@ -38,7 +38,7 @@ void PlayCutScene (int nr);
 class CCutScene
 {
 protected:
-    float					m_fFadeAlpha;				// momentaner Alpha Wert fürs Fading
+    float					m_fFadeAlpha;				// momentaner Alpha Wert fÃ¼rs Fading
     float					m_fYScroll;					// y Pos des Scrolltextes
 
 public:

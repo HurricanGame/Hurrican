@@ -21,27 +21,27 @@ private:
     int		DisplayState;							// Was ist auf dem Monitor zu sehen?
     int		OldDisplayState;						// Was ist auf dem Monitor zu sehen?
     int		DeckelPhase;							// AnimPhase des Deckels
-    float	DeckelCount;							// Counter für Sinusbewegung des Hochgehenden Deckels
-    float	DeckelOffset;							// Tatsächlicher Offset (=sin(DeckelCount) * X)
+    float	DeckelCount;							// Counter fÃ¼r Sinusbewegung des Hochgehenden Deckels
+    float	DeckelOffset;							// TatsÃ¤chlicher Offset (=sin(DeckelCount) * X)
     int		DeckelStatus;							// Aktueller Status (siehe #defines)
     float	SizeCount;
     float	OpenCounter;							// Cunter wann der Deckel aufgeht
-    float	HochCounter;							// Conter wann der Kopf hochfährt
+    float	HochCounter;							// Conter wann der Kopf hochfÃ¤hrt
     int		HochStatus;								// Status des Kopfs (siehe #defines)
     float	ShotDelay;
 
     float	SpawnDelay;								// Delay zum Gegner ausspucken
 
     float	SmokeDelay;								// Rauchcounter
-    float	SmokeDelay2;							// Rauchcounter für Damage-Rauch
+    float	SmokeDelay2;							// Rauchcounter fÃ¼r Damage-Rauch
 
     float	LightRayCount;							// Counter, wie breit der Lichtkegel ist
 
     float	DeathCount;
 
-    int		AnimUnten;								// Aktuelle Animphase für das Unterteil
+    int		AnimUnten;								// Aktuelle Animphase fÃ¼r das Unterteil
 
-    bool	AktionFertig;							// Aktion fertig (Deckel öffnen, hoch/runter fahren)
+    bool	AktionFertig;							// Aktion fertig (Deckel Ã¶ffnen, hoch/runter fahren)
 
 public:
     DirectGraphicsSprite	Deckel;

@@ -4,7 +4,7 @@
 //
 // Joystick Klasse
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -54,9 +54,9 @@ public:
     int   JoystickY;								// Joystick y-Koordinaten
     int   JoystickX2;								// Joystick x-Koordinaten 2. analog Stick
     int   JoystickY2;								// Joystick y-Koordinaten 2. analog Stick
-    int   JoystickPOV;								// POV (für coolie hat)
+    int   JoystickPOV;								// POV (fÃ¼r coolie hat)
     int   JoystickMode;								// Joypad oder Stickmode
-    bool  JoystickButtons[MAX_JOYSTICKBUTTONS];		// Feuerknopf gedrückt?
+    bool  JoystickButtons[MAX_JOYSTICKBUTTONS];		// Feuerknopf gedrÃ¼ckt?
     char  JoystickName[70];							// Joystick Produktname
     int   NumButtons;                               // How many buttons joystick supports
 

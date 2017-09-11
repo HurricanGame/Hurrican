@@ -114,10 +114,10 @@ void DirectJoystickClass::StopForceFeedbackEffect(int nr)
 #if defined(PLATFORM_DIRECTX)
 bool DirectJoystickClass::Init(HWND hwnd, LPDIRECTINPUT8 lpDI)
 {
-    HRESULT             dirval;           // Rückgabewert
+    HRESULT             dirval;           // RÃ¼ckgabewert
     DIPROPRANGE         diprg;            // Joystick Eigenschaften
 
-    // Joystick für enumerierte GUID erstellen
+    // Joystick fÃ¼r enumerierte GUID erstellen
     dirval = lpDI->CreateDevice(guidJoystickDevice,&lpDIJoystick, NULL);
     if (dirval != DI_OK)
     {
@@ -126,7 +126,7 @@ bool DirectJoystickClass::Init(HWND hwnd, LPDIRECTINPUT8 lpDI)
     }
     Protokoll.WriteText( false, "Joystick : CreateDevice successful!\n" );
 
-    // Datenformat für Joystick festlegen
+    // Datenformat fÃ¼r Joystick festlegen
     dirval = lpDIJoystick->SetDataFormat(&c_dfDIJoystick2);
     if (dirval != DI_OK)
     {

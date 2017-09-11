@@ -287,7 +287,7 @@ bool TexturesystemClass::DX8_LoadTexture( const std::string &path, const std::st
                       lpD3DDevice,
                       (LPVOID)buf,
                       buf_size,
-                      NULL, NULL,				  // x und y Grösse des Sprites (aus Datei übernehmen)
+                      NULL, NULL,				  // x und y GrÃ¶sse des Sprites (aus Datei Ã¼bernehmen)
                       1,                          // Nur eine Version der Textur
                       0,                          // Immer 0 setzen
                       D3DFMT_UNKNOWN,			  // Format aus der Datei lesen
@@ -305,7 +305,7 @@ bool TexturesystemClass::DX8_LoadTexture( const std::string &path, const std::st
         hresult = D3DXCreateTextureFromFileEx(
                       lpD3DDevice,
                       fullpath.c_str(),
-                      NULL, NULL,				  // x und y Grösse des Sprites (aus Datei übernehmen)
+                      NULL, NULL,				  // x und y GrÃ¶sse des Sprites (aus Datei Ã¼bernehmen)
                       1,                          // Nur eine Version der Textur
                       0,                          // Immer 0 setzen
                       D3DFMT_UNKNOWN,			  // Format aus der Datei lesen

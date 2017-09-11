@@ -3,7 +3,7 @@
 //---------------------------------------------------------------------------------------
 //
 // Erleichtert das Abfragen von Tasten-Namen mit DInput
-// von Jörg Matthias Winterstein
+// von JÃ¶rg Matthias Winterstein
 //
 // (c) 2002 Poke53280
 //
@@ -15,5 +15,5 @@
 // Funktions-Prototypen
 //---------------------------------------------------------------------------------------
 
-const char *GetKeyName(int DIK_Code);			// Liefert den Namen der angegebenen Taste zurück
+const char *GetKeyName(int DIK_Code);			// Liefert den Namen der angegebenen Taste zurÃ¼ck
 

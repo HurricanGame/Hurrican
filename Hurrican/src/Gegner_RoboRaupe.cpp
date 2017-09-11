@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Die Roboter Raupe
 //
-// kriecht auf den Spieler zu und schiesst in regelmässigen Abständen 3 Feuerbälle
+// kriecht auf den Spieler zu und schiesst in regelmÃ¤ssigen AbstÃ¤nden 3 FeuerbÃ¤lle
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -31,11 +31,11 @@ GegnerRoboRaupe::GegnerRoboRaupe(int Wert1, int Wert2, bool Light)
 void GegnerRoboRaupe::DoKI(void)
 {
     // animieren
-    AnimCount += SpeedFaktor;		// Animationscounter weiterzählen
-    if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+    AnimCount += SpeedFaktor;		// Animationscounter weiterzÃ¤hlen
+    if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
     {
         AnimCount = 0;					// Dann wieder auf Null setzen
-        AnimPhase++;					// Und nächste Animationsphase
+        AnimPhase++;					// Und nÃ¤chste Animationsphase
         if (AnimPhase > AnimEnde)		// Animation von zu Ende	?
             AnimPhase = AnimStart;
 
@@ -91,7 +91,7 @@ void GegnerRoboRaupe::DoKI(void)
     if (blockl & BLOCKWERT_WAND ||	blockl & BLOCKWERT_GEGNERWAND) BlickRichtung = RECHTS;
     if (blockr & BLOCKWERT_WAND ||	blockr & BLOCKWERT_GEGNERWAND) BlickRichtung = LINKS;
 
-    // Testen, ob der Spieler die Raupe berührt hat
+    // Testen, ob der Spieler die Raupe berÃ¼hrt hat
     TestDamagePlayers(5.0f SYNC);
 }
 

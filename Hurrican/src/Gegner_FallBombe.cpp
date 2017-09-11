@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Die fallende Bombe im Fahrstuhl
 //
-// fällt dem Hurri von oben auf die Birne
+// fÃ¤llt dem Hurri von oben auf die Birne
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -38,7 +38,7 @@ void GegnerFallBombe::DoKI(void)
 
     switch (Handlung)
     {
-    // Stein wird "aktiviert" (über den Hurri gesetzt damit er von dort runterfallen kann)
+    // Stein wird "aktiviert" (Ã¼ber den Hurri gesetzt damit er von dort runterfallen kann)
     case GEGNER_NOTVISIBLE:
     {
         Handlung = GEGNER_FALLEN;
@@ -48,7 +48,7 @@ void GegnerFallBombe::DoKI(void)
     }
     break;
 
-    // Stein fällt runter
+    // Stein fÃ¤llt runter
     case GEGNER_FALLEN:
     {
         if (ySpeed > g_Fahrstuhl_Speed + 50.0f)
@@ -68,7 +68,7 @@ void GegnerFallBombe::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler den Stein berührt hat
+    // Testen, ob der Spieler den Stein berÃ¼hrt hat
     TestDamagePlayers(25.0f, true);
 
     if (yPos >= g_Fahrstuhl_yPos - 59)

@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Die Fledermaus
 //
-// Hängt an der Decke und fliegt auf den Hurri zu, wenn er in die Nähe kommt,
+// HÃ¤ngt an der Decke und fliegt auf den Hurri zu, wenn er in die NÃ¤he kommt,
 // oder wenn sie angeschossen wird
 // --------------------------------------------------------------------------------------
 
@@ -57,7 +57,7 @@ void GegnerFledermaus::DoKI(void)
     {
     case GEGNER_STEHEN:
     {
-        // Hurri in der Nähe oder von einem Schuss getroffen ?
+        // Hurri in der NÃ¤he oder von einem Schuss getroffen ?
         // Dann losfliegen
         //
         if ((PlayerAbstandHoriz() < 240 && pAim->ypos > yPos) ||
@@ -71,13 +71,13 @@ void GegnerFledermaus::DoKI(void)
         AnimSpeed = 0.5f;
         AnimEnde  = 14;
         AnimStart = 0;
-        Value1	= (int)pAim->xpos+rand()%80 - 30;			// Flugziel zufällig in Richtung Spieler
+        Value1	= (int)pAim->xpos+rand()%80 - 30;			// Flugziel zufÃ¤llig in Richtung Spieler
         Value2	= (int)pAim->ypos - 50 +rand()%100;	// setzen mit etwas Variation
         Handlung = GEGNER_VERFOLGEN;
     }
     break;
 
-    case GEGNER_VERFOLGEN:					// Mücke verfolgt den Spieler
+    case GEGNER_VERFOLGEN:					// MÃ¼cke verfolgt den Spieler
     {
         // Punkt links
         if (Value1 < xPos)
@@ -128,7 +128,7 @@ void GegnerFledermaus::DoKI(void)
         int dx = abs ((int) (xPos - Value1));
         int dy = abs ((int) (yPos - Value2));
 
-        // Punkt erreicht oder Abstand zu groß ? Dann neues Ziel setzen
+        // Punkt erreicht oder Abstand zu groÃŸ ? Dann neues Ziel setzen
         //
         if (PlayerAbstand() > 300 ||
                 (dx*dx + dy*dy) < 20*20)
@@ -172,7 +172,7 @@ void GegnerFledermaus::DoKI(void)
 
     }
 
-    // Spieler berührt ?
+    // Spieler berÃ¼hrt ?
     TestDamagePlayers(4.0f SYNC);
 }
 

@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
-// Der bröckelnde Felsblock
+// Der brÃ¶ckelnde Felsblock
 //
-// fängt an zu bröckeln sobald der Spieler darüber läuft und fällt dann runter
+// fÃ¤ngt an zu brÃ¶ckeln sobald der Spieler darÃ¼ber lÃ¤uft und fÃ¤llt dann runter
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -50,7 +50,7 @@ void GegnerBrockelRock::DoKI(void)
     //
     switch (Handlung)
     {
-    // Stein wartet bis der Spieler darüber läuft
+    // Stein wartet bis der Spieler darÃ¼ber lÃ¤uft
     case GEGNER_STEHEN:
     {
         for (int i = 0; i < NUMPLAYERS; i++)
@@ -59,13 +59,13 @@ void GegnerBrockelRock::DoKI(void)
     }
     break;
 
-    // Counter zählt runter bis Stein fällt
+    // Counter zÃ¤hlt runter bis Stein fÃ¤llt
     //
     case GEGNER_SPRINGEN:
     {
         AnimCount -= 50.0f SYNC;
 
-        if (AnimCount < 0.0f)				// Langsam zerbröckeln
+        if (AnimCount < 0.0f)				// Langsam zerbrÃ¶ckeln
         {
             AnimCount = 0.0f;
 
@@ -87,7 +87,7 @@ void GegnerBrockelRock::DoKI(void)
     }
     break;
 
-    // Stein fällt runter
+    // Stein fÃ¤llt runter
     //
     case GEGNER_FALLEN:
     {

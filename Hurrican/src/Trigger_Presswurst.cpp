@@ -60,11 +60,11 @@ void GegnerPresswurst::DoKI(void)
                 Player[p].yspeed < 0.0f)
             Player[p].yspeed *= -0.25f;
 
-    // Kollisionsrechteck fürs Wegschieben
+    // Kollisionsrechteck fÃ¼rs Wegschieben
     GegnerRect[GegnerArt].top = 0;
     Wegschieben(GegnerRect[GegnerArt], 0.0f);
 
-    // Kollisionsrechteck für das Unterteil
+    // Kollisionsrechteck fÃ¼r das Unterteil
     GegnerRect[GegnerArt].top = 251;
 
     blocko = TileEngine.BlockOben		  (xPos, yPos, yPosOld, yPosOld, GegnerRect[GegnerArt]);
@@ -104,7 +104,7 @@ void GegnerPresswurst::DoKI(void)
     // Pressen
     case GEGNER_LAUFEN :
     {
-        // Spieler beim Runterfallen berührt? Dann stirbt er leider ;)
+        // Spieler beim Runterfallen berÃ¼hrt? Dann stirbt er leider ;)
         //
         for (int p = 0; p < NUMPLAYERS; p++)
             if (SpriteCollision(Player[p].xpos,
@@ -117,7 +117,7 @@ void GegnerPresswurst::DoKI(void)
                 if (Player[p].Handlung != SPRINGEN)
                     Player[p].DamagePlayer(500.0f);
 
-                // wenn er springt, dann runterdrücken
+                // wenn er springt, dann runterdrÃ¼cken
                 else
                 {
                     //pPlayer->yspeed = 0.0f;
@@ -132,7 +132,7 @@ void GegnerPresswurst::DoKI(void)
                 (blocku & BLOCKWERT_WAND		  ||
                  blocku & BLOCKWERT_GEGNERWAND))
         {
-            // Spieler beim Runterfallen berührt? Dann stirbt er leider ;)
+            // Spieler beim Runterfallen berÃ¼hrt? Dann stirbt er leider ;)
             //
             for (int p = 0; p < NUMPLAYERS; p++)
                 if (SpriteCollision(Player[p].xpos,

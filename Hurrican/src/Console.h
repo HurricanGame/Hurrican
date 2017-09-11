@@ -2,9 +2,9 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Konsolen-Klasse für Hurrican
+// Konsolen-Klasse fÃ¼r Hurrican
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -57,10 +57,10 @@ private:
     float					its_Alpha;					// Aktueller Alphawert der Konsole
     float					Fade;						// Ein / Aus faden ?
     DirectGraphicsSprite	ConsoleGFX;					// Grafik der Konsole
-    bool					Activate;					// Aktivierungstaste gedrückt oder nicht
+    bool					Activate;					// Aktivierungstaste gedrÃ¼ckt oder nicht
     char					Text[MAX_LINES][MAX_CHARS]; // Text in der Konsole
     char					Buffer[MAX_CHARS];
-    bool					Pressed[256];				// Für Tasten-lock
+    bool					Pressed[256];				// FÃ¼r Tasten-lock
     bool					CONSOLE_CHEAT(char *cheat);
     // DKS - New console joystick support - CursorChar stores the candidate character (space by default)
     char                    CursorChar[2];             
@@ -79,10 +79,10 @@ public:
     void LoadSprites(void);
 
     void ShowConsole	 (void);						// Menu anzeigen
-    void Open			 (void);						// öffnen
+    void Open			 (void);						// Ã¶ffnen
     void Hide			 (void);						// verstecken
     void CheckInput		 (void);						// Wurde was eingegeben ?
-    void CheckCommands	 (void);						// Text nach enter drücken checken
+    void CheckCommands	 (void);						// Text nach enter drÃ¼cken checken
     void ScrollUp		 (void);						// Eine Zeile hochscrollen
     bool DoConsole	     (void);						// Alles machen, was die Console betrifft =)
 };

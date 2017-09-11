@@ -168,7 +168,7 @@ void GegnerFieserFireWalker::DoKI(void)
 
     TurnonWall();
 
-    // Spieler berührt den Gegner?
+    // Spieler berÃ¼hrt den Gegner?
     //
     TestDamagePlayers(4.0f SYNC);
 }

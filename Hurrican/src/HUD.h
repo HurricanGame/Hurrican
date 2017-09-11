@@ -2,10 +2,10 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Funktionen für das Hurrican HUD
+// Funktionen fÃ¼r das Hurrican HUD
 // Werte anzeigen usw
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -23,9 +23,9 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define	ENERGY_BALL_HEIGHT	48					// Höhe der Energyball Grafik (für Umrechnung)
-#define ARMOUR_BALL_HEIGHT	48					// dito für Armour
-#define BLITZ_STAT_HEIGHT	18					// Höhe der Blitz-Status Grafik
+#define	ENERGY_BALL_HEIGHT	48					// HÃ¶he der Energyball Grafik (fÃ¼r Umrechnung)
+#define ARMOUR_BALL_HEIGHT	48					// dito fÃ¼r Armour
+#define BLITZ_STAT_HEIGHT	18					// HÃ¶he der Blitz-Status Grafik
 
 // --------------------------------------------------------------------------------------
 // HUD-Klasse
@@ -36,18 +36,18 @@ class HUDClass
 private:
     float					xpos, ypos;				// Position  des HUDs
 
-    DirectGraphicsSprite	HUDGfx;					// Grafiken für das HUD
+    DirectGraphicsSprite	HUDGfx;					// Grafiken fÃ¼r das HUD
     DirectGraphicsSprite	HUDBomb;				// Smartbomb eingesammelt ?
-    DirectGraphicsSprite	HUDFontBig;				// Grosser Font für HUD Darstellung
+    DirectGraphicsSprite	HUDFontBig;				// Grosser Font fÃ¼r HUD Darstellung
     DirectGraphicsSprite	HUDBall[2];				// Grafiken des Energy- und Radbalkens
-    DirectGraphicsSprite	SelectedWeapon;			// Welche Waffe wurde gewählt ?
+    DirectGraphicsSprite	SelectedWeapon;			// Welche Waffe wurde gewÃ¤hlt ?
     DirectGraphicsSprite	WeaponRahmen;			// Balken um Waffenstufe
     DirectGraphicsSprite	WeaponPunkt;			// Ein Punkt im Waffenrahmen
-    DirectGraphicsSprite	HUDBlitz;				// Aktuelle Blitz-Stärke
+    DirectGraphicsSprite	HUDBlitz;				// Aktuelle Blitz-StÃ¤rke
     DirectGraphicsSprite	HUDAutoFire;			// AutoFire Symbol
     DirectGraphicsSprite	HUDSuperShot;			// SuperShot Symbol
 
-    DirectGraphicsSprite	BossHUD;				// Boss HUD für die Boss Energie
+    DirectGraphicsSprite	BossHUD;				// Boss HUD fÃ¼r die Boss Energie
     DirectGraphicsSprite	BossBar;				// Boss Energiebalken
 
 public:
@@ -55,9 +55,9 @@ public:
     unsigned char			red, green, blue;		// Farbwerte des HUDS
     unsigned char			Alpha;					// Alphawert des HUDS
 
-    DirectGraphicsSprite	Arrow;					// Pfeil fürs Tutorial
+    DirectGraphicsSprite	Arrow;					// Pfeil fÃ¼rs Tutorial
 
-    float					ArrowX;					// Werte für den Pfeil im Tutorial Level
+    float					ArrowX;					// Werte fÃ¼r den Pfeil im Tutorial Level
     float					ArrowY;
     bool					bShowArrow;
 
@@ -68,7 +68,7 @@ public:
     //      to allow statically-allocated HUD global var (used to be dynamically allocated)
     void LoadSprites(void);
 
-    void UpdateValues  (void);						// Werte im HUD ändern
+    void UpdateValues  (void);						// Werte im HUD Ã¤ndern
     void ShowHUD	   (void);						// HUD anzeigen
     void RenderBossHUD (void);						// Boss HUD anzeigen
     void DoHUD	       (void);						// Alles machen, was da HUD betrifft =)

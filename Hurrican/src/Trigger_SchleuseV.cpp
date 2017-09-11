@@ -32,7 +32,7 @@ void GegnerSchleuseV::DoKI(void)
     Energy = 100;
     DamageTaken = 0.0f;
 
-    // Testen, ob der Spieler die Schleuse berührt hat
+    // Testen, ob der Spieler die Schleuse berÃ¼hrt hat
     //
     for (int p = 0; p < NUMPLAYERS; p++)
         if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
@@ -45,7 +45,7 @@ void GegnerSchleuseV::DoKI(void)
             if (Player[p].xpos > xPos) Player[p].xpos = xPos + GegnerRect[GegnerArt].right - Player[p].CollideRect.left;
         }
 
-    // Testen, ob ein Gegner die Schleuse berührt hat
+    // Testen, ob ein Gegner die Schleuse berÃ¼hrt hat
     //
     GegnerClass *pTemp = Gegner.pStart;			// Anfang der Liste
 
@@ -59,12 +59,12 @@ void GegnerSchleuseV::DoKI(void)
             if (pTemp->xPos > xPos) pTemp->xPos = xPos + GegnerRect[GegnerArt].right - GegnerRect[pTemp->GegnerArt].left;
         }
 
-        pTemp = pTemp->pNext;				// Nächsten Gegner durchgehen
+        pTemp = pTemp->pNext;				// NÃ¤chsten Gegner durchgehen
     }
 
     switch (Handlung)
     {
-    // Schleuse wird geöffnet
+    // Schleuse wird geÃ¶ffnet
     //
     case GEGNER_OEFFNEN:
     {
@@ -77,7 +77,7 @@ void GegnerSchleuseV::DoKI(void)
     }
     break;
 
-    // Schleuse öffnet sich
+    // Schleuse Ã¶ffnet sich
     //
     case GEGNER_LAUFEN:
     {
@@ -87,7 +87,7 @@ void GegnerSchleuseV::DoKI(void)
             yAcc   =  0.0f;
         }
 
-        // Ganz geöffnet?
+        // Ganz geÃ¶ffnet?
         if (yPos < float (Value1) - 201.0f)
         {
             ySpeed   = 0.0f;

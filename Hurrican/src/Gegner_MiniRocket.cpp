@@ -87,7 +87,7 @@ void GegnerMiniRocket::DoKI(void)
         //
         float dx, dy;
 
-        // Abstände berechnen
+        // AbstÃ¤nde berechnen
         dx = (xPos + 6) - (pAim->xpos + 35);
         dy = (yPos + 12) - (pAim->ypos + 20);
 

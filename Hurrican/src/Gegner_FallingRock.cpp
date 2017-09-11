@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Der fallende Felsblock
 //
-// ruht in der Decke und wartet bis der Spieler drunter durchläuft, umd dann runter
+// ruht in der Decke und wartet bis der Spieler drunter durchlÃ¤uft, umd dann runter
 // zu fallen
 // --------------------------------------------------------------------------------------
 
@@ -31,13 +31,13 @@ void GegnerFallingRock::DoKI(void)
 // Je nach Handlung richtig verhalten
     switch (Handlung)
     {
-    case GEGNER_FALLEN:						// Stein fällt runter
+    case GEGNER_FALLEN:						// Stein fÃ¤llt runter
     {
         // Maximale Geschwindigkeitsbegrenzung
         if (ySpeed > 50.0f)
             yAcc = 0.0f;
 
-        // Spieler berührt Stein
+        // Spieler berÃ¼hrt Stein
         TestDamagePlayers(40.0f, true);
 
         // Stein ist am Boden gelandet
@@ -60,7 +60,7 @@ void GegnerFallingRock::DoKI(void)
             {
                 Active = true;
 
-                // Rauch erzeugen wo der Stein die Decke verlässt
+                // Rauch erzeugen wo der Stein die Decke verlÃ¤sst
                 for (int i=0; i<3; i++)
                 {
                     PartikelSystem.PushPartikel(xPos-10, yPos + i*10, SMOKE);

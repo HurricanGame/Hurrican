@@ -1,10 +1,10 @@
 // --------------------------------------------------------------------------------------
 // Der Sound Trigger
 //
-// L‰dt Sound mit Namen "Value1.wav" (bei Value1 == 1 z.B. also "1.wav")
-// Value2 : 0 = Sound st‰ndig loopen und Lautst‰rke vom Spieler abh‰ngig regulieren
+// L√§dt Sound mit Namen "Value1.wav" (bei Value1 == 1 z.B. also "1.wav")
+// Value2 : 0 = Sound st√§ndig loopen und Lautst√§rke vom Spieler abh√§ngig regulieren
 //			1 = Bei SpielerAbstand < 100 Sound einmalig abspielen
-//			2 = Bei SpielerAbstand < 100 Sound st‰ndig abspielen
+//			2 = Bei SpielerAbstand < 100 Sound st√§ndig abspielen
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -34,11 +34,11 @@ void GegnerSoundTrigger::DoKI(void)
 {
     switch (Value2)
     {
-    // Sound loopen, Lautst‰rke anh‰ngig von SpielerAbstand
+    // Sound loopen, Lautst√§rke anh√§ngig von SpielerAbstand
     //
     case 0 :
     {
-        // Sound auf die richtige Lautst‰rke und den Pitch setzen
+        // Sound auf die richtige Lautst√§rke und den Pitch setzen
         //
         if (PlayerAbstand() < 700)
         {
@@ -77,7 +77,7 @@ void GegnerSoundTrigger::DoKI(void)
                 }
             }
 
-            // Sound abspielen, wenn er noch nicht l‰uft bzw im Menu gestoppt wurde
+            // Sound abspielen, wenn er noch nicht l√§uft bzw im Menu gestoppt wurde
             //
             //DKS - Added function GetChannelWaveIsPlayingOn() to SoundManagerClass:
             int channel = SoundManager.GetChannelWaveIsPlayingOn(SOUND_TRIGGER_START + Value1);

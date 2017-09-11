@@ -5,7 +5,7 @@
 // Mathe-Hilfsfuktionen
 //
 // (c) 2004
-// Jörg M. Winterstein
+// JÃ¶rg M. Winterstein
 // http://www.poke53280.de
 //
 // --------------------------------------------------------------------------------------

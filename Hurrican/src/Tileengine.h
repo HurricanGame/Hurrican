@@ -2,10 +2,10 @@
 
 // --------------------------------------------------------------------------------------
 //
-// 2D Tile-Engine für Hurrican
+// 2D Tile-Engine fÃ¼r Hurrican
 // bestehend aus einem Vordergrund-Layer in verschiedenen Helligkeitsstufen
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -28,12 +28,12 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-//----- Flags für den Blockwert
+//----- Flags fÃ¼r den Blockwert
 
 #define BLOCKWERT_WAND				1		// Solide Wand
-#define BLOCKWERT_GEGNERWAND		2		// Wand nur für Gegner
+#define BLOCKWERT_GEGNERWAND		2		// Wand nur fÃ¼r Gegner
 #define BLOCKWERT_PLATTFORM			4		// Plattform
-#define BLOCKWERT_LIGHT				8		// Licht bei Objekten verändern
+#define BLOCKWERT_LIGHT				8		// Licht bei Objekten verÃ¤ndern
 #define BLOCKWERT_VERDECKEN			16		// Spieler und Objekte verdecken
 #define BLOCKWERT_ANIMIERT_BACK		32		// Animiert Hintergrund
 #define BLOCKWERT_ANIMIERT_FRONT	64		// Animiert Overlay
@@ -42,7 +42,7 @@
 #define BLOCKWERT_FLIESSBANDL		512		// Fliessband Links
 #define BLOCKWERT_FLIESSBANDR		1024	// Fliessband Rechts
 #define BLOCKWERT_WENDEPUNKT		2048	// Bewegte Plattformen umdrehen lassen
-#define BLOCKWERT_DESTRUCTIBLE		4096	// Zerstörbare Wand
+#define BLOCKWERT_DESTRUCTIBLE		4096	// ZerstÃ¶rbare Wand
 #define BLOCKWERT_MOVELINKS			8192	// Textur nach links bewegen
 #define BLOCKWERT_OVERLAY_LIGHT	   16384	// Overlay nimmt Licht an
 #define BLOCKWERT_SUMPF			   32768	// Einsinken
@@ -51,31 +51,31 @@
 #define BLOCKWERT_WASSERFALL	  262144	// Wasserfall
 #define BLOCKWERT_MOVERECHTS	  524288	// Textur nach rechts bewegen
 
-#define BLOCKWERT_SCHRAEGE_L	 2097152	// Schräge Rechts
-#define BLOCKWERT_SCHRAEGE_R	 4194304	// Schräge Rechts
-#define BLOCKWERT_LIQUID		 8388608	// Flüssigkeit (Wasser, Säure, Lava, Magensäure)
+#define BLOCKWERT_SCHRAEGE_L	 2097152	// SchrÃ¤ge Rechts
+#define BLOCKWERT_SCHRAEGE_R	 4194304	// SchrÃ¤ge Rechts
+#define BLOCKWERT_LIQUID		 8388608	// FlÃ¼ssigkeit (Wasser, SÃ¤ure, Lava, MagensÃ¤ure)
 
 //--- Animationsgeschwindigkeit der animierten Level-Tiles
 
 #define TILEANIM_SPEED      0.8f
 
-//--- Werte zur Levelgrösse
+//--- Werte zur LevelgrÃ¶sse
 
-#define	TILESIZE_X			20						// Grösse eines
+#define	TILESIZE_X			20						// GrÃ¶sse eines
 #define	TILESIZE_Y			20						// einzelnen Tiles
-#define TILESETSIZE_X		256.0f					// Grösse eines
+#define TILESETSIZE_X		256.0f					// GrÃ¶sse eines
 #define TILESETSIZE_Y		256.0f					// Tilesets
 
 #define SCREENSIZE_X		32						// Leveltiles pro Screen
 #define SCREENSIZE_Y		24
 
-#define MAX_LEVELSIZE_X		1024					// Gesamtgrösse des Level
+#define MAX_LEVELSIZE_X		1024					// GesamtgrÃ¶sse des Level
 #define MAX_LEVELSIZE_Y		1600
 
 #define MAX_TILESETS		64						// Maximalzahl der Tilesets
 #define INCLUDE_ZEROTILE	1						// Tile 0,0 im Tileset mit verwenden ?
 
-//----- Grösse des nicht scrollbaren Bereichs
+//----- GrÃ¶sse des nicht scrollbaren Bereichs
 
 #define	SCROLL_BORDER_EXTREME_LEFT		0
 #define	SCROLL_BORDER_EXTREME_TOP		0
@@ -90,7 +90,7 @@
 #define	LOOK_BORDER_TOP			60
 #define	LOOK_BORDER_BOTTOM		400
 
-//--- Zustände der Tileengine
+//--- ZustÃ¤nde der Tileengine
 
 #define	ZUSTAND_SCROLLBAR		0		// Spieler kann Level scrollen durch laufen
 #define ZUSTAND_SCROLLTO		1		// Level Scrollt zu bestimmter Position
@@ -111,7 +111,7 @@
 // Strukturen
 // --------------------------------------------------------------------------------------
 
-// Struktur für ein Level Tile wie es aus dem Level geladen wird
+// Struktur fÃ¼r ein Level Tile wie es aus dem Level geladen wird
 //
 //DKS - Made binary sizes of member vars explicit here to make loading/saving binary files more robust:
 struct LevelTileLoadStruct
@@ -124,7 +124,7 @@ struct LevelTileLoadStruct
     uint32_t Block;                    // Blockierungsart (siehe #defines)
 };
 
-// Struktur für die Farbwerte von einem Level Tile
+// Struktur fÃ¼r die Farbwerte von einem Level Tile
 //
 struct LevelTileSaveStruct
 {
@@ -132,7 +132,7 @@ struct LevelTileSaveStruct
 };
 
 
-// Struktur für ein Level Tile wie es im Level vorkommt (wie beim Laden, nur noch mit Extra Farben für alle Ecken)
+// Struktur fÃ¼r ein Level Tile wie es im Level vorkommt (wie beim Laden, nur noch mit Extra Farben fÃ¼r alle Ecken)
 //
 struct LevelTileStruct
 {
@@ -147,7 +147,7 @@ struct LevelTileStruct
 };
 
 // --------------------------------------------------------------------------------------
-// Struktur für ein aus dem Level zu ladendes Objekte
+// Struktur fÃ¼r ein aus dem Level zu ladendes Objekte
 // --------------------------------------------------------------------------------------
 
 //DKS - Made binary sizes of member vars and padding bytes explicit here to make
@@ -160,8 +160,8 @@ struct LevelObjectStruct
     uint8_t  ChangeLight;            // Umgebungslicht annehmen ?
     uint8_t  Skill;                  // 0 = Easy, 1 = Medium, 2 = Hard
     uint8_t  PADDING_CHUNK_1[2];     // 2 PADDING BYTES
-    int32_t  Value1;                 // Werte für diverse Trigger
-    int32_t  Value2;                 // Werte für diverse Trigger
+    int32_t  Value1;                 // Werte fÃ¼r diverse Trigger
+    int32_t  Value2;                 // Werte fÃ¼r diverse Trigger
 };
 
 // --------------------------------------------------------------------------------------
@@ -183,7 +183,7 @@ struct FileHeader
     uint8_t         UsedTilesets;                   // Anzahl der Tilesets
     char            SetNames[64][16];               // Namen der benutzten Sets
     uint8_t         PADDING_CHUNK_2[3];             // 3 PADDING BYTES
-    uint32_t        SizeX, SizeY;                   // Größe des Levels
+    uint32_t        SizeX, SizeY;                   // GrÃ¶ÃŸe des Levels
     uint32_t        NumObjects;                     // Anzahl der Objekte
     uint8_t         ScrollBackground;               // Hintergrundbild srollen oder statisch ?
     uint8_t         PADDING_CHUNK_3[3];             // 3 PADDING BYTES
@@ -191,8 +191,8 @@ struct FileHeader
 
 // --------------------------------------------------------------------------------------
 // Anhang am File nach den Level Daten
-// damit nicht alle levels nochmal konvertiert werden, hänge ich einfach alle dinge, die
-// noch ins level format reinmüssen, dahinter =)
+// damit nicht alle levels nochmal konvertiert werden, hÃ¤nge ich einfach alle dinge, die
+// noch ins level format reinmÃ¼ssen, dahinter =)
 // --------------------------------------------------------------------------------------
 
 //DKS - Made binary sizes of member vars and padding bytes explicit here to make
@@ -201,13 +201,13 @@ struct FileAppendix
 {
     char    Songs[2][30];             // Namen der benutzten Songs (Stage und Boss)
     int32_t UsedPowerblock;           // ID der benutzten Powerblock Art
-    char    Col1[8], Col2[8];         // Farben für Liquid
+    char    Col1[8], Col2[8];         // Farben fÃ¼r Liquid
     uint8_t Taschenlampe;
     uint8_t PADDING_CHUNK_1[3];       // 3 padding bytes
 };
 
 // --------------------------------------------------------------------------------------
-// Infos für die Schwabbelverscheibung eines einzelnen Vertex
+// Infos fÃ¼r die Schwabbelverscheibung eines einzelnen Vertex
 // --------------------------------------------------------------------------------------
 
 struct SchwabbelPos
@@ -220,7 +220,7 @@ struct SchwabbelPos
 // Unions
 // --------------------------------------------------------------------------------------
 
-// Union für r,g,b,a Zugriff in D3DCOLOR
+// Union fÃ¼r r,g,b,a Zugriff in D3DCOLOR
 
 union FarbUnion
 {
@@ -468,7 +468,7 @@ class WaterSinTableClass
 class TileEngineClass
 {
 private:
-    float			TileAnimCount;							// Animations-Zähler und
+    float			TileAnimCount;							// Animations-ZÃ¤hler und
     float			CloudMovement;
     int				TileAnimPhase;							// Phase der Tile Animation
     float			ScrollSpeedX, ScrollSpeedY;				// Scrollspeed
@@ -495,12 +495,12 @@ public:
 
     // DKS - Replaced both SinList2 and WaterList lookup tables with new class
     //       WaterSinTableClass.  See its comments for more info.
-    //float			WaterPos;								// Position in der WaterListe für die Wasseroberfläche
+    //float			WaterPos;								// Position in der WaterListe fÃ¼r die WasseroberflÃ¤che
     ////DKS - Disabled this, was only ever filled with zeroes and had no effect.
     ////float			SinList[4096];							// Sinus Liste zum Schwabbeln des Alienlevels
 
     //float			SinList2[4096];							// Sinus Liste zum Schwabbeln des Wasserhintergrunds
-    //float			WaterList[4096];						// Sinus Liste zum Schwabbeln der Oberfläche
+    //float			WaterList[4096];						// Sinus Liste zum Schwabbeln der OberflÃ¤che
 
     char			Beschreibung[100];						// Beschreibung des Levels
     int				Zustand;								// Aktueller Zustand
@@ -513,13 +513,13 @@ public:
     int				MaxDiamonds;
 
     //DKS - See above note regarding SinList: disabled SinPos (unused)
-    //float			SinPos;									// Position in der SinusListe für das AlienLevel
-    float			SinPos2;								// Position in der SinusListe für den Wasserhintergrund
+    //float			SinPos;									// Position in der SinusListe fÃ¼r das AlienLevel
+    float			SinPos2;								// Position in der SinusListe fÃ¼r den Wasserhintergrund
 
     bool							bScrollBackground;		// Hintegrundbild scrollen ?
 
     //DKS - Lightmap code in original game was never used and all related code has now been disabled:
-    //LevelTileSaveStruct				OriginalTiles[MAX_LEVELSIZE_X]  // Array mit Leveldaten merken (für Lightmaps)
+    //LevelTileSaveStruct				OriginalTiles[MAX_LEVELSIZE_X]  // Array mit Leveldaten merken (fÃ¼r Lightmaps)
     //[MAX_LEVELSIZE_Y];
 
     RECT                            TileRects[144];         // vorberechnete Tile Ausschnitte
@@ -529,24 +529,24 @@ public:
     DirectGraphicsSprite			CloudLayer;				// Wolkenlayer
     DirectGraphicsSprite			GameOver;				// GameOver Symbol
     DirectGraphicsSprite			Wasserfall[2];			// Wasserfall Grafiken
-    DirectGraphicsSprite			LiquidGfx[2];				// Flüssigkeit
-    float							WasserU[9];				// vorberechnete TexturKoordinaten für das Wasser TU
-    float							WasserV[9];				// vorberechnete TexturKoordinaten für das Wasser TV
+    DirectGraphicsSprite			LiquidGfx[2];				// FlÃ¼ssigkeit
+    float							WasserU[9];				// vorberechnete TexturKoordinaten fÃ¼r das Wasser TU
+    float							WasserV[9];				// vorberechnete TexturKoordinaten fÃ¼r das Wasser TV
     DirectGraphicsSprite			Shadow;					// Schatten im Alien Level
     float							WasserfallOffset;		// Wasserfall Offset
     float							XOffset, YOffset;		// Scrolloffset des Levels
     float							NewXOffset, NewYOffset; // Neue Scrolloffsets, falls das Level von einem Gegner gelockt ist
     double							Timelimit;				// Zeitlimit
-    double							TimelimitSave;			// usprüngliches Zeitlimit
-    int								LEVELSIZE_X;			// Grösse des Levels
+    double							TimelimitSave;			// usprÃ¼ngliches Zeitlimit
+    int								LEVELSIZE_X;			// GrÃ¶sse des Levels
     int								LEVELSIZE_Y;			// in Tiles
-    float							LEVELPIXELSIZE_X;		// Levelgrösse in Pixeln
-    float							LEVELPIXELSIZE_Y;		// (für XOffset und YOffset)
+    float							LEVELPIXELSIZE_X;		// LevelgrÃ¶sse in Pixeln
+    float							LEVELPIXELSIZE_Y;		// (fÃ¼r XOffset und YOffset)
 
     CDragonHack	    *pDragonHack;
 
 
-    // Vorberechnung fürs Levelrendern
+    // Vorberechnung fÃ¼rs Levelrendern
     int 							RenderPosX;				// Bereich des Levels, der gerendert wird
     int 							RenderPosY;
     int 							RenderPosXTo;
@@ -616,12 +616,12 @@ public:
     uint32_t BlockSlopes        (const float x, float &y, const RECT rect, const float ySpeed);
 
     //DKS - x,y parameters did not need to be references and are now value params:
-    bool CheckDestroyableWalls(float x, float y,			// Schuss auf Zerstörbare
-                               float xs, float ys,			// Wände testen
+    bool CheckDestroyableWalls(float x, float y,			// Schuss auf ZerstÃ¶rbare
+                               float xs, float ys,			// WÃ¤nde testen
                                RECT rect);
 
     void ExplodeWall (int x, int y);						// Wand an x/y explodieren lassen
-    void ExplodeWalls(int x, int y);						// Wand an x/y und alle angrenzenden Wände
+    void ExplodeWalls(int x, int y);						// Wand an x/y und alle angrenzenden WÃ¤nde
     // explodieren lassen
 
     D3DCOLOR LightValue(float x, float y, RECT rect, bool forced);	// Helligkeit an Stelle x/y

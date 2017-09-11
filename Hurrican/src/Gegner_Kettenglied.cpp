@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Das Kettenglied
 //
-// hängt zb. an dem Rollmops
+// hÃ¤ngt zb. an dem Rollmops
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -62,10 +62,10 @@ void GegnerKettenglied::DoKI(void)
     //
     switch (Handlung)
     {
-    // Stein wartet bis der Spieler darüber läuft
+    // Stein wartet bis der Spieler darÃ¼ber lÃ¤uft
     case GEGNER_STEHEN:
     {
-        // Schaden genommen? Dann diesen Schaden dem Parent zufügen
+        // Schaden genommen? Dann diesen Schaden dem Parent zufÃ¼gen
         if (Energy < 1000.0f)
         {
             if (pParent->AnimCount <= 0.0f)

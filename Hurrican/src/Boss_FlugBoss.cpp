@@ -47,7 +47,7 @@ GegnerFlugBoss::GegnerFlugBoss(int Wert1, int Wert2, bool Light)
     yHit    = 100.0f;
     dHit    = -1.0f;
 
-    // Zusätzliche Grafiken laden
+    // ZusÃ¤tzliche Grafiken laden
     //
     SchieneL.LoadImage ("flugboss_schiene_l.png", 320, 73, 320, 73, 1, 1);
     SchieneR.LoadImage ("flugboss_schiene_r.png", 320, 73, 320, 73, 1, 1);
@@ -132,7 +132,7 @@ void GegnerFlugBoss::DoDraw(void)
     // Auge
     alphaAuge += alphaSpeed * alphaDir SYNC;
 
-    // Grenzen für Alpha checken
+    // Grenzen fÃ¼r Alpha checken
     if (alphaAuge > 255.0f)
     {
         alphaAuge = 255.0f;
@@ -164,13 +164,13 @@ void GegnerFlugBoss::DoKI(void)
     		HUD.ShowBossHUD(6000, Energy);
 
     	// Animieren
-    	if (AnimEnde > 0)						// Soll überhaupt anmiert werden ?
+    	if (AnimEnde > 0)						// Soll Ã¼berhaupt anmiert werden ?
     	{
-    		AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-    		if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+    		AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+    		if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
     		{
     			AnimCount = 0;					// Dann wieder auf Null setzen
-    			AnimPhase++;					// Und nächste Animationsphase
+    			AnimPhase++;					// Und nÃ¤chste Animationsphase
     			if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
     				AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
     		}
@@ -276,7 +276,7 @@ void GegnerFlugBoss::DoKI(void)
 
     		} break;
 
-    		// Geschütze reinfahren
+    		// GeschÃ¼tze reinfahren
     		//
     		case GEGNER_EINFAHREN:
     		{
@@ -299,7 +299,7 @@ void GegnerFlugBoss::DoKI(void)
 
     		} break;
 
-    		// Geschütze rausfahren
+    		// GeschÃ¼tze rausfahren
     		//
     		case GEGNER_AUSFAHREN:
     		{
@@ -323,7 +323,7 @@ void GegnerFlugBoss::DoKI(void)
 
     		} break;
 
-    		// Mit Geschützen ballern
+    		// Mit GeschÃ¼tzen ballern
     		//
     		case GEGNER_SPECIAL:
     		{
@@ -334,7 +334,7 @@ void GegnerFlugBoss::DoKI(void)
 
     			// Kanone Links
 
-    			// Abstände berechnen
+    			// AbstÃ¤nde berechnen
     			dx = (xPos - 120) - (pPlayer->xpos + 35);
     			dy = (yPos + 194) - (pPlayer->ypos + 40);
 
@@ -357,7 +357,7 @@ void GegnerFlugBoss::DoKI(void)
 
     			// Kanone rechts
 
-    			// Abstände berechnen
+    			// AbstÃ¤nde berechnen
     			dx = (xPos + 370) - (pPlayer->xpos + 35);
     			dy = (yPos + 194) - (pPlayer->ypos + 40);
 
@@ -422,7 +422,7 @@ void GegnerFlugBoss::DoKI(void)
     			}
     		}
 
-    		// Wait Counter runterzählen und neue Aktion bestimmen
+    		// Wait Counter runterzÃ¤hlen und neue Aktion bestimmen
     		//
     		case GEGNER_LAUFEN:
     		{
@@ -440,7 +440,7 @@ void GegnerFlugBoss::DoKI(void)
 
     				switch (j)
     				{
-    					// aus den zwei kleinen Geschützen ballern?
+    					// aus den zwei kleinen GeschÃ¼tzen ballern?
     					//
     					case 0 :
     					{
@@ -451,7 +451,7 @@ void GegnerFlugBoss::DoKI(void)
     						xSpeed    = -10.0f;
     					} break;
 
-    					// Geschütze einfahren und ballern
+    					// GeschÃ¼tze einfahren und ballern
     					//
     					case 1 :
     					{
@@ -515,7 +515,7 @@ void GegnerFlugBoss::DoKI(void)
     		default : break;
     	} // switch
 
-    	// Kanonen wieder zurückziehen, wenn sie geschossen haben
+    	// Kanonen wieder zurÃ¼ckziehen, wenn sie geschossen haben
     	//
     	for (int i = 0; i < 4; i++)
     	{
@@ -572,7 +572,7 @@ void GegnerFlugBoss::GegnerExplode(void)
     /*
     	// Level wieder zum Spieler scrollen und dann weiterscrollen lassen
     	// dabei aufpassen, dass der Spieler nicht zu weit links fliegt und der Scrollbereich im
-    	// negativen liegt, da sonst das Spiel hängenbleibt =)
+    	// negativen liegt, da sonst das Spiel hÃ¤ngenbleibt =)
     	//
     	if (pPlayer->xpos - 300 <= 0)
     		TileEngine.ScrollLevel(0,

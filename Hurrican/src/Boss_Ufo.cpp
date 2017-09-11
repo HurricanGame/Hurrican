@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Das Ufo
 //
-// fliegt von links nach rechts und andersrum über dem Spieler und ballert dabei
+// fliegt von links nach rechts und andersrum Ã¼ber dem Spieler und ballert dabei
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -75,13 +75,13 @@ void GegnerUfo::DoKI(void)
         HUD.ShowBossHUD(4000, Energy);
 
     // Animieren
-    if (AnimEnde > 0)						// Soll überhaupt anmiert werden ?
+    if (AnimEnde > 0)						// Soll Ã¼berhaupt anmiert werden ?
     {
-        AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+        if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und nächste Animationsphase
+            AnimPhase++;					// Und nÃ¤chste Animationsphase
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
                 AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
         }
@@ -123,7 +123,7 @@ void GegnerUfo::DoKI(void)
         SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
     }
 
-    // Über dem Spieler schweben
+    // Ãœber dem Spieler schweben
     //
     if (Handlung != GEGNER_INIT		  &&
             Handlung != GEGNER_EINFLIEGEN &&
@@ -168,7 +168,7 @@ void GegnerUfo::DoKI(void)
     }
     break;
 
-    case GEGNER_LAUFEN:			// Über dem Spieler schweben
+    case GEGNER_LAUFEN:			// Ãœber dem Spieler schweben
     {
         // Nach unten fliegen oder oben
         if (yPos < Value2 + 100) yPos += 5.0f SYNC;
@@ -189,7 +189,7 @@ void GegnerUfo::DoKI(void)
         }
 
 
-        // Neue Action ausführen ?
+        // Neue Action ausfÃ¼hren ?
         //
         ActionDelay -= 1.0f SYNC;
 
@@ -326,7 +326,7 @@ void GegnerUfo::DoKI(void)
         break;
     } // switch
 
-    // Hat das Ufo den Hurri berührt ?
+    // Hat das Ufo den Hurri berÃ¼hrt ?
     TestDamagePlayers(20.0f SYNC);
 }
 

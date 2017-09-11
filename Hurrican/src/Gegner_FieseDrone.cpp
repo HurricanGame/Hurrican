@@ -38,23 +38,23 @@ void GegnerFieseDrone::DoKI(void)
 
     // Animieren
     //
-    AnimCount += SpeedFaktor;			// Animationscounter weiterz‰hlen
+    AnimCount += SpeedFaktor;			// Animationscounter weiterz√§hlen
     if (Handlung == GEGNER_LAUFEN)
     {
-        if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+        if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und n‰chste Animationsphase
+            AnimPhase++;					// Und n√§chste Animationsphase
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
                 AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
         }
     }
     else if (Handlung == GEGNER_DREHEN)
     {
-        if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+        if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und n‰chste Animationsphase
+            AnimPhase++;					// Und n√§chste Animationsphase
             if (AnimPhase > AnimEnde)		// Animation von zu Ende	?
             {
                 AnimCount = 0.0f;
@@ -67,10 +67,10 @@ void GegnerFieseDrone::DoKI(void)
     }
     else if (Handlung == GEGNER_DREHEN2)
     {
-        if (AnimCount > AnimSpeed)			// Grenze ¸berschritten ?
+        if (AnimCount > AnimSpeed)			// Grenze √ºberschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase--;					// Und n‰chste Animationsphase
+            AnimPhase--;					// Und n√§chste Animationsphase
             if (AnimPhase <= 13)				// Animation von zu Ende	?
             {
                 AnimPhase = 0;				// Dann wieder von vorne beginnen
@@ -137,7 +137,7 @@ void GegnerFieseDrone::DoKI(void)
 
     switch (Handlung)
     {
-    // In der Luft rumd¸mpeln
+    // In der Luft rumd√ºmpeln
     //
     case GEGNER_LAUFEN:
     {
@@ -184,7 +184,7 @@ void GegnerFieseDrone::DoKI(void)
         PartikelSystem.PushPartikel (xPos + flamex, yPos + 28, SMOKE);
     }
 
-    // Testen, ob der Spieler die Drone ber¸hrt hat
+    // Testen, ob der Spieler die Drone ber√ºhrt hat
     TestDamagePlayers(1.0f SYNC);
 }
 

@@ -2,7 +2,7 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Klasse für den Drache, der im Hintergrund beim Turmlevel rumfliegt
+// Klasse fÃ¼r den Drache, der im Hintergrund beim Turmlevel rumfliegt
 //
 // --------------------------------------------------------------------------------------
 

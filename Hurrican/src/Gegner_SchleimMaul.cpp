@@ -1,7 +1,7 @@
 // --------------------------------------------------------------------------------------
 // Der Schleimboller mit Maul
 //
-// Hängt in der Gegend rum und spawnt maximal 6 Baby Alien-Schleimboller
+// HÃ¤ngt in der Gegend rum und spawnt maximal 6 Baby Alien-Schleimboller
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"

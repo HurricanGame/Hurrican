@@ -34,13 +34,13 @@ GegnerFlugKanone::GegnerFlugKanone(int Wert1, int Wert2, bool Light)
 void GegnerFlugKanone::DoKI(void)
 {
     // Animieren
-    if (AnimEnde > 0)						// Soll überhaupt anmiert werden ?
+    if (AnimEnde > 0)						// Soll Ã¼berhaupt anmiert werden ?
     {
-        AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
+        if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und nächste Animationsphase
+            AnimPhase++;					// Und nÃ¤chste Animationsphase
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
                 AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
         }
@@ -89,7 +89,7 @@ void GegnerFlugKanone::DoKI(void)
         break;
     } // switch
 
-    // Testen, ob der Spieler die FlugKanone berührt hat
+    // Testen, ob der Spieler die FlugKanone berÃ¼hrt hat
     TestDamagePlayers(1.0f SYNC);
 }
 

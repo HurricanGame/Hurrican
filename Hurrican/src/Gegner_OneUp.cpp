@@ -13,7 +13,7 @@
 
 GegnerOneUp::GegnerOneUp(int Wert1, int Wert2, bool Light)
 {
-    Handlung    = GEGNER_FALLEN;			// Zu Beginn fällt das Extraleben
+    Handlung    = GEGNER_FALLEN;			// Zu Beginn fÃ¤llt das Extraleben
     Energy	    = 1.0f;
     Value1	    = Wert1;
     Value2	    = Wert2;
@@ -47,9 +47,9 @@ void GegnerOneUp::DoKI(void)
 
     switch(Handlung)
     {
-    case GEGNER_FALLEN :			// Leben fällt runter
+    case GEGNER_FALLEN :			// Leben fÃ¤llt runter
     {
-        if (ySpeed > 50.0f)			// Fall-Limit nicht überschreiten
+        if (ySpeed > 50.0f)			// Fall-Limit nicht Ã¼berschreiten
             ySpeed = 50.0f;
         // Am Boden abhopfen ?
         if (TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_WAND ||
@@ -89,7 +89,7 @@ void GegnerOneUp::DoKI(void)
                             Player[i].xpos, Player[i].ypos, Player[i].CollideRect) == true)
         {
             Player[0].Score += 1000;					// Punkte vergeben
-            Player[i].Lives++;						// Anzahl der Leben erhöhen
+            Player[i].Lives++;						// Anzahl der Leben erhÃ¶hen
             Player[0].LivesFullGame++;
             Player[0].LivesThisLevel++;
             Energy = 0.0f;							// Und Leben verschwinden lassen

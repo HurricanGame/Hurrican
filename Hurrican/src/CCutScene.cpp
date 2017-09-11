@@ -2,9 +2,9 @@
 
 // --------------------------------------------------------------------------------------
 //
-// Klasse für die CutScenes zwischen zwei Stages
+// Klasse fÃ¼r die CutScenes zwischen zwei Stages
 //
-// (c) 2004 Jörg M. Winterstein
+// (c) 2004 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -22,7 +22,7 @@
 
 
 // --------------------------------------------------------------------------------------
-// Sonstige Funktionen für die CutScenes
+// Sonstige Funktionen fÃ¼r die CutScenes
 // --------------------------------------------------------------------------------------
 
 void PlayCutScene (int nr)
@@ -39,7 +39,7 @@ void PlayCutScene (int nr)
 
     } // switch
 
-    // Warten, bis alle Tasten, die die CutScene abbrechen könnten, losgelassen wurden
+    // Warten, bis alle Tasten, die die CutScene abbrechen kÃ¶nnten, losgelassen wurden
     //
     do
     {
@@ -79,7 +79,7 @@ void PlayCutScene (int nr)
     }
     while (pScene->m_bIsDone == false);
 
-    // und CutScene wieder löschen
+    // und CutScene wieder lÃ¶schen
     //
     delete (pScene);
 }
@@ -141,7 +141,7 @@ void CCutScene1::RunCutScene (void)
         //int   a;
         //a = 255;
 
-        // CutScene Text anzeigen, sofern ausgefüllt
+        // CutScene Text anzeigen, sofern ausgefÃ¼llt
 //		if (strcmp (TextArray [TEXT_CUTSCENE1_1 + i], "-") != 0)
 //			pDefaultFont->DrawText (20, 480 - m_fYScroll + i * 12, TextArray [TEXT_CUTSCENE1_1 + i], D3DCOLOR_RGBA (255, 255, 255, a));
     }

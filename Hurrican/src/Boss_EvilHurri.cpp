@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------
-// Der Böse Hurrican
+// Der BÃ¶se Hurrican
 //
 // --------------------------------------------------------------------------------------
 
@@ -88,7 +88,7 @@ void GegnerEvilHurri::DoKI(void)
     else
         DamageTaken = 0.0f;						// oder ganz anhalten
 
-    // Testen, ob der Spieler den Boss berührt hat
+    // Testen, ob der Spieler den Boss berÃ¼hrt hat
     for (int p = 0; p < NUMPLAYERS; p++)
         if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
                             Player[p].xpos, Player[p].ypos, Player[p].CollideRect) == true)
@@ -162,7 +162,7 @@ void GegnerEvilHurri::DoKI(void)
     }
     break;
 
-    case GEGNER_STEHEN:			// Counter runterzählen und nächste Aktion entscheiden
+    case GEGNER_STEHEN:			// Counter runterzÃ¤hlen und nÃ¤chste Aktion entscheiden
     {
         AnimPhase = 0;
         AnimStart = 0;
@@ -178,7 +178,7 @@ void GegnerEvilHurri::DoKI(void)
         {
             ActionDelay = 0.0f;
 
-            // Bei großem Abstand spieler zerquetschen
+            // Bei groÃŸem Abstand spieler zerquetschen
             if (PlayerAbstand() > 300)
             {
                 if (rand()%2 == 0)
@@ -258,7 +258,7 @@ void GegnerEvilHurri::DoKI(void)
     }
     break;
 
-    case GEGNER_EINFLIEGEN:		// EvilHurri läuft ins Level
+    case GEGNER_EINFLIEGEN:		// EvilHurri lÃ¤uft ins Level
     {
         Energy = 6000;
         DamageTaken = 0.0f;
@@ -450,7 +450,7 @@ void GegnerEvilHurri::DoKI(void)
     }
     break;
 
-    // Gegner Blitzt in den Himmel und Schüsse fallen von oben
+    // Gegner Blitzt in den Himmel und SchÃ¼sse fallen von oben
     case GEGNER_SPECIAL:
     {
         ActionDelay += 1.0f SYNC;
@@ -525,7 +525,7 @@ void GegnerEvilHurri::DoKI(void)
     }
     break;
 
-    // Über den Screen rennen und dabei nach oben ballern
+    // Ãœber den Screen rennen und dabei nach oben ballern
     case GEGNER_AUSSPUCKEN:
     {
         // Am Rand angekommen ?
@@ -568,7 +568,7 @@ void GegnerEvilHurri::DoKI(void)
     }
     break;
 
-    // Über den Screen rennen und dabei nach oben ballern
+    // Ãœber den Screen rennen und dabei nach oben ballern
     case GEGNER_AUSSPUCKENZWEI:
     {
         // Am Rand angekommen ?

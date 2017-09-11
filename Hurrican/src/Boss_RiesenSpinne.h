@@ -13,7 +13,7 @@ private:
     float					HeadWinkel;					// Winkel des Kopfes
     float					HeadXOffset;				// X-Offset des Kopfse
     float					WalkDir;					// Laufrichtung
-    float					WalkCount;					// Zähler fürs Laufen
+    float					WalkCount;					// ZÃ¤hler fÃ¼rs Laufen
     float					DamageWackel;				// Spinne wurde verletzt
     float					LastEnergy;
     float					ShotDelay;

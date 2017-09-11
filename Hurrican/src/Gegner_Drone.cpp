@@ -40,23 +40,23 @@ void GegnerDrone::DoKI(void)
 {
     // Animieren
     //
-    AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
+    AnimCount += SpeedFaktor;			// Animationscounter weiterzÃ¤hlen
     if (Handlung == GEGNER_LAUFEN)
     {
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und nächste Animationsphase
+            AnimPhase++;					// Und nÃ¤chste Animationsphase
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
                 AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
         }
     }
     else if (Handlung == GEGNER_DREHEN)
     {
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und nächste Animationsphase
+            AnimPhase++;					// Und nÃ¤chste Animationsphase
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
             {
                 AnimCount = 0.0f;
@@ -67,10 +67,10 @@ void GegnerDrone::DoKI(void)
     }
     else if (Handlung == GEGNER_DREHEN2)
     {
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        if (AnimCount > AnimSpeed)			// Grenze Ã¼berschritten ?
         {
             AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase--;					// Und nächste Animationsphase
+            AnimPhase--;					// Und nÃ¤chste Animationsphase
             if (AnimPhase <= 6)				// Animation von zu Ende	?
             {
                 AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
@@ -108,7 +108,7 @@ void GegnerDrone::DoKI(void)
 
     switch (Handlung)
     {
-    // In der Luft rumdümpeln
+    // In der Luft rumdÃ¼mpeln
     //
     case GEGNER_LAUFEN:
         if ((xPos + 30 < pAim->xpos + 35 && BlickRichtung == LINKS) ||
@@ -201,7 +201,7 @@ void GegnerDrone::DoKI(void)
         }
         break;
 
-    // Drone stürzt ab
+    // Drone stÃ¼rzt ab
     //
     case GEGNER_FALLEN:
     {
@@ -229,7 +229,7 @@ void GegnerDrone::DoKI(void)
 
     }
 
-    // Drone stürzt ab ?
+    // Drone stÃ¼rzt ab ?
     //
     if (Energy <= 0.0f && Handlung != GEGNER_FALLEN)
     {

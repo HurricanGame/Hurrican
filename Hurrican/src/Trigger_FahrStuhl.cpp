@@ -1,9 +1,9 @@
 // --------------------------------------------------------------------------------------
 // Der Fahrstuhl
 //
-// F‰hrt nach unten, sobald der Spieler drauftritt
-// Value1 == 0 : Fahrstuhl f¸r das Fahrstuhl Level, sprich, wechselt das Tempo
-// Value1 >  0 : Fahrtsuhl f‰hrt ganz normal nach unten (Tempelausgang)
+// F√§hrt nach unten, sobald der Spieler drauftritt
+// Value1 == 0 : Fahrstuhl f√ºr das Fahrstuhl Level, sprich, wechselt das Tempo
+// Value1 >  0 : Fahrtsuhl f√§hrt ganz normal nach unten (Tempelausgang)
 // --------------------------------------------------------------------------------------
 
 #include "stdafx.h"
@@ -84,7 +84,7 @@ void GegnerFahrstuhl::DoKI(void)
                     TileEngine.ScrollLevel (xPos - 50, yPos - 400, ZUSTAND_SCROLLTOLOCK);
             }
 
-            Handlung = GEGNER_FALLEN;				// Fahrstuhl f‰hrt los
+            Handlung = GEGNER_FALLEN;				// Fahrstuhl f√§hrt los
         }
 
 // Je nach Handlung richtig verhalten
@@ -96,7 +96,7 @@ void GegnerFahrstuhl::DoKI(void)
     {
     } break;
 
-    // Fahrstuhl f‰hrt nach unten
+    // Fahrstuhl f√§hrt nach unten
     case GEGNER_FALLEN:
     {
         if (Value1 == 0)
@@ -121,7 +121,7 @@ void GegnerFahrstuhl::DoKI(void)
         if (ySpeed < new_ySpeed) ySpeed += 0.3f SYNC;
         if (ySpeed > new_ySpeed) ySpeed -= 0.3f SYNC;
 
-        // Funken spr¸hen
+        // Funken spr√ºhen
         static float sparkcount = 0.0f;
 
         sparkcount -= 1.0f SYNC;

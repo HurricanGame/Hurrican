@@ -5,7 +5,7 @@
 // DX8 Sprite Klasse
 // zum laden und anzeigen von dx8 Surfaces und D3DSprites
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -43,7 +43,7 @@ RECT GetClippingArea(void);										// Aktuelle Clipping Area abfragen
 // --------------------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------------------
-// Surface Klasse für das Laden und Anzeigen (copyrects) 
+// Surface Klasse fÃ¼r das Laden und Anzeigen (copyrects) 
 // von Bildern (ohne Colorkey und anderen Effekten)
 // --------------------------------------------------------------------------------------
 
@@ -57,7 +57,7 @@ class DirectGraphicsSurface
 			  DirectGraphicsSurface(void);						// Konstruktor (leer)
 			 ~DirectGraphicsSurface(void);						// Surface freigeben
 		bool LoadImage(char Filename[100],						// Laden des Bildes "Filename"
-					   int xSize, int ySize);					// mit Grösse xSize, ySize
+					   int xSize, int ySize);					// mit GrÃ¶sse xSize, ySize
 		bool  SetRect	  (int left,  int top, 
 						   int right, int bottom);				// Neuen Ausschnitt setzen
 		RECT  GetRect	  (void);								// Ausschnitt holen
@@ -66,9 +66,9 @@ class DirectGraphicsSurface
 };
 
 // --------------------------------------------------------------------------------------
-// Sprite Klasse für das Laden und Anzeigen
+// Sprite Klasse fÃ¼r das Laden und Anzeigen
 // von Sprites (MIT Colorkey und anderen Effekten, hoffentlich schnell :)
-// mit Hilfe von Vertices und Texturen drübergeklebt
+// mit Hilfe von Vertices und Texturen drÃ¼bergeklebt
 // --------------------------------------------------------------------------------------
 
 class DirectGraphicsSprite
@@ -78,20 +78,20 @@ class DirectGraphicsSprite
 		
 	public:
 		LPDIRECT3DTEXTURE8	itsTexture;							// Textur mit Grafikdaten
-		float				itsXSize;							// x-Grösse der Textur
-		float				itsYSize;							// y-Grösse der Textur
-		int					itsXFrameSize;						// Framegrösse in X-Richtung
-		int					itsYFrameSize;						// Framegrösse in Y-Richtung
+		float				itsXSize;							// x-GrÃ¶sse der Textur
+		float				itsYSize;							// y-GrÃ¶sse der Textur
+		int					itsXFrameSize;						// FramegrÃ¶sse in X-Richtung
+		int					itsYFrameSize;						// FramegrÃ¶sse in Y-Richtung
 		int					itsXFrameCount;						// Frameanzahl in X-Richtung
 		int					itsYFrameCount;						// Frameanzahl in Y-Richtung
 
 			  DirectGraphicsSprite(void);						// Konstruktor (leer)
 			 ~DirectGraphicsSprite(void);						// Textur freigeben
 		bool  LoadImage(char Filename[100],						// Laden des Bildes "Filename"
-					    int xs, int ys, int xfs, int yfs,		// x/y Size und Framegrösse
+					    int xs, int ys, int xfs, int yfs,		// x/y Size und FramegrÃ¶sse
 						int xfc,  int yfc);						// Frameanzahl
 		bool  LoadFromGfx(char Filename[100],						// Laden des Bildes "Filename"
-					    int xs, int ys, int xfs, int yfs,		// x/y Size und Framegrösse
+					    int xs, int ys, int xfs, int yfs,		// x/y Size und FramegrÃ¶sse
 						int xfc,  int yfc);						// Frameanzahl
 		bool  SetRect	  (int left,  int top, 
 						   int right, int bottom);				// Neuen Ausschnitt setzen
@@ -99,7 +99,7 @@ class DirectGraphicsSprite
 		bool  RenderSprite(float x, float y, D3DCOLOR Color);	// Sprite rendern
 		bool  RenderSprite(float x, float y, int Anim,			// Sprite rendern mit Animation
 						   D3DCOLOR Color);	
-		bool  RenderSpriteScaled(float x, float y,				// Sprite in beliebiger Grösse
+		bool  RenderSpriteScaled(float x, float y,				// Sprite in beliebiger GrÃ¶sse
 								 float width, float height);	
 		bool  RenderSpriteRotated(float x, float y, int Winkel,// Sprite rotiert darstellen
 								  D3DCOLOR Color);				

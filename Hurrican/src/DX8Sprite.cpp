@@ -5,7 +5,7 @@
 // DX8 Sprite Klasse
 // zum laden und anzeigen von dx8 Surfaces und D3DSprites
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 JÃ¶rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -17,8 +17,8 @@
 #include <string>
 
 #if defined(PLATFORM_DIRECTX)
-#include <d3dx8.h>										// Für die Texturen
-#include <d3dx8math.h>									// Für D3DXVECTOR2
+#include <d3dx8.h>										// FÃ¼r die Texturen
+#include <d3dx8math.h>									// FÃ¼r D3DXVECTOR2
 #endif
 
 #if defined(PLATFORM_SDL)
@@ -42,7 +42,7 @@
 #include "unrarlib.h"
 #endif
 
-extern bool					GameRunning;				// Läuft das Spiel noch ?
+extern bool					GameRunning;				// LÃ¤uft das Spiel noch ?
 
 // --------------------------------------------------------------------------------------
 // Variablen
@@ -86,7 +86,7 @@ DirectGraphicsSurface::~DirectGraphicsSurface(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Laden des Bildes "Filename" mit Grösse xSize, ySize in die Surface
+// Laden des Bildes "Filename" mit GrÃ¶sse xSize, ySize in die Surface
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize)
@@ -128,7 +128,7 @@ bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize
     itsSurface = LoadTexture( Filename, dims, 0 );
 #endif
 
-    // Grösse setzen
+    // GrÃ¶sse setzen
     itsRect.left   = 0;
     itsRect.top    = 0;
     itsRect.right  = xSize;
@@ -193,13 +193,13 @@ DirectGraphicsSprite::~DirectGraphicsSprite(void)
 //
 ////        _itoa_s(LoadedTextures, Buffer, 10);
 ////		Protokoll.WriteText( false, Buffer );
-////		Protokoll.WriteText( false, " Sprite Textur(en) übrig !\n" );
+////		Protokoll.WriteText( false, " Sprite Textur(en) Ã¼brig !\n" );
 //    }
 }
 
 // --------------------------------------------------------------------------------------
 // Laden des Bildes "Filename"
-// xfs, yfs Grösse eines Frames
+// xfs, yfs GrÃ¶sse eines Frames
 // xfc, yfc Anzahl der Frames
 // --------------------------------------------------------------------------------------
 
@@ -316,7 +316,7 @@ loadfile:
         hresult = D3DXCreateTextureFromFileEx(
                       lpD3DDevice,
                       Temp,
-                      NULL, NULL,				  // x und y Grösse des Sprites (aus Datei übernehmen)
+                      NULL, NULL,				  // x und y GrÃ¶sse des Sprites (aus Datei Ã¼bernehmen)
                       1,                          // Nur eine Version der Textur
                       0,                          // Immer 0 setzen
                       D3DFMT_UNKNOWN,			  // Format aus der Datei lesen
@@ -340,7 +340,7 @@ loadfile:
                       lpD3DDevice,
                       (LPVOID)pData,
                       Size,
-                      NULL, NULL,				  // x und y Grösse des Sprites (aus Datei übernehmen)
+                      NULL, NULL,				  // x und y GrÃ¶sse des Sprites (aus Datei Ã¼bernehmen)
                       1,                          // Nur eine Version der Textur
                       0,                          // Immer 0 setzen
                       D3DFMT_UNKNOWN,			  // Format aus der Datei lesen
@@ -368,12 +368,12 @@ loadfile:
         return false;
     }
 
-    // Grösse der Textur anpassen
+    // GrÃ¶sse der Textur anpassen
     D3DSURFACE_DESC desc;
     itsTexture->GetLevelDesc(0,&desc);
 #endif
 
-    // Grösse setzen
+    // GrÃ¶sse setzen
 #if defined(PLATFORM_DIRECTX)
     itsXSize		= (float)desc.Width;
     itsYSize		= (float)desc.Height;
@@ -558,7 +558,7 @@ void DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
 
 // --------------------------------------------------------------------------------------
 // Sprite ganz normal zeichnen mit aktuellem Surfaceausschnitt und Colorkey, dabei
-// alle vier Eckpunkte anders einfärben
+// alle vier Eckpunkte anders einfÃ¤rben
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR c1, D3DCOLOR c2, D3DCOLOR c3, D3DCOLOR c4)
@@ -872,7 +872,7 @@ void DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int he
 }
 
 // --------------------------------------------------------------------------------------
-// Sprite mit übergebenem Winkel rotiert darstellen
+// Sprite mit Ã¼bergebenem Winkel rotiert darstellen
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D3DCOLOR Color)
@@ -925,7 +925,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
 
     D3DXMATRIX	matRot, matTrans, matTrans2;
 
-    // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
+    // Winkel angleichen, damit er immer zwischen 0Â° und 360Â° bleibt
     if (Winkel > 360) Winkel -= 360;
     if (Winkel < 0)	  Winkel += 360;
 
@@ -936,13 +936,13 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
     D3DXMatrixTranslation(&matTrans,-x-(itsRect.right  - itsRect.left)/2.0f,
                           -y-(itsRect.bottom - itsRect.top )/2.0f, 0.0f);
 
-    // Transformation wieder zurück
+    // Transformation wieder zurÃ¼ck
     D3DXMatrixTranslation(&matTrans2,x+(itsRect.right  - itsRect.left)/2.0f,
                           y+(itsRect.bottom - itsRect.top )/2.0f, 0.0f);
 
     D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans);		// Verschieben
     D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRot);		// rotieren
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurück verschieben
+    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurÃ¼ck verschieben
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
@@ -972,7 +972,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
 }
 
 // --------------------------------------------------------------------------------------
-// Sprite mit übergebenem Winkel rotiert darstellen
+// Sprite mit Ã¼bergebenem Winkel rotiert darstellen
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, int Anim, D3DCOLOR Color, bool mirror)
@@ -1047,7 +1047,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
 
     D3DXMATRIX	matRot, matTrans, matTrans2;
 
-    // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
+    // Winkel angleichen, damit er immer zwischen 0Â° und 360Â° bleibt
     if (Winkel > 360) Winkel -= 360;
     if (Winkel < 0)	  Winkel += 360;
 
@@ -1058,13 +1058,13 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
     D3DXMatrixTranslation(&matTrans,-x-(itsRect.right  - itsRect.left)/2.0f,
                           -y-(itsRect.bottom - itsRect.top )/2.0f, 0.0f);
 
-    // Transformation wieder zurück
+    // Transformation wieder zurÃ¼ck
     D3DXMatrixTranslation(&matTrans2,x+(itsRect.right  - itsRect.left)/2.0f,
                           y+(itsRect.bottom - itsRect.top )/2.0f, 0.0f);
 
     D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans);		// Verschieben
     D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRot);		// rotieren
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurück verschieben
+    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurÃ¼ck verschieben
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
@@ -1163,7 +1163,7 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
 
     D3DXMATRIX	matRot, matTrans, matTrans2;
 
-    // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
+    // Winkel angleichen, damit er immer zwischen 0Â° und 360Â° bleibt
     while (Winkel > 360) Winkel -= 360;
     while (Winkel < 0)	  Winkel += 360;
 
@@ -1174,13 +1174,13 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
     D3DXMatrixTranslation(&matTrans,-x-(itsRect.right  - itsRect.left)/2.0f-offx,
                           -y-(itsRect.bottom - itsRect.top )/2.0f-offy, 0.0f);
 
-    // Transformation wieder zurück
+    // Transformation wieder zurÃ¼ck
     D3DXMatrixTranslation(&matTrans2,x+(itsRect.right  - itsRect.left)/2.0f+offx,
                           y+(itsRect.bottom - itsRect.top )/2.0f+offy, 0.0f);
 
     D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans);		// Verschieben
     D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRot);		// rotieren
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurück verschieben
+    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurÃ¼ck verschieben
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
@@ -1210,7 +1210,7 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
 }
 
 // --------------------------------------------------------------------------------------
-// Sprite mit übergebenem Winkel rotiert darstellen in beliebiger Grösse
+// Sprite mit Ã¼bergebenem Winkel rotiert darstellen in beliebiger GrÃ¶sse
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
@@ -1265,7 +1265,7 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
 
     D3DXMATRIX	matRot, matTrans, matTrans2;
 
-    // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
+    // Winkel angleichen, damit er immer zwischen 0Â° und 360Â° bleibt
     if (Winkel > 360) Winkel -= 360;
     if (Winkel < 0)	  Winkel += 360;
 
@@ -1276,14 +1276,14 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
     D3DXMatrixTranslation(&matTrans,-x-(width) /2,
                           -y-(height)/2, 0.0f);
 
-    // Transformation wieder zurück
+    // Transformation wieder zurÃ¼ck
     D3DXMatrixTranslation(&matTrans2,x+(width) /2,
                           y+(height)/2, 0.0f);
 
     // Verschieben und rotieren
     D3DXMatrixMultiply	 (&matWorld, &matTrans, &matRot);
 
-    // und wieder zurück verschieben
+    // und wieder zurÃ¼ck verschieben
     D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
