@@ -43,7 +43,7 @@ template < typename E, class A, class B, class L > void
 matrix_set_translation(matrix<E,A,B,L>& m, E x, E y)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     matrix_set_translation(m, x, y, value_type(0));
 }
@@ -95,8 +95,8 @@ matrix_set_translation_2D(matrix<E,A,B,L>& m, const VecT& translation)
 template < class MatT > vector< typename MatT::value_type, fixed<3> >
 matrix_get_translation(const MatT& m)
 {
-    typedef typename MatT::value_type value_type;
-    typedef vector< value_type, fixed<3> > vector_type;
+    [[maybe_unused]] typedef typename MatT::value_type value_type;
+    [[maybe_unused]] typedef vector< value_type, fixed<3> > vector_type;
 
     /* Checking */
     detail::CheckMatAffine3D(m);
@@ -117,8 +117,8 @@ matrix_get_translation(
     typename MatT::value_type& t3
 )
 {
-    typedef typename MatT::value_type value_type;
-    typedef vector< value_type, fixed<3> > vector_type;
+    [[maybe_unused]] typedef typename MatT::value_type value_type;
+    [[maybe_unused]] typedef vector< value_type, fixed<3> > vector_type;
 
     /* Checking */
     detail::CheckMatAffine3D(m);
@@ -132,8 +132,8 @@ matrix_get_translation(
 template < class MatT > vector< typename MatT::value_type, fixed<2> >
 matrix_get_translation_2D(const MatT& m)
 {
-    typedef typename MatT::value_type value_type;
-    typedef vector< value_type, fixed<2> > vector_type;
+    [[maybe_unused]] typedef typename MatT::value_type value_type;
+    [[maybe_unused]] typedef vector< value_type, fixed<2> > vector_type;
 
     /* Checking */
     detail::CheckMatAffine2D(m);
@@ -149,8 +149,8 @@ matrix_get_translation_2D(
     typename MatT::value_type& t2
 )
 {
-    typedef typename MatT::value_type value_type;
-    typedef vector< value_type, fixed<2> > vector_type;
+    [[maybe_unused]] typedef typename MatT::value_type value_type;
+    [[maybe_unused]] typedef vector< value_type, fixed<2> > vector_type;
 
     /* Checking */
     detail::CheckMatAffine2D(m);
@@ -167,8 +167,8 @@ matrix_get_translation_2D(
 template < class MatT > vector< typename MatT::value_type, fixed<3> >
 matrix_get_view_translation(const MatT& m)
 {
-    typedef typename MatT::value_type value_type;
-    typedef vector< value_type, fixed<3> > vector_type;
+    [[maybe_unused]] typedef typename MatT::value_type value_type;
+    [[maybe_unused]] typedef vector< value_type, fixed<3> > vector_type;
 
     vector_type x, y, z;
     matrix_get_basis_vectors(m,x,y,z);

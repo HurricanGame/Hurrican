@@ -78,10 +78,10 @@ typename et::ExprTraits<LeftT>::result_type,
          mul(const LeftT& left, const RightT& right)
 {
     /* Shorthand: */
-    typedef et::ExprTraits<LeftT> left_traits;
-    typedef et::ExprTraits<RightT> right_traits;
-    typedef typename left_traits::result_type left_result;
-    typedef typename right_traits::result_type right_result;
+    [[maybe_unused]] typedef et::ExprTraits<LeftT> left_traits;
+    [[maybe_unused]] typedef et::ExprTraits<RightT> right_traits;
+    [[maybe_unused]] typedef typename left_traits::result_type left_result;
+    [[maybe_unused]] typedef typename right_traits::result_type right_result;
 
     /* First, require matrix expressions: */
     CML_STATIC_REQUIRE_M(
@@ -94,11 +94,11 @@ typename et::ExprTraits<LeftT>::result_type,
     /* Deduce size type to ensure that a run-time check is performed if
      * necessary:
      */
-    typedef typename et::MatrixPromote<
+    [[maybe_unused]] typedef typename et::MatrixPromote<
     typename left_traits::result_type,
              typename right_traits::result_type
              >::type result_type;
-    typedef typename result_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename result_type::size_tag size_tag;
 
     /* Require that left has the same number of columns as right has rows.
      * This automatically checks fixed-size matrices at compile time, and
@@ -113,7 +113,7 @@ typename et::ExprTraits<LeftT>::result_type,
     cml::et::detail::Resize(C, N);
 
     /* XXX Specialize this for fixed-size matrices: */
-    typedef typename result_type::value_type value_type;
+    [[maybe_unused]] typedef typename result_type::value_type value_type;
     for(size_t i = 0; i < left.rows(); ++i)                 /* rows */
     {
         for(size_t j = 0; j < right.cols(); ++j)            /* cols */
@@ -155,7 +155,7 @@ operator*(const matrix<E,AT,BO,L>& left,
           const et::MatrixXpr<XprT>& right)
 {
     /* Generate a temporary, and compute the right-hand expression: */
-    typedef typename et::MatrixXpr<XprT>::temporary_type expr_tmp;
+    [[maybe_unused]] typedef typename et::MatrixXpr<XprT>::temporary_type expr_tmp;
     expr_tmp tmp;
     cml::et::detail::Resize(tmp,right.rows(),right.cols());
     tmp = right;
@@ -172,7 +172,7 @@ operator*(const et::MatrixXpr<XprT>& left,
           const matrix<E,AT,BO,L>& right)
 {
     /* Generate a temporary, and compute the left-hand expression: */
-    typedef typename et::MatrixXpr<XprT>::temporary_type expr_tmp;
+    [[maybe_unused]] typedef typename et::MatrixXpr<XprT>::temporary_type expr_tmp;
     expr_tmp tmp;
     cml::et::detail::Resize(tmp,left.rows(),left.cols());
     tmp = left;
@@ -189,12 +189,12 @@ operator*(const et::MatrixXpr<XprT1>& left,
           const et::MatrixXpr<XprT2>& right)
 {
     /* Generate temporaries and compute expressions: */
-    typedef typename et::MatrixXpr<XprT1>::temporary_type left_tmp;
+    [[maybe_unused]] typedef typename et::MatrixXpr<XprT1>::temporary_type left_tmp;
     left_tmp ltmp;
     cml::et::detail::Resize(ltmp,left.rows(),left.cols());
     ltmp = left;
 
-    typedef typename et::MatrixXpr<XprT2>::temporary_type right_tmp;
+    [[maybe_unused]] typedef typename et::MatrixXpr<XprT2>::temporary_type right_tmp;
     right_tmp rtmp;
     cml::et::detail::Resize(rtmp,right.rows(),right.cols());
     rtmp = right;

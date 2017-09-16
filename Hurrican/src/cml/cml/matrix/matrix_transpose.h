@@ -47,21 +47,21 @@ public:
     /* Copy the expression by value into higher-up expressions: */
     typedef expr_type expr_const_reference;
 
-    typedef typename ExprT::value_type value_type;
+    [[maybe_unused]] typedef typename ExprT::value_type value_type;
     typedef matrix_result_tag result_tag;
-    typedef typename ExprT::size_tag size_tag;
+    [[maybe_unused]] typedef typename ExprT::size_tag size_tag;
 
     /* Store the expression traits: */
     typedef ExprTraits<ExprT> expr_traits;
 
     /* Get the reference type: */
-    typedef typename expr_traits::const_reference expr_reference;
+    [[maybe_unused]] typedef typename expr_traits::const_reference expr_reference;
 
     /* Swap the orientation: */
-    typedef typename expr_traits::result_type::transposed_type result_type;
+    [[maybe_unused]] typedef typename expr_traits::result_type::transposed_type result_type;
 
     /* Get the temporary type: */
-    typedef typename result_type::temporary_type temporary_type;
+    [[maybe_unused]] typedef typename result_type::temporary_type temporary_type;
 
     /* For matching by assignability: */
     typedef cml::et::not_assignable_tag assignable_tag;
@@ -147,12 +147,12 @@ template<class ExprT>
 struct ExprTraits< MatrixTransposeOp<ExprT> >
 {
     typedef MatrixTransposeOp<ExprT> expr_type;
-    typedef typename expr_type::value_type value_type;
-    typedef typename expr_type::expr_const_reference const_reference;
-    typedef typename expr_type::result_tag result_tag;
-    typedef typename expr_type::size_tag size_tag;
-    typedef typename expr_type::result_type result_type;
-    typedef typename expr_type::assignable_tag assignable_tag;
+    [[maybe_unused]] typedef typename expr_type::value_type value_type;
+    [[maybe_unused]] typedef typename expr_type::expr_const_reference const_reference;
+    [[maybe_unused]] typedef typename expr_type::result_tag result_tag;
+    [[maybe_unused]] typedef typename expr_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename expr_type::result_type result_type;
+    [[maybe_unused]] typedef typename expr_type::assignable_tag assignable_tag;
     typedef expr_node_tag node_tag;
 
     value_type get(const expr_type& m, size_t i, size_t j) const
@@ -194,7 +194,7 @@ transpose(const matrix<E,AT,BO,L>& expr)
     typedef et::MatrixTransposeOp<matrix_type> Op;
 
     /* Determine the returned matrix type: */
-    typedef typename et::MatrixTransposeOp<
+    [[maybe_unused]] typedef typename et::MatrixTransposeOp<
     matrix_type
     >::temporary_type tmp_type;
 
@@ -223,7 +223,7 @@ transpose(MATXPR_ARG_TYPE expr)
     typedef et::MatrixTransposeOp<XprT> Op;
 
     /* Determine the returned matrix type: */
-    typedef typename et::MatrixTransposeOp<XprT>::temporary_type tmp_type;
+    [[maybe_unused]] typedef typename et::MatrixTransposeOp<XprT>::temporary_type tmp_type;
 
     /* The expression to use to assign the temporary: */
     typedef et::MatrixXpr<Op> ExprT;

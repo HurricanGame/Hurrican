@@ -114,13 +114,13 @@ public:
     {
         typedef cml::vector<E,AT> vector_type;
         enum { Len = vector_type::array_size };
-        typedef typename VectorAssignmentUnroller<OpT,E,AT,SrcT>::template
+        [[maybe_unused]] typedef typename VectorAssignmentUnroller<OpT,E,AT,SrcT>::template
         Eval<0, Len-1, (Len <= CML_VECTOR_UNROLL_LIMIT)> Unroller;
         /* Note: Len is the array size, so Len-1 is the last element. */
 
         /* Use a run-time check if src is a run-time sized expression: */
-        typedef typename ExprTraits<SrcT>::size_tag src_size;
-        typedef typename select_if<
+        [[maybe_unused]] typedef typename ExprTraits<SrcT>::size_tag src_size;
+        [[maybe_unused]] typedef typename select_if<
             same_type<src_size,dynamic_size_tag>::is_true,
             dynamic_size_tag, fixed_size_tag>::result size_tag;
 
@@ -194,7 +194,7 @@ struct VectorAccumulateUnroller
     typedef ExprTraits<RightT> right_traits;
 
     /* Figure out the return type: */
-    typedef typename AccumT::value_type result_type;
+    [[maybe_unused]] typedef typename AccumT::value_type result_type;
 
     /** Evaluate for the first Len-1 elements. */
     template<int N, int Last> struct Eval<N,Last,true>

@@ -49,10 +49,10 @@ void lu_inplace(MatT& A)
 {
     /* Shorthand: */
     typedef et::ExprTraits<MatT> arg_traits;
-    typedef typename arg_traits::result_tag arg_result;
-    typedef typename arg_traits::assignable_tag arg_assignment;
-    typedef typename arg_traits::size_tag size_tag;
-    typedef typename arg_traits::value_type value_type;
+    [[maybe_unused]] typedef typename arg_traits::result_tag arg_result;
+    [[maybe_unused]] typedef typename arg_traits::assignable_tag arg_assignment;
+    [[maybe_unused]] typedef typename arg_traits::size_tag size_tag;
+    [[maybe_unused]] typedef typename arg_traits::value_type value_type;
 
     /* lu_inplace() requires an assignable matrix expression: */
     CML_STATIC_REQUIRE_M(
@@ -88,7 +88,7 @@ lu_copy(const MatT& M)
 {
     /* Shorthand: */
     typedef et::ExprTraits<MatT> arg_traits;
-    typedef typename arg_traits::result_tag arg_result;
+    [[maybe_unused]] typedef typename arg_traits::result_tag arg_result;
 
     /* lu_with_copy() requires a matrix expression: */
     CML_STATIC_REQUIRE_M(
@@ -135,8 +135,8 @@ lu_solve(const MatT& LU, const VecT& b)
 {
     /* Shorthand. */
     typedef et::ExprTraits<MatT> lu_traits;
-    typedef typename et::MatVecPromote<MatT,VecT>::temporary_type vector_type;
-    typedef typename vector_type::value_type value_type;
+    [[maybe_unused]] typedef typename et::MatVecPromote<MatT,VecT>::temporary_type vector_type;
+    [[maybe_unused]] typedef typename vector_type::value_type value_type;
 
     /* Verify that the matrix is square, and get the size: */
     ssize_t N = (ssize_t) cml::et::CheckedSquare(

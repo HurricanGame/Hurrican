@@ -65,9 +65,9 @@ vector< typename VecT::value_type, fixed<3> > project_point(
     const MatT_3& viewport,
     const VecT& p)
 {
-    typedef vector< typename VecT::value_type, fixed<3> > vector3_type;
-    typedef vector< typename VecT::value_type, fixed<4> > vector4_type;
-    typedef typename vector3_type::value_type value_type;
+    [[maybe_unused]] typedef vector< typename VecT::value_type, fixed<3> > vector3_type;
+    [[maybe_unused]] typedef vector< typename VecT::value_type, fixed<4> > vector4_type;
+    [[maybe_unused]] typedef typename vector3_type::value_type value_type;
 
     detail::CheckVec3(p);
 
@@ -118,9 +118,9 @@ vector< typename VecT::value_type, fixed<3> > unproject_point(
     const MatT_3& viewport,
     const VecT& p)
 {
-    typedef vector< typename VecT::value_type, fixed<3> > vector3_type;
-    typedef vector< typename VecT::value_type, fixed<4> > vector4_type;
-    typedef typename vector3_type::value_type value_type;
+    [[maybe_unused]] typedef vector< typename VecT::value_type, fixed<3> > vector3_type;
+    [[maybe_unused]] typedef vector< typename VecT::value_type, fixed<4> > vector4_type;
+    [[maybe_unused]] typedef typename vector3_type::value_type value_type;
 
     detail::CheckVec3(p);
 

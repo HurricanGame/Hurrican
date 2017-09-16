@@ -25,9 +25,9 @@ template < class QuatT > vector< typename QuatT::value_type, fixed<3> >
 quaternion_get_basis_vector(const QuatT& q, size_t i)
 {
     typedef QuatT quaternion_type;
-    typedef typename quaternion_type::value_type value_type;
-    typedef typename quaternion_type::order_type order_type;
-    typedef vector< value_type, fixed<3> > vector_type;
+    [[maybe_unused]] typedef typename quaternion_type::value_type value_type;
+    [[maybe_unused]] typedef typename quaternion_type::order_type order_type;
+    [[maybe_unused]] typedef vector< value_type, fixed<3> > vector_type;
 
     /* Checking */
     detail::CheckQuat(q);

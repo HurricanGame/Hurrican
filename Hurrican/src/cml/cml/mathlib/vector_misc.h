@@ -30,7 +30,7 @@ template < class VecT_1, class VecT_2 >
 typename detail::CrossPromote<VecT_1,VecT_2>::promoted_vector
 project_to_hplane(const VecT_1& v, const VecT_2& n)
 {
-    typedef typename detail::CrossPromote<VecT_1,VecT_2>::promoted_vector
+    [[maybe_unused]] typedef typename detail::CrossPromote<VecT_1,VecT_2>::promoted_vector
     result_type;
 
     result_type result;
@@ -44,7 +44,7 @@ project_to_hplane(const VecT_1& v, const VecT_2& n)
 template < class VecT > vector< typename VecT::value_type, fixed<2> >
 perp(const VecT& v)
 {
-    typedef vector< typename VecT::value_type, fixed<2> > temporary_type;
+    [[maybe_unused]] typedef vector< typename VecT::value_type, fixed<2> > temporary_type;
 
     /* Checking */
     detail::CheckVec2(v);
@@ -70,8 +70,8 @@ unit_cross(const LeftT& left, const RightT& right)
 template < class VecT > vector< typename VecT::value_type, fixed<3> >
 cross_cardinal(const VecT& v, size_t i)
 {
-    typedef vector< typename VecT::value_type, fixed<3> > vector_type;
-    typedef typename vector_type::value_type value_type;
+    [[maybe_unused]] typedef vector< typename VecT::value_type, fixed<3> > vector_type;
+    [[maybe_unused]] typedef typename vector_type::value_type value_type;
 
     /* Checking */
     detail::CheckVec3(v);
@@ -90,8 +90,8 @@ cross_cardinal(const VecT& v, size_t i)
 template < class VecT > vector< typename VecT::value_type, fixed<3> >
 cross_cardinal(size_t i, const VecT& v)
 {
-    typedef vector< typename VecT::value_type, fixed<3> > vector_type;
-    typedef typename vector_type::value_type value_type;
+    [[maybe_unused]] typedef vector< typename VecT::value_type, fixed<3> > vector_type;
+    [[maybe_unused]] typedef typename vector_type::value_type value_type;
 
     /* Checking */
     detail::CheckVec3(v);
@@ -117,7 +117,7 @@ typename VecT_1::value_type,
          >
          rotate_vector(const VecT_1& v, const VecT_2& n, Real angle)
 {
-    typedef vector<
+    [[maybe_unused]] typedef vector<
     typename et::ScalarPromote<
     typename VecT_1::value_type,
              typename VecT_2::value_type
@@ -140,8 +140,8 @@ template< class VecT, typename Real >
 vector< typename VecT::value_type, fixed<2> >
 rotate_vector_2D(const VecT& v, Real angle)
 {
-    typedef vector< typename VecT::value_type, fixed<2> > result_type;
-    typedef typename result_type::value_type value_type;
+    [[maybe_unused]] typedef vector< typename VecT::value_type, fixed<2> > result_type;
+    [[maybe_unused]] typedef typename result_type::value_type value_type;
 
     /* Checking */
     detail::CheckVec2(v);
@@ -174,8 +174,8 @@ rotate_vector_2D(const VecT& v, Real angle)
 template < typename E, class A > void
 random_unit(vector<E,A>& v)
 {
-    typedef vector<E,A> vector_type;
-    typedef typename vector_type::value_type value_type;
+    [[maybe_unused]] typedef vector<E,A> vector_type;
+    [[maybe_unused]] typedef typename vector_type::value_type value_type;
 
     switch (v.size())
     {
@@ -231,8 +231,8 @@ random_unit(vector<E,A>& v)
 template < typename E, class A, class VecT > void
 random_unit(vector<E,A>& v, const VecT& axis, E theta)
 {
-    typedef vector<E,A> vector_type;
-    typedef typename vector_type::value_type value_type;
+    [[maybe_unused]] typedef vector<E,A> vector_type;
+    [[maybe_unused]] typedef typename vector_type::value_type value_type;
 
     switch (v.size())
     {
@@ -292,10 +292,10 @@ typename detail::DotPromote< VecT_1, VecT_2 >::promoted_scalar
 manhattan_distance(const VecT_1& v1, const VecT_2& v2)
 {
     /* Check that a promotion exists */
-    typedef typename et::VectorPromote<
+    [[maybe_unused]] typedef typename et::VectorPromote<
     VecT_1,VecT_2>::temporary_type promoted_vector;
 
-    typedef typename detail::DotPromote< VecT_1, VecT_2 >::promoted_scalar scalar_type;
+    [[maybe_unused]] typedef typename detail::DotPromote< VecT_1, VecT_2 >::promoted_scalar scalar_type;
 
     scalar_type sum = scalar_type(0);
     for (size_t i = 0; i < v1.size(); ++i)

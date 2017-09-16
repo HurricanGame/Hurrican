@@ -33,7 +33,7 @@ template<class LeftT, class RightT> struct VectorPromote;
 template<typename E1, class AT1, typename E2, class AT2>
 struct VectorPromote< cml::vector<E1,AT1>, cml::vector<E2,AT2> >
 {
-    typedef typename ArrayPromote<
+    [[maybe_unused]] typedef typename ArrayPromote<
     typename cml::vector<E1,AT1>::array_type,
              typename cml::vector<E2,AT2>::array_type
              >::type promoted_array;
@@ -45,7 +45,7 @@ struct VectorPromote< cml::vector<E1,AT1>, cml::vector<E2,AT2> >
              > type;
 
     /* The deduced temporary type: */
-    typedef typename type::temporary_type temporary_type;
+    [[maybe_unused]] typedef typename type::temporary_type temporary_type;
 };
 
 /** Type promotion for a vector and a scalar. */
@@ -56,7 +56,7 @@ struct VectorPromote<cml::vector<E,AT>, S>
     typedef cml::vector<typename ScalarPromote<E,S>::type, AT> type;
 
     /* The deduced temporary type: */
-    typedef typename type::temporary_type temporary_type;
+    [[maybe_unused]] typedef typename type::temporary_type temporary_type;
 };
 
 /** Type promotion for a scalar and a vector. */
@@ -67,7 +67,7 @@ struct VectorPromote<S, cml::vector<E,AT> >
     typedef cml::vector<typename ScalarPromote<S,E>::type, AT> type;
 
     /* The deduced temporary type: */
-    typedef typename type::temporary_type temporary_type;
+    [[maybe_unused]] typedef typename type::temporary_type temporary_type;
 };
 
 } // namespace et

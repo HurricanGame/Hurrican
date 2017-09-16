@@ -56,15 +56,15 @@ public:
 
     /* Shorthand for the array type generator: */
     typedef ArrayType storage_type;
-    typedef typename ArrayType::template rebind<4>::other generator_type;
+    [[maybe_unused]] typedef typename ArrayType::template rebind<4>::other generator_type;
 
     /* Vector representing the quaternion.  Use the rebinding template to
      * set the vector size:
      */
-    typedef vector<Element, generator_type> vector_type;
+    [[maybe_unused]] typedef vector<Element, generator_type> vector_type;
 
     /* Vector temporary type: */
-    typedef typename vector_type::temporary_type vector_temporary;
+    [[maybe_unused]] typedef typename vector_type::temporary_type vector_temporary;
 
     /* Quaternion order: */
     typedef Order order_type;
@@ -73,9 +73,9 @@ public:
     typedef Cross cross_type;
 
     /* Scalar type representing the scalar part: */
-    typedef typename vector_type::value_type value_type;
-    typedef typename vector_type::reference reference;
-    typedef typename vector_type::const_reference const_reference;
+    [[maybe_unused]] typedef typename vector_type::value_type value_type;
+    [[maybe_unused]] typedef typename vector_type::reference reference;
+    [[maybe_unused]] typedef typename vector_type::const_reference const_reference;
     /* XXX Need to verify that this is a true scalar type. */
 
     /* The quaternion type: */
@@ -95,13 +95,13 @@ public:
     typedef const quaternion_type& expr_const_reference;
 
     /* For matching by storage type: */
-    typedef typename vector_type::memory_tag memory_tag;
+    [[maybe_unused]] typedef typename vector_type::memory_tag memory_tag;
 
     /* For matching by size type: */
-    typedef typename vector_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename vector_type::size_tag size_tag;
 
     /* Get the imaginary part type: */
-    typedef typename vector_temporary::subvector_type imaginary_type;
+    [[maybe_unused]] typedef typename vector_temporary::subvector_type imaginary_type;
 
     /* For matching by result-type: */
     typedef cml::et::quaternion_result_tag result_tag;
@@ -284,7 +284,7 @@ public:
     /** Copy construct from a QuaternionXpr. */
     template<typename XprT> quaternion(QUATXPR_ARG_TYPE e)
     {
-        typedef typename XprT::order_type arg_order;
+        [[maybe_unused]] typedef typename XprT::order_type arg_order;
         m_q[W] = e[arg_order::W];
         m_q[X] = e[arg_order::X];
         m_q[Y] = e[arg_order::Y];
@@ -427,7 +427,7 @@ public:
 #define CML_QUAT_ASSIGN_FROM_QUATXPR(_op_)                              \
     template<typename XprT> quaternion_type&                            \
     operator _op_ (QUATXPR_ARG_TYPE e) {                                \
-        typedef typename XprT::order_type arg_order;                    \
+        [[maybe_unused]] typedef typename XprT::order_type arg_order;                    \
         m_q[W] _op_ e[arg_order::W];                                    \
         m_q[X] _op_ e[arg_order::X];                                    \
         m_q[Y] _op_ e[arg_order::Y];                                    \

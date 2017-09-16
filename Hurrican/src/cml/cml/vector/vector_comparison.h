@@ -84,8 +84,8 @@ inline bool
 vector_weak_order(const LeftT& left, const RightT& right, OpT)
 {
     /* Shorthand: */
-    typedef et::ExprTraits<LeftT> left_traits;
-    typedef et::ExprTraits<RightT> right_traits;
+    [[maybe_unused]] typedef et::ExprTraits<LeftT> left_traits;
+    [[maybe_unused]] typedef et::ExprTraits<RightT> right_traits;
 
     /* vector_comparison() requires vector expressions: */
     CML_STATIC_REQUIRE_M(
@@ -95,11 +95,11 @@ vector_weak_order(const LeftT& left, const RightT& right, OpT)
      * commas:
      */
 
-    typedef typename et::VectorPromote<
+    [[maybe_unused]] typedef typename et::VectorPromote<
     typename left_traits::result_type,
              typename right_traits::result_type
              >::type result_type;
-    typedef typename result_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename result_type::size_tag size_tag;
 
     /* Verify expression size: */
     ssize_t N = (ssize_t) et::CheckedSize(left,right,size_tag());
@@ -146,8 +146,8 @@ inline bool
 vector_total_order(const LeftT& left, const RightT& right, OpT)
 {
     /* Shorthand: */
-    typedef et::ExprTraits<LeftT> left_traits;
-    typedef et::ExprTraits<RightT> right_traits;
+    [[maybe_unused]] typedef et::ExprTraits<LeftT> left_traits;
+    [[maybe_unused]] typedef et::ExprTraits<RightT> right_traits;
 
     /* vector_comparison() requires vector expressions: */
     CML_STATIC_REQUIRE_M(
@@ -157,11 +157,11 @@ vector_total_order(const LeftT& left, const RightT& right, OpT)
      * commas:
      */
 
-    typedef typename et::VectorPromote<
+    [[maybe_unused]] typedef typename et::VectorPromote<
     typename left_traits::result_type,
              typename right_traits::result_type
              >::type result_type;
-    typedef typename result_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename result_type::size_tag size_tag;
 
     /* Verify expression size: */
     ssize_t N = (ssize_t) et::CheckedSize(left,right,size_tag());

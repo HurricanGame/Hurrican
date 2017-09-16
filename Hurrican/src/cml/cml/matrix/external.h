@@ -49,9 +49,9 @@ public:
      */
 
     /* Standard: */
-    typedef typename array_type::value_type value_type;
-    typedef typename array_type::reference reference;
-    typedef typename array_type::const_reference const_reference;
+    [[maybe_unused]] typedef typename array_type::value_type value_type;
+    [[maybe_unused]] typedef typename array_type::reference reference;
+    [[maybe_unused]] typedef typename array_type::const_reference const_reference;
 
     typedef matrix_type& expr_reference;
     typedef const matrix_type& expr_const_reference;
@@ -60,16 +60,16 @@ public:
     typedef BasisOrient basis_orient;
 
     /* For matching by memory layout: */
-    typedef typename array_type::layout layout;
+    [[maybe_unused]] typedef typename array_type::layout layout;
 
     /* For matching by storage type if necessary: */
-    typedef typename array_type::memory_tag memory_tag;
+    [[maybe_unused]] typedef typename array_type::memory_tag memory_tag;
 
     /* For matching by size type if necessary: */
-    typedef typename array_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename array_type::size_tag size_tag;
 
     /* For matching by resizability: */
-    typedef typename array_type::resizing_tag resizing_tag;
+    [[maybe_unused]] typedef typename array_type::resizing_tag resizing_tag;
 
     /* For matching by result-type: */
     typedef cml::et::matrix_result_tag result_tag;
@@ -86,12 +86,12 @@ public:
              > transposed_type;
 
     /* To simplify the matrix row and column operators: */
-    typedef vector<
+    [[maybe_unused]] typedef vector<
     Element,
     typename array_type::row_array_type::generator_type
     > row_vector_type;
 
-    typedef vector<
+    [[maybe_unused]] typedef vector<
     Element,
     typename array_type::col_array_type::generator_type
     > col_vector_type;
@@ -341,9 +341,9 @@ public:
      */
 
     /* Standard: */
-    typedef typename array_type::value_type value_type;
-    typedef typename array_type::reference reference;
-    typedef typename array_type::const_reference const_reference;
+    [[maybe_unused]] typedef typename array_type::value_type value_type;
+    [[maybe_unused]] typedef typename array_type::reference reference;
+    [[maybe_unused]] typedef typename array_type::const_reference const_reference;
 
     typedef matrix_type& expr_reference;
     typedef const matrix_type& expr_const_reference;
@@ -352,16 +352,16 @@ public:
     typedef BasisOrient basis_orient;
 
     /* For matching by memory layout: */
-    typedef typename array_type::layout layout;
+    [[maybe_unused]] typedef typename array_type::layout layout;
 
     /* For matching by storage type if necessary: */
-    typedef typename array_type::memory_tag memory_tag;
+    [[maybe_unused]] typedef typename array_type::memory_tag memory_tag;
 
     /* For matching by size type if necessary: */
-    typedef typename array_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename array_type::size_tag size_tag;
 
     /* For matching by resizability: */
-    typedef typename array_type::resizing_tag resizing_tag;
+    [[maybe_unused]] typedef typename array_type::resizing_tag resizing_tag;
 
     /* For matching by result-type: */
     typedef cml::et::matrix_result_tag result_tag;
@@ -378,12 +378,12 @@ public:
     > transposed_type;
 
     /* To simplify the matrix row and column operators: */
-    typedef vector<
+    [[maybe_unused]] typedef vector<
     Element,
     typename array_type::row_array_type::generator_type
     > row_vector_type;
 
-    typedef vector<
+    [[maybe_unused]] typedef vector<
     Element,
     typename array_type::col_array_type::generator_type
     > col_vector_type;

@@ -48,7 +48,7 @@ template< class VecT > inline void
 CheckVec(const VecT&)
 {
     typedef et::ExprTraits<VecT> vector_traits;
-    typedef typename vector_traits::result_tag result_type;
+    [[maybe_unused]] typedef typename vector_traits::result_tag result_type;
 
     CML_STATIC_REQUIRE_M(
         (same_type<result_type, et::vector_result_tag>::is_true),
@@ -79,7 +79,7 @@ template< class VecT, size_t N, class ErrorT > inline void
 CheckVecN(const VecT& v)
 {
     typedef et::ExprTraits<VecT> vector_traits;
-    typedef typename vector_traits::size_tag size_tag;
+    [[maybe_unused]] typedef typename vector_traits::size_tag size_tag;
 
     detail::CheckVecN<VecT,N,ErrorT>(v, size_tag());
 }
@@ -133,7 +133,7 @@ template< class VecT > inline void
 CheckVec2Or3(const VecT& v)
 {
     typedef et::ExprTraits<VecT> vector_traits;
-    typedef typename vector_traits::size_tag size_tag;
+    [[maybe_unused]] typedef typename vector_traits::size_tag size_tag;
 
     detail::CheckVec2Or3(v, size_tag());
 }
@@ -147,7 +147,7 @@ template< class MatT > inline void
 CheckMat(const MatT&)
 {
     typedef et::ExprTraits<MatT> matrix_traits;
-    typedef typename matrix_traits::result_tag result_type;
+    [[maybe_unused]] typedef typename matrix_traits::result_tag result_type;
 
     CML_STATIC_REQUIRE_M(
         (same_type<result_type, et::matrix_result_tag>::is_true),
@@ -181,7 +181,7 @@ template< class MatT, size_t N, size_t M, class ErrorT > inline void
 CheckMatNxM(const MatT& m)
 {
     typedef et::ExprTraits<MatT> matrix_traits;
-    typedef typename matrix_traits::size_tag size_tag;
+    [[maybe_unused]] typedef typename matrix_traits::size_tag size_tag;
 
     CheckMatNxM<MatT,N,M,ErrorT>(m, size_tag());
 }
@@ -242,7 +242,7 @@ template< class MatT, size_t N, size_t M, class ErrorT > inline void
 CheckMatMinNxM(const MatT& m)
 {
     typedef et::ExprTraits<MatT> matrix_traits;
-    typedef typename matrix_traits::size_tag size_tag;
+    [[maybe_unused]] typedef typename matrix_traits::size_tag size_tag;
 
     CheckMatMinNxM<MatT,N,M,ErrorT>(m, size_tag());
 }
@@ -366,7 +366,7 @@ template< class MatT > inline void
 CheckMatSquare(const MatT& m)
 {
     typedef et::ExprTraits<MatT> matrix_traits;
-    typedef typename matrix_traits::size_tag size_tag;
+    [[maybe_unused]] typedef typename matrix_traits::size_tag size_tag;
 
     detail::CheckMatSquare<
     MatT,function_expects_square_matrix_arg_error>(m, size_tag());
@@ -381,7 +381,7 @@ template< class QuatT > inline void
 CheckQuat(const QuatT& /*q*/)
 {
     typedef et::ExprTraits<QuatT> quaternion_traits;
-    typedef typename quaternion_traits::result_tag result_type;
+    [[maybe_unused]] typedef typename quaternion_traits::result_tag result_type;
 
     CML_STATIC_REQUIRE_M(
         (same_type<result_type, et::quaternion_result_tag>::is_true),

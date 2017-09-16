@@ -84,8 +84,8 @@ inline bool
 quaternion_weak_order(const LeftT& left, const RightT& right, OpT)
 {
     /* Shorthand: */
-    typedef et::ExprTraits<LeftT> left_traits;
-    typedef et::ExprTraits<RightT> right_traits;
+    [[maybe_unused]] typedef et::ExprTraits<LeftT> left_traits;
+    [[maybe_unused]] typedef et::ExprTraits<RightT> right_traits;
 
     /* quaternion_comparison() requires quaternion expressions: */
     CML_STATIC_REQUIRE_M(
@@ -95,7 +95,7 @@ quaternion_weak_order(const LeftT& left, const RightT& right, OpT)
      * commas:
      */
 
-    typedef typename et::QuaternionPromote<
+    [[maybe_unused]] typedef typename et::QuaternionPromote<
     typename left_traits::result_type,
              typename right_traits::result_type
              >::type result_type;
@@ -144,8 +144,8 @@ inline bool
 quaternion_total_order(const LeftT& left, const RightT& right, OpT)
 {
     /* Shorthand: */
-    typedef et::ExprTraits<LeftT> left_traits;
-    typedef et::ExprTraits<RightT> right_traits;
+    [[maybe_unused]] typedef et::ExprTraits<LeftT> left_traits;
+    [[maybe_unused]] typedef et::ExprTraits<RightT> right_traits;
 
     /* quaternion_comparison() requires quaternion expressions: */
     CML_STATIC_REQUIRE_M(
@@ -155,7 +155,7 @@ quaternion_total_order(const LeftT& left, const RightT& right, OpT)
      * commas:
      */
 
-    typedef typename et::QuaternionPromote<
+    [[maybe_unused]] typedef typename et::QuaternionPromote<
     typename left_traits::result_type,
              typename right_traits::result_type
              >::type result_type;

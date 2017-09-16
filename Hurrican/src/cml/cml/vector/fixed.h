@@ -38,32 +38,32 @@ public:
     typedef fixed_1D<Element,Size> array_type;
 
     /* Shorthand for the type of this vector: */
-    typedef vector<Element,generator_type> vector_type;
+    [[maybe_unused]] typedef vector<Element,generator_type> vector_type;
 
     /* The vector coordinate type: */
     typedef Element coordinate_type;
 
     /* For integration into the expression template code: */
-    typedef vector_type expr_type;
+    [[maybe_unused]] typedef vector_type expr_type;
 
     /* For integration into the expression template code: */
-    typedef vector_type temporary_type;
-    typedef vector< Element, fixed<Size-1> > subvector_type;
+    [[maybe_unused]] typedef vector_type temporary_type;
+    [[maybe_unused]] typedef vector< Element, fixed<Size-1> > subvector_type;
 
     /* Standard: */
-    typedef typename array_type::value_type value_type;
-    typedef typename array_type::reference reference;
-    typedef typename array_type::const_reference const_reference;
+    [[maybe_unused]] typedef typename array_type::value_type value_type;
+    [[maybe_unused]] typedef typename array_type::reference reference;
+    [[maybe_unused]] typedef typename array_type::const_reference const_reference;
 
     /* For integration into the expression templates code: */
-    typedef vector_type& expr_reference;
+    [[maybe_unused]] typedef vector_type& expr_reference;
     typedef const vector_type& expr_const_reference;
 
     /* For matching by storage type: */
-    typedef typename array_type::memory_tag memory_tag;
+    [[maybe_unused]] typedef typename array_type::memory_tag memory_tag;
 
     /* For matching by size type: */
-    typedef typename array_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename array_type::size_tag size_tag;
 
     /* For matching by result-type: */
     typedef cml::et::vector_result_tag result_tag;

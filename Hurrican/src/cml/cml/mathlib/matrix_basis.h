@@ -233,8 +233,8 @@ matrix_get_basis_vector(const MatT& m, size_t i)
 template < class MatT > TEMP_VEC3
 matrix_get_transposed_basis_vector(const MatT& m, size_t i)
 {
-    typedef typename MatT::value_type value_type;
-    typedef vector< value_type, fixed<3> > vector_type;
+    [[maybe_unused]] typedef typename MatT::value_type value_type;
+    [[maybe_unused]] typedef vector< value_type, fixed<3> > vector_type;
 
     /* Checking */
     detail::CheckMatLinear3D(m);

@@ -34,9 +34,9 @@ typename detail::CrossPromote<VecT_1,VecT_2>::promoted_vector, VecT_3
 >::promoted_scalar
 signed_angle(const VecT_1& v1, const VecT_2& v2, const VecT_3& reference)
 {
-    typedef typename detail::CrossPromote<VecT_1,VecT_2>::promoted_vector
+    [[maybe_unused]] typedef typename detail::CrossPromote<VecT_1,VecT_2>::promoted_vector
     vector_type;
-    typedef typename detail::DotPromote<vector_type,VecT_3>::promoted_scalar
+    [[maybe_unused]] typedef typename detail::DotPromote<vector_type,VecT_3>::promoted_scalar
     value_type;
 
     vector_type c = cross(v1,v2);

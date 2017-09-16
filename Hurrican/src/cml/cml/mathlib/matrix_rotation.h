@@ -30,7 +30,7 @@ template < typename E, class A, class B, class L > void
 matrix_rotation_world_axis( matrix<E,A,B,L>& m, size_t axis, E angle)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckMatLinear3D(m);
@@ -80,7 +80,7 @@ template < typename E, class A, class B, class L, class VecT > void
 matrix_rotation_axis_angle(matrix<E,A,B,L>& m, const VecT& axis, E angle)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckMatLinear3D(m);
@@ -128,8 +128,8 @@ matrix_rotation_quaternion(matrix<E,A,B,L>& m, const QuatT& q)
 {
     typedef matrix<E,A,B,L> matrix_type;
     typedef QuatT quaternion_type;
-    typedef typename quaternion_type::order_type order_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename quaternion_type::order_type order_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     enum
     {
@@ -201,7 +201,7 @@ matrix_rotation_euler(matrix<E,A,B,L>& m, E angle_0, E angle_1, E angle_2,
                       EulerOrder order)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckMatLinear3D(m);
@@ -285,7 +285,7 @@ matrix_rotation_euler_derivatives(
     EulerOrder order)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckMatLinear3D(m);
@@ -366,7 +366,7 @@ matrix_rotation_align(
     bool normalize = true,
     AxisOrder order = axis_order_zyx)
 {
-    typedef vector< E,fixed<3> > vector_type;
+    [[maybe_unused]] typedef vector< E,fixed<3> > vector_type;
 
     identity_transform(m);
 
@@ -381,7 +381,7 @@ template < typename E, class A, class B, class L, class VecT > void
 matrix_rotation_align(matrix<E,A,B,L>& m, const VecT& align,
                       bool normalize = true, AxisOrder order = axis_order_zyx)
 {
-    typedef vector< E,fixed<3> > vector_type;
+    [[maybe_unused]] typedef vector< E,fixed<3> > vector_type;
 
     identity_transform(m);
 
@@ -397,7 +397,7 @@ matrix_rotation_align_axial(matrix<E,A,B,L>& m, const VecT_1& align,
                             const VecT_2& axis, bool normalize = true,
                             AxisOrder order = axis_order_zyx)
 {
-    typedef vector< E,fixed<3> > vector_type;
+    [[maybe_unused]] typedef vector< E,fixed<3> > vector_type;
 
     identity_transform(m);
 
@@ -415,7 +415,7 @@ matrix_rotation_align_viewplane(
     Handedness handedness,
     AxisOrder order = axis_order_zyx)
 {
-    typedef vector< E, fixed<3> > vector_type;
+    [[maybe_unused]] typedef vector< E, fixed<3> > vector_type;
 
     identity_transform(m);
 
@@ -498,7 +498,7 @@ template < typename E, class A, class B, class L > void
 matrix_rotation_2D( matrix<E,A,B,L>& m, E angle)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckMatLinear2D(m);
@@ -523,7 +523,7 @@ template < typename E, class A, class B, class L, class VecT > void
 matrix_rotation_align_2D(matrix<E,A,B,L>& m, const VecT& align,
                          bool normalize = true, AxisOrder2D order = axis_order_xy)
 {
-    typedef vector< E, fixed<2> > vector_type;
+    [[maybe_unused]] typedef vector< E, fixed<2> > vector_type;
 
     identity_transform(m);
 
@@ -542,7 +542,7 @@ template < typename E, class A, class B, class L > void
 matrix_rotate_about_world_axis(matrix<E,A,B,L>& m, size_t axis, E angle)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckMatLinear3D(m);
@@ -597,7 +597,7 @@ template < typename E, class A, class B, class L > void
 matrix_rotate_about_local_axis(matrix<E,A,B,L>& m, size_t axis, E angle)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckMatLinear3D(m);
@@ -651,7 +651,7 @@ template < typename E, class A, class B, class L > void
 matrix_rotate_2D(matrix<E,A,B,L>& m, E angle)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckMatLinear2D(m);
@@ -702,8 +702,8 @@ template < typename E, class A, class B, class L > void
 matrix_scale_rotation_angle(matrix<E,A,B,L>& m, E t,
                             E tolerance = epsilon<E>::placeholder())
 {
-    typedef vector< E,fixed<3> > vector_type;
-    typedef typename vector_type::value_type value_type;
+    [[maybe_unused]] typedef vector< E,fixed<3> > vector_type;
+    [[maybe_unused]] typedef typename vector_type::value_type value_type;
 
     vector_type axis;
     value_type angle;
@@ -716,8 +716,8 @@ template < typename E, class A, class B, class L > void
 matrix_scale_rotation_angle_2D(
     matrix<E,A,B,L>& m, E t, E tolerance = epsilon<E>::placeholder())
 {
-    typedef vector< E,fixed<2> > vector_type;
-    typedef typename vector_type::value_type value_type;
+    [[maybe_unused]] typedef vector< E,fixed<2> > vector_type;
+    [[maybe_unused]] typedef typename vector_type::value_type value_type;
 
     value_type angle = matrix_to_rotation_2D(m);
     matrix_rotation_2D(m, angle * t);
@@ -883,7 +883,7 @@ matrix_to_axis_angle(
     E tolerance = epsilon<E>::placeholder())
 {
     typedef MatT matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckMatLinear3D(m);
@@ -941,7 +941,7 @@ void matrix_to_euler(
     Real tolerance = epsilon<Real>::placeholder())
 {
     typedef MatT matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckMatLinear3D(m);

@@ -37,8 +37,8 @@ struct inverse_f<MatT,2>
 {
     typename MatT::temporary_type operator()(const MatT& M) const
     {
-        typedef typename MatT::temporary_type temporary_type;
-        typedef typename temporary_type::value_type value_type;
+        [[maybe_unused]] typedef typename MatT::temporary_type temporary_type;
+        [[maybe_unused]] typedef typename temporary_type::value_type value_type;
 
         /* Matrix containing the inverse: */
         temporary_type Z;
@@ -68,7 +68,7 @@ struct inverse_f<MatT,3>
     typename MatT::temporary_type operator()(const MatT& M) const
     {
         /* Shorthand. */
-        typedef typename MatT::value_type value_type;
+        [[maybe_unused]] typedef typename MatT::value_type value_type;
 
         /* Compute cofactors for each entry: */
         value_type m_00 = M(1,1)*M(2,2) - M(1,2)*M(2,1);
@@ -128,7 +128,7 @@ struct inverse_f<MatT,4>
     typename MatT::temporary_type operator()(const MatT& M) const
     {
         /* Shorthand. */
-        typedef typename MatT::value_type value_type;
+        [[maybe_unused]] typedef typename MatT::value_type value_type;
 
         /* Common cofactors, rows 0,1: */
         value_type m_22_33_23_32 = M(2,2)*M(3,3) - M(2,3)*M(3,2);
@@ -246,7 +246,7 @@ struct inverse_f
     typename MatT::temporary_type operator()(const MatT& M) const
     {
         /* Shorthand. */
-        typedef typename MatT::value_type value_type;
+        [[maybe_unused]] typedef typename MatT::value_type value_type;
 
         /* Size of matrix */
         size_t N = M.rows();
@@ -362,7 +362,7 @@ struct inverse_f
     typename MatT::temporary_type operator()(const MatT& M) const
     {
         /* Shorthand. */
-        typedef typename MatT::value_type value_type;
+        [[maybe_unused]] typedef typename MatT::value_type value_type;
 
         /* Compute LU factorization: */
         size_t N = M.rows();
@@ -467,7 +467,7 @@ template<typename E, class AT, typename BO, typename L> inline
 typename matrix<E,AT,BO,L>::temporary_type
 inverse(const matrix<E,AT,BO,L>& M/*, bool force_NxN = false*/)
 {
-    typedef typename matrix<E,AT,BO,L>::size_tag size_tag;
+    [[maybe_unused]] typedef typename matrix<E,AT,BO,L>::size_tag size_tag;
     return detail::inverse(M,size_tag()/*,force_NxN*/);
 }
 
@@ -476,7 +476,7 @@ template<typename XprT> inline
 typename et::MatrixXpr<XprT>::temporary_type
 inverse(const et::MatrixXpr<XprT>& e/*, bool force_NxN = false*/)
 {
-    typedef typename et::MatrixXpr<XprT>::size_tag size_tag;
+    [[maybe_unused]] typedef typename et::MatrixXpr<XprT>::size_tag size_tag;
     return detail::inverse(e,size_tag()/*,force_NxN*/);
 }
 

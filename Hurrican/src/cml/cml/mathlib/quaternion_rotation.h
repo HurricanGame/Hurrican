@@ -38,8 +38,8 @@ template < class E, class A, class O, class C > void
 quaternion_rotation_world_axis(quaternion<E,A,O,C>& q, size_t axis, E angle)
 {
     typedef quaternion<E,A,O,C> quaternion_type;
-    typedef typename quaternion_type::value_type value_type;
-    typedef typename quaternion_type::order_type order_type;
+    [[maybe_unused]] typedef typename quaternion_type::value_type value_type;
+    [[maybe_unused]] typedef typename quaternion_type::order_type order_type;
 
     /* Checking */
     detail::CheckIndex3(axis);
@@ -85,8 +85,8 @@ quaternion_rotation_axis_angle(
     quaternion<E,A,O,C>& q, const VecT& axis, E angle)
 {
     typedef quaternion<E,A,O,C> quaternion_type;
-    typedef typename quaternion_type::value_type value_type;
-    typedef typename quaternion_type::order_type order_type;
+    [[maybe_unused]] typedef typename quaternion_type::value_type value_type;
+    [[maybe_unused]] typedef typename quaternion_type::order_type order_type;
 
     /* Checking */
     detail::CheckVec3(axis);
@@ -125,8 +125,8 @@ template < class E, class A, class O, class C, class MatT > void
 quaternion_rotation_matrix(quaternion<E,A,O,C>& q, const MatT& m)
 {
     typedef quaternion<E,A,O,C> quaternion_type;
-    typedef typename quaternion_type::value_type value_type;
-    typedef typename quaternion_type::order_type order_type;
+    [[maybe_unused]] typedef typename quaternion_type::value_type value_type;
+    [[maybe_unused]] typedef typename quaternion_type::order_type order_type;
 
     /* Checking */
     detail::CheckMatLinear3D(m);
@@ -186,8 +186,8 @@ quaternion_rotation_euler(
     EulerOrder order)
 {
     typedef quaternion<E,A,O,C> quaternion_type;
-    typedef typename quaternion_type::value_type value_type;
-    typedef typename quaternion_type::order_type order_type;
+    [[maybe_unused]] typedef typename quaternion_type::value_type value_type;
+    [[maybe_unused]] typedef typename quaternion_type::order_type order_type;
 
     size_t i, j, k;
     bool odd, repeat;
@@ -390,8 +390,8 @@ template < class E, class A, class O, class C > void
 quaternion_rotate_about_world_axis(quaternion<E,A,O,C>& q,size_t axis,E angle)
 {
     typedef quaternion<E,A,O,C> quaternion_type;
-    typedef typename quaternion_type::value_type value_type;
-    typedef typename quaternion_type::order_type order_type;
+    [[maybe_unused]] typedef typename quaternion_type::value_type value_type;
+    [[maybe_unused]] typedef typename quaternion_type::order_type order_type;
 
     /* Checking */
     detail::CheckIndex3(axis);
@@ -446,8 +446,8 @@ template < class E, class A, class O, class C > void
 quaternion_rotate_about_local_axis(quaternion<E,A,O,C>& q,size_t axis,E angle)
 {
     typedef quaternion<E,A,O,C> quaternion_type;
-    typedef typename quaternion_type::value_type value_type;
-    typedef typename quaternion_type::order_type order_type;
+    [[maybe_unused]] typedef typename quaternion_type::value_type value_type;
+    [[maybe_unused]] typedef typename quaternion_type::order_type order_type;
 
     /* Checking */
     detail::CheckIndex3(axis);
@@ -508,8 +508,8 @@ quaternion_rotation_vec_to_vec(
     bool unit_length_vectors = false)
 {
     typedef quaternion<E,A,O,C> quaternion_type;
-    typedef typename quaternion_type::value_type value_type;
-    typedef vector< value_type, fixed<3> > vector_type;
+    [[maybe_unused]] typedef typename quaternion_type::value_type value_type;
+    [[maybe_unused]] typedef vector< value_type, fixed<3> > vector_type;
 
     /* Checking handled by cross() */
 
@@ -546,8 +546,8 @@ template < typename E, class A, class O, class C > void
 quaternion_scale_angle(quaternion<E,A,O,C>& q, E t,
                        E tolerance = epsilon<E>::placeholder())
 {
-    typedef vector< E,fixed<3> > vector_type;
-    typedef typename vector_type::value_type value_type;
+    [[maybe_unused]] typedef vector< E,fixed<3> > vector_type;
+    [[maybe_unused]] typedef typename vector_type::value_type value_type;
 
     vector_type axis;
     value_type angle;
@@ -608,8 +608,8 @@ quaternion_to_axis_angle(
     E tolerance = epsilon<E>::placeholder())
 {
     typedef QuatT quaternion_type;
-    typedef typename quaternion_type::value_type value_type;
-    typedef typename quaternion_type::order_type order_type;
+    [[maybe_unused]] typedef typename quaternion_type::value_type value_type;
+    [[maybe_unused]] typedef typename quaternion_type::order_type order_type;
 
     /* Checking */
     detail::CheckQuat(q);
@@ -650,7 +650,7 @@ quaternion_to_euler(
     Real tolerance = epsilon<Real>::placeholder())
 {
     typedef QuatT quaternion_type;
-    typedef typename quaternion_type::value_type value_type;
+    [[maybe_unused]] typedef typename quaternion_type::value_type value_type;
     typedef matrix< value_type,fixed<3,3>,row_basis,row_major > matrix_type;
 
     matrix_type m;

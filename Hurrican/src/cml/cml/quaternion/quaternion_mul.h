@@ -51,13 +51,13 @@ QuaternionMult(const Quat1_T& q1, const Quat2_T& q2)
     detail::CheckQuat(q1);
     detail::CheckQuat(q2);
 
-    typedef typename et::QuaternionPromote<
+    [[maybe_unused]] typedef typename et::QuaternionPromote<
     typename Quat1_T::temporary_type, typename Quat2_T::temporary_type
     >::temporary_type temporary_type;
 
-    typedef typename temporary_type::value_type value_type;
-    typedef typename temporary_type::order_type order_type;
-    typedef typename temporary_type::cross_type cross_type;
+    [[maybe_unused]] typedef typename temporary_type::value_type value_type;
+    [[maybe_unused]] typedef typename temporary_type::order_type order_type;
+    [[maybe_unused]] typedef typename temporary_type::cross_type cross_type;
 
     typedef detail::SumOp<cross_type, value_type> sum_op;
 

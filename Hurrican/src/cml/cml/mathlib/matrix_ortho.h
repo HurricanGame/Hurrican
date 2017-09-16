@@ -35,7 +35,7 @@ template < typename E, class A, class B, class L > void
 matrix_orthogonalize_3x3(matrix<E,A,B,L>& m, size_t stable_axis = 2,
                          size_t num_iter = 0, E s = E(1))
 {
-    typedef vector< E, fixed<3> > vector_type;
+    [[maybe_unused]] typedef vector< E, fixed<3> > vector_type;
 
     vector_type x, y, z;
     matrix_get_basis_vectors(m,x,y,z);
@@ -48,7 +48,7 @@ template < typename E, class A, class B, class L > void
 matrix_orthogonalize_2x2(matrix<E,A,B,L>& m, size_t stable_axis = 0,
                          size_t num_iter = 0, E s = E(1))
 {
-    typedef vector< E, fixed<2> > vector_type;
+    [[maybe_unused]] typedef vector< E, fixed<2> > vector_type;
 
     vector_type x, y;
     matrix_get_basis_vectors_2D(m,x,y);

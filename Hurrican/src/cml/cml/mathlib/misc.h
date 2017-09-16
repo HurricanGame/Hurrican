@@ -33,7 +33,7 @@ namespace cml
 template < size_t N >
 vector< double, fixed<N> > zero()
 {
-    typedef vector< double, fixed<N> > vector_type;
+    [[maybe_unused]] typedef vector< double, fixed<N> > vector_type;
 
     vector_type result;
     result.zero();
@@ -47,7 +47,7 @@ vector< double, fixed<N> > axis(size_t i)
     /* Checking */
     detail::CheckValidArg(i < N);
 
-    typedef vector< double, fixed<N> > vector_type;
+    [[maybe_unused]] typedef vector< double, fixed<N> > vector_type;
     vector_type result;
     result.cardinal(i);
     return result;

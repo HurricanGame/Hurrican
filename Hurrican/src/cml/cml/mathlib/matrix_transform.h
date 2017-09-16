@@ -150,7 +150,7 @@ template < typename E, class A, class B, class L, class VecT > void
 matrix_scale_along_axis(matrix<E,A,B,L>&m, const VecT& axis, E scale)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckVec3(axis);
@@ -173,7 +173,7 @@ void matrix_scale_along_axis_2D(matrix<E,A,B,L>&  m, const VecT& axis,
                                 E scale)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckVec2(axis);
@@ -270,7 +270,7 @@ template < typename E, class A, class B, class L > void
 matrix_reflect(matrix<E,A,B,L>& m, size_t axis)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckMatLinear3D(m);
@@ -311,7 +311,7 @@ template < typename E, class A, class B, class L > void
 matrix_reflect_2D(matrix<E,A,B,L>& m, size_t axis)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckMatLinear2D(m);
@@ -345,7 +345,7 @@ template < typename E, class A, class B, class L, class VecT > void
 matrix_reflect_about_hplane(matrix<E,A,B,L>& m, const VecT& normal)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     matrix_scale_along_axis(m, normal, value_type(-1));
 }
@@ -359,7 +359,7 @@ template < typename E, class A, class B, class L, class VecT > void
 matrix_reflect_about_hplane_2D(matrix<E,A,B,L>&m, const VecT& normal)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     matrix_scale_along_axis_2D(m, normal, value_type(-1));
 }
@@ -373,7 +373,7 @@ template < typename E, class A, class B, class L > void
 matrix_ortho_project(matrix<E,A,B,L>& m, size_t axis)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckMatLinear3D(m);
@@ -414,7 +414,7 @@ template < typename E, class A, class B, class L > void
 matrix_ortho_project_2D(matrix<E,A,B,L>& m, size_t axis)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckMatLinear2D(m);
@@ -450,7 +450,7 @@ template < typename E, class A, class B, class L, class VecT > void
 matrix_ortho_project_to_hplane(matrix<E,A,B,L>& m, const VecT& normal)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     matrix_scale_along_axis(m, normal, value_type(0));
 }
@@ -466,7 +466,7 @@ template < typename E, class A, class B, class L, class VecT > void
 matrix_ortho_project_to_hplane_2D(matrix<E,A,B,L>& m, const VecT& normal)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     matrix_scale_along_axis_2D(m, normal, value_type(0));
 }
@@ -554,8 +554,8 @@ matrix_look_at(
     Handedness handedness)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef vector< E,fixed<3> > vector_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef vector< E,fixed<3> > vector_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckMatAffine3D(m);
@@ -595,7 +595,7 @@ matrix_look_at(matrix<E,A,B,L>& m, E eye_x, E eye_y, E eye_z, E target_x,
                E target_y, E target_z, E up_x, E up_y, E up_z,
                Handedness handedness)
 {
-    typedef vector< E, fixed<3> > vector_type;
+    [[maybe_unused]] typedef vector< E, fixed<3> > vector_type;
 
     matrix_look_at(m,
                    vector_type(eye_x,eye_y,eye_z),
@@ -787,7 +787,7 @@ matrix_affine_transform_2D(
 template < typename E, class A, class B, class L, class MatT > void
 matrix_3D_affine_from_2D_affine(matrix<E,A,B,L>& m, const MatT& affine_2D)
 {
-    typedef vector< E, fixed<2> > vector_type;
+    [[maybe_unused]] typedef vector< E, fixed<2> > vector_type;
 
     vector_type x = matrix_get_x_basis_vector_2D(affine_2D);
     vector_type y = matrix_get_y_basis_vector_2D(affine_2D);
@@ -807,7 +807,7 @@ matrix_3D_affine_from_2D_affine(matrix<E,A,B,L>& m, const MatT& affine_2D)
 template < typename E, class A, class B, class L, class MatT > void
 matrix_3D_affine_from_3D_affine(matrix<E,A,B,L>& m, const MatT& affine_3D)
 {
-    typedef vector< E, fixed<3> > vector_type;
+    [[maybe_unused]] typedef vector< E, fixed<3> > vector_type;
 
     vector_type x = matrix_get_x_basis_vector(affine_3D);
     vector_type y = matrix_get_y_basis_vector(affine_3D);
@@ -844,8 +844,8 @@ void matrix_decompose_SRT(
     vector<VE,VA>& translation)
 {
     typedef MatT matrix_type;
-    typedef typename matrix_type::value_type value_type;
-    typedef vector<value_type, fixed<3> > vector_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef vector<value_type, fixed<3> > vector_type;
 
     /* Checking */
     detail::CheckMatAffine3D(m);
@@ -886,7 +886,7 @@ void matrix_decompose_SRT(
     vector<VE,VA>& translation)
 {
     typedef MatT matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
     typedef matrix< value_type, fixed<3,3> > rotation_type;
 
     rotation_type rotation_matrix;
@@ -910,7 +910,7 @@ void matrix_decompose_SRT(
     Real tolerance = epsilon<Real>::placeholder())
 {
     typedef MatT matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
     typedef matrix< value_type, fixed<3,3> > rotation_type;
 
     rotation_type rotation_matrix;
@@ -933,7 +933,7 @@ void matrix_decompose_SRT(
     Real tolerance = epsilon<Real>::placeholder())
 {
     typedef MatT matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
     typedef matrix< value_type, fixed<3,3> > rotation_type;
 
     rotation_type rotation_matrix;
@@ -961,8 +961,8 @@ void matrix_decompose_SRT_2D(
     vector<VE,VA>& translation)
 {
     typedef MatT matrix_type;
-    typedef typename matrix_type::value_type value_type;
-    typedef vector<value_type, fixed<2> > vector_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef vector<value_type, fixed<2> > vector_type;
 
     /* Checking */
     detail::CheckMatAffine2D(m);
@@ -991,7 +991,7 @@ void matrix_decompose_SRT_2D(
     vector<E,A>& translation)
 {
     typedef MatT matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
     typedef matrix< value_type, fixed<2,2> > rotation_type;
 
     rotation_type rotation_matrix;

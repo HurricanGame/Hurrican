@@ -68,8 +68,8 @@ void make_pick_ray(
     vector<E,A>& direction,
     bool normalize = true)
 {
-    typedef vector<E,A> vector_type;
-    typedef typename vector_type::value_type value_type;
+    [[maybe_unused]] typedef vector<E,A> vector_type;
+    [[maybe_unused]] typedef typename vector_type::value_type value_type;
 
     // NOTE: Changed 'near' and 'far' to 'n' and 'f' to work around
     // windows.h 'near' and 'far' macros.

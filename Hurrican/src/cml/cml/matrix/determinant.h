@@ -90,7 +90,7 @@ struct determinant_f<MatT,4>
     typename MatT::value_type operator()(const MatT& M) const
     {
         /* Shorthand. */
-        typedef typename MatT::value_type value_type;
+        [[maybe_unused]] typedef typename MatT::value_type value_type;
 
         /* Common cofactors: */
         value_type m_22_33_23_32 = M(2,2)*M(3,3) - M(2,3)*M(3,2);
@@ -179,7 +179,7 @@ determinant(const MatT& M, dynamic_size_tag)
 template<typename E, class AT, class BO, class L> inline E
 determinant(const matrix<E,AT,BO,L>& M)
 {
-    typedef typename matrix<E,AT,BO,L>::size_tag size_tag;
+    [[maybe_unused]] typedef typename matrix<E,AT,BO,L>::size_tag size_tag;
     return detail::determinant(M,size_tag());
 }
 
@@ -187,7 +187,7 @@ determinant(const matrix<E,AT,BO,L>& M)
 template<typename XprT> inline typename XprT::value_type
 determinant(const et::MatrixXpr<XprT>& e)
 {
-    typedef typename et::MatrixXpr<XprT>::size_tag size_tag;
+    [[maybe_unused]] typedef typename et::MatrixXpr<XprT>::size_tag size_tag;
     return detail::determinant(e,size_tag());
 }
 

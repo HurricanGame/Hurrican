@@ -167,9 +167,9 @@ vector(const vector<E,AT>& m) {                                         \
 template<class XprT>                                                    \
 vector(VECXPR_ARG_TYPE e) {                                             \
     /* Verify that a promotion exists at compile time: */               \
-    typedef typename et::VectorPromote<                                 \
+    [[maybe_unused]] typedef typename et::VectorPromote<                                 \
         vector_type, typename XprT::result_type>::type result_type;     \
-    typedef typename XprT::value_type src_value_type;                   \
+    [[maybe_unused]] typedef typename XprT::value_type src_value_type;                   \
     typedef et::OpAssign<Element,src_value_type> OpT;                   \
     et::UnrollAssignment<OpT>(*this,e);                                 \
 }
@@ -209,9 +209,9 @@ operator _op_ (const cml::vector<E,AT>& m) {                            \
 template<class XprT> vector_type&                                       \
 operator _op_ (VECXPR_ARG_TYPE e) {                                     \
     /* Verify that a promotion exists at compile time: */               \
-    typedef typename et::VectorPromote<                                 \
+    [[maybe_unused]] typedef typename et::VectorPromote<                                 \
         vector_type, typename XprT::result_type>::type result_type;     \
-    typedef typename XprT::value_type src_value_type;                   \
+    [[maybe_unused]] typedef typename XprT::value_type src_value_type;                   \
     typedef _op_name_ <Element,src_value_type> OpT;                     \
     cml::et::UnrollAssignment<OpT>(*this,e);                            \
     return *this;                                                       \

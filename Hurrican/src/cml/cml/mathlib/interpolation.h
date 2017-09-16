@@ -45,15 +45,15 @@ struct TypePromote< T1,T2,et::scalar_result_tag >
 {
     typedef et::ExprTraits<T1> traits_1;
     typedef et::ExprTraits<T2> traits_2;
-    typedef typename traits_1::result_tag result_type_1;
-    typedef typename traits_2::result_tag result_type_2;
+    [[maybe_unused]] typedef typename traits_1::result_tag result_type_1;
+    [[maybe_unused]] typedef typename traits_2::result_tag result_type_2;
 
     /* Check that results are of the same type */
     CML_STATIC_REQUIRE_M(
         (same_type<result_type_1, result_type_2>::is_true),
         function_expects_args_of_same_type_error);
 
-    typedef typename et::ScalarPromote<T1,T2>::type temporary_type;
+    [[maybe_unused]] typedef typename et::ScalarPromote<T1,T2>::type temporary_type;
 };
 
 template< class T1, class T2 >
@@ -61,8 +61,8 @@ struct TypePromote< T1,T2,et::vector_result_tag >
 {
     typedef et::ExprTraits<T1> traits_1;
     typedef et::ExprTraits<T2> traits_2;
-    typedef typename traits_1::result_tag result_type_1;
-    typedef typename traits_2::result_tag result_type_2;
+    [[maybe_unused]] typedef typename traits_1::result_tag result_type_1;
+    [[maybe_unused]] typedef typename traits_2::result_tag result_type_2;
 
     /* Check that results are of the same type */
     CML_STATIC_REQUIRE_M(
@@ -72,7 +72,7 @@ struct TypePromote< T1,T2,et::vector_result_tag >
     /* @todo: This should be VectorPromote<> for symmetry with the other
      * type promotions.
      */
-    typedef typename CrossPromote<T1,T2>::promoted_vector temporary_type;
+    [[maybe_unused]] typedef typename CrossPromote<T1,T2>::promoted_vector temporary_type;
 };
 
 template< class T1, class T2 >
@@ -80,15 +80,15 @@ struct TypePromote< T1,T2,et::matrix_result_tag >
 {
     typedef et::ExprTraits<T1> traits_1;
     typedef et::ExprTraits<T2> traits_2;
-    typedef typename traits_1::result_tag result_type_1;
-    typedef typename traits_2::result_tag result_type_2;
+    [[maybe_unused]] typedef typename traits_1::result_tag result_type_1;
+    [[maybe_unused]] typedef typename traits_2::result_tag result_type_2;
 
     /* Check that results are of the same type */
     CML_STATIC_REQUIRE_M(
         (same_type<result_type_1, result_type_2>::is_true),
         function_expects_args_of_same_type_error);
 
-    typedef typename et::MatrixPromote2<T1,T2>::temporary_type temporary_type;
+    [[maybe_unused]] typedef typename et::MatrixPromote2<T1,T2>::temporary_type temporary_type;
 };
 
 template< class T1, class T2 >
@@ -96,15 +96,15 @@ struct TypePromote< T1,T2,et::quaternion_result_tag >
 {
     typedef et::ExprTraits<T1> traits_1;
     typedef et::ExprTraits<T2> traits_2;
-    typedef typename traits_1::result_tag result_type_1;
-    typedef typename traits_2::result_tag result_type_2;
+    [[maybe_unused]] typedef typename traits_1::result_tag result_type_1;
+    [[maybe_unused]] typedef typename traits_2::result_tag result_type_2;
 
     /* Check that results are of the same type */
     CML_STATIC_REQUIRE_M(
         (same_type<result_type_1, result_type_2>::is_true),
         function_expects_args_of_same_type_error);
 
-    typedef typename et::QuaternionPromote2<T1,T2>::temporary_type
+    [[maybe_unused]] typedef typename et::QuaternionPromote2<T1,T2>::temporary_type
     temporary_type;
 };
 
@@ -116,9 +116,9 @@ struct TypePromote3< T1,T2,T3,et::matrix_result_tag >
     typedef et::ExprTraits<T1> traits_1;
     typedef et::ExprTraits<T2> traits_2;
     typedef et::ExprTraits<T3> traits_3;
-    typedef typename traits_1::result_tag result_type_1;
-    typedef typename traits_2::result_tag result_type_2;
-    typedef typename traits_3::result_tag result_type_3;
+    [[maybe_unused]] typedef typename traits_1::result_tag result_type_1;
+    [[maybe_unused]] typedef typename traits_2::result_tag result_type_2;
+    [[maybe_unused]] typedef typename traits_3::result_tag result_type_3;
 
     /* Check that results are of the same type */
     CML_STATIC_REQUIRE_M(
@@ -128,9 +128,9 @@ struct TypePromote3< T1,T2,T3,et::matrix_result_tag >
         (same_type<result_type_1, result_type_3>::is_true),
         function_expects_args_of_same_type_error);
 
-    typedef typename et::MatrixPromote3<T1,T2,T3>::temporary_type
+    [[maybe_unused]] typedef typename et::MatrixPromote3<T1,T2,T3>::temporary_type
     temporary_type;
-    typedef typename temporary_type::value_type value_type;
+    [[maybe_unused]] typedef typename temporary_type::value_type value_type;
 };
 
 template< class T1, class T2, class T3 >
@@ -139,9 +139,9 @@ struct TypePromote3< T1,T2,T3,et::quaternion_result_tag >
     typedef et::ExprTraits<T1> traits_1;
     typedef et::ExprTraits<T2> traits_2;
     typedef et::ExprTraits<T3> traits_3;
-    typedef typename traits_1::result_tag result_type_1;
-    typedef typename traits_2::result_tag result_type_2;
-    typedef typename traits_3::result_tag result_type_3;
+    [[maybe_unused]] typedef typename traits_1::result_tag result_type_1;
+    [[maybe_unused]] typedef typename traits_2::result_tag result_type_2;
+    [[maybe_unused]] typedef typename traits_3::result_tag result_type_3;
 
     /* Check that results are of the same type */
     CML_STATIC_REQUIRE_M(
@@ -151,9 +151,9 @@ struct TypePromote3< T1,T2,T3,et::quaternion_result_tag >
         (same_type<result_type_1, result_type_3>::is_true),
         function_expects_args_of_same_type_error);
 
-    typedef typename et::QuaternionPromote3<T1,T2,T3>::temporary_type
+    [[maybe_unused]] typedef typename et::QuaternionPromote3<T1,T2,T3>::temporary_type
     temporary_type;
-    typedef typename temporary_type::value_type value_type;
+    [[maybe_unused]] typedef typename temporary_type::value_type value_type;
 };
 
 template <
@@ -167,10 +167,10 @@ struct TypePromote4< T1,T2,T3,T4,et::matrix_result_tag >
     typedef et::ExprTraits<T2> traits_2;
     typedef et::ExprTraits<T3> traits_3;
     typedef et::ExprTraits<T4> traits_4;
-    typedef typename traits_1::result_tag result_type_1;
-    typedef typename traits_2::result_tag result_type_2;
-    typedef typename traits_3::result_tag result_type_3;
-    typedef typename traits_4::result_tag result_type_4;
+    [[maybe_unused]] typedef typename traits_1::result_tag result_type_1;
+    [[maybe_unused]] typedef typename traits_2::result_tag result_type_2;
+    [[maybe_unused]] typedef typename traits_3::result_tag result_type_3;
+    [[maybe_unused]] typedef typename traits_4::result_tag result_type_4;
 
     /* Check that results are of the same type */
     CML_STATIC_REQUIRE_M(
@@ -183,9 +183,9 @@ struct TypePromote4< T1,T2,T3,T4,et::matrix_result_tag >
         (same_type<result_type_1, result_type_4>::is_true),
         function_expects_args_of_same_type_error);
 
-    typedef typename et::MatrixPromote4<T1,T2,T3,T4>::temporary_type
+    [[maybe_unused]] typedef typename et::MatrixPromote4<T1,T2,T3,T4>::temporary_type
     temporary_type;
-    typedef typename temporary_type::value_type value_type;
+    [[maybe_unused]] typedef typename temporary_type::value_type value_type;
 };
 
 template< class T1, class T2, class T3, class T4 >
@@ -195,10 +195,10 @@ struct TypePromote4< T1,T2,T3,T4,et::quaternion_result_tag >
     typedef et::ExprTraits<T2> traits_2;
     typedef et::ExprTraits<T3> traits_3;
     typedef et::ExprTraits<T4> traits_4;
-    typedef typename traits_1::result_tag result_type_1;
-    typedef typename traits_2::result_tag result_type_2;
-    typedef typename traits_3::result_tag result_type_3;
-    typedef typename traits_4::result_tag result_type_4;
+    [[maybe_unused]] typedef typename traits_1::result_tag result_type_1;
+    [[maybe_unused]] typedef typename traits_2::result_tag result_type_2;
+    [[maybe_unused]] typedef typename traits_3::result_tag result_type_3;
+    [[maybe_unused]] typedef typename traits_4::result_tag result_type_4;
 
     /* Check that results are of the same type */
     CML_STATIC_REQUIRE_M(
@@ -211,9 +211,9 @@ struct TypePromote4< T1,T2,T3,T4,et::quaternion_result_tag >
         (same_type<result_type_1, result_type_4>::is_true),
         function_expects_args_of_same_type_error);
 
-    typedef typename et::QuaternionPromote4<T1,T2,T3,T4>::temporary_type
+    [[maybe_unused]] typedef typename et::QuaternionPromote4<T1,T2,T3,T4>::temporary_type
     temporary_type;
-    typedef typename temporary_type::value_type value_type;
+    [[maybe_unused]] typedef typename temporary_type::value_type value_type;
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -279,14 +279,14 @@ squad_intermediate(
     SizeT)
 {
     typedef et::ExprTraits<T1> traits_1;
-    typedef typename traits_1::result_tag result_type_1;
+    [[maybe_unused]] typedef typename traits_1::result_tag result_type_1;
 
-    typedef typename detail::TypePromote3<T1,T2,T3,result_type_1>::temporary_type
+    [[maybe_unused]] typedef typename detail::TypePromote3<T1,T2,T3,result_type_1>::temporary_type
     temporary_type;
-    typedef typename temporary_type::value_type value_type;
-    typedef typename temporary_type::cross_type cross_type;
+    [[maybe_unused]] typedef typename temporary_type::value_type value_type;
+    [[maybe_unused]] typedef typename temporary_type::cross_type cross_type;
     typedef et::ExprTraits<temporary_type> result_traits;
-    typedef typename result_traits::size_tag size_tag;
+    [[maybe_unused]] typedef typename result_traits::size_tag size_tag;
 
     /**
      * NOTE: It seems that the equation for computing an intermediate
@@ -339,9 +339,9 @@ struct squad_intermediate_f<MatT_1,MatT_2,MatT_3,3>
         const MatT_3& m3,
         Real tolerance)
     {
-        typedef typename et::MatrixPromote3<
+        [[maybe_unused]] typedef typename et::MatrixPromote3<
         MatT_1,MatT_2,MatT_3 >::temporary_type temporary_type;
-        typedef typename temporary_type::value_type value_type;
+        [[maybe_unused]] typedef typename temporary_type::value_type value_type;
         typedef quaternion< value_type > quaternion_type;
 
         quaternion_type q1, q2, q3;
@@ -371,11 +371,11 @@ struct squad_intermediate_f<MatT_1,MatT_2,MatT_3,2>
         const MatT_3& m3,
         Real tolerance)
     {
-        typedef typename et::MatrixPromote3<
+        [[maybe_unused]] typedef typename et::MatrixPromote3<
         MatT_1,MatT_2,MatT_3 >::temporary_type temporary_type;
-        typedef typename temporary_type::value_type value_type;
+        [[maybe_unused]] typedef typename temporary_type::value_type value_type;
         typedef quaternion< value_type > quaternion_type;
-        typedef vector< value_type, fixed<3> > vector_type;
+        [[maybe_unused]] typedef vector< value_type, fixed<3> > vector_type;
 
         value_type angle1 = matrix_to_rotation_2D(m1);
         value_type angle2 = matrix_to_rotation_2D(m2);
@@ -425,7 +425,7 @@ squad_intermediate(
     et::matrix_result_tag,
     dynamic_size_tag)
 {
-    typedef typename et::MatrixPromote3<
+    [[maybe_unused]] typedef typename et::MatrixPromote3<
     MatT_1,MatT_2,MatT_3 >::temporary_type temporary_type;
 
     temporary_type m;
@@ -465,13 +465,13 @@ slerp(
     SizeT)
 {
     typedef et::ExprTraits<VecT_1> type_traits;
-    typedef typename type_traits::result_tag result_type;
-    typedef typename
+    [[maybe_unused]] typedef typename type_traits::result_tag result_type;
+    [[maybe_unused]] typedef typename
     detail::TypePromote<VecT_1,VecT_2,result_type>::temporary_type
     temporary_type;
-    typedef typename temporary_type::value_type value_type;
+    [[maybe_unused]] typedef typename temporary_type::value_type value_type;
     typedef et::ExprTraits<temporary_type> result_traits;
-    typedef typename result_traits::size_tag size_tag;
+    [[maybe_unused]] typedef typename result_traits::size_tag size_tag;
 
     temporary_type result;
     detail::InterpResize(result, v1, size_tag());
@@ -507,11 +507,11 @@ slerp(
     SizeT)
 {
     typedef et::ExprTraits<QuatT_1> type_traits;
-    typedef typename type_traits::result_tag result_type;
-    typedef typename
+    [[maybe_unused]] typedef typename type_traits::result_tag result_type;
+    [[maybe_unused]] typedef typename
     detail::TypePromote<QuatT_1,QuatT_2,result_type>::temporary_type
     temporary_type;
-    typedef typename temporary_type::value_type value_type;
+    [[maybe_unused]] typedef typename temporary_type::value_type value_type;
 
     temporary_type q3 = q2;
     value_type c = dot(q1,q3);
@@ -549,7 +549,7 @@ template< class MatT_1, class MatT_2 > struct slerp_f<MatT_1,MatT_2,3>
         Real t,
         Real tolerance)
     {
-        typedef typename detail::TypePromote<
+        [[maybe_unused]] typedef typename detail::TypePromote<
         MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
         >::temporary_type temporary_type;
 
@@ -574,7 +574,7 @@ template< class MatT_1, class MatT_2 > struct slerp_f<MatT_1,MatT_2,2>
         Real t,
         Real tolerance)
     {
-        typedef typename detail::TypePromote<
+        [[maybe_unused]] typedef typename detail::TypePromote<
         MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
         >::temporary_type temporary_type;
 
@@ -618,7 +618,7 @@ slerp(
     et::matrix_result_tag,
     dynamic_size_tag)
 {
-    typedef typename detail::TypePromote<
+    [[maybe_unused]] typedef typename detail::TypePromote<
     MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
     >::temporary_type temporary_type;
 
@@ -657,13 +657,13 @@ nlerp(
     SizeT)
 {
     typedef et::ExprTraits<VecT_1> type_traits;
-    typedef typename type_traits::result_tag result_type;
-    typedef typename
+    [[maybe_unused]] typedef typename type_traits::result_tag result_type;
+    [[maybe_unused]] typedef typename
     detail::TypePromote<VecT_1,VecT_2,result_type>::temporary_type
     temporary_type;
-    typedef typename temporary_type::value_type value_type;
+    [[maybe_unused]] typedef typename temporary_type::value_type value_type;
     typedef et::ExprTraits<temporary_type> result_traits;
-    typedef typename result_traits::size_tag size_tag;
+    [[maybe_unused]] typedef typename result_traits::size_tag size_tag;
 
     temporary_type result;
     detail::InterpResize(result, v1, size_tag());
@@ -689,11 +689,11 @@ nlerp(
     SizeT)
 {
     typedef et::ExprTraits<QuatT_1> type_traits;
-    typedef typename type_traits::result_tag result_type;
-    typedef typename
+    [[maybe_unused]] typedef typename type_traits::result_tag result_type;
+    [[maybe_unused]] typedef typename
     detail::TypePromote<QuatT_1,QuatT_2,result_type>::temporary_type
     temporary_type;
-    typedef typename temporary_type::value_type value_type;
+    [[maybe_unused]] typedef typename temporary_type::value_type value_type;
 
     return normalize(lerp(q1, (dot(q1,q2) < value_type(0)) ? -q2 : q2, t));
 }
@@ -715,10 +715,10 @@ template< class MatT_1, class MatT_2 > struct nlerp_f<MatT_1,MatT_2,3>
         const MatT_2& m2,
         Real t)
     {
-        typedef typename detail::TypePromote<
+        [[maybe_unused]] typedef typename detail::TypePromote<
         MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
         >::temporary_type temporary_type;
-        typedef typename temporary_type::value_type value_type;
+        [[maybe_unused]] typedef typename temporary_type::value_type value_type;
 
         temporary_type m;
         et::detail::Resize(m,3,3);
@@ -739,10 +739,10 @@ template< class MatT_1, class MatT_2 > struct nlerp_f<MatT_1,MatT_2,2>
         const MatT_2& m2,
         Real t)
     {
-        typedef typename detail::TypePromote<
+        [[maybe_unused]] typedef typename detail::TypePromote<
         MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
         >::temporary_type temporary_type;
-        typedef typename temporary_type::value_type value_type;
+        [[maybe_unused]] typedef typename temporary_type::value_type value_type;
 
         temporary_type m;
         et::detail::Resize(m,2,2);
@@ -781,7 +781,7 @@ nlerp(
     et::matrix_result_tag,
     dynamic_size_tag)
 {
-    typedef typename detail::TypePromote<
+    [[maybe_unused]] typedef typename detail::TypePromote<
     MatT_1,MatT_2,typename et::ExprTraits<MatT_1>::result_tag
     >::temporary_type temporary_type;
 
@@ -848,12 +848,12 @@ squad_intermediate(
     detail::CheckQuat(t3);
 
     typedef et::ExprTraits<T1> traits_1;
-    typedef typename traits_1::result_tag result_type_1;
+    [[maybe_unused]] typedef typename traits_1::result_tag result_type_1;
 
-    typedef typename detail::TypePromote3<T1,T2,T3,result_type_1>::temporary_type
+    [[maybe_unused]] typedef typename detail::TypePromote3<T1,T2,T3,result_type_1>::temporary_type
     temporary_type;
     typedef et::ExprTraits<temporary_type> result_traits;
-    typedef typename result_traits::size_tag size_tag;
+    [[maybe_unused]] typedef typename result_traits::size_tag size_tag;
 
     temporary_type result;
     detail::InterpResize(result, t1, size_tag());
@@ -907,13 +907,13 @@ squad(
     detail::CheckQuat(t2);
 
     typedef et::ExprTraits<T1> traits_1;
-    typedef typename traits_1::result_tag result_type_1;
+    [[maybe_unused]] typedef typename traits_1::result_tag result_type_1;
 
-    typedef typename detail::TypePromote4<
+    [[maybe_unused]] typedef typename detail::TypePromote4<
     T1,T2,T3,T4,result_type_1>::temporary_type temporary_type;
-    typedef typename temporary_type::value_type value_type;
+    [[maybe_unused]] typedef typename temporary_type::value_type value_type;
     typedef et::ExprTraits<temporary_type> result_traits;
-    typedef typename result_traits::size_tag size_tag;
+    [[maybe_unused]] typedef typename result_traits::size_tag size_tag;
 
     temporary_type result;
     detail::InterpResize(result, t1, size_tag());
@@ -944,12 +944,12 @@ slerp(
     Real tolerance = epsilon<Real>::placeholder())
 {
     typedef et::ExprTraits<T1> traits_1;
-    typedef typename traits_1::result_tag result_type_1;
+    [[maybe_unused]] typedef typename traits_1::result_tag result_type_1;
 
-    typedef typename detail::TypePromote<T1,T2,result_type_1>::temporary_type
+    [[maybe_unused]] typedef typename detail::TypePromote<T1,T2,result_type_1>::temporary_type
     temporary_type;
     typedef et::ExprTraits<temporary_type> result_traits;
-    typedef typename result_traits::size_tag size_tag;
+    [[maybe_unused]] typedef typename result_traits::size_tag size_tag;
 
     temporary_type result;
     detail::InterpResize(result, t1, size_tag());
@@ -969,12 +969,12 @@ T1,T2,typename et::ExprTraits<T1>::result_tag
 nlerp(const T1& t1, const T2& t2, Real t)
 {
     typedef et::ExprTraits<T1> traits_1;
-    typedef typename traits_1::result_tag result_type_1;
+    [[maybe_unused]] typedef typename traits_1::result_tag result_type_1;
 
-    typedef typename detail::TypePromote<T1,T2,result_type_1>::temporary_type
+    [[maybe_unused]] typedef typename detail::TypePromote<T1,T2,result_type_1>::temporary_type
     temporary_type;
     typedef et::ExprTraits<temporary_type> result_traits;
-    typedef typename result_traits::size_tag size_tag;
+    [[maybe_unused]] typedef typename result_traits::size_tag size_tag;
 
     temporary_type result;
     detail::InterpResize(result, t1, size_tag());
@@ -1004,7 +1004,7 @@ lerp(const T1& val0, const T2& val1, Scalar u)
     >::temporary_type temporary_type;
 
     typedef et::ExprTraits<temporary_type> result_traits;
-    typedef typename result_traits::size_tag size_tag;
+    [[maybe_unused]] typedef typename result_traits::size_tag size_tag;
 
     temporary_type result;
     detail::InterpResize(result, val1, size_tag());
@@ -1043,7 +1043,7 @@ bilerp(const T1& val00, const T2& val10,
     >::temporary_type temporary_type;
 
     typedef et::ExprTraits<temporary_type> result_traits;
-    typedef typename result_traits::size_tag size_tag;
+    [[maybe_unused]] typedef typename result_traits::size_tag size_tag;
 
     temporary_type result;
     detail::InterpResize(result, val00, size_tag());
@@ -1121,7 +1121,7 @@ trilerp(const T1& val000, const T2& val100,
     >::temporary_type temporary_type;
 
     typedef et::ExprTraits<temporary_type> result_traits;
-    typedef typename result_traits::size_tag size_tag;
+    [[maybe_unused]] typedef typename result_traits::size_tag size_tag;
 
     temporary_type result;
     detail::InterpResize(result, val000, size_tag());

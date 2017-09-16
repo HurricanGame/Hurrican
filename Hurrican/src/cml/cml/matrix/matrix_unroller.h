@@ -184,20 +184,20 @@ public:
         };
 
 #if defined(CML_2D_UNROLLER)
-        typedef typename MatrixAssignmentUnroller<OpT,E,AT,BO,L,SrcT>
+        [[maybe_unused]] typedef typename MatrixAssignmentUnroller<OpT,E,AT,BO,L,SrcT>
         ::template Eval<0, 0, LastRow, LastCol,
                         (Max <= CML_MATRIX_UNROLL_LIMIT)> Unroller;
 #endif
 
 #if defined(CML_NO_2D_UNROLLER)
         /* Use a loop: */
-        typedef typename MatrixAssignmentUnroller<OpT,E,AT,BO,L,SrcT>
+        [[maybe_unused]] typedef typename MatrixAssignmentUnroller<OpT,E,AT,BO,L,SrcT>
         ::template Eval<0, 0, LastRow, LastCol> Unroller;
 #endif
 
         /* Use a run-time check if src is a run-time sized expression: */
-        typedef typename ExprTraits<SrcT>::size_tag src_size;
-        typedef typename select_if<
+        [[maybe_unused]] typedef typename ExprTraits<SrcT>::size_tag src_size;
+        [[maybe_unused]] typedef typename select_if<
             same_type<src_size,dynamic_size_tag>::is_true,
             dynamic_size_tag, fixed_size_tag>::result size_tag;
 

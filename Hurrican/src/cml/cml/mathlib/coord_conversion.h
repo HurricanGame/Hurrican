@@ -41,8 +41,8 @@ template < typename E, class A > void
 cylindrical_to_cartesian(
     E radius, E theta, E height, size_t axis, vector<E,A>& v)
 {
-    typedef vector<E,A> vector_type;
-    typedef typename vector_type::value_type value_type;
+    [[maybe_unused]] typedef vector<E,A> vector_type;
+    [[maybe_unused]] typedef typename vector_type::value_type value_type;
 
     /* Checking */
     detail::CheckVec3(v);
@@ -61,8 +61,8 @@ template < typename E, class A > void
 spherical_to_cartesian(E radius, E theta, E phi, size_t axis,
                        SphericalType type, vector<E,A>& v)
 {
-    typedef vector<E,A> vector_type;
-    typedef typename vector_type::value_type value_type;
+    [[maybe_unused]] typedef vector<E,A> vector_type;
+    [[maybe_unused]] typedef typename vector_type::value_type value_type;
 
     /* Checking */
     detail::CheckVec3(v);

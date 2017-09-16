@@ -54,7 +54,7 @@ template<typename LeftT, typename RightT> struct MatrixPromote
         >
     {
         /* Promote the arrays: */
-        typedef typename ArrayPromote<
+        [[maybe_unused]] typedef typename ArrayPromote<
         typename cml::matrix<E1,AT1,BO1,L1>::array_type,
                  typename cml::matrix<E2,AT2,BO2,L2>::array_type
                  >::type promoted_array;
@@ -68,7 +68,7 @@ template<typename LeftT, typename RightT> struct MatrixPromote
                  > type;
 
         /* The deduced temporary type: */
-        typedef typename type::temporary_type temporary_type;
+        [[maybe_unused]] typedef typename type::temporary_type temporary_type;
     };
 
     /** Type promotion for a matrix and a scalar. */
@@ -79,7 +79,7 @@ template<typename LeftT, typename RightT> struct MatrixPromote
         typedef cml::matrix<typename ScalarPromote<E,S>::type, AT, BO, L> type;
 
         /* The deduced temporary type: */
-        typedef typename type::temporary_type temporary_type;
+        [[maybe_unused]] typedef typename type::temporary_type temporary_type;
     };
 
     /** Type promotion for a scalar and a matrix. */
@@ -90,7 +90,7 @@ template<typename LeftT, typename RightT> struct MatrixPromote
         typedef cml::matrix<typename ScalarPromote<S,E>::type, AT, BO, L> type;
 
         /* The deduced temporary type: */
-        typedef typename type::temporary_type temporary_type;
+        [[maybe_unused]] typedef typename type::temporary_type temporary_type;
     };
 
     /** Type promotion for outer product. */
@@ -110,29 +110,29 @@ template<typename LeftT, typename RightT> struct MatrixPromote
 
         /* Deduce the corresponding matrix types for the vectors: */
         typedef CML_DEFAULT_ARRAY_LAYOUT layout;
-        typedef typename select_if<
+        [[maybe_unused]] typedef typename select_if<
         array_rows == -1, dynamic<>, fixed<array_rows,1>
         >::result left_storage;
         typedef cml::matrix<E1,left_storage,basis_orient,layout> left_matrix;
 
-        typedef typename select_if<
+        [[maybe_unused]] typedef typename select_if<
         array_cols == -1, dynamic<>, fixed<1,array_cols>
         >::result right_storage;
         typedef cml::matrix<E2,right_storage,basis_orient,layout> right_matrix;
 
         /* Finally, promote the matrix types to get the result: */
-        typedef typename et::MatrixPromote<left_matrix,right_matrix>::type type;
-        typedef typename type::temporary_type temporary_type;
+        [[maybe_unused]] typedef typename et::MatrixPromote<left_matrix,right_matrix>::type type;
+        [[maybe_unused]] typedef typename type::temporary_type temporary_type;
     };
 
     /** Remove const and & from the to-be-promoted types. */
-    typedef typename remove_const<
+    [[maybe_unused]] typedef typename remove_const<
     typename remove_reference<LeftT>::type>::type LeftBaseT;
-    typedef typename remove_const<
+    [[maybe_unused]] typedef typename remove_const<
     typename remove_reference<RightT>::type>::type RightBaseT;
 
-    typedef typename MatrixPromoteHelper<LeftBaseT,RightBaseT>::type type;
-    typedef typename type::temporary_type temporary_type;
+    [[maybe_unused]] typedef typename MatrixPromoteHelper<LeftBaseT,RightBaseT>::type type;
+    [[maybe_unused]] typedef typename type::temporary_type temporary_type;
 };
 
 /**
@@ -144,31 +144,31 @@ template<typename LeftT, typename RightT> struct MatrixPromote
 template < class Mat1_T, class Mat2_T >
 struct MatrixPromote2
 {
-    typedef typename MatrixPromote<
+    [[maybe_unused]] typedef typename MatrixPromote<
     typename Mat1_T::temporary_type, typename Mat2_T::temporary_type
     >::temporary_type temporary_type;
-    typedef typename temporary_type::value_type value_type;
+    [[maybe_unused]] typedef typename temporary_type::value_type value_type;
 };
 
 /** Type promotion for three matrix types. */
 template < class Mat1_T, class Mat2_T, class Mat3_T >
 struct MatrixPromote3
 {
-    typedef typename MatrixPromote<
+    [[maybe_unused]] typedef typename MatrixPromote<
     typename Mat1_T::temporary_type,
              typename MatrixPromote<
              typename Mat2_T::temporary_type,
              typename Mat3_T::temporary_type
              >::temporary_type
              >::temporary_type temporary_type;
-    typedef typename temporary_type::value_type value_type;
+    [[maybe_unused]] typedef typename temporary_type::value_type value_type;
 };
 
 /** Type promotion for four matrix types. */
 template < class Mat1_T, class Mat2_T, class Mat3_T, class Mat4_T >
 struct MatrixPromote4
 {
-    typedef typename MatrixPromote<
+    [[maybe_unused]] typedef typename MatrixPromote<
     typename Mat1_T::temporary_type,
              typename MatrixPromote<
              typename Mat2_T::temporary_type,
@@ -178,7 +178,7 @@ struct MatrixPromote4
              >::temporary_type
              >::temporary_type
              >::temporary_type temporary_type;
-    typedef typename temporary_type::value_type value_type;
+    [[maybe_unused]] typedef typename temporary_type::value_type value_type;
 };
 
 } // namespace et

@@ -55,30 +55,30 @@ template<typename LeftT, typename RightT>
 struct DotPromote
 {
     /* Shorthand: */
-    typedef et::ExprTraits<LeftT> left_traits;
-    typedef et::ExprTraits<RightT> right_traits;
-    typedef typename left_traits::value_type left_value;
-    typedef typename right_traits::value_type right_value;
+    [[maybe_unused]] typedef et::ExprTraits<LeftT> left_traits;
+    [[maybe_unused]] typedef et::ExprTraits<RightT> right_traits;
+    [[maybe_unused]] typedef typename left_traits::value_type left_value;
+    [[maybe_unused]] typedef typename right_traits::value_type right_value;
 
     /* Deduce the promoted scalar type: */
     typedef et::OpMul<left_value, right_value> op_mul;
-    typedef typename et::OpAdd<
+    [[maybe_unused]] typedef typename et::OpAdd<
     typename op_mul::value_type,
              typename op_mul::value_type> op_add;
-    typedef typename op_add::value_type promoted_scalar;
+    [[maybe_unused]] typedef typename op_add::value_type promoted_scalar;
 };
 
 template<typename LeftT, typename RightT>
 struct CrossPromote
 {
     /* Shorthand: */
-    typedef et::ExprTraits<LeftT> left_traits;
-    typedef et::ExprTraits<RightT> right_traits;
-    typedef typename left_traits::result_type left_type;
-    typedef typename right_traits::result_type right_type;
+    [[maybe_unused]] typedef et::ExprTraits<LeftT> left_traits;
+    [[maybe_unused]] typedef et::ExprTraits<RightT> right_traits;
+    [[maybe_unused]] typedef typename left_traits::result_type left_type;
+    [[maybe_unused]] typedef typename right_traits::result_type right_type;
 
     /* Deduce the matrix result type: */
-    typedef typename et::VectorPromote<
+    [[maybe_unused]] typedef typename et::VectorPromote<
     left_type,right_type>::temporary_type promoted_vector;
 };
 
@@ -86,13 +86,13 @@ template<typename LeftT, typename RightT>
 struct OuterPromote
 {
     /* Shorthand: */
-    typedef et::ExprTraits<LeftT> left_traits;
-    typedef et::ExprTraits<RightT> right_traits;
-    typedef typename left_traits::result_type left_type;
-    typedef typename right_traits::result_type right_type;
+    [[maybe_unused]] typedef et::ExprTraits<LeftT> left_traits;
+    [[maybe_unused]] typedef et::ExprTraits<RightT> right_traits;
+    [[maybe_unused]] typedef typename left_traits::result_type left_type;
+    [[maybe_unused]] typedef typename right_traits::result_type right_type;
 
     /* Deduce the matrix result type: */
-    typedef typename et::MatrixPromote<
+    [[maybe_unused]] typedef typename et::MatrixPromote<
     left_type,right_type>::temporary_type promoted_matrix;
 };
 
@@ -110,16 +110,16 @@ UnrollDot(const LeftT& left, const RightT& right, fixed_size_tag)
     typedef DotPromote<LeftT,RightT> dot_helper;
 
     /* Compile-type vector size check: */
-    typedef typename et::GetCheckedSize<LeftT,RightT,fixed_size_tag>
+    [[maybe_unused]] typedef typename et::GetCheckedSize<LeftT,RightT,fixed_size_tag>
     ::check_type check_sizes;
 
     /* Get the fixed array size using the helper: */
     enum { Len = check_sizes::array_size };
 
     /* Record the unroller type: */
-    typedef typename dot_helper::op_mul op_mul;
-    typedef typename dot_helper::op_add op_add;
-    typedef typename et::detail::VectorAccumulateUnroller<
+    [[maybe_unused]] typedef typename dot_helper::op_mul op_mul;
+    [[maybe_unused]] typedef typename dot_helper::op_add op_add;
+    [[maybe_unused]] typedef typename et::detail::VectorAccumulateUnroller<
     op_add,op_mul,LeftT,RightT>::template
     Eval<0, Len-1, (Len <= CML_VECTOR_DOT_UNROLL_LIMIT)> Unroller;
     /* Note: Len is the array size, so Len-1 is the last element. */
@@ -140,13 +140,13 @@ UnrollDot(const LeftT& left, const RightT& right, dynamic_size_tag)
 {
     /* Shorthand: */
     typedef DotPromote<LeftT,RightT> dot_helper;
-    typedef et::ExprTraits<LeftT> left_traits;
-    typedef et::ExprTraits<RightT> right_traits;
-    typedef typename dot_helper::op_mul op_mul;
-    typedef typename dot_helper::op_add op_add;
+    [[maybe_unused]] typedef et::ExprTraits<LeftT> left_traits;
+    [[maybe_unused]] typedef et::ExprTraits<RightT> right_traits;
+    [[maybe_unused]] typedef typename dot_helper::op_mul op_mul;
+    [[maybe_unused]] typedef typename dot_helper::op_add op_add;
 
     /* Record the return type: */
-    typedef typename dot_helper::promoted_scalar sum_type;
+    [[maybe_unused]] typedef typename dot_helper::promoted_scalar sum_type;
 
     /* Verify expression sizes: */
     const size_t N = et::CheckedSize(left,right,dynamic_size_tag());
@@ -214,13 +214,13 @@ inline typename detail::DotPromote<LeftT,RightT>::promoted_scalar
 dot(const LeftT& left, const RightT& right)
 {
     /* Shorthand: */
-    typedef detail::DotPromote<LeftT,RightT> dot_helper;
-    typedef et::ExprTraits<LeftT> left_traits;
-    typedef et::ExprTraits<RightT> right_traits;
-    typedef typename left_traits::result_type left_type;
-    typedef typename right_traits::result_type right_type;
-    typedef typename left_traits::size_tag left_size;
-    typedef typename right_traits::size_tag right_size;
+    [[maybe_unused]] typedef detail::DotPromote<LeftT,RightT> dot_helper;
+    [[maybe_unused]] typedef et::ExprTraits<LeftT> left_traits;
+    [[maybe_unused]] typedef et::ExprTraits<RightT> right_traits;
+    [[maybe_unused]] typedef typename left_traits::result_type left_type;
+    [[maybe_unused]] typedef typename right_traits::result_type right_type;
+    [[maybe_unused]] typedef typename left_traits::size_tag left_size;
+    [[maybe_unused]] typedef typename right_traits::size_tag right_size;
 
     /* dot() requires vector expressions: */
     CML_STATIC_REQUIRE_M(
@@ -231,9 +231,9 @@ dot(const LeftT& left, const RightT& right)
      */
 
     /* Figure out the unroller to use (fixed or dynamic): */
-    typedef typename et::VectorPromote<
+    [[maybe_unused]] typedef typename et::VectorPromote<
         left_type, right_type>::temporary_type promoted_vector;
-    typedef typename promoted_vector::size_tag size_tag;
+    [[maybe_unused]] typedef typename promoted_vector::size_tag size_tag;
 
     /* Call unroller: */
     return detail::UnrollDot(left,right,size_tag());
@@ -246,10 +246,10 @@ inline typename detail::DotPromote<LeftT,RightT>::promoted_scalar
 perp_dot(const LeftT& left, const RightT& right)
 {
     /* Shorthand: */
-    typedef et::ExprTraits<LeftT> left_traits;
-    typedef et::ExprTraits<RightT> right_traits;
-    typedef typename left_traits::result_tag left_result;
-    typedef typename right_traits::result_tag right_result;
+    [[maybe_unused]] typedef et::ExprTraits<LeftT> left_traits;
+    [[maybe_unused]] typedef et::ExprTraits<RightT> right_traits;
+    [[maybe_unused]] typedef typename left_traits::result_tag left_result;
+    [[maybe_unused]] typedef typename right_traits::result_tag right_result;
 
     /* perp_dot() requires vector expressions: */
     CML_STATIC_REQUIRE_M(
@@ -265,7 +265,7 @@ perp_dot(const LeftT& left, const RightT& right)
     detail::Require2D(right, typename right_traits::size_tag());
 
     /* Get result type: */
-    typedef typename detail::DotPromote<
+    [[maybe_unused]] typedef typename detail::DotPromote<
         LeftT,RightT>::promoted_scalar result_type;
 
     /* Compute and return: */
@@ -277,10 +277,10 @@ inline typename detail::CrossPromote<LeftT,RightT>::promoted_vector
 cross(const LeftT& left, const RightT& right)
 {
     /* Shorthand: */
-    typedef et::ExprTraits<LeftT> left_traits;
-    typedef et::ExprTraits<RightT> right_traits;
-    typedef typename left_traits::result_tag left_result;
-    typedef typename right_traits::result_tag right_result;
+    [[maybe_unused]] typedef et::ExprTraits<LeftT> left_traits;
+    [[maybe_unused]] typedef et::ExprTraits<RightT> right_traits;
+    [[maybe_unused]] typedef typename left_traits::result_tag left_result;
+    [[maybe_unused]] typedef typename right_traits::result_tag right_result;
 
     /* outer() requires vector expressions: */
     CML_STATIC_REQUIRE_M(
@@ -296,7 +296,7 @@ cross(const LeftT& left, const RightT& right)
     detail::Require3D(right, typename right_traits::size_tag());
 
     /* Get result type: */
-    typedef typename detail::CrossPromote<
+    [[maybe_unused]] typedef typename detail::CrossPromote<
         LeftT,RightT>::promoted_vector result_type;
 
     /* Now, compute and return the cross product: */
@@ -328,10 +328,10 @@ inline typename detail::OuterPromote<LeftT,RightT>::promoted_matrix
 outer(const LeftT& left, const RightT& right)
 {
     /* Shorthand: */
-    typedef et::ExprTraits<LeftT> left_traits;
-    typedef et::ExprTraits<RightT> right_traits;
-    typedef typename left_traits::result_tag left_result;
-    typedef typename right_traits::result_tag right_result;
+    [[maybe_unused]] typedef et::ExprTraits<LeftT> left_traits;
+    [[maybe_unused]] typedef et::ExprTraits<RightT> right_traits;
+    [[maybe_unused]] typedef typename left_traits::result_tag left_result;
+    [[maybe_unused]] typedef typename right_traits::result_tag right_result;
 
     /* outer() requires vector expressions: */
     CML_STATIC_REQUIRE_M(

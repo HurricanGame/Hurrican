@@ -25,7 +25,7 @@ template < typename E, class A, class B, class L > void
 identity_transform(matrix<E,A,B,L>& m)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     for (size_t i = 0; i < m.rows(); ++i)
     {
@@ -40,7 +40,7 @@ identity_transform(matrix<E,A,B,L>& m)
 template < class MatT > typename MatT::value_type
 trace(const MatT& m)
 {
-    typedef typename MatT::value_type value_type;
+    [[maybe_unused]] typedef typename MatT::value_type value_type;
 
     /* Checking */
     detail::CheckMatSquare(m);
@@ -110,7 +110,7 @@ matrix_skew_symmetric_2D(matrix<E,A,B,L>& m, E s)
 template < typename E, class A, class B, class L > void
 matrix_invert_RT_only(matrix<E,A,B,L>& m)
 {
-    typedef vector< E, fixed<3> > vector_type;
+    [[maybe_unused]] typedef vector< E, fixed<3> > vector_type;
 
     vector_type x, y, z;
     matrix_get_basis_vectors(m,x,y,z);
@@ -124,7 +124,7 @@ matrix_invert_RT_only(matrix<E,A,B,L>& m)
 template < typename E, class A, class B, class L > void
 matrix_invert_RT_only_2D(matrix<E,A,B,L>& m)
 {
-    typedef vector< E, fixed<2> > vector_type;
+    [[maybe_unused]] typedef vector< E, fixed<2> > vector_type;
 
     vector_type x, y;
     matrix_get_basis_vectors_2D(m,x,y);

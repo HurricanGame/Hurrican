@@ -42,7 +42,7 @@ matrix_perspective(matrix<E,A,B,L>& m, E left, E right, E bottom, E top,
                    ZClip z_clip)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckMatHomogeneous3D(m);
@@ -83,7 +83,7 @@ matrix_perspective(matrix<E,A,B,L>& m, E width, E height, E n, E f,
                    Handedness handedness, ZClip z_clip)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     value_type half_width = width * value_type(.5);
     value_type half_height = height * value_type(.5);
@@ -135,7 +135,7 @@ matrix_perspective_xfov(matrix<E,A,B,L>& m, E xfov, E aspect, E n,
                         E f, Handedness handedness, ZClip z_clip)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     value_type width = value_type(2) * std::tan(xfov * value_type(.5)) * n;
     matrix_perspective(m, width, width / aspect, n, f,
@@ -168,7 +168,7 @@ matrix_perspective_yfov(matrix<E,A,B,L>& m, E yfov, E aspect, E n,
                         E f, Handedness handedness, ZClip z_clip)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     value_type height = value_type(2) * std::tan(yfov * value_type(.5)) * n;
     matrix_perspective(m, height * aspect, height, n, f,
@@ -206,7 +206,7 @@ matrix_orthographic(matrix<E,A,B,L>& m, E left, E right, E bottom, E top,
                     ZClip z_clip)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckMatHomogeneous3D(m);
@@ -241,7 +241,7 @@ matrix_orthographic(matrix<E,A,B,L>& m, E width, E height, E n, E f,
                     Handedness handedness, ZClip z_clip)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     value_type half_width = width * value_type(.5);
     value_type half_height = height * value_type(.5);
@@ -330,7 +330,7 @@ matrix_pick(
     E viewport_x, E viewport_y, E viewport_width, E viewport_height)
 {
     typedef matrix<E,A,B,L> matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     /* Checking */
     detail::CheckMatHomogeneous3D(m);

@@ -221,9 +221,9 @@ matrix(const TEMPLATED_MATRIX_MACRO& m) {                               \
 template<class XprT>                                                    \
 matrix(MATXPR_ARG_TYPE e) {                                             \
     /* Verify that a promotion exists at compile time: */               \
-    typedef typename et::MatrixPromote<                                 \
+    [[maybe_unused]] typedef typename et::MatrixPromote<                                 \
         matrix_type, typename XprT::result_type>::type result_type;     \
-    typedef typename XprT::value_type src_value_type;                   \
+    [[maybe_unused]] typedef typename XprT::value_type src_value_type;                   \
     typedef et::OpAssign <Element,src_value_type> OpT;                  \
     et::UnrollAssignment<OpT>(*this,e);                                 \
 }
@@ -274,9 +274,9 @@ operator _op_ (const TEMPLATED_MATRIX_MACRO& m) {                       \
 template<class XprT> matrix_type&                                       \
 operator _op_ (MATXPR_ARG_TYPE e) {                                     \
     /* Verify that a promotion exists at compile time: */               \
-    typedef typename et::MatrixPromote<                                 \
+    [[maybe_unused]] typedef typename et::MatrixPromote<                                 \
         matrix_type, typename XprT::result_type>::type result_type;     \
-    typedef typename XprT::value_type src_value_type;                   \
+    [[maybe_unused]] typedef typename XprT::value_type src_value_type;                   \
     typedef _op_name_ <Element,src_value_type> OpT;                     \
     et::UnrollAssignment<OpT>(*this,e);                                 \
     return *this;                                                       \
@@ -304,7 +304,7 @@ matrix_type& operator _op_ (ELEMENT_ARG_TYPE s) {                       \
  */
 #define CML_ACCUMULATED_MATRIX_MULT(_arg_type_)                         \
 matrix_type& operator*=(_arg_type_ m) {                                 \
-    typedef typename et::MatrixPromote<                                 \
+    [[maybe_unused]] typedef typename et::MatrixPromote<                                 \
         matrix_type, _arg_type_>::type result_type;                     \
     cml::et::CheckedSquare(*this, typename result_type::size_tag());    \
     return (*this = (*this)*m);                                         \
@@ -314,14 +314,14 @@ matrix_type& operator*=(_arg_type_ m) {                                 \
 /* These should only be used for testing: */
 #define CML_MATRIX_BRACE_OPERATORS                                      \
 template<class Matrix> struct row_ref {                                 \
-    typedef typename Matrix::reference reference;                       \
+    [[maybe_unused]] typedef typename Matrix::reference reference;                       \
     reference operator[](size_t col) { return m(row,col); }             \
     Matrix& m;                                                          \
     size_t row;                                                         \
 };                                                                      \
                                                                         \
 template<class Matrix> struct const_row_ref {                           \
-    typedef typename Matrix::const_reference const_reference;           \
+    [[maybe_unused]] typedef typename Matrix::const_reference const_reference;           \
     const_reference operator[](size_t col) const { return m(row,col); } \
     const Matrix& m;                                                    \
     size_t row;                                                         \

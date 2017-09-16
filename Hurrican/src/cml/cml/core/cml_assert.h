@@ -90,7 +90,7 @@ template<typename M> struct STATIC_ASSERTION_FAILURE_M<true,M>
  * @sa STATIC_ASSERTION_FAILURE_M
  */
 #define CML_STATIC_REQUIRE_M(_E_, _M_) \
-    typedef typename STATIC_ASSERTION_FAILURE_M<(_E_),_M_> \
+    [[maybe_unused]] typedef typename STATIC_ASSERTION_FAILURE_M<(_E_),_M_> \
         ::result CML_JOIN(__bogus_assert_type_, __LINE__)
 
 } // namespace cml

@@ -34,33 +34,33 @@ public:
     /* Copy the expression by value into higher-up expressions: */
     typedef expr_type expr_const_reference;
 
-    typedef typename ExprT::value_type value_type;
+    [[maybe_unused]] typedef typename ExprT::value_type value_type;
     typedef quaternion_result_tag result_tag;
-    typedef typename ExprT::size_tag size_tag;
+    [[maybe_unused]] typedef typename ExprT::size_tag size_tag;
 
     /* Store the expression traits for the subexpression: */
     typedef ExprTraits<ExprT> expr_traits;
 
     /* Reference type for the subexpression: */
-    typedef typename expr_traits::const_reference expr_reference;
+    [[maybe_unused]] typedef typename expr_traits::const_reference expr_reference;
 
     /* Get the result type (same as for subexpression): */
-    typedef typename expr_traits::result_type result_type;
+    [[maybe_unused]] typedef typename expr_traits::result_type result_type;
 
     /* For matching by assignability: */
     typedef cml::et::not_assignable_tag assignable_tag;
 
     /* Get the temporary type: */
-    typedef typename result_type::temporary_type temporary_type;
+    [[maybe_unused]] typedef typename result_type::temporary_type temporary_type;
 
     /* Get the vector type: */
-    typedef typename result_type::vector_type vector_type;
+    [[maybe_unused]] typedef typename result_type::vector_type vector_type;
 
     /* Get the imaginary part type: */
-    typedef typename vector_type::subvector_type imaginary_type;
+    [[maybe_unused]] typedef typename vector_type::subvector_type imaginary_type;
 
     /* Record the order type: */
-    typedef typename result_type::order_type order_type;
+    [[maybe_unused]] typedef typename result_type::order_type order_type;
 
 
 public:
@@ -171,12 +171,12 @@ struct ExprTraits< ConjugateOp<ExprT> >
     typedef ConjugateOp<ExprT> expr_type;
     typedef ExprT arg_type;
 
-    typedef typename expr_type::value_type value_type;
-    typedef typename expr_type::expr_const_reference const_reference;
-    typedef typename expr_type::result_tag result_tag;
-    typedef typename expr_type::size_tag size_tag;
-    typedef typename expr_type::result_type result_type;
-    typedef typename expr_type::assignable_tag assignable_tag;
+    [[maybe_unused]] typedef typename expr_type::value_type value_type;
+    [[maybe_unused]] typedef typename expr_type::expr_const_reference const_reference;
+    [[maybe_unused]] typedef typename expr_type::result_tag result_tag;
+    [[maybe_unused]] typedef typename expr_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename expr_type::result_type result_type;
+    [[maybe_unused]] typedef typename expr_type::assignable_tag assignable_tag;
     typedef expr_node_tag node_tag;
 
     value_type get(const expr_type& v, size_t i) const

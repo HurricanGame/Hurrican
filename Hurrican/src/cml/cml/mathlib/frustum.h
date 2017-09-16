@@ -172,8 +172,8 @@ namespace detail
 template < typename Real > vector< Real, fixed<3> >
 intersect_planes(Real p1[4], Real p2[4], Real p3[4])
 {
-    typedef vector< Real, fixed<3> > vector_type;
-    typedef typename vector_type::value_type value_type;
+    [[maybe_unused]] typedef vector< Real, fixed<3> > vector_type;
+    [[maybe_unused]] typedef typename vector_type::value_type value_type;
 
     vector_type n1(p1[0],p1[1],p1[2]);
     vector_type n2(p2[0],p2[1],p2[2]);

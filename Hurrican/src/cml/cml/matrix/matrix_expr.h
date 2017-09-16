@@ -48,24 +48,24 @@ public:
     /* Copy the expression by value into higher-up expressions: */
     typedef expr_type expr_const_reference;
 
-    typedef typename ExprT::value_type value_type;
+    [[maybe_unused]] typedef typename ExprT::value_type value_type;
     typedef matrix_result_tag result_tag;
-    typedef typename ExprT::size_tag size_tag;  // Just inherit size type.
+    [[maybe_unused]] typedef typename ExprT::size_tag size_tag;  // Just inherit size type.
 
     /* Store the expression traits: */
     typedef ExprTraits<ExprT> expr_traits;
 
     /* Get the reference type: */
-    typedef typename expr_traits::const_reference expr_reference;
+    [[maybe_unused]] typedef typename expr_traits::const_reference expr_reference;
 
     /* Get the result type: */
-    typedef typename expr_traits::result_type result_type;
+    [[maybe_unused]] typedef typename expr_traits::result_type result_type;
 
     /* Get the basis type: */
-    typedef typename result_type::basis_orient basis_orient;
+    [[maybe_unused]] typedef typename result_type::basis_orient basis_orient;
 
     /* Get the temporary type: */
-    typedef typename result_type::temporary_type temporary_type;
+    [[maybe_unused]] typedef typename result_type::temporary_type temporary_type;
 
     /* For matching by assignability: */
     typedef cml::et::not_assignable_tag assignable_tag;
@@ -156,12 +156,12 @@ struct ExprTraits< MatrixXpr<ExprT> >
     typedef MatrixXpr<ExprT> expr_type;
     typedef ExprT arg_type;
 
-    typedef typename expr_type::value_type value_type;
-    typedef typename expr_type::expr_const_reference const_reference;
-    typedef typename expr_type::result_tag result_tag;
-    typedef typename expr_type::size_tag size_tag;
-    typedef typename expr_type::result_type result_type;
-    typedef typename expr_type::assignable_tag assignable_tag;
+    [[maybe_unused]] typedef typename expr_type::value_type value_type;
+    [[maybe_unused]] typedef typename expr_type::expr_const_reference const_reference;
+    [[maybe_unused]] typedef typename expr_type::result_tag result_tag;
+    [[maybe_unused]] typedef typename expr_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename expr_type::result_type result_type;
+    [[maybe_unused]] typedef typename expr_type::assignable_tag assignable_tag;
     typedef expr_node_tag node_tag;
 
     value_type get(const expr_type& e, size_t i, size_t j) const
@@ -202,21 +202,21 @@ public:
     /* Copy the expression by value into higher-up expressions: */
     typedef expr_type expr_const_reference;
 
-    typedef typename OpT::value_type value_type;
+    [[maybe_unused]] typedef typename OpT::value_type value_type;
     typedef matrix_result_tag result_tag;
-    typedef typename ExprT::size_tag size_tag;
+    [[maybe_unused]] typedef typename ExprT::size_tag size_tag;
 
     /* Store the expression traits for the subexpression: */
     typedef ExprTraits<ExprT> expr_traits;
 
     /* Reference type for the subexpression: */
-    typedef typename expr_traits::const_reference expr_reference;
+    [[maybe_unused]] typedef typename expr_traits::const_reference expr_reference;
 
     /* Get the result type: */
-    typedef typename expr_traits::result_type result_type;
+    [[maybe_unused]] typedef typename expr_traits::result_type result_type;
 
     /* Get the temporary type: */
-    typedef typename result_type::temporary_type temporary_type;
+    [[maybe_unused]] typedef typename result_type::temporary_type temporary_type;
 
     /* For matching by assignability: */
     typedef cml::et::not_assignable_tag assignable_tag;
@@ -286,12 +286,12 @@ struct ExprTraits< UnaryMatrixOp<ExprT,OpT> >
     typedef UnaryMatrixOp<ExprT,OpT> expr_type;
     typedef ExprT arg_type;
 
-    typedef typename expr_type::value_type value_type;
-    typedef typename expr_type::expr_const_reference const_reference;
-    typedef typename expr_type::result_tag result_tag;
-    typedef typename expr_type::size_tag size_tag;
-    typedef typename expr_type::result_type result_type;
-    typedef typename expr_type::assignable_tag assignable_tag;
+    [[maybe_unused]] typedef typename expr_type::value_type value_type;
+    [[maybe_unused]] typedef typename expr_type::expr_const_reference const_reference;
+    [[maybe_unused]] typedef typename expr_type::result_tag result_tag;
+    [[maybe_unused]] typedef typename expr_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename expr_type::result_type result_type;
+    [[maybe_unused]] typedef typename expr_type::assignable_tag assignable_tag;
     typedef expr_node_tag node_tag;
 
     value_type get(const expr_type& e, size_t i, size_t j) const
@@ -327,7 +327,7 @@ public:
      */
     typedef expr_type expr_const_reference;
 
-    typedef typename OpT::value_type value_type;
+    [[maybe_unused]] typedef typename OpT::value_type value_type;
     typedef matrix_result_tag result_tag;
 
     /* For matching by assignability: */
@@ -338,17 +338,17 @@ public:
     typedef ExprTraits<RightT> right_traits;
 
     /* Reference types for the two subexpressions: */
-    typedef typename left_traits::const_reference left_reference;
-    typedef typename right_traits::const_reference right_reference;
+    [[maybe_unused]] typedef typename left_traits::const_reference left_reference;
+    [[maybe_unused]] typedef typename right_traits::const_reference right_reference;
 
     /* Figure out the expression's resulting (matrix) type: */
-    typedef typename left_traits::result_type left_result;
-    typedef typename right_traits::result_type right_result;
-    typedef typename MatrixPromote<left_result,right_result>::type result_type;
-    typedef typename result_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename left_traits::result_type left_result;
+    [[maybe_unused]] typedef typename right_traits::result_type right_result;
+    [[maybe_unused]] typedef typename MatrixPromote<left_result,right_result>::type result_type;
+    [[maybe_unused]] typedef typename result_type::size_tag size_tag;
 
     /* Get the temporary type: */
-    typedef typename result_type::temporary_type temporary_type;
+    [[maybe_unused]] typedef typename result_type::temporary_type temporary_type;
 
     /* Define a size checker: */
     typedef GetCheckedSize<LeftT,RightT,size_tag> checked_size;
@@ -459,12 +459,12 @@ struct ExprTraits< BinaryMatrixOp<LeftT,RightT,OpT> >
     typedef LeftT left_type;
     typedef RightT right_type;
 
-    typedef typename expr_type::value_type value_type;
-    typedef typename expr_type::expr_const_reference const_reference;
-    typedef typename expr_type::result_tag result_tag;
-    typedef typename expr_type::size_tag size_tag;
-    typedef typename expr_type::result_type result_type;
-    typedef typename expr_type::assignable_tag assignable_tag;
+    [[maybe_unused]] typedef typename expr_type::value_type value_type;
+    [[maybe_unused]] typedef typename expr_type::expr_const_reference const_reference;
+    [[maybe_unused]] typedef typename expr_type::result_tag result_tag;
+    [[maybe_unused]] typedef typename expr_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename expr_type::result_type result_type;
+    [[maybe_unused]] typedef typename expr_type::assignable_tag assignable_tag;
     typedef expr_node_tag node_tag;
 
     value_type get(const expr_type& e, size_t i, size_t j) const
@@ -491,8 +491,8 @@ template<typename LeftTraits, typename RightTraits>
 struct MatrixExpressions
 {
     /* Require that both arguments are matrix expressions: */
-    typedef typename LeftTraits::result_tag left_result;
-    typedef typename RightTraits::result_tag right_result;
+    [[maybe_unused]] typedef typename LeftTraits::result_tag left_result;
+    [[maybe_unused]] typedef typename RightTraits::result_tag right_result;
     enum { is_true = (same_type<left_result,et::matrix_result_tag>::is_true
                       && same_type<right_result,et::matrix_result_tag>::is_true)
          };

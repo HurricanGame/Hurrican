@@ -49,7 +49,7 @@ operator<<(std::ostream& os, const cml::quaternion<E,AT,vector_first,CT>& q)
 template<typename E, class AT, class OT, typename CT> std::ostream&
 operator<<(std::ostream& os, const cml::quaternion<E,AT,OT,CT>& q)
 {
-    typedef typename cml::quaternion<E,AT,OT,CT>::order_type order_type;
+    [[maybe_unused]] typedef typename cml::quaternion<E,AT,OT,CT>::order_type order_type;
     enum
     {
         W = order_type::W,
@@ -74,7 +74,7 @@ operator<<(std::ostream& os, const cml::quaternion<E,AT,OT,CT>& q)
 template< class XprT > inline std::ostream&
 operator<<(std::ostream& os, const et::QuaternionXpr<XprT>& q)
 {
-    typedef typename et::QuaternionXpr<XprT>::result_type quaternion_type;
+    [[maybe_unused]] typedef typename et::QuaternionXpr<XprT>::result_type quaternion_type;
 
     os << quaternion_type(q);
     /* XXX This temporary can be removed by templating the stream insertion

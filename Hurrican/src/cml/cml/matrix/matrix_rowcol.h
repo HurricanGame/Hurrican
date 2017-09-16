@@ -34,21 +34,21 @@ public:
     /* Copy the expression by value into higher-up expressions: */
     typedef expr_type expr_const_reference;
 
-    typedef typename ExprT::value_type value_type;
-    typedef vector_result_tag result_tag;
-    typedef typename ExprT::size_tag size_tag;
+    [[maybe_unused]] typedef typename ExprT::value_type value_type;
+    [[maybe_unused]] typedef vector_result_tag result_tag;
+    [[maybe_unused]] typedef typename ExprT::size_tag size_tag;
 
     /* Store the expression traits: */
     typedef ExprTraits<ExprT> expr_traits;
 
     /* Get the reference type: */
-    typedef typename expr_traits::const_reference expr_reference;
+    [[maybe_unused]] typedef typename expr_traits::const_reference expr_reference;
 
     /* Get the result vector type: */
-    typedef typename expr_traits::result_type::row_vector_type result_type;
+    [[maybe_unused]] typedef typename expr_traits::result_type::row_vector_type result_type;
 
     /* Get the temporary type: */
-    typedef typename result_type::temporary_type temporary_type;
+    [[maybe_unused]] typedef typename result_type::temporary_type temporary_type;
 
 
 public:
@@ -108,11 +108,11 @@ struct ExprTraits< MatrixRowOp<ExprT> >
     typedef MatrixRowOp<ExprT> expr_type;
     typedef ExprT arg_type;
 
-    typedef typename expr_type::value_type value_type;
-    typedef typename expr_type::expr_const_reference const_reference;
-    typedef typename expr_type::result_tag result_tag;
-    typedef typename expr_type::size_tag size_tag;
-    typedef typename expr_type::result_type result_type;
+    [[maybe_unused]] typedef typename expr_type::value_type value_type;
+    [[maybe_unused]] typedef typename expr_type::expr_const_reference const_reference;
+    [[maybe_unused]] typedef typename expr_type::result_tag result_tag;
+    [[maybe_unused]] typedef typename expr_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename expr_type::result_type result_type;
     typedef expr_node_tag node_tag;
 
     value_type get(const expr_type& v, size_t i) const
@@ -138,21 +138,21 @@ public:
     /* Copy the expression by value into higher-up expressions: */
     typedef expr_type expr_const_reference;
 
-    typedef typename ExprT::value_type value_type;
-    typedef vector_result_tag result_tag;
-    typedef typename ExprT::size_tag size_tag;
+    [[maybe_unused]] typedef typename ExprT::value_type value_type;
+    [[maybe_unused]] typedef vector_result_tag result_tag;
+    [[maybe_unused]] typedef typename ExprT::size_tag size_tag;
 
     /* Store the expression traits: */
     typedef ExprTraits<ExprT> expr_traits;
 
     /* Get the reference type: */
-    typedef typename expr_traits::const_reference expr_reference;
+    [[maybe_unused]] typedef typename expr_traits::const_reference expr_reference;
 
     /* Get the result vector type: */
-    typedef typename expr_traits::result_type::col_vector_type result_type;
+    [[maybe_unused]] typedef typename expr_traits::result_type::col_vector_type result_type;
 
     /* Get the temporary type: */
-    typedef typename result_type::temporary_type temporary_type;
+    [[maybe_unused]] typedef typename result_type::temporary_type temporary_type;
 
 
 public:
@@ -212,11 +212,11 @@ struct ExprTraits< MatrixColOp<ExprT> >
     typedef MatrixColOp<ExprT> expr_type;
     typedef ExprT arg_type;
 
-    typedef typename expr_type::value_type value_type;
-    typedef typename expr_type::expr_const_reference const_reference;
-    typedef typename expr_type::result_tag result_tag;
-    typedef typename expr_type::size_tag size_tag;
-    typedef typename expr_type::result_type result_type;
+    [[maybe_unused]] typedef typename expr_type::value_type value_type;
+    [[maybe_unused]] typedef typename expr_type::expr_const_reference const_reference;
+    [[maybe_unused]] typedef typename expr_type::result_tag result_tag;
+    [[maybe_unused]] typedef typename expr_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename expr_type::result_type result_type;
     typedef expr_node_tag node_tag;
 
     value_type get(const expr_type& v, size_t i) const

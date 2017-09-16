@@ -50,8 +50,8 @@ orthonormalize(vector<E,A>& v0, vector<E,A>& v1, vector<E,A>& v2,
     detail::CheckVec3(v2);
     detail::CheckIndex3(stable_axis);
 
-    typedef vector< E, fixed<3> > vector_type;
-    typedef typename vector_type::value_type value_type;
+    [[maybe_unused]] typedef vector< E, fixed<3> > vector_type;
+    [[maybe_unused]] typedef typename vector_type::value_type value_type;
 
     /* Iterative Gram-Schmidt; this step is skipped by default. */
 
@@ -97,8 +97,8 @@ template < typename E, class A > void
 orthonormalize(vector<E,A>& v0, vector<E,A>& v1,
                size_t stable_axis = 0, size_t num_iter = 0, E s = E(1))
 {
-    typedef vector< E, fixed<2> > vector_type;
-    typedef typename vector_type::value_type value_type;
+    [[maybe_unused]] typedef vector< E, fixed<2> > vector_type;
+    [[maybe_unused]] typedef typename vector_type::value_type value_type;
 
     /* Checking */
     detail::CheckVec2(v0);
@@ -168,8 +168,8 @@ orthonormal_basis(
     bool normalize_align = true,
     AxisOrder order = axis_order_zyx)
 {
-    typedef vector< E,fixed<3> > vector_type;
-    typedef typename vector_type::value_type value_type;
+    [[maybe_unused]] typedef vector< E,fixed<3> > vector_type;
+    [[maybe_unused]] typedef typename vector_type::value_type value_type;
 
     /* Checking handled by cross() and assignment to fixed<3>. */
 
@@ -271,7 +271,7 @@ void orthonormal_basis_viewplane(
     AxisOrder order = axis_order_zyx)
 {
     typedef MatT matrix_type;
-    typedef typename matrix_type::value_type value_type;
+    [[maybe_unused]] typedef typename matrix_type::value_type value_type;
 
     orthonormal_basis(
         -(handedness == left_handed ? value_type(1) : value_type(-1)) *
@@ -316,7 +316,7 @@ void orthonormal_basis_2D(
     bool normalize_align = true,
     AxisOrder2D order = axis_order_xy)
 {
-    typedef vector< E,fixed<2> > vector_type;
+    [[maybe_unused]] typedef vector< E,fixed<2> > vector_type;
 
     /* Checking handled by perp() and assignment to fixed<2>. */
 

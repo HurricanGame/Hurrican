@@ -89,8 +89,8 @@ inline bool
 matrix_weak_order(const LeftT& left, const RightT& right, OpT)
 {
     /* Shorthand: */
-    typedef et::ExprTraits<LeftT> left_traits;
-    typedef et::ExprTraits<RightT> right_traits;
+    [[maybe_unused]] typedef et::ExprTraits<LeftT> left_traits;
+    [[maybe_unused]] typedef et::ExprTraits<RightT> right_traits;
 
     /* matrix_comparison() requires matrix expressions: */
     CML_STATIC_REQUIRE_M(
@@ -100,11 +100,11 @@ matrix_weak_order(const LeftT& left, const RightT& right, OpT)
      * commas:
      */
 
-    typedef typename et::MatrixPromote<
+    [[maybe_unused]] typedef typename et::MatrixPromote<
     typename left_traits::result_type,
              typename right_traits::result_type
              >::type result_type;
-    typedef typename result_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename result_type::size_tag size_tag;
 
     /* Verify expression size: */
     matrix_size N = et::CheckedSize(left,right,size_tag());
@@ -154,8 +154,8 @@ inline bool
 matrix_total_order(const LeftT& left, const RightT& right, OpT)
 {
     /* Shorthand: */
-    typedef et::ExprTraits<LeftT> left_traits;
-    typedef et::ExprTraits<RightT> right_traits;
+    [[maybe_unused]] typedef et::ExprTraits<LeftT> left_traits;
+    [[maybe_unused]] typedef et::ExprTraits<RightT> right_traits;
 
     /* matrix_comparison() requires matrix expressions: */
     CML_STATIC_REQUIRE_M(
@@ -165,11 +165,11 @@ matrix_total_order(const LeftT& left, const RightT& right, OpT)
      * commas:
      */
 
-    typedef typename et::MatrixPromote<
+    [[maybe_unused]] typedef typename et::MatrixPromote<
     typename left_traits::result_type,
              typename right_traits::result_type
              >::type result_type;
-    typedef typename result_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename result_type::size_tag size_tag;
 
     /* Verify expression size: */
     matrix_size N = et::CheckedSize(left,right,size_tag());

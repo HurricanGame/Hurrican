@@ -36,41 +36,41 @@ public:
     typedef QuaternionXpr<ExprT> expr_type;
 
     /* Record ary-ness of the expression: */
-    typedef typename ExprT::expr_ary expr_ary;
+    [[maybe_unused]] typedef typename ExprT::expr_ary expr_ary;
 
     /* Copy the expression by value into higher-up expressions: */
     typedef expr_type expr_const_reference;
 
-    typedef typename ExprT::value_type value_type;
+    [[maybe_unused]] typedef typename ExprT::value_type value_type;
     typedef quaternion_result_tag result_tag;
-    typedef typename ExprT::size_tag size_tag;
+    [[maybe_unused]] typedef typename ExprT::size_tag size_tag;
 
     /* Store the expression traits: */
     typedef ExprTraits<ExprT> expr_traits;
 
     /* Get the reference type: */
-    typedef typename expr_traits::const_reference expr_reference;
+    [[maybe_unused]] typedef typename expr_traits::const_reference expr_reference;
 
     /* Get the result type: */
-    typedef typename expr_traits::result_type result_type;
+    [[maybe_unused]] typedef typename expr_traits::result_type result_type;
 
     /* Get the vector type: */
-    typedef typename result_type::vector_type vector_type;
+    [[maybe_unused]] typedef typename result_type::vector_type vector_type;
 
     /* Get the imaginary part type: */
-    typedef typename vector_type::subvector_type imaginary_type;
+    [[maybe_unused]] typedef typename vector_type::subvector_type imaginary_type;
 
     /* For matching by assignability: */
     typedef cml::et::not_assignable_tag assignable_tag;
 
     /* Get the temporary type: */
-    typedef typename result_type::temporary_type temporary_type;
+    [[maybe_unused]] typedef typename result_type::temporary_type temporary_type;
 
     /* Record the order type: */
-    typedef typename result_type::order_type order_type;
+    [[maybe_unused]] typedef typename result_type::order_type order_type;
 
     /* Record the cross type: */
-    typedef typename result_type::cross_type cross_type;
+    [[maybe_unused]] typedef typename result_type::cross_type cross_type;
 
 
 public:
@@ -182,12 +182,12 @@ struct ExprTraits< QuaternionXpr<ExprT> >
 {
     typedef QuaternionXpr<ExprT> expr_type;
     typedef ExprT arg_type;
-    typedef typename expr_type::value_type value_type;
-    typedef typename expr_type::expr_const_reference const_reference;
-    typedef typename expr_type::result_tag result_tag;
-    typedef typename expr_type::size_tag size_tag;
-    typedef typename expr_type::result_type result_type;
-    typedef typename expr_type::assignable_tag not_assignable_tag;
+    [[maybe_unused]] typedef typename expr_type::value_type value_type;
+    [[maybe_unused]] typedef typename expr_type::expr_const_reference const_reference;
+    [[maybe_unused]] typedef typename expr_type::result_tag result_tag;
+    [[maybe_unused]] typedef typename expr_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename expr_type::result_type result_type;
+    [[maybe_unused]] typedef typename expr_type::assignable_tag not_assignable_tag;
     typedef expr_node_tag node_tag;
 
     value_type get(const expr_type& v, size_t i) const
@@ -218,33 +218,33 @@ public:
     /* Copy the expression by value into higher-up expressions: */
     typedef expr_type expr_const_reference;
 
-    typedef typename OpT::value_type value_type;
+    [[maybe_unused]] typedef typename OpT::value_type value_type;
     typedef quaternion_result_tag result_tag;
-    typedef typename ExprT::size_tag size_tag;
+    [[maybe_unused]] typedef typename ExprT::size_tag size_tag;
 
     /* Store the expression traits for the subexpression: */
     typedef ExprTraits<ExprT> expr_traits;
 
     /* Reference type for the subexpression: */
-    typedef typename expr_traits::const_reference expr_reference;
+    [[maybe_unused]] typedef typename expr_traits::const_reference expr_reference;
 
     /* Get the result type (same as for subexpression): */
-    typedef typename expr_traits::result_type result_type;
+    [[maybe_unused]] typedef typename expr_traits::result_type result_type;
 
     /* For matching by assignability: */
     typedef cml::et::not_assignable_tag assignable_tag;
 
     /* Get the temporary type: */
-    typedef typename result_type::temporary_type temporary_type;
+    [[maybe_unused]] typedef typename result_type::temporary_type temporary_type;
 
     /* Get the vector type: */
-    typedef typename result_type::vector_type vector_type;
+    [[maybe_unused]] typedef typename result_type::vector_type vector_type;
 
     /* Get the imaginary part type: */
-    typedef typename vector_type::subvector_type imaginary_type;
+    [[maybe_unused]] typedef typename vector_type::subvector_type imaginary_type;
 
     /* Record the order type: */
-    typedef typename result_type::order_type order_type;
+    [[maybe_unused]] typedef typename result_type::order_type order_type;
 
 
 public:
@@ -397,12 +397,12 @@ struct ExprTraits< UnaryQuaternionOp<ExprT,OpT> >
     typedef UnaryQuaternionOp<ExprT,OpT> expr_type;
     typedef ExprT arg_type;
 
-    typedef typename expr_type::value_type value_type;
-    typedef typename expr_type::expr_const_reference const_reference;
-    typedef typename expr_type::result_tag result_tag;
-    typedef typename expr_type::size_tag size_tag;
-    typedef typename expr_type::result_type result_type;
-    typedef typename expr_type::assignable_tag not_assignable_tag;
+    [[maybe_unused]] typedef typename expr_type::value_type value_type;
+    [[maybe_unused]] typedef typename expr_type::expr_const_reference const_reference;
+    [[maybe_unused]] typedef typename expr_type::result_tag result_tag;
+    [[maybe_unused]] typedef typename expr_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename expr_type::result_type result_type;
+    [[maybe_unused]] typedef typename expr_type::assignable_tag not_assignable_tag;
     typedef expr_node_tag node_tag;
 
     value_type get(const expr_type& v, size_t i) const
@@ -433,7 +433,7 @@ public:
     /* Copy the expression by value into higher-up expressions: */
     typedef expr_type expr_const_reference;
 
-    typedef typename OpT::value_type value_type;
+    [[maybe_unused]] typedef typename OpT::value_type value_type;
     typedef quaternion_result_tag result_tag;
 
     /* Store the expression traits types for the two subexpressions: */
@@ -441,30 +441,30 @@ public:
     typedef ExprTraits<RightT> right_traits;
 
     /* Reference types for the two subexpressions: */
-    typedef typename left_traits::const_reference left_reference;
-    typedef typename right_traits::const_reference right_reference;
+    [[maybe_unused]] typedef typename left_traits::const_reference left_reference;
+    [[maybe_unused]] typedef typename right_traits::const_reference right_reference;
 
     /* Figure out the expression's resulting (quaternion) type: */
-    typedef typename left_traits::result_type left_result;
-    typedef typename right_traits::result_type right_result;
-    typedef typename QuaternionPromote<left_result,right_result>::type
+    [[maybe_unused]] typedef typename left_traits::result_type left_result;
+    [[maybe_unused]] typedef typename right_traits::result_type right_result;
+    [[maybe_unused]] typedef typename QuaternionPromote<left_result,right_result>::type
     result_type;
-    typedef typename result_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename result_type::size_tag size_tag;
 
     /* For matching by assignability: */
     typedef cml::et::not_assignable_tag assignable_tag;
 
     /* Get the temporary type: */
-    typedef typename result_type::temporary_type temporary_type;
+    [[maybe_unused]] typedef typename result_type::temporary_type temporary_type;
 
     /* Get the vector type: */
-    typedef typename result_type::vector_type vector_type;
+    [[maybe_unused]] typedef typename result_type::vector_type vector_type;
 
     /* Get the imaginary part type: */
-    typedef typename vector_type::subvector_type imaginary_type;
+    [[maybe_unused]] typedef typename vector_type::subvector_type imaginary_type;
 
     /* Record the order type: */
-    typedef typename result_type::order_type order_type;
+    [[maybe_unused]] typedef typename result_type::order_type order_type;
 
     /* Define a size checker: */
     typedef GetCheckedSize<LeftT,RightT,size_tag> checked_size;
@@ -648,13 +648,13 @@ struct ExprTraits< BinaryQuaternionOp<LeftT,RightT,OpT> >
     typedef LeftT left_type;
     typedef RightT right_type;
 
-    typedef typename expr_type::value_type value_type;
-    typedef typename expr_type::expr_const_reference const_reference;
-    typedef typename expr_type::result_tag result_tag;
-    typedef typename expr_type::size_tag size_tag;
-    typedef typename expr_type::result_type result_type;
-    typedef typename expr_type::imaginary_type imaginary_type;
-    typedef typename expr_type::assignable_tag not_assignable_tag;
+    [[maybe_unused]] typedef typename expr_type::value_type value_type;
+    [[maybe_unused]] typedef typename expr_type::expr_const_reference const_reference;
+    [[maybe_unused]] typedef typename expr_type::result_tag result_tag;
+    [[maybe_unused]] typedef typename expr_type::size_tag size_tag;
+    [[maybe_unused]] typedef typename expr_type::result_type result_type;
+    [[maybe_unused]] typedef typename expr_type::imaginary_type imaginary_type;
+    [[maybe_unused]] typedef typename expr_type::assignable_tag not_assignable_tag;
     typedef expr_node_tag node_tag;
 
     value_type get(const expr_type& v, size_t i) const
@@ -673,8 +673,8 @@ template<class LeftTraits, class RightTraits>
 struct QuaternionExpressions
 {
     /* Require that both arguments are quaternion expressions: */
-    typedef typename LeftTraits::result_tag left_result;
-    typedef typename RightTraits::result_tag right_result;
+    [[maybe_unused]] typedef typename LeftTraits::result_tag left_result;
+    [[maybe_unused]] typedef typename RightTraits::result_tag right_result;
     enum { is_true = (same_type<left_result,et::quaternion_result_tag>::is_true
                       && same_type<right_result,et::quaternion_result_tag>::is_true)
          };
