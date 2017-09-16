@@ -167,7 +167,7 @@ char					StringBuffer[100];				// Für die Int / String Umwandlung
 // --------------------------------------------------------------------------------------
 
 #if defined(PLATFORM_DIRECTX)
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
+LRESULT CALLBACK WindowProc(HWND hwnd, std::uint32_t message, WPARAM wparam, LPARAM lparam)
 {
     switch(message)
     {
@@ -742,7 +742,7 @@ int main(int argc, char *argv[])
 
     Protokoll.WriteText( false, "RegisterClassEx successful!\n" );
 
-    DWORD style;
+    std::uint32_t style;
 
     if (CommandLineParams.RunWindowMode)
         style = WS_OVERLAPPED	|						// Fenster Style
@@ -1023,7 +1023,7 @@ void ConvertPlayerTexture(DirectGraphicsSprite *pTexture)
     D3DLOCKED_RECT pLockedRect;
     int width, height, r, g, b, a, col, temp;
     BYTE  *pRow;
-    DWORD *pPixel;
+    std::uint32_t *pPixel;
 
     // Textur locken
     //DKS - Adapted to new TexturesystemClass
@@ -1040,7 +1040,7 @@ void ConvertPlayerTexture(DirectGraphicsSprite *pTexture)
 
     for (int y = 0; y < height; y++)
     {
-        pPixel = (DWORD*)pRow; //pPixel auf Zeilenstart setzen
+        pPixel = (std::uint32_t*)pRow; //pPixel auf Zeilenstart setzen
         pRow += pLockedRect.Pitch; //Zeilenpointer eine Zeile weiter..
 
         for (int x = 0; x < width; x++)

@@ -35,7 +35,7 @@ char*       TastaturPuffer;
 // --------------------------------------------------------------------------------------
 
 #if defined(PLATFORM_DIRECTX)
-bool CALLBACK EnumForceFeedbackDevices(LPDIDEVICEINSTANCE lpddi, LPVOID pv)
+bool CALLBACK EnumForceFeedbackDevices(LPDIDEVICEINSTANCE lpddi, void *pv)
 {
     GUID *pguidDevice = NULL;
 
@@ -59,7 +59,7 @@ bool CALLBACK EnumForceFeedbackDevices(LPDIDEVICEINSTANCE lpddi, LPVOID pv)
         return DIENUM_STOP;
 }
 #elif defined(PLATFORM_SDL)
-bool EnumForceFeedbackDevices(int lpddi, LPVOID pv)
+bool EnumForceFeedbackDevices(int lpddi, void *pv)
 {
     return true;
 }
@@ -70,7 +70,7 @@ bool EnumForceFeedbackDevices(int lpddi, LPVOID pv)
 // --------------------------------------------------------------------------------------
 
 #if defined(PLATFORM_DIRECTX)
-bool CALLBACK EnumJoystickDevices(LPDIDEVICEINSTANCE lpddi, LPVOID pv)
+bool CALLBACK EnumJoystickDevices(LPDIDEVICEINSTANCE lpddi, void *pv)
 {
     GUID *pguidDevice = NULL;
 
@@ -93,7 +93,7 @@ bool CALLBACK EnumJoystickDevices(LPDIDEVICEINSTANCE lpddi, LPVOID pv)
         return DIENUM_STOP;
 }
 #elif defined(PLATFORM_SDL)
-bool EnumJoystickDevices(int lpddi, LPVOID pv)
+bool EnumJoystickDevices(int lpddi, void *pv)
 {
     return true;
 }
@@ -256,8 +256,8 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
                     DICONSTANTFORCE		 diConstantForce;
                     DIRAMPFORCE			 diRampForce;
                     DIEFFECT			 diEffect;
-                    DWORD				 dwAxes[2] = {DIJOFS_X, DIJOFS_Y};
-                    LONG				 lDirection[2] = {180*DI_DEGREES,0};
+                    std::uint32_t				 dwAxes[2] = {DIJOFS_X, DIJOFS_Y};
+                    std::int32_t				 lDirection[2] = {180*DI_DEGREES,0};
 
                     diConstantForce.lMagnitude = DI_FFNOMINALMAX;
 
@@ -474,7 +474,7 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
         while (!fertig)
         {
             DIDEVICEOBJECTDATA od;  // Speichert Mauszustand
-            DWORD dwElemente = 1;   // Elemente die abgefragt werden sollen
+            std::uint32_t dwElemente = 1;   // Elemente die abgefragt werden sollen
 
             hresult = lpDIMaus->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), &od, &dwElemente, 0);
             if (hresult == DIERR_INPUTLOST)

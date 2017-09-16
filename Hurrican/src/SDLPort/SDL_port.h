@@ -25,10 +25,8 @@
 #ifndef _SDLPORT_H_
 #define _SDLPORT_H_
 
-#include <stdint.h>
 #include <iostream>
 #include <string>
-#include <math.h>
 #include <sstream>
 #include <fstream>
 #include <vector>
@@ -40,38 +38,24 @@
 #include "opengl.h"
 #include "Logdatei.hpp"
 
-#define CONST       const
-#ifndef __WIN32__
-#define FALSE       false
-#define TRUE        true
-typedef bool        BOOL;
-typedef float       FLOAT;
-typedef int32_t     LONG;
-typedef uint32_t    DWORD, UINT;
-typedef char*       LPSTR;
-typedef const char* LPCTSTR;
-#endif
-typedef int64_t     LONGLONG;
-typedef void*       PVOID,*LPVOID;
-typedef int32_t     LPDIRECT3DSURFACE8;
+typedef std::int32_t     LPDIRECT3DSURFACE8;
 typedef GLuint      LPDIRECT3DTEXTURE8, LPDIRECT3DTEXTURE9, LPDIRECT3DVERTEXBUFFER8, LPDIRECT3DVERTEXBUFFER9;
-typedef uint32_t    LPDIRECTINPUT8;
+typedef std::uint32_t    LPDIRECTINPUT8;
 
 #ifndef __WIN32__
-typedef uint32_t HINSTANCE, HANDLE, HWND, HRESULT;
+typedef std::uint32_t HINSTANCE, HANDLE, HWND, HRESULT;
 
-//DKS - Converted to int32_t from LONG:
 typedef struct tagRECT
 {
-    int32_t left;
-    int32_t top;
-    int32_t right;
-    int32_t bottom;
+    std::int32_t left;
+    std::int32_t top;
+    std::int32_t right;
+    std::int32_t bottom;
 } RECT;
 #endif
-typedef uint32_t LPDIRECT3D8, LPDIRECT3D9, LPDIRECT3DDEVICE8, LPDIRECT3DDEVICE9, LPDIRECTSOUND8, D3DCOLOR;
+typedef std::uint32_t LPDIRECT3D8, LPDIRECT3D9, LPDIRECT3DDEVICE8, LPDIRECT3DDEVICE9, LPDIRECTSOUND8, D3DCOLOR;
 
-#define D3DX_PI ((float)(M_PI))
+//#define D3DX_PI ((float)(M_PI))
 
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
 #define D3DCOLOR_RGBA(r,g,b,a)  (((a)<<24) + ((r)<<16) + ((g)<<8) + (b))
@@ -107,8 +91,8 @@ typedef enum D3DPRIMITIVETYPE
 //DKS - No need for construction or destruction or virtual types, changed to struct:
 struct D3DXVECTOR2
 {
-    FLOAT x;
-    FLOAT y;
+    float x;
+    float y;
 };
 
 #define sprintf_s   sprintf
@@ -126,12 +110,12 @@ char* _strrev       ( char *);
 #ifndef __WIN32__
 void DeleteFile( const char* filename );
 #else
-uint8_t LoadGLFunctions( void );
+std::uint8_t LoadGLFunctions( void );
 #endif
-uint32_t getpixel( SDL_Surface *surface, int16_t x, int16_t y );
-void putpixel( SDL_Surface *surface, int16_t x, int16_t y, uint32_t pixel );
-void get_components( SDL_Surface *surface, int16_t x, int16_t y, uint8_t& r, uint8_t& g, uint8_t& b, uint8_t& a );
-uint8_t* LoadFileToMemory( const std::string& name, uint32_t& size );
+std::uint32_t getpixel( SDL_Surface *surface, std::int16_t x, std::int16_t y );
+void putpixel( SDL_Surface *surface, std::int16_t x, std::int16_t y, std::uint32_t pixel );
+void get_components( SDL_Surface *surface, std::int16_t x, std::int16_t y, std::uint8_t& r, std::uint8_t& g, std::uint8_t& b, std::uint8_t& a );
+std::uint8_t* LoadFileToMemory( const std::string& name, std::uint32_t& size );
 bool isPowerOfTwo(int x);
 int nextPowerOfTwo(int x);
 #if defined(USE_GL1)

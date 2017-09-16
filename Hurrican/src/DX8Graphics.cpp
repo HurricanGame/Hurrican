@@ -82,8 +82,8 @@ DirectGraphicsClass::~DirectGraphicsClass(void)
 // --------------------------------------------------------------------------------------
 
 #if defined(PLATFORM_DIRECTX)
-bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
-                               DWORD dwZ_Bits, bool VSync)
+bool DirectGraphicsClass::Init(HWND hwnd, std::uint32_t dwBreite, std::uint32_t dwHoehe,
+                               std::uint32_t dwZ_Bits, bool VSync)
 {
     Protokoll.WriteText( false, "\n--> Direct3D init <--\n" );
     Protokoll.WriteText( false, "---------------------\n\n" );
@@ -238,8 +238,8 @@ _ModeFound:
     return true;
 }
 #elif defined(PLATFORM_SDL)
-bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
-                               DWORD dwZ_Bits, bool VSync)
+bool DirectGraphicsClass::Init(HWND hwnd, std::uint32_t dwBreite, std::uint32_t dwHoehe,
+                               std::uint32_t dwZ_Bits, bool VSync)
 {
     bool isFullscreen       = !CommandLineParams.RunWindowMode;
     uint16_t ScreenWidth    = SCREENWIDTH;
@@ -833,8 +833,8 @@ void DirectGraphicsClass::SetFilterMode (bool filteron)
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsClass::RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,
-        UINT PrimitiveCount,
-        CONST void* pVertexStreamZeroData)
+        std::uint32_t PrimitiveCount,
+        const void* pVertexStreamZeroData)
 {
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->DrawPrimitiveUP(PrimitiveType, PrimitiveCount, pVertexStreamZeroData, sizeof(VERTEX2D));

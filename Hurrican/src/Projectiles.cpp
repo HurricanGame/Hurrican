@@ -12,6 +12,8 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
+#include <cmath>
+
 #include "Projectiles.hpp"
 #include "Console.hpp"
 #include "DX8Font.hpp"
@@ -760,7 +762,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     {
         Damage = 10;
         DamagePlayer = false;
-        ySpeed = D3DX_PI;
+        ySpeed = float(M_PI);
         xSpeed = 1.0f;
         ShotArt = SHIELDSPAWNER;
         //DKS - off-by-one error:
@@ -3583,7 +3585,7 @@ void ProjectileClass::Run(void)
     {
         // Drehwinkel aus der Geschwindigkeit errechnen
         //DKS - Converted to float, new Rad/Deg macros:
-        //float w = 90 + float(atan(ySpeed / xSpeed) * 360.0f / (D3DX_PI * 2));
+        //float w = 90 + float(atan(ySpeed / xSpeed) * 360.0f / (float(M_PI) * 2));
         float w = 90.0f + RadToDeg(atanf(ySpeed / xSpeed));
         Winkel = w;
 
@@ -3871,8 +3873,8 @@ void ProjectileClass::Run(void)
             ySpeed -= 0.5f SYNC;
 
         // Grenzen checken
-        if (ySpeed > D3DX_PI * 2)	ySpeed -= D3DX_PI * 2;
-        if (ySpeed < 0.0f)		 	ySpeed += D3DX_PI * 2;
+        if (ySpeed > float(M_PI) * 2)	ySpeed -= float(M_PI) * 2;
+        if (ySpeed < 0.0f)		 	ySpeed += float(M_PI) * 2;
 
 
         if (pParent->Handlung != RADELN &&

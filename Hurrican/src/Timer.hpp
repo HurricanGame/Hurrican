@@ -42,10 +42,10 @@ class TimerClass
 {
 private:
     bool		PerformanceCounter;    	// Performance Counter vorhanden ?
-    LONGLONG	vergangeneFrames;		// Vergangene Frames seit Beginn (für Schnitt)
-    LONGLONG	aktuelleZeit;			// die aktuelle Zeit
-    LONGLONG	Frequenz;				// Performance Timer Frequenz
-    LONGLONG	letzterFrame;			// Zeit des vorherigen Frames
+    std::int64_t	vergangeneFrames;		// Vergangene Frames seit Beginn (für Schnitt)
+    std::int64_t	aktuelleZeit;			// die aktuelle Zeit
+    std::int64_t	Frequenz;				// Performance Timer Frequenz
+    std::int64_t	letzterFrame;			// Zeit des vorherigen Frames
     float		MoveSpeed;				// Wird durch die aktuelle Framerate geteilt
     double		ZeitFaktor;				// Skalierungsfaktor
     double		DurchschnittFramerate;	// Durchschnittliche Framerate

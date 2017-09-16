@@ -147,7 +147,7 @@ loadfile:
         for (int y=0; y<ysize ; ++y)
         {
 #if defined(PLATFORM_DIRECTX)
-            DWORD BGRcolor=GetPixel(hdcImage,x,y);
+            std::uint32_t BGRcolor=GetPixel(hdcImage,x,y);
             map[count] = D3DCOLOR_RGBA(GetRValue(BGRcolor),
                                        GetGValue(BGRcolor),
                                        GetBValue(BGRcolor),
@@ -156,7 +156,7 @@ loadfile:
             //SDL_Color components;
             map[count] = hbm[count];
             /*
-            DWORD BGRcolor=getpixel(hbm,x,y);
+            std::uint32_t BGRcolor=getpixel(hbm,x,y);
             int_to_rgb( BGRcolor, components );
             map[count] = D3DCOLOR_RGBA(components.r,
             						   components.g,

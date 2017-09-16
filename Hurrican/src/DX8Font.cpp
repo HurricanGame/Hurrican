@@ -183,7 +183,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
     }
 
     // Colorkey feststellen
-    //DWORD key = ((DWORD*)d3dlr.pBits)[0];
+    //std::uint32_t key = ((std::uint32_t*)d3dlr.pBits)[0];
 #if 1
     /* menufont.png: pixel at (0,0) (upper left corner) is part of a char/glyph,
        so pick key from lower left corner. Maybe in DirectX image is flipped
@@ -191,10 +191,10 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 
     //DKS - All textures are now using a proper alpha channel, and shouldn't have any
     //      color information where their alpha is 0, so the key can now just be 0:
-    //DWORD key = (((DWORD*)image.data )[image.w * (image.h - 1)]);
-    DWORD key = 0;
+    //std::uint32_t key = (((std::uint32_t*)image.data )[image.w * (image.h - 1)]);
+    std::uint32_t key = 0;
 #else
-    DWORD key = ((DWORD*)image.data )[0];
+    std::uint32_t key = ((std::uint32_t*)image.data )[0];
 #endif
 
     /* // PICKLE Not OpenGLES compat, left for info
@@ -206,7 +206,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 
         GLubyte *buffer = (GLubyte *)malloc(textureWidth*textureHeight*4);
         glGetTexImage( GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer );
-        DWORD key = ((DWORD*)buffer)[0];
+        std::uint32_t key = ((std::uint32_t*)buffer)[0];
 
         glBindTexture( GL_TEXTURE_2D, 0 );
     */
@@ -227,13 +227,13 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
                 for (int l = 0; l<yCharsize; l++)
                 {
 #if defined(PLATFORM_DIRECTX)
-                    if (((DWORD*)d3dlr.pBits)[(j * yCharsize + l) * d3dsd.Width + (i*xCharsize + k)] != key)
+                    if (((std::uint32_t*)d3dlr.pBits)[(j * yCharsize + l) * d3dsd.Width + (i*xCharsize + k)] != key)
                         found = true;
 #elif defined(PLATFORM_SDL)
-                    if (((DWORD*)image.data)[(j * yCharsize + l) * image.w + (i*xCharsize + k)] != key)
+                    if (((std::uint32_t*)image.data)[(j * yCharsize + l) * image.w + (i*xCharsize + k)] != key)
                         found = true;
                     /*
-                    				if (((DWORD*)buffer)[(j * yCharsize + l) * textureWidth + (i*xCharsize + k)] != key)
+                    				if (((std::uint32_t*)buffer)[(j * yCharsize + l) * textureWidth + (i*xCharsize + k)] != key)
                     					found = true;
                     */
 #endif

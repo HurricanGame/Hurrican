@@ -127,8 +127,8 @@ public:
     DirectGraphicsClass(void);							// Konstruktor
     ~DirectGraphicsClass(void);							// Desktruktor
 
-    bool Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
-              DWORD dwZ_Bits, bool VSync);
+    bool Init(HWND hwnd, std::uint32_t dwBreite, std::uint32_t dwHoehe,
+              std::uint32_t dwZ_Bits, bool VSync);
     bool Exit(void);										// D3D beenden
     bool SetDeviceInfo(void);
 
@@ -140,8 +140,8 @@ public:
     void SetFilterMode(bool filteron);						// Linearer Textur Filter ein/aus
 
     void RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,    // Rendert in den Buffer, der am Ende
-                         UINT PrimitiveCount,				// eines jeden Frames komplett in
-                         CONST void* pVertexStreamZeroData);// den Backbuffer gerendert wird
+                         std::uint32_t PrimitiveCount,				// eines jeden Frames komplett in
+                         const void* pVertexStreamZeroData);// den Backbuffer gerendert wird
 
     void DisplayBuffer  (void);								// Render den Buffer auf den Backbuffer
     //DKS - SetTexture is now used for both GL and DirectX, and uses new TexturesystemClass:

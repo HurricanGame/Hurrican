@@ -25,10 +25,10 @@
 //
 typedef struct 
 {
-	DWORD	address;
-	DWORD	size;
+	std::uint32_t	address;
+	std::uint32_t	size;
     char	file[64];
-    DWORD	line;
+    std::uint32_t	line;
 } ALLOC_INFO;
 
 // Funktionen zum hinzufügen und entfernen von allokiertem Speicher
@@ -37,7 +37,7 @@ typedef list<ALLOC_INFO*> AllocList;
 
 AllocList *allocList;
 
-void AddTrack(DWORD addr,  DWORD asize,  const char *fname, DWORD lnum)
+void AddTrack(std::uint32_t addr,  std::uint32_t asize,  const char *fname, std::uint32_t lnum)
 {
 	ALLOC_INFO *info;
 
@@ -54,7 +54,7 @@ void AddTrack(DWORD addr,  DWORD asize,  const char *fname, DWORD lnum)
     allocList->insert(allocList->begin(), info);
 };
 
-void RemoveTrack(DWORD addr)
+void RemoveTrack(std::uint32_t addr)
 {
 	AllocList::iterator i;
 
@@ -74,7 +74,7 @@ void RemoveTrack(DWORD addr)
 void DumpUnfreed()
 {
 	AllocList::iterator i;
-    DWORD totalSize = 0;
+    std::uint32_t totalSize = 0;
     char buf[1024];
 
     if(!allocList)
@@ -104,7 +104,7 @@ void DumpUnfreed()
 	inline void * __cdecl operator new(unsigned int size, const char *file, int line)
 	{
 		void *ptr = (void *)malloc(size);
-		AddTrack((DWORD)ptr, size, file, line);
+		AddTrack((std::uint32_t)ptr, size, file, line);
 		return(ptr);
     };
 
@@ -112,7 +112,7 @@ void DumpUnfreed()
 	//
     inline void __cdecl operator delete(void *p)
 	{
-		RemoveTrack((DWORD)p);
+		RemoveTrack((std::uint32_t)p);
 		free(p);
 	};
 #endif

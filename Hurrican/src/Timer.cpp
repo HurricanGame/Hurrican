@@ -86,7 +86,7 @@ void  TimerClass::update(void)
     else															// wenn nicht, dann benutzen
         aktuelleZeit=timeGetTime();								    // wir timeGetTime
 
-    vergangeneZeit=(std::max<LONGLONG>(0,aktuelleZeit-letzterFrame))*ZeitFaktor;			// vergangene Zeit neu setzen
+    vergangeneZeit=(std::max<std::int64_t>(0,aktuelleZeit-letzterFrame))*ZeitFaktor;			// vergangene Zeit neu setzen
     letzterFrame=aktuelleZeit;										// letzten Frame aktualisieren
 
     aktuelleFramerate=1/vergangeneZeit;								// Framerate berechnen

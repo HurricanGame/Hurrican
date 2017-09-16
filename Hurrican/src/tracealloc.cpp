@@ -153,7 +153,7 @@ BOOL UninitSymInfo()
 BOOL InitSymInfo( PCSTR lpszInitialSymbolPath )
 {
     CHAR     lpszSymbolPath[BUFFERSIZE];
-    DWORD    symOptions = SymGetOptions();
+    std::uint32_t    symOptions = SymGetOptions();
 
     symOptions |= SYMOPT_LOAD_LINES;
     symOptions &= ~SYMOPT_UNDNAME;
@@ -166,7 +166,7 @@ BOOL InitSymInfo( PCSTR lpszInitialSymbolPath )
 }
 
 // Get the module name from a given address
-BOOL GetModuleNameFromAddress( UINT address, LPTSTR lpszModule )
+BOOL GetModuleNameFromAddress( std::uint32_t address, LPTSTR lpszModule )
 {
     BOOL              ret = FALSE;
     IMAGEHLP_MODULE   moduleInfo;
@@ -174,7 +174,7 @@ BOOL GetModuleNameFromAddress( UINT address, LPTSTR lpszModule )
     ::ZeroMemory( &moduleInfo, sizeof(moduleInfo) );
     moduleInfo.SizeOfStruct = sizeof(moduleInfo);
 
-    if ( SymGetModuleInfo( GetCurrentProcess(), (DWORD)address, &moduleInfo ) )
+    if ( SymGetModuleInfo( GetCurrentProcess(), (std::uint32_t)address, &moduleInfo ) )
     {
         // Got it!
         PCSTR2LPTSTR( moduleInfo.ModuleName, lpszModule );
@@ -191,8 +191,8 @@ BOOL GetModuleNameFromAddress( UINT address, LPTSTR lpszModule )
 BOOL GetFunctionInfoFromAddresses( ULONG fnAddress, ULONG stackAddress, LPTSTR lpszSymbol )
 {
     BOOL              ret = FALSE;
-    DWORD             dwDisp = 0;
-    DWORD             dwSymSize = 10000;
+    std::uint32_t             dwDisp = 0;
+    std::uint32_t             dwSymSize = 10000;
     TCHAR             lpszUnDSymbol[BUFFERSIZE]=_T("?");
     CHAR              lpszNonUnicodeUnDSymbol[BUFFERSIZE]="?";
     LPTSTR            lpszParamSep = NULL;
@@ -280,11 +280,11 @@ BOOL GetFunctionInfoFromAddresses( ULONG fnAddress, ULONG stackAddress, LPTSTR l
 // The output format is: "sourcefile(linenumber)" or
 //                       "modulename!address" or
 //                       "address"
-BOOL GetSourceInfoFromAddress( UINT address, LPTSTR lpszSourceInfo )
+BOOL GetSourceInfoFromAddress( std::uint32_t address, LPTSTR lpszSourceInfo )
 {
     BOOL           ret = FALSE;
     IMAGEHLP_LINE  lineInfo;
-    DWORD          dwDisp;
+    std::uint32_t          dwDisp;
     TCHAR          lpszFileName[BUFFERSIZE] = _T("");
     TCHAR          lpModuleInfo[BUFFERSIZE] = _T("");
 

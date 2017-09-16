@@ -2968,7 +2968,7 @@ void PartikelClass::Run(void)
             //      at the top of a level (level 7, eis.map will crash when firing laser weapon at beginning)
             // ORIGINAL LINE:
             //if (TileEngine.TileAt((int)((xPos + 5) / TILESIZE_X), (int)((yPos + 5) / TILESIZE_Y)).Block & BLOCKWERT_LIQUID)
-            // ADDED CHECK AND CONVERTED TO FLOAT DIV-BY-RECIPROCAL:
+            // ADDED CHECK AND CONVERTED TO float DIV-BY-RECIPROCAL:
             int tmp_x = (int)((xPos + 5.0f) * (1.0f/TILESIZE_X));
             int tmp_y = (int)((yPos + 5.0f) * (1.0f/TILESIZE_Y));
             if ( tmp_x >= 0 && tmp_x < TileEngine.LEVELSIZE_X &&
