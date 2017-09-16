@@ -45,7 +45,7 @@ void GegnerTutorialText::DoKI(void)
              GUI.m_TextID != Value1) &&
             !(Value1 == 20 && Player[0].PowerLines == 5))
     {
-        int    pos;				// Position, an der das zu ersetzende Wort steht
+        std::size_t pos;				// Position, an der das zu ersetzende Wort steht
         std::string newWord = "";			// neuer Text für das zu ersetzende Wort
         std::string s_text = "";			// Alter Text, in dem ersetzt wird
         char   c_text[512];		// Neuer Text, nachdem alles ersetzt wurde
@@ -73,7 +73,7 @@ void GegnerTutorialText::DoKI(void)
             do
             {
                 pos = s_text.find (s_Replacers[i]);
-                if (pos != (int)std::string::npos)
+                if (pos != std::string::npos)
                 {
                     newWord = s_Replacers[i+1];
                     newWord = "'" + newWord + "'";
@@ -81,7 +81,7 @@ void GegnerTutorialText::DoKI(void)
                 }
 
             }
-            while (pos != (int)std::string::npos);
+            while (pos != std::string::npos);
         }
 
         // aktualisierten Text übernehmen
