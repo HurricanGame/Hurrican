@@ -218,7 +218,7 @@ endif
 
 INCLUDES := -I. -I./SDLPort -I./cml $(INCLUDES_OS)
 
-COMMON_CXXFLAGS := -Wall -fsingle-precision-constant -fno-rtti
+COMMON_CXXFLAGS := -std=c++17 -Wall -fsingle-precision-constant -fno-rtti
 LDFLAGS += $(COMMON_CXXFLAGS)
 
 ifeq ($(USE_FLTO),yes)
