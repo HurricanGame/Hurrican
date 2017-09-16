@@ -9,7 +9,6 @@
 #include <iostream>
 #include <string>
 #include "stdafx.hpp"
-using namespace std;
 
 #include "Gegner_PowerBlock.hpp"
 #include "Trigger_TutorialText.hpp"
@@ -47,8 +46,8 @@ void GegnerTutorialText::DoKI(void)
             !(Value1 == 20 && Player[0].PowerLines == 5))
     {
         int    pos;				// Position, an der das zu ersetzende Wort steht
-        string newWord = "";			// neuer Text für das zu ersetzende Wort
-        string s_text = "";			// Alter Text, in dem ersetzt wird
+        std::string newWord = "";			// neuer Text für das zu ersetzende Wort
+        std::string s_text = "";			// Alter Text, in dem ersetzt wird
         char   c_text[512];		// Neuer Text, nachdem alles ersetzt wurde
 
         // Bei Trigger 7 Anzahl der Diamanten auf fünf setzen (falls die ersten fünf nicht richtig
@@ -74,7 +73,7 @@ void GegnerTutorialText::DoKI(void)
             do
             {
                 pos = s_text.find (s_Replacers[i]);
-                if (pos != (int)string::npos)
+                if (pos != (int)std::string::npos)
                 {
                     newWord = s_Replacers[i+1];
                     newWord = "'" + newWord + "'";
@@ -82,7 +81,7 @@ void GegnerTutorialText::DoKI(void)
                 }
 
             }
-            while (pos != (int)string::npos);
+            while (pos != (int)std::string::npos);
         }
 
         // aktualisierten Text übernehmen

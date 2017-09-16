@@ -39,8 +39,6 @@
 //#include <fstream>
 //#include <sstream>
 
-using namespace std;
-
 // --------------------------------------------------------------------------------------
 // Konstruktor (leer)
 // --------------------------------------------------------------------------------------
@@ -130,14 +128,14 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 
 #elif defined(PLATFORM_SDL)
     image_t image;
-    string fullpath;
+    std::string fullpath;
     char *pData;
     unsigned long Size;
 
     if (CommandLineParams.RunOwnLevelList == true)
     {
         //sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
-        fullpath = string(g_storage_ext) + "/levels/" + string(CommandLineParams.OwnLevelList) + string(Filename);
+        fullpath = std::string(g_storage_ext) + "/levels/" + std::string(CommandLineParams.OwnLevelList) + std::string(Filename);
         if (FileExists(fullpath.c_str()))
         {
             if (!loadImageSDL(image, fullpath, NULL, 0)) {
@@ -152,7 +150,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
     {
         //DKS - All textures are now stored in their own data/textures/ subdir:
         //sprintf_s(Temp, "%s/data/textures/%s", g_storage_ext, Filename);
-        fullpath = string(g_storage_ext) + "/data/textures/" + string(Filename);
+        fullpath = std::string(g_storage_ext) + "/data/textures/" + std::string(Filename);
         if (FileExists(fullpath.c_str()))
         {
             if (!loadImageSDL(image, fullpath, NULL, 0)) {
@@ -251,10 +249,10 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
     //DKS - I used this code to output the character widths to a text file, and they now reside in
     //      hard-coded arrays. This was so we can use compressed font images and not have to always
     //      have a .PNG image present.
-    //string outfile_str = string(Filename) + ".txt";
-    //ofstream outfile(outfile_str.c_str());
+    //std::string outfile_str = std::string(Filename) + ".txt";
+    //std::ofstream outfile(outfile_str.c_str());
     //for (int i=0; i < 256; ++i) {
-    //    ostringstream ostr;
+    //    std::ostringstream ostr;
     //    ostr << (int)mCharLength[i];
     //    outfile << ostr.str() << ", ";
     //}

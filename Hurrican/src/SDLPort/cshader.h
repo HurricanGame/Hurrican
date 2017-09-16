@@ -34,8 +34,6 @@
 #include "Logdatei.hpp"
 #include "cml/cml.h"
 
-using namespace std;
-
 #define CHECK_FLAG(X,Y) ((X & Y) == Y)
 
 enum
@@ -46,7 +44,7 @@ enum
 
 typedef struct SHADER_T
 {
-    string  path;
+    std::string  path;
     GLenum  type;
     GLuint  name;
 
@@ -64,10 +62,10 @@ public:
     virtual ~CShader();
 
     void        Close           ( void );
-    int8_t      Load            ( const string& path_vertex, const string& path_frag );
+    int8_t      Load            ( const std::string& path_vertex, const std::string& path_frag );
     void        Use             ( void );
-    GLint       GetAttribute    ( const string& attribute );
-    GLint       GetUniform      ( const string& attribute );
+    GLint       GetAttribute    ( const std::string& attribute );
+    GLint       GetUniform      ( const std::string& attribute );
 
     GLuint      NamePos;
     GLuint      NameClr;
@@ -79,17 +77,17 @@ public:
 #endif
 
 private:
-    int8_t      LoadShader      ( GLenum type, const string& path );
+    int8_t      LoadShader      ( GLenum type, const std::string& path );
     int8_t      CreateProgram   ( void );
-    GLuint      CompileShader   ( GLenum type, const string& path );
+    GLuint      CompileShader   ( GLenum type, const std::string& path );
     void        FindAttributes  ( void );
     void        FindUniforms    ( void );
     void        PrintLog        ( uint8_t type, GLuint shader=0 );
 
     GLuint                          Program;
-    vector<shader_t>                Shaders;
-    vector< pair<string, GLint> >   Uniforms;
-    vector< pair<string, GLint> >   Attributes;
+    std::vector<shader_t>                Shaders;
+    std::vector< pair<string, GLint> >   Uniforms;
+    std::vector< pair<string, GLint> >   Attributes;
 };
 
 extern cml::matrix44f_r g_matView;

@@ -35,8 +35,6 @@
 //      Copyright (c) 2013, Cong Xu  Simplified BSD License
 #include <tinydir/tinydir.h>
 
-using namespace std;
-
 extern Logdatei Protokoll;
 
 char TextArray  [TEXT_LASTTEXT][1024];
@@ -64,7 +62,7 @@ bool LoadLanguage (char *filename)
 {
     bool fromrar = false;
     FILE *Datei = NULL;
-    ifstream in;
+    std::ifstream in;
     char c;
     int  count;
     char temp[256];

@@ -26,8 +26,6 @@
 
 #include "SDL_port.h"
 
-using namespace std;
-
 class CFbo
 {
     public:

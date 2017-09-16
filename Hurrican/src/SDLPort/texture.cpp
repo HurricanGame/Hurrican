@@ -28,8 +28,6 @@
 #include "texture.h"
 #include "Texts.hpp"          //For ReplaceAll() function
 
-using namespace std;
-
 #if defined(USE_ETC1)
 #define ETC1_HEADER_SIZE 16
 #endif
@@ -57,14 +55,14 @@ enum
 //      In th.npot_scalex and th.npot_scaley, it sets a correction
 //      factor to apply to each dimension to compensate for any increases in size
 //      from power-of-two expansion (each will remain 1.0 if none occurred).
-bool SDL_LoadTexture( const string &path, const string &filename,
+bool SDL_LoadTexture( const std::string &path, const std::string &filename,
                       void *buf, unsigned int buf_size, TextureHandle &th )
 {
     image_t image;
     bool success = false;
     bool load_from_memory = buf_size > 0;
-    string fullpath;
-    string filename_sans_ext(filename);
+    std::string fullpath;
+    std::string filename_sans_ext(filename);
     ReplaceAll(filename_sans_ext, ".png", "");
 
     if (load_from_memory && !buf) {
@@ -440,12 +438,12 @@ bool loadImageSDL( image_t& image, const std::string &fullpath, void *buf, unsig
 
         // Blacklist of image filenames (sub-strings) that shouldn't ever be resized, because of
         // resulting graphics glitches
-        if (   fullpath.find("font")           != string::npos 
-            //|| fullpath.find("lightmap")     != string::npos           // Lightmaps were never actually used in the game
-            || fullpath.find("hurrican_rund")  != string::npos             // Menu star/nebula background (ugly)
-            || fullpath.find("roboraupe")      != string::npos             // Flat spiky enemy worm-like thing (glitches)
-            || fullpath.find("enemy-walker")   != string::npos             // Frog-like robotic walker (glitches)
-            || fullpath.find("stelzsack")      != string::npos             // Stilt-walker enemy on elevator level
+        if (   fullpath.find("font")           != std::string::npos 
+            //|| fullpath.find("lightmap")     != std::string::npos           // Lightmaps were never actually used in the game
+            || fullpath.find("hurrican_rund")  != std::string::npos             // Menu star/nebula background (ugly)
+            || fullpath.find("roboraupe")      != std::string::npos             // Flat spiky enemy worm-like thing (glitches)
+            || fullpath.find("enemy-walker")   != std::string::npos             // Frog-like robotic walker (glitches)
+            || fullpath.find("stelzsack")      != std::string::npos             // Stilt-walker enemy on elevator level
            )
         {
             factor = 1;

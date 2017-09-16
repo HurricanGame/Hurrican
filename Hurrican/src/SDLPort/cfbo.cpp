@@ -23,6 +23,7 @@
  */
 
 #include "cfbo.h"
+#include "opengl.h"
 
 #if defined(USE_FBO)
 

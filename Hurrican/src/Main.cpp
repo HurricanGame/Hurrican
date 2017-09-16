@@ -69,8 +69,6 @@
 #include <android/log.h>
 #endif
 
-using namespace std;
-
 // Memory Leaks
 
 //#include <stdlib.h>

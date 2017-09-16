@@ -19,8 +19,6 @@
 ********************************************************************************/
 
 
-using namespace std;
-
 // --------------------------------------------------------------------------------------
 // Include Dateien
 // --------------------------------------------------------------------------------------
@@ -333,7 +331,7 @@ void SoundManagerClass::SetVolumes(float sound_vol, float music_vol)
 
 //DKS - Added default parameter 'loop' to specify if the song should loop, and
 //      converted to use strings:
-void SoundManagerClass::LoadSong(const string &filename, int nr, bool loop /*=true*/)
+void SoundManagerClass::LoadSong(const std::string &filename, int nr, bool loop /*=true*/)
 {
     if (songs[nr].data) {
         StopSong(nr, false);
@@ -344,12 +342,12 @@ void SoundManagerClass::LoadSong(const string &filename, int nr, bool loop /*=tr
     char         *pData   = NULL;
     //DKS - Changed from unsigned int to unsigned long to fix unrarlib compilation error:
     unsigned long buf_size = 0;
-    string       fullpath;
+    std::string       fullpath;
 
     // Zuerst checken, ob sich der Song in einem MOD-Ordner befindet
     if (CommandLineParams.RunOwnLevelList) {
         //sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
-        fullpath = string(g_storage_ext) + "/levels/" + string(CommandLineParams.OwnLevelList) + "/" + filename;
+        fullpath = std::string(g_storage_ext) + "/levels/" + std::string(CommandLineParams.OwnLevelList) + "/" + filename;
         if (FileExists(fullpath.c_str()))
             goto loadfile;
     }
@@ -357,7 +355,7 @@ void SoundManagerClass::LoadSong(const string &filename, int nr, bool loop /*=tr
     //DKS - Music files now reside in new subdir data/music/
     // Dann checken, ob sich das File im Standard Ordner befindet
     //sprintf_s(Temp, "%s/data/music/%s", g_storage_ext, Filename);
-    fullpath = string(g_storage_ext) + "/data/music/" + filename;
+    fullpath = std::string(g_storage_ext) + "/data/music/" + filename;
     if (FileExists(fullpath.c_str()))
         goto loadfile;
 
@@ -632,7 +630,7 @@ void SoundManagerClass::FadeWave(int nr, int mode)
 }
 
 //DKS - Altered extensively, added string support:
-void SoundManagerClass::LoadWave(const string &filename, int nr, bool looped)
+void SoundManagerClass::LoadWave(const std::string &filename, int nr, bool looped)
 {
     if (!GameRunning)
         return;
@@ -641,7 +639,7 @@ void SoundManagerClass::LoadWave(const string &filename, int nr, bool looped)
     char         *pData = NULL;
     //DKS - Changed from unsigned int to unsigned long to fix unrarlib compilation error:
     unsigned long buf_size = 0;
-    string       fullpath;
+    std::string       fullpath;
 
     if (sounds[nr].data)
         UnloadWave(nr);
@@ -649,7 +647,7 @@ void SoundManagerClass::LoadWave(const string &filename, int nr, bool looped)
     // Zuerst checken, ob sich der Sound in einem MOD-Ordner befindet
     if (CommandLineParams.RunOwnLevelList) {
         //sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
-        fullpath = string(g_storage_ext) + "/levels/" + string(CommandLineParams.OwnLevelList) + "/" + filename;
+        fullpath = std::string(g_storage_ext) + "/levels/" + std::string(CommandLineParams.OwnLevelList) + "/" + filename;
 
         if (FileExists(fullpath.c_str()))
             goto loadfile;
@@ -657,7 +655,7 @@ void SoundManagerClass::LoadWave(const string &filename, int nr, bool looped)
 
     //DKS - Sound effects files now reside in new subdir data/sfx/
     //sprintf_s(Temp, "%s/data/sfx/%s", g_storage_ext, Filename);
-    fullpath = string(g_storage_ext) + "/data/sfx/" + filename;
+    fullpath = std::string(g_storage_ext) + "/data/sfx/" + filename;
     if (FileExists(fullpath.c_str()))
         goto loadfile;
 
@@ -723,8 +721,8 @@ loadfile:
 #endif //0
 
     //DisplayLoadInfo(Buffer);
-    string loadinfo_str = string(TextArray[TEXT_LADE_WAVE]) + filename +
-                            string(TextArray[TEXT_LADEN_ERFOLGREICH]) + string("\n");
+    std::string loadinfo_str = std::string(TextArray[TEXT_LADE_WAVE]) + filename +
+                            std::string(TextArray[TEXT_LADEN_ERFOLGREICH]) + std::string("\n");
     DisplayLoadInfo(loadinfo_str.c_str());
 }
 
