@@ -2,6 +2,7 @@
 // Klasse für die Gegner und Klasse für die Linked List der Gegner
 // --------------------------------------------------------------------------------------
 
+#include <algorithm>
 #include "stdafx.hpp"
 #include "GegnerClass.hpp"
 #include "Gegner_Helper.hpp"
@@ -349,7 +350,7 @@ int GegnerClass::PlayerAbstand(bool both)
 
             //DKS - converted to float:
             //Abstand = MIN(Abstand, float(sqrt((xdiff * xdiff) + (ydiff * ydiff))));
-            Abstand = MIN(Abstand, sqrtf((xdiff * xdiff) + (ydiff * ydiff)));
+            Abstand = std::min(Abstand, sqrtf((xdiff * xdiff) + (ydiff * ydiff)));
         }
 
     }
@@ -602,7 +603,7 @@ bool GegnerClass::IsOnScreen(void)
     int off;
     int xsize, ysize;
 
-    off = MIN(GegnerRect[GegnerArt].left, 0);
+    off = std::min(GegnerRect[GegnerArt].left, 0);
 
     xsize = pGegnerGrafix[GegnerArt]->itsXFrameSize;
     ysize = pGegnerGrafix[GegnerArt]->itsYFrameSize;

@@ -71,10 +71,6 @@ typedef struct tagRECT
 #endif
 typedef uint32_t LPDIRECT3D8, LPDIRECT3D9, LPDIRECT3DDEVICE8, LPDIRECT3DDEVICE9, LPDIRECTSOUND8, D3DCOLOR;
 
-#define MAX(a,b)    ((a)>(b)?(a):(b))
-#define MIN(a,b)    ((a)<(b)?(a):(b))
-#define LIM(a,b,c)  MAX(MIN(a,c),b)
-
 #define D3DX_PI ((float)(M_PI))
 
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN

@@ -14,6 +14,7 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
+#include <algorithm>
 #include <time.h>
 #include <stdexcept>
 #include <string>
@@ -1219,8 +1220,8 @@ void DirectGraphicsClass::SetupFramebuffers( void )
             RenderRect.w = (WindowView.h/3)*4;
             RenderRect.h = WindowView.h;
         }
-        RenderRect.x = MAX(0, WindowView.w - RenderRect.w)/2;
-        RenderRect.y = MAX(0, WindowView.h - RenderRect.h)/2;
+        RenderRect.x = std::max(0, WindowView.w - RenderRect.w)/2;
+        RenderRect.y = std::max(0, WindowView.h - RenderRect.h)/2;
 
         Protokoll.WriteText( false, "Render area: %dx%d at %dx%d\n", RenderRect.w, RenderRect.h, RenderRect.x, RenderRect.y );
     }
@@ -1228,8 +1229,8 @@ void DirectGraphicsClass::SetupFramebuffers( void )
 #endif
     {
         /* No scaling just center the rendering in the window */
-        WindowView.x = MAX( 0,(WindowView.w-RenderView.w)/2 );
-        WindowView.y = MAX( 0,(WindowView.h-RenderView.h)/2 );
+        WindowView.x = std::max( 0,(WindowView.w-RenderView.w)/2 );
+        WindowView.y = std::max( 0,(WindowView.h-RenderView.h)/2 );
         WindowView.w = RenderView.w;
         WindowView.h = RenderView.h;
 

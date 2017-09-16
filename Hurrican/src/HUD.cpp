@@ -13,6 +13,7 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
+#include <algorithm>
 #include "HUD.hpp"
 #include "DX8Font.hpp"
 #include "DX8Graphics.hpp"
@@ -439,7 +440,7 @@ void HUDClass::ShowHUD(void)
     // Anzahl verbleibender Leben anzeigen
     int LivesToShow;
 
-    LivesToShow = MAX(0, Player[0].Lives);
+    LivesToShow = std::max(0, Player[0].Lives);
 
     _itoa_s(LivesToShow, Buffer, 10);
 
@@ -474,7 +475,7 @@ void HUDClass::ShowHUD(void)
     // oder Leben Spieler 2
     else
     {
-        LivesToShow = MAX(0, Player[1].Lives);
+        LivesToShow = std::max(0, Player[1].Lives);
         _itoa_s(LivesToShow, Buffer, 10);
     }
 

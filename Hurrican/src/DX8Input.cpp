@@ -13,6 +13,7 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
+#include <algorithm>
 #include "DX8Input.hpp"
 #include "Logdatei.hpp"
 #include "Main.hpp"
@@ -668,7 +669,7 @@ void DirectInputClass::UpdateJoysticks(void)
 
 bool DirectInputClass::AreAllKeysReleased()
 {
-    for (int i = 0; i < MIN(NumberOfKeys,MAX_KEYS); i++)
+    for (int i = 0; i < std::min(NumberOfKeys,MAX_KEYS); i++)
         if (TastaturPuffer[i] != 0)
             return false;
 
@@ -681,7 +682,7 @@ bool DirectInputClass::AreAllKeysReleased()
 
 bool DirectInputClass::AnyKeyDown(void)
 {
-    for (int i = 0; i < MIN(NumberOfKeys,MAX_KEYS); i++)
+    for (int i = 0; i < std::min(NumberOfKeys,MAX_KEYS); i++)
         if (KeyDown(i))
             return true;
 

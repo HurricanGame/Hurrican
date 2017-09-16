@@ -14,6 +14,7 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
+#include <algorithm>
 #include "Globals.hpp"
 #include "Timer.hpp"
 #include "Logdatei.hpp"
@@ -85,7 +86,7 @@ void  TimerClass::update(void)
     else															// wenn nicht, dann benutzen
         aktuelleZeit=timeGetTime();								    // wir timeGetTime
 
-    vergangeneZeit=(MAX(0,aktuelleZeit-letzterFrame))*ZeitFaktor;			// vergangene Zeit neu setzen
+    vergangeneZeit=(std::max<LONGLONG>(0,aktuelleZeit-letzterFrame))*ZeitFaktor;			// vergangene Zeit neu setzen
     letzterFrame=aktuelleZeit;										// letzten Frame aktualisieren
 
     aktuelleFramerate=1/vergangeneZeit;								// Framerate berechnen

@@ -31,6 +31,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -454,7 +455,7 @@ void FillCommandLineParams( int argc, char* args[] )
             i++;
             if (i<argc)
             {
-                CommandLineParams.ScreenDepth = LIM(atoi(args[i]), 16, 32);
+                CommandLineParams.ScreenDepth = std::clamp(atoi(args[i]), 16, 32);
                 if (CommandLineParams.ScreenDepth >= 32)
                     CommandLineParams.ScreenDepth = 32;
                 else if (CommandLineParams.ScreenDepth > 24 && CommandLineParams.ScreenDepth < 32)
@@ -484,7 +485,7 @@ void FillCommandLineParams( int argc, char* args[] )
             i++;
             if (i<argc)
             {
-                CommandLineParams.TexFactor = LIM(atoi(args[i]), 1, 4);
+                CommandLineParams.TexFactor = std::clamp(atoi(args[i]), 1, 4);
                 if (CommandLineParams.TexFactor == 3)
                     CommandLineParams.TexFactor = 4;
                 fprintf( stdout, "Texfactor set to %d\n", CommandLineParams.TexFactor );
@@ -495,7 +496,7 @@ void FillCommandLineParams( int argc, char* args[] )
             i++;
             if (i<argc)
             {
-                CommandLineParams.TexSizeMin = LIM(atoi(args[i]), 16, 1024);
+                CommandLineParams.TexSizeMin = std::clamp(atoi(args[i]), 16, 1024);
                 fprintf( stdout, "Texsizemin set to %d\n", CommandLineParams.TexSizeMin );
             }
         }
