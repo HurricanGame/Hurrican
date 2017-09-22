@@ -102,7 +102,7 @@ vector_weak_order(const LeftT& left, const RightT& right, OpT)
     [[maybe_unused]] typedef typename result_type::size_tag size_tag;
 
     /* Verify expression size: */
-    ssize_t N = (ssize_t) et::CheckedSize(left,right,size_tag());
+    ssize_t N = static_cast<ssize_t>(et::CheckedSize(left,right,size_tag()));
     for(ssize_t i = 0; i < N; ++ i)
     {
         if(OpT().apply(
@@ -164,7 +164,7 @@ vector_total_order(const LeftT& left, const RightT& right, OpT)
     [[maybe_unused]] typedef typename result_type::size_tag size_tag;
 
     /* Verify expression size: */
-    ssize_t N = (ssize_t) et::CheckedSize(left,right,size_tag());
+    ssize_t N = static_cast<ssize_t>(et::CheckedSize(left,right,size_tag()));
     for(ssize_t i = 0; i < N; ++ i)
     {
 

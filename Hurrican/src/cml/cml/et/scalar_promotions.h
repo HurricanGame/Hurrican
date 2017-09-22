@@ -106,8 +106,8 @@ struct promote_trait
     enum
     {
         T1IsBetter =
-            (int) precision_trait<T1>::precisionRank >
-            (int) precision_trait<T2>::precisionRank,
+            static_cast<int>(precision_trait<T1>::precisionRank) >
+            static_cast<int>(precision_trait<T2>::precisionRank),
 
         // True if we know ranks for both T1 and T2
         knowBothRanks =

@@ -72,8 +72,8 @@ struct GetCheckedSize<LeftT,RightT,fixed_size_tag>
     {
         typedef matrix_size size_type;
         CML_STATIC_REQUIRE_M(
-            (size_t)LeftT::array_rows == (size_t)RightT::array_rows
-            && (size_t)LeftT::array_cols == (size_t)RightT::array_cols,
+            static_cast<size_t>(LeftT::array_rows) == static_cast<size_t>(RightT::array_rows)
+            && static_cast<size_t>(LeftT::array_cols) == static_cast<size_t>(RightT::array_cols),
             incompatible_expression_size_error);
 
         /* Record the array size as a constant: */
@@ -95,7 +95,7 @@ struct GetCheckedSize<LeftT,RightT,fixed_size_tag>
     {
         typedef size_t size_type;
         CML_STATIC_REQUIRE_M(
-            (size_t)LeftT::array_cols == (size_t)RightT::array_size,
+            static_cast<size_t>(LeftT::array_cols) == static_cast<size_t>(RightT::array_size),
             incompatible_expression_size_error);
 
         /* Record the array size as a constant: */
@@ -113,7 +113,7 @@ struct GetCheckedSize<LeftT,RightT,fixed_size_tag>
     {
         typedef size_t size_type;
         CML_STATIC_REQUIRE_M(
-            (size_t)LeftT::array_size == (size_t)RightT::array_rows,
+            static_cast<size_t>(LeftT::array_size) == static_cast<size_t>(RightT::array_rows),
             incompatible_expression_size_error);
 
         /* Record the array size as a constant: */
@@ -170,7 +170,7 @@ struct GetCheckedSize<LeftT,RightT,fixed_size_tag>
     {
         typedef size_t size_type;
         CML_STATIC_REQUIRE_M(
-            (size_t)LeftT::array_size == (size_t)RightT::array_size,
+            static_cast<size_t>(LeftT::array_size) == static_cast<size_t>(RightT::array_size),
             incompatible_expression_size_error);
 
         /* Record the array size as a constant: */
@@ -472,9 +472,9 @@ template<typename MatT> inline size_t
 CheckedSquare(const MatT&, fixed_size_tag)
 {
     CML_STATIC_REQUIRE_M(
-        ((size_t)MatT::array_rows == (size_t)MatT::array_cols),
+        (static_cast<size_t>(MatT::array_rows) == static_cast<size_t>(MatT::array_cols)),
         square_matrix_arg_expected_error);
-    return (size_t)MatT::array_rows;
+    return static_cast<size_t>(MatT::array_rows);
 }
 
 /** Verify the sizes of the argument matrices for matrix multiplication.

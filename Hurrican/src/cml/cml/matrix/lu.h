@@ -64,7 +64,7 @@ void lu_inplace(MatT& A)
      */
 
     /* Verify that the matrix is square, and get the size: */
-    ssize_t N = (ssize_t) cml::et::CheckedSquare(A, size_tag());
+    ssize_t N = static_cast<ssize_t>(cml::et::CheckedSquare(A, size_tag()));
 
 
     for(ssize_t k = 0; k < N-1; ++k)
@@ -139,8 +139,8 @@ lu_solve(const MatT& LU, const VecT& b)
     [[maybe_unused]] typedef typename vector_type::value_type value_type;
 
     /* Verify that the matrix is square, and get the size: */
-    ssize_t N = (ssize_t) cml::et::CheckedSquare(
-                    LU, typename lu_traits::size_tag());
+    ssize_t N = static_cast<ssize_t>(cml::et::CheckedSquare(
+                    LU, typename lu_traits::size_tag()));
 
     /* Verify that the matrix and vector have compatible sizes: */
     et::CheckedSize(LU, b, typename vector_type::size_tag());

@@ -58,7 +58,7 @@ template<typename LeftT, typename RightT> struct _op_name_ {             \
     typedef typename ScalarPromote<left_value,right_value>::type value_type; \
     typedef scalar_result_tag result_tag;                                \
     value_type apply(left_reference left, right_reference right) const { \
-        return left _op_ (LeftT) right; }                                \
+        return left _op_ static_cast<LeftT>(right); }                                \
 };
 
 /** Declare a binary boolean operator, like less-than, s1 < s2.

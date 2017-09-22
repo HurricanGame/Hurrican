@@ -175,7 +175,7 @@ template<typename VecT> inline void
 Require3D(const VecT&, fixed_size_tag)
 {
     CML_STATIC_REQUIRE_M(
-        ((size_t)VecT::array_size == 3),
+        (static_cast<size_t>(VecT::array_size == 3)),
         cross_expects_3D_vector_args_error);
 }
 
@@ -192,7 +192,7 @@ template<typename VecT> inline void
 Require2D(const VecT& v, fixed_size_tag)
 {
     CML_STATIC_REQUIRE_M(
-        ((size_t)VecT::array_size == 2),
+        (static_cast<size_t>(VecT::array_size == 2)),
         perp_dot_expects_2D_vector_args_error);
 }
 

@@ -47,7 +47,7 @@ struct promote<A1,A2,oned_tag,oned_tag,fixed_size_tag>
     left_scalar,right_scalar>::type promoted_scalar;
 
     /* Next, deduce the array size: */
-    enum { Size = VAL_MAX((size_t)A1::array_size, (size_t)A2::array_size) };
+    enum { Size = VAL_MAX(static_cast<size_t>(A1::array_size), static_cast<size_t>(A2::array_size)) };
 
     /* Finally, generate the promoted array type: */
     typedef fixed_1D<promoted_scalar,Size> type;
@@ -84,7 +84,7 @@ struct promote<A1,A2,twod_tag,oned_tag,fixed_size_tag>
     left_scalar,right_scalar>::type promoted_scalar;
 
     /* Next, deduce the array size: */
-    enum { Size = (size_t)A1::array_rows };
+    enum { Size = static_cast<size_t>(A1::array_rows) };
 
     /* Finally, generate the promoted array type: */
     typedef fixed_1D<promoted_scalar,Size> type;
@@ -102,7 +102,7 @@ struct promote<A1,A2,oned_tag,twod_tag,fixed_size_tag>
     left_scalar,right_scalar>::type promoted_scalar;
 
     /* Next, deduce the array size: */
-    enum { Size = (size_t)A2::array_cols };
+    enum { Size = static_cast<size_t>(A2::array_cols) };
 
     /* Finally, generate the promoted array type: */
     typedef fixed_1D<promoted_scalar,Size> type;
@@ -176,8 +176,8 @@ struct promote<A1,A2,twod_tag,twod_tag,fixed_size_tag>
     /* Next, deduce the array size: */
     enum
     {
-        Rows = (size_t)A1::array_rows,
-        Cols = (size_t)A2::array_cols
+        Rows = static_cast<size_t>(A1::array_rows),
+        Cols = static_cast<size_t>(A2::array_cols)
     };
 
     /* Then deduce the array layout: */

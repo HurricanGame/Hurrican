@@ -322,9 +322,9 @@ struct inverse_f
                     value_type mult = -Z(j,col);
                     Z(j,col) = value_type(0);
                     /*Z.row_op_add_mult(col,j,mult);*/
-                    for (size_t k = 0; k < Z.cols(); ++k)
+                    for (size_t k2 = 0; k2 < Z.cols(); ++k2)
                     {
-                        Z(j,k) += mult * Z(col,k);
+                        Z(j,k2) += mult * Z(col,k2);
                     }
                 }
             }

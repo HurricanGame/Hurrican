@@ -61,7 +61,7 @@ CheckVecN(const VecT& v, fixed_size_tag)
 {
     CheckVec(v);
 
-    CML_STATIC_REQUIRE_M(((size_t)VecT::array_size == N), ErrorT);
+    CML_STATIC_REQUIRE_M((static_cast<size_t>(VecT::array_size) == N), ErrorT);
 }
 
 /** Run-time check for a vector of size N */

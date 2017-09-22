@@ -47,7 +47,7 @@ template<typename LeftT, typename RightT> inline matrix_size
 MatMulCheckedSize(const LeftT&, const RightT&, fixed_size_tag)
 {
     CML_STATIC_REQUIRE_M(
-        ((size_t)LeftT::array_cols == (size_t)RightT::array_rows),
+        (static_cast<size_t>(LeftT::array_cols) == static_cast<size_t>(RightT::array_rows)),
         mul_expressions_have_wrong_size_error);
     return matrix_size(LeftT::array_rows,RightT::array_cols);
 }
