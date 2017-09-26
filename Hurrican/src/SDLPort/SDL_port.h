@@ -32,8 +32,8 @@
 #include <vector>
 
 #include "cml/cml.h"
-#include "SDL.h"
-#include "SDL_image.h"
+#include "SDL/SDL.h"
+#include "SDL/SDL_image.h"
 #include "keymap.h"
 #include "opengl.h"
 #include "Logdatei.hpp"

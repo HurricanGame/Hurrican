@@ -26,7 +26,7 @@
 #define _SDL_FMOD_H_
 
 #include <stdio.h>
-#include "SDL_mixer.h"
+#include "SDL/SDL_mixer.h"
 #include "SDL_port.h"
 #if defined(USE_MODPLUG)
 #include "modplug.h"
