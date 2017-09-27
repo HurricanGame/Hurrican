@@ -497,7 +497,7 @@ void ConsoleClass::CheckCommands(void)
 
             CONSOLE_PRINT("found.");
             TileEngine.LoadLevel(dummy);
-            Protokoll.WriteText(false, dummy);
+            Protokoll << dummy << std::endl;
         }
 
         // Ansonsten Fehlermeldung

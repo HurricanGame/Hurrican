@@ -5737,7 +5737,7 @@ void ProjectileListClass::ClearAll(void)
 
 #ifdef _DEBUG
     if (NumProjectiles != 0) 
-        Protokoll.WriteText( false, "ERROR: poss. mem leak / corruption in linked list of projectiles\n" );
+        Protokoll << "ERROR: poss. mem leak / corruption in linked list of projectiles" << std::endl;
 #endif
 
     //DKS - added support for new, fast pooled mem-manager:

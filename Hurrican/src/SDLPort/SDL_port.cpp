@@ -215,7 +215,7 @@ uint8_t* LoadFileToMemory( const std::string& name, uint32_t& size )
     file.open( name.c_str(), std::ios_base::in );
     if (file.is_open() == 0)
     {
-        Protokoll.WriteText( false, "Error file operation: File: %s\n", name.c_str() );
+        Protokoll << "Error file operation: File: " << name << std::endl;;
         return NULL;
     }
 
@@ -261,7 +261,7 @@ void load_matrix( GLenum mode, const GLfloat* m )
 {                                                                                       \
     N = (T)wglGetProcAddress(#N);                                                       \
     if (N == NULL) {                                                                    \
-        Protokoll.WriteText( false, "ERROR Video: OpenGL function is NULL:" #N "\n" );  \
+        Protokoll << "ERROR Video: OpenGL function is NULL:" << #N << std::endl;        \
         return 1;                                                                       \
     }                                                                                   \
 }

@@ -49,7 +49,7 @@
 bool SoundManagerClass::InitFMOD(SOUNDMANAGER_PARAMETERS smpp)
 {
 #if defined(PLATFORM_DIRECTX)
-    Protokoll.WriteText( false, "Initializing FMOD\n" );
+    Protokoll << "Initializing FMOD" << std::endl;
     FSOUND_SetOutput(FSOUND_OUTPUT_DSOUND);					// Output-Mode setzen
     FSOUND_SetDriver(0);									// Default-Soundkarte setzen
     FSOUND_SetMixer(FSOUND_MIXER_QUALITY_AUTODETECT);		// Mixer-Quality setzen
@@ -57,9 +57,9 @@ bool SoundManagerClass::InitFMOD(SOUNDMANAGER_PARAMETERS smpp)
     FMOD_RESULT result = SOUND_Init(smpp.Mixrate, smpp.MaxSoftwareChannels, smpp.Flags);
     bool success = (result == FMOD_OK);
     if (!success)
-        Protokoll.WriteText( false, "->ERROR: %s\n", GetFMODErrorString(SOUND_GetError()) );
+        Protokoll << "->ERROR: " << GetFMODErrorString(SOUND_GetError()) << std::endl;
 #elif defined(PLATFORM_SDL)
-    Protokoll.WriteText( false, "Initializing SDL_mixer\n" );
+    Protokoll << "Initializing SDL_mixer" << std::endl;
     bool success = SOUND_Init(smpp.Mixrate, smpp.MaxSoftwareChannels, smpp.Flags);
 #endif
 
@@ -267,17 +267,18 @@ void SoundManagerClass::Init()
 
     if (InitFMOD(smpp)) {
         num_channels = SOUND_GetMaxChannels();
-        Protokoll.WriteText( false, "Requested %d sound channels and got %d\n", smpp.MaxSoftwareChannels, num_channels );
+        Protokoll << "Requested " << smpp.MaxSoftwareChannels << " sound channels and got " << num_channels << std::endl;
         channels.resize(num_channels);
     } else {
-        Protokoll.WriteText( true, "-> ERROR: Create Sound Manager failed !\n" );
+        Protokoll << "-> ERROR: Create Sound Manager failed !" << std::endl;
+        GameRunning = false;
     }
 }
 
 //DKS - Added:
 void SoundManagerClass::Exit()
 {
-    Protokoll.WriteText( false, "-> Shutting down Sound Manager\n" );
+    Protokoll << "-> Shutting down Sound Manager" << std::endl;
 
     StopSongs();
     StopSounds();
@@ -362,12 +363,13 @@ void SoundManagerClass::LoadSong(const std::string &filename, int nr, bool loop 
 #if defined(USE_UNRARLIB)
     // Auch nicht? Dann ist es hoffentlich im RAR file
     if (urarlib_get(&pData, &buf_size, filename.c_str(), RARFILENAME, convertText(RARFILEPASSWORD)) == false) {
-        Protokoll.WriteText( false, "\n-> Error loading song file %s from Archive !\n", filename.c_str() );
+        Protokoll << "\n-> Error loading song file " << filename << " from Archive !" << std::endl;
         return;
     } else
         fromrar = true;
 #else
-    Protokoll.WriteText( true, "\n-> Error: Could not locate song file %s\n", fullpath.c_str() );
+    Protokoll << "\n-> Error: Could not locate song file " << fullpath << std::endl;
+    GameRunning = false;
     return;
 #endif // USE_UNRARLIB
 
@@ -385,11 +387,11 @@ loadfile:
     // Fehler beim Laden ?
     //
     if (!songs[nr].data) {
-        Protokoll.WriteText( false, "\n-> NULL ptr returned from MUSIC_LoadSong() loading song file\n\t%s\n", fullpath.c_str() );
+        Protokoll << "\n-> NULL ptr returned from MUSIC_LoadSong() loading song file\n\t" << fullpath << std::endl;
         return;
     }
 
-    Protokoll.WriteText( false, "Loaded song file %s\n", fullpath.c_str() );
+    Protokoll << "Loaded song file " << fullpath << std::endl;
 
     // Set some sensible defaults
     songs[nr].vol = 100;
@@ -662,12 +664,14 @@ void SoundManagerClass::LoadWave(const std::string &filename, int nr, bool loope
 #if defined(USE_UNRARLIB)
     // Auch nicht? Dann ist es hoffentlich im RAR file
     if (urarlib_get(&pData, &buf_size, filename.c_str(), RARFILENAME, convertText(RARFILEPASSWORD)) == false) {
-        Protokoll.WriteText( true, "\n-> Error loading %s from Archive !\n", filename.c_str() );
+        Protokoll << "\n-> Error loading " << filename << " from Archive !" << std::endl;
+        GameRunning = false;
         return;
     } else
         fromrar = true;
 #else
-    Protokoll.WriteText( true, "\n-> Error: could not find WAV file %s!\n", fullpath.c_str() );
+    Protokoll << "\n-> Error: could not find WAV file " << fullpath << std::endl;
+    GameRunning = false;
     return;
 #endif // USE_UNRARLIB
 
@@ -697,7 +701,7 @@ loadfile:
 
     // Fehler beim Laden ?
     if (!sounds[nr].data)
-        Protokoll.WriteText( false, "\n-> Error: NULL returned from SOUND_Sample_Load, loading %s\n", filename.c_str() );
+        Protokoll << "\n-> Error: NULL returned from SOUND_Sample_Load, loading " << filename << std::endl;
 
     sounds[nr].looped = looped;
 
@@ -716,8 +720,7 @@ loadfile:
             strcpy_s(Buffer, TextArray [TEXT_LADE_WAVE]);
             strcat_s(Buffer, Filename);
             strcat_s(Buffer, TextArray [TEXT_LADEN_ERFOLGREICH]);
-            strcat_s(Buffer, " \n");
-            Protokoll.WriteText( false, Buffer );*/
+            Protokoll << Buffer << std::endl;*/
 #endif //0
 
     //DisplayLoadInfo(Buffer);
@@ -752,12 +755,12 @@ int SoundManagerClass::PlayWave_SDL(int vol, int pan, int nr)
 
     if (channel < 0) {
 #ifdef _DEBUG
-        Protokoll.WriteText( false, "Warning: could not find free channel to play sound #%d\n", nr );
+        Protokoll << "Warning: could not find free channel to play sound #" << nr << std::endl;
 #endif
         return -1;
     } else if (channel >= num_channels) {
 #ifdef _DEBUG
-        Protokoll.WriteText( false, "Warning: SOUND_PlaySound returned channel %d, >= num_channels (%d)\n", channel, num_channels );
+        Protokoll << "Warning: SOUND_PlaySound returned channel " << channel << ", >= num_channels (" << num_channels << ")\n" << std::endl;
 #endif
         channels.resize(channel+1);       // We should never have to do this if the sound library we're using
                                           //  numbers channels contiguously & starting at 0, but let's be safe.

@@ -410,34 +410,34 @@ void FillCommandLineParams( int argc, char* args[] )
         if ((strstr( args[i], "--help" ) != NULL) || (strstr( args[i], "-?") != NULL ) || 
                 (strstr( args[i], "-H") !=NULL) || (strstr( args[i], "-h") != NULL))
         {
-            Protokoll.WriteText( false, "Hurrican\n"  );
-            Protokoll.WriteText( false, "  Usage      : hurrican <arguments>\n" );
-            Protokoll.WriteText( false, "  Arguments\n" );
-            Protokoll.WriteText( false, "  -H,-?, --help           : Show this information\n" );
-            Protokoll.WriteText( false, "  -W,    --windowmode     : Run in a window, not fullsreen\n" );
-            Protokoll.WriteText( false, "  -F,    --showfps        : Show the current frames per second\n" );
-            Protokoll.WriteText( false, "  -D x,  --depth x        : Set screen pixel depth to x (16, 24, 32)\n" );
-            Protokoll.WriteText( false, "                            ( Default is %d )\n", DEFAULT_SCREENBPP );
-            Protokoll.WriteText( false, "  -L,    --lowres         : Use %dx%d low-resolution screen dimensions\n",
-                                                                        LOWRES_SCREENWIDTH, LOWRES_SCREENHEIGHT );
-            Protokoll.WriteText( false, "  -NV,   --novsync        : Disable VSync / double-buffering\n" );
-            Protokoll.WriteText( false, "  -NP,   --nonpot         : Allow non-power-of-two texture sizes\n" );
-            Protokoll.WriteText( false, "                            Normally, GPUs require texture dimensions that are\n" );
-            Protokoll.WriteText( false, "                            powers of two. If your GPU does not require that,\n" );
-            Protokoll.WriteText( false, "                            you can reduce VRAM usage with this switch.\n" );
-            Protokoll.WriteText( false, "  -TF x, --texfactor x    : Division factor for textures\n" );
-            Protokoll.WriteText( false, "                            Valid values: 1, 2, 4\n" );
-            Protokoll.WriteText( false, "                            If set to 2, textures dimensions will be halved.\n" );
-            Protokoll.WriteText( false, "                            If set to 4, textures dimensions will be quartered.\n" );
-            Protokoll.WriteText( false, "                            ( Default is 1 (no resizing) )\n" );
-            Protokoll.WriteText( false, "  -TS x, --texsizemin x   : Size limitation for texture division factor\n" );
-            Protokoll.WriteText( false, "                            Only textures with widths or heights above this\n" );
-            Protokoll.WriteText( false, "                            value will be resized. MIN: 16  MAX: 1024\n" );
-            Protokoll.WriteText( false, "                            ( Default is 1024 )\n" );
-            Protokoll.WriteText( false, "  -PD x, --pathdata x     : Look in this path for the game's read-only data\n" );
-            Protokoll.WriteText( false, "                            i.e. music, sound, graphics, levels, etc.\n" );
-            Protokoll.WriteText( false, "  -PS x, --pathsave x     : Use this path for the game's save data\n ");
-            Protokoll.WriteText( false, "                            i.e. save-games, settings, high-scores, etc.\n" );
+            Protokoll << "Hurrican" << std::endl;
+            Protokoll << "  Usage      : hurrican <arguments>" << std::endl;
+            Protokoll << "  Arguments" << std::endl;
+            Protokoll << "  -H,-?, --help           : Show this information" << std::endl;
+            Protokoll << "  -W,    --windowmode     : Run in a window, not fullsreen" << std::endl;
+            Protokoll << "  -F,    --showfps        : Show the current frames per second" << std::endl;
+            Protokoll << "  -D x,  --depth x        : Set screen pixel depth to x (16, 24, 32)" << std::endl;
+            Protokoll << "                            ( Default is " << DEFAULT_SCREENBPP << " )" << std::endl;
+            Protokoll << "  -L,    --lowres         : Use " + LOWRES_SCREENWIDTH << "x" << LOWRES_SCREENHEIGHT <<
+			                                                            " low-resolution screen dimensions" << std::endl;
+            Protokoll << "  -NV,   --novsync        : Disable VSync / double-buffering" << std::endl;
+            Protokoll << "  -NP,   --nonpot         : Allow non-power-of-two texture sizes" << std::endl;
+            Protokoll << "                            Normally, GPUs require texture dimensions that are" << std::endl;
+            Protokoll << "                            powers of two. If your GPU does not require that," << std::endl;
+            Protokoll << "                            you can reduce VRAM usage with this switch." << std::endl;
+            Protokoll << "  -TF x, --texfactor x    : Division factor for textures" << std::endl;
+            Protokoll << "                            Valid values: 1, 2, 4" << std::endl;
+            Protokoll << "                            If set to 2, textures dimensions will be halved." << std::endl;
+            Protokoll << "                            If set to 4, textures dimensions will be quartered." << std::endl;
+            Protokoll << "                            ( Default is 1 (no resizing) )" << std::endl;
+            Protokoll << "  -TS x, --texsizemin x   : Size limitation for texture division factor" << std::endl;
+            Protokoll << "                            Only textures with widths or heights above this" << std::endl;
+            Protokoll << "                            value will be resized. MIN: 16  MAX: 1024" << std::endl;
+            Protokoll << "                            ( Default is 1024 )" << std::endl;
+            Protokoll << "  -PD x, --pathdata x     : Look in this path for the game's read-only data" << std::endl;
+            Protokoll << "                            i.e. music, sound, graphics, levels, etc." << std::endl;
+            Protokoll << "  -PS x, --pathsave x     : Use this path for the game's save data" << std::endl;
+            Protokoll << "                            i.e. save-games, settings, high-scores, etc." << std::endl;
             exit(1);
         }
         else if ((strstr( args[i], "--windowmode" ) != NULL) || (strstr( args[i], "-W") != NULL))
@@ -629,8 +629,8 @@ int main(int argc, char *argv[])
         // Attempt to locate the dir
         if (!FindDir(g_storage_ext)) {
             // Failed, print message and use "." folder as fall-back
-            Protokoll.WriteText( false, "ERROR: Failed to locate data directory %s\n", g_storage_ext );
-            Protokoll.WriteText( false, "\tUsing '.' folder as fallback.\n" );
+            Protokoll << "ERROR: Failed to locate data directory " << g_storage_ext << std::endl;
+            Protokoll << "\tUsing '.' folder as fallback." << std::endl;
             g_storage_ext = (char*)malloc(strlen(".") + 1);
             strcpy_s(g_storage_ext, ".");
         }
@@ -667,18 +667,18 @@ int main(int argc, char *argv[])
             if (!success) {
                 // We weren't able to create the $HOME/.turrican directory, or if it exists, it is
                 // not a directory or is not accessible somehow.. 
-                Protokoll.WriteText( false, "ERROR: unable to create or access $HOME/.hurrican/ directory.\n" );
-                Protokoll.WriteText( false, "\tFull path that was tried: %s\n", g_save_ext );
+                Protokoll << "ERROR: unable to create or access $HOME/.hurrican/ directory." << std::endl;
+                Protokoll << "\tFull path that was tried: " << g_save_ext << std::endl;
                 free(g_save_ext);
             }
         } else {
             // We weren't able to find the $HOME env var
-            Protokoll.WriteText( false, "ERROR: unable to find $HOME environment variable\n" );
+            Protokoll << "ERROR: unable to find $HOME environment variable" << std::endl;
             success = false;
         }
 
         if (!success) {
-            Protokoll.WriteText( false, "\tUsing '.' folder as fallback.\n" );
+            Protokoll << "\tUsing '.' folder as fallback." << std::endl;
             g_save_ext = (char*)malloc(strlen(".") + 1);
             strcpy_s(g_save_ext, ".");
         }
@@ -689,8 +689,8 @@ int main(int argc, char *argv[])
 #endif //ANDROID
     }
 
-    Protokoll.WriteText( false, "--> Using external storage path '%s' <--\n", g_storage_ext );
-    Protokoll.WriteText( false, "--> Using save path '%s' <--\n\n", g_save_ext );
+    Protokoll << "--> Using external storage path '" << g_storage_ext << "' <--" << std::endl;
+    Protokoll << "--> Using save path '" << g_save_ext << "' <--\n" << std::endl;
 
 #if defined(PLATFORM_DIRECTX)
     // Desktop Window holen und Grösse auslesen (damit wir unser Fenster in der Mitte des Screens
@@ -699,23 +699,18 @@ int main(int argc, char *argv[])
     GetWindowRect(DesktopHWND, &rect);
 
     // Anfang der Logdatei mit Datum und Uhrzeit
-    Protokoll.WriteText( false, ">-------------------------<\n" );
-    Protokoll.WriteText( false, "|        Hurrican         |\n" );
-    Protokoll.WriteText( false, "|   (c) 2007 poke53280    |\n" );
-    Protokoll.WriteText( false, "|                         |\n" );
-    Protokoll.WriteText( false, "|    www.poke53280.de     |\n" );
-    Protokoll.WriteText( false, "|  www.hurrican-game.de   |\n" );
-    Protokoll.WriteText( false, ">-------------------------<\n" );
-    Protokoll.WriteText( false, "Logfile date: ", false);
-    strcpy_s(StringBuffer, __DATE__);
-    Protokoll.WriteText(StringBuffer, false);
-    Protokoll.WriteText(" - ", false);
-    strcpy_s(StringBuffer, __TIME__);
-    Protokoll.WriteText(StringBuffer, false);
+    Protokoll ">-------------------------<\n";
+    Protokoll "|        Hurrican         |\n";
+    Protokoll "|   (c) 2007 poke53280    |\n";
+    Protokoll "|                         |\n";
+    Protokoll "|    www.poke53280.de     |\n";
+    Protokoll "|  www.hurrican-game.de   |\n";
+    Protokoll ">-------------------------<\n";
+    Protokoll << "Logfile date: " << __DATE__ << " - " << __TIME__ << std::endl;
 
-    Protokoll.WriteText( false, "\n\n>-------------<\n" );
-    Protokoll.WriteText( false,     "| Init Window |\n" );
-    Protokoll.WriteText( false,     ">-------------<\n\n" );
+    Protokoll << "\n>-------------<\n";
+    Protokoll <<   "| Init Window |\n";
+    Protokoll <<   ">-------------<\n" << std::endl;
 
     g_hinst = hinstance;
 
@@ -736,11 +731,12 @@ int main(int argc, char *argv[])
     // Fensterklasse bei Windows registrieren
     if (!RegisterClassEx(&winclass))
     {
-        Protokoll.WriteText( true, "RegisterClassEx error!\n" );
+        Protokoll << "RegisterClassEx error!" << std::endl;
+        GameRunning = false;
         return(0);
     }
 
-    Protokoll.WriteText( false, "RegisterClassEx successful!\n" );
+    Protokoll << "RegisterClassEx successful!" << std::endl;
 
     std::uint32_t style;
 
@@ -770,20 +766,19 @@ int main(int argc, char *argv[])
                                   hinstance,							// Instance von Main
                                   NULL)))								// extra creation parms
     {
-        Protokoll.WriteText( true, "CreateWindowEx error!\n" );
+        Protokoll << "CreateWindowEx error!" << std::endl;
+        GameRunning = false;
         return(0);
     }
 
-    Protokoll.WriteText( false, "CreateWindowEx	successful!\n" );
-    Protokoll.WriteText( false, "WindowSizeX : " );
-    Protokoll.WriteValue(WINDOWWIDTH);
-    Protokoll.WriteText( false, "WindowSizeY : " );
-    Protokoll.WriteValue(WINDOWHEIGHT);
+    Protokoll << "CreateWindowEx	successful!" << std::endl;
+    Protokoll << "WindowSizeX : " << WINDOWWIDTH << std::endl;
+    Protokoll << "WindowSizeY : " << WINDOWHEIGHT << std::endl;
 
     if (CommandLineParams.RunWindowMode == false)
         ShowCursor(false);
 
-    Protokoll.WriteText( false, "\n-> Init Window successful!\n" );
+    Protokoll << "\n-> Init Window successful!" << std::endl;
 
     ShowWindow(g_hwnd, nshowcmd);						// Fenster anzeigen (sicher ist sicher)
     UpdateWindow(g_hwnd);								// Fenster-infos updaten
@@ -793,11 +788,13 @@ int main(int argc, char *argv[])
 
     if(!GameInit(g_hwnd, hinstance))
     {
-        Protokoll.WriteText( true, "\n-> GameInit error!\n\n" );
+        Protokoll << "\n-> GameInit error!\n" << std::endl;
         GameRunning = false;
     }
     else
-        Protokoll.WriteText( false, "\n-> GameInit successful!\n\n" );
+    {
+        Protokoll << "\n-> GameInit successful!\n" << std::endl;
+    }
 
 //----- Main-Loop
 
@@ -869,7 +866,7 @@ int main(int argc, char *argv[])
 #ifndef USE_NO_EXCEPTIONS
         catch(const char *str)
         {
-            Protokoll.WriteText( false, "Failure! Unhandled exception\n %s", str );
+            Protokoll << "Failure! Unhandled exception\n" << str << std::endl;
             GameRunning = false;
         }
 #endif // USE_NO_EXCEPTIONS
@@ -880,14 +877,18 @@ int main(int argc, char *argv[])
     //Timer.WriteLogValues();
 
     if(!GameExit())
-        Protokoll.WriteText( true, "-> GameExit Fehler !\n" );
+    {
+        Protokoll << "-> GameExit Fehler !" << std::endl;
+        GameRunning = false;
+    }
 
-    Protokoll.WriteText( false, "\n-> Hurrican closed !\n" );
-    Protokoll.WriteText( false, "\nhttp://www.poke53280.de\n" );
-    Protokoll.WriteText( false, "Bugreports, questions etc : information@poke53280.de\n" );
-    Protokoll.WriteText( false, "\n-> logfile end\n" );
+    Protokoll << "\n-> Hurrican closed !\n";
+    Protokoll << "\nhttp://www.poke53280.de\n";
+    Protokoll << "Bugreports, questions etc : information@poke53280.de\n";
+    Protokoll << "\n-> logfile end" << std::endl;
 
     // Kein Fehler im Game? Dann Logfile löschen
+    // FIXME: That doesn't belong here
     if (Protokoll.delLogFile == true)
         DeleteFile("Game_Log.txt");
 
@@ -930,7 +931,7 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
     // *.lng Files anfügen
     if (SendMessage(ComboBoxLanguageFiles, CB_DIR, DDL_READWRITE, (LPARAM) "*.lng") == CB_ERR)
     {
-        Protokoll.WriteText( false, "No language Files found!", true);
+        Protokoll << "No language Files found!" << std::endl;
     }
 
     LanguageFileCount = SendMessage (ComboBoxLanguageFiles, CB_GETCOUNT, 0, 0);
@@ -963,26 +964,28 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
     }
 
     if (LanguageFileCount == 0) {
-        Protokoll.WriteText( false, "ERROR: Failed to find any language files, aborting.\n" );
+        Protokoll << "ERROR: Failed to find any language files, aborting." << std::endl;
         return false;
     }
 #endif
 
-    Protokoll.WriteText( false, "\n>--------------------<\n" );
-    Protokoll.WriteText( false,   "| GameInit started   |\n" );
-    Protokoll.WriteText( false,   ">--------------------<\n" );
+    Protokoll << "\n>--------------------<\n";
+    Protokoll <<   "| GameInit started   |\n";
+    Protokoll <<   ">--------------------<" << std::endl;
 
     // Direct3D initialisieren
     if(!DirectGraphics.Init(hwnd, RENDERWIDTH, RENDERHEIGHT, CommandLineParams.ScreenDepth, CommandLineParams.VSync))
     {
-        Protokoll.WriteText( true, "\n-> Direct3D Initialisierung Fehler ...!\n" );
+        Protokoll << "\n-> Direct3D Initialisierung Fehler ...!" << std::endl;
+        GameRunning = false;
         return false;
     }
 
     // DirectInput initialisieren
     if(!DirectInput.Init(hwnd, hinstance))
     {
-        Protokoll.WriteText( true, "\n-> DirectInput8 Initialisierung Fehler ...!\n" );
+        Protokoll << "\n-> DirectInput8 Initialisierung Fehler ...!" << std::endl;
+        GameRunning = false;
         return false;
     }
 
@@ -1125,7 +1128,7 @@ bool GameInit2(void)
     // Konfiguration laden
     if (LoadConfig() == false)
     {
-        Protokoll.WriteText( false, "\n-> No config found. Creating default\n" );
+        Protokoll << "\n-> No config found. Creating default" << std::endl;
         CreateDefaultConfig ();
     }
 
@@ -1330,22 +1333,22 @@ bool GameInit2(void)
 
 bool GameExit(void)
 {
-    Protokoll.WriteText( false, "\n>--------------------<\n" );
-    Protokoll.WriteText( false,   "| GameExit started   |\n" );
-    Protokoll.WriteText( false,   ">--------------------<\n\n" );
+    Protokoll << "\n>--------------------<\n";
+    Protokoll <<   "| GameExit started   |\n";
+    Protokoll <<  ">--------------------<\n" << std::endl;
 
     // Sprites freigeben
     delete(pDefaultFont);
     delete(pMenuFont);
-    Protokoll.WriteText( false, "-> Fonts released\n" );
+    Protokoll << "-> Fonts released" << std::endl;
 
     // Menu beenden
     delete(pMenu);
-    Protokoll.WriteText( false, "-> Head menu released\n" );
+    Protokoll << "-> Head menu released" << std::endl;
 
     //DKS - Sound manager is now a static global, and we use new Exit() method:
     SoundManager.Exit();
-    Protokoll.WriteText( false, "-> Sound system released\n" );
+    Protokoll << "-> Sound system released" << std::endl;
 
     //DKS - Free any straggling textures in VRAM before closing down graphics:
     //      NOTE: this is important! Global systems that contain their own
@@ -1358,7 +1361,7 @@ bool GameExit(void)
     //      textures after the graphics system already closed. Textures::Exit()
     //      below will prevent that.
     Textures.Exit();
-    Protokoll.WriteText( false, "-> Texture system released\n" );
+    Protokoll << "-> Texture system released" << std::endl;
 
     DirectInput.Exit();					// DirectInput beenden
 

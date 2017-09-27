@@ -22,6 +22,7 @@
  *
  */
 
+#include <cstdint>
 #include "Main.hpp"
 #include "DX8Texture.hpp"
 #include "DX8Graphics.hpp"
@@ -66,10 +67,12 @@ bool SDL_LoadTexture( const std::string &path, const std::string &filename,
     ReplaceAll(filename_sans_ext, ".png", "");
 
     if (load_from_memory && !buf) {
-        Protokoll.WriteText( true, "Error in SDL_LoadTexture() loading texture from memory!\n" );
+        Protokoll << "Error in SDL_LoadTexture() loading texture from memory!" << std::endl;
+        GameRunning = false;
         return false;
     } else if (!load_from_memory && filename.empty()) {
-        Protokoll.WriteText( true, "Error in SDL_LoadTexture(): empty filename parameter\n" );
+        Protokoll << "Error in SDL_LoadTexture(): empty filename parameter" << std::endl;
+        GameRunning = false;
         return false;
     }
     
@@ -134,7 +137,8 @@ loaded:
         th.npot_scalex = image.npot_scalex;
         th.npot_scaley = image.npot_scaley;
     } else {
-        Protokoll.WriteText( true, "Error loading texture %s in SDL_LoadTexture()\n", filename.c_str() );
+        Protokoll << "Error loading texture " << filename << " in SDL_LoadTexture()" << std::endl;
+        GameRunning = false;
     }
     
     return success;
@@ -191,8 +195,9 @@ bool load_texture( image_t& image, GLuint &new_texture )
         int error = glGetError();
         if (error != 0)
         {
-            Protokoll.WriteText( false, "GL load_texture Error %X\n", error );
-            Protokoll.WriteText( false, "Format %X W %d H %d S %d Data %X + %d\n", image.format, image.w, image.h, image.size, image.data, image.offset );
+            Protokoll << "GL load_texture Error " << error << std::endl;
+            Protokoll << "Format " << std::hex << image.format << std::dec << " W " << image.w << " H " << image.h
+                      << " S " << image.size << " Data " << std::hex << static_cast<std::uintptr_t>(image.data) << std::dec << " + " << image.offset << std::endl;
             return false;
         }
 #endif
@@ -200,7 +205,7 @@ bool load_texture( image_t& image, GLuint &new_texture )
     }
     else
     {
-        Protokoll.WriteText( false, "ERROR Image data reference is NULL\n" );
+        Protokoll << "ERROR Image data reference is NULL" << std::endl;
         return false;
     }
 
@@ -247,19 +252,21 @@ bool loadImageETC1( image_t& image, const std::string &fullpath )
             image.type      = 0; /* dont care */
             image.compressed = true;
 
-            Protokoll.WriteText( false, "Loaded ETC type %c%c%c for %s\n", image.data[0], image.data[1], image.data[2], fullpath.c_str() );
+            Protokoll << "Loaded ETC type " << static_cast<char>(image.data[0]) << static_cast<char>(image.data[1]) << static_cast<char>(image.data[2])
+					  << " for " << fullpath << std::endl;
 
 #if defined(_DEBUG)
-            Protokoll.WriteText( false, "Header %c%c%c%c\nVersion %X\nType %d\nExt Width %d\nExt Height %d\nWidth %d\nHeight %d\n",
-                                 image.data[0], image.data[1], image.data[2], image.data[3],
-                                 (image.data[4]<<8)+image.data[5], (image.data[6]<<8)+image.data[7], (image.data[8]<<8)+image.data[9],
-                                 (image.data[10]<<8)+image.data[11], (image.data[12]<<8)+image.data[13], (image.data[14]<<8)+image.data[15] );
+            Protokoll << "Header " << static_cast<char>(image.data[0]) << static_cast<char>(image.data[1]) << static_cast<char>(image.data[2]) << static_cast<char>(image.data[3])
+                      << "\nVersion " << std::hex << (image.data[4]<<8)+image.data[5] << "\nType " << std::dec << (image.data[6]<<8)+image.data[7]
+                      << "\nExt Width " << (image.data[8]<<8)+image.data[9] << "\nExt Height " << (image.data[10]<<8)+image.data[11]
+                      << "\nWidth " << (image.data[12]<<8)+image.data[13] << "\nHeight " << (image.data[14]<<8)+image.data[15] << std::endl;
 #endif
             return true;
         }
         else
         {
-            Protokoll.WriteText( false, "ERROR Unknown file type %c%c%c%c\n",  image.data[0], image.data[1], image.data[2], image.data[3] );
+            Protokoll << "ERROR Unknown file type "<< static_cast<char>(image.data[0]) << static_cast<char>(image.data[1])
+			          << static_cast<char>(image.data[2]) << static_cast<char>(image.data[3]) << std::endl;
             delete [] image.data;
             image.data = NULL;
         }
@@ -299,7 +306,7 @@ bool loadImagePVRTC( image_t& image, const string &fullpath )
             pvrtc_bitperpixel = 4;
             break;
         default:
-            Protokoll.WriteText( false, "ERROR Unknown PVRTC format %X\n",  pvrtc_buffer32[2] );
+            Protokoll << "ERROR Unknown PVRTC format " << std::hex << pvrtc_buffer32[2] << std::endl;
             delete [] image.data;
             image.data = NULL;
             return false;
@@ -313,12 +320,22 @@ bool loadImagePVRTC( image_t& image, const string &fullpath )
         image.type      = 0; /* dont care */
         image.compressed = true;
 
-        Protokoll.WriteText( false, "Loaded PVRTC type %d for %s\n", pvrtc_buffer32[2], fullpath.c_str() );
+        Protokoll << "Loaded PVRTC type " << std::dec << pvrtc_buffer32[2] << " for " << fullpath << std::endl;
 
 #if defined(_DEBUG)
-        Protokoll.WriteText( false, "Version %X\nFlags %d\nPFormatA %d\nPFormatB %d\nColorS %d\nChanType %d\nHeight %d\nWidth %d\nDepth %d\nNumSurf %d\nNumFaces %d\nMipmap %d\nMeta %d\n", pvrtc_buffer32[0], pvrtc_buffer32[1], pvrtc_buffer32[2], pvrtc_buffer32[3],
-                             pvrtc_buffer32[4], pvrtc_buffer32[5], pvrtc_buffer32[6], pvrtc_buffer32[7], pvrtc_buffer32[8],
-                             pvrtc_buffer32[9], pvrtc_buffer32[10], pvrtc_buffer32[11], pvrtc_buffer32[12] );
+        Protokoll << "Version " << std::hex << pvrtc_buffer32[0]
+                  << "\nFlags " << std::dec << pvrtc_buffer32[1]
+                  << "\nPFormatA " << pvrtc_buffer32[2]
+                  << "\nPFormatB " << pvrtc_buffer32[3]
+                  << "\nColorS " << pvrtc_buffer32[4]
+                  << "\nChanType " << pvrtc_buffer32[5]
+                  << "\nHeight " << pvrtc_buffer32[6]
+                  << "\nWidth " << pvrtc_buffer32[7]
+                  << "\nDepth " << pvrtc_buffer32[8]
+                  << "\nNumSurf " << pvrtc_buffer32[9]
+                  << "\nNumFaces " << pvrtc_buffer32[10]
+                  << "\nMipmap " << pvrtc_buffer32[11]
+                  << "\nMeta " << pvrtc_buffer32[12] << std::endl;
 #endif
 
         return true;
@@ -355,7 +372,8 @@ bool loadImageSDL( image_t& image, const std::string &fullpath, void *buf, unsig
     if (buf_size == 0)  // Load from file
     {
         if (fullpath.empty() || !FileExists(fullpath.c_str())) {
-            Protokoll.WriteText( true, "Error in loadImageSDL loading %s\n", fullpath.c_str() );
+            Protokoll << "Error in loadImageSDL loading " << fullpath << std::endl;
+            GameRunning = false;
             return false;
         }
 
@@ -369,7 +387,8 @@ bool loadImageSDL( image_t& image, const std::string &fullpath, void *buf, unsig
             rawSurf = IMG_Load_RW( sdl_rw, 1 );
         } else
         {
-            Protokoll.WriteText( true, "ERROR Texture: Failed to load texture: %s\n", SDL_GetError() );
+            Protokoll << "ERROR Texture: Failed to load texture: " << SDL_GetError() << std::endl;
+            GameRunning = false;
             return false;
         }
     }
@@ -465,7 +484,8 @@ bool loadImageSDL( image_t& image, const std::string &fullpath, void *buf, unsig
 
         SDL_FreeSurface( finSurf );
     } else {
-        Protokoll.WriteText( true, "Error in loadImageSDL: Could not read image data into rawSurf\n" );
+        Protokoll << "Error in loadImageSDL: Could not read image data into rawSurf" << std::endl;
+        GameRunning = false;
         return false;
     }
 
@@ -476,12 +496,12 @@ bool loadImageSDL( image_t& image, const std::string &fullpath, void *buf, unsig
 uint8_t* LowerResolution( SDL_Surface* surface, int factor )
 {
     if (factor != 2 && factor != 4) {
-        Protokoll.WriteText( false, "ERROR call to LowerResolution() with factor not equal to 2 or 4\n");
+        Protokoll << "ERROR call to LowerResolution() with factor not equal to 2 or 4" << std::endl;
         return NULL;
     }
 
     if (surface->format->BytesPerPixel != 4) {
-        Protokoll.WriteText( false, "ERROR call to LowerResolution() with source surface bpp other than 4\n");
+        Protokoll << "ERROR call to LowerResolution() with source surface bpp other than 4" << std::endl;
         return NULL;
     }
 

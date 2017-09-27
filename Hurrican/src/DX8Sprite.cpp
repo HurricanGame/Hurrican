@@ -82,7 +82,7 @@ DirectGraphicsSurface::~DirectGraphicsSurface(void)
     delete_texture( itsSurface );
     itsSurface = -1;
 #endif
-    Protokoll.WriteText( false, "Surface release		: successful !\n" );
+    Protokoll << "Surface release		: successful !" << std::endl;
 }
 
 // --------------------------------------------------------------------------------------
@@ -104,7 +104,8 @@ bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize
         strcpy_s(Temp, strlen("Failed to create surface-for ") + 1, "Failed to create surface-for ");
         strcat_s(Temp, strlen(Filename) + 1, Filename);
         strcat_s(Temp, 3, " !");
-        Protokoll.WriteText( true, Temp );
+        Protokoll << Temp << std::endl;
+        GameRunning = false;
         return false;
     }
 
@@ -117,8 +118,9 @@ bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize
     {
         strcpy_s(Temp, strlen("Failed to load ") + 1, "Failed to load ");
         strcat_s(Temp, strlen(Filename) + 1, Filename);
-        strcat_s(Temp, 5, " !\n");
-        Protokoll.WriteText( true, Temp );
+        strcat_s(Temp, 5, " !");
+        Protokoll << Temp << std::endl;
+        GameRunning = false;
         return false;
     }
 #elif defined(PLATFORM_SDL)
@@ -138,8 +140,7 @@ bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize
     strcat_s(Temp, strlen(TextArray [TEXT_LADE_BITMAP]) + 1, TextArray [TEXT_LADE_BITMAP]);
     strcat_s(Temp, strlen(Filename) + 1, Filename);
     strcat_s(Temp, strlen(TextArray [TEXT_LADEN_ERFOLGREICH]) + 1, TextArray [TEXT_LADEN_ERFOLGREICH]);
-    strcat_s(Temp, 3, "\n");
-    Protokoll.WriteText( false, Temp );
+    Protokoll << Temp << std::endl;
 
     return true;
 }
@@ -189,11 +190,11 @@ DirectGraphicsSprite::~DirectGraphicsSprite(void)
 //#endif
 //        itsTexture = (LPDIRECT3DTEXTURE8)NULL;
 //        LoadedTextures--;
-////		Protokoll.WriteText( false, "-> Sprite texture successfully released ! \n" );
+////		Protokoll << "-> Sprite texture successfully released !" << std::endl;
 //
 ////        _itoa_s(LoadedTextures, Buffer, 10);
-////		Protokoll.WriteText( false, Buffer );
-////		Protokoll.WriteText( false, " Sprite Textur(en) übrig !\n" );
+////		Protokoll << Buffer;
+////		Protokoll << " Sprite Textur(en) übrig !" << std::endl;
 //    }
 }
 
@@ -295,13 +296,15 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
 
     if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
     {
-        Protokoll.WriteText( true, "\n-> Error loading %s from Archive !\n", Filename );
+        Protokoll << "\n-> Error loading " << Filename << " from Archive !" << std::endl;
+        GameRunning = false;
         return false;
     }
     else
         fromrar = true;
 #else
-    Protokoll.WriteText( true, "\n-> Error loading %s!\n", Temp );
+    Protokoll << "\n-> Error loading " << Temp << "!" << std::endl;
+    GameRunning = false;
     return false;
 #endif // USE_UNRARLIB
 
@@ -363,8 +366,9 @@ loadfile:
     {
         strcpy_s(Temp, strlen("Fehler beim Laden von ") + 1, "Fehler beim Laden von ");
         strcat_s(Temp, strlen(Filename) + 1, Filename);
-        strcat_s(Temp, 4, " !\n");
-        Protokoll.WriteText( true, Temp );
+        strcat_s(Temp, 4, " !");
+        Protokoll << Temp << std::endl;
+        GameRunning = false;
         return false;
     }
 
@@ -407,8 +411,8 @@ loadfile:
     itsRect = itsPreCalcedRects[0];
 
     // Bild korrekt geladen
-    sprintf_s(Temp, "%s %s %s %s", TextArray [TEXT_LADE_BITMAP], Filename, TextArray [TEXT_LADEN_ERFOLGREICH], "\n");
-    Protokoll.WriteText( false, Temp );
+    sprintf_s(Temp, "%s %s %s", TextArray [TEXT_LADE_BITMAP], Filename, TextArray [TEXT_LADEN_ERFOLGREICH]);
+    Protokoll << Temp << std::endl;
 
     DisplayLoadInfo(Temp);
 
@@ -423,7 +427,8 @@ bool DirectGraphicsSprite::LoadImage(const std::string &filename, uint16_t xs, u
 
     if (xfc == 0 || yfc == 0) {
 #ifdef _DEBUG
-        Protokoll.WriteText( true, "Error: xfc or yfc parameters to DirectGraphicsSprite::LoadImage() are 0! xfc:%d yfc:%d\n", xfc, yfc );
+        Protokoll << "Error: xfc or yfc parameters to DirectGraphicsSprite::LoadImage() are 0! xfc:") << xfc << " yfc:" << yfc << std::endl;
+        GameRunning = false;
 #endif
     }
 
@@ -435,7 +440,8 @@ bool DirectGraphicsSprite::LoadImage(const std::string &filename, uint16_t xs, u
     itsTexIdx = Textures.LoadTexture(filename);
     
     if (itsTexIdx == -1) {
-        Protokoll.WriteText( true, "Textures.LoadTexture() returned error loading file %s\n", filename.c_str() );
+        Protokoll << "Textures.LoadTexture() returned error loading file " << filename << std::endl;
+        GameRunning = false;
         return false;       
     }
 
@@ -479,14 +485,14 @@ bool DirectGraphicsSprite::LoadImage(const std::string &filename, uint16_t xs, u
     itsRect = itsPreCalcedRects[0];
 
     //char Temp[255];
-    //sprintf_s(Temp, "%s %s %s %s", TextArray [TEXT_LADE_BITMAP], filename.c_str(), TextArray [TEXT_LADEN_ERFOLGREICH], "\n");
-    //Protokoll.WriteText( false, Temp );
+    //sprintf_s(Temp, "%s %s %s", TextArray [TEXT_LADE_BITMAP], filename.c_str(), TextArray [TEXT_LADEN_ERFOLGREICH]);
+    //Protokoll << Temp << std::endl;
     //DisplayLoadInfo(Temp);
 
     std::string msg(filename);
     ReplaceAll(msg, ".png", "");
-    msg = "Loaded texture " + msg + "\n";
-    Protokoll.WriteText( false, msg.c_str() );
+    msg = "Loaded texture " + msg;
+    Protokoll << msg << std::endl;
     DisplayLoadInfo("");
 
     return true;

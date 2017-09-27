@@ -48,8 +48,9 @@ public:
     {
 #ifdef _DEBUG
         if (idx < 0 || idx >= (int)_loaded_textures.size()) {
-            Protokoll.WriteText( true, "-> Error: Out of bounds index for Texturesystemclass::operator[]: %d\n\
-                                        \tLower bound is 0, Upper bound is %d\n", idx, _loaded_textures.size()-1 );
+            Protokoll << "-> Error: Out of bounds index for Texturesystemclass::operator[]: " << std::dec << idx << "\n"
+                      << "\tLower bound is 0, Upper bound is " << _loaded_textures.size()-1 << std::endl;
+            GameRunning = false;
         }
 #endif
         return _loaded_textures[idx];

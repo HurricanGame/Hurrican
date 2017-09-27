@@ -48,7 +48,7 @@ TimerClass::TimerClass(void)
         PerformanceCounter=true;
         QueryPerformanceCounter((LARGE_INTEGER *) &letzterFrame);
         ZeitFaktor=1.0f/Frequenz;
-        //Protokoll.WriteValue(Frequenz);
+        //Protokoll << static_cast<int>(Frequenz) << std::endl;
     }
     // wenn nicht, dann timeGetTime verwenden
     else
@@ -251,10 +251,7 @@ void TimerClass::resetMaxMinFPS(void)
 
 void TimerClass::WriteLogValues(void)
 {
-    Protokoll.WriteText( false, "\nMaximum  FPS : " );
-    Protokoll.WriteValue((int)(FPSMaximum));
-    Protokoll.WriteText( false,   "Minimum  FPS : " );
-    Protokoll.WriteValue((int)(FPSMinimum));
-    Protokoll.WriteText( false,   "Average  FPS : " );
-    Protokoll.WriteValue((int)(DurchschnittFramerate));
+    Protokoll << "\nMaximum  FPS : " << static_cast<int>(FPSMaximum) << std::endl;
+    Protokoll << "Minimum  FPS : " << static_cast<int>(FPSMinimum) << std::endl;
+    Protokoll << "Average  FPS : " << static_cast<int>(DurchschnittFramerate) << std::endl;
 }

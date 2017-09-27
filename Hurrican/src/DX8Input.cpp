@@ -151,8 +151,8 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 {
     HRESULT hresult;
 
-    Protokoll.WriteText( false, "\n--> DirectInput8 init <--\n" );
-    Protokoll.WriteText( false, "-------------------------\n\n" );
+    Protokoll << "\n--> DirectInput8 init <--\n";
+    Protokoll << "-------------------------\n" << std::endl;
 
     hresult = DirectInput8Create(hinst, DIRECTINPUT_VERSION,
                                  IID_IDirectInput8, (LPVOID*)&lpDI, NULL);
@@ -160,10 +160,11 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
     // DirectInput Haupt-Device erstellen
     if(hresult != DI_OK)
     {
-        Protokoll.WriteText( true, "\n-> DirectInput8Create error!\n" );
+        Protokoll << "\n-> DirectInput8Create error!" << std::endl;
+        GameRunning = false;
         return false;
     }
-    Protokoll.WriteText( false, "DirectInput8Create	successful!\n" );
+    Protokoll << "DirectInput8Create successful!" << std::endl;
 
 //----- Keyboard
 
@@ -171,19 +172,21 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
     hresult = lpDI->CreateDevice(GUID_SysKeyboard, &lpDIKeyboard, NULL);
     if(hresult != DI_OK)
     {
-        Protokoll.WriteText( true, "\n-> Keyboard : CreateDevice error!\n" );
+        Protokoll << "\n-> Keyboard : CreateDevice error!" << std::endl;
+        GameRunning = false;
         return false;
     }
-    Protokoll.WriteText( false, "Keyboard : CreateDevice successful!\n" );
+    Protokoll << "Keyboard : CreateDevice successful!" << std::endl;
 
     // Datenformat für Keyboard festlegen
     hresult = lpDIKeyboard->SetDataFormat(&c_dfDIKeyboard);
     if(hresult != DI_OK)
     {
-        Protokoll.WriteText( true, "\n-> Keyboard : SetDataFormat error!\n" );
+        Protokoll << "\n-> Keyboard : SetDataFormat error!" << std::endl;
+        GameRunning = false;
         return false;
     }
-    Protokoll.WriteText( false, "Keyboard : SetDataFormat successful!\n" );
+    Protokoll << "Keyboard : SetDataFormat successful!" << std::endl;
 
     // Keyboard Cooperativelevel setzen
     if (CommandLineParams.RunWindowMode == true)
@@ -193,10 +196,11 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 
     if(hresult != DI_OK)
     {
-        Protokoll.WriteText( true, "\n-> Keyboard : SetCooperativeLevel error!\n" );
+        Protokoll << "\n-> Keyboard : SetCooperativeLevel error!" << std::endl;
+        GameRunning = false;
         return false;
     }
-    Protokoll.WriteText( false, "Keyboard : SetCooperativeLevel	successful!\n" );
+    Protokoll << "Keyboard : SetCooperativeLevel successful!" << std::endl;
 
     // Keyboard akquirieren
     if (lpDIKeyboard)
@@ -204,10 +208,11 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
         hresult = lpDIKeyboard->Acquire();
         if(hresult != DI_OK)
         {
-            Protokoll.WriteText( true, "\n-> Keyboard : Acquire error!\n" );
+            Protokoll << "\n-> Keyboard : Acquire error!" << std::endl;
+            GameRunning = false;
             return false;
         }
-        Protokoll.WriteText( false, "Keyboard : Acquire	successful!\n" );
+        Protokoll << "Keyboard : Acquire successful!" << std::endl;
     }
 
     // angeschlossenen Joystick mit ForceFeedback enumerieren
@@ -221,11 +226,11 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
                                     &guidJoystickDevice, 0/*DIEDFL_ATTACHEDONLY*/);
     }
     else
-        Protokoll.WriteText( false, "Joystick : EnumDevices successful!\n" );
+        Protokoll << "Joystick : EnumDevices successful!" << std::endl;
 
     // Gefundene Joysticks initialisieren
     if (JoysticksFound == 0)
-        Protokoll.WriteText( false, "No joystick found, skipping init!\n" );
+        Protokoll << "No joystick found, skipping init!" << std::endl;
     else
         for (int i = 0; i < JoysticksFound; i++)
         {
@@ -235,8 +240,8 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
             {
                 strcpy_s(Buf, strlen("Error initialising Joystick ") + 1, "Error initialising Joystick ");
                 strcat_s(Buf, strlen(Joysticks[i].JoystickName) + 1, Joysticks[i].JoystickName);
-                strcat_s(Buf, 5, " !\n");
-                Protokoll.WriteText( false, Buf );
+                strcat_s(Buf, 5, " !");
+                Protokoll << Buf << std::endl;
             }
             else
             {
@@ -244,12 +249,11 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 
                 strcpy_s(Buf, strlen("Joystick found : ") + 1, "Joystick found : ");
                 strcat_s(Buf, strlen(Joysticks[i].JoystickName) + 1, Joysticks[i].JoystickName);
-                strcat_s(Buf, 3, "\n");
-                Protokoll.WriteText( false, Buf );
+                Protokoll << Buf << std::endl;
 
                 if (Joysticks[i].CanForceFeedback)
                 {
-                    Protokoll.WriteText( false, "Initializing ForceFeedback Effects\n" );
+                    Protokoll << "Initializing ForceFeedback Effects" << std::endl;
 
                     // Vibrations-Effekte erstellen
                     // Kurzes, schwaches Vibrieren (ShorVib)
@@ -279,7 +283,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
                     hresult = Joysticks[i].lpDIJoystick->CreateEffect (GUID_ConstantForce , &diEffect, &Joysticks[i].pFFE_SmallVib, NULL);
                     if (hresult != DI_OK)
                     {
-                        Protokoll.WriteText( false, "Error initializing Effect! Not using ForceFeedback\n" );
+                        Protokoll << "Error initializing Effect! Not using ForceFeedback" << std::endl;
                         Joysticks[i].CanForceFeedback = false;
                     }
 
@@ -290,7 +294,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
                     hresult = Joysticks[i].lpDIJoystick->CreateEffect (GUID_ConstantForce , &diEffect, &Joysticks[i].pFFE_BigVib, NULL);
                     if (hresult != DI_OK)
                     {
-                        Protokoll.WriteText( false, "Error initializing Effect! Not using ForceFeedback\n" );
+                        Protokoll << "Error initializing Effect! Not using ForceFeedback" << std::endl;
                         Joysticks[i].CanForceFeedback = false;
                     }
 
@@ -305,7 +309,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
                     hresult = Joysticks[i].lpDIJoystick->CreateEffect (GUID_RampForce, &diEffect, &Joysticks[i].pFFE_MaxVib, NULL);
                     if (hresult != DI_OK)
                     {
-                        Protokoll.WriteText( false, "Error initializing Effect! Not using ForceFeedback\n" );
+                        Protokoll << "Error initializing Effect! Not using ForceFeedback" << std::endl;
                         Joysticks[i].CanForceFeedback = false;
                     }
 
@@ -321,14 +325,14 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
                     hresult = Joysticks[i].lpDIJoystick->CreateEffect (GUID_ConstantForce, &diEffect, &Joysticks[i].pFFE_Blitz, NULL);
                     if (hresult != DI_OK)
                     {
-                        Protokoll.WriteText( false, "Error initializing Effect! Not using ForceFeedback\n" );
+                        Protokoll << "Error initializing Effect! Not using ForceFeedback" << std::endl;
                         Joysticks[i].CanForceFeedback = false;
                     }
                 }
             }
         }
 
-    Protokoll.WriteText( false, "\n-> DirectInput8 init successful!\n\n" );
+    Protokoll << "\n-> DirectInput8 init successful!\n" << std::endl;
     return true;
 }
 #elif defined(PLATFORM_SDL)
@@ -339,7 +343,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 #else
     TastaturPuffer = (char*)SDL_GetKeyState( &NumberOfKeys );
 #endif
-    Protokoll.WriteText( false, "DirectInput8 polling for %d keys!\n", NumberOfKeys );
+    Protokoll << "DirectInput8 polling for " << NumberOfKeys << " keys!" << std::endl;
 
 #if defined(ANDROID)
     JoysticksFound = 0;
@@ -351,7 +355,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
     {
         if(Joysticks[i].Init(i) == false)
         {
-            Protokoll.WriteText( false, "Error opening joystick\n" );
+            Protokoll << "Error opening joystick" << std::endl;
         }
         else
         {
@@ -362,7 +366,7 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
                 // Replace GCW control's name with something that is clearer
                 strcpy_s(Joysticks[i].JoystickName, "GCW Zero");
                 InternalJoystickIndex = i;
-                Protokoll.WriteText( false, "Found GCW Zero's built-in controls.\n" );
+                Protokoll << "Found GCW Zero's built-in controls." << std::endl;
             }
 #endif //GCW
         }
@@ -405,7 +409,7 @@ void DirectInputClass::Exit(void)
     }
 
     SafeRelease(lpDI);					// DirectInput Hauptobjekt freigeben
-    Protokoll.WriteText( false, "-> DirectInput8 shutdown successfully completed !\n" );
+    Protokoll << "-> DirectInput8 shutdown successfully completed !" << std::endl;
 #elif defined(PLATFORM_SDL)
     for (int i = 0; i < JoysticksFound; i++)
     {
@@ -420,7 +424,7 @@ void DirectInputClass::Exit(void)
         }
     }
 
-    Protokoll.WriteText( false, "-> SDL/OpenGL input shutdown successfully completed !\n" );
+    Protokoll << "-> SDL/OpenGL input shutdown successfully completed !" << std::endl;
 #endif
 }
 
@@ -482,7 +486,7 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
                 hresult = lpDIMaus->Acquire();
                 if (hresult != DI_OK)
                 {
-                    Protokoll.WriteText( false, "\n-> Maus : Re-Acquire Fehler !\n" );
+                    Protokoll << "\n-> Maus : Re-Acquire Fehler !" << std::endl;
                     return false;
                 }
                 else
@@ -491,7 +495,7 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
                                                       &od, &dwElemente, 0);
                     if (hresult == DIERR_INPUTLOST)
                     {
-                        Protokoll.WriteText( false, "\n-> Maus : GetData Fehler !\n" );
+                        Protokoll << "\n-> Maus : GetData Fehler !" << std::endl;
                         return false;
                     }
                 }
@@ -568,7 +572,7 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
             hresult = lpDIMaus->Acquire();
             if (hresult != DI_OK)
             {
-                Protokoll.WriteText( false, "\n-> Maus : Re-Acquire Fehler !\n" );
+                Protokoll << "\n-> Maus : Re-Acquire Fehler !" << std::endl;
                 return false;
             }
             else
@@ -576,7 +580,7 @@ bool DirectInputClass::UpdateMaus(bool gepuffert)
                 hresult = lpDIMaus->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&ms);
                 if (hresult == DIERR_INPUTLOST)
                 {
-                    Protokoll.WriteText( false, "\n-> Maus : GetDeviceState Fehler !\n" );
+                    Protokoll << "\n-> Maus : GetDeviceState Fehler !" << std::endl;
                     return false;
                 }
             }
@@ -718,7 +722,7 @@ void DirectInputClass::InitTouchBoxes( int w, int h )
     Height = h;
 
     TouchDeviceCount = SDL_GetNumTouchDevices();
-    Protokoll.WriteText( false, "Finger devices detected: %d\n", TouchDeviceCount );
+    Protokoll << "Finger devices detected: " << TouchDeviceCount << std::endl;
 
     y_offset = h - (h/4);
     box_w = (RENDERWIDTH/9)*((float)w/(float)RENDERWIDTH);
@@ -731,7 +735,7 @@ void DirectInputClass::InitTouchBoxes( int w, int h )
         TouchBoxes.at(b).h = box_h;
     }
 
-    Protokoll.WriteText( false, "box size: %d x %d\n", box_w, box_h );
+    Protokoll << "box size: " << box_w << " x " << box_h << std::endl;
 
     // DPAD
     TouchdpadRadius = box_w*1.5f;
@@ -853,13 +857,13 @@ void DirectInputClass::UpdateTouchscreen( void )
                 }
                 else
                 {
-                    Protokoll.WriteText( false, "ERROR finger was NULL\n" );
+                    Protokoll << "ERROR finger was NULL\n" << std::endl;
                 }
             }
         }
         else
         {
-            Protokoll.WriteText( false, "ERROR device is %d\n", fingerdevice );
+            Protokoll << "ERROR device is " << std::dec << fingerdevice << std::endl;
         }
     }
 }

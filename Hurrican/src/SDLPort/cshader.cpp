@@ -79,7 +79,7 @@ int8_t CShader::LoadShader( GLenum type, const string& path )
 {
     shader_t shader;
 
-    Protokoll.WriteText( false, "Shader: Compiling %s\n", path.c_str() );
+    Protokoll << "Shader: Compiling " << path << std::endl;
 
     shader.type = type;
     shader.path = path;
@@ -91,7 +91,7 @@ int8_t CShader::LoadShader( GLenum type, const string& path )
     }
     else
     {
-        Protokoll.WriteText( false, "Shader: Compiled %s\n", path.c_str() );
+        Protokoll << "Shader: Compiled " << path << std::endl;
     }
 
     Shaders.push_back( shader );
@@ -132,7 +132,7 @@ GLuint CShader::CompileShader( GLenum type, const string& path )
     if (source != NULL)
     {
 #if defined(DEBUG)
-        Protokoll.WriteText( false, "Shader Source Begin\n%s\nShader Source End\n", source );
+        Protokoll << "Shader Source Begin\n" << source << "\nShader Source End" << std::endl;
 #endif
 
         shader = glCreateShader( type );
@@ -157,14 +157,14 @@ GLuint CShader::CompileShader( GLenum type, const string& path )
                 break;
             }
 
-            Protokoll.WriteText( false, "ERROR Shader: Compile failure in %s shader: %s\n", shadertype.c_str(), path.c_str() );
+            Protokoll << "ERROR Shader: Compile failure in " << shadertype << " shader: " << path << std::endl;
             PrintLog( SHADER, shader );
             return GL_INVALID_VALUE;
         }
     }
     else
     {
-        Protokoll.WriteText( false, "ERROR Shader: File read failure in %s shader: %s\n", shadertype.c_str(), path.c_str() );
+        Protokoll << "ERROR Shader: File read failure in " << shadertype << " shader: " << path << std::endl;
         return GL_INVALID_VALUE;
     }
 
@@ -188,7 +188,7 @@ int8_t CShader::CreateProgram( void )
     glGetProgramiv( Program, GL_LINK_STATUS, &status );
     if (status == GL_FALSE)
     {
-        Protokoll.WriteText( false, "ERROR Shader: Linker failure\n" );
+        Protokoll << "ERROR Shader: Linker failure" << std::endl;
         PrintLog( PROGRAM );
         Program = GL_INVALID_VALUE;
         return 1 ;
@@ -264,7 +264,7 @@ GLint CShader::GetAttribute( const string& attribute )
             return itr->second;
     }
 
-    Protokoll.WriteText( false, "ERROR Shader: Could not locate attribute: %s\n", attribute.c_str() );
+    Protokoll << "ERROR Shader: Could not locate attribute: " << attribute << std::endl;
 
     return GL_INVALID_VALUE;
 }
@@ -277,7 +277,7 @@ GLint CShader::GetUniform( const string& uniform )
             return itr->second;
     }
 
-    Protokoll.WriteText( false, "ERROR Shader: Could not locate uniform: %s\n", uniform.c_str() );
+    Protokoll << "ERROR Shader: Could not locate uniform: " << uniform << std::endl;
 
     return GL_INVALID_VALUE;
 }
@@ -293,7 +293,7 @@ void CShader::PrintLog( uint8_t type, GLuint shader )
 
         log = new char[loglength+1];
         glGetShaderInfoLog( shader, loglength, NULL, log );
-        Protokoll.WriteText( false, "Shader: Shader log:\n %s", log );
+        Protokoll << "Shader: Shader log:\n " << log << std::endl;
         delete [] log;
     }
 
@@ -303,7 +303,7 @@ void CShader::PrintLog( uint8_t type, GLuint shader )
 
         log = new char[loglength + 1];
         glGetProgramInfoLog( Program, loglength, NULL, log );
-        Protokoll.WriteText( false, "Shader: Program log:\n %s", log );
+        Protokoll << "Shader: Program log:\n " << log << std::endl;
         delete [] log;
     }
 }

@@ -68,9 +68,9 @@ int16_t TexturesystemClass::LoadTexture( const std::string &filename )
         idx = (*it).second;
 #ifdef _DEBUG
         if (idx < 0 || (int)idx >= (int)_loaded_textures.size()) {
-            Protokoll.WriteText( false, "-> Error: texture handle idx %d acquired from _texture_map is outside\n"
-                    "\t_loaded_textures array bounds. Lower bound: %d  Upper bound: %d\n"
-                    "\tfilename: %s\n", idx, 0, _loaded_textures.size()-1, filename.c_str());
+            Protokoll << "-> Error: texture handle idx " << idx << " acquired from _texture_map is outside\n"
+                    "\t_loaded_textures array bounds. Lower bound: 0  Upper bound: " << _loaded_textures.size()-1 << "\n"
+                    "\tfilename: " << filename << std::endl;
             return -1;
         }
 #endif
@@ -91,13 +91,14 @@ int16_t TexturesystemClass::LoadTexture( const std::string &filename )
         // This texture is already loaded in VRAM
         ++th.instances;
 #ifdef _DEBUG
-        Protokoll.WriteText( false, "-> Prevented loading of duplicate texture: %s, total references: %d\n", 
-                filename.c_str(), th.instances);
+        Protokoll << "-> Prevented loading of duplicate texture: " << filename << ", total references: " <<
+                th.instances << std::endl;
 #endif
     } else {
         // This texture is not in VRAM, load it..
         if ( !LoadTextureFromFile(filename, th)) {
-            Protokoll.WriteText( true, "-> Error loading texture from disk: %s\n", filename.c_str() );
+            Protokoll << "-> Error loading texture from disk: " << filename << std::endl;
+            GameRunning = false;
             th.instances = 0;
         } else {
             th.instances = 1;
@@ -113,7 +114,7 @@ int16_t TexturesystemClass::LoadTexture( const std::string &filename )
             th.npot_scalex = (*it).second.first;
             th.npot_scaley = (*it).second.second;
 #ifdef _DEBUG
-            Protokoll.WriteText( false, "Using external npot scalefactors %f, %f for texture %s\n", th.npot_scalex, th.npot_scaley, filename.c_str() );
+            Protokoll << "Using external npot scalefactors " << th.npot_scalex << " " << th.npot_scaley << " for texture " << filename << std::endl;
 #endif
         }
     }
@@ -134,7 +135,7 @@ void TexturesystemClass::UnloadTexture(const int idx)
                 SDL_UnloadTexture(th);
 #endif
 #ifdef _DEBUG
-		        Protokoll.WriteText( false, "-> Texture successfully released !\n" );
+		        Protokoll << "-> Texture successfully released !" << std::endl;
 #endif
             }
         }
@@ -147,7 +148,7 @@ void TexturesystemClass::ReadScaleFactorsFile( const std::string &fullpath )
     if (!file.is_open())
         return;
 
-    Protokoll.WriteText( false, "Reading texture NPOT scale factors from %s\n", fullpath.c_str() );
+    Protokoll << "Reading texture NPOT scale factors from " << fullpath << std::endl;
 
     std::string name;
     double xscale = 0, yscale = 0;
@@ -155,7 +156,7 @@ void TexturesystemClass::ReadScaleFactorsFile( const std::string &fullpath )
         if (!name.empty() && xscale != 0.0 && yscale != 0.0) {
             _scalefactors_map[name] = std::make_pair(xscale, yscale);
 #ifdef _DEBUG
-            Protokoll.WriteText( false, "Read name=%s xscale=%f yscale=%f\n", name.c_str(), xscale, yscale );
+            Protokoll << "Read name= " << name << " xscale=" << xscale << " yscale=" << yscale << std::endl;
 #endif
         }
     }
@@ -197,7 +198,7 @@ void TexturesystemClass::ReadScaleFactorsFiles()
 bool TexturesystemClass::LoadTextureFromFile( const std::string &filename, TextureHandle &th )
 {
     if (filename.empty()) {
-        Protokoll.WriteText( false, "Error: empty filename passed to LoadTextureFromFile()\n" );
+        Protokoll << "Error: empty filename passed to LoadTextureFromFile()" << std::endl;
         return false;
     }
 
@@ -233,8 +234,8 @@ bool TexturesystemClass::LoadTextureFromFile( const std::string &filename, Textu
         if (success) {
             goto loaded;
         } else {
-            Protokoll.WriteText( false, "Error loading texture %s from archive %s,\n", filename.c_str(), RARFILENAME );
-            Protokoll.WriteText( false, "->Trying elsewhere..\n" );
+            Protokoll << "Error loading texture " << filename << " from archive " << RARFILENAME << std::endl;
+            Protokoll << "->Trying elsewhere.." << std::endl;
         }
     }
 #endif // USE_UNRARLIB
@@ -250,7 +251,8 @@ bool TexturesystemClass::LoadTextureFromFile( const std::string &filename, Textu
 
 loaded:
     if (!success) {
-        Protokoll.WriteText( true, "Error loading texture %s\n", filename.c_str() );
+        Protokoll << "Error loading texture " << filename << std::endl;
+        GameRunning = false;
     } else {
         std::string tmpstr( std::string(TextArray[TEXT_LADE_BITMAP]) + ' ' + filename +
                 ' ' + std::string(TextArray[TEXT_LADEN_ERFOLGREICH]) + '\n' );
@@ -274,10 +276,12 @@ bool TexturesystemClass::DX8_LoadTexture( const std::string &path, const std::st
 
 
     if (load_from_memory && !buf) {
-        Protokoll.WriteText( true, "Error: null ptr passed to DX8_LoadTexture() reading file from memory\n");
+        Protokoll << "Error: null ptr passed to DX8_LoadTexture() reading file from memory" << std::endl;
+        GameRunning = false;
         return false;
     } else if (filename.empty()) {
-        Protokoll.WriteText( true, "Error: empty filename passed to DX8_LoadTexture()\n");
+        Protokoll << "Error: empty filename passed to DX8_LoadTexture()" << std::endl;
+        GameRunning = false;
         return false;
     }
 
@@ -320,9 +324,15 @@ bool TexturesystemClass::DX8_LoadTexture( const std::string &path, const std::st
 
     if (hresult != D3D_OK) {
         if (load_from_memory)
-            Protokoll.WriteText( true, "Error in DirectX loading texture\n" );
+        {
+            Protokoll << "Error in DirectX loading texture" << std::endl;
+            GameRunning = false;
+        }
         else
-            Protokoll.WriteText( true, "Error in DirectX loading texture: %s\n", fullpath.c_str() );
+        {
+            Protokoll << "Error in DirectX loading texture: " << fullpath << std::endl;
+            GameRunning = false;
+        }
 
         return false;
     } else {
@@ -343,7 +353,8 @@ bool TexturesystemClass::DX8_LoadTexture( const std::string &path, const std::st
         if (hresult != D3D_OK ||
                 tex_info.Width == 0 || tex_info.Height == 0 ||
                 img_info.Width == 0 || img_info.Height == 0) {
-            Protokoll.WriteText( true, "Error in DirectX reading image dimensions\n" );
+            Protokoll << "Error in DirectX reading image dimensions" << std::endl;
+            GameRunning = false;
         } else {
             th.npot_scalex = (double)img_info.Width  / (double)tex_info.Width;
             th.npot_scaley = (double)img_info.Height / (double)tex_info.Height;

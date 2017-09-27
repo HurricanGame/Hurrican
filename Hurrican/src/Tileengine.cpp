@@ -405,13 +405,15 @@ bool TileEngineClass::LoadLevel(char Filename[100])
     // Auch nicht? Dann ist es hoffentlich im RAR file
     if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
     {
-        Protokoll.WriteText( true, "\n-> Error loading %s from Archive !\n", Filename );
+        Protokoll << "\n-> Error loading " << Filename << " from Archive !" << std::endl;
+        GameRunning = false;
         return false;
     }
     else
         fromrar = true;
 #else
-    Protokoll.WriteText( true, "\n-> Error loading %s!\n", Temp );
+    Protokoll << "\n-> Error loading " << Temp << "!" << std::endl;
+    GameRunning = false;
     return false;
 #endif // USE_UNRARLIB
 
@@ -433,7 +435,7 @@ loadfile:
     }
 #endif // USE_UNRARLIB
 
-    Protokoll.WriteText(false, "\n-> Loading Level <-\n\n" );
+    Protokoll << "\n-> Loading Level <-\n" << std::endl;
 
     StopStageMusicAtStart = false;
 
@@ -451,7 +453,7 @@ loadfile:
 
     if(!Datei)
     {
-        Protokoll.WriteText( false, " \n-> Error loading level !\n" );
+        Protokoll << " \n-> Error loading level !" << std::endl;
         return false;
     }
 
@@ -915,10 +917,7 @@ loadfile:
     ComputeCoolLight();
 
     // Level korrekt geladen
-    strcpy_s(Temp, "-> Load Level : ");
-    strcat_s(Temp, Filename);
-    strcat_s(Temp, " successful ! <-\n\n");
-    Protokoll.WriteText( false, Temp );
+    Protokoll << "-> Load Level : " << Filename << " successful ! <-\n" << std::endl;
 
     Zustand = ZUSTAND_SCROLLBAR;
 

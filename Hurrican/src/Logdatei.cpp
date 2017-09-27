@@ -1,129 +1,57 @@
-// Datei : Logdatei.cpp
+/**
+ * This implements logging to a file and cout (or the Android log).
+ *
+ * (c) 2002 Jörg M. Winterstein
+ * (c) 2017 Stefan Schmidt
+ **/
 
-// --------------------------------------------------------------------------------------
-//
-// Logdatei Klasse
-// zum leichten Handhaben einer Protokoll Datei
-//
-// (c) 2002 Jörg M. Winterstein
-//
-// --------------------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------------------
-// Includes
-// --------------------------------------------------------------------------------------
-
-#include "Logdatei.hpp"									// Header-Datei einbinden
-#if defined(PLATFORM_DIRECTX)
-#include <windows.h>									// Windowsheader für Messagebox und Beep#
-#elif defined(PLATFORM_SDL)
-#include "SDL_port.h"
-#endif
-#include <string.h>										// Für String Operationen
-#include <stdio.h>										// Für Datei Operationen
+#include <iostream>
+#include "Logdatei.hpp"
 #if defined(ANDROID)
-#include <android/log.h>
+	#include <android/log.h>
 #endif
 
-// --------------------------------------------------------------------------------------
-// Variablen
-// --------------------------------------------------------------------------------------
 
-FILE *Logfile;											// Logdatei
-
-extern HWND					g_hwnd;						// Fenster Handle des Hauptfensters
-extern bool					GameRunning;				// Läuft das Spiel noch ?
-
-// --------------------------------------------------------------------------------------
-// Funktionen
-// --------------------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------------------
-// Konstruktor
-// erstellt eine neue Logdatei mit dem Namen "Name"
-// --------------------------------------------------------------------------------------
-
-Logdatei::Logdatei(const char Name[20])
+/**
+ * Construct the Logger object and open the logfile
+ **/
+Logdatei::Logdatei(const std::string &filename)
+: filename_(filename), file(std::ofstream(filename)), delLogFile(false)
 {
-    int len = strlen(Name) + 1;
-    strcpy_s(itsFilename, len, Name);							// Namen sichern
-    fopen_s(&Logfile, itsFilename, "w");					// Datei neu erstellen
-    if (Logfile != NULL)
-    {
-        fclose(Logfile);									// und gleich wieder schliessen
-    }
+	// Reduce unnecessary syncs
+	std::cout.sync_with_stdio(false);
 
-    delLogFile = false;
+	if(!file)
+	{
+		std::cerr << "Unable to open logfile (" << filename << ")!" << std::endl;
+		exit(EXIT_FAILURE);
+	}
 }
-
-// --------------------------------------------------------------------------------------
-// Destruktor
-// --------------------------------------------------------------------------------------
 
 Logdatei::~Logdatei()
 {
+	// make sure no output gets lost
+	flush();
 }
 
-// --------------------------------------------------------------------------------------
-// WriteText
-// schreibt den Text "Text" in die Logdatei
-// bei Fehler-Eintrag ggf Messagebox ausgeben
-// --------------------------------------------------------------------------------------
-
-void Logdatei::WriteText(bool Abbruch, const char* text, ...)
+/**
+ * Puts the internal buffer into the output-streams, flushes them and empties the buffer
+ **/
+void Logdatei::flush ()
 {
-#define BUFFER_SIZE 4096
-    va_list fmtargs;
-    char buffer[BUFFER_SIZE];
+	#ifdef ANDROID
+		// Android has no usable std::cout, so we use the Android-specific logging
+		__android_log_print(ANDROID_LOG_INFO, "Hurrican", "%s", this->str().c_str());
+	#else
+		// print to both outputs
+		std::cout << this->str();
+		this->file << this->str();
 
-    va_start( fmtargs, text );
-    vsnprintf( buffer, BUFFER_SIZE, text, fmtargs );
-    va_end( fmtargs );
+		// flush both streams to ensure they are up-to-date
+		std::cout << std::flush;
+		this->file << std::flush;
+	#endif
 
-#if defined(ANDROID)
-    __android_log_print(ANDROID_LOG_INFO, "libtcod", "%s", buffer);
-#else
-    printf( "%s", buffer );
-#endif
-
-    fopen_s(&Logfile, itsFilename, "a");					// Datei zum anfügen öffnen
-    if (Logfile != NULL)
-    {
-        fprintf_s(Logfile, buffer);								// und Text schreiben
-
-        if(Abbruch == true)									// Abbruch nach Log-Eintrag ?
-        {
-            fprintf(Logfile, "\n    ^\n");
-            fprintf(Logfile, "   /|\\\n");
-            fprintf(Logfile, "    |\n");
-            fprintf(Logfile, "    |\n");
-            fprintf(Logfile, "    |\n");
-            fprintf(Logfile, "  Error\n\n");
-        }
-        fclose(Logfile);									// Datei wieder schliessen
-    }
-    Logfile = NULL;
-
-    if(Abbruch == true)									// Abbruch nach Log-Eintrag ?
-    {
-#if defined(PLATFORM_DIRECTX)
-        MessageBox (g_hwnd, Text, "An error has occurred !", MB_OK | MB_ICONEXCLAMATION);
-#elif defined(PLATFORM_SDL)
-        printf( "An error has occurred !\n" );
-#endif
-        delLogFile  = false;
-        GameRunning = false;
-    }
-}
-
-// --------------------------------------------------------------------------------------
-// WriteText
-// schreibt den Wert "Value" in die Logdatei
-// --------------------------------------------------------------------------------------
-
-void Logdatei::WriteValue(int Value)
-{
-    fopen_s(&Logfile, itsFilename, "a");					// Datei zum anfügen öffnen
-    fprintf(Logfile, "%i\n", Value);					// und Wert schreiben
-    fclose(Logfile);									// Datei wieder schliessen
+	// empty internal buffer
+	this->str("");
 }

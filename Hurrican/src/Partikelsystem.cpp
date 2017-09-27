@@ -4767,7 +4767,7 @@ bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass* p
 
 #ifdef _DEBUG
     if (!pNew) {
-        Protokoll.WriteText( false, "WARNING: could not allocate memory for particle in PushPartikel()\n" );
+        Protokoll << "WARNING: could not allocate memory for particle in PushPartikel()" << std::endl;
         return false;
     }
 #endif
@@ -4887,7 +4887,7 @@ void PartikelsystemClass::ClearAll(void)
 
 #ifdef _DEBUG
     if (NumPartikel != 0) {
-        Protokoll.WriteText( false, "ERROR: poss. mem leak / mem. corruption in linked list of particles\n" );
+        Protokoll << "ERROR: poss. mem leak / mem. corruption in linked list of particles" << std::endl;
     }
 #endif
 

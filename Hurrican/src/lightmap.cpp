@@ -78,11 +78,11 @@ void CLightMap::Load(const char *filename)
 #if defined(USE_UNRARLIB)
     if (urarlib_get(&pData, &Size, (char*)filename, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
     {
-        Protokoll.WriteText( false, "Error loading Lightmap %s !\n", filename );
+        Protokoll << "Error loading Lightmap " << filename << " !" << std::endl;
         return;
     }
 #else
-    Protokoll.WriteText( false, "Error loading Lightmap %s !\n", filename );
+    Protokoll << "Error loading Lightmap " << filename << " !\n" << std::endl;
     return;
 #endif // USE_UNRARLIB
 
@@ -110,7 +110,8 @@ loadfile:
         strcpy_s(Name, strlen("Error loading Lightmap \"") + 1, "Error loading Lightmap \"");
         strcat_s(Name, strlen(filename) + 1, filename);
         strcat_s(Name, 3, "\"!");
-        Protokoll.WriteText( true, Name );
+        Protokoll << Name << std::endl;
+        GameRunning = false;
         return;
     }
 

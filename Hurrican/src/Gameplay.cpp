@@ -751,12 +751,12 @@ void CreateDefaultControlsConfig(int player)
 
 void CreateDefaultConfig(void)
 {
-    Protokoll.WriteText( false, "Creating new configuration file\n");
+    Protokoll << "Creating new configuration file" << std::endl;
 
     strcpy_s (ActualLanguage, strlen("english.lng") + 1, "english.lng");
     bool language_loaded = LoadLanguage (ActualLanguage);
     if (!language_loaded) {
-        Protokoll.WriteText( false, "ERROR: Failed to find default language file.\n");
+        Protokoll << "ERROR: Failed to find default language file." << std::endl;
         return;
     }
 
@@ -805,7 +805,7 @@ bool LoadConfig(void)
     //DKS - Made language loading default back to english if saved language not found:
     bool language_loaded = LoadLanguage (ActualLanguage);
     if (!language_loaded) {
-        Protokoll.WriteText( false, "ERROR loading %s, reverting to default language file.\n", ActualLanguage );
+        Protokoll << "ERROR loading " << ActualLanguage << ", reverting to default language file." << std::endl;
         strcpy_s(ActualLanguage, "english.lng");
         LoadLanguage(ActualLanguage);
     }
@@ -870,7 +870,7 @@ bool LoadConfig(void)
     fread(&Player[1].JoystickMode,	sizeof(Player[1].JoystickMode),	 1, Datei);
     fread(&Player[1].JoystickSchwelle,sizeof(Player[1].JoystickSchwelle),1, Datei);
 
-    Protokoll.WriteText( false, "Config file loading successful !\n" );
+    Protokoll << "Config file loading successful !" << std::endl;
 
     fclose(Datei);							// Und Datei wieder schliessen
 
@@ -912,7 +912,7 @@ void SaveConfig(void)
 
     if (Datei == NULL)
     {
-        Protokoll.WriteText( false, "Config file saving failed !\n" );
+        Protokoll << "Config file saving failed !" << std::endl;
         return;
     }
 
@@ -1303,7 +1303,8 @@ bool NewDemo (const char Filename[])
 
     if(!DEMOFile)
     {
-        Protokoll.WriteText( true, "\n-> Error opening Demo File !\n" );
+        Protokoll << "\n-> Error opening Demo File !" << std::endl;
+        GameRunning = false;
         return false;
     }
 

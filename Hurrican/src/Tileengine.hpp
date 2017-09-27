@@ -656,19 +656,19 @@ public:
 #ifdef _DEBUG_STRICT
         // Stricter bounds-check I use when optimizing
         if (i >= LEVELSIZE_X || i < 0 || j >= LEVELSIZE_Y || j < 0) {
-            Protokoll.WriteText( true, "-> Error: Out of bounds in TileEngineClass::TileAt():\n"
-                    "\tparam i: %d\tLower bound: %d\tUpper bound: %d\n"
-                    "\tparam j: %d\tLower bound: %d\tUpper bound: %d\n",
-                    i, 0, LEVELSIZE_X-1, j, 0, LEVELSIZE_Y-1 );
+            Protokoll << "-> Error: Out of bounds in TileEngineClass::TileAt():\n"
+                      << "\tparam i: " << i << "\tLower bound: " << 0 << "\tUpper bound: " << LEVELSIZE_X-1 << "\n"
+                      << "\tparam j: " << j << "\tLower bound: " << 0 << "\tUpper bound: " << LEVELSIZE_Y-1 << std::endl;
+            GameRunning = false;
             exit(1);    //WriteText above should do this for us (first param==true)
         }
 
 #elif defined _DEBUG
         if (i >= MAX_LEVELSIZE_X || i < 0 || j >= MAX_LEVELSIZE_Y || j < 0) {
-            Protokoll.WriteText( true, "-> Error: Out of bounds in TileEngineClass::TileAt():\n"
-                    "\tparam i: %d\tLower bound: %d\tUpper bound: %d\n"
-                    "\tparam j: %d\tLower bound: %d\tUpper bound: %d\n",
-                    i, 0, MAX_LEVELSIZE_X-1, j, 0, MAX_LEVELSIZE_Y-1 );
+            Protokoll << "-> Error: Out of bounds in TileEngineClass::TileAt():\n"
+                      << "\tparam i: " << i << "\tLower bound: " << 0 << "\tUpper bound: " << MAX_LEVELSIZE_X-1 << "\n"
+                      << "\tparam j: " << j << "\tLower bound: " << 0 << "\tUpper bound: " << MAX_LEVELSIZE_Y-1 << std::endl;
+            GameRunning = false;
             exit(1);    //WriteText above should do this for us (first param==true)
         }
 #endif

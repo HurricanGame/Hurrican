@@ -117,7 +117,8 @@ public:
         RECT& operator[](int i)
         {
             if (i < 0 || i >= (int)rects.size()) {
-                Protokoll.WriteText( true, "Error: index %d out of bounds of itsPreCalcedRects[] (size:%d)\n", i, rects.size());
+                Protokoll << "Error: index " << std::dec << i << " out of bounds of itsPreCalcedRects[] (size:" << rects.size() << std::endl;
+                GameRunning = false;
                 abort();
             }
 

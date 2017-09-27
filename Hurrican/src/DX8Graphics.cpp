@@ -85,13 +85,13 @@ DirectGraphicsClass::~DirectGraphicsClass(void)
 bool DirectGraphicsClass::Init(HWND hwnd, std::uint32_t dwBreite, std::uint32_t dwHoehe,
                                std::uint32_t dwZ_Bits, bool VSync)
 {
-    Protokoll.WriteText( false, "\n--> Direct3D init <--\n" );
-    Protokoll.WriteText( false, "---------------------\n\n" );
+    Protokoll << "\n--> Direct3D init <--\n";
+    Protokoll << "---------------------\n" << std::endl;
 
     if(VSync == true)
-        Protokoll.WriteText( false, "using VSync...\n" );
+        Protokoll << "using VSync..." << std::endl;
     else
-        Protokoll.WriteText( false, "NOT using VSync...\n" );
+        Protokoll << "NOT using VSync..." << std::endl;
 
     //D3DDISPLAYMODE			DisplayMode;
     //HRESULT					Res;
@@ -185,12 +185,13 @@ bool DirectGraphicsClass::Init(HWND hwnd, std::uint32_t dwBreite, std::uint32_t 
         goto _ModeFound;
 
     // no mode found!
-    Protokoll.WriteText( true, "No compatible Graphics Mode found!\n" );
+    Protokoll << "No compatible Graphics Mode found!" << std::endl;
+    GameRunning = false;
     return false;
 
 _ModeFound:
 
-    Protokoll.WriteText( false, "DX8 Device initialised!\n" );
+    Protokoll << "DX8 Device initialised!" << std::endl;
 
     /* Jetzt haben wir die Informationen zusammen und machen weiter */
 
@@ -200,34 +201,34 @@ _ModeFound:
 
     lpD3DDevice->GetDeviceCaps(&d3dCaps);
 
-    Protokoll.WriteText( false, "Texture restrictions:\n" );
+    Protokoll << "Texture restrictions:" << std::endl;
 
     if (d3dCaps.TextureCaps & D3DPTEXTURECAPS_SQUAREONLY)
     {
-        Protokoll.WriteText( false, "Square Only: TRUE\n" );
+        Protokoll << "Square Only: TRUE" << std::endl;
         SquareOnly = true;
     }
     else
     {
-        Protokoll.WriteText( false, "Square Only: FALSE\n" );
+        Protokoll << "Square Only: FALSE" << std::endl;
         SquareOnly = false;
     }
 
     // Device kann nur Texturen mit 2er-Potenz-Grösse
     if (d3dCaps.TextureCaps & D3DPTEXTURECAPS_POW2)
     {
-        Protokoll.WriteText( false, "Power of Two: TRUE\n" );
+        Protokoll << "Power of Two: TRUE" << std::endl;
         PowerOfTwo = true;
     }
     else
     {
-        Protokoll.WriteText( false, "Power of Two: FALSE\n" );
+        Protokoll << "Power of Two: FALSE" << std::endl;
         PowerOfTwo = false;
     }
 
     SetDeviceInfo();
 
-    Protokoll.WriteText( false, "\n-> Direct3D init successful!\n\n" );
+    Protokoll << "\n-> Direct3D init successful!\n" << std::endl;
 
     // DegreetoRad-Tabelle füllen
     for(int i=0; i<360; i++)
@@ -266,17 +267,17 @@ bool DirectGraphicsClass::Init(HWND hwnd, std::uint32_t dwBreite, std::uint32_t 
     ScreenHeight   = 0;
 #endif
 
-    Protokoll.WriteText( false, "\n--> SDL/OpenGL init <--\n" );
-    Protokoll.WriteText( false, "---------------------\n\n" );
+    Protokoll << "\n--> SDL/OpenGL init <--\n";
+    Protokoll << "---------------------\n" << std::endl;
 
     // Initialize defaults, Video and Audio subsystems
-    Protokoll.WriteText( false, "Initializing SDL.\n" );
+    Protokoll << "Initializing SDL." << std::endl;
     if (SDL_Init( SDL_INIT_VIDEO|SDL_INIT_AUDIO|SDL_INIT_TIMER|SDL_INIT_JOYSTICK )==-1)
     {
-        Protokoll.WriteText( false, "Failed to initialize SDL: %s.\n", SDL_GetError() );
+        Protokoll << "Failed to initialize SDL: " << SDL_GetError() << "." << std::endl;
         return false;
     }
-    Protokoll.WriteText( false, "SDL initialized.\n" );
+    Protokoll << "SDL initialized." << std::endl;
 
 #if !defined(USE_EGL_SDL) && !defined(USE_EGL_RAW) && !defined(USE_EGL_RPI)
     if (CommandLineParams.ScreenDepth > 16) {               //DKS - Screen depth is now default 16 under GLES, 32 others
@@ -345,7 +346,7 @@ bool DirectGraphicsClass::Init(HWND hwnd, std::uint32_t dwBreite, std::uint32_t 
     Screen = SDL_SetVideoMode( ScreenWidth, ScreenHeight, ScreenDepth, flags );
     if (Screen == NULL)
     {
-        Protokoll.WriteText( false, "Failed to %dx%dx%d video mode: %s\n", ScreenWidth, ScreenHeight, ScreenDepth, SDL_GetError() );
+        Protokoll << "Failed to " << ScreenWidth << "x" << ScreenHeight << "x" << ScreenDepth << "video mode: " << SDL_GetError() << std::endl;
         return false;
     }
 #endif
@@ -382,28 +383,28 @@ bool DirectGraphicsClass::Init(HWND hwnd, std::uint32_t dwBreite, std::uint32_t 
             // First, try setting it to -1, which requests 'late swap tearing', which
             //  will not wait for vsync if previous frame was missed:
 
-            Protokoll.WriteText( false, "-> Requesting SDL2 GL to enable VSync with 'late swap tearing' (optimal)\n" );
+            Protokoll << "-> Requesting SDL2 GL to enable VSync with 'late swap tearing' (optimal)" << std::endl;
             retval = SDL_GL_SetSwapInterval(-1);
             if (retval < 0) {
-                Protokoll.WriteText( false, "-> 'Late swap tearing' VSync not supported:\n%s\n", SDL_GetError() );
-                Protokoll.WriteText( false, "-> Requesting SDL2 GL to enable standard VSync\n" );
+                Protokoll << "-> 'Late swap tearing' VSync not supported:\n" << SDL_GetError() << std::endl;
+                Protokoll << "-> Requesting SDL2 GL to enable standard VSync" << std::endl;
                 retval = SDL_GL_SetSwapInterval(1);
                 if (retval < 0) {
-                    Protokoll.WriteText( false, "-> *** SDL2 GL failed to enable VSync:\n%s\n", SDL_GetError() );
+                    Protokoll << "-> *** SDL2 GL failed to enable VSync:\n" << SDL_GetError() << std::endl;
                     VSyncEnabled = false;
                 } else {
-                    Protokoll.WriteText( false, "-> VSync enabled successfully\n" );
+                    Protokoll << "-> VSync enabled successfully" << std::endl;
                     VSyncEnabled = true;
                 } 
             } else {
-                Protokoll.WriteText( false, "-> VSync with late-swap-tearing enabled successfully\n" );
+                Protokoll << "-> VSync with late-swap-tearing enabled successfully" << std::endl;
                 VSyncEnabled = true;
             }
         } else {
-            Protokoll.WriteText( false, "-> Requesting SDL2 GL to disable VSync\n" );
+            Protokoll << "-> Requesting SDL2 GL to disable VSync" << std::endl;
             retval = SDL_GL_SetSwapInterval(0);
             if (retval < 0) {
-                Protokoll.WriteText( false, "-> *** SDL2 GL failed to disable VSync:\n%s\n", SDL_GetError() );
+                Protokoll << "-> *** SDL2 GL failed to disable VSync:\n" << SDL_GetError() << std::endl;
                 VSyncEnabled = true;
             } else {
                 VSyncEnabled = false;
@@ -419,27 +420,27 @@ bool DirectGraphicsClass::Init(HWND hwnd, std::uint32_t dwBreite, std::uint32_t 
         if (retval >= 0) {
             if (status == 1) {
                 if (VSync) {
-                    Protokoll.WriteText( false, "-> SDL1 GL reports VSync was enabled successfully\n" );
+                    Protokoll << "-> SDL1 GL reports VSync was enabled successfully" << std::endl;
                 } else {
                     // We requested no VSync, but got it anyways:
-                    Protokoll.WriteText( false, "-> *** SDL1 GL reports VSync could not be disabled. (try fullscreen?)\n" );
+                    Protokoll << "-> *** SDL1 GL reports VSync could not be disabled. (try fullscreen?)" << std::endl;
                 }
 
                 VSyncEnabled = true;
             } else {
                 if (VSync) {
                     // We requested VSync, but didn't get it:
-                    Protokoll.WriteText( false, "-> *** SDL1 GL reports VSync is unavailable. (try fullscreen?)\n" );
+                    Protokoll << "-> *** SDL1 GL reports VSync is unavailable. (try fullscreen?)" << std::endl;
                 } else {
-                    Protokoll.WriteText( false, "-> SDL1 GL reports VSync was disabled successfully\n" );
+                    Protokoll << "-> SDL1 GL reports VSync was disabled successfully" << std::endl;
                 }
                 VSyncEnabled = false;
             }
         } else {
             // Call to SDL_GL_GetAttribute failed for some reason, we'll assume VSync
             //  is not set and call glFlush() each frame
-            Protokoll.WriteText( false, "-> *** Unable to determine SDL GL VSync status:\n%s\n", SDL_GetError() );
-            Protokoll.WriteText( false, "-> *** (Will assume VSync is unavailable). )\n" );
+            Protokoll << "-> *** Unable to determine SDL GL VSync status:\n" << SDL_GetError() << std::endl;
+            Protokoll << "-> *** (Will assume VSync is unavailable). )" << std::endl;
             VSyncEnabled = false;
         }
     }
@@ -458,7 +459,7 @@ bool DirectGraphicsClass::Init(HWND hwnd, std::uint32_t dwBreite, std::uint32_t 
 
     SetDeviceInfo();
 
-    Protokoll.WriteText( false, "\n-> OpenGL init successful!\n\n" );
+    Protokoll << "\n-> OpenGL init successful!\n" << std::endl;
 
     // DegreetoRad-Tabelle füllen
     for(int i=0; i<360; i++)
@@ -479,7 +480,7 @@ bool DirectGraphicsClass::Exit(void)
 #if defined(PLATFORM_DIRECTX)
     SafeRelease (lpD3DDevice);
     SafeRelease (lpD3D);
-    Protokoll.WriteText( false, "-> Direct3D shutdown successfully completed !\n" );
+    Protokoll << "-> Direct3D shutdown successfully completed !" << std::endl;
 #elif defined(PLATFORM_SDL)
 #if SDL_VERSION_ATLEAST(2,0,0)
     SDL_GL_DeleteContext(GLcontext);
@@ -496,7 +497,7 @@ bool DirectGraphicsClass::Exit(void)
     EGL_Close();
 #endif
     SDL_Quit();
-    Protokoll.WriteText( false, "-> SDL/OpenGL shutdown successfully completed !\n" );
+    Protokoll << "-> SDL/OpenGL shutdown successfully completed !" << std::endl;
 #endif
     return true;
 }
@@ -528,7 +529,8 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
 
     if(hr != D3D_OK)
     {
-        Protokoll.WriteText( true, "\n-> SetTransform error!\n" );
+        Protokoll << "\n-> SetTransform error!" << std::endl;
+        GameRunning = false;
         return false;
     }
 
@@ -536,7 +538,8 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
     hr = lpD3DDevice->SetVertexShader (D3DFVF_TLVERTEX);
     if(hr != D3D_OK)
     {
-        Protokoll.WriteText( true, "\n-> SetVertexShader error!\n" );
+        Protokoll << "\n-> SetVertexShader error!" << std::endl;
+        GameRunning = false;
         return false;
     }
 
@@ -561,17 +564,17 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
 
     /* OpenGL Information */
     output = (char*)glGetString( GL_VENDOR );
-    Protokoll.WriteText( false, "GL_VENDOR: %s\n", output );
+    Protokoll << "GL_VENDOR: " << output << std::endl;
     output = (char*)glGetString( GL_RENDERER );
-    Protokoll.WriteText( false, "GL_RENDERER: %s\n", output );
+    Protokoll << "GL_RENDERER: " << output << std::endl;
     output = (char*)glGetString( GL_VERSION );
-    Protokoll.WriteText( false, "GL_VERSION: %s\n", output );
+    Protokoll << "GL_VERSION: " << output << std::endl;
 #if defined(USE_GL2)
     output = (char*)glGetString( GL_SHADING_LANGUAGE_VERSION );
-    Protokoll.WriteText( false, "GL_SHADING_LANGUAGE_VERSION: %s\n", output );
+    Protokoll << "GL_SHADING_LANGUAGE_VERSION: " << output << std::endl;
 #endif
     glextentsions = (char*)glGetString( GL_EXTENSIONS );
-    Protokoll.WriteText( false, "GL_EXTENSIONS: %s\n", glextentsions );
+    Protokoll << "GL_EXTENSIONS: " << glextentsions << std::endl;
 
 #if defined(USE_ETC1)
     SupportedETC1 = ExtensionSupported( "GL_OES_compressed_ETC1_RGB8_texture" );
@@ -683,7 +686,7 @@ bool DirectGraphicsClass::TakeScreenshot(const char Filename[100], int screenx, 
     // Fehler ?
     if(hr != D3D_OK)
     {
-        Protokoll.WriteText( false, "\n-> TakeScreenshot error!\n" );
+        Protokoll << "\n-> TakeScreenshot error!" << std::endl;
         FrontBuffer->Release();
         return false;
     }
@@ -883,7 +886,7 @@ void DirectGraphicsClass::RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,
     }
     else
     {
-        Protokoll.WriteText( false, "Add type to count indinces\n" );
+        Protokoll << "Add type to count indinces" << std::endl;
         return;
     }
 
@@ -985,11 +988,11 @@ bool DirectGraphicsClass::ExtensionSupported( const char* ext )
 {
     if( strstr( glextentsions, ext ) != NULL)
     {
-        Protokoll.WriteText( false, "%s is supported\n", ext );
+        Protokoll << ext << " is supported" << std::endl;
         return true;
     }
 
-    Protokoll.WriteText( false, "%s is not supported\n", ext );
+    Protokoll << ext << " is not supported" << std::endl;
     return false;
 }
 #endif
@@ -1104,7 +1107,7 @@ void DirectGraphicsClass::ShowBackBuffer(void)
     {
         VERTEX2D vertices[4];
 
-        //Protokoll.WriteText( false, "%dx%d at %dx%d\n", RenderRect.w, RenderRect.h, RenderRect.x, RenderRect.y );
+        //Protokoll << std::dec << RenderRect.w << "x" << RenderRect.h << " at " << RenderRect.x << "x" << RenderRect.y << std::endl;
 
         vertices[0].x = RenderRect.x;
         vertices[0].y = RenderRect.y+RenderRect.h; /* lower left */
@@ -1166,7 +1169,7 @@ void DirectGraphicsClass::ShowBackBuffer(void)
 
     if (error != 0)
     {
-        Protokoll.WriteText( false, "GL Error %X file %s: line %d\n", error, __FILE__, __LINE__ );
+		Protokoll << "GL Error " << std::hex << error << " file " << __FILE__ << ": line " << std::dec << __LINE__ << std::endl;
     }
 #endif
 
@@ -1191,7 +1194,7 @@ void DirectGraphicsClass::SetupFramebuffers( void )
     WindowView.w = Screen->w;
     WindowView.h = Screen->h;
 #endif
-    Protokoll.WriteText( false, "Window resolution: %dx%d\n", WindowView.w, WindowView.h );
+    Protokoll << "Window resolution: " << WindowView.w << "x" << WindowView.h << std::endl;
 
     RenderView.x = 0;
     RenderView.y = 0;
@@ -1207,7 +1210,7 @@ void DirectGraphicsClass::SetupFramebuffers( void )
         SelectBuffer( true );
         glViewport( RenderView.x, RenderView.y, RenderView.w, RenderView.h );
         SelectBuffer( false );
-        Protokoll.WriteText( false, "Render viewport resolution: %dx%d at %dx%d\n", RenderView.w, RenderView.h, RenderView.x, RenderView.y );
+        Protokoll << "Render viewport resolution: " << RenderView.w << "x" << RenderView.h << " at " << RenderView.x << "x" << RenderView.y << std::endl;
 
         /* Select the best 4:3 resolution */
         if (WindowView.w<WindowView.h)
@@ -1223,7 +1226,7 @@ void DirectGraphicsClass::SetupFramebuffers( void )
         RenderRect.x = std::max(0, WindowView.w - RenderRect.w)/2;
         RenderRect.y = std::max(0, WindowView.h - RenderRect.h)/2;
 
-        Protokoll.WriteText( false, "Render area: %dx%d at %dx%d\n", RenderRect.w, RenderRect.h, RenderRect.x, RenderRect.y );
+        Protokoll << "Render area: " << RenderRect.w << "x" << RenderRect.h << " at " << RenderRect.x << "x" << RenderRect.y << std::endl;
     }
     else
 #endif
@@ -1245,7 +1248,7 @@ void DirectGraphicsClass::SetupFramebuffers( void )
     } else {
         glViewport( WindowView.x, WindowView.y, WindowView.w, WindowView.h );    /* Setup our viewport. */
     }
-    Protokoll.WriteText( false, "Window viewport: %dx%d at %dx%d\n", WindowView.w, WindowView.h, WindowView.x, WindowView.y );
+    Protokoll << "Window viewport: " << WindowView.w << "x" << WindowView.h << " at " << WindowView.x << "x" << WindowView.y << std::endl;
 }
 
 void DirectGraphicsClass::ClearBackBuffer( void )

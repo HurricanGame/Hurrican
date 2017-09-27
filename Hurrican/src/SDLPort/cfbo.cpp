@@ -43,11 +43,11 @@ bool CFbo::Open( uint16_t w, uint16_t h )
     if (glBindFramebuffer && glDeleteFramebuffers && glGenFramebuffers && glCheckFramebufferStatus && glFramebufferTexture2D &&
         glGenRenderbuffers && glBindRenderbuffer && glRenderbufferStorage && glDeleteRenderbuffers)
     {
-        Protokoll.WriteText( false, "FBO supported\n" );
+        Protokoll << "FBO supported" << std::endl;
     }
     else
     {
-        Protokoll.WriteText( false, "FBO is NOT supported\n" );
+        Protokoll << "FBO is NOT supported" << std::endl;
         return Enabled;
     }
 #endif
@@ -73,22 +73,22 @@ bool CFbo::Open( uint16_t w, uint16_t h )
     {
         case GL_FRAMEBUFFER_COMPLETE:
             Enabled = true;
-            Protokoll.WriteText( false, "GL_FRAMEBUFFER_COMPLETE: created successfully resolution: %dx%d\n", w, h );
+            Protokoll << "GL_FRAMEBUFFER_COMPLETE: created successfully resolution: " << std::dec << w << "x" << h << std::endl;
             break;
         case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
-            Protokoll.WriteText( false, "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: Not all framebuffer attachment points are framebuffer attachment complete.\n" );
+            Protokoll << "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT: Not all framebuffer attachment points are framebuffer attachment complete.\n" << std::endl;
             break;
         case GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS:
-            Protokoll.WriteText( false, "GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS: Not all attached images have the same width and height.\n" );
+            Protokoll << "GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS: Not all attached images have the same width and height.\n" << std::endl;
             break;
         case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
-            Protokoll.WriteText( false, "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: No images are attached to the framebuffer.\n" );
+            Protokoll << "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT: No images are attached to the framebuffer.\n" << std::endl;
             break;
         case GL_FRAMEBUFFER_UNSUPPORTED:
-            Protokoll.WriteText( false, "GL_FRAMEBUFFER_UNSUPPORTED: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions.\n" );
+            Protokoll << "GL_FRAMEBUFFER_UNSUPPORTED: The combination of internal formats of the attached images violates an implementation-dependent set of restrictions.\n" << std::endl;
             break;
         default:
-            Protokoll.WriteText( false, "FBO failed\n" );
+            Protokoll <<"FBO failed\n" << std::endl;
             break;
     }
     glBindFramebuffer( GL_FRAMEBUFFER, 0 );

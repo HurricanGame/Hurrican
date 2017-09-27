@@ -2573,7 +2573,7 @@ void MenuClass::LoadSavegames(void)
         // falls sie nicht existiert oder es eine Fehler gibt, ist der Slot noch leer
         fopen_s(&Datei, Name, "rb");
 
-        Protokoll.WriteText(  false, "save games loaded\n" );
+        Protokoll << "save games loaded" << std::endl;
 
         // Fehler beim Öffnen ? Dann leeren Slot erzeugen
         //

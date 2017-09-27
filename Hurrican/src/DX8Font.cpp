@@ -88,10 +88,11 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
     //DKS - Why is last parameter 0? That would cause problems in memory allocation:
     //if (!mTexture->LoadImage(Filename, xts, yts, xCharsize, yCharsize, xChars, 0))
     if (!mTexture->LoadImage(Filename, xts, yts, xCharsize, yCharsize, xChars, yChars)) {
-        Protokoll.WriteText(true, "Error loading font: %s\n", Filename);
+        Protokoll << "Error loading font: " << Filename << std::endl;
+        GameRunning = false;
         return false;
     } else {
-        Protokoll.WriteText(false, "Loading font: %s\n", Filename);
+        Protokoll << "Loading font: " << Filename << std::endl;
     }
 
     // Grösse setzen
@@ -124,7 +125,10 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 
     // Fehler beim Locken ?
     if (hresult != D3D_OK)
-        Protokoll.WriteText(true, "error locking font texture!");
+    {
+        Protokoll << "Error locking font texture!" << std::endl;
+        GameRunning = false;
+    }
 
 #elif defined(PLATFORM_SDL)
     image_t image;
@@ -140,7 +144,8 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
         {
             if (!loadImageSDL(image, fullpath, NULL, 0)) {
                 delete [] image.data;
-                Protokoll.WriteText(true, "Error in LoadFont(): loadImageSDL() returned error loading %s\n", fullpath.c_str() );
+                Protokoll << "Error in LoadFont(): loadImageSDL() returned error loading " << fullpath << std::endl;
+                GameRunning = false;
                 return false;
             }
         }
@@ -155,7 +160,8 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
         {
             if (!loadImageSDL(image, fullpath, NULL, 0)) {
                 delete [] image.data;
-                Protokoll.WriteText(true, "Error in LoadFont(): loadImageSDL() returned error loading %s\n", fullpath.c_str() );
+                Protokoll << "Error in LoadFont(): loadImageSDL() returned error loading " << fullpath << std::endl;
+                GameRunning = false;
                 return false;
             }
         }
@@ -169,7 +175,8 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
             if (!loadImageSDL(image, NULL, pData, Size))
                 delete [] image.data;
                 free(pData);
-                Protokoll.WriteText(true, "Error in LoadFont(): loadImageSDL() returned error loading %s from buffer\n", Filename );
+                Protokoll << "Error in LoadFont(): loadImageSDL() returned error loading " << Filename << " from buffer" << std::endl;
+                GameRunning = false;
                 return false;
             }
             free(pData);
@@ -178,7 +185,8 @@ bool DirectGraphicsFont::LoadFont(const char *Filename, int xts, int yts,
 #endif // USE_UNRARLIB
 
     if (image.data  == NULL) {
-        Protokoll.WriteText(true, "Error in LoadFont(): image.data is NULL\n" );
+        Protokoll << "Error in LoadFont(): image.data is NULL" << std::endl;
+        GameRunning = false;
         return false;
     }
 

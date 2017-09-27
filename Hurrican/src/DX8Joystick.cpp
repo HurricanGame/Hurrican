@@ -121,28 +121,28 @@ bool DirectJoystickClass::Init(HWND hwnd, LPDIRECTINPUT8 lpDI)
     dirval = lpDI->CreateDevice(guidJoystickDevice,&lpDIJoystick, NULL);
     if (dirval != DI_OK)
     {
-        Protokoll.WriteText( false, "\n-> Joystick : CreateDevice error!\n" );
+        Protokoll << "\n-> Joystick : CreateDevice error!" << std::endl;
         return false;
     }
-    Protokoll.WriteText( false, "Joystick : CreateDevice successful!\n" );
+    Protokoll << "Joystick : CreateDevice successful!" << std::endl;
 
     // Datenformat für Joystick festlegen
     dirval = lpDIJoystick->SetDataFormat(&c_dfDIJoystick2);
     if (dirval != DI_OK)
     {
-        Protokoll.WriteText( false, "\n-> Joystick : SetDataFormat error!\n" );
+        Protokoll << "\n-> Joystick : SetDataFormat error!" << std::endl;
         return false;
     }
-    Protokoll.WriteText( false, "Joystick : SetDataFormat successful!\n" );
+    Protokoll << "Joystick : SetDataFormat successful!" << std::endl;
 
     // Zusammenarbeit mit Windows regeln
     dirval = lpDIJoystick->SetCooperativeLevel(hwnd, DISCL_EXCLUSIVE | DISCL_FOREGROUND);
     if (dirval != DI_OK)
     {
-        Protokoll.WriteText( false, "\n-> Joystick : SetCooperativeLevel error!\n" );
+        Protokoll << "\n-> Joystick : SetCooperativeLevel error!" << std::endl;
         return false;
     }
-    Protokoll.WriteText( false, "Joystick : SetCooperativeLevel	successful!\n" );
+    Protokoll << "Joystick : SetCooperativeLevel successful!" << std::endl;
 
     // Joystick Objekt Eigenschaften festlegen
     diprg.diph.dwSize = sizeof(diprg);
@@ -155,10 +155,10 @@ bool DirectJoystickClass::Init(HWND hwnd, LPDIRECTINPUT8 lpDI)
     dirval = lpDIJoystick->SetProperty(DIPROP_RANGE, &diprg.diph);
     if (dirval != DI_OK)
     {
-        Protokoll.WriteText( false, "\n-> Joystick : SetPropertyX error!\n" );
+        Protokoll << "\n-> Joystick : SetPropertyX error!" << std::endl;
         return false;
     }
-    Protokoll.WriteText( false, "Joystick : SetPropertyX sucessfull!\n" );
+    Protokoll << "Joystick : SetPropertyX sucessfull!" << std::endl;
 
     diprg.diph.dwSize = sizeof(diprg);
     diprg.diph.dwHeaderSize = sizeof(diprg.diph);
@@ -170,10 +170,10 @@ bool DirectJoystickClass::Init(HWND hwnd, LPDIRECTINPUT8 lpDI)
     dirval = lpDIJoystick->SetProperty(DIPROP_RANGE, &diprg.diph);
     if (dirval != DI_OK)
     {
-        Protokoll.WriteText( false, "\n-> Joystick : SetPropertyY error!\n" );
+        Protokoll << "\n-> Joystick : SetPropertyY error!" << std::endl;
         return false;
     }
-    Protokoll.WriteText( false, "Joystick : SetPropertyY successful!\n" );
+    Protokoll << "Joystick : SetPropertyY successful!" << std::endl;
 
     // Joystick Objekt aktivieren
     if (lpDIJoystick)
@@ -181,10 +181,10 @@ bool DirectJoystickClass::Init(HWND hwnd, LPDIRECTINPUT8 lpDI)
         dirval = lpDIJoystick->Acquire();
         if (dirval != DI_OK)
         {
-            Protokoll.WriteText( false, "\n-> Joystick : Acquire error!\n" );
+            Protokoll << "\n-> Joystick : Acquire error!" << std::endl;
             return false;
         }
-        Protokoll.WriteText( false, "Joystick : Acquire successful!\n" );
+        Protokoll << "Joystick : Acquire successful!" << std::endl;
     }
     else
         return false;
@@ -204,7 +204,7 @@ bool DirectJoystickClass::Init(int joy)
 
     if (lpDIJoystick == NULL)
     {
-        Protokoll.WriteText( false, "\n-> Joystick : Acquire error!\n" );
+        Protokoll << "\n-> Joystick : Acquire error!" << std::endl;
         return false;
     }
 
@@ -222,7 +222,7 @@ bool DirectJoystickClass::Init(int joy)
         JoystickName[sizeof(JoystickName)-1] = '\0';                                // and null-terminate 
     }
 
-    Protokoll.WriteText( false, "Joystick %d: Acquire successful!\nButtons: %d Name: %s\n", joy, NumButtons, JoystickName );
+    Protokoll << "Joystick " << joy << ": Acquire successful!\nButtons: " << NumButtons << " Name: " << JoystickName << std::endl;
 
     return true;
 }
@@ -254,7 +254,7 @@ bool DirectJoystickClass::Update(void)
         //
         if (hresult != DI_OK)
         {
-            Protokoll.WriteText( false, "\n-> Joystick : Re-Acquire Fehler !\n" );
+            Protokoll << "\n-> Joystick : Re-Acquire Fehler !" << std::endl;
             return false;
         }
 
@@ -268,7 +268,7 @@ bool DirectJoystickClass::Update(void)
             //
             if (hresult == DIERR_INPUTLOST)
             {
-                Protokoll.WriteText( false, "\n-> Joystick : Re-Acquire Fehler !\n" );
+                Protokoll << "\n-> Joystick : Re-Acquire Fehler !" << std::endl;
                 return false;
             }
         }

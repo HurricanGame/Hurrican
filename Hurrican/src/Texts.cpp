@@ -91,10 +91,12 @@ loadfile:
     fopen_s(&Datei, temp, "r");												// Language File öffnen
     if (Datei == NULL)															// Fehler beim öffnen ?
     {
-        Protokoll.WriteText( true, "-> Error opening language-file\n'%s'", temp );
+        Protokoll << "-> Error opening language-file\n";
+        Protokoll << "'" << temp << "'" << std::endl;
+        GameRunning = false;
         return false;
     } else {
-        Protokoll.WriteText( false, "Using language-file '%s'\n", temp );
+        Protokoll << "Using language-file '" << temp << "'" << std::endl;
     }
 
 
@@ -137,7 +139,8 @@ loadfile:
         {
             // Fehler beim öffnen ? Dann standard Liste öffnen
             CommandLineParams.RunOwnLevelList = false;
-            Protokoll.WriteText( true, "-> Error opening level-order file\n" );
+            Protokoll << "-> Error opening level-order file" << std::endl;
+            GameRunning = false;
             return false;
         }
     }
@@ -161,13 +164,15 @@ loadfile:
         sprintf_s(Temp, "%s", "levellist.dat");
         if (urarlib_get(&pData, &Size, Temp, RARFILENAME, convertText(RARFILEPASSWORD)) == false)
         {
-            Protokoll.WriteText( true, "\n-> Error loading %s from Archive !\n", Temp );
+            Protokoll << "\n-> Error loading " << Temp << " from Archive !" << std::endl;
+            GameRunning = false;
             return false;
         }
         else
             fromrar = true;
 #else
-        Protokoll.WriteText( true, "\n-> Error loading %s!\n", Temp );
+        Protokoll << "\n-> Error loading " << Temp << "!" << std::endl;
+        GameRunning = false;
         return false;
 #endif // USE_UNRARLIB
 
@@ -233,22 +238,22 @@ int FindLanguageFiles(const char *path)
     int num_matches = 0;
 
     if (!path) {
-        Protokoll.WriteText( false, "ERROR: NULL path passed to find_language_files() in %s\n", __FILE__);
+        Protokoll << "ERROR: NULL path passed to find_language_files() in " << __FILE__ << std::endl;
         return 0;
     }
 
-    Protokoll.WriteText( false, "Searching for language files in %s\n", path );
+    Protokoll << "Searching for language files in " << path << std::endl;
     tinydir_open(&dir, path);
 
     while (dir.has_next) {
         if (tinydir_readfile(&dir, &file) != -1)
         {
             if (file.is_dir) {
-                Protokoll.WriteText( false, "File %s is directory, skipping\n", file.name );
+                Protokoll << "File " << file.name << " is directory, skipping" << std::endl;
             } else {
                 if (strcasecmp(file.extension, "lng") == 0) {
                     if (strlen(file.name) < MAX_LANGUAGE_FILENAME_LENGTH) {
-                        Protokoll.WriteText( false, "Found language file %s in path %s\n", file.name, file.path );
+                        Protokoll << "Found language file " << file.name << " in path " << file.path << std::endl;
 
                         // If we've found a file more than 5 characters in length, accept it..
                         if (strlen(file.name) > 4) {
@@ -258,12 +263,12 @@ int FindLanguageFiles(const char *path)
                         }
                     } else {
                         // Either the full pathname was too long or the filename without extension was too long:
-                        Protokoll.WriteText( false, "Skipping file with too long a name or full path:\n%s\n", file.path );
+                        Protokoll << "Skipping file with too long a name or full path:\n" << file.path << std::endl;
                     }
                 }
             }
         } else {
-            Protokoll.WriteText( false, "Error examining file, skipping\n" );
+            Protokoll << "Error examining file, skipping" << std::endl;
         }
 
         tinydir_next(&dir);
