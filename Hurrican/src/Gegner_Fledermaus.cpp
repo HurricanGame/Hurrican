@@ -71,8 +71,8 @@ void GegnerFledermaus::DoKI(void)
         AnimSpeed = 0.5f;
         AnimEnde  = 14;
         AnimStart = 0;
-        Value1	= (int)pAim->xpos+rand()%80 - 30;			// Flugziel zufällig in Richtung Spieler
-        Value2	= (int)pAim->ypos - 50 +rand()%100;	// setzen mit etwas Variation
+        Value1	= static_cast<int>(pAim->xpos)+rand()%80 - 30;			// Flugziel zufällig in Richtung Spieler
+        Value2	= static_cast<int>(pAim->ypos) - 50 +rand()%100;	// setzen mit etwas Variation
         Handlung = GEGNER_VERFOLGEN;
     }
     break;
@@ -125,8 +125,8 @@ void GegnerFledermaus::DoKI(void)
         if (ySpeed >  10.0f) ySpeed = 10.0f;
         if (ySpeed < -10.0f) ySpeed =-10.0f;
 
-        int dx = abs ((int) (xPos - Value1));
-        int dy = abs ((int) (yPos - Value2));
+        int dx = abs (static_cast<int>(xPos - Value1));
+        int dy = abs (static_cast<int>(yPos - Value2));
 
         // Punkt erreicht oder Abstand zu groß ? Dann neues Ziel setzen
         //

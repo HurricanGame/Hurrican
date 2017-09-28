@@ -463,8 +463,8 @@ loadfile:
     // und Werte übertragen
     LEVELSIZE_X		 = FixEndian(DateiHeader.SizeX);
     LEVELSIZE_Y		 = FixEndian(DateiHeader.SizeY);
-    LEVELPIXELSIZE_X = (float)LEVELSIZE_X*TILESIZE_X;
-    LEVELPIXELSIZE_Y = (float)LEVELSIZE_Y*TILESIZE_Y;
+    LEVELPIXELSIZE_X = LEVELSIZE_X*TILESIZE_X;
+    LEVELPIXELSIZE_Y = LEVELSIZE_Y*TILESIZE_Y;
     LoadedTilesets   = DateiHeader.UsedTilesets;
     strcpy_s(Beschreibung, DateiHeader.Beschreibung);
     bScrollBackground = DateiHeader.ScrollBackground;
@@ -481,7 +481,7 @@ loadfile:
     ParallaxLayer[0].LoadImage(DateiHeader.ParallaxAFile, 640, 480, 640, 480, 1, 1);
     ParallaxLayer[1].LoadImage(DateiHeader.ParallaxBFile, 640, 480, 640, 480, 1, 1);
     CloudLayer.LoadImage(DateiHeader.CloudFile, 640, 240, 640, 240, 1, 1);
-    Timelimit = (double) FixEndian(DateiHeader.Timelimit);
+    Timelimit = FixEndian(DateiHeader.Timelimit);
     DateiHeader.NumObjects = FixEndian(DateiHeader.NumObjects);
 
     if (Timelimit <= 0)
@@ -608,7 +608,7 @@ loadfile:
 
     // Objekt Daten laden und gleich Liste mit Objekten erstellen
     if (DateiHeader.NumObjects > 0)
-        for(i=0; i < (int)(DateiHeader.NumObjects); i++)
+        for(i=0; i < static_cast<int>(DateiHeader.NumObjects); i++)
         {
             fread(&LoadObject, sizeof(LoadObject), 1, Datei);				// Objekt laden
 
@@ -626,8 +626,8 @@ loadfile:
                 else														// aus Leveldatei
                     Player[LoadObject.Value2].Blickrichtung = LINKS;		// lesen
 
-                Player[LoadObject.Value2].xpos = (float)(LoadObject.XPos);
-                Player[LoadObject.Value2].ypos = (float)(LoadObject.YPos);
+                Player[LoadObject.Value2].xpos = static_cast<float>(LoadObject.XPos);
+                Player[LoadObject.Value2].ypos = static_cast<float>(LoadObject.YPos);
                 Player[LoadObject.Value2].xposold = Player[LoadObject.Value2].xpos;
                 Player[LoadObject.Value2].yposold = Player[LoadObject.Value2].ypos;
                 Player[LoadObject.Value2].JumpxSave = Player[LoadObject.Value2].xpos;
@@ -944,8 +944,8 @@ void TileEngineClass::CalcRenderRange(void)
 
     // Ausschnittgröße berechnen
     //
-    xo = (long)(XOffset * 0.05f);
-    yo = (long)(YOffset * 0.05f);
+    xo = static_cast<long>(XOffset * 0.05f);
+    yo = static_cast<long>(YOffset * 0.05f);
 
     /* CHECKME: Without the following checks the game
        in places like start of level 2 for a short
@@ -977,12 +977,12 @@ void TileEngineClass::CalcRenderRange(void)
         --RenderPosYTo;
 
     // Sonstige Ausgangswerte berechnen
-    xLevel = (int)xo;
-    yLevel = (int)yo;
+    xLevel = static_cast<int>(xo);
+    yLevel = static_cast<int>(yo);
 
     // Offsets der Tiles berechnen (0-19)
-    xTileOffs = (int)(XOffset) % TILESIZE_X;
-    yTileOffs = (int)(YOffset) % TILESIZE_Y;
+    xTileOffs = static_cast<int>(XOffset) % TILESIZE_X;
+    yTileOffs = static_cast<int>(YOffset) % TILESIZE_Y;
 
     // DKS - Update the new water sin table indexes before rendering any tiles:
     WaterSinTable.UpdateTableIndexes(xLevel, yLevel);
@@ -1009,13 +1009,13 @@ void TileEngineClass::DrawBackground(void)
 
 //----- Hintergrund-Bild
 
-    xoff = (int)(XOffset / 5) % 640;
+    xoff = static_cast<int>(XOffset / 5) % 640;
 
     if (bScrollBackground == true)				// Hintergrundbild mitscrollen
     {
         // Linke Hälfte
         Background.SetRect(0, 0, xoff, 480);
-        Background.RenderSprite(640-(float)(xoff), 0, 0xFFFFFFFF);
+        Background.RenderSprite(640-static_cast<float>(xoff), 0, 0xFFFFFFFF);
 
         // Rechte Hälfte
         Background.SetRect(xoff, 0, 640, 480);
@@ -1029,14 +1029,14 @@ void TileEngineClass::DrawBackground(void)
 
 //----- Layer ganz hinten (ausser im Flugsack Level)
 
-    xoff = (int)(XOffset / 3) % 640;
-    yoff = (float)((LEVELSIZE_Y-SCREENSIZE_Y)*TILESIZE_Y);	// Grösse des Levels in Pixeln (-1 Screen)
-    yoff = (float)(220-150/yoff*YOffset);			// y-Offset des Layers berechnen
+    xoff = static_cast<int>(XOffset / 3) % 640;
+    yoff = static_cast<float>((LEVELSIZE_Y-SCREENSIZE_Y)*TILESIZE_Y);	// Grösse des Levels in Pixeln (-1 Screen)
+    yoff = static_cast<float>(220-150/yoff*YOffset);			// y-Offset des Layers berechnen
     yoff -= 40;
 
     // Linke Hälfte
     ParallaxLayer[0].SetRect(0, 0, xoff, 480);
-    ParallaxLayer[0].RenderSprite(640-(float)(xoff), yoff, 0xFFFFFFFF);
+    ParallaxLayer[0].RenderSprite(640-static_cast<float>(xoff), yoff, 0xFFFFFFFF);
 
     // Rechte Hälfte
     ParallaxLayer[0].SetRect(xoff, 0, 640, 480);
@@ -1045,13 +1045,13 @@ void TileEngineClass::DrawBackground(void)
 
 //----- vorletzter Layer
 
-    yoff = (float)((LEVELSIZE_Y-SCREENSIZE_Y)*TILESIZE_Y);	// Grösse des Levels in Pixeln (-1 Screen)
-    yoff = (float)(200-200/yoff*YOffset);			// y-Offset des Layers berechnen
-    xoff = (int)(XOffset / 2) % 640;
+    yoff = static_cast<float>((LEVELSIZE_Y-SCREENSIZE_Y)*TILESIZE_Y);	// Grösse des Levels in Pixeln (-1 Screen)
+    yoff = static_cast<float>(200-200/yoff*YOffset);			// y-Offset des Layers berechnen
+    xoff = static_cast<int>(XOffset / 2) % 640;
 
     // Linke Hälfte
     ParallaxLayer[1].SetRect(0, 0, xoff, 480);
-    ParallaxLayer[1].RenderSprite(640-(float)(xoff), yoff, 0xFFFFFFFF);
+    ParallaxLayer[1].RenderSprite(640-static_cast<float>(xoff), yoff, 0xFFFFFFFF);
 
     // Rechte Hälfte
     ParallaxLayer[1].SetRect(xoff, 0, 640, 480);
@@ -1061,11 +1061,11 @@ void TileEngineClass::DrawBackground(void)
 
     if (IsElevatorLevel)
     {
-        yoff = float ((int)(YOffset / 1.5f) % 480);
+        yoff = float (static_cast<int>(YOffset / 1.5f) % 480);
 
         // Obere Hälfte
         ParallaxLayer[2].SetRect(0, 0, 640, int (yoff));
-        ParallaxLayer[2].RenderSprite(float (390 - XOffset), 480-(float)(yoff), 0xFFFFFFFF);
+        ParallaxLayer[2].RenderSprite(float (390 - XOffset), 480-static_cast<float>(yoff), 0xFFFFFFFF);
 
         // Untere Hälfte
         ParallaxLayer[2].SetRect(0, int (yoff), 640, 480);
@@ -1087,7 +1087,7 @@ void TileEngineClass::DrawBackground(void)
 
     // Linke Hälfte
     CloudLayer.SetRect(0, int(yoff), int(xoff), 240);
-    CloudLayer.RenderSprite(640-(float)(xoff), 0, 0xFFFFFFFF);
+    CloudLayer.RenderSprite(640-static_cast<float>(xoff), 0, 0xFFFFFFFF);
 
     // Rechte Hälfte
     CloudLayer.SetRect(int(xoff), int(yoff), 640, 240);
@@ -1142,8 +1142,8 @@ void TileEngineClass::DrawBackLevel(void)
     ActualTexture = -1;
 
     // x und ypos am screen errechnen
-    xScreen = (float)(-xTileOffs) + RenderPosX * TILESIZE_X;
-    yScreen = (float)(-yTileOffs) + RenderPosY * TILESIZE_Y;
+    xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
+    yScreen = static_cast<float>(-yTileOffs) + RenderPosY * TILESIZE_Y;
 
     DirectGraphics.SetColorKeyMode();
 
@@ -1156,7 +1156,7 @@ void TileEngineClass::DrawBackLevel(void)
 
     for(int j = RenderPosY; j<RenderPosYTo; j++)
     {
-        xScreen = (float)(-xTileOffs) + RenderPosX * TILESIZE_X;
+        xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
 
         for(int i = RenderPosX; i<RenderPosXTo; i++)
         {
@@ -1319,8 +1319,8 @@ void TileEngineClass::DrawFrontLevel(void)
     ActualTexture = -1;
 
     // x und ypos am screen errechnen
-    xScreen = (float)(-xTileOffs) + RenderPosX * TILESIZE_X;
-    yScreen = (float)(-yTileOffs) + RenderPosY * TILESIZE_Y;
+    xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
+    yScreen = static_cast<float>(-yTileOffs) + RenderPosY * TILESIZE_Y;
 
     DirectGraphics.SetColorKeyMode();
 
@@ -1333,7 +1333,7 @@ void TileEngineClass::DrawFrontLevel(void)
 
     for(int j=RenderPosY; j<RenderPosYTo; j++)
     {
-        xScreen = (float)(-xTileOffs) + RenderPosX * TILESIZE_X;
+        xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
 
         for(int i=RenderPosX; i<RenderPosXTo; i++)
         {
@@ -1523,8 +1523,8 @@ void TileEngineClass::DrawBackLevelOverlay (void)
     ActualTexture = -1;
 
     // x und ypos am screen errechnen
-    xScreen = (float)(-xTileOffs) + RenderPosX * TILESIZE_X;
-    yScreen = (float)(-yTileOffs) + RenderPosY * TILESIZE_Y;
+    xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
+    yScreen = static_cast<float>(-yTileOffs) + RenderPosY * TILESIZE_Y;
 
     DirectGraphics.SetColorKeyMode();
 
@@ -1536,7 +1536,7 @@ void TileEngineClass::DrawBackLevelOverlay (void)
 
     for(int j = RenderPosY; j<RenderPosYTo; j++)
     {
-        xScreen = (float)(-xTileOffs) + RenderPosX * TILESIZE_X;
+        xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
 
         for(int i = RenderPosX; i<RenderPosXTo; i++)
         {
@@ -1656,8 +1656,8 @@ void TileEngineClass::DrawOverlayLevel(void)
     ActualTexture = -1;
 
     // x und ypos am screen errechnen
-    xScreen = (float)(-xTileOffs) + RenderPosX * TILESIZE_X;
-    yScreen = (float)(-yTileOffs) + RenderPosY * TILESIZE_Y;
+    xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
+    yScreen = static_cast<float>(-yTileOffs) + RenderPosY * TILESIZE_Y;
 
     DirectGraphics.SetColorKeyMode();
 
@@ -1669,7 +1669,7 @@ void TileEngineClass::DrawOverlayLevel(void)
 
     for(int j = RenderPosY; j<RenderPosYTo; j++)
     {
-        xScreen = (float)(-xTileOffs) + RenderPosX * TILESIZE_X;
+        xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
 
         for(int i = RenderPosX; i<RenderPosXTo; i++)
         {
@@ -1715,7 +1715,7 @@ void TileEngineClass::DrawOverlayLevel(void)
                 					int yoff = (j+yLevel) % 3 * 20 + 120 - int (WasserfallOffset);
 
                 					Wasserfall[0].SetRect (xoff, yoff, xoff+20, yoff+20);
-                					Wasserfall[0].RenderSprite((float)(i*20-xTileOffs), (float)(j*20-yTileOffs), Col1);
+                					Wasserfall[0].RenderSprite(static_cast<float>(i*20-xTileOffs), static_cast<float>(j*20-yTileOffs), Col1);
 
                 					// Schicht 2
                 					//
@@ -1723,13 +1723,13 @@ void TileEngineClass::DrawOverlayLevel(void)
                 					yoff = (j+yLevel)   % 3 * 20 + 120 - int (WasserfallOffset / 2.0f);
 
                 					Wasserfall[0].SetRect (xoff, yoff, xoff+20, yoff+20);
-                					Wasserfall[0].RenderSprite((float)(i*20-xTileOffs), (float)(j*20-yTileOffs), Col2);
+                					Wasserfall[0].RenderSprite(static_cast<float>(i*20-xTileOffs), static_cast<float>(j*20-yTileOffs), Col2);
 
                 					// Glanzschicht (Schicht 3) drüber
                 					//
                 					DirectGraphics.SetAdditiveMode();
                 					Wasserfall[1].SetRect ((i*20-xTileOffs)%640, (j*20-yTileOffs)%480, (i*20-xTileOffs)%640+20, (j*20-yTileOffs)%480+20);
-                					Wasserfall[1].RenderSprite((float)(i*20-xTileOffs), (float)(j*20-yTileOffs), D3DCOLOR_RGBA (180, 240, 255, 60));
+                					Wasserfall[1].RenderSprite(static_cast<float>(i*20-xTileOffs), static_cast<float>(j*20-yTileOffs), D3DCOLOR_RGBA (180, 240, 255, 60));
                 					DirectGraphics.SetColorKeyMode();
                 				}
 
@@ -1868,15 +1868,15 @@ void TileEngineClass::DrawWater(void)
     int				xo, yo;
 
     // x und ypos am screen errechnen
-    xScreen = (float)(-xTileOffs) + RenderPosX * TILESIZE_X;
-    yScreen = (float)(-yTileOffs) + RenderPosY * TILESIZE_Y;
+    xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
+    yScreen = static_cast<float>(-yTileOffs) + RenderPosY * TILESIZE_Y;
 
     // Noch keine Tiles zum rendern
     NumToRender = 0;
 
     //DKS - WaterList lookup table has been replaced with WaterSinTableClass,
     //      see comments for it in Tileengine.h
-    //int off = (int)((WaterPos) + xLevel % 32 + (yLevel * 10) % 40) % 1024;
+    //int off = static_cast<int>((WaterPos) + xLevel % 32 + (yLevel * 10) % 40) % 1024;
 
     DirectGraphics.SetFilterMode (true);
     DirectGraphics.SetColorKeyMode();
@@ -1890,7 +1890,7 @@ void TileEngineClass::DrawWater(void)
 
         for(int j = RenderPosY; j<RenderPosYTo; j++)
         {
-            xScreen = (float)(-xTileOffs) + RenderPosX * TILESIZE_X;
+            xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
 
             for(int i = RenderPosX; i<RenderPosXTo; i++)
             {
@@ -1967,15 +1967,15 @@ void TileEngineClass::DrawWater(void)
         for (int schicht = 0; schicht < 2; schicht++)
         {
             // Offsets der Tiles berechnen (0-19)
-            xTileOffs = (int)(XOffset) % TILESIZE_X;
-            yTileOffs = (int)(YOffset) % TILESIZE_Y;
+            xTileOffs = static_cast<int>(XOffset) % TILESIZE_X;
+            yTileOffs = static_cast<int>(YOffset) % TILESIZE_Y;
 
             // ypos am screen errechnen
-            yScreen = (float)(-yTileOffs) + RenderPosY * TILESIZE_Y;
+            yScreen = static_cast<float>(-yTileOffs) + RenderPosY * TILESIZE_Y;
 
             for(int j = RenderPosY; j<RenderPosYTo; j++)
             {
-                xScreen = (float)(-xTileOffs) + RenderPosX * TILESIZE_X;
+                xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
 
                 for(int i = RenderPosX; i<RenderPosXTo; i++)
                 {
@@ -2130,12 +2130,12 @@ void TileEngineClass::DrawWater(void)
     }
 
     // Wasserfall rendern
-    xScreen = (float)(-xTileOffs) + RenderPosX * TILESIZE_X;
-    yScreen = (float)(-yTileOffs) + RenderPosY * TILESIZE_Y;
+    xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
+    yScreen = static_cast<float>(-yTileOffs) + RenderPosY * TILESIZE_Y;
     {
         for(int j = RenderPosY; j<RenderPosYTo; j++)
         {
-            xScreen = (float)(-xTileOffs) + RenderPosX * TILESIZE_X;
+            xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
 
             for(int i = RenderPosX; i<RenderPosXTo; i++)
             {
@@ -2152,7 +2152,7 @@ void TileEngineClass::DrawWater(void)
                     int yoff = (j+yLevel) % 3 * TILESIZE_Y + 120 - int (WasserfallOffset);
 
                     Wasserfall[0].SetRect (xoff, yoff, xoff+TILESIZE_X, yoff+TILESIZE_Y);
-                    Wasserfall[0].RenderSprite((float)(i*TILESIZE_X-xTileOffs), (float)(j*TILESIZE_Y-yTileOffs), Col1);
+                    Wasserfall[0].RenderSprite(static_cast<float>(i*TILESIZE_X-xTileOffs), static_cast<float>(j*TILESIZE_Y-yTileOffs), Col1);
 
                     // Schicht 2
                     //
@@ -2160,7 +2160,7 @@ void TileEngineClass::DrawWater(void)
                     yoff = (j+yLevel)   % 3 * TILESIZE_Y + 120 - int (WasserfallOffset / 2.0f);
 
                     Wasserfall[0].SetRect (xoff, yoff, xoff+TILESIZE_X, yoff+TILESIZE_Y);
-                    Wasserfall[0].RenderSprite((float)(i*TILESIZE_X-xTileOffs), (float)(j*TILESIZE_Y-yTileOffs), Col2);
+                    Wasserfall[0].RenderSprite(static_cast<float>(i*TILESIZE_X-xTileOffs), static_cast<float>(j*TILESIZE_Y-yTileOffs), Col2);
 
                     // Glanzschicht (Schicht 3) drüber
                     //
@@ -2169,8 +2169,8 @@ void TileEngineClass::DrawWater(void)
                                            (i*TILESIZE_X-xTileOffs)%640+TILESIZE_X,
                                            (j*TILESIZE_Y-yTileOffs)%480+TILESIZE_Y);
 
-                    Wasserfall[1].RenderSprite((float)(i*TILESIZE_X-xTileOffs),
-                                               (float)(j*TILESIZE_Y-yTileOffs),
+                    Wasserfall[1].RenderSprite(static_cast<float>(i*TILESIZE_X-xTileOffs),
+                                               static_cast<float>(j*TILESIZE_Y-yTileOffs),
                                                D3DCOLOR_RGBA (180, 240, 255, 60));
                 }
 
@@ -2208,8 +2208,8 @@ void TileEngineClass::CheckBounds(void)
 
 void TileEngineClass::WertAngleichen(float &nachx, float &nachy, float vonx, float vony)
 {
-//	nachx = (float)(int)vonx;
-//	nachy = (float)(int)vony;
+//	nachx = static_cast<float>(static_cast<int>(vonx));
+//	nachy = static_cast<float>(static_cast<int>(vony));
 
 //	return;
 
@@ -2365,8 +2365,8 @@ void TileEngineClass::UpdateLevel(void)
             }
             else
             {
-                float xdist = (float)(Player[1].xpos - Player[0].xpos);
-                float ydist = (float)(Player[1].ypos - Player[0].ypos);
+                float xdist = static_cast<float>(Player[1].xpos - Player[0].xpos);
+                float ydist = static_cast<float>(Player[1].ypos - Player[0].ypos);
 
                 ScrolltoX = (Player[0].xpos + 35) + xdist / 2.0f - 320.0f;
                 ScrolltoY = (Player[0].ypos + 40) + ydist / 2.0f - 240.0f;
@@ -2425,10 +2425,10 @@ void TileEngineClass::UpdateLevel(void)
             {
                 float xdist, ydist;
 
-                xdist = (float)(Player[1].xpos - Player[0].xpos);
+                xdist = static_cast<float>(Player[1].xpos - Player[0].xpos);
                 newx = (Player[0].xpos + 35) + xdist / 2.0f;
 
-                ydist = (float)(Player[1].ypos - Player[0].ypos);
+                ydist = static_cast<float>(Player[1].ypos - Player[0].ypos);
                 newy = (Player[0].ypos) + ydist / 2.0f;
             }
         }
@@ -2614,7 +2614,7 @@ int	TileEngineClass::BlockRechts(float &x, float &y, float  &xo, float &yo, RECT
             {
                 if (resolve)
                 {
-                    x = (float)(xlevel*TILESIZE_X)-rect.right-1;
+                    x = static_cast<float>(xlevel*TILESIZE_X)-rect.right-1;
                     xo = x;
                 }
 
@@ -2734,7 +2734,7 @@ int	TileEngineClass::BlockLinks(float &x, float &y, float &xo, float &yo, RECT r
             {
                 if (resolve)
                 {
-                    x = (float)(xlevel*TILESIZE_X) + TILESIZE_X - rect.left;
+                    x = static_cast<float>(xlevel*TILESIZE_X) + TILESIZE_X - rect.left;
                     xo = x;
                 }
                 return Art;
@@ -2830,7 +2830,7 @@ int	TileEngineClass::BlockOben(float &x, float &y, float &xo, float &yo, RECT re
             {
                 if (resolve)
                 {
-                    y  = (float)(ylevel*TILESIZE_Y + 21 - rect.top);
+                    y  = static_cast<float>(ylevel*TILESIZE_Y + 21 - rect.top);
                     yo = y;
                 }
 
@@ -2983,7 +2983,7 @@ int	TileEngineClass::BlockUnten(float &x, float &y, float &xo, float &yo, RECT r
                 if (resolve == true)
                 {
                     // resolven
-                    y = (float)(ylevel*TILESIZE_Y-rect.bottom);
+                    y = static_cast<float>(ylevel*TILESIZE_Y-rect.bottom);
                     yo = y;
                 }
 
@@ -3052,14 +3052,14 @@ uint32_t TileEngineClass::BlockRechts(float &x, float y, float &xo, float yo, RE
     if ( xo > x )
         return 0;
 
-    int xlev = (int)((x+rect.right+1) * (1.0f/TILESIZE_X));
+    int xlev = static_cast<int>((x+rect.right+1) * (1.0f/TILESIZE_X));
     if (xlev < 0 || xlev >= LEVELSIZE_X)
         return 0;
 
     uint32_t block = 0;
 
     for(int j=rect.top; j<rect.bottom; j+=TILESIZE_Y) {
-        int ylev = (int)((y+j) * (1.0f/TILESIZE_Y));
+        int ylev = static_cast<int>((y+j) * (1.0f/TILESIZE_Y));
 
         if (ylev < 0)
             continue;
@@ -3071,7 +3071,7 @@ uint32_t TileEngineClass::BlockRechts(float &x, float y, float &xo, float yo, RE
 
         if (block & BLOCKWERT_WAND) {
             if (resolve) {
-                x = (float)((xlev*TILESIZE_X)-rect.right-1);
+                x = static_cast<float>((xlev*TILESIZE_X)-rect.right-1);
                 xo = x;
             }
 
@@ -3092,12 +3092,12 @@ bool TileEngineClass::BlockDestroyRechts(float x, float y, float xo, float yo, R
     if (xo > x)
         return false;
 
-    int xlev = (int)((x+rect.right+1) * (1.0f/TILESIZE_X));
+    int xlev = static_cast<int>((x+rect.right+1) * (1.0f/TILESIZE_X));
     if (xlev < 0 || xlev >= LEVELSIZE_X)
         return false;
 
     for(int j=rect.top; j<rect.bottom; j+= TILESIZE_Y) {
-        int ylev = (int)((y+j) * (1.0f/TILESIZE_Y));
+        int ylev = static_cast<int>((y+j) * (1.0f/TILESIZE_Y));
 
         if (ylev < 0)
             continue;
@@ -3123,14 +3123,14 @@ uint32_t TileEngineClass::BlockLinks(float &x, float y, float &xo, float yo, REC
     if (xo < x)
         return 0;
 
-    int xlev = (int)((x+rect.left-1) * (1.0f/TILESIZE_X));
+    int xlev = static_cast<int>((x+rect.left-1) * (1.0f/TILESIZE_X));
     if (xlev < 0 || xlev >= LEVELSIZE_X)
         return 0;
 
     uint32_t block = 0;
 
     for(int j=rect.top; j<rect.bottom; j+=TILESIZE_Y) {
-        int ylev = (int)((y+j) * (1.0f/TILESIZE_Y));
+        int ylev = static_cast<int>((y+j) * (1.0f/TILESIZE_Y));
 
         if (ylev < 0)
             continue;
@@ -3142,7 +3142,7 @@ uint32_t TileEngineClass::BlockLinks(float &x, float y, float &xo, float yo, REC
 
         if (block & BLOCKWERT_WAND) {
             if (resolve) {
-                x = (float)((xlev*TILESIZE_X) + TILESIZE_X - rect.left);
+                x = static_cast<float>((xlev*TILESIZE_X) + TILESIZE_X - rect.left);
                 xo = x;
             }
             return block;
@@ -3162,12 +3162,12 @@ bool TileEngineClass::BlockDestroyLinks(float x, float y, float xo, float yo, RE
     if (xo < x)
         return false;
 
-    int xlev = (int)((x+rect.left-1) * (1.0f/TILESIZE_X));
+    int xlev = static_cast<int>((x+rect.left-1) * (1.0f/TILESIZE_X));
     if (xlev < 0 || xlev >= LEVELSIZE_X)
         return false;
 
     for(int j=rect.top; j<rect.bottom; j+=TILESIZE_Y) {
-        int ylev = (int)((y+j) * (1.0f/TILESIZE_Y));
+        int ylev = static_cast<int>((y+j) * (1.0f/TILESIZE_Y));
 
         if (ylev < 0)
             continue;
@@ -3193,14 +3193,14 @@ uint32_t TileEngineClass::BlockOben(float x, float &y, float xo, float &yo, RECT
     if (yo < y)
         return 0;
 
-    int ylev = (int)((y+rect.top-1) * (1.0f/TILESIZE_Y));
+    int ylev = static_cast<int>((y+rect.top-1) * (1.0f/TILESIZE_Y));
     if (ylev < 0 || ylev >= LEVELSIZE_Y)
         return 0;
 
     uint32_t block = 0;
 
     for(int i=rect.left; i<rect.right; i+=TILESIZE_X) {
-        int xlev = (int)((x+i) * (1.0f/TILESIZE_X));
+        int xlev = static_cast<int>((x+i) * (1.0f/TILESIZE_X));
         if (xlev < 0)
             continue;
         else if (xlev >= LEVELSIZE_X)
@@ -3211,7 +3211,7 @@ uint32_t TileEngineClass::BlockOben(float x, float &y, float xo, float &yo, RECT
 
         if (block & BLOCKWERT_WAND) {
             if (resolve) {
-                y  = (float)((ylev*TILESIZE_Y) + TILESIZE_Y - rect.top);
+                y  = static_cast<float>((ylev*TILESIZE_Y) + TILESIZE_Y - rect.top);
                 yo = y;
             }
 
@@ -3232,12 +3232,12 @@ bool TileEngineClass::BlockDestroyOben(float x, float y, float xo, float yo, REC
     if (yo < y)
         return false;
 
-    int ylev = (int)((y+rect.top-1) * (1.0f/TILESIZE_Y));
+    int ylev = static_cast<int>((y+rect.top-1) * (1.0f/TILESIZE_Y));
     if (ylev < 0 || ylev >= LEVELSIZE_Y)
         return false;
 
     for(int i=rect.left; i<rect.right; i+=TILESIZE_X) {
-        int xlev = (int)((x+i) * (1.0f/TILESIZE_X));
+        int xlev = static_cast<int>((x+i) * (1.0f/TILESIZE_X));
 
         if (xlev < 0)
             continue;
@@ -3264,7 +3264,7 @@ uint32_t TileEngineClass::BlockUntenNormal(float x, float y, float xo, float yo,
     if (yo > y)
         return false;
 
-    int ylev = (int)((y+rect.bottom+1) * (1.0f/TILESIZE_Y));
+    int ylev = static_cast<int>((y+rect.bottom+1) * (1.0f/TILESIZE_Y));
     if (ylev < 0 || ylev >= LEVELSIZE_Y)
         return 0;
 
@@ -3272,7 +3272,7 @@ uint32_t TileEngineClass::BlockUntenNormal(float x, float y, float xo, float yo,
 
     // BIG TODO: see if you can make this increment by TILESIZE_X
     for(int i=rect.left; i<rect.right; i++) {
-        int xlev = (int)((x+i) * (1.0f/TILESIZE_X));
+        int xlev = static_cast<int>((x+i) * (1.0f/TILESIZE_X));
 
         if (xlev < 0)
             continue;
@@ -3300,7 +3300,7 @@ uint32_t TileEngineClass::BlockUnten(float x, float &y, float xo, float &yo, REC
     if (yo > y)
         return 0;
 
-    int ylev = (int)((y+rect.bottom+1) * (1.0f/TILESIZE_Y));
+    int ylev = static_cast<int>((y+rect.bottom+1) * (1.0f/TILESIZE_Y));
     if (ylev < 0 || ylev >= LEVELSIZE_Y)
         return 0;
 
@@ -3308,7 +3308,7 @@ uint32_t TileEngineClass::BlockUnten(float x, float &y, float xo, float &yo, REC
 
     // BIG TODO: see if you can make this increment by TILESIZE_X
     for(int i=rect.left; i<rect.right; i++) {
-        int xlev = (int)((x+i) * (1.0f/TILESIZE_X));
+        int xlev = static_cast<int>((x+i) * (1.0f/TILESIZE_X));
 
         if (xlev < 0)
             continue;
@@ -3322,7 +3322,7 @@ uint32_t TileEngineClass::BlockUnten(float x, float &y, float xo, float &yo, REC
 
         if (block & BLOCKWERT_WAND || block & BLOCKWERT_PLATTFORM) {
             if (resolve) {
-                y = (float)(ylev*TILESIZE_Y-rect.bottom);
+                y = static_cast<float>(ylev*TILESIZE_Y-rect.bottom);
                 yo = y;
             }
 
@@ -3343,12 +3343,12 @@ bool TileEngineClass::BlockDestroyUnten(float x, float y, float xo, float yo, RE
     if (yo > y)
         return 0;
 
-    int ylev = (int)((y+rect.bottom+1) * (1.0f/TILESIZE_Y));
+    int ylev = static_cast<int>((y+rect.bottom+1) * (1.0f/TILESIZE_Y));
     if (ylev < 0 || ylev >= LEVELSIZE_Y)
         return false;
 
     for(int i=rect.left; i<rect.right; i+=TILESIZE_X) {
-        int xlev = (int)((x+i) * (1.0f/TILESIZE_X));
+        int xlev = static_cast<int>((x+i) * (1.0f/TILESIZE_X));
 
         if (xlev < 0)
             continue;
@@ -3940,18 +3940,18 @@ void TileEngineClass::DrawShadow (void)
 
     if (NUMPLAYERS == 1)
     {
-        x = (float)(int)(Player[0].xpos + 35 - 512 - XOffset);
-        y = (float)(int)(Player[0].ypos + 40 - 512 - YOffset);
+        x = static_cast<float>(static_cast<int>(Player[0].xpos + 35 - 512 - XOffset));
+        y = static_cast<float>(static_cast<int>(Player[0].ypos + 40 - 512 - YOffset));
     }
     else
     {
-        x = (float)(int)(XOffset + 320.0f);
-        y = (float)(int)(YOffset + 240.0f);
+        x = static_cast<float>(static_cast<int>(XOffset + 320.0f));
+        y = static_cast<float>(static_cast<int>(YOffset + 240.0f));
     }
 
     D3DCOLOR col;
 
-    col = D3DCOLOR_RGBA(255, 255, 255, (int)ShadowAlpha);
+    col = D3DCOLOR_RGBA(255, 255, 255, static_cast<int>(ShadowAlpha));
 
     Shadow.RenderSprite (x, y, col);
     Shadow.RenderSprite (x + 512, y, 0, col, true);
@@ -3959,7 +3959,7 @@ void TileEngineClass::DrawShadow (void)
     Shadow.RenderMirroredSprite (x, y + 512, col, false, true);
     Shadow.RenderMirroredSprite (x + 512, y + 512, col, true, true);
 
-    col = D3DCOLOR_RGBA(0, 0, 0, (int)ShadowAlpha);
+    col = D3DCOLOR_RGBA(0, 0, 0, static_cast<int>(ShadowAlpha));
 
     // Seitenränder
     RenderRect(x - 200,  y - 200,  1420, 200,  col);
@@ -3977,8 +3977,8 @@ void TileEngineClass::ExplodeWall (int x, int y)
     // ausserhalb des Levels nicht testen ;)
     if (x<1 ||
             y<1 ||
-            x>(int)LEVELSIZE_X-1 ||
-            y>(int)LEVELSIZE_Y-1)
+            x>static_cast<int>(LEVELSIZE_X-1) ||
+            y>static_cast<int>(LEVELSIZE_Y-1))
         return;
 
     // keine zerstörbare Wand?
@@ -3990,12 +3990,12 @@ void TileEngineClass::ExplodeWall (int x, int y)
     TileAt(x, y).FrontArt = 0;
 
     for (int i = 0; i < 2; i++)
-        PartikelSystem.PushPartikel((float)(x * TILESIZE_X + rand()%10), (float)(y * TILESIZE_Y + rand()%10), ROCKSPLITTERSMALL);
+        PartikelSystem.PushPartikel(static_cast<float>(x * TILESIZE_X + rand()%10), static_cast<float>(y * TILESIZE_Y + rand()%10), ROCKSPLITTERSMALL);
 
     for (int k=0; k<4; k++)
         PartikelSystem.PushPartikel(float(x*TILESIZE_X+8), float(y*TILESIZE_Y+8), FUNKE);
 
-    PartikelSystem.PushPartikel((float) x*TILESIZE_X - TILESIZE_X, (float) y*TILESIZE_Y - TILESIZE_Y, SMOKEBIG);
+    PartikelSystem.PushPartikel(static_cast<float>(x*TILESIZE_X - TILESIZE_X), static_cast<float>(y*TILESIZE_Y - TILESIZE_Y), SMOKEBIG);
 
     SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION1);
 }
@@ -4051,8 +4051,8 @@ void TileEngineClass::ClearLightMaps(void)
 {
     unsigned int xoff, yoff;
 
-    xoff = (int)(XOffset * 0.05f);
-    yoff = (int)(YOffset * 0.05f);
+    xoff = static_cast<int>(XOffset * 0.05f);
+    yoff = static_cast<int>(YOffset * 0.05f);
 
     for (unsigned int x = xoff; x < xoff + SCREENSIZE_X + 1; x++)
         for (unsigned int y = yoff; y < yoff + SCREENSIZE_Y + 1; y++)
@@ -4086,8 +4086,8 @@ void TileEngineClass::DrawLightmap (int Map, float x, float y, int alpha)
 
     int xpos, ypos;
 
-    xpos = (int)(x * 0.05f - lightmaps[Map].xsize / 2);
-    ypos = (int)(y * 0.05f - lightmaps[Map].ysize / 2);
+    xpos = static_cast<int>(x * 0.05f - lightmaps[Map].xsize / 2);
+    ypos = static_cast<int>(y * 0.05f - lightmaps[Map].ysize / 2);
 
     int xo, yo;
     int sx;

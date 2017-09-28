@@ -120,8 +120,8 @@ void GegnerClass::Render(void)
             //DKS - Adapted to new TexturesystemClass
             //if (pGegnerGrafix[GegnerArt]->itsTexture != 0)
             if (pGegnerGrafix[GegnerArt]->itsTexIdx != -1)
-                pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                                       (float)(yPos-TileEngine.YOffset),
+                pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                                       static_cast<float>(yPos-TileEngine.YOffset),
                                                        Anim, Color, mirrored);
         }
         // DAS ist die Extrawurst =)
@@ -155,8 +155,8 @@ void GegnerClass::Render(void)
                         //      sprite atop itself additively twice here, after experimenting.
                         //      I've left it as it was originally for now, however:
                         for (int i = 0; i < 2; i++)
-                            pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                                                   (float)(yPos-TileEngine.YOffset),
+                            pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                                                   static_cast<float>(yPos-TileEngine.YOffset),
                                                                    Anim, Color, mirrored);
                 }
 
@@ -2708,7 +2708,7 @@ void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage)
                 pTemp->yPos + GegnerRect[pTemp->GegnerArt].bottom > TileEngine.YOffset		  &&
                 pTemp->yPos + GegnerRect[pTemp->GegnerArt].top    < TileEngine.YOffset + 480)
         {
-            int amount = (int)(MaxDamage - dx);
+            int amount = static_cast<int>(MaxDamage - dx);
 
             if (amount < 0)
                 amount = 0;

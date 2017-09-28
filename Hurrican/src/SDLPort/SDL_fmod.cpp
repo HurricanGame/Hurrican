@@ -353,7 +353,7 @@ Mix_Chunk* SOUND_Sample_Load( int index, const char *filename, unsigned int inpu
     if ((inputmode & FSOUND_LOADMEMORY) == FSOUND_LOADMEMORY)
     {
 #if 1
-        SDL_RWops* sdl_rw = SDL_RWFromConstMem( (const void*)filename, length );
+        SDL_RWops* sdl_rw = SDL_RWFromConstMem( reinterpret_cast<const void *>(filename), length );
 		chunk = Mix_LoadWAV_RW(sdl_rw, 1);
 #else
         chunk = Mix_QuickLoad_WAV( (Uint8*)filename );
@@ -390,9 +390,9 @@ int SOUND_GetVolume( int channel )
 {
     if (channel < 0) return 0;
 
-    float vol = (float)Mix_Volume( channel, -1 ) / 128.0f;
+    float vol = static_cast<float>(Mix_Volume( channel, -1 )) / 128.0f;
     //DKS - SDL volumes are 0-128, while fmod's are 0-255:
-    return (int)(vol * 255.0f);
+    return static_cast<int>(vol * 255.0f);
 }
 
 signed char SOUND_SetVolume( int channel, int volume )

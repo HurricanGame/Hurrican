@@ -62,8 +62,8 @@ void GegnerSkull::DoKI(void)
 
     // Animphase abhängig von Position zum Spieler setzen
     //
-    float dx = (float)(pAim->xpos + 35) - (xPos + 16);
-    AnimPhase = (int)(dx / 30);
+    float dx = static_cast<float>(pAim->xpos + 35) - (xPos + 16);
+    AnimPhase = static_cast<int>(dx / 30);
     if (AnimPhase < -5) AnimPhase =  -5;
     if (AnimPhase > 9)	AnimPhase = 9;
     AnimPhase += 5;
@@ -111,7 +111,7 @@ void GegnerSkull::DoKI(void)
             AnimCount = 0.8f;
 
             SoundManager.StopWave(SOUND_EXPLOSION2);
-            SoundManager.PlayWave(75, 128, 8000 + (int)(endwert * 800), SOUND_EXPLOSION2);
+            SoundManager.PlayWave(75, 128, 8000 + static_cast<int>(endwert * 800), SOUND_EXPLOSION2);
 
             PartikelSystem.PushPartikel(xPos + rand()%30 - 30, yPos + rand()%30 - 30, EXPLOSION_MEDIUM2);
 
@@ -172,13 +172,13 @@ void GegnerSkull::DoKI(void)
             Timer.SetMoveSpeed(10.0f);
 
             // Flugsäcke spawnen
-            Gegner.PushGegner((float)(TileEngine.XOffset + 200.0f),
-                                (float)(TileEngine.YOffset - 40.0f),
+            Gegner.PushGegner(static_cast<float>(TileEngine.XOffset + 200.0f),
+                                static_cast<float>(TileEngine.YOffset - 40.0f),
                                 REITFLUGSACK, 1, 0, false);
 
             if (NUMPLAYERS ==2 )
-                Gegner.PushGegner((float)(TileEngine.XOffset + 300.0f),
-                                    (float)(TileEngine.YOffset - 50.0f),
+                Gegner.PushGegner(static_cast<float>(TileEngine.XOffset + 300.0f),
+                                    static_cast<float>(TileEngine.YOffset - 50.0f),
                                     REITFLUGSACK, 1, 0, false);
         }
     }

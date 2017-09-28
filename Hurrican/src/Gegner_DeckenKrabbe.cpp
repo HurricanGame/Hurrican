@@ -37,8 +37,8 @@ void GegnerDeckenKrabbe::DoDraw(void)
     else
         mirror = true;
 
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated((float)(xPos-TileEngine.XOffset),
-            (float)(yPos-TileEngine.YOffset), zRot, AnimPhase, 0xFFFFFFFF, mirror);
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos-TileEngine.XOffset),
+            static_cast<float>(yPos-TileEngine.YOffset), zRot, AnimPhase, 0xFFFFFFFF, mirror);
 
     // Testen, ob der Spieler die Krabbe berührt hat
     TestDamagePlayers(8.0f SYNC);
@@ -106,11 +106,11 @@ void GegnerDeckenKrabbe::DoKI(void)
             // Rotationsspeed errechnen, je nachdem, wie weit der Boden entfernt ist
             //
             int a = 0;
-            uint32_t b = TileEngine.TileAt((int)(xPos / TILESIZE_X), (int)(yPos / TILESIZE_Y) + a).Block;
+            uint32_t b = TileEngine.TileAt(static_cast<int>(xPos / TILESIZE_X), static_cast<int>(yPos / TILESIZE_Y) + a).Block;
 
             while (a < 20 && !(b & BLOCKWERT_WAND))
             {
-                b = TileEngine.TileAt((int)(xPos / TILESIZE_X), (int)(yPos / TILESIZE_Y) + a).Block;
+                b = TileEngine.TileAt(static_cast<int>(xPos / TILESIZE_X), static_cast<int>(yPos / TILESIZE_Y) + a).Block;
                 a++;
             }
 

@@ -32,8 +32,8 @@ GegnerBigRocket::GegnerBigRocket(int Wert1, int Wert2, bool Light)
 
 void GegnerBigRocket::DoDraw(void)
 {
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                           (float)(yPos-TileEngine.YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                           static_cast<float>(yPos-TileEngine.YOffset),
                                            AnimPhase, 0xFFFFFFFF, false);
 
     // Noch warten?

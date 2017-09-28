@@ -46,15 +46,15 @@ void GegnerWandKrabbe::DoDraw(void)
     if (Handlung == GEGNER_DREHEN ||
             Handlung == GEGNER_FALLEN ||
             Handlung == GEGNER_EXPLODIEREN)
-        pGegnerGrafix[GegnerArt]->RenderSpriteRotated((float)(xPos-TileEngine.XOffset),
-                (float)(yPos-TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos-TileEngine.XOffset),
+                static_cast<float>(yPos-TileEngine.YOffset),
                 rot, AnimPhase, 0xFFFFFFFF);
     // andernfalls normal an der Wand entlang rendern
     else
     {
         pGegnerGrafix[GegnerArt]->itsRect = pGegnerGrafix[GegnerArt]->itsPreCalcedRects[AnimPhase];
-        pGegnerGrafix[GegnerArt]->RenderMirroredSprite ((float)(xPos-TileEngine.XOffset),
-                (float)(yPos-TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderMirroredSprite (static_cast<float>(xPos-TileEngine.XOffset),
+                static_cast<float>(yPos-TileEngine.YOffset),
                 0xFFFFFFFF, mirrored, ySpeed < 0.0f);
     }
 }

@@ -171,7 +171,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
 
     case SPREADSHOT :	// SpreadShot des Spielers geradeaus
     {
-        Damage		 = 6 - ((int)(pParent->CurrentWeaponLevel[pParent->SelectedWeapon] * 0.75f));
+        Damage		 = 6 - (static_cast<int>(pParent->CurrentWeaponLevel[pParent->SelectedWeapon] * 0.75f));
         DamagePlayer = false;
         Winkel = WinkelUebergabe;
 
@@ -939,8 +939,8 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     case SPIDERSHOT2 :							// Schuss der Spinne
     {
         xSpeed	  = -20.0f;
-        ySpeed	  = -(float)(rand()%12 + 5);
-        yAcc	  =  (float)(rand()%10 + 5) / 5.0f;
+        ySpeed	  = -static_cast<float>(rand()%12 + 5);
+        yAcc	  =  static_cast<float>(rand()%10 + 5) / 5.0f;
 
         if (rand()%2 == 0)
         {
@@ -1043,14 +1043,14 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     case FLAMME :			// Splitter-Flamme aus dem Fass
     {
         ShotArt	  = FLAMME;
-        xSpeed	  = ((float)(rand()%120-60)/3);
-        ySpeed	  = -(float)(rand()% 60+30)/2;
+        xSpeed	  = (static_cast<float>(rand()%120-60)/3);
+        ySpeed	  = -static_cast<float>(rand()% 60+30)/2;
         yAcc	  = 4.0f;
         Damage    =   50;
         //DKS - off-by-one error:
         //AnimEnde  = 8;
         AnimEnde  = 7;
-        AnimSpeed = (float)(rand()%20+20)/100;
+        AnimSpeed = static_cast<float>(rand()%20+20)/100;
         DamagePlayer = false;
     }
     break;
@@ -1065,7 +1065,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         Damage       = 1;
         ySpeed		 = 1.0f;
         DamagePlayer = true;
-        xSpeed		 = ((float)(rand()%20-10)/8);
+        xSpeed		 = (static_cast<float>(rand()%20-10)/8);
         CheckBlock   = false;
         ExplodeOnImpact = false;
         OwnDraw		 = true;
@@ -1082,11 +1082,11 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         Damage       = 1;
         DamagePlayer = true;
         ySpeed		 = -20.0f;
-        xSpeed		= ((float)(rand()%20-10)/8);
+        xSpeed		= (static_cast<float>(rand()%20-10)/8);
         yPos		-= 40;
         xPos		+= 5;
         ExplodeOnImpact = false;
-        Winkel = (float)(rand()%360);
+        Winkel = static_cast<float>(rand()%360);
         OwnDraw = true;
 
     }
@@ -1141,7 +1141,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         ySpeed		 = absy / 10.0f;
         yAcc		 = 3.0f;
 
-        Winkel    = (float)(rand()%360);
+        Winkel    = static_cast<float>(rand()%360);
     }
     break;
 
@@ -1175,7 +1175,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
     {
         Damage       = 1;
         DamagePlayer = true;
-        xSpeed		 = -(float)(rand()%10 + 5);
+        xSpeed		 = -static_cast<float>(rand()%10 + 5);
         CheckBlock   = false;
         AnimCount    = 0.0f;
 
@@ -1191,12 +1191,12 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         AnimSpeed    = float((rand()%3+10)/20.0f);
         Damage       = 1;
         DamagePlayer = true;
-        ySpeed		 = ((float)(rand()%20-10)/8) - 1.0f;
+        ySpeed		 = (static_cast<float>(rand()%20-10)/8) - 1.0f;
         xSpeed		 = 25.0f;
-        yPos		-= 7 + ((float)(rand()%20)/10.0f);
+        yPos		-= 7 + (static_cast<float>(rand()%20)/10.0f);
         xPos		+= 33;
         ExplodeOnImpact = false;
-        Winkel = (float)(rand()%360);
+        Winkel = static_cast<float>(rand()%360);
         OwnDraw = true;
 
     }
@@ -1212,10 +1212,10 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         Damage       = 1;
         DamagePlayer = true;
         ySpeed		 = 20.0f;
-        xSpeed		= ((float)(rand()%20-10)/8);
+        xSpeed		= (static_cast<float>(rand()%20-10)/8);
         yPos		+= 30;
         ExplodeOnImpact = false;
-        Winkel = (float)(rand()%360);
+        Winkel = static_cast<float>(rand()%360);
         OwnDraw = true;
 
     }
@@ -1230,12 +1230,12 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         AnimSpeed    = float((rand()%3+10)/20.0f);
         Damage       = 1;
         DamagePlayer = true;
-        ySpeed		 = ((float)(rand()%20-10)/8) - 1.0f;
+        ySpeed		 = (static_cast<float>(rand()%20-10)/8) - 1.0f;
         xSpeed		 = -25.0f;
-        yPos		-= 15 + ((float)(rand()%20)/10.0f);
+        yPos		-= 15 + (static_cast<float>(rand()%20)/10.0f);
         xPos		-= 28;
         ExplodeOnImpact = false;
-        Winkel = (float)(rand()%360);
+        Winkel = static_cast<float>(rand()%360);
         OwnDraw = true;
 
     }
@@ -1270,7 +1270,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         Damage       = 4;
         CheckBlock   = false;
         ExplodeOnImpact = false;
-        Winkel = (float)(rand()%360);
+        Winkel = static_cast<float>(rand()%360);
         OwnDraw		 = true;
     }
     break;
@@ -1314,7 +1314,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         Damage       = 4;
         CheckBlock   = false;
 
-        Winkel = (float)(rand()%360);
+        Winkel = static_cast<float>(rand()%360);
         OwnDraw		 = true;
         ExplodeOnImpact = false;
 
@@ -1373,7 +1373,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         xSpeed	  = cos_deg(w) * 35.0f;
         ySpeed	  = sin_deg(w) * 35.0f;
 
-        Winkel = (float)(rand()%360);
+        Winkel = static_cast<float>(rand()%360);
 
         if (w == -90)
             xSpeed = 0.0f;
@@ -2313,8 +2313,8 @@ void ProjectileClass::Render(void)
         int size = (pParent->CurrentWeaponLevel[2] * 2 + 12);
         if (size < 20)
             size = 20;
-        ProjectileGrafix[ShotArt].RenderSpriteScaled((float)(xPos-TileEngine.XOffset) + 12 - size / 2.0f,
-                (float)(yPos-TileEngine.YOffset) + 12 - size / 2.0f, size, size, 0xFFFFFFFF);
+        ProjectileGrafix[ShotArt].RenderSpriteScaled(static_cast<float>(xPos-TileEngine.XOffset) + 12 - size / 2.0f,
+                static_cast<float>(yPos-TileEngine.YOffset) + 12 - size / 2.0f, size, size, 0xFFFFFFFF);
     }
     else if (ShotArt == ELEKTROPAMPE)
     {
@@ -2323,11 +2323,11 @@ void ProjectileClass::Render(void)
         if (Counter > 255.0f)
             Color = D3DCOLOR_RGBA(255, 255, 255, 255);
         else
-            Color = D3DCOLOR_RGBA(255, 255, 255, (int)(Counter));
+            Color = D3DCOLOR_RGBA(255, 255, 255, static_cast<int>(Counter));
 
         ProjectileGrafix[ShotArt].itsRect = ProjectileGrafix[ShotArt].itsPreCalcedRects[AnimPhase];
-        ProjectileGrafix[ShotArt].RenderSprite((float)(xPos-TileEngine.XOffset),
-                (float)(yPos-TileEngine.YOffset), Color);
+        ProjectileGrafix[ShotArt].RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                static_cast<float>(yPos-TileEngine.YOffset), Color);
 
         DirectGraphics.SetColorKeyMode();
     }
@@ -2338,14 +2338,14 @@ void ProjectileClass::Render(void)
         DirectGraphics.SetAdditiveMode();
 
         if (ShotArt == PLAYERFIRE)
-            Color = D3DCOLOR_RGBA(255, 128, 80, (int)(Counter));
+            Color = D3DCOLOR_RGBA(255, 128, 80, static_cast<int>(Counter));
         else
             Color = D3DCOLOR_RGBA(255, 192, 128, 192 - (AnimPhase * 6));
 
         ProjectileGrafix[ShotArt].itsRect = ProjectileGrafix[ShotArt].itsPreCalcedRects[AnimPhase];
 
-        ProjectileGrafix[ShotArt].RenderSpriteScaledRotated (46+(float)(xPos-TileEngine.XOffset)-(AnimPhase+30),
-                54+(float)(yPos-TileEngine.YOffset)-(AnimPhase+30),
+        ProjectileGrafix[ShotArt].RenderSpriteScaledRotated (46+static_cast<float>(xPos-TileEngine.XOffset)-(AnimPhase+30),
+                54+static_cast<float>(yPos-TileEngine.YOffset)-(AnimPhase+30),
                 AnimPhase*2.2f+20, AnimPhase*2.2f+20, Winkel, Color);
         DirectGraphics.SetColorKeyMode();
     }
@@ -2359,8 +2359,8 @@ void ProjectileClass::Render(void)
 
         int a = 30 - AnimPhase;
 
-        ProjectileGrafix[ShotArt].RenderSpriteScaled (46+(float)(xPos-TileEngine.XOffset)-(a+30),
-                54+(float)(yPos-TileEngine.YOffset)-(a+30),
+        ProjectileGrafix[ShotArt].RenderSpriteScaled (46+static_cast<float>(xPos-TileEngine.XOffset)-(a+30),
+                54+static_cast<float>(yPos-TileEngine.YOffset)-(a+30),
                 int (a*2.2f+20), int (a*2.2f+20), AnimPhase, Color);
         DirectGraphics.SetColorKeyMode();
     }
@@ -2373,13 +2373,13 @@ void ProjectileClass::Render(void)
         ShotRect[ShotArt].right  = (255-int(Damage/2))*2;
 
         Color = D3DCOLOR_RGBA(255, 255, 255, int(Damage/2));
-        ProjectileGrafix[ShotArt].RenderSpriteScaled ((float)(xPos-TileEngine.XOffset),
-                (float)(yPos-TileEngine.YOffset),
+        ProjectileGrafix[ShotArt].RenderSpriteScaled (static_cast<float>(xPos-TileEngine.XOffset),
+                static_cast<float>(yPos-TileEngine.YOffset),
                 (255-int(Damage/2))*2, (255-int(Damage/2))*2, Color);
 
         Color = D3DCOLOR_RGBA(255, 255, 255, int(Damage/4));
-        ProjectileGrafix[ShotArt].RenderSpriteScaled ((float)(xPos-TileEngine.XOffset),
-                (float)(yPos-TileEngine.YOffset),
+        ProjectileGrafix[ShotArt].RenderSpriteScaled (static_cast<float>(xPos-TileEngine.XOffset),
+                static_cast<float>(yPos-TileEngine.YOffset),
                 (255-int(Damage/2))*2, (255-int(Damage/2))*2, Color);
 
         DirectGraphics.SetColorKeyMode();
@@ -2389,8 +2389,8 @@ void ProjectileClass::Render(void)
         DirectGraphics.SetAdditiveMode();
         Color = 0xFFFFFFFF;
 
-        ProjectileGrafix[ShotArt].RenderSpriteScaled ((float)(xPos-TileEngine.XOffset),
-                (float)(yPos-TileEngine.YOffset),
+        ProjectileGrafix[ShotArt].RenderSpriteScaled (static_cast<float>(xPos-TileEngine.XOffset),
+                static_cast<float>(yPos-TileEngine.YOffset),
                 Damage, Damage, AnimPhase, Color);
 
         DirectGraphics.SetColorKeyMode();
@@ -2414,7 +2414,7 @@ void ProjectileClass::Render(void)
         {
             length = 480;
             size = 10.0f;
-            col = D3DCOLOR_RGBA(255, 255, 255, (int)(AnimCount / 45.0f * 255.0f));
+            col = D3DCOLOR_RGBA(255, 255, 255, static_cast<int>(AnimCount / 45.0f * 255.0f));
 
             ShotRect[SPIDERLASER].left = 0;
             ShotRect[SPIDERLASER].right  = 0;
@@ -2424,7 +2424,7 @@ void ProjectileClass::Render(void)
         else
         {
             length = 560;
-            size = (7.0f) * 30.0f + (float)sin(off) * 10.0f;
+            size = (7.0f) * 30.0f + static_cast<float>(sin(off)) * 10.0f;
             off += 5.0f SYNC;
             col = 0xFFFFFFFF;
 
@@ -2435,8 +2435,8 @@ void ProjectileClass::Render(void)
             Damage = 500;
         }
 
-        ProjectileGrafix[ShotArt].RenderSpriteScaled ((float)(xPos-TileEngine.XOffset) - 10.0f,
-                (float)(yPos-TileEngine.YOffset) - size / 2.0f,
+        ProjectileGrafix[ShotArt].RenderSpriteScaled (static_cast<float>(xPos-TileEngine.XOffset) - 10.0f,
+                static_cast<float>(yPos-TileEngine.YOffset) - size / 2.0f,
                 length, int(size), 0, col);
         DirectGraphics.SetColorKeyMode();
     }
@@ -2444,12 +2444,12 @@ void ProjectileClass::Render(void)
     {
         DirectGraphics.SetAdditiveMode();
 
-        ProjectileGrafix[ShotArt].RenderSpriteRotated((float)(xPos-TileEngine.XOffset),
-                (float)(yPos-TileEngine.YOffset),
+        ProjectileGrafix[ShotArt].RenderSpriteRotated(static_cast<float>(xPos-TileEngine.XOffset),
+                static_cast<float>(yPos-TileEngine.YOffset),
                 (xPos + yPos) / 2, 0x88FFFFFF);
 
-        ProjectileGrafix[ShotArt].RenderSpriteRotated((float)(xPos-TileEngine.XOffset),
-                (float)(yPos-TileEngine.YOffset),
+        ProjectileGrafix[ShotArt].RenderSpriteRotated(static_cast<float>(xPos-TileEngine.XOffset),
+                static_cast<float>(yPos-TileEngine.YOffset),
                 (xPos + yPos) / 2, 0x88FFFFFF);
 
         DirectGraphics.SetColorKeyMode();
@@ -2939,7 +2939,7 @@ void ProjectileClass::Run(void)
         if (AnimSpeed < 0.0f)
         {
             AnimSpeed = 0.25f;
-            PartikelSystem.PushPartikel(xPos + 460, yPos + (float)(rand()%170 - 90), LILA3);
+            PartikelSystem.PushPartikel(xPos + 460, yPos + static_cast<float>(rand()%170 - 90), LILA3);
 
             if (AnimPhase > 0)
             {
@@ -2954,7 +2954,7 @@ void ProjectileClass::Run(void)
             // Frequenz setzen
             //DKS - Added check for NULLness and DirectX, since SDL port doesn't support SetFrequency:
 #if defined(PLATFORM_DIRECTX)
-            int Freq = 11025 + (int)(AnimCount * 500.0f);
+            int Freq = 11025 + static_cast<int>(AnimCount * 500.0f);
             // DKS - added function SetWaveFrequency()
             SetWaveFrequency(SOUND_BEAMLOAD2, Freq);
 #endif
@@ -3010,8 +3010,8 @@ void ProjectileClass::Run(void)
     case GOLEMSCHUSS:				// Suchschuss des Golems
     {
         DirectGraphics.SetAdditiveMode();
-        Projectiles.LavaFlare.RenderSpriteScaled((float)(xPos - TileEngine.XOffset) - 21,
-                                     (float)(yPos - TileEngine.YOffset) - 21, 62, 62,
+        Projectiles.LavaFlare.RenderSpriteScaled(static_cast<float>(xPos - TileEngine.XOffset) - 21,
+                                     static_cast<float>(yPos - TileEngine.YOffset) - 21, 62, 62,
                                      0xAA88FF00);
         DirectGraphics.SetColorKeyMode();
         CurrentShotTexture = -1;
@@ -4351,8 +4351,8 @@ void ProjectileClass::ExplodeShot(void)
         SoundManager.PlayWave(100, 128, 9000, SOUND_BLITZENDE);
         SoundManager.PlayWave(100, 128, 9000, SOUND_BLITZENDE);
 
-        Projectiles.PushProjectile((float)TileEngine.XOffset - 60,
-                                     (float)TileEngine.YOffset + 480.0f - 128.0f,
+        Projectiles.PushProjectile(static_cast<float>(TileEngine.XOffset) - 60,
+                                     static_cast<float>(TileEngine.YOffset) + 480.0f - 128.0f,
                                      ELEKTROPAMPE);
     }
     break;
@@ -4718,7 +4718,7 @@ void ProjectileClass::ExplodeShot(void)
 
         // Prüfen, ob die Bombe eine zerstörbare Wand getroffen hat
         //
-        TileEngine.ExplodeWalls((int)xPos / 20, (int)yPos / 20);
+        TileEngine.ExplodeWalls(static_cast<int>(xPos) / 20, static_cast<int>(yPos) / 20);
 
         // Explodieren lassen
         SoundManager.PlayWave(80, 128, 11025, SOUND_EXPLOSION1);
@@ -4874,7 +4874,7 @@ void ProjectileClass::ExplodeShot(void)
 
         ShakeScreen(5);
         Gegner.DamageEnemiesonScreen(xPos, yPos, 400);
-        TileEngine.ExplodeWalls((int)xPos / 20, (int)yPos / 20);
+        TileEngine.ExplodeWalls(static_cast<int>(xPos) / 20, static_cast<int>(yPos) / 20);
 
         for (int p = 0; p < NUMPLAYERS; p++)
             DirectInput.Joysticks[Player[p].JoystickIndex].ForceFeedbackEffect(FFE_MEDIUMRUMBLE);

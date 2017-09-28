@@ -100,7 +100,7 @@ void  TimerClass::update(void)
                             /(vergangeneFrames+1);
 
     // Speedfaktor errechnen
-    SpeedFaktor = (float)(MoveSpeed * vergangeneZeit);
+    SpeedFaktor = static_cast<float>(MoveSpeed * vergangeneZeit);
 
     // begrenzen
 #define MAX_FACTOR 2.0f
@@ -130,7 +130,7 @@ void  TimerClass::wait(void)
         else								// oder timeGetTime, je nach dem
             aktuelleZeit=timeGetTime();
     }
-    while(maxFPS<(int)1/((aktuelleZeit-letzterFrame)*ZeitFaktor));
+    while(maxFPS<1/((aktuelleZeit-letzterFrame)*ZeitFaktor));
 }
 
 // --------------------------------------------------------------------------------------

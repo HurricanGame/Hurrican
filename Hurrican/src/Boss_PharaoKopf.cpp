@@ -29,9 +29,9 @@ GegnerPharaoKopf::GegnerPharaoKopf(int Wert1, int Wert2, bool Light)
 
 bool GegnerPharaoKopf::Links(void)
 {
-    if ((int)(xPos) < Value1 + BORDER)
+    if (static_cast<int>(xPos) < Value1 + BORDER)
     {
-        xPos = (float)(Value1 + BORDER);
+        xPos = static_cast<float>(Value1 + BORDER);
         return true;
     }
 
@@ -40,9 +40,9 @@ bool GegnerPharaoKopf::Links(void)
 
 bool GegnerPharaoKopf::Rechts(void)
 {
-    if ((int)(xPos) + GegnerRect[GegnerArt].right > Value1 + 652 - BORDER)
+    if (static_cast<int>(xPos) + GegnerRect[GegnerArt].right > Value1 + 652 - BORDER)
     {
-        xPos = (float)(Value1 + 652 - BORDER - GegnerRect[GegnerArt].right);
+        xPos = static_cast<float>(Value1 + 652 - BORDER - GegnerRect[GegnerArt].right);
         return true;
     }
 
@@ -51,9 +51,9 @@ bool GegnerPharaoKopf::Rechts(void)
 
 bool GegnerPharaoKopf::Unten(void)
 {
-    if ((int)(yPos) + GegnerRect[GegnerArt].bottom > Value2 + 480 - BORDER2)
+    if (static_cast<int>(yPos) + GegnerRect[GegnerArt].bottom > Value2 + 480 - BORDER2)
     {
-        yPos = (float)(Value2 + 480 - BORDER2 - GegnerRect[GegnerArt].bottom);
+        yPos = static_cast<float>(Value2 + 480 - BORDER2 - GegnerRect[GegnerArt].bottom);
         return true;
     }
 
@@ -78,8 +78,8 @@ void GegnerPharaoKopf::DoKI(void)
     // Levelausschnitt auf den PharaoKopf zentrieren, sobald dieser sichtbar wird
     if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        TileEngine.ScrollLevel((float)Value1,
-                                 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf die Faust zentrieren
+        TileEngine.ScrollLevel(static_cast<float>(Value1),
+                                 static_cast<float>(Value2), ZUSTAND_SCROLLTOLOCK);		// Level auf die Faust zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
@@ -169,7 +169,7 @@ void GegnerPharaoKopf::DoKI(void)
             AnimCount += 0.2f;
         }
 
-        if (yPos <= (float)Value2 + 480 - BORDER2 - GegnerRect[GegnerArt].bottom)			// Weit genug unten ?
+        if (yPos <= static_cast<float>(Value2) + 480 - BORDER2 - GegnerRect[GegnerArt].bottom)			// Weit genug unten ?
         {
             for (int p = 0; p < NUMPLAYERS; p++)
                 if (Player[p].AufPlattform == this)
@@ -190,7 +190,7 @@ void GegnerPharaoKopf::DoKI(void)
                 xAcc   = 3.0f;
             }
 _weiter:
-            yPos = (float)Value2 + 480 - BORDER2 - GegnerRect[GegnerArt].bottom;
+            yPos = static_cast<float>(Value2) + 480 - BORDER2 - GegnerRect[GegnerArt].bottom;
             SoundManager.PlayWave(100, 128, 8000, SOUND_STONEFALL);
 
             Handlung = GEGNER_LAUFEN;
@@ -326,7 +326,7 @@ _weiter2:
         // An die Decke gekommen ?
         if (ySpeed < 0)
         {
-            if (yPos < (float)Value2)
+            if (yPos < static_cast<float>(Value2))
             {
                 for (int i = 0; i < 20; i++)
                 {
@@ -336,7 +336,7 @@ _weiter2:
                 }
 
                 SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
-                yPos	= (float)Value2;
+                yPos	= static_cast<float>(Value2);
                 ySpeed  = 5.0f;
                 yAcc	= 10.0f;
 

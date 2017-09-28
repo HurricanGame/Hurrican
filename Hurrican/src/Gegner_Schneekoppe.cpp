@@ -24,8 +24,8 @@ GegnerSchneekoppe::GegnerSchneekoppe(int Wert1, int Wert2, bool Light)
     //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
     //xSpeed = (float)sin(Wert1 * PI / 180.0f) * Value2;
     //ySpeed = (float)cos(Wert1 * PI / 180.0f) * Value2;
-	xSpeed = sin_deg(Wert1) * (float)Value2;
-	ySpeed = cos_deg(Wert1) * (float)Value2;
+	xSpeed = sin_deg(Wert1) * static_cast<float>(Value2);
+	ySpeed = cos_deg(Wert1) * static_cast<float>(Value2);
 
     yAcc   = 6.0f;
 //	AnimSpeed = 0.5f;
@@ -51,8 +51,8 @@ void GegnerSchneekoppe::DoDraw(void)
     else if (xSpeed < 0  && ySpeed > 0 ) w = 360 + w;
     else if (xSpeed < 0  && ySpeed < 0 ) w = 180 + w;
 
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated((float)(xPos-TileEngine.XOffset),
-            (float)(yPos-TileEngine.YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos-TileEngine.XOffset),
+            static_cast<float>(yPos-TileEngine.YOffset),
             w, AnimPhase, 0xFFFFFFFF);
 }
 

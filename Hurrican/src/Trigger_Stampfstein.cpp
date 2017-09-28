@@ -41,10 +41,10 @@ void GegnerStampfstein::DoDraw(void)
     // rendern
     //
     DirectGraphics.SetColorKeyMode();
-    int size = (int)(oldy - yPos) + 165;
+    int size = static_cast<int>(oldy - yPos) + 165;
     pGegnerGrafix[GegnerArt]->SetRect(0, size, 80, 256);
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                           (float)(yPos-TileEngine.YOffset) + size, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                           static_cast<float>(yPos-TileEngine.YOffset) + size, 0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------
@@ -187,7 +187,7 @@ void GegnerStampfstein::DoKI(void)
             //      (falling blocks on chains) can be retracting at once, each one must
             //      keep track of which channel its chain sound is playing on, so when it
             //      is fully retracted, the correct sound channel is halted:
-            sfx_chain_channel = SoundManager.PlayWave3D((int)xPos + 40, (int)yPos + 20, 11025, SOUND_CHAIN);
+            sfx_chain_channel = SoundManager.PlayWave3D(static_cast<int>(xPos) + 40, static_cast<int>(yPos) + 20, 11025, SOUND_CHAIN);
         }
     }
     break;
@@ -198,7 +198,7 @@ void GegnerStampfstein::DoKI(void)
     {
         PlattformTest(GegnerRect[GegnerArt]);
 
-//			SoundManager.Update3D((int)(xPos + 40), (int)(yPos + 20), SOUND_CHAIN);
+//			SoundManager.Update3D(static_cast<int>(xPos + 40), static_cast<int>(yPos + 20), SOUND_CHAIN);
 
         if (blocko & BLOCKWERT_WAND)
         {

@@ -45,8 +45,8 @@ void GegnerTube::DoDraw(void)
 
     // Mutant drin?
     if (Value1 >= 4)
-        pGegnerGrafix[MUTANT]->RenderSprite(xPos - (float)(TileEngine.XOffset) - 1,
-                                            yPos - (float)(TileEngine.YOffset) + 60 + (float)sin(SinOff) * 1.8f,
+        pGegnerGrafix[MUTANT]->RenderSprite(xPos - static_cast<float>(TileEngine.XOffset) - 1,
+                                            yPos - static_cast<float>(TileEngine.YOffset) + 60 + static_cast<float>(sin(SinOff)) * 1.8f,
                                             0, 0xFFFFFFFF);
 
     // Flüssigkeit drin?
@@ -57,22 +57,22 @@ void GegnerTube::DoDraw(void)
         if (Value1 % 4 == 0 ||
                 Value1 == 5)
         {
-            RenderRect4(xPos - (float)(TileEngine.XOffset) + 18,
-                        yPos - (float)(TileEngine.YOffset) + 75,
+            RenderRect4(xPos - static_cast<float>(TileEngine.XOffset) + 18,
+                        yPos - static_cast<float>(TileEngine.YOffset) + 75,
                         62, 3, 0xFF008822, 0xFF008822, 0xFF004411, 0xFF004411);
 
-            RenderRect4(xPos - (float)(TileEngine.XOffset) + 18,
-                        yPos - (float)(TileEngine.YOffset) + 78,
+            RenderRect4(xPos - static_cast<float>(TileEngine.XOffset) + 18,
+                        yPos - static_cast<float>(TileEngine.YOffset) + 78,
                         62, 89, 0xFF004411, 0xFF004411, 0xFF00DD22, 0xFF00DD22);
         }
         else
         {
-            RenderRect4(xPos - (float)(TileEngine.XOffset) + 18,
-                        yPos - (float)(TileEngine.YOffset) + 145,
+            RenderRect4(xPos - static_cast<float>(TileEngine.XOffset) + 18,
+                        yPos - static_cast<float>(TileEngine.YOffset) + 145,
                         62, 3, 0xFF008822, 0xFF008822, 0xFF004411, 0xFF004411);
 
-            RenderRect4(xPos - (float)(TileEngine.XOffset) + 18,
-                        yPos - (float)(TileEngine.YOffset) + 148,
+            RenderRect4(xPos - static_cast<float>(TileEngine.XOffset) + 18,
+                        yPos - static_cast<float>(TileEngine.YOffset) + 148,
                         62, 19, 0xFF004411, 0xFF004411, 0xFF008822, 0xFF008822);
         }
 
@@ -85,8 +85,8 @@ void GegnerTube::DoDraw(void)
 
     if (Value1 == 5)
         a = 0;
-    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - (float)(TileEngine.XOffset),
-                                           yPos - (float)(TileEngine.YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - static_cast<float>(TileEngine.XOffset),
+                                           yPos - static_cast<float>(TileEngine.YOffset),
                                            a, 0xFFFFFFFF);
 
 

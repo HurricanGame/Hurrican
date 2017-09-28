@@ -54,8 +54,8 @@ void GegnerBlueBoulder::DoKI(void)
         // andererseits, bei Golemwurf direkt auf den Spieler zufliegen
         else
         {
-            xSpeed		 = (float)Value1;
-            ySpeed		 = (float)Value2;
+            xSpeed		 = static_cast<float>(Value1);
+            ySpeed		 = static_cast<float>(Value2);
             yAcc		 = 2.0f;
             AnimSpeed    = 0.4f;
         }

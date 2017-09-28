@@ -83,7 +83,7 @@ void fprintf_s( FILE* file, const char* src)
 
 void _itoa_s( int value, char* dst, int size )
 {
-    sprintf( (char*)dst, "%d", value );
+    sprintf( reinterpret_cast<char *>(dst), "%d", value );
 }
 
 #define SWAP(T, a, b) \
@@ -109,7 +109,7 @@ uint32_t getpixel( SDL_Surface *surface, int16_t x, int16_t y )
 {
     int16_t bpp = surface->format->BytesPerPixel;
     /* Here p is the address to the pixel we want to retrieve */
-    uint8_t *p = (uint8_t *)surface->pixels + y * surface->pitch + x * bpp;
+    uint8_t *p = reinterpret_cast<uint8_t *>(surface->pixels) + y * surface->pitch + x * bpp;
 
     switch (bpp)
     {
@@ -118,7 +118,7 @@ uint32_t getpixel( SDL_Surface *surface, int16_t x, int16_t y )
         break;
 
     case 2:
-        return *(uint16_t *)p;
+        return *reinterpret_cast<uint16_t *>(p);
         break;
 
     case 3:
@@ -129,7 +129,7 @@ uint32_t getpixel( SDL_Surface *surface, int16_t x, int16_t y )
         break;
 
     case 4:
-        return *(uint32_t *)p;
+        return *reinterpret_cast<uint32_t *>(p);
         break;
 
     default:
@@ -141,7 +141,7 @@ void putpixel( SDL_Surface *surface, int16_t x, int16_t y, uint32_t pixel )
 {
     int16_t bpp = surface->format->BytesPerPixel;
     /* Here p is the address to the pixel we want to set */
-    uint8_t *p = (uint8_t *)surface->pixels + y * surface->pitch + x * bpp;
+    uint8_t *p = reinterpret_cast<uint8_t *>(surface->pixels) + y * surface->pitch + x * bpp;
 
     switch (bpp)
     {
@@ -150,7 +150,7 @@ void putpixel( SDL_Surface *surface, int16_t x, int16_t y, uint32_t pixel )
         break;
 
     case 2:
-        *(uint16_t *)p = pixel;
+        *reinterpret_cast<uint16_t *>(p) = pixel;
         break;
 
     case 3:
@@ -170,7 +170,7 @@ void putpixel( SDL_Surface *surface, int16_t x, int16_t y, uint32_t pixel )
 
     case 4:
     default:
-        *(uint32_t *)p = pixel;
+        *reinterpret_cast<uint32_t *>(p) = pixel;
         break;
     }
 }
@@ -186,25 +186,25 @@ void get_components( SDL_Surface *surface, int16_t x, int16_t y, uint8_t& r, uin
     comp=color&surface->format->Rmask; /* Isolate red component */
     comp=comp>>surface->format->Rshift;/* Shift it down to 8-bit */
     comp=comp<<surface->format->Rloss; /* Expand to a full 8-bit number */
-    r=(uint8_t)comp;
+    r=static_cast<uint8_t>(comp);
 
     /* Get Green component */
     comp=color&surface->format->Gmask; /* Isolate green component */
     comp=comp>>surface->format->Gshift;/* Shift it down to 8-bit */
     comp=comp<<surface->format->Gloss; /* Expand to a full 8-bit number */
-    g=(uint8_t)comp;
+    g=static_cast<uint8_t>(comp);
 
     /* Get Blue component */
     comp=color&surface->format->Bmask; /* Isolate blue component */
     comp=comp>>surface->format->Bshift;/* Shift it down to 8-bit */
     comp=comp<<surface->format->Bloss; /* Expand to a full 8-bit number */
-    b=(uint8_t)comp;
+    b=static_cast<uint8_t>(comp);
 
     /* Get Alpha component */
     comp=color&surface->format->Amask; /* Isolate alpha component */
     comp=comp>>surface->format->Ashift;/* Shift it down to 8-bit */
     comp=comp<<surface->format->Aloss; /* Expand to a full 8-bit number */
-    a=(uint8_t)comp;
+    a=static_cast<uint8_t>(comp);
 }
 
 uint8_t* LoadFileToMemory( const std::string& name, uint32_t& size )
@@ -224,7 +224,7 @@ uint8_t* LoadFileToMemory( const std::string& name, uint32_t& size )
     file.seekg( 0, std::ios::beg );
 
     buffer = new uint8_t[size+1];
-    file.read( (char*)buffer, size );
+    file.read( reinterpret_cast<char *>(buffer), size );
     buffer[size] = '\0';
     size++;
 
@@ -241,7 +241,7 @@ bool isPowerOfTwo(int x)
 int nextPowerOfTwo(int x)
 {
     double logbase2 = log(x) / log(2);
-    return (int)round(pow(2,ceil(logbase2)));
+    return static_cast<int>(round(pow(2,ceil(logbase2))));
 }
 
 #if defined(USE_GL1)

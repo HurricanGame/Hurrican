@@ -38,8 +38,8 @@ void GegnerSnowBomb::DoDraw(void)
     // Nur rendern, wenn die Kugel auch rollt
     //
     if (Handlung != GEGNER_INIT)
-        pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                               (float)(yPos-TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                               static_cast<float>(yPos-TileEngine.YOffset),
                                                anim, 0xFFFFFFFF);
 }
 

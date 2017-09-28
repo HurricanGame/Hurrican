@@ -19,8 +19,8 @@ GegnerPlattform::GegnerPlattform(int Wert1, int Wert2, bool Light)
     Energy			= 100;
     Value1			= Wert1;
     Value2			= Wert2;
-    xSpeed			= (float)Wert1;
-    ySpeed			= (float)Wert2;
+    xSpeed			= static_cast<float>(Wert1);
+    ySpeed			= static_cast<float>(Wert2);
 
     ChangeLight		= Light;
     Destroyable		= false;
@@ -41,16 +41,16 @@ void GegnerPlattform::DoKI(void)
     // An den Wendepunkten umdrehen
 
     if (blockl & BLOCKWERT_WENDEPUNKT)
-        xSpeed = (float)Value1;
+        xSpeed = static_cast<float>(Value1);
 
     if (blockr & BLOCKWERT_WENDEPUNKT)
-        xSpeed = -(float)Value1;
+        xSpeed = -static_cast<float>(Value1);
 
     if (blocko & BLOCKWERT_WENDEPUNKT)
-        ySpeed = (float)Value2;
+        ySpeed = static_cast<float>(Value2);
 
     if (blocku & BLOCKWERT_WENDEPUNKT)
-        ySpeed = -(float)Value2;
+        ySpeed = -static_cast<float>(Value2);
 
     // Spieler steht auf der Plattform
     //

@@ -194,8 +194,8 @@ void GegnerDrone::DoKI(void)
             else
                 anim = 1;
 
-            Gegner.DroneFlame.RenderSprite((float)(xPos-TileEngine.XOffset) + BlickRichtung * 56 - 5,
-                                      (float)(yPos-TileEngine.YOffset) + 60,
+            Gegner.DroneFlame.RenderSprite(static_cast<float>(xPos-TileEngine.XOffset) + BlickRichtung * 56 - 5,
+                                      static_cast<float>(yPos-TileEngine.YOffset) + 60,
                                       anim, 0xFFFFFFFF);
             DirectGraphics.SetColorKeyMode ();
         }

@@ -172,19 +172,18 @@ void GegnerRiesenPiranha::DoKI(void)
 void GegnerRiesenPiranha::GegnerExplode(void)
 {
     // Fetzen erzeugen
-    int i = 0;
     for (int i=0; i<8; i++)
         PartikelSystem.PushPartikel(float(xPos + 64 + rand()%64),
                                       float(yPos + 64 + rand()%64), PIRANHATEILE2);
 
 
     // und noch n paar Luftblässchen dazu
-    for (i=0; i<100; i++)
+    for (int i=0; i<100; i++)
         PartikelSystem.PushPartikel(float(xPos - 10  + rand()%256),
                                       float(yPos + 10  + rand()%210), BUBBLE);
 
     // Blutwolken dazu
-    for (i=0; i<70; i++)
+    for (int i=0; i<70; i++)
         PartikelSystem.PushPartikel(float(xPos - 10  + rand()%256),
                                       float(yPos + 10  + rand()%210), PIRANHABLUT);
 

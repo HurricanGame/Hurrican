@@ -29,9 +29,9 @@ GegnerSchleimBoller::GegnerSchleimBoller(int Wert1, int Wert2, bool Light)
     else
         Size			= 60;
 
-    Energy = (float)Size;
+    Energy = static_cast<float>(Size);
 
-    xSpeed			= (float)(Value2);
+    xSpeed			= static_cast<float>(Value2);
     OwnDraw			= true;
 
     if (Value2 == 0)
@@ -53,8 +53,8 @@ void GegnerSchleimBoller::DoDraw(void)
 {
     // Je nach Größe anders gestrecht rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteScaled ((float)(xPos-TileEngine.XOffset) + (30 - Size/2),
-            (float)(yPos-TileEngine.YOffset) + (60 - Size),
+    pGegnerGrafix[GegnerArt]->RenderSpriteScaled (static_cast<float>(xPos-TileEngine.XOffset) + (30 - Size/2),
+            static_cast<float>(yPos-TileEngine.YOffset) + (60 - Size),
             Size, Size, AnimPhase, 0xFFFFFFFF);
 
     // Leuchten noch dazurendern?
@@ -64,8 +64,8 @@ void GegnerSchleimBoller::DoDraw(void)
         if (options_Detail >= DETAIL_HIGH)
         {
             DirectGraphics.SetAdditiveMode ();
-            Projectiles.LavaFlare.RenderSpriteScaled ((float)(xPos-TileEngine.XOffset) + 30 - Size,
-                                          (float)(yPos-TileEngine.YOffset) + 40 - Size,
+            Projectiles.LavaFlare.RenderSpriteScaled (static_cast<float>(xPos-TileEngine.XOffset) + 30 - Size,
+                                          static_cast<float>(yPos-TileEngine.YOffset) + 40 - Size,
                                           Size * 2, Size * 2, 0x8888FF88);
             DirectGraphics.SetColorKeyMode ();
         }
@@ -97,16 +97,16 @@ void GegnerSchleimBoller::DoKI(void)
             if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
             {
                 Handlung  = GEGNER_FALLEN;
-                ySpeed	  = -(float)(rand()%10 + 30);
+                ySpeed	  = -static_cast<float>(rand()%10 + 30);
                 yAcc	  = 8.0f;
                 AnimPhase = 0;
                 AnimEnde  = 2;
                 AnimSpeed = 2.0f;
 
                 if (pAim->xpos + 35 > xPos + 30)
-                    xSpeed = (float)(rand ()%8 + 6);
+                    xSpeed = static_cast<float>(rand ()%8 + 6);
                 else
-                    xSpeed = -(float)(rand ()%8 + 6);
+                    xSpeed = -static_cast<float>(rand ()%8 + 6);
             }
         }
     }

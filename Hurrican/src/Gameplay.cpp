@@ -795,7 +795,7 @@ bool LoadConfig(void)
     sprintf_s( temp, "%s/%s", g_save_ext, CONFIGFILE );
 
     fopen_s(&Datei, temp, "rb");		// versuchen Datei zu öffnen
-    free((void *)temp);
+    free(temp);
 
     if (Datei == NULL)
         return false;
@@ -908,7 +908,7 @@ void SaveConfig(void)
     sprintf_s( temp, "%s/%s", g_save_ext, CONFIGFILE );
 
     fopen_s(&Datei, temp, "wb");
-    free((void *)temp);
+    free(temp);
 
     if (Datei == NULL)
     {
@@ -1181,8 +1181,8 @@ void SummaryScreen(void)
 
         // Summary Screen rendern
         GUI.Run();
-        D3DCOLOR color = D3DCOLOR_RGBA(0, 255, 0, (int)(GUI.m_FadingAlpha));
-        pDefaultFont->DrawText((float)(RENDERWIDTH-pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_TITLE]))/2,
+        D3DCOLOR color = D3DCOLOR_RGBA(0, 255, 0, static_cast<int>(GUI.m_FadingAlpha));
+        pDefaultFont->DrawText(static_cast<float>(RENDERWIDTH-pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_TITLE]))/2,
                 title_txt_y, TextArray[TEXT_SUMMARY_TITLE], color);
 
         if (delay_ctr >= delay_can_leave) {
@@ -1193,7 +1193,7 @@ void SummaryScreen(void)
                 ReplaceAll(str_pressanykey, "key", "button");
             }
 
-            pDefaultFont->DrawText((float)(RENDERWIDTH-pDefaultFont->StringLength(str_pressanykey.c_str()))/2,
+            pDefaultFont->DrawText(static_cast<float>(RENDERWIDTH-pDefaultFont->StringLength(str_pressanykey.c_str()))/2,
                     pressanykey_txt_y, str_pressanykey.c_str(), color);
         }
 
@@ -1206,16 +1206,16 @@ void SummaryScreen(void)
 
         char buf[100];
         sprintf_s(buf, "%i/%i", Player[0].BlocksThisLevel, TileEngine.MaxBlocks);
-        pDefaultFont->DrawText((float)(sprite1_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
+        pDefaultFont->DrawText(static_cast<float>(sprite1_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
 
         sprintf_s(buf, "%i/%i", Player[0].DiamondsThisLevel, TileEngine.MaxDiamonds);
-        pDefaultFont->DrawText((float)(sprite2_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
+        pDefaultFont->DrawText(static_cast<float>(sprite2_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
 
         sprintf_s(buf, "%i/%i", Player[0].LivesThisLevel, TileEngine.MaxOneUps);
-        pDefaultFont->DrawText((float)(sprite3_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
+        pDefaultFont->DrawText(static_cast<float>(sprite3_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
 
         sprintf_s(buf, "%i/%i", Player[0].SecretThisLevel, TileEngine.MaxSecrets);
-        pDefaultFont->DrawText((float)(secrets_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
+        pDefaultFont->DrawText(static_cast<float>(secrets_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf, color);
 
         // Cheat freigespielt? -> Wenn alle Diamanten gefunden
         if (reveal_cheat)
@@ -1299,7 +1299,7 @@ bool NewDemo (const char Filename[])
     sprintf_s( temp, "%s/%s", g_save_ext, Filename );
 
     fopen_s(&DEMOFile, temp, "wb");
-    free((void *)temp);
+    free(temp);
 
     if(!DEMOFile)
     {
@@ -1361,7 +1361,7 @@ bool LoadDemo (const char Filename[])
     sprintf_s(temp, "%s/%s", g_save_ext, Filename );
 
     fopen_s(&DEMOFile, temp, "rb");
-    free((void *)temp);
+    free(temp);
 
     if(!DEMOFile)
         return false;
@@ -1504,11 +1504,11 @@ void ShowPissText(void)
         //      them centered properly horizontally, which I found frustrating.
         //      Oh well..
 //        GUI.ShowBox(TextArray[TEXT_PISS_1 + TextNr],
-//                      (int)(Player[0].ypos - 70 - TileEngine.YOffset),
-//                      (int)(Player[0].xpos - TileEngine.XOffset) - 10);
+//                      static_cast<int>(Player[0].ypos - 70 - TileEngine.YOffset),
+//                      static_cast<int>(Player[0].xpos - TileEngine.XOffset) - 10);
         GUI.ShowBox(TextArray[TEXT_PISS_1 + TextNr],
-                      (int)(Player[0].ypos - 70 - TileEngine.YOffset),
-                      (int)(Player[0].xpos - TileEngine.XOffset + TILESIZE*2));
+                      static_cast<int>(Player[0].ypos - 70 - TileEngine.YOffset),
+                      static_cast<int>(Player[0].xpos - TileEngine.XOffset + TILESIZE*2));
 
         if (Player[0].BronsonCounter > 220.0f + 50.0f * 18)
             Player[0].BronsonCounter = 270.0f;

@@ -22,7 +22,7 @@ GegnerFetteRakete::GegnerFetteRakete(int Wert1, int Wert2, bool Light)
     AnimEnde		= 10;
     AnimSpeed		= 0.3f;
     OwnDraw			= true;
-    rot				= (float)(Wert1);
+    rot				= static_cast<float>(Wert1);
     BlickRichtung   = LINKS;
 
     // Rakete kommt vom Drachen? Dann verhält sie sich anders
@@ -44,9 +44,9 @@ void GegnerFetteRakete::DoDraw(void)
 {
     // Rakete rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-TileEngine.XOffset),
-            (float)(yPos-TileEngine.YOffset),
-            (float)rot, AnimPhase, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated (static_cast<float>(xPos-TileEngine.XOffset),
+            static_cast<float>(yPos-TileEngine.YOffset),
+            static_cast<float>(rot), AnimPhase, 0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------

@@ -23,8 +23,8 @@ GegnerStahlmuecke::GegnerStahlmuecke(int Wert1, int Wert2, bool Light)
     xAcc			= 0.0f;
     yAcc			= 0.0f;
     Energy			= 10;
-    Value1			= (int)pAim->xpos-100+rand()%200;	// Flugziel zufällig in Richtung Spieler
-    Value2			= (int)pAim->ypos-100+rand()%200;	// setzen mit etwas Variation
+    Value1			= static_cast<int>(pAim->xpos)-100+rand()%200;	// Flugziel zufällig in Richtung Spieler
+    Value2			= static_cast<int>(pAim->ypos)-100+rand()%200;	// setzen mit etwas Variation
     ChangeLight		= Light;
     Destroyable		= true;
     OwnDraw			= true;
@@ -39,12 +39,12 @@ void GegnerStahlmuecke::DoDraw(void)
     bool mirrored = BlickRichtung == RECHTS;
 
     if (Handlung != GEGNER_FALLEN)
-        pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                               (float)(yPos-TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                               static_cast<float>(yPos-TileEngine.YOffset),
                                                AnimPhase, 0xFFFFFFFF, mirrored);
     else
-        pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                               (float)(yPos-TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                               static_cast<float>(yPos-TileEngine.YOffset),
                                                AnimPhase, 0xFFFF0000, mirrored);
 }
 
@@ -67,8 +67,8 @@ void GegnerStahlmuecke::DoKI(void)
 
         if (PlayerAbstand() < 500)
         {
-            Value1	= (int)pAim->xpos+35-50+rand()%100;	// Flugziel zufällig in Richtung Spieler
-            Value2	= (int)pAim->ypos+40-50+rand()%100;	// setzen mit etwas Variation
+            Value1	= static_cast<int>(pAim->xpos)+35-50+rand()%100;	// Flugziel zufällig in Richtung Spieler
+            Value2	= static_cast<int>(pAim->ypos)+40-50+rand()%100;	// setzen mit etwas Variation
             Handlung = GEGNER_VERFOLGEN;
         }
     }
@@ -125,16 +125,16 @@ void GegnerStahlmuecke::DoKI(void)
         if (ySpeed >  10.0f) ySpeed = 10.0f;
         if (ySpeed < -10.0f) ySpeed =-10.0f;
 
-        int dx = abs ((int) (xPos - Value1));
-        int dy = abs ((int) (yPos - Value2));
+        int dx = abs (static_cast<int>(xPos - Value1));
+        int dy = abs (static_cast<int>(yPos - Value2));
 
         // Punkt erreicht oder Abstand zu groß ? Dann neues Ziel setzen
         if (PlayerAbstand() > 400 ||
                 (dx*dx + dy*dy) < 20*20)
 
         {
-            Value1	= (int)pAim->xpos-50+rand()%100;	// Flugziel zufällig in Richtung Spieler
-            Value2	= (int)pAim->ypos-50+rand()%100;	// setzen mit etwas Variation
+            Value1	= static_cast<int>(pAim->xpos)-50+rand()%100;	// Flugziel zufällig in Richtung Spieler
+            Value2	= static_cast<int>(pAim->ypos)-50+rand()%100;	// setzen mit etwas Variation
         }
 
         // An die Wand gekommen ? Dann auch neues Ziel setzen
@@ -144,8 +144,8 @@ void GegnerStahlmuecke::DoKI(void)
                 blocku & BLOCKWERT_WAND ||
                 blocku & BLOCKWERT_PLATTFORM)
         {
-            Value1	= (int)pAim->xpos+35-50+rand()%100;	// Flugziel zufällig in Richtung Spieler
-            Value2	= (int)pAim->ypos+40-50+rand()%100;	// setzen mit etwas Variation
+            Value1	= static_cast<int>(pAim->xpos)+35-50+rand()%100;	// Flugziel zufällig in Richtung Spieler
+            Value2	= static_cast<int>(pAim->ypos)+40-50+rand()%100;	// setzen mit etwas Variation
         }
 
         // Nicht ins Wasser fliegen

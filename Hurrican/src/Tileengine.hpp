@@ -294,7 +294,7 @@ struct Vector2D
 //      /* Vertex offset computation for tile i,j (that would not alllow water
 //         animation to smoothly move in sync when scrolling left/right):    */
 //      (...)
-//      int off = (int)(int(WaterPos) + xLevel % 32 + (yLevel * 10) % 40) % 1024;
+//      int off = static_cast<int>(int(WaterPos) + xLevel % 32 + (yLevel * 10) % 40) % 1024;
 //      if (..) v1.y += WaterList[off + j*10 + i * 2];      // Top left vertex
 //      if (..) v2.y += WaterList[off + j*10 + i * 2];      // Top right vertex
 //      if (..) v3.y += WaterList[off + j*10 + i * 2 + 10]; // Bottom left vertex (pi/2 past pair above)

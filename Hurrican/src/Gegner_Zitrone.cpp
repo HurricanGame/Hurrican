@@ -79,42 +79,42 @@ void GegnerZitrone::DoDraw(void)
     if (a < 3) a = 3;
     if (a > 7) a = 7;
 
-    float yoff = (float)(sin(WackelOffset) * 10.0f);
+    float yoff = sin(WackelOffset) * 10.0f;
 
     if (AlreadyDrawn == false)
     {
         DirectGraphics.SetAdditiveMode();
         if (AnimPhase >= 5)
-            Projectiles.LavaFlare.RenderSprite ((float)-TileEngine.XOffset + xPos - 60 + a * 4,
-                                    (float)-TileEngine.YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
+            Projectiles.LavaFlare.RenderSprite (-TileEngine.XOffset + xPos - 60 + a * 4,
+                                    -TileEngine.YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
 
         if (AnimPhase <= 5)
-            Projectiles.LavaFlare.RenderSprite ((float)-TileEngine.XOffset + xPos + 40 + (a - 5) * 4,
-                                    (float)-TileEngine.YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
+            Projectiles.LavaFlare.RenderSprite (-TileEngine.XOffset + xPos + 40 + (a - 5) * 4,
+                                    -TileEngine.YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
         DirectGraphics.SetColorKeyMode();
     }
 
     // Knarre
-    Gegner.DroneGun.RenderSpriteRotatedOffset((float)-TileEngine.XOffset + xPos + 73.0f - (a) * 5,
-                                         (float)-TileEngine.YOffset + yPos + 48.0f + yoff, KnarreWinkel,
+    Gegner.DroneGun.RenderSpriteRotatedOffset(-TileEngine.XOffset + xPos + 73.0f - (a) * 5,
+                                         -TileEngine.YOffset + yPos + 48.0f + yoff, KnarreWinkel,
                                          0, 0, 0xFFFFFFFF);
 
 
     // Körper
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)-TileEngine.XOffset + xPos,
-                                           (float)-TileEngine.YOffset + yPos + yoff,
+    pGegnerGrafix[GegnerArt]->RenderSprite(-TileEngine.XOffset + xPos,
+                                           -TileEngine.YOffset + yPos + yoff,
                                            AnimPhase, 0xFFFFFFFF);
 
     if (AlreadyDrawn == false)
     {
         DirectGraphics.SetAdditiveMode();
         if (AnimPhase < 5)
-            Projectiles.LavaFlare.RenderSprite ((float)-TileEngine.XOffset + xPos - 70 + a * 4,
-                                    (float)-TileEngine.YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
+            Projectiles.LavaFlare.RenderSprite (-TileEngine.XOffset + xPos - 70 + a * 4,
+                                    -TileEngine.YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
 
         if (AnimPhase > 5)
-            Projectiles.LavaFlare.RenderSprite ((float)-TileEngine.XOffset + xPos + 60 - (a - 5) * 4,
-                                    (float)-TileEngine.YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
+            Projectiles.LavaFlare.RenderSprite (-TileEngine.XOffset + xPos + 60 - (a - 5) * 4,
+                                    -TileEngine.YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
         DirectGraphics.SetColorKeyMode();
     }
 
@@ -146,7 +146,7 @@ void GegnerZitrone::DoKI(void)
     dummy = (pAim->xpos + 35) - (xPos + 57);
     dummy /= 50.0f;
 
-    AnimPhase = 5 - (int)dummy;
+    AnimPhase = 5 - static_cast<int>(dummy);
 
     if(AnimPhase > 10)
         AnimPhase = 10;
@@ -215,9 +215,9 @@ void GegnerZitrone::DoKI(void)
             WinkelUebergabe = 360.0f - KnarreWinkel;
             //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
             //Projectiles.PushProjectile(xPos + 53.0f - (float)sin((180 - KnarreWinkel) / 180.0f * PI) * 45.0f,
-            //                             yPos + 56.0f + (float)cos((180 - KnarreWinkel) / 180.0f * PI) * 45.0f + (float)(sin(WackelOffset) * 10.0f), FLUGLASER);
+            //                             yPos + 56.0f + (float)cos((180 - KnarreWinkel) / 180.0f * PI) * 45.0f + static_cast<float>(sin(WackelOffset) * 10.0f), FLUGLASER);
             Projectiles.PushProjectile(xPos + 53.0f - sin_deg(180.0f - KnarreWinkel) * 45.0f,
-                                         yPos + 56.0f + cos_deg(180.0f - KnarreWinkel) * 45.0f + (float)(sin(WackelOffset) * 10.0f), FLUGLASER);
+                                         yPos + 56.0f + cos_deg(180.0f - KnarreWinkel) * 45.0f + static_cast<float>(sin(WackelOffset) * 10.0f), FLUGLASER);
 
             SoundManager.PlayWave(100, 128, 24000 + rand()%500, SOUND_LASERSHOT);
         }

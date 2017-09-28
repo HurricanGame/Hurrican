@@ -38,8 +38,8 @@ GegnerLavaBall::GegnerLavaBall(int Wert1, int Wert2, bool Light)
 void GegnerLavaBall::DoDraw(void)
 {
     // Render
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                           (float)(yPos-TileEngine.YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                           static_cast<float>(yPos-TileEngine.YOffset),
                                            AnimPhase, 0xFFFFFFFF);
 
     // Flare rendern
@@ -76,7 +76,7 @@ void GegnerLavaBall::DoKI(void)
             for (int i=0; i<12; i++)
                 PartikelSystem.PushPartikel(xPos+16+rand()%20, yPos + GegnerRect[GegnerArt].bottom+8, LAVA_SPRITZER2);
 
-            SoundManager.PlayWave3D((int)xPos + 30, (int)yPos + 30, 10000 + rand()%2050, SOUND_WATERIN);
+            SoundManager.PlayWave3D(static_cast<int>(xPos) + 30, static_cast<int>(yPos) + 30, 10000 + rand()%2050, SOUND_WATERIN);
         }
 
         InLava = true;
@@ -90,7 +90,7 @@ void GegnerLavaBall::DoKI(void)
             for (int i=0; i<12; i++)
                 PartikelSystem.PushPartikel(xPos+16+rand()%20, yPos + GegnerRect[GegnerArt].bottom+8, LAVA_SPRITZER);
 
-            SoundManager.PlayWave3D((int)xPos + 30, (int)yPos + 30, 10000 + rand()%2050, SOUND_WATEROUT);
+            SoundManager.PlayWave3D(static_cast<int>(xPos) + 30, static_cast<int>(yPos) + 30, 10000 + rand()%2050, SOUND_WATEROUT);
         }
 
         InLava = false;
@@ -141,13 +141,13 @@ void GegnerLavaBall::DoKI(void)
 
             PartikelSystem.PushPartikel (xPos - 10, yPos - 30, EXPLOSION_GIANT);
 
-            for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++)
                 PartikelSystem.PushPartikel (xPos - 10 + rand ()%40, yPos - 10 + rand ()%40, EXPLOSION_MEDIUM2);
 
-            for (int i = 0; i < 20; i++)
+            for (int j = 0; j < 20; j++)
                 PartikelSystem.PushPartikel (xPos - 10 + rand ()%50, yPos  - 16 + rand ()%56, MINIFLARE);
 
-            for (int i = 0; i < 20; i++)
+            for (int j = 0; j < 20; j++)
                 PartikelSystem.PushPartikel (xPos + rand ()%40, yPos + rand ()%40, SMOKE2);
         }
 }

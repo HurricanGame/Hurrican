@@ -110,12 +110,12 @@ void HUDClass::ShowHUD(void)
     if (NUMPLAYERS == 1)
     {
         off = ((MAX_ENERGY - Player[0].Energy) * 69.0f / MAX_ENERGY);
-        HUDBall[0].SetRect(0, (int)off, 69, 69);
+        HUDBall[0].SetRect(0, static_cast<int>(off), 69, 69);
         HUDBall[0].RenderSprite(xpos, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));
 
         // Radenergie
         off = ((MAX_ARMOUR - Player[0].Armour) * 69.0f / MAX_ARMOUR );
-        HUDBall[1].SetRect(0, (int)off, 69, 69);
+        HUDBall[1].SetRect(0, static_cast<int>(off), 69, 69);
         HUDBall[1].RenderSprite(xpos+548-69, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));
     }
     else
@@ -128,12 +128,12 @@ void HUDClass::ShowHUD(void)
                 pCurrentPlayer = &Player[0];
 
                 off = ((MAX_ENERGY - pCurrentPlayer->Energy) / MAX_ENERGY * 69);
-                HUDBall[0].SetRect(0, (int)off, 34, 69);
+                HUDBall[0].SetRect(0, static_cast<int>(off), 34, 69);
                 HUDBall[0].RenderSprite(xpos, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));
 
                 // Radenergie
                 off = ((MAX_ARMOUR - pCurrentPlayer->Armour) / MAX_ENERGY * 69);
-                HUDBall[1].SetRect(34, (int)off, 69, 69);
+                HUDBall[1].SetRect(34, static_cast<int>(off), 69, 69);
                 HUDBall[1].RenderSprite(xpos + 34, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));
             }
             else
@@ -141,12 +141,12 @@ void HUDClass::ShowHUD(void)
                 pCurrentPlayer = &Player[1];
 
                 off = ((MAX_ENERGY - pCurrentPlayer->Energy) / MAX_ENERGY * 69);
-                HUDBall[0].SetRect(0, (int)off, 34, 69);
+                HUDBall[0].SetRect(0, static_cast<int>(off), 34, 69);
                 HUDBall[0].RenderSprite(xpos+548-69, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));
 
                 // Radenergie
                 off = ((MAX_ARMOUR - pCurrentPlayer->Armour) / MAX_ARMOUR * 69);
-                HUDBall[1].SetRect(34, (int)off, 69, 69);
+                HUDBall[1].SetRect(34, static_cast<int>(off), 69, 69);
                 HUDBall[1].RenderSprite(xpos+548-69 + 34, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));
             }
         }
@@ -362,7 +362,7 @@ void HUDClass::ShowHUD(void)
         {
             if (NUMPLAYERS == 2 &&
                     Player[p].SelectedWeapon != Player[1-p].SelectedWeapon &&
-                    Player[1-p].SelectedWeapon == (int)i)
+                    Player[1-p].SelectedWeapon == static_cast<int>(i))
                 continue;
 
             if (i == (unsigned int)Player[p].SelectedWeapon)
@@ -380,7 +380,7 @@ void HUDClass::ShowHUD(void)
             else
             {
                 if (NUMPLAYERS == 1 ||
-                        Player[p].SelectedWeapon != (int)i)
+                        Player[p].SelectedWeapon != static_cast<int>(i))
                     playercol = D3DCOLOR_RGBA(0, 255, 0, 64);
                 else
                 {
@@ -406,8 +406,8 @@ void HUDClass::ShowHUD(void)
                 else
                     WeaponRahmen.itsRect.left  = 5;
 
-                WeaponRahmen.RenderSprite((float)(xpos + p * 5 + 216 + i*32),
-                                          (float)(ypos +  35), playercol);
+                WeaponRahmen.RenderSprite(static_cast<float>(xpos + p * 5 + 216 + i*32),
+                                          static_cast<float>(ypos +  35), playercol);
 
             }
 
@@ -415,7 +415,7 @@ void HUDClass::ShowHUD(void)
             for (int j=0; j<Player[p].CurrentWeaponLevel[i]; j++)
             {
                 if (NUMPLAYERS == 1 ||
-                        (Player[p].SelectedWeapon == (int)i &&
+                        (Player[p].SelectedWeapon == static_cast<int>(i) &&
                          Player[p].SelectedWeapon != Player[1-p].SelectedWeapon))
 
                     WeaponPunkt.RenderSprite(xpos + 217 + i*32, ypos +  50 - j * 2 , 0, playercol);
@@ -512,16 +512,16 @@ void HUDClass::ShowHUD(void)
         {
             DirectGraphics.SetAdditiveMode();
 
-            float size = (float)((int)(TileEngine.Timelimit + 1) - TileEngine.Timelimit) * 255.0f;
+            float size = static_cast<float>(static_cast<int>(TileEngine.Timelimit + 1) - TileEngine.Timelimit) * 255.0f;
 
             float xoff = 0.0f;
-            if ((int)(TileEngine.Timelimit) == 1)
+            if (static_cast<int>(TileEngine.Timelimit) == 1)
                 xoff = -size / 2.4f;
 
             HUDFontBig.RenderSpriteScaled(320 - size / 2.0f + xoff,
                                           240 - size / 2.0f,
-                                          12 + (int)size,
-                                          24 + (int)size, D3DCOLOR_RGBA(255, 0, 0, 255 - (int)(size)));
+                                          12 + static_cast<int>(size),
+                                          24 + static_cast<int>(size), D3DCOLOR_RGBA(255, 0, 0, 255 - static_cast<int>(size)));
 
             DirectGraphics.SetColorKeyMode();
         }

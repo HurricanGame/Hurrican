@@ -33,12 +33,12 @@ _asm fistp x
 
 #else
 
-#define MYMATH_FTOL(fx,x)  (x) = (long)(fx)
+#define MYMATH_FTOL(fx,x)  (x) = static_cast<long>(fx)
 
 #endif /* defined(USE_X86) */
 #endif //0
 
-#define MYMATH_FTOL(fx,x)  (x) = (long)(fx)
+#define MYMATH_FTOL(fx,x)  (x) = static_cast<long>(fx)
 
 // DKS - When the following is defined, all calls to rand() end up calling fast_rand()
 #ifdef USE_FAST_RNG

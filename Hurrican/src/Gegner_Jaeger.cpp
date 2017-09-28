@@ -36,14 +36,14 @@ void GegnerJaeger::DoDraw(void)
     // beim Hoch fliegen
     //
     if (Handlung == GEGNER_DREHEN)
-        pGegnerGrafix[GegnerArt]->RenderSpriteScaled((float)(xPos-TileEngine.XOffset),
-                (float)(yPos-TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSpriteScaled(static_cast<float>(xPos-TileEngine.XOffset),
+                static_cast<float>(yPos-TileEngine.YOffset),
                 35, 26, AnimPhase, 0xFFFFFFFF);
     // und beim runterfliegen
     //
     else if (Handlung == GEGNER_DREHEN2)
-        pGegnerGrafix[GegnerArt]->RenderSpriteRotated((float)(xPos-TileEngine.XOffset),
-                (float)(yPos-TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos-TileEngine.XOffset),
+                static_cast<float>(yPos-TileEngine.YOffset),
                 180, AnimPhase, 0xFFFFFFFF);
 }
 

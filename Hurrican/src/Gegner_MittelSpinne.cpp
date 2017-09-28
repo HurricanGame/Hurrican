@@ -15,18 +15,18 @@ GegnerMittelSpinne::GegnerMittelSpinne(int Wert1, int Wert2, bool Light)
 {
     Handlung		= GEGNER_LAUFEN;
     Energy			= 50;
-    AnimSpeed		= (float)(rand()%8 + 5) / 8.0f;
+    AnimSpeed		= static_cast<float>(rand()%8 + 5) / 8.0f;
     ChangeLight		= Light;
     Destroyable		= true;
     AnimEnde		= 8;
     Value1			= Wert1;
     Value2			= Wert2;
-    rot				= (float)(rand()%80 + 140);
+    rot				= static_cast<float>(rand()%80 + 140);
     OwnDraw			= true;
     TestBlock		= false;
     shotdelay		= 0.0f;
     Active			= true;
-    yStart			= (float)(TileEngine.YOffset);
+    yStart			= static_cast<float>(TileEngine.YOffset);
 }
 
 // --------------------------------------------------------------------------------------
@@ -52,18 +52,18 @@ void GegnerMittelSpinne::DoDraw(void)
     if (lightred > light)
         lightred = light;
 
-    D3DCOLOR Color = D3DCOLOR_RGBA((int)(light), (int)(lightred), (int)(lightred), 255);
+    D3DCOLOR Color = D3DCOLOR_RGBA(static_cast<int>(light), static_cast<int>(lightred), static_cast<int>(lightred), 255);
 
     // Schatten rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-TileEngine.XOffset) + 6,
-            (float)(yPos-TileEngine.YOffset) + 6,
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated (static_cast<float>(xPos-TileEngine.XOffset) + 6,
+            static_cast<float>(yPos-TileEngine.YOffset) + 6,
             rot, AnimPhase, 0x55000000);
 
     // Spinne rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-TileEngine.XOffset),
-            (float)(yPos-TileEngine.YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated (static_cast<float>(xPos-TileEngine.XOffset),
+            static_cast<float>(yPos-TileEngine.YOffset),
             rot, AnimPhase, Color);
 }
 

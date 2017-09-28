@@ -20,7 +20,7 @@ GegnerSchleimMaul::GegnerSchleimMaul (float x, float y, int  Wert1, int Wert2, b
     Value2			= Wert2;
     ChangeLight		= Light;
     Destroyable		= true;
-    AnimSpeed       = ((float)(rand()%4 + 2)) / 10.0f;
+    AnimSpeed       = (static_cast<float>(rand()%4 + 2)) / 10.0f;
     AnimEnde		= 15;
     ShotDelay		= 0.0f;
     SpawnCount		= 0.0f;
@@ -36,14 +36,14 @@ GegnerSchleimMaul::GegnerSchleimMaul (float x, float y, int  Wert1, int Wert2, b
 
         // Zufallspunkt um die Mama rum
         //
-        r = (float)(rand()%360);
+        r = static_cast<float>(rand()%360);
 
         r1 = float (rand()%40) + 30;
         r2 = float (rand()%40) + 30;
 
         //DKS - Obvious bug I am fixing here: passing a value between 0-359 to sin()/cos(), which take 
         //      radian inputs, while also adding support of deg/rad cos/sin w/ lookup table support:
-        //Gegner.PushGegner (x + (float)(sin(r)) * r1, y + (float)(cos(r)) * r2, SCHLEIMALIEN, 0, 0, ChangeLight);
+        //Gegner.PushGegner (x + static_cast<float>(sin(r)) * r1, y + static_cast<float>(cos(r)) * r2, SCHLEIMALIEN, 0, 0, ChangeLight);
         Gegner.PushGegner (x + sin_deg(r) * r1, y + cos_deg(r) * r2, SCHLEIMALIEN, 0, 0, ChangeLight);
         pChildren[i] = Gegner.pEnd;
     }
@@ -57,8 +57,8 @@ void GegnerSchleimMaul::DoDraw(void)
 {
     // etwas durchsichtig rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                           (float)(yPos-TileEngine.YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                           static_cast<float>(yPos-TileEngine.YOffset),
                                            AnimPhase, 0xAAFFFFFF);
 }
 
@@ -79,14 +79,14 @@ void GegnerSchleimMaul::DoKI(void)
 
             // Zufallspunkt um die Mama rum
             //
-            r = (float)(rand()%360);
+            r = static_cast<float>(rand()%360);
 
             r1 = float (rand()%40) + 30;
             r2 = float (rand()%40) + 30;
 
             //DKS - Obvious bug I am fixing here: passing a value between 0-359 to sin()/cos(), which take 
             //      radian inputs, while also adding support of deg/rad cos/sin w/ lookup table support:
-            //Gegner.PushGegner (xPos + (float)(sin(r)) * r1, yPos + (float)(cos(r)) * r2, SCHLEIMALIEN, 20, 0, ChangeLight);
+            //Gegner.PushGegner (xPos + static_cast<float>(sin(r)) * r1, yPos + static_cast<float>(cos(r)) * r2, SCHLEIMALIEN, 20, 0, ChangeLight);
             Gegner.PushGegner (xPos + sin_deg(r) * r1, yPos + cos_deg(r) * r2, SCHLEIMALIEN, 20, 0, ChangeLight);
             pChildren[i] = Gegner.pEnd;
         }

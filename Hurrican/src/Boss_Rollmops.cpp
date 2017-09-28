@@ -36,7 +36,7 @@ GegnerRollmops::GegnerRollmops(int Wert1, int Wert2, bool Light)
     for (int i = 0; i < NUM_KETTENGLIEDER; i++)
     {
         Gegner.PushGegner(0, 0, KETTENGLIED, 0, 0, false);
-        pKettenTeile[i] = (GegnerKettenglied*)(Gegner.pEnd);
+        pKettenTeile[i] = reinterpret_cast<GegnerKettenglied *>(Gegner.pEnd);
         pKettenTeile[i]->pParent = this;
     }
 }
@@ -114,8 +114,8 @@ void GegnerRollmops::DoDraw(void)
             pKettenTeile[i]->AnimCount = 360.0f - RadToDeg(Schwung);
         }
 
-        Rollen.RenderSprite((float)(xPos-TileEngine.XOffset),
-                            (float)(yPos-TileEngine.YOffset), AnimPhase, 0xFFFFFFFF, mirrored);
+        Rollen.RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                            static_cast<float>(yPos-TileEngine.YOffset), AnimPhase, 0xFFFFFFFF, mirrored);
 
     }
     break;
@@ -131,16 +131,16 @@ void GegnerRollmops::DoDraw(void)
     case GEGNER_WARTEN:
     case GEGNER_EXPLODIEREN:
     {
-        Rollen.RenderSprite((float)(xPos-TileEngine.XOffset),
-                            (float)(yPos-TileEngine.YOffset), AnimPhase, 0xFFFFFFFF, mirrored);
+        Rollen.RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                            static_cast<float>(yPos-TileEngine.YOffset), AnimPhase, 0xFFFFFFFF, mirrored);
     }
     break;
 
     case GEGNER_INIT:
     case GEGNER_STEHEN:
     {
-        pGegnerGrafix[GegnerArt]->RenderSpriteScaled((float)(xPos-TileEngine.XOffset) + 16.0f,
-                (float)(yPos-TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSpriteScaled(static_cast<float>(xPos-TileEngine.XOffset) + 16.0f,
+                static_cast<float>(yPos-TileEngine.YOffset),
                 120, 120,
                 AnimPhase, 0xFFFFFFFF);
     }
@@ -151,8 +151,8 @@ void GegnerRollmops::DoDraw(void)
     {
         mirrored = (xPos < Value1 + 320.0f);
 
-        Aufklappen.RenderSprite((float)(xPos-TileEngine.XOffset),
-                                (float)(yPos-TileEngine.YOffset),
+        Aufklappen.RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                static_cast<float>(yPos-TileEngine.YOffset),
                                 AnimPhase, 0xFFFFFFFF, mirrored);
     }
     break;
@@ -167,14 +167,14 @@ void GegnerRollmops::DoDraw(void)
             xoff = 65.0f;
 
         // Knarre rendern
-        Gun.RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset) + 6.0f + xoff,
-                                      (float)(yPos-TileEngine.YOffset) + 38.0f,
+        Gun.RenderSpriteRotatedOffset(static_cast<float>(xPos-TileEngine.XOffset) + 6.0f + xoff,
+                                      static_cast<float>(yPos-TileEngine.YOffset) + 38.0f,
                                       GunWinkel,
                                       53, 20, 0xFFFFFFFF, mirrored);
 
         // Mops ohne Knarre rendern
-        Aufklappen.RenderSprite((float)(xPos-TileEngine.XOffset),
-                                (float)(yPos-TileEngine.YOffset),
+        Aufklappen.RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                static_cast<float>(yPos-TileEngine.YOffset),
                                 8, 0xFFFFFFFF, mirrored);
     }
     break;
@@ -242,9 +242,9 @@ void GegnerRollmops::Losrollen(void)
 void GegnerRollmops::Abhopsen(float mul)
 {
     if (ySpeed > 0.0f &&
-            yPos > (float)(Value2 + 480.0f - 100.0f - 40.0f))
+            yPos > static_cast<float>(Value2 + 480.0f - 100.0f - 40.0f))
     {
-        yPos = (float)(Value2 + 480.0f - 100.0f - 40.0f);
+        yPos = static_cast<float>(Value2 + 480.0f - 100.0f - 40.0f);
 
         SoundManager.PlayWave(100, 128, 8000 + rand()%2000, SOUND_LANDEN);
 
@@ -289,7 +289,7 @@ void GegnerRollmops::RoundShot(bool single)
             WinkelCount = 0;
     }
     else
-        for (WinkelCount = (float)(rand()%30); WinkelCount < 360.0f; WinkelCount += 30)
+        for (WinkelCount = static_cast<float>(rand()%30); WinkelCount < 360.0f; WinkelCount += 30)
         {
             WinkelUebergabe = WinkelCount;
             //DKS - support sin/cos lookup table & deg/rad versions of sin/cos
@@ -316,8 +316,8 @@ void GegnerRollmops::DoKI(void)
     // Levelausschnitt auf den Mops zentrieren, sobald dieser sichtbar wird
     if (TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        TileEngine.ScrollLevel((float)Value1,
-                                 (float)Value2, ZUSTAND_SCROLLTOLOCK);
+        TileEngine.ScrollLevel(static_cast<float>(Value1),
+                                 static_cast<float>(Value2), ZUSTAND_SCROLLTOLOCK);
 
         // Mops aus Screen bringen
         xPos = Value1 + 640.0f;
@@ -411,22 +411,22 @@ void GegnerRollmops::DoKI(void)
                     shot = true;
                 }
 
-                HookY = (float)Value2 + 20;
+                HookY = static_cast<float>(Value2) + 20;
 
                 //DKS - This was already commented out in original source:
                 //xPos = pPlayer->xpos;
 
 
-                xPos = (float)(Value1 + 320.0f - 65.0f + sin(Schwung) * 300.0f);
-                yPos = (float)(Value2 - 500.0f + cos(Schwung * 0.75f) * 830.0f);
+                xPos = static_cast<float>(Value1 + 320.0f - 65.0f + sin(Schwung) * 300.0f);
+                yPos = static_cast<float>(Value2 - 500.0f + cos(Schwung * 0.75f) * 830.0f);
 
                 SchwungDir += 0.16f SYNC;
                 if (SchwungDir > 2*PI)
                     SchwungDir = 0.0f;
 
-                Schwung = (float)sin(SchwungDir);
+                Schwung = sin(SchwungDir);
 
-                AnimPhase = - (int)(((Value1 + 640.0f) - xPos) / 200.0f);
+                AnimPhase = - static_cast<int>(((Value1 + 640.0f) - xPos) / 200.0f);
 
                 if (AnimPhase < 0)
                     AnimPhase += 10;
@@ -520,7 +520,7 @@ void GegnerRollmops::DoKI(void)
                 ShotDelay -= 1.0f;
 
                 // abspringen?
-                if ((int)(ShotDelay) % 3 == 0)
+                if (static_cast<int>(ShotDelay) % 3 == 0)
                 {
                     xSpeed = 12.0f;
                     ySpeed = -60.0f;
@@ -588,7 +588,7 @@ void GegnerRollmops::DoKI(void)
                 ShotDelay -= 1.0f;
 
                 // abspringen?
-                if ((int)(ShotDelay) % 3 == 0)
+                if (static_cast<int>(ShotDelay) % 3 == 0)
                 {
                     xSpeed = -16.0f;
                     ySpeed = -60.0f;
@@ -705,7 +705,7 @@ void GegnerRollmops::DoKI(void)
                 // schiessen?
                 if (Handlung == GEGNER_OEFFNEN)
                 {
-                    ShotCount = (float)(rand()%15) + 15;
+                    ShotCount = static_cast<float>(rand()%15) + 15;
                     Handlung = GEGNER_VERFOLGEN;
                     Destroyable = true;
                 }
@@ -894,7 +894,7 @@ void GegnerRollmops::DoKI(void)
     GegnerRect[GegnerArt].left   = 20;
     GegnerRect[GegnerArt].right  = 80;
     GegnerRect[GegnerArt].bottom = 80;
-    TestDamagePlayers((float) 20.0 SYNC);
+    TestDamagePlayers(20.0f SYNC);
 
     // Keine Energie mehr? Dann explodieren
     if (Energy <= 0.0f &&

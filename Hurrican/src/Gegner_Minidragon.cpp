@@ -31,7 +31,7 @@ GegnerMiniDragon::GegnerMiniDragon(int Wert1, int Wert2, bool Light)
     {
         ySpeed = -(13.0f + rand()%4);
         yAcc = 3.0f;
-        xSpeed = (float)(rand()%10 - 5) / 2.0f;
+        xSpeed = static_cast<float>(rand()%10 - 5) / 2.0f;
         Handlung = GEGNER_FALLEN;
 
         AnimCount = 0.0f;
@@ -56,10 +56,9 @@ void GegnerMiniDragon::DoDraw(void)
 
     mirrored = pAim->xpos + 35 < xPos + 30;
 
-    int i = 0;
     for (int i = 0; i < Segments; i++)
-        pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-TileEngine.XOffset) + (6-i) * mulx,
-                                                (float)(yPos-TileEngine.YOffset) + (6-i) * muly,
+        pGegnerGrafix[GegnerArt]->RenderSprite (static_cast<float>(xPos-TileEngine.XOffset) + (6-i) * mulx,
+                                                static_cast<float>(yPos-TileEngine.YOffset) + (6-i) * muly,
                                                 4, 0xFFFFFFFF);
 
     // Kopf
@@ -98,9 +97,8 @@ void GegnerMiniDragon::DoDraw(void)
 
     if (Segments == 6)
     {
-        i++;
-        pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-TileEngine.XOffset) + BlickRichtung * 15.0f,
-                                                (float)(yPos-TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSprite (static_cast<float>(xPos-TileEngine.XOffset) + BlickRichtung * 15.0f,
+                                                static_cast<float>(yPos-TileEngine.YOffset),
                                                 a, 0xFFFFFFFF, mirrored);
     }
 }

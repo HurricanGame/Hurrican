@@ -26,7 +26,7 @@ GegnerLaFassSpawner::GegnerLaFassSpawner(int Wert1, int Wert2, bool Light)
     ChangeLight		= Light;
     Destroyable		= false;
     OwnDraw			= true;
-    AnimCount		= (float)(Wert2);
+    AnimCount		= static_cast<float>(Wert2);
     DontMove		= true;
     Active			= true;
 }
@@ -43,7 +43,7 @@ void GegnerLaFassSpawner::DoKI(void)
 
     if (AnimCount <= 0.0f)
     {
-        AnimCount = (float)(Value2);
+        AnimCount = static_cast<float>(Value2);
 
         // in die richtige Richtung schubsen
         if (Value1 == 0)

@@ -1581,12 +1581,12 @@ void ShowDebugInfo(void)
     pDefaultFont->DrawText(300, 75, StringBuffer, 0xFFFFFFFF);
 
     // MoveSpeed anzeigen
-    _itoa_s((int)(Timer.GetMoveSpeed()), StringBuffer, 10);
+    _itoa_s(static_cast<int>(Timer.GetMoveSpeed()), StringBuffer, 10);
     pDefaultFont->DrawText(  0, 90, "Move Speed :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 90, StringBuffer, 0xFFFFFFFF);
 
     // Blitzwinkel angeben
-    //_itoa_s((int)(Player->BlitzWinkel), StringBuffer, 10);
+    //_itoa_s(static_cast<int>(Player->BlitzWinkel), StringBuffer, 10);
     pDefaultFont->DrawText(  0, 135, "Blitzwinkel :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 135, StringBuffer, 0xFFFFFFFF);
 
@@ -1624,9 +1624,9 @@ void ShowFPS()
     unsigned int cur_ticks = timeGetTime();
     unsigned int ticks_elapsed = cur_ticks - ticks_fps_last_updated;
     if (ticks_elapsed > fps_update_freq_in_ticks && frame_ctr > 0) {
-        float avg_fps = (float)frame_ctr * 
-            (1000.0f / (float)fps_update_freq_in_ticks) *
-            ((float)fps_update_freq_in_ticks / (float)ticks_elapsed);
+        float avg_fps = static_cast<float>(frame_ctr) * 
+            (1000.0f / static_cast<float>(fps_update_freq_in_ticks)) *
+            (static_cast<float>(fps_update_freq_in_ticks) / static_cast<float>(ticks_elapsed));
         sprintf_s(char_buf, "FPS: %.1f", avg_fps );
         fprintf_s(stdout, char_buf);
         fprintf_s(stdout, "\n");

@@ -52,7 +52,7 @@ void GegnerWandKannone::DoKI(void)
             {
                 AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
                 AnimEnde  = 0;
-                AnimCount = (float) Value1;
+                AnimCount = static_cast<float>(Value1);
                 Handlung = GEGNER_LAUFEN;
             }
         }

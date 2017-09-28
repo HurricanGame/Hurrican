@@ -71,41 +71,41 @@ void GegnerFlugBoss::DoDraw(void)
 {
     // Schienen
     SchieneL.RenderSprite(-SchienePos,
-                          (float)(yPos-TileEngine.YOffset) + 161,
+                          static_cast<float>(yPos-TileEngine.YOffset) + 161,
                           0xFFFFFFFF);
 
     SchieneR.RenderSprite(320 + SchienePos,
-                          (float)(yPos-TileEngine.YOffset) + 161,
+                          static_cast<float>(yPos-TileEngine.YOffset) + 161,
                           0xFFFFFFFF);
 
     // Fette Kanone
-    Kanone_big.RenderSprite((float) (- TileEngine.XOffset + xPos + 121),
-                            (float) (- TileEngine.YOffset + yPos + 249 - yKanone[0]),
+    Kanone_big.RenderSprite(static_cast<float>(- TileEngine.XOffset + xPos + 121),
+                            static_cast<float>(- TileEngine.YOffset + yPos + 249 - yKanone[0]),
                             0xFFFFFFFF);
 
     // Medium Kanone
-    Kanone_medium.RenderSprite((float) (- TileEngine.XOffset + xPos + 148),
-                               (float) (- TileEngine.YOffset + yPos + 254 - yKanone[1]),
+    Kanone_medium.RenderSprite(static_cast<float>(- TileEngine.XOffset + xPos + 148),
+                               static_cast<float>(- TileEngine.YOffset + yPos + 254 - yKanone[1]),
                                0xFFFFFFFF);
 
     // Mini Kanone 1
-    Kanone_small.RenderSprite((float) (- TileEngine.XOffset + xPos + 68),
-                              (float) (- TileEngine.YOffset + yPos + 261 - yKanone[2]),
+    Kanone_small.RenderSprite(static_cast<float>(- TileEngine.XOffset + xPos + 68),
+                              static_cast<float>(- TileEngine.YOffset + yPos + 261 - yKanone[2]),
                               0xFFFFFFFF);
 
     // Mini Kanone 2
-    Kanone_small.RenderSprite((float) (- TileEngine.XOffset + xPos + 78),
-                              (float) (- TileEngine.YOffset + yPos + 251 - yKanone[3]),
+    Kanone_small.RenderSprite(static_cast<float>(- TileEngine.XOffset + xPos + 78),
+                              static_cast<float>(- TileEngine.YOffset + yPos + 251 - yKanone[3]),
                               0xFFFFFFFF);
 
     // Schatten
-    RenderRect ((float)(xPos-TileEngine.XOffset + 255),
-                (float)(yPos-TileEngine.YOffset + 161),
+    RenderRect (static_cast<float>(xPos-TileEngine.XOffset + 255),
+                static_cast<float>(yPos-TileEngine.YOffset + 161),
                 18, 80, 0x88000000);
 
     // Main
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                           (float)(yPos-TileEngine.YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                           static_cast<float>(yPos-TileEngine.YOffset),
                                            AnimPhase, 0xFFFFFFFF);
 
     //int a = int (alphaAuge); // PICKLE not used
@@ -121,12 +121,12 @@ void GegnerFlugBoss::DoDraw(void)
 
     // Geschuetz
     Geschuetz.RenderSpriteRotated(xKanone - 62,
-                                  (float) (- TileEngine.YOffset + yPos + 160), Winkel[0], 0,
+                                  static_cast<float>(- TileEngine.YOffset + yPos + 160), Winkel[0], 0,
                                   0xFFFFFFFF);
 
     // Geschuetz
     Geschuetz.RenderSpriteRotated(640 - xKanone,
-                                  (float) (- TileEngine.YOffset + yPos + 160), Winkel[1], 0,
+                                  static_cast<float>(- TileEngine.YOffset + yPos + 160), Winkel[1], 0,
                                   0xFFFFFFFF);
 
     // Auge
@@ -145,8 +145,8 @@ void GegnerFlugBoss::DoDraw(void)
         alphaDir  = 1.0f;
     }
 
-    Auge.RenderSprite((float) (- TileEngine.XOffset + xPos + 175),
-                      (float) (- TileEngine.YOffset + yPos + 182), 0,
+    Auge.RenderSprite(static_cast<float>(- TileEngine.XOffset + xPos + 175),
+                      static_cast<float>(- TileEngine.YOffset + yPos + 182), 0,
                       0xFFFFFFFF);
 }
 
@@ -179,8 +179,8 @@ void GegnerFlugBoss::DoKI(void)
     	// Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
     	if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     	{
-    		TileEngine.ScrollLevel((float)Value1,
-    								 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
+    		TileEngine.ScrollLevel(static_cast<float>(Value1),
+    								 static_cast<float>(Value2), ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
     		SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
 

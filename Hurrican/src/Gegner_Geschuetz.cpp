@@ -60,7 +60,7 @@ void GegnerGeschuetz::DoKI(void)
         if (AnimPhase == AnimStart)
         {
             Projectiles.PushProjectile(xPos + 27, yPos + 36, KRABBLERLASER1);
-            SoundManager.PlayWave3D((int)(xPos + 30), (int)(yPos + 30), 44000, SOUND_LASERSHOT);
+            SoundManager.PlayWave3D(static_cast<int>(xPos + 30), static_cast<int>(yPos + 30), 44000, SOUND_LASERSHOT);
             Handlung  = GEGNER_SCHLIESSEN;
             AnimEnde  = 25;
             AnimStart = 0;

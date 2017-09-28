@@ -520,13 +520,13 @@ void MenuClass::ShowMenu(void)
     {
         const int OFFSET2 = 20;
 
-        float d = (float)(pMenuFont->StringLength(TextArray [TEXT_MENUE_EINSTELLUNGEN], 2));
+        float d = static_cast<float>(pMenuFont->StringLength(TextArray [TEXT_MENUE_EINSTELLUNGEN], 2));
         pMenuFont->DrawText(320 - d/2.0f, ypos + OFFSET - OFFSET2, TextArray [TEXT_MENUE_EINSTELLUNGEN], menucolor, 2);
 
         // Sound / Musik Lautstärke
         for (int i=0; i<2; i++)
         {
-            float d = (float)(pMenuFont->StringLength(TextArray [TEXT_SOUND + i], 2));
+            float d = static_cast<float>(pMenuFont->StringLength(TextArray [TEXT_SOUND + i], 2));
 
             if (i == 0)
                 LoadingBar.SetRect(0, 0, int(SoundManager.g_sound_vol / 100.0f * 318.0f), 19);
@@ -558,7 +558,7 @@ void MenuClass::ShowMenu(void)
         //Sonstige Menu-Punkte anzeigen
         for (int i=2; i<4; i++)
         {
-            float d = (float)(pMenuFont->StringLength(TextArray [TEXT_SOUND + i], 2));
+            float d = static_cast<float>(pMenuFont->StringLength(TextArray [TEXT_SOUND + i], 2));
 
             // Schrift anzeigen
             //
@@ -570,7 +570,7 @@ void MenuClass::ShowMenu(void)
         }
 
         // Detailstufe
-        d = (float)(pMenuFont->StringLength(TextArray [TEXT_DETAIL_LOW + options_Detail], 2));
+        d = static_cast<float>(pMenuFont->StringLength(TextArray [TEXT_DETAIL_LOW + options_Detail], 2));
         if (4 == AktuellerPunkt)
             pMenuFont->DrawText (320.0f - d / 2.0f, ypos + OFFSET - OFFSET2 + (4+2) * 35, TextArray[TEXT_DETAIL_LOW + options_Detail], menucolor, 2);
         else
@@ -588,7 +588,7 @@ void MenuClass::ShowMenu(void)
             vertical_spacing += 8;
         }
 
-        float d = (float)(pMenuFont->StringLength(TextArray [TEXT_SPRACHE], 2));
+        float d = static_cast<float>(pMenuFont->StringLength(TextArray [TEXT_SPRACHE], 2));
         pMenuFont->DrawText(320 - d/2.0f, ypos + OFFSET, TextArray [TEXT_SPRACHE], menucolor, 2);
 
         char lang_name[256] = "";
@@ -658,12 +658,12 @@ void MenuClass::ShowMenu(void)
                 p1_col = 0xFFFFFFFF;
                 p2_col = 0x88FFFFFF;
                 RenderRect(col1_off_x - 4, line1_off_y + MENU_TASTEN_PLAYER_LINE*line_spacing - 2, 
-                        (float)pDefaultFont->StringLength(TextArray[TEXT_PLAYER_ONE]) + 10, line_spacing, 0x30FFFFFF);
+                        pDefaultFont->StringLength(TextArray[TEXT_PLAYER_ONE]) + 10, line_spacing, 0x30FFFFFF);
             } else {
                 p1_col = 0x88FFFFFF;
                 p2_col = 0xFFFFFFFF;
                 RenderRect(col1_off_x + col2_off_x - 4, line1_off_y+MENU_TASTEN_PLAYER_LINE*line_spacing - 2, 
-                        (float)pDefaultFont->StringLength(TextArray[TEXT_PLAYER_TWO]) + 10, line_spacing, 0x30FFFFFF);
+                        pDefaultFont->StringLength(TextArray[TEXT_PLAYER_TWO]) + 10, line_spacing, 0x30FFFFFF);
             }
         } else {
             p1_col = 0x88FFFFFF;
@@ -925,7 +925,7 @@ void MenuClass::ShowMenu(void)
     {
         char Buffer[100];		// Für itoa
 
-        float d = (float)(pMenuFont->StringLength(TextArray [TEXT_MENUE_HIGHSCORES], 2));
+        float d = static_cast<float>(pMenuFont->StringLength(TextArray [TEXT_MENUE_HIGHSCORES], 2));
         pMenuFont->DrawText(320 - d/2.0f, ypos, TextArray [TEXT_MENUE_HIGHSCORES], menucolor, 2);
 
         //pMenuFont->DrawText(xpos-120,  ypos+55, TextArray [TEXT_HIGHSCORE_PLATZ],  0xFFFFFFFF, 2);
@@ -2494,7 +2494,7 @@ void MenuClass::DoMenu(void)
                 // Prüfsumme gegen Savegame-Manipulation errechnen
 
                 Savegames[AktuellerPunkt].Pruefsumme =
-                    (int)Player[0].Energy + (int)Player[0].Armour + (int)Player[0].Shield +
+                    static_cast<int>(Player[0].Energy) + static_cast<int>(Player[0].Armour) + static_cast<int>(Player[0].Shield) +
                     Player[0].Score  + Stage  + Skill  +
                     NewStage + Player[0].CollectedDiamonds +
                     Player[0].SelectedWeapon;
@@ -2595,7 +2595,7 @@ void MenuClass::LoadSavegames(void)
             long Pruefsumme;
 
             Pruefsumme =
-                (int)Savegames[i].Energy[0] + (int)Savegames[i].Armour[0] + (int)Savegames[i].Shield[0] +
+                static_cast<int>(Savegames[i].Energy[0]) + static_cast<int>(Savegames[i].Armour[0]) + static_cast<int>(Savegames[i].Shield[0]) +
                 Savegames[i].Score  + Savegames[i].Stage  + Savegames[i].Skill  +
                 Savegames[i].NewStage + Savegames[i].CollectedDiamonds +
                 Savegames[i].SelectedWeapon[0];

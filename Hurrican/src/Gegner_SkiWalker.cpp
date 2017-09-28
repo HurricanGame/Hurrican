@@ -111,7 +111,7 @@ void GegnerSkiWalker::DoKI(void)
 
             if (ShotDelay <= 0.0f)
             {
-                ShotDelay = (float)(10 + rand()%5);
+                ShotDelay = static_cast<float>(10 + rand()%5);
                 SoundManager.PlayWave(100, 128, 18000 + rand()%2000, SOUND_LASERSHOT);
 
                 if (BlickRichtung == LINKS)

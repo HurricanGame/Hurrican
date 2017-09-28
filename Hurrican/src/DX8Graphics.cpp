@@ -551,7 +551,6 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
     char vert[256];
     char frag[256];
 #endif
-    char* output;
 
 #if defined(__WIN32__)
     if (LoadGLFunctions() != 0)
@@ -563,18 +562,14 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
     SetupFramebuffers();
 
     /* OpenGL Information */
-    output = (char*)glGetString( GL_VENDOR );
-    Protokoll << "GL_VENDOR: " << output << std::endl;
-    output = (char*)glGetString( GL_RENDERER );
-    Protokoll << "GL_RENDERER: " << output << std::endl;
-    output = (char*)glGetString( GL_VERSION );
-    Protokoll << "GL_VERSION: " << output << std::endl;
+    Protokoll << "GL_VENDOR: " << glGetString(GL_VENDOR) << std::endl;
+    Protokoll << "GL_RENDERER: " << glGetString(GL_RENDERER) << std::endl;
+    Protokoll << "GL_VERSION: " << glGetString(GL_VERSION) << std::endl;
 #if defined(USE_GL2)
-    output = (char*)glGetString( GL_SHADING_LANGUAGE_VERSION );
-    Protokoll << "GL_SHADING_LANGUAGE_VERSION: " << output << std::endl;
+    Protokoll << "GL_SHADING_LANGUAGE_VERSION: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 #endif
-    glextentsions = (char*)glGetString( GL_EXTENSIONS );
-    Protokoll << "GL_EXTENSIONS: " << glextentsions << std::endl;
+    glextensions = reinterpret_cast<const char *>(glGetString(GL_EXTENSIONS));
+    Protokoll << "GL_EXTENSIONS: " << glextensions << std::endl;
 
 #if defined(USE_ETC1)
     SupportedETC1 = ExtensionSupported( "GL_OES_compressed_ETC1_RGB8_texture" );
@@ -646,8 +641,8 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
     g_matView.identity();
     g_matModelView.identity();
 
-    cml::matrix_orthographic_RH( matProjWindow, 0.0f, (float)WindowView.w, (float)WindowView.h, 0.0f, 0.0f, 1.0f, cml::z_clip_neg_one );
-    cml::matrix_orthographic_RH( matProjRender, 0.0f, (float)RenderView.w, (float)RenderView.h, 0.0f, 0.0f, 1.0f, cml::z_clip_neg_one );
+    cml::matrix_orthographic_RH( matProjWindow, 0.0f, static_cast<float>(WindowView.w), static_cast<float>(WindowView.h), 0.0f, 0.0f, 1.0f, cml::z_clip_neg_one );
+    cml::matrix_orthographic_RH( matProjRender, 0.0f, static_cast<float>(RenderView.w), static_cast<float>(RenderView.h), 0.0f, 0.0f, 1.0f, cml::z_clip_neg_one );
     matProj = matProjWindow;
 
 #if defined(USE_GL1)
@@ -837,7 +832,7 @@ void DirectGraphicsClass::SetFilterMode (bool filteron)
 
 void DirectGraphicsClass::RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,
         std::uint32_t PrimitiveCount,
-        const void* pVertexStreamZeroData)
+        void *pVertexStreamZeroData)
 {
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->DrawPrimitiveUP(PrimitiveType, PrimitiveCount, pVertexStreamZeroData, sizeof(VERTEX2D));
@@ -893,14 +888,14 @@ void DirectGraphicsClass::RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,
 #if defined(USE_GL1)
     // Swizzle the color from bgra to rgba
     uint32_t color;
-    uint8_t* data = (uint8_t*)pVertexStreamZeroData;
+    uint8_t *data = reinterpret_cast<uint8_t *>(pVertexStreamZeroData);
     for (uint32_t count=0; count<PrimitiveCount; count++)
     {
-        color = *(uint32_t*)(data+clr_offset);
+        color = *reinterpret_cast<uint32_t *>(data+clr_offset);
 
         if (color != 0xFFFFFFFF)
         {
-            *(uint32_t*)(data+clr_offset) =  (color & 0xFF00FF00) +
+            *reinterpret_cast<uint32_t *>(data+clr_offset) =  (color & 0xFF00FF00) +
                                              ((color & 0x00FF0000) >> 16) +
                                              ((color & 0x000000FF) << 16);
             data += stride;
@@ -911,14 +906,14 @@ void DirectGraphicsClass::RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,
     if (use_texture == true)
     {
         glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-        glTexCoordPointer( 2, GL_FLOAT, stride, (uint8_t*)pVertexStreamZeroData+tex_offset );
+        glTexCoordPointer( 2, GL_FLOAT, stride, reinterpret_cast<uint8_t *>(pVertexStreamZeroData)+tex_offset);
     }
 
     glEnableClientState( GL_VERTEX_ARRAY );
     glVertexPointer( 2, GL_FLOAT, stride, pVertexStreamZeroData );
 
     glEnableClientState( GL_COLOR_ARRAY );
-    glColorPointer( 4, GL_UNSIGNED_BYTE, stride, (uint8_t*)pVertexStreamZeroData+clr_offset );
+    glColorPointer( 4, GL_UNSIGNED_BYTE, stride, reinterpret_cast<uint8_t *>(pVertexStreamZeroData)+clr_offset);
 #elif defined(USE_GL2)
     // Enable attributes and uniforms for transfer
     if (ProgramCurrent == PROGRAM_TEXTURE)
@@ -986,7 +981,7 @@ void DirectGraphicsClass::DisplayBuffer  (void)
 #if defined(PLATFORM_SDL)
 bool DirectGraphicsClass::ExtensionSupported( const char* ext )
 {
-    if( strstr( glextentsions, ext ) != NULL)
+    if( strstr( glextensions, ext ) != NULL)
     {
         Protokoll << ext << " is supported" << std::endl;
         return true;

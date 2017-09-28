@@ -30,10 +30,10 @@ GegnerClimber::GegnerClimber(int Wert1, int Wert2, bool Light)
     // Aus der Spinnenmaschine? Dann anfangs per Zufall drehen
     if (Wert1 == 99)
     {
-        rot = (float)((int)(360.0f + rand()%50 - 50) % 360);
+        rot = static_cast<float>(static_cast<int>(360.0f + rand()%50 - 50) % 360);
     }
 
-    rotspeed = (float)(rand()%8 + 3) / 2.0f;
+    rotspeed = static_cast<float>(rand()%8 + 3) / 2.0f;
 }
 
 // --------------------------------------------------------------------------------------
@@ -44,8 +44,8 @@ void GegnerClimber::DoDraw(void)
 {
     // Spinne rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-TileEngine.XOffset),
-            (float)(yPos-TileEngine.YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated (static_cast<float>(xPos-TileEngine.XOffset),
+            static_cast<float>(yPos-TileEngine.YOffset),
             rot, AnimPhase, 0xFFFFFFFF);
 }
 

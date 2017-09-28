@@ -61,7 +61,7 @@ OuttroClass::OuttroClass(void)
 
     // Ein paar Schneepartikel adden
     for (int i = 0; i < 100; i++)
-        PartikelSystem.PushPartikel((float)(rand()%640), (float)(rand()%480), SCHNEEFLOCKE_END);
+        PartikelSystem.PushPartikel(static_cast<float>(rand()%640), static_cast<float>(rand()%480), SCHNEEFLOCKE_END);
 }
 
 // --------------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ void OuttroClass::DoOuttro(void)
     float off = 0.0f;
 
     if (Zustand != OUTTRO_SCROLLER)
-        off = (float)(sin(Counter / 2.0f)) / 2.0f;
+        off = static_cast<float>(sin(Counter / 2.0f)) / 2.0f;
 
     Tower.RenderSpriteRotated(299 + off,
                               61 + TowerOffset,
@@ -138,14 +138,14 @@ void OuttroClass::DoOuttro(void)
         D3DCOLOR col1;
 
         if (Counter < 12.8f)
-            col1 = D3DCOLOR_RGBA(255, 255, 255, (int)(Counter * 20.0f));
+            col1 = D3DCOLOR_RGBA(255, 255, 255, static_cast<int>(Counter * 20.0f));
         else
             col1 = 0xFFFFFFFF;
 
         int a;
 
         // Spieler 2
-        a = (int)((Counter - 15.0f) / 10);
+        a = static_cast<int>((Counter - 15.0f) / 10);
         if (a > 8) a = 7;
 
         if (NUMPLAYERS == 2)
@@ -172,7 +172,7 @@ void OuttroClass::DoOuttro(void)
             }
 
         // Spieler 1
-        a = (int)(Counter / 10);
+        a = static_cast<int>(Counter / 10);
         Reiter[0].itsRect = Reiter[0].itsPreCalcedRects[a];
 
         Reiter[0].RenderSpriteScaledRotated(px[0] - (190 / 100.0f * Counter / 2.0f),
@@ -203,7 +203,7 @@ void OuttroClass::DoOuttro(void)
     {
         Snow = 1.0f;
 
-        PartikelSystem.PushPartikel((float)(rand()%640), -8, SCHNEEFLOCKE_END);
+        PartikelSystem.PushPartikel(static_cast<float>(rand()%640), -8, SCHNEEFLOCKE_END);
     }
 
     switch(Zustand)
@@ -234,11 +234,11 @@ void OuttroClass::DoOuttro(void)
         if (SmokeDelay < 0.0f)
         {
             SmokeDelay = 1.5f;
-            PartikelSystem.PushPartikel((float)(280 + rand()%180),
-                                          (float)(320 + rand()%10), SMOKEBIG_OUTTRO);
+            PartikelSystem.PushPartikel(static_cast<float>(280 + rand()%180),
+                                          static_cast<float>(320 + rand()%10), SMOKEBIG_OUTTRO);
 
-            PartikelSystem.PushPartikel((float)(280 + rand()%180),
-                                          (float)(150 + TowerOffset + rand()%100), EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(static_cast<float>(280 + rand()%180),
+                                          static_cast<float>(150 + TowerOffset + rand()%100), EXPLOSION_MEDIUM2);
         }
 
     }
@@ -256,11 +256,11 @@ void OuttroClass::DoOuttro(void)
         {
             SmokeDelay = 0.5f;
 
-            PartikelSystem.PushPartikel((float)(280 + rand()%180),
-                                          (float)(320 + rand()%10), SMOKEBIG_OUTTRO);
+            PartikelSystem.PushPartikel(static_cast<float>(280 + rand()%180),
+                                          static_cast<float>(320 + rand()%10), SMOKEBIG_OUTTRO);
 
-            PartikelSystem.PushPartikel((float)(280 + rand()%180),
-                                          (float)(150 + TowerOffset + rand()%100), EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(static_cast<float>(280 + rand()%180),
+                                          static_cast<float>(150 + TowerOffset + rand()%100), EXPLOSION_MEDIUM2);
         }
 
         if (Zustand == OUTTRO_TOWER_EXPLODE)
@@ -362,14 +362,14 @@ void OuttroClass::DoOuttro(void)
         SmokeDelay -= 1.0f SYNC;
         if (SmokeDelay < 0.0f)
         {
-            SmokeDelay = (float)(rand()%10) + 5.0f;
+            SmokeDelay = static_cast<float>(rand()%10) + 5.0f;
 
             for (int i = 0; i < 10; i++)
-                PartikelSystem.PushPartikel((float)(280 + rand()%180),
-                                              (float)(340 + rand()%10), SMOKEBIG_OUTTRO);
+                PartikelSystem.PushPartikel(static_cast<float>(280 + rand()%180),
+                                              static_cast<float>(340 + rand()%10), SMOKEBIG_OUTTRO);
 
-            PartikelSystem.PushPartikel((float)(280 + rand()%180),
-                                          (float)(150 + TowerOffset + rand()%100), EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(static_cast<float>(280 + rand()%180),
+                                          static_cast<float>(150 + TowerOffset + rand()%100), EXPLOSION_MEDIUM2);
         }
 
         // Note: original code had each line spaced by 20.0f, 30 lines drawn total, which is more than

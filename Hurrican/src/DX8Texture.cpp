@@ -67,7 +67,7 @@ int16_t TexturesystemClass::LoadTexture( const std::string &filename )
         //  but if its instances == 0, it will need to be re-loaded from disk.
         idx = (*it).second;
 #ifdef _DEBUG
-        if (idx < 0 || (int)idx >= (int)_loaded_textures.size()) {
+        if (idx < 0 || static_cast<int>(i)dx >= (int)_loaded_textures.size()) {
             Protokoll << "-> Error: texture handle idx " << idx << " acquired from _texture_map is outside\n"
                     "\t_loaded_textures array bounds. Lower bound: 0  Upper bound: " << _loaded_textures.size()-1 << "\n"
                     "\tfilename: " << filename << std::endl;
@@ -124,7 +124,7 @@ int16_t TexturesystemClass::LoadTexture( const std::string &filename )
 
 void TexturesystemClass::UnloadTexture(const int idx)
 {
-    if (idx >= 0 && idx < (int)_loaded_textures.size()) {
+    if (idx >= 0 && idx < static_cast<int>(_loaded_textures.size())) {
         TextureHandle &th = _loaded_textures[idx];
         if (th.instances > 0) {
             --th.instances;

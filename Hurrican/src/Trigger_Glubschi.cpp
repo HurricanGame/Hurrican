@@ -53,8 +53,8 @@ void GegnerGlubschi::DoDraw(void)
 
     // Glubschi rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                           (float)(yPos-TileEngine.YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                           static_cast<float>(yPos-TileEngine.YOffset),
                                            AnimPhase, 0xFFFFFFFF);
 
     // Corona rendern

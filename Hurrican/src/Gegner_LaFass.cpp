@@ -25,7 +25,7 @@ GegnerLaFass::GegnerLaFass(int Wert1, int Wert2, bool Light)
     Active			= true;
     TestBlock		= true;
 
-    xSpeed = (float)(Value1);
+    xSpeed = static_cast<float>(Value1);
 }
 
 // --------------------------------------------------------------------------------------

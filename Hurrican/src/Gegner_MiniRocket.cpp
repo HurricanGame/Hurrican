@@ -37,29 +37,29 @@ void GegnerMiniRocket::DoDraw(void)
     DirectGraphics.SetAdditiveMode();
 
     //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos, optimized:
-    //float xoff = (float)(sin((360 - rot) / 180.0f * PI) * 12.0f);
-    //float yoff = (float)(cos((360 - rot) / 180.0f * PI) * 12.0f);
-    //Projectiles.LavaFlare.RenderSpriteScaled ((float)(xPos-TileEngine.XOffset) - 15.0f - (float)(sin(FlareSin) * 1.0f) + xoff,
-    //                              (float)(yPos-TileEngine.YOffset) - 15.0f - (float)(sin(FlareSin) * 1.0f) + yoff,
-    //                              (int)(40.0f + (float)sin(FlareSin) * 2.0f),
-    //                              (int)(40.0f + (float)sin(FlareSin) * 2.0f),
+    //float xoff = static_cast<float>(sin((360 - rot) / 180.0f * PI) * 12.0f);
+    //float yoff = static_cast<float>(cos((360 - rot) / 180.0f * PI) * 12.0f);
+    //Projectiles.LavaFlare.RenderSpriteScaled (static_cast<float>(xPos-TileEngine.XOffset) - 15.0f - static_cast<float>(sin(FlareSin) * 1.0f) + xoff,
+    //                              static_cast<float>(yPos-TileEngine.YOffset) - 15.0f - static_cast<float>(sin(FlareSin) * 1.0f) + yoff,
+    //                              static_cast<int>(40.0f + (float)sin(FlareSin) * 2.0f),
+    //                              static_cast<int>(40.0f + (float)sin(FlareSin) * 2.0f),
     //                              0, 0xFFFF8822);
 	float xoff = sin_deg(360.0f - rot) * 12.0f;
 	float yoff = cos_deg(360.0f - rot) * 12.0f;
     float sin_FlareSin = sin_rad(FlareSin);
 	Projectiles.LavaFlare.RenderSpriteScaled (xPos-TileEngine.XOffset - 15.0f - sin_FlareSin + xoff, 
 								  yPos-TileEngine.YOffset - 15.0f - sin_FlareSin + yoff, 
-								 (int)(40.0f + sin_FlareSin * 2.0f),
-								 (int)(40.0f + sin_FlareSin * 2.0f),
+								 static_cast<int>(40.0f + sin_FlareSin * 2.0f),
+								 static_cast<int>(40.0f + sin_FlareSin * 2.0f),
 								 0, 0xFFFF8822);
 
     DirectGraphics.SetColorKeyMode();
 
     // Rakete rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-TileEngine.XOffset),
-            (float)(yPos-TileEngine.YOffset),
-            (float)rot, 0, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated (static_cast<float>(xPos-TileEngine.XOffset),
+            static_cast<float>(yPos-TileEngine.YOffset),
+            static_cast<float>(rot), 0, 0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------

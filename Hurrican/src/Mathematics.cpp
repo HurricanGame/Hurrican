@@ -29,6 +29,6 @@ void seed_fast_rand(uint32_t seed)
 int fast_rand(void)
 {
    fast_rand_seed_val = (214013 * fast_rand_seed_val + 2531011);
-   return (int)((fast_rand_seed_val>>16)&0x7FFF);
+   return static_cast<int>((fast_rand_seed_val>>16)&0x7FFF);
 }
 #endif // USE_FAST_RNG

@@ -32,7 +32,7 @@ GegnerFieserFireWalker::GegnerFieserFireWalker (int  Wert1, int Wert2, bool Ligh
 void GegnerFieserFireWalker::DoDraw(void)
 {
     // Gegner rendern
-    int  Wert = 255 - (int)(DamageTaken);
+    int  Wert = 255 - static_cast<int>(DamageTaken);
     bool mirror;
 
     if (BlickRichtung == LINKS)
@@ -41,8 +41,8 @@ void GegnerFieserFireWalker::DoDraw(void)
         mirror = true;
 
     D3DCOLOR Color = D3DCOLOR_RGBA(255, Wert, Wert, 255);
-    pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-TileEngine.XOffset),
-                                            (float)(yPos-TileEngine.YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite (static_cast<float>(xPos-TileEngine.XOffset),
+                                            static_cast<float>(yPos-TileEngine.YOffset),
                                             AnimPhase, Color, mirror);
 
     if (AlreadyDrawn)

@@ -100,20 +100,20 @@ void GegnerSkeletor::DoDraw(void)
     if (Handlung == GEGNER_SPRINGEN)
     {
     	DirectGraphics.SetAdditiveMode();
-    	LavaFlare.RenderSpriteScaled(xPos - (float)TileEngine.XOffset - 90,
-    								 yPos - (float)TileEngine.YOffset - 50,
+    	LavaFlare.RenderSpriteScaled(xPos - static_cast<float>(TileEngine.XOffset) - 90,
+    								 yPos - static_cast<float>(TileEngine.YOffset) - 50,
     								 300, 300, 0, 0x88FF8822);
 
-    	LavaFlare.RenderSpriteScaled(xPos - (float)TileEngine.XOffset - 40,
-    								 yPos - (float)TileEngine.YOffset,
+    	LavaFlare.RenderSpriteScaled(xPos - static_cast<float>(TileEngine.XOffset) - 40,
+    								 yPos - static_cast<float>(TileEngine.YOffset),
     								 200, 200, 0, 0x88FFCC66);
 
     	DirectGraphics.SetColorKeyMode();
     }
     */
 
-    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - (float)TileEngine.XOffset,
-                                           yPos - (float)TileEngine.YOffset + yoff,
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - static_cast<float>(TileEngine.XOffset),
+                                           yPos - static_cast<float>(TileEngine.YOffset) + yoff,
                                            AnimPhase, Color, mirror);
 
     if (Handlung == GEGNER_SPECIAL2)
@@ -121,8 +121,8 @@ void GegnerSkeletor::DoDraw(void)
         for (int i = 0; i < 4; i++)
         {
             D3DCOLOR col = D3DCOLOR_RGBA(255, 255, 255, 200 - i * 30);
-            pGegnerGrafix[GegnerArt]->RenderSprite(xPos - (float)TileEngine.XOffset - (xSpeed * i * 2),
-                                                   yPos - (float)TileEngine.YOffset + yoff,
+            pGegnerGrafix[GegnerArt]->RenderSprite(xPos - static_cast<float>(TileEngine.XOffset) - (xSpeed * i * 2),
+                                                   yPos - static_cast<float>(TileEngine.YOffset) + yoff,
                                                    AnimPhase, col, mirror);
         }
     }
@@ -140,12 +140,12 @@ void GegnerSkeletor::DoDraw(void)
         Flamme.itsRect = Flamme.itsPreCalcedRects[ShotCount % 2];
 
         if (BlickRichtung == RECHTS)
-            Flamme.RenderSpriteRotatedOffset(xPos - (float)TileEngine.XOffset + foff,
-                                             yPos - (float)TileEngine.YOffset + 60, 90 - GunWinkel,
+            Flamme.RenderSpriteRotatedOffset(xPos - static_cast<float>(TileEngine.XOffset) + foff,
+                                             yPos - static_cast<float>(TileEngine.YOffset) + 60, 90 - GunWinkel,
                                              -50, 0, 0xFFFFFFFF, !mirror);
         else
-            Flamme.RenderSpriteRotatedOffset(xPos - (float)TileEngine.XOffset + foff,
-                                             yPos - (float)TileEngine.YOffset + 60, GunWinkel - 90,
+            Flamme.RenderSpriteRotatedOffset(xPos - static_cast<float>(TileEngine.XOffset) + foff,
+                                             yPos - static_cast<float>(TileEngine.YOffset) + 60, GunWinkel - 90,
                                              -50, 0, 0xFFFFFFFF, !mirror);
 
         DirectGraphics.SetColorKeyMode();
@@ -170,12 +170,12 @@ void GegnerSkeletor::DoKI(void)
     if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
         // Ausserhalb des Screens setzen
-        xPos = (float)TileEngine.XOffset + 100.0f;
-        yPos = (float)TileEngine.YOffset - 250.0f;
+        xPos = static_cast<float>(TileEngine.XOffset) + 100.0f;
+        yPos = static_cast<float>(TileEngine.YOffset) - 250.0f;
         DrawNow = true;
 
-        TileEngine.ScrollLevel((float)Value1,
-                                 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
+        TileEngine.ScrollLevel(static_cast<float>(Value1),
+                                 static_cast<float>(Value2), ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
@@ -319,13 +319,13 @@ void GegnerSkeletor::DoKI(void)
 
         if (xPos + 60 < Value1 + 320)
         {
-            a = (int)(xPos - TileEngine.XOffset) / 56;
+            a = static_cast<int>(xPos - TileEngine.XOffset) / 56;
             BlickRichtung = RECHTS;
             AnimPhase = 10 + a;
         }
         else
         {
-            a = (int)(xPos - TileEngine.XOffset - 320 + 60) / 56;
+            a = static_cast<int>(xPos - TileEngine.XOffset - 320 + 60) / 56;
             BlickRichtung = LINKS;
             AnimPhase = 15 - a;
         }
@@ -356,13 +356,13 @@ void GegnerSkeletor::DoKI(void)
 
         if (xPos + 60 < Value1 + 320)
         {
-            a = (int)(xPos - TileEngine.XOffset) / 56;
+            a = static_cast<int>(xPos - TileEngine.XOffset) / 56;
             BlickRichtung = RECHTS;
             AnimPhase = 10 + a;
         }
         else
         {
-            a = (int)(xPos - TileEngine.XOffset - 320 + 60) / 56;
+            a = static_cast<int>(xPos - TileEngine.XOffset - 320 + 60) / 56;
             BlickRichtung = LINKS;
             AnimPhase = 15 - a;
         }
@@ -388,7 +388,7 @@ void GegnerSkeletor::DoKI(void)
         // Aufgekommen?
         if (yPos > Value2 + 250)
         {
-            yPos = (float)Value2 + 250;
+            yPos = static_cast<float>(Value2) + 250;
             xSpeed = 0.0f;
             ySpeed = 0.0f;
             xAcc = 0.0f;
@@ -437,7 +437,7 @@ void GegnerSkeletor::DoKI(void)
                 PartikelSystem.PushPartikel(xPos + 50 + off, yPos + 35, EXPLOSIONFLARE);
                 PartikelSystem.PushPartikel(xPos + 50 + off, yPos + 35, EXPLOSIONFLARE);
 
-                WinkelUebergabe = 40.0f - (float)(AnimPhase) * 4 - rand()%8;
+                WinkelUebergabe = 40.0f - static_cast<float>(AnimPhase) * 4 - rand()%8;
 
                 if (BlickRichtung == LINKS)
                     WinkelUebergabe += 1;
@@ -538,7 +538,7 @@ void GegnerSkeletor::DoKI(void)
 
         if (yPos > Value2 + 250)
         {
-            yPos = (float)Value2 + 250;
+            yPos = static_cast<float>(Value2) + 250;
             AnimPhase = 0;
             ySpeed = 0.0f;
             Handlung = GEGNER_CRUSHENERHOLEN;

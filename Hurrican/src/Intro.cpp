@@ -131,8 +131,8 @@ void IntroClass::DoIntro(void)
     if ((TextOff - 1) % 4 == 3 &&
             a < 5)
     {
-        int alpha = (int)(Counter / 1300.0f * 255.0f);
-        D3DCOLOR fadecol = D3DCOLOR_RGBA(255, 255, 255, (uint8_t)alpha);
+        int alpha = static_cast<int>(Counter / 1300.0f * 255.0f);
+        D3DCOLOR fadecol = D3DCOLOR_RGBA(255, 255, 255, static_cast<uint8_t>(alpha));
         Background[a+1].RenderSprite(0, 0, 0, fadecol);
     }
 
@@ -237,13 +237,13 @@ void IntroClass::DoIntro(void)
             else if (alpha > 255)
                 alpha = 255;
 
-            col = D3DCOLOR_RGBA(0, 255, 0, (uint8_t)alpha);
+            col = D3DCOLOR_RGBA(0, 255, 0, static_cast<uint8_t>(alpha));
 
             if (t <= EntriesOff && (t-EntriesOff) > -lines_displayed && t < num_entries)
             {
 
                 const int tmp_h = 15 * scale_factor;
-                pDefaultFont->DrawText(10, (float)(RENDERHEIGHT-tmp_h + t*line_y_off) - EntriesOff * line_y_off, 
+                pDefaultFont->DrawText(10, static_cast<float>(RENDERHEIGHT-tmp_h + t*line_y_off) - EntriesOff * line_y_off, 
                         entries[t].text.c_str(), col);
 
                 // Teil des Textes verdecken
@@ -295,7 +295,7 @@ void IntroClass::DoIntro(void)
                 xr = (float)l;
 
                 // blinken lassen
-                if ((int)(Counter / 100.0f) % 2 == 0)
+                if (static_cast<int>(Counter / 100.0f) % 2 == 0)
                     RenderRect(xr - 12, RENDERHEIGHT-tmp_h, 12, 12 * scale_factor, 0xFFFFFFFF);
             }
 

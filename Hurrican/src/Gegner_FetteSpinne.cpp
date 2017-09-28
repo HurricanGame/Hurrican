@@ -49,8 +49,8 @@ void GegnerFetteSpinne::DoDraw(void)
         h = false;
 
     pGegnerGrafix[GegnerArt]->itsRect = pGegnerGrafix[GegnerArt]->itsPreCalcedRects[AnimPhase];
-    pGegnerGrafix[GegnerArt]->RenderMirroredSprite ((float)(xPos-TileEngine.XOffset),
-            (float)(yPos-TileEngine.YOffset),
+    pGegnerGrafix[GegnerArt]->RenderMirroredSprite (static_cast<float>(xPos-TileEngine.XOffset),
+            static_cast<float>(yPos-TileEngine.YOffset),
             0xFFFFFFFF, h, v);
 }
 
@@ -116,11 +116,11 @@ void GegnerFetteSpinne::DoKI(void)
                 // Decke über der Spinne suchen
                 bool block = false;
                 int a = 0;
-                uint32_t b = TileEngine.TileAt((int)(xPos / TILESIZE_X), (int)(yPos / TILESIZE_Y) + a).Block;
+                uint32_t b = TileEngine.TileAt(static_cast<int>(xPos / TILESIZE_X), static_cast<int>(yPos / TILESIZE_Y) + a).Block;
 
                 while (a < 10 && block == false)
                 {
-                    b = TileEngine.TileAt((int)(xPos / TILESIZE_X), (int)(yPos / TILESIZE_Y) + a).Block;
+                    b = TileEngine.TileAt(static_cast<int>(xPos / TILESIZE_X), static_cast<int>(yPos / TILESIZE_Y) + a).Block;
 
                     // Decke gefunden?
                     if (b & BLOCKWERT_WAND)

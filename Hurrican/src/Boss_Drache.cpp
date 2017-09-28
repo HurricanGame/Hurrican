@@ -123,18 +123,18 @@ void GegnerDrache::DoDraw(void)
     // Kopf kann man treffen?
     if (Handlung == GEGNER_LAUFEN3)
     {
-        GegnerRect[DRACHE].top    =  20 + (int)HeadY;
-        GegnerRect[DRACHE].bottom = 130 + (int)HeadY;
+        GegnerRect[DRACHE].top    =  20 + static_cast<int>(HeadY);
+        GegnerRect[DRACHE].bottom = 130 + static_cast<int>(HeadY);
 
         if (Position == LINKS)
         {
-            GegnerRect[DRACHE].left   = (int)HeadX - 60;
-            GegnerRect[DRACHE].right  = (int)HeadX + 20;
+            GegnerRect[DRACHE].left   = static_cast<int>(HeadX) - 60;
+            GegnerRect[DRACHE].right  = static_cast<int>(HeadX) + 20;
         }
         else
         {
-            GegnerRect[DRACHE].left   = 180 + (int)HeadX;
-            GegnerRect[DRACHE].right  = 270 + (int)HeadX;
+            GegnerRect[DRACHE].left   = 180 + static_cast<int>(HeadX);
+            GegnerRect[DRACHE].right  = 270 + static_cast<int>(HeadX);
         }
     }
     else
@@ -158,15 +158,15 @@ void GegnerDrache::DoDraw(void)
 
     // Hinteres Bein rendern
     //
-    Leg.RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset) - 140 - mirrorOffset * 270,
-                                  (float)(yPos-TileEngine.YOffset) + 95 + DrawYOffset,
-                                  (float)(cos(AnimWinkel)) * 10.0f, 87, -25, 0xFF888888, (mirrored < 0));
+    Leg.RenderSpriteRotatedOffset(static_cast<float>(xPos-TileEngine.XOffset) - 140 - mirrorOffset * 270,
+                                  static_cast<float>(yPos-TileEngine.YOffset) + 95 + DrawYOffset,
+                                  static_cast<float>(cos(AnimWinkel)) * 10.0f, 87, -25, 0xFF888888, (mirrored < 0));
 
     // Hinterer Arm rendern
     //
-    Arm.RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset) + 140 + mirrorOffset * 210,
-                                  (float)(yPos-TileEngine.YOffset) + 100 + DrawYOffset,
-                                  (float)(sin(AnimWinkel)) * 10.0f, -42, -35, 0xFF888888, (mirrored < 0));
+    Arm.RenderSpriteRotatedOffset(static_cast<float>(xPos-TileEngine.XOffset) + 140 + mirrorOffset * 210,
+                                  static_cast<float>(yPos-TileEngine.YOffset) + 100 + DrawYOffset,
+                                  static_cast<float>(sin(AnimWinkel)) * 10.0f, -42, -35, 0xFF888888, (mirrored < 0));
 
     // Halswirbel?
     if ((Handlung == GEGNER_LAUFEN3  ||
@@ -190,15 +190,15 @@ void GegnerDrache::DoDraw(void)
         //DKS - converted to float:
         //render   = (int) sqrt(HeadX * HeadX + HeadY * HeadY) / 10;
         //float dist = (float)sqrt(HeadX * HeadX + HeadY * HeadY);
-        render   = (int) sqrtf(HeadX * HeadX + HeadY * HeadY) / 10;
+        render   = sqrtf(HeadX * HeadX + HeadY * HeadY) / 10;
         float dist = sqrtf(HeadX * HeadX + HeadY * HeadY);
 
         float xadd = HeadX / dist * 10.0f;
         float yadd = HeadY / dist * 10.0f;
         while (render-- > 0)
         {
-            Tail.RenderSpriteRotated((float)(xPos-TileEngine.XOffset) + 200 + mirrorOffset * 220 + xoff * Position,
-                                     (float)(yPos-TileEngine.YOffset) + 60 + yoff + DrawYOffset, winkel, 0xFFFFFFFF);
+            Tail.RenderSpriteRotated(static_cast<float>(xPos-TileEngine.XOffset) + 200 + mirrorOffset * 220 + xoff * Position,
+                                     static_cast<float>(yPos-TileEngine.YOffset) + 60 + yoff + DrawYOffset, winkel, 0xFFFFFFFF);
             // ein wirbel weiter
             if (Position == LINKS)
             {
@@ -219,23 +219,23 @@ void GegnerDrache::DoDraw(void)
 
     // Körper rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-TileEngine.XOffset),
-            (float)(yPos-TileEngine.YOffset) + DrawYOffset,
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated (static_cast<float>(xPos-TileEngine.XOffset),
+            static_cast<float>(yPos-TileEngine.YOffset) + DrawYOffset,
             0, 0, 0xFFFFFFFF, (mirrored < 0));
 
     // Knubbel am Hals rendern
-    pGegnerGrafix[MINIDRAGON]->RenderSprite((float)(xPos-TileEngine.XOffset) + 170 + mirrorOffset * 210,
-                                            (float)(yPos-TileEngine.YOffset) + 55 + DrawYOffset, 4, 0xFFFFFFFF);
+    pGegnerGrafix[MINIDRAGON]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset) + 170 + mirrorOffset * 210,
+                                            static_cast<float>(yPos-TileEngine.YOffset) + 55 + DrawYOffset, 4, 0xFFFFFFFF);
 
     // Schwanz rendern
     //
     int i = 0;
-    float tempx = (float)(xPos-TileEngine.XOffset) + 10.0f - mirrorOffset * 165;
+    float tempx = static_cast<float>(xPos-TileEngine.XOffset) + 10.0f - mirrorOffset * 165;
 
     for (i = 0; i < NUM_TAILS; i++)
     {
         Tail.RenderSpriteScaled(tempx,
-                                (float)(yPos-TileEngine.YOffset) + 20.0f + (float)(sin(TailSinus + i / 7.0f) * i) + 42.0f + DrawYOffset,
+                                static_cast<float>(yPos-TileEngine.YOffset) + 20.0f + static_cast<float>(sin(TailSinus + i / 7.0f) * i) + 42.0f + DrawYOffset,
                                 12 - i / 4, 29  - i / 2, 0, 0xFFFFFFFF);
         tempx -= (12 - i / 4) * mirrored;
     }
@@ -245,34 +245,34 @@ void GegnerDrache::DoDraw(void)
     bool isMirrored = false;
     isMirrored = (mirrored < 0);
     Spitze.RenderSprite(tempx - 37 - mirrorOffset * 37.0f,
-                        (float)(yPos-TileEngine.YOffset) + 17.0f + (float)(sin((float)(TailSinus + i / 7.0f)) * i) + 36.0f + DrawYOffset,
+                        static_cast<float>(yPos-TileEngine.YOffset) + 17.0f + static_cast<float>(sin(static_cast<float>(TailSinus + i / 7.0f)) * i) + 36.0f + DrawYOffset,
                         0, 0xFFFFFFFF, isMirrored);
 
     // Unterkiefer
     //
-    Head[1].RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset) + 190 + mirrorOffset * 276 + HeadX,
-                                      (float)(yPos-TileEngine.YOffset) + 50 + HeadY + DrawYOffset,
-                                      (float)(HeadWinkel + sin(KieferWinkel) * 10.0f) - 10.0f,
+    Head[1].RenderSpriteRotatedOffset(static_cast<float>(xPos-TileEngine.XOffset) + 190 + mirrorOffset * 276 + HeadX,
+                                      static_cast<float>(yPos-TileEngine.YOffset) + 50 + HeadY + DrawYOffset,
+                                      static_cast<float>(HeadWinkel + sin(KieferWinkel) * 10.0f) - 10.0f,
                                       -40, -10, 0xFFFFFFFF, (mirrored < 0));
     // Kopf
     //
-    Head[0].RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset) + 180 + mirrorOffset * 276 + HeadX,
-                                      (float)(yPos-TileEngine.YOffset) + 15 + HeadY + DrawYOffset,
-                                      (float)(HeadWinkel - sin(KieferWinkel) * 10.0f) + 10.0f,
+    Head[0].RenderSpriteRotatedOffset(static_cast<float>(xPos-TileEngine.XOffset) + 180 + mirrorOffset * 276 + HeadX,
+                                      static_cast<float>(yPos-TileEngine.YOffset) + 15 + HeadY + DrawYOffset,
+                                      static_cast<float>(HeadWinkel - sin(KieferWinkel) * 10.0f) + 10.0f,
                                       -35, 15, 0xFFFFFFFF, (mirrored < 0));
 
     // Vorderes Bein rendern
     //
-    Leg.RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset) - 140 - mirrorOffset * 270,
-                                  (float)(yPos-TileEngine.YOffset) + 85 + DrawYOffset,
-                                  (float)(sin(AnimWinkel)) * 12.0f, 87, -25, 0xFFFFFFFF, (mirrored < 0));
+    Leg.RenderSpriteRotatedOffset(static_cast<float>(xPos-TileEngine.XOffset) - 140 - mirrorOffset * 270,
+                                  static_cast<float>(yPos-TileEngine.YOffset) + 85 + DrawYOffset,
+                                  static_cast<float>(sin(AnimWinkel)) * 12.0f, 87, -25, 0xFFFFFFFF, (mirrored < 0));
 
 
     // Vorderer Arm rendern
     //
-    Arm.RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset) + 140 + mirrorOffset * 210,
-                                  (float)(yPos-TileEngine.YOffset) + 90 + DrawYOffset,
-                                  (float)(cos(AnimWinkel)) * 12.0f, -42, -35, 0xFFFFFFFF, (mirrored < 0));
+    Arm.RenderSpriteRotatedOffset(static_cast<float>(xPos-TileEngine.XOffset) + 140 + mirrorOffset * 210,
+                                  static_cast<float>(yPos-TileEngine.YOffset) + 90 + DrawYOffset,
+                                  static_cast<float>(cos(AnimWinkel)) * 12.0f, -42, -35, 0xFFFFFFFF, (mirrored < 0));
 
 
     // Flare
@@ -300,9 +300,9 @@ void GegnerDrache::DoDraw(void)
         if (ArrowCount < 0.0f)
             ArrowCount = 2.0f;
 
-        if ((int)(ArrowCount) % 2 == 0)
-            HUD.Arrow.RenderMirroredSprite((float)(xPos - TileEngine.XOffset) + 50,
-                                             (float)(yPos - TileEngine.YOffset) - 30,
+        if (static_cast<int>(ArrowCount) % 2 == 0)
+            HUD.Arrow.RenderMirroredSprite(static_cast<float>(xPos - TileEngine.XOffset) + 50,
+                                             static_cast<float>(yPos - TileEngine.YOffset) - 30,
                                              0xFF00FF00,
                                              false, true);
     }
@@ -360,7 +360,7 @@ void GegnerDrache::DoKI(void)
     if (Value2 == 0 &&
             Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        TileEngine.ScrollLevel((float)Value1,
+        TileEngine.ScrollLevel(static_cast<float>(Value1),
                                  yPos, ZUSTAND_SCROLLTOLOCK);		// Level auf den Drache zentrieren
 
         // Drache aus Screen bringen
@@ -561,7 +561,7 @@ void GegnerDrache::DoKI(void)
             if (off > 2 * PI)
                 off -= 2 * PI;
 
-            DrawYOffset = (float)sin(off) * 8.0f;
+            DrawYOffset = static_cast<float>(sin(off)) * 8.0f;
 
             if (Energy > 100.0f)
                 Energy -= 85 SYNC;
@@ -801,7 +801,7 @@ void GegnerDrache::DoKI(void)
                 BlickRichtung = 1;
 
             xPos = Value1 + 320.0f + 100 + 800.0f * BlickRichtung;
-            yPos = (float)StartPosY - 80;
+            yPos = static_cast<float>(StartPosY) - 80;
             xSpeed = -15.0f * BlickRichtung;
             ySpeed = 5.0f;
             yAcc   = -0.1f;
@@ -843,7 +843,7 @@ void GegnerDrache::DoKI(void)
                 BlickRichtung = 1;
 
             xPos = Value1 + 320.0f + 100 + 800.0f * BlickRichtung;
-            yPos = (float)StartPosY + 50;
+            yPos = static_cast<float>(StartPosY) + 50;
             xSpeed = -50.0f * BlickRichtung;
             ySpeed = 0.0f;
             yAcc   = 0.0f;
@@ -885,7 +885,7 @@ void GegnerDrache::DoKI(void)
             else
                 Position = LINKS;
 
-            yPos = (float)StartPosY + 50 + rand()%50;
+            yPos = static_cast<float>(StartPosY) + 50 + rand()%50;
 
             KieferWinkel = PI / 2.0f;
             xSpeed = 0.0f;
@@ -993,9 +993,9 @@ void GegnerDrache::DoKI(void)
                 {
                     WinkelUebergabe = 180.0f;
 
-                    if (xPos > (float)TileEngine.XOffset)
-                        PartikelSystem.PushPartikel((float) TileEngine.XOffset + 10.0f,
-                                                      (float)(TileEngine.YOffset + rand()%480),
+                    if (xPos > static_cast<float>(TileEngine.XOffset))
+                        PartikelSystem.PushPartikel(static_cast<float>(TileEngine.XOffset) + 10.0f,
+                                                      static_cast<float>(TileEngine.YOffset + rand()%480),
                                                       BLATT2);
 
                     for (int p = 0; p < NUMPLAYERS; p++)
@@ -1005,9 +1005,9 @@ void GegnerDrache::DoKI(void)
                 {
                     WinkelUebergabe = 0.0f;
 
-                    if (xPos < (float)TileEngine.XOffset + 550.0f)
-                        PartikelSystem.PushPartikel((float)(TileEngine.XOffset + 640.0f),
-                                                      (float)(TileEngine.YOffset + rand()%480),
+                    if (xPos < static_cast<float>(TileEngine.XOffset) + 550.0f)
+                        PartikelSystem.PushPartikel(static_cast<float>(TileEngine.XOffset + 640.0f),
+                                                      static_cast<float>(TileEngine.YOffset + rand()%480),
                                                       BLATT2);
 
                     for (int p = 0; p < NUMPLAYERS; p++)
@@ -1040,12 +1040,12 @@ void GegnerDrache::DoKI(void)
             if (Position == RECHTS)
             {
                 xPos = Value1 - 300.0f;
-                xPos += (float)sin(AnimCount) * 150.0f;
+                xPos += static_cast<float>(sin(AnimCount)) * 150.0f;
             }
             else
             {
                 xPos = Value1 + 740.0f;
-                xPos -= (float)sin(AnimCount) * 150.0f;
+                xPos -= static_cast<float>(sin(AnimCount)) * 150.0f;
             }
 
             // Angekommen?
@@ -1119,9 +1119,9 @@ void GegnerDrache::DoKI(void)
                 }
 
             // Kopf am Boden? Dann sound, funken, speed umdrehen und kurz warten
-            if ((HeadYSpeed > 0.0f && yPos + 50 + HeadY > (float)StartPosY + 380.0f) ||
-                    (HeadXSpeed > 0.0f && xPos + HeadX > (float)Value1 + 400.0f) ||
-                    (HeadXSpeed < 0.0f && xPos + HeadX < (float)Value1 + 100.0f) ||
+            if ((HeadYSpeed > 0.0f && yPos + 50 + HeadY > static_cast<float>(StartPosY) + 380.0f) ||
+                    (HeadXSpeed > 0.0f && xPos + HeadX > static_cast<float>(Value1) + 400.0f) ||
+                    (HeadXSpeed < 0.0f && xPos + HeadX < static_cast<float>(Value1) + 100.0f) ||
                     PlayerHit == true)
             {
                 Attack = GEGNER_SCHLIESSEN;
@@ -1181,12 +1181,12 @@ void GegnerDrache::DoKI(void)
             if (Position == RECHTS)
             {
                 xPos = Value1 - 300.0f;
-                xPos += (float)sin(AnimCount) * 150.0f;
+                xPos += static_cast<float>(sin(AnimCount)) * 150.0f;
             }
             else
             {
                 xPos = Value1 + 740.0f;
-                xPos -= (float)sin(AnimCount) * 150.0f;
+                xPos -= static_cast<float>(sin(AnimCount)) * 150.0f;
             }
 
             // Angekommen?
@@ -1207,7 +1207,7 @@ void GegnerDrache::DoKI(void)
     // Hat der Drache den Hurri getroffen ?
     // Testen, ob der Spieler den Boss berührt hat
     if (Destroyable == true)
-        TestDamagePlayers((float) 5.0 SYNC);
+        TestDamagePlayers(5.0f SYNC);
 
     // Partikel an der Düse erzeugen
     SmokeCount -= 1.0f SYNC;

@@ -63,8 +63,8 @@ void GegnerSchabe::DoKI(void)
     // An der Wand krabbeln
     int xl, yl;
 
-    xl = (int)(xPos+10) / TILESIZE_X;
-    yl = (int)(yPos+10) / TILESIZE_X;
+    xl = static_cast<int>(xPos+10) / TILESIZE_X;
+    yl = static_cast<int>(yPos+10) / TILESIZE_X;
 
     // Schabe läuft nach links
     if (xSpeed < 0.0f)
@@ -83,8 +83,8 @@ void GegnerSchabe::DoKI(void)
             xSpeed = 0.0f;
             ySpeed = SPEED;
 
-            xPos = (float)xl*20.0f;
-            yPos = (float)yl*20.0f;
+            xPos = static_cast<float>(xl)*20.0f;
+            yPos = static_cast<float>(yl)*20.0f;
         }
 
         // ..xx
@@ -102,8 +102,8 @@ void GegnerSchabe::DoKI(void)
             xSpeed =  0.0f;
             ySpeed = -SPEED;
 
-            xPos = (float)xl*20.0f;
-            yPos = (float)yl*20.0f;
+            xPos = static_cast<float>(xl)*20.0f;
+            yPos = static_cast<float>(yl)*20.0f;
         }
     }
 
@@ -125,8 +125,8 @@ void GegnerSchabe::DoKI(void)
             xSpeed = 0.0f;
             ySpeed = SPEED;
 
-            xPos = (float)xl*20.0f;
-            yPos = (float)yl*20.0f;
+            xPos = static_cast<float>(xl)*20.0f;
+            yPos = static_cast<float>(yl)*20.0f;
         }
 
         // xx..
@@ -144,8 +144,8 @@ void GegnerSchabe::DoKI(void)
             xSpeed = 0.0f;
             ySpeed = -SPEED;
 
-            xPos = (float)xl*20.0f;
-            yPos = (float)yl*20.0f;
+            xPos = static_cast<float>(xl)*20.0f;
+            yPos = static_cast<float>(yl)*20.0f;
         }
     }
 
@@ -166,8 +166,8 @@ void GegnerSchabe::DoKI(void)
             xSpeed = SPEED;
             ySpeed = 0.0f;
 
-            xPos = (float)xl*20.0f;
-            yPos = (float)yl*20.0f;
+            xPos = static_cast<float>(xl)*20.0f;
+            yPos = static_cast<float>(yl)*20.0f;
         }
 
         // ....
@@ -184,8 +184,8 @@ void GegnerSchabe::DoKI(void)
             xSpeed = -SPEED;
             ySpeed =  0.0f;
 
-            xPos = (float)xl*20.0f;
-            yPos = (float)yl*20.0f;
+            xPos = static_cast<float>(xl)*20.0f;
+            yPos = static_cast<float>(yl)*20.0f;
         }
     }
 
@@ -206,8 +206,8 @@ void GegnerSchabe::DoKI(void)
             xSpeed = SPEED;
             ySpeed = 0.0f;
 
-            xPos = (float)xl*20.0f;
-            yPos = (float)yl*20.0f;
+            xPos = static_cast<float>(xl)*20.0f;
+            yPos = static_cast<float>(yl)*20.0f;
         }
 
         // xx..
@@ -224,8 +224,8 @@ void GegnerSchabe::DoKI(void)
             xSpeed = -SPEED;
             ySpeed =  0.0f;
 
-            xPos = (float)xl*20.0f;
-            yPos = (float)yl*20.0f;
+            xPos = static_cast<float>(xl)*20.0f;
+            yPos = static_cast<float>(yl)*20.0f;
         }
     }
 
@@ -240,8 +240,8 @@ void GegnerSchabe::DoKI(void)
     {
         xSpeed = 0.0f;
 
-        xPos = (float)xl*20.0f;
-        yPos = (float)yl*20.0f;
+        xPos = static_cast<float>(xl)*20.0f;
+        yPos = static_cast<float>(yl)*20.0f;
 
         if (TileEngine.TileAt(xl-0, yl-1).Block & BLOCKWERT_WAND)
             ySpeed =  SPEED;
@@ -260,8 +260,8 @@ void GegnerSchabe::DoKI(void)
     {
         ySpeed = 0.0f;
 
-        xPos = (float)xl*20.0f;
-        yPos = (float)yl*20.0f;
+        xPos = static_cast<float>(xl)*20.0f;
+        yPos = static_cast<float>(yl)*20.0f;
 
         if (TileEngine.TileAt(xl-1, yl-0).Block & BLOCKWERT_WAND)
             xSpeed =  SPEED;
@@ -352,8 +352,8 @@ void GegnerSchabe::DoKI(void)
 
 void GegnerSchabe::DoDraw(void)
 {
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-TileEngine.XOffset),
-            (float)(yPos-TileEngine.YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated (static_cast<float>(xPos-TileEngine.XOffset),
+            static_cast<float>(yPos-TileEngine.YOffset),
             winkel, AnimPhase, 0xFFFFFFFF, mirror);
 }
 

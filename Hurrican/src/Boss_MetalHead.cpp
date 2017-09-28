@@ -85,7 +85,7 @@ void GegnerMetalHead::DoDraw(void)
         // Halsteile rendern
         for (int i = 0; i < AnimEnde; i++)
             HalsGfx.RenderSpriteRotated (Hals[i].x,
-                                         Hals[i].y - (float)TileEngine.YOffset,
+                                         Hals[i].y - static_cast<float>(TileEngine.YOffset),
                                          Hals[i].w, 0xFFFFFFFF);
 
         return;
@@ -147,7 +147,7 @@ void GegnerMetalHead::DoDraw(void)
     // Halsteile rendern
     for (int i = 0; i < MAXWIRBEL-1; i++)
         HalsGfx.RenderSpriteRotated (Hals[i].x,
-                                     Hals[i].y - (float)TileEngine.YOffset,
+                                     Hals[i].y - static_cast<float>(TileEngine.YOffset),
                                      Hals[i].w, 0xFFFFFFFF);
 
     // Turbine läuft? Dann Orange leuchten lassen
@@ -345,7 +345,7 @@ void GegnerMetalHead::DoKI(void)
             Handlung != GEGNER_NOTVISIBLE &&
             Handlung != GEGNER_CRUSHEN &&
             Handlung != GEGNER_CRUSHEN2 &&
-            yPos < (float)(Value2 + 230.0f))
+            yPos < static_cast<float>(Value2 + 230.0f))
         for (int p = 0; p < NUMPLAYERS; p++)
         {
             if (Player[p].xpos + 35 < xPos + 200)
@@ -368,8 +368,8 @@ void GegnerMetalHead::DoKI(void)
     //
     if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        TileEngine.ScrollLevel((float)Value1,
-                                 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
+        TileEngine.ScrollLevel(static_cast<float>(Value1),
+                                 static_cast<float>(Value2), ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
@@ -469,7 +469,7 @@ void GegnerMetalHead::DoKI(void)
     }
 
     // Corona des Auges drehen
-    Eye_Winkel = (float)(int (yPos) % 10 % 360);
+    Eye_Winkel = static_cast<float>(int (yPos) % 10 % 360);
 
     // Bei diversen Handlungen den Kiefer bewegen
     //
@@ -549,8 +549,8 @@ void GegnerMetalHead::DoKI(void)
                         break;
                     }
 
-                    Gegner.PushGegner((float)Value1 + 50 + rand()%550,
-                                        (float)Value2 - 40,
+                    Gegner.PushGegner(static_cast<float>(Value1) + 50 + rand()%550,
+                                        static_cast<float>(Value2) - 40,
                                         SCHLEIMBOLLER, size, 0, false);
                 }
 
@@ -646,19 +646,19 @@ void GegnerMetalHead::DoKI(void)
                 xPos -= 1.0f SYNC;
             }
 
-            KieferPos  = (float)sin(SinCount) * 50.0f;
+            KieferPos  = static_cast<float>(sin(SinCount)) * 50.0f;
 
             switch(Akt)
             {
             case GEGNER_OEFFNEN:
             {
-                TurbineOff = (float)sin(SinCount) * 30.0f;
+                TurbineOff = static_cast<float>(sin(SinCount)) * 30.0f;
                 SinCount += 0.2f SYNC;
 
                 if (SinCount >= PI / 2.0f)
                 {
                     Destroyable = true;
-                    GegnerRect[GegnerArt].left   = (int)(85 + TurbineOff);
+                    GegnerRect[GegnerArt].left   = static_cast<int>(85 + TurbineOff);
                     GegnerRect[GegnerArt].top    = 210;
                     GegnerRect[GegnerArt].right  = GegnerRect[GegnerArt].left + Turbine.itsXFrameSize;
                     GegnerRect[GegnerArt].bottom = GegnerRect[GegnerArt].top  + Turbine.itsYFrameSize + 20;
@@ -793,7 +793,7 @@ void GegnerMetalHead::DoKI(void)
 
             case GEGNER_SCHLIESSEN:
             {
-                TurbineOff = (float)sin(SinCount) * 30.0f;
+                TurbineOff = static_cast<float>(sin(SinCount)) * 30.0f;
 
                 SinCount -= 0.2f SYNC;
 
@@ -895,14 +895,14 @@ void GegnerMetalHead::DoKI(void)
             //
             if (AnimCount < 0.0f)
             {
-                PartikelSystem.PushPartikel (Hals[AnimEnde].x + (float)TileEngine.XOffset,
+                PartikelSystem.PushPartikel (Hals[AnimEnde].x + static_cast<float>(TileEngine.XOffset),
                                                Hals[AnimEnde].y, HALSWIRBEL);
 
-                PartikelSystem.PushPartikel (float (Hals[AnimEnde].x - 20) + (float)TileEngine.XOffset,
+                PartikelSystem.PushPartikel (float (Hals[AnimEnde].x - 20) + static_cast<float>(TileEngine.XOffset),
                                                float (Hals[AnimEnde].y - Hals[AnimEnde].w / 3.0f), EXPLOSION_MEDIUM2);
 
                 for (int i = 0; i < 30; i++)
-                    PartikelSystem.PushPartikel (float (Hals[AnimEnde].x - 20 + rand ()% 20) + (float)TileEngine.XOffset,
+                    PartikelSystem.PushPartikel (float (Hals[AnimEnde].x - 20 + rand ()% 20) + static_cast<float>(TileEngine.XOffset),
                                                    float (Hals[AnimEnde].y - 20 + rand ()% 20), FUNKE);
 
                 SoundManager.PlayWave (100, 128, 10000 + rand()%2000, SOUND_EXPLOSION1);

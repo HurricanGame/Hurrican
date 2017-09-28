@@ -34,14 +34,14 @@ void GegnerSpikelift::DoDraw(void)
 {
     // Unterteil rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-TileEngine.XOffset),
-                                            (float)(yPos-TileEngine.YOffset) + 40.0f,
+    pGegnerGrafix[GegnerArt]->RenderSprite (static_cast<float>(xPos-TileEngine.XOffset),
+                                            static_cast<float>(yPos-TileEngine.YOffset) + 40.0f,
                                             1, 0xFFFFFFFF);
 
     // Oberteil (Spikes) rendern
     if (Value1 == 0)
-        pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-TileEngine.XOffset),
-                                                (float)(yPos-TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSprite (static_cast<float>(xPos-TileEngine.XOffset),
+                                                static_cast<float>(yPos-TileEngine.YOffset),
                                                 0, 0xFFFFFFFF);
 }
 

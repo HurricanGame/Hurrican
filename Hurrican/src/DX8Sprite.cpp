@@ -152,7 +152,7 @@ bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize
 #if defined(PLATFORM_DIRECTX)
 bool DirectGraphicsSurface::DrawSurface(LPDIRECT3DSURFACE8 &Temp, int xPos, int yPos)
 {
-    POINT Dest = {(int)(xPos), (int)(yPos)};						// Zielkoordinaten
+    POINT Dest = {static_cast<int>(xPos), static_cast<int>(yPos)};						// Zielkoordinaten
     lpD3DDevice->CopyRects(itsSurface, &itsRect, 1, Temp, &Dest);	// anzeigen
 
     return true;
@@ -391,8 +391,8 @@ loadfile:
     itsYFrameSize	= yfs;
     itsRect.left	= 0;
     itsRect.top		= 0;
-    itsRect.right	= (int)itsXSize;
-    itsRect.bottom	= (int)itsYSize;
+    itsRect.right	= static_cast<int>(i)tsXSize;
+    itsRect.bottom	= static_cast<int>(i)tsYSize;
 
     // Ausschnitte vorberechnen
     //DKS - array is now dynamically allocated
@@ -449,8 +449,8 @@ bool DirectGraphicsSprite::LoadImage(const std::string &filename, uint16_t xs, u
     //      nearest-power-of-two expansion to make one single factor that allows
     //      flexible texture-coordinate computation with no divisions.
     //      This also means we no longer need member vars itsXSize and itsYSize.
-    itsXTexScale = (float)((double)Textures[itsTexIdx].npot_scalex / (double)xs);
-    itsYTexScale = (float)((double)Textures[itsTexIdx].npot_scaley / (double)ys);
+    itsXTexScale = static_cast<float>(static_cast<double>(Textures[itsTexIdx].npot_scalex) / static_cast<double>(xs));
+    itsYTexScale = static_cast<float>(static_cast<double>(Textures[itsTexIdx].npot_scaley) / static_cast<double>(ys));
 
     itsXFrameCount	= xfc;
     itsYFrameCount	= yfc;

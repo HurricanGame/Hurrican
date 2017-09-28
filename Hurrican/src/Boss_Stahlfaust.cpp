@@ -40,8 +40,8 @@ void GegnerStahlfaust::DoKI(void)
     // Levelausschnitt auf die Faust zentrieren, sobald dieses sichtbar wird
     if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        TileEngine.ScrollLevel((float)Value1,
-                                 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf die Faust zentrieren
+        TileEngine.ScrollLevel(static_cast<float>(Value1),
+                                 static_cast<float>(Value2), ZUSTAND_SCROLLTOLOCK);		// Level auf die Faust zentrieren
         yPos -= 300;												// und Faust aus dem Screen setzen
         Handlung = GEGNER_INIT;
 

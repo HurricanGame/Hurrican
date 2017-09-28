@@ -380,7 +380,7 @@ bool loadImageSDL( image_t& image, const std::string &fullpath, void *buf, unsig
         rawSurf = IMG_Load(fullpath.c_str());
     } else              // Load from memory
     {
-        SDL_RWops* sdl_rw = SDL_RWFromConstMem( (const void*)buf, buf_size );
+        SDL_RWops* sdl_rw = SDL_RWFromConstMem(reinterpret_cast<const void*>(buf), buf_size);
 
         if (sdl_rw != NULL)
         {
@@ -406,12 +406,12 @@ bool loadImageSDL( image_t& image, const std::string &fullpath, void *buf, unsig
             //  Check if surface is PoT
             if (!isPowerOfTwo(rawSurf->w)) {
                 rawDimensions.x = nextPowerOfTwo(rawSurf->w);
-                image.npot_scalex = (double)rawSurf->w / (double)rawDimensions.x;
+                image.npot_scalex = static_cast<double>(rawSurf->w) / static_cast<double>(rawDimensions.x);
             }
             
             if (!isPowerOfTwo(rawSurf->h)) {
                 rawDimensions.y = nextPowerOfTwo(rawSurf->h);
-                image.npot_scaley = (double)rawSurf->h / (double)rawDimensions.y;
+                image.npot_scaley = static_cast<double>(rawSurf->h) / static_cast<double>(rawDimensions.y);
             }
         }
 
@@ -511,11 +511,11 @@ uint8_t* LowerResolution( SDL_Surface* surface, int factor )
     if (!dataout)
         return dataout;
 
-    uint32_t *dataout32 = (uint32_t *)dataout;
-    uint32_t *datain32 = (uint32_t *)surface->pixels;
+    uint32_t *dataout32 = reinterpret_cast<uint32_t *>(dataout);
+    uint32_t *datain32 = reinterpret_cast<uint32_t *>(surface->pixels);
 
     for (y=0; y<surface->h; y+=factor) {
-        datain32 = ((uint32_t *)surface->pixels) + surface->w * y;
+        datain32 = (reinterpret_cast<uint32_t *>(surface->pixels)) + surface->w * y;
         for (x=0; x<surface->w; x+=factor) {
             *dataout32 = *datain32;
             datain32 += factor;

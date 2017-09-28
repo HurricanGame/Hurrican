@@ -42,8 +42,8 @@ void GegnerWuxeSpinnen::DoKI(void)
             Handlung != GEGNER_VERFOLGEN &&
             TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        TileEngine.ScrollLevel((float)Value1,
-                                 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
+        TileEngine.ScrollLevel(static_cast<float>(Value1),
+                                 static_cast<float>(Value2), ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
         Gegner.PushGegner (xPos, yPos - 40, EXTRAS, 10, 0, false);
@@ -94,7 +94,7 @@ void GegnerWuxeSpinnen::DoKI(void)
             //
             if (Energy > 500.0f)
             {
-                float x = (float)(rand()%520);
+                float x = static_cast<float>(rand()%520);
 
                 Gegner.PushGegner (float (Value1) + x, float (Value2) - 100, MITTELSPINNE, 0, 1, false);
             }

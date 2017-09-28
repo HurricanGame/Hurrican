@@ -306,8 +306,8 @@ bool DirectJoystickClass::Update(void)
         if (SDL_JoystickNumAxes(lpDIJoystick) > 1)
         {
             //DKS - Map range of motion from SDL's (+/- 32768) to the original game's (+/- 1000)
-            JoystickX = (int)((float)SDL_JoystickGetAxis( lpDIJoystick, 0 ) * (1000.0f / 32767.0f));
-            JoystickY = (int)((float)SDL_JoystickGetAxis( lpDIJoystick, 1 ) * (1000.0f / 32767.0f));
+            JoystickX = static_cast<int>(SDL_JoystickGetAxis( lpDIJoystick, 0 ) * (1000.0f / 32767.0f));
+            JoystickY = static_cast<int>(SDL_JoystickGetAxis( lpDIJoystick, 1 ) * (1000.0f / 32767.0f));
         }
 
         if (SDL_JoystickNumHats(lpDIJoystick) > 0)

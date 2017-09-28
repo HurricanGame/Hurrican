@@ -270,7 +270,7 @@ public:
             value = 255;
         else if (value < 0)
             value = 0;
-        red = (uint8_t)value;
+        red = static_cast<uint8_t>(value);
     }
 
     void SetGreen(int value)
@@ -279,7 +279,7 @@ public:
             value = 255;
         else if (value < 0)
             value = 0;
-        green = (uint8_t)value;
+        green = static_cast<uint8_t>(value);
     }
 
     void SetBlue(int value)
@@ -288,7 +288,7 @@ public:
             value = 255;
         else if (value < 0)
             value = 0;
-        blue = (uint8_t)value;
+        blue = static_cast<uint8_t>(value);
     }
 
     void SetAlpha(int value)
@@ -297,7 +297,7 @@ public:
             value = 255;
         else if (value < 0)
             value = 0;
-        alpha = (uint8_t)value;
+        alpha = static_cast<uint8_t>(value);
     }
 
     PartikelClass		*pNext;						// Zeiger auf den nächsten   Partikel

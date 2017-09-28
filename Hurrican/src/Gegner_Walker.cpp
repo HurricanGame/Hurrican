@@ -110,7 +110,7 @@ void GegnerWalker::DoKI(void)
 
             if (ShotDelay <= 0.0f)
             {
-                ShotDelay = (float)(10 + rand()%5);
+                ShotDelay = static_cast<float>(10 + rand()%5);
                 AnimStart = 12;
                 AnimPhase = 12;
                 AnimEnde  = 20;

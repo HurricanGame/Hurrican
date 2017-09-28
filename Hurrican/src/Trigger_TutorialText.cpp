@@ -101,7 +101,7 @@ void GegnerTutorialText::DoKI(void)
             ReplaceAll(displayed_text, "key", "button");
         }
 
-        GUI.ShowBox((char *)displayed_text.c_str(), 100);
+        GUI.ShowBox(displayed_text.c_str(), 100);
         GUI.m_TextID = Value1;
 
         SoundManager.PlayWave (100, 128, 11025, SOUND_MESSAGE);
@@ -205,7 +205,7 @@ void GegnerTutorialText::DoKI(void)
 
                     // angeschoßenen PowerBlock suchen
                     //
-                    pPower = (GegnerPowerBlock*)(pTemp);
+                    pPower = reinterpret_cast<GegnerPowerBlock *>(pTemp);
 
                     if (pPower->ExtraType == 7 &&
                             pPower->AnimPhase == 1)

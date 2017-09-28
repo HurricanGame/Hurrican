@@ -22,8 +22,8 @@ GegnerSmallWespe::GegnerSmallWespe(int Wert1, int Wert2, bool Light)
     xAcc			= 0.0f;
     yAcc			= 0.0f;
     Energy			= 50;
-    Value1			= (int)pAim->xpos-100+rand()%200;	// Flugziel zufällig in Richtung Spieler
-    Value2			= (int)pAim->ypos-100+rand()%50;		// setzen mit etwas Variation
+    Value1			= static_cast<int>(pAim->xpos)-100+rand()%200;	// Flugziel zufällig in Richtung Spieler
+    Value2			= static_cast<int>(pAim->ypos)-100+rand()%50;		// setzen mit etwas Variation
     ChangeLight		= Light;
     Destroyable		= true;
 }
@@ -45,8 +45,8 @@ void GegnerSmallWespe::DoKI(void)
     {
         if (PlayerAbstand() < 500)
         {
-            Value1	= (int)pAim->xpos+35-50+rand()%100;	// Flugziel zufällig in Richtung Spieler
-            Value2	= (int)pAim->ypos+40-50+rand()%30;	// setzen mit etwas Variation
+            Value1	= static_cast<int>(pAim->xpos)+35-50+rand()%100;	// Flugziel zufällig in Richtung Spieler
+            Value2	= static_cast<int>(pAim->ypos)+40-50+rand()%30;	// setzen mit etwas Variation
             Handlung = GEGNER_VERFOLGEN;
         }
     }
@@ -103,8 +103,8 @@ void GegnerSmallWespe::DoKI(void)
         if (ySpeed >  MAXSPEED) ySpeed =  MAXSPEED;
         if (ySpeed < -MAXSPEED) ySpeed = -MAXSPEED;
 
-        int dx = abs ((int) (xPos - Value1));
-        int dy = abs ((int) (yPos - Value2));
+        int dx = abs (static_cast<int>(xPos - Value1));
+        int dy = abs (static_cast<int>(yPos - Value2));
 
         // nah am Spieler "zuschlagen" ?
         if (PlayerAbstand() < 200)
@@ -117,8 +117,8 @@ void GegnerSmallWespe::DoKI(void)
                 (dx*dx + dy*dy) < 20*20)
 
         {
-            Value1	= (int)pAim->xpos-50+rand()%100;	// Flugziel zufällig in Richtung Spieler
-            Value2	= (int)pAim->ypos-50+rand()%100;	// setzen mit etwas Variation
+            Value1	= static_cast<int>(pAim->xpos)-50+rand()%100;	// Flugziel zufällig in Richtung Spieler
+            Value2	= static_cast<int>(pAim->ypos)-50+rand()%100;	// setzen mit etwas Variation
         }
 
         // An die Wand gekommen ? Dann auch neues Ziel setzen
@@ -128,8 +128,8 @@ void GegnerSmallWespe::DoKI(void)
                 blocku & BLOCKWERT_WAND ||
                 blocku & BLOCKWERT_PLATTFORM)
         {
-            Value1	= (int)pAim->xpos+35-50+rand()%100;	// Flugziel zufällig in Richtung Spieler
-            Value2	= (int)pAim->ypos+40-50+rand()%30;	// setzen mit etwas Variation
+            Value1	= static_cast<int>(pAim->xpos)+35-50+rand()%100;	// Flugziel zufällig in Richtung Spieler
+            Value2	= static_cast<int>(pAim->ypos)+40-50+rand()%30;	// setzen mit etwas Variation
         }
     }
     break;

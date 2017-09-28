@@ -40,20 +40,20 @@ GegnerUfo::GegnerUfo(int Wert1, int Wert2, bool Light)
 
 void GegnerUfo::DoDraw(void)
 {
-    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - (float)TileEngine.XOffset,
-                                           yPos - (float)TileEngine.YOffset,
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - static_cast<float>(TileEngine.XOffset),
+                                           yPos - static_cast<float>(TileEngine.YOffset),
                                            AnimPhase, 0xFFFFFFFF);
 
     if (AlreadyDrawn == false)
     {
         DirectGraphics.SetAdditiveMode();
-        Projectiles.LavaFlare.RenderSpriteRotated(xPos + 40.0f - (float)TileEngine.XOffset,
-                                      yPos + 20.0f - (float)TileEngine.YOffset,
+        Projectiles.LavaFlare.RenderSpriteRotated(xPos + 40.0f - static_cast<float>(TileEngine.XOffset),
+                                      yPos + 20.0f - static_cast<float>(TileEngine.YOffset),
                                       xPos * 0.5f, 0xFFFF2288);
 
         //DKS - This was commented out in original source code:
-//		Projectiles.LavaFlare.RenderSpriteRotated(xPos + 40.0f - (float)TileEngine.XOffset,
-//									  yPos + 30.0f - (float)TileEngine.YOffset,
+//		Projectiles.LavaFlare.RenderSpriteRotated(xPos + 40.0f - static_cast<float>(TileEngine.XOffset),
+//									  yPos + 30.0f - static_cast<float>(TileEngine.YOffset),
 //									  360.0f - xPos * 0.5f, 0x88FFFF88);
 
         DirectGraphics.SetColorKeyMode();
@@ -90,8 +90,8 @@ void GegnerUfo::DoKI(void)
     // Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
     if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        TileEngine.ScrollLevel((float)Value1,
-                                 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
+        TileEngine.ScrollLevel(static_cast<float>(Value1),
+                                 static_cast<float>(Value2), ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
         yPos -= 300;												// und Boss aus dem Screen setzen
         Handlung = GEGNER_INIT;
 

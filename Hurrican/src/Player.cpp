@@ -415,8 +415,8 @@ void PlayerClass::runExplode(void)
             //
             if (g_Fahrstuhl_yPos > -1.0f)
             {
-                xpos = (float)(TileEngine.XOffset) + 320.0f - 35;
-                ypos = (float)(g_Fahrstuhl_yPos) - CollideRect.bottom - 1;
+                xpos = static_cast<float>(TileEngine.XOffset) + 320.0f - 35;
+                ypos = static_cast<float>(g_Fahrstuhl_yPos) - CollideRect.bottom - 1;
                 xposold = xpos;	// Alte Position wieder herstellen, wenn der
                 yposold = ypos;	// der Spieler zB einen Abgrund runterfiel
                 JumpxSave = xpos;
@@ -798,7 +798,7 @@ void PlayerClass::DoStuffWhenDamaged(void)
         sparkcount -= 1.0f SYNC;
     else
     {
-        sparkcount = (float)(rand()%(int)(Energy / 2 + 2)) + 5;
+        sparkcount = static_cast<float>(rand()%static_cast<int>(Energy / 2 + 2)) + 5;
 
         // ein Funken "Schadenseffekt" per Zufall einbauen
         //
@@ -810,8 +810,8 @@ void PlayerClass::DoStuffWhenDamaged(void)
         //
         case 0:
         {
-            float x = xpos + (float)(20 + rand()%40);
-            float y = ypos + (float)(20 + rand()%40);
+            float x = xpos + static_cast<float>(20 + rand()%40);
+            float y = ypos + static_cast<float>(20 + rand()%40);
 
             for (int i = 0; i < 5; i++)
                 PartikelSystem.PushPartikel(x + rand()%4, y + rand()%4, FUNKE);
@@ -825,8 +825,8 @@ void PlayerClass::DoStuffWhenDamaged(void)
         //
         case 1:
         {
-            float x = xpos + (float)(20 + rand()%40);
-            float y = ypos + (float)(20 + rand()%40);
+            float x = xpos + static_cast<float>(20 + rand()%40);
+            float y = ypos + static_cast<float>(20 + rand()%40);
 
             for (int i = 0; i < 5; i++)
                 PartikelSystem.PushPartikel(x + rand()%4, y + rand()%4, LONGFUNKE);
@@ -968,7 +968,7 @@ void PlayerClass::CheckForExplode(void)
         {
             if (pTemp->GegnerArt == PUNISHER)
             {
-                pPunisher = (GegnerPunisher*)pTemp;
+                pPunisher = reinterpret_cast<GegnerPunisher *>(pTemp);
                 pPunisher->Vanish();
             }
 
@@ -1030,7 +1030,7 @@ void PlayerClass::PullItems(void)
             absy = (pTemp->yPos+10)-(ypos+40);		// und y Strecke
 
             //DKS - converted to float:
-            //speed = (float)(1.0f/sqrt(absx*absx + absy*absy));	// Länge der Strecke berechnen
+            //speed = static_cast<float>(1.0f/sqrt(absx*absx + absy*absy));	// Länge der Strecke berechnen
             speed = 1.0f/sqrtf(absx*absx + absy*absy);	// Länge der Strecke berechnen
             speed = speed * 0.1f * BlitzStart;				// Geschwindigkeit ist 4 fach
 
@@ -1206,7 +1206,7 @@ void PlayerClass::AnimatePlayer(void)
         // Richtung umkehren wenn an die Decke gestossen ?
         if(bo & BLOCKWERT_WAND ||
                 (TileEngine.Zustand == ZUSTAND_LOCKED &&
-                 ypos <= (float)TileEngine.YOffset))
+                 ypos <= static_cast<float>(TileEngine.YOffset)))
         {
             if (yspeed < 0.0f)
                 yspeed = 0.0f;
@@ -1416,7 +1416,7 @@ void PlayerClass::AnimatePlayer(void)
 
                 if (AufPlattform->GegnerArt == MUSHROOM)
                 {
-                    pTemp = (GegnerMushroom*)(AufPlattform);
+                    pTemp = reinterpret_cast<GegnerMushroom *>(AufPlattform);
                     pTemp->PlayerJumps(this);
                 }
 
@@ -1691,7 +1691,7 @@ void PlayerClass::AnimatePlayer(void)
                 else
                     Winkel = 180 + Winkel;
 
-                AnimPhase = (int)((Winkel + 0.0f) / 10.0f) % FRAMES_SURROUND;
+                AnimPhase = static_cast<int>((Winkel + 0.0f) / 10.0f) % FRAMES_SURROUND;
             }
         }
 
@@ -1704,7 +1704,7 @@ void PlayerClass::AnimatePlayer(void)
             //DKS - Added check for NULLness and DirectX, since SDL port doesn't support SetFrequency.
             //      Also added function SetWaveFrequency()
 #if defined(PLATFORM_DIRECTX)
-            int Freq = 9000 + (int)(BlitzStart / 20.0f * 2000);
+            int Freq = 9000 + static_cast<int>(BlitzStart / 20.0f * 2000);
             //if (SoundManager.its_Sounds[SOUND_BEAMLOAD + SoundOff] != NULL)
             //    SOUND_SetFrequency(SoundManager.its_Sounds[SOUND_BEAMLOAD + SoundOff]->Channel, Freq);
             SetWaveFrequency((SOUND_BEAMLOAD + SoundOff), Freq);
@@ -1726,7 +1726,7 @@ void PlayerClass::AnimatePlayer(void)
             else
                 Winkel = 180 + Winkel;
 
-            AnimPhase = (int)((Winkel + 0.0f) / 10.0f) % FRAMES_SURROUND;
+            AnimPhase = static_cast<int>((Winkel + 0.0f) / 10.0f) % FRAMES_SURROUND;
 
             // Beam abfeuern
             if (!Aktion[AKTION_BLITZ] || !Aktion[AKTION_SHOOT])
@@ -2427,7 +2427,7 @@ void PlayerClass::AnimatePlayer(void)
     // Testen, ob sich der Spieler im Wasser befindet
 
     //DKS - Added bounds check to Tiles[][] array, eliminated divisions while I was here:
-    //uint32_t middle = TileEngine.TileAt((int)(xpos + 35) / TILESIZE_X, (int)(ypos + 40) / TILESIZE_Y).Block;
+    //uint32_t middle = TileEngine.TileAt(static_cast<int>(xpos + 35) / TILESIZE_X, static_cast<int>(ypos + 40) / TILESIZE_Y).Block;
     uint32_t middle = 0;
     { 
         int tile_x = (xpos + 35.0f) * (1.0f/TILESIZE_X);
@@ -2667,8 +2667,8 @@ void PlayerClass::AnimatePlayer(void)
         if (NUMPLAYERS == 2 &&
                 StageClearRunning == false)
         {
-            if (xpos < TileEngine.XOffset)  xpos = (float)TileEngine.XOffset;
-            if (xpos > TileEngine.XOffset + 570) xpos = (float)TileEngine.XOffset + 570;
+            if (xpos < TileEngine.XOffset)  xpos = static_cast<float>(TileEngine.XOffset);
+            if (xpos > TileEngine.XOffset + 570) xpos = static_cast<float>(TileEngine.XOffset) + 570;
         }
     }
 
@@ -2778,7 +2778,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
     if (leuchten)
         DirectGraphics.SetAdditiveMode();
 
-    xdraw = (float)((int)(xpos) - (int)(TileEngine.XOffset));
+    xdraw = static_cast<float>(static_cast<int>(xpos) - static_cast<int>(TileEngine.XOffset));
     ydraw = ypos - TileEngine.YOffset;
 
     // Im Wasser? Dann schwabbeln lassen
@@ -2792,8 +2792,8 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
             bo & BLOCKWERT_LIQUID &&
             bu & BLOCKWERT_PLATTFORM)
     {
-        int yLevel = (int)(ypos + 80.0f) / 20;
-        int off = (int)(TileEngine.SinPos2 + yLevel) % 40;
+        int yLevel = static_cast<int>(ypos + 80.0f) / 20;
+        int off = static_cast<int>(TileEngine.SinPos2 + yLevel) % 40;
 
         xdraw -= TileEngine.SinList2[off];
     }
@@ -3060,18 +3060,18 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
             switch (FlameOff)
             {
             case 0 :
-                Projectiles.SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)TileEngine.XOffset,
-                                               ypos + AustrittY - 70 - (float)TileEngine.YOffset, 0, 0x88FFCC99);
+                Projectiles.SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - static_cast<float>(TileEngine.XOffset),
+                                               ypos + AustrittY - 70 - static_cast<float>(TileEngine.YOffset), 0, 0x88FFCC99);
                 break;
 
             case 1 :
-                Projectiles.SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)TileEngine.XOffset,
-                                               ypos + AustrittY - 70 - (float)TileEngine.YOffset, 0, 0x8899CCFF);
+                Projectiles.SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - static_cast<float>(TileEngine.XOffset),
+                                               ypos + AustrittY - 70 - static_cast<float>(TileEngine.YOffset), 0, 0x8899CCFF);
                 break;
 
             case 2 :
-                Projectiles.SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - (float)TileEngine.XOffset,
-                                               ypos + AustrittY - 70 - (float)TileEngine.YOffset, 0, 0x8899FFCC);
+                Projectiles.SchussFlammeFlare.RenderSprite(xpos + AustrittX - 70 - static_cast<float>(TileEngine.XOffset),
+                                               ypos + AustrittY - 70 - static_cast<float>(TileEngine.YOffset), 0, 0x8899FFCC);
                 break;
             }
         }
@@ -3793,8 +3793,8 @@ void PlayerClass::DrawNormalLightning(int DrawLength)
     float tl, tr, to, tu;					// Textur Koordinaten
     float x, y;
 
-    x = (float)(xpos - TileEngine.XOffset+60);		// Position errechnen
-    y = (float)(ypos - TileEngine.YOffset+36);
+    x = static_cast<float>(xpos - TileEngine.XOffset+60);		// Position errechnen
+    y = static_cast<float>(ypos - TileEngine.YOffset+36);
 
     if (Blickrichtung == LINKS)
         x -= 56;
@@ -3932,8 +3932,8 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul)
     ystrahl = 0;
     xstrahl = 0;
 
-    xstart = (float)(18);
-    ystart = (float)(4);
+    xstart = static_cast<float>(18);
+    ystart = static_cast<float>(4);
 
     maxintersections = DrawLength + 2;
 
@@ -3943,7 +3943,7 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul)
 
     if (changecount <= 0.0f)
     {
-        changecount = (float)(rand()%10 + 1) / 10.0f;
+        changecount = static_cast<float>(rand()%10 + 1) / 10.0f;
 
         for (int n = 0; n < 12; n ++)
         {
@@ -3972,27 +3972,27 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul)
             for (int i = 0; i < maxintersections * 2; i += 2)
             {
                 // zwei neue Punkte zwischen letztem Punkt und Endpunkt per Zufall setzen
-                xstrahl = (int)((xpos - TileEngine.XOffset + xstart) + (rand()%32 - 16) * mul);
-                ystrahl = (int)(ypos - TileEngine.YOffset + ystart - yoff);
+                xstrahl = static_cast<int>((xpos - TileEngine.XOffset + xstart) + (rand()%32 - 16) * mul);
+                ystrahl = static_cast<int>(ypos - TileEngine.YOffset + ystart - yoff);
 
                 // Am End- und Austrittspunkt gebündelt
                 if (i == 0)
                 {
-                    xstrahl = (int)(xpos - TileEngine.XOffset + xstart) + rand()%6 - 2;
-                    ystrahl = (int)(ypos - TileEngine.YOffset + ystart);
+                    xstrahl = static_cast<int>(xpos - TileEngine.XOffset + xstart) + rand()%6 - 2;
+                    ystrahl = static_cast<int>(ypos - TileEngine.YOffset + ystart);
                 }
 
                 if (i >= (maxintersections - 1) * 2)
                 {
-                    xstrahl = (int)(xpos - TileEngine.XOffset + xstart) + rand()%6 - 2;
-                    ystrahl = (int)(ypos - TileEngine.YOffset + ystart - (DrawLength + 1)*32);
+                    xstrahl = static_cast<int>(xpos - TileEngine.XOffset + xstart) + rand()%6 - 2;
+                    ystrahl = static_cast<int>(ypos - TileEngine.YOffset + ystart - (DrawLength + 1)*32);
                 }
 
                 // Position setzen
-                strahlen[n][i + 0].x = (float)(xstrahl - size + xstart);
-                strahlen[n][i + 1].x = (float)(xstrahl + size + xstart);
-                strahlen[n][i + 0].y = (float)(ystrahl + ystart);
-                strahlen[n][i + 1].y = (float)(ystrahl + ystart);
+                strahlen[n][i + 0].x = static_cast<float>(xstrahl - size + xstart);
+                strahlen[n][i + 1].x = static_cast<float>(xstrahl + size + xstart);
+                strahlen[n][i + 0].y = static_cast<float>(ystrahl + ystart);
+                strahlen[n][i + 1].y = static_cast<float>(ystrahl + ystart);
 
                 // texturkoordinaten setzen
                 strahlen[n][i + 0].tu = 0.0f;
@@ -4045,8 +4045,8 @@ bool PlayerClass::DoLightning(void)
 
     float x, y;
 
-    x = (float)(xpos - TileEngine.XOffset+35);		// Position errechnen
-    y = (float)(ypos - TileEngine.YOffset+35);
+    x = static_cast<float>(xpos - TileEngine.XOffset+35);		// Position errechnen
+    y = static_cast<float>(ypos - TileEngine.YOffset+35);
 
     //if (Blickrichtung == LINKS)
     //	x -= 56;
@@ -4369,8 +4369,8 @@ bool PlayerClass::LoadBeam (void)
     float x;
     //float y;
 
-    x = (float)(xpos - TileEngine.XOffset+60);		// Position errechnen
-    //y = (float)(ypos - TileEngine.YOffset+36);
+    x = static_cast<float>(xpos - TileEngine.XOffset+60);		// Position errechnen
+    //y = static_cast<float>(ypos - TileEngine.YOffset+36);
 
     if (Blickrichtung == LINKS)
         x -= 56;
@@ -4420,8 +4420,8 @@ bool PlayerClass::LoadBeam (void)
             //DKS - pretty obviously a bug, they mean to convert to degrees before calling sin (which takes radians)
             //      When I fixed this, I went ahead and added support for trig lookup table, and support for 
             //      rad/deg versions of sin/cos
-            //PartikelSystem.PushPartikel (float (BeamX + sin ((float)j) * 50),
-            //                               float (BeamY + cos ((float)j) * 50), BEAMSMOKE2, this);
+            //PartikelSystem.PushPartikel (float (BeamX + sin (static_cast<float>(j)) * 50),
+            //                               float (BeamY + cos (static_cast<float>(j)) * 50), BEAMSMOKE2, this);
 			PartikelSystem.PushPartikel (BeamX + sin_deg(j) * 50.0f,
 										   BeamY + cos_deg(j) * 50.0f, BEAMSMOKE2, this);
         }
@@ -4549,8 +4549,8 @@ void PlayerClass::CalcFlamePos (void)
     }
 
     // X-Offset richtig berechnen
-    xoff -= (int)(TileEngine.XOffset);
-    yoff -= (int)(TileEngine.YOffset);
+    xoff -= static_cast<int>(TileEngine.XOffset);
+    yoff -= static_cast<int>(TileEngine.YOffset);
 
     // Und dann je nach Blickrichtung die Flamme und den Flare dazu setzen
     if (Blickrichtung == RECHTS)
@@ -4721,8 +4721,8 @@ void PlayerClass::CalcAustrittsPunkt(void)
     //----- Genauen Pixel am Anfang derFlamme finden
     //
     CalcFlamePos();
-    AustrittX += (float)TileEngine.XOffset;
-    AustrittY += (float)TileEngine.YOffset;
+    AustrittX += static_cast<float>(TileEngine.XOffset);
+    AustrittY += static_cast<float>(TileEngine.YOffset);
     switch (AustrittAnim)
     {
     // gerade flamme
@@ -4887,7 +4887,7 @@ void PlayerClass::ScrollFlugsack(void)
     if (!FlugsackFliesFree &&
             Riding() &&
             BeideFrei == true)
-        TileEngine.YOffset -= (float)(PLAYER_FLUGSACKSPEED SYNC);
+        TileEngine.YOffset -= static_cast<float>(PLAYER_FLUGSACKSPEED SYNC);
 }
 
 // --------------------------------------------------------------------------------------

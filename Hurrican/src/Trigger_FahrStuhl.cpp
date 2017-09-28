@@ -44,9 +44,9 @@ void GegnerFahrstuhl::DoDraw(void)
     DirectGraphics.SetFilterMode (true);
 
     // Schatten rendern
-    float l = (float) (g_Fahrstuhl_yPos - TileEngine.YOffset) - 80;
-    pGegnerGrafix[GegnerArt]->RenderSpriteScaled((float)(xPos-TileEngine.XOffset - 10),
-            (float)(g_Fahrstuhl_yPos-TileEngine.YOffset),
+    float l = static_cast<float>(g_Fahrstuhl_yPos - TileEngine.YOffset) - 80;
+    pGegnerGrafix[GegnerArt]->RenderSpriteScaled(static_cast<float>(xPos-TileEngine.XOffset - 10),
+            static_cast<float>(g_Fahrstuhl_yPos-TileEngine.YOffset),
             GegnerRect[GegnerArt].right  + 20,
             int (GegnerRect[GegnerArt].bottom + l / 5.0f),
             AnimPhase, 0x99000000);
@@ -54,8 +54,8 @@ void GegnerFahrstuhl::DoDraw(void)
     DirectGraphics.SetFilterMode (false);
 
     // Fahrstuhl rendern
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                           (float)(g_Fahrstuhl_yPos-TileEngine.YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                           static_cast<float>(g_Fahrstuhl_yPos-TileEngine.YOffset),
                                            AnimPhase, 0xFFFFFFFF);
 }
 

@@ -93,7 +93,7 @@ void SoundManagerClass::UpdateChannels()
                     if (channels[i].pending_vol == 0) {
                         StopChannel(i);
                     } else {
-                        if (channels[i].vol != (float)channels[i].pending_vol)
+                        if (channels[i].vol != channels[i].pending_vol)
                             SetChannelVolume(i, channels[i].pending_vol);
 
                         if (channels[i].panning != channels[i].pending_pan)
@@ -229,7 +229,7 @@ void SoundManagerClass::UpdateSongs()
                     songs[i].pause_when_fade_ends = false;
                 }
                 SetSongVolume(i, songs[i].vol);
-                //MUSIC_SetMasterVolume(songs[i].data, (int)(songs[i].vol * g_music_vol * (2.55f/100.0f)));
+                //MUSIC_SetMasterVolume(songs[i].data, static_cast<int>(songs[i].vol * g_music_vol * (2.55f/100.0f)));
             } else {
                 // If a song is fading and is now over, reset its values: 
                 songs[i].fade_speed = 0.0f;
@@ -514,7 +514,7 @@ void SoundManagerClass::SetSongVolume(int nr, float volume)
         return;
 
     songs[nr].vol = volume;
-    MUSIC_SetMasterVolume(songs[nr].data, (int)(volume*g_music_vol*(2.55f/100.0f)));
+    MUSIC_SetMasterVolume(songs[nr].data, static_cast<int>(volume*g_music_vol*(2.55f/100.0f)));
 }
 
 //---------------------------------------------------------------------------------------
@@ -531,7 +531,7 @@ void SoundManagerClass::SetAbsoluteSongVolume(int nr, float volume)
         return;
 
     songs[nr].vol = volume;
-    MUSIC_SetMasterVolume(songs[nr].data, (int)(volume));
+    MUSIC_SetMasterVolume(songs[nr].data, static_cast<int>(volume));
 }
 
 //DKS - Added:
@@ -1024,7 +1024,7 @@ void SoundManagerClass::SetPendingChannelVolumeAndPanning(int ch, int new_vol, i
         // If this pan request had a non-zero volume, average the total pans together with it:
         num_pans++;
         accumulated_pan += new_pan;
-        channels[ch].pending_pan = (int)((float)accumulated_pan / (float)num_pans);
+        channels[ch].pending_pan = static_cast<int>(static_cast<float>(accumulated_pan) / static_cast<float>(num_pans));
     }
 }
 

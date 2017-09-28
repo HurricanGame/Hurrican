@@ -119,7 +119,7 @@ void GegnerBruecke::DoKI(void)
             }
     }
     else
-        yPos = (float)(Value1 + 3);
+        yPos = static_cast<float>(Value1 + 3);
 
 
 }

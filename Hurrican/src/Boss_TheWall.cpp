@@ -85,13 +85,13 @@ void GegnerTheWall::DoDraw(void)
             Color = 0xFFFFFFFF;
 
         // Maschine rechts
-        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - (float)TileEngine.XOffset,
-                                               yPos - (float)TileEngine.YOffset,
+        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - static_cast<float>(TileEngine.XOffset),
+                                               yPos - static_cast<float>(TileEngine.YOffset),
                                                0xFFFFFFFF);
 
         // Vorderteil
-        Vorne.RenderSprite(xPos - (float)TileEngine.XOffset + VorneX + 3.0f,
-                           yPos - (float)TileEngine.YOffset + VorneY + 148.0f,
+        Vorne.RenderSprite(xPos - static_cast<float>(TileEngine.XOffset) + VorneX + 3.0f,
+                           yPos - static_cast<float>(TileEngine.YOffset) + VorneY + 148.0f,
                            0xFFFFFFFF);
     }
 
@@ -101,33 +101,33 @@ void GegnerTheWall::DoDraw(void)
         Brain.SetRect(0, 123, 27, 157);
         if (DirectGraphics.BlendMode == ADDITIV_MODE)
             DirectGraphics.SetAdditiveMode();
-        Brain.RenderSprite(xPos - (float)TileEngine.XOffset + 3  + VorneX,
-                           yPos - (float)TileEngine.YOffset + 228 + VorneY, Color);
+        Brain.RenderSprite(xPos - static_cast<float>(TileEngine.XOffset) + 3  + VorneX,
+                           yPos - static_cast<float>(TileEngine.YOffset) + 228 + VorneY, Color);
     }
 
     if (AlreadyDrawn == true)
         return;
 
     // Kringel im Hintergrund
-    Kringel[1].RenderSprite(xPos - (float)TileEngine.XOffset + TunnelOffx + 38,
-                            yPos - (float)TileEngine.YOffset + TunnelOffY - 14, (int)(KringelWinkel / 3.0f ) % 5,
+    Kringel[1].RenderSprite(xPos - static_cast<float>(TileEngine.XOffset) + TunnelOffx + 38,
+                            yPos - static_cast<float>(TileEngine.YOffset) + TunnelOffY - 14, static_cast<int>(KringelWinkel / 3.0f ) % 5,
                             col);
 
     // Herz rendern
     if (Handlung != GEGNER_EXPLODIEREN)
     {
-        Brain.RenderSprite(xPos - (float)TileEngine.XOffset + TunnelOffx + 116,
-                           yPos - (float)TileEngine.YOffset + TunnelOffY + 59, HeartAnim,
+        Brain.RenderSprite(xPos - static_cast<float>(TileEngine.XOffset) + TunnelOffx + 116,
+                           yPos - static_cast<float>(TileEngine.YOffset) + TunnelOffY + 59, HeartAnim,
                            col);
 
         // Suppe rendern
         DirectGraphics.SetAdditiveMode();
-        D3DCOLOR supcol1 = D3DCOLOR_RGBA(150, 0, 0, (int)(toff*1.5f));
-        D3DCOLOR supcol2 = D3DCOLOR_RGBA(150, 0, 0, (int)(toff*1.5f));
+        D3DCOLOR supcol1 = D3DCOLOR_RGBA(150, 0, 0, static_cast<int>(toff*1.5f));
+        D3DCOLOR supcol2 = D3DCOLOR_RGBA(150, 0, 0, static_cast<int>(toff*1.5f));
         int start = int((4000 - Energy * 0.75f) / 4000.0f * 42);
 
-        RenderRect4(xPos - (float)TileEngine.XOffset + TunnelOffx + 117,
-                    yPos - (float)TileEngine.YOffset + TunnelOffY + 59 + start, 37, (float)(42 - start),
+        RenderRect4(xPos - static_cast<float>(TileEngine.XOffset) + TunnelOffx + 117,
+                    yPos - static_cast<float>(TileEngine.YOffset) + TunnelOffY + 59 + start, 37, static_cast<float>(42 - start),
                     supcol1, supcol1, supcol2, supcol2);
 
         DirectGraphics.SetColorKeyMode();
@@ -135,17 +135,17 @@ void GegnerTheWall::DoDraw(void)
 
     // Röhrenaufhängung rendern
     Brain.SetRect(76, 0, 129, 157);
-    Brain.RenderSprite(xPos - (float)TileEngine.XOffset + TunnelOffx + 110,
-                       yPos - (float)TileEngine.YOffset + TunnelOffY + 2, col);
+    Brain.RenderSprite(xPos - static_cast<float>(TileEngine.XOffset) + TunnelOffx + 110,
+                       yPos - static_cast<float>(TileEngine.YOffset) + TunnelOffY + 2, col);
 
     // abdeckenden Kringel rendern
     //DKS - Changed to use simple version of RenderSpriteRotated (original code was
     //      specifying anim parameter than never changed from zero)
-    //Kringel[0].RenderSpriteRotated(xPos - (float)TileEngine.XOffset + TunnelOffx + 37,
-    //                               yPos - (float)TileEngine.YOffset + TunnelOffY - 16, 360.0f - KringelWinkel, 0,
+    //Kringel[0].RenderSpriteRotated(xPos - static_cast<float>(TileEngine.XOffset) + TunnelOffx + 37,
+    //                               yPos - static_cast<float>(TileEngine.YOffset) + TunnelOffY - 16, 360.0f - KringelWinkel, 0,
     //                               col);
-    Kringel[0].RenderSpriteRotated(xPos - (float)TileEngine.XOffset + TunnelOffx + 37,
-                                   yPos - (float)TileEngine.YOffset + TunnelOffY - 16, 360.0f - KringelWinkel, col);
+    Kringel[0].RenderSpriteRotated(xPos - static_cast<float>(TileEngine.XOffset) + TunnelOffx + 37,
+                                   yPos - static_cast<float>(TileEngine.YOffset) + TunnelOffY - 16, 360.0f - KringelWinkel, col);
 
     // Türen
 
@@ -153,23 +153,23 @@ void GegnerTheWall::DoDraw(void)
     Tuer.SetRect(toff, 0, 138, 185);
 
     // Schatten
-    Tuer.RenderSprite(xPos - (float)TileEngine.XOffset + TunnelOffx  + 20,
-                      yPos - (float)TileEngine.YOffset + TunnelOffY - 10, 0x80000000);
+    Tuer.RenderSprite(xPos - static_cast<float>(TileEngine.XOffset) + TunnelOffx  + 20,
+                      yPos - static_cast<float>(TileEngine.YOffset) + TunnelOffY - 10, 0x80000000);
 
-    Tuer.RenderSprite(xPos - (float)TileEngine.XOffset + TunnelOffx  + 10,
-                      yPos - (float)TileEngine.YOffset + TunnelOffY - 10, -1,
+    Tuer.RenderSprite(xPos - static_cast<float>(TileEngine.XOffset) + TunnelOffx  + 10,
+                      yPos - static_cast<float>(TileEngine.YOffset) + TunnelOffY - 10, -1,
                       0xFF333333, col, 0xFF333333, col);
 
     // Tür rechts
     Tuer.SetRect(138, 0, 266 - toff, 185);
 
-    Tuer.RenderSprite(xPos - (float)TileEngine.XOffset + TunnelOffx + 128 + toff,
-                      yPos - (float)TileEngine.YOffset + TunnelOffY - 10, -1,
+    Tuer.RenderSprite(xPos - static_cast<float>(TileEngine.XOffset) + TunnelOffx + 128 + toff,
+                      yPos - static_cast<float>(TileEngine.YOffset) + TunnelOffY - 10, -1,
                       col, 0xFF333333, col, 0xFF333333);
 
     // rahmen aussenrum
-    Rahmen.RenderSprite(xPos - (float)TileEngine.XOffset + TunnelOffx - 8,
-                        yPos - (float)TileEngine.YOffset + TunnelOffY - 26, 0xFFA0A0A0);
+    Rahmen.RenderSprite(xPos - static_cast<float>(TileEngine.XOffset) + TunnelOffx - 8,
+                        yPos - static_cast<float>(TileEngine.YOffset) + TunnelOffY - 26, 0xFFA0A0A0);
 
     AlreadyDrawn = true;
 }
@@ -224,7 +224,7 @@ void GegnerTheWall::NeueAktion(void)
             ShotCount = 20;
             ShotDelay = 5.0f;
             Handlung = GEGNER_SPECIAL;
-            dummy	 = (float)(rand()%10) + 15;
+            dummy	 = static_cast<float>(rand()%10) + 15;
         }
         break;
 
@@ -626,7 +626,7 @@ void GegnerTheWall::DoKI(void)
         {
             if (ShotCount > 1)
             {
-                Projectiles.PushProjectile((float) TileEngine.XOffset - 40.0f,
+                Projectiles.PushProjectile(static_cast<float>(TileEngine.XOffset) - 40.0f,
                                              yPos + 240.0f, SPIDERLASER);
                 SoundManager.PlayWave (100, 128, 11025, SOUND_BEAMLOAD2);
             }

@@ -19,7 +19,7 @@ GegnerPresse::GegnerPresse(int Wert1, int Wert2, bool Light)
     Energy			= 100;
     Value1			= Wert1;
     Value2			= Wert2;
-    ySpeed			= (float)Wert2;
+    ySpeed			= static_cast<float>(Wert2);
     AnimPhase		= 0;
     ChangeLight		= Light;
     Destroyable		= false;
@@ -43,7 +43,7 @@ void GegnerPresse::DoKI(void)
                  blocku & BLOCKWERT_GEGNERWAND ||
                  blocku & BLOCKWERT_WAND))
         {
-            ySpeed = -(float)Value2 / 2;
+            ySpeed = -static_cast<float>(Value2) / 2;
 
             // Staub erzeugen
             for (int i=0; i < 8; i++)

@@ -91,7 +91,7 @@ private:
 #if defined(PLATFORM_DIRECTX)
     D3DDISPLAYMODE			d3ddm;							// Display Mode
 #elif defined(PLATFORM_SDL)
-    char*                   glextentsions;
+    const char              *glextensions;
     bool                    use_texture;
     int                     MaxTextureUnits;
 #if defined(USE_GL2)
@@ -141,7 +141,7 @@ public:
 
     void RendertoBuffer (D3DPRIMITIVETYPE PrimitiveType,    // Rendert in den Buffer, der am Ende
                          std::uint32_t PrimitiveCount,				// eines jeden Frames komplett in
-                         const void* pVertexStreamZeroData);// den Backbuffer gerendert wird
+                         void *pVertexStreamZeroData);// den Backbuffer gerendert wird
 
     void DisplayBuffer  (void);								// Render den Buffer auf den Backbuffer
     //DKS - SetTexture is now used for both GL and DirectX, and uses new TexturesystemClass:

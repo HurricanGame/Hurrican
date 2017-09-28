@@ -33,8 +33,8 @@ GegnerSpiderBomb::GegnerSpiderBomb(int Wert1, int Wert2, bool Light)
     {
         Handlung  = GEGNER_FALLEN;
         AnimPhase = 6;
-        xSpeed =  (float)(rand()%10) + 20.0f;
-        ySpeed = -(float)(rand()%10 + 30.0f);
+        xSpeed =  static_cast<float>(rand()%10) + 20.0f;
+        ySpeed = -static_cast<float>(rand()%10 + 30.0f);
         yAcc   = 5.0f;
     }
 }

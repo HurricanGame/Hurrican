@@ -22,7 +22,7 @@ GegnerNeuFisch::GegnerNeuFisch(int Wert1, int Wert2, bool Light)
     ChangeLight		= Light;
     Destroyable		= true;
     pFest			= NULL;
-    MoveSpeed		= 5.0f + (float)(rand()%50) / 10.0f;
+    MoveSpeed		= 5.0f + static_cast<float>(rand()%50) / 10.0f;
 }
 
 
@@ -150,8 +150,8 @@ void GegnerNeuFisch::DoKI(void)
                 Handlung = GEGNER_SPECIAL;
                 AnimSpeed = 0.3f;
 
-                Value1 = (int)(pAim->xpos - xPos);
-                Value2 = (int)(pAim->ypos - yPos);
+                Value1 = static_cast<int>(pAim->xpos - xPos);
+                Value2 = static_cast<int>(pAim->ypos - yPos);
 
                 AnimPhase = 0;
                 AnimEnde  = 9;

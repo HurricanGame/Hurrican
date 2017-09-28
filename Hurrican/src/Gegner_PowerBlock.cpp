@@ -60,8 +60,8 @@ void GegnerPowerBlock::DoDraw(void)
     //normal
     if (AnimPhase > 0)
     {
-        pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-TileEngine.XOffset),
-                                                (float)(yPos-TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSprite (static_cast<float>(xPos-TileEngine.XOffset),
+                                                static_cast<float>(yPos-TileEngine.YOffset),
                                                 1 + TileEngine.DateiAppendix.UsedPowerblock * 2, 0xFFFFFFFF, false);
     }
 
@@ -69,8 +69,8 @@ void GegnerPowerBlock::DoDraw(void)
     if (AnimPhase == 2)
     {
         D3DCOLOR col = D3DCOLOR_RGBA(255, 255, 255, int(DamageTaken));
-        pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-TileEngine.XOffset),
-                                                (float)(yPos-TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSprite (static_cast<float>(xPos-TileEngine.XOffset),
+                                                static_cast<float>(yPos-TileEngine.YOffset),
                                                 AnimPhase + TileEngine.DateiAppendix.UsedPowerblock * 2, col, false);
     }
 }

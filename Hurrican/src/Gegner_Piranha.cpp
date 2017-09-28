@@ -39,7 +39,7 @@ GegnerPiranha::GegnerPiranha(int Wert1, int Wert2, bool Light)
 
         xSpeed = -20.0f - rand()%20;
         xsave  = xSpeed;
-        ySpeed = (float)Wert2 * 3;
+        ySpeed = static_cast<float>(Wert2) * 3;
         ysave  = ySpeed;
 
         AnimCount = 1.0f;
@@ -77,8 +77,8 @@ void GegnerPiranha::DoDraw(void)
     else
         off = 20;
 
-    pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-TileEngine.XOffset),
-                                            (float)(yPos-TileEngine.YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite (static_cast<float>(xPos-TileEngine.XOffset),
+                                            static_cast<float>(yPos-TileEngine.YOffset),
                                             off+AnimPhase, 0xFFFFFFFF, mirror);
 }
 

@@ -23,7 +23,7 @@ GegnerSchleimAlien::GegnerSchleimAlien(int Wert1, int Wert2, bool Light)
     Value2			= Wert2;
     ChangeLight		= Light;
     Destroyable		= true;
-    AnimSpeed       = ((float)(rand()%4 + 2)) / 5.0f;
+    AnimSpeed       = (static_cast<float>(rand()%4 + 2)) / 5.0f;
     AnimEnde		= 15;
     OwnDraw			= true;
 
@@ -33,7 +33,7 @@ GegnerSchleimAlien::GegnerSchleimAlien(int Wert1, int Wert2, bool Light)
 
     // ansonsten langsam wachsen
     else
-        Size = (float)(Wert1);
+        Size = static_cast<float>(Wert1);
 }
 
 // --------------------------------------------------------------------------------------
@@ -44,9 +44,9 @@ void GegnerSchleimAlien::DoDraw(void)
 {
     // Je nach Größe anders gestrecht rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteScaled ((float)(xPos-TileEngine.XOffset) + 30 - Size/2.0f,
-            (float)(yPos-TileEngine.YOffset) + 30 - Size/2.0f,
-            (int)(Size), (int)(Size), AnimPhase, 0xAAFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSpriteScaled (static_cast<float>(xPos-TileEngine.XOffset) + 30 - Size/2.0f,
+            static_cast<float>(yPos-TileEngine.YOffset) + 30 - Size/2.0f,
+            static_cast<int>(Size), static_cast<int>(Size), AnimPhase, 0xAAFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------

@@ -35,8 +35,8 @@ void GegnerSchienenViech::DoDraw(void)
     col = 0xFFCCCCCC;
 
     // Draw kommt jetzt erst hier, damit der Gegner über allen Leveltiles gerendert wird
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                           (float)(yPos-TileEngine.YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                           static_cast<float>(yPos-TileEngine.YOffset),
                                            AnimPhase, col);
 
     AlreadyDrawn = true;

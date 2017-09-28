@@ -107,7 +107,7 @@ void GegnerPartikelSpawner::DoKI(void)
                 float sx, sy;
 
                 sx = xPos-320 + rand()%640;
-                sy = (float)(TileEngine.YOffset) - 16 - rand ()%64;
+                sy = static_cast<float>(TileEngine.YOffset) - 16 - rand ()%64;
 
                 if (sx + 20 < TileEngine.XOffset ||
                         sx - 180 > TileEngine.XOffset + 640.0f)
@@ -123,7 +123,7 @@ void GegnerPartikelSpawner::DoKI(void)
             // Schneeflocke
             case 1 :
             {
-                PartikelSystem.PushPartikel(xPos-320 + rand()%640 , (float)(TileEngine.YOffset) - 16 - rand ()%64, SCHNEEFLOCKE);
+                PartikelSystem.PushPartikel(xPos-320 + rand()%640 , static_cast<float>(TileEngine.YOffset) - 16 - rand ()%64, SCHNEEFLOCKE);
                 AnimCount = 0.5f;
             }
             break;
@@ -219,7 +219,7 @@ void GegnerPartikelSpawner::DoKI(void)
             {
                 PartikelSystem.PushPartikel(xPos + 4, yPos + 4, SPIDERPARTS);
 
-                AnimCount = (float)(rand()%5 + 10);
+                AnimCount = static_cast<float>(rand()%5 + 10);
             }
             break;
 
@@ -230,14 +230,14 @@ void GegnerPartikelSpawner::DoKI(void)
 
                 if (Value2 == 0)
                 {
-                    PartikelSystem.PushPartikel((float)(TileEngine.XOffset + 640.0f),
-                                                  (float)(yPos - 240.0f + rand()%480), BLATT2);
+                    PartikelSystem.PushPartikel(static_cast<float>(TileEngine.XOffset + 640.0f),
+                                                  static_cast<float>(yPos - 240.0f + rand()%480), BLATT2);
                     AnimCount = (rand()%5 + 1) / 5.0f;
                 }
                 else
                 {
-                    PartikelSystem.PushPartikel((float)(TileEngine.XOffset + 640.0f),
-                                                  (float)(yPos - 240.0f + rand()%480), DUST);
+                    PartikelSystem.PushPartikel(static_cast<float>(TileEngine.XOffset + 640.0f),
+                                                  static_cast<float>(yPos - 240.0f + rand()%480), DUST);
                     AnimCount = (rand()%5 + 1) / 2.0f;
                 }
 
@@ -247,8 +247,8 @@ void GegnerPartikelSpawner::DoKI(void)
             // Staub
             case 16:
             {
-                PartikelSystem.PushPartikel((float)(xPos + rand()%200 - 100),
-                                              (float)(yPos + rand()%200 - 100), DUST);
+                PartikelSystem.PushPartikel(static_cast<float>(xPos + rand()%200 - 100),
+                                              static_cast<float>(yPos + rand()%200 - 100), DUST);
 
                 AnimCount = (rand()%5 + 1) / 5.0f;
             }
@@ -324,8 +324,8 @@ void GegnerPartikelSpawner::DoKI(void)
             // Maden
             case 17:
             {
-                Gegner.PushGegner((float)(xPos + rand()%20 - 10),
-                                    (float)(yPos + 16), MADE, 0, 0, false, false);
+                Gegner.PushGegner(static_cast<float>(xPos + rand()%20 - 10),
+                                    static_cast<float>(yPos + 16), MADE, 0, 0, false, false);
             }
             break;
             } // switch

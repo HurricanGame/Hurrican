@@ -37,10 +37,10 @@ void GegnerPresswurst::DoDraw(void)
 {
     // rendern
     //
-    int size = (int)(oldy - yPos) + GegnerRect[GegnerArt].top;
+    int size = static_cast<int>(oldy - yPos) + GegnerRect[GegnerArt].top;
     pGegnerGrafix[GegnerArt]->SetRect(0, size, 185, 357);
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                           (float)(yPos-TileEngine.YOffset) + size, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                           static_cast<float>(yPos-TileEngine.YOffset) + size, 0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------
@@ -96,7 +96,7 @@ void GegnerPresswurst::DoKI(void)
                 yAcc = 2.5f;
 
                 if (PlayerAbstand(true) < 600)
-                    SoundManager.PlayWave3D((int)(xPos + 90), (int)(yPos + 330), 11025, SOUND_PRESSE);
+                    SoundManager.PlayWave3D(static_cast<int>(xPos + 90), static_cast<int>(yPos + 330), 11025, SOUND_PRESSE);
             }
     }
     break;
@@ -151,7 +151,7 @@ void GegnerPresswurst::DoKI(void)
             SmokeCount = 5.0f;
 
             if (PlayerAbstand() < 600)
-                SoundManager.PlayWave3D((int)(xPos + 90), (int)(yPos + 330), 11025, SOUND_DOORSTOP);
+                SoundManager.PlayWave3D(static_cast<int>(xPos + 90), static_cast<int>(yPos + 330), 11025, SOUND_DOORSTOP);
 
             ShakeScreen(2.0f);
 
@@ -182,7 +182,7 @@ void GegnerPresswurst::DoKI(void)
             Handlung  = GEGNER_SPECIAL2;
             AnimCount = 28.0f;
             if (PlayerAbstand() < 600)
-                SoundManager.PlayWave3D((int)(xPos + 90), (int)(yPos + 330), 13000, SOUND_STEAM2);
+                SoundManager.PlayWave3D(static_cast<int>(xPos + 90), static_cast<int>(yPos + 330), 13000, SOUND_STEAM2);
         }
     }
     break;
@@ -213,7 +213,7 @@ void GegnerPresswurst::DoKI(void)
             yAcc     = 0.2f;
 
             if (PlayerAbstand() < 600)
-                SoundManager.PlayWave3D((int)(xPos + 90), (int)(yPos + 330), 11025, SOUND_PRESSE);
+                SoundManager.PlayWave3D(static_cast<int>(xPos + 90), static_cast<int>(yPos + 330), 11025, SOUND_PRESSE);
         }
     }
     break;

@@ -78,23 +78,23 @@ void GegnerSchneeKoenig::DoDraw(void)
     else
         GunMod = -1.0f;
 
-    Knarre.RenderSpriteRotatedOffset((float)(xPos - TileEngine.XOffset) + 95.0f + (float)sin(xoff) * 1.5f,
-                                     (float)(yPos - TileEngine.YOffset) + yOffset - 36 + KnarreY,
+    Knarre.RenderSpriteRotatedOffset(static_cast<float>(xPos - TileEngine.XOffset) + 95.0f + static_cast<float>(sin(xoff)) * 1.5f,
+                                     static_cast<float>(yPos - TileEngine.YOffset) + yOffset - 36 + KnarreY,
                                      KnarreWinkel, GunSlide * GunMod, 10,
                                      Color, false);
 
     // Body
     if (WackelAnim > 0.0f)
     {
-        AnimPhase = 10 - DamageAnims[((int)WackelAnim) % 4];
+        AnimPhase = 10 - DamageAnims[static_cast<int>(WackelAnim) % 4];
         WackelAnim -= 2.0f SYNC;
 
         if (WackelAnim < 0.0f)
             AnimPhase = 10;
     }
 
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos - TileEngine.XOffset) + (float)sin(xoff) * 5.0f,
-                                           (float)(yPos - TileEngine.YOffset) + yOffset,
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset) + static_cast<float>(sin(xoff)) * 5.0f,
+                                           static_cast<float>(yPos - TileEngine.YOffset) + yOffset,
                                            AnimPhase, Color, false);
 
 //	RenderLaser();
@@ -110,12 +110,12 @@ void GegnerSchneeKoenig::RenderLaser(void)
 
     //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
     //w = (KnarreWinkel + 180.0f) * PI / 180.0f;
-    //Laser.RenderSpriteRotatedOffset((float)(xPos - TileEngine.XOffset) + 90.0f + (float)sin(w) * 70.0f,
-    //                                (float)(yPos - TileEngine.YOffset) + 5.0f + (float)cos(w) * 70.0f,
+    //Laser.RenderSpriteRotatedOffset(static_cast<float>(xPos - TileEngine.XOffset) + 90.0f + (float)sin(w) * 70.0f,
+    //                                static_cast<float>(yPos - TileEngine.YOffset) + 5.0f + (float)cos(w) * 70.0f,
     //                                KnarreWinkel, 0, 0, 0xFFFFFFFF);
     w = KnarreWinkel + 180.0f;
-    Laser.RenderSpriteRotatedOffset((float)(xPos - TileEngine.XOffset) + 90.0f + sin_deg(w) * 70.0f,
-                                    (float)(yPos - TileEngine.YOffset) + 5.0f + cos_deg(w) * 70.0f,
+    Laser.RenderSpriteRotatedOffset(static_cast<float>(xPos - TileEngine.XOffset) + 90.0f + sin_deg(w) * 70.0f,
+                                    static_cast<float>(yPos - TileEngine.YOffset) + 5.0f + cos_deg(w) * 70.0f,
                                     KnarreWinkel, 0, 0, 0xFFFFFFFF);
 }
 
@@ -223,8 +223,8 @@ void GegnerSchneeKoenig::DoKI(void)
         ySave = yPos;
 
         // kommt von oben in der mitte des screens runter
-        xPos = (float)TileEngine.XOffset + (640 - 140) / 2.0f;
-        yPos = (float)TileEngine.YOffset - 300;
+        xPos = static_cast<float>(TileEngine.XOffset) + (640 - 140) / 2.0f;
+        yPos = static_cast<float>(TileEngine.YOffset) - 300;
         ySpeed = 50.0f;
         DrawNow = true;
         TileEngine.Zustand = ZUSTAND_LOCKED;
@@ -258,7 +258,7 @@ void GegnerSchneeKoenig::DoKI(void)
             for (int i = 0; i < 10; i++)
                 PartikelSystem.PushPartikel(xPos + rand()%130 - 10, yPos + rand()%40 + 60, SMOKEBIG);
 
-            TileEngine.ScrollLevel((float)TileEngine.XOffset, yPos - 320.0f, ZUSTAND_SCROLLTOLOCK);
+            TileEngine.ScrollLevel(static_cast<float>(TileEngine.XOffset), yPos - 320.0f, ZUSTAND_SCROLLTOLOCK);
 
             SoundManager.PlayWave(50, 128, 11025, SOUND_DOORSTOP);
         }
@@ -416,13 +416,13 @@ void GegnerSchneeKoenig::DoKI(void)
                             float target;
 
                             if (xPos + 100 > TileEngine.XOffset + 320.0f)
-                                target = (float)TileEngine.XOffset + 100.0f;
+                                target = static_cast<float>(TileEngine.XOffset) + 100.0f;
                             else
-                                target = (float)TileEngine.XOffset + 540.0f;
+                                target = static_cast<float>(TileEngine.XOffset) + 540.0f;
 
                             // zurück zur Mitte springen
                             if (ShotCount == 1)
-                                target = (float)TileEngine.XOffset + 320.0f;
+                                target = static_cast<float>(TileEngine.XOffset) + 320.0f;
 
                             Action = GEGNER_AUSSPUCKEN;
                             ySpeed = -110.0f;
@@ -593,7 +593,7 @@ void GegnerSchneeKoenig::DoKI(void)
 
             int a;
 
-            a = (int)((yPos - TileEngine.YOffset - 200.0f) / 10.0f);
+            a = static_cast<int>((yPos - TileEngine.YOffset - 200.0f) / 10.0f);
 
             if (a > 10) a = 10;
             if (a <  0) a = 0;
@@ -629,7 +629,7 @@ void GegnerSchneeKoenig::DoKI(void)
         if (PlayerAbstandHoriz() < 100 &&
                 Value1 > 0)
             ShotCount--;
-        else if(abs((int)(aim - KnarreWinkel)) < 10.0f)
+        else if(abs(static_cast<int>(aim - KnarreWinkel)) < 10.0f)
             ShotDelay -= 1.0f SYNC;
 
         if (ShotDelay <= 0.0f)
@@ -649,13 +649,13 @@ void GegnerSchneeKoenig::DoKI(void)
             //                                  yPos + (float)cos((KnarreWinkel + 180.0f) * PI / 180.0f) * 60.0f + KnarreY + yOffset, SMOKEBIG);
 
             //Gegner.PushGegner(xPos + (float)sin((KnarreWinkel + 180.0f) * PI / 180.0f) * 70.0f + 100,
-            //                    yPos + (float)cos((KnarreWinkel + 180.0f) * PI / 180.0f) * 60.0f + KnarreY + 5.0f + yOffset, SCHNEEKOPPE, -(int)(w) - 3 + rand()%7 , 40, false);
+            //                    yPos + (float)cos((KnarreWinkel + 180.0f) * PI / 180.0f) * 60.0f + KnarreY + 5.0f + yOffset, SCHNEEKOPPE, -static_cast<int>(w) - 3 + rand()%7 , 40, false);
             for (int p = 0; p < 2; p++)
                 PartikelSystem.PushPartikel(xPos + sin_deg(KnarreWinkel + 180.0f) * 70.0f + 80.0f,
                                               yPos + cos_deg(KnarreWinkel + 180.0f) * 60.0f + KnarreY + yOffset, SMOKEBIG);
 
             Gegner.PushGegner(xPos + sin_deg(KnarreWinkel + 180.0f) * 70.0f + 100.0f,
-                                yPos + cos_deg(KnarreWinkel + 180.0f) * 60.0f + KnarreY + 5.0f + yOffset, SCHNEEKOPPE, -(int)(w) - 3 + rand()%7 , 40, false);
+                                yPos + cos_deg(KnarreWinkel + 180.0f) * 60.0f + KnarreY + 5.0f + yOffset, SCHNEEKOPPE, -static_cast<int>(w) - 3 + rand()%7 , 40, false);
 
 
             SoundManager.PlayWave(100, 128, 8000 + rand()%1000, SOUND_GRANATE);
@@ -690,7 +690,7 @@ void GegnerSchneeKoenig::DoKI(void)
         LastEnergy = Energy;
     }
 
-    GegnerRect[GegnerArt].top = 60 + (int)yOffset;
+    GegnerRect[GegnerArt].top = 60 + static_cast<int>(yOffset);
 
     if (Handlung != GEGNER_SPRINGEN &&
             Handlung != GEGNER_AUSFAHREN)

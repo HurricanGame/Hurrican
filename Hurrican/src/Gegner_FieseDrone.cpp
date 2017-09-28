@@ -24,7 +24,7 @@ GegnerFieseDrone::GegnerFieseDrone(int Wert1, int Wert2, bool Light)
     yAcc			= 0.0f;
     AnimSpeed       = 1.5f;
     AnimEnde		= 12;
-    ShotDelay = (float)(rand()%12 + 12);
+    ShotDelay = static_cast<float>(rand()%12 + 12);
     SmokeDelay		= 0.0f;
 }
 
@@ -102,7 +102,7 @@ void GegnerFieseDrone::DoKI(void)
             ShotDelay -= 1.0f SYNC;
         else
         {
-            ShotDelay = (float)(rand()%12 + 12);
+            ShotDelay = static_cast<float>(rand()%12 + 12);
 
             float xdiv, ydiv, newwinkel;
 

@@ -120,9 +120,9 @@ void GegnerBigFish::NewAction(void)
         float newx = pAim->xpos;
 
         if (newx > Value1 + 400)
-            newx = (float)Value1 + 400;
+            newx = static_cast<float>(Value1) + 400;
 
-        MoveTo(newx, (float)Value2 + 200);
+        MoveTo(newx, static_cast<float>(Value2) + 200);
     }
 
     // neue Aktion festlegen
@@ -166,40 +166,40 @@ void GegnerBigFish::DoDraw(void)
 {
     static float FlossenSin = 0.0f;
     static float FlossenSin2 = 0.0f;
-    float mw = (float)(sin(-PI/2 + MaulWinkel) * 35.0f);
-    float fs = (float)sin(FlossenSin) * 40.0f;
-    float fs2 = (float)sin(FlossenSin2) * 10.0f;
-    float YOff = (float)(sin(SinOff) * 5.0f);
+    float mw = sin(-PI/2 + MaulWinkel) * 35.0f;
+    float fs = sin(FlossenSin) * 40.0f;
+    float fs2 = sin(FlossenSin2) * 10.0f;
+    float YOff = sin(SinOff) * 5.0f;
 
     // Maul rendern
-    Maul.RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset) + 51.0f,
-                                   (float)(yPos-TileEngine.YOffset) + YOff + 94.0f,
+    Maul.RenderSpriteRotatedOffset((xPos-TileEngine.XOffset) + 51.0f,
+                                   (yPos-TileEngine.YOffset) + YOff + 94.0f,
                                    mw,
                                    12, -17, 0xFFFFFFFF, false);
 
     // Schwanzflosse rendern
-    FlosseGross.RenderSpriteScaled((float)(xPos-TileEngine.XOffset) + 203.0f,
-                                   (float)(yPos-TileEngine.YOffset) + YOff - 9.0f,
-                                   88 + (int)fs2, 157, 0, 0xFFFFFFFF);
+    FlosseGross.RenderSpriteScaled((xPos-TileEngine.XOffset) + 203.0f,
+                                   (yPos-TileEngine.YOffset) + YOff - 9.0f,
+                                   88 + static_cast<int>(fs2), 157, 0, 0xFFFFFFFF);
 
     // obere Floße rendern
-    FlosseOben.RenderSpriteScaled((float)(xPos-TileEngine.XOffset) + 151.0f,
-                                  (float)(yPos-TileEngine.YOffset) + YOff - 20.0f + (int)fs2,
-                                  74, 59 -  (int)fs2, 0, 0xFFFFFFFF);
+    FlosseOben.RenderSpriteScaled((xPos-TileEngine.XOffset) + 151.0f,
+                                  (yPos-TileEngine.YOffset) + YOff - 20.0f + static_cast<int>(fs2),
+                                  74, 59 -  static_cast<int>(fs2), 0, 0xFFFFFFFF);
 
     // untere Floße rendern
-    FlosseUnten.RenderSpriteScaled((float)(xPos-TileEngine.XOffset) + 140.0f,
-                                   (float)(yPos-TileEngine.YOffset) + YOff + 120.0f,
-                                   97, 72  + (int)fs2, 0, 0xFFFFFFFF);
+    FlosseUnten.RenderSpriteScaled((xPos-TileEngine.XOffset) + 140.0f,
+                                   (yPos-TileEngine.YOffset) + YOff + 120.0f,
+                                   97, 72  + static_cast<int>(fs2), 0, 0xFFFFFFFF);
 
     // Fisch rendern
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                           (float)(yPos-TileEngine.YOffset) + YOff,
+    pGegnerGrafix[GegnerArt]->RenderSprite((xPos-TileEngine.XOffset),
+                                           (yPos-TileEngine.YOffset) + YOff,
                                            0, 0xFFFFFFFF, false);
 
     // kleine Floße rendern
-    FlosseKlein.RenderSpriteRotatedOffset((float)(xPos-TileEngine.XOffset) + 184.0f,
-                                          (float)(yPos-TileEngine.YOffset) + YOff + 80.0f,
+    FlosseKlein.RenderSpriteRotatedOffset((xPos-TileEngine.XOffset) + 184.0f,
+                                          (yPos-TileEngine.YOffset) + YOff + 80.0f,
                                           fs,
                                           -28, -9, 0xFFFFFFFF, false);
 
@@ -212,13 +212,13 @@ void GegnerBigFish::DoDraw(void)
         D3DCOLOR col;
         int a;
 
-        a = (int)(Energy / 2000.0f * 255.0f);
+        a = static_cast<int>(Energy / 2000.0f * 255.0f);
 
         col = D3DCOLOR_RGBA(255, 224, 80, a);
 
         for (int i = 0; i < 2; i++)
-            Projectiles.LavaFlare.RenderSprite((float)(xPos-TileEngine.XOffset) - 49,
-                                   (float)(yPos-TileEngine.YOffset) - 22 + YOff,
+            Projectiles.LavaFlare.RenderSprite(xPos-TileEngine.XOffset - 49,
+                                   yPos-TileEngine.YOffset - 22 + YOff,
                                    0, col, false);
 
         // Flossen bewegen
@@ -266,11 +266,11 @@ void GegnerBigFish::DoKI(void)
             LeftOrRight *= -1;
 
         if (IsKugel)
-            Gegner.PushGegner((float)TileEngine.XOffset + 300.0f + 300 * LeftOrRight,
-                                (float)TileEngine.YOffset + 200, KUGELKLEIN + Art, 5, 0, false);
+            Gegner.PushGegner(TileEngine.XOffset + 300.0f + 300 * LeftOrRight,
+                                TileEngine.YOffset + 200, KUGELKLEIN + Art, 5, 0, false);
         else
-            Gegner.PushGegner((float)TileEngine.XOffset + 300.0f + 320 * LeftOrRight,
-                                (float)TileEngine.YOffset + 350, SWIMWALKER, 5, 0, false);
+            Gegner.PushGegner(TileEngine.XOffset + 300.0f + 320 * LeftOrRight,
+                                TileEngine.YOffset + 350, SWIMWALKER, 5, 0, false);
         IsKugel = !IsKugel;
 
     }
@@ -291,8 +291,8 @@ void GegnerBigFish::DoKI(void)
             TileEngine.Zustand == ZUSTAND_SCROLLBAR &&
             Energy > 0.0f)
     {
-        TileEngine.ScrollLevel((float)Value1,
-                                 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf die Faust zentrieren
+        TileEngine.ScrollLevel(Value1,
+                                 Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf die Faust zentrieren
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
         xPos  += 400;
     }
@@ -353,13 +353,13 @@ void GegnerBigFish::DoKI(void)
             DamageTaken = 0.0f;
 
             NewAction();
-            MoveTo((float)Value1 + 450, yPos);
+            MoveTo(static_cast<float>(Value1) + 450, yPos);
         }
         break;
 
         case GEGNER_LAUFEN:
         {
-            MoveTo((float)Value1 + 50 + rand()%300, (float)Value2 + 50 + rand()%200);
+            MoveTo(static_cast<float>(Value1) + 50 + rand()%300, static_cast<float>(Value2) + 50 + rand()%200);
             ShotCount--;
 
             if (ShotCount <= 0)
@@ -444,16 +444,16 @@ void GegnerBigFish::DoKI(void)
     // Testen, ob der Fisch den Spieler berührt hat
     GegnerRect[BIGFISH].left   = 60;
     GegnerRect[BIGFISH].right  = 280;
-    GegnerRect[BIGFISH].top    = 28   + (int)(sin(SinOff) * 5.0f);
-    GegnerRect[BIGFISH].bottom = 156 + (int)(sin(SinOff) * 5.0f);
+    GegnerRect[BIGFISH].top    = 28   + static_cast<int>(sin(SinOff) * 5.0f);
+    GegnerRect[BIGFISH].bottom = 156 + static_cast<int>(sin(SinOff) * 5.0f);
 
     TestDamagePlayers(8.0f SYNC);
 
     // Normales Cliprect setzen
     GegnerRect[BIGFISH].left   = 0;
     GegnerRect[BIGFISH].right  = 17;
-    GegnerRect[BIGFISH].top    = 28 + (int)(sin(SinOff) * 5.0f);
-    GegnerRect[BIGFISH].bottom = 50 + (int)(sin(SinOff) * 5.0f);
+    GegnerRect[BIGFISH].top    = 28 + static_cast<int>(sin(SinOff) * 5.0f);
+    GegnerRect[BIGFISH].bottom = 50 + static_cast<int>(sin(SinOff) * 5.0f);
 }
 
 // --------------------------------------------------------------------------------------

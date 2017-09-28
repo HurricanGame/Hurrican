@@ -30,12 +30,12 @@ GegnerBallerdrone::GegnerBallerdrone(int Wert1, int Wert2, bool Light)
 void GegnerBallerdrone::DoDraw(void)
 {
     if (Handlung == GEGNER_FALLEN)
-        pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                               (float)(yPos-TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                               static_cast<float>(yPos-TileEngine.YOffset),
                                                AnimPhase, 0xFFFF0000);
     else
-        pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                               (float)(yPos-TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                               static_cast<float>(yPos-TileEngine.YOffset),
                                                AnimPhase, 0xFFFFFFFF);
 
     // Flare rendern

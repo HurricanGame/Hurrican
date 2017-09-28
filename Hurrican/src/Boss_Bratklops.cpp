@@ -221,11 +221,11 @@ void GegnerBratklops::DoDraw()
                 xs = float (xstart);
                 ys = float (ystart);
 
-                for (int i = 0; i < NUMPLAYERS; i++)
-                    if (SpriteCollision (Player[i].xpos, Player[i].ypos, Player[i].CollideRect,
+                for (int j = 0; j < NUMPLAYERS; j++)
+                    if (SpriteCollision (Player[j].xpos, Player[j].ypos, Player[j].CollideRect,
                                          xs, ys, Rect) == true)
                     {
-                        Player[i].DamagePlayer (10.0f SYNC);
+                        Player[j].DamagePlayer (10.0f SYNC);
                     }
 
                 // Und nächstes Rechteck
@@ -300,8 +300,8 @@ void GegnerBratklops::DoKI(void)
     //
     if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        TileEngine.ScrollLevel((float)Value1,
-                                 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
+        TileEngine.ScrollLevel(static_cast<float>(Value1),
+                                 static_cast<float>(Value2), ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
         xPos -= 232;												// und Boss aus dem Screen setzen
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren

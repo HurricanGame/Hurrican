@@ -44,7 +44,7 @@ void GegnerLavaKrabbe::DoDraw(void)
         if (g > 255) g = 255;
         if (b > 255) b = 255;
 
-        w = (int)(255 - DamageTaken);
+        w = static_cast<int>(255 - DamageTaken);
 
         if (g > w)	g = w;
         if (b > w)	b = w;
@@ -58,8 +58,8 @@ void GegnerLavaKrabbe::DoDraw(void)
         size = 70.0f - size;
 
         pGegnerGrafix[GegnerArt]->SetRect (0, 0, 70, 34);
-        pGegnerGrafix[GegnerArt]->RenderSpriteScaledRotated((float)(xPos-TileEngine.XOffset + size / 2),
-                (float)(yPos-TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSpriteScaledRotated(static_cast<float>(xPos-TileEngine.XOffset + size / 2),
+                static_cast<float>(yPos-TileEngine.YOffset),
                 70 - size, 34 - size / 2.0f, zPos*4.0f, Color);
     }
 
@@ -67,7 +67,7 @@ void GegnerLavaKrabbe::DoDraw(void)
     //
     else
     {
-        int  a = (int)(255 - DamageTaken);
+        int  a = static_cast<int>(255 - DamageTaken);
         bool mirrored;
 
         if (BlickRichtung == RECHTS)
@@ -76,8 +76,8 @@ void GegnerLavaKrabbe::DoDraw(void)
             mirrored = false;
 
         D3DCOLOR Color = D3DCOLOR_RGBA(255, a, a, 255);
-        pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                               (float)(yPos-TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                               static_cast<float>(yPos-TileEngine.YOffset),
                                                AnimPhase, Color, mirrored);
     }
 }
@@ -100,7 +100,7 @@ void GegnerLavaKrabbe::DoKI(void)
     case GEGNER_NOTVISIBLE:
     {
         Handlung = GEGNER_FALLEN;
-        yPos = (float)(TileEngine.YOffset) + 200.0f;
+        yPos = static_cast<float>(TileEngine.YOffset) + 200.0f;
         yAcc = 1.0f;
         ySpeed = g_Fahrstuhl_Speed - 15.05f;
     }

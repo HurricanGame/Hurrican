@@ -44,8 +44,8 @@ void GegnerStachelbeere::DoDraw(void)
     case GEGNER_LAUFEN2:
     {
         pGegnerGrafix[GegnerArt]->SetRect(AnimPhase * 60, 0, (AnimPhase + 1) * 60, 60);
-        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - (float)TileEngine.XOffset,
-                                               yPos - (float)TileEngine.YOffset,
+        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - static_cast<float>(TileEngine.XOffset),
+                                               yPos - static_cast<float>(TileEngine.YOffset),
                                                AnimPhase, color, mirrored);
 
     }
@@ -59,12 +59,12 @@ void GegnerStachelbeere::DoDraw(void)
                                           (AnimPhase % 3) * 120 + 120, (AnimPhase / 3 + 2) * 60);
 
         if (!mirrored)
-            pGegnerGrafix[GegnerArt]->RenderMirroredSprite(xPos - (float)TileEngine.XOffset - 60.0f,
-                    yPos - (float)TileEngine.YOffset,
+            pGegnerGrafix[GegnerArt]->RenderMirroredSprite(xPos - static_cast<float>(TileEngine.XOffset) - 60.0f,
+                    yPos - static_cast<float>(TileEngine.YOffset),
                     color);
         else
-            pGegnerGrafix[GegnerArt]->RenderSprite(xPos - (float)TileEngine.XOffset,
-                                                   yPos - (float)TileEngine.YOffset,
+            pGegnerGrafix[GegnerArt]->RenderSprite(xPos - static_cast<float>(TileEngine.XOffset),
+                                                   yPos - static_cast<float>(TileEngine.YOffset),
                                                    color);
     }
     break;

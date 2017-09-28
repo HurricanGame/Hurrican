@@ -40,21 +40,21 @@ void GegnerEvilHurri::DoDraw(void)
         DirectGraphics.SetAdditiveMode();
         if (BlickRichtung == LINKS)
         {
-            Player[0].PlayerRun.RenderSprite((float)(xPos-TileEngine.XOffset),
-                                      (float)(yPos-TileEngine.YOffset),
+            Player[0].PlayerRun.RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                      static_cast<float>(yPos-TileEngine.YOffset),
                                       AnimPhase, 0xAA444444, true);
-            Player[0].PlayerRun.RenderSprite((float)(xPos-TileEngine.XOffset),
-                                      (float)(yPos-TileEngine.YOffset),
+            Player[0].PlayerRun.RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                      static_cast<float>(yPos-TileEngine.YOffset),
                                       AnimPhase, 0xFF0022FF, true);
         }
         else
         {
-            Player[0].PlayerRun.RenderSprite((float)(xPos-TileEngine.XOffset),
-                                      (float)(yPos-TileEngine.YOffset),
+            Player[0].PlayerRun.RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                      static_cast<float>(yPos-TileEngine.YOffset),
                                       AnimPhase, 0xAA444444);
 
-            Player[0].PlayerRun.RenderSprite((float)(xPos-TileEngine.XOffset),
-                                      (float)(yPos-TileEngine.YOffset),
+            Player[0].PlayerRun.RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                      static_cast<float>(yPos-TileEngine.YOffset),
                                       AnimPhase, 0xFF0022FF);
         }
     }
@@ -76,8 +76,8 @@ void GegnerEvilHurri::DoKI(void)
     // Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
     if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR)
     {
-        TileEngine.ScrollLevel((float)Value1,
-                                 (float)Value2, ZUSTAND_SCROLLTOLOCK);		// Level auf die Faust zentrieren
+        TileEngine.ScrollLevel(static_cast<float>(Value1),
+                                 static_cast<float>(Value2), ZUSTAND_SCROLLTOLOCK);		// Level auf die Faust zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }

@@ -35,8 +35,8 @@ GegnerShootPlattform::GegnerShootPlattform(int Wert1, int Wert2, bool Light)
 void GegnerShootPlattform::DoDraw(void)
 {
     // Button rendern
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                           (float)(yPos-TileEngine.YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                           static_cast<float>(yPos-TileEngine.YOffset),
                                            AnimPhase, 0xFFFFFFFF);
 
     if (Value2 == 1)

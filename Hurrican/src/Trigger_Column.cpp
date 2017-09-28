@@ -62,8 +62,8 @@ void GegnerColumn::DoDraw(void)
 #endif
 
 
-    pGegnerGrafix[GegnerArt]->RenderSprite ((float)(xPos-TileEngine.XOffset),
-                                            (float)(yPos-TileEngine.YOffset), 0, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite (static_cast<float>(xPos-TileEngine.XOffset),
+                                            static_cast<float>(yPos-TileEngine.YOffset), 0, 0xFFFFFFFF);
 
     // Normale Projektions-Matrix wieder herstellen
     D3DXMatrixRotationZ (&matWorld, 0.0f);

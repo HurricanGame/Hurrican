@@ -31,7 +31,7 @@ void GegnerKettenglied::DoDraw(void)
     D3DCOLOR Color;
 
     // Gegner getroffen? Dann nochmal in weiss aufleuchten lassen
-    int	Wert = 255-(int)DamageTaken;
+    int	Wert = 255-static_cast<int>(DamageTaken);
 
     if (AnimSpeed < 0.0f)
     {
@@ -42,12 +42,12 @@ void GegnerKettenglied::DoDraw(void)
     }
     else
     {
-        Wert = (int)AnimSpeed;
+        Wert = static_cast<int>(AnimSpeed);
         Color = D3DCOLOR_RGBA(255, 255, 255, Wert);
     }
 
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated ((float)(xPos-TileEngine.XOffset),
-            (float)(yPos-TileEngine.YOffset),
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated (static_cast<float>(xPos-TileEngine.XOffset),
+            static_cast<float>(yPos-TileEngine.YOffset),
             AnimCount, AnimPhase, Color);
 }
 
@@ -82,11 +82,11 @@ void GegnerKettenglied::DoKI(void)
     // Kettenglied fliegt los
     case GEGNER_SPECIAL:
     {
-        AnimCount = (float)(rand()%360);
+        AnimCount = static_cast<float>(rand()%360);
 
         Destroyable = false;
-        xSpeed =  (float)(rand()%40 - 20);
-        ySpeed = -(float)(rand()%40 - 20);
+        xSpeed =  static_cast<float>(rand()%40 - 20);
+        ySpeed = -static_cast<float>(rand()%40 - 20);
         yAcc   = 5.0f;
 
         Handlung = GEGNER_SPECIAL2;

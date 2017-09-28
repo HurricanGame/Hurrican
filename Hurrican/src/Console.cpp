@@ -226,22 +226,22 @@ void ConsoleClass::CheckCommands(void)
 
             CONSOLE_PRINT(TileEngine.Beschreibung);
 
-            _itoa_s((int)(TileEngine.XOffset), temp, 10);
+            _itoa_s(static_cast<int>(TileEngine.XOffset), temp, 10);
             strcpy_s(StringBuffer, "Level Offset X : ");
             strcat_s(StringBuffer, temp);
             CONSOLE_PRINT(StringBuffer);
 
-            _itoa_s((int)(TileEngine.YOffset), temp, 10);
+            _itoa_s(static_cast<int>(TileEngine.YOffset), temp, 10);
             strcpy_s(StringBuffer, "Level Offset Y : ");
             strcat_s(StringBuffer, temp);
             CONSOLE_PRINT(StringBuffer);
 
-            _itoa_s((int)(TileEngine.LEVELSIZE_X), temp, 10);
+            _itoa_s(static_cast<int>(TileEngine.LEVELSIZE_X), temp, 10);
             strcpy_s(StringBuffer, "Level Size X : ");
             strcat_s(StringBuffer, temp);
             CONSOLE_PRINT(StringBuffer);
 
-            _itoa_s((int)(TileEngine.LEVELSIZE_Y), temp, 10);
+            _itoa_s(static_cast<int>(TileEngine.LEVELSIZE_Y), temp, 10);
             strcpy_s(StringBuffer, "Level Size Y : ");
             strcat_s(StringBuffer, temp);
             CONSOLE_PRINT(StringBuffer);
@@ -529,10 +529,10 @@ void ConsoleClass::CheckCommands(void)
         for (int i=0; i < TileEngine.LEVELSIZE_X; i++)
             for (int j=0; j < TileEngine.LEVELSIZE_Y; j++)
             {
-                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_WAND)		  RenderRect((float)i, (float)j, 1, 1, 0xFFFFFFFF);
-                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_DESTRUCTIBLE) RenderRect((float)i, (float)j, 1, 1, 0xFFFFFF00);
-                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_PLATTFORM)	  RenderRect((float)i, (float)j, 1, 1, 0xFF888888);
-                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_WASSER)		  RenderRect((float)i, (float)j, 1, 1, 0xFF0000FF);
+                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_WAND)		  RenderRect(static_cast<float>(i), static_cast<float>(j), 1, 1, 0xFFFFFFFF);
+                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_DESTRUCTIBLE) RenderRect(static_cast<float>(i), static_cast<float>(j), 1, 1, 0xFFFFFF00);
+                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_PLATTFORM)	  RenderRect(static_cast<float>(i), static_cast<float>(j), 1, 1, 0xFF888888);
+                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_WASSER)		  RenderRect(static_cast<float>(i), static_cast<float>(j), 1, 1, 0xFF0000FF);
             }
 
         char buf[100], buf2[100];

@@ -117,14 +117,14 @@ void GegnerRotzpott::CalcKnarreWinkel(void)
 void GegnerRotzpott::DoDraw(void)
 {
     // Knarre
-    Gegner.DroneGun.RenderSpriteRotatedOffset((float)-TileEngine.XOffset + xPos + 20.0f,
-                                         (float)-TileEngine.YOffset + yPos - 28.0f, GunWinkel,
+    Gegner.DroneGun.RenderSpriteRotatedOffset(-TileEngine.XOffset + xPos + 20.0f,
+                                         -TileEngine.YOffset + yPos - 28.0f, GunWinkel,
                                          0, 0, 0xFFFFFFFF);
 
 
     // Körper
-    pGegnerGrafix[GegnerArt]->RenderSprite((float)-TileEngine.XOffset + xPos,
-                                           (float)-TileEngine.YOffset + yPos,
+    pGegnerGrafix[GegnerArt]->RenderSprite(-TileEngine.XOffset + xPos,
+                                           -TileEngine.YOffset + yPos,
                                            0, 0xFFFFFFFF);
 
     AlreadyDrawn = true;
@@ -147,7 +147,7 @@ void GegnerRotzpott::DoKI(void)
     // schiessen, wenn Spieler in der Nähe und Turm kurz
     // vor finalem Winkel?
     if (PlayerAbstand() < 400 &&
-            abs((int)(GunWinkel - NewWinkel)) < 10)
+            abs(static_cast<int>(GunWinkel - NewWinkel)) < 10)
         ShotDelay -= 1.0f SYNC;
 
     if (ShotDelay <= 0.0f)
@@ -163,7 +163,7 @@ void GegnerRotzpott::DoKI(void)
         {
             ShotDelay = 9.0f;
             SoundManager.PlayWave(100, 128, 16000 + rand()%500, SOUND_LASERSHOT);
-            WinkelUebergabe = 360.0f - GunWinkel + ((float)(rand()%10 - 5)) / 2.0f;
+            WinkelUebergabe = 360.0f - GunWinkel + (static_cast<float>(rand()%10 - 5)) / 2.0f;
             //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
             //Projectiles.PushProjectile(xPos + 20.0f - (float)sin((180 - GunWinkel) / 180.0f * PI) * 25.0f,
             //                             yPos - 12.0f + (float)cos((180 - GunWinkel) / 180.0f * PI) * 20.0f, ROTZSHOT);

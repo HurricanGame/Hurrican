@@ -53,9 +53,9 @@ void GegnerPunisher::DoDraw(void)
         for (int i = 0; i < 170; i++)
         {
             pGegnerGrafix[GegnerArt]->SetRect(3 * 170, 2 * 170 + i, 4 * 170, 2 * 170 + i+1);
-            pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset + (float)(sin((alpha / 20.0f) + i / 10.0f) * ((255.0f - alpha) / 255.0f * 200.0f))),
-                                                   (float)(yPos-TileEngine.YOffset + i),
-                                                   D3DCOLOR_RGBA (255, 255, 255, (int)alpha));
+            pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset + static_cast<float>(sin((alpha / 20.0f) + i / 10.0f) * ((255.0f - alpha) / 255.0f * 200.0f))),
+                                                   static_cast<float>(yPos-TileEngine.YOffset + i),
+                                                   D3DCOLOR_RGBA (255, 255, 255, static_cast<int>(alpha)));
         }
     }
     break;
@@ -63,8 +63,8 @@ void GegnerPunisher::DoDraw(void)
     // normal rendern
     case GEGNER_LAUFEN:
     {
-        pGegnerGrafix[GegnerArt]->RenderSprite((float)(xPos-TileEngine.XOffset),
-                                               (float)(yPos-TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
+                                               static_cast<float>(yPos-TileEngine.YOffset),
                                                AnimPhase, D3DCOLOR_RGBA (255, 255, 255, 255), false);
     }
     break;
@@ -101,8 +101,8 @@ void GegnerPunisher::DoKI(void)
     case GEGNER_INIT:
     {
         // zentrieren
-        xPos = (float)(TileEngine.XOffset + 320 - 100/2.0f);
-        yPos = (float)(TileEngine.YOffset + 240 - 95/2.0f);
+        xPos = static_cast<float>(TileEngine.XOffset + 320 - 100/2.0f);
+        yPos = static_cast<float>(TileEngine.YOffset + 240 - 95/2.0f);
 
         alpha = 0.0f;
         Handlung = GEGNER_INIT2;
@@ -175,7 +175,7 @@ void GegnerPunisher::DoKI(void)
             if (AnimCount > 30.0f)	AnimCount = 20.0f;
         }
 
-        AnimPhase = (int)(AnimCount);
+        AnimPhase = static_cast<int>(AnimCount);
     }
     break;
 

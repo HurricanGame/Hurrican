@@ -148,8 +148,8 @@ CCracktro::CCracktro()
 
     for (int i = 0; i < 200; i++)
     {
-        Stars[i].Count   = (float)(rand()%640);
-        Stars[i].Abstand = (float)(rand()%140 + 340);
+        Stars[i].Count   = static_cast<float>(rand()%640);
+        Stars[i].Abstand = static_cast<float>(rand()%140 + 340);
         Stars[i].Ebene   = rand()%200 + 55;
     }
 
@@ -196,8 +196,6 @@ void CCracktro::Main(void)
     DirectGraphics.ClearBackBuffer();
 #endif
 
-    int i;
-
     // --------------------------------------------------------------------------------------
     // Sterne
     // --------------------------------------------------------------------------------------
@@ -221,14 +219,14 @@ void CCracktro::Main(void)
     static float LogoPos = 0.0f;
 
     s = SinPos;
-    s =(float)(sinf(s)) * 80.0f;
-    s = (float)(abs((int)s));
+    s = sinf(s) * 80.0f;
+    s = abs(static_cast<int>(s));
 
     colpos += 6.0f SYNC;
 
-    for(i = 0; i < 43; i++)
+    for(int i = 0; i < 43; i++)
     {
-        pFont->DrawDemoChar(xchar - ScrollOffset, (float)(450 - s), CrackText[i + ScrollPos], ScrollCol[(int)(colpos + i) % (sizeof(ScrollCol) / sizeof(D3DCOLOR))]);
+        pFont->DrawDemoChar(xchar - ScrollOffset, static_cast<float>(450 - s), CrackText[i + ScrollPos], ScrollCol[static_cast<int>(colpos + i) % (sizeof(ScrollCol) / sizeof(D3DCOLOR))]);
 
         if (CrackText[i + ScrollPos] != 32)
             xchar += pFont->mCharLength[CrackText[i + ScrollPos] - 33] + 2;
@@ -249,7 +247,7 @@ void CCracktro::Main(void)
         ScrollOffset -= l;
         ScrollPos++;
 
-        if ((unsigned int)ScrollPos > strlen(CrackText) - 50)
+        if (static_cast<unsigned int>(ScrollPos) > strlen(CrackText) - 50)
             ScrollPos = 0;
     }
 
@@ -270,7 +268,7 @@ void CCracktro::Main(void)
     if (SinPos > 0.7f && SinPos < PI + 1.0f)
     {
         DirectGraphics.SetColorKeyMode();
-        Logo[0].RenderSprite((640 - 341) / 2 + (float)(sin(LogoPos) * 100.0f), 50, 0, 0xFFFFFFFF);
+        Logo[0].RenderSprite((640 - 341) / 2 + static_cast<float>(sin(LogoPos) * 100.0f), 50, 0, 0xFFFFFFFF);
 
         numsin += 0.4f SYNC;
 
@@ -283,10 +281,10 @@ void CCracktro::Main(void)
         // Zahlen
         for (int i = 0; i < 5; i++)
         {
-            off  = (float)(sin(numsin + i / 3.0f) * 10.0f);
-            off2 = (float)(sin(numsin + i / 3.0f + PI / 2) * 20.0f);
+            off  = static_cast<float>(sin(numsin + i / 3.0f) * 10.0f);
+            off2 = static_cast<float>(sin(numsin + i / 3.0f + PI / 2) * 20.0f);
 
-            Zahlen.RenderSprite(75 + i * 40 - off + (640 - 341) / 2 + (float)(sin(LogoPos) * 100.0f),
+            Zahlen.RenderSprite(75 + i * 40 - off + (640 - 341) / 2 + static_cast<float>(sin(LogoPos) * 100.0f),
                                 110 - off2, i, 0xFFFFFFFF);
         }
     }
@@ -295,8 +293,8 @@ void CCracktro::Main(void)
     // Copper Balken
     // --------------------------------------------------------------------------------------
 
-    for(i = 0; i < 7; i++)
-        Bars[1].RenderSpriteScaled(0, 95 - (float)(sin(SinPos + i / 5.0f) * 90.0f), 640, 6 + i * 3, 0, 0xFFFFFFFF);
+    for(int i = 0; i < 7; i++)
+        Bars[1].RenderSpriteScaled(0, 95 - static_cast<float>(sin(SinPos + i / 5.0f) * 90.0f), 640, 6 + i * 3, 0, 0xFFFFFFFF);
 
     Bars[2].RenderSpriteScaled(0, 255, 640, 100, 0, 0xFFFFFFFF);
 
@@ -305,7 +303,7 @@ void CCracktro::Main(void)
     // --------------------------------------------------------------------------------------
     xchar = 0;
 
-    for(i = 0; i < 50; i++)
+    for(int i = 0; i < 50; i++)
     {
         pFont->DrawDemoChar(xchar - ScrollOffset2, 295, StaticText[i + ScrollPos2], 0xFF000000);
 
@@ -327,7 +325,7 @@ void CCracktro::Main(void)
         ScrollOffset2 -= l;
         ScrollPos2++;
 
-        if ((unsigned int)ScrollPos2 > strlen(StaticText) - 50)
+        if (static_cast<unsigned int>(ScrollPos2) > strlen(StaticText) - 50)
             ScrollPos2 = 0;
     }
 
@@ -338,7 +336,7 @@ void CCracktro::Main(void)
     if (!(SinPos > 0.7f && SinPos < PI + 1.0f))
     {
         DirectGraphics.SetColorKeyMode();
-        Logo[0].RenderSprite((640 - 341) / 2 + (float)(sin(LogoPos) * 100.0f), 50, 0, 0xFFFFFFFF);
+        Logo[0].RenderSprite((640 - 341) / 2 + static_cast<float>(sin(LogoPos) * 100.0f), 50, 0, 0xFFFFFFFF);
 
         numsin += 0.4f SYNC;
 
@@ -351,10 +349,10 @@ void CCracktro::Main(void)
         // Zahlen
         for (int i = 0; i < 5; i++)
         {
-            off  = (float)(sin(numsin + i / 3.0f) * 10.0f);
-            off2 = (float)(sin(numsin + i / 3.0f + PI / 2) * 20.0f);
+            off  = static_cast<float>(sin(numsin + i / 3.0f) * 10.0f);
+            off2 = static_cast<float>(sin(numsin + i / 3.0f + PI / 2) * 20.0f);
 
-            Zahlen.RenderSprite(75 + i * 40 - off + (640 - 341) / 2 + (float)(sin(LogoPos) * 100.0f),
+            Zahlen.RenderSprite(75 + i * 40 - off + (640 - 341) / 2 + static_cast<float>(sin(LogoPos) * 100.0f),
                                 110 - off2, i, 0xFFFFFFFF);
         }
     }
@@ -368,22 +366,22 @@ void CCracktro::Main(void)
 
     blinkpos += 5.0f SYNC;
 
-    fontoff = (int)(blinkpos / 100.0f);
+    fontoff = static_cast<int>(blinkpos / 100.0f);
 
-    if (fontoff >= (int)(sizeof(BlinkText) / sizeof(BlinkText[0])))
+    if (fontoff >= static_cast<int>(sizeof(BlinkText) / sizeof(BlinkText[0])))
     {
         blinkpos = 0.0f;
         fontoff = 0;
     }
 
-    float    yo = 220 - (float)(cos(LogoPos) * 10.0f);
-    D3DCOLOR col = BlinkCol[(int)(blinkpos) % (sizeof(BlinkCol) / sizeof(D3DCOLOR))];
+    float    yo = 220 - static_cast<float>(cos(LogoPos) * 10.0f);
+    D3DCOLOR col = BlinkCol[static_cast<int>(blinkpos) % (sizeof(BlinkCol) / sizeof(D3DCOLOR))];
 
     RenderRect(0, yo, 640, 2, col);
     RenderRect(0, yo + 20.0f, 640, 2, col);
 
-    pFont->DrawDemoText((float)(-sin(LogoPos) * 140.0f) +
-                        (float)(626 - pFont->DemoStringLength(BlinkText[fontoff])) / 2.0f, yo + 2.0f,
+    pFont->DrawDemoText(static_cast<float>(-sin(LogoPos) * 140.0f) +
+                        static_cast<float>(626 - pFont->DemoStringLength(BlinkText[fontoff])) / 2.0f, yo + 2.0f,
                         BlinkText[fontoff],
                         col);
 
@@ -393,9 +391,9 @@ void CCracktro::Main(void)
 
     for (int i = 0; i < 16; i++)
     {
-        RenderRect((float)(-sin(LogoPos) * 140.0f) +
-                   320 +	 (float)(sin(SinPos + i * (2 * PI / 16)) * 140 ),
-                   yo + 10 + (float)(cos(SinPos + i * (2 * PI / 16)) * 20), 4, 2, 0xFFFFFFFF);
+        RenderRect(static_cast<float>(-sin(LogoPos) * 140.0f) +
+                   320 +	 static_cast<float>(sin(SinPos + i * (2 * PI / 16)) * 140 ),
+                   yo + 10 + static_cast<float>(cos(SinPos + i * (2 * PI / 16)) * 20), 4, 2, 0xFFFFFFFF);
     }
 
 
@@ -420,8 +418,8 @@ void CCracktro::Load(void)
 
     // farbige Balken
     for (int i = 0; i < 320; i++)
-        RenderRect(0,   (float)(i * 2),
-                   640, (float)(i * 2), ScrollCol[rand()%(int(sizeof(ScrollCol) / sizeof(D3DCOLOR)))]);
+        RenderRect(0,   static_cast<float>(i * 2),
+                   640, static_cast<float>(i * 2), ScrollCol[rand()%(int(sizeof(ScrollCol) / sizeof(D3DCOLOR)))]);
 
     count -= 1.0f SYNC;
 

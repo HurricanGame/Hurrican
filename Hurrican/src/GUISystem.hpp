@@ -44,7 +44,7 @@ public:
 
     void Run();
     void RenderBox();
-    void ShowBox(char Text[BOXTEXTLENGTH], int yoff, int xoff = 320);
+    void ShowBox(const char Text[BOXTEXTLENGTH], int yoff, int xoff = 320);
     void ShowBox(int xoff, int yoff, int w, int h);
     void HideBox();
     void HideBoxFast();
