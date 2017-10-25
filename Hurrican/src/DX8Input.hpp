@@ -144,7 +144,7 @@ extern DirectInputClass		DirectInput;
 #if defined(PLATFORM_DIRECTX)
 extern char					TastaturPuffer[256];				// Tastaturpuffer des Keyboards
 #elif defined(PLATFORM_SDL)
-extern char*				TastaturPuffer;
+extern const Uint8*				TastaturPuffer;
 #endif
 extern bool					UseForceFeedback;					// ForceFeedback Fähigkeit nutzen ?
 

@@ -27,7 +27,7 @@
 #if defined(PLATFORM_DIRECTX)
 char        TastaturPuffer[MAX_KEYS];	// Tastaturpuffer für Keyboardabfrage
 #elif defined(PLATFORM_SDL)
-char*       TastaturPuffer;
+const Uint8*       TastaturPuffer;
 #endif
 
 // --------------------------------------------------------------------------------------
@@ -339,9 +339,9 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst)
 {
 #if SDL_VERSION_ATLEAST(2,0,0)
-    TastaturPuffer = (char*)SDL_GetKeyboardState( &NumberOfKeys );
+    TastaturPuffer = SDL_GetKeyboardState(&NumberOfKeys);
 #else
-    TastaturPuffer = (char*)SDL_GetKeyState( &NumberOfKeys );
+    TastaturPuffer = SDL_GetKeyState(&NumberOfKeys);
 #endif
     Protokoll << "DirectInput8 polling for " << NumberOfKeys << " keys!" << std::endl;
 
