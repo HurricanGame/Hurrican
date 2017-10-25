@@ -3053,7 +3053,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe)
 
         if (options_Detail >= DETAIL_MEDIUM)
         {
-            int FlameOff = SelectedWeapon;
+            FlameOff = SelectedWeapon;
             if (FlameThrower)
                 FlameOff = 0;
 
@@ -3375,7 +3375,7 @@ void PlayerClass::PlayerShoot(void)
 
             case 1 :
             {
-                int tempaddx, tempaddy, tempshot;
+                int tempaddx, tempaddy;
                 float mul1 = 7.0f/8.0f;
 
                 // Normale Schüsse
@@ -3584,7 +3584,7 @@ void PlayerClass::PlayerShoot(void)
 
             case 2 :
             {
-                int tempadd, tempshot;
+                int tempadd;
 
                 // Normale Schüsse
                 //

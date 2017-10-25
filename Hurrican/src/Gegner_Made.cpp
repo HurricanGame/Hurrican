@@ -44,7 +44,7 @@ GegnerMade::GegnerMade(int Wert1, int Wert2, bool Light)
     {
         AnimPhase = rand()%20;
         yAcc   = 4.0f;
-        xSpeed =  (float)  (rand()%200-100)/12;
+        xSpeed =  float ((rand()%200-100)/12);
         ySpeed = - float (((rand()%40) / 2.0f) + 12.0f);
         Handlung = GEGNER_FALLEN;
     }

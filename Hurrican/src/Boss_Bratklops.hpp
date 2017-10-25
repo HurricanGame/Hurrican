@@ -12,7 +12,7 @@ private:
     float	FlareDelay;
     int	    Shots;
 
-    D3DXMATRIX	matRot, matRot2, matWorld;
+    D3DXMATRIX	matWorld;
 
 public:
     DirectGraphicsSprite	*pGfx [7];				// Animationen sind einzeln

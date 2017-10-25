@@ -32,7 +32,7 @@ GegnerColumn2::GegnerColumn2(int Wert1, int Wert2, bool Light)
 
 void GegnerColumn2::DoDraw(void)
 {
-    D3DXMATRIX	matWorld, matRot, matTrans, matTrans2;	// Rotations und Translations Matrizen
+    D3DXMATRIX	matWorldLocal, matRot, matTrans, matTrans2;	// Rotations und Translations Matrizen
     int			Winkel;									// Rotationswinkel
 
     Winkel = int(AnimCount);
@@ -46,16 +46,16 @@ void GegnerColumn2::DoDraw(void)
     D3DXMatrixTranslation(&matTrans, float (-(xPos-TileEngine.XOffset+40)),float (-(yPos-TileEngine.YOffset+100)), 0.0f);		// Transformation zum Ursprung
     D3DXMatrixTranslation(&matTrans2,float   (xPos-TileEngine.XOffset+40), float (  yPos-TileEngine.YOffset+100),  0.0f);		// Transformation wieder zurück
 
-    D3DXMatrixIdentity	 (&matWorld);
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans);		// Verschieben
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRot);			// rotieren
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);		// und wieder zurück verschieben
+    D3DXMatrixIdentity	 (&matWorldLocal);
+    D3DXMatrixMultiply	 (&matWorldLocal, &matWorldLocal, &matTrans);		// Verschieben
+    D3DXMatrixMultiply	 (&matWorldLocal, &matWorldLocal, &matRot);			// rotieren
+    D3DXMatrixMultiply	 (&matWorldLocal, &matWorldLocal, &matTrans2);		// und wieder zurück verschieben
 
     // rotierte Matrix setzen
 #if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorldLocal);
 #elif defined(PLATFORM_SDL)
-    g_matModelView = matWorld * g_matView;
+    g_matModelView = matWorldLocal * g_matView;
 #if defined(USE_GL1)
     load_matrix( GL_MODELVIEW, g_matModelView.data() );
 #endif
@@ -66,11 +66,11 @@ void GegnerColumn2::DoDraw(void)
                                             static_cast<float>(yPos-TileEngine.YOffset), 0, 0xFFFFFFFF);
 
     // Normale Projektions-Matrix wieder herstellen
-    D3DXMatrixRotationZ (&matWorld, 0.0f);
+    D3DXMatrixRotationZ (&matWorldLocal, 0.0f);
 #if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorldLocal);
 #elif defined(PLATFORM_SDL)
-    g_matModelView = matWorld * g_matView;
+    g_matModelView = matWorldLocal * g_matView;
 #if defined(USE_GL1)
     load_matrix( GL_MODELVIEW, g_matModelView.data() );
 #endif

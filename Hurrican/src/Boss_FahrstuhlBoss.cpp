@@ -579,33 +579,33 @@ void GegnerFahrstuhlBoss::DoKI(void)
         for (int p = 0; p < NUMPLAYERS; p++)
             Player[p].ypos -= A;
 
-        GegnerClass *pTemp    = Gegner.pStart;		// Zeiger auf den ersten Gegner
-        while (pTemp != NULL)							// Ende der Liste erreicht ?
-        {
-            if (pTemp->GegnerArt >= SPITTER &&
-                    pTemp->GegnerArt <= FAHRSTUHL)
-            {
-                pTemp->yPos	   -= A;				// Nach oben bewegen
-                pTemp->yPosOld -= A;
-            }
-
-            pTemp = pTemp->pNext;						// Zeiger auf das nächste Element
-        }
-
-        ProjectileClass *pTemp2 = Projectiles.pStart;	// Zeiger auf den ersten Schuss
-        while (pTemp2 != NULL)							// Ende der Liste erreicht ?
-        {
-            pTemp2->yPos	-= A;				// Nach oben bewegen
-            pTemp2->yPosOld -= A;
-            pTemp2 = pTemp2->pNext;						// Zeiger auf das nächste Element
-        }
-
-        PartikelClass *pTemp3 = PartikelSystem.pStart;// Zeiger auf den ersten Partikel
+        GegnerClass *pTemp3    = Gegner.pStart;		// Zeiger auf den ersten Gegner
         while (pTemp3 != NULL)							// Ende der Liste erreicht ?
         {
-            pTemp3->yPos	-= A;				// Nach oben bewegen
-            pTemp3->yPosOld -= A;
+            if (pTemp3->GegnerArt >= SPITTER &&
+                    pTemp3->GegnerArt <= FAHRSTUHL)
+            {
+                pTemp3->yPos	   -= A;				// Nach oben bewegen
+                pTemp3->yPosOld -= A;
+            }
+
             pTemp3 = pTemp3->pNext;						// Zeiger auf das nächste Element
+        }
+
+        ProjectileClass *pTemp4 = Projectiles.pStart;	// Zeiger auf den ersten Schuss
+        while (pTemp4 != NULL)							// Ende der Liste erreicht ?
+        {
+            pTemp4->yPos	-= A;				// Nach oben bewegen
+            pTemp4->yPosOld -= A;
+            pTemp4 = pTemp4->pNext;						// Zeiger auf das nächste Element
+        }
+
+        PartikelClass *pTemp5 = PartikelSystem.pStart;// Zeiger auf den ersten Partikel
+        while (pTemp5 != NULL)							// Ende der Liste erreicht ?
+        {
+            pTemp5->yPos	-= A;				// Nach oben bewegen
+            pTemp5->yPosOld -= A;
+            pTemp5 = pTemp5->pNext;						// Zeiger auf das nächste Element
         }
     }
 }

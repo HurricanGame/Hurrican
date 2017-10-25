@@ -250,8 +250,8 @@ void IntroClass::DoIntro(void)
                 if (t == EntriesOff)
                 {
                     DirectGraphics.SetColorKeyMode();
-                    const int tmp_h = 17;
-                    RenderRect(xr, RENDERHEIGHT - (tmp_h-1)*scale_factor, RENDERWIDTH, tmp_h*scale_factor, 0xFF000000);
+                    const int tmp_h2 = 17;
+                    RenderRect(xr, RENDERHEIGHT - (tmp_h2-1)*scale_factor, RENDERWIDTH, tmp_h2*scale_factor, 0xFF000000);
                 }
             }
         }
@@ -292,7 +292,7 @@ void IntroClass::DoIntro(void)
             }
             else
             {
-                xr = (float)l;
+                xr = l;
 
                 // blinken lassen
                 if (static_cast<int>(Counter / 100.0f) % 2 == 0)

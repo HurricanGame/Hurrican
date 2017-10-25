@@ -365,7 +365,7 @@ void HUDClass::ShowHUD(void)
                     Player[1-p].SelectedWeapon == static_cast<int>(i))
                 continue;
 
-            if (i == (unsigned int)Player[p].SelectedWeapon)
+            if (i == static_cast<unsigned int>(Player[p].SelectedWeapon))
             {
                 if (NUMPLAYERS == 1)
                     playercol = D3DCOLOR_RGBA(0, 255, 0, 224);

@@ -148,17 +148,16 @@ void GegnerSkull::DoKI(void)
             PartikelSystem.PushPartikel (xPos + 20, yPos + 20, SHOCKEXPLOSION);
             PartikelSystem.PushPartikel (xPos + 20, yPos + 20, SHOCKEXPLOSION);
 
-            int i;
-            for (i = 0; i < 20; i++)
+            for (int i = 0; i < 20; i++)
                 PartikelSystem.PushPartikel(xPos + rand()%30,
                                               yPos + rand()%30,
                                               SPIDERSPLITTER);
 
-            for (i = 0; i < 20; i++)
+            for (int i = 0; i < 20; i++)
                 PartikelSystem.PushPartikel(xPos - 50 + rand()%100,
                                               yPos - 50 + rand()%100, EXPLOSION_BIG);
 
-            for (i = 0; i < 20; i++)
+            for (int i = 0; i < 20; i++)
                 PartikelSystem.PushPartikel(xPos - 50 + rand()%100,
                                               yPos - 50 + rand()%100, SPLITTER);
 

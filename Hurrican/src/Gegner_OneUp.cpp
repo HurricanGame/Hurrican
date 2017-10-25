@@ -97,7 +97,7 @@ void GegnerOneUp::DoKI(void)
             PartikelSystem.PushPartikel(xPos - 40, yPos - 40, EXPLOSIONFLARE);
             PartikelSystem.PushPartikel(xPos - 40, yPos - 40, EXPLOSIONFLARE);
 
-            for (int i = 0; i < 200; i++)
+            for (int j = 0; j < 200; j++)
                 PartikelSystem.PushPartikel(xPos + 20, yPos + 20, KRINGELSECRET);
         }
 }

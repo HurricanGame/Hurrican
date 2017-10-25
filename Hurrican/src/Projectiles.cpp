@@ -833,7 +833,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp)
         yAcc	= 10.0f;
         Counter = -ySpeed;
 
-        if ((int)xSpeed % 2 == 0)
+        if (static_cast<int>(xSpeed) % 2 == 0)
         {
             ySpeed  *= -1.0f;
             yAcc	*= -1.0f;

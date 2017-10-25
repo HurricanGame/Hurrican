@@ -109,10 +109,10 @@ int16_t TexturesystemClass::LoadTexture( const std::string &filename )
     if (!_scalefactors_map.empty()) {
         std::string filename_sans_ext(filename);
         ReplaceAll( filename_sans_ext, ".png", "" );
-        std::map< std::string, std::pair<double,double> >::iterator it = _scalefactors_map.find(filename_sans_ext);
-        if ( it != _scalefactors_map.end() ) {
-            th.npot_scalex = (*it).second.first;
-            th.npot_scaley = (*it).second.second;
+        std::map< std::string, std::pair<double,double> >::iterator it2 = _scalefactors_map.find(filename_sans_ext);
+        if ( it2 != _scalefactors_map.end() ) {
+            th.npot_scalex = (*it2).second.first;
+            th.npot_scaley = (*it2).second.second;
 #ifdef _DEBUG
             Protokoll << "Using external npot scalefactors " << th.npot_scalex << " " << th.npot_scaley << " for texture " << filename << std::endl;
 #endif
