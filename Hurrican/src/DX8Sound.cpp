@@ -23,7 +23,10 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
-#include <stdio.h>
+#include <cstdio>
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem::v1;
+
 #include "DX8Sound.hpp"
 #include "Logdatei.hpp"
 #include "Globals.hpp"
@@ -347,17 +350,14 @@ void SoundManagerClass::LoadSong(const std::string &filename, int nr, bool loop 
 
     // Zuerst checken, ob sich der Song in einem MOD-Ordner befindet
     if (CommandLineParams.RunOwnLevelList) {
-        //sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
         fullpath = std::string(g_storage_ext) + "/levels/" + std::string(CommandLineParams.OwnLevelList) + "/" + filename;
-        if (FileExists(fullpath.c_str()))
+        if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
             goto loadfile;
     }
 
-    //DKS - Music files now reside in new subdir data/music/
     // Dann checken, ob sich das File im Standard Ordner befindet
-    //sprintf_s(Temp, "%s/data/music/%s", g_storage_ext, Filename);
     fullpath = std::string(g_storage_ext) + "/data/music/" + filename;
-    if (FileExists(fullpath.c_str()))
+    if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
         goto loadfile;
 
 #if defined(USE_UNRARLIB)
@@ -651,14 +651,12 @@ void SoundManagerClass::LoadWave(const std::string &filename, int nr, bool loope
         //sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
         fullpath = std::string(g_storage_ext) + "/levels/" + std::string(CommandLineParams.OwnLevelList) + "/" + filename;
 
-        if (FileExists(fullpath.c_str()))
+        if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
             goto loadfile;
     }
 
-    //DKS - Sound effects files now reside in new subdir data/sfx/
-    //sprintf_s(Temp, "%s/data/sfx/%s", g_storage_ext, Filename);
     fullpath = std::string(g_storage_ext) + "/data/sfx/" + filename;
-    if (FileExists(fullpath.c_str()))
+    if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
         goto loadfile;
 
 #if defined(USE_UNRARLIB)

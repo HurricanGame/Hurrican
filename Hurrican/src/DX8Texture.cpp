@@ -21,6 +21,8 @@
 #include <fstream>
 #include <string>
 #include <map>
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem::v1;
 
 #ifdef USE_UNRARLIB
 #include "unrarlib.h"
@@ -177,20 +179,20 @@ void TexturesystemClass::ReadScaleFactorsFiles()
 
     // First, see if there is a file in data/textures/ where plain old .PNG files are and load its data:
     fullpath = path + scalefactors_filename;
-    if (FileExists(fullpath.c_str()))
+    if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
         ReadScaleFactorsFile(fullpath);
 
     // Then, handle any files in the compressed-textures subfolders, their data will also be loaded,
     // and any data they contain will override what's already loaded, on a file-by-file basis.
 #if defined(USE_ETC1)
     fullpath = path + "etc1/" + scalefactors_filename; 
-    if (FileExists(fullpath.c_str()))
+    if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
         ReadScaleFactorsFile(fullpath);
 #endif
 
 #if defined(USE_PVRTC)
     fullpath = path + "pvr/" + scalefactors_filename; 
-    if (FileExists(fullpath.c_str()))
+    if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
         ReadScaleFactorsFile(fullpath);
 #endif
 }
@@ -218,7 +220,7 @@ bool TexturesystemClass::LoadTextureFromFile( const std::string &filename, Textu
     // Are we using unrarlib to read all game data from a single RAR archive?
     void  *buf_data   = NULL;   // Memory  buffer file is read into, if using unrarlib
     unsigned long buf_size = 0;  // Size of memory buffer file is read into, if using unrarlib
-    if ( FileExists(RARFILENAME) &&
+    if ( fs::exists(RARFILENAME) && fs::is_regular_file(RARFILENAME) &&
             urarlib_get(&buf_data, &buf_size, filename.c_str(), RARFILENAME, convertText(RARFILEPASSWORD)) &&
             buf_data != NULL )
     {

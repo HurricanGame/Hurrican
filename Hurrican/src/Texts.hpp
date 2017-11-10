@@ -352,7 +352,7 @@ void InitReplacers (void);						// Tasten ErsetzungsStrings für die TutorialTex
 int	 GetDecValue(const char *pair, int len);			// Dezimalwert einer Hexzahl mit Länge len
 
 //DKS - Added cross-platform language-files handling
-int FindLanguageFiles(const char *path);
+void FindLanguageFiles(const char *path);
 
 //DKS - Added function to split a longer line into two shorter lines, for when
 //      running on a lower-resolution device w/ scaled font
@@ -371,13 +371,10 @@ void ReplaceAll(std::string& str, const std::string &from, const std::string &to
 // --------------------------------------------------------------------------------------
 // Externals
 // --------------------------------------------------------------------------------------
-#define MAX_LANGUAGE_FILES                          20
-#define MAX_LANGUAGE_FILENAME_LENGTH                256    
 
+extern std::vector<std::string> LanguageFiles;
 extern char				    TextArray [TEXT_LASTTEXT][1024];
 extern char					ActualLanguage[256];
-extern int					LanguageFileCount;				// Anzahl gefundener Language Files
-extern char					LanguageFiles[MAX_LANGUAGE_FILES][MAX_LANGUAGE_FILENAME_LENGTH]; 
 extern char					s_Replacers[MAX_AKTIONEN * 2][256];
 extern char					Cheats[MAX_CHEATS][256];
 

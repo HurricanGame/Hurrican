@@ -81,9 +81,6 @@ bool GameInit (HWND hwnd, HINSTANCE hinstance);		// Spiel vor  dem Cracktro init
 bool GameInit2(void);								// Spiel nach dem Cracktro initialisieren
 bool GameExit   (void);								// Spiel de-initialisieren
 bool Heartbeat  (void);								// Haupt Game Loop
-bool CreateDir(const char *dir); //DKS - Added function to create a directory if it doesn't already exist (1 on success)
-bool FindDir(const char *dir);   //DKS - Added function to check if a directory exists (1 on success)
-bool FileExists(const char *Filename);
 
 //DKS - I made a separate set of spritesheets with blue coloring for Player 2, so these
 //      are no longer necessary and have been disabled:

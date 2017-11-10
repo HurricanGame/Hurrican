@@ -569,7 +569,7 @@ public:
     void LoadSprites();
 
     void ClearLevel(void);									// Level freigeben
-    bool LoadLevel(char Filename[100]);						// Level laden
+    bool LoadLevel(const std::string &Filename);						// Level laden
     void InitNewLevel(int xSize, int ySize);				// Neues Level initialisieren
     void SetScrollSpeed(float xSpeed, float ySpeed);		// neue Scrollspeed setzen
     void CalcRenderRange		(void);						// Bereiche berechnen, die gerendert werden sollen

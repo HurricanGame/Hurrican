@@ -592,10 +592,10 @@ void MenuClass::ShowMenu(void)
         pMenuFont->DrawText(320 - d/2.0f, ypos + OFFSET, TextArray [TEXT_SPRACHE], menucolor, 2);
 
         char lang_name[256] = "";
-        for (int i = 0; i < LanguageFileCount; i++)
+        for (std::size_t i = 0; i < LanguageFiles.size(); i++)
         {
 
-            strcpy_s(lang_name, LanguageFiles[i]);
+            strcpy_s(lang_name, LanguageFiles[i].c_str());
             // Truncate the extension
             int trunc_loc = strlen(lang_name) - 4;
             lang_name[trunc_loc] = '\0';
@@ -611,10 +611,10 @@ void MenuClass::ShowMenu(void)
         }
 
         pDefaultFont->DrawText (320 - pDefaultFont->StringLength (TextArray[TEXT_ZURUECK]) / 2.0f, 
-                ypos + 136 + vertical_spacing * LanguageFileCount, (TextArray[TEXT_ZURUECK]), 0x88FFFFFF);
-        if (AktuellerPunkt == LanguageFileCount)
+                ypos + 136 + vertical_spacing * LanguageFiles.size(), (TextArray[TEXT_ZURUECK]), 0x88FFFFFF);
+        if (AktuellerPunkt == LanguageFiles.size())
             pDefaultFont->DrawText (320 - pDefaultFont->StringLength (TextArray[TEXT_ZURUECK]) / 2.0f, 
-                    ypos + 136 + vertical_spacing * LanguageFileCount, (TextArray[TEXT_ZURUECK]), 0x88FFFFFF);
+                    ypos + 136 + vertical_spacing * LanguageFiles.size(), (TextArray[TEXT_ZURUECK]), 0x88FFFFFF);
 
 
     }
@@ -1675,9 +1675,9 @@ void MenuClass::DoMenu(void)
     case MENUZUSTAND_LANGUAGE:
     {
         if (AktuellerPunkt < 0)
-            AktuellerPunkt = LanguageFileCount;
+            AktuellerPunkt = LanguageFiles.size();
 
-        if (AktuellerPunkt > LanguageFileCount)
+        if (AktuellerPunkt > LanguageFiles.size())
             AktuellerPunkt = 0;
 
 
@@ -1688,9 +1688,9 @@ void MenuClass::DoMenu(void)
             AuswahlPossible = false;
 
             // Language File gewählt ?
-            if (AktuellerPunkt < LanguageFileCount)
+            if (AktuellerPunkt < LanguageFiles.size())
             {
-                strcpy_s (ActualLanguage, strlen(LanguageFiles [AktuellerPunkt]) + 1, LanguageFiles [AktuellerPunkt]);
+                strcpy_s (ActualLanguage, strlen(LanguageFiles[AktuellerPunkt].c_str()) + 1, LanguageFiles[AktuellerPunkt].c_str());
                 LoadLanguage (ActualLanguage);
                 SaveConfig();
                 ShowLanguageInfoCounter = 2000.0f;

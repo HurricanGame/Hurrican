@@ -13,10 +13,13 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 #include <iostream>
 #include <fstream>
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem::v1;
+
 #include "Texts.hpp"
 #include "Logdatei.hpp"
 #include "Main.hpp"
@@ -29,14 +32,10 @@
 #include "unrarlib.h"
 #endif
 
-//DKS - Added cross-platform language-files handling:
-//      Uses Windows/UNIX-compatible tinydir library to parse directories
-//      https://github.com/cxong/tinydir 
-//      Copyright (c) 2013, Cong Xu  Simplified BSD License
-#include <tinydir/tinydir.h>
-
 extern Logdatei Protokoll;
 
+std::vector<std::string> LanguageFiles;
+char					ActualLanguage[256];			// Gewählte Language
 char TextArray  [TEXT_LASTTEXT][1024];
 char s_Replacers[MAX_AKTIONEN*2][256];
 
@@ -70,7 +69,7 @@ bool LoadLanguage (char *filename)
     if (CommandLineParams.RunOwnLevelList == true)
     {
         sprintf_s(temp, "%s/levels/%s/custom.lng", g_storage_ext, CommandLineParams.OwnLevelList);
-        if (FileExists(temp))
+        if (fs::exists(temp) && fs::is_regular_file(temp))
             goto loadfile;
     }
 
@@ -78,12 +77,12 @@ bool LoadLanguage (char *filename)
     // First, always try the lang/ folder
     sprintf_s(temp, "%s/lang/%s", g_storage_ext, filename);
 
-    if (FileExists(temp))
+    if (fs::exists(temp) && fs::is_regular_file(temp))
         goto loadfile;
 
     // If not found in the lang/ folder, try the root game folder
     sprintf_s(temp, "%s/%s", g_storage_ext, filename);
-    if (!FileExists(temp))
+    if (!fs::exists(temp) && fs::is_regular_file(temp))
         return false;
 
 loadfile:
@@ -154,7 +153,7 @@ loadfile:
         //      the rest of the level data.
         // Checken, ob sich das File im Standard Ordner befindet
         sprintf_s(Temp, "%s/%s", g_storage_ext, "data/levels/levellist.dat");
-        if (FileExists(Temp))
+        if (fs::exists(Temp) && fs::is_regular_file(Temp))
             goto loadfilelevel;
 
 #if defined(USE_UNRARLIB)
@@ -229,53 +228,28 @@ loadfilelevel:
 
 } // LoadLanguage
 
-//DKS - Added cross-platform language-files handling
-// Returns number of matched files
-int FindLanguageFiles(const char *path)
+void FindLanguageFiles(const char *path)
 {
-    tinydir_dir dir;
-    tinydir_file file;
-    int num_matches = 0;
-
     if (!path) {
         Protokoll << "ERROR: NULL path passed to find_language_files() in " << __FILE__ << std::endl;
-        return 0;
     }
 
     Protokoll << "Searching for language files in " << path << std::endl;
-    tinydir_open(&dir, path);
-
-    while (dir.has_next) {
-        if (tinydir_readfile(&dir, &file) != -1)
-        {
-            if (file.is_dir) {
-                Protokoll << "File " << file.name << " is directory, skipping" << std::endl;
-            } else {
-                if (strcasecmp(file.extension, "lng") == 0) {
-                    if (strlen(file.name) < MAX_LANGUAGE_FILENAME_LENGTH) {
-                        Protokoll << "Found language file " << file.name << " in path " << file.path << std::endl;
-
-                        // If we've found a file more than 5 characters in length, accept it..
-                        if (strlen(file.name) > 4) {
-                            // Copy filename with extension (no leading path)
-                            strcpy_s(LanguageFiles[num_matches], file.name); 
-                            num_matches++;
-                        }
-                    } else {
-                        // Either the full pathname was too long or the filename without extension was too long:
-                        Protokoll << "Skipping file with too long a name or full path:\n" << file.path << std::endl;
-                    }
-                }
-            }
-        } else {
-            Protokoll << "Error examining file, skipping" << std::endl;
-        }
-
-        tinydir_next(&dir);
-    }
-
-    tinydir_close(&dir);
-    return num_matches;
+    
+    for(auto& file: fs::directory_iterator(path))
+    {
+		if (!fs::is_regular_file(file))
+		{
+			Protokoll << "File " << file.path().filename() << " is not a regular file, skipping" << std::endl;
+			continue;
+		}
+		
+		if (file.path().extension() == ".lng")
+		{
+			Protokoll << "Found language file " << file.path().filename() << " in path " << path << std::endl;
+			LanguageFiles.push_back(file.path().filename());
+		}
+	}
 }
 
 //DKS - Added function to split a longer line into two shorter lines, for when

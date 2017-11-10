@@ -14,7 +14,10 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
-#include <stdio.h>
+#include <cstdio>
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem::v1;
+
 #include "Tileengine.hpp"
 #include "DX8Texture.hpp"
 #include "DX8Graphics.hpp"
@@ -366,9 +369,9 @@ void TileEngineClass::ClearLevel()
 // Level laden
 // --------------------------------------------------------------------------------------
 
-bool TileEngineClass::LoadLevel(char Filename[100])
+bool TileEngineClass::LoadLevel(const std::string &Filename)
 {
-    char			Temp[256];
+    std::string Temp;
     FileHeader				DateiHeader;					// Header der Level-Datei
     FILE					*Datei = NULL;					// Level-Datei
     LevelObjectStruct		LoadObject;
@@ -390,16 +393,15 @@ bool TileEngineClass::LoadLevel(char Filename[100])
     // Zuerst checken, ob sich das Level in einem MOD-Ordner befindet
     if (CommandLineParams.RunOwnLevelList == true)
     {
-        sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
-        if (FileExists(Temp))
-            goto loadfile;
+		Temp = std::string(g_storage_ext) + "/levels/" + CommandLineParams.OwnLevelList + "/" + Filename;
+		if (fs::exists(Temp) && fs::is_regular_file(Temp))
+			goto loadfile;
     }
 
-    //DKS - Levels have now been moved to their own subdir, data/levels/
     // Dann checken, ob sich das File im Standard Ordner befindet
-    sprintf_s(Temp, "%s/data/levels/%s", g_storage_ext,  Filename);
-    if (FileExists(Temp))
-        goto loadfile;
+    Temp = std::string(g_storage_ext) + "/data/levels/" + Filename;
+    if (fs::exists(Temp) && fs::is_regular_file(Temp))
+			goto loadfile;
 
 #if defined(USE_UNRARLIB)
     // Auch nicht? Dann ist es hoffentlich im RAR file
@@ -449,7 +451,7 @@ loadfile:
     }
 
     // File öffnen
-    fopen_s(&Datei, Temp, "rb");
+    fopen_s(&Datei, Temp.c_str(), "rb");
 
     if(!Datei)
     {

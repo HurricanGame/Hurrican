@@ -23,6 +23,9 @@
  */
 
 #include <cstdint>
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem::v1;
+
 #include "Main.hpp"
 #include "DX8Texture.hpp"
 #include "DX8Graphics.hpp"
@@ -231,7 +234,7 @@ bool loadImageETC1( image_t& image, const std::string &fullpath )
 
     uint32_t etc1_filesize;
 
-    if (fullpath.empty() || !FileExists(fullpath.c_str()))
+    if (fullpath.empty() || !fs::exists(fullpath) || !fs::is_regular_file(fullpath))
         return false;
 
     image.data = LoadFileToMemory( fullpath, etc1_filesize );
@@ -371,7 +374,7 @@ bool loadImageSDL( image_t& image, const std::string &fullpath, void *buf, unsig
 
     if (buf_size == 0)  // Load from file
     {
-        if (fullpath.empty() || !FileExists(fullpath.c_str())) {
+        if (fullpath.empty() || !fs::exists(fullpath) || !fs::is_regular_file(fullpath)) {
             Protokoll << "Error in loadImageSDL loading " << fullpath << std::endl;
             GameRunning = false;
             return false;

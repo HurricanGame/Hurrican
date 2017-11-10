@@ -28,10 +28,13 @@
 #include <windows.h>									// Alle Windows Header includen
 #include <Dxerr8.h>
 #endif
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem::v1;
+
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -132,9 +135,6 @@ CGUISystem				GUI;							// GUI System
 CCracktro				*Cracktro;
 RECT					srcrect, destrect;
 
-int						LanguageFileCount;				// Anzahl gefundener Language Files
-char					LanguageFiles[MAX_LANGUAGE_FILES][MAX_LANGUAGE_FILENAME_LENGTH]; 
-char					ActualLanguage[256];			// Gewählte Language
 char                    *g_storage_ext = NULL;          // Where data files (levels, graphics, music, etc) 
                                                         //      for the game are stored (read)
 char                    *g_save_ext = NULL;             // Where configuration files, logs, and save games 
@@ -248,62 +248,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, std::uint32_t message, WPARAM wparam, LPA
     return(DefWindowProc(hwnd, message, wparam, lparam));
 }
 #endif
-
-// --------------------------------------------------------------------------------------
-// File Exists Funktion
-// --------------------------------------------------------------------------------------
-
-bool FileExists(const char* Filename)
-{
-    if (!Filename)
-        return false;
-
-    std::fstream fin;
-
-    fin.open(Filename,std::ios::in);
-    if (fin.is_open())
-    {
-        fin.close();
-        return true;
-    }
-
-    fin.close();
-    return false;
-}
-
-//DKS - Added function:
-// Create the directory dir if it doesn't already exist. Return true if created or already exists.
-bool CreateDir(const char *dir)
-{
-    if (!dir) return false;
-
-#if defined (PLATFORM_DIRECTX)
-	struct _stat	st;
-	return (_stat(dir, &st) != 0) ? (mkdir(dir) == 0) : (_S_ISDIR(st.st_mode) != 0);
-#else
-	struct stat	st;
-	return (stat(dir, &st) != 0) ? (mkdir(dir, 0755) == 0) : (S_ISDIR(st.st_mode) != 0);
-#endif
-}
-
-//DKS - Added function:
-// If directory exists (and is indeed a directory), return true
-bool FindDir(const char *dir)
-{
-#if defined (PLATFORM_DIRECTX)
-    struct _stat st;
-    if (!dir || _stat(dir, &st) != 0)
-        return false;
-    else 
-        return _S_ISDIR(st.st_mode) != 0;
-#else
-    struct stat st;
-    if (!dir || stat(dir, &st) != 0)
-        return false;
-    else 
-        return S_ISDIR(st.st_mode) != 0;
-#endif
-}
 
 int GetStringPos(const char
                  *string, const char *substr)
@@ -507,7 +451,7 @@ void FillCommandLineParams( int argc, char* args[] )
                 if (args[i] && strlen(args[i]) > 0 && !CommandLineParams.DataPath) {
                     CommandLineParams.DataPath = (char*)malloc(strlen(args[i] + 1));
                     strcpy_s(CommandLineParams.DataPath, args[i]);
-                    if (FindDir(CommandLineParams.DataPath)) {
+                    if (fs::is_directory(CommandLineParams.DataPath)) {
                         fprintf( stdout, "Data path set to %s\n", CommandLineParams.DataPath );
                     } else {
                         fprintf( stdout, "ERROR: could not find data path %s\n", CommandLineParams.DataPath );
@@ -524,7 +468,7 @@ void FillCommandLineParams( int argc, char* args[] )
                 if (args[i] && strlen(args[i]) > 0 && !CommandLineParams.SavePath) {
                     CommandLineParams.SavePath = (char*)malloc(strlen(args[i] + 1));
                     strcpy_s(CommandLineParams.SavePath, args[i]);
-                    if (CreateDir(CommandLineParams.SavePath)) {
+                    if (fs::create_directory(CommandLineParams.SavePath)) {
                         fprintf( stdout, "Save path set to %s\n", CommandLineParams.SavePath );
                     } else {
                         fprintf( stdout, "ERROR: could not find save path %s\n", CommandLineParams.SavePath );
@@ -663,9 +607,9 @@ int main(int argc, char *argv[])
             g_save_ext = (char*)malloc(strlen(homedir) + strlen(subdir) + 1);
             strcpy_s(g_save_ext, homedir);
             strcat_s(g_save_ext, subdir);
-            success = CreateDir(g_save_ext);
+            success = fs::is_directory(g_save_ext) || fs::create_directory(g_save_ext);
             if (!success) {
-                // We weren't able to create the $HOME/.turrican directory, or if it exists, it is
+                // We weren't able to create the $HOME/.hurrican directory, or if it exists, it is
                 // not a directory or is not accessible somehow.. 
                 Protokoll << "ERROR: unable to create or access $HOME/.hurrican/ directory." << std::endl;
                 Protokoll << "\tFull path that was tried: " << g_save_ext << std::endl;
@@ -949,21 +893,21 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
         strcpy(langfilepath, "./lang");
     }
 
-    LanguageFileCount = FindLanguageFiles(langfilepath);
+    FindLanguageFiles(langfilepath);
 
     // Try again if needed
-    if (LanguageFileCount == 0) {
+    if (LanguageFiles.empty()) {
         strcpy(langfilepath, "./");
-        LanguageFileCount = FindLanguageFiles(langfilepath);
+        FindLanguageFiles(langfilepath);
     }
 
     // One more time if needed
-    if (LanguageFileCount == 0) {
+    if (LanguageFiles.empty()) {
         strcpy(langfilepath, "./lang");
-        LanguageFileCount = FindLanguageFiles(langfilepath);
+        FindLanguageFiles(langfilepath);
     }
 
-    if (LanguageFileCount == 0) {
+    if (LanguageFiles.empty()) {
         Protokoll << "ERROR: Failed to find any language files, aborting." << std::endl;
         return false;
     }
