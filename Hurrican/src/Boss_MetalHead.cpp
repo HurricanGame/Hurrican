@@ -853,6 +853,7 @@ void GegnerMetalHead::DoKI(void)
             }
 
         }
+        [[fallthrough]];
 
         // Kopf fliegt auf xto/yto zu
         case GEGNER_STEHEN:
