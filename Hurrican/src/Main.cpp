@@ -956,101 +956,6 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance)
     return true;
 }
 
-//DKS - I made a separate set of spritesheets with blue coloring for Player 2, so these
-//      are no longer necessary and have been disabled:
-#if 0
-// --------------------------------------------------------------------------------------
-// Textur von Spieler 2 anpassen
-// --------------------------------------------------------------------------------------
-
-void ConvertPlayerTexture(DirectGraphicsSprite *pTexture)
-{
-#if defined(PLATFORM_DIRECTX)
-    HRESULT hr;
-    D3DLOCKED_RECT pLockedRect;
-    int width, height, r, g, b, a, col, temp;
-    BYTE  *pRow;
-    std::uint32_t *pPixel;
-
-    // Textur locken
-    //DKS - Adapted to new TexturesystemClass
-    //hr = pTexture->itsTexture->LockRect(0, &pLockedRect, 0, 0);
-    TextureHandle &th = Textures[pTexture->itsTexIdx];
-    hr = th.tex->LockRect(0, &pLockedRect, 0, 0);
-    if (hr != D3D_OK)
-        return;
-
-    // Breite, Höhe und Pitch setzen
-    width  = (int)pTexture->itsXSize;
-    height = (int)pTexture->itsYSize;
-    pRow = (BYTE*)pLockedRect.pBits;
-
-    for (int y = 0; y < height; y++)
-    {
-        pPixel = (std::uint32_t*)pRow; //pPixel auf Zeilenstart setzen
-        pRow += pLockedRect.Pitch; //Zeilenpointer eine Zeile weiter..
-
-        for (int x = 0; x < width; x++)
-        {
-            // farbe holen
-            col = (int)*pPixel;
-            a = (col >> 24) & 255;
-            r = (col >> 16) & 255;
-            g = (col >>  8) & 255;
-            b = (col) & 255;
-
-            // Kein Colorkey?
-            if (a > 0)
-            {
-                // Rot und Blau vertauschen
-                if (b > r)
-                {
-                    temp = b;
-                    b = r;
-                    r = temp;
-                }
-
-                r = r * 3 / 2;
-
-                if (r > 255)
-                    r = 255;
-            }
-
-            temp = 0;
-
-            *pPixel = D3DCOLOR_RGBA(b, g, r, a);
-
-            *pPixel++;
-        }
-    }
-
-    // Textur wieder freigeben
-    //DKS - Adapted to new TexturesystemClass
-    //pTexture->itsTexture->UnlockRect(0);
-    th.tex->UnlockRect(0);
-#endif
-}
-
-void CreatePlayer2Texture(void)
-{
-    ConvertPlayerTexture(&PlayerKucken[1]);
-    ConvertPlayerTexture(&PlayerIdle[1]);
-    ConvertPlayerTexture(&PlayerRun[1]);
-    ConvertPlayerTexture(&PlayerRide[1]);
-    ConvertPlayerTexture(&PlayerRad[1]);
-    ConvertPlayerTexture(&PlayerBlitz[1]);
-    ConvertPlayerTexture(&PlayerJump[1]);
-    ConvertPlayerTexture(&PlayerCrouch[1]);
-    ConvertPlayerTexture(&PlayerIdle2[1]);
-    ConvertPlayerTexture(&PlayerJumpUp[1]);
-    ConvertPlayerTexture(&PlayerJumpDiagonal[1]);
-    ConvertPlayerTexture(&PlayerOben[1]);
-    ConvertPlayerTexture(&PlayerPiss[1]);
-    ConvertPlayerTexture(&PlayerPiss[1]);
-    ConvertPlayerTexture(&PlayerDiagonal[1]);
-}
-#endif //0
-
 // --------------------------------------------------------------------------------------
 // GameInit2, initialisiert den Rest nach dem Cracktro
 // --------------------------------------------------------------------------------------
@@ -1255,10 +1160,6 @@ bool GameInit2(void)
 
     if (!GameRunning)
         return false;
-
-    //DKS - I made a separate set of spritesheets with blue coloring for Player 2, so this
-    //      is no longer necessary and has been disabled:
-    //CreatePlayer2Texture();
 
     // Konsole initialisieren
     //DKS - Load console sprites:
