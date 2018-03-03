@@ -86,13 +86,11 @@ private:
 
     GLuint                          Program;
     std::vector<shader_t>                Shaders;
-    std::vector< pair<string, GLint> >   Uniforms;
-    std::vector< pair<string, GLint> >   Attributes;
+    std::vector< std::pair<std::string, GLint> >   Uniforms;
+    std::vector< std::pair<std::string, GLint> >   Attributes;
 };
 
 extern cml::matrix44f_r g_matView;
 extern cml::matrix44f_r g_matModelView;
-
-extern uint8_t* LoadFileToMemory( const std::string& name, uint32_t& size );
 
 #endif // CSHADER_H

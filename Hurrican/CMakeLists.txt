@@ -192,13 +192,14 @@ set(HURRICAN_SOURCES
     src/Trigger_TutorialText.cpp
     src/Trigger_Warning.cpp
     src/tracealloc.cpp
+    src/SDLPort/cshader.cpp
     src/SDLPort/SDL_fmod.cpp
     src/SDLPort/SDL_port.cpp
     src/SDLPort/texture.cpp)
 
 add_definitions(-DLINUX)
 add_definitions(-DUSE_HOME_DIR)
-add_definitions(-DUSE_GL1)
+add_definitions(-DUSE_GL2)
 add_definitions(-DPLATFORM_SDL)
 add_definitions(-DUSE_MODPLUG)
 

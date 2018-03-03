@@ -23,6 +23,7 @@
  */
 
 #include "cshader.h"
+#include "SDL_port.h"
 
 CShader::CShader() :
     NamePos (GL_INVALID_VALUE),
@@ -40,7 +41,7 @@ CShader::~CShader()
 {
 }
 
-void CShader::Close( void )
+void CShader::Close()
 {
     uint16_t i;
 
@@ -61,7 +62,7 @@ void CShader::Close( void )
     Shaders.clear();
 }
 
-int8_t CShader::Load( const string& path_vertex, const string& path_frag )
+int8_t CShader::Load( const std::string& path_vertex, const std::string& path_frag )
 {
     if (LoadShader( GL_VERTEX_SHADER, path_vertex ))
         return 1;
@@ -75,7 +76,7 @@ int8_t CShader::Load( const string& path_vertex, const string& path_frag )
     return 0;
 }
 
-int8_t CShader::LoadShader( GLenum type, const string& path )
+int8_t CShader::LoadShader( GLenum type, const std::string& path )
 {
     shader_t shader;
 
@@ -99,16 +100,16 @@ int8_t CShader::LoadShader( GLenum type, const string& path )
     return 0;
 }
 
-void CShader::Use( void )
+void CShader::Use()
 {
     glUseProgram( Program );
 }
 
-GLuint CShader::CompileShader( GLenum type, const string& path )
+GLuint CShader::CompileShader( GLenum type, const std::string& path )
 {
     GLint       status;
     GLuint      shader;
-    string      shadertype;
+    std::string      shadertype;
     uint8_t*    source;
     uint32_t    size = 0;
 
@@ -136,7 +137,7 @@ GLuint CShader::CompileShader( GLenum type, const string& path )
 #endif
 
         shader = glCreateShader( type );
-        glShaderSource( shader, 1, (const char**)&source, NULL );
+        glShaderSource( shader, 1, (const GLchar**)&source, NULL );
         glCompileShader( shader );
 
         delete [] source;
@@ -171,7 +172,7 @@ GLuint CShader::CompileShader( GLenum type, const string& path )
     return shader;
 }
 
-int8_t CShader::CreateProgram( void )
+int8_t CShader::CreateProgram()
 {
     uint16_t i;
     GLint   status;
@@ -200,7 +201,7 @@ int8_t CShader::CreateProgram( void )
     return 0;
 }
 
-void CShader::FindAttributes( void )
+void CShader::FindAttributes()
 {
     GLint numAttributes;
     GLint maxAttributeLen;
@@ -219,8 +220,8 @@ void CShader::FindAttributes( void )
         glGetActiveAttrib( Program, index, maxAttributeLen, NULL, &size, &type, attributeName );
         location = glGetAttribLocation( Program, attributeName );
 
-        pair<string, GLint> parameter;
-        parameter.first = string(attributeName);
+        std::pair<std::string, GLint> parameter;
+        parameter.first = std::string(attributeName);
         parameter.second = location;
         Attributes.push_back(parameter);
     }
@@ -228,7 +229,7 @@ void CShader::FindAttributes( void )
     delete [] attributeName;
 }
 
-void CShader::FindUniforms( void )
+void CShader::FindUniforms()
 {
     GLint numUniforms;
     GLint maxUniformLen;
@@ -247,8 +248,8 @@ void CShader::FindUniforms( void )
         glGetActiveUniform( Program, index, maxUniformLen, NULL, &size, &type, uniformName );
         location = glGetUniformLocation( Program, uniformName );
 
-        pair<string, GLint> parameter;
-        parameter.first = string(uniformName);
+        std::pair<std::string, GLint> parameter;
+        parameter.first = std::string(uniformName);
         parameter.second = location;
         Uniforms.push_back(parameter);
     }
@@ -256,9 +257,9 @@ void CShader::FindUniforms( void )
     delete [] uniformName;
 }
 
-GLint CShader::GetAttribute( const string& attribute )
+GLint CShader::GetAttribute( const std::string& attribute )
 {
-    for (vector<pair<string, GLint> >::const_iterator itr(Attributes.begin()); itr < Attributes.end(); ++itr)
+    for (std::vector<std::pair<std::string, GLint> >::const_iterator itr(Attributes.begin()); itr < Attributes.end(); ++itr)
     {
         if (attribute == itr->first)
             return itr->second;
@@ -269,9 +270,9 @@ GLint CShader::GetAttribute( const string& attribute )
     return GL_INVALID_VALUE;
 }
 
-GLint CShader::GetUniform( const string& uniform )
+GLint CShader::GetUniform( const std::string& uniform )
 {
-    for (vector<pair<string, GLint> >::const_iterator itr(Uniforms.begin()); itr < Uniforms.end(); ++itr)
+    for (std::vector<std::pair<std::string, GLint> >::const_iterator itr(Uniforms.begin()); itr < Uniforms.end(); ++itr)
     {
         if (uniform == itr->first)
             return itr->second;
