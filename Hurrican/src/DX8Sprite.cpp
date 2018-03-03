@@ -932,8 +932,8 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
     D3DXMATRIX	matRot, matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
-    if (Winkel > 360) Winkel -= 360;
-    if (Winkel < 0)	  Winkel += 360;
+    Winkel = std::fmod(Winkel, 360);
+    if (Winkel < 0) Winkel += 360;
 
     // Rotationsmatrix
     D3DXMatrixRotationZ  (&matRot, float(PI * Winkel / 180));
@@ -1054,8 +1054,8 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
     D3DXMATRIX	matRot, matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
-    if (Winkel > 360) Winkel -= 360;
-    if (Winkel < 0)	  Winkel += 360;
+    Winkel = std::fmod(Winkel, 360);
+    if (Winkel < 0) Winkel += 360;
 
     // Rotationsmatrix
     D3DXMatrixRotationZ  (&matRot, float(PI * Winkel / 180));
@@ -1120,9 +1120,7 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
 
     if (mirrored)
     {
-        float t = l;
-        l = r;
-        r = t;
+		std::swap(l, r);
 
         offx = -offx;
         Winkel = 360.0f - Winkel;
@@ -1170,8 +1168,8 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
     D3DXMATRIX	matRot, matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
-    while (Winkel > 360) Winkel -= 360;
-    while (Winkel < 0)	  Winkel += 360;
+    Winkel = std::fmod(Winkel, 360);
+    if (Winkel < 0) Winkel += 360;
 
     // Rotationsmatrix
     D3DXMatrixRotationZ  (&matRot, float(PI * Winkel / 180));
@@ -1272,8 +1270,8 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
     D3DXMATRIX	matRot, matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
-    if (Winkel > 360) Winkel -= 360;
-    if (Winkel < 0)	  Winkel += 360;
+    Winkel = std::fmod(Winkel, 360);
+    if (Winkel < 0) Winkel += 360;
 
     // Rotationsmatrix
     D3DXMatrixRotationZ  (&matRot, float(PI * Winkel / 180));
