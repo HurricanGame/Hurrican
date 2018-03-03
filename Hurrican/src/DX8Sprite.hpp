@@ -31,7 +31,7 @@
 #if defined(PLATFORM_DIRECTX)
 #define POS_COORD_OFFSET  0.6f     // DKS - Game originally used this value
 #else // OpenGL:
-#define POS_COORD_OFFSET  0.5f
+#define POS_COORD_OFFSET  0.0f
 #endif
 
 #define	MAX_SPRITES		      32768    // Maximalzahl Sprites am Screen

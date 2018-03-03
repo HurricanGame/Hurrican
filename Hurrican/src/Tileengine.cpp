@@ -1196,8 +1196,8 @@ void TileEngineClass::DrawBackLevel(void)
                 // Screen-Koordinaten der Vertices
                 l = xScreen   ;						// Links
                 o = yScreen   ;						// Oben
-                r = xScreen+TILESIZE_X - 1;						// Rechts
-                u = yScreen+TILESIZE_Y - 1;						// Unten
+                r = xScreen+TILESIZE_X;						// Rechts
+                u = yScreen+TILESIZE_Y;						// Unten
 
                 l -= POS_COORD_OFFSET;
                 r += POS_COORD_OFFSET;
@@ -1373,8 +1373,8 @@ void TileEngineClass::DrawFrontLevel(void)
                 // Screen-Koordinaten der Vertices
                 l = xScreen   ;						// Links
                 o = yScreen   ;						// Oben
-                r = xScreen+TILESIZE_X - 1;						// Rechts
-                u = yScreen+TILESIZE_Y - 1;						// Unten
+                r = xScreen+TILESIZE_X ;						// Rechts
+                u = yScreen+TILESIZE_Y ;						// Unten
 
                 l -= POS_COORD_OFFSET;
                 r += POS_COORD_OFFSET;
@@ -1578,8 +1578,8 @@ void TileEngineClass::DrawBackLevelOverlay (void)
                 // Screen-Koordinaten der Vertices
                 l = xScreen   ;						// Links
                 o = yScreen   ;						// Oben
-                r = xScreen+TILESIZE_X - 1;						// Rechts
-                u = yScreen+TILESIZE_Y - 1;						// Unten
+                r = xScreen+TILESIZE_X;						// Rechts
+                u = yScreen+TILESIZE_Y;						// Unten
 
                 l -= POS_COORD_OFFSET;
                 r += POS_COORD_OFFSET;
@@ -1687,8 +1687,8 @@ void TileEngineClass::DrawOverlayLevel(void)
                 // Screen-Koordinaten der Vertices
                 l = xScreen   ;						// Links
                 o = yScreen   ;						// Oben
-                r = xScreen+TILESIZE_X - 1;						// Rechts
-                u = yScreen+TILESIZE_Y - 1;						// Unten
+                r = xScreen+TILESIZE_X;						// Rechts
+                u = yScreen+TILESIZE_Y;						// Unten
 
                 l -= POS_COORD_OFFSET;
                 r += POS_COORD_OFFSET;
@@ -1902,8 +1902,8 @@ void TileEngineClass::DrawWater(void)
                     // Screen-Koordinaten der Vertices
                     l = xScreen   ;						// Links
                     o = yScreen   ;						// Oben
-                    r = xScreen+TILESIZE_X - 1;						// Rechts
-                    u = yScreen+TILESIZE_Y - 1;						// Unten
+                    r = xScreen+TILESIZE_X;						// Rechts
+                    u = yScreen+TILESIZE_Y;						// Unten
 
                     l -= POS_COORD_OFFSET;
                     r += POS_COORD_OFFSET;
@@ -1987,8 +1987,8 @@ void TileEngineClass::DrawWater(void)
                         // Screen-Koordinaten der Vertices
                         l = xScreen   ;						// Links
                         o = yScreen   ;						// Oben
-                        r = xScreen+TILESIZE_X - 1;						// Rechts
-                        u = yScreen+TILESIZE_Y - 1;						// Unten
+                        r = xScreen+TILESIZE_X;						// Rechts
+                        u = yScreen+TILESIZE_Y;						// Unten
 
                         l -= POS_COORD_OFFSET;
                         r += POS_COORD_OFFSET;

@@ -512,9 +512,9 @@ void DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
     //y = float (int (y));
 
     l = x;									// Links
-    r = x+(itsRect.right-itsRect.left-1);	// Rechts
+    r = x+(itsRect.right-itsRect.left);	// Rechts
     o = y;									// Oben
-    u = y+(itsRect.bottom-itsRect.top-1);	// Unten
+    u = y+(itsRect.bottom-itsRect.top);	// Unten
 
     l -= POS_COORD_OFFSET;
     r += POS_COORD_OFFSET;
@@ -583,9 +583,9 @@ void DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR c1,
         itsRect = itsPreCalcedRects [Anim];
 
     l = x;									// Links
-    r = x+(itsRect.right-itsRect.left-1);	// Rechts
+    r = x+(itsRect.right-itsRect.left);	// Rechts
     o = y;									// Oben
-    u = y+(itsRect.bottom-itsRect.top-1);	// Unten
+    u = y+(itsRect.bottom-itsRect.top);	// Unten
 
     l -= POS_COORD_OFFSET;
     r += POS_COORD_OFFSET;
@@ -643,24 +643,24 @@ void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
 
     if (v == false)
     {
-        o = y-0.5f;									// Unten
-        u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Oben
+        o = y;									// Unten
+        u = y+(itsRect.bottom-itsRect.top);	// Oben
     }
     else
     {
-        u = y-0.5f;									// Unten
-        o = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Oben
+        u = y;									// Unten
+        o = y+(itsRect.bottom-itsRect.top);	// Oben
     }
 
     if (h == false)
     {
-        r = x+(itsRect.right-itsRect.left-1)+0.5f;
-        l = x-0.5f;
+        r = x+(itsRect.right-itsRect.left);
+        l = x;
     }
     else
     {
-        l = x+(itsRect.right-itsRect.left-1)+0.5f;
-        r = x-0.5f;
+        l = x+(itsRect.right-itsRect.left);
+        r = x;
     }
 
     tl = itsRect.left    * itsXTexScale;	// Links
@@ -714,9 +714,9 @@ void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
     //y = float (int (y));
 
     r = x;									// Links
-    l = x+(itsRect.right-itsRect.left-1);	// Rechts
+    l = x+(itsRect.right-itsRect.left);	// Rechts
     o = y;									// Oben
-    u = y+(itsRect.bottom-itsRect.top-1);	// Unten
+    u = y+(itsRect.bottom-itsRect.top);	// Unten
 
     l += POS_COORD_OFFSET;
     r -= POS_COORD_OFFSET;
@@ -887,9 +887,9 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
     float tl, tr, to, tu;					// Textur Koordinaten
 
     l = x;									// Links
-    r = x+(itsRect.right-itsRect.left-1);	// Rechts
+    r = x+(itsRect.right-itsRect.left);	// Rechts
     o = y;									// Oben
-    u = y+(itsRect.bottom-itsRect.top-1);	// Unten
+    u = y+(itsRect.bottom-itsRect.top);	// Unten
 
     l -= POS_COORD_OFFSET;
     r += POS_COORD_OFFSET;
@@ -998,9 +998,9 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
     //
     if (mirror == false)
     {
-        l = x-0.5f;									// Links
+        l = x;									// Links
         //r = x+(itsRect.right-itsRect.left-1)+0.5f;	// Rechts   //DKS
-		r = x+(width-1)+0.5f;	// Rechts
+		r = x+width;	// Rechts
 
         Winkel = 360 - Winkel;
     }
@@ -1009,14 +1009,14 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
     //
     else
     {
-        r = x+0.5f;									// Links
+        r = x;									// Links
         //l = x+(itsRect.right-itsRect.left-1)-0.5f;	// Rechts   //DKS
-		l = x+(width-1)-0.5f;	// Rechts
+		l = x+width;	// Rechts
     }
 
-    o = y-0.5f;									// Oben
+    o = y;									// Oben
     //u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten    //DKS
-	u = y+(height-1)+0.5f;	// Unten
+	u = y+height;	// Unten
 
     tl = itsRect.left   * itsXTexScale;	// Links
     tr = itsRect.right  * itsXTexScale;	// Rechts
@@ -1114,9 +1114,9 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
     float height = itsRect.bottom - itsRect.top;
     float width = itsRect.right - itsRect.left;
 
-    l = x-0.5f;									// Links
+    l = x;									// Links
     //r = x+(itsRect.right-itsRect.left-1)+0.5f;	// Rechts       //DKS
-	r = x+(width-1)+0.5f;	// Rechts
+	r = x+width;	// Rechts
 
     if (mirrored)
     {
@@ -1130,9 +1130,9 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
 
     Winkel = 360 - Winkel;
 
-    o = y-0.5f;									// Oben
+    o = y;									// Oben
     //u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten        //DKS
-	u = y+(height-1)+0.5f;	// Unten
+	u = y+height;	// Unten
 
     tl = itsRect.left   * itsXTexScale;	// Links
     tr = itsRect.right  * itsXTexScale;	// Rechts
@@ -1336,9 +1336,9 @@ void RenderRect4(float x, float y, float width, float height,
     float l,  r,  o,  u;					// Vertice Koordinaten
 
     l = x;			// Links
-    r = x+width - 1;	// Rechts
+    r = x+width;	// Rechts
     o = y;			// Oben
-    u = y+height - 1;	// Unten
+    u = y+height;	// Unten
 
     l -= POS_COORD_OFFSET;
     r += POS_COORD_OFFSET;
@@ -1383,7 +1383,7 @@ void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2,	D3DCOLOR Color)
     TriangleStrip[0].y		= p1.y;
 
     TriangleStrip[1].x		= p2.x;		// p2
-    TriangleStrip[1].y		= p2.y;;
+    TriangleStrip[1].y		= p2.y;
 
     DirectGraphics.SetTexture( -1 );
 
@@ -1410,7 +1410,7 @@ void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2,	D3DCOLOR Color1, D3DCOLOR Color2
     TriangleStrip[0].y		= p1.y;
 
     TriangleStrip[1].x		= p2.x;		// p2
-    TriangleStrip[1].y		= p2.y;;
+    TriangleStrip[1].y		= p2.y;
 
     DirectGraphics.SetTexture( -1 );
 
