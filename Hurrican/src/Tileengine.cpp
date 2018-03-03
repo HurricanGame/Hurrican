@@ -1199,11 +1199,6 @@ void TileEngineClass::DrawBackLevel(void)
                 r = xScreen+TILESIZE_X;						// Rechts
                 u = yScreen+TILESIZE_Y;						// Unten
 
-                l -= POS_COORD_OFFSET;
-                r += POS_COORD_OFFSET;
-                o -= POS_COORD_OFFSET;
-                u += POS_COORD_OFFSET;
-
                 // Textur-Koordinaten
                 tl = Rect.left  /TILESETSIZE_X;				// Links
                 tr = Rect.right /TILESETSIZE_X;				// Rechts
@@ -1375,11 +1370,6 @@ void TileEngineClass::DrawFrontLevel(void)
                 o = yScreen   ;						// Oben
                 r = xScreen+TILESIZE_X ;						// Rechts
                 u = yScreen+TILESIZE_Y ;						// Unten
-
-                l -= POS_COORD_OFFSET;
-                r += POS_COORD_OFFSET;
-                o -= POS_COORD_OFFSET;
-                u += POS_COORD_OFFSET;
 
                 // Textur-Koordinaten
                 tl = Rect.left  /TILESETSIZE_X;				// Links
@@ -1581,11 +1571,6 @@ void TileEngineClass::DrawBackLevelOverlay (void)
                 r = xScreen+TILESIZE_X;						// Rechts
                 u = yScreen+TILESIZE_Y;						// Unten
 
-                l -= POS_COORD_OFFSET;
-                r += POS_COORD_OFFSET;
-                o -= POS_COORD_OFFSET;
-                u += POS_COORD_OFFSET;
-
                 // Textur-Koordinaten
                 tl = Rect.left  /TILESETSIZE_X;				// Links
                 tr = Rect.right /TILESETSIZE_X;				// Rechts
@@ -1689,11 +1674,6 @@ void TileEngineClass::DrawOverlayLevel(void)
                 o = yScreen   ;						// Oben
                 r = xScreen+TILESIZE_X;						// Rechts
                 u = yScreen+TILESIZE_Y;						// Unten
-
-                l -= POS_COORD_OFFSET;
-                r += POS_COORD_OFFSET;
-                o -= POS_COORD_OFFSET;
-                u += POS_COORD_OFFSET;
                 /*
                 				// Wasserfall
                 				//
@@ -1905,11 +1885,6 @@ void TileEngineClass::DrawWater(void)
                     r = xScreen+TILESIZE_X;						// Rechts
                     u = yScreen+TILESIZE_Y;						// Unten
 
-                    l -= POS_COORD_OFFSET;
-                    r += POS_COORD_OFFSET;
-                    o -= POS_COORD_OFFSET;
-                    u += POS_COORD_OFFSET;
-
                     //DKS - Original code was setting texture coordinates when no texture 
                     //      is bound.. disabled the code:
                     /* DISABLED BLOCK
@@ -1989,11 +1964,6 @@ void TileEngineClass::DrawWater(void)
                         o = yScreen   ;						// Oben
                         r = xScreen+TILESIZE_X;						// Rechts
                         u = yScreen+TILESIZE_Y;						// Unten
-
-                        l -= POS_COORD_OFFSET;
-                        r += POS_COORD_OFFSET;
-                        o -= POS_COORD_OFFSET;
-                        u += POS_COORD_OFFSET;
 
                         // Vertices definieren
                         v1.x = l;						// Links oben
