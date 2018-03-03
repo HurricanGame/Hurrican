@@ -104,18 +104,16 @@ void HUDClass::ShowHUD(void)
         // DKS - Note: For the HUD GUI, font scaling is limited to 2, as the numbers need to fit
         pDefaultFont->SetScaleFactor(2); // Anything more than 2 won't fit, force it
 
-    // Energy
-    float off;
-
     if (NUMPLAYERS == 1)
     {
-        off = ((MAX_ENERGY - Player[0].Energy) * 69.0f / MAX_ENERGY);
-        HUDBall[0].SetRect(0, static_cast<int>(off), 69, 69);
+		float off;
+        off = floor((MAX_ENERGY - Player[0].Energy) * 69.0f / MAX_ENERGY);
+        HUDBall[0].SetRect(0, off, 69, 69);
         HUDBall[0].RenderSprite(xpos, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));
 
         // Radenergie
-        off = ((MAX_ARMOUR - Player[0].Armour) * 69.0f / MAX_ARMOUR );
-        HUDBall[1].SetRect(0, static_cast<int>(off), 69, 69);
+        off = floor((MAX_ARMOUR - Player[0].Armour) * 69.0f / MAX_ARMOUR );
+        HUDBall[1].SetRect(0, off, 69, 69);
         HUDBall[1].RenderSprite(xpos+548-69, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));
     }
     else
@@ -127,26 +125,30 @@ void HUDClass::ShowHUD(void)
             {
                 pCurrentPlayer = &Player[0];
 
-                off = ((MAX_ENERGY - pCurrentPlayer->Energy) / MAX_ENERGY * 69);
-                HUDBall[0].SetRect(0, static_cast<int>(off), 34, 69);
+                float off;
+                // Energy
+                off = floor((MAX_ENERGY - pCurrentPlayer->Energy) / MAX_ENERGY * 69);
+                HUDBall[0].SetRect(0, off, 34, 69);
                 HUDBall[0].RenderSprite(xpos, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));
 
                 // Radenergie
-                off = ((MAX_ARMOUR - pCurrentPlayer->Armour) / MAX_ENERGY * 69);
-                HUDBall[1].SetRect(34, static_cast<int>(off), 69, 69);
+                off = floor((MAX_ARMOUR - pCurrentPlayer->Armour) / MAX_ENERGY * 69);
+                HUDBall[1].SetRect(34, off, 69, 69);
                 HUDBall[1].RenderSprite(xpos + 34, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));
             }
             else
             {
                 pCurrentPlayer = &Player[1];
 
-                off = ((MAX_ENERGY - pCurrentPlayer->Energy) / MAX_ENERGY * 69);
-                HUDBall[0].SetRect(0, static_cast<int>(off), 34, 69);
+                float off;
+                // Energy
+                off = floor((MAX_ENERGY - pCurrentPlayer->Energy) / MAX_ENERGY * 69);
+                HUDBall[0].SetRect(0, off, 34, 69);
                 HUDBall[0].RenderSprite(xpos+548-69, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));
 
                 // Radenergie
-                off = ((MAX_ARMOUR - pCurrentPlayer->Armour) / MAX_ARMOUR * 69);
-                HUDBall[1].SetRect(34, static_cast<int>(off), 69, 69);
+                off = floor((MAX_ARMOUR - pCurrentPlayer->Armour) / MAX_ARMOUR * 69);
+                HUDBall[1].SetRect(34, off, 69, 69);
                 HUDBall[1].RenderSprite(xpos+548-69 + 34, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));
             }
         }
