@@ -299,14 +299,9 @@ bool DirectGraphicsClass::Init(HWND hwnd, std::uint32_t dwBreite, std::uint32_t 
         SDL_GL_SetAttribute( SDL_GL_BUFFER_SIZE, 16 );
     }
     SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 0 );         // DKS - No need for a depth buffer in this game
-    SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, VSync);    // DKS - VSync on still the default, but controlled w/ cmd switch
     SDL_GL_SetAttribute( SDL_GL_MULTISAMPLEBUFFERS, 0 ); // DKS - Changed this to 0 (Game would not load w/ GL1.2 laptop)
     SDL_GL_SetAttribute( SDL_GL_MULTISAMPLESAMPLES, 0 );
-
-    //DKS - Some SDL versions < 1.3.0 support setting vsync through a now-deprecated attribute:
-#if !SDL_VERSION_ATLEAST(1,3,0) && defined(SDL_GL_SWAP_CONTROL)
     SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, VSync);
-#endif
 
 #if SDL_VERSION_ATLEAST(2,0,0)
 #if defined(USE_GLES1)
@@ -416,7 +411,7 @@ bool DirectGraphicsClass::Init(HWND hwnd, std::uint32_t dwBreite, std::uint32_t 
         // Try to determine if VSync got set, because if not, we'll have to call
         //  glFlush() every frame to ensure image gets displayed on all platforms
         int status;
-        int retval = SDL_GL_GetAttribute(SDL_GL_DOUBLEBUFFER, &status);
+        int retval = SDL_GL_GetAttribute(SDL_GL_SWAP_CONTROL, &status);
         if (retval >= 0) {
             if (status == 1) {
                 if (VSync) {
@@ -1149,13 +1144,8 @@ void DirectGraphicsClass::ShowBackBuffer(void)
 #if SDL_VERSION_ATLEAST(2,0,0)
     SDL_GL_SwapWindow(Window);
 #else   // SDL1.2:
-    //DKS - Added call to glFlush when VSync is either disabled or unavailable to
-    //      fix black screen on my dev laptop when running with no vsync under GL1:
-    if (VSyncEnabled) {
-        SDL_GL_SwapBuffers();
-    } else {
-        glFlush();
-    }
+	glFlush();
+	SDL_GL_SwapBuffers();
 #endif
 #endif
 
