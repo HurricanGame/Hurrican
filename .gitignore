@@ -1,5 +1,7 @@
 Game_Log.txt
 *.o
 hurricanlinux
+cmake-build-*
+.idea
 
 
