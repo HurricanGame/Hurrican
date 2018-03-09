@@ -755,14 +755,9 @@ void CreateDefaultConfig(void) {
 bool LoadConfig(void) {
     float Sound, Musik;
 
-    // DKS - Full paths can now be longer:
-    // char temp[100];
-    // snprintf( temp, sizeof(temp), "%s/%s", g_save_ext, CONFIGFILE );
-    char *temp = (char *)malloc(strlen(g_save_ext) + 1 + strlen(CONFIGFILE) + 1);
-    sprintf_s(temp, "%s/%s", g_save_ext, CONFIGFILE);
+    std::string filename = std::string(g_save_ext) + "/" + CONFIGFILE;
 
-    std::ifstream Datei(temp, std::ifstream::binary);  // versuchen Datei zu öffnen
-    free(temp);
+    std::ifstream Datei(filename, std::ifstream::binary);  // versuchen Datei zu öffnen
 
     if (!Datei)
         return false;
@@ -862,14 +857,9 @@ bool LoadConfig(void) {
 void SaveConfig(void) {
     float Sound, Musik;
 
-    // DKS - Full paths can now be longer:
-    // char temp[100];
-    // snprintf( temp, sizeof(temp), "%s/%s", g_save_ext, CONFIGFILE );
-    char *temp = (char *)malloc(strlen(g_save_ext) + 1 + strlen(CONFIGFILE) + 1);
-    sprintf_s(temp, "%s/%s", g_save_ext, CONFIGFILE);
+    std::string filename = std::string(g_save_ext) + "/" + CONFIGFILE;
 
-    std::ofstream Datei(temp, std::ifstream::binary);
-    free(temp);
+    std::ofstream Datei(filename, std::ifstream::binary);
 
     if (!Datei) {
         Protokoll << "Config file saving failed !" << std::endl;
@@ -969,7 +959,7 @@ bool DisplayLoadInfo(const char Text[100]) {
                 // Split the line in two if too long to display on low-res device:
                 char text1[255];
                 char text2[255];
-                SplitLine(text1, text2, (char *)text);
+                SplitLine(text1, text2, text);
                 pDefaultFont->DrawTextCenterAlign(320.0f, y_pos, text1, 0xFFFFFFFF, 0);
                 pDefaultFont->DrawTextCenterAlign(320.0f, y_pos + y_inc, text2, 0xFFFFFFFF, 0);
             } else {
@@ -1243,14 +1233,9 @@ void SummaryScreen(void) {
 // --------------------------------------------------------------------------------------
 
 bool NewDemo(const char Filename[]) {
-    // DKS - Full paths can now be longer:
-    // char temp[100];
-    // snprintf( temp, sizeof(temp), "%s/%s", g_save_ext, Filename );
-    char *temp = (char *)malloc(strlen(g_save_ext) + 1 + strlen(Filename) + 1);
-    sprintf_s(temp, "%s/%s", g_save_ext, Filename);
+    std::string fullpath = std::string(g_save_ext) + "/" + Filename;
 
-    DEMOFile.open(temp, std::ofstream::binary);
-    free(temp);
+    DEMOFile.open(fullpath, std::ofstream::binary);
 
     if (!DEMOFile) {
         Protokoll << "\n-> Error opening Demo File !" << std::endl;
@@ -1299,18 +1284,9 @@ bool LoadDemo(const char Filename[]) {
     TileEngine.XOffset = 0;
     TileEngine.YOffset = 0;
 
-    // DKS - Fixed bug in handling size of full demo path: sizeof(100) returns something very different than 100
-    //      (Thank you to Alexander Troosh for the bug report.)
-    // DKS - Full paths can also now be longer:
-    //// File öffnen
-    // char temp[100];
-    // snprintf( temp, sizeof(100), "%s/%s", g_save_ext, Filename );
+    std::string fullpath = std::string(g_save_ext) + "/" + Filename;
 
-    char *temp = (char *)malloc(strlen(g_save_ext) + 1 + strlen(Filename) + 1);
-    sprintf_s(temp, "%s/%s", g_save_ext, Filename);
-
-    DEMOFile.open(temp, std::fstream::in | std::fstream::binary);
-    free(temp);
+    DEMOFile.open(fullpath, std::fstream::in | std::fstream::binary);
 
     if (!DEMOFile)
         return false;

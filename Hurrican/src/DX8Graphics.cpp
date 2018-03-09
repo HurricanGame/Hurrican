@@ -858,7 +858,7 @@ void DirectGraphicsClass::RendertoBuffer(D3DPRIMITIVETYPE PrimitiveType,
 #endif
         glEnableVertexAttribArray(Shaders[ProgramCurrent].NameTex);
         glVertexAttribPointer(Shaders[ProgramCurrent].NameTex, 2, GL_FLOAT, GL_FALSE, stride,
-                              (uint8_t *)pVertexStreamZeroData + tex_offset);
+                              reinterpret_cast<uint8_t *>(pVertexStreamZeroData + tex_offset));
     }
 
     glEnableVertexAttribArray(Shaders[ProgramCurrent].NamePos);
@@ -866,7 +866,7 @@ void DirectGraphicsClass::RendertoBuffer(D3DPRIMITIVETYPE PrimitiveType,
 
     glEnableVertexAttribArray(Shaders[ProgramCurrent].NameClr);
     glVertexAttribPointer(Shaders[ProgramCurrent].NameClr, 4, GL_UNSIGNED_BYTE, GL_TRUE, stride,
-                          (uint8_t *)pVertexStreamZeroData + clr_offset);
+                          reinterpret_cast<uint8_t *>(pVertexStreamZeroData + clr_offset));
 
     D3DXMATRIXA16 matMVP = g_matModelView * matProj;
     glUniformMatrix4fv(Shaders[ProgramCurrent].NameMvp, 1, GL_FALSE, matMVP.data());
@@ -988,7 +988,7 @@ void DirectGraphicsClass::SetTexture(int idx) {
         lpD3DDevice->SetTexture(0, NULL);  // Textur setzen
 #else                                      // BEGIN GL CODE
                                            // DKS - There is no need to call glBindTexture():
-       // glBindTexture( GL_TEXTURE_2D, 0 );
+        // glBindTexture( GL_TEXTURE_2D, 0 );
 #if defined(USE_GL1)
         glDisable(GL_TEXTURE_2D);
 #endif
