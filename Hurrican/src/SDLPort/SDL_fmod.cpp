@@ -23,7 +23,7 @@
  */
 
 #include "SDL_fmod.h"
-#include "string.h"
+#include <cstring>
 
 static int g_allocated = 0;
 static bool g_music_loops = true;
@@ -135,30 +135,15 @@ MUSIC_MODULE *MUSIC_LoadSong(const char *filename) {
     MUSIC_MODULE *music = NULL;
 #if defined(USE_MODPLUG)
     uint32_t size;
-    FILE *file = NULL;
-    uint8_t *buffer = NULL;
 
-    file = fopen(filename, "rb");
-    if (file == NULL) {
+    std::vector<char> buffer = LoadFileToMemory(filename);
+
+    if (buffer.empty()) {
         printf("ERROR Error file operation: File: %s\n", filename);
         return NULL;
     }
 
-    fseek(file, 0, SEEK_END);
-    size = ftell(file);
-    fseek(file, 0, SEEK_SET);
-    buffer = (uint8_t *)malloc(size + 1);
-
-    if (size != fread(buffer, sizeof(uint8_t), size, file)) {
-        free(buffer);
-        return NULL;
-    }
-    fclose(file);
-    buffer[size] = 0;
-
-    music = ModPlug_Load(buffer, size);
-
-    free(buffer);
+    music = ModPlug_Load(buffer.data(), buffer.size() - 1);
 #else
     music = Mix_LoadMUS(filename);
 #endif
@@ -293,9 +278,9 @@ signed char MUSIC_IsFinished(MUSIC_MODULE *music) {
 #if defined(USE_MODPLUG)
 void hookmusic(void *ptr, uint8_t *buffer, int size) {
     int rsize;
-    ModPlugFile *music = (ModPlugFile *)ptr;
+    ModPlugFile *music = reinterpret_cast<ModPlugFile *>(ptr);
 
-    rsize = ModPlug_Read(music, (void *)buffer, size);
+    rsize = ModPlug_Read(music, reinterpret_cast<void *>(buffer), size);
 
     // DKS - Added support for non-looped music files (i.e. gameover.it shouldn't loop)
     //      NOTE: I don't see the reason for the volume check, setting the volume to 0
@@ -311,11 +296,11 @@ void hookmusic(void *ptr, uint8_t *buffer, int size) {
         if (g_music_loops) {
             // The song is over and it loops, so re-seek to beginning and fill rest of buffer
             ModPlug_Seek(music, 0);
-            ModPlug_Read(music, (void *)(buffer + rsize), size - rsize);
+            ModPlug_Read(music, reinterpret_cast<void *>(buffer + rsize), size - rsize);
 
         } else {
             // The song is over and doesn't loop, so fill remaining part of the buffer with zeroes and stop it
-            memset((void *)(buffer + rsize), 0, size - rsize);
+            std::memset(buffer + rsize, 0, size - rsize);
             MUSIC_StopSong(music);
         }
     }
