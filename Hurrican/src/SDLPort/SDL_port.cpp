@@ -89,25 +89,6 @@ void _itoa_s( int value, char* dst, int size )
     sprintf( reinterpret_cast<char *>(dst), "%d", value );
 }
 
-#define SWAP(T, a, b) \
-    do { T save = (a); (a) = (b); (b) = save; } while (0)
-
-char* _strrev( char *s )
-{
-    size_t len = strlen(s);
-
-    if (len > 1)
-    {
-        char *a = s;
-        char *b = s + len - 1;
-
-        for (; a < b; ++a, --b)
-            SWAP(char, *a, *b);
-    }
-
-    return s;
-}
-
 uint32_t getpixel( SDL_Surface *surface, int16_t x, int16_t y )
 {
     int16_t bpp = surface->format->BytesPerPixel;

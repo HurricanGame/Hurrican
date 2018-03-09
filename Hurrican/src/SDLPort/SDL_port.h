@@ -105,7 +105,6 @@ void strcpy_s       ( char* dst, const char* src );
 void strncpy_s      ( char* dst, const char* src, int size );
 void fprintf_s      ( FILE* file, const char* src );
 void _itoa_s        ( int value, char* dst, int size );
-char* _strrev       ( char *);
 
 #ifndef __WIN32__
 void DeleteFile( const char* filename );

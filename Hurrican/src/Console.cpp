@@ -14,6 +14,8 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem::v1;
 #include "Console.hpp"
 #include "DX8Graphics.hpp"
 #include "GetKeyName.hpp"
@@ -455,56 +457,34 @@ void ConsoleClass::CheckCommands(void)
     // Stage laden
     if (strncmp(Buffer, "loadmap ", 8) == 0)
     {
-        char dummy[255], dummy2[255];
-
-        strcpy_s(dummy, _strrev (Buffer));
-        strncpy_s (dummy2, dummy, strlen (dummy) - 8);
-        dummy2[strlen (dummy) - 8] = 0;
-        strcpy_s(dummy, _strrev (dummy2));
+		std::string mapname = std::string(Buffer).substr(8);
 
         // Meldung ausgeben
-        strcpy_s(Buffer, "Loading Level ");
-        strcat_s(Buffer, dummy);
-        strcat_s(Buffer, " ...");
-        CONSOLE_PRINT(Buffer);
+        std::string msg = std::string("Loading Level ") + mapname + " ...";
+        CONSOLE_PRINT(msg.c_str());
 
         // und Level laden
-        FILE *Datei = NULL;
-        char name[100];
+        if (mapname.substr(mapname.length()-4) != ".map")
+			mapname += ".map";
 
-        strcpy_s(name, g_storage_ext );
-        strcat_s(name, "/data/levels/");    //DKS - Changed from /data/ to /data/levels/
-        strcat_s(name, dummy);
-
-        // .map anhängen
-        if (dummy2[strlen (dummy2) - 1] != 'p' ||
-                dummy2[strlen (dummy2) - 2] != 'a' ||
-                dummy2[strlen (dummy2) - 3] != 'm')
-        {
-            strcat_s(name, ".map");
-            strcat_s(dummy, ".map");
-        }
-
-        fopen_s(&Datei, name, "rb");
+        std::string filename = std::string(g_storage_ext) + "/data/levels/" + mapname;
 
         // Datei gefunden? Dann laden
-        if (Datei)
+        if (fs::exists(filename) && fs::is_regular_file(filename))
         {
             for (int i = 0; i < NUMPLAYERS; i++)
                 Player[i].InitNewLevel();
 
-            fclose(Datei);
-
             CONSOLE_PRINT("found.");
-            TileEngine.LoadLevel(dummy);
-            Protokoll << dummy << std::endl;
+            TileEngine.LoadLevel(mapname);
+            Protokoll << mapname << std::endl;
         }
 
         // Ansonsten Fehlermeldung
         else
         {
-            sprintf_s(dummy2,  "Map %s not found !", name);
-            CONSOLE_PRINT(dummy2);
+			msg = std::string("Map ") + mapname + " not found!";
+            CONSOLE_PRINT(msg.c_str());
         }
     }
 
