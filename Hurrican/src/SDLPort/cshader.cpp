@@ -110,37 +110,26 @@ GLuint CShader::CompileShader( GLenum type, const std::string& path )
     GLint       status;
     GLuint      shader;
     std::string      shadertype;
-    uint8_t*    source;
+    std::vector<char> source;
     uint32_t    size = 0;
 
-    source = LoadFileToMemory( path, size );
+    source = LoadFileToMemory(path);
 
 #if defined(USE_GLES2)
-    uint8_t     length;
-    uint8_t*    temp;
-    const char* precision = "precision mediump float;\n";
-
-    length = strlen(precision);
-    temp = new uint8_t[size+length];
-
-    memcpy( temp, precision, length );
-    memcpy( temp+length, source, size );
-
-    delete [] source;
-    source = temp;
+    const std::string precision = "precision mediump float;\n";
+    source.insert(source.begin(), precision.begin(), precision.end());
 #endif
 
-    if (source != NULL)
+    if (!source.empty())
     {
 #if defined(DEBUG)
         Protokoll << "Shader Source Begin\n" << source << "\nShader Source End" << std::endl;
 #endif
 
         shader = glCreateShader( type );
-        glShaderSource( shader, 1, (const GLchar**)&source, NULL );
+        const GLchar *shader_src = source.data();
+        glShaderSource( shader, 1, &shader_src, NULL );
         glCompileShader( shader );
-
-        delete [] source;
 
         glGetShaderiv( shader, GL_COMPILE_STATUS, &status );
         if (status == GL_FALSE)

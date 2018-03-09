@@ -23,6 +23,7 @@
  */
 
 #include <cstdint>
+#include <cstring>
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem::v1;
 
@@ -99,8 +100,8 @@ bool SDL_LoadTexture( const std::string &path, const std::string &filename,
                       load_texture( alpha_image, th.alphatex);
        }
 
-       delete [] image.data;
-       delete [] alpha_image.data;
+       image.data = std::vector<char>();
+       alpha_image.data = std::vector<char>();;
 
        if (success)
            goto loaded;
@@ -116,7 +117,7 @@ bool SDL_LoadTexture( const std::string &path, const std::string &filename,
         success = loadImagePVRTC( image, fullpath ) &&
                   load_texture ( image, th.tex );
 
-        delete [] image.data;
+        image.data = std::vector<char>();
         if (success)
             goto loaded;
         else
@@ -127,7 +128,7 @@ bool SDL_LoadTexture( const std::string &path, const std::string &filename,
     fullpath = path + "/" + filename;
     success = loadImageSDL( image, fullpath, buf, buf_size ) &&
               load_texture( image, th.tex );
-    delete [] image.data;
+    image.data = std::vector<char>();
 
     if (success)
         goto loaded;
@@ -162,7 +163,7 @@ bool load_texture( image_t& image, GLuint &new_texture )
 {
     GLuint texture;
 
-    if (image.data != NULL)
+    if (!image.data.empty())
     {
         // Have OpenGL generate a texture object handle for us
         glGenTextures( 1, &texture );
@@ -186,12 +187,12 @@ bool load_texture( image_t& image, GLuint &new_texture )
         if (image.compressed == true)
         {
             glCompressedTexImage2D( GL_TEXTURE_2D, 0, image.format,
-                                    image.w, image.h, 0, image.size, image.data+image.offset );
+                                    image.w, image.h, 0, image.data.size(), image.data.data()+image.offset );
         }
         else
         {
             glTexImage2D( GL_TEXTURE_2D, 0, image.format, image.w, image.h, 0,
-                          image.format, image.type, image.data );
+                          image.format, image.type, image.data.data() );
         }
 
 #if defined(_DEBUG)
@@ -237,9 +238,9 @@ bool loadImageETC1( image_t& image, const std::string &fullpath )
     if (fullpath.empty() || !fs::exists(fullpath) || !fs::is_regular_file(fullpath))
         return false;
 
-    image.data = LoadFileToMemory( fullpath, etc1_filesize );
+    image.data = LoadFileToMemory(fullpath);
 
-    if (image.data != NULL)
+    if (!image.data.empty())
     {
         if ((image.data[0] == 'P') &&
                 (image.data[1] == 'K') &&
@@ -250,7 +251,7 @@ bool loadImageETC1( image_t& image, const std::string &fullpath )
             image.format = GL_ETC1_RGB8_OES;
             image.h = (image.data[14]<<8)+image.data[15];
             image.w = (image.data[12]<<8)+image.data[13];
-            image.size      = (((image.data[8]<<8)+image.data[9]) / 4) * (((image.data[10]<<8)+image.data[11]) / 4) * 8;
+            //image.size      = (((image.data[8]<<8)+image.data[9]) / 4) * (((image.data[10]<<8)+image.data[11]) / 4) * 8;
             image.offset    = ETC1_HEADER_SIZE;
             image.type      = 0; /* dont care */
             image.compressed = true;
@@ -268,10 +269,9 @@ bool loadImageETC1( image_t& image, const std::string &fullpath )
         }
         else
         {
-            Protokoll << "ERROR Unknown file type "<< static_cast<char>(image.data[0]) << static_cast<char>(image.data[1])
-			          << static_cast<char>(image.data[2]) << static_cast<char>(image.data[3]) << std::endl;
-            delete [] image.data;
-            image.data = NULL;
+            Protokoll << "ERROR Unknown file type "<< image.data[0] << image.data[1]
+			          << image.data[2] << image.data[3] << std::endl;
+            image.data = std::vector<char>();
         }
     }
 
@@ -280,19 +280,19 @@ bool loadImageETC1( image_t& image, const std::string &fullpath )
 #endif
 
 #if defined(USE_PVRTC)
-bool loadImagePVRTC( image_t& image, const string &fullpath )
+bool loadImagePVRTC( image_t& image, const std::string &fullpath )
 {
     uint32_t* pvrtc_buffer32 = NULL;
     uint32_t pvrtc_filesize, pvrtc_depth, pvrtc_bitperpixel;
 
-    if (fullpath.empty() || !FileExists(fullpath.c_str()))
+    if (fullpath.empty() || !fs::exists(fullpath) || !fs::is_regular_file(fullpath))
         return false;
 
-    image.data = LoadFileToMemory( fullpath, pvrtc_filesize );
+    image.data = LoadFileToMemory(fullpath);
 
-    if (image.data != NULL)
+    if (!image.data.empty())
     {
-        pvrtc_buffer32  = (uint32_t*)image.data;
+        pvrtc_buffer32  = (uint32_t*)image.data.data();
 
         switch ( pvrtc_buffer32[2] )
         {
@@ -310,15 +310,16 @@ bool loadImagePVRTC( image_t& image, const string &fullpath )
             break;
         default:
             Protokoll << "ERROR Unknown PVRTC format " << std::hex << pvrtc_buffer32[2] << std::endl;
-            delete [] image.data;
-            image.data = NULL;
+            //delete [] image.data;
+            //image.data = NULL;
+            image.data = std::vector<char>();
             return false;
         }
 
         image.h = pvrtc_buffer32[6];
         image.w = pvrtc_buffer32[7];
         pvrtc_depth     = pvrtc_buffer32[8];
-        image.size      = (image.w * image.h * pvrtc_depth * pvrtc_bitperpixel) / 8;
+        //image.size      = (image.w * image.h * pvrtc_depth * pvrtc_bitperpixel) / 8;
         image.offset    = PVRTC_HEADER_SIZE;
         image.type      = 0; /* dont care */
         image.compressed = true;
@@ -365,8 +366,7 @@ bool loadImageSDL( image_t& image, const std::string &fullpath, void *buf, unsig
     SDL_Surface* finSurf = NULL;
 
     // Init
-    image.data          = NULL;
-    image.size          = 0; /* dont care */
+    image.data          = std::vector<char>();
     image.compressed    = false;
     image.format        = GL_RGBA;
     image.npot_scalex   = 1.0;
@@ -477,11 +477,10 @@ bool loadImageSDL( image_t& image, const std::string &fullpath, void *buf, unsig
         image.w = finSurf->w / factor;
         image.h = finSurf->h / factor;
 
-        if (image.data == NULL)
+        if (image.data.empty())
         {
-            image.size = finSurf->w*finSurf->h*sizeof(uint32_t);
-            image.data = new uint8_t[image.size];
-            memcpy( image.data, finSurf->pixels, image.size );
+			image.data.resize(finSurf->w*finSurf->h*sizeof(uint32_t));
+            std::memcpy(image.data.data(), finSurf->pixels, image.data.size());
             image.type = GL_UNSIGNED_BYTE;
         }
 
@@ -496,25 +495,23 @@ bool loadImageSDL( image_t& image, const std::string &fullpath, void *buf, unsig
 }
 
 //DKS - Assumes rgba8888 input, rgba8888 output
-uint8_t* LowerResolution( SDL_Surface* surface, int factor )
+std::vector<char> LowerResolution(SDL_Surface* surface, int factor)
 {
     if (factor != 2 && factor != 4) {
         Protokoll << "ERROR call to LowerResolution() with factor not equal to 2 or 4" << std::endl;
-        return NULL;
+        return std::vector<char>();
     }
 
     if (surface->format->BytesPerPixel != 4) {
         Protokoll << "ERROR call to LowerResolution() with source surface bpp other than 4" << std::endl;
-        return NULL;
+        return std::vector<char>();
     }
 
     int x, y;
-    uint8_t *dataout = new uint8_t[(surface->h / factor) * (surface->w / factor) * sizeof(uint32_t)];
+    std::vector<char> dataout;
+    dataout.reserve((surface->h / factor) * (surface->w / factor) * sizeof(uint32_t));
 
-    if (!dataout)
-        return dataout;
-
-    uint32_t *dataout32 = reinterpret_cast<uint32_t *>(dataout);
+    uint32_t *dataout32 = reinterpret_cast<uint32_t *>(dataout.data());
     uint32_t *datain32 = reinterpret_cast<uint32_t *>(surface->pixels);
 
     for (y=0; y<surface->h; y+=factor) {

@@ -28,31 +28,28 @@
 #include "SDL_port.h"
 #include <string>
 
-typedef struct IMAGE_T
+struct image_t
 {
-    uint8_t* data;
+    std::vector<char> data;
     bool compressed;
     uint32_t w, h;
-    uint32_t size;
     uint32_t offset;
     double   npot_scalex, npot_scaley;    //DKS - Correction factors to compensate for any 
                                           //      nearest-power-of-two size expansions.
     GLenum type;
     GLenum format;
 
-    IMAGE_T() :
-        data        (NULL),
+    image_t() :
         compressed  (false),
         w           (0),
         h           (0),
-        size        (0),
         offset      (0),
         npot_scalex (1.0),
         npot_scaley (1.0),
         type        (GL_UNSIGNED_BYTE),
         format      (GL_RGBA)
     { }
-} image_t;
+};
 
 //DKS - Textures are now managed in DX8Texture.cpp in new TexturesystemClass.
 //      This function now takes a reference to a TextureHandle object,
@@ -75,7 +72,7 @@ bool loadImagePVRTC( image_t& image, const std::string &fullpath );
 
 bool loadImageSDL( image_t& image, const std::string &fullpath, void *buf, unsigned int buf_size );
 
-uint8_t* LowerResolution( SDL_Surface* surface, int factor );
+std::vector<char> LowerResolution(SDL_Surface *surface, int factor);
 
 //DKS - disabled (RGBA5551 did not benefit how textures actually were stored in VRAM)
 /*

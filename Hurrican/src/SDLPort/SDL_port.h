@@ -115,7 +115,7 @@ std::uint8_t LoadGLFunctions( void );
 std::uint32_t getpixel( SDL_Surface *surface, std::int16_t x, std::int16_t y );
 void putpixel( SDL_Surface *surface, std::int16_t x, std::int16_t y, std::uint32_t pixel );
 void get_components( SDL_Surface *surface, std::int16_t x, std::int16_t y, std::uint8_t& r, std::uint8_t& g, std::uint8_t& b, std::uint8_t& a );
-std::uint8_t* LoadFileToMemory( const std::string& name, std::uint32_t& size );
+std::vector<char> LoadFileToMemory( const std::string& name);
 bool isPowerOfTwo(int x);
 int nextPowerOfTwo(int x);
 #if defined(USE_GL1)

@@ -24,6 +24,9 @@
 
 #include "SDL_port.h"
 
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem::v1;
+
 #if defined(USE_GL1)
 GLenum MatrixMode = 0;
 #endif
@@ -207,28 +210,21 @@ void get_components( SDL_Surface *surface, int16_t x, int16_t y, uint8_t& r, uin
     a=static_cast<uint8_t>(comp);
 }
 
-uint8_t* LoadFileToMemory( const std::string& name, uint32_t& size )
+std::vector<char> LoadFileToMemory( const std::string& name)
 {
-    std::fstream file;
-    uint8_t* buffer;
+    std::ifstream file(name.c_str(), std::ifstream::binary);
 
-    file.open( name.c_str(), std::ios_base::in );
-    if (file.is_open() == 0)
+    if (!file)
     {
-        Protokoll << "Error file operation: File: " << name << std::endl;;
-        return NULL;
+        Protokoll << "Error file operation: File: " << name << std::endl;
+        // FIXME: An exception would be far more useful...
+        return std::vector<char>();
     }
 
-    file.seekg( 0, std::ios::end );
-    size = file.tellg();
-    file.seekg( 0, std::ios::beg );
-
-    buffer = new uint8_t[size+1];
-    file.read( reinterpret_cast<char *>(buffer), size );
-    buffer[size] = '\0';
-    size++;
-
-    file.close();
+    auto filesize = fs::file_size(name);
+    std::vector<char> buffer(filesize+1);
+    file.read(buffer.data(), filesize);
+    buffer[filesize] = '\0';
 
     return buffer;
 }
