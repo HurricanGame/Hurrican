@@ -357,7 +357,6 @@ void TileEngineClass::ClearLevel() {
 bool TileEngineClass::LoadLevel(const std::string &Filename) {
     std::string Temp;
     FileHeader DateiHeader;  // Header der Level-Datei
-    FILE *Datei = NULL;      // Level-Datei
     LevelObjectStruct LoadObject;
 
 #if defined(USE_UNRARLIB)  // DKS - Added ifdef block
@@ -430,7 +429,7 @@ loadfile:
     }
 
     // File öffnen
-    fopen_s(&Datei, Temp.c_str(), "rb");
+    std::ifstream Datei(Temp, std::ifstream::binary);
 
     if (!Datei) {
         Protokoll << " \n-> Error loading level !" << std::endl;
@@ -438,7 +437,7 @@ loadfile:
     }
 
     // DateiHeader auslesen
-    fread(&DateiHeader, sizeof(DateiHeader), 1, Datei);
+    Datei.read(reinterpret_cast<char *>(&DateiHeader), sizeof(DateiHeader));
 
     // und Werte übertragen
     LEVELSIZE_X = FixEndian(DateiHeader.SizeX);
@@ -486,7 +485,7 @@ loadfile:
 
     for (i = 0; i < LEVELSIZE_X; i++)
         for (int j = 0; j < LEVELSIZE_Y; j++) {
-            fread(&LoadTile, sizeof(LoadTile), 1, Datei);
+            Datei.read(reinterpret_cast<char *>(&LoadTile), sizeof(LoadTile));
 
             if (LoadTile.TileSetBack > LoadedTilesets)
                 LoadTile.TileSetBack = LoadedTilesets;
@@ -573,7 +572,7 @@ loadfile:
     // Objekt Daten laden und gleich Liste mit Objekten erstellen
     if (DateiHeader.NumObjects > 0)
         for (i = 0; i < static_cast<int>(DateiHeader.NumObjects); i++) {
-            fread(&LoadObject, sizeof(LoadObject), 1, Datei);  // Objekt laden
+            Datei.read(reinterpret_cast<char *>(&LoadObject), sizeof(LoadObject));  // Objekt laden
 
             LoadObject.ObjectID = FixEndian(LoadObject.ObjectID);
             LoadObject.XPos = FixEndian(LoadObject.XPos);
@@ -794,7 +793,7 @@ loadfile:
         Player[1].JumpySave = Player[1].ypos;
     }
 
-    fread(&DateiAppendix, sizeof(DateiAppendix), 1, Datei);
+    Datei.read(reinterpret_cast<char *>(&DateiAppendix), sizeof(DateiAppendix));
 
     DateiAppendix.UsedPowerblock = FixEndian(DateiAppendix.UsedPowerblock);
 
@@ -802,7 +801,7 @@ loadfile:
     ShadowAlpha = 255.0f;
 
     // Datei schliessen
-    fclose(Datei);
+    Datei.close();
 
     // Temp Datei löschen und speicher freigeben
     DeleteFile(TEMP_FILE_PREFIX "temp.map");

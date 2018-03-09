@@ -41,10 +41,6 @@ void D3DXMatrixIdentity(D3DXMATRIXA16 *m) {
     m->identity();
 }
 
-void fopen_s(FILE **file, const char *path, const char *mode) {
-    *file = fopen(path, mode);
-}
-
 void strcat_s(char *dst, const char *src) {
     strcat(dst, src);
 }

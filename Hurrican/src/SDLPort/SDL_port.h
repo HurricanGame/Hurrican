@@ -94,7 +94,6 @@ struct D3DXVECTOR2 {
 };
 
 #define sprintf_s sprintf
-void fopen_s(FILE **file, const char *path, const char *mode);
 void strcat_s(char *dst, const char *src);
 void strcat_s(char *dst, uint32_t size, const char *src);
 void strncat_s(char *dst, const char *src, uint32_t size);

@@ -55,7 +55,6 @@ char Cheats[MAX_CHEATS][256] = {"$.345&&",            // 99 Extras = dnstuff
 //
 bool LoadLanguage(char *filename) {
     bool fromrar = false;
-    FILE *Datei = NULL;
     std::ifstream in;
     char c;
     int count;
@@ -81,8 +80,8 @@ bool LoadLanguage(char *filename) {
 
 loadfile:
 
-    fopen_s(&Datei, temp, "r");  // Language File öffnen
-    if (Datei == NULL)           // Fehler beim öffnen ?
+    std::ifstream Datei(temp);  // Language File öffnen
+    if (!Datei)                 // Fehler beim öffnen ?
     {
         Protokoll << "-> Error opening language-file\n";
         Protokoll << "'" << temp << "'" << std::endl;
@@ -97,20 +96,20 @@ loadfile:
     for (int i = 0; i < TEXT_LASTTEXT - 2; i++) {
         strcpy_s(TextArray[i], 1, "");
         count = 0;
-        c = getc(Datei);
+        c = Datei.get();
 
         // Zeichen für Zeichen auslesen, bis ein c==10 gelesen wird. Dies markiert das Zeilenende
         //
         while (c != 10 && count < 1023) {
             TextArray[i][count] = c;
-            c = getc(Datei);
+            c = Datei.get();
             count++;
         }
 
         TextArray[i][count] = '\0';
     }
 
-    fclose(Datei);
+    Datei.close();
 
     //
     // Stage Reihenfolge laden
@@ -121,8 +120,8 @@ loadfile:
 
         sprintf_s(buf, "%s/levels/%s/levellist.dat", g_storage_ext, CommandLineParams.OwnLevelList);
 
-        fopen_s(&Datei, buf, "rt");  // Reihenfolge Level laden
-        if (Datei == NULL) {
+        Datei.open(buf);  // Reihenfolge Level laden
+        if (!Datei) {
             // Fehler beim öffnen ? Dann standard Liste öffnen
             CommandLineParams.RunOwnLevelList = false;
             Protokoll << "-> Error opening level-order file" << std::endl;

@@ -2325,9 +2325,8 @@ void MenuClass::DoMenu(void) {
                                                             Player[0].Grenades + Player[0].SmartBombs + NUMPLAYERS;
 
                     // Und Savegame in Datei schreiben
-                    char Name[100];      // Für die Dateinamen
-                    char Buffer[5];      // Für _itoa
-                    FILE *Datei = NULL;  // Savegame Datei
+                    char Name[100];  // Für die Dateinamen
+                    char Buffer[5];  // Für _itoa
 
                     // Name des Savegames erstellen
                     _itoa_s(AktuellerPunkt, Buffer, 10);
@@ -2335,18 +2334,19 @@ void MenuClass::DoMenu(void) {
                     // Versuchen, die Datei zu erstellen
                     // nur weitermachen falls es keinen Fehler gibt
                     snprintf(Name, sizeof(Name), "%s/Savegame%s.save", g_save_ext, Buffer);
-                    fopen_s(&Datei, Name, "wb");
+                    std::ofstream Datei(Name, std::ofstream::binary);
 
                     // Fehler beim Öffnen ? Dann leeren Slot erzeugen
-                    if (Datei == NULL) {
+                    if (!Datei) {
                     }
 
                     // Ansonsten Slot speichern
                     else
-                        fwrite(&Savegames[AktuellerPunkt], sizeof(Savegames[AktuellerPunkt]), 1, Datei);
+                        Datei.write(reinterpret_cast<char *>(&Savegames[AktuellerPunkt]),
+                                    sizeof(Savegames[AktuellerPunkt]));
 
                     // Und Datei wieder schliessen
-                    fclose(Datei);
+                    Datei.close();
                 }  // Select Slot Auswahl
 
                 // oder Weiter/Continue  ?
@@ -2371,7 +2371,6 @@ void MenuClass::DoMenu(void) {
 void MenuClass::LoadSavegames(void) {
     char Name[100];  // Für die Dateinamen
     char Buffer[5];  // Für _itoa
-    FILE *Datei;     // Savegame Datei
 
     // Versuchen, die einzelnen Savegames zu laden
     for (int i = 0; i < MAX_SAVEGAMES; i++) {
@@ -2381,23 +2380,23 @@ void MenuClass::LoadSavegames(void) {
 
         // Versuchen, die Datei zu öffnen
         // falls sie nicht existiert oder es eine Fehler gibt, ist der Slot noch leer
-        fopen_s(&Datei, Name, "rb");
+        std::ifstream Datei(Name, std::ifstream::binary);
 
         Protokoll << "save games loaded" << std::endl;
 
         // Fehler beim Öffnen ? Dann leeren Slot erzeugen
         //
-        if (Datei == NULL)
+        if (!Datei)
             Savegames[i].Stage = -1;
 
         else {
             // Ansonsten Slot auslesen
             //
-            fread(&Savegames[i], sizeof(Savegames[i]), 1, Datei);
+            Datei.read(reinterpret_cast<char *>(&Savegames[i]), sizeof(Savegames[i]));
 
             // Und Datei wieder schliessen
             //
-            fclose(Datei);
+            Datei.close();
             // Checken ob die Pruefsumme noch stimmt
             // Prüfsumme gegen Savegame-Manipulation errechnen
             // und nur wenn diese stimmt das Savegame übernehmen
@@ -2500,29 +2499,28 @@ void MenuClass::ShowSavegames(int Highlight) {
 // --------------------------------------------------------------------------------------
 
 void MenuClass::LoadHighscore(void) {
-    FILE *Datei;  // Savegame Datei
     char name[256];
 
     // Versuchen, die Highscore Datei zu öffnen
     // falls sie nicht existiert oder es eine Fehler gibt, wird die Standard
     // Highscore gesetzt
     sprintf_s(name, "%s/Hurrican.hsl", g_save_ext);
-    fopen_s(&Datei, name, "rb");
+    std::ifstream Datei(name, std::ifstream::binary);
 
     // Fehler beim Öffnen ? Dann standard Highscore setzen
     //
-    if (Datei == NULL)
+    if (!Datei)
         ResetHighscore();
 
     else {
         // Ansonsten Scores auslesen
         //
         for (int i = 0; i < MAX_HIGHSCORES; i++)
-            fread(&Highscores[i], sizeof(Highscores[i]), 1, Datei);
+            Datei.read(reinterpret_cast<char *>(&Highscores[i]), sizeof(Highscores[i]));
 
         // Und Datei wieder schliessen
         //
-        fclose(Datei);
+        Datei.close();
 
         // Checken ob die Pruefsumme noch stimmt
         // und nur wenn diese stimmt die Highscore übernehmen
@@ -2557,16 +2555,15 @@ void MenuClass::LoadHighscore(void) {
 // --------------------------------------------------------------------------------------
 
 void MenuClass::SaveHighscore(void) {
-    FILE *Datei;  // Savegame Datei
     char name[256];
 
     // Highscore Datei öffnen
     sprintf_s(name, "%s/Hurrican.hsl", g_save_ext);
-    fopen_s(&Datei, name, "wb");
+    std::ofstream Datei(name, std::ofstream::binary);
 
     // Fehler beim Öffnen ? Dann standard Highscore setzen
     //
-    if (Datei == NULL)
+    if (!Datei)
         ResetHighscore();
 
     else {
@@ -2591,7 +2588,7 @@ void MenuClass::SaveHighscore(void) {
 
             // Und Eintrag speichern
             //
-            fwrite(&Highscores[i], sizeof(Highscores[i]), 1, Datei);
+            Datei.write(reinterpret_cast<char *>(&Highscores[i]), sizeof(Highscores[i]));
 
             // SixK - SWAP TO BIG ENDIAN Again once datas have been written
             Highscores[i].Score = FixEndian(Highscores[i].Score);
@@ -2603,7 +2600,7 @@ void MenuClass::SaveHighscore(void) {
 
     // Und Datei wieder schliessen
     //
-    fclose(Datei);
+    Datei.close();
 }
 
 // --------------------------------------------------------------------------------------

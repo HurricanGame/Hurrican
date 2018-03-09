@@ -53,7 +53,7 @@ bool ShowSummary = false;
 long DEMOPress = 0;          // Counter bis zum nächsten Tastendruck
 bool DEMORecording = false;  // demo wird grad aufgenommen
 bool DEMOPlaying = false;    // demo spielt gradf ab
-FILE *DEMOFile = NULL;       // Datei in der das Demo gespeichert wird
+std::fstream DEMOFile;       // Datei in der das Demo gespeichert wird
 
 bool FlameThrower = false;
 bool HasCheated = false;
@@ -755,22 +755,20 @@ void CreateDefaultConfig(void) {
 bool LoadConfig(void) {
     float Sound, Musik;
 
-    FILE *Datei = NULL;
-
     // DKS - Full paths can now be longer:
     // char temp[100];
     // snprintf( temp, sizeof(temp), "%s/%s", g_save_ext, CONFIGFILE );
     char *temp = (char *)malloc(strlen(g_save_ext) + 1 + strlen(CONFIGFILE) + 1);
     sprintf_s(temp, "%s/%s", g_save_ext, CONFIGFILE);
 
-    fopen_s(&Datei, temp, "rb");  // versuchen Datei zu öffnen
+    std::ifstream Datei(temp, std::ifstream::binary);  // versuchen Datei zu öffnen
     free(temp);
 
-    if (Datei == NULL)
+    if (!Datei)
         return false;
 
     // Spracheinstellung laden
-    fread(&ActualLanguage, sizeof(ActualLanguage), 1, Datei);
+    Datei.read(reinterpret_cast<char *>(&ActualLanguage), sizeof(ActualLanguage));
     // DKS - Made language loading default back to english if saved language not found:
     bool language_loaded = LoadLanguage(ActualLanguage);
     if (!language_loaded) {
@@ -780,29 +778,29 @@ bool LoadConfig(void) {
     }
 
     // Daten für Sound und Musik-Lautstärke auslesen
-    fread(&Sound, sizeof(Sound), 1, Datei);
-    fread(&Musik, sizeof(Musik), 1, Datei);
+    Datei.read(reinterpret_cast<char *>(&Sound), sizeof(Sound));
+    Datei.read(reinterpret_cast<char *>(&Musik), sizeof(Musik));
     SoundManager.SetVolumes(Sound, Musik);
 
     // Daten für Keyboard und Joystick auslesen
-    fread(&Player[0].AktionKeyboard, sizeof(Player[0].AktionKeyboard), 1, Datei);
-    fread(&Player[0].AktionJoystick, sizeof(Player[0].AktionJoystick), 1, Datei);
-    fread(&Player[0].Walk_UseAxxis, sizeof(Player[0].Walk_UseAxxis), 1, Datei);
-    fread(&Player[0].Look_UseAxxis, sizeof(Player[0].Look_UseAxxis), 1, Datei);
+    Datei.read(reinterpret_cast<char *>(&Player[0].AktionKeyboard), sizeof(Player[0].AktionKeyboard));
+    Datei.read(reinterpret_cast<char *>(&Player[0].AktionJoystick), sizeof(Player[0].AktionJoystick));
+    Datei.read(reinterpret_cast<char *>(&Player[0].Walk_UseAxxis), sizeof(Player[0].Walk_UseAxxis));
+    Datei.read(reinterpret_cast<char *>(&Player[0].Look_UseAxxis), sizeof(Player[0].Look_UseAxxis));
 
-    fread(&Player[1].AktionKeyboard, sizeof(Player[1].AktionKeyboard), 1, Datei);
-    fread(&Player[1].AktionJoystick, sizeof(Player[1].AktionJoystick), 1, Datei);
-    fread(&Player[1].Walk_UseAxxis, sizeof(Player[1].Walk_UseAxxis), 1, Datei);
-    fread(&Player[1].Look_UseAxxis, sizeof(Player[1].Look_UseAxxis), 1, Datei);
+    Datei.read(reinterpret_cast<char *>(&Player[1].AktionKeyboard), sizeof(Player[1].AktionKeyboard));
+    Datei.read(reinterpret_cast<char *>(&Player[1].AktionJoystick), sizeof(Player[1].AktionJoystick));
+    Datei.read(reinterpret_cast<char *>(&Player[1].Walk_UseAxxis), sizeof(Player[1].Walk_UseAxxis));
+    Datei.read(reinterpret_cast<char *>(&Player[1].Look_UseAxxis), sizeof(Player[1].Look_UseAxxis));
 
-    fread(&UseForceFeedback, sizeof(UseForceFeedback), 1, Datei);
+    Datei.read(reinterpret_cast<char *>(&UseForceFeedback), sizeof(UseForceFeedback));
 
     // Sonstige Optionen laden
-    fread(&options_Detail, sizeof(options_Detail), 1, Datei);
+    Datei.read(reinterpret_cast<char *>(&options_Detail), sizeof(options_Detail));
 
-    fread(&Player[0].ControlType, sizeof(Player[0].ControlType), 1, Datei);
-    fread(&Player[0].JoystickMode, sizeof(Player[0].JoystickMode), 1, Datei);
-    fread(&Player[0].JoystickSchwelle, sizeof(Player[0].JoystickSchwelle), 1, Datei);
+    Datei.read(reinterpret_cast<char *>(&Player[0].ControlType), sizeof(Player[0].ControlType));
+    Datei.read(reinterpret_cast<char *>(&Player[0].JoystickMode), sizeof(Player[0].JoystickMode));
+    Datei.read(reinterpret_cast<char *>(&Player[0].JoystickSchwelle), sizeof(Player[0].JoystickSchwelle));
 
     // Joystick nicht mehr da?
     if (DirectInput.Joysticks[Player[0].JoystickIndex].Active == false) {
@@ -833,13 +831,13 @@ bool LoadConfig(void) {
 #endif  // GCW
     }
 
-    fread(&Player[1].ControlType, sizeof(Player[1].ControlType), 1, Datei);
-    fread(&Player[1].JoystickMode, sizeof(Player[1].JoystickMode), 1, Datei);
-    fread(&Player[1].JoystickSchwelle, sizeof(Player[1].JoystickSchwelle), 1, Datei);
+    Datei.read(reinterpret_cast<char *>(&Player[1].ControlType), sizeof(Player[1].ControlType));
+    Datei.read(reinterpret_cast<char *>(&Player[1].JoystickMode), sizeof(Player[1].JoystickMode));
+    Datei.read(reinterpret_cast<char *>(&Player[1].JoystickSchwelle), sizeof(Player[1].JoystickSchwelle));
 
     Protokoll << "Config file loading successful !" << std::endl;
 
-    fclose(Datei);  // Und Datei wieder schliessen
+    Datei.close();  // Und Datei wieder schliessen
 
     PartikelSystem.SetParticleCount();
 
@@ -864,57 +862,55 @@ bool LoadConfig(void) {
 void SaveConfig(void) {
     float Sound, Musik;
 
-    FILE *Datei = NULL;
-
     // DKS - Full paths can now be longer:
     // char temp[100];
     // snprintf( temp, sizeof(temp), "%s/%s", g_save_ext, CONFIGFILE );
     char *temp = (char *)malloc(strlen(g_save_ext) + 1 + strlen(CONFIGFILE) + 1);
     sprintf_s(temp, "%s/%s", g_save_ext, CONFIGFILE);
 
-    fopen_s(&Datei, temp, "wb");
+    std::ofstream Datei(temp, std::ifstream::binary);
     free(temp);
 
-    if (Datei == NULL) {
+    if (!Datei) {
         Protokoll << "Config file saving failed !" << std::endl;
         return;
     }
 
     // Spracheinstellung speichern
-    fwrite(&ActualLanguage, sizeof(ActualLanguage), 1, Datei);
+    Datei.write(reinterpret_cast<char *>(&ActualLanguage), sizeof(ActualLanguage));
 
     // Daten für Sound und Musik-Lautstärke schreiben
     Sound = float(SoundManager.g_sound_vol);
     Musik = float(SoundManager.g_music_vol);
 
-    fwrite(&Sound, sizeof(Sound), 1, Datei);
-    fwrite(&Musik, sizeof(Musik), 1, Datei);
+    Datei.write(reinterpret_cast<char *>(&Sound), sizeof(Sound));
+    Datei.write(reinterpret_cast<char *>(&Musik), sizeof(Musik));
 
     // Daten für Keyboard und Joystick schreiben
-    fwrite(&Player[0].AktionKeyboard, sizeof(Player[0].AktionKeyboard), 1, Datei);
-    fwrite(&Player[0].AktionJoystick, sizeof(Player[0].AktionJoystick), 1, Datei);
-    fwrite(&Player[0].Walk_UseAxxis, sizeof(Player[0].Walk_UseAxxis), 1, Datei);
-    fwrite(&Player[0].Look_UseAxxis, sizeof(Player[0].Look_UseAxxis), 1, Datei);
+    Datei.write(reinterpret_cast<char *>(&Player[0].AktionKeyboard), sizeof(Player[0].AktionKeyboard));
+    Datei.write(reinterpret_cast<char *>(&Player[0].AktionJoystick), sizeof(Player[0].AktionJoystick));
+    Datei.write(reinterpret_cast<char *>(&Player[0].Walk_UseAxxis), sizeof(Player[0].Walk_UseAxxis));
+    Datei.write(reinterpret_cast<char *>(&Player[0].Look_UseAxxis), sizeof(Player[0].Look_UseAxxis));
 
-    fwrite(&Player[1].AktionKeyboard, sizeof(Player[1].AktionKeyboard), 1, Datei);
-    fwrite(&Player[1].AktionJoystick, sizeof(Player[1].AktionJoystick), 1, Datei);
-    fwrite(&Player[1].Walk_UseAxxis, sizeof(Player[1].Walk_UseAxxis), 1, Datei);
-    fwrite(&Player[1].Look_UseAxxis, sizeof(Player[1].Look_UseAxxis), 1, Datei);
+    Datei.write(reinterpret_cast<char *>(&Player[1].AktionKeyboard), sizeof(Player[1].AktionKeyboard));
+    Datei.write(reinterpret_cast<char *>(&Player[1].AktionJoystick), sizeof(Player[1].AktionJoystick));
+    Datei.write(reinterpret_cast<char *>(&Player[1].Walk_UseAxxis), sizeof(Player[1].Walk_UseAxxis));
+    Datei.write(reinterpret_cast<char *>(&Player[1].Look_UseAxxis), sizeof(Player[1].Look_UseAxxis));
 
-    fwrite(&UseForceFeedback, sizeof(UseForceFeedback), 1, Datei);
+    Datei.write(reinterpret_cast<char *>(&UseForceFeedback), sizeof(UseForceFeedback));
 
     // Sonstige Optionen sichern
-    fwrite(&options_Detail, sizeof(options_Detail), 1, Datei);
+    Datei.write(reinterpret_cast<char *>(&options_Detail), sizeof(options_Detail));
 
-    fwrite(&Player[0].ControlType, sizeof(Player[0].ControlType), 1, Datei);
-    fwrite(&Player[0].JoystickMode, sizeof(Player[0].JoystickMode), 1, Datei);
-    fwrite(&Player[0].JoystickSchwelle, sizeof(Player[0].JoystickSchwelle), 1, Datei);
+    Datei.write(reinterpret_cast<char *>(&Player[0].ControlType), sizeof(Player[0].ControlType));
+    Datei.write(reinterpret_cast<char *>(&Player[0].JoystickMode), sizeof(Player[0].JoystickMode));
+    Datei.write(reinterpret_cast<char *>(&Player[0].JoystickSchwelle), sizeof(Player[0].JoystickSchwelle));
 
-    fwrite(&Player[1].ControlType, sizeof(Player[1].ControlType), 1, Datei);
-    fwrite(&Player[1].JoystickMode, sizeof(Player[1].JoystickMode), 1, Datei);
-    fwrite(&Player[1].JoystickSchwelle, sizeof(Player[1].JoystickSchwelle), 1, Datei);
+    Datei.write(reinterpret_cast<char *>(&Player[1].ControlType), sizeof(Player[1].ControlType));
+    Datei.write(reinterpret_cast<char *>(&Player[1].JoystickMode), sizeof(Player[1].JoystickMode));
+    Datei.write(reinterpret_cast<char *>(&Player[1].JoystickSchwelle), sizeof(Player[1].JoystickSchwelle));
 
-    fclose(Datei);  // Und Datei wieder schliessen
+    Datei.close();  // Und Datei wieder schliessen
 }
 
 // --------------------------------------------------------------------------------------
@@ -1253,7 +1249,7 @@ bool NewDemo(const char Filename[]) {
     char *temp = (char *)malloc(strlen(g_save_ext) + 1 + strlen(Filename) + 1);
     sprintf_s(temp, "%s/%s", g_save_ext, Filename);
 
-    fopen_s(&DEMOFile, temp, "wb");
+    DEMOFile.open(temp, std::ofstream::binary);
     free(temp);
 
     if (!DEMOFile) {
@@ -1264,10 +1260,10 @@ bool NewDemo(const char Filename[]) {
 
     // DateiHeader schreiben
     //
-    fwrite(&DEMO_ID, sizeof(DEMO_ID), 1, DEMOFile);
+    DEMOFile.write(reinterpret_cast<const char *>(&DEMO_ID), sizeof(DEMO_ID));
 
     // Stage Nr schreiben
-    fwrite(&Stage, sizeof(Stage), 1, DEMOFile);
+    DEMOFile.write(reinterpret_cast<char *>(&Stage), sizeof(Stage));
 
     DEMORecording = true;
     DEMOPress = 0;
@@ -1313,7 +1309,7 @@ bool LoadDemo(const char Filename[]) {
     char *temp = (char *)malloc(strlen(g_save_ext) + 1 + strlen(Filename) + 1);
     sprintf_s(temp, "%s/%s", g_save_ext, Filename);
 
-    fopen_s(&DEMOFile, temp, "rb");
+    DEMOFile.open(temp, std::fstream::in | std::fstream::binary);
     free(temp);
 
     if (!DEMOFile)
@@ -1321,13 +1317,13 @@ bool LoadDemo(const char Filename[]) {
 
     // DateiHeader lesen
     //
-    fread(&Kennung, sizeof(DEMO_ID), 1, DEMOFile);
+    DEMOFile.read(reinterpret_cast<char *>(&Kennung), sizeof(DEMO_ID));
 
     if (strcmp(DEMO_ID, Kennung) != 0)
         return false;
 
     // Stage Nr laden
-    fread(&Stage, sizeof(Stage), 1, DEMOFile);
+    DEMOFile.read(reinterpret_cast<char *>(&Stage), sizeof(Stage));
     NewStage = Stage;
 
     DEMOPlaying = true;
@@ -1360,7 +1356,7 @@ bool LoadDemo(const char Filename[]) {
 
 void EndDemo(void) {
     // File schliessen
-    fclose(DEMOFile);
+    DEMOFile.close();
 
     DEMOPlaying = false;
     DEMORecording = false;
@@ -1384,14 +1380,14 @@ void RecordDemo(void) {
     // Tasten speichern
     //
     for (int i = 0; i < MAX_AKTIONEN; i++)
-        fwrite(&Player[0].Aktion[i], sizeof(Player[0].Aktion[i]), 1, DEMOFile);
+        DEMOFile.write(reinterpret_cast<char *>(&Player[0].Aktion[i]), sizeof(Player[0].Aktion[i]));
 
     // FPS speichern
     //
     int fps;
 
     fps = int(Timer.getFrameRate());
-    fwrite(&fps, sizeof(fps), 1, DEMOFile);
+    DEMOFile.write(reinterpret_cast<char *>(&fps), sizeof(fps));
 
 }  // RecordDemo
 
@@ -1407,17 +1403,17 @@ void PlayDemo(void) {
     // Tasten laden
     //
     for (int i = 0; i < MAX_AKTIONEN; i++)
-        fread(&Player[0].Aktion[i], sizeof(Player[0].Aktion[i]), 1, DEMOFile);
+        DEMOFile.read(reinterpret_cast<char *>(&Player[0].Aktion[i]), sizeof(Player[0].Aktion[i]));
 
     // FPS laden
     //
     int fps;
 
-    fread(&fps, sizeof(fps), 1, DEMOFile);
+    DEMOFile.read(reinterpret_cast<char *>(&fps), sizeof(fps));
     Timer.SetMaxFPS(fps);
 
     // Demo Ende ?
-    if (feof(DEMOFile)) {
+    if (DEMOFile.eof()) {
         EndDemo();
         LoadDemo("Demo.dem");
     }
