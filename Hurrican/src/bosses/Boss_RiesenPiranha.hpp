@@ -4,16 +4,15 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerRiesenPiranha : public GegnerClass
-{
-public:
+class GegnerRiesenPiranha : public GegnerClass {
+  public:
+    float ShotDelay;  // Schussverzögerung
 
-    float				ShotDelay;						// Schussverzögerung
-
-    GegnerRiesenPiranha(int  Wert1, int Wert2,			// Konstruktor
+    GegnerRiesenPiranha(int Wert1,
+                        int Wert2,  // Konstruktor
                         bool Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
 };
 

@@ -12,11 +12,11 @@
 #ifndef _TEXTS_HPP_
 #define _TEXTS_HPP_
 
+#include <iostream>
+#include <string>
+#include "DX8Font.hpp"
 #include "Main.hpp"
 #include "Player.hpp"
-#include "DX8Font.hpp"
-#include <string>
-#include <iostream>
 
 // --------------------------------------------------------------------------------------
 // Defines
@@ -24,22 +24,21 @@
 
 #define MAX_CHEATS 10
 
-#define CHEAT_EXTRAS	0
-#define CHEAT_WAFFEN	1
-#define CHEAT_SCHILD	2
-#define CHEAT_ZEIT		3
-#define CHEAT_GOD		4
-#define CHEAT_RAD	    5
-#define CHEAT_AUTOFIRE	6
-#define CHEAT_SUPERSHOT	7
-#define CHEAT_FLAMER	8
+#define CHEAT_EXTRAS 0
+#define CHEAT_WAFFEN 1
+#define CHEAT_SCHILD 2
+#define CHEAT_ZEIT 3
+#define CHEAT_GOD 4
+#define CHEAT_RAD 5
+#define CHEAT_AUTOFIRE 6
+#define CHEAT_SUPERSHOT 7
+#define CHEAT_FLAMER 8
 
 // Enum für die verschiedenen Texte
 // es wird nie konkret ein String im Code angegeben, sondern immer nur eine Zahl, welche
 // einen Array-Eintrag im Text Array angibt.
 
-typedef enum Textenum
-{
+typedef enum Textenum {
     // Header des Language Files
     TEXT_HEADER,
     TEXT_HEADER2,
@@ -347,37 +346,35 @@ typedef enum Textenum
 // Funktionen
 // --------------------------------------------------------------------------------------
 
-bool LoadLanguage  (char *filename);			// Bestimmte Sprachdatei laden
-void InitReplacers (void);						// Tasten ErsetzungsStrings für die TutorialTexte initialisieren
-int	 GetDecValue(const char *pair, int len);			// Dezimalwert einer Hexzahl mit Länge len
+bool LoadLanguage(char *filename);           // Bestimmte Sprachdatei laden
+void InitReplacers(void);                    // Tasten ErsetzungsStrings für die TutorialTexte initialisieren
+int GetDecValue(const char *pair, int len);  // Dezimalwert einer Hexzahl mit Länge len
 
-//DKS - Added cross-platform language-files handling
+// DKS - Added cross-platform language-files handling
 void FindLanguageFiles(const char *path);
 
-//DKS - Added function to split a longer line into two shorter lines, for when
+// DKS - Added function to split a longer line into two shorter lines, for when
 //      running on a lower-resolution device w/ scaled font
 void SplitLine(char *dst1, char *dst2, const char *source);
 
-//DKS - Added function to split a longer line into one, dst1, sized up to
+// DKS - Added function to split a longer line into one, dst1, sized up to
 //      width (in pixels) based on font passed, and one, dst2, is the remainder,
 //      minus any leading whitespace. Returns true if line needed to be split.
 bool ExtractStringOfLength(char *dst1, char *dst2, char *source, int width, DirectGraphicsFont *font);
 
-//DKS - Added function to replace any instance of a substring with another substring,
+// DKS - Added function to replace any instance of a substring with another substring,
 //      primarily for use on gaming/phone systems where "key" should be replaced with
 //      "button"
-void ReplaceAll(std::string& str, const std::string &from, const std::string &to);
+void ReplaceAll(std::string &str, const std::string &from, const std::string &to);
 
 // --------------------------------------------------------------------------------------
 // Externals
 // --------------------------------------------------------------------------------------
 
 extern std::vector<std::string> LanguageFiles;
-extern char				    TextArray [TEXT_LASTTEXT][1024];
-extern char					ActualLanguage[256];
-extern char					s_Replacers[MAX_AKTIONEN * 2][256];
-extern char					Cheats[MAX_CHEATS][256];
-
+extern char TextArray[TEXT_LASTTEXT][1024];
+extern char ActualLanguage[256];
+extern char s_Replacers[MAX_AKTIONEN * 2][256];
+extern char Cheats[MAX_CHEATS][256];
 
 #endif
-

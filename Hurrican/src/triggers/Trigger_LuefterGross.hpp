@@ -4,16 +4,15 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerLuefterGross : public GegnerClass
-{
-public :
-
-    GegnerLuefterGross(int  Wert1, int Wert2,					// Konstruktor
+class GegnerLuefterGross : public GegnerClass {
+  public:
+    GegnerLuefterGross(int Wert1,
+                       int Wert2,  // Konstruktor
                        bool Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
-    void DoDraw		   (void);
+    void DoDraw(void);
 };
 
 #endif

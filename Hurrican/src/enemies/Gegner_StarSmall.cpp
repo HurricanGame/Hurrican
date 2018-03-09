@@ -4,29 +4,28 @@
 // Prallt von der Wand ab
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.hpp"
 #include "enemies/Gegner_StarSmall.hpp"
+#include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerStarSmall::GegnerStarSmall(int Wert1, int Wert2, bool Light)
-{
-    Handlung		= GEGNER_LAUFEN;
-    Energy			= 20;
-    Value1			= Wert1;
-    Value2			= Wert2;
-    AnimStart		= 0;
-    AnimEnde		= 4;
-    AnimSpeed		= 0.8f;
-    AnimCount		= 0.0f;
-    ChangeLight		= Light;
-    Destroyable		= true;
+GegnerStarSmall::GegnerStarSmall(int Wert1, int Wert2, bool Light) {
+    Handlung = GEGNER_LAUFEN;
+    Energy = 20;
+    Value1 = Wert1;
+    Value2 = Wert2;
+    AnimStart = 0;
+    AnimEnde = 4;
+    AnimSpeed = 0.8f;
+    AnimCount = 0.0f;
+    ChangeLight = Light;
+    Destroyable = true;
 
     ySpeed = 8.0f;
-    yAcc   = 0.0f;
-    xAcc   = 0.0f;
+    yAcc = 0.0f;
+    xAcc = 0.0f;
 
     // in Richtung Spieler fliegen
     //
@@ -40,8 +39,7 @@ GegnerStarSmall::GegnerStarSmall(int Wert1, int Wert2, bool Light)
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerStarSmall::DoKI(void)
-{
+void GegnerStarSmall::DoKI(void) {
     if (xSpeed > 0.0f)
         BlickRichtung = RECHTS;
     else
@@ -51,28 +49,23 @@ void GegnerStarSmall::DoKI(void)
 
     // Je nach Handlung richtig verhalten
     //
-    switch (Handlung)
-    {
-    case GEGNER_LAUFEN :
-    {
-        // An den Wänden umdrehen
-        //
-        if ((xSpeed < 0.0f && blockl & BLOCKWERT_WAND) ||
-                (xSpeed > 0.0f && blockr & BLOCKWERT_WAND))
-            xSpeed *= -1.0f;
+    switch (Handlung) {
+        case GEGNER_LAUFEN: {
+            // An den Wänden umdrehen
+            //
+            if ((xSpeed < 0.0f && blockl & BLOCKWERT_WAND) || (xSpeed > 0.0f && blockr & BLOCKWERT_WAND))
+                xSpeed *= -1.0f;
 
-        if ((ySpeed < 0.0f && blocko & BLOCKWERT_WAND) ||
-                (ySpeed > 0.0f && blocku & BLOCKWERT_WAND) ||
+            if ((ySpeed < 0.0f && blocko & BLOCKWERT_WAND) || (ySpeed > 0.0f && blocku & BLOCKWERT_WAND) ||
                 (ySpeed < 0.0f && yPos - TileEngine.YOffset < 0.0f) ||
                 (ySpeed > 0.0f && yPos - TileEngine.YOffset > 440.0f))
-            ySpeed *= -1.0f;
-    }
-    break;
+                ySpeed *= -1.0f;
+        } break;
 
-    default :
-        break;
+        default:
+            break;
 
-    } // switch
+    }  // switch
 
     // Testen, ob der Spieler den Sack berührt hat
     TestDamagePlayers(2.0f SYNC);
@@ -82,15 +75,14 @@ void GegnerStarSmall::DoKI(void)
 // StarSmall explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerStarSmall::GegnerExplode(void)
-{
+void GegnerStarSmall::GegnerExplode(void) {
     for (int i = 0; i < 8; i++)
-        PartikelSystem.PushPartikel (xPos-30+rand()%40, yPos-30+rand()%40, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30 + rand() % 40, yPos - 30 + rand() % 40, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 8; i++)
-        PartikelSystem.PushPartikel (xPos+rand()%40, yPos+rand()%40, LONGFUNKE);
+        PartikelSystem.PushPartikel(xPos + rand() % 40, yPos + rand() % 40, LONGFUNKE);
 
-    SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
 
-    Player[0].Score += 150;		// Punkte geben
+    Player[0].Score += 150;  // Punkte geben
 }

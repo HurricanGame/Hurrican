@@ -13,9 +13,9 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
-#include "GegnerClass.hpp"
 #include "DX8Input.hpp"
 #include "DX8Sound.hpp"
+#include "GegnerClass.hpp"
 
 // --------------------------------------------------------------------------------------
 // Defines
@@ -28,23 +28,22 @@
 // Dragon-Klasse
 // --------------------------------------------------------------------------------------
 
-class CDragonHack
-{
-private:
-    float					m_AppearCount;
-    DirectGraphicsSprite	m_GFX;
-    float					m_xPos, m_yPos;
-    float					m_xSpeed, m_ySpeed;
-    float					m_AnimCount;
+class CDragonHack {
+  private:
+    float m_AppearCount;
+    DirectGraphicsSprite m_GFX;
+    float m_xPos, m_yPos;
+    float m_xSpeed, m_ySpeed;
+    float m_AnimCount;
 
-public:
-    int						m_State;
+  public:
+    int m_State;
 
-    CDragonHack	 (void);						// CutScene initialisieren
-    ~CDragonHack	 (void);						// CutScene freigeben
+    CDragonHack(void);   // CutScene initialisieren
+    ~CDragonHack(void);  // CutScene freigeben
 
-    void Run			 (void);							// laufen, pardon: "fliegen" lassen
+    void Run(void);  // laufen, pardon: "fliegen" lassen
     // abgebrochen wurde
-}; // CDragonHack
+};  // CDragonHack
 
 #endif

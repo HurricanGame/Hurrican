@@ -4,20 +4,17 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerSchleimMaul : public GegnerClass
-{
-private:
-    float	SpawnCount;
-    float	ShotDelay;
-    GegnerClass	*pChildren[10];
+class GegnerSchleimMaul : public GegnerClass {
+  private:
+    float SpawnCount;
+    float ShotDelay;
+    GegnerClass *pChildren[10];
 
-public :
-
-    GegnerSchleimMaul(float x, float y, int  Wert1, int Wert2,
-                      bool Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-    void DoDraw		   (void);							// Gegner individuell rendern
+  public:
+    GegnerSchleimMaul(float x, float y, int Wert1, int Wert2, bool Light);
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw(void);         // Gegner individuell rendern
 };
 
 #endif

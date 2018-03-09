@@ -4,16 +4,16 @@
 #include "GegnerClass.hpp"
 #include "Gegner_Stuff.hpp"
 
-class GegnerDeckenturm : public GegnerClass
-{
-private:
+class GegnerDeckenturm : public GegnerClass {
+  private:
     float Winkel;
-public:
 
-    GegnerDeckenturm  (int  Wert1, int Wert2,			// Konstruktor
-                       bool Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner
+  public:
+    GegnerDeckenturm(int Wert1,
+                     int Wert2,  // Konstruktor
+                     bool Light);
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
 };
 

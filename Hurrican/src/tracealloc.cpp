@@ -32,18 +32,19 @@ Usage:
 
 #if defined(_DEBUG) && defined(WIN32) && defined(DETECT_LEAKS)
 
-#include <windows.h>
-#include <tchar.h>
-#include <iostream>
 #include <ImageHlp.h>
-#include <string>
 #include <assert.h>
+#include <tchar.h>
+#include <windows.h>
+#include <iostream>
+#include <string>
 
 using namespace std;
 
 typedef std::basic_string<TCHAR, char_traits<TCHAR> > tcstring;
 
-// Setup how much buffer is used for a single path fetch, increase if you get AV's during leak dump (4096 is plenty though)
+// Setup how much buffer is used for a single path fetch, increase if you get AV's during leak dump (4096 is plenty
+// though)
 #define BUFFERSIZE 4096
 
 // Define how many levels of callstack that should be fetched for each allocation.
@@ -56,222 +57,200 @@ typedef std::basic_string<TCHAR, char_traits<TCHAR> > tcstring;
 // Define frequency of no mans land checking
 #define NML_CHECK_EVERY 1000
 
-#pragma comment( lib, "imagehlp.lib" )
+#pragma comment(lib, "imagehlp.lib")
 
-void GetStackTrace(HANDLE hThread, ULONG ranOffsets[][2], ULONG nMaxStack );
-void WriteStackTrace(ULONG ranOffsets[][2], ULONG nMaxStack, tcstring& roOut);
-void* TraceAlloc(size_t nSize);
-void TraceDealloc(void* poMem);
+void GetStackTrace(HANDLE hThread, ULONG ranOffsets[][2], ULONG nMaxStack);
+void WriteStackTrace(ULONG ranOffsets[][2], ULONG nMaxStack, tcstring &roOut);
+void *TraceAlloc(size_t nSize);
+void TraceDealloc(void *poMem);
 
-void OutputDebugStringFormat( LPCTSTR lpszFormat, ... )
-{
-    TCHAR    lpszBuffer[BUFFERSIZE];
-    va_list  fmtList;
+void OutputDebugStringFormat(LPCTSTR lpszFormat, ...) {
+    TCHAR lpszBuffer[BUFFERSIZE];
+    va_list fmtList;
 
-    va_start( fmtList, lpszFormat );
-    _vstprintf_s( lpszBuffer, lpszFormat, fmtList );
-    va_end( fmtList );
+    va_start(fmtList, lpszFormat);
+    _vstprintf_s(lpszBuffer, lpszFormat, fmtList);
+    va_end(fmtList);
 
-    ::OutputDebugString( lpszBuffer );
+    ::OutputDebugString(lpszBuffer);
 }
 
 // Unicode safe char* -> TCHAR* conversion
-void PCSTR2LPTSTR( PCSTR lpszIn, LPTSTR lpszOut )
-{
-#if defined(UNICODE)||defined(_UNICODE)
+void PCSTR2LPTSTR(PCSTR lpszIn, LPTSTR lpszOut) {
+#if defined(UNICODE) || defined(_UNICODE)
     ULONG index = 0;
     PCSTR lpAct = lpszIn;
 
-    for( ; ; lpAct++ )
-    {
+    for (;; lpAct++) {
         lpszOut[index++] = (TCHAR)(*lpAct);
-        if ( *lpAct == 0 )
+        if (*lpAct == 0)
             break;
     }
 #else
     // This is trivial :)
     int count = strlen(lpszIn);
-    strcpy_s(lpszOut, count, lpszIn );
+    strcpy_s(lpszOut, count, lpszIn);
 #endif
 }
 
 // Let's figure out the path for the symbol files
 // Search path= ".;%_NT_SYMBOL_PATH%;%_NT_ALTERNATE_SYMBOL_PATH%;%SYSTEMROOT%;%SYSTEMROOT%\System32;" + lpszIniPath
 // Note: There is no size check for lpszSymbolPath!
-void InitSymbolPath( PSTR lpszSymbolPath, PCSTR lpszIniPath )
-{
+void InitSymbolPath(PSTR lpszSymbolPath, PCSTR lpszIniPath) {
     CHAR lpszPath[BUFFERSIZE];
 
     // Creating the default path
     // ".;%_NT_SYMBOL_PATH%;%_NT_ALTERNATE_SYMBOL_PATH%;%SYSTEMROOT%;%SYSTEMROOT%\System32;"
     int count = strlen(".");
-    strcpy_s(lpszSymbolPath, count, "." );
+    strcpy_s(lpszSymbolPath, count, ".");
 
     // environment variable _NT_SYMBOL_PATH
-    if ( GetEnvironmentVariableA( "_NT_SYMBOL_PATH", lpszPath, BUFFERSIZE ) )
-    {
+    if (GetEnvironmentVariableA("_NT_SYMBOL_PATH", lpszPath, BUFFERSIZE)) {
         int count = strlen(lpszSymbolPath);
-        strcat_s( lpszSymbolPath, count, ";" );
-        strcat( lpszSymbolPath, lpszPath );
+        strcat_s(lpszSymbolPath, count, ";");
+        strcat(lpszSymbolPath, lpszPath);
     }
 
     // environment variable _NT_ALTERNATE_SYMBOL_PATH
-    if ( GetEnvironmentVariableA( "_NT_ALTERNATE_SYMBOL_PATH", lpszPath, BUFFERSIZE ) )
-    {
-        strcat( lpszSymbolPath, ";" );
-        strcat( lpszSymbolPath, lpszPath );
+    if (GetEnvironmentVariableA("_NT_ALTERNATE_SYMBOL_PATH", lpszPath, BUFFERSIZE)) {
+        strcat(lpszSymbolPath, ";");
+        strcat(lpszSymbolPath, lpszPath);
     }
 
     // environment variable SYSTEMROOT
-    if ( GetEnvironmentVariableA( "SYSTEMROOT", lpszPath, BUFFERSIZE ) )
-    {
-        strcat( lpszSymbolPath, ";" );
-        strcat( lpszSymbolPath, lpszPath );
-        strcat( lpszSymbolPath, ";" );
+    if (GetEnvironmentVariableA("SYSTEMROOT", lpszPath, BUFFERSIZE)) {
+        strcat(lpszSymbolPath, ";");
+        strcat(lpszSymbolPath, lpszPath);
+        strcat(lpszSymbolPath, ";");
 
         // SYSTEMROOT\System32
-        strcat( lpszSymbolPath, lpszPath );
-        strcat( lpszSymbolPath, "\\System32" );
+        strcat(lpszSymbolPath, lpszPath);
+        strcat(lpszSymbolPath, "\\System32");
     }
 
     // Add user defined path
-    if ( lpszIniPath != NULL )
-        if ( lpszIniPath[0] != '\0' )
-        {
-            strcat( lpszSymbolPath, ";" );
-            strcat( lpszSymbolPath, lpszIniPath );
+    if (lpszIniPath != NULL)
+        if (lpszIniPath[0] != '\0') {
+            strcat(lpszSymbolPath, ";");
+            strcat(lpszSymbolPath, lpszIniPath);
         }
 }
 
 // Uninitialize the loaded symbol files
-BOOL UninitSymInfo()
-{
-    return SymCleanup( GetCurrentProcess() );
+BOOL UninitSymInfo() {
+    return SymCleanup(GetCurrentProcess());
 }
 
 // Initializes the symbol files
-BOOL InitSymInfo( PCSTR lpszInitialSymbolPath )
-{
-    CHAR     lpszSymbolPath[BUFFERSIZE];
-    std::uint32_t    symOptions = SymGetOptions();
+BOOL InitSymInfo(PCSTR lpszInitialSymbolPath) {
+    CHAR lpszSymbolPath[BUFFERSIZE];
+    std::uint32_t symOptions = SymGetOptions();
 
     symOptions |= SYMOPT_LOAD_LINES;
     symOptions &= ~SYMOPT_UNDNAME;
-    SymSetOptions( symOptions );
+    SymSetOptions(symOptions);
 
     // Get the search path for the symbol files
-    InitSymbolPath( lpszSymbolPath, lpszInitialSymbolPath );
+    InitSymbolPath(lpszSymbolPath, lpszInitialSymbolPath);
 
-    return SymInitialize( GetCurrentProcess(), lpszSymbolPath, TRUE);
+    return SymInitialize(GetCurrentProcess(), lpszSymbolPath, TRUE);
 }
 
 // Get the module name from a given address
-BOOL GetModuleNameFromAddress( std::uint32_t address, LPTSTR lpszModule )
-{
-    BOOL              ret = FALSE;
-    IMAGEHLP_MODULE   moduleInfo;
+BOOL GetModuleNameFromAddress(std::uint32_t address, LPTSTR lpszModule) {
+    BOOL ret = FALSE;
+    IMAGEHLP_MODULE moduleInfo;
 
-    ::ZeroMemory( &moduleInfo, sizeof(moduleInfo) );
+    ::ZeroMemory(&moduleInfo, sizeof(moduleInfo));
     moduleInfo.SizeOfStruct = sizeof(moduleInfo);
 
-    if ( SymGetModuleInfo( GetCurrentProcess(), (std::uint32_t)address, &moduleInfo ) )
-    {
+    if (SymGetModuleInfo(GetCurrentProcess(), (std::uint32_t)address, &moduleInfo)) {
         // Got it!
-        PCSTR2LPTSTR( moduleInfo.ModuleName, lpszModule );
+        PCSTR2LPTSTR(moduleInfo.ModuleName, lpszModule);
         ret = TRUE;
-    }
-    else
+    } else
         // Not found :(
-        _tcscpy( lpszModule, _T("?") );
+        _tcscpy(lpszModule, _T("?"));
 
     return ret;
 }
 
 // Get function prototype and parameter info from ip address and stack address
-BOOL GetFunctionInfoFromAddresses( ULONG fnAddress, ULONG stackAddress, LPTSTR lpszSymbol )
-{
-    BOOL              ret = FALSE;
-    std::uint32_t             dwDisp = 0;
-    std::uint32_t             dwSymSize = 10000;
-    TCHAR             lpszUnDSymbol[BUFFERSIZE]=_T("?");
-    CHAR              lpszNonUnicodeUnDSymbol[BUFFERSIZE]="?";
-    LPTSTR            lpszParamSep = NULL;
-    LPCTSTR           lpszParsed = lpszUnDSymbol;
-    PIMAGEHLP_SYMBOL  pSym = (PIMAGEHLP_SYMBOL)GlobalAlloc( GMEM_FIXED, dwSymSize );
+BOOL GetFunctionInfoFromAddresses(ULONG fnAddress, ULONG stackAddress, LPTSTR lpszSymbol) {
+    BOOL ret = FALSE;
+    std::uint32_t dwDisp = 0;
+    std::uint32_t dwSymSize = 10000;
+    TCHAR lpszUnDSymbol[BUFFERSIZE] = _T("?");
+    CHAR lpszNonUnicodeUnDSymbol[BUFFERSIZE] = "?";
+    LPTSTR lpszParamSep = NULL;
+    LPCTSTR lpszParsed = lpszUnDSymbol;
+    PIMAGEHLP_SYMBOL pSym = (PIMAGEHLP_SYMBOL)GlobalAlloc(GMEM_FIXED, dwSymSize);
 
-    ::ZeroMemory( pSym, dwSymSize );
+    ::ZeroMemory(pSym, dwSymSize);
     pSym->SizeOfStruct = dwSymSize;
     pSym->MaxNameLength = dwSymSize - sizeof(IMAGEHLP_SYMBOL);
 
     // Set the default to unknown
-    _tcscpy( lpszSymbol, _T("?") );
+    _tcscpy(lpszSymbol, _T("?"));
 
     // Get symbol info for IP
-    if ( SymGetSymFromAddr( GetCurrentProcess(), (ULONG)fnAddress, &dwDisp, pSym ) )
-    {
+    if (SymGetSymFromAddr(GetCurrentProcess(), (ULONG)fnAddress, &dwDisp, pSym)) {
         // Make the symbol readable for humans
-        UnDecorateSymbolName( pSym->Name, lpszNonUnicodeUnDSymbol, BUFFERSIZE,
-                              UNDNAME_COMPLETE |
-                              UNDNAME_NO_THISTYPE |
-                              UNDNAME_NO_SPECIAL_SYMS |
-                              UNDNAME_NO_MEMBER_TYPE |
-                              UNDNAME_NO_MS_KEYWORDS |
-                              UNDNAME_NO_ACCESS_SPECIFIERS );
+        UnDecorateSymbolName(pSym->Name, lpszNonUnicodeUnDSymbol, BUFFERSIZE,
+                             UNDNAME_COMPLETE | UNDNAME_NO_THISTYPE | UNDNAME_NO_SPECIAL_SYMS | UNDNAME_NO_MEMBER_TYPE |
+                                 UNDNAME_NO_MS_KEYWORDS | UNDNAME_NO_ACCESS_SPECIFIERS);
 
         // Symbol information is ANSI string
-        PCSTR2LPTSTR( lpszNonUnicodeUnDSymbol, lpszUnDSymbol );
+        PCSTR2LPTSTR(lpszNonUnicodeUnDSymbol, lpszUnDSymbol);
 
         // I am just smarter than the symbol file :)
-        if ( _tcscmp(lpszUnDSymbol, _T("_WinMain@16")) == 0 )
+        if (_tcscmp(lpszUnDSymbol, _T("_WinMain@16")) == 0)
             _tcscpy(lpszUnDSymbol, _T("WinMain(HINSTANCE,HINSTANCE,LPCTSTR,int)"));
-        else if ( _tcscmp(lpszUnDSymbol, _T("_main")) == 0 )
+        else if (_tcscmp(lpszUnDSymbol, _T("_main")) == 0)
             _tcscpy(lpszUnDSymbol, _T("main(int,TCHAR * *)"));
-        else if ( _tcscmp(lpszUnDSymbol, _T("_mainCRTStartup")) == 0 )
+        else if (_tcscmp(lpszUnDSymbol, _T("_mainCRTStartup")) == 0)
             _tcscpy(lpszUnDSymbol, _T("mainCRTStartup()"));
-        else if ( _tcscmp(lpszUnDSymbol, _T("_wmain")) == 0 )
+        else if (_tcscmp(lpszUnDSymbol, _T("_wmain")) == 0)
             _tcscpy(lpszUnDSymbol, _T("wmain(int,TCHAR * *,TCHAR * *)"));
-        else if ( _tcscmp(lpszUnDSymbol, _T("_wmainCRTStartup")) == 0 )
+        else if (_tcscmp(lpszUnDSymbol, _T("_wmainCRTStartup")) == 0)
             _tcscpy(lpszUnDSymbol, _T("wmainCRTStartup()"));
 
         lpszSymbol[0] = _T('\0');
 
         // Let's go through the stack, and modify the function prototype, and insert the actual
         // parameter values from the stack
-        if ( _tcsstr( lpszUnDSymbol, _T("(void)") ) == NULL && _tcsstr( lpszUnDSymbol, _T("()") ) == NULL)
-        {
+        if (_tcsstr(lpszUnDSymbol, _T("(void)")) == NULL && _tcsstr(lpszUnDSymbol, _T("()")) == NULL) {
             ULONG index = 0;
-            for( ; ; index++ )
-            {
-                lpszParamSep = (LPTSTR)_tcschr( lpszParsed, _T(',') );
-                if ( lpszParamSep == NULL )
+            for (;; index++) {
+                lpszParamSep = (LPTSTR)_tcschr(lpszParsed, _T(','));
+                if (lpszParamSep == NULL)
                     break;
 
                 *lpszParamSep = _T('\0');
 
-                _tcscat( lpszSymbol, lpszParsed );
-                _stprintf( lpszSymbol + _tcslen(lpszSymbol), _T("=0x%08X,"), *((ULONG*)(stackAddress) + 2 + index) );
+                _tcscat(lpszSymbol, lpszParsed);
+                _stprintf(lpszSymbol + _tcslen(lpszSymbol), _T("=0x%08X,"), *((ULONG *)(stackAddress) + 2 + index));
 
                 lpszParsed = lpszParamSep + 1;
             }
 
-            lpszParamSep = (LPTSTR)_tcschr( lpszParsed, _T(')') );
-            if ( lpszParamSep != NULL )
-            {
+            lpszParamSep = (LPTSTR)_tcschr(lpszParsed, _T(')'));
+            if (lpszParamSep != NULL) {
                 *lpszParamSep = _T('\0');
 
-                _tcscat( lpszSymbol, lpszParsed );
-                _stprintf( lpszSymbol + _tcslen(lpszSymbol), _T("=0x%08X)"), *((ULONG*)(stackAddress) + 2 + index) );
+                _tcscat(lpszSymbol, lpszParsed);
+                _stprintf(lpszSymbol + _tcslen(lpszSymbol), _T("=0x%08X)"), *((ULONG *)(stackAddress) + 2 + index));
 
                 lpszParsed = lpszParamSep + 1;
             }
         }
 
-        _tcscat( lpszSymbol, lpszParsed );
+        _tcscat(lpszSymbol, lpszParsed);
 
         ret = TRUE;
     }
 
-    GlobalFree( pSym );
+    GlobalFree(pSym);
 
     return ret;
 }
@@ -280,38 +259,34 @@ BOOL GetFunctionInfoFromAddresses( ULONG fnAddress, ULONG stackAddress, LPTSTR l
 // The output format is: "sourcefile(linenumber)" or
 //                       "modulename!address" or
 //                       "address"
-BOOL GetSourceInfoFromAddress( std::uint32_t address, LPTSTR lpszSourceInfo )
-{
-    BOOL           ret = FALSE;
-    IMAGEHLP_LINE  lineInfo;
-    std::uint32_t          dwDisp;
-    TCHAR          lpszFileName[BUFFERSIZE] = _T("");
-    TCHAR          lpModuleInfo[BUFFERSIZE] = _T("");
+BOOL GetSourceInfoFromAddress(std::uint32_t address, LPTSTR lpszSourceInfo) {
+    BOOL ret = FALSE;
+    IMAGEHLP_LINE lineInfo;
+    std::uint32_t dwDisp;
+    TCHAR lpszFileName[BUFFERSIZE] = _T("");
+    TCHAR lpModuleInfo[BUFFERSIZE] = _T("");
 
-    _tcscpy( lpszSourceInfo, _T("?(?)") );
+    _tcscpy(lpszSourceInfo, _T("?(?)"));
 
-    ::ZeroMemory( &lineInfo, sizeof( lineInfo ) );
-    lineInfo.SizeOfStruct = sizeof( lineInfo );
+    ::ZeroMemory(&lineInfo, sizeof(lineInfo));
+    lineInfo.SizeOfStruct = sizeof(lineInfo);
 
-    if ( SymGetLineFromAddr( GetCurrentProcess(), address, &dwDisp, &lineInfo ) )
-    {
+    if (SymGetLineFromAddr(GetCurrentProcess(), address, &dwDisp, &lineInfo)) {
         // Got it. Let's use "sourcefile(linenumber)" format
-        PCSTR2LPTSTR( lineInfo.FileName, lpszFileName );
-        _stprintf( lpszSourceInfo, _T("%s(%d)"), lpszFileName, lineInfo.LineNumber );
+        PCSTR2LPTSTR(lineInfo.FileName, lpszFileName);
+        _stprintf(lpszSourceInfo, _T("%s(%d)"), lpszFileName, lineInfo.LineNumber);
         ret = TRUE;
-    }
-    else
-    {
+    } else {
         // There is no source file information. :(
         // Let's use the "modulename!address" format
-        GetModuleNameFromAddress( address, lpModuleInfo );
+        GetModuleNameFromAddress(address, lpModuleInfo);
 
-        if ( lpModuleInfo[0] == _T('?') || lpModuleInfo[0] == _T('\0'))
+        if (lpModuleInfo[0] == _T('?') || lpModuleInfo[0] == _T('\0'))
             // There is no modulename information. :((
             // Let's use the "address" format
-            _stprintf( lpszSourceInfo, _T("0x%08X"), lpModuleInfo, address );
+            _stprintf(lpszSourceInfo, _T("0x%08X"), lpModuleInfo, address);
         else
-            _stprintf( lpszSourceInfo, _T("%s!0x%08X"), lpModuleInfo, address );
+            _stprintf(lpszSourceInfo, _T("%s!0x%08X"), lpModuleInfo, address);
 
         ret = FALSE;
     }
@@ -319,88 +294,73 @@ BOOL GetSourceInfoFromAddress( std::uint32_t address, LPTSTR lpszSourceInfo )
     return ret;
 }
 
-void GetStackTrace(HANDLE hThread, ULONG ranOffsets[][2], ULONG nMaxStack )
-{
-    STACKFRAME     callStack;
-    BOOL           bResult;
-    CONTEXT        context;
-    TCHAR          symInfo[BUFFERSIZE] = _T("?");
-    TCHAR          srcInfo[BUFFERSIZE] = _T("?");
-    HANDLE         hProcess = GetCurrentProcess();
+void GetStackTrace(HANDLE hThread, ULONG ranOffsets[][2], ULONG nMaxStack) {
+    STACKFRAME callStack;
+    BOOL bResult;
+    CONTEXT context;
+    TCHAR symInfo[BUFFERSIZE] = _T("?");
+    TCHAR srcInfo[BUFFERSIZE] = _T("?");
+    HANDLE hProcess = GetCurrentProcess();
 
     // If it's not this thread, let's suspend it, and resume it at the end
-    if ( hThread != GetCurrentThread() )
-        if ( SuspendThread( hThread ) == -1 )
-        {
+    if (hThread != GetCurrentThread())
+        if (SuspendThread(hThread) == -1) {
             // whaaat ?!
-            OutputDebugStringFormat( _T("Call stack info(thread=0x%X) failed.\n") );
+            OutputDebugStringFormat(_T("Call stack info(thread=0x%X) failed.\n"));
             return;
         }
 
-    ::ZeroMemory( &context, sizeof(context) );
+    ::ZeroMemory(&context, sizeof(context));
     context.ContextFlags = CONTEXT_FULL;
 
-    if ( !GetThreadContext( hThread, &context ) )
-    {
-        OutputDebugStringFormat( _T("Call stack info(thread=0x%X) failed.\n") );
+    if (!GetThreadContext(hThread, &context)) {
+        OutputDebugStringFormat(_T("Call stack info(thread=0x%X) failed.\n"));
         return;
     }
 
-    ::ZeroMemory( &callStack, sizeof(callStack) );
-    callStack.AddrPC.Offset    = context.Eip;
+    ::ZeroMemory(&callStack, sizeof(callStack));
+    callStack.AddrPC.Offset = context.Eip;
     callStack.AddrStack.Offset = context.Esp;
     callStack.AddrFrame.Offset = context.Ebp;
-    callStack.AddrPC.Mode      = AddrModeFlat;
-    callStack.AddrStack.Mode   = AddrModeFlat;
-    callStack.AddrFrame.Mode   = AddrModeFlat;
+    callStack.AddrPC.Mode = AddrModeFlat;
+    callStack.AddrStack.Mode = AddrModeFlat;
+    callStack.AddrFrame.Mode = AddrModeFlat;
 
-    for( ULONG index = 0; ; index++ )
-    {
-        bResult = StackWalk(
-                      IMAGE_FILE_MACHINE_I386,
-                      hProcess,
-                      hThread,
-                      &callStack,
-                      NULL,
-                      NULL,
-                      SymFunctionTableAccess,
-                      SymGetModuleBase,
-                      NULL);
+    for (ULONG index = 0;; index++) {
+        bResult = StackWalk(IMAGE_FILE_MACHINE_I386, hProcess, hThread, &callStack, NULL, NULL, SymFunctionTableAccess,
+                            SymGetModuleBase, NULL);
 
         // Ignore the first two levels (it's only TraceAlloc and operator new anyhow)
-        if ( index < 3 )
+        if (index < 3)
             continue;
 
         // Break if we have fetched nMaxStack levels
-        if ( index-3 == nMaxStack)
+        if (index - 3 == nMaxStack)
             break;
 
         // If we are at the top of the stackframe then break.
-        if( !bResult || callStack.AddrFrame.Offset == 0)
-        {
-            ranOffsets[index-3][0] = 0;
-            ranOffsets[index-3][1] = 0;
+        if (!bResult || callStack.AddrFrame.Offset == 0) {
+            ranOffsets[index - 3][0] = 0;
+            ranOffsets[index - 3][1] = 0;
             break;
         }
 
         // Remember program counter and frame pointer
-        ranOffsets[index-3][0] = callStack.AddrPC.Offset;
-        ranOffsets[index-3][1] = callStack.AddrFrame.Offset;
+        ranOffsets[index - 3][0] = callStack.AddrPC.Offset;
+        ranOffsets[index - 3][1] = callStack.AddrFrame.Offset;
     }
 
-    if ( hThread != GetCurrentThread() )
-        ResumeThread( hThread );
+    if (hThread != GetCurrentThread())
+        ResumeThread(hThread);
 }
 
-void WriteStackTrace(ULONG ranOffsets[][2], ULONG nMaxStack, tcstring& roOut)
-{
-    TCHAR          symInfo[BUFFERSIZE] = _T("?");
-    TCHAR          srcInfo[BUFFERSIZE] = _T("?");
+void WriteStackTrace(ULONG ranOffsets[][2], ULONG nMaxStack, tcstring &roOut) {
+    TCHAR symInfo[BUFFERSIZE] = _T("?");
+    TCHAR srcInfo[BUFFERSIZE] = _T("?");
 
-    for (ULONG index = 0; index < nMaxStack && ranOffsets[index][0] != 0 && ranOffsets[index][1] != 0; index++)
-    {
-        GetFunctionInfoFromAddresses( ranOffsets[index][0], ranOffsets[index][1], symInfo );
-        GetSourceInfoFromAddress( ranOffsets[index][0], srcInfo );
+    for (ULONG index = 0; index < nMaxStack && ranOffsets[index][0] != 0 && ranOffsets[index][1] != 0; index++) {
+        GetFunctionInfoFromAddresses(ranOffsets[index][0], ranOffsets[index][1], symInfo);
+        GetSourceInfoFromAddress(ranOffsets[index][0], srcInfo);
 
         roOut += _T("     ");
         roOut += srcInfo;
@@ -410,31 +370,24 @@ void WriteStackTrace(ULONG ranOffsets[][2], ULONG nMaxStack, tcstring& roOut)
     }
 }
 
-struct sdAllocBlock
-{
+struct sdAllocBlock {
     unsigned long nMagicNumber;
-    sdAllocBlock* poNext;
-    sdAllocBlock* poPrev;
+    sdAllocBlock *poNext;
+    sdAllocBlock *poPrev;
     size_t nSize;
     ULONG anStack[MAXSTACK][2];
     char pzNoMansLand[NO_MANS_LAND_SIZE];
 
-    sdAllocBlock()
-    {
-        Init();
-    }
+    sdAllocBlock() { Init(); }
 
-    void Init()
-    {
+    void Init() {
         poNext = this;
         poPrev = this;
         nMagicNumber = 0x55555555;
     }
 
-    void Disconnect()
-    {
-        if (poNext != this)
-        {
+    void Disconnect() {
+        if (poNext != this) {
             poNext->poPrev = poPrev;
             poPrev->poNext = poNext;
             poNext = this;
@@ -442,8 +395,7 @@ struct sdAllocBlock
         }
     }
 
-    void ConnectTo(sdAllocBlock* poPos)
-    {
+    void ConnectTo(sdAllocBlock *poPos) {
         Disconnect();
         poPrev = poPos;
         poNext = poPos->poNext;
@@ -452,50 +404,30 @@ struct sdAllocBlock
     }
 };
 
-void LeakDump(tcstring& roOut);
+void LeakDump(tcstring &roOut);
 
-class CS
-{
+class CS {
     CRITICAL_SECTION cs;
-public:
-    CS()
-    {
-        InitializeCriticalSection(&cs);
-    }
-    ~CS() { }
-    operator CRITICAL_SECTION& ()
-    {
-        return cs;
-    }
+
+  public:
+    CS() { InitializeCriticalSection(&cs); }
+    ~CS() {}
+    operator CRITICAL_SECTION &() { return cs; }
 };
 
-class Guard
-{
-    CRITICAL_SECTION& rcs;
-public:
-    Guard(CRITICAL_SECTION& rcs)
-        : rcs(rcs)
-    {
-        EnterCriticalSection(&rcs);
-    }
-    ~Guard()
-    {
-        LeaveCriticalSection(&rcs);
-    }
+class Guard {
+    CRITICAL_SECTION &rcs;
+
+  public:
+    Guard(CRITICAL_SECTION &rcs) : rcs(rcs) { EnterCriticalSection(&rcs); }
+    ~Guard() { LeaveCriticalSection(&rcs); }
 };
 
+class cLeakDetector {
+  public:
+    cLeakDetector() { InitSymInfo(""); }
 
-class cLeakDetector
-{
-public:
-
-    cLeakDetector()
-    {
-        InitSymInfo("");
-    }
-
-    ~cLeakDetector()
-    {
+    ~cLeakDetector() {
         tcstring leaks;
         LeakDump(leaks);
         OutputDebugString(leaks.c_str());
@@ -507,37 +439,29 @@ static unsigned int nNumAllocs = 0;
 static unsigned int nCurrentAllocs = 0;
 static unsigned int nMaxConcurrent = 0;
 
-CS& Gate()
-{
+CS &Gate() {
     static CS cs;
     return cs;
 }
 
-sdAllocBlock& Head()
-{
+sdAllocBlock &Head() {
     static cLeakDetector oDetector;
     static sdAllocBlock oHead;
     return oHead;
 }
 
-class cInitializer
-{
-public:
-    cInitializer()
-    {
-        Head();
-    };
+class cInitializer {
+  public:
+    cInitializer() { Head(); };
 } oInitalizer;
 
-void LeakDump(tcstring& roOut)
-{
+void LeakDump(tcstring &roOut) {
     Guard at(Gate());
 
     TCHAR buffer[65];
 
-    sdAllocBlock* poBlock = Head().poNext;
-    while (poBlock != &Head())
-    {
+    sdAllocBlock *poBlock = Head().poNext;
+    while (poBlock != &Head()) {
         tcstring stack;
         WriteStackTrace(poBlock->anStack, MAXSTACK, stack);
 
@@ -547,8 +471,7 @@ void LeakDump(tcstring& roOut)
         if (stack.find(_T(": afxMap")) != tcstring::npos)
             bIsKnownLeak = true;
 
-        if (!bIsKnownLeak)
-        {
+        if (!bIsKnownLeak) {
             roOut += _T("Leak of ");
             roOut += _itot(poBlock->nSize, buffer, 10);
             roOut += _T(" bytes detected:\n");
@@ -568,32 +491,27 @@ void LeakDump(tcstring& roOut)
     roOut += _T("\n");
 }
 
-
-bool AssertMem(char* m, char c, size_t s)
-{
+bool AssertMem(char *m, char c, size_t s) {
     size_t i = 0;
     for (i = 0; i < s; i++)
-        if (m[i] != c) break;
+        if (m[i] != c)
+            break;
     return i >= s;
 }
 
-void CheckNoMansLand()
-{
+void CheckNoMansLand() {
     Guard at(Gate());
 
-    sdAllocBlock* poBlock = Head().poNext;
-    while (poBlock != &Head())
-    {
-        if (!AssertMem(poBlock->pzNoMansLand, 0x55, NO_MANS_LAND_SIZE))
-        {
+    sdAllocBlock *poBlock = Head().poNext;
+    while (poBlock != &Head()) {
+        if (!AssertMem(poBlock->pzNoMansLand, 0x55, NO_MANS_LAND_SIZE)) {
             bool MEMORYERROR_STUFF_WRITTEN_IN_NOMANSLAND_LEAD = false;
             tcstring stack;
             WriteStackTrace(poBlock->anStack, MAXSTACK, stack);
             assert(MEMORYERROR_STUFF_WRITTEN_IN_NOMANSLAND_LEAD);
         }
-        char* pzNoMansLand = ((char*)poBlock) + sizeof(sdAllocBlock) + poBlock->nSize;
-        if (!AssertMem(pzNoMansLand, 0x55, NO_MANS_LAND_SIZE))
-        {
+        char *pzNoMansLand = ((char *)poBlock) + sizeof(sdAllocBlock) + poBlock->nSize;
+        if (!AssertMem(pzNoMansLand, 0x55, NO_MANS_LAND_SIZE)) {
             bool MEMORYERROR_STUFF_WRITTEN_IN_NOMANSLAND_TAIL = false;
             tcstring stack;
             WriteStackTrace(poBlock->anStack, MAXSTACK, stack);
@@ -603,76 +521,63 @@ void CheckNoMansLand()
     }
 }
 
-void* TraceAlloc(size_t nSize)
-{
+void *TraceAlloc(size_t nSize) {
     Guard at(Gate());
 
     nNumAllocs++;
 #ifdef DETECT_OVERWRITES
-    if (nNumAllocs % NML_CHECK_EVERY == 0)
-    {
+    if (nNumAllocs % NML_CHECK_EVERY == 0) {
         CheckNoMansLand();
     }
 #endif
 
-    sdAllocBlock* poBlock = (sdAllocBlock*) malloc(nSize + sizeof(sdAllocBlock) + NO_MANS_LAND_SIZE);
+    sdAllocBlock *poBlock = (sdAllocBlock *)malloc(nSize + sizeof(sdAllocBlock) + NO_MANS_LAND_SIZE);
     poBlock->Init();
     poBlock->nSize = nSize;
-    char* pzNoMansLand = ((char*)poBlock) + sizeof(sdAllocBlock) + poBlock->nSize;
+    char *pzNoMansLand = ((char *)poBlock) + sizeof(sdAllocBlock) + poBlock->nSize;
     memset(poBlock->pzNoMansLand, 0x55, NO_MANS_LAND_SIZE);
     memset(pzNoMansLand, 0x55, NO_MANS_LAND_SIZE);
 
-    GetStackTrace(GetCurrentThread(), poBlock->anStack, MAXSTACK );
+    GetStackTrace(GetCurrentThread(), poBlock->anStack, MAXSTACK);
 
     poBlock->ConnectTo(&Head());
     nCurrentAllocs++;
     if (nCurrentAllocs > nMaxConcurrent)
         nMaxConcurrent = nCurrentAllocs;
-    return (void*)(((char*) poBlock) + sizeof(sdAllocBlock));
+    return (void *)(((char *)poBlock) + sizeof(sdAllocBlock));
 }
 
-
-void TraceDealloc(void* poMem)
-{
+void TraceDealloc(void *poMem) {
     Guard at(Gate());
 
-    if (!poMem) return; // delete NULL; = do nothing
+    if (!poMem)
+        return;  // delete NULL; = do nothing
 
-    sdAllocBlock* poBlock = (sdAllocBlock*) ((char*)poMem - sizeof(sdAllocBlock));
-    char* pzNoMansLand = ((char*)poBlock) + sizeof(sdAllocBlock) + poBlock->nSize;
+    sdAllocBlock *poBlock = (sdAllocBlock *)((char *)poMem - sizeof(sdAllocBlock));
+    char *pzNoMansLand = ((char *)poBlock) + sizeof(sdAllocBlock) + poBlock->nSize;
 
-    if (poBlock->nMagicNumber != 0x55555555)
-    {
+    if (poBlock->nMagicNumber != 0x55555555) {
         // Whupps, something fishy is going on
 
         // Validate the address against our list of allocated blocks
-        sdAllocBlock* poLoopBlock = Head().poNext;
+        sdAllocBlock *poLoopBlock = Head().poNext;
         while (poLoopBlock != &Head() && poLoopBlock != poBlock)
             poLoopBlock = poLoopBlock->poNext;
-        if (poLoopBlock == &Head())
-        {
+        if (poLoopBlock == &Head()) {
             // Hell we didn't allocate this block.
             // Just free the memory and hope for the best.
             free(poMem);
-        }
-        else
-        {
+        } else {
             bool MEMORYERROR_STUFF_WRITTEN_IN_NOMANSLAND_LEAD = false;
             assert(MEMORYERROR_STUFF_WRITTEN_IN_NOMANSLAND_LEAD);
         }
-    }
-    else if (!AssertMem(poBlock->pzNoMansLand, 0x55, NO_MANS_LAND_SIZE))
-    {
+    } else if (!AssertMem(poBlock->pzNoMansLand, 0x55, NO_MANS_LAND_SIZE)) {
         bool MEMORYERROR_STUFF_WRITTEN_IN_NOMANSLAND_LEAD = false;
         assert(MEMORYERROR_STUFF_WRITTEN_IN_NOMANSLAND_LEAD);
-    }
-    else if (!AssertMem(pzNoMansLand, 0x55, NO_MANS_LAND_SIZE))
-    {
+    } else if (!AssertMem(pzNoMansLand, 0x55, NO_MANS_LAND_SIZE)) {
         bool MEMORYERROR_STUFF_WRITTEN_IN_NOMANSLAND_TAIL = false;
         assert(MEMORYERROR_STUFF_WRITTEN_IN_NOMANSLAND_TAIL);
-    }
-    else
-    {
+    } else {
         poBlock->Disconnect();
         free(poBlock);
         nCurrentAllocs--;
@@ -680,44 +585,36 @@ void TraceDealloc(void* poMem)
 }
 
 // Take over global new and delete
-void* operator new(size_t s)
-{
+void *operator new(size_t s) {
     return TraceAlloc(s);
 }
 
-void* operator new[](size_t s)
-{
+void *operator new[](size_t s) {
     return TraceAlloc(s);
 }
 
-void operator delete(void* pMem)
-{
+void operator delete(void *pMem) {
     TraceDealloc(pMem);
 }
 
-void operator delete[] (void* pMem)
-{
+void operator delete[](void *pMem) {
     TraceDealloc(pMem);
 }
 
 // And then some crap for taking over MFC allocations.
-void* __cdecl operator new(size_t s, LPCSTR lpszFileName, int nLine)
-{
+void *__cdecl operator new(size_t s, LPCSTR lpszFileName, int nLine) {
     return TraceAlloc(s);
 }
 
-void* __cdecl operator new[](size_t s, LPCSTR lpszFileName, int nLine)
-{
+void *__cdecl operator new[](size_t s, LPCSTR lpszFileName, int nLine) {
     return TraceAlloc(s);
 }
 
-void __cdecl operator delete(void* pMem, LPCSTR /* lpszFileName */, int /* nLine */)
-{
+void __cdecl operator delete(void *pMem, LPCSTR /* lpszFileName */, int /* nLine */) {
     TraceDealloc(pMem);
 }
 
-void __cdecl operator delete[](void* pMem, LPCSTR /* lpszFileName */, int /* nLine */)
-{
+void __cdecl operator delete[](void *pMem, LPCSTR /* lpszFileName */, int /* nLine */) {
     TraceDealloc(pMem);
 }
 

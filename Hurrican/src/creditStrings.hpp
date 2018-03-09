@@ -2,8 +2,7 @@
 // Die Credits
 // --------------------------------------------------------------------------------------
 
-const char *Credits[] =
-{
+const char *Credits[] = {
 
     "",
     "",
@@ -292,15 +291,14 @@ const char *Credits[] =
     "",
     "",
     "",
-    "#eoc"			// end of credits =)
+    "#eoc"  // end of credits =)
 
 };
 
-//DKS - Made a version of the above credits text array meant for use on
+// DKS - Made a version of the above credits text array meant for use on
 //      low resolution displays that use text scaling. Long lines are split,
 //      and there's less repeated blank lines.
-const char *LowResCredits[] =
-{
+const char *LowResCredits[] = {
     "",
     "",
     "",
@@ -549,6 +547,6 @@ const char *LowResCredits[] =
     "",
     "",
     "",
-    "#eoc"			// end of credits =)
+    "#eoc"  // end of credits =)
 
 };

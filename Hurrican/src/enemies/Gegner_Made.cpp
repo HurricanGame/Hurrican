@@ -4,48 +4,45 @@
 // Wird vom Bratklops gekotzt und explodiert am Boden/Hurri oder bei Beschuss
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.hpp"
 #include "Gegner_Made.hpp"
+#include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerMade::GegnerMade(int Wert1, int Wert2, bool Light)
-{
-    Handlung		= GEGNER_INIT;
-    HitSound		= 1;
-    Energy			= 10;
-    Value1			= Wert1;
-    Value2			= Wert2;
-    AnimStart		= 0;
-    AnimEnde		= 20;
-    AnimSpeed		= (rand()%10 + 5) / 20.0f;
-    AnimCount		= 0.0f;
-    ChangeLight		= Light;
-    Destroyable		= true;
-    AnimPhase		= 16;
-    OwnDraw			= true;
-    movesin			= 0.0f;
+GegnerMade::GegnerMade(int Wert1, int Wert2, bool Light) {
+    Handlung = GEGNER_INIT;
+    HitSound = 1;
+    Energy = 10;
+    Value1 = Wert1;
+    Value2 = Wert2;
+    AnimStart = 0;
+    AnimEnde = 20;
+    AnimSpeed = (rand() % 10 + 5) / 20.0f;
+    AnimCount = 0.0f;
+    ChangeLight = Light;
+    Destroyable = true;
+    AnimPhase = 16;
+    OwnDraw = true;
+    movesin = 0.0f;
 
     // Nur nach rechts fliegen? (Bratklops)
     //
-    if (Value1 == 98)
-    {
-        AnimPhase = rand()%20;
-        yAcc   = 4.0f;
-        xSpeed =  (rand()%120) / 3.0f;
-        ySpeed = -(((rand()%40) / 3.0f) + 8.0f);
+    if (Value1 == 98) {
+        AnimPhase = rand() % 20;
+        yAcc = 4.0f;
+        xSpeed = (rand() % 120) / 3.0f;
+        ySpeed = -(((rand() % 40) / 3.0f) + 8.0f);
         Handlung = GEGNER_FALLEN;
     }
 
     // oder in alle Richtungen (Schwabbel)
-    else if (Value1 == 99)
-    {
-        AnimPhase = rand()%20;
-        yAcc   = 4.0f;
-        xSpeed =  float ((rand()%200-100)/12);
-        ySpeed = - float (((rand()%40) / 2.0f) + 12.0f);
+    else if (Value1 == 99) {
+        AnimPhase = rand() % 20;
+        yAcc = 4.0f;
+        xSpeed = float((rand() % 200 - 100) / 12);
+        ySpeed = -float(((rand() % 40) / 2.0f) + 12.0f);
         Handlung = GEGNER_FALLEN;
     }
 }
@@ -54,49 +51,40 @@ GegnerMade::GegnerMade(int Wert1, int Wert2, bool Light)
 // Draw funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerMade::DoDraw(void)
-{
+void GegnerMade::DoDraw(void) {
     movesin += 0.8f SYNC;
 
-    if (movesin > 2*PI)
+    if (movesin > 2 * PI)
         movesin = 0.0f;
 
-    switch (Handlung)
-    {
-    case GEGNER_LAUFEN:
-    {
-        pGegnerGrafix[GegnerArt]->RenderSpriteScaled(static_cast<float>(xPos - TileEngine.XOffset) - static_cast<int>(sin(movesin) * 2.5f),
-                static_cast<float>(yPos - TileEngine.YOffset),
-                20 + static_cast<int>(sin(movesin) * 5.0f),
-                20, 15, 0xFFFFFFFF);
+    switch (Handlung) {
+        case GEGNER_LAUFEN: {
+            pGegnerGrafix[GegnerArt]->RenderSpriteScaled(
+                static_cast<float>(xPos - TileEngine.XOffset) - static_cast<int>(sin(movesin) * 2.5f),
+                static_cast<float>(yPos - TileEngine.YOffset), 20 + static_cast<int>(sin(movesin) * 5.0f), 20, 15,
+                0xFFFFFFFF);
 
-    }
-    break;
+        } break;
 
-    default:
-    {
-        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                               static_cast<float>(yPos - TileEngine.YOffset), AnimPhase,
-                                               0xFFFFFFFF);
-    }
-    break;
+        default: {
+            pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
+                                                   static_cast<float>(yPos - TileEngine.YOffset), AnimPhase,
+                                                   0xFFFFFFFF);
+        } break;
     }
 }
-
 
 // --------------------------------------------------------------------------------------
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerMade::DoKI(void)
-{
+void GegnerMade::DoKI(void) {
     // langsame zugrunde gehen :P
     Energy -= 0.1f SYNC;
 
     BlickRichtung = LINKS;
 
-    if (Handlung == GEGNER_INIT)
-    {
+    if (Handlung == GEGNER_INIT) {
         Handlung = GEGNER_LAUFEN;
 
         if (xPos + 10 < pAim->xpos + 35)
@@ -105,41 +93,27 @@ void GegnerMade::DoKI(void)
             xSpeed = -0.8f;
     }
 
-    if (Handlung == GEGNER_FALLEN)
-    {
+    if (Handlung == GEGNER_FALLEN) {
         SimpleAnimation();
 
-        if ((blocku & BLOCKWERT_WAND) ||
-                (blocku & BLOCKWERT_GEGNERWAND) ||
-                (blocku & BLOCKWERT_PLATTFORM))
-        {
+        if ((blocku & BLOCKWERT_WAND) || (blocku & BLOCKWERT_GEGNERWAND) || (blocku & BLOCKWERT_PLATTFORM)) {
             Handlung = GEGNER_LAUFEN;
         }
-    }
-    else
-    {
+    } else {
         AnimPhase = 15;
         yAcc = 4.0f;
         ySpeed = 0.0f;
 
-        if (!(blocku & BLOCKWERT_WAND) &&
-                !(blocku & BLOCKWERT_GEGNERWAND) &&
-                !(blocku & BLOCKWERT_PLATTFORM))
-        {
+        if (!(blocku & BLOCKWERT_WAND) && !(blocku & BLOCKWERT_GEGNERWAND) && !(blocku & BLOCKWERT_PLATTFORM)) {
             Handlung = GEGNER_FALLEN;
             yAcc = 4.0f;
         }
     }
 
     // an der Wand umdrehen
-    if ((xSpeed < 0.0f &&
-            (blockl & BLOCKWERT_WAND ||
-             blockl & BLOCKWERT_GEGNERWAND)) ||
+    if ((xSpeed < 0.0f && (blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND)) ||
 
-            (xSpeed > 0.0f &&
-             (blockr & BLOCKWERT_WAND ||
-              blockr & BLOCKWERT_GEGNERWAND)))
-    {
+        (xSpeed > 0.0f && (blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND))) {
         xSpeed *= -1;
     }
 
@@ -152,11 +126,9 @@ void GegnerMade::DoKI(void)
 // Made explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerMade::GegnerExplode(void)
-{
-    SoundManager.PlayWave (100, rand ()%200 + 20, 8000 + rand()%4000, SOUND_MADE);
+void GegnerMade::GegnerExplode(void) {
+    SoundManager.PlayWave(100, rand() % 200 + 20, 8000 + rand() % 4000, SOUND_MADE);
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(float(xPos - 10 + rand()%24),
-                                      float(yPos - 12 + rand()%22), MADEBLUT);
+        PartikelSystem.PushPartikel(float(xPos - 10 + rand() % 24), float(yPos - 12 + rand() % 22), MADEBLUT);
 }

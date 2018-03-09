@@ -5,53 +5,48 @@
 // Er kann zwar drauf stehen, verliert dabei aber enorm viel energie
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.hpp"
 #include "Trigger_Spikelift.hpp"
+#include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerSpikelift::GegnerSpikelift(int Wert1, int Wert2, bool Light)
-{
-    Handlung		= GEGNER_INIT;
-    BlickRichtung	= RECHTS;
-    Energy			= 100;
-    Value1			= Wert1;
-    Value2			= Wert2;
-    ChangeLight		= Light;
-    Destroyable		= false;
-    AnimCount	    = 0.0f;
-    TestBlock		= false;
-    OwnDraw			= true;
+GegnerSpikelift::GegnerSpikelift(int Wert1, int Wert2, bool Light) {
+    Handlung = GEGNER_INIT;
+    BlickRichtung = RECHTS;
+    Energy = 100;
+    Value1 = Wert1;
+    Value2 = Wert2;
+    ChangeLight = Light;
+    Destroyable = false;
+    AnimCount = 0.0f;
+    TestBlock = false;
+    OwnDraw = true;
 }
 
 // --------------------------------------------------------------------------------------
 // Eigene Drawfuktion
 // --------------------------------------------------------------------------------------
 
-void GegnerSpikelift::DoDraw(void)
-{
+void GegnerSpikelift::DoDraw(void) {
     // Unterteil rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSprite (static_cast<float>(xPos-TileEngine.XOffset),
-                                            static_cast<float>(yPos-TileEngine.YOffset) + 40.0f,
-                                            1, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
+                                           static_cast<float>(yPos - TileEngine.YOffset) + 40.0f, 1, 0xFFFFFFFF);
 
     // Oberteil (Spikes) rendern
     if (Value1 == 0)
-        pGegnerGrafix[GegnerArt]->RenderSprite (static_cast<float>(xPos-TileEngine.XOffset),
-                                                static_cast<float>(yPos-TileEngine.YOffset),
-                                                0, 0xFFFFFFFF);
+        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
+                                               static_cast<float>(yPos - TileEngine.YOffset), 0, 0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------
 // "Spikelift KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSpikelift::DoKI(void)
-{
-#if 0 // PICKLE was turned off by comments, this is cleaner
+void GegnerSpikelift::DoKI(void) {
+#if 0  // PICKLE was turned off by comments, this is cleaner
     // Je nach Handlung richtig verhalten
     //
     switch (Handlung)
@@ -166,6 +161,4 @@ void GegnerSpikelift::DoKI(void)
 // Spikelift explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerSpikelift::GegnerExplode(void)
-{
-}
+void GegnerSpikelift::GegnerExplode(void) {}

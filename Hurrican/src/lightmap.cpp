@@ -1,4 +1,4 @@
-//DKS - Lightmaps have been disabled (never worked originally, see Tileengine.cpp's
+// DKS - Lightmaps have been disabled (never worked originally, see Tileengine.cpp's
 //      comments for DrawLightmap()), so all the following is commented out now:
 #if 0
 
@@ -16,9 +16,9 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
+#include "lightmap.h"
 #include <stdio.h>
 #include "Gameplay.hpp"
-#include "lightmap.h"
 #include "Logdatei.hpp"
 #include "unrarlib.h"
 
@@ -84,7 +84,7 @@ void CLightMap::Load(const char *filename)
 #else
     Protokoll << "Error loading Lightmap " << filename << " !\n" << std::endl;
     return;
-#endif // USE_UNRARLIB
+#endif  // USE_UNRARLIB
 
     fopen_s (&TempFile, TEMP_FILE_PREFIX "temp.dat", "wb");	// Datei öffnen
     fwrite (pData, Size, 1, TempFile);			// speichern
@@ -176,4 +176,4 @@ loadfile:
 #endif
 }
 
-#endif //0
+#endif  // 0

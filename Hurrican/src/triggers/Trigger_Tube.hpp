@@ -4,17 +4,17 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerTube : public GegnerClass
-{
-private :
-    float	SinOff;
-public :
+class GegnerTube : public GegnerClass {
+  private:
+    float SinOff;
 
-    GegnerTube(int  Wert1, int Wert2,					// Konstruktor
+  public:
+    GegnerTube(int Wert1,
+               int Wert2,  // Konstruktor
                bool Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-    void DoDraw		   (void);							// Zeichnen
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw(void);         // Zeichnen
 };
 
 #endif

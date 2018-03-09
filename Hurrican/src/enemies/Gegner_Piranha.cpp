@@ -5,60 +5,56 @@
 // er in der Nähe ist
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.hpp"
 #include "Gegner_Piranha.hpp"
+#include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
 // Piranha Konstruktor
 
-GegnerPiranha::GegnerPiranha(int Wert1, int Wert2, bool Light)
-{
-    Handlung		= GEGNER_LAUFEN;
-    HitSound		= 1;
-    AnimStart		= 0;
-    AnimEnde		= 10;
-    AnimSpeed		= 0.75f;
-    if (rand()%2 == 0)
-        BlickRichtung	= LINKS;
+GegnerPiranha::GegnerPiranha(int Wert1, int Wert2, bool Light) {
+    Handlung = GEGNER_LAUFEN;
+    HitSound = 1;
+    AnimStart = 0;
+    AnimEnde = 10;
+    AnimSpeed = 0.75f;
+    if (rand() % 2 == 0)
+        BlickRichtung = LINKS;
     else
-        BlickRichtung	= RECHTS;
-    xSpeed			= -8.0;
-    ySpeed			=  0.0f;
-    xAcc			=  0.0f;
-    yAcc			=  0.0f;
-    Energy			= 30;
-    Value1			= Wert1;
-    Value2			= Wert2;
+        BlickRichtung = RECHTS;
+    xSpeed = -8.0;
+    ySpeed = 0.0f;
+    xAcc = 0.0f;
+    yAcc = 0.0f;
+    Energy = 30;
+    Value1 = Wert1;
+    Value2 = Wert2;
 
     // vom bigfish ausgespuckt
-    if (Value1 == 98)
-    {
+    if (Value1 == 98) {
         Value1 = 99;
         Value2 = 0;
         Handlung = GEGNER_SPECIAL;
 
-        xSpeed = -20.0f - rand()%20;
-        xsave  = xSpeed;
+        xSpeed = -20.0f - rand() % 20;
+        xsave = xSpeed;
         ySpeed = static_cast<float>(Wert2) * 3;
-        ysave  = ySpeed;
+        ysave = ySpeed;
 
         AnimCount = 1.0f;
-    }
-    else
+    } else
 
         if (Value2 != 1)
-            Value2			= rand()%20 + 2;
-    ChangeLight		= Light;
-    Destroyable		= true;
-    OwnDraw			= true;
+        Value2 = rand() % 20 + 2;
+    ChangeLight = Light;
+    Destroyable = true;
+    OwnDraw = true;
 }
 
 // --------------------------------------------------------------------------------------
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerPiranha::DoDraw(void)
-{
+void GegnerPiranha::DoDraw(void) {
     // Piranha rendern
     //
     bool mirror;
@@ -77,144 +73,115 @@ void GegnerPiranha::DoDraw(void)
     else
         off = 20;
 
-    pGegnerGrafix[GegnerArt]->RenderSprite (static_cast<float>(xPos-TileEngine.XOffset),
-                                            static_cast<float>(yPos-TileEngine.YOffset),
-                                            off+AnimPhase, 0xFFFFFFFF, mirror);
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
+                                           static_cast<float>(yPos - TileEngine.YOffset), off + AnimPhase, 0xFFFFFFFF,
+                                           mirror);
 }
 
 // --------------------------------------------------------------------------------------
 // Piranha Bewegungs KI
 
-void GegnerPiranha::DoKI(void)
-{
+void GegnerPiranha::DoKI(void) {
     if (Handlung != GEGNER_SPECIAL)
         SimpleAnimation();
 
     // Nach links bzw rechts auf Kollision prüfen und dann ggf umkehren
     //
-    if ((xSpeed < 0.0f &&
-            (blockl & BLOCKWERT_WAND ||
-             blockl & BLOCKWERT_GEGNERWAND)) ||
-            (xSpeed > 0.0f &&
-             (blockr & BLOCKWERT_WAND ||
-              blockr & BLOCKWERT_GEGNERWAND)))
+    if ((xSpeed < 0.0f && (blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND)) ||
+        (xSpeed > 0.0f && (blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND)))
 
     {
-        xSpeed	      = 0;
-        Handlung	  = GEGNER_DREHEN;
-        AnimPhase	  = 10;
-        AnimStart	  = 0;
-        AnimEnde	  = 15;
+        xSpeed = 0;
+        Handlung = GEGNER_DREHEN;
+        AnimPhase = 10;
+        AnimStart = 0;
+        AnimEnde = 15;
     }
 
     // Spieler im Wasser und in Sichtweite ? Dann verfolgen
-    if (pAim->InLiquid == true &&
-            Value1 == 99 &&
-            (PlayerAbstand() <= 150 ||
-             Value2 == 1))
-    {
-
-        if (pAim->ypos+4+Value2 < yPos &&	// Spieler oberhalb oder
-                !(blocko & BLOCKWERT_WAND)		&&
-                !(blocko & BLOCKWERT_GEGNERWAND) &&
-                blocko & BLOCKWERT_WASSER)
+    if (pAim->InLiquid == true && Value1 == 99 && (PlayerAbstand() <= 150 || Value2 == 1)) {
+        if (pAim->ypos + 4 + Value2 < yPos &&  // Spieler oberhalb oder
+            !(blocko & BLOCKWERT_WAND) && !(blocko & BLOCKWERT_GEGNERWAND) && blocko & BLOCKWERT_WASSER)
             yPos -= 4.0f SYNC;
 
-        if (pAim->ypos+4+Value2 > yPos &&	// unterhalb des Piranhas
-                !(TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_WAND) &&
-                !(TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_GEGNERWAND))
-            yPos += 4.0f SYNC;			// Dann auf ihn zu schwimmen
+        if (pAim->ypos + 4 + Value2 > yPos &&  // unterhalb des Piranhas
+            !(TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_WAND) &&
+            !(TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_GEGNERWAND))
+            yPos += 4.0f SYNC;  // Dann auf ihn zu schwimmen
     }
 
     // Je nach Handlung richtig verhalten
     //
-    switch (Handlung)
-    {
-    case GEGNER_SPECIAL:
-    {
-        AnimCount -= 0.1f SYNC;
+    switch (Handlung) {
+        case GEGNER_SPECIAL: {
+            AnimCount -= 0.1f SYNC;
 
-        xSpeed = xsave * AnimCount;
-        ySpeed = ysave * AnimCount;
+            xSpeed = xsave * AnimCount;
+            ySpeed = ysave * AnimCount;
 
-        if (AnimCount < 0.0f)
+            if (AnimCount < 0.0f) {
+                xSpeed = 0.0;
+                ySpeed = 0.0f;
+                Value2 = 1;
+                Value1 = 99;
+                Handlung = GEGNER_LAUFEN;
+            }
+
+        } break;
+
+        case GEGNER_LAUFEN:  // Piranha schwimmt rum
         {
-            xSpeed = 0.0;
-            ySpeed = 0.0f;
-            Value2 = 1;
-            Value1 = 99;
-            Handlung = GEGNER_LAUFEN;
-        }
-
-    }
-    break;
-
-    case GEGNER_LAUFEN:						// Piranha schwimmt rum
-    {
-        if (pAim->InLiquid == true &&	// Spieler im Wasser und
-                Value1 == 99 &&
-                (PlayerAbstand() <= 150 ||
-                 Value2 == 1))			// in Sichtweite ?
-        {
-            if (BlickRichtung == LINKS)		// Dann schneller schwimmen
-                xSpeed = -14.0f;
-            else
-                xSpeed =  14.0f;
-
-            // Piranha links oder rechts am Spieler vorbei ?
-            // Dann umdrehen und weiter verfolgen
-            if (Handlung == GEGNER_LAUFEN)
+            if (pAim->InLiquid == true &&                                 // Spieler im Wasser und
+                Value1 == 99 && (PlayerAbstand() <= 150 || Value2 == 1))  // in Sichtweite ?
             {
-                if ((BlickRichtung == LINKS &&
-                        pAim->xpos > xPos + GegnerRect[GegnerArt].right-20) ||
+                if (BlickRichtung == LINKS)  // Dann schneller schwimmen
+                    xSpeed = -14.0f;
+                else
+                    xSpeed = 14.0f;
 
-                        (BlickRichtung == RECHTS &&
-                         pAim->xpos + pAim->CollideRect.right < xPos))
+                // Piranha links oder rechts am Spieler vorbei ?
+                // Dann umdrehen und weiter verfolgen
+                if (Handlung == GEGNER_LAUFEN) {
+                    if ((BlickRichtung == LINKS && pAim->xpos > xPos + GegnerRect[GegnerArt].right - 20) ||
+
+                        (BlickRichtung == RECHTS && pAim->xpos + pAim->CollideRect.right < xPos)) {
+                        xSpeed = 0;
+                        Handlung = GEGNER_DREHEN;
+                        AnimPhase = 10;
+                        AnimStart = 0;
+                        AnimEnde = 15;
+                    }
+                }
+            } else {
+                if (BlickRichtung == LINKS)
+                    xSpeed = -float(rand() % 10 + 4);
+                else
+                    xSpeed = float(rand() % 10 + 4);
+            }
+        } break;
+
+        case GEGNER_DREHEN:  // Piranha dreht sich um
+        {
+            if (AnimPhase == AnimStart) {
+                Handlung = GEGNER_LAUFEN;
+                AnimEnde = 10;
+                AnimStart = 0;
+                AnimPhase = 0;
+
+                if (BlickRichtung == LINKS)  // Ab jetzt in die andere Richtung schwimmen
                 {
-                    xSpeed	      = 0;
-                    Handlung	  = GEGNER_DREHEN;
-                    AnimPhase	  = 10;
-                    AnimStart	  = 0;
-                    AnimEnde	  = 15;
+                    BlickRichtung = RECHTS;
+                    xSpeed = 8.0f;
+                } else {
+                    BlickRichtung = LINKS;
+                    xSpeed = -8.0f;
                 }
             }
-        }
-        else
-        {
-            if (BlickRichtung == LINKS)
-                xSpeed = -float (rand()%10 + 4);
-            else
-                xSpeed =  float (rand()%10 + 4);
-        }
-    }
-    break;
+        } break;
 
-    case GEGNER_DREHEN:						// Piranha dreht sich um
-    {
-        if (AnimPhase == AnimStart)
-        {
-            Handlung  = GEGNER_LAUFEN;
-            AnimEnde  = 10;
-            AnimStart = 0;
-            AnimPhase = 0;
-
-            if (BlickRichtung == LINKS)		// Ab jetzt in die andere Richtung schwimmen
-            {
-                BlickRichtung = RECHTS;
-                xSpeed = 8.0f;
-            }
-            else
-            {
-                BlickRichtung = LINKS;
-                xSpeed = -8.0f;
-            }
-        }
-    }
-    break;
-
-    default :
-        break;
-    } // switch
+        default:
+            break;
+    }  // switch
 
     // Testen, ob der Spieler den Piranha berührt hat
     TestDamagePlayers(1.0f SYNC);
@@ -223,23 +190,19 @@ void GegnerPiranha::DoKI(void)
 // --------------------------------------------------------------------------------------
 // Piranha explodiert
 
-void GegnerPiranha::GegnerExplode(void)
-{
+void GegnerPiranha::GegnerExplode(void) {
     // Fetzen und Blasen erzeugen
     int i;
-    for (i=0; i<3; i++)
-        PartikelSystem.PushPartikel(float(xPos - 20 + rand()%45),
-                                      float(yPos - 5  + rand()%30), PIRANHATEILE);
+    for (i = 0; i < 3; i++)
+        PartikelSystem.PushPartikel(float(xPos - 20 + rand() % 45), float(yPos - 5 + rand() % 30), PIRANHATEILE);
 
-    for (i=0; i<3; i++)
-        PartikelSystem.PushPartikel(float(xPos - 10  + rand()%45),
-                                      float(yPos + 10  + rand()%30), BUBBLE);
+    for (i = 0; i < 3; i++)
+        PartikelSystem.PushPartikel(float(xPos - 10 + rand() % 45), float(yPos + 10 + rand() % 30), BUBBLE);
 
     // Blutwolke dazu
-    PartikelSystem.PushPartikel(float(xPos + 2),
-                                  float(yPos - 5), PIRANHABLUT);
+    PartikelSystem.PushPartikel(float(xPos + 2), float(yPos - 5), PIRANHABLUT);
 
-    SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, -rand() % 2000 + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 200;
 }

@@ -5,34 +5,32 @@
 // und dreht an einem WendePunkt um
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.hpp"
 #include "Trigger_Plattform.hpp"
+#include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerPlattform::GegnerPlattform(int Wert1, int Wert2, bool Light)
-{
-    Handlung		= GEGNER_STEHEN;
-    BlickRichtung	= LINKS;
-    Energy			= 100;
-    Value1			= Wert1;
-    Value2			= Wert2;
-    xSpeed			= static_cast<float>(Wert1);
-    ySpeed			= static_cast<float>(Wert2);
+GegnerPlattform::GegnerPlattform(int Wert1, int Wert2, bool Light) {
+    Handlung = GEGNER_STEHEN;
+    BlickRichtung = LINKS;
+    Energy = 100;
+    Value1 = Wert1;
+    Value2 = Wert2;
+    xSpeed = static_cast<float>(Wert1);
+    ySpeed = static_cast<float>(Wert2);
 
-    ChangeLight		= Light;
-    Destroyable		= false;
-    Active			= true;
+    ChangeLight = Light;
+    Destroyable = false;
+    Active = true;
 }
 
 // --------------------------------------------------------------------------------------
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerPlattform::DoKI(void)
-{
+void GegnerPlattform::DoKI(void) {
     if (TileEngine.DateiAppendix.UsedPowerblock == 2)
         AnimPhase = 1;
     else
@@ -61,6 +59,4 @@ void GegnerPlattform::DoKI(void)
 // Plattform explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerPlattform::GegnerExplode(void)
-{
-}
+void GegnerPlattform::GegnerExplode(void) {}

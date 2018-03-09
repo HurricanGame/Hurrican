@@ -4,17 +4,16 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerPokeNuke : public GegnerClass
-{
-private:
-    float	SmokeDelay;
+class GegnerPokeNuke : public GegnerClass {
+  private:
+    float SmokeDelay;
 
-public:
-
-    GegnerPokeNuke (int  Wert1, int Wert2,			// Konstruktor
-                    bool Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner
+  public:
+    GegnerPokeNuke(int Wert1,
+                   int Wert2,  // Konstruktor
+                   bool Light);
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
 };
 

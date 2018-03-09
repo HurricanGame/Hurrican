@@ -15,9 +15,9 @@
 // Inlcudces
 // --------------------------------------------------------------------------------------
 
-#include "Globals.hpp"
 #include "DX8Font.hpp"
 #include "DX8Sprite.hpp"
+#include "Globals.hpp"
 #include "Timer.hpp"
 
 // --------------------------------------------------------------------------------------
@@ -26,39 +26,37 @@
 
 //----- Zustände
 
-#define OUTTRO_FADEIN			0
-#define OUTTRO_TOWER_EXPLODE	1
-#define OUTTRO_PLAYER_FLEES		2
-#define OUTTRO_SCROLLER			3
+#define OUTTRO_FADEIN 0
+#define OUTTRO_TOWER_EXPLODE 1
+#define OUTTRO_PLAYER_FLEES 2
+#define OUTTRO_SCROLLER 3
 
 // --------------------------------------------------------------------------------------
 // Klassen Deklaration für das Outtro
 // --------------------------------------------------------------------------------------
 
-class OuttroClass
-{
-private:
-    DirectGraphicsSprite	Background;
-    DirectGraphicsSprite	Tower;
-    DirectGraphicsSprite	Henry;
-    DirectGraphicsSprite	Reiter[2];
-    bool					finished;
-    int						Zustand;
-    float					Counter;
-    int						TextOff;
-    float					SmokeDelay;
-    float					TowerOffset;
-    float					Snow;
-    float					PlayerSmoke;
-    float					px[2], py[2], xs[2], ys[2];
+class OuttroClass {
+  private:
+    DirectGraphicsSprite Background;
+    DirectGraphicsSprite Tower;
+    DirectGraphicsSprite Henry;
+    DirectGraphicsSprite Reiter[2];
+    bool finished;
+    int Zustand;
+    float Counter;
+    int TextOff;
+    float SmokeDelay;
+    float TowerOffset;
+    float Snow;
+    float PlayerSmoke;
+    float px[2], py[2], xs[2], ys[2];
 
-    void	InitPlayerPos(void);
+    void InitPlayerPos(void);
 
-public:
-    OuttroClass(void);							// Konstruktor
-    ~OuttroClass(void);							// Destruktor
-    void DoOuttro   (void);							// Intro ablaufen lassen
-
+  public:
+    OuttroClass(void);    // Konstruktor
+    ~OuttroClass(void);   // Destruktor
+    void DoOuttro(void);  // Intro ablaufen lassen
 };
 
 #endif

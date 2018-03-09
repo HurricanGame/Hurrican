@@ -4,19 +4,18 @@
 #include "GegnerClass.hpp"
 #include "Gegner_Stuff.hpp"
 
-class GegnerBallerdrone : public GegnerClass
-{
-private:
-    float	shotdelay;
+class GegnerBallerdrone : public GegnerClass {
+  private:
+    float shotdelay;
 
-public :
-
-    GegnerBallerdrone(int  Wert1, int Wert2,			// Konstruktor
+  public:
+    GegnerBallerdrone(int Wert1,
+                      int Wert2,  // Konstruktor
                       bool Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
-    void DoDraw		   (void);
+    void DoDraw(void);
 };
 
 #endif

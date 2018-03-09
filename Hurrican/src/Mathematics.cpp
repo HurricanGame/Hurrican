@@ -1,8 +1,8 @@
-#include <stdint.h>
 #include "Mathematics.hpp"
+#include <stdint.h>
 
 #ifdef USE_FAST_RNG
-//DKS - added a very fast RNG, here is an example speed comparison on the GCW Zero:
+// DKS - added a very fast RNG, here is an example speed comparison on the GCW Zero:
 //      (The GCW Zero is a 1GHz 32-bit MIPS device running uclibc Dingux/Linux)
 //      The reason for the vast discrepancy in performance is that rand() on
 //      uclibc strangely locks/unlocks a mutex despite having no internal state
@@ -19,16 +19,14 @@
 //+-------------------------------------+-------------------+--------------------+
 static uint32_t fast_rand_seed_val;
 
-//Used to seed the generator.
-void seed_fast_rand(uint32_t seed)
-{
-   fast_rand_seed_val = seed;
+// Used to seed the generator.
+void seed_fast_rand(uint32_t seed) {
+    fast_rand_seed_val = seed;
 }
 
 // fast_rand routine returns an integer in range 0..32767
-int fast_rand(void)
-{
-   fast_rand_seed_val = (214013 * fast_rand_seed_val + 2531011);
-   return static_cast<int>((fast_rand_seed_val>>16)&0x7FFF);
+int fast_rand(void) {
+    fast_rand_seed_val = (214013 * fast_rand_seed_val + 2531011);
+    return static_cast<int>((fast_rand_seed_val >> 16) & 0x7FFF);
 }
-#endif // USE_FAST_RNG
+#endif  // USE_FAST_RNG

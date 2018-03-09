@@ -4,16 +4,14 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerFieserWalker : public GegnerClass
-{
-private :
-    float	ShotDelay;
+class GegnerFieserWalker : public GegnerClass {
+  private:
+    float ShotDelay;
 
-public :
-
-    GegnerFieserWalker(int  Wert1, int Wert2, bool Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner
+  public:
+    GegnerFieserWalker(int Wert1, int Wert2, bool Light);
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
 };
 

@@ -5,53 +5,48 @@
  * (c) 2017 Stefan Schmidt
  **/
 
-#include <iostream>
 #include "Logdatei.hpp"
+#include <iostream>
 #if defined(ANDROID)
-	#include <android/log.h>
+#include <android/log.h>
 #endif
-
 
 /**
  * Construct the Logger object and open the logfile
  **/
 Logdatei::Logdatei(const std::string &filename)
-: filename_(filename), file(std::ofstream(filename)), delLogFile(false)
-{
-	// Reduce unnecessary syncs
-	std::cout.sync_with_stdio(false);
+    : filename_(filename), file(std::ofstream(filename)), delLogFile(false) {
+    // Reduce unnecessary syncs
+    std::cout.sync_with_stdio(false);
 
-	if(!file)
-	{
-		std::cerr << "Unable to open logfile (" << filename << ")!" << std::endl;
-		exit(EXIT_FAILURE);
-	}
+    if (!file) {
+        std::cerr << "Unable to open logfile (" << filename << ")!" << std::endl;
+        exit(EXIT_FAILURE);
+    }
 }
 
-Logdatei::~Logdatei()
-{
-	// make sure no output gets lost
-	flush();
+Logdatei::~Logdatei() {
+    // make sure no output gets lost
+    flush();
 }
 
 /**
  * Puts the internal buffer into the output-streams, flushes them and empties the buffer
  **/
-void Logdatei::flush ()
-{
-	#ifdef ANDROID
-		// Android has no usable std::cout, so we use the Android-specific logging
-		__android_log_print(ANDROID_LOG_INFO, "Hurrican", "%s", this->str().c_str());
-	#else
-		// print to both outputs
-		std::cout << this->str();
-		this->file << this->str();
+void Logdatei::flush() {
+#ifdef ANDROID
+    // Android has no usable std::cout, so we use the Android-specific logging
+    __android_log_print(ANDROID_LOG_INFO, "Hurrican", "%s", this->str().c_str());
+#else
+    // print to both outputs
+    std::cout << this->str();
+    this->file << this->str();
 
-		// flush both streams to ensure they are up-to-date
-		std::cout << std::flush;
-		this->file << std::flush;
-	#endif
+    // flush both streams to ensure they are up-to-date
+    std::cout << std::flush;
+    this->file << std::flush;
+#endif
 
-	// empty internal buffer
-	this->str("");
+    // empty internal buffer
+    this->str("");
 }

@@ -4,14 +4,13 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerFadeMusic : public GegnerClass
-{
-public:
-
-    GegnerFadeMusic	   (int Wert1,	int Wert2,			// Konstruktor
-                        bool		  Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner
+class GegnerFadeMusic : public GegnerClass {
+  public:
+    GegnerFadeMusic(int Wert1,
+                    int Wert2,  // Konstruktor
+                    bool Light);
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
 };
 

@@ -4,30 +4,29 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerSkeletor : public GegnerClass
-{
-private:
-    float   SmokeDelay;
-    int		ShotCount;
-    float	ShotDelay;
-    float	GunWinkel;
-    bool	HasLaughed;
-    int		AnimOffset;
-    int		LastHandlung;
-    bool	DrawNow;
+class GegnerSkeletor : public GegnerClass {
+  private:
+    float SmokeDelay;
+    int ShotCount;
+    float ShotDelay;
+    float GunWinkel;
+    bool HasLaughed;
+    int AnimOffset;
+    int LastHandlung;
+    bool DrawNow;
 
-    void	CalcGunWinkel();
-    void	Laugh();
+    void CalcGunWinkel();
+    void Laugh();
 
-public:
+  public:
+    DirectGraphicsSprite Flamme;
 
-    DirectGraphicsSprite	Flamme;
-
-    GegnerSkeletor (int Wert1,	int Wert2,			// Konstruktor
-                    bool		  Light);
-    void GegnerExplode (void);						// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-    void DoDraw		   (void);							// Gegner individuell rendern
+    GegnerSkeletor(int Wert1,
+                   int Wert2,  // Konstruktor
+                   bool Light);
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw(void);         // Gegner individuell rendern
 };
 
 #endif

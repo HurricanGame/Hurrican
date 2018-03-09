@@ -4,54 +4,48 @@
 // Spawnt in bestimmten Abständen (Value2) das LaFass =)
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.hpp"
 #include "Trigger_LaFassSpawner.hpp"
+#include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerLaFassSpawner::GegnerLaFassSpawner(int Wert1, int Wert2, bool Light)
-{
-    Handlung		= GEGNER_STEHEN;
-    BlickRichtung	= RECHTS;
-    Energy			= 100;
-    Value1			= Wert1;
-    Value2			= Wert2;
+GegnerLaFassSpawner::GegnerLaFassSpawner(int Wert1, int Wert2, bool Light) {
+    Handlung = GEGNER_STEHEN;
+    BlickRichtung = RECHTS;
+    Energy = 100;
+    Value1 = Wert1;
+    Value2 = Wert2;
 
     // default wert
     if (Value2 == 0)
         Value2 = 40;
 
-    ChangeLight		= Light;
-    Destroyable		= false;
-    OwnDraw			= true;
-    AnimCount		= static_cast<float>(Wert2);
-    DontMove		= true;
-    Active			= true;
+    ChangeLight = Light;
+    Destroyable = false;
+    OwnDraw = true;
+    AnimCount = static_cast<float>(Wert2);
+    DontMove = true;
+    Active = true;
 }
 
 // --------------------------------------------------------------------------------------
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerLaFassSpawner::DoKI(void)
-{
+void GegnerLaFassSpawner::DoKI(void) {
     // Fass spawnen?
     if (PlayerAbstand() < 800)
         AnimCount -= 1.0f SYNC;
 
-    if (AnimCount <= 0.0f)
-    {
+    if (AnimCount <= 0.0f) {
         AnimCount = static_cast<float>(Value2);
 
         // in die richtige Richtung schubsen
-        if (Value1 == 0)
-        {
+        if (Value1 == 0) {
             Gegner.PushGegner(xPos, yPos, LAFASS, -5, 0, false);
-        }
-        else
-        {
+        } else {
             Gegner.PushGegner(xPos, yPos, LAFASS, 5, 0, false);
         }
     }
@@ -61,6 +55,4 @@ void GegnerLaFassSpawner::DoKI(void)
 // LaFassSpawner explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerLaFassSpawner::GegnerExplode(void)
-{
-}
+void GegnerLaFassSpawner::GegnerExplode(void) {}

@@ -4,21 +4,20 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerMiniDragon : public GegnerClass
-{
-private:
-    float	NewX, NewY;
-    float	OldX, OldY;
-    int		Segments;
-    float	ShotDelay;
+class GegnerMiniDragon : public GegnerClass {
+  private:
+    float NewX, NewY;
+    float OldX, OldY;
+    int Segments;
+    float ShotDelay;
 
-public :
-
-    GegnerMiniDragon(int  Wert1, int Wert2,			// Konstruktor
+  public:
+    GegnerMiniDragon(int Wert1,
+                     int Wert2,  // Konstruktor
                      bool Light);
-    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-    void DoDraw		   (void);							// Gegner individuell rendern
-    void GegnerExplode (void);							// Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw(void);         // Gegner individuell rendern
+    void GegnerExplode(void);  // Gegner explodiert
 };
 
 #endif

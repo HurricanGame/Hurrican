@@ -4,93 +4,87 @@
 // Hopst aus der Lava raus und wieder rein
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.hpp"
 #include "Gegner_LavaBall.hpp"
+#include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerLavaBall::GegnerLavaBall(int Wert1, int Wert2, bool Light)
-{
-    Active			= true;
-    Handlung		= GEGNER_EINFLIEGEN;
-    Energy			= 100;
-    Value1			= Wert1;
-    Value2			= Wert2;
-    AnimStart		= 0;
-    AnimEnde		= 19;
-    AnimSpeed		= 0.5f;
-    ChangeLight		= Light;
-    Destroyable		= false;
-    ySpeed			= float (-Value1);
-    yAcc			= 4.0f;
-    SmokeDelay		= 0.0f;
-    FlareDelay		= 0.0f;
-    InLava			= true;
-    OwnDraw			= true;
+GegnerLavaBall::GegnerLavaBall(int Wert1, int Wert2, bool Light) {
+    Active = true;
+    Handlung = GEGNER_EINFLIEGEN;
+    Energy = 100;
+    Value1 = Wert1;
+    Value2 = Wert2;
+    AnimStart = 0;
+    AnimEnde = 19;
+    AnimSpeed = 0.5f;
+    ChangeLight = Light;
+    Destroyable = false;
+    ySpeed = float(-Value1);
+    yAcc = 4.0f;
+    SmokeDelay = 0.0f;
+    FlareDelay = 0.0f;
+    InLava = true;
+    OwnDraw = true;
 }
 
 // --------------------------------------------------------------------------------------
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerLavaBall::DoDraw(void)
-{
+void GegnerLavaBall::DoDraw(void) {
     // Render
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
-                                           static_cast<float>(yPos-TileEngine.YOffset),
-                                           AnimPhase, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
+                                           static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFFFFFFFF);
 
     // Flare rendern
-    DirectGraphics.SetAdditiveMode ();
-    float w = yPos/4;
-    Projectiles.LavaFlare.RenderSpriteScaledRotated (float (xPos - 60 - TileEngine.XOffset),
-                                         float (yPos - 60 - TileEngine.YOffset), 180, 180, w, 0xFFFFCC88);
-    DirectGraphics.SetColorKeyMode ();
+    DirectGraphics.SetAdditiveMode();
+    float w = yPos / 4;
+    Projectiles.LavaFlare.RenderSpriteScaledRotated(float(xPos - 60 - TileEngine.XOffset),
+                                                    float(yPos - 60 - TileEngine.YOffset), 180, 180, w, 0xFFFFCC88);
+    DirectGraphics.SetColorKeyMode();
 }
 
 // --------------------------------------------------------------------------------------
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerLavaBall::DoKI(void)
-{
+void GegnerLavaBall::DoKI(void) {
     SimpleAnimation();
 
     // erst erschienen? Dann yPos merken
     //
-    if (Handlung == GEGNER_EINFLIEGEN)
-    {
-        yStart   = yPos;
+    if (Handlung == GEGNER_EINFLIEGEN) {
+        yStart = yPos;
         Handlung = GEGNER_LAUFEN;
         return;
     }
 
-    if (TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_LIQUID)
-    {
+    if (TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_LIQUID) {
         // eben erst reingefallen?
         //
-        if (InLava == false)
-        {
-            for (int i=0; i<12; i++)
-                PartikelSystem.PushPartikel(xPos+16+rand()%20, yPos + GegnerRect[GegnerArt].bottom+8, LAVA_SPRITZER2);
+        if (InLava == false) {
+            for (int i = 0; i < 12; i++)
+                PartikelSystem.PushPartikel(xPos + 16 + rand() % 20, yPos + GegnerRect[GegnerArt].bottom + 8,
+                                            LAVA_SPRITZER2);
 
-            SoundManager.PlayWave3D(static_cast<int>(xPos) + 30, static_cast<int>(yPos) + 30, 10000 + rand()%2050, SOUND_WATERIN);
+            SoundManager.PlayWave3D(static_cast<int>(xPos) + 30, static_cast<int>(yPos) + 30, 10000 + rand() % 2050,
+                                    SOUND_WATERIN);
         }
 
         InLava = true;
-    }
-    else
-    {
+    } else {
         // eben erst rausgekommen?
         //
-        if (InLava == true)
-        {
-            for (int i=0; i<12; i++)
-                PartikelSystem.PushPartikel(xPos+16+rand()%20, yPos + GegnerRect[GegnerArt].bottom+8, LAVA_SPRITZER);
+        if (InLava == true) {
+            for (int i = 0; i < 12; i++)
+                PartikelSystem.PushPartikel(xPos + 16 + rand() % 20, yPos + GegnerRect[GegnerArt].bottom + 8,
+                                            LAVA_SPRITZER);
 
-            SoundManager.PlayWave3D(static_cast<int>(xPos) + 30, static_cast<int>(yPos) + 30, 10000 + rand()%2050, SOUND_WATEROUT);
+            SoundManager.PlayWave3D(static_cast<int>(xPos) + 30, static_cast<int>(yPos) + 30, 10000 + rand() % 2050,
+                                    SOUND_WATEROUT);
         }
 
         InLava = false;
@@ -100,20 +94,18 @@ void GegnerLavaBall::DoKI(void)
     //
     SmokeDelay -= 1.0f SYNC;
 
-    if (SmokeDelay < 0.0f)
-    {
+    if (SmokeDelay < 0.0f) {
         SmokeDelay = 0.5f;
 
         if (InLava == false)
-            PartikelSystem.PushPartikel (xPos - 20 + rand ()%50, yPos + rand ()%40, SMOKEBIG);
+            PartikelSystem.PushPartikel(xPos - 20 + rand() % 50, yPos + rand() % 40, SMOKEBIG);
     }
 
     FlareDelay -= 1.0f SYNC;
 
-    if (FlareDelay < 0.0f)
-    {
+    if (FlareDelay < 0.0f) {
         FlareDelay = 2.0f;
-        //PartikelSystem.PushPartikel (xPos - 16 + rand ()%56, yPos  - 16 + rand ()%56, MINIFLARE);
+        // PartikelSystem.PushPartikel (xPos - 16 + rand ()%56, yPos  - 16 + rand ()%56, MINIFLARE);
     }
 
     // Maximale Fall-Geschwindigkeit
@@ -131,24 +123,23 @@ void GegnerLavaBall::DoKI(void)
     // zurückfliegt, zerstört wird, aber dabei nicht explodieren soll
     //
     for (int i = 0; i < NUMPLAYERS; i++)
-        if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                            Player[i].xpos, Player[i].ypos, Player[i].CollideRect) == true)
-        {
+        if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[i].xpos, Player[i].ypos, Player[i].CollideRect) ==
+            true) {
             Player[i].DamagePlayer(50.0f);
             Energy = 0.0f;
 
-            SoundManager.PlayWave (100, 128, 9000 + rand()%2000, SOUND_EXPLOSION1);
+            SoundManager.PlayWave(100, 128, 9000 + rand() % 2000, SOUND_EXPLOSION1);
 
-            PartikelSystem.PushPartikel (xPos - 10, yPos - 30, EXPLOSION_GIANT);
+            PartikelSystem.PushPartikel(xPos - 10, yPos - 30, EXPLOSION_GIANT);
 
             for (int j = 0; j < 4; j++)
-                PartikelSystem.PushPartikel (xPos - 10 + rand ()%40, yPos - 10 + rand ()%40, EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(xPos - 10 + rand() % 40, yPos - 10 + rand() % 40, EXPLOSION_MEDIUM2);
 
             for (int j = 0; j < 20; j++)
-                PartikelSystem.PushPartikel (xPos - 10 + rand ()%50, yPos  - 16 + rand ()%56, MINIFLARE);
+                PartikelSystem.PushPartikel(xPos - 10 + rand() % 50, yPos - 16 + rand() % 56, MINIFLARE);
 
             for (int j = 0; j < 20; j++)
-                PartikelSystem.PushPartikel (xPos + rand ()%40, yPos + rand ()%40, SMOKE2);
+                PartikelSystem.PushPartikel(xPos + rand() % 40, yPos + rand() % 40, SMOKE2);
         }
 }
 
@@ -156,6 +147,4 @@ void GegnerLavaBall::DoKI(void)
 // LavaBall explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerLavaBall::GegnerExplode(void)
-{
-}
+void GegnerLavaBall::GegnerExplode(void) {}

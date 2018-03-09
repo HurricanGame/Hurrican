@@ -5,55 +5,51 @@
 // je länger man schiesst, um so mehr beschleunigt die Plattform
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.hpp"
 #include "Trigger_ShootButton.hpp"
+#include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerShootButton::GegnerShootButton  (GegnerClass *Plattform)
-{
-    Handlung		= GEGNER_STEHEN;
-    BlickRichtung	= RECHTS;
-    Energy			= 100;
-    Value1			= 0;
-    Value2			= 0;
-    ChangeLight		= false;
-    Destroyable		= true;
-    AnimEnde		= 2;
-    AnimSpeed       = 5.0f;
-    pPlattForm		= Plattform;
-    SmokeCount		= 0.1f;
-    OwnDraw			= true;
+GegnerShootButton::GegnerShootButton(GegnerClass *Plattform) {
+    Handlung = GEGNER_STEHEN;
+    BlickRichtung = RECHTS;
+    Energy = 100;
+    Value1 = 0;
+    Value2 = 0;
+    ChangeLight = false;
+    Destroyable = true;
+    AnimEnde = 2;
+    AnimSpeed = 5.0f;
+    pPlattForm = Plattform;
+    SmokeCount = 0.1f;
+    OwnDraw = true;
 }
 
 // --------------------------------------------------------------------------------------
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerShootButton::DoDraw(void)
-{
+void GegnerShootButton::DoDraw(void) {
     // Button rendern
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(pPlattForm->xPos-TileEngine.XOffset + 41),
-                                           static_cast<float>(pPlattForm->yPos-TileEngine.YOffset - 8),
-                                           AnimPhase, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(pPlattForm->xPos - TileEngine.XOffset + 41),
+                                           static_cast<float>(pPlattForm->yPos - TileEngine.YOffset - 8), AnimPhase,
+                                           0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------
 // ShootButton KI
 // --------------------------------------------------------------------------------------
 
-void GegnerShootButton::DoKI(void)
-{
+void GegnerShootButton::DoKI(void) {
     SimpleAnimation();
 
     yPos = pPlattForm->yPos - 9 + pPlattForm->ySpeed SYNC;
 
     // beschossen ?
     //
-    if (Energy < 100.0f)
-    {
+    if (Energy < 100.0f) {
         Energy = 100.0f;
         pPlattForm->yAcc = -3.0f;
 
@@ -62,16 +58,14 @@ void GegnerShootButton::DoKI(void)
         // Flamme ausgeben
         //
         SmokeCount -= 1.0f SYNC;
-        if (SmokeCount <= 0.0f)
-        {
+        if (SmokeCount <= 0.0f) {
             SmokeCount = 0.2f;
-            Projectiles.PushProjectile  (pPlattForm->xPos + 23 + rand()%4, pPlattForm->yPos - 15, FEUERFALLE3);
-            PartikelSystem.PushPartikel (pPlattForm->xPos + 33 + rand()%2, pPlattForm->yPos + 40, FLUGSACKSMOKE);
-            PartikelSystem.PushPartikel (pPlattForm->xPos + 51 + rand()%2, pPlattForm->yPos + 40, FLUGSACKSMOKE2);
-            PartikelSystem.PushPartikel (pPlattForm->xPos + 48 + rand()%2, pPlattForm->yPos + 40, FUNKE);
+            Projectiles.PushProjectile(pPlattForm->xPos + 23 + rand() % 4, pPlattForm->yPos - 15, FEUERFALLE3);
+            PartikelSystem.PushPartikel(pPlattForm->xPos + 33 + rand() % 2, pPlattForm->yPos + 40, FLUGSACKSMOKE);
+            PartikelSystem.PushPartikel(pPlattForm->xPos + 51 + rand() % 2, pPlattForm->yPos + 40, FLUGSACKSMOKE2);
+            PartikelSystem.PushPartikel(pPlattForm->xPos + 48 + rand() % 2, pPlattForm->yPos + 40, FUNKE);
         }
-    }
-    else if (int (pPlattForm->yPos) < pPlattForm->Value1)
+    } else if (int(pPlattForm->yPos) < pPlattForm->Value1)
         pPlattForm->yAcc = 3.0f;
 }
 
@@ -79,6 +73,4 @@ void GegnerShootButton::DoKI(void)
 // ShootButton explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerShootButton::GegnerExplode(void)
-{
-}
+void GegnerShootButton::GegnerExplode(void) {}

@@ -1,6 +1,6 @@
 /*// Datei : MemLeaks.hpp
 
-// -------------------------------------------------------------------------------------- 
+// --------------------------------------------------------------------------------------
 //
 // Überlädt den "new" und den "delete" Operator
 // New speichert zudem jeden Aufruf mit Angabe der Datei und der Zeilen Nummer im Code in
@@ -17,16 +17,16 @@
 #ifndef _MEMLEAKS_HPP_
 #define _MEMLEAKS_HPP_
 
-#include <windows.h>
 #include <stdlib.h>
+#include <windows.h>
 
 
 // Struktur, die Infos zu einem New-Aufruf entählt
 //
-typedef struct 
+typedef struct
 {
-	std::uint32_t	address;
-	std::uint32_t	size;
+    std::uint32_t	address;
+    std::uint32_t	size;
     char	file[64];
     std::uint32_t	line;
 } ALLOC_INFO;
@@ -39,11 +39,11 @@ AllocList *allocList;
 
 void AddTrack(std::uint32_t addr,  std::uint32_t asize,  const char *fname, std::uint32_t lnum)
 {
-	ALLOC_INFO *info;
+    ALLOC_INFO *info;
 
-    if(!allocList) 
-	{
-		allocList = new(AllocList);
+    if(!allocList)
+    {
+        allocList = new(AllocList);
     }
 
     info = new(ALLOC_INFO);
@@ -56,42 +56,42 @@ void AddTrack(std::uint32_t addr,  std::uint32_t asize,  const char *fname, std:
 
 void RemoveTrack(std::uint32_t addr)
 {
-	AllocList::iterator i;
+    AllocList::iterator i;
 
     if(!allocList)
-		return;
+        return;
 
     for(i = allocList->begin(); i != allocList->end(); i++)
     {
-	    if((*i)->address == addr)
-	    {
-			allocList->remove((*i));
-			break;
-		}
-	}
+        if((*i)->address == addr)
+        {
+            allocList->remove((*i));
+            break;
+        }
+    }
 };
 
 void DumpUnfreed()
 {
-	AllocList::iterator i;
+    AllocList::iterator i;
     std::uint32_t totalSize = 0;
     char buf[1024];
 
     if(!allocList)
-		return;
+        return;
 
-    for(i = allocList->begin(); i != allocList->end(); i++) 
-	{
-		sprintf(buf, "%-50s:\t\tLINE %d,\t\tADDRESS %d\t%d unfreed\n", 
-				(*i)->file, (*i)->line, (*i)->address, (*i)->size);
-		OutputDebugString(buf);
-		totalSize += (*i)->size;
-	}
+    for(i = allocList->begin(); i != allocList->end(); i++)
+    {
+        sprintf(buf, "%-50s:\t\tLINE %d,\t\tADDRESS %d\t%d unfreed\n",
+                (*i)->file, (*i)->line, (*i)->address, (*i)->size);
+        OutputDebugString(buf);
+        totalSize += (*i)->size;
+    }
 
-	sprintf(buf, "-----------------------------------------------------------\n");
-	OutputDebugString(buf);
-	sprintf(buf, "Total Unfreed: %d bytes\n", totalSize);
-	OutputDebugString(buf);
+    sprintf(buf, "-----------------------------------------------------------\n");
+    OutputDebugString(buf);
+    sprintf(buf, "Total Unfreed: %d bytes\n", totalSize);
+    OutputDebugString(buf);
 };
 
 // Operatoren überladen
@@ -99,22 +99,22 @@ void DumpUnfreed()
 
 #ifdef _DEBUG
 
-	// new überladen
-	//
-	inline void * __cdecl operator new(unsigned int size, const char *file, int line)
-	{
-		void *ptr = (void *)malloc(size);
-		AddTrack((std::uint32_t)ptr, size, file, line);
-		return(ptr);
+    // new überladen
+    //
+    inline void * __cdecl operator new(unsigned int size, const char *file, int line)
+    {
+        void *ptr = (void *)malloc(size);
+        AddTrack((std::uint32_t)ptr, size, file, line);
+        return(ptr);
     };
 
-	// delete überladen
-	//
+    // delete überladen
+    //
     inline void __cdecl operator delete(void *p)
-	{
-		RemoveTrack((std::uint32_t)p);
-		free(p);
-	};
+    {
+        RemoveTrack((std::uint32_t)p);
+        free(p);
+    };
 #endif
 
 

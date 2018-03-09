@@ -4,15 +4,15 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerStahlfaust : public GegnerClass
-{
-public:
-    float	SmokeDelay;
+class GegnerStahlfaust : public GegnerClass {
+  public:
+    float SmokeDelay;
 
-    GegnerStahlfaust   (int Wert1,	int Wert2,			// Konstruktor
-                        bool		  Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner
+    GegnerStahlfaust(int Wert1,
+                     int Wert2,  // Konstruktor
+                     bool Light);
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
 };
 

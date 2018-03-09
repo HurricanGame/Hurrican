@@ -4,20 +4,19 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerPresswurst : public GegnerClass
-{
-private:
-    float	oldy;
-    float	SmokeCount;
+class GegnerPresswurst : public GegnerClass {
+  private:
+    float oldy;
+    float SmokeCount;
 
-public:
-
-    GegnerPresswurst	   (int Wert1,	int Wert2,			// Konstruktor
-                            bool		  Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner
+  public:
+    GegnerPresswurst(int Wert1,
+                     int Wert2,  // Konstruktor
+                     bool Light);
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
-    void DoDraw		   (void);
+    void DoDraw(void);
 };
 
 #endif

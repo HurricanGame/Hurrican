@@ -2,37 +2,35 @@
 // Der Fiese Walker mit dem Flammenwerfer
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.hpp"
 #include "Gegner_FieserFireWalker.hpp"
+#include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerFieserFireWalker::GegnerFieserFireWalker (int  Wert1, int Wert2, bool Light)
-{
-    Handlung		= GEGNER_LAUFEN;
-    Energy			= 120;
-    Value1			= Wert1;
-    Value2			= Wert2;
-    ChangeLight		= Light;
-    Destroyable		= true;
-    AnimSpeed       = 0.5f;
-    AnimEnde		= 14;
-    xSpeed			= 5.0f;
-    ShotDelay		= 30.0f;
-    ShotDelay2		= 0.0f;
-    OwnDraw			= true;
+GegnerFieserFireWalker::GegnerFieserFireWalker(int Wert1, int Wert2, bool Light) {
+    Handlung = GEGNER_LAUFEN;
+    Energy = 120;
+    Value1 = Wert1;
+    Value2 = Wert2;
+    ChangeLight = Light;
+    Destroyable = true;
+    AnimSpeed = 0.5f;
+    AnimEnde = 14;
+    xSpeed = 5.0f;
+    ShotDelay = 30.0f;
+    ShotDelay2 = 0.0f;
+    OwnDraw = true;
 }
 
 // --------------------------------------------------------------------------------------
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerFieserFireWalker::DoDraw(void)
-{
+void GegnerFieserFireWalker::DoDraw(void) {
     // Gegner rendern
-    int  Wert = 255 - static_cast<int>(DamageTaken);
+    int Wert = 255 - static_cast<int>(DamageTaken);
     bool mirror;
 
     if (BlickRichtung == LINKS)
@@ -41,22 +39,19 @@ void GegnerFieserFireWalker::DoDraw(void)
         mirror = true;
 
     D3DCOLOR Color = D3DCOLOR_RGBA(255, Wert, Wert, 255);
-    pGegnerGrafix[GegnerArt]->RenderSprite (static_cast<float>(xPos-TileEngine.XOffset),
-                                            static_cast<float>(yPos-TileEngine.YOffset),
-                                            AnimPhase, Color, mirror);
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
+                                           static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, Color, mirror);
 
     if (AlreadyDrawn)
         return;
 
-    if (Handlung == GEGNER_STEHEN)
-    {
+    if (Handlung == GEGNER_STEHEN) {
         // Leuchten beim Schiessen rendern
         //
-        DirectGraphics.SetAdditiveMode ();
-        Projectiles.LavaFlare.RenderSprite (float (xPos - TileEngine.XOffset - 30) + 6 + BlickRichtung * 36,
-                                float (yPos - TileEngine.YOffset - 30), 0,
-                                0xFFFF8822);
-        DirectGraphics.SetColorKeyMode ();
+        DirectGraphics.SetAdditiveMode();
+        Projectiles.LavaFlare.RenderSprite(float(xPos - TileEngine.XOffset - 30) + 6 + BlickRichtung * 36,
+                                           float(yPos - TileEngine.YOffset - 30), 0, 0xFFFF8822);
+        DirectGraphics.SetColorKeyMode();
     }
 
     AlreadyDrawn = true;
@@ -66,104 +61,85 @@ void GegnerFieserFireWalker::DoDraw(void)
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFieserFireWalker::DoKI(void)
-{
-    SimpleAnimation ();
+void GegnerFieserFireWalker::DoKI(void) {
+    SimpleAnimation();
 
     // Je nach Handlung anders verhalten
     //
-    switch (Handlung)
-    {
-    // rumhopsen
-    //
-    case GEGNER_LAUFEN:
-    {
-        if (!(blocku & BLOCKWERT_WAND) &&
-                !(blocku & BLOCKWERT_PLATTFORM))
-        {
-            Handlung = GEGNER_FALLEN;
-            ySpeed   = 2.0f;
-            yAcc	 = 3.0f;
-        }
-
-        // nahe genug zum schiessen?
+    switch (Handlung) {
+        // rumhopsen
         //
-        if (ShotDelay <= 0.0f &&
-                AnimPhase == 3 &&
-                PlayerAbstand() < 400 &&
-                PlayerAbstandVert () < 150 &&
-                ((BlickRichtung == RECHTS && xPos+GegnerRect[GegnerArt].right < pAim->xpos + pAim->CollideRect.left) ||
-                 (BlickRichtung == LINKS  && xPos+GegnerRect[GegnerArt].left  > pAim->xpos + pAim->CollideRect.right))
-           )
-        {
-            ShotDelay  = 40.0f;
-            ShotDelay2 = 0.0f;
-            Handlung  = GEGNER_STEHEN;
-            xSpeed    = 0.0f;
-            AnimEnde  = 0;
+        case GEGNER_LAUFEN: {
+            if (!(blocku & BLOCKWERT_WAND) && !(blocku & BLOCKWERT_PLATTFORM)) {
+                Handlung = GEGNER_FALLEN;
+                ySpeed = 2.0f;
+                yAcc = 3.0f;
+            }
 
-            SoundManager.PlayWave (100, 128, 11025, SOUND_FEUERFALLE);
-        }
+            // nahe genug zum schiessen?
+            //
+            if (ShotDelay <= 0.0f && AnimPhase == 3 && PlayerAbstand() < 400 && PlayerAbstandVert() < 150 &&
+                ((BlickRichtung == RECHTS &&
+                  xPos + GegnerRect[GegnerArt].right < pAim->xpos + pAim->CollideRect.left) ||
+                 (BlickRichtung == LINKS &&
+                  xPos + GegnerRect[GegnerArt].left > pAim->xpos + pAim->CollideRect.right))) {
+                ShotDelay = 40.0f;
+                ShotDelay2 = 0.0f;
+                Handlung = GEGNER_STEHEN;
+                xSpeed = 0.0f;
+                AnimEnde = 0;
 
-        if (ShotDelay > 0.0f)
-            ShotDelay -= 1.0f SYNC;
+                SoundManager.PlayWave(100, 128, 11025, SOUND_FEUERFALLE);
+            }
 
-        if (TurnonShot())
-            ShotDelay = -1.0f;
+            if (ShotDelay > 0.0f)
+                ShotDelay -= 1.0f SYNC;
 
-    }
-    break;
+            if (TurnonShot())
+                ShotDelay = -1.0f;
 
-    // Flammenwerfer schiessen
-    //
-    case GEGNER_STEHEN:
-    {
-        if (ShotDelay2 > 0.0f)
-            ShotDelay2 -= 1.0f SYNC;
+        } break;
 
-        if (ShotDelay2 <= 0.0f)
-        {
-            ShotDelay2 = 0.4f;
-            ShotDelay -= 1.0f;
+        // Flammenwerfer schiessen
+        //
+        case GEGNER_STEHEN: {
+            if (ShotDelay2 > 0.0f)
+                ShotDelay2 -= 1.0f SYNC;
 
-            Projectiles.PushProjectile  (xPos + 5 + BlickRichtung * 38, yPos - 7, WALKERFIRE, pAim);
-        }
+            if (ShotDelay2 <= 0.0f) {
+                ShotDelay2 = 0.4f;
+                ShotDelay -= 1.0f;
 
-        // Spieler nicht mehr vor dem Walker? Dann auch nicht mehr schiessen
-        if ((BlickRichtung == RECHTS && xPos+60 >= pAim->xpos) ||
-                (BlickRichtung == LINKS  && xPos    <= pAim->xpos + 80))
-            ShotDelay = -1.0f;
+                Projectiles.PushProjectile(xPos + 5 + BlickRichtung * 38, yPos - 7, WALKERFIRE, pAim);
+            }
 
-        if (ShotDelay < 0.0f)
-        {
-            ShotDelay = 20.0f;
-            Handlung = GEGNER_LAUFEN;
-            AnimEnde = 14;
-            xSpeed = 5.0f * BlickRichtung;
-        }
+            // Spieler nicht mehr vor dem Walker? Dann auch nicht mehr schiessen
+            if ((BlickRichtung == RECHTS && xPos + 60 >= pAim->xpos) ||
+                (BlickRichtung == LINKS && xPos <= pAim->xpos + 80))
+                ShotDelay = -1.0f;
 
-    }
-    break;
+            if (ShotDelay < 0.0f) {
+                ShotDelay = 20.0f;
+                Handlung = GEGNER_LAUFEN;
+                AnimEnde = 14;
+                xSpeed = 5.0f * BlickRichtung;
+            }
 
-    case GEGNER_FALLEN:
-    {
-        if (ySpeed > 35.0f)
-        {
-            ySpeed = 35.0f;
-            yAcc   = 0.0f;
-        }
+        } break;
 
-        if (blocku & BLOCKWERT_WAND ||
-                blocku & BLOCKWERT_PLATTFORM)
-        {
-            ySpeed = 0.0f;
-            yAcc   = 0.0f;
-            Handlung = GEGNER_LAUFEN;
-        }
+        case GEGNER_FALLEN: {
+            if (ySpeed > 35.0f) {
+                ySpeed = 35.0f;
+                yAcc = 0.0f;
+            }
 
-    }
-    break;
+            if (blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM) {
+                ySpeed = 0.0f;
+                yAcc = 0.0f;
+                Handlung = GEGNER_LAUFEN;
+            }
 
+        } break;
     }
 
     TurnonWall();
@@ -177,19 +153,15 @@ void GegnerFieserFireWalker::DoKI(void)
 // FieserFireWalker explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerFieserFireWalker::GegnerExplode(void)
-{
+void GegnerFieserFireWalker::GegnerExplode(void) {
     PartikelSystem.PushPartikel(xPos - 30, yPos - 30, EXPLOSION_BIG);
 
     for (int i = 0; i < 8; i++)
-        PartikelSystem.PushPartikel(xPos - 30 + rand ()% 60,
-                                      yPos - 30 + rand ()% 60, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30 + rand() % 60, yPos - 30 + rand() % 60, EXPLOSION_MEDIUM2);
     for (int i = 0; i < 12; i++)
-        PartikelSystem.PushPartikel(xPos + rand ()% 50,
-                                      yPos + rand ()% 50, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + rand() % 50, yPos + rand() % 50, SPIDERSPLITTER);
 
-
-    SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION4);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION4);  // Sound ausgeben
 
     Player[0].Score += 80;
 }

@@ -4,30 +4,29 @@
 // Prallt von der Wand ab und schiesst ab und zu
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.hpp"
 #include "Gegner_StarBig.hpp"
+#include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerStarBig::GegnerStarBig(int Wert1, int Wert2, bool Light)
-{
-    Handlung		= GEGNER_LAUFEN;
-    Energy			= 100;
-    Value1			= Wert1;
-    Value2			= Wert2;
-    AnimStart		= 0;
-    AnimEnde		= 4;
-    AnimSpeed		= 0.75f;
-    AnimCount		= 0.0f;
-    ChangeLight		= Light;
-    Destroyable		= true;
-    ShotCount		= 0;
+GegnerStarBig::GegnerStarBig(int Wert1, int Wert2, bool Light) {
+    Handlung = GEGNER_LAUFEN;
+    Energy = 100;
+    Value1 = Wert1;
+    Value2 = Wert2;
+    AnimStart = 0;
+    AnimEnde = 4;
+    AnimSpeed = 0.75f;
+    AnimCount = 0.0f;
+    ChangeLight = Light;
+    Destroyable = true;
+    ShotCount = 0;
 
     ySpeed = 12.0f;
-    yAcc   = 0.0f;
-    xAcc   = 0.0f;
+    yAcc = 0.0f;
+    xAcc = 0.0f;
 
     // in Richtung Spieler fliegen
     //
@@ -41,59 +40,52 @@ GegnerStarBig::GegnerStarBig(int Wert1, int Wert2, bool Light)
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerStarBig::DoKI(void)
-{
+void GegnerStarBig::DoKI(void) {
     if (xSpeed > 0.0f)
         BlickRichtung = RECHTS;
     else
         BlickRichtung = LINKS;
 
     // Animieren
-    AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-    if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+    AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
+    if (AnimCount > AnimSpeed)  // Grenze überschritten ?
     {
-        AnimCount = 0;					// Dann wieder auf Null setzen
-        AnimPhase++;					// Und nächste Animationsphase
-        if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
+        AnimCount = 0;              // Dann wieder auf Null setzen
+        AnimPhase++;                // Und nächste Animationsphase
+        if (AnimPhase >= AnimEnde)  // Animation von zu Ende	?
         {
-            AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
+            AnimPhase = AnimStart;  // Dann wieder von vorne beginnen
             ShotCount++;
 
             // Schiessen
             //
-            if (ShotCount > Skill+2)
-            {
+            if (ShotCount > Skill + 2) {
                 ShotCount = 0;
-                SoundManager.PlayWave (100, 128, 15000 + rand()%4000, SOUND_CANON);
-                Projectiles.PushProjectile (xPos + 36, yPos + 36, SUCHSCHUSS);
+                SoundManager.PlayWave(100, 128, 15000 + rand() % 4000, SOUND_CANON);
+                Projectiles.PushProjectile(xPos + 36, yPos + 36, SUCHSCHUSS);
             }
         }
-    } // animieren
+    }  // animieren
 
     // Je nach Handlung richtig verhalten
     //
-    switch (Handlung)
-    {
-    case GEGNER_LAUFEN :
-    {
-        // An den Wänden umdrehen
-        //
-        if ((xSpeed < 0.0f && blockl & BLOCKWERT_WAND) ||
-                (xSpeed > 0.0f && blockr & BLOCKWERT_WAND))
-            xSpeed *= -1.0f;
+    switch (Handlung) {
+        case GEGNER_LAUFEN: {
+            // An den Wänden umdrehen
+            //
+            if ((xSpeed < 0.0f && blockl & BLOCKWERT_WAND) || (xSpeed > 0.0f && blockr & BLOCKWERT_WAND))
+                xSpeed *= -1.0f;
 
-        if ((ySpeed < 0.0f && blocko & BLOCKWERT_WAND) ||
-                (ySpeed > 0.0f && blocku & BLOCKWERT_WAND) ||
+            if ((ySpeed < 0.0f && blocko & BLOCKWERT_WAND) || (ySpeed > 0.0f && blocku & BLOCKWERT_WAND) ||
                 (ySpeed < 0.0f && yPos - TileEngine.YOffset < 0.0f) ||
                 (ySpeed > 0.0f && yPos - TileEngine.YOffset > 400.0f))
-            ySpeed *= -1.0f;
-    }
-    break;
+                ySpeed *= -1.0f;
+        } break;
 
-    default :
-        break;
+        default:
+            break;
 
-    } // switch
+    }  // switch
 
     // Testen, ob der Spieler den Sack berührt hat
     TestDamagePlayers(2.0f SYNC);
@@ -103,17 +95,16 @@ void GegnerStarBig::DoKI(void)
 // StarBig explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerStarBig::GegnerExplode(void)
-{
-    PartikelSystem.PushPartikel (xPos-20, yPos-20, EXPLOSION_GIANT);
+void GegnerStarBig::GegnerExplode(void) {
+    PartikelSystem.PushPartikel(xPos - 20, yPos - 20, EXPLOSION_GIANT);
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel (xPos-30+rand()%80, yPos-30+rand()%80, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30 + rand() % 80, yPos - 30 + rand() % 80, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 15; i++)
-        PartikelSystem.PushPartikel (xPos+rand()%80, yPos+rand()%80, LONGFUNKE);
+        PartikelSystem.PushPartikel(xPos + rand() % 80, yPos + rand() % 80, LONGFUNKE);
 
-    SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION3);
 
-    Player[0].Score += 150;		// Punkte geben
+    Player[0].Score += 150;  // Punkte geben
 }

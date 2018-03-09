@@ -4,31 +4,29 @@
 // Dümpelt im Wasser rum und wartet auf eine Kollision ;)
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.hpp"
 #include "Gegner_WasserMine.hpp"
+#include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerWasserMine::GegnerWasserMine(int Wert1, int Wert2, bool Light)
-{
-    Handlung		= GEGNER_LAUFEN;
-    Energy			= 20;
-    AnimSpeed		= 3.0f;
-    ChangeLight		= Light;
-    Destroyable		= false;
-    AnimSpeed		= 4.0f;
-    AnimEnde		= 10;
-    Value1			= int (Wert1);
+GegnerWasserMine::GegnerWasserMine(int Wert1, int Wert2, bool Light) {
+    Handlung = GEGNER_LAUFEN;
+    Energy = 20;
+    AnimSpeed = 3.0f;
+    ChangeLight = Light;
+    Destroyable = false;
+    AnimSpeed = 4.0f;
+    AnimEnde = 10;
+    Value1 = int(Wert1);
 }
 
 // --------------------------------------------------------------------------------------
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerWasserMine::DoKI(void)
-{
+void GegnerWasserMine::DoKI(void) {
     SimpleAnimation();
 
     // Spieler berührt ?
@@ -39,18 +37,17 @@ void GegnerWasserMine::DoKI(void)
 // WasserMine explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerWasserMine::GegnerExplode(void)
-{
-    SoundManager.PlayWave (100, 128, 8000, SOUND_EXPLOSION3);
-    SoundManager.PlayWave (100, 128,14000, SOUND_EXPLOSION4);
+void GegnerWasserMine::GegnerExplode(void) {
+    SoundManager.PlayWave(100, 128, 8000, SOUND_EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 14000, SOUND_EXPLOSION4);
 
     ShakeScreen(5.0f);
 
     for (int i = 0; i < 50; i++)
-        PartikelSystem.PushPartikel(xPos - 5 + rand()%40, yPos - 5 + rand()%60, WATERFLUSH_HIGH);
+        PartikelSystem.PushPartikel(xPos - 5 + rand() % 40, yPos - 5 + rand() % 60, WATERFLUSH_HIGH);
 
     for (int i = 0; i < 25; i++)
-        PartikelSystem.PushPartikel(xPos - 5 + rand()%40, yPos - 50 + rand()%110, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos - 5 + rand() % 40, yPos - 50 + rand() % 110, SPIDERSPLITTER);
 
     PartikelSystem.PushPartikel(xPos - 40, yPos - 55, EXPLOSION_GIANT);
 }

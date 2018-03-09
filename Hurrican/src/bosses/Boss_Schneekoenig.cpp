@@ -4,8 +4,8 @@
 // Ist ein Fetter Sack, der den Spieler des öfteren nervt
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.hpp"
 #include "Boss_Schneekoenig.hpp"
+#include "stdafx.hpp"
 
 int DamageAnims[4] = {1, 2, 1, 0};
 
@@ -13,31 +13,30 @@ int DamageAnims[4] = {1, 2, 1, 0};
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerSchneeKoenig::GegnerSchneeKoenig(int Wert1, int Wert2, bool Light)
-{
-    Handlung		= GEGNER_INIT;
-    BlickRichtung	= LINKS;
-    Energy			= 50000;
-    LastEnergy		= 50000;
+GegnerSchneeKoenig::GegnerSchneeKoenig(int Wert1, int Wert2, bool Light) {
+    Handlung = GEGNER_INIT;
+    BlickRichtung = LINKS;
+    Energy = 50000;
+    LastEnergy = 50000;
 
-    ChangeLight		= Light;
-    Destroyable		= false;
-    Value1			= Wert1;
-    Value2			= Wert2;
-    TestBlock		= false;
-    OwnDraw			= true;
-    yOffset			= 0.0f;
-    SmokeDelay		= 0.0f;
-    KnarreWinkel	= 0.0f;
-    KnarreY			= 60.0f;
-    SpezialAktion	= Value2;
-    ShotDelay		= 0.0f;
-    Action			= -1;
-    ShotCount		= 0;
-    GunSlide		= 0.0f;
-    WackelCount	    = 0.0f;
-    WackelAnim		= 0.0f;
-    DrawNow			= false;
+    ChangeLight = Light;
+    Destroyable = false;
+    Value1 = Wert1;
+    Value2 = Wert2;
+    TestBlock = false;
+    OwnDraw = true;
+    yOffset = 0.0f;
+    SmokeDelay = 0.0f;
+    KnarreWinkel = 0.0f;
+    KnarreY = 60.0f;
+    SpezialAktion = Value2;
+    ShotDelay = 0.0f;
+    Action = -1;
+    ShotCount = 0;
+    GunSlide = 0.0f;
+    WackelCount = 0.0f;
+    WackelAnim = 0.0f;
+    DrawNow = false;
 
     Knarre.LoadImage("schneekoenig_knarre.png", 21, 94, 21, 94, 1, 1);
     Laser.LoadImage("redlaser.png", 32, 32, 32, 32, 1, 1);
@@ -47,8 +46,7 @@ GegnerSchneeKoenig::GegnerSchneeKoenig(int Wert1, int Wert2, bool Light)
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerSchneeKoenig::DoDraw(void)
-{
+void GegnerSchneeKoenig::DoDraw(void) {
     if (DrawNow == false)
         return;
 
@@ -59,11 +57,9 @@ void GegnerSchneeKoenig::DoDraw(void)
 
     Color = 0xFFFFFFFF;
 
-    //int	Wert = 255-(int(DamageTaken));  // PICKLE not used
+    // int	Wert = 255-(int(DamageTaken));  // PICKLE not used
 
-    if (Handlung == GEGNER_AUSFAHREN ||
-            WackelCount > 0.0f)
-    {
+    if (Handlung == GEGNER_AUSFAHREN || WackelCount > 0.0f) {
         xoff += 15.0f SYNC;
 
         if (WackelCount > 0.0f)
@@ -78,14 +74,13 @@ void GegnerSchneeKoenig::DoDraw(void)
     else
         GunMod = -1.0f;
 
-    Knarre.RenderSpriteRotatedOffset(static_cast<float>(xPos - TileEngine.XOffset) + 95.0f + static_cast<float>(sin(xoff)) * 1.5f,
-                                     static_cast<float>(yPos - TileEngine.YOffset) + yOffset - 36 + KnarreY,
-                                     KnarreWinkel, GunSlide * GunMod, 10,
-                                     Color, false);
+    Knarre.RenderSpriteRotatedOffset(
+        static_cast<float>(xPos - TileEngine.XOffset) + 95.0f + static_cast<float>(sin(xoff)) * 1.5f,
+        static_cast<float>(yPos - TileEngine.YOffset) + yOffset - 36 + KnarreY, KnarreWinkel, GunSlide * GunMod, 10,
+        Color, false);
 
     // Body
-    if (WackelAnim > 0.0f)
-    {
+    if (WackelAnim > 0.0f) {
         AnimPhase = 10 - DamageAnims[static_cast<int>(WackelAnim) % 4];
         WackelAnim -= 2.0f SYNC;
 
@@ -93,24 +88,23 @@ void GegnerSchneeKoenig::DoDraw(void)
             AnimPhase = 10;
     }
 
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset) + static_cast<float>(sin(xoff)) * 5.0f,
-                                           static_cast<float>(yPos - TileEngine.YOffset) + yOffset,
-                                           AnimPhase, Color, false);
+    pGegnerGrafix[GegnerArt]->RenderSprite(
+        static_cast<float>(xPos - TileEngine.XOffset) + static_cast<float>(sin(xoff)) * 5.0f,
+        static_cast<float>(yPos - TileEngine.YOffset) + yOffset, AnimPhase, Color, false);
 
-//	RenderLaser();
+    //	RenderLaser();
 }
 
 // --------------------------------------------------------------------------------------
 // Laser rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerSchneeKoenig::RenderLaser(void)
-{
+void GegnerSchneeKoenig::RenderLaser(void) {
     float w;
 
-    //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
-    //w = (KnarreWinkel + 180.0f) * PI / 180.0f;
-    //Laser.RenderSpriteRotatedOffset(static_cast<float>(xPos - TileEngine.XOffset) + 90.0f + (float)sin(w) * 70.0f,
+    // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+    // w = (KnarreWinkel + 180.0f) * PI / 180.0f;
+    // Laser.RenderSpriteRotatedOffset(static_cast<float>(xPos - TileEngine.XOffset) + 90.0f + (float)sin(w) * 70.0f,
     //                                static_cast<float>(yPos - TileEngine.YOffset) + 5.0f + (float)cos(w) * 70.0f,
     //                                KnarreWinkel, 0, 0, 0xFFFFFFFF);
     w = KnarreWinkel + 180.0f;
@@ -123,8 +117,7 @@ void GegnerSchneeKoenig::RenderLaser(void)
 // Winkel zum Spieler ausrechnen
 // --------------------------------------------------------------------------------------
 
-float GegnerSchneeKoenig::WinkelToPlayer(void)
-{
+float GegnerSchneeKoenig::WinkelToPlayer(void) {
     float dx;
 
     // Abstände berechnen
@@ -134,7 +127,6 @@ float GegnerSchneeKoenig::WinkelToPlayer(void)
 
     winkel = dx / 10.0f;
 
-
     return winkel;
 }
 
@@ -142,8 +134,7 @@ float GegnerSchneeKoenig::WinkelToPlayer(void)
 // Neuen Angriff festlegen
 // --------------------------------------------------------------------------------------
 
-void GegnerSchneeKoenig::NextAction(int NewAction)
-{
+void GegnerSchneeKoenig::NextAction(int NewAction) {
     static int LastAttack = 0;
     static int NextAttack = 0;
 
@@ -154,48 +145,35 @@ void GegnerSchneeKoenig::NextAction(int NewAction)
         NextAttack = NewAction;
 
     // oder per Zufall?
-    else
-    {
-        //if (Value1 > 0)
+    else {
+        // if (Value1 > 0)
         NextAttack = LastAttack + 1;
 
-        if ( NextAttack > 3 ||
-                (NextAttack == 2 &&
-                 Value1 == 1))
+        if (NextAttack > 3 || (NextAttack == 2 && Value1 == 1))
             NextAttack = 0;
     }
 
+    switch (NextAttack) {
+        // Schneekoppen ballern
+        case 0: {
+            Action = GEGNER_INIT2;
+        } break;
 
-    switch(NextAttack)
-    {
-    // Schneekoppen ballern
-    case 0:
-    {
-        Action = GEGNER_INIT2;
-    }
-    break;
+        // Knarre einziehen und springen
+        case 1: {
+            Action = GEGNER_INIT3;
+        } break;
 
-    // Knarre einziehen und springen
-    case 1:
-    {
-        Action = GEGNER_INIT3;
-    }
-    break;
+        // Knarre einziehen, von links nach rechts hopsen und wieder zurück
+        // und dabei Blaue Bomben abwerfen
+        case 2: {
+            Action = GEGNER_INIT2;
+        } break;
 
-    // Knarre einziehen, von links nach rechts hopsen und wieder zurück
-    // und dabei Blaue Bomben abwerfen
-    case 2:
-    {
-        Action = GEGNER_INIT2;
-    }
-    break;
-
-    // Schneekoppen ballern
-    case 3:
-    {
-        Action = GEGNER_INIT4;
-    }
-    break;
+        // Schneekoppen ballern
+        case 3: {
+            Action = GEGNER_INIT4;
+        } break;
     }
 
     LastAttack = NextAttack;
@@ -207,17 +185,14 @@ void GegnerSchneeKoenig::NextAction(int NewAction)
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSchneeKoenig::DoKI(void)
-{
+void GegnerSchneeKoenig::DoKI(void) {
     // Energie anzeigen
     if (Handlung != GEGNER_INIT && Handlung != GEGNER_EXPLODIEREN)
         HUD.ShowBossHUD(50000, Energy);
 
     // Boss aktivieren und Mucke laufen lassen
     //
-    if (Active == true &&
-            TileEngine.Zustand == ZUSTAND_SCROLLBAR)
-    {
+    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
         SoundManager.StopSong(MUSIC_STAGEMUSIC, true);  // Ausfaden und pausieren
         SoundManager.PlaySong(MUSIC_BOSS, false);
         ySave = yPos;
@@ -230,7 +205,6 @@ void GegnerSchneeKoenig::DoKI(void)
         TileEngine.Zustand = ZUSTAND_LOCKED;
     }
 
-
     // Kanone zurückfahren
     if (GunSlide > 0.0f)
         GunSlide -= 1.0f SYNC;
@@ -238,453 +212,393 @@ void GegnerSchneeKoenig::DoKI(void)
         GunSlide = 0.0f;
 
     // Je nach Handlung richtig verhalten
-    switch (Handlung)
-    {
-    // Warten bis der Screen zentriert wurde
-    case GEGNER_INIT:
-    {
-        // auf den Boden geknallt?
-        if (yPos > ySave)
-        {
-            yPos = ySave;
-            ShakeScreen(3.0f);
-            Handlung  = GEGNER_INIT2;
-            ySpeed	  = 0.0f;
-            AnimCount = 20.0f;
+    switch (Handlung) {
+        // Warten bis der Screen zentriert wurde
+        case GEGNER_INIT: {
+            // auf den Boden geknallt?
+            if (yPos > ySave) {
+                yPos = ySave;
+                ShakeScreen(3.0f);
+                Handlung = GEGNER_INIT2;
+                ySpeed = 0.0f;
+                AnimCount = 20.0f;
 
-            for (int i = 0; i < 30; i++)
-                PartikelSystem.PushPartikel(xPos + rand()%180 - 30, yPos + rand()%40 + 70, SNOWFLUSH);
+                for (int i = 0; i < 30; i++)
+                    PartikelSystem.PushPartikel(xPos + rand() % 180 - 30, yPos + rand() % 40 + 70, SNOWFLUSH);
 
-            for (int i = 0; i < 10; i++)
-                PartikelSystem.PushPartikel(xPos + rand()%130 - 10, yPos + rand()%40 + 60, SMOKEBIG);
+                for (int i = 0; i < 10; i++)
+                    PartikelSystem.PushPartikel(xPos + rand() % 130 - 10, yPos + rand() % 40 + 60, SMOKEBIG);
 
-            TileEngine.ScrollLevel(static_cast<float>(TileEngine.XOffset), yPos - 320.0f, ZUSTAND_SCROLLTOLOCK);
+                TileEngine.ScrollLevel(static_cast<float>(TileEngine.XOffset), yPos - 320.0f, ZUSTAND_SCROLLTOLOCK);
 
-            SoundManager.PlayWave(50, 128, 11025, SOUND_DOORSTOP);
-        }
-    }
-    break;
-
-    // kurz abwarten nach dem Runterfallen und Kamera hochscrollen
-    case GEGNER_INIT2:
-    {
-        AnimCount -= 1.0f SYNC;
-
-        if (AnimCount < 0.0f)
-        {
-            Handlung = GEGNER_EINFLIEGEN;
-            Action   = GEGNER_EINFLIEGEN;
-            AnimEnde  = 12;
-            AnimSpeed = 1.0f;
-
-            SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
-        }
-    }
-    break;
-
-    // Bein ausfahren
-    case GEGNER_EINFLIEGEN:
-    {
-        switch (Action)
-        {
-        case GEGNER_EINFLIEGEN:
-        {
-            SimpleAnimation();
-
-            yOffset = -AnimPhase * 8.0f;
-
-            if (yOffset < -40.0f)
-                yOffset = -40.0f;
-
-            if (AnimPhase >= AnimEnde-1)
-            {
-                yOffset = 0.0f;
-                yPos   -= 40.0f;
-                AnimPhase = 10;
-                GegnerRect[GegnerArt].bottom = 150;
-
-                NextAction(0);
+                SoundManager.PlayWave(50, 128, 11025, SOUND_DOORSTOP);
             }
+        } break;
 
-        }
-        break;
-
-        case GEGNER_INIT2:
-        {
-            KnarreY -= 5.0f SYNC;
-
-            if (KnarreY < 0.0f)
-            {
-                KnarreY = 0.0f;
-                Action   = -1;
-                Handlung = GEGNER_VERFOLGEN;
-                ShotDelay = 1.0f;
-                ShotCount = 10 + rand()%6;
-            }
-        }
-        break;
-
-        case GEGNER_INIT3:
-        {
-            KnarreY -= 5.0f SYNC;
-
-            if (KnarreY < 0.0f)
-            {
-                KnarreY   = 0.0f;
-                Action    = GEGNER_STEHEN;
-                Handlung  = GEGNER_SPRINGEN;
-                AnimPhase = 10;
-                AnimCount = 1.0f;
-                ShotCount = 6;
-
-                SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
-
-                for (int p = 0; p < NUMPLAYERS; p++)
-                    if (Player[p].AufPlattform == this)
-                        Player[p].AufPlattform = NULL;
-            }
-        }
-        break;
-
-        case GEGNER_INIT4:
-        {
-            KnarreY -= 5.0f SYNC;
-
-            if (KnarreY < 0.0f)
-            {
-                KnarreY   = 0.0f;
-                Action    = GEGNER_BOMBARDIEREN;
-                Handlung  = GEGNER_SPRINGEN;
-                AnimPhase = 10;
-                AnimCount = 1.0f;
-                ShotCount = 6;
-                ShotDelay = 1.5f;
-
-                SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
-
-                for (int p = 0; p < NUMPLAYERS; p++)
-                    if (Player[p].AufPlattform == this)
-                        Player[p].AufPlattform = NULL;
-            }
-        }
-        break;
-
-        } // switch (Action)
-
-
-    }
-    break;
-
-    case GEGNER_SPRINGEN:
-    {
-        // Kanone zurückfahren
-        if (KnarreY < 60.0f)
-            KnarreY += 5.0f SYNC;
-        else
-        {
-            KnarreY = 60.0f;
-
-            switch(Action)
-            {
-            // abspringen
-            case GEGNER_STEHEN:
-            case GEGNER_BOMBARDIEREN:
-            {
-                AnimCount -= 4.0f SYNC;
-                if (AnimCount <= 0.0f)
-                {
-                    AnimCount = 1.0f;
-                    AnimPhase--;
-
-                    if (AnimPhase < 5)
-                    {
-                        // Auf Spieler springen?
-                        if (Action ==GEGNER_STEHEN)
-                        {
-                            Action = GEGNER_SPRINGEN;
-                            ySpeed = -80.0f;
-                            yAcc = 18.0f;
-                            xSpeed = PlayerAbstandHoriz() / 8.0f;
-
-                            if (xPos > pAim->xpos)
-                                xSpeed *= -1.0f;
-                        }
-
-                        // an den Rand springen?
-                        else
-                        {
-                            float target;
-
-                            if (xPos + 100 > TileEngine.XOffset + 320.0f)
-                                target = static_cast<float>(TileEngine.XOffset) + 100.0f;
-                            else
-                                target = static_cast<float>(TileEngine.XOffset) + 540.0f;
-
-                            // zurück zur Mitte springen
-                            if (ShotCount == 1)
-                                target = static_cast<float>(TileEngine.XOffset) + 320.0f;
-
-                            Action = GEGNER_AUSSPUCKEN;
-                            ySpeed = -110.0f;
-                            yAcc = 16.0f;
-                            xSpeed = (target - (xPos + 100.0f)) / 12.0f;
-
-                            //if (xPos > target)
-                            //	xSpeed *= -1.0f;
-                        }
-                    }
-                }
-            }
-            break;
-
-            // aufkommen
-            case GEGNER_SCHLIESSEN:
-            case GEGNER_AUSSPUCKENZWEI:
-            {
-                AnimCount -= 4.0f SYNC;
-                if (AnimCount <= 0.0f)
-                {
-                    AnimCount = 1.0f;
-                    AnimPhase++;
-
-                    if (AnimPhase > 10)
-                    {
-                        AnimPhase = 10;
-
-                        if (Action == GEGNER_SCHLIESSEN)
-                            Action = GEGNER_STEHEN;
-                        else
-                            Action = GEGNER_BOMBARDIEREN;
-
-                        ShotCount--;
-
-                        if (ShotCount <= 0)
-                        {
-                            Handlung = GEGNER_EINFLIEGEN;
-                            NextAction();
-                        }
-                    }
-                }
-            }
-            break;
-
-            case GEGNER_SPRINGEN:
-            case GEGNER_AUSSPUCKEN:
-            {
-                if (Action == GEGNER_AUSSPUCKEN &&
-                        ShotCount > 1)
-                {
-                    ShotDelay -= 1.0f SYNC;
-
-                    if (ShotDelay <= 0.0f)
-                    {
-                        ShotDelay = 2.0f;
-
-                        Projectiles.PushProjectile(xPos + 100.0f, yPos + 140.0f, BLUEBOMB);
-                    }
-                }
-
-                if (ySpeed > 0.0f)
-                {
-                    // auf den Boden geknallt?
-                    if (yPos > (ySave - 40.0f))
-                    {
-                        for (int i = 0; i < 30; i++)
-                            PartikelSystem.PushPartikel(xPos + 10 + rand()%140, yPos + rand()%40 + 110, SNOWFLUSH);
-
-                        yPos = ySave - 40.0f;
-                        ShakeScreen(3.0f);
-
-                        xSpeed = 0.0f;
-                        ySpeed = 0.0f;
-                        xAcc   = 0.0f;
-                        yAcc   = 0.0f;
-
-                        if (Action == GEGNER_SPRINGEN)
-                            Action = GEGNER_SCHLIESSEN;
-                        else
-                            Action = GEGNER_AUSSPUCKENZWEI;
-
-                        // Spieler zerquetscht?
-                        TestDamagePlayers(500.0f);
-
-                        SoundManager.PlayWave(50, 128, 11025, SOUND_DOORSTOP);
-                    }
-                }
-            }
-            break;
-            }
-        }
-    }
-    break;
-
-    case GEGNER_AUSFAHREN:
-    {
-        // Kanone zurück
-        if (KnarreWinkel < 0.0f)
-            KnarreWinkel += 5.0f SYNC;
-
-        if (KnarreWinkel > 0.0f)
-            KnarreWinkel -= 5.0f SYNC;
-
-        if (KnarreY < 60.0f)
-            KnarreY += 5.0f SYNC;
-        else
-        {
-            KnarreY = 60.0f;
+        // kurz abwarten nach dem Runterfallen und Kamera hochscrollen
+        case GEGNER_INIT2: {
             AnimCount -= 1.0f SYNC;
 
-            // losfliegen
-            if (AnimCount < 0.0f &&
-                    yAcc == 0.0f)
-            {
-                ySpeed = -5.0f;
-                yAcc = -0.6f;
+            if (AnimCount < 0.0f) {
+                Handlung = GEGNER_EINFLIEGEN;
+                Action = GEGNER_EINFLIEGEN;
+                AnimEnde = 12;
+                AnimSpeed = 1.0f;
+
+                SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
             }
+        } break;
 
-            if (yPos < TileEngine.YOffset - 300.0f)
-                Energy = 0.0f;
+        // Bein ausfahren
+        case GEGNER_EINFLIEGEN: {
+            switch (Action) {
+                case GEGNER_EINFLIEGEN: {
+                    SimpleAnimation();
 
-            // Auf der Hälfte explodieren lassen?
-            if (Value1 >= 2 &&
-                    yPos < TileEngine.YOffset + 150.0f)
-            {
-                SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
-                ShakeScreen(5.0f);
+                    yOffset = -AnimPhase * 8.0f;
 
-                for (int i = 0; i < 50; i++)
-                    PartikelSystem.PushPartikel(xPos  - 20 + rand()%150, yPos + rand()%70, SMOKEBIG);
+                    if (yOffset < -40.0f)
+                        yOffset = -40.0f;
 
-                for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos - 40 + rand()%200, yPos + rand()%100, EXPLOSION_MEDIUM2);
+                    if (AnimPhase >= AnimEnde - 1) {
+                        yOffset = 0.0f;
+                        yPos -= 40.0f;
+                        AnimPhase = 10;
+                        GegnerRect[GegnerArt].bottom = 150;
 
-                for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos + rand()%150, yPos + rand()%70, SCHROTT1);
+                        NextAction(0);
+                    }
 
-                for (int i = 0; i < 5; i++)
-                    PartikelSystem.PushPartikel(xPos - 40 + rand()%180, yPos + rand()%100, EXPLOSION_BIG);
+                } break;
 
-                for (int i = 0; i < 5; i++)
-                    PartikelSystem.PushPartikel(xPos + rand()%200, yPos + 70 + rand()%20, SPLITTER);
+                case GEGNER_INIT2: {
+                    KnarreY -= 5.0f SYNC;
 
-                Energy = 0.0f;
-            }
+                    if (KnarreY < 0.0f) {
+                        KnarreY = 0.0f;
+                        Action = -1;
+                        Handlung = GEGNER_VERFOLGEN;
+                        ShotDelay = 1.0f;
+                        ShotCount = 10 + rand() % 6;
+                    }
+                } break;
 
+                case GEGNER_INIT3: {
+                    KnarreY -= 5.0f SYNC;
 
-            // Dampf ablassen =)
-            SmokeDelay -= 1.0f SYNC;
+                    if (KnarreY < 0.0f) {
+                        KnarreY = 0.0f;
+                        Action = GEGNER_STEHEN;
+                        Handlung = GEGNER_SPRINGEN;
+                        AnimPhase = 10;
+                        AnimCount = 1.0f;
+                        ShotCount = 6;
 
-            if (SmokeDelay < 0.0f)
-            {
-                SmokeDelay = 0.5f;
-                PartikelSystem.PushPartikel(xPos + 60 + rand()%20, yPos + 120 + yOffset, SMOKEBIG);
-                PartikelSystem.PushPartikel(xPos + 95 + rand()%20, yPos + 140 + yOffset, FUNKE);
+                        SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
 
-                Projectiles.PushProjectile(xPos + 75 + rand()%4, yPos + 80 + yOffset, FEUERFALLE3);
+                        for (int p = 0; p < NUMPLAYERS; p++)
+                            if (Player[p].AufPlattform == this)
+                                Player[p].AufPlattform = NULL;
+                    }
+                } break;
 
-                // Explodieren?
-                if (Value1 >= 2 &&
-                        rand()%2 == 0)
-                {
-                    SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
-                    PartikelSystem.PushPartikel(xPos + rand()%150, yPos + rand()%100, EXPLOSION_MEDIUM2);
+                case GEGNER_INIT4: {
+                    KnarreY -= 5.0f SYNC;
+
+                    if (KnarreY < 0.0f) {
+                        KnarreY = 0.0f;
+                        Action = GEGNER_BOMBARDIEREN;
+                        Handlung = GEGNER_SPRINGEN;
+                        AnimPhase = 10;
+                        AnimCount = 1.0f;
+                        ShotCount = 6;
+                        ShotDelay = 1.5f;
+
+                        SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
+
+                        for (int p = 0; p < NUMPLAYERS; p++)
+                            if (Player[p].AufPlattform == this)
+                                Player[p].AufPlattform = NULL;
+                    }
+                } break;
+
+            }  // switch (Action)
+
+        } break;
+
+        case GEGNER_SPRINGEN: {
+            // Kanone zurückfahren
+            if (KnarreY < 60.0f)
+                KnarreY += 5.0f SYNC;
+            else {
+                KnarreY = 60.0f;
+
+                switch (Action) {
+                    // abspringen
+                    case GEGNER_STEHEN:
+                    case GEGNER_BOMBARDIEREN: {
+                        AnimCount -= 4.0f SYNC;
+                        if (AnimCount <= 0.0f) {
+                            AnimCount = 1.0f;
+                            AnimPhase--;
+
+                            if (AnimPhase < 5) {
+                                // Auf Spieler springen?
+                                if (Action == GEGNER_STEHEN) {
+                                    Action = GEGNER_SPRINGEN;
+                                    ySpeed = -80.0f;
+                                    yAcc = 18.0f;
+                                    xSpeed = PlayerAbstandHoriz() / 8.0f;
+
+                                    if (xPos > pAim->xpos)
+                                        xSpeed *= -1.0f;
+                                }
+
+                                // an den Rand springen?
+                                else {
+                                    float target;
+
+                                    if (xPos + 100 > TileEngine.XOffset + 320.0f)
+                                        target = static_cast<float>(TileEngine.XOffset) + 100.0f;
+                                    else
+                                        target = static_cast<float>(TileEngine.XOffset) + 540.0f;
+
+                                    // zurück zur Mitte springen
+                                    if (ShotCount == 1)
+                                        target = static_cast<float>(TileEngine.XOffset) + 320.0f;
+
+                                    Action = GEGNER_AUSSPUCKEN;
+                                    ySpeed = -110.0f;
+                                    yAcc = 16.0f;
+                                    xSpeed = (target - (xPos + 100.0f)) / 12.0f;
+
+                                    // if (xPos > target)
+                                    //	xSpeed *= -1.0f;
+                                }
+                            }
+                        }
+                    } break;
+
+                    // aufkommen
+                    case GEGNER_SCHLIESSEN:
+                    case GEGNER_AUSSPUCKENZWEI: {
+                        AnimCount -= 4.0f SYNC;
+                        if (AnimCount <= 0.0f) {
+                            AnimCount = 1.0f;
+                            AnimPhase++;
+
+                            if (AnimPhase > 10) {
+                                AnimPhase = 10;
+
+                                if (Action == GEGNER_SCHLIESSEN)
+                                    Action = GEGNER_STEHEN;
+                                else
+                                    Action = GEGNER_BOMBARDIEREN;
+
+                                ShotCount--;
+
+                                if (ShotCount <= 0) {
+                                    Handlung = GEGNER_EINFLIEGEN;
+                                    NextAction();
+                                }
+                            }
+                        }
+                    } break;
+
+                    case GEGNER_SPRINGEN:
+                    case GEGNER_AUSSPUCKEN: {
+                        if (Action == GEGNER_AUSSPUCKEN && ShotCount > 1) {
+                            ShotDelay -= 1.0f SYNC;
+
+                            if (ShotDelay <= 0.0f) {
+                                ShotDelay = 2.0f;
+
+                                Projectiles.PushProjectile(xPos + 100.0f, yPos + 140.0f, BLUEBOMB);
+                            }
+                        }
+
+                        if (ySpeed > 0.0f) {
+                            // auf den Boden geknallt?
+                            if (yPos > (ySave - 40.0f)) {
+                                for (int i = 0; i < 30; i++)
+                                    PartikelSystem.PushPartikel(xPos + 10 + rand() % 140, yPos + rand() % 40 + 110,
+                                                                SNOWFLUSH);
+
+                                yPos = ySave - 40.0f;
+                                ShakeScreen(3.0f);
+
+                                xSpeed = 0.0f;
+                                ySpeed = 0.0f;
+                                xAcc = 0.0f;
+                                yAcc = 0.0f;
+
+                                if (Action == GEGNER_SPRINGEN)
+                                    Action = GEGNER_SCHLIESSEN;
+                                else
+                                    Action = GEGNER_AUSSPUCKENZWEI;
+
+                                // Spieler zerquetscht?
+                                TestDamagePlayers(500.0f);
+
+                                SoundManager.PlayWave(50, 128, 11025, SOUND_DOORSTOP);
+                            }
+                        }
+                    } break;
                 }
             }
+        } break;
 
-            int a;
+        case GEGNER_AUSFAHREN: {
+            // Kanone zurück
+            if (KnarreWinkel < 0.0f)
+                KnarreWinkel += 5.0f SYNC;
 
-            a = static_cast<int>((yPos - TileEngine.YOffset - 200.0f) / 10.0f);
+            if (KnarreWinkel > 0.0f)
+                KnarreWinkel -= 5.0f SYNC;
 
-            if (a > 10) a = 10;
-            if (a <  0) a = 0;
+            if (KnarreY < 60.0f)
+                KnarreY += 5.0f SYNC;
+            else {
+                KnarreY = 60.0f;
+                AnimCount -= 1.0f SYNC;
 
-            AnimPhase = a;
-        }
-    }
-    break;
+                // losfliegen
+                if (AnimCount < 0.0f && yAcc == 0.0f) {
+                    ySpeed = -5.0f;
+                    yAcc = -0.6f;
+                }
 
-    // Auf Spieler ballern
-    case GEGNER_VERFOLGEN:
-    {
-        // Winkel zum Spieler ausrechnen
+                if (yPos < TileEngine.YOffset - 300.0f)
+                    Energy = 0.0f;
 
-        float aim = WinkelToPlayer();
+                // Auf der Hälfte explodieren lassen?
+                if (Value1 >= 2 && yPos < TileEngine.YOffset + 150.0f) {
+                    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+                    ShakeScreen(5.0f);
 
-        if (KnarreWinkel < aim)
-        {
-            KnarreWinkel += 8.0f SYNC;
+                    for (int i = 0; i < 50; i++)
+                        PartikelSystem.PushPartikel(xPos - 20 + rand() % 150, yPos + rand() % 70, SMOKEBIG);
 
-            if (KnarreWinkel > aim)
-                KnarreWinkel = aim;
-        }
+                    for (int i = 0; i < 20; i++)
+                        PartikelSystem.PushPartikel(xPos - 40 + rand() % 200, yPos + rand() % 100, EXPLOSION_MEDIUM2);
 
-        if (KnarreWinkel > aim)
-        {
-            KnarreWinkel -= 8.0f SYNC;
+                    for (int i = 0; i < 20; i++)
+                        PartikelSystem.PushPartikel(xPos + rand() % 150, yPos + rand() % 70, SCHROTT1);
 
-            if (KnarreWinkel < aim)
-                KnarreWinkel = aim;
-        }
+                    for (int i = 0; i < 5; i++)
+                        PartikelSystem.PushPartikel(xPos - 40 + rand() % 180, yPos + rand() % 100, EXPLOSION_BIG);
 
-        if (PlayerAbstandHoriz() < 100 &&
-                Value1 > 0)
-            ShotCount--;
-        else if(abs(static_cast<int>(aim - KnarreWinkel)) < 10.0f)
-            ShotDelay -= 1.0f SYNC;
+                    for (int i = 0; i < 5; i++)
+                        PartikelSystem.PushPartikel(xPos + rand() % 200, yPos + 70 + rand() % 20, SPLITTER);
 
-        if (ShotDelay <= 0.0f)
-        {
-            ShotDelay = 8.0f;
+                    Energy = 0.0f;
+                }
 
-            float w;
+                // Dampf ablassen =)
+                SmokeDelay -= 1.0f SYNC;
 
-            if (KnarreWinkel <= 0.0f)
-                w = 180 - KnarreWinkel;
-            else
-                w = KnarreWinkel - 180;
+                if (SmokeDelay < 0.0f) {
+                    SmokeDelay = 0.5f;
+                    PartikelSystem.PushPartikel(xPos + 60 + rand() % 20, yPos + 120 + yOffset, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + 95 + rand() % 20, yPos + 140 + yOffset, FUNKE);
 
-            //DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
-            //for (int p = 0; p < 2; p++)
-            //    PartikelSystem.PushPartikel(xPos + (float)sin((KnarreWinkel + 180.0f) * PI / 180.0f) * 70.0f + 80,
-            //                                  yPos + (float)cos((KnarreWinkel + 180.0f) * PI / 180.0f) * 60.0f + KnarreY + yOffset, SMOKEBIG);
+                    Projectiles.PushProjectile(xPos + 75 + rand() % 4, yPos + 80 + yOffset, FEUERFALLE3);
 
-            //Gegner.PushGegner(xPos + (float)sin((KnarreWinkel + 180.0f) * PI / 180.0f) * 70.0f + 100,
-            //                    yPos + (float)cos((KnarreWinkel + 180.0f) * PI / 180.0f) * 60.0f + KnarreY + 5.0f + yOffset, SCHNEEKOPPE, -static_cast<int>(w) - 3 + rand()%7 , 40, false);
-            for (int p = 0; p < 2; p++)
-                PartikelSystem.PushPartikel(xPos + sin_deg(KnarreWinkel + 180.0f) * 70.0f + 80.0f,
-                                              yPos + cos_deg(KnarreWinkel + 180.0f) * 60.0f + KnarreY + yOffset, SMOKEBIG);
+                    // Explodieren?
+                    if (Value1 >= 2 && rand() % 2 == 0) {
+                        SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
+                        PartikelSystem.PushPartikel(xPos + rand() % 150, yPos + rand() % 100, EXPLOSION_MEDIUM2);
+                    }
+                }
 
-            Gegner.PushGegner(xPos + sin_deg(KnarreWinkel + 180.0f) * 70.0f + 100.0f,
-                                yPos + cos_deg(KnarreWinkel + 180.0f) * 60.0f + KnarreY + 5.0f + yOffset, SCHNEEKOPPE, -static_cast<int>(w) - 3 + rand()%7 , 40, false);
+                int a;
 
+                a = static_cast<int>((yPos - TileEngine.YOffset - 200.0f) / 10.0f);
 
-            SoundManager.PlayWave(100, 128, 8000 + rand()%1000, SOUND_GRANATE);
+                if (a > 10)
+                    a = 10;
+                if (a < 0)
+                    a = 0;
 
-            GunSlide = 5.0f;
+                AnimPhase = a;
+            }
+        } break;
 
-            // Boss kommt nicht zum ersten mal? Dann Shusscount abziehen
-            if (Value1 > 0)
+        // Auf Spieler ballern
+        case GEGNER_VERFOLGEN: {
+            // Winkel zum Spieler ausrechnen
+
+            float aim = WinkelToPlayer();
+
+            if (KnarreWinkel < aim) {
+                KnarreWinkel += 8.0f SYNC;
+
+                if (KnarreWinkel > aim)
+                    KnarreWinkel = aim;
+            }
+
+            if (KnarreWinkel > aim) {
+                KnarreWinkel -= 8.0f SYNC;
+
+                if (KnarreWinkel < aim)
+                    KnarreWinkel = aim;
+            }
+
+            if (PlayerAbstandHoriz() < 100 && Value1 > 0)
                 ShotCount--;
-        }
+            else if (abs(static_cast<int>(aim - KnarreWinkel)) < 10.0f)
+                ShotDelay -= 1.0f SYNC;
 
-        if (ShotCount <= 0)
-            NextAction();
-    }
-    break;
+            if (ShotDelay <= 0.0f) {
+                ShotDelay = 8.0f;
 
+                float w;
 
-    default :
-        break;
-    } // switch
+                if (KnarreWinkel <= 0.0f)
+                    w = 180 - KnarreWinkel;
+                else
+                    w = KnarreWinkel - 180;
+
+                // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
+                // for (int p = 0; p < 2; p++)
+                //    PartikelSystem.PushPartikel(xPos + (float)sin((KnarreWinkel + 180.0f) * PI / 180.0f) * 70.0f + 80,
+                //                                  yPos + (float)cos((KnarreWinkel + 180.0f) * PI / 180.0f) * 60.0f +
+                //                                  KnarreY + yOffset, SMOKEBIG);
+
+                // Gegner.PushGegner(xPos + (float)sin((KnarreWinkel + 180.0f) * PI / 180.0f) * 70.0f + 100,
+                //                    yPos + (float)cos((KnarreWinkel + 180.0f) * PI / 180.0f) * 60.0f + KnarreY + 5.0f
+                //                    + yOffset, SCHNEEKOPPE, -static_cast<int>(w) - 3 + rand()%7 , 40, false);
+                for (int p = 0; p < 2; p++)
+                    PartikelSystem.PushPartikel(xPos + sin_deg(KnarreWinkel + 180.0f) * 70.0f + 80.0f,
+                                                yPos + cos_deg(KnarreWinkel + 180.0f) * 60.0f + KnarreY + yOffset,
+                                                SMOKEBIG);
+
+                Gegner.PushGegner(xPos + sin_deg(KnarreWinkel + 180.0f) * 70.0f + 100.0f,
+                                  yPos + cos_deg(KnarreWinkel + 180.0f) * 60.0f + KnarreY + 5.0f + yOffset, SCHNEEKOPPE,
+                                  -static_cast<int>(w) - 3 + rand() % 7, 40, false);
+
+                SoundManager.PlayWave(100, 128, 8000 + rand() % 1000, SOUND_GRANATE);
+
+                GunSlide = 5.0f;
+
+                // Boss kommt nicht zum ersten mal? Dann Shusscount abziehen
+                if (Value1 > 0)
+                    ShotCount--;
+            }
+
+            if (ShotCount <= 0)
+                NextAction();
+        } break;
+
+        default:
+            break;
+    }  // switch
 
     // Boss hat Schaden genommen?
-    if (DamageTaken > 0.0f)
-    {
+    if (DamageTaken > 0.0f) {
         // War es eine seiner eigenen Bomben? Dann zieht das ganz schön was ab =)
-        if (LastEnergy - Energy > 5000)
-        {
-        }
-        else
+        if (LastEnergy - Energy > 5000) {
+        } else
             DamageTaken = 0.0f;
 
         LastEnergy = Energy;
@@ -692,24 +606,20 @@ void GegnerSchneeKoenig::DoKI(void)
 
     GegnerRect[GegnerArt].top = 60 + static_cast<int>(yOffset);
 
-    if (Handlung != GEGNER_SPRINGEN &&
-            Handlung != GEGNER_AUSFAHREN)
-    {
+    if (Handlung != GEGNER_SPRINGEN && Handlung != GEGNER_AUSFAHREN) {
         Wegschieben(GegnerRect[GegnerArt], 0);
         PlattformTest(GegnerRect[GegnerArt]);
     }
 
     // Checken, ob der Schneekönig von einer Schneekoppe getroffen wurde =)
-    GegnerClass* pTemp;
+    GegnerClass *pTemp;
     pTemp = Gegner.pStart;
 
     if (Handlung != GEGNER_AUSFAHREN)
-        while (pTemp != NULL)
-        {
+        while (pTemp != NULL) {
             if (pTemp->GegnerArt == SCHNEEKOPPE)
-                if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
-                                    pTemp->xPos, pTemp->yPos, GegnerRect[pTemp->GegnerArt]) == true)
-                {
+                if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], pTemp->xPos, pTemp->yPos,
+                                    GegnerRect[pTemp->GegnerArt]) == true) {
                     pTemp->Energy = 0.0f;
                     Energy -= 5000.0f;
 
@@ -721,9 +631,7 @@ void GegnerSchneeKoenig::DoKI(void)
         }
 
     // kaputt? Dann rausfliegen
-    if (Energy < 100.0f &&
-            Handlung != GEGNER_AUSFAHREN)
-    {
+    if (Energy < 100.0f && Handlung != GEGNER_AUSFAHREN) {
         // Spieler fliegt runter
         for (int p = 0; p < NUMPLAYERS; p++)
             if (Player[p].AufPlattform == this)
@@ -736,8 +644,8 @@ void GegnerSchneeKoenig::DoKI(void)
 
         xSpeed = 0.0f;
         ySpeed = 0.0;
-        xAcc   = 0.0f;
-        yAcc   = 0.0f;
+        xAcc = 0.0f;
+        yAcc = 0.0f;
 
         SoundManager.PlayWave(100, 128, 11025, SOUND_TAKEOFF);
 
@@ -750,8 +658,7 @@ void GegnerSchneeKoenig::DoKI(void)
 // SchneeKoenig explodiert nicht, sondern bleibt kaputt stehen
 // --------------------------------------------------------------------------------------
 
-void GegnerSchneeKoenig::GegnerExplode(void)
-{
+void GegnerSchneeKoenig::GegnerExplode(void) {
     // Endboss-Musik ausfaden und abschalten
     SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
 

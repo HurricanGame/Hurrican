@@ -8,49 +8,45 @@
 // nach oben
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.hpp"
 #include "Trigger_ShootPlattform.hpp"
+#include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerShootPlattform::GegnerShootPlattform(int Wert1, int Wert2, bool Light)
-{
-    Handlung		= GEGNER_STEHEN;
-    BlickRichtung	= RECHTS;
-    Energy			= 100;
-    Value1			= Wert2;			// yPos der Plattform
-    Value2			= 0;
-    ChangeLight		= Light;
-    Destroyable		= false;
-    OwnDraw			= true;
-    TestBlock		= false;
+GegnerShootPlattform::GegnerShootPlattform(int Wert1, int Wert2, bool Light) {
+    Handlung = GEGNER_STEHEN;
+    BlickRichtung = RECHTS;
+    Energy = 100;
+    Value1 = Wert2;  // yPos der Plattform
+    Value2 = 0;
+    ChangeLight = Light;
+    Destroyable = false;
+    OwnDraw = true;
+    TestBlock = false;
 }
 
 // --------------------------------------------------------------------------------------
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerShootPlattform::DoDraw(void)
-{
+void GegnerShootPlattform::DoDraw(void) {
     // Button rendern
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
-                                           static_cast<float>(yPos-TileEngine.YOffset),
-                                           AnimPhase, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
+                                           static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFFFFFFFF);
 
-    if (Value2 == 1)
-    {
+    if (Value2 == 1) {
         // Lighflare rendern, wenn angeschossen
-        DirectGraphics.SetAdditiveMode ();
-        Projectiles.LavaFlare.RenderSprite (float (xPos - 9 - TileEngine.XOffset),
-                                float (yPos - 5 - TileEngine.YOffset), 0, 0xAAFFFFFF);
+        DirectGraphics.SetAdditiveMode();
+        Projectiles.LavaFlare.RenderSprite(float(xPos - 9 - TileEngine.XOffset), float(yPos - 5 - TileEngine.YOffset),
+                                           0, 0xAAFFFFFF);
 
-        Projectiles.LavaFlare.RenderSprite (float (xPos - 9 - TileEngine.XOffset),
-                                float (yPos - 5 - TileEngine.YOffset), 0, 0x88AAAA00);
-        Projectiles.LavaFlare.RenderSprite (float (xPos - 9 - TileEngine.XOffset),
-                                float (yPos - 5 - TileEngine.YOffset), 0, 0x88AA0000);
-        DirectGraphics.SetColorKeyMode ();
+        Projectiles.LavaFlare.RenderSprite(float(xPos - 9 - TileEngine.XOffset), float(yPos - 5 - TileEngine.YOffset),
+                                           0, 0x88AAAA00);
+        Projectiles.LavaFlare.RenderSprite(float(xPos - 9 - TileEngine.XOffset), float(yPos - 5 - TileEngine.YOffset),
+                                           0, 0x88AA0000);
+        DirectGraphics.SetColorKeyMode();
 
         Value2 = 0;
     }
@@ -60,9 +56,8 @@ void GegnerShootPlattform::DoDraw(void)
 // "ShootPlattform KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerShootPlattform::DoKI(void)
-{
-    BlickRichtung	= LINKS;
+void GegnerShootPlattform::DoKI(void) {
+    BlickRichtung = LINKS;
 
     // Testen, ob der Spieler auf der Plattform steht
     //
@@ -70,37 +65,32 @@ void GegnerShootPlattform::DoKI(void)
 
     // MaxSpeed
     //
-    if (ySpeed < -30.0f) ySpeed = -30.0f;
-    if (ySpeed >  30.0f) ySpeed =  30.0f;
+    if (ySpeed < -30.0f)
+        ySpeed = -30.0f;
+    if (ySpeed > 30.0f)
+        ySpeed = 30.0f;
 
     // Wieder am Ausgangspunkt gelandet ?
     //
-    if (ySpeed > 0.0f &&
-            int (yPos) > Value1)
-    {
-        yPos = float (Value1);
+    if (ySpeed > 0.0f && int(yPos) > Value1) {
+        yPos = float(Value1);
         ySpeed = 0.0f;
-        yAcc   = 0.0f;
+        yAcc = 0.0f;
     }
 
     // An der Decke abprallen
     for (int p = 0; p < NUMPLAYERS; p++)
-        if (Player[p].AufPlattform == this)
-        {
-            uint32_t bo = TileEngine.BlockOben(Player[p].xpos, Player[p].ypos,
-                                            Player[p].xposold,  Player[p].yposold, Player[p].CollideRect);
+        if (Player[p].AufPlattform == this) {
+            uint32_t bo = TileEngine.BlockOben(Player[p].xpos, Player[p].ypos, Player[p].xposold, Player[p].yposold,
+                                               Player[p].CollideRect);
 
-            if (ySpeed < 0.0f &&
-                    bo & BLOCKWERT_WAND)
+            if (ySpeed < 0.0f && bo & BLOCKWERT_WAND)
                 ySpeed *= -1.0f;
         }
-
 }
 
 // --------------------------------------------------------------------------------------
 // ShootPlattform explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerShootPlattform::GegnerExplode(void)
-{
-}
+void GegnerShootPlattform::GegnerExplode(void) {}

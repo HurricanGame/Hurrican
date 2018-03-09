@@ -4,9 +4,8 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerFlugBoss : public GegnerClass
-{
-private:
+class GegnerFlugBoss : public GegnerClass {
+  private:
     DirectGraphicsSprite SchieneL;
     DirectGraphicsSprite SchieneR;
 
@@ -23,7 +22,7 @@ private:
     float yKanone[4];
 
     float xKanone;
-    float Winkel [2];
+    float Winkel[2];
 
     float xHit;
     float yHit;
@@ -36,13 +35,13 @@ private:
     float ShotDelay;
     float ShotCount;
 
-public:
-
-    GegnerFlugBoss (int Wert1,	int Wert2,			// Konstruktor
-                    bool		  Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-    void DoDraw		   (void);							// Gegner individuell rendern
+  public:
+    GegnerFlugBoss(int Wert1,
+                   int Wert2,  // Konstruktor
+                   bool Light);
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw(void);         // Gegner individuell rendern
 };
 
 #endif

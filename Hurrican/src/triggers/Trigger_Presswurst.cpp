@@ -5,59 +5,53 @@
 // und wartet dann solange wie es Value2 angibt
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.hpp"
 #include "Trigger_Presswurst.hpp"
+#include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerPresswurst::GegnerPresswurst(int Wert1, int Wert2, bool Light)
-{
-    Handlung		= GEGNER_INIT;
-    BlickRichtung	= LINKS;
-    Energy			= 100;
-    Value1			= Wert1;
-    Value2			= Wert2;
-    AnimPhase		= 0;
-    ChangeLight		= Light;
-    Destroyable		= false;
-    Active			= true;
-    OwnDraw			= true;
-    TestBlock		= false;
-    oldy			= 0.0f;
-    SmokeCount		= 0.0f;
+GegnerPresswurst::GegnerPresswurst(int Wert1, int Wert2, bool Light) {
+    Handlung = GEGNER_INIT;
+    BlickRichtung = LINKS;
+    Energy = 100;
+    Value1 = Wert1;
+    Value2 = Wert2;
+    AnimPhase = 0;
+    ChangeLight = Light;
+    Destroyable = false;
+    Active = true;
+    OwnDraw = true;
+    TestBlock = false;
+    oldy = 0.0f;
+    SmokeCount = 0.0f;
 }
 
 // --------------------------------------------------------------------------------------
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerPresswurst::DoDraw(void)
-{
+void GegnerPresswurst::DoDraw(void) {
     // rendern
     //
     int size = static_cast<int>(oldy - yPos) + GegnerRect[GegnerArt].top;
     pGegnerGrafix[GegnerArt]->SetRect(0, size, 185, 357);
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
-                                           static_cast<float>(yPos-TileEngine.YOffset) + size, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
+                                           static_cast<float>(yPos - TileEngine.YOffset) + size, 0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------
 // Bewegungs KI
 // --------------------------------------------------------------------------------------
 
-void GegnerPresswurst::DoKI(void)
-{
+void GegnerPresswurst::DoKI(void) {
     // Spieler kann von unten nicht durchspringen
     //
     for (int p = 0; p < NUMPLAYERS; p++)
-        if (SpriteCollision(Player[p].xpos,
-                            Player[p].ypos,
-                            Player[p].CollideRect,
-                            xPos, yPos, GegnerRect[GegnerArt]) == true &&
-                yPos < Player[p].ypos					   &&
-                Player[p].yspeed < 0.0f)
+        if (SpriteCollision(Player[p].xpos, Player[p].ypos, Player[p].CollideRect, xPos, yPos, GegnerRect[GegnerArt]) ==
+                true &&
+            yPos < Player[p].ypos && Player[p].yspeed < 0.0f)
             Player[p].yspeed *= -0.25f;
 
     // Kollisionsrechteck fürs Wegschieben
@@ -67,164 +61,138 @@ void GegnerPresswurst::DoKI(void)
     // Kollisionsrechteck für das Unterteil
     GegnerRect[GegnerArt].top = 251;
 
-    blocko = TileEngine.BlockOben		  (xPos, yPos, yPosOld, yPosOld, GegnerRect[GegnerArt]);
+    blocko = TileEngine.BlockOben(xPos, yPos, yPosOld, yPosOld, GegnerRect[GegnerArt]);
     blocku = TileEngine.BlockUntenNormal(xPos, yPos, yPosOld, yPosOld, GegnerRect[GegnerArt]);
 
     // Ja nach Handlung richtig verhalten
-    switch (Handlung)
-    {
-    // Am Anfang einmal initialisieren
-    case GEGNER_INIT:
-    {
-        yPos -= GegnerRect[GegnerArt].top;
-        oldy = yPos;
-        Handlung = GEGNER_INIT2;
+    switch (Handlung) {
+        // Am Anfang einmal initialisieren
+        case GEGNER_INIT: {
+            yPos -= GegnerRect[GegnerArt].top;
+            oldy = yPos;
+            Handlung = GEGNER_INIT2;
 
-    }
-    break;
+        } break;
 
-    // Auf Spieler warten
-    case GEGNER_INIT2:
-    {
-        for (int p = 0; p < NUMPLAYERS; p++)
-            if (Player[p].ypos > yPos		&&
-                    PlayerAbstandHoriz(&Player[p]) < 200  &&
-                    PlayerAbstandVert(&Player[p])  < 500)
-            {
-                Handlung = GEGNER_LAUFEN;
-                ySpeed = 10.0f;
-                yAcc = 2.5f;
+        // Auf Spieler warten
+        case GEGNER_INIT2: {
+            for (int p = 0; p < NUMPLAYERS; p++)
+                if (Player[p].ypos > yPos && PlayerAbstandHoriz(&Player[p]) < 200 &&
+                    PlayerAbstandVert(&Player[p]) < 500) {
+                    Handlung = GEGNER_LAUFEN;
+                    ySpeed = 10.0f;
+                    yAcc = 2.5f;
 
-                if (PlayerAbstand(true) < 600)
-                    SoundManager.PlayWave3D(static_cast<int>(xPos + 90), static_cast<int>(yPos + 330), 11025, SOUND_PRESSE);
-            }
-    }
-    break;
-
-    // Pressen
-    case GEGNER_LAUFEN :
-    {
-        // Spieler beim Runterfallen berührt? Dann stirbt er leider ;)
-        //
-        for (int p = 0; p < NUMPLAYERS; p++)
-            if (SpriteCollision(Player[p].xpos,
-                                Player[p].ypos,
-                                Player[p].CollideRect,
-                                xPos, yPos, GegnerRect[GegnerArt]) == true &&
-                    Player[p].ypos > yPos)
-            {
-                // wenn er steht, dann gleich zerquetschen
-                if (Player[p].Handlung != SPRINGEN)
-                    Player[p].DamagePlayer(500.0f);
-
-                // wenn er springt, dann runterdrücken
-                else
-                {
-                    //pPlayer->yspeed = 0.0f;
-                    //pPlayer->yadd = 0.0f;
-                    Player[p].ypos = yPos + GegnerRect[PRESSWURST].bottom;
+                    if (PlayerAbstand(true) < 600)
+                        SoundManager.PlayWave3D(static_cast<int>(xPos + 90), static_cast<int>(yPos + 330), 11025,
+                                                SOUND_PRESSE);
                 }
-            }
+        } break;
 
-
-        // Am Boden ? Dann Partikel erzeugen und zum "Produzieren" wechseln
-        if (ySpeed > 0.0f &&
-                (blocku & BLOCKWERT_WAND		  ||
-                 blocku & BLOCKWERT_GEGNERWAND))
-        {
+        // Pressen
+        case GEGNER_LAUFEN: {
             // Spieler beim Runterfallen berührt? Dann stirbt er leider ;)
             //
             for (int p = 0; p < NUMPLAYERS; p++)
-                if (SpriteCollision(Player[p].xpos,
-                                    Player[p].ypos,
-                                    Player[p].CollideRect,
-                                    xPos, yPos, GegnerRect[GegnerArt]) == true &&
+                if (SpriteCollision(Player[p].xpos, Player[p].ypos, Player[p].CollideRect, xPos, yPos,
+                                    GegnerRect[GegnerArt]) == true &&
+                    Player[p].ypos > yPos) {
+                    // wenn er steht, dann gleich zerquetschen
+                    if (Player[p].Handlung != SPRINGEN)
+                        Player[p].DamagePlayer(500.0f);
+
+                    // wenn er springt, dann runterdrücken
+                    else {
+                        // pPlayer->yspeed = 0.0f;
+                        // pPlayer->yadd = 0.0f;
+                        Player[p].ypos = yPos + GegnerRect[PRESSWURST].bottom;
+                    }
+                }
+
+            // Am Boden ? Dann Partikel erzeugen und zum "Produzieren" wechseln
+            if (ySpeed > 0.0f && (blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_GEGNERWAND)) {
+                // Spieler beim Runterfallen berührt? Dann stirbt er leider ;)
+                //
+                for (int p = 0; p < NUMPLAYERS; p++)
+                    if (SpriteCollision(Player[p].xpos, Player[p].ypos, Player[p].CollideRect, xPos, yPos,
+                                        GegnerRect[GegnerArt]) == true &&
                         Player[p].ypos > yPos)
-                    Player[p].DamagePlayer(500.0f);
+                        Player[p].DamagePlayer(500.0f);
 
-            //DKS - Disabled this, as it had no effect (default paremeter resolv==false and
-            //      return value isn't used here for anything:
-            //TileEngine.BlockUnten(xPos, yPos, yPosOld, yPosOld, GegnerRect[GegnerArt]);
+                // DKS - Disabled this, as it had no effect (default paremeter resolv==false and
+                //      return value isn't used here for anything:
+                // TileEngine.BlockUnten(xPos, yPos, yPosOld, yPosOld, GegnerRect[GegnerArt]);
 
-            ySpeed = 0.0f;
-            yAcc   = 0.0f;
-            SmokeCount = 5.0f;
+                ySpeed = 0.0f;
+                yAcc = 0.0f;
+                SmokeCount = 5.0f;
 
-            if (PlayerAbstand() < 600)
-                SoundManager.PlayWave3D(static_cast<int>(xPos + 90), static_cast<int>(yPos + 330), 11025, SOUND_DOORSTOP);
+                if (PlayerAbstand() < 600)
+                    SoundManager.PlayWave3D(static_cast<int>(xPos + 90), static_cast<int>(yPos + 330), 11025,
+                                            SOUND_DOORSTOP);
 
-            ShakeScreen(2.0f);
+                ShakeScreen(2.0f);
 
-            Handlung = GEGNER_SPECIAL;
-        }
+                Handlung = GEGNER_SPECIAL;
+            }
 
-        // An der Decke ? Dann wieder in den Wartezustand setzen
-        if (ySpeed < 0.0f &&
-                (blocko & BLOCKWERT_WAND		  ||
-                 blocko & BLOCKWERT_GEGNERWAND))
-        {
-            ySpeed = 0.0f;
-            yAcc   = 0.0f;
+            // An der Decke ? Dann wieder in den Wartezustand setzen
+            if (ySpeed < 0.0f && (blocko & BLOCKWERT_WAND || blocko & BLOCKWERT_GEGNERWAND)) {
+                ySpeed = 0.0f;
+                yAcc = 0.0f;
 
-            Handlung = GEGNER_INIT2;
-        }
+                Handlung = GEGNER_INIT2;
+            }
 
-    }
-    break;
+        } break;
 
-    // Presse wartet unten und spuckt dann Dampf
-    case GEGNER_SPECIAL:
-    {
-        SmokeCount -= 1.0f SYNC;
+        // Presse wartet unten und spuckt dann Dampf
+        case GEGNER_SPECIAL: {
+            SmokeCount -= 1.0f SYNC;
 
-        if (SmokeCount <= 0.0f)
-        {
-            Handlung  = GEGNER_SPECIAL2;
-            AnimCount = 28.0f;
-            if (PlayerAbstand() < 600)
-                SoundManager.PlayWave3D(static_cast<int>(xPos + 90), static_cast<int>(yPos + 330), 13000, SOUND_STEAM2);
-        }
-    }
-    break;
+            if (SmokeCount <= 0.0f) {
+                Handlung = GEGNER_SPECIAL2;
+                AnimCount = 28.0f;
+                if (PlayerAbstand() < 600)
+                    SoundManager.PlayWave3D(static_cast<int>(xPos + 90), static_cast<int>(yPos + 330), 13000,
+                                            SOUND_STEAM2);
+            }
+        } break;
 
-    // Presse dampft
-    case GEGNER_SPECIAL2:
-    {
-        // rauchen lassen
-        SmokeCount -= 1.0f SYNC;
-        if (SmokeCount <= 0.0f)
-        {
-            SmokeCount = 0.2f;
+        // Presse dampft
+        case GEGNER_SPECIAL2: {
+            // rauchen lassen
+            SmokeCount -= 1.0f SYNC;
+            if (SmokeCount <= 0.0f) {
+                SmokeCount = 0.2f;
 
-            PartikelSystem.PushPartikel(xPos + 30.0f, yPos + 300.0f, SMOKE3_LU);
-            PartikelSystem.PushPartikel(xPos + 135.0f, yPos + 300.0f, SMOKE3_RU);
-        }
+                PartikelSystem.PushPartikel(xPos + 30.0f, yPos + 300.0f, SMOKE3_LU);
+                PartikelSystem.PushPartikel(xPos + 135.0f, yPos + 300.0f, SMOKE3_RU);
+            }
 
-        // Spinne spawnen
-        AnimCount -= 1.0f SYNC;
-        if (AnimCount < 0.0f)
-        {
             // Spinne spawnen
-            Gegner.PushGegner(xPos + 60.0f, yPos + 357 - GegnerRect[SPIDERBOMB].bottom, SPIDERBOMB, 0, 0, false, true);
+            AnimCount -= 1.0f SYNC;
+            if (AnimCount < 0.0f) {
+                // Spinne spawnen
+                Gegner.PushGegner(xPos + 60.0f, yPos + 357 - GegnerRect[SPIDERBOMB].bottom, SPIDERBOMB, 0, 0, false,
+                                  true);
 
-            // wieder hochfahren
-            Handlung = GEGNER_LAUFEN;
-            ySpeed   = -15.0f;
-            yAcc     = 0.2f;
+                // wieder hochfahren
+                Handlung = GEGNER_LAUFEN;
+                ySpeed = -15.0f;
+                yAcc = 0.2f;
 
-            if (PlayerAbstand() < 600)
-                SoundManager.PlayWave3D(static_cast<int>(xPos + 90), static_cast<int>(yPos + 330), 11025, SOUND_PRESSE);
-        }
-    }
-    break;
+                if (PlayerAbstand() < 600)
+                    SoundManager.PlayWave3D(static_cast<int>(xPos + 90), static_cast<int>(yPos + 330), 11025,
+                                            SOUND_PRESSE);
+            }
+        } break;
 
-    } // switch
+    }  // switch
 }
 
 // --------------------------------------------------------------------------------------
 // Presswurst explodiert (geht ja garnich *g*)
 // --------------------------------------------------------------------------------------
 
-void GegnerPresswurst::GegnerExplode(void)
-{
-}
+void GegnerPresswurst::GegnerExplode(void) {}

@@ -4,20 +4,19 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerGlubschi2 : public GegnerClass
-{
-private:
-    float	rotspeed;
-    float	rot;
+class GegnerGlubschi2 : public GegnerClass {
+  private:
+    float rotspeed;
+    float rot;
 
-public:
-
-    GegnerGlubschi2  (int Wert1,	int Wert2,		// Konstruktor
-                      bool Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner
+  public:
+    GegnerGlubschi2(int Wert1,
+                    int Wert2,  // Konstruktor
+                    bool Light);
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
-    void DoDraw		   (void);
+    void DoDraw(void);
 };
 
 #endif

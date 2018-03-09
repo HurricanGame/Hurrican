@@ -25,56 +25,57 @@
 #ifndef _TEXTURE_H_
 #define _TEXTURE_H_
 
-#include "SDL_port.h"
 #include <string>
+#include "SDL_port.h"
 
-struct image_t
-{
+struct image_t {
     std::vector<char> data;
     bool compressed;
     uint32_t w, h;
     uint32_t offset;
-    double   npot_scalex, npot_scaley;    //DKS - Correction factors to compensate for any 
-                                          //      nearest-power-of-two size expansions.
+    double npot_scalex, npot_scaley;  // DKS - Correction factors to compensate for any
+                                      //      nearest-power-of-two size expansions.
     GLenum type;
     GLenum format;
 
-    image_t() :
-        compressed  (false),
-        w           (0),
-        h           (0),
-        offset      (0),
-        npot_scalex (1.0),
-        npot_scaley (1.0),
-        type        (GL_UNSIGNED_BYTE),
-        format      (GL_RGBA)
-    { }
+    image_t()
+        : compressed(false),
+          w(0),
+          h(0),
+          offset(0),
+          npot_scalex(1.0),
+          npot_scaley(1.0),
+          type(GL_UNSIGNED_BYTE),
+          format(GL_RGBA) {}
 };
 
-//DKS - Textures are now managed in DX8Texture.cpp in new TexturesystemClass.
+// DKS - Textures are now managed in DX8Texture.cpp in new TexturesystemClass.
 //      This function now takes a reference to a TextureHandle object,
 //      returning true on success.
 //      Through TextureHandle data members npot_scalex and npot_scaley, it returns a
 //      factor to apply to each dimension to compensate for any increases in size
 //      from power-of-two expansion (each will be 1.0f if none occurred).
-bool SDL_LoadTexture( const std::string &path, const std::string &filename,
-                      void *buf, unsigned int buf_size, TextureHandle &th );
-void SDL_UnloadTexture( TextureHandle &th );
+bool SDL_LoadTexture(const std::string &path,
+                     const std::string &filename,
+                     void *buf,
+                     unsigned int buf_size,
+                     TextureHandle &th);
+void SDL_UnloadTexture(TextureHandle &th);
 
-bool load_texture( image_t& image, GLuint &new_texture);
+bool load_texture(image_t &image, GLuint &new_texture);
 
 #if defined(USE_ETC1)
-bool loadImageETC1( image_t& image, const std::string &fullpath );
+bool loadImageETC1(image_t &image, const std::string &fullpath);
 #endif
 #if defined(USE_PVRTC)
-bool loadImagePVRTC( image_t& image, const std::string &fullpath );
+bool loadImagePVRTC(image_t &image, const std::string &fullpath);
 #endif
 
-bool loadImageSDL( image_t& image, const std::string &fullpath, void *buf, unsigned int buf_size );
+bool loadImageSDL(image_t &image, const std::string &fullpath, void *buf, unsigned int buf_size);
 
 std::vector<char> LowerResolution(SDL_Surface *surface, int factor);
 
-//DKS - disabled (RGBA5551 did not benefit how textures actually were stored in VRAM)
+// DKS - disabled (RGBA5551 did not benefit how textures actually were stored in VRAM)
 /*
 #if defined(RGBA_5551)
 uint8_t* ConvertRGBA5551( SDL_Surface* surface, uint8_t factor );

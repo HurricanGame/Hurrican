@@ -4,19 +4,18 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerNeuFisch : public GegnerClass
-{
-private:
-    PlayerClass*	pFest;
-    float			MoveSpeed;
-public :
+class GegnerNeuFisch : public GegnerClass {
+  private:
+    PlayerClass *pFest;
+    float MoveSpeed;
 
-    GegnerNeuFisch (int  Wert1, int Wert2,				// Konstruktor
-                    bool Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner
+  public:
+    GegnerNeuFisch(int Wert1,
+                   int Wert2,  // Konstruktor
+                   bool Light);
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
 };
 
 #endif
-

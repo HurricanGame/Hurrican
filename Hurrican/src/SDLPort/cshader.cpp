@@ -25,49 +25,40 @@
 #include "cshader.h"
 #include "SDL_port.h"
 
-CShader::CShader() :
-    NamePos (GL_INVALID_VALUE),
-    NameClr (GL_INVALID_VALUE),
-    NameTex (GL_INVALID_VALUE),
-    NameMvp (GL_INVALID_VALUE),
-    Program (GL_INVALID_VALUE),
-    Shaders (),
-    Uniforms(),
-    Attributes()
-{
-}
+CShader::CShader()
+    : NamePos(GL_INVALID_VALUE),
+      NameClr(GL_INVALID_VALUE),
+      NameTex(GL_INVALID_VALUE),
+      NameMvp(GL_INVALID_VALUE),
+      Program(GL_INVALID_VALUE),
+      Shaders(),
+      Uniforms(),
+      Attributes() {}
 
-CShader::~CShader()
-{
-}
+CShader::~CShader() {}
 
-void CShader::Close()
-{
+void CShader::Close() {
     uint16_t i;
 
-    for(i=0; i<Shaders.size(); i++)
-    {
-        if ( Shaders.at(i).name != GL_INVALID_VALUE)
-        {
-            glDeleteShader( Shaders.at(i).name );
+    for (i = 0; i < Shaders.size(); i++) {
+        if (Shaders.at(i).name != GL_INVALID_VALUE) {
+            glDeleteShader(Shaders.at(i).name);
         }
     }
 
-    if (Program != GL_INVALID_VALUE)
-    {
-        glDeleteProgram( Program );
+    if (Program != GL_INVALID_VALUE) {
+        glDeleteProgram(Program);
     }
 
     Program = GL_INVALID_VALUE;
     Shaders.clear();
 }
 
-int8_t CShader::Load( const std::string& path_vertex, const std::string& path_frag )
-{
-    if (LoadShader( GL_VERTEX_SHADER, path_vertex ))
+int8_t CShader::Load(const std::string &path_vertex, const std::string &path_frag) {
+    if (LoadShader(GL_VERTEX_SHADER, path_vertex))
         return 1;
 
-    if (LoadShader( GL_FRAGMENT_SHADER, path_frag ))
+    if (LoadShader(GL_FRAGMENT_SHADER, path_frag))
         return 1;
 
     if (CreateProgram())
@@ -76,42 +67,36 @@ int8_t CShader::Load( const std::string& path_vertex, const std::string& path_fr
     return 0;
 }
 
-int8_t CShader::LoadShader( GLenum type, const std::string& path )
-{
+int8_t CShader::LoadShader(GLenum type, const std::string &path) {
     shader_t shader;
 
     Protokoll << "Shader: Compiling " << path << std::endl;
 
     shader.type = type;
     shader.path = path;
-    shader.name = CompileShader( shader.type, shader.path );
+    shader.name = CompileShader(shader.type, shader.path);
 
-    if (shader.name == GL_INVALID_VALUE)
-    {
+    if (shader.name == GL_INVALID_VALUE) {
         return 1;
-    }
-    else
-    {
+    } else {
         Protokoll << "Shader: Compiled " << path << std::endl;
     }
 
-    Shaders.push_back( shader );
+    Shaders.push_back(shader);
 
     return 0;
 }
 
-void CShader::Use()
-{
-    glUseProgram( Program );
+void CShader::Use() {
+    glUseProgram(Program);
 }
 
-GLuint CShader::CompileShader( GLenum type, const std::string& path )
-{
-    GLint       status;
-    GLuint      shader;
-    std::string      shadertype;
+GLuint CShader::CompileShader(GLenum type, const std::string &path) {
+    GLint status;
+    GLuint shader;
+    std::string shadertype;
     std::vector<char> source;
-    uint32_t    size = 0;
+    uint32_t size = 0;
 
     source = LoadFileToMemory(path);
 
@@ -120,40 +105,35 @@ GLuint CShader::CompileShader( GLenum type, const std::string& path )
     source.insert(source.begin(), precision.begin(), precision.end());
 #endif
 
-    if (!source.empty())
-    {
+    if (!source.empty()) {
 #if defined(DEBUG)
         Protokoll << "Shader Source Begin\n" << source << "\nShader Source End" << std::endl;
 #endif
 
-        shader = glCreateShader( type );
+        shader = glCreateShader(type);
         const GLchar *shader_src = source.data();
-        glShaderSource( shader, 1, &shader_src, NULL );
-        glCompileShader( shader );
+        glShaderSource(shader, 1, &shader_src, NULL);
+        glCompileShader(shader);
 
-        glGetShaderiv( shader, GL_COMPILE_STATUS, &status );
-        if (status == GL_FALSE)
-        {
-            switch(type)
-            {
-            case GL_VERTEX_SHADER:
-                shadertype = "vertex";
-                break;
-            case GL_FRAGMENT_SHADER:
-                shadertype = "fragment";
-                break;
-            default :
-                shadertype = "unknown";
-                break;
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+        if (status == GL_FALSE) {
+            switch (type) {
+                case GL_VERTEX_SHADER:
+                    shadertype = "vertex";
+                    break;
+                case GL_FRAGMENT_SHADER:
+                    shadertype = "fragment";
+                    break;
+                default:
+                    shadertype = "unknown";
+                    break;
             }
 
             Protokoll << "ERROR Shader: Compile failure in " << shadertype << " shader: " << path << std::endl;
-            PrintLog( SHADER, shader );
+            PrintLog(SHADER, shader);
             return GL_INVALID_VALUE;
         }
-    }
-    else
-    {
+    } else {
         Protokoll << "ERROR Shader: File read failure in " << shadertype << " shader: " << path << std::endl;
         return GL_INVALID_VALUE;
     }
@@ -161,27 +141,24 @@ GLuint CShader::CompileShader( GLenum type, const std::string& path )
     return shader;
 }
 
-int8_t CShader::CreateProgram()
-{
+int8_t CShader::CreateProgram() {
     uint16_t i;
-    GLint   status;
+    GLint status;
 
     Program = glCreateProgram();
 
-    for(i = 0; i < Shaders.size(); i++)
-    {
-        glAttachShader( Program, Shaders[i].name );
+    for (i = 0; i < Shaders.size(); i++) {
+        glAttachShader(Program, Shaders[i].name);
     }
 
-    glLinkProgram( Program );
+    glLinkProgram(Program);
 
-    glGetProgramiv( Program, GL_LINK_STATUS, &status );
-    if (status == GL_FALSE)
-    {
+    glGetProgramiv(Program, GL_LINK_STATUS, &status);
+    if (status == GL_FALSE) {
         Protokoll << "ERROR Shader: Linker failure" << std::endl;
-        PrintLog( PROGRAM );
+        PrintLog(PROGRAM);
         Program = GL_INVALID_VALUE;
-        return 1 ;
+        return 1;
     }
 
     FindAttributes();
@@ -190,24 +167,22 @@ int8_t CShader::CreateProgram()
     return 0;
 }
 
-void CShader::FindAttributes()
-{
+void CShader::FindAttributes() {
     GLint numAttributes;
     GLint maxAttributeLen;
-    char* attributeName;
+    char *attributeName;
 
-    glGetProgramiv( Program, GL_ACTIVE_ATTRIBUTES, &numAttributes );
-    glGetProgramiv( Program, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &maxAttributeLen );
+    glGetProgramiv(Program, GL_ACTIVE_ATTRIBUTES, &numAttributes);
+    glGetProgramiv(Program, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &maxAttributeLen);
     attributeName = new char[maxAttributeLen];
 
-    for (GLint index(0); index < numAttributes; ++index)
-    {
+    for (GLint index(0); index < numAttributes; ++index) {
         GLint size;
         GLenum type;
         GLint location;
 
-        glGetActiveAttrib( Program, index, maxAttributeLen, NULL, &size, &type, attributeName );
-        location = glGetAttribLocation( Program, attributeName );
+        glGetActiveAttrib(Program, index, maxAttributeLen, NULL, &size, &type, attributeName);
+        location = glGetAttribLocation(Program, attributeName);
 
         std::pair<std::string, GLint> parameter;
         parameter.first = std::string(attributeName);
@@ -215,27 +190,25 @@ void CShader::FindAttributes()
         Attributes.push_back(parameter);
     }
 
-    delete [] attributeName;
+    delete[] attributeName;
 }
 
-void CShader::FindUniforms()
-{
+void CShader::FindUniforms() {
     GLint numUniforms;
     GLint maxUniformLen;
-    char* uniformName;
+    char *uniformName;
 
-    glGetProgramiv( Program, GL_ACTIVE_UNIFORMS, &numUniforms );
-    glGetProgramiv( Program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxUniformLen );
+    glGetProgramiv(Program, GL_ACTIVE_UNIFORMS, &numUniforms);
+    glGetProgramiv(Program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxUniformLen);
     uniformName = new char[maxUniformLen];
 
-    for (GLint index(0); index < numUniforms; ++index)
-    {
+    for (GLint index(0); index < numUniforms; ++index) {
         GLint size;
         GLenum type;
         GLint location;
 
-        glGetActiveUniform( Program, index, maxUniformLen, NULL, &size, &type, uniformName );
-        location = glGetUniformLocation( Program, uniformName );
+        glGetActiveUniform(Program, index, maxUniformLen, NULL, &size, &type, uniformName);
+        location = glGetUniformLocation(Program, uniformName);
 
         std::pair<std::string, GLint> parameter;
         parameter.first = std::string(uniformName);
@@ -243,13 +216,12 @@ void CShader::FindUniforms()
         Uniforms.push_back(parameter);
     }
 
-    delete [] uniformName;
+    delete[] uniformName;
 }
 
-GLint CShader::GetAttribute( const std::string& attribute )
-{
-    for (std::vector<std::pair<std::string, GLint> >::const_iterator itr(Attributes.begin()); itr < Attributes.end(); ++itr)
-    {
+GLint CShader::GetAttribute(const std::string &attribute) {
+    for (std::vector<std::pair<std::string, GLint> >::const_iterator itr(Attributes.begin()); itr < Attributes.end();
+         ++itr) {
         if (attribute == itr->first)
             return itr->second;
     }
@@ -259,10 +231,9 @@ GLint CShader::GetAttribute( const std::string& attribute )
     return GL_INVALID_VALUE;
 }
 
-GLint CShader::GetUniform( const std::string& uniform )
-{
-    for (std::vector<std::pair<std::string, GLint> >::const_iterator itr(Uniforms.begin()); itr < Uniforms.end(); ++itr)
-    {
+GLint CShader::GetUniform(const std::string &uniform) {
+    for (std::vector<std::pair<std::string, GLint> >::const_iterator itr(Uniforms.begin()); itr < Uniforms.end();
+         ++itr) {
         if (uniform == itr->first)
             return itr->second;
     }
@@ -272,28 +243,25 @@ GLint CShader::GetUniform( const std::string& uniform )
     return GL_INVALID_VALUE;
 }
 
-void CShader::PrintLog( uint8_t type, GLuint shader )
-{
-    GLint   loglength;
-    char* log;
+void CShader::PrintLog(uint8_t type, GLuint shader) {
+    GLint loglength;
+    char *log;
 
-    if (CHECK_FLAG(type, SHADER))
-    {
-        glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &loglength );
-
-        log = new char[loglength+1];
-        glGetShaderInfoLog( shader, loglength, NULL, log );
-        Protokoll << "Shader: Shader log:\n " << log << std::endl;
-        delete [] log;
-    }
-
-    if (CHECK_FLAG(type, PROGRAM))
-    {
-        glGetProgramiv( Program, GL_INFO_LOG_LENGTH, &loglength );
+    if (CHECK_FLAG(type, SHADER)) {
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &loglength);
 
         log = new char[loglength + 1];
-        glGetProgramInfoLog( Program, loglength, NULL, log );
+        glGetShaderInfoLog(shader, loglength, NULL, log);
+        Protokoll << "Shader: Shader log:\n " << log << std::endl;
+        delete[] log;
+    }
+
+    if (CHECK_FLAG(type, PROGRAM)) {
+        glGetProgramiv(Program, GL_INFO_LOG_LENGTH, &loglength);
+
+        log = new char[loglength + 1];
+        glGetProgramInfoLog(Program, loglength, NULL, log);
         Protokoll << "Shader: Program log:\n " << log << std::endl;
-        delete [] log;
+        delete[] log;
     }
 }

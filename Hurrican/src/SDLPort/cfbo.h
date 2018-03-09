@@ -26,23 +26,21 @@
 
 #include "SDL_port.h"
 
-class CFbo
-{
-    public:
-        CFbo();
-        virtual ~CFbo();
+class CFbo {
+  public:
+    CFbo();
+    virtual ~CFbo();
 
-        bool Enabled;
-        bool Open( uint16_t w, uint16_t h );
-        void BindTexture( bool active );
-        void Close( void );
-        GLuint texture;
-        GLuint framebuffer;
-        uint16_t width;
-        uint16_t height;
+    bool Enabled;
+    bool Open(uint16_t w, uint16_t h);
+    void BindTexture(bool active);
+    void Close(void);
+    GLuint texture;
+    GLuint framebuffer;
+    uint16_t width;
+    uint16_t height;
 
-    private:
-
+  private:
 };
 
-#endif // CFBO_H
+#endif  // CFBO_H

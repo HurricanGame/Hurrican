@@ -4,19 +4,18 @@
 #include "GegnerClass.hpp"
 #include "Gegner_Stuff.hpp"
 
-class GegnerWandKrabbe : public GegnerClass
-{
-private :
+class GegnerWandKrabbe : public GegnerClass {
+  private:
     float rot;
-    int   lastPlayerAction;
+    int lastPlayerAction;
 
-public :
-
-    GegnerWandKrabbe(int  Wert1, int Wert2,				// Konstruktor
+  public:
+    GegnerWandKrabbe(int Wert1,
+                     int Wert2,  // Konstruktor
                      bool Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-    void DoDraw		   (void);							// Gegner individuell rendern
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw(void);         // Gegner individuell rendern
 };
 
 #endif

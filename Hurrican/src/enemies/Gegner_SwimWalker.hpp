@@ -4,14 +4,13 @@
 #include "GegnerClass.hpp"
 #include "Gegner_Stuff.hpp"
 
-class GegnerSwimWalker : public GegnerClass
-{
-public:
-
-    GegnerSwimWalker(int  Wert1, int Wert2,				// Konstruktor
+class GegnerSwimWalker : public GegnerClass {
+  public:
+    GegnerSwimWalker(int Wert1,
+                     int Wert2,  // Konstruktor
                      bool Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
 };
 

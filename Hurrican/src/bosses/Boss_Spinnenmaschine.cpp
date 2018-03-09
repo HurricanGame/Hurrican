@@ -4,29 +4,28 @@
 // Öffnet den Topfdeckel und lässt Gegner raus
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.hpp"
 #include "Boss_Spinnenmaschine.hpp"
+#include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light)
-{
-    Handlung		= GEGNER_INIT;
-    BlickRichtung	= LINKS;
-    Energy			= 4000;
-    ChangeLight		= Light;
-    Destroyable		= true;
-    Value1			= Wert1;
-    Value2			= Wert2;
-    TestBlock		= false;
-    OwnDraw			= true;
-    ShotDelay		= 5.0f;
+GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light) {
+    Handlung = GEGNER_INIT;
+    BlickRichtung = LINKS;
+    Energy = 4000;
+    ChangeLight = Light;
+    Destroyable = true;
+    Value1 = Wert1;
+    Value2 = Wert2;
+    TestBlock = false;
+    OwnDraw = true;
+    ShotDelay = 5.0f;
 
     GegnerRect[SPINNENMASCHINE].left = 0;
-    GegnerRect[SPINNENMASCHINE].right  = 400;
-    GegnerRect[SPINNENMASCHINE].top  = 0;
+    GegnerRect[SPINNENMASCHINE].right = 400;
+    GegnerRect[SPINNENMASCHINE].top = 0;
     GegnerRect[SPINNENMASCHINE].bottom = 300;
 
     // Zusätzliche Grafiken laden
@@ -34,8 +33,8 @@ GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light)
     Display.LoadImage("spinnenmaschine_states.png", 280, 84, 70, 84, 4, 1);
 
     Deckel.LoadImage("spinnenmaschine_topf.png", 372, 264, 186, 44, 2, 6);
-    Unten[0].LoadImage ("spinnenmaschine_unten.png", 228, 129, 228, 129, 1, 1);
-    Unten[1].LoadImage ("spinnenmaschine_unten2.png", 228, 129, 228, 129, 1, 1);
+    Unten[0].LoadImage("spinnenmaschine_unten.png", 228, 129, 228, 129, 1, 1);
+    Unten[1].LoadImage("spinnenmaschine_unten2.png", 228, 129, 228, 129, 1, 1);
 
     Strahl.LoadImage("blitztexture.png", 64, 64, 64, 64, 1, 1);
 
@@ -50,14 +49,14 @@ GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light)
 
     SpawnDelay = 8.0f;
 
-    SmokeDelay  = 0.0f;
+    SmokeDelay = 0.0f;
     SmokeDelay2 = 0.0f;
 
     LightRayCount = 0.0f;
 
     AktionFertig = false;
 
-    DisplayState    = 0;
+    DisplayState = 0;
     OldDisplayState = 0;
     AnimUnten = 0;
 }
@@ -66,323 +65,269 @@ GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light)
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerSpinnenmaschine::DoDraw(void)
-{
+void GegnerSpinnenmaschine::DoDraw(void) {
     D3DCOLOR Color;
 
-    int	Wert = 255-(int(DamageTaken));
+    int Wert = 255 - (int(DamageTaken));
 
     if (DirectGraphics.BlendMode == ADDITIV_MODE)
         Color = D3DCOLOR_RGBA(255, 255, 255, Wert);
     else
         Color = 0xFFFFFFFF;
 
-    if (Handlung != GEGNER_SPECIAL)
-    {
+    if (Handlung != GEGNER_SPECIAL) {
         // evtl strahl rendern, wenn der deckel aufgeht
-        if (DeckelStatus != ZU)
-        {
+        if (DeckelStatus != ZU) {
             DirectGraphics.SetAdditiveMode();
             Strahl.RenderSpriteScaled(static_cast<float>(xPos - TileEngine.XOffset) - LightRayCount * 8.0f + 170,
                                       static_cast<float>(yPos - TileEngine.YOffset),
-                                      static_cast<int>(LightRayCount * 16.0f),
-                                      190, 0xFFFF8822);
+                                      static_cast<int>(LightRayCount * 16.0f), 190, 0xFFFF8822);
             DirectGraphics.SetColorKeyMode();
         }
 
         // Oberteil
-        //DKS - Optimized cos(PI) to be a constant (-1):
-        //DeckelOffset = -(static_cast<float>(cos(DeckelCount) * 20.0f) + static_cast<float>(cos(PI) * 20));
+        // DKS - Optimized cos(PI) to be a constant (-1):
+        // DeckelOffset = -(static_cast<float>(cos(DeckelCount) * 20.0f) + static_cast<float>(cos(PI) * 20));
         DeckelOffset = -(static_cast<float>(cos(DeckelCount) * 20.0f) - 20.0f);
         pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                               static_cast<float>(yPos - TileEngine.YOffset) - DeckelOffset,
-                                               0, Color, true);
+                                               static_cast<float>(yPos - TileEngine.YOffset) - DeckelOffset, 0, Color,
+                                               true);
 
         // Anzeige
         Display.RenderSprite(static_cast<float>(xPos - TileEngine.XOffset) + 133,
-                             static_cast<float>(yPos - TileEngine.YOffset) + 263 - DeckelOffset,
-                             DisplayState, Color, true);
+                             static_cast<float>(yPos - TileEngine.YOffset) + 263 - DeckelOffset, DisplayState, Color,
+                             true);
 
         // Topfdeckel
         Deckel.RenderSprite(static_cast<float>(xPos - TileEngine.XOffset) + 75,
-                            static_cast<float>(yPos - TileEngine.YOffset) - DeckelOffset + 159,
-                            DeckelPhase, Color, true);
+                            static_cast<float>(yPos - TileEngine.YOffset) - DeckelOffset + 159, DeckelPhase, Color,
+                            true);
     }
 
     // Unterteil
     Unten[AnimUnten].RenderSprite(static_cast<float>(xPos - TileEngine.XOffset) + 45,
-                                  static_cast<float>(yPos - TileEngine.YOffset) + 352,
-                                  0, 0xFFFFFFFF, true);
+                                  static_cast<float>(yPos - TileEngine.YOffset) + 352, 0, 0xFFFFFFFF, true);
 }
 
 // --------------------------------------------------------------------------------------
 // Deckel hoch und runterklappen
 // --------------------------------------------------------------------------------------
 
-void GegnerSpinnenmaschine::DoDeckel(void)
-{
-    switch (DeckelStatus)
-    {
-    // deckel ist zu und Counter zählt, wann er auf geht
-    case ZU :
-    {
-        OpenCounter -= 1.0f SYNC;
+void GegnerSpinnenmaschine::DoDeckel(void) {
+    switch (DeckelStatus) {
+        // deckel ist zu und Counter zählt, wann er auf geht
+        case ZU: {
+            OpenCounter -= 1.0f SYNC;
 
-        if (OpenCounter < 0.0f)
-        {
-            OpenCounter  = 0.0f;
-            DeckelStatus = OEFFNEN;
-            AnimCount = 0.0f;
-        }
-    }
-    break;
-
-    // Deckel öffnet sich gerade
-    case OEFFNEN :
-    {
-        LightRayCount += 1.0f SYNC;
-
-        AnimCount += 1.0f SYNC;
-
-        if (AnimCount > 0.8f)
-        {
-            AnimCount = 0.0f;
-            DeckelPhase += 1;
-        }
-
-        if (DeckelPhase > 10)
-        {
-            DeckelPhase = 10;
-            DeckelStatus = OFFEN;
-            OpenCounter = TIME_TILL_CLOSE;
-        }
-    }
-    break;
-
-    // deckel ist offen und Counter zählt, wann er zugeht
-    case OFFEN :
-    {
-        OpenCounter -= 1.0f SYNC;
-
-        if (OpenCounter < 0.0f)
-        {
-            OpenCounter  = 0.0f;
-            DeckelStatus = SCHLIESSEN;
-            AnimCount = 0.0f;
-        }
-
-        // Gegner spawnen
-        SpawnDelay -= 1.0f SYNC;
-        if (SpawnDelay < 0.0f)
-        {
-            // Je nach Art der grünen Anzeige vorne einen anderen Gegner spawnen
-            switch (DisplayState)
-            {
-            // Climber
-            case 1 :
-            {
-                SpawnDelay = 6.0f;
-                Gegner.PushGegner(xPos + 100 + rand()%60 , yPos + 190 - DeckelOffset, CLIMBSPIDER, 99, 0, false, false);
+            if (OpenCounter < 0.0f) {
+                OpenCounter = 0.0f;
+                DeckelStatus = OEFFNEN;
+                AnimCount = 0.0f;
             }
-            break;
+        } break;
 
-            // Dronen
-            case 2 :
-            {
-                SpawnDelay = 20.0f;
-                Gegner.PushGegner(xPos + 135, yPos + 190 - DeckelOffset, DRONE, 99, 0, false, false);
+        // Deckel öffnet sich gerade
+        case OEFFNEN: {
+            LightRayCount += 1.0f SYNC;
+
+            AnimCount += 1.0f SYNC;
+
+            if (AnimCount > 0.8f) {
+                AnimCount = 0.0f;
+                DeckelPhase += 1;
             }
-            break;
 
-            // Spinnenbombe
-            case 3 :
-            {
-                SpawnDelay = 15.0f;
-                Gegner.PushGegner(xPos + 100 + rand()%80 , yPos + 180 - DeckelOffset, SPIDERBOMB, 99, 0, false, false);
+            if (DeckelPhase > 10) {
+                DeckelPhase = 10;
+                DeckelStatus = OFFEN;
+                OpenCounter = TIME_TILL_CLOSE;
             }
-            break;
+        } break;
+
+        // deckel ist offen und Counter zählt, wann er zugeht
+        case OFFEN: {
+            OpenCounter -= 1.0f SYNC;
+
+            if (OpenCounter < 0.0f) {
+                OpenCounter = 0.0f;
+                DeckelStatus = SCHLIESSEN;
+                AnimCount = 0.0f;
             }
-        }
-    }
-    break;
 
-    // Deckel schliesst sich gerade
-    case SCHLIESSEN :
-    {
-        LightRayCount -= 1.0f SYNC;
+            // Gegner spawnen
+            SpawnDelay -= 1.0f SYNC;
+            if (SpawnDelay < 0.0f) {
+                // Je nach Art der grünen Anzeige vorne einen anderen Gegner spawnen
+                switch (DisplayState) {
+                    // Climber
+                    case 1: {
+                        SpawnDelay = 6.0f;
+                        Gegner.PushGegner(xPos + 100 + rand() % 60, yPos + 190 - DeckelOffset, CLIMBSPIDER, 99, 0,
+                                          false, false);
+                    } break;
 
-        AnimCount += 1.0f SYNC;
+                    // Dronen
+                    case 2: {
+                        SpawnDelay = 20.0f;
+                        Gegner.PushGegner(xPos + 135, yPos + 190 - DeckelOffset, DRONE, 99, 0, false, false);
+                    } break;
 
-        if (AnimCount > 0.8f)
-        {
-            AnimCount = 0.0f;
-            DeckelPhase -= 1;
-        }
+                    // Spinnenbombe
+                    case 3: {
+                        SpawnDelay = 15.0f;
+                        Gegner.PushGegner(xPos + 100 + rand() % 80, yPos + 180 - DeckelOffset, SPIDERBOMB, 99, 0, false,
+                                          false);
+                    } break;
+                }
+            }
+        } break;
 
-        if (DeckelPhase < 0)
-        {
-            DeckelPhase = 0;
-            DeckelStatus = ZU;
-            OpenCounter = TIME_TILL_OPEN;
-            LightRayCount = 0.0f;
+        // Deckel schliesst sich gerade
+        case SCHLIESSEN: {
+            LightRayCount -= 1.0f SYNC;
 
-            AktionFertig = true;
-        }
-    }
-    break;
+            AnimCount += 1.0f SYNC;
 
-    } // switch (DeckelStatus)
+            if (AnimCount > 0.8f) {
+                AnimCount = 0.0f;
+                DeckelPhase -= 1;
+            }
+
+            if (DeckelPhase < 0) {
+                DeckelPhase = 0;
+                DeckelStatus = ZU;
+                OpenCounter = TIME_TILL_OPEN;
+                LightRayCount = 0.0f;
+
+                AktionFertig = true;
+            }
+        } break;
+
+    }  // switch (DeckelStatus)
 }
 
 // --------------------------------------------------------------------------------------
 // Kopf hoch und runterfahren
 // --------------------------------------------------------------------------------------
 
-void GegnerSpinnenmaschine::DoHoch(void)
-{
-    switch (HochStatus)
-    {
-    // Kopf ist unten, Counter zählt, wann er hochgeht
-    case ZU :
-    {
-        HochCounter -= 1.0f SYNC;
+void GegnerSpinnenmaschine::DoHoch(void) {
+    switch (HochStatus) {
+        // Kopf ist unten, Counter zählt, wann er hochgeht
+        case ZU: {
+            HochCounter -= 1.0f SYNC;
 
-        if (HochCounter < 0.0f)
-        {
-            HochCounter  = 0.0f;
-            HochStatus = OEFFNEN;
+            if (HochCounter < 0.0f) {
+                HochCounter = 0.0f;
+                HochStatus = OEFFNEN;
 
-            SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
-        }
-    }
-    break;
-
-    // Kopf fährt gerade hoch
-    case OEFFNEN :
-    {
-        DeckelCount += 0.2f SYNC;
-
-        if (DeckelCount > PI)
-        {
-            DeckelCount = PI;
-            HochStatus = OFFEN;
-            HochCounter = TIME_TILL_HOCH * 2;
-            ShotDelay = 10.0f;
-
-            SoundManager.PlayWave(50, 128, 14000, SOUND_DOORSTOP);
-        }
-
-        if (DeckelCount < PI)
-        {
-            SmokeDelay -= 1.0f SYNC;
-
-            if (SmokeDelay < 0.0f)
-            {
-                SmokeDelay = 0.4f;
-                PartikelSystem.PushPartikel(xPos + 55.0f, yPos + 375, SMOKE3_LU);
-                PartikelSystem.PushPartikel(xPos + 245.0f, yPos + 375, SMOKE3_RU);
+                SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
             }
-        }
-    }
-    break;
+        } break;
 
-    // Kopf ist oben und Counter zählt, wann er runtergeht
-    case OFFEN :
-    {
-        HochCounter -= 1.0f SYNC;
+        // Kopf fährt gerade hoch
+        case OEFFNEN: {
+            DeckelCount += 0.2f SYNC;
 
-        if (HochCounter < 0.0f)
-        {
-            HochCounter  = 0.0f;
-            HochStatus = SCHLIESSEN;
+            if (DeckelCount > PI) {
+                DeckelCount = PI;
+                HochStatus = OFFEN;
+                HochCounter = TIME_TILL_HOCH * 2;
+                ShotDelay = 10.0f;
 
-            SoundManager.PlayWave(50, 128, 11025, SOUND_STEAM);
-        }
+                SoundManager.PlayWave(50, 128, 14000, SOUND_DOORSTOP);
+            }
 
-        ShotDelay -= 1.0f SYNC;
+            if (DeckelCount < PI) {
+                SmokeDelay -= 1.0f SYNC;
 
-        // schuss abgeben
-        if (ShotDelay <= 0.0f)
-        {
-            ShotDelay = 15.0f;
+                if (SmokeDelay < 0.0f) {
+                    SmokeDelay = 0.4f;
+                    PartikelSystem.PushPartikel(xPos + 55.0f, yPos + 375, SMOKE3_LU);
+                    PartikelSystem.PushPartikel(xPos + 245.0f, yPos + 375, SMOKE3_RU);
+                }
+            }
+        } break;
 
-            Projectiles.PushProjectile(xPos + 230, yPos + 310, PHARAOLASER, pAim);
+        // Kopf ist oben und Counter zählt, wann er runtergeht
+        case OFFEN: {
+            HochCounter -= 1.0f SYNC;
 
-            // Sound ausgeben
-            SoundManager.PlayWave(50, 128, 22050, SOUND_PHARAODIE);
-            SoundManager.PlayWave(70, 128, 11025, SOUND_LASERSHOT);
-        }
-    }
-    break;
+            if (HochCounter < 0.0f) {
+                HochCounter = 0.0f;
+                HochStatus = SCHLIESSEN;
 
-    // Kopf geht wieder runter
-    case SCHLIESSEN :
-    {
-        DeckelCount -= 0.2f SYNC;
+                SoundManager.PlayWave(50, 128, 11025, SOUND_STEAM);
+            }
 
-        if (DeckelCount <= 0.0f)
-        {
-            DeckelCount = 0.0f;
-            HochStatus = ZU;
-            HochCounter = TIME_TILL_HOCH;
+            ShotDelay -= 1.0f SYNC;
 
-            // Rauch
-            for (int i = 1; i < 10; i++)
-                PartikelSystem.PushPartikel(xPos + i * 25.0f, yPos + 330, SMOKEBIG);
+            // schuss abgeben
+            if (ShotDelay <= 0.0f) {
+                ShotDelay = 15.0f;
 
-            SoundManager.PlayWave(100, 128, 11025, SOUND_DOORSTOP);
+                Projectiles.PushProjectile(xPos + 230, yPos + 310, PHARAOLASER, pAim);
 
-            AktionFertig = true;
-        }
-    }
-    break;
+                // Sound ausgeben
+                SoundManager.PlayWave(50, 128, 22050, SOUND_PHARAODIE);
+                SoundManager.PlayWave(70, 128, 11025, SOUND_LASERSHOT);
+            }
+        } break;
 
-    } // switch (DeckelStatus)
+        // Kopf geht wieder runter
+        case SCHLIESSEN: {
+            DeckelCount -= 0.2f SYNC;
+
+            if (DeckelCount <= 0.0f) {
+                DeckelCount = 0.0f;
+                HochStatus = ZU;
+                HochCounter = TIME_TILL_HOCH;
+
+                // Rauch
+                for (int i = 1; i < 10; i++)
+                    PartikelSystem.PushPartikel(xPos + i * 25.0f, yPos + 330, SMOKEBIG);
+
+                SoundManager.PlayWave(100, 128, 11025, SOUND_DOORSTOP);
+
+                AktionFertig = true;
+            }
+        } break;
+
+    }  // switch (DeckelStatus)
 }
 
 // --------------------------------------------------------------------------------------
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSpinnenmaschine::DoKI(void)
-{
+void GegnerSpinnenmaschine::DoKI(void) {
     // Energie anzeigen
-    if (Handlung != GEGNER_INIT &&
-            Handlung != GEGNER_SPECIAL &&
-            Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER_INIT && Handlung != GEGNER_SPECIAL && Handlung != GEGNER_EXPLODIEREN)
         HUD.ShowBossHUD(4000, Energy);
 
     // Boss aktivieren und Mucke laufen lassen
     //
-    if (Active == true &&
-            Handlung != GEGNER_SPECIAL &&
-            TileEngine.Zustand == ZUSTAND_SCROLLBAR)
-    {
-        if (PlayerAbstandHoriz() < 450)
-        {
-            TileEngine.ScrollLevel(static_cast<float>(Value1),
-                                     static_cast<float>(Value2), ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss zentrieren
+    if (Active == true && Handlung != GEGNER_SPECIAL && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
+        if (PlayerAbstandHoriz() < 450) {
+            TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
+                                   ZUSTAND_SCROLLTOLOCK);             // Level auf den Boss zentrieren
             SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
         }
     }
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
     if (DamageTaken > 0.0f)
-        DamageTaken -= 50 SYNC;					// Rotwerden langsam ausfaden lassen
+        DamageTaken -= 50 SYNC;  // Rotwerden langsam ausfaden lassen
     else
-        DamageTaken = 0.0f;						// oder ganz anhalten
+        DamageTaken = 0.0f;  // oder ganz anhalten
 
     // Hat die Maschine keine Energie mehr ? Dann explodiert sie
-    if (Energy <= 100.0f &&
-            Handlung != GEGNER_EXPLODIEREN &&
-            Handlung != GEGNER_SPECIAL)
-    {
-        Handlung   = GEGNER_EXPLODIEREN;
+    if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN && Handlung != GEGNER_SPECIAL) {
+        Handlung = GEGNER_EXPLODIEREN;
         SpawnDelay = 0.0f;
-        xSpeed     = 0.0f;
-        ySpeed     = 0.0f;
-        xAcc       = 0.0f;
-        yAcc       = 0.0f;
+        xSpeed = 0.0f;
+        ySpeed = 0.0f;
+        xAcc = 0.0f;
+        yAcc = 0.0f;
         DeathCount = 40.0f;
 
         Gegner.PushGegner(140, 820, ONEUP, 0, 0, false);
@@ -393,13 +338,11 @@ void GegnerSpinnenmaschine::DoKI(void)
         SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
     }
 
-
     // Bei Damage dampfen lassen
     if (Handlung != GEGNER_SPECIAL)
         SmokeDelay2 -= 1.0f SYNC;
 
-    if (SmokeDelay2 < 0.0f)
-    {
+    if (SmokeDelay2 < 0.0f) {
         SmokeDelay2 = 0.3f;
 
         // Links oben rausdampfen lassen
@@ -432,187 +375,163 @@ void GegnerSpinnenmaschine::DoKI(void)
             PartikelSystem.PushPartikel(xPos + 108.0f, yPos + 389.0f, SMOKE3_LU);
     }
 
-// Je nach Handlung richtig verhalten
-    switch (Handlung)
-    {
-    // Warten bis der Screen zentriert wurde
-    case GEGNER_INIT:
-    {
-        if (TileEngine.Zustand == ZUSTAND_LOCKED)
-        {
-            // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-            //
-            //DKS - Added function SongIsPlaying() to SoundManagerClass:
-            if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
-            {
-                SoundManager.PlaySong(MUSIC_BOSS, false);
-
-                // Und Boss erscheinen lassen
+    // Je nach Handlung richtig verhalten
+    switch (Handlung) {
+        // Warten bis der Screen zentriert wurde
+        case GEGNER_INIT: {
+            if (TileEngine.Zustand == ZUSTAND_LOCKED) {
+                // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 //
-                Handlung = GEGNER_EINFLIEGEN;
+                // DKS - Added function SongIsPlaying() to SoundManagerClass:
+                if (!SoundManager.SongIsPlaying(MUSIC_BOSS)) {
+                    SoundManager.PlaySong(MUSIC_BOSS, false);
+
+                    // Und Boss erscheinen lassen
+                    //
+                    Handlung = GEGNER_EINFLIEGEN;
+                }
             }
-        }
-    }
-    break;
+        } break;
 
-    case GEGNER_EINFLIEGEN:		// Gegner kommt in den Screen geflogen
-    {
-        Energy = 4000;
-        DamageTaken = 0.0f;
-
-        DisplayState = rand()%3 + 1;
-        OldDisplayState = DisplayState;
-
-        Handlung = GEGNER_LAUFEN;
-
-    }
-    break;
-
-    // Kopf hoch- /runterfahren
-    case GEGNER_STEHEN:
-    {
-        // Abhandeln, wann der Kopf hochfährt
-        DoHoch();
-
-        if (AktionFertig == true)
+        case GEGNER_EINFLIEGEN:  // Gegner kommt in den Screen geflogen
         {
-            AktionFertig = false;
+            Energy = 4000;
+            DamageTaken = 0.0f;
+
+            DisplayState = rand() % 3 + 1;
+            OldDisplayState = DisplayState;
+
             Handlung = GEGNER_LAUFEN;
 
-            do
-            {
-                DisplayState = rand()%3 + 1;
+        } break;
+
+        // Kopf hoch- /runterfahren
+        case GEGNER_STEHEN: {
+            // Abhandeln, wann der Kopf hochfährt
+            DoHoch();
+
+            if (AktionFertig == true) {
+                AktionFertig = false;
+                Handlung = GEGNER_LAUFEN;
+
+                do {
+                    DisplayState = rand() % 3 + 1;
+                } while (DisplayState == OldDisplayState);
+
+                OldDisplayState = DisplayState;
             }
-            while (DisplayState == OldDisplayState);
+        } break;
 
-            OldDisplayState = DisplayState;
-        }
-    }
-    break;
+        // Deckel öffnen
+        case GEGNER_LAUFEN: {
+            // Deckel abhandeln
+            DoDeckel();
 
-    // Deckel öffnen
-    case GEGNER_LAUFEN:
-    {
-        // Deckel abhandeln
-        DoDeckel();
-
-        if (AktionFertig == true)
-        {
-            AktionFertig = false;
-            Handlung = GEGNER_STEHEN;
-            DisplayState = 0;
-        }
-    }
-    break;
-
-    case GEGNER_SPECIAL:
-    {
-        if (PlayerAbstand(true) < 800)
-        {
-            SmokeDelay -= 1.0f SYNC;
-
-            if (SmokeDelay < 0.0f)
-            {
-                SmokeDelay = 1.0f;
-                PartikelSystem.PushPartikel(xPos + rand()%250, yPos + 300 + rand()%100, SMOKEBIG);
+            if (AktionFertig == true) {
+                AktionFertig = false;
+                Handlung = GEGNER_STEHEN;
+                DisplayState = 0;
             }
-        }
-    }
-    break;
+        } break;
 
-    case GEGNER_EXPLODIEREN:
-    {
-        Energy = 100.0f;
+        case GEGNER_SPECIAL: {
+            if (PlayerAbstand(true) < 800) {
+                SmokeDelay -= 1.0f SYNC;
 
-        SpawnDelay -= 1.0f SYNC;
+                if (SmokeDelay < 0.0f) {
+                    SmokeDelay = 1.0f;
+                    PartikelSystem.PushPartikel(xPos + rand() % 250, yPos + 300 + rand() % 100, SMOKEBIG);
+                }
+            }
+        } break;
 
-        if (SpawnDelay < 0.0f)
-        {
-            SpawnDelay = 0.4f;
+        case GEGNER_EXPLODIEREN: {
+            Energy = 100.0f;
 
-            int xo = rand()%300;
-            int yo = rand()%400;
+            SpawnDelay -= 1.0f SYNC;
 
-            PartikelSystem.PushPartikel(xPos + xo, yPos + yo, EXPLOSION_MEDIUM2);
+            if (SpawnDelay < 0.0f) {
+                SpawnDelay = 0.4f;
 
-            // ggf. Rauch
-            if (rand()%2 == 0)
-                PartikelSystem.PushPartikel(xPos + rand()%300, yPos + rand()%400, SMOKEBIG);
+                int xo = rand() % 300;
+                int yo = rand() % 400;
 
-            // ggf Explosion Traces
-            if (rand()%10 == 0)
-                PartikelSystem.PushPartikel(xPos + 100 + rand()%100, yPos + 200 + rand()%200, EXPLOSION_TRACE);
+                PartikelSystem.PushPartikel(xPos + xo, yPos + yo, EXPLOSION_MEDIUM2);
 
-            // ggf. Sound
-            if (rand()%3 == 0)
-                SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION3 + rand()%2);
+                // ggf. Rauch
+                if (rand() % 2 == 0)
+                    PartikelSystem.PushPartikel(xPos + rand() % 300, yPos + rand() % 400, SMOKEBIG);
 
-            // ggf. Splitter erzeugen
-            if (yo > 100 && rand()%5 == 0)
-                for (int i = 0; i < 10; i++)
-                    PartikelSystem.PushPartikel(xPos + xo - 10 + rand()%20, yPos + yo - 10 + rand()%20, SPIDERSPLITTER);
-        }
+                // ggf Explosion Traces
+                if (rand() % 10 == 0)
+                    PartikelSystem.PushPartikel(xPos + 100 + rand() % 100, yPos + 200 + rand() % 200, EXPLOSION_TRACE);
 
-        DeathCount -= 1.0f SYNC;
+                // ggf. Sound
+                if (rand() % 3 == 0)
+                    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION3 + rand() % 2);
 
-        // fertig explodiert? Dann ganz zerlegen, Unterteil bleibt stehen
-        if (DeathCount < 0.0f)
-        {
-            Handlung = GEGNER_SPECIAL;
-            Energy = 1.0f;
-            Destroyable = false;
-            Player[0].Score += 8000;
-
-            SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
-            ScrolltoPlayeAfterBoss();
-
-            ShakeScreen(5.0f);
-
-            // Splitter und Große Explosionen
-            for (int i = 0; i < 10; i++)
-            {
-                PartikelSystem.PushPartikel(xPos + rand()%300, yPos + rand()%400, SPIDERSPLITTER);
-                PartikelSystem.PushPartikel(xPos + 50 + rand()%200, yPos + 100 + rand()%300, EXPLOSION_TRACE);
+                // ggf. Splitter erzeugen
+                if (yo > 100 && rand() % 5 == 0)
+                    for (int i = 0; i < 10; i++)
+                        PartikelSystem.PushPartikel(xPos + xo - 10 + rand() % 20, yPos + yo - 10 + rand() % 20,
+                                                    SPIDERSPLITTER);
             }
 
-            // Explosionen und Rauch
-            for (int i = 0; i < 50; i++)
-            {
-                PartikelSystem.PushPartikel(xPos + rand()%300, yPos + rand()%300 + 100, EXPLOSION_MEDIUM2);
-                PartikelSystem.PushPartikel(xPos + rand()%300, yPos + rand()%300 + 100, SMOKEBIG);
+            DeathCount -= 1.0f SYNC;
+
+            // fertig explodiert? Dann ganz zerlegen, Unterteil bleibt stehen
+            if (DeathCount < 0.0f) {
+                Handlung = GEGNER_SPECIAL;
+                Energy = 1.0f;
+                Destroyable = false;
+                Player[0].Score += 8000;
+
+                SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+                ScrolltoPlayeAfterBoss();
+
+                ShakeScreen(5.0f);
+
+                // Splitter und Große Explosionen
+                for (int i = 0; i < 10; i++) {
+                    PartikelSystem.PushPartikel(xPos + rand() % 300, yPos + rand() % 400, SPIDERSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + 50 + rand() % 200, yPos + 100 + rand() % 300, EXPLOSION_TRACE);
+                }
+
+                // Explosionen und Rauch
+                for (int i = 0; i < 50; i++) {
+                    PartikelSystem.PushPartikel(xPos + rand() % 300, yPos + rand() % 300 + 100, EXPLOSION_MEDIUM2);
+                    PartikelSystem.PushPartikel(xPos + rand() % 300, yPos + rand() % 300 + 100, SMOKEBIG);
+                }
+
+                // Funken
+                for (int i = 0; i < 300; i++)
+                    PartikelSystem.PushPartikel(xPos + rand() % 300, yPos + rand() % 300 + 100, FUNKE);
+
+                // Unterteilanim == kaputt
+                AnimUnten = 1;
             }
+        } break;
 
-            // Funken
-            for (int i = 0; i < 300; i++)
-                PartikelSystem.PushPartikel(xPos + rand()%300, yPos + rand()%300 + 100, FUNKE);
-
-            // Unterteilanim == kaputt
-            AnimUnten  = 1;
-        }
-    }
-    break;
-
-    default :
-        break;
-    } // switch
+        default:
+            break;
+    }  // switch
 
     // Testen, ob der Spieler die Spinnenmaschine berührt hat
     // dafür nehmen wir ein anderes Rect, weil das normale GegnerRect nur das Auge ist, wo man den Gegner treffen kann
     //
-    //RECT rect;
+    // RECT rect;
 
-    //rect.top    = 0;
-    //rect.left   = 0;
-    //rect.bottom = 317;
-    //rect.right  = 400;
+    // rect.top    = 0;
+    // rect.left   = 0;
+    // rect.bottom = 317;
+    // rect.right  = 400;
 
-    //if (SpriteCollision(xPos, yPos, rect,
+    // if (SpriteCollision(xPos, yPos, rect,
     //					pPlayer->xpos, pPlayer->ypos, pPlayer->CollideRect) == true)
     //	pPlayer->DamagePlayer(float(4.0 SYNC));
 
     // Deckel zu? Dann kann der Boss nicht getroffen werden
-    if (HochStatus == ZU)
-    {
+    if (HochStatus == ZU) {
         GegnerRect[GegnerArt].left = 0;
         GegnerRect[GegnerArt].top = 0;
         GegnerRect[GegnerArt].bottom = 0;
@@ -622,8 +541,7 @@ void GegnerSpinnenmaschine::DoKI(void)
     }
 
     // andererseits kann man ihn am Auge treffen
-    else if (Handlung != GEGNER_SPECIAL)
-    {
+    else if (Handlung != GEGNER_SPECIAL) {
         GegnerRect[GegnerArt].left = 204;
         GegnerRect[GegnerArt].top = 350 - static_cast<int>(DeckelOffset);
         GegnerRect[GegnerArt].bottom = 350;
@@ -635,24 +553,17 @@ void GegnerSpinnenmaschine::DoKI(void)
     // Spieler kommt nicht dran vorbei
     if (Handlung != GEGNER_SPECIAL)
         for (int p = 0; p < NUMPLAYERS; p++)
-            if(Player[p].xpos < xPos + 250)
-            {
-                if (Player[p].Handlung == RADELN ||
-                        Player[p].Handlung == RADELN_FALL)
-                {
+            if (Player[p].xpos < xPos + 250) {
+                if (Player[p].Handlung == RADELN || Player[p].Handlung == RADELN_FALL) {
                     if (Player[p].Blickrichtung == LINKS)
                         Player[p].Blickrichtung = RECHTS;
-                }
-                else
+                } else
                     Player[p].xpos = xPos + 250;
             }
-
 }
 
 // --------------------------------------------------------------------------------------
 // Spinnenmaschine explodiert nicht, sondern bleibt kaputt stehen
 // --------------------------------------------------------------------------------------
 
-void GegnerSpinnenmaschine::GegnerExplode(void)
-{
-}
+void GegnerSpinnenmaschine::GegnerExplode(void) {}

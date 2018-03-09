@@ -4,14 +4,13 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerEndLevel : public GegnerClass
-{
-public:
-
-    GegnerEndLevel   (int Wert1,	int Wert2,			// Konstruktor
-                      bool		  Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner
+class GegnerEndLevel : public GegnerClass {
+  public:
+    GegnerEndLevel(int Wert1,
+                   int Wert2,  // Konstruktor
+                   bool Light);
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
 };
 

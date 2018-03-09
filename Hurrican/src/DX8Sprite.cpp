@@ -17,22 +17,22 @@
 #include <string>
 
 #if defined(PLATFORM_DIRECTX)
-#include <d3dx8.h>										// Für die Texturen
-#include <d3dx8math.h>									// Für D3DXVECTOR2
+#include <d3dx8.h>      // Für die Texturen
+#include <d3dx8math.h>  // Für D3DXVECTOR2
 #endif
 
 #if defined(PLATFORM_SDL)
 #include "SDLPort/SDL_port.h"
-#endif //PLATFORM_SDL
+#endif  // PLATFORM_SDL
 
 #include "DX8Texture.hpp"
 
 #if defined(PLATFORM_SDL)
 #include "SDLPort/texture.h"
-#endif //PLATFORM_SDL
+#endif  // PLATFORM_SDL
 
-#include "DX8Sprite.hpp"
 #include "DX8Graphics.hpp"
+#include "DX8Sprite.hpp"
 #include "Gameplay.hpp"
 #include "Globals.hpp"
 #include "Logdatei.hpp"
@@ -42,19 +42,19 @@
 #include "unrarlib.h"
 #endif
 
-extern bool					GameRunning;				// Läuft das Spiel noch ?
+extern bool GameRunning;  // Läuft das Spiel noch ?
 
 // --------------------------------------------------------------------------------------
 // Variablen
 // --------------------------------------------------------------------------------------
 
-int						ActualTexture  = -1;				// aktuelle Textur (damit wir uns ein paar
+int ActualTexture = -1;  // aktuelle Textur (damit wir uns ein paar
 
 // --------------------------------------------------------------------------------------
 // Klassenfunktionen
 // --------------------------------------------------------------------------------------
 
-//DKS - DirectGraphicsSurface class was never used anywhere in the game, even in the
+// DKS - DirectGraphicsSurface class was never used anywhere in the game, even in the
 //      original DirectX release, so disabled it:
 #if 0
 // --------------------------------------------------------------------------------------
@@ -158,7 +158,7 @@ bool DirectGraphicsSurface::DrawSurface(LPDIRECT3DSURFACE8 &Temp, int xPos, int 
     return true;
 }
 #endif
-#endif //0
+#endif  // 0
 
 // --------------------------------------------------------------------------------------
 // DirectGraphicsSprite Funktionen
@@ -168,34 +168,33 @@ bool DirectGraphicsSurface::DrawSurface(LPDIRECT3DSURFACE8 &Temp, int xPos, int 
 // Desktruktor gibt die Textur wieder frei
 // --------------------------------------------------------------------------------------
 
-DirectGraphicsSprite::~DirectGraphicsSprite(void)
-{
-    //DKS - itsPreCalcedRects array is now dynamically allocated:
+DirectGraphicsSprite::~DirectGraphicsSprite(void) {
+// DKS - itsPreCalcedRects array is now dynamically allocated:
 #ifndef _DEBUG
-    //DKS - When in debug mode, itsPreCalcedRects is bound-checked vector wrapper,
+    // DKS - When in debug mode, itsPreCalcedRects is bound-checked vector wrapper,
     //      otherwise it is a dynamically-allocated array
-    delete [] itsPreCalcedRects;
+    delete[] itsPreCalcedRects;
     itsPreCalcedRects = NULL;
 #endif
 
     Textures.UnloadTexture(itsTexIdx);
 
-//    if(itsTexture != 0)
-//    {
-//#if defined(PLATFORM_DIRECTX)
-//        SafeRelease(itsTexture);
-//#elif defined(PLATFORM_SDL)
-//        delete_texture( itsTexture );
-//        itsTexture = -1;
-//#endif
-//        itsTexture = (LPDIRECT3DTEXTURE8)NULL;
-//        LoadedTextures--;
-////		Protokoll << "-> Sprite texture successfully released !" << std::endl;
-//
-////        _itoa_s(LoadedTextures, Buffer, 10);
-////		Protokoll << Buffer;
-////		Protokoll << " Sprite Textur(en) übrig !" << std::endl;
-//    }
+    //    if(itsTexture != 0)
+    //    {
+    //#if defined(PLATFORM_DIRECTX)
+    //        SafeRelease(itsTexture);
+    //#elif defined(PLATFORM_SDL)
+    //        delete_texture( itsTexture );
+    //        itsTexture = -1;
+    //#endif
+    //        itsTexture = (LPDIRECT3DTEXTURE8)NULL;
+    //        LoadedTextures--;
+    ////		Protokoll << "-> Sprite texture successfully released !" << std::endl;
+    //
+    ////        _itoa_s(LoadedTextures, Buffer, 10);
+    ////		Protokoll << Buffer;
+    ////		Protokoll << " Sprite Textur(en) übrig !" << std::endl;
+    //    }
 }
 
 // --------------------------------------------------------------------------------------
@@ -204,7 +203,7 @@ DirectGraphicsSprite::~DirectGraphicsSprite(void)
 // xfc, yfc Anzahl der Frames
 // --------------------------------------------------------------------------------------
 
-//DKS - Textures have been overhauled and handled through new class, TexturesystemClass
+// DKS - Textures have been overhauled and handled through new class, TexturesystemClass
 //      I have left the original version of this function commented-out here for reference.
 #if 0
 bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int xfs, int yfs,
@@ -306,7 +305,7 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
     Protokoll << "\n-> Error loading " << Temp << "!" << std::endl;
     GameRunning = false;
     return false;
-#endif // USE_UNRARLIB
+#endif  // USE_UNRARLIB
 
 
 loadfile:
@@ -418,10 +417,14 @@ loadfile:
 
     return true;
 }
-#endif //0 // END REFERENCE COPY OF ORIGINAL LoadImage()
-bool DirectGraphicsSprite::LoadImage(const std::string &filename, uint16_t xs, uint16_t ys, uint16_t xfs, uint16_t yfs,
-                                     uint16_t xfc,  uint16_t yfc)
-{
+#endif  // 0 // END REFERENCE COPY OF ORIGINAL LoadImage()
+bool DirectGraphicsSprite::LoadImage(const std::string &filename,
+                                     uint16_t xs,
+                                     uint16_t ys,
+                                     uint16_t xfs,
+                                     uint16_t yfs,
+                                     uint16_t xfc,
+                                     uint16_t yfc) {
     if (GameRunning == false || filename.empty())
         return false;
 
@@ -438,44 +441,44 @@ bool DirectGraphicsSprite::LoadImage(const std::string &filename, uint16_t xs, u
     }
 
     itsTexIdx = Textures.LoadTexture(filename);
-    
+
     if (itsTexIdx == -1) {
         Protokoll << "Textures.LoadTexture() returned error loading file " << filename << std::endl;
         GameRunning = false;
-        return false;       
+        return false;
     }
 
-    //DKS - Added scale factors that are combined with correction factors from any
+    // DKS - Added scale factors that are combined with correction factors from any
     //      nearest-power-of-two expansion to make one single factor that allows
     //      flexible texture-coordinate computation with no divisions.
     //      This also means we no longer need member vars itsXSize and itsYSize.
     itsXTexScale = static_cast<float>(static_cast<double>(Textures[itsTexIdx].npot_scalex) / static_cast<double>(xs));
     itsYTexScale = static_cast<float>(static_cast<double>(Textures[itsTexIdx].npot_scaley) / static_cast<double>(ys));
 
-    itsXFrameCount	= xfc;
-    itsYFrameCount	= yfc;
-    itsXFrameSize	= xfs;
-    itsYFrameSize	= yfs;
+    itsXFrameCount = xfc;
+    itsYFrameCount = yfc;
+    itsXFrameSize = xfs;
+    itsYFrameSize = yfs;
 
     // Ausschnitte vorberechnen
-    //DKS - itsPreCalcedRects array is now dynamically allocated
+    // DKS - itsPreCalcedRects array is now dynamically allocated
 #ifdef _DEBUG
-    //DKS - When in debug mode, itsPreCalcedRects is bound-checked vector wrapper
+    // DKS - When in debug mode, itsPreCalcedRects is bound-checked vector wrapper
     itsPreCalcedRects.Clear();
 #else
     if (itsPreCalcedRects != NULL)
-        delete [] itsPreCalcedRects;
+        delete[] itsPreCalcedRects;
     itsPreCalcedRects = new RECT[xfc * yfc];
 #endif
 
     for (int i = 0; i < xfc * yfc; i++) {
         RECT r;
-        r.top	= (i/itsXFrameCount) * itsYFrameSize;
-        r.left	= (i%itsXFrameCount) * itsXFrameSize;
-        r.right  = r.left + itsXFrameSize;
-        r.bottom = r.top  + itsYFrameSize;
+        r.top = (i / itsXFrameCount) * itsYFrameSize;
+        r.left = (i % itsXFrameCount) * itsXFrameSize;
+        r.right = r.left + itsXFrameSize;
+        r.bottom = r.top + itsYFrameSize;
 #ifdef _DEBUG
-        //DKS - When in debug mode, itsPreCalcedRects is bound-checked vector wrapper
+        // DKS - When in debug mode, itsPreCalcedRects is bound-checked vector wrapper
         itsPreCalcedRects.PushBack(r);
 #else
         itsPreCalcedRects[i] = r;
@@ -484,10 +487,10 @@ bool DirectGraphicsSprite::LoadImage(const std::string &filename, uint16_t xs, u
 
     itsRect = itsPreCalcedRects[0];
 
-    //char Temp[255];
-    //sprintf_s(Temp, "%s %s %s", TextArray [TEXT_LADE_BITMAP], filename.c_str(), TextArray [TEXT_LADEN_ERFOLGREICH]);
-    //Protokoll << Temp << std::endl;
-    //DisplayLoadInfo(Temp);
+    // char Temp[255];
+    // sprintf_s(Temp, "%s %s %s", TextArray [TEXT_LADE_BITMAP], filename.c_str(), TextArray [TEXT_LADEN_ERFOLGREICH]);
+    // Protokoll << Temp << std::endl;
+    // DisplayLoadInfo(Temp);
 
     std::string msg(filename);
     ReplaceAll(msg, ".png", "");
@@ -502,59 +505,58 @@ bool DirectGraphicsSprite::LoadImage(const std::string &filename, uint16_t xs, u
 // Sprite ganz normal zeichnen mit aktuellem Surfaceausschnitt und Colorkey
 // --------------------------------------------------------------------------------------
 
-void DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
-{
-    float l,  r,  o,  u;					// Vertice Koordinaten
-    float tl, tr, to, tu;					// Textur Koordinaten
+void DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color) {
+    float l, r, o, u;      // Vertice Koordinaten
+    float tl, tr, to, tu;  // Textur Koordinaten
 
-    //DKS - unnecessary:
-    //x = float (int (x));
-    //y = float (int (y));
+    // DKS - unnecessary:
+    // x = float (int (x));
+    // y = float (int (y));
 
-    l = x;									// Links
-    r = x+(itsRect.right-itsRect.left);	// Rechts
-    o = y;									// Oben
-    u = y+(itsRect.bottom-itsRect.top);	// Unten
+    l = x;                                   // Links
+    r = x + (itsRect.right - itsRect.left);  // Rechts
+    o = y;                                   // Oben
+    u = y + (itsRect.bottom - itsRect.top);  // Unten
 
-    //DKS - Converted this and all other sprite-rendering functions to use new itsXTexScale
+    // DKS - Converted this and all other sprite-rendering functions to use new itsXTexScale
     //      and itsYTexScale texture-coordinate-conversion factors like so:
-    //tl = itsRect.left  /itsXSize;	// Links
-    //tr = itsRect.right /itsXSize;	// Rechts
-    //to = itsRect.top   /itsYSize;	// Oben
-    //tu = itsRect.bottom/itsYSize;	// Unten
-    tl = itsRect.left    * itsXTexScale;	// Links
-    tr = itsRect.right   * itsXTexScale;	// Rechts
-    to = itsRect.top     * itsYTexScale;	// Oben
-    tu = itsRect.bottom  * itsYTexScale;	// Unten
+    // tl = itsRect.left  /itsXSize;	// Links
+    // tr = itsRect.right /itsXSize;	// Rechts
+    // to = itsRect.top   /itsYSize;	// Oben
+    // tu = itsRect.bottom/itsYSize;	// Unten
+    tl = itsRect.left * itsXTexScale;    // Links
+    tr = itsRect.right * itsXTexScale;   // Rechts
+    to = itsRect.top * itsYTexScale;     // Oben
+    tu = itsRect.bottom * itsYTexScale;  // Unten
 
-    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
+    VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
 
-    TriangleStrip[0].x		= l;		// Links oben
-    TriangleStrip[0].y		= o;
-    TriangleStrip[0].tu		= tl;
-    TriangleStrip[0].tv		= to;
+    TriangleStrip[0].x = l;  // Links oben
+    TriangleStrip[0].y = o;
+    TriangleStrip[0].tu = tl;
+    TriangleStrip[0].tv = to;
 
-    TriangleStrip[1].x		= r;		// Rechts oben
-    TriangleStrip[1].y		= o;
-    TriangleStrip[1].tu		= tr;
-    TriangleStrip[1].tv		= to;
+    TriangleStrip[1].x = r;  // Rechts oben
+    TriangleStrip[1].y = o;
+    TriangleStrip[1].tu = tr;
+    TriangleStrip[1].tv = to;
 
-    TriangleStrip[2].x		= l;		// Links unten
-    TriangleStrip[2].y		= u;
-    TriangleStrip[2].tu		= tl;
-    TriangleStrip[2].tv		= tu;
+    TriangleStrip[2].x = l;  // Links unten
+    TriangleStrip[2].y = u;
+    TriangleStrip[2].tu = tl;
+    TriangleStrip[2].tv = tu;
 
-    TriangleStrip[3].x		= r;		// Rechts unten
-    TriangleStrip[3].y		= u;
-    TriangleStrip[3].tu		= tr;
-    TriangleStrip[3].tv		= tu;
+    TriangleStrip[3].x = r;  // Rechts unten
+    TriangleStrip[3].y = u;
+    TriangleStrip[3].tu = tr;
+    TriangleStrip[3].tv = tu;
 
-    DirectGraphics.SetTexture( itsTexIdx );
+    DirectGraphics.SetTexture(itsTexIdx);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
 }
 
 // --------------------------------------------------------------------------------------
@@ -562,387 +564,382 @@ void DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color)
 // alle vier Eckpunkte anders einfärben
 // --------------------------------------------------------------------------------------
 
-void DirectGraphicsSprite::RenderSprite(float x, float y, int Anim, D3DCOLOR c1, D3DCOLOR c2, D3DCOLOR c3, D3DCOLOR c4)
-{
-    float l,  r,  o,  u;					// Vertice Koordinaten
-    float tl, tr, to, tu;					// Textur Koordinaten
+void DirectGraphicsSprite::RenderSprite(float x,
+                                        float y,
+                                        int Anim,
+                                        D3DCOLOR c1,
+                                        D3DCOLOR c2,
+                                        D3DCOLOR c3,
+                                        D3DCOLOR c4) {
+    float l, r, o, u;      // Vertice Koordinaten
+    float tl, tr, to, tu;  // Textur Koordinaten
 
-    //DKS - unnecessary:
-    //x = float (int (x));
-    //y = float (int (y));
+    // DKS - unnecessary:
+    // x = float (int (x));
+    // y = float (int (y));
 
     // Ausschnitt einstellen
     Anim %= 255;
 
     if (Anim > -1)
-        itsRect = itsPreCalcedRects [Anim];
+        itsRect = itsPreCalcedRects[Anim];
 
-    l = x;									// Links
-    r = x+(itsRect.right-itsRect.left);	// Rechts
-    o = y;									// Oben
-    u = y+(itsRect.bottom-itsRect.top);	// Unten
+    l = x;                                   // Links
+    r = x + (itsRect.right - itsRect.left);  // Rechts
+    o = y;                                   // Oben
+    u = y + (itsRect.bottom - itsRect.top);  // Unten
 
-    tl = itsRect.left    * itsXTexScale;	// Links
-    tr = itsRect.right   * itsXTexScale;	// Rechts
-    to = itsRect.top     * itsYTexScale;	// Oben
-    tu = itsRect.bottom  * itsYTexScale;	// Unten
+    tl = itsRect.left * itsXTexScale;    // Links
+    tr = itsRect.right * itsXTexScale;   // Rechts
+    to = itsRect.top * itsYTexScale;     // Oben
+    tu = itsRect.bottom * itsYTexScale;  // Unten
 
-    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
+    VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
-    TriangleStrip[0].x		= l;		// Links oben
-    TriangleStrip[0].y		= o;
-    TriangleStrip[0].color  = c1;
-    TriangleStrip[0].tu		= tl;
-    TriangleStrip[0].tv		= to;
+    TriangleStrip[0].x = l;  // Links oben
+    TriangleStrip[0].y = o;
+    TriangleStrip[0].color = c1;
+    TriangleStrip[0].tu = tl;
+    TriangleStrip[0].tv = to;
 
-    TriangleStrip[1].x		= r;		// Rechts oben
-    TriangleStrip[1].y		= o;
-    TriangleStrip[1].color  = c2;
-    TriangleStrip[1].tu		= tr;
-    TriangleStrip[1].tv		= to;
+    TriangleStrip[1].x = r;  // Rechts oben
+    TriangleStrip[1].y = o;
+    TriangleStrip[1].color = c2;
+    TriangleStrip[1].tu = tr;
+    TriangleStrip[1].tv = to;
 
-    TriangleStrip[2].x		= l;		// Links unten
-    TriangleStrip[2].y		= u;
-    TriangleStrip[2].color  = c3;
-    TriangleStrip[2].tu		= tl;
-    TriangleStrip[2].tv		= tu;
+    TriangleStrip[2].x = l;  // Links unten
+    TriangleStrip[2].y = u;
+    TriangleStrip[2].color = c3;
+    TriangleStrip[2].tu = tl;
+    TriangleStrip[2].tv = tu;
 
-    TriangleStrip[3].x		= r;		// Rechts unten
-    TriangleStrip[3].y		= u;
-    TriangleStrip[3].color  = c4;
-    TriangleStrip[3].tu		= tr;
-    TriangleStrip[3].tv		= tu;
+    TriangleStrip[3].x = r;  // Rechts unten
+    TriangleStrip[3].y = u;
+    TriangleStrip[3].color = c4;
+    TriangleStrip[3].tu = tr;
+    TriangleStrip[3].tv = tu;
 
-    DirectGraphics.SetTexture( itsTexIdx );
+    DirectGraphics.SetTexture(itsTexIdx);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
 }
 
 // --------------------------------------------------------------------------------------
 // Sprite vertikal spiegelverkehrt zeichnen
 // --------------------------------------------------------------------------------------
-void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color, bool h, bool v)
-{
-    float l,  r,  o,  u;					// Vertice Koordinaten
-    float tl, tr, to, tu;					// Textur Koordinaten
+void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color, bool h, bool v) {
+    float l, r, o, u;      // Vertice Koordinaten
+    float tl, tr, to, tu;  // Textur Koordinaten
 
-    //DKS - unnecessary:
-    //x = float (int (x));
-    //y = float (int (y));
+    // DKS - unnecessary:
+    // x = float (int (x));
+    // y = float (int (y));
 
-    if (v == false)
-    {
-        o = y;									// Unten
-        u = y+(itsRect.bottom-itsRect.top);	// Oben
-    }
-    else
-    {
-        u = y;									// Unten
-        o = y+(itsRect.bottom-itsRect.top);	// Oben
+    if (v == false) {
+        o = y;                                   // Unten
+        u = y + (itsRect.bottom - itsRect.top);  // Oben
+    } else {
+        u = y;                                   // Unten
+        o = y + (itsRect.bottom - itsRect.top);  // Oben
     }
 
-    if (h == false)
-    {
-        r = x+(itsRect.right-itsRect.left);
+    if (h == false) {
+        r = x + (itsRect.right - itsRect.left);
         l = x;
-    }
-    else
-    {
-        l = x+(itsRect.right-itsRect.left);
+    } else {
+        l = x + (itsRect.right - itsRect.left);
         r = x;
     }
 
-    tl = itsRect.left    * itsXTexScale;	// Links
-    tr = itsRect.right   * itsXTexScale;	// Rechts
-    to = itsRect.top     * itsYTexScale;	// Oben
-    tu = itsRect.bottom  * itsYTexScale;	// Unten
+    tl = itsRect.left * itsXTexScale;    // Links
+    tr = itsRect.right * itsXTexScale;   // Rechts
+    to = itsRect.top * itsYTexScale;     // Oben
+    tu = itsRect.bottom * itsYTexScale;  // Unten
 
-    //tl = 0; tr = 0.5f; to = 0; tu = 0.5f;
+    // tl = 0; tr = 0.5f; to = 0; tu = 0.5f;
 
-    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
+    VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
 
-    TriangleStrip[0].x		= l;		// Links oben
-    TriangleStrip[0].y		= o;
-    TriangleStrip[0].tu		= tl;
-    TriangleStrip[0].tv		= to;
+    TriangleStrip[0].x = l;  // Links oben
+    TriangleStrip[0].y = o;
+    TriangleStrip[0].tu = tl;
+    TriangleStrip[0].tv = to;
 
-    TriangleStrip[1].x		= r;		// Rechts oben
-    TriangleStrip[1].y		= o;
-    TriangleStrip[1].tu		= tr;
-    TriangleStrip[1].tv		= to;
+    TriangleStrip[1].x = r;  // Rechts oben
+    TriangleStrip[1].y = o;
+    TriangleStrip[1].tu = tr;
+    TriangleStrip[1].tv = to;
 
-    TriangleStrip[2].x		= l;		// Links unten
-    TriangleStrip[2].y		= u;
-    TriangleStrip[2].tu		= tl;
-    TriangleStrip[2].tv		= tu;
+    TriangleStrip[2].x = l;  // Links unten
+    TriangleStrip[2].y = u;
+    TriangleStrip[2].tu = tl;
+    TriangleStrip[2].tv = tu;
 
-    TriangleStrip[3].x		= r;		// Rechts unten
-    TriangleStrip[3].y		= u;
-    TriangleStrip[3].tu		= tr;
-    TriangleStrip[3].tv		= tu;
+    TriangleStrip[3].x = r;  // Rechts unten
+    TriangleStrip[3].y = u;
+    TriangleStrip[3].tu = tr;
+    TriangleStrip[3].tv = tu;
 
-    DirectGraphics.SetTexture( itsTexIdx );
+    DirectGraphics.SetTexture(itsTexIdx);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
 }
 
 // --------------------------------------------------------------------------------------
 // Sprite spiegelverkehrt zeichnen mit aktuellem Surfaceausschnitt und Colorkey
 // --------------------------------------------------------------------------------------
 
-void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color)
-{
-    float l,  r,  o,  u;					// Vertice Koordinaten
-    float tl, tr, to, tu;					// Textur Koordinaten
+void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color) {
+    float l, r, o, u;      // Vertice Koordinaten
+    float tl, tr, to, tu;  // Textur Koordinaten
 
-    //DKS - unnecessary:
-    //x = float (int (x));
-    //y = float (int (y));
+    // DKS - unnecessary:
+    // x = float (int (x));
+    // y = float (int (y));
 
-    r = x;									// Links
-    l = x+(itsRect.right-itsRect.left);	// Rechts
-    o = y;									// Oben
-    u = y+(itsRect.bottom-itsRect.top);	// Unten
+    r = x;                                   // Links
+    l = x + (itsRect.right - itsRect.left);  // Rechts
+    o = y;                                   // Oben
+    u = y + (itsRect.bottom - itsRect.top);  // Unten
 
-    tl = itsRect.left   * itsXTexScale;	// Links
-    tr = itsRect.right  * itsXTexScale;	// Rechts
-    to = itsRect.top    * itsYTexScale;	// Oben
-    tu = itsRect.bottom * itsYTexScale;	// Unten
+    tl = itsRect.left * itsXTexScale;    // Links
+    tr = itsRect.right * itsXTexScale;   // Rechts
+    to = itsRect.top * itsYTexScale;     // Oben
+    tu = itsRect.bottom * itsYTexScale;  // Unten
 
-    //DKS - Was already commented out in original code:
-    //tl = 0; tr = 0.5f; to = 0; tu = 0.5f;
+    // DKS - Was already commented out in original code:
+    // tl = 0; tr = 0.5f; to = 0; tu = 0.5f;
 
-    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
+    VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
 
-    TriangleStrip[0].x		= l;		// Links oben
-    TriangleStrip[0].y		= o;
-    TriangleStrip[0].tu		= tl;
-    TriangleStrip[0].tv		= to;
+    TriangleStrip[0].x = l;  // Links oben
+    TriangleStrip[0].y = o;
+    TriangleStrip[0].tu = tl;
+    TriangleStrip[0].tv = to;
 
-    TriangleStrip[1].x		= r;		// Rechts oben
-    TriangleStrip[1].y		= o;
-    TriangleStrip[1].tu		= tr;
-    TriangleStrip[1].tv		= to;
+    TriangleStrip[1].x = r;  // Rechts oben
+    TriangleStrip[1].y = o;
+    TriangleStrip[1].tu = tr;
+    TriangleStrip[1].tv = to;
 
-    TriangleStrip[2].x		= l;		// Links unten
-    TriangleStrip[2].y		= u;
-    TriangleStrip[2].tu		= tl;
-    TriangleStrip[2].tv		= tu;
+    TriangleStrip[2].x = l;  // Links unten
+    TriangleStrip[2].y = u;
+    TriangleStrip[2].tu = tl;
+    TriangleStrip[2].tv = tu;
 
-    TriangleStrip[3].x		= r;		// Rechts unten
-    TriangleStrip[3].y		= u;
-    TriangleStrip[3].tu		= tr;
-    TriangleStrip[3].tv		= tu;
+    TriangleStrip[3].x = r;  // Rechts unten
+    TriangleStrip[3].y = u;
+    TriangleStrip[3].tu = tr;
+    TriangleStrip[3].tv = tu;
 
-    DirectGraphics.SetTexture( itsTexIdx );
+    DirectGraphics.SetTexture(itsTexIdx);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
 }
 
 // --------------------------------------------------------------------------------------
 // Sprite skaliert zeichnen mit aktuellem Surfaceausschnitt (mit textur Filter)
 // --------------------------------------------------------------------------------------
 
-void DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int height, D3DCOLOR col)
-{
-    float l,  r,  o,  u;					// Vertice Koordinaten
-    float tl, tr, to, tu;					// Textur Koordinaten
+void DirectGraphicsSprite::RenderSpriteScaled(float x, float y, int width, int height, D3DCOLOR col) {
+    float l, r, o, u;      // Vertice Koordinaten
+    float tl, tr, to, tu;  // Textur Koordinaten
 
-    l = x;			// Links
-    r = x+width;	// Rechts
-    o = y;			// Oben
-    u = y+height;	// Unten
+    l = x;           // Links
+    r = x + width;   // Rechts
+    o = y;           // Oben
+    u = y + height;  // Unten
 
-    tl = itsRect.left   * itsXTexScale;	// Links
-    tr = itsRect.right  * itsXTexScale;	// Rechts
-    to = itsRect.top    * itsYTexScale;	// Oben
-    tu = itsRect.bottom * itsYTexScale;	// Unten
+    tl = itsRect.left * itsXTexScale;    // Links
+    tr = itsRect.right * itsXTexScale;   // Rechts
+    to = itsRect.top * itsYTexScale;     // Oben
+    tu = itsRect.bottom * itsYTexScale;  // Unten
 
-    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
+    VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = col;
 
-    TriangleStrip[0].x		= l;		// Links oben
-    TriangleStrip[0].y		= o;
-    TriangleStrip[0].tu		= tl;
-    TriangleStrip[0].tv		= to;
+    TriangleStrip[0].x = l;  // Links oben
+    TriangleStrip[0].y = o;
+    TriangleStrip[0].tu = tl;
+    TriangleStrip[0].tv = to;
 
-    TriangleStrip[1].x		= r;		// Rechts oben
-    TriangleStrip[1].y		= o;
-    TriangleStrip[1].tu		= tr;
-    TriangleStrip[1].tv		= to;
+    TriangleStrip[1].x = r;  // Rechts oben
+    TriangleStrip[1].y = o;
+    TriangleStrip[1].tu = tr;
+    TriangleStrip[1].tv = to;
 
-    TriangleStrip[2].x		= l;		// Links unten
-    TriangleStrip[2].y		= u;
-    TriangleStrip[2].tu		= tl;
-    TriangleStrip[2].tv		= tu;
+    TriangleStrip[2].x = l;  // Links unten
+    TriangleStrip[2].y = u;
+    TriangleStrip[2].tu = tl;
+    TriangleStrip[2].tv = tu;
 
-    TriangleStrip[3].x		= r;		// Rechts unten
-    TriangleStrip[3].y		= u;
-    TriangleStrip[3].tu		= tr;
-    TriangleStrip[3].tv		= tu;
+    TriangleStrip[3].x = r;  // Rechts unten
+    TriangleStrip[3].y = u;
+    TriangleStrip[3].tu = tr;
+    TriangleStrip[3].tv = tu;
 
-    DirectGraphics.SetTexture( itsTexIdx );
+    DirectGraphics.SetTexture(itsTexIdx);
 
-    DirectGraphics.SetFilterMode (true);
+    DirectGraphics.SetFilterMode(true);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
 
-    DirectGraphics.SetFilterMode (false);
+    DirectGraphics.SetFilterMode(false);
 }
 
 // --------------------------------------------------------------------------------------
 // Sprite skaliert zeichnen mit angegebener Animationsphase (mit textur Filter)
 // --------------------------------------------------------------------------------------
 
-void DirectGraphicsSprite::RenderSpriteScaled(float x, float y,int width, int height, int Anim, D3DCOLOR col)
-{
-    float l,  r,  o,  u;					// Vertice Koordinaten
-    float tl, tr, to, tu;					// Textur Koordinaten
+void DirectGraphicsSprite::RenderSpriteScaled(float x, float y, int width, int height, int Anim, D3DCOLOR col) {
+    float l, r, o, u;      // Vertice Koordinaten
+    float tl, tr, to, tu;  // Textur Koordinaten
 
-    l = x;			// Links
-    r = x+width;	// Rechts
-    o = y;			// Oben
-    u = y+height;	// Unten
+    l = x;           // Links
+    r = x + width;   // Rechts
+    o = y;           // Oben
+    u = y + height;  // Unten
 
-    tl = ((Anim%itsXFrameCount) * itsXFrameSize)                 * itsXTexScale; // Links
-    tr = ((Anim%itsXFrameCount) * itsXFrameSize + itsXFrameSize) * itsXTexScale; // Rechts
-    to = ((Anim/itsXFrameCount) * itsYFrameSize)                 * itsYTexScale; // Oben
-    tu = ((Anim/itsXFrameCount) * itsYFrameSize + itsYFrameSize) * itsYTexScale; // Unten
+    tl = ((Anim % itsXFrameCount) * itsXFrameSize) * itsXTexScale;                  // Links
+    tr = ((Anim % itsXFrameCount) * itsXFrameSize + itsXFrameSize) * itsXTexScale;  // Rechts
+    to = ((Anim / itsXFrameCount) * itsYFrameSize) * itsYTexScale;                  // Oben
+    tu = ((Anim / itsXFrameCount) * itsYFrameSize + itsYFrameSize) * itsYTexScale;  // Unten
 
-    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
+    VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = col;
 
-    TriangleStrip[0].x		= l;		// Links oben
-    TriangleStrip[0].y		= o;
-    TriangleStrip[0].tu		= tl;
-    TriangleStrip[0].tv		= to;
+    TriangleStrip[0].x = l;  // Links oben
+    TriangleStrip[0].y = o;
+    TriangleStrip[0].tu = tl;
+    TriangleStrip[0].tv = to;
 
-    TriangleStrip[1].x		= r;		// Rechts oben
-    TriangleStrip[1].y		= o;
-    TriangleStrip[1].tu		= tr;
-    TriangleStrip[1].tv		= to;
+    TriangleStrip[1].x = r;  // Rechts oben
+    TriangleStrip[1].y = o;
+    TriangleStrip[1].tu = tr;
+    TriangleStrip[1].tv = to;
 
-    TriangleStrip[2].x		= l;		// Links unten
-    TriangleStrip[2].y		= u;
-    TriangleStrip[2].tu		= tl;
-    TriangleStrip[2].tv		= tu;
+    TriangleStrip[2].x = l;  // Links unten
+    TriangleStrip[2].y = u;
+    TriangleStrip[2].tu = tl;
+    TriangleStrip[2].tv = tu;
 
-    TriangleStrip[3].x		= r;		// Rechts unten
-    TriangleStrip[3].y		= u;
-    TriangleStrip[3].tu		= tr;
-    TriangleStrip[3].tv		= tu;
+    TriangleStrip[3].x = r;  // Rechts unten
+    TriangleStrip[3].y = u;
+    TriangleStrip[3].tu = tr;
+    TriangleStrip[3].tv = tu;
 
-    DirectGraphics.SetTexture( itsTexIdx );
+    DirectGraphics.SetTexture(itsTexIdx);
 
-    DirectGraphics.SetFilterMode (true);
+    DirectGraphics.SetFilterMode(true);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
 
-    DirectGraphics.SetFilterMode (false);
+    DirectGraphics.SetFilterMode(false);
 }
 
 // --------------------------------------------------------------------------------------
 // Sprite mit übergebenem Winkel rotiert darstellen
 // --------------------------------------------------------------------------------------
 
-void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D3DCOLOR Color)
-{
-    float l,  r,  o,  u;					// Vertice Koordinaten
-    float tl, tr, to, tu;					// Textur Koordinaten
+void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D3DCOLOR Color) {
+    float l, r, o, u;      // Vertice Koordinaten
+    float tl, tr, to, tu;  // Textur Koordinaten
 
-    l = x;									// Links
-    r = x+(itsRect.right-itsRect.left);	// Rechts
-    o = y;									// Oben
-    u = y+(itsRect.bottom-itsRect.top);	// Unten
+    l = x;                                   // Links
+    r = x + (itsRect.right - itsRect.left);  // Rechts
+    o = y;                                   // Oben
+    u = y + (itsRect.bottom - itsRect.top);  // Unten
 
-    tl = itsRect.left   * itsXTexScale;	// Links
-    tr = itsRect.right  * itsXTexScale;	// Rechts
-    to = itsRect.top    * itsYTexScale;	// Oben
-    tu = itsRect.bottom * itsYTexScale;	// Unten
+    tl = itsRect.left * itsXTexScale;    // Links
+    tr = itsRect.right * itsXTexScale;   // Rechts
+    to = itsRect.top * itsYTexScale;     // Oben
+    tu = itsRect.bottom * itsYTexScale;  // Unten
 
-    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
+    VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
 
-    TriangleStrip[0].x		= l;		// Links oben
-    TriangleStrip[0].y		= o;
-    TriangleStrip[0].tu		= tl;
-    TriangleStrip[0].tv		= to;
+    TriangleStrip[0].x = l;  // Links oben
+    TriangleStrip[0].y = o;
+    TriangleStrip[0].tu = tl;
+    TriangleStrip[0].tv = to;
 
-    TriangleStrip[1].x		= r;		// Rechts oben
-    TriangleStrip[1].y		= o;
-    TriangleStrip[1].tu		= tr;
-    TriangleStrip[1].tv		= to;
+    TriangleStrip[1].x = r;  // Rechts oben
+    TriangleStrip[1].y = o;
+    TriangleStrip[1].tu = tr;
+    TriangleStrip[1].tv = to;
 
-    TriangleStrip[2].x		= l;		// Links unten
-    TriangleStrip[2].y		= u;
-    TriangleStrip[2].tu		= tl;
-    TriangleStrip[2].tv		= tu;
+    TriangleStrip[2].x = l;  // Links unten
+    TriangleStrip[2].y = u;
+    TriangleStrip[2].tu = tl;
+    TriangleStrip[2].tv = tu;
 
-    TriangleStrip[3].x		= r;		// Rechts unten
-    TriangleStrip[3].y		= u;
-    TriangleStrip[3].tu		= tr;
-    TriangleStrip[3].tv		= tu;
+    TriangleStrip[3].x = r;  // Rechts unten
+    TriangleStrip[3].y = u;
+    TriangleStrip[3].tu = tr;
+    TriangleStrip[3].tv = tu;
 
-    DirectGraphics.SetTexture( itsTexIdx );
+    DirectGraphics.SetTexture(itsTexIdx);
 
-//----- Sprite rotieren
+    //----- Sprite rotieren
 
-    D3DXMATRIX	matRot, matTrans, matTrans2;
+    D3DXMATRIX matRot, matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
     Winkel = std::fmod(Winkel, 360);
-    if (Winkel < 0) Winkel += 360;
+    if (Winkel < 0)
+        Winkel += 360;
 
     // Rotationsmatrix
-    D3DXMatrixRotationZ  (&matRot, float(PI * Winkel / 180));
+    D3DXMatrixRotationZ(&matRot, float(PI * Winkel / 180));
 
     // Transformation zum Ursprung
-    D3DXMatrixTranslation(&matTrans,-x-(itsRect.right  - itsRect.left)/2.0f,
-                          -y-(itsRect.bottom - itsRect.top )/2.0f, 0.0f);
+    D3DXMatrixTranslation(&matTrans, -x - (itsRect.right - itsRect.left) / 2.0f,
+                          -y - (itsRect.bottom - itsRect.top) / 2.0f, 0.0f);
 
     // Transformation wieder zurück
-    D3DXMatrixTranslation(&matTrans2,x+(itsRect.right  - itsRect.left)/2.0f,
-                          y+(itsRect.bottom - itsRect.top )/2.0f, 0.0f);
+    D3DXMatrixTranslation(&matTrans2, x + (itsRect.right - itsRect.left) / 2.0f,
+                          y + (itsRect.bottom - itsRect.top) / 2.0f, 0.0f);
 
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans);		// Verschieben
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRot);		// rotieren
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurück verschieben
+    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans);   // Verschieben
+    D3DXMatrixMultiply(&matWorld, &matWorld, &matRot);     // rotieren
+    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück verschieben
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix( GL_MODELVIEW, g_matModelView.data() );
+    load_matrix(GL_MODELVIEW, g_matModelView.data());
 #endif
 #endif
 
-    DirectGraphics.SetFilterMode (true);
+    DirectGraphics.SetFilterMode(true);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
 
-    DirectGraphics.SetFilterMode (false);
+    DirectGraphics.SetFilterMode(false);
 
     // Normale Projektions-Matrix wieder herstellen
-    D3DXMatrixRotationZ (&matWorld, 0.0f);
+    D3DXMatrixRotationZ(&matWorld, 0.0f);
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix( GL_MODELVIEW, g_matModelView.data() );
+    load_matrix(GL_MODELVIEW, g_matModelView.data());
 #endif
 #endif
 }
@@ -951,120 +948,118 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
 // Sprite mit übergebenem Winkel rotiert darstellen
 // --------------------------------------------------------------------------------------
 
-void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, int Anim, D3DCOLOR Color, bool mirror)
-{
-    float l,  r,  o,  u;					// Vertice Koordinaten
-    float tl, tr, to, tu;					// Textur Koordinaten
+void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, int Anim, D3DCOLOR Color, bool mirror) {
+    float l, r, o, u;      // Vertice Koordinaten
+    float tl, tr, to, tu;  // Textur Koordinaten
 
     // Ausschnitt einstellen
     Anim %= 255;
-    itsRect = itsPreCalcedRects [Anim];
+    itsRect = itsPreCalcedRects[Anim];
 
-    //DKS - Pulled duplicated math out of logic below:
+    // DKS - Pulled duplicated math out of logic below:
     float height = itsRect.bottom - itsRect.top;
     float width = itsRect.right - itsRect.left;
 
     // normal
     //
-    if (mirror == false)
-    {
-        l = x;									// Links
-        //r = x+(itsRect.right-itsRect.left-1)+0.5f;	// Rechts   //DKS
-		r = x+width;	// Rechts
+    if (mirror == false) {
+        l = x;          // Links
+                        // r = x+(itsRect.right-itsRect.left-1)+0.5f;	// Rechts   //DKS
+        r = x + width;  // Rechts
 
         Winkel = 360 - Winkel;
     }
 
     // oder gespiegelt
     //
-    else
-    {
-        r = x;									// Links
-        //l = x+(itsRect.right-itsRect.left-1)-0.5f;	// Rechts   //DKS
-		l = x+width;	// Rechts
+    else {
+        r = x;          // Links
+                        // l = x+(itsRect.right-itsRect.left-1)-0.5f;	// Rechts   //DKS
+        l = x + width;  // Rechts
     }
 
-    o = y;									// Oben
-    //u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten    //DKS
-	u = y+height;	// Unten
+    o = y;           // Oben
+                     // u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten    //DKS
+    u = y + height;  // Unten
 
-    tl = itsRect.left   * itsXTexScale;	// Links
-    tr = itsRect.right  * itsXTexScale;	// Rechts
-    to = itsRect.top    * itsYTexScale;	// Oben
-    tu = itsRect.bottom * itsYTexScale;	// Unten
+    tl = itsRect.left * itsXTexScale;    // Links
+    tr = itsRect.right * itsXTexScale;   // Rechts
+    to = itsRect.top * itsYTexScale;     // Oben
+    tu = itsRect.bottom * itsYTexScale;  // Unten
 
-    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
+    VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
 
-    TriangleStrip[0].x		= l;		// Links oben
-    TriangleStrip[0].y		= o;
-    TriangleStrip[0].tu		= tl;
-    TriangleStrip[0].tv		= to;
+    TriangleStrip[0].x = l;  // Links oben
+    TriangleStrip[0].y = o;
+    TriangleStrip[0].tu = tl;
+    TriangleStrip[0].tv = to;
 
-    TriangleStrip[1].x		= r;		// Rechts oben
-    TriangleStrip[1].y		= o;
-    TriangleStrip[1].tu		= tr;
-    TriangleStrip[1].tv		= to;
+    TriangleStrip[1].x = r;  // Rechts oben
+    TriangleStrip[1].y = o;
+    TriangleStrip[1].tu = tr;
+    TriangleStrip[1].tv = to;
 
-    TriangleStrip[2].x		= l;		// Links unten
-    TriangleStrip[2].y		= u;
-    TriangleStrip[2].tu		= tl;
-    TriangleStrip[2].tv		= tu;
+    TriangleStrip[2].x = l;  // Links unten
+    TriangleStrip[2].y = u;
+    TriangleStrip[2].tu = tl;
+    TriangleStrip[2].tv = tu;
 
-    TriangleStrip[3].x		= r;		// Rechts unten
-    TriangleStrip[3].y		= u;
-    TriangleStrip[3].tu		= tr;
-    TriangleStrip[3].tv		= tu;
+    TriangleStrip[3].x = r;  // Rechts unten
+    TriangleStrip[3].y = u;
+    TriangleStrip[3].tu = tr;
+    TriangleStrip[3].tv = tu;
 
-    DirectGraphics.SetTexture( itsTexIdx );
+    DirectGraphics.SetTexture(itsTexIdx);
 
-//----- Sprite rotieren
+    //----- Sprite rotieren
 
-    D3DXMATRIX	matRot, matTrans, matTrans2;
+    D3DXMATRIX matRot, matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
     Winkel = std::fmod(Winkel, 360);
-    if (Winkel < 0) Winkel += 360;
+    if (Winkel < 0)
+        Winkel += 360;
 
     // Rotationsmatrix
-    D3DXMatrixRotationZ  (&matRot, float(PI * Winkel / 180));
+    D3DXMatrixRotationZ(&matRot, float(PI * Winkel / 180));
 
     // Transformation zum Ursprung
-    D3DXMatrixTranslation(&matTrans,-x-(itsRect.right  - itsRect.left)/2.0f,
-                          -y-(itsRect.bottom - itsRect.top )/2.0f, 0.0f);
+    D3DXMatrixTranslation(&matTrans, -x - (itsRect.right - itsRect.left) / 2.0f,
+                          -y - (itsRect.bottom - itsRect.top) / 2.0f, 0.0f);
 
     // Transformation wieder zurück
-    D3DXMatrixTranslation(&matTrans2,x+(itsRect.right  - itsRect.left)/2.0f,
-                          y+(itsRect.bottom - itsRect.top )/2.0f, 0.0f);
+    D3DXMatrixTranslation(&matTrans2, x + (itsRect.right - itsRect.left) / 2.0f,
+                          y + (itsRect.bottom - itsRect.top) / 2.0f, 0.0f);
 
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans);		// Verschieben
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRot);		// rotieren
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurück verschieben
+    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans);   // Verschieben
+    D3DXMatrixMultiply(&matWorld, &matWorld, &matRot);     // rotieren
+    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück verschieben
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix( GL_MODELVIEW, g_matModelView.data() );
+    load_matrix(GL_MODELVIEW, g_matModelView.data());
 #endif
 #endif
 
-    DirectGraphics.SetFilterMode (true);
+    DirectGraphics.SetFilterMode(true);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
 
-    DirectGraphics.SetFilterMode (false);
+    DirectGraphics.SetFilterMode(false);
 
     // Normale Projektions-Matrix wieder herstellen
-    D3DXMatrixRotationZ (&matWorld, 0.0f);
+    D3DXMatrixRotationZ(&matWorld, 0.0f);
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix( GL_MODELVIEW, g_matModelView.data() );
+    load_matrix(GL_MODELVIEW, g_matModelView.data());
 #endif
 #endif
 }
@@ -1073,24 +1068,28 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
 // Sprite rotiert darstellen mit Verschiebung
 // --------------------------------------------------------------------------------------
 
-void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Winkel, float offx, float offy, D3DCOLOR Color, bool mirrored)
-{
-    float l,  r,  o,  u;					// Vertice Koordinaten
-    float tl, tr, to, tu;					// Textur Koordinaten
+void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
+                                                     float y,
+                                                     float Winkel,
+                                                     float offx,
+                                                     float offy,
+                                                     D3DCOLOR Color,
+                                                     bool mirrored) {
+    float l, r, o, u;      // Vertice Koordinaten
+    float tl, tr, to, tu;  // Textur Koordinaten
 
-//	itsRect = itsPreCalcedRects [0];    //DKS - This was commented out already in original source
+    //	itsRect = itsPreCalcedRects [0];    //DKS - This was commented out already in original source
 
-    //DKS - Pulled duplicated math out of logic below:
+    // DKS - Pulled duplicated math out of logic below:
     float height = itsRect.bottom - itsRect.top;
     float width = itsRect.right - itsRect.left;
 
-    l = x;									// Links
-    //r = x+(itsRect.right-itsRect.left-1)+0.5f;	// Rechts       //DKS
-	r = x+width;	// Rechts
+    l = x;          // Links
+                    // r = x+(itsRect.right-itsRect.left-1)+0.5f;	// Rechts       //DKS
+    r = x + width;  // Rechts
 
-    if (mirrored)
-    {
-		std::swap(l, r);
+    if (mirrored) {
+        std::swap(l, r);
 
         offx = -offx;
         Winkel = 360.0f - Winkel;
@@ -1098,87 +1097,88 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
 
     Winkel = 360 - Winkel;
 
-    o = y;									// Oben
-    //u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten        //DKS
-	u = y+height;	// Unten
+    o = y;           // Oben
+                     // u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten        //DKS
+    u = y + height;  // Unten
 
-    tl = itsRect.left   * itsXTexScale;	// Links
-    tr = itsRect.right  * itsXTexScale;	// Rechts
-    to = itsRect.top    * itsYTexScale;	// Oben
-    tu = itsRect.bottom * itsYTexScale;	// Unten
+    tl = itsRect.left * itsXTexScale;    // Links
+    tr = itsRect.right * itsXTexScale;   // Rechts
+    to = itsRect.top * itsYTexScale;     // Oben
+    tu = itsRect.bottom * itsYTexScale;  // Unten
 
-    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
+    VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
 
-    TriangleStrip[0].x		= l;		// Links oben
-    TriangleStrip[0].y		= o;
-    TriangleStrip[0].tu		= tl;
-    TriangleStrip[0].tv		= to;
+    TriangleStrip[0].x = l;  // Links oben
+    TriangleStrip[0].y = o;
+    TriangleStrip[0].tu = tl;
+    TriangleStrip[0].tv = to;
 
-    TriangleStrip[1].x		= r;		// Rechts oben
-    TriangleStrip[1].y		= o;
-    TriangleStrip[1].tu		= tr;
-    TriangleStrip[1].tv		= to;
+    TriangleStrip[1].x = r;  // Rechts oben
+    TriangleStrip[1].y = o;
+    TriangleStrip[1].tu = tr;
+    TriangleStrip[1].tv = to;
 
-    TriangleStrip[2].x		= l;		// Links unten
-    TriangleStrip[2].y		= u;
-    TriangleStrip[2].tu		= tl;
-    TriangleStrip[2].tv		= tu;
+    TriangleStrip[2].x = l;  // Links unten
+    TriangleStrip[2].y = u;
+    TriangleStrip[2].tu = tl;
+    TriangleStrip[2].tv = tu;
 
-    TriangleStrip[3].x		= r;		// Rechts unten
-    TriangleStrip[3].y		= u;
-    TriangleStrip[3].tu		= tr;
-    TriangleStrip[3].tv		= tu;
+    TriangleStrip[3].x = r;  // Rechts unten
+    TriangleStrip[3].y = u;
+    TriangleStrip[3].tu = tr;
+    TriangleStrip[3].tv = tu;
 
-    DirectGraphics.SetTexture( itsTexIdx );
+    DirectGraphics.SetTexture(itsTexIdx);
 
-//----- Sprite rotieren
+    //----- Sprite rotieren
 
-    D3DXMATRIX	matRot, matTrans, matTrans2;
+    D3DXMATRIX matRot, matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
     Winkel = std::fmod(Winkel, 360);
-    if (Winkel < 0) Winkel += 360;
+    if (Winkel < 0)
+        Winkel += 360;
 
     // Rotationsmatrix
-    D3DXMatrixRotationZ  (&matRot, float(PI * Winkel / 180));
+    D3DXMatrixRotationZ(&matRot, float(PI * Winkel / 180));
 
     // Transformation zum Ursprung
-    D3DXMatrixTranslation(&matTrans,-x-(itsRect.right  - itsRect.left)/2.0f-offx,
-                          -y-(itsRect.bottom - itsRect.top )/2.0f-offy, 0.0f);
+    D3DXMatrixTranslation(&matTrans, -x - (itsRect.right - itsRect.left) / 2.0f - offx,
+                          -y - (itsRect.bottom - itsRect.top) / 2.0f - offy, 0.0f);
 
     // Transformation wieder zurück
-    D3DXMatrixTranslation(&matTrans2,x+(itsRect.right  - itsRect.left)/2.0f+offx,
-                          y+(itsRect.bottom - itsRect.top )/2.0f+offy, 0.0f);
+    D3DXMatrixTranslation(&matTrans2, x + (itsRect.right - itsRect.left) / 2.0f + offx,
+                          y + (itsRect.bottom - itsRect.top) / 2.0f + offy, 0.0f);
 
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans);		// Verschieben
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matRot);		// rotieren
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);	// und wieder zurück verschieben
+    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans);   // Verschieben
+    D3DXMatrixMultiply(&matWorld, &matWorld, &matRot);     // rotieren
+    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück verschieben
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix( GL_MODELVIEW, g_matModelView.data() );
+    load_matrix(GL_MODELVIEW, g_matModelView.data());
 #endif
 #endif
 
-    DirectGraphics.SetFilterMode (true);
+    DirectGraphics.SetFilterMode(true);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
 
-    DirectGraphics.SetFilterMode (false);
+    DirectGraphics.SetFilterMode(false);
 
     // Normale Projektions-Matrix wieder herstellen
-    D3DXMatrixRotationZ (&matWorld, 0.0f);
+    D3DXMatrixRotationZ(&matWorld, 0.0f);
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix( GL_MODELVIEW, g_matModelView.data() );
+    load_matrix(GL_MODELVIEW, g_matModelView.data());
 #endif
 #endif
 }
@@ -1187,97 +1187,98 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x, float y, float Win
 // Sprite mit übergebenem Winkel rotiert darstellen in beliebiger Grösse
 // --------------------------------------------------------------------------------------
 
-void DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
-        float width, float height,
-        float Winkel, D3DCOLOR Color)
-{
-    float l,  r,  o,  u;					// Vertice Koordinaten
-    float tl, tr, to, tu;					// Textur Koordinaten
+void DirectGraphicsSprite::RenderSpriteScaledRotated(float x,
+                                                     float y,
+                                                     float width,
+                                                     float height,
+                                                     float Winkel,
+                                                     D3DCOLOR Color) {
+    float l, r, o, u;      // Vertice Koordinaten
+    float tl, tr, to, tu;  // Textur Koordinaten
 
-    l = x;			// Links
-    r = x+width;	// Rechts
-    o = y;			// Oben
-    u = y+height;	// Unten
+    l = x;           // Links
+    r = x + width;   // Rechts
+    o = y;           // Oben
+    u = y + height;  // Unten
 
-    tl = itsRect.left   * itsXTexScale;	// Links
-    tr = itsRect.right  * itsXTexScale;	// Rechts
-    to = itsRect.top    * itsYTexScale;	// Oben
-    tu = itsRect.bottom * itsYTexScale;	// Unten
+    tl = itsRect.left * itsXTexScale;    // Links
+    tr = itsRect.right * itsXTexScale;   // Rechts
+    to = itsRect.top * itsYTexScale;     // Oben
+    tu = itsRect.bottom * itsYTexScale;  // Unten
 
-    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
+    VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = Color;
 
-    TriangleStrip[0].x		= l;		// Links oben
-    TriangleStrip[0].y		= o;
-    TriangleStrip[0].tu		= tl;
-    TriangleStrip[0].tv		= to;
+    TriangleStrip[0].x = l;  // Links oben
+    TriangleStrip[0].y = o;
+    TriangleStrip[0].tu = tl;
+    TriangleStrip[0].tv = to;
 
-    TriangleStrip[1].x		= r;		// Rechts oben
-    TriangleStrip[1].y		= o;
-    TriangleStrip[1].tu		= tr;
-    TriangleStrip[1].tv		= to;
+    TriangleStrip[1].x = r;  // Rechts oben
+    TriangleStrip[1].y = o;
+    TriangleStrip[1].tu = tr;
+    TriangleStrip[1].tv = to;
 
-    TriangleStrip[2].x		= l;		// Links unten
-    TriangleStrip[2].y		= u;
-    TriangleStrip[2].tu		= tl;
-    TriangleStrip[2].tv		= tu;
+    TriangleStrip[2].x = l;  // Links unten
+    TriangleStrip[2].y = u;
+    TriangleStrip[2].tu = tl;
+    TriangleStrip[2].tv = tu;
 
-    TriangleStrip[3].x		= r;		// Rechts unten
-    TriangleStrip[3].y		= u;
-    TriangleStrip[3].tu		= tr;
-    TriangleStrip[3].tv		= tu;
+    TriangleStrip[3].x = r;  // Rechts unten
+    TriangleStrip[3].y = u;
+    TriangleStrip[3].tu = tr;
+    TriangleStrip[3].tv = tu;
 
-    DirectGraphics.SetTexture( itsTexIdx );
+    DirectGraphics.SetTexture(itsTexIdx);
 
-//----- Sprite rotieren
+    //----- Sprite rotieren
 
-    D3DXMATRIX	matRot, matTrans, matTrans2;
+    D3DXMATRIX matRot, matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
     Winkel = std::fmod(Winkel, 360);
-    if (Winkel < 0) Winkel += 360;
+    if (Winkel < 0)
+        Winkel += 360;
 
     // Rotationsmatrix
-    D3DXMatrixRotationZ  (&matRot, float(PI * Winkel / 180));
+    D3DXMatrixRotationZ(&matRot, float(PI * Winkel / 180));
 
     // Transformation zum Ursprung
-    D3DXMatrixTranslation(&matTrans,-x-(width) /2,
-                          -y-(height)/2, 0.0f);
+    D3DXMatrixTranslation(&matTrans, -x - (width) / 2, -y - (height) / 2, 0.0f);
 
     // Transformation wieder zurück
-    D3DXMatrixTranslation(&matTrans2,x+(width) /2,
-                          y+(height)/2, 0.0f);
+    D3DXMatrixTranslation(&matTrans2, x + (width) / 2, y + (height) / 2, 0.0f);
 
     // Verschieben und rotieren
-    D3DXMatrixMultiply	 (&matWorld, &matTrans, &matRot);
+    D3DXMatrixMultiply(&matWorld, &matTrans, &matRot);
 
     // und wieder zurück verschieben
-    D3DXMatrixMultiply	 (&matWorld, &matWorld, &matTrans2);
+    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix( GL_MODELVIEW, g_matModelView.data() );
+    load_matrix(GL_MODELVIEW, g_matModelView.data());
 #endif
 #endif
 
-    DirectGraphics.SetFilterMode (true);
+    DirectGraphics.SetFilterMode(true);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2,&TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
 
-    DirectGraphics.SetFilterMode (false);
+    DirectGraphics.SetFilterMode(false);
 
     // Normale Projektions-Matrix wieder herstellen
-    D3DXMatrixRotationZ (&matWorld, 0.0f);
+    D3DXMatrixRotationZ(&matWorld, 0.0f);
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 #elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix( GL_MODELVIEW, g_matModelView.data() );
+    load_matrix(GL_MODELVIEW, g_matModelView.data());
 #endif
 #endif
 }
@@ -1290,66 +1291,60 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x, float y,
 // Rechteck enzeigen
 // --------------------------------------------------------------------------------------
 
-void RenderRect4(float x, float y, float width, float height,
-                 D3DCOLOR c1,
-                 D3DCOLOR c2,
-                 D3DCOLOR c3,
-                 D3DCOLOR c4)
-{
-    float l,  r,  o,  u;					// Vertice Koordinaten
+void RenderRect4(float x, float y, float width, float height, D3DCOLOR c1, D3DCOLOR c2, D3DCOLOR c3, D3DCOLOR c4) {
+    float l, r, o, u;  // Vertice Koordinaten
 
-    l = x;			// Links
-    r = x+width;	// Rechts
-    o = y;			// Oben
-    u = y+height;	// Unten
+    l = x;           // Links
+    r = x + width;   // Rechts
+    o = y;           // Oben
+    u = y + height;  // Unten
 
-    VERTEX2D TriangleStrip[4]; //DKS - Added local declaration
+    VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
     TriangleStrip[0].color = c1;
-    TriangleStrip[0].x		= l;		// Links oben
-    TriangleStrip[0].y		= o;
+    TriangleStrip[0].x = l;  // Links oben
+    TriangleStrip[0].y = o;
 
     TriangleStrip[1].color = c2;
-    TriangleStrip[1].x		= r;		// Rechts oben
-    TriangleStrip[1].y		= o;
+    TriangleStrip[1].x = r;  // Rechts oben
+    TriangleStrip[1].y = o;
 
     TriangleStrip[2].color = c3;
-    TriangleStrip[2].x		= l;		// Links unten
-    TriangleStrip[2].y		= u;
+    TriangleStrip[2].x = l;  // Links unten
+    TriangleStrip[2].y = u;
 
     TriangleStrip[3].color = c4;
-    TriangleStrip[3].x		= r;		// Rechts unten
-    TriangleStrip[3].y		= u;
+    TriangleStrip[3].x = r;  // Rechts unten
+    TriangleStrip[3].y = u;
 
-    DirectGraphics.SetTexture( -1 );
+    DirectGraphics.SetTexture(-1);
 
     // Rechteck zeichnen
-    DirectGraphics.RendertoBuffer (D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
 }
 
 // --------------------------------------------------------------------------------------
 // Linie rendern
 // --------------------------------------------------------------------------------------
 
-void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2,	D3DCOLOR Color)
-{
-    VERTEX2D TriangleStrip[2]; //DKS - Added local declaration
+void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2, D3DCOLOR Color) {
+    VERTEX2D TriangleStrip[2];  // DKS - Added local declaration
 
     TriangleStrip[0].color = TriangleStrip[1].color = Color;
 
-    TriangleStrip[0].x		= p1.x;		// p1
-    TriangleStrip[0].y		= p1.y;
+    TriangleStrip[0].x = p1.x;  // p1
+    TriangleStrip[0].y = p1.y;
 
-    TriangleStrip[1].x		= p2.x;		// p2
-    TriangleStrip[1].y		= p2.y;
+    TriangleStrip[1].x = p2.x;  // p2
+    TriangleStrip[1].y = p2.y;
 
-    DirectGraphics.SetTexture( -1 );
+    DirectGraphics.SetTexture(-1);
 
     // Linie zeichnen
 #if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->DrawPrimitiveUP(D3DPT_LINELIST,1,&TriangleStrip[0],sizeof(VERTEX2D));
+    lpD3DDevice->DrawPrimitiveUP(D3DPT_LINELIST, 1, &TriangleStrip[0], sizeof(VERTEX2D));
 #elif defined(PLATFORM_SDL)
-    DirectGraphics.RendertoBuffer (D3DPT_LINELIST, 1, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(D3DPT_LINELIST, 1, &TriangleStrip[0]);
 #endif
 }
 
@@ -1357,37 +1352,36 @@ void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2,	D3DCOLOR Color)
 // Linie rendern (zwei farbig)
 // --------------------------------------------------------------------------------------
 
-void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2,	D3DCOLOR Color1, D3DCOLOR Color2)
-{
-    VERTEX2D TriangleStrip[2]; //DKS - Added local declaration
+void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2, D3DCOLOR Color1, D3DCOLOR Color2) {
+    VERTEX2D TriangleStrip[2];  // DKS - Added local declaration
 
     TriangleStrip[0].color = Color1;
     TriangleStrip[1].color = Color2;
 
-    TriangleStrip[0].x		= p1.x;		// p1
-    TriangleStrip[0].y		= p1.y;
+    TriangleStrip[0].x = p1.x;  // p1
+    TriangleStrip[0].y = p1.y;
 
-    TriangleStrip[1].x		= p2.x;		// p2
-    TriangleStrip[1].y		= p2.y;
+    TriangleStrip[1].x = p2.x;  // p2
+    TriangleStrip[1].y = p2.y;
 
-    DirectGraphics.SetTexture( -1 );
+    DirectGraphics.SetTexture(-1);
 
     // Linie zeichnen
 #if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->DrawPrimitiveUP(D3DPT_LINELIST,1,&TriangleStrip[0],sizeof(VERTEX2D));
+    lpD3DDevice->DrawPrimitiveUP(D3DPT_LINELIST, 1, &TriangleStrip[0], sizeof(VERTEX2D));
 #elif defined(PLATFORM_SDL)
-    DirectGraphics.RendertoBuffer (D3DPT_LINELIST, 1, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(D3DPT_LINELIST, 1, &TriangleStrip[0]);
 #endif
 }
 
 // --------------------------------------------------------------------------------------
 // Kreis an x/y zeichnen mit Radius r und Farbe col
 // --------------------------------------------------------------------------------------
-//DKS - disabled this as it was only used in a single debug code block in Trigger_FadeMusic.cpp
+// DKS - disabled this as it was only used in a single debug code block in Trigger_FadeMusic.cpp
 #if 0
 void RenderCircle(float x, float y, float r, D3DCOLOR col)
 {
-	#define step 0.2f
+#define step 0.2f
 
 	D3DXVECTOR2 p1, p2;
 	for (float i = 0; i < 2*PI; i += step)

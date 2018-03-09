@@ -6,33 +6,31 @@
 // Value1 = 1 Gegner blickt rechts
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.hpp"
 #include "Gegner_WandKannone.hpp"
+#include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerWandKannone::GegnerWandKannone(int Wert1, int Wert2, bool Light)
-{
-    Handlung		= GEGNER_LAUFEN;
-    Energy			= 30;
-    Value1			= Wert1;
-    Value2			= Wert2;
-    AnimStart		= 0;
-    AnimEnde		= 0;
-    AnimSpeed		= 0.0f;
-    AnimCount		= float (Value1);
-    ChangeLight		= Light;
-    Destroyable		= true;
+GegnerWandKannone::GegnerWandKannone(int Wert1, int Wert2, bool Light) {
+    Handlung = GEGNER_LAUFEN;
+    Energy = 30;
+    Value1 = Wert1;
+    Value2 = Wert2;
+    AnimStart = 0;
+    AnimEnde = 0;
+    AnimSpeed = 0.0f;
+    AnimCount = float(Value1);
+    ChangeLight = Light;
+    Destroyable = true;
 }
 
 // --------------------------------------------------------------------------------------
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerWandKannone::DoKI(void)
-{
+void GegnerWandKannone::DoKI(void) {
     // Richtung setzen
     //
     if (Value2 == 0)
@@ -41,77 +39,68 @@ void GegnerWandKannone::DoKI(void)
         BlickRichtung = RECHTS;
 
     // Animieren
-    if (AnimEnde > 0)						// Soll überhaupt anmiert werden ?
+    if (AnimEnde > 0)  // Soll überhaupt anmiert werden ?
     {
-        AnimCount += SpeedFaktor;			// Animationscounter weiterzählen
-        if (AnimCount > AnimSpeed)			// Grenze überschritten ?
+        AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
+        if (AnimCount > AnimSpeed)  // Grenze überschritten ?
         {
-            AnimCount = 0;					// Dann wieder auf Null setzen
-            AnimPhase++;					// Und nächste Animationsphase
-            if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
+            AnimCount = 0;              // Dann wieder auf Null setzen
+            AnimPhase++;                // Und nächste Animationsphase
+            if (AnimPhase >= AnimEnde)  // Animation von zu Ende	?
             {
-                AnimPhase = AnimStart;		// Dann wieder von vorne beginnen
-                AnimEnde  = 0;
+                AnimPhase = AnimStart;  // Dann wieder von vorne beginnen
+                AnimEnde = 0;
                 AnimCount = static_cast<float>(Value1);
                 Handlung = GEGNER_LAUFEN;
             }
         }
-    } // animieren
+    }  // animieren
 
     // Je nach Handlung richtig verhalten
     //
-    switch (Handlung)
-    {
-    case GEGNER_LAUFEN :
-    {
-        AnimCount -= 1.0f SYNC;
+    switch (Handlung) {
+        case GEGNER_LAUFEN: {
+            AnimCount -= 1.0f SYNC;
 
-        if (AnimCount <= 0.0)
-        {
-            AnimCount = 0.0f;
-            Handlung = GEGNER_SCHIESSEN;
-            AnimEnde = 3;
-            AnimSpeed = 0.5f;
-            AnimStart = 0;
-            AnimPhase = 0;
+            if (AnimCount <= 0.0) {
+                AnimCount = 0.0f;
+                Handlung = GEGNER_SCHIESSEN;
+                AnimEnde = 3;
+                AnimSpeed = 0.5f;
+                AnimStart = 0;
+                AnimPhase = 0;
 
-            // Schuss abgeben
-            //
-            if (PlayerAbstand() < 600)
-            {
-                SoundManager.PlayWave (100, 128, 22050, SOUND_LASERSHOT);
-                if (BlickRichtung == LINKS)
-                {
-                    Projectiles.PushProjectile(xPos - 18, yPos + 15, WALKER_LASER);
-                    PartikelSystem.PushPartikel(xPos - 24, yPos - 10, LASERFLAME);
+                // Schuss abgeben
+                //
+                if (PlayerAbstand() < 600) {
+                    SoundManager.PlayWave(100, 128, 22050, SOUND_LASERSHOT);
+                    if (BlickRichtung == LINKS) {
+                        Projectiles.PushProjectile(xPos - 18, yPos + 15, WALKER_LASER);
+                        PartikelSystem.PushPartikel(xPos - 24, yPos - 10, LASERFLAME);
 
-                }
-                else
-                {
-                    Projectiles.PushProjectile(xPos + 30, yPos + 15, WALKER_LASER2);
-                    PartikelSystem.PushPartikel(xPos + 21, yPos - 10, LASERFLAME);
+                    } else {
+                        Projectiles.PushProjectile(xPos + 30, yPos + 15, WALKER_LASER2);
+                        PartikelSystem.PushPartikel(xPos + 21, yPos - 10, LASERFLAME);
+                    }
                 }
             }
-        }
-    }
-    break;
+        } break;
 
-    default :
-        break;
+        default:
+            break;
 
-    } // switch
+    }  // switch
 }
 
 // --------------------------------------------------------------------------------------
 // WandKannnone explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerWandKannone::GegnerExplode(void)
-{
+void GegnerWandKannone::GegnerExplode(void) {
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel (xPos-30+rand()%42, yPos-30+rand()%32, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30 + rand() % 42, yPos - 30 + rand() % 32, EXPLOSION_MEDIUM2);
 
-    SoundManager.PlayWave (100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
 
-    Player[0].Score += 150;		// Punkte geben
+    Player[0].Score += 150;  // Punkte geben
 }

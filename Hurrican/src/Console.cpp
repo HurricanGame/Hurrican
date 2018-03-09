@@ -18,12 +18,12 @@
 namespace fs = std::experimental::filesystem::v1;
 #include "Console.hpp"
 #include "DX8Graphics.hpp"
-#include "GetKeyName.hpp"
 #include "Gameplay.hpp"
+#include "GetKeyName.hpp"
 #include "Globals.hpp"
 #include "Logdatei.hpp"
-#include "Projectiles.hpp"
 #include "Player.hpp"
+#include "Projectiles.hpp"
 #include "Tileengine.hpp"
 #include "Timer.hpp"
 
@@ -35,16 +35,15 @@ namespace fs = std::experimental::filesystem::v1;
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-ConsoleClass::ConsoleClass()
-{
-    its_Alpha		= 0.0f;
-    Fade			= 0.0f;
-    Activate		= true;
-    Active			= false;
-    Showing			= false;
-    RenderBinary    = false;
-    CursorChar[0]      = ' ';      
-    CursorChar[1]      = '\0';      
+ConsoleClass::ConsoleClass() {
+    its_Alpha = 0.0f;
+    Fade = 0.0f;
+    Activate = true;
+    Active = false;
+    Showing = false;
+    RenderBinary = false;
+    CursorChar[0] = ' ';
+    CursorChar[1] = '\0';
 
     // Text in der Konsole leeren
     for (int i = 0; i < MAX_LINES; i++)
@@ -52,54 +51,51 @@ ConsoleClass::ConsoleClass()
 
     // Text in Konsole schreiben
     for (int i = 0; i < 9; i++)
-        CONSOLE_PRINT(TextArray[TEXT_CONSOLE1+i]);
+        CONSOLE_PRINT(TextArray[TEXT_CONSOLE1 + i]);
 
     // Lock-Puffer leeren
     for (int i = 0; i < 256; i++)
         Pressed[i] = false;
 
-} // Konstruktor
+}  // Konstruktor
 
 // --------------------------------------------------------------------------------------
 // Destruktor
 // --------------------------------------------------------------------------------------
 
-ConsoleClass::~ConsoleClass()
-{
-    //DKS - There is no need call this explicitly, it leads to a double-free:
-    //ConsoleGFX.~DirectGraphicsSprite();	// Grafik freigeben
-} // Destruktor
+ConsoleClass::~ConsoleClass() {
+    // DKS - There is no need call this explicitly, it leads to a double-free:
+    // ConsoleGFX.~DirectGraphicsSprite();	// Grafik freigeben
+}  // Destruktor
 
-void ConsoleClass::LoadSprites(void)
-{
-    ConsoleGFX.LoadImage("console.png", 512, 256, 512, 256, 1, 1);	// Grafik laden
+void ConsoleClass::LoadSprites(void) {
+    ConsoleGFX.LoadImage("console.png", 512, 256, 512, 256, 1, 1);  // Grafik laden
 }
 
 // --------------------------------------------------------------------------------------
 // Konsole anzeigen
 // --------------------------------------------------------------------------------------
 
-void ConsoleClass::ShowConsole(void)
-{
-    //DKS - modified code to support scaled fonts (less lines displayed) and allow joystick input
-    D3DCOLOR	Color;
-    int			a;
-    float		yoffset;
+void ConsoleClass::ShowConsole(void) {
+    // DKS - modified code to support scaled fonts (less lines displayed) and allow joystick input
+    D3DCOLOR Color;
+    int a;
+    float yoffset;
     static float cursorcount = 0.0f;
-    int scale_factor = pDefaultFont->GetScaleFactor();//DKS - added font scaling support
-    int console_lines = MAX_LINES / pDefaultFont->GetScaleFactor(); //DKS - ditto
+    int scale_factor = pDefaultFont->GetScaleFactor();               // DKS - added font scaling support
+    int console_lines = MAX_LINES / pDefaultFont->GetScaleFactor();  // DKS - ditto
     int line_spacing = 12 * scale_factor;
-    //a = int (its_Alpha * 8 / 9);  //DKS - This line was commented out in original source
-    a = int (its_Alpha);
+    // a = int (its_Alpha * 8 / 9);  //DKS - This line was commented out in original source
+    a = int(its_Alpha);
 
-    yoffset = - 255.0f + its_Alpha - 1.0f;
+    yoffset = -255.0f + its_Alpha - 1.0f;
 
     Color = D3DCOLOR_RGBA(255, 255, 255, a);
     ConsoleGFX.RenderSpriteScaled(0, yoffset, 640, 256, Color);
 
-    //DKS- Fixed for low-res devices using scaled fonts:
+    // DKS- Fixed for low-res devices using scaled fonts:
     //// Text anzeigen
-    //for (int i=MAX_LINES-ConsoleLines, line_pos=0; i<MAX_LINES; i++, line_pos++)
+    // for (int i=MAX_LINES-ConsoleLines, line_pos=0; i<MAX_LINES; i++, line_pos++)
     //{
     //    a = int (its_Alpha * 8 / 9);
     //    Color = D3DCOLOR_RGBA(128, 128, 255, a);
@@ -110,9 +106,9 @@ void ConsoleClass::ShowConsole(void)
     //     using the current font scaling. Low-res devices like 320x240can only display
     //     8 lines instead of 16, for example:
     Color = D3DCOLOR_RGBA(128, 128, 255, a);
-    for (int i=0; i < console_lines; i++) {
-        int array_off = MAX_LINES-console_lines+i;
-        //DKS - Do a bounds check here just to be extra safe:
+    for (int i = 0; i < console_lines; i++) {
+        int array_off = MAX_LINES - console_lines + i;
+        // DKS - Do a bounds check here just to be extra safe:
         if (array_off >= 0 && array_off < MAX_LINES)
             pDefaultFont->DrawText(26, yoffset + float(10 + i * line_spacing), Text[array_off], Color);
     }
@@ -129,47 +125,44 @@ void ConsoleClass::ShowConsole(void)
         cursorcount = 0.0f;
 
     Color = D3DCOLOR_RGBA(255, 255, 255, a);
-    pDefaultFont->DrawText(26 - 6 * scale_factor, yoffset +  10 + console_lines * line_spacing, Temp, Color);
+    pDefaultFont->DrawText(26 - 6 * scale_factor, yoffset + 10 + console_lines * line_spacing, Temp, Color);
 
     // Draw cursor block
     int text_width = pDefaultFont->StringLength(Temp);
     int cursor_x = 20 + text_width;
-    if (scale_factor > 1) 
+    if (scale_factor > 1)
         cursor_x -= 6;
     int cursor_y = yoffset + 10 + console_lines * line_spacing;
     int cursor_h = 12 * scale_factor;
     int cursor_w = 9 * scale_factor;
 
-    switch (int (cursorcount))
-    {
-    case 0 :
-        pDefaultFont->DrawText(cursor_x, cursor_y, CursorChar, Color);
-        RenderRect(cursor_x, cursor_y, cursor_w, cursor_h, D3DCOLOR_RGBA(255,255,255,140));
-        break;
+    switch (int(cursorcount)) {
+        case 0:
+            pDefaultFont->DrawText(cursor_x, cursor_y, CursorChar, Color);
+            RenderRect(cursor_x, cursor_y, cursor_w, cursor_h, D3DCOLOR_RGBA(255, 255, 255, 140));
+            break;
 
-    case 1 :
-        pDefaultFont->DrawText(cursor_x, cursor_y, CursorChar, Color);
-        break;
+        case 1:
+            pDefaultFont->DrawText(cursor_x, cursor_y, CursorChar, Color);
+            break;
 
-    default :
-        break;
+        default:
+            break;
     }
-    
-} // ShowConsole
+
+}  // ShowConsole
 
 // --------------------------------------------------------------------------------------
 // Cheat eingegeben?
 // --------------------------------------------------------------------------------------
 
-bool ConsoleClass::CONSOLE_CHEAT(char *cheat)
-{
+bool ConsoleClass::CONSOLE_CHEAT(char *cheat) {
     bool result = false;
 
     // TODO FIX
     result = CONSOLE_COMMAND(convertText(cheat));
 
-    if (result)
-    {
+    if (result) {
         SoundManager.PlayWave(100, 128, 15000, SOUND_MESSAGE);
         Player[0].Score = 0;
         HasCheated = true;
@@ -182,228 +175,186 @@ bool ConsoleClass::CONSOLE_CHEAT(char *cheat)
 // Text checken, wenn Enter gedrückt wurde
 // --------------------------------------------------------------------------------------
 
-void ConsoleClass::CheckCommands(void)
-{
+void ConsoleClass::CheckCommands(void) {
     // Hilfe
     //
-    //DKS - Re-enabled help, as it seems to be just fine
-//#ifdef _DEBUG
+    // DKS - Re-enabled help, as it seems to be just fine
+    //#ifdef _DEBUG
     // TODO FIX
-    		if (CONSOLE_COMMAND("help"))
-    		{
-    			CONSOLE_PRINT(" ");
-    			CONSOLE_PRINT("Console Commands");
-    			CONSOLE_PRINT("-------------------------");
-    			CONSOLE_PRINT(" ");
-    			CONSOLE_PRINT("clear - clear console");
-    			CONSOLE_PRINT("levelinfo - show level information");
-    			CONSOLE_PRINT("maxfps x - set maximum framerate to 'x' (0=no maximum)");
-    			CONSOLE_PRINT("setspeed x - Set Game-speed (default=10)");
-    			CONSOLE_PRINT("loadmap 'name' - load level 'name'");
-    			CONSOLE_PRINT("minimap - save minimap to disc");
-    			CONSOLE_PRINT("quit - Quit game immediately");
-    		} else 
+    if (CONSOLE_COMMAND("help")) {
+        CONSOLE_PRINT(" ");
+        CONSOLE_PRINT("Console Commands");
+        CONSOLE_PRINT("-------------------------");
+        CONSOLE_PRINT(" ");
+        CONSOLE_PRINT("clear - clear console");
+        CONSOLE_PRINT("levelinfo - show level information");
+        CONSOLE_PRINT("maxfps x - set maximum framerate to 'x' (0=no maximum)");
+        CONSOLE_PRINT("setspeed x - Set Game-speed (default=10)");
+        CONSOLE_PRINT("loadmap 'name' - load level 'name'");
+        CONSOLE_PRINT("minimap - save minimap to disc");
+        CONSOLE_PRINT("quit - Quit game immediately");
+    } else
 
-    // Konsole löschen
-    if (CONSOLE_COMMAND("clear"))
-    {
-        for (int i=0; i<MAX_LINES; i++)
+        // Konsole löschen
+        if (CONSOLE_COMMAND("clear")) {
+        for (int i = 0; i < MAX_LINES; i++)
             strcpy_s(Text[i], "");
 
         strcpy_s(Buffer, "");
         CursorChar[0] = ' ';
-    }
-    else
+    } else
 
         // Levelinfo anzeigen
-        if (CONSOLE_COMMAND("levelinfo"))
-        {
-            char StringBuffer[100];
-            char temp[50];
+        if (CONSOLE_COMMAND("levelinfo")) {
+        char StringBuffer[100];
+        char temp[50];
 
-            CONSOLE_PRINT(" ");
-            CONSOLE_PRINT("Levelinfo");
-            CONSOLE_PRINT("-------------");
-            CONSOLE_PRINT(" ");
+        CONSOLE_PRINT(" ");
+        CONSOLE_PRINT("Levelinfo");
+        CONSOLE_PRINT("-------------");
+        CONSOLE_PRINT(" ");
 
-            CONSOLE_PRINT(TileEngine.Beschreibung);
+        CONSOLE_PRINT(TileEngine.Beschreibung);
 
-            _itoa_s(static_cast<int>(TileEngine.XOffset), temp, 10);
-            strcpy_s(StringBuffer, "Level Offset X : ");
-            strcat_s(StringBuffer, temp);
-            CONSOLE_PRINT(StringBuffer);
+        _itoa_s(static_cast<int>(TileEngine.XOffset), temp, 10);
+        strcpy_s(StringBuffer, "Level Offset X : ");
+        strcat_s(StringBuffer, temp);
+        CONSOLE_PRINT(StringBuffer);
 
-            _itoa_s(static_cast<int>(TileEngine.YOffset), temp, 10);
-            strcpy_s(StringBuffer, "Level Offset Y : ");
-            strcat_s(StringBuffer, temp);
-            CONSOLE_PRINT(StringBuffer);
+        _itoa_s(static_cast<int>(TileEngine.YOffset), temp, 10);
+        strcpy_s(StringBuffer, "Level Offset Y : ");
+        strcat_s(StringBuffer, temp);
+        CONSOLE_PRINT(StringBuffer);
 
-            _itoa_s(static_cast<int>(TileEngine.LEVELSIZE_X), temp, 10);
-            strcpy_s(StringBuffer, "Level Size X : ");
-            strcat_s(StringBuffer, temp);
-            CONSOLE_PRINT(StringBuffer);
+        _itoa_s(static_cast<int>(TileEngine.LEVELSIZE_X), temp, 10);
+        strcpy_s(StringBuffer, "Level Size X : ");
+        strcat_s(StringBuffer, temp);
+        CONSOLE_PRINT(StringBuffer);
 
-            _itoa_s(static_cast<int>(TileEngine.LEVELSIZE_Y), temp, 10);
-            strcpy_s(StringBuffer, "Level Size Y : ");
-            strcat_s(StringBuffer, temp);
-            CONSOLE_PRINT(StringBuffer);
+        _itoa_s(static_cast<int>(TileEngine.LEVELSIZE_Y), temp, 10);
+        strcpy_s(StringBuffer, "Level Size Y : ");
+        strcat_s(StringBuffer, temp);
+        CONSOLE_PRINT(StringBuffer);
+    } else
+
+        // Spiel sofort verlassen
+        if (CONSOLE_COMMAND("quit")) {
+        CONSOLE_PRINT("Shutting down ...");
+        GameRunning = false;
+    } else
+
+        // Volle Extrawaffen
+        if (CONSOLE_CHEAT(Cheats[CHEAT_EXTRAS])) {
+        for (int p = 0; p < NUMPLAYERS; p++) {
+            Player[p].PowerLines = 999;
+            Player[p].Grenades = 999;
+            Player[p].SmartBombs = 999;
         }
-        else
 
-            // Spiel sofort verlassen
-            if (CONSOLE_COMMAND("quit"))
+        CONSOLE_PRINT("-> Let's rock!");
+    } else
+
+        // Volle Zeit
+        if (CONSOLE_CHEAT(Cheats[CHEAT_ZEIT])) {
+        TileEngine.Timelimit = 999;
+
+        CONSOLE_PRINT("-> knowing that there's no rhyme...");
+    } else
+
+        // Volle Waffen
+        if (CONSOLE_CHEAT(Cheats[CHEAT_WAFFEN])) {
+        for (int p = 0; p < NUMPLAYERS; p++) {
+            Player[p].CurrentWeaponLevel[3] = 16;
+
+            for (int w = 0; w <= 2; w++)
+                Player[p].CurrentWeaponLevel[w] = 8;
+        }
+
+        CONSOLE_PRINT("-> Blast Off and Strike The Evil Bydo Empire!");
+    } else
+
+        // Schild
+        if (CONSOLE_CHEAT(Cheats[CHEAT_SCHILD])) {
+        for (int i = 0; i < NUMPLAYERS; i++) {
+            /*
+            if (Player[i].Shield <= 0.0f)
             {
-                CONSOLE_PRINT("Shutting down ...");
-                GameRunning = false;
+                Projectiles.PushProjectile (Player[i].xpos, Player[i].ypos, SHIELDSPAWNER, Player[i]);
+                Projectiles.PushProjectile (Player[i].xpos, Player[i].ypos, SHIELDSPAWNER2, Player[i]);
             }
-            else
 
+            // Schild setzen
+            Player[i].Shield = 500.0f;*/
 
-                // Volle Extrawaffen
-                if (CONSOLE_CHEAT(Cheats[CHEAT_EXTRAS]))
-                {
-                    for (int p = 0; p < NUMPLAYERS; p++)
-                    {
-                        Player[p].PowerLines = 999;
-                        Player[p].Grenades   = 999;
-                        Player[p].SmartBombs = 999;
-                    }
+            Player[i].Lives = 99;
+        }
 
-                    CONSOLE_PRINT("-> Let's rock!");
-                }
-                else
+        strcpy_s(Buffer, "-> Live long and prosper!");
+    } else
 
-                    // Volle Zeit
-                    if (CONSOLE_CHEAT(Cheats[CHEAT_ZEIT]))
-                    {
-                        TileEngine.Timelimit = 999;
+        // Dauerfeuer
+        if (CONSOLE_CHEAT(Cheats[CHEAT_SUPERSHOT])) {
+        for (int i = 0; i < NUMPLAYERS; i++)
+            Player[i].RiesenShotExtra += 500;
 
-                        CONSOLE_PRINT("-> knowing that there's no rhyme...");
-                    }
-                    else
+        strcpy_s(Buffer, "-> Supershot");
+    } else
 
-                        // Volle Waffen
-                        if (CONSOLE_CHEAT(Cheats[CHEAT_WAFFEN]))
-                        {
-                            for (int p = 0; p < NUMPLAYERS; p++)
-                            {
-                                Player[p].CurrentWeaponLevel[3] = 16;
+        // Dauerfeuer
+        if (CONSOLE_CHEAT(Cheats[CHEAT_AUTOFIRE])) {
+        for (int i = 0; i < NUMPLAYERS; i++)
+            Player[i].AutoFireExtra += 500;
 
-                                for (int w = 0; w <= 2; w++)
-                                    Player[p].CurrentWeaponLevel[w] = 8;
-                            }
+        strcpy_s(Buffer, "-> Autofire");
+    } else
 
-                            CONSOLE_PRINT("-> Blast Off and Strike The Evil Bydo Empire!");
-                        }
-                        else
+        // Flammenwerfer Mode
+        if (CONSOLE_CHEAT(Cheats[CHEAT_FLAMER])) {
+        FlameThrower = !FlameThrower;
 
-                            // Schild
-                            if (CONSOLE_CHEAT(Cheats[CHEAT_SCHILD]))
-                            {
-                                for (int i = 0; i < NUMPLAYERS; i++)
-                                {
-                                    /*
-                                    if (Player[i].Shield <= 0.0f)
-                                    {
-                                    	Projectiles.PushProjectile (Player[i].xpos, Player[i].ypos, SHIELDSPAWNER, Player[i]);
-                                    	Projectiles.PushProjectile (Player[i].xpos, Player[i].ypos, SHIELDSPAWNER2, Player[i]);
-                                    }
-
-                                    // Schild setzen
-                                    Player[i].Shield = 500.0f;*/
-
-                                    Player[i].Lives = 99;
-
-                                }
-
-                                strcpy_s(Buffer, "-> Live long and prosper!");
-                            }
-                            else
-
-                                // Dauerfeuer
-                                if (CONSOLE_CHEAT(Cheats[CHEAT_SUPERSHOT]))
-                                {
-                                    for (int i = 0; i < NUMPLAYERS; i++)
-                                        Player[i].RiesenShotExtra += 500;
-
-                                    strcpy_s(Buffer, "-> Supershot");
-                                }
-                                else
-
-                                    // Dauerfeuer
-                                    if (CONSOLE_CHEAT(Cheats[CHEAT_AUTOFIRE]))
-                                    {
-                                        for (int i = 0; i < NUMPLAYERS; i++)
-                                            Player[i].AutoFireExtra += 500;
-
-                                        strcpy_s(Buffer, "-> Autofire");
-                                    }
-                                    else
-
-
-                                        // Flammenwerfer Mode
-                                        if (CONSOLE_CHEAT(Cheats[CHEAT_FLAMER]))
-                                        {
-                                            FlameThrower = !FlameThrower;
-
-                                            if (FlameThrower)
-                                            {
-                                                CONSOLE_PRINT("-> Flamethrower on");
-                                            }
-                                            else
-                                            {
-                                                CONSOLE_PRINT("-> Flamethrower off");
-                                            }
-                                        } //else
+        if (FlameThrower) {
+            CONSOLE_PRINT("-> Flamethrower on");
+        } else {
+            CONSOLE_PRINT("-> Flamethrower off");
+        }
+    }  // else
 
     // GodMode
-    if (CONSOLE_CHEAT(Cheats[CHEAT_GOD]))
-    {
-        if (Player[0].GodMode == false)
-        {
+    if (CONSOLE_CHEAT(Cheats[CHEAT_GOD])) {
+        if (Player[0].GodMode == false) {
             Player[0].GodMode = true;
             Player[1].GodMode = true;
             CONSOLE_PRINT("-> Godmode on");
-        }
-        else
-        {
+        } else {
             Player[0].GodMode = false;
             Player[1].GodMode = false;
             CONSOLE_PRINT("-> Godmode off");
         }
-    } //else
+    }  // else
 
     // GodMode
-    if (CONSOLE_CHEAT(Cheats[CHEAT_RAD]))
-    {
-        if (Player[0].WheelMode == false)
-        {
+    if (CONSOLE_CHEAT(Cheats[CHEAT_RAD])) {
+        if (Player[0].WheelMode == false) {
             Player[0].WheelMode = true;
             Player[1].WheelMode = true;
             CONSOLE_PRINT("-> WheelMode on");
-        }
-        else
-        {
+        } else {
             Player[0].WheelMode = false;
             Player[1].WheelMode = false;
             CONSOLE_PRINT("-> WheelMode off");
         }
-    } //else
+    }  // else
 
     // max FPS setzen
-    if (strncmp(Buffer, "maxfps ", 7) == 0)
-    {
-
+    if (strncmp(Buffer, "maxfps ", 7) == 0) {
         // Bis zu der Zahl vorgehen
         int index1 = 7;
         int g_test = 0;
 
-        while(Buffer[index1] !='\0')
-        {
-            if(Buffer[index1]>=48 && Buffer[index1]<=58)
-            {
-                g_test*=10;
-                g_test+=Buffer[index1]-48;
+        while (Buffer[index1] != '\0') {
+            if (Buffer[index1] >= 48 && Buffer[index1] <= 58) {
+                g_test *= 10;
+                g_test += Buffer[index1] - 48;
             }
             index1++;
         }
@@ -421,20 +372,17 @@ void ConsoleClass::CheckCommands(void)
         Timer.SetMaxFPS(g_test);
     }
 
-//#ifdef _DEBUG
+    //#ifdef _DEBUG
     // Speed setzen
-    if (strncmp(Buffer, "setspeed ", 9) == 0)
-    {
+    if (strncmp(Buffer, "setspeed ", 9) == 0) {
         // Bis zu der Zahl vorgehen
         int index1 = 9;
         int g_test = 0;
 
-        while(Buffer[index1] !='\0')
-        {
-            if(Buffer[index1]>=48 && Buffer[index1]<=58)
-            {
-                g_test*=10;
-                g_test+=Buffer[index1]-48;
+        while (Buffer[index1] != '\0') {
+            if (Buffer[index1] >= 48 && Buffer[index1] <= 58) {
+                g_test *= 10;
+                g_test += Buffer[index1] - 48;
             }
             index1++;
         }
@@ -451,27 +399,24 @@ void ConsoleClass::CheckCommands(void)
         // und Speed Setzen
         Timer.SetMoveSpeed(float(atoi(dummy)));
     }
-//#endif
-
+    //#endif
 
     // Stage laden
-    if (strncmp(Buffer, "loadmap ", 8) == 0)
-    {
-		std::string mapname = std::string(Buffer).substr(8);
+    if (strncmp(Buffer, "loadmap ", 8) == 0) {
+        std::string mapname = std::string(Buffer).substr(8);
 
         // Meldung ausgeben
         std::string msg = std::string("Loading Level ") + mapname + " ...";
         CONSOLE_PRINT(msg.c_str());
 
         // und Level laden
-        if (mapname.substr(mapname.length()-4) != ".map")
-			mapname += ".map";
+        if (mapname.substr(mapname.length() - 4) != ".map")
+            mapname += ".map";
 
         std::string filename = std::string(g_storage_ext) + "/data/levels/" + mapname;
 
         // Datei gefunden? Dann laden
-        if (fs::exists(filename) && fs::is_regular_file(filename))
-        {
+        if (fs::exists(filename) && fs::is_regular_file(filename)) {
             for (int i = 0; i < NUMPLAYERS; i++)
                 Player[i].InitNewLevel();
 
@@ -481,17 +426,15 @@ void ConsoleClass::CheckCommands(void)
         }
 
         // Ansonsten Fehlermeldung
-        else
-        {
-			msg = std::string("Map ") + mapname + " not found!";
+        else {
+            msg = std::string("Map ") + mapname + " not found!";
             CONSOLE_PRINT(msg.c_str());
         }
     }
 
     // Minimap anzeigen und Screenshot machen
-    if (strncmp(Buffer, "minimap", 7) == 0)
-    {
-        // Darstellung beenden
+    if (strncmp(Buffer, "minimap", 7) == 0) {
+    // Darstellung beenden
 #if defined(PLATFORM_DIRECTX)
         lpD3DDevice->EndScene();
 #endif
@@ -506,13 +449,16 @@ void ConsoleClass::CheckCommands(void)
         RenderRect(0, 0, 640, 480, 0xFF000000);
 
         // Mini Map anzeigen
-        for (int i=0; i < TileEngine.LEVELSIZE_X; i++)
-            for (int j=0; j < TileEngine.LEVELSIZE_Y; j++)
-            {
-                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_WAND)		  RenderRect(static_cast<float>(i), static_cast<float>(j), 1, 1, 0xFFFFFFFF);
-                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_DESTRUCTIBLE) RenderRect(static_cast<float>(i), static_cast<float>(j), 1, 1, 0xFFFFFF00);
-                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_PLATTFORM)	  RenderRect(static_cast<float>(i), static_cast<float>(j), 1, 1, 0xFF888888);
-                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_WASSER)		  RenderRect(static_cast<float>(i), static_cast<float>(j), 1, 1, 0xFF0000FF);
+        for (int i = 0; i < TileEngine.LEVELSIZE_X; i++)
+            for (int j = 0; j < TileEngine.LEVELSIZE_Y; j++) {
+                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_WAND)
+                    RenderRect(static_cast<float>(i), static_cast<float>(j), 1, 1, 0xFFFFFFFF);
+                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_DESTRUCTIBLE)
+                    RenderRect(static_cast<float>(i), static_cast<float>(j), 1, 1, 0xFFFFFF00);
+                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_PLATTFORM)
+                    RenderRect(static_cast<float>(i), static_cast<float>(j), 1, 1, 0xFF888888);
+                if (TileEngine.TileAt(i, j).Block & BLOCKWERT_WASSER)
+                    RenderRect(static_cast<float>(i), static_cast<float>(j), 1, 1, 0xFF0000FF);
             }
 
         char buf[100], buf2[100];
@@ -525,7 +471,7 @@ void ConsoleClass::CheckCommands(void)
         pDefaultFont->DrawText(3, 470, TileEngine.Beschreibung, 0xFF00FF00);
 
 #if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->EndScene();						// Darstellung beenden
+        lpD3DDevice->EndScene();  // Darstellung beenden
 #endif
         DirectGraphics.ShowBackBuffer();
 
@@ -535,157 +481,133 @@ void ConsoleClass::CheckCommands(void)
     }
 
     // Demo aufnehmen
-    if (CONSOLE_COMMAND("record demo"))
-    {
-        NewDemo ("Demo.dem");
+    if (CONSOLE_COMMAND("record demo")) {
+        NewDemo("Demo.dem");
         CONSOLE_PRINT("Recording demo");
         this->Activate = false;
-        this->Fade   = -25.0f;
+        this->Fade = -25.0f;
         this->Active = false;
-        this->Showing= false;
-    } //else
+        this->Showing = false;
+    }  // else
 
     // Demo anhalten
-    if (CONSOLE_COMMAND("stop demo"))
-    {
-        EndDemo ();
+    if (CONSOLE_COMMAND("stop demo")) {
+        EndDemo();
         CONSOLE_PRINT("Demo stopped");
-    } //else
+    }  // else
 
     // Demo laden und abspielen
-    if (CONSOLE_COMMAND("load demo"))
-    {
-        if (LoadDemo ("Demo.dem") == false)
-        {
+    if (CONSOLE_COMMAND("load demo")) {
+        if (LoadDemo("Demo.dem") == false) {
             CONSOLE_PRINT("Error loading demo");
-        }
-        else
-        {
+        } else {
             CONSOLE_PRINT("Playing demo");
             this->Activate = false;
-            this->Fade   = -25.0f;
+            this->Fade = -25.0f;
             this->Active = false;
-            this->Showing= false;
+            this->Showing = false;
         }
-    } //else
+    }  // else
 
     // 0 und 1 Render Mode anschalten
-    if (CONSOLE_COMMAND("binary"))
-    {
-        if (this->RenderBinary == false)
-        {
+    if (CONSOLE_COMMAND("binary")) {
+        if (this->RenderBinary == false) {
             CONSOLE_PRINT("Rendering Binary");
             this->RenderBinary = true;
-        }
-        else
-        {
+        } else {
             CONSOLE_PRINT("Rendering Normal");
             this->RenderBinary = false;
         }
-    } //else
-
+    }  // else
 
 #ifdef _DEBUG
     // In Level warpen
-    if (strncmp(Buffer, "goto ", 5) == 0)
-    {
+    if (strncmp(Buffer, "goto ", 5) == 0) {
         // Bis zu der Zahl vorgehen
         int index1 = 5;
         int g_test = 0;
 
-        while(Buffer[index1] !='\0')
-        {
-            if(Buffer[index1]>=48 && Buffer[index1]<=58)
-            {
-                g_test*=10;
-                g_test+=Buffer[index1]-48;
+        while (Buffer[index1] != '\0') {
+            if (Buffer[index1] >= 48 && Buffer[index1] <= 58) {
+                g_test *= 10;
+                g_test += Buffer[index1] - 48;
             }
             index1++;
         }
 
         // Level > 0? Dann dorthin springen
         //
-        if (g_test >= MAX_LEVELS)
-        {
+        if (g_test >= MAX_LEVELS) {
             CONSOLE_PRINT("Level does not exist");
-        }
-        else if (g_test > 0)
-        {
+        } else if (g_test > 0) {
             this->Activate = false;
-            this->Fade   = -25.0f;
+            this->Fade = -25.0f;
             this->Active = false;
-            this->Showing= false;
+            this->Showing = false;
 
-            InitNewGame ();
+            InitNewGame();
 
-            for (int p = 0; p < NUMPLAYERS; p++)
-            {
-                for (int i=0; i<MAX_AKTIONEN; i++)
+            for (int p = 0; p < NUMPLAYERS; p++) {
+                for (int i = 0; i < MAX_AKTIONEN; i++)
                     Player[p].Aktion[i] = false;
 
-                Stage    = g_test;
+                Stage = g_test;
                 NewStage = g_test;
             }
 
-            InitNewGameLevel (Stage);
+            InitNewGameLevel(Stage);
         }
-    } //else
+    }  // else
 #endif
 
-    if (CONSOLE_COMMAND("light cool"))
-    {
+    if (CONSOLE_COMMAND("light cool")) {
         TileEngine.ComputeCoolLight();
     }
 
-    //DKS - ComputeShitLight() was never used in the original game except for here; disabling it.
-    //if (CONSOLE_COMMAND("light shit"))
+    // DKS - ComputeShitLight() was never used in the original game except for here; disabling it.
+    // if (CONSOLE_COMMAND("light shit"))
     //{
     //    TileEngine.ComputeShitLight();
     //}
 
-    if (CONSOLE_COMMAND("lamp"))
-    {
-        if (TileEngine.bDrawShadow == false)
-        {
+    if (CONSOLE_COMMAND("lamp")) {
+        if (TileEngine.bDrawShadow == false) {
             TileEngine.bDrawShadow = true;
             ShadowAlpha = 255.0f;
-        }
-        else
+        } else
             TileEngine.bDrawShadow = false;
     }
 
-    //strcpy_s(Buffer, "Error : Unknown Command !");
+    // strcpy_s(Buffer, "Error : Unknown Command !");
 
-} // CheckCommands
+}  // CheckCommands
 
 // --------------------------------------------------------------------------------------
 // Eine Zeile hochscrollen
 // --------------------------------------------------------------------------------------
 
-void ConsoleClass::ScrollUp(void)
-{
+void ConsoleClass::ScrollUp(void) {
     // Zeilen eins hochscrollen
-    //DKS - Fixed overwriting of the lines buffer by one line:
+    // DKS - Fixed overwriting of the lines buffer by one line:
     /*for (int i = 0; i < MAX_LINES; i++)*/
-    for (int i = 0; i < MAX_LINES-1; i++)
-        strcpy_s(Text[i], Text[i+1]);
+    for (int i = 0; i < MAX_LINES - 1; i++)
+        strcpy_s(Text[i], Text[i + 1]);
 
     // Und unterste Zeile mit der letzten eingabe füllen
     /*strcpy_s(Text[MAX_LINES], Buffer);*/
-    strcpy_s(Text[MAX_LINES-1], Buffer);
+    strcpy_s(Text[MAX_LINES - 1], Buffer);
     Buffer[0] = '\0';
     CursorChar[0] = ' ';
-} // ScrollUp
+}  // ScrollUp
 
 // --------------------------------------------------------------------------------------
 // Checken ob was eingegeben wurde
 // --------------------------------------------------------------------------------------
 
-//DKS - Added joystick support:
-void ConsoleClass::CheckInput(void)
-{
+// DKS - Added joystick support:
+void ConsoleClass::CheckInput(void) {
     static float joy_counter = 0.0f;
-    const float joy_delay = 30.0f;     // Only accept joy input once every time counter reaches this value
+    const float joy_delay = 30.0f;  // Only accept joy input once every time counter reaches this value
 
     joy_counter += 30.0f SYNC;
     if (joy_counter > joy_delay) {
@@ -695,36 +617,36 @@ void ConsoleClass::CheckInput(void)
     if (joy_counter >= joy_delay && Player[0].ControlType == CONTROLTYPE_JOY && JoystickFound) {
         joy_counter = 0.0f;
         int joy_idx = Player[0].JoystickIndex;
-        bool up         = false;
-        bool down       = false;
-        bool left       = false;
-        bool right      = false;
+        bool up = false;
+        bool down = false;
+        bool left = false;
+        bool right = false;
 
         if (DirectInput.Joysticks[joy_idx].JoystickPOV != -1) {
             // HAT switch is pressed
-            if        (DirectInput.Joysticks[joy_idx].JoystickPOV >= 4500 * 1 &&
-                       DirectInput.Joysticks[joy_idx].JoystickPOV <= 4500 * 3) {
+            if (DirectInput.Joysticks[joy_idx].JoystickPOV >= 4500 * 1 &&
+                DirectInput.Joysticks[joy_idx].JoystickPOV <= 4500 * 3) {
                 right = true;
             } else if (DirectInput.Joysticks[joy_idx].JoystickPOV >= 4500 * 5 &&
                        DirectInput.Joysticks[joy_idx].JoystickPOV <= 4500 * 7) {
                 left = true;
-            } else if (DirectInput.Joysticks[joy_idx].JoystickPOV >  4500 * 3 &&
-                       DirectInput.Joysticks[joy_idx].JoystickPOV <  4500 * 5) {
+            } else if (DirectInput.Joysticks[joy_idx].JoystickPOV > 4500 * 3 &&
+                       DirectInput.Joysticks[joy_idx].JoystickPOV < 4500 * 5) {
                 down = true;
-            } else if ((DirectInput.Joysticks[joy_idx].JoystickPOV >  4500 * 7 && 
+            } else if ((DirectInput.Joysticks[joy_idx].JoystickPOV > 4500 * 7 &&
                         DirectInput.Joysticks[joy_idx].JoystickPOV <= 4500 * 8) ||
-                       (DirectInput.Joysticks[joy_idx].JoystickPOV >= 0        &&
+                       (DirectInput.Joysticks[joy_idx].JoystickPOV >= 0 &&
                         DirectInput.Joysticks[joy_idx].JoystickPOV < 4500 * 1)) {
                 up = true;
             }
-        } else if (DirectInput.Joysticks[joy_idx].JoystickX >  Player[0].JoystickSchwelle) {
+        } else if (DirectInput.Joysticks[joy_idx].JoystickX > Player[0].JoystickSchwelle) {
             right = true;
         } else if (DirectInput.Joysticks[joy_idx].JoystickX < -Player[0].JoystickSchwelle) {
-            left  = true;
-        } else if (DirectInput.Joysticks[joy_idx].JoystickY >  Player[0].JoystickSchwelle) {
-            down  = true;
+            left = true;
+        } else if (DirectInput.Joysticks[joy_idx].JoystickY > Player[0].JoystickSchwelle) {
+            down = true;
         } else if (DirectInput.Joysticks[joy_idx].JoystickY < -Player[0].JoystickSchwelle) {
-            up  = true;
+            up = true;
         }
 
         if (right) {
@@ -732,14 +654,14 @@ void ConsoleClass::CheckInput(void)
         } else if (left) {
             int buf_len = strlen(Buffer);
             if (buf_len >= 1) {
-                Buffer[buf_len-1] = '\0';
+                Buffer[buf_len - 1] = '\0';
             }
         } else if (up) {
             // Chars 97-122 are a..z, Chars 48-57 are 0..9, Space is 32
             if (CursorChar[0] == ' ') {
                 CursorChar[0] = 'a';
             } else if (CursorChar[0] == 'z') {
-                CursorChar[0] = '0';    // Number '0'
+                CursorChar[0] = '0';  // Number '0'
             } else if (CursorChar[0] == '9') {
                 CursorChar[0] = ' ';
             } else {
@@ -750,7 +672,7 @@ void ConsoleClass::CheckInput(void)
             if (CursorChar[0] == ' ') {
                 CursorChar[0] = '9';
             } else if (CursorChar[0] == 'a') {
-                CursorChar[0] = ' ';    // Number '0'
+                CursorChar[0] = ' ';  // Number '0'
             } else if (CursorChar[0] == '0') {
                 CursorChar[0] = 'z';
             } else {
@@ -766,41 +688,38 @@ void ConsoleClass::CheckInput(void)
             }
         }
     }
-                
-    for (int i = 0; i < 256; i++)
-    {
-        if (KeyDown(i) &&
-                Pressed[i] == false)
-        {
+
+    for (int i = 0; i < 256; i++) {
+        if (KeyDown(i) && Pressed[i] == false) {
             SoundManager.PlayWave(100, 128, 15000, SOUND_CLICK);
 
             Pressed[i] = true;
 
             // Zeichen anhängen
-            //DKS - Fixed buffer overflow by adding strlen check that encompasses both
+            // DKS - Fixed buffer overflow by adding strlen check that encompasses both
             //      single characters and spaces. Previously, only single chars had a
             //      check and, worse, it had an off-by-one error. (Caught with valgrind)
             //      Also: added check of string's on-screen length drawn with current
             //      font, to ensure line never goes off right edge of console, especially
             //      in low-res modes using new font scaling support.
-            if (strlen(Buffer) < MAX_CHARS-1 && pDefaultFont->StringLength(Buffer) < 570)
-            {
+            if (strlen(Buffer) < MAX_CHARS - 1 && pDefaultFont->StringLength(Buffer) < 570) {
                 // Space anhängen
                 if (i == DIK_SPACE) {
                     strcat_s(Buffer, " ");
-                } else if (strlen(GetKeyName(i)) == 1) //DKS - Replacement line that also has saner strlen(GetKeyName) check
+                } else if (strlen(GetKeyName(i)) ==
+                           1)  // DKS - Replacement line that also has saner strlen(GetKeyName) check
                 {
-                    //Single characters:
+                    // Single characters:
 
-                    //DKS - This original code is a bit obtuse. It was brought to my attention by
+                    // DKS - This original code is a bit obtuse. It was brought to my attention by
                     //      valgrind  complaining of a conditional on uninitialized data. It
                     //      wasn't a true problem here, but might as well get valgrind to quiet down
                     //      while I'm here:
-                    //DKS - We already know GetKeyName(i)'s strlen was <= 1, why use a huge buffer?
-                    //char buf[50];
-                    //strcpy_s(buf, GetKeyName(i));
+                    // DKS - We already know GetKeyName(i)'s strlen was <= 1, why use a huge buffer?
+                    // char buf[50];
+                    // strcpy_s(buf, GetKeyName(i));
                     // unwandeln in kleinbuchstaben
-                    //if (!KeyDown(DIK_LSHIFT)) {
+                    // if (!KeyDown(DIK_LSHIFT)) {
                     //    char c;
                     //    for (int i=0; i < 50; i++) {
                     //        c = buf[i];
@@ -809,20 +728,19 @@ void ConsoleClass::CheckInput(void)
                     //        buf[i] = c;
                     //    }
                     //}
-                    //strcat_s(Buffer, buf);
+                    // strcat_s(Buffer, buf);
 
                     char buf[2];
                     buf[0] = *GetKeyName(i);
                     buf[1] = '\0';
-                    if(!KeyDown(DIK_LSHIFT))
+                    if (!KeyDown(DIK_LSHIFT))
                         buf[0] = tolower(buf[0]);
                     strcat_s(Buffer, buf);
                 }
             }
 
             // Backspace
-            if (i == DIK_BACK && strlen(Buffer) > 0)
-            {
+            if (i == DIK_BACK && strlen(Buffer) > 0) {
                 char Temp[MAX_CHARS];
 
                 strcpy_s(Temp, Buffer);
@@ -831,10 +749,8 @@ void ConsoleClass::CheckInput(void)
             }
 
             // Neue Zeile
-            if (i == DIK_RETURN)
-            {
-                if (strlen(Buffer) > 0)
-                {
+            if (i == DIK_RETURN) {
+                if (strlen(Buffer) > 0) {
                     CheckCommands();
                     ScrollUp();
                 }
@@ -845,15 +761,14 @@ void ConsoleClass::CheckInput(void)
         if (!KeyDown(i))
             Pressed[i] = false;
     }
-} // CheckInput
+}  // CheckInput
 
 // --------------------------------------------------------------------------------------
 // Konsole zeigen
 // --------------------------------------------------------------------------------------
 
-void ConsoleClass::Open(void)
-{
-    Fade   = 25.0f;
+void ConsoleClass::Open(void) {
+    Fade = 25.0f;
     Active = true;
     Showing = true;
     strcpy_s(Buffer, "");
@@ -864,9 +779,8 @@ void ConsoleClass::Open(void)
 // Konsole verstecken
 // --------------------------------------------------------------------------------------
 
-void ConsoleClass::Hide(void)
-{
-    Fade   = -25.0f;
+void ConsoleClass::Hide(void) {
+    Fade = -25.0f;
     Active = false;
 }
 
@@ -874,8 +788,7 @@ void ConsoleClass::Hide(void)
 // Konsole ablaufen lassen
 // --------------------------------------------------------------------------------------
 
-bool ConsoleClass::DoConsole(void)
-{
+bool ConsoleClass::DoConsole(void) {
 #if defined(GCW)
     // On GCW Zero, the Home key (Power Slider switch) is mapped to the console as well as the Tab key.
     // Konsole ist aktivierbar
@@ -883,8 +796,7 @@ bool ConsoleClass::DoConsole(void)
         Activate = true;
 
     // Konsole wird aktiviert oder deaktiviert ?
-    if ((KeyDown(DIK_TAB) || KeyDown(DIK_HOME)) && Activate == true)
-    {
+    if ((KeyDown(DIK_TAB) || KeyDown(DIK_HOME)) && Activate == true) {
         Activate = false;
 
         if (Active == true)
@@ -892,7 +804,7 @@ bool ConsoleClass::DoConsole(void)
         else
 
             if (Active == false)
-                Open();
+            Open();
     }
 #else
     // Konsole ist aktivierbar
@@ -900,8 +812,7 @@ bool ConsoleClass::DoConsole(void)
         Activate = true;
 
     // Konsole wird aktiviert oder deaktiviert ?
-    if (KeyDown(DIK_TAB) && Activate == true)
-    {
+    if (KeyDown(DIK_TAB) && Activate == true) {
         Activate = false;
 
         if (Active == true)
@@ -909,32 +820,28 @@ bool ConsoleClass::DoConsole(void)
         else
 
             if (Active == false)
-                Open();
+            Open();
     }
-#endif //GCW
+#endif  // GCW
 
     // Konsole fadet gerade ?
     if (Fade != 0)
         its_Alpha += 2.0f * Fade SYNC;
 
     // Überlauf verhindern
-    if (its_Alpha > 255.0f)
-    {
+    if (its_Alpha > 255.0f) {
         its_Alpha = 255.0f;
-        Fade	  =   0.0f;
+        Fade = 0.0f;
     }
 
     // Konsole ist ausgefadet ?
-    if (its_Alpha < 0.0f)
-    {
+    if (its_Alpha < 0.0f) {
         its_Alpha = 0.0f;
-        Fade	  = 0.0f;
+        Fade = 0.0f;
     }
 
     // Konsole ausgefadet? Dann aussteigen
-    if (Active == false &&
-            its_Alpha <= 0.0f)
-    {
+    if (Active == false && its_Alpha <= 0.0f) {
         Showing = false;
         return false;
     }
@@ -945,7 +852,7 @@ bool ConsoleClass::DoConsole(void)
     // Einheitsmatrix setzen, da Konsole nicht rotiert wird
     //
     D3DXMATRIX matView;
-    D3DXMatrixIdentity	 (&matView);
+    D3DXMatrixIdentity(&matView);
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->SetTransform(D3DTS_VIEW, &matView);
 #elif defined(PLATFORM_SDL)
@@ -955,7 +862,7 @@ bool ConsoleClass::DoConsole(void)
     // Und anzeigen
     ShowConsole();
 
-    SetScreenShake ();
+    SetScreenShake();
 
     return true;
-} // DoCOnsole
+}  // DoCOnsole

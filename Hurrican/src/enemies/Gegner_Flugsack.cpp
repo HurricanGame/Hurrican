@@ -4,29 +4,28 @@
 // Fliegt rum, ist fett und ballert auf den Hurri
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.hpp"
 #include "Gegner_Flugsack.hpp"
+#include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerFlugsack::GegnerFlugsack(int Wert1, int Wert2, bool Light)
-{
-    Handlung		= GEGNER_LAUFEN;
-    Energy			= 50;
-    Value1			= Wert1;
-    Value2			= Wert2;
-    ChangeLight		= Light;
-    Destroyable		= true;
-    xSpeed			= 0.0f;
-    ySpeed			= 0.0f;
-    xAcc			= 2.0f;
-    yAcc			= 2.0f;
-    AnimSpeed       = 1.5f;
-    AnimEnde		= 10;
-    ShotCount		= 1.0f;
-    SmokeCount		= 0.2f;
+GegnerFlugsack::GegnerFlugsack(int Wert1, int Wert2, bool Light) {
+    Handlung = GEGNER_LAUFEN;
+    Energy = 50;
+    Value1 = Wert1;
+    Value2 = Wert2;
+    ChangeLight = Light;
+    Destroyable = true;
+    xSpeed = 0.0f;
+    ySpeed = 0.0f;
+    xAcc = 2.0f;
+    yAcc = 2.0f;
+    AnimSpeed = 1.5f;
+    AnimEnde = 10;
+    ShotCount = 1.0f;
+    SmokeCount = 0.2f;
 
     if (Value1 == 99)
         Energy = 0.0f;
@@ -36,122 +35,119 @@ GegnerFlugsack::GegnerFlugsack(int Wert1, int Wert2, bool Light)
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFlugsack::DoKI(void)
-{
+void GegnerFlugsack::DoKI(void) {
     SimpleAnimation();
 
-// Je nach Handlung richtig verhalten
-    switch (Handlung)
-    {
-    case GEGNER_LAUFEN:						// Normal fliegen und dabei ab und zu schiessen
-    {
-        if (pAim->xpos + 45 < xPos + GegnerRect[GegnerArt].left)
-            BlickRichtung = LINKS;
-
-        if (pAim->xpos + 45 > xPos + GegnerRect[GegnerArt].right)
-            BlickRichtung = RECHTS;
-
-        // umherfliegen
-        if (ySpeed >  6.0f) yAcc = -2.0f;
-        if (ySpeed < -6.0f) yAcc =  2.0f;
-        if (xSpeed >  5.0f) xAcc = -2.0f;
-        if (xSpeed < -5.0f) xAcc =  2.0f;
-
-        // Spieler verfolgen
-        if (pAim->xpos + 45 < xPos + 40 && !(blockl & BLOCKWERT_WAND)) xPos -= 4.0f SYNC;
-        if (pAim->xpos + 45 > xPos + 40 && !(blockr & BLOCKWERT_WAND)) xPos += 4.0f SYNC;
-        if (pAim->ypos + 45 < yPos + 45 && !(blocko & BLOCKWERT_WAND)) yPos -= 4.0f SYNC;
-        if (pAim->ypos + 45 > yPos + 45 && !(blocku & BLOCKWERT_WAND)) yPos += 4.0f SYNC;
-
-        if (blocko & BLOCKWERT_WAND || blocko & BLOCKWERT_GEGNERWAND)	ySpeed =  4.0f;
-        if (blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_GEGNERWAND)	ySpeed = -4.0f;
-        if (blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND)	xSpeed =  4.0f;
-        if (blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND)	xSpeed = -4.0f;
-
-        // Rauch ausgeben
-        SmokeCount -= 1.0f SYNC;
-        if (SmokeCount < 0.0f)
+    // Je nach Handlung richtig verhalten
+    switch (Handlung) {
+        case GEGNER_LAUFEN:  // Normal fliegen und dabei ab und zu schiessen
         {
-            SmokeCount += 0.1f;
+            if (pAim->xpos + 45 < xPos + GegnerRect[GegnerArt].left)
+                BlickRichtung = LINKS;
 
-            if (BlickRichtung == LINKS)
-                PartikelSystem.PushPartikel(xPos + 66, yPos+50, FLUGSACKSMOKE2);
-            else
-                PartikelSystem.PushPartikel(xPos, yPos+50, FLUGSACKSMOKE);
-        }
+            if (pAim->xpos + 45 > xPos + GegnerRect[GegnerArt].right)
+                BlickRichtung = RECHTS;
 
-        // Bei bestimmten Mindestabstand schiessen lassen
-        if (PlayerAbstand() <= 400 &&
-                ((BlickRichtung == LINKS  && pAim->xpos+45 <= xPos) ||
-                 (BlickRichtung == RECHTS && pAim->xpos-45 >= xPos)))
-        {
-            ShotCount -= 1.0f SYNC;
-            if (ShotCount < 0.0f)
-            {
-                SoundManager.PlayWave(100, 128, 11025, SOUND_CANON);
+            // umherfliegen
+            if (ySpeed > 6.0f)
+                yAcc = -2.0f;
+            if (ySpeed < -6.0f)
+                yAcc = 2.0f;
+            if (xSpeed > 5.0f)
+                xAcc = -2.0f;
+            if (xSpeed < -5.0f)
+                xAcc = 2.0f;
+
+            // Spieler verfolgen
+            if (pAim->xpos + 45 < xPos + 40 && !(blockl & BLOCKWERT_WAND))
+                xPos -= 4.0f SYNC;
+            if (pAim->xpos + 45 > xPos + 40 && !(blockr & BLOCKWERT_WAND))
+                xPos += 4.0f SYNC;
+            if (pAim->ypos + 45 < yPos + 45 && !(blocko & BLOCKWERT_WAND))
+                yPos -= 4.0f SYNC;
+            if (pAim->ypos + 45 > yPos + 45 && !(blocku & BLOCKWERT_WAND))
+                yPos += 4.0f SYNC;
+
+            if (blocko & BLOCKWERT_WAND || blocko & BLOCKWERT_GEGNERWAND)
+                ySpeed = 4.0f;
+            if (blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_GEGNERWAND)
+                ySpeed = -4.0f;
+            if (blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND)
+                xSpeed = 4.0f;
+            if (blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND)
+                xSpeed = -4.0f;
+
+            // Rauch ausgeben
+            SmokeCount -= 1.0f SYNC;
+            if (SmokeCount < 0.0f) {
+                SmokeCount += 0.1f;
 
                 if (BlickRichtung == LINKS)
-                {
-                    PartikelSystem.PushPartikel(xPos + 10, yPos+2, SMOKE);
-                    Projectiles.PushProjectile(xPos + 17, yPos+10, SUCHSCHUSS);
-                }
+                    PartikelSystem.PushPartikel(xPos + 66, yPos + 50, FLUGSACKSMOKE2);
                 else
-                {
-                    PartikelSystem.PushPartikel(xPos + 45, yPos+2, SMOKE);
-                    Projectiles.PushProjectile(xPos + 53, yPos+10, SUCHSCHUSS);
-                }
-
-                if (Skill == 0) ShotCount += 20.0f;
-                if (Skill == 1) ShotCount += 15.0f;
-                if (Skill == 2) ShotCount += 12.0f;
-                if (Skill == 3) ShotCount += 8.0f;
+                    PartikelSystem.PushPartikel(xPos, yPos + 50, FLUGSACKSMOKE);
             }
-        }
-    }
-    break;
 
-    // Sack stürzt ab
-    case GEGNER_FALLEN:
-    {
-        // An die Wand gekracht ?
-        if (blockl & BLOCKWERT_WAND ||
-                blockr & BLOCKWERT_WAND ||
-                blocko & BLOCKWERT_WAND ||
-                blocku & BLOCKWERT_WAND ||
-                blocku & BLOCKWERT_PLATTFORM)
-            Energy = 0.0f;
+            // Bei bestimmten Mindestabstand schiessen lassen
+            if (PlayerAbstand() <= 400 && ((BlickRichtung == LINKS && pAim->xpos + 45 <= xPos) ||
+                                           (BlickRichtung == RECHTS && pAim->xpos - 45 >= xPos))) {
+                ShotCount -= 1.0f SYNC;
+                if (ShotCount < 0.0f) {
+                    SoundManager.PlayWave(100, 128, 11025, SOUND_CANON);
 
-        // Grenze der Fallgeschwindigkeit
-        if (ySpeed > 35.0f)
-            yAcc = 0.0f;
+                    if (BlickRichtung == LINKS) {
+                        PartikelSystem.PushPartikel(xPos + 10, yPos + 2, SMOKE);
+                        Projectiles.PushProjectile(xPos + 17, yPos + 10, SUCHSCHUSS);
+                    } else {
+                        PartikelSystem.PushPartikel(xPos + 45, yPos + 2, SMOKE);
+                        Projectiles.PushProjectile(xPos + 53, yPos + 10, SUCHSCHUSS);
+                    }
 
-        // FlugSack rauchen lassen
-        if (AnimCount == 0.0f)
-        {
-            PartikelSystem.PushPartikel(xPos+20+rand()%40, yPos+20+rand()%30, SMOKE);
-        }
+                    if (Skill == 0)
+                        ShotCount += 20.0f;
+                    if (Skill == 1)
+                        ShotCount += 15.0f;
+                    if (Skill == 2)
+                        ShotCount += 12.0f;
+                    if (Skill == 3)
+                        ShotCount += 8.0f;
+                }
+            }
+        } break;
 
-        if (PlayerAbstand() <= 600 &&
-                AnimCount == 0.0f && AnimPhase%2 == 0 && rand()%2 == 0)
-        {
-            PartikelSystem.PushPartikel(xPos+rand()%80-30, yPos+rand()%70-30, EXPLOSION_MEDIUM2);
-            SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_EXPLOSION1);
-        }
-    }
-    break;
+        // Sack stürzt ab
+        case GEGNER_FALLEN: {
+            // An die Wand gekracht ?
+            if (blockl & BLOCKWERT_WAND || blockr & BLOCKWERT_WAND || blocko & BLOCKWERT_WAND ||
+                blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM)
+                Energy = 0.0f;
 
-    default :
-        break;
-    } // switch
+            // Grenze der Fallgeschwindigkeit
+            if (ySpeed > 35.0f)
+                yAcc = 0.0f;
+
+            // FlugSack rauchen lassen
+            if (AnimCount == 0.0f) {
+                PartikelSystem.PushPartikel(xPos + 20 + rand() % 40, yPos + 20 + rand() % 30, SMOKE);
+            }
+
+            if (PlayerAbstand() <= 600 && AnimCount == 0.0f && AnimPhase % 2 == 0 && rand() % 2 == 0) {
+                PartikelSystem.PushPartikel(xPos + rand() % 80 - 30, yPos + rand() % 70 - 30, EXPLOSION_MEDIUM2);
+                SoundManager.PlayWave(100, 128, 11025 + rand() % 2000, SOUND_EXPLOSION1);
+            }
+        } break;
+
+        default:
+            break;
+    }  // switch
 
     // Soviel Energie verloren, dass der Spacko abstürzt ?
-    if (Energy <= 0.0f && Handlung != GEGNER_FALLEN)
-    {
-        Handlung  = GEGNER_FALLEN;
-        Energy	  = 40.0f;
-        ySpeed    = 3.0f;
-        yAcc	  = 2.0f;
-        xAcc      = 0.0f;
+    if (Energy <= 0.0f && Handlung != GEGNER_FALLEN) {
+        Handlung = GEGNER_FALLEN;
+        Energy = 40.0f;
+        ySpeed = 3.0f;
+        yAcc = 2.0f;
+        xAcc = 0.0f;
         AnimSpeed = 0.5f;
 
         if (BlickRichtung == LINKS)
@@ -172,16 +168,14 @@ void GegnerFlugsack::DoKI(void)
 // Explodieren
 // --------------------------------------------------------------------------------------
 
-void GegnerFlugsack::GegnerExplode(void)
-{
+void GegnerFlugsack::GegnerExplode(void) {
+    for (int i = 0; i < 10; i++)
+        PartikelSystem.PushPartikel(xPos + rand() % 80 - 30, yPos + rand() % 70 - 30, EXPLOSION_MEDIUM2);
 
-    for (int i=0; i<10; i++)
-        PartikelSystem.PushPartikel(xPos+rand()%80-30, yPos+rand()%70-30, EXPLOSION_MEDIUM2);
+    for (int i = 0; i < 5; i++)
+        PartikelSystem.PushPartikel(xPos + rand() % 40 + 20, yPos + rand() % 30 + 20, SPLITTER);
 
-    for (int i=0; i<5; i++)
-        PartikelSystem.PushPartikel(xPos+rand()%40+20, yPos+rand()%30+20, SPLITTER);
-
-    SoundManager.PlayWave(75, 128, 11025 + rand()%2000, SOUND_EXPLOSION4);	// Sound ausgeben
+    SoundManager.PlayWave(75, 128, 11025 + rand() % 2000, SOUND_EXPLOSION4);  // Sound ausgeben
 
     Player[0].Score += 225;
 }

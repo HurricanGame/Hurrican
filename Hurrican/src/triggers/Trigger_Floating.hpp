@@ -4,17 +4,16 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerFloating : public GegnerClass
-{
-private :
-    bool	playeron;
+class GegnerFloating : public GegnerClass {
+  private:
+    bool playeron;
 
-public:
-
-    GegnerFloating	   (int Wert1,	int Wert2,			// Konstruktor
-                        bool		  Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner
+  public:
+    GegnerFloating(int Wert1,
+                   int Wert2,  // Konstruktor
+                   bool Light);
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
 };
 

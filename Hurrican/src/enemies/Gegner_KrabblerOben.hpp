@@ -4,16 +4,15 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerKrabblerOben : public GegnerClass
-{
-public:
+class GegnerKrabblerOben : public GegnerClass {
+  public:
+    float ShotDelay;  // Schussverzögerung
 
-    float				ShotDelay;						// Schussverzögerung
-
-    GegnerKrabblerOben(int  Wert1, int Wert2,			// Konstruktor
+    GegnerKrabblerOben(int Wert1,
+                       int Wert2,  // Konstruktor
                        bool Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
 };
 

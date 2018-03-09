@@ -4,127 +4,113 @@
 // fängt an zu bröckeln sobald der Spieler darüber läuft und fällt dann runter
 // --------------------------------------------------------------------------------------
 
-#include "stdafx.hpp"
 #include "Gegner_BrockelRock.hpp"
+#include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerBrockelRock::GegnerBrockelRock(int Wert1, int Wert2, bool Light)
-{
-    Handlung		= GEGNER_STEHEN;
-    Energy			= 10;
-    Value1			= Wert1;
-    Value2			= Wert2;
-    ChangeLight		= Light;
-    Destroyable		= false;
-    OwnDraw			= true;
-    AnimCount		= 255.0f;
+GegnerBrockelRock::GegnerBrockelRock(int Wert1, int Wert2, bool Light) {
+    Handlung = GEGNER_STEHEN;
+    Energy = 10;
+    Value1 = Wert1;
+    Value2 = Wert2;
+    ChangeLight = Light;
+    Destroyable = false;
+    OwnDraw = true;
+    AnimCount = 255.0f;
 }
 
 // --------------------------------------------------------------------------------------
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerBrockelRock::DoDraw(void)
-{
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
-                                           static_cast<float>(yPos-TileEngine.YOffset),
-                                           0, D3DCOLOR_RGBA(255, 255, 255, int(AnimCount)));
+void GegnerBrockelRock::DoDraw(void) {
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
+                                           static_cast<float>(yPos - TileEngine.YOffset), 0,
+                                           D3DCOLOR_RGBA(255, 255, 255, int(AnimCount)));
 
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos-TileEngine.XOffset),
-                                           static_cast<float>(yPos-TileEngine.YOffset),
-                                           1, D3DCOLOR_RGBA(255, 255, 255, 255 - int(AnimCount)));
+    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
+                                           static_cast<float>(yPos - TileEngine.YOffset), 1,
+                                           D3DCOLOR_RGBA(255, 255, 255, 255 - int(AnimCount)));
 }
 
 // --------------------------------------------------------------------------------------
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerBrockelRock::DoKI(void)
-{
+void GegnerBrockelRock::DoKI(void) {
     PlattformTest(GegnerRect[GegnerArt]);
 
     // Je nach Handlung richtig verhalten
     //
-    switch (Handlung)
-    {
-    // Stein wartet bis der Spieler darüber läuft
-    case GEGNER_STEHEN:
-    {
-        for (int i = 0; i < NUMPLAYERS; i++)
-            if (Player[i].AufPlattform == this)
-                Handlung = GEGNER_SPRINGEN;
-    }
-    break;
+    switch (Handlung) {
+        // Stein wartet bis der Spieler darüber läuft
+        case GEGNER_STEHEN: {
+            for (int i = 0; i < NUMPLAYERS; i++)
+                if (Player[i].AufPlattform == this)
+                    Handlung = GEGNER_SPRINGEN;
+        } break;
 
-    // Counter zählt runter bis Stein fällt
-    //
-    case GEGNER_SPRINGEN:
-    {
-        AnimCount -= 50.0f SYNC;
+        // Counter zählt runter bis Stein fällt
+        //
+        case GEGNER_SPRINGEN: {
+            AnimCount -= 50.0f SYNC;
 
-        if (AnimCount < 0.0f)				// Langsam zerbröckeln
-        {
-            AnimCount = 0.0f;
-
-            // Partikel erzeugen
-            //
-            for (int i = 0; i < 5; i++)
+            if (AnimCount < 0.0f)  // Langsam zerbröckeln
             {
-                PartikelSystem.PushPartikel(xPos + rand()%60, yPos + 20, ROCKSPLITTERSMALL);
-                PartikelSystem.PushPartikel(xPos + i * 10 - 10, yPos, SMOKEBIG);
+                AnimCount = 0.0f;
+
+                // Partikel erzeugen
+                //
+                for (int i = 0; i < 5; i++) {
+                    PartikelSystem.PushPartikel(xPos + rand() % 60, yPos + 20, ROCKSPLITTERSMALL);
+                    PartikelSystem.PushPartikel(xPos + i * 10 - 10, yPos, SMOKEBIG);
+                }
+
+                // Sound ausgeben
+                //
+                SoundManager.PlayWave(100, 128, 11025 + rand() % 2000, SOUND_STONEFALL);
+                Handlung = GEGNER_FALLEN;
+                yAcc = 4.0f;
             }
 
-            // Sound ausgeben
-            //
-            SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEFALL);
-            Handlung = GEGNER_FALLEN;
-            yAcc     =  4.0f;
-        }
+        } break;
 
-    }
-    break;
+        // Stein fällt runter
+        //
+        case GEGNER_FALLEN: {
+            // Maximale Geschwindigkeitsbegrenzung
+            if (ySpeed > 50.0f)
+                yAcc = 0.0f;
 
-    // Stein fällt runter
-    //
-    case GEGNER_FALLEN:
-    {
-        // Maximale Geschwindigkeitsbegrenzung
-        if (ySpeed > 50.0f)
-            yAcc = 0.0f;
+            // Stein ist am Boden gelandet
+            if (blocku & BLOCKWERT_WAND) {
+                Energy = 0;
+            }
+        } break;
 
-        // Stein ist am Boden gelandet
-        if (blocku & BLOCKWERT_WAND)
-        {
-            Energy = 0;
-        }
-    }
-    break;
-
-    default :
-        break;
-    } // switch
+        default:
+            break;
+    }  // switch
 }
 
 // --------------------------------------------------------------------------------------
 // Explodieren
 // --------------------------------------------------------------------------------------
 
-void GegnerBrockelRock::GegnerExplode(void)
-{
+void GegnerBrockelRock::GegnerExplode(void) {
     for (int i = 0; i < NUMPLAYERS; i++)
         if (Player[i].AufPlattform == this)
             Player[i].AufPlattform = NULL;
 
     // Splitter erzeugen Rauch
-    for (int i = 0; i<10; i++)
-    {
-        PartikelSystem.PushPartikel(xPos + rand()%80-12, yPos + rand()%20 + 20, SMOKE);
-        PartikelSystem.PushPartikel(xPos + rand()%80-12, yPos + rand()%40, ROCKSPLITTER);
-        PartikelSystem.PushPartikel(xPos + rand()%80-12, yPos + rand()%40, ROCKSPLITTERSMALL);
+    for (int i = 0; i < 10; i++) {
+        PartikelSystem.PushPartikel(xPos + rand() % 80 - 12, yPos + rand() % 20 + 20, SMOKE);
+        PartikelSystem.PushPartikel(xPos + rand() % 80 - 12, yPos + rand() % 40, ROCKSPLITTER);
+        PartikelSystem.PushPartikel(xPos + rand() % 80 - 12, yPos + rand() % 40, ROCKSPLITTERSMALL);
     }
 
-    SoundManager.PlayWave(100, 128, 11025 + rand()%2000, SOUND_STONEEXPLODE);	// Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + rand() % 2000, SOUND_STONEEXPLODE);  // Sound ausgeben
 }

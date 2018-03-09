@@ -4,15 +4,14 @@
 #include "GegnerClass.hpp"
 #include "Gegner_Stuff.hpp"
 
-class GegnerBrockelRock : public GegnerClass
-{
-public:
-
-    GegnerBrockelRock(int  Wert1, int Wert2,			// Konstruktor
+class GegnerBrockelRock : public GegnerClass {
+  public:
+    GegnerBrockelRock(int Wert1,
+                      int Wert2,  // Konstruktor
                       bool Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner eigenen kleinen KI bewegen
-    void DoDraw		   (void);							// Gegner individuell rendern
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw(void);         // Gegner individuell rendern
 };
 
 #endif

@@ -25,28 +25,27 @@
 #ifndef _SDLPORT_H_
 #define _SDLPORT_H_
 
-#include <iostream>
-#include <string>
-#include <sstream>
 #include <fstream>
+#include <iostream>
+#include <sstream>
+#include <string>
 #include <vector>
 
-#include "cml/cml.h"
+#include "Logdatei.hpp"
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
+#include "cml/cml.h"
 #include "keymap.h"
 #include "opengl.h"
-#include "Logdatei.hpp"
 
-typedef std::int32_t     LPDIRECT3DSURFACE8;
-typedef GLuint      LPDIRECT3DTEXTURE8, LPDIRECT3DTEXTURE9, LPDIRECT3DVERTEXBUFFER8, LPDIRECT3DVERTEXBUFFER9;
-typedef std::uint32_t    LPDIRECTINPUT8;
+typedef std::int32_t LPDIRECT3DSURFACE8;
+typedef GLuint LPDIRECT3DTEXTURE8, LPDIRECT3DTEXTURE9, LPDIRECT3DVERTEXBUFFER8, LPDIRECT3DVERTEXBUFFER9;
+typedef std::uint32_t LPDIRECTINPUT8;
 
 #ifndef __WIN32__
 typedef std::uint32_t HINSTANCE, HANDLE, HWND, HRESULT;
 
-typedef struct tagRECT
-{
+typedef struct tagRECT {
     std::int32_t left;
     std::int32_t top;
     std::int32_t right;
@@ -58,70 +57,75 @@ typedef std::uint32_t LPDIRECT3D8, LPDIRECT3D9, LPDIRECT3DDEVICE8, LPDIRECT3DDEV
 //#define D3DX_PI ((float)(M_PI))
 
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
-#define D3DCOLOR_RGBA(r,g,b,a)  (((a)<<24) + ((r)<<16) + ((g)<<8) + (b))
+#define D3DCOLOR_RGBA(r, g, b, a) (((a) << 24) + ((r) << 16) + ((g) << 8) + (b))
 #else
-#define D3DCOLOR_RGBA(r,g,b,a)  (((b)<<24) + ((g)<<16) + ((r)<<8) + (a))
+#define D3DCOLOR_RGBA(r, g, b, a) (((b) << 24) + ((g) << 16) + ((r) << 8) + (a))
 #endif
 #define timeGetTime SDL_GetTicks
 
-#define LPDIRECTINPUTDEVICE8 SDL_Joystick*
+#define LPDIRECTINPUTDEVICE8 SDL_Joystick *
 
-typedef cml::matrix44f_r    D3DXMATRIX, D3DXMATRIXA16;
+typedef cml::matrix44f_r D3DXMATRIX, D3DXMATRIXA16;
 
-void D3DXMatrixIdentity( D3DXMATRIXA16* m );
+void D3DXMatrixIdentity(D3DXMATRIXA16 *m);
 
-#define D3DXMatrixScaling(m,x,y,z)      cml::matrix_scale((*m),(x),(y),(z))
-#define D3DXMatrixTranslation(m,x,y,z)  cml::matrix_translation((*m),(x),(y),(z))
-#define D3DXMatrixMultiply(m,j,k)       (*m) = (*j)*(*k)
-#define D3DXMatrixRotationX(m,a)        cml::matrix_rotation_world_x((*m),(a))
-#define D3DXMatrixRotationY(m,a)        cml::matrix_rotation_world_y((*m),(a))
-#define D3DXMatrixRotationZ(m,a)        cml::matrix_rotation_world_z((*m),(a))
+#define D3DXMatrixScaling(m, x, y, z) cml::matrix_scale((*m), (x), (y), (z))
+#define D3DXMatrixTranslation(m, x, y, z) cml::matrix_translation((*m), (x), (y), (z))
+#define D3DXMatrixMultiply(m, j, k) (*m) = (*j) * (*k)
+#define D3DXMatrixRotationX(m, a) cml::matrix_rotation_world_x((*m), (a))
+#define D3DXMatrixRotationY(m, a) cml::matrix_rotation_world_y((*m), (a))
+#define D3DXMatrixRotationZ(m, a) cml::matrix_rotation_world_z((*m), (a))
 
-typedef enum D3DPRIMITIVETYPE
-{
-    D3DPT_POINTLIST       = GL_POINTS,
-    D3DPT_LINELIST        = GL_LINES,
-    D3DPT_LINESTRIP       = GL_LINE_STRIP,
-    D3DPT_TRIANGLELIST    = GL_TRIANGLES,
-    D3DPT_TRIANGLESTRIP   = GL_TRIANGLE_STRIP,
-    D3DPT_TRIANGLEFAN     = GL_TRIANGLE_FAN,
-    D3DPT_FORCE_DWORD     = 0x7fffffff
-} D3DPRIMITIVETYPE, *LPD3DPRIMITIVETYPE;
+typedef enum D3DPRIMITIVETYPE {
+    D3DPT_POINTLIST = GL_POINTS,
+    D3DPT_LINELIST = GL_LINES,
+    D3DPT_LINESTRIP = GL_LINE_STRIP,
+    D3DPT_TRIANGLELIST = GL_TRIANGLES,
+    D3DPT_TRIANGLESTRIP = GL_TRIANGLE_STRIP,
+    D3DPT_TRIANGLEFAN = GL_TRIANGLE_FAN,
+    D3DPT_FORCE_DWORD = 0x7fffffff
+} D3DPRIMITIVETYPE,
+    *LPD3DPRIMITIVETYPE;
 
-//DKS - No need for construction or destruction or virtual types, changed to struct:
-struct D3DXVECTOR2
-{
+// DKS - No need for construction or destruction or virtual types, changed to struct:
+struct D3DXVECTOR2 {
     float x;
     float y;
 };
 
-#define sprintf_s   sprintf
-void fopen_s        ( FILE** file, const char* path, const char* mode );
-void strcat_s       ( char* dst, const char* src );
-void strcat_s       ( char* dst, uint32_t size, const char* src );
-void strncat_s      ( char* dst, const char* src, uint32_t size );
-void strcpy_s       ( char* dst, int size, const char* src );
-void strcpy_s       ( char* dst, const char* src );
-void strncpy_s      ( char* dst, const char* src, int size );
-void fprintf_s      ( FILE* file, const char* src );
-void _itoa_s        ( int value, char* dst, int size );
+#define sprintf_s sprintf
+void fopen_s(FILE **file, const char *path, const char *mode);
+void strcat_s(char *dst, const char *src);
+void strcat_s(char *dst, uint32_t size, const char *src);
+void strncat_s(char *dst, const char *src, uint32_t size);
+void strcpy_s(char *dst, int size, const char *src);
+void strcpy_s(char *dst, const char *src);
+void strncpy_s(char *dst, const char *src, int size);
+void fprintf_s(FILE *file, const char *src);
+void _itoa_s(int value, char *dst, int size);
 
 #ifndef __WIN32__
-void DeleteFile( const char* filename );
+void DeleteFile(const char *filename);
 #else
-std::uint8_t LoadGLFunctions( void );
+std::uint8_t LoadGLFunctions(void);
 #endif
-std::uint32_t getpixel( SDL_Surface *surface, std::int16_t x, std::int16_t y );
-void putpixel( SDL_Surface *surface, std::int16_t x, std::int16_t y, std::uint32_t pixel );
-void get_components( SDL_Surface *surface, std::int16_t x, std::int16_t y, std::uint8_t& r, std::uint8_t& g, std::uint8_t& b, std::uint8_t& a );
-std::vector<char> LoadFileToMemory( const std::string& name);
+std::uint32_t getpixel(SDL_Surface *surface, std::int16_t x, std::int16_t y);
+void putpixel(SDL_Surface *surface, std::int16_t x, std::int16_t y, std::uint32_t pixel);
+void get_components(SDL_Surface *surface,
+                    std::int16_t x,
+                    std::int16_t y,
+                    std::uint8_t &r,
+                    std::uint8_t &g,
+                    std::uint8_t &b,
+                    std::uint8_t &a);
+std::vector<char> LoadFileToMemory(const std::string &name);
 bool isPowerOfTwo(int x);
 int nextPowerOfTwo(int x);
 #if defined(USE_GL1)
-void load_matrix( GLenum mode, const GLfloat* m );
+void load_matrix(GLenum mode, const GLfloat *m);
 #endif
 
 extern D3DXMATRIXA16 g_matView;
 extern D3DXMATRIXA16 g_matModelView;
 
-#endif // _SDLPORT_H_
+#endif  // _SDLPORT_H_

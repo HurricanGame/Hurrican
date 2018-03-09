@@ -24,73 +24,63 @@
 #ifndef CSHADER_H
 #define CSHADER_H
 
-#include <string>
-#include <vector>
-#include <string.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "opengl.h"
+#include <string.h>
+#include <string>
+#include <vector>
 #include "Logdatei.hpp"
 #include "cml/cml.h"
+#include "opengl.h"
 
-#define CHECK_FLAG(X,Y) ((X & Y) == Y)
+#define CHECK_FLAG(X, Y) ((X & Y) == Y)
 
-enum
-{
-    SHADER  =0x01,
-    PROGRAM =0x02
-};
+enum { SHADER = 0x01, PROGRAM = 0x02 };
 
-typedef struct SHADER_T
-{
-    std::string  path;
-    GLenum  type;
-    GLuint  name;
+typedef struct SHADER_T {
+    std::string path;
+    GLenum type;
+    GLuint name;
 
-    SHADER_T() :
-        path("none"),
-        type(GL_INVALID_VALUE),
-        name(GL_INVALID_VALUE)
-    {};
+    SHADER_T() : path("none"), type(GL_INVALID_VALUE), name(GL_INVALID_VALUE){};
 } shader_t;
 
-class CShader
-{
-public:
+class CShader {
+  public:
     CShader();
     virtual ~CShader();
 
-    void        Close           ( void );
-    int8_t      Load            ( const std::string& path_vertex, const std::string& path_frag );
-    void        Use             ( void );
-    GLint       GetAttribute    ( const std::string& attribute );
-    GLint       GetUniform      ( const std::string& attribute );
+    void Close(void);
+    int8_t Load(const std::string &path_vertex, const std::string &path_frag);
+    void Use(void);
+    GLint GetAttribute(const std::string &attribute);
+    GLint GetUniform(const std::string &attribute);
 
-    GLuint      NamePos;
-    GLuint      NameClr;
-    GLuint      NameTex;
-    GLuint      NameMvp;
+    GLuint NamePos;
+    GLuint NameClr;
+    GLuint NameTex;
+    GLuint NameMvp;
 #if defined(USE_ETC1)
-    GLuint      texUnit0;
-    GLuint      texUnit1;
+    GLuint texUnit0;
+    GLuint texUnit1;
 #endif
 
-private:
-    int8_t      LoadShader      ( GLenum type, const std::string& path );
-    int8_t      CreateProgram   ( void );
-    GLuint      CompileShader   ( GLenum type, const std::string& path );
-    void        FindAttributes  ( void );
-    void        FindUniforms    ( void );
-    void        PrintLog        ( uint8_t type, GLuint shader=0 );
+  private:
+    int8_t LoadShader(GLenum type, const std::string &path);
+    int8_t CreateProgram(void);
+    GLuint CompileShader(GLenum type, const std::string &path);
+    void FindAttributes(void);
+    void FindUniforms(void);
+    void PrintLog(uint8_t type, GLuint shader = 0);
 
-    GLuint                          Program;
-    std::vector<shader_t>                Shaders;
-    std::vector< std::pair<std::string, GLint> >   Uniforms;
-    std::vector< std::pair<std::string, GLint> >   Attributes;
+    GLuint Program;
+    std::vector<shader_t> Shaders;
+    std::vector<std::pair<std::string, GLint> > Uniforms;
+    std::vector<std::pair<std::string, GLint> > Attributes;
 };
 
 extern cml::matrix44f_r g_matView;
 extern cml::matrix44f_r g_matModelView;
 
-#endif // CSHADER_H
+#endif  // CSHADER_H

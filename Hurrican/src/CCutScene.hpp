@@ -8,7 +8,7 @@
 //
 // --------------------------------------------------------------------------------------
 
-//DKS - This code was never used in the original game, so I've commented it out to make
+// DKS - This code was never used in the original game, so I've commented it out to make
 //      that clear:
 #if 0
 
@@ -19,8 +19,8 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
-#include "DX8Input.hpp"
 #include "DX8Font.hpp"
+#include "DX8Input.hpp"
 #include "DX8Sprite.hpp"
 #include "Globals.hpp"
 #include "Timer.hpp"
@@ -76,6 +76,6 @@ public:
 
 }; // CCutScene1
 
-#endif // _CUTSCENE_HPP_
+#endif  // _CUTSCENE_HPP_
 
-#endif //0
+#endif  // 0

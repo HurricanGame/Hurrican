@@ -4,15 +4,15 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerFeuerspucker : public GegnerClass
-{
-public:
+class GegnerFeuerspucker : public GegnerClass {
+  public:
     float ShotDelay;
 
-    GegnerFeuerspucker (int Wert1,	int Wert2,			// Konstruktor
-                        bool		  Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner
+    GegnerFeuerspucker(int Wert1,
+                       int Wert2,  // Konstruktor
+                       bool Light);
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
 };
 

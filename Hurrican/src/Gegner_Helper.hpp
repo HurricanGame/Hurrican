@@ -15,7 +15,7 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
-#include "triggers/Trigger_TutorialText.hpp"            // muss oben sein, weil es <string> includiert
+#include "triggers/Trigger_TutorialText.hpp"  // muss oben sein, weil es <string> includiert
 
 #if defined(PLATFORM_DIRECTX)
 #include <d3dx8.h>
@@ -61,18 +61,18 @@
 #include "enemies/Gegner_LaFass.hpp"
 #include "enemies/Gegner_LavaBall.hpp"
 #include "enemies/Gegner_LavaBallSpawner.hpp"
-#include "enemies/Gegner_Lavamann.hpp"
 #include "enemies/Gegner_LavaKrabbe.hpp"
+#include "enemies/Gegner_Lavamann.hpp"
 #include "enemies/Gegner_Made.hpp"
-#include "enemies/Gegner_Minidragon.hpp"
 #include "enemies/Gegner_MiniRocket.hpp"
+#include "enemies/Gegner_Minidragon.hpp"
 #include "enemies/Gegner_MittelSpinne.hpp"
 #include "enemies/Gegner_Mutant.hpp"
 #include "enemies/Gegner_Nest.hpp"
 #include "enemies/Gegner_NeuFisch.hpp"
 #include "enemies/Gegner_OneUp.hpp"
-#include "enemies/Gegner_Piranha.hpp"
 #include "enemies/Gegner_Pflanze.hpp"
+#include "enemies/Gegner_Piranha.hpp"
 #include "enemies/Gegner_PokeNuke.hpp"
 #include "enemies/Gegner_PowerBlock.hpp"
 #include "enemies/Gegner_Punisher.hpp"
@@ -139,9 +139,9 @@
 #include "triggers/Trigger_Column.hpp"
 #include "triggers/Trigger_Column2.hpp"
 #include "triggers/Trigger_EndLevel.hpp"
+#include "triggers/Trigger_FadeMusic.hpp"
 #include "triggers/Trigger_Fahrstuhl.hpp"
 #include "triggers/Trigger_Fass.hpp"
-#include "triggers/Trigger_FadeMusic.hpp"
 #include "triggers/Trigger_Feuerspucker.hpp"
 #include "triggers/Trigger_Floating.hpp"
 #include "triggers/Trigger_Floating2.hpp"
@@ -177,18 +177,17 @@
 // Funktions-Prototypen
 // --------------------------------------------------------------------------------------
 
-void LoadGegnerGrafik(int Nr);							// Bestimmten Gegner laden
+void LoadGegnerGrafik(int Nr);  // Bestimmten Gegner laden
 
 // --------------------------------------------------------------------------------------
 // Externals
 // --------------------------------------------------------------------------------------
 
-extern GegnerListClass		Gegner;
-extern DirectGraphicsSprite	*pGegnerGrafix[MAX_GEGNERGFX];		// Grafiken der Gegner
-extern RECT					 GegnerRect	  [MAX_GEGNERGFX];		// Rechtecke für Kollision
-extern float				 g_Fahrstuhl_yPos;					// yPosition des Fahrstuhls
-extern float				 g_Fahrstuhl_Offset;				// Scrollposition relativ zum Farhstuhl
-extern float				 g_Fahrstuhl_Speed;					// Fahrstuhl Geschwindigkeit
-
+extern GegnerListClass Gegner;
+extern DirectGraphicsSprite *pGegnerGrafix[MAX_GEGNERGFX];  // Grafiken der Gegner
+extern RECT GegnerRect[MAX_GEGNERGFX];                      // Rechtecke für Kollision
+extern float g_Fahrstuhl_yPos;                              // yPosition des Fahrstuhls
+extern float g_Fahrstuhl_Offset;                            // Scrollposition relativ zum Farhstuhl
+extern float g_Fahrstuhl_Speed;                             // Fahrstuhl Geschwindigkeit
 
 #endif

@@ -48,19 +48,19 @@ extern "C" {
 /**         USE_GLES2 : EGL for use with OpenGL-ES 2.0 contexts */
 
 enum EGL_RENDER_T {
-    RENDER_RAW=0,           /** Sets render mode to raw or framebuffer mode. */
-    RENDER_SDL,             /** Sets render mode to X11/SDL mode. */
+    RENDER_RAW = 0, /** Sets render mode to raw or framebuffer mode. */
+    RENDER_SDL,     /** Sets render mode to X11/SDL mode. */
     RENDER_TOTAL
 };
 
 /** Public API */
-void    EGL_Close                   ( void );
+void EGL_Close(void);
 
-//DKS - Now takes additional parameters 'depth' and 'vsync' allowing Hurrican
+// DKS - Now takes additional parameters 'depth' and 'vsync' allowing Hurrican
 //      to pass in requested VSync and color depth.
-int8_t  EGL_Open                    ( uint16_t width, uint16_t height, uint16_t depth, bool vsync );
+int8_t EGL_Open(uint16_t width, uint16_t height, uint16_t depth, bool vsync);
 
-void    EGL_SwapBuffers             ( void );
+void EGL_SwapBuffers(void);
 
 /** Simple Examples  */
 /**     Raw mode:
@@ -84,28 +84,26 @@ void    EGL_SwapBuffers             ( void );
 */
 
 #if defined(DEBUG)
-#define GET_EGLERROR(FUNCTION)               \
-    FUNCTION;                                \
-    {                                        \
-        CheckEGLErrors(__FILE__, __LINE__);  \
-    }
+#define GET_EGLERROR(FUNCTION) \
+    FUNCTION;                  \
+    { CheckEGLErrors(__FILE__, __LINE__); }
 #else
 #define GET_EGLERROR(FUNCTION) FUNCTION;
 #endif
 
-#define peglQueryString(A,B)                    GET_EGLERROR(eglQueryString(A,B))
-#define peglDestroyContext(A,B)                 GET_EGLERROR(eglDestroyContext(A,B))
-#define peglDestroySurface(A,B)                 GET_EGLERROR(eglDestroySurface(A,B))
-#define peglTerminate(A)                        GET_EGLERROR(eglTerminate(A))
-#define peglSwapBuffers(A,B)                    GET_EGLERROR(eglSwapBuffers(A,B))
-#define peglGetDisplay(A)                       GET_EGLERROR(eglGetDisplay(A))
-#define peglBindAPI(A)                          GET_EGLERROR(eglBindAPI(A))
-#define peglCreateContext(A,B,C,D)              GET_EGLERROR(eglCreateContext(A,B,C,D))
-#define peglCreateWindowSurface(A,B,C,D)        GET_EGLERROR(eglCreateWindowSurface(A,B,C,D))
-#define peglInitialize(A,B,C)                   GET_EGLERROR(eglInitialize(A,B,C))
-#define peglMakeCurrent(A,B,C,D)                GET_EGLERROR(eglMakeCurrent(A,B,C,D))
-#define peglChooseConfig(A,B,C,D,E)             GET_EGLERROR(eglChooseConfig(A,B,C,D,E))
-#define peglSwapInterval(A,B)                   GET_EGLERROR(eglSwapInterval(A,B))
+#define peglQueryString(A, B) GET_EGLERROR(eglQueryString(A, B))
+#define peglDestroyContext(A, B) GET_EGLERROR(eglDestroyContext(A, B))
+#define peglDestroySurface(A, B) GET_EGLERROR(eglDestroySurface(A, B))
+#define peglTerminate(A) GET_EGLERROR(eglTerminate(A))
+#define peglSwapBuffers(A, B) GET_EGLERROR(eglSwapBuffers(A, B))
+#define peglGetDisplay(A) GET_EGLERROR(eglGetDisplay(A))
+#define peglBindAPI(A) GET_EGLERROR(eglBindAPI(A))
+#define peglCreateContext(A, B, C, D) GET_EGLERROR(eglCreateContext(A, B, C, D))
+#define peglCreateWindowSurface(A, B, C, D) GET_EGLERROR(eglCreateWindowSurface(A, B, C, D))
+#define peglInitialize(A, B, C) GET_EGLERROR(eglInitialize(A, B, C))
+#define peglMakeCurrent(A, B, C, D) GET_EGLERROR(eglMakeCurrent(A, B, C, D))
+#define peglChooseConfig(A, B, C, D, E) GET_EGLERROR(eglChooseConfig(A, B, C, D, E))
+#define peglSwapInterval(A, B) GET_EGLERROR(eglSwapInterval(A, B))
 
 #ifdef __cplusplus
 }

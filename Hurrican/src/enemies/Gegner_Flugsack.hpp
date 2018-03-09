@@ -4,18 +4,17 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-class GegnerFlugsack : public GegnerClass
-{
-private:
-    float ShotCount;								// Schuss Delay
-    float SmokeCount;								// Rauch  Delay
+class GegnerFlugsack : public GegnerClass {
+  private:
+    float ShotCount;   // Schuss Delay
+    float SmokeCount;  // Rauch  Delay
 
-public:
-
-    GegnerFlugsack(int  Wert1, int Wert2,				// Konstruktor
+  public:
+    GegnerFlugsack(int Wert1,
+                   int Wert2,  // Konstruktor
                    bool Light);
-    void GegnerExplode (void);							// Gegner explodiert
-    void DoKI		   (void);							// Gegner individuell mit seiner
+    void GegnerExplode(void);  // Gegner explodiert
+    void DoKI(void);           // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
 };
 
