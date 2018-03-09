@@ -2,8 +2,8 @@
 #define _BOSS_ROLLMOPS_HPP_
 
 #include "GegnerClass.hpp"
-#include "Gegner_Kettenglied.hpp"
-#include "Gegner_Stuff.hpp"
+#include "enemies/Gegner_Kettenglied.hpp"
+#include "enemies/Gegner_Stuff.hpp"
 
 #define NUM_KETTENGLIEDER	20
 

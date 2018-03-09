@@ -19,7 +19,7 @@
 #include "DX8Graphics.hpp"
 #include "Gameplay.hpp"
 #include "GegnerClass.hpp"
-#include "Gegner_Stuff.hpp"
+#include "enemies/Gegner_Stuff.hpp"
 #include "Player.hpp"
 #include "Tileengine.hpp"
 #include "Timer.hpp"

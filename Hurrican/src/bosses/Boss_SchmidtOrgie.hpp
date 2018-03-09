@@ -2,7 +2,7 @@
 #define _BOSS_SCHMIDTORGIE_HPP_
 
 #include "GegnerClass.hpp"
-#include "Gegner_Stuff.hpp"
+#include "enemies/Gegner_Stuff.hpp"
 
 class GegnerSchmidtOrgie : public GegnerClass
 {

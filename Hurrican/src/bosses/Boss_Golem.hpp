@@ -2,7 +2,7 @@
 #define _BOSS_GOLEM_HPP_
 
 #include "GegnerClass.hpp"
-#include "Gegner_Stuff.hpp"
+#include "enemies/Gegner_Stuff.hpp"
 
 #define WACKELMAX 0.1f
 #define ARMX -55.0f

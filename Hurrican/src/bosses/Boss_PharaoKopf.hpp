@@ -2,7 +2,7 @@
 #define _BOSS_PHARAOKOPF_HPP_
 
 #include "GegnerClass.hpp"
-#include "Gegner_Stuff.hpp"
+#include "enemies/Gegner_Stuff.hpp"
 
 #define BORDER  25
 #define BORDER2 20

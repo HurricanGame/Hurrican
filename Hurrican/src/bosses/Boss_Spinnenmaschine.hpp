@@ -2,7 +2,7 @@
 #define _BOSS_SPINNENMASCHINE_HPP_
 
 #include "GegnerClass.hpp"
-#include "Gegner_Stuff.hpp"
+#include "enemies/Gegner_Stuff.hpp"
 
 #define TIME_TILL_OPEN	10.0f
 #define TIME_TILL_CLOSE 40.0f
