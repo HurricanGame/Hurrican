@@ -804,7 +804,7 @@ loadfile:
     Datei.close();
 
     // Temp Datei löschen und speicher freigeben
-    DeleteFile(TEMP_FILE_PREFIX "temp.map");
+    fs::remove(fs::path(TEMP_FILE_PREFIX "temp.map"));
 
     // Liquid Farben setzen
     ColR1 = GetDecValue(&DateiAppendix.Col1[0], 2);

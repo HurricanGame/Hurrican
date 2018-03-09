@@ -200,7 +200,7 @@ loadfile:
     in.close();
 
     if (fromrar) {
-        DeleteFile(TEMP_FILE_PREFIX "temp.dat");
+        fs::remove(fs::path(TEMP_FILE_PREFIX "temp.dat"));
     }
 
     return true;

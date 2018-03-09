@@ -749,7 +749,7 @@ int main(int argc, char *argv[]) {
     // Kein Fehler im Game? Dann Logfile löschen
     // FIXME: That doesn't belong here
     if (Protokoll.delLogFile == true)
-        DeleteFile("Game_Log.txt");
+        fs::remove(fs::path("Game_Log.txt"));
 
     free(g_storage_ext);
     free(g_save_ext);

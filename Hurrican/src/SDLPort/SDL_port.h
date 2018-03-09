@@ -103,9 +103,7 @@ void strncpy_s(char *dst, const char *src, int size);
 void fprintf_s(FILE *file, const char *src);
 void _itoa_s(int value, char *dst, int size);
 
-#ifndef __WIN32__
-void DeleteFile(const char *filename);
-#else
+#ifdef __WIN32__
 std::uint8_t LoadGLFunctions(void);
 #endif
 std::uint32_t getpixel(SDL_Surface *surface, std::int16_t x, std::int16_t y);
