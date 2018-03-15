@@ -164,7 +164,4 @@ extern D3DXMATRIX matProj;                  // Projektionsmatrix
 extern D3DXMATRIX matWorld;                 // Weltmatrix
 extern float DegreetoRad[360];              // Tabelle mit Rotationswerten
 
-extern const double BackBufferX;
-extern const double BackBufferY;
-
 #endif

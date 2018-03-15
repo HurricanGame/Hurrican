@@ -24,13 +24,8 @@
 #ifndef CSHADER_H
 #define CSHADER_H
 
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <string>
 #include <vector>
-#include "Logdatei.hpp"
 #include "cml/cml.h"
 #include "opengl.h"
 
@@ -38,22 +33,22 @@
 
 enum { SHADER = 0x01, PROGRAM = 0x02 };
 
-typedef struct SHADER_T {
+struct shader_t {
     std::string path;
     GLenum type;
     GLuint name;
 
-    SHADER_T() : path("none"), type(GL_INVALID_VALUE), name(GL_INVALID_VALUE){};
-} shader_t;
+    shader_t() : path("none"), type(GL_INVALID_VALUE), name(GL_INVALID_VALUE){};
+};
 
 class CShader {
   public:
     CShader();
     virtual ~CShader();
 
-    void Close(void);
+    void Close();
     int8_t Load(const std::string &path_vertex, const std::string &path_frag);
-    void Use(void);
+    void Use();
     GLint GetAttribute(const std::string &attribute);
     GLint GetUniform(const std::string &attribute);
 

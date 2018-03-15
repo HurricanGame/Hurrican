@@ -112,7 +112,7 @@ GLuint CShader::CompileShader(GLenum type, const std::string &path) {
 
         shader = glCreateShader(type);
         const GLchar *shader_src = source.data();
-        glShaderSource(shader, 1, &shader_src, NULL);
+        glShaderSource(shader, 1, &shader_src, nullptr);
         glCompileShader(shader);
 
         glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
@@ -181,7 +181,7 @@ void CShader::FindAttributes() {
         GLenum type;
         GLint location;
 
-        glGetActiveAttrib(Program, index, maxAttributeLen, NULL, &size, &type, attributeName);
+        glGetActiveAttrib(Program, index, maxAttributeLen, nullptr, &size, &type, attributeName);
         location = glGetAttribLocation(Program, attributeName);
 
         std::pair<std::string, GLint> parameter;
@@ -207,7 +207,7 @@ void CShader::FindUniforms() {
         GLenum type;
         GLint location;
 
-        glGetActiveUniform(Program, index, maxUniformLen, NULL, &size, &type, uniformName);
+        glGetActiveUniform(Program, index, maxUniformLen, nullptr, &size, &type, uniformName);
         location = glGetUniformLocation(Program, uniformName);
 
         std::pair<std::string, GLint> parameter;
@@ -251,7 +251,7 @@ void CShader::PrintLog(uint8_t type, GLuint shader) {
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &loglength);
 
         log = new char[loglength + 1];
-        glGetShaderInfoLog(shader, loglength, NULL, log);
+        glGetShaderInfoLog(shader, loglength, nullptr, log);
         Protokoll << "Shader: Shader log:\n " << log << std::endl;
         delete[] log;
     }
@@ -260,7 +260,7 @@ void CShader::PrintLog(uint8_t type, GLuint shader) {
         glGetProgramiv(Program, GL_INFO_LOG_LENGTH, &loglength);
 
         log = new char[loglength + 1];
-        glGetProgramInfoLog(Program, loglength, NULL, log);
+        glGetProgramInfoLog(Program, loglength, nullptr, log);
         Protokoll << "Shader: Program log:\n " << log << std::endl;
         delete[] log;
     }

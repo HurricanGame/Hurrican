@@ -29,9 +29,6 @@
 #include "eglport.h"
 #endif
 
-const double BackBufferX = 1024.0f;
-const double BackBufferY = 1024.0f;
-
 // --------------------------------------------------------------------------------------
 // sonstige Variablen
 // --------------------------------------------------------------------------------------
@@ -54,7 +51,7 @@ float DegreetoRad[360];  // Tabelle mit Rotationswerten
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-DirectGraphicsClass::DirectGraphicsClass(void) {
+DirectGraphicsClass::DirectGraphicsClass() {
 #if defined(PLATFORM_DIRECTX)
     lpD3D = NULL;
 #elif defined(PLATFORM_SDL)
@@ -72,7 +69,7 @@ DirectGraphicsClass::DirectGraphicsClass(void) {
 // Desktruktor
 // --------------------------------------------------------------------------------------
 
-DirectGraphicsClass::~DirectGraphicsClass(void) {}
+DirectGraphicsClass::~DirectGraphicsClass() {}
 
     // --------------------------------------------------------------------------------------
     // D3D Initialisieren
@@ -858,7 +855,7 @@ void DirectGraphicsClass::RendertoBuffer(D3DPRIMITIVETYPE PrimitiveType,
 #endif
         glEnableVertexAttribArray(Shaders[ProgramCurrent].NameTex);
         glVertexAttribPointer(Shaders[ProgramCurrent].NameTex, 2, GL_FLOAT, GL_FALSE, stride,
-                              reinterpret_cast<uint8_t *>(pVertexStreamZeroData + tex_offset));
+                              reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + tex_offset);
     }
 
     glEnableVertexAttribArray(Shaders[ProgramCurrent].NamePos);
@@ -866,7 +863,7 @@ void DirectGraphicsClass::RendertoBuffer(D3DPRIMITIVETYPE PrimitiveType,
 
     glEnableVertexAttribArray(Shaders[ProgramCurrent].NameClr);
     glVertexAttribPointer(Shaders[ProgramCurrent].NameClr, 4, GL_UNSIGNED_BYTE, GL_TRUE, stride,
-                          reinterpret_cast<uint8_t *>(pVertexStreamZeroData + clr_offset));
+                          reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + clr_offset);
 
     D3DXMATRIXA16 matMVP = g_matModelView * matProj;
     glUniformMatrix4fv(Shaders[ProgramCurrent].NameMvp, 1, GL_FALSE, matMVP.data());
@@ -899,7 +896,7 @@ void DirectGraphicsClass::RendertoBuffer(D3DPRIMITIVETYPE PrimitiveType,
 // Render den Buffer auf den Backbuffer
 // --------------------------------------------------------------------------------------
 
-void DirectGraphicsClass::DisplayBuffer(void) {
+void DirectGraphicsClass::DisplayBuffer() {
 #if defined(PLATFORM_DIRECTX)
     // Darstellung beenden
     lpD3DDevice->EndScene();
@@ -910,7 +907,7 @@ void DirectGraphicsClass::DisplayBuffer(void) {
 
 #if defined(PLATFORM_SDL)
 bool DirectGraphicsClass::ExtensionSupported(const char *ext) {
-    if (strstr(glextensions, ext) != NULL) {
+    if (strstr(glextensions, ext) != nullptr) {
         Protokoll << ext << " is supported" << std::endl;
         return true;
     }
@@ -1012,7 +1009,7 @@ void DirectGraphicsClass::SetTexture(int idx) {
 // Present aufrufen
 // --------------------------------------------------------------------------------------
 
-void DirectGraphicsClass::ShowBackBuffer(void) {
+void DirectGraphicsClass::ShowBackBuffer() {
 #if defined(PLATFORM_DIRECTX)
     HRESULT hresult;
 
@@ -1093,7 +1090,7 @@ void DirectGraphicsClass::ShowBackBuffer(void) {
 }
 
 #if defined(PLATFORM_SDL)
-void DirectGraphicsClass::SetupFramebuffers(void) {
+void DirectGraphicsClass::SetupFramebuffers() {
 /* Read the current window size */
 #if SDL_VERSION_ATLEAST(2, 0, 0)
     {
@@ -1161,7 +1158,7 @@ void DirectGraphicsClass::SetupFramebuffers(void) {
               << WindowView.y << std::endl;
 }
 
-void DirectGraphicsClass::ClearBackBuffer(void) {
+void DirectGraphicsClass::ClearBackBuffer() {
 #if defined(USE_GL2) && defined(USE_FBO)
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 #endif
