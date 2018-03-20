@@ -23,7 +23,7 @@
  *
  */
 
-#include "eglport.h"
+#include "eglport.hpp"
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -63,7 +63,7 @@
 #define SOUND_GetPaused FSOUND_GetPaused
 
 #elif defined(PLATFORM_SDL)
-#include "SDL_fmod.h"
+#include "SDL_fmod.hpp"
 #else
 #error no sound system selected
 #endif

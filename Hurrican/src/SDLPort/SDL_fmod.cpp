@@ -22,7 +22,7 @@
  *
  */
 
-#include "SDL_fmod.h"
+#include "SDL_fmod.hpp"
 #include <cstring>
 
 static int g_allocated = 0;

@@ -22,13 +22,13 @@
 #endif
 
 #if defined(PLATFORM_SDL)
-#include "SDLPort/SDL_port.h"
+#include "SDLPort/SDL_port.hpp"
 #endif  // PLATFORM_SDL
 
 #include "DX8Texture.hpp"
 
 #if defined(PLATFORM_SDL)
-#include "SDLPort/texture.h"
+#include "SDLPort/texture.hpp"
 #endif  // PLATFORM_SDL
 
 #include "DX8Graphics.hpp"

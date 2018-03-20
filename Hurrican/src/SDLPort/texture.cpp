@@ -31,7 +31,7 @@ namespace fs = std::experimental::filesystem::v1;
 #include "DX8Texture.hpp"
 #include "Main.hpp"
 #include "Texts.hpp"  //For ReplaceAll() function
-#include "texture.h"
+#include "texture.hpp"
 
 #if defined(USE_ETC1)
 #define ETC1_HEADER_SIZE 16

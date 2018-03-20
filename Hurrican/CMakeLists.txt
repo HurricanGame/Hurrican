@@ -171,17 +171,17 @@ set(HURRICAN_SOURCES
         src/cml/cml/util.h
         src/cml/cml/vector.h
         src/SDLPort/cfbo.cpp
-        src/SDLPort/cfbo.h
+        src/SDLPort/cfbo.hpp
         src/SDLPort/cshader.cpp
-        src/SDLPort/cshader.h
-        src/SDLPort/keymap.h
-        src/SDLPort/opengl.h
+        src/SDLPort/cshader.hpp
+        src/SDLPort/keymap.hpp
+        src/SDLPort/opengl.hpp
         src/SDLPort/SDL_fmod.cpp
-        src/SDLPort/SDL_fmod.h
+        src/SDLPort/SDL_fmod.hpp
         src/SDLPort/SDL_port.cpp
-        src/SDLPort/SDL_port.h
+        src/SDLPort/SDL_port.hpp
         src/SDLPort/texture.cpp
-        src/SDLPort/texture.h
+        src/SDLPort/texture.hpp
         src/CCracktro.cpp
         src/CCracktro.hpp
         src/CCutScene.cpp

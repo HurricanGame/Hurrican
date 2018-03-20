@@ -22,8 +22,8 @@
  *
  */
 
-#include "cshader.h"
-#include "SDL_port.h"
+#include "cshader.hpp"
+#include "SDL_port.hpp"
 
 CShader::CShader()
     : NamePos(GL_INVALID_VALUE),

@@ -22,8 +22,8 @@
  *
  */
 
-#include "cfbo.h"
-#include "opengl.h"
+#include "cfbo.hpp"
+#include "opengl.hpp"
 
 #if defined(USE_FBO)
 

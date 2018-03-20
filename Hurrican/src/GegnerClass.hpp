@@ -16,7 +16,7 @@
 // --------------------------------------------------------------------------------------
 
 #if defined(PLATFORM_SDL)
-#include "SDL_port.h"
+#include "SDL_port.hpp"
 #else
 #include <d3dx8.h>
 #endif

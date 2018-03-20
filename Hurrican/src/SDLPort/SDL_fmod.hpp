@@ -27,7 +27,7 @@
 
 #include <stdio.h>
 #include "SDL/SDL_mixer.h"
-#include "SDL_port.h"
+#include "SDL_port.hpp"
 #if defined(USE_MODPLUG)
 #include "libmodplug/modplug.h"
 #endif

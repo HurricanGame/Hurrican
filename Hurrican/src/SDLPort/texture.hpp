@@ -26,7 +26,7 @@
 #define _TEXTURE_H_
 
 #include <string>
-#include "SDL_port.h"
+#include "SDL_port.hpp"
 
 struct image_t {
     std::vector<char> data;

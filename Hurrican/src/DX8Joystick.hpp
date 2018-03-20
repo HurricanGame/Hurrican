@@ -25,7 +25,7 @@
 #include <dinput.h>
 #endif
 #if defined(PLATFORM_SDL)
-#include "SDL_port.h"
+#include "SDL_port.hpp"
 #endif
 
 // --------------------------------------------------------------------------------------

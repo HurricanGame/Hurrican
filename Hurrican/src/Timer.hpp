@@ -27,7 +27,7 @@
 #if defined(PLATFORM_DIRECTX)
 #include <windows.h>
 #elif defined(PLATFORM_SDL)
-#include "SDL_port.h"
+#include "SDL_port.hpp"
 #endif
 
 // --------------------------------------------------------------------------------------

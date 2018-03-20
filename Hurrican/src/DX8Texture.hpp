@@ -8,7 +8,7 @@
 
 #include <map>
 #include <string>
-#include "SDLPort/SDL_port.h"
+#include "SDLPort/SDL_port.hpp"
 
 class TextureHandle {
   public:

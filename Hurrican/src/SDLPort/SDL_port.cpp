@@ -22,7 +22,7 @@
  *
  */
 
-#include "SDL_port.h"
+#include "SDL_port.hpp"
 
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem::v1;

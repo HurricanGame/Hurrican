@@ -35,8 +35,8 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include "cml/cml.h"
-#include "keymap.h"
-#include "opengl.h"
+#include "keymap.hpp"
+#include "opengl.hpp"
 
 typedef std::int32_t LPDIRECT3DSURFACE8;
 typedef GLuint LPDIRECT3DTEXTURE8, LPDIRECT3DTEXTURE9, LPDIRECT3DVERTEXBUFFER8, LPDIRECT3DVERTEXBUFFER9;

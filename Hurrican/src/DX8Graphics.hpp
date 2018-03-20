@@ -18,9 +18,9 @@
 // --------------------------------------------------------------------------------------
 
 #if defined(PLATFORM_SDL)
-#include "SDL_port.h"
+#include "SDL_port.hpp"
 #if defined(USE_GL2)
-#include "cshader.h"
+#include "cshader.hpp"
 #if defined(USE_FBO)
 #include "cfbo.h"
 #endif /* USE_FBO */

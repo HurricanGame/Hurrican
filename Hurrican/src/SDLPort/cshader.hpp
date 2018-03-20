@@ -27,7 +27,7 @@
 #include <string>
 #include <vector>
 #include "cml/cml.h"
-#include "opengl.h"
+#include "opengl.hpp"
 
 #define CHECK_FLAG(X, Y) ((X & Y) == Y)
 

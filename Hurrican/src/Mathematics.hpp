@@ -15,7 +15,7 @@
 #include <stdint.h>
 #include <cmath>
 #ifdef PLATFORM_SDL
-#include "SDLPort/SDL_port.h"
+#include "SDLPort/SDL_port.hpp"
 #endif
 
 // --------------------------------------------------------------------------------------

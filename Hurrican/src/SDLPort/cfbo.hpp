@@ -24,7 +24,7 @@
 #ifndef CFBO_H
 #define CFBO_H
 
-#include "SDL_port.h"
+#include "SDL_port.hpp"
 
 class CFbo {
   public:
