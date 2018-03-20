@@ -31,29 +31,27 @@ In general these instructions should work for most linux versions:
 cd src && make
 
 Definitions:
-  Platform Type
-	PLATFORM_DIRECTX : Use the original directx code
-	PLATFORM_SDL     : Use the new SDL/OpenGL code
-	__WIN32__	 : Use on windows builds
-  OpenGL Options:
-  	EGL		 : see SDLPort/eglport.h
-	USE_GL1          : Use the OpenGL 1.X code (fixed pipline)
-	USE_GLES1        : Use the OpenGL 1.X code with ES compatible (requires USE_GL1)
-	USE_GL2          : Use the OpenGL 2.0 code (programable pipline)
-	USE_GLES2        : Use the OpenGL 2.0 code with ES compatible (requires USE_GL2)
-	USE_PVRTC	 : Use ImgTec's PVRTC texture compression (only for PVR gpu's)
-  Sound:
-  	USE_MODPLUG      : Use the stable modplug code for music. (otherwise mikmod is used, which is known to have problems)
-  	
-  Other:
-  	ENABLE_CONSOLE_COMMANDS : turns a console where commands can be entered
-  	_DEBUG			: enables some debug output
-  	
-  	
+&nbsp;&nbsp;  Platform Type
+&nbsp;&nbsp;&nbsp;&nbsp;    PLATFORM_DIRECTX: Use the original directx code
+&nbsp;&nbsp;&nbsp;&nbsp;    PLATFORM_SDL     : Use the new SDL/OpenGL code
+&nbsp;&nbsp;&nbsp;&nbsp;    \_\_WIN32\_\_	 : Use on windows builds
+&nbsp;&nbsp;  OpenGL Options:
+&nbsp;&nbsp;&nbsp;&nbsp;  	EGL		 : see SDLPort/eglport.h
+&nbsp;&nbsp;&nbsp;&nbsp;	USE_GL1          : Use the OpenGL 1.X code (fixed pipline)
+&nbsp;&nbsp;&nbsp;&nbsp;	USE_GLES1        : Use the OpenGL 1.X code with ES compatible (requires USE_GL1)
+&nbsp;&nbsp;&nbsp;&nbsp;	USE_GL2          : Use the OpenGL 2.0 code (programable pipline)
+&nbsp;&nbsp;&nbsp;&nbsp;	USE_GLES2        : Use the OpenGL 2.0 code with ES compatible (requires USE_GL2)
+&nbsp;&nbsp;&nbsp;&nbsp;	USE_PVRTC	 : Use ImgTec's PVRTC texture compression (only for PVR gpu's)
+&nbsp;&nbsp;  Sound:
+&nbsp;&nbsp;&nbsp;&nbsp;  	USE_MODPLUG      : Use the stable modplug code for music. (otherwise mikmod is used, which is known to have problems)
+
+&nbsp;&nbsp;  Other:
+&nbsp;&nbsp;&nbsp;&nbsp;  	ENABLE_CONSOLE_COMMANDS : turns a console where commands can be entered
+&nbsp;&nbsp;&nbsp;&nbsp;  	_DEBUG			: enables some debug output
+
+
  Typical desktop build would use: -DPLATFORM_SDL -DUSE_GL2 -DUSE_MODPLUG -DENABLE_CONSOLE_COMMANDS
  An mobile device may use : -DPLATFORM_SDL -DUSE_GL2 -DUSE_GLES2 -DUSE_EGL_SDL -DUSE_MODPLUG -DENABLE_CONSOLE_COMMANDS
  Check the makefile for other examples.
- 
- Pickle (pickle136@gmail.com)
 
-Note: For cross-platform file/directory handling, the SDL port makes use of the cross-platform 'tinydir' library. Much thanks to Cong Xu, the author. https://github.com/cxong/tinydir Copyright (c) 2013, Cong Xu  - Simplified BSD License.
+ Pickle (pickle136@gmail.com)
