@@ -37,6 +37,7 @@ namespace fs = std::experimental::filesystem::v1;
 
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <iomanip>
 
 #include "CCracktro.hpp"
 #include "Console.hpp"
@@ -1339,21 +1340,22 @@ void ShowFPS() {
     const unsigned int fps_update_freq_in_ticks = 500;
     static unsigned int ticks_fps_last_updated = 0;
     static int frame_ctr = 0;
-    static char char_buf[24] = "";
+    static std::stringstream char_buf;
 
     frame_ctr++;
     unsigned int cur_ticks = timeGetTime();
     unsigned int ticks_elapsed = cur_ticks - ticks_fps_last_updated;
     if (ticks_elapsed > fps_update_freq_in_ticks && frame_ctr > 0) {
+        char_buf.str("");
         float avg_fps = static_cast<float>(frame_ctr) * (1000.0f / static_cast<float>(fps_update_freq_in_ticks)) *
                         (static_cast<float>(fps_update_freq_in_ticks) / static_cast<float>(ticks_elapsed));
-        sprintf_s(char_buf, "FPS: %.1f", avg_fps);
-        fprintf_s(stdout, char_buf);
-        fprintf_s(stdout, "\n");
+        char_buf << std::fixed << std::setprecision(1) << "FPS: " << avg_fps;
+        std::cout << char_buf.str() << std::endl;
         frame_ctr = 0;
         ticks_fps_last_updated = cur_ticks;
     }
-    pMenuFont->DrawText(0, 0, char_buf, 0xFFFFFFFF);
+    pMenuFont->DrawText(0, 0, char_buf.str().c_str(), 0xFFFFFFFF);
+
 }
 
 //----------------------------------------------------------------------------

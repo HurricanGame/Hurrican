@@ -57,14 +57,6 @@ void strcpy_s(char *dst, const char *src) {
     strcpy(dst, src);
 }
 
-void strncpy_s(char *dst, const char *src, int size) {
-    strncpy(dst, src, size);
-}
-
-void fprintf_s(FILE *file, const char *src) {
-    fprintf(file, "%s", src);
-}
-
 void _itoa_s(int value, char *dst, int size) {
     sprintf(reinterpret_cast<char *>(dst), "%d", value);
 }
