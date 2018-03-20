@@ -16,9 +16,6 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
-#if defined(PLATFORM_DIRECTX)
-#include <d3dx8.h>
-#endif
 #include "DX8Sprite.hpp"
 #include "Player.hpp"
 

@@ -54,13 +54,7 @@ void PlayCutScene (int nr)
     {
         // CutScene rendern
         //
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->BeginScene();
-#endif
         pScene->RunCutScene();
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->EndScene();
-#endif
         DirectGraphics.ShowBackBuffer();
 
         // Keyboard abfragen

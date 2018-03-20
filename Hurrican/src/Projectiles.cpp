@@ -2091,13 +2091,9 @@ void ProjectileClass::Render(void) {
             D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans);   // Verschieben
             D3DXMatrixMultiply(&matWorld, &matWorld, &matRot);     // rotieren
             D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück verschieben
-#if defined(PLATFORM_DIRECTX)
-            lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
             g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
             load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 
             DirectGraphics.SetFilterMode(true);
@@ -2115,13 +2111,9 @@ void ProjectileClass::Render(void) {
         if (Winkel > -10000.0f) {
             // Normale Projektions-Matrix wieder herstellen
             D3DXMatrixRotationZ(&matWorld, 0.0f);
-#if defined(PLATFORM_DIRECTX)
-            lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
             g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
             load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 
             DirectGraphics.SetFilterMode(false);
@@ -2655,14 +2647,6 @@ void ProjectileClass::Run(void) {
                     SoundManager.PlayWave(100, 128, 8000, SOUND_LILA);
                     SoundManager.StopWave(SOUND_BEAMLOAD2);
                 }
-            } else {
-            // Frequenz setzen
-            // DKS - Added check for NULLness and DirectX, since SDL port doesn't support SetFrequency:
-#if defined(PLATFORM_DIRECTX)
-                int Freq = 11025 + static_cast<int>(AnimCount * 500.0f);
-                // DKS - added function SetWaveFrequency()
-                SetWaveFrequency(SOUND_BEAMLOAD2, Freq);
-#endif
             }
 
             if (AnimCount > 140.0f) {

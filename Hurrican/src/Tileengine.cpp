@@ -317,15 +317,11 @@ void TileEngineClass::ClearLevel() {
     for (int i = 0; i < MAX_TILESETS; i++) {
     // DKS - Adapted to new TexturesystemClass
 #if 0
-#if defined(PLATFORM_DIRECTX)
-        SafeRelease(TileGfx[i].itsTexture);
-#elif defined(PLATFORM_SDL)
         if (TileGfx[i].itsTexture)
         {
             glDeleteTextures( 1, &TileGfx[i].itsTexture );
             TileGfx[i].itsTexture = 0;
         }
-#endif
 #endif  // 0
         Textures.UnloadTexture(TileGfx[i].itsTexIdx);
         TileGfx[i].itsTexIdx = -1;
@@ -924,11 +920,7 @@ void TileEngineClass::DrawBackground(void) {
     //
     D3DXMATRIX matView;
     D3DXMatrixIdentity(&matView);
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_VIEW, &matView);
-#elif defined(PLATFORM_SDL)
     g_matView = matView;
-#endif
 
     //----- Hintergrund-Bild
 

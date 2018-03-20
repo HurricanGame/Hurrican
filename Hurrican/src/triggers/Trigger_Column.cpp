@@ -54,13 +54,9 @@ void GegnerColumn::DoDraw(void) {
     D3DXMatrixMultiply(&matWorldLocal, &matWorldLocal, &matTrans2);  // und wieder zurück verschieben
 
     // rotierte Matrix setzen
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorldLocal);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorldLocal * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 
     pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
@@ -68,13 +64,9 @@ void GegnerColumn::DoDraw(void) {
 
     // Normale Projektions-Matrix wieder herstellen
     D3DXMatrixRotationZ(&matWorldLocal, 0.0f);
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorldLocal);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorldLocal * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 
     SetScreenShake();

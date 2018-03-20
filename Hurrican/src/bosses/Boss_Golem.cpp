@@ -139,13 +139,9 @@ void GegnerGolem::DoDraw(void) {
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTransBody);   // rotieren (Körper)
     D3DXMatrixMultiply(&matWorld, &matWorld, &matRotBody);     // rotieren (Arm)
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2Body);  // und wieder zurück verschieben
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 
     // Arm hinten zeichnen
@@ -157,13 +153,9 @@ void GegnerGolem::DoDraw(void) {
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTransBody);   // rotieren (Körper)
     D3DXMatrixMultiply(&matWorld, &matWorld, &matRotBody);     // rotieren (Arm)
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2Body);  // und wieder zurück verschieben
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 
     pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset) + wackel,
@@ -195,13 +187,9 @@ void GegnerGolem::DoDraw(void) {
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTransBody);   // rotieren (Körper)
     D3DXMatrixMultiply(&matWorld, &matWorld, &matRotBody);     // rotieren (Arm)
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2Body);  // und wieder zurück verschieben
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 
     // Arm zeichnen
@@ -210,13 +198,9 @@ void GegnerGolem::DoDraw(void) {
 
     // Normale Projektions-Matrix wieder herstellen
     D3DXMatrixRotationZ(&matWorld, 0.0f);
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 
     // Blockrect setzen

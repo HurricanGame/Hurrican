@@ -45,27 +45,6 @@ DirectJoystickClass::~DirectJoystickClass(void) {}
 void DirectJoystickClass::ForceFeedbackEffect(int nr) {
     if (UseForceFeedback == false || CanForceFeedback == false)
         return;
-
-#if defined(PLATFORM_DIRECTX)
-    switch (nr) {
-        case 0:
-            pFFE_SmallVib->Start(1, 0);
-            break;
-
-        case 1:
-            pFFE_BigVib->Start(1, 0);
-            break;
-
-        case 2:
-            pFFE_MaxVib->Start(1, 0);
-            break;
-
-        case 3:
-            pFFE_Blitz->Start(1, 0);
-            break;
-    }
-#elif defined(PLATFORM_SDL)
-#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -75,111 +54,12 @@ void DirectJoystickClass::ForceFeedbackEffect(int nr) {
 void DirectJoystickClass::StopForceFeedbackEffect(int nr) {
     if (UseForceFeedback == false || CanForceFeedback == false)
         return;
-
-#if defined(PLATFORM_DIRECTX)
-    switch (nr) {
-        case 0:
-            pFFE_SmallVib->Stop();
-            break;
-
-        case 1:
-            pFFE_BigVib->Stop();
-            break;
-
-        case 2:
-            pFFE_MaxVib->Stop();
-            break;
-
-        case 3:
-            pFFE_Blitz->Stop();
-            break;
-    }
-#elif defined(PLATFORM_SDL)
-#endif
 }
 
     // --------------------------------------------------------------------------------------
     // Joystick initialisieren
     // --------------------------------------------------------------------------------------
 
-#if defined(PLATFORM_DIRECTX)
-bool DirectJoystickClass::Init(HWND hwnd, LPDIRECTINPUT8 lpDI) {
-    HRESULT dirval;     // Rückgabewert
-    DIPROPRANGE diprg;  // Joystick Eigenschaften
-
-    // Joystick für enumerierte GUID erstellen
-    dirval = lpDI->CreateDevice(guidJoystickDevice, &lpDIJoystick, NULL);
-    if (dirval != DI_OK) {
-        Protokoll << "\n-> Joystick : CreateDevice error!" << std::endl;
-        return false;
-    }
-    Protokoll << "Joystick : CreateDevice successful!" << std::endl;
-
-    // Datenformat für Joystick festlegen
-    dirval = lpDIJoystick->SetDataFormat(&c_dfDIJoystick2);
-    if (dirval != DI_OK) {
-        Protokoll << "\n-> Joystick : SetDataFormat error!" << std::endl;
-        return false;
-    }
-    Protokoll << "Joystick : SetDataFormat successful!" << std::endl;
-
-    // Zusammenarbeit mit Windows regeln
-    dirval = lpDIJoystick->SetCooperativeLevel(hwnd, DISCL_EXCLUSIVE | DISCL_FOREGROUND);
-    if (dirval != DI_OK) {
-        Protokoll << "\n-> Joystick : SetCooperativeLevel error!" << std::endl;
-        return false;
-    }
-    Protokoll << "Joystick : SetCooperativeLevel successful!" << std::endl;
-
-    // Joystick Objekt Eigenschaften festlegen
-    diprg.diph.dwSize = sizeof(diprg);
-    diprg.diph.dwHeaderSize = sizeof(diprg.diph);
-    diprg.diph.dwObj = DIJOFS_X;  // x-Achse
-    diprg.diph.dwHow = DIPH_BYOFFSET;
-    diprg.lMin = -1000;  // Wertebereich
-    diprg.lMax = +1000;  // von, bis
-
-    dirval = lpDIJoystick->SetProperty(DIPROP_RANGE, &diprg.diph);
-    if (dirval != DI_OK) {
-        Protokoll << "\n-> Joystick : SetPropertyX error!" << std::endl;
-        return false;
-    }
-    Protokoll << "Joystick : SetPropertyX sucessfull!" << std::endl;
-
-    diprg.diph.dwSize = sizeof(diprg);
-    diprg.diph.dwHeaderSize = sizeof(diprg.diph);
-    diprg.diph.dwObj = DIJOFS_Y;  // y-Achse
-    diprg.diph.dwHow = DIPH_BYOFFSET;
-    diprg.lMin = -1000;  // Wertebereich
-    diprg.lMax = +1000;  // von, bis
-
-    dirval = lpDIJoystick->SetProperty(DIPROP_RANGE, &diprg.diph);
-    if (dirval != DI_OK) {
-        Protokoll << "\n-> Joystick : SetPropertyY error!" << std::endl;
-        return false;
-    }
-    Protokoll << "Joystick : SetPropertyY successful!" << std::endl;
-
-    // Joystick Objekt aktivieren
-    if (lpDIJoystick) {
-        dirval = lpDIJoystick->Acquire();
-        if (dirval != DI_OK) {
-            Protokoll << "\n-> Joystick : Acquire error!" << std::endl;
-            return false;
-        }
-        Protokoll << "Joystick : Acquire successful!" << std::endl;
-    } else
-        return false;
-
-    Active = true;
-
-    // DKS - new code to set the number of buttons this joystick supports
-    //      NOTE: this is completely untested, not even tested to compile yet:
-    NumButtons = lpDIJoystick->Caps.NumberButtons;
-
-    return true;
-}
-#elif defined(PLATFORM_SDL)
 bool DirectJoystickClass::Init(int joy) {
     lpDIJoystick = SDL_JoystickOpen(joy);
 
@@ -207,63 +87,10 @@ bool DirectJoystickClass::Init(int joy) {
 
     return true;
 }
-#endif
 
     // --------------------------------------------------------------------------------------
     // Joystick updaten
     // --------------------------------------------------------------------------------------
-
-#if defined(PLATFORM_DIRECTX)
-bool DirectJoystickClass::Update(void) {
-    HRESULT hresult;
-    DIJOYSTATE2 js;
-
-    hresult = lpDIJoystick->Poll();
-    hresult = lpDIJoystick->GetDeviceState(sizeof(DIJOYSTATE2), &js);
-
-    // Joystick auf einmal weg?
-    //
-    if (hresult == DIERR_INPUTLOST) {
-        // Versuchen, erneut zu holen
-        //
-        lpDIJoystick->Acquire();
-        hresult = lpDIJoystick->GetDeviceState(sizeof(DIJOYSTATE2), &js);
-
-        // immernoch wech? Dann gibts halt kein Joystick mehr
-        //
-        if (hresult != DI_OK) {
-            Protokoll << "\n-> Joystick : Re-Acquire Fehler !" << std::endl;
-            return false;
-        }
-
-        // Ansonsten State holen
-        //
-        else {
-            hresult = lpDIJoystick->GetDeviceState(sizeof(DIJOYSTATE2), &js);
-
-            // Wieder fehler? Dann wars das auch mit dem Joystick
-            //
-            if (hresult == DIERR_INPUTLOST) {
-                Protokoll << "\n-> Joystick : Re-Acquire Fehler !" << std::endl;
-                return false;
-            }
-        }
-    }
-
-    for (int i = 0; i < NumButtons; i++) {
-        if (js.rgbButtons[i] & 0x80)
-            JoystickButtons[i] = true;
-        else
-            JoystickButtons[i] = false;
-    }
-
-    JoystickX = js.lX;
-    JoystickY = js.lY;
-    JoystickPOV = js.rgdwPOV[0];
-
-    return true;
-}
-#elif defined(PLATFORM_SDL)
 bool DirectJoystickClass::Update(void) {
     if (lpDIJoystick != NULL) {
         SDL_JoystickUpdate();
@@ -321,7 +148,6 @@ bool DirectJoystickClass::Update(void) {
 
     return true;
 }
-#endif
 
 // DKS-Added these three for better joystick support, esp in menus
 bool DirectJoystickClass::ButtonEnterPressed(void) {

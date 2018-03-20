@@ -80,9 +80,6 @@ class DirectGraphicsClass {
   private:
     bool VSyncEnabled;  // VSync ein/aus ?
     bool FilterMode;    // Linearer Filter an/aus?
-#if defined(PLATFORM_DIRECTX)
-    D3DDISPLAYMODE d3ddm;  // Display Mode
-#elif defined(PLATFORM_SDL)
     const char *glextensions;
     bool use_texture;
     int MaxTextureUnits;
@@ -90,13 +87,9 @@ class DirectGraphicsClass {
     GLuint ProgramCurrent;
     CShader Shaders[PROGRAM_TOTAL];
 #endif
-#endif
 
   public:
     int BlendMode;  // Additiv, Colorkey oder White mode aktiviert?
-#if defined(PLATFORM_DIRECTX)
-    D3DPRESENT_PARAMETERS d3dpp;  // Present Parameters
-#elif defined(PLATFORM_SDL)
     bool SupportedETC1;
     bool SupportedPVRTC;
 #if SDL_VERSION_ATLEAST(2, 0, 0)
@@ -111,7 +104,7 @@ class DirectGraphicsClass {
 #if defined(USE_GL2) && defined(USE_FBO)
     CFbo RenderBuffer;
 #endif
-#endif
+
     bool SquareOnly;            // Nur quadratische Texturen
     bool PowerOfTwo;            // Nur 2er Potenz Texturen
     void ShowBackBuffer(void);  // Present aufrufen
@@ -155,10 +148,6 @@ extern LPDIRECT3D8 lpD3D;                   // Direct3D Hauptobjekt
 extern LPDIRECT3DDEVICE8 lpD3DDevice;       // Direct3D Device-Objekt
 extern DirectGraphicsClass DirectGraphics;  // DirectGraphics Klasse
 extern LPDIRECT3DSURFACE8 lpBackbuffer;     // Der Backbuffer
-#if defined(PLATFORM_DIRECTX)
-extern D3DFORMAT D3DFormat;  // Format der Primary Surface
-extern D3DCAPS8 d3dcaps;     // Möglichkeiten der Hardware
-#endif
 extern LPDIRECT3DVERTEXBUFFER8 lpVBSprite;  // VertexBuffer für die Sprites
 extern D3DXMATRIX matProj;                  // Projektionsmatrix
 extern D3DXMATRIX matWorld;                 // Weltmatrix

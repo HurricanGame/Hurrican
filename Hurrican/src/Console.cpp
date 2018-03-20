@@ -434,16 +434,7 @@ void ConsoleClass::CheckCommands(void) {
 
     // Minimap anzeigen und Screenshot machen
     if (strncmp(Buffer, "minimap", 7) == 0) {
-    // Darstellung beenden
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->EndScene();
-#endif
         DirectGraphics.ShowBackBuffer();
-
-        // Mit dem Darstellen beginnen
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->BeginScene();
-#endif
 
         // Screen schwarz färben
         RenderRect(0, 0, 640, 480, 0xFF000000);
@@ -470,9 +461,6 @@ void ConsoleClass::CheckCommands(void) {
         pDefaultFont->DrawText(3, 458, buf, 0xFF00FF00);
         pDefaultFont->DrawText(3, 470, TileEngine.Beschreibung, 0xFF00FF00);
 
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->EndScene();  // Darstellung beenden
-#endif
         DirectGraphics.ShowBackBuffer();
 
         // Screenshot machen
@@ -853,11 +841,7 @@ bool ConsoleClass::DoConsole(void) {
     //
     D3DXMATRIX matView;
     D3DXMatrixIdentity(&matView);
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_VIEW, &matView);
-#elif defined(PLATFORM_SDL)
     g_matView = matView;
-#endif
 
     // Und anzeigen
     ShowConsole();

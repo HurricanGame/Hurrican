@@ -15,9 +15,6 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
-#if defined(PLATFORM_DIRECTX)
-#include "windows.h"
-#endif
 #include "Intro.hpp"
 #include "Outtro.hpp"
 

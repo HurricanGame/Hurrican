@@ -522,11 +522,7 @@ void HUDClass::DoHUD(void) {
     //
     D3DXMATRIX matView;
     D3DXMatrixIdentity(&matView);
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_VIEW, &matView);
-#elif defined(PLATFORM_SDL)
     g_matView = matView;
-#endif
 
     // Hud anzeigen
     //

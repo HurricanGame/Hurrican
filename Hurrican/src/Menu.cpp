@@ -420,15 +420,7 @@ void MenuClass::ShowMenu(void) {
         ScrollPos -= 360.0f;
 
         // Total löschen
-
-#if defined(PLATFORM_DIRECTX)
-    // DKS - Since I removed all use of the Z-coordinate, this should be changed too. Note: DirectX is entirely
-    // untested.  lpD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-    //                   D3DCOLOR_XRGB(0,0,0),	1.0f, 0);
-    lpD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-#elif defined(PLATFORM_SDL)
     DirectGraphics.ClearBackBuffer();
-#endif
 
     ShowMenuBack();
 
@@ -1159,11 +1151,7 @@ void MenuClass::DoMenu(void) {
     //
     D3DXMATRIX matView;
     D3DXMatrixIdentity(&matView);
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_VIEW, &matView);
-#elif defined(PLATFORM_SDL)
     g_matView = matView;
-#endif
 
     // Wird noch keine Menu Musik gespielt ?
     //

@@ -141,25 +141,6 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
 
     // Geladene Font Textur locken
     //
-#if defined(PLATFORM_DIRECTX)
-    D3DSURFACE_DESC d3dsd;
-    D3DLOCKED_RECT  d3dlr;
-    HRESULT hresult;
-
-    //DKS - Adapted to new TexturesystemClass
-    //mTexture->itsTexture->GetLevelDesc(0, &d3dsd);
-    //hresult = mTexture->itsTexture->LockRect    (0, &d3dlr, 0, 0 );
-    TextureHandle &th = Textures[mTexture->itsTexIdx];
-    th.tex->GetLevelDesc(0, &d3dsd);
-
-    // Fehler beim Locken ?
-    if (hresult != D3D_OK)
-    {
-        Protokoll << "Error locking font texture!" << std::endl;
-        GameRunning = false;
-    }
-
-#elif defined(PLATFORM_SDL)
     image_t image;
     std::string fullpath;
     char *pData;
@@ -247,7 +228,6 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
 
         glBindTexture( GL_TEXTURE_2D, 0 );
     */
-#endif
     //key = 0;
 
     // Einzelne Zeichen durchgehen
@@ -263,17 +243,12 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
 
                 for (int l = 0; l<yCharsize; l++)
                 {
-#if defined(PLATFORM_DIRECTX)
-                    if (((std::uint32_t*)d3dlr.pBits)[(j * yCharsize + l) * d3dsd.Width + (i*xCharsize + k)] != key)
-                        found = true;
-#elif defined(PLATFORM_SDL)
                     if (((std::uint32_t*)image.data)[(j * yCharsize + l) * image.w + (i*xCharsize + k)] != key)
                         found = true;
                     /*
                     				if (((std::uint32_t*)buffer)[(j * yCharsize + l) * textureWidth + (i*xCharsize + k)] != key)
                     					found = true;
                     */
-#endif
                 }
 
                 if (found == true)
@@ -295,12 +270,8 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
     //}
     //outfile.close();
 
-#if defined(PLATFORM_DIRECTX)
-    // Unlocken
-    th.tex->UnlockRect(0);  //DKS - Adapted to new TexturesystemClass
-#elif defined(PLATFORM_SDL)
+
     delete [] image.data;
-#endif
 #endif  // 0
 
     return true;

@@ -15,10 +15,6 @@
 // --------------------------------------------------------------------------------------
 // Includes
 // --------------------------------------------------------------------------------------
-
-#if defined(PLATFORM_DIRECTX)
-#include <d3dx8.h>
-#endif
 #include "DX8Graphics.hpp"
 #include "DX8Sprite.hpp"
 //#include "lightmap.h"     //DKS - all light-map related code disabled

@@ -20,10 +20,6 @@
 // --------------------------------------------------------------------------------------
 // Include Dateien
 // --------------------------------------------------------------------------------------
-
-#if defined(PLATFORM_DIRECTX)
-#include <dinput.h>
-#endif
 #if defined(PLATFORM_SDL)
 #include "SDL_port.hpp"
 #endif
@@ -39,13 +35,6 @@
 class DirectJoystickClass {
   public:
     LPDIRECTINPUTDEVICE8 lpDIJoystick;  // Joystick Device Interface
-#if defined(PLATFORM_DIRECTX)
-    GUID guidJoystickDevice;            // GUID des Joystick Devices
-    LPDIRECTINPUTEFFECT pFFE_SmallVib;  // Kurzes, schwaches Vibrieren
-    LPDIRECTINPUTEFFECT pFFE_BigVib;    // Kurzes, starkes Vibrieren
-    LPDIRECTINPUTEFFECT pFFE_MaxVib;    // Kurzes, heftiges Vibrieren
-    LPDIRECTINPUTEFFECT pFFE_Blitz;     // Blitz Effekt
-#endif
 
     bool CanForceFeedback;
     bool Active;
@@ -65,11 +54,7 @@ class DirectJoystickClass {
     void ForceFeedbackEffect(int nr);
     void StopForceFeedbackEffect(int nr);
 
-#if defined(PLATFORM_DIRECTX)
-    bool Init(HWND hwnd, LPDIRECTINPUT8 lpDI);
-#elif defined(PLATFORM_SDL)
     bool Init(int joy);
-#endif
 
     bool Update(void);
 

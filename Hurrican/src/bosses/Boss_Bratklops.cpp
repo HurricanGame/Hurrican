@@ -156,13 +156,9 @@ void GegnerBratklops::DoDraw() {
             D3DXMatrixTranslation(&matTrans2, l + 15, o, 0.0f);       // Transformation wieder zurück
             D3DXMatrixMultiply(&matWorld, &matTrans, &matRot);        // Verschieben und rotieren
             D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);     // und wieder zurück
-#if defined(PLATFORM_DIRECTX)
-            lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
             g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
             load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 
             DirectGraphics.SetFilterMode(true);
@@ -176,13 +172,9 @@ void GegnerBratklops::DoDraw() {
             // Normale Projektions-Matrix wieder herstellen
             //
             D3DXMatrixRotationZ(&matWorld, 0.0f);
-#if defined(PLATFORM_DIRECTX)
-            lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
             g_matModelView = matWorld * g_matView;
 #if defined(GL1)
             load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 
             DirectGraphics.SetColorKeyMode();
