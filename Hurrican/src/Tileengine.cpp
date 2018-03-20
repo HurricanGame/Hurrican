@@ -15,6 +15,7 @@
 // --------------------------------------------------------------------------------------
 
 #include <cstdio>
+#include <string>
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem::v1;
 
@@ -807,17 +808,17 @@ loadfile:
     fs::remove(fs::path(TEMP_FILE_PREFIX "temp.map"));
 
     // Liquid Farben setzen
-    ColR1 = GetDecValue(&DateiAppendix.Col1[0], 2);
-    ColG1 = GetDecValue(&DateiAppendix.Col1[2], 2);
-    ColB1 = GetDecValue(&DateiAppendix.Col1[4], 2);
+    ColR1 = std::stoi(std::string(&DateiAppendix.Col1[0], 2), nullptr, 16);
+    ColG1 = std::stoi(std::string(&DateiAppendix.Col1[2], 2), nullptr, 16);
+    ColB1 = std::stoi(std::string(&DateiAppendix.Col1[4], 2), nullptr, 16);
 
-    ColR2 = GetDecValue(&DateiAppendix.Col2[0], 2);
-    ColG2 = GetDecValue(&DateiAppendix.Col2[2], 2);
-    ColB2 = GetDecValue(&DateiAppendix.Col2[4], 2);
+    ColR2 = std::stoi(std::string(&DateiAppendix.Col2[0], 2), nullptr, 16);
+    ColG2 = std::stoi(std::string(&DateiAppendix.Col2[2], 2), nullptr, 16);
+    ColB2 = std::stoi(std::string(&DateiAppendix.Col2[4], 2), nullptr, 16);
 
-    Col1 = D3DCOLOR_RGBA(ColR1, ColG1, ColB1, GetDecValue(&DateiAppendix.Col1[6], 2));
+    Col1 = D3DCOLOR_RGBA(ColR1, ColG1, ColB1, std::stoi(std::string(&DateiAppendix.Col1[6], 2), nullptr, 16));
 
-    Col2 = D3DCOLOR_RGBA(ColR2, ColG2, ColB2, GetDecValue(&DateiAppendix.Col2[6], 2));
+    Col2 = D3DCOLOR_RGBA(ColR2, ColG2, ColB2, std::stoi(std::string(&DateiAppendix.Col2[6], 2), nullptr, 16));
 
     ColR3 = ColR1 + ColR2 + 32;
     if (ColR3 > 255)
@@ -829,7 +830,7 @@ loadfile:
     if (ColB3 > 255)
         ColB3 = 255;
 
-    ColA3 = GetDecValue(&DateiAppendix.Col1[6], 2) + GetDecValue(&DateiAppendix.Col2[6], 2);
+    ColA3 = std::stoi(std::string(&DateiAppendix.Col1[6], 2), nullptr, 16) + std::stoi(std::string(&DateiAppendix.Col2[6], 2), nullptr, 16);
     if (ColA3 > 255)
         ColA3 = 255;
 

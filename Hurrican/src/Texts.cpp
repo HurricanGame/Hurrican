@@ -60,7 +60,7 @@ bool LoadLanguage(char *filename) {
     int count;
     char temp[256];
 
-    if (CommandLineParams.RunOwnLevelList == true) {
+    if (CommandLineParams.RunOwnLevelList) {
         sprintf_s(temp, "%s/levels/%s/custom.lng", g_storage_ext, CommandLineParams.OwnLevelList);
         if (fs::exists(temp) && fs::is_regular_file(temp))
             goto loadfile;
@@ -115,12 +115,10 @@ loadfile:
     // Stage Reihenfolge laden
     //
     //
-    if (CommandLineParams.RunOwnLevelList == true) {
-        char buf[256];
+    if (CommandLineParams.RunOwnLevelList) {
+        std::string levelfile = std::string(g_storage_ext) + "/levels/" + CommandLineParams.OwnLevelList + "/levellist.dat";
 
-        sprintf_s(buf, "%s/levels/%s/levellist.dat", g_storage_ext, CommandLineParams.OwnLevelList);
-
-        Datei.open(buf);  // Reihenfolge Level laden
+        Datei.open(levelfile);  // Reihenfolge Level laden
         if (!Datei) {
             // Fehler beim öffnen ? Dann standard Liste öffnen
             CommandLineParams.RunOwnLevelList = false;
@@ -416,76 +414,4 @@ void InitReplacers(void) {
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_WAFFE_BOUNCE]));
         strcpy(s_Replacers[29], buf);
     }
-}
-
-// --------------------------------------------------------------------------------------
-// Dec Value einer Hex zahl ermitteln
-// --------------------------------------------------------------------------------------
-
-int GetDecValue(const char *pair, int len) {
-    int r = 0;
-    int f = 0;
-    char c;
-
-    for (int i = 0; i < len; i++) {
-        c = pair[i];
-
-        switch (c) {
-            case '0':
-                f = 0;
-                break;
-            case '1':
-                f = 1;
-                break;
-            case '2':
-                f = 2;
-                break;
-            case '3':
-                f = 3;
-                break;
-            case '4':
-                f = 4;
-                break;
-            case '5':
-                f = 5;
-                break;
-            case '6':
-                f = 6;
-                break;
-            case '7':
-                f = 7;
-                break;
-            case '8':
-                f = 8;
-                break;
-            case '9':
-                f = 9;
-                break;
-            case 'A':
-                f = 10;
-                break;
-            case 'B':
-                f = 11;
-                break;
-            case 'C':
-                f = 12;
-                break;
-            case 'D':
-                f = 13;
-                break;
-            case 'E':
-                f = 14;
-                break;
-            case 'F':
-                f = 15;
-                break;
-        }
-
-        for (int j = 0; j < i; j++)
-            f *= 16;
-
-        r += f;
-    }
-
-    return r;
 }
