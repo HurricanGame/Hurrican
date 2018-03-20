@@ -149,7 +149,7 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
     }
 
     DirectGraphics.SetTexture(Legs[2].itsTexIdx);
-    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, 2, &TriangleStrip[0]);
 
     //----- Unterteil des Beines rendern
 
@@ -214,7 +214,7 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
     }
 
     DirectGraphics.SetTexture(Legs[1].itsTexIdx);
-    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, 2, &TriangleStrip[0]);
 
     //----- Fuß rendern
     Legs[0].RenderSpriteRotated(xp, yp, 0, anim * 3 + off, col);

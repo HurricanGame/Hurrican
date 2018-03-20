@@ -1087,7 +1087,7 @@ void TileEngineClass::DrawBackLevel(void) {
 
                     // Tiles zeichnen
                     if (NumToRender > 0)
-                        DirectGraphics.RendertoBuffer(D3DPT_TRIANGLELIST, NumToRender * 2, &TilesToRender[0]);
+                        DirectGraphics.RendertoBuffer(GL_TRIANGLES, NumToRender * 2, &TilesToRender[0]);
 
                     // Neue aktuelle Textur setzen
                     DirectGraphics.SetTexture(TileGfx[ActualTexture].itsTexIdx);
@@ -1208,7 +1208,7 @@ void TileEngineClass::DrawBackLevel(void) {
     }
 
     if (NumToRender > 0)
-        DirectGraphics.RendertoBuffer(D3DPT_TRIANGLELIST, NumToRender * 2, &TilesToRender[0]);
+        DirectGraphics.RendertoBuffer(GL_TRIANGLES, NumToRender * 2, &TilesToRender[0]);
 }
 
 // --------------------------------------------------------------------------------------
@@ -1253,7 +1253,7 @@ void TileEngineClass::DrawFrontLevel(void) {
 
                     // Tiles zeichnen
                     if (NumToRender > 0)
-                        DirectGraphics.RendertoBuffer(D3DPT_TRIANGLELIST, NumToRender * 2, &TilesToRender[0]);
+                        DirectGraphics.RendertoBuffer(GL_TRIANGLES, NumToRender * 2, &TilesToRender[0]);
 
                     // Neue aktuelle Textur setzen
                     DirectGraphics.SetTexture(TileGfx[ActualTexture].itsTexIdx);
@@ -1380,7 +1380,7 @@ void TileEngineClass::DrawFrontLevel(void) {
 
     if (NumToRender > 0)
 
-        DirectGraphics.RendertoBuffer(D3DPT_TRIANGLELIST, NumToRender * 2, &TilesToRender[0]);
+        DirectGraphics.RendertoBuffer(GL_TRIANGLES, NumToRender * 2, &TilesToRender[0]);
 }
 
 // --------------------------------------------------------------------------------------
@@ -1440,7 +1440,7 @@ void TileEngineClass::DrawBackLevelOverlay(void) {
 
                     // Tiles zeichnen
                     if (NumToRender > 0)
-                        DirectGraphics.RendertoBuffer(D3DPT_TRIANGLELIST, NumToRender * 2, &TilesToRender[0]);
+                        DirectGraphics.RendertoBuffer(GL_TRIANGLES, NumToRender * 2, &TilesToRender[0]);
 
                     // Neue aktuelle Textur setzen
                     DirectGraphics.SetTexture(TileGfx[ActualTexture].itsTexIdx);
@@ -1516,7 +1516,7 @@ void TileEngineClass::DrawBackLevelOverlay(void) {
     }
 
     if (NumToRender > 0)
-        DirectGraphics.RendertoBuffer(D3DPT_TRIANGLELIST, NumToRender * 2, &TilesToRender[0]);
+        DirectGraphics.RendertoBuffer(GL_TRIANGLES, NumToRender * 2, &TilesToRender[0]);
 }
 
 // --------------------------------------------------------------------------------------
@@ -1571,7 +1571,7 @@ void TileEngineClass::DrawOverlayLevel(void) {
                                     // Tiles zeichnen
                                     if (NumToRender > 0)
                                     {
-                                        DirectGraphics.RendertoBuffer (D3DPT_TRIANGLELIST, NumToRender*2,
+                                        DirectGraphics.RendertoBuffer (GL_TRIANGLES, NumToRender*2,
                    &TilesToRender[0]); NumToRender   = 0;
                                     }
 
@@ -1625,7 +1625,7 @@ void TileEngineClass::DrawOverlayLevel(void) {
 
                         // Tiles zeichnen
                         if (NumToRender > 0)
-                            DirectGraphics.RendertoBuffer(D3DPT_TRIANGLELIST, NumToRender * 2, &TilesToRender[0]);
+                            DirectGraphics.RendertoBuffer(GL_TRIANGLES, NumToRender * 2, &TilesToRender[0]);
 
                         // Neue aktuelle Textur setzen
                         DirectGraphics.SetTexture(TileGfx[ActualTexture].itsTexIdx);
@@ -1722,7 +1722,7 @@ void TileEngineClass::DrawOverlayLevel(void) {
     }
 
     if (NumToRender > 0)
-        DirectGraphics.RendertoBuffer(D3DPT_TRIANGLELIST, NumToRender * 2, &TilesToRender[0]);
+        DirectGraphics.RendertoBuffer(GL_TRIANGLES, NumToRender * 2, &TilesToRender[0]);
 }
 
 // --------------------------------------------------------------------------------------
@@ -1814,7 +1814,7 @@ void TileEngineClass::DrawWater(void) {
         }
 
         if (NumToRender > 0)
-            DirectGraphics.RendertoBuffer(D3DPT_TRIANGLELIST, NumToRender * 2, &TilesToRender[0]);
+            DirectGraphics.RendertoBuffer(GL_TRIANGLES, NumToRender * 2, &TilesToRender[0]);
     }
 
     // oder geiles, animiertes Wasser?
@@ -1959,7 +1959,7 @@ void TileEngineClass::DrawWater(void) {
                     DirectGraphics.SetTexture(LiquidGfx[0].itsTexIdx);
                 }
 
-                DirectGraphics.RendertoBuffer(D3DPT_TRIANGLELIST, NumToRender * 2, &TilesToRender[0]);
+                DirectGraphics.RendertoBuffer(GL_TRIANGLES, NumToRender * 2, &TilesToRender[0]);
             }
 
             NumToRender = 0;

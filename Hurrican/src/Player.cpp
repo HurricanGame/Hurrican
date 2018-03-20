@@ -3438,11 +3438,11 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
 
     // Blitzstrahl zeichnen
     v1.color = v2.color = v3.color = v4.color = 0xFFFFFFFF;
-    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, 2, &TriangleStrip[0]);
 
     // nochmal rendern bei supershot?
     if (RiesenShotExtra > 0.0f)
-        DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
+        DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, 2, &TriangleStrip[0]);
 
     DirectGraphics.SetFilterMode(false);
 
@@ -3578,7 +3578,7 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul) {
     DirectGraphics.SetTexture(Projectiles.BlitzTexture.itsTexIdx);
 
     for (int n = 0; n < 12; n++) {
-        DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, (maxintersections - 1) * 2 - 1, &strahlen[n][0]);
+        DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, (maxintersections - 1) * 2 - 1, &strahlen[n][0]);
     }
 
     return;

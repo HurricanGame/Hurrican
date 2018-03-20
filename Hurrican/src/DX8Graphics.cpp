@@ -778,7 +778,7 @@ void DirectGraphicsClass::SetFilterMode(bool filteron) {
 // in den Backbuffer gerendert wird
 // --------------------------------------------------------------------------------------
 
-void DirectGraphicsClass::RendertoBuffer(D3DPRIMITIVETYPE PrimitiveType,
+void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
                                          std::uint32_t PrimitiveCount,
                                          void *pVertexStreamZeroData) {
 #if defined(PLATFORM_DIRECTX)
@@ -1239,7 +1239,7 @@ void DirectGraphicsClass::DrawCircle(uint16_t x, uint16_t y, uint16_t radius) {
     vtx[SECTORS + 1].color = 0x8000FF00;
 
     glLineWidth(3);
-    RendertoBuffer(D3DPT_LINESTRIP, SECTORS, &vtx[0]);
+    RendertoBuffer(GL_LINE_STRIP, SECTORS, &vtx[0]);
 }
 #endif /* ANDROID */
 #endif /* USE_GL2 && USE_FBO */

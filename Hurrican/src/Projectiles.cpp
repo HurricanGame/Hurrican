@@ -2110,7 +2110,7 @@ void ProjectileClass::Render(void) {
 
         // Sprite zeichnen
         // DKS - Altered to match new QUAD2D strips:
-        DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip);
+        DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, 2, &TriangleStrip);
 
         if (Winkel > -10000.0f) {
             // Normale Projektions-Matrix wieder herstellen

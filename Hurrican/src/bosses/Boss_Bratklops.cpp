@@ -169,7 +169,7 @@ void GegnerBratklops::DoDraw() {
 
             // Blitzstrahl zeichnen
             //
-            DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
+            DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, 2, &TriangleStrip[0]);
 
             DirectGraphics.SetFilterMode(false);
 

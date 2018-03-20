@@ -3379,7 +3379,7 @@ bool PartikelClass::Render(void) {
 
         // Sprite zeichnen
         // DKS - Altered to match new QUAD2D strips:
-        DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip);
+        DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, 2, &TriangleStrip);
 
     } else if (PartikelArt == TEXTSECRET) {
         D3DCOLOR col = D3DCOLOR_RGBA(255, 224, 64, alpha);

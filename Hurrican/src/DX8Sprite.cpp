@@ -556,7 +556,7 @@ void DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color) {
     DirectGraphics.SetTexture(itsTexIdx);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, 2, &TriangleStrip[0]);
 }
 
 // --------------------------------------------------------------------------------------
@@ -623,7 +623,7 @@ void DirectGraphicsSprite::RenderSprite(float x,
     DirectGraphics.SetTexture(itsTexIdx);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, 2, &TriangleStrip[0]);
 }
 
 // --------------------------------------------------------------------------------------
@@ -687,7 +687,7 @@ void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
     DirectGraphics.SetTexture(itsTexIdx);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, 2, &TriangleStrip[0]);
 }
 
 // --------------------------------------------------------------------------------------
@@ -742,7 +742,7 @@ void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
     DirectGraphics.SetTexture(itsTexIdx);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, 2, &TriangleStrip[0]);
 }
 
 // --------------------------------------------------------------------------------------
@@ -792,7 +792,7 @@ void DirectGraphicsSprite::RenderSpriteScaled(float x, float y, int width, int h
     DirectGraphics.SetFilterMode(true);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, 2, &TriangleStrip[0]);
 
     DirectGraphics.SetFilterMode(false);
 }
@@ -844,7 +844,7 @@ void DirectGraphicsSprite::RenderSpriteScaled(float x, float y, int width, int h
     DirectGraphics.SetFilterMode(true);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, 2, &TriangleStrip[0]);
 
     DirectGraphics.SetFilterMode(false);
 }
@@ -928,7 +928,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
     DirectGraphics.SetFilterMode(true);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, 2, &TriangleStrip[0]);
 
     DirectGraphics.SetFilterMode(false);
 
@@ -1048,7 +1048,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
     DirectGraphics.SetFilterMode(true);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, 2, &TriangleStrip[0]);
 
     DirectGraphics.SetFilterMode(false);
 
@@ -1167,7 +1167,7 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
     DirectGraphics.SetFilterMode(true);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, 2, &TriangleStrip[0]);
 
     DirectGraphics.SetFilterMode(false);
 
@@ -1267,7 +1267,7 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x,
     DirectGraphics.SetFilterMode(true);
 
     // Sprite zeichnen
-    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, 2, &TriangleStrip[0]);
 
     DirectGraphics.SetFilterMode(false);
 
@@ -1320,7 +1320,7 @@ void RenderRect4(float x, float y, float width, float height, D3DCOLOR c1, D3DCO
     DirectGraphics.SetTexture(-1);
 
     // Rechteck zeichnen
-    DirectGraphics.RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(GL_TRIANGLE_STRIP, 2, &TriangleStrip[0]);
 }
 
 // --------------------------------------------------------------------------------------
@@ -1344,7 +1344,7 @@ void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2, D3DCOLOR Color) {
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->DrawPrimitiveUP(D3DPT_LINELIST, 1, &TriangleStrip[0], sizeof(VERTEX2D));
 #elif defined(PLATFORM_SDL)
-    DirectGraphics.RendertoBuffer(D3DPT_LINELIST, 1, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(GL_LINES, 1, &TriangleStrip[0]);
 #endif
 }
 
@@ -1370,7 +1370,7 @@ void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2, D3DCOLOR Color1, D3DCOLOR Color2
 #if defined(PLATFORM_DIRECTX)
     lpD3DDevice->DrawPrimitiveUP(D3DPT_LINELIST, 1, &TriangleStrip[0], sizeof(VERTEX2D));
 #elif defined(PLATFORM_SDL)
-    DirectGraphics.RendertoBuffer(D3DPT_LINELIST, 1, &TriangleStrip[0]);
+    DirectGraphics.RendertoBuffer(GL_LINES, 1, &TriangleStrip[0]);
 #endif
 }
 

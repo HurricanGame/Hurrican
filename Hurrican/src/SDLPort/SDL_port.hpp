@@ -75,17 +75,6 @@ void D3DXMatrixIdentity(D3DXMATRIXA16 *m);
 #define D3DXMatrixRotationY(m, a) cml::matrix_rotation_world_y((*m), (a))
 #define D3DXMatrixRotationZ(m, a) cml::matrix_rotation_world_z((*m), (a))
 
-typedef enum D3DPRIMITIVETYPE {
-    D3DPT_POINTLIST = GL_POINTS,
-    D3DPT_LINELIST = GL_LINES,
-    D3DPT_LINESTRIP = GL_LINE_STRIP,
-    D3DPT_TRIANGLELIST = GL_TRIANGLES,
-    D3DPT_TRIANGLESTRIP = GL_TRIANGLE_STRIP,
-    D3DPT_TRIANGLEFAN = GL_TRIANGLE_FAN,
-    D3DPT_FORCE_DWORD = 0x7fffffff
-} D3DPRIMITIVETYPE,
-    *LPD3DPRIMITIVETYPE;
-
 // DKS - No need for construction or destruction or virtual types, changed to struct:
 struct D3DXVECTOR2 {
     float x;
