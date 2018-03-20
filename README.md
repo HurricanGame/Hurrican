@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/thrimbor/Hurrican.svg?branch=master)](https://travis-ci.org/thrimbor/Hurrican)
+
 Hi guys,
 
 I decided to release the sourcecode for Hurrican and its level editor to the public today, along with all the assets that the game contains.
