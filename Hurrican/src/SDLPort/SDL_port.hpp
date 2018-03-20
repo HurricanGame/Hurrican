@@ -61,7 +61,6 @@ typedef std::uint32_t LPDIRECT3D8, LPDIRECT3D9, LPDIRECT3DDEVICE8, LPDIRECT3DDEV
 #else
 #define D3DCOLOR_RGBA(r, g, b, a) (((b) << 24) + ((g) << 16) + ((r) << 8) + (a))
 #endif
-#define timeGetTime SDL_GetTicks
 
 #define LPDIRECTINPUTDEVICE8 SDL_Joystick *
 

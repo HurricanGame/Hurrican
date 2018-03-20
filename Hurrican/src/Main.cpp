@@ -769,11 +769,11 @@ int main(int argc, char *argv[]) {
 bool GameInit(HWND hwnd, HINSTANCE hinstance) {
     options_Detail = DETAIL_LOW;
 
-    srand(timeGetTime());
+    srand(SDL_GetTicks());
 
     // DKS - added fast RNG, this is to ensure it always gets seeded, though the above should already do so:
 #ifdef USE_FAST_RNG
-    seed_fast_rand(timeGetTime());
+    seed_fast_rand(SDL_GetTicks());
 #endif  // USE_FAST_RNG
 
 #if defined(PLATFORM_DIRECTX)
@@ -1343,7 +1343,7 @@ void ShowFPS() {
     static std::stringstream char_buf;
 
     frame_ctr++;
-    unsigned int cur_ticks = timeGetTime();
+    unsigned int cur_ticks = SDL_GetTicks();
     unsigned int ticks_elapsed = cur_ticks - ticks_fps_last_updated;
     if (ticks_elapsed > fps_update_freq_in_ticks && frame_ctr > 0) {
         char_buf.str("");

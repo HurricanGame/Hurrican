@@ -1340,7 +1340,7 @@ void EndDemo(void) {
     Timer.SetMaxFPS(0);
 
     // DKS - added this to ensure RNG is always properly seeded
-    srand(timeGetTime());
+    srand(SDL_GetTicks());
 
 }  // EndDemo
 

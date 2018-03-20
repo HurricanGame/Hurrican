@@ -48,11 +48,11 @@ TimerClass::TimerClass(void) {
         ZeitFaktor = 1.0f / Frequenz;
         // Protokoll << static_cast<int>(Frequenz) << std::endl;
     }
-    // wenn nicht, dann timeGetTime verwenden
+    // wenn nicht, dann SDL_GetTicks verwenden
     else {
 #endif
         PerformanceCounter = false;
-        letzterFrame = timeGetTime();
+        letzterFrame = SDL_GetTicks();
         ZeitFaktor = 0.001f;
 #if defined(PLATFORM_DIRECTX)
     }
@@ -77,7 +77,7 @@ void TimerClass::update(void) {
         QueryPerformanceCounter((LARGE_INTEGER *)&aktuelleZeit);  // dann beutzen
 #endif
     } else                             // wenn nicht, dann benutzen
-        aktuelleZeit = timeGetTime();  // wir timeGetTime
+        aktuelleZeit = SDL_GetTicks();  // wir SDL_GetTicks
 
     vergangeneZeit =
         (std::max<std::int64_t>(0, aktuelleZeit - letzterFrame)) * ZeitFaktor;  // vergangene Zeit neu setzen
@@ -117,8 +117,8 @@ void TimerClass::wait(void) {
 #if defined(PLATFORM_DIRECTX)
             QueryPerformanceCounter((LARGE_INTEGER *)&aktuelleZeit);
 #endif
-        } else  // oder timeGetTime, je nach dem
-            aktuelleZeit = timeGetTime();
+        } else  // oder SDL_GetTicks, je nach dem
+            aktuelleZeit = SDL_GetTicks();
     } while (maxFPS < 1 / ((aktuelleZeit - letzterFrame) * ZeitFaktor));
 }
 
@@ -134,8 +134,8 @@ void TimerClass::wait(int Wert) {
 #if defined(PLATFORM_DIRECTX)
             QueryPerformanceCounter((LARGE_INTEGER *)&aktuelleZeit);
 #endif
-        } else  // oder timeGetTime, je nach dem
-            aktuelleZeit = timeGetTime();
+        } else  // oder SDL_GetTicks, je nach dem
+            aktuelleZeit = SDL_GetTicks();
     } while (Wert > (aktuelleZeit - letzterFrame) * ZeitFaktor * 1000);
 }
 
