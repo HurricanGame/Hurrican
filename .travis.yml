@@ -1,0 +1,26 @@
+sudo: required
+
+before_install:
+  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+  - sudo apt-get update -qq
+
+install:
+  - sudo apt-get install -qq g++-7
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
+  - sudo apt-get install -qq libsdl1.2-dev
+  - sudo apt-get install -qq libsdl-image1.2-dev
+  - sudo apt-get install -qq libsdl-mixer1.2-dev
+  - sudo apt-get install -qq libmodplug-dev
+
+language: cpp
+
+compiler:
+  - clang
+  - gcc
+
+before_script:
+  - mkdir Hurrican/build
+  - cd Hurrican/build
+  - cmake ..
+
+script: make
