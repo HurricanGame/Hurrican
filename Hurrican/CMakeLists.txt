@@ -398,8 +398,6 @@ set(HURRICAN_SOURCES
         src/HUD.hpp
         src/Intro.cpp
         src/Intro.hpp
-        src/lightmap.cpp
-        src/lightmap.hpp
         src/Logdatei.cpp
         src/Logdatei.hpp
         src/Main.cpp
