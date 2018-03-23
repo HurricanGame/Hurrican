@@ -48,20 +48,8 @@ namespace fs = std::experimental::filesystem::v1;
 // Parameter	: keine
 //---------------------------------------------------------------------------------------
 bool SoundManagerClass::InitFMOD(SOUNDMANAGER_PARAMETERS smpp) {
-#if defined(PLATFORM_DIRECTX)
-    Protokoll << "Initializing FMOD" << std::endl;
-    FSOUND_SetOutput(FSOUND_OUTPUT_DSOUND);            // Output-Mode setzen
-    FSOUND_SetDriver(0);                               // Default-Soundkarte setzen
-    FSOUND_SetMixer(FSOUND_MIXER_QUALITY_AUTODETECT);  // Mixer-Quality setzen
-
-    FMOD_RESULT result = SOUND_Init(smpp.Mixrate, smpp.MaxSoftwareChannels, smpp.Flags);
-    bool success = (result == FMOD_OK);
-    if (!success)
-        Protokoll << "->ERROR: " << GetFMODErrorString(SOUND_GetError()) << std::endl;
-#elif defined(PLATFORM_SDL)
     Protokoll << "Initializing SDL_mixer" << std::endl;
     bool success = SOUND_Init(smpp.Mixrate, smpp.MaxSoftwareChannels, smpp.Flags);
-#endif
 
     return success;
 }
@@ -394,12 +382,8 @@ void SoundManagerClass::PlaySong(int nr, bool resuming_paused_song) {
         MUSIC_SetPaused(songs[nr].data, false);  // oder Pause aufheben ?
         SetSongVolume(nr, songs[nr].vol);
     } else {
-#if defined(PLATFORM_DIRECTX)
-        MUSIC_PlaySong(songs[nr].data);  // Von vorne abspielen ?
-#else
         // DKS - Added looped parameter under SDL to specify if the song plays looped or not:
         MUSIC_PlaySong(songs[nr].data, songs[nr].looped);  // Von vorne abspielen ?
-#endif
         SetSongVolume(nr, 100.0f);
     }
 }
@@ -695,24 +679,15 @@ loadfile:
 //       freq parameter, and another that doesn't take the freq
 //       parameter, since SDL_mixer doesn't support pitch-changing.
 //       Macro in DX8Sound.h converts PlayWave() calls in the game.
-#if defined(PLATFORM_DIRECTX)
-int SoundManagerClass::PlayWave(int vol, int pan, int freq, int nr)
-#else  // SDL version:
-int SoundManagerClass::PlayWave_SDL(int vol, int pan, int nr)
-#endif
-{
+int SoundManagerClass::PlayWave_SDL(int vol, int pan, int nr) {
     // hört man den Sound überhaupt ?
     if (g_sound_vol == 0 || !sounds[nr].data)
         return -1;
 
-        // Sound spielen
-        // DKS - Added looped boolean parameter for SDL port's fmod wrapper, so that
-        //       it no longer has to keep track of which sounds are looped:
-#if defined(PLATFORM_DIRECTX)
-    int channel = SOUND_PlaySound(FSOUND_FREE, sounds[nr].data);
-#else
+    // Sound spielen
+    // DKS - Added looped boolean parameter for SDL port's fmod wrapper, so that
+    //       it no longer has to keep track of which sounds are looped:
     int channel = SOUND_PlaySound(FSOUND_FREE, sounds[nr].data, sounds[nr].looped);
-#endif
 
     if (channel < 0) {
 #ifdef _DEBUG
@@ -730,11 +705,8 @@ int SoundManagerClass::PlayWave_SDL(int vol, int pan, int nr)
         num_channels = channel + 1;
     }
 
-        // Und Werte für den Channel, in dem er gespielt wird, setzen
-        // DKS - SetFrequency not supported under SDL:
-#if defined(PLATFORM_DIRECTX)
-    SOUND_SetFrequency(channel, freq);
-#endif
+    // Und Werte für den Channel, in dem er gespielt wird, setzen
+    // DKS - SetFrequency not supported under SDL:
 
     channels[channel].paused = false;
     channels[channel].sound_num = nr;
@@ -764,12 +736,7 @@ int SoundManagerClass::PlayWave_SDL(int vol, int pan, int nr)
 //       freq parameter, and another that doesn't take the freq
 //       parameter, since SDL_mixer doesn't support pitch-changing.
 //       Macro in DX8Sound.h converts PlayWave3D() calls in the game.
-#if defined(PLATFORM_DIRECTX)
-int SoundManagerClass::PlayWave3D(int x, int y, int freq, int nr)
-#else  // SDL version:
-int SoundManagerClass::PlayWave3D_SDL(int x, int y, int nr)
-#endif
-{
+int SoundManagerClass::PlayWave3D_SDL(int x, int y, int nr) {
     int channel = -1;
 
     // DKS - Functionality here also copied into Update3DChannel()
@@ -797,11 +764,7 @@ int SoundManagerClass::PlayWave3D_SDL(int x, int y, int nr)
                 pan = 255;
         }
 
-#if defined(PLATFORM_DIRECTX)
-        channel = PlayWave(vol, pan, freq, nr);
-#else  // SDL version:
         channel = PlayWave_SDL(vol, pan, nr);
-#endif
     }
 
     if (channel != -1) {
@@ -969,12 +932,3 @@ void SoundManagerClass::SetPendingChannelVolumeAndPanning(int ch, int new_vol, i
         channels[ch].pending_pan = static_cast<int>(static_cast<float>(accumulated_pan) / static_cast<float>(num_pans));
     }
 }
-
-// DKS - added.. (Playing waves and varying freq's not supported under SDL, for now anyway)
-#if defined(PLATFORM_DIRECTX)
-void SoundManagerClass::SetWaveFrequency(int nr, int freq) {
-    for (int i = 0; i < num_channels; ++i)
-        if (channels[i].sound_num == nr)
-            SOUND_SetFrequency(i, freq);
-}
-#endif

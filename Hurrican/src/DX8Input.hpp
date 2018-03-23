@@ -19,9 +19,6 @@
 #if defined(ANDROID)
 #include <vector>
 #endif
-#if defined(PLATFORM_DIRECTX)
-#include <dinput.h>
-#endif
 #include "DX8Joystick.hpp"
 
 // --------------------------------------------------------------------------------------
@@ -31,9 +28,7 @@
 #define MAX_MOUSEBUTTONS 4
 #define DINPUT_BUFFERSIZE 32
 #define MAX_KEYS 256
-#if defined(PLATFORM_DIRECTX)
-#define KeyDown(Taste) (TastaturPuffer[Taste] & 0x80)
-#elif defined(PLATFORM_SDL)
+#if defined(PLATFORM_SDL)
 #if SDL_VERSION_ATLEAST(2, 0, 0)
 #define KeyDown(Taste) (TastaturPuffer[SDL_GetScancodeFromKey(Taste)] > 0)
 #else
@@ -72,14 +67,8 @@ class DirectInputClass {
 #if defined(GCW)
     int InternalJoystickIndex;  // If the system has built-in joystick controls,
 #endif                          // GCW
-        // this is their index, -1 otherwise.
+                                // this is their index, -1 otherwise.
   public:
-#if defined(PLATFORM_DIRECTX)
-    LPDIRECTINPUTDEVICE8 lpDIKeyboard;  // Keyboard Device Interface
-    LPDIRECTINPUTDEVICE8 lpDIMaus;      // Maus Device Interface
-    GUID guidJoystickDevice;            // GUID des Joystick Devices
-#endif
-
     int JoysticksFound;
     DirectJoystickClass Joysticks[MAX_JOYSTICKS];
 
@@ -139,9 +128,7 @@ class DirectInputClass {
 // --------------------------------------------------------------------------------------
 
 extern DirectInputClass DirectInput;
-#if defined(PLATFORM_DIRECTX)
-extern char TastaturPuffer[256];  // Tastaturpuffer des Keyboards
-#elif defined(PLATFORM_SDL)
+#if defined(PLATFORM_SDL)
 extern const Uint8 *TastaturPuffer;
 #endif
 extern bool UseForceFeedback;  // ForceFeedback Fähigkeit nutzen ?

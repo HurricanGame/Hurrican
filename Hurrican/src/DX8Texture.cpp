@@ -132,11 +132,7 @@ void TexturesystemClass::UnloadTexture(const int idx) {
         if (th.instances > 0) {
             --th.instances;
             if (th.instances == 0) {
-#if defined(PLATFORM_DIRECTX)
-                DX8_UnloadTexture(th);
-#else
                 SDL_UnloadTexture(th);
-#endif
 #ifdef _DEBUG
                 Protokoll << "-> Texture successfully released !" << std::endl;
 #endif
@@ -221,12 +217,8 @@ bool TexturesystemClass::LoadTextureFromFile(const std::string &filename, Textur
     if (fs::exists(RARFILENAME) && fs::is_regular_file(RARFILENAME) &&
         urarlib_get(&buf_data, &buf_size, filename.c_str(), RARFILENAME, convertText(RARFILEPASSWORD)) &&
         buf_data != NULL) {
-    // Load the texture from the image that is now in buf_data[]
-#if defined(PLATFORM_DIRECTX)
-        success = DX8_LoadTexture(NULL, NULL, buf_data, buf_size, th);
-#elif defined(PLATFORM_SDL)
+        // Load the texture from the image that is now in buf_data[]
         success = SDL_LoadTexture(NULL, NULL, buf_data, buf_size, th);
-#endif
         if (buf_data)
             free(buf_data);
 
@@ -239,12 +231,8 @@ bool TexturesystemClass::LoadTextureFromFile(const std::string &filename, Textur
     }
 #endif  // USE_UNRARLIB
 
-        // Load the texture from disk:
-#if defined(PLATFORM_DIRECTX)
-    success = DX8_LoadTexture(path, filename, NULL, 0, th);
-#elif defined(PLATFORM_SDL)
+    // Load the texture from disk:
     success = SDL_LoadTexture(path, filename, NULL, 0, th);
-#endif
     if (success)
         goto loaded;
 
@@ -260,103 +248,3 @@ loaded:
 
     return success;
 }
-
-// DKS - This is an UNTESTED effort at incorporating DirectX support back into the new texture system.
-//      It should be more flexible than the original game's DirectX texture support, in that
-//      it allows for loading textures from disk that are arbitrarily resized.
-#if defined(PLATFORM_DIRECTX)
-bool TexturesystemClass::DX8_LoadTexture(const std::string &path,
-                                         const std::string &filename,
-                                         void *buf,
-                                         unsigned int buf_size,
-                                         TextureHandle &th) {
-    HRESULT hresult;
-    bool load_from_memory = buf_size > 0;
-    std::string fullpath = path + "/" + filename;
-
-    if (load_from_memory && !buf) {
-        Protokoll << "Error: null ptr passed to DX8_LoadTexture() reading file from memory" << std::endl;
-        GameRunning = false;
-        return false;
-    } else if (filename.empty()) {
-        Protokoll << "Error: empty filename passed to DX8_LoadTexture()" << std::endl;
-        GameRunning = false;
-        return false;
-    }
-
-    if (load_from_memory) {
-        // Load texture from memory buffer
-        hresult = D3DXCreateTextureFromFileInMemoryEx(lpD3DDevice, (LPVOID)buf, buf_size, NULL,
-                                                      NULL,  // x und y GrÃ¶sse des Sprites (aus Datei Ã¼bernehmen)
-                                                      1,     // Nur eine Version der Textur
-                                                      0,     // Immer 0 setzen
-                                                      D3DFMT_UNKNOWN,    // Format aus der Datei lesen
-                                                      D3DPOOL_MANAGED,   // DX bestimmt wo die Textur gespeichert wird
-                                                      D3DX_FILTER_NONE,  // Keine Filter verwenden
-                                                      D3DX_FILTER_NONE,
-                                                      0xFFFF00FF,  // Colorkeyfarbe (Lila)
-                                                      NULL,        // Keine Image Info
-                                                      NULL,        // Keine Palette angeben
-                                                      &th.tex);
-    } else {
-        if (!FileExists(fullpath.c_str()))
-            return false;
-
-        hresult = D3DXCreateTextureFromFileEx(lpD3DDevice, fullpath.c_str(), NULL,
-                                              NULL,  // x und y GrÃ¶sse des Sprites (aus Datei Ã¼bernehmen)
-                                              1,     // Nur eine Version der Textur
-                                              0,     // Immer 0 setzen
-                                              D3DFMT_UNKNOWN,    // Format aus der Datei lesen
-                                              D3DPOOL_MANAGED,   // DX bestimmt wo die Textur gespeichert wird
-                                              D3DX_FILTER_NONE,  // Keine Filter verwenden
-                                              D3DX_FILTER_NONE,
-                                              0xFFFF00FF,  // Colorkeyfarbe (Lila)
-                                              NULL,        // Keine Image Info
-                                              NULL,        // Keine Palette angeben
-                                              &th.tex);
-    }
-
-    if (hresult != D3D_OK) {
-        if (load_from_memory) {
-            Protokoll << "Error in DirectX loading texture" << std::endl;
-            GameRunning = false;
-        } else {
-            Protokoll << "Error in DirectX loading texture: " << fullpath << std::endl;
-            GameRunning = false;
-        }
-
-        return false;
-    } else {
-        // Get the dimensions of texture in VRAM:
-        D3DSURFACE_DESC tex_info;
-        tex_info.Width = tex_info.Height = 0;
-        th.tex->GetLevelDesc(0, &tex_info);
-
-        // Get the dimensions of the file directly:
-        D3DXIMAGE_INFO img_info;
-        img_info.Width = img_info.Height = 0;
-
-        if (load_from_memory)
-            hresult = D3DXGetimgInfoFromFileInMemory(buf, buf_size, &img_info);
-        else
-            hresult = D3DXGetimgInfoFromFile(fullpath.c_str(), &img_info);
-
-        if (hresult != D3D_OK || tex_info.Width == 0 || tex_info.Height == 0 || img_info.Width == 0 ||
-            img_info.Height == 0) {
-            Protokoll << "Error in DirectX reading image dimensions" << std::endl;
-            GameRunning = false;
-        } else {
-            th.npot_scalex = (double)img_info.Width / (double)tex_info.Width;
-            th.npot_scaley = (double)img_info.Height / (double)tex_info.Height;
-        }
-    }
-
-    th.instances = 1;
-    return true;
-}
-
-void TexturesystemClass::DX8_UnloadTexture(TextureHandle &th) {
-    SafeRelease(th.tex);
-    th.instances = 0;
-}
-#endif  // PLATFORM_DIRECTX

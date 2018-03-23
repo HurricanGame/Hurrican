@@ -16,20 +16,9 @@
 #include <stdio.h>
 #include <string>
 
-#if defined(PLATFORM_DIRECTX)
-#include <d3dx8.h>      // Für die Texturen
-#include <d3dx8math.h>  // Für D3DXVECTOR2
-#endif
-
-#if defined(PLATFORM_SDL)
-#include "SDLPort/SDL_port.hpp"
-#endif  // PLATFORM_SDL
-
 #include "DX8Texture.hpp"
-
-#if defined(PLATFORM_SDL)
+#include "SDLPort/SDL_port.hpp"
 #include "SDLPort/texture.hpp"
-#endif  // PLATFORM_SDL
 
 #include "DX8Graphics.hpp"
 #include "DX8Sprite.hpp"
@@ -54,112 +43,6 @@ int ActualTexture = -1;  // aktuelle Textur (damit wir uns ein paar
 // Klassenfunktionen
 // --------------------------------------------------------------------------------------
 
-// DKS - DirectGraphicsSurface class was never used anywhere in the game, even in the
-//      original DirectX release, so disabled it:
-#if 0
-// --------------------------------------------------------------------------------------
-// DirectGraphicsSurface Funktionen
-// --------------------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------------------
-// Konstruktor
-// --------------------------------------------------------------------------------------
-
-DirectGraphicsSurface::DirectGraphicsSurface(void)
-{
-    itsSurface = (LPDIRECT3DSURFACE8)NULL;
-}
-
-// --------------------------------------------------------------------------------------
-// Desktruktor gibt die Surface wieder frei
-// --------------------------------------------------------------------------------------
-
-DirectGraphicsSurface::~DirectGraphicsSurface(void)
-{
-#if defined(PLATFORM_DIRECTX)
-    SafeRelease(itsSurface);
-#elif defined(PLATFORM_SDL)
-    delete_texture( itsSurface );
-    itsSurface = -1;
-#endif
-    Protokoll << "Surface release		: successful !" << std::endl;
-}
-
-// --------------------------------------------------------------------------------------
-// Laden des Bildes "Filename" mit Grösse xSize, ySize in die Surface
-// --------------------------------------------------------------------------------------
-
-bool DirectGraphicsSurface::LoadImage(const char *Filename, int xSize, int ySize)
-{
-    HRESULT hresult;
-    char	Temp[140];
-
-#if defined(PLATFORM_DIRECTX)
-    // Surface erstellen
-    hresult = lpD3DDevice->CreateImageSurface(xSize, ySize, D3DFormat, &itsSurface);
-
-    // Fehler beim Surface erstellen ?
-    if(hresult != D3D_OK)
-    {
-        strcpy_s(Temp, strlen("Failed to create surface-for ") + 1, "Failed to create surface-for ");
-        strcat_s(Temp, strlen(Filename) + 1, Filename);
-        strcat_s(Temp, 3, " !");
-        Protokoll << Temp << std::endl;
-        GameRunning = false;
-        return false;
-    }
-
-    // Bild laden
-    hresult = D3DXLoadSurfaceFromFile(itsSurface, NULL, NULL, Filename, NULL,
-                                      D3DX_FILTER_NONE, 0, NULL);
-
-    // Fehler beim Laden ?
-    if(hresult != D3D_OK)
-    {
-        strcpy_s(Temp, strlen("Failed to load ") + 1, "Failed to load ");
-        strcat_s(Temp, strlen(Filename) + 1, Filename);
-        strcat_s(Temp, 5, " !");
-        Protokoll << Temp << std::endl;
-        GameRunning = false;
-        return false;
-    }
-#elif defined(PLATFORM_SDL)
-    (void)hresult;
-
-    SDL_Rect dims;
-    itsSurface = LoadTexture( Filename, dims, 0 );
-#endif
-
-    // Grösse setzen
-    itsRect.left   = 0;
-    itsRect.top    = 0;
-    itsRect.right  = xSize;
-    itsRect.bottom = ySize;
-
-    // Bild korrekt geladen
-    strcat_s(Temp, strlen(TextArray [TEXT_LADE_BITMAP]) + 1, TextArray [TEXT_LADE_BITMAP]);
-    strcat_s(Temp, strlen(Filename) + 1, Filename);
-    strcat_s(Temp, strlen(TextArray [TEXT_LADEN_ERFOLGREICH]) + 1, TextArray [TEXT_LADEN_ERFOLGREICH]);
-    Protokoll << Temp << std::endl;
-
-    return true;
-}
-
-// --------------------------------------------------------------------------------------
-// Bild auf Surface anzeigen
-// --------------------------------------------------------------------------------------
-
-#if defined(PLATFORM_DIRECTX)
-bool DirectGraphicsSurface::DrawSurface(LPDIRECT3DSURFACE8 &Temp, int xPos, int yPos)
-{
-    POINT Dest = {static_cast<int>(xPos), static_cast<int>(yPos)};						// Zielkoordinaten
-    lpD3DDevice->CopyRects(itsSurface, &itsRect, 1, Temp, &Dest);	// anzeigen
-
-    return true;
-}
-#endif
-#endif  // 0
-
 // --------------------------------------------------------------------------------------
 // DirectGraphicsSprite Funktionen
 // --------------------------------------------------------------------------------------
@@ -181,12 +64,8 @@ DirectGraphicsSprite::~DirectGraphicsSprite(void) {
 
     //    if(itsTexture != 0)
     //    {
-    //#if defined(PLATFORM_DIRECTX)
-    //        SafeRelease(itsTexture);
-    //#elif defined(PLATFORM_SDL)
     //        delete_texture( itsTexture );
     //        itsTexture = -1;
-    //#endif
     //        itsTexture = (LPDIRECT3DTEXTURE8)NULL;
     //        LoadedTextures--;
     ////		Protokoll << "-> Sprite texture successfully released !" << std::endl;
@@ -227,12 +106,8 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
 #endif
 
     // zuerst eine evtl benutzte Textur freigeben
-#if defined(PLATFORM_DIRECTX)
-    SafeRelease(itsTexture);
-#elif defined(PLATFORM_SDL)
     delete_texture( itsTexture );
     itsTexture = 0;
-#endif
 
     fromrar = false;
 
@@ -313,77 +188,17 @@ loadfile:
     // normal von Platte laden?
     if (fromrar == false)
     {
-#if defined(PLATFORM_DIRECTX)
-        // Textur laden
-        hresult = D3DXCreateTextureFromFileEx(
-                      lpD3DDevice,
-                      Temp,
-                      NULL, NULL,				  // x und y Grösse des Sprites (aus Datei übernehmen)
-                      1,                          // Nur eine Version der Textur
-                      0,                          // Immer 0 setzen
-                      D3DFMT_UNKNOWN,			  // Format aus der Datei lesen
-                      D3DPOOL_MANAGED,            // DX bestimmt wo die Textur gespeichert wird
-                      D3DX_FILTER_NONE,			  // Keine Filter verwenden
-                      D3DX_FILTER_NONE,
-                      0xFFFF00FF,                 // Colorkeyfarbe (Lila)
-                      NULL,						  // Keine Image Info
-                      NULL,						  // Keine Palette angeben
-                      &itsTexture);
-
-#elif defined(PLATFORM_SDL)
         itsTexture = LoadTexture( Temp, dims, 0 );
-#endif
     }
     else
     {
-#if defined(PLATFORM_DIRECTX)
-        // Textur aus Speicher erzeugen
-        hresult = D3DXCreateTextureFromFileInMemoryEx(
-                      lpD3DDevice,
-                      (LPVOID)pData,
-                      Size,
-                      NULL, NULL,				  // x und y Grösse des Sprites (aus Datei übernehmen)
-                      1,                          // Nur eine Version der Textur
-                      0,                          // Immer 0 setzen
-                      D3DFMT_UNKNOWN,			  // Format aus der Datei lesen
-                      D3DPOOL_MANAGED,            // DX bestimmt wo die Textur gespeichert wird
-                      D3DX_FILTER_NONE,			  // Keine Filter verwenden
-                      D3DX_FILTER_NONE,
-                      0xFFFF00FF,                 // Colorkeyfarbe (Lila)
-                      NULL,						  // Keine Image Info
-                      NULL,						  // Keine Palette angeben
-                      &itsTexture);
-#elif defined(PLATFORM_SDL)
         itsTexture = LoadTexture( pData, dims, Size );
-#endif
         free(pData);
     }
 
-#if defined(PLATFORM_DIRECTX)
-    // Fehler beim Laden ?
-    if(hresult != D3D_OK)
-    {
-        strcpy_s(Temp, strlen("Fehler beim Laden von ") + 1, "Fehler beim Laden von ");
-        strcat_s(Temp, strlen(Filename) + 1, Filename);
-        strcat_s(Temp, 4, " !");
-        Protokoll << Temp << std::endl;
-        GameRunning = false;
-        return false;
-    }
-
-    // Grösse der Textur anpassen
-    D3DSURFACE_DESC desc;
-    itsTexture->GetLevelDesc(0,&desc);
-#endif
-
     // Grösse setzen
-#if defined(PLATFORM_DIRECTX)
-    itsXSize		= (float)desc.Width;
-    itsYSize		= (float)desc.Height;
-#elif defined(PLATFORM_SDL)
     itsXSize		= (float)dims.w;
     itsYSize		= (float)dims.h;
-#endif
     itsXFrameCount	= xfc;
     itsYFrameCount	= yfc;
     itsXFrameSize	= xfs;
@@ -916,13 +731,9 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans);   // Verschieben
     D3DXMatrixMultiply(&matWorld, &matWorld, &matRot);     // rotieren
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück verschieben
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 
     DirectGraphics.SetFilterMode(true);
@@ -934,13 +745,9 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
 
     // Normale Projektions-Matrix wieder herstellen
     D3DXMatrixRotationZ(&matWorld, 0.0f);
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 }
 
@@ -1036,13 +843,9 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans);   // Verschieben
     D3DXMatrixMultiply(&matWorld, &matWorld, &matRot);     // rotieren
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück verschieben
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 
     DirectGraphics.SetFilterMode(true);
@@ -1054,13 +857,9 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
 
     // Normale Projektions-Matrix wieder herstellen
     D3DXMatrixRotationZ(&matWorld, 0.0f);
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 }
 
@@ -1155,13 +954,9 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans);   // Verschieben
     D3DXMatrixMultiply(&matWorld, &matWorld, &matRot);     // rotieren
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück verschieben
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 
     DirectGraphics.SetFilterMode(true);
@@ -1173,13 +968,9 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
 
     // Normale Projektions-Matrix wieder herstellen
     D3DXMatrixRotationZ(&matWorld, 0.0f);
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 }
 
@@ -1255,13 +1046,9 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x,
 
     // und wieder zurück verschieben
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 
     DirectGraphics.SetFilterMode(true);
@@ -1273,13 +1060,9 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x,
 
     // Normale Projektions-Matrix wieder herstellen
     D3DXMatrixRotationZ(&matWorld, 0.0f);
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 }
 
@@ -1341,11 +1124,7 @@ void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2, D3DCOLOR Color) {
     DirectGraphics.SetTexture(-1);
 
     // Linie zeichnen
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->DrawPrimitiveUP(D3DPT_LINELIST, 1, &TriangleStrip[0], sizeof(VERTEX2D));
-#elif defined(PLATFORM_SDL)
     DirectGraphics.RendertoBuffer(GL_LINES, 1, &TriangleStrip[0]);
-#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -1367,11 +1146,7 @@ void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2, D3DCOLOR Color1, D3DCOLOR Color2
     DirectGraphics.SetTexture(-1);
 
     // Linie zeichnen
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->DrawPrimitiveUP(D3DPT_LINELIST, 1, &TriangleStrip[0], sizeof(VERTEX2D));
-#elif defined(PLATFORM_SDL)
     DirectGraphics.RendertoBuffer(GL_LINES, 1, &TriangleStrip[0]);
-#endif
 }
 
 // --------------------------------------------------------------------------------------

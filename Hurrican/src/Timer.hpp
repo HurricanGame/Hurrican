@@ -35,10 +35,8 @@
 
 class TimerClass {
   private:
-    bool PerformanceCounter;        // Performance Counter vorhanden ?
     std::int64_t vergangeneFrames;  // Vergangene Frames seit Beginn (für Schnitt)
     std::int64_t aktuelleZeit;      // die aktuelle Zeit
-    std::int64_t Frequenz;          // Performance Timer Frequenz
     std::int64_t letzterFrame;      // Zeit des vorherigen Frames
     float MoveSpeed;                // Wird durch die aktuelle Framerate geteilt
     double ZeitFaktor;              // Skalierungsfaktor
@@ -52,7 +50,7 @@ class TimerClass {
     int maxFPS;                // Maximum Framerate (Framebremse)
     float SpeedFaktor;         // Faktor, mit dem alle Werte verrechnet werden
 
-    TimerClass(void);               // Konstruktor, prüft auf den PerformanceCounter
+    TimerClass(void);               // Konstruktor
     ~TimerClass(void);              // Desktruktor
     void update(void);              // Timer updaten und Zeiten berechnen
     void wait(void);                // Maximum Framrate abwarten

@@ -24,76 +24,23 @@
 // Variablen
 // --------------------------------------------------------------------------------------
 
-#if defined(PLATFORM_DIRECTX)
-char TastaturPuffer[MAX_KEYS];  // Tastaturpuffer für Keyboardabfrage
-#elif defined(PLATFORM_SDL)
 const Uint8 *TastaturPuffer;
-#endif
 
 // --------------------------------------------------------------------------------------
 // Joystick mit ForceFeedback Enumeration Callback-Funktion
 // --------------------------------------------------------------------------------------
 
-#if defined(PLATFORM_DIRECTX)
-bool CALLBACK EnumForceFeedbackDevices(LPDIDEVICEINSTANCE lpddi, void *pv) {
-    GUID *pguidDevice = NULL;
-
-    if (pv) {
-        pguidDevice = (GUID *)pv;
-        *pguidDevice = lpddi->guidInstance;
-    }
-
-    DirectInput.Joysticks[DirectInput.JoysticksFound].CanForceFeedback = true;
-    DirectInput.Joysticks[DirectInput.JoysticksFound].guidJoystickDevice = DirectInput.guidJoystickDevice;
-    strcpy_s(DirectInput.Joysticks[DirectInput.JoysticksFound].JoystickName, strlen((char *)lpddi->tszProductName) + 1,
-             (char *)lpddi->tszProductName);
-
-    // Counter erhöhen
-    DirectInput.JoysticksFound++;
-
-    // Genug Joysticks? Dann halte die EnumDevices() Funktion an
-    if (DirectInput.JoysticksFound < MAX_JOYSTICKS)
-        return DIENUM_CONTINUE;
-    else
-        return DIENUM_STOP;
-}
-#elif defined(PLATFORM_SDL)
 bool EnumForceFeedbackDevices(int lpddi, void *pv) {
     return true;
 }
-#endif
 
-    // --------------------------------------------------------------------------------------
-    // Joystick Enumeration Callback-Funktion
-    // --------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------
+// Joystick Enumeration Callback-Funktion
+// --------------------------------------------------------------------------------------
 
-#if defined(PLATFORM_DIRECTX)
-bool CALLBACK EnumJoystickDevices(LPDIDEVICEINSTANCE lpddi, void *pv) {
-    GUID *pguidDevice = NULL;
-
-    if (pv) {
-        pguidDevice = (GUID *)pv;
-        *pguidDevice = lpddi->guidInstance;
-    }
-
-    DirectInput.Joysticks[DirectInput.JoysticksFound].CanForceFeedback = false;
-    strcpy_s(DirectInput.Joysticks[DirectInput.JoysticksFound].JoystickName, strlen((char *)lpddi->tszProductName) + 1,
-             (char *)lpddi->tszProductName);
-
-    // Counter erhöhen
-    DirectInput.JoysticksFound++;
-
-    // Genug Joysticks? Dann halte die EnumDevices() Funktion an
-    if (DirectInput.JoysticksFound < MAX_JOYSTICKS)
-        return DIENUM_CONTINUE;
-    else
-        return DIENUM_STOP;
-}
-#elif defined(PLATFORM_SDL)
 bool EnumJoystickDevices(int lpddi, void *pv) {
     return true;
 }
-#endif
 
 // --------------------------------------------------------------------------------------
 // Klassenfunktionen
@@ -108,13 +55,6 @@ bool EnumJoystickDevices(int lpddi, void *pv) {
 // --------------------------------------------------------------------------------------
 
 DirectInputClass::DirectInputClass(void) {
-#if defined(PLATFORM_DIRECTX)
-    lpDI = NULL;
-    lpDIKeyboard = NULL;
-    lpDIMaus = NULL;
-    NumberOfKeys = MAX_KEYS;
-#endif
-
     // Zu Beginn alle Eingabegeräte zurücksetzen
     MausX = 0;
     MausY = 0;
@@ -134,184 +74,10 @@ DirectInputClass::DirectInputClass(void) {
 
 DirectInputClass::~DirectInputClass(void) {}
 
-    // --------------------------------------------------------------------------------------
-    // DirectInput initialisieren
-    // Keyboard und Maus initialisieren und Joystick, falls vorhanden
-    // --------------------------------------------------------------------------------------
-
-#if defined(PLATFORM_DIRECTX)
-bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst) {
-    HRESULT hresult;
-
-    Protokoll << "\n--> DirectInput8 init <--\n";
-    Protokoll << "-------------------------\n" << std::endl;
-
-    hresult = DirectInput8Create(hinst, DIRECTINPUT_VERSION, IID_IDirectInput8, (LPVOID *)&lpDI, NULL);
-
-    // DirectInput Haupt-Device erstellen
-    if (hresult != DI_OK) {
-        Protokoll << "\n-> DirectInput8Create error!" << std::endl;
-        GameRunning = false;
-        return false;
-    }
-    Protokoll << "DirectInput8Create successful!" << std::endl;
-
-    //----- Keyboard
-
-    // Keyboard Device erstellen
-    hresult = lpDI->CreateDevice(GUID_SysKeyboard, &lpDIKeyboard, NULL);
-    if (hresult != DI_OK) {
-        Protokoll << "\n-> Keyboard : CreateDevice error!" << std::endl;
-        GameRunning = false;
-        return false;
-    }
-    Protokoll << "Keyboard : CreateDevice successful!" << std::endl;
-
-    // Datenformat für Keyboard festlegen
-    hresult = lpDIKeyboard->SetDataFormat(&c_dfDIKeyboard);
-    if (hresult != DI_OK) {
-        Protokoll << "\n-> Keyboard : SetDataFormat error!" << std::endl;
-        GameRunning = false;
-        return false;
-    }
-    Protokoll << "Keyboard : SetDataFormat successful!" << std::endl;
-
-    // Keyboard Cooperativelevel setzen
-    if (CommandLineParams.RunWindowMode == true)
-        hresult = lpDIKeyboard->SetCooperativeLevel(hwnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
-    else
-        hresult = lpDIKeyboard->SetCooperativeLevel(hwnd, DISCL_BACKGROUND | DISCL_NONEXCLUSIVE);
-
-    if (hresult != DI_OK) {
-        Protokoll << "\n-> Keyboard : SetCooperativeLevel error!" << std::endl;
-        GameRunning = false;
-        return false;
-    }
-    Protokoll << "Keyboard : SetCooperativeLevel successful!" << std::endl;
-
-    // Keyboard akquirieren
-    if (lpDIKeyboard) {
-        hresult = lpDIKeyboard->Acquire();
-        if (hresult != DI_OK) {
-            Protokoll << "\n-> Keyboard : Acquire error!" << std::endl;
-            GameRunning = false;
-            return false;
-        }
-        Protokoll << "Keyboard : Acquire successful!" << std::endl;
-    }
-
-    // angeschlossenen Joystick mit ForceFeedback enumerieren
-    hresult = lpDI->EnumDevices(DI8DEVCLASS_GAMECTRL, (LPDIENUMDEVICESCALLBACK)EnumForceFeedbackDevices,
-                                &guidJoystickDevice, 0 /*DIEDFL_ATTACHEDONLY*/);
-    if (hresult != DI_OK) {
-        hresult = lpDI->EnumDevices(DI8DEVCLASS_GAMECTRL, (LPDIENUMDEVICESCALLBACK)EnumJoystickDevices,
-                                    &guidJoystickDevice, 0 /*DIEDFL_ATTACHEDONLY*/);
-    } else
-        Protokoll << "Joystick : EnumDevices successful!" << std::endl;
-
-    // Gefundene Joysticks initialisieren
-    if (JoysticksFound == 0)
-        Protokoll << "No joystick found, skipping init!" << std::endl;
-    else
-        for (int i = 0; i < JoysticksFound; i++) {
-            char Buf[255];
-
-            if (Joysticks[i].Init(hwnd, lpDI) == false) {
-                strcpy_s(Buf, strlen("Error initialising Joystick ") + 1, "Error initialising Joystick ");
-                strcat_s(Buf, strlen(Joysticks[i].JoystickName) + 1, Joysticks[i].JoystickName);
-                strcat_s(Buf, 5, " !");
-                Protokoll << Buf << std::endl;
-            } else {
-                JoystickFound = true;
-
-                strcpy_s(Buf, strlen("Joystick found : ") + 1, "Joystick found : ");
-                strcat_s(Buf, strlen(Joysticks[i].JoystickName) + 1, Joysticks[i].JoystickName);
-                Protokoll << Buf << std::endl;
-
-                if (Joysticks[i].CanForceFeedback) {
-                    Protokoll << "Initializing ForceFeedback Effects" << std::endl;
-
-                    // Vibrations-Effekte erstellen
-                    // Kurzes, schwaches Vibrieren (ShorVib)
-                    DICONSTANTFORCE diConstantForce;
-                    DIRAMPFORCE diRampForce;
-                    DIEFFECT diEffect;
-                    std::uint32_t dwAxes[2] = {DIJOFS_X, DIJOFS_Y};
-                    std::int32_t lDirection[2] = {180 * DI_DEGREES, 0};
-
-                    diConstantForce.lMagnitude = DI_FFNOMINALMAX;
-
-                    diEffect.dwSize = sizeof(DIEFFECT);
-                    diEffect.dwFlags = DIEFF_OBJECTOFFSETS | DIEFF_CARTESIAN;
-                    diEffect.dwDuration = DI_SECONDS / 4;
-                    diEffect.dwSamplePeriod = 0;
-                    diEffect.dwGain = DI_FFNOMINALMAX;
-                    diEffect.dwTriggerButton = DIEB_NOTRIGGER;
-                    diEffect.dwTriggerRepeatInterval = 0;
-                    diEffect.cAxes = 2;
-                    diEffect.rgdwAxes = dwAxes;
-                    diEffect.rglDirection = lDirection;
-                    diEffect.lpEnvelope = NULL;
-                    diEffect.cbTypeSpecificParams = sizeof(DICONSTANTFORCE);
-                    diEffect.lpvTypeSpecificParams = &diConstantForce;
-                    diEffect.dwStartDelay = 0;
-
-                    hresult = Joysticks[i].lpDIJoystick->CreateEffect(GUID_ConstantForce, &diEffect,
-                                                                      &Joysticks[i].pFFE_SmallVib, NULL);
-                    if (hresult != DI_OK) {
-                        Protokoll << "Error initializing Effect! Not using ForceFeedback" << std::endl;
-                        Joysticks[i].CanForceFeedback = false;
-                    }
-
-                    // Kurzes, starkes Vibrieren (BigVib)
-                    diEffect.dwFlags = DIEFF_OBJECTOFFSETS | DIEFF_POLAR;
-                    diEffect.dwGain = DI_FFNOMINALMAX / 2;
-
-                    hresult = Joysticks[i].lpDIJoystick->CreateEffect(GUID_ConstantForce, &diEffect,
-                                                                      &Joysticks[i].pFFE_BigVib, NULL);
-                    if (hresult != DI_OK) {
-                        Protokoll << "Error initializing Effect! Not using ForceFeedback" << std::endl;
-                        Joysticks[i].CanForceFeedback = false;
-                    }
-
-                    // Kurzes, abklingendes Vibrieren (MaxVib)
-                    diEffect.dwGain = DI_FFNOMINALMAX;
-                    diEffect.dwDuration = DI_SECONDS;
-                    diRampForce.lStart = -10000;
-                    diRampForce.lEnd = 0;
-                    diEffect.cbTypeSpecificParams = sizeof(DIRAMPFORCE);
-                    diEffect.lpvTypeSpecificParams = &diRampForce;
-
-                    hresult = Joysticks[i].lpDIJoystick->CreateEffect(GUID_RampForce, &diEffect,
-                                                                      &Joysticks[i].pFFE_MaxVib, NULL);
-                    if (hresult != DI_OK) {
-                        Protokoll << "Error initializing Effect! Not using ForceFeedback" << std::endl;
-                        Joysticks[i].CanForceFeedback = false;
-                    }
-
-                    // Blitz Effekt
-                    diEffect.dwTriggerRepeatInterval = INFINITE;
-                    diEffect.dwGain = DI_FFNOMINALMAX;
-                    diEffect.dwDuration = DI_SECONDS | INFINITE;
-                    diConstantForce.lMagnitude = DI_FFNOMINALMAX;
-                    diEffect.dwGain = DI_FFNOMINALMAX / 2;
-                    diEffect.cbTypeSpecificParams = sizeof(DICONSTANTFORCE);
-                    diEffect.lpvTypeSpecificParams = &diConstantForce;
-
-                    hresult = Joysticks[i].lpDIJoystick->CreateEffect(GUID_ConstantForce, &diEffect,
-                                                                      &Joysticks[i].pFFE_Blitz, NULL);
-                    if (hresult != DI_OK) {
-                        Protokoll << "Error initializing Effect! Not using ForceFeedback" << std::endl;
-                        Joysticks[i].CanForceFeedback = false;
-                    }
-                }
-            }
-        }
-
-    Protokoll << "\n-> DirectInput8 init successful!\n" << std::endl;
-    return true;
-}
-#elif defined(PLATFORM_SDL)
+// --------------------------------------------------------------------------------------
+// DirectInput initialisieren
+// Keyboard und Maus initialisieren und Joystick, falls vorhanden
+// --------------------------------------------------------------------------------------
 bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst) {
 #if SDL_VERSION_ATLEAST(2, 0, 0)
     TastaturPuffer = SDL_GetKeyboardState(&NumberOfKeys);
@@ -346,40 +112,12 @@ bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst) {
 
     return true;
 }
-#endif
 
 // --------------------------------------------------------------------------------------
 // DirectInput beenden
 // --------------------------------------------------------------------------------------
 
 void DirectInputClass::Exit(void) {
-#if defined(PLATFORM_DIRECTX)
-    if (lpDIKeyboard != NULL)  // Keyboard freigeben
-    {
-        lpDIKeyboard->Unacquire();
-        lpDIKeyboard->Release();
-        lpDIKeyboard = NULL;
-    }
-
-    /*if(lpDIMaus != NULL)				// Maus freigeben
-    {
-        lpDIMaus->Unacquire();
-        lpDIMaus->Release();
-        lpDIMaus = NULL;
-    }*/
-
-    for (int i = 0; i < JoysticksFound; i++) {
-        if (Joysticks[i].lpDIJoystick != NULL)  // Joystick freigeben
-        {
-            Joysticks[i].lpDIJoystick->Unacquire();
-            Joysticks[i].lpDIJoystick->Release();
-            Joysticks[i].lpDIJoystick = NULL;
-        }
-    }
-
-    SafeRelease(lpDI);  // DirectInput Hauptobjekt freigeben
-    Protokoll << "-> DirectInput8 shutdown successfully completed !" << std::endl;
-#elif defined(PLATFORM_SDL)
     for (int i = 0; i < JoysticksFound; i++) {
 #if SDL_VERSION_ATLEAST(2, 0, 0)
         if (Joysticks[i].lpDIJoystick != NULL)
@@ -393,7 +131,6 @@ void DirectInputClass::Exit(void) {
     }
 
     Protokoll << "-> SDL/OpenGL input shutdown successfully completed !" << std::endl;
-#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -401,24 +138,9 @@ void DirectInputClass::Exit(void) {
 // --------------------------------------------------------------------------------------
 
 bool DirectInputClass::UpdateTastatur(void) {
-#if defined(PLATFORM_DIRECTX)
-    HRESULT hresult;
-
-    hresult = lpDIKeyboard->GetDeviceState(sizeof(TastaturPuffer), (LPVOID)&TastaturPuffer);
-
-    if (hresult == DIERR_INPUTLOST)  // Keyboard verloren gegangen ?
-    {
-        if (lpDIKeyboard)  // Dann nochmal versuchen
-        {
-            lpDIKeyboard->Acquire();
-            hresult = lpDIKeyboard->GetDeviceState(sizeof(TastaturPuffer), (LPVOID)&TastaturPuffer);
-        }
-    }
-#elif defined(PLATFORM_SDL)
     SDL_PumpEvents();
 #if defined(ANDROID)
     UpdateTouchscreen();
-#endif
 #endif
     return true;
 }
@@ -430,143 +152,6 @@ bool DirectInputClass::UpdateTastatur(void) {
 // --------------------------------------------------------------------------------------
 
 bool DirectInputClass::UpdateMaus(bool gepuffert) {
-#if defined(PLATFORM_DIRECTX)
-    return true;
-
-    HRESULT hresult;
-    DIMOUSESTATE ms;
-    bool fertig = false;
-
-    // Gepufferte Abfrage : Langsam, bearbeitet aber ALLE Maus-Aktionen
-    if (gepuffert == true) {
-        while (!fertig) {
-            DIDEVICEOBJECTDATA od;         // Speichert Mauszustand
-            std::uint32_t dwElemente = 1;  // Elemente die abgefragt werden sollen
-
-            hresult = lpDIMaus->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), &od, &dwElemente, 0);
-            if (hresult == DIERR_INPUTLOST) {
-                hresult = lpDIMaus->Acquire();
-                if (hresult != DI_OK) {
-                    Protokoll << "\n-> Maus : Re-Acquire Fehler !" << std::endl;
-                    return false;
-                } else {
-                    hresult = lpDIMaus->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), &od, &dwElemente, 0);
-                    if (hresult == DIERR_INPUTLOST) {
-                        Protokoll << "\n-> Maus : GetData Fehler !" << std::endl;
-                        return false;
-                    }
-                }
-            } else if (hresult != DI_OK)  // anderer Fehler ?
-            {
-                fertig = true;
-                return false;
-            }
-
-            if (dwElemente == 0)  // Keine Elemente wurden verändert
-                fertig = true;
-
-            switch (od.dwOfs)  // Feld 'dwOfs' enthält Maus-Aktion:
-            {
-                case DIMOFS_X:  // Horizontale Bewegung
-                    MausX += od.dwData;
-                    fertig = true;
-                    break;
-
-                case DIMOFS_Y:  // Vertikale Bewegung
-                    MausY += od.dwData;
-                    fertig = true;
-                    break;
-
-                case DIMOFS_BUTTON0:       // Knopf 0 gedrückt
-                    if (od.dwData & 0x80)  // Knopf gedrück
-                    {
-                        MausButtons[0] = true;
-                        fertig = TRUE;
-                    } else  // Knopf losgelassen
-                    {
-                        MausButtons[0] = false;
-                        fertig = TRUE;
-                    }
-                    break;
-
-                case DIMOFS_BUTTON1:       // Knopf 1 gedrückt
-                    if (od.dwData & 0x80)  // Knopf gedrück
-                    {
-                        MausButtons[1] = true;
-                        fertig = TRUE;
-                    } else  // Knopf losgelassen
-                    {
-                        MausButtons[1] = false;
-                        fertig = TRUE;
-                    }
-                    break;
-
-                case DIMOFS_BUTTON2:       // Knopf 2 gedrückt
-                    if (od.dwData & 0x80)  // Knopf gedrück
-                    {
-                        MausButtons[2] = true;
-                        fertig = TRUE;
-                    } else  // Knopf losgelassen
-                    {
-                        MausButtons[2] = false;
-                        fertig = TRUE;
-                    }
-                    break;
-            };
-        }
-    }
-
-    // Ungepuffert: Schnell, verpasst aber ab und zu Maus-Aktionen:
-    else {
-        hresult = lpDIMaus->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&ms);
-        if (hresult == DIERR_INPUTLOST) {
-            hresult = lpDIMaus->Acquire();
-            if (hresult != DI_OK) {
-                Protokoll << "\n-> Maus : Re-Acquire Fehler !" << std::endl;
-                return false;
-            } else {
-                hresult = lpDIMaus->GetDeviceState(sizeof(DIMOUSESTATE), (LPVOID)&ms);
-                if (hresult == DIERR_INPUTLOST) {
-                    Protokoll << "\n-> Maus : GetDeviceState Fehler !" << std::endl;
-                    return false;
-                }
-            }
-        } else  // anderer Fehler
-            if (hresult != DI_OK) {
-            return false;
-        }
-
-        // Mauskoordinaten angleichen
-        MausX += ms.lX;
-        MausY += ms.lY;
-
-        // Buttons prüfen
-        if (ms.rgbButtons[0] & 0x80)
-            MausButtons[0] = true;
-        else
-            MausButtons[0] = false;
-        if (ms.rgbButtons[1] & 0x80)
-            MausButtons[1] = true;
-        else
-            MausButtons[1] = false;
-        if (ms.rgbButtons[2] & 0x80)
-            MausButtons[2] = true;
-        else
-            MausButtons[2] = false;
-    }
-
-    // Die Maus nicht verschwinden lassen
-    if (MausX < 0)
-        MausX = 0;
-    if (MausY < 0)
-        MausY = 0;
-    if (MausX > RENDERWIDTH)
-        MausX = RENDERWIDTH;
-    if (MausY > RENDERHEIGHT)
-        MausY = RENDERHEIGHT;
-
-    return true;
-#elif defined(PLATFORM_SDL)
     // Position
     uint8_t buttons = SDL_GetMouseState(&MausX, &MausY);
 
@@ -595,19 +180,13 @@ bool DirectInputClass::UpdateMaus(bool gepuffert) {
         MausY = RENDERHEIGHT;
 
     return true;
-#endif
 }
 
 // --------------------------------------------------------------------------------------
 // Keyboard wieder akquirieren (wenn Fenster gewechselt zB)
 // --------------------------------------------------------------------------------------
 
-void DirectInputClass::AcquireKeyboard(void) {
-#if defined(PLATFORM_DIRECTX)
-    if (lpDIKeyboard)
-        lpDIKeyboard->Acquire();
-#endif
-}
+void DirectInputClass::AcquireKeyboard(void) {}
 
 // --------------------------------------------------------------------------------------
 // Alle Joysticks updaten

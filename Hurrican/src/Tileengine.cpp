@@ -15,8 +15,8 @@
 // --------------------------------------------------------------------------------------
 
 #include <cstdio>
-#include <string>
 #include <experimental/filesystem>
+#include <string>
 namespace fs = std::experimental::filesystem::v1;
 
 #include "Console.hpp"
@@ -826,7 +826,8 @@ loadfile:
     if (ColB3 > 255)
         ColB3 = 255;
 
-    ColA3 = std::stoi(std::string(&DateiAppendix.Col1[6], 2), nullptr, 16) + std::stoi(std::string(&DateiAppendix.Col2[6], 2), nullptr, 16);
+    ColA3 = std::stoi(std::string(&DateiAppendix.Col1[6], 2), nullptr, 16) +
+            std::stoi(std::string(&DateiAppendix.Col2[6], 2), nullptr, 16);
     if (ColA3 > 255)
         ColA3 = 255;
 

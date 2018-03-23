@@ -17,9 +17,6 @@
 
 #include "triggers/Trigger_TutorialText.hpp"  // muss oben sein, weil es <string> includiert
 
-#if defined(PLATFORM_DIRECTX)
-#include <d3dx8.h>
-#endif
 #include "DX8Sprite.hpp"
 
 #include "enemies/Gegner_Auge.hpp"

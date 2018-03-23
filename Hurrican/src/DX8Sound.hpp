@@ -25,48 +25,7 @@
 #include <string>
 #include <vector>
 
-#if defined(PLATFORM_DIRECTX)
-#include <dsound.h>
-#include "fmod.h"
-#include "fmod_errors.h"
-
-#define MUSIC_MODULE FMUSIC_MODULE
-#define SOUND_SAMPLE FSOUND_SAMPLE
-
-#define MUSIC_PlaySong FMUSIC_PlaySong
-#define MUSIC_IsPlaying FMUSIC_IsPlaying
-#define MUSIC_FreeSong FMUSIC_FreeSong
-#define MUSIC_StopSong FMUSIC_StopSong
-#define MUSIC_SetPaused FMUSIC_SetPaused
-#define MUSIC_GetPaused FMUSIC_GetPaused
-#define MUSIC_SetMasterVolume FMUSIC_SetMasterVolume
-#define MUSIC_StopAllSongs FMUSIC_StopAllSongs
-#define MUSIC_LoadSong FMUSIC_LoadSong
-#define MUSIC_LoadSongEx FMUSIC_LoadSongEx
-#define MUSIC_IsFinished FMUSIC_IsFinished
-
-#define SOUND_Init FSOUND_Init
-#define SOUND_GetError FSOUND_GetError
-#define SOUND_GetMaxChannels FSOUND_GetMaxChannels
-#define SOUND_SetFrequency FSOUND_SetFrequency
-#define SOUND_SetPan FSOUND_SetPan
-#define SOUND_Close FSOUND_Close
-#define SOUND_PlaySound FSOUND_PlaySound
-#define SOUND_Sample_Free FSOUND_Sample_Free
-#define SOUND_IsPlaying FSOUND_IsPlaying
-#define SOUND_GetVolume FSOUND_GetVolume
-#define SOUND_SetVolume FSOUND_SetVolume
-#define SOUND_StopSound FSOUND_StopSound
-
-// DKS - Added:
-#define SOUND_SetPaused FSOUND_SetPaused
-#define SOUND_GetPaused FSOUND_GetPaused
-
-#elif defined(PLATFORM_SDL)
 #include "SDL_fmod.hpp"
-#else
-#error no sound system selected
-#endif
 
 // --------------------------------------------------------------------------------------
 // Defines
@@ -378,22 +337,11 @@ class SoundManagerClass {
                   int nr,  // Sound laden
                   bool looped);
 
-#if defined(PLATFORM_DIRECTX)
-    int PlayWave(int vol,
-                 int pan,  // Sound spielen
-                 int freq,
-                 int nr);
-    int PlayWave3D(int x,
-                   int y,  // Sound spielen abhängig von der Spieler
-                   int freq,
-                   int nr);  // position lauter oder leiser
-#else                        // SDL versions not taking the unsupported freq parameter, called
-       // via macro replacement of instances of PlayWave() PlayWave3D()
-       // (This masks out many unnecessary calls to rand() and int modulus)
+    // via macro replacement of instances of PlayWave() PlayWave3D()
+    // (This masks out many unnecessary calls to rand() and int modulus)
     int PlayWave_SDL(int vol, int pan, int nr);  // Sound spielen
     int PlayWave3D_SDL(int x, int y, int nr);    // Sound spielen abhängig von der Spieler
                                                  // position lauter oder leiser
-#endif
 
     void StopWave(int nr);  // Wave anhalten
 
@@ -418,9 +366,6 @@ class SoundManagerClass {
     void SetPendingChannelVolumeAndPanning(int ch, int new_vol, int new_pan);
 
     // DKS - Added #ifdef block around features SDL_mixer lacks:
-#if defined(PLATFORM_DIRECTX)
-    void SetWaveFrequency(int nr, int freq);
-#endif
 };
 
 // Externs

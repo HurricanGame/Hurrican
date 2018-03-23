@@ -3285,13 +3285,9 @@ bool PartikelClass::Render(void) {
 
         // und wieder zurück verschieben
         D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
         g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
         load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
     } else
 
@@ -3303,13 +3299,9 @@ bool PartikelClass::Render(void) {
 
         // Normale Projektions-Matrix wieder herstellen
         D3DXMatrixRotationZ(&matWorld, 0.0f);
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
         g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
         load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
     }
 
@@ -4534,13 +4526,9 @@ void PartikelsystemClass::DrawOnly(void) {
 
     // Normale Projektions-Matrix wieder herstellen
     D3DXMatrixRotationZ(&matWorld, 0.0f);
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 }
 
@@ -4619,13 +4607,9 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem)
 
     // Normale Projektions-Matrix wieder herstellen
     D3DXMatrixRotationZ (&matWorld, 0.0f);
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix( GL_MODELVIEW, g_matModelView.data() );
-#endif
 #endif
 }
 #endif  // 0
@@ -4714,13 +4698,9 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
 
     // Normale Projektions-Matrix wieder herstellen
     D3DXMatrixRotationZ(&matWorld, 0.0f);
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 }
 
@@ -4790,13 +4770,9 @@ void PartikelsystemClass::DoPartikel(void)
 
     // Normale Projektions-Matrix wieder herstellen
     D3DXMatrixRotationZ (&matWorld, 0.0f);
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix( GL_MODELVIEW, g_matModelView.data() );
-#endif
 #endif
 }
 #endif  // 0
@@ -4880,13 +4856,9 @@ void PartikelsystemClass::DoPartikel(void) {
     DirectGraphics.SetColorKeyMode();
     // Normale Projektions-Matrix wieder herstellen
     D3DXMatrixRotationZ(&matWorld, 0.0f);
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 }
 

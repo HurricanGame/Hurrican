@@ -229,17 +229,9 @@ void GameLoop(void) {
     //      cleared any larger-than-640x480 rendering textures in use if FBOs
     //      are enabled. Disabling screen-clear here helps embedded platforms
     //      which have very limited fill-rate.
-#if 0  // DKS-DISABLED SCREEN CLEAR IN MAIN GAME LOOP
+#if 0   // DKS-DISABLED SCREEN CLEAR IN MAIN GAME LOOP
     // Total löschen
-#if defined(PLATFORM_DIRECTX)
-    //DKS - Since I removed all use of the Z-coordinate, this should be changed too. Note: DirectX is entirely untested.
-    //lpD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-    //                   D3DCOLOR_XRGB(0,0,0), 1.0f, 0);
-    lpD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET,
-                       D3DCOLOR_XRGB(0,0,0), 1.0f, 0);
-#elif defined(PLATFORM_SDL)
     DirectGraphics.ClearBackBuffer();
-#endif
 #endif  // 0
 
     TileEngine.NewXOffset = -1;
@@ -537,11 +529,7 @@ void SetScreenShake(void) {
     D3DXMatrixMultiply(&matView, &matView, &matTrans2);  // und wieder zurück verschieben
 
     // rotierte Matrix setzen
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_VIEW, &matView);
-#elif defined(PLATFORM_SDL)
     g_matView = matView;
-#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -911,22 +899,15 @@ void SaveConfig(void) {
 bool DisplayLoadInfo(const char Text[100]) {
     if (NochKeinFullScreen == true || pMenu == NULL)
         return false;
-        // TODO FIX
-        /*
-            strrev (Text);				// String umdrehen
-            strnset(Text, ' ', 2);		// Ersten zwei (vorher letzten Zwei = \n) Buchstaben löschen
-            strrev (Text);				// Wieder richtig herum drehen
-            */
+    // TODO FIX
+    /*
+        strrev (Text);				// String umdrehen
+        strnset(Text, ' ', 2);		// Ersten zwei (vorher letzten Zwei = \n) Buchstaben löschen
+        strrev (Text);				// Wieder richtig herum drehen
+        */
 
-        // Anzeigen im Loadingscreen
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->EndScene();
-
-    lpD3DDevice->BeginScene();
-    lpD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-#elif defined(PLATFORM_SDL)
+    // Anzeigen im Loadingscreen
     DirectGraphics.ClearBackBuffer();
-#endif
 
     pMenu->ShowMenuBack();
 
@@ -978,13 +959,7 @@ bool DisplayLoadInfo(const char Text[100]) {
     /*for (i=0; i<24; i++)
         pDefaultFont->DrawText(10, float(230+i*10), LoadInfoText[i], D3DCOLOR_RGBA(0, 255, 0, i*10));*/
 
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->EndScene();
-#endif
     DirectGraphics.ShowBackBuffer();
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->BeginScene();
-#endif
 
     pMenu->LoadingItemsLoaded++;
     pMenu->LoadingProgress += 318.0f / pMenu->LoadingItemsToLoad;
@@ -1002,12 +977,9 @@ bool DisplayLoadInfo(const char Text[100]) {
 // --------------------------------------------------------------------------------------
 
 void ExplodePlayer(void) {
-//	static float delay = 0.0f;
+    //	static float delay = 0.0f;
 
-// alte Darstellung beenden
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->EndScene();
-#endif
+    // alte Darstellung beenden
 }
 
 // --------------------------------------------------------------------------------------
@@ -1085,15 +1057,9 @@ void SummaryScreen(void) {
     GUI.ShowBox(box_x, box_y, box_w, box_h);
 
     while (leave == false) {
-    // alte Darstellung beenden
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->EndScene();
-#endif
+        // alte Darstellung beenden
 
         // Mit dem Darstellen beginnen
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->BeginScene();
-#endif
 
         TileEngine.DrawBackground();  // Level abhandeln
         TileEngine.DrawBackLevel();
@@ -1173,10 +1139,7 @@ void SummaryScreen(void) {
                                    0);
         }
 
-            // Darstellung beenden
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->EndScene();
-#endif
+        // Darstellung beenden
 
         // Backbuffer mit Frontbuffer tauschen
         DirectGraphics.ShowBackBuffer();
@@ -1209,14 +1172,8 @@ void SummaryScreen(void) {
             delay_ctr = delay_can_leave;
     }
 
-    //#if defined(PLATFORM_DIRECTX) /* SDL_mixer does not work this kind of check, as far as i can tell */
-    //    // Musik noch nicht zu Ende ? Dann nochmal warten
-    //    while (!MUSIC_IsFinished(SoundManager.its_Songs[MUSIC_STAGECLEAR]->SongData))
-    //        ;
-    //#elif defined(PLATFORM_SDL)
     //    //DKS - I revamped this summary screen code quite a bit so that no delay should ever be necessary
     //    //    SDL_Delay( 3000 );
-    //#endif
     while (SoundManager.SongIsPlaying(MUSIC_STAGECLEAR))
         ;
 

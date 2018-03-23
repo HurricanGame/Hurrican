@@ -825,13 +825,9 @@ void PlayerClass::CheckForExplode(void) {
         WackelMaximum = 0.0f;
         WackelValue = 0.0f;
         D3DXMatrixRotationZ(&matRot, 0.0f);
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->SetTransform(D3DTS_WORLD, &matRot);
-#elif defined(PLATFORM_SDL)
         g_matModelView = matRot * g_matView;
 #if defined(USE_GL1)
         load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 
         CollideRect.left = 0;
@@ -1493,17 +1489,6 @@ void PlayerClass::AnimatePlayer(void) {
         // Beam Laden und richtige Animationsphase setzen
         //
         if (Handlung == BEAMLADEN) {
-        // PullItems();  //DKS - was already commented out
-
-        // DKS - Added check for NULLness and DirectX, since SDL port doesn't support SetFrequency.
-        //      Also added function SetWaveFrequency()
-#if defined(PLATFORM_DIRECTX)
-            int Freq = 9000 + static_cast<int>(BlitzStart / 20.0f * 2000);
-            // if (SoundManager.its_Sounds[SOUND_BEAMLOAD + SoundOff] != NULL)
-            //    SOUND_SetFrequency(SoundManager.its_Sounds[SOUND_BEAMLOAD + SoundOff]->Channel, Freq);
-            SetWaveFrequency((SOUND_BEAMLOAD + SoundOff), Freq);
-#endif
-
             // Beam aufladen. Je länger der Blitz desto schneller lädt der Beam
             if (BlitzStart < PLAYER_BEAM_MAX)
                 BlitzStart += CurrentWeaponLevel[3] * 1.0f SYNC;
@@ -3425,13 +3410,9 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
 
     D3DXMatrixMultiply(&matWorld, &matTrans, &matRot);     // Verschieben und rotieren
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 
     DirectGraphics.SetFilterMode(true);
@@ -3449,13 +3430,9 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
     // Normale Projektions-Matrix wieder herstellen, wenn der Screen nicht gerade gewackelt wird
     if (WackelMaximum <= 0.0f) {
         D3DXMatrixRotationZ(&matWorld, 0.0f);
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
         g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
         load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
     } else {
         int Winkel = int(WackelValue + 500) - 500;  // +500 und -500 damit er von -1.0 bis +1.0
@@ -3472,14 +3449,10 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
         if (WackelMaximum <= 0.0f)  // Wackeln zuende ?
             WackelMaximum = 0.0f;   // Dann aufhören damit
 
-            // rotierte Matrix setzen
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->SetTransform(D3DTS_WORLD, &matRot);
-#elif defined(PLATFORM_SDL)
+        // rotierte Matrix setzen
         g_matModelView = matRot * g_matView;
 #if defined(USE_GL1)
         load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
     }
 
@@ -3812,13 +3785,9 @@ bool PlayerClass::DoLightning(void) {
         D3DXMatrixTranslation(&matTrans2, x, y, 0.0f);     // Transformation wieder zurück
     D3DXMatrixMultiply(&matWorld, &matTrans, &matRot);     // Verschieben und rotieren
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
 
     DirectGraphics.SetFilterMode(true);
@@ -3843,13 +3812,9 @@ bool PlayerClass::DoLightning(void) {
     // Normale Projektions-Matrix wieder herstellen, wenn der Screen nicht gerade gewackelt wird
     if (WackelMaximum <= 0.0f) {
         D3DXMatrixRotationZ(&matWorld, 0.0f);
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-#elif defined(PLATFORM_SDL)
         g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
         load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
     } else {
         int Winkel = int(WackelValue + 500) - 500;  // +500 und -500 damit er von -1.0 bis +1.0
@@ -3866,14 +3831,10 @@ bool PlayerClass::DoLightning(void) {
         if (WackelMaximum <= 0.0f)  // Wackeln zuende ?
             WackelMaximum = 0.0f;   // Dann aufhören damit
 
-            // rotierte Matrix setzen
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->SetTransform(D3DTS_WORLD, &matRot);
-#elif defined(PLATFORM_SDL)
+        // rotierte Matrix setzen
         g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
         load_matrix(GL_MODELVIEW, g_matModelView.data());
-#endif
 #endif
     }
 

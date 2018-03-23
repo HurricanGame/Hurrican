@@ -24,10 +24,6 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
-#if defined(PLATFORM_DIRECTX)
-#include <Dxerr8.h>
-#include <windows.h>  // Alle Windows Header includen
-#endif
 #include <algorithm>
 #include <cstdio>
 #include <experimental/filesystem>
@@ -91,17 +87,6 @@ extern DirectGraphicsSprite PartikelGrafix[MAX_PARTIKELGFX];  // Grafiken der Pa
 // globale Variablen
 // --------------------------------------------------------------------------------------
 
-#if defined(PLATFORM_DIRECTX)
-D3DFORMAT D3DFormat;                     // Format der Primary Surface
-D3DCAPS8 d3dcaps;                        // Möglichkeiten der Hardware
-LPDIRECT3D8 lpD3D = NULL;                // Direct3D Hauptobjekt
-LPDIRECT3DDEVICE8 lpD3DDevice = NULL;    // Direct3D Device-Objekt
-LPDIRECT3DSURFACE8 lpBackbuffer = NULL;  // Der Backbuffer
-HWND DesktopHWND = NULL;                 // Handle des Desktops
-HWND g_hwnd = NULL;                      // Handle des Hauptfensters
-HINSTANCE g_hinst;                       // hinstance des Hauptfensters
-#endif
-
 bool FixedFramerate = false;  // true = Spiel mit 50 Frames laufen lassen
 // false = Spiel so flüssig wie möglich laufen lassen
 bool Sprache;                    // true == deutsch / false == englisch
@@ -150,10 +135,6 @@ int WINDOWHEIGHT;
 // Variablen für den Spielablauf
 // --------------------------------------------------------------------------------------
 
-#if defined(PLATFORM_DIRECTX)
-HBITMAP SplashScreen = NULL;  // SplashScreen Grafik
-#endif
-
 // DKS - PlayerClass array is now static, not dynamically-allocated:
 // PlayerClass				*pPlayer[2];					// Werte der Spieler
 PlayerClass Player[2];  // Werte der Spieler
@@ -165,75 +146,6 @@ char StringBuffer[100];                 // Für die Int / String Umwandlung
 // --------------------------------------------------------------------------------------
 // Callback Funktion
 // --------------------------------------------------------------------------------------
-
-#if defined(PLATFORM_DIRECTX)
-LRESULT CALLBACK WindowProc(HWND hwnd, std::uint32_t message, WPARAM wparam, LPARAM lparam) {
-    switch (message) {
-        case WM_CREATE:  // Splash Screen beim erstellen des
-        {
-            // Fensters laden
-            SplashScreen = LoadBitmap(g_hinst, MAKEINTRESOURCE(IDB_SPLASHSCREEN));
-            return (0);
-        } break;
-
-        case WM_PAINT:  // Beim starten den Splash Screen anzeigen
-        {
-            if (NochKeinFullScreen == true && CommandLineParams.RunWindowMode == false) {
-                PAINTSTRUCT ps;
-                HDC hdc, hdcMem;
-
-                hdc = BeginPaint(g_hwnd, &ps);
-
-                hdcMem = CreateCompatibleDC(hdc);
-                SelectObject(hdcMem, SplashScreen);
-
-                BitBlt(hdc, -1, -1, 450, 110, hdcMem, 0, 0, SRCCOPY);
-
-                DeleteDC(hdcMem);
-                EndPaint(g_hwnd, &ps);
-
-                InvalidateRect(g_hwnd, NULL, false);
-            }
-        } break;
-
-        case WM_DESTROY:  // Fenster wird geschlossen
-        {
-            GameRunning = false;  // Spiel beenden
-            PostQuitMessage(0);   // Quit-Message posten
-            return (0);           // Success zurückliefern
-        } break;
-
-        case WM_SYSCOMMAND:  // "Alt aktiviert Menu" ausschalten
-        {
-            if (wparam == SC_TASKLIST || wparam == SC_KEYMENU)
-                return (0);
-        } break;
-
-        case WM_ACTIVATE: {
-            int Active = LOWORD(wparam);  // activation flag
-
-            if (Active == WA_INACTIVE) {
-                SoundManager.PauseSongs();
-                SoundManager.PauseSounds();
-
-                GamePaused = true;
-            } else {
-                SoundManager.UnpauseSongs();
-                SoundManager.UnpauseSounds();
-
-                GamePaused = false;
-            }
-
-        } break;
-
-        default:
-            break;
-    }
-
-    // unbearbeitete Nachrichten zurückliefern
-    return (DefWindowProc(hwnd, message, wparam, lparam));
-}
-#endif
 
 int GetStringPos(const char *string, const char *substr) {
     int len = strlen(string);
@@ -253,61 +165,6 @@ int GetStringPos(const char *string, const char *substr) {
     return -1;
 }
 
-#if defined(PLATFORM_DIRECTX)
-void FillCommandLineParams(void) {
-    int windowpos;
-    int listpos;
-    int levelpos;
-    char buffer[256];
-    CommandLineParams.DataPath = NULL;
-    CommandLinesParams.SavePath = NULL;
-    //	char *temppos;
-
-    // windowmode?
-    windowpos = GetStringPos(CommandLineParams.Params, "windowmode");
-    CommandLineParams.RunWindowMode = windowpos > -1;
-
-    // own levellist?
-    listpos = GetStringPos(CommandLineParams.Params, "custom");
-    CommandLineParams.RunOwnLevelList = listpos > -1;
-    if (CommandLineParams.OwnLevelList) {
-        int i = 0;
-        int len = strlen(CommandLineParams.Params);
-        for (i = 0; i < len; i++) {
-            if (CommandLineParams.Params[listpos + i] == 0 || CommandLineParams.Params[listpos + i] == 32 ||
-                CommandLineParams.Params[listpos + i] == 10)
-                break;
-
-            buffer[i] = CommandLineParams.Params[listpos + i];
-        }
-
-        buffer[i] = 0;
-        strcpy_s(CommandLineParams.OwnLevelList, strlen(buffer) + 1, buffer);
-    }
-
-    // own single level?
-    levelpos = GetStringPos(CommandLineParams.Params, "level");
-    CommandLineParams.RunUserLevel = levelpos > -1;
-    if (CommandLineParams.RunUserLevel) {
-        int i = 0;
-        int len = strlen(CommandLineParams.Params);
-        for (i = 0; i < len; i++) {
-            if (CommandLineParams.Params[levelpos + i] == 0 || CommandLineParams.Params[levelpos + i] == 32 ||
-                CommandLineParams.Params[levelpos + i] == 10)
-                break;
-
-            buffer[i] = CommandLineParams.Params[levelpos + i];
-        }
-
-        buffer[i] = 0;
-        strcpy_s(CommandLineParams.UserLevelName, strlen(buffer) + 1, buffer);
-    }
-
-    // DKS - Forced this for now for new option on Windows: (TODO: fix this to be flexible on windows too)
-    CommandLineParams.ScreenDepth = 32;
-}
-
-#elif defined(PLATFORM_SDL)
 void FillCommandLineParams(int argc, char *args[]) {
     uint16_t i;
 
@@ -446,40 +303,17 @@ void FillCommandLineParams(int argc, char *args[]) {
     }
 }
 
-#endif
+// --------------------------------------------------------------------------------------
+// Win-Main Funktion
+// --------------------------------------------------------------------------------------
 
-    // --------------------------------------------------------------------------------------
-    // Win-Main Funktion
-    // --------------------------------------------------------------------------------------
-
-#if defined(PLATFORM_DIRECTX)
-int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace, LPSTR lpcmdline, int nshowcmd) {
-#elif defined(PLATFORM_SDL)
 int main(int argc, char *argv[]) {
-#endif
-
     GamePaused = false;
 
-#if defined(PLATFORM_DIRECTX)
-    WNDCLASSEX winclass;  // eigene Windows-Klasse
-    MSG message;          // Message
-    RECT rect;            // Grösse des Desktops
-
-    // evtle Parameter holen und Typ des Parameters rausfinden
-    strcpy_s(CommandLineParams.Params, 1, "");
-
-    if (strlen(lpcmdline) != 0)
-        strcpy_s(CommandLineParams.Params, strlen(lpcmdline) + 1, lpcmdline);
-
-    FillCommandLineParams();
-
-#elif defined(PLATFORM_SDL)
     HWND g_hwnd = 0;
     HINSTANCE hinstance = 0;
 
     FillCommandLineParams(argc, argv);
-
-#endif
 
     if (CommandLineParams.RunWindowMode) {
         WINDOWWIDTH = 1024;
@@ -571,91 +405,6 @@ int main(int argc, char *argv[]) {
     Protokoll << "--> Using external storage path '" << g_storage_ext << "' <--" << std::endl;
     Protokoll << "--> Using save path '" << g_save_ext << "' <--\n" << std::endl;
 
-#if defined(PLATFORM_DIRECTX)
-    // Desktop Window holen und Grösse auslesen (damit wir unser Fenster in der Mitte des Screens
-    // positionnieren können)
-    DesktopHWND = GetDesktopWindow();
-    GetWindowRect(DesktopHWND, &rect);
-
-    // Anfang der Logdatei mit Datum und Uhrzeit
-    Protokoll ">-------------------------<\n";
-    Protokoll "|        Hurrican         |\n";
-    Protokoll "|   (c) 2007 poke53280    |\n";
-    Protokoll "|                         |\n";
-    Protokoll "|    www.poke53280.de     |\n";
-    Protokoll "|  www.hurrican-game.de   |\n";
-    Protokoll ">-------------------------<\n";
-    Protokoll << "Logfile date: " << __DATE__ << " - " << __TIME__ << std::endl;
-
-    Protokoll << "\n>-------------<\n";
-    Protokoll << "| Init Window |\n";
-    Protokoll << ">-------------<\n" << std::endl;
-
-    g_hinst = hinstance;
-
-    // Werte für die Windows-Klasse festlegen
-    winclass.cbSize = sizeof(WNDCLASSEX);                                // Grösse der Klasse
-    winclass.style = CS_HREDRAW | CS_VREDRAW;                            // Fenster-Einstellungen
-    winclass.lpfnWndProc = WindowProc;                                   // Callback Funktion
-    winclass.cbClsExtra = 0;                                             // extra Klassen-Info Space
-    winclass.cbWndExtra = 0;                                             // extra Fenster-Info Space
-    winclass.hInstance = hinstance;                                      // Fenster-Handle
-    winclass.hIcon = LoadIcon(hinstance, MAKEINTRESOURCE(IDI_ICON1));    // Fenster-Icon
-    winclass.hCursor = LoadCursor(NULL, IDC_ARROW);                      // Mauscursor setzen
-    winclass.hbrBackground = CreateSolidBrush(RGB(0, 0, 0));             // Hintergrundfarbe setzen
-    winclass.lpszMenuName = NULL;                                        // Menu-Name
-    winclass.lpszClassName = WINDOWCLASSNAME;                            // Name der neuen Klasse
-    winclass.hIconSm = LoadIcon(hinstance, MAKEINTRESOURCE(IDI_ICON1));  // Task-Leiste Icon laden
-
-    // Fensterklasse bei Windows registrieren
-    if (!RegisterClassEx(&winclass)) {
-        Protokoll << "RegisterClassEx error!" << std::endl;
-        GameRunning = false;
-        return (0);
-    }
-
-    Protokoll << "RegisterClassEx successful!" << std::endl;
-
-    std::uint32_t style;
-
-    if (CommandLineParams.RunWindowMode)
-        style = WS_OVERLAPPED |  // Fenster Style
-                WS_CAPTION | WS_SYSMENU | WS_BORDER | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_SIZEBOX | WS_VISIBLE;
-    else
-        style = WS_POPUPWINDOW;
-
-    // Neues Fenster mit der registrierten Klasse erstellen
-    if (!(g_hwnd = CreateWindowEx(NULL,                              // Eigenschaften
-                                  WINDOWCLASSNAME,                   // Name der neuen Klasse
-                                  "Hurrican",                        // Titel des Fenster
-                                  style,                             // ohne Alles =)
-                                  (rect.right - WINDOWWIDTH) / 2,    // x und y des Fensters
-                                  (rect.bottom - WINDOWHEIGHT) / 2,  // in der Mitte zentriert
-                                  WINDOWWIDTH,                       // Fensterbreite
-                                  WINDOWHEIGHT,                      // Fensterhöhe
-                                  NULL,                              // Handle des Parentfensters
-                                  NULL,                              // Handle des Menus
-                                  hinstance,                         // Instance von Main
-                                  NULL)))                            // extra creation parms
-    {
-        Protokoll << "CreateWindowEx error!" << std::endl;
-        GameRunning = false;
-        return (0);
-    }
-
-    Protokoll << "CreateWindowEx	successful!" << std::endl;
-    Protokoll << "WindowSizeX : " << WINDOWWIDTH << std::endl;
-    Protokoll << "WindowSizeY : " << WINDOWHEIGHT << std::endl;
-
-    if (CommandLineParams.RunWindowMode == false)
-        ShowCursor(false);
-
-    Protokoll << "\n-> Init Window successful!" << std::endl;
-
-    ShowWindow(g_hwnd, nshowcmd);  // Fenster anzeigen (sicher ist sicher)
-    UpdateWindow(g_hwnd);          // Fenster-infos updaten
-#endif
-
     //----- Spiel-Initialisierung
 
     if (!GameInit(g_hwnd, hinstance)) {
@@ -668,23 +417,12 @@ int main(int argc, char *argv[]) {
     //----- Main-Loop
 
     while (GameRunning == true) {
-#if defined(PLATFORM_DIRECTX)
-        while (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))  // Nachricht vom Stapel holen
-        {
-            // und löschen
-            TranslateMessage(&message);  // Nachricht überetzen
-            DispatchMessage(&message);   // Nachricht an WinProc weiterleiten
-            UpdateWindow(g_hwnd);
-        }
-#endif
-#if defined(PLATFORM_SDL)
         SDL_Event event;
 
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT)
                 GameRunning = false;
         }
-#endif
 
             // DKS - Exceptions can now be disabled, reducing unnecessary code-bloat:
 #ifndef USE_NO_EXCEPTIONS
@@ -755,11 +493,7 @@ int main(int argc, char *argv[]) {
     free(g_storage_ext);
     free(g_save_ext);
 
-#if defined(PLATFORM_DIRECTX)
-    return (message.wParam);  // Rückkehr zu Windows
-#elif defined(PLATFORM_SDL)
     return 0;
-#endif
 }
 
 // --------------------------------------------------------------------------------------
@@ -776,24 +510,6 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance) {
     seed_fast_rand(SDL_GetTicks());
 #endif  // USE_FAST_RNG
 
-#if defined(PLATFORM_DIRECTX)
-    // Language Files
-    HWND ComboBoxLanguageFiles = NULL;
-    ComboBoxLanguageFiles = CreateWindow("COMBOBOX", "", WS_CHILD, 0, 0, 0, 0, g_hwnd, 0, g_hinst, NULL);
-
-    // Loadinfo Text festlegen
-    //	DisplayHintNr = rand()%30;
-
-    // *.lng Files anfügen
-    if (SendMessage(ComboBoxLanguageFiles, CB_DIR, DDL_READWRITE, (LPARAM) "*.lng") == CB_ERR) {
-        Protokoll << "No language Files found!" << std::endl;
-    }
-
-    LanguageFileCount = SendMessage(ComboBoxLanguageFiles, CB_GETCOUNT, 0, 0);
-    for (int i = 0; i < LanguageFileCount; i++) {
-        SendMessage(ComboBoxLanguageFiles, CB_GETLBTEXT, i, (LPARAM)LanguageFiles[i]);
-    }
-#elif defined(PLATFORM_SDL)
     // DKS - Added language-translation files support to SDL port:
     char langfilepath[256];
     if (g_storage_ext) {
@@ -821,7 +537,6 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance) {
         Protokoll << "ERROR: Failed to find any language files, aborting." << std::endl;
         return false;
     }
-#endif
 
     Protokoll << "\n>--------------------<\n";
     Protokoll << "| GameInit started   |\n";
@@ -1127,37 +842,6 @@ bool GameExit(void) {
 // --------------------------------------------------------------------------------------
 
 bool Heartbeat(void) {
-#if defined(PLATFORM_DIRECTX)
-    // Test cooperative level
-    HRESULT hr;
-
-    // testen, ob das Device noch da ist
-    hr = lpD3DDevice->TestCooperativeLevel();
-
-    // device lost?
-    if (hr == D3DERR_DEVICELOST) {
-        // 500 milliseconds
-        Sleep(500);
-        return false;
-    } else
-        // Bereit für Reset des Devices nachdem wir wieder Focus haben?
-        if (hr == D3DERR_DEVICENOTRESET) {
-        SafeRelease(lpBackbuffer);
-
-        // device neu initialisieren
-        hr = lpD3DDevice->Reset(&DirectGraphics.d3dpp);
-
-        if (hr == D3D_OK) {
-            DirectGraphics.SetDeviceInfo();
-        } else {
-            DXTRACE_ERR("lpD3DDevice->Reset", hr);
-            return false;
-        }
-    }
-
-    lpD3DDevice->BeginScene();  // Mit dem Darstellen beginnen
-#endif
-
     switch (SpielZustand) {
         // Cracktro
         case CRACKTRO: {
@@ -1355,7 +1039,6 @@ void ShowFPS() {
         ticks_fps_last_updated = cur_ticks;
     }
     pMenuFont->DrawText(0, 0, char_buf.str().c_str(), 0xFFFFFFFF);
-
 }
 
 //----------------------------------------------------------------------------

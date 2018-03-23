@@ -52,12 +52,8 @@ float DegreetoRad[360];  // Tabelle mit Rotationswerten
 // --------------------------------------------------------------------------------------
 
 DirectGraphicsClass::DirectGraphicsClass() {
-#if defined(PLATFORM_DIRECTX)
-    lpD3D = NULL;
-#elif defined(PLATFORM_SDL)
     SupportedETC1 = false;
     SupportedPVRTC = false;
-#endif
     use_texture = false;
 
 #if defined(USE_GL2)
@@ -71,143 +67,9 @@ DirectGraphicsClass::DirectGraphicsClass() {
 
 DirectGraphicsClass::~DirectGraphicsClass() {}
 
-    // --------------------------------------------------------------------------------------
-    // D3D Initialisieren
-    // --------------------------------------------------------------------------------------
-
-#if defined(PLATFORM_DIRECTX)
-bool DirectGraphicsClass::Init(HWND hwnd,
-                               std::uint32_t dwBreite,
-                               std::uint32_t dwHoehe,
-                               std::uint32_t dwZ_Bits,
-                               bool VSync) {
-    Protokoll << "\n--> Direct3D init <--\n";
-    Protokoll << "---------------------\n" << std::endl;
-
-    if (VSync == true)
-        Protokoll << "using VSync..." << std::endl;
-    else
-        Protokoll << "NOT using VSync..." << std::endl;
-
-    // D3DDISPLAYMODE			DisplayMode;
-    // HRESULT					Res;
-
-    lpD3DDevice = NULL;
-
-    ZeroMemory(&d3dpp, sizeof(d3dpp));
-
-    lpD3D = Direct3DCreate8(D3D_SDK_VERSION);
-
-    // Res = lpD3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &DisplayMode);
-
-    d3dpp.Windowed = CommandLineParams.RunWindowMode;  // Fenster Modus ?
-    d3dpp.BackBufferCount = 1;                         // 1 Backbuffer setzen
-    // DKS - Since I removed all use of the Z-coordinate, this should be changed too. Note: DirectX is entirely
-    // untested.  d3dpp.EnableAutoDepthStencil			= true;
-    d3dpp.EnableAutoDepthStencil = false;
-    d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
-    d3dpp.hDeviceWindow = hwnd;        // Fenster Handle
-    d3dpp.BackBufferWidth = dwBreite;  // ScreenBreite
-    d3dpp.BackBufferHeight = dwHoehe;  // Screenhöhe
-    d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
-
-    d3dpp.SwapEffect = D3DSWAPEFFECT_COPY_VSYNC;  // VSync an
-    // if(VSync == true)	d3dpp.SwapEffect	= D3DSWAPEFFECT_COPY_VSYNC;		// VSync an
-    //				else
-    d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;  // VSync aus
-
-    if (CommandLineParams.RunWindowMode == false) {
-        d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;  // Refresh Rate
-        if (VSync == true)                                           // VSYNC anlassen
-            d3dpp.FullScreen_PresentationInterval = D3DPRESENT_INTERVAL_ONE;
-        else  // VSYNC auslassen
-            d3dpp.FullScreen_PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
-    }
-
-    d3dpp.Flags = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;  // Backbuffer
-
-    // ok, now try some video modes
-
-    // 32 Bit / Hardware  X8R8G8B8
-    d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
-    if (SUCCEEDED(lpD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING,
-                                      &d3dpp, &lpD3DDevice)))
-        goto _ModeFound;
-
-    // 16 Bit / Hardware R5B6G5
-    d3dpp.BackBufferFormat = D3DFMT_R5G6B5;
-    if (SUCCEEDED(lpD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING,
-                                      &d3dpp, &lpD3DDevice)))
-        goto _ModeFound;
-
-    // 32 Bit / Software X8R8G8B8
-    d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
-    if (SUCCEEDED(lpD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_hwnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING,
-                                      &d3dpp, &lpD3DDevice)))
-        goto _ModeFound;
-
-    // 16 Bit / Software R5G6B5
-    d3dpp.BackBufferFormat = D3DFMT_R5G6B5;
-    if (SUCCEEDED(lpD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_hwnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING,
-                                      &d3dpp, &lpD3DDevice)))
-        goto _ModeFound;
-
-    // nothing so far? OK... go for 32 bit reference rasterizer = ultraslow!
-    // note: this does not work on my machine, so i have no idea if that helps
-    d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
-    if (SUCCEEDED(lpD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_REF, g_hwnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING,
-                                      &d3dpp, &lpD3DDevice)))
-        goto _ModeFound;
-
-    // no mode found!
-    Protokoll << "No compatible Graphics Mode found!" << std::endl;
-    GameRunning = false;
-    return false;
-
-_ModeFound:
-
-    Protokoll << "DX8 Device initialised!" << std::endl;
-
-    /* Jetzt haben wir die Informationen zusammen und machen weiter */
-
-    // Rausfinden, wie ich die Texturen laden muss (nur rechteckig, 2er Potenz)
-    // Device kann nur quadratische Texturen
-    D3DCAPS8 d3dCaps;
-
-    lpD3DDevice->GetDeviceCaps(&d3dCaps);
-
-    Protokoll << "Texture restrictions:" << std::endl;
-
-    if (d3dCaps.TextureCaps & D3DPTEXTURECAPS_SQUAREONLY) {
-        Protokoll << "Square Only: TRUE" << std::endl;
-        SquareOnly = true;
-    } else {
-        Protokoll << "Square Only: FALSE" << std::endl;
-        SquareOnly = false;
-    }
-
-    // Device kann nur Texturen mit 2er-Potenz-Grösse
-    if (d3dCaps.TextureCaps & D3DPTEXTURECAPS_POW2) {
-        Protokoll << "Power of Two: TRUE" << std::endl;
-        PowerOfTwo = true;
-    } else {
-        Protokoll << "Power of Two: FALSE" << std::endl;
-        PowerOfTwo = false;
-    }
-
-    SetDeviceInfo();
-
-    Protokoll << "\n-> Direct3D init successful!\n" << std::endl;
-
-    // DegreetoRad-Tabelle füllen
-    for (int i = 0; i < 360; i++)
-        DegreetoRad[i] = float(PI * i / 180);
-
-    SetColorKeyMode();
-
-    return true;
-}
-#elif defined(PLATFORM_SDL)
+// --------------------------------------------------------------------------------------
+// D3D Initialisieren
+// --------------------------------------------------------------------------------------
 bool DirectGraphicsClass::Init(HWND hwnd,
                                std::uint32_t dwBreite,
                                std::uint32_t dwHoehe,
@@ -286,7 +148,6 @@ bool DirectGraphicsClass::Init(HWND hwnd,
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 #endif /* defined(USE_GLES1) */
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
-#endif /* PLATFORM_SDL */
 
     // Setup SDL Screen
     if (isFullscreen == true) {
@@ -439,11 +300,6 @@ bool DirectGraphicsClass::Init(HWND hwnd,
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsClass::Exit(void) {
-#if defined(PLATFORM_DIRECTX)
-    SafeRelease(lpD3DDevice);
-    SafeRelease(lpD3D);
-    Protokoll << "-> Direct3D shutdown successfully completed !" << std::endl;
-#elif defined(PLATFORM_SDL)
 #if SDL_VERSION_ATLEAST(2, 0, 0)
     SDL_GL_DeleteContext(GLcontext);
     SDL_DestroyWindow(Window);
@@ -460,7 +316,6 @@ bool DirectGraphicsClass::Exit(void) {
 #endif
     SDL_Quit();
     Protokoll << "-> SDL/OpenGL shutdown successfully completed !" << std::endl;
-#endif
     return true;
 }
 
@@ -470,42 +325,6 @@ bool DirectGraphicsClass::Exit(void) {
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsClass::SetDeviceInfo(void) {
-#if defined(PLATFORM_DIRECTX)
-    HRESULT hr;
-
-    // Globale Variable mit dem tatsächlichen BackBuffer füllen
-    lpD3DDevice->GetBackBuffer(0, D3DBACKBUFFER_TYPE_MONO, &lpBackbuffer);
-
-    // Licht, Cullmodus und Z-Buffer aktivieren
-    lpD3DDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(255, 255, 255));
-    lpD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
-    lpD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-    lpD3DDevice->SetRenderState(D3DRS_ZENABLE, D3DZB_FALSE);
-
-    // Projektionsmatrix einstellen
-    //
-    D3DXMatrixOrthoOffCenterLH(&matProj, 0, 640, 480, 0, 0.0f, 1.0f);
-
-    hr = lpD3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
-
-    if (hr != D3D_OK) {
-        Protokoll << "\n-> SetTransform error!" << std::endl;
-        GameRunning = false;
-        return false;
-    }
-
-    // Flexible Vertex Format setzen
-    hr = lpD3DDevice->SetVertexShader(D3DFVF_TLVERTEX);
-    if (hr != D3D_OK) {
-        Protokoll << "\n-> SetVertexShader error!" << std::endl;
-        GameRunning = false;
-        return false;
-    }
-
-    // Alphablending aktivieren
-    lpD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
-    lpD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
-#elif defined(PLATFORM_SDL)
 #if defined(USE_GL2)
     char vert[256];
     char frag[256];
@@ -611,8 +430,6 @@ bool DirectGraphicsClass::SetDeviceInfo(void) {
     SelectBuffer(true);
 #endif
 
-#endif /* PLATFORM_SDL */
-
     return true;
 }
 
@@ -622,68 +439,6 @@ bool DirectGraphicsClass::SetDeviceInfo(void) {
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsClass::TakeScreenshot(const char Filename[100], int screenx, int screeny) {
-#if defined(PLATFORM_DIRECTX)
-    FILE *f = NULL;                  // Datei
-    HRESULT hr;                      // Für Fehler-Prüfung
-    IDirect3DSurface8 *FrontBuffer;  // Zeiger auf Frontbuffer
-
-    // Surface erzeugen, in die das Bild kopiert wird
-    lpD3DDevice->CreateImageSurface(screenx, screeny, D3DFMT_A8R8G8B8, &FrontBuffer);
-
-    // Front Buffer hineinkopieren
-    hr = lpD3DDevice->GetFrontBuffer(FrontBuffer);
-
-    // Fehler ?
-    if (hr != D3D_OK) {
-        Protokoll << "\n-> TakeScreenshot error!" << std::endl;
-        FrontBuffer->Release();
-        return false;
-    }
-
-    // BMP Datei erzeugen, wobei bereits existierende Dateien nicht überschrieben werden
-    // so entstehen dann Screenshot000 - Screenshot999
-
-    char TempName[100];
-    char TempDate[128];
-    char Buffer[10];
-    int i = 0;
-
-    _tzset();
-    _strdate_s(TempDate);
-
-    // Zeichen im Datum ersetzen
-    int len = strlen(TempDate);
-    for (int i = 0; i < len; i++)
-        if (TempDate[i] == '/')
-            TempDate[i] = '-';
-
-    i = 0;
-
-    do {
-        _itoa_s(i, Buffer, 10);
-
-        // Datei Namen zusammensetzen
-        strcpy_s(TempName, strlen(Filename) + 1, Filename);  // Name
-        strcat_s(TempName, 2, "_");
-        strcat_s(TempName, strlen(TempDate) + 1, TempDate);
-        strcat_s(TempName, 2, "_");
-        if (i < 10)
-            strcat_s(TempName, 2, "0");  // evtl noch 0
-        if (i < 100)
-            strcat_s(TempName, 2, "0");                  // oder gar  00 davor schreiben
-        strcat_s(TempName, strlen(Buffer) + 1, Buffer);  // Aktuelle Zahl
-        strcat_s(TempName, 5, ".BMP");                   // und BMP Endung
-        fopen_s(&f, TempName, "rb");
-        i++;
-    } while (f != NULL);
-
-    // Screenshot Datei erzeugen
-    D3DXSaveSurfaceToFile(TempName, D3DXIFF_BMP, FrontBuffer, NULL, NULL);
-
-    // Surface wieder freigeben
-    FrontBuffer->Release();
-#elif defined(PLATFORM_SDL)
-#endif
     return true;
 }
 
@@ -695,12 +450,7 @@ void DirectGraphicsClass::SetColorKeyMode(void) {
     if (BlendMode == COLORKEY_MODE)
         return;
 
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);      // Colorkey
-    lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);  // einschalten
-#elif defined(PLATFORM_SDL)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-#endif
 
     BlendMode = COLORKEY_MODE;
 }
@@ -713,12 +463,7 @@ void DirectGraphicsClass::SetWhiteMode(void) {
     if (BlendMode == WHITE_MODE)
         return;
 
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_INVSRCALPHA);  // White
-    lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_DESTALPHA);   // einschalten
-#elif defined(PLATFORM_SDL)
     glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_DST_ALPHA);
-#endif
 
     BlendMode = WHITE_MODE;
 }
@@ -731,12 +476,7 @@ void DirectGraphicsClass::SetAdditiveMode(void) {
     if (BlendMode == ADDITIV_MODE)
         return;
 
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);    // Additive Blending
-    lpD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_DESTALPHA);  // einschalten
-#elif defined(PLATFORM_SDL)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-#endif
 
     BlendMode = ADDITIV_MODE;
 }
@@ -746,30 +486,6 @@ void DirectGraphicsClass::SetAdditiveMode(void) {
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsClass::SetFilterMode(bool filteron) {
-    // Filter schon an? Dann nichts ändern
-    //
-
-    if (filteron == FilterMode)
-        return;
-
-    // Filter einschalten
-    //
-    if (filteron == true) {
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->SetTextureStageState(0, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
-        lpD3DDevice->SetTextureStageState(0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
-#endif
-    }
-
-    // andernfalls Filter ausschalten
-    //
-    else {
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->SetTextureStageState(0, D3DTSS_MINFILTER, D3DTEXF_POINT);
-        lpD3DDevice->SetTextureStageState(0, D3DTSS_MAGFILTER, D3DTEXF_POINT);
-#endif
-    }
-
     FilterMode = filteron;
 }
 
@@ -781,9 +497,6 @@ void DirectGraphicsClass::SetFilterMode(bool filteron) {
 void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
                                          std::uint32_t PrimitiveCount,
                                          void *pVertexStreamZeroData) {
-#if defined(PLATFORM_DIRECTX)
-    lpD3DDevice->DrawPrimitiveUP(PrimitiveType, PrimitiveCount, pVertexStreamZeroData, sizeof(VERTEX2D));
-#elif defined(PLATFORM_SDL)
     int stride = sizeof(VERTEX2D);
     // DKS - Changed multiplier from 3 to 2, since I removed the unnecessary Z coordinate:
     int clr_offset = sizeof(float) * 2;
@@ -845,28 +558,28 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
     glEnableClientState(GL_COLOR_ARRAY);
     glColorPointer(4, GL_UNSIGNED_BYTE, stride, reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + clr_offset);
 #elif defined(USE_GL2)
-    // Enable attributes and uniforms for transfer
-    if (ProgramCurrent == PROGRAM_TEXTURE) {
+        // Enable attributes and uniforms for transfer
+        if (ProgramCurrent == PROGRAM_TEXTURE) {
 #if defined(USE_ETC1)
-        if (SupportedETC1 == true) {
-            glUniform1i(Shaders[ProgramCurrent].texUnit0, 0);
-            glUniform1i(Shaders[ProgramCurrent].texUnit1, 1);
-        }
+            if (SupportedETC1 == true) {
+                glUniform1i(Shaders[ProgramCurrent].texUnit0, 0);
+                glUniform1i(Shaders[ProgramCurrent].texUnit1, 1);
+            }
 #endif
-        glEnableVertexAttribArray(Shaders[ProgramCurrent].NameTex);
-        glVertexAttribPointer(Shaders[ProgramCurrent].NameTex, 2, GL_FLOAT, GL_FALSE, stride,
-                              reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + tex_offset);
-    }
+            glEnableVertexAttribArray(Shaders[ProgramCurrent].NameTex);
+            glVertexAttribPointer(Shaders[ProgramCurrent].NameTex, 2, GL_FLOAT, GL_FALSE, stride,
+                                  reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + tex_offset);
+        }
 
-    glEnableVertexAttribArray(Shaders[ProgramCurrent].NamePos);
-    glVertexAttribPointer(Shaders[ProgramCurrent].NamePos, 2, GL_FLOAT, GL_FALSE, stride, pVertexStreamZeroData);
+        glEnableVertexAttribArray(Shaders[ProgramCurrent].NamePos);
+        glVertexAttribPointer(Shaders[ProgramCurrent].NamePos, 2, GL_FLOAT, GL_FALSE, stride, pVertexStreamZeroData);
 
-    glEnableVertexAttribArray(Shaders[ProgramCurrent].NameClr);
-    glVertexAttribPointer(Shaders[ProgramCurrent].NameClr, 4, GL_UNSIGNED_BYTE, GL_TRUE, stride,
-                          reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + clr_offset);
+        glEnableVertexAttribArray(Shaders[ProgramCurrent].NameClr);
+        glVertexAttribPointer(Shaders[ProgramCurrent].NameClr, 4, GL_UNSIGNED_BYTE, GL_TRUE, stride,
+                              reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + clr_offset);
 
-    D3DXMATRIXA16 matMVP = g_matModelView * matProj;
-    glUniformMatrix4fv(Shaders[ProgramCurrent].NameMvp, 1, GL_FALSE, matMVP.data());
+        D3DXMATRIXA16 matMVP = g_matModelView * matProj;
+        glUniformMatrix4fv(Shaders[ProgramCurrent].NameMvp, 1, GL_FALSE, matMVP.data());
 #endif
 
     glDrawArrays(PrimitiveType, 0, PrimitiveCount);
@@ -880,15 +593,13 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     }
 #elif defined(USE_GL2)
-    // Disbale attributes and uniforms
-    glDisableVertexAttribArray(Shaders[ProgramCurrent].NamePos);
-    glDisableVertexAttribArray(Shaders[ProgramCurrent].NameClr);
+        // Disbale attributes and uniforms
+        glDisableVertexAttribArray(Shaders[ProgramCurrent].NamePos);
+        glDisableVertexAttribArray(Shaders[ProgramCurrent].NameClr);
 
-    if (ProgramCurrent == PROGRAM_TEXTURE) {
-        glDisableVertexAttribArray(Shaders[ProgramCurrent].NameTex);
-    }
-#endif
-
+        if (ProgramCurrent == PROGRAM_TEXTURE) {
+            glDisableVertexAttribArray(Shaders[ProgramCurrent].NameTex);
+        }
 #endif
 }
 
@@ -897,10 +608,6 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsClass::DisplayBuffer() {
-#if defined(PLATFORM_DIRECTX)
-    // Darstellung beenden
-    lpD3DDevice->EndScene();
-#endif
     // Backbuffer mit Frontbuffer tauschen
     ShowBackBuffer();
 }
@@ -962,9 +669,6 @@ void DirectGraphicsClass::SetTexture(int idx) {
     if (idx >= 0) {
         use_texture = true;
         TextureHandle &th = Textures[idx];
-
-#if defined(PLATFORM_DIRECTX)
-#else  // BEGIN GL CODE
         glBindTexture(GL_TEXTURE_2D, th.tex);
 #if defined(USE_ETC1)
         if (SupportedETC1 == true) {
@@ -978,13 +682,9 @@ void DirectGraphicsClass::SetTexture(int idx) {
 #if defined(USE_GL1)
         glEnable(GL_TEXTURE_2D);
 #endif
-#endif  // END GL CODE
     } else {
         use_texture = false;
-#if defined(PLATFORM_DIRECTX)
-        lpD3DDevice->SetTexture(0, NULL);  // Textur setzen
-#else                                      // BEGIN GL CODE
-                                           // DKS - There is no need to call glBindTexture():
+        // DKS - There is no need to call glBindTexture():
         // glBindTexture( GL_TEXTURE_2D, 0 );
 #if defined(USE_GL1)
         glDisable(GL_TEXTURE_2D);
@@ -1001,7 +701,6 @@ void DirectGraphicsClass::SetTexture(int idx) {
         }
 #endif
 #endif  // 0
-#endif  // END GL CODE
     }
 }
 
@@ -1010,12 +709,6 @@ void DirectGraphicsClass::SetTexture(int idx) {
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsClass::ShowBackBuffer() {
-#if defined(PLATFORM_DIRECTX)
-    HRESULT hresult;
-
-    hresult = lpD3DDevice->Present(NULL, NULL, 0, NULL);  // Frontbuffer anzeigen
-#elif defined(PLATFORM_SDL)
-
 #if defined(USE_GL2) && defined(USE_FBO)
     if (RenderBuffer.Enabled == true) {
         VERTEX2D vertices[4];
@@ -1066,10 +759,10 @@ void DirectGraphicsClass::ShowBackBuffer() {
 //      glFlush() instead of SDL_GL_SwapWindow() when vsync is either
 //      disabled or unavailable.
 #if SDL_VERSION_ATLEAST(2, 0, 0)
-    SDL_GL_SwapWindow(Window);
+        SDL_GL_SwapWindow(Window);
 #else  // SDL1.2:
-    glFlush();
-    SDL_GL_SwapBuffers();
+        glFlush();
+        SDL_GL_SwapBuffers();
 #endif
 #endif
 
@@ -1084,8 +777,6 @@ void DirectGraphicsClass::ShowBackBuffer() {
 
 #if defined(USE_GL2) && defined(USE_FBO)
     SelectBuffer(true);
-#endif
-
 #endif
 }
 

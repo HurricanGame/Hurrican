@@ -25,7 +25,7 @@
 // --------------------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------------------
-// Konstruktor, prüft auf den PerformanceCounter und setzt diverse Werte auf den Startwert
+// Konstruktor, setzt diverse Werte auf den Startwert
 // --------------------------------------------------------------------------------------
 
 TimerClass::TimerClass(void) {
@@ -40,23 +40,8 @@ TimerClass::TimerClass(void) {
     MoveSpeed = 10.0f;          // so moven wie bei 60 fps
     SpeedFaktor = 1.0f;
 
-#if defined(PLATFORM_DIRECTX)
-    // testen, ob ein PerformanceCounter exisitert
-    if (QueryPerformanceFrequency((LARGE_INTEGER *)&Frequenz)) {
-        PerformanceCounter = true;
-        QueryPerformanceCounter((LARGE_INTEGER *)&letzterFrame);
-        ZeitFaktor = 1.0f / Frequenz;
-        // Protokoll << static_cast<int>(Frequenz) << std::endl;
-    }
-    // wenn nicht, dann SDL_GetTicks verwenden
-    else {
-#endif
-        PerformanceCounter = false;
-        letzterFrame = SDL_GetTicks();
-        ZeitFaktor = 0.001f;
-#if defined(PLATFORM_DIRECTX)
-    }
-#endif
+    letzterFrame = SDL_GetTicks();
+    ZeitFaktor = 0.001f;
 }
 
 // --------------------------------------------------------------------------------------
@@ -70,14 +55,8 @@ TimerClass::~TimerClass(void) {}
 // --------------------------------------------------------------------------------------
 
 void TimerClass::update(void) {
-    vergangeneFrames++;      // für die Schnittberechnung
-    if (PerformanceCounter)  // Counter vorhanden ?
-    {
-#if defined(PLATFORM_DIRECTX)
-        QueryPerformanceCounter((LARGE_INTEGER *)&aktuelleZeit);  // dann beutzen
-#endif
-    } else                             // wenn nicht, dann benutzen
-        aktuelleZeit = SDL_GetTicks();  // wir SDL_GetTicks
+    vergangeneFrames++;             // für die Schnittberechnung
+    aktuelleZeit = SDL_GetTicks();  // wir SDL_GetTicks
 
     vergangeneZeit =
         (std::max<std::int64_t>(0, aktuelleZeit - letzterFrame)) * ZeitFaktor;  // vergangene Zeit neu setzen
@@ -112,13 +91,7 @@ void TimerClass::wait(void) {
     // Diese Schleife wird solange durchlaufen, bis die gewünschte Framerate erreicht ist
     do {
         // Zeit holen
-        if (PerformanceCounter)  // mit PerformanceCounter
-        {
-#if defined(PLATFORM_DIRECTX)
-            QueryPerformanceCounter((LARGE_INTEGER *)&aktuelleZeit);
-#endif
-        } else  // oder SDL_GetTicks, je nach dem
-            aktuelleZeit = SDL_GetTicks();
+        aktuelleZeit = SDL_GetTicks();
     } while (maxFPS < 1 / ((aktuelleZeit - letzterFrame) * ZeitFaktor));
 }
 
@@ -129,13 +102,7 @@ void TimerClass::wait(void) {
 void TimerClass::wait(int Wert) {
     do {
         // Zeit holen
-        if (PerformanceCounter)  // mit PerformanceCounter
-        {
-#if defined(PLATFORM_DIRECTX)
-            QueryPerformanceCounter((LARGE_INTEGER *)&aktuelleZeit);
-#endif
-        } else  // oder SDL_GetTicks, je nach dem
-            aktuelleZeit = SDL_GetTicks();
+        aktuelleZeit = SDL_GetTicks();
     } while (Wert > (aktuelleZeit - letzterFrame) * ZeitFaktor * 1000);
 }
 

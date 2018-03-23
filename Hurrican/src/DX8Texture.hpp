@@ -89,15 +89,6 @@ class TexturesystemClass {
     void ReadScaleFactorsFile(const std::string &fullpath);
 
     bool LoadTextureFromFile(const std::string &filename, TextureHandle &th);
-
-#if defined(PLATFORM_DIRECTX)
-    bool DX8_LoadTexture(const std::string &path,
-                         const std::string &filename,
-                         void *buf,
-                         unsigned int buf_size,
-                         TextureHandle &th);
-    void DX8_UnloadTexture(TextureHandle &th);
-#endif
 };
 
 // EXTERNS:
