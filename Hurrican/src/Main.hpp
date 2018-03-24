@@ -73,7 +73,7 @@ struct sCommandLineParams {
 // Prototypen von Funktionen
 // --------------------------------------------------------------------------------------
 
-bool GameInit(HWND hwnd, HINSTANCE hinstance);  // Spiel vor  dem Cracktro initialisieren
+bool GameInit();  // Spiel vor  dem Cracktro initialisieren
 bool GameInit2(void);                           // Spiel nach dem Cracktro initialisieren
 bool GameExit(void);                            // Spiel de-initialisieren
 bool Heartbeat(void);                           // Haupt Game Loop

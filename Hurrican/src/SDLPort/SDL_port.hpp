@@ -43,8 +43,6 @@ typedef GLuint LPDIRECT3DTEXTURE8, LPDIRECT3DTEXTURE9, LPDIRECT3DVERTEXBUFFER8, 
 typedef std::uint32_t LPDIRECTINPUT8;
 
 #ifndef __WIN32__
-typedef std::uint32_t HINSTANCE, HANDLE, HWND, HRESULT;
-
 typedef struct tagRECT {
     std::int32_t left;
     std::int32_t top;

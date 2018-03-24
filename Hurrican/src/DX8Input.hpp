@@ -79,7 +79,7 @@ class DirectInputClass {
     DirectInputClass(void);   // Konstruktor
     ~DirectInputClass(void);  // Desktruktor
 
-    bool Init(HWND hwnd, HINSTANCE hinst);  // DirectInput initialisieren
+    bool Init();  // DirectInput initialisieren
     void Exit(void);                        // DirectInput beenden
     bool UpdateTastatur(void);              // Tasten abfragen und im Puffer speichern
     bool UpdateMaus(bool gepuffert);        // Maus abfragen gepuffert/ungepuffert

@@ -112,7 +112,7 @@ class DirectGraphicsClass {
     DirectGraphicsClass(void);   // Konstruktor
     ~DirectGraphicsClass(void);  // Desktruktor
 
-    bool Init(HWND hwnd, std::uint32_t dwBreite, std::uint32_t dwHoehe, std::uint32_t dwZ_Bits, bool VSync);
+    bool Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, std::uint32_t dwZ_Bits, bool VSync);
     bool Exit(void);  // D3D beenden
     bool SetDeviceInfo(void);
 

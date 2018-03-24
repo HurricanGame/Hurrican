@@ -61,7 +61,6 @@ extern bool GameRunning;  // Spiel läuft :-)
 #ifdef _DEBUG
 extern bool DebugMode;  // Debug Mode ein/aus
 #endif
-extern HWND g_hwnd;  // Handle des Hauptfensters
 extern bool FlameThrower;
 extern bool HasCheated;
 extern RECT srcrect, destrect;

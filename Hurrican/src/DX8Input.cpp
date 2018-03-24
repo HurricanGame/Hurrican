@@ -78,7 +78,7 @@ DirectInputClass::~DirectInputClass(void) {}
 // DirectInput initialisieren
 // Keyboard und Maus initialisieren und Joystick, falls vorhanden
 // --------------------------------------------------------------------------------------
-bool DirectInputClass::Init(HWND hwnd, HINSTANCE hinst) {
+bool DirectInputClass::Init() {
 #if SDL_VERSION_ATLEAST(2, 0, 0)
     TastaturPuffer = SDL_GetKeyboardState(&NumberOfKeys);
 #else

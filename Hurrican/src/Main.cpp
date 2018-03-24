@@ -263,9 +263,6 @@ void FillCommandLineParams(int argc, char *args[]) {
 int main(int argc, char *argv[]) {
     GamePaused = false;
 
-    HWND g_hwnd = 0;
-    HINSTANCE hinstance = 0;
-
     FillCommandLineParams(argc, argv);
 
     // Set game's data path:
@@ -352,7 +349,7 @@ int main(int argc, char *argv[]) {
 
     //----- Spiel-Initialisierung
 
-    if (!GameInit(g_hwnd, hinstance)) {
+    if (!GameInit()) {
         Protokoll << "\n-> GameInit error!\n" << std::endl;
         GameRunning = false;
     } else {
@@ -445,7 +442,7 @@ int main(int argc, char *argv[]) {
 // GameInit, initialisiert die DX Objekte
 // --------------------------------------------------------------------------------------
 
-bool GameInit(HWND hwnd, HINSTANCE hinstance) {
+bool GameInit() {
     options_Detail = DETAIL_LOW;
 
     srand(SDL_GetTicks());
@@ -488,14 +485,14 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance) {
     Protokoll << ">--------------------<" << std::endl;
 
     // Direct3D initialisieren
-    if (!DirectGraphics.Init(hwnd, RENDERWIDTH, RENDERHEIGHT, CommandLineParams.ScreenDepth, CommandLineParams.VSync)) {
+    if (!DirectGraphics.Init(RENDERWIDTH, RENDERHEIGHT, CommandLineParams.ScreenDepth, CommandLineParams.VSync)) {
         Protokoll << "\n-> Direct3D Initialisierung Fehler ...!" << std::endl;
         GameRunning = false;
         return false;
     }
 
     // DirectInput initialisieren
-    if (!DirectInput.Init(hwnd, hinstance)) {
+    if (!DirectInput.Init()) {
         Protokoll << "\n-> DirectInput8 Initialisierung Fehler ...!" << std::endl;
         GameRunning = false;
         return false;

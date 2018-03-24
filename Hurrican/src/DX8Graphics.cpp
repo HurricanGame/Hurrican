@@ -70,8 +70,7 @@ DirectGraphicsClass::~DirectGraphicsClass() {}
 // --------------------------------------------------------------------------------------
 // D3D Initialisieren
 // --------------------------------------------------------------------------------------
-bool DirectGraphicsClass::Init(HWND hwnd,
-                               std::uint32_t dwBreite,
+bool DirectGraphicsClass::Init(std::uint32_t dwBreite,
                                std::uint32_t dwHoehe,
                                std::uint32_t dwZ_Bits,
                                bool VSync) {
