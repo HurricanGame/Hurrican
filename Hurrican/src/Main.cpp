@@ -31,36 +31,16 @@
 #include <iostream>
 namespace fs = std::experimental::filesystem::v1;
 
-#include <sys/stat.h>
-#include <sys/types.h>
 #include <iomanip>
-
 #include "CCracktro.hpp"
 #include "Console.hpp"
-#include "DX8Font.hpp"
-#include "DX8Graphics.hpp"
-#include "DX8Input.hpp"
 #include "DX8Sound.hpp"
-#include "DX8Sprite.hpp"
 #include "DX8Texture.hpp"
 #include "GUISystem.hpp"
 #include "Gameplay.hpp"
-#include "GegnerClass.hpp"
-#include "Globals.hpp"
 #include "HUD.hpp"
-#include "Intro.hpp"
-#include "Logdatei.hpp"
-#include "Main.hpp"
-#include "Mathematics.hpp"
-#include "Menu.hpp"
-#include "Outtro.hpp"
 #include "Partikelsystem.hpp"
-#include "Player.hpp"
 #include "Projectiles.hpp"
-#include "Texts.hpp"
-#include "Tileengine.hpp"
-#include "Timer.hpp"
-#include "resource.hpp"
 
 #ifdef USE_UNRARLIB
 #include "unrarlib.h"
@@ -89,7 +69,6 @@ extern DirectGraphicsSprite PartikelGrafix[MAX_PARTIKELGFX];  // Grafiken der Pa
 
 bool FixedFramerate = false;  // true = Spiel mit 50 Frames laufen lassen
 // false = Spiel so flüssig wie möglich laufen lassen
-bool Sprache;                    // true == deutsch / false == englisch
 bool GameRunning = true;         // Spiel läuft :-)
 bool GamePaused = false;         // Spiel eingefroren (wenn man zb das Fenster verlässt)
 bool NochKeinFullScreen = true;  // Logo noch anzeigen in Paint ?
@@ -115,21 +94,17 @@ ProjectileListClass Projectiles;     // Liste mit Schüssen
 GegnerListClass Gegner;              // Liste mit Gegner
 IntroClass *pIntro;                  // Intro-Objekt
 OuttroClass *pOuttro;                // Outtro-Objekt
-MenuClass *pMenu = NULL;             // Hauptmenu-Objekt
+MenuClass *pMenu = nullptr;          // Hauptmenu-Objekt
 ConsoleClass Console;                // Konsolen-Objekt
 CGUISystem GUI;                      // GUI System
 CCracktro *Cracktro;
-RECT srcrect, destrect;
 
-char *g_storage_ext = NULL;  // Where data files (levels, graphics, music, etc)
-                             //      for the game are stored (read)
-char *g_save_ext = NULL;     // Where configuration files, logs, and save games
-                             //      are written (-DKS) (write)
+char *g_storage_ext = nullptr;  // Where data files (levels, graphics, music, etc)
+                                //      for the game are stored (read)
+char *g_save_ext = nullptr;     // Where configuration files, logs, and save games
+                                //      are written (-DKS) (write)
 
 sCommandLineParams CommandLineParams;
-
-int WINDOWWIDTH;
-int WINDOWHEIGHT;
 
 // --------------------------------------------------------------------------------------
 // Variablen für den Spielablauf
@@ -143,28 +118,6 @@ HUDClass HUD;                           // Das HUD
 unsigned char SpielZustand = CRACKTRO;  // Aktueller Zustand des Spieles
 char StringBuffer[100];                 // Für die Int / String Umwandlung
 
-// --------------------------------------------------------------------------------------
-// Callback Funktion
-// --------------------------------------------------------------------------------------
-
-int GetStringPos(const char *string, const char *substr) {
-    int len = strlen(string);
-    for (int i = 0; i < len; i++) {
-        int index = 0;
-
-        while (string[i] == substr[index]) {
-            i++;
-            index++;
-
-            int len = strlen(substr);
-            if (index >= len)
-                return i + 1;
-        }
-    }
-
-    return -1;
-}
-
 void FillCommandLineParams(int argc, char *args[]) {
     uint16_t i;
 
@@ -177,12 +130,12 @@ void FillCommandLineParams(int argc, char *args[]) {
     CommandLineParams.ShowFPS = false;
     CommandLineParams.AllowNPotTextureSizes = false;
     CommandLineParams.LowRes = false;
-    CommandLineParams.DataPath = NULL;
-    CommandLineParams.SavePath = NULL;
+    CommandLineParams.DataPath = nullptr;
+    CommandLineParams.SavePath = nullptr;
 
     for (i = 1; i < argc; i++) {
-        if ((strstr(args[i], "--help") != NULL) || (strstr(args[i], "-?") != NULL) || (strstr(args[i], "-H") != NULL) ||
-            (strstr(args[i], "-h") != NULL)) {
+        if ((strstr(args[i], "--help") != nullptr) || (strstr(args[i], "-?") != nullptr) ||
+            (strstr(args[i], "-H") != nullptr) || (strstr(args[i], "-h") != nullptr)) {
             Protokoll << "Hurrican" << std::endl;
             Protokoll << "  Usage      : hurrican <arguments>" << std::endl;
             Protokoll << "  Arguments" << std::endl;
@@ -212,13 +165,13 @@ void FillCommandLineParams(int argc, char *args[]) {
             Protokoll << "  -PS x, --pathsave x     : Use this path for the game's save data" << std::endl;
             Protokoll << "                            i.e. save-games, settings, high-scores, etc." << std::endl;
             exit(1);
-        } else if ((strstr(args[i], "--windowmode") != NULL) || (strstr(args[i], "-W") != NULL)) {
+        } else if ((strstr(args[i], "--windowmode") != nullptr) || (strstr(args[i], "-W") != nullptr)) {
             CommandLineParams.RunWindowMode = true;
             fprintf(stdout, "Window mode is enabled\n");
-        } else if ((strstr(args[i], "--showfps") != NULL) || (strstr(args[i], "-F") != NULL)) {
+        } else if ((strstr(args[i], "--showfps") != nullptr) || (strstr(args[i], "-F") != nullptr)) {
             CommandLineParams.ShowFPS = true;
             fprintf(stdout, "FPS will be displayed\n");
-        } else if ((strstr(args[i], "--depth") != NULL) || (strstr(args[i], "-D") != NULL)) {
+        } else if ((strstr(args[i], "--depth") != nullptr) || (strstr(args[i], "-D") != nullptr)) {
             i++;
             if (i < argc) {
                 CommandLineParams.ScreenDepth = std::clamp(atoi(args[i]), 16, 32);
@@ -230,16 +183,16 @@ void FillCommandLineParams(int argc, char *args[]) {
                     CommandLineParams.ScreenDepth = 16;
                 fprintf(stdout, "Screen depth (bpp) requested is %d\n", CommandLineParams.ScreenDepth);
             }
-        } else if ((strstr(args[i], "--lowres") != NULL) || (strstr(args[i], "-L") != NULL)) {
+        } else if ((strstr(args[i], "--lowres") != nullptr) || (strstr(args[i], "-L") != nullptr)) {
             fprintf(stdout, "Low-resolution 320x240 screen dimensions are requested\n");
             CommandLineParams.LowRes = true;
-        } else if ((strstr(args[i], "--novsync") != NULL) || (strstr(args[i], "-NV") != NULL)) {
+        } else if ((strstr(args[i], "--novsync") != nullptr) || (strstr(args[i], "-NV") != nullptr)) {
             fprintf(stdout, "VSync / double-buffering will be disabled, if supported\n");
             CommandLineParams.VSync = false;
-        } else if ((strstr(args[i], "--nonpot") != NULL) || (strstr(args[i], "-NP") != NULL)) {
+        } else if ((strstr(args[i], "--nonpot") != nullptr) || (strstr(args[i], "-NP") != nullptr)) {
             fprintf(stdout, "Non-power-of-two textures are allowed\n");
             CommandLineParams.AllowNPotTextureSizes = true;
-        } else if ((strstr(args[i], "--texfactor") != NULL) || (strstr(args[i], "-TF") != NULL)) {
+        } else if ((strstr(args[i], "--texfactor") != nullptr) || (strstr(args[i], "-TF") != nullptr)) {
             i++;
             if (i < argc) {
                 CommandLineParams.TexFactor = std::clamp(atoi(args[i]), 1, 4);
@@ -247,13 +200,13 @@ void FillCommandLineParams(int argc, char *args[]) {
                     CommandLineParams.TexFactor = 4;
                 fprintf(stdout, "Texfactor set to %d\n", CommandLineParams.TexFactor);
             }
-        } else if ((strstr(args[i], "--texsizemin") != NULL) || (strstr(args[i], "-TS") != NULL)) {
+        } else if ((strstr(args[i], "--texsizemin") != nullptr) || (strstr(args[i], "-TS") != nullptr)) {
             i++;
             if (i < argc) {
                 CommandLineParams.TexSizeMin = std::clamp(atoi(args[i]), 16, 1024);
                 fprintf(stdout, "Texsizemin set to %d\n", CommandLineParams.TexSizeMin);
             }
-        } else if ((strstr(args[i], "--pathdata") != NULL) || (strstr(args[i], "-PD") != NULL)) {
+        } else if ((strstr(args[i], "--pathdata") != nullptr) || (strstr(args[i], "-PD") != nullptr)) {
             i++;
             if (i < argc) {
                 if (args[i] && strlen(args[i]) > 0 && !CommandLineParams.DataPath) {
@@ -264,11 +217,11 @@ void FillCommandLineParams(int argc, char *args[]) {
                     } else {
                         fprintf(stdout, "ERROR: could not find data path %s\n", CommandLineParams.DataPath);
                         free(CommandLineParams.DataPath);
-                        CommandLineParams.DataPath = NULL;
+                        CommandLineParams.DataPath = nullptr;
                     }
                 }
             }
-        } else if ((strstr(args[i], "--pathsave") != NULL) || (strstr(args[i], "-PS") != NULL)) {
+        } else if ((strstr(args[i], "--pathsave") != nullptr) || (strstr(args[i], "-PS") != nullptr)) {
             i++;
             if (i < argc) {
                 if (args[i] && strlen(args[i]) > 0 && !CommandLineParams.SavePath) {
@@ -279,20 +232,20 @@ void FillCommandLineParams(int argc, char *args[]) {
                     } else {
                         fprintf(stdout, "ERROR: could not find save path %s\n", CommandLineParams.SavePath);
                         free(CommandLineParams.SavePath);
-                        CommandLineParams.SavePath = NULL;
+                        CommandLineParams.SavePath = nullptr;
                     }
                 }
             }
-        } else if ((strstr(args[i], "--npot") != NULL) || (strstr(args[i], "-NP") != NULL)) {
+        } else if ((strstr(args[i], "--npot") != nullptr) || (strstr(args[i], "-NP") != nullptr)) {
             fprintf(stdout, "Non-power-of-two textures are allowed\n");
             CommandLineParams.AllowNPotTextureSizes = true;
-        } else if (strstr(args[i], "--custom") != NULL) {
+        } else if (strstr(args[i], "--custom") != nullptr) {
             i++;
             if (i < argc && strlen(args[i]) < 256) {
                 strcpy(CommandLineParams.OwnLevelList, args[i]);
                 CommandLineParams.RunOwnLevelList = true;
             }
-        } else if (strstr(args[i], "--level") != NULL) {
+        } else if (strstr(args[i], "--level") != nullptr) {
             // own single level?
             i++;
             if (i < argc && strlen(args[i]) < 256) {
@@ -315,22 +268,14 @@ int main(int argc, char *argv[]) {
 
     FillCommandLineParams(argc, argv);
 
-    if (CommandLineParams.RunWindowMode) {
-        WINDOWWIDTH = 1024;
-        WINDOWHEIGHT = 768;
-    } else {
-        WINDOWWIDTH = 449;
-        WINDOWHEIGHT = 109;
-    }
-
     // Set game's data path:
-    g_storage_ext = NULL;
+    g_storage_ext = nullptr;
     // First, see if a command line parameter was passed:
     if (CommandLineParams.DataPath) {
         g_storage_ext = (char *)malloc(strlen(CommandLineParams.DataPath + 1));
         strcpy_s(g_storage_ext, CommandLineParams.DataPath);
         free(CommandLineParams.DataPath);
-        CommandLineParams.DataPath = NULL;
+        CommandLineParams.DataPath = nullptr;
     } else {
 #if defined(ANDROID)
         g_storage_ext = (char *)malloc(strlen(SDL_AndroidGetExternalStoragePath() + 1));
@@ -356,12 +301,12 @@ int main(int argc, char *argv[]) {
     }
 
     // Set game's save path (save games, settings, logs, high-scores, etc)
-    g_save_ext = NULL;
+    g_save_ext = nullptr;
     if (CommandLineParams.SavePath) {
         g_save_ext = (char *)malloc(strlen(CommandLineParams.SavePath + 1));
         strcpy_s(g_save_ext, CommandLineParams.SavePath);
         free(CommandLineParams.SavePath);
-        CommandLineParams.SavePath = NULL;
+        CommandLineParams.SavePath = nullptr;
     } else {
 #if defined(ANDROID)
         g_save_ext = (char *)malloc(strlen(SDL_AndroidGetExternalStoragePath() + 1));
@@ -416,7 +361,7 @@ int main(int argc, char *argv[]) {
 
     //----- Main-Loop
 
-    while (GameRunning == true) {
+    while (GameRunning) {
         SDL_Event event;
 
         while (SDL_PollEvent(&event)) {
@@ -429,7 +374,7 @@ int main(int argc, char *argv[]) {
         try
 #endif  // USE_NO_EXCEPTIONS
         {
-            if (GamePaused == false) {
+            if (!GamePaused) {
                 // Main Loop
                 Heartbeat();
 
@@ -446,7 +391,7 @@ int main(int argc, char *argv[]) {
 
                 // Feste Framerate ? (Spiel läuft in Zeitlupe, wenn zu langsam)
                 //
-                if (FixedFramerate == true) {
+                if (FixedFramerate) {
                     Timer.SetMaxFPS(60);
                     SpeedFaktor = 1.0f / 60.0f * Timer.GetMoveSpeed();
                 } else {
@@ -458,7 +403,7 @@ int main(int argc, char *argv[]) {
 
                 // Bei Demo immer gleichen Speedfaktor setzen
                 //
-                if (DEMORecording == true || DEMOPlaying == true)
+                if (DEMORecording || DEMOPlaying)
                     SpeedFaktor = 0.28f;
             }
         }
@@ -487,7 +432,7 @@ int main(int argc, char *argv[]) {
 
     // Kein Fehler im Game? Dann Logfile löschen
     // FIXME: That doesn't belong here
-    if (Protokoll.delLogFile == true)
+    if (Protokoll.delLogFile)
         fs::remove(fs::path("Game_Log.txt"));
 
     free(g_storage_ext);
@@ -583,7 +528,7 @@ bool GameInit(HWND hwnd, HINSTANCE hinstance) {
 // GameInit2, initialisiert den Rest nach dem Cracktro
 // --------------------------------------------------------------------------------------
 
-bool GameInit2(void) {
+bool GameInit2() {
     // DKS-Player[] is a static global now:
     // Player initialisieren
     // Player[0] = new PlayerClass(0);
@@ -597,7 +542,7 @@ bool GameInit2(void) {
     // memset(Player[1], 0, sizeof(*Player[1]));
 
     // Konfiguration laden
-    if (LoadConfig() == false) {
+    if (!LoadConfig()) {
         Protokoll << "\n-> No config found. Creating default" << std::endl;
         CreateDefaultConfig();
     }
@@ -797,7 +742,7 @@ bool GameInit2(void) {
 // GameExit, de-initialisieren der DX Objekte, Sprites etc.
 // --------------------------------------------------------------------------------------
 
-bool GameExit(void) {
+bool GameExit() {
     Protokoll << "\n>--------------------<\n";
     Protokoll << "| GameExit started   |\n";
     Protokoll << ">--------------------<\n" << std::endl;
@@ -841,7 +786,7 @@ bool GameExit(void) {
 // Heartbeat, der Mainloop. der bei jedem Frame durchlaufen wird
 // --------------------------------------------------------------------------------------
 
-bool Heartbeat(void) {
+bool Heartbeat() {
     switch (SpielZustand) {
         // Cracktro
         case CRACKTRO: {
@@ -849,7 +794,7 @@ bool Heartbeat(void) {
 
             Cracktro->Run();
 
-            if (Cracktro->b_running == false) {
+            if (!Cracktro->b_running) {
                 delete (Cracktro);
                 SpielZustand = MAINMENU;
 
@@ -867,8 +812,7 @@ bool Heartbeat(void) {
             //		SpielZustand = OUTTRO;
 
             goto jump;
-
-        } break;
+        }
 
         //----- Intro anzeigen ?
         case INTRO: {
@@ -1045,7 +989,7 @@ void ShowFPS() {
 // Outtro starten
 //----------------------------------------------------------------------------
 
-void StartOuttro(void) {
+void StartOuttro() {
     Stage = -1;
     pOuttro = new OuttroClass();
     SpielZustand = OUTTRO;
@@ -1055,7 +999,7 @@ void StartOuttro(void) {
 // Intro starten
 //----------------------------------------------------------------------------
 
-void StartIntro(void) {
+void StartIntro() {
     pIntro = new IntroClass();
     SpielZustand = INTRO;
 }
