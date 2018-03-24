@@ -91,7 +91,6 @@ void _itoa_s(int value, char *dst, int size);
 std::uint8_t LoadGLFunctions(void);
 #endif
 std::uint32_t getpixel(SDL_Surface *surface, std::int16_t x, std::int16_t y);
-void putpixel(SDL_Surface *surface, std::int16_t x, std::int16_t y, std::uint32_t pixel);
 void get_components(SDL_Surface *surface,
                     std::int16_t x,
                     std::int16_t y,

@@ -69,58 +69,22 @@ uint32_t getpixel(SDL_Surface *surface, int16_t x, int16_t y) {
     switch (bpp) {
         case 1:
             return *p;
-            break;
 
         case 2:
             return *reinterpret_cast<uint16_t *>(p);
-            break;
 
         case 3:
-            if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
-                return p[0] << 16 | p[1] << 8 | p[2];
-            else
-                return p[0] | p[1] << 8 | p[2] << 16;
-            break;
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+            return p[0] << 16 | p[1] << 8 | p[2];
+#else
+            return p[0] | p[1] << 8 | p[2] << 16;
+#endif
 
         case 4:
             return *reinterpret_cast<uint32_t *>(p);
-            break;
 
         default:
             return 0; /* shouldn't happen, but avoids warnings */
-    }
-}
-
-void putpixel(SDL_Surface *surface, int16_t x, int16_t y, uint32_t pixel) {
-    int16_t bpp = surface->format->BytesPerPixel;
-    /* Here p is the address to the pixel we want to set */
-    uint8_t *p = reinterpret_cast<uint8_t *>(surface->pixels) + y * surface->pitch + x * bpp;
-
-    switch (bpp) {
-        case 1:
-            *p = pixel;
-            break;
-
-        case 2:
-            *reinterpret_cast<uint16_t *>(p) = pixel;
-            break;
-
-        case 3:
-            if (SDL_BYTEORDER == SDL_BIG_ENDIAN) {
-                p[0] = (pixel >> 16) & 0xff;
-                p[1] = (pixel >> 8) & 0xff;
-                p[2] = pixel & 0xff;
-            } else {
-                p[0] = pixel & 0xff;
-                p[1] = (pixel >> 8) & 0xff;
-                p[2] = (pixel >> 16) & 0xff;
-            }
-            break;
-
-        case 4:
-        default:
-            *reinterpret_cast<uint32_t *>(p) = pixel;
-            break;
     }
 }
 
