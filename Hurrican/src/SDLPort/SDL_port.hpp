@@ -85,7 +85,6 @@ void strcat_s(char *dst, uint32_t size, const char *src);
 void strncat_s(char *dst, const char *src, uint32_t size);
 void strcpy_s(char *dst, int size, const char *src);
 void strcpy_s(char *dst, const char *src);
-void _itoa_s(int value, char *dst, int size);
 
 #ifdef __WIN32__
 std::uint8_t LoadGLFunctions(void);

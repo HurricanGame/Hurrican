@@ -44,12 +44,6 @@
 
 #endif
 
-#define CONSOLE_PRINT(x)                    \
-    {                                       \
-        strcpy_s(Buffer, strlen(x) + 1, x); \
-        ScrollUp();                         \
-    }
-
 // --------------------------------------------------------------------------------------
 // Consolen-Klasse
 // --------------------------------------------------------------------------------------
@@ -87,6 +81,9 @@ class ConsoleClass {
     void CheckCommands(void);  // Text nach enter drücken checken
     void ScrollUp(void);       // Eine Zeile hochscrollen
     bool DoConsole(void);      // Alles machen, was die Console betrifft =)
+
+    void print(const std::string &output);
+    void print(const char *output);
 };
 
 // --------------------------------------------------------------------------------------

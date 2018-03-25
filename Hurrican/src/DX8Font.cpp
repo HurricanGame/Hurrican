@@ -583,7 +583,7 @@ int DirectGraphicsFont::StringLength(const char Text[], int Spacing) {
 void DirectGraphicsFont::ShowFPS(void) {
     static int updateFPS;  // Trigger für die FPS, da sonst Anzeige zu schnell
     static double FPS;
-    char Buffer[20];
+    std::string Buffer;
     double Value;
 
     updateFPS++;
@@ -593,32 +593,32 @@ void DirectGraphicsFont::ShowFPS(void) {
     }
 
     // Aktuelle FPS
-    _itoa_s(static_cast<int>(FPS), Buffer, 10);
+    Buffer = std::to_string(FPS);
     DrawText(0, 0, "Aktuelle FPS :", 0xFFFFFFFF);
-    DrawText(150, 0, Buffer, 0xFFFFFFFF);
+    DrawText(150, 0, Buffer.c_str(), 0xFFFFFFFF);
 
     // FPS Grenze
-    _itoa_s(static_cast<int>(Timer.maxFPS), Buffer, 10);
+    Buffer = std::to_string(Timer.maxFPS);
     DrawText(200, 0, "FPS Grenze :", 0xFFFFFFFF);
-    DrawText(300, 0, Buffer, 0xFFFFFFFF);
+    DrawText(300, 0, Buffer.c_str(), 0xFFFFFFFF);
 
     // Durchschnittliche FPS
     Value = Timer.getAverageFPS();
-    _itoa_s(static_cast<int>(Value), Buffer, 10);
+    Buffer = std::to_string(Value);
     DrawText(0, 15, "Durchschnitt FPS :", 0xFFFFFFFF);
-    DrawText(150, 15, Buffer, 0xFFFFFFFF);
+    DrawText(150, 15, Buffer.c_str(), 0xFFFFFFFF);
 
     // Maximale FPS
     Value = Timer.getMaxFrameRate();
-    _itoa_s(static_cast<int>(Value), Buffer, 10);
+    Buffer = std::to_string(Value);
     DrawText(0, 30, "Maximale FPS :", 0xFFFFFFFF);
-    DrawText(150, 30, Buffer, 0xFFFFFFFF);
+    DrawText(150, 30, Buffer.c_str(), 0xFFFFFFFF);
 
     // Minimale FPS
     Value = Timer.getMinFrameRate();
-    _itoa_s(static_cast<int>(Value), Buffer, 10);
+    Buffer = std::to_string(Value);
     DrawText(0, 45, "Minimale FPS :", 0xFFFFFFFF);
-    DrawText(150, 45, Buffer, 0xFFFFFFFF);
+    DrawText(150, 45, Buffer.c_str(), 0xFFFFFFFF);
 }
 
 // DKS - New functions added to facilitate resized fonts:

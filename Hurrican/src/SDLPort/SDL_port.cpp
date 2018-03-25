@@ -57,10 +57,6 @@ void strcpy_s(char *dst, const char *src) {
     strcpy(dst, src);
 }
 
-void _itoa_s(int value, char *dst, int size) {
-    sprintf(reinterpret_cast<char *>(dst), "%d", value);
-}
-
 uint32_t getpixel(SDL_Surface *surface, int16_t x, int16_t y) {
     int16_t bpp = surface->format->BytesPerPixel;
     /* Here p is the address to the pixel we want to retrieve */

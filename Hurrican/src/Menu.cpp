@@ -419,7 +419,7 @@ void MenuClass::ShowMenu(void) {
     if (ScrollPos > 360.0f)
         ScrollPos -= 360.0f;
 
-        // Total löschen
+    // Total löschen
     DirectGraphics.ClearBackBuffer();
 
     ShowMenuBack();
@@ -912,11 +912,11 @@ void MenuClass::ShowMenu(void) {
 
                 pMenuFont->DrawText(xpos - 120, ypos + float(105 + i * 26), Highscores[i].Name, Color, 2);
 
-                _itoa_s(Highscores[i].Score, Buffer, 10);
-                pMenuFont->DrawTextRightAlign(xpos + 270, ypos + float(105 + i * 26), Buffer, Color, 2);
+                std::string strbuf = std::to_string(Highscores[i].Score);
+                pMenuFont->DrawTextRightAlign(xpos + 270, ypos + float(105 + i * 26), strbuf.c_str(), Color, 2);
 
-                _itoa_s(Highscores[i].Stage, Buffer, 10);
-                pMenuFont->DrawTextCenterAlign(xpos + 350, ypos + float(105 + i * 26), Buffer, Color, 2);
+                strbuf = std::to_string(Highscores[i].Stage);
+                pMenuFont->DrawTextCenterAlign(xpos + 350, ypos + float(105 + i * 26), strbuf.c_str(), Color, 2);
 
                 Skills.RenderSpriteScaled(xpos + 422, ypos + float(105 + i * 26), 30, 30, Highscores[i].Skill,
                                           0xFFFFFFFF);
@@ -2313,15 +2313,15 @@ void MenuClass::DoMenu(void) {
                                                             Player[0].Grenades + Player[0].SmartBombs + NUMPLAYERS;
 
                     // Und Savegame in Datei schreiben
-                    char Name[100];  // Für die Dateinamen
-                    char Buffer[5];  // Für _itoa
+                    std::string Name;    // Für die Dateinamen
+                    std::string Buffer;  // Für _itoa
 
                     // Name des Savegames erstellen
-                    _itoa_s(AktuellerPunkt, Buffer, 10);
+                    Buffer = std::to_string(AktuellerPunkt);
 
                     // Versuchen, die Datei zu erstellen
                     // nur weitermachen falls es keinen Fehler gibt
-                    snprintf(Name, sizeof(Name), "%s/Savegame%s.save", g_save_ext, Buffer);
+                    Name = std::string(g_save_ext) + "/Savegame" + Buffer + ".save";
                     std::ofstream Datei(Name, std::ofstream::binary);
 
                     // Fehler beim Öffnen ? Dann leeren Slot erzeugen
@@ -2357,14 +2357,12 @@ void MenuClass::DoMenu(void) {
 // --------------------------------------------------------------------------------------
 
 void MenuClass::LoadSavegames(void) {
-    char Name[100];  // Für die Dateinamen
-    char Buffer[5];  // Für _itoa
+    std::string Name;  // Für die Dateinamen
 
     // Versuchen, die einzelnen Savegames zu laden
     for (int i = 0; i < MAX_SAVEGAMES; i++) {
         // Name des Savegames erstellen
-        _itoa_s(i, Buffer, 10);
-        snprintf(Name, sizeof(Name), "%s/Savegame%s.save", g_save_ext, Buffer);
+        Name = std::string(g_save_ext) + "/Savegame" + std::to_string(i) + ".save";
 
         // Versuchen, die Datei zu öffnen
         // falls sie nicht existiert oder es eine Fehler gibt, ist der Slot noch leer
@@ -2415,7 +2413,6 @@ void MenuClass::LoadSavegames(void) {
 
 // DKS - Altered to allow scaled fonts on low resolution devices
 void MenuClass::ShowSavegames(int Highlight) {
-    char buffer[100];
     D3DCOLOR col;
     const int scale_factor = pDefaultFont->GetScaleFactor();
     int line_off_y = 14;
@@ -2448,15 +2445,15 @@ void MenuClass::ShowSavegames(int Highlight) {
         // Stage anzeigen
         //
         if (Savegames[i].Stage >= 0) {
-            _itoa_s(Savegames[i].Stage, buffer, 10);
-            pDefaultFont->DrawTextCenterAlign(col1_off_x, savegames_off_y + i * line_off_y, buffer, col, 0);
+            std::string buffer = std::to_string(Savegames[i].Stage);
+            pDefaultFont->DrawTextCenterAlign(col1_off_x, savegames_off_y + i * line_off_y, buffer.c_str(), col, 0);
         }
 
         // Spieler anzeigen
         //
         if (Savegames[i].Stage >= 0) {
-            _itoa_s(Savegames[i].Players, buffer, 10);
-            pDefaultFont->DrawTextCenterAlign(col2_off_x, savegames_off_y + i * line_off_y, buffer, col, 0);
+            std::string buffer = std::to_string(Savegames[i].Players);
+            pDefaultFont->DrawTextCenterAlign(col2_off_x, savegames_off_y + i * line_off_y, buffer.c_str(), col, 0);
         }
 
         // DKS - This was duplicate code that I removed, it did nothing different than above.. obvious bug

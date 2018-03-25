@@ -198,17 +198,17 @@ void HUDClass::ShowHUD(void) {
         // AutoFire anzeigen, wenn vorhanden
         if (Player[p].AutoFireExtra > 0.0f) {
             HUDAutoFire.RenderSprite(xpos + 263 + xoff, ypos + 61, 0, Color);
-            _itoa_s(int(Player[p].AutoFireExtra), Buffer, 10);
+            std::string buf = std::to_string(int(Player[p].AutoFireExtra));
 
             if (Player[p].AutoFireExtra < 10) {
-                pDefaultFont->DrawText(xpos + 270 + xoff, ypos + 86, Buffer, D3DCOLOR_RGBA(0, 0, 0, Alpha));
-                pDefaultFont->DrawText(xpos + 269 + xoff, ypos + 85, Buffer, playercol);
+                pDefaultFont->DrawText(xpos + 270 + xoff, ypos + 86, buf.c_str(), D3DCOLOR_RGBA(0, 0, 0, Alpha));
+                pDefaultFont->DrawText(xpos + 269 + xoff, ypos + 85, buf.c_str(), playercol);
             } else if (Player[p].AutoFireExtra < 100) {
-                pDefaultFont->DrawText(xpos + 271 + xoff, ypos + 86, Buffer, D3DCOLOR_RGBA(0, 0, 0, Alpha));
-                pDefaultFont->DrawText(xpos + 270 + xoff, ypos + 85, Buffer, playercol);
+                pDefaultFont->DrawText(xpos + 271 + xoff, ypos + 86, buf.c_str(), D3DCOLOR_RGBA(0, 0, 0, Alpha));
+                pDefaultFont->DrawText(xpos + 270 + xoff, ypos + 85, buf.c_str(), playercol);
             } else {
-                pDefaultFont->DrawText(xpos + 269 + xoff, ypos + 86, Buffer, D3DCOLOR_RGBA(0, 0, 0, Alpha));
-                pDefaultFont->DrawText(xpos + 268 + xoff, ypos + 85, Buffer, playercol);
+                pDefaultFont->DrawText(xpos + 269 + xoff, ypos + 86, buf.c_str(), D3DCOLOR_RGBA(0, 0, 0, Alpha));
+                pDefaultFont->DrawText(xpos + 268 + xoff, ypos + 85, buf.c_str(), playercol);
             }
         }
 
@@ -220,17 +220,17 @@ void HUDClass::ShowHUD(void) {
                 off += 37;
 
             HUDSuperShot.RenderSprite(xpos + 264 + xoff, ypos + 61 + off, 0, Color);
-            _itoa_s(int(Player[p].RiesenShotExtra), Buffer, 10);
+            std::string buf = std::to_string(int(Player[p].RiesenShotExtra));
 
             if (Player[p].RiesenShotExtra < 10) {
-                pDefaultFont->DrawText(xpos + 270 + xoff, ypos + 87 + off, Buffer, D3DCOLOR_RGBA(0, 0, 0, Alpha));
-                pDefaultFont->DrawText(xpos + 269 + xoff, ypos + 86 + off, Buffer, playercol);
+                pDefaultFont->DrawText(xpos + 270 + xoff, ypos + 87 + off, buf.c_str(), D3DCOLOR_RGBA(0, 0, 0, Alpha));
+                pDefaultFont->DrawText(xpos + 269 + xoff, ypos + 86 + off, buf.c_str(), playercol);
             } else if (Player[p].RiesenShotExtra < 100) {
-                pDefaultFont->DrawText(xpos + 271 + xoff, ypos + 87 + off, Buffer, D3DCOLOR_RGBA(0, 0, 0, Alpha));
-                pDefaultFont->DrawText(xpos + 270 + xoff, ypos + 86 + off, Buffer, playercol);
+                pDefaultFont->DrawText(xpos + 271 + xoff, ypos + 87 + off, buf.c_str(), D3DCOLOR_RGBA(0, 0, 0, Alpha));
+                pDefaultFont->DrawText(xpos + 270 + xoff, ypos + 86 + off, buf.c_str(), playercol);
             } else {
-                pDefaultFont->DrawText(xpos + 269 + xoff, ypos + 87 + off, Buffer, D3DCOLOR_RGBA(0, 0, 0, Alpha));
-                pDefaultFont->DrawText(xpos + 268 + xoff, ypos + 86 + off, Buffer, playercol);
+                pDefaultFont->DrawText(xpos + 269 + xoff, ypos + 87 + off, buf.c_str(), D3DCOLOR_RGBA(0, 0, 0, Alpha));
+                pDefaultFont->DrawText(xpos + 268 + xoff, ypos + 86 + off, buf.c_str(), playercol);
             }
         }
 
@@ -247,9 +247,10 @@ void HUDClass::ShowHUD(void) {
             else if (digit > 9)
                 digit = 9;
 
-            _itoa_s(digit, Buffer, 10);
+            std::string buf;
+            buf = std::to_string(digit);
 
-            pDefaultFont->DrawText(xpos + 350 + off + p * 10, ypos + 36, Buffer, playercol);
+            pDefaultFont->DrawText(xpos + 350 + off + p * 10, ypos + 36, buf.c_str(), playercol);
 
             // Anzahl verbleibender Granaten anzeigen
             digit = Player[p].Grenades;
@@ -257,25 +258,25 @@ void HUDClass::ShowHUD(void) {
                 digit = 0;
             else if (digit > 9)
                 digit = 9;
-            _itoa_s(digit, Buffer, 10);
+            buf = std::to_string(digit);
 
-            pDefaultFont->DrawText(xpos + 372 + off + p * 10, ypos + 36, Buffer, playercol);
+            pDefaultFont->DrawText(xpos + 372 + off + p * 10, ypos + 36, buf.c_str(), playercol);
         } else {
             // DKS - Original, normal-resolution code:
-            _itoa_s(Player[p].PowerLines, Buffer, 10);
+            std::string buf = std::to_string(Player[p].PowerLines);
 
             if (Player[p].PowerLines < 10)
-                pDefaultFont->DrawText(xpos + 353 + off + p * 10, ypos + 40, Buffer, playercol);
+                pDefaultFont->DrawText(xpos + 353 + off + p * 10, ypos + 40, buf.c_str(), playercol);
             else
-                pDefaultFont->DrawText(xpos + 349 + off + p * 10, ypos + 40, Buffer, playercol);
+                pDefaultFont->DrawText(xpos + 349 + off + p * 10, ypos + 40, buf.c_str(), playercol);
 
             // Anzahl verbleibender Granaten anzeigen
-            _itoa_s(Player[p].Grenades, Buffer, 10);
+            buf = std::to_string(Player[p].Grenades);
 
             if (Player[p].Grenades < 10)
-                pDefaultFont->DrawText(xpos + 376 + off + p * 10, ypos + 40, Buffer, playercol);
+                pDefaultFont->DrawText(xpos + 376 + off + p * 10, ypos + 40, buf.c_str(), playercol);
             else
-                pDefaultFont->DrawText(xpos + 372 + off + p * 10, ypos + 40, Buffer, playercol);
+                pDefaultFont->DrawText(xpos + 372 + off + p * 10, ypos + 40, buf.c_str(), playercol);
         }
 
         // Befindet sich die Smartbombe im Besitz des Spielers ?
@@ -389,61 +390,56 @@ void HUDClass::ShowHUD(void) {
 
     LivesToShow = std::max(0, Player[0].Lives);
 
-    _itoa_s(LivesToShow, Buffer, 10);
+    std::string buf = std::to_string(LivesToShow);
 
-    for (unsigned int i = 0; i < strlen(Buffer); i++) {
-        char z = Buffer[i] - 48;
-
+    for (std::size_t i = 0; i < buf.length(); i++) {
+        char z = buf[i] - 48;
         HUDFontBig.SetRect(z * 12, 0, z * 12 + 12, 25);
-        HUDFontBig.RenderSprite(xpos - strlen(Buffer) * 13 + i * 13 + 48, ypos + 22, Color);
+        HUDFontBig.RenderSprite(xpos - buf.length() * 13 + i * 13 + 48, ypos + 22, Color);
     }
 
     // Punkte anzeigen
     if (HasCheated)
         Player[0].Score = 0;
 
-    _itoa_s(Player[0].Score, Buffer, 10);
+    buf = std::to_string(Player[0].Score);
 
-    int len = strlen(Buffer);
-    for (int i = 0; i < len; i++) {
-        char z = Buffer[i] - 48;
-
+    for (std::size_t i = 0; i < buf.length(); i++) {
+        char z = buf[i] - 48;
         HUDFontBig.SetRect(z * 12, 0, z * 12 + 12, 25);
-        HUDFontBig.RenderSprite(xpos - strlen(Buffer) * 13 + i * 13 + 195, ypos + 22, Color);
+        HUDFontBig.RenderSprite(xpos - buf.length() * 13 + i * 13 + 195, ypos + 22, Color);
     }
 
     // Diamanten anzeigen
     if (NUMPLAYERS == 1)
-        _itoa_s(Player[0].CollectedDiamonds, Buffer, 10);
+        buf = std::to_string(Player[0].CollectedDiamonds);
 
     // oder Leben Spieler 2
     else {
         LivesToShow = std::max(0, Player[1].Lives);
-        _itoa_s(LivesToShow, Buffer, 10);
+        buf = std::to_string(LivesToShow);
     }
 
-    len = strlen(Buffer);
-    for (int i = 0; i < len; i++) {
-        char z = Buffer[i] - 48;
-
+    for (std::size_t i = 0; i < buf.length(); i++) {
+        char z = buf[i] - 48;
         HUDFontBig.SetRect(z * 12, 0, z * 12 + 12, 25);
-        HUDFontBig.RenderSprite(xpos - strlen(Buffer) * 13 + i * 13 + 527, ypos + 22, Color);
+        HUDFontBig.RenderSprite(xpos - buf.length() * 13 + i * 13 + 527, ypos + 22, Color);
     }
 
     if (NUMPLAYERS == 2) {
-        _itoa_s(Player[0].CollectedDiamonds, Buffer, 10);
+        buf = std::to_string(Player[0].CollectedDiamonds);
         pGegnerGrafix[DIAMANT]->RenderSprite(xpos + 555, ypos + 15, 0, Color);
-        pDefaultFont->DrawTextCenterAlign(xpos + 566, ypos + 50, Buffer, Color);
+        pDefaultFont->DrawTextCenterAlign(xpos + 566, ypos + 50, buf.c_str(), Color);
     }
 
     // Verbleibende Zeit anzeigen
-    _itoa_s(int(TileEngine.Timelimit), Buffer, 10);
+    buf = std::to_string(int(TileEngine.Timelimit));
 
-    for (unsigned int i = 0; i < strlen(Buffer); i++) {
-        char z = Buffer[i] - 48;
+    for (std::size_t i = 0; i < buf.length(); i++) {
+        char z = buf[i] - 48;
 
         HUDFontBig.SetRect(z * 12, 0, z * 12 + 12, 25);
-        HUDFontBig.RenderSprite(xpos - strlen(Buffer) * 13 + i * 13 + 467, ypos + 22, Color);
+        HUDFontBig.RenderSprite(xpos - buf.length() * 13 + i * 13 + 467, ypos + 22, Color);
 
         // Zeit wird knapp? Dann Rote Zahlen rendern
         if (BossHUDActive <= 0.0f && TileEngine.Timelimit < 10.0f && TileEngine.Timelimit > 0.0f) {

@@ -70,10 +70,7 @@ DirectGraphicsClass::~DirectGraphicsClass() {}
 // --------------------------------------------------------------------------------------
 // D3D Initialisieren
 // --------------------------------------------------------------------------------------
-bool DirectGraphicsClass::Init(std::uint32_t dwBreite,
-                               std::uint32_t dwHoehe,
-                               std::uint32_t dwZ_Bits,
-                               bool VSync) {
+bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, std::uint32_t dwZ_Bits, bool VSync) {
     bool isFullscreen = !CommandLineParams.RunWindowMode;
     uint16_t ScreenWidth = SCREENWIDTH;
     uint16_t ScreenHeight = SCREENHEIGHT;
@@ -194,9 +191,9 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite,
     }
 #endif
 
-        // DKS - BEGIN VSYNC-RELATED CODE:
-        // If not using EGL, i.e. using SDL's GL handling, some more handling of
-        //  Vsync is necessary now that context has been created:
+    // DKS - BEGIN VSYNC-RELATED CODE:
+    // If not using EGL, i.e. using SDL's GL handling, some more handling of
+    //  Vsync is necessary now that context has been created:
 #if !defined(USE_EGL_SDL) && !defined(USE_EGL_RAW) && !defined(USE_EGL_RPI)
 #if SDL_VERSION_ATLEAST(2, 0, 0)
     {

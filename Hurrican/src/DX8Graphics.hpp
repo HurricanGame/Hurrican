@@ -123,9 +123,9 @@ class DirectGraphicsClass {
     void SetWhiteMode(void);            // Komplett weiss rendern
     void SetFilterMode(bool filteron);  // Linearer Textur Filter ein/aus
 
-    void RendertoBuffer(GLenum PrimitiveType,  // Rendert in den Buffer, der am Ende
-                        std::uint32_t PrimitiveCount,    // eines jeden Frames komplett in
-                        void *pVertexStreamZeroData);    // den Backbuffer gerendert wird
+    void RendertoBuffer(GLenum PrimitiveType,          // Rendert in den Buffer, der am Ende
+                        std::uint32_t PrimitiveCount,  // eines jeden Frames komplett in
+                        void *pVertexStreamZeroData);  // den Backbuffer gerendert wird
 
     void DisplayBuffer(void);  // Render den Buffer auf den Backbuffer
     // DKS - SetTexture is now used for both GL and DirectX, and uses new TexturesystemClass:

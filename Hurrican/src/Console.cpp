@@ -51,7 +51,7 @@ ConsoleClass::ConsoleClass() {
 
     // Text in Konsole schreiben
     for (int i = 0; i < 9; i++)
-        CONSOLE_PRINT(TextArray[TEXT_CONSOLE1 + i]);
+        this->print(TextArray[TEXT_CONSOLE1 + i]);
 
     // Lock-Puffer leeren
     for (int i = 0; i < 256; i++)
@@ -182,17 +182,17 @@ void ConsoleClass::CheckCommands(void) {
     //#ifdef _DEBUG
     // TODO FIX
     if (CONSOLE_COMMAND("help")) {
-        CONSOLE_PRINT(" ");
-        CONSOLE_PRINT("Console Commands");
-        CONSOLE_PRINT("-------------------------");
-        CONSOLE_PRINT(" ");
-        CONSOLE_PRINT("clear - clear console");
-        CONSOLE_PRINT("levelinfo - show level information");
-        CONSOLE_PRINT("maxfps x - set maximum framerate to 'x' (0=no maximum)");
-        CONSOLE_PRINT("setspeed x - Set Game-speed (default=10)");
-        CONSOLE_PRINT("loadmap 'name' - load level 'name'");
-        CONSOLE_PRINT("minimap - save minimap to disc");
-        CONSOLE_PRINT("quit - Quit game immediately");
+        this->print(" ");
+        this->print("Console Commands");
+        this->print("-------------------------");
+        this->print(" ");
+        this->print("clear - clear console");
+        this->print("levelinfo - show level information");
+        this->print("maxfps x - set maximum framerate to 'x' (0=no maximum)");
+        this->print("setspeed x - Set Game-speed (default=10)");
+        this->print("loadmap 'name' - load level 'name'");
+        this->print("minimap - save minimap to disc");
+        this->print("quit - Quit game immediately");
     } else
 
         // Konsole löschen
@@ -206,40 +206,36 @@ void ConsoleClass::CheckCommands(void) {
 
         // Levelinfo anzeigen
         if (CONSOLE_COMMAND("levelinfo")) {
-        char StringBuffer[100];
+        std::string StringBuffer;
         char temp[50];
 
-        CONSOLE_PRINT(" ");
-        CONSOLE_PRINT("Levelinfo");
-        CONSOLE_PRINT("-------------");
-        CONSOLE_PRINT(" ");
+        this->print(" ");
+        this->print("Levelinfo");
+        this->print("-------------");
+        this->print(" ");
 
-        CONSOLE_PRINT(TileEngine.Beschreibung);
+        this->print(TileEngine.Beschreibung);
 
-        _itoa_s(static_cast<int>(TileEngine.XOffset), temp, 10);
-        strcpy_s(StringBuffer, "Level Offset X : ");
-        strcat_s(StringBuffer, temp);
-        CONSOLE_PRINT(StringBuffer);
+        StringBuffer = "Level Offset X : ";
+        StringBuffer += std::to_string(TileEngine.XOffset);
+        this->print(StringBuffer);
 
-        _itoa_s(static_cast<int>(TileEngine.YOffset), temp, 10);
-        strcpy_s(StringBuffer, "Level Offset Y : ");
-        strcat_s(StringBuffer, temp);
-        CONSOLE_PRINT(StringBuffer);
+        StringBuffer = "Level Offset Y : ";
+        StringBuffer += std::to_string(TileEngine.XOffset);
+        this->print(StringBuffer);
 
-        _itoa_s(static_cast<int>(TileEngine.LEVELSIZE_X), temp, 10);
-        strcpy_s(StringBuffer, "Level Size X : ");
-        strcat_s(StringBuffer, temp);
-        CONSOLE_PRINT(StringBuffer);
+        StringBuffer = "Level Size X : ";
+        StringBuffer += std::to_string(TileEngine.LEVELSIZE_X);
+        this->print(StringBuffer);
 
-        _itoa_s(static_cast<int>(TileEngine.LEVELSIZE_Y), temp, 10);
-        strcpy_s(StringBuffer, "Level Size Y : ");
-        strcat_s(StringBuffer, temp);
-        CONSOLE_PRINT(StringBuffer);
+        StringBuffer = "Level Size Y : ";
+        StringBuffer += std::to_string(TileEngine.LEVELSIZE_Y);
+        this->print(StringBuffer);
     } else
 
         // Spiel sofort verlassen
         if (CONSOLE_COMMAND("quit")) {
-        CONSOLE_PRINT("Shutting down ...");
+        this->print("Shutting down ...");
         GameRunning = false;
     } else
 
@@ -251,14 +247,14 @@ void ConsoleClass::CheckCommands(void) {
             Player[p].SmartBombs = 999;
         }
 
-        CONSOLE_PRINT("-> Let's rock!");
+        this->print("-> Let's rock!");
     } else
 
         // Volle Zeit
         if (CONSOLE_CHEAT(Cheats[CHEAT_ZEIT])) {
         TileEngine.Timelimit = 999;
 
-        CONSOLE_PRINT("-> knowing that there's no rhyme...");
+        this->print("-> knowing that there's no rhyme...");
     } else
 
         // Volle Waffen
@@ -270,7 +266,7 @@ void ConsoleClass::CheckCommands(void) {
                 Player[p].CurrentWeaponLevel[w] = 8;
         }
 
-        CONSOLE_PRINT("-> Blast Off and Strike The Evil Bydo Empire!");
+        this->print("-> Blast Off and Strike The Evil Bydo Empire!");
     } else
 
         // Schild
@@ -313,9 +309,9 @@ void ConsoleClass::CheckCommands(void) {
         FlameThrower = !FlameThrower;
 
         if (FlameThrower) {
-            CONSOLE_PRINT("-> Flamethrower on");
+            this->print("-> Flamethrower on");
         } else {
-            CONSOLE_PRINT("-> Flamethrower off");
+            this->print("-> Flamethrower off");
         }
     }  // else
 
@@ -324,11 +320,11 @@ void ConsoleClass::CheckCommands(void) {
         if (Player[0].GodMode == false) {
             Player[0].GodMode = true;
             Player[1].GodMode = true;
-            CONSOLE_PRINT("-> Godmode on");
+            this->print("-> Godmode on");
         } else {
             Player[0].GodMode = false;
             Player[1].GodMode = false;
-            CONSOLE_PRINT("-> Godmode off");
+            this->print("-> Godmode off");
         }
     }  // else
 
@@ -337,11 +333,11 @@ void ConsoleClass::CheckCommands(void) {
         if (Player[0].WheelMode == false) {
             Player[0].WheelMode = true;
             Player[1].WheelMode = true;
-            CONSOLE_PRINT("-> WheelMode on");
+            this->print("-> WheelMode on");
         } else {
             Player[0].WheelMode = false;
             Player[1].WheelMode = false;
-            CONSOLE_PRINT("-> WheelMode off");
+            this->print("-> WheelMode off");
         }
     }  // else
 
@@ -359,14 +355,10 @@ void ConsoleClass::CheckCommands(void) {
             index1++;
         }
 
-        // Meldung ausgeben
-        char dummy[50];
-
-        _itoa_s(g_test, dummy, 10);
-        strcpy_s(Buffer, "Setting maximum Framerate to ");
-        strcat_s(Buffer, dummy);
-        strcat_s(Buffer, " ...");
-        CONSOLE_PRINT(Buffer);
+        std::string StringBuffer = "Setting maximum Framerate to ";
+        StringBuffer += std::to_string(g_test);
+        StringBuffer += " ...";
+        this->print(StringBuffer);
 
         // und FPS Setzen
         Timer.SetMaxFPS(g_test);
@@ -387,17 +379,13 @@ void ConsoleClass::CheckCommands(void) {
             index1++;
         }
 
-        // Meldung ausgeben
-        char dummy[50];
-
-        _itoa_s(g_test, dummy, 10);
-        strcpy_s(Buffer, "Setting Speed to ");
-        strcat_s(Buffer, dummy);
-        strcat_s(Buffer, " ...");
-        CONSOLE_PRINT(Buffer);
+        std::string StringBuffer = "Setting Speed to ";
+        StringBuffer += std::to_string(g_test);
+        StringBuffer += " ...";
+        this->print(StringBuffer);
 
         // und Speed Setzen
-        Timer.SetMoveSpeed(float(atoi(dummy)));
+        Timer.SetMoveSpeed(float(g_test));
     }
     //#endif
 
@@ -407,7 +395,7 @@ void ConsoleClass::CheckCommands(void) {
 
         // Meldung ausgeben
         std::string msg = std::string("Loading Level ") + mapname + " ...";
-        CONSOLE_PRINT(msg.c_str());
+        this->print(msg.c_str());
 
         // und Level laden
         if (mapname.substr(mapname.length() - 4) != ".map")
@@ -420,7 +408,7 @@ void ConsoleClass::CheckCommands(void) {
             for (int i = 0; i < NUMPLAYERS; i++)
                 Player[i].InitNewLevel();
 
-            CONSOLE_PRINT("found.");
+            this->print("found.");
             TileEngine.LoadLevel(mapname);
             Protokoll << mapname << std::endl;
         }
@@ -428,7 +416,7 @@ void ConsoleClass::CheckCommands(void) {
         // Ansonsten Fehlermeldung
         else {
             msg = std::string("Map ") + mapname + " not found!";
-            CONSOLE_PRINT(msg.c_str());
+            this->print(msg.c_str());
         }
     }
 
@@ -452,26 +440,23 @@ void ConsoleClass::CheckCommands(void) {
                     RenderRect(static_cast<float>(i), static_cast<float>(j), 1, 1, 0xFF0000FF);
             }
 
-        char buf[100], buf2[100];
-
-        strcpy_s(buf, "Level ");
-        _itoa_s(Stage, buf2, 10);
-        strcat_s(buf, buf2);
-
-        pDefaultFont->DrawText(3, 458, buf, 0xFF00FF00);
+        std::string buf;
+        buf = "Level ";
+        buf += std::to_string(Stage);
+        pDefaultFont->DrawText(3, 458, buf.c_str(), 0xFF00FF00);
         pDefaultFont->DrawText(3, 470, TileEngine.Beschreibung, 0xFF00FF00);
 
         DirectGraphics.ShowBackBuffer();
 
         // Screenshot machen
         DirectGraphics.TakeScreenshot("MiniMap", 640, 480);
-        CONSOLE_PRINT("Mini Map saved !");
+        this->print("Mini Map saved !");
     }
 
     // Demo aufnehmen
     if (CONSOLE_COMMAND("record demo")) {
         NewDemo("Demo.dem");
-        CONSOLE_PRINT("Recording demo");
+        this->print("Recording demo");
         this->Activate = false;
         this->Fade = -25.0f;
         this->Active = false;
@@ -481,15 +466,15 @@ void ConsoleClass::CheckCommands(void) {
     // Demo anhalten
     if (CONSOLE_COMMAND("stop demo")) {
         EndDemo();
-        CONSOLE_PRINT("Demo stopped");
+        this->print("Demo stopped");
     }  // else
 
     // Demo laden und abspielen
     if (CONSOLE_COMMAND("load demo")) {
         if (LoadDemo("Demo.dem") == false) {
-            CONSOLE_PRINT("Error loading demo");
+            this->print("Error loading demo");
         } else {
-            CONSOLE_PRINT("Playing demo");
+            this->print("Playing demo");
             this->Activate = false;
             this->Fade = -25.0f;
             this->Active = false;
@@ -500,10 +485,10 @@ void ConsoleClass::CheckCommands(void) {
     // 0 und 1 Render Mode anschalten
     if (CONSOLE_COMMAND("binary")) {
         if (this->RenderBinary == false) {
-            CONSOLE_PRINT("Rendering Binary");
+            this->print("Rendering Binary");
             this->RenderBinary = true;
         } else {
-            CONSOLE_PRINT("Rendering Normal");
+            this->print("Rendering Normal");
             this->RenderBinary = false;
         }
     }  // else
@@ -526,7 +511,7 @@ void ConsoleClass::CheckCommands(void) {
         // Level > 0? Dann dorthin springen
         //
         if (g_test >= MAX_LEVELS) {
-            CONSOLE_PRINT("Level does not exist");
+            this->print("Level does not exist");
         } else if (g_test > 0) {
             this->Activate = false;
             this->Fade = -25.0f;
@@ -850,3 +835,13 @@ bool ConsoleClass::DoConsole(void) {
 
     return true;
 }  // DoCOnsole
+
+void ConsoleClass::print(const std::string &output) {
+    strcpy_s(Buffer, strlen(output.c_str()) + 1, output.c_str());
+    ScrollUp();
+}
+
+void ConsoleClass::print(const char *output) {
+    strcpy_s(Buffer, strlen(output) + 1, output);
+    ScrollUp();
+}
