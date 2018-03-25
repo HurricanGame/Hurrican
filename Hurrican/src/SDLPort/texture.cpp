@@ -487,31 +487,3 @@ std::vector<char> LowerResolution(SDL_Surface *surface, int factor) {
 
     return dataout;
 }
-
-#if 0  // DKS - Disabled ConvertRGBA5551, as it did not affect how GL stores textures in VRAM.
-#if defined(RGBA_5551)
-static uint8_t* ConvertRGBA5551( SDL_Surface* surface, uint8_t factor )
-{
-    uint8_t r, g, b, a;
-    int32_t x, y;
-    uint8_t* data = NULL;
-    uint16_t* data16 = NULL;
-
-    // Create the space for the 16 bpp image
-    data = new uint8_t[(surface->w / factor) * (surface->h / factor) * sizeof(uint16_t)];
-
-    for (y=0; y<surface->h; y+=factor)
-    {
-        for (x=0; x<surface->w; x+=factor)
-        {
-            get_components( surface, x, y, r, g, b, a );
-
-            *data16 = ((uint16_t)(r>>3)<<11) | ((uint16_t)(g>>3)<<6) | ((uint16_t)(b>>3)<<1) | ((a > 0) ? 0x1 : 0x0);
-            data16++;
-        }
-    }
-
-    return data;
-}
-#endif
-#endif

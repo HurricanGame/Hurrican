@@ -75,11 +75,4 @@ bool loadImageSDL(image_t &image, const std::string &fullpath, void *buf, unsign
 
 std::vector<char> LowerResolution(SDL_Surface *surface, int factor);
 
-// DKS - disabled (RGBA5551 did not benefit how textures actually were stored in VRAM)
-/*
-#if defined(RGBA_5551)
-uint8_t* ConvertRGBA5551( SDL_Surface* surface, uint8_t factor );
-#endif
-*/
-
 #endif /* _TEXTURE_H_ */

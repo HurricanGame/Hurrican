@@ -89,14 +89,6 @@ void strcpy_s(char *dst, const char *src);
 #ifdef __WIN32__
 std::uint8_t LoadGLFunctions();
 #endif
-std::uint32_t getpixel(SDL_Surface *surface, std::int16_t x, std::int16_t y);
-void get_components(SDL_Surface *surface,
-                    std::int16_t x,
-                    std::int16_t y,
-                    std::uint8_t &r,
-                    std::uint8_t &g,
-                    std::uint8_t &b,
-                    std::uint8_t &a);
 std::vector<char> LoadFileToMemory(const std::string &name);
 bool isPowerOfTwo(int x);
 int nextPowerOfTwo(int x);
