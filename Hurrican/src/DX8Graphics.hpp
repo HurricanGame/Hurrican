@@ -104,9 +104,6 @@ class DirectGraphicsClass {
 #if defined(USE_GL2) && defined(USE_FBO)
     CFbo RenderBuffer;
 #endif
-
-    bool SquareOnly;            // Nur quadratische Texturen
-    bool PowerOfTwo;            // Nur 2er Potenz Texturen
     void ShowBackBuffer(void);  // Present aufrufen
 
     DirectGraphicsClass(void);   // Konstruktor
