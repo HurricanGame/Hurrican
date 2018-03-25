@@ -66,21 +66,21 @@ class ConsoleClass {
     bool Showing;       // Gerade angezeigt ?
     bool RenderBinary;  // Alles als 0 und 1 rendern (nur fun)
 
-    ConsoleClass(void);   // Menu initialisieren und Grafiken laden
-    ~ConsoleClass(void);  // Menu freigeben
+    ConsoleClass();   // Menu initialisieren und Grafiken laden
+    ~ConsoleClass();  // Menu freigeben
 
     // DKS - ConsoleClass is now a static global, instead of dynamically allocated
     //      pointer, so moved the loading of sprites from its constructor to this new
     //      function:
-    void LoadSprites(void);
+    void LoadSprites();
 
-    void ShowConsole(void);    // Menu anzeigen
-    void Open(void);           // öffnen
-    void Hide(void);           // verstecken
-    void CheckInput(void);     // Wurde was eingegeben ?
-    void CheckCommands(void);  // Text nach enter drücken checken
-    void ScrollUp(void);       // Eine Zeile hochscrollen
-    bool DoConsole(void);      // Alles machen, was die Console betrifft =)
+    void ShowConsole();    // Menu anzeigen
+    void Open();           // öffnen
+    void Hide();           // verstecken
+    void CheckInput();     // Wurde was eingegeben ?
+    void CheckCommands();  // Text nach enter drücken checken
+    void ScrollUp();       // Eine Zeile hochscrollen
+    bool DoConsole();      // Alles machen, was die Console betrifft =)
 
     void print(const std::string &output);
     void print(const char *output);

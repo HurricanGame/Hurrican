@@ -74,7 +74,7 @@ float ShadowAlpha;
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-TileEngineClass::TileEngineClass(void) {
+TileEngineClass::TileEngineClass() {
     bDrawShadow = false;
 
     XOffset = 0;
@@ -201,7 +201,7 @@ TileEngineClass::TileEngineClass(void) {
 // Destruktor
 // --------------------------------------------------------------------------------------
 
-TileEngineClass::~TileEngineClass(void) {
+TileEngineClass::~TileEngineClass() {
     if (pDragonHack != NULL)
         delete pDragonHack;
 }
@@ -856,7 +856,7 @@ void TileEngineClass::SetScrollSpeed(float xSpeed, float ySpeed) {
 // Ausrechnen, welcher Levelausschnitt gerendert werden soll
 // --------------------------------------------------------------------------------------
 
-void TileEngineClass::CalcRenderRange(void) {
+void TileEngineClass::CalcRenderRange() {
     long xo, yo;
 
     // Ausschnittgröße berechnen
@@ -913,7 +913,7 @@ void TileEngineClass::CalcRenderRange(void) {
 // Hintergrund Parallax Layer anzeigen
 // --------------------------------------------------------------------------------------
 
-void TileEngineClass::DrawBackground(void) {
+void TileEngineClass::DrawBackground() {
     int xoff;
     float yoff;
 
@@ -1021,7 +1021,7 @@ void TileEngineClass::DrawBackground(void) {
 // --------------------------------------------------------------------------------------
 
 // DKS - this was an empty function in the original code, disabling it:
-// void TileEngineClass::DrawSpecialLayer(void)
+// void TileEngineClass::DrawSpecialLayer()
 //{
 //
 //}
@@ -1041,7 +1041,7 @@ void TileEngineClass::DrawBackground(void) {
 // da die Wände später gesetzt werden, da sie alles verdecken, was in sie reinragt
 // --------------------------------------------------------------------------------------
 
-void TileEngineClass::DrawBackLevel(void) {
+void TileEngineClass::DrawBackLevel() {
     RECT Rect;             // Texturausschnitt im Tileset
     int NumToRender;       // Wieviele Vertices zu rendern ?
     int ActualTexture;     // Aktuelle Textur
@@ -1208,7 +1208,7 @@ void TileEngineClass::DrawBackLevel(void) {
 // Level Vodergrund anzeigen
 // --------------------------------------------------------------------------------------
 
-void TileEngineClass::DrawFrontLevel(void) {
+void TileEngineClass::DrawFrontLevel() {
     RECT Rect;             // Texturausschnitt im Tileset
     int NumToRender;       // Wieviele Vertices zu rendern ?
     int ActualTexture;     // Aktuelle Textur
@@ -1394,7 +1394,7 @@ void TileEngineClass::ScrollLevel(float x, float y, int neu, float sx, float sy)
 // Wandstücke, die den Spieler vedecken, erneut zeichnen
 // --------------------------------------------------------------------------------------
 
-void TileEngineClass::DrawBackLevelOverlay(void) {
+void TileEngineClass::DrawBackLevelOverlay() {
     RECT Rect;             // Texturausschnitt im Tileset
     int NumToRender;       // Wieviele Vertices zu rendern ?
     int ActualTexture;     // Aktuelle Textur
@@ -1516,7 +1516,7 @@ void TileEngineClass::DrawBackLevelOverlay(void) {
 // Die Levelstücke zeigen, die den Spieler verdecken
 // --------------------------------------------------------------------------------------
 
-void TileEngineClass::DrawOverlayLevel(void) {
+void TileEngineClass::DrawOverlayLevel() {
     RECT Rect;             // Texturausschnitt im Tileset
     int NumToRender;       // Wieviele Vertices zu rendern ?
     int ActualTexture;     // Aktuelle Textur
@@ -1722,7 +1722,7 @@ void TileEngineClass::DrawOverlayLevel(void) {
 // Die Levelstücke zeigen, die den Spieler verdecken
 // --------------------------------------------------------------------------------------
 
-void TileEngineClass::DrawWater(void) {
+void TileEngineClass::DrawWater() {
     int NumToRender;   // Wieviele Vertices zu rendern ?
     float l, r, o, u;  // Vertice Koordinaten
     int xo, yo;
@@ -2016,7 +2016,7 @@ void TileEngineClass::DrawWater(void) {
 // Grenzen checken
 // --------------------------------------------------------------------------------------
 
-void TileEngineClass::CheckBounds(void) {
+void TileEngineClass::CheckBounds() {
     // Grenzen des Levels checken
     if (XOffset < TILESIZE_X)
         XOffset = TILESIZE_X;
@@ -2075,7 +2075,7 @@ void TileEngineClass::WertAngleichen(float &nachx, float &nachy, float vonx, flo
 // Level scrollen und Tiles animieren usw
 // --------------------------------------------------------------------------------------
 
-void TileEngineClass::UpdateLevel(void) {
+void TileEngineClass::UpdateLevel() {
     if (Console.Showing)
         return;
 
@@ -3403,7 +3403,7 @@ D3DCOLOR TileEngineClass::LightValue(float x, float y, RECT rect, bool forced) {
 
 // DKS - This function was never actually used in the original game and is now disabled:
 #if 0
-void TileEngineClass::ComputeShitLight (void)
+void TileEngineClass::ComputeShitLight ()
 {
     for (int i=0; i< LEVELSIZE_X; i += 1)
         for (int j=0; j<LEVELSIZE_Y; j += 1)
@@ -3425,7 +3425,7 @@ void TileEngineClass::ComputeShitLight (void)
 // entsprechend der umliegenden Tiles -> smoothe Übergänge -> Geilomat!
 // --------------------------------------------------------------------------------------
 
-void TileEngineClass::ComputeCoolLight(void) {
+void TileEngineClass::ComputeCoolLight() {
     // Lichter im Level interpolieren
     // Dabei werden die Leveltiles in 2er Schritten durchgegangen
     // Dann werden die 4 Ecken des aktuellen Tiles auf die Farben der Nachbarfelder gesetzt
@@ -3659,7 +3659,7 @@ void TileEngineClass::ComputeCoolLight(void) {
 // "Taschenlampen" Ausschnitt im Alien Level rendern
 // --------------------------------------------------------------------------------------
 
-void TileEngineClass::DrawShadow(void) {
+void TileEngineClass::DrawShadow() {
     if (bDrawShadow == false)
         return;
 
@@ -3768,7 +3768,7 @@ void TileEngineClass::ExplodeWalls(int x, int y) {
 // DKS - See note for function below this one for DrawLightmap() as to why this was
 //      disabled.
 #if 0
-void TileEngineClass::ClearLightMaps(void)
+void TileEngineClass::ClearLightMaps()
 {
     unsigned int xoff, yoff;
 

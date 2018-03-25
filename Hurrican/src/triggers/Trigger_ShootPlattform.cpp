@@ -31,7 +31,7 @@ GegnerShootPlattform::GegnerShootPlattform(int Wert1, int Wert2, bool Light) {
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerShootPlattform::DoDraw(void) {
+void GegnerShootPlattform::DoDraw() {
     // Button rendern
     pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
                                            static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFFFFFFFF);
@@ -56,7 +56,7 @@ void GegnerShootPlattform::DoDraw(void) {
 // "ShootPlattform KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerShootPlattform::DoKI(void) {
+void GegnerShootPlattform::DoKI() {
     BlickRichtung = LINKS;
 
     // Testen, ob der Spieler auf der Plattform steht
@@ -93,4 +93,4 @@ void GegnerShootPlattform::DoKI(void) {
 // ShootPlattform explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerShootPlattform::GegnerExplode(void) {}
+void GegnerShootPlattform::GegnerExplode() {}

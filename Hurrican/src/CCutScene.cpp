@@ -114,7 +114,7 @@ CCutScene::~CCutScene()
 // CutScene1
 // --------------------------------------------------------------------------------------
 
-CCutScene1::CCutScene1 (void)
+CCutScene1::CCutScene1 ()
 {
     BackGround = new DirectGraphicsSprite ();
     //DKS - Corrected Y frame-count from 0 to 1 here:
@@ -124,7 +124,7 @@ CCutScene1::CCutScene1 (void)
 
 // --------------------------------------------------------------------------------------
 
-void CCutScene1::RunCutScene (void)
+void CCutScene1::RunCutScene ()
 {
     //static float yscroll = 0.0f; // PICKLE not used
 
@@ -167,7 +167,7 @@ void CCutScene1::RunCutScene (void)
 
 // --------------------------------------------------------------------------------------
 
-CCutScene1::~CCutScene1 (void)
+CCutScene1::~CCutScene1 ()
 {
     delete (BackGround);
 

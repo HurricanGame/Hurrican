@@ -28,7 +28,7 @@ GegnerFieserFireWalker::GegnerFieserFireWalker(int Wert1, int Wert2, bool Light)
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerFieserFireWalker::DoDraw(void) {
+void GegnerFieserFireWalker::DoDraw() {
     // Gegner rendern
     int Wert = 255 - static_cast<int>(DamageTaken);
     bool mirror;
@@ -61,7 +61,7 @@ void GegnerFieserFireWalker::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFieserFireWalker::DoKI(void) {
+void GegnerFieserFireWalker::DoKI() {
     SimpleAnimation();
 
     // Je nach Handlung anders verhalten
@@ -153,7 +153,7 @@ void GegnerFieserFireWalker::DoKI(void) {
 // FieserFireWalker explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerFieserFireWalker::GegnerExplode(void) {
+void GegnerFieserFireWalker::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos - 30, yPos - 30, EXPLOSION_BIG);
 
     for (int i = 0; i < 8; i++)

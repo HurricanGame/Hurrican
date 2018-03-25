@@ -51,12 +51,12 @@ class OuttroClass {
     float PlayerSmoke;
     float px[2], py[2], xs[2], ys[2];
 
-    void InitPlayerPos(void);
+    void InitPlayerPos();
 
   public:
-    OuttroClass(void);    // Konstruktor
-    ~OuttroClass(void);   // Destruktor
-    void DoOuttro(void);  // Intro ablaufen lassen
+    OuttroClass();    // Konstruktor
+    ~OuttroClass();   // Destruktor
+    void DoOuttro();  // Intro ablaufen lassen
 };
 
 #endif

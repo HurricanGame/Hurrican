@@ -32,7 +32,7 @@ GegnerMittelSpinne::GegnerMittelSpinne(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerMittelSpinne::DoDraw(void) {
+void GegnerMittelSpinne::DoDraw() {
     // Helligkeit abhängig vom der Entfernung zum oberen Rand berechnen, damit
     // es aussieht, als kämen die Spinnen aus der Dunkelheit
     // Ich bin schon ein Fux ;)
@@ -71,7 +71,7 @@ void GegnerMittelSpinne::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerMittelSpinne::DoKI(void) {
+void GegnerMittelSpinne::DoKI() {
     SimpleAnimation();
 
     // Je nach Handlung richtig verhalten
@@ -161,7 +161,7 @@ void GegnerMittelSpinne::DoKI(void) {
 // Explodieren
 // --------------------------------------------------------------------------------------
 
-void GegnerMittelSpinne::GegnerExplode(void) {
+void GegnerMittelSpinne::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
     PartikelSystem.PushPartikel(xPos + 5, yPos, EXPLOSION_MEDIUM3);
 

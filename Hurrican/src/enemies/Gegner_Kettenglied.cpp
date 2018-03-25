@@ -23,7 +23,7 @@ GegnerKettenglied::GegnerKettenglied(int Wert1, int Wert2, bool Light) {
     AnimSpeed = -1.0f;
 }
 
-void GegnerKettenglied::DoDraw(void) {
+void GegnerKettenglied::DoDraw() {
     // rendern
     //
     D3DCOLOR Color;
@@ -50,7 +50,7 @@ void GegnerKettenglied::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerKettenglied::DoKI(void) {
+void GegnerKettenglied::DoKI() {
     // Je nach Handlung richtig verhalten
     //
     switch (Handlung) {
@@ -113,4 +113,4 @@ void GegnerKettenglied::DoKI(void) {
 // Explodieren
 // --------------------------------------------------------------------------------------
 
-void GegnerKettenglied::GegnerExplode(void) {}
+void GegnerKettenglied::GegnerExplode() {}

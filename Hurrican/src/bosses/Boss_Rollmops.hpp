@@ -24,19 +24,19 @@ class GegnerRollmops : public GegnerClass {
     float Delay;
     float HitsToTake;
 
-    void NeueAktion(void);
+    void NeueAktion();
     void GunAusfahren(bool Auf);
-    void Losrollen(void);
+    void Losrollen();
     void Abhopsen(float mul = -0.6f);
-    void CalcGunWinkel(void);
+    void CalcGunWinkel();
     void RoundShot(bool single);
 
   public:
     GegnerRollmops(int Wert1,
                    int Wert2,  // Konstruktor
                    bool Light);
-    void GegnerExplode(void);  // Gegner explodiert
-    void DoKI(void);           // Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void GegnerExplode();  // Gegner explodiert
+    void DoKI();           // Gegner individuell mit seiner eigenen kleinen KI bewegen
     void DoDraw(
         void);  // Gegner individuell rendern														// eigenen kleinen KI
                 // bewegen

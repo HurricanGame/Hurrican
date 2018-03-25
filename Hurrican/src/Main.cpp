@@ -903,7 +903,7 @@ jump:
     // --------------------------------------------------------------------------------------
 
 #ifdef _DEBUG
-void ShowDebugInfo(void) {
+void ShowDebugInfo() {
     // Blaues durchsichtiges Rechteck zeichnen
     RenderRect(0, 0, 320, 240, 0xA00000FF);
     pDefaultFont->ShowFPS();  // FPS anzeigen

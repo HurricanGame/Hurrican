@@ -62,13 +62,13 @@ class GegnerClass {
     uint32_t blocku, blocko, blockl, blockr;  // Block links rechts über und unter dem Gegner
     PlayerClass *pAim;                        // Player to attack
 
-    GegnerClass(void);                                       // Konstruktor
-    virtual ~GegnerClass(void);                              // Destruktor
-    virtual void GegnerExplode(void);                        // Gegner explodiert
-    virtual void DoKI(void) {}                               // Gegner individuell bewegen
-    virtual void DoDraw(void) {}                             // Gegner individuell rendern (nur bei manchen)
-    bool Run(void);                                          // Gegner bewegen, checken etc
-    void Render(void);                                       // nur rendern
+    GegnerClass();                                       // Konstruktor
+    virtual ~GegnerClass();                              // Destruktor
+    virtual void GegnerExplode();                        // Gegner explodiert
+    virtual void DoKI() {}                               // Gegner individuell bewegen
+    virtual void DoDraw() {}                             // Gegner individuell rendern (nur bei manchen)
+    bool Run();                                          // Gegner bewegen, checken etc
+    void Render();                                       // nur rendern
     int PlayerAbstand(bool both = false);                    // Abstand Gegner/Spieler zurückliefern
     int PlayerAbstandHoriz(PlayerClass *pTarget = NULL);     // Nur Horizontaler Abstand
     int PlayerAbstandVert(PlayerClass *pTarget = NULL);      // Nur Vertikaler   Abstand
@@ -76,9 +76,9 @@ class GegnerClass {
     void PlattformTest(RECT rect);                           // Steht der Spieler auf dem Gegner ?
     void Wegschieben(RECT rect, float dam);                  // Gegner schiebt Spieler beiseite
     void SimpleAnimation(bool backward = false);             // Einfache Animation (loop)
-    void TurnonWall(void);                                   // An der Wand umdrehen?
-    bool TurnonShot(void);                                   // Umdrehen, wenn angeschoßen
-    bool IsOnScreen(void);                                   // Gegner grade sichtbar?
+    void TurnonWall();                                   // An der Wand umdrehen?
+    bool TurnonShot();                                   // Umdrehen, wenn angeschoßen
+    bool IsOnScreen();                                   // Gegner grade sichtbar?
     GegnerClass *pNext;                                      // Zeiger auf den nächsten   Gegner
     GegnerClass *pPrev;                                      // Zeiger auf den vorherigen Gegner
 };
@@ -100,13 +100,13 @@ class GegnerListClass {
     GegnerClass *pStart;  // Erstes  Element der Liste
     GegnerClass *pEnd;    // Letztes Element der Liste
 
-    GegnerListClass(void);   // Konstruktor
-    ~GegnerListClass(void);  // Destruktor
+    GegnerListClass();   // Konstruktor
+    ~GegnerListClass();  // Destruktor
 
     // DKS - GegnerListClass is now a static global, instead of dynamically allocated
     //      pointer, so moved the loading of sprites from its constructor to this new
     //      function:
-    void LoadSprites(void);
+    void LoadSprites();
 
     bool PushGegner(float x,
                     float y,
@@ -116,10 +116,10 @@ class GegnerListClass {
                     bool Light,
                     bool atEnd = true);
     void DelSel(GegnerClass *pTemp);  // Ausgewählten Gegner entfernen
-    void ClearAll(void);              // Alle Gegner löschen
-    int GetNumGegner(void);           // Zahl der Gegner zurückliefern
-    void RunAll(void);                // Alle Gegner der Liste animieren
-    void RenderAll(void);             // Alle Gegner der Liste rendern
+    void ClearAll();              // Alle Gegner löschen
+    int GetNumGegner();           // Zahl der Gegner zurückliefern
+    void RunAll();                // Alle Gegner der Liste animieren
+    void RenderAll();             // Alle Gegner der Liste rendern
     void DamageEnemiesonScreen(float x,
                                float y,  // Alle Gegner ausgehend von Stelle x/y verwunden (Granate)
                                int MaxDamage);

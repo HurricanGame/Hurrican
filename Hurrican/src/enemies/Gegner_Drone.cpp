@@ -35,7 +35,7 @@ GegnerDrone::GegnerDrone(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerDrone::DoKI(void) {
+void GegnerDrone::DoKI() {
     // Animieren
     //
     AnimCount += SpeedFaktor;  // Animationscounter weiterzählen
@@ -236,7 +236,7 @@ void GegnerDrone::DoKI(void) {
 // Drone explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerDrone::GegnerExplode(void) {
+void GegnerDrone::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION3);
 
     for (int i = 0; i < 5; i++) {

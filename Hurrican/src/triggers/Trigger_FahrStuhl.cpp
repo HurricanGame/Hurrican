@@ -37,7 +37,7 @@ GegnerFahrstuhl::GegnerFahrstuhl(int Wert1, int Wert2, bool Light) {
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerFahrstuhl::DoDraw(void) {
+void GegnerFahrstuhl::DoDraw() {
     DirectGraphics.SetFilterMode(true);
 
     // Schatten rendern
@@ -58,7 +58,7 @@ void GegnerFahrstuhl::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFahrstuhl::DoKI(void) {
+void GegnerFahrstuhl::DoKI() {
     if (Value1 == 0)
         TileEngine.XOffset = xPos + 200 - 320.0f;
 
@@ -142,7 +142,7 @@ void GegnerFahrstuhl::DoKI(void) {
 // Fahrstuhl explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerFahrstuhl::GegnerExplode(void) {
+void GegnerFahrstuhl::GegnerExplode() {
     FahrstuhlPos = -1.0f;
 
     ShakeScreen(10);

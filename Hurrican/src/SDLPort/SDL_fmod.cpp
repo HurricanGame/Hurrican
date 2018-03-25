@@ -102,16 +102,16 @@ signed char SOUND_Init(int mixrate, int maxsoftwarechannels, unsigned int flags)
     return 1;
 }
 
-void SOUND_Close(void) {
+void SOUND_Close() {
     Mix_CloseAudio();
 }
 
-int SOUND_GetError(void) {
+int SOUND_GetError() {
     // Do nothing
     return 1;
 }
 
-int SOUND_GetMaxChannels(void) {
+int SOUND_GetMaxChannels() {
     return g_allocated;
 }
 
@@ -261,7 +261,7 @@ signed char MUSIC_SetMasterVolume(MUSIC_MODULE *music, int volume) {
     return 0;
 }
 
-void MUSIC_StopAllSongs(void) {
+void MUSIC_StopAllSongs() {
     // printf( "MUSIC_StopAllSongs\n" );
     MUSIC_StopSong(g_music_current);
 }

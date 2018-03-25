@@ -529,8 +529,8 @@ class TileEngineClass {
     float xScreen;
     float yScreen;
 
-    TileEngineClass(void);   // Konstruktor
-    ~TileEngineClass(void);  // Destruktor
+    TileEngineClass();   // Konstruktor
+    ~TileEngineClass();  // Destruktor
 
     // DKS - Added initialization function that will load the sprites.
     //      This was necessary since making TileEngineClass a global
@@ -539,21 +539,21 @@ class TileEngineClass {
     //      itself, since graphics system should be initialized first.
     void LoadSprites();
 
-    void ClearLevel(void);                            // Level freigeben
+    void ClearLevel();                            // Level freigeben
     bool LoadLevel(const std::string &Filename);      // Level laden
     void InitNewLevel(int xSize, int ySize);          // Neues Level initialisieren
     void SetScrollSpeed(float xSpeed, float ySpeed);  // neue Scrollspeed setzen
-    void CalcRenderRange(void);                       // Bereiche berechnen, die gerendert werden sollen
-    void DrawBackground(void);                        // Hintergrund Layer zeichnen
-    void DrawBackLevel(void);                         // Level hintergrund anzeigen
-    void DrawFrontLevel(void);                        // Level vordergrund anzeigen
-    void DrawBackLevelOverlay(void);                  // Boden Tiles, die verdecken
-    void DrawOverlayLevel(void);                      // Sonstige, die verdecken
+    void CalcRenderRange();                       // Bereiche berechnen, die gerendert werden sollen
+    void DrawBackground();                        // Hintergrund Layer zeichnen
+    void DrawBackLevel();                         // Level hintergrund anzeigen
+    void DrawFrontLevel();                        // Level vordergrund anzeigen
+    void DrawBackLevelOverlay();                  // Boden Tiles, die verdecken
+    void DrawOverlayLevel();                      // Sonstige, die verdecken
     // DKS - this was an empty function in the original code, disabling it:
-    // void DrawSpecialLayer		(void);							// Spezielle Sachen wie der Drache
-    void DrawWater(void);  // Wasser Planes rendern
-    void CheckBounds(void);
-    void UpdateLevel(void);                                                           // Level evtl scrollen usw
+    // void DrawSpecialLayer		();							// Spezielle Sachen wie der Drache
+    void DrawWater();  // Wasser Planes rendern
+    void CheckBounds();
+    void UpdateLevel();                                                           // Level evtl scrollen usw
     void ScrollLevel(float x, float y, int neu, float sx = 10.0f, float sy = 10.0f);  // Screen scrollen
     void MakeBordersLookCool(int x, int y);
 
@@ -599,20 +599,20 @@ class TileEngineClass {
 
     D3DCOLOR LightValue(float x, float y, RECT rect, bool forced);  // Helligkeit an Stelle x/y
 
-    void ComputeCoolLight(void);  // Coole   Lightberechnung
+    void ComputeCoolLight();  // Coole   Lightberechnung
 
     // DKS - This function was never actually used in the original game and is now disabled:
     //      (Only place was as a console command in Console.cpp)
-    // void ComputeShitLight (void);							// Billige Lightberechnung
+    // void ComputeShitLight ();							// Billige Lightberechnung
 
-    void DrawShadow(void);  // Schatten im Alien Level zeichnen
+    void DrawShadow();  // Schatten im Alien Level zeichnen
 
     // DKS - The original code had a return as line 5 of DrawLightmap, making it a stub.
     //      When I tried removing it, I saw why: the lightmaps colors' don't match what
     //      you'd expect and they appear in places off-center from where they should be.
     //      I have now disabled the function and all four calls to it elsewhere in the code,
     //      and all related code.
-    // void ClearLightMaps	  (void);							// alle LightMaps entfernen und Ursprungshelligkeit wieder
+    // void ClearLightMaps	  ();							// alle LightMaps entfernen und Ursprungshelligkeit wieder
     // herstellen  void DrawLightmap	  (int Map, float x, float y, int alpha);	// LightMap an x/y mit alpha addieren
 
     void WertAngleichen(float &nachx, float &nachy, float vonx, float vony);

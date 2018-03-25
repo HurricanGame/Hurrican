@@ -27,7 +27,7 @@ GegnerFass::GegnerFass(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFass::DoKI(void) {
+void GegnerFass::DoKI() {
     // Feststellen ob der Hurri auf dem Fass steht
     PlattformTest(GegnerRect[GegnerArt]);
 
@@ -69,7 +69,7 @@ void GegnerFass::DoKI(void) {
 // Fass explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerFass::GegnerExplode(void) {
+void GegnerFass::GegnerExplode() {
     SoundManager.PlayWave(25, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 5; i++)

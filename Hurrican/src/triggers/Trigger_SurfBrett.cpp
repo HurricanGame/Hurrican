@@ -29,7 +29,7 @@ GegnerSurfBrett::GegnerSurfBrett(int Wert1, int Wert2, bool Light) {
 // "SurfBrett KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSurfBrett::DoKI(void) {
+void GegnerSurfBrett::DoKI() {
     /*
     SimpleAnimation();
     BlickRichtung	= LINKS;
@@ -169,4 +169,4 @@ void GegnerSurfBrett::DoKI(void) {
 // SurfBrett explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerSurfBrett::GegnerExplode(void) {}
+void GegnerSurfBrett::GegnerExplode() {}

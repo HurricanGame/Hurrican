@@ -45,10 +45,10 @@ public:
     int						m_iFading;					// -1 = fade in, 1 = fadeout, 0 = no fade
     bool					m_bIsDone;					// CutScene beendet/abgebrochen
 
-    CCutScene	 (void);						// CutScene initialisieren
-    virtual	    ~CCutScene	 (void);						// CutScene freigeben
+    CCutScene	 ();						// CutScene initialisieren
+    virtual	    ~CCutScene	 ();						// CutScene freigeben
 
-    virtual void RunCutScene (void) {}						// CutSCene laufen lassen, bis sie zuende ist oder
+    virtual void RunCutScene () {}						// CutSCene laufen lassen, bis sie zuende ist oder
     // abgebrochen wurde
 }; // CCutScene
 
@@ -69,10 +69,10 @@ private:
     DirectGraphicsSprite *BackGround;
 
 public:
-    CCutScene1			(void);
-    ~CCutScene1			(void);
+    CCutScene1			();
+    ~CCutScene1			();
 
-    void RunCutScene	(void);
+    void RunCutScene	();
 
 }; // CCutScene1
 

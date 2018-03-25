@@ -29,7 +29,7 @@ GegnerRotzpott::GegnerRotzpott(int Wert1, int Wert2, bool Light) {
 // Knarre zeigt auf Hurrican
 // --------------------------------------------------------------------------------------
 
-void GegnerRotzpott::CalcKnarreWinkel(void) {
+void GegnerRotzpott::CalcKnarreWinkel() {
     // Gegner auf Spieler ausrichten
     //
     float dx, dy;
@@ -111,7 +111,7 @@ void GegnerRotzpott::CalcKnarreWinkel(void) {
 // Draw
 // --------------------------------------------------------------------------------------
 
-void GegnerRotzpott::DoDraw(void) {
+void GegnerRotzpott::DoDraw() {
     // Knarre
     Gegner.DroneGun.RenderSpriteRotatedOffset(-TileEngine.XOffset + xPos + 20.0f, -TileEngine.YOffset + yPos - 28.0f,
                                               GunWinkel, 0, 0, 0xFFFFFFFF);
@@ -126,7 +126,7 @@ void GegnerRotzpott::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerRotzpott::DoKI(void) {
+void GegnerRotzpott::DoKI() {
     // Knarre ausrichten
 
     // Testen, ob der Spieler den gegner berührt hat
@@ -177,7 +177,7 @@ void GegnerRotzpott::DoKI(void) {
 // GegnerRotzpott explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerRotzpott::GegnerExplode(void) {
+void GegnerRotzpott::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
 
     // int i = 0;

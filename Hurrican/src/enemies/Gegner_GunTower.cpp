@@ -32,7 +32,7 @@ GegnerGunTower::GegnerGunTower(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerGunTower::DoKI(void) {
+void GegnerGunTower::DoKI() {
     SimpleAnimation();
 
     // Je nach Handlung richtig verhalten
@@ -109,7 +109,7 @@ void GegnerGunTower::DoKI(void) {
 // Explodieren
 // --------------------------------------------------------------------------------------
 
-void GegnerGunTower::GegnerExplode(void) {
+void GegnerGunTower::GegnerExplode() {
     PartikelSystem.PushPartikel(float(xPos - 20), float(yPos - 40), EXPLOSION_BIG);
     for (int i = 0; i < 2; i++)
         PartikelSystem.PushPartikel(float(xPos - 10 + rand() % 60), float(yPos - 40 + rand() % 20), EXPLOSION_MEDIUM2);

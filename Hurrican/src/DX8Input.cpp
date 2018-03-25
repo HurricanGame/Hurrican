@@ -54,7 +54,7 @@ bool EnumJoystickDevices(int lpddi, void *pv) {
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-DirectInputClass::DirectInputClass(void) {
+DirectInputClass::DirectInputClass() {
     // Zu Beginn alle Eingabegeräte zurücksetzen
     MausX = 0;
     MausY = 0;
@@ -72,7 +72,7 @@ DirectInputClass::DirectInputClass(void) {
 // Destruktor
 // --------------------------------------------------------------------------------------
 
-DirectInputClass::~DirectInputClass(void) {}
+DirectInputClass::~DirectInputClass() {}
 
 // --------------------------------------------------------------------------------------
 // DirectInput initialisieren
@@ -117,7 +117,7 @@ bool DirectInputClass::Init() {
 // DirectInput beenden
 // --------------------------------------------------------------------------------------
 
-void DirectInputClass::Exit(void) {
+void DirectInputClass::Exit() {
     for (int i = 0; i < JoysticksFound; i++) {
 #if SDL_VERSION_ATLEAST(2, 0, 0)
         if (Joysticks[i].lpDIJoystick != NULL)
@@ -137,7 +137,7 @@ void DirectInputClass::Exit(void) {
 // Tasten abfragen und im Puffer speichern
 // --------------------------------------------------------------------------------------
 
-bool DirectInputClass::UpdateTastatur(void) {
+bool DirectInputClass::UpdateTastatur() {
     SDL_PumpEvents();
 #if defined(ANDROID)
     UpdateTouchscreen();
@@ -186,13 +186,13 @@ bool DirectInputClass::UpdateMaus(bool gepuffert) {
 // Keyboard wieder akquirieren (wenn Fenster gewechselt zB)
 // --------------------------------------------------------------------------------------
 
-void DirectInputClass::AcquireKeyboard(void) {}
+void DirectInputClass::AcquireKeyboard() {}
 
 // --------------------------------------------------------------------------------------
 // Alle Joysticks updaten
 // --------------------------------------------------------------------------------------
 
-void DirectInputClass::UpdateJoysticks(void) {
+void DirectInputClass::UpdateJoysticks() {
     for (int i = 0; i < JoysticksFound; i++)
         Joysticks[i].Update();
 }
@@ -213,7 +213,7 @@ bool DirectInputClass::AreAllKeysReleased() {
 // Checken ob irgendeine Taste gedrückt ist
 // --------------------------------------------------------------------------------------
 
-bool DirectInputClass::AnyKeyDown(void) {
+bool DirectInputClass::AnyKeyDown() {
     for (int i = 0; i < std::min(NumberOfKeys, MAX_KEYS); i++)
         if (KeyDown(i))
             return true;
@@ -225,7 +225,7 @@ bool DirectInputClass::AnyKeyDown(void) {
 // Checken ob irgendein Button gedrückt ist
 // --------------------------------------------------------------------------------------
 
-bool DirectInputClass::AnyButtonDown(void) {
+bool DirectInputClass::AnyButtonDown() {
     if (JoystickFound == false)
         return false;
 
@@ -308,7 +308,7 @@ void DirectInputClass::InitTouchBoxes(int w, int h) {
     TouchBoxMaps.at(11) = SDLK_RETURN;
 }
 
-void DirectInputClass::UpdateTouchscreen(void) {
+void DirectInputClass::UpdateTouchscreen() {
     uint32_t buttons;
     uint8_t box;
     SDL_Finger *finger;
@@ -450,7 +450,7 @@ char *DirectInputClass::MapButtonToString(int joy_idx, int button) {
 
 // DKS - Convenience function for when in the actual game
 #if defined(GCW)
-bool DirectInputClass::InternalJoystickMainMenuButtonDown(void) {
+bool DirectInputClass::InternalJoystickMainMenuButtonDown() {
     int joy_idx = GetInternalJoystickIndex();
     int button_idx = GetInternalJoystickMainMenuButton();
     if (joy_idx >= 0 && joy_idx < JoysticksFound && Joysticks[joy_idx].Active &&

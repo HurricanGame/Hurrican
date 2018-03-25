@@ -56,7 +56,7 @@ GegnerPowerBlock::GegnerPowerBlock(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerPowerBlock::DoDraw(void) {
+void GegnerPowerBlock::DoDraw() {
     DirectGraphics.SetColorKeyMode();
 
     // normal
@@ -79,7 +79,7 @@ void GegnerPowerBlock::DoDraw(void) {
 // Bewegungs "KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerPowerBlock::DoKI(void) {
+void GegnerPowerBlock::DoKI() {
     if (AnimPhase == 0)
         Value2 = int(yPos);  // yPos sichern
 
@@ -191,7 +191,7 @@ void GegnerPowerBlock::DoKI(void) {
 // explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerPowerBlock::GegnerExplode(void) {
+void GegnerPowerBlock::GegnerExplode() {
     for (int i = 0; i < NUMPLAYERS; i++)
         if (Player[i].AufPlattform == this) {
             Player[i].AufPlattform = NULL;

@@ -34,7 +34,7 @@ GegnerLaFassSpawner::GegnerLaFassSpawner(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerLaFassSpawner::DoKI(void) {
+void GegnerLaFassSpawner::DoKI() {
     // Fass spawnen?
     if (PlayerAbstand() < 800)
         AnimCount -= 1.0f SYNC;
@@ -55,4 +55,4 @@ void GegnerLaFassSpawner::DoKI(void) {
 // LaFassSpawner explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerLaFassSpawner::GegnerExplode(void) {}
+void GegnerLaFassSpawner::GegnerExplode() {}

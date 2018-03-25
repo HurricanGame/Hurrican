@@ -27,7 +27,7 @@ GegnerWuxeSpinnen::GegnerWuxeSpinnen(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerWuxeSpinnen::DoKI(void) {
+void GegnerWuxeSpinnen::DoKI() {
     // Energie anzeigen
     if (Handlung != GEGNER_INIT && Handlung != GEGNER_VERFOLGEN && Handlung != GEGNER_EXPLODIEREN)
         HUD.ShowBossHUD(2000, Energy);
@@ -126,7 +126,7 @@ void GegnerWuxeSpinnen::DoKI(void) {
 // WuxeSpinnen explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerWuxeSpinnen::GegnerExplode(void) {
+void GegnerWuxeSpinnen::GegnerExplode() {
     // Extra Leben
     Gegner.PushGegner(xPos, yPos - 250, ONEUP, 10, 0, false);
 

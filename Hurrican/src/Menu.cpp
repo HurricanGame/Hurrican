@@ -51,7 +51,7 @@ int tempNUMPLAYERS;
 // Konstruktor : Menu Grafiken laden und Werte initialisieren
 // --------------------------------------------------------------------------------------
 
-MenuClass::MenuClass(void) {
+MenuClass::MenuClass() {
     MenuNebel.LoadImage("hurrican_rund.png", 512, 512, 512, 512, 1, 1);
     MenuTitel.LoadImage("hurrican-logo.png", 400, 90, 400, 90, 1, 1);
 
@@ -371,7 +371,7 @@ MenuClass::MenuClass(void) {
 // Konstruktor : Menu Grafiken freigeben
 // --------------------------------------------------------------------------------------
 
-MenuClass::~MenuClass(void) {
+MenuClass::~MenuClass() {
     // Aktuelle Highscoreliste speichern
     //
     SaveHighscore();
@@ -382,7 +382,7 @@ MenuClass::~MenuClass(void) {
 // wird auch für den Progressbar benutzt
 // --------------------------------------------------------------------------------------
 
-void MenuClass::ShowMenuBack(void) {
+void MenuClass::ShowMenuBack() {
     MenuNebel.RenderSpriteScaledRotated(-80, -140, 800, 800, ScrollPos, 0xFFFFFFFF);
 
     DirectGraphics.SetAdditiveMode();
@@ -403,7 +403,7 @@ void MenuClass::ShowMenuBack(void) {
 // Menu anzeigen
 // --------------------------------------------------------------------------------------
 
-void MenuClass::ShowMenu(void) {
+void MenuClass::ShowMenu() {
     D3DCOLOR menucolor;
     D3DCOLOR menucolor2;
     D3DCOLOR menucolor3;
@@ -1130,7 +1130,7 @@ void MenuClass::ShowMenu(void) {
 // Alles machen, was da Menu betrifft, sprich, werte ändern und dann anzeigen
 // --------------------------------------------------------------------------------------
 
-void MenuClass::DoMenu(void) {
+void MenuClass::DoMenu() {
     // DKS - Modified extensively while adding joystick support and fixing navigation backwards to previous menus
     bool joy_up = false;
     bool joy_down = false;
@@ -2356,7 +2356,7 @@ void MenuClass::DoMenu(void) {
 // Savegames laden
 // --------------------------------------------------------------------------------------
 
-void MenuClass::LoadSavegames(void) {
+void MenuClass::LoadSavegames() {
     std::string Name;  // Für die Dateinamen
 
     // Versuchen, die einzelnen Savegames zu laden
@@ -2483,7 +2483,7 @@ void MenuClass::ShowSavegames(int Highlight) {
 // Highscore-Liste laden
 // --------------------------------------------------------------------------------------
 
-void MenuClass::LoadHighscore(void) {
+void MenuClass::LoadHighscore() {
     char name[256];
 
     // Versuchen, die Highscore Datei zu öffnen
@@ -2539,7 +2539,7 @@ void MenuClass::LoadHighscore(void) {
 // Highscore-Liste speichern
 // --------------------------------------------------------------------------------------
 
-void MenuClass::SaveHighscore(void) {
+void MenuClass::SaveHighscore() {
     char name[256];
 
     // Highscore Datei öffnen
@@ -2592,7 +2592,7 @@ void MenuClass::SaveHighscore(void) {
 // Highscore-Liste mit Standardwerten resetten
 // --------------------------------------------------------------------------------------
 
-void MenuClass::ResetHighscore(void) {
+void MenuClass::ResetHighscore() {
     char HighscoreNames[MAX_HIGHSCORES][30] = {
         "EISWUXE", "TURRI", "MANFRED", "CHRIS", "ANDREAS", "JULIAN", "RAMIRO", "PETER", "CELAL", "MARKUS",
     };
@@ -2619,7 +2619,7 @@ void MenuClass::ResetHighscore(void) {
 // --------------------------------------------------------------------------------------
 
 // DKS - Fixed displaying language info with scaled fonts, made rectangle drawing smarter and sized dynamically
-void MenuClass::ShowLanguageInfo(void) {
+void MenuClass::ShowLanguageInfo() {
     int a1, a2;
 
     if (ShowLanguageInfoCounter < 0.0f)
@@ -2669,7 +2669,7 @@ void MenuClass::ShowLanguageInfo(void) {
 // Prüfen obs eine neue Highscore gibt
 // --------------------------------------------------------------------------------------
 
-void MenuClass::CheckForNewHighscore(void) {
+void MenuClass::CheckForNewHighscore() {
     AktuellerZustand = MENUPUNKT_HIGHSCORES;
     SoundManager.StopSongs();
     SoundManager.StopSounds();

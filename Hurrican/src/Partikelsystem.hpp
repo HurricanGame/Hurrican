@@ -249,15 +249,15 @@ class PartikelClass {
     //      NOTE: The primary reason construction has been eliminated is to support the new
     //      pooled memory manager (see DataStructures.h), which stores an array of
     //      pre-constructed objects from which it assigns new ones.
-    // PartikelClass(void);							// Konstruktor
-    PartikelClass(void){};   // Konstruktor
-    ~PartikelClass(void){};  // Destruktor
+    // PartikelClass();							// Konstruktor
+    PartikelClass(){};   // Konstruktor
+    ~PartikelClass(){};  // Destruktor
     void CreatePartikel(float x,
                         float y,
                         int Art,  // Bestimmten Partikel erzeugen
                         PlayerClass *pParent = NULL);
-    void Run(void);     // Partikel animieren und bewegen
-    bool Render(void);  // Partikel anzeigen
+    void Run();     // Partikel animieren und bewegen
+    bool Render();  // Partikel anzeigen
 
     // DKS: Found that colors were getting set unsafely in Run() and elsewhere, and I
     //      also converted the r,g,b,a member vars to uint8_t; these ensure safety:
@@ -322,13 +322,13 @@ class PartikelsystemClass {
     PartikelClass *pStart;  // Erstes  Element der Liste
     PartikelClass *pEnd;    // Letztes Element der Liste
 
-    PartikelsystemClass(void);   // Konstruktor
-    ~PartikelsystemClass(void);  // Destruktor
+    PartikelsystemClass();   // Konstruktor
+    ~PartikelsystemClass();  // Destruktor
 
     // DKS - PartikelsystemClass is now a static global, instead of dynamically allocated
     //      pointer, so moved the loading of sprites from its constructor to this new
     //      function:
-    void LoadSprites(void);
+    void LoadSprites();
 
     bool PushPartikel(float x, float y, int Art,
                       PlayerClass *pParent = NULL);  // Partikel "Art" hinzufügen
@@ -340,14 +340,14 @@ class PartikelsystemClass {
     // void DelSel		(PartikelClass *pTemp);			// Ausgewähltes Objekt entfernen
     PartikelClass *DelNode(PartikelClass *pPtr);
 
-    void ClearAll(void);                    // Alle Objekte löschen
-    int GetNumPartikel(void);               // Zahl der Partikel zurückliefern
-    void DoPartikel(void);                  // Alle Partikel der Liste animieren/anzeigen
+    void ClearAll();                    // Alle Objekte löschen
+    int GetNumPartikel();               // Zahl der Partikel zurückliefern
+    void DoPartikel();                  // Alle Partikel der Liste animieren/anzeigen
     void DoPartikelSpecial(bool ShowThem);  // Alle Partikel der Liste animieren/anzeigen
-    void DrawOnly(void);                    // Alle Partikel der Liste nur anzeigen
-    void DoThunder(void);
-    void ClearPowerUpEffects(void);
-    void SetParticleCount(void);  // Je nach Detailstufe Maximum setzen
+    void DrawOnly();                    // Alle Partikel der Liste nur anzeigen
+    void DoThunder();
+    void ClearPowerUpEffects();
+    void SetParticleCount();  // Je nach Detailstufe Maximum setzen
 };
 
 // --------------------------------------------------------------------------------------

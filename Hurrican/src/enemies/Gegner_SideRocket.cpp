@@ -29,7 +29,7 @@ GegnerSideRocket::GegnerSideRocket(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSideRocket::DoKI(void) {
+void GegnerSideRocket::DoKI() {
     if (Value1 == 0)
         BlickRichtung = LINKS;
     else
@@ -112,7 +112,7 @@ void GegnerSideRocket::DoKI(void) {
 // SideRocket explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerSideRocket::GegnerExplode(void) {
+void GegnerSideRocket::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
 
     PartikelSystem.PushPartikel(xPos - 10, yPos - 20, EXPLOSION_MEDIUM2);

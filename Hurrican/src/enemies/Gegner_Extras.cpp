@@ -70,7 +70,7 @@ GegnerExtras::GegnerExtras(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerExtras::DoKI(void) {
+void GegnerExtras::DoKI() {
     BlickRichtung = LINKS;
 
     switch (Handlung) {
@@ -314,4 +314,4 @@ void GegnerExtras::DoKI(void) {
 // Extra verschwindet
 // --------------------------------------------------------------------------------------
 
-void GegnerExtras::GegnerExplode(void) {}
+void GegnerExtras::GegnerExplode() {}

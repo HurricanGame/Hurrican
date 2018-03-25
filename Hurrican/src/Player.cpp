@@ -175,7 +175,7 @@ PlayerClass::PlayerClass() {
 // Desktruktor
 // --------------------------------------------------------------------------------------
 
-PlayerClass::~PlayerClass(void) {}
+PlayerClass::~PlayerClass() {}
 
 // --------------------------------------------------------------------------------------
 // Spieler auf neues Spiel vorbereiten
@@ -317,7 +317,7 @@ void PlayerClass::InitNewLevel() {
 // Spieler explodiert gerade
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::runExplode(void) {
+void PlayerClass::runExplode() {
     ExplodingTimer -= 1.0f SYNC;
 
     // Zuende explodiert?
@@ -421,7 +421,7 @@ void PlayerClass::runExplode(void) {
 // will der Spieler schiessen?
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::checkShoot(void) {
+void PlayerClass::checkShoot() {
     // DKS - No need to check if sound is playing, just ask to stop it:
     // if (!Aktion[AKTION_SHOOT] &&
     //        FlameThrower == true &&
@@ -497,7 +497,7 @@ void PlayerClass::checkShoot(void) {
 // Autofire abhandeln
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::handleAutoFire(void) {
+void PlayerClass::handleAutoFire() {
     // Eingesammeltes Autofire runterzählen
     //
     if (AutoFireExtra > 0.0f) {
@@ -518,7 +518,7 @@ void PlayerClass::handleAutoFire(void) {
 // Eingabegeräte abfragen und Spieler entsprechend reagieren lassen
 // --------------------------------------------------------------------------------------
 
-bool PlayerClass::GetPlayerInput(void) {
+bool PlayerClass::GetPlayerInput() {
     // tot?
     if (Handlung == TOT)
         return false;
@@ -727,7 +727,7 @@ bool PlayerClass::GetPlayerInput(void) {
 // Funken und Rauch erzeugen, wenn der Spieler angeschlagen ist
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::DoStuffWhenDamaged(void) {
+void PlayerClass::DoStuffWhenDamaged() {
     if (Console.Showing == true || Handlung == EXPLODIEREN)
         return;
 
@@ -803,7 +803,7 @@ void PlayerClass::DoStuffWhenDamaged(void) {
 // Energie testen, ob <= 0. Dann explodieren lassen
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::CheckForExplode(void) {
+void PlayerClass::CheckForExplode() {
     if (Energy <= 0.0f && Handlung != EXPLODIEREN && GameOverTimer == 0.0f) {
         // DKS - No need to check if the sounds are playing, just request they stop:
         // if (SoundManager.its_Sounds[SOUND_ABZUG + SoundOff]->isPlaying == true)
@@ -925,7 +925,7 @@ void PlayerClass::CheckForExplode(void) {
 // Items in Reichweite anziehen
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::PullItems(void) {
+void PlayerClass::PullItems() {
     GegnerClass *pTemp;
 
     pTemp = Gegner.pStart;
@@ -955,7 +955,7 @@ void PlayerClass::PullItems(void) {
 // Spieler animieren
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::AnimatePlayer(void) {
+void PlayerClass::AnimatePlayer() {
     // Pause beim Explodieren
     //
     if (Handlung == EXPLODIEREN || Handlung == TOT)
@@ -2366,7 +2366,7 @@ void PlayerClass::AnimatePlayer(void) {
 // Aktionen, wenn der Spieler auf einer Plattform steht
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::DoPlattformStuff(void) {
+void PlayerClass::DoPlattformStuff() {
     if (AufPlattform == NULL)
         return;
 
@@ -2698,7 +2698,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe) {
 // Spieler mit aktueller Speed bewegen
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::MovePlayer(void) {
+void PlayerClass::MovePlayer() {
     // wenn der Spieler gerade fernegesteuert das Level verlässt dann gleich wieder raus
     if (DoFesteAktion == true || Handlung == TOT)
         return;
@@ -2776,7 +2776,7 @@ void PlayerClass::MovePlayer(void) {
 // Spieler schiesst mit Primär Waffe
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::PlayerShoot(void) {
+void PlayerClass::PlayerShoot() {
     float wadd = 0.0f;
     int yoff;
 
@@ -3304,7 +3304,7 @@ void PlayerClass::PlayerShoot(void) {
 // Spieler Granate
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::PlayerGrenadeShoot(void) {
+void PlayerClass::PlayerGrenadeShoot() {
     CalcAustrittsPunkt();
 
     //----- Richung des Schusses ermitteln
@@ -3564,7 +3564,7 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul) {
 // Andernfalls nur der Blitzursprung beim Spieler
 // --------------------------------------------------------------------------------------
 
-bool PlayerClass::DoLightning(void) {
+bool PlayerClass::DoLightning() {
     int DrawLength;       // Länge des Blitze mit berücksichtigten Wänden im Weg
     GegnerClass *pEnemy;  // Für die Blitz/Gegner Kollision
 
@@ -3849,7 +3849,7 @@ bool PlayerClass::DoLightning(void) {
 // Der Beam lädt sich langsam auf, je nach Blitzlänge unterschiedlich schnell
 // --------------------------------------------------------------------------------------
 
-bool PlayerClass::LoadBeam(void) {
+bool PlayerClass::LoadBeam() {
     if (BlitzWinkel < 0)     // Einmal im Kreis rumgedreht ? Dann wieder
         BlitzWinkel += 360;  // von vorne beginnen mit der Rotation
     if (BlitzWinkel > 360)   // und zwar im und gegen den Uhrzeigersinn
@@ -3973,7 +3973,7 @@ void PlayerClass::DamagePlayer(float Ammount, bool Override) {
 // Level zentrieren, damit der Spieler wieder im Mittelpunkt steht
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::CenterLevel(void) {
+void PlayerClass::CenterLevel() {
     TileEngine.XOffset = xpos - 300;
     TileEngine.YOffset = ypos - 280;
 }
@@ -3982,7 +3982,7 @@ void PlayerClass::CenterLevel(void) {
 // Waffenlevels für die nächste Stufe berechnen
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::CalcWeaponLevels(void) {
+void PlayerClass::CalcWeaponLevels() {
     /*
         for (int i = 0; i < 3; i++)
             pPlayer->NextWeaponLevel[i] = 3 + (pPlayer->CurrentWeaponLevel[i] - 1) * 2;
@@ -3995,7 +3995,7 @@ void PlayerClass::CalcWeaponLevels(void) {
 // Position der Schussflamme errechnen
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::CalcFlamePos(void) {
+void PlayerClass::CalcFlamePos() {
     float xoff, yoff;
 
     // auf dem FlugSack reiten
@@ -4168,7 +4168,7 @@ void PlayerClass::CalcFlamePos(void) {
 // Austrittspunkt des Schusses errechnen
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::CalcAustrittsPunkt(void) {
+void PlayerClass::CalcAustrittsPunkt() {
     // float xver = 0.0f;	// Verschiebung des Austrittspunktes, wenn man vor einer Wandsteht
 
     //----- Genauen Pixel am Anfang derFlamme finden
@@ -4214,7 +4214,7 @@ void PlayerClass::CalcAustrittsPunkt(void) {
 // Spieler aus dem Level rausgelaufen?
 // --------------------------------------------------------------------------------------
 
-bool PlayerClass::CheckLevelExit(void) {
+bool PlayerClass::CheckLevelExit() {
     // Spieler aus Level draussen?
     if (xpos + Player[0].CollideRect.right < TileEngine.XOffset ||
         xpos + Player[0].CollideRect.left > TileEngine.XOffset + 640 ||
@@ -4229,7 +4229,7 @@ bool PlayerClass::CheckLevelExit(void) {
 // Spieler im Ausgang
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::PlayerInExit(void) {
+void PlayerClass::PlayerInExit() {
     StageClearRunning = false;
 
     // Summary Screen zeigen, wenn nicht im Tutorial Mode
@@ -4284,7 +4284,7 @@ void PlayerClass::PlayerInExit(void) {
 // Spieler läuft grad ins Exit
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::RunPlayerExit(void) {
+void PlayerClass::RunPlayerExit() {
     // DKS - Added support for non-looped music, so this is no longer necessary..
     //      This was causing stage-clear music to never be heard in the SDL port.
     //// Musik zuende ?
@@ -4299,7 +4299,7 @@ void PlayerClass::RunPlayerExit(void) {
 // Alle Spieler auf einem Flugsack?
 // --------------------------------------------------------------------------------------
 
-bool PlayerClass::Riding(void) {
+bool PlayerClass::Riding() {
     for (int p = 0; p < NUMPLAYERS; p++)
         if (Player[p].Handlung != SACKREITEN && Player[p].Handlung != DREHEN && Player[p].Handlung != TOT)
             return false;
@@ -4311,7 +4311,7 @@ bool PlayerClass::Riding(void) {
 // Level bei Flugsack Passage scrollen
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::ScrollFlugsack(void) {
+void PlayerClass::ScrollFlugsack() {
     bool BeideFrei = true;
 
     for (int p = 0; p < NUMPLAYERS; p++)
@@ -4325,7 +4325,7 @@ void PlayerClass::ScrollFlugsack(void) {
 // Waffen durchcyclen
 // --------------------------------------------------------------------------------------
 
-void PlayerClass::checkWeaponSwitch(void) {
+void PlayerClass::checkWeaponSwitch() {
     if (!Aktion[AKTION_WAFFEN_CYCLE])
         weaponswitchlock = false;
 

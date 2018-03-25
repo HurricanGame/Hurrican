@@ -28,7 +28,7 @@ GegnerBruecke::GegnerBruecke(int Wert1, int Wert2, bool Light) {
 // "Bruecke KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerBruecke::DoKI(void) {
+void GegnerBruecke::DoKI() {
     // Brücke nicht im Bild ?
     //
     if (xPos + 10 < TileEngine.XOffset || xPos > TileEngine.XOffset + 640 || yPos + 10 < TileEngine.YOffset ||
@@ -111,4 +111,4 @@ void GegnerBruecke::DoKI(void) {
 // Bruecke explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerBruecke::GegnerExplode(void) {}
+void GegnerBruecke::GegnerExplode() {}

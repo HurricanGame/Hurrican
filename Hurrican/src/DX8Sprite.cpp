@@ -51,7 +51,7 @@ int ActualTexture = -1;  // aktuelle Textur (damit wir uns ein paar
 // Desktruktor gibt die Textur wieder frei
 // --------------------------------------------------------------------------------------
 
-DirectGraphicsSprite::~DirectGraphicsSprite(void) {
+DirectGraphicsSprite::~DirectGraphicsSprite() {
 // DKS - itsPreCalcedRects array is now dynamically allocated:
 #ifndef _DEBUG
     // DKS - When in debug mode, itsPreCalcedRects is bound-checked vector wrapper,
@@ -100,7 +100,7 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
 #endif
     unsigned long	Size;
 #if defined(PLATFORM_SDL)
-    (void)hresult;
+    ()hresult;
 
     SDL_Rect        dims;
 #endif

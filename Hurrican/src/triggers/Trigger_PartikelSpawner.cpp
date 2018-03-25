@@ -56,7 +56,7 @@ GegnerPartikelSpawner::GegnerPartikelSpawner(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerPartikelSpawner::DoKI(void) {
+void GegnerPartikelSpawner::DoKI() {
     // Smoke Emitter geben Auftrieb beim Springen bei geradem Rauch nach oben (Value2 == 0)
     if (Value1 == 19 || ((Value1 == 5 || (Value1 == 6 && Aussetzer > 6.0f)) && Value2 == 0)) {
         for (int p = 0; p < NUMPLAYERS; p++)
@@ -278,4 +278,4 @@ void GegnerPartikelSpawner::DoKI(void) {
 // PartikelSpawner explodiert (nicht *g*)
 // --------------------------------------------------------------------------------------
 
-void GegnerPartikelSpawner::GegnerExplode(void) {}
+void GegnerPartikelSpawner::GegnerExplode() {}

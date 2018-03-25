@@ -23,14 +23,14 @@ class GegnerBigFish : public GegnerClass {
     GegnerBigFish(int Wert1,
                   int Wert2,  // Konstruktor
                   bool Light);
-    void NewAction(void);
-    void GegnerExplode(void);  // Gegner explodiert
-    void DoKI(void);           // Gegner bewegen
+    void NewAction();
+    void GegnerExplode();  // Gegner explodiert
+    void DoKI();           // Gegner bewegen
     void DoDraw(
         void);  // Gegner individuell rendern														// eigenen kleinen KI
                 // bewegen
     void MoveTo(float x, float y);
-    void DoMove(void);
+    void DoMove();
 };
 
 #endif

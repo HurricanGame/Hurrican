@@ -44,7 +44,7 @@ GegnerMiniDragon::GegnerMiniDragon(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerMiniDragon::DoDraw(void) {
+void GegnerMiniDragon::DoDraw() {
     bool mirrored;
     float mulx, muly;
 
@@ -100,7 +100,7 @@ void GegnerMiniDragon::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerMiniDragon::DoKI(void) {
+void GegnerMiniDragon::DoKI() {
     if ((blocko & BLOCKWERT_WAND && ySpeed < 0.0f) || (blocku & BLOCKWERT_WAND && ySpeed > 0.0f))
         ySpeed *= -1;
 
@@ -300,6 +300,6 @@ void GegnerMiniDragon::DoKI(void) {
 // Drache explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerMiniDragon::GegnerExplode(void) {
+void GegnerMiniDragon::GegnerExplode() {
     Player[0].Score += 250;
 }

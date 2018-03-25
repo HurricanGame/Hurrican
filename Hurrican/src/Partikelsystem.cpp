@@ -61,7 +61,7 @@ int DrawMode;                                          // normale oder rotierte 
 //      pooled memory manager (see DataStructures.h), which stores an array of
 //      pre-constructed objects from which it assigns new ones.
 #if 0
-PartikelClass::PartikelClass(void)
+PartikelClass::PartikelClass()
 {
     // Partikelwerte auf Null setzen (zur Sicherheit)
     red = green = blue = 255;
@@ -2123,7 +2123,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 // Partikel animieren und bewegen
 // --------------------------------------------------------------------------------------
 
-void PartikelClass::Run(void) {
+void PartikelClass::Run() {
     uint32_t bo, bu, bl, br;
 
     // DKS - alpha color was getting set outside its range, so set
@@ -3249,7 +3249,7 @@ void PartikelClass::Run(void) {
 // schon gesetzt ist, denn das bringt Speeeeeeeeeeed ... hoffentlich =)
 // --------------------------------------------------------------------------------------
 
-bool PartikelClass::Render(void) {
+bool PartikelClass::Render() {
     if (alpha < 0)
         alpha = 0;
 
@@ -3510,7 +3510,7 @@ bool PartikelClass::Render(void) {
 // Konstruktor : laden der Partikel Grafiken
 // --------------------------------------------------------------------------------------
 
-PartikelsystemClass::PartikelsystemClass(void) {
+PartikelsystemClass::PartikelsystemClass() {
     pStart = NULL;
     pEnd = NULL;
     NumPartikel = 0;
@@ -3527,7 +3527,7 @@ PartikelsystemClass::PartikelsystemClass(void) {
 // DKS - PartikelsystemClass is now a static global, instead of dynamically allocated
 //      pointer, so moved the loading of sprites from its constructor to this new
 //      function:
-void PartikelsystemClass::LoadSprites(void) {
+void PartikelsystemClass::LoadSprites() {
     // Patronenhülse
     PartikelGrafix[BULLET].LoadImage("bullet.png", 8, 8, 8, 8, 1, 1);
     PartikelRect[BULLET].left = 2;
@@ -4286,7 +4286,7 @@ void PartikelsystemClass::LoadSprites(void) {
 // Destruktor : Löschen der ganzen Liste und Freigabe der Partikel-Grafiken
 // --------------------------------------------------------------------------------------
 
-PartikelsystemClass::~PartikelsystemClass(void) {
+PartikelsystemClass::~PartikelsystemClass() {
     // Partikel-Liste komplett leeren
     ClearAll();
 }
@@ -4442,7 +4442,7 @@ PartikelClass *PartikelsystemClass::DelNode(PartikelClass *pPtr) {
 
 // DKS - adapted to use singly-linked list
 #if 0
-void PartikelsystemClass::ClearAll(void)
+void PartikelsystemClass::ClearAll()
 {
     PartikelClass *pTemp    = pStart;				// Zeiger auf den ersten   Partikel
     PartikelClass *pNaechst;						// Zeiger auf den nächsten Partikel (falls
@@ -4458,7 +4458,7 @@ void PartikelsystemClass::ClearAll(void)
     pEnd   = NULL;
 }
 #endif  // 0
-void PartikelsystemClass::ClearAll(void) {
+void PartikelsystemClass::ClearAll() {
     if (pStart) {
         PartikelClass *pNext = pStart->pNext;
         while (pNext) {
@@ -4486,7 +4486,7 @@ void PartikelsystemClass::ClearAll(void) {
 // Zahl der Partikel zurückliefern
 // --------------------------------------------------------------------------------------
 
-int PartikelsystemClass::GetNumPartikel(void) {
+int PartikelsystemClass::GetNumPartikel() {
     return NumPartikel;
 }
 
@@ -4494,7 +4494,7 @@ int PartikelsystemClass::GetNumPartikel(void) {
 // Alle Partikel der Liste nur anzeigen
 // --------------------------------------------------------------------------------------
 
-void PartikelsystemClass::DrawOnly(void) {
+void PartikelsystemClass::DrawOnly() {
     //----- Partikel, die normal oder mit Alphablending gerendert werden, durchlaufen
 
     PartikelClass *pTemp = pStart;  // Anfang der Liste
@@ -4710,7 +4710,7 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
 
 // DKS - Adapted to now-singly-linked particle list:
 #if 0
-void PartikelsystemClass::DoPartikel(void)
+void PartikelsystemClass::DoPartikel()
 {
     if (Console.Showing == true)
     {
@@ -4776,7 +4776,7 @@ void PartikelsystemClass::DoPartikel(void)
 #endif
 }
 #endif  // 0
-void PartikelsystemClass::DoPartikel(void) {
+void PartikelsystemClass::DoPartikel() {
     if (Console.Showing == true) {
         DrawOnly();
         return;
@@ -4866,7 +4866,7 @@ void PartikelsystemClass::DoPartikel(void) {
 // Blitz und Döner zeigen ;)
 // --------------------------------------------------------------------------------------
 
-void PartikelsystemClass::DoThunder(void) {
+void PartikelsystemClass::DoThunder() {
     if (ThunderAlpha > 0.0f) {
         D3DCOLOR col = D3DCOLOR_RGBA(ThunderColor[0], ThunderColor[1], ThunderColor[2], int(ThunderAlpha));
         RenderRect(0, 0, 640, 480, col);
@@ -4881,7 +4881,7 @@ void PartikelsystemClass::DoThunder(void) {
 
 // DKS - Adapted to now-singly-linked particle list:
 #if 0
-void PartikelsystemClass::ClearPowerUpEffects(void)
+void PartikelsystemClass::ClearPowerUpEffects()
 {
     PartikelClass* pTemp;
     PartikelClass* pNext;
@@ -4899,7 +4899,7 @@ void PartikelsystemClass::ClearPowerUpEffects(void)
     }
 }
 #endif  // 0
-void PartikelsystemClass::ClearPowerUpEffects(void) {
+void PartikelsystemClass::ClearPowerUpEffects() {
     PartikelClass *pCurr = pStart;
     PartikelClass *pPrev = NULL;
 
@@ -4928,7 +4928,7 @@ void PartikelsystemClass::ClearPowerUpEffects(void) {
 // Je nach Detailstufe wird ein anderer Wert für MAX_PARTIKEL gesetzt
 // --------------------------------------------------------------------------------------
 
-void PartikelsystemClass::SetParticleCount(void) {
+void PartikelsystemClass::SetParticleCount() {
     switch (options_Detail) {
         case DETAIL_LOW:
             MAX_PARTIKEL = 2000;

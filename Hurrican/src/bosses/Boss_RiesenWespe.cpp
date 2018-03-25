@@ -28,7 +28,7 @@ GegnerRiesenWasp::GegnerRiesenWasp(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerRiesenWasp::DoKI(void) {
+void GegnerRiesenWasp::DoKI() {
     // animieren
     AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
     if (AnimCount > AnimSpeed)  // Grenze überschritten ?
@@ -145,7 +145,7 @@ void GegnerRiesenWasp::DoKI(void) {
 // RiesenWasp explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerRiesenWasp::GegnerExplode(void) {
+void GegnerRiesenWasp::GegnerExplode() {
     // Explosionen erzeugen
     for (int i = 0; i < 10; i++)
         PartikelSystem.PushPartikel(xPos + rand() % 110 - 30, yPos + rand() % 60 - 30, EXPLOSION_BIG);

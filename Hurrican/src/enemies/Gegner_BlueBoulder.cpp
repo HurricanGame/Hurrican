@@ -32,7 +32,7 @@ GegnerBlueBoulder::GegnerBlueBoulder(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerBlueBoulder::DoKI(void) {
+void GegnerBlueBoulder::DoKI() {
     SimpleAnimation();
 
     if (blocku & BLOCKWERT_WAND)
@@ -80,7 +80,7 @@ void GegnerBlueBoulder::DoKI(void) {
 // Boulder explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerBlueBoulder::GegnerExplode(void) {
+void GegnerBlueBoulder::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_STONEEXPLODE);
 
     for (int i = 0; i < 16; i++)

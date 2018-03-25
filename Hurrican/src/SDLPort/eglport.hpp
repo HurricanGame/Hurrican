@@ -54,13 +54,13 @@ enum EGL_RENDER_T {
 };
 
 /** Public API */
-void EGL_Close(void);
+void EGL_Close();
 
 // DKS - Now takes additional parameters 'depth' and 'vsync' allowing Hurrican
 //      to pass in requested VSync and color depth.
 int8_t EGL_Open(uint16_t width, uint16_t height, uint16_t depth, bool vsync);
 
-void EGL_SwapBuffers(void);
+void EGL_SwapBuffers();
 
 /** Simple Examples  */
 /**     Raw mode:

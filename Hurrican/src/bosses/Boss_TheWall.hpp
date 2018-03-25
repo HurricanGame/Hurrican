@@ -22,7 +22,7 @@ class GegnerTheWall : public GegnerClass {
     float dummy;
     float SkullShotDelay;
 
-    void ReturnSkull(void);
+    void ReturnSkull();
 
   public:
     DirectGraphicsSprite Vorne;
@@ -33,10 +33,10 @@ class GegnerTheWall : public GegnerClass {
 
     GegnerTheWall(int Wert1, int Wert2, bool Light);
 
-    void GegnerExplode(void);  // Gegner explodiert
-    void DoKI(void);           // Gegner individuell mit seiner eigenen kleinen KI bewegen
-    void DoDraw(void);         // Gegner individuell rendern
-    void NeueAktion(void);
+    void GegnerExplode();  // Gegner explodiert
+    void DoKI();           // Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw();         // Gegner individuell rendern
+    void NeueAktion();
 };
 
 #endif

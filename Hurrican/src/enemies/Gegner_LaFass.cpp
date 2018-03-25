@@ -31,7 +31,7 @@ GegnerLaFass::GegnerLaFass(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerLaFass::DoKI(void) {
+void GegnerLaFass::DoKI() {
     SimpleAnimation();
     BlickRichtung = LINKS;
 
@@ -54,7 +54,7 @@ void GegnerLaFass::DoKI(void) {
 // LaFass explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerLaFass::GegnerExplode(void) {
+void GegnerLaFass::GegnerExplode() {
     // wurde abgeschossen? Dann Fass fallen lassen
     //
     if (Value2 != 99) {

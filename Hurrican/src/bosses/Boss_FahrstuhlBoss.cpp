@@ -45,7 +45,7 @@ GegnerFahrstuhlBoss::GegnerFahrstuhlBoss(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerFahrstuhlBoss::DoDraw(void) {
+void GegnerFahrstuhlBoss::DoDraw() {
     // Gegner mit Kopf und Kanonen rendern
     //
     pGegnerGrafix[GegnerArt]->RenderSprite(float(xPos - TileEngine.XOffset), float(yPos - TileEngine.YOffset), 0,
@@ -69,7 +69,7 @@ void GegnerFahrstuhlBoss::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFahrstuhlBoss::DoKI(void) {
+void GegnerFahrstuhlBoss::DoKI() {
     if (x1 < 0)
         x1 = 0;
 
@@ -554,7 +554,7 @@ void GegnerFahrstuhlBoss::DoKI(void) {
 // FahrstuhlBoss explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerFahrstuhlBoss::GegnerExplode(void) {
+void GegnerFahrstuhlBoss::GegnerExplode() {
     ShakeScreen(10);
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
     Player[0].Score += 9000;

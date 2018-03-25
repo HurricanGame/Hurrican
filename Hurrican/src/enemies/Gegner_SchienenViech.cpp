@@ -27,7 +27,7 @@ GegnerSchienenViech::GegnerSchienenViech(int Wert1, int Wert2, bool Light) {
 // Eigene Drawfunktion
 // --------------------------------------------------------------------------------------
 
-void GegnerSchienenViech::DoDraw(void) {
+void GegnerSchienenViech::DoDraw() {
     D3DCOLOR col;
 
     col = 0xFFCCCCCC;
@@ -43,7 +43,7 @@ void GegnerSchienenViech::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSchienenViech::DoKI(void) {
+void GegnerSchienenViech::DoKI() {
     // temporäre position für Gegnerwand Check (Wandcheck komplett rausgenmommen, damit er nicht in der
     // Schiene stecken bleibt ;)
     //
@@ -140,7 +140,7 @@ void GegnerSchienenViech::DoKI(void) {
 // SchienenViech explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerSchienenViech::GegnerExplode(void) {
+void GegnerSchienenViech::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION3);
 
     for (int i = 0; i < 5; i++)

@@ -30,7 +30,7 @@ GegnerFeuerspucker::GegnerFeuerspucker(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFeuerspucker::DoKI(void) {
+void GegnerFeuerspucker::DoKI() {
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
         // Pausieren
@@ -92,7 +92,7 @@ void GegnerFeuerspucker::DoKI(void) {
 // Feuerspucker explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerFeuerspucker::GegnerExplode(void) {
+void GegnerFeuerspucker::GegnerExplode() {
     SoundManager.PlayWave(25, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 5; i++)

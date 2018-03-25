@@ -50,11 +50,11 @@ class GegnerSpinnenmaschine : public GegnerClass {
     GegnerSpinnenmaschine(int Wert1,
                           int Wert2,  // Konstruktor
                           bool Light);
-    void DoDeckel(void);
-    void DoHoch(void);
-    void GegnerExplode(void);  // Gegner explodiert
-    void DoKI(void);           // Gegner individuell mit seiner eigenen kleinen KI bewegen
-    void DoDraw(void);         // Gegner individuell rendern
+    void DoDeckel();
+    void DoHoch();
+    void GegnerExplode();  // Gegner explodiert
+    void DoKI();           // Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw();         // Gegner individuell rendern
 };
 
 #endif

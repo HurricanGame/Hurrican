@@ -39,7 +39,7 @@ GegnerStarSmall::GegnerStarSmall(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerStarSmall::DoKI(void) {
+void GegnerStarSmall::DoKI() {
     if (xSpeed > 0.0f)
         BlickRichtung = RECHTS;
     else
@@ -75,7 +75,7 @@ void GegnerStarSmall::DoKI(void) {
 // StarSmall explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerStarSmall::GegnerExplode(void) {
+void GegnerStarSmall::GegnerExplode() {
     for (int i = 0; i < 8; i++)
         PartikelSystem.PushPartikel(xPos - 30 + rand() % 40, yPos - 30 + rand() % 40, EXPLOSION_MEDIUM2);
 

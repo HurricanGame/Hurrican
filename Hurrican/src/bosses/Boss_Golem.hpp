@@ -36,11 +36,11 @@ class GegnerGolem : public GegnerClass {
     GegnerGolem(int Wert1,
                 int Wert2,  // Konstruktor
                 bool Light);
-    float WinkelToPlayer(void);
-    void GegnerExplode(void);  // Gegner explodiert
-    void DoKI(void);           // Gegner individuell mit seiner eigenen kleinen KI bewegen
-    void DoDraw(void);         // Gegner individuell rendern
-    void Wackeln(void);
+    float WinkelToPlayer();
+    void GegnerExplode();  // Gegner explodiert
+    void DoKI();           // Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw();         // Gegner individuell rendern
+    void Wackeln();
     bool GoToZero(float &Value, float speed = 0.1f);
     // wackeln lassen beim Laufen
 };

@@ -51,7 +51,7 @@ GegnerSkull::GegnerSkull(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSkull::DoKI(void) {
+void GegnerSkull::DoKI() {
     Energy = 100000;
     BlickRichtung = LINKS;
 
@@ -287,4 +287,4 @@ void GegnerSkull::DoKI(void) {
 // Schädel explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerSkull::GegnerExplode(void) {}
+void GegnerSkull::GegnerExplode() {}

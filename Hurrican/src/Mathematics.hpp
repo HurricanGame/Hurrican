@@ -43,7 +43,7 @@ _asm fistp x
 // DKS - When the following is defined, all calls to rand() end up calling fast_rand()
 #ifdef USE_FAST_RNG
 extern void seed_fast_rand(uint32_t seed);
-extern int fast_rand(void);
+extern int fast_rand();
 #define rand() fast_rand()
 #define srand(x) seed_fast_rand(x)
 #endif  // USE_FAST_RNG

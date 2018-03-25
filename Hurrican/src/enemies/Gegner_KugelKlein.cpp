@@ -34,7 +34,7 @@ GegnerKugelKlein::GegnerKugelKlein(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerKugelKlein::DoKI(void) {
+void GegnerKugelKlein::DoKI() {
     BlickRichtung = LINKS;
     AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
     if (AnimCount > AnimSpeed)  // Grenze überschritten ?
@@ -100,7 +100,7 @@ void GegnerKugelKlein::DoKI(void) {
 // Stachelkugel explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerKugelKlein::GegnerExplode(void) {
+void GegnerKugelKlein::GegnerExplode() {
     // Explosion
     PartikelSystem.PushPartikel(float(xPos - 15), float(yPos - 15), EXPLOSION_MEDIUM2);
 

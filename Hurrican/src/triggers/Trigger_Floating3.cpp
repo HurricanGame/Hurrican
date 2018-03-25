@@ -35,7 +35,7 @@ GegnerFloating3::GegnerFloating3(int Wert1, int Wert2, bool Light) {
 // Eigene Drawfunktion
 // --------------------------------------------------------------------------------------
 
-void GegnerFloating3::DoDraw(void) {
+void GegnerFloating3::DoDraw() {
     // Standfläche rendern
     //
     pGegnerGrafix[GegnerArt]->itsRect = pGegnerGrafix[GegnerArt]->itsPreCalcedRects[0];
@@ -54,7 +54,7 @@ void GegnerFloating3::DoDraw(void) {
 // Floating3 KI
 // --------------------------------------------------------------------------------------
 
-void GegnerFloating3::DoKI(void) {
+void GegnerFloating3::DoKI() {
     playeron = false;
 
     for (int p = 0; p < NUMPLAYERS; p++)
@@ -147,4 +147,4 @@ void GegnerFloating3::DoKI(void) {
 // Floating3 explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerFloating3::GegnerExplode(void) {}
+void GegnerFloating3::GegnerExplode() {}

@@ -29,7 +29,7 @@ GegnerSwitch::GegnerSwitch(int Wert1, int Wert2, bool Light) {
 // "Switch KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSwitch::DoKI(void) {
+void GegnerSwitch::DoKI() {
     // Testen, ob der Spieler den Schalter berührt hat und ihn durch Druck auf die "nach oben kucken" Taste
     // aktiviert
     //
@@ -62,4 +62,4 @@ void GegnerSwitch::DoKI(void) {
 // Switch explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerSwitch::GegnerExplode(void) {}
+void GegnerSwitch::GegnerExplode() {}

@@ -32,7 +32,7 @@ GegnerFireSpider::GegnerFireSpider(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerFireSpider::DoDraw(void) {
+void GegnerFireSpider::DoDraw() {
     // Spinne rendern
     //
     pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset),
@@ -44,7 +44,7 @@ void GegnerFireSpider::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFireSpider::DoKI(void) {
+void GegnerFireSpider::DoKI() {
     blocku = TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
     SimpleAnimation();
 
@@ -223,7 +223,7 @@ void GegnerFireSpider::DoKI(void) {
 // FireSpider explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerFireSpider::GegnerExplode(void) {
+void GegnerFireSpider::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
     PartikelSystem.PushPartikel(xPos + 5, yPos, EXPLOSION_MEDIUM2);
 

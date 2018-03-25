@@ -36,7 +36,7 @@ GegnerEierMann::GegnerEierMann(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerEierMann::DoKI(void) {
+void GegnerEierMann::DoKI() {
     // Animieren
     if (AnimEnde > 0)  // Soll überhaupt anmiert werden ?
     {
@@ -71,7 +71,7 @@ void GegnerEierMann::DoKI(void) {
 // EierMann explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerEierMann::GegnerExplode(void) {
+void GegnerEierMann::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_GIANT);
 
     for (int i = 0; i < 10; i++) {

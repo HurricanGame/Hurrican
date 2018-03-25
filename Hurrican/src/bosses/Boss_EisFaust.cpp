@@ -29,7 +29,7 @@ GegnerEisFaust::GegnerEisFaust(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerEisFaust::DoKI(void) {
+void GegnerEisFaust::DoKI() {
     // Energie anzeigen
     if (Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_EXPLODIEREN)
         HUD.ShowBossHUD(7000, Energy);
@@ -314,7 +314,7 @@ void GegnerEisFaust::DoKI(void) {
 // EisFaust explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerEisFaust::GegnerExplode(void) {
+void GegnerEisFaust::GegnerExplode() {
     // Splitter
     for (int i = 0; i < 20; i++)
         PartikelSystem.PushPartikel(xPos + 60 + rand() % 60, yPos + 80 + rand() % 40, SPLITTER);

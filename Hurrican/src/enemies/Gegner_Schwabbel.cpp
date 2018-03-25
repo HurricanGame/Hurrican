@@ -28,7 +28,7 @@ GegnerSchwabbel::GegnerSchwabbel(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSchwabbel::DoKI(void) {
+void GegnerSchwabbel::DoKI() {
     // Weniger Energie -> schneller schwabbeln
     //
     AnimSpeed = Energy / 1000.0f + 0.1f;
@@ -89,7 +89,7 @@ void GegnerSchwabbel::DoKI(void) {
 // Schwabbel explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerSchwabbel::GegnerExplode(void) {
+void GegnerSchwabbel::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_MADE);
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
 

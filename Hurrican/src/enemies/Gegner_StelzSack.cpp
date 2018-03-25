@@ -38,7 +38,7 @@ GegnerStelzSack::GegnerStelzSack(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerStelzSack::DoKI(void) {
+void GegnerStelzSack::DoKI() {
     // y-Position auf Höhe des Fahrstuhls setzen
     if (Handlung != GEGNER_INIT && Handlung != GEGNER_FALLEN)
         yPos = g_Fahrstuhl_yPos - 147;
@@ -159,7 +159,7 @@ void GegnerStelzSack::DoKI(void) {
 // StelzSack explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerStelzSack::GegnerExplode(void) {
+void GegnerStelzSack::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos, yPos, STELZHEAD);
 
     PartikelSystem.PushPartikel(xPos - 20, yPos - 10, STELZE);

@@ -219,7 +219,7 @@ BOOL GetFunctionInfoFromAddresses(ULONG fnAddress, ULONG stackAddress, LPTSTR lp
 
         // Let's go through the stack, and modify the function prototype, and insert the actual
         // parameter values from the stack
-        if (_tcsstr(lpszUnDSymbol, _T("(void)")) == NULL && _tcsstr(lpszUnDSymbol, _T("()")) == NULL) {
+        if (_tcsstr(lpszUnDSymbol, _T("()")) == NULL && _tcsstr(lpszUnDSymbol, _T("()")) == NULL) {
             ULONG index = 0;
             for (;; index++) {
                 lpszParamSep = (LPTSTR)_tcschr(lpszParsed, _T(','));

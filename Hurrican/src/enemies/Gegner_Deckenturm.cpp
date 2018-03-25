@@ -28,7 +28,7 @@ GegnerDeckenturm::GegnerDeckenturm(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerDeckenturm::DoKI(void) {
+void GegnerDeckenturm::DoKI() {
     BlickRichtung = LINKS;
 
     SimpleAnimation();
@@ -130,7 +130,7 @@ void GegnerDeckenturm::DoKI(void) {
 // Deckenturm explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerDeckenturm::GegnerExplode(void) {
+void GegnerDeckenturm::GegnerExplode() {
     // Explosion
     PartikelSystem.PushPartikel(float(xPos - 10), float(yPos - 10), EXPLOSION_MEDIUM2);
 

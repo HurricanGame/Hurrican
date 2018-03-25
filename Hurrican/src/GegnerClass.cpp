@@ -12,7 +12,7 @@
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-GegnerClass::GegnerClass(void) {
+GegnerClass::GegnerClass() {
     Active = false;
     TestBlock = true;
     OwnDraw = false;
@@ -47,7 +47,7 @@ GegnerClass::GegnerClass(void) {
 // Destruktor
 // --------------------------------------------------------------------------------------
 
-GegnerClass::~GegnerClass(void) {
+GegnerClass::~GegnerClass() {
     for (int p = 0; p < NUMPLAYERS; p++)
         if (Player[p].AufPlattform == this)
             Player[p].AufPlattform = NULL;
@@ -71,7 +71,7 @@ void GegnerClass::TestDamagePlayers(float dam, bool destroy) {
 // Gegner explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerClass::GegnerExplode(void) {
+void GegnerClass::GegnerExplode() {
     for (int p = 0; p < NUMPLAYERS; p++)
         if (Player[p].AufPlattform == this)
             Player[p].AufPlattform = NULL;
@@ -81,7 +81,7 @@ void GegnerClass::GegnerExplode(void) {
 // Gegner nur rendern. Entweder per Standard oder per eigener Drawroutine
 // --------------------------------------------------------------------------------------
 
-void GegnerClass::Render(void) {
+void GegnerClass::Render() {
     // Nicht auf Screen? Dann nicht rendern ;)
     if (IsOnScreen() == false)
         return;
@@ -183,7 +183,7 @@ void GegnerClass::Render(void) {
 // Gegner auf Grenzen checken usw
 // --------------------------------------------------------------------------------------
 
-bool GegnerClass::Run(void) {
+bool GegnerClass::Run() {
     // Ist der Gegner überhaupt schon aktiviert worden, also im Screen gewesen ?
     // Oder ist es ein Eisstachel, der sich immer bewegt
     if (Active == true || GegnerArt == EISSTACHEL) {
@@ -493,7 +493,7 @@ void GegnerClass::SimpleAnimation(bool backward) {
 // An der Wand umdrehen
 // --------------------------------------------------------------------------------------
 
-void GegnerClass::TurnonWall(void) {
+void GegnerClass::TurnonWall() {
     if (((blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND) && xSpeed < 0.0f) ||
         ((blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND) && xSpeed > 0.0f)) {
         xSpeed *= -1;
@@ -506,7 +506,7 @@ void GegnerClass::TurnonWall(void) {
 // Umdrehen, wenn angeschoßen
 // --------------------------------------------------------------------------------------
 
-bool GegnerClass::TurnonShot(void) {
+bool GegnerClass::TurnonShot() {
     if (TurnCount > 0.0f)
         TurnCount -= 1.0f SYNC;
 
@@ -528,7 +528,7 @@ bool GegnerClass::TurnonShot(void) {
 // Gegner grade sichtbar?
 // --------------------------------------------------------------------------------------
 
-bool GegnerClass::IsOnScreen(void) {
+bool GegnerClass::IsOnScreen() {
     int off;
     int xsize, ysize;
 
@@ -557,7 +557,7 @@ bool GegnerClass::IsOnScreen(void) {
 // Konstruktor : Initialisierung der GegnerDaten
 // --------------------------------------------------------------------------------------
 
-GegnerListClass::GegnerListClass(void) {
+GegnerListClass::GegnerListClass() {
     pStart = NULL;
     pEnd = NULL;
     NumGegner = 0;
@@ -567,12 +567,12 @@ GegnerListClass::GegnerListClass(void) {
 // Destruktor : Löschen der ganzen Liste und Freigabe der Gegner-Grafiken
 // --------------------------------------------------------------------------------------
 
-GegnerListClass::~GegnerListClass(void) {
+GegnerListClass::~GegnerListClass() {
     // Gegner-Liste komplett leeren
     ClearAll();
 }
 
-void GegnerListClass::LoadSprites(void) {
+void GegnerListClass::LoadSprites() {
     // Flamme der Drone laden
     DroneFlame.LoadImage("droneflame.png", 164, 46, 82, 46, 2, 1);
 
@@ -2167,7 +2167,7 @@ void GegnerListClass::DelSel(GegnerClass *pTemp) {
 // Alle Gegner der Liste löschen
 // --------------------------------------------------------------------------------------
 
-void GegnerListClass::ClearAll(void) {
+void GegnerListClass::ClearAll() {
     GegnerClass *pTemp = pStart;  // Zeiger auf den ersten   Gegner
     GegnerClass *pNaechst;        // Zeiger auf den nächsten Gegner (falls
     // der eine gelöscht wird)
@@ -2186,7 +2186,7 @@ void GegnerListClass::ClearAll(void) {
 // Zahl der Gegner zurückliefern
 // --------------------------------------------------------------------------------------
 
-int GegnerListClass::GetNumGegner(void) {
+int GegnerListClass::GetNumGegner() {
     return NumGegner;
 }
 
@@ -2194,7 +2194,7 @@ int GegnerListClass::GetNumGegner(void) {
 // Alle Gegner der Liste animieren
 // --------------------------------------------------------------------------------------
 
-void GegnerListClass::RenderAll(void) {
+void GegnerListClass::RenderAll() {
     GegnerClass *pTemp = pStart;  // Anfang der Liste
 
     // Zuerst die "Gegner" rendern, die als Background fungieren
@@ -2246,7 +2246,7 @@ void GegnerListClass::RenderAll(void) {
 // Alle Gegner der Liste durchgehen
 // --------------------------------------------------------------------------------------
 
-void GegnerListClass::RunAll(void) {
+void GegnerListClass::RunAll() {
     GegnerClass *pTemp = pStart;  // Anfang der Liste
     GegnerClass *pNext = NULL;
 

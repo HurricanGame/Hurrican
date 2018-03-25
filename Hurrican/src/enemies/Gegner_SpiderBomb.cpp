@@ -41,7 +41,7 @@ GegnerSpiderBomb::GegnerSpiderBomb(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSpiderBomb::DoKI(void) {
+void GegnerSpiderBomb::DoKI() {
     if (Handlung == GEGNER_LAUFEN)
         SimpleAnimation();
 
@@ -155,7 +155,7 @@ void GegnerSpiderBomb::DoKI(void) {
 // Explodieren
 // --------------------------------------------------------------------------------------
 
-void GegnerSpiderBomb::GegnerExplode(void) {
+void GegnerSpiderBomb::GegnerExplode() {
     ShakeScreen(5);
 
     for (int i = 0; i < 6; i++)

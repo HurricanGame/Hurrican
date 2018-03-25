@@ -42,7 +42,7 @@ GegnerAuge::GegnerAuge(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerAuge::DoKI(void) {
+void GegnerAuge::DoKI() {
     // rauchen lassen
     //
     smokedelay -= 0.25f SYNC;
@@ -125,7 +125,7 @@ void GegnerAuge::DoKI(void) {
 // Auge explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerAuge::GegnerExplode(void) {
+void GegnerAuge::GegnerExplode() {
     // Explosion
     for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(float(xPos - 15) + rand() % 20, float(yPos - 15) + rand() % 40, EXPLOSION_MEDIUM2);

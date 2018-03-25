@@ -74,19 +74,19 @@ struct sCommandLineParams {
 // --------------------------------------------------------------------------------------
 
 bool GameInit();  // Spiel vor  dem Cracktro initialisieren
-bool GameInit2(void);                           // Spiel nach dem Cracktro initialisieren
-bool GameExit(void);                            // Spiel de-initialisieren
-bool Heartbeat(void);                           // Haupt Game Loop
+bool GameInit2();                           // Spiel nach dem Cracktro initialisieren
+bool GameExit();                            // Spiel de-initialisieren
+bool Heartbeat();                           // Haupt Game Loop
 
 // DKS - I made a separate set of spritesheets with blue coloring for Player 2, so these
 //      are no longer necessary and have been disabled:
 #if 0
 void ConvertPlayerTexture(DirectGraphicsSprite *pTexture);
-void CreatePlayer2Texture(void);
+void CreatePlayer2Texture();
 #endif  // 0
 
-void StartOuttro(void);
-void StartIntro(void);
+void StartOuttro();
+void StartIntro();
 
 extern int WINDOWWIDTH;
 extern int WINDOWHEIGHT;
@@ -96,11 +96,11 @@ extern char *g_storage_ext;  // Where data files (levels, graphics, music, etc) 
 extern char *g_save_ext;     // Where configuration files, logs, and save games are written (-DKS) (write)
 
 #ifdef _DEBUG
-void ShowDebugInfo(void);  // Allen möglichen Kram anzeigen
+void ShowDebugInfo();  // Allen möglichen Kram anzeigen
 #endif
 
 // DKS - Added FPS reporting:
-void ShowFPS(void);
+void ShowFPS();
 
 // --------------------------------------------------------------------------------------
 // Endianess handling

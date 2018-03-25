@@ -33,7 +33,7 @@ GegnerStahlmuecke::GegnerStahlmuecke(int Wert1, int Wert2, bool Light) {
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerStahlmuecke::DoDraw(void) {
+void GegnerStahlmuecke::DoDraw() {
     bool mirrored = BlickRichtung == RECHTS;
 
     if (Handlung != GEGNER_FALLEN)
@@ -50,7 +50,7 @@ void GegnerStahlmuecke::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerStahlmuecke::DoKI(void) {
+void GegnerStahlmuecke::DoKI() {
     SimpleAnimation();
 
     // Je nach Handlung richtig verhalten
@@ -195,7 +195,7 @@ void GegnerStahlmuecke::DoKI(void) {
 // Explodieren
 // --------------------------------------------------------------------------------------
 
-void GegnerStahlmuecke::GegnerExplode(void) {
+void GegnerStahlmuecke::GegnerExplode() {
     // Explosion
     PartikelSystem.PushPartikel(float(xPos + 2), float(yPos - 10), EXPLOSION_MEDIUM3);
 

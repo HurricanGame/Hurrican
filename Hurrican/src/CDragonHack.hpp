@@ -39,10 +39,10 @@ class CDragonHack {
   public:
     int m_State;
 
-    CDragonHack(void);   // CutScene initialisieren
-    ~CDragonHack(void);  // CutScene freigeben
+    CDragonHack();   // CutScene initialisieren
+    ~CDragonHack();  // CutScene freigeben
 
-    void Run(void);  // laufen, pardon: "fliegen" lassen
+    void Run();  // laufen, pardon: "fliegen" lassen
     // abgebrochen wurde
 };  // CDragonHack
 

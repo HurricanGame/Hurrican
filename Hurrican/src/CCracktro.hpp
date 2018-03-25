@@ -43,12 +43,12 @@ class CCracktro {
   public:
     bool b_running;
 
-    CCracktro(void);   // Cracktro initialisieren
-    ~CCracktro(void);  // Cracktro freigeben
+    CCracktro();   // Cracktro initialisieren
+    ~CCracktro();  // Cracktro freigeben
 
-    void Run(void);  // Cracktro laufen lassen
-    void Main(void);
-    void Load(void);
+    void Run();  // Cracktro laufen lassen
+    void Main();
+    void Load();
 };  // CCracktro
 
 #endif

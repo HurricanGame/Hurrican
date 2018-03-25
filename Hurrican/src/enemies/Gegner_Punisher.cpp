@@ -39,7 +39,7 @@ GegnerPunisher::GegnerPunisher(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerPunisher::DoDraw(void) {
+void GegnerPunisher::DoDraw() {
     // Je nach Handlung entsprechend anders rendern
     //
     switch (Handlung) {
@@ -70,7 +70,7 @@ void GegnerPunisher::DoDraw(void) {
 // Spieler verfolgen
 // --------------------------------------------------------------------------------------
 
-void GegnerPunisher::FollowPlayer(void) {
+void GegnerPunisher::FollowPlayer() {
     if (xPos + 50 < pAim->xpos + 35)
         xAcc = 2.0f;
     if (xPos + 50 > pAim->xpos + 35)
@@ -95,7 +95,7 @@ void GegnerPunisher::FollowPlayer(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerPunisher::DoKI(void) {
+void GegnerPunisher::DoKI() {
     switch (Handlung) {
         // initialisieren
         case GEGNER_INIT: {
@@ -205,7 +205,7 @@ void GegnerPunisher::DoKI(void) {
 // Punisher verschwindet
 // --------------------------------------------------------------------------------------
 
-void GegnerPunisher::Vanish(void) {
+void GegnerPunisher::Vanish() {
     if (ShowSummary == true)
         SoundManager.StopSong(MUSIC_PUNISHER, false);
     else
@@ -220,7 +220,7 @@ void GegnerPunisher::Vanish(void) {
 // Punisher explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerPunisher::GegnerExplode(void) {
+void GegnerPunisher::GegnerExplode() {
     TileEngine.Timelimit += 100;
 
     Player[0].PunisherActive = false;

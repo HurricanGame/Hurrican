@@ -29,7 +29,7 @@ GegnerMushroom::GegnerMushroom(int Wert1, int Wert2, bool Light) {
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerMushroom::DoDraw(void) {
+void GegnerMushroom::DoDraw() {
     // Mushroom rendern
     //
     pGegnerGrafix[GegnerArt]->RenderSpriteScaled(static_cast<float>(xPos - TileEngine.XOffset),
@@ -60,7 +60,7 @@ void GegnerMushroom::PlayerJumps(PlayerClass *pPlayer) {
 // Mushroom KI
 // --------------------------------------------------------------------------------------
 
-void GegnerMushroom::DoKI(void) {
+void GegnerMushroom::DoKI() {
     BlickRichtung = LINKS;
 
     switch (Handlung) {
@@ -103,4 +103,4 @@ void GegnerMushroom::DoKI(void) {
 // Mushroom explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerMushroom::GegnerExplode(void) {}
+void GegnerMushroom::GegnerExplode() {}

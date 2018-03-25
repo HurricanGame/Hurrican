@@ -11,10 +11,10 @@ class GegnerShootButton : public GegnerClass {
 
   public:
     GegnerShootButton(GegnerClass *Plattform);  // Konstruktor
-    void GegnerExplode(void);                   // Gegner explodiert
-    void DoKI(void);                            // Gegner individuell mit seiner
+    void GegnerExplode();                   // Gegner explodiert
+    void DoKI();                            // Gegner individuell mit seiner
     // eigenen kleinen KI bewegen
-    void DoDraw(void);
+    void DoDraw();
 };
 
 #endif

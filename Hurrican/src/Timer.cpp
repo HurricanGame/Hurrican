@@ -28,7 +28,7 @@
 // Konstruktor, setzt diverse Werte auf den Startwert
 // --------------------------------------------------------------------------------------
 
-TimerClass::TimerClass(void) {
+TimerClass::TimerClass() {
     aktuelleZeit = 0;  // Aktuelle Zeit auf 0 setzen
     letzterFrame = 0;  // die des letzten Frames auch
     maxFPS = 0;        // best mögliche Peformance fordern
@@ -48,13 +48,13 @@ TimerClass::TimerClass(void) {
 // Desktruktor (leer)
 // --------------------------------------------------------------------------------------
 
-TimerClass::~TimerClass(void) {}
+TimerClass::~TimerClass() {}
 
 // --------------------------------------------------------------------------------------
 // Timer updaten und Zeiten berechnen
 // --------------------------------------------------------------------------------------
 
-void TimerClass::update(void) {
+void TimerClass::update() {
     vergangeneFrames++;             // für die Schnittberechnung
     aktuelleZeit = SDL_GetTicks();  // wir SDL_GetTicks
 
@@ -84,7 +84,7 @@ void TimerClass::update(void) {
 // Warten bis die maximal gesetzte Framerate erreicht ist
 // --------------------------------------------------------------------------------------
 
-void TimerClass::wait(void) {
+void TimerClass::wait() {
     if (maxFPS == 0)  // bei Framerate = 0 gleich wieder zurück
         return;       // da wir da nichts abwarten müssen :-)
 
@@ -118,7 +118,7 @@ void TimerClass::SetMoveSpeed(float Wert) {
 // Movespeed zurückliefern
 // --------------------------------------------------------------------------------------
 
-float TimerClass::GetMoveSpeed(void) {
+float TimerClass::GetMoveSpeed() {
     return MoveSpeed;
 }
 
@@ -142,7 +142,7 @@ double TimerClass::getElapsed() {
 // Framerate auslesen
 // --------------------------------------------------------------------------------------
 
-double TimerClass::getFrameRate(void) {
+double TimerClass::getFrameRate() {
     return (aktuelleFramerate);  // Framerate berechnen und zurückgeben
 }
 
@@ -150,7 +150,7 @@ double TimerClass::getFrameRate(void) {
 // Minimale Framerate auslesen
 // --------------------------------------------------------------------------------------
 
-double TimerClass::getMinFrameRate(void) {
+double TimerClass::getMinFrameRate() {
     return (FPSMinimum);
 }
 
@@ -158,7 +158,7 @@ double TimerClass::getMinFrameRate(void) {
 // Maximale Framerate auslesen
 // --------------------------------------------------------------------------------------
 
-double TimerClass::getMaxFrameRate(void) {
+double TimerClass::getMaxFrameRate() {
     return (FPSMaximum);
 }
 
@@ -166,14 +166,14 @@ double TimerClass::getMaxFrameRate(void) {
 // Durchschnittliche FPS auslesen
 // --------------------------------------------------------------------------------------
 
-double TimerClass::getAverageFPS(void) {
+double TimerClass::getAverageFPS() {
     return DurchschnittFramerate;
 }
 
 // --------------------------------------------------------------------------------------
 // Wert holen, mit dem die Bewegungen verrechnet werden
 // --------------------------------------------------------------------------------------
-double TimerClass::getSpeedFactor(void) {
+double TimerClass::getSpeedFactor() {
     return vergangeneZeit;
 }
 
@@ -181,7 +181,7 @@ double TimerClass::getSpeedFactor(void) {
 // Max und Min FPS resetten
 // --------------------------------------------------------------------------------------
 
-void TimerClass::resetMaxMinFPS(void) {
+void TimerClass::resetMaxMinFPS() {
     FPSMaximum = 0.0f;
     FPSMinimum = 10000.0f;
     DurchschnittFramerate = aktuelleFramerate;
@@ -191,7 +191,7 @@ void TimerClass::resetMaxMinFPS(void) {
 // Max und Min und Durchschnitts FPS in Logdatei sichern
 // --------------------------------------------------------------------------------------
 
-void TimerClass::WriteLogValues(void) {
+void TimerClass::WriteLogValues() {
     Protokoll << "\nMaximum  FPS : " << static_cast<int>(FPSMaximum) << std::endl;
     Protokoll << "Minimum  FPS : " << static_cast<int>(FPSMinimum) << std::endl;
     Protokoll << "Average  FPS : " << static_cast<int>(DurchschnittFramerate) << std::endl;

@@ -35,7 +35,7 @@ GegnerTutorialText::GegnerTutorialText(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerTutorialText::DoKI(void) {
+void GegnerTutorialText::DoKI() {
     // Spieler nahe genug? Dann einfaden
     if (PlayerAbstand() < 120 && Value1 != 9 && (GUI.m_FadeMode == INVISIBLE || GUI.m_TextID != Value1) &&
         !(Value1 == 20 && Player[0].PowerLines == 5)) {
@@ -227,4 +227,4 @@ void GegnerTutorialText::DoKI(void) {
 // Trigger explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerTutorialText::GegnerExplode(void) {}
+void GegnerTutorialText::GegnerExplode() {}

@@ -27,7 +27,7 @@ GegnerPflanze::GegnerPflanze(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerPflanze::DoKI(void) {
+void GegnerPflanze::DoKI() {
     // Animieren
     //
     AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
@@ -89,7 +89,7 @@ void GegnerPflanze::DoKI(void) {
 // Pflanze explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerPflanze::GegnerExplode(void) {
+void GegnerPflanze::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 5; i++)

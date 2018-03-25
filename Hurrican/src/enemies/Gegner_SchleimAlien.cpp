@@ -39,7 +39,7 @@ GegnerSchleimAlien::GegnerSchleimAlien(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerSchleimAlien::DoDraw(void) {
+void GegnerSchleimAlien::DoDraw() {
     // Je nach Größe anders gestrecht rendern
     //
     pGegnerGrafix[GegnerArt]->RenderSpriteScaled(static_cast<float>(xPos - TileEngine.XOffset) + 30 - Size / 2.0f,
@@ -51,7 +51,7 @@ void GegnerSchleimAlien::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSchleimAlien::DoKI(void) {
+void GegnerSchleimAlien::DoKI() {
     SimpleAnimation();
 
     // Wachsen lassen
@@ -88,7 +88,7 @@ void GegnerSchleimAlien::DoKI(void) {
 // Alien SchleimBoller explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerSchleimAlien::GegnerExplode(void) {
+void GegnerSchleimAlien::GegnerExplode() {
     for (int i = 0; i < NUMPLAYERS; i++)
         if (Player[i].AufPlattform == this)
             Player[i].AufPlattform = NULL;

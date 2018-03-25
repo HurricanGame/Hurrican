@@ -29,7 +29,7 @@ GegnerRoboMan1::GegnerRoboMan1(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerRoboMan1::DoKI(void) {
+void GegnerRoboMan1::DoKI() {
     blocko = TileEngine.BlockOben(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
     blocku = TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
     blockl = TileEngine.BlockLinks(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
@@ -181,7 +181,7 @@ void GegnerRoboMan1::DoKI(void) {
 // RoboMan explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerRoboMan1::GegnerExplode(void) {
+void GegnerRoboMan1::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION3);
 
     int i;

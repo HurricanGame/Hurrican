@@ -30,7 +30,7 @@ GegnerDiamant::GegnerDiamant(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerDiamant::DoKI(void) {
+void GegnerDiamant::DoKI() {
     BlickRichtung = LINKS;
 
     // Bei Animationsphase 1 kurze Pause damit er nich blinkt wie ein Feuerwehrauto =)
@@ -139,6 +139,6 @@ void GegnerDiamant::DoKI(void) {
 // Diamant verschwindet
 // --------------------------------------------------------------------------------------
 
-void GegnerDiamant::GegnerExplode(void) {
+void GegnerDiamant::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);  // Sound ausgeben
 }

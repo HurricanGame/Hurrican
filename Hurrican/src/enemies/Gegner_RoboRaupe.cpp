@@ -27,7 +27,7 @@ GegnerRoboRaupe::GegnerRoboRaupe(int Wert1, int Wert2, bool Light) {
 // Bewegungs KI
 // --------------------------------------------------------------------------------------
 
-void GegnerRoboRaupe::DoKI(void) {
+void GegnerRoboRaupe::DoKI() {
     // animieren
     AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
     if (AnimCount > AnimSpeed)  // Grenze überschritten ?
@@ -90,7 +90,7 @@ void GegnerRoboRaupe::DoKI(void) {
 // Explodieren
 // --------------------------------------------------------------------------------------
 
-void GegnerRoboRaupe::GegnerExplode(void) {
+void GegnerRoboRaupe::GegnerExplode() {
     // blaue Explosionen erzeugen
     for (int i = 0; i < 50; i++)
         PartikelSystem.PushPartikel(xPos + rand() % 90 - 10, yPos + rand() % 40 - 10, BLUE_EXPLOSION);

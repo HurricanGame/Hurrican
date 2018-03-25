@@ -31,14 +31,14 @@ class GegnerDrache : public GegnerClass {
     float ArrowCount;
     float FlareRot;
 
-    void ComputeHeadWinkel(void);
+    void ComputeHeadWinkel();
 
   public:
     GegnerDrache(int Wert1,
                  int Wert2,  // Konstruktor
                  bool Light);
-    void GegnerExplode(void);  // Gegner explodiert
-    void DoKI(void);           // Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void GegnerExplode();  // Gegner explodiert
+    void DoKI();           // Gegner individuell mit seiner eigenen kleinen KI bewegen
     void DoDraw(
         void);  // Gegner individuell rendern														// eigenen kleinen KI
                 // bewegen

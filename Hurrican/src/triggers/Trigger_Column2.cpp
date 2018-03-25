@@ -29,7 +29,7 @@ GegnerColumn2::GegnerColumn2(int Wert1, int Wert2, bool Light) {
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerColumn2::DoDraw(void) {
+void GegnerColumn2::DoDraw() {
     D3DXMATRIX matWorldLocal, matRot, matTrans, matTrans2;  // Rotations und Translations Matrizen
     int Winkel;                                             // Rotationswinkel
 
@@ -76,7 +76,7 @@ void GegnerColumn2::DoDraw(void) {
 // "Column KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerColumn2::DoKI(void) {
+void GegnerColumn2::DoKI() {
     // Säule wird umgeschossen ?
     //
     if (Energy < 100.0f && Handlung != GEGNER_EXPLODIEREN) {
@@ -131,7 +131,7 @@ void GegnerColumn2::DoKI(void) {
 // Column2 fliegt auseinander
 // --------------------------------------------------------------------------------------
 
-void GegnerColumn2::GegnerExplode(void) {
+void GegnerColumn2::GegnerExplode() {
     for (int i = 0; i < 30; i++)
         PartikelSystem.PushPartikel(xPos + rand() % 100, yPos + 80 + rand() % 40, SMOKE);
 

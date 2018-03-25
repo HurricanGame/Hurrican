@@ -28,7 +28,7 @@ GegnerRiesenRaupe::GegnerRiesenRaupe(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerRiesenRaupe::DoKI(void) {
+void GegnerRiesenRaupe::DoKI() {
     // animieren
     AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
     if (AnimCount > AnimSpeed)  // Grenze überschritten ?
@@ -105,7 +105,7 @@ void GegnerRiesenRaupe::DoKI(void) {
 // RiesenRaupe explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerRiesenRaupe::GegnerExplode(void) {
+void GegnerRiesenRaupe::GegnerExplode() {
     // Explosionen erzeugen
     for (int i = 0; i < 10; i++) {
         PartikelSystem.PushPartikel(xPos + rand() % 180 - 30, yPos + rand() % 60 - 30, EXPLOSION_BIG);

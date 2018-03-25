@@ -25,7 +25,7 @@ GegnerStalagtit::GegnerStalagtit(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerStalagtit::DoKI(void) {
+void GegnerStalagtit::DoKI() {
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
         case GEGNER_FALLEN:  // Stein fällt runter
@@ -69,7 +69,7 @@ void GegnerStalagtit::DoKI(void) {
 // Stalagtit explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerStalagtit::GegnerExplode(void) {
+void GegnerStalagtit::GegnerExplode() {
     // und Splitter erzeugen Rauch
     for (int i = 0; i < 20; i++) {
         PartikelSystem.PushPartikel(xPos + rand() % 40 - 8, yPos + rand() % 80 - 8, SMOKE);

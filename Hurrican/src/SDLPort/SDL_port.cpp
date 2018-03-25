@@ -161,7 +161,7 @@ void load_matrix(GLenum mode, const GLfloat *m) {
         }                                                                            \
     }
 
-uint8_t LoadGLFunctions(void) {
+uint8_t LoadGLFunctions() {
 #if defined(USE_GL2)
     LOAD_OPENGL_PROC(PFNGLDELETESHADERPROC, glDeleteShader);
     LOAD_OPENGL_PROC(PFNGLDELETEPROGRAMPROC, glDeleteProgram);

@@ -30,7 +30,7 @@ GegnerStahlfaust::GegnerStahlfaust(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerStahlfaust::DoKI(void) {
+void GegnerStahlfaust::DoKI() {
     // Energie anzeigen
     if (Handlung != GEGNER_INIT && Handlung != GEGNER_EXPLODIEREN)
         HUD.ShowBossHUD(4000, Energy);
@@ -278,7 +278,7 @@ void GegnerStahlfaust::DoKI(void) {
 // Stahlfaust explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerStahlfaust::GegnerExplode(void) {
+void GegnerStahlfaust::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
     // Splitter

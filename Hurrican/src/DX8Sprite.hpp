@@ -50,13 +50,13 @@ private:
     RECT				itsRect;							// zu zeigender Ausschnitt
 
 public:
-    DirectGraphicsSurface(void);						// Konstruktor (leer)
-    ~DirectGraphicsSurface(void);						// Surface freigeben
+    DirectGraphicsSurface();						// Konstruktor (leer)
+    ~DirectGraphicsSurface();						// Surface freigeben
     bool LoadImage(const char *Filename,					// Laden des Bildes "Filename"
                    int xSize, int ySize);					// mit Grösse xSize, ySize
     bool  SetRect	  (int left,  int top,
                        int right, int bottom);				// Neuen Ausschnitt setzen
-    RECT  GetRect	  (void);								// Ausschnitt holen
+    RECT  GetRect	  ();								// Ausschnitt holen
 };
 #endif  // 0
 
@@ -121,7 +121,7 @@ class DirectGraphicsSprite {
     RECT *itsPreCalcedRects;  // vorberechnete Ausschnitte für die Frames
 #endif
 
-    DirectGraphicsSprite(void)
+    DirectGraphicsSprite()
         : itsXFrameCount(0),
           itsYFrameCount(0),
           itsXFrameSize(0),
@@ -138,7 +138,7 @@ class DirectGraphicsSprite {
         itsRect.top = itsRect.bottom = itsRect.left = itsRect.right = 0;
     }
 
-    ~DirectGraphicsSprite(void);  // Textur freigeben
+    ~DirectGraphicsSprite();  // Textur freigeben
 
     bool LoadImage(const std::string &filename,  // Laden des Bildes "Filename"
                    uint16_t xs,
@@ -161,7 +161,7 @@ class DirectGraphicsSprite {
     }
 
     // DKS - this is never used anywhere, disabled:
-    // RECT  GetRect	  (void);								// Ausschnitt holen
+    // RECT  GetRect	  ();								// Ausschnitt holen
 
     // DKS - All of the following rendering functions no longer pointlessly return bool value of true:
     void RenderSprite(float x, float y, D3DCOLOR Color);  // Sprite rendern

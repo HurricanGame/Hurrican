@@ -32,7 +32,7 @@ GegnerKrabblerRechts::GegnerKrabblerRechts(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerKrabblerRechts::DoKI(void) {
+void GegnerKrabblerRechts::DoKI() {
     BlickRichtung = LINKS;
 
     SimpleAnimation();
@@ -84,7 +84,7 @@ void GegnerKrabblerRechts::DoKI(void) {
 // WandKrabbler explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerKrabblerRechts::GegnerExplode(void) {
+void GegnerKrabblerRechts::GegnerExplode() {
     // Explosion
     for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(float(xPos - 15) + rand() % 20, float(yPos - 15) + rand() % 40, EXPLOSION_MEDIUM3);

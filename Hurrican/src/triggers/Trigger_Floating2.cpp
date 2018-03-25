@@ -30,7 +30,7 @@ GegnerFloating2::GegnerFloating2(int Wert1, int Wert2, bool Light) {
 // Floating2 KI
 // --------------------------------------------------------------------------------------
 
-void GegnerFloating2::DoKI(void) {
+void GegnerFloating2::DoKI() {
     BlickRichtung = RECHTS;
 
     playeron = false;
@@ -84,4 +84,4 @@ void GegnerFloating2::DoKI(void) {
 // Floating2 explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerFloating2::GegnerExplode(void) {}
+void GegnerFloating2::GegnerExplode() {}

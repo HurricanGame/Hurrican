@@ -72,7 +72,7 @@ uint8_t smallfont_charwidths[256] = {
     1, 1, 1, 8, 1,  1,  1, 1,  1,  1, 1, 1,  1,  1, 1, 1,  1, 1,  1, 1, 1, 7, 1,  1, 1, 1, 1, 7, 1, 1, 1, 1,
     1, 1, 1, 1, 1,  1,  1, 1,  1,  1, 1, 1,  1,  1, 1, 1,  1, 1,  1, 1, 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1};
 
-DirectGraphicsFont::DirectGraphicsFont(void) {
+DirectGraphicsFont::DirectGraphicsFont() {
     // DKS - Added support for font scaling
     mScaleFactor = 1;
 
@@ -89,7 +89,7 @@ DirectGraphicsFont::DirectGraphicsFont(void) {
 // Desktruktor gibt die Textur des Fonts wieder frei
 // --------------------------------------------------------------------------------------
 
-DirectGraphicsFont::~DirectGraphicsFont(void) {
+DirectGraphicsFont::~DirectGraphicsFont() {
     // Font Textur freigeben
     delete (mTexture);
     mTexture = NULL;
@@ -580,7 +580,7 @@ int DirectGraphicsFont::StringLength(const char Text[], int Spacing) {
 // FPS Werte auf dem Screen anzeigen
 // --------------------------------------------------------------------------------------
 
-void DirectGraphicsFont::ShowFPS(void) {
+void DirectGraphicsFont::ShowFPS() {
     static int updateFPS;  // Trigger für die FPS, da sonst Anzeige zu schnell
     static double FPS;
     std::string Buffer;
@@ -622,12 +622,12 @@ void DirectGraphicsFont::ShowFPS(void) {
 }
 
 // DKS - New functions added to facilitate resized fonts:
-int DirectGraphicsFont::GetYCharSize(void) {
+int DirectGraphicsFont::GetYCharSize() {
     return mYCharSize * mScaleFactor;
 }
 
 // DKS - Added support for font scaling
-int DirectGraphicsFont::GetScaleFactor(void) {
+int DirectGraphicsFont::GetScaleFactor() {
     return mScaleFactor;
 }
 

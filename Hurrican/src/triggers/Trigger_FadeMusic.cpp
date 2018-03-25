@@ -27,7 +27,7 @@ GegnerFadeMusic::GegnerFadeMusic(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFadeMusic::DoKI(void) {
+void GegnerFadeMusic::DoKI() {
     // Ist der Trigger nahe genug am Spieler, dass er aktiviert wird ?
     if (PlayerAbstand() <= 150) {
         // Musik Ausfaden
@@ -75,4 +75,4 @@ void GegnerFadeMusic::DoKI(void) {
 // FadeMusic explodiert (nicht *g*)
 // --------------------------------------------------------------------------------------
 
-void GegnerFadeMusic::GegnerExplode(void) {}
+void GegnerFadeMusic::GegnerExplode() {}

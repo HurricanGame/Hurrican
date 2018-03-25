@@ -50,22 +50,22 @@ class TimerClass {
     int maxFPS;                // Maximum Framerate (Framebremse)
     float SpeedFaktor;         // Faktor, mit dem alle Werte verrechnet werden
 
-    TimerClass(void);               // Konstruktor
-    ~TimerClass(void);              // Desktruktor
-    void update(void);              // Timer updaten und Zeiten berechnen
-    void wait(void);                // Maximum Framrate abwarten
+    TimerClass();               // Konstruktor
+    ~TimerClass();              // Desktruktor
+    void update();              // Timer updaten und Zeiten berechnen
+    void wait();                // Maximum Framrate abwarten
     void wait(int Wert);            // Wartetet "Wert" Milli-Sekunden
     void SetMoveSpeed(float Wert);  // neue Movespeed setzen
-    float GetMoveSpeed(void);       // MoveSpeed abfragen
+    float GetMoveSpeed();       // MoveSpeed abfragen
     void SetMaxFPS(int Wert);       // Maximum Framerate setzen
     double getElapsed();            // vergagnge Zeit in Milli-Sekunden holen
-    double getFrameRate(void);      // Framerate auslesen
-    double getMinFrameRate(void);   // Minimale Framerate auslesen
-    double getMaxFrameRate(void);   // Maximale Framerate auslesen
-    double getAverageFPS(void);     // Durchschnittliche FPS auslesen
-    double getSpeedFactor(void);    // Wert holen, mit dem die Bewegungen verrechnet werden
-    void resetMaxMinFPS(void);      // Max und Min FPS resetten
-    void WriteLogValues(void);      // Werte in Logdatei sichern
+    double getFrameRate();      // Framerate auslesen
+    double getMinFrameRate();   // Minimale Framerate auslesen
+    double getMaxFrameRate();   // Maximale Framerate auslesen
+    double getAverageFPS();     // Durchschnittliche FPS auslesen
+    double getSpeedFactor();    // Wert holen, mit dem die Bewegungen verrechnet werden
+    void resetMaxMinFPS();      // Max und Min FPS resetten
+    void WriteLogValues();      // Werte in Logdatei sichern
 };
 
 // --------------------------------------------------------------------------------------

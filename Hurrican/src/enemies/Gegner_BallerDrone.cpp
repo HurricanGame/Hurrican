@@ -26,7 +26,7 @@ GegnerBallerdrone::GegnerBallerdrone(int Wert1, int Wert2, bool Light) {
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerBallerdrone::DoDraw(void) {
+void GegnerBallerdrone::DoDraw() {
     if (Handlung == GEGNER_FALLEN)
         pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
                                                static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFFFF0000);
@@ -49,7 +49,7 @@ void GegnerBallerdrone::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerBallerdrone::DoKI(void) {
+void GegnerBallerdrone::DoKI() {
     BlickRichtung = LINKS;
     AnimCount -= 1.0f SYNC;
 
@@ -153,7 +153,7 @@ void GegnerBallerdrone::DoKI(void) {
 // Ballerdrone explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerBallerdrone::GegnerExplode(void) {
+void GegnerBallerdrone::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION3);
 
     int i;

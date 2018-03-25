@@ -28,7 +28,7 @@ GegnerLavaBallSpawner::GegnerLavaBallSpawner(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerLavaBallSpawner::DoKI(void) {
+void GegnerLavaBallSpawner::DoKI() {
     // Warten bis ein neuer geschossen wird
     //
     int pa = PlayerAbstand();
@@ -46,4 +46,4 @@ void GegnerLavaBallSpawner::DoKI(void) {
 // LavaBall explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerLavaBallSpawner::GegnerExplode(void) {}
+void GegnerLavaBallSpawner::GegnerExplode() {}

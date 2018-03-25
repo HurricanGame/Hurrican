@@ -30,7 +30,7 @@ GegnerPlattform::GegnerPlattform(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerPlattform::DoKI(void) {
+void GegnerPlattform::DoKI() {
     if (TileEngine.DateiAppendix.UsedPowerblock == 2)
         AnimPhase = 1;
     else
@@ -59,4 +59,4 @@ void GegnerPlattform::DoKI(void) {
 // Plattform explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerPlattform::GegnerExplode(void) {}
+void GegnerPlattform::GegnerExplode() {}

@@ -35,7 +35,7 @@ GegnerReitFlugsack::GegnerReitFlugsack(int Wert1, int Wert2, bool Light) {
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerReitFlugsack::DoDraw(void) {
+void GegnerReitFlugsack::DoDraw() {
     bool mirror = BlickRichtung != LINKS;
 
     pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
@@ -57,7 +57,7 @@ void GegnerReitFlugsack::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerReitFlugsack::DoKI(void) {
+void GegnerReitFlugsack::DoKI() {
     SimpleAnimation();
 
     // Je nach Handlung richtig verhalten
@@ -194,4 +194,4 @@ void GegnerReitFlugsack::DoKI(void) {
 // Flugsack explodiert (ohne viel tamm tamm *g*)
 // --------------------------------------------------------------------------------------
 
-void GegnerReitFlugsack::GegnerExplode(void) {}
+void GegnerReitFlugsack::GegnerExplode() {}

@@ -200,14 +200,14 @@ class ProjectileClass {
     //      NOTE: The primary reason construction has been eliminated is to support the new
     //      pooled memory manager (see DataStructures.h), which stores an array of
     //      pre-constructed objects from which it assigns new ones.
-    ProjectileClass(void) {}   // Konstruktor
-    ~ProjectileClass(void) {}  // Destruktor
+    ProjectileClass() {}   // Konstruktor
+    ~ProjectileClass() {}  // Destruktor
 
     void CreateShot(float x, float y, int Art, PlayerClass *pTemp);  // Bestimmten Schuss erzeugen
-    void Run(void);                                                  // Schuss animieren und bewegen
-    void Render(void);                                               // Schuss rendern
-    void CheckCollision(void);                                       // Kollision checken
-    void ExplodeShot(void);                                          // Schuss explodiert und erzeugt Partikel
+    void Run();                                                  // Schuss animieren und bewegen
+    void Render();                                               // Schuss rendern
+    void CheckCollision();                                       // Kollision checken
+    void ExplodeShot();                                          // Schuss explodiert und erzeugt Partikel
     ProjectileClass *pNext;                                          // Zeiger auf den nächsten   Schuss
     // DKS - Made a singly-linked list, there's no need or benefit for a doubly-linked list here.
     // ProjectileClass		*pPrev;						// Zeiger auf den vorherigen Schuss
@@ -248,13 +248,13 @@ class ProjectileListClass {
     DirectGraphicsSprite SchussFlamme[3];    // Grafiken für die SchussFlamme, für alle 3 Waffen
     DirectGraphicsSprite SchussFlammeFlare;  // Grafiken für das Leuchten der SchussFlamme
 
-    ProjectileListClass(void);   // Konstruktor
-    ~ProjectileListClass(void);  // Destruktor
+    ProjectileListClass();   // Konstruktor
+    ~ProjectileListClass();  // Destruktor
 
     // DKS - ProjectileListClass is now a static global, instead of dynamically allocated
     //      pointer, so moved the loading of sprites from its constructor to this new
     //      function:
-    void LoadSprites(void);
+    void LoadSprites();
 
     bool PushProjectile(float x, float y, int Art, PlayerClass *pTemp = NULL);  // Schuss "Art" hinzufügen
     bool PushBlitzBeam(int Size,
@@ -268,10 +268,10 @@ class ProjectileListClass {
     // void DelSel		(ProjectileClass *pTemp);		// Ausgewähltes Objekt entfernen
     ProjectileClass *DelNode(ProjectileClass *pPtr);
 
-    void ClearAll(void);          // Alle Objekte löschen
+    void ClearAll();          // Alle Objekte löschen
     void ClearType(int type);     // Alle Objekte eines Typs löschen
-    int GetNumProjectiles(void);  // Zahl der Schüsse zurückliefern
-    void DoProjectiles(void);     // Alle Schüsse der Liste animieren
+    int GetNumProjectiles();  // Zahl der Schüsse zurückliefern
+    void DoProjectiles();     // Alle Schüsse der Liste animieren
 };
 
 // --------------------------------------------------------------------------------------

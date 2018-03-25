@@ -23,7 +23,7 @@
 // Konstruktor, lädt die Grafiken
 // --------------------------------------------------------------------------------------
 
-IntroClass::IntroClass(void) {
+IntroClass::IntroClass() {
     Background[0].LoadImage("intro1.png", 640, 480, 640, 480, 1, 1);
     Background[1].LoadImage("intro2.png", 640, 480, 640, 480, 1, 1);
     Background[2].LoadImage("intro3.png", 640, 480, 640, 480, 1, 1);
@@ -84,7 +84,7 @@ IntroClass::IntroClass(void) {
 // Desktruktor
 // --------------------------------------------------------------------------------------
 
-IntroClass::~IntroClass(void) {
+IntroClass::~IntroClass() {
     // DKS
     // MUSIC_StopAllSongs();
     SoundManager.StopSongs();
@@ -97,7 +97,7 @@ IntroClass::~IntroClass(void) {
 // Intro beenden
 // --------------------------------------------------------------------------------------
 
-void IntroClass::EndIntro(void) {
+void IntroClass::EndIntro() {
     if (Zustand != INTRO_FADEOUT) {
         if (Zustand != INTRO_FADEIN) {
             Counter = 255.0f;
@@ -112,7 +112,7 @@ void IntroClass::EndIntro(void) {
 // Intro ablaufen lassen
 // --------------------------------------------------------------------------------------
 
-void IntroClass::DoIntro(void) {
+void IntroClass::DoIntro() {
     // Hintergrund rendern
     DirectGraphics.SetColorKeyMode();
 

@@ -34,7 +34,7 @@ GegnerLavaBall::GegnerLavaBall(int Wert1, int Wert2, bool Light) {
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerLavaBall::DoDraw(void) {
+void GegnerLavaBall::DoDraw() {
     // Render
     pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
                                            static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFFFFFFFF);
@@ -51,7 +51,7 @@ void GegnerLavaBall::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerLavaBall::DoKI(void) {
+void GegnerLavaBall::DoKI() {
     SimpleAnimation();
 
     // erst erschienen? Dann yPos merken
@@ -147,4 +147,4 @@ void GegnerLavaBall::DoKI(void) {
 // LavaBall explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerLavaBall::GegnerExplode(void) {}
+void GegnerLavaBall::GegnerExplode() {}

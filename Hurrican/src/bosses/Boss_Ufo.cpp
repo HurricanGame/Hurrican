@@ -37,7 +37,7 @@ GegnerUfo::GegnerUfo(int Wert1, int Wert2, bool Light) {
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerUfo::DoDraw(void) {
+void GegnerUfo::DoDraw() {
     pGegnerGrafix[GegnerArt]->RenderSprite(xPos - static_cast<float>(TileEngine.XOffset),
                                            yPos - static_cast<float>(TileEngine.YOffset), AnimPhase, 0xFFFFFFFF);
 
@@ -62,7 +62,7 @@ void GegnerUfo::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerUfo::DoKI(void) {
+void GegnerUfo::DoKI() {
     SmokeDelay -= 1.0f SYNC;
 
     // Energie anzeigen
@@ -305,7 +305,7 @@ void GegnerUfo::DoKI(void) {
 // Ufo explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerUfo::GegnerExplode(void) {
+void GegnerUfo::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
     ShakeScreen(5.0f);
 

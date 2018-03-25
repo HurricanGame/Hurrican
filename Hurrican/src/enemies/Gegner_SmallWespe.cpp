@@ -31,7 +31,7 @@ GegnerSmallWespe::GegnerSmallWespe(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSmallWespe::DoKI(void) {
+void GegnerSmallWespe::DoKI() {
     static float MAXSPEED = 15.0f;
 
     SimpleAnimation();
@@ -185,7 +185,7 @@ void GegnerSmallWespe::DoKI(void) {
 // Explodieren
 // --------------------------------------------------------------------------------------
 
-void GegnerSmallWespe::GegnerExplode(void) {
+void GegnerSmallWespe::GegnerExplode() {
     // Explosion
     PartikelSystem.PushPartikel(float(xPos + 2), float(yPos - 10), EXPLOSION_MEDIUM);
 

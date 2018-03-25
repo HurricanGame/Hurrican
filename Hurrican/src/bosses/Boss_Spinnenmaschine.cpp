@@ -65,7 +65,7 @@ GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerSpinnenmaschine::DoDraw(void) {
+void GegnerSpinnenmaschine::DoDraw() {
     D3DCOLOR Color;
 
     int Wert = 255 - (int(DamageTaken));
@@ -113,7 +113,7 @@ void GegnerSpinnenmaschine::DoDraw(void) {
 // Deckel hoch und runterklappen
 // --------------------------------------------------------------------------------------
 
-void GegnerSpinnenmaschine::DoDeckel(void) {
+void GegnerSpinnenmaschine::DoDeckel() {
     switch (DeckelStatus) {
         // deckel ist zu und Counter zählt, wann er auf geht
         case ZU: {
@@ -210,7 +210,7 @@ void GegnerSpinnenmaschine::DoDeckel(void) {
 // Kopf hoch und runterfahren
 // --------------------------------------------------------------------------------------
 
-void GegnerSpinnenmaschine::DoHoch(void) {
+void GegnerSpinnenmaschine::DoHoch() {
     switch (HochStatus) {
         // Kopf ist unten, Counter zählt, wann er hochgeht
         case ZU: {
@@ -299,7 +299,7 @@ void GegnerSpinnenmaschine::DoHoch(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSpinnenmaschine::DoKI(void) {
+void GegnerSpinnenmaschine::DoKI() {
     // Energie anzeigen
     if (Handlung != GEGNER_INIT && Handlung != GEGNER_SPECIAL && Handlung != GEGNER_EXPLODIEREN)
         HUD.ShowBossHUD(4000, Energy);
@@ -566,4 +566,4 @@ void GegnerSpinnenmaschine::DoKI(void) {
 // Spinnenmaschine explodiert nicht, sondern bleibt kaputt stehen
 // --------------------------------------------------------------------------------------
 
-void GegnerSpinnenmaschine::GegnerExplode(void) {}
+void GegnerSpinnenmaschine::GegnerExplode() {}

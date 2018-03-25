@@ -26,7 +26,7 @@ GegnerFieserWalker::GegnerFieserWalker(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFieserWalker::DoKI(void) {
+void GegnerFieserWalker::DoKI() {
     SimpleAnimation();
 
     // Je nach Handlung anders verhalten
@@ -100,7 +100,7 @@ void GegnerFieserWalker::DoKI(void) {
 // FieserWalker explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerFieserWalker::GegnerExplode(void) {
+void GegnerFieserWalker::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos - 30, yPos - 30, EXPLOSION_BIG);
 
     for (int i = 0; i < 8; i++)

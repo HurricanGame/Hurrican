@@ -31,7 +31,7 @@ GegnerLavamann::GegnerLavamann(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerLavamann::DoDraw(void) {
+void GegnerLavamann::DoDraw() {
     bool mirror = false;
 
     if (BlickRichtung == LINKS)
@@ -52,7 +52,7 @@ void GegnerLavamann::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerLavamann::DoKI(void) {
+void GegnerLavamann::DoKI() {
     SimpleAnimation();
 
     // Schrägen checken
@@ -154,7 +154,7 @@ void GegnerLavamann::DoKI(void) {
 // Lavamann explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerLavamann::GegnerExplode(void) {
+void GegnerLavamann::GegnerExplode() {
     for (int i = 0; i < 8; i++) {
         PartikelSystem.PushPartikel(float(xPos - 30 + rand() % 40), float(yPos - 30 + rand() % 50), SMOKEBIG);
 

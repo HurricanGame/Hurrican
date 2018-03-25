@@ -32,7 +32,7 @@ GegnerEvilHurri::GegnerEvilHurri(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerEvilHurri::DoDraw(void) {
+void GegnerEvilHurri::DoDraw() {
     for (int i = 0; i < 4; i++) {
         DirectGraphics.SetAdditiveMode();
         if (BlickRichtung == LINKS) {
@@ -56,7 +56,7 @@ void GegnerEvilHurri::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerEvilHurri::DoKI(void) {
+void GegnerEvilHurri::DoKI() {
     // Animieren
     SimpleAnimation();
 
@@ -562,7 +562,7 @@ void GegnerEvilHurri::DoKI(void) {
 // EvilHurri explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerEvilHurri::GegnerExplode(void) {
+void GegnerEvilHurri::GegnerExplode() {
     Player[0].Score += 9000;
 
     for (int i = 0; i < 10; i++)

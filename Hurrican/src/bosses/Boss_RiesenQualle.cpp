@@ -31,7 +31,7 @@ GegnerRiesenQualle::GegnerRiesenQualle(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerRiesenQualle::DoKI(void) {
+void GegnerRiesenQualle::DoKI() {
     // animieren
     AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
     if (AnimCount > AnimSpeed)  // Grenze überschritten ?
@@ -106,7 +106,7 @@ void GegnerRiesenQualle::DoKI(void) {
 // Riesen Qualle explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerRiesenQualle::GegnerExplode(void) {
+void GegnerRiesenQualle::GegnerExplode() {
     // Fetzen erzeugen
     for (int i = 0; i < 8; i++)
         PartikelSystem.PushPartikel(float(xPos + 64 + rand() % 64), float(yPos + 64 + rand() % 64), PIRANHATEILE2);

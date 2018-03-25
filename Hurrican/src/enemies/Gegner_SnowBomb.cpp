@@ -25,7 +25,7 @@ GegnerSnowBomb::GegnerSnowBomb(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerSnowBomb::DoDraw(void) {
+void GegnerSnowBomb::DoDraw() {
     int anim;
 
     if (xSpeed < 0.0f)
@@ -44,7 +44,7 @@ void GegnerSnowBomb::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSnowBomb::DoKI(void) {
+void GegnerSnowBomb::DoKI() {
     PlattformTest(GegnerRect[GegnerArt]);
     SimpleAnimation();
 
@@ -126,7 +126,7 @@ void GegnerSnowBomb::DoKI(void) {
 // SnowBomb explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerSnowBomb::GegnerExplode(void) {
+void GegnerSnowBomb::GegnerExplode() {
     for (int i = 0; i < 8; i++)
         Projectiles.PushProjectile(xPos + rand() % 60, yPos + rand() % 50, SNOWBOMBSMALL);
 

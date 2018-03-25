@@ -55,10 +55,10 @@ class IntroClass {
 
   public:
     int Zustand;
-    IntroClass(void);    // Konstruktor
-    ~IntroClass(void);   // Destruktor
-    void DoIntro(void);  // Intro ablaufen lassen
-    void EndIntro(void);
+    IntroClass();    // Konstruktor
+    ~IntroClass();   // Destruktor
+    void DoIntro();  // Intro ablaufen lassen
+    void EndIntro();
 };
 
 #endif

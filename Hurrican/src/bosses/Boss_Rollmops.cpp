@@ -43,7 +43,7 @@ GegnerRollmops::GegnerRollmops(int Wert1, int Wert2, bool Light) {
 // Winkel zum Spieler ausrechnen
 // --------------------------------------------------------------------------------------
 
-void GegnerRollmops::CalcGunWinkel(void) {
+void GegnerRollmops::CalcGunWinkel() {
     float xdiv, ydiv;
     float neww;
 
@@ -85,7 +85,7 @@ void GegnerRollmops::CalcGunWinkel(void) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerRollmops::DoDraw(void) {
+void GegnerRollmops::DoDraw() {
     bool mirrored = false;
 
     // Je nach Handlung andere Grafik rendern
@@ -166,7 +166,7 @@ void GegnerRollmops::DoDraw(void) {
 // Neue Aktion festlegen
 // --------------------------------------------------------------------------------------
 
-void GegnerRollmops::NeueAktion(void) {
+void GegnerRollmops::NeueAktion() {
     GunAusfahren(true);
 }
 
@@ -206,7 +206,7 @@ void GegnerRollmops::GunAusfahren(bool Auf) {
 // Gurkensalat machen
 // --------------------------------------------------------------------------------------
 
-void GegnerRollmops::Losrollen(void) {}
+void GegnerRollmops::Losrollen() {}
 
 // --------------------------------------------------------------------------------------
 // Abhopsen am Boden
@@ -270,7 +270,7 @@ void GegnerRollmops::RoundShot(bool single) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerRollmops::DoKI(void) {
+void GegnerRollmops::DoKI() {
     // Energie anzeigen
     if (Handlung != GEGNER_INIT && Handlung != GEGNER_EXPLODIEREN)
         HUD.ShowBossHUD(4000, Energy);
@@ -794,7 +794,7 @@ void GegnerRollmops::DoKI(void) {
 // Rollmops explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerRollmops::GegnerExplode(void) {
+void GegnerRollmops::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION2);
 
     int i;

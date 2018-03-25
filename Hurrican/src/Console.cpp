@@ -68,7 +68,7 @@ ConsoleClass::~ConsoleClass() {
     // ConsoleGFX.~DirectGraphicsSprite();	// Grafik freigeben
 }  // Destruktor
 
-void ConsoleClass::LoadSprites(void) {
+void ConsoleClass::LoadSprites() {
     ConsoleGFX.LoadImage("console.png", 512, 256, 512, 256, 1, 1);  // Grafik laden
 }
 
@@ -76,7 +76,7 @@ void ConsoleClass::LoadSprites(void) {
 // Konsole anzeigen
 // --------------------------------------------------------------------------------------
 
-void ConsoleClass::ShowConsole(void) {
+void ConsoleClass::ShowConsole() {
     // DKS - modified code to support scaled fonts (less lines displayed) and allow joystick input
     D3DCOLOR Color;
     int a;
@@ -175,7 +175,7 @@ bool ConsoleClass::CONSOLE_CHEAT(char *cheat) {
 // Text checken, wenn Enter gedrückt wurde
 // --------------------------------------------------------------------------------------
 
-void ConsoleClass::CheckCommands(void) {
+void ConsoleClass::CheckCommands() {
     // Hilfe
     //
     // DKS - Re-enabled help, as it seems to be just fine
@@ -559,7 +559,7 @@ void ConsoleClass::CheckCommands(void) {
 // Eine Zeile hochscrollen
 // --------------------------------------------------------------------------------------
 
-void ConsoleClass::ScrollUp(void) {
+void ConsoleClass::ScrollUp() {
     // Zeilen eins hochscrollen
     // DKS - Fixed overwriting of the lines buffer by one line:
     /*for (int i = 0; i < MAX_LINES; i++)*/
@@ -578,7 +578,7 @@ void ConsoleClass::ScrollUp(void) {
 // --------------------------------------------------------------------------------------
 
 // DKS - Added joystick support:
-void ConsoleClass::CheckInput(void) {
+void ConsoleClass::CheckInput() {
     static float joy_counter = 0.0f;
     const float joy_delay = 30.0f;  // Only accept joy input once every time counter reaches this value
 
@@ -740,7 +740,7 @@ void ConsoleClass::CheckInput(void) {
 // Konsole zeigen
 // --------------------------------------------------------------------------------------
 
-void ConsoleClass::Open(void) {
+void ConsoleClass::Open() {
     Fade = 25.0f;
     Active = true;
     Showing = true;
@@ -752,7 +752,7 @@ void ConsoleClass::Open(void) {
 // Konsole verstecken
 // --------------------------------------------------------------------------------------
 
-void ConsoleClass::Hide(void) {
+void ConsoleClass::Hide() {
     Fade = -25.0f;
     Active = false;
 }
@@ -761,7 +761,7 @@ void ConsoleClass::Hide(void) {
 // Konsole ablaufen lassen
 // --------------------------------------------------------------------------------------
 
-bool ConsoleClass::DoConsole(void) {
+bool ConsoleClass::DoConsole() {
 #if defined(GCW)
     // On GCW Zero, the Home key (Power Slider switch) is mapped to the console as well as the Tab key.
     // Konsole ist aktivierbar

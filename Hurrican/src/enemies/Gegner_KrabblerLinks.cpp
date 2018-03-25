@@ -32,7 +32,7 @@ GegnerKrabblerLinks::GegnerKrabblerLinks(int Wert1, int Wert2, bool Light) {
 // Bewegungs KI
 // --------------------------------------------------------------------------------------
 
-void GegnerKrabblerLinks::DoKI(void) {
+void GegnerKrabblerLinks::DoKI() {
     BlickRichtung = LINKS;
 
     SimpleAnimation();
@@ -84,7 +84,7 @@ void GegnerKrabblerLinks::DoKI(void) {
 // WandKrabbler explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerKrabblerLinks::GegnerExplode(void) {
+void GegnerKrabblerLinks::GegnerExplode() {
     // Explosion
     for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(float(xPos - 15) + rand() % 20, float(yPos - 15) + rand() % 40, EXPLOSION_MEDIUM3);

@@ -30,7 +30,7 @@ GegnerSkiWalker::GegnerSkiWalker(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSkiWalker::DoKI(void) {
+void GegnerSkiWalker::DoKI() {
     SimpleAnimation();
 
     // And der Wand jeweils umdrehen
@@ -155,7 +155,7 @@ void GegnerSkiWalker::DoKI(void) {
 // SkiWalker explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerSkiWalker::GegnerExplode(void) {
+void GegnerSkiWalker::GegnerExplode() {
     for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(float(xPos - 20 + rand() % 45), float(yPos - 20 + rand() % 45), EXPLOSION_MEDIUM2);
 

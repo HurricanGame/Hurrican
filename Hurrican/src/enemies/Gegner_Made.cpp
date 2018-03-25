@@ -51,7 +51,7 @@ GegnerMade::GegnerMade(int Wert1, int Wert2, bool Light) {
 // Draw funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerMade::DoDraw(void) {
+void GegnerMade::DoDraw() {
     movesin += 0.8f SYNC;
 
     if (movesin > 2 * PI)
@@ -78,7 +78,7 @@ void GegnerMade::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerMade::DoKI(void) {
+void GegnerMade::DoKI() {
     // langsame zugrunde gehen :P
     Energy -= 0.1f SYNC;
 
@@ -126,7 +126,7 @@ void GegnerMade::DoKI(void) {
 // Made explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerMade::GegnerExplode(void) {
+void GegnerMade::GegnerExplode() {
     SoundManager.PlayWave(100, rand() % 200 + 20, 8000 + rand() % 4000, SOUND_MADE);
 
     for (int i = 0; i < 10; i++)

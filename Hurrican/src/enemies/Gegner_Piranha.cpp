@@ -54,7 +54,7 @@ GegnerPiranha::GegnerPiranha(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerPiranha::DoDraw(void) {
+void GegnerPiranha::DoDraw() {
     // Piranha rendern
     //
     bool mirror;
@@ -81,7 +81,7 @@ void GegnerPiranha::DoDraw(void) {
 // --------------------------------------------------------------------------------------
 // Piranha Bewegungs KI
 
-void GegnerPiranha::DoKI(void) {
+void GegnerPiranha::DoKI() {
     if (Handlung != GEGNER_SPECIAL)
         SimpleAnimation();
 
@@ -190,7 +190,7 @@ void GegnerPiranha::DoKI(void) {
 // --------------------------------------------------------------------------------------
 // Piranha explodiert
 
-void GegnerPiranha::GegnerExplode(void) {
+void GegnerPiranha::GegnerExplode() {
     // Fetzen und Blasen erzeugen
     int i;
     for (i = 0; i < 3; i++)

@@ -13,9 +13,9 @@ class GegnerUfo : public GegnerClass {
     GegnerUfo(int Wert1,
               int Wert2,  // Konstruktor
               bool Light);
-    void GegnerExplode(void);  // Gegner explodiert
-    void DoKI(void);           // Gegner individuell mit seiner
-    void DoDraw(void);
+    void GegnerExplode();  // Gegner explodiert
+    void DoKI();           // Gegner individuell mit seiner
+    void DoDraw();
     // eigenen kleinen KI bewegen
 };
 

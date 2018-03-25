@@ -34,7 +34,7 @@ GegnerTube::GegnerTube(int Wert1, int Wert2, bool Light) {
 // Drawroutine
 // --------------------------------------------------------------------------------------
 
-void GegnerTube::DoDraw(void) {
+void GegnerTube::DoDraw() {
     if (Value1 == 0 || Value1 == 1 || Value1 == 4 || Value1 == 5)
         PlattformTest(GegnerRect[GegnerArt]);
 
@@ -83,7 +83,7 @@ void GegnerTube::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerTube::DoKI(void) {
+void GegnerTube::DoKI() {
     SinOff += 0.3f SYNC;
 
     if (SinOff > 2 * PI)
@@ -110,4 +110,4 @@ void GegnerTube::DoKI(void) {
 // LuefterGross explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerTube::GegnerExplode(void) {}
+void GegnerTube::GegnerExplode() {}

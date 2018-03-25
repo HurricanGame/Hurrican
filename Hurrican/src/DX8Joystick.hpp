@@ -48,24 +48,24 @@ class DirectJoystickClass {
     char JoystickName[70];                      // Joystick Produktname
     int NumButtons;                             // How many buttons joystick supports
 
-    DirectJoystickClass(void);
-    ~DirectJoystickClass(void);
+    DirectJoystickClass();
+    ~DirectJoystickClass();
 
     void ForceFeedbackEffect(int nr);
     void StopForceFeedbackEffect(int nr);
 
     bool Init(int joy);
 
-    bool Update(void);
+    bool Update();
 
     // DKS-Added these three for better joystick support, esp in menus
     // Returns true if button(s) serving as Enter key  are pressed (For menus)
-    bool ButtonEnterPressed(void);
+    bool ButtonEnterPressed();
 
     // Returns true if button(s) serving as Escape key are pressed (For menus)
-    bool ButtonEscapePressed(void);
+    bool ButtonEscapePressed();
 
     // Returns true if button(s) serving as Delete key are pressed (For menus, esp. button mapping menu)
-    bool ButtonDeletePressed(void);
+    bool ButtonDeletePressed();
 };
 #endif

@@ -32,7 +32,7 @@ GegnerRiesenPiranha::GegnerRiesenPiranha(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerRiesenPiranha::DoKI(void) {
+void GegnerRiesenPiranha::DoKI() {
     // Animieren
     if (AnimEnde > 0)  // Soll überhaupt anmiert werden ?
     {
@@ -145,7 +145,7 @@ void GegnerRiesenPiranha::DoKI(void) {
 // Riesen Piranha explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerRiesenPiranha::GegnerExplode(void) {
+void GegnerRiesenPiranha::GegnerExplode() {
     // Fetzen erzeugen
     for (int i = 0; i < 8; i++)
         PartikelSystem.PushPartikel(float(xPos + 64 + rand() % 64), float(yPos + 64 + rand() % 64), PIRANHATEILE2);

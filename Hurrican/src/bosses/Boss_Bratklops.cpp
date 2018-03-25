@@ -243,7 +243,7 @@ void GegnerBratklops::DoDraw() {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerBratklops::DoKI(void) {
+void GegnerBratklops::DoKI() {
     D3DXMATRIX swap;
 
     /*// TODO
@@ -533,7 +533,7 @@ void GegnerBratklops::DoKI(void) {
 // Braktklops explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerBratklops::GegnerExplode(void) {
+void GegnerBratklops::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
     // Zusäzliche Grafiken freigeben

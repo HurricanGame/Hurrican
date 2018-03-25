@@ -29,7 +29,7 @@ GegnerBigRocket::GegnerBigRocket(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerBigRocket::DoDraw(void) {
+void GegnerBigRocket::DoDraw() {
     pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
                                            static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFFFFFFFF, false);
 
@@ -56,7 +56,7 @@ void GegnerBigRocket::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerBigRocket::DoKI(void) {
+void GegnerBigRocket::DoKI() {
     SimpleAnimation();
 
     switch (Handlung) {
@@ -102,7 +102,7 @@ void GegnerBigRocket::DoKI(void) {
 // BigRocket explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerBigRocket::GegnerExplode(void) {
+void GegnerBigRocket::GegnerExplode() {
     // Nur explodieren lassen, wenn Rakete zu sehen ist
     //
     if (!(yPos + 350.0f < TileEngine.YOffset)) {

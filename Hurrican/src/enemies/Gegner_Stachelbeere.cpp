@@ -30,7 +30,7 @@ GegnerStachelbeere::GegnerStachelbeere(int Wert1, int Wert2, bool Light) {
 // Eigene Drawroutine
 // --------------------------------------------------------------------------------------
 
-void GegnerStachelbeere::DoDraw(void) {
+void GegnerStachelbeere::DoDraw() {
     bool mirrored;
     D3DCOLOR color = 0xFFFFFFFF;
 
@@ -66,7 +66,7 @@ void GegnerStachelbeere::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerStachelbeere::DoKI(void) {
+void GegnerStachelbeere::DoKI() {
     // Schrägen checken
     //
     if (ySpeed >= 0.0f)
@@ -253,7 +253,7 @@ void GegnerStachelbeere::DoKI(void) {
 // Stachelkugel explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerStachelbeere::GegnerExplode(void) {
+void GegnerStachelbeere::GegnerExplode() {
     for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(float(xPos - 30 + rand() % 60), float(yPos - 30 + rand() % 60), EXPLOSION_MEDIUM2);
 

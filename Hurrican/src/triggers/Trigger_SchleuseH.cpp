@@ -26,7 +26,7 @@ GegnerSchleuseH::GegnerSchleuseH(int Wert1, int Wert2, bool Light) {
 // "SchleuseH KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSchleuseH::DoKI(void) {
+void GegnerSchleuseH::DoKI() {
     Energy = 100;
     DamageTaken = 0.0f;
     PlattformTest(GegnerRect[GegnerArt]);
@@ -67,4 +67,4 @@ void GegnerSchleuseH::DoKI(void) {
 // SchleuseH explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerSchleuseH::GegnerExplode(void) {}
+void GegnerSchleuseH::GegnerExplode() {}

@@ -63,10 +63,10 @@ class CShader {
 
   private:
     int8_t LoadShader(GLenum type, const std::string &path);
-    int8_t CreateProgram(void);
+    int8_t CreateProgram();
     GLuint CompileShader(GLenum type, const std::string &path);
-    void FindAttributes(void);
-    void FindUniforms(void);
+    void FindAttributes();
+    void FindUniforms();
     void PrintLog(uint8_t type, GLuint shader = 0);
 
     GLuint Program;

@@ -51,18 +51,18 @@ class GegnerClass {
     float Energy;                        // Energie des Gegners
     int blocku, blocko, blockl, blockr;  // Block links rechts über und unter dem Gegner
 
-    GegnerClass(void);                 // Konstruktor
-    ~GegnerClass(void);                // Destruktor
-    virtual void GegnerExplode(void);  // Gegner explodiert
-    virtual void DoKI(void) {}         // Gegner individuell bewegen
-    bool DoGegner(void);               // Gegner auf Grenzen checken und malen
-    int PlayerAbstand(void);           // Abstand Gegner/Spieler zurückliefern
-    int PlayerAbstandHoriz(void);      // Nur Horizontaler Abstand
-    int PlayerAbstandVert(void);       // Nur Vertikaler   Abstand
+    GegnerClass();                 // Konstruktor
+    ~GegnerClass();                // Destruktor
+    virtual void GegnerExplode();  // Gegner explodiert
+    virtual void DoKI() {}         // Gegner individuell bewegen
+    bool DoGegner();               // Gegner auf Grenzen checken und malen
+    int PlayerAbstand();           // Abstand Gegner/Spieler zurückliefern
+    int PlayerAbstandHoriz();      // Nur Horizontaler Abstand
+    int PlayerAbstandVert();       // Nur Vertikaler   Abstand
     void PlattformTest(RECT rect);     // Steht der Spieler auf dem Gegner ?
-    void SimpleAnimation(void);        // Einfache Animation (loop)
-    void TurnonWall(void);             // An der Wand umdrehen?
-    void TurnonShot(void);             // Umdrehen, wenn angeschoßen
+    void SimpleAnimation();        // Einfache Animation (loop)
+    void TurnonWall();             // An der Wand umdrehen?
+    void TurnonShot();             // Umdrehen, wenn angeschoßen
     GegnerClass *pNext;                // Zeiger auf den nächsten   Gegner
     GegnerClass *pPrev;                // Zeiger auf den vorherigen Gegner
 };
@@ -79,8 +79,8 @@ class GegnerListClass {
     GegnerClass *pStart;  // Erstes  Element der Liste
     GegnerClass *pEnd;    // Letztes Element der Liste
 
-    GegnerListClass(void);   // Konstruktor
-    ~GegnerListClass(void);  // Destruktor
+    GegnerListClass();   // Konstruktor
+    ~GegnerListClass();  // Destruktor
 
     bool PushGegner(float x,
                     float y,
@@ -89,10 +89,10 @@ class GegnerListClass {
                     int Value2,
                     bool Light);
     void DelSel(GegnerClass *pTemp);                // Ausgewählten Gegner entfernen
-    void ClearAll(void);                            // Alle Gegner löschen
-    int GetNumGegner(void);                         // Zahl der Gegner zurückliefern
-    void DoAllGegner(void);                         // Alle Gegner der Liste animieren
-    void ShowAllGegner(void);                       // Alle Gegner der Liste anzeigen
+    void ClearAll();                            // Alle Gegner löschen
+    int GetNumGegner();                         // Zahl der Gegner zurückliefern
+    void DoAllGegner();                         // Alle Gegner der Liste animieren
+    void ShowAllGegner();                       // Alle Gegner der Liste anzeigen
     void DestroyEnemiesonScreen(float x, float y);  // Alle Gegner ausgehend von Stelle x/y verwunden (Granate)
 };
 

@@ -104,35 +104,35 @@ class DirectGraphicsClass {
 #if defined(USE_GL2) && defined(USE_FBO)
     CFbo RenderBuffer;
 #endif
-    void ShowBackBuffer(void);  // Present aufrufen
+    void ShowBackBuffer();  // Present aufrufen
 
-    DirectGraphicsClass(void);   // Konstruktor
-    ~DirectGraphicsClass(void);  // Desktruktor
+    DirectGraphicsClass();   // Konstruktor
+    ~DirectGraphicsClass();  // Desktruktor
 
     bool Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, std::uint32_t dwZ_Bits, bool VSync);
-    bool Exit(void);  // D3D beenden
-    bool SetDeviceInfo(void);
+    bool Exit();  // D3D beenden
+    bool SetDeviceInfo();
 
     bool TakeScreenshot(const char Filename[100], int screenx,
                         int screeny);   // Screenshot machen
-    void SetColorKeyMode(void);         // Alpha für Colorkey oder
-    void SetAdditiveMode(void);         // Additive-Blending nutzen
-    void SetWhiteMode(void);            // Komplett weiss rendern
+    void SetColorKeyMode();         // Alpha für Colorkey oder
+    void SetAdditiveMode();         // Additive-Blending nutzen
+    void SetWhiteMode();            // Komplett weiss rendern
     void SetFilterMode(bool filteron);  // Linearer Textur Filter ein/aus
 
     void RendertoBuffer(GLenum PrimitiveType,          // Rendert in den Buffer, der am Ende
                         std::uint32_t PrimitiveCount,  // eines jeden Frames komplett in
                         void *pVertexStreamZeroData);  // den Backbuffer gerendert wird
 
-    void DisplayBuffer(void);  // Render den Buffer auf den Backbuffer
+    void DisplayBuffer();  // Render den Buffer auf den Backbuffer
     // DKS - SetTexture is now used for both GL and DirectX, and uses new TexturesystemClass:
     void SetTexture(int idx);
 #if defined(PLATFORM_SDL)
     bool ExtensionSupported(const char *ext);
-    void SetupFramebuffers(void);
-    void ClearBackBuffer(void);
+    void SetupFramebuffers();
+    void ClearBackBuffer();
     void SelectBuffer(bool active);
-    void DrawTouchOverlay(void);
+    void DrawTouchOverlay();
     void DrawCircle(uint16_t x, uint16_t y, uint16_t radius);
 #endif
 };

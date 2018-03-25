@@ -27,7 +27,7 @@ GegnerSchmidtOrgie::GegnerSchmidtOrgie(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSchmidtOrgie::DoKI(void) {
+void GegnerSchmidtOrgie::DoKI() {
     // Linseneffekt ausfaden
     if (Handlung != GEGNER_EXPLODIEREN) {
         if (ShadowAlpha > 0.0f)
@@ -159,7 +159,7 @@ void GegnerSchmidtOrgie::DoKI(void) {
 // SchmidtOrgie explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerSchmidtOrgie::GegnerExplode(void) {
+void GegnerSchmidtOrgie::GegnerExplode() {
     // Extra Leben
     Gegner.PushGegner(xPos, yPos - 250, ONEUP, 10, 0, false);
 

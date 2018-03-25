@@ -55,9 +55,9 @@ enum FSOUND_DEFINES {
 };
 
 signed char SOUND_Init(int mixrate, int maxsoftwarechannels, unsigned int flags);
-void SOUND_Close(void);
-int SOUND_GetError(void);
-int SOUND_GetMaxChannels(void);
+void SOUND_Close();
+int SOUND_GetError();
+int SOUND_GetMaxChannels();
 signed char SOUND_SetFrequency(int channel, int freq);
 signed char SOUND_SetPan(int channel, int pan);
 
@@ -77,7 +77,7 @@ signed char MUSIC_StopSong(MUSIC_MODULE *music);
 signed char MUSIC_SetPaused(MUSIC_MODULE *music, signed char pause);
 signed char MUSIC_GetPaused(MUSIC_MODULE *music);
 signed char MUSIC_SetMasterVolume(MUSIC_MODULE *music, int volume);
-void MUSIC_StopAllSongs(void);
+void MUSIC_StopAllSongs();
 signed char MUSIC_IsFinished(MUSIC_MODULE *music);
 
 Mix_Chunk *SOUND_Sample_Load(int index, const char *filename, unsigned int inputmode, int offset, int length);

@@ -26,7 +26,7 @@ GegnerLavaKrabbe::GegnerLavaKrabbe(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerLavaKrabbe::DoDraw(void) {
+void GegnerLavaKrabbe::DoDraw() {
     // rotierend runterfallen?
     //
     if (Handlung == GEGNER_FALLEN) {
@@ -89,7 +89,7 @@ void GegnerLavaKrabbe::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerLavaKrabbe::DoKI(void) {
+void GegnerLavaKrabbe::DoKI() {
     if (Handlung == GEGNER_STEHEN || Handlung == GEGNER_DREHEN || Handlung == GEGNER_DREHEN2) {
         yPos = g_Fahrstuhl_yPos - 34.0f;
     }
@@ -201,7 +201,7 @@ void GegnerLavaKrabbe::DoKI(void) {
 // LavaKrabbe explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerLavaKrabbe::GegnerExplode(void) {
+void GegnerLavaKrabbe::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 9000 + rand() % 2000, SOUND_EXPLOSION3);
 
     PartikelSystem.PushPartikel(xPos + 15, yPos + 10, LAVAKRABBE_KOPF);

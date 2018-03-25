@@ -34,7 +34,7 @@ GegnerWalker::GegnerWalker(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerWalker::DoKI(void) {
+void GegnerWalker::DoKI() {
     SimpleAnimation();
 
     // Nach links bzw rechts auf Kollision prüfen und dann ggf umkehren
@@ -205,7 +205,7 @@ void GegnerWalker::DoKI(void) {
 // Walker explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerWalker::GegnerExplode(void) {
+void GegnerWalker::GegnerExplode() {
     for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(float(xPos - 20 + rand() % 45), float(yPos - 20 + rand() % 45), EXPLOSION_MEDIUM2);
 

@@ -12,13 +12,13 @@ class GegnerPharaoKopf : public GegnerClass {
     GegnerPharaoKopf(int Wert1,
                      int Wert2,  // Konstruktor
                      bool Light);
-    void GegnerExplode(void);  // Gegner explodiert
-    void DoKI(void);           // Gegner individuell mit seiner
+    void GegnerExplode();  // Gegner explodiert
+    void DoKI();           // Gegner individuell mit seiner
 
-    bool Links(void);
-    bool Rechts(void);
-    bool Unten(void);
-    bool Oben(void);
+    bool Links();
+    bool Rechts();
+    bool Unten();
+    bool Oben();
     // eigenen kleinen KI bewegen
 };
 

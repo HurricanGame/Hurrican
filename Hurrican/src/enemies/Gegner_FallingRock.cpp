@@ -25,7 +25,7 @@ GegnerFallingRock::GegnerFallingRock(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFallingRock::DoKI(void) {
+void GegnerFallingRock::DoKI() {
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
         case GEGNER_FALLEN:  // Stein fällt runter
@@ -74,7 +74,7 @@ void GegnerFallingRock::DoKI(void) {
 // FallingRock explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerFallingRock::GegnerExplode(void) {
+void GegnerFallingRock::GegnerExplode() {
     // und Splitter erzeugen Rauch
     for (int i = 0; i < 10; i++) {
         PartikelSystem.PushPartikel(xPos + rand() % 80 - 12, yPos + rand() % 20 + 20, SMOKE);

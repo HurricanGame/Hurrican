@@ -27,7 +27,7 @@ GegnerGeschuetz::GegnerGeschuetz(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerGeschuetz::DoKI(void) {
+void GegnerGeschuetz::DoKI() {
     BlickRichtung = LINKS;
 
     SimpleAnimation();
@@ -79,7 +79,7 @@ void GegnerGeschuetz::DoKI(void) {
 // Geschuetz explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerGeschuetz::GegnerExplode(void) {
+void GegnerGeschuetz::GegnerExplode() {
     // Explosion
     PartikelSystem.PushPartikel(float(xPos - 10), float(yPos - 10), EXPLOSION_MEDIUM2);
 

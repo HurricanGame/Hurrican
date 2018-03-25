@@ -31,7 +31,7 @@ GegnerShootButton::GegnerShootButton(GegnerClass *Plattform) {
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerShootButton::DoDraw(void) {
+void GegnerShootButton::DoDraw() {
     // Button rendern
     pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(pPlattForm->xPos - TileEngine.XOffset + 41),
                                            static_cast<float>(pPlattForm->yPos - TileEngine.YOffset - 8), AnimPhase,
@@ -42,7 +42,7 @@ void GegnerShootButton::DoDraw(void) {
 // ShootButton KI
 // --------------------------------------------------------------------------------------
 
-void GegnerShootButton::DoKI(void) {
+void GegnerShootButton::DoKI() {
     SimpleAnimation();
 
     yPos = pPlattForm->yPos - 9 + pPlattForm->ySpeed SYNC;
@@ -73,4 +73,4 @@ void GegnerShootButton::DoKI(void) {
 // ShootButton explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerShootButton::GegnerExplode(void) {}
+void GegnerShootButton::GegnerExplode() {}

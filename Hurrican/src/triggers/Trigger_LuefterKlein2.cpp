@@ -31,7 +31,7 @@ GegnerLuefterKlein2::GegnerLuefterKlein2(int Wert1, int Wert2, bool Light) {
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerLuefterKlein2::DoDraw(void) {
+void GegnerLuefterKlein2::DoDraw() {
     D3DCOLOR Color = TileEngine.LightValue(xPos, yPos, GegnerRect[GegnerArt], ForceLight);
     pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
                                            static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, Color, false);
@@ -41,7 +41,7 @@ void GegnerLuefterKlein2::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerLuefterKlein2::DoKI(void) {
+void GegnerLuefterKlein2::DoKI() {
     SimpleAnimation();
 }
 
@@ -49,4 +49,4 @@ void GegnerLuefterKlein2::DoKI(void) {
 // LuefterKlein2 explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerLuefterKlein2::GegnerExplode(void) {}
+void GegnerLuefterKlein2::GegnerExplode() {}

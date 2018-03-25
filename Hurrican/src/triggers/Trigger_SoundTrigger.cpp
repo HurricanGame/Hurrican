@@ -29,7 +29,7 @@ GegnerSoundTrigger::GegnerSoundTrigger(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSoundTrigger::DoKI(void) {
+void GegnerSoundTrigger::DoKI() {
     switch (Value2) {
         // Sound loopen, Lautstärke anhängig von SpielerAbstand
         //
@@ -116,4 +116,4 @@ void GegnerSoundTrigger::DoKI(void) {
 // SoundTrigger explodiert (nicht *g*)
 // --------------------------------------------------------------------------------------
 
-void GegnerSoundTrigger::GegnerExplode(void) {}
+void GegnerSoundTrigger::GegnerExplode() {}

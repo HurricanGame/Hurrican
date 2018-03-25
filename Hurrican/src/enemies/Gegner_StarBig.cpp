@@ -40,7 +40,7 @@ GegnerStarBig::GegnerStarBig(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerStarBig::DoKI(void) {
+void GegnerStarBig::DoKI() {
     if (xSpeed > 0.0f)
         BlickRichtung = RECHTS;
     else
@@ -95,7 +95,7 @@ void GegnerStarBig::DoKI(void) {
 // StarBig explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerStarBig::GegnerExplode(void) {
+void GegnerStarBig::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos - 20, yPos - 20, EXPLOSION_GIANT);
 
     for (int i = 0; i < 10; i++)

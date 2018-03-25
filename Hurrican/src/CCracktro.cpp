@@ -119,7 +119,7 @@ CCracktro::~CCracktro() {
 // Hauptteil
 // --------------------------------------------------------------------------------------
 
-void CCracktro::Main(void) {
+void CCracktro::Main() {
     DirectGraphics.ClearBackBuffer();
 
     // --------------------------------------------------------------------------------------
@@ -324,7 +324,7 @@ void CCracktro::Main(void) {
 // Ladebalken
 // --------------------------------------------------------------------------------------
 
-void CCracktro::Load(void) {
+void CCracktro::Load() {
     static float count = 10.0f;
 
     // farbige Balken
@@ -342,7 +342,7 @@ void CCracktro::Load(void) {
 // Laufen lassen
 // --------------------------------------------------------------------------------------
 
-void CCracktro::Run(void) {
+void CCracktro::Run() {
     switch (State) {
         case 0:
             Main();

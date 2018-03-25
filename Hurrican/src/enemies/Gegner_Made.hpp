@@ -12,9 +12,9 @@ class GegnerMade : public GegnerClass {
     GegnerMade(int Wert1,
                int Wert2,  // Konstruktor
                bool Light);
-    void GegnerExplode(void);  // Gegner explodiert
-    void DoKI(void);           // Gegner individuell mit seiner KI bewegen
-    void DoDraw(void);         // eigene draw routine
+    void GegnerExplode();  // Gegner explodiert
+    void DoKI();           // Gegner individuell mit seiner KI bewegen
+    void DoDraw();         // eigene draw routine
 };
 
 #endif

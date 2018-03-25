@@ -27,7 +27,7 @@
 // Konstruktor, lädt die Grafiken
 // --------------------------------------------------------------------------------------
 
-OuttroClass::OuttroClass(void) {
+OuttroClass::OuttroClass() {
     Background.LoadImage("endscreen_background.png", 640, 480, 640, 480, 1, 1);
     Tower.LoadImage("endscreen_turm.png", 199, 315, 199, 315, 1, 1);
     Henry.LoadImage("endscreen_henry.png", 237, 88, 237, 88, 1, 1);
@@ -68,7 +68,7 @@ OuttroClass::OuttroClass(void) {
 // Desktruktor
 // --------------------------------------------------------------------------------------
 
-OuttroClass::~OuttroClass(void) {
+OuttroClass::~OuttroClass() {
     // DKS
     // MUSIC_StopAllSongs();
     SoundManager.StopSongs();
@@ -81,7 +81,7 @@ OuttroClass::~OuttroClass(void) {
 // Wete für die beiden Spieler setzen
 // --------------------------------------------------------------------------------------
 
-void OuttroClass::InitPlayerPos(void) {
+void OuttroClass::InitPlayerPos() {
     px[0] = 330.0f;
     py[0] = 240.0f;
     xs[0] = 10.0f;
@@ -97,7 +97,7 @@ void OuttroClass::InitPlayerPos(void) {
 // Outtro ablaufen lassen
 // --------------------------------------------------------------------------------------
 
-void OuttroClass::DoOuttro(void) {
+void OuttroClass::DoOuttro() {
     // Hintergrund rendern
     DirectGraphics.SetColorKeyMode();
     DirectGraphics.SetFilterMode(false);

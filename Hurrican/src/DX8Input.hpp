@@ -76,18 +76,18 @@ class DirectInputClass {
     int MausY;  // der Maus und ihre Buttons
     bool MausButtons[MAX_MOUSEBUTTONS];
 
-    DirectInputClass(void);   // Konstruktor
-    ~DirectInputClass(void);  // Desktruktor
+    DirectInputClass();   // Konstruktor
+    ~DirectInputClass();  // Desktruktor
 
     bool Init();  // DirectInput initialisieren
-    void Exit(void);                        // DirectInput beenden
-    bool UpdateTastatur(void);              // Tasten abfragen und im Puffer speichern
+    void Exit();                        // DirectInput beenden
+    bool UpdateTastatur();              // Tasten abfragen und im Puffer speichern
     bool UpdateMaus(bool gepuffert);        // Maus abfragen gepuffert/ungepuffert
-    void AcquireKeyboard(void);             // Keyboard akquirierens
+    void AcquireKeyboard();             // Keyboard akquirierens
     bool AreAllKeysReleased();              // Checken ob keine Taste mehr gedrückt ist
-    bool AnyKeyDown(void);
-    bool AnyButtonDown(void);
-    void UpdateJoysticks(void);
+    bool AnyKeyDown();
+    bool AnyButtonDown();
+    void UpdateJoysticks();
     char *MapButtonToString(int joy_idx, int button);  // Returns char string "1" for button 0, etc..
                                                        // But when used on GCW Zero's internal controls
                                                        // (or other special cases) will return the custom
@@ -98,12 +98,12 @@ class DirectInputClass {
     // On embedded systems like GCW Zero, this is set to the device's internal controls
     // so that a player is never 'locked out' and also so the game is not dependent on
     // the system always setting the internal controls to device index 0. Likely useful on other devices, too. -DKS
-    int GetInternalJoystickIndex(void) { return InternalJoystickIndex; }
+    int GetInternalJoystickIndex() { return InternalJoystickIndex; }
 
     // On GCW Zero, Main menu button is permanently mapped to START (button 5):
-    int GetInternalJoystickMainMenuButton(void) { return 5; }
+    int GetInternalJoystickMainMenuButton() { return 5; }
 
-    bool InternalJoystickMainMenuButtonDown(void);
+    bool InternalJoystickMainMenuButtonDown();
 #endif  // GCW
 
 #if defined(ANDROID)
@@ -115,7 +115,7 @@ class DirectInputClass {
     uint16_t TouchdpadY;
     uint16_t TouchdpadRadius;
     void InitTouchBoxes(int w, int h);
-    void UpdateTouchscreen(void);
+    void UpdateTouchscreen();
     bool CheckRectCollision(SDL_Rect *boxA, SDL_Rect *boxB);
     std::vector<SDL_Rect> TouchBoxes;
     std::vector<SDL_Keycode> TouchBoxMaps;

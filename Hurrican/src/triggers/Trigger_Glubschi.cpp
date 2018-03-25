@@ -29,7 +29,7 @@ GegnerGlubschi::GegnerGlubschi(int Wert1, int Wert2, bool Light) {
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerGlubschi::DoDraw(void) {
+void GegnerGlubschi::DoDraw() {
     BlickRichtung = LINKS;
 
     // Je nach horizontalem Spielerabstand richtige Animationsphase setzen
@@ -64,7 +64,7 @@ void GegnerGlubschi::DoDraw(void) {
 // Glubschi KI
 // --------------------------------------------------------------------------------------
 
-void GegnerGlubschi::DoKI(void) {
+void GegnerGlubschi::DoKI() {
     // Corona rotieren
     //
     rot += rotspeed SYNC;
@@ -76,4 +76,4 @@ void GegnerGlubschi::DoKI(void) {
 // Glubschi explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerGlubschi::GegnerExplode(void) {}
+void GegnerGlubschi::GegnerExplode() {}

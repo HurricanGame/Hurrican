@@ -34,7 +34,7 @@ GegnerEiszapfen::GegnerEiszapfen(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerEiszapfen::DoKI(void) {
+void GegnerEiszapfen::DoKI() {
     SimpleAnimation();
 
     switch (Handlung) {
@@ -76,7 +76,7 @@ void GegnerEiszapfen::DoKI(void) {
 // Eiszapfen explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerEiszapfen::GegnerExplode(void) {
+void GegnerEiszapfen::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 30; i++) {

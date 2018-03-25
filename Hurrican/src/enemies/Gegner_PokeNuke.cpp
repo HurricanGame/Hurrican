@@ -26,7 +26,7 @@ GegnerPokeNuke::GegnerPokeNuke(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerPokeNuke::DoKI(void) {
+void GegnerPokeNuke::DoKI() {
     BlickRichtung = LINKS;
 
     switch (Handlung) {
@@ -60,7 +60,7 @@ void GegnerPokeNuke::DoKI(void) {
 // PokeNuke explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerPokeNuke::GegnerExplode(void) {
+void GegnerPokeNuke::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION2);
     ShakeScreen(7);
 

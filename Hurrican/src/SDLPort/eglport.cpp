@@ -83,22 +83,22 @@ uint32_t fpsTime = 0;  /** Start time of frame count measurment */
 /** Private API */
 void OpenCfg(const char *file, uint16_t depth, bool vsync);  // DKS - Added depth,vsync params
 int8_t ConfigureEGL(EGLConfig config);
-int8_t FindEGLConfigs(void);
+int8_t FindEGLConfigs();
 int8_t CheckEGLErrors(const char *file, uint16_t line);
 
-int8_t GetNativeDisplay(void);
+int8_t GetNativeDisplay();
 int8_t GetNativeWindow(uint16_t width, uint16_t height);
-void FreeNativeDisplay(void);
-void FreeNativeWindow(void);
+void FreeNativeDisplay();
+void FreeNativeWindow();
 
-void Platform_Open(void);
-void Platform_Close(void);
-void Platform_VSync(void);
-uint32_t Platform_GetTicks(void);
+void Platform_Open();
+void Platform_Close();
+void Platform_VSync();
+uint32_t Platform_GetTicks();
 
 /** @brief Release all EGL and system resources
  */
-void EGL_Close(void) {
+void EGL_Close() {
     /* Release EGL resources */
     if (eglDisplay != NULL) {
         peglMakeCurrent(eglDisplay, NULL, NULL, EGL_NO_CONTEXT);
@@ -127,7 +127,7 @@ void EGL_Close(void) {
 
 /** @brief Swap the surface buffer onto the display
  */
-void EGL_SwapBuffers(void) {
+void EGL_SwapBuffers() {
     if (eglSettings[CFG_VSYNC] != 0) {
         Platform_VSync();
     }
@@ -358,7 +358,7 @@ void OpenCfg(const char *file, uint16_t depth, bool vsync) {
 /** @brief Find a EGL configuration tht matches the defined attributes
  * @return : 0 if the function passed, else 1
  */
-int8_t FindEGLConfigs(void) {
+int8_t FindEGLConfigs() {
     EGLBoolean result;
     int attrib = 0;
     EGLint ConfigAttribs[23];
@@ -499,7 +499,7 @@ int8_t CheckEGLErrors(const char *file, uint16_t line) {
  * @param window : pointer to save the display reference
  * @return : 0 if the function passed, else 1
  */
-int8_t GetNativeDisplay(void) {
+int8_t GetNativeDisplay() {
     if (eglSettings[CFG_MODE] == RENDER_RAW) /* RAW FB mode */
     {
         printf("EGLport: Using EGL_DEFAULT_DISPLAY\n");
@@ -614,11 +614,11 @@ int8_t GetNativeWindow(uint16_t width, uint16_t height) {
 
 /** @brief Release the system's native display
  */
-void FreeNativeDisplay(void) {}
+void FreeNativeDisplay() {}
 
 /** @brief Release the system's native window
  */
-void FreeNativeWindow(void) {
+void FreeNativeWindow() {
 #if defined(WIZ) || defined(CAANOO)
     if (nativeWindow != NULL) {
         free(nativeWindow);
@@ -629,7 +629,7 @@ void FreeNativeWindow(void) {
 
 /** @brief Open any system specific resources
  */
-void Platform_Open(void) {
+void Platform_Open() {
 #if defined(PANDORA)
     /* Pandora VSync */
     fbdev = open("/dev/fb0", O_RDONLY /* O_RDWR */);
@@ -643,7 +643,7 @@ void Platform_Open(void) {
 
 /** @brief Release any system specific resources
  */
-void Platform_Close(void) {
+void Platform_Close() {
 #if defined(PANDORA)
     /* Pandora VSync */
     close(fbdev);
@@ -653,7 +653,7 @@ void Platform_Close(void) {
 
 /** @brief Check the systems vsync state
  */
-void Platform_VSync(void) {
+void Platform_VSync() {
 #if defined(PANDORA)
     /* Pandora VSync */
     if (fbdev >= 0) {
@@ -665,7 +665,7 @@ void Platform_VSync(void) {
 
 /** @brief Get the system tick time (ms)
  */
-uint32_t Platform_GetTicks(void) {
+uint32_t Platform_GetTicks() {
     uint32_t ticks = 0;
 #if defined(USE_EGL_SDL)
     ticks = SDL_GetTicks();

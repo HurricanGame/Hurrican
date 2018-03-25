@@ -26,7 +26,7 @@ GegnerBrockelRock::GegnerBrockelRock(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerBrockelRock::DoDraw(void) {
+void GegnerBrockelRock::DoDraw() {
     pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
                                            static_cast<float>(yPos - TileEngine.YOffset), 0,
                                            D3DCOLOR_RGBA(255, 255, 255, int(AnimCount)));
@@ -40,7 +40,7 @@ void GegnerBrockelRock::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerBrockelRock::DoKI(void) {
+void GegnerBrockelRock::DoKI() {
     PlattformTest(GegnerRect[GegnerArt]);
 
     // Je nach Handlung richtig verhalten
@@ -100,7 +100,7 @@ void GegnerBrockelRock::DoKI(void) {
 // Explodieren
 // --------------------------------------------------------------------------------------
 
-void GegnerBrockelRock::GegnerExplode(void) {
+void GegnerBrockelRock::GegnerExplode() {
     for (int i = 0; i < NUMPLAYERS; i++)
         if (Player[i].AufPlattform == this)
             Player[i].AufPlattform = NULL;

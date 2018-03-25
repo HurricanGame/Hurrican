@@ -26,7 +26,7 @@ GegnerEndLevel::GegnerEndLevel(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerEndLevel::DoKI(void) {
+void GegnerEndLevel::DoKI() {
     // Ist der Trigger im Bild ?
     if (Energy > 0.0f && (NewStage != Value1 || RunningTutorial) && xPos + 120 > TileEngine.XOffset &&
         xPos < TileEngine.XOffset + 640 && yPos + 120 > TileEngine.YOffset && yPos < TileEngine.YOffset + 480) {
@@ -64,4 +64,4 @@ void GegnerEndLevel::DoKI(void) {
 // EndLevel explodiert (nicht *g*)
 // --------------------------------------------------------------------------------------
 
-void GegnerEndLevel::GegnerExplode(void) {}
+void GegnerEndLevel::GegnerExplode() {}

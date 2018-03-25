@@ -28,7 +28,7 @@ GegnerNeuFisch::GegnerNeuFisch(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerNeuFisch::DoKI(void) {
+void GegnerNeuFisch::DoKI() {
     // Animieren
     //
     AnimCount += SpeedFaktor;  // Animationscounter weiterzählen
@@ -164,7 +164,7 @@ void GegnerNeuFisch::DoKI(void) {
 // NeuFisch explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerNeuFisch::GegnerExplode(void) {
+void GegnerNeuFisch::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 10; i++) {

@@ -486,7 +486,7 @@ void SoundManagerClass::SetAbsoluteSongVolume(int nr, float volume) {
 }
 
 // DKS - Added:
-void SoundManagerClass::ResetAllSoundVolumes(void) {
+void SoundManagerClass::ResetAllSoundVolumes() {
     for (int i = 0; i < MAX_SONGS; i++)
         SetSongVolume(i, 100.0f);
 
@@ -501,7 +501,7 @@ void SoundManagerClass::ResetAllSoundVolumes(void) {
 // Parameter	: keine
 //---------------------------------------------------------------------------------------
 
-void SoundManagerClass::Update(void) {
+void SoundManagerClass::Update() {
     UpdateChannels();
     UpdateSongs();
 

@@ -31,7 +31,7 @@ GegnerFallBombe::GegnerFallBombe(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFallBombe::DoKI(void) {
+void GegnerFallBombe::DoKI() {
     SimpleAnimation();
 
     switch (Handlung) {
@@ -71,7 +71,7 @@ void GegnerFallBombe::DoKI(void) {
 // FallBombe explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerFallBombe::GegnerExplode(void) {
+void GegnerFallBombe::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
     PartikelSystem.PushPartikel(xPos - 40, yPos, EXPLOSION_BIG);
 

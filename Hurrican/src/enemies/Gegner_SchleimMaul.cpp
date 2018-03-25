@@ -52,7 +52,7 @@ GegnerSchleimMaul::GegnerSchleimMaul(float x, float y, int Wert1, int Wert2, boo
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerSchleimMaul::DoDraw(void) {
+void GegnerSchleimMaul::DoDraw() {
     // etwas durchsichtig rendern
     //
     pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
@@ -63,7 +63,7 @@ void GegnerSchleimMaul::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSchleimMaul::DoKI(void) {
+void GegnerSchleimMaul::DoKI() {
     SimpleAnimation();
 
     // Ein Child weg? Dann neu spawnen
@@ -102,7 +102,7 @@ void GegnerSchleimMaul::DoKI(void) {
 // SchleimMaul explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerSchleimMaul::GegnerExplode(void) {
+void GegnerSchleimMaul::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_ALIEN);
 
     for (int i = 0; i < 16; i++)

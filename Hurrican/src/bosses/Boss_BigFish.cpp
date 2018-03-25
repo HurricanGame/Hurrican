@@ -62,7 +62,7 @@ void GegnerBigFish::MoveTo(float x, float y) {
         ySpeed = -10.0f;
 }
 
-void GegnerBigFish::DoMove(void) {
+void GegnerBigFish::DoMove() {
     if (xSpeed < 0.0f && NewX > xPos) {
         xSpeed += 1.0f SYNC;
 
@@ -100,7 +100,7 @@ void GegnerBigFish::DoMove(void) {
 // Neue Aktion starten
 // --------------------------------------------------------------------------------------
 
-void GegnerBigFish::NewAction(void) {
+void GegnerBigFish::NewAction() {
     static int lastaction = -1;
 
     // Spieler rechts vom Fisch? Dann den Fisch bewegen
@@ -143,7 +143,7 @@ void GegnerBigFish::NewAction(void) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerBigFish::DoDraw(void) {
+void GegnerBigFish::DoDraw() {
     static float FlossenSin = 0.0f;
     static float FlossenSin2 = 0.0f;
     float mw = sin(-PI / 2 + MaulWinkel) * 35.0f;
@@ -213,7 +213,7 @@ void GegnerBigFish::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerBigFish::DoKI(void) {
+void GegnerBigFish::DoKI() {
     static bool IsKugel = false;
 
     KugelCount -= 1.0f SYNC;
@@ -401,7 +401,7 @@ void GegnerBigFish::DoKI(void) {
 // Explodieren
 // --------------------------------------------------------------------------------------
 
-void GegnerBigFish::GegnerExplode(void) {
+void GegnerBigFish::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
     // Blut

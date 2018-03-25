@@ -38,7 +38,7 @@ GegnerClimber::GegnerClimber(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerClimber::DoDraw(void) {
+void GegnerClimber::DoDraw() {
     // Spinne rendern
     //
     pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset),
@@ -50,7 +50,7 @@ void GegnerClimber::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerClimber::DoKI(void) {
+void GegnerClimber::DoKI() {
     blocku = TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
     // Animationscounter weiterzählen
@@ -279,7 +279,7 @@ void GegnerClimber::DoKI(void) {
 // Climber explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerClimber::GegnerExplode(void) {
+void GegnerClimber::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
     PartikelSystem.PushPartikel(xPos + 5, yPos, EXPLOSION_MEDIUM2);
 

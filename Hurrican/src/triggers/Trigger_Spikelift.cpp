@@ -29,7 +29,7 @@ GegnerSpikelift::GegnerSpikelift(int Wert1, int Wert2, bool Light) {
 // Eigene Drawfuktion
 // --------------------------------------------------------------------------------------
 
-void GegnerSpikelift::DoDraw(void) {
+void GegnerSpikelift::DoDraw() {
     // Unterteil rendern
     //
     pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
@@ -45,7 +45,7 @@ void GegnerSpikelift::DoDraw(void) {
 // "Spikelift KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSpikelift::DoKI(void) {
+void GegnerSpikelift::DoKI() {
 #if 0  // PICKLE was turned off by comments, this is cleaner
     // Je nach Handlung richtig verhalten
     //
@@ -161,4 +161,4 @@ void GegnerSpikelift::DoKI(void) {
 // Spikelift explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerSpikelift::GegnerExplode(void) {}
+void GegnerSpikelift::GegnerExplode() {}

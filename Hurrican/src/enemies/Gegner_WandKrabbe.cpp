@@ -32,7 +32,7 @@ GegnerWandKrabbe::GegnerWandKrabbe(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerWandKrabbe::DoDraw(void) {
+void GegnerWandKrabbe::DoDraw() {
     bool mirrored;
 
     if (BlickRichtung == RECHTS)
@@ -58,7 +58,7 @@ void GegnerWandKrabbe::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerWandKrabbe::DoKI(void) {
+void GegnerWandKrabbe::DoKI() {
     if (Handlung != GEGNER_DREHEN && Handlung != GEGNER_EXPLODIEREN)
         SimpleAnimation();
 
@@ -267,7 +267,7 @@ void GegnerWandKrabbe::DoKI(void) {
 // WandKrabbe explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerWandKrabbe::GegnerExplode(void) {
+void GegnerWandKrabbe::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 6; i++)

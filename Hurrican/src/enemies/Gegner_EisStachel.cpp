@@ -30,7 +30,7 @@ GegnerEisStachel::GegnerEisStachel(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerEisStachel::DoKI(void) {
+void GegnerEisStachel::DoKI() {
     SimpleAnimation();
 
     // Je nach Handlung richtig verhalten
@@ -55,4 +55,4 @@ void GegnerEisStachel::DoKI(void) {
 // EisStachel explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerEisStachel::GegnerExplode(void) {}
+void GegnerEisStachel::GegnerExplode() {}

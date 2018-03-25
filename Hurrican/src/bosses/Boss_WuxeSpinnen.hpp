@@ -12,9 +12,9 @@ class GegnerWuxeSpinnen : public GegnerClass {
     GegnerWuxeSpinnen(int Wert1,
                       int Wert2,  // Konstruktor
                       bool Light);
-    void GegnerExplode(void);  // Gegner explodiert
+    void GegnerExplode();  // Gegner explodiert
     void
-    DoKI(void);  // Gegner individuell mit seiner 														// eigenen
+    DoKI();  // Gegner individuell mit seiner 														// eigenen
                  // kleinen KI bewegen
 };
 

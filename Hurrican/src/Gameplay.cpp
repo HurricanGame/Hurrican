@@ -74,7 +74,7 @@ int DisplayHintNr = -1;
 // Ein neues Spiel initialisieren
 // --------------------------------------------------------------------------------------
 
-void InitNewGame(void) {
+void InitNewGame() {
     FlameThrower = false;
     HasCheated = false;
 
@@ -186,7 +186,7 @@ void InitNewGameLevel(int Nr) {
 // Game Over Schriftzug anzeigen
 // --------------------------------------------------------------------------------------
 
-void ShowGameOver(void) {
+void ShowGameOver() {
     // DKS - This is not needed, and SDLPort/SDL_fmod.cpp now supports specifying if a song
     //      is to be played looped in a new parameter to PlaySong(). This was causing
     //      game-over music to never be heard in the SDL port.
@@ -220,7 +220,7 @@ void ShowGameOver(void) {
 // Haupt-Spielablauf
 // --------------------------------------------------------------------------------------
 
-void GameLoop(void) {
+void GameLoop() {
     HUD.bShowArrow = false;
 
     // DKS - There is no need to clear the screen in the game loop, as a full-screen
@@ -451,7 +451,7 @@ void GameLoop(void) {
 // Game Loop verlassen
 // --------------------------------------------------------------------------------------
 
-void LeaveGameLoop(void) {
+void LeaveGameLoop() {
     // Movespeed wieder richtig setzen
     Timer.SetMoveSpeed(10.0f);
 
@@ -504,7 +504,7 @@ void LeaveGameLoop(void) {
 // sodass alles verdreht gerendert wird ... echt clever =)
 // --------------------------------------------------------------------------------------
 
-void SetScreenShake(void) {
+void SetScreenShake() {
     D3DXMATRIX matView, matRot, matTrans, matTrans2;  // Rotations und Translations Matrizen
     int Winkel;                                       // Rotationswinkel
 
@@ -536,7 +536,7 @@ void SetScreenShake(void) {
 // ScreenWackel werte bearbeiten
 // --------------------------------------------------------------------------------------
 
-void ScreenWackeln(void) {
+void ScreenWackeln() {
     // Weiterwackeln
     //
     if (Console.Active == false) {
@@ -708,7 +708,7 @@ void CreateDefaultControlsConfig(int player) {
     }
 }
 
-void CreateDefaultConfig(void) {
+void CreateDefaultConfig() {
     Protokoll << "Creating new configuration file" << std::endl;
 
     strcpy_s(ActualLanguage, strlen("english.lng") + 1, "english.lng");
@@ -740,7 +740,7 @@ void CreateDefaultConfig(void) {
 // Defaut Wert gesetzt
 // --------------------------------------------------------------------------------------
 
-bool LoadConfig(void) {
+bool LoadConfig() {
     float Sound, Musik;
 
     std::string filename = std::string(g_save_ext) + "/" + CONFIGFILE;
@@ -842,7 +842,7 @@ bool LoadConfig(void) {
 // Aktuelle Konfiguration mit den Sound-Lautstärken speichern
 // --------------------------------------------------------------------------------------
 
-void SaveConfig(void) {
+void SaveConfig() {
     float Sound, Musik;
 
     std::string filename = std::string(g_save_ext) + "/" + CONFIGFILE;
@@ -976,7 +976,7 @@ bool DisplayLoadInfo(const char Text[100]) {
 // Spieler explodieren lassen
 // --------------------------------------------------------------------------------------
 
-void ExplodePlayer(void) {
+void ExplodePlayer() {
     //	static float delay = 0.0f;
 
     // alte Darstellung beenden
@@ -1015,7 +1015,7 @@ void StageClear(bool PlaySong) {
 
 // DKS - Fixed display on low-res scaled-font devices, and made display on
 //      normal-resolution devices be centered and spaced properly.
-void SummaryScreen(void) {
+void SummaryScreen() {
     bool leave = false;
     bool all_controls_unpressed_yet = false;
     bool reveal_cheat = (RunningTutorial == false) && (Player[0].DiamondsThisLevel == TileEngine.MaxDiamonds);
@@ -1287,7 +1287,7 @@ bool LoadDemo(const char Filename[]) {
 // Demo beenden
 // --------------------------------------------------------------------------------------
 
-void EndDemo(void) {
+void EndDemo() {
     // File schliessen
     DEMOFile.close();
 
@@ -1305,7 +1305,7 @@ void EndDemo(void) {
 // Demo aufnehmen
 // --------------------------------------------------------------------------------------
 
-void RecordDemo(void) {
+void RecordDemo() {
     /*srand (DEMOPress++);
     if (DEMOPress > 32000)
         DEMOPress = 0;*/
@@ -1328,7 +1328,7 @@ void RecordDemo(void) {
 // Demo abspielen
 // --------------------------------------------------------------------------------------
 
-void PlayDemo(void) {
+void PlayDemo() {
     /*srand (DEMOPress++);
     if (DEMOPress > 32000)
         DEMOPress = 0;*/
@@ -1356,7 +1356,7 @@ void PlayDemo(void) {
 // Nach dem Boss den Screen wieder auf den Spieler zentrieren und Musik einfaden etc.
 // --------------------------------------------------------------------------------------
 
-void ScrolltoPlayeAfterBoss(void) {
+void ScrolltoPlayeAfterBoss() {
     // Level wieder zum Spieler scrollen und dann weiterscrollen lassen
     TileEngine.Zustand = ZUSTAND_SCROLLBAR;
     TileEngine.MustCenterPlayer = true;
@@ -1369,7 +1369,7 @@ void ScrolltoPlayeAfterBoss(void) {
 // Piss-Text anzeigen =)
 // --------------------------------------------------------------------------------------
 
-void ShowPissText(void) {
+void ShowPissText() {
     if (Player[0].BronsonCounter > 220.0f) {
         int TextNr = int((Player[0].BronsonCounter - 220.0f) / 50.0f);
 
@@ -1393,7 +1393,7 @@ void ShowPissText(void) {
 // Zufällig ein Ziel aussuchen
 // --------------------------------------------------------------------------------------
 
-PlayerClass *ChooseAim(void) {
+PlayerClass *ChooseAim() {
     PlayerClass *pAim;
 
     pAim = &Player[rand() % NUMPLAYERS];

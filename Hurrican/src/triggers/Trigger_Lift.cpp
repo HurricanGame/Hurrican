@@ -31,7 +31,7 @@ GegnerLift::GegnerLift(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerLift::DoKI(void) {
+void GegnerLift::DoKI() {
     BlickRichtung = LINKS;
 
     // Animieren
@@ -95,4 +95,4 @@ void GegnerLift::DoKI(void) {
 // Lift explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerLift::GegnerExplode(void) {}
+void GegnerLift::GegnerExplode() {}

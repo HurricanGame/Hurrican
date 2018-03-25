@@ -30,7 +30,7 @@ GegnerZitrone::GegnerZitrone(int Wert1, int Wert2, bool Light) {
 // Knarre zeigt auf Hurrican
 // --------------------------------------------------------------------------------------
 
-void GegnerZitrone::CalcKnarreWinkel(void) {
+void GegnerZitrone::CalcKnarreWinkel() {
     float xdiv, ydiv, newwinkel;
 
     ydiv = (pAim->ypos + 40) - (yPos + 40);
@@ -78,7 +78,7 @@ void GegnerZitrone::CalcKnarreWinkel(void) {
 //
 // --------------------------------------------------------------------------------------
 
-void GegnerZitrone::DoDraw(void) {
+void GegnerZitrone::DoDraw() {
     int a;
 
     a = AnimPhase;
@@ -130,7 +130,7 @@ void GegnerZitrone::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerZitrone::DoKI(void) {
+void GegnerZitrone::DoKI() {
     blocko = TileEngine.BlockOben(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
     blocku = TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
     blockl = TileEngine.BlockLinks(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
@@ -329,7 +329,7 @@ void GegnerZitrone::DoKI(void) {
 // Drone explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerZitrone::GegnerExplode(void) {
+void GegnerZitrone::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION4);
 
     for (int i = 0; i < 12; i++) {

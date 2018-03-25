@@ -34,7 +34,7 @@ GegnerFledermaus::GegnerFledermaus(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFledermaus::DoKI(void) {
+void GegnerFledermaus::DoKI() {
     SimpleAnimation();
 
     if ((blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM) && ySpeed > 0.0f)
@@ -161,7 +161,7 @@ void GegnerFledermaus::DoKI(void) {
 // Fledermaus explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerFledermaus::GegnerExplode(void) {
+void GegnerFledermaus::GegnerExplode() {
     for (int i = 0; i < 100; i++)
         PartikelSystem.PushPartikel(xPos + 10 + rand() % 35, yPos + 10 + rand() % 25, FUNKE);
 

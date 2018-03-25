@@ -47,7 +47,7 @@ GegnerMutant::GegnerMutant(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerMutant::DoKI(void) {
+void GegnerMutant::DoKI() {
     switch (Handlung) {
         case GEGNER_LAUFEN: {
             if (PlayerAbstandHoriz() > 20) {
@@ -149,7 +149,7 @@ void GegnerMutant::DoKI(void) {
 // Mutant explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerMutant::GegnerExplode(void) {
+void GegnerMutant::GegnerExplode() {
     for (int i = 0; i < 10; i++)
         PartikelSystem.PushPartikel(xPos + rand() % 60 - 10, yPos + rand() % 60, EXPLOSION_GREEN);
 

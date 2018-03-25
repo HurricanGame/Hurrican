@@ -48,7 +48,7 @@ GegnerSchleimBoller::GegnerSchleimBoller(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerSchleimBoller::DoDraw(void) {
+void GegnerSchleimBoller::DoDraw() {
     // Je nach Größe anders gestrecht rendern
     //
     pGegnerGrafix[GegnerArt]->RenderSpriteScaled(static_cast<float>(xPos - TileEngine.XOffset) + (30 - Size / 2),
@@ -74,7 +74,7 @@ void GegnerSchleimBoller::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSchleimBoller::DoKI(void) {
+void GegnerSchleimBoller::DoKI() {
     BlickRichtung = LINKS;
 
     if (Handlung == GEGNER_FALLEN)
@@ -144,7 +144,7 @@ void GegnerSchleimBoller::DoKI(void) {
 // SchleimBoller explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerSchleimBoller::GegnerExplode(void) {
+void GegnerSchleimBoller::GegnerExplode() {
     // PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_GREEN);
 
     for (int i = 0; i < 3 + int(Size / 8); i++)

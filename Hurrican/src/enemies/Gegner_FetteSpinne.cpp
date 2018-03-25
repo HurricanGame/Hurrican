@@ -30,7 +30,7 @@ GegnerFetteSpinne::GegnerFetteSpinne(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerFetteSpinne::DoDraw(void) {
+void GegnerFetteSpinne::DoDraw() {
     bool h, v;
 
     // normal
@@ -55,7 +55,7 @@ void GegnerFetteSpinne::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFetteSpinne::DoKI(void) {
+void GegnerFetteSpinne::DoKI() {
     // Animieren
     if (AnimEnde > 0)  // Soll überhaupt anmiert werden ?
     {
@@ -210,7 +210,7 @@ void GegnerFetteSpinne::DoKI(void) {
 // Fette Spinne explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerFetteSpinne::GegnerExplode(void) {
+void GegnerFetteSpinne::GegnerExplode() {
     for (int i = 0; i < 15; i++)
         PartikelSystem.PushPartikel(xPos - 30 + rand() % 170, yPos - 30 + rand() % 72, EXPLOSION_MEDIUM2);
 

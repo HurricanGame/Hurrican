@@ -60,20 +60,20 @@ class HUDClass {
     float ArrowY;
     bool bShowArrow;
 
-    HUDClass(void);   // HUD initialisieren und Grafiken laden
-    ~HUDClass(void);  // HUD freigeben
+    HUDClass();   // HUD initialisieren und Grafiken laden
+    ~HUDClass();  // HUD freigeben
 
     // DKS - Added LoadSprites() function and moved these here from class constructor,
     //      to allow statically-allocated HUD global var (used to be dynamically allocated)
-    void LoadSprites(void);
+    void LoadSprites();
 
-    void UpdateValues(void);                 // Werte im HUD ändern
-    void ShowHUD(void);                      // HUD anzeigen
-    void RenderBossHUD(void);                // Boss HUD anzeigen
-    void DoHUD(void);                        // Alles machen, was da HUD betrifft =)
+    void UpdateValues();                 // Werte im HUD ändern
+    void ShowHUD();                      // HUD anzeigen
+    void RenderBossHUD();                // Boss HUD anzeigen
+    void DoHUD();                        // Alles machen, was da HUD betrifft =)
     void ShowBossHUD(float max, float act);  // Boss Energie anzeigen
     void ShowArrow(float x, float y);        // Pfeil in diesem Frame anzeigen
-    void RenderArrow(void);                  // Pfeil rendern
+    void RenderArrow();                  // Pfeil rendern
 };
 
 // --------------------------------------------------------------------------------------

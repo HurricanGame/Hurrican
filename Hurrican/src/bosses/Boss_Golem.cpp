@@ -41,7 +41,7 @@ GegnerGolem::GegnerGolem(int Wert1, int Wert2, bool Light) {
 // Winkel zum Spieler
 // --------------------------------------------------------------------------------------
 
-float GegnerGolem::WinkelToPlayer(void) {
+float GegnerGolem::WinkelToPlayer() {
     float xdiv, ydiv;
     float w;
 
@@ -61,7 +61,7 @@ float GegnerGolem::WinkelToPlayer(void) {
 // Golem beim laufen wackeln lassen
 // --------------------------------------------------------------------------------------
 
-void GegnerGolem::Wackeln(void) {
+void GegnerGolem::Wackeln() {
     // yoff bewegen
     if (Wackel > 0.0f)
         yoff = Wackel * 8.0f;
@@ -85,7 +85,7 @@ void GegnerGolem::Wackeln(void) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerGolem::DoDraw(void) {
+void GegnerGolem::DoDraw() {
     D3DCOLOR Color;
     // D3DCOLOR Color2;
     float wackel = 0.0f;
@@ -240,7 +240,7 @@ bool GegnerGolem::GoToZero(float &Value, float speed) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerGolem::DoKI(void) {
+void GegnerGolem::DoKI() {
     // Energie anzeigen
     if (Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_EXPLODIEREN)
         HUD.ShowBossHUD(8000, Energy);
@@ -731,7 +731,7 @@ void GegnerGolem::DoKI(void) {
 // Golem explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerGolem::GegnerExplode(void) {
+void GegnerGolem::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
     for (int p = 0; p < NUMPLAYERS; p++)

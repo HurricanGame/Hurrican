@@ -295,7 +295,7 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
 // Direct3D beenden
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsClass::Exit(void) {
+bool DirectGraphicsClass::Exit() {
 #if SDL_VERSION_ATLEAST(2, 0, 0)
     SDL_GL_DeleteContext(GLcontext);
     SDL_DestroyWindow(Window);
@@ -320,7 +320,7 @@ bool DirectGraphicsClass::Exit(void) {
 // Für Init und nach Task Wechsel
 // --------------------------------------------------------------------------------------
 
-bool DirectGraphicsClass::SetDeviceInfo(void) {
+bool DirectGraphicsClass::SetDeviceInfo() {
 #if defined(USE_GL2)
     char vert[256];
     char frag[256];
@@ -442,7 +442,7 @@ bool DirectGraphicsClass::TakeScreenshot(const char Filename[100], int screenx, 
 // Renderstates für Sprites mit ColorKey setzen
 // --------------------------------------------------------------------------------------
 
-void DirectGraphicsClass::SetColorKeyMode(void) {
+void DirectGraphicsClass::SetColorKeyMode() {
     if (BlendMode == COLORKEY_MODE)
         return;
 
@@ -455,7 +455,7 @@ void DirectGraphicsClass::SetColorKeyMode(void) {
 // Renderstates für Sprites setzen, die komplett weiss gerendert werden
 // --------------------------------------------------------------------------------------
 
-void DirectGraphicsClass::SetWhiteMode(void) {
+void DirectGraphicsClass::SetWhiteMode() {
     if (BlendMode == WHITE_MODE)
         return;
 
@@ -468,7 +468,7 @@ void DirectGraphicsClass::SetWhiteMode(void) {
 // Renderstates für Sprites mit Additivem Alphablending setzen
 // --------------------------------------------------------------------------------------
 
-void DirectGraphicsClass::SetAdditiveMode(void) {
+void DirectGraphicsClass::SetAdditiveMode() {
     if (BlendMode == ADDITIV_MODE)
         return;
 
@@ -874,7 +874,7 @@ void DirectGraphicsClass::SelectBuffer(bool active) {
 }
 
 #if defined(ANDROID)
-void DirectGraphicsClass::DrawTouchOverlay(void) {
+void DirectGraphicsClass::DrawTouchOverlay() {
     int i;
     int x, y, w, h;
     VERTEX2D vertices[4];

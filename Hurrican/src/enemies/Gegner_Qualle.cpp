@@ -33,7 +33,7 @@ GegnerQualle::GegnerQualle(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerQualle::DoKI(void) {
+void GegnerQualle::DoKI() {
     if (AnimPhase != AnimStart)
         SimpleAnimation();
 
@@ -119,7 +119,7 @@ void GegnerQualle::DoKI(void) {
 // Qualle explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerQualle::GegnerExplode(void) {
+void GegnerQualle::GegnerExplode() {
     for (int i = 0; i < 5; i++) {
         // ein paar Luftblässchen erzeugen
         PartikelSystem.PushPartikel(float(xPos - 10 + rand() % 45), float(yPos + 10 + rand() % 30), BUBBLE);

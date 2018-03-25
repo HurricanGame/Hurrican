@@ -29,7 +29,7 @@ GegnerMiniRocket::GegnerMiniRocket(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerMiniRocket::DoDraw(void) {
+void GegnerMiniRocket::DoDraw() {
     // Flare rendern
     //
     DirectGraphics.SetAdditiveMode();
@@ -64,7 +64,7 @@ void GegnerMiniRocket::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerMiniRocket::DoKI(void) {
+void GegnerMiniRocket::DoKI() {
     BlickRichtung = LINKS;
 
     // Am Anfang erst etwas senkrecht hoch fliegen
@@ -155,7 +155,7 @@ void GegnerMiniRocket::DoKI(void) {
 // FetteRakete explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerMiniRocket::GegnerExplode(void) {
+void GegnerMiniRocket::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
 
     int i = 0;

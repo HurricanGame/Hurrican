@@ -28,7 +28,7 @@
 // Konstruktor : HUD Grafiken laden und Werte initialisieren
 // --------------------------------------------------------------------------------------
 
-HUDClass::HUDClass(void) {
+HUDClass::HUDClass() {
     // HUD Werte initialisieren
     Alpha = 192;
     red = 0;
@@ -43,11 +43,11 @@ HUDClass::HUDClass(void) {
 // Konstruktor : HUD Grafiken freigeben
 // --------------------------------------------------------------------------------------
 
-HUDClass::~HUDClass(void) {}
+HUDClass::~HUDClass() {}
 
 // DKS - Added LoadSprites() function and moved these here from class constructor,
 //      to allow statically-allocated HUD global var (used to be dynamically allocated)
-void HUDClass::LoadSprites(void) {
+void HUDClass::LoadSprites() {
     HUDGfx.LoadImage("hud.png", 548, 69, 548, 69, 1, 1);
     HUDBlitz.LoadImage("hudblitz.png", 6, 18, 6, 18, 1, 1);
     HUDBomb.LoadImage("hudbomb.png", 18, 18, 18, 18, 1, 1);
@@ -69,13 +69,13 @@ void HUDClass::LoadSprites(void) {
 // Werte im HUD ändern
 // --------------------------------------------------------------------------------------
 
-void HUDClass::UpdateValues(void) {}
+void HUDClass::UpdateValues() {}
 
 // --------------------------------------------------------------------------------------
 // HUD anzeigen
 // --------------------------------------------------------------------------------------
 
-void HUDClass::ShowHUD(void) {
+void HUDClass::ShowHUD() {
     char Buffer[100];  // Für iota Umwandlung der HUD-Werte
     int BlitzOff;      // Für die Balken-Offsets
                        //	int		 StateOff;
@@ -468,7 +468,7 @@ void HUDClass::ShowHUD(void) {
 // Boss HUD anzeigen
 // --------------------------------------------------------------------------------------
 
-void HUDClass::RenderBossHUD(void) {
+void HUDClass::RenderBossHUD() {
     // Boss HUD anzeigen
     if (BossHUDActive > 0.0f) {
         int a = int(BossHUDActive * 0.75);
@@ -506,7 +506,7 @@ void HUDClass::ShowBossHUD(float max, float act) {
 // Alles machen, was da HUD betrifft, sprich, werte ändern und dann anzeigen
 // --------------------------------------------------------------------------------------
 
-void HUDClass::DoHUD(void) {
+void HUDClass::DoHUD() {
     // Hud Werte aktualisieren
     //
     for (int p = 0; p < NUMPLAYERS; p++)

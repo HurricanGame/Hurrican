@@ -71,7 +71,7 @@ GegnerLightFlare::GegnerLightFlare(int Wert1, int Wert2, bool Light) {
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerLightFlare::DoDraw(void) {
+void GegnerLightFlare::DoDraw() {
     DirectGraphics.SetAdditiveMode();
     while (rot > 360.0f)
         rot -= 360.0f;
@@ -89,7 +89,7 @@ void GegnerLightFlare::DoDraw(void) {
 // LightFlare KI
 // --------------------------------------------------------------------------------------
 
-void GegnerLightFlare::DoKI(void) {
+void GegnerLightFlare::DoKI() {
     // rotieren
     rot += rotspeed SYNC;
 
@@ -111,4 +111,4 @@ void GegnerLightFlare::DoKI(void) {
 // LightFlare explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerLightFlare::GegnerExplode(void) {}
+void GegnerLightFlare::GegnerExplode() {}

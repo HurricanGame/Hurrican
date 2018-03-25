@@ -58,7 +58,7 @@ GegnerTheWall::GegnerTheWall(int Wert1, int Wert2, bool Light) {
 const int TunnelOffx = -320;
 const int TunnelOffY = +140;
 
-void GegnerTheWall::DoDraw(void) {
+void GegnerTheWall::DoDraw() {
     if (PlayerAbstand() > 800)
         return;
 
@@ -169,7 +169,7 @@ void GegnerTheWall::DoDraw(void) {
 // Neue Aktion
 // --------------------------------------------------------------------------------------
 
-void GegnerTheWall::NeueAktion(void) {
+void GegnerTheWall::NeueAktion() {
     // Wieder aufmachen?
     if (CountOpen <= 0) {
         CountOpen = 1;
@@ -238,7 +238,7 @@ void GegnerTheWall::NeueAktion(void) {
 // Den Schädel wieder zurückpfeiffen
 // --------------------------------------------------------------------------------------
 
-void GegnerTheWall::ReturnSkull(void) {
+void GegnerTheWall::ReturnSkull() {
     GegnerClass *pTemp;
     pTemp = Gegner.pStart;
 
@@ -254,7 +254,7 @@ void GegnerTheWall::ReturnSkull(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerTheWall::DoKI(void) {
+void GegnerTheWall::DoKI() {
     // Auf den Spieler schiessen?
     if (Energy < 1500.0f && Value1 == 1) {
         SkullShotDelay -= 1.0f SYNC;
@@ -637,4 +637,4 @@ void GegnerTheWall::DoKI(void) {
 // Explodieren
 // --------------------------------------------------------------------------------------
 
-void GegnerTheWall::GegnerExplode(void) {}
+void GegnerTheWall::GegnerExplode() {}

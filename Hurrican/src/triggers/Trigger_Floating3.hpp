@@ -15,9 +15,9 @@ class GegnerFloating3 : public GegnerClass {
     GegnerFloating3(int Wert1,
                     int Wert2,  // Konstruktor
                     bool Light);
-    void GegnerExplode(void);  // Gegner explodiert
-    void DoKI(void);           // Gegner bewegen
-    void DoDraw(void);         // Eigene Draw Routine
+    void GegnerExplode();  // Gegner explodiert
+    void DoKI();           // Gegner bewegen
+    void DoDraw();         // Eigene Draw Routine
 };
 
 #endif

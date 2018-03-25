@@ -62,7 +62,7 @@ GegnerFlugBoss::GegnerFlugBoss(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerFlugBoss::DoDraw(void) {
+void GegnerFlugBoss::DoDraw() {
     // Schienen
     SchieneL.RenderSprite(-SchienePos, static_cast<float>(yPos - TileEngine.YOffset) + 161, 0xFFFFFFFF);
 
@@ -133,7 +133,7 @@ void GegnerFlugBoss::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFlugBoss::DoKI(void) {
+void GegnerFlugBoss::DoKI() {
     /*
         BlickRichtung	= LINKS;
 
@@ -536,7 +536,7 @@ void GegnerFlugBoss::DoKI(void) {
 // FlugBoss explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerFlugBoss::GegnerExplode(void) {
+void GegnerFlugBoss::GegnerExplode() {
     // Splitter
     for (int i = 0; i < 20; i++)
         PartikelSystem.PushPartikel(xPos + rand() % 500 + 30, yPos + rand() % 2000 + 30, SPLITTER);

@@ -43,7 +43,7 @@ GegnerRiesenSpinne::GegnerRiesenSpinne(int Wert1, int Wert2, bool Light) {
 //
 // --------------------------------------------------------------------------------------
 
-void GegnerRiesenSpinne::StopCurrentAction(void) {}
+void GegnerRiesenSpinne::StopCurrentAction() {}
 
 // --------------------------------------------------------------------------------------
 // Bein zeichnen
@@ -224,7 +224,7 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerRiesenSpinne::DoDraw(void) {
+void GegnerRiesenSpinne::DoDraw() {
     D3DCOLOR Color = 0xFFFFFFFF;
 
     DirectGraphics.SetFilterMode(true);
@@ -336,7 +336,7 @@ void GegnerRiesenSpinne::DoDraw(void) {
 // Neue Handlung, wenn sie links steht
 // --------------------------------------------------------------------------------------
 
-void GegnerRiesenSpinne::RandomHandlung(void) {
+void GegnerRiesenSpinne::RandomHandlung() {
     ShotDelay = 4.0f;
     xSpeed = 0.0f;
 
@@ -391,7 +391,7 @@ void GegnerRiesenSpinne::RandomHandlung(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerRiesenSpinne::DoKI(void) {
+void GegnerRiesenSpinne::DoKI() {
     // Energie anzeigen
     if (Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_EXPLODIEREN)
         HUD.ShowBossHUD(100000, Energy);
@@ -787,7 +787,7 @@ void GegnerRiesenSpinne::DoKI(void) {
 // RiesenSpinne explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerRiesenSpinne::GegnerExplode(void) {
+void GegnerRiesenSpinne::GegnerExplode() {
     Player[0].Score += 15000;
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
     ShakeScreen(5.0f);

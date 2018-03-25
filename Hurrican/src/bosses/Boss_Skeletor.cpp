@@ -76,7 +76,7 @@ void GegnerSkeletor::CalcGunWinkel() {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerSkeletor::DoDraw(void) {
+void GegnerSkeletor::DoDraw() {
     if (DrawNow == false)
         return;
 
@@ -149,7 +149,7 @@ void GegnerSkeletor::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSkeletor::DoKI(void) {
+void GegnerSkeletor::DoKI() {
     CalcGunWinkel();
 
     // Energie anzeigen
@@ -542,6 +542,6 @@ void GegnerSkeletor::DoKI(void) {
 // Skeletor explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerSkeletor::GegnerExplode(void) {
+void GegnerSkeletor::GegnerExplode() {
     ScrolltoPlayeAfterBoss();
 }

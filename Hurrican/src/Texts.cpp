@@ -315,7 +315,7 @@ void ReplaceAll(std::string &str, const std::string &from, const std::string &to
 // Tasten ErsetzungsStrings für die TutorialTexte initialisieren
 // --------------------------------------------------------------------------------------
 
-void InitReplacers(void) {
+void InitReplacers() {
     strcpy_s(s_Replacers[0], strlen("KEY_LEFT") + 1, "KEY_LEFT");
     strcpy_s(s_Replacers[2], strlen("KEY_RIGHT") + 1, "KEY_RIGHT");
     strcpy_s(s_Replacers[4], strlen("KEY_CROUCH") + 1, "KEY_CROUCH");

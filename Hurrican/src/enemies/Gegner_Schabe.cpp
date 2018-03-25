@@ -40,7 +40,7 @@ GegnerSchabe::GegnerSchabe(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSchabe::DoKI(void) {
+void GegnerSchabe::DoKI() {
     // Schiessen
     if (PlayerAbstand() < 600)
         ShotDelay -= 1.0f SYNC;
@@ -314,7 +314,7 @@ void GegnerSchabe::DoKI(void) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerSchabe::DoDraw(void) {
+void GegnerSchabe::DoDraw() {
     pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset),
                                                   static_cast<float>(yPos - TileEngine.YOffset), winkel, AnimPhase,
                                                   0xFFFFFFFF, mirror);
@@ -324,7 +324,7 @@ void GegnerSchabe::DoDraw(void) {
 // Schabe explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerSchabe::GegnerExplode(void) {
+void GegnerSchabe::GegnerExplode() {
     // Explosion
     for (int i = 0; i < 2; i++) {
         PartikelSystem.PushPartikel(float(xPos - 20) + rand() % 10, float(yPos - 20) + rand() % 10, EXPLOSION_MEDIUM2);

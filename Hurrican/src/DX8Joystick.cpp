@@ -18,7 +18,7 @@
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-DirectJoystickClass::DirectJoystickClass(void) {
+DirectJoystickClass::DirectJoystickClass() {
     lpDIJoystick = NULL;
 
     Active = false;
@@ -36,7 +36,7 @@ DirectJoystickClass::DirectJoystickClass(void) {
 // Destruktor
 // --------------------------------------------------------------------------------------
 
-DirectJoystickClass::~DirectJoystickClass(void) {}
+DirectJoystickClass::~DirectJoystickClass() {}
 
 // --------------------------------------------------------------------------------------
 // ForceFeedback Effekt "nr" starten
@@ -91,7 +91,7 @@ bool DirectJoystickClass::Init(int joy) {
     // --------------------------------------------------------------------------------------
     // Joystick updaten
     // --------------------------------------------------------------------------------------
-bool DirectJoystickClass::Update(void) {
+bool DirectJoystickClass::Update() {
     if (lpDIJoystick != NULL) {
         SDL_JoystickUpdate();
 
@@ -150,14 +150,14 @@ bool DirectJoystickClass::Update(void) {
 }
 
 // DKS-Added these three for better joystick support, esp in menus
-bool DirectJoystickClass::ButtonEnterPressed(void) {
+bool DirectJoystickClass::ButtonEnterPressed() {
     return JoystickButtons[0];  // Default is button 0
 }
 
-bool DirectJoystickClass::ButtonEscapePressed(void) {
+bool DirectJoystickClass::ButtonEscapePressed() {
     return JoystickButtons[1];  // Default is button 1
 }
 
-bool DirectJoystickClass::ButtonDeletePressed(void) {
+bool DirectJoystickClass::ButtonDeletePressed() {
     return JoystickButtons[4];  // Default is button 4
 }

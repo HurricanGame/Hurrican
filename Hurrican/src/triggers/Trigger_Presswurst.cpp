@@ -32,7 +32,7 @@ GegnerPresswurst::GegnerPresswurst(int Wert1, int Wert2, bool Light) {
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerPresswurst::DoDraw(void) {
+void GegnerPresswurst::DoDraw() {
     // rendern
     //
     int size = static_cast<int>(oldy - yPos) + GegnerRect[GegnerArt].top;
@@ -45,7 +45,7 @@ void GegnerPresswurst::DoDraw(void) {
 // Bewegungs KI
 // --------------------------------------------------------------------------------------
 
-void GegnerPresswurst::DoKI(void) {
+void GegnerPresswurst::DoKI() {
     // Spieler kann von unten nicht durchspringen
     //
     for (int p = 0; p < NUMPLAYERS; p++)
@@ -195,4 +195,4 @@ void GegnerPresswurst::DoKI(void) {
 // Presswurst explodiert (geht ja garnich *g*)
 // --------------------------------------------------------------------------------------
 
-void GegnerPresswurst::GegnerExplode(void) {}
+void GegnerPresswurst::GegnerExplode() {}

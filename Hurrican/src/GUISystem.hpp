@@ -35,10 +35,10 @@ class CGUISystem {
     float m_FadingAlpha;
     int m_TextID;
 
-    CGUISystem(void);
-    ~CGUISystem(void);
+    CGUISystem();
+    ~CGUISystem();
 
-    void InitGUISystem(void);
+    void InitGUISystem();
 
     void Run();
     void RenderBox();

@@ -41,8 +41,8 @@ class DirectGraphicsFont {
     // DKS - Added support for font scaling
     int mScaleFactor;  // Font will be scaled this much (default is 1, no scaling)
 
-    DirectGraphicsFont(void);              // Konstruktor (leer)
-    ~DirectGraphicsFont(void);             // Textur freigeben
+    DirectGraphicsFont();              // Konstruktor (leer)
+    ~DirectGraphicsFont();             // Textur freigeben
     bool LoadFont(const char *Filename,    // Laden des Bildes "Filename"
                   int xts,                 // Textur-Grösse x
                   int yts,                 // Textur-Grösse y
@@ -88,11 +88,11 @@ class DirectGraphicsFont {
     int DemoStringLength(const char Text[]);           // Länge eines Strings in Pixeln zurückliefern
     int StringLength(const char Text[]);               // Länge eines Strings in Pixeln zurückliefern
     int StringLength(const char Text[], int Spacing);  // Länge eines Strings in Pixeln zurückliefern
-    void ShowFPS(void);                                // FPS Werte anzeigen
+    void ShowFPS();                                // FPS Werte anzeigen
 
     // DKS - New functions added to facilitate scaled fonts, primarily the "default" font on 320x240 devices
-    int GetYCharSize(void);
-    int GetScaleFactor(void);
+    int GetYCharSize();
+    int GetScaleFactor();
     void SetScaleFactor(int scale_factor);
 };
 

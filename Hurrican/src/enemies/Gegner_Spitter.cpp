@@ -28,7 +28,7 @@ GegnerSpitter::GegnerSpitter(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSpitter::DoKI(void) {
+void GegnerSpitter::DoKI() {
     blockl = TileEngine.BlockLinks(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
     blockr = TileEngine.BlockRechts(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
     blocko = TileEngine.BlockOben(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
@@ -121,7 +121,7 @@ void GegnerSpitter::DoKI(void) {
 // Spitter explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerSpitter::GegnerExplode(void) {
+void GegnerSpitter::GegnerExplode() {
     Player[0].Score += 50;
 
     PartikelSystem.PushPartikel(float(xPos - 10), float(yPos - 10), EXPLOSION_MEDIUM);

@@ -30,7 +30,7 @@ GegnerWandKannone::GegnerWandKannone(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerWandKannone::DoKI(void) {
+void GegnerWandKannone::DoKI() {
     // Richtung setzen
     //
     if (Value2 == 0)
@@ -96,7 +96,7 @@ void GegnerWandKannone::DoKI(void) {
 // WandKannnone explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerWandKannone::GegnerExplode(void) {
+void GegnerWandKannone::GegnerExplode() {
     for (int i = 0; i < 10; i++)
         PartikelSystem.PushPartikel(xPos - 30 + rand() % 42, yPos - 30 + rand() % 32, EXPLOSION_MEDIUM2);
 

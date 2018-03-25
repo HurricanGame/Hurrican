@@ -27,7 +27,7 @@ GegnerSecret::GegnerSecret(int Wert1, int Wert2, bool Light) {
 // "Secret KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSecret::DoKI(void) {
+void GegnerSecret::DoKI() {
     // Secret nicht im Bild ?
     //
     if (xPos + 10 < TileEngine.XOffset || xPos > TileEngine.XOffset + 640 || yPos + 10 < TileEngine.YOffset ||
@@ -69,4 +69,4 @@ void GegnerSecret::DoKI(void) {
 // Secret explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerSecret::GegnerExplode(void) {}
+void GegnerSecret::GegnerExplode() {}

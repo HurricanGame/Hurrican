@@ -46,7 +46,7 @@ GegnerSchneeKoenig::GegnerSchneeKoenig(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerSchneeKoenig::DoDraw(void) {
+void GegnerSchneeKoenig::DoDraw() {
     if (DrawNow == false)
         return;
 
@@ -99,7 +99,7 @@ void GegnerSchneeKoenig::DoDraw(void) {
 // Laser rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerSchneeKoenig::RenderLaser(void) {
+void GegnerSchneeKoenig::RenderLaser() {
     float w;
 
     // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -117,7 +117,7 @@ void GegnerSchneeKoenig::RenderLaser(void) {
 // Winkel zum Spieler ausrechnen
 // --------------------------------------------------------------------------------------
 
-float GegnerSchneeKoenig::WinkelToPlayer(void) {
+float GegnerSchneeKoenig::WinkelToPlayer() {
     float dx;
 
     // Abstände berechnen
@@ -185,7 +185,7 @@ void GegnerSchneeKoenig::NextAction(int NewAction) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSchneeKoenig::DoKI(void) {
+void GegnerSchneeKoenig::DoKI() {
     // Energie anzeigen
     if (Handlung != GEGNER_INIT && Handlung != GEGNER_EXPLODIEREN)
         HUD.ShowBossHUD(50000, Energy);
@@ -658,7 +658,7 @@ void GegnerSchneeKoenig::DoKI(void) {
 // SchneeKoenig explodiert nicht, sondern bleibt kaputt stehen
 // --------------------------------------------------------------------------------------
 
-void GegnerSchneeKoenig::GegnerExplode(void) {
+void GegnerSchneeKoenig::GegnerExplode() {
     // Endboss-Musik ausfaden und abschalten
     SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
 

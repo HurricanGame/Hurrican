@@ -28,7 +28,7 @@ GegnerPresse::GegnerPresse(int Wert1, int Wert2, bool Light) {
 // Bewegungs KI
 // --------------------------------------------------------------------------------------
 
-void GegnerPresse::DoKI(void) {
+void GegnerPresse::DoKI() {
     // Ja nach Handlung richtig verhalten
     switch (Handlung) {
         // Pressen (während der Wehen ...)
@@ -81,4 +81,4 @@ void GegnerPresse::DoKI(void) {
 // Presse explodiert (geht ja garnich *g*)
 // --------------------------------------------------------------------------------------
 
-void GegnerPresse::GegnerExplode(void) {}
+void GegnerPresse::GegnerExplode() {}

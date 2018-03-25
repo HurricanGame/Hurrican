@@ -30,7 +30,7 @@ GegnerShrine::GegnerShrine(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerShrine::DoKI(void) {
+void GegnerShrine::DoKI() {
     BlickRichtung = LINKS;
 
     if (AnimCount > 0.0f)
@@ -88,4 +88,4 @@ void GegnerShrine::DoKI(void) {
 // Shrine explodiert (nicht)
 // --------------------------------------------------------------------------------------
 
-void GegnerShrine::GegnerExplode(void) {}
+void GegnerShrine::GegnerExplode() {}

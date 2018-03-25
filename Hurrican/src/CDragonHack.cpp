@@ -18,7 +18,7 @@
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-CDragonHack::CDragonHack(void) {
+CDragonHack::CDragonHack() {
     m_GFX.LoadImage("drache_klein.png", 160, 160, 160, 40, 1, 4);
 
     m_AnimCount = 0.0f;
@@ -35,13 +35,13 @@ CDragonHack::CDragonHack(void) {
 // Destruktor
 // --------------------------------------------------------------------------------------
 
-CDragonHack::~CDragonHack(void) {}
+CDragonHack::~CDragonHack() {}
 
 // --------------------------------------------------------------------------------------
 // rumfliegen lassen
 // --------------------------------------------------------------------------------------
 
-void CDragonHack::Run(void) {
+void CDragonHack::Run() {
     m_AnimCount += 3.0f SYNC;
 
     if (m_AnimCount >= 4.0f)

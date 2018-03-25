@@ -28,7 +28,7 @@ GegnerRaketenwerfer::GegnerRaketenwerfer(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerRaketenwerfer::DoKI(void) {
+void GegnerRaketenwerfer::DoKI() {
     // animieren wenn der Spieler in der Nähe ist
 
     if (PlayerAbstand() < 600 && pAim->ypos > yPos)
@@ -57,7 +57,7 @@ void GegnerRaketenwerfer::DoKI(void) {
 // Raketenwerfer explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerRaketenwerfer::GegnerExplode(void) {
+void GegnerRaketenwerfer::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos - 20, yPos - 15, EXPLOSION_BIG);
 
     for (int i = 0; i < 20; i++) {

@@ -187,19 +187,19 @@ class MenuClass {
     float Rotation;   // Rotationsgrad
     int RotationDir;  // Rotationsrichtung
 
-    MenuClass(void);   // Menu initialisieren und Grafiken laden
-    ~MenuClass(void);  // Menu freigeben
+    MenuClass();   // Menu initialisieren und Grafiken laden
+    ~MenuClass();  // Menu freigeben
 
-    void ShowMenuBack(void);            // Hintergrund des Menus
-    void ShowMenu(void);                // Menu anzeigen
-    void DoMenu(void);                  // Alles machen, was da Menu betrifft =)
-    void LoadSavegames(void);           // Savegame Structs mit Daten füllen
+    void ShowMenuBack();            // Hintergrund des Menus
+    void ShowMenu();                // Menu anzeigen
+    void DoMenu();                  // Alles machen, was da Menu betrifft =)
+    void LoadSavegames();           // Savegame Structs mit Daten füllen
     void ShowSavegames(int Highlight);  // Verfügbare Savegames anzeigen
-    void LoadHighscore(void);           // Highscoreliste laden
-    void SaveHighscore(void);           // Highscoreliste speichern
-    void ResetHighscore(void);          // Highscoreliste resetten
-    void ShowLanguageInfo(void);        // Infos aus der Language file anzeigen
-    void CheckForNewHighscore(void);
+    void LoadHighscore();           // Highscoreliste laden
+    void SaveHighscore();           // Highscoreliste speichern
+    void ResetHighscore();          // Highscoreliste resetten
+    void ShowLanguageInfo();        // Infos aus der Language file anzeigen
+    void CheckForNewHighscore();
 };
 
 // --------------------------------------------------------------------------------------

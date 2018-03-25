@@ -35,7 +35,7 @@ GegnerStampfstein::GegnerStampfstein(int Wert1, int Wert2, bool Light) {
 // Rendern
 // --------------------------------------------------------------------------------------
 
-void GegnerStampfstein::DoDraw(void) {
+void GegnerStampfstein::DoDraw() {
     // rendern
     //
     DirectGraphics.SetColorKeyMode();
@@ -49,7 +49,7 @@ void GegnerStampfstein::DoDraw(void) {
 // Bewegungs KI
 // --------------------------------------------------------------------------------------
 
-void GegnerStampfstein::DoKI(void) {
+void GegnerStampfstein::DoKI() {
     Energy = 5000.0f;
 
     // Spieler kann seitlich nicht durchlaufen
@@ -215,4 +215,4 @@ void GegnerStampfstein::DoKI(void) {
 // Stampfstein explodiert (geht ja garnich *g*)
 // --------------------------------------------------------------------------------------
 
-void GegnerStampfstein::GegnerExplode(void) {}
+void GegnerStampfstein::GegnerExplode() {}

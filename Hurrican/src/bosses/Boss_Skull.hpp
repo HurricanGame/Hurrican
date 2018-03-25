@@ -17,8 +17,8 @@ class GegnerSkull : public GegnerClass {
     GegnerSkull(int Wert1,
                 int Wert2,  // Konstruktor
                 bool Light);
-    void GegnerExplode(void);  // Gegner explodiert
-    void DoKI(void);           // Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void GegnerExplode();  // Gegner explodiert
+    void DoKI();           // Gegner individuell mit seiner eigenen kleinen KI bewegen
 };
 
 #endif

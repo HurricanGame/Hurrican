@@ -25,7 +25,7 @@ void seed_fast_rand(uint32_t seed) {
 }
 
 // fast_rand routine returns an integer in range 0..32767
-int fast_rand(void) {
+int fast_rand() {
     fast_rand_seed_val = (214013 * fast_rand_seed_val + 2531011);
     return static_cast<int>((fast_rand_seed_val >> 16) & 0x7FFF);
 }

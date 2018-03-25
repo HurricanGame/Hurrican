@@ -59,7 +59,7 @@ GegnerMetalHead::GegnerMetalHead(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerMetalHead::DoDraw(void) {
+void GegnerMetalHead::DoDraw() {
     if (AlreadyDrawn == true)
         return;
 
@@ -222,7 +222,7 @@ void GegnerMetalHead::MoveToNewPoint(float x, float y, float s, int Aktion) {
 // GunWinkel ausrechnen
 // --------------------------------------------------------------------------------------
 
-void GegnerMetalHead::WinkelToPlayer(void) {
+void GegnerMetalHead::WinkelToPlayer() {
     float xdiv, ydiv;
     float neww;
 
@@ -254,7 +254,7 @@ void GegnerMetalHead::WinkelToPlayer(void) {
 // Moven
 // --------------------------------------------------------------------------------------
 
-void GegnerMetalHead::DoMove(void) {
+void GegnerMetalHead::DoMove() {
     if (xSpeed < 0.0f && NewX > xPos) {
         xSpeed += 1.0f SYNC;
 
@@ -292,7 +292,7 @@ void GegnerMetalHead::DoMove(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerMetalHead::DoKI(void) {
+void GegnerMetalHead::DoKI() {
     if (Handlung != GEGNER_EXPLODIEREN) {
         if (ShadowAlpha > 0.0f)
             ShadowAlpha -= 5.0f SYNC;
@@ -845,7 +845,7 @@ void GegnerMetalHead::DoKI(void) {
 // MetalHead explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerMetalHead::GegnerExplode(void) {
+void GegnerMetalHead::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
     Player[0].Score += 12500;

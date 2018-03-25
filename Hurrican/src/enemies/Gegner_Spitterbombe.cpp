@@ -26,7 +26,7 @@ GegnerSpitterbombe::GegnerSpitterbombe(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSpitterbombe::DoKI(void) {
+void GegnerSpitterbombe::DoKI() {
     // Animieren
     //
     AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
@@ -56,7 +56,7 @@ void GegnerSpitterbombe::DoKI(void) {
 // Bombe explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerSpitterbombe::GegnerExplode(void) {
+void GegnerSpitterbombe::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 5; i++)

@@ -26,7 +26,7 @@ GegnerNest::GegnerNest(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerNest::DoKI(void) {
+void GegnerNest::DoKI() {
     // Wespe spawnen?
     //
 
@@ -49,7 +49,7 @@ void GegnerNest::DoKI(void) {
 // Nest explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerNest::GegnerExplode(void) {
+void GegnerNest::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION4);
 
     for (int i = 0; i < 5; i++)

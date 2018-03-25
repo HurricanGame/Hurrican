@@ -6,19 +6,19 @@
 // Konstruktor
 //
 
-CGUISystem::CGUISystem(void) {}
+CGUISystem::CGUISystem() {}
 
 //
 // Destruktor
 //
 
-CGUISystem::~CGUISystem(void) {}
+CGUISystem::~CGUISystem() {}
 
 //
 // GUISystem initialisieren
 //
 
-void CGUISystem::InitGUISystem(void) {
+void CGUISystem::InitGUISystem() {
     m_Rahmen.LoadImage("guiback.png", 60, 60, 20, 20, 3, 3);
 
     m_BoxSize.top = 0;
@@ -38,7 +38,7 @@ void CGUISystem::InitGUISystem(void) {
 // Hinweisbox rendern
 //
 
-void CGUISystem::RenderBox(void) {
+void CGUISystem::RenderBox() {
     D3DCOLOR color;
     int alpha = int(m_FadingAlpha);
 
@@ -160,7 +160,7 @@ void CGUISystem::ShowBox(int xoff, int yoff, int w, int h) {
 // Hinweisbox für Tutorial Level ausblenden
 //
 
-void CGUISystem::HideBox(void) {
+void CGUISystem::HideBox() {
     m_FadeMode = FADEOUT;
 }
 
@@ -168,7 +168,7 @@ void CGUISystem::HideBox(void) {
 // Hinweisbox für Tutorial Level gleich komplett abschalten
 //
 
-void CGUISystem::HideBoxFast(void) {
+void CGUISystem::HideBoxFast() {
     m_FadingAlpha = 0.0f;
     m_FadeMode = INVISIBLE;
 }
@@ -177,7 +177,7 @@ void CGUISystem::HideBoxFast(void) {
 // GUI anzeigen und evtl faden
 //
 
-void CGUISystem::Run(void) {
+void CGUISystem::Run() {
     // nicht faden? dann gleich abhauen
     //
     if (m_FadeMode == INVISIBLE)

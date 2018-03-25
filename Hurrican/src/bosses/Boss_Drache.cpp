@@ -73,7 +73,7 @@ GegnerDrache::GegnerDrache(int Wert1, int Wert2, bool Light) {
 
 #define NUM_TAILS 20
 
-void GegnerDrache::DoDraw(void) {
+void GegnerDrache::DoDraw() {
     if (PlayerAbstand() > 1000)
         return;
 
@@ -279,7 +279,7 @@ void GegnerDrache::DoDraw(void) {
 // Winkel des Kopfes zum Spieler hin ausrechnen
 // --------------------------------------------------------------------------------------
 
-void GegnerDrache::ComputeHeadWinkel(void) {
+void GegnerDrache::ComputeHeadWinkel() {
     if (HeadLocked == true)
         return;
 
@@ -311,7 +311,7 @@ void GegnerDrache::ComputeHeadWinkel(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerDrache::DoKI(void) {
+void GegnerDrache::DoKI() {
     // Energie anzeigen
     if (Value2 == 0 && Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_EXPLODIEREN)
         HUD.ShowBossHUD(7000, Energy);
@@ -1060,4 +1060,4 @@ void GegnerDrache::DoKI(void) {
 // Drache explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerDrache::GegnerExplode(void) {}
+void GegnerDrache::GegnerExplode() {}

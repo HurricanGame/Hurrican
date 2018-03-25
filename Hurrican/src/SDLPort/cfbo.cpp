@@ -110,7 +110,7 @@ void CFbo::BindTexture(bool active) {
     }
 }
 
-void CFbo::Close(void) {
+void CFbo::Close() {
     if (Enabled == true) {
         glDeleteTextures(1, &texture);
         glBindFramebuffer(GL_FRAMEBUFFER, 0);

@@ -53,7 +53,7 @@ float WinkelUebergabe;  // Extra "Parameter" für PushProjectile
 //      Note that PushBlitzBeam() is an an exception and has been modified to account
 //      for this change.
 #if 0
-ProjectileClass::ProjectileClass(void)
+ProjectileClass::ProjectileClass()
 {
     xPos	= 0.0f;
     yPos	= 0.0f;
@@ -1885,7 +1885,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
 // Schüsse auf Kollision mit den Gegnern oder Spielern testen
 // --------------------------------------------------------------------------------------
 
-void ProjectileClass::CheckCollision(void) {
+void ProjectileClass::CheckCollision() {
     GegnerClass *pEnemy = Gegner.pStart;  // Anfang der Gegnerliste
 
     while (pEnemy != NULL)  // Noch nicht alle durch ?
@@ -2001,7 +2001,7 @@ void ProjectileClass::CheckCollision(void) {
 // Projektil rendern
 // --------------------------------------------------------------------------------------
 
-void ProjectileClass::Render(void) {
+void ProjectileClass::Render() {
     D3DCOLOR Color;
 
     // Schuss rendern
@@ -2407,7 +2407,7 @@ void ProjectileClass::Render(void) {
 // Projektil animieren und bewegen
 // --------------------------------------------------------------------------------------
 
-void ProjectileClass::Run(void) {
+void ProjectileClass::Run() {
     bo = bu = bl = br = 0;
 
     if (AnimEnde > 0)            // Soll überhaupt anmiert werden ?
@@ -3459,7 +3459,7 @@ void ProjectileClass::Run(void) {
 // Bei Kollision mit Level oder Gegner
 // --------------------------------------------------------------------------------------
 
-void ProjectileClass::ExplodeShot(void) {
+void ProjectileClass::ExplodeShot() {
     CurrentShotTexture = -1;
 
     // Jeder Schuss erzeugt beim explodieren andere Partikel
@@ -4230,13 +4230,13 @@ void ProjectileClass::ExplodeShot(void) {
 // --------------------------------------------------------------------------------------
 // Konstruktor : laden der Projektil Grafiken
 // --------------------------------------------------------------------------------------
-ProjectileListClass::ProjectileListClass(void) {
+ProjectileListClass::ProjectileListClass() {
     pStart = NULL;
     pEnd = NULL;
     NumProjectiles = 0;
 }
 
-void ProjectileListClass::LoadSprites(void) {
+void ProjectileListClass::LoadSprites() {
     // DKS - All of these 5 sprites are no longer globals, I moved them here cleaning up big messes
     //      and fixing ambiguous orders of calls to destructors.
     // Grafiken für das Leuchten diverser Schüsse laden
@@ -4792,7 +4792,7 @@ void ProjectileListClass::LoadSprites(void) {
 // Destruktor : Löschen der ganzen Liste und Freigabe der Projektil-Grafiken
 // --------------------------------------------------------------------------------------
 
-ProjectileListClass::~ProjectileListClass(void) {
+ProjectileListClass::~ProjectileListClass() {
     // Schuss-Liste komplett leeren
     ClearAll();
 }
@@ -5020,7 +5020,7 @@ ProjectileClass *ProjectileListClass::DelNode(ProjectileClass *pPtr) {
 // DKS - Converted ProjectileListClass to a singly-linked list (depends on DelNode() now).
 //      and added support for new pooled memory manager.
 #if 0
-void ProjectileListClass::ClearAll(void)
+void ProjectileListClass::ClearAll()
 {
     ProjectileClass *pTemp    = pStart;				// Zeiger auf das erste    Proectile
     ProjectileClass *pNaechst;						// Zeiger auf das nächste  Proectile (falls
@@ -5036,7 +5036,7 @@ void ProjectileListClass::ClearAll(void)
     pEnd   = NULL;
 }
 #endif  // 0
-void ProjectileListClass::ClearAll(void) {
+void ProjectileListClass::ClearAll() {
     if (pStart) {
         ProjectileClass *pNext = pStart->pNext;
 
@@ -5110,7 +5110,7 @@ void ProjectileListClass::ClearType(int Type) {
 // Zahl der Projectile zurückliefern
 // --------------------------------------------------------------------------------------
 
-int ProjectileListClass::GetNumProjectiles(void) {
+int ProjectileListClass::GetNumProjectiles() {
     return NumProjectiles;
 }
 
@@ -5120,7 +5120,7 @@ int ProjectileListClass::GetNumProjectiles(void) {
 
 // DKS - Adapted after converting projectile list to singly-linked one
 #if 0
-void ProjectileListClass::DoProjectiles(void)
+void ProjectileListClass::DoProjectiles()
 {
     ProjectileClass *pTemp = pStart;		// Anfang der Liste
     ProjectileClass *pNext = NULL;			// Nächstes projectile in der Liste
@@ -5149,7 +5149,7 @@ void ProjectileListClass::DoProjectiles(void)
     }
 }
 #endif  // 0
-void ProjectileListClass::DoProjectiles(void) {
+void ProjectileListClass::DoProjectiles() {
     ProjectileClass *pPrev = NULL;
     ProjectileClass *pCurr = pStart;
 

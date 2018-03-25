@@ -26,7 +26,7 @@ GegnerPharaoKopf::GegnerPharaoKopf(int Wert1, int Wert2, bool Light) {
     TestBlock = false;
 }
 
-bool GegnerPharaoKopf::Links(void) {
+bool GegnerPharaoKopf::Links() {
     if (static_cast<int>(xPos) < Value1 + BORDER) {
         xPos = static_cast<float>(Value1 + BORDER);
         return true;
@@ -35,7 +35,7 @@ bool GegnerPharaoKopf::Links(void) {
     return false;
 }
 
-bool GegnerPharaoKopf::Rechts(void) {
+bool GegnerPharaoKopf::Rechts() {
     if (static_cast<int>(xPos) + GegnerRect[GegnerArt].right > Value1 + 652 - BORDER) {
         xPos = static_cast<float>(Value1 + 652 - BORDER - GegnerRect[GegnerArt].right);
         return true;
@@ -44,7 +44,7 @@ bool GegnerPharaoKopf::Rechts(void) {
     return false;
 }
 
-bool GegnerPharaoKopf::Unten(void) {
+bool GegnerPharaoKopf::Unten() {
     if (static_cast<int>(yPos) + GegnerRect[GegnerArt].bottom > Value2 + 480 - BORDER2) {
         yPos = static_cast<float>(Value2 + 480 - BORDER2 - GegnerRect[GegnerArt].bottom);
         return true;
@@ -57,7 +57,7 @@ bool GegnerPharaoKopf::Unten(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerPharaoKopf::DoKI(void) {
+void GegnerPharaoKopf::DoKI() {
     // Energie anzeigen
     if (Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_EXPLODIEREN)
         HUD.ShowBossHUD(6000, Energy);
@@ -484,7 +484,7 @@ void GegnerPharaoKopf::DoKI(void) {
 // PharaoKopf explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerPharaoKopf::GegnerExplode(void) {
+void GegnerPharaoKopf::GegnerExplode() {
     for (int p = 0; p < NUMPLAYERS; p++) {
         if (Player[p].AufPlattform == this)
             Player[p].AufPlattform = NULL;

@@ -26,7 +26,7 @@ GegnerSchleuseV::GegnerSchleuseV(int Wert1, int Wert2, bool Light) {
 // "SchleuseV KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSchleuseV::DoKI(void) {
+void GegnerSchleuseV::DoKI() {
     Energy = 100;
     DamageTaken = 0.0f;
 
@@ -95,4 +95,4 @@ void GegnerSchleuseV::DoKI(void) {
 // SchleuseV explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerSchleuseV::GegnerExplode(void) {}
+void GegnerSchleuseV::GegnerExplode() {}

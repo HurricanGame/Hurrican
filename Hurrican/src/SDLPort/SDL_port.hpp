@@ -87,7 +87,7 @@ void strcpy_s(char *dst, int size, const char *src);
 void strcpy_s(char *dst, const char *src);
 
 #ifdef __WIN32__
-std::uint8_t LoadGLFunctions(void);
+std::uint8_t LoadGLFunctions();
 #endif
 std::uint32_t getpixel(SDL_Surface *surface, std::int16_t x, std::int16_t y);
 void get_components(SDL_Surface *surface,

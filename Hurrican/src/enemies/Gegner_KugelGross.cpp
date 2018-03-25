@@ -35,7 +35,7 @@ GegnerKugelGross::GegnerKugelGross(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerKugelGross::DoKI(void) {
+void GegnerKugelGross::DoKI() {
     BlickRichtung = LINKS;
     AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
     if (AnimCount > AnimSpeed)  // Grenze überschritten ?
@@ -100,7 +100,7 @@ void GegnerKugelGross::DoKI(void) {
 // Stachelkugel explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerKugelGross::GegnerExplode(void) {
+void GegnerKugelGross::GegnerExplode() {
     // Zwei neue Kugeln spawnen
     Gegner.PushGegner(xPos + 12, yPos + 12, KUGELMEDIUM, -8, 0, ChangeLight);
     Gegner.PushGegner(xPos + 12, yPos + 12, KUGELMEDIUM, 8, 0, ChangeLight);

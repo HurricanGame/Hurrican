@@ -30,7 +30,7 @@ GegnerFlugKanone::GegnerFlugKanone(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFlugKanone::DoKI(void) {
+void GegnerFlugKanone::DoKI() {
     // Animieren
     if (AnimEnde > 0)  // Soll überhaupt anmiert werden ?
     {
@@ -108,7 +108,7 @@ void GegnerFlugKanone::DoKI(void) {
 // FlugKanone explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerFlugKanone::GegnerExplode(void) {
+void GegnerFlugKanone::GegnerExplode() {
     for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(float(xPos - 20 + rand() % 45), float(yPos - 20 + rand() % 45), EXPLOSION_MEDIUM2);
     for (int i = 0; i < 20; i++)

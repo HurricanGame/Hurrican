@@ -38,7 +38,7 @@ GegnerFetteRakete::GegnerFetteRakete(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerFetteRakete::DoDraw(void) {
+void GegnerFetteRakete::DoDraw() {
     // Rakete rendern
     //
     pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset),
@@ -50,7 +50,7 @@ void GegnerFetteRakete::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFetteRakete::DoKI(void) {
+void GegnerFetteRakete::DoKI() {
     BlickRichtung = LINKS;
 
     switch (Handlung) {
@@ -158,7 +158,7 @@ void GegnerFetteRakete::DoKI(void) {
 // FetteRakete explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerFetteRakete::GegnerExplode(void) {
+void GegnerFetteRakete::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
 
     PartikelSystem.PushPartikel(xPos - 10, yPos - 20, EXPLOSION_MEDIUM2);

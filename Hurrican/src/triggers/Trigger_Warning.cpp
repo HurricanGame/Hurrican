@@ -28,7 +28,7 @@ GegnerWarning::GegnerWarning(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerWarning::DoKI(void) {
+void GegnerWarning::DoKI() {
     xPos = float(TileEngine.XOffset + 230);
     yPos = float(TileEngine.YOffset + 400);
 
@@ -50,4 +50,4 @@ void GegnerWarning::DoKI(void) {
 // Warning explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerWarning::GegnerExplode(void) {}
+void GegnerWarning::GegnerExplode() {}

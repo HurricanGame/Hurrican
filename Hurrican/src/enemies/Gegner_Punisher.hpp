@@ -13,11 +13,11 @@ class GegnerPunisher : public GegnerClass {
     GegnerPunisher(int Wert1,
                    int Wert2,  // Konstruktor
                    bool Light);
-    void FollowPlayer(void);   // Spieler folgen
-    void GegnerExplode(void);  // Gegner explodiert
-    void DoKI(void);           // Gegner individuell mit seiner eigenen kleinen KI bewegen
-    void DoDraw(void);         // Gegner individuell rendern
-    void Vanish(void);
+    void FollowPlayer();   // Spieler folgen
+    void GegnerExplode();  // Gegner explodiert
+    void DoKI();           // Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw();         // Gegner individuell rendern
+    void Vanish();
 };
 
 #endif

@@ -30,7 +30,7 @@ GegnerJaeger::GegnerJaeger(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerJaeger::DoDraw(void) {
+void GegnerJaeger::DoDraw() {
     // beim Hoch fliegen
     //
     if (Handlung == GEGNER_DREHEN)
@@ -49,7 +49,7 @@ void GegnerJaeger::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerJaeger::DoKI(void) {
+void GegnerJaeger::DoKI() {
     SimpleAnimation();
 
     switch (Handlung) {
@@ -125,7 +125,7 @@ void GegnerJaeger::DoKI(void) {
 // Jaeger explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerJaeger::GegnerExplode(void) {
+void GegnerJaeger::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 6; i++)

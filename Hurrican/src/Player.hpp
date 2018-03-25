@@ -133,7 +133,7 @@ class PlayerClass {
     int randomwert;     // aktueller srand wert
     float changecount;  // zähler, wann die blitze sich ändern
     bool weaponswitchlock;
-    void checkWeaponSwitch(void);
+    void checkWeaponSwitch();
 
   public:
     bool GegnerDran;
@@ -246,41 +246,41 @@ class PlayerClass {
     DirectGraphicsSprite PlayerRad;   // Grafiken für das Rad
 
     PlayerClass();       // Spieler initlaisieren
-    ~PlayerClass(void);  // Spieler freigeben
+    ~PlayerClass();  // Spieler freigeben
     // DKS - Added paramter to specify if the player being initialized is player 1 (0) or player 2 (1):
     void InitPlayer(int player_num);                           // Auf neues Spiel vorbereiten
-    void InitNewLevel(void);                                   // Auf neues Level vorbereiten
-    bool GetPlayerInput(void);                                 // Eingabegeräte abfragen
-    void PlayerShoot(void);                                    // Spieler schiesst
-    void PlayerGrenadeShoot(void);                             // Granate ablassen
-    void AnimatePlayer(void);                                  // Spieler animieren
-    void MovePlayer(void);                                     // Spieler mit aktueller Speed bewegen
+    void InitNewLevel();                                   // Auf neues Level vorbereiten
+    bool GetPlayerInput();                                 // Eingabegeräte abfragen
+    void PlayerShoot();                                    // Spieler schiesst
+    void PlayerGrenadeShoot();                             // Granate ablassen
+    void AnimatePlayer();                                  // Spieler animieren
+    void MovePlayer();                                     // Spieler mit aktueller Speed bewegen
     bool DrawPlayer(bool leuchten, bool farbe);                // Spieler zeichnen
-    bool DoLightning(void);                                    // Blitz animieren und zeichnen
+    bool DoLightning();                                    // Blitz animieren und zeichnen
     void DrawNormalLightning(int DrawLength);                  // Den normalen Blitz rendern
     void DrawCoolLightning(int DrawLength, float mul = 1.0f);  // Den neuen Blitz rendern =)
-    bool LoadBeam(void);                                       // Beam aufladen
+    bool LoadBeam();                                       // Beam aufladen
     void DamagePlayer(float Ammount,                           // Spieler erleidet Schaden
                       bool Override = false);
-    void CenterLevel(void);  // Level auf Spieler zentrieren
-    void PullItems(void);
+    void CenterLevel();  // Level auf Spieler zentrieren
+    void PullItems();
 
     // Player Move Funktionen
 
-    void runExplode(void);          // spieler explodiert gerade
-    void checkShoot(void);          // Spieler will schiessen?
-    void handleAutoFire(void);      // Autofire abhandeln
-    void DoStuffWhenDamaged(void);  // Funken und Rauch, wenn der Spieler wenig Energie hat
-    void DoPlattformStuff(void);    // Auf einer Plattform bewegen
-    void CheckForExplode(void);     // Keine Energy mehr? Dann explodieren
-    void CalcWeaponLevels(void);
-    void CalcFlamePos(void);        // Position der Flamme berechnen
-    void CalcAustrittsPunkt(void);  // Austrittspunkt des Schusses berechnen
-    bool CheckLevelExit(void);      // Spieler im Ausgang?
-    void RunPlayerExit(void);       // Spieler läuft grad ins Exit
-    void PlayerInExit(void);        // Spieler aus dem Level rausgelaufen?
-    bool Riding(void);              // Alle Spieler auf einem Flugsack?
-    void ScrollFlugsack(void);      // Im Flugsacklevel scrollen?
+    void runExplode();          // spieler explodiert gerade
+    void checkShoot();          // Spieler will schiessen?
+    void handleAutoFire();      // Autofire abhandeln
+    void DoStuffWhenDamaged();  // Funken und Rauch, wenn der Spieler wenig Energie hat
+    void DoPlattformStuff();    // Auf einer Plattform bewegen
+    void CheckForExplode();     // Keine Energy mehr? Dann explodieren
+    void CalcWeaponLevels();
+    void CalcFlamePos();        // Position der Flamme berechnen
+    void CalcAustrittsPunkt();  // Austrittspunkt des Schusses berechnen
+    bool CheckLevelExit();      // Spieler im Ausgang?
+    void RunPlayerExit();       // Spieler läuft grad ins Exit
+    void PlayerInExit();        // Spieler aus dem Level rausgelaufen?
+    bool Riding();              // Alle Spieler auf einem Flugsack?
+    void ScrollFlugsack();      // Im Flugsacklevel scrollen?
 
     // DKS - Player sprites are no longer static globals, but instead class member vars:
     //      This function will load the sprites specific to each player based on

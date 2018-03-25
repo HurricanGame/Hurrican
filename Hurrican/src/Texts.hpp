@@ -347,7 +347,7 @@ typedef enum Textenum {
 // --------------------------------------------------------------------------------------
 
 bool LoadLanguage(char *filename);           // Bestimmte Sprachdatei laden
-void InitReplacers(void);                    // Tasten ErsetzungsStrings für die TutorialTexte initialisieren
+void InitReplacers();                    // Tasten ErsetzungsStrings für die TutorialTexte initialisieren
 
 // DKS - Added cross-platform language-files handling
 void FindLanguageFiles(const char *path);

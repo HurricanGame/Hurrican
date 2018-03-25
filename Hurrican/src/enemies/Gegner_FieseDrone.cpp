@@ -31,7 +31,7 @@ GegnerFieseDrone::GegnerFieseDrone(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFieseDrone::DoKI(void) {
+void GegnerFieseDrone::DoKI() {
     static int flamex = 0;
 
     // Animieren
@@ -188,7 +188,7 @@ void GegnerFieseDrone::DoKI(void) {
 // FieseDrone explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerFieseDrone::GegnerExplode(void) {
+void GegnerFieseDrone::GegnerExplode() {
     for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(float(xPos - 25 + rand() % 40), float(yPos - 25 + rand() % 40), EXPLOSION_MEDIUM2);
     for (int i = 0; i < 20; i++)

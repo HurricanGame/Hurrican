@@ -29,7 +29,7 @@ GegnerSwimWalker::GegnerSwimWalker(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSwimWalker::DoKI(void) {
+void GegnerSwimWalker::DoKI() {
     SimpleAnimation();
 
     // Nach links bzw rechts auf Kollision prüfen und dann ggf umkehren
@@ -87,7 +87,7 @@ void GegnerSwimWalker::DoKI(void) {
 // Explodieren
 // --------------------------------------------------------------------------------------
 
-void GegnerSwimWalker::GegnerExplode(void) {
+void GegnerSwimWalker::GegnerExplode() {
     // blubbern
     PartikelSystem.PushPartikel(xPos + rand() % 20, yPos + rand() % 20, EXPLOSION_MEDIUM3);
 

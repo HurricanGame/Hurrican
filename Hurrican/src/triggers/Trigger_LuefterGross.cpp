@@ -25,7 +25,7 @@ GegnerLuefterGross::GegnerLuefterGross(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerLuefterGross::DoDraw(void) {
+void GegnerLuefterGross::DoDraw() {
     D3DCOLOR Color = TileEngine.LightValue(xPos, yPos, GegnerRect[GegnerArt], ForceLight);
     pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
                                            static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, Color, false);
@@ -35,10 +35,10 @@ void GegnerLuefterGross::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerLuefterGross::DoKI(void) {}
+void GegnerLuefterGross::DoKI() {}
 
 // --------------------------------------------------------------------------------------
 // LuefterGross explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerLuefterGross::GegnerExplode(void) {}
+void GegnerLuefterGross::GegnerExplode() {}

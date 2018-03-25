@@ -27,7 +27,7 @@ GegnerDeckenKrabbe::GegnerDeckenKrabbe(int Wert1, int Wert2, bool Light) {
 // Eigene Draw Funktion
 // --------------------------------------------------------------------------------------
 
-void GegnerDeckenKrabbe::DoDraw(void) {
+void GegnerDeckenKrabbe::DoDraw() {
     bool mirror;
 
     if (BlickRichtung == LINKS)
@@ -47,7 +47,7 @@ void GegnerDeckenKrabbe::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerDeckenKrabbe::DoKI(void) {
+void GegnerDeckenKrabbe::DoKI() {
     if (zRot > 360.0f)
         zRot = 0.0f;
     if (zRot < 0.0f)
@@ -236,7 +236,7 @@ void GegnerDeckenKrabbe::DoKI(void) {
 // DeckenKrabbe explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerDeckenKrabbe::GegnerExplode(void) {
+void GegnerDeckenKrabbe::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 9000 + rand() % 2000, SOUND_EXPLOSION3);
 
     PartikelSystem.PushPartikel(xPos + 15, yPos + 10, LAVAKRABBE_KOPF);

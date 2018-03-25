@@ -31,7 +31,7 @@ GegnerOneUp::GegnerOneUp(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerOneUp::DoKI(void) {
+void GegnerOneUp::DoKI() {
     SimpleAnimation();
 
     // auf dem Fliessband bewegen
@@ -99,7 +99,7 @@ void GegnerOneUp::DoKI(void) {
 // Extra Leben verschwindet
 // --------------------------------------------------------------------------------------
 
-void GegnerOneUp::GegnerExplode(void) {
+void GegnerOneUp::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);          // Sound ausgeben
     SoundManager.PlayWave(100, 128, 11025, SOUND_VOICE_EXTRALIFE);  // Sound ausgeben
 }

@@ -35,7 +35,7 @@ GegnerKugelMedium::GegnerKugelMedium(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerKugelMedium::DoKI(void) {
+void GegnerKugelMedium::DoKI() {
     BlickRichtung = LINKS;
     AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
     if (AnimCount > AnimSpeed)  // Grenze überschritten ?
@@ -96,7 +96,7 @@ void GegnerKugelMedium::DoKI(void) {
 // Stachelkugel explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerKugelMedium::GegnerExplode(void) {
+void GegnerKugelMedium::GegnerExplode() {
     // Zwei neue Kugeln spawnen
     Gegner.PushGegner(xPos + 8, yPos + 8, KUGELKLEIN, -8, 0, ChangeLight);
     Gegner.PushGegner(xPos + 8, yPos + 8, KUGELKLEIN, 8, 0, ChangeLight);

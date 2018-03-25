@@ -26,7 +26,7 @@ GegnerWasserMine::GegnerWasserMine(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerWasserMine::DoKI(void) {
+void GegnerWasserMine::DoKI() {
     SimpleAnimation();
 
     // Spieler berührt ?
@@ -37,7 +37,7 @@ void GegnerWasserMine::DoKI(void) {
 // WasserMine explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerWasserMine::GegnerExplode(void) {
+void GegnerWasserMine::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000, SOUND_EXPLOSION3);
     SoundManager.PlayWave(100, 128, 14000, SOUND_EXPLOSION4);
 

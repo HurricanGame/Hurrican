@@ -35,7 +35,7 @@ GegnerFlugsack::GegnerFlugsack(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerFlugsack::DoKI(void) {
+void GegnerFlugsack::DoKI() {
     SimpleAnimation();
 
     // Je nach Handlung richtig verhalten
@@ -168,7 +168,7 @@ void GegnerFlugsack::DoKI(void) {
 // Explodieren
 // --------------------------------------------------------------------------------------
 
-void GegnerFlugsack::GegnerExplode(void) {
+void GegnerFlugsack::GegnerExplode() {
     for (int i = 0; i < 10; i++)
         PartikelSystem.PushPartikel(xPos + rand() % 80 - 30, yPos + rand() % 70 - 30, EXPLOSION_MEDIUM2);
 

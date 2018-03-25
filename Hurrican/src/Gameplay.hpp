@@ -30,31 +30,31 @@
 // Prototypen von Funktionen
 // --------------------------------------------------------------------------------------
 
-void InitNewGame(void);                        // Neues Spiel initialisieren
+void InitNewGame();                        // Neues Spiel initialisieren
 void InitNewGameLevel(int Nr);                 // Alles für den Levelstart in Stage NR vorbereiten
-void GameLoop(void);                           // Haupt-Spielablauf
-void ScreenWackeln(void);                      // Screen wackeln lassen
+void GameLoop();                           // Haupt-Spielablauf
+void ScreenWackeln();                      // Screen wackeln lassen
 void ShakeScreen(float staerke);               // Angeben wie stark der Screen wackeln soll
-void SetScreenShake(void);                     // Geshakten Screen setzen bzw Matrix dafür einstellen
-void ExplodePlayer(void);                      // Spieler explodieren lassen
+void SetScreenShake();                     // Geshakten Screen setzen bzw Matrix dafür einstellen
+void ExplodePlayer();                      // Spieler explodieren lassen
 void StageClear(bool PlaySong = true);         // Spieler aus dem Level abgehen lassen
-void SummaryScreen(void);                      // Zusammenfassung des Levels
-bool LoadConfig(void);                         // Konfigurationen laden
-void SaveConfig(void);                         // Konfigurationen speichern
+void SummaryScreen();                      // Zusammenfassung des Levels
+bool LoadConfig();                         // Konfigurationen laden
+void SaveConfig();                         // Konfigurationen speichern
 void CreateDefaultControlsConfig(int player);  // Load per-player default controls configuration
-void CreateDefaultConfig(void);                // DefaultKonfigurationen erstellen
+void CreateDefaultConfig();                // DefaultKonfigurationen erstellen
 bool DisplayLoadInfo(const char Text[100]);    // Text beim Loading anzeigen
 bool NewDemo(const char Filename[]);           // Neues Demo aufzeichnen
-void RecordDemo(void);                         // Spielereingaben sichern
+void RecordDemo();                         // Spielereingaben sichern
 bool LoadDemo(const char Filename[]);          // Demo laden
-void PlayDemo(void);                           // Demo laufen lassen
-void EndDemo(void);                            // Demo anhalten
-void LeaveGameLoop(void);                      // Game Loop verlassen
-void ScrolltoPlayeAfterBoss(void);             // Der Name ist Programm
-void ShowPissText(void);
-void ShowGameOver(void);
+void PlayDemo();                           // Demo laufen lassen
+void EndDemo();                            // Demo anhalten
+void LeaveGameLoop();                      // Game Loop verlassen
+void ScrolltoPlayeAfterBoss();             // Der Name ist Programm
+void ShowPissText();
+void ShowGameOver();
 const char *convertText(const char *text);
-PlayerClass *ChooseAim(void);
+PlayerClass *ChooseAim();
 
 // --------------------------------------------------------------------------------------
 // Externals

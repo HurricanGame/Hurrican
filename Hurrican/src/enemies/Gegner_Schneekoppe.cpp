@@ -37,7 +37,7 @@ GegnerSchneekoppe::GegnerSchneekoppe(int Wert1, int Wert2, bool Light) {
 // Eigene Drawroutine
 // --------------------------------------------------------------------------------------
 
-void GegnerSchneekoppe::DoDraw(void) {
+void GegnerSchneekoppe::DoDraw() {
     // Drehwinkel aus der Geschwindigkeit errechnen
 
     // DKS - converted to float, optimized:
@@ -62,7 +62,7 @@ void GegnerSchneekoppe::DoDraw(void) {
 // "Bewegungs KI"
 // --------------------------------------------------------------------------------------
 
-void GegnerSchneekoppe::DoKI(void) {
+void GegnerSchneekoppe::DoKI() {
     BlickRichtung = RECHTS;
 
     SimpleAnimation();
@@ -86,7 +86,7 @@ void GegnerSchneekoppe::DoKI(void) {
 // Auge explodiert
 // --------------------------------------------------------------------------------------
 
-void GegnerSchneekoppe::GegnerExplode(void) {
+void GegnerSchneekoppe::GegnerExplode() {
     for (int i = 0; i < 10; i++)
         PartikelSystem.PushPartikel(xPos - 10 + rand() % 20, yPos - 10 + rand() % 20, BLUE_EXPLOSION);
 
