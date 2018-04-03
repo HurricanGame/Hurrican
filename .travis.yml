@@ -2,6 +2,7 @@ sudo: required
 
 before_install:
   - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+  - sudo add-apt-repository -y ppa:tobix/epoxy
   - sudo apt-get update -qq
 
 install:
@@ -11,6 +12,7 @@ install:
   - sudo apt-get install -qq libsdl-image1.2-dev
   - sudo apt-get install -qq libsdl-mixer1.2-dev
   - sudo apt-get install -qq libmodplug-dev
+  - sudo apt-get install -qq libepoxy-dev
 
 language: cpp
 
