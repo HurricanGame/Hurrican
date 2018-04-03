@@ -19,6 +19,7 @@
 #include "DX8Sprite.hpp"
 //#include "lightmap.h"     //DKS - all light-map related code disabled
 #include "CDragonHack.hpp"
+#include "Globals.hpp"
 
 // --------------------------------------------------------------------------------------
 // Defines

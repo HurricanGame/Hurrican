@@ -102,7 +102,7 @@ class DirectGraphicsSprite {
             if (i < 0 || i >= (int)rects.size()) {
                 Protokoll << "Error: index " << std::dec << i
                           << " out of bounds of itsPreCalcedRects[] (size:" << rects.size() << std::endl;
-                GameRunning = false;
+//                GameRunning = false;
                 abort();
             }
 

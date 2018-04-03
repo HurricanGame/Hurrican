@@ -519,4 +519,7 @@ INCLUDE(FindSDL_image REQUIRED)
 
 include_directories(${SDL_INCLUDE_DIR})
 
-target_link_libraries(${PROJECT_NAME} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARIES} ${SDL_IMAGE_LIBRARIES} ${OPENGL_LIBRARIES} stdc++fs modplug)
+target_link_libraries(${PROJECT_NAME} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARIES} ${SDL_IMAGE_LIBRARIES} ${OPENGL_LIBRARIES} modplug)
+if(UNIX)
+    target_link_libraries(${PROJECT_NAME} stdc++fs)
+endif()

@@ -52,6 +52,7 @@
 #define glClearDepth glClearDepthf
 #endif
 
+#ifndef GL_GLEXT_PROTOTYPES
 #if defined(__WIN32__)
 #if defined(USE_GL2)
 /* OpenGL Version 2.0 API */
@@ -117,5 +118,6 @@ extern PFNGLCOMPRESSEDTEXIMAGE2DARBPROC glCompressedTexImage2D;
 extern PFNGLGETCOMPRESSEDTEXIMAGEARBPROC glGetCompressedTexImageARB;
 #endif
 #endif /* WIN32 */
+#endif
 
 #endif /* _OPENGL_H_ */

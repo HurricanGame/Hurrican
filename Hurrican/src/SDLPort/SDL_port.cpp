@@ -37,6 +37,7 @@ void D3DXMatrixIdentity(D3DXMATRIXA16 *m) {
     m->identity();
 }
 
+#ifndef __WIN32__
 void strcat_s(char *dst, const char *src) {
     strcat(dst, src);
 }
@@ -56,6 +57,7 @@ void strcpy_s(char *dst, int size, const char *src) {
 void strcpy_s(char *dst, const char *src) {
     strcpy(dst, src);
 }
+#endif
 
 std::vector<char> LoadFileToMemory(const std::string &name) {
     std::ifstream file(name.c_str(), std::ifstream::binary);
@@ -104,6 +106,7 @@ void load_matrix(GLenum mode, const GLfloat *m) {
     }
 
 uint8_t LoadGLFunctions() {
+#ifndef GL_GLEXT_PROTOTYPES
 #if defined(USE_GL2)
     LOAD_OPENGL_PROC(PFNGLDELETESHADERPROC, glDeleteShader);
     LOAD_OPENGL_PROC(PFNGLDELETEPROGRAMPROC, glDeleteProgram);
@@ -149,10 +152,11 @@ uint8_t LoadGLFunctions() {
     LOAD_OPENGL_PROC(PFNGLCOMPRESSEDTEXIMAGE2DARBPROC, glCompressedTexImage2D);
     LOAD_OPENGL_PROC(PFNGLGETCOMPRESSEDTEXIMAGEARBPROC, glGetCompressedTexImageARB);
 #endif
-
+#endif
     return 0;
 }
 
+//#ifndef GL_GLEXT_PROTOTYPES
 /* OpenGL Version 2.0 API */
 #if defined(USE_GL2)
 PFNGLDELETESHADERPROC glDeleteShader = NULL;
@@ -197,8 +201,10 @@ PFNGLDELETERENDERBUFFERSEXTPROC glDeleteRenderbuffers = NULL;
 
 #if defined(USE_GL1) || defined(USE_GL2)
 /* GL_ARB_texture_compression */
+#undef glCompressedTexImage2D
 PFNGLCOMPRESSEDTEXIMAGE2DARBPROC glCompressedTexImage2D = NULL;
 PFNGLGETCOMPRESSEDTEXIMAGEARBPROC glGetCompressedTexImageARB = NULL;
 #endif
+//#endif
 
 #endif

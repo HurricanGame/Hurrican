@@ -211,7 +211,7 @@ void FillCommandLineParams(int argc, char *args[]) {
             if (i < argc) {
                 if (args[i] && strlen(args[i]) > 0 && !CommandLineParams.DataPath) {
                     CommandLineParams.DataPath = (char *)malloc(strlen(args[i] + 1));
-                    strcpy_s(CommandLineParams.DataPath, args[i]);
+                    strcpy(CommandLineParams.DataPath, args[i]);
                     if (fs::is_directory(CommandLineParams.DataPath)) {
                         fprintf(stdout, "Data path set to %s\n", CommandLineParams.DataPath);
                     } else {
@@ -226,7 +226,7 @@ void FillCommandLineParams(int argc, char *args[]) {
             if (i < argc) {
                 if (args[i] && strlen(args[i]) > 0 && !CommandLineParams.SavePath) {
                     CommandLineParams.SavePath = (char *)malloc(strlen(args[i] + 1));
-                    strcpy_s(CommandLineParams.SavePath, args[i]);
+                    strcpy(CommandLineParams.SavePath, args[i]);
                     if (fs::create_directory(CommandLineParams.SavePath)) {
                         fprintf(stdout, "Save path set to %s\n", CommandLineParams.SavePath);
                     } else {
@@ -270,7 +270,7 @@ int main(int argc, char *argv[]) {
     // First, see if a command line parameter was passed:
     if (CommandLineParams.DataPath) {
         g_storage_ext = (char *)malloc(strlen(CommandLineParams.DataPath + 1));
-        strcpy_s(g_storage_ext, CommandLineParams.DataPath);
+        strcpy(g_storage_ext, CommandLineParams.DataPath);
         free(CommandLineParams.DataPath);
         CommandLineParams.DataPath = nullptr;
     } else {
@@ -292,7 +292,7 @@ int main(int argc, char *argv[]) {
         }
 #else
         g_storage_ext = (char *)malloc(strlen(".") + 1);
-        strcpy_s(g_storage_ext, ".");
+        strcpy(g_storage_ext, ".");
 #endif
 #endif  // ANDROID
     }
@@ -301,7 +301,7 @@ int main(int argc, char *argv[]) {
     g_save_ext = nullptr;
     if (CommandLineParams.SavePath) {
         g_save_ext = (char *)malloc(strlen(CommandLineParams.SavePath + 1));
-        strcpy_s(g_save_ext, CommandLineParams.SavePath);
+        strcpy(g_save_ext, CommandLineParams.SavePath);
         free(CommandLineParams.SavePath);
         CommandLineParams.SavePath = nullptr;
     } else {
@@ -316,8 +316,8 @@ int main(int argc, char *argv[]) {
         if (homedir) {
             const char *subdir = "/.hurrican";
             g_save_ext = (char *)malloc(strlen(homedir) + strlen(subdir) + 1);
-            strcpy_s(g_save_ext, homedir);
-            strcat_s(g_save_ext, subdir);
+            strcpy(g_save_ext, homedir);
+            strcat(g_save_ext, subdir);
             success = fs::is_directory(g_save_ext) || fs::create_directory(g_save_ext);
             if (!success) {
                 // We weren't able to create the $HOME/.hurrican directory, or if it exists, it is
@@ -335,7 +335,7 @@ int main(int argc, char *argv[]) {
         if (!success) {
             Protokoll << "\tUsing '.' folder as fallback." << std::endl;
             g_save_ext = (char *)malloc(strlen(".") + 1);
-            strcpy_s(g_save_ext, ".");
+            strcpy(g_save_ext, ".");
         }
 #else
         g_save_ext = (char *)malloc(strlen(".") + 1);

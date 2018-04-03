@@ -287,7 +287,7 @@ bool ExtractStringOfLength(char *dst1, char *dst2, char *source, int width, Dire
     dst1[split_pos + 1] = '\0';
 
     // Now, copy the remainder, minus the leading space and including the NULL terminator, into dst2
-    strcpy_s(dst2, &source[split_pos + 1]);
+    strcpy(dst2, &source[split_pos + 1]);
 
     return true;
 }

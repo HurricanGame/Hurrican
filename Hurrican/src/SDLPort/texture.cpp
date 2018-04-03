@@ -186,7 +186,7 @@ bool load_texture(image_t &image, GLuint &new_texture) {
         if (error != 0) {
             Protokoll << "GL load_texture Error " << error << std::endl;
             Protokoll << "Format " << std::hex << image.format << std::dec << " W " << image.w << " H " << image.h
-                      << " S " << image.size << " Data " << std::hex << static_cast<std::uintptr_t>(image.data)
+                      << " S " << image.data.size() << " Data " << std::hex << reinterpret_cast<std::uintptr_t>(image.data.data())
                       << std::dec << " + " << image.offset << std::endl;
             return false;
         }

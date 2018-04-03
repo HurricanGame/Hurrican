@@ -245,7 +245,7 @@ bool DirectGraphicsSprite::LoadImage(const std::string &filename,
 
     if (xfc == 0 || yfc == 0) {
 #ifdef _DEBUG
-        Protokoll << "Error: xfc or yfc parameters to DirectGraphicsSprite::LoadImage() are 0! xfc:") << xfc << " yfc:" << yfc << std::endl;
+        Protokoll << "Error: xfc or yfc parameters to DirectGraphicsSprite::LoadImage() are 0! xfc:" << xfc << " yfc:" << yfc << std::endl;
         GameRunning = false;
 #endif
     }
