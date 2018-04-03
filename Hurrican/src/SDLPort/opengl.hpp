@@ -2,7 +2,11 @@
 #define _OPENGL_H_
 
 #include <epoxy/gl.h>
+#ifdef _WIN32
+#include <epoxy/wgl.h>
+#else
 #include <epoxy/glx.h>
+#endif
 #if 0
 #include "SDL.h"
 

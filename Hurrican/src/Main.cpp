@@ -32,6 +32,7 @@
 namespace fs = std::experimental::filesystem::v1;
 
 #include <iomanip>
+#include <SDL.h>
 #include "CCracktro.hpp"
 #include "Console.hpp"
 #include "DX8Sound.hpp"
@@ -259,7 +260,8 @@ void FillCommandLineParams(int argc, char *args[]) {
 // --------------------------------------------------------------------------------------
 // Win-Main Funktion
 // --------------------------------------------------------------------------------------
-
+#undef main
+#define main main
 int main(int argc, char *argv[]) {
     GamePaused = false;
 
