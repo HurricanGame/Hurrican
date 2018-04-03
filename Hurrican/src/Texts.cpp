@@ -220,7 +220,7 @@ void FindLanguageFiles(const char *path) {
 
         if (file.path().extension() == ".lng") {
             Protokoll << "Found language file " << file.path().filename() << " in path " << path << std::endl;
-            LanguageFiles.push_back(file.path().filename());
+            LanguageFiles.push_back(file.path().filename().string());
         }
     }
 }

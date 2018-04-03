@@ -19,6 +19,7 @@
 #include <map>
 #include <string>
 #include "DX8Graphics.hpp"
+//#include "Globals.hpp"
 
 // --------------------------------------------------------------------------------------
 // Defines

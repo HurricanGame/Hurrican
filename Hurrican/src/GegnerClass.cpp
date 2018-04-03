@@ -532,7 +532,7 @@ bool GegnerClass::IsOnScreen() {
     int off;
     int xsize, ysize;
 
-    off = std::min(GegnerRect[GegnerArt].left, 0);
+    off = std::min((LONG)GegnerRect[GegnerArt].left, (LONG)0);
 
     xsize = pGegnerGrafix[GegnerArt]->itsXFrameSize;
     ysize = pGegnerGrafix[GegnerArt]->itsYFrameSize;

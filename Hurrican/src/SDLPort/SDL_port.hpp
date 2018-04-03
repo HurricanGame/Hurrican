@@ -32,8 +32,8 @@
 #include <vector>
 
 #include "Logdatei.hpp"
-#include "SDL/SDL.h"
-#include "SDL/SDL_image.h"
+#include "SDL.h"
+#include "SDL_image.h"
 #include "cml/cml.h"
 #include "keymap.hpp"
 #include "opengl.hpp"
@@ -49,6 +49,7 @@ typedef struct tagRECT {
     std::int32_t right;
     std::int32_t bottom;
 } RECT;
+typedef std::uint32_t LONG;
 #endif
 typedef std::uint32_t LPDIRECT3D8, LPDIRECT3D9, LPDIRECT3DDEVICE8, LPDIRECT3DDEVICE9, LPDIRECTSOUND8, D3DCOLOR;
 

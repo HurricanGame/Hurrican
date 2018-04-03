@@ -1,7 +1,7 @@
 #ifndef _OPENGL_H_
 #define _OPENGL_H_
 
-#include "SDL/SDL.h"
+#include "SDL.h"
 
 // Do some sanity checks
 #if !defined(USE_GL1) && !defined(USE_GL2)
@@ -43,7 +43,7 @@
 #endif
 
 #else /* Full OpenGL Profile */
-#include "SDL/SDL_opengl.h"
+#include "SDL_opengl.h"
 #endif
 
 #endif
