@@ -56,6 +56,12 @@ void DirectJoystickClass::StopForceFeedbackEffect(int nr) {
         return;
 }
 
+#if SDL_VERSION_ATLEAST(2,0,0)
+    #define SDLJOYINDEX lpDIJoystick
+#else
+    #define SDLJOYINDEX joy
+#endif
+
     // --------------------------------------------------------------------------------------
     // Joystick initialisieren
     // --------------------------------------------------------------------------------------
@@ -75,10 +81,10 @@ bool DirectJoystickClass::Init(int joy) {
     CanForceFeedback = false;  // Forced false for now until implemented
 
     // Get joystick's name
-    if (strlen(SDL_JoystickName(joy)) < sizeof(JoystickName)) {
-        strcpy_s(JoystickName, SDL_JoystickName(joy));
+    if (strlen(SDL_JoystickName(SDLJOYINDEX)) < sizeof(JoystickName)) {
+        strcpy_s(JoystickName, SDL_JoystickName(SDLJOYINDEX));
     } else {
-        strcpy_s(JoystickName, sizeof(JoystickName) - 1, SDL_JoystickName(joy));  // Truncate to fit
+        strcpy_s(JoystickName, sizeof(JoystickName) - 1, SDL_JoystickName(SDLJOYINDEX));  // Truncate to fit
         JoystickName[sizeof(JoystickName) - 1] = '\0';                            // and null-terminate
     }
 
