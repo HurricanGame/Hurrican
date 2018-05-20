@@ -5,6 +5,7 @@
 ##### Pre-configured build targets (default is linux_GL1)
 # linux_GL1   : Linux (OpenGL1)
 # linux_GL2   : Linux (OpenGLES2)
+# linux_GL3   : Linux (OpenGLES3)
 # aros        : AROS Research Operating System (OpenGL1)
 # rpi         : Raspberry PI (OpenGLES2)
 # gcw         : GCW Zero handheld (OpenGLES2)
@@ -214,7 +215,24 @@ LDFLAGS := -g -lSDL -lGLESv2 -lSDL_mixer -lSDL_image -lmodplug -lX11 -lEGL
 
 endif
 
+ifeq ($(TARGET),linux_GL3)
 
+EXE := ../hurricanlinux
+CXX := g++
+CC  := gcc
+LD  := g++
+RM  := rm -f
+
+USE_EGL := yes
+USE_GL3 := yes
+USE_FBO := yes
+
+DEFINES += -DLINUX -DUSE_HOME_DIR -DUSE_GLES3 -DUSE_EGL_SDL
+
+INCLUDES_OS := -I/usr/include -I/usr/include/SDL -I/usr/include/GLES2 -I/usr/include/libmodplug
+LDFLAGS := -g -lSDL -lGLESv2 -lSDL_mixer -lSDL_image -lmodplug -lX11 -lEGL
+
+endif
 
 INCLUDES := -I. -I./SDLPort -I./cml $(INCLUDES_OS)
 
@@ -249,7 +267,12 @@ endif
 
 ifeq ($(USE_GL2),yes)
 DEFINES += -DUSE_GL2
-GL2_FILES := SDLPort/cshader
+GL_FILES := SDLPort/cshader
+endif
+
+ifeq ($(USE_GL3),yes)
+DEFINES += -DUSE_GL3
+GL_FILES := SDLPort/cshader
 endif
 
 ifeq ($(USE_FBO),yes)
@@ -456,7 +479,7 @@ FILES :=Boss_BigFish \
         stdafx \
         tracealloc
 
-ALL_FILES := $(FILES) $(SDL_FILES) $(UNRAR_FILES) $(EGL_FILES) $(GL2_FILES) $(FBO_FILES)
+ALL_FILES := $(FILES) $(SDL_FILES) $(UNRAR_FILES) $(EGL_FILES) $(GL_FILES) $(FBO_FILES)
 
 ALL_OBJS := $(addsuffix .o, $(ALL_FILES))
 

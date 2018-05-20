@@ -56,7 +56,7 @@ DirectGraphicsClass::DirectGraphicsClass() {
     SupportedPVRTC = false;
     use_texture = false;
 
-#if defined(USE_GL2)
+#if defined(USE_GL2) || defined(USE_GL3)
     ProgramCurrent = PROGRAM_NONE;
 #endif
 }
@@ -140,6 +140,10 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+#elif defined(USE_GLES3)
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 #else
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 #endif /* defined(USE_GLES1) */
@@ -300,13 +304,13 @@ bool DirectGraphicsClass::Exit() {
     SDL_GL_DeleteContext(GLcontext);
     SDL_DestroyWindow(Window);
 #endif
-#if defined(USE_GL2)
+#if defined(USE_GL2) || defined(USE_GL3)
     Shaders[PROGRAM_COLOR].Close();
     Shaders[PROGRAM_TEXTURE].Close();
 #if defined(USE_FBO)
     RenderBuffer.Close();
 #endif /* USE_FBO */
-#endif /* USE_GL2 */
+#endif /* USE_GL2 || USE_GL3 */
 #if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
     EGL_Close();
 #endif
@@ -321,9 +325,14 @@ bool DirectGraphicsClass::Exit() {
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsClass::SetDeviceInfo() {
-#if defined(USE_GL2)
+#if defined(USE_GL2) || defined(USE_GL3)
     char vert[256];
     char frag[256];
+#if defined(USE_GL3)
+    const char* glsl_version = "320";
+#else /* USE_GL2 */
+    const char* glsl_version = "100";
+#endif
 #endif
 
 #if defined(__WIN32__)
@@ -338,7 +347,7 @@ bool DirectGraphicsClass::SetDeviceInfo() {
     Protokoll << "GL_VENDOR: " << glGetString(GL_VENDOR) << std::endl;
     Protokoll << "GL_RENDERER: " << glGetString(GL_RENDERER) << std::endl;
     Protokoll << "GL_VERSION: " << glGetString(GL_VERSION) << std::endl;
-#if defined(USE_GL2)
+#if defined(USE_GL2) || defined(USE_GL3)
     Protokoll << "GL_SHADING_LANGUAGE_VERSION: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 #endif
     glextensions = reinterpret_cast<const char *>(glGetString(GL_EXTENSIONS));
@@ -364,22 +373,22 @@ bool DirectGraphicsClass::SetDeviceInfo() {
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 #endif
 
-#if defined(USE_GL2)
+#if defined(USE_GL2) || defined(USE_GL3)
     // Compile the shader code and link into a program
-    sprintf_s(vert, "%s/data/shaders/shader_color.vert", g_storage_ext);
-    sprintf_s(frag, "%s/data/shaders/shader_color.frag", g_storage_ext);
+    sprintf_s(vert, "%s/data/shaders/%s/shader_color.vert", g_storage_ext, glsl_version);
+    sprintf_s(frag, "%s/data/shaders/%s/shader_color.frag", g_storage_ext, glsl_version);
 
     if (Shaders[PROGRAM_COLOR].Load(vert, frag) != 0) {
         return false;
     }
 
-    sprintf_s(vert, "%s/data/shaders/shader_texture.vert", g_storage_ext);
+    sprintf_s(vert, "%s/data/shaders/%s/shader_texture.vert", g_storage_ext, glsl_version);
 #if defined(USE_ETC1)
     if (SupportedETC1 == true) {
-        sprintf_s(frag, "%s/data/shaders/shader_etc1_texture.frag", g_storage_ext);
+        sprintf_s(frag, "%s/data/shaders/%s/shader_etc1_texture.frag", g_storage_ext, glsl_version);
     } else {
 #endif
-        sprintf_s(frag, "%s/data/shaders/shader_texture.frag", g_storage_ext);
+    sprintf_s(frag, "%s/data/shaders/%s/shader_texture.frag", g_storage_ext, glsl_version);
 #if defined(USE_ETC1)
     }
 #endif
@@ -404,7 +413,7 @@ bool DirectGraphicsClass::SetDeviceInfo() {
         Shaders[PROGRAM_TEXTURE].texUnit1 = Shaders[PROGRAM_TEXTURE].GetUniform("u_Texture1");
     }
 #endif
-#endif /* USE_GL2 */
+#endif /* USE_GL2 || USE_GL3 */
 
     /* Matrices setup */
     g_matView.identity();
@@ -498,7 +507,7 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
     int clr_offset = sizeof(float) * 2;
     int tex_offset = clr_offset + sizeof(D3DCOLOR);
 
-#if defined(USE_GL2)
+#if defined(USE_GL2) || defined(USE_GL3)
     uint8_t program_next = PROGRAM_COLOR;
 
     // Determine the shader program to use
@@ -553,7 +562,7 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
 
     glEnableClientState(GL_COLOR_ARRAY);
     glColorPointer(4, GL_UNSIGNED_BYTE, stride, reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + clr_offset);
-#elif defined(USE_GL2)
+#elif defined(USE_GL2) || defined(USE_GL3)
         // Enable attributes and uniforms for transfer
         if (ProgramCurrent == PROGRAM_TEXTURE) {
 #if defined(USE_ETC1)
@@ -588,7 +597,7 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
     if (use_texture == true) {
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     }
-#elif defined(USE_GL2)
+#elif defined(USE_GL2) || defined(USE_GL3)
         // Disbale attributes and uniforms
         glDisableVertexAttribArray(Shaders[ProgramCurrent].NamePos);
         glDisableVertexAttribArray(Shaders[ProgramCurrent].NameClr);
@@ -705,7 +714,7 @@ void DirectGraphicsClass::SetTexture(int idx) {
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsClass::ShowBackBuffer() {
-#if defined(USE_GL2) && defined(USE_FBO)
+#if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
     if (RenderBuffer.Enabled == true) {
         VERTEX2D vertices[4];
 
@@ -771,7 +780,7 @@ void DirectGraphicsClass::ShowBackBuffer() {
     }
 #endif
 
-#if defined(USE_GL2) && defined(USE_FBO)
+#if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
     SelectBuffer(true);
 #endif
 }
@@ -796,7 +805,7 @@ void DirectGraphicsClass::SetupFramebuffers() {
     RenderView.y = 0;
     RenderView.w = RENDERWIDTH;
     RenderView.h = RENDERHEIGHT;
-#if defined(USE_GL2) && defined(USE_FBO)
+#if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
     /* Create an FBO for rendering */
     RenderBuffer.Open(RenderView.w, RenderView.h);
 
@@ -846,18 +855,18 @@ void DirectGraphicsClass::SetupFramebuffers() {
 }
 
 void DirectGraphicsClass::ClearBackBuffer() {
-#if defined(USE_GL2) && defined(USE_FBO)
+#if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 #endif
     glClear(GL_COLOR_BUFFER_BIT);
 
-#if defined(USE_GL2) && defined(USE_FBO)
+#if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
     glBindFramebuffer(GL_FRAMEBUFFER, RenderBuffer.framebuffer);
     glClear(GL_COLOR_BUFFER_BIT);
 #endif
 }
 
-#if defined(USE_GL2) && defined(USE_FBO)
+#if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
 void DirectGraphicsClass::SelectBuffer(bool active) {
     if (RenderBuffer.Enabled == true) {
         if (active == true) {
@@ -929,6 +938,6 @@ void DirectGraphicsClass::DrawCircle(uint16_t x, uint16_t y, uint16_t radius) {
     RendertoBuffer(GL_LINE_STRIP, SECTORS, &vtx[0]);
 }
 #endif /* ANDROID */
-#endif /* USE_GL2 && USE_FBO */
+#endif /* (USE_GL2 || USE_GL3) && USE_FBO */
 
 #endif /* PLATFORM_SDL */

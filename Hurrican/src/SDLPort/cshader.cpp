@@ -101,8 +101,15 @@ GLuint CShader::CompileShader(GLenum type, const std::string &path) {
     source = LoadFileToMemory(path);
 
 #if defined(USE_GLES2)
+    const std::string version = "#version 100\n";
     const std::string precision = "precision mediump float;\n";
     source.insert(source.begin(), precision.begin(), precision.end());
+    source.insert(source.begin(), version.begin(), version.end());
+#elif defined(USE_GLES3)
+    const std::string version = "#version 320 es\n";
+    const std::string precision = "precision highp float;\n";
+    source.insert(source.begin(), precision.begin(), precision.end());
+    source.insert(source.begin(), version.begin(), version.end());
 #endif
 
     if (!source.empty()) {
