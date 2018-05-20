@@ -9,7 +9,8 @@
 # aros        : AROS Research Operating System (OpenGL1)
 # rpi         : Raspberry PI (OpenGLES2)
 # gcw         : GCW Zero handheld (OpenGLES2)
-# rdu         : ??? (TODO: Learn from Pickle which platform this represents)
+# rdu         : IMS display version 1
+# rdu2        : IMS display version 2
 # pandora     : Pandora handheld (OpenGLES2)
 
 ifndef TARGET
@@ -153,6 +154,33 @@ INCLUDES_OS := -ISDL_port \
                -I$(RDUSDK)/include/GLES2 -I$(RDUSDK)/include/EGL
 
 LDFLAGS := -L$(RDUSDK)/lib -g -lpthread -lmodplug -lSDL_mixer -lSDL_image -lSDL -lGLESv2 -lEGL
+
+endif
+
+ifeq ($(TARGET),rdu2)
+
+EXE := ../hurrican
+CXX := $(RDU2SDK)/bin/armv7l-ims-linux-gnueabihf-g++
+CC  := $(RDU2SDK)/bin/armv7l-ims-linux-gnueabihf-gcc
+LD  := $(RDU2SDK)/bin/armv7l-ims-linux-gnueabihf-g++
+RM  := rm -f
+
+USE_EGL := yes
+USE_GL2 := yes
+USE_FBO := yes
+
+DEFINES += -DRDU -DUSE_GL2 -DUSE_GLES2 -DUSE_ETC1 -DUSE_FBO -DUSE_EGL_RAW -DMESA_EGL_NO_X11_HEADERS
+DEFINES += -DUSE_HOME_DIR
+DEFINES += -DUSE_TRIG_LOOKUP_TABLE
+DEFINES += -DUSE_FAST_RNG
+DEFINES += -DUSE_NO_EXCEPTIONS
+
+INCLUDES_OS := -ISDL_port \
+               -I$(RDU2SDK)/include/SDL2 \
+               -I$(RDU2SDK)/include/libmodplug \
+               -I$(RDU2SDK)/include/GLES2 -I$(RDUSDK)/include/EGL
+
+LDFLAGS := -L$(RDU2SDK)/lib -g -lpthread -lmodplug -lSDL2_mixer -lSDL2_image -lSDL2 -lGLESv2 -lEGL
 
 endif
 
