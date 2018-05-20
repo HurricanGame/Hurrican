@@ -302,6 +302,15 @@ void OpenCfg(const char *file, uint16_t depth, bool vsync) {
     strncpy(eglStrings[CFG_BUFFER_SIZE], "size_buffer=", MAX_STRING);
     strncpy(eglStrings[CFG_STENCIL_SIZE], "size_stencil=", MAX_STRING);
 
+    /* Write in a default name for unused configs */
+    for (i=0; i<CFG_TOTAL; i++)
+    {
+	if ( strlen(eglStrings[i]) <= 0)
+        {
+    	    strncpy( eglStrings[i], "default", MAX_STRING );
+        }
+    }
+
     /* Set defaults */
 #if defined(USE_EGL_SDL)
     eglSettings[CFG_MODE] = RENDER_SDL;
@@ -342,7 +351,7 @@ void OpenCfg(const char *file, uint16_t depth, bool vsync) {
             for (i = 0; i < CFG_TOTAL; i++) {
                 location = strstr(buffer, eglStrings[i]);
                 if (location != NULL) {
-                    eglSettings[i] = atol(location + strlen(eglStrings[i]));
+                    eglSettings[i] = atol( location+strlen(eglStrings[i]) );
                     printf("EGLport: %s set to %d.\n", eglStrings[i], eglSettings[i]);
                     break;
                 }

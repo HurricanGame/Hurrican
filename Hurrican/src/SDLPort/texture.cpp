@@ -107,7 +107,12 @@ bool SDL_LoadTexture(const std::string &path,
 
 #if defined(USE_PVRTC)
     if (DirectGraphics.SupportedPVRTC) {
-        fullpath = path + "/pvr/" + filename_sans_ext + ".pvr";
+        fullpath = path + "/pvr/" + filename + ".pvr";
+
+#if defined(_DEBUG)
+        Protokoll << "Using PVR looking for " << fullpath << std::endl;
+#endif
+
         success = loadImagePVRTC(image, fullpath) && load_texture(image, th.tex);
 
         image.data = std::vector<char>();
@@ -274,12 +279,16 @@ bool loadImagePVRTC(image_t &image, const std::string &fullpath) {
         switch (pvrtc_buffer32[2]) {
             case PVRTC_RGB_2BPP:
                 image.format = GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
+                pvrtc_bitperpixel = 2;
+                break;
             case PVRTC_RGBA_2BPP:
                 image.format = GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
                 pvrtc_bitperpixel = 2;
                 break;
             case PVRTC_RGB_4BPP:
                 image.format = GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
+                pvrtc_bitperpixel = 4;
+                break;
             case PVRTC_RGBA_4BPP:
                 image.format = GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
                 pvrtc_bitperpixel = 4;
