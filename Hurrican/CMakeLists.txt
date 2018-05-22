@@ -505,6 +505,7 @@ add_definitions(-DNOMINMAX)
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/src/SDLPort)
+include_directories(${CMAKE_SOURCE_DIR}/3rdparty/glm)
 include_directories(${CMAKE_SOURCE_DIR}/src/cml)
 add_executable(hurrican ${HURRICAN_SOURCES})
 
