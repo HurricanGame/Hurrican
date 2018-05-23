@@ -62,23 +62,23 @@ class GegnerClass {
     uint32_t blocku, blocko, blockl, blockr;  // Block links rechts über und unter dem Gegner
     PlayerClass *pAim;                        // Player to attack
 
-    GegnerClass();                                       // Konstruktor
-    virtual ~GegnerClass();                              // Destruktor
-    virtual void GegnerExplode();                        // Gegner explodiert
-    virtual void DoKI() {}                               // Gegner individuell bewegen
-    virtual void DoDraw() {}                             // Gegner individuell rendern (nur bei manchen)
-    bool Run();                                          // Gegner bewegen, checken etc
-    void Render();                                       // nur rendern
+    GegnerClass();                                           // Konstruktor
+    virtual ~GegnerClass();                                  // Destruktor
+    virtual void GegnerExplode();                            // Gegner explodiert
+    virtual void DoKI() {}                                   // Gegner individuell bewegen
+    virtual void DoDraw() {}                                 // Gegner individuell rendern (nur bei manchen)
+    bool Run();                                              // Gegner bewegen, checken etc
+    void Render();                                           // nur rendern
     int PlayerAbstand(bool both = false);                    // Abstand Gegner/Spieler zurückliefern
-    int PlayerAbstandHoriz(PlayerClass *pTarget = NULL);     // Nur Horizontaler Abstand
-    int PlayerAbstandVert(PlayerClass *pTarget = NULL);      // Nur Vertikaler   Abstand
+    int PlayerAbstandHoriz(PlayerClass *pTarget = nullptr);  // Nur Horizontaler Abstand
+    int PlayerAbstandVert(PlayerClass *pTarget = nullptr);   // Nur Vertikaler   Abstand
     void TestDamagePlayers(float dam, bool detroy = false);  // Spieler verletzt?
     void PlattformTest(RECT rect);                           // Steht der Spieler auf dem Gegner ?
     void Wegschieben(RECT rect, float dam);                  // Gegner schiebt Spieler beiseite
     void SimpleAnimation(bool backward = false);             // Einfache Animation (loop)
-    void TurnonWall();                                   // An der Wand umdrehen?
-    bool TurnonShot();                                   // Umdrehen, wenn angeschoßen
-    bool IsOnScreen();                                   // Gegner grade sichtbar?
+    void TurnonWall();                                       // An der Wand umdrehen?
+    bool TurnonShot();                                       // Umdrehen, wenn angeschoßen
+    bool IsOnScreen();                                       // Gegner grade sichtbar?
     GegnerClass *pNext;                                      // Zeiger auf den nächsten   Gegner
     GegnerClass *pPrev;                                      // Zeiger auf den vorherigen Gegner
 };
@@ -116,10 +116,10 @@ class GegnerListClass {
                     bool Light,
                     bool atEnd = true);
     void DelSel(GegnerClass *pTemp);  // Ausgewählten Gegner entfernen
-    void ClearAll();              // Alle Gegner löschen
-    int GetNumGegner();           // Zahl der Gegner zurückliefern
-    void RunAll();                // Alle Gegner der Liste animieren
-    void RenderAll();             // Alle Gegner der Liste rendern
+    void ClearAll();                  // Alle Gegner löschen
+    int GetNumGegner();               // Zahl der Gegner zurückliefern
+    void RunAll();                    // Alle Gegner der Liste animieren
+    void RenderAll();                 // Alle Gegner der Liste rendern
     void DamageEnemiesonScreen(float x,
                                float y,  // Alle Gegner ausgehend von Stelle x/y verwunden (Granate)
                                int MaxDamage);

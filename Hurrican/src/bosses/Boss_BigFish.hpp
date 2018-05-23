@@ -24,11 +24,9 @@ class GegnerBigFish : public GegnerClass {
                   int Wert2,  // Konstruktor
                   bool Light);
     void NewAction();
-    void GegnerExplode();  // Gegner explodiert
-    void DoKI();           // Gegner bewegen
-    void DoDraw(
-        void);  // Gegner individuell rendern														// eigenen kleinen KI
-                // bewegen
+    void GegnerExplode() override;  // Gegner explodiert
+    void DoKI() override;           // Gegner bewegen
+    void DoDraw() override;  // Gegner individuell rendern
     void MoveTo(float x, float y);
     void DoMove();
 };

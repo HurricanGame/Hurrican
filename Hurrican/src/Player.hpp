@@ -200,17 +200,18 @@ class PlayerClass {
     int BlocksFullGame;         // Anzahl gefundener Powerblöcke im ganzen Spiel
     int Lives;                  // Wieviele Leben noch ?
     int SelectedWeapon;         // gewählte Waffe
-    int CurrentWeaponLevel[4];  // Aktuelles Level		 der Waffen 1-4
-                                //		int						CollectedPowerUps[4];	// Gesammelt Powerups    der Waffen 1-4
-                                //		int						NextWeaponLevel[4];		// Nächste   Waffenstufe der Waffen 1-4
-    int BlitzLength;            // Länge des Blitzes
-    int PowerLines;             // Anzahl an Powerlines
-    int Grenades;               // Anzahl Granaten
-    int SmartBombs;             // Anzahl Smart Bombs
-    int SecretThisLevel;        // Anzahl Secrets im Level
-    int SecretFullGame;         // Anzahl Secrets im ganzen Spiel
-    float BronsonCounter;       // Counter, wann der Hurri anfängt zu pullern =)
-    int FesteAktion;            // Was soll der Spieler von alleine Machen?
+    int CurrentWeaponLevel
+        [4];               // Aktuelles Level		 der Waffen 1-4
+                           //		int						CollectedPowerUps[4];	// Gesammelt Powerups    der Waffen 1-4
+                           //		int						NextWeaponLevel[4];		// Nächste   Waffenstufe der Waffen 1-4
+    int BlitzLength;       // Länge des Blitzes
+    int PowerLines;        // Anzahl an Powerlines
+    int Grenades;          // Anzahl Granaten
+    int SmartBombs;        // Anzahl Smart Bombs
+    int SecretThisLevel;   // Anzahl Secrets im Level
+    int SecretFullGame;    // Anzahl Secrets im ganzen Spiel
+    float BronsonCounter;  // Counter, wann der Hurri anfängt zu pullern =)
+    int FesteAktion;       // Was soll der Spieler von alleine Machen?
     bool DoFesteAktion;
     bool StageClearRunning;
     int JoystickIndex;       // Welcher Joystick wird benutzt?
@@ -225,8 +226,8 @@ class PlayerClass {
     bool SpritesLoaded;  // DKS - Added this to indicate if all the
                          // textures below are loaded yet. Player 2's
                          // textures get loaded on-demand.
-    int PlayerNumber;  // DKS - Added this that indicates whether this
-                       // player class is for player 1 (0) or 2 (1)
+    int PlayerNumber;    // DKS - Added this that indicates whether this
+                         // player class is for player 1 (0) or 2 (1)
     DirectGraphicsSprite PlayerBlitz;
     DirectGraphicsSprite PlayerCrouch;
     DirectGraphicsSprite PlayerKucken;
@@ -245,25 +246,24 @@ class PlayerClass {
     DirectGraphicsSprite PlayerRide;  // Grafiken für das Reiten auf dem FlugSack
     DirectGraphicsSprite PlayerRad;   // Grafiken für das Rad
 
-    PlayerClass();       // Spieler initlaisieren
-    ~PlayerClass();  // Spieler freigeben
+    PlayerClass();             // Spieler initlaisieren
+    ~PlayerClass() = default;  // Spieler freigeben
     // DKS - Added paramter to specify if the player being initialized is player 1 (0) or player 2 (1):
     void InitPlayer(int player_num);                           // Auf neues Spiel vorbereiten
-    void InitNewLevel();                                   // Auf neues Level vorbereiten
-    bool GetPlayerInput();                                 // Eingabegeräte abfragen
-    void PlayerShoot();                                    // Spieler schiesst
-    void PlayerGrenadeShoot();                             // Granate ablassen
-    void AnimatePlayer();                                  // Spieler animieren
-    void MovePlayer();                                     // Spieler mit aktueller Speed bewegen
+    void InitNewLevel();                                       // Auf neues Level vorbereiten
+    bool GetPlayerInput();                                     // Eingabegeräte abfragen
+    void PlayerShoot();                                        // Spieler schiesst
+    void PlayerGrenadeShoot();                                 // Granate ablassen
+    void AnimatePlayer();                                      // Spieler animieren
+    void MovePlayer();                                         // Spieler mit aktueller Speed bewegen
     bool DrawPlayer(bool leuchten, bool farbe);                // Spieler zeichnen
-    bool DoLightning();                                    // Blitz animieren und zeichnen
+    bool DoLightning();                                        // Blitz animieren und zeichnen
     void DrawNormalLightning(int DrawLength);                  // Den normalen Blitz rendern
     void DrawCoolLightning(int DrawLength, float mul = 1.0f);  // Den neuen Blitz rendern =)
-    bool LoadBeam();                                       // Beam aufladen
-    void DamagePlayer(float Ammount,                           // Spieler erleidet Schaden
+    bool LoadBeam();                                           // Beam aufladen
+    void DamagePlayer(float amount,                            // Spieler erleidet Schaden
                       bool Override = false);
     void CenterLevel();  // Level auf Spieler zentrieren
-    void PullItems();
 
     // Player Move Funktionen
 

@@ -25,7 +25,6 @@
 #ifndef _SDL_FMOD_H_
 #define _SDL_FMOD_H_
 
-#include <stdio.h>
 #include "SDL_mixer.h"
 #include "SDL_port.hpp"
 #if defined(USE_MODPLUG)
@@ -56,9 +55,7 @@ enum FSOUND_DEFINES {
 
 signed char SOUND_Init(int mixrate, int maxsoftwarechannels, unsigned int flags);
 void SOUND_Close();
-int SOUND_GetError();
 int SOUND_GetMaxChannels();
-signed char SOUND_SetFrequency(int channel, int freq);
 signed char SOUND_SetPan(int channel, int pan);
 
 MUSIC_MODULE *MUSIC_LoadSong(const char *filename);

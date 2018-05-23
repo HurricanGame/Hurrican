@@ -176,7 +176,7 @@ void GegnerBigFish::DoDraw() {
     FlosseKlein.RenderSpriteRotatedOffset((xPos - TileEngine.XOffset) + 184.0f,
                                           (yPos - TileEngine.YOffset) + YOff + 80.0f, fs, -28, -9, 0xFFFFFFFF, false);
 
-    if (AlreadyDrawn == false) {
+    if (!AlreadyDrawn) {
         DirectGraphics.SetAdditiveMode();
 
         // Leuchtflare rendern
@@ -252,7 +252,7 @@ void GegnerBigFish::DoKI() {
         HUD.ShowBossHUD(2000, Energy);
 
     // Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
-    if (Active == true && Handlung != GEGNER_EXPLODIEREN && TileEngine.Zustand == ZUSTAND_SCROLLBAR && Energy > 0.0f) {
+    if (Active && Handlung != GEGNER_EXPLODIEREN && TileEngine.Zustand == ZUSTAND_SCROLLBAR && Energy > 0.0f) {
         TileEngine.ScrollLevel(Value1, Value2, ZUSTAND_SCROLLTOLOCK);  // Level auf die Faust zentrieren
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);       // Ausfaden und pausieren
         xPos += 400;
@@ -287,7 +287,7 @@ void GegnerBigFish::DoKI() {
     }
 
     // Je nach Handlung richtig verhalten
-    if (Moving == true)
+    if (Moving)
         DoMove();
     else
         switch (Handlung) {
@@ -295,7 +295,7 @@ void GegnerBigFish::DoKI() {
             {
                 if (TileEngine.Zustand == ZUSTAND_LOCKED) {
                     // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-                    if (SoundManager.SongIsPlaying(MUSIC_BOSS) == false)
+                    if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
                         SoundManager.PlaySong(MUSIC_BOSS, false);
 
                     // Und Boss erscheinen lassen
@@ -327,7 +327,7 @@ void GegnerBigFish::DoKI() {
                 // und Maulbewegung
                 MaulWinkel += 0.6f SYNC;
 
-                if (MaulWinkel > PI && shot == false) {
+                if (MaulWinkel > PI && !shot) {
                     shot = true;
                     Gegner.PushGegner(xPos + 80.0f, yPos + 90.0f, PIRANHA, 99, 1, true);
                     ShotCount--;
@@ -351,7 +351,7 @@ void GegnerBigFish::DoKI() {
                 // und Maulbewegung
                 MaulWinkel += 0.1f SYNC;
 
-                if (MaulWinkel > PI && shot == false) {
+                if (MaulWinkel > PI && !shot) {
                     shot = true;
 
                     for (int i = 0; i < 9; i++)

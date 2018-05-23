@@ -17,7 +17,6 @@
 // --------------------------------------------------------------------------------------
 #include "DX8Graphics.hpp"
 #include "DX8Sprite.hpp"
-//#include "lightmap.h"     //DKS - all light-map related code disabled
 #include "CDragonHack.hpp"
 #include "Globals.hpp"
 
@@ -94,15 +93,6 @@
 #define ZUSTAND_SCROLLTOPLAYER 4  // Level Scrollt zum Spieler
 #define ZUSTAND_LOCKED 5          // Level sitzt an bestimmter Position fest
 
-//--- LiightMaps
-// DKS - all light-map related code disabled:
-//#define MAX_LIGHTMAPS			5
-//
-//#define LIGHTMAP_BLITZ			0
-//#define LIGHTMAP_EXPLOSION		1
-//#define LIGHTMAP_GOLEMSHOT		2
-//#define LIGHTMAP_LILA			3
-
 // --------------------------------------------------------------------------------------
 // Strukturen
 // --------------------------------------------------------------------------------------
@@ -117,12 +107,6 @@ struct LevelTileLoadStruct {
     uint8_t FrontArt;                 // Tile im Vordergrund
     uint8_t Red, Green, Blue, Alpha;  // Farbwert des Tiles
     uint32_t Block;                   // Blockierungsart (siehe #defines)
-};
-
-// Struktur für die Farbwerte von einem Level Tile
-//
-struct LevelTileSaveStruct {
-    D3DCOLOR Color[4];  // Farbwert des Tiles (Alle vier Ecken)
 };
 
 // Struktur für ein Level Tile wie es im Level vorkommt (wie beim Laden, nur noch mit Extra Farben für alle Ecken)
@@ -193,14 +177,6 @@ struct FileAppendix {
     char Col1[8], Col2[8];   // Farben für Liquid
     uint8_t Taschenlampe;
     uint8_t PADDING_CHUNK_1[3];  // 3 padding bytes
-};
-
-// --------------------------------------------------------------------------------------
-// Infos für die Schwabbelverscheibung eines einzelnen Vertex
-// --------------------------------------------------------------------------------------
-
-struct SchwabbelPos {
-    float lo, ro, lu, ru;
 };
 
 // --------------------------------------------------------------------------------------
@@ -455,9 +431,6 @@ class TileEngineClass {
     //       WaterSinTableClass. See its comments for more info.
     WaterSinTableClass WaterSinTable;
 
-    // DKS - Lightmap code in original game was never used and all related code has now been disabled:
-    // CLightMap		lightmaps[MAX_LIGHTMAPS];
-
   public:
     FileAppendix DateiAppendix;  // Anhang der Level-Datei
     bool IsElevatorLevel;
@@ -490,10 +463,6 @@ class TileEngineClass {
     float SinPos2;  // Position in der SinusListe für den Wasserhintergrund
 
     bool bScrollBackground;  // Hintegrundbild scrollen ?
-
-    // DKS - Lightmap code in original game was never used and all related code has now been disabled:
-    // LevelTileSaveStruct				OriginalTiles[MAX_LEVELSIZE_X]  // Array mit Leveldaten merken (für Lightmaps)
-    //[MAX_LEVELSIZE_Y];
 
     RECT TileRects[144];                         // vorberechnete Tile Ausschnitte
     DirectGraphicsSprite TileGfx[MAX_TILESETS];  // Tilegrafiken
@@ -550,28 +519,12 @@ class TileEngineClass {
     void DrawFrontLevel();                        // Level vordergrund anzeigen
     void DrawBackLevelOverlay();                  // Boden Tiles, die verdecken
     void DrawOverlayLevel();                      // Sonstige, die verdecken
-    // DKS - this was an empty function in the original code, disabling it:
-    // void DrawSpecialLayer		();							// Spezielle Sachen wie der Drache
     void DrawWater();  // Wasser Planes rendern
     void CheckBounds();
     void UpdateLevel();                                                           // Level evtl scrollen usw
     void ScrollLevel(float x, float y, int neu, float sx = 10.0f, float sy = 10.0f);  // Screen scrollen
     void MakeBordersLookCool(int x, int y);
 
-    // DKS - These were all a mess and I rewrote them. See new comments in Tileengine.cpp
-#if 0
-    int	 BlockRechts		(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve = false);
-    int	 BlockLinks			(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve = false);
-    int	 BlockOben			(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve = false);
-    int	 BlockUnten			(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve = false);
-    int	 BlockUntenNormal	(float &x, float &y, float &xo, float &yo, RECT rect);
-    //DKS - ResolveLinks() was never used anywhere, disabled and no replacement was made:
-    void ResolveLinks		(float &x, float &y, float &xo, float &yo, RECT rect);
-    bool BlockDestroyRechts		(float &x, float &y, float &xo, float &yo, RECT rect);
-    bool BlockDestroyLinks		(float &x, float &y, float &xo, float &yo, RECT rect);
-    bool BlockDestroyOben		(float &x, float &y, float &xo, float &yo, RECT rect);
-    bool BlockDestroyUnten		(float &x, float &y, float &xo, float &yo, RECT rect);
-#endif  // 0
     uint32_t BlockRechts(float &x, float y, float &xo, float yo, RECT rect, bool resolve = false);
     uint32_t BlockLinks(float &x, float y, float &xo, float yo, RECT rect, bool resolve = false);
     uint32_t BlockOben(float x, float &y, float xo, float &yo, RECT rect, bool resolve = false);
@@ -582,9 +535,6 @@ class TileEngineClass {
     bool BlockDestroyOben(float x, float y, float xo, float yo, RECT rect);
     bool BlockDestroyUnten(float x, float y, float xo, float yo, RECT rect);
 
-    // DKS - Rewrote this function, see notes in Tileengine.cpp
-    // int	 BlockSlopes		(float &x, float &y, float &xo, float &yo, RECT rect, float ySpeed, bool resolve =
-    // false);
     uint32_t BlockSlopes(const float x, float &y, const RECT rect, const float ySpeed);
 
     // DKS - x,y parameters did not need to be references and are now value params:
@@ -602,22 +552,9 @@ class TileEngineClass {
 
     void ComputeCoolLight();  // Coole   Lightberechnung
 
-    // DKS - This function was never actually used in the original game and is now disabled:
-    //      (Only place was as a console command in Console.cpp)
-    // void ComputeShitLight ();							// Billige Lightberechnung
-
     void DrawShadow();  // Schatten im Alien Level zeichnen
 
-    // DKS - The original code had a return as line 5 of DrawLightmap, making it a stub.
-    //      When I tried removing it, I saw why: the lightmaps colors' don't match what
-    //      you'd expect and they appear in places off-center from where they should be.
-    //      I have now disabled the function and all four calls to it elsewhere in the code,
-    //      and all related code.
-    // void ClearLightMaps	  ();							// alle LightMaps entfernen und Ursprungshelligkeit wieder
-    // herstellen  void DrawLightmap	  (int Map, float x, float y, int alpha);	// LightMap an x/y mit alpha addieren
-
     void WertAngleichen(float &nachx, float &nachy, float vonx, float vony);
-    bool LineHitsLine(const Vector2D p, const Vector2D u, const Vector2D q, const Vector2D v, Vector2D &pHit);
 
     // DKS - Added bounds-checked accessor for Tiles[][] array for debugging purposes:
     LevelTileStruct &TileAt(const int i, const int j) {

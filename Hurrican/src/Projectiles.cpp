@@ -2656,10 +2656,6 @@ void ProjectileClass::Run() {
         } break;
 
         case SPIDERSHOT: {
-            // DKS - Lightmaps have been disabled (never worked originally, see Tileengine.cpp's
-            //      comments for DrawLightmap()):
-            // TileEngine.DrawLightmap(LIGHTMAP_LILA, xPos + 65.0f, yPos + 40.0f, 255);
-
             if (bl & BLOCKWERT_WAND || br & BLOCKWERT_WAND || bo & BLOCKWERT_WAND ||
                 TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) & BLOCKWERT_WAND) {
                 Damage = 0;
@@ -2686,9 +2682,8 @@ void ProjectileClass::Run() {
         case GOLEMSCHUSS:  // Suchschuss des Golems
         {
             DirectGraphics.SetAdditiveMode();
-            Projectiles.LavaFlare.RenderSpriteScaled(static_cast<float>(xPos - TileEngine.XOffset) - 21,
-                                                     static_cast<float>(yPos - TileEngine.YOffset) - 21, 62, 62,
-                                                     0xAA88FF00);
+            Projectiles.LavaFlare.RenderSpriteScaled(xPos - TileEngine.XOffset - 21, yPos - TileEngine.YOffset - 21, 62,
+                                                     62, 0xAA88FF00);
             DirectGraphics.SetColorKeyMode();
             CurrentShotTexture = -1;
 
@@ -2707,7 +2702,7 @@ void ProjectileClass::Run() {
                         PlayerClass *pAim;
                         yAcc = 0.0f;
 
-                        if (pParent == NULL)
+                        if (pParent == nullptr)
                             pAim = ChooseAim();
                         else
                             pAim = pParent;
@@ -2725,8 +2720,8 @@ void ProjectileClass::Run() {
                         absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
                         absy = speed * absy;  // (xSpeed*ySpeed ergibt 4)
 
-                        xSpeed = float(absx);
-                        ySpeed = float(absy);
+                        xSpeed = absx;
+                        ySpeed = absy;
                     }
                 }
             }

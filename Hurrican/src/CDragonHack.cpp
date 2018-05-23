@@ -58,15 +58,15 @@ void CDragonHack::Run() {
 
                 // von links
                 if (rand() % 2 == 0) {
-                    m_xPos = static_cast<float>(TileEngine.XOffset) - 160;
-                    m_yPos = static_cast<float>(TileEngine.YOffset) + 200;
+                    m_xPos = TileEngine.XOffset - 160;
+                    m_yPos = TileEngine.YOffset + 200;
                     m_xSpeed = 10.0f;
                 }
 
                 // von rechts
                 else {
-                    m_xPos = static_cast<float>(TileEngine.XOffset) + 640.0f + 160.0f;
-                    m_yPos = static_cast<float>(TileEngine.YOffset) + 200;
+                    m_xPos = TileEngine.XOffset + 640.0f + 160.0f;
+                    m_yPos = TileEngine.YOffset + 200;
                     m_xSpeed = -10.0f;
                 }
 
@@ -78,8 +78,8 @@ void CDragonHack::Run() {
         case STATE_FLY: {
             bool mirrored = m_xSpeed > 0.0f;
 
-            m_GFX.RenderSprite(static_cast<float>(m_xPos - TileEngine.XOffset),
-                               static_cast<float>(m_yPos - TileEngine.YOffset), m_AnimCount, 0xDDFFFFFF, mirrored);
+            m_GFX.RenderSprite(m_xPos - TileEngine.XOffset,
+                               m_yPos - TileEngine.YOffset, m_AnimCount, 0xDDFFFFFF, mirrored);
 
             m_xPos += m_xSpeed SYNC;
             m_yPos += m_ySpeed SYNC;

@@ -76,9 +76,7 @@ void HUDClass::UpdateValues() {}
 // --------------------------------------------------------------------------------------
 
 void HUDClass::ShowHUD() {
-    char Buffer[100];  // Für iota Umwandlung der HUD-Werte
     int BlitzOff;      // Für die Balken-Offsets
-                       //	int		 StateOff;
     D3DCOLOR Color;    // Farbe des Huds
     D3DCOLOR playercol;
 
@@ -157,17 +155,6 @@ void HUDClass::ShowHUD() {
     WeaponRahmen.RenderSprite(xpos + 216 + 3 * 32, ypos + 35, 0, color);
     for (int j = 0; j < Player[0].CurrentWeaponLevel[3]; j++)
         WeaponPunkt.RenderSprite(xpos + 217 + 3 * 32, ypos + 50 - j, 0, color);
-
-    /*
-         // Balken anzeigen, wieviele PowerUps noch zum nächsten Waffenlevel benötigt werden
-         for (i=0; i<4; i++)
-         {
-             StateOff = pPlayer->CollectedPowerUps[i] * 24/pPlayer->NextWeaponLevel[i];
-
-             WeaponState.SetRect(0, 0, StateOff, 8);
-             WeaponState.RenderSprite(xpos + 208 + i*32,  ypos + 42, Color);
-         }
-    */
 
     // Anzahl verbleibender Powerlines anzeigen
     for (int p = 0; p < NUMPLAYERS; p++) {
@@ -526,7 +513,7 @@ void HUDClass::DoHUD() {
 
     // Tutorial Pfeil anzeigen?
     //
-    if (bShowArrow == true)
+    if (bShowArrow)
         RenderArrow();
 
     // und evtl wieder rotierten Screen setzen

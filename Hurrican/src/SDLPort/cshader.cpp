@@ -35,8 +35,6 @@ CShader::CShader()
       Uniforms(),
       Attributes() {}
 
-CShader::~CShader() {}
-
 void CShader::Close() {
     uint16_t i;
 

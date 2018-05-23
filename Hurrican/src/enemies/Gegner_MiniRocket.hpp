@@ -14,10 +14,9 @@ class GegnerMiniRocket : public GegnerClass {
     GegnerMiniRocket(int Wert1,
                      int Wert2,  // Konstruktor
                      bool Light);
-    void GegnerExplode();  // Gegner explodiert
-    void DoKI();           // Gegner individuell mit seiner
-    void DoDraw();         // Gegner individuell rendern
-    // eigenen kleinen KI bewegen
+    void GegnerExplode() override;  // Gegner explodiert
+    void DoKI() override;           // Gegner individuell mit seiner
+    void DoDraw() override;         // Gegner individuell rendern eigenen kleinen KI bewegen
 };
 
 #endif

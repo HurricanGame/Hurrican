@@ -36,10 +36,6 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define D3DFVF_TLVERTEX (D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_DIFFUSE)  // Eigenes Flexible Vertex Format
-
-#define BackBufferSize 10  // Vertrex Unterteilungen des Backbuffers, muss gerade sein
-
 #define ADDITIV_MODE 0
 #define COLORKEY_MODE 1
 #define WHITE_MODE 2
@@ -131,9 +127,13 @@ class DirectGraphicsClass {
     bool ExtensionSupported(const char *ext);
     void SetupFramebuffers();
     void ClearBackBuffer();
+#if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
     void SelectBuffer(bool active);
+#if defined(ANDROID)
     void DrawTouchOverlay();
     void DrawCircle(uint16_t x, uint16_t y, uint16_t radius);
+#endif
+#endif
 #endif
 };
 
@@ -141,11 +141,7 @@ class DirectGraphicsClass {
 // Externals
 // --------------------------------------------------------------------------------------
 
-extern LPDIRECT3D8 lpD3D;                   // Direct3D Hauptobjekt
-extern LPDIRECT3DDEVICE8 lpD3DDevice;       // Direct3D Device-Objekt
 extern DirectGraphicsClass DirectGraphics;  // DirectGraphics Klasse
-extern LPDIRECT3DSURFACE8 lpBackbuffer;     // Der Backbuffer
-extern LPDIRECT3DVERTEXBUFFER8 lpVBSprite;  // VertexBuffer für die Sprites
 extern D3DXMATRIX matProj;                  // Projektionsmatrix
 extern D3DXMATRIX matWorld;                 // Weltmatrix
 extern float DegreetoRad[360];              // Tabelle mit Rotationswerten

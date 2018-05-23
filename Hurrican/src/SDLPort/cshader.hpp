@@ -29,7 +29,7 @@
 #include "cml/cml.h"
 #include "opengl.hpp"
 
-#define CHECK_FLAG(X, Y) ((X & Y) == Y)
+#define CHECK_FLAG(X, Y) (((X) & (Y)) == (Y))
 
 enum { SHADER = 0x01, PROGRAM = 0x02 };
 
@@ -44,7 +44,7 @@ struct shader_t {
 class CShader {
   public:
     CShader();
-    virtual ~CShader();
+    virtual ~CShader() = default;
 
     void Close();
     int8_t Load(const std::string &path_vertex, const std::string &path_frag);

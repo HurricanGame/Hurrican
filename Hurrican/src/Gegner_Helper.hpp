@@ -15,8 +15,6 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
-#include "triggers/Trigger_TutorialText.hpp"  // muss oben sein, weil es <string> includiert
-
 #include "DX8Sprite.hpp"
 
 #include "enemies/Gegner_Auge.hpp"
@@ -168,6 +166,7 @@
 #include "triggers/Trigger_SurfBrett.hpp"
 #include "triggers/Trigger_Switch.hpp"
 #include "triggers/Trigger_Tube.hpp"
+#include "triggers/Trigger_TutorialText.hpp"
 #include "triggers/Trigger_Warning.hpp"
 
 // --------------------------------------------------------------------------------------

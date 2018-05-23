@@ -123,9 +123,9 @@ TileEngineClass::TileEngineClass() {
             Tiles[i][j].move_v1 = Tiles[i][j].move_v2 = Tiles[i][j].move_v3 = Tiles[i][j].move_v4 = false;
         }
 
-    for (int i = 0; i < MAX_TILESETS; i++)
+    for (auto &i : TileGfx)
         // DKS - Adapted to new TexturesystemClass
-        TileGfx[i].itsTexIdx = -1;
+        i.itsTexIdx = -1;
 
     // DKS - Moved these to the new TileEngineClass::LoadSprites() function (see note there)
     //// Wasserfall Textur laden
@@ -164,8 +164,8 @@ TileEngineClass::TileEngineClass() {
         TileRects[i].bottom = TileRects[i].top + TILESIZE_Y;
     }
 
-        /* DKS - Replaced both SinList2 and WaterList lookup tables with new class
-           WaterSinTableClass. See its comments in Tileengine.h for more info.    */
+    /* DKS - Replaced both SinList2 and WaterList lookup tables with new class
+       WaterSinTableClass. See its comments in Tileengine.h for more info.    */
 #if 0
     int i = 0;
     float w = 0.0f;
@@ -230,44 +230,6 @@ void TileEngineClass::LoadSprites() {
 }
 
 // --------------------------------------------------------------------------------------
-// Schneiden sich zwei Linien?
-// --------------------------------------------------------------------------------------
-
-bool TileEngineClass::LineHitsLine(const Vector2D p,
-                                   const Vector2D u,
-                                   const Vector2D q,
-                                   const Vector2D v,
-                                   Vector2D &pHit) {
-    // Die Determinante D berechnen
-    const float D = u.y * v.x - u.x * v.y;
-
-    // Wenn D null ist, sind die Linien parallel.
-    if (D < 0.0001f && D > -0.0001f)
-        return false;
-
-    // Determinante Ds berechnen
-    const float Ds = (q.y - p.y) * v.x - (q.x - p.x) * v.y;
-
-    // s = Ds / D berechnen und prüfen, ob s in den Grenzen liegt
-    const float s = Ds / D;
-    if (s < 0.0f || s > 1.0f)
-        return false;
-
-    // Jetzt berechnen wir Dt und t.
-    const float Dt = (q.y - p.y) * u.x - (q.x - p.x) * u.y;
-    const float t = Dt / D;
-    if (t < 0.0f || t > 1.0f)
-        return false;
-
-    // Die Linien schneiden sich!
-    // Wir tragen den Schnittpunkt ein.
-    pHit.x = p.x + s * u.x;
-    pHit.y = p.y + s * u.y;
-
-    return true;
-}
-
-// --------------------------------------------------------------------------------------
 // Neues, leeres Level der Grösse xSize/ySize erstellen
 // --------------------------------------------------------------------------------------
 
@@ -315,7 +277,7 @@ void TileEngineClass::ClearLevel() {
         }
 
     for (int i = 0; i < MAX_TILESETS; i++) {
-    // DKS - Adapted to new TexturesystemClass
+        // DKS - Adapted to new TexturesystemClass
 #if 0
         if (TileGfx[i].itsTexture)
         {
@@ -371,7 +333,7 @@ bool TileEngineClass::LoadLevel(const std::string &Filename) {
     g_Fahrstuhl_yPos = -1.0f;
 
     // Zuerst checken, ob sich das Level in einem MOD-Ordner befindet
-    if (CommandLineParams.RunOwnLevelList == true) {
+    if (CommandLineParams.RunOwnLevelList) {
         Temp = std::string(g_storage_ext) + "/levels/" + CommandLineParams.OwnLevelList + "/" + Filename;
         if (fs::exists(Temp) && fs::is_regular_file(Temp))
             goto loadfile;
@@ -420,9 +382,9 @@ loadfile:
     ClearLevel();
 
     // Drache im Hintergrund ggf. löschen
-    if (pDragonHack != NULL) {
+    if (pDragonHack != nullptr) {
         delete pDragonHack;
-        pDragonHack = NULL;
+        pDragonHack = nullptr;
     }
 
     // File öffnen
@@ -892,6 +854,7 @@ void TileEngineClass::CalcRenderRange() {
         RenderPosYTo = SCREENSIZE_Y;
 
     // DKS - Added:
+    // FIXME: Unnecessary loop
     while (xo + RenderPosXTo > LEVELSIZE_X)
         --RenderPosXTo;
     while (yo + RenderPosYTo > LEVELSIZE_Y)
@@ -927,7 +890,7 @@ void TileEngineClass::DrawBackground() {
 
     xoff = static_cast<int>(XOffset / 5) % 640;
 
-    if (bScrollBackground == true)  // Hintergrundbild mitscrollen
+    if (bScrollBackground)  // Hintergrundbild mitscrollen
     {
         // Linke Hälfte
         Background.SetRect(0, 0, xoff, 480);
@@ -1010,21 +973,9 @@ void TileEngineClass::DrawBackground() {
 
     //----- Dragon Hack
 
-    if (pDragonHack != NULL && Console.Showing == false)
+    if (pDragonHack != nullptr && !Console.Showing)
         pDragonHack->Run();
 }
-
-// --------------------------------------------------------------------------------------
-//
-// Spezial Layer
-// zb der Drache im Turm Level
-// --------------------------------------------------------------------------------------
-
-// DKS - this was an empty function in the original code, disabling it:
-// void TileEngineClass::DrawSpecialLayer()
-//{
-//
-//}
 
 // --------------------------------------------------------------------------------------
 // Level Hintergrund anzeigen
@@ -3373,8 +3324,8 @@ D3DCOLOR TileEngineClass::LightValue(float x, float y, RECT rect, bool forced) {
     //        forced == false)
     //    return 0xFFFFFFFF;										// das Licht des Objektes ändern
     if ((xLevel >= LEVELSIZE_X || yLevel >= LEVELSIZE_Y) ||
-        (forced == false && !(TileAt(xLevel, yLevel).Block & BLOCKWERT_LIGHT)))  // Soll das Leveltile garnicht
-        return 0xFFFFFFFF;                                                       // das Licht des Objektes ändern
+        (!forced && !(TileAt(xLevel, yLevel).Block & BLOCKWERT_LIGHT)))  // Soll das Leveltile garnicht
+        return 0xFFFFFFFF;                                               // das Licht des Objektes ändern
 
     r = TileAt(xLevel, yLevel).Red;
     g = TileAt(xLevel, yLevel).Green;
@@ -3395,29 +3346,6 @@ D3DCOLOR TileEngineClass::LightValue(float x, float y, RECT rect, bool forced) {
 
     return Color;
 }
-
-// --------------------------------------------------------------------------------------
-// Anfänglich verwendete Lichtberechnung herstellen
-// Jedes Tile hat an allen vier Ecken die selbe Farbe -> Keine Übergänge -> Scheisse
-// --------------------------------------------------------------------------------------
-
-// DKS - This function was never actually used in the original game and is now disabled:
-#if 0
-void TileEngineClass::ComputeShitLight ()
-{
-    for (int i=0; i< LEVELSIZE_X; i += 1)
-        for (int j=0; j<LEVELSIZE_Y; j += 1)
-        {
-            TileAt(i, j).Color[0] =
-                TileAt(i, j).Color[1] =
-                TileAt(i, j).Color[2] =
-                TileAt(i, j).Color[3] = D3DCOLOR_RGBA(TileAt(i, j).Red,
-                        TileAt(i, j).Green,
-                        TileAt(i, j).Blue,
-                        TileAt(i, j).Alpha);
-        }
-} // ComputeShitLight
-#endif  // 0
 
 // --------------------------------------------------------------------------------------
 // Neue Lichtberechnung
@@ -3645,12 +3573,6 @@ void TileEngineClass::ComputeCoolLight() {
             bn = int((b1 + b2 + b3 + b4) / 4.0f);
 
             TileAt(i, j).Color[3] = D3DCOLOR_RGBA(rn, gn, bn, al);
-
-            // DKS - Lightmap code in original game was never used and all related code has now been disabled:
-            // OriginalTiles[i][j].Color[0] = TileAt(i, j).Color[0];
-            // OriginalTiles[i][j].Color[1] = TileAt(i, j).Color[1];
-            // OriginalTiles[i][j].Color[2] = TileAt(i, j).Color[2];
-            // OriginalTiles[i][j].Color[3] = TileAt(i, j).Color[3];
         }
 
 }  // ComputeCoolLight
@@ -3660,7 +3582,7 @@ void TileEngineClass::ComputeCoolLight() {
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::DrawShadow() {
-    if (bDrawShadow == false)
+    if (!bDrawShadow)
         return;
 
     float x, y;
@@ -3698,7 +3620,7 @@ void TileEngineClass::DrawShadow() {
 
 void TileEngineClass::ExplodeWall(int x, int y) {
     // ausserhalb des Levels nicht testen ;)
-    if (x < 1 || y < 1 || x > static_cast<int>(LEVELSIZE_X - 1) || y > static_cast<int>(LEVELSIZE_Y - 1))
+    if (x < 1 || y < 1 || x > (LEVELSIZE_X - 1) || y > (LEVELSIZE_Y - 1))
         return;
 
     // keine zerstörbare Wand?
@@ -3760,140 +3682,3 @@ void TileEngineClass::ExplodeWalls(int x, int y) {
     ExplodeWall(x + 0, y + 2);
     ExplodeWall(x + 1, y + 2);
 }
-
-// --------------------------------------------------------------------------------------
-// Alle LightMaps auf dem Screen löschen und Ursprungszustand wieder herstellen
-// --------------------------------------------------------------------------------------
-
-// DKS - See note for function below this one for DrawLightmap() as to why this was
-//      disabled.
-#if 0
-void TileEngineClass::ClearLightMaps()
-{
-    unsigned int xoff, yoff;
-
-    xoff = static_cast<int>(XOffset * 0.05f);
-    yoff = static_cast<int>(YOffset * 0.05f);
-
-    for (unsigned int x = xoff; x < xoff + SCREENSIZE_X + 1; x++)
-        for (unsigned int y = yoff; y < yoff + SCREENSIZE_Y + 1; y++)
-            for (int i = 0; i < 4; i++)
-                TileAt(x, y).Color[i] = OriginalTiles[x][y].Color[i];
-}
-#endif  // 0
-
-// --------------------------------------------------------------------------------------
-// Lightmap an x/y mit alpha zum Level dazuaddieren
-// Gilt nur einen Frame lang, danach wird der Originalzustand wieder hergestellt
-// --------------------------------------------------------------------------------------
-
-// DKS - The original code had a return as line 5 of this function, making it a stub.
-//      When I tried removing it, I saw why: the lightmaps colors' don't match what
-//      you'd expect and they appear in places off-center from where they should be.
-//      I have now disabled the function and all four calls to it elsewhere in the code.
-#if 0
-void TileEngineClass::DrawLightmap (int Map, float x, float y, int alpha)
-{
-    // keine Lightmap Effekte?
-    if (options_Detail < DETAIL_HIGH)
-        return;
-
-    return; // DKS - This is the return that was in the original code (see note above)
-
-    if (x < 0 || y < 0 ||
-            x > LEVELPIXELSIZE_X ||
-            y > LEVELPIXELSIZE_Y)
-        return;
-
-    int xpos, ypos;
-
-    xpos = static_cast<int>(x * 0.05f - lightmaps[Map].xsize / 2);
-    ypos = static_cast<int>(y * 0.05f - lightmaps[Map].ysize / 2);
-
-    int xo, yo;
-    int sx;
-
-    sx = lightmaps[Map].xsize;
-
-    if (alpha < 0)
-        alpha = 0;
-
-    // normal draufaddieren?
-    if (alpha == 255)
-    {
-        for (int mapx = 0; mapx < lightmaps[Map].xsize - 1; mapx++)
-            for (int mapy = 0; mapy < lightmaps[Map].ysize - 1; mapy++)
-
-                if (xpos >= 0 &&
-                        ypos >= 0)
-                {
-                    // Position des Level Tiles ausrechnen
-                    xo = xpos + mapx;
-                    yo = ypos + mapy;
-
-                    if (!(TileAt(xo, yo).Block & BLOCKWERT_WAND))
-                    {
-                        // Farben addieren (mit OR verknüpfen)
-                        TileAt(xo, yo).Color[0] |= lightmaps[Map].map[mapx + mapy * sx];
-                        TileAt(xo, yo).Color[1] |= lightmaps[Map].map[mapx + 1 + mapy * sx];
-                        TileAt(xo, yo).Color[2] |= lightmaps[Map].map[mapx + (mapy + 1) * sx];
-                        TileAt(xo, yo).Color[3] |= lightmaps[Map].map[mapx + 1 + (mapy + 1) * sx];
-                    }
-                }
-    }
-
-    // oder alpha mit einberechnen (langsamer)
-    else
-    {
-        // alphamaske erstellen
-        FarbUnion col;
-
-        for (int mapx = 0; mapx < lightmaps[Map].xsize - 1; mapx++)
-            for (int mapy = 0; mapy < lightmaps[Map].ysize - 1; mapy++)
-
-                if (xpos >= 0 &&
-                        ypos >= 0)
-                {
-                    // Position des Level Tiles ausrechnen
-                    xo = xpos + mapx;
-                    yo = ypos + mapy;
-
-                    // Nur Levelhintergrund bzw farbiges overlay beleuchten
-                    if (!(TileAt(xo, yo).Block & BLOCKWERT_WAND))
-                    {
-                        // links oben
-                        col.color = lightmaps[Map].map[mapx + mapy * sx];
-                        col.color = D3DCOLOR_RGBA(col.farbStruct.r * alpha / 255,
-                                                  col.farbStruct.g * alpha / 255,
-                                                  col.farbStruct.b * alpha / 255,
-                                                  255);
-                        TileAt(xo, yo).Color[0] |= col.color;
-
-                        // rechts oben
-                        col.color = lightmaps[Map].map[mapx + 1 + mapy * sx];
-                        col.color = D3DCOLOR_RGBA(col.farbStruct.r * alpha / 255,
-                                                  col.farbStruct.g * alpha / 255,
-                                                  col.farbStruct.b * alpha / 255,
-                                                  255);
-                        TileAt(xo, yo).Color[1] |= col.color;
-
-                        // links unten
-                        col.color = lightmaps[Map].map[mapx + (mapy + 1) * sx];
-                        col.color = D3DCOLOR_RGBA(col.farbStruct.r * alpha / 255,
-                                                  col.farbStruct.g * alpha / 255,
-                                                  col.farbStruct.b * alpha / 255,
-                                                  255);
-                        TileAt(xo, yo).Color[2] |= col.color;
-
-                        // rechts unten
-                        col.color = lightmaps[Map].map[mapx + 1 + (mapy + 1) * sx];
-                        col.color = D3DCOLOR_RGBA(col.farbStruct.r * alpha / 255,
-                                                  col.farbStruct.g * alpha / 255,
-                                                  col.farbStruct.b * alpha / 255,
-                                                  255);
-                        TileAt(xo, yo).Color[3] |= col.color;
-                    }
-                }
-    }
-}
-#endif  // 0

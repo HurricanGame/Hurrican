@@ -537,12 +537,6 @@ void ConsoleClass::CheckCommands() {
         TileEngine.ComputeCoolLight();
     }
 
-    // DKS - ComputeShitLight() was never used in the original game except for here; disabling it.
-    // if (CONSOLE_COMMAND("light shit"))
-    //{
-    //    TileEngine.ComputeShitLight();
-    //}
-
     if (CONSOLE_COMMAND("lamp")) {
         if (TileEngine.bDrawShadow == false) {
             TileEngine.bDrawShadow = true;
@@ -625,7 +619,7 @@ void ConsoleClass::CheckInput() {
         if (right) {
             strcat_s(Buffer, CursorChar);
         } else if (left) {
-            int buf_len = strlen(Buffer);
+            std::size_t buf_len = strlen(Buffer);
             if (buf_len >= 1) {
                 Buffer[buf_len - 1] = '\0';
             }
@@ -663,7 +657,7 @@ void ConsoleClass::CheckInput() {
     }
 
     for (int i = 0; i < 256; i++) {
-        if (KeyDown(i) && Pressed[i] == false) {
+        if (KeyDown(i) && !Pressed[i]) {
             SoundManager.PlayWave(100, 128, 15000, SOUND_CLICK);
 
             Pressed[i] = true;
@@ -785,14 +779,14 @@ bool ConsoleClass::DoConsole() {
         Activate = true;
 
     // Konsole wird aktiviert oder deaktiviert ?
-    if (KeyDown(DIK_TAB) && Activate == true) {
+    if (KeyDown(DIK_TAB) && Activate) {
         Activate = false;
 
-        if (Active == true)
+        if (Active)
             Hide();
         else
 
-            if (Active == false)
+            if (!Active)
             Open();
     }
 #endif  // GCW
@@ -814,7 +808,7 @@ bool ConsoleClass::DoConsole() {
     }
 
     // Konsole ausgefadet? Dann aussteigen
-    if (Active == false && its_Alpha <= 0.0f) {
+    if (!Active && its_Alpha <= 0.0f) {
         Showing = false;
         return false;
     }

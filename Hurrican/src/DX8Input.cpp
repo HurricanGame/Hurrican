@@ -72,7 +72,7 @@ DirectInputClass::DirectInputClass() {
 // Destruktor
 // --------------------------------------------------------------------------------------
 
-DirectInputClass::~DirectInputClass() {}
+DirectInputClass::~DirectInputClass() = default;
 
 // --------------------------------------------------------------------------------------
 // DirectInput initialisieren
@@ -93,7 +93,7 @@ bool DirectInputClass::Init() {
     JoysticksFound = SDL_NumJoysticks();
 
     for (int i = 0; i < JoysticksFound; i++) {
-        if (Joysticks[i].Init(i) == false) {
+        if (!Joysticks[i].Init(i)) {
             Protokoll << "Error opening joystick" << std::endl;
         } else {
             JoystickFound = true;
@@ -126,7 +126,7 @@ void DirectInputClass::Exit() {
 #endif
         {
             SDL_JoystickClose(Joysticks[i].lpDIJoystick);
-            Joysticks[i].lpDIJoystick = NULL;
+            Joysticks[i].lpDIJoystick = nullptr;
         }
     }
 
@@ -226,7 +226,7 @@ bool DirectInputClass::AnyKeyDown() {
 // --------------------------------------------------------------------------------------
 
 bool DirectInputClass::AnyButtonDown() {
-    if (JoystickFound == false)
+    if (!JoystickFound)
         return false;
 
     for (int i = 0; i < JoysticksFound; i++)

@@ -14,9 +14,9 @@ class GegnerRotzpott : public GegnerClass {
     GegnerRotzpott(int Wert1,
                    int Wert2,  // Konstruktor
                    bool Light);
-    void GegnerExplode();  // Gegner explodiert
-    void DoKI();           // Gegner individuell mit seiner eigenen kleinen KI bewegen
-    void DoDraw();         // Eigene Drawroutine
+    void GegnerExplode() override;  // Gegner explodiert
+    void DoKI() override;           // Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw() override;         // Eigene Drawroutine
     void CalcKnarreWinkel();
 };
 

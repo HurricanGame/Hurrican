@@ -34,9 +34,6 @@
 #define MAX_SOUNDS 140  // Anzahl verschiedener Soundeffekte
 #define MAX_SONGS 15    // Anzahl verschiedener Musikstücke
 
-#define FREE 0     // Channel frei
-#define PLAYING 1  // Channel spielt gerade
-
 // Definitionen der einzelnen Soundeffekte
 
 #define SOUND_SPREADSHOT 0     // Spreadshot
@@ -221,7 +218,7 @@ class SongClass {
     bool was_playing;  // Was this song playing before calling PausePlaying()?
 
     SongClass()
-        : data(NULL),
+        : data(nullptr),
           vol(100),
           fade_speed(0),
           fade_end_vol(0),
@@ -229,7 +226,7 @@ class SongClass {
           looped(true),
           paused(false),
           was_playing(false) {}
-    ~SongClass() {}
+    ~SongClass() = default;
 };
 
 //---------------------------------------------------------------------------------------
@@ -241,8 +238,8 @@ class SampleClass {
   public:
     SOUND_SAMPLE *data;
     bool looped;
-    SampleClass() : data(NULL), looped(false) {}
-    ~SampleClass() {}
+    SampleClass() : data(nullptr), looped(false) {}
+    ~SampleClass() = default;
 };
 
 // DKS - Added:

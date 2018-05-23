@@ -63,7 +63,6 @@
 
 class DirectInputClass {
   private:
-    LPDIRECTINPUT8 lpDI;  // DirectInput Hauptinterface
 #if defined(GCW)
     int InternalJoystickIndex;  // If the system has built-in joystick controls,
 #endif                          // GCW
@@ -79,12 +78,12 @@ class DirectInputClass {
     DirectInputClass();   // Konstruktor
     ~DirectInputClass();  // Desktruktor
 
-    bool Init();  // DirectInput initialisieren
-    void Exit();                        // DirectInput beenden
-    bool UpdateTastatur();              // Tasten abfragen und im Puffer speichern
-    bool UpdateMaus(bool gepuffert);        // Maus abfragen gepuffert/ungepuffert
-    void AcquireKeyboard();             // Keyboard akquirierens
-    bool AreAllKeysReleased();              // Checken ob keine Taste mehr gedrückt ist
+    bool Init();                      // DirectInput initialisieren
+    void Exit();                      // DirectInput beenden
+    bool UpdateTastatur();            // Tasten abfragen und im Puffer speichern
+    bool UpdateMaus(bool gepuffert);  // Maus abfragen gepuffert/ungepuffert
+    void AcquireKeyboard();           // Keyboard akquirierens
+    bool AreAllKeysReleased();        // Checken ob keine Taste mehr gedrückt ist
     bool AnyKeyDown();
     bool AnyButtonDown();
     void UpdateJoysticks();

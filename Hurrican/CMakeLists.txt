@@ -186,17 +186,12 @@ set(HURRICAN_SOURCES
         src/SDLPort/texture.hpp
         src/CCracktro.cpp
         src/CCracktro.hpp
-        src/CCutScene.cpp
-        src/CCutScene.hpp
         src/CDragonHack.cpp
         src/CDragonHack.hpp
-        src/CGegner.hpp
         src/Console.cpp
         src/Console.hpp
         src/creditStrings.hpp
         src/DataStructures.hpp
-        src/DX8Enum.cpp
-        src/DX8Enum.hpp
         src/DX8Font.cpp
         src/DX8Font.hpp
         src/DX8Graphics.cpp
@@ -390,7 +385,6 @@ set(HURRICAN_SOURCES
         src/enemies/Gegner_Zitrone.hpp
         src/GegnerClass.cpp
         src/GegnerClass.hpp
-        src/GegnerPowerBlock.hpp
         src/GetKeyName.cpp
         src/GetKeyName.hpp
         src/Globals.hpp
@@ -417,7 +411,6 @@ set(HURRICAN_SOURCES
         src/Player.hpp
         src/Projectiles.cpp
         src/Projectiles.hpp
-        src/resource.hpp
         src/stdafx.hpp
         src/Texts.cpp
         src/Texts.hpp

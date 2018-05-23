@@ -24,6 +24,8 @@
 #ifndef CFBO_H
 #define CFBO_H
 
+#if defined(USE_FBO)
+
 #include "SDL_port.hpp"
 
 class CFbo {
@@ -42,5 +44,7 @@ class CFbo {
 
   private:
 };
+
+#endif
 
 #endif  // CFBO_H

@@ -19,47 +19,6 @@
 #include <map>
 #include <string>
 #include "DX8Graphics.hpp"
-//#include "Globals.hpp"
-
-// --------------------------------------------------------------------------------------
-// Defines
-// --------------------------------------------------------------------------------------
-
-#define MAX_SPRITES 32768  // Maximalzahl Sprites am Screen
-#define MAX_SPRITEGFX 500  // Maximal ladbare Sprites
-
-// --------------------------------------------------------------------------------------
-// Strukturen
-// --------------------------------------------------------------------------------------
-
-// --------------------------------------------------------------------------------------
-// Klassendeklaration
-// --------------------------------------------------------------------------------------
-
-// DKS - DirectGraphicsSurface class was never used anywhere in the game, even in the
-//      original DirectX release, so disabled it:
-#if 0
-// --------------------------------------------------------------------------------------
-// Surface Klasse für das Laden und Anzeigen (copyrects)
-// von Bildern (ohne Colorkey und anderen Effekten)
-// --------------------------------------------------------------------------------------
-
-class DirectGraphicsSurface
-{
-private:
-    LPDIRECT3DSURFACE8	itsSurface;							// Surface mit Grafikdaten
-    RECT				itsRect;							// zu zeigender Ausschnitt
-
-public:
-    DirectGraphicsSurface();						// Konstruktor (leer)
-    ~DirectGraphicsSurface();						// Surface freigeben
-    bool LoadImage(const char *Filename,					// Laden des Bildes "Filename"
-                   int xSize, int ySize);					// mit Grösse xSize, ySize
-    bool  SetRect	  (int left,  int top,
-                       int right, int bottom);				// Neuen Ausschnitt setzen
-    RECT  GetRect	  ();								// Ausschnitt holen
-};
-#endif  // 0
 
 // --------------------------------------------------------------------------------------
 // Sprite Klasse für das Laden und Anzeigen
@@ -102,7 +61,7 @@ class DirectGraphicsSprite {
             if (i < 0 || i >= (int)rects.size()) {
                 Protokoll << "Error: index " << std::dec << i
                           << " out of bounds of itsPreCalcedRects[] (size:" << rects.size() << std::endl;
-//                GameRunning = false;
+                //                GameRunning = false;
                 abort();
             }
 
@@ -133,7 +92,7 @@ class DirectGraphicsSprite {
 #ifndef _DEBUG
           // DKS - When not in debug-mode, this is the pointer to the dynamically allocated array of RECTs
           ,
-          itsPreCalcedRects(NULL)
+          itsPreCalcedRects(nullptr)
 #endif
     {
         itsRect.top = itsRect.bottom = itsRect.left = itsRect.right = 0;
@@ -161,10 +120,6 @@ class DirectGraphicsSprite {
         itsRect.bottom = bottom;  // Unterer Rand
     }
 
-    // DKS - this is never used anywhere, disabled:
-    // RECT  GetRect	  ();								// Ausschnitt holen
-
-    // DKS - All of the following rendering functions no longer pointlessly return bool value of true:
     void RenderSprite(float x, float y, D3DCOLOR Color);  // Sprite rendern
 
     void RenderSprite(float x,
@@ -201,7 +156,7 @@ class DirectGraphicsSprite {
         itsRect = itsPreCalcedRects[Anim];
 
         // Und Sprite rendern
-        if (mirrored == false)
+        if (!mirrored)
             RenderSprite(x, y, Color);
         else
             RenderMirroredSprite(x, y, Color);
@@ -289,9 +244,6 @@ void RenderLine(D3DXVECTOR2 p1,
                 D3DCOLOR Color1,
                 D3DCOLOR Color2);
 
-// DKS - Disabled, as it is no longer used anywhere:
-// void RenderCircle(float x, float y, float r, D3DCOLOR col);
-
 // DKS - Inlined this, since it is simple and used extremely frequently and takes many parameters:
 static inline bool SpriteCollision(const float x1,
                                    const float y1,
@@ -307,10 +259,4 @@ static inline bool SpriteCollision(const float x1,
         return false;
 }
 
-// --------------------------------------------------------------------------------------
-// Externals
-// --------------------------------------------------------------------------------------
-
-// DKS - never actually used:
-// extern DirectGraphicsSprite Preview;
 #endif

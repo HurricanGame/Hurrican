@@ -51,7 +51,7 @@ class TimerClass {
     float SpeedFaktor;         // Faktor, mit dem alle Werte verrechnet werden
 
     TimerClass();               // Konstruktor
-    ~TimerClass();              // Desktruktor
+    ~TimerClass() = default;    // Desktruktor
     void update();              // Timer updaten und Zeiten berechnen
     void wait();                // Maximum Framrate abwarten
     void wait(int Wert);            // Wartetet "Wert" Milli-Sekunden

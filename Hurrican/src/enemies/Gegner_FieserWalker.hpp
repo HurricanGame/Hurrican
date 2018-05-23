@@ -10,9 +10,8 @@ class GegnerFieserWalker : public GegnerClass {
 
   public:
     GegnerFieserWalker(int Wert1, int Wert2, bool Light);
-    void GegnerExplode();  // Gegner explodiert
-    void DoKI();           // Gegner individuell mit seiner
-    // eigenen kleinen KI bewegen
+    void GegnerExplode() override;  // Gegner explodiert
+    void DoKI() override;           // Gegner individuell mit seiner eigenen kleinen KI bewegen
 };
 
 #endif

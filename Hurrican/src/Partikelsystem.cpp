@@ -3107,19 +3107,6 @@ void PartikelClass::Run() {
             {
                 Lebensdauer -= float(50.0 SYNC);
                 tmp_alpha = int(Lebensdauer);
-
-                // DKS - Lightmaps have been disabled (never worked originally, see Tileengine.cpp's
-                //      comments for DrawLightmap()), so all the following is commented out now:
-                //// LightMap rendern
-                // int a;
-                // a = (int) Lebensdauer * 2;
-                // if (a > 255)
-                //    a = 255;
-                // if (PartikelArt == EXPLOSIONFLARE)
-                //    TileEngine.DrawLightmap(LIGHTMAP_EXPLOSION, xPos + 80, yPos + 80, a);
-                // else if (PartikelArt == EXPLOSIONFLARE2)
-                //    TileEngine.DrawLightmap(LIGHTMAP_LILA, xPos + 80, yPos + 80, a);
-
             } break;
 
             case SCHLEIM:   // kleiner Schleimbollen

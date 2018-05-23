@@ -11,9 +11,9 @@ class GegnerFieserFireWalker : public GegnerClass {
 
   public:
     GegnerFieserFireWalker(int Wert1, int Wert2, bool Light);
-    void GegnerExplode();  // Gegner explodiert
-    void DoKI();           // Gegner individuell mit seiner eigenen kleinen KI bewegen
-    void DoDraw();         // Gegner individuell rendern
+    void GegnerExplode() override;  // Gegner explodiert
+    void DoKI() override;           // Gegner individuell mit seiner eigenen kleinen KI bewegen
+    void DoDraw() override;         // Gegner individuell rendern
 };
 
 #endif

@@ -203,18 +203,12 @@ void GegnerRollmops::GunAusfahren(bool Auf) {
 }
 
 // --------------------------------------------------------------------------------------
-// Gurkensalat machen
-// --------------------------------------------------------------------------------------
-
-void GegnerRollmops::Losrollen() {}
-
-// --------------------------------------------------------------------------------------
 // Abhopsen am Boden
 // --------------------------------------------------------------------------------------
 
 void GegnerRollmops::Abhopsen(float mul) {
-    if (ySpeed > 0.0f && yPos > static_cast<float>(Value2 + 480.0f - 100.0f - 40.0f)) {
-        yPos = static_cast<float>(Value2 + 480.0f - 100.0f - 40.0f);
+    if (ySpeed > 0.0f && yPos > Value2 + 480.0f - 100.0f - 40.0f) {
+        yPos = Value2 + 480.0f - 100.0f - 40.0f;
 
         SoundManager.PlayWave(100, 128, 8000 + rand() % 2000, SOUND_LANDEN);
 
@@ -352,7 +346,7 @@ void GegnerRollmops::DoKI() {
 
                 if (HookY < Value2 + 20) {
                     // evtl schiessen
-                    if (yPos < Value2 + 130 && shot == false) {
+                    if (yPos < Value2 + 130 && !shot) {
                         RoundShot(false);
                         shot = true;
                     }

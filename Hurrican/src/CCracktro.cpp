@@ -13,7 +13,6 @@
 // --------------------------------------------------------------------------------------
 
 #include "CCracktro.hpp"
-#include <stdio.h>
 #include "DX8Input.hpp"
 #include "DX8Sound.hpp"
 
@@ -191,7 +190,7 @@ void CCracktro::Main() {
 
     if (SinPos > 0.7f && SinPos < PI + 1.0f) {
         DirectGraphics.SetColorKeyMode();
-        Logo[0].RenderSprite((640 - 341) / 2 + static_cast<float>(sin(LogoPos) * 100.0f), 50, 0, 0xFFFFFFFF);
+        Logo[0].RenderSprite((640 - 341) / 2 + sin(LogoPos) * 100.0f, 50, 0, 0xFFFFFFFF);
 
         numsin += 0.4f SYNC;
 
@@ -203,11 +202,10 @@ void CCracktro::Main() {
 
         // Zahlen
         for (int i = 0; i < 5; i++) {
-            off = static_cast<float>(sin(numsin + i / 3.0f) * 10.0f);
-            off2 = static_cast<float>(sin(numsin + i / 3.0f + PI / 2) * 20.0f);
+            off = sin(numsin + i / 3.0f) * 10.0f;
+            off2 = sin(numsin + i / 3.0f + PI / 2) * 20.0f;
 
-            Zahlen.RenderSprite(75 + i * 40 - off + (640 - 341) / 2 + static_cast<float>(sin(LogoPos) * 100.0f),
-                                110 - off2, i, 0xFFFFFFFF);
+            Zahlen.RenderSprite(75 + i * 40 - off + (640 - 341) / 2 + sin(LogoPos) * 100.0f, 110 - off2, i, 0xFFFFFFFF);
         }
     }
 
@@ -216,8 +214,7 @@ void CCracktro::Main() {
     // --------------------------------------------------------------------------------------
 
     for (int i = 0; i < 7; i++)
-        Bars[1].RenderSpriteScaled(0, 95 - static_cast<float>(sin(SinPos + i / 5.0f) * 90.0f), 640, 6 + i * 3, 0,
-                                   0xFFFFFFFF);
+        Bars[1].RenderSpriteScaled(0, 95 - sin(SinPos + i / 5.0f) * 90.0f, 640, 6 + i * 3, 0, 0xFFFFFFFF);
 
     Bars[2].RenderSpriteScaled(0, 255, 640, 100, 0, 0xFFFFFFFF);
 
@@ -256,7 +253,7 @@ void CCracktro::Main() {
 
     if (!(SinPos > 0.7f && SinPos < PI + 1.0f)) {
         DirectGraphics.SetColorKeyMode();
-        Logo[0].RenderSprite((640 - 341) / 2 + static_cast<float>(sin(LogoPos) * 100.0f), 50, 0, 0xFFFFFFFF);
+        Logo[0].RenderSprite((640 - 341) / 2 + sin(LogoPos) * 100.0f, 50, 0, 0xFFFFFFFF);
 
         numsin += 0.4f SYNC;
 
@@ -268,11 +265,10 @@ void CCracktro::Main() {
 
         // Zahlen
         for (int i = 0; i < 5; i++) {
-            off = static_cast<float>(sin(numsin + i / 3.0f) * 10.0f);
-            off2 = static_cast<float>(sin(numsin + i / 3.0f + PI / 2) * 20.0f);
+            off = sin(numsin + i / 3.0f) * 10.0f;
+            off2 = sin(numsin + i / 3.0f + PI / 2) * 20.0f;
 
-            Zahlen.RenderSprite(75 + i * 40 - off + (640 - 341) / 2 + static_cast<float>(sin(LogoPos) * 100.0f),
-                                110 - off2, i, 0xFFFFFFFF);
+            Zahlen.RenderSprite(75 + i * 40 - off + (640 - 341) / 2 + sin(LogoPos) * 100.0f, 110 - off2, i, 0xFFFFFFFF);
         }
     }
 
@@ -292,24 +288,23 @@ void CCracktro::Main() {
         fontoff = 0;
     }
 
-    float yo = 220 - static_cast<float>(cos(LogoPos) * 10.0f);
+    float yo = 220 - cos(LogoPos) * 10.0f;
     D3DCOLOR col = BlinkCol[static_cast<int>(blinkpos) % (sizeof(BlinkCol) / sizeof(D3DCOLOR))];
 
     RenderRect(0, yo, 640, 2, col);
     RenderRect(0, yo + 20.0f, 640, 2, col);
 
-    pFont->DrawDemoText(static_cast<float>(-sin(LogoPos) * 140.0f) +
-                            static_cast<float>(626 - pFont->DemoStringLength(BlinkText[fontoff])) / 2.0f,
-                        yo + 2.0f, BlinkText[fontoff], col);
+    pFont->DrawDemoText(
+        -sin(LogoPos) * 140.0f + static_cast<float>(626 - pFont->DemoStringLength(BlinkText[fontoff])) / 2.0f,
+        yo + 2.0f, BlinkText[fontoff], col);
 
     // --------------------------------------------------------------------------------------
     // Kringel
     // --------------------------------------------------------------------------------------
 
     for (int i = 0; i < 16; i++) {
-        RenderRect(static_cast<float>(-sin(LogoPos) * 140.0f) + 320 +
-                       static_cast<float>(sin(SinPos + i * (2 * PI / 16)) * 140),
-                   yo + 10 + static_cast<float>(cos(SinPos + i * (2 * PI / 16)) * 20), 4, 2, 0xFFFFFFFF);
+        RenderRect(-sin(LogoPos) * 140.0f + 320 + sin(SinPos + i * (2 * PI / 16)) * 140,
+                   yo + 10 + cos(SinPos + i * (2 * PI / 16)) * 20, 4, 2, 0xFFFFFFFF);
     }
 
     // beenden

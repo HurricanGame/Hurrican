@@ -47,7 +47,7 @@ GegnerSchneeKoenig::GegnerSchneeKoenig(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerSchneeKoenig::DoDraw() {
-    if (DrawNow == false)
+    if (!DrawNow)
         return;
 
     BlickRichtung = LINKS;
@@ -74,10 +74,9 @@ void GegnerSchneeKoenig::DoDraw() {
     else
         GunMod = -1.0f;
 
-    Knarre.RenderSpriteRotatedOffset(
-        static_cast<float>(xPos - TileEngine.XOffset) + 95.0f + static_cast<float>(sin(xoff)) * 1.5f,
-        static_cast<float>(yPos - TileEngine.YOffset) + yOffset - 36 + KnarreY, KnarreWinkel, GunSlide * GunMod, 10,
-        Color, false);
+    Knarre.RenderSpriteRotatedOffset(xPos - TileEngine.XOffset + 95.0f + sin(xoff) * 1.5f,
+                                     yPos - TileEngine.YOffset + yOffset - 36 + KnarreY, KnarreWinkel,
+                                     GunSlide * GunMod, 10, Color, false);
 
     // Body
     if (WackelAnim > 0.0f) {
@@ -88,9 +87,8 @@ void GegnerSchneeKoenig::DoDraw() {
             AnimPhase = 10;
     }
 
-    pGegnerGrafix[GegnerArt]->RenderSprite(
-        static_cast<float>(xPos - TileEngine.XOffset) + static_cast<float>(sin(xoff)) * 5.0f,
-        static_cast<float>(yPos - TileEngine.YOffset) + yOffset, AnimPhase, Color, false);
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset + sin(xoff) * 5.0f,
+                                           yPos - TileEngine.YOffset + yOffset, AnimPhase, Color, false);
 
     //	RenderLaser();
 }
@@ -108,9 +106,9 @@ void GegnerSchneeKoenig::RenderLaser() {
     //                                static_cast<float>(yPos - TileEngine.YOffset) + 5.0f + (float)cos(w) * 70.0f,
     //                                KnarreWinkel, 0, 0, 0xFFFFFFFF);
     w = KnarreWinkel + 180.0f;
-    Laser.RenderSpriteRotatedOffset(static_cast<float>(xPos - TileEngine.XOffset) + 90.0f + sin_deg(w) * 70.0f,
-                                    static_cast<float>(yPos - TileEngine.YOffset) + 5.0f + cos_deg(w) * 70.0f,
-                                    KnarreWinkel, 0, 0, 0xFFFFFFFF);
+    Laser.RenderSpriteRotatedOffset(xPos - TileEngine.XOffset + 90.0f + sin_deg(w) * 70.0f,
+                                    yPos - TileEngine.YOffset + 5.0f + cos_deg(w) * 70.0f, KnarreWinkel, 0, 0,
+                                    0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------
@@ -192,14 +190,14 @@ void GegnerSchneeKoenig::DoKI() {
 
     // Boss aktivieren und Mucke laufen lassen
     //
-    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
+    if (Active && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
         SoundManager.StopSong(MUSIC_STAGEMUSIC, true);  // Ausfaden und pausieren
         SoundManager.PlaySong(MUSIC_BOSS, false);
         ySave = yPos;
 
         // kommt von oben in der mitte des screens runter
-        xPos = static_cast<float>(TileEngine.XOffset) + (640 - 140) / 2.0f;
-        yPos = static_cast<float>(TileEngine.YOffset) - 300;
+        xPos = TileEngine.XOffset + (640 - 140) / 2.0f;
+        yPos = TileEngine.YOffset - 300;
         ySpeed = 50.0f;
         DrawNow = true;
         TileEngine.Zustand = ZUSTAND_LOCKED;
@@ -298,7 +296,7 @@ void GegnerSchneeKoenig::DoKI() {
 
                         for (int p = 0; p < NUMPLAYERS; p++)
                             if (Player[p].AufPlattform == this)
-                                Player[p].AufPlattform = NULL;
+                                Player[p].AufPlattform = nullptr;
                     }
                 } break;
 
@@ -318,7 +316,7 @@ void GegnerSchneeKoenig::DoKI() {
 
                         for (int p = 0; p < NUMPLAYERS; p++)
                             if (Player[p].AufPlattform == this)
-                                Player[p].AufPlattform = NULL;
+                                Player[p].AufPlattform = nullptr;
                     }
                 } break;
 
@@ -359,9 +357,9 @@ void GegnerSchneeKoenig::DoKI() {
                                     float target;
 
                                     if (xPos + 100 > TileEngine.XOffset + 320.0f)
-                                        target = static_cast<float>(TileEngine.XOffset) + 100.0f;
+                                        target = TileEngine.XOffset + 100.0f;
                                     else
-                                        target = static_cast<float>(TileEngine.XOffset) + 540.0f;
+                                        target = TileEngine.XOffset + 540.0f;
 
                                     // zurück zur Mitte springen
                                     if (ShotCount == 1)
@@ -616,10 +614,10 @@ void GegnerSchneeKoenig::DoKI() {
     pTemp = Gegner.pStart;
 
     if (Handlung != GEGNER_AUSFAHREN)
-        while (pTemp != NULL) {
+        while (pTemp != nullptr) {
             if (pTemp->GegnerArt == SCHNEEKOPPE)
                 if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], pTemp->xPos, pTemp->yPos,
-                                    GegnerRect[pTemp->GegnerArt]) == true) {
+                                    GegnerRect[pTemp->GegnerArt])) {
                     pTemp->Energy = 0.0f;
                     Energy -= 5000.0f;
 
@@ -635,7 +633,7 @@ void GegnerSchneeKoenig::DoKI() {
         // Spieler fliegt runter
         for (int p = 0; p < NUMPLAYERS; p++)
             if (Player[p].AufPlattform == this)
-                Player[p].AufPlattform = NULL;
+                Player[p].AufPlattform = nullptr;
 
         Energy = 100;
         Destroyable = false;
@@ -664,7 +662,7 @@ void GegnerSchneeKoenig::GegnerExplode() {
 
     for (int p = 0; p < NUMPLAYERS; p++)
         if (Player[p].AufPlattform == this)
-            Player[p].AufPlattform = NULL;
+            Player[p].AufPlattform = nullptr;
 
     Player[0].Score += 2000 * Value1;
     HUD.BossHUDActive = false;

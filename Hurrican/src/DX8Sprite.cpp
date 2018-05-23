@@ -57,7 +57,7 @@ DirectGraphicsSprite::~DirectGraphicsSprite() {
     // DKS - When in debug mode, itsPreCalcedRects is bound-checked vector wrapper,
     //      otherwise it is a dynamically-allocated array
     delete[] itsPreCalcedRects;
-    itsPreCalcedRects = NULL;
+    itsPreCalcedRects = nullptr;
 #endif
 
     Textures.UnloadTexture(itsTexIdx);
@@ -240,12 +240,13 @@ bool DirectGraphicsSprite::LoadImage(const std::string &filename,
                                      uint16_t yfs,
                                      uint16_t xfc,
                                      uint16_t yfc) {
-    if (GameRunning == false || filename.empty())
+    if (!GameRunning || filename.empty())
         return false;
 
     if (xfc == 0 || yfc == 0) {
 #ifdef _DEBUG
-        Protokoll << "Error: xfc or yfc parameters to DirectGraphicsSprite::LoadImage() are 0! xfc:" << xfc << " yfc:" << yfc << std::endl;
+        Protokoll << "Error: xfc or yfc parameters to DirectGraphicsSprite::LoadImage() are 0! xfc:" << xfc
+                  << " yfc:" << yfc << std::endl;
         GameRunning = false;
 #endif
     }
@@ -281,7 +282,7 @@ bool DirectGraphicsSprite::LoadImage(const std::string &filename,
     // DKS - When in debug mode, itsPreCalcedRects is bound-checked vector wrapper
     itsPreCalcedRects.Clear();
 #else
-    if (itsPreCalcedRects != NULL)
+    if (itsPreCalcedRects != nullptr)
         delete[] itsPreCalcedRects;
     itsPreCalcedRects = new RECT[xfc * yfc];
 #endif
@@ -324,21 +325,11 @@ void DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color) {
     float l, r, o, u;      // Vertice Koordinaten
     float tl, tr, to, tu;  // Textur Koordinaten
 
-    // DKS - unnecessary:
-    // x = float (int (x));
-    // y = float (int (y));
-
     l = x;                                   // Links
     r = x + (itsRect.right - itsRect.left);  // Rechts
     o = y;                                   // Oben
     u = y + (itsRect.bottom - itsRect.top);  // Unten
 
-    // DKS - Converted this and all other sprite-rendering functions to use new itsXTexScale
-    //      and itsYTexScale texture-coordinate-conversion factors like so:
-    // tl = itsRect.left  /itsXSize;	// Links
-    // tr = itsRect.right /itsXSize;	// Rechts
-    // to = itsRect.top   /itsYSize;	// Oben
-    // tu = itsRect.bottom/itsYSize;	// Unten
     tl = itsRect.left * itsXTexScale;    // Links
     tr = itsRect.right * itsXTexScale;   // Rechts
     to = itsRect.top * itsYTexScale;     // Oben
@@ -388,10 +379,6 @@ void DirectGraphicsSprite::RenderSprite(float x,
                                         D3DCOLOR c4) {
     float l, r, o, u;      // Vertice Koordinaten
     float tl, tr, to, tu;  // Textur Koordinaten
-
-    // DKS - unnecessary:
-    // x = float (int (x));
-    // y = float (int (y));
 
     // Ausschnitt einstellen
     Anim %= 255;
@@ -452,7 +439,7 @@ void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
     // x = float (int (x));
     // y = float (int (y));
 
-    if (v == false) {
+    if (!v) {
         o = y;                                   // Unten
         u = y + (itsRect.bottom - itsRect.top);  // Oben
     } else {
@@ -460,7 +447,7 @@ void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
         o = y + (itsRect.bottom - itsRect.top);  // Oben
     }
 
-    if (h == false) {
+    if (!h) {
         r = x + (itsRect.right - itsRect.left);
         l = x;
     } else {
@@ -513,10 +500,6 @@ void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
     float l, r, o, u;      // Vertice Koordinaten
     float tl, tr, to, tu;  // Textur Koordinaten
 
-    // DKS - unnecessary:
-    // x = float (int (x));
-    // y = float (int (y));
-
     r = x;                                   // Links
     l = x + (itsRect.right - itsRect.left);  // Rechts
     o = y;                                   // Oben
@@ -526,9 +509,6 @@ void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
     tr = itsRect.right * itsXTexScale;   // Rechts
     to = itsRect.top * itsYTexScale;     // Oben
     tu = itsRect.bottom * itsYTexScale;  // Unten
-
-    // DKS - Was already commented out in original code:
-    // tl = 0; tr = 0.5f; to = 0; tu = 0.5f;
 
     VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
@@ -769,7 +749,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
 
     // normal
     //
-    if (mirror == false) {
+    if (!mirror) {
         l = x;          // Links
                         // r = x+(itsRect.right-itsRect.left-1)+0.5f;	// Rechts   //DKS
         r = x + width;  // Rechts
@@ -876,8 +856,6 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
                                                      bool mirrored) {
     float l, r, o, u;      // Vertice Koordinaten
     float tl, tr, to, tu;  // Textur Koordinaten
-
-    //	itsRect = itsPreCalcedRects [0];    //DKS - This was commented out already in original source
 
     // DKS - Pulled duplicated math out of logic below:
     float height = itsRect.bottom - itsRect.top;
@@ -1148,27 +1126,3 @@ void RenderLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2, D3DCOLOR Color1, D3DCOLOR Color2
     // Linie zeichnen
     DirectGraphics.RendertoBuffer(GL_LINES, 1, &TriangleStrip[0]);
 }
-
-// --------------------------------------------------------------------------------------
-// Kreis an x/y zeichnen mit Radius r und Farbe col
-// --------------------------------------------------------------------------------------
-// DKS - disabled this as it was only used in a single debug code block in Trigger_FadeMusic.cpp
-#if 0
-void RenderCircle(float x, float y, float r, D3DCOLOR col)
-{
-#define step 0.2f
-
-	D3DXVECTOR2 p1, p2;
-	for (float i = 0; i < 2*PI; i += step)
-	{
-      //SKD - converted sin/cos to sinf/cosf:
-		p1.x = x + (float)sinf(i) * r;
-		p1.y = y + (float)cosf(i) * r;
-
-		p2.x = x + (float)sinf(i + step) * r;
-		p2.y = y + (float)cosf(i + step) * r;
-
-		RenderLine(p1, p2, col);
-	}
-}
-#endif

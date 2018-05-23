@@ -24,6 +24,7 @@
 
 #include "SDL_fmod.hpp"
 #include <cstring>
+#include <iostream>
 
 static int g_allocated = 0;
 static bool g_music_loops = true;
@@ -31,7 +32,7 @@ static bool g_music_loops = true;
 // DKS - no need for this:
 // static int  g_volume;
 
-static MUSIC_MODULE *g_music_current = NULL;
+static MUSIC_MODULE *g_music_current = nullptr;
 
 #if defined(USE_MODPLUG)
 static ModPlug_Settings settings;
@@ -42,42 +43,43 @@ signed char SOUND_Init(int mixrate, int maxsoftwarechannels, unsigned int flags)
 
     int chunksize = 2048;
     if (Mix_OpenAudio(mixrate, MIX_DEFAULT_FORMAT, 2, chunksize) == -1) {
-        printf("->ERROR: Mix_OpenAudio: %s\n", Mix_GetError());
+        std::cerr << "->ERROR: Mix_OpenAudio: " << Mix_GetError() << std::endl;
         return 0;
     } else {
         // DKS - Check what we actually received:
         int cur_freq = 0, cur_channels = 0;
         uint16_t cur_format = 0;
         Mix_QuerySpec(&cur_freq, &cur_format, &cur_channels);
-        printf("SDL_mixer initialized. Buffer size:%d, Freq:%d, Channels:%d\n", chunksize, cur_freq, cur_channels);
+        std::cout << "SDL_mixer initialized. Buffer size:" << chunksize << ", Freq:" << cur_freq
+                  << ", Channels:" << cur_channels << std::endl;
         switch (cur_format) {
             case AUDIO_U8:
-                printf("Unsigned 8-bit samples\n");
+                std::cout << "Unsigned 8-bit samples " << std::endl;
                 break;
             case AUDIO_S8:
-                printf("Signed 8-bit samples\n");
+                std::cout << "Signed 8-bit samples " << std::endl;
                 break;
             case AUDIO_U16LSB:
-                printf("Unsigned 16-bit samples (little-endian)\n");
+                std::cout << "Unsigned 16-bit samples (little-endian) " << std::endl;
                 break;
             case AUDIO_S16LSB:
-                printf("Signed 16-bit samples (little-endian)\n");
+                std::cout << "Signed 16-bit samples (little-endian) " << std::endl;
                 break;
             case AUDIO_U16MSB:
-                printf("Unsigned 16-bit samples (big-endian)\n");
+                std::cout << "Unsigned 16-bit samples (big-endian) " << std::endl;
                 break;
             case AUDIO_S16MSB:
-                printf("Signed 16-bit samples (big-endian)\n");
+                std::cout << "Signed 16-bit samples (big-endian) " << std::endl;
                 break;
             default:
-                printf("Unrecognized SDL_mixer sample format.\n");
+                std::cout << "Unrecognized SDL_mixer sample format. " << std::endl;
                 break;
         }
     }
     g_allocated = Mix_AllocateChannels(maxsoftwarechannels);
 
 #if defined(USE_MODPLUG)
-    printf("Using libModPlug directly for ImpulseTracker music file decoding.\n");
+    std::cout << "Using libModPlug directly for ImpulseTracker music file decoding. " << std::endl;
     ModPlug_GetSettings(&settings);
 
     settings.mFlags = MODPLUG_ENABLE_OVERSAMPLING | MODPLUG_ENABLE_NOISE_REDUCTION;
@@ -96,7 +98,7 @@ signed char SOUND_Init(int mixrate, int maxsoftwarechannels, unsigned int flags)
 
     ModPlug_SetSettings(&settings);
 #else
-    printf("Using SDL_mixer's default decoder for ImpulseTracker music file decoding.\n");
+    std::cout << "Using SDL_mixer's default decoder for ImpulseTracker music file decoding. " << std::endl;
 #endif
 
     return 1;
@@ -106,18 +108,8 @@ void SOUND_Close() {
     Mix_CloseAudio();
 }
 
-int SOUND_GetError() {
-    // Do nothing
-    return 1;
-}
-
 int SOUND_GetMaxChannels() {
     return g_allocated;
-}
-
-signed char SOUND_SetFrequency(int channel, int freq) {
-    // Do nothing
-    return 1;
 }
 
 signed char SOUND_SetPan(int channel, int pan) {
@@ -132,15 +124,15 @@ signed char SOUND_SetPan(int channel, int pan) {
 }
 
 MUSIC_MODULE *MUSIC_LoadSong(const char *filename) {
-    MUSIC_MODULE *music = NULL;
+    MUSIC_MODULE *music = nullptr;
 #if defined(USE_MODPLUG)
     uint32_t size;
 
     std::vector<char> buffer = LoadFileToMemory(filename);
 
     if (buffer.empty()) {
-        printf("ERROR Error file operation: File: %s\n", filename);
-        return NULL;
+        std::cerr << "ERROR Error file operation: File: " << filename << std::endl;
+        return nullptr;
     }
 
     music = ModPlug_Load(buffer.data(), buffer.size() - 1);
@@ -202,11 +194,11 @@ signed char MUSIC_StopSong(MUSIC_MODULE *music) {
     // printf( "%8X MUSIC_StopSong\n", music );
     if (g_music_current == music) {
 #if defined(USE_MODPLUG)
-        Mix_HookMusic(NULL, NULL);
+        Mix_HookMusic(nullptr, nullptr);
 #else
         Mix_HaltMusic();
 #endif
-        g_music_current = NULL;
+        g_music_current = nullptr;
     }
     return 0;
 }
@@ -308,7 +300,7 @@ void hookmusic(void *ptr, uint8_t *buffer, int size) {
 #endif
 
 Mix_Chunk *SOUND_Sample_Load(int index, const char *filename, unsigned int inputmode, int offset, int length) {
-    Mix_Chunk *chunk = NULL;
+    Mix_Chunk *chunk = nullptr;
 
     // Load from memory
     if ((inputmode & FSOUND_LOADMEMORY) == FSOUND_LOADMEMORY) {

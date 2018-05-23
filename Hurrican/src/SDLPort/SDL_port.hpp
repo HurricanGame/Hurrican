@@ -38,9 +38,7 @@
 #include "keymap.hpp"
 #include "opengl.hpp"
 
-typedef std::int32_t LPDIRECT3DSURFACE8;
 typedef GLuint LPDIRECT3DTEXTURE8, LPDIRECT3DTEXTURE9, LPDIRECT3DVERTEXBUFFER8, LPDIRECT3DVERTEXBUFFER9;
-typedef std::uint32_t LPDIRECTINPUT8;
 
 #ifndef __WIN32__
 typedef struct tagRECT {

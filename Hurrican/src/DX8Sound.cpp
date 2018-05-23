@@ -304,7 +304,7 @@ void SoundManagerClass::LoadSong(const std::string &filename, int nr, bool loop 
     }
 
     bool fromrar = false;
-    char *pData = NULL;
+    char *pData = nullptr;
     // DKS - Changed from unsigned int to unsigned long to fix unrarlib compilation error:
     unsigned long buf_size = 0;
     std::string fullpath;
@@ -584,7 +584,7 @@ void SoundManagerClass::LoadWave(const std::string &filename, int nr, bool loope
         return;
 
     bool fromrar = false;
-    char *pData = NULL;
+    char *pData = nullptr;
     // DKS - Changed from unsigned int to unsigned long to fix unrarlib compilation error:
     unsigned long buf_size = 0;
     std::string fullpath;
@@ -631,42 +631,11 @@ loadfile:
             SOUND_Sample_Load(nr, fullpath.c_str(), (looped ? FSOUND_LOOP_NORMAL : FSOUND_LOOP_OFF), 0, 0);
     }
 
-        // DKS - This was already commented out in original source:
-#if 0
-    // Temp Datei wieder löschen und Speicher freigeben
-    DeleteFile("temp.dat");
-    free(pData);
-
-    // Und bei bedarf den loop ausschalten
-    if (looped == false)
-      FSOUND_Sample_SetLoopMode(its_Sounds[Nummer]->SoundData, FSOUND_LOOP_OFF);
-
-    //its_Sounds[Nummer].Name = Filename;
-#endif  // 0
-
     // Fehler beim Laden ?
     if (!sounds[nr].data)
         Protokoll << "\n-> Error: NULL returned from SOUND_Sample_Load, loading " << filename << std::endl;
 
     sounds[nr].looped = looped;
-
-    // DKS - No idea why the game did this, I am disabling this:
-#if 0
-    // kurz anspielen und wieder stoppen
-    int Channel = SOUND_PlaySound   (FSOUND_FREE, its_Sounds[Nr]->SoundData);
-    SOUND_SetVolume(Channel, 0);
-    SOUND_StopSound(Channel);
-#endif  // 0
-
-    // DKS - Already commented out in original source:
-#if 0
-    // TODO FIX
-    /*
-            strcpy_s(Buffer, TextArray [TEXT_LADE_WAVE]);
-            strcat_s(Buffer, Filename);
-            strcat_s(Buffer, TextArray [TEXT_LADEN_ERFOLGREICH]);
-            Protokoll << Buffer << std::endl;*/
-#endif  // 0
 
     // DisplayLoadInfo(Buffer);
     std::string loadinfo_str = std::string(TextArray[TEXT_LADE_WAVE]) + filename +

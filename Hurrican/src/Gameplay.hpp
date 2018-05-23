@@ -36,7 +36,6 @@ void GameLoop();                           // Haupt-Spielablauf
 void ScreenWackeln();                      // Screen wackeln lassen
 void ShakeScreen(float staerke);               // Angeben wie stark der Screen wackeln soll
 void SetScreenShake();                     // Geshakten Screen setzen bzw Matrix dafür einstellen
-void ExplodePlayer();                      // Spieler explodieren lassen
 void StageClear(bool PlaySong = true);         // Spieler aus dem Level abgehen lassen
 void SummaryScreen();                      // Zusammenfassung des Levels
 bool LoadConfig();                         // Konfigurationen laden

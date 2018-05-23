@@ -12,8 +12,8 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
+#include "Gameplay.hpp"
 #include <stdio.h>
-//#include "CCutScene.h"    //DKS - CCutScene code was never used in original game; disabled it
 #include "Console.hpp"
 #include "DX8Font.hpp"
 #include "DX8Graphics.hpp"
@@ -21,7 +21,6 @@
 #include "DX8Sound.hpp"
 #include "DX8Sprite.hpp"
 #include "GUISystem.hpp"
-#include "Gameplay.hpp"
 #include "Gegner_Helper.hpp"
 #include "HUD.hpp"
 #include "Logdatei.hpp"
@@ -91,7 +90,7 @@ void InitNewGame() {
         Player[p].BlocksFullGame = 0;
 
         // nur im Tutorial Level
-        if (RunningTutorial == true)
+        if (RunningTutorial)
             Player[p].GodMode = true;
     }
 
@@ -122,9 +121,9 @@ void InitNewGameLevel(int Nr) {
 
     // Externes Level aus Command Line laden ?
     //
-    if (CommandLineParams.RunUserLevel == false) {
+    if (!CommandLineParams.RunUserLevel) {
         // Nein, dann normales Level in der Reihenfolge laden oder Tutorial Level
-        if (RunningTutorial == true)
+        if (RunningTutorial)
             strcpy_s(Name, strlen("tutorial.map") + 1, "tutorial.map");
         else
             strcpy_s(Name, strlen(StageReihenfolge[Stage - 1]) + 1, StageReihenfolge[Stage - 1]);
@@ -132,7 +131,7 @@ void InitNewGameLevel(int Nr) {
         strcpy_s(Name, strlen(CommandLineParams.UserLevelName) + 1, CommandLineParams.UserLevelName);
 
     // und Level endlich laden
-    if (TileEngine.LoadLevel(Name) == false) {
+    if (!TileEngine.LoadLevel(Name)) {
         SpielZustand = MAINMENU;
         pMenu->AktuellerZustand = MENUPUNKT_STARTGAME;
         Stage = -1;
@@ -174,7 +173,7 @@ void InitNewGameLevel(int Nr) {
     }
 
     // Level-Musik abspielen
-    if (StopStageMusicAtStart == false)
+    if (!StopStageMusicAtStart)
         SoundManager.PlaySong(MUSIC_STAGEMUSIC, false);
 
     FahrstuhlPos = -1.0f;
@@ -262,7 +261,7 @@ void GameLoop() {
         for (int p = 0; p < NUMPLAYERS; p++) {
             Player[p].WasDamaged = false;
 
-            if (Console.Showing == false && Player[p].Handlung != TOT) {
+            if (!Console.Showing && Player[p].Handlung != TOT) {
                 if (Player[p].GameOverTimer == 0.0f) {
                     // Spieler-Eingabe abfragen
                     Player[p].GetPlayerInput();
@@ -274,21 +273,21 @@ void GameLoop() {
             Player[p].GegnerDran = false;
 
             // Spieler bewegen
-            if (p == 0 && Console.Showing == false)
+            if (p == 0 && !Console.Showing)
                 Player[p].ScrollFlugsack();
         }
 
         // Spieler auf einer Plattform ?
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (Player[p].AufPlattform != NULL)
+            if (Player[p].AufPlattform != nullptr)
                 Player[p].DoPlattformStuff();
 
         // Gegner bewegen
-        if (Console.Showing == false)
+        if (!Console.Showing)
             Gegner.RunAll();
 
         // Level checken
-        if (Console.Showing == false)
+        if (!Console.Showing)
             TileEngine.UpdateLevel();
 
         TileEngine.CheckBounds();
@@ -303,10 +302,6 @@ void GameLoop() {
     TileEngine.CalcRenderRange();
     TileEngine.DrawBackground();
 
-    // Drache zb
-    // DKS - this was an empty function in the original code, disabling it:
-    // TileEngine.DrawSpecialLayer();
-
     // Evtl. rotieren, wenn Screen wackelt
     if (WackelMaximum > 0.0f)
         ScreenWackeln();
@@ -314,11 +309,6 @@ void GameLoop() {
     // Level anzeigen
     TileEngine.DrawBackLevel();
     TileEngine.DrawFrontLevel();
-
-    // DKS - Lightmap code in original game was never used and all related code has now been disabled:
-    //// LighMaps löschen
-    // if (options_Detail >= DETAIL_HIGH)
-    //    TileEngine.ClearLightMaps();
 
     // Gegner anzeigen
     Gegner.RenderAll();
@@ -349,7 +339,7 @@ void GameLoop() {
             }
 
             Player[p].BlinkCounter -= 0.5f SYNC;
-        } else if (Player[p].WasDamaged == true)
+        } else if (Player[p].WasDamaged)
             Player[p].DrawPlayer(true, false);
     }
 
@@ -390,7 +380,7 @@ void GameLoop() {
         off = 100 - int(WarningCount);
 
         pGegnerGrafix[WARNING]->SetRect(0, 0, 180, 40);
-        pGegnerGrafix[WARNING]->RenderSpriteScaled(float(230 - off * 4.5f / 4.0f), float(390 - off / 4.0f),
+        pGegnerGrafix[WARNING]->RenderSpriteScaled(230 - off * 4.5f / 4.0f, 390 - off / 4.0f,
                                                    int(180 + off * 4.5f / 2.0f), int(40 + off * 1.0f / 2.0f), Col);
 
         DirectGraphics.SetFilterMode(false);
@@ -401,7 +391,7 @@ void GameLoop() {
     // Blitz und andere Partikel rendern, die alles überlagern
     PartikelSystem.DoThunder();
 
-    if (Console.Showing == false) {
+    if (!Console.Showing) {
         // Waffen 1-3 auswählen
         if (KeyDown(DIK_1))
             Player[0].SelectedWeapon = 0;
@@ -442,7 +432,7 @@ void GameLoop() {
         if (KeyDown(DIK_F8)) Player[0].CurrentWeaponLevel[Player[0].SelectedWeapon] = 8;
     */
 
-    if (DEMORecording == true)
+    if (DEMORecording)
         pDefaultFont->DrawText(10, 455, "Recording demo", D3DCOLOR_RGBA(255, 255, 255, 255));
 
 }  // GameLoop
@@ -539,7 +529,7 @@ void SetScreenShake() {
 void ScreenWackeln() {
     // Weiterwackeln
     //
-    if (Console.Active == false) {
+    if (!Console.Active) {
         WackelValue += WackelDir SYNC * WackelSpeed;
 
         if (WackelValue < -WackelMaximum ||  // An der aktuellen oberen  Grenze oder
@@ -786,7 +776,7 @@ bool LoadConfig() {
     Datei.read(reinterpret_cast<char *>(&Player[0].JoystickSchwelle), sizeof(Player[0].JoystickSchwelle));
 
     // Joystick nicht mehr da?
-    if (DirectInput.Joysticks[Player[0].JoystickIndex].Active == false) {
+    if (!DirectInput.Joysticks[Player[0].JoystickIndex].Active) {
 #if defined(GCW)
         // GCW Zero player 1 defaults:
         Player[0].ControlType = CONTROLTYPE_JOY;
@@ -800,7 +790,7 @@ bool LoadConfig() {
 #endif  // GCW
     }
 
-    if (DirectInput.Joysticks[Player[1].JoystickIndex].Active == false) {
+    if (!DirectInput.Joysticks[Player[1].JoystickIndex].Active) {
 #if defined(GCW)
         // GCW Zero player 2 defaults:
         Player[1].ControlType = CONTROLTYPE_JOY;
@@ -824,7 +814,7 @@ bool LoadConfig() {
 
     PartikelSystem.SetParticleCount();
 
-    if (JoystickFound == false) {
+    if (!JoystickFound) {
         Player[0].ControlType = CONTROLTYPE_KEYBOARD;
         Player[1].ControlType = CONTROLTYPE_KEYBOARD;
     }
@@ -858,8 +848,8 @@ void SaveConfig() {
     Datei.write(reinterpret_cast<char *>(&ActualLanguage), sizeof(ActualLanguage));
 
     // Daten für Sound und Musik-Lautstärke schreiben
-    Sound = float(SoundManager.g_sound_vol);
-    Musik = float(SoundManager.g_music_vol);
+    Sound = SoundManager.g_sound_vol;
+    Musik = SoundManager.g_music_vol;
 
     Datei.write(reinterpret_cast<char *>(&Sound), sizeof(Sound));
     Datei.write(reinterpret_cast<char *>(&Musik), sizeof(Musik));
@@ -897,7 +887,7 @@ void SaveConfig() {
 // --------------------------------------------------------------------------------------
 
 bool DisplayLoadInfo(const char Text[100]) {
-    if (NochKeinFullScreen == true || pMenu == NULL)
+    if (NochKeinFullScreen || pMenu == nullptr)
         return false;
     // TODO FIX
     /*
@@ -973,16 +963,6 @@ bool DisplayLoadInfo(const char Text[100]) {
 }
 
 // --------------------------------------------------------------------------------------
-// Spieler explodieren lassen
-// --------------------------------------------------------------------------------------
-
-void ExplodePlayer() {
-    //	static float delay = 0.0f;
-
-    // alte Darstellung beenden
-}
-
-// --------------------------------------------------------------------------------------
 // Stage Clear Musik dudelt und Spieler läuft aus dem Screen raus
 // --------------------------------------------------------------------------------------
 
@@ -1018,7 +998,7 @@ void StageClear(bool PlaySong) {
 void SummaryScreen() {
     bool leave = false;
     bool all_controls_unpressed_yet = false;
-    bool reveal_cheat = (RunningTutorial == false) && (Player[0].DiamondsThisLevel == TileEngine.MaxDiamonds);
+    bool reveal_cheat = !RunningTutorial && (Player[0].DiamondsThisLevel == TileEngine.MaxDiamonds);
 
     // DKS - Added counter to prevent accidental early-exit:
     const float delay_can_leave = 400.0f;
@@ -1056,7 +1036,7 @@ void SummaryScreen() {
     // DKS - NOTE: boxes are drawn less-than intuitively, you must use dimensions multiples of TILESIZE
     GUI.ShowBox(box_x, box_y, box_w, box_h);
 
-    while (leave == false) {
+    while (!leave) {
         // alte Darstellung beenden
 
         // Mit dem Darstellen beginnen
@@ -1211,8 +1191,8 @@ bool NewDemo(const char Filename[]) {
     DEMOPress = 0;
 
     // Tasten auf false setzen
-    for (int i = 0; i < MAX_AKTIONEN; i++)
-        Player[0].Aktion[i] = false;
+    for (bool &i : Player[0].Aktion)
+        i = false;
 
     // Level neu initialisieren und dann gehts los
     int l = Stage;
@@ -1263,8 +1243,8 @@ bool LoadDemo(const char Filename[]) {
     DEMOPress = 0;
 
     // Tasten auf false setzen
-    for (int i = 0; i < MAX_AKTIONEN; i++)
-        Player[0].Aktion[i] = false;
+    for (bool &i : Player[0].Aktion)
+        i = false;
 
     // Level neu initialisieren und dann gehts los
     int l = NewStage;

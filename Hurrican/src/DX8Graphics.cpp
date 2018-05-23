@@ -150,7 +150,7 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
     // Setup SDL Screen
-    if (isFullscreen == true) {
+    if (isFullscreen) {
 #if SDL_VERSION_ATLEAST(2, 0, 0)
         flags |= SDL_WINDOW_FULLSCREEN;
 #else /* SDL 1.2 */
@@ -169,7 +169,7 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
     // SDL_WM_SetCaption("Hurrican", "Hurrican");
 
     Screen = SDL_SetVideoMode(ScreenWidth, ScreenHeight, ScreenDepth, flags);
-    if (Screen == NULL) {
+    if (Screen == nullptr) {
         Protokoll << "Failed to " << ScreenWidth << "x" << ScreenHeight << "x" << ScreenDepth
                   << "video mode: " << SDL_GetError() << std::endl;
         return false;
@@ -511,7 +511,7 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
     uint8_t program_next = PROGRAM_COLOR;
 
     // Determine the shader program to use
-    if (use_texture == true) {
+    if (use_texture) {
         program_next = PROGRAM_TEXTURE;
     } else {
         program_next = PROGRAM_COLOR;
@@ -598,7 +598,7 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     }
 #elif defined(USE_GL2) || defined(USE_GL3)
-        // Disbale attributes and uniforms
+        // Disable attributes and uniforms
         glDisableVertexAttribArray(Shaders[ProgramCurrent].NamePos);
         glDisableVertexAttribArray(Shaders[ProgramCurrent].NameClr);
 

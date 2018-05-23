@@ -9,9 +9,9 @@ class GegnerSchienenViech : public GegnerClass {
     GegnerSchienenViech(int Wert1,
                         int Wert2,  // Konstruktor
                         bool Light);
-    void GegnerExplode();  // Gegner explodiert
-    void DoKI();           // Gegner individuell mit KI bewegen
-    void DoDraw();         // eigene Drawfunktion
+    void GegnerExplode() override;  // Gegner explodiert
+    void DoKI() override;           // Gegner individuell mit KI bewegen
+    void DoDraw() override;         // eigene Drawfunktion
 };
 
 #endif
