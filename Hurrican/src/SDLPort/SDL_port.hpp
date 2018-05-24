@@ -85,9 +85,6 @@ void strcpy_s(char *dst, int size, const char *src);
 void strcpy_s(char *dst, const char *src);
 #endif
 
-#ifdef __WIN32__
-std::uint8_t LoadGLFunctions();
-#endif
 std::vector<char> LoadFileToMemory(const std::string &name);
 bool isPowerOfTwo(int x);
 int nextPowerOfTwo(int x);

@@ -335,12 +335,6 @@ bool DirectGraphicsClass::SetDeviceInfo() {
 #endif
 #endif
 
-#if defined(__WIN32__)
-    if (LoadGLFunctions() != 0) {
-        return false;
-    }
-#endif /* __WIN32__ */
-
     SetupFramebuffers();
 
     /* OpenGL Information */
