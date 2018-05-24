@@ -29,9 +29,6 @@
 static int g_allocated = 0;
 static bool g_music_loops = true;
 
-// DKS - no need for this:
-// static int  g_volume;
-
 static MUSIC_MODULE *g_music_current = nullptr;
 
 #if defined(USE_MODPLUG)

@@ -178,7 +178,7 @@ bool load_texture(image_t &image, GLuint &new_texture) {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-        if (image.compressed == true) {
+        if (image.compressed) {
             glCompressedTexImage2D(GL_TEXTURE_2D, 0, image.format, image.w, image.h, 0, image.data.size(),
                                    image.data.data() + image.offset);
         } else {
@@ -328,19 +328,10 @@ bool loadImagePVRTC(image_t &image, const std::string &fullpath) {
 #endif
 
 bool loadImageSDL(image_t &image, const std::string &fullpath, void *buf, unsigned int buf_size) {
-// DKS - No longer needed, as we no longer use sprites that are colorkeyed
-#if 0
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    uint32_t flags = SDL_TRUE;
-#else
-    uint32_t flags = SDL_SRCCOLORKEY|SDL_RLEACCEL;
-#endif
-#endif
-
     uint8_t factor;
     SDL_Rect rawDimensions;
-    SDL_Surface *rawSurf = NULL;  // This surface will tell us the details of the image
-    SDL_Surface *finSurf = NULL;
+    SDL_Surface *rawSurf = nullptr;  // This surface will tell us the details of the image
+    SDL_Surface *finSurf = nullptr;
 
     // Init
     image.data = std::vector<char>();
@@ -362,7 +353,7 @@ bool loadImageSDL(image_t &image, const std::string &fullpath, void *buf, unsign
     {
         SDL_RWops *sdl_rw = SDL_RWFromConstMem(reinterpret_cast<const void *>(buf), buf_size);
 
-        if (sdl_rw != NULL) {
+        if (sdl_rw != nullptr) {
             rawSurf = IMG_Load_RW(sdl_rw, 1);
         } else {
             Protokoll << "ERROR Texture: Failed to load texture: " << SDL_GetError() << std::endl;
@@ -371,7 +362,7 @@ bool loadImageSDL(image_t &image, const std::string &fullpath, void *buf, unsign
         }
     }
 
-    if (rawSurf != NULL) {
+    if (rawSurf != nullptr) {
         //  Store dimensions of original RAW surface
         rawDimensions.x = rawSurf->w;
         rawDimensions.y = rawSurf->h;
@@ -400,28 +391,13 @@ bool loadImageSDL(image_t &image, const std::string &fullpath, void *buf, unsign
 #endif
         );
 
-        // DKS - Many of the original game's textures used magenta for a colorkey, instead
-        //      of using an alpha channel. All those textures have been converted to
-        //      now use an alpha channel, so SDL_SetColorKey() below is no longer necessary.
-#if 0
-        //      Check if original image uses an alpha channel
-        //if (!(rawSurf->flags & SDL_SRCALPHA))
-        if (rawSurf->format->BytesPerPixel <= 3 )
-        {
-            // if no alpha use MAGENTA and key it out.
-            SDL_SetColorKey( rawSurf, flags, SDL_MapRGB( rawSurf->format, 255, 0, 255 ) );
-        }
-        else
-#endif
-        {
 #if SDL_VERSION_ATLEAST(2, 0, 0)
-            SDL_SetSurfaceAlphaMod(rawSurf, 255);
+        SDL_SetSurfaceAlphaMod(rawSurf, 255);
 #else /* SDL 1.2 */
-            SDL_SetAlpha(rawSurf, 0, 0);
+        SDL_SetAlpha(rawSurf, 0, 0);
 #endif
-        }
 
-        SDL_BlitSurface(rawSurf, 0, finSurf, 0);
+        SDL_BlitSurface(rawSurf, nullptr, finSurf, nullptr);
         SDL_FreeSurface(rawSurf);
 
         factor = 1;
@@ -483,10 +459,9 @@ std::vector<char> LowerResolution(SDL_Surface *surface, int factor) {
     dataout.reserve((surface->h / factor) * (surface->w / factor) * sizeof(uint32_t));
 
     uint32_t *dataout32 = reinterpret_cast<uint32_t *>(dataout.data());
-    uint32_t *datain32 = reinterpret_cast<uint32_t *>(surface->pixels);
 
     for (y = 0; y < surface->h; y += factor) {
-        datain32 = (reinterpret_cast<uint32_t *>(surface->pixels)) + surface->w * y;
+        uint32_t *datain32 = (reinterpret_cast<uint32_t *>(surface->pixels)) + surface->w * y;
         for (x = 0; x < surface->w; x += factor) {
             *dataout32 = *datain32;
             datain32 += factor;

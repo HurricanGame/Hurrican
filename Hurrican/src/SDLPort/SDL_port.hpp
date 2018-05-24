@@ -38,7 +38,7 @@
 #include "keymap.hpp"
 #include "opengl.hpp"
 
-typedef GLuint LPDIRECT3DTEXTURE8, LPDIRECT3DTEXTURE9, LPDIRECT3DVERTEXBUFFER8, LPDIRECT3DVERTEXBUFFER9;
+typedef GLuint LPDIRECT3DTEXTURE8;
 
 #ifndef __WIN32__
 typedef struct tagRECT {
@@ -49,9 +49,7 @@ typedef struct tagRECT {
 } RECT;
 typedef std::uint32_t LONG;
 #endif
-typedef std::uint32_t LPDIRECT3D8, LPDIRECT3D9, LPDIRECT3DDEVICE8, LPDIRECT3DDEVICE9, LPDIRECTSOUND8, D3DCOLOR;
-
-//#define D3DX_PI ((float)(M_PI))
+typedef std::uint32_t LPDIRECT3DDEVICE8, D3DCOLOR;
 
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
 #define D3DCOLOR_RGBA(r, g, b, a) (((a) << 24) + ((r) << 16) + ((g) << 8) + (b))

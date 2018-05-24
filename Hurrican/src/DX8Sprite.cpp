@@ -13,7 +13,6 @@
 // Includes
 // --------------------------------------------------------------------------------------
 
-#include <stdio.h>
 #include <string>
 
 #include "DX8Texture.hpp"
@@ -32,12 +31,6 @@
 #endif
 
 extern bool GameRunning;  // Läuft das Spiel noch ?
-
-// --------------------------------------------------------------------------------------
-// Variablen
-// --------------------------------------------------------------------------------------
-
-int ActualTexture = -1;  // aktuelle Textur (damit wir uns ein paar
 
 // --------------------------------------------------------------------------------------
 // Klassenfunktionen
@@ -268,8 +261,8 @@ bool DirectGraphicsSprite::LoadImage(const std::string &filename,
     //      nearest-power-of-two expansion to make one single factor that allows
     //      flexible texture-coordinate computation with no divisions.
     //      This also means we no longer need member vars itsXSize and itsYSize.
-    itsXTexScale = static_cast<float>(static_cast<double>(Textures[itsTexIdx].npot_scalex) / static_cast<double>(xs));
-    itsYTexScale = static_cast<float>(static_cast<double>(Textures[itsTexIdx].npot_scaley) / static_cast<double>(ys));
+    itsXTexScale = static_cast<float>(Textures[itsTexIdx].npot_scalex / static_cast<double>(xs));
+    itsYTexScale = static_cast<float>(Textures[itsTexIdx].npot_scaley / static_cast<double>(ys));
 
     itsXFrameCount = xfc;
     itsYFrameCount = yfc;
@@ -434,10 +427,6 @@ void DirectGraphicsSprite::RenderSprite(float x,
 void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color, bool h, bool v) {
     float l, r, o, u;      // Vertice Koordinaten
     float tl, tr, to, tu;  // Textur Koordinaten
-
-    // DKS - unnecessary:
-    // x = float (int (x));
-    // y = float (int (y));
 
     if (!v) {
         o = y;                                   // Unten

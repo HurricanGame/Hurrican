@@ -199,7 +199,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 Lebensdauer = 192;
                 AnimEnde = 19;
-                AnimSpeed = float((rand() % 6 + 3) / 20.0f);
+                AnimSpeed = (rand() % 6 + 3) / 20.0f;
 
                 PartikelSystem.PushPartikel(x - 30, y - 30, EXPLOSIONFLARE);
 
@@ -217,7 +217,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 Lebensdauer = 192;
                 AnimEnde = 19;
-                AnimSpeed = float((rand() % 6 + 3) / 20.0f);
+                AnimSpeed = (rand() % 6 + 3) / 20.0f;
 
                 PartikelSystem.PushPartikel(x - 30, y - 30, EXPLOSIONFLARE);
 
@@ -235,7 +235,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 Lebensdauer = 192;
                 AnimEnde = 19;
-                AnimSpeed = float((rand() % 6 + 3) / 20.0f);
+                AnimSpeed = (rand() % 6 + 3) / 20.0f;
 
                 PartikelSystem.PushPartikel(x - 30, y - 30, EXPLOSIONFLARE);
 
@@ -255,7 +255,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 Lebensdauer = 192;
                 AnimEnde = 19;
-                AnimSpeed = float((rand() % 2 + 5) / 10.0f);
+                AnimSpeed = (rand() % 2 + 5) / 10.0f;
 
                 PartikelSystem.PushPartikel(x + 30, y + 30, EXPLOSIONFLARE);
 
@@ -275,7 +275,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - This sprite actually has 25 frames, so increased this to 24:
                 // AnimEnde	= 22;
                 AnimEnde = 24;
-                AnimSpeed = float((rand() % 10 + 5) / 15.0f);
+                AnimSpeed = (rand() % 10 + 5) / 15.0f;
 
             } break;
 
@@ -288,7 +288,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - This sprite actually has 25 frames, so increased this to 24:
                 // AnimEnde	= 22;
                 AnimEnde = 24;
-                AnimSpeed = float((rand() % 5 + 10) / 80.0f);
+                AnimSpeed = (rand() % 5 + 10) / 80.0f;
 
                 PartikelSystem.PushPartikel(x - 30, y - 30, EXPLOSIONFLARE);
 
@@ -301,7 +301,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 Lebensdauer = 224;
                 AnimEnde = 19;
-                AnimSpeed = float((rand() % 5 + 10) / 30.0f);
+                AnimSpeed = (rand() % 5 + 10) / 30.0f;
                 PartikelSystem.PushPartikel(x + 32, y + 32, EXPLOSION_KRINGEL);
 
                 if (options_Detail >= DETAIL_MAXIMUM)
@@ -318,7 +318,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 Lebensdauer = 192;
                 AnimEnde = 15;
-                AnimSpeed = float((rand() % 5 + 10) / 15.0f);
+                AnimSpeed = (rand() % 5 + 10) / 15.0f;
 
             } break;
 
@@ -332,7 +332,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 //      This was glitching after switching to using the sprites' itsPreCalcedRects[]
                 // AnimEnde	= 12;
                 AnimEnde = 11;
-                AnimSpeed = float((rand() % 10 + 5) / 15.0f);
+                AnimSpeed = (rand() % 10 + 5) / 15.0f;
 
             } break;
 
@@ -342,12 +342,10 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
                 Lebensdauer = 200;
-                // DKS - Changed value from 16 to 15, this is an off-by-one error:
-                // AnimEnde	= 16;
                 AnimEnde = 15;
                 AnimSpeed = 0.3f;
                 xSpeed = (static_cast<float>(rand() % 160 - 80) / 4);
-                ySpeed = -(static_cast<float>((rand() % 20 + 50) / 2.0f));
+                ySpeed = -((rand() % 20 + 50) / 2.0f);
                 yAcc = 3.0f;
                 BounceWalls = true;
 
@@ -380,8 +378,6 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 alpha = 192;
 
                 Lebensdauer = 192;
-                // DKS - This actually has 4 frames of animation, not 2:
-                // AnimEnde	= 1;
                 AnimEnde = 3;
                 AnimSpeed = 2.0f;
                 ySpeed = -static_cast<float>(rand() % 10 + 20) / 20;
@@ -395,8 +391,6 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 alpha = 192;
 
                 Lebensdauer = 128;
-                // DKS - Off by one error:
-                // AnimEnde	= 4;
                 AnimEnde = 3;
                 AnimSpeed = 1.0f;
             } break;
@@ -524,10 +518,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 yAcc = 2.8f;
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = true;
-                // DKS - off-by-one error:
-                // AnimEnde	= 8;
                 AnimEnde = 7;
-                AnimSpeed = float((rand() % 10 + 5) / 12.0f);
+                AnimSpeed = (rand() % 10 + 5) / 12.0f;
             } break;
 
             case ROCKSPLITTERSMALL:  // kleine Splitter eines Felsblocks
@@ -541,10 +533,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 yAcc = 2.8f;
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = true;
-                // DKS - off-by-one error:
-                // AnimEnde	= 8;
                 AnimEnde = 7;
-                AnimSpeed = float((rand() % 10 + 5) / 8.0f);
+                AnimSpeed = (rand() % 10 + 5) / 8.0f;
             } break;
 
             case ROCKSPLITTERSMALLBLUE:  // kleine Splitter eines Stalagtits
@@ -558,34 +548,10 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 yAcc = 2.8f;
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = true;
-                // DKS - off-by-one error:
-                // AnimEnde	= 8;
                 AnimEnde = 7;
-                AnimSpeed = float((rand() % 10 + 5) / 8.0f);
+                AnimSpeed = (rand() % 10 + 5) / 8.0f;
             } break;
 
-            // DKS - Added missing SPIDERSPLITTER2 case:
-#if 0
-        case SPIDERSPLITTER :	// Splitter der Spinne
-        {
-            PartikelArt += rand()%2;
-            int r = rand()%128 + 128;
-            red	= green = blue = r;
-            alpha = 255;
-
-            xSpeed		= (float(rand()%80-40)/3.0f);
-            ySpeed		= -float(rand()%30+15)/2.0f;
-            xAcc		= 0.0f;
-            yAcc		= 3.0f;
-            //Lebensdauer = 255;      //DKS - now redundant
-            BounceWalls = true;
-            //DKS - off-by-one error:
-            //AnimEnde	= 16;
-            AnimEnde	= 15;
-            AnimSpeed	= float((rand()%10+5)/12.0f);
-        }
-        break;
-#endif                            // 0
             case SPIDERSPLITTER:  // Splitter der Spinne
             case SPIDERSPLITTER2: {
                 if (PartikelArt == SPIDERSPLITTER)
@@ -600,10 +566,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 yAcc = 3.0f;
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = true;
-                // DKS - off-by-one error:
-                // AnimEnde	= 16;
                 AnimEnde = 15;
-                AnimSpeed = float((rand() % 10 + 5) / 12.0f);
+                AnimSpeed = (rand() % 10 + 5) / 12.0f;
             } break;
 
             case SPIDERGRENADE:  // Granate der Spinne
@@ -616,10 +580,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 yAcc = 5.0f;
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = false;
-                // DKS - off-by-one error:
-                // AnimEnde	= 4;
                 AnimEnde = 3;
-                AnimSpeed = float((rand() % 10 + 5) / 12.0f);
+                AnimSpeed = (rand() % 10 + 5) / 12.0f;
             } break;
 
             case EVILSMOKE:  // Schatten des EvilHurri links
@@ -1648,7 +1610,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 absy = speed * absy;  // (xSpeed*ySpeed ergibt 4)
 
                 xSpeed = float(absx);
-                ySpeed = float(absy);
+                ySpeed = absy;
             } break;
 
             case KRINGELB:  // Blauer Kringel
@@ -1675,8 +1637,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
                 absy = speed * absy;  // (xSpeed*ySpeed ergibt 4)
 
-                xSpeed = float(absx);
-                ySpeed = float(absy);
+                xSpeed = absx;
+                ySpeed = absy;
             } break;
 
             case KRINGELHB:  // Hellblauer Kringel
@@ -1703,8 +1665,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
                 absy = speed * absy;  // (xSpeed*ySpeed ergibt 4)
 
-                xSpeed = float(absx);
-                ySpeed = float(absy);
+                xSpeed = absx;
+                ySpeed = absy;
             } break;
 
             case LONGFUNKE:  // Langer Roter Funken
@@ -1858,8 +1820,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
                 absy = speed * absy;  // (xSpeed*ySpeed ergibt 4)
 
-                xSpeed = float(absx);
-                ySpeed = float(absy);
+                xSpeed = absx;
+                ySpeed = absy;
             } break;
 
             case MINIFLARE:  // Flare vom Lava Ball
@@ -2132,7 +2094,7 @@ void PartikelClass::Run() {
 
     // Screen verlassen oder eh schon weg wegen der Lebensdauer ?
     //
-    if (RemoveWhenOffScreen == true) {
+    if (RemoveWhenOffScreen) {
         if (yPos - TileEngine.YOffset > 480 + 20 || yPos - TileEngine.YOffset + PartikelRect[PartikelArt].bottom < 20 ||
             xPos - TileEngine.XOffset > 640 + 20 || xPos - TileEngine.XOffset + PartikelRect[PartikelArt].right < 20)
             Lebensdauer = 0.0f;
@@ -2151,7 +2113,7 @@ void PartikelClass::Run() {
         yPos += ySpeed SYNC;
     }
 
-    if (BounceWalls == true) {
+    if (BounceWalls) {
         bo = TileEngine.BlockOben(xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
         bl = TileEngine.BlockLinks(xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
         br = TileEngine.BlockRechts(xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
@@ -2164,7 +2126,7 @@ void PartikelClass::Run() {
     }
 
     // Auf Kollision mit dem Level Testen
-    if (BounceWalls == true) {
+    if (BounceWalls) {
         // Testen,ob der Partikel sich in einer Wand verfangen hat, wenn ja
         // dann verschwinden lassen
 
@@ -2266,12 +2228,10 @@ void PartikelClass::Run() {
             {
                 Lebensdauer -= 5.0f SYNC;  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
-                // DKS - off-by-one error:
-                // if (AnimPhase >= AnimEnde)		// Animation zu Ende	?
                 if (AnimPhase > AnimEnde)  // Animation zu Ende	?
                     Lebensdauer = 0;       // Dann Explosion verschwinden lassen
 
-                if (Rotate == true)
+                if (Rotate)
                     Rot += RotDir * AnimSpeed * 10.0f SYNC;
 
             } break;
@@ -2280,8 +2240,6 @@ void PartikelClass::Run() {
             {
                 Lebensdauer -= 12.0f SYNC;  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
-                // DKS - off-by-one error:
-                // if (AnimPhase >= AnimEnde)		// Animation zu Ende	?
                 if (AnimPhase > AnimEnde)  // Animation zu Ende	?
                     Lebensdauer = 0;       // Dann Explosion verschwinden lassen
 
@@ -2291,8 +2249,6 @@ void PartikelClass::Run() {
             {
                 Lebensdauer -= 7.0f SYNC;  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
-                // DKS - we weren't getting our full animation
-                // if (AnimPhase == AnimEnde)		// Animation zu Ende	?
                 if (AnimPhase > AnimEnde)  // Animation zu Ende	?
                     AnimPhase = 0;         // Dann von vorne beginnen lassen
 
@@ -2421,8 +2377,6 @@ void PartikelClass::Run() {
                     Lebensdauer = 0;
 
                 // Animation von vorne beginnen
-                // DKS - we weren't getting our full animation
-                // if (AnimPhase == AnimEnde)
                 if (AnimPhase > AnimEnde)
                     AnimPhase = 0;
 
@@ -2435,8 +2389,6 @@ void PartikelClass::Run() {
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
                 // Animation von vorne beginnen
-                // DKS - we weren't getting our full animation
-                // if (AnimPhase == AnimEnde)
                 if (AnimPhase > AnimEnde)
                     AnimPhase = 0;
             } break;
@@ -2467,7 +2419,7 @@ void PartikelClass::Run() {
                     // DKS - converted to float:
                     Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
-                    vol = int((100 - float(Abstand / 6.0f)) * 1.5f);
+                    vol = int((100 - Abstand / 6.0f) * 1.5f);
                     if (vol < 0)
                         vol = 0;
 
@@ -2489,7 +2441,6 @@ void PartikelClass::Run() {
                     xAcc = 0.0f;
 
                     Lebensdauer -= 10.0f SYNC;
-                    tmp_alpha = int(Lebensdauer);
                 }
 
                 if (xSpeed > 0.0f)
@@ -2514,9 +2465,6 @@ void PartikelClass::Run() {
 
                 // drehen
                 if (yAcc != 0.0f)
-                    // DKS - Fixed bug where nests would rotate wildly if VSYNC was not enabled and framerate was high:
-                    //      (Rotation rate was not tied to game timer, added SYNC factor)
-                    // Rot += RotDir;        // Original code
                     Rot += RotDir SYNC;
 
                 while (Rot > 360.0f)
@@ -2559,8 +2507,6 @@ void PartikelClass::Run() {
             case ROCKSPLITTERSMALL:
             case ROCKSPLITTERSMALLBLUE:
             case BOULDER_SMALL: {
-                // DKS - we weren't getting our full animation
-                // if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
                 if (AnimPhase > AnimEnde)  // Animation von zu Ende	?
                     AnimPhase = 0;         // Dann wieder von vorne beginnen
 
@@ -2569,21 +2515,19 @@ void PartikelClass::Run() {
             } break;
 
             case WASSER_SPRITZER: {
-                Lebensdauer -= static_cast<float>(AnimSpeed) SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= AnimSpeed SYNC;  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
                 OwnDraw = true;
             } break;
 
             case WASSER_SPRITZER2: {
-                Lebensdauer -= static_cast<float>(AnimSpeed) SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= AnimSpeed SYNC;  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
                 OwnDraw = true;
             } break;
 
             case SPIDERSPLITTER:
             case SPIDERSPLITTER2: {
-                // DKS - we weren't getting our full animation
-                // if (AnimPhase == AnimEnde)		// Animation von zu Ende	?
                 if (AnimPhase > AnimEnde)  // Animation von zu Ende	?
                     AnimPhase = 0;         // Dann wieder von vorne beginnen
 
@@ -2613,8 +2557,6 @@ void PartikelClass::Run() {
 
             case STELZE:  // Stelze eines StelzSacks
             {
-                // DKS - we weren't getting our full animation
-                // if (AnimPhase >= AnimEnde)		// Animation von zu Ende	?
                 if (AnimPhase > AnimEnde)  // Animation von zu Ende	?
                     AnimPhase = 0;
 
@@ -2832,7 +2774,7 @@ void PartikelClass::Run() {
                 Lebensdauer -= 20.0f SYNC;  // langsam
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
-                if (m_pParent != NULL) {
+                if (m_pParent != nullptr) {
                     // Bewegungsrichtung anpassen
                     // DKS - converted to float:
                     float absx = m_pParent->BeamX - xPos;  // Differenz der x
@@ -2845,8 +2787,8 @@ void PartikelClass::Run() {
                     absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
                     absy = speed * absy;  // (xSpeed*ySpeed ergibt 4)
 
-                    xSpeed = float(absx);
-                    ySpeed = float(absy);
+                    xSpeed = absx;
+                    ySpeed = absy;
                 }
             } break;
 
@@ -2928,8 +2870,6 @@ void PartikelClass::Run() {
             {
                 Lebensdauer -= 16.0f SYNC;  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
-                // DKS - we weren't getting our full animation
-                // if (AnimPhase >= AnimEnde)
                 if (AnimPhase > AnimEnde)
                     AnimPhase = 0;
             } break;
@@ -3051,8 +2991,8 @@ void PartikelClass::Run() {
                 absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
                 absy = speed * absy;  // (xSpeed*ySpeed ergibt 4)
 
-                xSpeed = float(absx);
-                ySpeed = float(absy);
+                xSpeed = absx;
+                ySpeed = absy;
             } break;
 
             case TURBINESMOKE:  // Partikel, die in die Turbine des Metalhead Bosses gesaugt werden
@@ -3075,8 +3015,8 @@ void PartikelClass::Run() {
                 absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
                 absy = speed * absy;  // (xSpeed*ySpeed ergibt 4)
 
-                xSpeed = float(absx);
-                ySpeed = float(absy);
+                xSpeed = absx;
+                ySpeed = absy;
             } break;
 
             case MINIFLARE:  // Flare beim Lava Ball
@@ -3115,8 +3055,6 @@ void PartikelClass::Run() {
                 Lebensdauer -= 18.0f SYNC;  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
-                // DKS - we weren't getting our full animation
-                // if (AnimPhase >= AnimEnde)
                 if (AnimPhase > AnimEnde)
                     AnimPhase = 0;
             } break;
@@ -3175,8 +3113,6 @@ void PartikelClass::Run() {
             case EXPLOSION_TRACE_END: {
                 Lebensdauer -= 4.0f SYNC;  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
-                // DKS - off-by-one error:
-                // if (AnimPhase >= AnimEnde)		// Animation zu Ende	?
                 if (AnimPhase > AnimEnde)  // Animation zu Ende	?
                     Lebensdauer = 0;       // Dann Explosion verschwinden lassen
 
@@ -3241,7 +3177,7 @@ bool PartikelClass::Render() {
         alpha = 0;
 
     // Partikel rotieren?
-    if (Rotate == true) {
+    if (Rotate) {
         DrawMode = MODE_ROTATED;
 
         if (Rot < 0.0f)
@@ -3279,7 +3215,7 @@ bool PartikelClass::Render() {
     } else
 
         // Partikel nicht rotieren?
-        if (Rotate == false && DrawMode != MODE_NORMAL) {
+        if (!Rotate && DrawMode != MODE_NORMAL) {
         DrawMode = MODE_NORMAL;
 
         DirectGraphics.SetFilterMode(false);
@@ -3296,7 +3232,7 @@ bool PartikelClass::Render() {
     // DKS - Added a check to ensure we never draw without a valid animation phase, to ensure
     //      we never step outside itsPreCalcedRects boundaries
     // if (OwnDraw == false)
-    if (OwnDraw == false && AnimPhase <= AnimEnde) {
+    if (!OwnDraw && AnimPhase <= AnimEnde) {
         float l, r, o, u;      // Vertice Koordinaten
         float tl, tr, to, tu;  // Textur Koordinaten
         float xts = PartikelGrafix[PartikelArt].itsXTexScale;
@@ -3316,10 +3252,10 @@ bool PartikelClass::Render() {
 
         RECT &Rect = PartikelGrafix[PartikelArt].itsPreCalcedRects[AnimPhase];
 
-        l = float(-TileEngine.XOffset + xPos - 0.5f);                                 // Links
-        r = float(-TileEngine.XOffset + xPos + (Rect.right - Rect.left - 1) + 0.5f);  // Rechts
-        o = float(-TileEngine.YOffset + yPos - 0.5f);                                 // Oben
-        u = float(-TileEngine.YOffset + yPos + (Rect.bottom - Rect.top - 1) + 0.5f);  // Unten
+        l = -TileEngine.XOffset + xPos - 0.5f;                                 // Links
+        r = -TileEngine.XOffset + xPos + (Rect.right - Rect.left - 1) + 0.5f;  // Rechts
+        o = -TileEngine.YOffset + yPos - 0.5f;                                 // Oben
+        u = -TileEngine.YOffset + yPos + (Rect.bottom - Rect.top - 1) + 0.5f;  // Unten
 
         tl = Rect.left * xts;    // Links
         tr = Rect.right * xts;   // Rechts
@@ -3362,8 +3298,8 @@ bool PartikelClass::Render() {
 
     } else if (PartikelArt == TEXTSECRET) {
         D3DCOLOR col = D3DCOLOR_RGBA(255, 224, 64, alpha);
-        pMenuFont->DrawTextCenterAlign(static_cast<float>(xPos - TileEngine.XOffset),
-                                       static_cast<float>(yPos - TileEngine.YOffset), TextArray[TEXT_SECRET], col);
+        pMenuFont->DrawTextCenterAlign(xPos - TileEngine.XOffset, yPos - TileEngine.YOffset, TextArray[TEXT_SECRET],
+                                       col);
 
         CurrentPartikelTexture = -1;
     }
@@ -3383,8 +3319,8 @@ bool PartikelClass::Render() {
 
         D3DXVECTOR2 pos, dir;
 
-        pos.x = float(xPos - TileEngine.XOffset);
-        pos.y = float(yPos - TileEngine.YOffset);
+        pos.x = xPos - TileEngine.XOffset;
+        pos.y = yPos - TileEngine.YOffset;
         dir.x = pos.x - xSpeed;
         dir.y = pos.y - ySpeed;
 
@@ -3412,9 +3348,8 @@ bool PartikelClass::Render() {
         // PartikelGrafix[PartikelArt].RenderSpriteRotated (float (xPos - TileEngine.XOffset),
         //        float (yPos - TileEngine.YOffset),
         //        AnimCount / PI * 180.0f, D3DCOLOR_RGBA(red, green, blue, alpha));
-        PartikelGrafix[PartikelArt].RenderSpriteRotated(float(xPos - TileEngine.XOffset),
-                                                        float(yPos - TileEngine.YOffset), RadToDeg(AnimCount),
-                                                        D3DCOLOR_RGBA(red, green, blue, alpha));
+        PartikelGrafix[PartikelArt].RenderSpriteRotated(xPos - TileEngine.XOffset, yPos - TileEngine.YOffset,
+                                                        RadToDeg(AnimCount), D3DCOLOR_RGBA(red, green, blue, alpha));
 
         CurrentPartikelTexture = PartikelArt;
     }
@@ -3423,9 +3358,9 @@ bool PartikelClass::Render() {
     else if (PartikelArt == BEAMSMOKE5) {
         float a = static_cast<float>(255 - alpha + 64);
 
-        PartikelGrafix[PartikelArt].RenderSpriteScaledRotated(float(xPos - a / 2.0f - TileEngine.XOffset) + 30,
-                                                              float(yPos - a / 2.0f - TileEngine.YOffset) + 30, a, a,
-                                                              Rot, D3DCOLOR_RGBA(255, 255, 255, alpha));
+        PartikelGrafix[PartikelArt].RenderSpriteScaledRotated(xPos - a / 2.0f - TileEngine.XOffset + 30,
+                                                              yPos - a / 2.0f - TileEngine.YOffset + 30, a, a, Rot,
+                                                              D3DCOLOR_RGBA(255, 255, 255, alpha));
 
         CurrentPartikelTexture = PartikelArt;
     }
@@ -3435,7 +3370,7 @@ bool PartikelClass::Render() {
         // int a = 255 - alpha + 64;
 
         PartikelGrafix[PartikelArt].RenderSpriteScaled(
-            float(xPos - AnimCount / 2.0f - TileEngine.XOffset), float(yPos - AnimCount / 2.0f - TileEngine.YOffset),
+            xPos - AnimCount / 2.0f - TileEngine.XOffset, yPos - AnimCount / 2.0f - TileEngine.YOffset,
             static_cast<int>(AnimCount), static_cast<int>(AnimCount), D3DCOLOR_RGBA(red, green, blue, alpha));
 
         CurrentPartikelTexture = PartikelArt;
@@ -3443,10 +3378,9 @@ bool PartikelClass::Render() {
 
     // Leuchten beim Extra Einsammeln
     else if (PartikelArt == EXTRACOLLECTED) {
-        PartikelGrafix[PartikelArt].RenderSpriteScaled(float(xPos + 16 - AnimCount / 2.0f - TileEngine.XOffset),
-                                                       float(yPos + 16 - AnimCount / 2.0f - TileEngine.YOffset),
-                                                       static_cast<int>(AnimCount), static_cast<int>(AnimCount),
-                                                       D3DCOLOR_RGBA(red, green, blue, alpha));
+        PartikelGrafix[PartikelArt].RenderSpriteScaled(
+            xPos + 16 - AnimCount / 2.0f - TileEngine.XOffset, yPos + 16 - AnimCount / 2.0f - TileEngine.YOffset,
+            static_cast<int>(AnimCount), static_cast<int>(AnimCount), D3DCOLOR_RGBA(red, green, blue, alpha));
 
         CurrentPartikelTexture = PartikelArt;
     }
@@ -3455,10 +3389,9 @@ bool PartikelClass::Render() {
     else if (PartikelArt == DIAMANTCOLLECTED) {
         DirectGraphics.SetAdditiveMode();
 
-        PartikelGrafix[PartikelArt].RenderSpriteScaled(float(xPos + 15 - AnimCount / 2.0f - TileEngine.XOffset),
-                                                       float(yPos + 15 - AnimCount / 2.0f - TileEngine.YOffset),
-                                                       static_cast<int>(AnimCount), static_cast<int>(AnimCount),
-                                                       D3DCOLOR_RGBA(red, green, blue, alpha));
+        PartikelGrafix[PartikelArt].RenderSpriteScaled(
+            xPos + 15 - AnimCount / 2.0f - TileEngine.XOffset, yPos + 15 - AnimCount / 2.0f - TileEngine.YOffset,
+            static_cast<int>(AnimCount), static_cast<int>(AnimCount), D3DCOLOR_RGBA(red, green, blue, alpha));
 
         CurrentPartikelTexture = PartikelArt;
     }
@@ -3469,19 +3402,19 @@ bool PartikelClass::Render() {
 
         h = 100;
         if (PartikelArt == WASSER_SPRITZER)
-            b = static_cast<int>(200 - alpha / 2);
+            b = 200 - alpha / 2;
         else
             b = static_cast<int>(AnimCount * 30);
 
-        PartikelGrafix[PartikelArt].RenderSpriteScaled(float(xPos - TileEngine.XOffset) - b / 4,
-                                                       float(yPos - TileEngine.YOffset) - h / 2, b, h,
+        PartikelGrafix[PartikelArt].RenderSpriteScaled(xPos - TileEngine.XOffset - b / 4,
+                                                       yPos - TileEngine.YOffset - h / 2, b, h,
                                                        D3DCOLOR_RGBA(red, green, blue, alpha));
 
         CurrentPartikelTexture = PartikelArt;
     } else if (PartikelArt == BEAMSMOKE) {
-        PartikelGrafix[PartikelArt].RenderSpriteScaledRotated(
-            float(xPos - TileEngine.XOffset) - AnimCount / 2.0f, float(yPos - TileEngine.YOffset) - AnimCount / 2.0f,
-            AnimCount, AnimCount, static_cast<float>(Rot), D3DCOLOR_RGBA(red, green, blue, alpha));
+        PartikelGrafix[PartikelArt].RenderSpriteScaledRotated(xPos - TileEngine.XOffset - AnimCount / 2.0f,
+                                                              yPos - TileEngine.YOffset - AnimCount / 2.0f, AnimCount,
+                                                              AnimCount, Rot, D3DCOLOR_RGBA(red, green, blue, alpha));
 
         CurrentPartikelTexture = PartikelArt;
     }
@@ -3498,15 +3431,15 @@ bool PartikelClass::Render() {
 // --------------------------------------------------------------------------------------
 
 PartikelsystemClass::PartikelsystemClass() {
-    pStart = NULL;
-    pEnd = NULL;
+    pStart = nullptr;
+    pEnd = nullptr;
     NumPartikel = 0;
     MAX_PARTIKEL = 2000;
     SetParticleCount();
 
     ThunderAlpha = 0.0f;
-    for (int i = 0; i < 3; i++)
-        ThunderColor[i] = 0;
+    for (unsigned char &i : ThunderColor)
+        i = 0;
 
     DrawMode = MODE_NORMAL;
 }
@@ -4290,38 +4223,6 @@ PartikelsystemClass::~PartikelsystemClass() {
 //      4.) Not return a value
 //      5.) Increment NumPartikel *before* calling CreatePartikel(), which can
 //          sometimes push particles of its own and overflow new memory pool.
-#if 0
-bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass* pParent)
-{
-    if(NumPartikel >= MAX_PARTIKEL)			// Grenze überschritten ?
-        return false;
-
-    PartikelClass *pNew = new PartikelClass;		// Neuer zu erstellender Partikel
-
-    if (pNew->CreatePartikel(x, y, Art, pParent) == false)	// neuen Partikel erzeugen
-        return false;
-
-    if(pStart==NULL)						// Liste leer ?
-    {
-        pStart = pNew;						// Ja, dann neuer Partikel gleich erstes
-        pEnd   = pNew;						// und letzter Partikel
-
-        pStart->pNext=NULL;					// Next/Previous gibts nich, da wir
-        pStart->pPrev=NULL;					// nur 1 Partikel haben
-    }
-    else									// Liste ist NICHT leer
-    {
-        pEnd->pNext = pNew;					// Letzter Partikel zeigt auf den neuen
-        pNew->pPrev = pEnd;					// Letzter Partikel ist nicht mehr das letzte
-
-        pNew->pNext = NULL;					// Nach dem neuen Partikel kommt keiner mehr
-        pEnd		= pNew;					// da es jetzt das letzte in der Liste ist
-    }
-
-    NumPartikel++;							// Partikelanzahl erhöhen
-    return true;
-}
-#endif  // 0
 bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass *pParent) {
     if (NumPartikel >= MAX_PARTIKEL)  // Grenze überschritten ?
         return false;
@@ -4331,7 +4232,7 @@ bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass *p
         (Art == GRENADEFLARE || Art == SHOTFLARE || Art == SHOTFLARE2 || Art == EXPLOSIONFLARE))
         return false;
 
-    PartikelClass *pNew = NULL;
+    PartikelClass *pNew = nullptr;
 #ifdef USE_NO_MEMPOOLING
     pNew = new PartikelClass;  // Neuer zu erstellender Partikel
 #else
@@ -4352,9 +4253,9 @@ bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass *p
     NumPartikel++;
 
     pNew->CreatePartikel(x, y, Art, pParent);  // neuen Partikel erzeugen
-    pNew->pNext = NULL;
+    pNew->pNext = nullptr;
 
-    if (pStart == NULL)
+    if (pStart == nullptr)
         pStart = pNew;
 
     if (pEnd)
@@ -4368,44 +4269,12 @@ bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass *p
 // --------------------------------------------------------------------------------------
 // Bestimmten Partikel der Liste löschen
 // --------------------------------------------------------------------------------------
-
-// DKS - Replaced with new DelNode() function that supports a singly-linked list and
-//      new pooled memory manager. (see next function below this )
-#if 0
-void PartikelsystemClass::DelSel(PartikelClass *pTemp)
-{
-    PartikelClass  *pN;
-    PartikelClass  *pP;
-
-    if(pTemp!=NULL)						// zu löschender Partikel existiert
-    {
-        pN = pTemp->pNext;
-        pP = pTemp->pPrev;
-
-        if(pP == NULL)					// Wird der erste Partikel gelöscht ?
-            pStart = pN;				// Dann wird dessen Nächster zum Ersten
-        else
-            pP->pNext = pN;	   	        // ansonsten normal eins aufrücken
-
-        if(pN == NULL)					// Wird der letzte Partikel gelöscht ?
-            pEnd = pP;					// Dann wir der letzte Partikel zum ersten
-        else
-            pN->pPrev = pP;
-
-        delete (pTemp);					// Speicher freigeben
-        pTemp = NULL;
-
-        NumPartikel--;					// Partikelzahl verringern
-    }
-}
-#endif  // 0
-
 // DKS - Added new function DelNode() that supports new singly-linked list.
 //      It is now up to the caller to splice the list, this blindly deletes what is passed
 //      to it and returns the pointer that was in pPtr->pNext, or NULL if pPtr was NULL.
 PartikelClass *PartikelsystemClass::DelNode(PartikelClass *pPtr) {
-    PartikelClass *pNext = NULL;
-    if (pPtr != NULL)  // zu löschender Partikel existiert
+    PartikelClass *pNext = nullptr;
+    if (pPtr != nullptr)  // zu löschender Partikel existiert
     {
         pNext = pPtr->pNext;
 
@@ -4426,25 +4295,6 @@ PartikelClass *PartikelsystemClass::DelNode(PartikelClass *pPtr) {
 // --------------------------------------------------------------------------------------
 // Alle Partikel der Liste löschen
 // --------------------------------------------------------------------------------------
-
-// DKS - adapted to use singly-linked list
-#if 0
-void PartikelsystemClass::ClearAll()
-{
-    PartikelClass *pTemp    = pStart;				// Zeiger auf den ersten   Partikel
-    PartikelClass *pNaechst;						// Zeiger auf den nächsten Partikel (falls
-    // das eine gelöscht wird)
-    while (pTemp != NULL)							// Ende der Liste erreicht ?
-    {
-        pNaechst = pTemp->pNext;					// Zeiger auf das nächste Element
-        DelSel(pTemp);								// Das aktuelle löschen
-        pTemp = pNaechst;							// und das nächste bearbeiten
-    }
-
-    pStart = NULL;
-    pEnd   = NULL;
-}
-#endif  // 0
 void PartikelsystemClass::ClearAll() {
     if (pStart) {
         PartikelClass *pNext = pStart->pNext;
@@ -4453,7 +4303,7 @@ void PartikelsystemClass::ClearAll() {
         }
         DelNode(pStart);
     }
-    pStart = pEnd = NULL;
+    pStart = pEnd = nullptr;
 
 #ifdef _DEBUG
     if (NumPartikel != 0) {
@@ -4488,7 +4338,7 @@ void PartikelsystemClass::DrawOnly() {
     CurrentPartikelTexture = -1;    // Aktuelle Textur gibt es noch keine
     DrawMode = MODE_NORMAL;
     DirectGraphics.SetColorKeyMode();
-    while (pTemp != NULL)  // Noch nicht alle durch ?
+    while (pTemp != nullptr)  // Noch nicht alle durch ?
     {
         if (pTemp->PartikelArt < ADDITIV_GRENZE)
             pTemp->Render();
@@ -4501,7 +4351,7 @@ void PartikelsystemClass::DrawOnly() {
     pTemp = pStart;
     CurrentPartikelTexture = -1;  // Aktuelle Textur gibt es noch keine
     DirectGraphics.SetAdditiveMode();
-    while (pTemp != NULL)  // Noch nicht alle durch ?
+    while (pTemp != nullptr)  // Noch nicht alle durch ?
     {
         if (pTemp->PartikelArt >= ADDITIV_GRENZE)
             pTemp->Render();
@@ -4522,92 +4372,14 @@ void PartikelsystemClass::DrawOnly() {
 // --------------------------------------------------------------------------------------
 // Alle Partikel der Liste animieren und anzeigen, aber speziale
 // --------------------------------------------------------------------------------------
-
-// DKS - Adapted to now-singly-linked particle list:
-#if 0
-void PartikelsystemClass::DoPartikelSpecial(bool ShowThem)
-{
-    if (Console.Showing == true)
-    {
-        DrawOnly();
-        return;
-    }
-
-    PartikelClass *pTemp = pStart;			// Anfang der Liste
-    PartikelClass *pNext = NULL;			// Nächster Partikel in der Liste
-
-    CurrentPartikelTexture = -1;			// Aktuelle Textur gibt es noch keine
-
-    DrawMode = MODE_NORMAL;
-
-//----- Partikel, die normal oder mit Alphablending gerendert werden, durchlaufen
-
-    DirectGraphics.SetColorKeyMode();
-    while (pTemp != NULL)					// Noch nicht alle durch ?
-    {
-        if (ShowThem == false &&
-                pTemp->PartikelArt < ADDITIV_GRENZE)
-        {
-            pTemp->Run();					// Partikel animieren/bewegen
-
-            if (pTemp->Lebensdauer > 0.0f)
-                pTemp->Render();
-        }
-
-        pNext = pTemp->pNext;				// Nächstes sichern
-
-        if (pTemp->Lebensdauer <= 0.0f) 	// ggf Partikel löschen (bei Lebensdauer == 0)
-            DelSel(pTemp);
-
-        pTemp = pNext;						// Und nächsten Partikel anhandeln
-    }
-
-//----- Partikel, die mit additivem Alphablending gerendert werden, durchlaufen
-
-    pTemp = pStart;
-    pNext = NULL;
-    CurrentPartikelTexture = -1;			// Aktuelle Textur gibt es noch keine
-    DirectGraphics.SetAdditiveMode();
-    while (pTemp != NULL)					// Noch nicht alle durch ?
-    {
-        if ((ShowThem == true &&
-                (pTemp->PartikelArt == SCHNEEFLOCKE_END ||
-                 pTemp->PartikelArt == EXPLOSION_TRACE_END)) ||
-                (ShowThem == false &&
-                 pTemp->PartikelArt >= ADDITIV_GRENZE))
-        {
-            pTemp->Run();		// Partikel animieren/bewegen
-
-            if (pTemp->Lebensdauer > 0.0f)
-                pTemp->Render();
-        }
-
-        pNext = pTemp->pNext;				// Nächstes sichern
-
-        if (pTemp->Lebensdauer <= 0.0f) 	// ggf Partikel löschen (bei Lebensdauer == 0)
-            DelSel(pTemp);
-
-        pTemp = pNext;						// Und nächsten Partikel anhandeln
-    }
-
-    DirectGraphics.SetColorKeyMode();
-
-    // Normale Projektions-Matrix wieder herstellen
-    D3DXMatrixRotationZ (&matWorld, 0.0f);
-    g_matModelView = matWorld * g_matView;
-#if defined(USE_GL1)
-    load_matrix( GL_MODELVIEW, g_matModelView.data() );
-#endif
-}
-#endif  // 0
 void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
-    if (Console.Showing == true) {
+    if (Console.Showing) {
         DrawOnly();
         return;
     }
 
     PartikelClass *pCurr = pStart;
-    PartikelClass *pPrev = NULL;
+    PartikelClass *pPrev = nullptr;
 
     CurrentPartikelTexture = -1;  // Aktuelle Textur gibt es noch keine
     DrawMode = MODE_NORMAL;
@@ -4616,8 +4388,8 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
 
     DirectGraphics.SetColorKeyMode();
 
-    while (pCurr != NULL) {
-        if (ShowThem == false && pCurr->PartikelArt < ADDITIV_GRENZE) {
+    while (pCurr != nullptr) {
+        if (!ShowThem && pCurr->PartikelArt < ADDITIV_GRENZE) {
             pCurr->Run();
             if (pCurr->Lebensdauer > 0.0f)
                 pCurr->Render();
@@ -4647,13 +4419,12 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
     //----- Partikel, die mit additivem Alphablending gerendert werden, durchlaufen
 
     pCurr = pStart;
-    pPrev = NULL;
+    pPrev = nullptr;
     CurrentPartikelTexture = -1;  // Aktuelle Textur gibt es noch keine
     DirectGraphics.SetAdditiveMode();
-    while (pCurr != NULL) {
-        if ((ShowThem == true &&
-             (pCurr->PartikelArt == SCHNEEFLOCKE_END || pCurr->PartikelArt == EXPLOSION_TRACE_END)) ||
-            (ShowThem == false && pCurr->PartikelArt >= ADDITIV_GRENZE)) {
+    while (pCurr != nullptr) {
+        if ((ShowThem && (pCurr->PartikelArt == SCHNEEFLOCKE_END || pCurr->PartikelArt == EXPLOSION_TRACE_END)) ||
+            (!ShowThem && pCurr->PartikelArt >= ADDITIV_GRENZE)) {
             pCurr->Run();  // Partikel animieren/bewegen
 
             if (pCurr->Lebensdauer > 0.0f)
@@ -4694,90 +4465,21 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
 // --------------------------------------------------------------------------------------
 // Alle Partikel der Liste animieren und anzeigen
 // --------------------------------------------------------------------------------------
-
-// DKS - Adapted to now-singly-linked particle list:
-#if 0
-void PartikelsystemClass::DoPartikel()
-{
-    if (Console.Showing == true)
-    {
-        DrawOnly();
-        return;
-    }
-
-    PartikelClass *pTemp = pStart;			// Anfang der Liste
-    PartikelClass *pNext = NULL;			// Nächster Partikel in der Liste
-
-    CurrentPartikelTexture = -1;			// Aktuelle Textur gibt es noch keine
-
-    DrawMode = MODE_NORMAL;
-
-//----- Partikel, die normal oder mit Alphablending gerendert werden, durchlaufen
-
-    DirectGraphics.SetColorKeyMode();
-    while (pTemp != NULL)					// Noch nicht alle durch ?
-    {
-        if (pTemp->PartikelArt < ADDITIV_GRENZE)
-        {
-            pTemp->Run();		// Partikel animieren/bewegen
-            pTemp->Render();
-        }
-
-        pNext = pTemp->pNext;				// Nächstes sichern
-
-        if (pTemp->Lebensdauer <= 0.0f) 	// ggf Partikel löschen (bei Lebensdauer == 0)
-            DelSel(pTemp);
-
-        pTemp = pNext;						// Und nächsten Partikel anhandeln
-    }
-
-//----- Partikel, die mit additivem Alphablending gerendert werden, durchlaufen
-
-    pTemp = pStart;
-    pNext = NULL;
-    CurrentPartikelTexture = -1;			// Aktuelle Textur gibt es noch keine
-    DirectGraphics.SetAdditiveMode();
-    while (pTemp != NULL)					// Noch nicht alle durch ?
-    {
-        if (pTemp->PartikelArt >= ADDITIV_GRENZE)
-        {
-            pTemp->Run();		// Partikel animieren/bewegen
-            pTemp->Render();
-        }
-
-        pNext = pTemp->pNext;				// Nächstes sichern
-
-        if (pTemp->Lebensdauer <= 0.0f) 	// ggf Partikel löschen (bei Lebensdauer == 0)
-            DelSel(pTemp);
-
-        pTemp = pNext;						// Und nächsten Partikel anhandeln
-    }
-
-    DirectGraphics.SetColorKeyMode();
-
-    // Normale Projektions-Matrix wieder herstellen
-    D3DXMatrixRotationZ (&matWorld, 0.0f);
-    g_matModelView = matWorld * g_matView;
-#if defined(USE_GL1)
-    load_matrix( GL_MODELVIEW, g_matModelView.data() );
-#endif
-}
-#endif  // 0
 void PartikelsystemClass::DoPartikel() {
-    if (Console.Showing == true) {
+    if (Console.Showing) {
         DrawOnly();
         return;
     }
 
     PartikelClass *pCurr = pStart;
-    PartikelClass *pPrev = NULL;
+    PartikelClass *pPrev = nullptr;
     CurrentPartikelTexture = -1;  // Aktuelle Textur gibt es noch keine
     DrawMode = MODE_NORMAL;
 
     //----- Partikel, die normal oder mit Alphablending gerendert werden, durchlaufen
 
     DirectGraphics.SetColorKeyMode();
-    while (pCurr != NULL) {
+    while (pCurr != nullptr) {
         if (pCurr->PartikelArt < ADDITIV_GRENZE) {
             pCurr->Run();  // Partikel animieren/bewegen
 
@@ -4808,11 +4510,11 @@ void PartikelsystemClass::DoPartikel() {
     }
 
     pCurr = pStart;
-    pPrev = NULL;
+    pPrev = nullptr;
     CurrentPartikelTexture = -1;  // Aktuelle Textur gibt es noch keine
     DirectGraphics.SetAdditiveMode();
 
-    while (pCurr != NULL) {
+    while (pCurr != nullptr) {
         if (pCurr->PartikelArt >= ADDITIV_GRENZE) {
             pCurr->Run();
             if (pCurr->Lebensdauer > 0.0f)
@@ -4832,7 +4534,7 @@ void PartikelsystemClass::DoPartikel() {
             pCurr = DelNode(pCurr);
             // pCurr now points to the node after the one deleted
 
-            if (pPrev != NULL) {
+            if (pPrev != nullptr) {
                 // This is not the first node in the list, so
                 // splice this node onto the previous one
                 pPrev->pNext = pCurr;
@@ -4865,32 +4567,11 @@ void PartikelsystemClass::DoThunder() {
 // PowerUp Partikel löschen, falls schon welche vorhanden
 // damit kein so bunter bonbon scheiss entsteht, wenn mehrere extras gleichzeitig aufgepowert werden
 // --------------------------------------------------------------------------------------
-
-// DKS - Adapted to now-singly-linked particle list:
-#if 0
-void PartikelsystemClass::ClearPowerUpEffects()
-{
-    PartikelClass* pTemp;
-    PartikelClass* pNext;
-
-    pTemp = PartikelSystem.pStart;
-
-    while (pTemp != NULL)
-    {
-        pNext = pTemp->pNext;
-
-        if (pTemp->PartikelArt == KRINGEL)
-            PartikelSystem.DelSel(pTemp);
-
-        pTemp = pNext;
-    }
-}
-#endif  // 0
 void PartikelsystemClass::ClearPowerUpEffects() {
     PartikelClass *pCurr = pStart;
-    PartikelClass *pPrev = NULL;
+    PartikelClass *pPrev = nullptr;
 
-    while (pCurr != NULL) {
+    while (pCurr != nullptr) {
         if (pCurr->PartikelArt == KRINGEL) {
             // If this is the last node in the list, update the main class's pEnd pointer
             if (pEnd == pCurr) {
