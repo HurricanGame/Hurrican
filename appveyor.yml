@@ -30,6 +30,7 @@ before_build:
   - |-
     set CMAKE_PREFIX_PATH=C:\dependencies
 
+  - git submodule update --init --recursive
   - ps: cd Hurrican
   - cmake -G "Visual Studio 15 2017 Win64"
 build:
