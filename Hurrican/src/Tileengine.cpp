@@ -3312,24 +3312,24 @@ bool TileEngineClass::CheckDestroyableWalls(float x, float y, float xs, float ys
 
 D3DCOLOR TileEngineClass::LightValue(float x, float y, RECT rect, bool forced) {
     D3DCOLOR Color;
-    int xLevel, yLevel;
+    int x_level, y_level;
     unsigned int r, g, b;
 
-    xLevel = int((x + (rect.right - rect.left) / 2) / TILESIZE_X);  // xPosition im Level
-    yLevel = int((y + (rect.bottom - rect.top) / 2) / TILESIZE_Y);  // yPosition im Level
+    x_level = int((x + (rect.right - rect.left) / 2) / TILESIZE_X);  // xPosition im Level
+    y_level = int((y + (rect.bottom - rect.top) / 2) / TILESIZE_Y);  // yPosition im Level
 
-    // DKS - Added check for xLevel,yLevel being in bounds of levels' dimensions, also,
+    // DKS - Added check for x_level,y_level being in bounds of levels' dimensions, also,
     //      check forced==false before blindly looking up block value:
-    // if (!(TileAt(xLevel, yLevel).Block & BLOCKWERT_LIGHT) &&		// Soll das Leveltile garnicht
+    // if (!(TileAt(x_level, y_level).Block & BLOCKWERT_LIGHT) &&		// Soll das Leveltile garnicht
     //        forced == false)
     //    return 0xFFFFFFFF;										// das Licht des Objektes ändern
-    if ((xLevel >= LEVELSIZE_X || yLevel >= LEVELSIZE_Y) ||
-        (!forced && !(TileAt(xLevel, yLevel).Block & BLOCKWERT_LIGHT)))  // Soll das Leveltile garnicht
+    if ((x_level >= LEVELSIZE_X || y_level >= LEVELSIZE_Y) ||
+        (!forced && !(TileAt(x_level, y_level).Block & BLOCKWERT_LIGHT)))  // Soll das Leveltile garnicht
         return 0xFFFFFFFF;                                               // das Licht des Objektes ändern
 
-    r = TileAt(xLevel, yLevel).Red;
-    g = TileAt(xLevel, yLevel).Green;
-    b = TileAt(xLevel, yLevel).Blue;
+    r = TileAt(x_level, y_level).Red;
+    g = TileAt(x_level, y_level).Green;
+    b = TileAt(x_level, y_level).Blue;
 
     r += 48;  // Farbewerte ein wenig erhöhen, damit man selbst bei 0,0,0
     g += 48;  // noch ein wenig was sehen kann und das Sprite nicht

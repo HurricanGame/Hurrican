@@ -39,10 +39,10 @@ void GegnerSecret::DoKI() {
         case GEGNER_STEHEN: {
             // Spieler berührt das Secret? Dann Counter erhöhen und deaktivieren
             //
-            GegnerRect[GegnerArt].left = -Value1 / 2 + 20;
-            GegnerRect[GegnerArt].right = Value1 / 2 + 20;
-            GegnerRect[GegnerArt].top = -Value2 / 2 + 20;
-            GegnerRect[GegnerArt].bottom = Value2 / 2 + 20;
+            GegnerRect[GegnerArt].left = -(Value1 / 2) + 20;
+            GegnerRect[GegnerArt].right = (Value1 / 2) + 20;
+            GegnerRect[GegnerArt].top = -(Value2 / 2) + 20;
+            GegnerRect[GegnerArt].bottom = (Value2 / 2) + 20;
 
             for (int p = 0; p < NUMPLAYERS; p++)
                 if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[p].xpos, Player[p].ypos,

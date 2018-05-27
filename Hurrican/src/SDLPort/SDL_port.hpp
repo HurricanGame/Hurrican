@@ -38,28 +38,30 @@
 #include "keymap.hpp"
 #include "opengl.hpp"
 
-typedef GLuint LPDIRECT3DTEXTURE8;
+using LPDIRECT3DTEXTURE8 = GLuint;
 
 #ifndef __WIN32__
-typedef struct tagRECT {
+struct RECT {
     std::int32_t left;
     std::int32_t top;
     std::int32_t right;
     std::int32_t bottom;
-} RECT;
-typedef std::uint32_t LONG;
+};
+using LONG = std::uint32_t;
 #endif
-typedef std::uint32_t LPDIRECT3DDEVICE8, D3DCOLOR;
+using LPDIRECT3DDEVICE8 = std::uint32_t;
+using D3DCOLOR = std::uint32_t;
 
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
-#define D3DCOLOR_RGBA(r, g, b, a) (((a) << 24) + ((r) << 16) + ((g) << 8) + (b))
+#define D3DCOLOR_RGBA(r, g, b, a) ((static_cast<std::uint32_t>(a) << 24u) | (static_cast<std::uint32_t>(r) << 16u) | (static_cast<std::uint32_t>(g) << 8u) | static_cast<std::uint32_t>(b))
 #else
-#define D3DCOLOR_RGBA(r, g, b, a) (((b) << 24) + ((g) << 16) + ((r) << 8) + (a))
+#define D3DCOLOR_RGBA(r, g, b, a) ((static_cast<std::uint32_t>(b) << 24u) | (static_cast<std::uint32_t>(g) << 16u) | (static_cast<std::uint32_t>(r) << 8u) | static_cast<std::uint32_t>(a))
 #endif
 
 #define LPDIRECTINPUTDEVICE8 SDL_Joystick *
 
-typedef cml::matrix44f_r D3DXMATRIX, D3DXMATRIXA16;
+using D3DXMATRIXA16 = cml::matrix44f_r;
+using D3DXMATRIX = cml::matrix44f_r;
 
 void D3DXMatrixIdentity(D3DXMATRIXA16 *m);
 
