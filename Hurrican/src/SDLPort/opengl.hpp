@@ -2,11 +2,6 @@
 #define _OPENGL_H_
 
 #include <epoxy/gl.h>
-#ifdef _WIN32
-#include <epoxy/wgl.h>
-#else
-#include <epoxy/glx.h>
-#endif
 
 // Do some sanity checks
 #if !defined(USE_GL1) && !defined(USE_GL2) && !defined(USE_GL3)
