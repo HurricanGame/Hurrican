@@ -366,11 +366,11 @@ void OuttroClass::DoOuttro() {
                 int off = TextOff + i - 27;
                 if (off > 0) {
                     if (TEXT_OUTTRO1 + off < TEXT_SEPERATOR_MARIO)
-                        sprintf_s(text, "%s", TextArray[TEXT_OUTTRO1 + off]);
+                        snprintf(text, 255, "%s", TextArray[TEXT_OUTTRO1 + off]);
                     else if (TEXT_OUTTRO1 + off <= TEXT_SEPERATOR_MARIO + AnzahlCredits)
-                        sprintf_s(text, "%s", Credits[off + 25]);
+                        snprintf(text, 255, "%s", Credits[off + 25]);
                     else if (TEXT_OUTTRO1 + off <= TEXT_SEPERATOR_MARIO + AnzahlCredits + 10)
-                        sprintf_s(text, "%s", TextArray[TEXT_OUTTRO1 + off - AnzahlCredits]);
+                        snprintf(text, 255, "%s", TextArray[TEXT_OUTTRO1 + off - AnzahlCredits]);
                     else
                         strcpy_s(text, "");
 

@@ -1091,19 +1091,19 @@ void SummaryScreen() {
                                color);
 
         char buf[100];
-        sprintf_s(buf, "%i/%i", Player[0].BlocksThisLevel, TileEngine.MaxBlocks);
+        snprintf(buf, 100, "%i/%i", Player[0].BlocksThisLevel, TileEngine.MaxBlocks);
         pDefaultFont->DrawText(static_cast<float>(sprite1_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf,
                                color);
 
-        sprintf_s(buf, "%i/%i", Player[0].DiamondsThisLevel, TileEngine.MaxDiamonds);
+        snprintf(buf, 100, "%i/%i", Player[0].DiamondsThisLevel, TileEngine.MaxDiamonds);
         pDefaultFont->DrawText(static_cast<float>(sprite2_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf,
                                color);
 
-        sprintf_s(buf, "%i/%i", Player[0].LivesThisLevel, TileEngine.MaxOneUps);
+        snprintf(buf, 100, "%i/%i", Player[0].LivesThisLevel, TileEngine.MaxOneUps);
         pDefaultFont->DrawText(static_cast<float>(sprite3_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf,
                                color);
 
-        sprintf_s(buf, "%i/%i", Player[0].SecretThisLevel, TileEngine.MaxSecrets);
+        snprintf(buf, 100, "%i/%i", Player[0].SecretThisLevel, TileEngine.MaxSecrets);
         pDefaultFont->DrawText(static_cast<float>(secrets_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf,
                                color);
 
@@ -1114,7 +1114,7 @@ void SummaryScreen() {
             for (unsigned int p = 0; p < strlen(buf2); p++)
                 buf2[p] ^= 64;
 
-            sprintf_s(buf, "%s: %s", TextArray[TEXT_SUMMARY_CHEATUNLOCK], buf2);
+            snprintf(buf, 100, "%s: %s", TextArray[TEXT_SUMMARY_CHEATUNLOCK], buf2);
             pDefaultFont->DrawText(RENDERWIDTH / 2 - pDefaultFont->StringLength(buf, 0) / 2, cheat_txt_y, buf, color,
                                    0);
         }

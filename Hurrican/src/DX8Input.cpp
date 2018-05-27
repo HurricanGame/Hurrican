@@ -442,7 +442,7 @@ char *DirectInputClass::MapButtonToString(int joy_idx, int button) {
         // Non-platform-specific generic code for all joysticks:
         {
             // Report button numbers as ranging from 1..99 instead of 0..98
-            sprintf_s(buf, "%d", button + 1);
+            snprintf(buf, 20, "%d", button + 1);
             return buf;
         }
     }

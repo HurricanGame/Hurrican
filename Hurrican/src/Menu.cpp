@@ -740,7 +740,7 @@ void MenuClass::ShowMenu() {
                 else {
                     // Print joystick name, truncated to fit if necessary
                     char tmpbuf[120];
-                    sprintf_s(tmpbuf, "%d:%s", pCurrentPlayer->JoystickIndex,
+                    snprintf(tmpbuf, 120, "%d:%s", pCurrentPlayer->JoystickIndex,
                               DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].JoystickName);
                     int cutoff = strlen(tmpbuf) - 1;
                     int max_w = col2_off_x - 10;
@@ -859,7 +859,7 @@ void MenuClass::ShowMenu() {
                                     }
                                 } else {
                                     // Joy button
-                                    sprintf_s(Buf, "%s %s", TextArray[TEXT_BUTTON],
+                                    snprintf(Buf, 80, "%s %s", TextArray[TEXT_BUTTON],
                                               DirectInput.MapButtonToString(pCurrentPlayer->JoystickIndex,
                                                                             pCurrentPlayer->AktionJoystick[i]));
                                 }
@@ -943,7 +943,7 @@ void MenuClass::ShowMenu() {
             pMenuFont->DrawTextCenterAlign(320, ypos + 180, TextArray[TEXT_NAMEN_EINGEBEN],
                                            D3DCOLOR_RGBA(255, 255, 255, 255), 2);
 
-            sprintf_s(Buffer, "%s %d", Buffer, NewRank + 1);
+            snprintf(Buffer, 100, "%s %d", Buffer, NewRank + 1);
 
             pMenuFont->DrawTextCenterAlign(320, ypos + 150, Buffer, D3DCOLOR_RGBA(255, 255, 255, 255), 2);
         } break;  // ENTERNAME
@@ -2040,7 +2040,7 @@ void MenuClass::DoMenu() {
 
             // Aktuellen Namen azeigen
             char Buffer[20];
-            sprintf_s(Buffer, "%s", NewName);
+            snprintf(Buffer, 20, "%s", NewName);
             pMenuFont->DrawTextCenterAlign(319, ypos + 230, Buffer, D3DCOLOR_RGBA(0, 0, 255, 255), 2);
             pMenuFont->DrawTextCenterAlign(321, ypos + 230, Buffer, D3DCOLOR_RGBA(0, 0, 255, 255), 2);
             pMenuFont->DrawTextCenterAlign(320, ypos + 229, Buffer, D3DCOLOR_RGBA(0, 0, 255, 255), 2);
@@ -2484,12 +2484,12 @@ void MenuClass::ShowSavegames(int Highlight) {
 // --------------------------------------------------------------------------------------
 
 void MenuClass::LoadHighscore() {
-    char name[256];
+    std::string name;
 
     // Versuchen, die Highscore Datei zu öffnen
     // falls sie nicht existiert oder es eine Fehler gibt, wird die Standard
     // Highscore gesetzt
-    sprintf_s(name, "%s/Hurrican.hsl", g_save_ext);
+    name = std::string(g_save_ext) + "/Hurrican.hsl";
     std::ifstream Datei(name, std::ifstream::binary);
 
     // Fehler beim Öffnen ? Dann standard Highscore setzen
@@ -2540,10 +2540,10 @@ void MenuClass::LoadHighscore() {
 // --------------------------------------------------------------------------------------
 
 void MenuClass::SaveHighscore() {
-    char name[256];
+    std::string name;
 
     // Highscore Datei öffnen
-    sprintf_s(name, "%s/Hurrican.hsl", g_save_ext);
+    name = std::string(g_save_ext) + "/Hurrican.hsl";
     std::ofstream Datei(name, std::ofstream::binary);
 
     // Fehler beim Öffnen ? Dann standard Highscore setzen

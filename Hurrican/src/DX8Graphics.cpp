@@ -326,8 +326,8 @@ bool DirectGraphicsClass::Exit() {
 
 bool DirectGraphicsClass::SetDeviceInfo() {
 #if defined(USE_GL2) || defined(USE_GL3)
-    char vert[256];
-    char frag[256];
+    std::string vert;
+    std::string frag;
 #if defined(USE_GL3)
     const char* glsl_version = "320";
 #else /* USE_GL2 */
@@ -369,20 +369,20 @@ bool DirectGraphicsClass::SetDeviceInfo() {
 
 #if defined(USE_GL2) || defined(USE_GL3)
     // Compile the shader code and link into a program
-    sprintf_s(vert, "%s/data/shaders/%s/shader_color.vert", g_storage_ext, glsl_version);
-    sprintf_s(frag, "%s/data/shaders/%s/shader_color.frag", g_storage_ext, glsl_version);
+    vert = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_color.vert";
+    frag = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_color.frag";
 
     if (Shaders[PROGRAM_COLOR].Load(vert, frag) != 0) {
         return false;
     }
 
-    sprintf_s(vert, "%s/data/shaders/%s/shader_texture.vert", g_storage_ext, glsl_version);
+    vert = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_texture.vert";
 #if defined(USE_ETC1)
     if (SupportedETC1 == true) {
         sprintf_s(frag, "%s/data/shaders/%s/shader_etc1_texture.frag", g_storage_ext, glsl_version);
     } else {
 #endif
-    sprintf_s(frag, "%s/data/shaders/%s/shader_texture.frag", g_storage_ext, glsl_version);
+    frag = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_texture.frag";
 #if defined(USE_ETC1)
     }
 #endif

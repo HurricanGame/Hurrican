@@ -58,23 +58,23 @@ bool LoadLanguage(char *filename) {
     std::ifstream in;
     char c;
     int count;
-    char temp[256];
+    std::string temp;
 
     if (CommandLineParams.RunOwnLevelList) {
-        sprintf_s(temp, "%s/levels/%s/custom.lng", g_storage_ext, CommandLineParams.OwnLevelList);
+        temp = std::string(g_storage_ext) +  "/levels/" + CommandLineParams.OwnLevelList + "/custom.lng";
         if (fs::exists(temp) && fs::is_regular_file(temp))
             goto loadfile;
     }
 
     // DKS - Fixed language loading (it did not look in lang/ folder at all)
     // First, always try the lang/ folder
-    sprintf_s(temp, "%s/lang/%s", g_storage_ext, filename);
+    temp = std::string(g_storage_ext) + "/lang/" + filename;
 
     if (fs::exists(temp) && fs::is_regular_file(temp))
         goto loadfile;
 
     // If not found in the lang/ folder, try the root game folder
-    sprintf_s(temp, "%s/%s", g_storage_ext, filename);
+    temp = std::string(g_storage_ext) + "/" + filename;
     if (!fs::exists(temp) && fs::is_regular_file(temp))
         return false;
 
@@ -127,14 +127,14 @@ loadfile:
             return false;
         }
     } else {
-        char Temp[256];
+        std::string Temp;
 
         fromrar = false;
 
         // DKS - levellist.dat now resides in its new subfolder, data/levels/levellist.dat, along with
         //      the rest of the level data.
         // Checken, ob sich das File im Standard Ordner befindet
-        sprintf_s(Temp, "%s/%s", g_storage_ext, "data/levels/levellist.dat");
+        Temp = std::string(g_storage_ext) + "/data/levels/levellist.dat";
         if (fs::exists(Temp) && fs::is_regular_file(Temp))
             goto loadfilelevel;
 
@@ -181,17 +181,18 @@ loadfile:
 
     // DKS - Fixed mem leak, this while() block now uses temp[] char array
     while (!in.eof()) {
+        char tmpchar[256];
         temp[0] = '\0';  // DKS - Added initializer
-        in.getline(temp, 256);
+        in.getline(tmpchar, 256);
 
         /* CHECKME: Removing CR from line ending (stegerg) */
         char *cr;
-        if ((cr = strchr(temp, '\r'))) {
+        if ((cr = strchr(tmpchar, '\r'))) {
             *cr = '\0';
         }
 
-        if (strlen(temp) > 0) {  // DKS - Added check for strlen > 0
-            strcpy_s(StageReihenfolge[MAX_LEVELS], strlen(temp) + 1, temp);
+        if (strlen(tmpchar) > 0) {  // DKS - Added check for strlen > 0
+            strcpy_s(StageReihenfolge[MAX_LEVELS], strlen(tmpchar) + 1, tmpchar);
             MAX_LEVELS++;
         }
     }
@@ -355,62 +356,62 @@ void InitReplacers() {
     } else {
         int joy_idx = Player[0].JoystickIndex;
         char buf[256];
-        sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1], TextArray[TEXT_LEFT]);
+        snprintf(buf, 256, "%s %s", TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1], TextArray[TEXT_LEFT]);
         strcpy(s_Replacers[1], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1], TextArray[TEXT_RIGHT]);
+        snprintf(buf, 256, "%s %s", TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1], TextArray[TEXT_RIGHT]);
         strcpy(s_Replacers[3], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1], TextArray[TEXT_DOWN]);
+        snprintf(buf, 256, "%s %s", TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1], TextArray[TEXT_DOWN]);
         strcpy(s_Replacers[5], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1], TextArray[TEXT_UP]);
+        snprintf(buf, 256, "%s %s", TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1], TextArray[TEXT_UP]);
         strcpy(s_Replacers[7], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1], TextArray[TEXT_DOWN]);
+        snprintf(buf, 256, "%s %s", TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1], TextArray[TEXT_DOWN]);
         strcpy(s_Replacers[9], buf);
 
         if (Player[0].JoystickMode == JOYMODE_JOYSTICK)
-            sprintf_s(buf, "%s %s", TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1], TextArray[TEXT_UP]);
+            snprintf(buf, 256, "%s %s", TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1], TextArray[TEXT_UP]);
         else
-            sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON],
+            snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
                       DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_JUMP]));
 
         strcpy(s_Replacers[11], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON],
+        snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_SHOOT]));
         strcpy(s_Replacers[13], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON],
+        snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_BLITZ]));
         strcpy(s_Replacers[15], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON],
+        snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_POWERLINE]));
         strcpy(s_Replacers[17], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON],
+        snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_GRANATE]));
         strcpy(s_Replacers[19], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON],
+        snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_SMARTBOMB]));
         strcpy(s_Replacers[21], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON],
+        snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_WAFFEN_CYCLE]));
         strcpy(s_Replacers[23], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON],
+        snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_WAFFE_SPREAD]));
         strcpy(s_Replacers[25], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON],
+        snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_WAFFE_LASER]));
         strcpy(s_Replacers[27], buf);
 
-        sprintf_s(buf, "%s %s", TextArray[TEXT_BUTTON],
+        snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_WAFFE_BOUNCE]));
         strcpy(s_Replacers[29], buf);
     }
