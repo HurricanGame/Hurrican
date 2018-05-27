@@ -107,7 +107,7 @@ void GegnerNeuFisch::DoKI() {
 
             blockl = blockr = 0;
 
-            RECT rect;
+            RECT_struct rect;
             rect.top = 32;
             rect.bottom = 40;
 

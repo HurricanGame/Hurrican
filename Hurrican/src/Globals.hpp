@@ -63,6 +63,6 @@ extern bool DebugMode;  // Debug Mode ein/aus
 #endif
 extern bool FlameThrower;
 extern bool HasCheated;
-extern RECT srcrect, destrect;
+extern RECT_struct srcrect, destrect;
 
 #endif

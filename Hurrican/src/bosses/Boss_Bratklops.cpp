@@ -181,7 +181,7 @@ void GegnerBratklops::DoDraw() {
 
             // Kollisionsabfrage mit Spieler durch rotierte Rechtecke (wie beim Spielerblitz)
             //
-            RECT Rect;  // Rechteck für die Kollisionserkennung
+            RECT_struct Rect;  // Rechteck für die Kollisionserkennung
             // ein Laser-Stück wird grob durch
             Rect.left = 0;  // ein 24x24 Rechteck abgeschätzt
             Rect.top = 0;
@@ -512,7 +512,7 @@ void GegnerBratklops::DoKI() {
     // dafür nehmen wir ein anderes Rect, weil das normale GegnerRect nur das Grüne Auge ist, wo man den Gegner treffen
     // kann
     //
-    // RECT rect;
+    // RECT_struct rect;
 
     // rect.top    = 100;
     // rect.left   = 0;

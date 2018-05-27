@@ -102,7 +102,7 @@ void GegnerGolem::DoDraw() {
     // Color2 = D3DCOLOR_RGBA(128, Wert, Wert, 255);
 
     // Rotationsmatrizen erstellen
-    RECT itsRect;
+    RECT_struct itsRect;
     D3DXMATRIX matRotBody, matRotArm, matTransBody, matTransArm, matTrans2Body, matTrans2Arm;
 
     // Körper

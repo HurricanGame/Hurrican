@@ -519,7 +519,7 @@ void GegnerSpinnenmaschine::DoKI() {
     // Testen, ob der Spieler die Spinnenmaschine berührt hat
     // dafür nehmen wir ein anderes Rect, weil das normale GegnerRect nur das Auge ist, wo man den Gegner treffen kann
     //
-    // RECT rect;
+    // RECT_struct rect;
 
     // rect.top    = 0;
     // rect.left   = 0;

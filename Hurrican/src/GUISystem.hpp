@@ -26,7 +26,7 @@ class CGUISystem {
   private:
     float m_xPos, m_yPos;
     DirectGraphicsSprite m_Rahmen;
-    RECT m_BoxSize;
+    RECT_struct m_BoxSize;
     char m_BoxText[BOXTEXTLENGTH];
     int m_BoxLines;
 

@@ -375,7 +375,7 @@ int GegnerClass::PlayerAbstandVert(PlayerClass *pTarget) {
 // Feststellen ob der Spieler auf einem Gegner steht (der als Plattform in Frage kommt)
 // --------------------------------------------------------------------------------------
 
-void GegnerClass::PlattformTest(RECT rect) {
+void GegnerClass::PlattformTest(RECT_struct rect) {
     // Spieler steht auf dem Gegner
     //
     for (int p = 0; p < NUMPLAYERS; p++)
@@ -428,7 +428,7 @@ void GegnerClass::PlattformTest(RECT rect) {
 // Gegner schiebt Spieler beiseite
 // --------------------------------------------------------------------------------------
 
-void GegnerClass::Wegschieben(RECT rect, float dam) {
+void GegnerClass::Wegschieben(RECT_struct rect, float dam) {
     // Testen, ob der Spieler den Gegner berührt hat
     //
     for (int i = 0; i < NUMPLAYERS; i++)
@@ -532,7 +532,7 @@ bool GegnerClass::IsOnScreen() {
     int off;
     int xsize, ysize;
 
-    off = std::min((LONG)GegnerRect[GegnerArt].left, (LONG)0);
+    off = std::min(GegnerRect[GegnerArt].left, 0);
 
     xsize = pGegnerGrafix[GegnerArt]->itsXFrameSize;
     ysize = pGegnerGrafix[GegnerArt]->itsYFrameSize;

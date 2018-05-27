@@ -32,7 +32,7 @@
 // --------------------------------------------------------------------------------------
 
 DirectGraphicsSprite ProjectileGrafix[MAX_SHOTGFX];  // Grafiken der Schüsse
-RECT ShotRect[MAX_SHOTGFX];                          // Rechtecke für Level Kollision
+RECT_struct ShotRect[MAX_SHOTGFX];                          // Rechtecke für Level Kollision
 int CurrentShotTexture;                              // Aktuelle Textur der Schüsse
 uint32_t bo, bu, bl, br;                             // Blockwerte um den aktuellen Schuss herum
 
@@ -1955,14 +1955,14 @@ void ProjectileClass::Render() {
         // xfs = ProjectileGrafix[ShotArt].itsXFrameSize;
         // yfs = ProjectileGrafix[ShotArt].itsYFrameSize;
         // xfc = ProjectileGrafix[ShotArt].itsXFrameCount;
-        // RECT Rect;
+        // RECT_struct Rect;
         //// Ausschnitt berechnen
         // Rect.top	= (AnimPhase/xfc) * yfs;
         // Rect.left	= (AnimPhase%xfc) * xfs;
         // Rect.right  = Rect.left + xfs;
         // Rect.bottom = Rect.top  + yfs;
 
-        RECT &Rect = ProjectileGrafix[ShotArt].itsPreCalcedRects[AnimPhase];
+        RECT_struct &Rect = ProjectileGrafix[ShotArt].itsPreCalcedRects[AnimPhase];
 
         l = -TileEngine.XOffset + xPos - 0.5f;                                 // Links
         r = -TileEngine.XOffset + xPos + (Rect.right - Rect.left - 1) + 0.5f;  // Rechts

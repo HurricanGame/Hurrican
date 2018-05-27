@@ -470,7 +470,7 @@ void GegnerRiesenSpinne::DoKI() {
 
                 // Spieler wegschieben?
 
-                RECT coll;
+                RECT_struct coll;
 
                 coll.left = 50;
                 coll.right = 120;

@@ -464,7 +464,7 @@ class TileEngineClass {
 
     bool bScrollBackground;  // Hintegrundbild scrollen ?
 
-    RECT TileRects[144];                         // vorberechnete Tile Ausschnitte
+    RECT_struct TileRects[144];                         // vorberechnete Tile Ausschnitte
     DirectGraphicsSprite TileGfx[MAX_TILESETS];  // Tilegrafiken
     DirectGraphicsSprite Background;             // Hintergrund
     DirectGraphicsSprite ParallaxLayer[6];       // Anzahl der Layer
@@ -525,30 +525,30 @@ class TileEngineClass {
     void ScrollLevel(float x, float y, int neu, float sx = 10.0f, float sy = 10.0f);  // Screen scrollen
     void MakeBordersLookCool(int x, int y);
 
-    uint32_t BlockRechts(float &x, float y, float &xo, float yo, RECT rect, bool resolve = false);
-    uint32_t BlockLinks(float &x, float y, float &xo, float yo, RECT rect, bool resolve = false);
-    uint32_t BlockOben(float x, float &y, float xo, float &yo, RECT rect, bool resolve = false);
-    uint32_t BlockUnten(float x, float &y, float xo, float &yo, RECT rect, bool resolve = false);
-    uint32_t BlockUntenNormal(float x, float y, float xo, float yo, RECT rect);
-    bool BlockDestroyRechts(float x, float y, float xo, float yo, RECT rect);
-    bool BlockDestroyLinks(float x, float y, float xo, float yo, RECT rect);
-    bool BlockDestroyOben(float x, float y, float xo, float yo, RECT rect);
-    bool BlockDestroyUnten(float x, float y, float xo, float yo, RECT rect);
+    uint32_t BlockRechts(float &x, float y, float &xo, float yo, RECT_struct rect, bool resolve = false);
+    uint32_t BlockLinks(float &x, float y, float &xo, float yo, RECT_struct rect, bool resolve = false);
+    uint32_t BlockOben(float x, float &y, float xo, float &yo, RECT_struct rect, bool resolve = false);
+    uint32_t BlockUnten(float x, float &y, float xo, float &yo, RECT_struct rect, bool resolve = false);
+    uint32_t BlockUntenNormal(float x, float y, float xo, float yo, RECT_struct rect);
+    bool BlockDestroyRechts(float x, float y, float xo, float yo, RECT_struct rect);
+    bool BlockDestroyLinks(float x, float y, float xo, float yo, RECT_struct rect);
+    bool BlockDestroyOben(float x, float y, float xo, float yo, RECT_struct rect);
+    bool BlockDestroyUnten(float x, float y, float xo, float yo, RECT_struct rect);
 
-    uint32_t BlockSlopes(const float x, float &y, const RECT rect, const float ySpeed);
+    uint32_t BlockSlopes(const float x, float &y, const RECT_struct rect, const float ySpeed);
 
     // DKS - x,y parameters did not need to be references and are now value params:
     bool CheckDestroyableWalls(float x,
                                float y,  // Schuss auf Zerstörbare
                                float xs,
                                float ys,  // Wände testen
-                               RECT rect);
+                               RECT_struct rect);
 
     void ExplodeWall(int x, int y);   // Wand an x/y explodieren lassen
     void ExplodeWalls(int x, int y);  // Wand an x/y und alle angrenzenden Wände
     // explodieren lassen
 
-    D3DCOLOR LightValue(float x, float y, RECT rect, bool forced);  // Helligkeit an Stelle x/y
+    D3DCOLOR LightValue(float x, float y, RECT_struct rect, bool forced);  // Helligkeit an Stelle x/y
 
     void ComputeCoolLight();  // Coole   Lightberechnung
 

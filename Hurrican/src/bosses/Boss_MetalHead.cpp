@@ -822,7 +822,7 @@ void GegnerMetalHead::DoKI() {
 
     // Testen, ob der Spieler den Schädel berührt hat
     //
-    RECT r;
+    RECT_struct r;
     r.top = 0;
     r.left = 0;
     r.bottom = 140;

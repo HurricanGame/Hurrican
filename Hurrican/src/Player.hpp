@@ -151,7 +151,7 @@ class PlayerClass {
     bool WheelMode;   // Unendlich Rad ?
     bool WasDamaged;  // verwundet diesen Frame?
 
-    RECT CollideRect;           // Rechteck für die Kollision
+    RECT_struct CollideRect;           // Rechteck für die Kollision
     GegnerClass *AufPlattform;  // Auf einem Lift etc ?
     bool InLiquid;              // Spieler in Einer Flüssigkeit?
     bool JumpPossible;          // Kann man springen ?

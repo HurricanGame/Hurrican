@@ -40,15 +40,12 @@
 
 using LPDIRECT3DTEXTURE8 = GLuint;
 
-#ifndef __WIN32__
-struct RECT {
+struct RECT_struct {
     std::int32_t left;
     std::int32_t top;
     std::int32_t right;
     std::int32_t bottom;
 };
-using LONG = std::uint32_t;
-#endif
 using LPDIRECT3DDEVICE8 = std::uint32_t;
 using D3DCOLOR = std::uint32_t;
 

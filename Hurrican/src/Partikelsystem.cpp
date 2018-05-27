@@ -43,7 +43,7 @@ extern LPDIRECT3DDEVICE8 lpD3DDevice;  // Direct3D Device-Objekt
 // --------------------------------------------------------------------------------------
 
 DirectGraphicsSprite PartikelGrafix[MAX_PARTIKELGFX];  // Grafiken der Partikel
-RECT PartikelRect[MAX_PARTIKELGFX];                    // Rechtecke für Level Kollision
+RECT_struct PartikelRect[MAX_PARTIKELGFX];                    // Rechtecke für Level Kollision
 int CurrentPartikelTexture;                            // Aktuelle Textur der Partikel
 int DrawMode;                                          // normale oder rotierte Partikel?
 
@@ -3243,14 +3243,14 @@ bool PartikelClass::Render() {
         // xfs = PartikelGrafix[PartikelArt].itsXFrameSize;
         // yfs = PartikelGrafix[PartikelArt].itsYFrameSize;
         // xfc = PartikelGrafix[PartikelArt].itsXFrameCount;
-        // RECT Rect;
+        // RECT_struct Rect;
         //// Ausschnitt berechnen
         // Rect.top	= (AnimPhase/xfc) * yfs;
         // Rect.left	= (AnimPhase%xfc) * xfs;
         // Rect.right  = Rect.left + xfs;
         // Rect.bottom = Rect.top  + yfs;
 
-        RECT &Rect = PartikelGrafix[PartikelArt].itsPreCalcedRects[AnimPhase];
+        RECT_struct &Rect = PartikelGrafix[PartikelArt].itsPreCalcedRects[AnimPhase];
 
         l = -TileEngine.XOffset + xPos - 0.5f;                                 // Links
         r = -TileEngine.XOffset + xPos + (Rect.right - Rect.left - 1) + 0.5f;  // Rechts

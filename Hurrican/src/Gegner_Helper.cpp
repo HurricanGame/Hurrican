@@ -31,7 +31,7 @@
 // --------------------------------------------------------------------------------------
 
 DirectGraphicsSprite *pGegnerGrafix[MAX_GEGNERGFX];  // Grafiken der Gegner
-RECT GegnerRect[MAX_GEGNERGFX];                      // Rechtecke für Kollision
+RECT_struct GegnerRect[MAX_GEGNERGFX];                      // Rechtecke für Kollision
 float g_Fahrstuhl_yPos;                              // yPosition des Fahrstuhls
 float g_Fahrstuhl_Offset;                            // Scrollposition relativ zum Farhstuhl
 float g_Fahrstuhl_Speed;                             // Fahrstuhl Geschwindigkeit

@@ -296,7 +296,7 @@ bool DirectGraphicsFont::DrawValue(float x, float y, float Value, D3DCOLOR Color
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR Color) {
-    RECT rect;
+    RECT_struct rect;
     unsigned char z;
     float oldx = x;
 
@@ -370,7 +370,7 @@ bool DirectGraphicsFont::DrawDemoChar(float x, float y, const char Text, D3DCOLO
     if (Text == 32 || Text == '\n')
         return false;
 
-    RECT rect;
+    RECT_struct rect;
     unsigned char z;
 
     z = Text;  // Aktuell zu bearbeitendes Zeichen holen
@@ -393,7 +393,7 @@ bool DirectGraphicsFont::DrawDemoChar(float x, float y, const char Text, D3DCOLO
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsFont::DrawDemoText(float x, float y, const char Text[], D3DCOLOR Color) {
-    RECT rect;
+    RECT_struct rect;
     unsigned char z;
     float oldx = x;
 
@@ -430,7 +430,7 @@ bool DirectGraphicsFont::DrawDemoText(float x, float y, const char Text[], D3DCO
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR Color, int Spacing) {
-    RECT rect;
+    RECT_struct rect;
     unsigned char z;
     float oldx = x;
 

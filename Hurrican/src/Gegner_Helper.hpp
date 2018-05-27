@@ -181,7 +181,7 @@ void LoadGegnerGrafik(int Nr);  // Bestimmten Gegner laden
 
 extern GegnerListClass Gegner;
 extern DirectGraphicsSprite *pGegnerGrafix[MAX_GEGNERGFX];  // Grafiken der Gegner
-extern RECT GegnerRect[MAX_GEGNERGFX];                      // Rechtecke für Kollision
+extern RECT_struct GegnerRect[MAX_GEGNERGFX];                      // Rechtecke für Kollision
 extern float g_Fahrstuhl_yPos;                              // yPosition des Fahrstuhls
 extern float g_Fahrstuhl_Offset;                            // Scrollposition relativ zum Farhstuhl
 extern float g_Fahrstuhl_Speed;                             // Fahrstuhl Geschwindigkeit

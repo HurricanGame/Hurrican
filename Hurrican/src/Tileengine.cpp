@@ -993,7 +993,7 @@ void TileEngineClass::DrawBackground() {
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::DrawBackLevel() {
-    RECT Rect;             // Texturausschnitt im Tileset
+    RECT_struct Rect;             // Texturausschnitt im Tileset
     int NumToRender;       // Wieviele Vertices zu rendern ?
     int ActualTexture;     // Aktuelle Textur
     float l, r, o, u;      // Vertice Koordinaten
@@ -1160,7 +1160,7 @@ void TileEngineClass::DrawBackLevel() {
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::DrawFrontLevel() {
-    RECT Rect;             // Texturausschnitt im Tileset
+    RECT_struct Rect;             // Texturausschnitt im Tileset
     int NumToRender;       // Wieviele Vertices zu rendern ?
     int ActualTexture;     // Aktuelle Textur
     float l, r, o, u;      // Vertice Koordinaten
@@ -1346,7 +1346,7 @@ void TileEngineClass::ScrollLevel(float x, float y, int neu, float sx, float sy)
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::DrawBackLevelOverlay() {
-    RECT Rect;             // Texturausschnitt im Tileset
+    RECT_struct Rect;             // Texturausschnitt im Tileset
     int NumToRender;       // Wieviele Vertices zu rendern ?
     int ActualTexture;     // Aktuelle Textur
     float l, r, o, u;      // Vertice Koordinaten
@@ -1468,7 +1468,7 @@ void TileEngineClass::DrawBackLevelOverlay() {
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::DrawOverlayLevel() {
-    RECT Rect;             // Texturausschnitt im Tileset
+    RECT_struct Rect;             // Texturausschnitt im Tileset
     int NumToRender;       // Wieviele Vertices zu rendern ?
     int ActualTexture;     // Aktuelle Textur
     float l, r, o, u;      // Vertice Koordinaten
@@ -2319,7 +2319,7 @@ void TileEngineClass::MakeBordersLookCool(int x, int y) {
 // Zurückliefern, welche BlockArt sich Rechts vom übergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
-int	TileEngineClass::BlockRechts(float &x, float &y, float  &xo, float &yo, RECT rect, bool resolve)
+int	TileEngineClass::BlockRechts(float &x, float &y, float  &xo, float &yo, RECT_struct rect, bool resolve)
 {
     // Nach rechts muss nicht gecheckt werden ?
     if (xo > x)
@@ -2371,7 +2371,7 @@ int	TileEngineClass::BlockRechts(float &x, float &y, float  &xo, float &yo, RECT
 // Zurückliefern, ob sich rechts eine zerstörbare Wand befindet
 // --------------------------------------------------------------------------------------
 
-bool TileEngineClass::BlockDestroyRechts(float &x, float &y, float  &xo, float &yo, RECT rect)
+bool TileEngineClass::BlockDestroyRechts(float &x, float &y, float  &xo, float &yo, RECT_struct rect)
 {
     // Nach rechts muss nicht gecheckt werden ?
     if (xo > x)
@@ -2408,7 +2408,7 @@ bool TileEngineClass::BlockDestroyRechts(float &x, float &y, float  &xo, float &
 }
 
 //DKS - Never used anywhere, so I've not made a replacement version:
-void TileEngineClass::ResolveLinks (float &x, float &y, float &xo, float &yo, RECT rect)
+void TileEngineClass::ResolveLinks (float &x, float &y, float &xo, float &yo, RECT_struct rect)
 {
     float laenge;
 //	float xr, yr;
@@ -2438,7 +2438,7 @@ void TileEngineClass::ResolveLinks (float &x, float &y, float &xo, float &yo, RE
 // Zurückliefern, welche BlockArt sich Links vom übergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
-int	TileEngineClass::BlockLinks(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve)
+int	TileEngineClass::BlockLinks(float &x, float &y, float &xo, float &yo, RECT_struct rect, bool resolve)
 {
     // Nach links muss nicht gecheckt werden ?
     if (xo < x ||
@@ -2490,7 +2490,7 @@ int	TileEngineClass::BlockLinks(float &x, float &y, float &xo, float &yo, RECT r
 // Zurückliefern, ob sich links eine zerstörbare Wand befindet
 // --------------------------------------------------------------------------------------
 
-bool TileEngineClass::BlockDestroyLinks(float &x, float &y, float &xo, float &yo, RECT rect)
+bool TileEngineClass::BlockDestroyLinks(float &x, float &y, float &xo, float &yo, RECT_struct rect)
 {
     // Nach links muss nicht gecheckt werden ?
     if (xo < x ||
@@ -2534,7 +2534,7 @@ bool TileEngineClass::BlockDestroyLinks(float &x, float &y, float &xo, float &yo
 // Zurückliefern, welche BlockArt sich oberhalb vom übergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
-int	TileEngineClass::BlockOben(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve)
+int	TileEngineClass::BlockOben(float &x, float &y, float &xo, float &yo, RECT_struct rect, bool resolve)
 {
     // Nach oben muss nicht gecheckt werden ?
     if (yo < y ||
@@ -2587,7 +2587,7 @@ int	TileEngineClass::BlockOben(float &x, float &y, float &xo, float &yo, RECT re
 // Zurückliefern, ob sich oben eine zerstörbare Wand befindet
 // --------------------------------------------------------------------------------------
 
-bool TileEngineClass::BlockDestroyOben(float &x, float &y, float &xo, float &yo, RECT rect)
+bool TileEngineClass::BlockDestroyOben(float &x, float &y, float &xo, float &yo, RECT_struct rect)
 {
     // Nach oben muss nicht gecheckt werden ?
     if (yo < y ||
@@ -2630,7 +2630,7 @@ bool TileEngineClass::BlockDestroyOben(float &x, float &y, float &xo, float &yo,
 // und dabei nicht "begradigen" sprich die y-Position an das Tile angleichen
 // --------------------------------------------------------------------------------------
 
-int	TileEngineClass::BlockUntenNormal(float &x, float &y, float &xo, float &yo, RECT rect)
+int	TileEngineClass::BlockUntenNormal(float &x, float &y, float &xo, float &yo, RECT_struct rect)
 {
     // Nach unten muss nicht gecheckt werden ?
     if (yo > y ||
@@ -2676,7 +2676,7 @@ int	TileEngineClass::BlockUntenNormal(float &x, float &y, float &xo, float &yo, 
 // Zurückliefern, welche BlockArt sich unterhalb vom übergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
-int	TileEngineClass::BlockUnten(float &x, float &y, float &xo, float &yo, RECT rect, bool resolve)
+int	TileEngineClass::BlockUnten(float &x, float &y, float &xo, float &yo, RECT_struct rect, bool resolve)
 {
     // Nach unten muss nicht gecheckt werden ?
     // Nach unten muss nicht gecheckt werden ?
@@ -2740,7 +2740,7 @@ int	TileEngineClass::BlockUnten(float &x, float &y, float &xo, float &yo, RECT r
 // Zurückliefern, welche BlockArt sich unterhalb vom übergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
-bool TileEngineClass::BlockDestroyUnten(float &x, float &y, float &xo, float &yo, RECT rect)
+bool TileEngineClass::BlockDestroyUnten(float &x, float &y, float &xo, float &yo, RECT_struct rect)
 {
     // Nach unten muss nicht gecheckt werden ?
     // Nach unten muss nicht gecheckt werden ?
@@ -2787,7 +2787,7 @@ bool TileEngineClass::BlockDestroyUnten(float &x, float &y, float &xo, float &yo
 // Zurückliefern, welche BlockArt sich Rechts vom übergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
-uint32_t TileEngineClass::BlockRechts(float &x, float y, float &xo, float yo, RECT rect, bool resolve) {
+uint32_t TileEngineClass::BlockRechts(float &x, float y, float &xo, float yo, RECT_struct rect, bool resolve) {
     // Nach rechts muss nicht gecheckt werden ?
     if (xo > x)
         return 0;
@@ -2826,7 +2826,7 @@ uint32_t TileEngineClass::BlockRechts(float &x, float y, float &xo, float yo, RE
 // Zurückliefern, ob sich rechts eine zerstörbare Wand befindet
 // --------------------------------------------------------------------------------------
 
-bool TileEngineClass::BlockDestroyRechts(float x, float y, float xo, float yo, RECT rect) {
+bool TileEngineClass::BlockDestroyRechts(float x, float y, float xo, float yo, RECT_struct rect) {
     // Nach rechts muss nicht gecheckt werden ?
     if (xo > x)
         return false;
@@ -2856,7 +2856,7 @@ bool TileEngineClass::BlockDestroyRechts(float x, float y, float xo, float yo, R
 // Zurückliefern, welche BlockArt sich Links vom übergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
-uint32_t TileEngineClass::BlockLinks(float &x, float y, float &xo, float yo, RECT rect, bool resolve) {
+uint32_t TileEngineClass::BlockLinks(float &x, float y, float &xo, float yo, RECT_struct rect, bool resolve) {
     // Nach links muss nicht gecheckt werden ?
     if (xo < x)
         return 0;
@@ -2894,7 +2894,7 @@ uint32_t TileEngineClass::BlockLinks(float &x, float y, float &xo, float yo, REC
 // Zurückliefern, ob sich links eine zerstörbare Wand befindet
 // --------------------------------------------------------------------------------------
 
-bool TileEngineClass::BlockDestroyLinks(float x, float y, float xo, float yo, RECT rect) {
+bool TileEngineClass::BlockDestroyLinks(float x, float y, float xo, float yo, RECT_struct rect) {
     // Nach links muss nicht gecheckt werden ?
     if (xo < x)
         return false;
@@ -2924,7 +2924,7 @@ bool TileEngineClass::BlockDestroyLinks(float x, float y, float xo, float yo, RE
 // Zurückliefern, welche Blockblock sich oberhalb vom übergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
-uint32_t TileEngineClass::BlockOben(float x, float &y, float xo, float &yo, RECT rect, bool resolve) {
+uint32_t TileEngineClass::BlockOben(float x, float &y, float xo, float &yo, RECT_struct rect, bool resolve) {
     // Nach oben muss nicht gecheckt werden ?
     if (yo < y)
         return 0;
@@ -2962,7 +2962,7 @@ uint32_t TileEngineClass::BlockOben(float x, float &y, float xo, float &yo, RECT
 // Zurückliefern, ob sich oben eine zerstörbare Wand befindet
 // --------------------------------------------------------------------------------------
 
-bool TileEngineClass::BlockDestroyOben(float x, float y, float xo, float yo, RECT rect) {
+bool TileEngineClass::BlockDestroyOben(float x, float y, float xo, float yo, RECT_struct rect) {
     // Nach oben muss nicht gecheckt werden ?
     if (yo < y)
         return false;
@@ -2993,7 +2993,7 @@ bool TileEngineClass::BlockDestroyOben(float x, float y, float xo, float yo, REC
 // und dabei nicht "begradigen" sprich die y-Position an das Tile angleichen
 // --------------------------------------------------------------------------------------
 
-uint32_t TileEngineClass::BlockUntenNormal(float x, float y, float xo, float yo, RECT rect) {
+uint32_t TileEngineClass::BlockUntenNormal(float x, float y, float xo, float yo, RECT_struct rect) {
     // Nach unten muss nicht gecheckt werden ?
     if (yo > y)
         return false;
@@ -3028,7 +3028,7 @@ uint32_t TileEngineClass::BlockUntenNormal(float x, float y, float xo, float yo,
 // Zurückliefern, welche Blockblock sich unterhalb vom übergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
-uint32_t TileEngineClass::BlockUnten(float x, float &y, float xo, float &yo, RECT rect, bool resolve) {
+uint32_t TileEngineClass::BlockUnten(float x, float &y, float xo, float &yo, RECT_struct rect, bool resolve) {
     // Nach unten muss nicht gecheckt werden ?
     if (yo > y)
         return 0;
@@ -3069,7 +3069,7 @@ uint32_t TileEngineClass::BlockUnten(float x, float &y, float xo, float &yo, REC
 // Zurückliefern, welche Blockblock sich unterhalb vom übergebenen Rect befindet
 // --------------------------------------------------------------------------------------
 
-bool TileEngineClass::BlockDestroyUnten(float x, float y, float xo, float yo, RECT rect) {
+bool TileEngineClass::BlockDestroyUnten(float x, float y, float xo, float yo, RECT_struct rect) {
     // Nach unten muss nicht gecheckt werden ?
     if (yo > y)
         return 0;
@@ -3105,7 +3105,7 @@ bool TileEngineClass::BlockDestroyUnten(float x, float y, float xo, float yo, RE
 //      It returns the correct type for Block data as well (uint32_t vs int).
 // ORIGINAL CODE:
 #if 0
-int	TileEngineClass::BlockSlopes(float &x, float &y, float &xo, float &yo, RECT rect, float ySpeed, bool resolve)
+int	TileEngineClass::BlockSlopes(float &x, float &y, float &xo, float &yo, RECT_struct rect, float ySpeed, bool resolve)
 {
     int Art	= 0;
     int xlevel;
@@ -3173,7 +3173,7 @@ int	TileEngineClass::BlockSlopes(float &x, float &y, float &xo, float &yo, RECT 
 }
 #endif  // 0
 // DKS - Rewritten version of above function:
-uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT rect, const float ySpeed) {
+uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT_struct rect, const float ySpeed) {
     uint32_t block = 0;
     for (int j = rect.bottom; j < rect.bottom + TILESIZE_Y; j++) {
         int ylev = int((y + (j - 1)) * (1.0f / TILESIZE_Y));
@@ -3245,7 +3245,7 @@ uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT rect, 
 //      blitz-beam to the left off the edge of the screen. Also, made inline.
 // ORIGINAL VERSION:
 #if 0
-bool TileEngineClass::CheckDestroyableWalls(float &x, float &y, float xs, float ys, RECT rect)
+bool TileEngineClass::CheckDestroyableWalls(float &x, float &y, float xs, float ys, RECT_struct rect)
 {
     int	  xstart, ystart;
     int   xl, yl;
@@ -3276,7 +3276,7 @@ bool TileEngineClass::CheckDestroyableWalls(float &x, float &y, float xs, float 
 }
 #endif  // 0
 // DKS - Rewritten version of above function:
-bool TileEngineClass::CheckDestroyableWalls(float x, float y, float xs, float ys, RECT rect) {
+bool TileEngineClass::CheckDestroyableWalls(float x, float y, float xs, float ys, RECT_struct rect) {
     int xstart = int(x * (1.0f / TILESIZE_X));
     int ystart = int(y * (1.0f / TILESIZE_Y));
     int xl = int(rect.right) / TILESIZE_X + 2;
@@ -3310,7 +3310,7 @@ bool TileEngineClass::CheckDestroyableWalls(float x, float y, float xs, float ys
 // damit die Gegner entsprechend dem Licht im Editor "beleuchtet" werden
 // --------------------------------------------------------------------------------------
 
-D3DCOLOR TileEngineClass::LightValue(float x, float y, RECT rect, bool forced) {
+D3DCOLOR TileEngineClass::LightValue(float x, float y, RECT_struct rect, bool forced) {
     D3DCOLOR Color;
     int x_level, y_level;
     unsigned int r, g, b;

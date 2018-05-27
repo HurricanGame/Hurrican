@@ -73,8 +73,8 @@ class GegnerClass {
     int PlayerAbstandHoriz(PlayerClass *pTarget = nullptr);  // Nur Horizontaler Abstand
     int PlayerAbstandVert(PlayerClass *pTarget = nullptr);   // Nur Vertikaler   Abstand
     void TestDamagePlayers(float dam, bool detroy = false);  // Spieler verletzt?
-    void PlattformTest(RECT rect);                           // Steht der Spieler auf dem Gegner ?
-    void Wegschieben(RECT rect, float dam);                  // Gegner schiebt Spieler beiseite
+    void PlattformTest(RECT_struct rect);                           // Steht der Spieler auf dem Gegner ?
+    void Wegschieben(RECT_struct rect, float dam);                  // Gegner schiebt Spieler beiseite
     void SimpleAnimation(bool backward = false);             // Einfache Animation (loop)
     void TurnonWall();                                       // An der Wand umdrehen?
     bool TurnonShot();                                       // Umdrehen, wenn angeschoßen

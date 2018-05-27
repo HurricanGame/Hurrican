@@ -205,7 +205,7 @@ loadfile:
     //DKS - array is now dynamically allocated
     if (itsPreCalcedRects != NULL) 
         free(itsPreCalcedRects);
-    itsPreCalcedRects = (RECT*)malloc(xfc * yfc * sizeof(RECT));
+    itsPreCalcedRects = (RECT_struct*)malloc(xfc * yfc * sizeof(RECT_struct));
 
     for (int i = 0; i < xfc * yfc; i++)
     {
@@ -277,11 +277,11 @@ bool DirectGraphicsSprite::LoadImage(const std::string &filename,
 #else
     if (itsPreCalcedRects != nullptr)
         delete[] itsPreCalcedRects;
-    itsPreCalcedRects = new RECT[xfc * yfc];
+    itsPreCalcedRects = new RECT_struct[xfc * yfc];
 #endif
 
     for (int i = 0; i < xfc * yfc; i++) {
-        RECT r;
+        RECT_struct r;
         r.top = (i / itsXFrameCount) * itsYFrameSize;
         r.left = (i % itsXFrameCount) * itsXFrameSize;
         r.right = r.left + itsXFrameSize;

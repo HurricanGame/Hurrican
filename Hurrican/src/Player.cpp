@@ -3609,7 +3609,7 @@ bool PlayerClass::DoLightning() {
     xstart -= 20.0f * cos_deg(BlitzWinkel - 90);
     ystart -= 20.0f * sin_deg(BlitzWinkel - 90);
 
-    RECT Rect;  // Rechteck für die Kollisionserkennung
+    RECT_struct Rect;  // Rechteck für die Kollisionserkennung
     // ein Blitz-Stück wird grob durch
     Rect.left = 0;  // ein 32x32 Rechteck abgeschätzt
     Rect.top = 0;

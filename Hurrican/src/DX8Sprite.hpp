@@ -29,7 +29,7 @@
 class DirectGraphicsSprite {
   public:
     // DKS - Moved itsRect to the top, since it is used most-frequently:
-    RECT itsRect;  // zu zeigender Ausschnitt
+    RECT_struct itsRect;  // zu zeigender Ausschnitt
 
     // DKS - Made these shorts instead of ints:
     int16_t itsXFrameCount;  // Frameanzahl in X-Richtung
@@ -53,11 +53,11 @@ class DirectGraphicsSprite {
     //      lots of RAM needlessly. Also, when in debug-mode, it is a bounds-
     //      checked wrapper to a vector, as I found the game was accessing
     //      past its end in Projectiles.cpp and Partikelsystem.cpp
-    // RECT				itsPreCalcedRects[256];				// vorberechnete Ausschnitte für die Frames
+    // RECT_struct				itsPreCalcedRects[256];				// vorberechnete Ausschnitte für die Frames
 #ifdef _DEBUG
     class BoundCheckedArray {
       public:
-        RECT &operator[](int i) {
+        RECT_struct &operator[](int i) {
             if (i < 0 || i >= (int)rects.size()) {
                 Protokoll << "Error: index " << std::dec << i
                           << " out of bounds of itsPreCalcedRects[] (size:" << rects.size() << std::endl;
@@ -68,17 +68,17 @@ class DirectGraphicsSprite {
             return rects[i];
         }
 
-        void PushBack(RECT &r) { rects.push_back(r); }
+        void PushBack(RECT_struct &r) { rects.push_back(r); }
 
         void Clear() { rects.clear(); }
 
       private:
-        std::vector<RECT> rects;
+        std::vector<RECT_struct> rects;
     };
     BoundCheckedArray itsPreCalcedRects;
 #else
     // DKS - When not in debug-mode, this is the pointer to the dynamically allocated array of RECTs
-    RECT *itsPreCalcedRects;  // vorberechnete Ausschnitte für die Frames
+    RECT_struct *itsPreCalcedRects;  // vorberechnete Ausschnitte für die Frames
 #endif
 
     DirectGraphicsSprite()
@@ -247,10 +247,10 @@ void RenderLine(D3DXVECTOR2 p1,
 // DKS - Inlined this, since it is simple and used extremely frequently and takes many parameters:
 static inline bool SpriteCollision(const float x1,
                                    const float y1,
-                                   const RECT &rect1,
+                                   const RECT_struct &rect1,
                                    const float x2,
                                    const float y2,
-                                   const RECT &rect2) {
+                                   const RECT_struct &rect2) {
     // Kollision der Bounding-Boxes ?
     if (x1 + rect1.left < x2 + rect2.right && x2 + rect2.left < x1 + rect1.right &&
         y1 + rect1.top < y2 + rect2.bottom && y2 + rect2.top < y1 + rect1.bottom)

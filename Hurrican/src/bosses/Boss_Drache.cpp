@@ -929,7 +929,7 @@ void GegnerDrache::DoKI() {
 
                 // Kopf schiesst auf Spieler zu
                 case GEGNER_VERFOLGEN: {
-                    RECT colliderect;
+                    RECT_struct colliderect;
 
                     colliderect.top = 30;
                     colliderect.bottom = 50;
