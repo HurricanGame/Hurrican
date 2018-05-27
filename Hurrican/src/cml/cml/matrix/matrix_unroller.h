@@ -175,7 +175,6 @@ public:
     void operator()(
         cml::matrix<E,AT,BO,L>& dest, const SrcT& src, cml::fixed_size_tag)
     {
-        typedef cml::matrix<E,AT,BO,L> matrix_type;
         enum
         {
             LastRow = matrix_type::array_rows-1,
@@ -218,7 +217,6 @@ private:
         matrix_type& dest, const SrcT& /*src*/, scalar_result_tag
     )
     {
-        typedef ExprTraits<matrix_type> dest_traits;
         return dest_traits().size(dest);
     }
 
@@ -226,7 +224,6 @@ private:
         matrix_type& /*dest*/, const SrcT& src, matrix_result_tag
     )
     {
-        typedef ExprTraits<SrcT> src_traits;
         return src_traits().size(src);
     }
 
@@ -265,7 +262,6 @@ public:
      */
     void operator()(matrix_type& dest, const SrcT& src, cml::dynamic_size_tag)
     {
-        typedef ExprTraits<SrcT> src_traits;
         matrix_size N = this->CheckOrResize(
             dest,src,typename matrix_type::resizing_tag());
         for(size_t i = 0; i < N.first; ++i)

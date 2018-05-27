@@ -112,7 +112,6 @@ public:
     /** Unroll assignment to a fixed-sized vector. */
     void operator()(vector_type& dest, const SrcT& src, cml::fixed_size_tag)
     {
-        typedef cml::vector<E,AT> vector_type;
         enum { Len = vector_type::array_size };
         [[maybe_unused]] typedef typename VectorAssignmentUnroller<OpT,E,AT,SrcT>::template
         Eval<0, Len-1, (Len <= CML_VECTOR_UNROLL_LIMIT)> Unroller;
@@ -167,7 +166,6 @@ public:
     void operator()(vector_type& dest, const SrcT& src, cml::dynamic_size_tag)
     {
         /* Shorthand: */
-        typedef ExprTraits<SrcT> src_traits;
         size_t N = this->CheckOrResize(
             dest,src,typename vector_type::resizing_tag());
         for(size_t i = 0; i < N; ++i)
