@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/thrimbor/Hurrican.svg?branch=master)](https://travis-ci.org/thrimbor/Hurrican)
+[![Build Status](https://travis-ci.org/thrimbor/Hurrican.svg?branch=master)](https://travis-ci.org/thrimbor/Hurrican) [![Build status](https://ci.appveyor.com/api/projects/status/rvxt2q3mlrxt5mu3/branch/master?svg=true)](https://ci.appveyor.com/project/thrimbor/hurrican/branch/master)
 
 Hi guys,
 
