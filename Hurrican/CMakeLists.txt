@@ -70,108 +70,6 @@ set(HURRICAN_SOURCES
         src/bosses/Boss_Ufo.hpp
         src/bosses/Boss_WuxeSpinnen.cpp
         src/bosses/Boss_WuxeSpinnen.hpp
-        src/cml/cml/core/meta/common.h
-        src/cml/cml/core/meta/if.h
-        src/cml/cml/core/meta/switch.h
-        src/cml/cml/core/cml_assert.h
-        src/cml/cml/core/cml_meta.h
-        src/cml/cml/core/common.h
-        src/cml/cml/core/dynamic_1D.h
-        src/cml/cml/core/dynamic_2D.h
-        src/cml/cml/core/external_1D.h
-        src/cml/cml/core/external_2D.h
-        src/cml/cml/core/fixed_1D.h
-        src/cml/cml/core/fixed_2D.h
-        src/cml/cml/core/fwd.h
-        src/cml/cml/et/array_promotions.h
-        src/cml/cml/et/scalar_ops.h
-        src/cml/cml/et/scalar_promotions.h
-        src/cml/cml/et/size_checking.h
-        src/cml/cml/et/tags.h
-        src/cml/cml/et/traits.h
-        src/cml/cml/mathlib/checking.h
-        src/cml/cml/mathlib/coord_conversion.h
-        src/cml/cml/mathlib/epsilon.h
-        src/cml/cml/mathlib/frustum.h
-        src/cml/cml/mathlib/helper.h
-        src/cml/cml/mathlib/interpolation.h
-        src/cml/cml/mathlib/mathlib.h
-        src/cml/cml/mathlib/matrix_basis.h
-        src/cml/cml/mathlib/matrix_concat.h
-        src/cml/cml/mathlib/matrix_misc.h
-        src/cml/cml/mathlib/matrix_ortho.h
-        src/cml/cml/mathlib/matrix_projection.h
-        src/cml/cml/mathlib/matrix_rotation.h
-        src/cml/cml/mathlib/matrix_transform.h
-        src/cml/cml/mathlib/matrix_translation.h
-        src/cml/cml/mathlib/misc.h
-        src/cml/cml/mathlib/picking.h
-        src/cml/cml/mathlib/projection.h
-        src/cml/cml/mathlib/quaternion_basis.h
-        src/cml/cml/mathlib/quaternion_rotation.h
-        src/cml/cml/mathlib/typedef.h
-        src/cml/cml/mathlib/vector_angle.h
-        src/cml/cml/mathlib/vector_misc.h
-        src/cml/cml/mathlib/vector_ortho.h
-        src/cml/cml/mathlib/vector_transform.h
-        src/cml/cml/matrix/class_ops.h
-        src/cml/cml/matrix/determinant.h
-        src/cml/cml/matrix/dynamic.h
-        src/cml/cml/matrix/external.h
-        src/cml/cml/matrix/fixed.h
-        src/cml/cml/matrix/inverse.h
-        src/cml/cml/matrix/lu.h
-        src/cml/cml/matrix/matop_macros.h
-        src/cml/cml/matrix/matrix_comparison.h
-        src/cml/cml/matrix/matrix_expr.h
-        src/cml/cml/matrix/matrix_functions.h
-        src/cml/cml/matrix/matrix_mul.h
-        src/cml/cml/matrix/matrix_ops.h
-        src/cml/cml/matrix/matrix_print.h
-        src/cml/cml/matrix/matrix_promotions.h
-        src/cml/cml/matrix/matrix_rowcol.h
-        src/cml/cml/matrix/matrix_traits.h
-        src/cml/cml/matrix/matrix_transpose.h
-        src/cml/cml/matrix/matrix_unroller.h
-        src/cml/cml/matvec/matvec_mul.h
-        src/cml/cml/matvec/matvec_promotions.h
-        src/cml/cml/quaternion/conjugate.h
-        src/cml/cml/quaternion/inverse.h
-        src/cml/cml/quaternion/quaternion.h
-        src/cml/cml/quaternion/quaternion_comparison.h
-        src/cml/cml/quaternion/quaternion_dot.h
-        src/cml/cml/quaternion/quaternion_expr.h
-        src/cml/cml/quaternion/quaternion_functions.h
-        src/cml/cml/quaternion/quaternion_mul.h
-        src/cml/cml/quaternion/quaternion_ops.h
-        src/cml/cml/quaternion/quaternion_print.h
-        src/cml/cml/quaternion/quaternion_promotions.h
-        src/cml/cml/quaternion/quaternion_traits.h
-        src/cml/cml/quaternion/quatop_macros.h
-        src/cml/cml/vector/class_ops.h
-        src/cml/cml/vector/dynamic.h
-        src/cml/cml/vector/external.h
-        src/cml/cml/vector/fixed.h
-        src/cml/cml/vector/vecop_macros.h
-        src/cml/cml/vector/vector_comparison.h
-        src/cml/cml/vector/vector_expr.h
-        src/cml/cml/vector/vector_functions.h
-        src/cml/cml/vector/vector_ops.h
-        src/cml/cml/vector/vector_print.h
-        src/cml/cml/vector/vector_products.h
-        src/cml/cml/vector/vector_promotions.h
-        src/cml/cml/vector/vector_traits.h
-        src/cml/cml/vector/vector_unroller.h
-        src/cml/cml/cml.h
-        src/cml/cml/constants.h
-        src/cml/cml/defaults.h
-        src/cml/cml/dynamic.h
-        src/cml/cml/external.h
-        src/cml/cml/fixed.h
-        src/cml/cml/matrix.h
-        src/cml/cml/quaternion.h
-        src/cml/cml/util.h
-        src/cml/cml/vector.h
         src/SDLPort/cfbo.cpp
         src/SDLPort/cfbo.hpp
         src/SDLPort/cshader.cpp
@@ -507,7 +405,6 @@ add_definitions(-DNOMINMAX)
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/src/SDLPort)
 include_directories(${CMAKE_SOURCE_DIR}/3rdparty/glm)
-include_directories(${CMAKE_SOURCE_DIR}/src/cml)
 add_executable(hurrican ${HURRICAN_SOURCES})
 
 INCLUDE(FindOpenGL REQUIRED)
