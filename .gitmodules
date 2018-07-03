@@ -1,0 +1,3 @@
+[submodule "Hurrican/3rdparty/glm"]
+	path = Hurrican/3rdparty/glm
+	url = https://github.com/g-truc/glm.git
