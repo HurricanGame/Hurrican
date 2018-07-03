@@ -2025,7 +2025,7 @@ void ProjectileClass::Render() {
             D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück verschieben
             g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-            load_matrix(GL_MODELVIEW, g_matModelView.data());
+            load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 
             DirectGraphics.SetFilterMode(true);
@@ -2045,7 +2045,7 @@ void ProjectileClass::Render() {
             D3DXMatrixRotationZ(&matWorld, 0.0f);
             g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-            load_matrix(GL_MODELVIEW, g_matModelView.data());
+            load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 
             DirectGraphics.SetFilterMode(false);

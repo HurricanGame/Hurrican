@@ -34,7 +34,7 @@ D3DXMATRIXA16 g_matView;
 D3DXMATRIXA16 g_matModelView;
 
 void D3DXMatrixIdentity(D3DXMATRIXA16 *m) {
-    m->identity();
+    *m = glm::mat4x4(1.0f);
 }
 
 #ifndef __WIN32__

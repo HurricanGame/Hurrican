@@ -56,7 +56,7 @@ void GegnerColumn2::DoDraw() {
     // rotierte Matrix setzen
     g_matModelView = matWorldLocal * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 
     pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
@@ -66,7 +66,7 @@ void GegnerColumn2::DoDraw() {
     D3DXMatrixRotationZ(&matWorldLocal, 0.0f);
     g_matModelView = matWorldLocal * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 
     SetScreenShake();

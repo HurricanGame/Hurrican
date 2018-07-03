@@ -702,7 +702,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück verschieben
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 
     DirectGraphics.SetFilterMode(true);
@@ -716,7 +716,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
     D3DXMatrixRotationZ(&matWorld, 0.0f);
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 }
 
@@ -814,7 +814,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück verschieben
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 
     DirectGraphics.SetFilterMode(true);
@@ -828,7 +828,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
     D3DXMatrixRotationZ(&matWorld, 0.0f);
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 }
 
@@ -923,7 +923,7 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück verschieben
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 
     DirectGraphics.SetFilterMode(true);
@@ -937,7 +937,7 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
     D3DXMatrixRotationZ(&matWorld, 0.0f);
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 }
 
@@ -1015,7 +1015,7 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x,
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 
     DirectGraphics.SetFilterMode(true);
@@ -1029,7 +1029,7 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x,
     D3DXMatrixRotationZ(&matWorld, 0.0f);
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 }
 

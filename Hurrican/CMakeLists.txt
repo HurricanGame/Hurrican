@@ -500,6 +500,7 @@ add_definitions(-DLINUX)
 add_definitions(-DUSE_HOME_DIR)
 add_definitions(-DUSE_GL2)
 add_definitions(-DPLATFORM_SDL)
+add_definitions(-DGLM_FORCE_CTOR_INIT)
 add_definitions(-DUSE_MODPLUG)
 add_definitions(-DNOMINMAX)
 

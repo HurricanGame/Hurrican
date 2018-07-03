@@ -141,7 +141,7 @@ void GegnerGolem::DoDraw() {
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2Body);  // und wieder zurück verschieben
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 
     // Arm hinten zeichnen
@@ -155,7 +155,7 @@ void GegnerGolem::DoDraw() {
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2Body);  // und wieder zurück verschieben
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 
     pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset) + wackel,
@@ -189,7 +189,7 @@ void GegnerGolem::DoDraw() {
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2Body);  // und wieder zurück verschieben
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 
     // Arm zeichnen
@@ -200,7 +200,7 @@ void GegnerGolem::DoDraw() {
     D3DXMatrixRotationZ(&matWorld, 0.0f);
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 
     // Blockrect setzen

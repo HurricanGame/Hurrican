@@ -410,19 +410,18 @@ bool DirectGraphicsClass::SetDeviceInfo() {
 #endif /* USE_GL2 || USE_GL3 */
 
     /* Matrices setup */
-    g_matView.identity();
-    g_matModelView.identity();
+    D3DXMatrixIdentity(&g_matView);
+    D3DXMatrixIdentity(&g_matModelView);
 
-    cml::matrix_orthographic_RH(matProjWindow, 0.0f, static_cast<float>(WindowView.w), static_cast<float>(WindowView.h),
-                                0.0f, 0.0f, 1.0f, cml::z_clip_neg_one);
-    cml::matrix_orthographic_RH(matProjRender, 0.0f, static_cast<float>(RenderView.w), static_cast<float>(RenderView.h),
-                                0.0f, 0.0f, 1.0f, cml::z_clip_neg_one);
+    matProjWindow = glm::ortho(0.0f, float(WindowView.w), float(WindowView.h), 0.0f, 0.0f, 1.0f);
+    matProjRender = glm::ortho(0.0f, float(RenderView.w), float(RenderView.h), 0.0f, 0.0f, 1.0f);
+
     matProj = matProjWindow;
 
 #if defined(USE_GL1)
     /* change to the projection matrix and set our viewing volume. */
-    load_matrix(GL_PROJECTION, matProj.data());
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_PROJECTION, glm::value_ptr(matProj));
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif /* USE_GL1 */
 
 #if defined(USE_FBO)
@@ -577,8 +576,8 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
         glVertexAttribPointer(Shaders[ProgramCurrent].NameClr, 4, GL_UNSIGNED_BYTE, GL_TRUE, stride,
                               reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + clr_offset);
 
-        D3DXMATRIXA16 matMVP = g_matModelView * matProj;
-        glUniformMatrix4fv(Shaders[ProgramCurrent].NameMvp, 1, GL_FALSE, matMVP.data());
+        D3DXMATRIXA16 matMVP = matProj * g_matModelView;
+        glUniformMatrix4fv(Shaders[ProgramCurrent].NameMvp, 1, GL_FALSE, glm::value_ptr(matMVP));
 #endif
 
     glDrawArrays(PrimitiveType, 0, PrimitiveCount);

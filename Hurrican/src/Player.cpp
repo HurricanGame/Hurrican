@@ -813,7 +813,7 @@ void PlayerClass::CheckForExplode() {
         D3DXMatrixRotationZ(&matRot, 0.0f);
         g_matModelView = matRot * g_matView;
 #if defined(USE_GL1)
-        load_matrix(GL_MODELVIEW, g_matModelView.data());
+        load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 
         CollideRect.left = 0;
@@ -3367,7 +3367,7 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 
     DirectGraphics.SetFilterMode(true);
@@ -3387,7 +3387,7 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
         D3DXMatrixRotationZ(&matWorld, 0.0f);
         g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-        load_matrix(GL_MODELVIEW, g_matModelView.data());
+        load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
     } else {
         int Winkel = int(WackelValue + 500) - 500;  // +500 und -500 damit er von -1.0 bis +1.0
@@ -3407,7 +3407,7 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
         // rotierte Matrix setzen
         g_matModelView = matRot * g_matView;
 #if defined(USE_GL1)
-        load_matrix(GL_MODELVIEW, g_matModelView.data());
+        load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
     }
 
@@ -3736,7 +3736,7 @@ bool PlayerClass::DoLightning() {
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 
     DirectGraphics.SetFilterMode(true);
@@ -3763,7 +3763,7 @@ bool PlayerClass::DoLightning() {
         D3DXMatrixRotationZ(&matWorld, 0.0f);
         g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-        load_matrix(GL_MODELVIEW, g_matModelView.data());
+        load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
     } else {
         int Winkel = int(WackelValue + 500) - 500;  // +500 und -500 damit er von -1.0 bis +1.0
@@ -3783,7 +3783,7 @@ bool PlayerClass::DoLightning() {
         // rotierte Matrix setzen
         g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-        load_matrix(GL_MODELVIEW, g_matModelView.data());
+        load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
     }
 

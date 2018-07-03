@@ -34,7 +34,9 @@
 #include "Logdatei.hpp"
 #include "SDL.h"
 #include "SDL_image.h"
-#include "cml/cml.h"
+#include "glm/mat4x4.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 #include "keymap.hpp"
 #include "opengl.hpp"
 
@@ -57,17 +59,17 @@ using D3DCOLOR = std::uint32_t;
 
 #define LPDIRECTINPUTDEVICE8 SDL_Joystick *
 
-using D3DXMATRIXA16 = cml::matrix44f_r;
-using D3DXMATRIX = cml::matrix44f_r;
+using D3DXMATRIXA16 = glm::mat4x4;
+using D3DXMATRIX = glm::mat4x4;
 
 void D3DXMatrixIdentity(D3DXMATRIXA16 *m);
 
-#define D3DXMatrixScaling(m, x, y, z) cml::matrix_scale((*m), (x), (y), (z))
-#define D3DXMatrixTranslation(m, x, y, z) cml::matrix_translation((*m), (x), (y), (z))
-#define D3DXMatrixMultiply(m, j, k) (*m) = (*j) * (*k)
-#define D3DXMatrixRotationX(m, a) cml::matrix_rotation_world_x((*m), (a))
-#define D3DXMatrixRotationY(m, a) cml::matrix_rotation_world_y((*m), (a))
-#define D3DXMatrixRotationZ(m, a) cml::matrix_rotation_world_z((*m), (a))
+#define D3DXMatrixScaling(m, x, y, z) (*(m)) = glm::scale(glm::mat4x4(1.0f), glm::vec3((x), (y), (z)))
+#define D3DXMatrixTranslation(m, x, y, z) (*(m))=glm::translate(glm::mat4x4(1.0f), glm::vec3((x), (y), (z)))
+#define D3DXMatrixMultiply(m, j, k) (*(m)) = ((*(k)) * (*(j)))
+#define D3DXMatrixRotationX(m, a) (*(m))=glm::rotate(glm::mat4x4(1.0f), (a), glm::vec3(1.0f, 0.0f, 0.0f))
+#define D3DXMatrixRotationY(m, a) (*(m))=glm::rotate(glm::mat4x4(1.0f), (a), glm::vec3(0.0f, 1.0f, 0.0f))
+#define D3DXMatrixRotationZ(m, a) (*(m))=glm::rotate(glm::mat4x4(1.0f), (a), glm::vec3(0.0f, 0.0f, 1.0f))
 
 // DKS - No need for construction or destruction or virtual types, changed to struct:
 struct D3DXVECTOR2 {

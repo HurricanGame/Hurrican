@@ -26,7 +26,7 @@
 
 #include <string>
 #include <vector>
-#include "cml/cml.h"
+#include "SDL_port.hpp"
 #include "opengl.hpp"
 
 #define CHECK_FLAG(X, Y) (((X) & (Y)) == (Y))
@@ -75,7 +75,7 @@ class CShader {
     std::vector<std::pair<std::string, GLint> > Attributes;
 };
 
-extern cml::matrix44f_r g_matView;
-extern cml::matrix44f_r g_matModelView;
+extern D3DXMATRIXA16 g_matView;
+extern D3DXMATRIXA16 g_matModelView;
 
 #endif  // CSHADER_H

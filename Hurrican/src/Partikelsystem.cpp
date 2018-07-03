@@ -3210,7 +3210,7 @@ bool PartikelClass::Render() {
         D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);
         g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-        load_matrix(GL_MODELVIEW, g_matModelView.data());
+        load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
     } else
 
@@ -3224,7 +3224,7 @@ bool PartikelClass::Render() {
         D3DXMatrixRotationZ(&matWorld, 0.0f);
         g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-        load_matrix(GL_MODELVIEW, g_matModelView.data());
+        load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
     }
 
@@ -4365,7 +4365,7 @@ void PartikelsystemClass::DrawOnly() {
     D3DXMatrixRotationZ(&matWorld, 0.0f);
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 }
 
@@ -4458,7 +4458,7 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
     D3DXMatrixRotationZ(&matWorld, 0.0f);
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 }
 
@@ -4547,7 +4547,7 @@ void PartikelsystemClass::DoPartikel() {
     D3DXMatrixRotationZ(&matWorld, 0.0f);
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
-    load_matrix(GL_MODELVIEW, g_matModelView.data());
+    load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 }
 
