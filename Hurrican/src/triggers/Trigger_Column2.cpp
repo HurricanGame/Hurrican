@@ -48,7 +48,7 @@ void GegnerColumn2::DoDraw() {
     D3DXMatrixTranslation(&matTrans2, float(xPos - TileEngine.XOffset + 40), float(yPos - TileEngine.YOffset + 100),
                           0.0f);  // Transformation wieder zurück
 
-    D3DXMatrixIdentity(&matWorldLocal);
+    matWorldLocal = glm::mat4x4(1.0f);
     D3DXMatrixMultiply(&matWorldLocal, &matWorldLocal, &matTrans);   // Verschieben
     D3DXMatrixMultiply(&matWorldLocal, &matWorldLocal, &matRot);     // rotieren
     D3DXMatrixMultiply(&matWorldLocal, &matWorldLocal, &matTrans2);  // und wieder zurück verschieben

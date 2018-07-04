@@ -32,11 +32,6 @@ GLenum MatrixMode = 0;
 #endif
 D3DXMATRIXA16 g_matView;
 D3DXMATRIXA16 g_matModelView;
-
-void D3DXMatrixIdentity(D3DXMATRIXA16 *m) {
-    *m = glm::mat4x4(1.0f);
-}
-
 #ifndef __WIN32__
 void strcat_s(char *dst, const char *src) {
     strcat(dst, src);

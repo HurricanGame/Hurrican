@@ -883,7 +883,7 @@ void TileEngineClass::DrawBackground() {
     // Hintergrund nicht rotieren
     //
     D3DXMATRIX matView;
-    D3DXMatrixIdentity(&matView);
+    matView = glm::mat4x4(1.0f);
     g_matView = matView;
 
     //----- Hintergrund-Bild

@@ -513,7 +513,7 @@ void SetScreenShake() {
     D3DXMatrixTranslation(&matTrans, -320.0f, -240.0f, 0.0f);  // Transformation zum Ursprung
     D3DXMatrixTranslation(&matTrans2, 320.0f, 240.0f, 0.0f);   // Transformation wieder zurück
 
-    D3DXMatrixIdentity(&matView);
+    matView = glm::mat4x4(1.0f);
     D3DXMatrixMultiply(&matView, &matView, &matTrans);   // Verschieben
     D3DXMatrixMultiply(&matView, &matView, &matRot);     // rotieren
     D3DXMatrixMultiply(&matView, &matView, &matTrans2);  // und wieder zurück verschieben

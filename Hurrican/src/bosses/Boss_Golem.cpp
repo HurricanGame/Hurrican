@@ -132,7 +132,7 @@ void GegnerGolem::DoDraw() {
     // Transformation wieder zurück
     D3DXMatrixTranslation(&matTrans2Arm, x + 120, y + 80, 0.0f);
 
-    D3DXMatrixIdentity(&matWorld);
+    matWorld = glm::mat4x4(1.0f);
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTransArm);    // rotieren (Körper)
     D3DXMatrixMultiply(&matWorld, &matWorld, &matRotArm);      // rotieren (Arm)
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2Arm);   // und wieder zurück verschieben
@@ -149,7 +149,7 @@ void GegnerGolem::DoDraw() {
                         static_cast<float>(yPos - TileEngine.YOffset) + yoff, Color);
 
     // Körper zeichnen
-    D3DXMatrixIdentity(&matWorld);
+    matWorld = glm::mat4x4(1.0f);
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTransBody);   // rotieren (Körper)
     D3DXMatrixMultiply(&matWorld, &matWorld, &matRotBody);     // rotieren (Arm)
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2Body);  // und wieder zurück verschieben
@@ -180,7 +180,7 @@ void GegnerGolem::DoDraw() {
     // Transformation wieder zurück
     D3DXMatrixTranslation(&matTrans2Arm, x + 175, y + 95, 0.0f);
 
-    D3DXMatrixIdentity(&matWorld);
+    matWorld = glm::mat4x4(1.0f);
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTransArm);    // rotieren (Körper)
     D3DXMatrixMultiply(&matWorld, &matWorld, &matRotArm);      // rotieren (Arm)
     D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2Arm);   // und wieder zurück verschieben

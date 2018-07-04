@@ -504,7 +504,7 @@ void HUDClass::DoHUD() {
     // Einheitsmatrix setzen, da das HUD nie rotiert gerendert wird
     //
     D3DXMATRIX matView;
-    D3DXMatrixIdentity(&matView);
+    matView = glm::mat4x4(1.0f);
     g_matView = matView;
 
     // Hud anzeigen

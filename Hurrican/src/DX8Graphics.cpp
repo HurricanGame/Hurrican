@@ -410,8 +410,8 @@ bool DirectGraphicsClass::SetDeviceInfo() {
 #endif /* USE_GL2 || USE_GL3 */
 
     /* Matrices setup */
-    D3DXMatrixIdentity(&g_matView);
-    D3DXMatrixIdentity(&g_matModelView);
+    g_matView = glm::mat4x4(1.0f);
+    g_matModelView = glm::mat4x4(1.0f);
 
     matProjWindow = glm::ortho(0.0f, float(WindowView.w), float(WindowView.h), 0.0f, 0.0f, 1.0f);
     matProjRender = glm::ortho(0.0f, float(RenderView.w), float(RenderView.h), 0.0f, 0.0f, 1.0f);

@@ -62,8 +62,6 @@ using D3DCOLOR = std::uint32_t;
 using D3DXMATRIXA16 = glm::mat4x4;
 using D3DXMATRIX = glm::mat4x4;
 
-void D3DXMatrixIdentity(D3DXMATRIXA16 *m);
-
 #define D3DXMatrixScaling(m, x, y, z) (*(m)) = glm::scale(glm::mat4x4(1.0f), glm::vec3((x), (y), (z)))
 #define D3DXMatrixTranslation(m, x, y, z) (*(m))=glm::translate(glm::mat4x4(1.0f), glm::vec3((x), (y), (z)))
 #define D3DXMatrixMultiply(m, j, k) (*(m)) = ((*(k)) * (*(j)))
