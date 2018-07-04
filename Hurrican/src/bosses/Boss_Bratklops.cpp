@@ -149,7 +149,7 @@ void GegnerBratklops::DoDraw() {
             DirectGraphics.SetTexture(pLaser->itsTexIdx);
 
             // Blitz rotieren lassen
-            D3DXMATRIX matRot, matTrans, matTrans2;
+            glm::mat4x4 matRot, matTrans, matTrans2;
 
             D3DXMatrixRotationZ(&matRot, DegreetoRad[360 - Winkel]);  // Rotationsmatrix
             D3DXMatrixTranslation(&matTrans, -l - 15, -o, 0.0f);      // Transformation zum Ursprung
@@ -244,7 +244,7 @@ void GegnerBratklops::DoDraw() {
 // --------------------------------------------------------------------------------------
 
 void GegnerBratklops::DoKI() {
-    D3DXMATRIX swap;
+    glm::mat4x4 swap;
 
     /*// TODO
     static float c = 480.0f;

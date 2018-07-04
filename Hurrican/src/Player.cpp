@@ -807,7 +807,7 @@ void PlayerClass::CheckForExplode() {
         DirectInput.Joysticks[JoystickIndex].StopForceFeedbackEffect(FFE_BLITZ);
 
         // Screen bei evtl. Ruckeln begradigen
-        D3DXMATRIX matRot;  // Rotationsmatrix
+        glm::mat4x4 matRot;  // Rotationsmatrix
         WackelMaximum = 0.0f;
         WackelValue = 0.0f;
         D3DXMatrixRotationZ(&matRot, 0.0f);
@@ -3353,7 +3353,7 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
     DirectGraphics.SetTexture(Projectiles.Blitzstrahl[BlitzAnim].itsTexIdx);
 
     // Blitz rotieren lassen
-    D3DXMATRIX matRot, matTrans, matTrans2;
+    glm::mat4x4 matRot, matTrans, matTrans2;
 
     D3DXMatrixRotationZ(&matRot, DegreetoRad[int(BlitzWinkel)]);  // Rotationsmatrix
     D3DXMatrixTranslation(&matTrans, -x - 16, -y - 56, 0.0f);     // Transformation zum Ursprung
@@ -3724,7 +3724,7 @@ bool PlayerClass::DoLightning() {
     }
 
     // Blitz rotieren lassen
-    D3DXMATRIX matRot, matTrans, matTrans2;
+    glm::mat4x4 matRot, matTrans, matTrans2;
 
     D3DXMatrixRotationZ(&matRot, DegreetoRad[int(BlitzWinkel)]);  // Rotationsmatrix
     D3DXMatrixTranslation(&matTrans, -x, -y, 0.0f);               // Transformation zum Ursprung

@@ -1149,7 +1149,7 @@ void MenuClass::DoMenu() {
 
     // Einheitsmatrix setzen, damit das Menu richtig angezeigt wird
     //
-    D3DXMATRIX matView;
+    glm::mat4x4 matView;
     matView = glm::mat4x4(1.0f);
     g_matView = matView;
 

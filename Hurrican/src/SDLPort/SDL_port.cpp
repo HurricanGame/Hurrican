@@ -30,8 +30,8 @@ namespace fs = std::experimental::filesystem::v1;
 #if defined(USE_GL1)
 GLenum MatrixMode = 0;
 #endif
-D3DXMATRIXA16 g_matView;
-D3DXMATRIXA16 g_matModelView;
+glm::mat4x4 g_matView;
+glm::mat4x4 g_matModelView;
 #ifndef __WIN32__
 void strcat_s(char *dst, const char *src) {
     strcat(dst, src);

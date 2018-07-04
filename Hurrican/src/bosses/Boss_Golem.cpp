@@ -103,7 +103,7 @@ void GegnerGolem::DoDraw() {
 
     // Rotationsmatrizen erstellen
     RECT_struct itsRect;
-    D3DXMATRIX matRotBody, matRotArm, matTransBody, matTransArm, matTrans2Body, matTrans2Arm;
+    glm::mat4x4 matRotBody, matRotArm, matTransBody, matTransArm, matTrans2Body, matTrans2Arm;
 
     // Körper
     int offx = 0;

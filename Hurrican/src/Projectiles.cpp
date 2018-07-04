@@ -1945,7 +1945,7 @@ void ProjectileClass::Render() {
         float l, r, o, u;      // Vertice Koordinaten
         float tl, tr, to, tu;  // Textur Koordinaten
 
-        D3DXMATRIX matRot, matTrans, matTrans2;
+        glm::mat4x4 matRot, matTrans, matTrans2;
 
         float xts = ProjectileGrafix[ShotArt].itsXTexScale;
         float yts = ProjectileGrafix[ShotArt].itsYTexScale;

@@ -495,7 +495,7 @@ void LeaveGameLoop() {
 // --------------------------------------------------------------------------------------
 
 void SetScreenShake() {
-    D3DXMATRIX matView, matRot, matTrans, matTrans2;  // Rotations und Translations Matrizen
+    glm::mat4x4 matView, matRot, matTrans, matTrans2;  // Rotations und Translations Matrizen
     int Winkel;                                       // Rotationswinkel
 
     float f = (ScreenWinkel + WackelValue);

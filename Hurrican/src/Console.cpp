@@ -818,7 +818,7 @@ bool ConsoleClass::DoConsole() {
 
     // Einheitsmatrix setzen, da Konsole nicht rotiert wird
     //
-    D3DXMATRIX matView;
+    glm::mat4x4 matView;
     matView = glm::mat4x4(1.0f);
     g_matView = matView;
 

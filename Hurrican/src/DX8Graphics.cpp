@@ -33,10 +33,10 @@
 // sonstige Variablen
 // --------------------------------------------------------------------------------------
 
-D3DXMATRIX matProj;   // Projektionsmatrix
-D3DXMATRIX matWorld;  // Weltmatrix
-D3DXMATRIX matProjWindow;
-D3DXMATRIX matProjRender;
+glm::mat4x4 matProj;   // Projektionsmatrix
+glm::mat4x4 matWorld;  // Weltmatrix
+glm::mat4x4 matProjWindow;
+glm::mat4x4 matProjRender;
 float DegreetoRad[360];  // Tabelle mit Rotationswerten
 
 // --------------------------------------------------------------------------------------
@@ -576,7 +576,7 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
         glVertexAttribPointer(Shaders[ProgramCurrent].NameClr, 4, GL_UNSIGNED_BYTE, GL_TRUE, stride,
                               reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + clr_offset);
 
-        D3DXMATRIXA16 matMVP = matProj * g_matModelView;
+        glm::mat4x4 matMVP = matProj * g_matModelView;
         glUniformMatrix4fv(Shaders[ProgramCurrent].NameMvp, 1, GL_FALSE, glm::value_ptr(matMVP));
 #endif
 

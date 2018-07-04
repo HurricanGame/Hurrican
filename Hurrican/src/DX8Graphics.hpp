@@ -142,8 +142,8 @@ class DirectGraphicsClass {
 // --------------------------------------------------------------------------------------
 
 extern DirectGraphicsClass DirectGraphics;  // DirectGraphics Klasse
-extern D3DXMATRIX matProj;                  // Projektionsmatrix
-extern D3DXMATRIX matWorld;                 // Weltmatrix
+extern glm::mat4x4 matProj;                  // Projektionsmatrix
+extern glm::mat4x4 matWorld;                 // Weltmatrix
 extern float DegreetoRad[360];              // Tabelle mit Rotationswerten
 
 #endif

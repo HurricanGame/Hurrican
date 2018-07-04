@@ -30,7 +30,7 @@ GegnerColumn2::GegnerColumn2(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerColumn2::DoDraw() {
-    D3DXMATRIX matWorldLocal, matRot, matTrans, matTrans2;  // Rotations und Translations Matrizen
+    glm::mat4x4 matWorldLocal, matRot, matTrans, matTrans2;  // Rotations und Translations Matrizen
     int Winkel;                                             // Rotationswinkel
 
     Winkel = int(AnimCount);

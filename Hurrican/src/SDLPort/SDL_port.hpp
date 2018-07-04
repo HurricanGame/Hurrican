@@ -59,9 +59,6 @@ using D3DCOLOR = std::uint32_t;
 
 #define LPDIRECTINPUTDEVICE8 SDL_Joystick *
 
-using D3DXMATRIXA16 = glm::mat4x4;
-using D3DXMATRIX = glm::mat4x4;
-
 #define D3DXMatrixScaling(m, x, y, z) (*(m)) = glm::scale(glm::mat4x4(1.0f), glm::vec3((x), (y), (z)))
 #define D3DXMatrixTranslation(m, x, y, z) (*(m))=glm::translate(glm::mat4x4(1.0f), glm::vec3((x), (y), (z)))
 #define D3DXMatrixMultiply(m, j, k) (*(m)) = ((*(k)) * (*(j)))
@@ -90,7 +87,7 @@ int nextPowerOfTwo(int x);
 void load_matrix(GLenum mode, const GLfloat *m);
 #endif
 
-extern D3DXMATRIXA16 g_matView;
-extern D3DXMATRIXA16 g_matModelView;
+extern glm::mat4x4 g_matView;
+extern glm::mat4x4 g_matModelView;
 
 #endif  // _SDLPORT_H_

@@ -3187,7 +3187,7 @@ bool PartikelClass::Render() {
 
         DirectGraphics.SetFilterMode(true);
 
-        D3DXMATRIX matRot, matTrans, matTrans2;
+        glm::mat4x4 matRot, matTrans, matTrans2;
         int width = PartikelGrafix[PartikelArt].itsXFrameSize;
         int height = PartikelGrafix[PartikelArt].itsYFrameSize;
 

@@ -75,7 +75,7 @@ class CShader {
     std::vector<std::pair<std::string, GLint> > Attributes;
 };
 
-extern D3DXMATRIXA16 g_matView;
-extern D3DXMATRIXA16 g_matModelView;
+extern glm::mat4x4 g_matView;
+extern glm::mat4x4 g_matModelView;
 
 #endif  // CSHADER_H

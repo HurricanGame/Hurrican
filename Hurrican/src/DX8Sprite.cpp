@@ -679,7 +679,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
 
     //----- Sprite rotieren
 
-    D3DXMATRIX matRot, matTrans, matTrans2;
+    glm::mat4x4 matRot, matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
     Winkel = std::fmod(Winkel, 360);
@@ -791,7 +791,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
 
     //----- Sprite rotieren
 
-    D3DXMATRIX matRot, matTrans, matTrans2;
+    glm::mat4x4 matRot, matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
     Winkel = std::fmod(Winkel, 360);
@@ -900,7 +900,7 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
 
     //----- Sprite rotieren
 
-    D3DXMATRIX matRot, matTrans, matTrans2;
+    glm::mat4x4 matRot, matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
     Winkel = std::fmod(Winkel, 360);
@@ -992,7 +992,7 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x,
 
     //----- Sprite rotieren
 
-    D3DXMATRIX matRot, matTrans, matTrans2;
+    glm::mat4x4 matRot, matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
     Winkel = std::fmod(Winkel, 360);
