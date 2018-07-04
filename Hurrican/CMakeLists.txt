@@ -394,9 +394,20 @@ set(HURRICAN_SOURCES
         src/triggers/Trigger_Warning.cpp
         src/triggers/Trigger_Warning.hpp)
 
+# Default to OpenGL 2
+if (NOT RENDERER)
+    set(RENDERER "GL2")
+endif()
+
+if (RENDERER STREQUAL "GL1")
+    add_definitions(-DUSE_GL1)
+elseif(RENDERER STREQUAL "GL2")
+    add_definitions(-DUSE_GL2)
+endif()
+
+
 add_definitions(-DLINUX)
 add_definitions(-DUSE_HOME_DIR)
-add_definitions(-DUSE_GL2)
 add_definitions(-DPLATFORM_SDL)
 add_definitions(-DUSE_MODPLUG)
 add_definitions(-DNOMINMAX)
