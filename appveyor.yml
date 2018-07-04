@@ -2,6 +2,10 @@ version: '{build}'
 image: Visual Studio 2017
 platform: x64
 configuration: Debug
+environment:
+  matrix:
+    - RENDERER: GL1
+    - RENDERER: GL2
 before_build:
   - |-
     vcpkg install libmodplug:x64-windows

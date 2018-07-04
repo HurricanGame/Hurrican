@@ -1,3 +1,7 @@
+env:
+  - RENDERER=GL1
+  - RENDERER=GL2
+
 os:
   - linux
   - osx
