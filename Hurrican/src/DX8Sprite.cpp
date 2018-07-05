@@ -687,7 +687,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
         Winkel += 360;
 
     // Rotationsmatrix
-    D3DXMatrixRotationZ(&matRot, float(PI * Winkel / 180));
+    matRot = glm::rotate(glm::mat4x4(1.0f), float(PI * Winkel / 180), glm::vec3(0.0f, 0.0f, 1.0f));
 
     // Transformation zum Ursprung
     D3DXMatrixTranslation(&matTrans, -x - (itsRect.right - itsRect.left) / 2.0f,
@@ -713,7 +713,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
     DirectGraphics.SetFilterMode(false);
 
     // Normale Projektions-Matrix wieder herstellen
-    D3DXMatrixRotationZ(&matWorld, 0.0f);
+    matWorld = glm::mat4x4(1.0f);
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
@@ -799,7 +799,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
         Winkel += 360;
 
     // Rotationsmatrix
-    D3DXMatrixRotationZ(&matRot, float(PI * Winkel / 180));
+    matRot = glm::rotate(glm::mat4x4(1.0f), float(PI * Winkel / 180), glm::vec3(0.0f, 0.0f, 1.0f));
 
     // Transformation zum Ursprung
     D3DXMatrixTranslation(&matTrans, -x - (itsRect.right - itsRect.left) / 2.0f,
@@ -825,7 +825,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
     DirectGraphics.SetFilterMode(false);
 
     // Normale Projektions-Matrix wieder herstellen
-    D3DXMatrixRotationZ(&matWorld, 0.0f);
+    matWorld = glm::mat4x4(1.0f);
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
@@ -908,7 +908,7 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
         Winkel += 360;
 
     // Rotationsmatrix
-    D3DXMatrixRotationZ(&matRot, float(PI * Winkel / 180));
+    matRot = glm::rotate(glm::mat4x4(1.0f), float(PI * Winkel / 180), glm::vec3(0.0f, 0.0f, 1.0f));
 
     // Transformation zum Ursprung
     D3DXMatrixTranslation(&matTrans, -x - (itsRect.right - itsRect.left) / 2.0f - offx,
@@ -934,7 +934,7 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
     DirectGraphics.SetFilterMode(false);
 
     // Normale Projektions-Matrix wieder herstellen
-    D3DXMatrixRotationZ(&matWorld, 0.0f);
+    matWorld = glm::mat4x4(1.0f);
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
@@ -1000,7 +1000,7 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x,
         Winkel += 360;
 
     // Rotationsmatrix
-    D3DXMatrixRotationZ(&matRot, float(PI * Winkel / 180));
+    matRot = glm::rotate(glm::mat4x4(1.0f), float(PI * Winkel / 180), glm::vec3(0.0f, 0.0f, 1.0f));
 
     // Transformation zum Ursprung
     D3DXMatrixTranslation(&matTrans, -x - (width) / 2, -y - (height) / 2, 0.0f);
@@ -1026,7 +1026,7 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x,
     DirectGraphics.SetFilterMode(false);
 
     // Normale Projektions-Matrix wieder herstellen
-    D3DXMatrixRotationZ(&matWorld, 0.0f);
+    matWorld = glm::mat4x4(1.0f);
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));

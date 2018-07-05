@@ -112,7 +112,7 @@ void GegnerGolem::DoDraw() {
     float y = static_cast<float>(yPos - TileEngine.YOffset);
 
     itsRect = GegnerRect[GegnerArt];
-    D3DXMatrixRotationZ(&matRotBody, Wackel);
+    matRotBody = glm::rotate(glm::mat4x4(1.0f), Wackel, glm::vec3(0.0f, 0.0f, 1.0f));
     D3DXMatrixTranslation(&matTransBody, -x - (itsRect.right - itsRect.left) / 2.0f - offx,
                           -y - (itsRect.bottom - itsRect.top) / 2.0f - offy, 0.0f);
 
@@ -120,7 +120,7 @@ void GegnerGolem::DoDraw() {
     D3DXMatrixTranslation(&matTrans2Body, x + (itsRect.right - itsRect.left) / 2.0f + offx,
                           y + (itsRect.bottom - itsRect.top) / 2.0f + offy, 0.0f);
 
-    D3DXMatrixRotationZ(&matRotArm, rotarm2 - 0.5f);
+    matRotArm = glm::rotate(glm::mat4x4(1.0f), rotarm2 - 0.5f, glm::vec3(0.0f, 0.0f, 1.0f));
 
     // arm bewegen
     offx = 0;
@@ -172,7 +172,7 @@ void GegnerGolem::DoDraw() {
     itsRect.right = 193;
     itsRect.bottom = 179;
 
-    D3DXMatrixRotationZ(&matRotArm, rotarm1 - 0.3f);
+    matRotArm = glm::rotate(glm::mat4x4(1.0f), rotarm1 - 0.3f, glm::vec3(0.0f, 0.0f, 1.0f));
 
     // arm bewegen
     D3DXMatrixTranslation(&matTransArm, -x - 180, -y - 50, 0.0f);
@@ -197,7 +197,7 @@ void GegnerGolem::DoDraw() {
                         static_cast<float>(yPos - TileEngine.YOffset) + yoff, Color);
 
     // Normale Projektions-Matrix wieder herstellen
-    D3DXMatrixRotationZ(&matWorld, 0.0f);
+    matWorld = glm::mat4x4(1.0f);
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));

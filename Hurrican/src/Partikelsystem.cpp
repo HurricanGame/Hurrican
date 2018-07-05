@@ -3192,7 +3192,7 @@ bool PartikelClass::Render() {
         int height = PartikelGrafix[PartikelArt].itsYFrameSize;
 
         // Rotationsmatrix
-        D3DXMatrixRotationZ(&matRot, DegreetoRad[int(Rot)]);
+        matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[int(Rot)], glm::vec3(0.0f, 0.0f, 1.0f));
 
         float x = static_cast<float>(xPos - TileEngine.XOffset);
         float y = static_cast<float>(yPos - TileEngine.YOffset);
@@ -3221,7 +3221,7 @@ bool PartikelClass::Render() {
         DirectGraphics.SetFilterMode(false);
 
         // Normale Projektions-Matrix wieder herstellen
-        D3DXMatrixRotationZ(&matWorld, 0.0f);
+        matWorld = glm::mat4x4(1.0f);
         g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
         load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
@@ -4362,7 +4362,7 @@ void PartikelsystemClass::DrawOnly() {
     DirectGraphics.SetColorKeyMode();
 
     // Normale Projektions-Matrix wieder herstellen
-    D3DXMatrixRotationZ(&matWorld, 0.0f);
+    matWorld = glm::mat4x4(1.0f);
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
@@ -4455,7 +4455,7 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
     DirectGraphics.SetColorKeyMode();
 
     // Normale Projektions-Matrix wieder herstellen
-    D3DXMatrixRotationZ(&matWorld, 0.0f);
+    matWorld = glm::mat4x4(1.0f);
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
@@ -4544,7 +4544,7 @@ void PartikelsystemClass::DoPartikel() {
 
     DirectGraphics.SetColorKeyMode();
     // Normale Projektions-Matrix wieder herstellen
-    D3DXMatrixRotationZ(&matWorld, 0.0f);
+    matWorld = glm::mat4x4(1.0f);
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));

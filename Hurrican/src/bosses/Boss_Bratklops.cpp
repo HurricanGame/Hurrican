@@ -151,7 +151,7 @@ void GegnerBratklops::DoDraw() {
             // Blitz rotieren lassen
             glm::mat4x4 matRot, matTrans, matTrans2;
 
-            D3DXMatrixRotationZ(&matRot, DegreetoRad[360 - Winkel]);  // Rotationsmatrix
+            matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[360 - Winkel], glm::vec3(0.0f, 0.0f, 1.0f));  // Rotationsmatrix
             D3DXMatrixTranslation(&matTrans, -l - 15, -o, 0.0f);      // Transformation zum Ursprung
             D3DXMatrixTranslation(&matTrans2, l + 15, o, 0.0f);       // Transformation wieder zurück
             matWorld = matRot * matTrans;        // Verschieben und rotieren
@@ -171,7 +171,7 @@ void GegnerBratklops::DoDraw() {
 
             // Normale Projektions-Matrix wieder herstellen
             //
-            D3DXMatrixRotationZ(&matWorld, 0.0f);
+            matWorld = glm::mat4x4(1.0f);
             g_matModelView = matWorld * g_matView;
 #if defined(GL1)
             load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));

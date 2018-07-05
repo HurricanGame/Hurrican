@@ -2007,7 +2007,7 @@ void ProjectileClass::Render() {
             Winkel = float(int(Winkel) % 360);
 
             // Rotationsmatrix
-            D3DXMatrixRotationZ(&matRot, DegreetoRad[int(Winkel)]);
+            matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[int(Winkel)], glm::vec3(0.0f, 0.0f, 1.0f));
 
             float x = -TileEngine.XOffset + xPos;
             float y = -TileEngine.YOffset + yPos;
@@ -2042,7 +2042,7 @@ void ProjectileClass::Render() {
 
         if (Winkel > -10000.0f) {
             // Normale Projektions-Matrix wieder herstellen
-            D3DXMatrixRotationZ(&matWorld, 0.0f);
+            matWorld = glm::mat4x4(1.0f);
             g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
             load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));

@@ -810,7 +810,7 @@ void PlayerClass::CheckForExplode() {
         glm::mat4x4 matRot;  // Rotationsmatrix
         WackelMaximum = 0.0f;
         WackelValue = 0.0f;
-        D3DXMatrixRotationZ(&matRot, 0.0f);
+        matRot = glm::mat4x4(1.0f);
         g_matModelView = matRot * g_matView;
 #if defined(USE_GL1)
         load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
@@ -3355,7 +3355,7 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
     // Blitz rotieren lassen
     glm::mat4x4 matRot, matTrans, matTrans2;
 
-    D3DXMatrixRotationZ(&matRot, DegreetoRad[int(BlitzWinkel)]);  // Rotationsmatrix
+    matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[int(BlitzWinkel)], glm::vec3(0.0f, 0.0f, 1.0f));  // Rotationsmatrix
     D3DXMatrixTranslation(&matTrans, -x - 16, -y - 56, 0.0f);     // Transformation zum Ursprung
 
     if (Blickrichtung == RECHTS)
@@ -3384,7 +3384,7 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
 
     // Normale Projektions-Matrix wieder herstellen, wenn der Screen nicht gerade gewackelt wird
     if (WackelMaximum <= 0.0f) {
-        D3DXMatrixRotationZ(&matWorld, 0.0f);
+        matWorld = glm::mat4x4(1.0f);
         g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
         load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
@@ -3399,7 +3399,7 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
             Winkel -= 360;
         if (Winkel < 0)
             Winkel += 360;
-        D3DXMatrixRotationZ(&matRot, DegreetoRad[Winkel]);
+        matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[Winkel], glm::vec3(0.0f, 0.0f, 1.0f));
 
         if (WackelMaximum <= 0.0f)  // Wackeln zuende ?
             WackelMaximum = 0.0f;   // Dann aufhören damit
@@ -3726,7 +3726,7 @@ bool PlayerClass::DoLightning() {
     // Blitz rotieren lassen
     glm::mat4x4 matRot, matTrans, matTrans2;
 
-    D3DXMatrixRotationZ(&matRot, DegreetoRad[int(BlitzWinkel)]);  // Rotationsmatrix
+    matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[int(BlitzWinkel)], glm::vec3(0.0f, 0.0f, 1.0f));  // Rotationsmatrix
     D3DXMatrixTranslation(&matTrans, -x, -y, 0.0f);               // Transformation zum Ursprung
     if (Blickrichtung == RECHTS)
         D3DXMatrixTranslation(&matTrans2, x, y, 0.0f);  // Transformation wieder zurück
@@ -3760,7 +3760,7 @@ bool PlayerClass::DoLightning() {
 
     // Normale Projektions-Matrix wieder herstellen, wenn der Screen nicht gerade gewackelt wird
     if (WackelMaximum <= 0.0f) {
-        D3DXMatrixRotationZ(&matWorld, 0.0f);
+        matWorld = glm::mat4x4(1.0f);
         g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
         load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
@@ -3775,7 +3775,7 @@ bool PlayerClass::DoLightning() {
             Winkel -= 360;
         if (Winkel < 0)
             Winkel += 360;
-        D3DXMatrixRotationZ(&matRot, DegreetoRad[Winkel]);
+        matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[Winkel], glm::vec3(0.0f, 0.0f, 1.0f));
 
         if (WackelMaximum <= 0.0f)  // Wackeln zuende ?
             WackelMaximum = 0.0f;   // Dann aufhören damit

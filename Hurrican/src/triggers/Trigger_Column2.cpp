@@ -41,7 +41,7 @@ void GegnerColumn2::DoDraw() {
         Winkel -= 360;
     if (Winkel < 0)
         Winkel += 360;
-    D3DXMatrixRotationZ(&matRot, DegreetoRad[Winkel]);
+    matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[Winkel], glm::vec3(0.0f, 0.0f, 1.0f));
 
     D3DXMatrixTranslation(&matTrans, float(-(xPos - TileEngine.XOffset + 40)),
                           float(-(yPos - TileEngine.YOffset + 100)), 0.0f);  // Transformation zum Ursprung
@@ -63,7 +63,7 @@ void GegnerColumn2::DoDraw() {
                                            static_cast<float>(yPos - TileEngine.YOffset), 0, 0xFFFFFFFF);
 
     // Normale Projektions-Matrix wieder herstellen
-    D3DXMatrixRotationZ(&matWorldLocal, 0.0f);
+    matWorldLocal = glm::mat4x4(1.0f);
     g_matModelView = matWorldLocal * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
