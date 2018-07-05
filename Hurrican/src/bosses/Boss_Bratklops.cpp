@@ -154,8 +154,8 @@ void GegnerBratklops::DoDraw() {
             D3DXMatrixRotationZ(&matRot, DegreetoRad[360 - Winkel]);  // Rotationsmatrix
             D3DXMatrixTranslation(&matTrans, -l - 15, -o, 0.0f);      // Transformation zum Ursprung
             D3DXMatrixTranslation(&matTrans2, l + 15, o, 0.0f);       // Transformation wieder zurück
-            D3DXMatrixMultiply(&matWorld, &matTrans, &matRot);        // Verschieben und rotieren
-            D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);     // und wieder zurück
+            matWorld = matRot * matTrans;        // Verschieben und rotieren
+            matWorld = matTrans2 * matWorld;     // und wieder zurück
             g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
             load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));

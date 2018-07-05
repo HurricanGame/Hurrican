@@ -133,12 +133,12 @@ void GegnerGolem::DoDraw() {
     D3DXMatrixTranslation(&matTrans2Arm, x + 120, y + 80, 0.0f);
 
     matWorld = glm::mat4x4(1.0f);
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTransArm);    // rotieren (Körper)
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matRotArm);      // rotieren (Arm)
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2Arm);   // und wieder zurück verschieben
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTransBody);   // rotieren (Körper)
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matRotBody);     // rotieren (Arm)
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2Body);  // und wieder zurück verschieben
+    matWorld = matTransArm * matWorld;    // rotieren (Körper)
+    matWorld = matRotArm * matWorld;      // rotieren (Arm)
+    matWorld = matTrans2Arm * matWorld;   // und wieder zurück verschieben
+    matWorld = matTransBody * matWorld;   // rotieren (Körper)
+    matWorld = matRotBody * matWorld;     // rotieren (Arm)
+    matWorld = matTrans2Body * matWorld;  // und wieder zurück verschieben
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
@@ -150,9 +150,9 @@ void GegnerGolem::DoDraw() {
 
     // Körper zeichnen
     matWorld = glm::mat4x4(1.0f);
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTransBody);   // rotieren (Körper)
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matRotBody);     // rotieren (Arm)
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2Body);  // und wieder zurück verschieben
+    matWorld = matTransBody * matWorld;   // rotieren (Körper)
+    matWorld = matRotBody * matWorld;     // rotieren (Arm)
+    matWorld = matTrans2Body * matWorld;  // und wieder zurück verschieben
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
@@ -181,12 +181,12 @@ void GegnerGolem::DoDraw() {
     D3DXMatrixTranslation(&matTrans2Arm, x + 175, y + 95, 0.0f);
 
     matWorld = glm::mat4x4(1.0f);
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTransArm);    // rotieren (Körper)
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matRotArm);      // rotieren (Arm)
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2Arm);   // und wieder zurück verschieben
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTransBody);   // rotieren (Körper)
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matRotBody);     // rotieren (Arm)
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2Body);  // und wieder zurück verschieben
+    matWorld = matTransArm * matWorld;    // rotieren (Körper)
+    matWorld = matRotArm * matWorld;      // rotieren (Arm)
+    matWorld = matTrans2Arm * matWorld;   // und wieder zurück verschieben
+    matWorld = matTransBody * matWorld;   // rotieren (Körper)
+    matWorld = matRotBody * matWorld;     // rotieren (Arm)
+    matWorld = matTrans2Body * matWorld;  // und wieder zurück verschieben
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));

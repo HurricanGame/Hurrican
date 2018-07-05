@@ -61,7 +61,6 @@ using D3DCOLOR = std::uint32_t;
 
 #define D3DXMatrixScaling(m, x, y, z) (*(m)) = glm::scale(glm::mat4x4(1.0f), glm::vec3((x), (y), (z)))
 #define D3DXMatrixTranslation(m, x, y, z) (*(m))=glm::translate(glm::mat4x4(1.0f), glm::vec3((x), (y), (z)))
-#define D3DXMatrixMultiply(m, j, k) (*(m)) = ((*(k)) * (*(j)))
 #define D3DXMatrixRotationX(m, a) (*(m))=glm::rotate(glm::mat4x4(1.0f), (a), glm::vec3(1.0f, 0.0f, 0.0f))
 #define D3DXMatrixRotationY(m, a) (*(m))=glm::rotate(glm::mat4x4(1.0f), (a), glm::vec3(0.0f, 1.0f, 0.0f))
 #define D3DXMatrixRotationZ(m, a) (*(m))=glm::rotate(glm::mat4x4(1.0f), (a), glm::vec3(0.0f, 0.0f, 1.0f))

@@ -49,9 +49,9 @@ void GegnerColumn2::DoDraw() {
                           0.0f);  // Transformation wieder zurück
 
     matWorldLocal = glm::mat4x4(1.0f);
-    D3DXMatrixMultiply(&matWorldLocal, &matWorldLocal, &matTrans);   // Verschieben
-    D3DXMatrixMultiply(&matWorldLocal, &matWorldLocal, &matRot);     // rotieren
-    D3DXMatrixMultiply(&matWorldLocal, &matWorldLocal, &matTrans2);  // und wieder zurück verschieben
+    matWorldLocal = matTrans * matWorldLocal;   // Verschieben
+    matWorldLocal = matRot * matWorldLocal;     // rotieren
+    matWorldLocal = matTrans2 * matWorldLocal;  // und wieder zurück verschieben
 
     // rotierte Matrix setzen
     g_matModelView = matWorldLocal * g_matView;

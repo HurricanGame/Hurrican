@@ -697,9 +697,9 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
     D3DXMatrixTranslation(&matTrans2, x + (itsRect.right - itsRect.left) / 2.0f,
                           y + (itsRect.bottom - itsRect.top) / 2.0f, 0.0f);
 
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans);   // Verschieben
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matRot);     // rotieren
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück verschieben
+    matWorld = matTrans * matWorld;   // Verschieben
+    matWorld = matRot * matWorld;     // rotieren
+    matWorld = matTrans2 * matWorld;  // und wieder zurück verschieben
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
@@ -809,9 +809,9 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
     D3DXMatrixTranslation(&matTrans2, x + (itsRect.right - itsRect.left) / 2.0f,
                           y + (itsRect.bottom - itsRect.top) / 2.0f, 0.0f);
 
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans);   // Verschieben
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matRot);     // rotieren
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück verschieben
+    matWorld = matTrans * matWorld;   // Verschieben
+    matWorld = matRot * matWorld;     // rotieren
+    matWorld = matTrans2 * matWorld;  // und wieder zurück verschieben
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
@@ -918,9 +918,9 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
     D3DXMatrixTranslation(&matTrans2, x + (itsRect.right - itsRect.left) / 2.0f + offx,
                           y + (itsRect.bottom - itsRect.top) / 2.0f + offy, 0.0f);
 
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans);   // Verschieben
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matRot);     // rotieren
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück verschieben
+    matWorld = matTrans * matWorld;   // Verschieben
+    matWorld = matRot * matWorld;     // rotieren
+    matWorld = matTrans2 * matWorld;  // und wieder zurück verschieben
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
@@ -1009,10 +1009,10 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x,
     D3DXMatrixTranslation(&matTrans2, x + (width) / 2, y + (height) / 2, 0.0f);
 
     // Verschieben und rotieren
-    D3DXMatrixMultiply(&matWorld, &matTrans, &matRot);
+    matWorld = matRot * matTrans;
 
     // und wieder zurück verschieben
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);
+    matWorld = matTrans2 * matWorld;
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));

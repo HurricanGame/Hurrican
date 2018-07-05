@@ -2020,9 +2020,9 @@ void ProjectileClass::Render() {
             // Transformation wieder zurück
             D3DXMatrixTranslation(&matTrans2, x + mx, y + my, 0.0f);
 
-            D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans);   // Verschieben
-            D3DXMatrixMultiply(&matWorld, &matWorld, &matRot);     // rotieren
-            D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück verschieben
+            matWorld = matTrans * matWorld;   // Verschieben
+            matWorld = matRot * matWorld;     // rotieren
+            matWorld = matTrans2 * matWorld;  // und wieder zurück verschieben
             g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
             load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));

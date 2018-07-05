@@ -3363,8 +3363,8 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
     else
         D3DXMatrixTranslation(&matTrans2, x + 31, y, 0.0f);  // Transformation wieder zurück
 
-    D3DXMatrixMultiply(&matWorld, &matTrans, &matRot);     // Verschieben und rotieren
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück
+    matWorld = matRot * matTrans;     // Verschieben und rotieren
+    matWorld = matTrans2 * matWorld;  // und wieder zurück
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
@@ -3732,8 +3732,8 @@ bool PlayerClass::DoLightning() {
         D3DXMatrixTranslation(&matTrans2, x, y, 0.0f);  // Transformation wieder zurück
     else
         D3DXMatrixTranslation(&matTrans2, x, y, 0.0f);     // Transformation wieder zurück
-    D3DXMatrixMultiply(&matWorld, &matTrans, &matRot);     // Verschieben und rotieren
-    D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);  // und wieder zurück
+    matWorld = matRot * matTrans;     // Verschieben und rotieren
+    matWorld = matTrans2 * matWorld;  // und wieder zurück
     g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));

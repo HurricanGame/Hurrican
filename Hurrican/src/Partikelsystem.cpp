@@ -3204,10 +3204,10 @@ bool PartikelClass::Render() {
         D3DXMatrixTranslation(&matTrans2, x + (width) / 2, y + (height) / 2, 0.0f);
 
         // Verschieben und rotieren
-        D3DXMatrixMultiply(&matWorld, &matTrans, &matRot);
+        matWorld = matRot * matTrans;
 
         // und wieder zurück verschieben
-        D3DXMatrixMultiply(&matWorld, &matWorld, &matTrans2);
+        matWorld = matTrans2 * matWorld;
         g_matModelView = matWorld * g_matView;
 #if defined(USE_GL1)
         load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
