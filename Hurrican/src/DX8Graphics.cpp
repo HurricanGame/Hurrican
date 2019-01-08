@@ -496,9 +496,8 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
                                          std::uint32_t PrimitiveCount,
                                          void *pVertexStreamZeroData) {
     int stride = sizeof(VERTEX2D);
-    // DKS - Changed multiplier from 3 to 2, since I removed the unnecessary Z coordinate:
-    int clr_offset = sizeof(float) * 2;
-    int tex_offset = clr_offset + sizeof(D3DCOLOR);
+    size_t clr_offset = offsetof(VERTEX2D, color);
+    size_t tex_offset = offsetof(VERTEX2D, tu);
 
 #if defined(USE_GL2) || defined(USE_GL3)
     uint8_t program_next = PROGRAM_COLOR;
