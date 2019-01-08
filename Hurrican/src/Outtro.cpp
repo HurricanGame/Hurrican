@@ -363,14 +363,14 @@ void OuttroClass::DoOuttro() {
 
             for (int i = 0, display_line = 0; i < num_lines; i++, display_line++) {
                 int AnzahlCredits = CreditsCount - 65;
-                int off = TextOff + i - 27;
-                if (off > 0) {
-                    if (TEXT_OUTTRO1 + off < TEXT_SEPERATOR_MARIO)
-                        snprintf(text, 255, "%s", TextArray[TEXT_OUTTRO1 + off]);
-                    else if (TEXT_OUTTRO1 + off <= TEXT_SEPERATOR_MARIO + AnzahlCredits)
-                        snprintf(text, 255, "%s", Credits[off + 25]);
-                    else if (TEXT_OUTTRO1 + off <= TEXT_SEPERATOR_MARIO + AnzahlCredits + 10)
-                        snprintf(text, 255, "%s", TextArray[TEXT_OUTTRO1 + off - AnzahlCredits]);
+                int off2 = TextOff + i - 27;
+                if (off2 > 0) {
+                    if (TEXT_OUTTRO1 + off2 < TEXT_SEPERATOR_MARIO)
+                        snprintf(text, 255, "%s", TextArray[TEXT_OUTTRO1 + off2]);
+                    else if (TEXT_OUTTRO1 + off2 <= TEXT_SEPERATOR_MARIO + AnzahlCredits)
+                        snprintf(text, 255, "%s", Credits[off2 + 25]);
+                    else if (TEXT_OUTTRO1 + off2 <= TEXT_SEPERATOR_MARIO + AnzahlCredits + 10)
+                        snprintf(text, 255, "%s", TextArray[TEXT_OUTTRO1 + off2 - AnzahlCredits]);
                     else
                         strcpy_s(text, "");
 

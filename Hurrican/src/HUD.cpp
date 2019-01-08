@@ -201,23 +201,23 @@ void HUDClass::ShowHUD() {
 
         // Supershot anzeigen, wenn vorhanden (bei vorhandenem Autofire wird der Supershot tiefer angezeigt)
         if (Player[p].RiesenShotExtra > 0.0f) {
-            int off = 0;
+            int off2 = 0;
 
             if (Player[p].AutoFireExtra > 0.0f)
-                off += 37;
+                off2 += 37;
 
-            HUDSuperShot.RenderSprite(xpos + 264 + xoff, ypos + 61 + off, 0, Color);
+            HUDSuperShot.RenderSprite(xpos + 264 + xoff, ypos + 61 + off2, 0, Color);
             std::string buf = std::to_string(int(Player[p].RiesenShotExtra));
 
             if (Player[p].RiesenShotExtra < 10) {
-                pDefaultFont->DrawText(xpos + 270 + xoff, ypos + 87 + off, buf.c_str(), D3DCOLOR_RGBA(0, 0, 0, Alpha));
-                pDefaultFont->DrawText(xpos + 269 + xoff, ypos + 86 + off, buf.c_str(), playercol);
+                pDefaultFont->DrawText(xpos + 270 + xoff, ypos + 87 + off2, buf.c_str(), D3DCOLOR_RGBA(0, 0, 0, Alpha));
+                pDefaultFont->DrawText(xpos + 269 + xoff, ypos + 86 + off2, buf.c_str(), playercol);
             } else if (Player[p].RiesenShotExtra < 100) {
-                pDefaultFont->DrawText(xpos + 271 + xoff, ypos + 87 + off, buf.c_str(), D3DCOLOR_RGBA(0, 0, 0, Alpha));
-                pDefaultFont->DrawText(xpos + 270 + xoff, ypos + 86 + off, buf.c_str(), playercol);
+                pDefaultFont->DrawText(xpos + 271 + xoff, ypos + 87 + off2, buf.c_str(), D3DCOLOR_RGBA(0, 0, 0, Alpha));
+                pDefaultFont->DrawText(xpos + 270 + xoff, ypos + 86 + off2, buf.c_str(), playercol);
             } else {
-                pDefaultFont->DrawText(xpos + 269 + xoff, ypos + 87 + off, buf.c_str(), D3DCOLOR_RGBA(0, 0, 0, Alpha));
-                pDefaultFont->DrawText(xpos + 268 + xoff, ypos + 86 + off, buf.c_str(), playercol);
+                pDefaultFont->DrawText(xpos + 269 + xoff, ypos + 87 + off2, buf.c_str(), D3DCOLOR_RGBA(0, 0, 0, Alpha));
+                pDefaultFont->DrawText(xpos + 268 + xoff, ypos + 86 + off2, buf.c_str(), playercol);
             }
         }
 

@@ -109,16 +109,16 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
         case DIAMONDSHOT:  // Diamant, der auf den Punisher fliegt
         {
             // DKS - Fixed uninitialized variable:
-            // GegnerClass *pAim, *pTemp;
+            // GegnerClass *pAim, *pTemp2;
             GegnerClass *pAim = NULL;
-            GegnerClass *pTemp = Gegner.pStart;
+            GegnerClass *pTemp2 = Gegner.pStart;
 
-            while (pTemp != NULL) {
-                if (pTemp->GegnerArt == PUNISHER) {
-                    pAim = pTemp;
-                    pTemp = NULL;
+            while (pTemp2 != NULL) {
+                if (pTemp2->GegnerArt == PUNISHER) {
+                    pAim = pTemp2;
+                    pTemp2 = NULL;
                 } else
-                    pTemp = pTemp->pNext;
+                    pTemp2 = pTemp2->pNext;
             }
 
             if (pAim == NULL)
