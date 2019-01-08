@@ -37,4 +37,4 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -DCMAKE_C_COMPILER=gcc-7 -DCMAKE_CXX_COMPILER=g++-7 ..; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake ..; fi
 
-script: make
+script: make -j2
