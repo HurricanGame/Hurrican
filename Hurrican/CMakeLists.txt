@@ -394,6 +394,9 @@ set(HURRICAN_SOURCES
         src/triggers/Trigger_Warning.cpp
         src/triggers/Trigger_Warning.hpp)
 
+# Prefer the OpenGL vendor-neutral dispatch library (fixes CMake warning)
+SET(OpenGL_GL_PREFERENCE "GLVND")
+
 # Default to OpenGL 2
 if (NOT RENDERER)
     set(RENDERER "GL2")
