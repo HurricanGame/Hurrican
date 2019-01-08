@@ -582,6 +582,18 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
     glDrawArrays(PrimitiveType, 0, PrimitiveCount);
 
 #if defined(USE_GL1)
+    // switch colors back to avoid corrupting the beam's VERTEX2D data
+    data = reinterpret_cast<uint8_t *>(pVertexStreamZeroData);
+    for (uint32_t count = 0; count < PrimitiveCount; count++) {
+        color = *reinterpret_cast<uint32_t *>(data + clr_offset);
+
+        if (color != 0xFFFFFFFF) {
+            *reinterpret_cast<uint32_t *>(data + clr_offset) =
+                    (color & 0xFF00FF00) + ((color & 0x00FF0000) >> 16) + ((color & 0x000000FF) << 16);
+            data += stride;
+        }
+    }
+
     // Disbale the client states
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
