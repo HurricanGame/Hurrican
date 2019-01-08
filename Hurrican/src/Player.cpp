@@ -3111,17 +3111,17 @@ void PlayerClass::PlayerShoot() {
                     //----- BounceShot
 
                 case 2: {
-                    int tempadd;
+                    int tempadd2;
 
                     // Normale Schüsse
                     //
                     if (RiesenShotExtra <= 0.0f) {
-                        tempadd = 12;
+                        tempadd2 = 12;
                         tempshot = BOUNCESHOT1;
 
                         SoundManager.PlayWave(100, 128, 11025, SOUND_BOUNCESHOT);
                     } else {
-                        tempadd = 24;
+                        tempadd2 = 24;
                         tempshot = BOUNCESHOTBIG1;
                         SoundManager.PlayWave(100, 128, 8000, SOUND_BOUNCESHOT);
                     }
@@ -3129,37 +3129,37 @@ void PlayerClass::PlayerShoot() {
                     WinkelUebergabe = 90.0f + wadd;
 
                     // if (CurrentWeaponLevel[SelectedWeapon] <= 5)
-                    Projectiles.PushProjectile(xpos - tempadd + AustrittX, ypos - tempadd + AustrittY, tempshot, this);
+                    Projectiles.PushProjectile(xpos - tempadd2 + AustrittX, ypos - tempadd2 + AustrittY, tempshot, this);
 
                     /*
                     if (CurrentWeaponLevel[SelectedWeapon] == 5)
                     {
                         if (wadd == 0.0f)
                         {
-                            Projectiles.PushProjectile(xpos-tempadd+AustrittX + 4, ypos-tempadd+AustrittY-11,
-                    tempshot+1, this); Projectiles.PushProjectile(xpos-tempadd+AustrittX + 4, ypos-tempadd+AustrittY+19,
+                            Projectiles.PushProjectile(xpos-tempadd2+AustrittX + 4, ypos-tempadd2+AustrittY-11,
+                    tempshot+1, this); Projectiles.PushProjectile(xpos-tempadd2+AustrittX + 4, ypos-tempadd2+AustrittY+19,
                     tempshot+1, this);
                         }
                         else
                         if (wadd ==  90.0f ||
                             wadd == -90.0f)
                         {
-                            Projectiles.PushProjectile(xpos-tempadd+AustrittX-11, ypos-tempadd+AustrittY+4, tempshot+1,
-                    this); Projectiles.PushProjectile(xpos-tempadd+AustrittX+19, ypos-tempadd+AustrittY+4, tempshot+1,
+                            Projectiles.PushProjectile(xpos-tempadd2+AustrittX-11, ypos-tempadd2+AustrittY+4, tempshot+1,
+                    this); Projectiles.PushProjectile(xpos-tempadd2+AustrittX+19, ypos-tempadd2+AustrittY+4, tempshot+1,
                     this);
                         }
                         else
                         if (wadd == 45.0f)
                         {
-                            Projectiles.PushProjectile(xpos-tempadd+AustrittX-7, ypos-tempadd+AustrittY+17, tempshot+1,
-                    this); Projectiles.PushProjectile(xpos-tempadd+AustrittX+17, ypos-tempadd+AustrittY-7, tempshot+1,
+                            Projectiles.PushProjectile(xpos-tempadd2+AustrittX-7, ypos-tempadd2+AustrittY+17, tempshot+1,
+                    this); Projectiles.PushProjectile(xpos-tempadd2+AustrittX+17, ypos-tempadd2+AustrittY-7, tempshot+1,
                     this);
                         }
                         else
                         if (wadd == -45.0f)
                         {
-                            Projectiles.PushProjectile(xpos-tempadd+AustrittX-7, ypos-tempadd+AustrittY-7, tempshot+1,
-                    this); Projectiles.PushProjectile(xpos-tempadd+AustrittX+17, ypos-tempadd+AustrittY+15, tempshot+1,
+                            Projectiles.PushProjectile(xpos-tempadd2+AustrittX-7, ypos-tempadd2+AustrittY-7, tempshot+1,
+                    this); Projectiles.PushProjectile(xpos-tempadd2+AustrittX+17, ypos-tempadd2+AustrittY+15, tempshot+1,
                     this);
                         }
                     }
@@ -3168,30 +3168,30 @@ void PlayerClass::PlayerShoot() {
                     {
                         if (wadd ==  0.0f)
                         {
-                            Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY-10, tempshot,
-                    this); Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY+10, tempshot,
+                            Projectiles.PushProjectile(xpos-tempadd2+AustrittX, ypos-tempadd2+AustrittY-10, tempshot,
+                    this); Projectiles.PushProjectile(xpos-tempadd2+AustrittX, ypos-tempadd2+AustrittY+10, tempshot,
                     this);
                         }
                         else
                         if (wadd ==  90.0f ||
                             wadd == -90.0f)
                         {
-                            Projectiles.PushProjectile(xpos-tempadd+AustrittX-10, ypos-tempadd+AustrittY, tempshot,
-                    this); Projectiles.PushProjectile(xpos-tempadd+AustrittX+10, ypos-tempadd+AustrittY, tempshot,
+                            Projectiles.PushProjectile(xpos-tempadd2+AustrittX-10, ypos-tempadd2+AustrittY, tempshot,
+                    this); Projectiles.PushProjectile(xpos-tempadd2+AustrittX+10, ypos-tempadd2+AustrittY, tempshot,
                     this);
                         }
 
                         if (wadd == -45.0f)
                         {
-                            Projectiles.PushProjectile(xpos-tempadd+AustrittX-7, ypos-tempadd+AustrittY-7, tempshot,
-                    this); Projectiles.PushProjectile(xpos-tempadd+AustrittX+7, ypos-tempadd+AustrittY+7, tempshot,
+                            Projectiles.PushProjectile(xpos-tempadd2+AustrittX-7, ypos-tempadd2+AustrittY-7, tempshot,
+                    this); Projectiles.PushProjectile(xpos-tempadd2+AustrittX+7, ypos-tempadd2+AustrittY+7, tempshot,
                     this);
                         }
                         else
                         if (wadd == 45.0f)
                         {
-                            Projectiles.PushProjectile(xpos-tempadd+AustrittX+7, ypos-tempadd+AustrittY-7, tempshot,
-                    this); Projectiles.PushProjectile(xpos-tempadd+AustrittX-7, ypos-tempadd+AustrittY+7, tempshot,
+                            Projectiles.PushProjectile(xpos-tempadd2+AustrittX+7, ypos-tempadd2+AustrittY-7, tempshot,
+                    this); Projectiles.PushProjectile(xpos-tempadd2+AustrittX-7, ypos-tempadd2+AustrittY+7, tempshot,
                     this);
                         }
                     }
@@ -3199,19 +3199,19 @@ void PlayerClass::PlayerShoot() {
                     if (CurrentWeaponLevel[SelectedWeapon] == 7)
                     {
                         WinkelUebergabe = 60.0f + wadd;
-                        Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+2, this);
+                        Projectiles.PushProjectile(xpos-tempadd2+AustrittX, ypos-tempadd2+AustrittY, tempshot+2, this);
 
                         WinkelUebergabe = 120.0f + wadd;
-                        Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+2, this);
+                        Projectiles.PushProjectile(xpos-tempadd2+AustrittX, ypos-tempadd2+AustrittY, tempshot+2, this);
                     }
 
                     if (CurrentWeaponLevel[SelectedWeapon] == 8)
                     {
                         WinkelUebergabe = 60.0f + wadd;
-                        Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
+                        Projectiles.PushProjectile(xpos-tempadd2+AustrittX, ypos-tempadd2+AustrittY, tempshot+1, this);
 
                         WinkelUebergabe = 120.0f + wadd;
-                        Projectiles.PushProjectile(xpos-tempadd+AustrittX, ypos-tempadd+AustrittY, tempshot+1, this);
+                        Projectiles.PushProjectile(xpos-tempadd2+AustrittX, ypos-tempadd2+AustrittY, tempshot+1, this);
                     }
                     */
 

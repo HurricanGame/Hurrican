@@ -506,7 +506,7 @@ void MenuClass::ShowMenu() {
 
             // Sound / Musik Lautstärke
             for (int i = 0; i < 2; i++) {
-                float d = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT_SOUND + i], 2));
+                float d2 = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT_SOUND + i], 2));
 
                 if (i == 0)
                     LoadingBar.SetRect(0, 0, int(SoundManager.g_sound_vol / 100.0f * 318.0f), 19);
@@ -514,12 +514,12 @@ void MenuClass::ShowMenu() {
                     LoadingBar.SetRect(0, 0, int(SoundManager.g_music_vol / 100.0f * 318.0f), 19);
 
                 if (i == AktuellerPunkt) {
-                    pMenuFont->DrawText(xpos + OFFSET - 20 - d, ypos + OFFSET - OFFSET2 + (i + 2) * 35,
+                    pMenuFont->DrawText(xpos + OFFSET - 20 - d2, ypos + OFFSET - OFFSET2 + (i + 2) * 35,
                                         TextArray[TEXT_SOUND + i], menucolor, 2);
                     LoadingScreen.RenderSprite(220, ypos + OFFSET - OFFSET2 + (i + 2) * 35 - 18, menucolor);
                     LoadingBar.RenderSprite(241, ypos + OFFSET - OFFSET2 + (i + 2) * 35 + 2, menucolor);
                 } else {
-                    pMenuFont->DrawText(xpos + OFFSET - 20 - d, ypos + OFFSET - OFFSET2 + (i + 2) * 35,
+                    pMenuFont->DrawText(xpos + OFFSET - 20 - d2, ypos + OFFSET - OFFSET2 + (i + 2) * 35,
                                         TextArray[TEXT_SOUND + i], menucolor2, 2);
                     LoadingScreen.RenderSprite(220, ypos + OFFSET - OFFSET2 + (i + 2) * 35 - 18, menucolor2);
                     LoadingBar.RenderSprite(241, ypos + OFFSET - OFFSET2 + (i + 2) * 35 + 2, menucolor2);
@@ -532,15 +532,15 @@ void MenuClass::ShowMenu() {
 
             // Sonstige Menu-Punkte anzeigen
             for (int i = 2; i < 4; i++) {
-                float d = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT_SOUND + i], 2));
+                float d2 = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT_SOUND + i], 2));
 
                 // Schrift anzeigen
                 //
                 if (i == AktuellerPunkt)
-                    pMenuFont->DrawText(320.0f - d / 2.0f, ypos + OFFSET - OFFSET2 + (i + 2) * 35,
+                    pMenuFont->DrawText(320.0f - d2 / 2.0f, ypos + OFFSET - OFFSET2 + (i + 2) * 35,
                                         TextArray[TEXT_SOUND + i], menucolor, 2);
                 else
-                    pMenuFont->DrawText(320.0f - d / 2.0f, ypos + OFFSET - OFFSET2 + (i + 2) * 35,
+                    pMenuFont->DrawText(320.0f - d2 / 2.0f, ypos + OFFSET - OFFSET2 + (i + 2) * 35,
                                         TextArray[TEXT_SOUND + i], menucolor2, 2);
             }
 
@@ -800,11 +800,11 @@ void MenuClass::ShowMenu() {
                     bool on_move_line = (i == AKTION_LINKS || i == AKTION_RECHTS || i == AKTION_DUCKEN);
                     bool on_look_line = (i == AKTION_OBEN || i == AKTION_UNTEN);
                     bool on_jump_line = (i == AKTION_JUMP);
-                    D3DCOLOR col;
+                    D3DCOLOR col2;
                     if (AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS == i && CurrentPlayer == j)
-                        col = 0xFFFFFFFF;
+                        col2 = 0xFFFFFFFF;
                     else
-                        col = 0x88FFFFFF;
+                        col2 = 0x88FFFFFF;
 
                     if (CurrentPlayer != j || AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS != i ||
                         (AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS == i && !control_reassignment_occuring)) {
@@ -817,14 +817,14 @@ void MenuClass::ShowMenu() {
                              pCurrentPlayer->AktionJoystick[i] == -1)) {
                             // Action is not defined
                             pDefaultFont->DrawText(col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
-                                                   TextArray[TEXT_NICHT_DEFINIERT], col);
+                                                   TextArray[TEXT_NICHT_DEFINIERT], col2);
                         } else {
                             if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD) {
                                 // Keyboard key
                                 if (pCurrentPlayer->AktionKeyboard[i] != -1)
                                     pDefaultFont->DrawText(col1_off_x + j * col2_off_x,
                                                            controls_off_y + i * line_spacing,
-                                                           GetKeyName(pCurrentPlayer->AktionKeyboard[i]), col);
+                                                           GetKeyName(pCurrentPlayer->AktionKeyboard[i]), col2);
                             } else {
                                 // Joy axis/hat/button
                                 char Buf[80];
@@ -865,7 +865,7 @@ void MenuClass::ShowMenu() {
                                 }
 
                                 pDefaultFont->DrawText(col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
-                                                       Buf, col);
+                                                       Buf, col2);
                             }
                         }
                     } else {
@@ -884,7 +884,7 @@ void MenuClass::ShowMenu() {
                         }
 
                         pDefaultFont->DrawText(col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing, Buf,
-                                               col);
+                                               col2);
                     }
                 }
             }
@@ -966,24 +966,24 @@ void MenuClass::ShowMenu() {
             for (i = 0; i < num_lines; i++) {
                 D3DCOLOR Color;
 
-                int alpha = int(i * yoff_inc - CreditsPosition);
+                int alpha2 = int(i * yoff_inc - CreditsPosition);
 
-                if (alpha > 360) {
-                    alpha = 255 - (alpha - 360) * 4;
+                if (alpha2 > 360) {
+                    alpha2 = 255 - (alpha2 - 360) * 4;
 
-                    if (alpha < 0)
-                        alpha = 0;
-                } else if (alpha < 150) {
-                    alpha = 255 - (150 - alpha) * 4;
+                    if (alpha2 < 0)
+                        alpha2 = 0;
+                } else if (alpha2 < 150) {
+                    alpha2 = 255 - (150 - alpha2) * 4;
 
-                    if (alpha < 0)
-                        alpha = 0;
+                    if (alpha2 < 0)
+                        alpha2 = 0;
                 }
 
                 else
-                    alpha = 255;
+                    alpha2 = 255;
 
-                Color = D3DCOLOR_RGBA(255, 255, 255, alpha);
+                Color = D3DCOLOR_RGBA(255, 255, 255, alpha2);
 
                 pDefaultFont->DrawTextCenterAlign(320.0f, float(int(i * yoff_inc - CreditsPosition)),
                                                   credits_displayed[CreditsOffset + i], Color, 0);
@@ -1735,27 +1735,27 @@ void MenuClass::DoMenu() {
 
                 // Spieler wechseln
                 if (AuswahlPossible == true) {
-                    PlayerClass *pCurrentPlayer;
+                    PlayerClass *pCurrentPlayer2;
 
                     if (CurrentPlayer == 0)
-                        pCurrentPlayer = &Player[0];
+                        pCurrentPlayer2 = &Player[0];
                     else
-                        pCurrentPlayer = &Player[1];
+                        pCurrentPlayer2 = &Player[1];
 
                     if (KeyDown(DIK_NUMPAD6) || KeyDown(DIK_RIGHT) || joy_right) {
                         input_counter = input_delay * 0.75f;  // Delay less than usual
 
                         if (AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE) {
-                            pCurrentPlayer->JoystickSchwelle -= 100.0f SYNC;
+                            pCurrentPlayer2->JoystickSchwelle -= 100.0f SYNC;
 
-                            if (pCurrentPlayer->JoystickSchwelle < 100.0f)
-                                pCurrentPlayer->JoystickSchwelle = 100.0f;
+                            if (pCurrentPlayer2->JoystickSchwelle < 100.0f)
+                                pCurrentPlayer2->JoystickSchwelle = 100.0f;
                         } else if (AktuellerPunkt >= MENU_TASTEN_PLAYER_LINE) {
                             AuswahlPossible = false;
                             CurrentPlayer = 1;
-                            pCurrentPlayer = &Player[1];
+                            pCurrentPlayer2 = &Player[1];
 
-                            if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD &&
+                            if (pCurrentPlayer2->ControlType == CONTROLTYPE_KEYBOARD &&
                                 (AktuellerPunkt == MENU_TASTEN_MODE_LINE ||
                                  AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE))
                                 AktuellerPunkt = MENU_TASTEN_TYPE_LINE;
@@ -1767,16 +1767,16 @@ void MenuClass::DoMenu() {
                         input_counter = input_delay * 0.75f;  // Delay less than usual
 
                         if (AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE) {
-                            pCurrentPlayer->JoystickSchwelle += 100.0f SYNC;
+                            pCurrentPlayer2->JoystickSchwelle += 100.0f SYNC;
 
-                            if (pCurrentPlayer->JoystickSchwelle > 900.0f)
-                                pCurrentPlayer->JoystickSchwelle = 900.0f;
+                            if (pCurrentPlayer2->JoystickSchwelle > 900.0f)
+                                pCurrentPlayer2->JoystickSchwelle = 900.0f;
                         } else if (AktuellerPunkt >= MENU_TASTEN_PLAYER_LINE) {
                             AuswahlPossible = false;
                             CurrentPlayer = 0;
-                            pCurrentPlayer = &Player[0];
+                            pCurrentPlayer2 = &Player[0];
 
-                            if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD &&
+                            if (pCurrentPlayer2->ControlType == CONTROLTYPE_KEYBOARD &&
                                 (AktuellerPunkt == MENU_TASTEN_MODE_LINE ||
                                  AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE))
                                 AktuellerPunkt = MENU_TASTEN_TYPE_LINE;
@@ -1808,12 +1808,12 @@ void MenuClass::DoMenu() {
                             }
                         }
                     } else {
-                        PlayerClass *pCurrentPlayer;
+                        PlayerClass *pCurrentPlayer2;
 
                         if (CurrentPlayer == 0)
-                            pCurrentPlayer = &Player[0];
+                            pCurrentPlayer2 = &Player[0];
                         else
-                            pCurrentPlayer = &Player[1];
+                            pCurrentPlayer2 = &Player[1];
 
                         if (AktuellerPunkt == MENU_TASTEN_DEFAULTS_LINE) {
                             // Load default controls for players 1/2
@@ -1828,10 +1828,10 @@ void MenuClass::DoMenu() {
 
                         // Joymode ändern?
                         if (AktuellerPunkt == MENU_TASTEN_MODE_LINE) {
-                            if (pCurrentPlayer->JoystickMode == JOYMODE_JOYSTICK)
-                                pCurrentPlayer->JoystickMode = JOYMODE_JOYPAD;
+                            if (pCurrentPlayer2->JoystickMode == JOYMODE_JOYSTICK)
+                                pCurrentPlayer2->JoystickMode = JOYMODE_JOYPAD;
                             else
-                                pCurrentPlayer->JoystickMode = JOYMODE_JOYSTICK;
+                                pCurrentPlayer2->JoystickMode = JOYMODE_JOYSTICK;
                         }
 
                         // Controller Type ändern?
@@ -1839,18 +1839,18 @@ void MenuClass::DoMenu() {
                             // Joytick dran?
                             if (JoystickFound == true) {
                                 // Von Keyboard auf Joystick wechseln?
-                                if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD) {
-                                    pCurrentPlayer->ControlType = CONTROLTYPE_JOY;
-                                    pCurrentPlayer->JoystickIndex = 0;
+                                if (pCurrentPlayer2->ControlType == CONTROLTYPE_KEYBOARD) {
+                                    pCurrentPlayer2->ControlType = CONTROLTYPE_JOY;
+                                    pCurrentPlayer2->JoystickIndex = 0;
                                 }
 
                                 // Von Joystick auf Keyboard wechseln?
                                 else {
-                                    pCurrentPlayer->JoystickIndex++;
+                                    pCurrentPlayer2->JoystickIndex++;
 
-                                    if (pCurrentPlayer->JoystickIndex >= DirectInput.JoysticksFound) {
-                                        pCurrentPlayer->ControlType = CONTROLTYPE_KEYBOARD;
-                                        pCurrentPlayer->JoystickIndex = 0;
+                                    if (pCurrentPlayer2->JoystickIndex >= DirectInput.JoysticksFound) {
+                                        pCurrentPlayer2->ControlType = CONTROLTYPE_KEYBOARD;
+                                        pCurrentPlayer2->JoystickIndex = 0;
                                     }
                                 }
                             }
@@ -2039,8 +2039,8 @@ void MenuClass::DoMenu() {
                 }
 
             // Aktuellen Namen azeigen
-            char Buffer[20];
-            snprintf(Buffer, 20, "%s", NewName);
+            char Buffer[32];
+            snprintf(Buffer, 32, "%s", NewName);
             pMenuFont->DrawTextCenterAlign(319, ypos + 230, Buffer, D3DCOLOR_RGBA(0, 0, 255, 255), 2);
             pMenuFont->DrawTextCenterAlign(321, ypos + 230, Buffer, D3DCOLOR_RGBA(0, 0, 255, 255), 2);
             pMenuFont->DrawTextCenterAlign(320, ypos + 229, Buffer, D3DCOLOR_RGBA(0, 0, 255, 255), 2);

@@ -2434,9 +2434,9 @@ void PartikelClass::Run() {
                 if (ySpeed > 6.0f)
                     ySpeed = 6.0f;
 
-                uint32_t bu = TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+                uint32_t bu2 = TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
 
-                if (bu & BLOCKWERT_WAND || bu & BLOCKWERT_PLATTFORM) {
+                if (bu2 & BLOCKWERT_WAND || bu2 & BLOCKWERT_PLATTFORM) {
                     xSpeed = 0.0f;
                     xAcc = 0.0f;
 
@@ -2470,9 +2470,9 @@ void PartikelClass::Run() {
                 while (Rot > 360.0f)
                     Rot -= 360.0f;
 
-                uint32_t bu = TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
+                uint32_t bu2 = TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
 
-                if (yAcc != 0.0f && (bu & BLOCKWERT_WAND || bu & BLOCKWERT_PLATTFORM)) {
+                if (yAcc != 0.0f && (bu2 & BLOCKWERT_WAND || bu2 & BLOCKWERT_PLATTFORM)) {
                     ySpeed = -ySpeed / 1.5f;
 
                     if (ySpeed > -1.0f) {
