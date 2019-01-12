@@ -9,8 +9,8 @@ out vec2 v_Texcoord0;
 
 void main()
 {
-    /* Send the color to the fragment shader (swizzle the color components to rgba)  */
-    v_Color = a_Color.bgra;
+    /* Send the color to the fragment shader */
+    v_Color = a_Color;
     /* Send the texcoords to the fragment shader */
     v_Texcoord0 = a_Texcoord0;
     /* gl_Position is a special variable used to store the final position. */

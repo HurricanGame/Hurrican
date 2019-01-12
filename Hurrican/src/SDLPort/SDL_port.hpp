@@ -49,7 +49,25 @@ struct RECT_struct {
     std::int32_t bottom;
 };
 using LPDIRECT3DDEVICE8 = std::uint32_t;
-using D3DCOLOR = std::uint32_t;
+
+class HCOLOR {
+public:
+    inline HCOLOR(std::uint32_t c) {
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+        this->color = glm::tvec4<std::uint8_t>((c >> 16) & 0xFF, (c >> 8) & 0xFF, c & 0xFF, (c >> 24) & 0xFF);
+#else
+        this->color = glm::tvec4<std::uint8_t>((c >> 8) & 0xFF, (c >> 16) & 0xFF, (c >> 24) & 0xFF, c & 0xFF);
+#endif
+    };
+    inline HCOLOR() = default;
+    friend HCOLOR operator| (HCOLOR lhs, const HCOLOR& rhs) {
+        lhs.color |= rhs.color;
+        return lhs;
+    };
+private:
+    glm::tvec4<std::uint8_t> color;
+};
+using D3DCOLOR = HCOLOR;
 
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
 #define D3DCOLOR_RGBA(r, g, b, a) ((static_cast<std::uint32_t>(a) << 24u) | (static_cast<std::uint32_t>(r) << 16u) | (static_cast<std::uint32_t>(g) << 8u) | static_cast<std::uint32_t>(b))
