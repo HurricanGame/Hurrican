@@ -282,14 +282,15 @@ int main(int argc, char *argv[]) {
 #else  // NON-ANDROID:
 #ifdef USE_STORAGE_PATH
         // A data-files storage path has been specified in the Makefile:
-        g_storage_ext = (char *)malloc(strlen(USE_STORAGE_PATH) + 1);
+        g_storage_ext = static_cast<char *>(malloc(strlen(USE_STORAGE_PATH) + 1));
         strcpy_s(g_storage_ext, USE_STORAGE_PATH);
         // Attempt to locate the dir
-        if (!FindDir(g_storage_ext)) {
+        if (!fs::is_directory(g_storage_ext)) {
             // Failed, print message and use "." folder as fall-back
             Protokoll << "ERROR: Failed to locate data directory " << g_storage_ext << std::endl;
             Protokoll << "\tUsing '.' folder as fallback." << std::endl;
-            g_storage_ext = (char *)malloc(strlen(".") + 1);
+            free(g_storage_ext);
+            g_storage_ext = static_cast<char *>(malloc(strlen(".") + 1));
             strcpy_s(g_storage_ext, ".");
         }
 #else
