@@ -23,8 +23,8 @@ GegnerSchneekoppe::GegnerSchneekoppe(int Wert1, int Wert2, bool Light) {
     // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
     // xSpeed = (float)sin(Wert1 * PI / 180.0f) * Value2;
     // ySpeed = (float)cos(Wert1 * PI / 180.0f) * Value2;
-    xSpeed = sin_deg(Wert1) * static_cast<float>(Value2);
-    ySpeed = cos_deg(Wert1) * static_cast<float>(Value2);
+    xSpeed = sin_deg(float(Wert1)) * float(Value2);
+    ySpeed = cos_deg(float(Wert1)) * float(Value2);
 
     yAcc = 6.0f;
     //	AnimSpeed = 0.5f;

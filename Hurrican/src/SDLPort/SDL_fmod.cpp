@@ -123,8 +123,6 @@ signed char SOUND_SetPan(int channel, int pan) {
 MUSIC_MODULE *MUSIC_LoadSong(const char *filename) {
     MUSIC_MODULE *music = nullptr;
 #if defined(USE_MODPLUG)
-    uint32_t size;
-
     std::vector<char> buffer = LoadFileToMemory(filename);
 
     if (buffer.empty()) {
@@ -132,7 +130,7 @@ MUSIC_MODULE *MUSIC_LoadSong(const char *filename) {
         return nullptr;
     }
 
-    music = ModPlug_Load(buffer.data(), buffer.size() - 1);
+    music = ModPlug_Load(buffer.data(), int(buffer.size() - 1));
 #else
     music = Mix_LoadMUS(filename);
 #endif

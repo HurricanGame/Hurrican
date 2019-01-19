@@ -244,7 +244,7 @@ void GegnerBratklops::DoDraw() {
 // --------------------------------------------------------------------------------------
 
 void GegnerBratklops::DoKI() {
-    glm::mat4x4 swap;
+    //glm::mat4x4 swap;
 
     /*// TODO
     static float c = 480.0f;

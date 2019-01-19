@@ -1067,8 +1067,8 @@ void SummaryScreen() {
         GUI.Run();
         D3DCOLOR color = D3DCOLOR_RGBA(0, 255, 0, static_cast<int>(GUI.m_FadingAlpha));
         pDefaultFont->DrawText(
-            static_cast<float>(RENDERWIDTH - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_TITLE])) / 2,
-            title_txt_y, TextArray[TEXT_SUMMARY_TITLE], color);
+            float(RENDERWIDTH - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_TITLE])) / 2,
+            float(title_txt_y), TextArray[TEXT_SUMMARY_TITLE], color);
 
         if (delay_ctr >= delay_can_leave) {
             std::string str_pressanykey(TextArray[TEXT_SUMMARY_PRESSFIRE]);
@@ -1079,32 +1079,32 @@ void SummaryScreen() {
             }
 
             pDefaultFont->DrawText(
-                static_cast<float>(RENDERWIDTH - pDefaultFont->StringLength(str_pressanykey.c_str())) / 2,
-                pressanykey_txt_y, str_pressanykey.c_str(), color);
+                float(RENDERWIDTH - pDefaultFont->StringLength(str_pressanykey.c_str())) / 2,
+                float(pressanykey_txt_y), str_pressanykey.c_str(), color);
         }
 
-        pGegnerGrafix[POWERBLOCK]->RenderSpriteScaled(sprite1_x - 16, sprites_y - 16, 32, 32, 1, color);
-        pGegnerGrafix[DIAMANT]->RenderSprite(sprite2_x - 14, sprites_y - 14, 0, color, false);
-        pGegnerGrafix[ONEUP]->RenderSpriteScaled(sprite3_x - 16, sprites_y - 16, 32, 32, 0, color);
+        pGegnerGrafix[POWERBLOCK]->RenderSpriteScaled(float(sprite1_x - 16), float(sprites_y - 16), 32, 32, 1, color);
+        pGegnerGrafix[DIAMANT]->RenderSprite(float(sprite2_x - 14), float(sprites_y - 14), 0, color, false);
+        pGegnerGrafix[ONEUP]->RenderSpriteScaled(float(sprite3_x - 16), float(sprites_y - 16), 32, 32, 0, color);
         pDefaultFont->DrawText(float(secrets_x - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_SECRETS]) / 2),
                                float(sprites_y - pDefaultFont->GetYCharSize() / 2), TextArray[TEXT_SUMMARY_SECRETS],
                                color);
 
         char buf[100];
         snprintf(buf, 100, "%i/%i", Player[0].BlocksThisLevel, TileEngine.MaxBlocks);
-        pDefaultFont->DrawText(static_cast<float>(sprite1_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf,
+        pDefaultFont->DrawText(float(sprite1_x - pDefaultFont->StringLength(buf) / 2), float(stats_txt_y), buf,
                                color);
 
         snprintf(buf, 100, "%i/%i", Player[0].DiamondsThisLevel, TileEngine.MaxDiamonds);
-        pDefaultFont->DrawText(static_cast<float>(sprite2_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf,
+        pDefaultFont->DrawText(float(sprite2_x - pDefaultFont->StringLength(buf) / 2), float(stats_txt_y), buf,
                                color);
 
         snprintf(buf, 100, "%i/%i", Player[0].LivesThisLevel, TileEngine.MaxOneUps);
-        pDefaultFont->DrawText(static_cast<float>(sprite3_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf,
+        pDefaultFont->DrawText(float(sprite3_x - pDefaultFont->StringLength(buf) / 2), float(stats_txt_y), buf,
                                color);
 
         snprintf(buf, 100, "%i/%i", Player[0].SecretThisLevel, TileEngine.MaxSecrets);
-        pDefaultFont->DrawText(static_cast<float>(secrets_x - pDefaultFont->StringLength(buf) / 2), stats_txt_y, buf,
+        pDefaultFont->DrawText(float(secrets_x - pDefaultFont->StringLength(buf) / 2), float(stats_txt_y), buf,
                                color);
 
         // Cheat freigespielt? -> Wenn alle Diamanten gefunden
@@ -1115,7 +1115,7 @@ void SummaryScreen() {
                 buf2[p] ^= 64;
 
             snprintf(buf, 100, "%s: %s", TextArray[TEXT_SUMMARY_CHEATUNLOCK], buf2);
-            pDefaultFont->DrawText(RENDERWIDTH / 2 - pDefaultFont->StringLength(buf, 0) / 2, cheat_txt_y, buf, color,
+            pDefaultFont->DrawText(float(RENDERWIDTH / 2 - pDefaultFont->StringLength(buf, 0) / 2), float(cheat_txt_y), buf, color,
                                    0);
         }
 

@@ -294,7 +294,7 @@ class WaterSinTableClass {
     WaterSinTableClass() {
         ResetPosition();
         for (int i = 0; i < 17; ++i) {
-            SinTable[i] = 2.5f * sinf(i * M_PI / 32.0);
+            SinTable[i] = 2.5f * sinf(i * float(M_PI) / 32.0f);
             NonWaterSinTable[i] = 2.0f * SinTable[i];
         }
     }

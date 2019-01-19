@@ -178,8 +178,8 @@ void GegnerExtras::DoKI() {
                     //}
                     // DKS-Rewrote the above to use radians directly and allow bitwise ops to replace mod operator.
                     for (int i = 0; i < 300; i++) {
-                        float ang = (float(M_PI * 2.0f) * (1.0f / 512.0f)) * float(rand() % 512);
-                        float r = rand() % 32 + 98;
+                        float ang = (float(M_PI) * 2.0f * (1.0f / 512.0f)) * float(rand() % 512);
+                        float r = float(rand() % 32 + 98);
                         PartikelSystem.PushPartikel(pCollector->xpos + (40.0f - 6.0f) + sin_rad(ang) * r,
                                                     pCollector->ypos + (40.0f - 6.0f) + cos_rad(ang) * r,
                                                     KRINGELR + Value1, pCollector);
@@ -218,8 +218,8 @@ void GegnerExtras::DoKI() {
                     PartikelSystem.ClearPowerUpEffects();
 
                     for (int i = 0; i < 300; i++) {
-                        int p = rand() % 360;
-                        int r = rand() % 30 + 100;
+                        float p = float(rand() % 360);
+                        float r = float(rand() % 30 + 100);
 
                         // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
                         // DKS BUGFIX - why did the original code use radian sin/cos with random numbers within

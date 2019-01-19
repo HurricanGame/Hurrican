@@ -428,7 +428,7 @@ void MenuClass::ShowMenu() {
     if (CommandLineParams.LowRes) {
         // Under Low-res, don't display controls message at bottom and shift other text up a bit
         pDefaultFont->DrawText(10.0f, 458, "www.poke53280.de", menucolor, 0);
-        pDefaultFont->DrawText(640 - pDefaultFont->StringLength("www.hurrican-game.de", 0) - 10, 458,
+        pDefaultFont->DrawText(float(640 - pDefaultFont->StringLength("www.hurrican-game.de", 0) - 10), 458,
                                "www.hurrican-game.de", menucolor, 0);
 #if defined(GCW)
         // Draw port credit text for Pickle & Senquack
@@ -441,7 +441,7 @@ void MenuClass::ShowMenu() {
 
             pDefaultFont->DrawTextCenterAlign(320.0f, 462, TextArray[TEXT_MENUE_ANLEITUNG], menucolor, 0);
         pDefaultFont->DrawText(10.0f, 462, "www.poke53280.de", menucolor, 0);
-        pDefaultFont->DrawText(640 - pDefaultFont->StringLength("www.hurrican-game.de", 0) - 10, 462,
+        pDefaultFont->DrawText(float(640 - pDefaultFont->StringLength("www.hurrican-game.de", 0) - 10), 462,
                                "www.hurrican-game.de", menucolor, 0);
     }
 
@@ -891,8 +891,6 @@ void MenuClass::ShowMenu() {
         } break;  // MENUZUSTAND_TASTEN
 
         case MENUPUNKT_HIGHSCORES: {
-            char Buffer[100];  // Für itoa
-
             float d = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT_MENUE_HIGHSCORES], 2));
             pMenuFont->DrawText(320 - d / 2.0f, ypos, TextArray[TEXT_MENUE_HIGHSCORES], menucolor, 2);
 

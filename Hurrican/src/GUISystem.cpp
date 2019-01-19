@@ -129,11 +129,11 @@ void CGUISystem::ShowBox(const char Text[BOXTEXTLENGTH], int yoff, int xoff /* =
     m_BoxSize.right = longest_length / TILESIZE * TILESIZE + TILESIZE;
     m_BoxSize.bottom = (m_BoxLines * (pDefaultFont->GetYCharSize() + 6)) / TILESIZE * TILESIZE + TILESIZE;
 
-    m_xPos = xoff - m_BoxSize.right / 2 - TILESIZE;
-    m_yPos = RENDERHEIGHT / 2 - m_BoxSize.bottom / 2 - TILESIZE;
+    m_xPos = float(xoff - m_BoxSize.right / 2 - TILESIZE);
+    m_yPos = float(RENDERHEIGHT / 2 - m_BoxSize.bottom / 2 - TILESIZE);
 
     if (yoff > -1)
-        m_yPos = static_cast<float>(yoff);
+        m_yPos = float(yoff);
 
     m_FadeMode = FADEIN;
 }
@@ -148,8 +148,8 @@ void CGUISystem::ShowBox(int xoff, int yoff, int w, int h) {
     // DKS - Fixed off-center box display
     //    m_xPos = (float)xoff;
     //    m_yPos = (float)yoff;
-    m_xPos = xoff - TILESIZE;
-    m_yPos = yoff - TILESIZE;
+    m_xPos = float(xoff - TILESIZE);
+    m_yPos = float(yoff - TILESIZE);
 
     strcpy_s(m_BoxText, 1, "");
 

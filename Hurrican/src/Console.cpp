@@ -207,7 +207,6 @@ void ConsoleClass::CheckCommands() {
         // Levelinfo anzeigen
         if (CONSOLE_COMMAND("levelinfo")) {
         std::string StringBuffer;
-        char temp[50];
 
         this->print(" ");
         this->print("Levelinfo");
