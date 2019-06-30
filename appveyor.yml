@@ -36,7 +36,7 @@ before_build:
 
   - git submodule update --init --recursive
   - ps: cd Hurrican
-  - cmake -G "Visual Studio 15 2017 Win64"
+  - cmake . -G "Visual Studio 15 2017 Win64"
 build:
   project: Hurrican\hurrican.sln
   parallel: true
