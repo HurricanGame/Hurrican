@@ -571,7 +571,7 @@ bool GameInit2() {
     }
 
     pMenu->LoadingProgress = 0.0f;
-    pMenu->LoadingItemsToLoad = 345;
+    pMenu->LoadingItemsToLoad = 522.f;
     pMenu->LoadingItemsLoaded = 0;
 
     // GUISystem initialiseren
