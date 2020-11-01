@@ -22,7 +22,7 @@
 #if defined(USE_GL2) || defined(USE_GL3)
 #include "cshader.hpp"
 #if defined(USE_FBO)
-#include "cfbo.h"
+#include "cfbo.hpp"
 #endif /* USE_FBO */
 #endif /* USE_GL2 || USE_GL3 */
 #else
