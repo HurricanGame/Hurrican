@@ -726,7 +726,7 @@ void DirectGraphicsClass::ShowBackBuffer() {
         use_texture = true;
         RenderBuffer.BindTexture(use_texture);
 
-        RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &vertices[0]);
+        RendertoBuffer(GL_TRIANGLE_STRIP, 2, &vertices[0]);
 
         use_texture = false;
         RenderBuffer.BindTexture(use_texture);
@@ -857,7 +857,7 @@ void DirectGraphicsClass::SelectBuffer(bool active) {
         } else {
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
             glViewport(WindowView.x, WindowView.y, WindowView.w, WindowView.h);
-            D3DXMatrixIdentity(&g_matModelView);
+            g_matModelView = glm::mat4x4(1.0f);
             matProj = matProjWindow;
         }
     }
@@ -893,7 +893,7 @@ void DirectGraphicsClass::DrawTouchOverlay() {
         vertices[3].tv = 1; /* upper right */
 #endif
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        RendertoBuffer(D3DPT_TRIANGLESTRIP, 2, &vertices[0]);
+        RendertoBuffer(GL_TRIANGLE_STRIP, 2, &vertices[0]);
     }
 
     DrawCircle(DirectInput.TouchdpadX, DirectInput.TouchdpadY, DirectInput.TouchdpadRadius);
