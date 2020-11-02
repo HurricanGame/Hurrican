@@ -77,6 +77,10 @@ void InitNewGame() {
     FlameThrower = false;
     HasCheated = false;
 
+    pMenu->LoadingItemsLoaded = 0;
+    pMenu->LoadingItemsToLoad = 106.0f + 28.0f * NUMPLAYERS;
+    pMenu->LoadingProgress = 0.0f;
+
     for (int p = 0; p < NUMPLAYERS; p++) {
         Player[p].Handlung = STEHEN;
         Player[p].InitPlayer(p);  // DKS: InitPlayer now takes argument specifying which
@@ -108,9 +112,6 @@ void InitNewGameLevel(int Nr) {
     // DKS - Might as well stop any boss music too:
     SoundManager.StopSong(MUSIC_BOSS, false);
 
-    pMenu->LoadingItemsLoaded = 0;
-    pMenu->LoadingItemsToLoad = 106.0f;
-    pMenu->LoadingProgress = 0.0f;
     WarningCount = 0.0f;
     ScreenWinkel = 0.0f;
 
@@ -952,6 +953,7 @@ bool DisplayLoadInfo(const char Text[100]) {
     DirectGraphics.ShowBackBuffer();
 
     pMenu->LoadingItemsLoaded++;
+
     pMenu->LoadingProgress += 318.0f / pMenu->LoadingItemsToLoad;
     if (pMenu->LoadingProgress > 318.0f)
         pMenu->LoadingProgress = 318.0f;

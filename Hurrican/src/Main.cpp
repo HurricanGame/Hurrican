@@ -1000,6 +1000,10 @@ void StartOuttro() {
 //----------------------------------------------------------------------------
 
 void StartIntro() {
+    pMenu->LoadingItemsLoaded = 0;
+    pMenu->LoadingItemsToLoad = 12.0f;
+    pMenu->LoadingProgress = 0.0f;
+
     pIntro = new IntroClass();
     SpielZustand = INTRO;
 }
