@@ -69,6 +69,19 @@ bool FlugsackFliesFree;
 
 int DisplayHintNr = -1;
 
+const int TextureCount[10] = {
+117, // Tutorial
+106, // Stages
+109,
+ 87,
+ 82,
+130,
+118,
+135,
+ 88,
+127
+};
+
 // --------------------------------------------------------------------------------------
 // Ein neues Spiel initialisieren
 // --------------------------------------------------------------------------------------
@@ -77,12 +90,14 @@ void InitNewGame() {
     FlameThrower = false;
     HasCheated = false;
 
-    pMenu->LoadingItemsLoaded = 0;
-    pMenu->LoadingItemsToLoad = 106.0f;
+    int NumTextures = 0;
     for (int p = 0; p < NUMPLAYERS; p++) {
         if (!Player[p].SpritesLoaded)
-            pMenu->LoadingItemsToLoad += 28.0f;
+            NumTextures += 28;
     }
+
+    pMenu->LoadingItemsLoaded = 0;
+    pMenu->LoadingItemsToLoad = static_cast<float>(NumTextures);
     pMenu->LoadingProgress = 0.0f;
 
     for (int p = 0; p < NUMPLAYERS; p++) {
@@ -126,14 +141,22 @@ void InitNewGameLevel(int Nr) {
 
     // Externes Level aus Command Line laden ?
     //
+    int NumTextures = 75; // unknown, use a default
     if (!CommandLineParams.RunUserLevel) {
         // Nein, dann normales Level in der Reihenfolge laden oder Tutorial Level
-        if (RunningTutorial)
+        if (RunningTutorial) {
             strcpy_s(Name, strlen("tutorial.map") + 1, "tutorial.map");
-        else
+            NumTextures = TextureCount[0];
+        } else {
             strcpy_s(Name, strlen(StageReihenfolge[Stage - 1]) + 1, StageReihenfolge[Stage - 1]);
+            NumTextures = TextureCount[Stage];
+        }
     } else
         strcpy_s(Name, strlen(CommandLineParams.UserLevelName) + 1, CommandLineParams.UserLevelName);
+
+    pMenu->LoadingItemsLoaded = 0;
+    pMenu->LoadingItemsToLoad = static_cast<float>(NumTextures);
+    pMenu->LoadingProgress = 0.0f;
 
     // und Level endlich laden
     if (!TileEngine.LoadLevel(Name)) {
