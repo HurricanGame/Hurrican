@@ -109,7 +109,7 @@ void InitNewGameLevel(int Nr) {
     SoundManager.StopSong(MUSIC_BOSS, false);
 
     pMenu->LoadingItemsLoaded = 0;
-    pMenu->LoadingItemsToLoad = 75.0f;
+    pMenu->LoadingItemsToLoad = 106.0f;
     pMenu->LoadingProgress = 0.0f;
     WarningCount = 0.0f;
     ScreenWinkel = 0.0f;
