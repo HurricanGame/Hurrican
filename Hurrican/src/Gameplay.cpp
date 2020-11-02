@@ -96,9 +96,7 @@ void InitNewGame() {
             NumTextures += 28;
     }
 
-    pMenu->LoadingItemsLoaded = 0;
-    pMenu->LoadingItemsToLoad = static_cast<float>(NumTextures);
-    pMenu->LoadingProgress = 0.0f;
+    pMenu->StartProgressBar(NumTextures);
 
     for (int p = 0; p < NUMPLAYERS; p++) {
         Player[p].Handlung = STEHEN;
@@ -154,9 +152,7 @@ void InitNewGameLevel(int Nr) {
     } else
         strcpy_s(Name, strlen(CommandLineParams.UserLevelName) + 1, CommandLineParams.UserLevelName);
 
-    pMenu->LoadingItemsLoaded = 0;
-    pMenu->LoadingItemsToLoad = static_cast<float>(NumTextures);
-    pMenu->LoadingProgress = 0.0f;
+    pMenu->StartProgressBar(NumTextures);
 
     // und Level endlich laden
     if (!TileEngine.LoadLevel(Name)) {
@@ -175,7 +171,7 @@ void InitNewGameLevel(int Nr) {
     // SoundManager.ResetAllSongVolumes();
     SoundManager.ResetAllSoundVolumes();
 
-    pMenu->LoadingProgress = 320.0f;
+    pMenu->ResetProgressBar();
     DisplayLoadInfo("");
     Timer.wait(1000);
     Timer.update();
@@ -971,19 +967,12 @@ bool DisplayLoadInfo(const char Text[100]) {
 
     pMenu->LoadingScreen.RenderSprite((640 - 360) / 2, (480 - 60) / 2 + 5, 0x88FFFFFF);
 
-    pMenu->LoadingBar.SetRect(0, 0, int(pMenu->LoadingProgress), 19);
-    pMenu->LoadingBar.RenderSprite((640 - 318) / 2, (480 - 19) / 2 + 5, 0x88FFFFFF);
+    pMenu->UpdateProgressBar();
 
     /*for (i=0; i<24; i++)
         pDefaultFont->DrawText(10, float(230+i*10), LoadInfoText[i], D3DCOLOR_RGBA(0, 255, 0, i*10));*/
 
     DirectGraphics.ShowBackBuffer();
-
-    pMenu->LoadingItemsLoaded++;
-
-    pMenu->LoadingProgress += 318.0f / pMenu->LoadingItemsToLoad;
-    if (pMenu->LoadingProgress > 318.0f)
-        pMenu->LoadingProgress = 318.0f;
 
     Timer.wait(1);
     Timer.update();

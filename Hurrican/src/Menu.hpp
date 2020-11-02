@@ -152,6 +152,9 @@ class MenuClass {
     bool AuswahlPossible;                  // Auswahl möglich ?
     float ShowLanguageInfoCounter;         // Wie lange wird das Fenster mit Infos zum Language-File angezeigt ?
     D3DCOLOR HighscoreColors[MAX_COLORS];  // Farbewerte der Highscore-Blink-Farben
+    float LoadingProgress;
+    float LoadingItemsToLoad;
+    int LoadingItemsLoaded;
 
     StarStruct Stars[MAX_STARS];              // Hintergrund-Sterne
     SavegameStruct Savegames[MAX_SAVEGAMES];  // Die Savegames (für Load Game)
@@ -167,9 +170,6 @@ class MenuClass {
     // DKS - These are now members here instead of being globals in Main.cpp:
     DirectGraphicsSprite LoadingScreen;  // Splash Screen im Fullscreen
     DirectGraphicsSprite LoadingBar;     // Fortschrittsbalken
-    float LoadingProgress;
-    float LoadingItemsToLoad;
-    int LoadingItemsLoaded;
 
     HighscoreStruct Highscores[MAX_HIGHSCORES];  // Die Top-Twenty
 
@@ -200,6 +200,9 @@ class MenuClass {
     void ResetHighscore();          // Highscoreliste resetten
     void ShowLanguageInfo();        // Infos aus der Language file anzeigen
     void CheckForNewHighscore();
+    void ResetProgressBar();
+    void StartProgressBar(int items);
+    void UpdateProgressBar();
 };
 
 // --------------------------------------------------------------------------------------

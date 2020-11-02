@@ -570,9 +570,7 @@ bool GameInit2() {
         pDefaultFont->SetScaleFactor(2);  // On lower res, draw smallest font twice as large so it appears 1:1
     }
 
-    pMenu->LoadingProgress = 0.0f;
-    pMenu->LoadingItemsToLoad = 522.f;
-    pMenu->LoadingItemsLoaded = 0;
+    pMenu->StartProgressBar(522);
 
     // GUISystem initialiseren
     GUI.InitGUISystem();
@@ -1000,9 +998,7 @@ void StartOuttro() {
 //----------------------------------------------------------------------------
 
 void StartIntro() {
-    pMenu->LoadingItemsLoaded = 0;
-    pMenu->LoadingItemsToLoad = 12.0f;
-    pMenu->LoadingProgress = 0.0f;
+    pMenu->StartProgressBar(12);
 
     pIntro = new IntroClass();
     SpielZustand = INTRO;

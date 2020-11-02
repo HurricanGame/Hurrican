@@ -2715,3 +2715,30 @@ void MenuClass::CheckForNewHighscore() {
 
     SpielZustand = MAINMENU;
 }
+
+// --------------------------------------------------------------------------------------
+// Progress bar
+// --------------------------------------------------------------------------------------
+
+void MenuClass::ResetProgressBar() {
+    LoadingProgress = 320.0f;
+}
+
+void MenuClass::StartProgressBar(int items) {
+    LoadingProgress = 0.0f;
+    LoadingItemsToLoad = static_cast<float>(items);
+    LoadingItemsLoaded = 0;
+}
+
+void MenuClass::UpdateProgressBar() {
+    LoadingScreen.RenderSprite((640 - 360) / 2, (480 - 60) / 2 + 5, 0x88FFFFFF);
+
+    LoadingBar.SetRect(0, 0, int(LoadingProgress), 19);
+    LoadingBar.RenderSprite((640 - 318) / 2, (480 - 19) / 2 + 5, 0x88FFFFFF);
+
+    LoadingItemsLoaded++;
+
+    LoadingProgress += 318.0f / LoadingItemsToLoad;
+    if (LoadingProgress > 318.0f)
+        LoadingProgress = 318.0f;
+}
