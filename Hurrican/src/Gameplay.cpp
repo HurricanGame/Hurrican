@@ -78,7 +78,11 @@ void InitNewGame() {
     HasCheated = false;
 
     pMenu->LoadingItemsLoaded = 0;
-    pMenu->LoadingItemsToLoad = 106.0f + 28.0f * NUMPLAYERS;
+    pMenu->LoadingItemsToLoad = 106.0f;
+    for (int p = 0; p < NUMPLAYERS; p++) {
+        if (!Player[p].SpritesLoaded)
+            pMenu->LoadingItemsToLoad += 28.0f;
+    }
     pMenu->LoadingProgress = 0.0f;
 
     for (int p = 0; p < NUMPLAYERS; p++) {
