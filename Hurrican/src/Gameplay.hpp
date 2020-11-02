@@ -31,7 +31,7 @@
 // --------------------------------------------------------------------------------------
 
 void InitNewGame();                        // Neues Spiel initialisieren
-void InitNewGameLevel(int Nr);                 // Alles für den Levelstart in Stage NR vorbereiten
+void InitNewGameLevel();                   // Alles für den Levelstart in Stage NR vorbereiten
 void GameLoop();                           // Haupt-Spielablauf
 void ScreenWackeln();                      // Screen wackeln lassen
 void ShakeScreen(float staerke);               // Angeben wie stark der Screen wackeln soll

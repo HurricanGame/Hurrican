@@ -2076,7 +2076,7 @@ void MenuClass::DoMenu() {
                     Skill = AktuellerPunkt;
                     //					SoundManager.StopSong(MUSIC_MENU, false);
                     InitNewGame();
-                    InitNewGameLevel(1);
+                    InitNewGameLevel();
                     SpielZustand = GAMELOOP;
                 }
 
@@ -2226,7 +2226,7 @@ void MenuClass::DoMenu() {
                     AktuellerZustand = MAINMENU;
                     AktuellerPunkt = 0;
                     //					SoundManager.StopSong(MUSIC_MENU, false);
-                    InitNewGameLevel(NewStage);  // Neues level laden
+                    InitNewGameLevel();  // Neues level laden
                     SpielZustand = GAMELOOP;     // Weiterspielen
                 }
             }
@@ -2340,7 +2340,7 @@ void MenuClass::DoMenu() {
                 {
                     AktuellerZustand = MAINMENU;
                     AktuellerPunkt = 0;
-                    InitNewGameLevel(NewStage);  // Neues level laden
+                    InitNewGameLevel();  // Neues level laden
                 }
             }
         } break;  // Save Game

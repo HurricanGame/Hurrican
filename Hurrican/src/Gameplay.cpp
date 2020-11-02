@@ -122,7 +122,7 @@ void InitNewGame() {
 // Ein neues Level initialisieren und Level "Stage'Nr'.map" laden
 // --------------------------------------------------------------------------------------
 
-void InitNewGameLevel(int Nr) {
+void InitNewGameLevel() {
     char Name[100];
 
     SoundManager.StopSong(MUSIC_STAGEMUSIC, false);
@@ -1220,7 +1220,7 @@ bool NewDemo(const char Filename[]) {
     InitNewGame();
     Stage = l;
     NewStage = l;
-    InitNewGameLevel(Stage);
+    InitNewGameLevel();
 
     // Timer auf 60 fps für Demo setzen
     Timer.SetMaxFPS(40);
@@ -1272,7 +1272,7 @@ bool LoadDemo(const char Filename[]) {
     InitNewGame();
     Stage = l;
     NewStage = l;
-    InitNewGameLevel(Stage);
+    InitNewGameLevel();
 
     // Timer auf 60 fps für Demo setzen
     Timer.SetMaxFPS(40);

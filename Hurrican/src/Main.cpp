@@ -824,7 +824,7 @@ bool Heartbeat() {
                 SoundManager.StopSong(MUSIC_INTRO, false);
                 delete (pIntro);
                 InitNewGame();
-                InitNewGameLevel(1);
+                InitNewGameLevel();
                 SpielZustand = GAMELOOP;
             }
         } break;

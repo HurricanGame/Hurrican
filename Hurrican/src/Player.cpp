@@ -4204,7 +4204,7 @@ void PlayerClass::PlayerInExit() {
         SmartBombs = 1;
 
         RunningTutorial = false;
-        InitNewGameLevel(NewStage);  // Neues level laden
+        InitNewGameLevel();  // Neues level laden
     }
 
     RunningTutorial = false;
