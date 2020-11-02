@@ -129,7 +129,9 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);          // DKS - No need for a depth buffer in this game
     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 0);  // DKS - Changed this to 0 (Game would not load w/ GL1.2 laptop)
     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
+#if !SDL_VERSION_ATLEAST(2, 0, 0)
     SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, VSync);
+#endif
 
 #if SDL_VERSION_ATLEAST(2, 0, 0)
 #if defined(USE_GLES1)
