@@ -25,7 +25,6 @@
 // --------------------------------------------------------------------------------------
 
 #include <algorithm>
-#include <cstdio>
 #include <experimental/filesystem>
 #include <fstream>
 #include <iostream>
@@ -168,10 +167,10 @@ void FillCommandLineParams(int argc, char *args[]) {
             exit(1);
         } else if ((strstr(args[i], "--windowmode") != nullptr) || (strstr(args[i], "-W") != nullptr)) {
             CommandLineParams.RunWindowMode = true;
-            fprintf(stdout, "Window mode is enabled\n");
+            std::cout << "Window mode is enabled" << std::endl;
         } else if ((strstr(args[i], "--showfps") != nullptr) || (strstr(args[i], "-F") != nullptr)) {
             CommandLineParams.ShowFPS = true;
-            fprintf(stdout, "FPS will be displayed\n");
+            std::cout << "FPS will be displayed" << std::endl;
         } else if ((strstr(args[i], "--depth") != nullptr) || (strstr(args[i], "-D") != nullptr)) {
             i++;
             if (i < argc) {
@@ -182,16 +181,16 @@ void FillCommandLineParams(int argc, char *args[]) {
                     CommandLineParams.ScreenDepth = 24;
                 else if (CommandLineParams.ScreenDepth > 16 && CommandLineParams.ScreenDepth < 24)
                     CommandLineParams.ScreenDepth = 16;
-                fprintf(stdout, "Screen depth (bpp) requested is %d\n", CommandLineParams.ScreenDepth);
+                std::cout << "Screen depth (bpp) requested is " << CommandLineParams.ScreenDepth << std::endl;
             }
         } else if ((strstr(args[i], "--lowres") != nullptr) || (strstr(args[i], "-L") != nullptr)) {
-            fprintf(stdout, "Low-resolution 320x240 screen dimensions are requested\n");
+            std::cout << "Low-resolution 320x240 screen dimensions are requested" << std::endl;
             CommandLineParams.LowRes = true;
         } else if ((strstr(args[i], "--novsync") != nullptr) || (strstr(args[i], "-NV") != nullptr)) {
-            fprintf(stdout, "VSync / double-buffering will be disabled, if supported\n");
+            std::cout << "VSync / double-buffering will be disabled, if supported" << std::endl;
             CommandLineParams.VSync = false;
         } else if ((strstr(args[i], "--nonpot") != nullptr) || (strstr(args[i], "-NP") != nullptr)) {
-            fprintf(stdout, "Non-power-of-two textures are allowed\n");
+            std::cout << "Non-power-of-two textures are allowed" << std::endl;
             CommandLineParams.AllowNPotTextureSizes = true;
         } else if ((strstr(args[i], "--texfactor") != nullptr) || (strstr(args[i], "-TF") != nullptr)) {
             i++;
@@ -199,13 +198,13 @@ void FillCommandLineParams(int argc, char *args[]) {
                 CommandLineParams.TexFactor = std::clamp(atoi(args[i]), 1, 4);
                 if (CommandLineParams.TexFactor == 3)
                     CommandLineParams.TexFactor = 4;
-                fprintf(stdout, "Texfactor set to %d\n", CommandLineParams.TexFactor);
+                std::cout << "Texfactor set to " << CommandLineParams.TexFactor << std::endl;
             }
         } else if ((strstr(args[i], "--texsizemin") != nullptr) || (strstr(args[i], "-TS") != nullptr)) {
             i++;
             if (i < argc) {
                 CommandLineParams.TexSizeMin = std::clamp(atoi(args[i]), 16, 1024);
-                fprintf(stdout, "Texsizemin set to %d\n", CommandLineParams.TexSizeMin);
+                std::cout << "Texsizemin set to " << CommandLineParams.TexSizeMin << std::endl;
             }
         } else if ((strstr(args[i], "--pathdata") != nullptr) || (strstr(args[i], "-PD") != nullptr)) {
             i++;
@@ -214,9 +213,9 @@ void FillCommandLineParams(int argc, char *args[]) {
                     CommandLineParams.DataPath = static_cast<char *>(malloc(strlen(args[i]) + 1));
                     strcpy(CommandLineParams.DataPath, args[i]);
                     if (fs::is_directory(CommandLineParams.DataPath)) {
-                        fprintf(stdout, "Data path set to %s\n", CommandLineParams.DataPath);
+                        std::cout << "Data path set to " << CommandLineParams.DataPath << std::endl;
                     } else {
-                        fprintf(stdout, "ERROR: could not find data path %s\n", CommandLineParams.DataPath);
+                        std::cout << "ERROR: could not find data path " << CommandLineParams.DataPath << std::endl;
                         free(CommandLineParams.DataPath);
                         CommandLineParams.DataPath = nullptr;
                     }
@@ -229,16 +228,16 @@ void FillCommandLineParams(int argc, char *args[]) {
                     CommandLineParams.SavePath = static_cast<char *>(malloc(strlen(args[i]) + 1));
                     strcpy(CommandLineParams.SavePath, args[i]);
                     if (fs::create_directory(CommandLineParams.SavePath)) {
-                        fprintf(stdout, "Save path set to %s\n", CommandLineParams.SavePath);
+                        std::cout << "Save path set to " << CommandLineParams.SavePath << std::endl;
                     } else {
-                        fprintf(stdout, "ERROR: could not find save path %s\n", CommandLineParams.SavePath);
+                        std::cout << "ERROR: could not find save path " << CommandLineParams.SavePath << std::endl;
                         free(CommandLineParams.SavePath);
                         CommandLineParams.SavePath = nullptr;
                     }
                 }
             }
         } else if ((strstr(args[i], "--npot") != nullptr) || (strstr(args[i], "-NP") != nullptr)) {
-            fprintf(stdout, "Non-power-of-two textures are allowed\n");
+            std::cout << "Non-power-of-two textures are allowed" << std::endl;
             CommandLineParams.AllowNPotTextureSizes = true;
         } else if (strstr(args[i], "--custom") != nullptr) {
             i++;
