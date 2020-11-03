@@ -441,8 +441,8 @@ include_directories(${SDL_INCLUDE_DIR})
 include_directories(${LibEpoxy_INCLUDE_DIRS})
 
 target_link_libraries(${PROJECT_NAME} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARIES} ${SDL_IMAGE_LIBRARIES} ${OPENGL_LIBRARIES} ${LibEpoxy_LIBRARIES} modplug)
-if(UNIX)
-    target_link_libraries(${PROJECT_NAME} stdc++fs)
+if(UNIX OR MINGW)
+   target_link_libraries(${PROJECT_NAME} stdc++fs)
 endif()
 
 if(UNIX)
