@@ -145,7 +145,7 @@ void FillCommandLineParams(int argc, char *args[]) {
             Protokoll << "  -F,    --showfps        : Show the current frames per second" << std::endl;
             Protokoll << "  -D x,  --depth x        : Set screen pixel depth to x (16, 24, 32)" << std::endl;
             Protokoll << "                            ( Default is " << DEFAULT_SCREENBPP << " )" << std::endl;
-            Protokoll << "  -L,    --lowres         : Use " + LOWRES_SCREENWIDTH << "x" << LOWRES_SCREENHEIGHT
+            Protokoll << "  -L,    --lowres         : Use " << LOWRES_SCREENWIDTH << "x" << LOWRES_SCREENHEIGHT
                       << " low-resolution screen dimensions" << std::endl;
             Protokoll << "  -NV,   --novsync        : Disable VSync / double-buffering" << std::endl;
             Protokoll << "  -NP,   --nonpot         : Allow non-power-of-two texture sizes" << std::endl;
