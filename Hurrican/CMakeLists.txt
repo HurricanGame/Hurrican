@@ -70,8 +70,6 @@ set(HURRICAN_SOURCES
         src/bosses/Boss_Ufo.hpp
         src/bosses/Boss_WuxeSpinnen.cpp
         src/bosses/Boss_WuxeSpinnen.hpp
-        src/SDLPort/cfbo.cpp
-        src/SDLPort/cfbo.hpp
         src/SDLPort/cshader.cpp
         src/SDLPort/cshader.hpp
         src/SDLPort/keymap.hpp
@@ -408,6 +406,14 @@ elseif(RENDERER STREQUAL "GL2")
     add_definitions(-DUSE_GL2)
 endif()
 
+OPTION(FBO "FBO support (allow screen to be scaled to arbitrary dimensions)" OFF)
+IF(FBO)
+    ADD_DEFINITIONS(-DUSE_FBO)
+    list(APPEND HURRICAN_SOURCES
+        src/SDLPort/cfbo.cpp
+        src/SDLPort/cfbo.hpp
+    )
+ENDIF(FBO)
 
 add_definitions(-DLINUX)
 add_definitions(-DUSE_HOME_DIR)
