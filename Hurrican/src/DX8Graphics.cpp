@@ -302,10 +302,6 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsClass::Exit() {
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    SDL_GL_DeleteContext(GLcontext);
-    SDL_DestroyWindow(Window);
-#endif
 #if defined(USE_GL2) || defined(USE_GL3)
     Shaders[PROGRAM_COLOR].Close();
     Shaders[PROGRAM_TEXTURE].Close();
@@ -313,6 +309,10 @@ bool DirectGraphicsClass::Exit() {
     RenderBuffer.Close();
 #endif /* USE_FBO */
 #endif /* USE_GL2 || USE_GL3 */
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+    SDL_GL_DeleteContext(GLcontext);
+    SDL_DestroyWindow(Window);
+#endif
 #if defined(USE_EGL_SDL) || defined(USE_EGL_RAW) || defined(USE_EGL_RPI)
     EGL_Close();
 #endif
