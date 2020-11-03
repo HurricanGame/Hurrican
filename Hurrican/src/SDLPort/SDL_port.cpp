@@ -32,7 +32,7 @@ GLenum MatrixMode = 0;
 #endif
 glm::mat4x4 g_matView;
 glm::mat4x4 g_matModelView;
-#ifndef __WIN32__
+#if !defined( __WIN32__) || defined(__MINGW32__)
 void strcat_s(char *dst, const char *src) {
     strcat(dst, src);
 }
