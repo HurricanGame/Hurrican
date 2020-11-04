@@ -427,6 +427,7 @@ endif()
 OPTION(MODPLUG "Use MODPLUG natively" OFF)
 IF(MODPLUG)
     ADD_DEFINITIONS(-DUSE_MODPLUG)
+    target_link_libraries(${PROJECT_NAME} modplug)
 ENDIF(MODPLUG)
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
@@ -446,7 +447,7 @@ include_directories(${SDL2_INCLUDE_DIR}
                     ${SDL2_MIXER_INCLUDE_DIR})
 include_directories(${LibEpoxy_INCLUDE_DIRS})
 
-target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${OPENGL_LIBRARIES} ${LibEpoxy_LIBRARIES} modplug)
+target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${OPENGL_LIBRARIES} ${LibEpoxy_LIBRARIES})
 if(UNIX OR MINGW)
    target_link_libraries(${PROJECT_NAME} stdc++fs)
 endif()
