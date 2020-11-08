@@ -154,7 +154,7 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
     // Setup SDL Screen
     if (isFullscreen) {
 #if SDL_VERSION_ATLEAST(2, 0, 0)
-        flags |= SDL_WINDOW_FULLSCREEN;
+        flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 #else /* SDL 1.2 */
         flags |= SDL_FULLSCREEN;
 #endif
@@ -806,6 +806,7 @@ void DirectGraphicsClass::SetupFramebuffers() {
             RenderRect.w = (WindowView.h / 3) * 4;
             RenderRect.h = WindowView.h;
         }
+
         RenderRect.x = std::max(0, WindowView.w - RenderRect.w) / 2;
         RenderRect.y = std::max(0, WindowView.h - RenderRect.h) / 2;
 
