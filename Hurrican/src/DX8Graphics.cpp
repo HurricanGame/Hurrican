@@ -164,9 +164,19 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
     // Create a window. Window mode MUST include SDL_WINDOW_OPENGL for use with OpenGL.
     Window =
         SDL_CreateWindow("Hurrican", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ScreenWidth, ScreenHeight, flags);
+    if (Window == nullptr) {
+        Protokoll << "Failed to " << ScreenWidth << "x" << ScreenHeight << "x" << ScreenDepth
+                  << "video mode: " << SDL_GetError() << std::endl;
+        return false;
+    }
 
     // Create an OpenGL context associated with the window.
     GLcontext = SDL_GL_CreateContext(Window);
+    if (GLcontext == nullptr) {
+        Protokoll << "Failed to " << ScreenWidth << "x" << ScreenHeight << "x" << ScreenDepth
+                  << "video mode: " << SDL_GetError() << std::endl;
+        return false;
+    }
 #else /* SDL 1.2 */
     // SDL_WM_SetCaption("Hurrican", "Hurrican");
 
