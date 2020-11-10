@@ -488,14 +488,14 @@ bool GameInit() {
 
     // Direct3D initialisieren
     if (!DirectGraphics.Init(RENDERWIDTH, RENDERHEIGHT, CommandLineParams.ScreenDepth, CommandLineParams.VSync)) {
-        Protokoll << "\n-> Direct3D Initialisierung Fehler ...!" << std::endl;
+        Protokoll << "\n-> Graphic Initialization Failure ...!" << std::endl;
         GameRunning = false;
         return false;
     }
 
     // DirectInput initialisieren
     if (!DirectInput.Init()) {
-        Protokoll << "\n-> DirectInput8 Initialisierung Fehler ...!" << std::endl;
+        Protokoll << "\n-> Input Initialization Failure ...!" << std::endl;
         GameRunning = false;
         return false;
     }
