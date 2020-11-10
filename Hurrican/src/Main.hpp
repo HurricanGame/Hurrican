@@ -44,13 +44,9 @@ struct sCommandLineParams {
 
 #define WIN_32_LEAN_AND_MEAN                    // MFC abschalten
 #define WINDOWCLASSNAME "HurricanWindowsClass"  // Name der Windows-Klasse
-#if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
-#define SCREENWIDTH 0
-#define SCREENHEIGHT 0
-#else
+
 #define SCREENWIDTH 640
 #define SCREENHEIGHT 480
-#endif
 
 #define LOWRES_SCREENWIDTH 320
 #define LOWRES_SCREENHEIGHT 240
