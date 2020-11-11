@@ -281,7 +281,8 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
     VSyncEnabled = VSync;
 #endif  // END VSYNC-RELATED CODE
 
-    SetDeviceInfo();
+    if (!SetDeviceInfo())
+        return false;
 
     Protokoll << "\n-> OpenGL init successful!\n" << std::endl;
 
