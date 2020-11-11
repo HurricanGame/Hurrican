@@ -54,7 +54,7 @@ float DegreetoRad[360];  // Tabelle mit Rotationswerten
 DirectGraphicsClass::DirectGraphicsClass() {
     SupportedETC1 = false;
     SupportedPVRTC = false;
-    use_texture = false;
+    use_shader = shader_t::COLOR;
 
 #if defined(USE_GL2) || defined(USE_GL3)
     ProgramCurrent = PROGRAM_NONE;
@@ -316,6 +316,7 @@ bool DirectGraphicsClass::Exit() {
 #if defined(USE_GL2) || defined(USE_GL3)
     Shaders[PROGRAM_COLOR].Close();
     Shaders[PROGRAM_TEXTURE].Close();
+    Shaders[PROGRAM_RENDER].Close();
 #if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
     RenderBuffer.Close();
 #endif /* USE_FBO */
@@ -404,6 +405,13 @@ bool DirectGraphicsClass::SetDeviceInfo() {
         return false;
     }
 
+    vert = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_render.vert";
+    frag = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_render.frag";
+
+    if (Shaders[PROGRAM_RENDER].Load(vert, frag) != 0) {
+        return false;
+    }
+
     // Get names for attributes and uniforms
     Shaders[PROGRAM_COLOR].NamePos = Shaders[PROGRAM_COLOR].GetAttribute("a_Position");
     Shaders[PROGRAM_COLOR].NameClr = Shaders[PROGRAM_COLOR].GetAttribute("a_Color");
@@ -420,6 +428,10 @@ bool DirectGraphicsClass::SetDeviceInfo() {
         Shaders[PROGRAM_TEXTURE].texUnit1 = Shaders[PROGRAM_TEXTURE].GetUniform("u_Texture1");
     }
 #endif
+    Shaders[PROGRAM_RENDER].NamePos = Shaders[PROGRAM_RENDER].GetAttribute("a_Position");
+    Shaders[PROGRAM_RENDER].NameClr = Shaders[PROGRAM_RENDER].GetAttribute("a_Color");
+    Shaders[PROGRAM_RENDER].NameTex = Shaders[PROGRAM_RENDER].GetAttribute("a_Texcoord0");
+    Shaders[PROGRAM_RENDER].NameMvp = Shaders[PROGRAM_RENDER].GetUniform("u_MVPMatrix");
 #endif /* USE_GL2 || USE_GL3 */
 
     /* Matrices setup */
@@ -513,20 +525,29 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
     size_t tex_offset = offsetof(VERTEX2D, tu);
 
 #if defined(USE_GL2) || defined(USE_GL3)
-    uint8_t program_next = PROGRAM_COLOR;
+    uint8_t program_next;
+    bool is_texture;
 
     // Determine the shader program to use
-    if (use_texture) {
+    switch (use_shader) {
+    case shader_t::TEXTURE:
         program_next = PROGRAM_TEXTURE;
-    } else {
+        is_texture = true;
+        break;
+    case shader_t::RENDER:
+        program_next = PROGRAM_RENDER;
+        is_texture = true;
+        break;
+    default:
         program_next = PROGRAM_COLOR;
+        is_texture = false;
     }
 
     // Check if the program is alreadt in use
     if (ProgramCurrent != program_next) {
         Shaders[program_next].Use();
+        ProgramCurrent = program_next;
     }
-    ProgramCurrent = program_next;
 #endif
 
     if (PrimitiveType == GL_LINES) {
@@ -544,7 +565,7 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
 
 #if defined(USE_GL1)
     // Enable the client states for transfer
-    if (use_texture == true) {
+    if (use_shader == shader_t::TEXTURE) {
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         glTexCoordPointer(2, GL_FLOAT, stride, reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + tex_offset);
     }
@@ -556,7 +577,7 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
     glColorPointer(4, GL_UNSIGNED_BYTE, stride, reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + clr_offset);
 #elif defined(USE_GL2) || defined(USE_GL3)
         // Enable attributes and uniforms for transfer
-        if (ProgramCurrent == PROGRAM_TEXTURE) {
+        if (is_texture) {
 #if defined(USE_ETC1)
             if (SupportedETC1 == true) {
                 glUniform1i(Shaders[ProgramCurrent].texUnit0, 0);
@@ -586,7 +607,7 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
 
-    if (use_texture == true) {
+    if (use_shader == shader_t::TEXTURE) {
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     }
 #elif defined(USE_GL2) || defined(USE_GL3)
@@ -594,7 +615,7 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
         glDisableVertexAttribArray(Shaders[ProgramCurrent].NamePos);
         glDisableVertexAttribArray(Shaders[ProgramCurrent].NameClr);
 
-        if (ProgramCurrent == PROGRAM_TEXTURE) {
+        if (is_texture) {
             glDisableVertexAttribArray(Shaders[ProgramCurrent].NameTex);
         }
 #endif
@@ -628,7 +649,7 @@ void DirectGraphicsClass::SetTexture( int32_t index )
 {
     if (index >= 0)
     {
-        use_texture = true;
+        use_shader = shader_t::TEXTURE;
         glBindTexture( GL_TEXTURE_2D, textures.at(index) );
 #if defined(USE_GL1)
         glEnable( GL_TEXTURE_2D );
@@ -644,7 +665,7 @@ void DirectGraphicsClass::SetTexture( int32_t index )
     }
     else
     {
-        use_texture = false;
+        use_shader = shader_t::COLOR;
         glBindTexture( GL_TEXTURE_2D, 0 );
 #if defined(USE_GL1)
         glDisable( GL_TEXTURE_2D );
@@ -664,7 +685,7 @@ void DirectGraphicsClass::SetTexture( int32_t index )
 #endif  // 0
 void DirectGraphicsClass::SetTexture(int idx) {
     if (idx >= 0) {
-        use_texture = true;
+        use_shader = shader_t::TEXTURE;
         TextureHandle &th = Textures[idx];
         glBindTexture(GL_TEXTURE_2D, th.tex);
 #if defined(USE_ETC1)
@@ -680,7 +701,7 @@ void DirectGraphicsClass::SetTexture(int idx) {
         glEnable(GL_TEXTURE_2D);
 #endif
     } else {
-        use_texture = false;
+        use_shader = shader_t::COLOR;
         // DKS - There is no need to call glBindTexture():
         // glBindTexture( GL_TEXTURE_2D, 0 );
 #if defined(USE_GL1)
@@ -734,13 +755,13 @@ void DirectGraphicsClass::ShowBackBuffer() {
 
         SelectBuffer(false);
 
-        use_texture = true;
-        RenderBuffer.BindTexture(use_texture);
+        use_shader = CommandLineParams.Scanlines ? shader_t::RENDER : shader_t::TEXTURE;
+        RenderBuffer.BindTexture(true);
 
         RendertoBuffer(GL_TRIANGLE_STRIP, 2, &vertices[0]);
 
-        use_texture = false;
-        RenderBuffer.BindTexture(use_texture);
+        use_shader = shader_t::COLOR;
+        RenderBuffer.BindTexture(false);
 
 #if defined(ANDROID)
         DrawTouchOverlay();

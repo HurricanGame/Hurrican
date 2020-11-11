@@ -123,6 +123,7 @@ void FillCommandLineParams(int argc, char *args[]) {
 
     // Set some sensible defaults
     CommandLineParams.RunWindowMode = SCREEN_FULLSCREEN;
+    CommandLineParams.Scanlines = false;
     CommandLineParams.TexFactor = 1;
     CommandLineParams.TexSizeMin = 1024;
     CommandLineParams.ScreenDepth = DEFAULT_SCREENBPP;
@@ -165,6 +166,7 @@ void FillCommandLineParams(int argc, char *args[]) {
             Protokoll << "                            i.e. music, sound, graphics, levels, etc." << std::endl;
             Protokoll << "  -PS x, --pathsave x     : Use this path for the game's save data" << std::endl;
             Protokoll << "                            i.e. save-games, settings, high-scores, etc." << std::endl;
+            Protokoll << "  -I,    --scanlines      : Display scanlines for a retro look" << std::endl;
             exit(1);
         } else if ((strstr(args[i], "--windowmode") != nullptr) || (strstr(args[i], "-W") != nullptr)) {
             if (CommandLineParams.RunWindowMode == SCREEN_FULLSCREEN_STRETCHED) {
@@ -251,6 +253,9 @@ void FillCommandLineParams(int argc, char *args[]) {
         } else if ((strstr(args[i], "--npot") != nullptr) || (strstr(args[i], "-NP") != nullptr)) {
             std::cout << "Non-power-of-two textures are allowed" << std::endl;
             CommandLineParams.AllowNPotTextureSizes = true;
+        } else if ((strstr(args[i], "--scanlines") != nullptr) || (strstr(args[i], "-I") != nullptr)) {
+            std::cout << "Scanlines enabled" << std::endl;
+            CommandLineParams.Scanlines = true;
         } else if (strstr(args[i], "--custom") != nullptr) {
             i++;
             if (i < argc && strlen(args[i]) < 256) {

@@ -27,6 +27,7 @@ struct sCommandLineParams {
     uint8_t RunWindowMode; // 0 = fullscreen, 1 = fullscreen stretched, 2 = Windowed
     bool RunOwnLevelList;
     bool RunUserLevel;
+    bool Scanlines;
     char UserLevelName[256];
     char OwnLevelList[256];
     char Params[256];

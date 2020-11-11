@@ -41,7 +41,7 @@
 #define WHITE_MODE 2
 
 #if defined(USE_GL2) || defined(USE_GL3)
-enum { PROGRAM_COLOR = 0, PROGRAM_TEXTURE, PROGRAM_TOTAL, PROGRAM_NONE };
+enum { PROGRAM_COLOR = 0, PROGRAM_TEXTURE, PROGRAM_RENDER, PROGRAM_TOTAL, PROGRAM_NONE };
 #endif
 
 // --------------------------------------------------------------------------------------
@@ -74,10 +74,12 @@ struct QUAD2D {
 
 class DirectGraphicsClass {
   private:
+    enum class shader_t {COLOR, TEXTURE, RENDER}; 
+  private:
     bool VSyncEnabled;  // VSync ein/aus ?
     bool FilterMode;    // Linearer Filter an/aus?
     const char *glextensions;
-    bool use_texture;
+    shader_t use_shader;
     int MaxTextureUnits;
 #if defined(USE_GL2) || defined(USE_GL3)
     GLuint ProgramCurrent;
