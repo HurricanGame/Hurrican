@@ -98,14 +98,7 @@ GLuint CShader::CompileShader(GLenum type, const std::string &path) {
 
     source = LoadFileToMemory(path);
 
-
-#if defined(USE_GL2)
-    const std::string version = "#version 110\n";
-    source.insert(source.begin(), version.begin(), version.end());
-#elif defined(USE_GL3)
-    const std::string version = "#version 130\n";
-    source.insert(source.begin(), version.begin(), version.end());
-#elif defined(USE_GLES2)
+#if defined(USE_GLES2)
     const std::string version = "#version 100\n";
     const std::string precision = "precision mediump float;\n";
     source.insert(source.begin(), precision.begin(), precision.end());
@@ -114,6 +107,12 @@ GLuint CShader::CompileShader(GLenum type, const std::string &path) {
     const std::string version = "#version 320 es\n";
     const std::string precision = "#ifdef GL_FRAGMENT_PRECISION_HIGH\nprecision highp float;\n#else\nprecision mediump float;\n#endif\n";
     source.insert(source.begin(), precision.begin(), precision.end());
+    source.insert(source.begin(), version.begin(), version.end());
+#elif defined(USE_GL2)
+    const std::string version = "#version 110\n";
+    source.insert(source.begin(), version.begin(), version.end());
+#elif defined(USE_GL3)
+    const std::string version = "#version 130\n";
     source.insert(source.begin(), version.begin(), version.end());
 #endif
 
