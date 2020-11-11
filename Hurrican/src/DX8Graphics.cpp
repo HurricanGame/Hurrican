@@ -191,7 +191,7 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
     //      depth and vsync. If eglport.cfg file is present, it will override
     //      whatever is passed here, however:
     if (EGL_Open(actual_w, actual_h, CommandLineParams.ScreenDepth == 16 ? 16 : 32, CommandLineParams.VSync) != 0) {
-        return 1;
+        return false;
     }
 #endif
 
