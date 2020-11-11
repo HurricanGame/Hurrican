@@ -316,7 +316,7 @@ bool DirectGraphicsClass::Exit() {
 #if defined(USE_GL2) || defined(USE_GL3)
     Shaders[PROGRAM_COLOR].Close();
     Shaders[PROGRAM_TEXTURE].Close();
-#if defined(USE_FBO)
+#if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
     RenderBuffer.Close();
 #endif /* USE_FBO */
 #endif /* USE_GL2 || USE_GL3 */
@@ -437,7 +437,7 @@ bool DirectGraphicsClass::SetDeviceInfo() {
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif /* USE_GL1 */
 
-#if defined(USE_FBO)
+#if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
     SelectBuffer(true);
 #endif
 
