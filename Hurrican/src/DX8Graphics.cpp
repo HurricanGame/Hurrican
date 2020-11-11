@@ -71,7 +71,7 @@ DirectGraphicsClass::~DirectGraphicsClass() {}
 // D3D Initialisieren
 // --------------------------------------------------------------------------------------
 bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, std::uint32_t dwZ_Bits, bool VSync) {
-    bool isFullscreen = !CommandLineParams.RunWindowMode;
+    bool isFullscreen = CommandLineParams.RunWindowMode != SCREEN_WINDOW;
     uint16_t ScreenWidth = SCREENWIDTH;
     uint16_t ScreenHeight = SCREENHEIGHT;
 
@@ -809,25 +809,25 @@ void DirectGraphicsClass::SetupFramebuffers() {
         Protokoll << "Render viewport resolution: " << RenderView.w << "x" << RenderView.h << " at " << RenderView.x
                   << "x" << RenderView.y << std::endl;
 
-        // TODO add an option to use full area on wide screens
-#if 1
-        /* Select the best 4:3 resolution */
-        if (WindowView.w < WindowView.h) {
+        if (CommandLineParams.RunWindowMode == SCREEN_FULLSCREEN_STRETCHED) {
+            /* Fill the whole screen area */
             RenderRect.w = WindowView.w;
-            RenderRect.h = (WindowView.w / 4) * 3;
-        } else {
-            RenderRect.w = (WindowView.h / 3) * 4;
             RenderRect.h = WindowView.h;
-        }
+            RenderRect.x = 0;
+            RenderRect.y = 0;
+        } else {
+            /* Select the best 4:3 resolution */
+            if (WindowView.w < WindowView.h) {
+                RenderRect.w = WindowView.w;
+                RenderRect.h = (WindowView.w / 4) * 3;
+            } else {
+                RenderRect.w = (WindowView.h / 3) * 4;
+                RenderRect.h = WindowView.h;
+            }
 
-        RenderRect.x = std::max(0, WindowView.w - RenderRect.w) / 2;
-        RenderRect.y = std::max(0, WindowView.h - RenderRect.h) / 2;
-#else
-        RenderRect.w = WindowView.w;
-        RenderRect.h = WindowView.h;
-        RenderRect.x = 0;
-        RenderRect.y = 0;
-#endif
+            RenderRect.x = std::max(0, WindowView.w - RenderRect.w) / 2;
+            RenderRect.y = std::max(0, WindowView.h - RenderRect.h) / 2;
+        }
 
         Protokoll << "Render area: " << RenderRect.w << "x" << RenderRect.h << " at " << RenderRect.x << "x"
                   << RenderRect.y << std::endl;

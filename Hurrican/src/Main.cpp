@@ -122,7 +122,7 @@ void FillCommandLineParams(int argc, char *args[]) {
     uint16_t i;
 
     // Set some sensible defaults
-    CommandLineParams.RunWindowMode = false;
+    CommandLineParams.RunWindowMode = SCREEN_FULLSCREEN;
     CommandLineParams.TexFactor = 1;
     CommandLineParams.TexSizeMin = 1024;
     CommandLineParams.ScreenDepth = DEFAULT_SCREENBPP;
@@ -141,6 +141,7 @@ void FillCommandLineParams(int argc, char *args[]) {
             Protokoll << "  Arguments" << std::endl;
             Protokoll << "  -H,-?, --help           : Show this information" << std::endl;
             Protokoll << "  -W,    --windowmode     : Run in a window, not fullsreen" << std::endl;
+            Protokoll << "  -S,    --stretch        : Run fullsreen stretched to fill the whole area" << std::endl;
             Protokoll << "  -F,    --showfps        : Show the current frames per second" << std::endl;
             Protokoll << "  -D x,  --depth x        : Set screen pixel depth to x (16, 24, 32)" << std::endl;
             Protokoll << "                            ( Default is " << DEFAULT_SCREENBPP << " )" << std::endl;
@@ -166,8 +167,19 @@ void FillCommandLineParams(int argc, char *args[]) {
             Protokoll << "                            i.e. save-games, settings, high-scores, etc." << std::endl;
             exit(1);
         } else if ((strstr(args[i], "--windowmode") != nullptr) || (strstr(args[i], "-W") != nullptr)) {
-            CommandLineParams.RunWindowMode = true;
-            std::cout << "Window mode is enabled" << std::endl;
+            if (CommandLineParams.RunWindowMode == SCREEN_FULLSCREEN_STRETCHED) {
+                std::cout << "Stretch mode selected, ignoring windowmode" << std::endl;
+            } else {
+                CommandLineParams.RunWindowMode = SCREEN_WINDOW;
+                std::cout << "Window mode is enabled" << std::endl;
+            }
+        } else if ((strstr(args[i], "--stretch") != nullptr) || (strstr(args[i], "-S") != nullptr)) {
+            if (CommandLineParams.RunWindowMode == SCREEN_WINDOW) {
+                std::cout << "Window mode selected, ignoring stretch mode" << std::endl;
+            } else {
+                CommandLineParams.RunWindowMode = SCREEN_FULLSCREEN_STRETCHED;
+                std::cout << "Stretched fullscreen mode is enabled" << std::endl;
+            }
         } else if ((strstr(args[i], "--showfps") != nullptr) || (strstr(args[i], "-F") != nullptr)) {
             CommandLineParams.ShowFPS = true;
             std::cout << "FPS will be displayed" << std::endl;
