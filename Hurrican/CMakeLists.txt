@@ -453,7 +453,7 @@ find_package(LibEpoxy 1.2 REQUIRED)
 
 include_directories(${LibEpoxy_INCLUDE_DIRS})
 
-target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} ${LibEpoxy_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${OPENGL_gl_LIBRARY} ${LibEpoxy_LIBRARIES})
 
 if (${SDL2_FOUND})
     include_directories(${SDL2_INCLUDE_DIR}
