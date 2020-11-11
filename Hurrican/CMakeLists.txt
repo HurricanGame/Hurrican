@@ -70,8 +70,6 @@ set(HURRICAN_SOURCES
         src/bosses/Boss_Ufo.hpp
         src/bosses/Boss_WuxeSpinnen.cpp
         src/bosses/Boss_WuxeSpinnen.hpp
-        src/SDLPort/cshader.cpp
-        src/SDLPort/cshader.hpp
         src/SDLPort/keymap.hpp
         src/SDLPort/opengl.hpp
         src/SDLPort/SDL_fmod.cpp
@@ -402,20 +400,32 @@ endif()
 
 if (RENDERER STREQUAL "GL1")
     add_definitions(-DUSE_GL1)
+    set(gl2 OFF)
 elseif(RENDERER STREQUAL "GL2")
     add_definitions(-DUSE_GL2)
+    set(gl2 ON)
 elseif(RENDERER STREQUAL "GL3")
     add_definitions(-DUSE_GL3)
+    set(gl2 ON)
+endif()
+
+if(${gl2})
+    list(APPEND HURRICAN_SOURCES
+        src/SDLPort/cshader.cpp
+        src/SDLPort/cshader.hpp
+    )
 endif()
 
 OPTION(FBO "FBO support (allow screen to be scaled to arbitrary dimensions)" OFF)
-IF(FBO)
+IF(FBO AND NOT ${gl2})
+    message(FATAL_ERROR "FBO is available only with GL2 or GL3")
+elseif(FBO AND ${gl2})
     ADD_DEFINITIONS(-DUSE_FBO)
     list(APPEND HURRICAN_SOURCES
         src/SDLPort/cfbo.cpp
         src/SDLPort/cfbo.hpp
     )
-ENDIF(FBO)
+ENDIF()
 
 add_definitions(-DLINUX)
 add_definitions(-DUSE_HOME_DIR)
