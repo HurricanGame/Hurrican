@@ -404,6 +404,8 @@ if (RENDERER STREQUAL "GL1")
     add_definitions(-DUSE_GL1)
 elseif(RENDERER STREQUAL "GL2")
     add_definitions(-DUSE_GL2)
+elseif(RENDERER STREQUAL "GL3")
+    add_definitions(-DUSE_GL3)
 endif()
 
 OPTION(FBO "FBO support (allow screen to be scaled to arbitrary dimensions)" OFF)
