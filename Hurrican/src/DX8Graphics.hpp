@@ -83,6 +83,7 @@ class DirectGraphicsClass {
     int MaxTextureUnits;
 #if defined(USE_GL2) || defined(USE_GL3)
     GLuint ProgramCurrent;
+    GLuint NameWH;
     CShader Shaders[PROGRAM_TOTAL];
 #endif
 

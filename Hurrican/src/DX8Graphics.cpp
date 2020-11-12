@@ -432,6 +432,7 @@ bool DirectGraphicsClass::SetDeviceInfo() {
     Shaders[PROGRAM_RENDER].NameClr = Shaders[PROGRAM_RENDER].GetAttribute("a_Color");
     Shaders[PROGRAM_RENDER].NameTex = Shaders[PROGRAM_RENDER].GetAttribute("a_Texcoord0");
     Shaders[PROGRAM_RENDER].NameMvp = Shaders[PROGRAM_RENDER].GetUniform("u_MVPMatrix");
+    NameWH                          = Shaders[PROGRAM_RENDER].GetUniform("u_WindowHeight");
 #endif /* USE_GL2 || USE_GL3 */
 
     /* Matrices setup */
@@ -543,9 +544,12 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
         is_texture = false;
     }
 
-    // Check if the program is alreadt in use
+    // Check if the program is already in use
     if (ProgramCurrent != program_next) {
         Shaders[program_next].Use();
+        if (program_next==PROGRAM_RENDER) {
+            glUniform1i(NameWH, RenderRect.h);
+        }
         ProgramCurrent = program_next;
     }
 #endif
