@@ -10,9 +10,6 @@ void main()
     vec4 p = texture2D(u_Texture0, v_Texcoord0) * v_Color;
     /* add scanlines */
     float r = float(u_WindowHeight / 216);
-    float t = float(u_WindowHeight / 360);
-    if (mod(gl_FragCoord.y, r) < t)
-        gl_FragColor = p;
-    else
-        gl_FragColor = vec4(p.rgb * 0.5, p.a);
+    float f = mod(gl_FragCoord.y, r) / r;
+    gl_FragColor = mix(p, vec4(p.rgb * 0.5, p.a), f);
 }
