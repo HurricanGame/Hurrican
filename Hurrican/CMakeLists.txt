@@ -390,6 +390,12 @@ set(HURRICAN_SOURCES
         src/triggers/Trigger_Warning.cpp
         src/triggers/Trigger_Warning.hpp)
 
+if(MINGW)
+    list(APPEND HURRICAN_SOURCES
+        hurrican.rc
+    )
+endif(MINGW)
+
 # Prefer the OpenGL vendor-neutral dispatch library (fixes CMake warning)
 SET(OpenGL_GL_PREFERENCE "GLVND")
 
