@@ -36,9 +36,7 @@ CShader::CShader()
       Attributes() {}
 
 void CShader::Close() {
-    uint16_t i;
-
-    for (i = 0; i < Shaders.size(); i++) {
+    for (size_t i = 0; i < Shaders.size(); i++) {
         if (Shaders.at(i).name != GL_INVALID_VALUE) {
             glDeleteShader(Shaders.at(i).name);
         }
@@ -52,37 +50,36 @@ void CShader::Close() {
     Shaders.clear();
 }
 
-int8_t CShader::Load(const std::string &path_vertex, const std::string &path_frag) {
-    if (LoadShader(GL_VERTEX_SHADER, path_vertex))
-        return 1;
+bool CShader::Load(const std::string &path_vertex, const std::string &path_frag) {
+    if (!LoadShader(GL_VERTEX_SHADER, path_vertex))
+        return false;
 
-    if (LoadShader(GL_FRAGMENT_SHADER, path_frag))
-        return 1;
+    if (!LoadShader(GL_FRAGMENT_SHADER, path_frag))
+        return false;
 
-    if (CreateProgram())
-        return 1;
+    if (!CreateProgram())
+        return false;
 
-    return 0;
+    return true;
 }
 
-int8_t CShader::LoadShader(GLenum type, const std::string &path) {
-    shader_t shader;
-
+bool CShader::LoadShader(GLenum type, const std::string &path) {
     Protokoll << "Shader: Compiling " << path << std::endl;
 
+    shader_t shader;
     shader.type = type;
     shader.path = path;
     shader.name = CompileShader(shader.type, shader.path);
 
     if (shader.name == GL_INVALID_VALUE) {
-        return 1;
+        return false;
     } else {
         Protokoll << "Shader: Compiled " << path << std::endl;
     }
 
     Shaders.push_back(shader);
 
-    return 0;
+    return true;
 }
 
 void CShader::Use() {
@@ -90,13 +87,7 @@ void CShader::Use() {
 }
 
 GLuint CShader::CompileShader(GLenum type, const std::string &path) {
-    GLint status;
-    GLuint shader;
-    std::string shadertype;
-    std::vector<char> source;
-    uint32_t size = 0;
-
-    source = LoadFileToMemory(path);
+    std::vector<char> source = LoadFileToMemory(path);
 
 #if defined(USE_GLES2)
     const std::string version = "#version 100\n";
@@ -121,12 +112,14 @@ GLuint CShader::CompileShader(GLenum type, const std::string &path) {
         Protokoll << "Shader Source Begin\n" << source << "\nShader Source End" << std::endl;
 #endif
 
-        shader = glCreateShader(type);
+        GLuint shader = glCreateShader(type);
         const GLchar *shader_src = source.data();
         glShaderSource(shader, 1, &shader_src, nullptr);
         glCompileShader(shader);
 
+        GLint status;
         glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+        std::string shadertype;
         if (status == GL_FALSE) {
             switch (type) {
                 case GL_VERTEX_SHADER:
@@ -144,56 +137,52 @@ GLuint CShader::CompileShader(GLenum type, const std::string &path) {
             PrintLog(SHADER, shader);
             return GL_INVALID_VALUE;
         }
+
+        return shader;
     } else {
-        Protokoll << "ERROR Shader: File read failure in " << shadertype << " shader: " << path << std::endl;
+        Protokoll << "ERROR Shader: File read failure in shader: " << path << std::endl;
         return GL_INVALID_VALUE;
     }
-
-    return shader;
 }
 
-int8_t CShader::CreateProgram() {
-    uint16_t i;
-    GLint status;
-
+bool CShader::CreateProgram() {
     Program = glCreateProgram();
 
-    for (i = 0; i < Shaders.size(); i++) {
+    for (size_t i = 0; i < Shaders.size(); i++) {
         glAttachShader(Program, Shaders[i].name);
     }
 
     glLinkProgram(Program);
 
+    GLint status;
     glGetProgramiv(Program, GL_LINK_STATUS, &status);
     if (status == GL_FALSE) {
         Protokoll << "ERROR Shader: Linker failure" << std::endl;
         PrintLog(PROGRAM);
         Program = GL_INVALID_VALUE;
-        return 1;
+        return false;
     }
 
     FindAttributes();
     FindUniforms();
 
-    return 0;
+    return true;
 }
 
 void CShader::FindAttributes() {
     GLint numAttributes;
     GLint maxAttributeLen;
-    char *attributeName;
 
     glGetProgramiv(Program, GL_ACTIVE_ATTRIBUTES, &numAttributes);
     glGetProgramiv(Program, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &maxAttributeLen);
-    attributeName = new char[maxAttributeLen];
+    char *attributeName = new char[maxAttributeLen];
 
     for (GLint index(0); index < numAttributes; ++index) {
         GLint size;
         GLenum type;
-        GLint location;
 
         glGetActiveAttrib(Program, index, maxAttributeLen, nullptr, &size, &type, attributeName);
-        location = glGetAttribLocation(Program, attributeName);
+        GLint location = glGetAttribLocation(Program, attributeName);
 
         std::pair<std::string, GLint> parameter;
         parameter.first = std::string(attributeName);
@@ -207,11 +196,10 @@ void CShader::FindAttributes() {
 void CShader::FindUniforms() {
     GLint numUniforms;
     GLint maxUniformLen;
-    char *uniformName;
 
     glGetProgramiv(Program, GL_ACTIVE_UNIFORMS, &numUniforms);
     glGetProgramiv(Program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxUniformLen);
-    uniformName = new char[maxUniformLen];
+    char *uniformName = new char[maxUniformLen];
 
     for (GLint index(0); index < numUniforms; ++index) {
         GLint size;

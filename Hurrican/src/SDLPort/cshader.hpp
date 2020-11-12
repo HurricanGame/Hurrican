@@ -47,7 +47,7 @@ class CShader {
     virtual ~CShader() = default;
 
     void Close();
-    int8_t Load(const std::string &path_vertex, const std::string &path_frag);
+    bool Load(const std::string &path_vertex, const std::string &path_frag);
     void Use();
     GLint GetAttribute(const std::string &attribute);
     GLint GetUniform(const std::string &attribute);
@@ -62,8 +62,8 @@ class CShader {
 #endif
 
   private:
-    int8_t LoadShader(GLenum type, const std::string &path);
-    int8_t CreateProgram();
+    bool LoadShader(GLenum type, const std::string &path);
+    bool CreateProgram();
     GLuint CompileShader(GLenum type, const std::string &path);
     void FindAttributes();
     void FindUniforms();

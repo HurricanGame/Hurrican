@@ -386,7 +386,7 @@ bool DirectGraphicsClass::SetDeviceInfo() {
     vert = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_color.vert";
     frag = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_color.frag";
 
-    if (Shaders[PROGRAM_COLOR].Load(vert, frag) != 0) {
+    if (!Shaders[PROGRAM_COLOR].Load(vert, frag)) {
         return false;
     }
 
@@ -401,14 +401,14 @@ bool DirectGraphicsClass::SetDeviceInfo() {
     }
 #endif
 
-    if (Shaders[PROGRAM_TEXTURE].Load(vert, frag) != 0) {
+    if (!Shaders[PROGRAM_TEXTURE].Load(vert, frag)) {
         return false;
     }
 
     vert = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_render.vert";
     frag = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_render.frag";
 
-    if (Shaders[PROGRAM_RENDER].Load(vert, frag) != 0) {
+    if (!Shaders[PROGRAM_RENDER].Load(vert, frag)) {
         return false;
     }
 
