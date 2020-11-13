@@ -93,7 +93,11 @@ signed char SOUND_StopSound(int channel);
 signed char SOUND_SetPaused(int channel, signed char paused);
 signed char SOUND_GetPaused(int channel);
 
+#if defined(USE_MODPLUG)
 void hookmusic(void *ptr, uint8_t *buffer, int size);
+#else
+void hookmusicFinished();
+#endif
 
 #ifdef __cplusplus
 }
