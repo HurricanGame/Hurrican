@@ -1674,7 +1674,7 @@ void MenuClass::DoMenu() {
                             //      be the console and main-menu activation keys, respectively.
                             //      Also added exclusions for keys 1,2 and 3 because they are
                             //      hard-coded in the game to be Weapon-selection keys.
-                            if (KeyDown(i) && i != DIK_NUMLOCK && i != DIK_CAPITAL && i != DIK_SCROLL && i != DIK_TAB &&
+                            if (TastaturPuffer[i] && i != DIK_NUMLOCK && i != DIK_CAPITAL && i != DIK_SCROLL && i != DIK_TAB &&
                                 i != DIK_ESCAPE && i != DIK_1 && i != DIK_2 &&
                                 i != DIK_3)  // ob eine Taste gedrückt wurde
                             {
@@ -1684,11 +1684,11 @@ void MenuClass::DoMenu() {
                                 if (i == DIK_HOME)
                                     break;
 #endif  // GCW
-                                pCurrentPlayer->AktionKeyboard[action] = i;
+                                pCurrentPlayer->AktionKeyboard[action] = KeyCode(i);
                                 control_reassignment_occuring = false;
                                 AuswahlPossible = false;
 
-                                while (KeyDown(i))
+                                while (TastaturPuffer[i])
                                     DirectInput.UpdateTastatur();
 
                                 input_counter = 0.0f;
