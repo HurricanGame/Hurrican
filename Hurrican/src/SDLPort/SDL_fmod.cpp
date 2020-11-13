@@ -161,6 +161,7 @@ signed char MUSIC_PlaySong(MUSIC_MODULE *music, bool loop /*=true*/) {
     ModPlug_Seek(music, 0);
     Mix_HookMusic(&hookmusic, music);
 #else
+    Mix_HookMusicFinished(hookmusicFinished);
     Mix_PlayMusic(music, (loop ? -1 : 0));
 #endif
     g_music_loops = loop;
@@ -191,6 +192,7 @@ signed char MUSIC_StopSong(MUSIC_MODULE *music) {
 #if defined(USE_MODPLUG)
         Mix_HookMusic(nullptr, nullptr);
 #else
+        Mix_HookMusicFinished(nullptr);
         Mix_HaltMusic();
 #endif
         g_music_current = nullptr;
@@ -290,6 +292,18 @@ void hookmusic(void *ptr, uint8_t *buffer, int size) {
             std::memset(buffer + rsize, 0, size - rsize);
             MUSIC_StopSong(music);
         }
+    }
+}
+#else
+void hookmusicFinished() {
+
+    if (g_music_loops) {
+        // The song is over and it loops, so re-seek to beginning
+        Mix_RewindMusic();
+    } else {
+        // The song is over and doesn't loop, so stop it
+        Mix_HaltMusic();
+        g_music_current = nullptr;
     }
 }
 #endif
