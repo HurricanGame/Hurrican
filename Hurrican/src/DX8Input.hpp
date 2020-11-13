@@ -31,8 +31,10 @@
 #if defined(PLATFORM_SDL)
 #if SDL_VERSION_ATLEAST(2, 0, 0)
 #define KeyDown(Taste) (TastaturPuffer[SDL_GetScancodeFromKey(Taste)] > 0)
+#define KeyCode(Taste) (SDL_GetKeyFromScancode(static_cast<SDL_Scancode >(i)))
 #else
 #define KeyDown(Taste) (TastaturPuffer[Taste] > 0)
+#define KeyCode(Taste) (Taste)
 #endif
 #endif
 
