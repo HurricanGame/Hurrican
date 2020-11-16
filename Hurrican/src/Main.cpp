@@ -505,7 +505,7 @@ bool GameInit() {
 
     // Direct3D initialisieren
     if (!DirectGraphics.Init(RENDERWIDTH, RENDERHEIGHT, CommandLineParams.ScreenDepth, CommandLineParams.VSync)) {
-        Protokoll << "\n-> Graphic Initialization Failure ...!" << std::endl;
+        Protokoll << "\n-> Graphics Initialization Failure ...!" << std::endl;
         GameRunning = false;
         return false;
     }
