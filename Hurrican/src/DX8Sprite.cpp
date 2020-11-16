@@ -205,7 +205,7 @@ loadfile:
     //DKS - array is now dynamically allocated
     if (itsPreCalcedRects != NULL) 
         free(itsPreCalcedRects);
-    itsPreCalcedRects = new RECT_struct[xfc * yfc];
+    itsPreCalcedRects = (RECT_struct*)malloc(xfc * yfc * sizeof(RECT_struct));
 
     for (int i = 0; i < xfc * yfc; i++)
     {
