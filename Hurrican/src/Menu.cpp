@@ -566,7 +566,8 @@ void MenuClass::ShowMenu() {
             pMenuFont->DrawText(320 - d / 2.0f, ypos + OFFSET, TextArray[TEXT_SPRACHE], menucolor, 2);
 
             char lang_name[256] = "";
-            for (std::size_t i = 0; i < LanguageFiles.size(); i++) {
+            const int num_lang = LanguageFiles.size();
+            for (int i = 0; i < num_lang; i++) {
                 strcpy_s(lang_name, LanguageFiles[i].c_str());
                 // Truncate the extension
                 int trunc_loc = strlen(lang_name) - 4;
@@ -585,7 +586,7 @@ void MenuClass::ShowMenu() {
             pDefaultFont->DrawText(320 - pDefaultFont->StringLength(TextArray[TEXT_ZURUECK]) / 2.0f,
                                    ypos + 136 + vertical_spacing * LanguageFiles.size(), (TextArray[TEXT_ZURUECK]),
                                    0x88FFFFFF);
-            if (AktuellerPunkt == LanguageFiles.size())
+            if (AktuellerPunkt == num_lang)
                 pDefaultFont->DrawText(320 - pDefaultFont->StringLength(TextArray[TEXT_ZURUECK]) / 2.0f,
                                        ypos + 136 + vertical_spacing * LanguageFiles.size(), (TextArray[TEXT_ZURUECK]),
                                        0x88FFFFFF);
@@ -1565,10 +1566,11 @@ void MenuClass::DoMenu() {
         } break;  // Sound / Musik Lautstärke
 
         case MENUZUSTAND_LANGUAGE: {
+            const int num_lang = LanguageFiles.size();
             if (AktuellerPunkt < 0)
-                AktuellerPunkt = LanguageFiles.size();
+                AktuellerPunkt = num_lang;
 
-            if (AktuellerPunkt > LanguageFiles.size())
+            if (AktuellerPunkt > num_lang)
                 AktuellerPunkt = 0;
 
             // Punkt gewählt
@@ -1577,7 +1579,7 @@ void MenuClass::DoMenu() {
                 AuswahlPossible = false;
 
                 // Language File gewählt ?
-                if (AktuellerPunkt < LanguageFiles.size()) {
+                if (AktuellerPunkt < num_lang) {
                     strcpy_s(ActualLanguage, strlen(LanguageFiles[AktuellerPunkt].c_str()) + 1,
                              LanguageFiles[AktuellerPunkt].c_str());
                     LoadLanguage(ActualLanguage);
