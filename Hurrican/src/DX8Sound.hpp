@@ -245,22 +245,22 @@ class SampleClass {
 // DKS - Added:
 class ChannelClass {
   public:
-    uint8_t sound_num;  // If sound_num is -1, the channel is not in use.
     uint8_t panning;
     uint8_t fade_mode;  // Fadet der Sound gerade ?
     uint8_t pending_pan;
     int16_t pending_vol;  // If -1, there is no pending volume/pan changes (from Trigger_SoundTrigger.cpp presumably)
+    int16_t sound_num;    // If sound_num is -1, the channel is not in use.
     bool paused;
     bool is3D;  // Is this a channel whose panning/volume gets updated based on distance to player?
     float vol;
     int xpos, ypos;  // If this is a 3D channel, this stores its origin point
 
     ChannelClass()
-        : sound_num(-1),
-          panning(128),
+        : panning(128),
           fade_mode(FADEMODE_NON),
           pending_pan(128),
           pending_vol(-1),
+          sound_num(-1),
           paused(false),
           is3D(false),
           vol(100.0f),
