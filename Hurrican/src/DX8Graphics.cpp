@@ -432,7 +432,9 @@ bool DirectGraphicsClass::SetDeviceInfo() {
     Shaders[PROGRAM_RENDER].NameClr = Shaders[PROGRAM_RENDER].GetAttribute("a_Color");
     Shaders[PROGRAM_RENDER].NameTex = Shaders[PROGRAM_RENDER].GetAttribute("a_Texcoord0");
     Shaders[PROGRAM_RENDER].NameMvp = Shaders[PROGRAM_RENDER].GetUniform("u_MVPMatrix");
+    NameWW                          = Shaders[PROGRAM_RENDER].GetUniform("u_WindowWidth");
     NameWH                          = Shaders[PROGRAM_RENDER].GetUniform("u_WindowHeight");
+    NameTime                        = Shaders[PROGRAM_RENDER].GetUniform("u_Time");
 #endif /* USE_GL2 || USE_GL3 */
 
     /* Matrices setup */
@@ -548,7 +550,9 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
     if (ProgramCurrent != program_next) {
         Shaders[program_next].Use();
         if (program_next==PROGRAM_RENDER) {
+            glUniform1i(NameWW, RenderRect.w);
             glUniform1i(NameWH, RenderRect.h);
+            glUniform1i(NameTime, 50*SDL_GetTicks()/1000);
         }
         ProgramCurrent = program_next;
     }
