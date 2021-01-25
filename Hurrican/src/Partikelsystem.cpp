@@ -3173,8 +3173,6 @@ void PartikelClass::Run() {
 // --------------------------------------------------------------------------------------
 
 bool PartikelClass::Render() {
-    if (alpha < 0)
-        alpha = 0;
 
     // Partikel rotieren?
     if (Rotate) {
