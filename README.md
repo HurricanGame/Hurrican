@@ -73,6 +73,8 @@ OpenGL Options
 * -DRENDERER=GLES1        : Use the OpenGL 1.X code with ES compatible
 * -DRENDERER=GL2          : Use the OpenGL 2.0 code (programable pipline) [this is the default if not specified]
 * -DRENDERER=GLES2        : Use the OpenGL 2.0 code with ES compatible
+* -DRENDERER=GL3          : Use the OpenGL 3.0 code (programable pipline)
+* -DRENDERER=GLES3        : Use the OpenGL 3.0 code with ES compatible
 * -DFBO                   : Add FBO support, allow screen to be scaled to arbitrary dimensions, available only with GL2 or GL3
 
 Sound
