@@ -57,3 +57,24 @@ Definitions:
  Check the makefile for other examples.
 
  Pickle (pickle136@gmail.com)
+
+Building with cmake
+
+It is now possible to build the code using cmake (tested on Linux and MinGW)
+
+    mkdir build && cd build
+    cmake ..
+    make
+
+The following build options are available:
+
+OpenGL Options
+* -DRENDERER=GL1          : Use the OpenGL 1.X code (fixed pipline)
+* -DRENDERER=GLES1        : Use the OpenGL 1.X code with ES compatible
+* -DRENDERER=GL2          : Use the OpenGL 2.0 code (programable pipline) [this is the default if not specified]
+* -DRENDERER=GLES2        : Use the OpenGL 2.0 code with ES compatible
+* -DFBO                   : Add FBO support, allow screen to be scaled to arbitrary dimensions, available only with GL2 or GL3
+
+Sound
+* -DMODPLUG=ON            : Use the modplug code for music (otherwise SDL_mixer is used)
+
