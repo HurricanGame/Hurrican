@@ -446,12 +446,12 @@ elseif(FBO AND ${gl2})
     )
 ENDIF()
 
-add_definitions(-DLINUX)
-add_definitions(-DUSE_HOME_DIR)
+add_definitions(-DLINUX) # is this used anywhere?
 add_definitions(-DPLATFORM_SDL)
-add_definitions(-DENABLE_CONSOLE_COMMANDS)
+add_definitions(-DENABLE_CONSOLE_COMMANDS) # make optional?
 add_definitions(-DNOMINMAX)
 if(UNIX)
+    add_definitions(-DUSE_HOME_DIR)
     add_definitions(-DUSE_STORAGE_PATH="${CMAKE_INSTALL_PREFIX}/share/hurrican/")
 endif()
 
@@ -497,7 +497,7 @@ else()
 
     target_link_libraries(${PROJECT_NAME} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARIES} ${SDL_IMAGE_LIBRARIES})
 endif()
-if(UNIX OR MINGW)
+if(UNIX OR MINGW) # Why?
     target_link_libraries(${PROJECT_NAME} stdc++fs)
 endif()
 

@@ -329,26 +329,42 @@ int main(int argc, char *argv[]) {
         strcpy_s(g_save_ext, SDL_AndroidGetExternalStoragePath());
 #else  // NON-ANDROID:
 #ifdef USE_HOME_DIR
-        // Makefile is specifying this is a UNIX machine and we should write saves,settings,etc to $HOME/.hurrican/ dir
-        char *homedir = getenv("HOME");
+        // Makefile is specifying this is a UNIX machine and we should write saves,settings,etc to $XDG_DATA_HOME/hurrican/ dir
         bool success = false;
-        if (homedir) {
-            const char *subdir = "/.hurrican";
-            g_save_ext = static_cast<char *>(malloc(strlen(homedir) + strlen(subdir) + 1));
-            strcpy(g_save_ext, homedir);
+        char *configdir = getenv("XDG_DATA_HOME "); // TODO use XDG_CONFIG_HOME for config file
+        if (configdir) {
+            const char *subdir = "/hurrican";
+            g_save_ext = static_cast<char *>(malloc(strlen(configdir) + strlen(subdir) + 1));
+            strcpy(g_save_ext, configdir);
             strcat(g_save_ext, subdir);
             success = fs::is_directory(g_save_ext) || fs::create_directory(g_save_ext);
             if (!success) {
-                // We weren't able to create the $HOME/.hurrican directory, or if it exists, it is
-                // not a directory or is not accessible somehow..
-                Protokoll << "ERROR: unable to create or access $HOME/.hurrican/ directory." << std::endl;
+                // We weren't able to create the $XDG_DATA_HOME/hurrican directory, or if it exists, it is
+                // not a directory or is not accessible somehow.
+                Protokoll << "ERROR: unable to create or access $XDG_DATA_HOME/hurrican/ directory." << std::endl;
                 Protokoll << "\tFull path that was tried: " << g_save_ext << std::endl;
                 free(g_save_ext);
             }
         } else {
-            // We weren't able to find the $HOME env var
-            Protokoll << "ERROR: unable to find $HOME environment variable" << std::endl;
-            success = false;
+            char *homedir = getenv("HOME");
+            if (homedir) {
+                const char *subdir = "/.local/share/hurrican";
+                g_save_ext = static_cast<char *>(malloc(strlen(homedir) + strlen(subdir) + 1));
+                strcpy(g_save_ext, homedir);
+                strcat(g_save_ext, subdir);
+                success = fs::is_directory(g_save_ext) || fs::create_directories(g_save_ext);
+                if (!success) {
+                    // We weren't able to create the $HOME/.local/share/hurrican directory, or if it exists, it is
+                    // not a directory or is not accessible somehow..
+                    Protokoll << "ERROR: unable to create or access $HOME/.local/share/hurrican/ directory." << std::endl;
+                    Protokoll << "\tFull path that was tried: " << g_save_ext << std::endl;
+                    free(g_save_ext);
+                }
+            } else {
+                // We weren't able to find the $HOME env var
+                Protokoll << "ERROR: unable to find $HOME environment variable" << std::endl;
+                success = false;
+            }
         }
 
         if (!success) {
