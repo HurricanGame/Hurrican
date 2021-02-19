@@ -4,5 +4,6 @@ hurricanlinux
 *.exe
 cmake-build-*
 .idea
-
-
+Savegame*
+Hurrican.cfg
+Hurrican.hsl
