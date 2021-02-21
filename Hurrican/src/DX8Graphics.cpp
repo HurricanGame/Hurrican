@@ -165,16 +165,15 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
     Window =
         SDL_CreateWindow("Hurrican", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ScreenWidth, ScreenHeight, flags);
     if (Window == nullptr) {
-        Protokoll << "Failed to " << ScreenWidth << "x" << ScreenHeight << "x" << ScreenDepth
-                  << "video mode: " << SDL_GetError() << std::endl;
+        Protokoll << "Failed to create " << ScreenWidth << "x" << ScreenHeight
+                  << " window: " << SDL_GetError() << std::endl;
         return false;
     }
 
     // Create an OpenGL context associated with the window.
     GLcontext = SDL_GL_CreateContext(Window);
     if (GLcontext == nullptr) {
-        Protokoll << "Failed to " << ScreenWidth << "x" << ScreenHeight << "x" << ScreenDepth
-                  << "video mode: " << SDL_GetError() << std::endl;
+        Protokoll << "Failed to create GL context: " << SDL_GetError() << std::endl;
         return false;
     }
 #else /* SDL 1.2 */
@@ -182,8 +181,8 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
 
     Screen = SDL_SetVideoMode(ScreenWidth, ScreenHeight, ScreenDepth, flags);
     if (Screen == nullptr) {
-        Protokoll << "Failed to " << ScreenWidth << "x" << ScreenHeight << "x" << ScreenDepth
-                  << "video mode: " << SDL_GetError() << std::endl;
+        Protokoll << "Failed to set " << ScreenWidth << "x" << ScreenHeight << "x" << ScreenDepth
+                  << " video mode: " << SDL_GetError() << std::endl;
         return false;
     }
 #endif
