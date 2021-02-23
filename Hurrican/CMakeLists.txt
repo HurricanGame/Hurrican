@@ -466,37 +466,39 @@ include_directories(${CMAKE_SOURCE_DIR}/src/SDLPort)
 include_directories(${CMAKE_SOURCE_DIR}/3rdparty/glm)
 add_executable(hurrican ${HURRICAN_SOURCES})
 
-INCLUDE(FindOpenGL REQUIRED)
 set(SDL2_BUILDING_LIBRARY TRUE)
 find_package(SDL2)
-if (${SDL2_FOUND})
+if (SDL2_FOUND)
     find_package(SDL2_image REQUIRED)
     find_package(SDL2_mixer REQUIRED)
-else()
+else(SDL2_FOUND)
     set(SDL_BUILDING_LIBRARY TRUE)
     find_package(SDL REQUIRED)
     INCLUDE(FindSDL_mixer REQUIRED)
     INCLUDE(FindSDL_image REQUIRED)
-endif()
+endif(SDL2_FOUND)
+
+INCLUDE(FindOpenGL REQUIRED)
 find_package(LibEpoxy 1.2 REQUIRED)
 
 include_directories(${LibEpoxy_INCLUDE_DIRS})
 
 target_link_libraries(${PROJECT_NAME} ${OPENGL_gl_LIBRARY} ${LibEpoxy_LIBRARIES})
 
-if (${SDL2_FOUND})
+if (SDL2_FOUND)
     include_directories(${SDL2_INCLUDE_DIR}
                         ${SDL2_IMAGE_INCLUDE_DIR}
                         ${SDL2_MIXER_INCLUDE_DIR})
 
     target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY} ${SDL2_MIXER_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
-else()
+else(SDL2_FOUND)
     include_directories(${SDL_INCLUDE_DIR}
                         ${SDL_IMAGE_INCLUDE_DIR}
                         ${SDL_MIXER_INCLUDE_DIR})
 
     target_link_libraries(${PROJECT_NAME} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARIES} ${SDL_IMAGE_LIBRARIES})
-endif()
+endif(SDL2_FOUND)
+
 if(UNIX OR MINGW) # Why?
     target_link_libraries(${PROJECT_NAME} stdc++fs)
 endif()
