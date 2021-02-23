@@ -68,7 +68,7 @@ extern DirectGraphicsSprite PartikelGrafix[MAX_PARTIKELGFX];  // Grafiken der Pa
 // --------------------------------------------------------------------------------------
 
 bool FixedFramerate = false;  // true = Spiel mit 50 Frames laufen lassen
-// false = Spiel so flüssig wie möglich laufen lassen
+                              // false = Spiel so flüssig wie möglich laufen lassen
 bool GameRunning = true;         // Spiel läuft :-)
 bool GamePaused = false;         // Spiel eingefroren (wenn man zb das Fenster verlässt)
 bool NochKeinFullScreen = true;  // Logo noch anzeigen in Paint ?
@@ -103,7 +103,7 @@ char *g_storage_ext = nullptr;  // Where data files (levels, graphics, music, et
                                 //      for the game are stored (read)
 char *g_config_ext = nullptr;   // Where configuration files
                                 //      are written (-DKS) (write)
-char *g_save_ext = nullptr;     // Where logs, high scores and save games
+char *g_save_ext = nullptr;     // Where high scores and save games
                                 //      are written (-DKS) (write)
 
 sCommandLineParams CommandLineParams;
@@ -278,7 +278,7 @@ void FillCommandLineParams(int argc, char *args[]) {
 // --------------------------------------------------------------------------------------
 // XDG Functions
 // --------------------------------------------------------------------------------------
-
+#ifdef USE_HOME_DIR
 char *createDir(const char *path, const char *subdir) {
 
     char *dir = static_cast<char *>(malloc(strlen(path) + strlen(subdir) + 1));
@@ -319,7 +319,7 @@ char *getXdgDir(const char *xdgVar, const char *fallback) {
 
     return xdg_ext;
 }
-
+#endif
 // --------------------------------------------------------------------------------------
 // Win-Main Funktion
 // --------------------------------------------------------------------------------------
