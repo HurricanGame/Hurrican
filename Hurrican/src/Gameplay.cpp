@@ -757,7 +757,7 @@ void CreateDefaultConfig() {
 bool LoadConfig() {
     float Sound, Musik;
 
-    std::string filename = std::string(g_save_ext) + "/" + CONFIGFILE;
+    std::string filename = std::string(g_config_ext) + "/" + CONFIGFILE;
 
     std::ifstream Datei(filename, std::ifstream::binary);  // versuchen Datei zu öffnen
 
@@ -859,7 +859,7 @@ bool LoadConfig() {
 void SaveConfig() {
     float Sound, Musik;
 
-    std::string filename = std::string(g_save_ext) + "/" + CONFIGFILE;
+    std::string filename = std::string(g_config_ext) + "/" + CONFIGFILE;
 
     std::ofstream Datei(filename, std::ifstream::binary);
 

@@ -101,7 +101,9 @@ CCracktro *Cracktro;
 
 char *g_storage_ext = nullptr;  // Where data files (levels, graphics, music, etc)
                                 //      for the game are stored (read)
-char *g_save_ext = nullptr;     // Where configuration files, logs, and save games
+char *g_config_ext = nullptr;   // Where configuration files
+                                //      are written (-DKS) (write)
+char *g_save_ext = nullptr;     // Where logs, high scores and save games
                                 //      are written (-DKS) (write)
 
 sCommandLineParams CommandLineParams;
@@ -274,6 +276,51 @@ void FillCommandLineParams(int argc, char *args[]) {
 }
 
 // --------------------------------------------------------------------------------------
+// XDG Functions
+// --------------------------------------------------------------------------------------
+
+char *createDir(const char *path, const char *subdir) {
+
+    char *dir = static_cast<char *>(malloc(strlen(path) + strlen(subdir) + 1));
+    strcpy(dir, path);
+    strcat(dir, subdir);
+    bool success = fs::is_directory(dir) || fs::create_directories(dir);
+    if (!success) {
+        Protokoll << "ERROR: unable to create or access directory." << std::endl;
+        Protokoll << "\tFull path that was tried: " << dir << std::endl;
+        free(dir);
+        dir = nullptr;
+    }
+
+    return dir;
+}
+
+char *getXdgDir(const char *xdgVar, const char *fallback) {
+
+    char *xdg_ext = nullptr;
+    char *xdgdir = getenv(xdgVar);
+    if (xdgdir) {
+        xdg_ext = createDir(xdgdir, "/hurrican");
+    }
+    if (xdg_ext == nullptr) {
+        char *homedir = getenv("HOME");
+        if (homedir) {
+            xdg_ext = createDir(homedir, fallback);
+        } else {
+            Protokoll << "ERROR: unable to find $HOME environment variable" << std::endl;
+        }
+    }
+
+    if (xdg_ext == nullptr) {
+        Protokoll << "\tUsing '.' folder as fallback." << std::endl;
+        xdg_ext = static_cast<char *>(malloc(strlen(".") + 1));
+        strcpy(xdg_ext, ".");
+    }
+
+    return xdg_ext;
+}
+
+// --------------------------------------------------------------------------------------
 // Win-Main Funktion
 // --------------------------------------------------------------------------------------
 #undef main
@@ -296,7 +343,7 @@ int main(int argc, char *argv[]) {
         g_storage_ext = (char *)malloc(strlen(SDL_AndroidGetExternalStoragePath() + 1));
         strcpy_s(g_storage_ext, SDL_AndroidGetExternalStoragePath());
 #else  // NON-ANDROID:
-#ifdef USE_STORAGE_PATH
+#  ifdef USE_STORAGE_PATH
         // A data-files storage path has been specified in the Makefile:
         g_storage_ext = static_cast<char *>(malloc(strlen(USE_STORAGE_PATH) + 1));
         strcpy_s(g_storage_ext, USE_STORAGE_PATH);
@@ -309,76 +356,41 @@ int main(int argc, char *argv[]) {
             g_storage_ext = static_cast<char *>(malloc(strlen(".") + 1));
             strcpy_s(g_storage_ext, ".");
         }
-#else
+#  else
         g_storage_ext = static_cast<char *>(malloc(strlen(".") + 1));
         strcpy(g_storage_ext, ".");
-#endif
+#  endif
 #endif  // ANDROID
     }
 
     // Set game's save path (save games, settings, logs, high-scores, etc)
-    g_save_ext = nullptr;
     if (CommandLineParams.SavePath) {
         g_save_ext = static_cast<char *>(malloc(strlen(CommandLineParams.SavePath) + 1));
         strcpy(g_save_ext, CommandLineParams.SavePath);
         free(CommandLineParams.SavePath);
         CommandLineParams.SavePath = nullptr;
+        g_config_ext = g_save_ext;
     } else {
 #if defined(ANDROID)
         g_save_ext = (char *)malloc(strlen(SDL_AndroidGetExternalStoragePath() + 1));
         strcpy_s(g_save_ext, SDL_AndroidGetExternalStoragePath());
+        g_config_ext = g_save_ext;
 #else  // NON-ANDROID:
-#ifdef USE_HOME_DIR
-        // Makefile is specifying this is a UNIX machine and we should write saves,settings,etc to $XDG_DATA_HOME/hurrican/ dir
-        bool success = false;
-        char *configdir = getenv("XDG_DATA_HOME "); // TODO use XDG_CONFIG_HOME for config file
-        if (configdir) {
-            const char *subdir = "/hurrican";
-            g_save_ext = static_cast<char *>(malloc(strlen(configdir) + strlen(subdir) + 1));
-            strcpy(g_save_ext, configdir);
-            strcat(g_save_ext, subdir);
-            success = fs::is_directory(g_save_ext) || fs::create_directory(g_save_ext);
-            if (!success) {
-                // We weren't able to create the $XDG_DATA_HOME/hurrican directory, or if it exists, it is
-                // not a directory or is not accessible somehow.
-                Protokoll << "ERROR: unable to create or access $XDG_DATA_HOME/hurrican/ directory." << std::endl;
-                Protokoll << "\tFull path that was tried: " << g_save_ext << std::endl;
-                free(g_save_ext);
-            }
-        } else {
-            char *homedir = getenv("HOME");
-            if (homedir) {
-                const char *subdir = "/.local/share/hurrican";
-                g_save_ext = static_cast<char *>(malloc(strlen(homedir) + strlen(subdir) + 1));
-                strcpy(g_save_ext, homedir);
-                strcat(g_save_ext, subdir);
-                success = fs::is_directory(g_save_ext) || fs::create_directories(g_save_ext);
-                if (!success) {
-                    // We weren't able to create the $HOME/.local/share/hurrican directory, or if it exists, it is
-                    // not a directory or is not accessible somehow..
-                    Protokoll << "ERROR: unable to create or access $HOME/.local/share/hurrican/ directory." << std::endl;
-                    Protokoll << "\tFull path that was tried: " << g_save_ext << std::endl;
-                    free(g_save_ext);
-                }
-            } else {
-                // We weren't able to find the $HOME env var
-                Protokoll << "ERROR: unable to find $HOME environment variable" << std::endl;
-                success = false;
-            }
-        }
+#  ifdef USE_HOME_DIR
+        // Makefile is specifying this is a UNIX machine and we should write saves, settings, etc to $XDG_CONFIG_HOME/hurrican/ dir
+        g_config_ext = getXdgDir("XDG_CONFIG_HOME", "/.config/hurrican");
 
-        if (!success) {
-            Protokoll << "\tUsing '.' folder as fallback." << std::endl;
-            g_save_ext = static_cast<char *>(malloc(strlen(".") + 1));
-            strcpy(g_save_ext, ".");
-        }
-#else
-        g_save_ext = (char *)malloc(strlen(".") + 1);
+        // Makefile is specifying this is a UNIX machine and we should write saves, settings, etc to $XDG_DATA_HOME/hurrican/ dir
+        g_save_ext = getXdgDir("XDG_DATA_HOME", "/.local/share/hurrican");
+#  else
+        g_save_ext = static_cast<char *>(malloc(strlen(".") + 1));
         strcpy_s(g_save_ext, ".");
-#endif  // USE_HOME_DIR
+        g_config_ext = g_save_ext;
+#  endif  // USE_HOME_DIR
 #endif  // ANDROID
     }
 
+    Protokoll << "--> Using external config path '" << g_config_ext << "' <--" << std::endl;
     Protokoll << "--> Using external storage path '" << g_storage_ext << "' <--" << std::endl;
     Protokoll << "--> Using save path '" << g_save_ext << "' <--\n" << std::endl;
 

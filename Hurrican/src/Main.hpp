@@ -95,7 +95,8 @@ extern int WINDOWHEIGHT;
 extern sCommandLineParams CommandLineParams;  // Externer Paramter?
 
 extern char *g_storage_ext;  // Where data files (levels, graphics, music, etc) for the game are stored (read)
-extern char *g_save_ext;     // Where configuration files, logs, and save games are written (-DKS) (write)
+extern char *g_config_ext;   // Where configuration files are written (-DKS) (write)
+extern char *g_save_ext;     // Where logs, high scores and save games are written (-DKS) (write)
 
 #ifdef _DEBUG
 void ShowDebugInfo();  // Allen möglichen Kram anzeigen
