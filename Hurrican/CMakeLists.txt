@@ -435,16 +435,25 @@ if(${gl2})
     )
 endif()
 
-OPTION(FBO "FBO support (allow screen to be scaled to arbitrary dimensions)" OFF)
-IF(FBO AND NOT ${gl2})
-    message(FATAL_ERROR "FBO is available only with GL2 or GL3")
-elseif(FBO AND ${gl2})
+include(CMakeDependentOption)
+
+CMAKE_DEPENDENT_OPTION(FBO "FBO support (allow screen to be scaled to arbitrary dimensions)" ON ${gl2} OFF)
+IF(FBO)
     ADD_DEFINITIONS(-DUSE_FBO)
     list(APPEND HURRICAN_SOURCES
         src/SDLPort/cfbo.cpp
         src/SDLPort/cfbo.hpp
     )
-ENDIF()
+ENDIF(FBO)
+
+CMAKE_DEPENDENT_OPTION(EGL "EGL support" OFF "${gl2}" OFF)
+IF(EGL)
+    ADD_DEFINITIONS(-DUSE_EGL)
+    list(APPEND HURRICAN_SOURCES
+        src/SDLPort/eglport.cpp
+        src/SDLPort/eglport.hpp
+    )
+ENDIF(EGL)
 
 add_definitions(-DLINUX) # is this used anywhere?
 add_definitions(-DPLATFORM_SDL)
@@ -454,6 +463,12 @@ if(UNIX)
     add_definitions(-DUSE_HOME_DIR)
     add_definitions(-DUSE_STORAGE_PATH="${CMAKE_INSTALL_PREFIX}/share/hurrican/")
 endif()
+
+# -DUSE_NO_MEMPOOLING
+# -DUSE_FAST_RNG
+# -DUSE_FAST_TRIG
+# -DUSE_ETC1
+# -DUSE_PVRTC
 
 OPTION(MODPLUG "Use MODPLUG natively" OFF)
 IF(MODPLUG)
