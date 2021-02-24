@@ -455,20 +455,18 @@ IF(EGL)
     )
 ENDIF(EGL)
 
-add_definitions(-DLINUX) # is this used anywhere?
 add_definitions(-DPLATFORM_SDL)
 add_definitions(-DENABLE_CONSOLE_COMMANDS) # make optional?
-add_definitions(-DNOMINMAX)
-if(UNIX)
-    add_definitions(-DUSE_HOME_DIR)
-    add_definitions(-DUSE_STORAGE_PATH="${CMAKE_INSTALL_PREFIX}/share/hurrican/")
-endif()
-
 # -DUSE_NO_MEMPOOLING
 # -DUSE_FAST_RNG
 # -DUSE_FAST_TRIG
 # -DUSE_ETC1
 # -DUSE_PVRTC
+
+if(UNIX)
+    add_definitions(-DUSE_HOME_DIR)
+    add_definitions(-DUSE_STORAGE_PATH="${CMAKE_INSTALL_PREFIX}/share/hurrican/")
+endif()
 
 OPTION(MODPLUG "Use MODPLUG natively" OFF)
 IF(MODPLUG)
