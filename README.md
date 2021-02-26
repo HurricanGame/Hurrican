@@ -75,8 +75,9 @@ OpenGL Options
 * -DRENDERER=GLES2        : Use the OpenGL 2.0 code with ES compatible
 * -DRENDERER=GL3          : Use the OpenGL 3.0 code (programable pipline)
 * -DRENDERER=GLES3        : Use the OpenGL 3.0 code with ES compatible
-* -DFBO                   : Add FBO support, allow screen to be scaled to arbitrary dimensions, available only with GL2 or GL3
+* -DFBO=ON                : Add FBO support, allow screen to be scaled to arbitrary dimensions, available only with GL2 or GL3 and enabled by default
+* -DEGL=ON                : Enable EGL support, available only with GL2 or GL3
 
 Sound
-* -DMODPLUG=ON            : Use the modplug code for music (otherwise SDL_mixer is used)
+* -DMODPLUG=ON            : Use the modplug code for music (useful when building with older SDL_mixer, which uses the lower quality mikmod engine)
 
