@@ -25,14 +25,26 @@
 #include "SDL_fmod.hpp"
 #include <cstring>
 #include <iostream>
+#if defined(USE_OPENMPT)
+#  include <cmath>
+#endif
 
 static int g_allocated = 0;
 static bool g_music_loops = true;
+#if defined(USE_OPENMPT)
+static int g_mixrate = 0;
+#endif
 
 static MUSIC_MODULE *g_music_current = nullptr;
 
-#if defined(USE_MODPLUG)
-static ModPlug_Settings settings;
+#if defined(USE_OPENMPT)
+    static void log_func( const char * message, void * userdata ) {}
+    static int error_func( int error, void * userdata ) {
+          (void)userdata;
+          (void)error;
+          return OPENMPT_ERROR_FUNC_RESULT_DEFAULT & ~OPENMPT_ERROR_FUNC_RESULT_LOG;
+        }
+    double getDeciBel(int volume) { return 20*log10(volume/100.); }
 #endif
 
 signed char SOUND_Init(int mixrate, int maxsoftwarechannels, unsigned int flags) {
@@ -75,25 +87,9 @@ signed char SOUND_Init(int mixrate, int maxsoftwarechannels, unsigned int flags)
     }
     g_allocated = Mix_AllocateChannels(maxsoftwarechannels);
 
-#if defined(USE_MODPLUG)
-    std::cout << "Using libModPlug directly for ImpulseTracker music file decoding. " << std::endl;
-    ModPlug_GetSettings(&settings);
-
-    settings.mFlags = MODPLUG_ENABLE_OVERSAMPLING | MODPLUG_ENABLE_NOISE_REDUCTION;
-    settings.mResamplingMode = MODPLUG_RESAMPLE_LINEAR;
-    settings.mReverbDepth = 0;
-    settings.mReverbDelay = 0;
-    settings.mBassAmount = 0;
-    settings.mBassRange = 0;
-    settings.mSurroundDepth = 0;
-    settings.mSurroundDelay = 0;
-    settings.mFrequency = mixrate;
-    settings.mBits = 16;
-    settings.mChannels = 2;
-    // settings.mStereoSeparation  = 128;
-    // settings.mMaxMixChannels    = g_allocated;
-
-    ModPlug_SetSettings(&settings);
+#if defined(USE_OPENMPT)
+    std::cout << "Using libopenmpt for ImpulseTracker music file decoding. " << std::endl;
+    g_mixrate = mixrate;
 #else
     std::cout << "Using SDL_mixer's default decoder for ImpulseTracker music file decoding. " << std::endl;
 #endif
@@ -122,7 +118,7 @@ signed char SOUND_SetPan(int channel, int pan) {
 
 MUSIC_MODULE *MUSIC_LoadSong(const char *filename) {
     MUSIC_MODULE *music = nullptr;
-#if defined(USE_MODPLUG)
+#if defined(USE_OPENMPT)
     std::vector<char> buffer = LoadFileToMemory(filename);
 
     if (buffer.empty()) {
@@ -130,7 +126,7 @@ MUSIC_MODULE *MUSIC_LoadSong(const char *filename) {
         return nullptr;
     }
 
-    music = ModPlug_Load(buffer.data(), int(buffer.size() - 1));
+    music = openmpt_module_create_from_memory2(buffer.data(), size_t(buffer.size() - 1), &log_func, NULL, &error_func, NULL, NULL, NULL, NULL);
 #else
     music = Mix_LoadMUS(filename);
 #endif
@@ -144,10 +140,10 @@ MUSIC_MODULE *MUSIC_LoadSongEx(const char *filename,
                                unsigned int mode,
                                const int *samplelist,
                                int samplelistnum) {
-#if defined(USE_MODPLUG)
-    return ModPlug_Load(filename, length);
-#else
     // TODO Only need for unrar, but this will require cache the music file to disk
+#if defined(USE_OPENMPT)
+    return NULL;
+#else
     return NULL;
 #endif
 }
@@ -156,9 +152,9 @@ MUSIC_MODULE *MUSIC_LoadSongEx(const char *filename,
 // signed char MUSIC_PlaySong( MUSIC_MODULE* music )
 signed char MUSIC_PlaySong(MUSIC_MODULE *music, bool loop /*=true*/) {
 // printf( "%8X MUSIC_PlaySong\n", music );
-#if defined(USE_MODPLUG)
-    ModPlug_SetMasterVolume(music, DEFAULT_VOLUME);
-    ModPlug_Seek(music, 0);
+#if defined(USE_OPENMPT)
+    openmpt_module_set_render_param(music, OPENMPT_MODULE_RENDER_MASTERGAIN_MILLIBEL, getDeciBel(DEFAULT_VOLUME)/100.);
+    openmpt_module_set_position_seconds(music, 0.);
     Mix_HookMusic(&hookmusic, music);
 #else
     Mix_HookMusicFinished(hookmusicFinished);
@@ -177,8 +173,8 @@ signed char MUSIC_IsPlaying(MUSIC_MODULE *music) {
 
 signed char MUSIC_FreeSong(MUSIC_MODULE *music) {
 // printf( "%8X MUSIC_FreeSong\n", music );
-#if defined(USE_MODPLUG)
-    ModPlug_Unload(music);
+#if defined(USE_OPENMPT)
+    openmpt_module_destroy(music);
 #else
     Mix_FreeMusic(music);
 #endif
@@ -189,7 +185,7 @@ signed char MUSIC_FreeSong(MUSIC_MODULE *music) {
 signed char MUSIC_StopSong(MUSIC_MODULE *music) {
     // printf( "%8X MUSIC_StopSong\n", music );
     if (g_music_current == music) {
-#if defined(USE_MODPLUG)
+#if defined(USE_OPENMPT)
         Mix_HookMusic(nullptr, nullptr);
 #else
         Mix_HookMusicFinished(nullptr);
@@ -208,7 +204,7 @@ signed char MUSIC_SetPaused(MUSIC_MODULE *music, signed char pause) {
         else
             Mix_ResumeMusic();
     } else if (!pause) {
-#if defined(USE_MODPLUG)
+#if defined(USE_OPENMPT)
         // DKS - When using modplug, we can handle pausing and unpausing various songs:
         g_music_current = music;
         Mix_HookMusic(&hookmusic, music);  // DKS - Be sure to reload our hook in case StopSong() was called
@@ -232,14 +228,10 @@ signed char MUSIC_GetPaused(MUSIC_MODULE *music) {
 
 signed char MUSIC_SetMasterVolume(MUSIC_MODULE *music, int volume) {
 // printf( "%8X MUSIC_SetMasterVolume %d\n", music, volume );
-#if defined(USE_MODPLUG)
+#if defined(USE_OPENMPT)
     // DKS - Modplug supports setting volume for individual tracks
     if (music) {
-        // DKS - Range of volumes for libmodplug is 0-512, not 0-255:
-        // ModPlug_SetMasterVolume( music, volume );
-        // DKS - I decided 3/2 of libmodplug's max was a better balance of the music's volume vs. sound effects:
-        // ModPlug_SetMasterVolume( music, volume*2 );
-        ModPlug_SetMasterVolume(music, volume * 3 / 2);
+        openmpt_module_set_render_param(music, OPENMPT_MODULE_RENDER_MASTERGAIN_MILLIBEL, getDeciBel(volume)/100.);
         // DKS - no need for this:
         // g_volume = volume;
     }
@@ -264,12 +256,13 @@ signed char MUSIC_IsFinished(MUSIC_MODULE *music) {
     }
 }
 
-#if defined(USE_MODPLUG)
+#if defined(USE_OPENMPT)
 void hookmusic(void *ptr, uint8_t *buffer, int size) {
+    const int frames = size / 4;
     int rsize;
-    ModPlugFile *music = reinterpret_cast<ModPlugFile *>(ptr);
+    MUSIC_MODULE *music = reinterpret_cast<MUSIC_MODULE *>(ptr);
 
-    rsize = ModPlug_Read(music, reinterpret_cast<void *>(buffer), size);
+    rsize = static_cast<int>(openmpt_module_read_interleaved_stereo(music, g_mixrate, frames, reinterpret_cast<int16_t *>(buffer)));
 
     // DKS - Added support for non-looped music files (i.e. gameover.it shouldn't loop)
     //      NOTE: I don't see the reason for the volume check, setting the volume to 0
@@ -281,15 +274,15 @@ void hookmusic(void *ptr, uint8_t *buffer, int size) {
     //        ModPlug_Seek( music, 0 );
     //    }
     //}
-    if (rsize < size) {
+    if (rsize < frames) {
         if (g_music_loops) {
             // The song is over and it loops, so re-seek to beginning and fill rest of buffer
-            ModPlug_Seek(music, 0);
-            ModPlug_Read(music, reinterpret_cast<void *>(buffer + rsize), size - rsize);
+            openmpt_module_set_position_seconds(music, 0.);
+            openmpt_module_read_interleaved_stereo(music, g_mixrate, frames - rsize, reinterpret_cast<int16_t *>(buffer + rsize*4));
 
         } else {
             // The song is over and doesn't loop, so fill remaining part of the buffer with zeroes and stop it
-            std::memset(buffer + rsize, 0, size - rsize);
+            std::memset(buffer + rsize*4, 0, size - rsize*4);
             MUSIC_StopSong(music);
         }
     }
