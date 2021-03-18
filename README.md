@@ -79,5 +79,5 @@ OpenGL Options
 * -DEGL=ON                : Enable EGL support, available only with GL2 or GL3
 
 Sound
-* -DMODPLUG=ON            : Use the modplug code for music (useful when building with older SDL_mixer, which uses the lower quality mikmod engine)
+* -DOPENMPT=ON            : Use the libopenmpt code for music (SDL2_mixer uses libmodplug while SDL_mixer uses the lower quality mikmod engine)
 
