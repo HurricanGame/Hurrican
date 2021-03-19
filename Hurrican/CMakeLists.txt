@@ -468,16 +468,16 @@ if(UNIX)
     add_definitions(-DUSE_STORAGE_PATH="${CMAKE_INSTALL_PREFIX}/share/hurrican/")
 endif()
 
-OPTION(MODPLUG "Use MODPLUG natively" OFF)
-IF(MODPLUG)
-    ADD_DEFINITIONS(-DUSE_MODPLUG)
-    target_link_libraries(${PROJECT_NAME} modplug)
-ENDIF(MODPLUG)
-
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/src/SDLPort)
 include_directories(${CMAKE_SOURCE_DIR}/3rdparty/glm)
-add_executable(hurrican ${HURRICAN_SOURCES})
+add_executable(${PROJECT_NAME} ${HURRICAN_SOURCES})
+
+OPTION(OPENMPT "Use OPENMPT for ImpulseTracker music file decoding" OFF)
+IF(OPENMPT)
+    ADD_DEFINITIONS(-DUSE_OPENMPT)
+    target_link_libraries(${PROJECT_NAME} openmpt)
+ENDIF(OPENMPT)
 
 set(SDL2_BUILDING_LIBRARY TRUE)
 find_package(SDL2)

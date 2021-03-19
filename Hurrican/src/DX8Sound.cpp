@@ -207,12 +207,12 @@ void SoundManagerClass::UpdateSongs() {
                 songs[i].pause_when_fade_ends = false;
             }
         } else if (SongIsPlaying(i)) {
-#ifndef USE_MODPLUG
+#ifndef USE_OPENMPT
             // DKS - Added this, because when SDL_mixer loops a music file, at least in some versions or
             //      configurations, it resets the song's volume to a default value. So, we must
             //      set the volume continuously.
             SetSongVolume(i, songs[i].vol);
-#endif  // !USE_MODPLUG
+#endif  // !USE_OPENMPT
         }
     }
 }
