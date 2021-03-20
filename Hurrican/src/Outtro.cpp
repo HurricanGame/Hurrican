@@ -14,6 +14,7 @@
 
 #include "Outtro.hpp"
 #include <stdio.h>
+#include <string>
 #include "Console.hpp"
 #include "DX8Sound.hpp"
 #include "Gameplay.hpp"
@@ -319,7 +320,7 @@ void OuttroClass::DoOuttro() {
             //      Note that, for here, we don't use the LowResCredts[] text array,
             //      as the logic here requires lines to be at specific locations.
             //      We end up with a little jerkiness when lines are split, but that's OK.
-            char text[255];
+            std::string text;
             char text1[255];
             char text2[255];
 
@@ -366,18 +367,16 @@ void OuttroClass::DoOuttro() {
                 int off2 = TextOff + i - 27;
                 if (off2 > 0) {
                     if (TEXT_OUTTRO1 + off2 < TEXT_SEPERATOR_MARIO)
-                        snprintf(text, 255, "%s", TextArray[TEXT_OUTTRO1 + off2]);
+                        text = TextArray[TEXT_OUTTRO1 + off2];
                     else if (TEXT_OUTTRO1 + off2 <= TEXT_SEPERATOR_MARIO + AnzahlCredits)
-                        snprintf(text, 255, "%s", Credits[off2 + 25]);
+                        text = Credits[off2 + 25];
                     else if (TEXT_OUTTRO1 + off2 <= TEXT_SEPERATOR_MARIO + AnzahlCredits + 10)
-                        snprintf(text, 255, "%s", TextArray[TEXT_OUTTRO1 + off2 - AnzahlCredits]);
-                    else
-                        strcpy_s(text, "");
+                        text = TextArray[TEXT_OUTTRO1 + off2 - AnzahlCredits];
 
                     // rendern
-                    if (CommandLineParams.LowRes && strlen(text) > 10 &&
-                        pDefaultFont->StringLength(text, 0) > max_draw_width) {
-                        SplitLine(text1, text2, text);
+                    if (CommandLineParams.LowRes && text.size() > 10 &&
+                        pDefaultFont->StringLength(text.c_str(), 0) > max_draw_width) {
+                        SplitLine(text1, text2, text.c_str());
                         pDefaultFont->DrawTextCenterAlign(320, float(display_line * yoff_inc) - Counter, text1,
                                                           0xFFEEFFFF, 0);
                         display_line++;
@@ -385,8 +384,8 @@ void OuttroClass::DoOuttro() {
                                                           0xFFEEFFFF, 0);
 
                     } else {
-                        if (strcmp(text, "") != 0)
-                            pDefaultFont->DrawTextCenterAlign(320, float(display_line * yoff_inc) - Counter, text,
+                        if (!text.empty())
+                            pDefaultFont->DrawTextCenterAlign(320, float(display_line * yoff_inc) - Counter, text.c_str(),
                                                               0xFFEEFFFF, 0);
                     }
                 }

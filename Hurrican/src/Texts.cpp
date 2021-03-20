@@ -18,6 +18,7 @@
 #include <experimental/filesystem>
 #include <fstream>
 #include <iostream>
+#include <string>
 namespace fs = std::experimental::filesystem::v1;
 
 #include "Gameplay.hpp"
@@ -355,64 +356,64 @@ void InitReplacers() {
         strcpy(s_Replacers[29], GetKeyName(Player[0].AktionKeyboard[AKTION_WAFFE_BOUNCE]));
     } else {
         int joy_idx = Player[0].JoystickIndex;
-        char buf[256];
-        snprintf(buf, 256, "%s %s", TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1], TextArray[TEXT_LEFT]);
-        strcpy(s_Replacers[1], buf);
+        std::string buf;
+        buf.append(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_LEFT]);
+        strcpy(s_Replacers[1], buf.c_str());
 
-        snprintf(buf, 256, "%s %s", TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1], TextArray[TEXT_RIGHT]);
-        strcpy(s_Replacers[3], buf);
+        buf.append(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_RIGHT]);
+        strcpy(s_Replacers[3], buf.c_str());
 
-        snprintf(buf, 256, "%s %s", TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1], TextArray[TEXT_DOWN]);
-        strcpy(s_Replacers[5], buf);
+        buf.append(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_DOWN]);
+        strcpy(s_Replacers[5], buf.c_str());
 
-        snprintf(buf, 256, "%s %s", TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1], TextArray[TEXT_UP]);
-        strcpy(s_Replacers[7], buf);
+        buf.append(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_UP]);
+        strcpy(s_Replacers[7], buf.c_str());
 
-        snprintf(buf, 256, "%s %s", TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1], TextArray[TEXT_DOWN]);
-        strcpy(s_Replacers[9], buf);
+        buf.append(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_DOWN]);
+        strcpy(s_Replacers[9], buf.c_str());
 
         if (Player[0].JoystickMode == JOYMODE_JOYSTICK)
-            snprintf(buf, 256, "%s %s", TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1], TextArray[TEXT_UP]);
+            buf.append(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_UP]);
         else
-            snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
+            buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
                       DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_JUMP]));
 
-        strcpy(s_Replacers[11], buf);
+        strcpy(s_Replacers[11], buf.c_str());
 
-        snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
+        buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_SHOOT]));
-        strcpy(s_Replacers[13], buf);
+        strcpy(s_Replacers[13], buf.c_str());
 
-        snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
+        buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_BLITZ]));
-        strcpy(s_Replacers[15], buf);
+        strcpy(s_Replacers[15], buf.c_str());
 
-        snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
+        buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_POWERLINE]));
-        strcpy(s_Replacers[17], buf);
+        strcpy(s_Replacers[17], buf.c_str());
 
-        snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
+        buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_GRANATE]));
-        strcpy(s_Replacers[19], buf);
+        strcpy(s_Replacers[19], buf.c_str());
 
-        snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
+        buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_SMARTBOMB]));
-        strcpy(s_Replacers[21], buf);
+        strcpy(s_Replacers[21], buf.c_str());
 
-        snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
+        buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_WAFFEN_CYCLE]));
-        strcpy(s_Replacers[23], buf);
+        strcpy(s_Replacers[23], buf.c_str());
 
-        snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
+        buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_WAFFE_SPREAD]));
-        strcpy(s_Replacers[25], buf);
+        strcpy(s_Replacers[25], buf.c_str());
 
-        snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
+        buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_WAFFE_LASER]));
-        strcpy(s_Replacers[27], buf);
+        strcpy(s_Replacers[27], buf.c_str());
 
-        snprintf(buf, 256, "%s %s", TextArray[TEXT_BUTTON],
+        buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_WAFFE_BOUNCE]));
-        strcpy(s_Replacers[29], buf);
+        strcpy(s_Replacers[29], buf.c_str());
     }
 }

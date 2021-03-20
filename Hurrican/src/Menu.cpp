@@ -18,6 +18,7 @@
 #endif
 #include <stdio.h>
 #include <time.h>
+#include <string>
 #include "Console.hpp"
 #include "DX8Font.hpp"
 #include "DX8Graphics.hpp"
@@ -828,64 +829,64 @@ void MenuClass::ShowMenu() {
                                                            GetKeyName(pCurrentPlayer->AktionKeyboard[i]), col2);
                             } else {
                                 // Joy axis/hat/button
-                                char Buf[80];
+                                std::string Buf;
                                 if (on_move_line) {
                                     // The three movement assignments (Walk Left, Walk Right, Crouch) can only be
                                     //  assigned to DPAD or X/Y-analog-axis and are a special case:
                                     if (pCurrentPlayer->Walk_UseAxxis) {
                                         // Movement is assigned to analog stick
-                                        strcpy_s(Buf, TextArray[TEXT_JOY_ACHSE]);
+                                        Buf = TextArray[TEXT_JOY_ACHSE];
                                     } else {
                                         // Movement is assigned to D-PAD HAT
-                                        strcpy_s(Buf, TextArray[TEXT_JOY_COOLIE]);
+                                        Buf = TextArray[TEXT_JOY_COOLIE];
                                     }
                                 } else if (on_look_line) {
                                     // Similarly, the two look assignments can only be assigned to DPAD or
                                     // X/Y-analog-axis
                                     if (pCurrentPlayer->Look_UseAxxis) {
                                         // Look up/down is assigned to analog stick
-                                        strcpy_s(Buf, TextArray[TEXT_JOY_ACHSE]);
+                                        Buf = TextArray[TEXT_JOY_ACHSE];
                                     } else {
                                         // Look up/down is assigned to DPAD HAT
-                                        strcpy_s(Buf, TextArray[TEXT_JOY_COOLIE]);
+                                        Buf = TextArray[TEXT_JOY_COOLIE];
                                     }
                                 } else if (on_jump_line && pCurrentPlayer->JoystickMode == JOYMODE_JOYSTICK) {
                                     // When in joystick mode, jump is handled by movement (DPAD or analog axis)
                                     if (pCurrentPlayer->Walk_UseAxxis) {
                                         // Jump/Movement is assigned to analog stick
-                                        strcpy_s(Buf, TextArray[TEXT_JOY_ACHSE]);
+                                        Buf = TextArray[TEXT_JOY_ACHSE];
                                     } else {
                                         // Jump/Movement is assigned to DPAD HAT
-                                        strcpy_s(Buf, TextArray[TEXT_JOY_COOLIE]);
+                                        Buf = TextArray[TEXT_JOY_COOLIE];
                                     }
                                 } else {
                                     // Joy button
-                                    snprintf(Buf, 80, "%s %s", TextArray[TEXT_BUTTON],
+                                    Buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
                                               DirectInput.MapButtonToString(pCurrentPlayer->JoystickIndex,
                                                                             pCurrentPlayer->AktionJoystick[i]));
                                 }
 
                                 pDefaultFont->DrawText(col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
-                                                       Buf, col2);
+                                                       Buf.c_str(), col2);
                             }
                         }
                     } else {
-                        char Buf[80];
+                        std::string Buf;
                         // Redefinition prompt
                         if (scale_factor <= 1) {
                             if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD)
                                 // Ask for new key
-                                strcpy_s(Buf, TextArray[TEXT_TASTEN_NEU_T]);
+                                Buf=TextArray[TEXT_TASTEN_NEU_T];
                             else
                                 // Ask for new button
-                                strcpy_s(Buf, TextArray[TEXT_TASTEN_NEU_B]);
+                                Buf=TextArray[TEXT_TASTEN_NEU_B];
                         } else {
                             // When using scaled fonts (low-res device), there's not enough room for the text prompt
-                            strcpy_s(Buf, "???");
+                            Buf="???";
                         }
 
-                        pDefaultFont->DrawText(col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing, Buf,
-                                               col2);
+                        pDefaultFont->DrawText(col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
+                                               Buf.c_str(), col2);
                     }
                 }
             }
@@ -933,18 +934,16 @@ void MenuClass::ShowMenu() {
         } break;  // HIGHSCORE
 
         case MENUZUSTAND_ENTERNAME: {
-            char Buffer[100];  // Für itoa
-
             pMenuFont->DrawTextCenterAlign(320, ypos + 90, TextArray[TEXT_WAHNSINN], D3DCOLOR_RGBA(255, 255, 255, 255),
                                            2);
 
-            strcpy_s(Buffer, strlen(TextArray[TEXT_NEUE_HIGHSCORE]) + 1, TextArray[TEXT_NEUE_HIGHSCORE]);
             pMenuFont->DrawTextCenterAlign(320, ypos + 180, TextArray[TEXT_NAMEN_EINGEBEN],
                                            D3DCOLOR_RGBA(255, 255, 255, 255), 2);
 
-            snprintf(Buffer, 100, "%s %d", Buffer, NewRank + 1);
+            std::string Buffer(TextArray[TEXT_NEUE_HIGHSCORE]);
+            Buffer.append(std::to_string(NewRank + 1));
 
-            pMenuFont->DrawTextCenterAlign(320, ypos + 150, Buffer, D3DCOLOR_RGBA(255, 255, 255, 255), 2);
+            pMenuFont->DrawTextCenterAlign(320, ypos + 150, Buffer.c_str(), D3DCOLOR_RGBA(255, 255, 255, 255), 2);
         } break;  // ENTERNAME
 
         case MENUPUNKT_CREDITS: {
