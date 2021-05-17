@@ -15,9 +15,9 @@
 // --------------------------------------------------------------------------------------
 
 #include <cstdio>
-#include <experimental/filesystem>
+#include <filesystem>
 #include <string>
-namespace fs = std::experimental::filesystem::v1;
+namespace fs = std::filesystem;
 
 #include "Console.hpp"
 #include "DX8Graphics.hpp"
@@ -171,7 +171,7 @@ TileEngineClass::TileEngineClass() {
     float w = 0.0f;
     while (i < 4000)
     {
-        /* SinList  [i] = 0.0f; */  //DKS - Disabled this and all eliminated all uses of it, 
+        /* SinList  [i] = 0.0f; */  //DKS - Disabled this and all eliminated all uses of it,
                                     // as it was only ever filled with zeroes and had no effect.
         //DKS - This is to ensure libm should explicitly be called here and not the lookup table:
         //SinList2 [i] = float (sin(w)) * 5.0f;

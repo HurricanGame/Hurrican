@@ -14,8 +14,8 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <experimental/filesystem>
-namespace fs = std::experimental::filesystem::v1;
+#include <filesystem>
+namespace fs = std::filesystem;
 #include "Console.hpp"
 #include "DX8Graphics.hpp"
 #include "Gameplay.hpp"

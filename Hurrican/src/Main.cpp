@@ -26,10 +26,10 @@
 
 #include <algorithm>
 #include <cstdio>
-#include <experimental/filesystem>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
-namespace fs = std::experimental::filesystem::v1;
+namespace fs = std::filesystem;
 
 #include <iomanip>
 #include <SDL.h>
