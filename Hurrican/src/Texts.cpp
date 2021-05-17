@@ -15,11 +15,11 @@
 
 #include <cstdio>
 #include <cstring>
-#include <experimental/filesystem>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
-namespace fs = std::experimental::filesystem::v1;
+namespace fs = std::filesystem;
 
 #include "Gameplay.hpp"
 #include "GetKeyName.hpp"

@@ -24,8 +24,8 @@
 
 #include <cstdint>
 #include <cstring>
-#include <experimental/filesystem>
-namespace fs = std::experimental::filesystem::v1;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include "DX8Graphics.hpp"
 #include "DX8Texture.hpp"

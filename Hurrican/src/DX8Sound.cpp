@@ -22,8 +22,8 @@
 // --------------------------------------------------------------------------------------
 
 #include <cstdio>
-#include <experimental/filesystem>
-namespace fs = std::experimental::filesystem::v1;
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include "DX8Sound.hpp"
 #include "Gameplay.hpp"
