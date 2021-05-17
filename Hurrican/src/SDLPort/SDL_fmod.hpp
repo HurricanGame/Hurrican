@@ -28,7 +28,7 @@
 #include "SDL_mixer.h"
 #include "SDL_port.hpp"
 #if defined(USE_OPENMPT)
-#include "libopenmpt/libopenmpt.h"
+#include <libopenmpt/libopenmpt.h>
 #endif
 #include "Logdatei.hpp"
 

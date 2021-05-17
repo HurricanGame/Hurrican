@@ -512,7 +512,7 @@ else(SDL2_FOUND)
     target_link_libraries(${PROJECT_NAME} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARIES} ${SDL_IMAGE_LIBRARIES})
 endif(SDL2_FOUND)
 
-if(UNIX OR MINGW) # Why?
+if((UNIX OR MINGW) AND NOT APPLE)
     target_link_libraries(${PROJECT_NAME} stdc++fs)
 endif()
 
