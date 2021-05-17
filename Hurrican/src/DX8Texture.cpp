@@ -17,12 +17,12 @@
 #include "Gameplay.hpp"
 #include "Main.hpp"
 
-#include <experimental/filesystem>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <map>
 #include <string>
-namespace fs = std::experimental::filesystem::v1;
+namespace fs = std::filesystem;
 
 #ifdef USE_UNRARLIB
 #include "unrarlib.h"
