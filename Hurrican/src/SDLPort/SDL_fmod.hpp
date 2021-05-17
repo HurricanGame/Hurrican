@@ -28,7 +28,7 @@
 #include "SDL_mixer.h"
 #include "SDL_port.hpp"
 #if defined(USE_MODPLUG)
-#include "libmodplug/modplug.h"
+#include <libmodplug/modplug.h>
 #endif
 #include "Logdatei.hpp"
 

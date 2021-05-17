@@ -440,8 +440,13 @@ find_package(LibEpoxy 1.2 REQUIRED)
 include_directories(${SDL_INCLUDE_DIR})
 include_directories(${LibEpoxy_INCLUDE_DIRS})
 
-target_link_libraries(${PROJECT_NAME} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARIES} ${SDL_IMAGE_LIBRARIES} ${OPENGL_LIBRARIES} ${LibEpoxy_LIBRARIES} modplug)
-if(UNIX OR MINGW)
+find_path(MODPLUG_INCLUDE_DIR libmodplug/modplug.h)
+include_directories(${MODPLUG_INCLUDE_DIR})
+find_library(MODPLUG_LIBRARY modplug REQUIRED)
+target_link_libraries(${PROJECT_NAME} ${MODPLUG_LIBRARY})
+
+target_link_libraries(${PROJECT_NAME} ${SDL_LIBRARY} ${SDL_MIXER_LIBRARIES} ${SDL_IMAGE_LIBRARIES} ${OPENGL_LIBRARIES} ${LibEpoxy_LIBRARIES})
+if((UNIX OR MINGW) AND NOT APPLE)
    target_link_libraries(${PROJECT_NAME} stdc++fs)
 endif()
 
