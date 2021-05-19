@@ -47,5 +47,5 @@ jobs:
         run: |
           mkdir Hurrican/build
           cd Hurrican/build
-          cmake -G ${{ matrix.generator }} ..
+          cmake -G "${{ matrix.generator }}" ..
           cmake --build .
