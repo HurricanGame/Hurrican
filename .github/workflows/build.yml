@@ -19,6 +19,9 @@ jobs:
           - generator: Xcode
             platform: macOS
             os: macos-latest
+          - generator: Visual Studio 16 2019
+            platform: Windows
+            os: windows-latest
     steps:
       - uses: actions/checkout@v2
         with:
@@ -36,6 +39,10 @@ jobs:
         run: |
           brew update
           brew install sdl2 sdl2_image sdl2_mixer sdl sdl_image sdl_mixer libepoxy libmodplug
+      - name: Install dependencies (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          vcpkg install libmodplug:x64-windows sdl2:x64-windows sdl2-image:x64-windows sdl2-mixer:x64-windows libepoxy:x64-windows
       - name: Build
         run: |
           mkdir Hurrican/build
