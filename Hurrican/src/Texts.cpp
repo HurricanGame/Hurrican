@@ -62,7 +62,7 @@ bool LoadLanguage(char *filename) {
     std::string temp;
 
     if (CommandLineParams.RunOwnLevelList) {
-        temp = std::string(g_storage_ext) +  "/levels/" + CommandLineParams.OwnLevelList + "/custom.lng";
+        temp = std::string(g_storage_ext) +  "/data/levels/" + CommandLineParams.OwnLevelList + "/custom.lng";
         if (fs::exists(temp) && fs::is_regular_file(temp))
             goto loadfile;
     }
@@ -117,10 +117,10 @@ loadfile:
     //
     //
     if (CommandLineParams.RunOwnLevelList) {
-        std::string levelfile = std::string(g_storage_ext) + "/levels/" + CommandLineParams.OwnLevelList + "/levellist.dat";
+        std::string levelfile = std::string(g_storage_ext) + "/data/levels/" + CommandLineParams.OwnLevelList + "/levellist.dat";
 
-        Datei.open(levelfile);  // Reihenfolge Level laden
-        if (!Datei) {
+        in.open(levelfile);  // Reihenfolge Level laden
+        if (!in) {
             // Fehler beim öffnen ? Dann standard Liste öffnen
             CommandLineParams.RunOwnLevelList = false;
             Protokoll << "-> Error opening level-order file" << std::endl;

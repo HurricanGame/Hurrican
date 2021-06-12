@@ -167,7 +167,7 @@ void TexturesystemClass::ReadScaleFactorsFiles() {
 
     if (CommandLineParams.RunOwnLevelList) {
         path =
-            std::string(g_storage_ext) + "/levels/" + std::string(CommandLineParams.OwnLevelList) + "/data/textures/";
+            std::string(g_storage_ext) + "/data/levels/" + std::string(CommandLineParams.OwnLevelList);
     } else {
         path = std::string(g_storage_ext) + "/data/textures/";
     }
