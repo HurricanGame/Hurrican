@@ -180,10 +180,8 @@ loadfile:
     //
     MAX_LEVELS = 0;
 
-    // DKS - Fixed mem leak, this while() block now uses temp[] char array
     while (!in.eof()) {
         char tmpchar[256];
-        temp[0] = '\0';  // DKS - Added initializer
         in.getline(tmpchar, 256);
 
         /* CHECKME: Removing CR from line ending (stegerg) */
