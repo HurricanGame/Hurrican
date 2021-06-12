@@ -198,17 +198,24 @@ bool TexturesystemClass::LoadTextureFromFile(const std::string &filename, Textur
         return false;
     }
 
-    std::string path = std::string(g_storage_ext);
+    bool success = false;
 
-    // DKS - All textures are now stored in their own data/textures/ subdir:
-    // Are we using a custom level set?
+    std::string fullpath, path;
+
+    // Zuerst checken, ob sich der Song in einem MOD-Ordner befindet
     if (CommandLineParams.RunOwnLevelList) {
-        path += "/levels/" + std::string(CommandLineParams.OwnLevelList);
+        path =
+            std::string(g_storage_ext) + "/data/levels/" + std::string(CommandLineParams.OwnLevelList);
+        fullpath = path + "/" + filename;
+        if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
+            goto loadfile;
     }
 
-    path += "/data/textures";
-
-    bool success = false;
+    // Dann checken, ob sich das File im Standard Ordner befindet
+    path = std::string(g_storage_ext) + "/data/textures";
+    fullpath = path + "/" + filename;
+    if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
+        goto loadfile;
 
 #if defined(USE_UNRARLIB)
     // Are we using unrarlib to read all game data from a single RAR archive?
@@ -230,7 +237,7 @@ bool TexturesystemClass::LoadTextureFromFile(const std::string &filename, Textur
         }
     }
 #endif  // USE_UNRARLIB
-
+loadfile:
     // Load the texture from disk:
     success = SDL_LoadTexture(path, filename, NULL, 0, th);
     if (success)
