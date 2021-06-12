@@ -370,7 +370,7 @@ loadfile:
         fwrite(pData, Size, 1, TempFile);                       // speichern
         fclose(TempFile);                                       // und schliessen
 
-        sprintf_s(Temp, "%s", TEMP_FILE_PREFIX "temp.map");  // Name anpassen
+        Temp = TEMP_FILE_PREFIX "temp.map";                  // Name anpassen
         free(pData);                                         // und Speicher freigeben
     }
 #endif  // USE_UNRARLIB
