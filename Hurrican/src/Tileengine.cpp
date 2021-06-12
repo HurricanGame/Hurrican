@@ -347,13 +347,13 @@ bool TileEngineClass::LoadLevel(const std::string &Filename) {
 #if defined(USE_UNRARLIB)
     // Auch nicht? Dann ist es hoffentlich im RAR file
     if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) == false) {
-        Protokoll << "\n-> Error loading " << Filename << " from Archive !" << std::endl;
+        Protokoll << "\n-> Error loading level " << Filename << " from Archive !" << std::endl;
         GameRunning = false;
         return false;
     } else
         fromrar = true;
 #else
-    Protokoll << "\n-> Error loading " << Temp << "!" << std::endl;
+    Protokoll << "\n-> Error loading level " << Filename << "!" << std::endl;
     GameRunning = false;
     return false;
 #endif  // USE_UNRARLIB

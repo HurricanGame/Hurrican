@@ -123,7 +123,7 @@ loadfile:
         if (!in) {
             // Fehler beim öffnen ? Dann standard Liste öffnen
             CommandLineParams.RunOwnLevelList = false;
-            Protokoll << "-> Error opening level-order file" << std::endl;
+            Protokoll << "-> Error opening level-order file" << levelfile << std::endl;
             GameRunning = false;
             return false;
         }
