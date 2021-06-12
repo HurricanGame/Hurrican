@@ -32,6 +32,8 @@
 #include "Tileengine.hpp"
 #include "Timer.hpp"
 
+#include <string>
+
 // --------------------------------------------------------------------------------------
 // Gameplay Variablen
 // --------------------------------------------------------------------------------------
@@ -123,7 +125,7 @@ void InitNewGame() {
 // --------------------------------------------------------------------------------------
 
 void InitNewGameLevel() {
-    char Name[100];
+    std::string Name;
 
     SoundManager.StopSong(MUSIC_STAGEMUSIC, false);
     // DKS - Might as well stop any boss music too:
@@ -143,14 +145,14 @@ void InitNewGameLevel() {
     if (!CommandLineParams.RunUserLevel) {
         // Nein, dann normales Level in der Reihenfolge laden oder Tutorial Level
         if (RunningTutorial) {
-            strcpy_s(Name, strlen("tutorial.map") + 1, "tutorial.map");
+            Name = "tutorial.map";
             NumTextures = TextureCount[0];
         } else {
-            strcpy_s(Name, strlen(StageReihenfolge[Stage - 1]) + 1, StageReihenfolge[Stage - 1]);
+            Name = StageReihenfolge[Stage - 1];
             NumTextures = TextureCount[Stage];
         }
     } else
-        strcpy_s(Name, strlen(CommandLineParams.UserLevelName) + 1, CommandLineParams.UserLevelName);
+        Name = CommandLineParams.UserLevelName;
 
     pMenu->StartProgressBar(NumTextures);
 
