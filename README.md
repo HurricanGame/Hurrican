@@ -3,8 +3,8 @@
 A fork of Hurrican, freeware jump and shoot game created by Poke53280, with SDL2 enabled by default, support for libopenmpt and CRT simulation.
 Additional userlevels from http://turricanforever.de included.
 
-Original code by Eiswuxe (Poke53280)  
-Further work by Pickle and Stefan Schmidt (thrimbor)
+Original code by Eiswuxe (Poke53280) [[Winterworks](https://www.winterworks.de/project/hurrican/)]  
+Further work by [Pickle136](https://sourceforge.net/projects/hurrican/) and Stefan Schmidt ([thrimbor](https://github.com/thrimbor/Hurrican))
 
 ![screenshot](https://github.com/drfiemost/Hurrican/wiki/images/level1.png)
 
@@ -13,13 +13,15 @@ Further work by Pickle and Stefan Schmidt (thrimbor)
 ### Dependencies
 
 The code depends on SDL2 (or the old deprecated SDL) with the image and mixer components, OpenGL and libepoxy.
-Optionally libopenmpt can be used for the music.
+Optionally libopenmpt can be used for the music in place of the standard from SDL_mixer (see below).
 A compiler with c++17 support is required.
 
 ### Building
 
 The code can be built using cmake (tested on Linux and MinGW)
 
+    git clone https://github.com/drfiemost/Hurrican.git
+    cd Hurrican/Hurrican
     mkdir build && cd build
     cmake -DCMAKE_BUILD_TYPE=Release ..
     make
