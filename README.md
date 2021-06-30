@@ -20,7 +20,7 @@ A compiler with c++17 support is required.
 
 The code can be built using cmake (tested on Linux and MinGW)
 
-    git clone https://github.com/drfiemost/Hurrican.git
+    git clone --recurse-submodules https://github.com/drfiemost/Hurrican.git
     cd Hurrican/Hurrican
     mkdir build && cd build
     cmake -DCMAKE_BUILD_TYPE=Release ..
