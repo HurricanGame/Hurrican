@@ -397,9 +397,6 @@ if(MINGW)
     )
 endif(MINGW)
 
-# Prefer the OpenGL vendor-neutral dispatch library (fixes CMake warning)
-SET(OpenGL_GL_PREFERENCE "GLVND")
-
 # Default to OpenGL 2
 if (NOT RENDERER)
     set(RENDERER "GL2")
@@ -446,15 +443,6 @@ IF(FBO)
     )
 ENDIF(FBO)
 
-CMAKE_DEPENDENT_OPTION(EGL "EGL support" OFF "${gl2}" OFF)
-IF(EGL)
-    ADD_DEFINITIONS(-DUSE_EGL)
-    list(APPEND HURRICAN_SOURCES
-        src/SDLPort/eglport.cpp
-        src/SDLPort/eglport.hpp
-    )
-ENDIF(EGL)
-
 add_definitions(-DPLATFORM_SDL)
 add_definitions(-DENABLE_CONSOLE_COMMANDS) # make optional?
 # -DUSE_NO_MEMPOOLING
@@ -491,12 +479,11 @@ else(SDL2_FOUND)
     INCLUDE(FindSDL_image REQUIRED)
 endif(SDL2_FOUND)
 
-INCLUDE(FindOpenGL REQUIRED)
 find_package(LibEpoxy 1.2 REQUIRED)
 
 include_directories(${LibEpoxy_INCLUDE_DIRS})
 
-target_link_libraries(${PROJECT_NAME} ${OPENGL_gl_LIBRARY} ${LibEpoxy_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${LibEpoxy_LIBRARIES})
 
 if (SDL2_FOUND)
     include_directories(${SDL2_INCLUDE_DIR}

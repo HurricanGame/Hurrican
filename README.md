@@ -12,7 +12,7 @@ Further work by [Pickle136](https://sourceforge.net/projects/hurrican/) and Stef
 
 ### Dependencies
 
-The code depends on SDL2 (or the old deprecated SDL) with the image and mixer components, OpenGL and libepoxy.
+The code depends on SDL2 (or the old deprecated SDL) with the image and mixer components, and libepoxy.
 Optionally libopenmpt can be used for the music in place of the standard from SDL_mixer (see below).
 A compiler with c++17 support is required.
 
@@ -36,7 +36,6 @@ OpenGL Options
 * -DRENDERER=GL3          : Use the OpenGL 3.0 code (programable pipline)
 * -DRENDERER=GLES3        : Use the OpenGL 3.0 code with ES compatible
 * -DFBO=ON                : Add FBO support, allow screen to be scaled to arbitrary dimensions, available only with GL2 or GL3 and enabled by default
-* -DEGL=ON                : Enable EGL support, available only with GL2 or GL3
 
 Sound
 * -DOPENMPT=ON            : Use the libopenmpt code for music (SDL2_mixer uses libmodplug while SDL_mixer uses the lower quality mikmod engine)
