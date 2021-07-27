@@ -36,6 +36,7 @@ OpenGL Options
 * -DRENDERER=GL3          : Use the OpenGL 3.0 code (programable pipline)
 * -DRENDERER=GLES3        : Use the OpenGL 3.0 code with ES compatible
 * -DFBO=ON                : Add FBO support, allow screen to be scaled to arbitrary dimensions, available only with GL2 or GL3 and enabled by default
+* -DDEFAULT_SCREENBPP=<16|24|32> : Set the default screen depth, 32 if not specified
 
 Sound
 * -DOPENMPT=ON            : Use the libopenmpt code for music (SDL2_mixer uses libmodplug while SDL_mixer uses the lower quality mikmod engine)
