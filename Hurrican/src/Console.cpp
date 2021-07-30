@@ -829,11 +829,11 @@ bool ConsoleClass::DoConsole() {
 }  // DoCOnsole
 
 void ConsoleClass::print(const std::string &output) {
-    strcpy_s(Buffer, strlen(output.c_str()) + 1, output.c_str());
+    strcpy_s(Buffer, MAX_CHARS-1, output.c_str());
     ScrollUp();
 }
 
 void ConsoleClass::print(const char *output) {
-    strcpy_s(Buffer, strlen(output) + 1, output);
+    strcpy_s(Buffer, MAX_CHARS-1, output);
     ScrollUp();
 }

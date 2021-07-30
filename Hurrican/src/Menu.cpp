@@ -1579,8 +1579,7 @@ void MenuClass::DoMenu() {
 
                 // Language File gewählt ?
                 if (AktuellerPunkt < num_lang) {
-                    strcpy_s(ActualLanguage, strlen(LanguageFiles[AktuellerPunkt].c_str()) + 1,
-                             LanguageFiles[AktuellerPunkt].c_str());
+                    strcpy_s(ActualLanguage, 256-1, LanguageFiles[AktuellerPunkt].c_str());
                     LoadLanguage(ActualLanguage);
                     SaveConfig();
                     ShowLanguageInfoCounter = 2000.0f;
@@ -1962,7 +1961,7 @@ void MenuClass::DoMenu() {
                 }
 
                 // Neuen Namen an die neue Position setzen
-                strcpy_s(Highscores[NewRank].Name, strlen(NewName) + 1, NewName);
+                strcpy_s(Highscores[NewRank].Name, 32-1, NewName);
 
                 Highscores[NewRank].Stage = NewStage;
                 Highscores[NewRank].Skill = NewSkill;
@@ -2271,7 +2270,7 @@ void MenuClass::DoMenu() {
                     strcpy_s(timestr, asctime(ptm));
 
                     strcpy_s(Savegames[AktuellerPunkt].Name, 1, "");
-                    strcpy_s(Savegames[AktuellerPunkt].Name, strlen(timestr) + 1, timestr);
+                    strcpy_s(Savegames[AktuellerPunkt].Name, 40-1, timestr);
 
                     Savegames[AktuellerPunkt].Players = NUMPLAYERS;
                     Savegames[AktuellerPunkt].Score = Player[0].Score;
