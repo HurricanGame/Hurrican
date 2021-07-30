@@ -707,11 +707,10 @@ void ConsoleClass::CheckInput() {
 
             // Backspace
             if (i == DIK_BACK && strlen(Buffer) > 0) {
-                char Temp[MAX_CHARS];
+                std::string Temp(Buffer, strlen(Buffer) - 1);
 
-                strcpy_s(Temp, Buffer);
                 strcpy_s(Buffer, "");
-                strncat_s(Buffer, Temp, strlen(Temp) - 1);
+                strncat_s(Buffer, Temp.c_str(), MAX_CHARS-1);
             }
 
             // Neue Zeile
