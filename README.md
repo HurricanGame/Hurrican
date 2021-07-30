@@ -1,11 +1,12 @@
 [![CI build](https://github.com/drfiemost/Hurrican/actions/workflows/build.yml/badge.svg)](https://github.com/drfiemost/Hurrican/actions/workflows/build.yml)
 
 A fork of Hurrican, freeware jump and shoot game created by Poke53280, with SDL2 enabled by default, support for libopenmpt and CRT simulation.
+Also uses XDG compliant data/config paths on UNIX.
 Additional userlevels from http://turricanforever.de included.
 
 Original code by Eiswuxe (Poke53280) [[Winterworks](https://www.winterworks.de/project/hurrican/)]  
 Further work by [Pickle136](https://sourceforge.net/projects/hurrican/) and Stefan Schmidt ([thrimbor](https://github.com/thrimbor/Hurrican))  
-CRT simulation based on [CRT effect - Shadertoy, Unity](https://luka712.github.io/2018/07/21/CRT-effect-Shadertoy-Unity/) article from luka712's blog
+CRT simulation partially based on [CRT effect - Shadertoy, Unity](https://luka712.github.io/2018/07/21/CRT-effect-Shadertoy-Unity/) article from luka712's blog
 
 ![screenshot](https://github.com/drfiemost/Hurrican/wiki/images/level1.png)
 
