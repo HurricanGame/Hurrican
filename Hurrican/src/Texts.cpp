@@ -355,62 +355,62 @@ void InitReplacers() {
     } else {
         int joy_idx = Player[0].JoystickIndex;
         std::string buf;
-        buf.append(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_LEFT]);
+        buf.assign(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_LEFT]);
         strcpy(s_Replacers[1], buf.c_str());
 
-        buf.append(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_RIGHT]);
+        buf.assign(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_RIGHT]);
         strcpy(s_Replacers[3], buf.c_str());
 
-        buf.append(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_DOWN]);
+        buf.assign(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_DOWN]);
         strcpy(s_Replacers[5], buf.c_str());
 
-        buf.append(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_UP]);
+        buf.assign(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_UP]);
         strcpy(s_Replacers[7], buf.c_str());
 
-        buf.append(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_DOWN]);
+        buf.assign(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_DOWN]);
         strcpy(s_Replacers[9], buf.c_str());
 
         if (Player[0].JoystickMode == JOYMODE_JOYSTICK)
-            buf.append(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_UP]);
+            buf.assign(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_UP]);
         else
-            buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
+            buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
                       DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_JUMP]));
 
         strcpy(s_Replacers[11], buf.c_str());
 
-        buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
+        buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_SHOOT]));
         strcpy(s_Replacers[13], buf.c_str());
 
-        buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
+        buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_BLITZ]));
         strcpy(s_Replacers[15], buf.c_str());
 
-        buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
+        buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_POWERLINE]));
         strcpy(s_Replacers[17], buf.c_str());
 
-        buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
+        buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_GRANATE]));
         strcpy(s_Replacers[19], buf.c_str());
 
-        buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
+        buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_SMARTBOMB]));
         strcpy(s_Replacers[21], buf.c_str());
 
-        buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
+        buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_WAFFEN_CYCLE]));
         strcpy(s_Replacers[23], buf.c_str());
 
-        buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
+        buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_WAFFE_SPREAD]));
         strcpy(s_Replacers[25], buf.c_str());
 
-        buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
+        buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_WAFFE_LASER]));
         strcpy(s_Replacers[27], buf.c_str());
 
-        buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
+        buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_WAFFE_BOUNCE]));
         strcpy(s_Replacers[29], buf.c_str());
     }
