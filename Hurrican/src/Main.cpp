@@ -246,7 +246,7 @@ void FillCommandLineParams(int argc, char *args[]) {
                 if (args[i] && strlen(args[i]) > 0 && !CommandLineParams.SavePath) {
                     CommandLineParams.SavePath = static_cast<char *>(malloc(strlen(args[i]) + 1));
                     strcpy(CommandLineParams.SavePath, args[i]);
-                    if (fs::create_directory(CommandLineParams.SavePath)) {
+                    if (fs::is_directory(CommandLineParams.SavePath)) {
                         std::cout << "Save path set to " << CommandLineParams.SavePath << std::endl;
                     } else {
                         std::cout << "ERROR: could not find save path " << CommandLineParams.SavePath << std::endl;
