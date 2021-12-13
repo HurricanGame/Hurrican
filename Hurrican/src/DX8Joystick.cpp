@@ -116,17 +116,17 @@ bool DirectJoystickClass::Init(int joy) {
         bind = SDL_GameControllerGetBindForButton(controller, SDL_CONTROLLER_BUTTON_A);
         if (bind.bindType != SDL_CONTROLLER_BINDTYPE_NONE) {
             enterButton = bind.value.button;
-            Protokoll << "Enter function mapped to button A (" << startButton << ")" << std::endl;
+            Protokoll << "Enter function mapped to button A (" << enterButton << ")" << std::endl;
         }
         bind = SDL_GameControllerGetBindForButton(controller, SDL_CONTROLLER_BUTTON_B);
         if (bind.bindType != SDL_CONTROLLER_BINDTYPE_NONE) {
             backButton = bind.value.button;
-            Protokoll << "Back function mapped to button B (" << startButton << ")" << std::endl;
+            Protokoll << "Back function mapped to button B (" << backButton << ")" << std::endl;
         }
         bind = SDL_GameControllerGetBindForButton(controller, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
         if (bind.bindType != SDL_CONTROLLER_BINDTYPE_NONE) {
             deleteButton = bind.value.button;
-            Protokoll << "Delete function mapped to button LB (" << startButton << ")" << std::endl;
+            Protokoll << "Delete function mapped to button LB (" << deleteButton << ")" << std::endl;
         }
         SDL_GameControllerClose(controller);
     }
