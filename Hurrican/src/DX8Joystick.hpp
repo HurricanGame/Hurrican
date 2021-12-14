@@ -24,6 +24,8 @@
 #include "SDL_port.hpp"
 #endif
 
+#include <string>
+
 // --------------------------------------------------------------------------------------
 // Klassendeklaration
 // --------------------------------------------------------------------------------------
@@ -45,7 +47,7 @@ class DirectJoystickClass {
     int JoystickPOV;                            // POV (für coolie hat)
     int JoystickMode;                           // Joypad oder Stickmode
     bool JoystickButtons[MAX_JOYSTICKBUTTONS];  // Feuerknopf gedrückt?
-    char JoystickName[70];                      // Joystick Produktname
+    std::string JoystickName;                   // Joystick Produktname
     int NumButtons;                             // How many buttons joystick supports
 
     int startButton;

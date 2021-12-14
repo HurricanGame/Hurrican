@@ -741,17 +741,17 @@ void MenuClass::ShowMenu() {
                                            col);
                 else {
                     // Print joystick name, truncated to fit if necessary
-                    char tmpbuf[120];
-                    snprintf(tmpbuf, 120, "%d:%s", pCurrentPlayer->JoystickIndex,
-                              DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].JoystickName);
-                    int cutoff = strlen(tmpbuf) - 1;
-                    int max_w = col2_off_x - 10;
-                    while (cutoff > 1 && pDefaultFont->StringLength(tmpbuf) > max_w) {
-                        tmpbuf[cutoff] = '\0';
+                    std::string tmpbuf = std::to_string(pCurrentPlayer->JoystickIndex)
+                        .append(":")
+                        .append(DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].JoystickName);
+                    int cutoff = tmpbuf.length() - 1;
+                    int const max_w = col2_off_x - 10;
+                    while (cutoff > 1 && pDefaultFont->StringLength(tmpbuf.c_str()) > max_w) {
+                        tmpbuf.erase(cutoff);
                         cutoff--;
                     }
                     pDefaultFont->DrawText(col1_off_x + j * col2_off_x,
-                                           line1_off_y + MENU_TASTEN_TYPE_LINE * line_spacing, tmpbuf, col);
+                                           line1_off_y + MENU_TASTEN_TYPE_LINE * line_spacing, tmpbuf.c_str(), col);
                 }
 
                 // Rechteck für Empfindlichkeit

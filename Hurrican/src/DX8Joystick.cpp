@@ -98,12 +98,7 @@ bool DirectJoystickClass::Init(int joy) {
     NumButtons = SDL_JoystickNumButtons(lpDIJoystick);
 
     // Get joystick's name
-    if (strlen(SDL_JoystickName(SDLJOYINDEX)) < sizeof(JoystickName)) {
-        strcpy_s(JoystickName, SDL_JoystickName(SDLJOYINDEX));
-    } else {
-        strcpy_s(JoystickName, sizeof(JoystickName) - 1, SDL_JoystickName(SDLJOYINDEX));  // Truncate to fit
-        JoystickName[sizeof(JoystickName) - 1] = '\0';                            // and null-terminate
-    }
+    JoystickName = SDL_JoystickName(SDLJOYINDEX);
 
     Protokoll << "Joystick " << joy << ": Acquire successful!\nButtons: " << NumButtons
         << " \nName: " << JoystickName << std::endl;
