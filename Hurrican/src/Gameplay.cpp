@@ -1111,22 +1111,30 @@ void SummaryScreen() {
                                float(sprites_y - pDefaultFont->GetYCharSize() / 2), TextArray[TEXT_SUMMARY_SECRETS],
                                color);
 
-        char buf[100];
-        snprintf(buf, 100, "%i/%i", Player[0].BlocksThisLevel, TileEngine.MaxBlocks);
-        pDefaultFont->DrawText(float(sprite1_x - pDefaultFont->StringLength(buf) / 2), float(stats_txt_y), buf,
-                               color);
+        std::string buf;
+        buf = std::to_string(Player[0].BlocksThisLevel)
+            .append("/")
+            .append(std::to_string(TileEngine.MaxBlocks));
+        pDefaultFont->DrawText(float(sprite1_x - pDefaultFont->StringLength(buf.c_str()) / 2), 
+                               float(stats_txt_y), buf.c_str(), color);
 
-        snprintf(buf, 100, "%i/%i", Player[0].DiamondsThisLevel, TileEngine.MaxDiamonds);
-        pDefaultFont->DrawText(float(sprite2_x - pDefaultFont->StringLength(buf) / 2), float(stats_txt_y), buf,
-                               color);
+        buf = std::to_string(Player[0].DiamondsThisLevel)
+            .append("/")
+            .append(std::to_string(TileEngine.MaxDiamonds));
+        pDefaultFont->DrawText(float(sprite2_x - pDefaultFont->StringLength(buf.c_str()) / 2),
+                               float(stats_txt_y), buf.c_str(), color);
 
-        snprintf(buf, 100, "%i/%i", Player[0].LivesThisLevel, TileEngine.MaxOneUps);
-        pDefaultFont->DrawText(float(sprite3_x - pDefaultFont->StringLength(buf) / 2), float(stats_txt_y), buf,
-                               color);
+        buf = std::to_string(Player[0].LivesThisLevel)
+            .append("/")
+            .append(std::to_string(TileEngine.MaxOneUps));
+        pDefaultFont->DrawText(float(sprite3_x - pDefaultFont->StringLength(buf.c_str()) / 2),
+                               float(stats_txt_y), buf.c_str(), color);
 
-        snprintf(buf, 100, "%i/%i", Player[0].SecretThisLevel, TileEngine.MaxSecrets);
-        pDefaultFont->DrawText(float(secrets_x - pDefaultFont->StringLength(buf) / 2), float(stats_txt_y), buf,
-                               color);
+        buf = std::to_string(Player[0].SecretThisLevel)
+            .append("/")
+            .append(std::to_string(TileEngine.MaxSecrets));
+        pDefaultFont->DrawText(float(secrets_x - pDefaultFont->StringLength(buf.c_str()) / 2),
+                               float(stats_txt_y), buf.c_str(), color);
 
         // Cheat freigespielt? -> Wenn alle Diamanten gefunden
         if (reveal_cheat) {
@@ -1135,8 +1143,11 @@ void SummaryScreen() {
             for (unsigned int p = 0; p < strlen(buf2); p++)
                 buf2[p] ^= 64;
 
-            snprintf(buf, 100, "%s: %s", TextArray[TEXT_SUMMARY_CHEATUNLOCK], buf2);
-            pDefaultFont->DrawText(float(RENDERWIDTH / 2 - pDefaultFont->StringLength(buf, 0) / 2), float(cheat_txt_y), buf, color,
+            buf = std::string(TextArray[TEXT_SUMMARY_CHEATUNLOCK])
+                .append(": ")
+                .append(buf2);
+            pDefaultFont->DrawText(float(RENDERWIDTH / 2 - pDefaultFont->StringLength(buf.c_str(), 0) / 2),
+                                   float(cheat_txt_y), buf.c_str(), color,
                                    0);
         }
 
