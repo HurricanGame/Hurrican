@@ -37,6 +37,8 @@ namespace fs = std::filesystem;
 #include "unrarlib.h"
 #endif
 
+constexpr int MIXRATE = 48000;
+
 //---------------------------------------------------------------------------------------
 // Funktionsdefinitionen
 //---------------------------------------------------------------------------------------
@@ -229,7 +231,7 @@ void SoundManagerClass::Init() {
     // smpp.MaxSoftwareChannels	= 64;
     smpp.MaxSoftwareChannels = 24;
 
-    smpp.Mixrate = 44100;
+    smpp.Mixrate = MIXRATE;
     smpp.Flags = FSOUND_INIT_USEDEFAULTMIDISYNTH;
 
     if (InitFMOD(smpp)) {
