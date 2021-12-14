@@ -24,14 +24,14 @@ constexpr Uint16 rumble[4] = { 20000, 40000, 60000, 30000 };
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-DirectJoystickClass::DirectJoystickClass() {
-    lpDIJoystick = NULL;
+DirectJoystickClass::DirectJoystickClass() :
+    lpDIJoystick(nullptr),
+    CanForceFeedback(false) {
 
     Active = false;
     JoystickX = 0;
     JoystickY = 0;
-    JoystickPOV = -1;
-    CanForceFeedback = false;
+    JoystickPOV = -1;;
     NumButtons = 0;
 
     // hardcoded default button values
@@ -144,6 +144,18 @@ bool DirectJoystickClass::Init(int joy) {
 #endif
 
     return true;
+}
+
+void DirectJoystickClass::Exit(int joy) {
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+        if (lpDIJoystick != nullptr)
+#else
+        if (SDL_JoystickOpened(joy))
+#endif
+        {
+            SDL_JoystickClose(lpDIJoystick);
+            lpDIJoystick = nullptr;
+        }
 }
 
     // --------------------------------------------------------------------------------------

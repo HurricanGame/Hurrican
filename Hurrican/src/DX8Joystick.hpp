@@ -35,10 +35,17 @@
 // --------------------------------------------------------------------------------------
 
 class DirectJoystickClass {
-  public:
+  private:
     LPDIRECTINPUTDEVICE8 lpDIJoystick;  // Joystick Device Interface
 
+    int startButton;
+    int enterButton;
+    int backButton;
+    int deleteButton;
+
     bool CanForceFeedback;
+
+  public:
     bool Active;
     int JoystickX;                              // Joystick x-Koordinaten
     int JoystickY;                              // Joystick y-Koordinaten
@@ -50,11 +57,6 @@ class DirectJoystickClass {
     std::string JoystickName;                   // Joystick Produktname
     int NumButtons;                             // How many buttons joystick supports
 
-    int startButton;
-    int enterButton;
-    int backButton;
-    int deleteButton;
-
     DirectJoystickClass();
     ~DirectJoystickClass();
 
@@ -62,6 +64,8 @@ class DirectJoystickClass {
     void StopForceFeedbackEffect(int nr);
 
     bool Init(int joy);
+
+    void Exit(int joy);
 
     bool Update();
 

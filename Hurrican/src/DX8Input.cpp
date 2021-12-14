@@ -123,15 +123,7 @@ bool DirectInputClass::Init() {
 
 void DirectInputClass::Exit() {
     for (int i = 0; i < JoysticksFound; i++) {
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-        if (Joysticks[i].lpDIJoystick != NULL)
-#else
-        if (SDL_JoystickOpened(i))
-#endif
-        {
-            SDL_JoystickClose(Joysticks[i].lpDIJoystick);
-            Joysticks[i].lpDIJoystick = nullptr;
-        }
+        Joysticks[i].Exit(i);
     }
 
     Protokoll << "-> SDL/OpenGL input shutdown successfully completed !" << std::endl;
