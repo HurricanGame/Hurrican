@@ -22,6 +22,8 @@
 // DKS - For new pooled memory manager and grouped drawlists of particles to render:
 #include "DataStructures.hpp"
 
+#include <algorithm>
+
 // --------------------------------------------------------------------------------------
 // Defines
 // --------------------------------------------------------------------------------------
@@ -262,35 +264,19 @@ class PartikelClass {
     // DKS: Found that colors were getting set unsafely in Run() and elsewhere, and I
     //      also converted the r,g,b,a member vars to uint8_t; these ensure safety:
     void SetRed(int value) {
-        if (value > 255)
-            value = 255;
-        else if (value < 0)
-            value = 0;
-        red = static_cast<uint8_t>(value);
+        red = static_cast<uint8_t>(std::clamp(value, 0, 255));
     }
 
     void SetGreen(int value) {
-        if (value > 255)
-            value = 255;
-        else if (value < 0)
-            value = 0;
-        green = static_cast<uint8_t>(value);
+        green = static_cast<uint8_t>(std::clamp(value, 0, 255));
     }
 
     void SetBlue(int value) {
-        if (value > 255)
-            value = 255;
-        else if (value < 0)
-            value = 0;
-        blue = static_cast<uint8_t>(value);
+        blue = static_cast<uint8_t>(std::clamp(value, 0, 255));
     }
 
     void SetAlpha(int value) {
-        if (value > 255)
-            value = 255;
-        else if (value < 0)
-            value = 0;
-        alpha = static_cast<uint8_t>(value);
+        alpha = static_cast<uint8_t>(std::clamp(value, 0, 255));
     }
 
     PartikelClass *pNext;  // Zeiger auf den nächsten   Partikel
