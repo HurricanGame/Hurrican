@@ -4237,7 +4237,7 @@ bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass *p
     pNew = particle_pool.alloc();
 #endif
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     if (!pNew) {
         Protokoll << "WARNING: could not allocate memory for particle in PushPartikel()" << std::endl;
         return false;
@@ -4303,7 +4303,7 @@ void PartikelsystemClass::ClearAll() {
     }
     pStart = pEnd = nullptr;
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     if (NumPartikel != 0) {
         Protokoll << "ERROR: poss. mem leak / mem. corruption in linked list of particles" << std::endl;
     }

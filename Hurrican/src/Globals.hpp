@@ -58,7 +58,7 @@
 
 extern bool Sprache;      // true == deutsch / false == englisch (nur für Menugrafiken)
 extern bool GameRunning;  // Spiel läuft :-)
-#ifdef _DEBUG
+#ifndef NDEBUG
 extern bool DebugMode;  // Debug Mode ein/aus
 #endif
 extern bool FlameThrower;

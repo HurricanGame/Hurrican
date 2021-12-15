@@ -65,7 +65,7 @@ int16_t TexturesystemClass::LoadTexture(const std::string &filename) {
         // Texture has been loaded previously, so it at least has a slot in _loaded_textures,
         //  but if its instances == 0, it will need to be re-loaded from disk.
         idx = (*it).second;
-#ifdef _DEBUG
+#ifndef NDEBUG
         if (idx < 0 || static_cast<int>(idx) >= (int)_loaded_textures.size()) {
             Protokoll << "-> Error: texture handle idx " << idx
                       << " acquired from _texture_map is outside\n"
@@ -93,7 +93,7 @@ int16_t TexturesystemClass::LoadTexture(const std::string &filename) {
     if (th.instances > 0) {
         // This texture is already loaded in VRAM
         ++th.instances;
-#ifdef _DEBUG
+#ifndef NDEBUG
         Protokoll << "-> Prevented loading of duplicate texture: " << filename << ", total references: " << th.instances
                   << std::endl;
 #endif
@@ -116,7 +116,7 @@ int16_t TexturesystemClass::LoadTexture(const std::string &filename) {
         if (it2 != _scalefactors_map.end()) {
             th.npot_scalex = (*it2).second.first;
             th.npot_scaley = (*it2).second.second;
-#ifdef _DEBUG
+#ifndef NDEBUG
             Protokoll << "Using external npot scalefactors " << th.npot_scalex << " " << th.npot_scaley
                       << " for texture " << filename << std::endl;
 #endif
@@ -133,7 +133,7 @@ void TexturesystemClass::UnloadTexture(const int idx) {
             --th.instances;
             if (th.instances == 0) {
                 SDL_UnloadTexture(th);
-#ifdef _DEBUG
+#ifndef NDEBUG
                 Protokoll << "-> Texture successfully released !" << std::endl;
 #endif
             }
@@ -153,7 +153,7 @@ void TexturesystemClass::ReadScaleFactorsFile(const std::string &fullpath) {
     while (file >> name >> xscale >> yscale) {
         if (!name.empty() && xscale != 0.0 && yscale != 0.0) {
             _scalefactors_map[name] = std::make_pair(xscale, yscale);
-#ifdef _DEBUG
+#ifndef NDEBUG
             Protokoll << "Read name= " << name << " xscale=" << xscale << " yscale=" << yscale << std::endl;
 #endif
         }

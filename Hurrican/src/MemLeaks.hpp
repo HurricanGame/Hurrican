@@ -97,7 +97,7 @@ void DumpUnfreed()
 // Operatoren überladen
 //
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 
     // new überladen
     //
@@ -120,7 +120,7 @@ void DumpUnfreed()
 
 // Für den Debug Modus wird ein neuer new Befehl generiert, der zusätzlich noch Dateiname und Zeilennummer
 // der Codezeile ausgibt, die die new funktion aufruft.
-#ifdef _DEBUG
+#ifndef NDEBUG
 #define DEBUG_NEW new(__FILE__, __LINE__)
 #else
 #define DEBUG_NEW new

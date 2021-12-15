@@ -109,7 +109,7 @@ bool SDL_LoadTexture(const std::string &path,
     if (DirectGraphics.SupportedPVRTC) {
         fullpath = path + "/pvr/" + filename + ".pvr";
 
-#if defined(_DEBUG)
+#ifndef NDEBUG
         Protokoll << "Using PVR looking for " << fullpath << std::endl;
 #endif
 
@@ -186,7 +186,7 @@ bool load_texture(image_t &image, GLuint &new_texture) {
                          image.data.data());
         }
 
-#if defined(_DEBUG)
+#ifndef NDEBUG
         int error = glGetError();
         if (error != 0) {
             Protokoll << "GL load_texture Error " << error << std::endl;
@@ -242,7 +242,7 @@ bool loadImageETC1(image_t &image, const std::string &fullpath) {
             Protokoll << "Loaded ETC type " << static_cast<char>(image.data[0]) << static_cast<char>(image.data[1])
                       << static_cast<char>(image.data[2]) << " for " << fullpath << std::endl;
 
-#if defined(_DEBUG)
+#ifndef NDEBUG
             Protokoll << "Header " << static_cast<char>(image.data[0]) << static_cast<char>(image.data[1])
                       << static_cast<char>(image.data[2]) << static_cast<char>(image.data[3]) << "\nVersion "
                       << std::hex << (image.data[4] << 8) + image.data[5] << "\nType " << std::dec
@@ -311,7 +311,7 @@ bool loadImagePVRTC(image_t &image, const std::string &fullpath) {
 
         Protokoll << "Loaded PVRTC type " << std::dec << pvrtc_buffer32[2] << " for " << fullpath << std::endl;
 
-#if defined(_DEBUG)
+#ifndef NDEBUG
         Protokoll << "Version " << std::hex << pvrtc_buffer32[0] << "\nFlags " << std::dec << pvrtc_buffer32[1]
                   << "\nPFormatA " << pvrtc_buffer32[2] << "\nPFormatB " << pvrtc_buffer32[3] << "\nColorS "
                   << pvrtc_buffer32[4] << "\nChanType " << pvrtc_buffer32[5] << "\nHeight " << pvrtc_buffer32[6]

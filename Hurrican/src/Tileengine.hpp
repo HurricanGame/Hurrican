@@ -569,7 +569,7 @@ class TileEngineClass {
             exit(1);  // WriteText above should do this for us (first param==true)
         }
 
-#elif defined _DEBUG
+#elif !defined NDEBUG
         if (i >= MAX_LEVELSIZE_X || i < 0 || j >= MAX_LEVELSIZE_Y || j < 0) {
             Protokoll << "-> Error: Out of bounds in TileEngineClass::TileAt():\n"
                       << "\tparam i: " << i << "\tLower bound: " << 0 << "\tUpper bound: " << MAX_LEVELSIZE_X - 1

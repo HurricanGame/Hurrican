@@ -27,7 +27,7 @@ class MemPool {
         if (head_of_free_list != NULL) {
             head_of_free_list = head_of_free_list->next;
         } else {
-#ifdef DEBUG
+#ifndef NDEBUG
             Protokoll << "ERROR in MemPool, tried to alloc() more than " << TPoolSize << " objects\n";
             Protokoll << "File: " << __FILE__ << " Line: " << __LINE__ << std::endl;
 #endif
@@ -37,7 +37,7 @@ class MemPool {
     }
 
     void free(T *t_ptr) {
-#ifdef DEBUG
+#ifndef NDEBUG
         if (t_ptr == NULL) {
             Protokoll << "ERROR in MemPool, NULL argument passed to free()" << std::endl;
             Protokoll << "File: " << __FILE__ << " Line: " << __LINE__ << std::endl;
@@ -254,7 +254,7 @@ class GroupedForwardList {
 #if 0
       // This code has been tested to work, but I don't need it in the game
       size_t count_items_in_group(int key) {
-#ifdef _DEBUG
+#ifndef NDEBUG
          if (key >= MAX_LIST_GROUPS) {
             cout << "ERROR: count_items_in_group() in GroupList, key: " << num_items 
                << " MAX_LIST_GROUPS: " << MAX_LIST_GROUPS << endl;
@@ -318,7 +318,7 @@ void GroupedForwardList<LIST_ITEM_TYPE, LIST_MAP_INDEX_INT_TYPE, MAX_LIST_GROUPS
 template <typename LIST_ITEM_TYPE, typename LIST_MAP_INDEX_INT_TYPE, size_t MAX_LIST_GROUPS, size_t MAX_LIST_ITEMS>
 void GroupedForwardList<LIST_ITEM_TYPE, LIST_MAP_INDEX_INT_TYPE, MAX_LIST_GROUPS, MAX_LIST_ITEMS>::push_back(
     const LIST_ITEM_TYPE &item) {
-#ifdef _DEBUG
+#ifndef NDEBUG
     if (num_items >= MAX_LIST_ITEMS) {
         Protokoll << "ERROR: push_back() in GroupList, num_items: " << num_items
                   << " MAX_LIST_ITEMS: " << MAX_LIST_ITEMS << std::endl;

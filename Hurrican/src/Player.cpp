@@ -3621,11 +3621,11 @@ bool PlayerClass::DoLightning() {
     // Rechtecke für die Kollisionsabfrage rotieren lassen
     for (int i = 0; i < BlitzLength + 1; i++) {
         // DKS - #ifdef'd this check
-#ifdef _DEBUG
+#ifndef NDEBUG
         // Zum anzeigen der Rects, die geprüft werden
         if (DebugMode == true)
             RenderRect(float(xstart - TileEngine.XOffset), float(ystart - TileEngine.YOffset), 31, 31, 0x80FFFFFF);
-#endif  // DEBUG
+#endif  // NDEBUG
 
         xs = xstart;
         ys = ystart;

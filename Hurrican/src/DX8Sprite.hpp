@@ -54,7 +54,7 @@ class DirectGraphicsSprite {
     //      checked wrapper to a vector, as I found the game was accessing
     //      past its end in Projectiles.cpp and Partikelsystem.cpp
     // RECT_struct				itsPreCalcedRects[256];				// vorberechnete Ausschnitte für die Frames
-#ifdef _DEBUG
+#ifndef NDEBUG
     class BoundCheckedArray {
       public:
         RECT_struct &operator[](int i) {
@@ -89,7 +89,7 @@ class DirectGraphicsSprite {
           itsTexIdx(-1),
           itsXTexScale(1.0),
           itsYTexScale(1.0)
-#ifndef _DEBUG
+#ifdef NDEBUG
           // DKS - When not in debug-mode, this is the pointer to the dynamically allocated array of RECTs
           ,
           itsPreCalcedRects(nullptr)

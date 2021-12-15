@@ -45,7 +45,7 @@ class TexturesystemClass {
     void ReadScaleFactorsFiles();
 
     TextureHandle &operator[](int idx) {
-#ifdef _DEBUG
+#ifndef NDEBUG
         if (idx < 0 || idx >= (int)_loaded_textures.size()) {
             Protokoll << "-> Error: Out of bounds index for Texturesystemclass::operator[]: " << std::dec << idx << "\n"
                       << "\tLower bound is 0, Upper bound is " << _loaded_textures.size() - 1 << std::endl;

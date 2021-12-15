@@ -169,14 +169,13 @@ void GegnerClass::Render() {
         }
 
 // DKS - made compilation dependent
-#ifdef _DEBUG
+#ifndef NDEBUG
     // Im Debug Mode noch den Abstand zum Spieler anzeigen
     if (DebugMode == true) {
-        char Buffer[10];
-        _itoa_s(PlayerAbstand(), Buffer, 10);
-        pMenuFont->DrawText(float(xPos - TileEngine.XOffset), float(yPos - TileEngine.YOffset), Buffer, 0xFFFFFFFF);
+        std::string Buffer = std::to_string(PlayerAbstand());
+        pMenuFont->DrawText(float(xPos - TileEngine.XOffset), float(yPos - TileEngine.YOffset), Buffer.c_str(), 0xFFFFFFFF);
     }
-#endif  //_DEBUG
+#endif  //NDEBUG
 }
 
 // --------------------------------------------------------------------------------------

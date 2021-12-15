@@ -933,8 +933,8 @@ bool DisplayLoadInfo(const char Text[100]) {
     pMenuFont->DrawTextCenterAlign(320, 200, TextArray[TEXT_MENUE_LOADING], 0xFFFFFFFF);
 
     // Anzahl anzeigen
-#ifdef _DEBUG
-    // DKS - Disabled this, it was causing crashes when _DEBUG was enabled (perhaps font was
+#ifndef NDEBUG
+    // DKS - Disabled this, it was causing crashes when DEBUG was enabled (perhaps font was
     //      not loaded at this point)
 #if 0
     char buf[5];

@@ -179,7 +179,7 @@ void ConsoleClass::CheckCommands() {
     // Hilfe
     //
     // DKS - Re-enabled help, as it seems to be just fine
-    //#ifdef _DEBUG
+    //#ifndef NDEBUG
     // TODO FIX
     if (CONSOLE_COMMAND("help")) {
         this->print(" ");
@@ -363,7 +363,7 @@ void ConsoleClass::CheckCommands() {
         Timer.SetMaxFPS(g_test);
     }
 
-    //#ifdef _DEBUG
+    //#ifndef NDEBUG
     // Speed setzen
     if (strncmp(Buffer, "setspeed ", 9) == 0) {
         // Bis zu der Zahl vorgehen
@@ -492,7 +492,7 @@ void ConsoleClass::CheckCommands() {
         }
     }  // else
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     // In Level warpen
     if (strncmp(Buffer, "goto ", 5) == 0) {
         // Bis zu der Zahl vorgehen
@@ -527,7 +527,7 @@ void ConsoleClass::CheckCommands() {
                 NewStage = g_test;
             }
 
-            InitNewGameLevel(Stage);
+            InitNewGameLevel();
         }
     }  // else
 #endif

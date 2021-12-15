@@ -2051,13 +2051,13 @@ void ProjectileClass::Render() {
             DirectGraphics.SetFilterMode(false);
         }
 
-#ifdef _DEBUG
+#ifndef NDEBUG
         if (DebugMode == true)
             RenderRect(float(xPos - TileEngine.XOffset + ShotRect[ShotArt].left),
                        float(yPos - TileEngine.YOffset + ShotRect[ShotArt].top),
                        float(ShotRect[ShotArt].right - ShotRect[ShotArt].left),
                        float(ShotRect[ShotArt].bottom - ShotRect[ShotArt].top), 0x88FFFFFF);
-#endif  //_DEBUG
+#endif  //NDEBUG
 
     }
 
@@ -4863,7 +4863,7 @@ void ProjectileListClass::ClearAll() {
     }
     pStart = pEnd = nullptr;
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     if (NumProjectiles != 0)
         Protokoll << "ERROR: poss. mem leak / corruption in linked list of projectiles" << std::endl;
 #endif

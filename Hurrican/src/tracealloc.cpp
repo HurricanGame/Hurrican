@@ -30,7 +30,7 @@ Usage:
 
 **********************************************************************/
 
-#if defined(_DEBUG) && defined(WIN32) && defined(DETECT_LEAKS)
+#if !defined(NDEBUG) && defined(WIN32) && defined(DETECT_LEAKS)
 
 #include <ImageHlp.h>
 #include <assert.h>

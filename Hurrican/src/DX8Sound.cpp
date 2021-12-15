@@ -507,7 +507,7 @@ void SoundManagerClass::Update() {
     UpdateChannels();
     UpdateSongs();
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     // Anzahl benutzter Channels zählen
     //
     int channels_in_use = 0;
@@ -661,12 +661,12 @@ int SoundManagerClass::PlayWave_SDL(int vol, int pan, int nr) {
     int channel = SOUND_PlaySound(FSOUND_FREE, sounds[nr].data, sounds[nr].looped);
 
     if (channel < 0) {
-#ifdef _DEBUG
+#ifndef NDEBUG
         Protokoll << "Warning: could not find free channel to play sound #" << nr << std::endl;
 #endif
         return -1;
     } else if (channel >= num_channels) {
-#ifdef _DEBUG
+#ifndef NDEBUG
         Protokoll << "Warning: SOUND_PlaySound returned channel " << channel << ", >= num_channels (" << num_channels
                   << ")\n"
                   << std::endl;

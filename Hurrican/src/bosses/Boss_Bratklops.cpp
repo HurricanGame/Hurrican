@@ -195,11 +195,11 @@ void GegnerBratklops::DoDraw() {
             // Rechtecke für die Kollisionsabfrage rotieren lassen
             for (int i = 0; i < 25; i++) {
             // Zum anzeigen der Rects, die geprüft werden
-#ifdef _DEBUG
+#ifndef NDEBUG
                 if (DebugMode == true)
                     RenderRect(float(xstart - TileEngine.XOffset), float(ystart - TileEngine.YOffset), 24, 24,
                                0x80FFFFFF);
-#endif  //_DEBUG
+#endif  //NDEBUG
 
                 // Laser auf Kollision mit dem Spieler prüfen
                 //

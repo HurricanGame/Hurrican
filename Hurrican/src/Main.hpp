@@ -99,7 +99,7 @@ extern char *g_storage_ext;  // Where data files (levels, graphics, music, etc) 
 extern char *g_config_ext;   // Where configuration files are written (-DKS) (write)
 extern char *g_save_ext;     // Where high scores and save games are written (-DKS) (write)
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 void ShowDebugInfo();  // Allen möglichen Kram anzeigen
 #endif
 
