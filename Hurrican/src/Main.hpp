@@ -18,13 +18,14 @@
 #include "Intro.hpp"
 #include "Outtro.hpp"
 
-// TODO an enum would be nicer
-#define SCREEN_FULLSCREEN           0
-#define SCREEN_FULLSCREEN_STRETCHED 1
-#define SCREEN_WINDOW               2
+enum class ScreenMode {
+  FULLSCREEN,
+  FULLSCREEN_STRETCHED,
+  WINDOW
+};
 
 struct sCommandLineParams {
-    uint8_t RunWindowMode; // 0 = fullscreen, 1 = fullscreen stretched, 2 = Windowed
+    ScreenMode RunWindowMode;
     bool RunOwnLevelList;
     bool RunUserLevel;
     bool Scanlines;

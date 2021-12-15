@@ -125,7 +125,7 @@ void FillCommandLineParams(int argc, char *args[]) {
     uint16_t i;
 
     // Set some sensible defaults
-    CommandLineParams.RunWindowMode = SCREEN_FULLSCREEN;
+    CommandLineParams.RunWindowMode = ScreenMode::FULLSCREEN;
     CommandLineParams.Scanlines = false;
     CommandLineParams.TexFactor = 1;
     CommandLineParams.TexSizeMin = 1024;
@@ -174,17 +174,17 @@ void FillCommandLineParams(int argc, char *args[]) {
             Protokoll << "         --level x        : Load selected level map" << std::endl;
             exit(1);
         } else if ((strstr(args[i], "--windowmode") != nullptr) || (strstr(args[i], "-W") != nullptr)) {
-            if (CommandLineParams.RunWindowMode == SCREEN_FULLSCREEN_STRETCHED) {
+            if (CommandLineParams.RunWindowMode == ScreenMode::FULLSCREEN_STRETCHED) {
                 std::cout << "Stretch mode selected, ignoring windowmode" << std::endl;
             } else {
-                CommandLineParams.RunWindowMode = SCREEN_WINDOW;
+                CommandLineParams.RunWindowMode = ScreenMode::WINDOW;
                 std::cout << "Window mode is enabled" << std::endl;
             }
         } else if ((strstr(args[i], "--stretch") != nullptr) || (strstr(args[i], "-S") != nullptr)) {
-            if (CommandLineParams.RunWindowMode == SCREEN_WINDOW) {
+            if (CommandLineParams.RunWindowMode == ScreenMode::WINDOW) {
                 std::cout << "Window mode selected, ignoring stretch mode" << std::endl;
             } else {
-                CommandLineParams.RunWindowMode = SCREEN_FULLSCREEN_STRETCHED;
+                CommandLineParams.RunWindowMode = ScreenMode::FULLSCREEN_STRETCHED;
                 std::cout << "Stretched fullscreen mode is enabled" << std::endl;
             }
         } else if ((strstr(args[i], "--showfps") != nullptr) || (strstr(args[i], "-F") != nullptr)) {

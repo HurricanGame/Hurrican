@@ -71,7 +71,7 @@ DirectGraphicsClass::~DirectGraphicsClass() {}
 // D3D Initialisieren
 // --------------------------------------------------------------------------------------
 bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, std::uint32_t dwZ_Bits, bool VSync) {
-    bool isFullscreen = CommandLineParams.RunWindowMode != SCREEN_WINDOW;
+    bool isFullscreen = CommandLineParams.RunWindowMode != ScreenMode::WINDOW;
     uint16_t ScreenWidth = SCREENWIDTH;
     uint16_t ScreenHeight = SCREENHEIGHT;
 
@@ -837,7 +837,7 @@ void DirectGraphicsClass::SetupFramebuffers() {
         Protokoll << "Render viewport resolution: " << RenderView.w << "x" << RenderView.h << " at " << RenderView.x
                   << "x" << RenderView.y << std::endl;
 
-        if (CommandLineParams.RunWindowMode == SCREEN_FULLSCREEN_STRETCHED) {
+        if (CommandLineParams.RunWindowMode == ScreenMode::FULLSCREEN_STRETCHED) {
             /* Fill the whole screen area */
             RenderRect.w = WindowView.w;
             RenderRect.h = WindowView.h;
