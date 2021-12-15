@@ -499,26 +499,25 @@ bool GameInit() {
 #endif  // USE_FAST_RNG
 
     // DKS - Added language-translation files support to SDL port:
-    char langfilepath[256];
+    std::string langfilepath;
     if (g_storage_ext) {
-        strcpy(langfilepath, g_storage_ext);
-        strcat(langfilepath, "/lang");
+        langfilepath.assign(g_storage_ext).append("/lang");
     } else {
-        strcpy(langfilepath, "./lang");
+        langfilepath.assign("./lang");
     }
 
-    FindLanguageFiles(langfilepath);
+    FindLanguageFiles(langfilepath.c_str());
 
     // Try again if needed
     if (LanguageFiles.empty()) {
-        strcpy(langfilepath, "./");
-        FindLanguageFiles(langfilepath);
+        langfilepath.assign("./");
+        FindLanguageFiles(langfilepath.c_str());
     }
 
     // One more time if needed
     if (LanguageFiles.empty()) {
-        strcpy(langfilepath, "./lang");
-        FindLanguageFiles(langfilepath);
+        langfilepath.assign("./lang");
+        FindLanguageFiles(langfilepath.c_str());
     }
 
     if (LanguageFiles.empty()) {
