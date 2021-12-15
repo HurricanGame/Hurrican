@@ -203,6 +203,10 @@ class MenuClass {
     void ResetProgressBar();
     void StartProgressBar(int items);
     void UpdateProgressBar();
+
+#ifndef NDEBUG
+    int ItemsLoaded() const { return LoadingItemsLoaded; }
+#endif
 };
 
 // --------------------------------------------------------------------------------------

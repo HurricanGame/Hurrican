@@ -934,15 +934,10 @@ bool DisplayLoadInfo(const char Text[100]) {
 
     // Anzahl anzeigen
 #ifndef NDEBUG
-    // DKS - Disabled this, it was causing crashes when DEBUG was enabled (perhaps font was
-    //      not loaded at this point)
-#if 0
-    char buf[5];
+    std::string buf = std::to_string(pMenu->ItemsLoaded());
 
-    sprintf_s(buf, "%d", LoadingItemsLoaded);
-    pDefaultFont->DrawText((700 - pDefaultFont->StringLength(TextArray[TEXT_MENUE_LOADING])) / 2.0f, 220,
-                           buf, 0xFFFFFFFF);
-#endif  // 0
+    pMenuFont->DrawText((700 - pMenuFont->StringLength(TextArray[TEXT_MENUE_LOADING])) / 2.0f, 270,
+                           buf.c_str(), 0xFFFFFFFF);
 #endif
 
     // Hint anzeigen
