@@ -948,18 +948,18 @@ bool DisplayLoadInfo(const char Text[100]) {
             float y_pos = 270.0f;
             float y_inc = 28.0f;
             int max_width = RENDERWIDTH - 20;
-            if (pDefaultFont->StringLength(text, 0) > max_width) {
+            if (pMenuFont->StringLength(text, 0) > max_width) {
                 // Split the line in two if too long to display on low-res device:
                 char text1[255];
                 char text2[255];
                 SplitLine(text1, text2, text);
-                pDefaultFont->DrawTextCenterAlign(320.0f, y_pos, text1, 0xFFFFFFFF, 0);
-                pDefaultFont->DrawTextCenterAlign(320.0f, y_pos + y_inc, text2, 0xFFFFFFFF, 0);
+                pMenuFont->DrawTextCenterAlign(320.0f, y_pos, text1, 0xFFFFFFFF, 0);
+                pMenuFont->DrawTextCenterAlign(320.0f, y_pos + y_inc, text2, 0xFFFFFFFF, 0);
             } else {
-                pDefaultFont->DrawTextCenterAlign(320.0f, y_pos, text, 0xFFFFFFFF, 0);
+                pMenuFont->DrawTextCenterAlign(320.0f, y_pos, text, 0xFFFFFFFF, 0);
             }
         } else {
-            pDefaultFont->DrawTextCenterAlign(320.0f, 270.0f, TextArray[TEXT_HINT1 + DisplayHintNr], 0xFFFFFFFF, 0);
+            pMenuFont->DrawTextCenterAlign(320.0f, 270.0f, TextArray[TEXT_HINT1 + DisplayHintNr], 0xFFFFFFFF, 0);
         }
     }
 
