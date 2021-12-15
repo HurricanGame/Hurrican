@@ -955,12 +955,12 @@ void ShowDebugInfo() {
 
     // Anzahl der aktuell aktiven Partikel anzeigen
     _itoa_s(PartikelSystem.GetNumPartikel(), StringBuffer, 10);
-    pDefaultFont->DrawText(0, 60, "Partikel :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(0, 60, "Particles :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 60, StringBuffer, 0xFFFFFFFF);
 
     // Anzahl der aktuell aktiven Schüsse anzeigen
     _itoa_s(Projectiles.GetNumProjectiles(), StringBuffer, 10);
-    pDefaultFont->DrawText(200, 60, "Projektile :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(200, 60, "Projectiles :", 0xFFFFFFFF);
     pDefaultFont->DrawText(300, 60, StringBuffer, 0xFFFFFFFF);
 
     // Benutzte Sound-Channels angeben
@@ -970,7 +970,7 @@ void ShowDebugInfo() {
 
     // Anzahl der Gegner im Level angeben
     _itoa_s(Gegner.GetNumGegner(), StringBuffer, 10);
-    pDefaultFont->DrawText(200, 75, "Gegneranzahl :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(200, 75, "Enemies :", 0xFFFFFFFF);
     pDefaultFont->DrawText(300, 75, StringBuffer, 0xFFFFFFFF);
 
     // MoveSpeed anzeigen
@@ -980,7 +980,7 @@ void ShowDebugInfo() {
 
     // Blitzwinkel angeben
     //_itoa_s(static_cast<int>(Player->BlitzWinkel), StringBuffer, 10);
-    pDefaultFont->DrawText(0, 135, "Blitzwinkel :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(0, 135, "Light angle :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 135, StringBuffer, 0xFFFFFFFF);
 
     // Blitzwinkel angeben
