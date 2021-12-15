@@ -119,7 +119,6 @@ PlayerClass Player[2];  // Werte der Spieler
 
 HUDClass HUD;                           // Das HUD
 unsigned char SpielZustand = CRACKTRO;  // Aktueller Zustand des Spieles
-char StringBuffer[100];                 // Für die Int / String Umwandlung
 
 void FillCommandLineParams(int argc, char *args[]) {
     uint16_t i;
@@ -949,52 +948,54 @@ jump:
 
 #ifdef _DEBUG
 void ShowDebugInfo() {
+    std::string StringBuffer;
+
     // Blaues durchsichtiges Rechteck zeichnen
     RenderRect(0, 0, 320, 240, 0xA00000FF);
     pDefaultFont->ShowFPS();  // FPS anzeigen
 
     // Anzahl der aktuell aktiven Partikel anzeigen
-    _itoa_s(PartikelSystem.GetNumPartikel(), StringBuffer, 10);
+    StringBuffer = std::to_string(PartikelSystem.GetNumPartikel());
     pDefaultFont->DrawText(0, 60, "Particles :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 60, StringBuffer, 0xFFFFFFFF);
 
     // Anzahl der aktuell aktiven Schüsse anzeigen
-    _itoa_s(Projectiles.GetNumProjectiles(), StringBuffer, 10);
+    StringBuffer = std::to_string(Projectiles.GetNumProjectiles());
     pDefaultFont->DrawText(200, 60, "Projectiles :", 0xFFFFFFFF);
     pDefaultFont->DrawText(300, 60, StringBuffer, 0xFFFFFFFF);
 
     // Benutzte Sound-Channels angeben
-    _itoa_s(SoundManager.most_channels_used, StringBuffer, 10);
+    StringBuffer = std::to_string(SoundManager.most_channels_used);
     pDefaultFont->DrawText(0, 75, "MaxChannels :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 75, StringBuffer, 0xFFFFFFFF);
 
     // Anzahl der Gegner im Level angeben
-    _itoa_s(Gegner.GetNumGegner(), StringBuffer, 10);
+    StringBuffer = std::to_string(Gegner.GetNumGegner());
     pDefaultFont->DrawText(200, 75, "Enemies :", 0xFFFFFFFF);
     pDefaultFont->DrawText(300, 75, StringBuffer, 0xFFFFFFFF);
 
     // MoveSpeed anzeigen
-    _itoa_s(static_cast<int>(Timer.GetMoveSpeed()), StringBuffer, 10);
+    StringBuffer = std::to_string(static_cast<int>(Timer.GetMoveSpeed()));
     pDefaultFont->DrawText(0, 90, "Move Speed :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 90, StringBuffer, 0xFFFFFFFF);
 
     // Blitzwinkel angeben
-    //_itoa_s(static_cast<int>(Player->BlitzWinkel), StringBuffer, 10);
+    StringBuffer = std::to_string(static_cast<int>(Player->BlitzWinkel));
     pDefaultFont->DrawText(0, 135, "Light angle :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 135, StringBuffer, 0xFFFFFFFF);
 
     // Blitzwinkel angeben
-    sprintf_s(StringBuffer, "%f", Timer.SpeedFaktor);
+    StringBuffer = std::to_string(Timer.SpeedFaktor);
     pDefaultFont->DrawText(0, 150, "Speed :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 150, StringBuffer, 0xFFFFFFFF);
 
     // Blitzwinkel angeben
-    // sprintf_s (StringBuffer, "%f", Player->JumpySave - Player->ypos);
+    StringBuffer = std::to_string(Player->JumpySave - Player->ypos);
     pDefaultFont->DrawText(0, 250, "yDiff :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 250, StringBuffer, 0xFFFFFFFF);
 
     // Blitzwinkel angeben
-    // sprintf_s (StringBuffer, "%f", Player->JumpAdd);
+    StringBuffer = std::to_string(Player->JumpAdd);
     pDefaultFont->DrawText(0, 270, "yAdd :", 0xFFFFFFFF);
     pDefaultFont->DrawText(150, 270, StringBuffer, 0xFFFFFFFF);
 
