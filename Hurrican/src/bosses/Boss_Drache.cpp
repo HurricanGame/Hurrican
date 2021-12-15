@@ -665,11 +665,11 @@ void GegnerDrache::DoKI() {
             DamageTaken = 0.0f;
 
             // mindestens einmal vorbeigeflogen?
-            if (TileEngine.pDragonHack->m_State == STATE_FLY)
+            if (TileEngine.pDragonHack->m_State == DragonState::FLY)
                 drachevorbei = true;
 
             // Hinten vorbeigeflogen?
-            if (TileEngine.pDragonHack->m_State == STATE_WAIT && drachevorbei == true) {
+            if (TileEngine.pDragonHack->m_State == DragonState::WAIT && drachevorbei == true) {
                 delete TileEngine.pDragonHack;
                 TileEngine.pDragonHack = NULL;
 

@@ -26,7 +26,7 @@ CDragonHack::CDragonHack() {
     m_yPos = 0.0f;
     m_xSpeed = 0.0f;
     m_ySpeed = 0.0f;
-    m_State = STATE_WAIT;
+    m_State = DragonState::WAIT;
 
     m_AppearCount = 5.0f;
 }
@@ -49,12 +49,12 @@ void CDragonHack::Run() {
 
     switch (m_State) {
         // nicht zu sehen
-        case STATE_WAIT: {
+        case DragonState::WAIT: {
             if (m_AppearCount > 0.0f)
                 m_AppearCount -= 1.0f SYNC;
             else {
                 m_AppearCount = 20.0f;
-                m_State = STATE_FLY;
+                m_State = DragonState::FLY;
 
                 // von links
                 if (rand() % 2 == 0) {
@@ -75,7 +75,7 @@ void CDragonHack::Run() {
         } break;
 
         // fliegen lassen, bis er aus dem Bild ist
-        case STATE_FLY: {
+        case DragonState::FLY: {
             bool mirrored = m_xSpeed > 0.0f;
 
             m_GFX.RenderSprite(m_xPos - TileEngine.XOffset,
@@ -87,7 +87,7 @@ void CDragonHack::Run() {
             // Ausserhalb des sichtbaren Bereichs? Dann verschwinden lassen
             if (m_xPos + 260.0f < TileEngine.XOffset || m_xPos - 260.0f > TileEngine.XOffset + 640.0f ||
                 m_yPos + 240.0f < TileEngine.YOffset || m_yPos - 240.0f > TileEngine.YOffset + 480.0f) {
-                m_State = STATE_WAIT;
+                m_State = DragonState::WAIT;
                 m_AppearCount = rand() % 100 + 50.0f;
             }
         } break;

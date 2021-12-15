@@ -21,8 +21,10 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define STATE_WAIT 0
-#define STATE_FLY 1
+enum class DragonState {
+  WAIT,
+  FLY
+};
 
 // --------------------------------------------------------------------------------------
 // Dragon-Klasse
@@ -37,7 +39,7 @@ class CDragonHack {
     float m_AnimCount;
 
   public:
-    int m_State;
+    DragonState m_State;
 
     CDragonHack();   // CutScene initialisieren
     ~CDragonHack();  // CutScene freigeben

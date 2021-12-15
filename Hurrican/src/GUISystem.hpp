@@ -6,16 +6,23 @@
 #include "DX8Sprite.hpp"
 
 // --------------------------------------------------------------------------------------
+// Defines
+// --------------------------------------------------------------------------------------
+
+enum class FadeMode {
+  INVISIBLE,
+  VISIBLE,
+  FADEIN,
+  FADEOUT,
+};
+
+// --------------------------------------------------------------------------------------
 // GUI Klasse
 // --------------------------------------------------------------------------------------
 
 class CGUISystem {
 #define TILESIZE 20
 
-#define INVISIBLE 0
-#define VISIBLE 1
-#define FADEIN 3
-#define FADEOUT 4
 #define FADESPEED 40.0f
 #define MAXFADE 200.0f
 
@@ -31,7 +38,7 @@ class CGUISystem {
     int m_BoxLines;
 
   public:
-    int m_FadeMode;
+    FadeMode m_FadeMode;
     float m_FadingAlpha;
     int m_TextID;
 
