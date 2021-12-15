@@ -595,7 +595,7 @@ void DirectGraphicsFont::ShowFPS() {
     // Aktuelle FPS
     Buffer = std::to_string(FPS);
     DrawText(0, 0, "Current FPS :", 0xFFFFFFFF);
-    DrawText(150, 0, Buffer.c_str(), 0xFFFFFFFF);
+    DrawText(100, 0, Buffer.c_str(), 0xFFFFFFFF);
 
     // FPS Grenze
     Buffer = std::to_string(Timer.maxFPS);
@@ -606,19 +606,19 @@ void DirectGraphicsFont::ShowFPS() {
     Value = Timer.getAverageFPS();
     Buffer = std::to_string(Value);
     DrawText(0, 15, "Average FPS :", 0xFFFFFFFF);
-    DrawText(150, 15, Buffer.c_str(), 0xFFFFFFFF);
+    DrawText(100, 15, Buffer.c_str(), 0xFFFFFFFF);
 
     // Maximale FPS
     Value = Timer.getMaxFrameRate();
     Buffer = std::to_string(Value);
     DrawText(0, 30, "Highest FPS :", 0xFFFFFFFF);
-    DrawText(150, 30, Buffer.c_str(), 0xFFFFFFFF);
+    DrawText(100, 30, Buffer.c_str(), 0xFFFFFFFF);
 
     // Minimale FPS
     Value = Timer.getMinFrameRate();
     Buffer = std::to_string(Value);
     DrawText(0, 45, "Lowest FPS :", 0xFFFFFFFF);
-    DrawText(150, 45, Buffer.c_str(), 0xFFFFFFFF);
+    DrawText(100, 45, Buffer.c_str(), 0xFFFFFFFF);
 }
 
 // DKS - New functions added to facilitate resized fonts:

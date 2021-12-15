@@ -957,7 +957,7 @@ void ShowDebugInfo() {
     // Anzahl der aktuell aktiven Partikel anzeigen
     StringBuffer = std::to_string(PartikelSystem.GetNumPartikel());
     pDefaultFont->DrawText(0, 60, "Particles :", 0xFFFFFFFF);
-    pDefaultFont->DrawText(150, 60, StringBuffer.c_str(), 0xFFFFFFFF);
+    pDefaultFont->DrawText(100, 60, StringBuffer.c_str(), 0xFFFFFFFF);
 
     // Anzahl der aktuell aktiven Schüsse anzeigen
     StringBuffer = std::to_string(Projectiles.GetNumProjectiles());
@@ -967,7 +967,7 @@ void ShowDebugInfo() {
     // Benutzte Sound-Channels angeben
     StringBuffer = std::to_string(SoundManager.most_channels_used);
     pDefaultFont->DrawText(0, 75, "MaxChannels :", 0xFFFFFFFF);
-    pDefaultFont->DrawText(150, 75, StringBuffer.c_str(), 0xFFFFFFFF);
+    pDefaultFont->DrawText(100, 75, StringBuffer.c_str(), 0xFFFFFFFF);
 
     // Anzahl der Gegner im Level angeben
     StringBuffer = std::to_string(Gegner.GetNumGegner());
@@ -977,27 +977,27 @@ void ShowDebugInfo() {
     // MoveSpeed anzeigen
     StringBuffer = std::to_string(static_cast<int>(Timer.GetMoveSpeed()));
     pDefaultFont->DrawText(0, 90, "Move Speed :", 0xFFFFFFFF);
-    pDefaultFont->DrawText(150, 90, StringBuffer.c_str(), 0xFFFFFFFF);
+    pDefaultFont->DrawText(100, 90, StringBuffer.c_str(), 0xFFFFFFFF);
 
     // Blitzwinkel angeben
     StringBuffer = std::to_string(static_cast<int>(Player->BlitzWinkel));
-    pDefaultFont->DrawText(0, 135, "Light angle :", 0xFFFFFFFF);
-    pDefaultFont->DrawText(150, 135, StringBuffer.c_str(), 0xFFFFFFFF);
+    pDefaultFont->DrawText(0, 105, "Light angle :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(100, 105, StringBuffer.c_str(), 0xFFFFFFFF);
 
     // Blitzwinkel angeben
     StringBuffer = std::to_string(Timer.SpeedFaktor);
-    pDefaultFont->DrawText(0, 150, "Speed :", 0xFFFFFFFF);
-    pDefaultFont->DrawText(150, 150, StringBuffer.c_str(), 0xFFFFFFFF);
+    pDefaultFont->DrawText(0, 120, "Speed :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(100, 120, StringBuffer.c_str(), 0xFFFFFFFF);
 
     // Blitzwinkel angeben
     StringBuffer = std::to_string(Player->JumpySave - Player->ypos);
-    pDefaultFont->DrawText(0, 250, "yDiff :", 0xFFFFFFFF);
-    pDefaultFont->DrawText(150, 250, StringBuffer.c_str(), 0xFFFFFFFF);
+    pDefaultFont->DrawText(0, 135, "yDiff :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(100, 135, StringBuffer.c_str(), 0xFFFFFFFF);
 
     // Blitzwinkel angeben
     StringBuffer = std::to_string(Player->JumpAdd);
-    pDefaultFont->DrawText(0, 270, "yAdd :", 0xFFFFFFFF);
-    pDefaultFont->DrawText(150, 270, StringBuffer.c_str(), 0xFFFFFFFF);
+    pDefaultFont->DrawText(0, 150, "yAdd :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(100, 150, StringBuffer.c_str(), 0xFFFFFFFF);
 
     /*	for (int i=0; i<128; i++)
             for (int j=0; j<96; j++)
