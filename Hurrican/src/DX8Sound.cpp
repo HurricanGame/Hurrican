@@ -314,13 +314,13 @@ void SoundManagerClass::LoadSong(const std::string &filename, int nr, bool loop 
     // Zuerst checken, ob sich der Song in einem MOD-Ordner befindet
     if (CommandLineParams.RunOwnLevelList) {
         fullpath =
-            std::string(g_storage_ext) + "/levels/" + std::string(CommandLineParams.OwnLevelList) + "/" + filename;
+            g_storage_ext + "/levels/" + std::string(CommandLineParams.OwnLevelList) + "/" + filename;
         if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
             goto loadfile;
     }
 
     // Dann checken, ob sich das File im Standard Ordner befindet
-    fullpath = std::string(g_storage_ext) + "/data/music/" + filename;
+    fullpath = g_storage_ext + "/data/music/" + filename;
     if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
         goto loadfile;
 
@@ -598,13 +598,13 @@ void SoundManagerClass::LoadWave(const std::string &filename, int nr, bool loope
     if (CommandLineParams.RunOwnLevelList) {
         // sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
         fullpath =
-            std::string(g_storage_ext) + "/levels/" + std::string(CommandLineParams.OwnLevelList) + "/" + filename;
+            g_storage_ext + "/levels/" + std::string(CommandLineParams.OwnLevelList) + "/" + filename;
 
         if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
             goto loadfile;
     }
 
-    fullpath = std::string(g_storage_ext) + "/data/sfx/" + filename;
+    fullpath = g_storage_ext + "/data/sfx/" + filename;
     if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
         goto loadfile;
 

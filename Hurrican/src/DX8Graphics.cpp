@@ -382,20 +382,20 @@ bool DirectGraphicsClass::SetDeviceInfo() {
 
 #if defined(USE_GL2) || defined(USE_GL3)
     // Compile the shader code and link into a program
-    vert = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_color.vert";
-    frag = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_color.frag";
+    vert = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_color.vert";
+    frag = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_color.frag";
 
     if (!Shaders[PROGRAM_COLOR].Load(vert, frag)) {
         return false;
     }
 
-    vert = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_texture.vert";
+    vert = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_texture.vert";
 #if defined(USE_ETC1)
     if (SupportedETC1 == true) {
         sprintf_s(frag, "%s/data/shaders/%s/shader_etc1_texture.frag", g_storage_ext, glsl_version);
     } else {
 #endif
-    frag = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_texture.frag";
+    frag = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_texture.frag";
 #if defined(USE_ETC1)
     }
 #endif
@@ -404,8 +404,8 @@ bool DirectGraphicsClass::SetDeviceInfo() {
         return false;
     }
 
-    vert = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_render.vert";
-    frag = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_render.frag";
+    vert = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_render.vert";
+    frag = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_render.frag";
 
     if (!Shaders[PROGRAM_RENDER].Load(vert, frag)) {
         return false;

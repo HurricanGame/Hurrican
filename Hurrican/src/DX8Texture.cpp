@@ -167,9 +167,9 @@ void TexturesystemClass::ReadScaleFactorsFiles() {
 
     if (CommandLineParams.RunOwnLevelList) {
         path =
-            std::string(g_storage_ext) + "/data/levels/" + std::string(CommandLineParams.OwnLevelList);
+            g_storage_ext + "/data/levels/" + std::string(CommandLineParams.OwnLevelList);
     } else {
-        path = std::string(g_storage_ext) + "/data/textures/";
+        path = g_storage_ext + "/data/textures/";
     }
 
     // First, see if there is a file in data/textures/ where plain old .PNG files are and load its data:
@@ -205,14 +205,14 @@ bool TexturesystemClass::LoadTextureFromFile(const std::string &filename, Textur
     // Zuerst checken, ob sich der Song in einem MOD-Ordner befindet
     if (CommandLineParams.RunOwnLevelList) {
         path =
-            std::string(g_storage_ext) + "/data/levels/" + std::string(CommandLineParams.OwnLevelList);
+            g_storage_ext + "/data/levels/" + std::string(CommandLineParams.OwnLevelList);
         fullpath = path + "/" + filename;
         if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
             goto loadfile;
     }
 
     // Dann checken, ob sich das File im Standard Ordner befindet
-    path = std::string(g_storage_ext) + "/data/textures";
+    path = g_storage_ext + "/data/textures";
     fullpath = path + "/" + filename;
     if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
         goto loadfile;

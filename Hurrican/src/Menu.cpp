@@ -2319,7 +2319,7 @@ void MenuClass::DoMenu() {
 
                     // Versuchen, die Datei zu erstellen
                     // nur weitermachen falls es keinen Fehler gibt
-                    Name = std::string(g_save_ext) + "/Savegame" + Buffer + ".save";
+                    Name = g_save_ext + "/Savegame" + Buffer + ".save";
                     std::ofstream Datei(Name, std::ofstream::binary);
 
                     // Fehler beim Öffnen ? Dann leeren Slot erzeugen
@@ -2360,7 +2360,7 @@ void MenuClass::LoadSavegames() {
     // Versuchen, die einzelnen Savegames zu laden
     for (int i = 0; i < MAX_SAVEGAMES; i++) {
         // Name des Savegames erstellen
-        Name = std::string(g_save_ext) + "/Savegame" + std::to_string(i) + ".save";
+        Name = g_save_ext + "/Savegame" + std::to_string(i) + ".save";
 
         // Versuchen, die Datei zu öffnen
         // falls sie nicht existiert oder es eine Fehler gibt, ist der Slot noch leer
@@ -2487,7 +2487,7 @@ void MenuClass::LoadHighscore() {
     // Versuchen, die Highscore Datei zu öffnen
     // falls sie nicht existiert oder es eine Fehler gibt, wird die Standard
     // Highscore gesetzt
-    name = std::string(g_save_ext) + "/Hurrican.hsl";
+    name = g_save_ext + "/Hurrican.hsl";
     std::ifstream Datei(name, std::ifstream::binary);
 
     // Fehler beim Öffnen ? Dann standard Highscore setzen
@@ -2541,7 +2541,7 @@ void MenuClass::SaveHighscore() {
     std::string name;
 
     // Highscore Datei öffnen
-    name = std::string(g_save_ext) + "/Hurrican.hsl";
+    name = g_save_ext + "/Hurrican.hsl";
     std::ofstream Datei(name, std::ofstream::binary);
 
     // Fehler beim Öffnen ? Dann standard Highscore setzen

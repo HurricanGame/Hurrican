@@ -334,13 +334,13 @@ bool TileEngineClass::LoadLevel(const std::string &Filename) {
 
     // Zuerst checken, ob sich das Level in einem MOD-Ordner befindet
     if (CommandLineParams.RunOwnLevelList) {
-        Temp = std::string(g_storage_ext) + "/data/levels/" + CommandLineParams.OwnLevelList + "/" + Filename;
+        Temp = g_storage_ext + "/data/levels/" + CommandLineParams.OwnLevelList + "/" + Filename;
         if (fs::exists(Temp) && fs::is_regular_file(Temp))
             goto loadfile;
     }
 
     // Dann checken, ob sich das File im Standard Ordner befindet
-    Temp = std::string(g_storage_ext) + "/data/levels/" + Filename;
+    Temp = g_storage_ext + "/data/levels/" + Filename;
     if (fs::exists(Temp) && fs::is_regular_file(Temp))
         goto loadfile;
 

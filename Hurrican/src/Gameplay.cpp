@@ -760,7 +760,7 @@ void CreateDefaultConfig() {
 bool LoadConfig() {
     float Sound, Musik;
 
-    std::string filename = std::string(g_config_ext) + "/" + CONFIGFILE;
+    std::string filename = g_config_ext + "/" + CONFIGFILE;
 
     std::ifstream Datei(filename, std::ifstream::binary);  // versuchen Datei zu öffnen
 
@@ -862,7 +862,7 @@ bool LoadConfig() {
 void SaveConfig() {
     float Sound, Musik;
 
-    std::string filename = std::string(g_config_ext) + "/" + CONFIGFILE;
+    std::string filename = g_config_ext + "/" + CONFIGFILE;
 
     std::ofstream Datei(filename, std::ifstream::binary);
 
@@ -1197,7 +1197,7 @@ void SummaryScreen() {
 // --------------------------------------------------------------------------------------
 
 bool NewDemo(const char Filename[]) {
-    std::string fullpath = std::string(g_save_ext) + "/" + Filename;
+    std::string fullpath = g_save_ext + "/" + Filename;
 
     DEMOFile.open(fullpath, std::ofstream::binary);
 
@@ -1248,7 +1248,7 @@ bool LoadDemo(const char Filename[]) {
     TileEngine.XOffset = 0;
     TileEngine.YOffset = 0;
 
-    std::string fullpath = std::string(g_save_ext) + "/" + Filename;
+    std::string fullpath = g_save_ext + "/" + Filename;
 
     DEMOFile.open(fullpath, std::fstream::in | std::fstream::binary);
 

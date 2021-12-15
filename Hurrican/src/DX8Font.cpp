@@ -149,7 +149,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
     if (CommandLineParams.RunOwnLevelList == true)
     {
         //sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
-        fullpath = std::string(g_storage_ext) + "/levels/" + std::string(CommandLineParams.OwnLevelList) + std::string(Filename);
+        fullpath = g_storage_ext + "/levels/" + std::string(CommandLineParams.OwnLevelList) + std::string(Filename);
         if (FileExists(fullpath.c_str()))
         {
             if (!loadImageSDL(image, fullpath, NULL, 0)) {
@@ -165,7 +165,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
     {
         //DKS - All textures are now stored in their own data/textures/ subdir:
         //sprintf_s(Temp, "%s/data/textures/%s", g_storage_ext, Filename);
-        fullpath = std::string(g_storage_ext) + "/data/textures/" + std::string(Filename);
+        fullpath = g_storage_ext + "/data/textures/" + std::string(Filename);
         if (FileExists(fullpath.c_str()))
         {
             if (!loadImageSDL(image, fullpath, NULL, 0)) {

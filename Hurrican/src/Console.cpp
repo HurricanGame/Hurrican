@@ -400,7 +400,7 @@ void ConsoleClass::CheckCommands() {
         if (mapname.substr(mapname.length() - 4) != ".map")
             mapname += ".map";
 
-        std::string filename = std::string(g_storage_ext) + "/data/levels/" + mapname;
+        std::string filename = g_storage_ext + "/data/levels/" + mapname;
 
         // Datei gefunden? Dann laden
         if (fs::exists(filename) && fs::is_regular_file(filename)) {

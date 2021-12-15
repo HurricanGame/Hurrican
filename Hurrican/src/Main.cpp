@@ -100,11 +100,11 @@ ConsoleClass Console;                // Konsolen-Objekt
 CGUISystem GUI;                      // GUI System
 CCracktro *Cracktro;
 
-char *g_storage_ext = nullptr;  // Where data files (levels, graphics, music, etc)
+std::string g_storage_ext;      // Where data files (levels, graphics, music, etc)
                                 //      for the game are stored (read)
-char *g_config_ext = nullptr;   // Where configuration files
+std::string g_config_ext;       // Where configuration files
                                 //      are written (-DKS) (write)
-char *g_save_ext = nullptr;     // Where high scores and save games
+std::string g_save_ext;         // Where high scores and save games
                                 //      are written (-DKS) (write)
 
 sCommandLineParams CommandLineParams;
@@ -330,49 +330,40 @@ int main(int argc, char *argv[]) {
     FillCommandLineParams(argc, argv);
 
     // Set game's data path:
-    g_storage_ext = nullptr;
     // First, see if a command line parameter was passed:
     if (CommandLineParams.DataPath) {
-        g_storage_ext = static_cast<char *>(malloc(strlen(CommandLineParams.DataPath) + 1));
-        strcpy(g_storage_ext, CommandLineParams.DataPath);
+        g_storage_ext = CommandLineParams.DataPath;
         free(CommandLineParams.DataPath);
         CommandLineParams.DataPath = nullptr;
     } else {
 #if defined(ANDROID)
-        g_storage_ext = (char *)malloc(strlen(SDL_AndroidGetExternalStoragePath() + 1));
-        strcpy_s(g_storage_ext, SDL_AndroidGetExternalStoragePath());
+        g_storage_ext = SDL_AndroidGetExternalStoragePath();
 #else  // NON-ANDROID:
 #  ifdef USE_STORAGE_PATH
         // A data-files storage path has been specified in the Makefile:
-        g_storage_ext = static_cast<char *>(malloc(strlen(USE_STORAGE_PATH) + 1));
-        strcpy_s(g_storage_ext, USE_STORAGE_PATH);
+        g_storage_ext = USE_STORAGE_PATH;
         // Attempt to locate the dir
         if (!fs::is_directory(g_storage_ext)) {
             // Failed, print message and use "." folder as fall-back
             Protokoll << "ERROR: Failed to locate data directory " << g_storage_ext << std::endl;
             Protokoll << "\tUsing '.' folder as fallback." << std::endl;
-            free(g_storage_ext);
-            g_storage_ext = static_cast<char *>(malloc(strlen(".") + 1));
-            strcpy_s(g_storage_ext, ".");
+            g_storage_ext = ".";
         }
 #  else
-        g_storage_ext = static_cast<char *>(malloc(strlen(".") + 1));
-        strcpy(g_storage_ext, ".");
+        g_storage_ext = ".";
 #  endif
 #endif  // ANDROID
     }
 
     // Set game's save path (save games, settings, logs, high-scores, etc)
     if (CommandLineParams.SavePath) {
-        g_save_ext = static_cast<char *>(malloc(strlen(CommandLineParams.SavePath) + 1));
-        strcpy(g_save_ext, CommandLineParams.SavePath);
+        g_save_ext = CommandLineParams.SavePath;
         free(CommandLineParams.SavePath);
         CommandLineParams.SavePath = nullptr;
         g_config_ext = g_save_ext;
     } else {
 #if defined(ANDROID)
-        g_save_ext = (char *)malloc(strlen(SDL_AndroidGetExternalStoragePath() + 1));
-        strcpy_s(g_save_ext, SDL_AndroidGetExternalStoragePath());
+        g_save_ext = SDL_AndroidGetExternalStoragePath();
         g_config_ext = g_save_ext;
 #else  // NON-ANDROID:
 #  ifdef USE_HOME_DIR
@@ -382,8 +373,7 @@ int main(int argc, char *argv[]) {
         // Makefile is specifying this is a UNIX machine and we should write saves, settings, etc to $XDG_DATA_HOME/hurrican/ dir
         g_save_ext = getXdgDir("XDG_DATA_HOME", "/.local/share/hurrican");
 #  else
-        g_save_ext = static_cast<char *>(malloc(strlen(".") + 1));
-        strcpy_s(g_save_ext, ".");
+        g_save_ext = ".";
         g_config_ext = g_save_ext;
 #  endif  // USE_HOME_DIR
 #endif  // ANDROID
@@ -478,9 +468,6 @@ int main(int argc, char *argv[]) {
     if (Protokoll.delLogFile)
         fs::remove(fs::path("Game_Log.txt"));
 
-    free(g_storage_ext);
-    free(g_save_ext);
-
     return 0;
 }
 
@@ -500,7 +487,7 @@ bool GameInit() {
 
     // DKS - Added language-translation files support to SDL port:
     std::string langfilepath;
-    if (g_storage_ext) {
+    if (!g_storage_ext.empty()) {
         langfilepath.assign(g_storage_ext).append("/lang");
     } else {
         langfilepath.assign("./lang");
