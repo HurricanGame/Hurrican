@@ -226,8 +226,8 @@ bool DirectInputClass::AnyButtonDown() {
         return false;
 
     for (int i = 0; i < JoysticksFound; i++)
-        for (int j = 0; j < Joysticks[i].NumButtons; j++)
-            if (Joysticks[i].JoystickButtons[j])
+        for (const auto& button: Joysticks[i].JoystickButtons)
+            if (button)
                 return true;
 
     return false;

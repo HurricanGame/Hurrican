@@ -80,10 +80,10 @@ CCracktro::CCracktro() {
     ScrollPos2 = 0;
     SinPos = 0.0f;
 
-    for (int i = 0; i < 200; i++) {
-        Stars[i].Count = static_cast<float>(rand() % 640);
-        Stars[i].Abstand = static_cast<float>(rand() % 140 + 340);
-        Stars[i].Ebene = rand() % 200 + 55;
+    for (auto& star: Stars) {
+        star.Count = static_cast<float>(rand() % 640);
+        star.Abstand = static_cast<float>(rand() % 140 + 340);
+        star.Ebene = rand() % 200 + 55;
     }
 
     // DKS - No need to check for any return value:
@@ -125,13 +125,13 @@ void CCracktro::Main() {
     // Sterne
     // --------------------------------------------------------------------------------------
 
-    for (int i = 0; i < 200; i++) {
-        Stars[i].Count -= Stars[i].Ebene * 0.1f SYNC;
+    for (auto& star: Stars) {
+        star.Count -= star.Ebene * 0.1f SYNC;
 
-        if (Stars[i].Count < 0.0f)
-            Stars[i].Count += 640;
+        if (star.Count < 0.0f)
+            star.Count += 640;
 
-        RenderRect(Stars[i].Count, Stars[i].Abstand, 4, 2, D3DCOLOR_RGBA(255, 255, 255, Stars[i].Ebene));
+        RenderRect(star.Count, star.Abstand, 4, 2, D3DCOLOR_RGBA(255, 255, 255, star.Ebene));
     }
 
     // --------------------------------------------------------------------------------------

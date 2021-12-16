@@ -81,10 +81,10 @@ MenuClass::MenuClass() {
     AktuellerPunkt = MENUPUNKT_STARTGAME;
 
     // Sterne initialisieren
-    for (int i = 0; i < MAX_STARS; i++) {
-        Stars[i].Count = float(rand() % 628) / 100.0f;
-        Stars[i].Abstand = float(rand() % 400 + 20);
-        Stars[i].Ebene = rand() % 120 + 20;
+    for (auto& star: Stars) {
+        star.Count = float(rand() % 628) / 100.0f;
+        star.Abstand = float(rand() % 400 + 20);
+        star.Ebene = rand() % 120 + 20;
     }
 
     // Farben für die Highscore erstellen, in der die Namen aufblinken
@@ -392,10 +392,10 @@ void MenuClass::ShowMenuBack() {
     MenuStar.SetRect(0, 0, 5, 5);
 
     // Sterne anzeigen
-    for (int i = 0; i < MAX_STARS; i++)
-        MenuStar.RenderSpriteRotated(320 - float(sin(Stars[i].Count) * Stars[i].Abstand),
-                                     240 + float(cos(Stars[i].Count) * Stars[i].Abstand), Stars[i].Count,
-                                     D3DCOLOR_RGBA(255, 255, 255, Stars[i].Ebene));
+    for (const auto& star: Stars)
+        MenuStar.RenderSpriteRotated(320 - float(sin(star.Count) * star.Abstand),
+                                     240 + float(cos(star.Count) * star.Abstand), star.Count,
+                                     D3DCOLOR_RGBA(255, 255, 255, star.Ebene));
 
     DirectGraphics.SetColorKeyMode();
 }
@@ -1173,11 +1173,11 @@ void MenuClass::DoMenu() {
 
     // Sterne bewegen
     //
-    for (int i = 0; i < MAX_STARS; i++) {
-        Stars[i].Count += Stars[i].Ebene / 20000.0f SYNC;
+    for (auto& star: Stars) {
+        star.Count += star.Ebene / 20000.0f SYNC;
 
-        if (Stars[i].Count > 2 * PI)
-            Stars[i].Count -= 2 * PI;
+        if (star.Count > 2 * PI)
+            star.Count -= 2 * PI;
     }
 
     ShowMenu();
