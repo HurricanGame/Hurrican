@@ -270,8 +270,8 @@ void GegnerRollmops::DoKI() {
         HUD.ShowBossHUD(4000, Energy);
 
     // Levelausschnitt auf den Mops zentrieren, sobald dieser sichtbar wird
-    if (TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
-        TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2), ZUSTAND_SCROLLTOLOCK);
+    if (TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
+        TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2), TileStateEnum::SCROLLTOLOCK);
 
         // Mops aus Screen bringen
         xPos = Value1 + 640.0f;
@@ -293,7 +293,7 @@ void GegnerRollmops::DoKI() {
             // warten bis Kamera am richtigen Fleck ist, dann reinhopsen lassen
             case GEGNER_EINFLIEGEN: {
                 // Kamera an der richtigen Position?
-                if (TileEngine.Zustand == ZUSTAND_LOCKED) {
+                if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                     // dann reinhopsen
                     xSpeed = -10.0f;
                     yAcc = 4.0f;

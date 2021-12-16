@@ -196,7 +196,7 @@ void GegnerPowerBlock::GegnerExplode() {
         if (Player[i].AufPlattform == this) {
             Player[i].AufPlattform = NULL;
             Player[i].JumpPossible = false;
-            Player[i].Handlung = SPRINGEN;
+            Player[i].Handlung = PlayerActionEnum::SPRINGEN;
             Player[i].AnimPhase = 0;
             Player[i].yspeed = 0.5f;
             Player[i].JumpAdd = PLAYER_JUMPADDSPEED;

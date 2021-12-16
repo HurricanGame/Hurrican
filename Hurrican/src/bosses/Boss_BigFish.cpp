@@ -252,8 +252,8 @@ void GegnerBigFish::DoKI() {
         HUD.ShowBossHUD(2000, Energy);
 
     // Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
-    if (Active && Handlung != GEGNER_EXPLODIEREN && TileEngine.Zustand == ZUSTAND_SCROLLBAR && Energy > 0.0f) {
-        TileEngine.ScrollLevel(Value1, Value2, ZUSTAND_SCROLLTOLOCK);  // Level auf die Faust zentrieren
+    if (Active && Handlung != GEGNER_EXPLODIEREN && TileEngine.Zustand == TileStateEnum::SCROLLBAR && Energy > 0.0f) {
+        TileEngine.ScrollLevel(Value1, Value2, TileStateEnum::SCROLLTOLOCK);  // Level auf die Faust zentrieren
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);       // Ausfaden und pausieren
         xPos += 400;
     }
@@ -293,7 +293,7 @@ void GegnerBigFish::DoKI() {
         switch (Handlung) {
             case GEGNER_NOTVISIBLE:  // Warten bis der Screen zentriert wurde
             {
-                if (TileEngine.Zustand == ZUSTAND_LOCKED) {
+                if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                     // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                     if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
                         SoundManager.PlaySong(MUSIC_BOSS, false);

@@ -34,9 +34,9 @@ void GegnerWuxeSpinnen::DoKI() {
 
     // Boss aktivieren und Mucke laufen lassen
     //
-    if (Active == true && Handlung != GEGNER_VERFOLGEN && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
+    if (Active == true && Handlung != GEGNER_VERFOLGEN && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
-                               ZUSTAND_SCROLLTOLOCK);  // Level auf den Boss zentrieren
+                               TileStateEnum::SCROLLTOLOCK);  // Level auf den Boss zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
         Gegner.PushGegner(xPos, yPos - 40, EXTRAS, 10, 0, false);
@@ -54,7 +54,7 @@ void GegnerWuxeSpinnen::DoKI() {
     switch (Handlung) {
         case GEGNER_INIT:  // Warten bis der Screen zentriert wurde
         {
-            if (TileEngine.Zustand == ZUSTAND_LOCKED) {
+            if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 //
                 // DKS - Added function SongIsPlaying() to SoundManagerClass:

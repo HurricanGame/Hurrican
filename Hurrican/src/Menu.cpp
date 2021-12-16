@@ -2208,7 +2208,7 @@ void MenuClass::DoMenu() {
                     Player[0].SmartBombs = Savegames[AktuellerPunkt].SmartBombs;
 
                     for (int p = 0; p < 2; p++) {
-                        Player[p].Handlung = STEHEN;
+                        Player[p].Handlung = PlayerActionEnum::STEHEN;
                         Player[p].Energy = Savegames[AktuellerPunkt].Energy[p];
                         Player[p].Armour = Savegames[AktuellerPunkt].Armour[p];
                         Player[p].Shield = Savegames[AktuellerPunkt].Shield[p];

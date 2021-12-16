@@ -141,13 +141,13 @@ void HUDClass::ShowHUD() {
     HUDBlitz.SetRect(0, BlitzOff, 6, 18);
 
     // Wenn geblitzt wird, die Blitzwaffe heller anzeigen
-    if (Player[0].Handlung == BLITZEN)
+    if (Player[0].Handlung == PlayerActionEnum::BLITZEN)
         SelectedWeapon.RenderSprite(xpos + 212 + 3 * 32, ypos + 14, 3, Color);
 
     D3DCOLOR color;
 
     // Blitz-Level anzeigen
-    if (Player[0].Handlung == BLITZEN)
+    if (Player[0].Handlung == PlayerActionEnum::BLITZEN)
         color = D3DCOLOR_RGBA(0, 255, 0, 192);
     else
         color = D3DCOLOR_RGBA(0, 255, 0, 64);
@@ -282,7 +282,7 @@ void HUDClass::ShowHUD() {
         }
 
         // Gewählte Waffe heller darstellen
-        if (Player[p].Handlung != BLITZEN) {
+        if (Player[p].Handlung != PlayerActionEnum::BLITZEN) {
             if (NUMPLAYERS == 1)
                 SelectedWeapon.RenderSprite(xpos + 212 + Player[p].SelectedWeapon * 32, ypos + 14,
                                             Player[p].SelectedWeapon, playercol);

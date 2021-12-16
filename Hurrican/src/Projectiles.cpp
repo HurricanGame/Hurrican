@@ -3263,7 +3263,8 @@ void ProjectileClass::Run() {
             if (ySpeed < 0.0f)
                 ySpeed += float(M_PI) * 2;
 
-            if (pParent->Handlung != RADELN && pParent->Handlung != RADELN_FALL) {
+            if (pParent->Handlung != PlayerActionEnum::RADELN &&
+                    pParent->Handlung != PlayerActionEnum::RADELN_FALL) {
                 // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
                 // xPos = float (pParent->xpos + 28 + sin (ySpeed) * 40);
                 // yPos = float (pParent->ypos + 38 + cos (ySpeed) * 40);
@@ -4020,15 +4021,17 @@ void ProjectileClass::ExplodeShot() {
                 // DKS - Converted to float:
                 Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
-                if (((ShotArt == BOMBE && Abstand <= 60) || (ShotArt == BOMBEBIG && Abstand <= 80)) &&
-                    (Player[p].Handlung == RADELN || Player[p].Handlung == RADELN_FALL)) {
+                if (((ShotArt == BOMBE && Abstand <= 60) ||
+                        (ShotArt == BOMBEBIG && Abstand <= 80)) &&
+                        (Player[p].Handlung == PlayerActionEnum::RADELN ||
+                        Player[p].Handlung == PlayerActionEnum::RADELN_FALL)) {
                     if (ShotArt == BOMBE)
                         Player[p].yspeed -= 45.0f;  // Bombe
                     else
                         Player[p].yspeed -= 75.0f;  // SuperBombe
 
                     Player[p].JumpAdd = PLAYER_JUMPADDSPEED;  // lassen
-                    Player[p].Handlung = RADELN_FALL;         // als Rad
+                    Player[p].Handlung = PlayerActionEnum::RADELN_FALL;         // als Rad
                 }
             }
 

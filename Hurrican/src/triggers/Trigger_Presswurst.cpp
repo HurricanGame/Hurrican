@@ -98,7 +98,7 @@ void GegnerPresswurst::DoKI() {
                                     GegnerRect[GegnerArt]) == true &&
                     Player[p].ypos > yPos) {
                     // wenn er steht, dann gleich zerquetschen
-                    if (Player[p].Handlung != SPRINGEN)
+                    if (Player[p].Handlung != PlayerActionEnum::SPRINGEN)
                         Player[p].DamagePlayer(500.0f);
 
                     // wenn er springt, dann runterdrücken

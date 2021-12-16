@@ -56,12 +56,14 @@ void GegnerSkiWalker::DoKI() {
     // Spieler draufgehüpft ?
     for (int i = 0; i < NUMPLAYERS; i++)
         if (Player[i].AufPlattform == this && (Handlung == GEGNER_LAUFEN || Handlung == GEGNER_FALLEN) &&
-            Player[i].Handlung != RADELN && Player[i].Handlung != RADELN_FALL && Player[i].Handlung != SACKREITEN &&
-            Player[i].Handlung != DREHEN && Player[i].yspeed > 0.0f) {
+                Player[i].Handlung != PlayerActionEnum::RADELN &&
+                Player[i].Handlung != PlayerActionEnum::RADELN_FALL &&
+                Player[i].Handlung != PlayerActionEnum::SACKREITEN &&
+                Player[i].Handlung != PlayerActionEnum::DREHEN && Player[i].yspeed > 0.0f) {
             // Spieler springen lassen
             Player[i].JumpPossible = false;
             Player[i].AnimPhase = 0;
-            Player[i].Handlung = SPRINGEN;
+            Player[i].Handlung = PlayerActionEnum::SPRINGEN;
             Player[i].JumpStart = Player[i].ypos;
             Player[i].yspeed = -PLAYER_MAXJUMPSPEED;
             Player[i].JumpAdd = 0.0f;

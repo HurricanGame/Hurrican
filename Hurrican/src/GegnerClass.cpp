@@ -233,8 +233,10 @@ bool GegnerClass::Run() {
 
         // Gegner Energie abziehen, wenn der Spieler ein Rad ist
         for (int p = 0; p < NUMPLAYERS; p++) {
-            if ((Player[p].Handlung == RADELN || Player[p].Handlung == RADELN_FALL) && Destroyable == true &&
-                SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[p].xpos, Player[p].ypos,
+            if ((Player[p].Handlung == PlayerActionEnum::RADELN ||
+                    Player[p].Handlung == PlayerActionEnum::RADELN_FALL) &&
+                    Destroyable == true &&
+                    SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[p].xpos, Player[p].ypos,
                                 Player[p].CollideRect) == true) {
                 Energy -= 10.0f SYNC;  // Energie abziehen
 
@@ -287,7 +289,7 @@ bool GegnerClass::Run() {
 
     // Aim ist tot? Dann neues suchen
     //
-    if (pAim->Handlung == TOT)
+    if (pAim->Handlung == PlayerActionEnum::TOT)
         pAim = ChooseAim();
 
     return true;
@@ -399,7 +401,9 @@ void GegnerClass::PlattformTest(RECT_struct rect) {
                 Player[p].AufPlattform = NULL;
         }
 
-        else if (Player[p].AufPlattform == NULL && Player[p].Handlung != SACKREITEN && Player[p].Handlung != DREHEN) {
+        else if (Player[p].AufPlattform == NULL &&
+                Player[p].Handlung != PlayerActionEnum::SACKREITEN &&
+                Player[p].Handlung != PlayerActionEnum::DREHEN) {
             // Feststellen ob der Hurri auf die Plattform gesprungen ist
             //
             int laenge;
@@ -434,7 +438,8 @@ void GegnerClass::Wegschieben(RECT_struct rect, float dam) {
         if (SpriteCollision(xPos, yPos, rect, Player[i].xpos, Player[i].ypos, Player[i].CollideRect) == true &&
             Player[i].AufPlattform != this) {
             // Spieler als Rad ? Dann abprallen
-            if (Player[i].Handlung == RADELN || Player[i].Handlung == RADELN_FALL) {
+            if (Player[i].Handlung == PlayerActionEnum::RADELN ||
+                    Player[i].Handlung == PlayerActionEnum::RADELN_FALL) {
                 if (Player[i].xpos < xPos)
                     Player[i].Blickrichtung = -1;
                 if (Player[i].xpos > xPos)

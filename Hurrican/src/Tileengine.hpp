@@ -87,11 +87,13 @@
 
 //--- Zustände der Tileengine
 
-#define ZUSTAND_SCROLLBAR 0       // Spieler kann Level scrollen durch laufen
-#define ZUSTAND_SCROLLTO 1        // Level Scrollt zu bestimmter Position
-#define ZUSTAND_SCROLLTOLOCK 2    // Level Scrollt zu bestimmter Position und lockt dann
-#define ZUSTAND_SCROLLTOPLAYER 4  // Level Scrollt zum Spieler
-#define ZUSTAND_LOCKED 5          // Level sitzt an bestimmter Position fest
+enum class TileStateEnum {
+  SCROLLBAR,       // Spieler kann Level scrollen durch laufen
+  SCROLLTO,        // Level Scrollt zu bestimmter Position
+  SCROLLTOLOCK,    // Level Scrollt zu bestimmter Position und lockt dann
+  SCROLLTOPLAYER,  // Level Scrollt zum Spieler
+  LOCKED           // Level sitzt an bestimmter Position fest
+};
 
 // --------------------------------------------------------------------------------------
 // Strukturen
@@ -449,7 +451,7 @@ class TileEngineClass {
     // float			WaterList[4096];						// Sinus Liste zum Schwabbeln der Oberfläche
 
     char Beschreibung[100];      // Beschreibung des Levels
-    int Zustand;                 // Aktueller Zustand
+    TileStateEnum Zustand;       // Aktueller Zustand
     float ScrolltoX, ScrolltoY;  // Lock-Werte
     float SpeedX, SpeedY;        // Speed for ScrollTo Funktion
     bool bDrawShadow;            // Taschenlampen Shatten im Alien Level rendern?
@@ -522,7 +524,7 @@ class TileEngineClass {
     void DrawWater();  // Wasser Planes rendern
     void CheckBounds();
     void UpdateLevel();                                                           // Level evtl scrollen usw
-    void ScrollLevel(float x, float y, int neu, float sx = 10.0f, float sy = 10.0f);  // Screen scrollen
+    void ScrollLevel(float x, float y, TileStateEnum neu, float sx = 10.0f, float sy = 10.0f);  // Screen scrollen
     void MakeBordersLookCool(int x, int y);
 
     uint32_t BlockRechts(float &x, float y, float &xo, float yo, RECT_struct rect, bool resolve = false);

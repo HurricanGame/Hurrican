@@ -67,7 +67,7 @@ void GegnerShrine::DoKI() {
     for (int p = 0; p < NUMPLAYERS; p++)
         if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[p].xpos, Player[p].ypos, Player[p].CollideRect) ==
                 true &&
-            Player[p].Handlung == DUCKEN && Value1 == 1) {
+            Player[p].Handlung == PlayerActionEnum::DUCKEN && Value1 == 1) {
             Value1 = 0;
             for (int i = 0; i < 2; i++)
                 Gegner.PushGegner(float(xPos - 20 + i * 110), yPos - 100, ONEUP, 0, 0, true);

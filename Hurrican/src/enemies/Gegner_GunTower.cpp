@@ -84,7 +84,7 @@ void GegnerGunTower::DoKI() {
                     BlickRichtung = LINKS;
                 AnimEnde = 0;
                 AnimPhase = 0;
-                Handlung = STEHEN;
+                Handlung = GEGNER_STEHEN;
             }
         } break;
 

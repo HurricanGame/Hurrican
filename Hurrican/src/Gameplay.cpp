@@ -101,7 +101,7 @@ void InitNewGame() {
     pMenu->StartProgressBar(NumTextures);
 
     for (int p = 0; p < NUMPLAYERS; p++) {
-        Player[p].Handlung = STEHEN;
+        Player[p].Handlung = PlayerActionEnum::STEHEN;
         Player[p].InitPlayer(p);  // DKS: InitPlayer now takes argument specifying which
                                   //      player number each player is. InitPlayer will
                                   //      also load each player's set of sprites if they
@@ -287,7 +287,7 @@ void GameLoop() {
         for (int p = 0; p < NUMPLAYERS; p++) {
             Player[p].WasDamaged = false;
 
-            if (!Console.Showing && Player[p].Handlung != TOT) {
+            if (!Console.Showing && Player[p].Handlung != PlayerActionEnum::TOT) {
                 if (Player[p].GameOverTimer == 0.0f) {
                     // Spieler-Eingabe abfragen
                     Player[p].GetPlayerInput();
@@ -429,7 +429,7 @@ void GameLoop() {
             Player[0].SelectedWeapon = 2;
 
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (Player[p].Handlung != TOT)
+            if (Player[p].Handlung != PlayerActionEnum::TOT)
                 Player[p].CheckForExplode();
     }
 
@@ -1365,7 +1365,7 @@ void PlayDemo() {
 
 void ScrolltoPlayeAfterBoss() {
     // Level wieder zum Spieler scrollen und dann weiterscrollen lassen
-    TileEngine.Zustand = ZUSTAND_SCROLLBAR;
+    TileEngine.Zustand = TileStateEnum::SCROLLBAR;
     TileEngine.MustCenterPlayer = true;
 
     // Level Musik wieder einfaden lassen (aus Pause Zustand)
@@ -1405,10 +1405,10 @@ PlayerClass *ChooseAim() {
 
     pAim = &Player[rand() % NUMPLAYERS];
 
-    if (pAim == &Player[0] && Player[0].Handlung == TOT)
+    if (pAim == &Player[0] && Player[0].Handlung == PlayerActionEnum::TOT)
         pAim = &Player[1];
 
-    if (pAim == &Player[1] && Player[1].Handlung == TOT)
+    if (pAim == &Player[1] && Player[1].Handlung == PlayerActionEnum::TOT)
         pAim = &Player[0];
 
     return pAim;

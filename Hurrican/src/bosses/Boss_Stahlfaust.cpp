@@ -36,9 +36,9 @@ void GegnerStahlfaust::DoKI() {
         HUD.ShowBossHUD(4000, Energy);
 
     // Levelausschnitt auf die Faust zentrieren, sobald dieses sichtbar wird
-    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
+    if (Active == true && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
-                               ZUSTAND_SCROLLTOLOCK);  // Level auf die Faust zentrieren
+                               TileStateEnum::SCROLLTOLOCK);  // Level auf die Faust zentrieren
         yPos -= 300;                                   // und Faust aus dem Screen setzen
         Handlung = GEGNER_INIT;
 
@@ -73,7 +73,7 @@ void GegnerStahlfaust::DoKI() {
     switch (Handlung) {
         case GEGNER_INIT:  // Warten bis der Screen zentriert wurde
         {
-            if (TileEngine.Zustand == ZUSTAND_LOCKED) {
+            if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 // DKS - Added function SongIsPlaying() to SoundManagerClass:
                 if (!SoundManager.SongIsPlaying(MUSIC_BOSS))

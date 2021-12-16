@@ -158,14 +158,14 @@ void GegnerSkeletor::DoKI() {
 
     // Boss aktivieren und Stagemusik ausfaden
     //
-    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
+    if (Active == true && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         // Ausserhalb des Screens setzen
         xPos = static_cast<float>(TileEngine.XOffset) + 100.0f;
         yPos = static_cast<float>(TileEngine.YOffset) - 250.0f;
         DrawNow = true;
 
         TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
-                               ZUSTAND_SCROLLTOLOCK);  // Level auf den Boss zentrieren
+                               TileStateEnum::SCROLLTOLOCK);  // Level auf den Boss zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
@@ -457,7 +457,7 @@ void GegnerSkeletor::DoKI() {
 
         case GEGNER_NOTVISIBLE:  // Warten bis der Screen zentriert wurde
         {
-            if (TileEngine.Zustand == ZUSTAND_LOCKED) {
+            if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Boss erscheinen lassen
                 //
                 SoundManager.PlayWave(100, 128, 11025, SOUND_STONEFALL);

@@ -153,7 +153,7 @@ TileEngineClass::TileEngineClass() {
 
     WasserfallOffset = 0.0f;
 
-    Zustand = ZUSTAND_SCROLLBAR;
+    Zustand = TileStateEnum::SCROLLBAR;
 
     // Tile Ausschnitte vorberechnen
     //
@@ -800,7 +800,7 @@ loadfile:
     // Level korrekt geladen
     Protokoll << "-> Load Level : " << Filename << " successful ! <-\n" << std::endl;
 
-    Zustand = ZUSTAND_SCROLLBAR;
+    Zustand = TileStateEnum::SCROLLBAR;
 
     return true;
 }
@@ -1331,7 +1331,7 @@ void TileEngineClass::DrawFrontLevel() {
 // Level Ausschnitt scrollen
 // --------------------------------------------------------------------------------------
 
-void TileEngineClass::ScrollLevel(float x, float y, int neu, float sx, float sy) {
+void TileEngineClass::ScrollLevel(float x, float y, TileStateEnum neu, float sx, float sy) {
     ScrolltoX = x;
     ScrolltoY = y;
     SpeedX = sx;
@@ -2070,7 +2070,7 @@ void TileEngineClass::UpdateLevel() {
     }
 
     // Sichtbaren Level-Ausschnitt scrollen
-    if (Zustand == ZUSTAND_SCROLLTO || Zustand == ZUSTAND_SCROLLTOLOCK) {
+    if (Zustand == TileStateEnum::SCROLLTO || Zustand == TileStateEnum::SCROLLTOLOCK) {
         if (XOffset < ScrolltoX) {
             XOffset += SpeedX SYNC;
 
@@ -2100,15 +2100,15 @@ void TileEngineClass::UpdateLevel() {
         }
 
         if (XOffset == ScrolltoX && YOffset == ScrolltoY) {
-            if (Zustand == ZUSTAND_SCROLLTOLOCK)
-                Zustand = ZUSTAND_LOCKED;
+            if (Zustand == TileStateEnum::SCROLLTOLOCK)
+                Zustand = TileStateEnum::LOCKED;
             else
-                Zustand = ZUSTAND_SCROLLBAR;
+                Zustand = TileStateEnum::SCROLLBAR;
         }
     }
 
     // Level-Ausschnitt zum Spieler Scrollen
-    if (Zustand == ZUSTAND_SCROLLTOPLAYER) {
+    if (Zustand == TileStateEnum::SCROLLTOPLAYER) {
         if (NUMPLAYERS == 1) {
             ScrolltoX = Player[0].xpos;
             ScrolltoY = Player[0].ypos;
@@ -2153,19 +2153,19 @@ void TileEngineClass::UpdateLevel() {
         }
 
         if (isScrolling == false)
-            Zustand = ZUSTAND_SCROLLBAR;
+            Zustand = TileStateEnum::SCROLLBAR;
     }
 
     // Scrollbar und 2-Spieler Modus? Dann Kamera entsprechend setzen
-    if (Zustand == ZUSTAND_SCROLLBAR) {
+    if (Zustand == TileStateEnum::SCROLLBAR) {
         float newx, newy;
         float angleichx, angleichy;
 
         if (NUMPLAYERS == 2) {
-            if (Player[0].Handlung == TOT) {
+            if (Player[0].Handlung == PlayerActionEnum::TOT) {
                 newx = Player[1].xpos + 35;
                 newy = Player[1].ypos;
-            } else if (Player[1].Handlung == TOT) {
+            } else if (Player[1].Handlung == PlayerActionEnum::TOT) {
                 newx = Player[0].xpos + 35;
                 newy = Player[0].ypos;
             } else {

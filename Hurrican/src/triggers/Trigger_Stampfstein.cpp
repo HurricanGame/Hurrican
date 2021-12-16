@@ -70,10 +70,10 @@ void GegnerStampfstein::DoKI() {
         //
         case GEGNER_NOTVISIBLE: {
             oldy = yPos;
-            Handlung = STEHEN;
+            Handlung = GEGNER_STEHEN;
         } break;
 
-        case STEHEN: {
+        case GEGNER_STEHEN: {
             oldy = yPos;
 
             // Spieler in der Nähe? Dann runterfallen lassen

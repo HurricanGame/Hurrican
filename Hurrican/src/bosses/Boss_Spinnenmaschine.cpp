@@ -306,10 +306,10 @@ void GegnerSpinnenmaschine::DoKI() {
 
     // Boss aktivieren und Mucke laufen lassen
     //
-    if (Active == true && Handlung != GEGNER_SPECIAL && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
+    if (Active == true && Handlung != GEGNER_SPECIAL && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         if (PlayerAbstandHoriz() < 450) {
             TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
-                                   ZUSTAND_SCROLLTOLOCK);             // Level auf den Boss zentrieren
+                                   TileStateEnum::SCROLLTOLOCK);             // Level auf den Boss zentrieren
             SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
         }
     }
@@ -379,7 +379,7 @@ void GegnerSpinnenmaschine::DoKI() {
     switch (Handlung) {
         // Warten bis der Screen zentriert wurde
         case GEGNER_INIT: {
-            if (TileEngine.Zustand == ZUSTAND_LOCKED) {
+            if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 //
                 // DKS - Added function SongIsPlaying() to SoundManagerClass:
@@ -554,7 +554,8 @@ void GegnerSpinnenmaschine::DoKI() {
     if (Handlung != GEGNER_SPECIAL)
         for (int p = 0; p < NUMPLAYERS; p++)
             if (Player[p].xpos < xPos + 250) {
-                if (Player[p].Handlung == RADELN || Player[p].Handlung == RADELN_FALL) {
+                if (Player[p].Handlung == PlayerActionEnum::RADELN ||
+                        Player[p].Handlung == PlayerActionEnum::RADELN_FALL) {
                     if (Player[p].Blickrichtung == LINKS)
                         Player[p].Blickrichtung = RECHTS;
                 } else

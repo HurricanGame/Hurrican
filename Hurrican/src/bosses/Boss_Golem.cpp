@@ -246,12 +246,12 @@ void GegnerGolem::DoKI() {
         HUD.ShowBossHUD(8000, Energy);
 
     // Levelausschnitt auf den Golem zentrieren, sobald dieser sichtbar wird
-    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
+    if (Active == true && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         // verstecken
         xPos += 400;
 
         // hinscrollen
-        TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2), ZUSTAND_SCROLLTOLOCK);
+        TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2), TileStateEnum::SCROLLTOLOCK);
 
         // Ausfaden und pausieren
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);
@@ -282,7 +282,7 @@ void GegnerGolem::DoKI() {
     switch (Handlung) {
         case GEGNER_NOTVISIBLE:  // Warten bis der Screen zentriert wurde
         {
-            if (TileEngine.Zustand == ZUSTAND_LOCKED) {
+            if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 // DKS - Added function SongIsPlaying() to SoundManagerClass:
                 if (!SoundManager.SongIsPlaying(MUSIC_BOSS))

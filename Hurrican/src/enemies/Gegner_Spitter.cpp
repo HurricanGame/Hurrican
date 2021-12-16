@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerSpitter::GegnerSpitter(int Wert1, int Wert2, bool Light) {
-    Handlung = LAUFEN;
+    Handlung = GEGNER_LAUFEN;
     AnimEnde = 4;
     AnimSpeed = 1.25f;
     Energy = 20;

@@ -221,9 +221,9 @@ void GegnerStachelbeere::DoKI() {
 
             // an der Wand umdrehen
             // oder am Screenrand, wenn der Screen gelockt ist
-            if ((TileEngine.Zustand == ZUSTAND_LOCKED && BlickRichtung == LINKS && xPos < TileEngine.XOffset) ||
+            if ((TileEngine.Zustand == TileStateEnum::LOCKED && BlickRichtung == LINKS && xPos < TileEngine.XOffset) ||
 
-                (TileEngine.Zustand == ZUSTAND_LOCKED && BlickRichtung == RECHTS &&
+                (TileEngine.Zustand == TileStateEnum::LOCKED && BlickRichtung == RECHTS &&
                  xPos > TileEngine.XOffset + 640 - 50) ||
 
                 (BlickRichtung == LINKS && (blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND)) ||

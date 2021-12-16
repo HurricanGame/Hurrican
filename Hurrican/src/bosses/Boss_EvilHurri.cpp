@@ -65,9 +65,9 @@ void GegnerEvilHurri::DoKI() {
         HUD.ShowBossHUD(6000, Energy);
 
     // Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
-    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
+    if (Active == true && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
-                               ZUSTAND_SCROLLTOLOCK);  // Level auf die Faust zentrieren
+                               TileStateEnum::SCROLLTOLOCK);  // Level auf die Faust zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
@@ -83,7 +83,8 @@ void GegnerEvilHurri::DoKI() {
         if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[p].xpos, Player[p].ypos, Player[p].CollideRect) ==
             true) {
             // Spieler als Rad ? Dann abprallen
-            if (Player[p].Handlung == RADELN || Player[p].Handlung == RADELN_FALL) {
+            if (Player[p].Handlung == PlayerActionEnum::RADELN ||
+                    Player[p].Handlung == PlayerActionEnum::RADELN_FALL) {
                 if (Player[p].xpos < xPos)
                     Player[p].Blickrichtung = -1;
                 if (Player[p].xpos > xPos)
@@ -141,7 +142,7 @@ void GegnerEvilHurri::DoKI() {
     switch (Handlung) {
         case GEGNER_INIT:  // Warten bis der Screen zentriert wurde
         {
-            if (TileEngine.Zustand == ZUSTAND_LOCKED) {
+            if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 // DKS - Added function SongIsPlaying() to SoundManagerClass:
                 if (!SoundManager.SongIsPlaying(MUSIC_BOSS))

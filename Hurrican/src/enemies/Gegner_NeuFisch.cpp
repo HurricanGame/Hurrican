@@ -145,7 +145,8 @@ void GegnerNeuFisch::DoKI() {
             xPos = pFest->xpos - Value1;
             yPos = pFest->ypos - Value2;
 
-            if (pFest->Handlung == RADELN || pFest->Handlung == RADELN_FALL) {
+            if (pFest->Handlung == PlayerActionEnum::RADELN ||
+                    pFest->Handlung == PlayerActionEnum::RADELN_FALL) {
                 Handlung = GEGNER_LAUFEN;
                 ;
                 AnimEnde = 9;

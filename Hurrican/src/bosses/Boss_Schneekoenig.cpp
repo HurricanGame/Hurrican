@@ -190,7 +190,7 @@ void GegnerSchneeKoenig::DoKI() {
 
     // Boss aktivieren und Mucke laufen lassen
     //
-    if (Active && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
+    if (Active && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         SoundManager.StopSong(MUSIC_STAGEMUSIC, true);  // Ausfaden und pausieren
         SoundManager.PlaySong(MUSIC_BOSS, false);
         ySave = yPos;
@@ -200,7 +200,7 @@ void GegnerSchneeKoenig::DoKI() {
         yPos = TileEngine.YOffset - 300;
         ySpeed = 50.0f;
         DrawNow = true;
-        TileEngine.Zustand = ZUSTAND_LOCKED;
+        TileEngine.Zustand = TileStateEnum::LOCKED;
     }
 
     // Kanone zurückfahren
@@ -227,7 +227,7 @@ void GegnerSchneeKoenig::DoKI() {
                 for (int i = 0; i < 10; i++)
                     PartikelSystem.PushPartikel(xPos + rand() % 130 - 10, yPos + rand() % 40 + 60, SMOKEBIG);
 
-                TileEngine.ScrollLevel(static_cast<float>(TileEngine.XOffset), yPos - 320.0f, ZUSTAND_SCROLLTOLOCK);
+                TileEngine.ScrollLevel(static_cast<float>(TileEngine.XOffset), yPos - 320.0f, TileStateEnum::SCROLLTOLOCK);
 
                 SoundManager.PlayWave(50, 128, 11025, SOUND_DOORSTOP);
             }

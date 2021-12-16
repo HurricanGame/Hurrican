@@ -393,9 +393,9 @@ void GegnerTheWall::DoKI() {
 
         // Boss aktivieren und Mucke laufen lassen
         //
-        if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
+        if (Active == true && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
             if (PlayerAbstand() < 800 && PlayerAbstandHoriz() < 400.0f) {
-                TileEngine.ScrollLevel(xPos - 355, yPos, ZUSTAND_SCROLLTOLOCK);  // Level auf den Boss zentrieren
+                TileEngine.ScrollLevel(xPos - 355, yPos, TileStateEnum::SCROLLTOLOCK);  // Level auf den Boss zentrieren
                 SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);         // Ausfaden und pausieren
             }
         }
@@ -406,12 +406,13 @@ void GegnerTheWall::DoKI() {
             Destroyable = false;
 
             // Level wieder zum Spieler scrollen und dann weiterscrollen lassen
-            TileEngine.ScrollLevel(Player[0].xpos - 300, Player[0].ypos - 280, ZUSTAND_SCROLLTOPLAYER);
+            TileEngine.ScrollLevel(Player[0].xpos - 300, Player[0].ypos - 280, TileStateEnum::SCROLLTOPLAYER);
 
             // Rad checken
             for (int p = 0; p < NUMPLAYERS; p++) {
-                if (Player[p].Handlung == RADELN || Player[p].Handlung == RADELN_FALL)
-                    Player[p].Handlung = LAUFEN;
+                if (Player[p].Handlung == PlayerActionEnum::RADELN ||
+                        Player[p].Handlung == PlayerActionEnum::RADELN_FALL)
+                    Player[p].Handlung = PlayerActionEnum::LAUFEN;
             }
 
             ShotCount = 1;

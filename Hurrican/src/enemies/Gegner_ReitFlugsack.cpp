@@ -148,9 +148,10 @@ void GegnerReitFlugsack::DoKI() {
 
             // Spieler steht drauf ?
             for (int i = 0; i < NUMPLAYERS; i++)
-                if (Player[i].AufPlattform == this && Player[i].Handlung != SACKREITEN &&
-                    Player[i].Handlung != DREHEN) {
-                    Player[i].Handlung = SACKREITEN;
+                if (Player[i].AufPlattform == this &&
+                        Player[i].Handlung != PlayerActionEnum::SACKREITEN &&
+                        Player[i].Handlung != PlayerActionEnum::DREHEN) {
+                    Player[i].Handlung = PlayerActionEnum::SACKREITEN;
                     Player[i].CollideRect.left = 15;  // Kollisionsrechteck anpassen
                     Player[i].CollideRect.right = 75;
                     Player[i].CollideRect.top = 10;

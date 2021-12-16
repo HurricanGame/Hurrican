@@ -334,9 +334,9 @@ void GegnerMetalHead::DoKI() {
 
     // Boss aktivieren und Mucke laufen lassen
     //
-    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
+    if (Active == true && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
-                               ZUSTAND_SCROLLTOLOCK);  // Level auf den Boss zentrieren
+                               TileStateEnum::SCROLLTOLOCK);  // Level auf den Boss zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
@@ -528,7 +528,7 @@ void GegnerMetalHead::DoKI() {
 
             case GEGNER_INIT:  // Warten bis der Screen zentriert wurde
             {
-                if (TileEngine.Zustand == ZUSTAND_LOCKED) {
+                if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                     // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                     //
                     // DKS - Added function SongIsPlaying() to SoundManagerClass:
@@ -833,8 +833,10 @@ void GegnerMetalHead::DoKI() {
             SpriteCollision(xPos + 50, yPos + 130, r, Player[p].xpos, Player[p].ypos, Player[p].CollideRect) == true) {
             // Beim Ansaugen gleich viel abziehen und Ansaugen beenden
             //
-            if (Handlung == GEGNER_SPECIAL2 && Player[p].Handlung != RADELN && Player[p].Handlung != RADELN_FALL) {
-                Player[p].DamagePlayer(500.0f);
+            if (Handlung == GEGNER_SPECIAL2 &&
+                    Player[p].Handlung != PlayerActionEnum::RADELN &&
+                    Player[p].Handlung != PlayerActionEnum::RADELN_FALL) {
+                    Player[p].DamagePlayer(500.0f);
                 AnimPhase = 1600;
             } else
                 Player[p].DamagePlayer(float(4.0 SYNC));

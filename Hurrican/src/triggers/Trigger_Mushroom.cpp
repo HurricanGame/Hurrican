@@ -50,7 +50,7 @@ void GegnerMushroom::PlayerJumps(PlayerClass *pPlayer) {
             pPlayer->yspeed = -PLAYER_MAXJUMPSPEED;
 
         pPlayer->yadd = PLAYER_JUMPADDSPEED;
-        pPlayer->Handlung = SPRINGEN;
+        pPlayer->Handlung = PlayerActionEnum::SPRINGEN;
 
         SoundManager.PlayWave(100, 128, int(11000), SOUND_MUSHROOMJUMP);
     }

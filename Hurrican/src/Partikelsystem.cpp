@@ -2961,7 +2961,8 @@ void PartikelClass::Run() {
                 xPos = m_pParent->xpos + xSpeed + 37;
                 yPos = m_pParent->ypos + ySpeed + 57;
 
-                if (m_pParent->Handlung == RADELN || m_pParent->Handlung == RADELN_FALL)
+                if (m_pParent->Handlung == PlayerActionEnum::RADELN ||
+                        m_pParent->Handlung == PlayerActionEnum::RADELN_FALL)
                     yPos += 30;
             } break;
 

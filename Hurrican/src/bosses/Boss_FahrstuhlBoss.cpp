@@ -100,7 +100,7 @@ void GegnerFahrstuhlBoss::DoKI() {
 
         // Level wieder auf Spieler zentrieren
         //
-        TileEngine.ScrollLevel(Player[0].xpos - 300, Player[0].ypos - 280, ZUSTAND_SCROLLTOPLAYER, 10.0f, 50.0f);
+        TileEngine.ScrollLevel(Player[0].xpos - 300, Player[0].ypos - 280, TileStateEnum::SCROLLTOPLAYER, 10.0f, 50.0f);
 
         // Endboss-Musik ausfaden und abschalten
         SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);

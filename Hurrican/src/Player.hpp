@@ -88,30 +88,31 @@
 
 //----- Definitionen der "Handlungen"
 
-#define STEHEN 0
-#define SCHIESSEN 1
-#define SCHIESSEN_O 2
-#define SCHIESSEN_RO 3
-#define SCHIESSEN_LO 4
-//#define SCHIESSEN_RU	5
-//#define SCHIESSEN_LU	6
-#define LAUFEN 7
-#define SPRINGEN 8
-#define DUCKEN 9
-#define BLITZEN 10      // Rundum-Blitz
-#define RADELN 11       // Radeln =)
-#define RADELN_FALL 12  // Als Rad fallen
-#define SACKREITEN 13   // Auf dem FlugSack rumreiten
-#define DREHEN 14       // Auf dem FlugSack umdrehen
-#define BEAMLADEN 15    // Osama Beam (auf)laden ;)
-#define PISSEN \
-    16  // Der Spieler hat zu lange gewartet, und jetzt muss der arme Hurri übelst strullen (Auch als "Charles
-        // Bronson"-Animation bekannt)
-#define SURFEN 17        // Spieler surft auf Gegner
-#define SURFENCROUCH 18  // Ducken beim surfen
-#define SURFENJUMP 19    // Springen beim surfen
-#define EXPLODIEREN 20   // Hurri explodiert
-#define TOT 21           // Hurri ist kaputt
+enum class PlayerActionEnum {
+  STEHEN,
+  SCHIESSEN,
+  SCHIESSEN_O,
+  SCHIESSEN_RO,
+  SCHIESSEN_LO,
+//  SCHIESSEN_RU,
+//  SCHIESSEN_LU,
+  LAUFEN,
+  SPRINGEN,
+  DUCKEN,
+  BLITZEN,      // Rundum-Blitz
+  RADELN,       // Radeln =)
+  RADELN_FALL,  // Als Rad fallen
+  SACKREITEN,   // Auf dem FlugSack rumreiten
+  DREHEN,       // Auf dem FlugSack umdrehen
+  BEAMLADEN,    // Osama Beam (auf)laden ;)
+  PISSEN,       // Der Spieler hat zu lange gewartet, und jetzt muss der arme Hurri übelst strullen
+                // (Auch als "Charles Bronson"-Animation bekannt)
+  SURFEN,       // Spieler surft auf Gegner
+  SURFENCROUCH, // Ducken beim surfen
+  SURFENJUMP,   // Springen beim surfen
+  EXPLODIEREN,  // Hurri explodiert
+  TOT           // Hurri ist kaputt
+};
 
 // --------------------------------------------------------------------------------------
 // Klasse für den Spieler
@@ -181,7 +182,7 @@ class PlayerClass {
     float BlitzWinkel;          // Aktuelle Richtung des Blitzes
     float BlitzCount;           // Zähler für die Blitzanimation
     int BlitzAnim;              // Aktuelle Blitzanimation
-    int Handlung;               // Was macht der Spieler gerade ?
+    PlayerActionEnum Handlung;  // Was macht der Spieler gerade ?
     int Blickrichtung;          // Wohin kuckt der Spieler ?
     float Energy;               // Energie
     float Armour;               // Rüstung

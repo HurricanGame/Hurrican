@@ -317,9 +317,9 @@ void GegnerDrache::DoKI() {
         HUD.ShowBossHUD(7000, Energy);
 
     // Levelausschnitt auf den Drache zentrieren, sobald dieser sichtbar wird
-    if (Value2 == 0 && Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
+    if (Value2 == 0 && Active == true && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         TileEngine.ScrollLevel(static_cast<float>(Value1), yPos,
-                               ZUSTAND_SCROLLTOLOCK);  // Level auf den Drache zentrieren
+                               TileStateEnum::SCROLLTOLOCK);  // Level auf den Drache zentrieren
 
         // Drache aus Screen bringen
         xPos = Value1 - 500.0f;
@@ -397,8 +397,10 @@ void GegnerDrache::DoKI() {
             bool alledrauf = true;
 
             for (int p = 0; p < NUMPLAYERS; p++)
-                if (Player[p].Handlung != TOT && (Player[p].AufPlattform != this || Player[p].Handlung == RADELN ||
-                                                  Player[p].Handlung == RADELN_FALL))
+                if (Player[p].Handlung != PlayerActionEnum::TOT &&
+                        (Player[p].AufPlattform != this ||
+                        Player[p].Handlung == PlayerActionEnum::RADELN ||
+                        Player[p].Handlung == PlayerActionEnum::RADELN_FALL))
                     alledrauf = false;
 
             if (alledrauf == true) {
@@ -646,7 +648,7 @@ void GegnerDrache::DoKI() {
         case GEGNER_NOTVISIBLE:  // Warten bis der Screen zentriert wurde
         {
             StartPosY = yPos - 25.0f;
-            if (TileEngine.Zustand == ZUSTAND_LOCKED) {
+            if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 // DKS - Added function SongIsPlaying() to SoundManagerClass:
                 if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
