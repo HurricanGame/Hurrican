@@ -28,6 +28,9 @@
 
 class CCracktro {
   private:
+    enum class StateEnum { MAIN, LOAD };
+
+  private:
     DirectGraphicsSprite Bars[3];
     DirectGraphicsSprite Logo[2];
     DirectGraphicsSprite Zahlen;
@@ -36,7 +39,7 @@ class CCracktro {
     float ScrollOffset, ScrollOffset2;
     int ScrollPos, ScrollPos2;
     float SinPos;
-    int State;
+    StateEnum State;
 
     StarStruct Stars[200];
 

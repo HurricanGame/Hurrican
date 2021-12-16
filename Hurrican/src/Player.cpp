@@ -4168,7 +4168,7 @@ void PlayerClass::PlayerInExit() {
 
     Stage = NewStage;  // Anpassen dass wir im neuen Level sind
 
-    SpielZustand = MAINMENU;
+    SpielZustand = GameStateEnum::MAINMENU;
     Console.Hide();
 
     // Tutorial Level zuende? Dann normal zurück ins Hauptmenu

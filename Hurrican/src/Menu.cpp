@@ -1398,7 +1398,7 @@ void MenuClass::DoMenu() {
                 } else if (AktuellerPunkt == MENUPUNKT_CONTINUEGAME && Stage > -1) {
                     AktuellerPunkt = 0;
                     SoundManager.StopSong(MUSIC_MENU, false);
-                    SpielZustand = GAMELOOP;
+                    SpielZustand = GameStateEnum::GAMELOOP;
 
                     // DKS - We now use the sound manager's already-present pause functions here:
 #if 0
@@ -1967,7 +1967,7 @@ void MenuClass::DoMenu() {
                 Highscores[NewRank].Skill = NewSkill;
 
                 // Und zurück ins Hauptmenu und dort die Highscores anzeigen
-                SpielZustand = MAINMENU;
+                SpielZustand = GameStateEnum::MAINMENU;
                 AktuellerZustand = MENUPUNKT_HIGHSCORES;
 
                 SoundManager.SetSongVolume(MUSIC_MENU, 0.0f);
@@ -2077,7 +2077,7 @@ void MenuClass::DoMenu() {
                     //					SoundManager.StopSong(MUSIC_MENU, false);
                     InitNewGame();
                     InitNewGameLevel();
-                    SpielZustand = GAMELOOP;
+                    SpielZustand = GameStateEnum::GAMELOOP;
                 }
 
                 // Neues Spiel starten ?
@@ -2223,11 +2223,11 @@ void MenuClass::DoMenu() {
                     }
 
                     // An der Stelle im Savegame weiterspielen
-                    AktuellerZustand = MAINMENU;
+                    AktuellerZustand = 3; // MAINMENU ???
                     AktuellerPunkt = 0;
                     //					SoundManager.StopSong(MUSIC_MENU, false);
                     InitNewGameLevel();  // Neues level laden
-                    SpielZustand = GAMELOOP;     // Weiterspielen
+                    SpielZustand = GameStateEnum::GAMELOOP;     // Weiterspielen
                 }
             }
         } break;  // Load Game
@@ -2338,7 +2338,7 @@ void MenuClass::DoMenu() {
                 // oder Weiter/Continue  ?
                 //				if (AktuellerPunkt == MAX_SAVEGAMES)
                 {
-                    AktuellerZustand = MAINMENU;
+                    AktuellerZustand = 3; // MAINMENU ???
                     AktuellerPunkt = 0;
                     InitNewGameLevel();  // Neues level laden
                 }
@@ -2713,7 +2713,7 @@ void MenuClass::CheckForNewHighscore() {
             break;
         }
 
-    SpielZustand = MAINMENU;
+    SpielZustand = GameStateEnum::MAINMENU;
 }
 
 // --------------------------------------------------------------------------------------

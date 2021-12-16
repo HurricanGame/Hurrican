@@ -26,10 +26,12 @@
 
 //----- Zustände
 
-#define INTRO_FADEIN 0
-#define INTRO_RUN 1
-#define INTRO_FADEOUT 2
-#define INTRO_DONE 3
+enum class IntroStateEnum {
+  FADEIN,
+  RUN,
+  FADEOUT,
+  DONE
+};
 
 // --------------------------------------------------------------------------------------
 // Klassen Deklaration für das Intro
@@ -54,7 +56,7 @@ class IntroClass {
     std::vector<IntroEntry> entries;
 
   public:
-    int Zustand;
+    IntroStateEnum Zustand;
     IntroClass();    // Konstruktor
     ~IntroClass();   // Destruktor
     void DoIntro();  // Intro ablaufen lassen

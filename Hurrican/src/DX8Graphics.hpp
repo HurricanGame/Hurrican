@@ -36,9 +36,11 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define ADDITIV_MODE 0
-#define COLORKEY_MODE 1
-#define WHITE_MODE 2
+enum class BlendModeEnum {
+  ADDITIV,
+  COLORKEY,
+  WHITE
+};
 
 #if defined(USE_GL2) || defined(USE_GL3)
 enum { PROGRAM_COLOR = 0, PROGRAM_TEXTURE, PROGRAM_RENDER, PROGRAM_TOTAL, PROGRAM_NONE };
@@ -90,7 +92,7 @@ class DirectGraphicsClass {
 #endif
 
   public:
-    int BlendMode;  // Additiv, Colorkey oder White mode aktiviert?
+    BlendModeEnum BlendMode;  // Additiv, Colorkey oder White mode aktiviert?
     bool SupportedETC1;
     bool SupportedPVRTC;
 #if SDL_VERSION_ATLEAST(2, 0, 0)

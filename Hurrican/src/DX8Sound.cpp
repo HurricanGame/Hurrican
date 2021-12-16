@@ -91,7 +91,7 @@ void SoundManagerClass::UpdateChannels() {
 
                 switch (channels[i].fade_mode) {
                     // einfaden
-                    case FADEMODE_IN: {
+                    case FadeModeEnum::IN: {
                         // Volume erhöhen
                         float new_vol = channels[i].vol;
 
@@ -106,7 +106,7 @@ void SoundManagerClass::UpdateChannels() {
                         //
                         if (new_vol > 100.0f) {
                             new_vol = 100.0f;
-                            channels[i].fade_mode = FADEMODE_NON;
+                            channels[i].fade_mode = FadeModeEnum::NON;
                         }
 
                         // Lautstärke setzen
@@ -114,7 +114,7 @@ void SoundManagerClass::UpdateChannels() {
                     } break;
 
                     // ausfaden
-                    case FADEMODE_OUT: {
+                    case FadeModeEnum::OUT: {
                         // Volume verringern
 
                         float new_vol = channels[i].vol;
@@ -553,10 +553,10 @@ void SoundManagerClass::FadeSong(int nr, float speed, int end, bool pause_when_f
 //				  Mode			FadeMode
 //---------------------------------------------------------------------------------------
 // DKS - altered extensively, it now fades waves of specified "nr" on all channels:
-void SoundManagerClass::FadeWave(int nr, int mode) {
+void SoundManagerClass::FadeWave(int nr, FadeModeEnum mode) {
     int channel = -1;
 
-    if (mode == FADEMODE_IN) {
+    if (mode == FadeModeEnum::IN) {
         // First, find if the sound is already playing
         for (int i = 0; i < num_channels; ++i) {
             if (channels[i].sound_num == nr)
@@ -681,7 +681,7 @@ int SoundManagerClass::PlayWave_SDL(int vol, int pan, int nr) {
 
     channels[channel].paused = false;
     channels[channel].sound_num = nr;
-    channels[channel].fade_mode = FADEMODE_NON;
+    channels[channel].fade_mode = FadeModeEnum::NON;
     channels[channel].pending_vol = -1;
     channels[channel].pending_pan = 128;
     channels[channel].paused = false;
@@ -827,7 +827,7 @@ void SoundManagerClass::StopChannel(int ch) {
         channels[ch].sound_num = -1;
     }
 
-    channels[ch].fade_mode = FADEMODE_NON;
+    channels[ch].fade_mode = FadeModeEnum::NON;
     channels[ch].pending_vol = -1;
     channels[ch].pending_pan = 128;
     channels[ch].paused = false;

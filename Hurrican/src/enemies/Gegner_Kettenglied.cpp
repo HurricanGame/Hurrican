@@ -32,7 +32,7 @@ void GegnerKettenglied::DoDraw() {
     int Wert = 255 - static_cast<int>(DamageTaken);
 
     if (AnimSpeed < 0.0f) {
-        if (DirectGraphics.BlendMode == ADDITIV_MODE)
+        if (DirectGraphics.BlendMode == BlendModeEnum::ADDITIV)
             Color = D3DCOLOR_RGBA(255, 255, 255, Wert);
         else
             Color = 0xFFFFFFFF;

@@ -59,7 +59,7 @@ PlayerClass *ChooseAim();
 // Externals
 // --------------------------------------------------------------------------------------
 
-extern unsigned char SpielZustand;
+extern GameStateEnum SpielZustand;
 extern bool NochKeinFullScreen;
 
 //----- externe Variablen zum Screen-Wackeln lassen (zB bei SpinnenBombe)

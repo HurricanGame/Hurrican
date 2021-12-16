@@ -31,7 +31,7 @@ IntroClass::IntroClass() {
     Background[4].LoadImage("intro5.png", 640, 480, 640, 480, 1, 1);
     Background[5].LoadImage("intro6.png", 640, 480, 640, 480, 1, 1);
 
-    Zustand = INTRO_FADEIN;
+    Zustand = IntroStateEnum::FADEIN;
 
     EntriesOff = 0;  // Offset into actual lines displayed on the screen (can vary based on font size)
     TextOff = 0;     // Offset into what text would be displayed with a normal-sized font
@@ -98,12 +98,12 @@ IntroClass::~IntroClass() {
 // --------------------------------------------------------------------------------------
 
 void IntroClass::EndIntro() {
-    if (Zustand != INTRO_FADEOUT) {
-        if (Zustand != INTRO_FADEIN) {
+    if (Zustand != IntroStateEnum::FADEOUT) {
+        if (Zustand != IntroStateEnum::FADEIN) {
             Counter = 255.0f;
         }
 
-        Zustand = INTRO_FADEOUT;
+        Zustand = IntroStateEnum::FADEOUT;
         SoundManager.FadeSong(MUSIC_INTRO, -1.5f, 0, false);
     }
 }
@@ -137,7 +137,7 @@ void IntroClass::DoIntro() {
 
     // Intro laufen lassen
     switch (Zustand) {
-        case INTRO_FADEIN:  // Text scrollen
+        case IntroStateEnum::FADEIN:  // Text scrollen
         {
             // Mucke spielen
             // DKS - Added function SongIsPlaying() to SoundManagerClass:
@@ -149,20 +149,20 @@ void IntroClass::DoIntro() {
 
             if (Counter > 255.0f) {
                 Counter = 0.0f;
-                Zustand = INTRO_RUN;
+                Zustand = IntroStateEnum::RUN;
             } else {
                 D3DCOLOR col = D3DCOLOR_RGBA(0, 0, 0, 255 - int(Counter));
                 RenderRect(0, 0, 640, 480, col);
             }
         } break;
 
-        case INTRO_FADEOUT: {
+        case IntroStateEnum::FADEOUT: {
             // und ausfaden
             Counter -= 5.0f SYNC;
 
             if (Counter < 0.0f) {
                 Counter = 0.0f;
-                Zustand = INTRO_DONE;
+                Zustand = IntroStateEnum::DONE;
             } else if (Counter > 255.0f) {
                 Counter = 255.0f;
             }
@@ -173,7 +173,7 @@ void IntroClass::DoIntro() {
         } break;
 
         // Scroller
-        case INTRO_RUN:
+        case IntroStateEnum::RUN:
             // DKS - Added low-resolution scaled-font support:
             {
                 int scale_factor = pDefaultFont->GetScaleFactor();

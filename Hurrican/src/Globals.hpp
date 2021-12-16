@@ -25,12 +25,14 @@
 
 //----- Spielzustände
 
-#define CRACKTRO 0
-#define VORSPANN 1
-#define INTRO 2
-#define MAINMENU 3
-#define GAMELOOP 4
-#define OUTTRO 5
+enum class GameStateEnum {
+  CRACKTRO,
+  VORSPANN,
+  INTRO,
+  MAINMENU,
+  GAMELOOP,
+  OUTTRO
+};
 
 // Tasten Abfragen (simple Methode)
 #define SimpleKeydown(vk_code) ((GetAsyncKeyState(vk_code) & 0x8000) ? 1 : 0)

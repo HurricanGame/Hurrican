@@ -158,7 +158,7 @@ void InitNewGameLevel() {
 
     // und Level endlich laden
     if (!TileEngine.LoadLevel(Name)) {
-        SpielZustand = MAINMENU;
+        SpielZustand = GameStateEnum::MAINMENU;
         pMenu->AktuellerZustand = MENUPUNKT_STARTGAME;
         Stage = -1;
         NewStage = -1;
@@ -204,7 +204,7 @@ void InitNewGameLevel() {
 
     FahrstuhlPos = -1.0f;
 
-    SpielZustand = GAMELOOP;
+    SpielZustand = GameStateEnum::GAMELOOP;
 }
 
 // --------------------------------------------------------------------------------------
@@ -320,7 +320,7 @@ void GameLoop() {
     }
     SpeedFaktor = SpeedFaktorMax;  // Restore the factor so other logic can stay in sync
 
-    if (SpielZustand != GAMELOOP)
+    if (SpielZustand != GameStateEnum::GAMELOOP)
         return;
 
     // Hintergrund und Parallax Layer anzeigen
@@ -483,7 +483,7 @@ void LeaveGameLoop() {
     pMenu->RotationDir = 1;
 
     // Ins Hauptmenu wechseln
-    SpielZustand = MAINMENU;
+    SpielZustand = GameStateEnum::MAINMENU;
     pMenu->AktuellerZustand = MENUZUSTAND_MAINMENU;
     if (Player[0].Lives == -1 && Player[1].Lives == -1)
         // DKS - If game is over, make main menu selection be "Start New Game"

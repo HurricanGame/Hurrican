@@ -52,14 +52,14 @@ void GegnerFadeMusic::DoKI() {
         if (Value1 == 2) {
             // Ist der Sound an und fadet noch nicht ?
             // if (SoundManager.its_Sounds[Value2]->FadeMode != FADEMODE_OUT)
-            SoundManager.FadeWave(Value2, FADEMODE_OUT);
+            SoundManager.FadeWave(Value2, FadeModeEnum::OUT);
         }
 
         // SoundTrigger Einfaden
         if (Value1 == 3) {
             // Ist der Sound aus und fadet nicht?
             // if (SoundManager.its_Sounds[Value2]->FadeMode != FADEMODE_IN)
-            SoundManager.FadeWave(Value2, FADEMODE_IN);
+            SoundManager.FadeWave(Value2, FadeModeEnum::IN);
         }
     }
 

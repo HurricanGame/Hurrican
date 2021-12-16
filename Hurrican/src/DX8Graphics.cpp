@@ -472,12 +472,12 @@ bool DirectGraphicsClass::TakeScreenshot(const char Filename[100], int screenx, 
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsClass::SetColorKeyMode() {
-    if (BlendMode == COLORKEY_MODE)
+    if (BlendMode == BlendModeEnum::COLORKEY)
         return;
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    BlendMode = COLORKEY_MODE;
+    BlendMode = BlendModeEnum::COLORKEY;
 }
 
 // --------------------------------------------------------------------------------------
@@ -485,12 +485,12 @@ void DirectGraphicsClass::SetColorKeyMode() {
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsClass::SetWhiteMode() {
-    if (BlendMode == WHITE_MODE)
+    if (BlendMode == BlendModeEnum::WHITE)
         return;
 
     glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_DST_ALPHA);
 
-    BlendMode = WHITE_MODE;
+    BlendMode = BlendModeEnum::WHITE;
 }
 
 // --------------------------------------------------------------------------------------
@@ -498,12 +498,12 @@ void DirectGraphicsClass::SetWhiteMode() {
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsClass::SetAdditiveMode() {
-    if (BlendMode == ADDITIV_MODE)
+    if (BlendMode == BlendModeEnum::ADDITIV)
         return;
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
-    BlendMode = ADDITIV_MODE;
+    BlendMode = BlendModeEnum::ADDITIV;
 }
 
 // --------------------------------------------------------------------------------------

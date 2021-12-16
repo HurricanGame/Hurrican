@@ -118,7 +118,7 @@ sCommandLineParams CommandLineParams;
 PlayerClass Player[2];  // Werte der Spieler
 
 HUDClass HUD;                           // Das HUD
-unsigned char SpielZustand = CRACKTRO;  // Aktueller Zustand des Spieles
+GameStateEnum SpielZustand = GameStateEnum::CRACKTRO;  // Aktueller Zustand des Spieles
 
 void FillCommandLineParams(int argc, char *args[]) {
     uint16_t i;
@@ -547,7 +547,7 @@ bool GameInit() {
 
 #ifdef SHOW_CRACKTRO
     Cracktro = new CCracktro();
-    SpielZustand = CRACKTRO;
+    SpielZustand = GameStateEnum::CRACKTRO;
 #endif
 
     return true;
@@ -816,14 +816,14 @@ bool GameExit() {
 bool Heartbeat() {
     switch (SpielZustand) {
         // Cracktro
-        case CRACKTRO: {
+        case GameStateEnum::CRACKTRO: {
 #ifdef SHOW_CRACKTRO
 
             Cracktro->Run();
 
             if (!Cracktro->b_running) {
                 delete (Cracktro);
-                SpielZustand = MAINMENU;
+                SpielZustand = GameStateEnum::MAINMENU;
 
                 if (!GameInit2())
                     return false;
@@ -832,19 +832,19 @@ bool Heartbeat() {
             if (!GameInit2())
                 return false;
 
-            SpielZustand = MAINMENU;
+            SpielZustand = GameStateEnum::MAINMENU;
 
 #endif
             //		pOuttro = new OuttroClass();
-            //		SpielZustand = OUTTRO;
+            //		SpielZustand = GameStateEnum::OUTTRO;
 
             goto jump;
         }
 
         //----- Intro anzeigen ?
-        case INTRO: {
+        case GameStateEnum::INTRO: {
             // Laufen lassen, bis beendet
-            if (pIntro->Zustand != INTRO_DONE) {
+            if (pIntro->Zustand != IntroStateEnum::DONE) {
                 pIntro->DoIntro();
 
                 if (DirectInput.AnyKeyDown() || DirectInput.AnyButtonDown())
@@ -854,12 +854,12 @@ bool Heartbeat() {
                 delete (pIntro);
                 InitNewGame();
                 InitNewGameLevel();
-                SpielZustand = GAMELOOP;
+                SpielZustand = GameStateEnum::GAMELOOP;
             }
         } break;
 
         //----- Outtro anzeigen ?
-        case OUTTRO: {
+        case GameStateEnum::OUTTRO: {
             pOuttro->DoOuttro();
 
             if (KeyDown(DIK_ESCAPE))  // Intro beenden ?
@@ -872,12 +872,12 @@ bool Heartbeat() {
         } break;
 
         //----- Hauptmenu
-        case MAINMENU: {
+        case GameStateEnum::MAINMENU: {
             pMenu->DoMenu();
         } break;
 
         //---- Haupt-Gameloop
-        case GAMELOOP: {
+        case GameStateEnum::GAMELOOP: {
             GameLoop();
         } break;
 
@@ -1021,7 +1021,7 @@ void ShowFPS() {
 void StartOuttro() {
     Stage = -1;
     pOuttro = new OuttroClass();
-    SpielZustand = OUTTRO;
+    SpielZustand = GameStateEnum::OUTTRO;
 }
 
 //----------------------------------------------------------------------------
@@ -1032,5 +1032,5 @@ void StartIntro() {
     pMenu->StartProgressBar(12);
 
     pIntro = new IntroClass();
-    SpielZustand = INTRO;
+    SpielZustand = GameStateEnum::INTRO;
 }

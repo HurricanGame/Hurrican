@@ -168,10 +168,12 @@
 #define MUSIC_FLUGSACK 14   // Musik für Flugsack Modus
 
 // Fadezustände für in Wave
-#define FADEMODE_NON 0
-#define FADEMODE_IN 1
-#define FADEMODE_OUT 2
-#define FADEMODE_FULL 3
+enum class FadeModeEnum {
+  NON,
+  IN,
+  OUT,
+  FULL
+};
 
 //---------------------------------------------------------------------------------------
 // Strukturen
@@ -245,8 +247,8 @@ class SampleClass {
 // DKS - Added:
 class ChannelClass {
   public:
+    FadeModeEnum fade_mode;  // Fadet der Sound gerade ?
     uint8_t panning;
-    uint8_t fade_mode;  // Fadet der Sound gerade ?
     uint8_t pending_pan;
     int16_t pending_vol;  // If -1, there is no pending volume/pan changes (from Trigger_SoundTrigger.cpp presumably)
     int16_t sound_num;    // If sound_num is -1, the channel is not in use.
@@ -256,8 +258,8 @@ class ChannelClass {
     int xpos, ypos;  // If this is a 3D channel, this stores its origin point
 
     ChannelClass()
-        : panning(128),
-          fade_mode(FADEMODE_NON),
+        : fade_mode(FadeModeEnum::NON),
+          panning(128),
           pending_pan(128),
           pending_vol(-1),
           sound_num(-1),
@@ -329,7 +331,7 @@ class SoundManagerClass {
                   float speed,
                   int end,  // Song ein/aus faden
                   bool pause_when_fade_ends);
-    void FadeWave(int nr, int mode);  // Fade Mode
+    void FadeWave(int nr, FadeModeEnum mode);  // Fade Mode
     void LoadWave(const std::string &filename,
                   int nr,  // Sound laden
                   bool looped);

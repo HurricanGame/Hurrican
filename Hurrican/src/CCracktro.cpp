@@ -99,7 +99,7 @@ CCracktro::CCracktro() {
     DirectGraphics.SetAdditiveMode();
     DirectGraphics.SetColorKeyMode();
 
-    State = 0;
+    State = StateEnum::MAIN;
 
 }  // Konstruktor
 
@@ -311,7 +311,7 @@ void CCracktro::Main() {
     //
     if (DirectInput.AnyKeyDown() || DirectInput.AnyButtonDown()) {
         SoundManager.StopSong(MUSIC_CRACKTRO, false);
-        State = 1;
+        State = StateEnum::LOAD;
     }
 }
 
@@ -339,16 +339,12 @@ void CCracktro::Load() {
 
 void CCracktro::Run() {
     switch (State) {
-        case 0:
+        case StateEnum::MAIN:
             Main();
             break;
 
-        case 1:
+        case StateEnum::LOAD:
             Load();
-            break;
-
-        default:
-            Main();
             break;
     }
 }  // RunCracktro

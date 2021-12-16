@@ -38,7 +38,7 @@ OuttroClass::OuttroClass() {
     // DKS - Player 2 textures are now loaded from disk already-converted
     // ConvertPlayerTexture(&Reiter[1]);
 
-    Zustand = OUTTRO_FADEIN;
+    Zustand = OutroStateEnum::FADEIN;
 
     Counter = 0.0f;
     SmokeDelay = 0.0f;
@@ -107,7 +107,7 @@ void OuttroClass::DoOuttro() {
     // Turm rendern
     float off = 0.0f;
 
-    if (Zustand != OUTTRO_SCROLLER)
+    if (Zustand != OutroStateEnum::SCROLLER)
         off = static_cast<float>(sin(Counter / 2.0f)) / 2.0f;
 
     Tower.RenderSpriteRotated(299 + off, 61 + TowerOffset, TowerOffset / 10.0f, 0xFFFFFFFF);
@@ -127,7 +127,7 @@ void OuttroClass::DoOuttro() {
     PartikelSystem.DoPartikelSpecial(true);
 
     // Spieler, der rausfliegt
-    if (Zustand == OUTTRO_PLAYER_FLEES) {
+    if (Zustand == OutroStateEnum::PLAYER_FLEES) {
         DirectGraphics.SetFilterMode(true);
 
         D3DCOLOR col1;
@@ -192,7 +192,7 @@ void OuttroClass::DoOuttro() {
     }
 
     switch (Zustand) {
-        case OUTTRO_FADEIN:  // Text scrollen
+        case OutroStateEnum::FADEIN:  // Text scrollen
         {
             // DKS - Added function WaveIsPlaying() to SoundManagerClass:
             if (!SoundManager.WaveIsPlaying(SOUND_TAKEOFF)) {
@@ -204,7 +204,7 @@ void OuttroClass::DoOuttro() {
 
             if (Counter > 255.0f) {
                 Counter = 255.0f;
-                Zustand = OUTTRO_TOWER_EXPLODE;
+                Zustand = OutroStateEnum::TOWER_EXPLODE;
             }
 
             D3DCOLOR col = D3DCOLOR_RGBA(0, 0, 0, 255 - int(Counter));
@@ -225,8 +225,8 @@ void OuttroClass::DoOuttro() {
         } break;
 
         // Explosionen
-        case OUTTRO_TOWER_EXPLODE:
-        case OUTTRO_PLAYER_FLEES: {
+        case OutroStateEnum::TOWER_EXPLODE:
+        case OutroStateEnum::PLAYER_FLEES: {
             SmokeDelay -= 1.0f SYNC;
             TowerOffset += 0.5f SYNC;
 
@@ -241,16 +241,16 @@ void OuttroClass::DoOuttro() {
                                             static_cast<float>(150 + TowerOffset + rand() % 100), EXPLOSION_MEDIUM2);
             }
 
-            if (Zustand == OUTTRO_TOWER_EXPLODE) {
+            if (Zustand == OutroStateEnum::TOWER_EXPLODE) {
                 if (TowerOffset >= 20.0f) {
                     Counter = 0.0f;
-                    Zustand = OUTTRO_PLAYER_FLEES;
+                    Zustand = OutroStateEnum::PLAYER_FLEES;
                     SoundManager.PlayWave(100, 128, 10000, SOUND_TAKEOFF);
                     InitPlayerPos();
                 }
             }
 
-            if (Zustand == OUTTRO_PLAYER_FLEES) {
+            if (Zustand == OutroStateEnum::PLAYER_FLEES) {
                 PlayerSmoke -= 1.0f SYNC;
 
                 if (PlayerSmoke < 0.0f) {
@@ -303,7 +303,7 @@ void OuttroClass::DoOuttro() {
 
                 // Spieler sind weg? Dann nur noch scroller anzeigen und fertig =)
                 if (Counter > 80.0f) {
-                    Zustand = OUTTRO_SCROLLER;
+                    Zustand = OutroStateEnum::SCROLLER;
                     TextOff = 0;
                     Counter = 0.0f;
 
@@ -315,7 +315,7 @@ void OuttroClass::DoOuttro() {
             }
         } break;
 
-        case OUTTRO_SCROLLER: {
+        case OutroStateEnum::SCROLLER: {
             // DKS - modified to support scaled fonts (used on low-res devices)
             //      Note that, for here, we don't use the LowResCredts[] text array,
             //      as the logic here requires lines to be at specific locations.

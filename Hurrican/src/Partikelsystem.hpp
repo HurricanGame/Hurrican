@@ -28,9 +28,6 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define MODE_NORMAL 0
-#define MODE_ROTATED 1
-
 //----- Partikel, die normal oder nur mit Alphablending gerendert werden
 
 #define BULLET 0                  // Patronenhülse

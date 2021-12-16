@@ -27,6 +27,15 @@
 #include "Timer.hpp"
 
 // --------------------------------------------------------------------------------------
+// Defines
+// --------------------------------------------------------------------------------------
+
+enum class DrawModeEnum {
+  NORMAL,
+  ROTATED
+};
+
+// --------------------------------------------------------------------------------------
 // externe Variablen
 // --------------------------------------------------------------------------------------
 
@@ -43,9 +52,9 @@ extern LPDIRECT3DDEVICE8 lpD3DDevice;  // Direct3D Device-Objekt
 // --------------------------------------------------------------------------------------
 
 DirectGraphicsSprite PartikelGrafix[MAX_PARTIKELGFX];  // Grafiken der Partikel
-RECT_struct PartikelRect[MAX_PARTIKELGFX];                    // Rechtecke für Level Kollision
+RECT_struct PartikelRect[MAX_PARTIKELGFX];             // Rechtecke für Level Kollision
 int CurrentPartikelTexture;                            // Aktuelle Textur der Partikel
-int DrawMode;                                          // normale oder rotierte Partikel?
+DrawModeEnum DrawMode;                                 // normale oder rotierte Partikel?
 
 // --------------------------------------------------------------------------------------
 // PartikelKlasse Funktionen
@@ -3176,7 +3185,7 @@ bool PartikelClass::Render() {
 
     // Partikel rotieren?
     if (Rotate) {
-        DrawMode = MODE_ROTATED;
+        DrawMode = DrawModeEnum::ROTATED;
 
         if (Rot < 0.0f)
             Rot += 360.0f;
@@ -3213,8 +3222,8 @@ bool PartikelClass::Render() {
     } else
 
         // Partikel nicht rotieren?
-        if (!Rotate && DrawMode != MODE_NORMAL) {
-        DrawMode = MODE_NORMAL;
+        if (!Rotate && DrawMode != DrawModeEnum::NORMAL) {
+        DrawMode = DrawModeEnum::NORMAL;
 
         DirectGraphics.SetFilterMode(false);
 
@@ -3439,7 +3448,7 @@ PartikelsystemClass::PartikelsystemClass() {
     for (unsigned char &i : ThunderColor)
         i = 0;
 
-    DrawMode = MODE_NORMAL;
+    DrawMode = DrawModeEnum::NORMAL;
 }
 
 // DKS - PartikelsystemClass is now a static global, instead of dynamically allocated
@@ -4334,7 +4343,7 @@ void PartikelsystemClass::DrawOnly() {
 
     PartikelClass *pTemp = pStart;  // Anfang der Liste
     CurrentPartikelTexture = -1;    // Aktuelle Textur gibt es noch keine
-    DrawMode = MODE_NORMAL;
+    DrawMode = DrawModeEnum::NORMAL;
     DirectGraphics.SetColorKeyMode();
     while (pTemp != nullptr)  // Noch nicht alle durch ?
     {
@@ -4380,7 +4389,7 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
     PartikelClass *pPrev = nullptr;
 
     CurrentPartikelTexture = -1;  // Aktuelle Textur gibt es noch keine
-    DrawMode = MODE_NORMAL;
+    DrawMode = DrawModeEnum::NORMAL;
 
     //----- Partikel, die normal oder mit Alphablending gerendert werden, durchlaufen
 
@@ -4472,7 +4481,7 @@ void PartikelsystemClass::DoPartikel() {
     PartikelClass *pCurr = pStart;
     PartikelClass *pPrev = nullptr;
     CurrentPartikelTexture = -1;  // Aktuelle Textur gibt es noch keine
-    DrawMode = MODE_NORMAL;
+    DrawMode = DrawModeEnum::NORMAL;
 
     //----- Partikel, die normal oder mit Alphablending gerendert werden, durchlaufen
 
