@@ -544,10 +544,7 @@ void HUDClass::RenderArrow() {
     if ((alphadir > 0.0f && alpha > 255.0f) || (alphadir < 0.0f && alpha < 0.0f)) {
         alphadir *= -1.0f;
 
-        if (alpha < 0.0f)
-            alpha = 0.0f;
-        if (alpha > 255.0f)
-            alpha = 255.0f;
+        alpha = std::clamp(alpha, 0.0f, 255.0f);
     }
 
     D3DCOLOR Color = D3DCOLOR_RGBA(0, 255, 0, int(alpha));

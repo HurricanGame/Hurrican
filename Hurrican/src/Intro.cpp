@@ -14,6 +14,7 @@
 
 #include "Intro.hpp"
 #include <stdio.h>
+#include <algorithm>
 #include <string>
 #include <vector>
 #include "DX8Sound.hpp"
@@ -116,11 +117,7 @@ void IntroClass::DoIntro() {
     // Hintergrund rendern
     DirectGraphics.SetColorKeyMode();
 
-    int a = (TextOff - 1) / 4;
-    if (a < 0)
-        a = 0;
-    if (a > 5)
-        a = 5;
+    int a = std::clamp((TextOff - 1) / 4, 0, 5);
 
     Background[a].RenderSprite(0, 0, 0, 0xFFFFFFFF);
 
@@ -214,12 +211,8 @@ void IntroClass::DoIntro() {
                     D3DCOLOR col;
 
                     int alpha = 255 - (scale_factor * (EntriesOff - t) * 25);
-                    if (alpha < 0)
-                        alpha = 0;
-                    else if (alpha > 255)
-                        alpha = 255;
 
-                    col = D3DCOLOR_RGBA(0, 255, 0, static_cast<uint8_t>(alpha));
+                    col = D3DCOLOR_RGBA(0, 255, 0, static_cast<uint8_t>(std::clamp(alpha, 0, 255)));
 
                     if (t <= EntriesOff && (t - EntriesOff) > -lines_displayed && t < num_entries) {
                         const int tmp_h = 15 * scale_factor;
