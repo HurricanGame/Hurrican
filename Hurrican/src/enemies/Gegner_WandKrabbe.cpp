@@ -223,15 +223,8 @@ void GegnerWandKrabbe::DoKI() {
         Value1 = int(xPos - pAim->xpos);
         Value2 = int(yPos - pAim->ypos);
 
-        if (Value1 < -10)
-            Value1 = -10;
-        if (Value1 > 50)
-            Value1 = 50;
-
-        if (Value2 < -30)
-            Value2 = -30;
-        if (Value2 > 80)
-            Value2 = 80;
+        Value1 = std::clamp(Value1, -10, 50);
+        Value2 = std::clamp(Value2, -30, 80);
     }
 
     // Keine Energie mehr, aber noch nicht am "abschmieren"? Dann abschmieren lassen ;)

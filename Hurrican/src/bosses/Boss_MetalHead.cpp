@@ -235,10 +235,7 @@ void GegnerMetalHead::WinkelToPlayer() {
     // neww = (float)atan(ydiv / xdiv) * 180.0f / PI;
     neww = RadToDeg(atanf(ydiv / xdiv));
 
-    if (neww < -20.0f)
-        neww = -20.0f;
-    if (neww > 50.0f)
-        neww = 50.0f;
+    neww = std::clamp(neww, -20.0f, 50.0f);
 
     if (Akt != GEGNER_SCHIESSEN)
         neww = 0.0f;

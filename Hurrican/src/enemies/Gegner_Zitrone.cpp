@@ -59,10 +59,7 @@ void GegnerZitrone::CalcKnarreWinkel() {
     while (newwinkel < 0.0f)
         newwinkel += 360.0f;
 
-    if (newwinkel < 100.0f)
-        newwinkel = 100.0f;
-    if (newwinkel > 260.0f)
-        newwinkel = 260.0f;
+    newwinkel = std::clamp(newwinkel, 100.0f, 260.0f);
 
     if (KnarreWinkel < newwinkel)
         KnarreWinkel += 20.0f SYNC;
@@ -79,14 +76,7 @@ void GegnerZitrone::CalcKnarreWinkel() {
 // --------------------------------------------------------------------------------------
 
 void GegnerZitrone::DoDraw() {
-    int a;
-
-    a = AnimPhase;
-
-    if (a < 3)
-        a = 3;
-    if (a > 7)
-        a = 7;
+    int a = std::clamp(AnimPhase, 3, 7);
 
     float yoff = sin(WackelOffset) * 10.0f;
 
@@ -152,11 +142,7 @@ void GegnerZitrone::DoKI() {
 
     AnimPhase = 5 - static_cast<int>(dummy);
 
-    if (AnimPhase > 10)
-        AnimPhase = 10;
-
-    if (AnimPhase < 0)
-        AnimPhase = 0;
+    AnimPhase = std::clamp(AnimPhase, 0, 10);
 
     if (blockl & BLOCKWERT_WAND || blockr & BLOCKWERT_WAND)
         xSpeed = 0.0f;
@@ -228,15 +214,8 @@ void GegnerZitrone::DoKI() {
         //
         case GEGNER_LAUFEN: {
             // speed begrenzen
-            if (xSpeed > 20.0f)
-                xSpeed = 20.0f;
-            if (xSpeed < -20.0f)
-                xSpeed = -20.0f;
-
-            if (ySpeed > 20.0f)
-                ySpeed = 20.0f;
-            if (ySpeed < -20.0f)
-                ySpeed = -20.0f;
+            xSpeed = std::clamp(xSpeed, -20.0f, 20.0f);
+            ySpeed = std::clamp(ySpeed, -20.0f, 20.0f);
 
             // xpunkt erreicht?
             if (xSpeed < 0.0f && xPos < NewX) {

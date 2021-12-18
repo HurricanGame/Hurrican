@@ -62,14 +62,8 @@ void GegnerRiesenWasp::DoKI() {
         if (yPos > pAim->ypos - 100)
             yAcc = -1.5f;
 
-        if (xSpeed > 22.0f)
-            xSpeed = 22.0f;
-        if (xSpeed < -22.0f)
-            xSpeed = -22.0f;
-        if (ySpeed > 10.0f)
-            ySpeed = 10.0f;
-        if (ySpeed < -10.0f)
-            ySpeed = -10.0f;
+        xSpeed = std::clamp(xSpeed, -22.0f, 22.0f);
+        ySpeed = std::clamp(ySpeed, -10.0f, 10.0f);
 
         // An der Wand umdrehen
         //
