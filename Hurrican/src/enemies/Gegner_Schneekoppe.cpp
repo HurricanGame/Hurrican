@@ -88,7 +88,7 @@ void GegnerSchneekoppe::DoKI() {
 
 void GegnerSchneekoppe::GegnerExplode() {
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 10 + rand() % 20, yPos - 10 + rand() % 20, BLUE_EXPLOSION);
+        PartikelSystem.PushPartikel(xPos - 10 + random(20), yPos - 10 + random(20), BLUE_EXPLOSION);
 
-    SoundManager.PlayWave(100, 128, -rand() % 2000 + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 }

@@ -583,7 +583,7 @@ void ShakeScreen(float staerke) {
     WackelMaximum = staerke;
     WackelValue = 0.0f;
     WackelDir = 1.0f;
-    WackelSpeed = float(rand() % 10 + 5);
+    WackelSpeed = float(random(10) + 5);
 }
 
 // --------------------------------------------------------------------------------------

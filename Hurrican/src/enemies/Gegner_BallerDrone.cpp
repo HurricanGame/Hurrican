@@ -56,7 +56,7 @@ void GegnerBallerdrone::DoKI() {
     if (AnimCount < 0.0f) {
         AnimCount += 0.2f;
 
-        PartikelSystem.PushPartikel(xPos + 37 + rand() % 3, yPos + 35, ROBOMANSMOKE);
+        PartikelSystem.PushPartikel(xPos + 37 + random(3), yPos + 35, ROBOMANSMOKE);
     }
 
     if (xSpeed > 20.0f)
@@ -105,7 +105,7 @@ void GegnerBallerdrone::DoKI() {
                     shotdelay = 15.0f;
                     Projectiles.PushProjectile(xPos + 12, yPos + 50, SUCHSCHUSS2);
                     Projectiles.PushProjectile(xPos + 64, yPos + 50, SUCHSCHUSS2);
-                    SoundManager.PlayWave(50, 128, 14000 + rand() % 2000, SOUND_GOLEMSHOT);
+                    SoundManager.PlayWave(50, 128, 14000 + random(2000), SOUND_GOLEMSHOT);
                 }
             }
         } break;
@@ -123,9 +123,9 @@ void GegnerBallerdrone::DoKI() {
 
             if (shotdelay < 0.0f) {
                 shotdelay = 5.0f SYNC;
-                PartikelSystem.PushPartikel(xPos + 35 + rand() % 5, yPos + 20 + rand() % 5, ROCKETSMOKE);
-                PartikelSystem.PushPartikel(xPos + 30 + rand() % 5, yPos + 20 + rand() % 5, SMOKE3);
-                PartikelSystem.PushPartikel(xPos + 30 + rand() % 5, yPos + 20 + rand() % 5, FUNKE);
+                PartikelSystem.PushPartikel(xPos + 35 + random(5), yPos + 20 + random(5), ROCKETSMOKE);
+                PartikelSystem.PushPartikel(xPos + 30 + random(5), yPos + 20 + random(5), SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 30 + random(5), yPos + 20 + random(5), FUNKE);
             }
         } break;
     }
@@ -143,7 +143,7 @@ void GegnerBallerdrone::DoKI() {
         Energy = 100.0f;
         Handlung = GEGNER_FALLEN;
         yAcc = 3.0f;
-        SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
+        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
         PartikelSystem.PushPartikel(xPos - 20, yPos - 40, EXPLOSION_BIG);
         shotdelay = 1.0f;
     }
@@ -154,18 +154,18 @@ void GegnerBallerdrone::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerBallerdrone::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
 
     int i;
 
     for (i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 30 + rand() % 90, yPos - 30 + rand() % 60, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30 + random(90), yPos - 30 + random(60), EXPLOSION_MEDIUM2);
 
     for (i = 0; i < 30; i++)
-        PartikelSystem.PushPartikel(xPos - 40 + rand() % 90, yPos - 30 + rand() % 60, SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos - 40 + random(90), yPos - 30 + random(60), SMOKEBIG);
 
     for (i = 0; i < 40; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 90, yPos + rand() % 60, FUNKE);
+        PartikelSystem.PushPartikel(xPos + random(90), yPos + random(60), FUNKE);
 
     Player[0].Score += 300;
 }

@@ -95,7 +95,7 @@ void GegnerStelzSack::DoKI() {
             if (AnimCount >= 12.0f) {
                 AnimCount = 0.0f;
 
-                SoundManager.PlayWave(100, 128, 18000 + rand() % 4000, SOUND_LASERSHOT);
+                SoundManager.PlayWave(100, 128, 18000 + random(4000), SOUND_LASERSHOT);
 
                 if (BlickRichtung == LINKS) {
                     PartikelSystem.PushPartikel(xPos - 50, yPos, STELZFLARE);
@@ -165,7 +165,7 @@ void GegnerStelzSack::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos - 20, yPos - 10, STELZE);
     PartikelSystem.PushPartikel(xPos + 20, yPos - 20, STELZE);
 
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION4);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION4);
 
     Player[0].Score += 500;  // Punkte geben
 }

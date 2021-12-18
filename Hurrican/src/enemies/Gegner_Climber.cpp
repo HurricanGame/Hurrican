@@ -28,10 +28,10 @@ GegnerClimber::GegnerClimber(int Wert1, int Wert2, bool Light) {
 
     // Aus der Spinnenmaschine? Dann anfangs per Zufall drehen
     if (Wert1 == 99) {
-        rot = static_cast<float>(static_cast<int>(360.0f + rand() % 50 - 50) % 360);
+        rot = static_cast<float>(static_cast<int>(360.0f + random(50) - 50) % 360);
     }
 
-    rotspeed = static_cast<float>(rand() % 8 + 3) / 2.0f;
+    rotspeed = static_cast<float>(random(8) + 3) / 2.0f;
 }
 
 // --------------------------------------------------------------------------------------
@@ -211,7 +211,7 @@ void GegnerClimber::DoKI() {
             // Schusscounter unten und Blickwinkel in Richtung Spieler ?
             // Dann schiessen
             if (shotdelay < 0.0f && Value1 != 99 && abs(int(winkel - rot)) < 10 && PlayerAbstand() < 350) {
-                shotdelay = float(rand() % 10 + 10);
+                shotdelay = float(random(10) + 10);
                 Handlung = GEGNER_SCHIESSEN;
                 AnimPhase = 0;
                 AnimEnde = 3;
@@ -220,7 +220,7 @@ void GegnerClimber::DoKI() {
                 ySpeed = 0.0f;
 
                 Projectiles.PushProjectile(xPos + 21, yPos + 13, SUCHSCHUSS);
-                SoundManager.PlayWave(100, 128, 15000 + rand() % 2000, SOUND_CANON);
+                SoundManager.PlayWave(100, 128, 15000 + random(2000), SOUND_CANON);
             }
         } break;
 
@@ -240,7 +240,7 @@ void GegnerClimber::DoKI() {
 
             if (shotdelay < 0.0f) {
                 shotdelay = 0.2f SYNC;
-                PartikelSystem.PushPartikel(xPos + 20 + rand() % 5, yPos + 15 + rand() % 5, ROCKETSMOKE);
+                PartikelSystem.PushPartikel(xPos + 20 + random(5), yPos + 15 + random(5), ROCKETSMOKE);
             }
         } break;
     }
@@ -256,19 +256,19 @@ void GegnerClimber::DoKI() {
     if (Energy <= 0.0f && Handlung != GEGNER_FALLEN) {
         Energy = 100.0f;
         Handlung = GEGNER_FALLEN;
-        xSpeed = rand() % 15 - 7.0f, ySpeed = -(rand() % 8) - 8.0f;
+        xSpeed = random(15) - 7.0f, ySpeed = -(random(8)) - 8.0f;
         yAcc = 3.0f;
 
         // Drehspeed beim Runterfallen setzen
         //
-        Value2 = rand() % 20 + 20;
+        Value2 = random(20) + 20;
 
         // evtl negativ (andere Richtung drehen)
         //
-        if (rand() % 2 == 0)
+        if (random(2) == 0)
             Value2 *= -1;
 
-        SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
+        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
         PartikelSystem.PushPartikel(xPos + 5, yPos, EXPLOSION_MEDIUM2);
 
         shotdelay = 1.0f;
@@ -280,12 +280,12 @@ void GegnerClimber::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerClimber::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
     PartikelSystem.PushPartikel(xPos + 5, yPos, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 10; i++) {
-        PartikelSystem.PushPartikel(xPos + rand() % 40, yPos + rand() % 30, SPIDERSPLITTER);
-        PartikelSystem.PushPartikel(xPos + rand() % 40, yPos + rand() % 30, FUNKE);
+        PartikelSystem.PushPartikel(xPos + random(40), yPos + random(30), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + random(40), yPos + random(30), FUNKE);
     }
 
     Player[0].Score += 250;

@@ -127,12 +127,12 @@ void GegnerReitFlugsack::DoKI() {
 
             // FlugSack rauchen lassen
             if (AnimCount == 0.0f) {
-                PartikelSystem.PushPartikel(xPos + 20 + rand() % 40, yPos + 20 + rand() % 30, SMOKE);
+                PartikelSystem.PushPartikel(xPos + 20 + random(40), yPos + 20 + random(30), SMOKE);
             }
 
-            if (AnimCount == 0.0f && AnimPhase % 2 == 0 && rand() % 2 == 0) {
-                PartikelSystem.PushPartikel(xPos + rand() % 80 - 30, yPos + rand() % 70 - 30, EXPLOSION_MEDIUM2);
-                SoundManager.PlayWave(100, 128, 11025 + rand() % 2000, SOUND_EXPLOSION1);
+            if (AnimCount == 0.0f && AnimPhase % 2 == 0 && random(2) == 0) {
+                PartikelSystem.PushPartikel(xPos + random(80) - 30, yPos + random(70) - 30, EXPLOSION_MEDIUM2);
+                SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_EXPLOSION1);
             }
 
         } break;
@@ -140,7 +140,7 @@ void GegnerReitFlugsack::DoKI() {
         case GEGNER_SPECIAL: {
             // FlugSack rauchen lassen
             if (AnimCount == 0.0f) {
-                PartikelSystem.PushPartikel(xPos + 20 + rand() % 40, yPos + 20 + rand() % 30, SMOKE);
+                PartikelSystem.PushPartikel(xPos + 20 + random(40), yPos + 20 + random(30), SMOKE);
             }
 
             // Testen, ob der Spieler den Sack berührt hat

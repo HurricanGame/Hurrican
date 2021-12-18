@@ -19,7 +19,7 @@ GegnerSchleimMaul::GegnerSchleimMaul(float x, float y, int Wert1, int Wert2, boo
     Value2 = Wert2;
     ChangeLight = Light;
     Destroyable = true;
-    AnimSpeed = (static_cast<float>(rand() % 4 + 2)) / 10.0f;
+    AnimSpeed = (static_cast<float>(random(4) + 2)) / 10.0f;
     AnimEnde = 15;
     ShotDelay = 0.0f;
     SpawnCount = 0.0f;
@@ -34,10 +34,10 @@ GegnerSchleimMaul::GegnerSchleimMaul(float x, float y, int Wert1, int Wert2, boo
 
         // Zufallspunkt um die Mama rum
         //
-        r = static_cast<float>(rand() % 360);
+        r = static_cast<float>(random(360));
 
-        r1 = float(rand() % 40) + 30;
-        r2 = float(rand() % 40) + 30;
+        r1 = float(random(40)) + 30;
+        r2 = float(random(40)) + 30;
 
         // DKS - Obvious bug I am fixing here: passing a value between 0-359 to sin()/cos(), which take
         //      radian inputs, while also adding support of deg/rad cos/sin w/ lookup table support:
@@ -73,10 +73,10 @@ void GegnerSchleimMaul::DoKI() {
 
             // Zufallspunkt um die Mama rum
             //
-            r = static_cast<float>(rand() % 360);
+            r = static_cast<float>(random(360));
 
-            r1 = float(rand() % 40) + 30;
-            r2 = float(rand() % 40) + 30;
+            r1 = float(random(40)) + 30;
+            r2 = float(random(40)) + 30;
 
             // DKS - Obvious bug I am fixing here: passing a value between 0-359 to sin()/cos(), which take
             //      radian inputs, while also adding support of deg/rad cos/sin w/ lookup table support:
@@ -106,9 +106,9 @@ void GegnerSchleimMaul::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_ALIEN);
 
     for (int i = 0; i < 16; i++)
-        PartikelSystem.PushPartikel(xPos + 15 + rand() % 20, yPos + 15 + rand() % 20, SCHLEIM2);
+        PartikelSystem.PushPartikel(xPos + 15 + random(20), yPos + 15 + random(20), SCHLEIM2);
 
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_SCHLEIM);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_SCHLEIM);  // Sound ausgeben
 
     Player[0].Score += 120;
 }

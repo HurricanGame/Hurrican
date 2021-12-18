@@ -175,7 +175,7 @@ void GegnerTheWall::NeueAktion() {
         CountOpen = 1;
         AnimCount = 50.0f;
         Handlung = GEGNER_OEFFNEN;
-        SoundManager.PlayWave(100, 128, 10000 + rand() % 1000, SOUND_DOOR);
+        SoundManager.PlayWave(100, 128, 10000 + random(1000), SOUND_DOOR);
 
         // Laser beenden
         Projectiles.ClearType(SPIDERLASER);
@@ -186,10 +186,10 @@ void GegnerTheWall::NeueAktion() {
         Value1 = -1;
         Gegner.PushGegner(xPos + 3, yPos + 228, SKULL, 99, 0, false);
     } else {
-        int i = rand() % 3;
+        int i = random(3);
 
         while (i == LastAction)
-            i = rand() % 3;
+            i = random(3);
 
         // Steht ein Spieler auf den Kisten? Dann Laser. Sonst Boden Elektro-Shock
         bool DoLaser = false;
@@ -208,7 +208,7 @@ void GegnerTheWall::NeueAktion() {
                 ShotCount = 20;
                 ShotDelay = 5.0f;
                 Handlung = GEGNER_SPECIAL;
-                dummy = static_cast<float>(rand() % 10) + 15;
+                dummy = static_cast<float>(random(10)) + 15;
             } break;
 
             case 1: {
@@ -231,7 +231,7 @@ void GegnerTheWall::NeueAktion() {
     }
 
     Laughing = 10.0f;
-    SoundManager.PlayWave(100, 128, 10000 + rand() % 2000, SOUND_LAUGH);
+    SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_LAUGH);
 }
 
 // --------------------------------------------------------------------------------------
@@ -262,7 +262,7 @@ void GegnerTheWall::DoKI() {
         if (SkullShotDelay < 0.0f) {
             SkullShotDelay = 15.0f;
             Projectiles.PushProjectile(xPos, yPos + 240.0f, SUCHSCHUSS2, pAim);
-            SoundManager.PlayWave(50, 128, 14000 + rand() % 2000, SOUND_GOLEMSHOT);
+            SoundManager.PlayWave(50, 128, 14000 + random(2000), SOUND_GOLEMSHOT);
         }
     }
 
@@ -376,14 +376,14 @@ void GegnerTheWall::DoKI() {
                 PartikelSystem.PushPartikel(xPos + 255, yPos + 130, SMOKE3);
 
             if (Energy < 1500)
-                if (rand() % 20 == 0) {
-                    PartikelSystem.PushPartikel(xPos - 10 + rand() % 10, yPos + 220 + rand() % 10, LASERFLAME);
+                if (random(20) == 0) {
+                    PartikelSystem.PushPartikel(xPos - 10 + random(10), yPos + 220 + random(10), LASERFLAME);
 
                     for (int i = 0; i < 10; i++)
-                        PartikelSystem.PushPartikel(xPos + 10 + rand() % 10, yPos + 240 + rand() % 10, FUNKE);
+                        PartikelSystem.PushPartikel(xPos + 10 + random(10), yPos + 240 + random(10), FUNKE);
 
                     for (int i = 0; i < 10; i++)
-                        PartikelSystem.PushPartikel(xPos + 20 + rand() % 2, yPos + 240 + rand() % 10, LASERFUNKE2);
+                        PartikelSystem.PushPartikel(xPos + 20 + random(2), yPos + 240 + random(10), LASERFUNKE2);
                 }
         }
 
@@ -437,11 +437,11 @@ void GegnerTheWall::DoKI() {
 
             int i;
             for (i = 0; i < 20; i++)
-                PartikelSystem.PushPartikel(xPos + TunnelOffx + 114 + rand() % 30, yPos + TunnelOffY + 59 + rand() % 45,
+                PartikelSystem.PushPartikel(xPos + TunnelOffx + 114 + random(30), yPos + TunnelOffY + 59 + random(45),
                                             SCHLEIM);
 
             for (i = 0; i < 80; i++)
-                PartikelSystem.PushPartikel(xPos + TunnelOffx + 114 + rand() % 30, yPos + TunnelOffY + 59 + rand() % 45,
+                PartikelSystem.PushPartikel(xPos + TunnelOffx + 114 + random(30), yPos + TunnelOffY + 59 + random(45),
                                             GLASSPLITTER);
 
             // Wie lange warten?
@@ -473,7 +473,7 @@ void GegnerTheWall::DoKI() {
                 if (Value1 == -1) {
                     Value1 = -2;
                     ReturnSkull();
-                    SoundManager.PlayWave(100, 128, 10000 + rand() % 2000, SOUND_LAUGH);
+                    SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_LAUGH);
                 }
 
                 // und loslegen (nach kurzer Pause)
@@ -491,7 +491,7 @@ void GegnerTheWall::DoKI() {
             if (ShotDelay < 0.0f) {
                 WinkelUebergabe = dummy;
 
-                SoundManager.PlayWave(50, 128, 8000 + rand() % 2000, SOUND_GOLEMSHOT);
+                SoundManager.PlayWave(50, 128, 8000 + random(2000), SOUND_GOLEMSHOT);
 
                 Projectiles.PushProjectile(xPos, yPos + 332, GOLEMSCHUSS);
                 PartikelSystem.PushPartikel(xPos - 30, yPos + 295, EXPLOSIONFLARE);
@@ -510,7 +510,7 @@ void GegnerTheWall::DoKI() {
             ShotDelay -= 1.0f SYNC;
 
             if (ShotDelay < 0.0f) {
-                SoundManager.PlayWave(100, 128, 10000 + rand() % 2000, SOUND_LILA);
+                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_LILA);
                 Projectiles.PushProjectile(xPos, yPos + 332, SPIDERSHOT2);
                 PartikelSystem.PushPartikel(xPos - 30, yPos + 295, EXPLOSIONFLARE);
                 PartikelSystem.PushPartikel(xPos, yPos + 320, SMOKEBIG);
@@ -584,7 +584,7 @@ void GegnerTheWall::DoKI() {
 
                 AnimCount -= 1.0f SYNC;
                 if (AnimCount < 0.0f) {
-                    SoundManager.PlayWave(100, 128, 10000 + rand() % 1000, SOUND_DOOR);
+                    SoundManager.PlayWave(100, 128, 10000 + random(1000), SOUND_DOOR);
                     Handlung = GEGNER_SCHLIESSEN;
                 }
             }
@@ -598,18 +598,18 @@ void GegnerTheWall::DoKI() {
             if (DoorOffset > PI) {
                 DoorOffset = 0.0f;
                 ShakeScreen(2.0f);
-                SoundManager.PlayWave(100, 128, 11000 + rand() % 1500, SOUND_DOORSTOP);
+                SoundManager.PlayWave(100, 128, 11000 + random(1500), SOUND_DOORSTOP);
 
                 // Tür öffnen Sound anhalten
                 SoundManager.StopWave(SOUND_DOOR);
 
                 for (int i = 0; i < 36; i++)
-                    PartikelSystem.PushPartikel(xPos + TunnelOffx + 110 + rand() % 30,
-                                                yPos + TunnelOffY + rand() % 10 + i * 5 - 25, SMOKE);
+                    PartikelSystem.PushPartikel(xPos + TunnelOffx + 110 + random(30),
+                                                yPos + TunnelOffY + random(10) + i * 5 - 25, SMOKE);
 
                 for (int i = 0; i < 15; i++)
-                    PartikelSystem.PushPartikel(xPos + TunnelOffx + 95 + rand() % 30,
-                                                yPos + TunnelOffY + rand() % 10 + i * 10 - 25, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + TunnelOffx + 95 + random(30),
+                                                yPos + TunnelOffY + random(10) + i * 10 - 25, SMOKEBIG);
 
                 Handlung = GEGNER_STEHEN;
                 AnimCount = 20.0f;

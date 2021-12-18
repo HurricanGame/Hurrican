@@ -128,12 +128,12 @@ void GegnerFlugsack::DoKI() {
 
             // FlugSack rauchen lassen
             if (AnimCount == 0.0f) {
-                PartikelSystem.PushPartikel(xPos + 20 + rand() % 40, yPos + 20 + rand() % 30, SMOKE);
+                PartikelSystem.PushPartikel(xPos + 20 + random(40), yPos + 20 + random(30), SMOKE);
             }
 
-            if (PlayerAbstand() <= 600 && AnimCount == 0.0f && AnimPhase % 2 == 0 && rand() % 2 == 0) {
-                PartikelSystem.PushPartikel(xPos + rand() % 80 - 30, yPos + rand() % 70 - 30, EXPLOSION_MEDIUM2);
-                SoundManager.PlayWave(100, 128, 11025 + rand() % 2000, SOUND_EXPLOSION1);
+            if (PlayerAbstand() <= 600 && AnimCount == 0.0f && AnimPhase % 2 == 0 && random(2) == 0) {
+                PartikelSystem.PushPartikel(xPos + random(80) - 30, yPos + random(70) - 30, EXPLOSION_MEDIUM2);
+                SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_EXPLOSION1);
             }
         } break;
 
@@ -170,12 +170,12 @@ void GegnerFlugsack::DoKI() {
 
 void GegnerFlugsack::GegnerExplode() {
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 80 - 30, yPos + rand() % 70 - 30, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + random(80) - 30, yPos + random(70) - 30, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 40 + 20, yPos + rand() % 30 + 20, SPLITTER);
+        PartikelSystem.PushPartikel(xPos + random(40) + 20, yPos + random(30) + 20, SPLITTER);
 
-    SoundManager.PlayWave(75, 128, 11025 + rand() % 2000, SOUND_EXPLOSION4);  // Sound ausgeben
+    SoundManager.PlayWave(75, 128, 11025 + random(2000), SOUND_EXPLOSION4);  // Sound ausgeben
 
     Player[0].Score += 225;
 }

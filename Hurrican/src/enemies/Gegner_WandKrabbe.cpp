@@ -96,7 +96,7 @@ void GegnerWandKrabbe::DoKI() {
         // auf den Spieler zufliegen und sich dabei drehen
         //
         case GEGNER_DREHEN: {
-            rot += float(rand() % 50 + 20) SYNC;
+            rot += float(random(50) + 20) SYNC;
 
             while (rot > 360.0f)
                 rot -= 360.0f;
@@ -109,7 +109,7 @@ void GegnerWandKrabbe::DoKI() {
         // nach "Abschütteln" runterfallen
         //
         case GEGNER_FALLEN: {
-            rot += float(rand() % 50 + 20) SYNC;
+            rot += float(random(50) + 20) SYNC;
 
             while (rot > 360.0f)
                 rot -= 360.0f;
@@ -120,7 +120,7 @@ void GegnerWandKrabbe::DoKI() {
         } break;
 
         case GEGNER_EXPLODIEREN: {
-            rot += float(rand() % 50 + 20) SYNC;
+            rot += float(random(50) + 20) SYNC;
 
             while (rot > 360.0f)
                 rot -= 360.0f;
@@ -141,8 +141,8 @@ void GegnerWandKrabbe::DoKI() {
             while (AnimCount <= 0.0f) {
                 AnimCount += 0.2f;
 
-                PartikelSystem.PushPartikel(xPos + 8 + rand() % 5, yPos + 25 + rand() % 5, SMOKE3);
-                PartikelSystem.PushPartikel(xPos + 8 + rand() % 5, yPos + 28 + rand() % 5, FUNKE);
+                PartikelSystem.PushPartikel(xPos + 8 + random(5), yPos + 25 + random(5), SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 8 + random(5), yPos + 28 + random(5), FUNKE);
             }
 
             // bei Aufprall explodieren lassen
@@ -169,12 +169,12 @@ void GegnerWandKrabbe::DoKI() {
             if (!(pAim->Aktion[AKTION_LINKS] == true && pAim->Aktion[AKTION_RECHTS] == true)) {
                 if (lastPlayerAction == LINKS && pAim->Aktion[AKTION_RECHTS]) {
                     lastPlayerAction = RECHTS;
-                    Value2 += rand() % 4 + 2;
+                    Value2 += random(4) + 2;
                 }
 
                 if (lastPlayerAction == RECHTS && pAim->Aktion[AKTION_LINKS]) {
                     lastPlayerAction = LINKS;
-                    Value2 += rand() % 4 + 2;
+                    Value2 += random(4) + 2;
                 }
 
                 // Gegner abgeschüttelt?
@@ -247,9 +247,9 @@ void GegnerWandKrabbe::DoKI() {
         yAcc = 3.0f;
 
         if (BlickRichtung == RECHTS)
-            xSpeed = float(rand() % 8 + 4);
+            xSpeed = float(random(8) + 4);
         else
-            xSpeed = -float(rand() % 8 + 4);
+            xSpeed = -float(random(8) + 4);
 
         Handlung = GEGNER_EXPLODIEREN;
 
@@ -271,11 +271,11 @@ void GegnerWandKrabbe::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 6; i++)
-        PartikelSystem.PushPartikel(xPos - 20 + rand() % 10, yPos + rand() % 30, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 20 + random(10), yPos + random(30), EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 20; i++) {
-        PartikelSystem.PushPartikel(xPos + rand() % 30, yPos + rand() % 64, FUNKE);
-        PartikelSystem.PushPartikel(xPos + rand() % 25, yPos + rand() % 50, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + random(30), yPos + random(64), FUNKE);
+        PartikelSystem.PushPartikel(xPos + random(25), yPos + random(50), SPIDERSPLITTER);
     }
 
     Player[0].Score += 100;

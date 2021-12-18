@@ -28,7 +28,7 @@ GegnerSchabe::GegnerSchabe(int Wert1, int Wert2, bool Light) {
     winkel = 0.0f;
     TestBlock = false;
     OwnDraw = true;
-    ShotDelay = 5.0f + rand() % 5;
+    ShotDelay = 5.0f + random(5);
 
     if (Value1 != 0) {
         xSpeed = -SPEED;
@@ -48,7 +48,7 @@ void GegnerSchabe::DoKI() {
     if (ShotDelay < 0.0f) {
         ShotDelay = 8.0f + (4.0f - Skill) * 2;
 
-        SoundManager.PlayWave(50, 128, 10000 + rand() % 4000, SOUND_CANON);
+        SoundManager.PlayWave(50, 128, 10000 + random(4000), SOUND_CANON);
         Projectiles.PushProjectile(xPos + 5.0f, yPos + 5.0f, SUCHSCHUSS);
     }
 
@@ -327,14 +327,14 @@ void GegnerSchabe::DoDraw() {
 void GegnerSchabe::GegnerExplode() {
     // Explosion
     for (int i = 0; i < 2; i++) {
-        PartikelSystem.PushPartikel(float(xPos - 20) + rand() % 10, float(yPos - 20) + rand() % 10, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(float(xPos - 20) + random(10), float(yPos - 20) + random(10), EXPLOSION_MEDIUM2);
 
-        PartikelSystem.PushPartikel(float(xPos + 5) + rand() % 10, float(yPos + 5) + rand() % 10, FUNKE);
+        PartikelSystem.PushPartikel(float(xPos + 5) + random(10), float(yPos + 5) + random(10), FUNKE);
 
-        PartikelSystem.PushPartikel(float(xPos + 5) + rand() % 10, float(yPos + 5) + rand() % 10, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(float(xPos + 5) + random(10), float(yPos + 5) + random(10), SPIDERSPLITTER);
     }
 
-    SoundManager.PlayWave(100, 128, -rand() % 2000 + 13000, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 13000, SOUND_EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 10;
 }

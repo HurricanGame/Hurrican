@@ -78,8 +78,8 @@ void GegnerBigRocket::DoKI() {
             if (smokedelay <= 0.0f) {
                 smokedelay += 0.2f;
 
-                PartikelSystem.PushPartikel(xPos + 20 + rand() % 10, yPos + 290 + rand() % 5, SMOKE3_U);
-                PartikelSystem.PushPartikel(xPos + 20 + rand() % 13, yPos + 290 + rand() % 5, ROCKETSMOKE);
+                PartikelSystem.PushPartikel(xPos + 20 + random(10), yPos + 290 + random(5), SMOKE3_U);
+                PartikelSystem.PushPartikel(xPos + 20 + random(13), yPos + 290 + random(5), ROCKETSMOKE);
             }
 
             blocko = TileEngine.BlockOben(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
@@ -112,13 +112,13 @@ void GegnerBigRocket::GegnerExplode() {
         SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION3);
 
         for (int i = 0; i < 30; i++) {
-            PartikelSystem.PushPartikel(xPos + rand() % 60, yPos + 30 + rand() % 250, EXPLOSION_MEDIUM2);
-            PartikelSystem.PushPartikel(xPos + 10 + rand() % 50, yPos + 30 + rand() % 250, SPIDERSPLITTER);
+            PartikelSystem.PushPartikel(xPos + random(60), yPos + 30 + random(250), EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos + 10 + random(50), yPos + 30 + random(250), SPIDERSPLITTER);
         }
 
         for (int i = 0; i < 80; i++) {
-            PartikelSystem.PushPartikel(xPos + 10 + rand() % 50, yPos + 30 + rand() % 250, MINIFLARE);
-            PartikelSystem.PushPartikel(xPos + 10 + rand() % 50, yPos + 30 + rand() % 250, LONGFUNKE);
+            PartikelSystem.PushPartikel(xPos + 10 + random(50), yPos + 30 + random(250), MINIFLARE);
+            PartikelSystem.PushPartikel(xPos + 10 + random(50), yPos + 30 + random(250), LONGFUNKE);
         }
 
         Player[0].Score += 2000;

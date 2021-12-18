@@ -19,7 +19,7 @@ GegnerMade::GegnerMade(int Wert1, int Wert2, bool Light) {
     Value2 = Wert2;
     AnimStart = 0;
     AnimEnde = 20;
-    AnimSpeed = (rand() % 10 + 5) / 20.0f;
+    AnimSpeed = (random(10) + 5) / 20.0f;
     AnimCount = 0.0f;
     ChangeLight = Light;
     Destroyable = true;
@@ -30,19 +30,19 @@ GegnerMade::GegnerMade(int Wert1, int Wert2, bool Light) {
     // Nur nach rechts fliegen? (Bratklops)
     //
     if (Value1 == 98) {
-        AnimPhase = rand() % 20;
+        AnimPhase = random(20);
         yAcc = 4.0f;
-        xSpeed = (rand() % 120) / 3.0f;
-        ySpeed = -(((rand() % 40) / 3.0f) + 8.0f);
+        xSpeed = (random(120)) / 3.0f;
+        ySpeed = -(((random(40)) / 3.0f) + 8.0f);
         Handlung = GEGNER_FALLEN;
     }
 
     // oder in alle Richtungen (Schwabbel)
     else if (Value1 == 99) {
-        AnimPhase = rand() % 20;
+        AnimPhase = random(20);
         yAcc = 4.0f;
-        xSpeed = float((rand() % 200 - 100) / 12);
-        ySpeed = -float(((rand() % 40) / 2.0f) + 12.0f);
+        xSpeed = float((random(200) - 100) / 12);
+        ySpeed = -float(((random(40)) / 2.0f) + 12.0f);
         Handlung = GEGNER_FALLEN;
     }
 }
@@ -127,8 +127,8 @@ void GegnerMade::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerMade::GegnerExplode() {
-    SoundManager.PlayWave(100, rand() % 200 + 20, 8000 + rand() % 4000, SOUND_MADE);
+    SoundManager.PlayWave(100, random(200) + 20, 8000 + random(4000), SOUND_MADE);
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(float(xPos - 10 + rand() % 24), float(yPos - 12 + rand() % 22), MADEBLUT);
+        PartikelSystem.PushPartikel(float(xPos - 10 + random(24)), float(yPos - 12 + random(22)), MADEBLUT);
 }

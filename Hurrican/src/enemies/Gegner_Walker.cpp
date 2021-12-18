@@ -91,7 +91,7 @@ void GegnerWalker::DoKI() {
                 ShotDelay -= 1.0f SYNC;
 
                 if (ShotDelay <= 0.0f) {
-                    ShotDelay = static_cast<float>(10 + rand() % 5);
+                    ShotDelay = static_cast<float>(10 + random(5));
                     AnimStart = 12;
                     AnimPhase = 12;
                     AnimEnde = 20;
@@ -116,7 +116,7 @@ void GegnerWalker::DoKI() {
 
             // Schuss abgeben
             if (AnimPhase == 17 && AnimCount == 0.0f) {
-                SoundManager.PlayWave(100, 128, 18000 + rand() % 2000, SOUND_LASERSHOT);
+                SoundManager.PlayWave(100, 128, 18000 + random(2000), SOUND_LASERSHOT);
 
                 if (BlickRichtung == LINKS)
                     Projectiles.PushProjectile(xPos - 18, yPos + 23, WALKER_LASER);
@@ -209,9 +209,9 @@ void GegnerWalker::DoKI() {
 
 void GegnerWalker::GegnerExplode() {
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(float(xPos - 20 + rand() % 45), float(yPos - 20 + rand() % 45), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(float(xPos - 20 + random(45)), float(yPos - 20 + random(45)), EXPLOSION_MEDIUM2);
 
-    SoundManager.PlayWave(100, 128, -rand() % 2000 + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 100;
 }

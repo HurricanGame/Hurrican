@@ -17,7 +17,7 @@ GegnerKugelKlein::GegnerKugelKlein(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER_LAUFEN;
     Energy = 20;
     BlickRichtung = LINKS;
-    (rand() % 2 == 0) ? xSpeed = -8.0f : xSpeed = 8.0f;  // x-Richtung zu Beginn Zufall
+    (random(2) == 0) ? xSpeed = -8.0f : xSpeed = 8.0f;  // x-Richtung zu Beginn Zufall
     yAcc = 5.0f;                                         // Fallen lassen
     Value1 = Wert1;
     Value2 = Wert2;
@@ -104,7 +104,7 @@ void GegnerKugelKlein::GegnerExplode() {
     // Explosion
     PartikelSystem.PushPartikel(float(xPos - 15), float(yPos - 15), EXPLOSION_MEDIUM2);
 
-    SoundManager.PlayWave(100, 128, -rand() % 2000 + 11025, SOUND_EXPLOSION4);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION4);  // Sound ausgeben
 
     Player[0].Score += 300;
 }

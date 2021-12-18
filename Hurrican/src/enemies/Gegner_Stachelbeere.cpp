@@ -102,10 +102,10 @@ void GegnerStachelbeere::DoKI() {
             // Partikel erzeugen
             // int i = 0;
             for (int i = 0; i < 10; i++)
-                PartikelSystem.PushPartikel(xPos + rand() % 60, yPos + 50, FUNKE);
+                PartikelSystem.PushPartikel(xPos + random(60), yPos + 50, FUNKE);
 
             for (int i = 0; i < 5; i++)
-                PartikelSystem.PushPartikel(xPos + rand() % 40, yPos + 40, SMOKE);
+                PartikelSystem.PushPartikel(xPos + random(40), yPos + 40, SMOKE);
 
             // Geschwindigkeit umdrehen
             ySpeed *= -0.5f;
@@ -144,7 +144,7 @@ void GegnerStachelbeere::DoKI() {
                 if (BlickRichtung == LINKS)
                     off = -60;
 
-                SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_GRANATE);
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_GRANATE);
 
                 Gegner.PushGegner(xPos + ShotCount * 15.0f + off, yPos + 10.0f, MINIROCKET, 0, 99, false, false);
 
@@ -197,7 +197,7 @@ void GegnerStachelbeere::DoKI() {
                 AnimPhase = 0;
                 AnimEnde = 16;
                 AnimSpeed = 1.0f;
-                SoundManager.PlayWave(50, 128, 12000 + rand() % 1000, SOUND_STEAM);
+                SoundManager.PlayWave(50, 128, 12000 + random(1000), SOUND_STEAM);
             }
         } break;
 
@@ -255,12 +255,12 @@ void GegnerStachelbeere::DoKI() {
 
 void GegnerStachelbeere::GegnerExplode() {
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(float(xPos - 30 + rand() % 60), float(yPos - 30 + rand() % 60), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(float(xPos - 30 + random(60)), float(yPos - 30 + random(60)), EXPLOSION_MEDIUM2);
 
     // Explosion
     PartikelSystem.PushPartikel(float(xPos - 15), float(yPos - 15), EXPLOSION_BIG);
 
-    SoundManager.PlayWave(100, 128, -rand() % 2000 + 11025, SOUND_EXPLOSION4);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION4);  // Sound ausgeben
 
     Player[0].Score += 300;
 

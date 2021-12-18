@@ -96,8 +96,8 @@ void GegnerFeuerspucker::GegnerExplode() {
     SoundManager.PlayWave(25, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos - 50 + rand() % 48, yPos - 50 + rand() % 56, EXPLOSION_BIG);
+        PartikelSystem.PushPartikel(xPos - 50 + random(48), yPos - 50 + random(56), EXPLOSION_BIG);
 
     for (int i = 0; i < 8; i++)
-        PartikelSystem.PushPartikel(xPos - 30 + rand() % 48, yPos - 30 + rand() % 56, EXPLOSION_MEDIUM);
+        PartikelSystem.PushPartikel(xPos - 30 + random(48), yPos - 30 + random(56), EXPLOSION_MEDIUM);
 }

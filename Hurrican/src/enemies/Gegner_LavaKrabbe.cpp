@@ -202,13 +202,13 @@ void GegnerLavaKrabbe::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerLavaKrabbe::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 9000 + rand() % 2000, SOUND_EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 9000 + random(2000), SOUND_EXPLOSION3);
 
     PartikelSystem.PushPartikel(xPos + 15, yPos + 10, LAVAKRABBE_KOPF);
 
     for (int i = 0; i < 4; i++)
-        PartikelSystem.PushPartikel(xPos - 10 + rand() % 30, yPos - 10 + rand() % 10, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 10 + random(30), yPos - 10 + random(10), EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 4; i++)
-        PartikelSystem.PushPartikel(xPos - 10 + rand() % 30, yPos - 10 + rand() % 10, LAVAKRABBE_BEIN);
+        PartikelSystem.PushPartikel(xPos - 10 + random(30), yPos - 10 + random(10), LAVAKRABBE_BEIN);
 }

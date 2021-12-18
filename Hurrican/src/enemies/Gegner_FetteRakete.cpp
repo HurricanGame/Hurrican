@@ -110,7 +110,7 @@ void GegnerFetteRakete::DoKI() {
             // zuende gedreht? Dann losfliegen
             if (AnimCount < 0.0f) {
                 Handlung = GEGNER_LAUFEN;
-                SoundManager.PlayWave(100, 128, 9000 + rand() % 2000, SOUND_ROCKET);
+                SoundManager.PlayWave(100, 128, 9000 + random(2000), SOUND_ROCKET);
 
                 xAcc = 0;
                 yAcc = 0;
@@ -159,13 +159,13 @@ void GegnerFetteRakete::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerFetteRakete::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
 
     PartikelSystem.PushPartikel(xPos - 10, yPos - 20, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 5; i++) {
-        PartikelSystem.PushPartikel(xPos + rand() % 20, yPos - 10 + rand() % 20, MINIFLARE);
-        PartikelSystem.PushPartikel(xPos + rand() % 20, yPos - 10 + rand() % 20, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + random(20), yPos - 10 + random(20), MINIFLARE);
+        PartikelSystem.PushPartikel(xPos + random(20), yPos - 10 + random(20), SPIDERSPLITTER);
     }
 
     Player[0].Score += 50;

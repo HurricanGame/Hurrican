@@ -56,7 +56,7 @@ void GegnerSwimWalker::DoKI() {
         case GEGNER_LAUFEN:  // Normal laufen und dabei ab und zu schiessen
         {
             // Bei bestimmten Mindestabstand schiessen lassen
-            if (PlayerAbstand() <= 250 && rand() % 200 == 0 &&
+            if (PlayerAbstand() <= 250 && random(200) == 0 &&
                 ((BlickRichtung == LINKS && pAim->xpos + 45 <= xPos) ||
                  (BlickRichtung == RECHTS && pAim->xpos - 45 >= xPos))) {
                 SoundManager.PlayWave(100, 128, 11025, SOUND_ROCKET);
@@ -89,15 +89,15 @@ void GegnerSwimWalker::DoKI() {
 
 void GegnerSwimWalker::GegnerExplode() {
     // blubbern
-    PartikelSystem.PushPartikel(xPos + rand() % 20, yPos + rand() % 20, EXPLOSION_MEDIUM3);
+    PartikelSystem.PushPartikel(xPos + random(20), yPos + random(20), EXPLOSION_MEDIUM3);
 
     PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 30; i++) {
-        PartikelSystem.PushPartikel(xPos - 10 + rand() % 85, yPos - 10 + rand() % 65, BUBBLE);
+        PartikelSystem.PushPartikel(xPos - 10 + random(85), yPos - 10 + random(65), BUBBLE);
     }
 
-    SoundManager.PlayWave(100, 128, 11025 + rand() % 2000, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 100;
 }

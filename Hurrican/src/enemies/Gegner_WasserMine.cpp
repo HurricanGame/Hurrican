@@ -44,10 +44,10 @@ void GegnerWasserMine::GegnerExplode() {
     ShakeScreen(5.0f);
 
     for (int i = 0; i < 50; i++)
-        PartikelSystem.PushPartikel(xPos - 5 + rand() % 40, yPos - 5 + rand() % 60, WATERFLUSH_HIGH);
+        PartikelSystem.PushPartikel(xPos - 5 + random(40), yPos - 5 + random(60), WATERFLUSH_HIGH);
 
     for (int i = 0; i < 25; i++)
-        PartikelSystem.PushPartikel(xPos - 5 + rand() % 40, yPos - 50 + rand() % 110, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos - 5 + random(40), yPos - 50 + random(110), SPIDERSPLITTER);
 
     PartikelSystem.PushPartikel(xPos - 40, yPos - 55, EXPLOSION_GIANT);
 }

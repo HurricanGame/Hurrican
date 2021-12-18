@@ -151,8 +151,8 @@ void GegnerRotzpott::DoKI() {
         // Wie schiesst er? Im Bogen oder direkt?
         if (pAim->ypos > yPos + 30) {
             ShotDelay = 9.0f;
-            SoundManager.PlayWave(100, 128, 16000 + rand() % 500, SOUND_LASERSHOT);
-            WinkelUebergabe = 360.0f - GunWinkel + (static_cast<float>(rand() % 10 - 5)) / 2.0f;
+            SoundManager.PlayWave(100, 128, 16000 + random(500), SOUND_LASERSHOT);
+            WinkelUebergabe = 360.0f - GunWinkel + (static_cast<float>(random(10) - 5)) / 2.0f;
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
             // Projectiles.PushProjectile(xPos + 20.0f - (float)sin((180 - GunWinkel) / 180.0f * PI) * 25.0f,
             //                             yPos - 12.0f + (float)cos((180 - GunWinkel) / 180.0f * PI) * 20.0f,
@@ -161,7 +161,7 @@ void GegnerRotzpott::DoKI() {
                                        yPos - 12.0f + cos_deg(180.0f - GunWinkel) * 20.0f, ROTZSHOT);
         } else {
             ShotDelay = 7.0f;
-            SoundManager.PlayWave(100, 128, 24000 + rand() % 500, SOUND_LASERSHOT);
+            SoundManager.PlayWave(100, 128, 24000 + random(500), SOUND_LASERSHOT);
             WinkelUebergabe = 360.0f - GunWinkel;
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
             // Projectiles.PushProjectile(xPos + 24.0f - (float)sin((180 - GunWinkel) / 180.0f * PI) * 45.0f,
@@ -178,16 +178,16 @@ void GegnerRotzpott::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerRotzpott::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
 
     // int i = 0;
     for (int i = 0; i < 8; i++) {
-        PartikelSystem.PushPartikel(xPos + rand() % 40 - 10, yPos - 10 + rand() % 20, EXPLOSION_MEDIUM2);
-        PartikelSystem.PushPartikel(xPos + rand() % 40 - 10, yPos - 10 + rand() % 20, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + random(40) - 10, yPos - 10 + random(20), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + random(40) - 10, yPos - 10 + random(20), SPIDERSPLITTER);
     }
 
     for (int i = 0; i < 4; i++)
-        PartikelSystem.PushPartikel(xPos - 10 + rand() % 40, yPos - 10 + rand() % 20, SCHROTT1);
+        PartikelSystem.PushPartikel(xPos - 10 + random(40), yPos - 10 + random(20), SCHROTT1);
 
     Player[0].Score += 350;
 }

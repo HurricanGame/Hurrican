@@ -57,7 +57,7 @@ void CDragonHack::Run() {
                 m_State = DragonState::FLY;
 
                 // von links
-                if (rand() % 2 == 0) {
+                if (random(2) == 0) {
                     m_xPos = TileEngine.XOffset - 160;
                     m_yPos = TileEngine.YOffset + 200;
                     m_xSpeed = 10.0f;
@@ -70,7 +70,7 @@ void CDragonHack::Run() {
                     m_xSpeed = -10.0f;
                 }
 
-                m_ySpeed = static_cast<float>(rand() % 9 - 4) / 5.0f;
+                m_ySpeed = static_cast<float>(random(9) - 4) / 5.0f;
             }
         } break;
 
@@ -88,7 +88,7 @@ void CDragonHack::Run() {
             if (m_xPos + 260.0f < TileEngine.XOffset || m_xPos - 260.0f > TileEngine.XOffset + 640.0f ||
                 m_yPos + 240.0f < TileEngine.YOffset || m_yPos - 240.0f > TileEngine.YOffset + 480.0f) {
                 m_State = DragonState::WAIT;
-                m_AppearCount = rand() % 100 + 50.0f;
+                m_AppearCount = random(100) + 50.0f;
             }
         } break;
     }

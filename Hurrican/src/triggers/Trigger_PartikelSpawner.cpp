@@ -96,8 +96,8 @@ void GegnerPartikelSpawner::DoKI() {
                     // Wäre der Partikel überhaupt im Screen?
                     float sx, sy;
 
-                    sx = xPos - 320 + rand() % 640;
-                    sy = static_cast<float>(TileEngine.YOffset) - 16 - rand() % 64;
+                    sx = xPos - 320 + random(640);
+                    sy = static_cast<float>(TileEngine.YOffset) - 16 - random(64);
 
                     if (sx + 20 < TileEngine.XOffset || sx - 180 > TileEngine.XOffset + 640.0f)
                         break;
@@ -110,8 +110,8 @@ void GegnerPartikelSpawner::DoKI() {
 
                 // Schneeflocke
                 case 1: {
-                    PartikelSystem.PushPartikel(xPos - 320 + rand() % 640,
-                                                static_cast<float>(TileEngine.YOffset) - 16 - rand() % 64,
+                    PartikelSystem.PushPartikel(xPos - 320 + random(640),
+                                                static_cast<float>(TileEngine.YOffset) - 16 - random(64),
                                                 SCHNEEFLOCKE);
                     AnimCount = 0.5f;
                 } break;
@@ -124,14 +124,14 @@ void GegnerPartikelSpawner::DoKI() {
 
                 // Aufsteigender Rauch
                 case 5: {
-                    PartikelSystem.PushPartikel(xPos + 8 + rand() % 10, yPos + 24 + rand() % 10, SMOKE3 + Value2);
+                    PartikelSystem.PushPartikel(xPos + 8 + random(10), yPos + 24 + random(10), SMOKE3 + Value2);
                     AnimCount = 0.25f;
                 } break;
 
                 // Aufsteigender Rauch, der ab und zu aussetzt
                 case 6: {
                     if (Aussetzer > 4.0f)
-                        PartikelSystem.PushPartikel(xPos + 8 + rand() % 10, yPos + 24 + rand() % 10, SMOKE3 + Value2);
+                        PartikelSystem.PushPartikel(xPos + 8 + random(10), yPos + 24 + random(10), SMOKE3 + Value2);
 
                     AnimCount = 0.25f;
                 } break;
@@ -139,20 +139,20 @@ void GegnerPartikelSpawner::DoKI() {
                 // Wasserdampf vom Wasserfall
                 case 7: {
                     for (int i = 0; i < 3; i++)
-                        PartikelSystem.PushPartikel(xPos - 26 + rand() % 50, yPos - 26 + rand() % 40, WATERFLUSH);
+                        PartikelSystem.PushPartikel(xPos - 26 + random(50), yPos - 26 + random(40), WATERFLUSH);
 
                 } break;  // Wasserdampf
 
                 // Wassertropfen von der Decke
                 case 8: {
-                    float xdrop = xPos + rand() % 40;
+                    float xdrop = xPos + random(40);
 
                     if (xdrop < TileEngine.XOffset || xdrop > TileEngine.XOffset + 640.0f ||
                         yPos < TileEngine.YOffset - 240.0f || yPos > TileEngine.YOffset + 480.0f) {
                     } else
                         PartikelSystem.PushPartikel(xdrop, yPos, SPAWNDROP, &Player[0]);
 
-                    AnimCount -= rand() % 5;
+                    AnimCount -= random(5);
                 } break;
 
                 // Blitz (und Donner)
@@ -161,14 +161,14 @@ void GegnerPartikelSpawner::DoKI() {
                     PartikelSystem.ThunderColor[0] = 228;
                     PartikelSystem.ThunderColor[1] = 242;
                     PartikelSystem.ThunderColor[2] = 255;
-                    SoundManager.PlayWave(20 + rand() % 60, 128, 8000 + rand() % 4000, SOUND_THUNDER);
+                    SoundManager.PlayWave(20 + random(60), 128, 8000 + random(4000), SOUND_THUNDER);
 
-                    Value2 = rand() % 80 + 10;
+                    Value2 = random(80) + 10;
                 } break;
 
                 // Nebel
                 case 11: {
-                    PartikelSystem.PushPartikel(xPos - Value2 + rand() % (Value2 * 2), yPos - 20 + rand() % 40, FOG);
+                    PartikelSystem.PushPartikel(xPos - Value2 + rand() % (Value2 * 2), yPos - 20 + random(40), FOG);
                 } break;
 
                 // Licht flackert (wie blitz, nur in schwarz)
@@ -177,16 +177,16 @@ void GegnerPartikelSpawner::DoKI() {
                     PartikelSystem.ThunderColor[0] = 0;
                     PartikelSystem.ThunderColor[1] = 0;
                     PartikelSystem.ThunderColor[2] = 0;
-                    SoundManager.PlayWave(80, 128, 11025 + rand() % 2000, SOUND_FUNKE + rand() % 4);
+                    SoundManager.PlayWave(80, 128, 11025 + random(2000), SOUND_FUNKE + random(4));
 
-                    Value2 = rand() % 20 + 10;
+                    Value2 = random(20) + 10;
                 } break;
 
                 // Spinnenteil
                 case 14: {
                     PartikelSystem.PushPartikel(xPos + 4, yPos + 4, SPIDERPARTS);
 
-                    AnimCount = static_cast<float>(rand() % 5 + 10);
+                    AnimCount = static_cast<float>(random(5) + 10);
                 } break;
 
                 // Blätter
@@ -195,22 +195,22 @@ void GegnerPartikelSpawner::DoKI() {
 
                     if (Value2 == 0) {
                         PartikelSystem.PushPartikel(static_cast<float>(TileEngine.XOffset + 640.0f),
-                                                    static_cast<float>(yPos - 240.0f + rand() % 480), BLATT2);
-                        AnimCount = (rand() % 5 + 1) / 5.0f;
+                                                    static_cast<float>(yPos - 240.0f + random(480)), BLATT2);
+                        AnimCount = (random(5) + 1) / 5.0f;
                     } else {
                         PartikelSystem.PushPartikel(static_cast<float>(TileEngine.XOffset + 640.0f),
-                                                    static_cast<float>(yPos - 240.0f + rand() % 480), DUST);
-                        AnimCount = (rand() % 5 + 1) / 2.0f;
+                                                    static_cast<float>(yPos - 240.0f + random(480)), DUST);
+                        AnimCount = (random(5) + 1) / 2.0f;
                     }
 
                 } break;
 
                 // Staub
                 case 16: {
-                    PartikelSystem.PushPartikel(static_cast<float>(xPos + rand() % 200 - 100),
-                                                static_cast<float>(yPos + rand() % 200 - 100), DUST);
+                    PartikelSystem.PushPartikel(static_cast<float>(xPos + random(200) - 100),
+                                                static_cast<float>(yPos + random(200) - 100), DUST);
 
-                    AnimCount = (rand() % 5 + 1) / 5.0f;
+                    AnimCount = (random(5) + 1) / 5.0f;
                 } break;
 
                 case 18: {
@@ -220,10 +220,10 @@ void GegnerPartikelSpawner::DoKI() {
 
                 // Aufsteigender Rauch mit Auftrieb (Value2)
                 case 19: {
-                    if (rand() % 3 == 0)
+                    if (random(3) == 0)
                         PartikelSystem.PushPartikel(xPos - 10, yPos - 20, SMOKEBIG);
                     else
-                        PartikelSystem.PushPartikel(xPos + 8 + rand() % 10, yPos + 24 + rand() % 10, SMOKE3);
+                        PartikelSystem.PushPartikel(xPos + 8 + random(10), yPos + 24 + random(10), SMOKE3);
 
                     AnimCount = 0.25f;
                 }
@@ -238,16 +238,16 @@ void GegnerPartikelSpawner::DoKI() {
             switch (Value1) {
                 // Rauch
                 case 2: {
-                    PartikelSystem.PushPartikel(xPos + rand() % 5, yPos + 24, SMOKE);
+                    PartikelSystem.PushPartikel(xPos + random(5), yPos + 24, SMOKE);
                 } break;
 
                 // Funken
                 case 3:
                 case 12: {
-                    if (rand() % 4 == 0) {
+                    if (random(4) == 0) {
                         // mit Sound?
                         if (Value1 == 3)
-                            SoundManager.PlayWave3D(int(xPos), int(yPos), 11025 + rand() % 1000, SOUND_FUNKE);
+                            SoundManager.PlayWave3D(int(xPos), int(yPos), 11025 + random(1000), SOUND_FUNKE);
 
                         PartikelSystem.PushPartikel(xPos, yPos - 24, LASERFLAME);
 
@@ -266,7 +266,7 @@ void GegnerPartikelSpawner::DoKI() {
 
                 // Maden
                 case 17: {
-                    Gegner.PushGegner(static_cast<float>(xPos + rand() % 20 - 10), static_cast<float>(yPos + 16), MADE,
+                    Gegner.PushGegner(static_cast<float>(xPos + random(20) - 10), static_cast<float>(yPos + 16), MADE,
                                       0, 0, false, false);
                 } break;
             }  // switch

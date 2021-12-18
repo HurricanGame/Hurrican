@@ -91,9 +91,9 @@ void GegnerSnowBomb::DoKI() {
                 }
 
                 for (int i = 0; i < 10; i++)
-                    PartikelSystem.PushPartikel(xPos + rand() % 50, yPos + rand() % 20 + 50, WATERFLUSH2);
+                    PartikelSystem.PushPartikel(xPos + random(50), yPos + random(20) + 50, WATERFLUSH2);
 
-                SoundManager.PlayWave(100, 128, 6000 + rand() % 2000, SOUND_LANDEN);
+                SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND_LANDEN);
             }
 
             if (ySpeed > 30.0f)
@@ -128,12 +128,12 @@ void GegnerSnowBomb::DoKI() {
 
 void GegnerSnowBomb::GegnerExplode() {
     for (int i = 0; i < 8; i++)
-        Projectiles.PushProjectile(xPos + rand() % 60, yPos + rand() % 50, SNOWBOMBSMALL);
+        Projectiles.PushProjectile(xPos + random(60), yPos + random(50), SNOWBOMBSMALL);
 
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 70 - 10, yPos + rand() % 70 - 10, SNOWFLUSH);
+        PartikelSystem.PushPartikel(xPos + random(70) - 10, yPos + random(70) - 10, SNOWFLUSH);
 
-    SoundManager.PlayWave(100, 128, 6000 + rand() % 2000, SOUND_LANDEN);
+    SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND_LANDEN);
 
     for (int i = 0; i < NUMPLAYERS; i++)
         if (Player[i].AufPlattform == this)

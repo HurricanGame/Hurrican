@@ -21,7 +21,7 @@ GegnerNeuFisch::GegnerNeuFisch(int Wert1, int Wert2, bool Light) {
     ChangeLight = Light;
     Destroyable = true;
     pFest = NULL;
-    MoveSpeed = 5.0f + static_cast<float>(rand() % 50) / 10.0f;
+    MoveSpeed = 5.0f + static_cast<float>(random(50)) / 10.0f;
 }
 
 // --------------------------------------------------------------------------------------
@@ -79,9 +79,9 @@ void GegnerNeuFisch::DoKI() {
 
         if (pAim->InLiquid == true) {
             if (yPos < pAim->ypos - 8 && (blocku & BLOCKWERT_WASSER))
-                ySpeed = float(rand() % 50 + 50) / 10.0f;
+                ySpeed = float(random(50) + 50) / 10.0f;
             if (yPos > pAim->ypos - 8 && (blocko & BLOCKWERT_WASSER))
-                ySpeed = -float(rand() % 50 + 50) / 10.0f;
+                ySpeed = -float(random(50) + 50) / 10.0f;
         }
     }
 
@@ -166,20 +166,20 @@ void GegnerNeuFisch::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerNeuFisch::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
 
     for (int i = 0; i < 10; i++) {
         // Fetzen erzeugen
-        PartikelSystem.PushPartikel(float(xPos - 20 + rand() % 90), float(yPos - 5 + rand() % 70), PIRANHATEILE);
+        PartikelSystem.PushPartikel(float(xPos - 20 + random(90)), float(yPos - 5 + random(70)), PIRANHATEILE);
 
         // und noch n paar Luftblässchen dazu
-        PartikelSystem.PushPartikel(float(xPos - 10 + rand() % 90), float(yPos + 10 + rand() % 70), BUBBLE);
+        PartikelSystem.PushPartikel(float(xPos - 10 + random(90)), float(yPos + 10 + random(70)), BUBBLE);
     }
 
     // Blutwolke dazu
     //
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(float(xPos + rand() % 60), float(yPos + rand() % 40), PIRANHABLUT);
+        PartikelSystem.PushPartikel(float(xPos + random(60)), float(yPos + random(40)), PIRANHABLUT);
 
     Player[0].Score += 250;
 }

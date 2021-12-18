@@ -52,7 +52,7 @@ void GegnerFallBombe::DoKI() {
 
             if (SmokeDelay <= 0.0f) {
                 SmokeDelay = 0.15f;
-                PartikelSystem.PushPartikel(xPos - rand() % 8, yPos - 16, SMOKE);
+                PartikelSystem.PushPartikel(xPos - random(8), yPos - 16, SMOKE);
             }
         } break;
 
@@ -72,12 +72,12 @@ void GegnerFallBombe::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerFallBombe::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
     PartikelSystem.PushPartikel(xPos - 40, yPos, EXPLOSION_BIG);
 
     for (int i = 0; i < 40; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 20, yPos + 40 + rand() % 30, FUNKE);
+        PartikelSystem.PushPartikel(xPos + random(20), yPos + 40 + random(30), FUNKE);
 
     for (int i = 0; i < 16; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 30 - 10, yPos + 40 + rand() % 30, SMOKE3);
+        PartikelSystem.PushPartikel(xPos + random(30) - 10, yPos + 40 + random(30), SMOKE3);
 }

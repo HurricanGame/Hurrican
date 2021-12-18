@@ -162,7 +162,7 @@ void GegnerSpinnenmaschine::DoDeckel() {
                     // Climber
                     case 1: {
                         SpawnDelay = 6.0f;
-                        Gegner.PushGegner(xPos + 100 + rand() % 60, yPos + 190 - DeckelOffset, CLIMBSPIDER, 99, 0,
+                        Gegner.PushGegner(xPos + 100 + random(60), yPos + 190 - DeckelOffset, CLIMBSPIDER, 99, 0,
                                           false, false);
                     } break;
 
@@ -175,7 +175,7 @@ void GegnerSpinnenmaschine::DoDeckel() {
                     // Spinnenbombe
                     case 3: {
                         SpawnDelay = 15.0f;
-                        Gegner.PushGegner(xPos + 100 + rand() % 80, yPos + 180 - DeckelOffset, SPIDERBOMB, 99, 0, false,
+                        Gegner.PushGegner(xPos + 100 + random(80), yPos + 180 - DeckelOffset, SPIDERBOMB, 99, 0, false,
                                           false);
                     } break;
                 }
@@ -398,7 +398,7 @@ void GegnerSpinnenmaschine::DoKI() {
             Energy = 4000;
             DamageTaken = 0.0f;
 
-            DisplayState = rand() % 3 + 1;
+            DisplayState = random(3) + 1;
             OldDisplayState = DisplayState;
 
             Handlung = GEGNER_LAUFEN;
@@ -415,7 +415,7 @@ void GegnerSpinnenmaschine::DoKI() {
                 Handlung = GEGNER_LAUFEN;
 
                 do {
-                    DisplayState = rand() % 3 + 1;
+                    DisplayState = random(3) + 1;
                 } while (DisplayState == OldDisplayState);
 
                 OldDisplayState = DisplayState;
@@ -440,7 +440,7 @@ void GegnerSpinnenmaschine::DoKI() {
 
                 if (SmokeDelay < 0.0f) {
                     SmokeDelay = 1.0f;
-                    PartikelSystem.PushPartikel(xPos + rand() % 250, yPos + 300 + rand() % 100, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + random(250), yPos + 300 + random(100), SMOKEBIG);
                 }
             }
         } break;
@@ -453,27 +453,27 @@ void GegnerSpinnenmaschine::DoKI() {
             if (SpawnDelay < 0.0f) {
                 SpawnDelay = 0.4f;
 
-                int xo = rand() % 300;
-                int yo = rand() % 400;
+                int xo = random(300);
+                int yo = random(400);
 
                 PartikelSystem.PushPartikel(xPos + xo, yPos + yo, EXPLOSION_MEDIUM2);
 
                 // ggf. Rauch
-                if (rand() % 2 == 0)
-                    PartikelSystem.PushPartikel(xPos + rand() % 300, yPos + rand() % 400, SMOKEBIG);
+                if (random(2) == 0)
+                    PartikelSystem.PushPartikel(xPos + random(300), yPos + random(400), SMOKEBIG);
 
                 // ggf Explosion Traces
-                if (rand() % 10 == 0)
-                    PartikelSystem.PushPartikel(xPos + 100 + rand() % 100, yPos + 200 + rand() % 200, EXPLOSION_TRACE);
+                if (random(10) == 0)
+                    PartikelSystem.PushPartikel(xPos + 100 + random(100), yPos + 200 + random(200), EXPLOSION_TRACE);
 
                 // ggf. Sound
-                if (rand() % 3 == 0)
-                    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION3 + rand() % 2);
+                if (random(3) == 0)
+                    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3 + random(2));
 
                 // ggf. Splitter erzeugen
-                if (yo > 100 && rand() % 5 == 0)
+                if (yo > 100 && random(5) == 0)
                     for (int i = 0; i < 10; i++)
-                        PartikelSystem.PushPartikel(xPos + xo - 10 + rand() % 20, yPos + yo - 10 + rand() % 20,
+                        PartikelSystem.PushPartikel(xPos + xo - 10 + random(20), yPos + yo - 10 + random(20),
                                                     SPIDERSPLITTER);
             }
 
@@ -493,19 +493,19 @@ void GegnerSpinnenmaschine::DoKI() {
 
                 // Splitter und Große Explosionen
                 for (int i = 0; i < 10; i++) {
-                    PartikelSystem.PushPartikel(xPos + rand() % 300, yPos + rand() % 400, SPIDERSPLITTER);
-                    PartikelSystem.PushPartikel(xPos + 50 + rand() % 200, yPos + 100 + rand() % 300, EXPLOSION_TRACE);
+                    PartikelSystem.PushPartikel(xPos + random(300), yPos + random(400), SPIDERSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + 50 + random(200), yPos + 100 + random(300), EXPLOSION_TRACE);
                 }
 
                 // Explosionen und Rauch
                 for (int i = 0; i < 50; i++) {
-                    PartikelSystem.PushPartikel(xPos + rand() % 300, yPos + rand() % 300 + 100, EXPLOSION_MEDIUM2);
-                    PartikelSystem.PushPartikel(xPos + rand() % 300, yPos + rand() % 300 + 100, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + random(300), yPos + random(300) + 100, EXPLOSION_MEDIUM2);
+                    PartikelSystem.PushPartikel(xPos + random(300), yPos + random(300) + 100, SMOKEBIG);
                 }
 
                 // Funken
                 for (int i = 0; i < 300; i++)
-                    PartikelSystem.PushPartikel(xPos + rand() % 300, yPos + rand() % 300 + 100, FUNKE);
+                    PartikelSystem.PushPartikel(xPos + random(300), yPos + random(300) + 100, FUNKE);
 
                 // Unterteilanim == kaputt
                 AnimUnten = 1;

@@ -65,8 +65,8 @@ void GegnerFledermaus::DoKI() {
             AnimSpeed = 0.5f;
             AnimEnde = 14;
             AnimStart = 0;
-            Value1 = static_cast<int>(pAim->xpos) + rand() % 80 - 30;   // Flugziel zufällig in Richtung Spieler
-            Value2 = static_cast<int>(pAim->ypos) - 50 + rand() % 100;  // setzen mit etwas Variation
+            Value1 = static_cast<int>(pAim->xpos) + random(80) - 30;   // Flugziel zufällig in Richtung Spieler
+            Value2 = static_cast<int>(pAim->ypos) - 50 + random(100);  // setzen mit etwas Variation
             Handlung = GEGNER_VERFOLGEN;
         } break;
 
@@ -163,11 +163,11 @@ void GegnerFledermaus::DoKI() {
 
 void GegnerFledermaus::GegnerExplode() {
     for (int i = 0; i < 100; i++)
-        PartikelSystem.PushPartikel(xPos + 10 + rand() % 35, yPos + 10 + rand() % 25, FUNKE);
+        PartikelSystem.PushPartikel(xPos + 10 + random(35), yPos + 10 + random(25), FUNKE);
 
     PartikelSystem.PushPartikel(xPos - 5, yPos - 5, EXPLOSION_MEDIUM2);
 
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
 
     Player[0].Score += 100;
 }

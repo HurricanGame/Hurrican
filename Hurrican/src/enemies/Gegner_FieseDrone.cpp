@@ -23,7 +23,7 @@ GegnerFieseDrone::GegnerFieseDrone(int Wert1, int Wert2, bool Light) {
     yAcc = 0.0f;
     AnimSpeed = 1.5f;
     AnimEnde = 12;
-    ShotDelay = static_cast<float>(rand() % 12 + 12);
+    ShotDelay = static_cast<float>(random(12) + 12);
     SmokeDelay = 0.0f;
 }
 
@@ -100,7 +100,7 @@ void GegnerFieseDrone::DoKI() {
         if (ShotDelay > 0.0f)
             ShotDelay -= 1.0f SYNC;
         else {
-            ShotDelay = static_cast<float>(rand() % 12 + 12);
+            ShotDelay = static_cast<float>(random(12) + 12);
 
             float xdiv, ydiv, newwinkel;
 
@@ -128,7 +128,7 @@ void GegnerFieseDrone::DoKI() {
 
             Projectiles.PushProjectile(xPos + 20, yPos + 20, FLUGLASER);
             PartikelSystem.PushPartikel(xPos + 20, yPos + 20, SMOKE);
-            SoundManager.PlayWave(50, 128, 25000 + rand() % 5000, SOUND_LASERSHOT);
+            SoundManager.PlayWave(50, 128, 25000 + random(5000), SOUND_LASERSHOT);
         }
     }
 
@@ -190,11 +190,11 @@ void GegnerFieseDrone::DoKI() {
 
 void GegnerFieseDrone::GegnerExplode() {
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(float(xPos - 25 + rand() % 40), float(yPos - 25 + rand() % 40), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(float(xPos - 25 + random(40)), float(yPos - 25 + random(40)), EXPLOSION_MEDIUM2);
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(float(xPos + 10 + rand() % 30), float(yPos + 10 + rand() % 30), LASERFUNKE2);
+        PartikelSystem.PushPartikel(float(xPos + 10 + random(30)), float(yPos + 10 + random(30)), LASERFUNKE2);
 
-    SoundManager.PlayWave(100, 128, -rand() % 2000 + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 80;
 }

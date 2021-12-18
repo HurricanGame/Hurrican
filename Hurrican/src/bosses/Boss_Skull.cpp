@@ -79,7 +79,7 @@ void GegnerSkull::DoKI() {
 
         //		PartikelSystem.PushPartikel(xPos, yPos + 20, SMOKE);
 
-        if (rand() % 20 == 0)
+        if (random(20) == 0)
             for (int i = 0; i < 10; i++)
                 PartikelSystem.PushPartikel(xPos + 10, yPos + 40, FUNKE);
     }
@@ -108,10 +108,10 @@ void GegnerSkull::DoKI() {
                 SoundManager.StopWave(SOUND_EXPLOSION2);
                 SoundManager.PlayWave(75, 128, 8000 + static_cast<int>(endwert * 800), SOUND_EXPLOSION2);
 
-                PartikelSystem.PushPartikel(xPos + rand() % 30 - 30, yPos + rand() % 30 - 30, EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(xPos + random(30) - 30, yPos + random(30) - 30, EXPLOSION_MEDIUM2);
 
                 for (int i = 0; i < 3; i++)
-                    PartikelSystem.PushPartikel(xPos + rand() % 30 - 10, yPos + rand() % 20 - 10, SPIDERSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + random(30) - 10, yPos + random(20) - 10, SPIDERSPLITTER);
             }
 
             if (xPos + 16 > TileEngine.XOffset + 320.0f)
@@ -147,16 +147,16 @@ void GegnerSkull::DoKI() {
                 PartikelSystem.PushPartikel(xPos + 20, yPos + 20, SHOCKEXPLOSION);
 
                 for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos + rand() % 30, yPos + rand() % 30, SPIDERSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + random(30), yPos + random(30), SPIDERSPLITTER);
 
                 for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos - 50 + rand() % 100, yPos - 50 + rand() % 100, EXPLOSION_BIG);
+                    PartikelSystem.PushPartikel(xPos - 50 + random(100), yPos - 50 + random(100), EXPLOSION_BIG);
 
                 for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos - 50 + rand() % 100, yPos - 50 + rand() % 100, SPLITTER);
+                    PartikelSystem.PushPartikel(xPos - 50 + random(100), yPos - 50 + random(100), SPLITTER);
 
                 for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos - 50 + rand() % 100, yPos - 50 + rand() % 100, SCHROTT1);
+                    PartikelSystem.PushPartikel(xPos - 50 + random(100), yPos - 50 + random(100), SCHROTT1);
 
                 PartikelSystem.PushPartikel(xPos - 80, yPos - 80, EXPLOSION_GIGA);
 
@@ -275,7 +275,7 @@ void GegnerSkull::DoKI() {
         if (ShotDelay < 0.0f) {
             ShotDelay = 15.0f;
             Projectiles.PushProjectile(xPos - 10, yPos, SUCHSCHUSS2, pAim);
-            SoundManager.PlayWave(50, 128, 14000 + rand() % 2000, SOUND_GOLEMSHOT);
+            SoundManager.PlayWave(50, 128, 14000 + random(2000), SOUND_GOLEMSHOT);
         }
     }
 

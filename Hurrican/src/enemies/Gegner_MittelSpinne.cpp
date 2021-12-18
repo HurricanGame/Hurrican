@@ -14,13 +14,13 @@
 GegnerMittelSpinne::GegnerMittelSpinne(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER_LAUFEN;
     Energy = 50;
-    AnimSpeed = static_cast<float>(rand() % 8 + 5) / 8.0f;
+    AnimSpeed = static_cast<float>(random(8) + 5) / 8.0f;
     ChangeLight = Light;
     Destroyable = true;
     AnimEnde = 8;
     Value1 = Wert1;
     Value2 = Wert2;
-    rot = static_cast<float>(rand() % 80 + 140);
+    rot = static_cast<float>(random(80) + 140);
     OwnDraw = true;
     TestBlock = false;
     shotdelay = 0.0f;
@@ -146,7 +146,7 @@ void GegnerMittelSpinne::DoKI() {
 
             if (shotdelay < 0.0f) {
                 shotdelay = 0.2f SYNC;
-                PartikelSystem.PushPartikel(xPos + 20 + rand() % 5, yPos + 15 + rand() % 5, ROCKETSMOKE);
+                PartikelSystem.PushPartikel(xPos + 20 + random(5), yPos + 15 + random(5), ROCKETSMOKE);
             }
         } break;
     }
@@ -162,17 +162,17 @@ void GegnerMittelSpinne::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerMittelSpinne::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
     PartikelSystem.PushPartikel(xPos + 5, yPos, EXPLOSION_MEDIUM3);
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 80, yPos + rand() % 50, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + random(80), yPos + random(50), SPIDERSPLITTER);
 
     for (int i = 0; i < 30; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 80, yPos + rand() % 50, FUNKE);
+        PartikelSystem.PushPartikel(xPos + random(80), yPos + random(50), FUNKE);
 
     for (int i = 0; i < 7; i++)
-        PartikelSystem.PushPartikel(xPos - 10 + rand() % 60, yPos - 10 + rand() % 60, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 10 + random(60), yPos - 10 + random(60), EXPLOSION_MEDIUM2);
 
     Player[0].Score += 250;
 }

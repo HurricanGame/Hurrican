@@ -384,7 +384,7 @@ void GegnerDrache::DoKI() {
             AnimCount -= 1.0f;
             if (AnimCount < 0.0f) {
                 AnimCount = 5.0f;
-                PartikelSystem.PushPartikel(xPos - 100 + rand() % 300, yPos + rand() % 100 + DrawYOffset, SMOKEBIG);
+                PartikelSystem.PushPartikel(xPos - 100 + random(300), yPos + random(100) + DrawYOffset, SMOKEBIG);
             }
 
             AnimWinkel = 0;
@@ -469,12 +469,12 @@ void GegnerDrache::DoKI() {
 
             if (AnimCount < 0.0f) {
                 AnimCount = 15.0f;
-                PartikelSystem.PushPartikel(xPos - 120 + rand() % 300, yPos + rand() % 100 + DrawYOffset, SMOKEBIG);
+                PartikelSystem.PushPartikel(xPos - 120 + random(300), yPos + random(100) + DrawYOffset, SMOKEBIG);
 
-                if (Attack != GEGNER_STEHEN && rand() % 4 == 0) {
-                    PartikelSystem.PushPartikel(xPos - 120 + rand() % 300, yPos + rand() % 100 + DrawYOffset,
+                if (Attack != GEGNER_STEHEN && random(4) == 0) {
+                    PartikelSystem.PushPartikel(xPos - 120 + random(300), yPos + random(100) + DrawYOffset,
                                                 EXPLOSION_MEDIUM2);
-                    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
+                    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
                 }
             }
 
@@ -510,7 +510,7 @@ void GegnerDrache::DoKI() {
                         ySpeed *= -0.3f;
 
                         for (int i = 0; i < 30; i++)
-                            PartikelSystem.PushPartikel(xPos - 100 + rand() % 260, yPos + 120.0f - rand() % 10,
+                            PartikelSystem.PushPartikel(xPos - 100 + random(260), yPos + 120.0f - random(10),
                                                         SNOWFLUSH);
 
                         // nicht weiter abspringen?
@@ -541,7 +541,7 @@ void GegnerDrache::DoKI() {
 
                     if (SmokeCount < 0.0f) {
                         SmokeCount = 0.2f;
-                        PartikelSystem.PushPartikel(xPos - 100 + rand() % 260, yPos + 120.0f, SNOWFLUSH);
+                        PartikelSystem.PushPartikel(xPos - 100 + random(260), yPos + 120.0f, SNOWFLUSH);
                     }
 
                     // liegenbleiben?
@@ -583,11 +583,11 @@ void GegnerDrache::DoKI() {
             if (ShotDelay < 0.0f) {
                 ShotDelay = 0.5f;
 
-                SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
-                PartikelSystem.PushPartikel(xPos - 100 + rand() % 500, yPos + 20 + rand() % 80, EXPLOSION_MEDIUM2);
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+                PartikelSystem.PushPartikel(xPos - 100 + random(500), yPos + 20 + random(80), EXPLOSION_MEDIUM2);
 
-                if (rand() % 3 == 0)
-                    PartikelSystem.PushPartikel(xPos - 100 + rand() % 500, yPos + 20 + rand() % 80, EXPLOSION_BIG);
+                if (random(3) == 0)
+                    PartikelSystem.PushPartikel(xPos - 100 + random(500), yPos + 20 + random(80), EXPLOSION_BIG);
             }
 
             switch (Attack) {
@@ -628,7 +628,7 @@ void GegnerDrache::DoKI() {
                     // Runtergefallen? Dann warten, bis der Hurri aufsteigt
                     if (yPos > StartPosY + 295.0f && ySpeed > 0.0f) {
                         for (int i = 0; i < 30; i++)
-                            PartikelSystem.PushPartikel(xPos - 120 + rand() % 300, yPos + 80.0f, SMOKEBIG);
+                            PartikelSystem.PushPartikel(xPos - 120 + random(300), yPos + 80.0f, SMOKEBIG);
 
                         ShakeScreen(5.0f);
                         SoundManager.PlayWave(100, 128, 10000, SOUND_DOORSTOP);
@@ -684,7 +684,7 @@ void GegnerDrache::DoKI() {
             HeadLocked = false;
 
             // Was macht unser kleiner Drache denn als Nächstes?
-            int newmove = rand() % 3;
+            int newmove = random(3);
 
             switch (newmove) {
                 // Spieler überfliegen und dabei eine Aktion ausfühern?
@@ -703,7 +703,7 @@ void GegnerDrache::DoKI() {
                     yAcc = -0.1f;
 
                     // Handlung festlegen, was er während dem Überfliegen macht
-                    int j = rand() % 2;
+                    int j = random(2);
 
                     switch (j) {
                         // Feuer spucken
@@ -738,7 +738,7 @@ void GegnerDrache::DoKI() {
                     yAcc = 0.0f;
 
                     // Handlung festlegen, was er während dem Überfliegen macht
-                    int j = rand() % 2;
+                    int j = random(2);
 
                     // REMOVE
                     j = 0;
@@ -761,14 +761,14 @@ void GegnerDrache::DoKI() {
                 case 2: {
                     Handlung = GEGNER_LAUFEN3;
                     Attack = GEGNER_EINFLIEGEN;
-                    ShotCount = 2 + rand() % 2;
+                    ShotCount = 2 + random(2);
 
                     if (xPos < Value1)
                         Position = RECHTS;
                     else
                         Position = LINKS;
 
-                    yPos = static_cast<float>(StartPosY) + 50 + rand() % 50;
+                    yPos = static_cast<float>(StartPosY) + 50 + random(50);
 
                     KieferWinkel = PI / 2.0f;
                     xSpeed = 0.0f;
@@ -804,7 +804,7 @@ void GegnerDrache::DoKI() {
                                                        yPos + 50.0f - HeadWinkel / 2.0f, FIREBALL_BIG);
                         }
 
-                        SoundManager.PlayWave(100, 128, 8000 + rand() % 2000, SOUND_FIREBALL);
+                        SoundManager.PlayWave(100, 128, 8000 + random(2000), SOUND_FIREBALL);
                     }
 
                 } break;
@@ -853,7 +853,7 @@ void GegnerDrache::DoKI() {
 
                             if (xPos > static_cast<float>(TileEngine.XOffset))
                                 PartikelSystem.PushPartikel(static_cast<float>(TileEngine.XOffset) + 10.0f,
-                                                            static_cast<float>(TileEngine.YOffset + rand() % 480),
+                                                            static_cast<float>(TileEngine.YOffset + random(480)),
                                                             BLATT2);
 
                             for (int p = 0; p < NUMPLAYERS; p++)
@@ -863,7 +863,7 @@ void GegnerDrache::DoKI() {
 
                             if (xPos < static_cast<float>(TileEngine.XOffset) + 550.0f)
                                 PartikelSystem.PushPartikel(static_cast<float>(TileEngine.XOffset + 640.0f),
-                                                            static_cast<float>(TileEngine.YOffset + rand() % 480),
+                                                            static_cast<float>(TileEngine.YOffset + random(480)),
                                                             BLATT2);
 
                             for (int p = 0; p < NUMPLAYERS; p++)
@@ -959,13 +959,13 @@ void GegnerDrache::DoKI() {
                         Attack = GEGNER_SCHLIESSEN;
                         AnimCount = 4.0f;
                         KieferWinkel = PI / 2.0f;
-                        SoundManager.PlayWave(100, 128, 10000 + rand() % 1000, SOUND_KLONG);
+                        SoundManager.PlayWave(100, 128, 10000 + random(1000), SOUND_KLONG);
                         HeadYSpeed *= -1;
                         HeadXSpeed *= -1;
 
                         for (int i = 0; i < 30; i++)
-                            PartikelSystem.PushPartikel(xPos + HeadX + 220.0f + rand() % 20 + mirrorOffset * 275.0f,
-                                                        yPos + HeadY + 70.0f + rand() % 20, FUNKE);
+                            PartikelSystem.PushPartikel(xPos + HeadX + 220.0f + random(20) + mirrorOffset * 275.0f,
+                                                        yPos + HeadY + 70.0f + random(20), FUNKE);
                     }
 
                 } break;

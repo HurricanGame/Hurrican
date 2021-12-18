@@ -132,7 +132,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
     Rotate = false;
     Rot = 0.0f;
     RemoveWhenOffScreen = true;
-    (rand() % 2 == 0) ? (RotDir = 1) : (RotDir = -1);
+    (random(2) == 0) ? (RotDir = 1) : (RotDir = -1);
 
     m_pParent = pParent;
     xPos = x;
@@ -155,8 +155,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (float(rand() % 40 + 20) / 5) * float(-m_pParent->Blickrichtung);
-                ySpeed = -float(rand() % 40 + 20) / 5;
+                xSpeed = (float(random(40) + 20) / 5) * float(-m_pParent->Blickrichtung);
+                ySpeed = -float(random(40) + 20) / 5;
                 xAcc = 0.0f;
                 yAcc = 5.0f;
                 // Lebensdauer = 255;      //DKS - now redundant
@@ -174,8 +174,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (float(rand() % 40 - 20) / 3);
-                ySpeed = -float(rand() % 8 + 14);
+                xSpeed = (float(random(40) - 20) / 3);
+                ySpeed = -float(random(8) + 14);
                 xAcc = 0.0f;
                 yAcc = 10.0f;
                 // Lebensdauer = 255;      //DKS - now redundant
@@ -190,13 +190,13 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (float(rand() % 40 - 20)) / 2;
-                ySpeed = -float(rand() % 10 + 20) / 2;
+                xSpeed = (float(random(40) - 20)) / 2;
+                ySpeed = -float(random(10) + 20) / 2;
                 xAcc = 0.0f;
                 yAcc = 5.0f;
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = true;
-                AnimPhase = rand() % 20;
+                AnimPhase = random(20);
 
                 Rotate = true;
             } break;
@@ -208,13 +208,13 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 Lebensdauer = 192;
                 AnimEnde = 19;
-                AnimSpeed = (rand() % 6 + 3) / 20.0f;
+                AnimSpeed = (random(6) + 3) / 20.0f;
 
                 PartikelSystem.PushPartikel(x - 30, y - 30, EXPLOSIONFLARE);
 
                 Rotate = true;
 
-                if (rand() % 2 == 0)
+                if (random(2) == 0)
                     PartikelArt = EXPLOSION_MEDIUM2_ADD;
 
             } break;
@@ -226,13 +226,13 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 Lebensdauer = 192;
                 AnimEnde = 19;
-                AnimSpeed = (rand() % 6 + 3) / 20.0f;
+                AnimSpeed = (random(6) + 3) / 20.0f;
 
                 PartikelSystem.PushPartikel(x - 30, y - 30, EXPLOSIONFLARE);
 
                 Rotate = true;
 
-                if (rand() % 2 == 0)
+                if (random(2) == 0)
                     PartikelArt = EXPLOSION_MEDIUM2_ADD;
 
             } break;
@@ -244,11 +244,11 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 Lebensdauer = 192;
                 AnimEnde = 19;
-                AnimSpeed = (rand() % 6 + 3) / 20.0f;
+                AnimSpeed = (random(6) + 3) / 20.0f;
 
                 PartikelSystem.PushPartikel(x - 30, y - 30, EXPLOSIONFLARE);
 
-                if (rand() % 2 == 0)
+                if (random(2) == 0)
                     PartikelArt = EXPLOSION_MEDIUM3_ADD;
 
                 Rotate = true;
@@ -264,13 +264,13 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 Lebensdauer = 192;
                 AnimEnde = 19;
-                AnimSpeed = (rand() % 2 + 5) / 10.0f;
+                AnimSpeed = (random(2) + 5) / 10.0f;
 
                 PartikelSystem.PushPartikel(x + 30, y + 30, EXPLOSIONFLARE);
 
                 for (int i = 0; i < 20; i++) {
-                    PartikelSystem.PushPartikel(x + 60 + rand() % 40, y + 60 + rand() % 40, FUNKE);
-                    PartikelSystem.PushPartikel(x + 60 + rand() % 40, y + 60 + rand() % 40, LONGFUNKE);
+                    PartikelSystem.PushPartikel(x + 60 + random(40), y + 60 + random(40), FUNKE);
+                    PartikelSystem.PushPartikel(x + 60 + random(40), y + 60 + random(40), LONGFUNKE);
                 }
 
             } break;
@@ -284,7 +284,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - This sprite actually has 25 frames, so increased this to 24:
                 // AnimEnde	= 22;
                 AnimEnde = 24;
-                AnimSpeed = (rand() % 10 + 5) / 15.0f;
+                AnimSpeed = (random(10) + 5) / 15.0f;
 
             } break;
 
@@ -297,7 +297,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - This sprite actually has 25 frames, so increased this to 24:
                 // AnimEnde	= 22;
                 AnimEnde = 24;
-                AnimSpeed = (rand() % 5 + 10) / 80.0f;
+                AnimSpeed = (random(5) + 10) / 80.0f;
 
                 PartikelSystem.PushPartikel(x - 30, y - 30, EXPLOSIONFLARE);
 
@@ -310,7 +310,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 Lebensdauer = 224;
                 AnimEnde = 19;
-                AnimSpeed = (rand() % 5 + 10) / 30.0f;
+                AnimSpeed = (random(5) + 10) / 30.0f;
                 PartikelSystem.PushPartikel(x + 32, y + 32, EXPLOSION_KRINGEL);
 
                 if (options_Detail >= DETAIL_MAXIMUM)
@@ -327,7 +327,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 Lebensdauer = 192;
                 AnimEnde = 15;
-                AnimSpeed = (rand() % 5 + 10) / 15.0f;
+                AnimSpeed = (random(5) + 10) / 15.0f;
 
             } break;
 
@@ -341,7 +341,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 //      This was glitching after switching to using the sprites' itsPreCalcedRects[]
                 // AnimEnde	= 12;
                 AnimEnde = 11;
-                AnimSpeed = (rand() % 10 + 5) / 15.0f;
+                AnimSpeed = (random(10) + 5) / 15.0f;
 
             } break;
 
@@ -353,8 +353,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 Lebensdauer = 200;
                 AnimEnde = 15;
                 AnimSpeed = 0.3f;
-                xSpeed = (static_cast<float>(rand() % 160 - 80) / 4);
-                ySpeed = -((rand() % 20 + 50) / 2.0f);
+                xSpeed = (static_cast<float>(random(160) - 80) / 4);
+                ySpeed = -((random(20) + 50) / 2.0f);
                 yAcc = 3.0f;
                 BounceWalls = true;
 
@@ -367,16 +367,16 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
                 // Lebensdauer = 255;      //DKS - now redundant
-                AnimPhase = rand() % 5;
-                if (rand() % 2 == 0) {
-                    xSpeed = -(static_cast<float>(rand() % 20 + 4) / 5);
+                AnimPhase = random(5);
+                if (random(2) == 0) {
+                    xSpeed = -(static_cast<float>(random(20) + 4) / 5);
                     xAcc = 0.1f;
                 } else {
-                    xSpeed = (static_cast<float>(rand() % 20 + 4) / 5);
+                    xSpeed = (static_cast<float>(random(20) + 4) / 5);
                     xAcc = -0.1f;
                 }
 
-                yAcc = -static_cast<float>(rand() % 10 + 20) / 100;
+                yAcc = -static_cast<float>(random(10) + 20) / 100;
 
             } break;
 
@@ -389,7 +389,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 Lebensdauer = 192;
                 AnimEnde = 3;
                 AnimSpeed = 2.0f;
-                ySpeed = -static_cast<float>(rand() % 10 + 20) / 20;
+                ySpeed = -static_cast<float>(random(10) + 20) / 20;
                 Rotate = true;
             } break;
 
@@ -412,7 +412,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 alpha = 128;
 
                 Lebensdauer = 128;
-                ySpeed = float(rand() % 10) + 5;
+                ySpeed = float(random(10)) + 5;
                 yAcc = 4.0f;
                 RemoveWhenOffScreen = false;
             } break;
@@ -423,13 +423,13 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
                 // Lebensdauer = 255;      //DKS - now redundant
-                ySpeed = -float((rand() % 40) + 25) / 3.0f;
+                ySpeed = -float((random(40)) + 25) / 3.0f;
                 yAcc = 5.0f;
-                xSpeed = float((rand() % 40) - 20) / 2.0f;
+                xSpeed = float((random(40)) - 20) / 2.0f;
 
                 Rotate = true;
 
-                AnimPhase = rand() % 2;
+                AnimPhase = random(2);
 
             } break;
 
@@ -439,16 +439,16 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
                 // Lebensdauer = 255;      //DKS - now redundant
-                ySpeed = -float((rand() % 20) - 10) / 10.0f;
-                yAcc = -float((rand() % 20) - 10) / 20.0f;
-                xSpeed = -float(rand() % 50 + 30);
+                ySpeed = -float((random(20)) - 10) / 10.0f;
+                yAcc = -float((random(20)) - 10) / 20.0f;
+                xSpeed = -float(random(50) + 30);
 
                 if (WinkelUebergabe != 0.0f)
                     xSpeed *= -1;
 
                 Rotate = true;
 
-                AnimPhase = rand() % 2;
+                AnimPhase = random(2);
 
             } break;
 
@@ -459,8 +459,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 // Lebensdauer = 255;      //DKS - now redundant
                 yAcc = 5.0f;
-                xSpeed = float((rand() % 40) - 20) / 2.0f;
-                ySpeed = -float((rand() % 10) + 20);
+                xSpeed = float((random(40)) - 20) / 2.0f;
+                ySpeed = -float((random(10)) + 20);
                 AnimSpeed = 1.5f;
 
                 BounceWalls = true;
@@ -477,14 +477,14 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 blue = 80;
                 alpha = 0;
 
-                xSpeed = static_cast<float>(rand() % 30 + 10) / 50.0f;
+                xSpeed = static_cast<float>(random(30) + 10) / 50.0f;
                 ySpeed = -3.0f * (AnimPhase + 1);
 
-                if (rand() % 2 == 0)
+                if (random(2) == 0)
                     xSpeed *= -1.0f;
 
                 // Lebensdauer = 255;      //DKS - now redundant
-                AnimPhase = rand() % 2;
+                AnimPhase = random(2);
 
                 RemoveWhenOffScreen = false;
                 AnimCount = 0.0f;
@@ -495,11 +495,11 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255;
                 alpha = 0;
-                xSpeed = static_cast<float>(rand() % 20 + 20) / 2.0f;
-                ySpeed = -static_cast<float>(rand() % 20 + 30);
+                xSpeed = static_cast<float>(random(20) + 20) / 2.0f;
+                ySpeed = -static_cast<float>(random(20) + 30);
                 yAcc = 5.0f;
                 // Lebensdauer = 255;      //DKS - now redundant
-                AnimCount = float(rand() % 100);
+                AnimCount = float(random(100));
                 OwnDraw = true;
             } break;
 
@@ -521,14 +521,14 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (float(rand() % 80 - 40) / 4);
-                ySpeed = -float(rand() % 30 + 15) / 4;
+                xSpeed = (float(random(80) - 40) / 4);
+                ySpeed = -float(random(30) + 15) / 4;
                 xAcc = 0.0f;
                 yAcc = 2.8f;
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = true;
                 AnimEnde = 7;
-                AnimSpeed = (rand() % 10 + 5) / 12.0f;
+                AnimSpeed = (random(10) + 5) / 12.0f;
             } break;
 
             case ROCKSPLITTERSMALL:  // kleine Splitter eines Felsblocks
@@ -536,14 +536,14 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (float(rand() % 80 - 40) / 4);
-                ySpeed = -float(rand() % 40 + 20) / 3;
+                xSpeed = (float(random(80) - 40) / 4);
+                ySpeed = -float(random(40) + 20) / 3;
                 xAcc = 0.0f;
                 yAcc = 2.8f;
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = true;
                 AnimEnde = 7;
-                AnimSpeed = (rand() % 10 + 5) / 8.0f;
+                AnimSpeed = (random(10) + 5) / 8.0f;
             } break;
 
             case ROCKSPLITTERSMALLBLUE:  // kleine Splitter eines Stalagtits
@@ -551,32 +551,32 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (float(rand() % 80 - 40) / 4);
-                ySpeed = -float(rand() % 40 + 20) / 3;
+                xSpeed = (float(random(80) - 40) / 4);
+                ySpeed = -float(random(40) + 20) / 3;
                 xAcc = 0.0f;
                 yAcc = 2.8f;
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = true;
                 AnimEnde = 7;
-                AnimSpeed = (rand() % 10 + 5) / 8.0f;
+                AnimSpeed = (random(10) + 5) / 8.0f;
             } break;
 
             case SPIDERSPLITTER:  // Splitter der Spinne
             case SPIDERSPLITTER2: {
                 if (PartikelArt == SPIDERSPLITTER)
-                    PartikelArt += rand() % 2;
-                int r = rand() % 128 + 128;
+                    PartikelArt += random(2);
+                int r = random(128) + 128;
                 red = green = blue = r;
                 alpha = 255;
 
-                xSpeed = (float(rand() % 80 - 40) / 3.0f);
-                ySpeed = -float(rand() % 30 + 15) / 2.0f;
+                xSpeed = (float(random(80) - 40) / 3.0f);
+                ySpeed = -float(random(30) + 15) / 2.0f;
                 xAcc = 0.0f;
                 yAcc = 3.0f;
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = true;
                 AnimEnde = 15;
-                AnimSpeed = (rand() % 10 + 5) / 12.0f;
+                AnimSpeed = (random(10) + 5) / 12.0f;
             } break;
 
             case SPIDERGRENADE:  // Granate der Spinne
@@ -590,7 +590,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = false;
                 AnimEnde = 3;
-                AnimSpeed = (rand() % 10 + 5) / 12.0f;
+                AnimSpeed = (random(10) + 5) / 12.0f;
             } break;
 
             case EVILSMOKE:  // Schatten des EvilHurri links
@@ -619,8 +619,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
                 // Lebensdauer = 255;      //DKS - now redundant
-                xSpeed = (float(rand() % 40 - 20) / 3.0f);
-                ySpeed = -float(rand() % 80 + 40) / 3.0f;
+                xSpeed = (float(random(40) - 20) / 3.0f);
+                ySpeed = -float(random(80) + 40) / 3.0f;
                 yAcc = 5.0f;
 
                 Rotate = true;
@@ -632,8 +632,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
                 // Lebensdauer = 255;      //DKS - now redundant
-                xSpeed = (float(rand() % 40 - 20) / 5.0f);
-                ySpeed = -float(rand() % 80 + 40) / 4.0f;
+                xSpeed = (float(random(40) - 20) / 5.0f);
+                ySpeed = -float(random(80) + 40) / 4.0f;
                 yAcc = 4.0f;
                 AnimCount = 1.0f;
             } break;
@@ -642,12 +642,12 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             {
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
-                ySpeed = -static_cast<float>(rand() % 10) / 10.0f;
+                ySpeed = -static_cast<float>(random(10)) / 10.0f;
                 yAcc = -0.1f;
 
                 // Lebensdauer = 255;      //DKS - now redundant
                 Rotate = true;
-                Rot = static_cast<float>(rand() % 360);
+                Rot = static_cast<float>(random(360));
 
             } break;
 
@@ -658,8 +658,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 alpha = 128;
 
                 Lebensdauer = 80;
-                xSpeed = (float(rand() % 40 - 20) / 10.0f);
-                ySpeed = -float(rand() % 40 - 20) / 6.0f;
+                xSpeed = (float(random(40) - 20) / 10.0f);
+                ySpeed = -float(random(40) - 20) / 6.0f;
 
                 // Grafik hat sich von 20x20 auf 24x24 pixel geändert :P
                 xPos -= 2;
@@ -686,50 +686,50 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 switch (Art) {
                     case SMOKE3: {
-                        xSpeed = (float(rand() % 40 - 20) / 15.0f);
-                        ySpeed = -float(rand() % 10 + 20) / 2.0f;
+                        xSpeed = (float(random(40) - 20) / 15.0f);
+                        ySpeed = -float(random(10) + 20) / 2.0f;
                     } break;
 
                     case SMOKE3_RO:  // rechts oben
                     {
-                        xSpeed = float(rand() % 10 + 20) / 3.0f;
-                        ySpeed = -xSpeed - (float(rand() % 40 - 20) / 15.0f);
+                        xSpeed = float(random(10) + 20) / 3.0f;
+                        ySpeed = -xSpeed - (float(random(40) - 20) / 15.0f);
                     } break;
 
                     case SMOKE3_R:  // rechts
                     {
-                        xSpeed = float(rand() % 10 + 20) / 2.0f;
-                        ySpeed = -(float(rand() % 40 - 20) / 15.0f);
+                        xSpeed = float(random(10) + 20) / 2.0f;
+                        ySpeed = -(float(random(40) - 20) / 15.0f);
                     } break;
 
                     case SMOKE3_RU:  // rechts oben
                     {
-                        xSpeed = float(rand() % 10 + 20) / 3.0f;
-                        ySpeed = xSpeed - (float(rand() % 40 - 20) / 15.0f);
+                        xSpeed = float(random(10) + 20) / 3.0f;
+                        ySpeed = xSpeed - (float(random(40) - 20) / 15.0f);
                     } break;
 
                     case SMOKE3_U:  // unten
                     {
-                        xSpeed = (float(rand() % 40 - 20) / 15.0f);
-                        ySpeed = float(rand() % 10 + 20) / 2.0f;
+                        xSpeed = (float(random(40) - 20) / 15.0f);
+                        ySpeed = float(random(10) + 20) / 2.0f;
                     } break;
 
                     case SMOKE3_LU:  // links oben
                     {
-                        xSpeed = -float(rand() % 10 + 20) / 3.0f;
-                        ySpeed = -xSpeed - (float(rand() % 40 - 20) / 15.0f);
+                        xSpeed = -float(random(10) + 20) / 3.0f;
+                        ySpeed = -xSpeed - (float(random(40) - 20) / 15.0f);
                     } break;
 
                     case SMOKE3_L:  // links
                     {
-                        xSpeed = -float(rand() % 10 + 20) / 2.0f;
-                        ySpeed = -(float(rand() % 40 - 20) / 15.0f);
+                        xSpeed = -float(random(10) + 20) / 2.0f;
+                        ySpeed = -(float(random(40) - 20) / 15.0f);
                     } break;
 
                     case SMOKE3_LO:  // links oben
                     {
-                        xSpeed = -float(rand() % 10 + 20) / 3.0f;
-                        ySpeed = xSpeed - (float(rand() % 40 - 20) / 15.0f);
+                        xSpeed = -float(random(10) + 20) / 3.0f;
+                        ySpeed = xSpeed - (float(random(40) - 20) / 15.0f);
                     } break;
                 }
 
@@ -747,10 +747,10 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 alpha = 255;
 
                 Lebensdauer = 90;
-                xSpeed = (float(rand() % 40 - 20) / 6.0f);
-                ySpeed = -float(rand() % 10 + 10) / 5.0f;
+                xSpeed = (float(random(40) - 20) / 6.0f);
+                ySpeed = -float(random(10) + 10) / 5.0f;
 
-                AnimPhase = rand() % 4;
+                AnimPhase = random(4);
                 Rotate = true;
 
             } break;
@@ -762,10 +762,10 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 alpha = 140;
 
                 Lebensdauer = 140;
-                xSpeed = (float(rand() % 40 - 20) / 10.0f);
-                ySpeed = -float(rand() % 20 + 10) / 10.0f;
+                xSpeed = (float(random(40) - 20) / 10.0f);
+                ySpeed = -float(random(20) + 10) / 10.0f;
 
-                AnimPhase = rand() % 4;
+                AnimPhase = random(4);
                 Rotate = true;
 
             } break;
@@ -778,11 +778,11 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 alpha = 200;
 
                 Lebensdauer = 200;
-                xSpeed = static_cast<float>(rand() % 6 - 3) * 6.0f;
-                ySpeed = static_cast<float>(rand() % 10 - 5) * 2.0f;
+                xSpeed = static_cast<float>(random(6) - 3) * 6.0f;
+                ySpeed = static_cast<float>(random(10) - 5) * 2.0f;
                 yAcc = -1.0f;
 
-                AnimPhase = rand() % 4;
+                AnimPhase = random(4);
                 Rotate = true;
 
             } break;
@@ -792,15 +792,15 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255;
                 alpha = 144;
-                xSpeed = (static_cast<float>(rand() % 40 - 20) / 40);
-                ySpeed = float(rand() % 10 + 40) / 5;
-                Lebensdauer = float(180 + rand() % 10);
+                xSpeed = (static_cast<float>(random(40) - 20) / 40);
+                ySpeed = float(random(10) + 40) / 5;
+                Lebensdauer = float(180 + random(10));
                 PartikelArt = ROCKETSMOKE;
 
             } break;
 
             case DUST: {
-                if (rand() % 2 == 0) {
+                if (random(2) == 0) {
                     red = 255;
                     green = 224;
                     blue = 128;
@@ -815,7 +815,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 }
 
                 // Lebensdauer = 255;      //DKS - now redundant
-                AnimPhase = rand() % 3;
+                AnimPhase = random(3);
 
                 xSpeed = -5.0f * (AnimPhase + 1);
             } break;
@@ -824,16 +824,16 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - off-by-one error:
                 // AnimEnde = 20;
                 AnimEnde = 19;
-                AnimSpeed = (rand() % 10 + 10) / 20.0f;
+                AnimSpeed = (random(10) + 10) / 20.0f;
 
-                xSpeed = (float(rand() % 80 - 40) / 4.0f);
-                ySpeed = -float(rand() % 10 + 8);
+                xSpeed = (float(random(80) - 40) / 4.0f);
+                ySpeed = -float(random(10) + 8);
                 xAcc = 0.0f;
                 yAcc = 3.0f;
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = true;
 
-                if (rand() % 2 == 0)
+                if (random(2) == 0)
                     PartikelArt = SCHROTT2;
             } break;
 
@@ -844,13 +844,13 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 alpha = 60;
                 xSpeed = 0.0f;
 
-                if (rand() % 2 == 0)  // Per Zufall nach links
+                if (random(2) == 0)  // Per Zufall nach links
                     xAcc = 0.2f;
                 else  // oder rechts
                     xAcc = -0.2f;
 
-                AnimPhase = rand() % 3;
-                ySpeed = static_cast<float>(rand() % 10 + 15) / 10;
+                AnimPhase = random(3);
+                ySpeed = static_cast<float>(random(10) + 15) / 10;
                 ySpeed *= (AnimPhase + 1);
 
                 if (PartikelArt == SCHNEEFLOCKE_END) {
@@ -867,8 +867,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (float(rand() % 80 - 40) / 3.0f);
-                ySpeed = -(float(rand() % 80 - 20) / 3.0f);
+                xSpeed = (float(random(80) - 40) / 3.0f);
+                ySpeed = -(float(random(80) - 20) / 3.0f);
                 xAcc = 0.0f;
                 yAcc = 5.0f;
                 // Lebensdauer = 255;      //DKS - now redundant
@@ -876,7 +876,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - off-by-one error:
                 // AnimEnde	= 15;
                 AnimEnde = 14;
-                AnimSpeed = float((rand() % 10 + 5) / 20.0f);
+                AnimSpeed = float((random(10) + 5) / 20.0f);
 
             } break;
 
@@ -885,14 +885,14 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (float(rand() % 80 - 40) / 3.0f);
-                ySpeed = -(float(rand() % 60 + 20) / 2.0f);
+                xSpeed = (float(random(80) - 40) / 3.0f);
+                ySpeed = -(float(random(60) + 20) / 2.0f);
                 xAcc = 0.0f;
                 yAcc = 5.0f;
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = true;
                 Rotate = true;
-                Rot = float(rand() % 360);
+                Rot = float(random(360));
 
             } break;
 
@@ -901,14 +901,14 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (float(rand() % 80 - 40) / 3.0f);
-                ySpeed = -(float(rand() % 60 + 20) / 2.0f);
+                xSpeed = (float(random(80) - 40) / 3.0f);
+                ySpeed = -(float(random(60) + 20) / 2.0f);
                 xAcc = 0.0f;
                 yAcc = 5.0f;
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = true;
                 Rotate = true;
-                Rot = float(rand() % 360);
+                Rot = float(random(360));
                 AnimPhase = 1;
                 PartikelArt = LAVAKRABBE_KOPF;
 
@@ -919,7 +919,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
                 // Lebensdauer = 255;      //DKS - now redundant
-                AnimPhase = rand() % 4;
+                AnimPhase = random(4);
                 RemoveWhenOffScreen = false;
 
             } break;
@@ -930,13 +930,13 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // Lebensdauer = 255;      //DKS - now redundant
                 AnimPhase = 0;
 
-                xSpeed = (float(rand() % 80 - 40) / 3.0f);
-                ySpeed = -(float(rand() % 30 + 10) / 2.0f);
+                xSpeed = (float(random(80) - 40) / 3.0f);
+                ySpeed = -(float(random(30) + 10) / 2.0f);
                 xAcc = 0.0f;
                 yAcc = 5.0f;
                 BounceWalls = true;
                 Rotate = true;
-                Rot = float(rand() % 360);
+                Rot = float(random(360));
 
             } break;
 
@@ -946,13 +946,13 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // Lebensdauer = 255;      //DKS - now redundant
                 AnimPhase = 1;
 
-                xSpeed = (float(rand() % 80 - 40) / 3.0f);
-                ySpeed = -(float(rand() % 30 + 10) / 2.0f);
+                xSpeed = (float(random(80) - 40) / 3.0f);
+                ySpeed = -(float(random(30) + 10) / 2.0f);
                 xAcc = 0.0f;
                 yAcc = 5.0f;
                 BounceWalls = true;
                 Rotate = true;
-                Rot = float(rand() % 360);
+                Rot = float(random(360));
 
                 PartikelArt = KETTENTEILE;
 
@@ -964,13 +964,13 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // Lebensdauer = 255;      //DKS - now redundant
                 AnimPhase = 2;
 
-                xSpeed = (float(rand() % 80 - 40) / 3.0f);
-                ySpeed = -(float(rand() % 30 + 10) / 2.0f);
+                xSpeed = (float(random(80) - 40) / 3.0f);
+                ySpeed = -(float(random(30) + 10) / 2.0f);
                 xAcc = 0.0f;
                 yAcc = 5.0f;
                 BounceWalls = true;
                 Rotate = true;
-                Rot = float(rand() % 360);
+                Rot = float(random(360));
 
                 PartikelArt = KETTENTEILE;
 
@@ -981,13 +981,13 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // red	= 255; green = 255; blue = 255; alpha = 255;
                 // Lebensdauer = 255;      //DKS - now redundant
 
-                xSpeed = (float(rand() % 80 - 40) / 3.0f);
-                ySpeed = -(float(rand() % 30 + 10) / 2.0f);
+                xSpeed = (float(random(80) - 40) / 3.0f);
+                ySpeed = -(float(random(30) + 10) / 2.0f);
                 xAcc = 0.0f;
                 yAcc = 5.0f;
                 BounceWalls = true;
                 Rotate = true;
-                Rot = float(rand() % 360);
+                Rot = float(random(360));
 
             } break;
 
@@ -1007,13 +1007,13 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                     blue = TileEngine.ColB3;
                 }
 
-                if (rand() % 2 == 0)
-                    Lebensdauer = static_cast<float>(rand() % 128 + 128);
+                if (random(2) == 0)
+                    Lebensdauer = static_cast<float>(random(128) + 128);
                 else
-                    Lebensdauer = static_cast<float>(rand() % 32 + 224);
+                    Lebensdauer = static_cast<float>(random(32) + 224);
 
-                AnimSpeed = static_cast<float>(rand() % 20 + 30);
-                AnimCount = static_cast<float>(rand() % 25 + 5) / 10.0f;
+                AnimSpeed = static_cast<float>(random(20) + 30);
+                AnimCount = static_cast<float>(random(25) + 5) / 10.0f;
 
             } break;
 
@@ -1033,19 +1033,19 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                     blue = TileEngine.ColB3;
                 }
 
-                if (rand() % 2 == 0)
-                    Lebensdauer = static_cast<float>(rand() % 128 + 128);
+                if (random(2) == 0)
+                    Lebensdauer = static_cast<float>(random(128) + 128);
                 else
-                    Lebensdauer = static_cast<float>(rand() % 32 + 224);
+                    Lebensdauer = static_cast<float>(random(32) + 224);
 
-                AnimSpeed = static_cast<float>(rand() % 15 + 25);
-                AnimCount = static_cast<float>(rand() % 25 + 5) / 8.0f;
+                AnimSpeed = static_cast<float>(random(15) + 25);
+                AnimCount = static_cast<float>(random(25) + 5) / 8.0f;
 
             } break;
 
             case LAVA_SPRITZER:  // LavaSpritzer beim raushopsen
             {
-                if (rand() % 3 == 0) {
+                if (random(3) == 0) {
                     red = 255;
                     green = 80;
                     blue = 32;
@@ -1059,8 +1059,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 // Lebensdauer = 255;      //DKS - now redundant
 
-                AnimSpeed = static_cast<float>(rand() % 20 + 30);
-                AnimCount = static_cast<float>(rand() % 25 + 5) / 10.0f;
+                AnimSpeed = static_cast<float>(random(20) + 30);
+                AnimCount = static_cast<float>(random(25) + 5) / 10.0f;
 
                 PartikelArt = WASSER_SPRITZER;
 
@@ -1068,7 +1068,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
             case LAVA_SPRITZER2:  // LavaSpritzer beim reinhopsen
             {
-                if (rand() % 3 == 0) {
+                if (random(3) == 0) {
                     red = 255;
                     green = 80;
                     blue = 32;
@@ -1082,8 +1082,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 // Lebensdauer = 255;      //DKS - now redundant
 
-                AnimSpeed = static_cast<float>(rand() % 15 + 25);
-                AnimCount = static_cast<float>(rand() % 25 + 5) / 8.0f;
+                AnimSpeed = static_cast<float>(random(15) + 25);
+                AnimCount = static_cast<float>(random(25) + 5) / 8.0f;
 
                 PartikelArt = WASSER_SPRITZER2;
 
@@ -1101,7 +1101,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 // Lebensdauer = 255;      //DKS - now redundant
                 AnimPhase = PartikelArt - HURRITEILE_ARM1;
-                xSpeed = (static_cast<float>(rand() % 80 - 40) / 4.0f);
+                xSpeed = (static_cast<float>(random(80) - 40) / 4.0f);
                 ySpeed = -15.0f * (AnimPhase + 2) / 6.0f;
                 yAcc = 2.0f;
                 BounceWalls = true;
@@ -1125,7 +1125,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 // Lebensdauer = 255;      //DKS - now redundant
                 AnimPhase = PartikelArt - HURRITEILE_P2_ARM1;
-                xSpeed = (static_cast<float>(rand() % 80 - 40) / 4.0f);
+                xSpeed = (static_cast<float>(random(80) - 40) / 4.0f);
                 ySpeed = -15.0f * (AnimPhase + 2) / 6.0f;
                 yAcc = 2.0f;
                 BounceWalls = true;
@@ -1160,8 +1160,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (static_cast<float>(rand() % 60 - 30) / 10);
-                ySpeed = (static_cast<float>(rand() % 60 - 30) / 10);
+                xSpeed = (static_cast<float>(random(60) - 30) / 10);
+                ySpeed = (static_cast<float>(random(60) - 30) / 10);
 
                 Lebensdauer = 180;
                 BounceWalls = false;
@@ -1172,8 +1172,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (static_cast<float>(rand() % 20 - 10) / 20);
-                ySpeed = (static_cast<float>(rand() % 20 - 10) / 20);
+                xSpeed = (static_cast<float>(random(20) - 10) / 20);
+                ySpeed = (static_cast<float>(random(20) - 10) / 20);
 
                 AnimCount = 30.0f;
                 Lebensdauer = 140;
@@ -1182,7 +1182,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 OwnDraw = true;  // eigene Draw-Routine, da er die Größe ändert
                 Rotate = true;
                 RotDir = 10.0f;
-                Rot = static_cast<float>(rand() % 360);
+                Rot = static_cast<float>(random(360));
             } break;
 
             case BEAMSMOKE2:  // Rauch beim Aufladen des Blitzbeams
@@ -1190,7 +1190,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - converted to float:
                 float absx, absy, speed;  // Variablen für die Geschwindigkeits-
 
-                AnimPhase = rand() % 3;
+                AnimPhase = random(3);
 
                 if (m_pParent != NULL) {
                     // berechnung
@@ -1207,8 +1207,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                     xSpeed = float(absx);
                     ySpeed = float(absy);
                 } else {
-                    xSpeed = static_cast<float>(rand() % 20 - 10) / 2.0f;
-                    ySpeed = static_cast<float>(rand() % 20 - 10) / 2.0f;
+                    xSpeed = static_cast<float>(random(20) - 10) / 2.0f;
+                    ySpeed = static_cast<float>(random(20) - 10) / 2.0f;
                 }
 
                 // DKS - now redundant:
@@ -1222,19 +1222,19 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                AnimPhase = rand() % 3;
+                AnimPhase = random(3);
 
-                float mul = static_cast<float>(rand() % 100 + 10) / 10.0f;
+                float mul = static_cast<float>(random(100) + 10) / 10.0f;
 
                 // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
                 // float arc = static_cast<float>(rand()%360) * PI / 180.0f;
                 // xSpeed		= static_cast<float>(sin(arc) * mul);
                 // ySpeed		= static_cast<float>(cos(arc) * mul);
-                int arc = rand() % 360;
+                int arc = random(360);
                 xSpeed = sin_deg(arc) * mul;
                 ySpeed = cos_deg(arc) * mul;
 
-                Lebensdauer = float(rand() % 200 + 55);
+                Lebensdauer = float(random(200) + 55);
             } break;
 
             case BEAMSMOKE4:  // Rauch des Blitzbeams
@@ -1242,19 +1242,19 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                float mul = static_cast<float>(rand() % 50 + 10) / 10.0f;
+                float mul = static_cast<float>(random(50) + 10) / 10.0f;
 
                 // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
                 // float arc = static_cast<float>(rand()%360) * PI / 180.0f;
                 // xSpeed		= static_cast<float>(sin(arc) * mul);
                 // ySpeed		= static_cast<float>(cos(arc) * mul);
-                int arc = rand() % 360;
+                int arc = random(360);
                 xSpeed = sin_deg(arc) * mul;
                 ySpeed = cos_deg(arc) * mul;
 
                 Rotate = true;
-                RotDir = static_cast<float>(rand() % 10 + 15);
-                Lebensdauer = float(rand() % 200 + 55);
+                RotDir = static_cast<float>(random(10) + 15);
+                Lebensdauer = float(random(200) + 55);
             } break;
 
             case BEAMSMOKE5:  // Druckwelle beim Beam Explodieren
@@ -1276,8 +1276,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (static_cast<float>(rand() % 60 - 30) / 20);
-                ySpeed = (static_cast<float>(rand() % 60 - 30) / 20);
+                xSpeed = (static_cast<float>(random(60) - 30) / 20);
+                ySpeed = (static_cast<float>(random(60) - 30) / 20);
                 yAcc = 0.5f;
 
                 Lebensdauer = 140;
@@ -1302,8 +1302,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                     blue = TileEngine.ColB3;
                 }
 
-                xSpeed = (static_cast<float>(rand() % 80 - 40) / 20);
-                ySpeed = (static_cast<float>(rand() % 60 - 10) / 20);
+                xSpeed = (static_cast<float>(random(80) - 40) / 20);
+                ySpeed = (static_cast<float>(random(60) - 10) / 20);
                 yAcc = 0.5f;
 
                 Lebensdauer = 75;
@@ -1327,8 +1327,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                     blue = TileEngine.ColB3;
                 }
 
-                xSpeed = (static_cast<float>(rand() % 80 - 40) / 20);
-                ySpeed = -(static_cast<float>(rand() % 40 + 40) / 20);
+                xSpeed = (static_cast<float>(random(80) - 40) / 20);
+                ySpeed = -(static_cast<float>(random(40) + 40) / 20);
                 yAcc = 1.0f;
 
                 BounceWalls = true;
@@ -1354,8 +1354,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                     blue = TileEngine.ColB3;
                 }
 
-                xSpeed = (static_cast<float>(rand() % 80 - 40) / 2.0f);
-                ySpeed = -(static_cast<float>(rand() % 100 + 100) / 5.0f);
+                xSpeed = (static_cast<float>(random(80) - 40) / 2.0f);
+                ySpeed = -(static_cast<float>(random(100) + 100) / 5.0f);
                 yAcc = 4.0f;
 
                 Lebensdauer = 128;
@@ -1380,8 +1380,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                     blue = TileEngine.ColB3;
                 }
 
-                xSpeed = (static_cast<float>(rand() % 40 - 20) / 4.0f);
-                ySpeed = -(static_cast<float>(rand() % 50 + 50) / 3.0f);
+                xSpeed = (static_cast<float>(random(40) - 20) / 4.0f);
+                ySpeed = -(static_cast<float>(random(50) + 50) / 3.0f);
                 yAcc = 6.0f;
 
                 Lebensdauer = 128;
@@ -1403,8 +1403,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             {
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
-                xSpeed = (static_cast<float>(rand() % 80 - 40) / 5);
-                ySpeed = -static_cast<float>(rand() % 40 + 20) / 5;
+                xSpeed = (static_cast<float>(random(80) - 40) / 5);
+                ySpeed = -static_cast<float>(random(40) + 20) / 5;
                 yAcc = 5.0f;
                 BounceWalls = true;
 
@@ -1416,8 +1416,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             {
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
-                xSpeed = (static_cast<float>(rand() % 80 - 40) / 5);
-                ySpeed = -static_cast<float>(rand() % 40 + 20) / 5;
+                xSpeed = (static_cast<float>(random(80) - 40) / 5);
+                ySpeed = -static_cast<float>(random(40) + 20) / 5;
                 yAcc = 5.0f;
                 BounceWalls = true;
 
@@ -1429,8 +1429,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             {
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
-                xSpeed = (static_cast<float>(rand() % 80 - 40) / 2);
-                ySpeed = -static_cast<float>(rand() % 40 + 20) / 5;
+                xSpeed = (static_cast<float>(random(80) - 40) / 2);
+                ySpeed = -static_cast<float>(random(40) + 20) / 5;
                 yAcc = 5.0f;
                 BounceWalls = true;
 
@@ -1442,8 +1442,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             {
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
-                xSpeed = (static_cast<float>(rand() % 20 - 10) / 2);
-                ySpeed = -static_cast<float>(rand() % 40 + 20) / 5;
+                xSpeed = (static_cast<float>(random(20) - 10) / 2);
+                ySpeed = -static_cast<float>(random(40) + 20) / 5;
                 yAcc = 5.0f;
                 BounceWalls = true;
                 // DKS - off-by-one error:
@@ -1459,8 +1459,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             {
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
-                xSpeed = (static_cast<float>(rand() % 80 - 40) / 40);
-                ySpeed = -static_cast<float>(rand() % 80 - 40) / 40;
+                xSpeed = (static_cast<float>(random(80) - 40) / 40);
+                ySpeed = -static_cast<float>(random(80) - 40) / 40;
                 // Lebensdauer = 255;      //DKS - now redundant
 
             } break;
@@ -1472,8 +1472,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255;
                 alpha = 150;
-                xSpeed = (static_cast<float>(rand() % 40 - 20) * 0.025f);
-                ySpeed = -static_cast<float>(rand() % 40 - 20) * 0.025f;
+                xSpeed = (static_cast<float>(random(40) - 20) * 0.025f);
+                ySpeed = -static_cast<float>(random(40) - 20) * 0.025f;
                 Lebensdauer = 200;
 
             } break;
@@ -1483,9 +1483,9 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255;
                 alpha = 128;
-                xSpeed = -(8.0f + (static_cast<float>(rand() % 20) / 10));
+                xSpeed = -(8.0f + (static_cast<float>(random(20)) / 10));
                 ySpeed = 15.0f;
-                Lebensdauer = float(150 + rand() % 10);
+                Lebensdauer = float(150 + random(10));
 
                 AnimSpeed = 0.8f;
                 // DKS - off-by-one error:
@@ -1501,9 +1501,9 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255;
                 alpha = 128;
-                xSpeed = 8.0f + (static_cast<float>(rand() % 20) / 10);
+                xSpeed = 8.0f + (static_cast<float>(random(20)) / 10);
                 ySpeed = 15.0f;
-                Lebensdauer = float(150 + rand() % 10);
+                Lebensdauer = float(150 + random(10));
 
                 AnimSpeed = 0.8f;
                 // DKS - off-by-one error:
@@ -1518,8 +1518,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255;
                 alpha = 128;
-                ySpeed = 15.0f + (static_cast<float>(rand() % 20) / 5);
-                Lebensdauer = float(150 + rand() % 10);
+                ySpeed = 15.0f + (static_cast<float>(random(20)) / 5);
+                Lebensdauer = float(150 + random(10));
 
                 AnimSpeed = 0.8f;
                 // DKS - off-by-one error:
@@ -1548,17 +1548,17 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 green = 224;
                 blue = 32;
                 alpha = 255;
-                AnimPhase = rand() % 4;
+                AnimPhase = random(4);
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = false;
 
-                float mul = static_cast<float>(rand() % 60 + 40) / 8.0f;
+                float mul = static_cast<float>(random(60) + 40) / 8.0f;
 
                 // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
                 // float arc = static_cast<float>(rand()%360) * PI / 180.0f;
                 // xSpeed		= static_cast<float>(sin(arc) * mul);
                 // ySpeed		= static_cast<float>(cos(arc) * mul);
-                int arc = rand() % 360;
+                int arc = random(360);
                 xSpeed = sin_deg(arc) * mul;
                 ySpeed = cos_deg(arc) * mul;
 
@@ -1572,7 +1572,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 green = 64;
                 blue = 0;
                 alpha = 255;
-                AnimPhase = rand() % 4;
+                AnimPhase = random(4);
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = false;
                 PartikelArt = KRINGEL;
@@ -1600,7 +1600,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 green = 255;
                 blue = 0;
                 alpha = 255;
-                AnimPhase = rand() % 4;
+                AnimPhase = random(4);
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = false;
                 PartikelArt = KRINGEL;
@@ -1628,7 +1628,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 green = 48;
                 blue = 255;
                 alpha = 255;
-                AnimPhase = rand() % 4;
+                AnimPhase = random(4);
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = false;
                 PartikelArt = KRINGEL;
@@ -1656,7 +1656,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 green = 192;
                 blue = 255;
                 alpha = 255;
-                AnimPhase = rand() % 4;
+                AnimPhase = random(4);
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = false;
                 PartikelArt = KRINGEL;
@@ -1684,8 +1684,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 green = 192;
                 blue = 24;
                 alpha = 255;
-                xSpeed = (static_cast<float>(rand() % 100 - 50) / 2);
-                ySpeed = -static_cast<float>(rand() % 40 + 40) / 2;
+                xSpeed = (static_cast<float>(random(100) - 50) / 2);
+                ySpeed = -static_cast<float>(random(40) + 40) / 2;
                 yAcc = 5.0f;
                 BounceWalls = true;
                 OwnDraw = true;
@@ -1701,8 +1701,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 blue = 24;
                 alpha = 255;
 
-                xSpeed = (static_cast<float>(rand() % 50 - 25) * 0.4f);
-                ySpeed = -static_cast<float>(rand() % 30 + 60) * 0.15f;
+                xSpeed = (static_cast<float>(random(50) - 25) * 0.4f);
+                ySpeed = -static_cast<float>(random(30) + 60) * 0.15f;
                 yAcc = 5.0f;
                 BounceWalls = true;
                 OwnDraw = true;
@@ -1717,8 +1717,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 green = 255;
                 blue = 255;
                 alpha = 128;
-                ySpeed = 8.0f + (static_cast<float>(rand() % 20) / 10);
-                Lebensdauer = float(150 + rand() % 10);
+                ySpeed = 8.0f + (static_cast<float>(random(20)) / 10);
+                Lebensdauer = float(150 + random(10));
 
                 BounceWalls = true;
             } break;
@@ -1731,8 +1731,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 alpha = 128;
 
                 Lebensdauer = 128;
-                ySpeed = -float(rand() % 10 + 2) / 2.0f;
-                xSpeed = float(rand() % 20 - 10) / 2.0f;
+                ySpeed = -float(random(10) + 2) / 2.0f;
+                xSpeed = float(random(20) - 10) / 2.0f;
                 yAcc = 4.0f;
             } break;
 
@@ -1742,14 +1742,14 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // red	= 255; green = 255; blue = 255; alpha = 255;
                 xSpeed = 0.0f;
 
-                if (rand() % 2 == 0)
+                if (random(2) == 0)
                     xAcc = 0.1f;
                 else
                     xAcc = -0.1f;
 
-                AnimCount = float(rand() % 10 + 10) / 10.0f;
+                AnimCount = float(random(10) + 10) / 10.0f;
 
-                ySpeed = -static_cast<float>(rand() % 10 + 20) / 10;
+                ySpeed = -static_cast<float>(random(10) + 20) / 10;
 
                 if (WinkelUebergabe == -1.0f) {
                     ySpeed *= -3.0f;
@@ -1812,7 +1812,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             {
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
-                AnimPhase = rand() % 3;
+                AnimPhase = random(3);
                 // Lebensdauer = 255;      //DKS - now redundant
                 BounceWalls = false;
 
@@ -1844,10 +1844,10 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 ySpeed = 2.0f;
                 yAcc = 2.0f;
-                xSpeed = float(rand() % 10 + 10) / 2.0f;
-                ySpeed = -float(rand() % 10 + 10);
+                xSpeed = float(random(10) + 10) / 2.0f;
+                ySpeed = -float(random(10) + 10);
 
-                if (rand() % 2 == 0)
+                if (random(2) == 0)
                     xSpeed *= -1;
             } break;
 
@@ -1884,14 +1884,14 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255;
                 alpha = 224;
-                xSpeed = (static_cast<float>(rand() % 80 - 40) / 3);
-                ySpeed = -static_cast<float>(rand() % 40 + 40) / 3;
+                xSpeed = (static_cast<float>(random(80) - 40) / 3);
+                ySpeed = -static_cast<float>(random(40) + 40) / 3;
                 yAcc = 5.0f;
                 BounceWalls = true;
                 // DKS - off-by-one error:
                 // AnimEnde    = 4;
                 AnimEnde = 3;
-                AnimSpeed = float((rand() % 2 + 3) / 10.0f);
+                AnimSpeed = float((random(2) + 3) / 10.0f);
 
                 // Lebensdauer = 255;      //DKS - now redundant
             } break;
@@ -1973,8 +1973,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // red	= 255; green = 255; blue = 255; alpha = 255;
                 // Lebensdauer = 255;      //DKS - now redundant
 
-                ySpeed = -static_cast<float>(rand() % 30 + 10) / 2.0f;
-                xSpeed = static_cast<float>(rand() % 40 - 20) / 2.0f;
+                ySpeed = -static_cast<float>(random(30) + 10) / 2.0f;
+                xSpeed = static_cast<float>(random(40) - 20) / 2.0f;
                 yAcc = 5.0f;
                 PartikelArt = LILA;
             } break;
@@ -1984,7 +1984,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // red	= 255; green = 255; blue = 255; alpha = 255;
                 // Lebensdauer = 255;      //DKS - now redundant
 
-                xSpeed = -static_cast<float>(rand() % 20 + 120);
+                xSpeed = -static_cast<float>(random(20) + 120);
                 PartikelArt = LILA;
             } break;
 
@@ -1993,8 +1993,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // red	= 255; green = 255; blue = 255;
                 alpha = 128;
                 // Lebensdauer = 255;      //DKS - now redundant
-                xSpeed = -static_cast<float>(rand() % 20 + 120) / 4.0f;
-                ySpeed = static_cast<float>(rand() % 20 - 10) / 5.0f;
+                xSpeed = -static_cast<float>(random(20) + 120) / 4.0f;
+                ySpeed = static_cast<float>(random(20) - 10) / 5.0f;
 
                 if (WinkelUebergabe != 0.0f)
                     xSpeed *= -1;
@@ -2007,8 +2007,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // red	= 255; green = 255; blue = 255;
                 alpha = 128;
                 // Lebensdauer = 255;      //DKS - now redundant
-                xSpeed = static_cast<float>(rand() % 10 - 5) / 10.0f;
-                ySpeed = static_cast<float>(rand() % 10 - 5) / 10.0f;
+                xSpeed = static_cast<float>(random(10) - 5) / 10.0f;
+                ySpeed = static_cast<float>(random(10) - 5) / 10.0f;
 
                 Rotate = true;
             } break;
@@ -2045,13 +2045,13 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 blue = 64;
                 alpha = 255;
 
-                if (rand() % 2 == 0)
+                if (random(2) == 0)
                     xAcc = -0.4f;
                 else
                     xAcc = -0.4f;
 
                 // Lebensdauer = 255;      //DKS - now redundant
-                AnimPhase = rand() % 3;
+                AnimPhase = random(3);
 
                 ySpeed = -3.0f * (AnimPhase + 1);
                 RemoveWhenOffScreen = false;
@@ -2066,8 +2066,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 xPos -= 60;
                 yPos -= 60;
 
-                xSpeed = (static_cast<float>(rand() % 80 - 40));
-                ySpeed = -static_cast<float>(rand() % 10 + 50);
+                xSpeed = (static_cast<float>(random(80) - 40));
+                ySpeed = -static_cast<float>(random(10) + 50);
                 yAcc = 8.0f;
 
             } break;
@@ -2434,7 +2434,7 @@ void PartikelClass::Run() {
 
                     // DKS - Added function WaveIsPlaying() to SoundManagerClass:
                     if (!SoundManager.WaveIsPlaying(SOUND_DROP))
-                        SoundManager.PlayWave(vol, 128, 6000 + rand() % 6000, SOUND_DROP);
+                        SoundManager.PlayWave(vol, 128, 6000 + random(6000), SOUND_DROP);
                 }
 
             } break;
@@ -2577,7 +2577,7 @@ void PartikelClass::Run() {
 
                 if (AnimCount < 0.0f) {
                     AnimCount = 0.5f;
-                    PartikelSystem.PushPartikel(xPos - 20 + rand() % 40, yPos - 20 + rand() % 40, EXPLOSION_MEDIUM2);
+                    PartikelSystem.PushPartikel(xPos - 20 + random(40), yPos - 20 + random(40), EXPLOSION_MEDIUM2);
                 }
             } break;
 

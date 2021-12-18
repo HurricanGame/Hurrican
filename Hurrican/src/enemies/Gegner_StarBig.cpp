@@ -61,7 +61,7 @@ void GegnerStarBig::DoKI() {
             //
             if (ShotCount > Skill + 2) {
                 ShotCount = 0;
-                SoundManager.PlayWave(100, 128, 15000 + rand() % 4000, SOUND_CANON);
+                SoundManager.PlayWave(100, 128, 15000 + random(4000), SOUND_CANON);
                 Projectiles.PushProjectile(xPos + 36, yPos + 36, SUCHSCHUSS);
             }
         }
@@ -99,12 +99,12 @@ void GegnerStarBig::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos - 20, yPos - 20, EXPLOSION_GIANT);
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 30 + rand() % 80, yPos - 30 + rand() % 80, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30 + random(80), yPos - 30 + random(80), EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 15; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 80, yPos + rand() % 80, LONGFUNKE);
+        PartikelSystem.PushPartikel(xPos + random(80), yPos + random(80), LONGFUNKE);
 
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
 
     Player[0].Score += 150;  // Punkte geben
 }

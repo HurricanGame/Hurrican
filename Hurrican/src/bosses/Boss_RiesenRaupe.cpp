@@ -42,7 +42,7 @@ void GegnerRiesenRaupe::DoKI() {
             xSpeed = 0.0f;
 
             if (PlayerAbstand() > 400 || ShotCount == 0) {
-                ShotCount = rand() % 5;
+                ShotCount = random(5);
                 AnimEnde = 10;
                 AnimSpeed = 1.5f;
             }
@@ -108,17 +108,17 @@ void GegnerRiesenRaupe::DoKI() {
 void GegnerRiesenRaupe::GegnerExplode() {
     // Explosionen erzeugen
     for (int i = 0; i < 10; i++) {
-        PartikelSystem.PushPartikel(xPos + rand() % 180 - 30, yPos + rand() % 60 - 30, EXPLOSION_BIG);
-        PartikelSystem.PushPartikel(xPos + rand() % 180 - 30, yPos + rand() % 60 - 30, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + random(180) - 30, yPos + random(60) - 30, EXPLOSION_BIG);
+        PartikelSystem.PushPartikel(xPos + random(180) - 30, yPos + random(60) - 30, SPIDERSPLITTER);
     }
 
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 180 - 10, yPos + rand() % 60 - 10, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + random(180) - 10, yPos + random(60) - 10, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 300; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 180 - 10, yPos + rand() % 50, ROCKETSMOKE);
+        PartikelSystem.PushPartikel(xPos + random(180) - 10, yPos + random(50), ROCKETSMOKE);
 
-    SoundManager.PlayWave(100, 128, 11025 + rand() % 2000, SOUND_EXPLOSION3);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_EXPLOSION3);  // Sound ausgeben
 
     Player[0].Score += 250;
 }

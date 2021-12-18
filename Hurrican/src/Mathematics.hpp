@@ -32,6 +32,8 @@ extern int fast_rand();
 #define srand(x) seed_fast_rand(x)
 #endif  // USE_FAST_RNG
 
+inline int random(int max) { return rand() % max; }
+
 // --------------------------------------------------------------------------------------
 // BEGIN GENERAL TRIG SECTION
 // --------------------------------------------------------------------------------------

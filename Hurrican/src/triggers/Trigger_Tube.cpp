@@ -96,12 +96,12 @@ void GegnerTube::DoKI() {
                 Value1 = 1;
 
                 for (int i = 0; i < 100; i++)
-                    PartikelSystem.PushPartikel(xPos + 5 + rand() % 55, yPos + 70 + rand() % 60, GLASSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + 5 + random(55), yPos + 70 + random(60), GLASSPLITTER);
 
                 Gegner.PushGegner(xPos - 1, yPos + 60, MUTANT, 1, 0, false);
                 Gegner.PushGegner(xPos + 50 - 10, yPos + 150, PARTIKELSPAWN, 11, 80, false);
 
-                SoundManager.PlayWave(100, 128, 10000 + rand() % 2000, SOUND_GLASSBREAK);
+                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_GLASSBREAK);
             }
     }
 }

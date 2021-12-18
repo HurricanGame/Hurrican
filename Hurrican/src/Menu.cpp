@@ -82,9 +82,9 @@ MenuClass::MenuClass() {
 
     // Sterne initialisieren
     for (auto& star: Stars) {
-        star.Count = float(rand() % 628) / 100.0f;
-        star.Abstand = float(rand() % 400 + 20);
-        star.Ebene = rand() % 120 + 20;
+        star.Count = float(random(628)) / 100.0f;
+        star.Abstand = float(random(400) + 20);
+        star.Ebene = random(120) + 20;
     }
 
     // Farben für die Highscore erstellen, in der die Namen aufblinken

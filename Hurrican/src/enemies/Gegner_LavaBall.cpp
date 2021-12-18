@@ -67,10 +67,10 @@ void GegnerLavaBall::DoKI() {
         //
         if (InLava == false) {
             for (int i = 0; i < 12; i++)
-                PartikelSystem.PushPartikel(xPos + 16 + rand() % 20, yPos + GegnerRect[GegnerArt].bottom + 8,
+                PartikelSystem.PushPartikel(xPos + 16 + random(20), yPos + GegnerRect[GegnerArt].bottom + 8,
                                             LAVA_SPRITZER2);
 
-            SoundManager.PlayWave3D(static_cast<int>(xPos) + 30, static_cast<int>(yPos) + 30, 10000 + rand() % 2050,
+            SoundManager.PlayWave3D(static_cast<int>(xPos) + 30, static_cast<int>(yPos) + 30, 10000 + random(2050),
                                     SOUND_WATERIN);
         }
 
@@ -80,10 +80,10 @@ void GegnerLavaBall::DoKI() {
         //
         if (InLava == true) {
             for (int i = 0; i < 12; i++)
-                PartikelSystem.PushPartikel(xPos + 16 + rand() % 20, yPos + GegnerRect[GegnerArt].bottom + 8,
+                PartikelSystem.PushPartikel(xPos + 16 + random(20), yPos + GegnerRect[GegnerArt].bottom + 8,
                                             LAVA_SPRITZER);
 
-            SoundManager.PlayWave3D(static_cast<int>(xPos) + 30, static_cast<int>(yPos) + 30, 10000 + rand() % 2050,
+            SoundManager.PlayWave3D(static_cast<int>(xPos) + 30, static_cast<int>(yPos) + 30, 10000 + random(2050),
                                     SOUND_WATEROUT);
         }
 
@@ -98,7 +98,7 @@ void GegnerLavaBall::DoKI() {
         SmokeDelay = 0.5f;
 
         if (InLava == false)
-            PartikelSystem.PushPartikel(xPos - 20 + rand() % 50, yPos + rand() % 40, SMOKEBIG);
+            PartikelSystem.PushPartikel(xPos - 20 + random(50), yPos + random(40), SMOKEBIG);
     }
 
     FlareDelay -= 1.0f SYNC;
@@ -128,18 +128,18 @@ void GegnerLavaBall::DoKI() {
             Player[i].DamagePlayer(50.0f);
             Energy = 0.0f;
 
-            SoundManager.PlayWave(100, 128, 9000 + rand() % 2000, SOUND_EXPLOSION1);
+            SoundManager.PlayWave(100, 128, 9000 + random(2000), SOUND_EXPLOSION1);
 
             PartikelSystem.PushPartikel(xPos - 10, yPos - 30, EXPLOSION_GIANT);
 
             for (int j = 0; j < 4; j++)
-                PartikelSystem.PushPartikel(xPos - 10 + rand() % 40, yPos - 10 + rand() % 40, EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(xPos - 10 + random(40), yPos - 10 + random(40), EXPLOSION_MEDIUM2);
 
             for (int j = 0; j < 20; j++)
-                PartikelSystem.PushPartikel(xPos - 10 + rand() % 50, yPos - 16 + rand() % 56, MINIFLARE);
+                PartikelSystem.PushPartikel(xPos - 10 + random(50), yPos - 16 + random(56), MINIFLARE);
 
             for (int j = 0; j < 20; j++)
-                PartikelSystem.PushPartikel(xPos + rand() % 40, yPos + rand() % 40, SMOKE2);
+                PartikelSystem.PushPartikel(xPos + random(40), yPos + random(40), SMOKE2);
         }
 }
 

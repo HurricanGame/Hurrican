@@ -748,33 +748,33 @@ void PlayerClass::DoStuffWhenDamaged() {
 
         // ein Funken "Schadenseffekt" per Zufall einbauen
         //
-        int effect = rand() % 3;
+        int effect = random(3);
 
         switch (effect) {
             // Normale Funken
             //
             case 0: {
-                float x = xpos + static_cast<float>(20 + rand() % 40);
-                float y = ypos + static_cast<float>(20 + rand() % 40);
+                float x = xpos + static_cast<float>(20 + random(40));
+                float y = ypos + static_cast<float>(20 + random(40));
 
                 for (int i = 0; i < 5; i++)
-                    PartikelSystem.PushPartikel(x + rand() % 4, y + rand() % 4, FUNKE);
+                    PartikelSystem.PushPartikel(x + random(4), y + random(4), FUNKE);
 
                 PartikelSystem.PushPartikel(x - 20, y - 20, LASERFLAME);
-                SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_FUNKE);
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_FUNKE);
             } break;
 
             // Lange Funken
             //
             case 1: {
-                float x = xpos + static_cast<float>(20 + rand() % 40);
-                float y = ypos + static_cast<float>(20 + rand() % 40);
+                float x = xpos + static_cast<float>(20 + random(40));
+                float y = ypos + static_cast<float>(20 + random(40));
 
                 for (int i = 0; i < 5; i++)
-                    PartikelSystem.PushPartikel(x + rand() % 4, y + rand() % 4, LONGFUNKE);
+                    PartikelSystem.PushPartikel(x + random(4), y + random(4), LONGFUNKE);
 
                 PartikelSystem.PushPartikel(x - 20, y - 20, LASERFLAME);
-                SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_FUNKE);
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_FUNKE);
             } break;
         }
     }
@@ -789,13 +789,13 @@ void PlayerClass::DoStuffWhenDamaged() {
         // Rauch per Zufall
         //
         if (Energy < MAX_ENERGY / 3 + 5.0f)
-            if (rand() % 2 == 0)
-                PartikelSystem.PushPartikel(xpos + 10 + rand() % 30, ypos + 20 + rand() % 40, SMOKE2);
+            if (random(2) == 0)
+                PartikelSystem.PushPartikel(xpos + 10 + random(30), ypos + 20 + random(40), SMOKE2);
 
         // Rauchsäule
         //
         if (Energy < MAX_ENERGY / 4 + 5.0f)
-            PartikelSystem.PushPartikel(xpos + 26 + Blickrichtung * 4 + rand() % 4, ypos + 20 + rand() % 4, SMOKE3);
+            PartikelSystem.PushPartikel(xpos + 26 + Blickrichtung * 4 + random(4), ypos + 20 + random(4), SMOKE3);
     }
 }
 
@@ -851,10 +851,10 @@ void PlayerClass::CheckForExplode() {
         ShakeScreen(5);
 
         for (int i = 0; i < 3; i++)
-            PartikelSystem.PushPartikel(xpos + 10 + rand() % 50, ypos + 10 + rand() % 50, SPLITTER);
+            PartikelSystem.PushPartikel(xpos + 10 + random(50), ypos + 10 + random(50), SPLITTER);
 
         for (int i = 0; i < 10; i++)
-            PartikelSystem.PushPartikel(xpos + 10 + rand() % 50, ypos + 10 + rand() % 50, SPIDERSPLITTER);
+            PartikelSystem.PushPartikel(xpos + 10 + random(50), ypos + 10 + random(50), SPIDERSPLITTER);
 
         PartikelSystem.PushPartikel(xpos + 35 - 90, ypos + 40 - 90, EXPLOSION_GIGA);
         PartikelSystem.PushPartikel(xpos + 35, ypos + 40, SHOCKEXPLOSION);
@@ -910,10 +910,10 @@ void PlayerClass::CheckForExplode() {
             SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
             for (int i = 0; i < 15; i++)
-                PartikelSystem.PushPartikel(xpos - 10 + rand() % 80, ypos - 10 + rand() % 80, EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(xpos - 10 + random(80), ypos - 10 + random(80), EXPLOSION_MEDIUM2);
 
             for (int i = 0; i < 40; i++)
-                PartikelSystem.PushPartikel(xpos + rand() % 90, ypos + rand() % 90, LONGFUNKE);
+                PartikelSystem.PushPartikel(xpos + random(90), ypos + random(90), LONGFUNKE);
             runExplode();
         } else if (Handlung != PlayerActionEnum::TOT) {
             Handlung = PlayerActionEnum::EXPLODIEREN;
@@ -1008,14 +1008,14 @@ void PlayerClass::AnimatePlayer() {
                     break;
 
                 if (TileEngine.TileAt(tile_x, tile_y).Block & BLOCKWERT_WASSERFALL) {
-                    if (rand() % 50 == 0)
-                        PartikelSystem.PushPartikel(tmp_x + rand() % 4, tmp_y + rand() % 4, WASSERTROPFEN);
+                    if (random(50) == 0)
+                        PartikelSystem.PushPartikel(tmp_x + random(4), tmp_y + random(4), WASSERTROPFEN);
 
-                    if (rand() % 200 == 0)
-                        PartikelSystem.PushPartikel(tmp_x + rand() % 4, tmp_y + rand() % 4, WATERFUNKE);
+                    if (random(200) == 0)
+                        PartikelSystem.PushPartikel(tmp_x + random(4), tmp_y + random(4), WATERFUNKE);
 
-                    if (rand() % 200 == 0)
-                        PartikelSystem.PushPartikel(tmp_x + (rand() % 4 - 16), tmp_y + (rand() % 4 - 16), WATERFLUSH);
+                    if (random(200) == 0)
+                        PartikelSystem.PushPartikel(tmp_x + (random(4) - 16), tmp_y + (random(4) - 16), WATERFLUSH);
                 }
             }
         }
@@ -1258,7 +1258,7 @@ void PlayerClass::AnimatePlayer() {
             //        SoundManager.its_Sounds[SOUND_DIVE]->isPlaying == false)
             //    SoundManager.PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_DIVE);
             if (InLiquid && !SoundManager.WaveIsPlaying(SOUND_DIVE))
-                SoundManager.PlayWave(100, rand() % 255, 8000 + rand() % 4000, SOUND_DIVE);
+                SoundManager.PlayWave(100, random(255), 8000 + random(4000), SOUND_DIVE);
 
             // Im Sumpf? Dann ein paar Pixel anheben und wieder runterfallen
             if (bu & BLOCKWERT_SUMPF) {
@@ -1391,7 +1391,7 @@ void PlayerClass::AnimatePlayer() {
                     changecount = 0.0f;
 
                     // Blitz Startsound ausgeben
-                    SoundManager.PlayWave(100, 128, rand() % 500 + 18025, SOUND_BLITZSTART + SoundOff);
+                    SoundManager.PlayWave(100, 128, random(500) + 18025, SOUND_BLITZSTART + SoundOff);
 
                     if (Blickrichtung == LINKS)  // Blitz je nach Blickrichtung neu
                         BlitzWinkel = 270;       // geradeaus richten
@@ -1449,7 +1449,7 @@ void PlayerClass::AnimatePlayer() {
         //         SoundManager.its_Sounds[SOUND_BLITZ + SoundOff]->isPlaying == true)
         else if (SoundManager.WaveIsPlaying(SOUND_BLITZ + SoundOff)) {
             SoundManager.StopWave(SOUND_BLITZ + SoundOff);
-            SoundManager.PlayWave(100, 128, rand() % 1000 + 11025, SOUND_BLITZENDE + SoundOff);
+            SoundManager.PlayWave(100, 128, random(1000) + 11025, SOUND_BLITZENDE + SoundOff);
             DirectInput.Joysticks[JoystickIndex].StopForceFeedbackEffect(FFE_BLITZ);
         }
 
@@ -1505,7 +1505,7 @@ void PlayerClass::AnimatePlayer() {
                 if (BlitzStart >= 20.0f) {
                     Projectiles.PushBlitzBeam(int(BlitzStart), BlitzWinkel, this);
                     SoundManager.PlayWave(100, 128, 7000, SOUND_BLITZENDE + SoundOff);
-                    SoundManager.PlayWave(100, 128, 10000 + rand() % 2000, SOUND_BLITZENDE + SoundOff);
+                    SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_BLITZENDE + SoundOff);
                     SoundManager.PlayWave(100, 128, 10000, SOUND_EXPLOSION3);
                 }
 
@@ -2121,16 +2121,16 @@ void PlayerClass::AnimatePlayer() {
         if (InLiquid == false) {
             if (Handlung == PlayerActionEnum::SPRINGEN || Handlung == PlayerActionEnum::RADELN_FALL) {
                 for (int i = 0; i < 12; i++)
-                    PartikelSystem.PushPartikel(xpos + 18 + rand() % 20, ypos + CollideRect.bottom - 25, spritzertype);
+                    PartikelSystem.PushPartikel(xpos + 18 + random(20), ypos + CollideRect.bottom - 25, spritzertype);
 
                 WinkelUebergabe = -1.0f;
                 for (int i = 0; i < 15; i++)
-                    PartikelSystem.PushPartikel(xpos + 10 + rand() % 40, ypos + CollideRect.bottom + rand() % 20,
+                    PartikelSystem.PushPartikel(xpos + 10 + random(40), ypos + CollideRect.bottom + random(20),
                                                 BUBBLE);
             }
 
             InLiquid = true;
-            SoundManager.PlayWave(100, 128, 10000 + rand() % 2050, SOUND_WATERIN);
+            SoundManager.PlayWave(100, 128, 10000 + random(2050), SOUND_WATERIN);
         }
     } else {
         // Aus dem Wasser heraus gehopst ?
@@ -2142,10 +2142,10 @@ void PlayerClass::AnimatePlayer() {
 
             if (Handlung == PlayerActionEnum::SPRINGEN || Handlung == PlayerActionEnum::RADELN_FALL) {
                 for (int i = 0; i < 12; i++)
-                    PartikelSystem.PushPartikel(xpos + 10 + rand() % 20, ypos + CollideRect.bottom - 25, spritzertype);
+                    PartikelSystem.PushPartikel(xpos + 10 + random(20), ypos + CollideRect.bottom - 25, spritzertype);
             }
 
-            SoundManager.PlayWave(100, 128, 10000 + rand() % 2050, SOUND_WATEROUT);
+            SoundManager.PlayWave(100, 128, 10000 + random(2050), SOUND_WATEROUT);
             InLiquid = false;
         }
     }
@@ -2162,11 +2162,11 @@ void PlayerClass::AnimatePlayer() {
         // if (rand()%500 == 0 &&
         //        SoundManager.its_Sounds[SOUND_DIVE]->isPlaying == false)
         //    SoundManager.PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_DIVE);
-        if (rand() % 500 == 0) {
+        if (random(500) == 0) {
             PartikelSystem.PushPartikel(xpos + 30, ypos + 20, BUBBLE);
             // ggf noch Tauchgeräusche abspielen
             if (!SoundManager.WaveIsPlaying(SOUND_DIVE))
-                SoundManager.PlayWave(100, rand() % 255, 8000 + rand() % 4000, SOUND_DIVE);
+                SoundManager.PlayWave(100, random(255), 8000 + random(4000), SOUND_DIVE);
         }
     }
 
@@ -3285,12 +3285,12 @@ void PlayerClass::PlayerShoot() {
                 // Grüne Funken beim Bounce
                 if (SelectedWeapon == 2)
                 for (int i = 0; i < 2; i++)
-                    PartikelSystem.PushPartikel(xpos + 30 + rand() % 4, ypos + 28 + yoff + rand() % 4, FUNKE2);
+                    PartikelSystem.PushPartikel(xpos + 30 + random(4), ypos + 28 + yoff + random(4), FUNKE2);
         }
 
         // Schussflamme
         FlameTime = 1.0f;
-        FlameAnim = rand() % 2;
+        FlameAnim = random(2);
     }
 
     else  // oder Bombe legen
@@ -3349,7 +3349,7 @@ void PlayerClass::PlayerGrenadeShoot() {
 
     // Schussflamme
     FlameTime = 1.0f;
-    FlameAnim = rand() % 2;
+    FlameAnim = random(2);
 }
 
 // --------------------------------------------------------------------------------------
@@ -3498,39 +3498,39 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul) {
         changecount -= 1.0f SYNC;
 
     if (changecount <= 0.0f) {
-        changecount = static_cast<float>(rand() % 10 + 1) / 10.0f;
+        changecount = static_cast<float>(random(10) + 1) / 10.0f;
 
         for (int n = 0; n < 12; n++) {
             // Farbe festlegen, hell oder dunkel oder fast weiss
-            zufall = rand() % 6;
+            zufall = random(6);
             if (zufall < 3) {
-                r = rand() % 64;
-                col = D3DCOLOR_RGBA(r / 2, r, rand() % 32 + 224, rand() % 64 + 192);
+                r = random(64);
+                col = D3DCOLOR_RGBA(r / 2, r, random(32) + 224, random(64) + 192);
             } else if (zufall < 5) {
-                r = rand() % 32;
-                col = D3DCOLOR_RGBA(r / 2, r, rand() % 24 + 64, rand() % 24 + 192);
+                r = random(32);
+                col = D3DCOLOR_RGBA(r / 2, r, random(24) + 64, random(24) + 192);
             } else {
-                r = rand() % 128 + 128;
-                col = D3DCOLOR_RGBA(r, r, 255, rand() % 16 + 128);
+                r = random(128) + 128;
+                col = D3DCOLOR_RGBA(r, r, 255, random(16) + 128);
             }
 
             // Startpunkt auf 0 setzen
             yoff = 0;
-            size = rand() % 4 + 1;
+            size = random(4) + 1;
 
             for (int i = 0; i < maxintersections * 2; i += 2) {
                 // zwei neue Punkte zwischen letztem Punkt und Endpunkt per Zufall setzen
-                xstrahl = static_cast<int>((xpos - TileEngine.XOffset + xstart) + (rand() % 32 - 16) * mul);
+                xstrahl = static_cast<int>((xpos - TileEngine.XOffset + xstart) + (random(32) - 16) * mul);
                 ystrahl = static_cast<int>(ypos - TileEngine.YOffset + ystart - yoff);
 
                 // Am End- und Austrittspunkt gebündelt
                 if (i == 0) {
-                    xstrahl = static_cast<int>(xpos - TileEngine.XOffset + xstart) + rand() % 6 - 2;
+                    xstrahl = static_cast<int>(xpos - TileEngine.XOffset + xstart) + random(6) - 2;
                     ystrahl = static_cast<int>(ypos - TileEngine.YOffset + ystart);
                 }
 
                 if (i >= (maxintersections - 1) * 2) {
-                    xstrahl = static_cast<int>(xpos - TileEngine.XOffset + xstart) + rand() % 6 - 2;
+                    xstrahl = static_cast<int>(xpos - TileEngine.XOffset + xstart) + random(6) - 2;
                     ystrahl = static_cast<int>(ypos - TileEngine.YOffset + ystart - (DrawLength + 1) * 32);
                 }
 
@@ -3550,7 +3550,7 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul) {
                 strahlen[n][i + 0].color = col;
                 strahlen[n][i + 1].color = col;
 
-                yoff += rand() % 21 + 24;
+                yoff += random(21) + 24;
             }
         }
     }
@@ -3707,7 +3707,7 @@ bool PlayerClass::DoLightning() {
                     // Hit Sound
                     // DKS - Added function WaveIsPlaying() to SoundManagerClass:
                     if (!SoundManager.WaveIsPlaying(SOUND_HIT + pEnemy->HitSound))
-                        SoundManager.PlayWave(100, 128, 21000 + rand() % 1000, SOUND_HIT + pEnemy->HitSound);
+                        SoundManager.PlayWave(100, 128, 21000 + random(1000), SOUND_HIT + pEnemy->HitSound);
 
                     // PlattForm ShootButton getroffen ? Dann Blitz kürzen
                     //
@@ -3734,8 +3734,8 @@ bool PlayerClass::DoLightning() {
         if (TileEngine.BlockLinks(xs, ys, xs, ys, Rect) & BLOCKWERT_WASSER &&  // Im Wasser blitzen ?
             TileEngine.BlockRechts(xs, ys, xs, ys, Rect) & BLOCKWERT_WASSER &&
             TileEngine.BlockOben(xs, ys, xs, ys, Rect) & BLOCKWERT_WASSER &&
-            TileEngine.BlockUnten(xs, ys, xs, ys, Rect) & BLOCKWERT_WASSER && rand() % 80 == 0)
-            PartikelSystem.PushPartikel(xs + rand() % 32, ys + rand() % 32, BUBBLE);  // Dann blubbern
+            TileEngine.BlockUnten(xs, ys, xs, ys, Rect) & BLOCKWERT_WASSER && random(80) == 0)
+            PartikelSystem.PushPartikel(xs + random(32), ys + random(32), BUBBLE);  // Dann blubbern
 
         if (TileEngine.BlockLinks(xs, ys, xs, ys, Rect) & BLOCKWERT_WAND ||  // Eine Wand getroffen ?
             TileEngine.BlockRechts(xs, ys, xs, ys, Rect) & BLOCKWERT_WAND ||
@@ -3918,7 +3918,7 @@ bool PlayerClass::LoadBeam() {
         if (BeamCount < 0.0f) {
             BeamCount = 0.1f;
 
-            int j = rand() % 360;
+            int j = random(360);
             // DKS - pretty obviously a bug, they mean to convert to degrees before calling sin (which takes radians)
             //      When I fixed this, I went ahead and added support for trig lookup table, and support for
             //      rad/deg versions of sin/cos

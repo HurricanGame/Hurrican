@@ -99,8 +99,8 @@ void GegnerUfo::DoKI() {
         DamageTaken = 0.0f;  // oder ganz anhalten
 
     // Schon schwer angeschlagen ? Dann raucht das Ufo =)
-    if (Energy < 700 && rand() % 5 == 0)
-        PartikelSystem.PushPartikel(xPos + rand() % 190, yPos + rand() % 60 + 25, SMOKE);
+    if (Energy < 700 && random(5) == 0)
+        PartikelSystem.PushPartikel(xPos + random(190), yPos + random(60) + 25, SMOKE);
 
     // Hat der Boss keine Energie mehr ? Dann explodiert er
     if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN) {
@@ -171,7 +171,7 @@ void GegnerUfo::DoKI() {
                     Gegner.PushGegner(xPos + 45.0f, yPos + 40.0f, FETTERAKETE, 360, 99, false);
                     Gegner.PushGegner(xPos + 135.0f, yPos + 40.0f, FETTERAKETE, 0, 99, false);
                     ShotDelay = 18.0f;
-                    SoundManager.PlayWave(100, 128, 8000 + rand() % 1000, SOUND_GRANATE);
+                    SoundManager.PlayWave(100, 128, 8000 + random(1000), SOUND_GRANATE);
                 }
             }
 
@@ -180,10 +180,10 @@ void GegnerUfo::DoKI() {
             ActionDelay -= 1.0f SYNC;
 
             if (ActionDelay < 0.0f) {
-                int j = rand() % 3;
+                int j = random(3);
 
                 while (j == LastAction)
-                    j = rand() % 3;
+                    j = random(3);
 
                 LastAction = j;
 
@@ -222,7 +222,7 @@ void GegnerUfo::DoKI() {
                 ShotDelay -= 1.0f SYNC;
 
             if (ShotDelay <= 0.0f) {
-                SoundManager.PlayWave(50, 128, 14000 + rand() % 2000, SOUND_GOLEMSHOT);
+                SoundManager.PlayWave(50, 128, 14000 + random(2000), SOUND_GOLEMSHOT);
                 Projectiles.PushProjectile(xPos + 20.0f, yPos + 40.0f, SUCHSCHUSS2);
                 Projectiles.PushProjectile(xPos + 165.0f, yPos + 40.0f, SUCHSCHUSS2);
                 ShotDelay = 5.0f;
@@ -250,7 +250,7 @@ void GegnerUfo::DoKI() {
             if (ShotDelay <= 0.0f) {
                 ShotDelay = 4.0f;
 
-                SoundManager.PlayWave(100, 128, 10000 + rand() % 500, SOUND_LASERSHOT);
+                SoundManager.PlayWave(100, 128, 10000 + random(500), SOUND_LASERSHOT);
 
                 Projectiles.PushProjectile(xPos + 100 - 21, yPos + 60, UFOLASER);
                 PartikelSystem.PushPartikel(xPos + 100 - 80, yPos + 30, UFOLASERFLARE);
@@ -273,11 +273,11 @@ void GegnerUfo::DoKI() {
             AnimCount -= 1.0f SYNC;
 
             if (AnimCount < 0.0f) {
-                PartikelSystem.PushPartikel(xPos + rand() % 180, yPos + rand() % 70 + 20, EXPLOSION_MEDIUM2);
-                SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
+                PartikelSystem.PushPartikel(xPos + random(180), yPos + random(70) + 20, EXPLOSION_MEDIUM2);
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
 
-                if (rand() % 4 == 0)
-                    PartikelSystem.PushPartikel(xPos + rand() % 180 - 40, yPos + rand() % 40, EXPLOSION_BIG);
+                if (random(4) == 0)
+                    PartikelSystem.PushPartikel(xPos + random(180) - 40, yPos + random(40), EXPLOSION_BIG);
 
                 AnimCount = 2.0f;
             }
@@ -311,7 +311,7 @@ void GegnerUfo::GegnerExplode() {
 
     // Splitter
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 190, yPos + rand() % 60 + 30, SPLITTER);
+        PartikelSystem.PushPartikel(xPos + random(190), yPos + random(60) + 30, SPLITTER);
 
     Player[0].Score += 4000;
     Gegner.PushGegner(xPos + 80.0f, yPos + 20.0f, ONEUP, 0, 0, false);
