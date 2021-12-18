@@ -584,7 +584,6 @@ void DirectGraphicsFont::ShowFPS() {
     static int updateFPS;  // Trigger für die FPS, da sonst Anzeige zu schnell
     static double FPS;
     std::string Buffer;
-    double Value;
 
     updateFPS++;
     if (updateFPS > FPS / 2) {
@@ -603,20 +602,17 @@ void DirectGraphicsFont::ShowFPS() {
     DrawText(300, 0, Buffer.c_str(), 0xFFFFFFFF);
 
     // Durchschnittliche FPS
-    Value = Timer.getAverageFPS();
-    Buffer = std::to_string(Value);
+    Buffer = std::to_string(Timer.getAverageFPS());
     DrawText(0, 15, "Average FPS :", 0xFFFFFFFF);
     DrawText(100, 15, Buffer.c_str(), 0xFFFFFFFF);
 
     // Maximale FPS
-    Value = Timer.getMaxFrameRate();
-    Buffer = std::to_string(Value);
+    Buffer = std::to_string(Timer.getMaxFrameRate());
     DrawText(0, 30, "Highest FPS :", 0xFFFFFFFF);
     DrawText(100, 30, Buffer.c_str(), 0xFFFFFFFF);
 
     // Minimale FPS
-    Value = Timer.getMinFrameRate();
-    Buffer = std::to_string(Value);
+    Buffer = std::to_string(Timer.getMinFrameRate());
     DrawText(0, 45, "Lowest FPS :", 0xFFFFFFFF);
     DrawText(100, 45, Buffer.c_str(), 0xFFFFFFFF);
 }
