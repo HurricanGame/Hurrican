@@ -598,7 +598,7 @@ void DirectGraphicsFont::ShowFPS() {
     DrawText(100, 0, Buffer.c_str(), 0xFFFFFFFF);
 
     // FPS Grenze
-    Buffer = std::to_string(Timer.maxFPS);
+    Buffer = std::to_string(Timer.GetMaxFPS());
     DrawText(200, 0, "Max FPS :", 0xFFFFFFFF);
     DrawText(300, 0, Buffer.c_str(), 0xFFFFFFFF);
 

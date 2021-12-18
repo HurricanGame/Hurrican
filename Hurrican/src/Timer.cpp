@@ -112,7 +112,7 @@ void TimerClass::SetMoveSpeed(float Wert) {
 // Movespeed zurückliefern
 // --------------------------------------------------------------------------------------
 
-float TimerClass::GetMoveSpeed() {
+float TimerClass::GetMoveSpeed() const {
     return MoveSpeed;
 }
 
@@ -124,11 +124,15 @@ void TimerClass::SetMaxFPS(int Wert) {
     maxFPS = Wert;  // Wert setzen
 }
 
+int TimerClass::GetMaxFPS() const {
+    return maxFPS;
+}
+
 // --------------------------------------------------------------------------------------
 // vergangene Zeit in Milli-Sekunden holen
 // --------------------------------------------------------------------------------------
 
-double TimerClass::getElapsed() {
+double TimerClass::getElapsed() const {
     return vergangeneZeit;  // Den Bahnhof in die Luft jagen, was sonst ?
 }
 
@@ -136,7 +140,7 @@ double TimerClass::getElapsed() {
 // Framerate auslesen
 // --------------------------------------------------------------------------------------
 
-double TimerClass::getFrameRate() {
+double TimerClass::getFrameRate() const {
     return (aktuelleFramerate);  // Framerate berechnen und zurückgeben
 }
 
@@ -144,7 +148,7 @@ double TimerClass::getFrameRate() {
 // Minimale Framerate auslesen
 // --------------------------------------------------------------------------------------
 
-double TimerClass::getMinFrameRate() {
+double TimerClass::getMinFrameRate() const {
     return (FPSMinimum);
 }
 
@@ -152,7 +156,7 @@ double TimerClass::getMinFrameRate() {
 // Maximale Framerate auslesen
 // --------------------------------------------------------------------------------------
 
-double TimerClass::getMaxFrameRate() {
+double TimerClass::getMaxFrameRate() const {
     return (FPSMaximum);
 }
 
@@ -160,14 +164,14 @@ double TimerClass::getMaxFrameRate() {
 // Durchschnittliche FPS auslesen
 // --------------------------------------------------------------------------------------
 
-double TimerClass::getAverageFPS() {
+double TimerClass::getAverageFPS() const {
     return DurchschnittFramerate;
 }
 
 // --------------------------------------------------------------------------------------
 // Wert holen, mit dem die Bewegungen verrechnet werden
 // --------------------------------------------------------------------------------------
-double TimerClass::getSpeedFactor() {
+double TimerClass::getSpeedFactor() const {
     return SpeedFaktor;
 }
 

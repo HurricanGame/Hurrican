@@ -429,7 +429,7 @@ int main(int argc, char *argv[]) {
                     SpeedFaktor = 1.0f / 60.0f * Timer.GetMoveSpeed();
                 } else {
                     // Timer.SetMaxFPS (0);
-                    SpeedFaktor = Timer.SpeedFaktor;
+                    SpeedFaktor = Timer.getSpeedFactor();
                 }
 
                 Timer.wait();
@@ -971,7 +971,7 @@ void ShowDebugInfo() {
     pDefaultFont->DrawText(100, 105, StringBuffer.c_str(), 0xFFFFFFFF);
 
     // Blitzwinkel angeben
-    StringBuffer = std::to_string(Timer.SpeedFaktor);
+    StringBuffer = std::to_string(Timer.getSpeedFactor());
     pDefaultFont->DrawText(0, 120, "Speed :", 0xFFFFFFFF);
     pDefaultFont->DrawText(100, 120, StringBuffer.c_str(), 0xFFFFFFFF);
 

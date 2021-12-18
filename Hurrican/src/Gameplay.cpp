@@ -192,7 +192,7 @@ void InitNewGameLevel() {
             // Timer updaten
             Timer.update();
             Timer.wait();
-            SpeedFaktor = Timer.SpeedFaktor;
+            SpeedFaktor = Timer.getSpeedFactor();
 
             SoundManager.Update();
         }
@@ -1153,7 +1153,7 @@ void SummaryScreen() {
 
         Timer.update();
         Timer.wait();
-        SpeedFaktor = Timer.SpeedFaktor;
+        SpeedFaktor = Timer.getSpeedFactor();
 
         DirectInput.UpdateTastatur();
         DirectInput.UpdateJoysticks();
