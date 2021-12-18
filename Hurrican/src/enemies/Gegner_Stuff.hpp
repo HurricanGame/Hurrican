@@ -5,11 +5,6 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-//----- Definitionen der Blickrichtungen
-
-#define RECHTS 1
-#define LINKS -1
-
 //----- Gegner/Objekt-Defines
 
 #define EXTRAS 0            // Alle Extras in einer Grafik

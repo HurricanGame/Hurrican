@@ -30,6 +30,13 @@ class PlayerClass;
 
 // DKS - TODO: Reduce size of member vars where appropriate
 class GegnerClass {
+  protected:
+    enum {
+        RECHTS = 1,
+        LINKS  = -1
+    };
+
+
   protected:            // protected wegen Ableitung
     int AnimStart;      // Erste Animationsphase
     int BlickRichtung;  // Links oder Rechts :)

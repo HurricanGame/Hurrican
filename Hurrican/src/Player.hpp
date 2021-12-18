@@ -81,11 +81,6 @@
 
 #define NUM_COOL_LIGHTNINGS 18  // Anzahl der Blitze, aus denen der neue coole Blitz besteht
 
-//----- Definitionen der Blickrichtungen
-
-#define RECHTS 1
-#define LINKS -1
-
 //----- Definitionen der "Handlungen"
 
 enum class PlayerActionEnum {
@@ -119,6 +114,12 @@ enum class PlayerActionEnum {
 // --------------------------------------------------------------------------------------
 
 class PlayerClass {
+  public:
+    enum {
+        RECHTS = 1,
+        LINKS  = -1
+    };
+
   private:
     uint32_t bl, br, bo, bu;  // Blockwerte in diesem Frame, damit wir nicht jedesmal
     // die Funktion aufrufen müssen, sondern nur EINMAL pro Frame
