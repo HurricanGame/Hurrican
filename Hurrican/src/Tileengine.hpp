@@ -481,7 +481,7 @@ class TileEngineClass {
     RECT_struct TileRects[144];                         // vorberechnete Tile Ausschnitte
     DirectGraphicsSprite TileGfx[MAX_TILESETS];  // Tilegrafiken
     DirectGraphicsSprite Background;             // Hintergrund
-    DirectGraphicsSprite ParallaxLayer[6];       // Anzahl der Layer
+    DirectGraphicsSprite ParallaxLayer[3];       // Anzahl der Layer
     DirectGraphicsSprite CloudLayer;             // Wolkenlayer
     DirectGraphicsSprite GameOver;               // GameOver Symbol
     DirectGraphicsSprite Wasserfall[2];          // Wasserfall Grafiken
