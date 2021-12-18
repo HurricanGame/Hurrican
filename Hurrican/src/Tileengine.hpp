@@ -26,30 +26,32 @@
 
 //----- Flags für den Blockwert
 
-#define BLOCKWERT_WAND 1               // Solide Wand
-#define BLOCKWERT_GEGNERWAND 2         // Wand nur für Gegner
-#define BLOCKWERT_PLATTFORM 4          // Plattform
-#define BLOCKWERT_LIGHT 8              // Licht bei Objekten verändern
-#define BLOCKWERT_VERDECKEN 16         // Spieler und Objekte verdecken
-#define BLOCKWERT_ANIMIERT_BACK 32     // Animiert Hintergrund
-#define BLOCKWERT_ANIMIERT_FRONT 64    // Animiert Overlay
-#define BLOCKWERT_WASSER 128           // Wasser (macht platsch :D )
-#define BLOCKWERT_SCHADEN 256          // Schaden
-#define BLOCKWERT_FLIESSBANDL 512      // Fliessband Links
-#define BLOCKWERT_FLIESSBANDR 1024     // Fliessband Rechts
-#define BLOCKWERT_WENDEPUNKT 2048      // Bewegte Plattformen umdrehen lassen
-#define BLOCKWERT_DESTRUCTIBLE 4096    // Zerstörbare Wand
-#define BLOCKWERT_MOVELINKS 8192       // Textur nach links bewegen
-#define BLOCKWERT_OVERLAY_LIGHT 16384  // Overlay nimmt Licht an
-#define BLOCKWERT_SUMPF 32768          // Einsinken
-#define BLOCKWERT_EIS 65536            // Eis, auf dem man ausrutscht
-#define BLOCKWERT_MOVEVERTICAL 131072  // Vertikale Texturbewegung
-#define BLOCKWERT_WASSERFALL 262144    // Wasserfall
-#define BLOCKWERT_MOVERECHTS 524288    // Textur nach rechts bewegen
+enum BlockValue : uint32_t {
+  BLOCKWERT_WAND           = 0x000001,    // Solide Wand
+  BLOCKWERT_GEGNERWAND     = 0x000002,    // Wand nur für Gegner
+  BLOCKWERT_PLATTFORM      = 0x000004,    // Plattform
+  BLOCKWERT_LIGHT          = 0x000008,    // Licht bei Objekten verändern
+  BLOCKWERT_VERDECKEN      = 0x000010,    // Spieler und Objekte verdecken
+  BLOCKWERT_ANIMIERT_BACK  = 0x000020,    // Animiert Hintergrund
+  BLOCKWERT_ANIMIERT_FRONT = 0x000040,    // Animiert Overlay
+  BLOCKWERT_WASSER         = 0x000080,    // Wasser (macht platsch :D )
+  BLOCKWERT_SCHADEN        = 0x000100,    // Schaden
+  BLOCKWERT_FLIESSBANDL    = 0x000200,    // Fliessband Links
+  BLOCKWERT_FLIESSBANDR    = 0x000400,    // Fliessband Rechts
+  BLOCKWERT_WENDEPUNKT     = 0x000800,    // Bewegte Plattformen umdrehen lassen
+  BLOCKWERT_DESTRUCTIBLE   = 0x001000,    // Zerstörbare Wand
+  BLOCKWERT_MOVELINKS      = 0x002000,    // Textur nach links bewegen
+  BLOCKWERT_OVERLAY_LIGHT  = 0x004000,    // Overlay nimmt Licht an
+  BLOCKWERT_SUMPF          = 0x008000,    // Einsinken
+  BLOCKWERT_EIS            = 0x010000,    // Eis, auf dem man ausrutscht
+  BLOCKWERT_MOVEVERTICAL   = 0x020000,    // Vertikale Texturbewegung
+  BLOCKWERT_WASSERFALL     = 0x040000,    // Wasserfall
+  BLOCKWERT_MOVERECHTS     = 0x080000,    // Textur nach rechts bewegen
 
-#define BLOCKWERT_SCHRAEGE_L 2097152  // Schräge Rechts
-#define BLOCKWERT_SCHRAEGE_R 4194304  // Schräge Rechts
-#define BLOCKWERT_LIQUID 8388608      // Flüssigkeit (Wasser, Säure, Lava, Magensäure)
+  BLOCKWERT_SCHRAEGE_L     = 0x200000,    // Schräge Rechts
+  BLOCKWERT_SCHRAEGE_R     = 0x400000,    // Schräge Rechts
+  BLOCKWERT_LIQUID         = 0x800000     // Flüssigkeit (Wasser, Säure, Lava, Magensäure)
+};
 
 //--- Animationsgeschwindigkeit der animierten Level-Tiles
 
