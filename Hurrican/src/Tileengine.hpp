@@ -113,6 +113,8 @@ struct LevelTileLoadStruct {
     uint32_t Block;                   // Blockierungsart (siehe #defines)
 };
 
+static_assert(sizeof(LevelTileLoadStruct) == 12, "Size of LevelTileLoadStruct is wrong");
+
 // Struktur für ein Level Tile wie es im Level vorkommt (wie beim Laden, nur noch mit Extra Farben für alle Ecken)
 //
 struct LevelTileStruct {
@@ -125,6 +127,8 @@ struct LevelTileStruct {
     uint32_t Block;                           // Blockierungsart (siehe #defines)
     bool move_v1, move_v2, move_v3, move_v4;  // Die Ecken eines Tiles bei der Wasseranim bewegen?
 };
+
+static_assert(sizeof(LevelTileStruct) == 32, "Size of LevelTileStruct is wrong");
 
 // --------------------------------------------------------------------------------------
 // Struktur für ein aus dem Level zu ladendes Objekte
@@ -142,6 +146,8 @@ struct LevelObjectStruct {
     int32_t Value1;              // Werte für diverse Trigger
     int32_t Value2;              // Werte für diverse Trigger
 };
+
+static_assert(sizeof(LevelObjectStruct) == 24, "Size of LevelObjectStruct is wrong");
 
 // --------------------------------------------------------------------------------------
 // Level-Datei Header
@@ -167,6 +173,8 @@ struct FileHeader {
     uint8_t PADDING_CHUNK_3[3];  // 3 PADDING BYTES
 };
 
+static_assert(sizeof(FileHeader) == 1292, "Size of FileHeader is wrong");
+
 // --------------------------------------------------------------------------------------
 // Anhang am File nach den Level Daten
 // damit nicht alle levels nochmal konvertiert werden, hänge ich einfach alle dinge, die
@@ -182,6 +190,8 @@ struct FileAppendix {
     uint8_t Taschenlampe;
     uint8_t PADDING_CHUNK_1[3];  // 3 padding bytes
 };
+
+static_assert(sizeof(FileAppendix) == 84, "Size of FileAppendix is wrong");
 
 // --------------------------------------------------------------------------------------
 // Unions
