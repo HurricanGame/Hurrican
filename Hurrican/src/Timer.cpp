@@ -168,7 +168,7 @@ double TimerClass::getAverageFPS() {
 // Wert holen, mit dem die Bewegungen verrechnet werden
 // --------------------------------------------------------------------------------------
 double TimerClass::getSpeedFactor() {
-    return vergangeneZeit;
+    return SpeedFaktor;
 }
 
 // --------------------------------------------------------------------------------------
