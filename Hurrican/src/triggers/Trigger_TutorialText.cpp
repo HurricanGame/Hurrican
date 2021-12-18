@@ -37,8 +37,9 @@ GegnerTutorialText::GegnerTutorialText(int Wert1, int Wert2, bool Light) {
 
 void GegnerTutorialText::DoKI() {
     // Spieler nahe genug? Dann einfaden
-    if (PlayerAbstand() < 120 && Value1 != 9 && (GUI.m_FadeMode == FadeMode::INVISIBLE || GUI.m_TextID != Value1) &&
-        !(Value1 == 20 && Player[0].PowerLines == 5)) {
+    if (PlayerAbstand() < 120 && Value1 != 9 &&
+            (GUI.GetFadeMode() == FadeMode::INVISIBLE || GUI.GetTextID() != Value1) &&
+            !(Value1 == 20 && Player[0].PowerLines == 5)) {
         std::size_t pos;           // Position, an der das zu ersetzende Wort steht
         std::string newWord = "";  // neuer Text für das zu ersetzende Wort
         std::string s_text = "";   // Alter Text, in dem ersetzt wird
@@ -90,13 +91,14 @@ void GegnerTutorialText::DoKI() {
         }
 
         GUI.ShowBox(displayed_text.c_str(), 100);
-        GUI.m_TextID = Value1;
+        GUI.SetTextID(Value1);
 
         SoundManager.PlayWave(100, 128, 11025, SOUND_MESSAGE);
     }
 
     // Spieler weg und Trigger auf dem Screen? Dann ausfaden
-    if (GUI.m_TextID == Value1 && IsOnScreen() && GUI.m_FadeMode == FadeMode::VISIBLE && PlayerAbstand() > 120)
+    if (GUI.GetTextID() == Value1 && IsOnScreen() &&
+            GUI.GetFadeMode() == FadeMode::VISIBLE && PlayerAbstand() > 120)
         GUI.HideBox();
 
     bool stillAlive = false;

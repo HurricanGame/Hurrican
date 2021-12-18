@@ -1081,7 +1081,7 @@ void SummaryScreen() {
 
         // Summary Screen rendern
         GUI.Run();
-        D3DCOLOR color = D3DCOLOR_RGBA(0, 255, 0, static_cast<int>(GUI.m_FadingAlpha));
+        D3DCOLOR color = D3DCOLOR_RGBA(0, 255, 0, static_cast<int>(GUI.GetFadingAlpha()));
         pDefaultFont->DrawText(
             float(RENDERWIDTH - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_TITLE])) / 2,
             float(title_txt_y), TextArray[TEXT_SUMMARY_TITLE], color);

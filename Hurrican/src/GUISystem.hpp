@@ -37,11 +37,11 @@ class CGUISystem {
     char m_BoxText[BOXTEXTLENGTH];
     int m_BoxLines;
 
-  public:
     FadeMode m_FadeMode;
     float m_FadingAlpha;
     int m_TextID;
 
+  public:
     CGUISystem();
     ~CGUISystem();
 
@@ -53,6 +53,11 @@ class CGUISystem {
     void ShowBox(int xoff, int yoff, int w, int h);
     void HideBox();
     void HideBoxFast();
+
+    FadeMode GetFadeMode() const { return m_FadeMode; }
+    float GetFadingAlpha() const { return m_FadingAlpha; }
+    void SetTextID(int TextID) { m_TextID = TextID; }
+    int GetTextID() const { return m_TextID; }
 };
 
 // --------------------------------------------------------------------------------------
