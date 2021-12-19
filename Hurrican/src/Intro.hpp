@@ -46,6 +46,7 @@ struct IntroEntry {
 class IntroClass {
   private:
     DirectGraphicsSprite Background[6];
+    IntroStateEnum Zustand;
     int BildNr;
     int EntriesOff;  // Offset into actual lines displayed on the screen (can vary based on font size)
     int TextOff;
@@ -56,11 +57,12 @@ class IntroClass {
     std::vector<IntroEntry> entries;
 
   public:
-    IntroStateEnum Zustand;
     IntroClass();    // Konstruktor
     ~IntroClass();   // Destruktor
     void DoIntro();  // Intro ablaufen lassen
     void EndIntro();
+
+    bool IsDone() const { return Zustand == IntroStateEnum::DONE; }
 };
 
 #endif

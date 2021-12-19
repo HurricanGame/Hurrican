@@ -844,7 +844,7 @@ bool Heartbeat() {
         //----- Intro anzeigen ?
         case GameStateEnum::INTRO: {
             // Laufen lassen, bis beendet
-            if (pIntro->Zustand != IntroStateEnum::DONE) {
+            if (!pIntro->IsDone()) {
                 pIntro->DoIntro();
 
                 if (DirectInput.AnyKeyDown() || DirectInput.AnyButtonDown())
