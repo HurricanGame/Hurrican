@@ -180,9 +180,9 @@ class GroupedForwardList {
 
     void clear();
 
-    size_t size() { return num_items; }
+    size_t size() const { return num_items; }
 
-    size_t get_num_groups() { return num_groups; }
+    size_t get_num_groups() const { return num_groups; }
 
     LIST_ITEM_TYPE *data() { return list; }
 
