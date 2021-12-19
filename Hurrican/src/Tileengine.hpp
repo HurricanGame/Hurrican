@@ -73,6 +73,8 @@ enum BlockValue : uint32_t {
 #define MAX_TILESETS 64     // Maximalzahl der Tilesets
 #define INCLUDE_ZEROTILE 1  // Tile 0,0 im Tileset mit verwenden ?
 
+#define MAX_TILERECTS 144
+
 //----- Grösse des nicht scrollbaren Bereichs
 
 #define SCROLL_BORDER_EXTREME_LEFT 0
@@ -478,7 +480,7 @@ class TileEngineClass {
 
     bool bScrollBackground;  // Hintegrundbild scrollen ?
 
-    RECT_struct TileRects[144];                         // vorberechnete Tile Ausschnitte
+    RECT_struct TileRects[MAX_TILERECTS];        // vorberechnete Tile Ausschnitte
     DirectGraphicsSprite TileGfx[MAX_TILESETS];  // Tilegrafiken
     DirectGraphicsSprite Background;             // Hintergrund
     DirectGraphicsSprite ParallaxLayer[3];       // Anzahl der Layer

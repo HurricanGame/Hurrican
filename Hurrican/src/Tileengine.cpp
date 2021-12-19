@@ -157,7 +157,7 @@ TileEngineClass::TileEngineClass() {
 
     // Tile Ausschnitte vorberechnen
     //
-    for (int i = 0; i < 144; i++) {
+    for (int i = 0; i < MAX_TILERECTS; i++) {
         TileRects[i].top = (i / 12) * TILESIZE_X;
         TileRects[i].left = (i % 12) * TILESIZE_Y;
         TileRects[i].right = TileRects[i].left + TILESIZE_X;
