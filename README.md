@@ -43,3 +43,6 @@ OpenGL Options
 Sound
 * -DOPENMPT=ON            : Use the libopenmpt code for music (SDL2_mixer uses libmodplug while SDL_mixer uses the lower quality mikmod engine)
 
+Generic
+* -DFAST_RANDOM=ON        : Use a fast linear congruential generator for random numbers
+* -DFAST_TRIG=ON          : Use fast approximation for trigonometric functions

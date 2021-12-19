@@ -446,10 +446,18 @@ ENDIF(FBO)
 add_definitions(-DPLATFORM_SDL)
 add_definitions(-DENABLE_CONSOLE_COMMANDS) # make optional?
 # -DUSE_NO_MEMPOOLING
-# -DUSE_FAST_RNG
-# -DUSE_FAST_TRIG
 # -DUSE_ETC1
 # -DUSE_PVRTC
+
+OPTION(FAST_RANDOM "Use a fast linear congruential generator for random numbers" OFF)
+IF(FAST_RANDOM)
+    ADD_DEFINITIONS(-DUSE_FAST_RNG)
+ENDIF(FAST_RANDOM)
+
+OPTION(FAST_TRIG "Use fast approximation for trigonometric functions" OFF)
+IF(FAST_TRIG)
+    ADD_DEFINITIONS(-DUSE_FAST_TRIG)
+ENDIF(FAST_TRIG)
 
 if(UNIX)
     add_definitions(-DUSE_HOME_DIR)
