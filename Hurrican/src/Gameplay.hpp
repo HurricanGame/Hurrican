@@ -23,10 +23,12 @@
 #define CONFIGFILE "Hurrican.cfg"  // Name der Konfigurationsdatei
 #define TUTORIAL_END 99
 
-#define DETAIL_LOW 0      // alles total billig
-#define DETAIL_MEDIUM 1   // animiertes Wasser dazu
-#define DETAIL_HIGH 2     // geiler Blitz, Leuchteffekte und Lightmaps
-#define DETAIL_MAXIMUM 3  // Schockwelle
+enum {
+  DETAIL_LOW = 0,      // alles total billig
+  DETAIL_MEDIUM = 1,   // animiertes Wasser dazu
+  DETAIL_HIGH = 2,     // geiler Blitz, Leuchteffekte und Lightmaps
+  DETAIL_MAXIMUM = 3   // Schockwelle
+};
 
 // --------------------------------------------------------------------------------------
 // Prototypen von Funktionen
