@@ -735,7 +735,7 @@ void DirectGraphicsClass::SetTexture(int idx) {
 
 void DirectGraphicsClass::ShowBackBuffer() {
 #if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
-    if (RenderBuffer.Enabled == true) {
+    if (RenderBuffer.IsEnabled() == true) {
         VERTEX2D vertices[4];
 
         // Protokoll << std::dec << RenderRect.w << "x" << RenderRect.h << " at " << RenderRect.x << "x" << RenderRect.y
@@ -829,7 +829,7 @@ void DirectGraphicsClass::SetupFramebuffers() {
     /* Create an FBO for rendering */
     RenderBuffer.Open(RenderView.w, RenderView.h);
 
-    if (RenderBuffer.Enabled == true) {
+    if (RenderBuffer.IsEnabled() == true) {
         /* Set the render viewport */
         SelectBuffer(true);
         glViewport(RenderView.x, RenderView.y, RenderView.w, RenderView.h);
@@ -890,16 +890,16 @@ void DirectGraphicsClass::ClearBackBuffer() {
     glClear(GL_COLOR_BUFFER_BIT);
 
 #if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
-    glBindFramebuffer(GL_FRAMEBUFFER, RenderBuffer.framebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, RenderBuffer.GetFramebuffer());
     glClear(GL_COLOR_BUFFER_BIT);
 #endif
 }
 
 #if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
 void DirectGraphicsClass::SelectBuffer(bool active) {
-    if (RenderBuffer.Enabled == true) {
+    if (RenderBuffer.IsEnabled() == true) {
         if (active == true) {
-            glBindFramebuffer(GL_FRAMEBUFFER, RenderBuffer.framebuffer);
+            glBindFramebuffer(GL_FRAMEBUFFER, RenderBuffer.GetFramebuffer());
             glViewport(RenderView.x, RenderView.y, RenderView.w, RenderView.h);
             matProj = matProjRender;
         } else {
