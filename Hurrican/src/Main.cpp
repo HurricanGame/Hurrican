@@ -679,7 +679,7 @@ bool GameInit2() {
     SoundManager.LoadWave("beamload2.wav", SOUND_BEAMLOAD2_P2, true);
 
     // DKS - This was commented out in original code, but I've added support for
-    //      Trigger_Stampfstein.cpp's .hppain retraction sound back in:
+    //      Trigger_Stampfstein's chain retraction sound back in:
     SoundManager.LoadWave("chain.wav", SOUND_CHAIN, true);
 
     SoundManager.LoadWave("mushroomjump.wav", SOUND_MUSHROOMJUMP, false);
@@ -749,7 +749,7 @@ bool GameInit2() {
 
     SoundManager.LoadSong("highscore.it", MUSIC_HIGHSCORE);
 
-    // DKS - Punisher music is now loaded on-demand in Gegner_Puni.hpper.cpp
+    // DKS - Punisher music is now loaded on-demand in Gegner_Punisher.cpp
     // SoundManager.LoadSong("Punisher.it", MUSIC_PUNISHER);
 
     if (!GameRunning)
