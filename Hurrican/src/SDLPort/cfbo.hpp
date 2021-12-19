@@ -31,7 +31,6 @@
 class CFbo {
   public:
     CFbo();
-    virtual ~CFbo();
 
     bool Open(uint16_t w, uint16_t h);
     void BindTexture(bool active);
