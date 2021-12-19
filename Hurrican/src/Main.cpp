@@ -460,8 +460,8 @@ int main(int argc, char *argv[]) {
     }
 
     Protokoll << "\n-> Hurrican closed !\n";
-    Protokoll << "\nhttp://www.poke53280.de\n";
-    Protokoll << "Bugreports, questions etc : information@poke53280.de\n";
+    Protokoll << "\nOriginal game: https://www.winterworks.de\n";
+    Protokoll << "This fork: https://github.com/drfiemost/Hurrican\n";
     Protokoll << "\n-> logfile end" << std::endl;
 
     // Kein Fehler im Game? Dann Logfile löschen
