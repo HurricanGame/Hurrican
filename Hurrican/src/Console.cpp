@@ -14,6 +14,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <string>
 #include <filesystem>
 namespace fs = std::filesystem;
 #include "Console.hpp"
@@ -113,10 +114,8 @@ void ConsoleClass::ShowConsole() {
             pDefaultFont->DrawText(26, yoffset + float(10 + i * line_spacing), Text[array_off], Color);
     }
 
-    char Temp[105];
-
-    strcpy_s(Temp, 2, ">");
-    strcat_s(Temp, Buffer);
+    std::string Temp(">");
+    Temp.append(Buffer);
 
     // Cursor animieren
     cursorcount += 0.3f SYNC;
@@ -125,10 +124,10 @@ void ConsoleClass::ShowConsole() {
         cursorcount = 0.0f;
 
     Color = D3DCOLOR_RGBA(255, 255, 255, a);
-    pDefaultFont->DrawText(26 - 6 * scale_factor, yoffset + 10 + console_lines * line_spacing, Temp, Color);
+    pDefaultFont->DrawText(26 - 6 * scale_factor, yoffset + 10 + console_lines * line_spacing, Temp.c_str(), Color);
 
     // Draw cursor block
-    int text_width = pDefaultFont->StringLength(Temp);
+    int text_width = pDefaultFont->StringLength(Temp.c_str());
     int cursor_x = 20 + text_width;
     if (scale_factor > 1)
         cursor_x -= 6;

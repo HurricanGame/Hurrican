@@ -32,8 +32,6 @@
 #include "Tileengine.hpp"
 #include "Timer.hpp"
 
-#include <string>
-
 // --------------------------------------------------------------------------------------
 // Gameplay Variablen
 // --------------------------------------------------------------------------------------
@@ -63,7 +61,7 @@ bool RunningTutorial = false;
 
 #define DEMO_ID "Hurrican Demo File"  // Kennung
 
-char StageReihenfolge[256][100];
+std::string StageReihenfolge[256];
 
 int options_Detail;
 bool StopStageMusicAtStart;

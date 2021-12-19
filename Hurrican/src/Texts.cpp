@@ -191,7 +191,7 @@ loadfile:
         }
 
         if (strlen(tmpchar) > 0) {  // DKS - Added check for strlen > 0
-            strcpy_s(StageReihenfolge[MAX_LEVELS], 100-1, tmpchar);
+            StageReihenfolge[MAX_LEVELS] = tmpchar;
             MAX_LEVELS++;
         }
     }

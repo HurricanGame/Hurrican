@@ -14,6 +14,8 @@
 #include "DX8Sprite.hpp"
 #include "Tileengine.hpp"
 
+#include <string>
+
 // --------------------------------------------------------------------------------------
 // Defines
 // --------------------------------------------------------------------------------------
@@ -85,6 +87,6 @@ extern int DisplayHintNr;
 extern const float ShockWaveX;
 extern const float ShockWaveY;
 
-extern char StageReihenfolge[256][100];
+extern std::string StageReihenfolge[256];
 
 #endif
