@@ -265,7 +265,7 @@ bool loadImageETC1(image_t &image, const std::string &fullpath) {
 
 #if defined(USE_PVRTC)
 bool loadImagePVRTC(image_t &image, const std::string &fullpath) {
-    uint32_t *pvrtc_buffer32 = NULL;
+    uint32_t *pvrtc_buffer32 = nullptr;
     uint32_t pvrtc_filesize, pvrtc_depth, pvrtc_bitperpixel;
 
     if (fullpath.empty() || !fs::exists(fullpath) || !fs::is_regular_file(fullpath))
@@ -296,7 +296,7 @@ bool loadImagePVRTC(image_t &image, const std::string &fullpath) {
             default:
                 Protokoll << "ERROR Unknown PVRTC format " << std::hex << pvrtc_buffer32[2] << std::endl;
                 // delete [] image.data;
-                // image.data = NULL;
+                // image.data = nullptr;
                 image.data = std::vector<char>();
                 return false;
         }

@@ -174,7 +174,7 @@ void GegnerWalker::DoKI() {
                 Player[i].yspeed >= 0.0f) {
             if (Player[i].AufPlattform == this) {
                 // Spieler springen lassen
-                Player[i].AufPlattform = NULL;
+                Player[i].AufPlattform = nullptr;
                 Player[i].JumpPossible = false;
                 Player[i].AnimPhase = 2;
                 Player[i].Handlung = PlayerActionEnum::SPRINGEN;

@@ -163,7 +163,7 @@ loadfile:
         if (fromrar == true) {
             // Zwischenspeichern
             //
-            FILE *TempFile = NULL;
+            FILE *TempFile = nullptr;
             fopen_s(&TempFile, TEMP_FILE_PREFIX "temp.dat", "wb");  // Datei öffnen
             fwrite(pData, Size, 1, TempFile);                       // speichern
             fclose(TempFile);                                       // und schliessen

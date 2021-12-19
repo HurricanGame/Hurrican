@@ -194,7 +194,7 @@ TileEngineClass::TileEngineClass() {
     // lightmaps[LIGHTMAP_GOLEMSHOT].Load("lightmap_golem.bmp");
     // lightmaps[LIGHTMAP_LILA].Load("lightmap_lila.bmp");
 
-    pDragonHack = NULL;
+    pDragonHack = nullptr;
 }
 
 // --------------------------------------------------------------------------------------
@@ -202,7 +202,7 @@ TileEngineClass::TileEngineClass() {
 // --------------------------------------------------------------------------------------
 
 TileEngineClass::~TileEngineClass() {
-    if (pDragonHack != NULL)
+    if (pDragonHack != nullptr)
         delete pDragonHack;
 }
 
@@ -270,10 +270,10 @@ void TileEngineClass::ClearLevel() {
     // Objekte, die immer benötigt werden, wie Extraleben, Diamanten etc.
     // werden nicht released
     for (int i = 4; i < MAX_GEGNERGFX; i++)
-        if (i != PUNISHER && pGegnerGrafix[i] != NULL)  // Ist eine Textur geladen ?
+        if (i != PUNISHER && pGegnerGrafix[i] != nullptr)  // Ist eine Textur geladen ?
         {
             delete (pGegnerGrafix[i]);  // dann diese löschen
-            pGegnerGrafix[i] = NULL;    // und auf NULL setzen
+            pGegnerGrafix[i] = nullptr;    // und auf NULL setzen
         }
 
     for (int i = 0; i < MAX_TILESETS; i++) {
@@ -320,7 +320,7 @@ bool TileEngineClass::LoadLevel(const std::string &Filename) {
 
 #if defined(USE_UNRARLIB)  // DKS - Added ifdef block
     bool fromrar = false;
-    char *pData = NULL;      // DKS - Added NULL init val
+    char *pData = nullptr;      // DKS - Added NULL init val
     unsigned long Size = 0;  // DKS - Added init val
 #endif                       // USE_UNRARLIB
 
@@ -365,7 +365,7 @@ loadfile:
     if (fromrar == true) {
         // Zwischenspeichern
         //
-        FILE *TempFile = NULL;
+        FILE *TempFile = nullptr;
         fopen_s(&TempFile, TEMP_FILE_PREFIX "temp.map", "wb");  // Datei öffnen
         fwrite(pData, Size, 1, TempFile);                       // speichern
         fclose(TempFile);                                       // und schliessen
@@ -578,146 +578,146 @@ loadfile:
             // Gegner und andere Objekte laden und ins Level setzen
             if (LoadObject.ObjectID > 0) {
                 // Spitter laden, wenn die Spitterbombe geladen wird
-                if (LoadObject.ObjectID == SPITTERBOMBE && pGegnerGrafix[SPITTER] == NULL)
+                if (LoadObject.ObjectID == SPITTERBOMBE && pGegnerGrafix[SPITTER] == nullptr)
                     LoadGegnerGrafik(SPITTER);
 
                 // Kleinen Piranha laden, wenn der Riesen Piranha geladen wird
-                if (LoadObject.ObjectID == RIESENPIRANHA && pGegnerGrafix[PIRANHA] == NULL)
+                if (LoadObject.ObjectID == RIESENPIRANHA && pGegnerGrafix[PIRANHA] == nullptr)
                     LoadGegnerGrafik(PIRANHA);
 
                 // Mücke laden, wenn das Nest geladen wird
-                if (LoadObject.ObjectID == NEST && pGegnerGrafix[STAHLMUECKE] == NULL)
+                if (LoadObject.ObjectID == NEST && pGegnerGrafix[STAHLMUECKE] == nullptr)
                     LoadGegnerGrafik(STAHLMUECKE);
 
                 // Spinnenbombe laden, wenn die Riesenspinne geladen wird
-                if (LoadObject.ObjectID == RIESENSPINNE && pGegnerGrafix[SPIDERBOMB] == NULL)
+                if (LoadObject.ObjectID == RIESENSPINNE && pGegnerGrafix[SPIDERBOMB] == nullptr)
                     LoadGegnerGrafik(SPIDERBOMB);
 
                 // Kleine Kugeln laden, wenn eine grosse geladen wird
                 if (LoadObject.ObjectID == KUGELRIESIG || LoadObject.ObjectID == KUGELGROSS ||
                     LoadObject.ObjectID == KUGELMEDIUM) {
-                    if (pGegnerGrafix[KUGELGROSS] == NULL)
+                    if (pGegnerGrafix[KUGELGROSS] == nullptr)
                         LoadGegnerGrafik(KUGELGROSS);
 
-                    if (pGegnerGrafix[KUGELMEDIUM] == NULL)
+                    if (pGegnerGrafix[KUGELMEDIUM] == nullptr)
                         LoadGegnerGrafik(KUGELMEDIUM);
 
-                    if (pGegnerGrafix[KUGELKLEIN] == NULL)
+                    if (pGegnerGrafix[KUGELKLEIN] == nullptr)
                         LoadGegnerGrafik(KUGELKLEIN);
                 }
 
                 // Boulder und Stelzsack laden, wenn der Fahrstuhlendboss geladen wird
                 if (LoadObject.ObjectID == FAHRSTUHLBOSS) {
-                    if (pGegnerGrafix[BOULDER] == NULL)
+                    if (pGegnerGrafix[BOULDER] == nullptr)
                         LoadGegnerGrafik(BOULDER);
-                    if (pGegnerGrafix[STELZSACK] == NULL)
+                    if (pGegnerGrafix[STELZSACK] == nullptr)
                         LoadGegnerGrafik(STELZSACK);
                 }
 
                 // lava Ball laden, wenn dessen Spawner geladen wird
                 if (LoadObject.ObjectID == LAVABALLSPAWNER)
-                    if (pGegnerGrafix[LAVABALL] == NULL)
+                    if (pGegnerGrafix[LAVABALL] == nullptr)
                         LoadGegnerGrafik(LAVABALL);
 
                 // Made laden, wenn der Bratklops oder der Partikelspawner geladen wird
                 if ((LoadObject.ObjectID == BRATKLOPS || LoadObject.ObjectID == PARTIKELSPAWN) &&
-                    pGegnerGrafix[MADE] == NULL)
+                    pGegnerGrafix[MADE] == nullptr)
                     LoadGegnerGrafik(MADE);
 
                 // Steine laden, wenn der Schrein geladen wird
-                if (LoadObject.ObjectID == SHRINE && pGegnerGrafix[FALLINGROCK] == NULL)
+                if (LoadObject.ObjectID == SHRINE && pGegnerGrafix[FALLINGROCK] == nullptr)
                     LoadGegnerGrafik(FALLINGROCK);
 
                 // ShootButton laden, wenn die entsprechende Plattform geladen wird
-                if (LoadObject.ObjectID == SHOOTPLATTFORM && pGegnerGrafix[SHOOTBUTTON] == NULL)
+                if (LoadObject.ObjectID == SHOOTPLATTFORM && pGegnerGrafix[SHOOTBUTTON] == nullptr)
                     LoadGegnerGrafik(SHOOTBUTTON);
 
                 // Made laden, wenn der Schwabbelsack geladen wird
-                if (LoadObject.ObjectID == SCHWABBEL && pGegnerGrafix[MADE] == NULL)
+                if (LoadObject.ObjectID == SCHWABBEL && pGegnerGrafix[MADE] == nullptr)
                     LoadGegnerGrafik(MADE);
 
                 // Boulder laden, wenn der MetalHead Boss geladen wird
-                if (LoadObject.ObjectID == METALHEAD && pGegnerGrafix[BOULDER] == NULL)
+                if (LoadObject.ObjectID == METALHEAD && pGegnerGrafix[BOULDER] == nullptr)
                     LoadGegnerGrafik(BOULDER);
 
                 // Schleimbollen laden, wenn das Schleimmaul geladen wird
-                if (LoadObject.ObjectID == SCHLEIMMAUL && pGegnerGrafix[SCHLEIMALIEN] == NULL)
+                if (LoadObject.ObjectID == SCHLEIMMAUL && pGegnerGrafix[SCHLEIMALIEN] == nullptr)
                     LoadGegnerGrafik(SCHLEIMALIEN);
 
                 // Mittelgroße Spinne laden, wenn der Spinnen Ansturm geladen wird
-                if (LoadObject.ObjectID == WUXESPINNEN && pGegnerGrafix[MITTELSPINNE] == NULL)
+                if (LoadObject.ObjectID == WUXESPINNEN && pGegnerGrafix[MITTELSPINNE] == nullptr)
                     LoadGegnerGrafik(MITTELSPINNE);
 
                 // Blauen Boulder laden, wenn der Golem geladen wird
-                if (LoadObject.ObjectID == GOLEM && pGegnerGrafix[BOULDER] == NULL)
+                if (LoadObject.ObjectID == GOLEM && pGegnerGrafix[BOULDER] == nullptr)
                     LoadGegnerGrafik(BOULDER);
 
                 // Climbspider laden, wenn die Spinnenmaschine geladen wird
-                if (LoadObject.ObjectID == SPINNENMASCHINE && pGegnerGrafix[CLIMBSPIDER] == NULL)
+                if (LoadObject.ObjectID == SPINNENMASCHINE && pGegnerGrafix[CLIMBSPIDER] == nullptr)
                     LoadGegnerGrafik(CLIMBSPIDER);
 
                 // Drone laden, wenn die Spinnenmaschine geladen wird
-                if (LoadObject.ObjectID == SPINNENMASCHINE && pGegnerGrafix[DRONE] == NULL)
+                if (LoadObject.ObjectID == SPINNENMASCHINE && pGegnerGrafix[DRONE] == nullptr)
                     LoadGegnerGrafik(DRONE);
 
                 // Fette Spinne laden, wenn die Spinnen Presswurst geladen wird
-                if (LoadObject.ObjectID == PRESSWURST && pGegnerGrafix[FETTESPINNE] == NULL)
+                if (LoadObject.ObjectID == PRESSWURST && pGegnerGrafix[FETTESPINNE] == nullptr)
                     LoadGegnerGrafik(FETTESPINNE);
 
                 // La Fass laden, wenn der La Fass Spawner geladen wird
-                if (LoadObject.ObjectID == LAFASSSPAWNER && pGegnerGrafix[LAFASS] == NULL)
+                if (LoadObject.ObjectID == LAFASSSPAWNER && pGegnerGrafix[LAFASS] == nullptr)
                     LoadGegnerGrafik(LAFASS);
 
                 // Minirakete laden, wenn Stachelbeere geladen wird
-                if (LoadObject.ObjectID == STACHELBEERE && pGegnerGrafix[MINIROCKET] == NULL) {
+                if (LoadObject.ObjectID == STACHELBEERE && pGegnerGrafix[MINIROCKET] == nullptr) {
                     LoadGegnerGrafik(MINIROCKET);
                 }
 
                 // Fette Rakete laden, wenn Riesenspinne oder Drache geladen wird
                 if ((LoadObject.ObjectID == RIESENSPINNE || LoadObject.ObjectID == UFO ||
                      LoadObject.ObjectID == SKELETOR || LoadObject.ObjectID == DRACHE) &&
-                    pGegnerGrafix[FETTERAKETE] == NULL)
+                    pGegnerGrafix[FETTERAKETE] == nullptr)
                     LoadGegnerGrafik(FETTERAKETE);
 
                 // Minidragon laden, wenn Drache geladen wird
-                if (LoadObject.ObjectID == DRACHE && pGegnerGrafix[MINIDRAGON] == NULL)
+                if (LoadObject.ObjectID == DRACHE && pGegnerGrafix[MINIDRAGON] == nullptr)
                     LoadGegnerGrafik(MINIDRAGON);
 
                 // Schneekoppe laden, wenn der Schneekönig geladen wird
-                if (LoadObject.ObjectID == SCHNEEKOENIG && pGegnerGrafix[SCHNEEKOPPE] == NULL)
+                if (LoadObject.ObjectID == SCHNEEKOENIG && pGegnerGrafix[SCHNEEKOPPE] == nullptr)
                     LoadGegnerGrafik(SCHNEEKOPPE);
 
                 // Ein Paar Gegner laden, wenn der BigFish geladen wird
                 if (LoadObject.ObjectID == BIGFISH) {
-                    if (pGegnerGrafix[PIRANHA] == NULL)
+                    if (pGegnerGrafix[PIRANHA] == nullptr)
                         LoadGegnerGrafik(PIRANHA);
 
-                    if (pGegnerGrafix[SWIMWALKER] == NULL)
+                    if (pGegnerGrafix[SWIMWALKER] == nullptr)
                         LoadGegnerGrafik(SWIMWALKER);
 
-                    if (pGegnerGrafix[KUGELKLEIN] == NULL)
+                    if (pGegnerGrafix[KUGELKLEIN] == nullptr)
                         LoadGegnerGrafik(KUGELKLEIN);
 
-                    if (pGegnerGrafix[KUGELMEDIUM] == NULL)
+                    if (pGegnerGrafix[KUGELMEDIUM] == nullptr)
                         LoadGegnerGrafik(KUGELMEDIUM);
 
-                    if (pGegnerGrafix[KUGELGROSS] == NULL)
+                    if (pGegnerGrafix[KUGELGROSS] == nullptr)
                         LoadGegnerGrafik(KUGELGROSS);
 
-                    if (pGegnerGrafix[KUGELRIESIG] == NULL)
+                    if (pGegnerGrafix[KUGELRIESIG] == nullptr)
                         LoadGegnerGrafik(KUGELRIESIG);
                 }
 
                 // Kettenglied laden, wenn der Rollmops geladen wird
-                if (LoadObject.ObjectID == ROLLMOPS && pGegnerGrafix[KETTENGLIED] == NULL)
+                if (LoadObject.ObjectID == ROLLMOPS && pGegnerGrafix[KETTENGLIED] == nullptr)
                     LoadGegnerGrafik(KETTENGLIED);
 
                 // Mutant laden, wenn die Tube geladen wird
-                if (LoadObject.ObjectID == TUBE && pGegnerGrafix[MUTANT] == NULL)
+                if (LoadObject.ObjectID == TUBE && pGegnerGrafix[MUTANT] == nullptr)
                     LoadGegnerGrafik(MUTANT);
 
                 // Skull laden, wenn der Skeletor geladen wird
-                if (LoadObject.ObjectID == SKELETOR && pGegnerGrafix[SKULL] == NULL)
+                if (LoadObject.ObjectID == SKELETOR && pGegnerGrafix[SKULL] == nullptr)
                     LoadGegnerGrafik(SKULL);
 
                 // Drache wird geladen?
@@ -727,7 +727,7 @@ loadfile:
                 }
 
                 // Gegner laden, wenn er nicht schon geladen wurde
-                if (pGegnerGrafix[LoadObject.ObjectID] == NULL)
+                if (pGegnerGrafix[LoadObject.ObjectID] == nullptr)
                     LoadGegnerGrafik(LoadObject.ObjectID);
 
                 // Gegner bei aktuellem Skill level überhaupt erzeugen ?

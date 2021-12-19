@@ -46,7 +46,7 @@ void GegnerSwitch::DoKI() {
             // Und prüfen, ob ein Objekt aktiviert wird
             GegnerClass *pTemp = Gegner.pStart;  // Anfang der Liste
 
-            while (pTemp != NULL)  // noch nicht alle durch ?
+            while (pTemp != nullptr)  // noch nicht alle durch ?
             {
                 // Value2 stimmt mit dem des Schalters überein? Dann soll dieses Objekt vom Schalter aktiviert werden
                 if (pTemp != this && pTemp->Value2 == Value2) {

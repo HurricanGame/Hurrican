@@ -103,7 +103,7 @@ void GegnerBrockelRock::DoKI() {
 void GegnerBrockelRock::GegnerExplode() {
     for (int i = 0; i < NUMPLAYERS; i++)
         if (Player[i].AufPlattform == this)
-            Player[i].AufPlattform = NULL;
+            Player[i].AufPlattform = nullptr;
 
     // Splitter erzeugen Rauch
     for (int i = 0; i < 10; i++) {

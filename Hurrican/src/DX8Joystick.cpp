@@ -87,7 +87,7 @@ void DirectJoystickClass::StopForceFeedbackEffect(int nr) {
 bool DirectJoystickClass::Init(int joy) {
     lpDIJoystick = SDL_JoystickOpen(joy);
 
-    if (lpDIJoystick == NULL) {
+    if (lpDIJoystick == nullptr) {
         Protokoll << "\n-> Joystick : Acquire error!" << std::endl;
         return false;
     }
@@ -162,7 +162,7 @@ void DirectJoystickClass::Exit(int joy) {
     // Joystick updaten
     // --------------------------------------------------------------------------------------
 bool DirectJoystickClass::Update() {
-    if (lpDIJoystick != NULL) {
+    if (lpDIJoystick != nullptr) {
         SDL_JoystickUpdate();
 
         for (int i = 0; i < NumButtons; i++) {

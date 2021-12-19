@@ -131,7 +131,7 @@ void GegnerStampfstein::DoKI() {
 
                 pTemp = Gegner.pStart;
 
-                while (pTemp != NULL) {
+                while (pTemp != nullptr) {
                     if (pTemp->Destroyable == true && pTemp != this &&
                         SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], pTemp->xPos, pTemp->yPos,
                                         GegnerRect[pTemp->GegnerArt]) == true)
@@ -194,7 +194,7 @@ void GegnerStampfstein::DoKI() {
                                          Player[p].CollideRect) &
                         BLOCKWERT_WAND) {
                     Player[p].DamagePlayer(500.0f, true);
-                    Player[p].AufPlattform = NULL;
+                    Player[p].AufPlattform = nullptr;
                     Player[p].ypos += 10.0f;
                     Player[p].yspeed = 10.0f;
                 }

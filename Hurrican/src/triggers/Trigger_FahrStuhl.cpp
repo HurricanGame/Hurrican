@@ -170,6 +170,6 @@ void GegnerFahrstuhl::GegnerExplode() {
         Player[p].JumpStart = Player[p].ypos;
         Player[p].yspeed = -PLAYER_MAXJUMPSPEED;
         Player[p].JumpAdd = 0.0f;
-        Player[p].AufPlattform = NULL;
+        Player[p].AufPlattform = nullptr;
     }
 }

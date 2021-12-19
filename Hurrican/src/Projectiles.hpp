@@ -256,7 +256,7 @@ class ProjectileListClass {
     //      function:
     void LoadSprites();
 
-    bool PushProjectile(float x, float y, int Art, PlayerClass *pTemp = NULL);  // Schuss "Art" hinzufügen
+    bool PushProjectile(float x, float y, int Art, PlayerClass *pTemp = nullptr);  // Schuss "Art" hinzufügen
     bool PushBlitzBeam(int Size,
                        float Richtung,
                        PlayerClass *pSource);  // BlitzBeam hinzufügen (in verschiedenen Größen und Richtungen möglich)

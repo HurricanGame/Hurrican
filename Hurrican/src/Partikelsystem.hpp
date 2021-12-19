@@ -254,7 +254,7 @@ class PartikelClass {
     void CreatePartikel(float x,
                         float y,
                         int Art,  // Bestimmten Partikel erzeugen
-                        PlayerClass *pParent = NULL);
+                        PlayerClass *pParent = nullptr);
     void Run();     // Partikel animieren und bewegen
     bool Render();  // Partikel anzeigen
 
@@ -314,7 +314,7 @@ class PartikelsystemClass {
     void LoadSprites();
 
     bool PushPartikel(float x, float y, int Art,
-                      PlayerClass *pParent = NULL);  // Partikel "Art" hinzufügen
+                      PlayerClass *pParent = nullptr);  // Partikel "Art" hinzufügen
 
     // DKS - Converted particle linked-list to be singly-linked so this DelNode()
     //      is a new function that replaces the old DelSel().

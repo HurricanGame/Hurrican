@@ -2255,7 +2255,7 @@ void MenuClass::DoMenu() {
 
                     char timestr[20];
 
-                    time_t seconds = time(NULL);
+                    time_t seconds = time(nullptr);
                     struct tm *ptm = localtime(&seconds);
 
                     /*

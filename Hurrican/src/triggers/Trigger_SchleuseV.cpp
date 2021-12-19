@@ -46,7 +46,7 @@ void GegnerSchleuseV::DoKI() {
     //
     GegnerClass *pTemp = Gegner.pStart;  // Anfang der Liste
 
-    while (pTemp != NULL)  // noch nicht alle durch ?
+    while (pTemp != nullptr)  // noch nicht alle durch ?
     {
         if (pTemp->Active == true && SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], pTemp->xPos, pTemp->yPos,
                                                      GegnerRect[pTemp->GegnerArt]) == true) {

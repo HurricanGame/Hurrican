@@ -310,7 +310,7 @@ void GegnerPharaoKopf::DoKI() {
                         if (Player[p].AufPlattform == this)
                             Player[p].DamagePlayer(200.0f);
 
-                        Player[p].AufPlattform = NULL;
+                        Player[p].AufPlattform = nullptr;
                     }
 
                     // Screen Wackeln lassen
@@ -322,7 +322,7 @@ void GegnerPharaoKopf::DoKI() {
                 if (ySpeed > 0.0f) {
                 // Hurri dabei erwischt ?
                 for (int p = 0; p < NUMPLAYERS; p++)
-                    if (Player[p].Energy > 0 && Player[p].AufPlattform == NULL &&
+                    if (Player[p].Energy > 0 && Player[p].AufPlattform == nullptr &&
                         SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[p].xpos, Player[p].ypos,
                                         Player[p].CollideRect) == true) {
                         Player[p].DamagePlayer(25.0f);
@@ -487,7 +487,7 @@ void GegnerPharaoKopf::DoKI() {
 void GegnerPharaoKopf::GegnerExplode() {
     for (int p = 0; p < NUMPLAYERS; p++) {
         if (Player[p].AufPlattform == this)
-            Player[p].AufPlattform = NULL;
+            Player[p].AufPlattform = nullptr;
 
         DirectInput.Joysticks[Player[p].JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);
     }

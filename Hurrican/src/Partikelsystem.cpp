@@ -87,7 +87,7 @@ PartikelClass::PartikelClass()
     Rotate				= false;
     Rot					= 0.0f;
     RemoveWhenOffScreen = true;
-    m_pParent = NULL;
+    m_pParent = nullptr;
 
     (rand()%2 == 0) ? (RotDir = 1) : (RotDir = -1);
 }
@@ -1192,7 +1192,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 AnimPhase = random(3);
 
-                if (m_pParent != NULL) {
+                if (m_pParent != nullptr) {
                     // berechnung
                     absx = m_pParent->BeamX - xPos;  // Differenz der x
                     absy = m_pParent->BeamY - yPos;  // und y Strecke
@@ -4452,7 +4452,7 @@ void PartikelsystemClass::DoPartikelSpecial(bool ShowThem) {
             pCurr = DelNode(pCurr);
             // pCurr now points to the node after the one deleted
 
-            if (pPrev != NULL) {
+            if (pPrev != nullptr) {
                 // This is not the first node in the list, so
                 // splice this node onto the previous one
                 pPrev->pNext = pCurr;

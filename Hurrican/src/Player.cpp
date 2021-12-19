@@ -81,7 +81,7 @@ PlayerClass::PlayerClass() {
     WheelMode = false;
     WasDamaged = false;
     memset(&CollideRect, 0, sizeof(CollideRect));
-    AufPlattform = NULL;
+    AufPlattform = nullptr;
     InLiquid = false;
     JumpPossible = false;
     JumpedOnSurfboard = false;
@@ -1279,7 +1279,7 @@ void PlayerClass::AnimatePlayer() {
 
         // Ist ein Sprung möglich ? (Wenn der Spieler wieder auf den Boden aufkommt)
         if ((bu & BLOCKWERT_SUMPF) || (bu & BLOCKWERT_WAND) || (bu & BLOCKWERT_PLATTFORM) ||
-            (bu & BLOCKWERT_SCHRAEGE_L) || (bu & BLOCKWERT_SCHRAEGE_R) || AufPlattform != NULL) {
+            (bu & BLOCKWERT_SCHRAEGE_L) || (bu & BLOCKWERT_SCHRAEGE_R) || AufPlattform != nullptr) {
             if (!(bu & BLOCKWERT_SCHRAEGE_L) && !(bu & BLOCKWERT_SCHRAEGE_R)) {
                 if (yspeed > 0.0f) {
                     // Beim Blitz weiterblitzen, ansonsten auf "STEHEN" schalten
@@ -1304,7 +1304,7 @@ void PlayerClass::AnimatePlayer() {
         }
 
         // Kein Block unter dem Spieler und kein Lift? Dann fällt er runter
-        if (AufPlattform == NULL &&
+        if (AufPlattform == nullptr &&
                 Handlung != PlayerActionEnum::SPRINGEN &&
                 yspeed >= 0.0f && (!(bu & BLOCKWERT_WAND)) &&
                 (!(bu & BLOCKWERT_PLATTFORM)) && (!(bu & BLOCKWERT_SUMPF)) &&
@@ -1327,7 +1327,7 @@ void PlayerClass::AnimatePlayer() {
 
         // Am Boden und nicht im Sumpf oder Damage-Tile? Dann die Position sichern
         if (Handlung != PlayerActionEnum::SPRINGEN &&
-                AufPlattform == NULL && !(bo & BLOCKWERT_SUMPF) && !(bu & BLOCKWERT_SUMPF) &&
+                AufPlattform == nullptr && !(bo & BLOCKWERT_SUMPF) && !(bu & BLOCKWERT_SUMPF) &&
                 !(bl & BLOCKWERT_SUMPF) && !(br & BLOCKWERT_SUMPF) && !(bo & BLOCKWERT_SCHADEN) &&
                 !(bu & BLOCKWERT_SCHADEN) && !(bl & BLOCKWERT_SCHADEN) && !(br & BLOCKWERT_SCHADEN)) {
             JumpxSave = xpos;
@@ -1614,7 +1614,7 @@ void PlayerClass::AnimatePlayer() {
 
         // Wieder am Boden aufgekommen ?
         if (Handlung == PlayerActionEnum::RADELN_FALL &&
-            ((AufPlattform != NULL) || (bu & BLOCKWERT_WAND) || (bu & BLOCKWERT_PLATTFORM))) {
+            ((AufPlattform != nullptr) || (bu & BLOCKWERT_WAND) || (bu & BLOCKWERT_PLATTFORM))) {
             if (yspeed > 2.0f)
                 PartikelSystem.PushPartikel(xpos + 20, ypos + 60, SMOKE);
 
@@ -1629,7 +1629,7 @@ void PlayerClass::AnimatePlayer() {
                     Handlung = PlayerActionEnum::RADELN;
                     TileEngine.BlockUnten(xpos, ypos, xposold, yposold, CollideRect, true);
                 } else {
-                    AufPlattform = NULL;
+                    AufPlattform = nullptr;
                     SoundManager.PlayWave(100, 128, 11025, SOUND_LANDEN);
                 }
             }
@@ -1858,7 +1858,7 @@ void PlayerClass::AnimatePlayer() {
             AnimPhase = 0;
             yspeed = -PLAYER_MAXJUMPSPEED;
             JumpAdd = PLAYER_JUMPADDSPEED;
-            AufPlattform = NULL;
+            AufPlattform = nullptr;
 
             // abstürzenden Flugsack adden
             Gegner.PushGegner(xpos, ypos + 20, FLUGSACK, 99, 0, false);
@@ -2368,7 +2368,7 @@ void PlayerClass::AnimatePlayer() {
 // --------------------------------------------------------------------------------------
 
 void PlayerClass::DoPlattformStuff() {
-    if (AufPlattform == NULL)
+    if (AufPlattform == nullptr)
         return;
 
     if (AufPlattform->GegnerArt == REITFLUGSACK)
@@ -2384,7 +2384,7 @@ void PlayerClass::DoPlattformStuff() {
 
     // Fahrstuhl über Boden gefahren? Dann bleibt der Spieler daran hängen
     if (bu & BLOCKWERT_WAND || bu & BLOCKWERT_PLATTFORM) {
-        AufPlattform = NULL;
+        AufPlattform = nullptr;
     } else {
         if (AufPlattform->GegnerArt == FAHRSTUHL)
             ypos = g_Fahrstuhl_yPos + GegnerRect[AufPlattform->GegnerArt].top - CollideRect.bottom;
@@ -2722,8 +2722,8 @@ void PlayerClass::MovePlayer() {
     //
     if (NUMPLAYERS == 2 && Player[0].Handlung !=PlayerActionEnum:: TOT &&
             Player[1].Handlung != PlayerActionEnum::TOT) {
-        PlayerClass *pVictim = NULL;
-        PlayerClass *pSurvivor = NULL;
+        PlayerClass *pVictim = nullptr;
+        PlayerClass *pSurvivor = nullptr;
 
         // Spieler 1 fällt unten raus?
         if (Player[0].ypos > Player[1].ypos + 480.0f) {
@@ -2738,7 +2738,7 @@ void PlayerClass::MovePlayer() {
         }
 
         // Einer der Spieler fällt raus
-        if (pVictim != NULL) {
+        if (pVictim != nullptr) {
             pVictim->xpos = pSurvivor->xpos;
             pVictim->ypos = pSurvivor->ypos - 20.0f;
         }

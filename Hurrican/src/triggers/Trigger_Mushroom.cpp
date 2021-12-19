@@ -43,7 +43,7 @@ void GegnerMushroom::DoDraw() {
 
 void GegnerMushroom::PlayerJumps(PlayerClass *pPlayer) {
     if (count > 0.0f) {
-        pPlayer->AufPlattform = NULL;
+        pPlayer->AufPlattform = nullptr;
         pPlayer->yspeed = -(PLAYER_MAXJUMPSPEED * (0.5f + count));
 
         if (pPlayer->yspeed > -PLAYER_MAXJUMPSPEED)

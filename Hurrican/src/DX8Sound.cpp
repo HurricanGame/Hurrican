@@ -342,7 +342,7 @@ loadfile:
     songs[nr].looped = loop;
 
     if (fromrar) {
-        songs[nr].data = MUSIC_LoadSongEx(pData, 0, buf_size, FSOUND_LOADMEMORY, NULL, 0);
+        songs[nr].data = MUSIC_LoadSongEx(pData, 0, buf_size, FSOUND_LOADMEMORY, nullptr, 0);
         free(pData);
     } else {
         songs[nr].data = MUSIC_LoadSong(fullpath.c_str());
@@ -424,7 +424,7 @@ void SoundManagerClass::UnloadSong(int nr) {
             StopSong(nr, false);
 
         MUSIC_FreeSong(songs[nr].data);
-        songs[nr].data = NULL;
+        songs[nr].data = nullptr;
     }
 }
 
@@ -448,7 +448,7 @@ void SoundManagerClass::StopSongs() {
 void SoundManagerClass::StopSounds() {
     // DKS - Now, we iterate over channels instead:
     // for (int i = 0; i < MAX_SOUNDS; i++)
-    //    if (its_Sounds[i] != NULL)
+    //    if (its_Sounds[i] != nullptr)
     //        StopWave(i);
 
     for (int i = 0; i < num_channels; ++i)
@@ -760,7 +760,7 @@ void SoundManagerClass::StopWave(int nr) {
 void SoundManagerClass::UnloadWave(int nr) {
     if (sounds[nr].data) {
         SOUND_Sample_Free(sounds[nr].data);
-        sounds[nr].data = NULL;
+        sounds[nr].data = nullptr;
     }
 }
 
@@ -810,7 +810,7 @@ void SoundManagerClass::UnpauseSongs() {
 // DKS - Added new function to check if a song is playing. Before, many parts of the
 //      game were calling MUSIC_IsPlaying() directly against SoundData, which would
 //      segfault if music wasn't initialized or a specific song wasn't loaded and
-//      SoundData was thus NULL.
+//      SoundData was thus nullptr.
 bool SoundManagerClass::SongIsPlaying(int nr) {
     return songs[nr].data && !songs[nr].paused && MUSIC_IsPlaying(songs[nr].data);
 }

@@ -487,14 +487,14 @@ void GegnerFahrstuhlBoss::DoKI() {
     // abdriften wegen der FahrstuhlGeschwindigkeit
 
     for (int i = 0; i < NUMPLAYERS; i++)
-        if (Player[i].AufPlattform == NULL) {
+        if (Player[i].AufPlattform == nullptr) {
             Player[i].ypos += 40.0f SYNC;
             Player[i].yposold += 40.0f SYNC;
             Player[i].JumpStart += 40.0f SYNC;
         }
 
     PartikelClass *pTemp = PartikelSystem.pStart;  // Zeiger auf den ersten Partikel
-    while (pTemp != NULL)                          // Ende der Liste erreicht ?
+    while (pTemp != nullptr)                          // Ende der Liste erreicht ?
     {
         if (pTemp->PartikelArt != FUNKE && pTemp->PartikelArt != BULLET && pTemp->PartikelArt != SMOKE) {
             pTemp->yPos += 40.0f SYNC;  // Nach unten bewegen
@@ -504,7 +504,7 @@ void GegnerFahrstuhlBoss::DoKI() {
     }
 
     ProjectileClass *pTemp2 = Projectiles.pStart;  // Zeiger auf den ersten Schuss
-    while (pTemp2 != NULL)                         // Ende der Liste erreicht ?
+    while (pTemp2 != nullptr)                         // Ende der Liste erreicht ?
     {
         if (pTemp2->ShotArt != STELZLASER) {
             pTemp2->yPos += 40.0f SYNC;  // Nach unten bewegen
@@ -522,7 +522,7 @@ void GegnerFahrstuhlBoss::DoKI() {
             Player[p].ypos -= A;
 
         GegnerClass *pTemp3 = Gegner.pStart;  // Zeiger auf den ersten Gegner
-        while (pTemp3 != NULL)                // Ende der Liste erreicht ?
+        while (pTemp3 != nullptr)                // Ende der Liste erreicht ?
         {
             if (pTemp3->GegnerArt >= SPITTER && pTemp3->GegnerArt <= FAHRSTUHL) {
                 pTemp3->yPos -= A;  // Nach oben bewegen
@@ -533,7 +533,7 @@ void GegnerFahrstuhlBoss::DoKI() {
         }
 
         ProjectileClass *pTemp4 = Projectiles.pStart;  // Zeiger auf den ersten Schuss
-        while (pTemp4 != NULL)                         // Ende der Liste erreicht ?
+        while (pTemp4 != nullptr)                         // Ende der Liste erreicht ?
         {
             pTemp4->yPos -= A;  // Nach oben bewegen
             pTemp4->yPosOld -= A;
@@ -541,7 +541,7 @@ void GegnerFahrstuhlBoss::DoKI() {
         }
 
         PartikelClass *pTemp5 = PartikelSystem.pStart;  // Zeiger auf den ersten Partikel
-        while (pTemp5 != NULL)                          // Ende der Liste erreicht ?
+        while (pTemp5 != nullptr)                          // Ende der Liste erreicht ?
         {
             pTemp5->yPos -= A;  // Nach oben bewegen
             pTemp5->yPosOld -= A;

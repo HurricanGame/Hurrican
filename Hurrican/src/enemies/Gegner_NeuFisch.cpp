@@ -20,7 +20,7 @@ GegnerNeuFisch::GegnerNeuFisch(int Wert1, int Wert2, bool Light) {
     AnimCount = 0.0f;
     ChangeLight = Light;
     Destroyable = true;
-    pFest = NULL;
+    pFest = nullptr;
     MoveSpeed = 5.0f + static_cast<float>(random(50)) / 10.0f;
 }
 

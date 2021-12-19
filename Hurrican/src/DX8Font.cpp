@@ -76,13 +76,13 @@ DirectGraphicsFont::DirectGraphicsFont() {
     // DKS - Added support for font scaling
     mScaleFactor = 1;
 
-    mTexture = NULL;
+    mTexture = nullptr;
 
     // DKS - Character widths are now hard-coded arrays we merely point to:
     //// alle mit 0 initialiseren, falls ein fehlerhaftest Zeichen verwendet wird
     // for (int i = 0; i < 256; i++)
     //    mCharLength[i] = 1;
-    mCharLength = NULL;
+    mCharLength = nullptr;
 }
 
 // --------------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ DirectGraphicsFont::DirectGraphicsFont() {
 DirectGraphicsFont::~DirectGraphicsFont() {
     // Font Textur freigeben
     delete (mTexture);
-    mTexture = NULL;
+    mTexture = nullptr;
 }
 
 // --------------------------------------------------------------------------------------
@@ -152,7 +152,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
         fullpath = g_storage_ext + "/levels/" + std::string(CommandLineParams.OwnLevelList) + std::string(Filename);
         if (FileExists(fullpath.c_str()))
         {
-            if (!loadImageSDL(image, fullpath, NULL, 0)) {
+            if (!loadImageSDL(image, fullpath, nullptr, 0)) {
                 delete [] image.data;
                 Protokoll << "Error in LoadFont(): loadImageSDL() returned error loading " << fullpath << std::endl;
                 GameRunning = false;
@@ -161,14 +161,14 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
         }
     }
 
-    if (image.data == NULL)
+    if (image.data == nullptr)
     {
         //DKS - All textures are now stored in their own data/textures/ subdir:
         //sprintf_s(Temp, "%s/data/textures/%s", g_storage_ext, Filename);
         fullpath = g_storage_ext + "/data/textures/" + std::string(Filename);
         if (FileExists(fullpath.c_str()))
         {
-            if (!loadImageSDL(image, fullpath, NULL, 0)) {
+            if (!loadImageSDL(image, fullpath, nullptr, 0)) {
                 delete [] image.data;
                 Protokoll << "Error in LoadFont(): loadImageSDL() returned error loading " << fullpath << std::endl;
                 GameRunning = false;
@@ -178,11 +178,11 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
     }
 
 #if defined(USE_UNRARLIB)
-    if (image.data == NULL)
+    if (image.data == nullptr)
     {
         if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) != false)
         {
-            if (!loadImageSDL(image, NULL, pData, Size))
+            if (!loadImageSDL(image, nullptr, pData, Size))
                 delete [] image.data;
                 free(pData);
                 Protokoll << "Error in LoadFont(): loadImageSDL() returned error loading " << Filename << " from buffer" << std::endl;
@@ -194,7 +194,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
     }
 #endif  // USE_UNRARLIB
 
-    if (image.data  == NULL) {
+    if (image.data  == nullptr) {
         Protokoll << "Error in LoadFont(): image.data is NULL" << std::endl;
         GameRunning = false;
         return false;

@@ -242,7 +242,7 @@ void GegnerTheWall::ReturnSkull() {
     GegnerClass *pTemp;
     pTemp = Gegner.pStart;
 
-    while (pTemp != NULL) {
+    while (pTemp != nullptr) {
         if (pTemp->GegnerArt == SKULL)
             pTemp->Handlung = GEGNER_SPECIAL2;
 
@@ -451,7 +451,7 @@ void GegnerTheWall::DoKI() {
             GegnerClass *pTemp;
             pTemp = Gegner.pStart;
 
-            while (pTemp != NULL) {
+            while (pTemp != nullptr) {
                 if (pTemp->GegnerArt == SKULL) {
                     pTemp->Value1 = 0;
                     pTemp->AnimCount = 0.5f;

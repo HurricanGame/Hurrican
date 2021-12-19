@@ -219,13 +219,13 @@ bool TexturesystemClass::LoadTextureFromFile(const std::string &filename, Textur
 
 #if defined(USE_UNRARLIB)
     // Are we using unrarlib to read all game data from a single RAR archive?
-    void *buf_data = NULL;       // Memory  buffer file is read into, if using unrarlib
+    void *buf_data = nullptr;       // Memory  buffer file is read into, if using unrarlib
     unsigned long buf_size = 0;  // Size of memory buffer file is read into, if using unrarlib
     if (fs::exists(RARFILENAME) && fs::is_regular_file(RARFILENAME) &&
         urarlib_get(&buf_data, &buf_size, filename.c_str(), RARFILENAME, convertText(RARFILEPASSWORD)) &&
-        buf_data != NULL) {
+        buf_data != nullptr) {
         // Load the texture from the image that is now in buf_data[]
-        success = SDL_LoadTexture(NULL, NULL, buf_data, buf_size, th);
+        success = SDL_LoadTexture(nullptr, nullptr, buf_data, buf_size, th);
         if (buf_data)
             free(buf_data);
 
@@ -239,7 +239,7 @@ bool TexturesystemClass::LoadTextureFromFile(const std::string &filename, Textur
 #endif  // USE_UNRARLIB
 loadfile:
     // Load the texture from disk:
-    success = SDL_LoadTexture(path, filename, NULL, 0, th);
+    success = SDL_LoadTexture(path, filename, nullptr, 0, th);
     if (success)
         goto loaded;
 

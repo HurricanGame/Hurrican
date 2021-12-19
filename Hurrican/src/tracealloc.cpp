@@ -129,7 +129,7 @@ void InitSymbolPath(PSTR lpszSymbolPath, PCSTR lpszIniPath) {
     }
 
     // Add user defined path
-    if (lpszIniPath != NULL)
+    if (lpszIniPath != nullptr)
         if (lpszIniPath[0] != '\0') {
             strcat(lpszSymbolPath, ";");
             strcat(lpszSymbolPath, lpszIniPath);
@@ -182,7 +182,7 @@ BOOL GetFunctionInfoFromAddresses(ULONG fnAddress, ULONG stackAddress, LPTSTR lp
     std::uint32_t dwSymSize = 10000;
     TCHAR lpszUnDSymbol[BUFFERSIZE] = _T("?");
     CHAR lpszNonUnicodeUnDSymbol[BUFFERSIZE] = "?";
-    LPTSTR lpszParamSep = NULL;
+    LPTSTR lpszParamSep = nullptr;
     LPCTSTR lpszParsed = lpszUnDSymbol;
     PIMAGEHLP_SYMBOL pSym = (PIMAGEHLP_SYMBOL)GlobalAlloc(GMEM_FIXED, dwSymSize);
 
@@ -219,11 +219,11 @@ BOOL GetFunctionInfoFromAddresses(ULONG fnAddress, ULONG stackAddress, LPTSTR lp
 
         // Let's go through the stack, and modify the function prototype, and insert the actual
         // parameter values from the stack
-        if (_tcsstr(lpszUnDSymbol, _T("()")) == NULL && _tcsstr(lpszUnDSymbol, _T("()")) == NULL) {
+        if (_tcsstr(lpszUnDSymbol, _T("()")) == nullptr && _tcsstr(lpszUnDSymbol, _T("()")) == nullptr) {
             ULONG index = 0;
             for (;; index++) {
                 lpszParamSep = (LPTSTR)_tcschr(lpszParsed, _T(','));
-                if (lpszParamSep == NULL)
+                if (lpszParamSep == nullptr)
                     break;
 
                 *lpszParamSep = _T('\0');
@@ -235,7 +235,7 @@ BOOL GetFunctionInfoFromAddresses(ULONG fnAddress, ULONG stackAddress, LPTSTR lp
             }
 
             lpszParamSep = (LPTSTR)_tcschr(lpszParsed, _T(')'));
-            if (lpszParamSep != NULL) {
+            if (lpszParamSep != nullptr) {
                 *lpszParamSep = _T('\0');
 
                 _tcscat(lpszSymbol, lpszParsed);
@@ -327,8 +327,8 @@ void GetStackTrace(HANDLE hThread, ULONG ranOffsets[][2], ULONG nMaxStack) {
     callStack.AddrFrame.Mode = AddrModeFlat;
 
     for (ULONG index = 0;; index++) {
-        bResult = StackWalk(IMAGE_FILE_MACHINE_I386, hProcess, hThread, &callStack, NULL, NULL, SymFunctionTableAccess,
-                            SymGetModuleBase, NULL);
+        bResult = StackWalk(IMAGE_FILE_MACHINE_I386, hProcess, hThread, &callStack, nullptr, nullptr, SymFunctionTableAccess,
+                            SymGetModuleBase, nullptr);
 
         // Ignore the first two levels (it's only TraceAlloc and operator new anyhow)
         if (index < 3)

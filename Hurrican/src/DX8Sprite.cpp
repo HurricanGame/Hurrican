@@ -59,7 +59,7 @@ DirectGraphicsSprite::~DirectGraphicsSprite() {
     //    {
     //        delete_texture( itsTexture );
     //        itsTexture = -1;
-    //        itsTexture = (LPDIRECT3DTEXTURE8)NULL;
+    //        itsTexture = (LPDIRECT3DTEXTURE8)nullptr;
     //        LoadedTextures--;
     ////		Protokoll << "-> Sprite texture successfully released !" << std::endl;
     //
@@ -203,7 +203,7 @@ loadfile:
 
     // Ausschnitte vorberechnen
     //DKS - array is now dynamically allocated
-    if (itsPreCalcedRects != NULL) 
+    if (itsPreCalcedRects != nullptr) 
         free(itsPreCalcedRects);
     itsPreCalcedRects = (RECT_struct*)malloc(xfc * yfc * sizeof(RECT_struct));
 

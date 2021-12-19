@@ -24,7 +24,7 @@ GegnerSkull::GegnerSkull(int Wert1, int Wert2, bool Light) {
     ShotDelay = 10.0f;
     ShotCount = 0;
     Disappear = 20.0f;
-    pMachine = NULL;
+    pMachine = nullptr;
 
     AnimCount = 0.0f;
     if (Value2 == 99)
@@ -35,13 +35,13 @@ GegnerSkull::GegnerSkull(int Wert1, int Wert2, bool Light) {
     // Position der Endboss Wand rausfinden
     GegnerClass *pTemp;
     pTemp = Gegner.pStart;
-    while (pTemp != NULL) {
+    while (pTemp != nullptr) {
         if (pTemp->GegnerArt == THEWALL) {
             mxPos = pTemp->xPos + 5;
             myPos = pTemp->yPos + 229;
             pMachine = pTemp;
 
-            pTemp = NULL;
+            pTemp = nullptr;
         } else
             pTemp = pTemp->pNext;
     }

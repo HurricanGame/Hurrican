@@ -110,18 +110,18 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
         {
             // DKS - Fixed uninitialized variable:
             // GegnerClass *pAim, *pTemp2;
-            GegnerClass *pAim = NULL;
+            GegnerClass *pAim = nullptr;
             GegnerClass *pTemp2 = Gegner.pStart;
 
-            while (pTemp2 != NULL) {
+            while (pTemp2 != nullptr) {
                 if (pTemp2->GegnerArt == PUNISHER) {
                     pAim = pTemp2;
-                    pTemp2 = NULL;
+                    pTemp2 = nullptr;
                 } else
                     pTemp2 = pTemp2->pNext;
             }
 
-            if (pAim == NULL)
+            if (pAim == nullptr)
                 return;
 
             // DKS - Converted to float:
@@ -3984,7 +3984,7 @@ void ProjectileClass::ExplodeShot() {
                 schaden = 250;
 
             pEnemy = Gegner.pStart;  // Anfang der Gegnerliste
-            while (pEnemy != NULL)   // Noch nicht alle durch ?
+            while (pEnemy != nullptr)   // Noch nicht alle durch ?
             {
                 xdiff = (xPos + ShotRect[ShotArt].left + (ShotRect[ShotArt].right - ShotRect[ShotArt].left) / 2) -
                         (pEnemy->xPos + GegnerRect[pEnemy->GegnerArt].right / 2);
@@ -4700,20 +4700,20 @@ bool ProjectileListClass::PushProjectile(float x, float y, int Art, PlayerClass*
 
     pNew->CreateShot(x, y, Art, pTemp);					// neues Projektil erzeugen
 
-    if(pStart==NULL)						// Liste leer ?
+    if(pStart==nullptr)						// Liste leer ?
     {
         pStart = pNew;						// Ja, dann neues projektil gleich das erste
         pEnd   = pNew;						// und letzte Projektil
 
-        pStart->pNext=NULL;					// Next/Previous gibts nich, da wir
-        pStart->pPrev=NULL;					// nur 1 Projektil haben
+        pStart->pNext=nullptr;					// Next/Previous gibts nich, da wir
+        pStart->pPrev=nullptr;					// nur 1 Projektil haben
     }
     else									// Liste ist NICHT leer
     {
         pEnd->pNext = pNew;					// Letztes Projektil zeigt auf das neue
         pNew->pPrev = pEnd;					// Letztes Projektil ist nicht mehr das letzte
 
-        pNew->pNext = NULL;					// Nach dem neuen Projektil kommt keines mehr
+        pNew->pNext = nullptr;					// Nach dem neuen Projektil kommt keines mehr
         pEnd		= pNew;					// da es jetzt das letzte in der Liste ist
     }
 

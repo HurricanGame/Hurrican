@@ -28,7 +28,7 @@ GegnerSchleimMaul::GegnerSchleimMaul(float x, float y, int Wert1, int Wert2, boo
     // 8 Baby Schleimbollen spawnen ;)
     //
     for (int i = 0; i < 8; i++) {
-        pChildren[i] = NULL;
+        pChildren[i] = nullptr;
 
         float r, r1, r2;
 

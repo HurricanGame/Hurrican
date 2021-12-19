@@ -129,7 +129,7 @@ void GegnerTutorialText::DoKI() {
 
                 pTemp = Gegner.pStart;
 
-                while (pTemp != NULL) {
+                while (pTemp != nullptr) {
                     // noch mind. ein Auge am Leben=
                     //
                     if (pTemp->GegnerArt == AUGE && pTemp->Value2 == 99)
@@ -167,7 +167,7 @@ void GegnerTutorialText::DoKI() {
 
                 pTemp = Gegner.pStart;
 
-                while (pTemp != NULL) {
+                while (pTemp != nullptr) {
                     if (pTemp->GegnerArt == POWERBLOCK) {
                         GegnerPowerBlock *pPower;
 

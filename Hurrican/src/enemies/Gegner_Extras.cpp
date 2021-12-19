@@ -124,14 +124,14 @@ void GegnerExtras::DoKI() {
     }  // switch
 
     // Testen, ob der Spieler das Extra eingesammelt hat
-    PlayerClass *pCollector = NULL;
+    PlayerClass *pCollector = nullptr;
 
     for (int i = 0; i < NUMPLAYERS; i++)
         if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[i].xpos, Player[i].ypos, Player[i].CollideRect) ==
             true)
             pCollector = &Player[i];
 
-    if (pCollector != NULL)  // &&
+    if (pCollector != nullptr)  // &&
                              // Handlung != GEGNER_SPRINGEN)
     {
         // Punkte fürs Extras sammeln gebe

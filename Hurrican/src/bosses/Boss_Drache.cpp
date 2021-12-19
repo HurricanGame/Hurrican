@@ -346,7 +346,7 @@ void GegnerDrache::DoKI() {
         // Alle übrigen Mini-Drachen zerstören
         GegnerClass *pTemp;
         pTemp = Gegner.pStart;
-        while (pTemp != NULL) {
+        while (pTemp != nullptr) {
             if (pTemp->GegnerArt == MINIDRAGON)
                 pTemp->Energy = 0.0f;
 
@@ -673,7 +673,7 @@ void GegnerDrache::DoKI() {
             // Hinten vorbeigeflogen?
             if (TileEngine.pDragonHack->m_State == DragonState::WAIT && drachevorbei == true) {
                 delete TileEngine.pDragonHack;
-                TileEngine.pDragonHack = NULL;
+                TileEngine.pDragonHack = nullptr;
 
                 Handlung = GEGNER_AUSWAHL;
             }

@@ -408,7 +408,7 @@ void GegnerMetalHead::DoKI() {
 
         for (int p = 0; p < NUMPLAYERS; p++)
             if (Player[p].AufPlattform == this)
-                Player[p].AufPlattform = NULL;
+                Player[p].AufPlattform = nullptr;
 
         // Endboss-Musik ausfaden und abschalten
         SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);

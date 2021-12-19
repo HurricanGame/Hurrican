@@ -102,7 +102,7 @@ void GegnerFloating3::DoKI() {
                             drehdir = -1.0f;
                     }
 
-                    Player[p].AufPlattform = NULL;
+                    Player[p].AufPlattform = nullptr;
 
                     turncount = 0.0f;
                     Handlung = GEGNER_DREHEN;

@@ -332,7 +332,7 @@ void DirectInputClass::UpdateTouchscreen() {
 
             for (index = 0; index < finger_count; index++) {
                 finger = SDL_GetTouchFinger(fingerdevice, index);
-                if (finger != NULL) {
+                if (finger != nullptr) {
                     touch.x = finger->x * Width;
                     touch.y = finger->y * Height;
 
