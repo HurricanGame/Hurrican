@@ -736,10 +736,14 @@ void GegnerMetalHead::DoKI() {
             }
                 [[fallthrough]];
 
-            // Kopf fliegt auf xto/yto zu
+            // Head flies towards xto/yto
             case GEGNER_STEHEN: {
-                // Beim Headbangen den Kiefer öffnen
+                // Open jaw when headbanging
                 //
+                // FIXME
+                // Akt is initialized to SK_AUSGANG
+                // and then only assigned values GEGNER_OEFFNEN, GEGNER_SCHLIESSEN and GEGNER_SCHIESSEN
+                // Something's broken here...
                 if (Akt == SK_BANGEN) {
                     if (KieferPos < 60.0f)
                         KieferPos += 5.0f SYNC;
@@ -747,7 +751,7 @@ void GegnerMetalHead::DoKI() {
                         KieferPos = 60.0f;
                 }
 
-                // Beim Zurückziehen in die Ausgangslage wieder schliessen
+                // Close again when pulling back into the starting position
                 //
                 if (Akt == SK_AUSGANG) {
                     if (KieferPos > 0.0f)
