@@ -9,6 +9,10 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
+#define TILESIZE 20
+
+#define BOXTEXTLENGTH 2000
+
 enum class FadeMode {
   INVISIBLE,
   VISIBLE,
@@ -21,15 +25,6 @@ enum class FadeMode {
 // --------------------------------------------------------------------------------------
 
 class CGUISystem {
-#define TILESIZE 20
-
-#define FADESPEED 40.0f
-#define MAXFADE 200.0f
-
-#define BOXTEXTLENGTH 2000
-
-#define BOXSIZEMAX 480
-
   private:
     float m_xPos, m_yPos;
     DirectGraphicsSprite m_Rahmen;
