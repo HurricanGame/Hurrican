@@ -68,10 +68,6 @@ struct sCommandLineParams {
 #define DEFAULT_SCREENBPP 32
 #endif
 
-#define PARAM_NONE 0
-#define PARAM_LEVEL 1
-#define PARAM_LIST 2
-
 // --------------------------------------------------------------------------------------
 // Prototypen von Funktionen
 // --------------------------------------------------------------------------------------
