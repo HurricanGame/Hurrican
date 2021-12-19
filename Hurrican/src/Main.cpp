@@ -26,6 +26,7 @@
 
 #include <algorithm>
 #include <cstdio>
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -171,7 +172,7 @@ void FillCommandLineParams(int argc, char *args[]) {
             Protokoll << "  -C,    --crt            : Simulate CRT effects for a retro look" << std::endl;
             Protokoll << "         --custom x       : Play custom userlevel" << std::endl;
             Protokoll << "         --level x        : Load selected level map" << std::endl;
-            exit(1);
+            exit(EXIT_SUCCESS);
         } else if ((strstr(args[i], "--windowmode") != nullptr) || (strstr(args[i], "-W") != nullptr)) {
             if (CommandLineParams.RunWindowMode == ScreenMode::FULLSCREEN_STRETCHED) {
                 std::cout << "Stretch mode selected, ignoring windowmode" << std::endl;

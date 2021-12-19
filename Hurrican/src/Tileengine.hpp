@@ -20,6 +20,8 @@
 #include "CDragonHack.hpp"
 #include "Globals.hpp"
 
+#include <cstdlib>
+
 // --------------------------------------------------------------------------------------
 // Defines
 // --------------------------------------------------------------------------------------
@@ -582,7 +584,7 @@ class TileEngineClass {
                       << "\tparam j: " << j << "\tLower bound: " << 0 << "\tUpper bound: " << LEVELSIZE_Y - 1
                       << std::endl;
             GameRunning = false;
-            exit(1);  // WriteText above should do this for us (first param==true)
+            exit(EXIT_FAILURE);  // WriteText above should do this for us (first param==true)
         }
 
 #elif !defined NDEBUG
@@ -593,7 +595,7 @@ class TileEngineClass {
                       << "\tparam j: " << j << "\tLower bound: " << 0 << "\tUpper bound: " << MAX_LEVELSIZE_Y - 1
                       << std::endl;
             GameRunning = false;
-            exit(1);  // WriteText above should do this for us (first param==true)
+            exit(EXIT_FAILURE);  // WriteText above should do this for us (first param==true)
         }
 #endif
         return Tiles[i][j];
