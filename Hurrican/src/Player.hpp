@@ -62,22 +62,24 @@ constexpr float BLITZ_POWER = 4.0f;         // Was zieht der Blitz ab ?
 
 //----- Definitionen der Aktionstasten
 
-#define AKTION_LINKS 0
-#define AKTION_RECHTS 1
-#define AKTION_DUCKEN 2
-#define AKTION_OBEN 3
-#define AKTION_UNTEN 4
-#define AKTION_JUMP 5
-#define AKTION_SHOOT 6
-#define AKTION_BLITZ 7
-#define AKTION_POWERLINE 8
-#define AKTION_GRANATE 9
-#define AKTION_SMARTBOMB 10
-#define AKTION_WAFFEN_CYCLE 11
-#define AKTION_WAFFE_SPREAD 12
-#define AKTION_WAFFE_LASER 13
-#define AKTION_WAFFE_BOUNCE 14
-#define MAX_AKTIONEN 15
+enum {
+  AKTION_LINKS = 0,
+  AKTION_RECHTS = 1,
+  AKTION_DUCKEN = 2,
+  AKTION_OBEN = 3,
+  AKTION_UNTEN = 4,
+  AKTION_JUMP = 5,
+  AKTION_SHOOT = 6,
+  AKTION_BLITZ = 7,
+  AKTION_POWERLINE = 8,
+  AKTION_GRANATE = 9,
+  AKTION_SMARTBOMB = 10,
+  AKTION_WAFFEN_CYCLE = 11,
+  AKTION_WAFFE_SPREAD = 12,
+  AKTION_WAFFE_LASER = 13,
+  AKTION_WAFFE_BOUNCE = 14,
+  MAX_AKTIONEN = 15
+};
 
 constexpr int NUM_COOL_LIGHTNINGS = 18;  // Anzahl der Blitze, aus denen der neue coole Blitz besteht
 

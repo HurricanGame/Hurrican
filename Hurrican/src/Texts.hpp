@@ -24,15 +24,17 @@
 
 constexpr int MAX_CHEATS = 10;
 
-#define CHEAT_EXTRAS 0
-#define CHEAT_WAFFEN 1
-#define CHEAT_SCHILD 2
-#define CHEAT_ZEIT 3
-#define CHEAT_GOD 4
-#define CHEAT_RAD 5
-#define CHEAT_AUTOFIRE 6
-#define CHEAT_SUPERSHOT 7
-#define CHEAT_FLAMER 8
+enum {
+  CHEAT_EXTRAS = 0,
+  CHEAT_WAFFEN = 1,
+  CHEAT_SCHILD = 2,
+  CHEAT_ZEIT = 3,
+  CHEAT_GOD = 4,
+  CHEAT_RAD = 5,
+  CHEAT_AUTOFIRE = 6,
+  CHEAT_SUPERSHOT = 7,
+  CHEAT_FLAMER = 8,
+};
 
 // Enum für die verschiedenen Texte
 // es wird nie konkret ein String im Code angegeben, sondern immer nur eine Zahl, welche

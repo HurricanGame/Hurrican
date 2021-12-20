@@ -41,10 +41,12 @@ constexpr int MAX_KEYS = 256;
 
 // ForceFeedback Effekte
 //
-#define FFE_SMALLRUMBLE 0
-#define FFE_MEDIUMRUMBLE 1
-#define FFE_BIGRUMBLE 2
-#define FFE_BLITZ 3
+enum {
+  FFE_SMALLRUMBLE = 0,
+  FFE_MEDIUMRUMBLE = 1,
+  FFE_BIGRUMBLE = 2,
+  FFE_BLITZ = 3
+};
 
 constexpr int MAX_JOYSTICKS = 4;
 // DKS - Fixed ambiguity: The game had ControlType and JoystickMode both using this define, but
