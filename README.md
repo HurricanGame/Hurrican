@@ -5,7 +5,7 @@ Also uses XDG compliant data/config paths on UNIX.
 Additional userlevels from http://turricanforever.de included.
 
 Original code by Eiswuxe (Poke53280) [[Winterworks](https://www.winterworks.de/project/hurrican/)]  
-Further work by [Pickle136](https://sourceforge.net/projects/hurrican/), Stefan Schmidt ([thrimbor](https://github.com/thrimbor/Hurrican)) and Leandro Nini [drfiemost](https://github.com/drfiemost/Hurrican)  
+Further work by [Pickle136](https://sourceforge.net/projects/hurrican/), Stefan Schmidt ([thrimbor](https://github.com/thrimbor/Hurrican)) and Leandro Nini ([drfiemost](https://github.com/drfiemost/Hurrican))  
 CRT simulation partially based on [CRT effect - Shadertoy, Unity](https://luka712.github.io/2018/07/21/CRT-effect-Shadertoy-Unity/) article from luka712's blog
 
 ![screenshot](https://github.com/drfiemost/Hurrican/wiki/images/level1.png)
