@@ -441,9 +441,9 @@ void GegnerClass::Wegschieben(RECT_struct rect, float dam) {
             if (Player[i].Handlung == PlayerActionEnum::RADELN ||
                     Player[i].Handlung == PlayerActionEnum::RADELN_FALL) {
                 if (Player[i].xpos < xPos)
-                    Player[i].Blickrichtung = -1;
+                    Player[i].Blickrichtung = LINKS;
                 if (Player[i].xpos > xPos)
-                    Player[i].Blickrichtung = 1;
+                    Player[i].Blickrichtung = RECHTS;
             }
 
             // Sonst Energie abziehen

@@ -86,9 +86,9 @@ void GegnerEvilHurri::DoKI() {
             if (Player[p].Handlung == PlayerActionEnum::RADELN ||
                     Player[p].Handlung == PlayerActionEnum::RADELN_FALL) {
                 if (Player[p].xpos < xPos)
-                    Player[p].Blickrichtung = -1;
+                    Player[p].Blickrichtung = LINKS;
                 if (Player[p].xpos > xPos)
-                    Player[p].Blickrichtung = 1;
+                    Player[p].Blickrichtung = RECHTS;
             }
 
             // Sonst Energie abziehen
