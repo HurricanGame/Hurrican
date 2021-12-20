@@ -23,7 +23,7 @@ GegnerPowerBlock::GegnerPowerBlock(int Wert1, int Wert2, bool Light) {
 
     for (int i = 0; i < 16; i++)
         AlreadySpawned[i] = false;
-
+#if 0
     // Itemanzahl standard mässig auf 16 setzen, wenn keine Items drin sind (weil Turri das immer vergisst im Editor)
     if (Wert1 == 0)
         Value1 = 10;
@@ -40,9 +40,10 @@ GegnerPowerBlock::GegnerPowerBlock(int Wert1, int Wert2, bool Light) {
         Value1 = int(Value1 * 0.5f);
     if (Skill == 3)
         Value1 = int(Value1 * 0.3f);
-
+#else
+    // NOTE why has this been hardcoded?
     Value1 = 4;
-
+#endif
     // Typ des Extras merken
     // Ist der Typ == 0, werden Extras per Zufall gespawnt
     ExtraType = Wert2;
