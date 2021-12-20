@@ -104,6 +104,8 @@ struct HighscoreStruct {
     int32_t Pruefsumme;
 };
 
+static_assert(sizeof(HighscoreStruct) == 48, "Size of HighscoreStruct is wrong");
+
 // --------------------------------------------------------------------------------------
 // Struktur zum Speichern und laden eines Savegames
 // --------------------------------------------------------------------------------------
@@ -134,6 +136,8 @@ struct SavegameStruct {
     int32_t SmartBombs;                // Anzahl an SmartBomben (Druckwellen)
     int32_t Pruefsumme;                // Prüfsumme für die Savegames
 };
+
+static_assert(sizeof(SavegameStruct) == 240, "Size of SavegameStruct is wrong");
 
 // --------------------------------------------------------------------------------------
 // Menu-Klasse
