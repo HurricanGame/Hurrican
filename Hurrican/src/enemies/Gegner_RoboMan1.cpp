@@ -123,10 +123,7 @@ void GegnerRoboMan1::DoKI() {
         if (yPos > pAim->ypos - 40)
             yAcc = -2.5f;
 
-        if (ySpeed > 10.0f)
-            ySpeed = 10.0f;
-        if (ySpeed < -10.0f)
-            ySpeed = -10.0f;
+        ySpeed = std::clamp(ySpeed, -10.0f, 10.0f);
     }
 
     if ((blocko & BLOCKWERT_WAND || blocko & BLOCKWERT_GEGNERWAND) && ySpeed < 0.0f)

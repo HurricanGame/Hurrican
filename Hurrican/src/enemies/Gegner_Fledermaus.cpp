@@ -106,14 +106,8 @@ void GegnerFledermaus::DoKI() {
                 }
             }
 
-            if (xSpeed > 10.0f)
-                xSpeed = 10.0f;
-            if (xSpeed < -10.0f)
-                xSpeed = -10.0f;
-            if (ySpeed > 10.0f)
-                ySpeed = 10.0f;
-            if (ySpeed < -10.0f)
-                ySpeed = -10.0f;
+            xSpeed = std::clamp(xSpeed, -10.0f, 10.0f);
+            ySpeed = std::clamp(ySpeed, -10.0f, 10.0f);
 
             int dx = abs(static_cast<int>(xPos - Value1));
             int dy = abs(static_cast<int>(yPos - Value2));

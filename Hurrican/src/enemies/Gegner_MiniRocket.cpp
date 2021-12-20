@@ -119,14 +119,8 @@ void GegnerMiniRocket::DoKI() {
         else
             yAcc = -2.5f;
 
-        if (xSpeed < -10.0f)
-            xSpeed = -10.0f;
-        if (xSpeed > 10.0f)
-            xSpeed = 10.0f;
-        if (ySpeed < -10.0f)
-            ySpeed = -10.0f;
-        if (ySpeed > 10.0f)
-            ySpeed = 10.0f;
+        xSpeed = std::clamp(xSpeed, -10.0f, 10.0f);
+        ySpeed = std::clamp(ySpeed, -10.0f, 10.0f);
     }
 
     // Rauchen lassen

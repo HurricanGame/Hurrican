@@ -54,10 +54,7 @@ void GegnerLavaKrabbe::DoDraw() {
         D3DCOLOR Color = D3DCOLOR_RGBA(r, g, b, 255);
         float size = zPos / 5.0f;
 
-        if (size < 0.0f)
-            size = 0.0f;
-        if (size > 70.0f)
-            size = 70.0f;
+        size = std::clamp(size, 0.0f, 70.0f);
 
         size = 70.0f - size;
 

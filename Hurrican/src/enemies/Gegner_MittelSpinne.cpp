@@ -42,10 +42,7 @@ void GegnerMittelSpinne::DoDraw() {
     // DKS - Removed superfluous "/1.0f"
     // light = (yPos - 20) - yStart / 1.0f;
     light = (yPos - 20) - yStart;
-    if (light < 0.0f)
-        light = 0.0;
-    if (light > 255.0f)
-        light = 255.0;
+    light = std::clamp(light, 0.0f, 255.0f);
 
     lightred = 255 - DamageTaken;
 

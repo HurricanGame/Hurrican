@@ -209,15 +209,8 @@ void GegnerMiniDragon::DoKI() {
             float xdiv = (pAim->xpos + 30.0f) - (OldX + 30.0f);
             float ydiv = (pAim->ypos + 35.0f) - (OldY + 20.0f);
 
-            if (xdiv < -80)
-                xdiv = -80;
-            if (xdiv > 80)
-                xdiv = 80;
-
-            if (ydiv < -80)
-                ydiv = -80;
-            if (ydiv > 80)
-                ydiv = 80;
+            xdiv = std::clamp(xdiv, -80.0f, 80.0f);
+            ydiv = std::clamp(ydiv, -80.0f, 80.0f);
 
             NewX = OldX + xdiv;
             NewY = OldY + ydiv;
@@ -232,14 +225,8 @@ void GegnerMiniDragon::DoKI() {
             else
                 yAcc = -2.0f;
 
-            if (xSpeed < -8.0f)
-                xSpeed = -8.0f;
-            if (xSpeed > 8.0f)
-                xSpeed = 8.0f;
-            if (ySpeed < -8.0f)
-                ySpeed = -8.0f;
-            if (ySpeed > 8.0f)
-                ySpeed = 8.0f;
+            xSpeed = std::clamp(xSpeed, -8.0f, 8.0f);
+            ySpeed = std::clamp(ySpeed, -8.0f, 8.0f);
 
         } break;
 

@@ -59,20 +59,14 @@ void GegnerBallerdrone::DoKI() {
         PartikelSystem.PushPartikel(xPos + 37 + random(3), yPos + 35, ROBOMANSMOKE);
     }
 
-    if (xSpeed > 20.0f)
-        xSpeed = 20.0f;
-    if (xSpeed < -20.0f)
-        xSpeed = -20.0f;
+    xSpeed = std::clamp(xSpeed, -20.0f, 20.0f);
     if (ySpeed < -10.0f)
         ySpeed = -10.0f;
 
     // Animationsphase je nach Speed festlegen
     AnimPhase = 6 + int(xSpeed / 2.0f);
 
-    if (AnimPhase < 0)
-        AnimPhase = 0;
-    if (AnimPhase > 12)
-        AnimPhase = 12;
+    AnimPhase = std::clamp(AnimPhase, 0, 12);
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {

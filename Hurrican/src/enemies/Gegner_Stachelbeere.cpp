@@ -213,11 +213,7 @@ void GegnerStachelbeere::DoKI() {
             else
                 xAcc = 10.0f;
 
-            if (xSpeed < -10.0)
-                xSpeed = -10.0f;
-
-            if (xSpeed > 10.0)
-                xSpeed = 10.0f;
+            xSpeed = std::clamp(xSpeed, -10.0f, 10.0f);
 
             // an der Wand umdrehen
             // oder am Screenrand, wenn der Screen gelockt ist

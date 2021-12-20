@@ -86,10 +86,7 @@ void GegnerFetteSpinne::DoKI() {
             // Speed setzen
             xAcc = 5.0f * BlickRichtung;
 
-            if (xSpeed > 12.0f)
-                xSpeed = 12.0f;
-            if (xSpeed < -12.0f)
-                xSpeed = -12.0f;
+            xSpeed = std::clamp(xSpeed, -12.0f, 12.0f);
 
             // An Mauern umdrehen
             //

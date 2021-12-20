@@ -81,14 +81,8 @@ void GegnerPunisher::FollowPlayer() {
     if (yPos + 100 > pAim->ypos + 40)
         yAcc = -2.0f;
 
-    if (xSpeed > 15.0f)
-        xSpeed = 15.0f;
-    if (xSpeed < -15.0f)
-        xSpeed = -15.0f;
-    if (ySpeed > 15.0f)
-        ySpeed = 15.0f;
-    if (ySpeed < -15.0f)
-        ySpeed = -15.0f;
+    xSpeed = std::clamp(xSpeed, -15.0f, 15.0f);
+    ySpeed = std::clamp(ySpeed, -15.0f, 15.0f);
 }
 
 // --------------------------------------------------------------------------------------

@@ -512,11 +512,7 @@ void GegnerSchneeKoenig::DoKI() {
                 int a;
 
                 a = static_cast<int>((yPos - TileEngine.YOffset - 200.0f) / 10.0f);
-
-                if (a > 10)
-                    a = 10;
-                if (a < 0)
-                    a = 0;
+                a = std::clamp(a, 0, 10);
 
                 AnimPhase = a;
             }

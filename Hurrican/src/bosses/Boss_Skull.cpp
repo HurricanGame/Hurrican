@@ -59,17 +59,11 @@ void GegnerSkull::DoKI() {
     //
     float dx = static_cast<float>(pAim->xpos + 35) - (xPos + 16);
     AnimPhase = static_cast<int>(dx / 30);
-    if (AnimPhase < -5)
-        AnimPhase = -5;
-    if (AnimPhase > 9)
-        AnimPhase = 9;
+    AnimPhase = std::clamp(AnimPhase, -5, 9);
     AnimPhase += 5;
     if (xSpeed < 0.0f)
         AnimPhase = 20 - AnimPhase;
-    if (AnimPhase < 0)
-        AnimPhase = 0;
-    if (AnimPhase > 19)
-        AnimPhase = 19;
+    AnimPhase = std::clamp(AnimPhase, 0, 19);
 
     // Antrieb
     //
@@ -124,14 +118,8 @@ void GegnerSkull::DoKI() {
             else
                 yAcc = 4.0f;
 
-            if (xSpeed > 25.0f)
-                xSpeed = 25.0f;
-            if (xSpeed < -25.0f)
-                xSpeed = -25.0f;
-            if (ySpeed > 15.0f)
-                ySpeed = 15.0f;
-            if (ySpeed < -15.0f)
-                ySpeed = -15.0f;
+            xSpeed = std::clamp(xSpeed, -25.0f, 25.0f);
+            ySpeed = std::clamp(ySpeed, -15.0f, 15.0f);
 
             if (Disappear < 0.0f) {
                 // explodieren lassen
@@ -189,14 +177,8 @@ void GegnerSkull::DoKI() {
                 else
                     yAcc = 2.0f;
 
-                if (xSpeed > 25.0f)
-                    xSpeed = 25.0f;
-                if (xSpeed < -25.0f)
-                    xSpeed = -25.0f;
-                if (ySpeed > 15.0f)
-                    ySpeed = 15.0f;
-                if (ySpeed < -15.0f)
-                    ySpeed = -15.0f;
+                xSpeed = std::clamp(xSpeed, -25.0f, 25.0f);
+                ySpeed = std::clamp(ySpeed, -15.0f, 15.0f);
 
                 if ((xSpeed < 0.0f && xPos < TileEngine.XOffset) ||
                     (xSpeed > 0.0f && xPos > TileEngine.XOffset + 640.0f))

@@ -87,10 +87,7 @@ void GegnerDrone::DoKI() {
         if (yPos > pAim->ypos - 60)
             yAcc = -1.5f;
 
-        if (xSpeed > 20.0f)
-            xSpeed = 20.0f;
-        if (xSpeed < -20.0f)
-            xSpeed = -20.0f;
+        xSpeed = std::clamp(xSpeed, -20.0f, 20.0f);
         if (ySpeed > 10.0f)
             ySpeed = 10.0f;
         if (ySpeed < -10.0f && Value1 != 99)

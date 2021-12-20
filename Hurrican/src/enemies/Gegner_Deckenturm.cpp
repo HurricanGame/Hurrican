@@ -91,11 +91,8 @@ void GegnerDeckenturm::DoKI() {
 
             AnimPhase = int(16 - Winkel / 12);
 
-            if (AnimPhase < 10)  // Nicht über die Seitengrenze
-                AnimPhase = 10;  // hinausgehen
-
-            if (AnimPhase > 21)
-                AnimPhase = 21;
+            // Nicht über die Seitengrenze hinausgehen
+            AnimPhase = std::clamp(AnimPhase, 10, 21);
 
             AnimEnde = AnimPhase;
             AnimStart = AnimPhase;

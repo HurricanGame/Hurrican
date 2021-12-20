@@ -55,14 +55,8 @@ void GegnerFlugKanone::DoKI() {
     if (yPos > pAim->ypos - 100)
         yAcc = -2.5f;
 
-    if (xSpeed > 20.0f)
-        xSpeed = 20.0f;
-    if (xSpeed < -20.0f)
-        xSpeed = -20.0f;
-    if (ySpeed > 10.0f)
-        ySpeed = 10.0f;
-    if (ySpeed < -10.0f)
-        ySpeed = -10.0f;
+    xSpeed = std::clamp(xSpeed, -20.0f, 20.0f);
+    ySpeed = std::clamp(ySpeed, -10.0f, 10.0f);
 
     if (ShotDelay > 0.0f)
         ShotDelay -= 1.0f SYNC;

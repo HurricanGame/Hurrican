@@ -120,10 +120,7 @@ void GegnerStahlfaust::DoKI() {
                 xAcc = 8.0f;  // Dann nach Rechts fliegen
 
             // Speed nicht zu hoch werde lassen
-            if (xSpeed < -18.0f)
-                xSpeed = -18.0f;
-            if (xSpeed > 18.0f)
-                xSpeed = 18.0f;
+            xSpeed = std::clamp(xSpeed, -18.0f, 18.0f);
 
             // Spieler unter der Faust ? Dann crushen
             if (pAim->xpos < xPos + GegnerRect[GegnerArt].right - 115 &&

@@ -87,14 +87,8 @@ void GegnerFieseDrone::DoKI() {
     if (yPos > pAim->ypos - 100)
         yAcc = -1.0f;
 
-    if (xSpeed > 10.0f)
-        xSpeed = 10.0f;
-    if (xSpeed < -10.0f)
-        xSpeed = -10.0f;
-    if (ySpeed > 8.0f)
-        ySpeed = 8.0f;
-    if (ySpeed < -8.0f)
-        ySpeed = -8.0f;
+    xSpeed = std::clamp(xSpeed, -10.0f, 10.0f);
+    ySpeed = std::clamp(ySpeed, -8.0f, 8.0f);
 
     if (Handlung == GEGNER_LAUFEN && PlayerAbstand() < 600) {
         if (ShotDelay > 0.0f)

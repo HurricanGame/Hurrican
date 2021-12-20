@@ -69,10 +69,7 @@ void GegnerRollmops::CalcGunWinkel() {
         neww *= -1.0f;
     }
 
-    if (neww < -30.0f)
-        neww = -30.0f;
-    if (neww > 90.0f)
-        neww = 90.0f;
+    neww = std::clamp(neww, -30.0f, 90.0f);
 
     if (GunWinkel < neww)
         GunWinkel += 5.0f SYNC;
