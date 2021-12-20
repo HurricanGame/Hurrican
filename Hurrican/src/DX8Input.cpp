@@ -165,15 +165,8 @@ bool DirectInputClass::UpdateMaus(bool gepuffert) {
     else
         MausButtons[2] = false;
 
-    // Clamps
-    if (MausX < 0)
-        MausX = 0;
-    if (MausY < 0)
-        MausY = 0;
-    if (MausX > RENDERWIDTH)
-        MausX = RENDERWIDTH;
-    if (MausY > RENDERHEIGHT)
-        MausY = RENDERHEIGHT;
+    MausX = std::clamp(MausX, 0, RENDERWIDTH);
+    MausY = std::clamp(MausY, 0, RENDERHEIGHT);
 
     return true;
 }
