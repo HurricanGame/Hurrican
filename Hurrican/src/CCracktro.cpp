@@ -153,18 +153,18 @@ void CCracktro::Main() {
                             ScrollCol[static_cast<int>(colpos + i) % (sizeof(ScrollCol) / sizeof(D3DCOLOR))]);
 
         if (CrackText[i + ScrollPos] != 32)
-            xchar += pFont->mCharLength[CrackText[i + ScrollPos] - 33] + 2;
+            xchar += pFont->GetCharLength(CrackText[i + ScrollPos] - 33) + 2;
         else
-            xchar += pFont->mXCharSize;
+            xchar += pFont->GetXCharSize();
     }
 
     ScrollOffset += 12.0f SYNC;
 
     int l;
     if (CrackText[ScrollPos] == 32)
-        l = pFont->mXCharSize;
+        l = pFont->GetXCharSize();
     else
-        l = pFont->mCharLength[CrackText[ScrollPos] - 33] + 2;
+        l = pFont->GetCharLength(CrackText[ScrollPos] - 33) + 2;
 
     if (ScrollOffset > l) {
         ScrollOffset -= l;
@@ -227,15 +227,15 @@ void CCracktro::Main() {
         pFont->DrawDemoChar(xchar - ScrollOffset2, 295, StaticText[i + ScrollPos2], 0xFF000000);
 
         if (StaticText[i + ScrollPos2] != 32)
-            xchar += pFont->mCharLength[StaticText[i + ScrollPos2] - 33] + 2;
+            xchar += pFont->GetCharLength(StaticText[i + ScrollPos2] - 33) + 2;
         else
-            xchar += pFont->mXCharSize;
+            xchar += pFont->GetXCharSize();
     }
 
     if (StaticText[ScrollPos2] == 32)
-        l = pFont->mXCharSize;
+        l = pFont->GetXCharSize();
     else
-        l = pFont->mCharLength[StaticText[ScrollPos2] - 33] + 2;
+        l = pFont->GetCharLength(StaticText[ScrollPos2] - 33) + 2;
 
     ScrollOffset2 += 10.0f SYNC;
 

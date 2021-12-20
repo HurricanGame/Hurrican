@@ -31,7 +31,6 @@ class DirectGraphicsFont {
     DirectGraphicsSprite *mTexture;  // Textur mit Font-Grafikdaten
     int mXChars;                     // Anzahl Zeichen in X-Richtung
 
-  public:
     // DKS - Character widths are now hard-coded arrays we merely point to:
     // char					mCharLength[256];				// Länge der Zeichen in Pixel
     uint8_t *mCharLength;  // Länge der Zeichen in Pixel
@@ -41,6 +40,7 @@ class DirectGraphicsFont {
     // DKS - Added support for font scaling
     int mScaleFactor;  // Font will be scaled this much (default is 1, no scaling)
 
+  public:
     DirectGraphicsFont();              // Konstruktor (leer)
     ~DirectGraphicsFont();             // Textur freigeben
     bool LoadFont(const char *Filename,    // Laden des Bildes "Filename"
@@ -94,6 +94,10 @@ class DirectGraphicsFont {
     int GetYCharSize();
     int GetScaleFactor();
     void SetScaleFactor(int scale_factor);
+
+    uint8_t GetCharLength(int i) const { return mCharLength[i]; }
+    int GetXCharSize() const { return mXCharSize; }
+    int GetYCharSize() const { return mYCharSize; }
 };
 
 // --------------------------------------------------------------------------------------
