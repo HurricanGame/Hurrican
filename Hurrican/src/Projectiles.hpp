@@ -161,11 +161,7 @@ enum {
   TURRIEXTRAWURST = 128,    // Schuss des Golems
 };
 
-#define MAX_SHOTS 1024  // Maximale Anzahl an Schüssen
-
-// DKS - This was unnecessarily high. Changed to the correct figure:
-//#define MAX_SHOTGFX				300						// Maximale Anzahl verschiedener Grafiken
-#define MAX_SHOTGFX 264  // Maximale Anzahl verschiedener Grafiken
+constexpr int MAX_SHOTS = 1024;  // Maximale Anzahl an Schüssen
 
 // --------------------------------------------------------------------------------------
 // Klassendeklaration

@@ -26,39 +26,39 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define PLAYER_MOVESPEED 20.0f                     // Spieler Geschwindigkeit
-#define PLAYER_ANIMSPEED 0.4f                      // Geschwindigkeit der einzlenen Animationen
-#define PLAYER_MAXJUMP 124.0f                      // Höchster Sprung in Pixeln
-#define PLAYER_MAXJUMPSPEED 43.0f                  // Schnellste Bewegung beim Springen/Fallen
-#define PLAYER_JUMPADDSPEED 12.5f                  // Spring-Manipulation
-#define PLAYER_ICESPEED (PLAYER_MOVESPEED / 5.0f)  // Geschwindigkeit auf dem Eis
-#define PLAYER_ICESSLOWDOWN 0.995f                 // Geschwindigkeitsänderung bei "Auslaufen" auf dem Eis
+constexpr float PLAYER_MOVESPEED = 20.0f;                     // Spieler Geschwindigkeit
+constexpr float PLAYER_ANIMSPEED = 0.4f;                      // Geschwindigkeit der einzlenen Animationen
+constexpr float PLAYER_MAXJUMP = 124.0f;                      // Höchster Sprung in Pixeln
+constexpr float PLAYER_MAXJUMPSPEED = 43.0f;                  // Schnellste Bewegung beim Springen/Fallen
+constexpr float PLAYER_JUMPADDSPEED = 12.5f;                  // Spring-Manipulation
+constexpr float PLAYER_ICESPEED = (PLAYER_MOVESPEED / 5.0f);  // Geschwindigkeit auf dem Eis
+constexpr float PLAYER_ICESSLOWDOWN = 0.995f;                 // Geschwindigkeitsänderung bei "Auslaufen" auf dem Eis
 
-#define PLAYER_MAXEXTRAS 9  // Maximale Anzahl an Granaten/Powerlines
+constexpr int PLAYER_MAXEXTRAS = 9;  // Maximale Anzahl an Granaten/Powerlines
 
 // frames
-#define PLAYERANIM_IDLE 0
-#define PLAYERANIM_RAD_ENDE 7     // Anzah der Rad Animationsphasen
-#define PLAYERANIM_RUN_END 18     // Ende  der Lauf Animation
-#define PLAYERANIM_BLITZ_ENDE 25  // Ende   der Rundum-Blitz Animation
-#define PLAYERANIM_JUMP_END 7     // Ende  der Sprung Animation
-#define PLAYERANIM_PISSEN 0       // Pissen =)
+constexpr int PLAYERANIM_IDLE = 0;
+constexpr int PLAYERANIM_RAD_ENDE = 7;     // Anzah der Rad Animationsphasen
+constexpr int PLAYERANIM_RUN_END = 18;     // Ende  der Lauf Animation
+constexpr int PLAYERANIM_BLITZ_ENDE = 25;  // Ende   der Rundum-Blitz Animation
+constexpr int PLAYERANIM_JUMP_END = 7;     // Ende  der Sprung Animation
+constexpr int PLAYERANIM_PISSEN = 0;       // Pissen =)
 
-#define PLAYER_FLUGSACKSPEED 4.0f  // Speed beim Flugsack fliegen
+constexpr float PLAYER_FLUGSACKSPEED = 4.0f;  // Speed beim Flugsack fliegen
 
 // neue Frames
-#define FRAMES_IDLE 19
-#define FRAMES_RUN 20
-#define FRAMES_JUMP 12
-#define FRAMES_SURROUND 36
-#define FRAMES_DUCKEN 4
+constexpr int FRAMES_IDLE = 19;
+constexpr int FRAMES_RUN = 20;
+constexpr int FRAMES_JUMP = 12;
+constexpr int FRAMES_SURROUND = 36;
+constexpr int FRAMES_DUCKEN = 4;
 
-#define PLAYER_RAD_SPEED 0.5f    // Geschwindigkeit der Rad Animation
-#define PLAYER_BLITZ_SPEED 0.5f  // Geschwindigkeit der Blitz-Animation
-#define PLAYER_BLITZ_START 4.0f  // Zeit die man benötigt um Blitzen zu können
-#define PLAYER_BEAM_MAX 160.0f   // Maximal aufladbare Beamstärke
-#define PLAYER_SHOTDELAY 1.8f    // Verzögerung beim normalen schiessen
-#define BLITZ_POWER 4.0f         // Was zieht der Blitz ab ?
+constexpr float PLAYER_RAD_SPEED = 0.5f;    // Geschwindigkeit der Rad Animation
+constexpr float PLAYER_BLITZ_SPEED = 0.5f;  // Geschwindigkeit der Blitz-Animation
+constexpr float PLAYER_BLITZ_START = 4.0f;  // Zeit die man benötigt um Blitzen zu können
+constexpr float PLAYER_BEAM_MAX = 160.0f;   // Maximal aufladbare Beamstärke
+constexpr float PLAYER_SHOTDELAY = 1.8f;    // Verzögerung beim normalen schiessen
+constexpr float BLITZ_POWER = 4.0f;         // Was zieht der Blitz ab ?
 
 //----- Definitionen der Aktionstasten
 
@@ -79,7 +79,7 @@
 #define AKTION_WAFFE_BOUNCE 14
 #define MAX_AKTIONEN 15
 
-#define NUM_COOL_LIGHTNINGS 18  // Anzahl der Blitze, aus denen der neue coole Blitz besteht
+constexpr int NUM_COOL_LIGHTNINGS = 18;  // Anzahl der Blitze, aus denen der neue coole Blitz besteht
 
 //----- Definitionen der "Handlungen"
 

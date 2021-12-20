@@ -28,6 +28,14 @@
 #include "Timer.hpp"
 
 // --------------------------------------------------------------------------------------
+// Defines
+// --------------------------------------------------------------------------------------
+
+// DKS - This was unnecessarily high. Changed to the correct figure:
+//constexpr int MAX_SHOTGFX = 300;  // Maximale Anzahl verschiedener Grafiken
+constexpr int MAX_SHOTGFX = 264;  // Maximale Anzahl verschiedener Grafiken
+
+// --------------------------------------------------------------------------------------
 // Variablen
 // --------------------------------------------------------------------------------------
 

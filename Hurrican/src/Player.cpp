@@ -42,6 +42,8 @@ int Stage;     // Aktuelles Level
 int NewStage;  // Neues Level
 int Skill;     // 0 = easy, 1 = medium, 2 = hard, 3 = Hurrican
 
+constexpr int TUTORIAL_END = 99;
+
 // --------------------------------------------------------------------------------------
 // Player-Klasse
 // --------------------------------------------------------------------------------------

@@ -23,10 +23,10 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define MAX_STARS 300                   // Anzahl scrollender Sterne im Hintergrund
-#define MAX_HIGHSCORES 10               // Anzahl der Highscore-Einträge
-#define MAX_SAVEGAMES 10                // Anzahl der Savegame Slots
-#define MAX_COLORS 99 + MAX_HIGHSCORES  // Anzahl der Blink-Farben in der Highscore
+constexpr int MAX_STARS = 300;                   // Anzahl scrollender Sterne im Hintergrund
+constexpr int MAX_HIGHSCORES = 10;               // Anzahl der Highscore-Einträge
+constexpr int MAX_SAVEGAMES = 10;                // Anzahl der Savegame Slots
+constexpr int MAX_COLORS = 99 + MAX_HIGHSCORES;  // Anzahl der Blink-Farben in der Highscore
 
 // ----- Defines für die Menu-Zustände
 

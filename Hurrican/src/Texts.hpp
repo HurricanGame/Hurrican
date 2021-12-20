@@ -22,7 +22,7 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define MAX_CHEATS 10
+constexpr int MAX_CHEATS = 10;
 
 #define CHEAT_EXTRAS 0
 #define CHEAT_WAFFEN 1

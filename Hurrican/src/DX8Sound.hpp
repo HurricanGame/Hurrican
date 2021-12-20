@@ -31,8 +31,8 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define MAX_SOUNDS 140  // Anzahl verschiedener Soundeffekte
-#define MAX_SONGS 15    // Anzahl verschiedener Musikstücke
+constexpr int MAX_SOUNDS = 140;  // Anzahl verschiedener Soundeffekte
+constexpr int MAX_SONGS = 15;    // Anzahl verschiedener Musikstücke
 
 // Definitionen der einzelnen Soundeffekte
 

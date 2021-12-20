@@ -26,21 +26,21 @@
 
 // DKS - Compensating for larger line spacing, which was too tight originally and allowed
 //      only for small non-block cursor indicator:
-//#define MAX_LINES	20				// Anzahl der Zeilen in der Konsole
-#define MAX_LINES 16  // Anzahl der Zeilen in der Konsole
-#define MAX_CHARS 90  // Anzahl der Zeichen pro Zeile
+//constexpr int MAX_LINES = 20;  // Anzahl der Zeilen in der Konsole
+constexpr int MAX_LINES = 16;  // Anzahl der Zeilen in der Konsole
+constexpr int MAX_CHARS = 90;  // Anzahl der Zeichen pro Zeile
 
 #if defined(ENABLE_CONSOLE_COMMANDS)
 
-#if defined(PLATFORM_SDL)
-#define CONSOLE_COMMAND(x) (strcmp(Buffer, x) == 0)
-#else
-#define CONSOLE_COMMAND(x) (strcmp(_strlwr_s(Buffer), x) == 0)
-#endif
+#  if defined(PLATFORM_SDL)
+#    define CONSOLE_COMMAND(x) (strcmp(Buffer, x) == 0)
+#  else
+#    define CONSOLE_COMMAND(x) (strcmp(_strlwr_s(Buffer), x) == 0)
+#  endif
 
 #else
 
-#define CONSOLE_COMMAND(x) (false)
+#  define CONSOLE_COMMAND(x) (false)
 
 #endif
 

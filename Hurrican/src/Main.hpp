@@ -52,20 +52,20 @@ struct sCommandLineParams {
 #define WIN_32_LEAN_AND_MEAN                    // MFC abschalten
 #define WINDOWCLASSNAME "HurricanWindowsClass"  // Name der Windows-Klasse
 
-#define SCREENWIDTH 640
-#define SCREENHEIGHT 480
+constexpr int SCREENWIDTH = 640;
+constexpr int SCREENHEIGHT = 480;
 
-#define LOWRES_SCREENWIDTH 320
-#define LOWRES_SCREENHEIGHT 240
+constexpr int LOWRES_SCREENWIDTH = 320;
+constexpr int LOWRES_SCREENHEIGHT = 240;
 
-#define RENDERWIDTH 640
-#define RENDERHEIGHT 480
+constexpr int RENDERWIDTH = 640;
+constexpr int RENDERHEIGHT = 480;
 
 // DKS - Screen depth is now configurable from the command line; if your
 //      platform does not support the default value of 32, you may define it
 //      by setting DEFAULT_SCREENBPP to correct value in Makefile.
 #ifndef DEFAULT_SCREENBPP
-#define DEFAULT_SCREENBPP 32
+#  define DEFAULT_SCREENBPP 32
 #endif
 
 // --------------------------------------------------------------------------------------

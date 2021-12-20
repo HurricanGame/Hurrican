@@ -69,7 +69,7 @@ void TimerClass::update() {
     SpeedFaktor = static_cast<float>(MoveSpeed * vergangeneZeit);
 
     // begrenzen
-#define MAX_FACTOR 2.0f
+    constexpr float MAX_FACTOR = 2.0f;
     if (SpeedFaktor > MAX_FACTOR)
         SpeedFaktor = MAX_FACTOR;
 }

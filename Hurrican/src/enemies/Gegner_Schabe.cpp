@@ -7,7 +7,7 @@
 #include "Gegner_Schabe.hpp"
 #include "stdafx.hpp"
 
-#define SPEED 5.0f
+constexpr float SPEED = 5.0f;
 
 // --------------------------------------------------------------------------------------
 // Konstruktor

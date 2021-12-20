@@ -948,7 +948,7 @@ void DirectGraphicsClass::DrawTouchOverlay() {
 }
 
 void DirectGraphicsClass::DrawCircle(uint16_t x, uint16_t y, uint16_t radius) {
-#define SECTORS 40
+    constexpr int SECTORS = 40;
     VERTEX2D vtx[SECTORS + 2];
 
     float radians = 0;

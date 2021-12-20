@@ -15,13 +15,13 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define MAX_JOYSTICKBUTTONS 128
+constexpr int MAX_JOYSTICKBUTTONS = 128;
 
 // --------------------------------------------------------------------------------------
 // Include Dateien
 // --------------------------------------------------------------------------------------
 #if defined(PLATFORM_SDL)
-#include "SDL_port.hpp"
+#  include "SDL_port.hpp"
 #endif
 
 #include <string>

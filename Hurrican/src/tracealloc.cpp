@@ -45,17 +45,17 @@ typedef std::basic_string<TCHAR, char_traits<TCHAR> > tcstring;
 
 // Setup how much buffer is used for a single path fetch, increase if you get AV's during leak dump (4096 is plenty
 // though)
-#define BUFFERSIZE 4096
+constexpr int BUFFERSIZE = 4096;
 
 // Define how many levels of callstack that should be fetched for each allocation.
 // Each level costs 2*sizof(ULONG) bytes / allocation.
-#define MAXSTACK 5
+constexpr int MAXSTACK = 5;
 
 // Define size of no mans land
-#define NO_MANS_LAND_SIZE 16
+constexpr int NO_MANS_LAND_SIZE = 16;
 
 // Define frequency of no mans land checking
-#define NML_CHECK_EVERY 1000
+constexpr int NML_CHECK_EVERY = 1000;
 
 #pragma comment(lib, "imagehlp.lib")
 

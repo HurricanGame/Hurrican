@@ -341,7 +341,7 @@ void DirectInputClass::UpdateTouchscreen() {
                         }
                     }
 
-#define OFFSET 15
+                    constexpr int OFFSET = 15;
                     int rel_x = TouchdpadX - touch.x;
                     int rel_y = TouchdpadY - touch.y;
                     if (pow(TouchdpadRadius, 2) >= (pow(abs(rel_x), 2) + pow(abs(rel_y), 2))) {

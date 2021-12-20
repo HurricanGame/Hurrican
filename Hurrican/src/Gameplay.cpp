@@ -59,7 +59,8 @@ bool HasCheated = false;
 
 bool RunningTutorial = false;
 
-#define DEMO_ID "Hurrican Demo File"  // Kennung
+constexpr const char* DEMO_ID = "Hurrican Demo File";  // Kennung
+constexpr const char* CONFIGFILE = "Hurrican.cfg";  // Name der Konfigurationsdatei
 
 std::string StageReihenfolge[256];
 
@@ -260,7 +261,7 @@ void GameLoop() {
     TileEngine.NewXOffset = -1;
     TileEngine.NewYOffset = -1;
 
-#define SPD_INC 0.3f
+    constexpr float SPD_INC = 0.3f;
     float i = 0;
     float SpeedFaktorMax = SpeedFaktor;
 

@@ -75,9 +75,9 @@ void DirectJoystickClass::StopForceFeedbackEffect(int nr) {
 }
 
 #if SDL_VERSION_ATLEAST(2,0,0)
-    #define SDLJOYINDEX lpDIJoystick
+#  define SDLJOYINDEX lpDIJoystick
 #else
-    #define SDLJOYINDEX joy
+#  define SDLJOYINDEX joy
 #endif
 
     // --------------------------------------------------------------------------------------

@@ -20,9 +20,6 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define CONFIGFILE "Hurrican.cfg"  // Name der Konfigurationsdatei
-#define TUTORIAL_END 99
-
 enum {
   DETAIL_LOW = 0,      // alles total billig
   DETAIL_MEDIUM = 1,   // animiertes Wasser dazu

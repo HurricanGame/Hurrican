@@ -9,9 +9,9 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define TILESIZE 20
+constexpr int TILESIZE = 20;
 
-#define BOXTEXTLENGTH 2000
+constexpr int BOXTEXTLENGTH = 2000;
 
 enum class FadeMode {
   INVISIBLE,

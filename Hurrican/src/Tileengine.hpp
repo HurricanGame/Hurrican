@@ -57,39 +57,39 @@ enum BlockValue : uint32_t {
 
 //--- Animationsgeschwindigkeit der animierten Level-Tiles
 
-#define TILEANIM_SPEED 0.8f
+constexpr float TILEANIM_SPEED = 0.8f;
 
 //--- Werte zur Levelgrösse
 
-#define TILESIZE_X 20         // Grösse eines
-#define TILESIZE_Y 20         // einzelnen Tiles
-#define TILESETSIZE_X 256.0f  // Grösse eines
-#define TILESETSIZE_Y 256.0f  // Tilesets
+constexpr int TILESIZE_X = 20;         // Grösse eines
+constexpr int TILESIZE_Y = 20;         // einzelnen Tiles
+constexpr float TILESETSIZE_X = 256.0f;  // Grösse eines
+constexpr float TILESETSIZE_Y = 256.0f;  // Tilesets
 
-#define SCREENSIZE_X 32  // Leveltiles pro Screen
-#define SCREENSIZE_Y 24
+constexpr int SCREENSIZE_X = 32;  // Leveltiles pro Screen
+constexpr int SCREENSIZE_Y = 24;
 
-#define MAX_LEVELSIZE_X 1024  // Gesamtgrösse des Level
-#define MAX_LEVELSIZE_Y 1600
+constexpr int MAX_LEVELSIZE_X = 1024;  // Gesamtgrösse des Level
+constexpr int MAX_LEVELSIZE_Y = 1600;
 
-#define MAX_TILESETS 64     // Maximalzahl der Tilesets
-#define INCLUDE_ZEROTILE 1  // Tile 0,0 im Tileset mit verwenden ?
+constexpr int MAX_TILESETS = 64;     // Maximalzahl der Tilesets
+constexpr int INCLUDE_ZEROTILE = 1;  // Tile = 0;,0 im Tileset mit verwenden ?
 
-#define MAX_TILERECTS 144
+constexpr int MAX_TILERECTS = 144;
 
 //----- Grösse des nicht scrollbaren Bereichs
 
-#define SCROLL_BORDER_EXTREME_LEFT 0
-#define SCROLL_BORDER_EXTREME_TOP 0
-#define SCROLL_BORDER_EXTREME_RIGHT 570
-#define SCROLL_BORDER_EXTREME_BOTTOM 400
+constexpr int SCROLL_BORDER_EXTREME_LEFT = 0;
+constexpr int SCROLL_BORDER_EXTREME_TOP = 0;
+constexpr int SCROLL_BORDER_EXTREME_RIGHT = 570;
+constexpr int SCROLL_BORDER_EXTREME_BOTTOM = 400;
 
-#define SCROLL_BORDER_HORIZ 0
-#define SCROLL_BORDER_TOP 50
-#define SCROLL_BORDER_BOTTOM 50
+constexpr int SCROLL_BORDER_HORIZ = 0;
+constexpr int SCROLL_BORDER_TOP = 50;
+constexpr int SCROLL_BORDER_BOTTOM = 50;
 
-#define LOOK_BORDER_TOP 60
-#define LOOK_BORDER_BOTTOM 400
+constexpr int LOOK_BORDER_TOP = 60;
+constexpr int LOOK_BORDER_BOTTOM = 400;
 
 //--- Zustände der Tileengine
 

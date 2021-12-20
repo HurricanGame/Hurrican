@@ -6,10 +6,10 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define FADESPEED 40.0f
-#define MAXFADE 200.0f
+constexpr float FADESPEED = 40.0f;
+constexpr float MAXFADE = 200.0f;
 
-#define BOXSIZEMAX 480
+constexpr int BOXSIZEMAX = 480;
 
 //
 // Konstruktor

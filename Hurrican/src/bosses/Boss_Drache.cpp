@@ -71,7 +71,7 @@ GegnerDrache::GegnerDrache(int Wert1, int Wert2, bool Light) {
     // Eigene Draw Funktion
     // --------------------------------------------------------------------------------------
 
-#define NUM_TAILS 20
+constexpr int NUM_TAILS = 20;
 
 void GegnerDrache::DoDraw() {
     if (PlayerAbstand() > 1000)
