@@ -185,7 +185,7 @@ class MenuClass {
     int NewScore;                        // Neue Punktezahl
     int NewStage;                        // Neue Stage
     int NewSkill;                        // Neuer Skill
-    char NewName[30];                    // Neuer Highscore Name
+    char NewName[32];                    // Neuer Highscore Name
     bool control_reassignment_occuring;  // Für Tasten / Button Konfiguration
 
     float Rotation;   // Rotationsgrad
