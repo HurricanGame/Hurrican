@@ -5,10 +5,11 @@
 #include "Gegner_Stuff.hpp"
 
 class GegnerDeckenKrabbe : public GegnerClass {
-  public:
+  private:
     float zRot;    // Rotation
     float zSpeed;  // Rotationsspeed
 
+  public:
     GegnerDeckenKrabbe(int Wert1,
                        int Wert2,  // Konstruktor
                        bool Light);

@@ -5,9 +5,10 @@
 #include "enemies/Gegner_Stuff.hpp"
 
 class GegnerStahlfaust : public GegnerClass {
-  public:
+  private:
     float SmokeDelay;
 
+  public:
     GegnerStahlfaust(int Wert1,
                      int Wert2,  // Konstruktor
                      bool Light);

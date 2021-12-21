@@ -5,9 +5,10 @@
 #include "enemies/Gegner_Stuff.hpp"
 
 class GegnerLavaKrabbe : public GegnerClass {
-  public:
+  private:
     float zPos;  // zPos da die Krabbe ja aus dem Hintergrund kommt
 
+  public:
     GegnerLavaKrabbe(int Wert1,
                      int Wert2,  // Konstruktor
                      bool Light);

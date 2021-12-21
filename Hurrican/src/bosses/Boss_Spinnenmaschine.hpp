@@ -41,12 +41,12 @@ class GegnerSpinnenmaschine : public GegnerClass {
 
     bool AktionFertig;  // Aktion fertig (Deckel öffnen, hoch/runter fahren)
 
-  public:
     DirectGraphicsSprite Deckel;
     DirectGraphicsSprite Unten[2];
     DirectGraphicsSprite Display;
     DirectGraphicsSprite Strahl;
 
+  public:
     GegnerSpinnenmaschine(int Wert1,
                           int Wert2,  // Konstruktor
                           bool Light);

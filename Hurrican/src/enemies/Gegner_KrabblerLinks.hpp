@@ -5,9 +5,10 @@
 #include "enemies/Gegner_Stuff.hpp"
 
 class GegnerKrabblerLinks : public GegnerClass {
-  public:
+  private:
     float ShotDelay;  // Schussverzögerung
 
+  public:
     GegnerKrabblerLinks(int Wert1,
                         int Wert2,  // Konstruktor
                         bool Light);

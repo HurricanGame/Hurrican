@@ -5,7 +5,7 @@
 #include "enemies/Gegner_Stuff.hpp"
 
 class GegnerFahrstuhlBoss : public GegnerClass {
-  public:
+  private:
     DirectGraphicsSprite Head;   // Grafiken für den "Kopf" des Gegners
     DirectGraphicsSprite Canon;  // Grafiken für die zwei Kanonen
     float ShotDelay;             // Schussverzögerung
@@ -17,6 +17,7 @@ class GegnerFahrstuhlBoss : public GegnerClass {
     bool Activated;  // Boss kommt schon rein
     int Shots;       // Wieviele Schüsse abgeben
 
+  public:
     GegnerFahrstuhlBoss(int Wert1,
                         int Wert2,  // Konstruktor
                         bool Light);

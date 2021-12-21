@@ -53,7 +53,6 @@ class GegnerMetalHead : public GegnerClass {
     void DoMove();
     void WinkelToPlayer();
 
-  public:
     DirectGraphicsSprite Kiefer;
     DirectGraphicsSprite Kiefer2;
     DirectGraphicsSprite Turbine;
@@ -61,6 +60,7 @@ class GegnerMetalHead : public GegnerClass {
     DirectGraphicsSprite HalsGfx;
     DirectGraphicsSprite Flare;
 
+  public:
     GegnerMetalHead(int Wert1,
                     int Wert2,  // Konstruktor
                     bool Light);

@@ -147,6 +147,9 @@ class PlayerClass {
     bool weaponswitchlock;
     void checkWeaponSwitch();
 
+    float DamageCounter;        // Wie lange bei Schaden blinken ?
+    int PlayerNumber;    // DKS - Added this that indicates whether this
+                         // player class is for player 1 (0) or 2 (1)
   public:
     bool GegnerDran;
     bool AlreadyDrawn;
@@ -198,7 +201,6 @@ class PlayerClass {
     float Energy;               // Energie
     float Armour;               // Rüstung
     float Shield;               // Noch Schild ?
-    float DamageCounter;        // Wie lange bei Schaden blinken ?
     float BlinkCounter;         // Spieler leuchtet auf ?
     int BlinkColor;             // In welcher Farbe? 0 = keine, 1 = rot, 2 = grün, 3 = blau, 4 = hellblau
     D3DCOLOR CurrentColor;      // In welcher Farbe?
@@ -238,8 +240,6 @@ class PlayerClass {
     bool SpritesLoaded;  // DKS - Added this to indicate if all the
                          // textures below are loaded yet. Player 2's
                          // textures get loaded on-demand.
-    int PlayerNumber;    // DKS - Added this that indicates whether this
-                         // player class is for player 1 (0) or 2 (1)
     DirectGraphicsSprite PlayerBlitz;
     DirectGraphicsSprite PlayerCrouch;
     DirectGraphicsSprite PlayerKucken;

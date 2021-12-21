@@ -5,11 +5,12 @@
 #include "enemies/Gegner_Stuff.hpp"
 
 class GegnerLavaBall : public GegnerClass {
-  public:
+  private:
     float yStart;
     float SmokeDelay, FlareDelay;
     bool InLava;
 
+  public:
     GegnerLavaBall(int Wert1,
                    int Wert2,  // Konstruktor
                    bool Light);

@@ -5,9 +5,10 @@
 #include "enemies/Gegner_Stuff.hpp"
 
 class GegnerFeuerspucker : public GegnerClass {
-  public:
+  private:
     float ShotDelay;
 
+  public:
     GegnerFeuerspucker(int Wert1,
                        int Wert2,  // Konstruktor
                        bool Light);
