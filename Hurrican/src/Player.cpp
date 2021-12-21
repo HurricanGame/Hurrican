@@ -232,7 +232,7 @@ void PlayerClass::InitPlayer(int player_num) {
     // Spielt der Spieler das TutorialLevel? Dann alle Extra-Waffen auf Null setzen
     //
     if (RunningTutorial) {
-        Skill = 0;
+        Skill = SKILL_EASY;
         PowerLines = 0;
         Grenades = 0;
         SmartBombs = 0;
@@ -447,7 +447,7 @@ void PlayerClass::checkShoot() {
         /*// Nur bei "Easy" Dauerfeuer
         // ansonsten Autofire Count verringern
         //
-        if (Skill > 0)
+        if (Skill > SKILL_EASY)
             AutoFireCount -= 1.0f;*/
 
         if (AutoFireExtra > 0.0f)
@@ -2079,21 +2079,10 @@ void PlayerClass::AnimatePlayer() {
 
     if ((bo & BLOCKWERT_SCHADEN) || (bu & BLOCKWERT_SCHADEN) || (bl & BLOCKWERT_SCHADEN) || (br & BLOCKWERT_SCHADEN)) {
         switch (Skill) {
-            case 0:
-                DamagePlayer(10.0f SYNC);
-                break;
-
-            case 1:
-                DamagePlayer(20.0f SYNC);
-                break;
-
-            case 2:
-                DamagePlayer(30.0f SYNC);
-                break;
-
-            case 3:
-                DamagePlayer(40.0f SYNC);
-                break;
+            case SKILL_EASY:     DamagePlayer(10.0f SYNC); break;
+            case SKILL_MEDIUM:   DamagePlayer(20.0f SYNC); break;
+            case SKILL_HARD:     DamagePlayer(30.0f SYNC); break;
+            case SKILL_HURRICAN: DamagePlayer(40.0f SYNC); break;
         }
 
         if ((Handlung == PlayerActionEnum::RADELN || Handlung == PlayerActionEnum::RADELN_FALL) && WheelMode == false)
@@ -3945,14 +3934,12 @@ void PlayerClass::DamagePlayer(float amount, bool Override) {
         return;
 
     // Skill Level berücksichtigen
-    if (Skill == 0)
-        amount *= 0.3f;
-    if (Skill == 1)
-        amount *= 0.6f;
-    if (Skill == 2)
-        amount *= 1.0f;
-    if (Skill == 3)
-        amount *= 2.2f;
+    switch (Skill) {
+        case SKILL_EASY:     amount *= 0.3f; break;
+        case SKILL_MEDIUM:   amount *= 0.6f; break;
+        case SKILL_HARD:     amount *= 1.0f; break;
+        case SKILL_HURRICAN: amount *= 2.2f; break;
+    }
 
     // Sound starten
     // DKS - Added function WaveIsPlaying() to SoundManagerClass:

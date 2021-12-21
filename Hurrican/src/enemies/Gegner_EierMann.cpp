@@ -19,14 +19,12 @@ GegnerEierMann::GegnerEierMann(int Wert1, int Wert2, bool Light) {
     AnimStart = 0;
     AnimEnde = 10;
 
-    if (Skill == 0)
-        AnimSpeed = 1.9f;
-    if (Skill == 1)
-        AnimSpeed = 1.6f;
-    if (Skill == 2)
-        AnimSpeed = 1.3f;
-    if (Skill == 3)
-        AnimSpeed = 1.0f;
+    switch (Skill) {
+        case SKILL_EASY:     AnimSpeed = 1.9f; break;
+        case SKILL_MEDIUM:   AnimSpeed = 1.6f; break;
+        case SKILL_HARD:     AnimSpeed = 1.3f; break;
+        case SKILL_HURRICAN: AnimSpeed = 1.0f; break;
+    }
 
     ChangeLight = Light;
     Destroyable = true;

@@ -2033,9 +2033,9 @@ void TileEngineClass::UpdateLevel() {
 
     // Zeit ablaufen lassen
     if (RunningTutorial == false && Timelimit > 0.0f && HUD.BossHUDActive == 0.0f && Console.Showing == false) {
-        if (Skill == 0)
+        if (Skill == SKILL_EASY)
             Timelimit -= 0.05f SYNC;
-        else if (Skill == 1)
+        else if (Skill == SKILL_MEDIUM)
             Timelimit -= 0.075f SYNC;
         else
             Timelimit -= 0.1f SYNC;

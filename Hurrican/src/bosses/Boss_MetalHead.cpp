@@ -476,21 +476,10 @@ void GegnerMetalHead::DoKI() {
                         int size = 32;
 
                         switch (Skill) {
-                            case 0:
-                                size = 32;
-                                break;
-
-                            case 1:
-                                size = 40;
-                                break;
-
-                            case 2:
-                                size = 48;
-                                break;
-
-                            case 3:
-                                size = 56;
-                                break;
+                            case SKILL_EASY:     size = 32; break;
+                            case SKILL_MEDIUM:   size = 40; break;
+                            case SKILL_HARD:     size = 48; break;
+                            case SKILL_HURRICAN: size = 56; break;
                         }
 
                         Gegner.PushGegner(static_cast<float>(Value1) + 50 + random(550),

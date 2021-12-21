@@ -61,11 +61,11 @@ void GegnerFlugKanone::DoKI() {
     if (ShotDelay > 0.0f)
         ShotDelay -= 1.0f SYNC;
     if (ShotDelay <= 0.0f) {
-        if (Skill == 0)
+        if (Skill == SKILL_EASY)
             ShotDelay = 10.0f;
-        if (Skill == 1)
+        if (Skill == SKILL_MEDIUM)
             ShotDelay = 7.5f;
-        if (Skill >= 2)
+        if (Skill >= SKILL_HARD)
             ShotDelay = 5.0f;
 
         if (abs(int(pAim->xpos - xPos)) < 100 && PlayerAbstand() < 300) {

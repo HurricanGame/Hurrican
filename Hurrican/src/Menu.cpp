@@ -2073,7 +2073,7 @@ void MenuClass::DoMenu() {
                     // Game starten mit Tutorial
                     NUMPLAYERS = 1;
                     RunningTutorial = true;
-                    Skill = AktuellerPunkt;
+                    Skill = SKILL_EASY;
                     //					SoundManager.StopSong(MUSIC_MENU, false);
                     InitNewGame();
                     InitNewGameLevel();

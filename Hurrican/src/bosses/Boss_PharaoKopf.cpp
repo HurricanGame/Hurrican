@@ -445,14 +445,12 @@ void GegnerPharaoKopf::DoKI() {
                 SoundManager.PlayWave(70, 128, 11025, SOUND_LASERSHOT);
 
                 // Je nach SchwierigkeitsGrad die Schuss Frequenz setzen
-                if (Skill == 0)
-                    AnimCount = 10.0f;
-                if (Skill == 1)
-                    AnimCount = 8.5f;
-                if (Skill == 2)
-                    AnimCount = 7.0f;
-                if (Skill == 3)
-                    AnimCount = 6.0f;
+                switch (Skill) {
+                    case SKILL_EASY:     AnimCount = 10.0f; break;
+                    case SKILL_MEDIUM:   AnimCount =  8.5f; break;
+                    case SKILL_HARD:     AnimCount =  7.0f; break;
+                    case SKILL_HURRICAN: AnimCount =  6.0f; break;
+                }
 
                 if (random(2) == 0) {
                     AnimPhase = 2;

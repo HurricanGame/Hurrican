@@ -122,14 +122,12 @@ void GegnerDrone::DoKI() {
             if (ActionDelay <= 0.0f && PlayerAbstand() < 600) {
                 Handlung = GEGNER_SCHIESSEN;
 
-                if (Skill == 0)
-                    ShotCount = 4;
-                if (Skill == 1)
-                    ShotCount = 6;
-                if (Skill == 2)
-                    ShotCount = 8;
-                if (Skill == 3)
-                    ShotCount = 10;
+                switch (Skill) {
+                    case SKILL_EASY:     ShotCount =  4; break;
+                    case SKILL_MEDIUM:   ShotCount =  6; break;
+                    case SKILL_HARD:     ShotCount =  8; break;
+                    case SKILL_HURRICAN: ShotCount = 10; break;
+                }
 
                 ShotDelay = 20.0f;
 

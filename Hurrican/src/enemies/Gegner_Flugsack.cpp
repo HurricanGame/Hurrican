@@ -103,14 +103,12 @@ void GegnerFlugsack::DoKI() {
                         Projectiles.PushProjectile(xPos + 53, yPos + 10, SUCHSCHUSS);
                     }
 
-                    if (Skill == 0)
-                        ShotCount += 20.0f;
-                    if (Skill == 1)
-                        ShotCount += 15.0f;
-                    if (Skill == 2)
-                        ShotCount += 12.0f;
-                    if (Skill == 3)
-                        ShotCount += 8.0f;
+                    switch (Skill) {
+                        case SKILL_EASY:     ShotCount += 20.0f; break;
+                        case SKILL_MEDIUM:   ShotCount += 15.0f; break;
+                        case SKILL_HARD:     ShotCount += 12.0f; break;
+                        case SKILL_HURRICAN: ShotCount +=  8.0f; break;
+                    }
                 }
             }
         } break;

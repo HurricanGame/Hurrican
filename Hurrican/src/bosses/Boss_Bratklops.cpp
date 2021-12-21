@@ -493,9 +493,9 @@ void GegnerBratklops::DoKI() {
             //
             ShotDelay -= 1.0f SYNC;
             if (ShotDelay <= 0.0f) {
-                if (Skill == 0)
+                if (Skill == SKILL_EASY)
                     ShotDelay = 0.40f;
-                else if (Skill == 1)
+                else if (Skill == SKILL_MEDIUM)
                     ShotDelay = 0.30f;
                 else
                     ShotDelay = 0.20f;

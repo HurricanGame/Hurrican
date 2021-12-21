@@ -145,7 +145,7 @@ struct LevelObjectStruct {
     int32_t XPos;                // x-Position
     int32_t YPos;                // y-Position
     uint8_t ChangeLight;         // Umgebungslicht annehmen ?
-    uint8_t Skill;               // 0 = Easy, 1 = Medium, 2 = Hard
+    uint8_t Skill;               // 0 = Easy, 1 = Medium, 2 = Hard, 3 = Hurrican
     uint8_t PADDING_CHUNK_1[2];  // 2 PADDING BYTES
     int32_t Value1;              // Werte für diverse Trigger
     int32_t Value2;              // Werte für diverse Trigger

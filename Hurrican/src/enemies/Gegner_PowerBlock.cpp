@@ -32,13 +32,13 @@ GegnerPowerBlock::GegnerPowerBlock(int Wert1, int Wert2, bool Light) {
 
     // Je mach Skill weniger Extras
     //
-    if (Skill == 0)
+    if (Skill == SKILL_EASY)
         Value1 = int(Value1 * 1.0f);
-    if (Skill == 1)
+    if (Skill == SKILL_MEDIUM)
         Value1 = int(Value1 * 0.7f);
-    if (Skill == 2)
+    if (Skill == SKILL_HARD)
         Value1 = int(Value1 * 0.5f);
-    if (Skill == 3)
+    if (Skill == SKILL_HURRICAN)
         Value1 = int(Value1 * 0.3f);
 #else
     // NOTE why has this been hardcoded?

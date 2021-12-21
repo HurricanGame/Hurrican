@@ -111,6 +111,14 @@ enum class PlayerActionEnum {
   TOT           // Hurri ist kaputt
 };
 
+// Skill level
+enum {
+  SKILL_EASY = 0,
+  SKILL_MEDIUM,
+  SKILL_HARD,
+  SKILL_HURRICAN
+};
+
 // --------------------------------------------------------------------------------------
 // Klasse für den Spieler
 // --------------------------------------------------------------------------------------
