@@ -40,18 +40,19 @@ class CCracktro {
     int ScrollPos, ScrollPos2;
     float SinPos;
     StateEnum State;
+    bool b_running;
 
     StarStruct Stars[200];
 
   public:
-    bool b_running;
-
     CCracktro();   // Cracktro initialisieren
     ~CCracktro();  // Cracktro freigeben
 
     void Run();  // Cracktro laufen lassen
     void Main();
     void Load();
+
+    bool IsRunning() const { return b_running; }
 };  // CCracktro
 
 #endif

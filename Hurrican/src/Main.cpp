@@ -822,7 +822,7 @@ bool Heartbeat() {
 
             Cracktro->Run();
 
-            if (!Cracktro->b_running) {
+            if (!Cracktro->IsRunning()) {
                 delete (Cracktro);
                 SpielZustand = GameStateEnum::MAINMENU;
 

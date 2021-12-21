@@ -172,14 +172,16 @@ constexpr int MAX_SHOTS = 1024;  // Maximale Anzahl an Schüssen
 // --------------------------------------------------------------------------------------
 
 class ProjectileClass {
+  private:
+    bool HasGlow;                // Leuchten?
+    bool CheckBlock;             // überhaupt Kollision mit Wand checken?
+
   public:
     float xSpeed, ySpeed;        // Geschwindigkeit des Partikels
     float xAcc, yAcc;            // Beschleunigung des Partikels
     int AnimPhase, AnimEnde;     // Aktuelle Phase und Endphase
     float AnimSpeed, AnimCount;  // Anim-Geschwindigkeit und Counter
     bool BounceWalls;            // an Wänden abprallen ?
-    bool CheckBlock;             // überhaupt Kollision mit Wand checken?
-    bool HasGlow;                // Leuchten?
     bool ExplodeOnImpact;        // Schüsse, die durch Objekte durchgehen
     int ShotArt;                 // Art des Schusses (siehe Defines)
     float xPos, yPos;            // Position des Partikels

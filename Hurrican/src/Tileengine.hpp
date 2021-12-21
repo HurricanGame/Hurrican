@@ -449,6 +449,28 @@ class TileEngineClass {
     //       WaterSinTableClass. See its comments for more info.
     WaterSinTableClass WaterSinTable;
 
+    // Vorberechnung fürs Levelrendern
+    int RenderPosX;  // Bereich des Levels, der gerendert wird
+    int RenderPosY;
+    int RenderPosXTo;
+    int RenderPosYTo;
+    int xLevel;
+    int yLevel;
+    int xTileOffs;
+    int yTileOffs;
+    float xScreen;
+    float yScreen;
+
+    bool bScrollBackground;  // Hintegrundbild scrollen ?
+
+    RECT_struct TileRects[MAX_TILERECTS];        // vorberechnete Tile Ausschnitte
+    DirectGraphicsSprite TileGfx[MAX_TILESETS];  // Tilegrafiken
+    DirectGraphicsSprite LiquidGfx[2];           // Flüssigkeit
+    DirectGraphicsSprite CloudLayer;             // Wolkenlayer
+    DirectGraphicsSprite Shadow;                 // Schatten im Alien Level
+    float WasserU[9];                            // vorberechnete TexturKoordinaten für das Wasser TU
+    float WasserV[9];                            // vorberechnete TexturKoordinaten für das Wasser TV
+
   public:
     FileAppendix DateiAppendix;  // Anhang der Level-Datei
     bool IsElevatorLevel;
@@ -480,19 +502,10 @@ class TileEngineClass {
     // float			SinPos;									// Position in der SinusListe für das AlienLevel
     float SinPos2;  // Position in der SinusListe für den Wasserhintergrund
 
-    bool bScrollBackground;  // Hintegrundbild scrollen ?
-
-    RECT_struct TileRects[MAX_TILERECTS];        // vorberechnete Tile Ausschnitte
-    DirectGraphicsSprite TileGfx[MAX_TILESETS];  // Tilegrafiken
     DirectGraphicsSprite Background;             // Hintergrund
     DirectGraphicsSprite ParallaxLayer[3];       // Anzahl der Layer
-    DirectGraphicsSprite CloudLayer;             // Wolkenlayer
     DirectGraphicsSprite GameOver;               // GameOver Symbol
     DirectGraphicsSprite Wasserfall[2];          // Wasserfall Grafiken
-    DirectGraphicsSprite LiquidGfx[2];           // Flüssigkeit
-    float WasserU[9];                            // vorberechnete TexturKoordinaten für das Wasser TU
-    float WasserV[9];                            // vorberechnete TexturKoordinaten für das Wasser TV
-    DirectGraphicsSprite Shadow;                 // Schatten im Alien Level
     float WasserfallOffset;                      // Wasserfall Offset
     float XOffset, YOffset;                      // Scrolloffset des Levels
     float NewXOffset, NewYOffset;                // Neue Scrolloffsets, falls das Level von einem Gegner gelockt ist
@@ -504,18 +517,6 @@ class TileEngineClass {
     float LEVELPIXELSIZE_Y;                      // (für XOffset und YOffset)
 
     CDragonHack *pDragonHack;
-
-    // Vorberechnung fürs Levelrendern
-    int RenderPosX;  // Bereich des Levels, der gerendert wird
-    int RenderPosY;
-    int RenderPosXTo;
-    int RenderPosYTo;
-    int xLevel;
-    int yLevel;
-    int xTileOffs;
-    int yTileOffs;
-    float xScreen;
-    float yScreen;
 
     TileEngineClass();   // Konstruktor
     ~TileEngineClass();  // Destruktor
