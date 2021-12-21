@@ -201,19 +201,6 @@ static_assert(sizeof(FileAppendix) == 84, "Size of FileAppendix is wrong");
 // Unions
 // --------------------------------------------------------------------------------------
 
-// Union für r,g,b,a Zugriff in D3DCOLOR
-
-union FarbUnion {
-    D3DCOLOR color;
-
-    struct {
-        unsigned char b;
-        unsigned char g;
-        unsigned char r;
-        unsigned char a;
-    } farbStruct;
-};
-
 struct Vector2D {
     float x;
     float y;
