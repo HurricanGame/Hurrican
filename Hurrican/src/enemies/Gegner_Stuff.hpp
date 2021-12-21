@@ -231,8 +231,8 @@ enum {
 
 //----- Sonstiges
 
-#define MAX_GEGNER 2048    // Maximale Zahl Gegner pro Level
-#define MAX_GEGNERGFX 200  // Maximale Grafiken der Gegner
+constexpr int MAX_GEGNER = 2048;    // Maximale Zahl Gegner pro Level
+constexpr int MAX_GEGNERGFX = 200;  // Maximale Grafiken der Gegner
 
 //----- Externals
 
