@@ -91,13 +91,12 @@ class DirectGraphicsFont {
     void ShowFPS();                                // FPS Werte anzeigen
 
     // DKS - New functions added to facilitate scaled fonts, primarily the "default" font on 320x240 devices
-    int GetYCharSize();
+    int GetYCharSize() const;
+    int GetXCharSize() const;
     int GetScaleFactor();
     void SetScaleFactor(int scale_factor);
 
     uint8_t GetCharLength(int i) const { return mCharLength[i]; }
-    int GetXCharSize() const { return mXCharSize; }
-    int GetYCharSize() const { return mYCharSize; }
 };
 
 // --------------------------------------------------------------------------------------

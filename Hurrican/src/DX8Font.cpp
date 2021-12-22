@@ -618,7 +618,11 @@ void DirectGraphicsFont::ShowFPS() {
 }
 
 // DKS - New functions added to facilitate resized fonts:
-int DirectGraphicsFont::GetYCharSize() {
+int DirectGraphicsFont::GetXCharSize() const {
+    return mXCharSize * mScaleFactor;
+}
+
+int DirectGraphicsFont::GetYCharSize() const {
     return mYCharSize * mScaleFactor;
 }
 
