@@ -4331,7 +4331,7 @@ void PartikelsystemClass::ClearAll() {
 // Zahl der Partikel zurückliefern
 // --------------------------------------------------------------------------------------
 
-int PartikelsystemClass::GetNumPartikel() {
+int PartikelsystemClass::GetNumPartikel() const {
     return NumPartikel;
 }
 

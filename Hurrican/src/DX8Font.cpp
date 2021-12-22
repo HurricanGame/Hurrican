@@ -627,7 +627,7 @@ int DirectGraphicsFont::GetYCharSize() const {
 }
 
 // DKS - Added support for font scaling
-int DirectGraphicsFont::GetScaleFactor() {
+int DirectGraphicsFont::GetScaleFactor() const {
     return mScaleFactor;
 }
 

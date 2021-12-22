@@ -36,10 +36,10 @@ class CCracktro {
     DirectGraphicsSprite Zahlen;
     DirectGraphicsSprite Star;
     DirectGraphicsFont *pFont;
-    float ScrollOffset, ScrollOffset2;
-    int ScrollPos, ScrollPos2;
-    float SinPos;
     StateEnum State;
+    float ScrollOffset, ScrollOffset2;
+    float SinPos;
+    int ScrollPos, ScrollPos2;
     bool b_running;
 
     StarStruct Stars[200];

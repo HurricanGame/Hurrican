@@ -270,7 +270,7 @@ class ProjectileListClass {
 
     void ClearAll();          // Alle Objekte löschen
     void ClearType(int type);     // Alle Objekte eines Typs löschen
-    int GetNumProjectiles();  // Zahl der Schüsse zurückliefern
+    int GetNumProjectiles() const; // Zahl der Schüsse zurückliefern
     void DoProjectiles();     // Alle Schüsse der Liste animieren
 };
 

@@ -220,18 +220,18 @@ bool DirectJoystickClass::Update() {
 }
 
 // DKS-Added these three for better joystick support, esp in menus
-bool DirectJoystickClass::ButtonEnterPressed() {
+bool DirectJoystickClass::ButtonEnterPressed() const {
     return JoystickButtons[enterButton];
 }
 
-bool DirectJoystickClass::ButtonEscapePressed() {
+bool DirectJoystickClass::ButtonEscapePressed() const {
     return JoystickButtons[backButton];
 }
 
-bool DirectJoystickClass::ButtonDeletePressed() {
+bool DirectJoystickClass::ButtonDeletePressed() const {
     return JoystickButtons[deleteButton];
 }
 
-bool DirectJoystickClass::ButtonStartPressed() {
+bool DirectJoystickClass::ButtonStartPressed() const {
     return JoystickButtons[startButton];
 }

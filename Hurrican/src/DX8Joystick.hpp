@@ -71,15 +71,15 @@ class DirectJoystickClass {
 
     // DKS-Added these three for better joystick support, esp in menus
     // Returns true if button(s) serving as Enter key  are pressed (For menus)
-    bool ButtonEnterPressed();
+    bool ButtonEnterPressed() const;
 
     // Returns true if button(s) serving as Escape key are pressed (For menus)
-    bool ButtonEscapePressed();
+    bool ButtonEscapePressed() const;
 
     // Returns true if button(s) serving as Delete key are pressed (For menus, esp. button mapping menu)
-    bool ButtonDeletePressed();
+    bool ButtonDeletePressed() const;
 
     // Returns true if button(s) serving as Start key are pressed (For game)
-    bool ButtonStartPressed();
+    bool ButtonStartPressed() const;
 };
 #endif

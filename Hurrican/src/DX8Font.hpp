@@ -93,7 +93,7 @@ class DirectGraphicsFont {
     // DKS - New functions added to facilitate scaled fonts, primarily the "default" font on 320x240 devices
     int GetYCharSize() const;
     int GetXCharSize() const;
-    int GetScaleFactor();
+    int GetScaleFactor() const;
     void SetScaleFactor(int scale_factor);
 
     uint8_t GetCharLength(int i) const { return mCharLength[i]; }

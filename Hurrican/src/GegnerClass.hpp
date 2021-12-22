@@ -76,16 +76,16 @@ class GegnerClass {
     virtual void DoDraw() {}                                 // Gegner individuell rendern (nur bei manchen)
     bool Run();                                              // Gegner bewegen, checken etc
     void Render();                                           // nur rendern
-    int PlayerAbstand(bool both = false);                    // Abstand Gegner/Spieler zurückliefern
-    int PlayerAbstandHoriz(PlayerClass *pTarget = nullptr);  // Nur Horizontaler Abstand
-    int PlayerAbstandVert(PlayerClass *pTarget = nullptr);   // Nur Vertikaler   Abstand
+    int PlayerAbstand(bool both = false) const;                     // Abstand Gegner/Spieler zurückliefern
+    int PlayerAbstandHoriz(PlayerClass *pTarget = nullptr) const;   // Nur Horizontaler Abstand
+    int PlayerAbstandVert(PlayerClass *pTarget = nullptr) const;    // Nur Vertikaler   Abstand
     void TestDamagePlayers(float dam, bool detroy = false);  // Spieler verletzt?
     void PlattformTest(RECT_struct rect);                           // Steht der Spieler auf dem Gegner ?
     void Wegschieben(RECT_struct rect, float dam);                  // Gegner schiebt Spieler beiseite
     void SimpleAnimation(bool backward = false);             // Einfache Animation (loop)
     void TurnonWall();                                       // An der Wand umdrehen?
     bool TurnonShot();                                       // Umdrehen, wenn angeschoßen
-    bool IsOnScreen();                                       // Gegner grade sichtbar?
+    bool IsOnScreen() const;                                 // Gegner grade sichtbar?
     GegnerClass *pNext;                                      // Zeiger auf den nächsten   Gegner
     GegnerClass *pPrev;                                      // Zeiger auf den vorherigen Gegner
 };

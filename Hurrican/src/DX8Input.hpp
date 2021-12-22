@@ -88,9 +88,9 @@ class DirectInputClass {
     bool UpdateTastatur();            // Tasten abfragen und im Puffer speichern
     bool UpdateMaus(bool gepuffert);  // Maus abfragen gepuffert/ungepuffert
     void AcquireKeyboard();           // Keyboard akquirierens
-    bool AreAllKeysReleased();        // Checken ob keine Taste mehr gedrückt ist
-    bool AnyKeyDown();
-    bool AnyButtonDown();
+    bool AreAllKeysReleased() const;  // Checken ob keine Taste mehr gedrückt ist
+    bool AnyKeyDown() const;
+    bool AnyButtonDown() const;
     void UpdateJoysticks();
     char *MapButtonToString(int joy_idx, int button);  // Returns char string "1" for button 0, etc..
                                                        // But when used on GCW Zero's internal controls

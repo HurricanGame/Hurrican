@@ -288,10 +288,10 @@ class PlayerClass {
     void CalcWeaponLevels();
     void CalcFlamePos();        // Position der Flamme berechnen
     void CalcAustrittsPunkt();  // Austrittspunkt des Schusses berechnen
-    bool CheckLevelExit();      // Spieler im Ausgang?
+    bool CheckLevelExit() const; // Spieler im Ausgang?
     void RunPlayerExit();       // Spieler läuft grad ins Exit
     void PlayerInExit();        // Spieler aus dem Level rausgelaufen?
-    bool Riding();              // Alle Spieler auf einem Flugsack?
+    bool Riding() const;        // Alle Spieler auf einem Flugsack?
     void ScrollFlugsack();      // Im Flugsacklevel scrollen?
 
     // DKS - Player sprites are no longer static globals, but instead class member vars:

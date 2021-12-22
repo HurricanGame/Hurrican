@@ -190,7 +190,7 @@ void DirectInputClass::UpdateJoysticks() {
 // Checken ob keine Taste mehr gedrückt ist
 // --------------------------------------------------------------------------------------
 
-bool DirectInputClass::AreAllKeysReleased() {
+bool DirectInputClass::AreAllKeysReleased() const {
     for (int i = 0; i < std::min(NumberOfKeys, MAX_KEYS); i++)
         if (TastaturPuffer[i] != 0)
             return false;
@@ -202,7 +202,7 @@ bool DirectInputClass::AreAllKeysReleased() {
 // Checken ob irgendeine Taste gedrückt ist
 // --------------------------------------------------------------------------------------
 
-bool DirectInputClass::AnyKeyDown() {
+bool DirectInputClass::AnyKeyDown() const {
     for (int i = 0; i < std::min(NumberOfKeys, MAX_KEYS); i++)
         if (KeyDown(i))
             return true;
@@ -214,7 +214,7 @@ bool DirectInputClass::AnyKeyDown() {
 // Checken ob irgendein Button gedrückt ist
 // --------------------------------------------------------------------------------------
 
-bool DirectInputClass::AnyButtonDown() {
+bool DirectInputClass::AnyButtonDown() const {
     if (!JoystickFound)
         return false;
 

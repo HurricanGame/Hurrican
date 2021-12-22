@@ -363,9 +363,9 @@ class SoundManagerClass {
     void StopChannel(int ch);
     void SetChannelVolume(int ch, float new_vol);
     void SetChannelPanning(int ch, int pan);
-    bool WaveIsPlaying(int nr);
-    bool WaveIsPlayingOnChannel(int nr, int ch);
-    int GetChannelWaveIsPlayingOn(int nr);
+    bool WaveIsPlaying(int nr) const;
+    bool WaveIsPlayingOnChannel(int nr, int ch) const;
+    int GetChannelWaveIsPlayingOn(int nr) const;
     void SetPendingChannelVolumeAndPanning(int ch, int new_vol, int new_pan);
 
     // DKS - Added #ifdef block around features SDL_mixer lacks:

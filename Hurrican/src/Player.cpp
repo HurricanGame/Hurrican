@@ -4195,7 +4195,7 @@ void PlayerClass::CalcAustrittsPunkt() {
 // Spieler aus dem Level rausgelaufen?
 // --------------------------------------------------------------------------------------
 
-bool PlayerClass::CheckLevelExit() {
+bool PlayerClass::CheckLevelExit() const {
     // Spieler aus Level draussen?
     return xpos + Player[0].CollideRect.right < TileEngine.XOffset ||
            xpos + Player[0].CollideRect.left > TileEngine.XOffset + 640 ||
@@ -4277,7 +4277,7 @@ void PlayerClass::RunPlayerExit() {
 // Alle Spieler auf einem Flugsack?
 // --------------------------------------------------------------------------------------
 
-bool PlayerClass::Riding() {
+bool PlayerClass::Riding() const {
     for (int p = 0; p < NUMPLAYERS; p++)
         if (Player[p].Handlung != PlayerActionEnum::SACKREITEN &&
                 Player[p].Handlung != PlayerActionEnum::DREHEN &&

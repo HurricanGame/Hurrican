@@ -4920,7 +4920,7 @@ void ProjectileListClass::ClearType(int Type) {
 // Zahl der Projectile zurückliefern
 // --------------------------------------------------------------------------------------
 
-int ProjectileListClass::GetNumProjectiles() {
+int ProjectileListClass::GetNumProjectiles() const {
     return NumProjectiles;
 }
 

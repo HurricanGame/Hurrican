@@ -847,7 +847,7 @@ void SoundManagerClass::SetChannelPanning(int ch, int pan) {
 }
 
 // DKS - Added:
-bool SoundManagerClass::WaveIsPlaying(int nr) {
+bool SoundManagerClass::WaveIsPlaying(int nr) const {
     for (int i = 0; i < num_channels; ++i)
         if (channels[i].sound_num == nr)
             return true;
@@ -855,7 +855,7 @@ bool SoundManagerClass::WaveIsPlaying(int nr) {
 }
 
 // DKS - Added, primarily to allow Trigger_Stampfstein to have its .hppain sound.
-bool SoundManagerClass::WaveIsPlayingOnChannel(int nr, int ch) {
+bool SoundManagerClass::WaveIsPlayingOnChannel(int nr, int ch) const {
     if (ch == -1 || nr == -1)
         return false;
 
@@ -863,7 +863,7 @@ bool SoundManagerClass::WaveIsPlayingOnChannel(int nr, int ch) {
 }
 
 // DKS - Added:
-int SoundManagerClass::GetChannelWaveIsPlayingOn(int nr) {
+int SoundManagerClass::GetChannelWaveIsPlayingOn(int nr) const {
     int channel = -1;
 
     for (int i = 0; i < num_channels; ++i)

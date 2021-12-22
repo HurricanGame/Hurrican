@@ -299,7 +299,7 @@ bool GegnerClass::Run() {
 // Abstand zwischen Gegner und Spieler berechnen und zurückliefern
 // --------------------------------------------------------------------------------------
 
-int GegnerClass::PlayerAbstand(bool both) {
+int GegnerClass::PlayerAbstand(bool both) const {
     float xdiff, ydiff, Abstand;
 
     Abstand = 99999.9f;
@@ -334,7 +334,7 @@ int GegnerClass::PlayerAbstand(bool both) {
 // Horizontaler Abstand zwischen Gegner und Spieler berechnen und zurückliefern
 // --------------------------------------------------------------------------------------
 
-int GegnerClass::PlayerAbstandHoriz(PlayerClass *pTarget) {
+int GegnerClass::PlayerAbstandHoriz(PlayerClass *pTarget) const {
     float Abstand;
 
     if (pTarget == nullptr)
@@ -355,7 +355,7 @@ int GegnerClass::PlayerAbstandHoriz(PlayerClass *pTarget) {
 // Vertikaler Abstand zwischen Gegner und Spieler berechnen und zurückliefern
 // --------------------------------------------------------------------------------------
 
-int GegnerClass::PlayerAbstandVert(PlayerClass *pTarget) {
+int GegnerClass::PlayerAbstandVert(PlayerClass *pTarget) const {
     float Abstand;
 
     if (pTarget == nullptr)
@@ -532,7 +532,7 @@ bool GegnerClass::TurnonShot() {
 // Gegner grade sichtbar?
 // --------------------------------------------------------------------------------------
 
-bool GegnerClass::IsOnScreen() {
+bool GegnerClass::IsOnScreen() const {
     int off;
     int xsize, ysize;
 

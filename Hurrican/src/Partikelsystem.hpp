@@ -326,7 +326,7 @@ class PartikelsystemClass {
     PartikelClass *DelNode(PartikelClass *pPtr);
 
     void ClearAll();                    // Alle Objekte löschen
-    int GetNumPartikel();               // Zahl der Partikel zurückliefern
+    int GetNumPartikel() const;         // Zahl der Partikel zurückliefern
     void DoPartikel();                  // Alle Partikel der Liste animieren/anzeigen
     void DoPartikelSpecial(bool ShowThem);  // Alle Partikel der Liste animieren/anzeigen
     void DrawOnly();                    // Alle Partikel der Liste nur anzeigen
