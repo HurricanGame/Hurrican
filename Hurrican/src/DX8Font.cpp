@@ -76,13 +76,13 @@ DirectGraphicsFont::DirectGraphicsFont() {
     // DKS - Added support for font scaling
     mScaleFactor = 1;
 
-    mTexture = NULL;
+    mTexture = nullptr;
 
     // DKS - Character widths are now hard-coded arrays we merely point to:
     //// alle mit 0 initialiseren, falls ein fehlerhaftest Zeichen verwendet wird
     // for (int i = 0; i < 256; i++)
     //    mCharLength[i] = 1;
-    mCharLength = NULL;
+    mCharLength = nullptr;
 }
 
 // --------------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ DirectGraphicsFont::DirectGraphicsFont() {
 DirectGraphicsFont::~DirectGraphicsFont() {
     // Font Textur freigeben
     delete (mTexture);
-    mTexture = NULL;
+    mTexture = nullptr;
 }
 
 // --------------------------------------------------------------------------------------
@@ -149,10 +149,10 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
     if (CommandLineParams.RunOwnLevelList == true)
     {
         //sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
-        fullpath = std::string(g_storage_ext) + "/levels/" + std::string(CommandLineParams.OwnLevelList) + std::string(Filename);
+        fullpath = g_storage_ext + "/levels/" + std::string(CommandLineParams.OwnLevelList) + std::string(Filename);
         if (FileExists(fullpath.c_str()))
         {
-            if (!loadImageSDL(image, fullpath, NULL, 0)) {
+            if (!loadImageSDL(image, fullpath, nullptr, 0)) {
                 delete [] image.data;
                 Protokoll << "Error in LoadFont(): loadImageSDL() returned error loading " << fullpath << std::endl;
                 GameRunning = false;
@@ -161,14 +161,14 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
         }
     }
 
-    if (image.data == NULL)
+    if (image.data == nullptr)
     {
         //DKS - All textures are now stored in their own data/textures/ subdir:
         //sprintf_s(Temp, "%s/data/textures/%s", g_storage_ext, Filename);
-        fullpath = std::string(g_storage_ext) + "/data/textures/" + std::string(Filename);
+        fullpath = g_storage_ext + "/data/textures/" + std::string(Filename);
         if (FileExists(fullpath.c_str()))
         {
-            if (!loadImageSDL(image, fullpath, NULL, 0)) {
+            if (!loadImageSDL(image, fullpath, nullptr, 0)) {
                 delete [] image.data;
                 Protokoll << "Error in LoadFont(): loadImageSDL() returned error loading " << fullpath << std::endl;
                 GameRunning = false;
@@ -178,11 +178,11 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
     }
 
 #if defined(USE_UNRARLIB)
-    if (image.data == NULL)
+    if (image.data == nullptr)
     {
         if (urarlib_get(&pData, &Size, Filename, RARFILENAME, convertText(RARFILEPASSWORD)) != false)
         {
-            if (!loadImageSDL(image, NULL, pData, Size))
+            if (!loadImageSDL(image, nullptr, pData, Size))
                 delete [] image.data;
                 free(pData);
                 Protokoll << "Error in LoadFont(): loadImageSDL() returned error loading " << Filename << " from buffer" << std::endl;
@@ -194,7 +194,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
     }
 #endif  // USE_UNRARLIB
 
-    if (image.data  == NULL) {
+    if (image.data  == nullptr) {
         Protokoll << "Error in LoadFont(): image.data is NULL" << std::endl;
         GameRunning = false;
         return false;
@@ -584,7 +584,6 @@ void DirectGraphicsFont::ShowFPS() {
     static int updateFPS;  // Trigger für die FPS, da sonst Anzeige zu schnell
     static double FPS;
     std::string Buffer;
-    double Value;
 
     updateFPS++;
     if (updateFPS > FPS / 2) {
@@ -594,40 +593,41 @@ void DirectGraphicsFont::ShowFPS() {
 
     // Aktuelle FPS
     Buffer = std::to_string(FPS);
-    DrawText(0, 0, "Aktuelle FPS :", 0xFFFFFFFF);
-    DrawText(150, 0, Buffer.c_str(), 0xFFFFFFFF);
+    DrawText(0, 0, "Current FPS :", 0xFFFFFFFF);
+    DrawText(100, 0, Buffer.c_str(), 0xFFFFFFFF);
 
     // FPS Grenze
-    Buffer = std::to_string(Timer.maxFPS);
-    DrawText(200, 0, "FPS Grenze :", 0xFFFFFFFF);
+    Buffer = std::to_string(Timer.GetMaxFPS());
+    DrawText(200, 0, "Max FPS :", 0xFFFFFFFF);
     DrawText(300, 0, Buffer.c_str(), 0xFFFFFFFF);
 
     // Durchschnittliche FPS
-    Value = Timer.getAverageFPS();
-    Buffer = std::to_string(Value);
-    DrawText(0, 15, "Durchschnitt FPS :", 0xFFFFFFFF);
-    DrawText(150, 15, Buffer.c_str(), 0xFFFFFFFF);
+    Buffer = std::to_string(Timer.getAverageFPS());
+    DrawText(0, 15, "Average FPS :", 0xFFFFFFFF);
+    DrawText(100, 15, Buffer.c_str(), 0xFFFFFFFF);
 
     // Maximale FPS
-    Value = Timer.getMaxFrameRate();
-    Buffer = std::to_string(Value);
-    DrawText(0, 30, "Maximale FPS :", 0xFFFFFFFF);
-    DrawText(150, 30, Buffer.c_str(), 0xFFFFFFFF);
+    Buffer = std::to_string(Timer.getMaxFrameRate());
+    DrawText(0, 30, "Highest FPS :", 0xFFFFFFFF);
+    DrawText(100, 30, Buffer.c_str(), 0xFFFFFFFF);
 
     // Minimale FPS
-    Value = Timer.getMinFrameRate();
-    Buffer = std::to_string(Value);
-    DrawText(0, 45, "Minimale FPS :", 0xFFFFFFFF);
-    DrawText(150, 45, Buffer.c_str(), 0xFFFFFFFF);
+    Buffer = std::to_string(Timer.getMinFrameRate());
+    DrawText(0, 45, "Lowest FPS :", 0xFFFFFFFF);
+    DrawText(100, 45, Buffer.c_str(), 0xFFFFFFFF);
 }
 
 // DKS - New functions added to facilitate resized fonts:
-int DirectGraphicsFont::GetYCharSize() {
+int DirectGraphicsFont::GetXCharSize() const {
+    return mXCharSize * mScaleFactor;
+}
+
+int DirectGraphicsFont::GetYCharSize() const {
     return mYCharSize * mScaleFactor;
 }
 
 // DKS - Added support for font scaling
-int DirectGraphicsFont::GetScaleFactor() {
+int DirectGraphicsFont::GetScaleFactor() const {
     return mScaleFactor;
 }
 

@@ -38,7 +38,7 @@ OuttroClass::OuttroClass() {
     // DKS - Player 2 textures are now loaded from disk already-converted
     // ConvertPlayerTexture(&Reiter[1]);
 
-    Zustand = OUTTRO_FADEIN;
+    Zustand = OutroStateEnum::FADEIN;
 
     Counter = 0.0f;
     SmokeDelay = 0.0f;
@@ -61,7 +61,7 @@ OuttroClass::OuttroClass() {
 
     // Ein paar Schneepartikel adden
     for (int i = 0; i < 100; i++)
-        PartikelSystem.PushPartikel(static_cast<float>(rand() % 640), static_cast<float>(rand() % 480),
+        PartikelSystem.PushPartikel(static_cast<float>(random(640)), static_cast<float>(random(480)),
                                     SCHNEEFLOCKE_END);
 }
 
@@ -107,7 +107,7 @@ void OuttroClass::DoOuttro() {
     // Turm rendern
     float off = 0.0f;
 
-    if (Zustand != OUTTRO_SCROLLER)
+    if (Zustand != OutroStateEnum::SCROLLER)
         off = static_cast<float>(sin(Counter / 2.0f)) / 2.0f;
 
     Tower.RenderSpriteRotated(299 + off, 61 + TowerOffset, TowerOffset / 10.0f, 0xFFFFFFFF);
@@ -127,7 +127,7 @@ void OuttroClass::DoOuttro() {
     PartikelSystem.DoPartikelSpecial(true);
 
     // Spieler, der rausfliegt
-    if (Zustand == OUTTRO_PLAYER_FLEES) {
+    if (Zustand == OutroStateEnum::PLAYER_FLEES) {
         DirectGraphics.SetFilterMode(true);
 
         D3DCOLOR col1;
@@ -188,11 +188,11 @@ void OuttroClass::DoOuttro() {
     if (Snow <= 0.0f) {
         Snow = 1.0f;
 
-        PartikelSystem.PushPartikel(static_cast<float>(rand() % 640), -8, SCHNEEFLOCKE_END);
+        PartikelSystem.PushPartikel(static_cast<float>(random(640)), -8, SCHNEEFLOCKE_END);
     }
 
     switch (Zustand) {
-        case OUTTRO_FADEIN:  // Text scrollen
+        case OutroStateEnum::FADEIN:  // Text scrollen
         {
             // DKS - Added function WaveIsPlaying() to SoundManagerClass:
             if (!SoundManager.WaveIsPlaying(SOUND_TAKEOFF)) {
@@ -204,7 +204,7 @@ void OuttroClass::DoOuttro() {
 
             if (Counter > 255.0f) {
                 Counter = 255.0f;
-                Zustand = OUTTRO_TOWER_EXPLODE;
+                Zustand = OutroStateEnum::TOWER_EXPLODE;
             }
 
             D3DCOLOR col = D3DCOLOR_RGBA(0, 0, 0, 255 - int(Counter));
@@ -215,18 +215,18 @@ void OuttroClass::DoOuttro() {
             // Explosionen und Qualm
             if (SmokeDelay < 0.0f) {
                 SmokeDelay = 1.5f;
-                PartikelSystem.PushPartikel(static_cast<float>(280 + rand() % 180),
-                                            static_cast<float>(320 + rand() % 10), SMOKEBIG_OUTTRO);
+                PartikelSystem.PushPartikel(static_cast<float>(280 + random(180)),
+                                            static_cast<float>(320 + random(10)), SMOKEBIG_OUTTRO);
 
-                PartikelSystem.PushPartikel(static_cast<float>(280 + rand() % 180),
-                                            static_cast<float>(150 + TowerOffset + rand() % 100), EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(static_cast<float>(280 + random(180)),
+                                            static_cast<float>(150 + TowerOffset + random(100)), EXPLOSION_MEDIUM2);
             }
 
         } break;
 
         // Explosionen
-        case OUTTRO_TOWER_EXPLODE:
-        case OUTTRO_PLAYER_FLEES: {
+        case OutroStateEnum::TOWER_EXPLODE:
+        case OutroStateEnum::PLAYER_FLEES: {
             SmokeDelay -= 1.0f SYNC;
             TowerOffset += 0.5f SYNC;
 
@@ -234,23 +234,23 @@ void OuttroClass::DoOuttro() {
             if (SmokeDelay < 0.0f) {
                 SmokeDelay = 0.5f;
 
-                PartikelSystem.PushPartikel(static_cast<float>(280 + rand() % 180),
-                                            static_cast<float>(320 + rand() % 10), SMOKEBIG_OUTTRO);
+                PartikelSystem.PushPartikel(static_cast<float>(280 + random(180)),
+                                            static_cast<float>(320 + random(10)), SMOKEBIG_OUTTRO);
 
-                PartikelSystem.PushPartikel(static_cast<float>(280 + rand() % 180),
-                                            static_cast<float>(150 + TowerOffset + rand() % 100), EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(static_cast<float>(280 + random(180)),
+                                            static_cast<float>(150 + TowerOffset + random(100)), EXPLOSION_MEDIUM2);
             }
 
-            if (Zustand == OUTTRO_TOWER_EXPLODE) {
+            if (Zustand == OutroStateEnum::TOWER_EXPLODE) {
                 if (TowerOffset >= 20.0f) {
                     Counter = 0.0f;
-                    Zustand = OUTTRO_PLAYER_FLEES;
+                    Zustand = OutroStateEnum::PLAYER_FLEES;
                     SoundManager.PlayWave(100, 128, 10000, SOUND_TAKEOFF);
                     InitPlayerPos();
                 }
             }
 
-            if (Zustand == OUTTRO_PLAYER_FLEES) {
+            if (Zustand == OutroStateEnum::PLAYER_FLEES) {
                 PlayerSmoke -= 1.0f SYNC;
 
                 if (PlayerSmoke < 0.0f) {
@@ -303,7 +303,7 @@ void OuttroClass::DoOuttro() {
 
                 // Spieler sind weg? Dann nur noch scroller anzeigen und fertig =)
                 if (Counter > 80.0f) {
-                    Zustand = OUTTRO_SCROLLER;
+                    Zustand = OutroStateEnum::SCROLLER;
                     TextOff = 0;
                     Counter = 0.0f;
 
@@ -315,7 +315,7 @@ void OuttroClass::DoOuttro() {
             }
         } break;
 
-        case OUTTRO_SCROLLER: {
+        case OutroStateEnum::SCROLLER: {
             // DKS - modified to support scaled fonts (used on low-res devices)
             //      Note that, for here, we don't use the LowResCredts[] text array,
             //      as the logic here requires lines to be at specific locations.
@@ -327,14 +327,14 @@ void OuttroClass::DoOuttro() {
             // Explosionen und Qualm
             SmokeDelay -= 1.0f SYNC;
             if (SmokeDelay < 0.0f) {
-                SmokeDelay = static_cast<float>(rand() % 10) + 5.0f;
+                SmokeDelay = static_cast<float>(random(10)) + 5.0f;
 
                 for (int i = 0; i < 10; i++)
-                    PartikelSystem.PushPartikel(static_cast<float>(280 + rand() % 180),
-                                                static_cast<float>(340 + rand() % 10), SMOKEBIG_OUTTRO);
+                    PartikelSystem.PushPartikel(static_cast<float>(280 + random(180)),
+                                                static_cast<float>(340 + random(10)), SMOKEBIG_OUTTRO);
 
-                PartikelSystem.PushPartikel(static_cast<float>(280 + rand() % 180),
-                                            static_cast<float>(150 + TowerOffset + rand() % 100), EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(static_cast<float>(280 + random(180)),
+                                            static_cast<float>(150 + TowerOffset + random(100)), EXPLOSION_MEDIUM2);
             }
 
             // Note: original code had each line spaced by 20.0f, 30 lines drawn total, which is more than

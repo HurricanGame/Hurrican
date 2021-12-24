@@ -23,9 +23,9 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define ENERGY_BALL_HEIGHT 48  // Höhe der Energyball Grafik (für Umrechnung)
-#define ARMOUR_BALL_HEIGHT 48  // dito für Armour
-#define BLITZ_STAT_HEIGHT 18   // Höhe der Blitz-Status Grafik
+constexpr int ENERGY_BALL_HEIGHT = 48;  // Höhe der Energyball Grafik (für Umrechnung)
+constexpr int ARMOUR_BALL_HEIGHT = 48;  // dito für Armour
+constexpr int BLITZ_STAT_HEIGHT = 18;   // Höhe der Blitz-Status Grafik
 
 // --------------------------------------------------------------------------------------
 // HUD-Klasse

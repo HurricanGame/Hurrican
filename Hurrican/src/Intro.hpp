@@ -26,10 +26,12 @@
 
 //----- Zustände
 
-#define INTRO_FADEIN 0
-#define INTRO_RUN 1
-#define INTRO_FADEOUT 2
-#define INTRO_DONE 3
+enum class IntroStateEnum {
+  FADEIN,
+  RUN,
+  FADEOUT,
+  DONE
+};
 
 // --------------------------------------------------------------------------------------
 // Klassen Deklaration für das Intro
@@ -44,6 +46,7 @@ struct IntroEntry {
 class IntroClass {
   private:
     DirectGraphicsSprite Background[6];
+    IntroStateEnum Zustand;
     int BildNr;
     int EntriesOff;  // Offset into actual lines displayed on the screen (can vary based on font size)
     int TextOff;
@@ -54,11 +57,12 @@ class IntroClass {
     std::vector<IntroEntry> entries;
 
   public:
-    int Zustand;
     IntroClass();    // Konstruktor
     ~IntroClass();   // Destruktor
     void DoIntro();  // Intro ablaufen lassen
     void EndIntro();
+
+    bool IsDone() const { return Zustand == IntroStateEnum::DONE; }
 };
 
 #endif

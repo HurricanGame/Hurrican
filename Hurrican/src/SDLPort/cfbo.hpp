@@ -31,12 +31,17 @@
 class CFbo {
   public:
     CFbo();
-    virtual ~CFbo();
 
-    bool Enabled;
     bool Open(uint16_t w, uint16_t h);
     void BindTexture(bool active);
     void Close();
+
+    bool IsEnabled() const { return Enabled; }
+
+    GLuint GetFramebuffer() const { return framebuffer; }
+
+  private:
+    bool Enabled;
     GLuint texture;
     GLuint framebuffer;
     uint16_t width;

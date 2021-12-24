@@ -71,7 +71,7 @@ DirectGraphicsClass::~DirectGraphicsClass() {}
 // D3D Initialisieren
 // --------------------------------------------------------------------------------------
 bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, std::uint32_t dwZ_Bits, bool VSync) {
-    bool isFullscreen = CommandLineParams.RunWindowMode != SCREEN_WINDOW;
+    bool isFullscreen = CommandLineParams.RunWindowMode != ScreenMode::WINDOW;
     uint16_t ScreenWidth = SCREENWIDTH;
     uint16_t ScreenHeight = SCREENHEIGHT;
 
@@ -382,20 +382,20 @@ bool DirectGraphicsClass::SetDeviceInfo() {
 
 #if defined(USE_GL2) || defined(USE_GL3)
     // Compile the shader code and link into a program
-    vert = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_color.vert";
-    frag = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_color.frag";
+    vert = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_color.vert";
+    frag = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_color.frag";
 
     if (!Shaders[PROGRAM_COLOR].Load(vert, frag)) {
         return false;
     }
 
-    vert = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_texture.vert";
+    vert = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_texture.vert";
 #if defined(USE_ETC1)
     if (SupportedETC1 == true) {
         sprintf_s(frag, "%s/data/shaders/%s/shader_etc1_texture.frag", g_storage_ext, glsl_version);
     } else {
 #endif
-    frag = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_texture.frag";
+    frag = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_texture.frag";
 #if defined(USE_ETC1)
     }
 #endif
@@ -404,8 +404,8 @@ bool DirectGraphicsClass::SetDeviceInfo() {
         return false;
     }
 
-    vert = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_render.vert";
-    frag = std::string(g_storage_ext) + "/data/shaders/" + glsl_version + "/shader_render.frag";
+    vert = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_render.vert";
+    frag = g_storage_ext + "/data/shaders/" + glsl_version + "/shader_render.frag";
 
     if (!Shaders[PROGRAM_RENDER].Load(vert, frag)) {
         return false;
@@ -472,12 +472,12 @@ bool DirectGraphicsClass::TakeScreenshot(const char Filename[100], int screenx, 
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsClass::SetColorKeyMode() {
-    if (BlendMode == COLORKEY_MODE)
+    if (BlendMode == BlendModeEnum::COLORKEY)
         return;
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    BlendMode = COLORKEY_MODE;
+    BlendMode = BlendModeEnum::COLORKEY;
 }
 
 // --------------------------------------------------------------------------------------
@@ -485,12 +485,12 @@ void DirectGraphicsClass::SetColorKeyMode() {
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsClass::SetWhiteMode() {
-    if (BlendMode == WHITE_MODE)
+    if (BlendMode == BlendModeEnum::WHITE)
         return;
 
     glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_DST_ALPHA);
 
-    BlendMode = WHITE_MODE;
+    BlendMode = BlendModeEnum::WHITE;
 }
 
 // --------------------------------------------------------------------------------------
@@ -498,12 +498,12 @@ void DirectGraphicsClass::SetWhiteMode() {
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsClass::SetAdditiveMode() {
-    if (BlendMode == ADDITIV_MODE)
+    if (BlendMode == BlendModeEnum::ADDITIV)
         return;
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
-    BlendMode = ADDITIV_MODE;
+    BlendMode = BlendModeEnum::ADDITIV;
 }
 
 // --------------------------------------------------------------------------------------
@@ -735,7 +735,7 @@ void DirectGraphicsClass::SetTexture(int idx) {
 
 void DirectGraphicsClass::ShowBackBuffer() {
 #if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
-    if (RenderBuffer.Enabled == true) {
+    if (RenderBuffer.IsEnabled() == true) {
         VERTEX2D vertices[4];
 
         // Protokoll << std::dec << RenderRect.w << "x" << RenderRect.h << " at " << RenderRect.x << "x" << RenderRect.y
@@ -829,7 +829,7 @@ void DirectGraphicsClass::SetupFramebuffers() {
     /* Create an FBO for rendering */
     RenderBuffer.Open(RenderView.w, RenderView.h);
 
-    if (RenderBuffer.Enabled == true) {
+    if (RenderBuffer.IsEnabled() == true) {
         /* Set the render viewport */
         SelectBuffer(true);
         glViewport(RenderView.x, RenderView.y, RenderView.w, RenderView.h);
@@ -837,7 +837,7 @@ void DirectGraphicsClass::SetupFramebuffers() {
         Protokoll << "Render viewport resolution: " << RenderView.w << "x" << RenderView.h << " at " << RenderView.x
                   << "x" << RenderView.y << std::endl;
 
-        if (CommandLineParams.RunWindowMode == SCREEN_FULLSCREEN_STRETCHED) {
+        if (CommandLineParams.RunWindowMode == ScreenMode::FULLSCREEN_STRETCHED) {
             /* Fill the whole screen area */
             RenderRect.w = WindowView.w;
             RenderRect.h = WindowView.h;
@@ -890,16 +890,16 @@ void DirectGraphicsClass::ClearBackBuffer() {
     glClear(GL_COLOR_BUFFER_BIT);
 
 #if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
-    glBindFramebuffer(GL_FRAMEBUFFER, RenderBuffer.framebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, RenderBuffer.GetFramebuffer());
     glClear(GL_COLOR_BUFFER_BIT);
 #endif
 }
 
 #if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
 void DirectGraphicsClass::SelectBuffer(bool active) {
-    if (RenderBuffer.Enabled == true) {
+    if (RenderBuffer.IsEnabled() == true) {
         if (active == true) {
-            glBindFramebuffer(GL_FRAMEBUFFER, RenderBuffer.framebuffer);
+            glBindFramebuffer(GL_FRAMEBUFFER, RenderBuffer.GetFramebuffer());
             glViewport(RenderView.x, RenderView.y, RenderView.w, RenderView.h);
             matProj = matProjRender;
         } else {
@@ -948,7 +948,7 @@ void DirectGraphicsClass::DrawTouchOverlay() {
 }
 
 void DirectGraphicsClass::DrawCircle(uint16_t x, uint16_t y, uint16_t radius) {
-#define SECTORS 40
+    constexpr int SECTORS = 40;
     VERTEX2D vtx[SECTORS + 2];
 
     float radians = 0;

@@ -36,9 +36,9 @@ void GegnerStahlfaust::DoKI() {
         HUD.ShowBossHUD(4000, Energy);
 
     // Levelausschnitt auf die Faust zentrieren, sobald dieses sichtbar wird
-    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
+    if (Active == true && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
-                               ZUSTAND_SCROLLTOLOCK);  // Level auf die Faust zentrieren
+                               TileStateEnum::SCROLLTOLOCK);  // Level auf die Faust zentrieren
         yPos -= 300;                                   // und Faust aus dem Screen setzen
         Handlung = GEGNER_INIT;
 
@@ -52,8 +52,8 @@ void GegnerStahlfaust::DoKI() {
         DamageTaken = 0.0f;  // oder ganz anhalten
 
     // Schon schwer angeschlagen ? Dann raucht die Faust =)
-    if (Energy < 2000 && rand() % 2 == 0)
-        PartikelSystem.PushPartikel(xPos + rand() % 200 + 20, yPos + rand() % 200 + 60, SMOKE);
+    if (Energy < 2000 && random(2) == 0)
+        PartikelSystem.PushPartikel(xPos + random(200) + 20, yPos + random(200) + 60, SMOKE);
 
     // Hat die Faust keine Energie mehr ? Dann explodiert sie
     if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN) {
@@ -73,7 +73,7 @@ void GegnerStahlfaust::DoKI() {
     switch (Handlung) {
         case GEGNER_INIT:  // Warten bis der Screen zentriert wurde
         {
-            if (TileEngine.Zustand == ZUSTAND_LOCKED) {
+            if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 // DKS - Added function SongIsPlaying() to SoundManagerClass:
                 if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
@@ -120,14 +120,11 @@ void GegnerStahlfaust::DoKI() {
                 xAcc = 8.0f;  // Dann nach Rechts fliegen
 
             // Speed nicht zu hoch werde lassen
-            if (xSpeed < -18.0f)
-                xSpeed = -18.0f;
-            if (xSpeed > 18.0f)
-                xSpeed = 18.0f;
+            xSpeed = std::clamp(xSpeed, -18.0f, 18.0f);
 
             // Spieler unter der Faust ? Dann crushen
             if (pAim->xpos < xPos + GegnerRect[GegnerArt].right - 115 &&
-                pAim->xpos + pAim->CollideRect.right > xPos + 155 && rand() % 2 == 0) {
+                pAim->xpos + pAim->CollideRect.right > xPos + 155 && random(2) == 0) {
                 Handlung = GEGNER_CRUSHEN;
                 ySpeed = 0.0f;
                 yAcc = 10.0f;
@@ -159,7 +156,7 @@ void GegnerStahlfaust::DoKI() {
 
                 // Rauch am Boden erzeugen
                 for (int i = 0; i < 25; i++)
-                    PartikelSystem.PushPartikel(xPos + rand() % 200, yPos + GegnerRect[GegnerArt].bottom - 20, SMOKE);
+                    PartikelSystem.PushPartikel(xPos + random(200), yPos + GegnerRect[GegnerArt].bottom - 20, SMOKE);
 
                 // Beschleunigung und Geschwindigkeit wieder richtig setzen um hochzufliegen
                 yAcc = -1.5f;
@@ -208,7 +205,7 @@ void GegnerStahlfaust::DoKI() {
 
                 // Rauch am Boden erzeugen
                 for (int i = 0; i < 25; i++)
-                    PartikelSystem.PushPartikel(xPos + 30 + rand() % 180, yPos + GegnerRect[GegnerArt].bottom - 20,
+                    PartikelSystem.PushPartikel(xPos + 30 + random(180), yPos + GegnerRect[GegnerArt].bottom - 20,
                                                 SMOKE);
 
                 // Beschleunigung und Geschwindigkeit wieder richtig setzen um hochzufliegen
@@ -250,14 +247,14 @@ void GegnerStahlfaust::DoKI() {
             if (SmokeDelay < 0.0f) {
                 SmokeDelay = 1.0f;
 
-                PartikelSystem.PushPartikel(xPos + rand() % 200, yPos + rand() % 200 + 20, EXPLOSION_MEDIUM2);
-                SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
+                PartikelSystem.PushPartikel(xPos + random(200), yPos + random(200) + 20, EXPLOSION_MEDIUM2);
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
 
-                if (rand() % 8 == 0)
-                    PartikelSystem.PushPartikel(xPos + rand() % 200, yPos + rand() % 200 + 20, EXPLOSION_BIG);
+                if (random(8) == 0)
+                    PartikelSystem.PushPartikel(xPos + random(200), yPos + random(200) + 20, EXPLOSION_BIG);
 
-                if (rand() % 20 == 0)
-                    PartikelSystem.PushPartikel(xPos + rand() % 100 + 60, yPos + rand() % 100 + 60, SPLITTER);
+                if (random(20) == 0)
+                    PartikelSystem.PushPartikel(xPos + random(100) + 60, yPos + random(100) + 60, SPLITTER);
             }
 
             // Fertig explodiert ? Dann wird sie ganz zerlegt
@@ -283,7 +280,7 @@ void GegnerStahlfaust::GegnerExplode() {
 
     // Splitter
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos + 60 + rand() % 60, yPos + 80 + rand() % 40, SPLITTER);
+        PartikelSystem.PushPartikel(xPos + 60 + random(60), yPos + 80 + random(40), SPLITTER);
 
     // DKS - In the course of optimizing PartikelsystemClass, I discovered that
     //      SPIDERSPLITTER2 was not handled in CreatePartikel(), and that
@@ -298,7 +295,7 @@ void GegnerStahlfaust::GegnerExplode() {
     for (int i = 0; i < 60; i++)
         // PartikelSystem.PushPartikel(xPos + 20 + rand()%100,
         //                              yPos + 40 + rand()%100, SPIDERSPLITTER2);
-        PartikelSystem.PushPartikel(xPos + 20 + rand() % 100, yPos + 40 + rand() % 100, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + 20 + random(100), yPos + 40 + random(100), SPIDERSPLITTER);
 
     for (int p = 0; p < NUMPLAYERS; p++)
         DirectInput.Joysticks[Player[p].JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);

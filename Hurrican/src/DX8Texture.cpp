@@ -65,8 +65,8 @@ int16_t TexturesystemClass::LoadTexture(const std::string &filename) {
         // Texture has been loaded previously, so it at least has a slot in _loaded_textures,
         //  but if its instances == 0, it will need to be re-loaded from disk.
         idx = (*it).second;
-#ifdef _DEBUG
-        if (idx < 0 || static_cast<int>(idx) >= (int)_loaded_textures.size()) {
+#ifndef NDEBUG
+        if (idx < 0 || static_cast<int>(idx) >= static_cast<int>(_loaded_textures.size())) {
             Protokoll << "-> Error: texture handle idx " << idx
                       << " acquired from _texture_map is outside\n"
                          "\t_loaded_textures array bounds. Lower bound: 0  Upper bound: "
@@ -93,7 +93,7 @@ int16_t TexturesystemClass::LoadTexture(const std::string &filename) {
     if (th.instances > 0) {
         // This texture is already loaded in VRAM
         ++th.instances;
-#ifdef _DEBUG
+#ifndef NDEBUG
         Protokoll << "-> Prevented loading of duplicate texture: " << filename << ", total references: " << th.instances
                   << std::endl;
 #endif
@@ -116,7 +116,7 @@ int16_t TexturesystemClass::LoadTexture(const std::string &filename) {
         if (it2 != _scalefactors_map.end()) {
             th.npot_scalex = (*it2).second.first;
             th.npot_scaley = (*it2).second.second;
-#ifdef _DEBUG
+#ifndef NDEBUG
             Protokoll << "Using external npot scalefactors " << th.npot_scalex << " " << th.npot_scaley
                       << " for texture " << filename << std::endl;
 #endif
@@ -133,7 +133,7 @@ void TexturesystemClass::UnloadTexture(const int idx) {
             --th.instances;
             if (th.instances == 0) {
                 SDL_UnloadTexture(th);
-#ifdef _DEBUG
+#ifndef NDEBUG
                 Protokoll << "-> Texture successfully released !" << std::endl;
 #endif
             }
@@ -153,7 +153,7 @@ void TexturesystemClass::ReadScaleFactorsFile(const std::string &fullpath) {
     while (file >> name >> xscale >> yscale) {
         if (!name.empty() && xscale != 0.0 && yscale != 0.0) {
             _scalefactors_map[name] = std::make_pair(xscale, yscale);
-#ifdef _DEBUG
+#ifndef NDEBUG
             Protokoll << "Read name= " << name << " xscale=" << xscale << " yscale=" << yscale << std::endl;
 #endif
         }
@@ -167,9 +167,9 @@ void TexturesystemClass::ReadScaleFactorsFiles() {
 
     if (CommandLineParams.RunOwnLevelList) {
         path =
-            std::string(g_storage_ext) + "/data/levels/" + std::string(CommandLineParams.OwnLevelList);
+            g_storage_ext + "/data/levels/" + std::string(CommandLineParams.OwnLevelList);
     } else {
-        path = std::string(g_storage_ext) + "/data/textures/";
+        path = g_storage_ext + "/data/textures/";
     }
 
     // First, see if there is a file in data/textures/ where plain old .PNG files are and load its data:
@@ -205,27 +205,27 @@ bool TexturesystemClass::LoadTextureFromFile(const std::string &filename, Textur
     // Zuerst checken, ob sich der Song in einem MOD-Ordner befindet
     if (CommandLineParams.RunOwnLevelList) {
         path =
-            std::string(g_storage_ext) + "/data/levels/" + std::string(CommandLineParams.OwnLevelList);
+            g_storage_ext + "/data/levels/" + std::string(CommandLineParams.OwnLevelList);
         fullpath = path + "/" + filename;
         if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
             goto loadfile;
     }
 
     // Dann checken, ob sich das File im Standard Ordner befindet
-    path = std::string(g_storage_ext) + "/data/textures";
+    path = g_storage_ext + "/data/textures";
     fullpath = path + "/" + filename;
     if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
         goto loadfile;
 
 #if defined(USE_UNRARLIB)
     // Are we using unrarlib to read all game data from a single RAR archive?
-    void *buf_data = NULL;       // Memory  buffer file is read into, if using unrarlib
+    void *buf_data = nullptr;       // Memory  buffer file is read into, if using unrarlib
     unsigned long buf_size = 0;  // Size of memory buffer file is read into, if using unrarlib
     if (fs::exists(RARFILENAME) && fs::is_regular_file(RARFILENAME) &&
         urarlib_get(&buf_data, &buf_size, filename.c_str(), RARFILENAME, convertText(RARFILEPASSWORD)) &&
-        buf_data != NULL) {
+        buf_data != nullptr) {
         // Load the texture from the image that is now in buf_data[]
-        success = SDL_LoadTexture(NULL, NULL, buf_data, buf_size, th);
+        success = SDL_LoadTexture(nullptr, nullptr, buf_data, buf_size, th);
         if (buf_data)
             free(buf_data);
 
@@ -239,7 +239,7 @@ bool TexturesystemClass::LoadTextureFromFile(const std::string &filename, Textur
 #endif  // USE_UNRARLIB
 loadfile:
     // Load the texture from disk:
-    success = SDL_LoadTexture(path, filename, NULL, 0, th);
+    success = SDL_LoadTexture(path, filename, nullptr, 0, th);
     if (success)
         goto loaded;
 

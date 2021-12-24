@@ -20,7 +20,7 @@ GegnerGlubschi2::GegnerGlubschi2(int Wert1, int Wert2, bool Light) {
     ChangeLight = Light;
     Destroyable = false;
     rot = 0.0;
-    rotspeed = float(rand() % 10 + 1) / 5.0f;
+    rotspeed = float(random(10) + 1) / 5.0f;
     TestBlock = false;
     OwnDraw = true;
 }

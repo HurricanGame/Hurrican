@@ -56,12 +56,14 @@ void GegnerSkiWalker::DoKI() {
     // Spieler draufgehüpft ?
     for (int i = 0; i < NUMPLAYERS; i++)
         if (Player[i].AufPlattform == this && (Handlung == GEGNER_LAUFEN || Handlung == GEGNER_FALLEN) &&
-            Player[i].Handlung != RADELN && Player[i].Handlung != RADELN_FALL && Player[i].Handlung != SACKREITEN &&
-            Player[i].Handlung != DREHEN && Player[i].yspeed > 0.0f) {
+                Player[i].Handlung != PlayerActionEnum::RADELN &&
+                Player[i].Handlung != PlayerActionEnum::RADELN_FALL &&
+                Player[i].Handlung != PlayerActionEnum::SACKREITEN &&
+                Player[i].Handlung != PlayerActionEnum::DREHEN && Player[i].yspeed > 0.0f) {
             // Spieler springen lassen
             Player[i].JumpPossible = false;
             Player[i].AnimPhase = 0;
-            Player[i].Handlung = SPRINGEN;
+            Player[i].Handlung = PlayerActionEnum::SPRINGEN;
             Player[i].JumpStart = Player[i].ypos;
             Player[i].yspeed = -PLAYER_MAXJUMPSPEED;
             Player[i].JumpAdd = 0.0f;
@@ -93,8 +95,8 @@ void GegnerSkiWalker::DoKI() {
                 ShotDelay -= 1.0f SYNC;
 
                 if (ShotDelay <= 0.0f) {
-                    ShotDelay = static_cast<float>(10 + rand() % 5);
-                    SoundManager.PlayWave(100, 128, 18000 + rand() % 2000, SOUND_LASERSHOT);
+                    ShotDelay = static_cast<float>(10 + random(5));
+                    SoundManager.PlayWave(100, 128, 18000 + random(2000), SOUND_LASERSHOT);
 
                     if (BlickRichtung == LINKS)
                         Projectiles.PushProjectile(xPos - 18, yPos + 9, WALKER_LASER);
@@ -157,13 +159,13 @@ void GegnerSkiWalker::DoKI() {
 
 void GegnerSkiWalker::GegnerExplode() {
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(float(xPos - 20 + rand() % 45), float(yPos - 20 + rand() % 45), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(float(xPos - 20 + random(45)), float(yPos - 20 + random(45)), EXPLOSION_MEDIUM2);
 
-    SoundManager.PlayWave(100, 128, -rand() % 2000 + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 100;
 
     for (int i = 0; i < NUMPLAYERS; i++)
         if (Player[i].AufPlattform == this)
-            Player[i].AufPlattform = NULL;
+            Player[i].AufPlattform = nullptr;
 }

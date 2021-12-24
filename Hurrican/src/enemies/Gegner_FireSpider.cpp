@@ -160,7 +160,7 @@ void GegnerFireSpider::DoKI() {
                 AnimPhase = 0;
                 AnimStart = 0;
                 AnimEnde = 10;
-                shotdelay = float(rand() % 20) + 20.0f;
+                shotdelay = float(random(20)) + 20.0f;
             }
         } break;
 
@@ -182,9 +182,9 @@ void GegnerFireSpider::DoKI() {
 
             if (shotdelay < 0.0f) {
                 shotdelay = 8.0f SYNC;
-                PartikelSystem.PushPartikel(xPos + 35 + rand() % 5, yPos + 20 + rand() % 5, ROCKETSMOKE);
-                PartikelSystem.PushPartikel(xPos + 30 + rand() % 5, yPos + 20 + rand() % 5, SMOKE3);
-                PartikelSystem.PushPartikel(xPos + 30 + rand() % 5, yPos + 20 + rand() % 5, FUNKE);
+                PartikelSystem.PushPartikel(xPos + 35 + random(5), yPos + 20 + random(5), ROCKETSMOKE);
+                PartikelSystem.PushPartikel(xPos + 30 + random(5), yPos + 20 + random(5), SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 30 + random(5), yPos + 20 + random(5), FUNKE);
             }
         } break;
     }
@@ -200,19 +200,19 @@ void GegnerFireSpider::DoKI() {
     if (Energy <= 0.0f && Handlung != GEGNER_FALLEN) {
         Energy = 100.0f;
         Handlung = GEGNER_FALLEN;
-        xSpeed = rand() % 15 - 7.0f, ySpeed = -(rand() % 8) - 8.0f;
+        xSpeed = random(15) - 7.0f, ySpeed = -(random(8)) - 8.0f;
         yAcc = 3.0f;
 
         // Drehspeed beim Runterfallen setzen
         //
-        Value2 = rand() % 20 + 20;
+        Value2 = random(20) + 20;
 
         // evtl negativ (andere Richtung drehen)
         //
-        if (rand() % 2 == 0)
+        if (random(2) == 0)
             Value2 *= -1;
 
-        SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
+        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
         PartikelSystem.PushPartikel(xPos + 5, yPos, EXPLOSION_MEDIUM2);
 
         shotdelay = 1.0f;
@@ -224,12 +224,12 @@ void GegnerFireSpider::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerFireSpider::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
     PartikelSystem.PushPartikel(xPos + 5, yPos, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 10; i++) {
-        PartikelSystem.PushPartikel(xPos + rand() % 40, yPos + rand() % 30, SPIDERSPLITTER);
-        PartikelSystem.PushPartikel(xPos + rand() % 40, yPos + rand() % 30, FUNKE);
+        PartikelSystem.PushPartikel(xPos + random(40), yPos + random(30), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + random(40), yPos + random(30), FUNKE);
     }
 
     Player[0].Score += 250;

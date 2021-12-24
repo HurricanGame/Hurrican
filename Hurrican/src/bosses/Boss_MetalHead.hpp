@@ -11,14 +11,14 @@ class GegnerMetalHead : public GegnerClass {
 
 // Aktionen/Angriffe (SK = StahlKopp)
 //
-#define SK_PAUSE 0     // Kurze Pause
-#define SK_AUSGANG 1   // Ausgansposition links oben
-#define SK_AUSHOLEN 2  // Ausholen zum Headbangen
-#define SK_BANGEN 3    // Headbangen, sprich, mit dem Kopf nach rechts schlagen
-#define SK_CHASING 4   // Spieler verfolgen
-#define SK_TURBINE 5   // Auf Turbinen-Ansaugen vorbereiten
-#define SK_WACKELN 6   // Kopf wackelt auf und ab und schlägt dabei gegen die Decke
-#define SK_SPUCKEN 7   // Kopf spuckt aus der Turbine Feuerbälle
+#define SK_PAUSE 0     // Short Pause
+#define SK_AUSGANG 1   // Starting position at the top left
+#define SK_AUSHOLEN 2  // Going out for headbanging
+#define SK_BANGEN 3    // Headbanging, in other words, banging head to the right
+#define SK_CHASING 4   // Track player
+#define SK_TURBINE 5   // Prepare for turbine suction
+#define SK_WACKELN 6   // Head wobbles up and down and hits the ceiling
+#define SK_SPUCKEN 7   // Head spits fireballs from the turbine
 
     struct wirbel {
         float x, y;
@@ -53,7 +53,6 @@ class GegnerMetalHead : public GegnerClass {
     void DoMove();
     void WinkelToPlayer();
 
-  public:
     DirectGraphicsSprite Kiefer;
     DirectGraphicsSprite Kiefer2;
     DirectGraphicsSprite Turbine;
@@ -61,6 +60,7 @@ class GegnerMetalHead : public GegnerClass {
     DirectGraphicsSprite HalsGfx;
     DirectGraphicsSprite Flare;
 
+  public:
     GegnerMetalHead(int Wert1,
                     int Wert2,  // Konstruktor
                     bool Light);

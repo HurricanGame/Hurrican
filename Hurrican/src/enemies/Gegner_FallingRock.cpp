@@ -57,7 +57,7 @@ void GegnerFallingRock::DoKI() {
                     }
 
                     // Sound ausgeben
-                    SoundManager.PlayWave(100, 128, 11025 + rand() % 2000, SOUND_STONEFALL);
+                    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEFALL);
 
                     Handlung = GEGNER_FALLEN;
                     ySpeed = 0.0f;
@@ -77,11 +77,11 @@ void GegnerFallingRock::DoKI() {
 void GegnerFallingRock::GegnerExplode() {
     // und Splitter erzeugen Rauch
     for (int i = 0; i < 10; i++) {
-        PartikelSystem.PushPartikel(xPos + rand() % 80 - 12, yPos + rand() % 20 + 20, SMOKE);
-        PartikelSystem.PushPartikel(xPos + rand() % 80 - 12, yPos + rand() % 40, ROCKSPLITTER);
-        PartikelSystem.PushPartikel(xPos + rand() % 80 - 12, yPos + rand() % 40, ROCKSPLITTERSMALL);
+        PartikelSystem.PushPartikel(xPos + random(80) - 12, yPos + random(20) + 20, SMOKE);
+        PartikelSystem.PushPartikel(xPos + random(80) - 12, yPos + random(40), ROCKSPLITTER);
+        PartikelSystem.PushPartikel(xPos + random(80) - 12, yPos + random(40), ROCKSPLITTERSMALL);
     }
-    SoundManager.PlayWave(100, 128, 11025 + rand() % 2000, SOUND_STONEEXPLODE);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEEXPLODE);  // Sound ausgeben
 
     Player[0].Score += 100;
 }

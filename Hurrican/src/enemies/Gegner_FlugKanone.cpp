@@ -55,23 +55,17 @@ void GegnerFlugKanone::DoKI() {
     if (yPos > pAim->ypos - 100)
         yAcc = -2.5f;
 
-    if (xSpeed > 20.0f)
-        xSpeed = 20.0f;
-    if (xSpeed < -20.0f)
-        xSpeed = -20.0f;
-    if (ySpeed > 10.0f)
-        ySpeed = 10.0f;
-    if (ySpeed < -10.0f)
-        ySpeed = -10.0f;
+    xSpeed = std::clamp(xSpeed, -20.0f, 20.0f);
+    ySpeed = std::clamp(ySpeed, -10.0f, 10.0f);
 
     if (ShotDelay > 0.0f)
         ShotDelay -= 1.0f SYNC;
     if (ShotDelay <= 0.0f) {
-        if (Skill == 0)
+        if (Skill == SKILL_EASY)
             ShotDelay = 10.0f;
-        if (Skill == 1)
+        if (Skill == SKILL_MEDIUM)
             ShotDelay = 7.5f;
-        if (Skill >= 2)
+        if (Skill >= SKILL_HARD)
             ShotDelay = 5.0f;
 
         if (abs(int(pAim->xpos - xPos)) < 100 && PlayerAbstand() < 300) {
@@ -110,11 +104,11 @@ void GegnerFlugKanone::DoKI() {
 
 void GegnerFlugKanone::GegnerExplode() {
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(float(xPos - 20 + rand() % 45), float(yPos - 20 + rand() % 45), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(float(xPos - 20 + random(45)), float(yPos - 20 + random(45)), EXPLOSION_MEDIUM2);
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(float(xPos + rand() % 65), float(yPos + rand() % 35), LASERFUNKE2);
+        PartikelSystem.PushPartikel(float(xPos + random(65)), float(yPos + random(35)), LASERFUNKE2);
 
-    SoundManager.PlayWave(100, 128, -rand() % 2000 + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 150;
 }

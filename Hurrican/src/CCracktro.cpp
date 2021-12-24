@@ -80,10 +80,10 @@ CCracktro::CCracktro() {
     ScrollPos2 = 0;
     SinPos = 0.0f;
 
-    for (int i = 0; i < 200; i++) {
-        Stars[i].Count = static_cast<float>(rand() % 640);
-        Stars[i].Abstand = static_cast<float>(rand() % 140 + 340);
-        Stars[i].Ebene = rand() % 200 + 55;
+    for (auto& star: Stars) {
+        star.Count = static_cast<float>(random(640));
+        star.Abstand = static_cast<float>(random(140) + 340);
+        star.Ebene = random(200) + 55;
     }
 
     // DKS - No need to check for any return value:
@@ -99,7 +99,7 @@ CCracktro::CCracktro() {
     DirectGraphics.SetAdditiveMode();
     DirectGraphics.SetColorKeyMode();
 
-    State = 0;
+    State = StateEnum::MAIN;
 
 }  // Konstruktor
 
@@ -125,13 +125,13 @@ void CCracktro::Main() {
     // Sterne
     // --------------------------------------------------------------------------------------
 
-    for (int i = 0; i < 200; i++) {
-        Stars[i].Count -= Stars[i].Ebene * 0.1f SYNC;
+    for (auto& star: Stars) {
+        star.Count -= star.Ebene * 0.1f SYNC;
 
-        if (Stars[i].Count < 0.0f)
-            Stars[i].Count += 640;
+        if (star.Count < 0.0f)
+            star.Count += 640;
 
-        RenderRect(Stars[i].Count, Stars[i].Abstand, 4, 2, D3DCOLOR_RGBA(255, 255, 255, Stars[i].Ebene));
+        RenderRect(star.Count, star.Abstand, 4, 2, D3DCOLOR_RGBA(255, 255, 255, star.Ebene));
     }
 
     // --------------------------------------------------------------------------------------
@@ -153,18 +153,18 @@ void CCracktro::Main() {
                             ScrollCol[static_cast<int>(colpos + i) % (sizeof(ScrollCol) / sizeof(D3DCOLOR))]);
 
         if (CrackText[i + ScrollPos] != 32)
-            xchar += pFont->mCharLength[CrackText[i + ScrollPos] - 33] + 2;
+            xchar += pFont->GetCharLength(CrackText[i + ScrollPos] - 33) + 2;
         else
-            xchar += pFont->mXCharSize;
+            xchar += pFont->GetXCharSize();
     }
 
     ScrollOffset += 12.0f SYNC;
 
     int l;
     if (CrackText[ScrollPos] == 32)
-        l = pFont->mXCharSize;
+        l = pFont->GetXCharSize();
     else
-        l = pFont->mCharLength[CrackText[ScrollPos] - 33] + 2;
+        l = pFont->GetCharLength(CrackText[ScrollPos] - 33) + 2;
 
     if (ScrollOffset > l) {
         ScrollOffset -= l;
@@ -227,15 +227,15 @@ void CCracktro::Main() {
         pFont->DrawDemoChar(xchar - ScrollOffset2, 295, StaticText[i + ScrollPos2], 0xFF000000);
 
         if (StaticText[i + ScrollPos2] != 32)
-            xchar += pFont->mCharLength[StaticText[i + ScrollPos2] - 33] + 2;
+            xchar += pFont->GetCharLength(StaticText[i + ScrollPos2] - 33) + 2;
         else
-            xchar += pFont->mXCharSize;
+            xchar += pFont->GetXCharSize();
     }
 
     if (StaticText[ScrollPos2] == 32)
-        l = pFont->mXCharSize;
+        l = pFont->GetXCharSize();
     else
-        l = pFont->mCharLength[StaticText[ScrollPos2] - 33] + 2;
+        l = pFont->GetCharLength(StaticText[ScrollPos2] - 33) + 2;
 
     ScrollOffset2 += 10.0f SYNC;
 
@@ -311,7 +311,7 @@ void CCracktro::Main() {
     //
     if (DirectInput.AnyKeyDown() || DirectInput.AnyButtonDown()) {
         SoundManager.StopSong(MUSIC_CRACKTRO, false);
-        State = 1;
+        State = StateEnum::LOAD;
     }
 }
 
@@ -339,16 +339,12 @@ void CCracktro::Load() {
 
 void CCracktro::Run() {
     switch (State) {
-        case 0:
+        case StateEnum::MAIN:
             Main();
             break;
 
-        case 1:
+        case StateEnum::LOAD:
             Load();
-            break;
-
-        default:
-            Main();
             break;
     }
 }  // RunCracktro

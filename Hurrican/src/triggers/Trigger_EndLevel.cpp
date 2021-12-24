@@ -38,9 +38,9 @@ void GegnerEndLevel::DoKI() {
             {
                 // Spieler zentrieren
                 if (NUMPLAYERS == 0)
-                    TileEngine.ScrollLevel(Player[0].xpos - 300, Player[0].ypos - 280, ZUSTAND_SCROLLTOLOCK);
+                    TileEngine.ScrollLevel(Player[0].xpos - 300, Player[0].ypos - 280, TileStateEnum::SCROLLTOLOCK);
                 else
-                    TileEngine.ScrollLevel(TileEngine.XOffset, TileEngine.YOffset, ZUSTAND_SCROLLTOLOCK);
+                    TileEngine.ScrollLevel(TileEngine.XOffset, TileEngine.YOffset, TileStateEnum::SCROLLTOLOCK);
 
                 Energy = 0.0f;
 

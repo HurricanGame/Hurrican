@@ -7,6 +7,7 @@
 
 #include "Logdatei.hpp"
 #include <iostream>
+#include <cstdlib>
 #if defined(ANDROID)
 #include <android/log.h>
 #endif

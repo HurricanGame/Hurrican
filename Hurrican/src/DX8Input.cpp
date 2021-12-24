@@ -123,15 +123,7 @@ bool DirectInputClass::Init() {
 
 void DirectInputClass::Exit() {
     for (int i = 0; i < JoysticksFound; i++) {
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-        if (Joysticks[i].lpDIJoystick != NULL)
-#else
-        if (SDL_JoystickOpened(i))
-#endif
-        {
-            SDL_JoystickClose(Joysticks[i].lpDIJoystick);
-            Joysticks[i].lpDIJoystick = nullptr;
-        }
+        Joysticks[i].Exit(i);
     }
 
     Protokoll << "-> SDL/OpenGL input shutdown successfully completed !" << std::endl;
@@ -173,15 +165,8 @@ bool DirectInputClass::UpdateMaus(bool gepuffert) {
     else
         MausButtons[2] = false;
 
-    // Clamps
-    if (MausX < 0)
-        MausX = 0;
-    if (MausY < 0)
-        MausY = 0;
-    if (MausX > RENDERWIDTH)
-        MausX = RENDERWIDTH;
-    if (MausY > RENDERHEIGHT)
-        MausY = RENDERHEIGHT;
+    MausX = std::clamp(MausX, 0, RENDERWIDTH);
+    MausY = std::clamp(MausY, 0, RENDERHEIGHT);
 
     return true;
 }
@@ -205,7 +190,7 @@ void DirectInputClass::UpdateJoysticks() {
 // Checken ob keine Taste mehr gedrückt ist
 // --------------------------------------------------------------------------------------
 
-bool DirectInputClass::AreAllKeysReleased() {
+bool DirectInputClass::AreAllKeysReleased() const {
     for (int i = 0; i < std::min(NumberOfKeys, MAX_KEYS); i++)
         if (TastaturPuffer[i] != 0)
             return false;
@@ -217,7 +202,7 @@ bool DirectInputClass::AreAllKeysReleased() {
 // Checken ob irgendeine Taste gedrückt ist
 // --------------------------------------------------------------------------------------
 
-bool DirectInputClass::AnyKeyDown() {
+bool DirectInputClass::AnyKeyDown() const {
     for (int i = 0; i < std::min(NumberOfKeys, MAX_KEYS); i++)
         if (KeyDown(i))
             return true;
@@ -229,13 +214,13 @@ bool DirectInputClass::AnyKeyDown() {
 // Checken ob irgendein Button gedrückt ist
 // --------------------------------------------------------------------------------------
 
-bool DirectInputClass::AnyButtonDown() {
+bool DirectInputClass::AnyButtonDown() const {
     if (!JoystickFound)
         return false;
 
     for (int i = 0; i < JoysticksFound; i++)
-        for (int j = 0; j < Joysticks[i].NumButtons; j++)
-            if (Joysticks[i].JoystickButtons[j])
+        for (const auto& button: Joysticks[i].JoystickButtons)
+            if (button)
                 return true;
 
     return false;
@@ -340,7 +325,7 @@ void DirectInputClass::UpdateTouchscreen() {
 
             for (index = 0; index < finger_count; index++) {
                 finger = SDL_GetTouchFinger(fingerdevice, index);
-                if (finger != NULL) {
+                if (finger != nullptr) {
                     touch.x = finger->x * Width;
                     touch.y = finger->y * Height;
 
@@ -356,7 +341,7 @@ void DirectInputClass::UpdateTouchscreen() {
                         }
                     }
 
-#define OFFSET 15
+                    constexpr int OFFSET = 15;
                     int rel_x = TouchdpadX - touch.x;
                     int rel_y = TouchdpadY - touch.y;
                     if (pow(TouchdpadRadius, 2) >= (pow(abs(rel_x), 2) + pow(abs(rel_y), 2))) {

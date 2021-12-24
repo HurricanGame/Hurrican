@@ -445,11 +445,30 @@ ENDIF(FBO)
 
 add_definitions(-DPLATFORM_SDL)
 add_definitions(-DENABLE_CONSOLE_COMMANDS) # make optional?
-# -DUSE_NO_MEMPOOLING
-# -DUSE_FAST_RNG
-# -DUSE_FAST_TRIG
-# -DUSE_ETC1
-# -DUSE_PVRTC
+
+# TODO add options
+# C++ exceptions can be turned off, reducing unnecessary code bloat and speed-hit
+# add_definitions(-DUSE_NO_EXCEPTIONS)
+# Bypass pooled memory manager (for debugging purposes)
+# add_definitions(-DUSE_NO_MEMPOOLING)
+# Use the Unrarlib library, for support of packing of data files
+# add_definitions(-DUSE_UNRARLIB)
+# ETC1 texture compression support
+# add_definitions(-DUSE_ETC1)
+# PVRTC texture compression suppor
+# add_definitions(-DUSE_PVRTC)
+
+# Fast random-number-generator (can be over 100 times faster than rand() on some platforms)
+OPTION(FAST_RANDOM "Use a fast linear congruential generator for random numbers" OFF)
+IF(FAST_RANDOM)
+    ADD_DEFINITIONS(-DUSE_FAST_RNG)
+ENDIF(FAST_RANDOM)
+
+# Fast trig approximations (For systems with CPUS lacking trig instructions i.e. ARM/MIPS)
+OPTION(FAST_TRIG "Use fast approximation for trigonometric functions" OFF)
+IF(FAST_TRIG)
+    ADD_DEFINITIONS(-DUSE_FAST_TRIG)
+ENDIF(FAST_TRIG)
 
 if(UNIX)
     add_definitions(-DUSE_HOME_DIR)

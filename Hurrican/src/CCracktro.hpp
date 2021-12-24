@@ -28,27 +28,31 @@
 
 class CCracktro {
   private:
+    enum class StateEnum { MAIN, LOAD };
+
+  private:
     DirectGraphicsSprite Bars[3];
     DirectGraphicsSprite Logo[2];
     DirectGraphicsSprite Zahlen;
     DirectGraphicsSprite Star;
     DirectGraphicsFont *pFont;
+    StateEnum State;
     float ScrollOffset, ScrollOffset2;
-    int ScrollPos, ScrollPos2;
     float SinPos;
-    int State;
+    int ScrollPos, ScrollPos2;
+    bool b_running;
 
     StarStruct Stars[200];
 
   public:
-    bool b_running;
-
     CCracktro();   // Cracktro initialisieren
     ~CCracktro();  // Cracktro freigeben
 
     void Run();  // Cracktro laufen lassen
     void Main();
     void Load();
+
+    bool IsRunning() const { return b_running; }
 };  // CCracktro
 
 #endif

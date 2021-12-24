@@ -14,17 +14,18 @@
 #include "DX8Sprite.hpp"
 #include "Tileengine.hpp"
 
+#include <string>
+
 // --------------------------------------------------------------------------------------
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define CONFIGFILE "Hurrican.cfg"  // Name der Konfigurationsdatei
-#define TUTORIAL_END 99
-
-#define DETAIL_LOW 0      // alles total billig
-#define DETAIL_MEDIUM 1   // animiertes Wasser dazu
-#define DETAIL_HIGH 2     // geiler Blitz, Leuchteffekte und Lightmaps
-#define DETAIL_MAXIMUM 3  // Schockwelle
+enum {
+  DETAIL_LOW = 0,      // alles total billig
+  DETAIL_MEDIUM = 1,   // animiertes Wasser dazu
+  DETAIL_HIGH = 2,     // geiler Blitz, Leuchteffekte und Lightmaps
+  DETAIL_MAXIMUM = 3   // Schockwelle
+};
 
 // --------------------------------------------------------------------------------------
 // Prototypen von Funktionen
@@ -59,7 +60,7 @@ PlayerClass *ChooseAim();
 // Externals
 // --------------------------------------------------------------------------------------
 
-extern unsigned char SpielZustand;
+extern GameStateEnum SpielZustand;
 extern bool NochKeinFullScreen;
 
 //----- externe Variablen zum Screen-Wackeln lassen (zB bei SpinnenBombe)
@@ -85,6 +86,6 @@ extern int DisplayHintNr;
 extern const float ShockWaveX;
 extern const float ShockWaveY;
 
-extern char StageReihenfolge[256][100];
+extern std::string StageReihenfolge[256];
 
 #endif

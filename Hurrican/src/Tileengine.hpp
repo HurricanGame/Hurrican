@@ -20,78 +20,86 @@
 #include "CDragonHack.hpp"
 #include "Globals.hpp"
 
+#include <cstdlib>
+
 // --------------------------------------------------------------------------------------
 // Defines
 // --------------------------------------------------------------------------------------
 
 //----- Flags für den Blockwert
 
-#define BLOCKWERT_WAND 1               // Solide Wand
-#define BLOCKWERT_GEGNERWAND 2         // Wand nur für Gegner
-#define BLOCKWERT_PLATTFORM 4          // Plattform
-#define BLOCKWERT_LIGHT 8              // Licht bei Objekten verändern
-#define BLOCKWERT_VERDECKEN 16         // Spieler und Objekte verdecken
-#define BLOCKWERT_ANIMIERT_BACK 32     // Animiert Hintergrund
-#define BLOCKWERT_ANIMIERT_FRONT 64    // Animiert Overlay
-#define BLOCKWERT_WASSER 128           // Wasser (macht platsch :D )
-#define BLOCKWERT_SCHADEN 256          // Schaden
-#define BLOCKWERT_FLIESSBANDL 512      // Fliessband Links
-#define BLOCKWERT_FLIESSBANDR 1024     // Fliessband Rechts
-#define BLOCKWERT_WENDEPUNKT 2048      // Bewegte Plattformen umdrehen lassen
-#define BLOCKWERT_DESTRUCTIBLE 4096    // Zerstörbare Wand
-#define BLOCKWERT_MOVELINKS 8192       // Textur nach links bewegen
-#define BLOCKWERT_OVERLAY_LIGHT 16384  // Overlay nimmt Licht an
-#define BLOCKWERT_SUMPF 32768          // Einsinken
-#define BLOCKWERT_EIS 65536            // Eis, auf dem man ausrutscht
-#define BLOCKWERT_MOVEVERTICAL 131072  // Vertikale Texturbewegung
-#define BLOCKWERT_WASSERFALL 262144    // Wasserfall
-#define BLOCKWERT_MOVERECHTS 524288    // Textur nach rechts bewegen
+enum BlockValue : uint32_t {
+  BLOCKWERT_WAND           = 0x000001,    // Solide Wand
+  BLOCKWERT_GEGNERWAND     = 0x000002,    // Wand nur für Gegner
+  BLOCKWERT_PLATTFORM      = 0x000004,    // Plattform
+  BLOCKWERT_LIGHT          = 0x000008,    // Licht bei Objekten verändern
+  BLOCKWERT_VERDECKEN      = 0x000010,    // Spieler und Objekte verdecken
+  BLOCKWERT_ANIMIERT_BACK  = 0x000020,    // Animiert Hintergrund
+  BLOCKWERT_ANIMIERT_FRONT = 0x000040,    // Animiert Overlay
+  BLOCKWERT_WASSER         = 0x000080,    // Wasser (macht platsch :D )
+  BLOCKWERT_SCHADEN        = 0x000100,    // Schaden
+  BLOCKWERT_FLIESSBANDL    = 0x000200,    // Fliessband Links
+  BLOCKWERT_FLIESSBANDR    = 0x000400,    // Fliessband Rechts
+  BLOCKWERT_WENDEPUNKT     = 0x000800,    // Bewegte Plattformen umdrehen lassen
+  BLOCKWERT_DESTRUCTIBLE   = 0x001000,    // Zerstörbare Wand
+  BLOCKWERT_MOVELINKS      = 0x002000,    // Textur nach links bewegen
+  BLOCKWERT_OVERLAY_LIGHT  = 0x004000,    // Overlay nimmt Licht an
+  BLOCKWERT_SUMPF          = 0x008000,    // Einsinken
+  BLOCKWERT_EIS            = 0x010000,    // Eis, auf dem man ausrutscht
+  BLOCKWERT_MOVEVERTICAL   = 0x020000,    // Vertikale Texturbewegung
+  BLOCKWERT_WASSERFALL     = 0x040000,    // Wasserfall
+  BLOCKWERT_MOVERECHTS     = 0x080000,    // Textur nach rechts bewegen
 
-#define BLOCKWERT_SCHRAEGE_L 2097152  // Schräge Rechts
-#define BLOCKWERT_SCHRAEGE_R 4194304  // Schräge Rechts
-#define BLOCKWERT_LIQUID 8388608      // Flüssigkeit (Wasser, Säure, Lava, Magensäure)
+  BLOCKWERT_SCHRAEGE_L     = 0x200000,    // Schräge Rechts
+  BLOCKWERT_SCHRAEGE_R     = 0x400000,    // Schräge Rechts
+  BLOCKWERT_LIQUID         = 0x800000     // Flüssigkeit (Wasser, Säure, Lava, Magensäure)
+};
 
 //--- Animationsgeschwindigkeit der animierten Level-Tiles
 
-#define TILEANIM_SPEED 0.8f
+constexpr float TILEANIM_SPEED = 0.8f;
 
 //--- Werte zur Levelgrösse
 
-#define TILESIZE_X 20         // Grösse eines
-#define TILESIZE_Y 20         // einzelnen Tiles
-#define TILESETSIZE_X 256.0f  // Grösse eines
-#define TILESETSIZE_Y 256.0f  // Tilesets
+constexpr int TILESIZE_X = 20;         // Grösse eines
+constexpr int TILESIZE_Y = 20;         // einzelnen Tiles
+constexpr float TILESETSIZE_X = 256.0f;  // Grösse eines
+constexpr float TILESETSIZE_Y = 256.0f;  // Tilesets
 
-#define SCREENSIZE_X 32  // Leveltiles pro Screen
-#define SCREENSIZE_Y 24
+constexpr int SCREENSIZE_X = 32;  // Leveltiles pro Screen
+constexpr int SCREENSIZE_Y = 24;
 
-#define MAX_LEVELSIZE_X 1024  // Gesamtgrösse des Level
-#define MAX_LEVELSIZE_Y 1600
+constexpr int MAX_LEVELSIZE_X = 1024;  // Gesamtgrösse des Level
+constexpr int MAX_LEVELSIZE_Y = 1600;
 
-#define MAX_TILESETS 64     // Maximalzahl der Tilesets
-#define INCLUDE_ZEROTILE 1  // Tile 0,0 im Tileset mit verwenden ?
+constexpr int MAX_TILESETS = 64;     // Maximalzahl der Tilesets
+constexpr int INCLUDE_ZEROTILE = 1;  // Tile = 0;,0 im Tileset mit verwenden ?
+
+constexpr int MAX_TILERECTS = 144;
 
 //----- Grösse des nicht scrollbaren Bereichs
 
-#define SCROLL_BORDER_EXTREME_LEFT 0
-#define SCROLL_BORDER_EXTREME_TOP 0
-#define SCROLL_BORDER_EXTREME_RIGHT 570
-#define SCROLL_BORDER_EXTREME_BOTTOM 400
+constexpr int SCROLL_BORDER_EXTREME_LEFT = 0;
+constexpr int SCROLL_BORDER_EXTREME_TOP = 0;
+constexpr int SCROLL_BORDER_EXTREME_RIGHT = 570;
+constexpr int SCROLL_BORDER_EXTREME_BOTTOM = 400;
 
-#define SCROLL_BORDER_HORIZ 0
-#define SCROLL_BORDER_TOP 50
-#define SCROLL_BORDER_BOTTOM 50
+constexpr int SCROLL_BORDER_HORIZ = 0;
+constexpr int SCROLL_BORDER_TOP = 50;
+constexpr int SCROLL_BORDER_BOTTOM = 50;
 
-#define LOOK_BORDER_TOP 60
-#define LOOK_BORDER_BOTTOM 400
+constexpr int LOOK_BORDER_TOP = 60;
+constexpr int LOOK_BORDER_BOTTOM = 400;
 
 //--- Zustände der Tileengine
 
-#define ZUSTAND_SCROLLBAR 0       // Spieler kann Level scrollen durch laufen
-#define ZUSTAND_SCROLLTO 1        // Level Scrollt zu bestimmter Position
-#define ZUSTAND_SCROLLTOLOCK 2    // Level Scrollt zu bestimmter Position und lockt dann
-#define ZUSTAND_SCROLLTOPLAYER 4  // Level Scrollt zum Spieler
-#define ZUSTAND_LOCKED 5          // Level sitzt an bestimmter Position fest
+enum class TileStateEnum {
+  SCROLLBAR,       // Spieler kann Level scrollen durch laufen
+  SCROLLTO,        // Level Scrollt zu bestimmter Position
+  SCROLLTOLOCK,    // Level Scrollt zu bestimmter Position und lockt dann
+  SCROLLTOPLAYER,  // Level Scrollt zum Spieler
+  LOCKED           // Level sitzt an bestimmter Position fest
+};
 
 // --------------------------------------------------------------------------------------
 // Strukturen
@@ -109,6 +117,8 @@ struct LevelTileLoadStruct {
     uint32_t Block;                   // Blockierungsart (siehe #defines)
 };
 
+static_assert(sizeof(LevelTileLoadStruct) == 12, "Size of LevelTileLoadStruct is wrong");
+
 // Struktur für ein Level Tile wie es im Level vorkommt (wie beim Laden, nur noch mit Extra Farben für alle Ecken)
 //
 struct LevelTileStruct {
@@ -122,6 +132,8 @@ struct LevelTileStruct {
     bool move_v1, move_v2, move_v3, move_v4;  // Die Ecken eines Tiles bei der Wasseranim bewegen?
 };
 
+static_assert(sizeof(LevelTileStruct) == 32, "Size of LevelTileStruct is wrong");
+
 // --------------------------------------------------------------------------------------
 // Struktur für ein aus dem Level zu ladendes Objekte
 // --------------------------------------------------------------------------------------
@@ -133,11 +145,13 @@ struct LevelObjectStruct {
     int32_t XPos;                // x-Position
     int32_t YPos;                // y-Position
     uint8_t ChangeLight;         // Umgebungslicht annehmen ?
-    uint8_t Skill;               // 0 = Easy, 1 = Medium, 2 = Hard
+    uint8_t Skill;               // 0 = Easy, 1 = Medium, 2 = Hard, 3 = Hurrican
     uint8_t PADDING_CHUNK_1[2];  // 2 PADDING BYTES
     int32_t Value1;              // Werte für diverse Trigger
     int32_t Value2;              // Werte für diverse Trigger
 };
+
+static_assert(sizeof(LevelObjectStruct) == 24, "Size of LevelObjectStruct is wrong");
 
 // --------------------------------------------------------------------------------------
 // Level-Datei Header
@@ -163,6 +177,8 @@ struct FileHeader {
     uint8_t PADDING_CHUNK_3[3];  // 3 PADDING BYTES
 };
 
+static_assert(sizeof(FileHeader) == 1292, "Size of FileHeader is wrong");
+
 // --------------------------------------------------------------------------------------
 // Anhang am File nach den Level Daten
 // damit nicht alle levels nochmal konvertiert werden, hänge ich einfach alle dinge, die
@@ -179,22 +195,11 @@ struct FileAppendix {
     uint8_t PADDING_CHUNK_1[3];  // 3 padding bytes
 };
 
+static_assert(sizeof(FileAppendix) == 84, "Size of FileAppendix is wrong");
+
 // --------------------------------------------------------------------------------------
 // Unions
 // --------------------------------------------------------------------------------------
-
-// Union für r,g,b,a Zugriff in D3DCOLOR
-
-union FarbUnion {
-    D3DCOLOR color;
-
-    struct {
-        unsigned char b;
-        unsigned char g;
-        unsigned char r;
-        unsigned char a;
-    } farbStruct;
-};
 
 struct Vector2D {
     float x;
@@ -431,6 +436,28 @@ class TileEngineClass {
     //       WaterSinTableClass. See its comments for more info.
     WaterSinTableClass WaterSinTable;
 
+    // Vorberechnung fürs Levelrendern
+    int RenderPosX;  // Bereich des Levels, der gerendert wird
+    int RenderPosY;
+    int RenderPosXTo;
+    int RenderPosYTo;
+    int xLevel;
+    int yLevel;
+    int xTileOffs;
+    int yTileOffs;
+    float xScreen;
+    float yScreen;
+
+    bool bScrollBackground;  // Hintegrundbild scrollen ?
+
+    RECT_struct TileRects[MAX_TILERECTS];        // vorberechnete Tile Ausschnitte
+    DirectGraphicsSprite TileGfx[MAX_TILESETS];  // Tilegrafiken
+    DirectGraphicsSprite LiquidGfx[2];           // Flüssigkeit
+    DirectGraphicsSprite CloudLayer;             // Wolkenlayer
+    DirectGraphicsSprite Shadow;                 // Schatten im Alien Level
+    float WasserU[9];                            // vorberechnete TexturKoordinaten für das Wasser TU
+    float WasserV[9];                            // vorberechnete TexturKoordinaten für das Wasser TV
+
   public:
     FileAppendix DateiAppendix;  // Anhang der Level-Datei
     bool IsElevatorLevel;
@@ -449,7 +476,7 @@ class TileEngineClass {
     // float			WaterList[4096];						// Sinus Liste zum Schwabbeln der Oberfläche
 
     char Beschreibung[100];      // Beschreibung des Levels
-    int Zustand;                 // Aktueller Zustand
+    TileStateEnum Zustand;       // Aktueller Zustand
     float ScrolltoX, ScrolltoY;  // Lock-Werte
     float SpeedX, SpeedY;        // Speed for ScrollTo Funktion
     bool bDrawShadow;            // Taschenlampen Shatten im Alien Level rendern?
@@ -462,19 +489,10 @@ class TileEngineClass {
     // float			SinPos;									// Position in der SinusListe für das AlienLevel
     float SinPos2;  // Position in der SinusListe für den Wasserhintergrund
 
-    bool bScrollBackground;  // Hintegrundbild scrollen ?
-
-    RECT_struct TileRects[144];                         // vorberechnete Tile Ausschnitte
-    DirectGraphicsSprite TileGfx[MAX_TILESETS];  // Tilegrafiken
     DirectGraphicsSprite Background;             // Hintergrund
-    DirectGraphicsSprite ParallaxLayer[6];       // Anzahl der Layer
-    DirectGraphicsSprite CloudLayer;             // Wolkenlayer
+    DirectGraphicsSprite ParallaxLayer[3];       // Anzahl der Layer
     DirectGraphicsSprite GameOver;               // GameOver Symbol
     DirectGraphicsSprite Wasserfall[2];          // Wasserfall Grafiken
-    DirectGraphicsSprite LiquidGfx[2];           // Flüssigkeit
-    float WasserU[9];                            // vorberechnete TexturKoordinaten für das Wasser TU
-    float WasserV[9];                            // vorberechnete TexturKoordinaten für das Wasser TV
-    DirectGraphicsSprite Shadow;                 // Schatten im Alien Level
     float WasserfallOffset;                      // Wasserfall Offset
     float XOffset, YOffset;                      // Scrolloffset des Levels
     float NewXOffset, NewYOffset;                // Neue Scrolloffsets, falls das Level von einem Gegner gelockt ist
@@ -486,18 +504,6 @@ class TileEngineClass {
     float LEVELPIXELSIZE_Y;                      // (für XOffset und YOffset)
 
     CDragonHack *pDragonHack;
-
-    // Vorberechnung fürs Levelrendern
-    int RenderPosX;  // Bereich des Levels, der gerendert wird
-    int RenderPosY;
-    int RenderPosXTo;
-    int RenderPosYTo;
-    int xLevel;
-    int yLevel;
-    int xTileOffs;
-    int yTileOffs;
-    float xScreen;
-    float yScreen;
 
     TileEngineClass();   // Konstruktor
     ~TileEngineClass();  // Destruktor
@@ -522,7 +528,7 @@ class TileEngineClass {
     void DrawWater();  // Wasser Planes rendern
     void CheckBounds();
     void UpdateLevel();                                                           // Level evtl scrollen usw
-    void ScrollLevel(float x, float y, int neu, float sx = 10.0f, float sy = 10.0f);  // Screen scrollen
+    void ScrollLevel(float x, float y, TileStateEnum neu, float sx = 10.0f, float sy = 10.0f);  // Screen scrollen
     void MakeBordersLookCool(int x, int y);
 
     uint32_t BlockRechts(float &x, float y, float &xo, float yo, RECT_struct rect, bool resolve = false);
@@ -566,10 +572,10 @@ class TileEngineClass {
                       << "\tparam j: " << j << "\tLower bound: " << 0 << "\tUpper bound: " << LEVELSIZE_Y - 1
                       << std::endl;
             GameRunning = false;
-            exit(1);  // WriteText above should do this for us (first param==true)
+            exit(EXIT_FAILURE);  // WriteText above should do this for us (first param==true)
         }
 
-#elif defined _DEBUG
+#elif !defined NDEBUG
         if (i >= MAX_LEVELSIZE_X || i < 0 || j >= MAX_LEVELSIZE_Y || j < 0) {
             Protokoll << "-> Error: Out of bounds in TileEngineClass::TileAt():\n"
                       << "\tparam i: " << i << "\tLower bound: " << 0 << "\tUpper bound: " << MAX_LEVELSIZE_X - 1
@@ -577,7 +583,7 @@ class TileEngineClass {
                       << "\tparam j: " << j << "\tLower bound: " << 0 << "\tUpper bound: " << MAX_LEVELSIZE_Y - 1
                       << std::endl;
             GameRunning = false;
-            exit(1);  // WriteText above should do this for us (first param==true)
+            exit(EXIT_FAILURE);  // WriteText above should do this for us (first param==true)
         }
 #endif
         return Tiles[i][j];

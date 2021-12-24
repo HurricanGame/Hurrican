@@ -24,13 +24,13 @@ class GegnerTheWall : public GegnerClass {
 
     void ReturnSkull();
 
-  public:
     DirectGraphicsSprite Vorne;
     DirectGraphicsSprite Tuer;
     DirectGraphicsSprite Rahmen;
     DirectGraphicsSprite Kringel[2];
     DirectGraphicsSprite Brain;
 
+  public:
     GegnerTheWall(int Wert1, int Wert2, bool Light);
 
     void GegnerExplode() override;  // Gegner explodiert

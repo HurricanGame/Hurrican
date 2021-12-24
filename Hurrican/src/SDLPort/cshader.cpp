@@ -36,9 +36,9 @@ CShader::CShader()
       Attributes() {}
 
 void CShader::Close() {
-    for (size_t i = 0; i < Shaders.size(); i++) {
-        if (Shaders.at(i).name != GL_INVALID_VALUE) {
-            glDeleteShader(Shaders.at(i).name);
+    for (const auto& shader: Shaders) {
+        if (shader.name != GL_INVALID_VALUE) {
+            glDeleteShader(shader.name);
         }
     }
 
@@ -148,8 +148,8 @@ GLuint CShader::CompileShader(GLenum type, const std::string &path) {
 bool CShader::CreateProgram() {
     Program = glCreateProgram();
 
-    for (size_t i = 0; i < Shaders.size(); i++) {
-        glAttachShader(Program, Shaders[i].name);
+    for (const auto& shader: Shaders) {
+        glAttachShader(Program, shader.name);
     }
 
     glLinkProgram(Program);
@@ -219,10 +219,9 @@ void CShader::FindUniforms() {
 }
 
 GLint CShader::GetAttribute(const std::string &attribute) {
-    for (std::vector<std::pair<std::string, GLint> >::const_iterator itr(Attributes.begin()); itr < Attributes.end();
-         ++itr) {
-        if (attribute == itr->first)
-            return itr->second;
+    for (const auto& a: Attributes) {
+        if (attribute == a.first)
+            return a.second;
     }
 
     Protokoll << "ERROR Shader: Could not locate attribute: " << attribute << std::endl;
@@ -231,10 +230,9 @@ GLint CShader::GetAttribute(const std::string &attribute) {
 }
 
 GLint CShader::GetUniform(const std::string &uniform) {
-    for (std::vector<std::pair<std::string, GLint> >::const_iterator itr(Uniforms.begin()); itr < Uniforms.end();
-         ++itr) {
-        if (uniform == itr->first)
-            return itr->second;
+    for (const auto& u: Uniforms) {
+        if (uniform == u.first)
+            return u.second;
     }
 
     Protokoll << "ERROR Shader: Could not locate uniform: " << uniform << std::endl;

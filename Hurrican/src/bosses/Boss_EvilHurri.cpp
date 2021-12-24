@@ -65,9 +65,9 @@ void GegnerEvilHurri::DoKI() {
         HUD.ShowBossHUD(6000, Energy);
 
     // Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
-    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
+    if (Active == true && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
-                               ZUSTAND_SCROLLTOLOCK);  // Level auf die Faust zentrieren
+                               TileStateEnum::SCROLLTOLOCK);  // Level auf die Faust zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
@@ -83,11 +83,12 @@ void GegnerEvilHurri::DoKI() {
         if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[p].xpos, Player[p].ypos, Player[p].CollideRect) ==
             true) {
             // Spieler als Rad ? Dann abprallen
-            if (Player[p].Handlung == RADELN || Player[p].Handlung == RADELN_FALL) {
+            if (Player[p].Handlung == PlayerActionEnum::RADELN ||
+                    Player[p].Handlung == PlayerActionEnum::RADELN_FALL) {
                 if (Player[p].xpos < xPos)
-                    Player[p].Blickrichtung = -1;
+                    Player[p].Blickrichtung = LINKS;
                 if (Player[p].xpos > xPos)
-                    Player[p].Blickrichtung = 1;
+                    Player[p].Blickrichtung = RECHTS;
             }
 
             // Sonst Energie abziehen
@@ -141,7 +142,7 @@ void GegnerEvilHurri::DoKI() {
     switch (Handlung) {
         case GEGNER_INIT:  // Warten bis der Screen zentriert wurde
         {
-            if (TileEngine.Zustand == ZUSTAND_LOCKED) {
+            if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 // DKS - Added function SongIsPlaying() to SoundManagerClass:
                 if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
@@ -171,7 +172,7 @@ void GegnerEvilHurri::DoKI() {
 
                 // Bei großem Abstand spieler zerquetschen
                 if (PlayerAbstand() > 300) {
-                    if (rand() % 2 == 0) {
+                    if (random(2) == 0) {
                         Handlung = GEGNER_CRUSHEN;
                         ActionDelay = 1.0f;
                         AnimPhase = 48;
@@ -195,7 +196,7 @@ void GegnerEvilHurri::DoKI() {
 
                 // Ansonsten im Kreis rum ballern
                 else {
-                    if (rand() % 2 == 0 && xPos > Value1 + 200 && xPos < Value1 + 440) {
+                    if (random(2) == 0 && xPos > Value1 + 200 && xPos < Value1 + 440) {
                         Handlung = GEGNER_BOMBARDIEREN;
                         ActionDelay = 3.0f;
                         AnimEnde = 0;
@@ -206,7 +207,7 @@ void GegnerEvilHurri::DoKI() {
 
                     // oder ballernd auf den Spieler zurennen
                     else {
-                        if (rand() % 2 == 0) {
+                        if (random(2) == 0) {
                             Handlung = GEGNER_LAUFEN;
                             ActionDelay = 1.0f;
                             AnimPhase = 3;
@@ -306,7 +307,7 @@ void GegnerEvilHurri::DoKI() {
 
                 // PartikelSystem.PushPartikel(xPos+30, yPos+28, BULLET);
 
-                SoundManager.PlayWave(100, rand() % 255, 8000 + rand() % 4000, SOUND_CANON);
+                SoundManager.PlayWave(100, random(255), 8000 + random(4000), SOUND_CANON);
 
                 if (BlickRichtung == RECHTS) {
                     PartikelSystem.PushPartikel(xPos + 50, yPos + 20, SMOKE);
@@ -318,7 +319,7 @@ void GegnerEvilHurri::DoKI() {
             }
 
             // Spingen ?
-            if (pAim->ypos + 10 < yPos && ySpeed == 0.0f && rand() % 10 == 0) {
+            if (pAim->ypos + 10 < yPos && ySpeed == 0.0f && random(10) == 0) {
                 ySpeed = -43.0f;
                 yAcc = 8.0f;
                 yPos -= 2.0f;
@@ -358,7 +359,7 @@ void GegnerEvilHurri::DoKI() {
 
                 //				PartikelSystem.PushPartikel(xPos+30, yPos+28, BULLET);
 
-                SoundManager.PlayWave(100, rand() % 255, 8000 + rand() % 4000, SOUND_CANON);
+                SoundManager.PlayWave(100, random(255), 8000 + random(4000), SOUND_CANON);
 
                 if (BlickRichtung == RECHTS) {
                     PartikelSystem.PushPartikel(xPos + 50, yPos + 20, SMOKE);
@@ -386,7 +387,7 @@ void GegnerEvilHurri::DoKI() {
             ActionDelay -= 1.0f SYNC;
 
             if (ActionDelay < 0.0f) {
-                SoundManager.PlayWave(100, rand() % 255, 8000 + rand() % 4000, SOUND_CANON);
+                SoundManager.PlayWave(100, random(255), 8000 + random(4000), SOUND_CANON);
                 PartikelSystem.PushPartikel(xPos + (AnimPhase - 36) * 5, yPos - 23 + abs(AnimPhase - 41) * 8, SMOKE);
                 //				PartikelSystem.PushPartikel(xPos+30, yPos+28, BULLET);
 
@@ -415,7 +416,7 @@ void GegnerEvilHurri::DoKI() {
                 AnimPhase = 0;
 
                 for (int i = 0; i < 30; i++)
-                    PartikelSystem.PushPartikel(xPos + 30 + rand() % 10, yPos + rand() % 10, LASERFUNKE2);
+                    PartikelSystem.PushPartikel(xPos + 30 + random(10), yPos + random(10), LASERFUNKE2);
 
                 Projectiles.PushProjectile(xPos, yPos - 20, EVILBLITZ);
                 SoundManager.PlayWave(100, 128, 11025, SOUND_SPIDERGRENADE);
@@ -429,7 +430,7 @@ void GegnerEvilHurri::DoKI() {
             }
 
             if (ActionDelay > 70.0f) {
-                if (rand() % 2 == 0) {
+                if (random(2) == 0) {
                     Handlung = GEGNER_AUFRICHTEN;
                     BlickRichtung = LINKS;
                     AnimPhase = 3;
@@ -546,10 +547,10 @@ void GegnerEvilHurri::DoKI() {
             if (AnimCount < 0.0f) {
                 AnimCount = 2.0f;
 
-                SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
-                PartikelSystem.PushPartikel(xPos - 20 + rand() % 70, yPos + rand() % 80, EXPLOSION_MEDIUM);
-                PartikelSystem.PushPartikel(xPos - 20 + rand() % 70, yPos + rand() % 80, EXPLOSION_MEDIUM2);
-                PartikelSystem.PushPartikel(xPos - 50 + rand() % 70, yPos - 30 + rand() % 80, EXPLOSION_BIG);
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+                PartikelSystem.PushPartikel(xPos - 20 + random(70), yPos + random(80), EXPLOSION_MEDIUM);
+                PartikelSystem.PushPartikel(xPos - 20 + random(70), yPos + random(80), EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(xPos - 50 + random(70), yPos - 30 + random(80), EXPLOSION_BIG);
             }
         } break;
 
@@ -566,10 +567,10 @@ void GegnerEvilHurri::GegnerExplode() {
     Player[0].Score += 9000;
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 20 + rand() % 70, yPos + rand() % 80, SPLITTER);
+        PartikelSystem.PushPartikel(xPos - 20 + random(70), yPos + random(80), SPLITTER);
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 20 + rand() % 70, yPos + rand() % 80, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 20 + random(70), yPos + random(80), EXPLOSION_MEDIUM2);
 
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 

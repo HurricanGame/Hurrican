@@ -26,10 +26,12 @@
 
 //----- Zustände
 
-#define OUTTRO_FADEIN 0
-#define OUTTRO_TOWER_EXPLODE 1
-#define OUTTRO_PLAYER_FLEES 2
-#define OUTTRO_SCROLLER 3
+enum class OutroStateEnum {
+  FADEIN,
+  TOWER_EXPLODE,
+  PLAYER_FLEES,
+  SCROLLER
+};
 
 // --------------------------------------------------------------------------------------
 // Klassen Deklaration für das Outtro
@@ -42,7 +44,7 @@ class OuttroClass {
     DirectGraphicsSprite Henry;
     DirectGraphicsSprite Reiter[2];
     bool finished;
-    int Zustand;
+    OutroStateEnum Zustand;
     float Counter;
     int TextOff;
     float SmokeDelay;

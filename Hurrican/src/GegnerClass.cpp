@@ -50,7 +50,7 @@ GegnerClass::GegnerClass() {
 GegnerClass::~GegnerClass() {
     for (int p = 0; p < NUMPLAYERS; p++)
         if (Player[p].AufPlattform == this)
-            Player[p].AufPlattform = NULL;
+            Player[p].AufPlattform = nullptr;
 }
 
 // --------------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ void GegnerClass::TestDamagePlayers(float dam, bool destroy) {
 void GegnerClass::GegnerExplode() {
     for (int p = 0; p < NUMPLAYERS; p++)
         if (Player[p].AufPlattform == this)
-            Player[p].AufPlattform = NULL;
+            Player[p].AufPlattform = nullptr;
 }
 
 // --------------------------------------------------------------------------------------
@@ -169,14 +169,13 @@ void GegnerClass::Render() {
         }
 
 // DKS - made compilation dependent
-#ifdef _DEBUG
+#ifndef NDEBUG
     // Im Debug Mode noch den Abstand zum Spieler anzeigen
     if (DebugMode == true) {
-        char Buffer[10];
-        _itoa_s(PlayerAbstand(), Buffer, 10);
-        pMenuFont->DrawText(float(xPos - TileEngine.XOffset), float(yPos - TileEngine.YOffset), Buffer, 0xFFFFFFFF);
+        std::string Buffer = std::to_string(PlayerAbstand());
+        pMenuFont->DrawText(float(xPos - TileEngine.XOffset), float(yPos - TileEngine.YOffset), Buffer.c_str(), 0xFFFFFFFF);
     }
-#endif  //_DEBUG
+#endif  //NDEBUG
 }
 
 // --------------------------------------------------------------------------------------
@@ -234,8 +233,10 @@ bool GegnerClass::Run() {
 
         // Gegner Energie abziehen, wenn der Spieler ein Rad ist
         for (int p = 0; p < NUMPLAYERS; p++) {
-            if ((Player[p].Handlung == RADELN || Player[p].Handlung == RADELN_FALL) && Destroyable == true &&
-                SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[p].xpos, Player[p].ypos,
+            if ((Player[p].Handlung == PlayerActionEnum::RADELN ||
+                    Player[p].Handlung == PlayerActionEnum::RADELN_FALL) &&
+                    Destroyable == true &&
+                    SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[p].xpos, Player[p].ypos,
                                 Player[p].CollideRect) == true) {
                 Energy -= 10.0f SYNC;  // Energie abziehen
 
@@ -288,7 +289,7 @@ bool GegnerClass::Run() {
 
     // Aim ist tot? Dann neues suchen
     //
-    if (pAim->Handlung == TOT)
+    if (pAim->Handlung == PlayerActionEnum::TOT)
         pAim = ChooseAim();
 
     return true;
@@ -298,7 +299,7 @@ bool GegnerClass::Run() {
 // Abstand zwischen Gegner und Spieler berechnen und zurückliefern
 // --------------------------------------------------------------------------------------
 
-int GegnerClass::PlayerAbstand(bool both) {
+int GegnerClass::PlayerAbstand(bool both) const {
     float xdiff, ydiff, Abstand;
 
     Abstand = 99999.9f;
@@ -333,10 +334,10 @@ int GegnerClass::PlayerAbstand(bool both) {
 // Horizontaler Abstand zwischen Gegner und Spieler berechnen und zurückliefern
 // --------------------------------------------------------------------------------------
 
-int GegnerClass::PlayerAbstandHoriz(PlayerClass *pTarget) {
+int GegnerClass::PlayerAbstandHoriz(PlayerClass *pTarget) const {
     float Abstand;
 
-    if (pTarget == NULL)
+    if (pTarget == nullptr)
         pTarget = pAim;
 
     Abstand =
@@ -354,10 +355,10 @@ int GegnerClass::PlayerAbstandHoriz(PlayerClass *pTarget) {
 // Vertikaler Abstand zwischen Gegner und Spieler berechnen und zurückliefern
 // --------------------------------------------------------------------------------------
 
-int GegnerClass::PlayerAbstandVert(PlayerClass *pTarget) {
+int GegnerClass::PlayerAbstandVert(PlayerClass *pTarget) const {
     float Abstand;
 
-    if (pTarget == NULL)
+    if (pTarget == nullptr)
         pTarget = pAim;
 
     Abstand =
@@ -397,10 +398,12 @@ void GegnerClass::PlattformTest(RECT_struct rect) {
             //
             if (Player[p].xpos + Player[p].CollideRect.left > xPos + rect.right ||
                 Player[p].xpos + Player[p].CollideRect.right < xPos + rect.left)
-                Player[p].AufPlattform = NULL;
+                Player[p].AufPlattform = nullptr;
         }
 
-        else if (Player[p].AufPlattform == NULL && Player[p].Handlung != SACKREITEN && Player[p].Handlung != DREHEN) {
+        else if (Player[p].AufPlattform == nullptr &&
+                Player[p].Handlung != PlayerActionEnum::SACKREITEN &&
+                Player[p].Handlung != PlayerActionEnum::DREHEN) {
             // Feststellen ob der Hurri auf die Plattform gesprungen ist
             //
             int laenge;
@@ -435,11 +438,12 @@ void GegnerClass::Wegschieben(RECT_struct rect, float dam) {
         if (SpriteCollision(xPos, yPos, rect, Player[i].xpos, Player[i].ypos, Player[i].CollideRect) == true &&
             Player[i].AufPlattform != this) {
             // Spieler als Rad ? Dann abprallen
-            if (Player[i].Handlung == RADELN || Player[i].Handlung == RADELN_FALL) {
+            if (Player[i].Handlung == PlayerActionEnum::RADELN ||
+                    Player[i].Handlung == PlayerActionEnum::RADELN_FALL) {
                 if (Player[i].xpos < xPos)
-                    Player[i].Blickrichtung = -1;
+                    Player[i].Blickrichtung = LINKS;
                 if (Player[i].xpos > xPos)
-                    Player[i].Blickrichtung = 1;
+                    Player[i].Blickrichtung = RECHTS;
             }
 
             // Sonst Energie abziehen
@@ -528,7 +532,7 @@ bool GegnerClass::TurnonShot() {
 // Gegner grade sichtbar?
 // --------------------------------------------------------------------------------------
 
-bool GegnerClass::IsOnScreen() {
+bool GegnerClass::IsOnScreen() const {
     int off;
     int xsize, ysize;
 
@@ -558,8 +562,8 @@ bool GegnerClass::IsOnScreen() {
 // --------------------------------------------------------------------------------------
 
 GegnerListClass::GegnerListClass() {
-    pStart = NULL;
-    pEnd = NULL;
+    pStart = nullptr;
+    pEnd = nullptr;
     NumGegner = 0;
 }
 
@@ -2093,13 +2097,13 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
     pNew->xPosOld = x;
     pNew->yPosOld = y;
 
-    if (pStart == NULL)  // Liste leer ?
+    if (pStart == nullptr)  // Liste leer ?
     {
         pStart = pNew;  // Ja, dann neuer Gegner gleich der erste
         pEnd = pNew;    // und letzte Gegner
 
-        pStart->pNext = NULL;  // Next/Previous gibts nich, da wir
-        pStart->pPrev = NULL;  // nur 1 Gegner haben
+        pStart->pNext = nullptr;  // Next/Previous gibts nich, da wir
+        pStart->pPrev = nullptr;  // nur 1 Gegner haben
     } else                     // Liste ist NICHT leer
     {
         // Gegner am Ende einfügen?
@@ -2107,7 +2111,7 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
             pEnd->pNext = pNew;  // Letzter Gegner zeigt auf den neuen
             pNew->pPrev = pEnd;  // Letzter Gegner ist nicht mehr der letzte
 
-            pNew->pNext = NULL;  // Nach dem neuen Gegner kommt keiner mehr
+            pNew->pNext = nullptr;  // Nach dem neuen Gegner kommt keiner mehr
             pEnd = pNew;         // da er jetzt der letzte in der Liste ist
         }
 
@@ -2116,7 +2120,7 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
             pStart->pPrev = pNew;  // Erster Gegner zeigt auf den neuen
             pNew->pNext = pStart;  // Erster Gegner ist nicht mehr der erste
 
-            pNew->pPrev = NULL;  // Vor dem neuen Gegner kommt keiner mehr
+            pNew->pPrev = nullptr;  // Vor dem neuen Gegner kommt keiner mehr
             pStart = pNew;       // da er jetzt der erste in der Liste ist
         }
     }
@@ -2141,23 +2145,23 @@ void GegnerListClass::DelSel(GegnerClass *pTemp) {
     GegnerClass *pN;
     GegnerClass *pP;
 
-    if (pTemp != NULL)  // zu löschender Gegner existiert
+    if (pTemp != nullptr)  // zu löschender Gegner existiert
     {
         pN = pTemp->pNext;
         pP = pTemp->pPrev;
 
-        if (pP == NULL)   // Wird der erste Gegner gelöscht ?
+        if (pP == nullptr)   // Wird der erste Gegner gelöscht ?
             pStart = pN;  // Dann wird dessen Nächster zum Ersten
         else
             pP->pNext = pN;  // ansonsten normal eins aufrücken
 
-        if (pN == NULL)  // Wird der letzte Gegner gelöscht ?
+        if (pN == nullptr)  // Wird der letzte Gegner gelöscht ?
             pEnd = pP;   // Dann wir der letzte Gegner zum ersten
         else
             pN->pPrev = pP;
 
         delete (pTemp);  // Speicher freigeben
-        pTemp = NULL;
+        pTemp = nullptr;
 
         NumGegner--;  // Gegnerzahl verringern
     }
@@ -2171,15 +2175,15 @@ void GegnerListClass::ClearAll() {
     GegnerClass *pTemp = pStart;  // Zeiger auf den ersten   Gegner
     GegnerClass *pNaechst;        // Zeiger auf den nächsten Gegner (falls
     // der eine gelöscht wird)
-    while (pTemp != NULL)  // Ende der Liste erreicht ?
+    while (pTemp != nullptr)  // Ende der Liste erreicht ?
     {
         pNaechst = pTemp->pNext;  // Zeiger auf das nächste Element
         DelSel(pTemp);            // Das aktuelle löschen
         pTemp = pNaechst;         // und das nächste bearbeiten
     }
 
-    pStart = NULL;
-    pEnd = NULL;
+    pStart = nullptr;
+    pEnd = nullptr;
 }
 
 // --------------------------------------------------------------------------------------
@@ -2200,7 +2204,7 @@ void GegnerListClass::RenderAll() {
     // Zuerst die "Gegner" rendern, die als Background fungieren
     // z.B. der große Lüfter, damit diese nicht die anderen Gegner verdecken können
     //
-    while (pTemp != NULL)  // noch nicht alle durch ?
+    while (pTemp != nullptr)  // noch nicht alle durch ?
     {
         if (pTemp->BackGround == false)  // kein Background? Dann nächsten
         {
@@ -2223,7 +2227,7 @@ void GegnerListClass::RenderAll() {
 
     pTemp = Gegner.pStart;
 
-    while (pTemp != NULL)  // noch nicht alle durch ?
+    while (pTemp != nullptr)  // noch nicht alle durch ?
     {
         if (pTemp->BackGround == true)  // Background? Dann nächsten
         {
@@ -2248,11 +2252,11 @@ void GegnerListClass::RenderAll() {
 
 void GegnerListClass::RunAll() {
     GegnerClass *pTemp = pStart;  // Anfang der Liste
-    GegnerClass *pNext = NULL;
+    GegnerClass *pNext = nullptr;
 
     // Alle Einträge der Gegnerliste durchgehen
     //
-    while (pTemp != NULL)  // noch nicht alle durch ?
+    while (pTemp != nullptr)  // noch nicht alle durch ?
     {
         pNext = pTemp->pNext;
 
@@ -2275,9 +2279,9 @@ void GegnerListClass::RunAll() {
 void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage) {
     // Gegner durchgehen und die auf dem Screen löschen
     GegnerClass *pTemp = pStart;  // Anfang der Liste
-    GegnerClass *pNext = NULL;    // Nächster Gegner in der Liste
+    GegnerClass *pNext = nullptr;    // Nächster Gegner in der Liste
 
-    while (pTemp != NULL)  // Noch nicht alle durch ?
+    while (pTemp != nullptr)  // Noch nicht alle durch ?
     {
         float ax = x - pTemp->xPos;
         float ay = y - pTemp->yPos;
@@ -2297,7 +2301,7 @@ void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage) {
 
             // DKS - Added function WaveIsPlaying() to SoundManagerClass:
             if (!SoundManager.WaveIsPlaying(SOUND_STONEFALL))
-                SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_STONEFALL);
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_STONEFALL);
         }
 
         // Gegner in der Nähe? Dann Energie abziehen

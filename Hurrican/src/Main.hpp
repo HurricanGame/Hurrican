@@ -18,13 +18,14 @@
 #include "Intro.hpp"
 #include "Outtro.hpp"
 
-// TODO an enum would be nicer
-#define SCREEN_FULLSCREEN           0
-#define SCREEN_FULLSCREEN_STRETCHED 1
-#define SCREEN_WINDOW               2
+enum class ScreenMode {
+  FULLSCREEN,
+  FULLSCREEN_STRETCHED,
+  WINDOW
+};
 
 struct sCommandLineParams {
-    uint8_t RunWindowMode; // 0 = fullscreen, 1 = fullscreen stretched, 2 = Windowed
+    ScreenMode RunWindowMode;
     bool RunOwnLevelList;
     bool RunUserLevel;
     bool Scanlines;
@@ -51,25 +52,21 @@ struct sCommandLineParams {
 #define WIN_32_LEAN_AND_MEAN                    // MFC abschalten
 #define WINDOWCLASSNAME "HurricanWindowsClass"  // Name der Windows-Klasse
 
-#define SCREENWIDTH 640
-#define SCREENHEIGHT 480
+constexpr int SCREENWIDTH = 640;
+constexpr int SCREENHEIGHT = 480;
 
-#define LOWRES_SCREENWIDTH 320
-#define LOWRES_SCREENHEIGHT 240
+constexpr int LOWRES_SCREENWIDTH = 320;
+constexpr int LOWRES_SCREENHEIGHT = 240;
 
-#define RENDERWIDTH 640
-#define RENDERHEIGHT 480
+constexpr int RENDERWIDTH = 640;
+constexpr int RENDERHEIGHT = 480;
 
 // DKS - Screen depth is now configurable from the command line; if your
 //      platform does not support the default value of 32, you may define it
 //      by setting DEFAULT_SCREENBPP to correct value in Makefile.
 #ifndef DEFAULT_SCREENBPP
-#define DEFAULT_SCREENBPP 32
+#  define DEFAULT_SCREENBPP 32
 #endif
-
-#define PARAM_NONE 0
-#define PARAM_LEVEL 1
-#define PARAM_LIST 2
 
 // --------------------------------------------------------------------------------------
 // Prototypen von Funktionen
@@ -94,11 +91,11 @@ extern int WINDOWWIDTH;
 extern int WINDOWHEIGHT;
 extern sCommandLineParams CommandLineParams;  // Externer Paramter?
 
-extern char *g_storage_ext;  // Where data files (levels, graphics, music, etc) for the game are stored (read)
-extern char *g_config_ext;   // Where configuration files are written (-DKS) (write)
-extern char *g_save_ext;     // Where high scores and save games are written (-DKS) (write)
+extern std::string g_storage_ext;  // Where data files (levels, graphics, music, etc) for the game are stored (read)
+extern std::string g_config_ext;   // Where configuration files are written (-DKS) (write)
+extern std::string g_save_ext;     // Where high scores and save games are written (-DKS) (write)
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 void ShowDebugInfo();  // Allen möglichen Kram anzeigen
 #endif
 

@@ -46,7 +46,7 @@ extern bool GameRunning;  // Läuft das Spiel noch ?
 
 DirectGraphicsSprite::~DirectGraphicsSprite() {
 // DKS - itsPreCalcedRects array is now dynamically allocated:
-#ifndef _DEBUG
+#ifdef NDEBUG
     // DKS - When in debug mode, itsPreCalcedRects is bound-checked vector wrapper,
     //      otherwise it is a dynamically-allocated array
     delete[] itsPreCalcedRects;
@@ -59,7 +59,7 @@ DirectGraphicsSprite::~DirectGraphicsSprite() {
     //    {
     //        delete_texture( itsTexture );
     //        itsTexture = -1;
-    //        itsTexture = (LPDIRECT3DTEXTURE8)NULL;
+    //        itsTexture = (LPDIRECT3DTEXTURE8)nullptr;
     //        LoadedTextures--;
     ////		Protokoll << "-> Sprite texture successfully released !" << std::endl;
     //
@@ -203,7 +203,7 @@ loadfile:
 
     // Ausschnitte vorberechnen
     //DKS - array is now dynamically allocated
-    if (itsPreCalcedRects != NULL) 
+    if (itsPreCalcedRects != nullptr) 
         free(itsPreCalcedRects);
     itsPreCalcedRects = (RECT_struct*)malloc(xfc * yfc * sizeof(RECT_struct));
 
@@ -237,7 +237,7 @@ bool DirectGraphicsSprite::LoadImage(const std::string &filename,
         return false;
 
     if (xfc == 0 || yfc == 0) {
-#ifdef _DEBUG
+#ifndef NDEBUG
         Protokoll << "Error: xfc or yfc parameters to DirectGraphicsSprite::LoadImage() are 0! xfc:" << xfc
                   << " yfc:" << yfc << std::endl;
         GameRunning = false;
@@ -271,7 +271,7 @@ bool DirectGraphicsSprite::LoadImage(const std::string &filename,
 
     // Ausschnitte vorberechnen
     // DKS - itsPreCalcedRects array is now dynamically allocated
-#ifdef _DEBUG
+#ifndef NDEBUG
     // DKS - When in debug mode, itsPreCalcedRects is bound-checked vector wrapper
     itsPreCalcedRects.Clear();
 #else
@@ -286,7 +286,7 @@ bool DirectGraphicsSprite::LoadImage(const std::string &filename,
         r.left = (i % itsXFrameCount) * itsXFrameSize;
         r.right = r.left + itsXFrameSize;
         r.bottom = r.top + itsYFrameSize;
-#ifdef _DEBUG
+#ifndef NDEBUG
         // DKS - When in debug mode, itsPreCalcedRects is bound-checked vector wrapper
         itsPreCalcedRects.PushBack(r);
 #else

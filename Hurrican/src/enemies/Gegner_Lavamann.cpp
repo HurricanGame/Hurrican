@@ -123,7 +123,7 @@ void GegnerLavamann::DoKI() {
         // Dann Sound ausgeben
         //
         case GEGNER_INIT: {
-            SoundManager.PlayWave(100, 128, 10000 + rand() % 1000, SOUND_FEUERFALLE);
+            SoundManager.PlayWave(100, 128, 10000 + random(1000), SOUND_FEUERFALLE);
             Handlung = GEGNER_LAUFEN;
         } break;
 
@@ -156,18 +156,18 @@ void GegnerLavamann::DoKI() {
 
 void GegnerLavamann::GegnerExplode() {
     for (int i = 0; i < 8; i++) {
-        PartikelSystem.PushPartikel(float(xPos - 30 + rand() % 40), float(yPos - 30 + rand() % 50), SMOKEBIG);
+        PartikelSystem.PushPartikel(float(xPos - 30 + random(40)), float(yPos - 30 + random(50)), SMOKEBIG);
 
-        PartikelSystem.PushPartikel(float(xPos - 10 + rand() % 40), float(yPos - 10 + rand() % 50), SMOKE3);
+        PartikelSystem.PushPartikel(float(xPos - 10 + random(40)), float(yPos - 10 + random(50)), SMOKE3);
 
-        PartikelSystem.PushPartikel(float(xPos - 60 + rand() % 80), float(yPos - 50 + rand() % 60), EXPLOSIONFLARE);
+        PartikelSystem.PushPartikel(float(xPos - 60 + random(80)), float(yPos - 50 + random(60)), EXPLOSIONFLARE);
 
-        PartikelSystem.PushPartikel(float(xPos - 40 + rand() % 40), float(yPos - 30 + rand() % 50), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(float(xPos - 40 + random(40)), float(yPos - 30 + random(50)), EXPLOSION_MEDIUM2);
 
-        PartikelSystem.PushPartikel(float(xPos - 20 + rand() % 50), float(yPos - 20 + rand() % 50), MINIFLARE);
+        PartikelSystem.PushPartikel(float(xPos - 20 + random(50)), float(yPos - 20 + random(50)), MINIFLARE);
     }
 
-    SoundManager.PlayWave(100, 128, -rand() % 2000 + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 350;
 }

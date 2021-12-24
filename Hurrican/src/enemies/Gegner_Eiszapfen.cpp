@@ -26,7 +26,7 @@ GegnerEiszapfen::GegnerEiszapfen(int Wert1, int Wert2, bool Light) {
         ySpeed = 30.0f;
         yAcc = 5.0f;
 
-        SoundManager.PlayWave(100, 128, 11025 + rand() % 2000, SOUND_STONEFALL);
+        SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEFALL);
     }
 }
 
@@ -44,11 +44,11 @@ void GegnerEiszapfen::DoKI() {
                 ySpeed = 30.0f;
                 yAcc = 5.0f;
 
-                SoundManager.PlayWave(100, 128, 11025 + rand() % 2000, SOUND_STONEFALL);
+                SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEFALL);
 
                 for (int i = 0; i < 15; i++) {
-                    PartikelSystem.PushPartikel(xPos - 20 + rand() % 35, yPos - 10 + rand() % 20, WATERFLUSH2);
-                    PartikelSystem.PushPartikel(xPos - 20 + rand() % 35, yPos - 10 + rand() % 20, SMOKE);
+                    PartikelSystem.PushPartikel(xPos - 20 + random(35), yPos - 10 + random(20), WATERFLUSH2);
+                    PartikelSystem.PushPartikel(xPos - 20 + random(35), yPos - 10 + random(20), SMOKE);
                 }
             }
         } break;
@@ -80,8 +80,8 @@ void GegnerEiszapfen::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 30; i++) {
-        PartikelSystem.PushPartikel(xPos - 20 + rand() % 35, yPos - 10 + rand() % 60, WATERFLUSH2);
-        PartikelSystem.PushPartikel(xPos - 20 + rand() % 35, yPos - 10 + rand() % 60, SMOKE);
+        PartikelSystem.PushPartikel(xPos - 20 + random(35), yPos - 10 + random(60), WATERFLUSH2);
+        PartikelSystem.PushPartikel(xPos - 20 + random(35), yPos - 10 + random(60), SMOKE);
     }
 
     Player[0].Score += 100;

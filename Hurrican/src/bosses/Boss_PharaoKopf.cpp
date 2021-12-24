@@ -68,9 +68,9 @@ void GegnerPharaoKopf::DoKI() {
     //----- Pharao Bewegungs Code
 
     // Levelausschnitt auf den PharaoKopf zentrieren, sobald dieser sichtbar wird
-    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
+    if (Active == true && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
-                               ZUSTAND_SCROLLTOLOCK);  // Level auf die Faust zentrieren
+                               TileStateEnum::SCROLLTOLOCK);  // Level auf die Faust zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
@@ -109,8 +109,8 @@ void GegnerPharaoKopf::DoKI() {
 
         // Brocken
         for (int i = 0; i < 100; i++) {
-            PartikelSystem.PushPartikel(xPos + rand() % 224, yPos + rand() % 224, ROCKSPLITTER);
-            PartikelSystem.PushPartikel(xPos + rand() % 224, yPos + rand() % 224, ROCKSPLITTERSMALL);
+            PartikelSystem.PushPartikel(xPos + random(224), yPos + random(224), ROCKSPLITTER);
+            PartikelSystem.PushPartikel(xPos + random(224), yPos + random(224), ROCKSPLITTERSMALL);
         }
 
         SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
@@ -121,7 +121,7 @@ void GegnerPharaoKopf::DoKI() {
     switch (Handlung) {
         case GEGNER_NOTVISIBLE:  // Warten bis der Screen zentriert wurde
         {
-            if (TileEngine.Zustand == ZUSTAND_LOCKED) {
+            if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 // DKS - Added function SongIsPlaying() to SoundManagerClass:
                 if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
@@ -145,11 +145,11 @@ void GegnerPharaoKopf::DoKI() {
 
             // Boden brodeln lassen wo er auftaucht
             if (AnimCount <= 0.0f) {
-                PartikelSystem.PushPartikel(xPos + float(rand() % 230) - 30, float(Value2 + 400 + rand() % 12),
+                PartikelSystem.PushPartikel(xPos + float(random(230)) - 30, float(Value2 + 400 + random(12)),
                                             SMOKEBIG);
-                PartikelSystem.PushPartikel(xPos + float(rand() % 230) - 12, float(Value2 + 405 + rand() % 12),
+                PartikelSystem.PushPartikel(xPos + float(random(230)) - 12, float(Value2 + 405 + random(12)),
                                             ROCKSPLITTER);
-                PartikelSystem.PushPartikel(xPos + float(rand() % 230) - 12, float(Value2 + 410 + rand() % 12),
+                PartikelSystem.PushPartikel(xPos + float(random(230)) - 12, float(Value2 + 410 + random(12)),
                                             ROCKSPLITTERSMALL);
 
                 AnimCount += 0.2f;
@@ -219,7 +219,7 @@ void GegnerPharaoKopf::DoKI() {
         {
             // Partikel am Boden
             if (ySpeed == 0)
-                PartikelSystem.PushPartikel(xPos + rand() % 224, yPos + 210, ROCKSPLITTERSMALL);
+                PartikelSystem.PushPartikel(xPos + random(224), yPos + 210, ROCKSPLITTERSMALL);
 
             // Links an die Wand rutschen ?
             if (xSpeed < 0) {
@@ -241,9 +241,9 @@ void GegnerPharaoKopf::DoKI() {
                         DirectInput.Joysticks[Player[p].JoystickIndex].ForceFeedbackEffect(FFE_MEDIUMRUMBLE);
 
                     for (int i = 0; i < 20; i++) {
-                        PartikelSystem.PushPartikel(xPos - 10, yPos - 30 + rand() % 224, SMOKEBIG);
-                        PartikelSystem.PushPartikel(xPos - 10, yPos + rand() % 224, ROCKSPLITTER);
-                        PartikelSystem.PushPartikel(xPos - 10, yPos + rand() % 224, ROCKSPLITTERSMALL);
+                        PartikelSystem.PushPartikel(xPos - 10, yPos - 30 + random(224), SMOKEBIG);
+                        PartikelSystem.PushPartikel(xPos - 10, yPos + random(224), ROCKSPLITTER);
+                        PartikelSystem.PushPartikel(xPos - 10, yPos + random(224), ROCKSPLITTERSMALL);
                     }
 
                     SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
@@ -275,9 +275,9 @@ void GegnerPharaoKopf::DoKI() {
                     xSpeed = 0.0f;
                     xAcc = 0.0f;
                     for (int i = 0; i < 20; i++) {
-                        PartikelSystem.PushPartikel(xPos + 175, yPos + rand() % 224 - 30, SMOKEBIG);
-                        PartikelSystem.PushPartikel(xPos + 212, yPos + rand() % 224, ROCKSPLITTER);
-                        PartikelSystem.PushPartikel(xPos + 212, yPos + rand() % 224, ROCKSPLITTERSMALL);
+                        PartikelSystem.PushPartikel(xPos + 175, yPos + random(224) - 30, SMOKEBIG);
+                        PartikelSystem.PushPartikel(xPos + 212, yPos + random(224), ROCKSPLITTER);
+                        PartikelSystem.PushPartikel(xPos + 212, yPos + random(224), ROCKSPLITTERSMALL);
                     }
 
                     SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
@@ -296,9 +296,9 @@ void GegnerPharaoKopf::DoKI() {
             if (ySpeed < 0) {
                 if (yPos < static_cast<float>(Value2)) {
                     for (int i = 0; i < 20; i++) {
-                        PartikelSystem.PushPartikel(xPos - 30 + rand() % 224, yPos, SMOKEBIG);
-                        PartikelSystem.PushPartikel(xPos + rand() % 224, yPos + 10, ROCKSPLITTER);
-                        PartikelSystem.PushPartikel(xPos + rand() % 224, yPos + 10, ROCKSPLITTERSMALL);
+                        PartikelSystem.PushPartikel(xPos - 30 + random(224), yPos, SMOKEBIG);
+                        PartikelSystem.PushPartikel(xPos + random(224), yPos + 10, ROCKSPLITTER);
+                        PartikelSystem.PushPartikel(xPos + random(224), yPos + 10, ROCKSPLITTERSMALL);
                     }
 
                     SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
@@ -310,7 +310,7 @@ void GegnerPharaoKopf::DoKI() {
                         if (Player[p].AufPlattform == this)
                             Player[p].DamagePlayer(200.0f);
 
-                        Player[p].AufPlattform = NULL;
+                        Player[p].AufPlattform = nullptr;
                     }
 
                     // Screen Wackeln lassen
@@ -322,7 +322,7 @@ void GegnerPharaoKopf::DoKI() {
                 if (ySpeed > 0.0f) {
                 // Hurri dabei erwischt ?
                 for (int p = 0; p < NUMPLAYERS; p++)
-                    if (Player[p].Energy > 0 && Player[p].AufPlattform == NULL &&
+                    if (Player[p].Energy > 0 && Player[p].AufPlattform == nullptr &&
                         SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[p].xpos, Player[p].ypos,
                                         Player[p].CollideRect) == true) {
                         Player[p].DamagePlayer(25.0f);
@@ -336,9 +336,9 @@ void GegnerPharaoKopf::DoKI() {
                     ySpeed = 0.0f;
                     yAcc = 0.0f;
                     for (int i = 0; i < 20; i++) {
-                        PartikelSystem.PushPartikel(xPos - 30 + rand() % 224, yPos + 170, SMOKEBIG);
-                        PartikelSystem.PushPartikel(xPos + rand() % 224, yPos + 220, ROCKSPLITTER);
-                        PartikelSystem.PushPartikel(xPos + rand() % 224, yPos + 220, ROCKSPLITTERSMALL);
+                        PartikelSystem.PushPartikel(xPos - 30 + random(224), yPos + 170, SMOKEBIG);
+                        PartikelSystem.PushPartikel(xPos + random(224), yPos + 220, ROCKSPLITTER);
+                        PartikelSystem.PushPartikel(xPos + random(224), yPos + 220, ROCKSPLITTERSMALL);
                     }
 
                     SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
@@ -356,7 +356,7 @@ void GegnerPharaoKopf::DoKI() {
             AnimCount -= 1.0f SYNC;
 
             if (AnimCount <= 0.0f) {
-                int j = rand() % 3;
+                int j = random(3);
 
                 // Schiessen ?
                 if (j == 0 && AnimPhase > 1) {
@@ -364,7 +364,7 @@ void GegnerPharaoKopf::DoKI() {
                     AnimPhase = 3;
                     AnimCount = 8.0f;
                 } else
-                    j = rand() % 2 + 1;
+                    j = random(2) + 1;
 
                 // Steine von der Decke rieseln lassen ?
                 if (j == 1) {
@@ -405,9 +405,9 @@ void GegnerPharaoKopf::DoKI() {
 
                 // Partikel unter Boss
                 for (int i = 0; i < 20; i++) {
-                    PartikelSystem.PushPartikel(xPos - 30 + rand() % 224, yPos + 170, SMOKEBIG);
-                    PartikelSystem.PushPartikel(xPos + rand() % 224, yPos + 220, ROCKSPLITTER);
-                    PartikelSystem.PushPartikel(xPos + rand() % 224, yPos + 220, ROCKSPLITTERSMALL);
+                    PartikelSystem.PushPartikel(xPos - 30 + random(224), yPos + 170, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + random(224), yPos + 220, ROCKSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + random(224), yPos + 220, ROCKSPLITTERSMALL);
                 }
 
                 SoundManager.PlayWave(100, 128, 11025, SOUND_PHARAORAMM);
@@ -445,16 +445,14 @@ void GegnerPharaoKopf::DoKI() {
                 SoundManager.PlayWave(70, 128, 11025, SOUND_LASERSHOT);
 
                 // Je nach SchwierigkeitsGrad die Schuss Frequenz setzen
-                if (Skill == 0)
-                    AnimCount = 10.0f;
-                if (Skill == 1)
-                    AnimCount = 8.5f;
-                if (Skill == 2)
-                    AnimCount = 7.0f;
-                if (Skill == 3)
-                    AnimCount = 6.0f;
+                switch (Skill) {
+                    case SKILL_EASY:     AnimCount = 10.0f; break;
+                    case SKILL_MEDIUM:   AnimCount =  8.5f; break;
+                    case SKILL_HARD:     AnimCount =  7.0f; break;
+                    case SKILL_HURRICAN: AnimCount =  6.0f; break;
+                }
 
-                if (rand() % 2 == 0) {
+                if (random(2) == 0) {
                     AnimPhase = 2;
                     Handlung = GEGNER_CRUSHENERHOLEN;
                 }
@@ -467,8 +465,8 @@ void GegnerPharaoKopf::DoKI() {
             Energy = 100.0f;
 
             // brodeln lassen
-            PartikelSystem.PushPartikel(xPos + rand() % 224, yPos + rand() % 224, ROCKSPLITTER);
-            PartikelSystem.PushPartikel(xPos + rand() % 224, yPos + rand() % 224, ROCKSPLITTERSMALL);
+            PartikelSystem.PushPartikel(xPos + random(224), yPos + random(224), ROCKSPLITTER);
+            PartikelSystem.PushPartikel(xPos + random(224), yPos + random(224), ROCKSPLITTERSMALL);
 
             // Fertig explodiert ? Dann wird er ganz zerlegt
             if (AnimCount <= 0.0f)
@@ -487,16 +485,16 @@ void GegnerPharaoKopf::DoKI() {
 void GegnerPharaoKopf::GegnerExplode() {
     for (int p = 0; p < NUMPLAYERS; p++) {
         if (Player[p].AufPlattform == this)
-            Player[p].AufPlattform = NULL;
+            Player[p].AufPlattform = nullptr;
 
         DirectInput.Joysticks[Player[p].JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);
     }
 
     // Splitter
     for (int i = 0; i < 50; i++) {
-        PartikelSystem.PushPartikel(xPos + rand() % 224, yPos + rand() % 224, ROCKSPLITTER);
-        PartikelSystem.PushPartikel(xPos + rand() % 224, yPos + rand() % 224, ROCKSPLITTERSMALL);
-        PartikelSystem.PushPartikel(xPos + rand() % 224, yPos + rand() % 224, SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos + random(224), yPos + random(224), ROCKSPLITTER);
+        PartikelSystem.PushPartikel(xPos + random(224), yPos + random(224), ROCKSPLITTERSMALL);
+        PartikelSystem.PushPartikel(xPos + random(224), yPos + random(224), SMOKEBIG);
     }
 
     Player[0].Score += 8000;

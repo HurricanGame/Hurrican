@@ -26,98 +26,110 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define PLAYER_MOVESPEED 20.0f                     // Spieler Geschwindigkeit
-#define PLAYER_ANIMSPEED 0.4f                      // Geschwindigkeit der einzlenen Animationen
-#define PLAYER_MAXJUMP 124.0f                      // Höchster Sprung in Pixeln
-#define PLAYER_MAXJUMPSPEED 43.0f                  // Schnellste Bewegung beim Springen/Fallen
-#define PLAYER_JUMPADDSPEED 12.5f                  // Spring-Manipulation
-#define PLAYER_ICESPEED (PLAYER_MOVESPEED / 5.0f)  // Geschwindigkeit auf dem Eis
-#define PLAYER_ICESSLOWDOWN 0.995f                 // Geschwindigkeitsänderung bei "Auslaufen" auf dem Eis
+constexpr float PLAYER_MOVESPEED = 20.0f;                     // Spieler Geschwindigkeit
+constexpr float PLAYER_ANIMSPEED = 0.4f;                      // Geschwindigkeit der einzlenen Animationen
+constexpr float PLAYER_MAXJUMP = 124.0f;                      // Höchster Sprung in Pixeln
+constexpr float PLAYER_MAXJUMPSPEED = 43.0f;                  // Schnellste Bewegung beim Springen/Fallen
+constexpr float PLAYER_JUMPADDSPEED = 12.5f;                  // Spring-Manipulation
+constexpr float PLAYER_ICESPEED = (PLAYER_MOVESPEED / 5.0f);  // Geschwindigkeit auf dem Eis
+constexpr float PLAYER_ICESSLOWDOWN = 0.995f;                 // Geschwindigkeitsänderung bei "Auslaufen" auf dem Eis
 
-#define PLAYER_MAXEXTRAS 9  // Maximale Anzahl an Granaten/Powerlines
+constexpr int PLAYER_MAXEXTRAS = 9;  // Maximale Anzahl an Granaten/Powerlines
 
 // frames
-#define PLAYERANIM_IDLE 0
-#define PLAYERANIM_RAD_ENDE 7     // Anzah der Rad Animationsphasen
-#define PLAYERANIM_RUN_END 18     // Ende  der Lauf Animation
-#define PLAYERANIM_BLITZ_ENDE 25  // Ende   der Rundum-Blitz Animation
-#define PLAYERANIM_JUMP_END 7     // Ende  der Sprung Animation
-#define PLAYERANIM_PISSEN 0       // Pissen =)
+constexpr int PLAYERANIM_IDLE = 0;
+constexpr int PLAYERANIM_RAD_ENDE = 7;     // Anzah der Rad Animationsphasen
+constexpr int PLAYERANIM_RUN_END = 18;     // Ende  der Lauf Animation
+constexpr int PLAYERANIM_BLITZ_ENDE = 25;  // Ende   der Rundum-Blitz Animation
+constexpr int PLAYERANIM_JUMP_END = 7;     // Ende  der Sprung Animation
+constexpr int PLAYERANIM_PISSEN = 0;       // Pissen =)
 
-#define PLAYER_FLUGSACKSPEED 4.0f  // Speed beim Flugsack fliegen
+constexpr float PLAYER_FLUGSACKSPEED = 4.0f;  // Speed beim Flugsack fliegen
 
 // neue Frames
-#define FRAMES_IDLE 19
-#define FRAMES_RUN 20
-#define FRAMES_JUMP 12
-#define FRAMES_SURROUND 36
-#define FRAMES_DUCKEN 4
+constexpr int FRAMES_IDLE = 19;
+constexpr int FRAMES_RUN = 20;
+constexpr int FRAMES_JUMP = 12;
+constexpr int FRAMES_SURROUND = 36;
+constexpr int FRAMES_DUCKEN = 4;
 
-#define PLAYER_RAD_SPEED 0.5f    // Geschwindigkeit der Rad Animation
-#define PLAYER_BLITZ_SPEED 0.5f  // Geschwindigkeit der Blitz-Animation
-#define PLAYER_BLITZ_START 4.0f  // Zeit die man benötigt um Blitzen zu können
-#define PLAYER_BEAM_MAX 160.0f   // Maximal aufladbare Beamstärke
-#define PLAYER_SHOTDELAY 1.8f    // Verzögerung beim normalen schiessen
-#define BLITZ_POWER 4.0f         // Was zieht der Blitz ab ?
+constexpr float PLAYER_RAD_SPEED = 0.5f;    // Geschwindigkeit der Rad Animation
+constexpr float PLAYER_BLITZ_SPEED = 0.5f;  // Geschwindigkeit der Blitz-Animation
+constexpr float PLAYER_BLITZ_START = 4.0f;  // Zeit die man benötigt um Blitzen zu können
+constexpr float PLAYER_BEAM_MAX = 160.0f;   // Maximal aufladbare Beamstärke
+constexpr float PLAYER_SHOTDELAY = 1.8f;    // Verzögerung beim normalen schiessen
+constexpr float BLITZ_POWER = 4.0f;         // Was zieht der Blitz ab ?
 
 //----- Definitionen der Aktionstasten
 
-#define AKTION_LINKS 0
-#define AKTION_RECHTS 1
-#define AKTION_DUCKEN 2
-#define AKTION_OBEN 3
-#define AKTION_UNTEN 4
-#define AKTION_JUMP 5
-#define AKTION_SHOOT 6
-#define AKTION_BLITZ 7
-#define AKTION_POWERLINE 8
-#define AKTION_GRANATE 9
-#define AKTION_SMARTBOMB 10
-#define AKTION_WAFFEN_CYCLE 11
-#define AKTION_WAFFE_SPREAD 12
-#define AKTION_WAFFE_LASER 13
-#define AKTION_WAFFE_BOUNCE 14
-#define MAX_AKTIONEN 15
+enum {
+  AKTION_LINKS = 0,
+  AKTION_RECHTS = 1,
+  AKTION_DUCKEN = 2,
+  AKTION_OBEN = 3,
+  AKTION_UNTEN = 4,
+  AKTION_JUMP = 5,
+  AKTION_SHOOT = 6,
+  AKTION_BLITZ = 7,
+  AKTION_POWERLINE = 8,
+  AKTION_GRANATE = 9,
+  AKTION_SMARTBOMB = 10,
+  AKTION_WAFFEN_CYCLE = 11,
+  AKTION_WAFFE_SPREAD = 12,
+  AKTION_WAFFE_LASER = 13,
+  AKTION_WAFFE_BOUNCE = 14,
+  MAX_AKTIONEN = 15
+};
 
-#define NUM_COOL_LIGHTNINGS 18  // Anzahl der Blitze, aus denen der neue coole Blitz besteht
-
-//----- Definitionen der Blickrichtungen
-
-#define RECHTS 1
-#define LINKS -1
+constexpr int NUM_COOL_LIGHTNINGS = 18;  // Anzahl der Blitze, aus denen der neue coole Blitz besteht
 
 //----- Definitionen der "Handlungen"
 
-#define STEHEN 0
-#define SCHIESSEN 1
-#define SCHIESSEN_O 2
-#define SCHIESSEN_RO 3
-#define SCHIESSEN_LO 4
-//#define SCHIESSEN_RU	5
-//#define SCHIESSEN_LU	6
-#define LAUFEN 7
-#define SPRINGEN 8
-#define DUCKEN 9
-#define BLITZEN 10      // Rundum-Blitz
-#define RADELN 11       // Radeln =)
-#define RADELN_FALL 12  // Als Rad fallen
-#define SACKREITEN 13   // Auf dem FlugSack rumreiten
-#define DREHEN 14       // Auf dem FlugSack umdrehen
-#define BEAMLADEN 15    // Osama Beam (auf)laden ;)
-#define PISSEN \
-    16  // Der Spieler hat zu lange gewartet, und jetzt muss der arme Hurri übelst strullen (Auch als "Charles
-        // Bronson"-Animation bekannt)
-#define SURFEN 17        // Spieler surft auf Gegner
-#define SURFENCROUCH 18  // Ducken beim surfen
-#define SURFENJUMP 19    // Springen beim surfen
-#define EXPLODIEREN 20   // Hurri explodiert
-#define TOT 21           // Hurri ist kaputt
+enum class PlayerActionEnum {
+  STEHEN,
+  SCHIESSEN,
+  SCHIESSEN_O,
+  SCHIESSEN_RO,
+  SCHIESSEN_LO,
+//  SCHIESSEN_RU,
+//  SCHIESSEN_LU,
+  LAUFEN,
+  SPRINGEN,
+  DUCKEN,
+  BLITZEN,      // Rundum-Blitz
+  RADELN,       // Radeln =)
+  RADELN_FALL,  // Als Rad fallen
+  SACKREITEN,   // Auf dem FlugSack rumreiten
+  DREHEN,       // Auf dem FlugSack umdrehen
+  BEAMLADEN,    // Osama Beam (auf)laden ;)
+  PISSEN,       // Der Spieler hat zu lange gewartet, und jetzt muss der arme Hurri übelst strullen
+                // (Auch als "Charles Bronson"-Animation bekannt)
+  SURFEN,       // Spieler surft auf Gegner
+  SURFENCROUCH, // Ducken beim surfen
+  SURFENJUMP,   // Springen beim surfen
+  EXPLODIEREN,  // Hurri explodiert
+  TOT           // Hurri ist kaputt
+};
+
+// Skill level
+enum {
+  SKILL_EASY = 0,
+  SKILL_MEDIUM,
+  SKILL_HARD,
+  SKILL_HURRICAN
+};
 
 // --------------------------------------------------------------------------------------
 // Klasse für den Spieler
 // --------------------------------------------------------------------------------------
 
 class PlayerClass {
+  public:
+    enum {
+        RECHTS = 1,
+        LINKS  = -1
+    };
+
   private:
     uint32_t bl, br, bo, bu;  // Blockwerte in diesem Frame, damit wir nicht jedesmal
     // die Funktion aufrufen müssen, sondern nur EINMAL pro Frame
@@ -135,6 +147,9 @@ class PlayerClass {
     bool weaponswitchlock;
     void checkWeaponSwitch();
 
+    float DamageCounter;        // Wie lange bei Schaden blinken ?
+    int PlayerNumber;    // DKS - Added this that indicates whether this
+                         // player class is for player 1 (0) or 2 (1)
   public:
     bool GegnerDran;
     bool AlreadyDrawn;
@@ -181,12 +196,11 @@ class PlayerClass {
     float BlitzWinkel;          // Aktuelle Richtung des Blitzes
     float BlitzCount;           // Zähler für die Blitzanimation
     int BlitzAnim;              // Aktuelle Blitzanimation
-    int Handlung;               // Was macht der Spieler gerade ?
+    PlayerActionEnum Handlung;  // Was macht der Spieler gerade ?
     int Blickrichtung;          // Wohin kuckt der Spieler ?
     float Energy;               // Energie
     float Armour;               // Rüstung
     float Shield;               // Noch Schild ?
-    float DamageCounter;        // Wie lange bei Schaden blinken ?
     float BlinkCounter;         // Spieler leuchtet auf ?
     int BlinkColor;             // In welcher Farbe? 0 = keine, 1 = rot, 2 = grün, 3 = blau, 4 = hellblau
     D3DCOLOR CurrentColor;      // In welcher Farbe?
@@ -226,8 +240,6 @@ class PlayerClass {
     bool SpritesLoaded;  // DKS - Added this to indicate if all the
                          // textures below are loaded yet. Player 2's
                          // textures get loaded on-demand.
-    int PlayerNumber;    // DKS - Added this that indicates whether this
-                         // player class is for player 1 (0) or 2 (1)
     DirectGraphicsSprite PlayerBlitz;
     DirectGraphicsSprite PlayerCrouch;
     DirectGraphicsSprite PlayerKucken;
@@ -276,10 +288,10 @@ class PlayerClass {
     void CalcWeaponLevels();
     void CalcFlamePos();        // Position der Flamme berechnen
     void CalcAustrittsPunkt();  // Austrittspunkt des Schusses berechnen
-    bool CheckLevelExit();      // Spieler im Ausgang?
+    bool CheckLevelExit() const; // Spieler im Ausgang?
     void RunPlayerExit();       // Spieler läuft grad ins Exit
     void PlayerInExit();        // Spieler aus dem Level rausgelaufen?
-    bool Riding();              // Alle Spieler auf einem Flugsack?
+    bool Riding() const;        // Alle Spieler auf einem Flugsack?
     void ScrollFlugsack();      // Im Flugsacklevel scrollen?
 
     // DKS - Player sprites are no longer static globals, but instead class member vars:

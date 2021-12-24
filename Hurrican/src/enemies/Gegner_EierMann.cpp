@@ -19,14 +19,12 @@ GegnerEierMann::GegnerEierMann(int Wert1, int Wert2, bool Light) {
     AnimStart = 0;
     AnimEnde = 10;
 
-    if (Skill == 0)
-        AnimSpeed = 1.9f;
-    if (Skill == 1)
-        AnimSpeed = 1.6f;
-    if (Skill == 2)
-        AnimSpeed = 1.3f;
-    if (Skill == 3)
-        AnimSpeed = 1.0f;
+    switch (Skill) {
+        case SKILL_EASY:     AnimSpeed = 1.9f; break;
+        case SKILL_MEDIUM:   AnimSpeed = 1.6f; break;
+        case SKILL_HARD:     AnimSpeed = 1.3f; break;
+        case SKILL_HURRICAN: AnimSpeed = 1.0f; break;
+    }
 
     ChangeLight = Light;
     Destroyable = true;
@@ -75,14 +73,14 @@ void GegnerEierMann::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_GIANT);
 
     for (int i = 0; i < 10; i++) {
-        PartikelSystem.PushPartikel(xPos - 30 + rand() % 100, yPos - 30 + rand() % 80, EXPLOSION_MEDIUM2);
-        PartikelSystem.PushPartikel(xPos + 10 + rand() % 40, yPos + 10 + rand() % 40, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos - 30 + random(100), yPos - 30 + random(80), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + 10 + random(40), yPos + 10 + random(40), SPIDERSPLITTER);
     }
 
     for (int i = 0; i < 4; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 80, yPos + rand() % 80, SPLITTER);
+        PartikelSystem.PushPartikel(xPos + random(80), yPos + random(80), SPLITTER);
 
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION4);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION4);
 
     Player[0].Score += 1500;  // Punkte geben
 }

@@ -44,7 +44,6 @@ struct shader_t {
 class CShader {
   public:
     CShader();
-    virtual ~CShader() = default;
 
     void Close();
     bool Load(const std::string &path_vertex, const std::string &path_frag);

@@ -16,7 +16,7 @@
 // --------------------------------------------------------------------------------------
 
 // DKS - Always show cracktro when debugging
-//#ifndef _DEBUG
+//#ifdef NDEBUG
 #define SHOW_CRACKTRO
 //#endif
 
@@ -26,6 +26,7 @@
 
 #include <algorithm>
 #include <cstdio>
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -73,9 +74,9 @@ bool FixedFramerate = false;  // true = Spiel mit 50 Frames laufen lassen
 bool GameRunning = true;         // Spiel läuft :-)
 bool GamePaused = false;         // Spiel eingefroren (wenn man zb das Fenster verlässt)
 bool NochKeinFullScreen = true;  // Logo noch anzeigen in Paint ?
-#ifdef _DEBUG
+#ifndef NDEBUG
 bool DebugMode = false;              // Debug Mode ein/aus
-#endif                               //_DEBUG
+#endif                               //NDEBUG
 float SpeedFaktor = 1.0f;            // Faktor, mit dem alle Bewegungen verrechnet werden
 TexturesystemClass Textures;         // DKS - Added Texturesystem class (see DX8Sprite.cpp)
 DirectGraphicsClass DirectGraphics;  // Grafik-Objekt
@@ -100,11 +101,11 @@ ConsoleClass Console;                // Konsolen-Objekt
 CGUISystem GUI;                      // GUI System
 CCracktro *Cracktro;
 
-char *g_storage_ext = nullptr;  // Where data files (levels, graphics, music, etc)
+std::string g_storage_ext;      // Where data files (levels, graphics, music, etc)
                                 //      for the game are stored (read)
-char *g_config_ext = nullptr;   // Where configuration files
+std::string g_config_ext;       // Where configuration files
                                 //      are written (-DKS) (write)
-char *g_save_ext = nullptr;     // Where high scores and save games
+std::string g_save_ext;         // Where high scores and save games
                                 //      are written (-DKS) (write)
 
 sCommandLineParams CommandLineParams;
@@ -118,14 +119,13 @@ sCommandLineParams CommandLineParams;
 PlayerClass Player[2];  // Werte der Spieler
 
 HUDClass HUD;                           // Das HUD
-unsigned char SpielZustand = CRACKTRO;  // Aktueller Zustand des Spieles
-char StringBuffer[100];                 // Für die Int / String Umwandlung
+GameStateEnum SpielZustand = GameStateEnum::CRACKTRO;  // Aktueller Zustand des Spieles
 
 void FillCommandLineParams(int argc, char *args[]) {
     uint16_t i;
 
     // Set some sensible defaults
-    CommandLineParams.RunWindowMode = SCREEN_FULLSCREEN;
+    CommandLineParams.RunWindowMode = ScreenMode::FULLSCREEN;
     CommandLineParams.Scanlines = false;
     CommandLineParams.TexFactor = 1;
     CommandLineParams.TexSizeMin = 1024;
@@ -172,19 +172,19 @@ void FillCommandLineParams(int argc, char *args[]) {
             Protokoll << "  -C,    --crt            : Simulate CRT effects for a retro look" << std::endl;
             Protokoll << "         --custom x       : Play custom userlevel" << std::endl;
             Protokoll << "         --level x        : Load selected level map" << std::endl;
-            exit(1);
+            exit(EXIT_SUCCESS);
         } else if ((strstr(args[i], "--windowmode") != nullptr) || (strstr(args[i], "-W") != nullptr)) {
-            if (CommandLineParams.RunWindowMode == SCREEN_FULLSCREEN_STRETCHED) {
+            if (CommandLineParams.RunWindowMode == ScreenMode::FULLSCREEN_STRETCHED) {
                 std::cout << "Stretch mode selected, ignoring windowmode" << std::endl;
             } else {
-                CommandLineParams.RunWindowMode = SCREEN_WINDOW;
+                CommandLineParams.RunWindowMode = ScreenMode::WINDOW;
                 std::cout << "Window mode is enabled" << std::endl;
             }
         } else if ((strstr(args[i], "--stretch") != nullptr) || (strstr(args[i], "-S") != nullptr)) {
-            if (CommandLineParams.RunWindowMode == SCREEN_WINDOW) {
+            if (CommandLineParams.RunWindowMode == ScreenMode::WINDOW) {
                 std::cout << "Window mode selected, ignoring stretch mode" << std::endl;
             } else {
-                CommandLineParams.RunWindowMode = SCREEN_FULLSCREEN_STRETCHED;
+                CommandLineParams.RunWindowMode = ScreenMode::FULLSCREEN_STRETCHED;
                 std::cout << "Stretched fullscreen mode is enabled" << std::endl;
             }
         } else if ((strstr(args[i], "--showfps") != nullptr) || (strstr(args[i], "-F") != nullptr)) {
@@ -331,49 +331,40 @@ int main(int argc, char *argv[]) {
     FillCommandLineParams(argc, argv);
 
     // Set game's data path:
-    g_storage_ext = nullptr;
     // First, see if a command line parameter was passed:
     if (CommandLineParams.DataPath) {
-        g_storage_ext = static_cast<char *>(malloc(strlen(CommandLineParams.DataPath) + 1));
-        strcpy(g_storage_ext, CommandLineParams.DataPath);
+        g_storage_ext = CommandLineParams.DataPath;
         free(CommandLineParams.DataPath);
         CommandLineParams.DataPath = nullptr;
     } else {
 #if defined(ANDROID)
-        g_storage_ext = (char *)malloc(strlen(SDL_AndroidGetExternalStoragePath() + 1));
-        strcpy_s(g_storage_ext, SDL_AndroidGetExternalStoragePath());
+        g_storage_ext = SDL_AndroidGetExternalStoragePath();
 #else  // NON-ANDROID:
 #  ifdef USE_STORAGE_PATH
         // A data-files storage path has been specified in the Makefile:
-        g_storage_ext = static_cast<char *>(malloc(strlen(USE_STORAGE_PATH) + 1));
-        strcpy_s(g_storage_ext, USE_STORAGE_PATH);
+        g_storage_ext = USE_STORAGE_PATH;
         // Attempt to locate the dir
         if (!fs::is_directory(g_storage_ext)) {
             // Failed, print message and use "." folder as fall-back
             Protokoll << "ERROR: Failed to locate data directory " << g_storage_ext << std::endl;
             Protokoll << "\tUsing '.' folder as fallback." << std::endl;
-            free(g_storage_ext);
-            g_storage_ext = static_cast<char *>(malloc(strlen(".") + 1));
-            strcpy_s(g_storage_ext, ".");
+            g_storage_ext = ".";
         }
 #  else
-        g_storage_ext = static_cast<char *>(malloc(strlen(".") + 1));
-        strcpy(g_storage_ext, ".");
+        g_storage_ext = ".";
 #  endif
 #endif  // ANDROID
     }
 
     // Set game's save path (save games, settings, logs, high-scores, etc)
     if (CommandLineParams.SavePath) {
-        g_save_ext = static_cast<char *>(malloc(strlen(CommandLineParams.SavePath) + 1));
-        strcpy(g_save_ext, CommandLineParams.SavePath);
+        g_save_ext = CommandLineParams.SavePath;
         free(CommandLineParams.SavePath);
         CommandLineParams.SavePath = nullptr;
         g_config_ext = g_save_ext;
     } else {
 #if defined(ANDROID)
-        g_save_ext = (char *)malloc(strlen(SDL_AndroidGetExternalStoragePath() + 1));
-        strcpy_s(g_save_ext, SDL_AndroidGetExternalStoragePath());
+        g_save_ext = SDL_AndroidGetExternalStoragePath();
         g_config_ext = g_save_ext;
 #else  // NON-ANDROID:
 #  ifdef USE_HOME_DIR
@@ -383,8 +374,7 @@ int main(int argc, char *argv[]) {
         // Makefile is specifying this is a UNIX machine and we should write saves, settings, etc to $XDG_DATA_HOME/hurrican/ dir
         g_save_ext = getXdgDir("XDG_DATA_HOME", "/.local/share/hurrican");
 #  else
-        g_save_ext = static_cast<char *>(malloc(strlen(".") + 1));
-        strcpy_s(g_save_ext, ".");
+        g_save_ext = ".";
         g_config_ext = g_save_ext;
 #  endif  // USE_HOME_DIR
 #endif  // ANDROID
@@ -440,7 +430,7 @@ int main(int argc, char *argv[]) {
                     SpeedFaktor = 1.0f / 60.0f * Timer.GetMoveSpeed();
                 } else {
                     // Timer.SetMaxFPS (0);
-                    SpeedFaktor = Timer.SpeedFaktor;
+                    SpeedFaktor = Timer.getSpeedFactor();
                 }
 
                 Timer.wait();
@@ -470,17 +460,14 @@ int main(int argc, char *argv[]) {
     }
 
     Protokoll << "\n-> Hurrican closed !\n";
-    Protokoll << "\nhttp://www.poke53280.de\n";
-    Protokoll << "Bugreports, questions etc : information@poke53280.de\n";
+    Protokoll << "\nOriginal game: https://www.winterworks.de\n";
+    Protokoll << "This fork: https://github.com/drfiemost/Hurrican\n";
     Protokoll << "\n-> logfile end" << std::endl;
 
     // Kein Fehler im Game? Dann Logfile löschen
     // FIXME: That doesn't belong here
     if (Protokoll.delLogFile)
         fs::remove(fs::path("Game_Log.txt"));
-
-    free(g_storage_ext);
-    free(g_save_ext);
 
     return 0;
 }
@@ -500,26 +487,25 @@ bool GameInit() {
 #endif  // USE_FAST_RNG
 
     // DKS - Added language-translation files support to SDL port:
-    char langfilepath[256];
-    if (g_storage_ext) {
-        strcpy(langfilepath, g_storage_ext);
-        strcat(langfilepath, "/lang");
+    std::string langfilepath;
+    if (!g_storage_ext.empty()) {
+        langfilepath.assign(g_storage_ext).append("/lang");
     } else {
-        strcpy(langfilepath, "./lang");
+        langfilepath.assign("./lang");
     }
 
-    FindLanguageFiles(langfilepath);
+    FindLanguageFiles(langfilepath.c_str());
 
     // Try again if needed
     if (LanguageFiles.empty()) {
-        strcpy(langfilepath, "./");
-        FindLanguageFiles(langfilepath);
+        langfilepath.assign("./");
+        FindLanguageFiles(langfilepath.c_str());
     }
 
     // One more time if needed
     if (LanguageFiles.empty()) {
-        strcpy(langfilepath, "./lang");
-        FindLanguageFiles(langfilepath);
+        langfilepath.assign("./lang");
+        FindLanguageFiles(langfilepath.c_str());
     }
 
     if (LanguageFiles.empty()) {
@@ -562,7 +548,7 @@ bool GameInit() {
 
 #ifdef SHOW_CRACKTRO
     Cracktro = new CCracktro();
-    SpielZustand = CRACKTRO;
+    SpielZustand = GameStateEnum::CRACKTRO;
 #endif
 
     return true;
@@ -693,7 +679,7 @@ bool GameInit2() {
     SoundManager.LoadWave("beamload2.wav", SOUND_BEAMLOAD2_P2, true);
 
     // DKS - This was commented out in original code, but I've added support for
-    //      Trigger_Stampfstein.cpp's .hppain retraction sound back in:
+    //      Trigger_Stampfstein's chain retraction sound back in:
     SoundManager.LoadWave("chain.wav", SOUND_CHAIN, true);
 
     SoundManager.LoadWave("mushroomjump.wav", SOUND_MUSHROOMJUMP, false);
@@ -763,7 +749,7 @@ bool GameInit2() {
 
     SoundManager.LoadSong("highscore.it", MUSIC_HIGHSCORE);
 
-    // DKS - Punisher music is now loaded on-demand in Gegner_Puni.hpper.cpp
+    // DKS - Punisher music is now loaded on-demand in Gegner_Punisher.cpp
     // SoundManager.LoadSong("Punisher.it", MUSIC_PUNISHER);
 
     if (!GameRunning)
@@ -831,14 +817,14 @@ bool GameExit() {
 bool Heartbeat() {
     switch (SpielZustand) {
         // Cracktro
-        case CRACKTRO: {
+        case GameStateEnum::CRACKTRO: {
 #ifdef SHOW_CRACKTRO
 
             Cracktro->Run();
 
-            if (!Cracktro->b_running) {
+            if (!Cracktro->IsRunning()) {
                 delete (Cracktro);
-                SpielZustand = MAINMENU;
+                SpielZustand = GameStateEnum::MAINMENU;
 
                 if (!GameInit2())
                     return false;
@@ -847,19 +833,19 @@ bool Heartbeat() {
             if (!GameInit2())
                 return false;
 
-            SpielZustand = MAINMENU;
+            SpielZustand = GameStateEnum::MAINMENU;
 
 #endif
             //		pOuttro = new OuttroClass();
-            //		SpielZustand = OUTTRO;
+            //		SpielZustand = GameStateEnum::OUTTRO;
 
             goto jump;
         }
 
         //----- Intro anzeigen ?
-        case INTRO: {
+        case GameStateEnum::INTRO: {
             // Laufen lassen, bis beendet
-            if (pIntro->Zustand != INTRO_DONE) {
+            if (!pIntro->IsDone()) {
                 pIntro->DoIntro();
 
                 if (DirectInput.AnyKeyDown() || DirectInput.AnyButtonDown())
@@ -869,12 +855,12 @@ bool Heartbeat() {
                 delete (pIntro);
                 InitNewGame();
                 InitNewGameLevel();
-                SpielZustand = GAMELOOP;
+                SpielZustand = GameStateEnum::GAMELOOP;
             }
         } break;
 
         //----- Outtro anzeigen ?
-        case OUTTRO: {
+        case GameStateEnum::OUTTRO: {
             pOuttro->DoOuttro();
 
             if (KeyDown(DIK_ESCAPE))  // Intro beenden ?
@@ -887,12 +873,12 @@ bool Heartbeat() {
         } break;
 
         //----- Hauptmenu
-        case MAINMENU: {
+        case GameStateEnum::MAINMENU: {
             pMenu->DoMenu();
         } break;
 
         //---- Haupt-Gameloop
-        case GAMELOOP: {
+        case GameStateEnum::GAMELOOP: {
             GameLoop();
         } break;
 
@@ -900,7 +886,7 @@ bool Heartbeat() {
             break;
     }
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 
     // Debugmode ?
     if (DebugMode == true)
@@ -932,7 +918,7 @@ jump:
     DirectGraphics.DisplayBuffer();
 
     // Screenshot machen
-#ifdef _DEBUG
+#ifndef NDEBUG
     if (KeyDown(DIK_F12))
         DirectGraphics.TakeScreenshot("HurricanShot", 640, 480);
 
@@ -947,63 +933,65 @@ jump:
     // So Firlefanz wie FPS usw anzeigen
     // --------------------------------------------------------------------------------------
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 void ShowDebugInfo() {
+    std::string StringBuffer;
+
     // Blaues durchsichtiges Rechteck zeichnen
     RenderRect(0, 0, 320, 240, 0xA00000FF);
     pDefaultFont->ShowFPS();  // FPS anzeigen
 
     // Anzahl der aktuell aktiven Partikel anzeigen
-    _itoa_s(PartikelSystem.GetNumPartikel(), StringBuffer, 10);
-    pDefaultFont->DrawText(0, 60, "Partikel :", 0xFFFFFFFF);
-    pDefaultFont->DrawText(150, 60, StringBuffer, 0xFFFFFFFF);
+    StringBuffer = std::to_string(PartikelSystem.GetNumPartikel());
+    pDefaultFont->DrawText(0, 60, "Particles :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(100, 60, StringBuffer.c_str(), 0xFFFFFFFF);
 
     // Anzahl der aktuell aktiven Schüsse anzeigen
-    _itoa_s(Projectiles.GetNumProjectiles(), StringBuffer, 10);
-    pDefaultFont->DrawText(200, 60, "Projektile :", 0xFFFFFFFF);
-    pDefaultFont->DrawText(300, 60, StringBuffer, 0xFFFFFFFF);
+    StringBuffer = std::to_string(Projectiles.GetNumProjectiles());
+    pDefaultFont->DrawText(200, 60, "Projectiles :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(300, 60, StringBuffer.c_str(), 0xFFFFFFFF);
 
     // Benutzte Sound-Channels angeben
-    _itoa_s(SoundManager.most_channels_used, StringBuffer, 10);
+    StringBuffer = std::to_string(SoundManager.most_channels_used);
     pDefaultFont->DrawText(0, 75, "MaxChannels :", 0xFFFFFFFF);
-    pDefaultFont->DrawText(150, 75, StringBuffer, 0xFFFFFFFF);
+    pDefaultFont->DrawText(100, 75, StringBuffer.c_str(), 0xFFFFFFFF);
 
     // Anzahl der Gegner im Level angeben
-    _itoa_s(Gegner.GetNumGegner(), StringBuffer, 10);
-    pDefaultFont->DrawText(200, 75, "Gegneranzahl :", 0xFFFFFFFF);
-    pDefaultFont->DrawText(300, 75, StringBuffer, 0xFFFFFFFF);
+    StringBuffer = std::to_string(Gegner.GetNumGegner());
+    pDefaultFont->DrawText(200, 75, "Enemies :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(300, 75, StringBuffer.c_str(), 0xFFFFFFFF);
 
     // MoveSpeed anzeigen
-    _itoa_s(static_cast<int>(Timer.GetMoveSpeed()), StringBuffer, 10);
+    StringBuffer = std::to_string(static_cast<int>(Timer.GetMoveSpeed()));
     pDefaultFont->DrawText(0, 90, "Move Speed :", 0xFFFFFFFF);
-    pDefaultFont->DrawText(150, 90, StringBuffer, 0xFFFFFFFF);
+    pDefaultFont->DrawText(100, 90, StringBuffer.c_str(), 0xFFFFFFFF);
 
     // Blitzwinkel angeben
-    //_itoa_s(static_cast<int>(Player->BlitzWinkel), StringBuffer, 10);
-    pDefaultFont->DrawText(0, 135, "Blitzwinkel :", 0xFFFFFFFF);
-    pDefaultFont->DrawText(150, 135, StringBuffer, 0xFFFFFFFF);
+    StringBuffer = std::to_string(static_cast<int>(Player->BlitzWinkel));
+    pDefaultFont->DrawText(0, 105, "Light angle :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(100, 105, StringBuffer.c_str(), 0xFFFFFFFF);
 
     // Blitzwinkel angeben
-    sprintf_s(StringBuffer, "%f", Timer.SpeedFaktor);
-    pDefaultFont->DrawText(0, 150, "Speed :", 0xFFFFFFFF);
-    pDefaultFont->DrawText(150, 150, StringBuffer, 0xFFFFFFFF);
+    StringBuffer = std::to_string(Timer.getSpeedFactor());
+    pDefaultFont->DrawText(0, 120, "Speed :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(100, 120, StringBuffer.c_str(), 0xFFFFFFFF);
 
     // Blitzwinkel angeben
-    // sprintf_s (StringBuffer, "%f", Player->JumpySave - Player->ypos);
-    pDefaultFont->DrawText(0, 250, "yDiff :", 0xFFFFFFFF);
-    pDefaultFont->DrawText(150, 250, StringBuffer, 0xFFFFFFFF);
+    StringBuffer = std::to_string(Player->JumpySave - Player->ypos);
+    pDefaultFont->DrawText(0, 135, "yDiff :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(100, 135, StringBuffer.c_str(), 0xFFFFFFFF);
 
     // Blitzwinkel angeben
-    // sprintf_s (StringBuffer, "%f", Player->JumpAdd);
-    pDefaultFont->DrawText(0, 270, "yAdd :", 0xFFFFFFFF);
-    pDefaultFont->DrawText(150, 270, StringBuffer, 0xFFFFFFFF);
+    StringBuffer = std::to_string(Player->JumpAdd);
+    pDefaultFont->DrawText(0, 150, "yAdd :", 0xFFFFFFFF);
+    pDefaultFont->DrawText(100, 150, StringBuffer.c_str(), 0xFFFFFFFF);
 
     /*	for (int i=0; i<128; i++)
             for (int j=0; j<96; j++)
                 if(TileEngineTiles[i][j].BackArt > 0)
                     pDefaultFont->DrawText(300+i, 100+j, ".", 0xFFFFFF00);*/
 }
-#endif  //_DEBUG
+#endif  //NDEBUG
 
 // DKS - added FPS reporting via command switch
 void ShowFPS() {
@@ -1034,7 +1022,7 @@ void ShowFPS() {
 void StartOuttro() {
     Stage = -1;
     pOuttro = new OuttroClass();
-    SpielZustand = OUTTRO;
+    SpielZustand = GameStateEnum::OUTTRO;
 }
 
 //----------------------------------------------------------------------------
@@ -1045,5 +1033,5 @@ void StartIntro() {
     pMenu->StartProgressBar(12);
 
     pIntro = new IntroClass();
-    SpielZustand = INTRO;
+    SpielZustand = GameStateEnum::INTRO;
 }

@@ -81,10 +81,10 @@ MenuClass::MenuClass() {
     AktuellerPunkt = MENUPUNKT_STARTGAME;
 
     // Sterne initialisieren
-    for (int i = 0; i < MAX_STARS; i++) {
-        Stars[i].Count = float(rand() % 628) / 100.0f;
-        Stars[i].Abstand = float(rand() % 400 + 20);
-        Stars[i].Ebene = rand() % 120 + 20;
+    for (auto& star: Stars) {
+        star.Count = float(random(628)) / 100.0f;
+        star.Abstand = float(random(400) + 20);
+        star.Ebene = random(120) + 20;
     }
 
     // Farben für die Highscore erstellen, in der die Namen aufblinken
@@ -392,10 +392,10 @@ void MenuClass::ShowMenuBack() {
     MenuStar.SetRect(0, 0, 5, 5);
 
     // Sterne anzeigen
-    for (int i = 0; i < MAX_STARS; i++)
-        MenuStar.RenderSpriteRotated(320 - float(sin(Stars[i].Count) * Stars[i].Abstand),
-                                     240 + float(cos(Stars[i].Count) * Stars[i].Abstand), Stars[i].Count,
-                                     D3DCOLOR_RGBA(255, 255, 255, Stars[i].Ebene));
+    for (const auto& star: Stars)
+        MenuStar.RenderSpriteRotated(320 - float(sin(star.Count) * star.Abstand),
+                                     240 + float(cos(star.Count) * star.Abstand), star.Count,
+                                     D3DCOLOR_RGBA(255, 255, 255, star.Ebene));
 
     DirectGraphics.SetColorKeyMode();
 }
@@ -741,17 +741,17 @@ void MenuClass::ShowMenu() {
                                            col);
                 else {
                     // Print joystick name, truncated to fit if necessary
-                    char tmpbuf[120];
-                    snprintf(tmpbuf, 120, "%d:%s", pCurrentPlayer->JoystickIndex,
-                              DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].JoystickName);
-                    int cutoff = strlen(tmpbuf) - 1;
-                    int max_w = col2_off_x - 10;
-                    while (cutoff > 1 && pDefaultFont->StringLength(tmpbuf) > max_w) {
-                        tmpbuf[cutoff] = '\0';
+                    std::string tmpbuf = std::to_string(pCurrentPlayer->JoystickIndex)
+                        .append(":")
+                        .append(DirectInput.Joysticks[pCurrentPlayer->JoystickIndex].JoystickName);
+                    int cutoff = tmpbuf.length() - 1;
+                    int const max_w = col2_off_x - 10;
+                    while (cutoff > 1 && pDefaultFont->StringLength(tmpbuf.c_str()) > max_w) {
+                        tmpbuf.erase(cutoff);
                         cutoff--;
                     }
                     pDefaultFont->DrawText(col1_off_x + j * col2_off_x,
-                                           line1_off_y + MENU_TASTEN_TYPE_LINE * line_spacing, tmpbuf, col);
+                                           line1_off_y + MENU_TASTEN_TYPE_LINE * line_spacing, tmpbuf.c_str(), col);
                 }
 
                 // Rechteck für Empfindlichkeit
@@ -1173,11 +1173,11 @@ void MenuClass::DoMenu() {
 
     // Sterne bewegen
     //
-    for (int i = 0; i < MAX_STARS; i++) {
-        Stars[i].Count += Stars[i].Ebene / 20000.0f SYNC;
+    for (auto& star: Stars) {
+        star.Count += star.Ebene / 20000.0f SYNC;
 
-        if (Stars[i].Count > 2 * PI)
-            Stars[i].Count -= 2 * PI;
+        if (star.Count > 2 * PI)
+            star.Count -= 2 * PI;
     }
 
     ShowMenu();
@@ -1398,7 +1398,7 @@ void MenuClass::DoMenu() {
                 } else if (AktuellerPunkt == MENUPUNKT_CONTINUEGAME && Stage > -1) {
                     AktuellerPunkt = 0;
                     SoundManager.StopSong(MUSIC_MENU, false);
-                    SpielZustand = GAMELOOP;
+                    SpielZustand = GameStateEnum::GAMELOOP;
 
                     // DKS - We now use the sound manager's already-present pause functions here:
 #if 0
@@ -1967,7 +1967,7 @@ void MenuClass::DoMenu() {
                 Highscores[NewRank].Skill = NewSkill;
 
                 // Und zurück ins Hauptmenu und dort die Highscores anzeigen
-                SpielZustand = MAINMENU;
+                SpielZustand = GameStateEnum::MAINMENU;
                 AktuellerZustand = MENUPUNKT_HIGHSCORES;
 
                 SoundManager.SetSongVolume(MUSIC_MENU, 0.0f);
@@ -2073,11 +2073,11 @@ void MenuClass::DoMenu() {
                     // Game starten mit Tutorial
                     NUMPLAYERS = 1;
                     RunningTutorial = true;
-                    Skill = AktuellerPunkt;
+                    Skill = SKILL_EASY;
                     //					SoundManager.StopSong(MUSIC_MENU, false);
                     InitNewGame();
                     InitNewGameLevel();
-                    SpielZustand = GAMELOOP;
+                    SpielZustand = GameStateEnum::GAMELOOP;
                 }
 
                 // Neues Spiel starten ?
@@ -2208,7 +2208,7 @@ void MenuClass::DoMenu() {
                     Player[0].SmartBombs = Savegames[AktuellerPunkt].SmartBombs;
 
                     for (int p = 0; p < 2; p++) {
-                        Player[p].Handlung = STEHEN;
+                        Player[p].Handlung = PlayerActionEnum::STEHEN;
                         Player[p].Energy = Savegames[AktuellerPunkt].Energy[p];
                         Player[p].Armour = Savegames[AktuellerPunkt].Armour[p];
                         Player[p].Shield = Savegames[AktuellerPunkt].Shield[p];
@@ -2223,11 +2223,11 @@ void MenuClass::DoMenu() {
                     }
 
                     // An der Stelle im Savegame weiterspielen
-                    AktuellerZustand = MAINMENU;
+                    AktuellerZustand = 3; // MAINMENU ???
                     AktuellerPunkt = 0;
                     //					SoundManager.StopSong(MUSIC_MENU, false);
                     InitNewGameLevel();  // Neues level laden
-                    SpielZustand = GAMELOOP;     // Weiterspielen
+                    SpielZustand = GameStateEnum::GAMELOOP;     // Weiterspielen
                 }
             }
         } break;  // Load Game
@@ -2255,7 +2255,7 @@ void MenuClass::DoMenu() {
 
                     char timestr[20];
 
-                    time_t seconds = time(NULL);
+                    time_t seconds = time(nullptr);
                     struct tm *ptm = localtime(&seconds);
 
                     /*
@@ -2319,7 +2319,7 @@ void MenuClass::DoMenu() {
 
                     // Versuchen, die Datei zu erstellen
                     // nur weitermachen falls es keinen Fehler gibt
-                    Name = std::string(g_save_ext) + "/Savegame" + Buffer + ".save";
+                    Name = g_save_ext + "/Savegame" + Buffer + ".save";
                     std::ofstream Datei(Name, std::ofstream::binary);
 
                     // Fehler beim Öffnen ? Dann leeren Slot erzeugen
@@ -2338,7 +2338,7 @@ void MenuClass::DoMenu() {
                 // oder Weiter/Continue  ?
                 //				if (AktuellerPunkt == MAX_SAVEGAMES)
                 {
-                    AktuellerZustand = MAINMENU;
+                    AktuellerZustand = 3; // MAINMENU ???
                     AktuellerPunkt = 0;
                     InitNewGameLevel();  // Neues level laden
                 }
@@ -2360,7 +2360,7 @@ void MenuClass::LoadSavegames() {
     // Versuchen, die einzelnen Savegames zu laden
     for (int i = 0; i < MAX_SAVEGAMES; i++) {
         // Name des Savegames erstellen
-        Name = std::string(g_save_ext) + "/Savegame" + std::to_string(i) + ".save";
+        Name = g_save_ext + "/Savegame" + std::to_string(i) + ".save";
 
         // Versuchen, die Datei zu öffnen
         // falls sie nicht existiert oder es eine Fehler gibt, ist der Slot noch leer
@@ -2487,7 +2487,7 @@ void MenuClass::LoadHighscore() {
     // Versuchen, die Highscore Datei zu öffnen
     // falls sie nicht existiert oder es eine Fehler gibt, wird die Standard
     // Highscore gesetzt
-    name = std::string(g_save_ext) + "/Hurrican.hsl";
+    name = g_save_ext + "/Hurrican.hsl";
     std::ifstream Datei(name, std::ifstream::binary);
 
     // Fehler beim Öffnen ? Dann standard Highscore setzen
@@ -2541,7 +2541,7 @@ void MenuClass::SaveHighscore() {
     std::string name;
 
     // Highscore Datei öffnen
-    name = std::string(g_save_ext) + "/Hurrican.hsl";
+    name = g_save_ext + "/Hurrican.hsl";
     std::ofstream Datei(name, std::ofstream::binary);
 
     // Fehler beim Öffnen ? Dann standard Highscore setzen
@@ -2713,7 +2713,7 @@ void MenuClass::CheckForNewHighscore() {
             break;
         }
 
-    SpielZustand = MAINMENU;
+    SpielZustand = GameStateEnum::MAINMENU;
 }
 
 // --------------------------------------------------------------------------------------

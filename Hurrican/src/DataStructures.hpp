@@ -24,10 +24,10 @@ class MemPool {
     T *alloc() {
         T *t_ptr = reinterpret_cast<T *>(head_of_free_list);
 
-        if (head_of_free_list != NULL) {
+        if (head_of_free_list != nullptr) {
             head_of_free_list = head_of_free_list->next;
         } else {
-#ifdef DEBUG
+#ifndef NDEBUG
             Protokoll << "ERROR in MemPool, tried to alloc() more than " << TPoolSize << " objects\n";
             Protokoll << "File: " << __FILE__ << " Line: " << __LINE__ << std::endl;
 #endif
@@ -37,8 +37,8 @@ class MemPool {
     }
 
     void free(T *t_ptr) {
-#ifdef DEBUG
-        if (t_ptr == NULL) {
+#ifndef NDEBUG
+        if (t_ptr == nullptr) {
             Protokoll << "ERROR in MemPool, NULL argument passed to free()" << std::endl;
             Protokoll << "File: " << __FILE__ << " Line: " << __LINE__ << std::endl;
             return;
@@ -58,7 +58,7 @@ class MemPool {
         for (size_t i = 0; i < TPoolSize - 1; ++i)
             pool[i].next = &pool[i + 1];  // Unused entries form a linked list of free slots
 
-        pool[TPoolSize - 1].next = NULL;  // Terminate end of free list
+        pool[TPoolSize - 1].next = nullptr;  // Terminate end of free list
         head_of_free_list = pool;
     }
 
@@ -180,9 +180,9 @@ class GroupedForwardList {
 
     void clear();
 
-    size_t size() { return num_items; }
+    size_t size() const { return num_items; }
 
-    size_t get_num_groups() { return num_groups; }
+    size_t get_num_groups() const { return num_groups; }
 
     LIST_ITEM_TYPE *data() { return list; }
 
@@ -203,7 +203,7 @@ class GroupedForwardList {
                 read_list_map_idx++;
                 if (read_list_map_idx >= num_groups) {
                     // We've run through all possible group chains, return NULL, we're done..
-                    return NULL;
+                    return nullptr;
                 }
                 read_node_idx = list_map[read_list_map_idx].head_node_idx;
             } while (read_node_idx == -2);
@@ -211,7 +211,7 @@ class GroupedForwardList {
 
         // Have we come to the end of any possible additional entries?
         if (read_node_idx == -1)
-            return NULL;
+            return nullptr;
 
         LIST_ITEM_TYPE *tmp_ptr = &list[read_node_idx];
         read_node_idx = list[read_node_idx].grouped_list_next_node_idx;
@@ -235,7 +235,7 @@ class GroupedForwardList {
 
     LIST_ITEM_TYPE *get_next_item_from_group() {
         if (read_node_idx == -1)
-            return NULL;
+            return nullptr;
 
         LIST_ITEM_TYPE *tmp_ptr = &list[read_node_idx];
         read_node_idx = list[read_node_idx].grouped_list_next_node_idx;
@@ -254,7 +254,7 @@ class GroupedForwardList {
 #if 0
       // This code has been tested to work, but I don't need it in the game
       size_t count_items_in_group(int key) {
-#ifdef _DEBUG
+#ifndef NDEBUG
          if (key >= MAX_LIST_GROUPS) {
             cout << "ERROR: count_items_in_group() in GroupList, key: " << num_items 
                << " MAX_LIST_GROUPS: " << MAX_LIST_GROUPS << endl;
@@ -318,7 +318,7 @@ void GroupedForwardList<LIST_ITEM_TYPE, LIST_MAP_INDEX_INT_TYPE, MAX_LIST_GROUPS
 template <typename LIST_ITEM_TYPE, typename LIST_MAP_INDEX_INT_TYPE, size_t MAX_LIST_GROUPS, size_t MAX_LIST_ITEMS>
 void GroupedForwardList<LIST_ITEM_TYPE, LIST_MAP_INDEX_INT_TYPE, MAX_LIST_GROUPS, MAX_LIST_ITEMS>::push_back(
     const LIST_ITEM_TYPE &item) {
-#ifdef _DEBUG
+#ifndef NDEBUG
     if (num_items >= MAX_LIST_ITEMS) {
         Protokoll << "ERROR: push_back() in GroupList, num_items: " << num_items
                   << " MAX_LIST_ITEMS: " << MAX_LIST_ITEMS << std::endl;

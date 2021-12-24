@@ -5,11 +5,12 @@
 #include "enemies/Gegner_Stuff.hpp"
 
 class GegnerEvilHurri : public GegnerClass {
-  public:
+  private:
     float BlinkDirection;  // Animationsphase der Beine
     float BlinkWert;       // Y-Offset des Körpers
     float ActionDelay;     // Warten
 
+  public:
     GegnerEvilHurri(int Wert1,
                     int Wert2,  // Konstruktor
                     bool Light);

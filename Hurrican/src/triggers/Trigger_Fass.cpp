@@ -73,15 +73,15 @@ void GegnerFass::GegnerExplode() {
     SoundManager.PlayWave(25, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos - 50 + rand() % 48, yPos - 50 + rand() % 56, EXPLOSION_BIG);
+        PartikelSystem.PushPartikel(xPos - 50 + random(48), yPos - 50 + random(56), EXPLOSION_BIG);
 
     for (int i = 0; i < 8; i++)
-        PartikelSystem.PushPartikel(xPos - 30 + rand() % 48, yPos - 30 + rand() % 56, EXPLOSION_MEDIUM);
+        PartikelSystem.PushPartikel(xPos - 30 + random(48), yPos - 30 + random(56), EXPLOSION_MEDIUM);
 
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos - 2 + rand() % 48, yPos - 2 + rand() % 12, FUNKE);
+        PartikelSystem.PushPartikel(xPos - 2 + random(48), yPos - 2 + random(12), FUNKE);
 
     // Flammen-Splitter auswerfen
     for (int i = 0; i < 16; i++)
-        Projectiles.PushProjectile(xPos - 24 + rand() % 48, yPos + rand() % 20, FLAMME);
+        Projectiles.PushProjectile(xPos - 24 + random(48), yPos + random(20), FLAMME);
 }

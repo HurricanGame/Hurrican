@@ -32,7 +32,7 @@ void GegnerKettenglied::DoDraw() {
     int Wert = 255 - static_cast<int>(DamageTaken);
 
     if (AnimSpeed < 0.0f) {
-        if (DirectGraphics.BlendMode == ADDITIV_MODE)
+        if (DirectGraphics.BlendMode == BlendModeEnum::ADDITIV)
             Color = D3DCOLOR_RGBA(255, 255, 255, Wert);
         else
             Color = 0xFFFFFFFF;
@@ -69,11 +69,11 @@ void GegnerKettenglied::DoKI() {
 
         // Kettenglied fliegt los
         case GEGNER_SPECIAL: {
-            AnimCount = static_cast<float>(rand() % 360);
+            AnimCount = static_cast<float>(random(360));
 
             Destroyable = false;
-            xSpeed = static_cast<float>(rand() % 40 - 20);
-            ySpeed = -static_cast<float>(rand() % 40 - 20);
+            xSpeed = static_cast<float>(random(40) - 20);
+            ySpeed = -static_cast<float>(random(40) - 20);
             yAcc = 5.0f;
 
             Handlung = GEGNER_SPECIAL2;

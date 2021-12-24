@@ -27,9 +27,12 @@
 
 #if defined(USE_FBO)
 
-CFbo::CFbo() {}
-
-CFbo::~CFbo() {}
+CFbo::CFbo()
+    : Enabled(false),
+      texture(GL_INVALID_VALUE),
+      framebuffer(GL_INVALID_VALUE),
+      width(0),
+      height(0) {}
 
 bool CFbo::Open(uint16_t w, uint16_t h) {
     Enabled = false;
@@ -52,7 +55,7 @@ bool CFbo::Open(uint16_t w, uint16_t h) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, nullptr);
     /* Create the framebuffer reference */
     glGenFramebuffers(1, &framebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);

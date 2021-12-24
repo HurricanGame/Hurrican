@@ -87,10 +87,7 @@ void GegnerDrone::DoKI() {
         if (yPos > pAim->ypos - 60)
             yAcc = -1.5f;
 
-        if (xSpeed > 20.0f)
-            xSpeed = 20.0f;
-        if (xSpeed < -20.0f)
-            xSpeed = -20.0f;
+        xSpeed = std::clamp(xSpeed, -20.0f, 20.0f);
         if (ySpeed > 10.0f)
             ySpeed = 10.0f;
         if (ySpeed < -10.0f && Value1 != 99)
@@ -125,14 +122,12 @@ void GegnerDrone::DoKI() {
             if (ActionDelay <= 0.0f && PlayerAbstand() < 600) {
                 Handlung = GEGNER_SCHIESSEN;
 
-                if (Skill == 0)
-                    ShotCount = 4;
-                if (Skill == 1)
-                    ShotCount = 6;
-                if (Skill == 2)
-                    ShotCount = 8;
-                if (Skill == 3)
-                    ShotCount = 10;
+                switch (Skill) {
+                    case SKILL_EASY:     ShotCount =  4; break;
+                    case SKILL_MEDIUM:   ShotCount =  6; break;
+                    case SKILL_HARD:     ShotCount =  8; break;
+                    case SKILL_HURRICAN: ShotCount = 10; break;
+                }
 
                 ShotDelay = 20.0f;
 
@@ -214,8 +209,8 @@ void GegnerDrone::DoKI() {
             // Drone rauchen lassen
             if (AnimCount >= 0.5f) {
                 AnimCount = 0.0f;
-                PartikelSystem.PushPartikel(xPos + rand() % 30 + 20, yPos + 10 + rand() % 40, SMOKE);
-                PartikelSystem.PushPartikel(xPos + rand() % 30 + 20, yPos + 10 + rand() % 40, SMOKE3);
+                PartikelSystem.PushPartikel(xPos + random(30) + 20, yPos + 10 + random(40), SMOKE);
+                PartikelSystem.PushPartikel(xPos + random(30) + 20, yPos + 10 + random(40), SMOKE3);
             }
         } break;
     }
@@ -237,15 +232,15 @@ void GegnerDrone::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerDrone::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
 
     for (int i = 0; i < 5; i++) {
-        PartikelSystem.PushPartikel(xPos - 30 + rand() % 70, yPos - 30 + rand() % 80, EXPLOSION_MEDIUM2);
-        PartikelSystem.PushPartikel(xPos - 30 + rand() % 70, yPos - 30 + rand() % 80, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos - 30 + random(70), yPos - 30 + random(80), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30 + random(70), yPos - 30 + random(80), SPIDERSPLITTER);
     }
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 30 + rand() % 70, yPos - 30 + rand() % 80, SPLITTER);
+        PartikelSystem.PushPartikel(xPos - 30 + random(70), yPos - 30 + random(80), SPLITTER);
 
     PartikelSystem.PushPartikel(xPos - 24, yPos - 16, EXPLOSION_GIANT);
 

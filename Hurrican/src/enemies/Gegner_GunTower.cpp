@@ -84,7 +84,7 @@ void GegnerGunTower::DoKI() {
                     BlickRichtung = LINKS;
                 AnimEnde = 0;
                 AnimPhase = 0;
-                Handlung = STEHEN;
+                Handlung = GEGNER_STEHEN;
             }
         } break;
 
@@ -112,9 +112,9 @@ void GegnerGunTower::DoKI() {
 void GegnerGunTower::GegnerExplode() {
     PartikelSystem.PushPartikel(float(xPos - 20), float(yPos - 40), EXPLOSION_BIG);
     for (int i = 0; i < 2; i++)
-        PartikelSystem.PushPartikel(float(xPos - 10 + rand() % 60), float(yPos - 40 + rand() % 20), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(float(xPos - 10 + random(60)), float(yPos - 40 + random(20)), EXPLOSION_MEDIUM2);
 
-    SoundManager.PlayWave(100, 128, -rand() % 2000 + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 200;
 }

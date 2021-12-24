@@ -235,10 +235,7 @@ void GegnerMetalHead::WinkelToPlayer() {
     // neww = (float)atan(ydiv / xdiv) * 180.0f / PI;
     neww = RadToDeg(atanf(ydiv / xdiv));
 
-    if (neww < -20.0f)
-        neww = -20.0f;
-    if (neww > 50.0f)
-        neww = 50.0f;
+    neww = std::clamp(neww, -20.0f, 50.0f);
 
     if (Akt != GEGNER_SCHIESSEN)
         neww = 0.0f;
@@ -334,9 +331,9 @@ void GegnerMetalHead::DoKI() {
 
     // Boss aktivieren und Mucke laufen lassen
     //
-    if (Active == true && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
+    if (Active == true && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
-                               ZUSTAND_SCROLLTOLOCK);  // Level auf den Boss zentrieren
+                               TileStateEnum::SCROLLTOLOCK);  // Level auf den Boss zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
@@ -352,7 +349,7 @@ void GegnerMetalHead::DoKI() {
                 Turbine_dran = false;
 
                 for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos + 20 + rand() % 80, yPos + 130 + rand() % 20, EXPLOSION_MEDIUM2);
+                    PartikelSystem.PushPartikel(xPos + 20 + random(80), yPos + 130 + random(20), EXPLOSION_MEDIUM2);
 
                 PartikelSystem.PushPartikel(xPos + 85 + TurbineOff, yPos + 202, KAPUTTETURBINE);
 
@@ -372,19 +369,19 @@ void GegnerMetalHead::DoKI() {
         while (SmokeCount < 0.0f) {
             SmokeCount += 0.8f;
 
-            PartikelSystem.PushPartikel(xPos + 50 + rand() % 15, yPos + 160 + rand() % 4, SMOKE3);
+            PartikelSystem.PushPartikel(xPos + 50 + random(15), yPos + 160 + random(4), SMOKE3);
 
-            if (rand() % 3 == 0)
-                PartikelSystem.PushPartikel(xPos + 40 + rand() % 10, yPos + 140 + rand() % 4, SMOKEBIG);
+            if (random(3) == 0)
+                PartikelSystem.PushPartikel(xPos + 40 + random(10), yPos + 140 + random(4), SMOKEBIG);
 
             // Zufällig funken sprühen
-            if (rand() % 10 == 0) {
+            if (random(10) == 0) {
                 for (int i = 0; i < 16; i++) {
-                    PartikelSystem.PushPartikel(xPos + 55 + rand() % 15, yPos + 160 + rand() % 15, FUNKE);
-                    PartikelSystem.PushPartikel(xPos + 55 + rand() % 15, yPos + 160 + rand() % 15, LASERFUNKE2);
+                    PartikelSystem.PushPartikel(xPos + 55 + random(15), yPos + 160 + random(15), FUNKE);
+                    PartikelSystem.PushPartikel(xPos + 55 + random(15), yPos + 160 + random(15), LASERFUNKE2);
                 }
 
-                PartikelSystem.PushPartikel(xPos + 30 + rand() % 20, yPos + 140, LASERFLAME);
+                PartikelSystem.PushPartikel(xPos + 30 + random(20), yPos + 140, LASERFLAME);
                 PartikelSystem.PushPartikel(xPos + 5, yPos + 110, EXPLOSIONFLARE);
                 PartikelSystem.PushPartikel(xPos + 5, yPos + 110, EXPLOSIONFLARE);
                 SoundManager.PlayWave(100, 128, 11025, SOUND_FUNKE);
@@ -411,14 +408,14 @@ void GegnerMetalHead::DoKI() {
 
         for (int p = 0; p < NUMPLAYERS; p++)
             if (Player[p].AufPlattform == this)
-                Player[p].AufPlattform = NULL;
+                Player[p].AufPlattform = nullptr;
 
         // Endboss-Musik ausfaden und abschalten
         SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
 
         // Kopf fliegt wech (mit Explosion)
         for (int i = 0; i < 60; i++)
-            PartikelSystem.PushPartikel(xPos + rand() % 10, yPos + 90 + rand() % 10, FUNKE);
+            PartikelSystem.PushPartikel(xPos + random(10), yPos + 90 + random(10), FUNKE);
 
         PartikelSystem.PushPartikel(xPos - 40, yPos + 40, EXPLOSION_GIANT);
 
@@ -438,7 +435,7 @@ void GegnerMetalHead::DoKI() {
         //
         if (KieferPos < 0 && KieferSpeed < 0.0f) {
             KieferSpeed = 10.0f;
-            SoundManager.PlayWave(25, 128, 10000 + rand() % 2000, SOUND_KLONG);
+            SoundManager.PlayWave(25, 128, 10000 + random(2000), SOUND_KLONG);
 
             for (int i = 0; i < 10; i++)
                 PartikelSystem.PushPartikel(xPos + 130 + i * 4, yPos + 160, LONGFUNKE);
@@ -479,31 +476,20 @@ void GegnerMetalHead::DoKI() {
                         int size = 32;
 
                         switch (Skill) {
-                            case 0:
-                                size = 32;
-                                break;
-
-                            case 1:
-                                size = 40;
-                                break;
-
-                            case 2:
-                                size = 48;
-                                break;
-
-                            case 3:
-                                size = 56;
-                                break;
+                            case SKILL_EASY:     size = 32; break;
+                            case SKILL_MEDIUM:   size = 40; break;
+                            case SKILL_HARD:     size = 48; break;
+                            case SKILL_HURRICAN: size = 56; break;
                         }
 
-                        Gegner.PushGegner(static_cast<float>(Value1) + 50 + rand() % 550,
+                        Gegner.PushGegner(static_cast<float>(Value1) + 50 + random(550),
                                           static_cast<float>(Value2) - 40, SCHLEIMBOLLER, size, 0, false);
                     }
 
                     Handlung = GEGNER_CRUSHENERHOLEN;
 
                     for (int i = 0; i < 20; i++)
-                        PartikelSystem.PushPartikel(xPos + rand() % 180, yPos + 200, SMOKEBIG);
+                        PartikelSystem.PushPartikel(xPos + random(180), yPos + 200, SMOKEBIG);
 
                     // Spieler noch drunter? Dann wars das
                     for (int p = 0; p < NUMPLAYERS; p++)
@@ -528,7 +514,7 @@ void GegnerMetalHead::DoKI() {
 
             case GEGNER_INIT:  // Warten bis der Screen zentriert wurde
             {
-                if (TileEngine.Zustand == ZUSTAND_LOCKED) {
+                if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                     // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                     //
                     // DKS - Added function SongIsPlaying() to SoundManagerClass:
@@ -593,7 +579,7 @@ void GegnerMetalHead::DoKI() {
 
                             if (Turbine_dran) {
                                 if (ShotArt == 0)
-                                    ShotCount = rand() % 4 + 4;
+                                    ShotCount = random(4) + 4;
                                 else
                                     ShotCount = 15;
 
@@ -625,7 +611,7 @@ void GegnerMetalHead::DoKI() {
                                 Destroyable = !(Turbine_dran == true);
                             } else {
                                 if (Turbine_dran) {
-                                    SoundManager.PlayWave(100, 128, 8000 + rand() % 2000, SOUND_FIREBALL);
+                                    SoundManager.PlayWave(100, 128, 8000 + random(2000), SOUND_FIREBALL);
 
                                     ShotDelay = 9.0f;
 
@@ -643,7 +629,7 @@ void GegnerMetalHead::DoKI() {
                                     }
 
                                     if (ShotArt == 1) {
-                                        SoundManager.PlayWave(100, 128, 14000 + rand() % 2000, SOUND_FIREBALL);
+                                        SoundManager.PlayWave(100, 128, 14000 + random(2000), SOUND_FIREBALL);
 
                                         for (int i = -40; i <= 40; i += 40) {
                                             WinkelUebergabe = GunWinkel + 90 + i;
@@ -662,7 +648,7 @@ void GegnerMetalHead::DoKI() {
                                     }
 
                                     if (ShotArt == 2) {
-                                        SoundManager.PlayWave(100, 128, 14000 + rand() % 2000, SOUND_FIREBALL);
+                                        SoundManager.PlayWave(100, 128, 14000 + random(2000), SOUND_FIREBALL);
                                         Projectiles.PushProjectile(xPos + 180, yPos + 195, FIREBALL_BOMB, pAim);
                                     }
 
@@ -671,11 +657,11 @@ void GegnerMetalHead::DoKI() {
                                     ShotDelay = 0.5f;
 
                                     if (ShotArt == 1)
-                                        Projectiles.PushProjectile(xPos + 95, yPos + 185 + rand() % 5, WALKERFIRE,
+                                        Projectiles.PushProjectile(xPos + 95, yPos + 185 + random(5), WALKERFIRE,
                                                                    pAim);
                                     else {
                                         if (ShotCount % 12 == 0) {
-                                            Projectiles.PushProjectile(xPos + 100, yPos + 213 + rand() % 5, PFLANZESHOT,
+                                            Projectiles.PushProjectile(xPos + 100, yPos + 213 + random(5), PFLANZESHOT,
                                                                        pAim);
 
                                             PartikelSystem.PushPartikel(xPos + 80, yPos + 150, EXPLOSIONFLARE);
@@ -699,15 +685,15 @@ void GegnerMetalHead::DoKI() {
                             int j;
 
                             if (Energy < 2000.0f)
-                                j = rand() % 4;
+                                j = random(4);
                             else
-                                j = rand() % 3;
+                                j = random(3);
 
                             while (j == ShotArt) {
                                 if (Energy < 2000.0f)
-                                    j = rand() % 4;
+                                    j = random(4);
                                 else
-                                    j = rand() % 3;
+                                    j = random(3);
                             }
 
                             ShotArt = j;
@@ -739,10 +725,14 @@ void GegnerMetalHead::DoKI() {
             }
                 [[fallthrough]];
 
-            // Kopf fliegt auf xto/yto zu
+            // Head flies towards xto/yto
             case GEGNER_STEHEN: {
-                // Beim Headbangen den Kiefer öffnen
+                // Open jaw when headbanging
                 //
+                // FIXME
+                // Akt is initialized to SK_AUSGANG
+                // and then only assigned values GEGNER_OEFFNEN, GEGNER_SCHLIESSEN and GEGNER_SCHIESSEN
+                // Something's broken here...
                 if (Akt == SK_BANGEN) {
                     if (KieferPos < 60.0f)
                         KieferPos += 5.0f SYNC;
@@ -750,7 +740,7 @@ void GegnerMetalHead::DoKI() {
                         KieferPos = 60.0f;
                 }
 
-                // Beim Zurückziehen in die Ausgangslage wieder schliessen
+                // Close again when pulling back into the starting position
                 //
                 if (Akt == SK_AUSGANG) {
                     if (KieferPos > 0.0f)
@@ -781,10 +771,10 @@ void GegnerMetalHead::DoKI() {
 
                     for (int i = 0; i < 30; i++)
                         PartikelSystem.PushPartikel(
-                            float(Hals[AnimEnde].x - 20 + rand() % 20) + static_cast<float>(TileEngine.XOffset),
-                            float(Hals[AnimEnde].y - 20 + rand() % 20), FUNKE);
+                            float(Hals[AnimEnde].x - 20 + random(20)) + static_cast<float>(TileEngine.XOffset),
+                            float(Hals[AnimEnde].y - 20 + random(20)), FUNKE);
 
-                    SoundManager.PlayWave(100, 128, 10000 + rand() % 2000, SOUND_EXPLOSION1);
+                    SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_EXPLOSION1);
                     AnimCount = 2.5f;
                     AnimEnde--;
 
@@ -792,20 +782,20 @@ void GegnerMetalHead::DoKI() {
                     //
                     if (AnimEnde == MAXWIRBEL - 5) {
                         for (int i = 0; i < 20; i++)
-                            PartikelSystem.PushPartikel(xPos + 10 + rand() % 160, yPos + 20 + rand() % 80,
+                            PartikelSystem.PushPartikel(xPos + 10 + random(160), yPos + 20 + random(80),
                                                         EXPLOSION_MEDIUM2);
 
                         for (int i = 0; i < 5; i++)
-                            PartikelSystem.PushPartikel(xPos + rand() % 160, yPos + 40 + rand() % 80, EXPLOSION_BIG);
+                            PartikelSystem.PushPartikel(xPos + random(160), yPos + 40 + random(80), EXPLOSION_BIG);
 
                         for (int i = 0; i < 40; i++)
-                            PartikelSystem.PushPartikel(xPos + rand() % 180, yPos + rand() % 140, SCHROTT1);
+                            PartikelSystem.PushPartikel(xPos + random(180), yPos + random(140), SCHROTT1);
 
                         for (int i = 0; i < 10; i++)
-                            PartikelSystem.PushPartikel(xPos + 30 + rand() % 160, yPos + 50 + rand() % 80, SPLITTER);
+                            PartikelSystem.PushPartikel(xPos + 30 + random(160), yPos + 50 + random(80), SPLITTER);
 
                         for (int i = 0; i < 100; i++)
-                            PartikelSystem.PushPartikel(xPos + 30 + rand() % 160, yPos + 50 + rand() % 80, SMOKE3);
+                            PartikelSystem.PushPartikel(xPos + 30 + random(160), yPos + 50 + random(80), SMOKE3);
 
                         SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
                     }
@@ -833,8 +823,10 @@ void GegnerMetalHead::DoKI() {
             SpriteCollision(xPos + 50, yPos + 130, r, Player[p].xpos, Player[p].ypos, Player[p].CollideRect) == true) {
             // Beim Ansaugen gleich viel abziehen und Ansaugen beenden
             //
-            if (Handlung == GEGNER_SPECIAL2 && Player[p].Handlung != RADELN && Player[p].Handlung != RADELN_FALL) {
-                Player[p].DamagePlayer(500.0f);
+            if (Handlung == GEGNER_SPECIAL2 &&
+                    Player[p].Handlung != PlayerActionEnum::RADELN &&
+                    Player[p].Handlung != PlayerActionEnum::RADELN_FALL) {
+                    Player[p].DamagePlayer(500.0f);
                 AnimPhase = 1600;
             } else
                 Player[p].DamagePlayer(float(4.0 SYNC));

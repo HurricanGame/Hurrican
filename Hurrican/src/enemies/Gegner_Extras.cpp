@@ -41,7 +41,7 @@ GegnerExtras::GegnerExtras(int Wert1, int Wert2, bool Light) {
     // Rausfliegen?
     if (Value2 == 0) {
         Handlung = GEGNER_SPRINGEN;
-        ySpeed = float(rand() % 40) / 10.0f - 20.0f;
+        ySpeed = float(random(40)) / 10.0f - 20.0f;
         yAcc = 5.0f;
 
         if (Value1 == 0)
@@ -51,12 +51,12 @@ GegnerExtras::GegnerExtras(int Wert1, int Wert2, bool Light) {
         else if (Value1 == 2)
             xSpeed = 0.0f;
         else {
-            xSpeed = float(rand() % 80 + 20) / 8.0f;
-            if (rand() % 2 == 0)
+            xSpeed = float(random(80) + 20) / 8.0f;
+            if (random(2) == 0)
                 xSpeed *= -1;
         }
 
-        xSpeed += float(rand() % 20 - 10) / 5.0f;
+        xSpeed += float(random(20) - 10) / 5.0f;
     }
 
     // ansonsten liegenbleiben
@@ -124,14 +124,14 @@ void GegnerExtras::DoKI() {
     }  // switch
 
     // Testen, ob der Spieler das Extra eingesammelt hat
-    PlayerClass *pCollector = NULL;
+    PlayerClass *pCollector = nullptr;
 
     for (int i = 0; i < NUMPLAYERS; i++)
         if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[i].xpos, Player[i].ypos, Player[i].CollideRect) ==
             true)
             pCollector = &Player[i];
 
-    if (pCollector != NULL)  // &&
+    if (pCollector != nullptr)  // &&
                              // Handlung != GEGNER_SPRINGEN)
     {
         // Punkte fürs Extras sammeln gebe
@@ -178,8 +178,8 @@ void GegnerExtras::DoKI() {
                     //}
                     // DKS-Rewrote the above to use radians directly and allow bitwise ops to replace mod operator.
                     for (int i = 0; i < 300; i++) {
-                        float ang = (float(M_PI) * 2.0f * (1.0f / 512.0f)) * float(rand() % 512);
-                        float r = float(rand() % 32 + 98);
+                        float ang = (float(M_PI) * 2.0f * (1.0f / 512.0f)) * float(random(512));
+                        float r = float(random(32) + 98);
                         PartikelSystem.PushPartikel(pCollector->xpos + (40.0f - 6.0f) + sin_rad(ang) * r,
                                                     pCollector->ypos + (40.0f - 6.0f) + cos_rad(ang) * r,
                                                     KRINGELR + Value1, pCollector);
@@ -218,8 +218,8 @@ void GegnerExtras::DoKI() {
                     PartikelSystem.ClearPowerUpEffects();
 
                     for (int i = 0; i < 300; i++) {
-                        float p = float(rand() % 360);
-                        float r = float(rand() % 30 + 100);
+                        float p = float(random(360));
+                        float r = float(random(30) + 100);
 
                         // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
                         // DKS BUGFIX - why did the original code use radian sin/cos with random numbers within
@@ -298,7 +298,7 @@ void GegnerExtras::DoKI() {
             case 8:
             case 9:
             case 10:
-                SoundManager.PlayWave(100, 128, 11000 + rand() % 1000, SOUND_AMMO);  // Sound ausgeben
+                SoundManager.PlayWave(100, 128, 11000 + random(1000), SOUND_AMMO);  // Sound ausgeben
                 break;
 
             default:

@@ -114,10 +114,10 @@ void GegnerBigFish::NewAction() {
     }
 
     // neue Aktion festlegen
-    int j = rand() % 3;
+    int j = random(3);
 
     while (lastaction == j)
-        j = rand() % 3;
+        j = random(3);
 
     lastaction = j;
 
@@ -229,7 +229,7 @@ void GegnerBigFish::DoKI() {
         if (Energy > 1500)
             Art = 0;
 
-        if (rand() % 2 == 0)
+        if (random(2) == 0)
             LeftOrRight *= -1;
 
         if (IsKugel)
@@ -252,8 +252,8 @@ void GegnerBigFish::DoKI() {
         HUD.ShowBossHUD(2000, Energy);
 
     // Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
-    if (Active && Handlung != GEGNER_EXPLODIEREN && TileEngine.Zustand == ZUSTAND_SCROLLBAR && Energy > 0.0f) {
-        TileEngine.ScrollLevel(Value1, Value2, ZUSTAND_SCROLLTOLOCK);  // Level auf die Faust zentrieren
+    if (Active && Handlung != GEGNER_EXPLODIEREN && TileEngine.Zustand == TileStateEnum::SCROLLBAR && Energy > 0.0f) {
+        TileEngine.ScrollLevel(Value1, Value2, TileStateEnum::SCROLLTOLOCK);  // Level auf die Faust zentrieren
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);       // Ausfaden und pausieren
         xPos += 400;
     }
@@ -265,8 +265,8 @@ void GegnerBigFish::DoKI() {
         DamageTaken = 0.0f;  // oder ganz anhalten
 
     // Schon schwer angeschlagen ? Dann blutet der Fish
-    if (Energy < 1000 && rand() % 20 == 0)
-        PartikelSystem.PushPartikel(xPos + rand() % 200 + 40, yPos + 50 + rand() % 100, PIRANHABLUT);
+    if (Energy < 1000 && random(20) == 0)
+        PartikelSystem.PushPartikel(xPos + random(200) + 40, yPos + 50 + random(100), PIRANHABLUT);
 
     // Hat der Boss keine Energie mehr ? Dann explodiert er
     if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN) {
@@ -293,7 +293,7 @@ void GegnerBigFish::DoKI() {
         switch (Handlung) {
             case GEGNER_NOTVISIBLE:  // Warten bis der Screen zentriert wurde
             {
-                if (TileEngine.Zustand == ZUSTAND_LOCKED) {
+                if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                     // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                     if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
                         SoundManager.PlaySong(MUSIC_BOSS, false);
@@ -313,7 +313,7 @@ void GegnerBigFish::DoKI() {
             } break;
 
             case GEGNER_LAUFEN: {
-                MoveTo(static_cast<float>(Value1) + 50 + rand() % 300, static_cast<float>(Value2) + 50 + rand() % 200);
+                MoveTo(static_cast<float>(Value1) + 50 + random(300), static_cast<float>(Value2) + 50 + random(200));
                 ShotCount--;
 
                 if (ShotCount <= 0)
@@ -336,7 +336,7 @@ void GegnerBigFish::DoKI() {
                 if (MaulWinkel > 2 * PI) {
                     shot = false;
                     MaulWinkel = 0.0f;
-                    SoundManager.PlayWave(50, 128, 6000 + rand() % 500, SOUND_KLONG);
+                    SoundManager.PlayWave(50, 128, 6000 + random(500), SOUND_KLONG);
 
                     if (ShotCount <= 0)
                         NewAction();
@@ -363,7 +363,7 @@ void GegnerBigFish::DoKI() {
                 if (MaulWinkel > 2 * PI) {
                     shot = false;
                     MaulWinkel = 0.0f;
-                    SoundManager.PlayWave(50, 128, 6000 + rand() % 500, SOUND_KLONG);
+                    SoundManager.PlayWave(50, 128, 6000 + random(500), SOUND_KLONG);
 
                     if (ShotCount <= 0)
                         NewAction();
@@ -406,10 +406,10 @@ void GegnerBigFish::GegnerExplode() {
 
     // Blut
     for (int i = 0; i < 80; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 200 + 40, yPos + 50 + rand() % 100, PIRANHABLUT);
+        PartikelSystem.PushPartikel(xPos + random(200) + 40, yPos + 50 + random(100), PIRANHABLUT);
 
     for (int i = 0; i < 20; i++)
-        Gegner.PushGegner(xPos + rand() % 200 + 40, yPos + 30 + rand() % 80, PIRANHA, 99, 0, false);
+        Gegner.PushGegner(xPos + random(200) + 40, yPos + 30 + random(80), PIRANHA, 99, 0, false);
 
     for (int i = 0; i < NUMPLAYERS; i++)
         DirectInput.Joysticks[Player[i].JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);

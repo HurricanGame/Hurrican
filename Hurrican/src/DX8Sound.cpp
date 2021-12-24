@@ -37,6 +37,8 @@ namespace fs = std::filesystem;
 #include "unrarlib.h"
 #endif
 
+constexpr int MIXRATE = 48000;
+
 //---------------------------------------------------------------------------------------
 // Funktionsdefinitionen
 //---------------------------------------------------------------------------------------
@@ -89,7 +91,7 @@ void SoundManagerClass::UpdateChannels() {
 
                 switch (channels[i].fade_mode) {
                     // einfaden
-                    case FADEMODE_IN: {
+                    case FadeModeEnum::IN: {
                         // Volume erhöhen
                         float new_vol = channels[i].vol;
 
@@ -104,7 +106,7 @@ void SoundManagerClass::UpdateChannels() {
                         //
                         if (new_vol > 100.0f) {
                             new_vol = 100.0f;
-                            channels[i].fade_mode = FADEMODE_NON;
+                            channels[i].fade_mode = FadeModeEnum::NON;
                         }
 
                         // Lautstärke setzen
@@ -112,7 +114,7 @@ void SoundManagerClass::UpdateChannels() {
                     } break;
 
                     // ausfaden
-                    case FADEMODE_OUT: {
+                    case FadeModeEnum::OUT: {
                         // Volume verringern
 
                         float new_vol = channels[i].vol;
@@ -229,7 +231,7 @@ void SoundManagerClass::Init() {
     // smpp.MaxSoftwareChannels	= 64;
     smpp.MaxSoftwareChannels = 24;
 
-    smpp.Mixrate = 44100;
+    smpp.Mixrate = MIXRATE;
     smpp.Flags = FSOUND_INIT_USEDEFAULTMIDISYNTH;
 
     if (InitFMOD(smpp)) {
@@ -312,13 +314,13 @@ void SoundManagerClass::LoadSong(const std::string &filename, int nr, bool loop 
     // Zuerst checken, ob sich der Song in einem MOD-Ordner befindet
     if (CommandLineParams.RunOwnLevelList) {
         fullpath =
-            std::string(g_storage_ext) + "/levels/" + std::string(CommandLineParams.OwnLevelList) + "/" + filename;
+            g_storage_ext + "/levels/" + std::string(CommandLineParams.OwnLevelList) + "/" + filename;
         if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
             goto loadfile;
     }
 
     // Dann checken, ob sich das File im Standard Ordner befindet
-    fullpath = std::string(g_storage_ext) + "/data/music/" + filename;
+    fullpath = g_storage_ext + "/data/music/" + filename;
     if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
         goto loadfile;
 
@@ -340,7 +342,7 @@ loadfile:
     songs[nr].looped = loop;
 
     if (fromrar) {
-        songs[nr].data = MUSIC_LoadSongEx(pData, 0, buf_size, FSOUND_LOADMEMORY, NULL, 0);
+        songs[nr].data = MUSIC_LoadSongEx(pData, 0, buf_size, FSOUND_LOADMEMORY, nullptr, 0);
         free(pData);
     } else {
         songs[nr].data = MUSIC_LoadSong(fullpath.c_str());
@@ -422,7 +424,7 @@ void SoundManagerClass::UnloadSong(int nr) {
             StopSong(nr, false);
 
         MUSIC_FreeSong(songs[nr].data);
-        songs[nr].data = NULL;
+        songs[nr].data = nullptr;
     }
 }
 
@@ -446,7 +448,7 @@ void SoundManagerClass::StopSongs() {
 void SoundManagerClass::StopSounds() {
     // DKS - Now, we iterate over channels instead:
     // for (int i = 0; i < MAX_SOUNDS; i++)
-    //    if (its_Sounds[i] != NULL)
+    //    if (its_Sounds[i] != nullptr)
     //        StopWave(i);
 
     for (int i = 0; i < num_channels; ++i)
@@ -505,7 +507,7 @@ void SoundManagerClass::Update() {
     UpdateChannels();
     UpdateSongs();
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     // Anzahl benutzter Channels zählen
     //
     int channels_in_use = 0;
@@ -551,10 +553,10 @@ void SoundManagerClass::FadeSong(int nr, float speed, int end, bool pause_when_f
 //				  Mode			FadeMode
 //---------------------------------------------------------------------------------------
 // DKS - altered extensively, it now fades waves of specified "nr" on all channels:
-void SoundManagerClass::FadeWave(int nr, int mode) {
+void SoundManagerClass::FadeWave(int nr, FadeModeEnum mode) {
     int channel = -1;
 
-    if (mode == FADEMODE_IN) {
+    if (mode == FadeModeEnum::IN) {
         // First, find if the sound is already playing
         for (int i = 0; i < num_channels; ++i) {
             if (channels[i].sound_num == nr)
@@ -596,13 +598,13 @@ void SoundManagerClass::LoadWave(const std::string &filename, int nr, bool loope
     if (CommandLineParams.RunOwnLevelList) {
         // sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
         fullpath =
-            std::string(g_storage_ext) + "/levels/" + std::string(CommandLineParams.OwnLevelList) + "/" + filename;
+            g_storage_ext + "/levels/" + std::string(CommandLineParams.OwnLevelList) + "/" + filename;
 
         if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
             goto loadfile;
     }
 
-    fullpath = std::string(g_storage_ext) + "/data/sfx/" + filename;
+    fullpath = g_storage_ext + "/data/sfx/" + filename;
     if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
         goto loadfile;
 
@@ -659,12 +661,12 @@ int SoundManagerClass::PlayWave_SDL(int vol, int pan, int nr) {
     int channel = SOUND_PlaySound(FSOUND_FREE, sounds[nr].data, sounds[nr].looped);
 
     if (channel < 0) {
-#ifdef _DEBUG
+#ifndef NDEBUG
         Protokoll << "Warning: could not find free channel to play sound #" << nr << std::endl;
 #endif
         return -1;
     } else if (channel >= num_channels) {
-#ifdef _DEBUG
+#ifndef NDEBUG
         Protokoll << "Warning: SOUND_PlaySound returned channel " << channel << ", >= num_channels (" << num_channels
                   << ")\n"
                   << std::endl;
@@ -679,7 +681,7 @@ int SoundManagerClass::PlayWave_SDL(int vol, int pan, int nr) {
 
     channels[channel].paused = false;
     channels[channel].sound_num = nr;
-    channels[channel].fade_mode = FADEMODE_NON;
+    channels[channel].fade_mode = FadeModeEnum::NON;
     channels[channel].pending_vol = -1;
     channels[channel].pending_pan = 128;
     channels[channel].paused = false;
@@ -758,7 +760,7 @@ void SoundManagerClass::StopWave(int nr) {
 void SoundManagerClass::UnloadWave(int nr) {
     if (sounds[nr].data) {
         SOUND_Sample_Free(sounds[nr].data);
-        sounds[nr].data = NULL;
+        sounds[nr].data = nullptr;
     }
 }
 
@@ -808,7 +810,7 @@ void SoundManagerClass::UnpauseSongs() {
 // DKS - Added new function to check if a song is playing. Before, many parts of the
 //      game were calling MUSIC_IsPlaying() directly against SoundData, which would
 //      segfault if music wasn't initialized or a specific song wasn't loaded and
-//      SoundData was thus NULL.
+//      SoundData was thus nullptr.
 bool SoundManagerClass::SongIsPlaying(int nr) {
     return songs[nr].data && !songs[nr].paused && MUSIC_IsPlaying(songs[nr].data);
 }
@@ -825,7 +827,7 @@ void SoundManagerClass::StopChannel(int ch) {
         channels[ch].sound_num = -1;
     }
 
-    channels[ch].fade_mode = FADEMODE_NON;
+    channels[ch].fade_mode = FadeModeEnum::NON;
     channels[ch].pending_vol = -1;
     channels[ch].pending_pan = 128;
     channels[ch].paused = false;
@@ -845,7 +847,7 @@ void SoundManagerClass::SetChannelPanning(int ch, int pan) {
 }
 
 // DKS - Added:
-bool SoundManagerClass::WaveIsPlaying(int nr) {
+bool SoundManagerClass::WaveIsPlaying(int nr) const {
     for (int i = 0; i < num_channels; ++i)
         if (channels[i].sound_num == nr)
             return true;
@@ -853,7 +855,7 @@ bool SoundManagerClass::WaveIsPlaying(int nr) {
 }
 
 // DKS - Added, primarily to allow Trigger_Stampfstein to have its .hppain sound.
-bool SoundManagerClass::WaveIsPlayingOnChannel(int nr, int ch) {
+bool SoundManagerClass::WaveIsPlayingOnChannel(int nr, int ch) const {
     if (ch == -1 || nr == -1)
         return false;
 
@@ -861,7 +863,7 @@ bool SoundManagerClass::WaveIsPlayingOnChannel(int nr, int ch) {
 }
 
 // DKS - Added:
-int SoundManagerClass::GetChannelWaveIsPlayingOn(int nr) {
+int SoundManagerClass::GetChannelWaveIsPlayingOn(int nr) const {
     int channel = -1;
 
     for (int i = 0; i < num_channels; ++i)

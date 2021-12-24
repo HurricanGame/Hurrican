@@ -32,6 +32,8 @@ extern int fast_rand();
 #define srand(x) seed_fast_rand(x)
 #endif  // USE_FAST_RNG
 
+inline int random(int max) { return rand() % max; }
+
 // --------------------------------------------------------------------------------------
 // BEGIN GENERAL TRIG SECTION
 // --------------------------------------------------------------------------------------
@@ -43,8 +45,8 @@ extern int fast_rand();
 
 // DKS - RAD/DEG conversions:
 // Multiply by a constant ratio (these save a division):
-#define DegToRad(x) ((x) * float(double(M_PI) / double(180.0)))
-#define RadToDeg(x) ((x) * float(double(180.0) / double(M_PI)))
+inline float DegToRad(float x) { return x * static_cast<float>(M_PI / 180.0); }
+inline float RadToDeg(float x) { return x * static_cast<float>(180.0 / M_PI); }
 
 // Override libm's double sin/cos (but not sinf/cosf, keep those for when we need accuracy)
 #define sin(X) sin_rad(X)

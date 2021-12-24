@@ -31,8 +31,8 @@ GegnerSpiderBomb::GegnerSpiderBomb(int Wert1, int Wert2, bool Light) {
     if (Wert1 == 99) {
         Handlung = GEGNER_FALLEN;
         AnimPhase = 6;
-        xSpeed = static_cast<float>(rand() % 10) + 20.0f;
-        ySpeed = -static_cast<float>(rand() % 10 + 30.0f);
+        xSpeed = static_cast<float>(random(10)) + 20.0f;
+        ySpeed = -static_cast<float>(random(10) + 30.0f);
         yAcc = 5.0f;
     }
 }
@@ -159,14 +159,14 @@ void GegnerSpiderBomb::GegnerExplode() {
     ShakeScreen(5);
 
     for (int i = 0; i < 6; i++)
-        PartikelSystem.PushPartikel(float(xPos - 60 + rand() % 80), float(yPos - 40 + rand() % 30), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(float(xPos - 60 + random(80)), float(yPos - 40 + random(30)), EXPLOSION_MEDIUM2);
 
     PartikelSystem.PushPartikel(float(xPos - 20), float(yPos - 40), EXPLOSION_BIG);
 
     for (int i = 0; i < 4; i++)
         PartikelSystem.PushPartikel(float(xPos + 10), float(yPos + 10), SPLITTER);
 
-    SoundManager.PlayWave(100, 128, -rand() % 2000 + 11025, SOUND_EXPLOSION3);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION3);  // Sound ausgeben
 
     Player[0].Score += 250;
 }

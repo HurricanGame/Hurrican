@@ -141,10 +141,10 @@ void GegnerSchienenViech::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerSchienenViech::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
 
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos - 30 + rand() % 30, yPos - 30 + rand() % 40, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30 + random(30), yPos - 30 + random(40), EXPLOSION_MEDIUM2);
 
     Player[0].Score += 500;
 }

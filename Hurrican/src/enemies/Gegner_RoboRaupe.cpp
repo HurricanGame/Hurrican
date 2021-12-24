@@ -45,7 +45,7 @@ void GegnerRoboRaupe::DoKI() {
                 xPos += 18.0f;
 
             // evtl schiessen wenn Spieler zu nahe
-            if (PlayerAbstand(true) < 200 && rand() % 2 == 0) {
+            if (PlayerAbstand(true) < 200 && random(2) == 0) {
                 if (BlickRichtung == RECHTS) {
                     Projectiles.PushProjectile(xPos + 31, yPos + 10, ARCSHOT);
 
@@ -93,12 +93,12 @@ void GegnerRoboRaupe::DoKI() {
 void GegnerRoboRaupe::GegnerExplode() {
     // blaue Explosionen erzeugen
     for (int i = 0; i < 50; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 90 - 10, yPos + rand() % 40 - 10, BLUE_EXPLOSION);
+        PartikelSystem.PushPartikel(xPos + random(90) - 10, yPos + random(40) - 10, BLUE_EXPLOSION);
 
     for (int i = 0; i < 300; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 90 - 10, yPos + rand() % 25 + 5, ROCKETSMOKEBLUE);
+        PartikelSystem.PushPartikel(xPos + random(90) - 10, yPos + random(25) + 5, ROCKETSMOKEBLUE);
 
-    SoundManager.PlayWave(100, 128, 11025 + rand() % 2000, SOUND_EXPLOSION3);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_EXPLOSION3);  // Sound ausgeben
 
     Player[0].Score += 250;
 }

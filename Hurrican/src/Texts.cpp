@@ -62,20 +62,20 @@ bool LoadLanguage(char *filename) {
     std::string temp;
 
     if (CommandLineParams.RunOwnLevelList) {
-        temp = std::string(g_storage_ext) +  "/data/levels/" + CommandLineParams.OwnLevelList + "/custom.lng";
+        temp = g_storage_ext +  "/data/levels/" + CommandLineParams.OwnLevelList + "/custom.lng";
         if (fs::exists(temp) && fs::is_regular_file(temp))
             goto loadfile;
     }
 
     // DKS - Fixed language loading (it did not look in lang/ folder at all)
     // First, always try the lang/ folder
-    temp = std::string(g_storage_ext) + "/lang/" + filename;
+    temp = g_storage_ext + "/lang/" + filename;
 
     if (fs::exists(temp) && fs::is_regular_file(temp))
         goto loadfile;
 
     // If not found in the lang/ folder, try the root game folder
-    temp = std::string(g_storage_ext) + "/" + filename;
+    temp = g_storage_ext + "/" + filename;
     if (!fs::exists(temp) && fs::is_regular_file(temp))
         return false;
 
@@ -117,7 +117,7 @@ loadfile:
     //
     //
     if (CommandLineParams.RunOwnLevelList) {
-        std::string levelfile = std::string(g_storage_ext) + "/data/levels/" + CommandLineParams.OwnLevelList + "/levellist.dat";
+        std::string levelfile = g_storage_ext + "/data/levels/" + CommandLineParams.OwnLevelList + "/levellist.dat";
 
         in.open(levelfile);  // Reihenfolge Level laden
         if (!in) {
@@ -135,7 +135,7 @@ loadfile:
         // DKS - levellist.dat now resides in its new subfolder, data/levels/levellist.dat, along with
         //      the rest of the level data.
         // Checken, ob sich das File im Standard Ordner befindet
-        Temp = std::string(g_storage_ext) + "/data/levels/levellist.dat";
+        Temp = g_storage_ext + "/data/levels/levellist.dat";
         if (fs::exists(Temp) && fs::is_regular_file(Temp))
             goto loadfilelevel;
 
@@ -163,7 +163,7 @@ loadfile:
         if (fromrar == true) {
             // Zwischenspeichern
             //
-            FILE *TempFile = NULL;
+            FILE *TempFile = nullptr;
             fopen_s(&TempFile, TEMP_FILE_PREFIX "temp.dat", "wb");  // Datei öffnen
             fwrite(pData, Size, 1, TempFile);                       // speichern
             fclose(TempFile);                                       // und schliessen
@@ -191,7 +191,7 @@ loadfile:
         }
 
         if (strlen(tmpchar) > 0) {  // DKS - Added check for strlen > 0
-            strcpy_s(StageReihenfolge[MAX_LEVELS], 100-1, tmpchar);
+            StageReihenfolge[MAX_LEVELS] = tmpchar;
             MAX_LEVELS++;
         }
     }

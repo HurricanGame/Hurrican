@@ -52,23 +52,23 @@ void GegnerFadeMusic::DoKI() {
         if (Value1 == 2) {
             // Ist der Sound an und fadet noch nicht ?
             // if (SoundManager.its_Sounds[Value2]->FadeMode != FADEMODE_OUT)
-            SoundManager.FadeWave(Value2, FADEMODE_OUT);
+            SoundManager.FadeWave(Value2, FadeModeEnum::OUT);
         }
 
         // SoundTrigger Einfaden
         if (Value1 == 3) {
             // Ist der Sound aus und fadet nicht?
             // if (SoundManager.its_Sounds[Value2]->FadeMode != FADEMODE_IN)
-            SoundManager.FadeWave(Value2, FADEMODE_IN);
+            SoundManager.FadeWave(Value2, FadeModeEnum::IN);
         }
     }
 
     // DKS - Disabled, as RenderCircle is only used this once here and what is the point?
-    //#ifdef _DEBUG
+    //#ifndef NDEBUG
     //    if (DebugMode)
     //        RenderCircle(static_cast<float>(xPos + 20 - TileEngine.XOffset),
     //                     static_cast<float>(yPos + 20 - TileEngine.YOffset), 150, 0xFFFFFFFF);
-    //#endif //_DEBUG
+    //#endif //NDEBUG
 }
 
 // --------------------------------------------------------------------------------------

@@ -43,14 +43,14 @@ void GegnerMushroom::DoDraw() {
 
 void GegnerMushroom::PlayerJumps(PlayerClass *pPlayer) {
     if (count > 0.0f) {
-        pPlayer->AufPlattform = NULL;
+        pPlayer->AufPlattform = nullptr;
         pPlayer->yspeed = -(PLAYER_MAXJUMPSPEED * (0.5f + count));
 
         if (pPlayer->yspeed > -PLAYER_MAXJUMPSPEED)
             pPlayer->yspeed = -PLAYER_MAXJUMPSPEED;
 
         pPlayer->yadd = PLAYER_JUMPADDSPEED;
-        pPlayer->Handlung = SPRINGEN;
+        pPlayer->Handlung = PlayerActionEnum::SPRINGEN;
 
         SoundManager.PlayWave(100, 128, int(11000), SOUND_MUSHROOMJUMP);
     }

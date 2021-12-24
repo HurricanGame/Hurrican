@@ -91,11 +91,8 @@ void GegnerDeckenturm::DoKI() {
 
             AnimPhase = int(16 - Winkel / 12);
 
-            if (AnimPhase < 10)  // Nicht über die Seitengrenze
-                AnimPhase = 10;  // hinausgehen
-
-            if (AnimPhase > 21)
-                AnimPhase = 21;
+            // Nicht über die Seitengrenze hinausgehen
+            AnimPhase = std::clamp(AnimPhase, 10, 21);
 
             AnimEnde = AnimPhase;
             AnimStart = AnimPhase;
@@ -134,7 +131,7 @@ void GegnerDeckenturm::GegnerExplode() {
     // Explosion
     PartikelSystem.PushPartikel(float(xPos - 10), float(yPos - 10), EXPLOSION_MEDIUM2);
 
-    SoundManager.PlayWave(100, 128, -rand() % 2000 + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 200;
 }

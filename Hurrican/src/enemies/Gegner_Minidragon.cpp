@@ -27,9 +27,9 @@ GegnerMiniDragon::GegnerMiniDragon(int Wert1, int Wert2, bool Light) {
 
     // Vom Drache abgeworfen?
     if (Value2 == 99) {
-        ySpeed = -(13.0f + rand() % 4);
+        ySpeed = -(13.0f + random(4));
         yAcc = 3.0f;
-        xSpeed = static_cast<float>(rand() % 10 - 5) / 2.0f;
+        xSpeed = static_cast<float>(random(10) - 5) / 2.0f;
         Handlung = GEGNER_FALLEN;
 
         AnimCount = 0.0f;
@@ -127,14 +127,14 @@ void GegnerMiniDragon::DoKI() {
                 AnimEnde = 0;
                 AnimPhase = 0;
 
-                SoundManager.PlayWave(100, 128, 8000 + rand() % 8000, SOUND_EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 8000 + random(8000), SOUND_EXPLOSION1);
 
                 // int i = 0;
                 for (int i = 0; i < 10; i++)
-                    PartikelSystem.PushPartikel(xPos + 10 + rand() % 30, yPos + rand() % 10, SPIDERSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + 10 + random(30), yPos + random(10), SPIDERSPLITTER);
 
                 for (int i = 0; i < 3; i++)
-                    PartikelSystem.PushPartikel(xPos - 10 + rand() % 30, yPos - 20 + rand() % 20, EXPLOSION_MEDIUM3);
+                    PartikelSystem.PushPartikel(xPos - 10 + random(30), yPos - 20 + random(20), EXPLOSION_MEDIUM3);
             }
         } break;
 
@@ -200,7 +200,7 @@ void GegnerMiniDragon::DoKI() {
                 else
                     WinkelUebergabe = 1.0f;
 
-                SoundManager.PlayWave(100, 128, 11000 + rand() % 2000, SOUND_FIREBALL);
+                SoundManager.PlayWave(100, 128, 11000 + random(2000), SOUND_FIREBALL);
 
                 WinkelUebergabe = 90.0f * BlickRichtung;
                 Projectiles.PushProjectile(xPos + BlickRichtung * 10.0f, yPos, FIREBALL);
@@ -209,15 +209,8 @@ void GegnerMiniDragon::DoKI() {
             float xdiv = (pAim->xpos + 30.0f) - (OldX + 30.0f);
             float ydiv = (pAim->ypos + 35.0f) - (OldY + 20.0f);
 
-            if (xdiv < -80)
-                xdiv = -80;
-            if (xdiv > 80)
-                xdiv = 80;
-
-            if (ydiv < -80)
-                ydiv = -80;
-            if (ydiv > 80)
-                ydiv = 80;
+            xdiv = std::clamp(xdiv, -80.0f, 80.0f);
+            ydiv = std::clamp(ydiv, -80.0f, 80.0f);
 
             NewX = OldX + xdiv;
             NewY = OldY + ydiv;
@@ -232,14 +225,8 @@ void GegnerMiniDragon::DoKI() {
             else
                 yAcc = -2.0f;
 
-            if (xSpeed < -8.0f)
-                xSpeed = -8.0f;
-            if (xSpeed > 8.0f)
-                xSpeed = 8.0f;
-            if (ySpeed < -8.0f)
-                ySpeed = -8.0f;
-            if (ySpeed > 8.0f)
-                ySpeed = 8.0f;
+            xSpeed = std::clamp(xSpeed, -8.0f, 8.0f);
+            ySpeed = std::clamp(ySpeed, -8.0f, 8.0f);
 
         } break;
 
@@ -256,17 +243,17 @@ void GegnerMiniDragon::DoKI() {
                 muly = (OldY - yPos) / 6.0f;
                 mulx = (OldX - xPos) / 6.0f;
 
-                SoundManager.PlayWave(100, 128, 8000 + rand() % 8000, SOUND_EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 8000 + random(8000), SOUND_EXPLOSION1);
                 PartikelSystem.PushPartikel(xPos + (6 - Segments) * mulx, yPos + (6 - Segments) * muly,
                                             EXPLOSION_MEDIUM2);
 
                 for (int i = 0; i < 3; i++)
-                    PartikelSystem.PushPartikel(xPos + (6 - Segments) * mulx + rand() % 40,
-                                                yPos + (6 - Segments) * muly + rand() % 30, SPIDERSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + (6 - Segments) * mulx + random(40),
+                                                yPos + (6 - Segments) * muly + random(30), SPIDERSPLITTER);
 
                 for (int i = 0; i < 10; i++)
-                    PartikelSystem.PushPartikel(xPos + (6 - Segments) * mulx + rand() % 40,
-                                                yPos + (6 - Segments) * muly + rand() % 30, FUNKE);
+                    PartikelSystem.PushPartikel(xPos + (6 - Segments) * mulx + random(40),
+                                                yPos + (6 - Segments) * muly + random(30), FUNKE);
 
                 ShotDelay = 2.0f;
                 Segments--;
@@ -286,7 +273,7 @@ void GegnerMiniDragon::DoKI() {
         xAcc = 0.0f;
         yAcc = 0.0f;
 
-        SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION3);
+        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
         PartikelSystem.PushPartikel(xPos - 26, yPos - 22, EXPLOSION_BIG);
     }
 

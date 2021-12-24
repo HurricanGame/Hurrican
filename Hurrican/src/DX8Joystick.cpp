@@ -24,14 +24,14 @@ constexpr Uint16 rumble[4] = { 20000, 40000, 60000, 30000 };
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
-DirectJoystickClass::DirectJoystickClass() {
-    lpDIJoystick = NULL;
+DirectJoystickClass::DirectJoystickClass() :
+    lpDIJoystick(nullptr),
+    CanForceFeedback(false) {
 
     Active = false;
     JoystickX = 0;
     JoystickY = 0;
-    JoystickPOV = -1;
-    CanForceFeedback = false;
+    JoystickPOV = -1;;
     NumButtons = 0;
 
     // hardcoded default button values
@@ -75,9 +75,9 @@ void DirectJoystickClass::StopForceFeedbackEffect(int nr) {
 }
 
 #if SDL_VERSION_ATLEAST(2,0,0)
-    #define SDLJOYINDEX lpDIJoystick
+#  define SDLJOYINDEX lpDIJoystick
 #else
-    #define SDLJOYINDEX joy
+#  define SDLJOYINDEX joy
 #endif
 
     // --------------------------------------------------------------------------------------
@@ -87,7 +87,7 @@ void DirectJoystickClass::StopForceFeedbackEffect(int nr) {
 bool DirectJoystickClass::Init(int joy) {
     lpDIJoystick = SDL_JoystickOpen(joy);
 
-    if (lpDIJoystick == NULL) {
+    if (lpDIJoystick == nullptr) {
         Protokoll << "\n-> Joystick : Acquire error!" << std::endl;
         return false;
     }
@@ -98,12 +98,7 @@ bool DirectJoystickClass::Init(int joy) {
     NumButtons = SDL_JoystickNumButtons(lpDIJoystick);
 
     // Get joystick's name
-    if (strlen(SDL_JoystickName(SDLJOYINDEX)) < sizeof(JoystickName)) {
-        strcpy_s(JoystickName, SDL_JoystickName(SDLJOYINDEX));
-    } else {
-        strcpy_s(JoystickName, sizeof(JoystickName) - 1, SDL_JoystickName(SDLJOYINDEX));  // Truncate to fit
-        JoystickName[sizeof(JoystickName) - 1] = '\0';                            // and null-terminate
-    }
+    JoystickName = SDL_JoystickName(SDLJOYINDEX);
 
     Protokoll << "Joystick " << joy << ": Acquire successful!\nButtons: " << NumButtons
         << " \nName: " << JoystickName << std::endl;
@@ -151,11 +146,23 @@ bool DirectJoystickClass::Init(int joy) {
     return true;
 }
 
+void DirectJoystickClass::Exit(int joy) {
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+        if (lpDIJoystick != nullptr)
+#else
+        if (SDL_JoystickOpened(joy))
+#endif
+        {
+            SDL_JoystickClose(lpDIJoystick);
+            lpDIJoystick = nullptr;
+        }
+}
+
     // --------------------------------------------------------------------------------------
     // Joystick updaten
     // --------------------------------------------------------------------------------------
 bool DirectJoystickClass::Update() {
-    if (lpDIJoystick != NULL) {
+    if (lpDIJoystick != nullptr) {
         SDL_JoystickUpdate();
 
         for (int i = 0; i < NumButtons; i++) {
@@ -213,18 +220,18 @@ bool DirectJoystickClass::Update() {
 }
 
 // DKS-Added these three for better joystick support, esp in menus
-bool DirectJoystickClass::ButtonEnterPressed() {
+bool DirectJoystickClass::ButtonEnterPressed() const {
     return JoystickButtons[enterButton];
 }
 
-bool DirectJoystickClass::ButtonEscapePressed() {
+bool DirectJoystickClass::ButtonEscapePressed() const {
     return JoystickButtons[backButton];
 }
 
-bool DirectJoystickClass::ButtonDeletePressed() {
+bool DirectJoystickClass::ButtonDeletePressed() const {
     return JoystickButtons[deleteButton];
 }
 
-bool DirectJoystickClass::ButtonStartPressed() {
+bool DirectJoystickClass::ButtonStartPressed() const {
     return JoystickButtons[startButton];
 }

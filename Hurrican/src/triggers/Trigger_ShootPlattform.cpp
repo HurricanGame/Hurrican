@@ -65,10 +65,7 @@ void GegnerShootPlattform::DoKI() {
 
     // MaxSpeed
     //
-    if (ySpeed < -30.0f)
-        ySpeed = -30.0f;
-    if (ySpeed > 30.0f)
-        ySpeed = 30.0f;
+    ySpeed = std::clamp(ySpeed, -30.0f, 30.0f);
 
     // Wieder am Ausgangspunkt gelandet ?
     //

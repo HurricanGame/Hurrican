@@ -59,10 +59,7 @@ void GegnerZitrone::CalcKnarreWinkel() {
     while (newwinkel < 0.0f)
         newwinkel += 360.0f;
 
-    if (newwinkel < 100.0f)
-        newwinkel = 100.0f;
-    if (newwinkel > 260.0f)
-        newwinkel = 260.0f;
+    newwinkel = std::clamp(newwinkel, 100.0f, 260.0f);
 
     if (KnarreWinkel < newwinkel)
         KnarreWinkel += 20.0f SYNC;
@@ -79,14 +76,7 @@ void GegnerZitrone::CalcKnarreWinkel() {
 // --------------------------------------------------------------------------------------
 
 void GegnerZitrone::DoDraw() {
-    int a;
-
-    a = AnimPhase;
-
-    if (a < 3)
-        a = 3;
-    if (a > 7)
-        a = 7;
+    int a = std::clamp(AnimPhase, 3, 7);
 
     float yoff = sin(WackelOffset) * 10.0f;
 
@@ -152,11 +142,7 @@ void GegnerZitrone::DoKI() {
 
     AnimPhase = 5 - static_cast<int>(dummy);
 
-    if (AnimPhase > 10)
-        AnimPhase = 10;
-
-    if (AnimPhase < 0)
-        AnimPhase = 0;
+    AnimPhase = std::clamp(AnimPhase, 0, 10);
 
     if (blockl & BLOCKWERT_WAND || blockr & BLOCKWERT_WAND)
         xSpeed = 0.0f;
@@ -184,12 +170,12 @@ void GegnerZitrone::DoKI() {
 
                 int dx;
 
-                dx = rand() % 60 + 30;
-                if (rand() % 2 == 0)
+                dx = random(60) + 30;
+                if (random(2) == 0)
                     dx *= -1;
 
                 NewX = pAim->xpos + dx;
-                NewY = pAim->ypos - rand() % 80 - 80.0f;
+                NewY = pAim->ypos - random(80) - 80.0f;
 
                 if (NewX > xPos)
                     xAcc = 5.0f;
@@ -220,7 +206,7 @@ void GegnerZitrone::DoKI() {
                                                static_cast<float>(sin(WackelOffset) * 10.0f),
                                            FLUGLASER);
 
-                SoundManager.PlayWave(100, 128, 24000 + rand() % 500, SOUND_LASERSHOT);
+                SoundManager.PlayWave(100, 128, 24000 + random(500), SOUND_LASERSHOT);
             }
         } break;
 
@@ -228,15 +214,8 @@ void GegnerZitrone::DoKI() {
         //
         case GEGNER_LAUFEN: {
             // speed begrenzen
-            if (xSpeed > 20.0f)
-                xSpeed = 20.0f;
-            if (xSpeed < -20.0f)
-                xSpeed = -20.0f;
-
-            if (ySpeed > 20.0f)
-                ySpeed = 20.0f;
-            if (ySpeed < -20.0f)
-                ySpeed = -20.0f;
+            xSpeed = std::clamp(xSpeed, -20.0f, 20.0f);
+            ySpeed = std::clamp(ySpeed, -20.0f, 20.0f);
 
             // xpunkt erreicht?
             if (xSpeed < 0.0f && xPos < NewX) {
@@ -296,8 +275,8 @@ void GegnerZitrone::DoKI() {
             SmokeDelay -= 1.0f SYNC;
             if (SmokeDelay <= 0.0f) {
                 SmokeDelay = 0.1f;
-                PartikelSystem.PushPartikel(xPos + rand() % 30 + 20, yPos + 10 + rand() % 40, SMOKE);
-                PartikelSystem.PushPartikel(xPos + rand() % 30 + 20, yPos + 10 + rand() % 40, SMOKE3);
+                PartikelSystem.PushPartikel(xPos + random(30) + 20, yPos + 10 + random(40), SMOKE);
+                PartikelSystem.PushPartikel(xPos + random(30) + 20, yPos + 10 + random(40), SMOKE3);
             }
         } break;
     }
@@ -313,14 +292,14 @@ void GegnerZitrone::DoKI() {
         xAcc = 0.0f;
         xSpeed = 5.0f;
 
-        if (rand() % 2 == 0)
+        if (random(2) == 0)
             xSpeed *= -1;
 
-        SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION4);
+        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION4);
 
         for (int i = 0; i < 8; i++) {
-            PartikelSystem.PushPartikel(xPos + rand() % 80, yPos - 10 + rand() % 90, EXPLOSION_MEDIUM2);
-            PartikelSystem.PushPartikel(xPos + rand() % 80, yPos - 10 + rand() % 90, SPIDERSPLITTER);
+            PartikelSystem.PushPartikel(xPos + random(80), yPos - 10 + random(90), EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos + random(80), yPos - 10 + random(90), SPIDERSPLITTER);
         }
     }
 }
@@ -330,16 +309,16 @@ void GegnerZitrone::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerZitrone::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION4);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION4);
 
     for (int i = 0; i < 12; i++) {
-        PartikelSystem.PushPartikel(xPos + rand() % 80, yPos - 10 + rand() % 90, EXPLOSION_MEDIUM2);
-        PartikelSystem.PushPartikel(xPos + rand() % 80, yPos - 10 + rand() % 90, SPIDERSPLITTER);
-        PartikelSystem.PushPartikel(xPos + 10 + rand() % 80, yPos - 10 + rand() % 90, SCHROTT1);
+        PartikelSystem.PushPartikel(xPos + random(80), yPos - 10 + random(90), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + random(80), yPos - 10 + random(90), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + 10 + random(80), yPos - 10 + random(90), SCHROTT1);
     }
 
     for (int i = 0; i < 4; i++)
-        PartikelSystem.PushPartikel(xPos - 30 + rand() % 70, yPos - 30 + rand() % 80, SPLITTER);
+        PartikelSystem.PushPartikel(xPos - 30 + random(70), yPos - 30 + random(80), SPLITTER);
 
     Player[0].Score += 400;
 }

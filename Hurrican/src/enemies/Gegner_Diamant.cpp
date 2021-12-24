@@ -122,7 +122,7 @@ void GegnerDiamant::DoKI() {
 
                 pTemp = Gegner.pStart;
 
-                while (pTemp != NULL) {
+                while (pTemp != nullptr) {
                     if (pTemp->GegnerArt == PUNISHER) {
                         pPunisher = reinterpret_cast<GegnerPunisher *>(pTemp);
                         pPunisher->Vanish();

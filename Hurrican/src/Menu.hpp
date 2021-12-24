@@ -23,57 +23,70 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define MAX_STARS 300                   // Anzahl scrollender Sterne im Hintergrund
-#define MAX_HIGHSCORES 10               // Anzahl der Highscore-Einträge
-#define MAX_SAVEGAMES 10                // Anzahl der Savegame Slots
-#define MAX_COLORS 99 + MAX_HIGHSCORES  // Anzahl der Blink-Farben in der Highscore
+constexpr int MAX_STARS = 300;                   // Anzahl scrollender Sterne im Hintergrund
+constexpr int MAX_HIGHSCORES = 10;               // Anzahl der Highscore-Einträge
+constexpr int MAX_SAVEGAMES = 10;                // Anzahl der Savegame Slots
+constexpr int MAX_COLORS = 99 + MAX_HIGHSCORES;  // Anzahl der Blink-Farben in der Highscore
 
 // ----- Defines für die Menu-Zustände
 
-#define MENUZUSTAND_MAINMENU 0
-#define MENUZUSTAND_STARTGAME 1
-#define MENUZUSTAND_VOLUMES 2
-#define MENUZUSTAND_NEWGAME 6
-#define MENUZUSTAND_PLAYERCOUNT 7
-#define MENUZUSTAND_SELECTSKILL 8
-#define MENUZUSTAND_LOADGAME 9
-#define MENUZUSTAND_SAVEGAME 10
-#define MENUZUSTAND_ENTERNAME 11
-#define MENUZUSTAND_LANGUAGE 12
-#define MENUZUSTAND_TASTEN 13
-#define MENUZUSTAND_BUTTONS 14
+enum {
+  MENUZUSTAND_MAINMENU = 0,
+  MENUZUSTAND_STARTGAME = 1,
+  MENUZUSTAND_VOLUMES = 2,
+  MENUZUSTAND_NEWGAME = 6,
+  MENUZUSTAND_PLAYERCOUNT = 7,
+  MENUZUSTAND_SELECTSKILL = 8,
+  MENUZUSTAND_LOADGAME = 9,
+  MENUZUSTAND_SAVEGAME = 10,
+  MENUZUSTAND_ENTERNAME = 11,
+  MENUZUSTAND_LANGUAGE = 12,
+  MENUZUSTAND_TASTEN = 13,
+  MENUZUSTAND_BUTTONS = 14
+};
 
 // ----- Defines für die einzelnen Menu-Punkte
 
-#define MENUPUNKT_STARTGAME 0
-#define MENUPUNKT_CONTINUEGAME 1
-#define MENUPUNKT_VOLUMES 2
-#define MENUPUNKT_HIGHSCORES 3
-#define MENUPUNKT_CREDITS 4
-#define MENUPUNKT_END 5
+enum {
+  MENUPUNKT_STARTGAME = 0,
+  MENUPUNKT_CONTINUEGAME = 1,
+  MENUPUNKT_VOLUMES = 2,
+  MENUPUNKT_HIGHSCORES = 3,
+  MENUPUNKT_CREDITS = 4,
+  MENUPUNKT_END = 5
+};
 
 // DKS - Added missing defines (In the correct order!) for VOLUMES sub-menu, a.k.a. PREFERENCES sub-menu
-#define MENUPUNKT_VOLUMES_SOUND 0
-#define MENUPUNKT_VOLUMES_MUSIC 1
-#define MENUPUNKT_VOLUMES_TASTEN 2  // Controls  reconfiguration
-#define MENUPUNKT_VOLUMES_LANGUAGE 3
-#define MENUPUNKT_VOLUMES_DETAILS 4
+
+enum {
+  MENUPUNKT_VOLUMES_SOUND = 0,
+  MENUPUNKT_VOLUMES_MUSIC = 1,
+  MENUPUNKT_VOLUMES_TASTEN = 2,  // Controls  reconfiguration
+  MENUPUNKT_VOLUMES_LANGUAGE = 3,
+  MENUPUNKT_VOLUMES_DETAILS = 4
+};
 
 // DKS - Added missing defines for NEWGAME sub-menu
-#define MENUPUNKT_NEWGAME_TUTORIAL 0
-#define MENUPUNKT_NEWGAME_STARTNEWGAME 1
-#define MENUPUNKT_NEWGAME_LOADGAME 2
+
+enum {
+  MENUPUNKT_NEWGAME_TUTORIAL = 0,
+  MENUPUNKT_NEWGAME_STARTNEWGAME = 1,
+  MENUPUNKT_NEWGAME_LOADGAME = 2
+};
 
 // DKS - Controls-reconfiguration menu: (Menu "tasten")
-#define MENU_TASTEN_FORCEFEEDBACK_LINE 0
-#define MENU_TASTEN_DEFAULTS_LINE 1
-#define MENU_TASTEN_PLAYER_LINE 2
-#define MENU_TASTEN_TYPE_LINE 3
-#define MENU_TASTEN_MODE_LINE 4
-#define MENU_TASTEN_SENSITIVITY_LINE 5
-#define MENU_TASTEN_NUM_NON_CONTROLS 6  // Number of non-controls lines (before assignable controls begin)
-#define MENU_TASTEN_NUM_CONTROLS 12     // Number of assignable-controls lines
-#define MENU_TASTEN_NUM_LINES (MENU_TASTEN_NUM_CONTROLS + MENU_TASTEN_NUM_NON_CONTROLS)
+
+enum {
+  MENU_TASTEN_FORCEFEEDBACK_LINE = 0,
+  MENU_TASTEN_DEFAULTS_LINE = 1,
+  MENU_TASTEN_PLAYER_LINE = 2,
+  MENU_TASTEN_TYPE_LINE = 3,
+  MENU_TASTEN_MODE_LINE = 4,
+  MENU_TASTEN_SENSITIVITY_LINE = 5,
+  MENU_TASTEN_NUM_NON_CONTROLS = 6,  // Number of non-controls lines (before assignable controls begin)
+  MENU_TASTEN_NUM_CONTROLS = 12,     // Number of assignable-controls lines
+  MENU_TASTEN_NUM_LINES = (MENU_TASTEN_NUM_CONTROLS + MENU_TASTEN_NUM_NON_CONTROLS)
+};
 
 // --------------------------------------------------------------------------------------
 // Strukturen
@@ -103,6 +116,8 @@ struct HighscoreStruct {
     int32_t Skill;  // Schwierigkeitsgrad
     int32_t Pruefsumme;
 };
+
+static_assert(sizeof(HighscoreStruct) == 48, "Size of HighscoreStruct is wrong");
 
 // --------------------------------------------------------------------------------------
 // Struktur zum Speichern und laden eines Savegames
@@ -134,6 +149,8 @@ struct SavegameStruct {
     int32_t SmartBombs;                // Anzahl an SmartBomben (Druckwellen)
     int32_t Pruefsumme;                // Prüfsumme für die Savegames
 };
+
+static_assert(sizeof(SavegameStruct) == 240, "Size of SavegameStruct is wrong");
 
 // --------------------------------------------------------------------------------------
 // Menu-Klasse
@@ -181,7 +198,7 @@ class MenuClass {
     int NewScore;                        // Neue Punktezahl
     int NewStage;                        // Neue Stage
     int NewSkill;                        // Neuer Skill
-    char NewName[30];                    // Neuer Highscore Name
+    char NewName[32];                    // Neuer Highscore Name
     bool control_reassignment_occuring;  // Für Tasten / Button Konfiguration
 
     float Rotation;   // Rotationsgrad
@@ -203,6 +220,10 @@ class MenuClass {
     void ResetProgressBar();
     void StartProgressBar(int items);
     void UpdateProgressBar();
+
+#ifndef NDEBUG
+    int ItemsLoaded() const { return LoadingItemsLoaded; }
+#endif
 };
 
 // --------------------------------------------------------------------------------------

@@ -70,10 +70,10 @@ void GegnerStampfstein::DoKI() {
         //
         case GEGNER_NOTVISIBLE: {
             oldy = yPos;
-            Handlung = STEHEN;
+            Handlung = GEGNER_STEHEN;
         } break;
 
-        case STEHEN: {
+        case GEGNER_STEHEN: {
             oldy = yPos;
 
             // Spieler in der Nähe? Dann runterfallen lassen
@@ -86,7 +86,7 @@ void GegnerStampfstein::DoKI() {
                     ySpeed = 20.0f;
                     yAcc = 15.0f;
 
-                    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_STONEFALL);
+                    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_STONEFALL);
                 }
             }
         } break;
@@ -117,9 +117,9 @@ void GegnerStampfstein::DoKI() {
 
                 // Trümmer erzeugen
                 for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos + i * 5 - 10, yPos + 236, ROCKSPLITTER + rand() % 2);
+                    PartikelSystem.PushPartikel(xPos + i * 5 - 10, yPos + 236, ROCKSPLITTER + random(2));
 
-                SoundManager.PlayWave(175, 128, 8000 + rand() % 4000, SOUND_PHARAORAMM);
+                SoundManager.PlayWave(175, 128, 8000 + random(4000), SOUND_PHARAORAMM);
 
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
@@ -131,7 +131,7 @@ void GegnerStampfstein::DoKI() {
 
                 pTemp = Gegner.pStart;
 
-                while (pTemp != NULL) {
+                while (pTemp != nullptr) {
                     if (pTemp->Destroyable == true && pTemp != this &&
                         SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], pTemp->xPos, pTemp->yPos,
                                         GegnerRect[pTemp->GegnerArt]) == true)
@@ -194,7 +194,7 @@ void GegnerStampfstein::DoKI() {
                                          Player[p].CollideRect) &
                         BLOCKWERT_WAND) {
                     Player[p].DamagePlayer(500.0f, true);
-                    Player[p].AufPlattform = NULL;
+                    Player[p].AufPlattform = nullptr;
                     Player[p].ypos += 10.0f;
                     Player[p].yspeed = 10.0f;
                 }

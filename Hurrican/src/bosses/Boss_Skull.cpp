@@ -24,7 +24,7 @@ GegnerSkull::GegnerSkull(int Wert1, int Wert2, bool Light) {
     ShotDelay = 10.0f;
     ShotCount = 0;
     Disappear = 20.0f;
-    pMachine = NULL;
+    pMachine = nullptr;
 
     AnimCount = 0.0f;
     if (Value2 == 99)
@@ -35,13 +35,13 @@ GegnerSkull::GegnerSkull(int Wert1, int Wert2, bool Light) {
     // Position der Endboss Wand rausfinden
     GegnerClass *pTemp;
     pTemp = Gegner.pStart;
-    while (pTemp != NULL) {
+    while (pTemp != nullptr) {
         if (pTemp->GegnerArt == THEWALL) {
             mxPos = pTemp->xPos + 5;
             myPos = pTemp->yPos + 229;
             pMachine = pTemp;
 
-            pTemp = NULL;
+            pTemp = nullptr;
         } else
             pTemp = pTemp->pNext;
     }
@@ -59,17 +59,11 @@ void GegnerSkull::DoKI() {
     //
     float dx = static_cast<float>(pAim->xpos + 35) - (xPos + 16);
     AnimPhase = static_cast<int>(dx / 30);
-    if (AnimPhase < -5)
-        AnimPhase = -5;
-    if (AnimPhase > 9)
-        AnimPhase = 9;
+    AnimPhase = std::clamp(AnimPhase, -5, 9);
     AnimPhase += 5;
     if (xSpeed < 0.0f)
         AnimPhase = 20 - AnimPhase;
-    if (AnimPhase < 0)
-        AnimPhase = 0;
-    if (AnimPhase > 19)
-        AnimPhase = 19;
+    AnimPhase = std::clamp(AnimPhase, 0, 19);
 
     // Antrieb
     //
@@ -79,7 +73,7 @@ void GegnerSkull::DoKI() {
 
         //		PartikelSystem.PushPartikel(xPos, yPos + 20, SMOKE);
 
-        if (rand() % 20 == 0)
+        if (random(20) == 0)
             for (int i = 0; i < 10; i++)
                 PartikelSystem.PushPartikel(xPos + 10, yPos + 40, FUNKE);
     }
@@ -108,10 +102,10 @@ void GegnerSkull::DoKI() {
                 SoundManager.StopWave(SOUND_EXPLOSION2);
                 SoundManager.PlayWave(75, 128, 8000 + static_cast<int>(endwert * 800), SOUND_EXPLOSION2);
 
-                PartikelSystem.PushPartikel(xPos + rand() % 30 - 30, yPos + rand() % 30 - 30, EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(xPos + random(30) - 30, yPos + random(30) - 30, EXPLOSION_MEDIUM2);
 
                 for (int i = 0; i < 3; i++)
-                    PartikelSystem.PushPartikel(xPos + rand() % 30 - 10, yPos + rand() % 20 - 10, SPIDERSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + random(30) - 10, yPos + random(20) - 10, SPIDERSPLITTER);
             }
 
             if (xPos + 16 > TileEngine.XOffset + 320.0f)
@@ -124,14 +118,8 @@ void GegnerSkull::DoKI() {
             else
                 yAcc = 4.0f;
 
-            if (xSpeed > 25.0f)
-                xSpeed = 25.0f;
-            if (xSpeed < -25.0f)
-                xSpeed = -25.0f;
-            if (ySpeed > 15.0f)
-                ySpeed = 15.0f;
-            if (ySpeed < -15.0f)
-                ySpeed = -15.0f;
+            xSpeed = std::clamp(xSpeed, -25.0f, 25.0f);
+            ySpeed = std::clamp(ySpeed, -15.0f, 15.0f);
 
             if (Disappear < 0.0f) {
                 // explodieren lassen
@@ -147,16 +135,16 @@ void GegnerSkull::DoKI() {
                 PartikelSystem.PushPartikel(xPos + 20, yPos + 20, SHOCKEXPLOSION);
 
                 for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos + rand() % 30, yPos + rand() % 30, SPIDERSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + random(30), yPos + random(30), SPIDERSPLITTER);
 
                 for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos - 50 + rand() % 100, yPos - 50 + rand() % 100, EXPLOSION_BIG);
+                    PartikelSystem.PushPartikel(xPos - 50 + random(100), yPos - 50 + random(100), EXPLOSION_BIG);
 
                 for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos - 50 + rand() % 100, yPos - 50 + rand() % 100, SPLITTER);
+                    PartikelSystem.PushPartikel(xPos - 50 + random(100), yPos - 50 + random(100), SPLITTER);
 
                 for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos - 50 + rand() % 100, yPos - 50 + rand() % 100, SCHROTT1);
+                    PartikelSystem.PushPartikel(xPos - 50 + random(100), yPos - 50 + random(100), SCHROTT1);
 
                 PartikelSystem.PushPartikel(xPos - 80, yPos - 80, EXPLOSION_GIGA);
 
@@ -189,14 +177,8 @@ void GegnerSkull::DoKI() {
                 else
                     yAcc = 2.0f;
 
-                if (xSpeed > 25.0f)
-                    xSpeed = 25.0f;
-                if (xSpeed < -25.0f)
-                    xSpeed = -25.0f;
-                if (ySpeed > 15.0f)
-                    ySpeed = 15.0f;
-                if (ySpeed < -15.0f)
-                    ySpeed = -15.0f;
+                xSpeed = std::clamp(xSpeed, -25.0f, 25.0f);
+                ySpeed = std::clamp(ySpeed, -15.0f, 15.0f);
 
                 if ((xSpeed < 0.0f && xPos < TileEngine.XOffset) ||
                     (xSpeed > 0.0f && xPos > TileEngine.XOffset + 640.0f))
@@ -275,7 +257,7 @@ void GegnerSkull::DoKI() {
         if (ShotDelay < 0.0f) {
             ShotDelay = 15.0f;
             Projectiles.PushProjectile(xPos - 10, yPos, SUCHSCHUSS2, pAim);
-            SoundManager.PlayWave(50, 128, 14000 + rand() % 2000, SOUND_GOLEMSHOT);
+            SoundManager.PlayWave(50, 128, 14000 + random(2000), SOUND_GOLEMSHOT);
         }
     }
 

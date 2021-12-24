@@ -15,14 +15,16 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define MAX_JOYSTICKBUTTONS 128
+constexpr int MAX_JOYSTICKBUTTONS = 128;
 
 // --------------------------------------------------------------------------------------
 // Include Dateien
 // --------------------------------------------------------------------------------------
 #if defined(PLATFORM_SDL)
-#include "SDL_port.hpp"
+#  include "SDL_port.hpp"
 #endif
+
+#include <string>
 
 // --------------------------------------------------------------------------------------
 // Klassendeklaration
@@ -33,10 +35,17 @@
 // --------------------------------------------------------------------------------------
 
 class DirectJoystickClass {
-  public:
+  private:
     LPDIRECTINPUTDEVICE8 lpDIJoystick;  // Joystick Device Interface
 
+    int startButton;
+    int enterButton;
+    int backButton;
+    int deleteButton;
+
     bool CanForceFeedback;
+
+  public:
     bool Active;
     int JoystickX;                              // Joystick x-Koordinaten
     int JoystickY;                              // Joystick y-Koordinaten
@@ -45,13 +54,8 @@ class DirectJoystickClass {
     int JoystickPOV;                            // POV (für coolie hat)
     int JoystickMode;                           // Joypad oder Stickmode
     bool JoystickButtons[MAX_JOYSTICKBUTTONS];  // Feuerknopf gedrückt?
-    char JoystickName[70];                      // Joystick Produktname
+    std::string JoystickName;                   // Joystick Produktname
     int NumButtons;                             // How many buttons joystick supports
-
-    int startButton;
-    int enterButton;
-    int backButton;
-    int deleteButton;
 
     DirectJoystickClass();
     ~DirectJoystickClass();
@@ -61,19 +65,21 @@ class DirectJoystickClass {
 
     bool Init(int joy);
 
+    void Exit(int joy);
+
     bool Update();
 
     // DKS-Added these three for better joystick support, esp in menus
     // Returns true if button(s) serving as Enter key  are pressed (For menus)
-    bool ButtonEnterPressed();
+    bool ButtonEnterPressed() const;
 
     // Returns true if button(s) serving as Escape key are pressed (For menus)
-    bool ButtonEscapePressed();
+    bool ButtonEscapePressed() const;
 
     // Returns true if button(s) serving as Delete key are pressed (For menus, esp. button mapping menu)
-    bool ButtonDeletePressed();
+    bool ButtonDeletePressed() const;
 
     // Returns true if button(s) serving as Start key are pressed (For game)
-    bool ButtonStartPressed();
+    bool ButtonStartPressed() const;
 };
 #endif

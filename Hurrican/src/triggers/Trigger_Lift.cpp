@@ -45,7 +45,7 @@ void GegnerLift::DoKI() {
             if (AnimPhase >= AnimEnde)  // Animation von zu Ende	?
             {
                 for (int i = 0; i < 10; i++)
-                    PartikelSystem.PushPartikel(xPos - 30 + rand() % 80, yPos - 20 + rand() % 20, EXPLOSION_MEDIUM2);
+                    PartikelSystem.PushPartikel(xPos - 30 + random(80), yPos - 20 + random(20), EXPLOSION_MEDIUM2);
 
                 Handlung = GEGNER_STEHEN;
                 AnimPhase = 0;
@@ -55,9 +55,9 @@ void GegnerLift::DoKI() {
                 yAcc = 0.0f;
 
                 for (int p = 0; p < NUMPLAYERS; p++)
-                    Player[p].AufPlattform = NULL;
+                    Player[p].AufPlattform = nullptr;
 
-                SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
             }
         }
     }  // animieren

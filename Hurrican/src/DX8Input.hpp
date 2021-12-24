@@ -25,35 +25,38 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define MAX_MOUSEBUTTONS 4
-#define DINPUT_BUFFERSIZE 32
-#define MAX_KEYS 256
+constexpr int MAX_MOUSEBUTTONS = 4;
+constexpr int DINPUT_BUFFERSIZE = 32;
+constexpr int MAX_KEYS = 256;
+
 #if defined(PLATFORM_SDL)
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-#define KeyDown(Taste) (TastaturPuffer[SDL_GetScancodeFromKey(Taste)] > 0)
-#define KeyCode(Taste) (SDL_GetKeyFromScancode(static_cast<SDL_Scancode >(i)))
-#else
-#define KeyDown(Taste) (TastaturPuffer[Taste] > 0)
-#define KeyCode(Taste) (Taste)
-#endif
+#  if SDL_VERSION_ATLEAST(2, 0, 0)
+#    define KeyDown(Taste) (TastaturPuffer[SDL_GetScancodeFromKey(Taste)] > 0)
+#    define KeyCode(Taste) (SDL_GetKeyFromScancode(static_cast<SDL_Scancode >(i)))
+#  else
+#    define KeyDown(Taste) (TastaturPuffer[Taste] > 0)
+#    define KeyCode(Taste) (Taste)
+#  endif
 #endif
 
 // ForceFeedback Effekte
 //
-#define FFE_SMALLRUMBLE 0
-#define FFE_MEDIUMRUMBLE 1
-#define FFE_BIGRUMBLE 2
-#define FFE_BLITZ 3
+enum {
+  FFE_SMALLRUMBLE = 0,
+  FFE_MEDIUMRUMBLE = 1,
+  FFE_BIGRUMBLE = 2,
+  FFE_BLITZ = 3
+};
 
-#define MAX_JOYSTICKS 4
-// DKS - Fixed ambiguity: The game had ControlType and JoystickMode both using this #define, but
+constexpr int MAX_JOYSTICKS = 4;
+// DKS - Fixed ambiguity: The game had ControlType and JoystickMode both using this define, but
 //      that was confusing and mixed up in the code:  Now, JoystickMode uses this define and
 //      ControlType uses the one following it:
-#define JOYMODE_JOYPAD 1    // NOTE: DO NOT change the values 1 & 2 here, Texts.cpp counts on these values.
-#define JOYMODE_JOYSTICK 2  // There originally was a 0 but it was removed for reasons in comment above.
+constexpr int JOYMODE_JOYPAD = 1;    // NOTE: DO NOT change the values 1 & 2 here, Texts.cpp counts on these values.
+constexpr int JOYMODE_JOYSTICK = 2;  // There originally was a 0 but it was removed for reasons in comment above.
 
-#define CONTROLTYPE_KEYBOARD 0
-#define CONTROLTYPE_JOY 1
+constexpr int CONTROLTYPE_KEYBOARD = 0;
+constexpr int CONTROLTYPE_JOY = 1;
 
 // --------------------------------------------------------------------------------------
 // Klassendeklaration
@@ -85,9 +88,9 @@ class DirectInputClass {
     bool UpdateTastatur();            // Tasten abfragen und im Puffer speichern
     bool UpdateMaus(bool gepuffert);  // Maus abfragen gepuffert/ungepuffert
     void AcquireKeyboard();           // Keyboard akquirierens
-    bool AreAllKeysReleased();        // Checken ob keine Taste mehr gedrückt ist
-    bool AnyKeyDown();
-    bool AnyButtonDown();
+    bool AreAllKeysReleased() const;  // Checken ob keine Taste mehr gedrückt ist
+    bool AnyKeyDown() const;
+    bool AnyButtonDown() const;
     void UpdateJoysticks();
     char *MapButtonToString(int joy_idx, int button);  // Returns char string "1" for button 0, etc..
                                                        // But when used on GCW Zero's internal controls
@@ -108,7 +111,7 @@ class DirectInputClass {
 #endif  // GCW
 
 #if defined(ANDROID)
-#define BOX_RECT_TOTAL 12
+    constexpr int BOX_RECT_TOTAL = 12;
     uint16_t Width;
     uint16_t Height;
     uint16_t TouchDeviceCount;

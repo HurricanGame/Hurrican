@@ -34,16 +34,16 @@ namespace fs = std::filesystem;
 #include "texture.hpp"
 
 #if defined(USE_ETC1)
-#define ETC1_HEADER_SIZE 16
+constexpr int ETC1_HEADER_SIZE = 16;
 #endif
 
 #if defined(USE_PVRTC)
-#define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG 0x8C00
-#define GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG 0x8C01
-#define GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG 0x8C02
-#define GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG 0x8C03
+#  define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG 0x8C00
+#  define GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG 0x8C01
+#  define GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG 0x8C02
+#  define GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG 0x8C03
 
-#define PVRTC_HEADER_SIZE 52
+constexpr int PVRTC_HEADER_SIZE = 52;
 
 enum { PVRTC_RGB_2BPP = 0, PVRTC_RGBA_2BPP, PVRTC_RGB_4BPP, PVRTC_RGBA_4BPP };
 #endif
@@ -109,7 +109,7 @@ bool SDL_LoadTexture(const std::string &path,
     if (DirectGraphics.SupportedPVRTC) {
         fullpath = path + "/pvr/" + filename + ".pvr";
 
-#if defined(_DEBUG)
+#ifndef NDEBUG
         Protokoll << "Using PVR looking for " << fullpath << std::endl;
 #endif
 
@@ -186,7 +186,7 @@ bool load_texture(image_t &image, GLuint &new_texture) {
                          image.data.data());
         }
 
-#if defined(_DEBUG)
+#ifndef NDEBUG
         int error = glGetError();
         if (error != 0) {
             Protokoll << "GL load_texture Error " << error << std::endl;
@@ -242,7 +242,7 @@ bool loadImageETC1(image_t &image, const std::string &fullpath) {
             Protokoll << "Loaded ETC type " << static_cast<char>(image.data[0]) << static_cast<char>(image.data[1])
                       << static_cast<char>(image.data[2]) << " for " << fullpath << std::endl;
 
-#if defined(_DEBUG)
+#ifndef NDEBUG
             Protokoll << "Header " << static_cast<char>(image.data[0]) << static_cast<char>(image.data[1])
                       << static_cast<char>(image.data[2]) << static_cast<char>(image.data[3]) << "\nVersion "
                       << std::hex << (image.data[4] << 8) + image.data[5] << "\nType " << std::dec
@@ -265,7 +265,7 @@ bool loadImageETC1(image_t &image, const std::string &fullpath) {
 
 #if defined(USE_PVRTC)
 bool loadImagePVRTC(image_t &image, const std::string &fullpath) {
-    uint32_t *pvrtc_buffer32 = NULL;
+    uint32_t *pvrtc_buffer32 = nullptr;
     uint32_t pvrtc_filesize, pvrtc_depth, pvrtc_bitperpixel;
 
     if (fullpath.empty() || !fs::exists(fullpath) || !fs::is_regular_file(fullpath))
@@ -296,7 +296,7 @@ bool loadImagePVRTC(image_t &image, const std::string &fullpath) {
             default:
                 Protokoll << "ERROR Unknown PVRTC format " << std::hex << pvrtc_buffer32[2] << std::endl;
                 // delete [] image.data;
-                // image.data = NULL;
+                // image.data = nullptr;
                 image.data = std::vector<char>();
                 return false;
         }
@@ -311,7 +311,7 @@ bool loadImagePVRTC(image_t &image, const std::string &fullpath) {
 
         Protokoll << "Loaded PVRTC type " << std::dec << pvrtc_buffer32[2] << " for " << fullpath << std::endl;
 
-#if defined(_DEBUG)
+#ifndef NDEBUG
         Protokoll << "Version " << std::hex << pvrtc_buffer32[0] << "\nFlags " << std::dec << pvrtc_buffer32[1]
                   << "\nPFormatA " << pvrtc_buffer32[2] << "\nPFormatB " << pvrtc_buffer32[3] << "\nColorS "
                   << pvrtc_buffer32[4] << "\nChanType " << pvrtc_buffer32[5] << "\nHeight " << pvrtc_buffer32[6]

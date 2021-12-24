@@ -5,9 +5,10 @@
 #include "enemies/Gegner_Stuff.hpp"
 
 class GegnerLavaBallSpawner : public GegnerClass {
-  public:
+  private:
     float Delay;
 
+  public:
     GegnerLavaBallSpawner(int Wert1,
                           int Wert2,  // Konstruktor
                           bool Light);

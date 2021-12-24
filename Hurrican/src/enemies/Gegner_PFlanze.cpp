@@ -15,7 +15,7 @@ GegnerPflanze::GegnerPflanze(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER_LAUFEN;
     HitSound = 1;
     Energy = 80;
-    AnimPhase = rand() % 8;
+    AnimPhase = random(8);
     AnimEnde = 9;
     AnimSpeed = 2.2f - Skill * 0.4f;
     AnimCount = 0.0f;
@@ -48,7 +48,7 @@ void GegnerPflanze::DoKI() {
         {
             // Schiessen ?
             //
-            if (RunningTutorial == false && (PlayerAbstand() < 300 || rand() % 2 == 0)) {
+            if (RunningTutorial == false && (PlayerAbstand() < 300 || random(2) == 0)) {
                 Handlung = GEGNER_SCHIESSEN;
                 AnimEnde = 17;
                 AnimSpeed = 2.2f - Skill * 0.4f;
@@ -90,14 +90,14 @@ void GegnerPflanze::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerPflanze::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
 
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 50, yPos + rand() % 40, EXPLOSION_GREEN);
+        PartikelSystem.PushPartikel(xPos + random(50), yPos + random(40), EXPLOSION_GREEN);
 
     for (int i = 0; i < 30; i++)
         // Blätter erzeugen
-        PartikelSystem.PushPartikel(float(xPos + rand() % 100), float(yPos + 10 + rand() % 50), BLATT);
+        PartikelSystem.PushPartikel(float(xPos + random(100)), float(yPos + 10 + random(50)), BLATT);
 
     Player[0].Score += 300;
 }

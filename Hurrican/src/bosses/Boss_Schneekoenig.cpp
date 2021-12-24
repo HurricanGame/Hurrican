@@ -190,7 +190,7 @@ void GegnerSchneeKoenig::DoKI() {
 
     // Boss aktivieren und Mucke laufen lassen
     //
-    if (Active && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
+    if (Active && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         SoundManager.StopSong(MUSIC_STAGEMUSIC, true);  // Ausfaden und pausieren
         SoundManager.PlaySong(MUSIC_BOSS, false);
         ySave = yPos;
@@ -200,7 +200,7 @@ void GegnerSchneeKoenig::DoKI() {
         yPos = TileEngine.YOffset - 300;
         ySpeed = 50.0f;
         DrawNow = true;
-        TileEngine.Zustand = ZUSTAND_LOCKED;
+        TileEngine.Zustand = TileStateEnum::LOCKED;
     }
 
     // Kanone zurückfahren
@@ -222,12 +222,12 @@ void GegnerSchneeKoenig::DoKI() {
                 AnimCount = 20.0f;
 
                 for (int i = 0; i < 30; i++)
-                    PartikelSystem.PushPartikel(xPos + rand() % 180 - 30, yPos + rand() % 40 + 70, SNOWFLUSH);
+                    PartikelSystem.PushPartikel(xPos + random(180) - 30, yPos + random(40) + 70, SNOWFLUSH);
 
                 for (int i = 0; i < 10; i++)
-                    PartikelSystem.PushPartikel(xPos + rand() % 130 - 10, yPos + rand() % 40 + 60, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + random(130) - 10, yPos + random(40) + 60, SMOKEBIG);
 
-                TileEngine.ScrollLevel(static_cast<float>(TileEngine.XOffset), yPos - 320.0f, ZUSTAND_SCROLLTOLOCK);
+                TileEngine.ScrollLevel(static_cast<float>(TileEngine.XOffset), yPos - 320.0f, TileStateEnum::SCROLLTOLOCK);
 
                 SoundManager.PlayWave(50, 128, 11025, SOUND_DOORSTOP);
             }
@@ -277,7 +277,7 @@ void GegnerSchneeKoenig::DoKI() {
                         Action = -1;
                         Handlung = GEGNER_VERFOLGEN;
                         ShotDelay = 1.0f;
-                        ShotCount = 10 + rand() % 6;
+                        ShotCount = 10 + random(6);
                     }
                 } break;
 
@@ -419,7 +419,7 @@ void GegnerSchneeKoenig::DoKI() {
                             // auf den Boden geknallt?
                             if (yPos > (ySave - 40.0f)) {
                                 for (int i = 0; i < 30; i++)
-                                    PartikelSystem.PushPartikel(xPos + 10 + rand() % 140, yPos + rand() % 40 + 110,
+                                    PartikelSystem.PushPartikel(xPos + 10 + random(140), yPos + random(40) + 110,
                                                                 SNOWFLUSH);
 
                                 yPos = ySave - 40.0f;
@@ -475,19 +475,19 @@ void GegnerSchneeKoenig::DoKI() {
                     ShakeScreen(5.0f);
 
                     for (int i = 0; i < 50; i++)
-                        PartikelSystem.PushPartikel(xPos - 20 + rand() % 150, yPos + rand() % 70, SMOKEBIG);
+                        PartikelSystem.PushPartikel(xPos - 20 + random(150), yPos + random(70), SMOKEBIG);
 
                     for (int i = 0; i < 20; i++)
-                        PartikelSystem.PushPartikel(xPos - 40 + rand() % 200, yPos + rand() % 100, EXPLOSION_MEDIUM2);
+                        PartikelSystem.PushPartikel(xPos - 40 + random(200), yPos + random(100), EXPLOSION_MEDIUM2);
 
                     for (int i = 0; i < 20; i++)
-                        PartikelSystem.PushPartikel(xPos + rand() % 150, yPos + rand() % 70, SCHROTT1);
+                        PartikelSystem.PushPartikel(xPos + random(150), yPos + random(70), SCHROTT1);
 
                     for (int i = 0; i < 5; i++)
-                        PartikelSystem.PushPartikel(xPos - 40 + rand() % 180, yPos + rand() % 100, EXPLOSION_BIG);
+                        PartikelSystem.PushPartikel(xPos - 40 + random(180), yPos + random(100), EXPLOSION_BIG);
 
                     for (int i = 0; i < 5; i++)
-                        PartikelSystem.PushPartikel(xPos + rand() % 200, yPos + 70 + rand() % 20, SPLITTER);
+                        PartikelSystem.PushPartikel(xPos + random(200), yPos + 70 + random(20), SPLITTER);
 
                     Energy = 0.0f;
                 }
@@ -497,26 +497,22 @@ void GegnerSchneeKoenig::DoKI() {
 
                 if (SmokeDelay < 0.0f) {
                     SmokeDelay = 0.5f;
-                    PartikelSystem.PushPartikel(xPos + 60 + rand() % 20, yPos + 120 + yOffset, SMOKEBIG);
-                    PartikelSystem.PushPartikel(xPos + 95 + rand() % 20, yPos + 140 + yOffset, FUNKE);
+                    PartikelSystem.PushPartikel(xPos + 60 + random(20), yPos + 120 + yOffset, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + 95 + random(20), yPos + 140 + yOffset, FUNKE);
 
-                    Projectiles.PushProjectile(xPos + 75 + rand() % 4, yPos + 80 + yOffset, FEUERFALLE3);
+                    Projectiles.PushProjectile(xPos + 75 + random(4), yPos + 80 + yOffset, FEUERFALLE3);
 
                     // Explodieren?
-                    if (Value1 >= 2 && rand() % 2 == 0) {
-                        SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
-                        PartikelSystem.PushPartikel(xPos + rand() % 150, yPos + rand() % 100, EXPLOSION_MEDIUM2);
+                    if (Value1 >= 2 && random(2) == 0) {
+                        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+                        PartikelSystem.PushPartikel(xPos + random(150), yPos + random(100), EXPLOSION_MEDIUM2);
                     }
                 }
 
                 int a;
 
                 a = static_cast<int>((yPos - TileEngine.YOffset - 200.0f) / 10.0f);
-
-                if (a > 10)
-                    a = 10;
-                if (a < 0)
-                    a = 0;
+                a = std::clamp(a, 0, 10);
 
                 AnimPhase = a;
             }
@@ -573,9 +569,9 @@ void GegnerSchneeKoenig::DoKI() {
 
                 Gegner.PushGegner(xPos + sin_deg(KnarreWinkel + 180.0f) * 70.0f + 100.0f,
                                   yPos + cos_deg(KnarreWinkel + 180.0f) * 60.0f + KnarreY + 5.0f + yOffset, SCHNEEKOPPE,
-                                  -static_cast<int>(w) - 3 + rand() % 7, 40, false);
+                                  -static_cast<int>(w) - 3 + random(7), 40, false);
 
-                SoundManager.PlayWave(100, 128, 8000 + rand() % 1000, SOUND_GRANATE);
+                SoundManager.PlayWave(100, 128, 8000 + random(1000), SOUND_GRANATE);
 
                 GunSlide = 5.0f;
 

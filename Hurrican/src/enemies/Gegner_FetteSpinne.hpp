@@ -5,10 +5,11 @@
 #include "Gegner_Stuff.hpp"
 
 class GegnerFetteSpinne : public GegnerClass {
-  public:
+  private:
     float ShotDelay;
     int WalkState;  // 0 == unten, 1 == an der Decke
 
+  public:
     GegnerFetteSpinne(int Wert1,
                       int Wert2,  // Konstruktor
                       bool Light);

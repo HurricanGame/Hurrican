@@ -2,6 +2,15 @@
 #include "Main.hpp"
 #include "Timer.hpp"
 
+// --------------------------------------------------------------------------------------
+// Defines
+// --------------------------------------------------------------------------------------
+
+constexpr float FADESPEED = 40.0f;
+constexpr float MAXFADE = 200.0f;
+
+constexpr int BOXSIZEMAX = 480;
+
 //
 // Konstruktor
 //
@@ -27,7 +36,7 @@ void CGUISystem::InitGUISystem() {
     m_BoxSize.bottom = 0;
 
     m_FadingAlpha = 0.0f;
-    m_FadeMode = INVISIBLE;
+    m_FadeMode = FadeMode::INVISIBLE;
 
     m_BoxLines = 0;
 
@@ -135,7 +144,7 @@ void CGUISystem::ShowBox(const char Text[BOXTEXTLENGTH], int yoff, int xoff /* =
     if (yoff > -1)
         m_yPos = float(yoff);
 
-    m_FadeMode = FADEIN;
+    m_FadeMode = FadeMode::FADEIN;
 }
 
 //
@@ -153,7 +162,7 @@ void CGUISystem::ShowBox(int xoff, int yoff, int w, int h) {
 
     strcpy_s(m_BoxText, 1, "");
 
-    m_FadeMode = FADEIN;
+    m_FadeMode = FadeMode::FADEIN;
 }
 
 //
@@ -161,7 +170,7 @@ void CGUISystem::ShowBox(int xoff, int yoff, int w, int h) {
 //
 
 void CGUISystem::HideBox() {
-    m_FadeMode = FADEOUT;
+    m_FadeMode = FadeMode::FADEOUT;
 }
 
 //
@@ -170,7 +179,7 @@ void CGUISystem::HideBox() {
 
 void CGUISystem::HideBoxFast() {
     m_FadingAlpha = 0.0f;
-    m_FadeMode = INVISIBLE;
+    m_FadeMode = FadeMode::INVISIBLE;
 }
 
 //
@@ -180,7 +189,7 @@ void CGUISystem::HideBoxFast() {
 void CGUISystem::Run() {
     // nicht faden? dann gleich abhauen
     //
-    if (m_FadeMode == INVISIBLE)
+    if (m_FadeMode == FadeMode::INVISIBLE)
         return;
 
     // Box rendern
@@ -191,24 +200,24 @@ void CGUISystem::Run() {
     // Einfaden
     //
 
-    if (m_FadeMode == FADEIN) {
+    if (m_FadeMode == FadeMode::FADEIN) {
         if (m_FadingAlpha < MAXFADE)
             m_FadingAlpha += FADESPEED SYNC;
         else {
             m_FadingAlpha = MAXFADE;
-            m_FadeMode = VISIBLE;
+            m_FadeMode = FadeMode::VISIBLE;
         }
     }
 
     // Ausfaden
     //
 
-    if (m_FadeMode == FADEOUT) {
+    if (m_FadeMode == FadeMode::FADEOUT) {
         if (m_FadingAlpha > 0.0f)
             m_FadingAlpha -= FADESPEED SYNC;
         else {
             m_FadingAlpha = 0.0f;
-            m_FadeMode = INVISIBLE;
+            m_FadeMode = FadeMode::INVISIBLE;
         }
     }
 }

@@ -6,23 +6,25 @@
 #include "DX8Sprite.hpp"
 
 // --------------------------------------------------------------------------------------
+// Defines
+// --------------------------------------------------------------------------------------
+
+constexpr int TILESIZE = 20;
+
+constexpr int BOXTEXTLENGTH = 2000;
+
+enum class FadeMode {
+  INVISIBLE,
+  VISIBLE,
+  FADEIN,
+  FADEOUT,
+};
+
+// --------------------------------------------------------------------------------------
 // GUI Klasse
 // --------------------------------------------------------------------------------------
 
 class CGUISystem {
-#define TILESIZE 20
-
-#define INVISIBLE 0
-#define VISIBLE 1
-#define FADEIN 3
-#define FADEOUT 4
-#define FADESPEED 40.0f
-#define MAXFADE 200.0f
-
-#define BOXTEXTLENGTH 2000
-
-#define BOXSIZEMAX 480
-
   private:
     float m_xPos, m_yPos;
     DirectGraphicsSprite m_Rahmen;
@@ -30,11 +32,11 @@ class CGUISystem {
     char m_BoxText[BOXTEXTLENGTH];
     int m_BoxLines;
 
-  public:
-    int m_FadeMode;
+    FadeMode m_FadeMode;
     float m_FadingAlpha;
     int m_TextID;
 
+  public:
     CGUISystem();
     ~CGUISystem();
 
@@ -46,6 +48,11 @@ class CGUISystem {
     void ShowBox(int xoff, int yoff, int w, int h);
     void HideBox();
     void HideBoxFast();
+
+    FadeMode GetFadeMode() const { return m_FadeMode; }
+    float GetFadingAlpha() const { return m_FadingAlpha; }
+    void SetTextID(int TextID) { m_TextID = TextID; }
+    int GetTextID() const { return m_TextID; }
 };
 
 // --------------------------------------------------------------------------------------

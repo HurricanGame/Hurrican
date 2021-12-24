@@ -5,11 +5,12 @@
 #include "enemies/Gegner_Stuff.hpp"
 
 class GegnerUfo : public GegnerClass {
-  public:
+  private:
     float ShotDelay;    // Schussverzögerung
     float ActionDelay;  // Wie lange wird die aktuelle Aktion durchgeführt
     float SmokeDelay;
 
+  public:
     GegnerUfo(int Wert1,
               int Wert2,  // Konstruktor
               bool Light);

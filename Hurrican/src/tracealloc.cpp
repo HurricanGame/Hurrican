@@ -30,7 +30,7 @@ Usage:
 
 **********************************************************************/
 
-#if defined(_DEBUG) && defined(WIN32) && defined(DETECT_LEAKS)
+#if !defined(NDEBUG) && defined(WIN32) && defined(DETECT_LEAKS)
 
 #include <ImageHlp.h>
 #include <assert.h>
@@ -45,17 +45,17 @@ typedef std::basic_string<TCHAR, char_traits<TCHAR> > tcstring;
 
 // Setup how much buffer is used for a single path fetch, increase if you get AV's during leak dump (4096 is plenty
 // though)
-#define BUFFERSIZE 4096
+constexpr int BUFFERSIZE = 4096;
 
 // Define how many levels of callstack that should be fetched for each allocation.
 // Each level costs 2*sizof(ULONG) bytes / allocation.
-#define MAXSTACK 5
+constexpr int MAXSTACK = 5;
 
 // Define size of no mans land
-#define NO_MANS_LAND_SIZE 16
+constexpr int NO_MANS_LAND_SIZE = 16;
 
 // Define frequency of no mans land checking
-#define NML_CHECK_EVERY 1000
+constexpr int NML_CHECK_EVERY = 1000;
 
 #pragma comment(lib, "imagehlp.lib")
 
@@ -129,7 +129,7 @@ void InitSymbolPath(PSTR lpszSymbolPath, PCSTR lpszIniPath) {
     }
 
     // Add user defined path
-    if (lpszIniPath != NULL)
+    if (lpszIniPath != nullptr)
         if (lpszIniPath[0] != '\0') {
             strcat(lpszSymbolPath, ";");
             strcat(lpszSymbolPath, lpszIniPath);
@@ -182,7 +182,7 @@ BOOL GetFunctionInfoFromAddresses(ULONG fnAddress, ULONG stackAddress, LPTSTR lp
     std::uint32_t dwSymSize = 10000;
     TCHAR lpszUnDSymbol[BUFFERSIZE] = _T("?");
     CHAR lpszNonUnicodeUnDSymbol[BUFFERSIZE] = "?";
-    LPTSTR lpszParamSep = NULL;
+    LPTSTR lpszParamSep = nullptr;
     LPCTSTR lpszParsed = lpszUnDSymbol;
     PIMAGEHLP_SYMBOL pSym = (PIMAGEHLP_SYMBOL)GlobalAlloc(GMEM_FIXED, dwSymSize);
 
@@ -219,11 +219,11 @@ BOOL GetFunctionInfoFromAddresses(ULONG fnAddress, ULONG stackAddress, LPTSTR lp
 
         // Let's go through the stack, and modify the function prototype, and insert the actual
         // parameter values from the stack
-        if (_tcsstr(lpszUnDSymbol, _T("()")) == NULL && _tcsstr(lpszUnDSymbol, _T("()")) == NULL) {
+        if (_tcsstr(lpszUnDSymbol, _T("()")) == nullptr && _tcsstr(lpszUnDSymbol, _T("()")) == nullptr) {
             ULONG index = 0;
             for (;; index++) {
                 lpszParamSep = (LPTSTR)_tcschr(lpszParsed, _T(','));
-                if (lpszParamSep == NULL)
+                if (lpszParamSep == nullptr)
                     break;
 
                 *lpszParamSep = _T('\0');
@@ -235,7 +235,7 @@ BOOL GetFunctionInfoFromAddresses(ULONG fnAddress, ULONG stackAddress, LPTSTR lp
             }
 
             lpszParamSep = (LPTSTR)_tcschr(lpszParsed, _T(')'));
-            if (lpszParamSep != NULL) {
+            if (lpszParamSep != nullptr) {
                 *lpszParamSep = _T('\0');
 
                 _tcscat(lpszSymbol, lpszParsed);
@@ -327,8 +327,8 @@ void GetStackTrace(HANDLE hThread, ULONG ranOffsets[][2], ULONG nMaxStack) {
     callStack.AddrFrame.Mode = AddrModeFlat;
 
     for (ULONG index = 0;; index++) {
-        bResult = StackWalk(IMAGE_FILE_MACHINE_I386, hProcess, hThread, &callStack, NULL, NULL, SymFunctionTableAccess,
-                            SymGetModuleBase, NULL);
+        bResult = StackWalk(IMAGE_FILE_MACHINE_I386, hProcess, hThread, &callStack, nullptr, nullptr, SymFunctionTableAccess,
+                            SymGetModuleBase, nullptr);
 
         // Ignore the first two levels (it's only TraceAlloc and operator new anyhow)
         if (index < 3)

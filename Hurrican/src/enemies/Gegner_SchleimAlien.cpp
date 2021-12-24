@@ -22,7 +22,7 @@ GegnerSchleimAlien::GegnerSchleimAlien(int Wert1, int Wert2, bool Light) {
     Value2 = Wert2;
     ChangeLight = Light;
     Destroyable = true;
-    AnimSpeed = (static_cast<float>(rand() % 4 + 2)) / 5.0f;
+    AnimSpeed = (static_cast<float>(random(4) + 2)) / 5.0f;
     AnimEnde = 15;
     OwnDraw = true;
 
@@ -91,14 +91,14 @@ void GegnerSchleimAlien::DoKI() {
 void GegnerSchleimAlien::GegnerExplode() {
     for (int i = 0; i < NUMPLAYERS; i++)
         if (Player[i].AufPlattform == this)
-            Player[i].AufPlattform = NULL;
+            Player[i].AufPlattform = nullptr;
 
     PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_ALIEN);
 
     for (int i = 0; i < 16; i++)
-        PartikelSystem.PushPartikel(xPos + 15 + rand() % 20, yPos + 15 + rand() % 20, SCHLEIM2);
+        PartikelSystem.PushPartikel(xPos + 15 + random(20), yPos + 15 + random(20), SCHLEIM2);
 
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_SCHLEIM);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_SCHLEIM);  // Sound ausgeben
 
     Player[0].Score += 120;
 }

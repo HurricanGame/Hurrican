@@ -14,6 +14,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <string>
 #include <filesystem>
 namespace fs = std::filesystem;
 #include "Console.hpp"
@@ -113,10 +114,8 @@ void ConsoleClass::ShowConsole() {
             pDefaultFont->DrawText(26, yoffset + float(10 + i * line_spacing), Text[array_off], Color);
     }
 
-    char Temp[105];
-
-    strcpy_s(Temp, 2, ">");
-    strcat_s(Temp, Buffer);
+    std::string Temp(">");
+    Temp.append(Buffer);
 
     // Cursor animieren
     cursorcount += 0.3f SYNC;
@@ -125,10 +124,10 @@ void ConsoleClass::ShowConsole() {
         cursorcount = 0.0f;
 
     Color = D3DCOLOR_RGBA(255, 255, 255, a);
-    pDefaultFont->DrawText(26 - 6 * scale_factor, yoffset + 10 + console_lines * line_spacing, Temp, Color);
+    pDefaultFont->DrawText(26 - 6 * scale_factor, yoffset + 10 + console_lines * line_spacing, Temp.c_str(), Color);
 
     // Draw cursor block
-    int text_width = pDefaultFont->StringLength(Temp);
+    int text_width = pDefaultFont->StringLength(Temp.c_str());
     int cursor_x = 20 + text_width;
     if (scale_factor > 1)
         cursor_x -= 6;
@@ -179,7 +178,7 @@ void ConsoleClass::CheckCommands() {
     // Hilfe
     //
     // DKS - Re-enabled help, as it seems to be just fine
-    //#ifdef _DEBUG
+    //#ifndef NDEBUG
     // TODO FIX
     if (CONSOLE_COMMAND("help")) {
         this->print(" ");
@@ -363,7 +362,7 @@ void ConsoleClass::CheckCommands() {
         Timer.SetMaxFPS(g_test);
     }
 
-    //#ifdef _DEBUG
+    //#ifndef NDEBUG
     // Speed setzen
     if (strncmp(Buffer, "setspeed ", 9) == 0) {
         // Bis zu der Zahl vorgehen
@@ -400,7 +399,7 @@ void ConsoleClass::CheckCommands() {
         if (mapname.substr(mapname.length() - 4) != ".map")
             mapname += ".map";
 
-        std::string filename = std::string(g_storage_ext) + "/data/levels/" + mapname;
+        std::string filename = g_storage_ext + "/data/levels/" + mapname;
 
         // Datei gefunden? Dann laden
         if (fs::exists(filename) && fs::is_regular_file(filename)) {
@@ -492,7 +491,7 @@ void ConsoleClass::CheckCommands() {
         }
     }  // else
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     // In Level warpen
     if (strncmp(Buffer, "goto ", 5) == 0) {
         // Bis zu der Zahl vorgehen
@@ -527,7 +526,7 @@ void ConsoleClass::CheckCommands() {
                 NewStage = g_test;
             }
 
-            InitNewGameLevel(Stage);
+            InitNewGameLevel();
         }
     }  // else
 #endif

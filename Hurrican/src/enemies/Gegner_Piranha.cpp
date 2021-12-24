@@ -17,7 +17,7 @@ GegnerPiranha::GegnerPiranha(int Wert1, int Wert2, bool Light) {
     AnimStart = 0;
     AnimEnde = 10;
     AnimSpeed = 0.75f;
-    if (rand() % 2 == 0)
+    if (random(2) == 0)
         BlickRichtung = LINKS;
     else
         BlickRichtung = RECHTS;
@@ -35,7 +35,7 @@ GegnerPiranha::GegnerPiranha(int Wert1, int Wert2, bool Light) {
         Value2 = 0;
         Handlung = GEGNER_SPECIAL;
 
-        xSpeed = -20.0f - rand() % 20;
+        xSpeed = -20.0f - random(20);
         xsave = xSpeed;
         ySpeed = static_cast<float>(Wert2) * 3;
         ysave = ySpeed;
@@ -44,7 +44,7 @@ GegnerPiranha::GegnerPiranha(int Wert1, int Wert2, bool Light) {
     } else
 
         if (Value2 != 1)
-        Value2 = rand() % 20 + 2;
+        Value2 = random(20) + 2;
     ChangeLight = Light;
     Destroyable = true;
     OwnDraw = true;
@@ -154,9 +154,9 @@ void GegnerPiranha::DoKI() {
                 }
             } else {
                 if (BlickRichtung == LINKS)
-                    xSpeed = -float(rand() % 10 + 4);
+                    xSpeed = -float(random(10) + 4);
                 else
-                    xSpeed = float(rand() % 10 + 4);
+                    xSpeed = float(random(10) + 4);
             }
         } break;
 
@@ -194,15 +194,15 @@ void GegnerPiranha::GegnerExplode() {
     // Fetzen und Blasen erzeugen
     int i;
     for (i = 0; i < 3; i++)
-        PartikelSystem.PushPartikel(float(xPos - 20 + rand() % 45), float(yPos - 5 + rand() % 30), PIRANHATEILE);
+        PartikelSystem.PushPartikel(float(xPos - 20 + random(45)), float(yPos - 5 + random(30)), PIRANHATEILE);
 
     for (i = 0; i < 3; i++)
-        PartikelSystem.PushPartikel(float(xPos - 10 + rand() % 45), float(yPos + 10 + rand() % 30), BUBBLE);
+        PartikelSystem.PushPartikel(float(xPos - 10 + random(45)), float(yPos + 10 + random(30)), BUBBLE);
 
     // Blutwolke dazu
     PartikelSystem.PushPartikel(float(xPos + 2), float(yPos - 5), PIRANHABLUT);
 
-    SoundManager.PlayWave(100, 128, -rand() % 2000 + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 200;
 }

@@ -69,9 +69,9 @@ void GegnerFahrstuhl::DoKI() {
         if (Player[p].AufPlattform == this) {
             if (Handlung != GEGNER_FALLEN) {
                 if (Value1 == 0) {
-                    TileEngine.Zustand = ZUSTAND_LOCKED;
-                } else if (TileEngine.Zustand != ZUSTAND_SCROLLTOPLAYER)
-                    TileEngine.ScrollLevel(xPos - 50, yPos - 400, ZUSTAND_SCROLLTOLOCK);
+                    TileEngine.Zustand = TileStateEnum::LOCKED;
+                } else if (TileEngine.Zustand != TileStateEnum::SCROLLTOPLAYER)
+                    TileEngine.ScrollLevel(xPos - 50, yPos - 400, TileStateEnum::SCROLLTOLOCK);
             }
 
             Handlung = GEGNER_FALLEN;  // Fahrstuhl fährt los
@@ -95,7 +95,7 @@ void GegnerFahrstuhl::DoKI() {
                     Player[p].ypos = yPos - Player[p].CollideRect.bottom;
                 }
 
-                if (TileEngine.Zustand == ZUSTAND_LOCKED)
+                if (TileEngine.Zustand == TileStateEnum::LOCKED)
                     new_ySpeed = 8.0f;
             } else
                 new_ySpeed = Player[0].AutoScrollspeed;
@@ -114,12 +114,12 @@ void GegnerFahrstuhl::DoKI() {
             if (sparkcount < 0.0f) {
                 sparkcount = 0.05f;
 
-                PartikelSystem.PushPartikel(xPos + rand() % 5, yPos + rand() % 5, FUNKE);
-                PartikelSystem.PushPartikel(xPos + rand() % 5 + GegnerRect[GegnerArt].right, yPos + rand() % 5, FUNKE);
+                PartikelSystem.PushPartikel(xPos + random(5), yPos + random(5), FUNKE);
+                PartikelSystem.PushPartikel(xPos + random(5) + GegnerRect[GegnerArt].right, yPos + random(5), FUNKE);
 
-                if (rand() % 20 == 0)
+                if (random(20) == 0)
                     PartikelSystem.PushPartikel(xPos - 20, yPos - 10, SMOKEBIG);
-                if (rand() % 20 == 0)
+                if (random(20) == 0)
                     PartikelSystem.PushPartikel(xPos - 20 + GegnerRect[GegnerArt].right, yPos - 10, SMOKEBIG);
             }
 
@@ -149,27 +149,27 @@ void GegnerFahrstuhl::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
     for (int j = 0; j < 100; j++)
-        PartikelSystem.PushPartikel(xPos + rand() % 400, yPos + rand() % 100, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + random(400), yPos + random(100), SPIDERSPLITTER);
 
     for (int j = 0; j < 50; j++) {
-        PartikelSystem.PushPartikel(xPos + rand() % 400, yPos + rand() % 100, ROCKETSMOKE);
-        PartikelSystem.PushPartikel(xPos - 30 + rand() % 400, yPos - 30 + rand() % 100, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + random(400), yPos + random(100), ROCKETSMOKE);
+        PartikelSystem.PushPartikel(xPos - 30 + random(400), yPos - 30 + random(100), EXPLOSION_MEDIUM2);
     }
 
     for (int j = 0; j < 20; j++)
-        PartikelSystem.PushPartikel(xPos + rand() % 400, yPos + rand() % 100, SPLITTER);
+        PartikelSystem.PushPartikel(xPos + random(400), yPos + random(100), SPLITTER);
 
-    TileEngine.Zustand = ZUSTAND_SCROLLBAR;
+    TileEngine.Zustand = TileStateEnum::SCROLLBAR;
 
     // Spieler springt ab
     //
     for (int p = 0; p < NUMPLAYERS; p++) {
         Player[p].JumpPossible = false;
         Player[p].AnimPhase = 0;
-        Player[p].Handlung = SPRINGEN;
+        Player[p].Handlung = PlayerActionEnum::SPRINGEN;
         Player[p].JumpStart = Player[p].ypos;
         Player[p].yspeed = -PLAYER_MAXJUMPSPEED;
         Player[p].JumpAdd = 0.0f;
-        Player[p].AufPlattform = NULL;
+        Player[p].AufPlattform = nullptr;
     }
 }

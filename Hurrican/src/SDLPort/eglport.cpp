@@ -68,10 +68,10 @@ enum EGL_SETTINGS_T {
 NativeDisplayType nativeDisplay = 0; /** Reference to the systems native display */
 NativeWindowType nativeWindow = 0;   /** Reference to the systems native window */
 EGLint eglSettings[CFG_TOTAL];       /** Stores setting values. */
-EGLDisplay eglDisplay = NULL;        /** Reference to the EGL display */
-EGLConfig eglConfig = NULL;          /** Reference to the EGL config */
-EGLContext eglContext = NULL;        /** Reference to the EGL context */
-EGLSurface eglSurface = NULL;        /** Reference to the EGL surface */
+EGLDisplay eglDisplay = nullptr;        /** Reference to the EGL display */
+EGLConfig eglConfig = nullptr;          /** Reference to the EGL config */
+EGLContext eglContext = nullptr;        /** Reference to the EGL context */
+EGLSurface eglSurface = nullptr;        /** Reference to the EGL surface */
 
 #define totalConfigsIn 5              /** Total number of configurations to request */
 EGLint totalConfigsFound = 0;         /** Total number of configurations matching attributes */
@@ -100,20 +100,20 @@ uint32_t Platform_GetTicks();
  */
 void EGL_Close() {
     /* Release EGL resources */
-    if (eglDisplay != NULL) {
-        peglMakeCurrent(eglDisplay, NULL, NULL, EGL_NO_CONTEXT);
-        if (eglContext != NULL) {
+    if (eglDisplay != nullptr) {
+        peglMakeCurrent(eglDisplay, nullptr, nullptr, EGL_NO_CONTEXT);
+        if (eglContext != nullptr) {
             peglDestroyContext(eglDisplay, eglContext);
         }
-        if (eglSurface != NULL) {
+        if (eglSurface != nullptr) {
             peglDestroySurface(eglDisplay, eglSurface);
         }
         peglTerminate(eglDisplay);
     }
 
-    eglSurface = NULL;
-    eglContext = NULL;
-    eglDisplay = NULL;
+    eglSurface = nullptr;
+    eglContext = nullptr;
+    eglDisplay = nullptr;
 
     /* Release platform resources */
     FreeNativeWindow();
@@ -176,7 +176,7 @@ int8_t EGL_Open(uint16_t width, uint16_t height, uint16_t depth, bool vsync) {
 #endif
 
     /* Check that system is not open */
-    if (eglDisplay != NULL || eglContext != NULL || eglSurface != NULL) {
+    if (eglDisplay != nullptr || eglContext != nullptr || eglSurface != nullptr) {
         printf("EGLport ERROR: EGL system is already open!\n");
         return 1;
     }
@@ -237,7 +237,7 @@ int8_t EGL_Open(uint16_t width, uint16_t height, uint16_t depth, bool vsync) {
 #endif /* EGL_VERSION_1_2 */
 
     printf("EGLport: Creating Context\n");
-    eglContext = peglCreateContext(eglDisplay, eglConfigs[configIndex], NULL, contextAttribs);
+    eglContext = peglCreateContext(eglDisplay, eglConfigs[configIndex], nullptr, contextAttribs);
     if (eglContext == EGL_NO_CONTEXT) {
         CheckEGLErrors(__FILE__, __LINE__);
         printf("EGLport ERROR: Unable to create GLES context!\n");
@@ -289,8 +289,8 @@ void OpenCfg(const char *file, uint16_t depth, bool vsync) {
 #define MAX_STRING 20
 #define MAX_SIZE 100
     uint8_t i;
-    FILE *fp = NULL;
-    char *location = NULL;
+    FILE *fp = nullptr;
+    char *location = nullptr;
     char eglStrings[CFG_TOTAL][MAX_STRING];
     char buffer[MAX_SIZE];
 
@@ -349,11 +349,11 @@ void OpenCfg(const char *file, uint16_t depth, bool vsync) {
 
     /* Parse INI file */
     fp = fopen(file, "r");
-    if (fp != NULL) {
-        while (fgets(buffer, MAX_SIZE, fp) != NULL) {
+    if (fp != nullptr) {
+        while (fgets(buffer, MAX_SIZE, fp) != nullptr) {
             for (i = 0; i < CFG_TOTAL; i++) {
                 location = strstr(buffer, eglStrings[i]);
-                if (location != NULL) {
+                if (location != nullptr) {
                     eglSettings[i] = atol( location+strlen(eglStrings[i]) );
                     printf("EGLport: %s set to %d.\n", eglStrings[i], eglSettings[i]);
                     break;
@@ -552,7 +552,7 @@ int8_t GetNativeWindow(uint16_t width, uint16_t height) {
 
     nativeWindow = (NativeWindowType)malloc(16 * 1024);
 
-    if (nativeWindow == NULL) {
+    if (nativeWindow == nullptr) {
         printf("EGLport ERROR: Memory for window Failed\n");
         return 1;
     }
@@ -634,10 +634,10 @@ void FreeNativeDisplay() {}
  */
 void FreeNativeWindow() {
 #if defined(WIZ) || defined(CAANOO)
-    if (nativeWindow != NULL) {
+    if (nativeWindow != nullptr) {
         free(nativeWindow);
     }
-    nativeWindow = NULL;
+    nativeWindow = nullptr;
 #endif /* WIZ / CAANOO */
 }
 

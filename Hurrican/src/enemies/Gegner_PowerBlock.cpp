@@ -23,7 +23,7 @@ GegnerPowerBlock::GegnerPowerBlock(int Wert1, int Wert2, bool Light) {
 
     for (int i = 0; i < 16; i++)
         AlreadySpawned[i] = false;
-
+#if 0
     // Itemanzahl standard mässig auf 16 setzen, wenn keine Items drin sind (weil Turri das immer vergisst im Editor)
     if (Wert1 == 0)
         Value1 = 10;
@@ -32,17 +32,18 @@ GegnerPowerBlock::GegnerPowerBlock(int Wert1, int Wert2, bool Light) {
 
     // Je mach Skill weniger Extras
     //
-    if (Skill == 0)
+    if (Skill == SKILL_EASY)
         Value1 = int(Value1 * 1.0f);
-    if (Skill == 1)
+    if (Skill == SKILL_MEDIUM)
         Value1 = int(Value1 * 0.7f);
-    if (Skill == 2)
+    if (Skill == SKILL_HARD)
         Value1 = int(Value1 * 0.5f);
-    if (Skill == 3)
+    if (Skill == SKILL_HURRICAN)
         Value1 = int(Value1 * 0.3f);
-
+#else
+    // NOTE why has this been hardcoded?
     Value1 = 4;
-
+#endif
     // Typ des Extras merken
     // Ist der Typ == 0, werden Extras per Zufall gespawnt
     ExtraType = Wert2;
@@ -159,9 +160,9 @@ void GegnerPowerBlock::DoKI() {
                 while (AlreadySpawned[extra]) {
                     // Per Zufallsverteilung entsprechendes Extra setzen
                     if (WeaponSpawned > 0)
-                        r = rand() % 675;
+                        r = random(675);
                     else
-                        r = rand() % 175 + 500;
+                        r = random(175) + 500;
 
                     for (int i = 0; i < 12; i++)
                         if (r < WaffenVerteilung[i]) {
@@ -194,9 +195,9 @@ void GegnerPowerBlock::DoKI() {
 void GegnerPowerBlock::GegnerExplode() {
     for (int i = 0; i < NUMPLAYERS; i++)
         if (Player[i].AufPlattform == this) {
-            Player[i].AufPlattform = NULL;
+            Player[i].AufPlattform = nullptr;
             Player[i].JumpPossible = false;
-            Player[i].Handlung = SPRINGEN;
+            Player[i].Handlung = PlayerActionEnum::SPRINGEN;
             Player[i].AnimPhase = 0;
             Player[i].yspeed = 0.5f;
             Player[i].JumpAdd = PLAYER_JUMPADDSPEED;
@@ -208,5 +209,5 @@ void GegnerPowerBlock::GegnerExplode() {
     // Explosion erzeugen
     PartikelSystem.PushPartikel(xPos - 30, yPos - 30, EXPLOSION_BIG);
 
-    SoundManager.PlayWave(100, 128, -rand() % 2000 + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 }

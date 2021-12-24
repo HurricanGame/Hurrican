@@ -91,7 +91,7 @@ void GegnerWalker::DoKI() {
                 ShotDelay -= 1.0f SYNC;
 
                 if (ShotDelay <= 0.0f) {
-                    ShotDelay = static_cast<float>(10 + rand() % 5);
+                    ShotDelay = static_cast<float>(10 + random(5));
                     AnimStart = 12;
                     AnimPhase = 12;
                     AnimEnde = 20;
@@ -116,7 +116,7 @@ void GegnerWalker::DoKI() {
 
             // Schuss abgeben
             if (AnimPhase == 17 && AnimCount == 0.0f) {
-                SoundManager.PlayWave(100, 128, 18000 + rand() % 2000, SOUND_LASERSHOT);
+                SoundManager.PlayWave(100, 128, 18000 + random(2000), SOUND_LASERSHOT);
 
                 if (BlickRichtung == LINKS)
                     Projectiles.PushProjectile(xPos - 18, yPos + 23, WALKER_LASER);
@@ -169,13 +169,15 @@ void GegnerWalker::DoKI() {
 
     // Spieler kann dem Walker auf den Kopf springen
     for (int i = 0; i < NUMPLAYERS; i++)
-        if (Player[i].Handlung != RADELN && Player[i].Handlung != RADELN_FALL && Player[i].yspeed >= 0.0f) {
+        if (Player[i].Handlung != PlayerActionEnum::RADELN &&
+                Player[i].Handlung != PlayerActionEnum::RADELN_FALL &&
+                Player[i].yspeed >= 0.0f) {
             if (Player[i].AufPlattform == this) {
                 // Spieler springen lassen
-                Player[i].AufPlattform = NULL;
+                Player[i].AufPlattform = nullptr;
                 Player[i].JumpPossible = false;
                 Player[i].AnimPhase = 2;
-                Player[i].Handlung = SPRINGEN;
+                Player[i].Handlung = PlayerActionEnum::SPRINGEN;
                 Player[i].JumpStart = Player[i].ypos;
                 Player[i].yspeed = -PLAYER_MAXJUMPSPEED;
                 Player[i].JumpAdd = 0.0f;
@@ -207,9 +209,9 @@ void GegnerWalker::DoKI() {
 
 void GegnerWalker::GegnerExplode() {
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(float(xPos - 20 + rand() % 45), float(yPos - 20 + rand() % 45), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(float(xPos - 20 + random(45)), float(yPos - 20 + random(45)), EXPLOSION_MEDIUM2);
 
-    SoundManager.PlayWave(100, 128, -rand() % 2000 + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 100;
 }

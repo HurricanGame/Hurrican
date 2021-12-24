@@ -119,14 +119,8 @@ void GegnerMiniRocket::DoKI() {
         else
             yAcc = -2.5f;
 
-        if (xSpeed < -10.0f)
-            xSpeed = -10.0f;
-        if (xSpeed > 10.0f)
-            xSpeed = 10.0f;
-        if (ySpeed < -10.0f)
-            ySpeed = -10.0f;
-        if (ySpeed > 10.0f)
-            ySpeed = 10.0f;
+        xSpeed = std::clamp(xSpeed, -10.0f, 10.0f);
+        ySpeed = std::clamp(ySpeed, -10.0f, 10.0f);
     }
 
     // Rauchen lassen
@@ -156,14 +150,14 @@ void GegnerMiniRocket::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerMiniRocket::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
 
     int i = 0;
     for (i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 20, yPos - 10 + rand() % 20, SMOKE);
+        PartikelSystem.PushPartikel(xPos + random(20), yPos - 10 + random(20), SMOKE);
 
     for (i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 20, yPos - 10 + rand() % 20, MINIFLARE);
+        PartikelSystem.PushPartikel(xPos + random(20), yPos - 10 + random(20), MINIFLARE);
 
     Player[0].Score += 50;
 }

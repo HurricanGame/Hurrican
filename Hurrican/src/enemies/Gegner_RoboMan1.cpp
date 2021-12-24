@@ -59,8 +59,8 @@ void GegnerRoboMan1::DoKI() {
     if (SmokeCount < 0.0f) {
         SmokeCount += 0.1f;
 
-        PartikelSystem.PushPartikel(xPos + 29 + rand() % 5, yPos + 90, ROBOMANSMOKE);
-        PartikelSystem.PushPartikel(xPos + 40 + rand() % 5, yPos + 90, ROBOMANSMOKE);
+        PartikelSystem.PushPartikel(xPos + 29 + random(5), yPos + 90, ROBOMANSMOKE);
+        PartikelSystem.PushPartikel(xPos + 40 + random(5), yPos + 90, ROBOMANSMOKE);
     }
 
     // Immer den Spieler im Auge behalten
@@ -123,10 +123,7 @@ void GegnerRoboMan1::DoKI() {
         if (yPos > pAim->ypos - 40)
             yAcc = -2.5f;
 
-        if (ySpeed > 10.0f)
-            ySpeed = 10.0f;
-        if (ySpeed < -10.0f)
-            ySpeed = -10.0f;
+        ySpeed = std::clamp(ySpeed, -10.0f, 10.0f);
     }
 
     if ((blocko & BLOCKWERT_WAND || blocko & BLOCKWERT_GEGNERWAND) && ySpeed < 0.0f)
@@ -150,7 +147,7 @@ void GegnerRoboMan1::DoKI() {
             // Robo rauchen lassen
             ShotCount -= 3.0f SYNC;
             if (ShotCount <= 0.0f) {
-                PartikelSystem.PushPartikel(xPos + rand() % 80, yPos + rand() % 90, SMOKE);
+                PartikelSystem.PushPartikel(xPos + random(80), yPos + random(90), SMOKE);
                 ShotCount = 1.0f;
             }
         } break;
@@ -182,14 +179,14 @@ void GegnerRoboMan1::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerRoboMan1::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
 
     int i;
 
     for (i = 0; i < 3; i++)
-        PartikelSystem.PushPartikel(xPos - 40 + rand() % 70, yPos + rand() % 40, EXPLOSION_BIG);
+        PartikelSystem.PushPartikel(xPos - 40 + random(70), yPos + random(40), EXPLOSION_BIG);
     for (i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 10 + rand() % 70, yPos + rand() % 60, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 10 + random(70), yPos + random(60), EXPLOSION_MEDIUM2);
     for (i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 70, yPos + 20 + rand() % 60, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + random(70), yPos + 20 + random(60), SPIDERSPLITTER);
 }

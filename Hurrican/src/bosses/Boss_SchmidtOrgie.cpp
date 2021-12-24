@@ -47,9 +47,9 @@ void GegnerSchmidtOrgie::DoKI() {
 
     // Boss aktivieren und Mucke laufen lassen
     //
-    if (Active == true && Handlung != GEGNER_VERFOLGEN && TileEngine.Zustand == ZUSTAND_SCROLLBAR) {
+    if (Active == true && Handlung != GEGNER_VERFOLGEN && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
-                               ZUSTAND_SCROLLTOLOCK);  // Level auf den Boss zentrieren
+                               TileStateEnum::SCROLLTOLOCK);  // Level auf den Boss zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
         Gegner.PushGegner(xPos, yPos - 40, EXTRAS, 10, 0, false);
@@ -67,7 +67,7 @@ void GegnerSchmidtOrgie::DoKI() {
     switch (Handlung) {
         case GEGNER_INIT:  // Warten bis der Screen zentriert wurde
         {
-            if (TileEngine.Zustand == ZUSTAND_LOCKED) {
+            if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 //
                 // DKS - Added function SongIsPlaying() to SoundManagerClass:
@@ -87,7 +87,7 @@ void GegnerSchmidtOrgie::DoKI() {
             ActionCounter -= 1.5f SYNC;
 
             float x;
-            if (rand() % 2 == 0)
+            if (random(2) == 0)
                 x = -40.0f;
             else
                 x = 620.0f;
@@ -97,13 +97,13 @@ void GegnerSchmidtOrgie::DoKI() {
 
                 // Gegner per Zufall wählen und spawnen
                 //
-                int spawn = rand() % 2;
+                int spawn = random(2);
 
                 if (spawn == 0)
-                    Gegner.PushGegner(float(Value1) + x, float(Value2) + 50 + rand() % 200, FLEDERMAUS, 0, 1, false);
+                    Gegner.PushGegner(float(Value1) + x, float(Value2) + 50 + random(200), FLEDERMAUS, 0, 1, false);
 
                 if (spawn == 1)
-                    Gegner.PushGegner(float(Value1) + x, float(Value2) + 200 + rand() % 50, SCHLEIMBOLLER, 24, 0,
+                    Gegner.PushGegner(float(Value1) + x, float(Value2) + 200 + random(50), SCHLEIMBOLLER, 24, 0,
                                       false);
 
                 Energy -= 10;
@@ -111,14 +111,14 @@ void GegnerSchmidtOrgie::DoKI() {
                 // ab und zu ein Paar Augen einstreuen
                 //
                 if (int(Energy) % 1000 == 0) {
-                    Gegner.PushGegner(float(Value1) - 20, float(Value2) + 130, AUGE, rand() % 10, 0, false);
-                    Gegner.PushGegner(float(Value1) + 620, float(Value2) + 200, AUGE, rand() % 10, 0, false);
+                    Gegner.PushGegner(float(Value1) - 20, float(Value2) + 130, AUGE, random(10), 0, false);
+                    Gegner.PushGegner(float(Value1) + 620, float(Value2) + 200, AUGE, random(10), 0, false);
                 }
 
                 // oder eine Stachelkugel, einen Firewalker oder ein großer Schleimboller;)
                 //
                 if (int(Energy) % 500 == 0) {
-                    int j = rand() % 3;
+                    int j = random(3);
 
                     switch (j) {
                         case 0:

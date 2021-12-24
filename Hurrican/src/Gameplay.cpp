@@ -32,8 +32,6 @@
 #include "Tileengine.hpp"
 #include "Timer.hpp"
 
-#include <string>
-
 // --------------------------------------------------------------------------------------
 // Gameplay Variablen
 // --------------------------------------------------------------------------------------
@@ -61,9 +59,10 @@ bool HasCheated = false;
 
 bool RunningTutorial = false;
 
-#define DEMO_ID "Hurrican Demo File"  // Kennung
+constexpr const char* DEMO_ID = "Hurrican Demo File";  // Kennung
+constexpr const char* CONFIGFILE = "Hurrican.cfg";  // Name der Konfigurationsdatei
 
-char StageReihenfolge[256][100];
+std::string StageReihenfolge[256];
 
 int options_Detail;
 bool StopStageMusicAtStart;
@@ -101,7 +100,7 @@ void InitNewGame() {
     pMenu->StartProgressBar(NumTextures);
 
     for (int p = 0; p < NUMPLAYERS; p++) {
-        Player[p].Handlung = STEHEN;
+        Player[p].Handlung = PlayerActionEnum::STEHEN;
         Player[p].InitPlayer(p);  // DKS: InitPlayer now takes argument specifying which
                                   //      player number each player is. InitPlayer will
                                   //      also load each player's set of sprites if they
@@ -158,7 +157,7 @@ void InitNewGameLevel() {
 
     // und Level endlich laden
     if (!TileEngine.LoadLevel(Name)) {
-        SpielZustand = MAINMENU;
+        SpielZustand = GameStateEnum::MAINMENU;
         pMenu->AktuellerZustand = MENUPUNKT_STARTGAME;
         Stage = -1;
         NewStage = -1;
@@ -192,7 +191,7 @@ void InitNewGameLevel() {
             // Timer updaten
             Timer.update();
             Timer.wait();
-            SpeedFaktor = Timer.SpeedFaktor;
+            SpeedFaktor = Timer.getSpeedFactor();
 
             SoundManager.Update();
         }
@@ -204,7 +203,7 @@ void InitNewGameLevel() {
 
     FahrstuhlPos = -1.0f;
 
-    SpielZustand = GAMELOOP;
+    SpielZustand = GameStateEnum::GAMELOOP;
 }
 
 // --------------------------------------------------------------------------------------
@@ -262,7 +261,7 @@ void GameLoop() {
     TileEngine.NewXOffset = -1;
     TileEngine.NewYOffset = -1;
 
-#define SPD_INC 0.3f
+    constexpr float SPD_INC = 0.3f;
     float i = 0;
     float SpeedFaktorMax = SpeedFaktor;
 
@@ -287,7 +286,7 @@ void GameLoop() {
         for (int p = 0; p < NUMPLAYERS; p++) {
             Player[p].WasDamaged = false;
 
-            if (!Console.Showing && Player[p].Handlung != TOT) {
+            if (!Console.Showing && Player[p].Handlung != PlayerActionEnum::TOT) {
                 if (Player[p].GameOverTimer == 0.0f) {
                     // Spieler-Eingabe abfragen
                     Player[p].GetPlayerInput();
@@ -320,7 +319,7 @@ void GameLoop() {
     }
     SpeedFaktor = SpeedFaktorMax;  // Restore the factor so other logic can stay in sync
 
-    if (SpielZustand != GAMELOOP)
+    if (SpielZustand != GameStateEnum::GAMELOOP)
         return;
 
     // Hintergrund und Parallax Layer anzeigen
@@ -429,7 +428,7 @@ void GameLoop() {
             Player[0].SelectedWeapon = 2;
 
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (Player[p].Handlung != TOT)
+            if (Player[p].Handlung != PlayerActionEnum::TOT)
                 Player[p].CheckForExplode();
     }
 
@@ -483,7 +482,7 @@ void LeaveGameLoop() {
     pMenu->RotationDir = 1;
 
     // Ins Hauptmenu wechseln
-    SpielZustand = MAINMENU;
+    SpielZustand = GameStateEnum::MAINMENU;
     pMenu->AktuellerZustand = MENUZUSTAND_MAINMENU;
     if (Player[0].Lives == -1 && Player[1].Lives == -1)
         // DKS - If game is over, make main menu selection be "Start New Game"
@@ -583,7 +582,7 @@ void ShakeScreen(float staerke) {
     WackelMaximum = staerke;
     WackelValue = 0.0f;
     WackelDir = 1.0f;
-    WackelSpeed = float(rand() % 10 + 5);
+    WackelSpeed = float(random(10) + 5);
 }
 
 // --------------------------------------------------------------------------------------
@@ -760,7 +759,7 @@ void CreateDefaultConfig() {
 bool LoadConfig() {
     float Sound, Musik;
 
-    std::string filename = std::string(g_config_ext) + "/" + CONFIGFILE;
+    std::string filename = g_config_ext + "/" + CONFIGFILE;
 
     std::ifstream Datei(filename, std::ifstream::binary);  // versuchen Datei zu öffnen
 
@@ -862,7 +861,7 @@ bool LoadConfig() {
 void SaveConfig() {
     float Sound, Musik;
 
-    std::string filename = std::string(g_config_ext) + "/" + CONFIGFILE;
+    std::string filename = g_config_ext + "/" + CONFIGFILE;
 
     std::ofstream Datei(filename, std::ifstream::binary);
 
@@ -933,16 +932,11 @@ bool DisplayLoadInfo(const char Text[100]) {
     pMenuFont->DrawTextCenterAlign(320, 200, TextArray[TEXT_MENUE_LOADING], 0xFFFFFFFF);
 
     // Anzahl anzeigen
-#ifdef _DEBUG
-    // DKS - Disabled this, it was causing crashes when _DEBUG was enabled (perhaps font was
-    //      not loaded at this point)
-#if 0
-    char buf[5];
+#ifndef NDEBUG
+    std::string buf = std::to_string(pMenu->ItemsLoaded());
 
-    sprintf_s(buf, "%d", LoadingItemsLoaded);
-    pDefaultFont->DrawText((700 - pDefaultFont->StringLength(TextArray[TEXT_MENUE_LOADING])) / 2.0f, 220,
-                           buf, 0xFFFFFFFF);
-#endif  // 0
+    pMenuFont->DrawText((700 - pMenuFont->StringLength(TextArray[TEXT_MENUE_LOADING])) / 2.0f, 270,
+                           buf.c_str(), 0xFFFFFFFF);
 #endif
 
     // Hint anzeigen
@@ -953,18 +947,18 @@ bool DisplayLoadInfo(const char Text[100]) {
             float y_pos = 270.0f;
             float y_inc = 28.0f;
             int max_width = RENDERWIDTH - 20;
-            if (pDefaultFont->StringLength(text, 0) > max_width) {
+            if (pMenuFont->StringLength(text, 0) > max_width) {
                 // Split the line in two if too long to display on low-res device:
                 char text1[255];
                 char text2[255];
                 SplitLine(text1, text2, text);
-                pDefaultFont->DrawTextCenterAlign(320.0f, y_pos, text1, 0xFFFFFFFF, 0);
-                pDefaultFont->DrawTextCenterAlign(320.0f, y_pos + y_inc, text2, 0xFFFFFFFF, 0);
+                pMenuFont->DrawTextCenterAlign(320.0f, y_pos, text1, 0xFFFFFFFF, 0);
+                pMenuFont->DrawTextCenterAlign(320.0f, y_pos + y_inc, text2, 0xFFFFFFFF, 0);
             } else {
-                pDefaultFont->DrawTextCenterAlign(320.0f, y_pos, text, 0xFFFFFFFF, 0);
+                pMenuFont->DrawTextCenterAlign(320.0f, y_pos, text, 0xFFFFFFFF, 0);
             }
         } else {
-            pDefaultFont->DrawTextCenterAlign(320.0f, 270.0f, TextArray[TEXT_HINT1 + DisplayHintNr], 0xFFFFFFFF, 0);
+            pMenuFont->DrawTextCenterAlign(320.0f, 270.0f, TextArray[TEXT_HINT1 + DisplayHintNr], 0xFFFFFFFF, 0);
         }
     }
 
@@ -1086,7 +1080,7 @@ void SummaryScreen() {
 
         // Summary Screen rendern
         GUI.Run();
-        D3DCOLOR color = D3DCOLOR_RGBA(0, 255, 0, static_cast<int>(GUI.m_FadingAlpha));
+        D3DCOLOR color = D3DCOLOR_RGBA(0, 255, 0, static_cast<int>(GUI.GetFadingAlpha()));
         pDefaultFont->DrawText(
             float(RENDERWIDTH - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_TITLE])) / 2,
             float(title_txt_y), TextArray[TEXT_SUMMARY_TITLE], color);
@@ -1111,22 +1105,30 @@ void SummaryScreen() {
                                float(sprites_y - pDefaultFont->GetYCharSize() / 2), TextArray[TEXT_SUMMARY_SECRETS],
                                color);
 
-        char buf[100];
-        snprintf(buf, 100, "%i/%i", Player[0].BlocksThisLevel, TileEngine.MaxBlocks);
-        pDefaultFont->DrawText(float(sprite1_x - pDefaultFont->StringLength(buf) / 2), float(stats_txt_y), buf,
-                               color);
+        std::string buf;
+        buf = std::to_string(Player[0].BlocksThisLevel)
+            .append("/")
+            .append(std::to_string(TileEngine.MaxBlocks));
+        pDefaultFont->DrawText(float(sprite1_x - pDefaultFont->StringLength(buf.c_str()) / 2), 
+                               float(stats_txt_y), buf.c_str(), color);
 
-        snprintf(buf, 100, "%i/%i", Player[0].DiamondsThisLevel, TileEngine.MaxDiamonds);
-        pDefaultFont->DrawText(float(sprite2_x - pDefaultFont->StringLength(buf) / 2), float(stats_txt_y), buf,
-                               color);
+        buf = std::to_string(Player[0].DiamondsThisLevel)
+            .append("/")
+            .append(std::to_string(TileEngine.MaxDiamonds));
+        pDefaultFont->DrawText(float(sprite2_x - pDefaultFont->StringLength(buf.c_str()) / 2),
+                               float(stats_txt_y), buf.c_str(), color);
 
-        snprintf(buf, 100, "%i/%i", Player[0].LivesThisLevel, TileEngine.MaxOneUps);
-        pDefaultFont->DrawText(float(sprite3_x - pDefaultFont->StringLength(buf) / 2), float(stats_txt_y), buf,
-                               color);
+        buf = std::to_string(Player[0].LivesThisLevel)
+            .append("/")
+            .append(std::to_string(TileEngine.MaxOneUps));
+        pDefaultFont->DrawText(float(sprite3_x - pDefaultFont->StringLength(buf.c_str()) / 2),
+                               float(stats_txt_y), buf.c_str(), color);
 
-        snprintf(buf, 100, "%i/%i", Player[0].SecretThisLevel, TileEngine.MaxSecrets);
-        pDefaultFont->DrawText(float(secrets_x - pDefaultFont->StringLength(buf) / 2), float(stats_txt_y), buf,
-                               color);
+        buf = std::to_string(Player[0].SecretThisLevel)
+            .append("/")
+            .append(std::to_string(TileEngine.MaxSecrets));
+        pDefaultFont->DrawText(float(secrets_x - pDefaultFont->StringLength(buf.c_str()) / 2),
+                               float(stats_txt_y), buf.c_str(), color);
 
         // Cheat freigespielt? -> Wenn alle Diamanten gefunden
         if (reveal_cheat) {
@@ -1135,8 +1137,11 @@ void SummaryScreen() {
             for (unsigned int p = 0; p < strlen(buf2); p++)
                 buf2[p] ^= 64;
 
-            snprintf(buf, 100, "%s: %s", TextArray[TEXT_SUMMARY_CHEATUNLOCK], buf2);
-            pDefaultFont->DrawText(float(RENDERWIDTH / 2 - pDefaultFont->StringLength(buf, 0) / 2), float(cheat_txt_y), buf, color,
+            buf = std::string(TextArray[TEXT_SUMMARY_CHEATUNLOCK])
+                .append(": ")
+                .append(buf2);
+            pDefaultFont->DrawText(float(RENDERWIDTH / 2 - pDefaultFont->StringLength(buf.c_str(), 0) / 2),
+                                   float(cheat_txt_y), buf.c_str(), color,
                                    0);
         }
 
@@ -1147,7 +1152,7 @@ void SummaryScreen() {
 
         Timer.update();
         Timer.wait();
-        SpeedFaktor = Timer.SpeedFaktor;
+        SpeedFaktor = Timer.getSpeedFactor();
 
         DirectInput.UpdateTastatur();
         DirectInput.UpdateJoysticks();
@@ -1191,7 +1196,7 @@ void SummaryScreen() {
 // --------------------------------------------------------------------------------------
 
 bool NewDemo(const char Filename[]) {
-    std::string fullpath = std::string(g_save_ext) + "/" + Filename;
+    std::string fullpath = g_save_ext + "/" + Filename;
 
     DEMOFile.open(fullpath, std::ofstream::binary);
 
@@ -1242,7 +1247,7 @@ bool LoadDemo(const char Filename[]) {
     TileEngine.XOffset = 0;
     TileEngine.YOffset = 0;
 
-    std::string fullpath = std::string(g_save_ext) + "/" + Filename;
+    std::string fullpath = g_save_ext + "/" + Filename;
 
     DEMOFile.open(fullpath, std::fstream::in | std::fstream::binary);
 
@@ -1359,7 +1364,7 @@ void PlayDemo() {
 
 void ScrolltoPlayeAfterBoss() {
     // Level wieder zum Spieler scrollen und dann weiterscrollen lassen
-    TileEngine.Zustand = ZUSTAND_SCROLLBAR;
+    TileEngine.Zustand = TileStateEnum::SCROLLBAR;
     TileEngine.MustCenterPlayer = true;
 
     // Level Musik wieder einfaden lassen (aus Pause Zustand)
@@ -1399,10 +1404,10 @@ PlayerClass *ChooseAim() {
 
     pAim = &Player[rand() % NUMPLAYERS];
 
-    if (pAim == &Player[0] && Player[0].Handlung == TOT)
+    if (pAim == &Player[0] && Player[0].Handlung == PlayerActionEnum::TOT)
         pAim = &Player[1];
 
-    if (pAim == &Player[1] && Player[1].Handlung == TOT)
+    if (pAim == &Player[1] && Player[1].Handlung == PlayerActionEnum::TOT)
         pAim = &Player[0];
 
     return pAim;

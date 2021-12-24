@@ -21,8 +21,8 @@ GegnerSmallWespe::GegnerSmallWespe(int Wert1, int Wert2, bool Light) {
     xAcc = 0.0f;
     yAcc = 0.0f;
     Energy = 50;
-    Value1 = static_cast<int>(pAim->xpos) - 100 + rand() % 200;  // Flugziel zufällig in Richtung Spieler
-    Value2 = static_cast<int>(pAim->ypos) - 100 + rand() % 50;   // setzen mit etwas Variation
+    Value1 = static_cast<int>(pAim->xpos) - 100 + random(200);  // Flugziel zufällig in Richtung Spieler
+    Value2 = static_cast<int>(pAim->ypos) - 100 + random(50);   // setzen mit etwas Variation
     ChangeLight = Light;
     Destroyable = true;
 }
@@ -42,8 +42,8 @@ void GegnerSmallWespe::DoKI() {
         {
             if (PlayerAbstand() < 500) {
                 Value1 =
-                    static_cast<int>(pAim->xpos) + 35 - 50 + rand() % 100;  // Flugziel zufällig in Richtung Spieler
-                Value2 = static_cast<int>(pAim->ypos) + 40 - 50 + rand() % 30;  // setzen mit etwas Variation
+                    static_cast<int>(pAim->xpos) + 35 - 50 + random(100);  // Flugziel zufällig in Richtung Spieler
+                Value2 = static_cast<int>(pAim->ypos) + 40 - 50 + random(30);  // setzen mit etwas Variation
                 Handlung = GEGNER_VERFOLGEN;
             }
         } break;
@@ -108,16 +108,16 @@ void GegnerSmallWespe::DoKI() {
             if (PlayerAbstand() > 400 || (dx * dx + dy * dy) < 20 * 20)
 
             {
-                Value1 = static_cast<int>(pAim->xpos) - 50 + rand() % 100;  // Flugziel zufällig in Richtung Spieler
-                Value2 = static_cast<int>(pAim->ypos) - 50 + rand() % 100;  // setzen mit etwas Variation
+                Value1 = static_cast<int>(pAim->xpos) - 50 + random(100);  // Flugziel zufällig in Richtung Spieler
+                Value2 = static_cast<int>(pAim->ypos) - 50 + random(100);  // setzen mit etwas Variation
             }
 
             // An die Wand gekommen ? Dann auch neues Ziel setzen
             if (blockl & BLOCKWERT_WAND || blockr & BLOCKWERT_WAND || blocko & BLOCKWERT_WAND ||
                 blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM) {
                 Value1 =
-                    static_cast<int>(pAim->xpos) + 35 - 50 + rand() % 100;  // Flugziel zufällig in Richtung Spieler
-                Value2 = static_cast<int>(pAim->ypos) + 40 - 50 + rand() % 30;  // setzen mit etwas Variation
+                    static_cast<int>(pAim->xpos) + 35 - 50 + random(100);  // Flugziel zufällig in Richtung Spieler
+                Value2 = static_cast<int>(pAim->ypos) + 40 - 50 + random(30);  // setzen mit etwas Variation
             }
         } break;
 
@@ -172,7 +172,7 @@ void GegnerSmallWespe::DoKI() {
         PartikelSystem.PushPartikel(float(xPos + 2), float(yPos - 10), EXPLOSION_MEDIUM);
 
         for (int i = 0; i < 5; i++)
-            PartikelSystem.PushPartikel(float(xPos + 2) + rand() % 20, float(yPos - 10) + rand() % 10, SMOKE2);
+            PartikelSystem.PushPartikel(float(xPos + 2) + random(20), float(yPos - 10) + random(10), SMOKE2);
 
         if (BlickRichtung == LINKS)
             xSpeed = -5.0f;
@@ -193,7 +193,7 @@ void GegnerSmallWespe::GegnerExplode() {
     for (int i = 0; i < 3; i++)
         PartikelSystem.PushPartikel(float(xPos + 15), float(yPos + 20), SPLITTER);
 
-    SoundManager.PlayWave(100, 128, -rand() % 2000 + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 200;
 }

@@ -86,10 +86,7 @@ void GegnerFetteSpinne::DoKI() {
             // Speed setzen
             xAcc = 5.0f * BlickRichtung;
 
-            if (xSpeed > 12.0f)
-                xSpeed = 12.0f;
-            if (xSpeed < -12.0f)
-                xSpeed = -12.0f;
+            xSpeed = std::clamp(xSpeed, -12.0f, 12.0f);
 
             // An Mauern umdrehen
             //
@@ -212,15 +209,15 @@ void GegnerFetteSpinne::DoKI() {
 
 void GegnerFetteSpinne::GegnerExplode() {
     for (int i = 0; i < 15; i++)
-        PartikelSystem.PushPartikel(xPos - 30 + rand() % 170, yPos - 30 + rand() % 72, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30 + random(170), yPos - 30 + random(72), EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 4; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 100, yPos + rand() % 30, SPLITTER);
+        PartikelSystem.PushPartikel(xPos + random(100), yPos + random(30), SPLITTER);
 
     for (int i = 0; i < 16; i++)
-        PartikelSystem.PushPartikel(xPos + rand() % 100, yPos + rand() % 30, SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + random(100), yPos + random(30), SPIDERSPLITTER);
 
-    SoundManager.PlayWave(100, 128, 8000 + rand() % 4000, SOUND_EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
 
     Player[0].Score += 800;  // Punkte geben
 }
