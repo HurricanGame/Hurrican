@@ -3377,9 +3377,9 @@ void TileEngineClass::ComputeCoolLight() {
                 b4 = TileAt(i, j).Blue;
             }
 
-            rn = int((r1 + r2 + r3 + r4) / 4.0f);
-            gn = int((g1 + g2 + g3 + g4) / 4.0f);
-            bn = int((b1 + b2 + b3 + b4) / 4.0f);
+            rn = (r1 + r2 + r3 + r4) / 4;
+            gn = (g1 + g2 + g3 + g4) / 4;
+            bn = (b1 + b2 + b3 + b4) / 4;
 
             TileAt(i, j).Color[0] = D3DCOLOR_RGBA(rn, gn, bn, al);
 
@@ -3429,9 +3429,9 @@ void TileEngineClass::ComputeCoolLight() {
                 b4 = TileAt(i, j).Blue;
             }
 
-            rn = int((r1 + r2 + r3 + r4) / 4.0f);
-            gn = int((g1 + g2 + g3 + g4) / 4.0f);
-            bn = int((b1 + b2 + b3 + b4) / 4.0f);
+            rn = (r1 + r2 + r3 + r4) / 4;
+            gn = (g1 + g2 + g3 + g4) / 4;
+            bn = (b1 + b2 + b3 + b4) / 4;
 
             TileAt(i, j).Color[1] = D3DCOLOR_RGBA(rn, gn, bn, al);
 
@@ -3481,9 +3481,9 @@ void TileEngineClass::ComputeCoolLight() {
                 b4 = TileAt(i, j).Blue;
             }
 
-            rn = int((r1 + r2 + r3 + r4) / 4.0f);
-            gn = int((g1 + g2 + g3 + g4) / 4.0f);
-            bn = int((b1 + b2 + b3 + b4) / 4.0f);
+            rn = (r1 + r2 + r3 + r4) / 4;
+            gn = (g1 + g2 + g3 + g4) / 4;
+            bn = (b1 + b2 + b3 + b4) / 4;
 
             TileAt(i, j).Color[2] = D3DCOLOR_RGBA(rn, gn, bn, al);
 
@@ -3533,9 +3533,9 @@ void TileEngineClass::ComputeCoolLight() {
                 b4 = TileAt(i, j).Blue;
             }
 
-            rn = int((r1 + r2 + r3 + r4) / 4.0f);
-            gn = int((g1 + g2 + g3 + g4) / 4.0f);
-            bn = int((b1 + b2 + b3 + b4) / 4.0f);
+            rn = (r1 + r2 + r3 + r4) / 4;
+            gn = (g1 + g2 + g3 + g4) / 4;
+            bn = (b1 + b2 + b3 + b4) / 4;
 
             TileAt(i, j).Color[3] = D3DCOLOR_RGBA(rn, gn, bn, al);
         }
