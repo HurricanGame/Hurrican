@@ -3238,65 +3238,29 @@ uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT_struct
 // Checken ob ein Schuss eine zerstörbare Wand getroffen hat und wenn ja, diese
 // zerstören und true zurückliefern, damit der Schuss ebenfalls gelöscht wird
 // --------------------------------------------------------------------------------------
-// DKS - x,y parameters did not need to be references and xs,ys params were never
-//      anything but 0 in the only place this function was used, so I eliminated
-//      them as they had no effect when 0. Rewrote code to be clearer and also
-//      not allow out-of-bounds access to Tiles[][] array. Before, it was possible
-//      this happened when, say, loading the 2nd map and immediately firing the
-//      blitz-beam to the left off the edge of the screen. Also, made inline.
-// ORIGINAL VERSION:
-#if 0
-bool TileEngineClass::CheckDestroyableWalls(float &x, float &y, float xs, float ys, RECT_struct rect)
+bool TileEngineClass::CheckDestroyableWalls(float x, float y, float xs, float ys, RECT_struct rect)
 {
-    int	  xstart, ystart;
-    int   xl, yl;
-
-    xstart = int((x+xs SYNC) * 0.05f);
-    ystart = int((y+ys SYNC) * 0.05f);
-
     // Ausserhalb vom Level?
     //
-    if (x < 0 || y < 0 ||
-            x > LEVELPIXELSIZE_X ||
-            y > LEVELPIXELSIZE_Y)
+    if (x < 0 || x > LEVELPIXELSIZE_X ||
+            y < 0 || y > LEVELPIXELSIZE_Y)
         return false;
 
-    xl = int(rect.right )/TILESIZE_X+2;
-    yl = int(rect.bottom)/TILESIZE_Y+2;
+    int xstart = int((x+xs SYNC) * 0.05f);
+    int ystart = int((y+ys SYNC) * 0.05f);
 
-    // Ganzes Rect des Schusses prüfen
-    for (int i=xstart-1; i<xstart + xl; i++)
-        for (int j=ystart; j<ystart + yl; j++)
+    int const xl = int(rect.right )/TILESIZE_X+2;
+    int const yl = int(rect.bottom)/TILESIZE_Y+2;
+
+    // avoid out-of-bounds access to Tiles[][] array.
+    xstart = std::clamp(xstart, 1, LEVELSIZE_X - xl);
+    ystart = std::clamp(ystart, 0, LEVELSIZE_Y - yl);
+
+    // Check whole rect of the shot
+    for (int i=xstart-1; i<xstart + xl; i++) {
+        for (int j=ystart; j<ystart + yl; j++) {
             if (TileAt(i, j).Block & BLOCKWERT_DESTRUCTIBLE)
             {
-                ExplodeWall(i, j);
-                return true;
-            }
-
-    return false;
-}
-#endif  // 0
-// DKS - Rewritten version of above function:
-bool TileEngineClass::CheckDestroyableWalls(float x, float y, float xs, float ys, RECT_struct rect) {
-    int xstart = int(x * (1.0f / TILESIZE_X));
-    int ystart = int(y * (1.0f / TILESIZE_Y));
-    int xl = int(rect.right) / TILESIZE_X + 2;
-    int yl = int(rect.bottom) / TILESIZE_Y + 2;
-
-    // Ganzes Rect des Schusses prüfen
-    for (int i = xstart - 1; i < xstart + xl; i++) {
-        if (i < 0)
-            continue;
-        else if (i >= LEVELSIZE_X)
-            break;
-
-        for (int j = ystart; j < ystart + yl; j++) {
-            if (j < 0)
-                continue;
-            else if (j >= LEVELSIZE_Y)
-                break;
-
-            if (TileAt(i, j).Block & BLOCKWERT_DESTRUCTIBLE) {
                 ExplodeWall(i, j);
                 return true;
             }
