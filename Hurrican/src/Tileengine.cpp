@@ -2264,7 +2264,7 @@ void TileEngineClass::UpdateLevel() {
 // ausfransen, indem die Alphawerte der angrenzenden Tiles auf 0 gesetzt werden
 // damit die Tiles nicht so abgeschnitten aussehen
 // --------------------------------------------------------------------------------------
-
+#if 0 // unused
 void TileEngineClass::MakeBordersLookCool(int x, int y) {
     /*	if (TileAt(x+1, y+0).Block & BLOCKWERT_DESTRUCTIBLE)
         {
@@ -2302,7 +2302,7 @@ void TileEngineClass::MakeBordersLookCool(int x, int y) {
                                                             0);
         }*/
 }
-
+#endif
 // DKS - After discovering some particles (LONGFUNKE particles emitted when spreadshot projectiles
 //      hit walls) get lodged inside wall tiles and stay there (only visible when drawing of
 //      overlay tile layers is disabled), I had a look at the Block* functions below.

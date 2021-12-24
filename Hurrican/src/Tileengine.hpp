@@ -529,7 +529,6 @@ class TileEngineClass {
     void CheckBounds();
     void UpdateLevel();                                                           // Level evtl scrollen usw
     void ScrollLevel(float x, float y, TileStateEnum neu, float sx = 10.0f, float sy = 10.0f);  // Screen scrollen
-    void MakeBordersLookCool(int x, int y);
 
     uint32_t BlockRechts(float &x, float y, float &xo, float yo, RECT_struct rect, bool resolve = false);
     uint32_t BlockLinks(float &x, float y, float &xo, float yo, RECT_struct rect, bool resolve = false);
