@@ -3553,11 +3553,11 @@ void TileEngineClass::DrawShadow() {
     float x, y;
 
     if (NUMPLAYERS == 1) {
-        x = static_cast<float>(static_cast<int>(Player[0].xpos + 35 - 512 - XOffset));
-        y = static_cast<float>(static_cast<int>(Player[0].ypos + 40 - 512 - YOffset));
+        x = Player[0].xpos + 35 - 512 - XOffset;
+        y = Player[0].ypos + 40 - 512 - YOffset;
     } else {
-        x = static_cast<float>(static_cast<int>(XOffset + 320.0f));
-        y = static_cast<float>(static_cast<int>(YOffset + 240.0f));
+        x = XOffset + 320.0f;
+        y = YOffset + 240.0f;
     }
 
     D3DCOLOR col;
