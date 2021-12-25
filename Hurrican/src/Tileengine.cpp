@@ -858,11 +858,10 @@ void TileEngineClass::CalcRenderRange() {
         RenderPosYTo = SCREENSIZE_Y;
 
     // DKS - Added:
-    // FIXME: Unnecessary loop
-    while (xo + RenderPosXTo > LEVELSIZE_X)
-        --RenderPosXTo;
-    while (yo + RenderPosYTo > LEVELSIZE_Y)
-        --RenderPosYTo;
+    if (xo + RenderPosXTo > LEVELSIZE_X)
+        RenderPosXTo = LEVELSIZE_X - xo;
+    if (yo + RenderPosYTo > LEVELSIZE_Y)
+        RenderPosYTo = LEVELSIZE_Y - yo;
 
     // Sonstige Ausgangswerte berechnen
     xLevel = static_cast<int>(xo);
