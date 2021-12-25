@@ -464,7 +464,7 @@ class TileEngineClass {
     bool MustCenterPlayer;
     int ColR1, ColG1, ColB1;  // Farben in RGB
     int ColR2, ColG2, ColB2;
-    int ColR3, ColG3, ColB3, ColA3;
+    int ColR3, ColG3, ColB3;
 
     // DKS - Replaced both SinList2 and WaterList lookup tables with new class
     //       WaterSinTableClass.  See its comments for more info.

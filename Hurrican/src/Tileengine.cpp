@@ -776,10 +776,13 @@ loadfile:
     ColR2 = std::stoi(std::string(&DateiAppendix.Col2[0], 2), nullptr, 16);
     ColG2 = std::stoi(std::string(&DateiAppendix.Col2[2], 2), nullptr, 16);
     ColB2 = std::stoi(std::string(&DateiAppendix.Col2[4], 2), nullptr, 16);
+    
+    int const ColA1 = std::stoi(std::string(&DateiAppendix.Col1[6], 2), nullptr, 16);
+    int const ColA2 = std::stoi(std::string(&DateiAppendix.Col2[6], 2), nullptr, 16);
 
-    Col1 = D3DCOLOR_RGBA(ColR1, ColG1, ColB1, std::stoi(std::string(&DateiAppendix.Col1[6], 2), nullptr, 16));
+    Col1 = D3DCOLOR_RGBA(ColR1, ColG1, ColB1, ColA1);
 
-    Col2 = D3DCOLOR_RGBA(ColR2, ColG2, ColB2, std::stoi(std::string(&DateiAppendix.Col2[6], 2), nullptr, 16));
+    Col2 = D3DCOLOR_RGBA(ColR2, ColG2, ColB2, ColA2);
 
     ColR3 = ColR1 + ColR2 + 32;
     if (ColR3 > 255)
@@ -790,9 +793,7 @@ loadfile:
     ColB3 = ColB1 + ColB2 + 32;
     if (ColB3 > 255)
         ColB3 = 255;
-
-    ColA3 = std::stoi(std::string(&DateiAppendix.Col1[6], 2), nullptr, 16) +
-            std::stoi(std::string(&DateiAppendix.Col2[6], 2), nullptr, 16);
+    int ColA3 = ColA1 + ColA2;
     if (ColA3 > 255)
         ColA3 = 255;
 
