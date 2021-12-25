@@ -732,11 +732,13 @@ loadfile:
 
                 // Gegner bei aktuellem Skill level überhaupt erzeugen ?
                 if (LoadObject.Skill <= Skill) {
-                    Gegner.PushGegner(float(LoadObject.XPos), float(LoadObject.YPos), LoadObject.ObjectID,
+                    Gegner.PushGegner(static_cast<float>(LoadObject.XPos),
+                                      static_cast<float>(LoadObject.YPos), LoadObject.ObjectID,
                                       LoadObject.Value1, LoadObject.Value2, LoadObject.ChangeLight);
 
                     if (LoadObject.ObjectID == REITFLUGSACK && NUMPLAYERS == 2)
-                        Gegner.PushGegner(float(LoadObject.XPos) + 60, float(LoadObject.YPos) + 40, LoadObject.ObjectID,
+                        Gegner.PushGegner(static_cast<float>(LoadObject.XPos) + 60,
+                                          static_cast<float>(LoadObject.YPos) + 40, LoadObject.ObjectID,
                                           LoadObject.Value1, LoadObject.Value2, LoadObject.ChangeLight);
                 }
             }
@@ -895,7 +897,7 @@ void TileEngineClass::DrawBackground() {
     {
         // Linke Hälfte
         Background.SetRect(0, 0, xoff, 480);
-        Background.RenderSprite(640 - static_cast<float>(xoff), 0, 0xFFFFFFFF);
+        Background.RenderSprite(static_cast<float>(640 - xoff), 0, 0xFFFFFFFF);
 
         // Rechte Hälfte
         Background.SetRect(xoff, 0, 640, 480);
@@ -908,14 +910,14 @@ void TileEngineClass::DrawBackground() {
 
     //----- Layer ganz hinten (ausser im Flugsack Level)
 
-    xoff = static_cast<int>(XOffset / 3) % 640;
+    xoff = static_cast<int>(XOffset / 3.0f) % 640;
     yoff = static_cast<float>((LEVELSIZE_Y - SCREENSIZE_Y) * TILESIZE_Y);  // Grösse des Levels in Pixeln (-1 Screen)
-    yoff = static_cast<float>(220 - 150 / yoff * YOffset);                 // y-Offset des Layers berechnen
-    yoff -= 40;
+    yoff = 220.0f - 150.0f / yoff * YOffset;                               // y-Offset des Layers berechnen
+    yoff -= 40.0f;
 
     // Linke Hälfte
     ParallaxLayer[0].SetRect(0, 0, xoff, 480);
-    ParallaxLayer[0].RenderSprite(640 - static_cast<float>(xoff), yoff, 0xFFFFFFFF);
+    ParallaxLayer[0].RenderSprite(static_cast<float>(640 - xoff), yoff, 0xFFFFFFFF);
 
     // Rechte Hälfte
     ParallaxLayer[0].SetRect(xoff, 0, 640, 480);
@@ -924,12 +926,12 @@ void TileEngineClass::DrawBackground() {
     //----- vorletzter Layer
 
     yoff = static_cast<float>((LEVELSIZE_Y - SCREENSIZE_Y) * TILESIZE_Y);  // Grösse des Levels in Pixeln (-1 Screen)
-    yoff = static_cast<float>(200 - 200 / yoff * YOffset);                 // y-Offset des Layers berechnen
-    xoff = static_cast<int>(XOffset / 2) % 640;
+    yoff = 200.0f - 200.0f / yoff * YOffset;                               // y-Offset des Layers berechnen
+    xoff = static_cast<int>(XOffset / 2.0f) % 640;
 
     // Linke Hälfte
     ParallaxLayer[1].SetRect(0, 0, xoff, 480);
-    ParallaxLayer[1].RenderSprite(640 - static_cast<float>(xoff), yoff, 0xFFFFFFFF);
+    ParallaxLayer[1].RenderSprite(static_cast<float>(640 - xoff), yoff, 0xFFFFFFFF);
 
     // Rechte Hälfte
     ParallaxLayer[1].SetRect(xoff, 0, 640, 480);
@@ -938,15 +940,15 @@ void TileEngineClass::DrawBackground() {
     //----- Im Fahrstuhl-Level noch den vertikalen Parallax-Layer anzeigen
 
     if (IsElevatorLevel) {
-        yoff = float(static_cast<int>(YOffset / 1.5f) % 480);
+        yoff = static_cast<float>(static_cast<int>(YOffset / 1.5f) % 480);
 
         // Obere Hälfte
-        ParallaxLayer[2].SetRect(0, 0, 640, int(yoff));
-        ParallaxLayer[2].RenderSprite(float(390 - XOffset), 480 - static_cast<float>(yoff), 0xFFFFFFFF);
+        ParallaxLayer[2].SetRect(0, 0, 640, static_cast<int>(yoff));
+        ParallaxLayer[2].RenderSprite(390.0f - XOffset, 480.0f - yoff, 0xFFFFFFFF);
 
         // Untere Hälfte
-        ParallaxLayer[2].SetRect(0, int(yoff), 640, 480);
-        ParallaxLayer[2].RenderSprite(float(390 - XOffset), 0, 0xFFFFFFFF);
+        ParallaxLayer[2].SetRect(0, static_cast<int>(yoff), 640, 480);
+        ParallaxLayer[2].RenderSprite(390.0f - XOffset, 0, 0xFFFFFFFF);
     }
 
     //----- Wolken Layer (Wenn Focus des Level GANZ oben, dann wird er GANZ angezeigt)
@@ -958,16 +960,16 @@ void TileEngineClass::DrawBackground() {
 
     DirectGraphics.SetAdditiveMode();
 
-    xoff = int(XOffset / 4 + CloudMovement) % 640;
-    yoff = float((LEVELSIZE_Y - SCREENSIZE_Y) * 40);  // Grösse des Levels in Pixeln (-1 Screen)
-    yoff = float(240 / yoff * YOffset);               // y-Offset des Layers berechnen
+    xoff = static_cast<int>(XOffset / 4.0f + CloudMovement) % 640;
+    yoff = static_cast<float>((LEVELSIZE_Y - SCREENSIZE_Y) * 40);  // Grösse des Levels in Pixeln (-1 Screen)
+    yoff = 240.0f / yoff * YOffset;               // y-Offset des Layers berechnen
 
     // Linke Hälfte
-    CloudLayer.SetRect(0, int(yoff), int(xoff), 240);
-    CloudLayer.RenderSprite(640 - static_cast<float>(xoff), 0, 0xFFFFFFFF);
+    CloudLayer.SetRect(0, static_cast<int>(yoff), xoff, 240);
+    CloudLayer.RenderSprite(static_cast<float>(640 - xoff), 0, 0xFFFFFFFF);
 
     // Rechte Hälfte
-    CloudLayer.SetRect(int(xoff), int(yoff), 640, 240);
+    CloudLayer.SetRect(xoff, static_cast<int>(yoff), 640, 240);
     CloudLayer.RenderSprite(0, 0, 0xFFFFFFFF);
 
     DirectGraphics.SetColorKeyMode();
@@ -1093,7 +1095,7 @@ void TileEngineClass::DrawBackLevel() {
                 // DKS - WaterList lookup table has been replaced with WaterSinTableClass,
                 //      see comments for it in Tileengine.h
 #if 0
-                off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
+                off = (static_cast<int>(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
 
                 //DKS - Fixed out of bounds access to Tiles[][] array on y here:
                 //      When yLevel is 1 and j is -1 (indicating that the one-tile overdraw
@@ -1264,7 +1266,7 @@ void TileEngineClass::DrawFrontLevel() {
                 // DKS - WaterList lookup table has been replaced with WaterSinTableClass,
                 //      see comments for it in Tileengine.h
 #if 0
-                off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
+                off = (static_cast<int>(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
 
                 //DKS - Fixed out of bounds access to Tiles[][] array on y here:
                 //      When yLevel is 1 and j is -1 (indicating that the one-tile overdraw
@@ -1418,7 +1420,7 @@ void TileEngineClass::DrawBackLevelOverlay() {
                 // al = TileAt(xLevel+i, yLevel+j).Alpha;
 
                 // DKS - Variable was unused in original source, disabled:
-                // off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
+                // off = (static_cast<int>(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
 
                 v1.color = TileAt(xLevel + i, yLevel + j).Color[0];
                 v2.color = TileAt(xLevel + i, yLevel + j).Color[1];
@@ -1626,7 +1628,7 @@ void TileEngineClass::DrawOverlayLevel() {
                     }
 
                     // DKS - Variable was unused in original source, disabled:
-                    // off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
+                    // off = (static_cast<int>(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
 
                     v1.x = l;  // Links oben
                     v1.y = o;
@@ -1928,7 +1930,7 @@ void TileEngineClass::DrawWater() {
                     // Schicht 1
                     //
                     int xoff = (i + xLevel) % 3 * TILESIZE_X;
-                    int yoff = (j + yLevel) % 3 * TILESIZE_Y + 120 - int(WasserfallOffset);
+                    int yoff = (j + yLevel) % 3 * TILESIZE_Y + 120 - static_cast<int>(WasserfallOffset);
 
                     Wasserfall[0].SetRect(xoff, yoff, xoff + TILESIZE_X, yoff + TILESIZE_Y);
                     Wasserfall[0].RenderSprite(static_cast<float>(i * TILESIZE_X - xTileOffs),
@@ -1937,7 +1939,7 @@ void TileEngineClass::DrawWater() {
                     // Schicht 2
                     //
                     xoff = (i + xLevel + 1) % 3 * TILESIZE_X;
-                    yoff = (j + yLevel) % 3 * TILESIZE_Y + 120 - int(WasserfallOffset / 2.0f);
+                    yoff = (j + yLevel) % 3 * TILESIZE_Y + 120 - static_cast<int>(WasserfallOffset / 2.0f);
 
                     Wasserfall[0].SetRect(xoff, yoff, xoff + TILESIZE_X, yoff + TILESIZE_Y);
                     Wasserfall[0].RenderSprite(static_cast<float>(i * TILESIZE_X - xTileOffs),
@@ -2339,7 +2341,7 @@ int	TileEngineClass::BlockRechts(float &x, float &y, float  &xo, float &yo, RECT
     int ylevel;
     int laenge;
 
-    //laenge = abs(int(xs SYNC))+1;
+    //laenge = abs(static_cast<int>(xs SYNC))+1;
     laenge = 5;
 
     for (int l=0; l<laenge && Art == 0; l++)
@@ -2387,7 +2389,7 @@ bool TileEngineClass::BlockDestroyRechts(float &x, float &y, float  &xo, float &
             y > LEVELPIXELSIZE_Y)
         return false;
 
-    //laenge = abs(int(xs SYNC))+1;
+    //laenge = abs(static_cast<int>(xs SYNC))+1;
     laenge = 5;
 
     for (int l=0; l<laenge; l++)
@@ -2459,7 +2461,7 @@ int	TileEngineClass::BlockLinks(float &x, float &y, float &xo, float &yo, RECT_s
     int ylevel;
     int laenge;
 
-    //laenge = abs(int(xs SYNC))+1;
+    //laenge = abs(static_cast<int>(xs SYNC))+1;
     laenge = 5;
 
     for (int l=0; l<laenge && Art == 0; l++)
@@ -2510,7 +2512,7 @@ bool TileEngineClass::BlockDestroyLinks(float &x, float &y, float &xo, float &yo
     int ylevel;
     int laenge;
 
-    //laenge = abs(int(xs SYNC))+1;
+    //laenge = abs(static_cast<int>(xs SYNC))+1;
     laenge = 5;
 
     for (int l=0; l<laenge; l++)
@@ -2555,7 +2557,7 @@ int	TileEngineClass::BlockOben(float &x, float &y, float &xo, float &yo, RECT_st
     int ylevel;
     int laenge;
 
-    //laenge = abs(int(yo - y))+1;
+    //laenge = abs(static_cast<int>(yo - y))+1;
     laenge = 5;
 
     for (int l=0; l<laenge && Art == 0; l++)
@@ -2605,7 +2607,7 @@ bool TileEngineClass::BlockDestroyOben(float &x, float &y, float &xo, float &yo,
     int ylevel;
     int laenge;
 
-    //laenge = abs(int(yo - y))+1;
+    //laenge = abs(static_cast<int>(yo - y))+1;
     laenge = 5;
 
     for (int l=0; l<laenge; l++)
@@ -2651,7 +2653,7 @@ int	TileEngineClass::BlockUntenNormal(float &x, float &y, float &xo, float &yo, 
     int ylevel;
     int laenge;
 
-    laenge = int(y - yo)+1;
+    laenge = static_cast<int>(y - yo)+1;
     laenge = 5;
 
     for (int l=0; l<laenge && Art == 0; l+=20)
@@ -2700,7 +2702,7 @@ int	TileEngineClass::BlockUnten(float &x, float &y, float &xo, float &yo, RECT_s
     int  laenge;
     //bool checkagain = true;
 
-    //laenge = int(y - yo)+1;
+    //laenge = static_cast<int>(y - yo)+1;
     laenge = 5;
 
     for (int l=0; l<laenge && Art == 0; l+=20)
@@ -2760,7 +2762,7 @@ bool TileEngineClass::BlockDestroyUnten(float &x, float &y, float &xo, float &yo
     int  laenge;
     //bool checkagain = true;
 
-    //laenge = int(y - yo)+1;
+    //laenge = static_cast<int>(y - yo)+1;
     laenge = 5;
 
     // so lange ausführen, bis kein Block mehr unter den Füßen ist
@@ -3113,7 +3115,7 @@ int	TileEngineClass::BlockSlopes(float &x, float &y, float &xo, float &yo, RECT_
     int ylevel;
     //int laenge;
 
-    //laenge = int(y - yo)+1;
+    //laenge = static_cast<int>(y - yo)+1;
     //laenge = 5;
 
     for(int j = rect.bottom; j<rect.bottom+TILESIZE_Y; j++)
@@ -3177,7 +3179,7 @@ int	TileEngineClass::BlockSlopes(float &x, float &y, float &xo, float &yo, RECT_
 uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT_struct rect, const float ySpeed) {
     uint32_t block = 0;
     for (int j = rect.bottom; j < rect.bottom + TILESIZE_Y; j++) {
-        int ylev = int((y + (j - 1)) * (1.0f / TILESIZE_Y));
+        int ylev = static_cast<int>((y + (j - 1)) * (1.0f / TILESIZE_Y));
 
         if (ylev < 0)
             continue;
@@ -3189,7 +3191,7 @@ uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT_struct
 
         // DKS - TODO see if you can get this to increment faster, by tile:
         for (int i = rect.left; i < rect.right; i++) {
-            int xlev = int((x + i) * (1.0f / TILESIZE_X));
+            int xlev = static_cast<int>((x + i) * (1.0f / TILESIZE_X));
 
             if (xlev < 0)
                 continue;
@@ -3199,7 +3201,8 @@ uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT_struct
             block = TileAt(xlev, ylev).Block;
 
             if (block & BLOCKWERT_SCHRAEGE_L) {
-                float newy = (ylev + 1) * TILESIZE_Y - rect.bottom - (TILESIZE_Y - float(int(x + i) % TILESIZE_X)) - 1;
+                float newy = (ylev + 1) * TILESIZE_Y - rect.bottom -
+                    (TILESIZE_Y - static_cast<float>(static_cast<int>(x + i) % TILESIZE_X)) - 1;
                 if (ySpeed == 0.0f || y > newy) {
                     y = newy;
                     return block;
@@ -3212,7 +3215,7 @@ uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT_struct
 
         // DKS TODO: try to get this to decrement faster, by tile:
         for (int i = rect.right; i > rect.left; i--) {
-            int xlev = int((x + i) * (1.0f / TILESIZE_X));
+            int xlev = static_cast<int>((x + i) * (1.0f / TILESIZE_X));
 
             if (xlev >= LEVELSIZE_X)
                 continue;
@@ -3222,7 +3225,8 @@ uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT_struct
             block = TileAt(xlev, ylev).Block;
 
             if (block & BLOCKWERT_SCHRAEGE_R) {
-                float newy = (ylev + 1) * TILESIZE_Y - rect.bottom - (float(int(x + i) % TILESIZE_X)) - 1;
+                float newy = (ylev + 1) * TILESIZE_Y - rect.bottom -
+                    (static_cast<float>(static_cast<int>(x + i) % TILESIZE_X)) - 1;
                 if (ySpeed == 0.0f || y > newy) {
                     y = newy;
                     return block;
@@ -3246,11 +3250,11 @@ bool TileEngineClass::CheckDestroyableWalls(float x, float y, float xs, float ys
             y < 0 || y > LEVELPIXELSIZE_Y)
         return false;
 
-    int xstart = int((x+xs SYNC) * 0.05f);
-    int ystart = int((y+ys SYNC) * 0.05f);
+    int xstart = static_cast<int>((x+xs SYNC) * 0.05f);
+    int ystart = static_cast<int>((y+ys SYNC) * 0.05f);
 
-    int const xl = int(rect.right )/TILESIZE_X+2;
-    int const yl = int(rect.bottom)/TILESIZE_Y+2;
+    int const xl = static_cast<int>(rect.right )/TILESIZE_X+2;
+    int const yl = static_cast<int>(rect.bottom)/TILESIZE_Y+2;
 
     // avoid out-of-bounds access to Tiles[][] array.
     xstart = std::clamp(xstart, 1, LEVELSIZE_X - xl);
@@ -3280,8 +3284,8 @@ D3DCOLOR TileEngineClass::LightValue(float x, float y, RECT_struct rect, bool fo
     int x_level, y_level;
     unsigned int r, g, b;
 
-    x_level = int((x + (rect.right - rect.left) / 2) / TILESIZE_X);  // xPosition im Level
-    y_level = int((y + (rect.bottom - rect.top) / 2) / TILESIZE_Y);  // yPosition im Level
+    x_level = static_cast<int>((x + (rect.right - rect.left) / 2) / TILESIZE_X);  // xPosition im Level
+    y_level = static_cast<int>((y + (rect.bottom - rect.top) / 2) / TILESIZE_Y);  // yPosition im Level
 
     // DKS - Added check for x_level,y_level being in bounds of levels' dimensions, also,
     //      check forced==false before blindly looking up block value:
@@ -3601,7 +3605,7 @@ void TileEngineClass::ExplodeWall(int x, int y) {
                                     static_cast<float>(y * TILESIZE_Y + random(10)), ROCKSPLITTERSMALL);
 
     for (int k = 0; k < 4; k++)
-        PartikelSystem.PushPartikel(float(x * TILESIZE_X + 8), float(y * TILESIZE_Y + 8), FUNKE);
+        PartikelSystem.PushPartikel(static_cast<float>(x * TILESIZE_X + 8), static_cast<float>(y * TILESIZE_Y + 8), FUNKE);
 
     PartikelSystem.PushPartikel(static_cast<float>(x * TILESIZE_X - TILESIZE_X),
                                 static_cast<float>(y * TILESIZE_Y - TILESIZE_Y), SMOKEBIG);
