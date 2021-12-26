@@ -3329,16 +3329,19 @@ void TileEngineClass::ComputeCoolLight() {
     // Farben der Nachbarfelder werden allerdings nur mit verrechnet, wenn es sich nicht um eine massive Wand handelt.
     // In diesem Falle wird die Standard-Tilefarbe verwendet
     //
-    int rn, gn, bn, r1, r2, r3, r4, g1, g2, g3, g4, b1, b2, b3, b4, al;
+    int rn, gn, bn, r1, r2, r3, g1, g2, g3, b1, b2, b3;
 
     for (int i = 1; i < LEVELSIZE_X - 1; i += 1)
         for (int j = 1; j < LEVELSIZE_Y - 1; j += 1) {
-            al = TileAt(i, j).Alpha;
+            int const al = TileAt(i, j).Alpha;
+
+            int const r4 = TileAt(i, j).Red;
+            int const g4 = TileAt(i, j).Green;
+            int const b4 = TileAt(i, j).Blue;
 
             // Ecke links oben
             //
-            if ((!(TileAt(i - 1, j - 1).Block & BLOCKWERT_WAND) && !(TileAt(i, j).Block & BLOCKWERT_WAND)) ||
-                (TileAt(i - 1, j - 1).Block & BLOCKWERT_WAND && TileAt(i, j).Block & BLOCKWERT_WAND)) {
+            if (!((TileAt(i - 1, j - 1).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
                 r1 = TileAt(i - 1, j - 1).Red;
                 g1 = TileAt(i - 1, j - 1).Green;
                 b1 = TileAt(i - 1, j - 1).Blue;
@@ -3348,8 +3351,7 @@ void TileEngineClass::ComputeCoolLight() {
                 b1 = TileAt(i, j).Blue;
             }
 
-            if ((!(TileAt(i + 0, j - 1).Block & BLOCKWERT_WAND) && !(TileAt(i, j).Block & BLOCKWERT_WAND)) ||
-                (TileAt(i + 0, j - 1).Block & BLOCKWERT_WAND && TileAt(i, j).Block & BLOCKWERT_WAND)) {
+            if (!((TileAt(i + 0, j - 1).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
                 r2 = TileAt(i + 0, j - 1).Red;
                 g2 = TileAt(i + 0, j - 1).Green;
                 b2 = TileAt(i + 0, j - 1).Blue;
@@ -3359,8 +3361,7 @@ void TileEngineClass::ComputeCoolLight() {
                 b2 = TileAt(i, j).Blue;
             }
 
-            if ((!(TileAt(i - 1, j + 0).Block & BLOCKWERT_WAND) && !(TileAt(i, j).Block & BLOCKWERT_WAND)) ||
-                (TileAt(i - 1, j + 0).Block & BLOCKWERT_WAND && TileAt(i, j).Block & BLOCKWERT_WAND)) {
+            if (!((TileAt(i - 1, j + 0).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
                 r3 = TileAt(i - 1, j + 0).Red;
                 g3 = TileAt(i - 1, j + 0).Green;
                 b3 = TileAt(i - 1, j + 0).Blue;
@@ -3368,17 +3369,6 @@ void TileEngineClass::ComputeCoolLight() {
                 r3 = TileAt(i, j).Red;
                 g3 = TileAt(i, j).Green;
                 b3 = TileAt(i, j).Blue;
-            }
-
-            if ((!(TileAt(i, j).Block & BLOCKWERT_WAND) && !(TileAt(i, j).Block & BLOCKWERT_WAND)) ||
-                (TileAt(i, j).Block & BLOCKWERT_WAND && TileAt(i, j).Block & BLOCKWERT_WAND)) {
-                r4 = TileAt(i, j).Red;
-                g4 = TileAt(i, j).Green;
-                b4 = TileAt(i, j).Blue;
-            } else {
-                r4 = TileAt(i, j).Red;
-                g4 = TileAt(i, j).Green;
-                b4 = TileAt(i, j).Blue;
             }
 
             rn = (r1 + r2 + r3 + r4) / 4;
@@ -3389,8 +3379,7 @@ void TileEngineClass::ComputeCoolLight() {
 
             // Ecke rechts oben
             //
-            if ((!(TileAt(i - 0, j - 1).Block & BLOCKWERT_WAND) && !(TileAt(i, j).Block & BLOCKWERT_WAND)) ||
-                (TileAt(i - 0, j - 1).Block & BLOCKWERT_WAND && TileAt(i, j).Block & BLOCKWERT_WAND)) {
+            if (!((TileAt(i - 0, j - 1).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
                 r1 = TileAt(i - 0, j - 1).Red;
                 g1 = TileAt(i - 0, j - 1).Green;
                 b1 = TileAt(i - 0, j - 1).Blue;
@@ -3400,8 +3389,7 @@ void TileEngineClass::ComputeCoolLight() {
                 b1 = TileAt(i, j).Blue;
             }
 
-            if ((!(TileAt(i + 1, j - 1).Block & BLOCKWERT_WAND) && !(TileAt(i, j).Block & BLOCKWERT_WAND)) ||
-                (TileAt(i + 1, j - 1).Block & BLOCKWERT_WAND && TileAt(i, j).Block & BLOCKWERT_WAND)) {
+            if (!((TileAt(i + 1, j - 1).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
                 r2 = TileAt(i + 1, j - 1).Red;
                 g2 = TileAt(i + 1, j - 1).Green;
                 b2 = TileAt(i + 1, j - 1).Blue;
@@ -3411,8 +3399,7 @@ void TileEngineClass::ComputeCoolLight() {
                 b2 = TileAt(i, j).Blue;
             }
 
-            if ((!(TileAt(i + 1, j + 0).Block & BLOCKWERT_WAND) && !(TileAt(i, j).Block & BLOCKWERT_WAND)) ||
-                (TileAt(i + 1, j + 0).Block & BLOCKWERT_WAND && TileAt(i, j).Block & BLOCKWERT_WAND)) {
+            if (!((TileAt(i + 1, j + 0).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
                 r3 = TileAt(i + 1, j + 0).Red;
                 g3 = TileAt(i + 1, j + 0).Green;
                 b3 = TileAt(i + 1, j + 0).Blue;
@@ -3420,17 +3407,6 @@ void TileEngineClass::ComputeCoolLight() {
                 r3 = TileAt(i, j).Red;
                 g3 = TileAt(i, j).Green;
                 b3 = TileAt(i, j).Blue;
-            }
-
-            if ((!(TileAt(i, j).Block & BLOCKWERT_WAND) && !(TileAt(i, j).Block & BLOCKWERT_WAND)) ||
-                (TileAt(i, j).Block & BLOCKWERT_WAND && TileAt(i, j).Block & BLOCKWERT_WAND)) {
-                r4 = TileAt(i, j).Red;
-                g4 = TileAt(i, j).Green;
-                b4 = TileAt(i, j).Blue;
-            } else {
-                r4 = TileAt(i, j).Red;
-                g4 = TileAt(i, j).Green;
-                b4 = TileAt(i, j).Blue;
             }
 
             rn = (r1 + r2 + r3 + r4) / 4;
@@ -3441,8 +3417,7 @@ void TileEngineClass::ComputeCoolLight() {
 
             // Ecke links unten
             //
-            if ((!(TileAt(i - 1, j - 0).Block & BLOCKWERT_WAND) && !(TileAt(i, j).Block & BLOCKWERT_WAND)) ||
-                (TileAt(i - 1, j - 0).Block & BLOCKWERT_WAND && TileAt(i, j).Block & BLOCKWERT_WAND)) {
+            if (!((TileAt(i - 1, j - 0).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
                 r1 = TileAt(i - 1, j - 0).Red;
                 g1 = TileAt(i - 1, j - 0).Green;
                 b1 = TileAt(i - 1, j - 0).Blue;
@@ -3452,8 +3427,7 @@ void TileEngineClass::ComputeCoolLight() {
                 b1 = TileAt(i, j).Blue;
             }
 
-            if ((!(TileAt(i - 1, j + 1).Block & BLOCKWERT_WAND) && !(TileAt(i, j).Block & BLOCKWERT_WAND)) ||
-                (TileAt(i - 1, j + 1).Block & BLOCKWERT_WAND && TileAt(i, j).Block & BLOCKWERT_WAND)) {
+            if (!((TileAt(i - 1, j + 1).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
                 r2 = TileAt(i - 1, j + 1).Red;
                 g2 = TileAt(i - 1, j + 1).Green;
                 b2 = TileAt(i - 1, j + 1).Blue;
@@ -3463,8 +3437,7 @@ void TileEngineClass::ComputeCoolLight() {
                 b2 = TileAt(i, j).Blue;
             }
 
-            if ((!(TileAt(i - 0, j + 1).Block & BLOCKWERT_WAND) && !(TileAt(i, j).Block & BLOCKWERT_WAND)) ||
-                (TileAt(i - 0, j + 1).Block & BLOCKWERT_WAND && TileAt(i, j).Block & BLOCKWERT_WAND)) {
+            if (!((TileAt(i - 0, j + 1).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
                 r3 = TileAt(i - 0, j + 1).Red;
                 g3 = TileAt(i - 0, j + 1).Green;
                 b3 = TileAt(i - 0, j + 1).Blue;
@@ -3472,17 +3445,6 @@ void TileEngineClass::ComputeCoolLight() {
                 r3 = TileAt(i, j).Red;
                 g3 = TileAt(i, j).Green;
                 b3 = TileAt(i, j).Blue;
-            }
-
-            if ((!(TileAt(i, j).Block & BLOCKWERT_WAND) && !(TileAt(i, j).Block & BLOCKWERT_WAND)) ||
-                (TileAt(i, j).Block & BLOCKWERT_WAND && TileAt(i, j).Block & BLOCKWERT_WAND)) {
-                r4 = TileAt(i, j).Red;
-                g4 = TileAt(i, j).Green;
-                b4 = TileAt(i, j).Blue;
-            } else {
-                r4 = TileAt(i, j).Red;
-                g4 = TileAt(i, j).Green;
-                b4 = TileAt(i, j).Blue;
             }
 
             rn = (r1 + r2 + r3 + r4) / 4;
@@ -3493,8 +3455,7 @@ void TileEngineClass::ComputeCoolLight() {
 
             // Ecke rechts unten
             //
-            if ((!(TileAt(i + 1, j - 0).Block & BLOCKWERT_WAND) && !(TileAt(i, j).Block & BLOCKWERT_WAND)) ||
-                (TileAt(i + 1, j - 0).Block & BLOCKWERT_WAND && TileAt(i, j).Block & BLOCKWERT_WAND)) {
+            if (!((TileAt(i + 1, j - 0).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
                 r1 = TileAt(i + 1, j - 0).Red;
                 g1 = TileAt(i + 1, j - 0).Green;
                 b1 = TileAt(i + 1, j - 0).Blue;
@@ -3504,8 +3465,7 @@ void TileEngineClass::ComputeCoolLight() {
                 b1 = TileAt(i, j).Blue;
             }
 
-            if ((!(TileAt(i - 0, j + 1).Block & BLOCKWERT_WAND) && !(TileAt(i, j).Block & BLOCKWERT_WAND)) ||
-                (TileAt(i - 0, j + 1).Block & BLOCKWERT_WAND && TileAt(i, j).Block & BLOCKWERT_WAND)) {
+            if (!((TileAt(i - 0, j + 0).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
                 r2 = TileAt(i - 0, j + 1).Red;
                 g2 = TileAt(i - 0, j + 1).Green;
                 b2 = TileAt(i - 0, j + 1).Blue;
@@ -3515,8 +3475,7 @@ void TileEngineClass::ComputeCoolLight() {
                 b2 = TileAt(i, j).Blue;
             }
 
-            if ((!(TileAt(i + 1, j + 1).Block & BLOCKWERT_WAND) && !(TileAt(i, j).Block & BLOCKWERT_WAND)) ||
-                (TileAt(i + 1, j + 1).Block & BLOCKWERT_WAND && TileAt(i, j).Block & BLOCKWERT_WAND)) {
+            if (!((TileAt(i + 1, j + 1).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
                 r3 = TileAt(i + 1, j + 1).Red;
                 g3 = TileAt(i + 1, j + 1).Green;
                 b3 = TileAt(i + 1, j + 1).Blue;
@@ -3524,17 +3483,6 @@ void TileEngineClass::ComputeCoolLight() {
                 r3 = TileAt(i, j).Red;
                 g3 = TileAt(i, j).Green;
                 b3 = TileAt(i, j).Blue;
-            }
-
-            if ((!(TileAt(i, j).Block & BLOCKWERT_WAND) && !(TileAt(i, j).Block & BLOCKWERT_WAND)) ||
-                (TileAt(i, j).Block & BLOCKWERT_WAND && TileAt(i, j).Block & BLOCKWERT_WAND)) {
-                r4 = TileAt(i, j).Red;
-                g4 = TileAt(i, j).Green;
-                b4 = TileAt(i, j).Blue;
-            } else {
-                r4 = TileAt(i, j).Red;
-                g4 = TileAt(i, j).Green;
-                b4 = TileAt(i, j).Blue;
             }
 
             rn = (r1 + r2 + r3 + r4) / 4;
