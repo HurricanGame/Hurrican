@@ -3280,12 +3280,9 @@ bool TileEngineClass::CheckDestroyableWalls(float x, float y, float xs, float ys
 // --------------------------------------------------------------------------------------
 
 D3DCOLOR TileEngineClass::LightValue(float x, float y, RECT_struct rect, bool forced) {
-    D3DCOLOR Color;
-    int x_level, y_level;
-    unsigned int r, g, b;
 
-    x_level = static_cast<int>((x + (rect.right - rect.left) / 2) / TILESIZE_X);  // xPosition im Level
-    y_level = static_cast<int>((y + (rect.bottom - rect.top) / 2) / TILESIZE_Y);  // yPosition im Level
+    int const x_level = static_cast<int>((x + (rect.right - rect.left) / 2) / TILESIZE_X);  // xPosition im Level
+    int const y_level = static_cast<int>((y + (rect.bottom - rect.top) / 2) / TILESIZE_Y);  // yPosition im Level
 
     // DKS - Added check for x_level,y_level being in bounds of levels' dimensions, also,
     //      check forced==false before blindly looking up block value:
@@ -3296,9 +3293,9 @@ D3DCOLOR TileEngineClass::LightValue(float x, float y, RECT_struct rect, bool fo
         (!forced && !(TileAt(x_level, y_level).Block & BLOCKWERT_LIGHT)))  // Soll das Leveltile garnicht
         return 0xFFFFFFFF;                                               // das Licht des Objektes ändern
 
-    r = TileAt(x_level, y_level).Red;
-    g = TileAt(x_level, y_level).Green;
-    b = TileAt(x_level, y_level).Blue;
+    unsigned int r = TileAt(x_level, y_level).Red;
+    unsigned int g = TileAt(x_level, y_level).Green;
+    unsigned int b = TileAt(x_level, y_level).Blue;
 
     r += 48;  // Farbewerte ein wenig erhöhen, damit man selbst bei 0,0,0
     g += 48;  // noch ein wenig was sehen kann und das Sprite nicht
@@ -3311,9 +3308,7 @@ D3DCOLOR TileEngineClass::LightValue(float x, float y, RECT_struct rect, bool fo
     if (b > 255)
         b = 255;
 
-    Color = D3DCOLOR_RGBA(r, g, b, 255);
-
-    return Color;
+    return D3DCOLOR_RGBA(r, g, b, 255);
 }
 
 // --------------------------------------------------------------------------------------
