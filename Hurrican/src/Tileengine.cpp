@@ -3201,8 +3201,8 @@ uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT_struct
             block = TileAt(xlev, ylev).Block;
 
             if (block & BLOCKWERT_SCHRAEGE_L) {
-                float newy = (ylev + 1) * TILESIZE_Y - rect.bottom -
-                    (TILESIZE_Y - static_cast<float>(static_cast<int>(x + i) % TILESIZE_X)) - 1;
+                float newy = static_cast<float>((ylev + 1) * TILESIZE_Y - rect.bottom -
+                    (TILESIZE_Y - (static_cast<int>(x + i) % TILESIZE_X)) - 1);
                 if (ySpeed == 0.0f || y > newy) {
                     y = newy;
                     return block;
@@ -3225,8 +3225,8 @@ uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT_struct
             block = TileAt(xlev, ylev).Block;
 
             if (block & BLOCKWERT_SCHRAEGE_R) {
-                float newy = (ylev + 1) * TILESIZE_Y - rect.bottom -
-                    (static_cast<float>(static_cast<int>(x + i) % TILESIZE_X)) - 1;
+                float newy = static_cast<float>((ylev + 1) * TILESIZE_Y - rect.bottom -
+                    (static_cast<int>(x + i) % TILESIZE_X) - 1);
                 if (ySpeed == 0.0f || y > newy) {
                     y = newy;
                     return block;
