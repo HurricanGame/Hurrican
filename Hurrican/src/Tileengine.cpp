@@ -1174,8 +1174,8 @@ void TileEngineClass::DrawFrontLevel() {
     ActualTexture = -1;
 
     // x und ypos am screen errechnen
-    xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
-    yScreen = static_cast<float>(-yTileOffs) + RenderPosY * TILESIZE_Y;
+    xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
+    yScreen = static_cast<float>(-yTileOffs + RenderPosY * TILESIZE_Y);
 
     DirectGraphics.SetColorKeyMode();
 
@@ -1187,7 +1187,7 @@ void TileEngineClass::DrawFrontLevel() {
     // int off = 0;
 
     for (int j = RenderPosY; j < RenderPosYTo; j++) {
-        xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
+        xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
 
         for (int i = RenderPosX; i < RenderPosXTo; i++) {
             if (TileAt(xLevel + i, yLevel + j).FrontArt > 0 &&
@@ -1360,8 +1360,8 @@ void TileEngineClass::DrawBackLevelOverlay() {
     ActualTexture = -1;
 
     // x und ypos am screen errechnen
-    xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
-    yScreen = static_cast<float>(-yTileOffs) + RenderPosY * TILESIZE_Y;
+    xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
+    yScreen = static_cast<float>(-yTileOffs + RenderPosY * TILESIZE_Y);
 
     DirectGraphics.SetColorKeyMode();
 
@@ -1372,7 +1372,7 @@ void TileEngineClass::DrawBackLevelOverlay() {
     // int off = 0;
 
     for (int j = RenderPosY; j < RenderPosYTo; j++) {
-        xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
+        xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
 
         for (int i = RenderPosX; i < RenderPosXTo; i++) {
             // Hintergrundtile nochmal neu setzen?
@@ -1482,8 +1482,8 @@ void TileEngineClass::DrawOverlayLevel() {
     ActualTexture = -1;
 
     // x und ypos am screen errechnen
-    xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
-    yScreen = static_cast<float>(-yTileOffs) + RenderPosY * TILESIZE_Y;
+    xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
+    yScreen = static_cast<float>(-yTileOffs + RenderPosY * TILESIZE_Y);
 
     DirectGraphics.SetColorKeyMode();
 
@@ -1494,7 +1494,7 @@ void TileEngineClass::DrawOverlayLevel() {
     // int off = 0;
 
     for (int j = RenderPosY; j < RenderPosYTo; j++) {
-        xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
+        xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
 
         for (int i = RenderPosX; i < RenderPosXTo; i++) {
             // Vordergrund Tiles setzen, um Spieler zu verdecken
@@ -1682,8 +1682,8 @@ void TileEngineClass::DrawWater() {
     int xo, yo;
 
     // x und ypos am screen errechnen
-    xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
-    yScreen = static_cast<float>(-yTileOffs) + RenderPosY * TILESIZE_Y;
+    xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
+    yScreen = static_cast<float>(-yTileOffs + RenderPosY * TILESIZE_Y);
 
     // Noch keine Tiles zum rendern
     NumToRender = 0;
@@ -1701,7 +1701,7 @@ void TileEngineClass::DrawWater() {
         DirectGraphics.SetTexture(-1);
 
         for (int j = RenderPosY; j < RenderPosYTo; j++) {
-            xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
+            xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
 
             for (int i = RenderPosX; i < RenderPosXTo; i++) {
                 // Vordergrund Tiles setzen um Spieler zu verdecken
@@ -1773,10 +1773,10 @@ void TileEngineClass::DrawWater() {
             yTileOffs = static_cast<int>(YOffset) % TILESIZE_Y;
 
             // ypos am screen errechnen
-            yScreen = static_cast<float>(-yTileOffs) + RenderPosY * TILESIZE_Y;
+            yScreen = static_cast<float>(-yTileOffs + RenderPosY * TILESIZE_Y);
 
             for (int j = RenderPosY; j < RenderPosYTo; j++) {
-                xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
+                xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
 
                 for (int i = RenderPosX; i < RenderPosXTo; i++) {
                     // Vordergrund Tiles setzen um Spieler zu verdecken
@@ -1914,11 +1914,11 @@ void TileEngineClass::DrawWater() {
     }
 
     // Wasserfall rendern
-    xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
-    yScreen = static_cast<float>(-yTileOffs) + RenderPosY * TILESIZE_Y;
+    xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
+    yScreen = static_cast<float>(-yTileOffs + RenderPosY * TILESIZE_Y);
     {
         for (int j = RenderPosY; j < RenderPosYTo; j++) {
-            xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
+            xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
 
             for (int i = RenderPosX; i < RenderPosXTo; i++) {
                 // Ist ein Wasserfall teil?
