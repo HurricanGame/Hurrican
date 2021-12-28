@@ -15,10 +15,9 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-// DKS - Always show cracktro when debugging
-//#ifdef NDEBUG
-#define SHOW_CRACKTRO
-//#endif
+#ifdef NDEBUG
+#  define SHOW_CRACKTRO
+#endif
 
 // --------------------------------------------------------------------------------------
 // Includes
