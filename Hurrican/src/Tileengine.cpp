@@ -3253,8 +3253,8 @@ bool TileEngineClass::CheckDestroyableWalls(float x, float y, float xs, float ys
     int xstart = static_cast<int>((x+xs SYNC) * 0.05f);
     int ystart = static_cast<int>((y+ys SYNC) * 0.05f);
 
-    int const xl = static_cast<int>(rect.right )/TILESIZE_X+2;
-    int const yl = static_cast<int>(rect.bottom)/TILESIZE_Y+2;
+    int const xl = rect.right / TILESIZE_X + 2;
+    int const yl = rect.bottom / TILESIZE_Y + 2;
 
     // avoid out-of-bounds access to Tiles[][] array.
     xstart = std::clamp(xstart, 1, LEVELSIZE_X - xl);
