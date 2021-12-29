@@ -1965,17 +1965,8 @@ void TileEngineClass::WertAngleichen(float &nachx, float &nachy, float vonx, flo
 
     //	return;
 
-    float rangex = vonx - nachx;
-    float rangey = vony - nachy;
-
-    if (rangex > 50.0f)
-        rangex = 50.0f;
-    if (rangex < -50.0f)
-        rangex = -50.0f;
-    if (rangey > 60.0f)
-        rangey = 60.0f;
-    if (rangey < -60.0f)
-        rangey = -60.0f;
+    float const rangex = std::clamp(vonx - nachx, -50.0f, 50.0f);
+    float const rangey = std::clamp(vony - nachy, -60.0f, 60.0f);
 
     nachx += rangex * 0.8f SYNC;
 
