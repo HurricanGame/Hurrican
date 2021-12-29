@@ -2084,8 +2084,8 @@ void TileEngineClass::UpdateLevel() {
                 ScrolltoX = Player[0].xpos;
                 ScrolltoY = Player[0].ypos;
             } else {
-                float xdist = static_cast<float>(Player[1].xpos - Player[0].xpos);
-                float ydist = static_cast<float>(Player[1].ypos - Player[0].ypos);
+                float const xdist = static_cast<float>(Player[1].xpos - Player[0].xpos);
+                float const ydist = static_cast<float>(Player[1].ypos - Player[0].ypos);
 
                 ScrolltoX = static_cast<float>(Player[0].xpos + 35) + xdist / 2.0f - 320.0f;
                 ScrolltoY = static_cast<float>(Player[0].ypos + 40) + ydist / 2.0f - 240.0f;
@@ -2123,7 +2123,6 @@ void TileEngineClass::UpdateLevel() {
     // Scrollbar und 2-Spieler Modus? Dann Kamera entsprechend setzen
     if (Zustand == TileStateEnum::SCROLLBAR) {
         float newx, newy;
-        float angleichx, angleichy;
 
         if (NUMPLAYERS == 2) {
             if (Player[0].Handlung == PlayerActionEnum::TOT) {
@@ -2133,12 +2132,10 @@ void TileEngineClass::UpdateLevel() {
                 newx = Player[0].xpos + 35;
                 newy = Player[0].ypos;
             } else {
-                float xdist, ydist;
-
-                xdist = static_cast<float>(Player[1].xpos - Player[0].xpos);
+                float const xdist = static_cast<float>(Player[1].xpos - Player[0].xpos);
                 newx = (Player[0].xpos + 35) + xdist / 2.0f;
 
-                ydist = static_cast<float>(Player[1].ypos - Player[0].ypos);
+                float const ydist = static_cast<float>(Player[1].ypos - Player[0].ypos);
                 newy = (Player[0].ypos) + ydist / 2.0f;
             }
         } else {
@@ -2151,8 +2148,8 @@ void TileEngineClass::UpdateLevel() {
         if (newy < 0)
             newy = 0;
 
-        angleichx = XOffset;
-        angleichy = YOffset;
+        float angleichx = XOffset;
+        float angleichy = YOffset;
 
         // Nach Boss wieder auf Spieler zentrieren?
         //		if (MustCenterPlayer == true)
