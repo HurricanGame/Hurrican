@@ -823,12 +823,11 @@ void TileEngineClass::SetScrollSpeed(float xSpeed, float ySpeed) {
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::CalcRenderRange() {
-    long xo, yo;
 
     // Ausschnittgröße berechnen
     //
-    xo = static_cast<long>(XOffset * (1.0f / TILESIZE_X));
-    yo = static_cast<long>(YOffset * (1.0f / TILESIZE_Y));
+    long xo = static_cast<long>(XOffset * (1.0f / TILESIZE_X));
+    long yo = static_cast<long>(YOffset * (1.0f / TILESIZE_Y));
 
     /* CHECKME: Without the following checks the game
        in places like start of level 2 for a short
@@ -996,15 +995,9 @@ void TileEngineClass::DrawBackground() {
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::DrawBackLevel() {
-    RECT_struct Rect;             // Texturausschnitt im Tileset
-    int NumToRender;       // Wieviele Vertices zu rendern ?
-    int ActualTexture;     // Aktuelle Textur
-    float l, r, o, u;      // Vertice Koordinaten
-    float tl, tr, to, tu;  // Textur Koordinaten
-    unsigned int Type;     // TileNR des Tiles
 
     // Am Anfang noch keine Textur gewählt
-    ActualTexture = -1;
+    int ActualTexture = -1;
 
     // x und ypos am screen errechnen
     xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
@@ -1013,7 +1006,7 @@ void TileEngineClass::DrawBackLevel() {
     DirectGraphics.SetColorKeyMode();
 
     // Noch keine Tiles zum rendern
-    NumToRender = 0;
+    int NumToRender = 0;
 
     // DKS - WaterList lookup table has been replaced with WaterSinTableClass,
     //      see comments for it in Tileengine.h
@@ -1043,26 +1036,26 @@ void TileEngineClass::DrawBackLevel() {
                     NumToRender = 0;
                 }
 
-                Type = TileAt(xLevel + i, yLevel + j).BackArt - INCLUDE_ZEROTILE;
+                unsigned int Type = TileAt(xLevel + i, yLevel + j).BackArt - INCLUDE_ZEROTILE;
 
                 // Animiertes Tile ?
                 if (TileAt(xLevel + i, yLevel + j).Block & BLOCKWERT_ANIMIERT_BACK)
                     Type += 36 * TileAnimPhase;
 
                 // richtigen Ausschnitt für das aktuelle Tile setzen
-                Rect = TileRects[Type];
+                RECT_struct const Rect = TileRects[Type];
 
                 // Screen-Koordinaten der Vertices
-                l = xScreen;               // Links
-                o = yScreen;               // Oben
-                r = xScreen + TILESIZE_X;  // Rechts
-                u = yScreen + TILESIZE_Y;  // Unten
+                float const l = xScreen;               // Links
+                float const o = yScreen;               // Oben
+                float const r = xScreen + TILESIZE_X;  // Rechts
+                float const u = yScreen + TILESIZE_Y;  // Unten
 
                 // Textur-Koordinaten
-                tl = Rect.left / TILESETSIZE_X;    // Links
-                tr = Rect.right / TILESETSIZE_X;   // Rechts
-                to = Rect.top / TILESETSIZE_Y;     // Oben
-                tu = Rect.bottom / TILESETSIZE_Y;  // Unten
+                float const tl = Rect.left / TILESETSIZE_X;    // Links
+                float const tr = Rect.right / TILESETSIZE_X;   // Rechts
+                float const to = Rect.top / TILESETSIZE_Y;     // Oben
+                float const tu = Rect.bottom / TILESETSIZE_Y;  // Unten
 
                 // Vertices definieren
                 v1.color = TileAt(xLevel + i, yLevel + j).Color[0];
@@ -1163,15 +1156,9 @@ void TileEngineClass::DrawBackLevel() {
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::DrawFrontLevel() {
-    RECT_struct Rect;             // Texturausschnitt im Tileset
-    int NumToRender;       // Wieviele Vertices zu rendern ?
-    int ActualTexture;     // Aktuelle Textur
-    float l, r, o, u;      // Vertice Koordinaten
-    float tl, tr, to, tu;  // Textur Koordinaten
-    unsigned int Type;     // TileNR des Tiles
 
     // Am Anfang noch keine Textur gewählt
-    ActualTexture = -1;
+    int ActualTexture = -1;
 
     // x und ypos am screen errechnen
     xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
@@ -1180,7 +1167,7 @@ void TileEngineClass::DrawFrontLevel() {
     DirectGraphics.SetColorKeyMode();
 
     // Noch keine Tiles zum rendern
-    NumToRender = 0;
+    int NumToRender = 0;
 
     // DKS - WaterList lookup table has been replaced with WaterSinTableClass,
     //      see comments for it in Tileengine.h
@@ -1209,26 +1196,26 @@ void TileEngineClass::DrawFrontLevel() {
                     NumToRender = 0;
                 }
 
-                Type = TileAt(xLevel + i, yLevel + j).FrontArt - INCLUDE_ZEROTILE;
+                unsigned int Type = TileAt(xLevel + i, yLevel + j).FrontArt - INCLUDE_ZEROTILE;
 
                 // Animiertes Tile ?
                 if (TileAt(xLevel + i, yLevel + j).Block & BLOCKWERT_ANIMIERT_FRONT)
                     Type += 36 * TileAnimPhase;
 
                 // richtigen Ausschnitt für das aktuelle Tile setzen
-                Rect = TileRects[Type];
+                RECT_struct const Rect = TileRects[Type];
 
                 // Screen-Koordinaten der Vertices
-                l = xScreen;               // Links
-                o = yScreen;               // Oben
-                r = xScreen + TILESIZE_X;  // Rechts
-                u = yScreen + TILESIZE_Y;  // Unten
+                float const l = xScreen;               // Links
+                float const o = yScreen;               // Oben
+                float const r = xScreen + TILESIZE_X;  // Rechts
+                float const u = yScreen + TILESIZE_Y;  // Unten
 
                 // Textur-Koordinaten
-                tl = Rect.left / TILESETSIZE_X;    // Links
-                tr = Rect.right / TILESETSIZE_X;   // Rechts
-                to = Rect.top / TILESETSIZE_Y;     // Oben
-                tu = Rect.bottom / TILESETSIZE_Y;  // Unten
+                float const tl = Rect.left / TILESETSIZE_X;    // Links
+                float const tr = Rect.right / TILESETSIZE_X;   // Rechts
+                float const to = Rect.top / TILESETSIZE_Y;     // Oben
+                float const tu = Rect.bottom / TILESETSIZE_Y;  // Unten
 
                 // Licht setzen (prüfen auf Overlay light, wegen hellen Kanten)
                 if (TileAt(xLevel + i, yLevel + j).Block & BLOCKWERT_OVERLAY_LIGHT) {
@@ -1349,15 +1336,9 @@ void TileEngineClass::ScrollLevel(float x, float y, TileStateEnum neu, float sx,
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::DrawBackLevelOverlay() {
-    RECT_struct Rect;             // Texturausschnitt im Tileset
-    int NumToRender;       // Wieviele Vertices zu rendern ?
-    int ActualTexture;     // Aktuelle Textur
-    float l, r, o, u;      // Vertice Koordinaten
-    float tl, tr, to, tu;  // Textur Koordinaten
-    unsigned int Type;     // TileNR des Tiles
 
     // Am Anfang noch keine Textur gewählt
-    ActualTexture = -1;
+    int ActualTexture = -1;
 
     // x und ypos am screen errechnen
     xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
@@ -1366,7 +1347,7 @@ void TileEngineClass::DrawBackLevelOverlay() {
     DirectGraphics.SetColorKeyMode();
 
     // Noch keine Tiles zum rendern
-    NumToRender = 0;
+    int NumToRender = 0;
     // int al;
     // DKS - Variable was unused in original source, disabled:
     // int off = 0;
@@ -1396,26 +1377,26 @@ void TileEngineClass::DrawBackLevelOverlay() {
                     NumToRender = 0;
                 }
 
-                Type = TileAt(xLevel + i, yLevel + j).BackArt - INCLUDE_ZEROTILE;
+                unsigned int Type = TileAt(xLevel + i, yLevel + j).BackArt - INCLUDE_ZEROTILE;
 
                 // Animiertes Tile ?
                 if (TileAt(xLevel + i, yLevel + j).Block & BLOCKWERT_ANIMIERT_BACK)
                     Type += 36 * TileAnimPhase;
 
                 // richtigen Ausschnitt für das aktuelle Tile setzen
-                Rect = TileRects[Type];
+                RECT_struct const Rect = TileRects[Type];
 
                 // Screen-Koordinaten der Vertices
-                l = xScreen;               // Links
-                o = yScreen;               // Oben
-                r = xScreen + TILESIZE_X;  // Rechts
-                u = yScreen + TILESIZE_Y;  // Unten
+                float const l = xScreen;               // Links
+                float const o = yScreen;               // Oben
+                float const r = xScreen + TILESIZE_X;  // Rechts
+                float const u = yScreen + TILESIZE_Y;  // Unten
 
                 // Textur-Koordinaten
-                tl = Rect.left / TILESETSIZE_X;    // Links
-                tr = Rect.right / TILESETSIZE_X;   // Rechts
-                to = Rect.top / TILESETSIZE_Y;     // Oben
-                tu = Rect.bottom / TILESETSIZE_Y;  // Unten
+                float const tl = Rect.left / TILESETSIZE_X;    // Links
+                float const tr = Rect.right / TILESETSIZE_X;   // Rechts
+                float const to = Rect.top / TILESETSIZE_Y;     // Oben
+                float const tu = Rect.bottom / TILESETSIZE_Y;  // Unten
 
                 // al = TileAt(xLevel+i, yLevel+j).Alpha;
 
@@ -1471,15 +1452,9 @@ void TileEngineClass::DrawBackLevelOverlay() {
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::DrawOverlayLevel() {
-    RECT_struct Rect;             // Texturausschnitt im Tileset
-    int NumToRender;       // Wieviele Vertices zu rendern ?
-    int ActualTexture;     // Aktuelle Textur
-    float l, r, o, u;      // Vertice Koordinaten
-    float tl, tr, to, tu;  // Textur Koordinaten
-    unsigned int Type;     // TileNR des Tiles
 
     // Am Anfang noch keine Textur gewählt
-    ActualTexture = -1;
+    int ActualTexture = -1;
 
     // x und ypos am screen errechnen
     xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
@@ -1488,7 +1463,7 @@ void TileEngineClass::DrawOverlayLevel() {
     DirectGraphics.SetColorKeyMode();
 
     // Noch keine Tiles zum rendern
-    NumToRender = 0;
+    int NumToRender = 0;
     // int al;
     // DKS - Variable was unused in original source, disabled:
     // int off = 0;
@@ -1506,10 +1481,10 @@ void TileEngineClass::DrawOverlayLevel() {
                 TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_MOVERECHTS ||
                 TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_MOVEVERTICAL) {
                 // Screen-Koordinaten der Vertices
-                l = xScreen;               // Links
-                o = yScreen;               // Oben
-                r = xScreen + TILESIZE_X;  // Rechts
-                u = yScreen + TILESIZE_Y;  // Unten
+                float const l = xScreen;               // Links
+                float const o = yScreen;               // Oben
+                float const r = xScreen + TILESIZE_X;  // Rechts
+                float const u = yScreen + TILESIZE_Y;  // Unten
                 /*
                                 // Wasserfall
                                 //
@@ -1582,20 +1557,20 @@ void TileEngineClass::DrawOverlayLevel() {
                     }
 
                     // "normales" Overlay Tile setzen
-                    Type = TileAt(xLevel + i, yLevel + j).FrontArt - INCLUDE_ZEROTILE;
+                    unsigned int Type = TileAt(xLevel + i, yLevel + j).FrontArt - INCLUDE_ZEROTILE;
 
                     // Animiertes Tile ?
                     if (TileAt(xLevel + i, yLevel + j).Block & BLOCKWERT_ANIMIERT_FRONT)
                         Type += 36 * TileAnimPhase;
 
                     // richtigen Ausschnitt für das aktuelle Tile setzen
-                    Rect = TileRects[Type];
+                    RECT_struct const Rect = TileRects[Type];
 
                     // Textur-Koordinaten
-                    tl = Rect.left / TILESETSIZE_X;    // Links
-                    tr = Rect.right / TILESETSIZE_X;   // Rechts
-                    to = Rect.top / TILESETSIZE_Y;     // Oben
-                    tu = Rect.bottom / TILESETSIZE_Y;  // Unten
+                    float tl = Rect.left / TILESETSIZE_X;    // Links
+                    float tr = Rect.right / TILESETSIZE_X;   // Rechts
+                    float to = Rect.top / TILESETSIZE_Y;     // Oben
+                    float tu = Rect.bottom / TILESETSIZE_Y;  // Unten
 
                     // bewegtes Tile vertikal
                     if (TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_MOVEVERTICAL) {
@@ -1677,16 +1652,13 @@ void TileEngineClass::DrawOverlayLevel() {
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::DrawWater() {
-    int NumToRender;   // Wieviele Vertices zu rendern ?
-    float l, r, o, u;  // Vertice Koordinaten
-    int xo, yo;
 
     // x und ypos am screen errechnen
     xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
     yScreen = static_cast<float>(-yTileOffs + RenderPosY * TILESIZE_Y);
 
     // Noch keine Tiles zum rendern
-    NumToRender = 0;
+    int NumToRender = 0;
 
     // DKS - WaterList lookup table has been replaced with WaterSinTableClass,
     //      see comments for it in Tileengine.h
@@ -1707,10 +1679,10 @@ void TileEngineClass::DrawWater() {
                 // Vordergrund Tiles setzen um Spieler zu verdecken
                 if (TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_LIQUID) {
                     // Screen-Koordinaten der Vertices
-                    l = xScreen;               // Links
-                    o = yScreen;               // Oben
-                    r = xScreen + TILESIZE_X;  // Rechts
-                    u = yScreen + TILESIZE_Y;  // Unten
+                    float const l = xScreen;               // Links
+                    float const o = yScreen;               // Oben
+                    float const r = xScreen + TILESIZE_X;  // Rechts
+                    float const u = yScreen + TILESIZE_Y;  // Unten
 
                     // DKS - Original code was setting texture coordinates when no texture
                     //      is bound.. disabled the code:
@@ -1782,10 +1754,10 @@ void TileEngineClass::DrawWater() {
                     // Vordergrund Tiles setzen um Spieler zu verdecken
                     if (TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_LIQUID) {
                         // Screen-Koordinaten der Vertices
-                        l = xScreen;               // Links
-                        o = yScreen;               // Oben
-                        r = xScreen + TILESIZE_X;  // Rechts
-                        u = yScreen + TILESIZE_Y;  // Unten
+                        float const l = xScreen;               // Links
+                        float const o = yScreen;               // Oben
+                        float const r = xScreen + TILESIZE_X;  // Rechts
+                        float const u = yScreen + TILESIZE_Y;  // Unten
 
                         // Vertices definieren
                         v1.x = l;  // Links oben
@@ -1830,8 +1802,8 @@ void TileEngineClass::DrawWater() {
                                 v2.color = Col3;
                         }
 
-                        xo = (i + xLevel) % 8;
-                        yo = (j + yLevel) % 8;
+                        int const xo = (i + xLevel) % 8;
+                        int const yo = (j + yLevel) % 8;
 
                         // Schicht 0 == langsam, gespiegelt
                         if (schicht == 0) {
@@ -1993,10 +1965,8 @@ void TileEngineClass::WertAngleichen(float &nachx, float &nachy, float vonx, flo
 
     //	return;
 
-    float rangex, rangey;
-
-    rangex = vonx - nachx;
-    rangey = vony - nachy;
+    float rangex = vonx - nachx;
+    float rangey = vony - nachy;
 
     if (rangex > 50.0f)
         rangex = 50.0f;
