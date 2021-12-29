@@ -827,8 +827,8 @@ void TileEngineClass::CalcRenderRange() {
 
     // Ausschnittgröße berechnen
     //
-    xo = static_cast<long>(XOffset * 0.05f);
-    yo = static_cast<long>(YOffset * 0.05f);
+    xo = static_cast<long>(XOffset * (1.0f / TILESIZE_X));
+    yo = static_cast<long>(YOffset * (1.0f / TILESIZE_Y));
 
     /* CHECKME: Without the following checks the game
        in places like start of level 2 for a short
@@ -3250,8 +3250,8 @@ bool TileEngineClass::CheckDestroyableWalls(float x, float y, float xs, float ys
             y < 0 || y > LEVELPIXELSIZE_Y)
         return false;
 
-    int xstart = static_cast<int>((x+xs SYNC) * 0.05f);
-    int ystart = static_cast<int>((y+ys SYNC) * 0.05f);
+    int xstart = static_cast<int>((x+xs SYNC) * (1.0f / TILESIZE_X));
+    int ystart = static_cast<int>((y+ys SYNC) * (1.0f / TILESIZE_Y));
 
     int const xl = rect.right / TILESIZE_X + 2;
     int const yl = rect.bottom / TILESIZE_Y + 2;
