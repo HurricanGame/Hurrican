@@ -2767,10 +2767,17 @@ uint32_t TileEngineClass::BlockRechts(float &x, float y, float &xo, float yo, RE
         else if (ylev >= LEVELSIZE_Y)
             return 0;
 
-        if (TileAt(xlev, ylev).Block != 0 && !(block & BLOCKWERT_WAND))
-            block = TileAt(xlev, ylev).Block;
+        bool blockWand = block & BLOCKWERT_WAND;
 
-        if (block & BLOCKWERT_WAND) {
+        if (!blockWand) {
+            uint32_t const newBlock = TileAt(xlev, ylev).Block;
+            if (newBlock != 0) {
+                block = newBlock;
+                blockWand = block & BLOCKWERT_WAND;
+            }
+        }
+
+        if (blockWand) {
             if (resolve) {
                 x = static_cast<float>((xlev * TILESIZE_X) - rect.right - 1);
                 xo = x;
@@ -2836,10 +2843,17 @@ uint32_t TileEngineClass::BlockLinks(float &x, float y, float &xo, float yo, REC
         else if (ylev >= LEVELSIZE_Y)
             return 0;
 
-        if (TileAt(xlev, ylev).Block != 0 && !(block & BLOCKWERT_WAND))
-            block = TileAt(xlev, ylev).Block;
+        bool blockWand = block & BLOCKWERT_WAND;
 
-        if (block & BLOCKWERT_WAND) {
+        if (!blockWand) {
+            uint32_t const newBlock = TileAt(xlev, ylev).Block;
+            if (newBlock != 0) {
+                block = newBlock;
+                blockWand = block & BLOCKWERT_WAND;
+            }
+        }
+
+        if (blockWand) {
             if (resolve) {
                 x = static_cast<float>((xlev * TILESIZE_X) + TILESIZE_X - rect.left);
                 xo = x;
@@ -2903,10 +2917,17 @@ uint32_t TileEngineClass::BlockOben(float x, float &y, float xo, float &yo, RECT
         else if (xlev >= LEVELSIZE_X)
             return 0;
 
-        if (TileAt(xlev, ylev).Block > 0 && !(block & BLOCKWERT_WAND))
-            block = TileAt(xlev, ylev).Block;
+        bool blockWand = block & BLOCKWERT_WAND;
 
-        if (block & BLOCKWERT_WAND) {
+        if (!blockWand) {
+            uint32_t const newBlock = TileAt(xlev, ylev).Block;
+            if (newBlock > 0) {
+                block = newBlock;
+                blockWand = block & BLOCKWERT_WAND;
+            }
+        }
+
+        if (blockWand) {
             if (resolve) {
                 y = static_cast<float>((ylev * TILESIZE_Y) + TILESIZE_Y - rect.top);
                 yo = y;
@@ -2974,11 +2995,17 @@ uint32_t TileEngineClass::BlockUntenNormal(float x, float y, float xo, float yo,
         else if (xlev >= LEVELSIZE_X)
             return 0;
 
-        // DKS - TODO: might be optimized a bit:
-        if (TileAt(xlev, ylev).Block > 0 && !(block & BLOCKWERT_WAND))
-            block = TileAt(xlev, ylev).Block;
+        bool blockWand = block & BLOCKWERT_WAND;
 
-        if (block & BLOCKWERT_WAND || block & BLOCKWERT_PLATTFORM)
+        if (!blockWand) {
+            uint32_t const newBlock = TileAt(xlev, ylev).Block;
+            if (newBlock > 0) {
+                block = newBlock;
+                blockWand = block & BLOCKWERT_WAND;
+            }
+        }
+
+        if (blockWand || block & BLOCKWERT_PLATTFORM)
             return block;
     }
 
@@ -3009,11 +3036,19 @@ uint32_t TileEngineClass::BlockUnten(float x, float &y, float xo, float &yo, REC
         else if (xlev >= LEVELSIZE_X)
             return 0;
 
-        // DKS - TODO: might be optimized a bit
-        if (!(block & BLOCKWERT_WAND) && !(block & BLOCKWERT_PLATTFORM) && TileAt(xlev, ylev).Block > 0)
-            block = TileAt(xlev, ylev).Block;
+        bool blockWand = block & BLOCKWERT_WAND;
+        bool blockPlatform = block & BLOCKWERT_PLATTFORM;
 
-        if (block & BLOCKWERT_WAND || block & BLOCKWERT_PLATTFORM) {
+        if (!blockWand && !blockPlatform) {
+            uint32_t const newBlock = TileAt(xlev, ylev).Block;
+            if (newBlock > 0) {
+                block = newBlock;
+                blockWand = block & BLOCKWERT_WAND;
+                blockPlatform = block & BLOCKWERT_PLATTFORM;
+            }
+        }
+
+        if (blockWand || blockPlatform) {
             if (resolve) {
                 y = static_cast<float>(ylev * TILESIZE_Y - rect.bottom);
                 yo = y;
@@ -3135,7 +3170,7 @@ int	TileEngineClass::BlockSlopes(float &x, float &y, float &xo, float &yo, RECT_
 #endif  // 0
 // DKS - Rewritten version of above function:
 uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT_struct rect, const float ySpeed) {
-    uint32_t block = 0;
+
     for (int j = rect.bottom; j < rect.bottom + TILESIZE_Y; j++) {
         int ylev = static_cast<int>((y + (j - 1)) * (1.0f / TILESIZE_Y));
 
@@ -3156,7 +3191,7 @@ uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT_struct
             else if (xlev >= LEVELSIZE_X)
                 break;
 
-            block = TileAt(xlev, ylev).Block;
+            uint32_t const block = TileAt(xlev, ylev).Block;
 
             if (block & BLOCKWERT_SCHRAEGE_L) {
                 float newy = static_cast<float>((ylev + 1) * TILESIZE_Y - rect.bottom -
@@ -3180,7 +3215,7 @@ uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT_struct
             else if (xlev < 0)
                 break;
 
-            block = TileAt(xlev, ylev).Block;
+            uint32_t const block = TileAt(xlev, ylev).Block;
 
             if (block & BLOCKWERT_SCHRAEGE_R) {
                 float newy = static_cast<float>((ylev + 1) * TILESIZE_Y - rect.bottom -
