@@ -2765,7 +2765,7 @@ uint32_t TileEngineClass::BlockRechts(float &x, float y, float &xo, float yo, RE
         if (ylev < 0)
             continue;
         else if (ylev >= LEVELSIZE_Y)
-            return 0;
+            break;
 
         bool blockWand = block & BLOCKWERT_WAND;
 
@@ -2809,7 +2809,7 @@ bool TileEngineClass::BlockDestroyRechts(float x, float y, float xo, float yo, R
         if (ylev < 0)
             continue;
         else if (ylev >= LEVELSIZE_Y)
-            return false;
+            break;
 
         if (TileAt(xlev, ylev).Block & BLOCKWERT_DESTRUCTIBLE) {
             ExplodeWall(xlev, ylev);
@@ -2841,7 +2841,7 @@ uint32_t TileEngineClass::BlockLinks(float &x, float y, float &xo, float yo, REC
         if (ylev < 0)
             continue;
         else if (ylev >= LEVELSIZE_Y)
-            return 0;
+            break;
 
         bool blockWand = block & BLOCKWERT_WAND;
 
@@ -2884,7 +2884,7 @@ bool TileEngineClass::BlockDestroyLinks(float x, float y, float xo, float yo, RE
         if (ylev < 0)
             continue;
         else if (ylev >= LEVELSIZE_Y)
-            return false;
+            break;
 
         if (TileAt(xlev, ylev).Block & BLOCKWERT_DESTRUCTIBLE) {
             ExplodeWall(xlev, ylev);
@@ -2915,7 +2915,7 @@ uint32_t TileEngineClass::BlockOben(float x, float &y, float xo, float &yo, RECT
         if (xlev < 0)
             continue;
         else if (xlev >= LEVELSIZE_X)
-            return 0;
+            break;
 
         bool blockWand = block & BLOCKWERT_WAND;
 
@@ -2959,7 +2959,7 @@ bool TileEngineClass::BlockDestroyOben(float x, float y, float xo, float yo, REC
         if (xlev < 0)
             continue;
         else if (xlev >= LEVELSIZE_X)
-            return false;
+            break;
 
         if (TileAt(xlev, ylev).Block & BLOCKWERT_DESTRUCTIBLE) {
             ExplodeWall(xlev, ylev);
@@ -2993,7 +2993,7 @@ uint32_t TileEngineClass::BlockUntenNormal(float x, float y, float xo, float yo,
         if (xlev < 0)
             continue;
         else if (xlev >= LEVELSIZE_X)
-            return 0;
+            break;
 
         bool blockWand = block & BLOCKWERT_WAND;
 
@@ -3034,7 +3034,7 @@ uint32_t TileEngineClass::BlockUnten(float x, float &y, float xo, float &yo, REC
         if (xlev < 0)
             continue;
         else if (xlev >= LEVELSIZE_X)
-            return 0;
+            break;
 
         bool blockWand = block & BLOCKWERT_WAND;
         bool blockPlatform = block & BLOCKWERT_PLATTFORM;
@@ -3080,7 +3080,7 @@ bool TileEngineClass::BlockDestroyUnten(float x, float y, float xo, float yo, RE
         if (xlev < 0)
             continue;
         else if (xlev >= LEVELSIZE_X)
-            return 0;
+            break;
 
         if (TileAt(xlev, ylev).Block & BLOCKWERT_DESTRUCTIBLE) {
             ExplodeWall(xlev, ylev);
@@ -3177,7 +3177,7 @@ uint32_t TileEngineClass::BlockSlopes(const float x, float &y, const RECT_struct
         if (ylev < 0)
             continue;
         else if (ylev >= LEVELSIZE_Y)
-            return 0;
+            break;
 
         // Schräge links
         // von links anfangen mit der Block-Prüdung
