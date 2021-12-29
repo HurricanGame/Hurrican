@@ -897,15 +897,15 @@ void TileEngineClass::DrawBackground() {
     {
         // Linke Hälfte
         Background.SetRect(0, 0, xoff, 480);
-        Background.RenderSprite(static_cast<float>(640 - xoff), 0, 0xFFFFFFFF);
+        Background.RenderSprite(static_cast<float>(640 - xoff), 0.0f, 0xFFFFFFFF);
 
         // Rechte Hälfte
         Background.SetRect(xoff, 0, 640, 480);
-        Background.RenderSprite(0, 0, 0xFFFFFFFF);
+        Background.RenderSprite(0.0f, 0.0f, 0xFFFFFFFF);
     } else  // oder statisch ?
     {
         Background.SetRect(0, 0, 640, 480);
-        Background.RenderSprite(0, 0, 0xFFFFFFFF);
+        Background.RenderSprite(0.0f, 0.0f, 0xFFFFFFFF);
     }
 
     //----- Layer ganz hinten (ausser im Flugsack Level)
@@ -921,7 +921,7 @@ void TileEngineClass::DrawBackground() {
 
     // Rechte Hälfte
     ParallaxLayer[0].SetRect(xoff, 0, 640, 480);
-    ParallaxLayer[0].RenderSprite(0, yoff, 0xFFFFFFFF);
+    ParallaxLayer[0].RenderSprite(0.0f, yoff, 0xFFFFFFFF);
 
     //----- vorletzter Layer
 
@@ -935,7 +935,7 @@ void TileEngineClass::DrawBackground() {
 
     // Rechte Hälfte
     ParallaxLayer[1].SetRect(xoff, 0, 640, 480);
-    ParallaxLayer[1].RenderSprite(0, yoff, 0xFFFFFFFF);
+    ParallaxLayer[1].RenderSprite(0.0f, yoff, 0xFFFFFFFF);
 
     //----- Im Fahrstuhl-Level noch den vertikalen Parallax-Layer anzeigen
 
@@ -948,7 +948,7 @@ void TileEngineClass::DrawBackground() {
 
         // Untere Hälfte
         ParallaxLayer[2].SetRect(0, static_cast<int>(yoff), 640, 480);
-        ParallaxLayer[2].RenderSprite(390.0f - XOffset, 0, 0xFFFFFFFF);
+        ParallaxLayer[2].RenderSprite(390.0f - XOffset, 0.0f, 0xFFFFFFFF);
     }
 
     //----- Wolken Layer (Wenn Focus des Level GANZ oben, dann wird er GANZ angezeigt)
@@ -966,11 +966,11 @@ void TileEngineClass::DrawBackground() {
 
     // Linke Hälfte
     CloudLayer.SetRect(0, static_cast<int>(yoff), xoff, 240);
-    CloudLayer.RenderSprite(static_cast<float>(640 - xoff), 0, 0xFFFFFFFF);
+    CloudLayer.RenderSprite(static_cast<float>(640 - xoff), 0.0f, 0xFFFFFFFF);
 
     // Rechte Hälfte
     CloudLayer.SetRect(xoff, static_cast<int>(yoff), 640, 240);
-    CloudLayer.RenderSprite(0, 0, 0xFFFFFFFF);
+    CloudLayer.RenderSprite(0.0f, 0.0f, 0xFFFFFFFF);
 
     DirectGraphics.SetColorKeyMode();
 
