@@ -77,11 +77,11 @@ float ShadowAlpha;
 TileEngineClass::TileEngineClass() {
     bDrawShadow = false;
 
-    XOffset = 0;
-    YOffset = 0;
+    XOffset = 0.0f;
+    YOffset = 0.0f;
 
-    NewXOffset = -1;
-    NewYOffset = -1;
+    NewXOffset = -1.0f;
+    NewYOffset = -1.0f;
 
     RenderPosX = 0;
     RenderPosY = 0;
@@ -256,8 +256,8 @@ void TileEngineClass::InitNewLevel(int xSize, int ySize) {
     XOffset = 0.0f;
     YOffset = 0.0f;
 
-    NewXOffset = -1;
-    NewYOffset = -1;
+    NewXOffset = -1.0f;
+    NewYOffset = -1.0f;
 }
 
 // --------------------------------------------------------------------------------------
@@ -891,7 +891,7 @@ void TileEngineClass::DrawBackground() {
 
     //----- Hintergrund-Bild
 
-    xoff = static_cast<int>(XOffset / 5) % 640;
+    xoff = static_cast<int>(XOffset / 5.0f) % 640;
 
     if (bScrollBackground)  // Hintergrundbild mitscrollen
     {
@@ -2254,10 +2254,10 @@ void TileEngineClass::UpdateLevel() {
 
     // Level an vorgegebene Position anpassen
     // weil z.B. der Fahrstuhl selber scrollt?
-    if (NewXOffset != -1)
+    if (NewXOffset != -1.0f)
         XOffset = NewXOffset;
 
-    if (NewYOffset != -1)
+    if (NewYOffset != -1.0f)
         YOffset = NewYOffset;
 }
 
