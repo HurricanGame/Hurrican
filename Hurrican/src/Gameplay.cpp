@@ -935,7 +935,7 @@ bool DisplayLoadInfo(const char Text[100]) {
 #ifndef NDEBUG
     std::string buf = std::to_string(pMenu->ItemsLoaded());
 
-    pMenuFont->DrawText((700 - pMenuFont->StringLength(TextArray[TEXT_MENUE_LOADING])) / 2.0f, 270,
+    pDefaultFont->DrawText((700 - pMenuFont->StringLength(TextArray[TEXT_MENUE_LOADING])) / 2.0f, 300,
                            buf.c_str(), 0xFFFFFFFF);
 #endif
 

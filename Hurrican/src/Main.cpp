@@ -589,10 +589,10 @@ bool GameInit2() {
     // DKS - Resized menufont.png and added missing glyphs to make Swedish translation work:
     // pMenuFont->LoadFont("menufont.png", 448, 256, 28, 28, 16, 7);
     pMenuFont->LoadFont("menufont.png", 448, 336, 28, 28, 16, 12, menufont_charwidths);
-    pMenu = new MenuClass();
-
     // Fonts laden
     pDefaultFont->LoadFont("smallfont.png", 320, 84, 10, 12, 32, 7, smallfont_charwidths);
+
+    pMenu = new MenuClass();
 
     // DKS - Added support for font scaling
     if (CommandLineParams.LowRes) {
