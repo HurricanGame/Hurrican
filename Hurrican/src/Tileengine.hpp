@@ -563,18 +563,7 @@ class TileEngineClass {
 
     // DKS - Added bounds-checked accessor for Tiles[][] array for debugging purposes:
     LevelTileStruct &TileAt(const int i, const int j) {
-#ifdef _DEBUG_STRICT
-        // Stricter bounds-check I use when optimizing
-        if (i >= LEVELSIZE_X || i < 0 || j >= LEVELSIZE_Y || j < 0) {
-            Protokoll << "-> Error: Out of bounds in TileEngineClass::TileAt():\n"
-                      << "\tparam i: " << i << "\tLower bound: " << 0 << "\tUpper bound: " << LEVELSIZE_X - 1 << "\n"
-                      << "\tparam j: " << j << "\tLower bound: " << 0 << "\tUpper bound: " << LEVELSIZE_Y - 1
-                      << std::endl;
-            GameRunning = false;
-            exit(EXIT_FAILURE);  // WriteText above should do this for us (first param==true)
-        }
-
-#elif !defined NDEBUG
+#ifndef NDEBUG
         if (i >= MAX_LEVELSIZE_X || i < 0 || j >= MAX_LEVELSIZE_Y || j < 0) {
             Protokoll << "-> Error: Out of bounds in TileEngineClass::TileAt():\n"
                       << "\tparam i: " << i << "\tLower bound: " << 0 << "\tUpper bound: " << MAX_LEVELSIZE_X - 1
@@ -583,6 +572,14 @@ class TileEngineClass {
                       << std::endl;
             GameRunning = false;
             exit(EXIT_FAILURE);  // WriteText above should do this for us (first param==true)
+        }
+
+        // Stricter bounds-check I use when optimizing
+        if (i >= LEVELSIZE_X || j >= LEVELSIZE_Y) {
+            Protokoll << "-> Warning: Out of level bound in TileEngineClass::TileAt():\n"
+                      << "\tparam i: " << i << "\tUpper bound: " << LEVELSIZE_X - 1 << "\n"
+                      << "\tparam j: " << j << "\tUpper bound: " << LEVELSIZE_Y - 1
+                      << std::endl;
         }
 #endif
         return Tiles[i][j];
