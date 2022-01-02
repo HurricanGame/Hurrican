@@ -1958,18 +1958,12 @@ void TileEngineClass::DrawWater() {
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::CheckBounds() {
+    float const xtilesize = static_cast<float>(TILESIZE_X);
+    float const ytilesize = static_cast<float>(TILESIZE_Y);
+
     // Grenzen des Levels checken
-    if (XOffset < TILESIZE_X)
-        XOffset = TILESIZE_X;
-
-    if (YOffset < TILESIZE_Y)
-        YOffset = TILESIZE_Y;
-
-    if (XOffset > LEVELPIXELSIZE_X - 640.0f - TILESIZE_X)
-        XOffset = LEVELPIXELSIZE_X - 640.0f - TILESIZE_X;
-
-    if (YOffset > LEVELPIXELSIZE_Y - 480.0f - TILESIZE_Y)
-        YOffset = LEVELPIXELSIZE_Y - 480.0f - TILESIZE_Y;
+    XOffset = std::clamp(XOffset, xtilesize, LEVELPIXELSIZE_X - 640.0f - xtilesize);
+    YOffset = std::clamp(YOffset, ytilesize, LEVELPIXELSIZE_Y - 480.0f - ytilesize);
 }
 
 // --------------------------------------------------------------------------------------
