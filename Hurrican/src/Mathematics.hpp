@@ -93,9 +93,9 @@ static float SineRemezRad(float x) {
     }
 
     if (x > pi_over_two) {
-        float x_div_half_pi = x * two_over_pi;
-        int quotient = static_cast<int>(x_div_half_pi);
-        float x_past_quad = x - static_cast<float>(quotient) * pi_over_two;
+        const float x_div_half_pi = x * two_over_pi;
+        const int quotient = static_cast<int>(x_div_half_pi);
+        const float x_past_quad = x - static_cast<float>(quotient) * pi_over_two;
 
         switch (quotient % 4) {
             case 0:  // x is < PI/2
@@ -119,11 +119,11 @@ static float SineRemezRad(float x) {
     // Specifically, these were generated using the method outlined on:
     // http://lolengine.net/wiki/doc/maths/remez/tutorial-fixing-parameters
     // whereby, the first coefficient (a1) is forced to 1.0 and eliminated
-    const float a3 = -1.660786242169313753522239789881311891420e-1;
-    const float a5 = 7.633773374658546665581958822838108771028e-3;
-    float x2 = x * x;
-    float x3 = x2 * x;
-    float result = x + x3 * a3 + (x2 * x3) * a5;
+    constexpr float a3 = -1.660786242169313753522239789881311891420e-1;
+    constexpr float a5 = 7.633773374658546665581958822838108771028e-3;
+    const float x2 = x * x;
+    const float x3 = x2 * x;
+    const float result = x + x3 * a3 + (x2 * x3) * a5;
 
     // NOTE: results can be slightly over 1.0, i.e. 1.0004, but that is
     //      close enough for our purposes in this game. We won't bother
