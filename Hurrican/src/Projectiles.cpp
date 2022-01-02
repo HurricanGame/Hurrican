@@ -1194,12 +1194,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             absy = speed * absy;  // (xSpeed*ySpeed ergibt 4)
 
             xSpeed = absx;
-            ySpeed = absy;
-
-            if (ySpeed < -5.0f)
-                ySpeed = -5.0f;
-            if (ySpeed > 5.0f)
-                ySpeed = 5.0f;
+            ySpeed = std::clamp(absy, -5.0f, 5.0f);
 
             if (xSpeed > 0.0f)
                 if (xSpeed < 5.0f)
@@ -2821,10 +2816,7 @@ void ProjectileClass::Run() {
         } break;
 
         case PHARAOLASER: {
-            if (ySpeed > 20.0f)
-                ySpeed = 20.0f;
-            if (ySpeed < -20.0f)
-                ySpeed = -20.0f;
+            ySpeed = std::clamp(ySpeed, -20.0f, 20.0f);
 
             // Spieler verfolgen
             if (pParent->ypos + 40 < yPos + 24)
@@ -2937,10 +2929,7 @@ void ProjectileClass::Run() {
             if (yPos + 5 > pParent->ypos + 45)
                 yAcc = -2.0f;
 
-            if (ySpeed < -10.0f)
-                ySpeed = -10.0f;
-            if (ySpeed > 10.0f)
-                ySpeed = 10.0f;
+            ySpeed = std::clamp(ySpeed, -10.0f, 10.0f);
 
             // Blubbern
             AnimCount -= 1.0f SYNC;
