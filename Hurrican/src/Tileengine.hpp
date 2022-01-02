@@ -299,7 +299,7 @@ class WaterSinTableClass {
     WaterSinTableClass() {
         ResetPosition();
         for (int i = 0; i < 17; ++i) {
-            SinTable[i] = 2.5f * sinf(i * float(M_PI) / 32.0f);
+            SinTable[i] = 2.5f * sinf(i * static_cast<float>(M_PI) / 32.0f);
             NonWaterSinTable[i] = 2.0f * SinTable[i];
         }
     }
@@ -328,7 +328,7 @@ class WaterSinTableClass {
         // advancing the original code's sin table offset by
         // 2, which was the original position advancement, i.e.
         // 2 * (pi/20) SYNC == (16/5) *(pi/32) SYNC
-        SinTablePos += float(16.0 / 5.0) * speed_faktor;
+        SinTablePos += static_cast<float>(16.0 / 5.0) * speed_faktor;
         while (SinTablePos >= 64.0f)
             SinTablePos -= 64.0f;
     }

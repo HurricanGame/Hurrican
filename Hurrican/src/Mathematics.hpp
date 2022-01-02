@@ -81,8 +81,8 @@ inline float RadToDeg(float x) { return x * static_cast<float>(180.0 / M_PI); }
 // | SIN APPROX (5th-deg Remez minimax)  |           118.1302|            8.465237|
 // +-------------------------------------+-------------------+--------------------+
 static float SineRemezRad(float x) {
-    const float pi_over_two = float(M_PI / 2.0L);
-    const float two_over_pi = float(2.0L / M_PI);
+    const float pi_over_two = static_cast<float>(M_PI / 2.0L);
+    const float two_over_pi = static_cast<float>(2.0L / M_PI);
     bool negate_result;
 
     if (x < 0) {
@@ -94,8 +94,8 @@ static float SineRemezRad(float x) {
 
     if (x > pi_over_two) {
         float x_div_half_pi = x * two_over_pi;
-        int quotient = int(x_div_half_pi);
-        float x_past_quad = x - float(quotient) * pi_over_two;
+        int quotient = static_cast<int>(x_div_half_pi);
+        float x_past_quad = x - static_cast<float>(quotient) * pi_over_two;
 
         switch (quotient % 4) {
             case 0:  // x is < PI/2
@@ -148,7 +148,7 @@ inline float sin_rad(const float rad) {
 }
 
 inline float cos_rad(const float rad) {
-    return SineRemezRad(rad + float(M_PI / 2.0L));
+    return SineRemezRad(rad + static_cast<float>(M_PI / 2.0L));
 }
 
 }  // Unnamed namespace
