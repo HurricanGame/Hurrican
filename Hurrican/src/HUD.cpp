@@ -228,11 +228,7 @@ void HUDClass::ShowHUD() {
 
             // Only ever display a max of 9, since we've no room
             int digit;
-            digit = Player[p].PowerLines;
-            if (digit < 0)
-                digit = 0;
-            else if (digit > 9)
-                digit = 9;
+            digit = std::clamp(Player[p].PowerLines, 0, 9);
 
             std::string buf;
             buf = std::to_string(digit);
@@ -240,11 +236,7 @@ void HUDClass::ShowHUD() {
             pDefaultFont->DrawText(xpos + 350 + off + p * 10, ypos + 36, buf.c_str(), playercol);
 
             // Anzahl verbleibender Granaten anzeigen
-            digit = Player[p].Grenades;
-            if (digit < 0)
-                digit = 0;
-            else if (digit > 9)
-                digit = 9;
+            digit = std::clamp(Player[p].Grenades, 0, 9);
             buf = std::to_string(digit);
 
             pDefaultFont->DrawText(xpos + 372 + off + p * 10, ypos + 36, buf.c_str(), playercol);
