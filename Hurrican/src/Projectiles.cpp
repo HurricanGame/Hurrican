@@ -3257,10 +3257,10 @@ void ProjectileClass::Run() {
                 ySpeed -= 0.5f SYNC;
 
             // Grenzen checken
-            if (ySpeed > static_cast<float>(M_PI) * 2)
-                ySpeed -= static_cast<float>(M_PI) * 2;
+            if (ySpeed > static_cast<float>(M_PI * 2.0))
+                ySpeed -= static_cast<float>(M_PI * 2.0);
             if (ySpeed < 0.0f)
-                ySpeed += static_cast<float>(M_PI) * 2;
+                ySpeed += static_cast<float>(M_PI * 2.0);
 
             if (pParent->Handlung != PlayerActionEnum::RADELN &&
                     pParent->Handlung != PlayerActionEnum::RADELN_FALL) {
