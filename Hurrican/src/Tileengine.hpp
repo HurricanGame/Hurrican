@@ -561,9 +561,12 @@ class TileEngineClass {
 
     void WertAngleichen(float &nachx, float &nachy, float vonx, float vony);
 
-    // DKS - Added bounds-checked accessor for Tiles[][] array for debugging purposes:
+#ifdef NDEBUG
+    inline
+#endif
     LevelTileStruct &TileAt(const int i, const int j) {
 #ifndef NDEBUG
+        // DKS - Added bounds-checked accessor for Tiles[][] array for debugging purposes:
         if (i >= MAX_LEVELSIZE_X || i < 0 || j >= MAX_LEVELSIZE_Y || j < 0) {
             Protokoll << "-> Error: Out of bounds in TileEngineClass::TileAt():\n"
                       << "\tparam i: " << i << "\tLower bound: " << 0 << "\tUpper bound: " << MAX_LEVELSIZE_X - 1
