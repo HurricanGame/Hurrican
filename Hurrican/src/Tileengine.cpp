@@ -115,12 +115,13 @@ TileEngineClass::TileEngineClass() {
             //		 for (int k = 0; k < 3; k++)
             //			 TileAt(i, j).Color[k] = 0xFFFFFFFF;
 
-            Tiles[i][j].Red = 255;
-            Tiles[i][j].Green = 255;
-            Tiles[i][j].Blue = 255;
-            Tiles[i][j].Alpha = 255;
+            LevelTileStruct& tile = Tiles[i][j];
+            tile.Red = 255;
+            tile.Green = 255;
+            tile.Blue = 255;
+            tile.Alpha = 255;
 
-            Tiles[i][j].move_v1 = Tiles[i][j].move_v2 = Tiles[i][j].move_v3 = Tiles[i][j].move_v4 = false;
+            tile.move_v1 = tile.move_v2 = tile.move_v3 = tile.move_v4 = false;
         }
 
     for (auto &i : TileGfx)
@@ -451,29 +452,31 @@ loadfile:
             if (LoadTile.TileSetFront > LoadedTilesets)
                 LoadTile.TileSetFront = LoadedTilesets;
 
+            LevelTileStruct& tile = TileAt(i, j);
+
             // Geladenes Leveltile übernehmen
             //
-            TileAt(i, j).Alpha = LoadTile.Alpha;
-            TileAt(i, j).BackArt = LoadTile.BackArt;
-            TileAt(i, j).Block = FixEndian(LoadTile.Block);
-            TileAt(i, j).Blue = LoadTile.Blue;
-            TileAt(i, j).FrontArt = LoadTile.FrontArt;
-            TileAt(i, j).Green = LoadTile.Green;
-            TileAt(i, j).Red = LoadTile.Red;
-            TileAt(i, j).TileSetBack = LoadTile.TileSetBack;
-            TileAt(i, j).TileSetFront = LoadTile.TileSetFront;
+            tile.Alpha = LoadTile.Alpha;
+            tile.BackArt = LoadTile.BackArt;
+            tile.Block = FixEndian(LoadTile.Block);
+            tile.Blue = LoadTile.Blue;
+            tile.FrontArt = LoadTile.FrontArt;
+            tile.Green = LoadTile.Green;
+            tile.Red = LoadTile.Red;
+            tile.TileSetBack = LoadTile.TileSetBack;
+            tile.TileSetFront = LoadTile.TileSetFront;
 
-            TileAt(i, j).Color[0] = D3DCOLOR_RGBA(LoadTile.Red, LoadTile.Green, LoadTile.Blue, LoadTile.Alpha);
-            TileAt(i, j).Color[1] = D3DCOLOR_RGBA(LoadTile.Red, LoadTile.Green, LoadTile.Blue, LoadTile.Alpha);
-            TileAt(i, j).Color[2] = D3DCOLOR_RGBA(LoadTile.Red, LoadTile.Green, LoadTile.Blue, LoadTile.Alpha);
-            TileAt(i, j).Color[3] = D3DCOLOR_RGBA(LoadTile.Red, LoadTile.Green, LoadTile.Blue, LoadTile.Alpha);
+            tile.Color[0] = D3DCOLOR_RGBA(LoadTile.Red, LoadTile.Green, LoadTile.Blue, LoadTile.Alpha);
+            tile.Color[1] = D3DCOLOR_RGBA(LoadTile.Red, LoadTile.Green, LoadTile.Blue, LoadTile.Alpha);
+            tile.Color[2] = D3DCOLOR_RGBA(LoadTile.Red, LoadTile.Green, LoadTile.Blue, LoadTile.Alpha);
+            tile.Color[3] = D3DCOLOR_RGBA(LoadTile.Red, LoadTile.Green, LoadTile.Blue, LoadTile.Alpha);
 
             // Eine Flüssigkeit als Block?
             // damit man nicht immer auf alle vier möglichen Flüssigkeiten checken muss,
             // sondern nur auf BLOCKWERT_LIQUID
 
-            if (TileAt(i, j).Block & BLOCKWERT_WASSER || TileAt(i, j).Block & BLOCKWERT_SUMPF)
-                TileAt(i, j).Block ^= BLOCKWERT_LIQUID;
+            if (tile.Block & BLOCKWERT_WASSER || tile.Block & BLOCKWERT_SUMPF)
+                tile.Block ^= BLOCKWERT_LIQUID;
         }
 
     // eventuelle Schrägen ermitteln und Ecken für die Wasseranim festlegen
@@ -503,29 +506,31 @@ loadfile:
             bo = TileAt(i + 0, j - 1).Block;
             bu = TileAt(i + 0, j + 1).Block;
 
+            LevelTileStruct& tile = TileAt(i, j);
+
             if (!(TileAt(i - 1, j - 1).Block & BLOCKWERT_WAND) && !(TileAt(i, j - 1).Block & BLOCKWERT_WASSERFALL) &&
                 !(TileAt(i - 1, j - 1).Block & BLOCKWERT_WASSERFALL) &&
                 (bl & BLOCKWERT_LIQUID && (!(bo & BLOCKWERT_WAND))))
-                TileAt(i, j).move_v1 = true;
+                tile.move_v1 = true;
             else
-                TileAt(i, j).move_v1 = false;
+                tile.move_v1 = false;
 
             if (!(TileAt(i - 1, j + 1).Block & BLOCKWERT_WAND) && (bl & BLOCKWERT_LIQUID && bu & BLOCKWERT_LIQUID))
-                TileAt(i, j).move_v3 = true;
+                tile.move_v3 = true;
             else
-                TileAt(i, j).move_v3 = false;
+                tile.move_v3 = false;
 
             if (!(TileAt(i + 1, j - 1).Block & BLOCKWERT_WAND) && !(TileAt(i, j - 1).Block & BLOCKWERT_WASSERFALL) &&
                 !(TileAt(i + 1, j - 1).Block & BLOCKWERT_WASSERFALL) &&
                 (br & BLOCKWERT_LIQUID && (!(bo & BLOCKWERT_WAND))))
-                TileAt(i, j).move_v2 = true;
+                tile.move_v2 = true;
             else
-                TileAt(i, j).move_v2 = false;
+                tile.move_v2 = false;
 
             if (!(TileAt(i + 1, j + 1).Block & BLOCKWERT_WAND) && (br & BLOCKWERT_LIQUID && bu & BLOCKWERT_LIQUID))
-                TileAt(i, j).move_v4 = true;
+                tile.move_v4 = true;
             else
-                TileAt(i, j).move_v4 = false;
+                tile.move_v4 = false;
         }
 
     // Objekt Daten laden und gleich Liste mit Objekten erstellen
@@ -1016,14 +1021,16 @@ void TileEngineClass::DrawBackLevel() {
         xScreen = static_cast<float>(-xTileOffs) + RenderPosX * TILESIZE_X;
 
         for (int i = RenderPosX; i < RenderPosXTo; i++) {
-            if (TileAt(xLevel + i, yLevel + j).BackArt > 0 &&  // Überhaupt ein Tile drin ?
-                (!(TileAt(xLevel + i, yLevel + j).Block & BLOCKWERT_WAND) ||
-                 (TileAt(xLevel + i, yLevel + j).FrontArt > 0 &&
-                  TileAt(xLevel + i, yLevel + j).Block & BLOCKWERT_VERDECKEN))) {
+            const LevelTileStruct& tile = TileAt(xLevel + i, yLevel + j);
+
+            if (tile.BackArt > 0 &&  // Überhaupt ein Tile drin ?
+                (!(tile.Block & BLOCKWERT_WAND) ||
+                 (tile.FrontArt > 0 &&
+                  tile.Block & BLOCKWERT_VERDECKEN))) {
                 // Neue Textur ?
-                if (TileAt(xLevel + i, yLevel + j).TileSetBack != ActualTexture) {
+                if (tile.TileSetBack != ActualTexture) {
                     // Aktuelle Textur sichern
-                    ActualTexture = TileAt(xLevel + i, yLevel + j).TileSetBack;
+                    ActualTexture = tile.TileSetBack;
 
                     // Tiles zeichnen
                     if (NumToRender > 0)
@@ -1036,10 +1043,10 @@ void TileEngineClass::DrawBackLevel() {
                     NumToRender = 0;
                 }
 
-                unsigned int Type = TileAt(xLevel + i, yLevel + j).BackArt - INCLUDE_ZEROTILE;
+                unsigned int Type = tile.BackArt - INCLUDE_ZEROTILE;
 
                 // Animiertes Tile ?
-                if (TileAt(xLevel + i, yLevel + j).Block & BLOCKWERT_ANIMIERT_BACK)
+                if (tile.Block & BLOCKWERT_ANIMIERT_BACK)
                     Type += 36 * TileAnimPhase;
 
                 // richtigen Ausschnitt für das aktuelle Tile setzen
@@ -1058,10 +1065,10 @@ void TileEngineClass::DrawBackLevel() {
                 float const tu = Rect.bottom / TILESETSIZE_Y;  // Unten
 
                 // Vertices definieren
-                v1.color = TileAt(xLevel + i, yLevel + j).Color[0];
-                v2.color = TileAt(xLevel + i, yLevel + j).Color[1];
-                v3.color = TileAt(xLevel + i, yLevel + j).Color[2];
-                v4.color = TileAt(xLevel + i, yLevel + j).Color[3];
+                v1.color = tile.Color[0];
+                v2.color = tile.Color[1];
+                v3.color = tile.Color[2];
+                v4.color = tile.Color[3];
 
                 v1.x = l;  // Links oben
                 v1.y = o;
@@ -1107,8 +1114,8 @@ void TileEngineClass::DrawBackLevel() {
                 if (TileAt(xLevel+i, yLevel+j).move_v4 == true) v4.x += SinList2[off + 2];
 #endif  // 0
 
-                if (TileAt(xLevel + i, yLevel + j).move_v1 || TileAt(xLevel + i, yLevel + j).move_v2 ||
-                    TileAt(xLevel + i, yLevel + j).move_v3 || TileAt(xLevel + i, yLevel + j).move_v4) {
+                if (tile.move_v1 || tile.move_v2 ||
+                    tile.move_v3 || tile.move_v4) {
                     float x_offs[2];
                     WaterSinTable.GetNonWaterSin(j, x_offs);
 
@@ -1120,15 +1127,15 @@ void TileEngineClass::DrawBackLevel() {
                     // if (TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)                    // Original line
                     if (yLevel + j > 0 &&  // DKS Added this check to above line
                         TileAt(xLevel + i, yLevel + j - 1).Block & BLOCKWERT_LIQUID) {
-                        if (TileAt(xLevel + i, yLevel + j).move_v1 == true)
+                        if (tile.move_v1 == true)
                             v1.x += x_offs[0];
-                        if (TileAt(xLevel + i, yLevel + j).move_v2 == true)
+                        if (tile.move_v2 == true)
                             v2.x += x_offs[0];
                     }
 
-                    if (TileAt(xLevel + i, yLevel + j).move_v3 == true)
+                    if (tile.move_v3 == true)
                         v3.x += x_offs[1];
-                    if (TileAt(xLevel + i, yLevel + j).move_v4 == true)
+                    if (tile.move_v4 == true)
                         v4.x += x_offs[1];
                 }
 
@@ -1177,13 +1184,15 @@ void TileEngineClass::DrawFrontLevel() {
         xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
 
         for (int i = RenderPosX; i < RenderPosXTo; i++) {
-            if (TileAt(xLevel + i, yLevel + j).FrontArt > 0 &&
-                !(TileAt(xLevel + i, yLevel + j).Block & BLOCKWERT_VERDECKEN) &&
-                !(TileAt(xLevel + i, yLevel + j).Block & BLOCKWERT_WAND)) {
+            const LevelTileStruct& tile = TileAt(xLevel + i, yLevel + j);
+
+            if (tile.FrontArt > 0 &&
+                !(tile.Block & BLOCKWERT_VERDECKEN) &&
+                !(tile.Block & BLOCKWERT_WAND)) {
                 // Neue Textur ?
-                if (TileAt(xLevel + i, yLevel + j).TileSetFront != ActualTexture) {
+                if (tile.TileSetFront != ActualTexture) {
                     // Aktuelle Textur sichern
-                    ActualTexture = TileAt(xLevel + i, yLevel + j).TileSetFront;
+                    ActualTexture = tile.TileSetFront;
 
                     // Tiles zeichnen
                     if (NumToRender > 0)
@@ -1196,10 +1205,10 @@ void TileEngineClass::DrawFrontLevel() {
                     NumToRender = 0;
                 }
 
-                unsigned int Type = TileAt(xLevel + i, yLevel + j).FrontArt - INCLUDE_ZEROTILE;
+                unsigned int Type = tile.FrontArt - INCLUDE_ZEROTILE;
 
                 // Animiertes Tile ?
-                if (TileAt(xLevel + i, yLevel + j).Block & BLOCKWERT_ANIMIERT_FRONT)
+                if (tile.Block & BLOCKWERT_ANIMIERT_FRONT)
                     Type += 36 * TileAnimPhase;
 
                 // richtigen Ausschnitt für das aktuelle Tile setzen
@@ -1218,14 +1227,14 @@ void TileEngineClass::DrawFrontLevel() {
                 float const tu = Rect.bottom / TILESETSIZE_Y;  // Unten
 
                 // Licht setzen (prüfen auf Overlay light, wegen hellen Kanten)
-                if (TileAt(xLevel + i, yLevel + j).Block & BLOCKWERT_OVERLAY_LIGHT) {
-                    v1.color = TileAt(xLevel + i, yLevel + j).Color[0];
-                    v2.color = TileAt(xLevel + i, yLevel + j).Color[1];
-                    v3.color = TileAt(xLevel + i, yLevel + j).Color[2];
-                    v4.color = TileAt(xLevel + i, yLevel + j).Color[3];
+                if (tile.Block & BLOCKWERT_OVERLAY_LIGHT) {
+                    v1.color = tile.Color[0];
+                    v2.color = tile.Color[1];
+                    v3.color = tile.Color[2];
+                    v4.color = tile.Color[3];
                 } else {
                     v1.color = v2.color = v3.color = v4.color =
-                        D3DCOLOR_RGBA(255, 255, 255, TileAt(xLevel + i, yLevel + j).Alpha);
+                        D3DCOLOR_RGBA(255, 255, 255, tile.Alpha);
                 }
 
                 v1.x = l;  // Links oben
@@ -1272,8 +1281,8 @@ void TileEngineClass::DrawFrontLevel() {
                 if (TileAt(xLevel+i, yLevel+j).move_v4 == true) v4.x += SinList2[off + 2];
 #endif  // 0
 
-                if (TileAt(xLevel + i, yLevel + j).move_v1 || TileAt(xLevel + i, yLevel + j).move_v2 ||
-                    TileAt(xLevel + i, yLevel + j).move_v3 || TileAt(xLevel + i, yLevel + j).move_v4) {
+                if (tile.move_v1 || tile.move_v2 ||
+                    tile.move_v3 || tile.move_v4) {
                     float x_offs[2];
                     WaterSinTable.GetNonWaterSin(j, x_offs);
 
@@ -1285,15 +1294,15 @@ void TileEngineClass::DrawFrontLevel() {
                     // if (TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)                    // Original line
                     if (yLevel + j > 0 &&  // DKS Added this check to above line
                         TileAt(xLevel + i, yLevel + j - 1).Block & BLOCKWERT_LIQUID) {
-                        if (TileAt(xLevel + i, yLevel + j).move_v1 == true)
+                        if (tile.move_v1 == true)
                             v1.x += x_offs[0];
-                        if (TileAt(xLevel + i, yLevel + j).move_v2 == true)
+                        if (tile.move_v2 == true)
                             v2.x += x_offs[0];
                     }
 
-                    if (TileAt(xLevel + i, yLevel + j).move_v3 == true)
+                    if (tile.move_v3 == true)
                         v3.x += x_offs[1];
-                    if (TileAt(xLevel + i, yLevel + j).move_v4 == true)
+                    if (tile.move_v4 == true)
                         v4.x += x_offs[1];
                 }
 
@@ -1356,15 +1365,17 @@ void TileEngineClass::DrawBackLevelOverlay() {
         xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
 
         for (int i = RenderPosX; i < RenderPosXTo; i++) {
+            const LevelTileStruct& tile = TileAt(xLevel + i, yLevel + j);
+
             // Hintergrundtile nochmal neu setzen?
             //
-            if (TileAt(xLevel + i, yLevel + j).BackArt > 0 && TileAt(xLevel + i, yLevel + j).Block & BLOCKWERT_WAND &&
-                (!(TileAt(xLevel + i, yLevel + j).FrontArt > 0 &&
-                   TileAt(xLevel + i, yLevel + j).Block & BLOCKWERT_VERDECKEN))) {
+            if (tile.BackArt > 0 && tile.Block & BLOCKWERT_WAND &&
+                (!(tile.FrontArt > 0 &&
+                   tile.Block & BLOCKWERT_VERDECKEN))) {
                 // Neue Textur ?
-                if (TileAt(xLevel + i, yLevel + j).TileSetBack != ActualTexture) {
+                if (tile.TileSetBack != ActualTexture) {
                     // Aktuelle Textur sichern
-                    ActualTexture = TileAt(xLevel + i, yLevel + j).TileSetBack;
+                    ActualTexture = tile.TileSetBack;
 
                     // Tiles zeichnen
                     if (NumToRender > 0)
@@ -1377,10 +1388,10 @@ void TileEngineClass::DrawBackLevelOverlay() {
                     NumToRender = 0;
                 }
 
-                unsigned int Type = TileAt(xLevel + i, yLevel + j).BackArt - INCLUDE_ZEROTILE;
+                unsigned int Type = tile.BackArt - INCLUDE_ZEROTILE;
 
                 // Animiertes Tile ?
-                if (TileAt(xLevel + i, yLevel + j).Block & BLOCKWERT_ANIMIERT_BACK)
+                if (tile.Block & BLOCKWERT_ANIMIERT_BACK)
                     Type += 36 * TileAnimPhase;
 
                 // richtigen Ausschnitt für das aktuelle Tile setzen
@@ -1398,15 +1409,15 @@ void TileEngineClass::DrawBackLevelOverlay() {
                 float const to = Rect.top / TILESETSIZE_Y;     // Oben
                 float const tu = Rect.bottom / TILESETSIZE_Y;  // Unten
 
-                // al = TileAt(xLevel+i, yLevel+j).Alpha;
+                // al = tile.Alpha;
 
                 // DKS - Variable was unused in original source, disabled:
                 // off = (static_cast<int>(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
 
-                v1.color = TileAt(xLevel + i, yLevel + j).Color[0];
-                v2.color = TileAt(xLevel + i, yLevel + j).Color[1];
-                v3.color = TileAt(xLevel + i, yLevel + j).Color[2];
-                v4.color = TileAt(xLevel + i, yLevel + j).Color[3];
+                v1.color = tile.Color[0];
+                v2.color = tile.Color[1];
+                v3.color = tile.Color[2];
+                v4.color = tile.Color[3];
 
                 v1.x = l;  // Links oben
                 v1.y = o;
@@ -1472,14 +1483,16 @@ void TileEngineClass::DrawOverlayLevel() {
         xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
 
         for (int i = RenderPosX; i < RenderPosXTo; i++) {
+            const LevelTileStruct& tile = TileAt(xLevel + i, yLevel + j);
+
             // Vordergrund Tiles setzen, um Spieler zu verdecken
-            if ((TileAt(i + xLevel, j + yLevel).FrontArt > 0 &&
-                 (TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_VERDECKEN ||
-                  TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_WAND)) ||
-                TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_WASSERFALL ||
-                TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_MOVELINKS ||
-                TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_MOVERECHTS ||
-                TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_MOVEVERTICAL) {
+            if ((tile.FrontArt > 0 &&
+                 (tile.Block & BLOCKWERT_VERDECKEN ||
+                  tile.Block & BLOCKWERT_WAND)) ||
+                tile.Block & BLOCKWERT_WASSERFALL ||
+                tile.Block & BLOCKWERT_MOVELINKS ||
+                tile.Block & BLOCKWERT_MOVERECHTS ||
+                tile.Block & BLOCKWERT_MOVEVERTICAL) {
                 // Screen-Koordinaten der Vertices
                 float const l = xScreen;               // Links
                 float const o = yScreen;               // Oben
@@ -1534,16 +1547,16 @@ void TileEngineClass::DrawOverlayLevel() {
                                 // normales Overlay Tile
                                 else
                 */
-                if ((TileAt(i + xLevel, j + yLevel).FrontArt > 0 &&
-                     (TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_VERDECKEN ||
-                      TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_MOVEVERTICAL ||
-                      TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_MOVELINKS ||
-                      TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_MOVERECHTS ||
-                      TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_WAND))) {
+                if ((tile.FrontArt > 0 &&
+                     (tile.Block & BLOCKWERT_VERDECKEN ||
+                      tile.Block & BLOCKWERT_MOVEVERTICAL ||
+                      tile.Block & BLOCKWERT_MOVELINKS ||
+                      tile.Block & BLOCKWERT_MOVERECHTS ||
+                      tile.Block & BLOCKWERT_WAND))) {
                     // Neue Textur ?
-                    if (TileAt(xLevel + i, yLevel + j).TileSetFront != ActualTexture) {
+                    if (tile.TileSetFront != ActualTexture) {
                         // Aktuelle Textur sichern
-                        ActualTexture = TileAt(xLevel + i, yLevel + j).TileSetFront;
+                        ActualTexture = tile.TileSetFront;
 
                         // Tiles zeichnen
                         if (NumToRender > 0)
@@ -1557,10 +1570,10 @@ void TileEngineClass::DrawOverlayLevel() {
                     }
 
                     // "normales" Overlay Tile setzen
-                    unsigned int Type = TileAt(xLevel + i, yLevel + j).FrontArt - INCLUDE_ZEROTILE;
+                    unsigned int Type = tile.FrontArt - INCLUDE_ZEROTILE;
 
                     // Animiertes Tile ?
-                    if (TileAt(xLevel + i, yLevel + j).Block & BLOCKWERT_ANIMIERT_FRONT)
+                    if (tile.Block & BLOCKWERT_ANIMIERT_FRONT)
                         Type += 36 * TileAnimPhase;
 
                     // richtigen Ausschnitt für das aktuelle Tile setzen
@@ -1573,33 +1586,33 @@ void TileEngineClass::DrawOverlayLevel() {
                     float tu = Rect.bottom / TILESETSIZE_Y;  // Unten
 
                     // bewegtes Tile vertikal
-                    if (TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_MOVEVERTICAL) {
+                    if (tile.Block & BLOCKWERT_MOVEVERTICAL) {
                         to -= 60.0f / 256.0f * WasserfallOffset / 120.0f;
                         tu -= 60.0f / 256.0f * WasserfallOffset / 120.0f;
                     }
 
                     // bewegtes Tile links
-                    if (TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_MOVELINKS) {
+                    if (tile.Block & BLOCKWERT_MOVELINKS) {
                         tl += 60.0f / 256.0f * WasserfallOffset / 120.0f;
                         tr += 60.0f / 256.0f * WasserfallOffset / 120.0f;
                     }
 
                     // bewegtes Tile rechts
-                    if (TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_MOVERECHTS) {
+                    if (tile.Block & BLOCKWERT_MOVERECHTS) {
                         tl -= 60.0f / 256.0f * WasserfallOffset / 120.0f;
                         tr -= 60.0f / 256.0f * WasserfallOffset / 120.0f;
                     }
 
-                    // al = TileAt(xLevel+i, yLevel+j).Alpha;
+                    // al = tile.Alpha;
 
-                    if (TileAt(xLevel + i, yLevel + j).Block & BLOCKWERT_OVERLAY_LIGHT) {
-                        v1.color = TileAt(xLevel + i, yLevel + j).Color[0];
-                        v2.color = TileAt(xLevel + i, yLevel + j).Color[1];
-                        v3.color = TileAt(xLevel + i, yLevel + j).Color[2];
-                        v4.color = TileAt(xLevel + i, yLevel + j).Color[3];
+                    if (tile.Block & BLOCKWERT_OVERLAY_LIGHT) {
+                        v1.color = tile.Color[0];
+                        v2.color = tile.Color[1];
+                        v3.color = tile.Color[2];
+                        v4.color = tile.Color[3];
                     } else {
                         v1.color = v2.color = v3.color = v4.color =
-                            D3DCOLOR_RGBA(255, 255, 255, TileAt(xLevel + i, yLevel + j).Alpha);
+                            D3DCOLOR_RGBA(255, 255, 255, tile.Alpha);
                     }
 
                     // DKS - Variable was unused in original source, disabled:
@@ -1751,8 +1764,10 @@ void TileEngineClass::DrawWater() {
                 xScreen = static_cast<float>(-xTileOffs + RenderPosX * TILESIZE_X);
 
                 for (int i = RenderPosX; i < RenderPosXTo; i++) {
+                    const LevelTileStruct& tile = TileAt(xLevel + i, yLevel + j);
+
                     // Vordergrund Tiles setzen um Spieler zu verdecken
-                    if (TileAt(i + xLevel, j + yLevel).Block & BLOCKWERT_LIQUID) {
+                    if (tile.Block & BLOCKWERT_LIQUID) {
                         // Screen-Koordinaten der Vertices
                         float const l = xScreen;               // Links
                         float const o = yScreen;               // Oben
@@ -1839,17 +1854,17 @@ void TileEngineClass::DrawWater() {
                         //    v3.y += WaterList[off + j*10 + i * 2 + 10];
                         // if (TileAt(xLevel+i, yLevel+j).move_v4 == true)
                         //    v4.y += WaterList[off + j*10 + i * 2 + 10];
-                        if (TileAt(xLevel + i, yLevel + j).move_v1 || TileAt(xLevel + i, yLevel + j).move_v2 ||
-                            TileAt(xLevel + i, yLevel + j).move_v3 || TileAt(xLevel + i, yLevel + j).move_v4) {
+                        if (tile.move_v1 || tile.move_v2 ||
+                            tile.move_v3 || tile.move_v4) {
                             float y_offs[2];
                             WaterSinTable.GetWaterSin(i, j, y_offs);
-                            if (TileAt(xLevel + i, yLevel + j).move_v1 == true)
+                            if (tile.move_v1 == true)
                                 v1.y += y_offs[0];
-                            if (TileAt(xLevel + i, yLevel + j).move_v2 == true)
+                            if (tile.move_v2 == true)
                                 v2.y += y_offs[0];
-                            if (TileAt(xLevel + i, yLevel + j).move_v3 == true)
+                            if (tile.move_v3 == true)
                                 v3.y += y_offs[1];
-                            if (TileAt(xLevel + i, yLevel + j).move_v4 == true)
+                            if (tile.move_v4 == true)
                                 v4.y += y_offs[1];
                         }
 
@@ -3286,9 +3301,10 @@ D3DCOLOR TileEngineClass::LightValue(float x, float y, RECT_struct rect, bool fo
         (!forced && !(TileAt(x_level, y_level).Block & BLOCKWERT_LIGHT)))  // Soll das Leveltile garnicht
         return 0xFFFFFFFF;                                               // das Licht des Objektes ändern
 
-    unsigned int r = TileAt(x_level, y_level).Red;
-    unsigned int g = TileAt(x_level, y_level).Green;
-    unsigned int b = TileAt(x_level, y_level).Blue;
+    const LevelTileStruct& tile = TileAt(x_level, y_level);
+    unsigned int r = tile.Red;
+    unsigned int g = tile.Green;
+    unsigned int b = tile.Blue;
 
     r += 48;  // Farbewerte ein wenig erhöhen, damit man selbst bei 0,0,0
     g += 48;  // noch ein wenig was sehen kann und das Sprite nicht
@@ -3310,6 +3326,18 @@ D3DCOLOR TileEngineClass::LightValue(float x, float y, RECT_struct rect, bool fo
 // entsprechend der umliegenden Tiles -> smoothe Übergänge -> Geilomat!
 // --------------------------------------------------------------------------------------
 
+inline void interpolateColor(const LevelTileStruct& centralTile, const LevelTileStruct& otherTile, int& r, int& g, int& b) {
+    if (!((otherTile.Block ^ centralTile.Block) & BLOCKWERT_WAND)) {
+        r = otherTile.Red;
+        g = otherTile.Green;
+        b = otherTile.Blue;
+    } else {
+        r = centralTile.Red;
+        g = centralTile.Green;
+        b = centralTile.Blue;
+    }
+}
+
 void TileEngineClass::ComputeCoolLight() {
     // Lichter im Level interpolieren
     // Dabei werden die Leveltiles in 2er Schritten durchgegangen
@@ -3321,163 +3349,61 @@ void TileEngineClass::ComputeCoolLight() {
 
     for (int i = 1; i < LEVELSIZE_X - 1; i += 1)
         for (int j = 1; j < LEVELSIZE_Y - 1; j += 1) {
-            int const al = TileAt(i, j).Alpha;
+            LevelTileStruct& tile = TileAt(i, j);
 
-            int const r4 = TileAt(i, j).Red;
-            int const g4 = TileAt(i, j).Green;
-            int const b4 = TileAt(i, j).Blue;
+            int const al = tile.Alpha;
+
+            int const r4 = tile.Red;
+            int const g4 = tile.Green;
+            int const b4 = tile.Blue;
 
             // Ecke links oben
             //
-            if (!((TileAt(i - 1, j - 1).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
-                r1 = TileAt(i - 1, j - 1).Red;
-                g1 = TileAt(i - 1, j - 1).Green;
-                b1 = TileAt(i - 1, j - 1).Blue;
-            } else {
-                r1 = TileAt(i, j).Red;
-                g1 = TileAt(i, j).Green;
-                b1 = TileAt(i, j).Blue;
-            }
-
-            if (!((TileAt(i + 0, j - 1).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
-                r2 = TileAt(i + 0, j - 1).Red;
-                g2 = TileAt(i + 0, j - 1).Green;
-                b2 = TileAt(i + 0, j - 1).Blue;
-            } else {
-                r2 = TileAt(i, j).Red;
-                g2 = TileAt(i, j).Green;
-                b2 = TileAt(i, j).Blue;
-            }
-
-            if (!((TileAt(i - 1, j + 0).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
-                r3 = TileAt(i - 1, j + 0).Red;
-                g3 = TileAt(i - 1, j + 0).Green;
-                b3 = TileAt(i - 1, j + 0).Blue;
-            } else {
-                r3 = TileAt(i, j).Red;
-                g3 = TileAt(i, j).Green;
-                b3 = TileAt(i, j).Blue;
-            }
+            interpolateColor(tile, TileAt(i - 1, j - 1), r1, g1, b1);
+            interpolateColor(tile, TileAt(i + 0, j - 1), r2, g2, b2);
+            interpolateColor(tile, TileAt(i - 1, j + 0), r3, g3, b3);
 
             rn = (r1 + r2 + r3 + r4) / 4;
             gn = (g1 + g2 + g3 + g4) / 4;
             bn = (b1 + b2 + b3 + b4) / 4;
 
-            TileAt(i, j).Color[0] = D3DCOLOR_RGBA(rn, gn, bn, al);
+            tile.Color[0] = D3DCOLOR_RGBA(rn, gn, bn, al);
 
             // Ecke rechts oben
             //
-            if (!((TileAt(i - 0, j - 1).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
-                r1 = TileAt(i - 0, j - 1).Red;
-                g1 = TileAt(i - 0, j - 1).Green;
-                b1 = TileAt(i - 0, j - 1).Blue;
-            } else {
-                r1 = TileAt(i, j).Red;
-                g1 = TileAt(i, j).Green;
-                b1 = TileAt(i, j).Blue;
-            }
-
-            if (!((TileAt(i + 1, j - 1).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
-                r2 = TileAt(i + 1, j - 1).Red;
-                g2 = TileAt(i + 1, j - 1).Green;
-                b2 = TileAt(i + 1, j - 1).Blue;
-            } else {
-                r2 = TileAt(i, j).Red;
-                g2 = TileAt(i, j).Green;
-                b2 = TileAt(i, j).Blue;
-            }
-
-            if (!((TileAt(i + 1, j + 0).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
-                r3 = TileAt(i + 1, j + 0).Red;
-                g3 = TileAt(i + 1, j + 0).Green;
-                b3 = TileAt(i + 1, j + 0).Blue;
-            } else {
-                r3 = TileAt(i, j).Red;
-                g3 = TileAt(i, j).Green;
-                b3 = TileAt(i, j).Blue;
-            }
+            interpolateColor(tile, TileAt(i - 0, j - 1), r1, g1, b1);
+            interpolateColor(tile, TileAt(i + 1, j - 1), r2, g2, b2);
+            interpolateColor(tile, TileAt(i + 1, j + 0), r3, g3, b3);
 
             rn = (r1 + r2 + r3 + r4) / 4;
             gn = (g1 + g2 + g3 + g4) / 4;
             bn = (b1 + b2 + b3 + b4) / 4;
 
-            TileAt(i, j).Color[1] = D3DCOLOR_RGBA(rn, gn, bn, al);
+            tile.Color[1] = D3DCOLOR_RGBA(rn, gn, bn, al);
 
             // Ecke links unten
             //
-            if (!((TileAt(i - 1, j - 0).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
-                r1 = TileAt(i - 1, j - 0).Red;
-                g1 = TileAt(i - 1, j - 0).Green;
-                b1 = TileAt(i - 1, j - 0).Blue;
-            } else {
-                r1 = TileAt(i, j).Red;
-                g1 = TileAt(i, j).Green;
-                b1 = TileAt(i, j).Blue;
-            }
-
-            if (!((TileAt(i - 1, j + 1).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
-                r2 = TileAt(i - 1, j + 1).Red;
-                g2 = TileAt(i - 1, j + 1).Green;
-                b2 = TileAt(i - 1, j + 1).Blue;
-            } else {
-                r2 = TileAt(i, j).Red;
-                g2 = TileAt(i, j).Green;
-                b2 = TileAt(i, j).Blue;
-            }
-
-            if (!((TileAt(i - 0, j + 1).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
-                r3 = TileAt(i - 0, j + 1).Red;
-                g3 = TileAt(i - 0, j + 1).Green;
-                b3 = TileAt(i - 0, j + 1).Blue;
-            } else {
-                r3 = TileAt(i, j).Red;
-                g3 = TileAt(i, j).Green;
-                b3 = TileAt(i, j).Blue;
-            }
+            interpolateColor(tile, TileAt(i - 1, j - 0), r1, g1, b1);
+            interpolateColor(tile, TileAt(i - 1, j + 1), r2, g2, b2);
+            interpolateColor(tile, TileAt(i - 0, j + 1), r3, g3, b3);
 
             rn = (r1 + r2 + r3 + r4) / 4;
             gn = (g1 + g2 + g3 + g4) / 4;
             bn = (b1 + b2 + b3 + b4) / 4;
 
-            TileAt(i, j).Color[2] = D3DCOLOR_RGBA(rn, gn, bn, al);
+            tile.Color[2] = D3DCOLOR_RGBA(rn, gn, bn, al);
 
             // Ecke rechts unten
             //
-            if (!((TileAt(i + 1, j - 0).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
-                r1 = TileAt(i + 1, j - 0).Red;
-                g1 = TileAt(i + 1, j - 0).Green;
-                b1 = TileAt(i + 1, j - 0).Blue;
-            } else {
-                r1 = TileAt(i, j).Red;
-                g1 = TileAt(i, j).Green;
-                b1 = TileAt(i, j).Blue;
-            }
-
-            if (!((TileAt(i - 0, j + 0).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
-                r2 = TileAt(i - 0, j + 1).Red;
-                g2 = TileAt(i - 0, j + 1).Green;
-                b2 = TileAt(i - 0, j + 1).Blue;
-            } else {
-                r2 = TileAt(i, j).Red;
-                g2 = TileAt(i, j).Green;
-                b2 = TileAt(i, j).Blue;
-            }
-
-            if (!((TileAt(i + 1, j + 1).Block ^ TileAt(i, j).Block) & BLOCKWERT_WAND)) {
-                r3 = TileAt(i + 1, j + 1).Red;
-                g3 = TileAt(i + 1, j + 1).Green;
-                b3 = TileAt(i + 1, j + 1).Blue;
-            } else {
-                r3 = TileAt(i, j).Red;
-                g3 = TileAt(i, j).Green;
-                b3 = TileAt(i, j).Blue;
-            }
+            interpolateColor(tile, TileAt(i + 1, j - 0), r1, g1, b1);
+            interpolateColor(tile, TileAt(i - 0, j + 0), r2, g2, b2);
+            interpolateColor(tile, TileAt(i + 1, j + 1), r3, g3, b3);
 
             rn = (r1 + r2 + r3 + r4) / 4;
             gn = (g1 + g2 + g3 + g4) / 4;
             bn = (b1 + b2 + b3 + b4) / 4;
 
-            TileAt(i, j).Color[3] = D3DCOLOR_RGBA(rn, gn, bn, al);
+            tile.Color[3] = D3DCOLOR_RGBA(rn, gn, bn, al);
         }
 
 }  // ComputeCoolLight
@@ -3528,13 +3454,15 @@ void TileEngineClass::ExplodeWall(int x, int y) {
     if (x < 1 || y < 1 || x > (LEVELSIZE_X - 1) || y > (LEVELSIZE_Y - 1))
         return;
 
+    LevelTileStruct& tile = TileAt(x, y);
+
     // keine zerstörbare Wand?
     //
-    if (!(TileAt(x, y).Block & BLOCKWERT_DESTRUCTIBLE))
+    if (!(tile.Block & BLOCKWERT_DESTRUCTIBLE))
         return;
 
-    TileAt(x, y).Block = 0;
-    TileAt(x, y).FrontArt = 0;
+    tile.Block = 0;
+    tile.FrontArt = 0;
 
     for (int i = 0; i < 2; i++)
         PartikelSystem.PushPartikel(static_cast<float>(x * TILESIZE_X + random(10)),
