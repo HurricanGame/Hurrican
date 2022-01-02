@@ -145,8 +145,8 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
             absy = speed * absy;  // (xSpeed*ySpeed ergibt 4)
 
-            xSpeed = float(absx);
-            ySpeed = float(absy);
+            xSpeed = absx;
+            ySpeed = absy;
             // DKS - off-by-one error:
             // AnimEnde = 9;
             AnimEnde = 8;
@@ -162,7 +162,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             DamagePlayer = true;
             Winkel = WinkelUebergabe;
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -180,9 +180,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             Winkel = WinkelUebergabe;
 
             if (pParent->Blickrichtung == PlayerClass::LINKS)
-                Winkel = float((int(Winkel) + 180) % 360);
+                Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -205,9 +205,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             Winkel = WinkelUebergabe;
 
             if (pParent->Blickrichtung == PlayerClass::LINKS)
-                Winkel = float((int(Winkel) + 180) % 360);
+                Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -229,9 +229,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             HasGlow = true;
 
             if (pParent->Blickrichtung == PlayerClass::LINKS)
-                Winkel = float((int(Winkel) + 180) % 360);
+                Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -255,9 +255,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             HasGlow = true;
 
             if (pParent->Blickrichtung == PlayerClass::LINKS)
-                Winkel = float((int(Winkel) + 180) % 360);
+                Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -279,9 +279,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             HasGlow = true;
 
             if (pParent->Blickrichtung == PlayerClass::LINKS)
-                Winkel = float((int(Winkel) + 180) % 360);
+                Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -304,9 +304,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             HasGlow = true;
 
             if (pParent->Blickrichtung == PlayerClass::LINKS)
-                Winkel = float((int(Winkel) + 180) % 360);
+                Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -334,9 +334,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             HasGlow = true;
 
             if (pParent->Blickrichtung == PlayerClass::LINKS)
-                Winkel = float((int(Winkel) + 180) % 360);
+                Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -359,9 +359,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             HasGlow = true;
 
             if (pParent->Blickrichtung == PlayerClass::LINKS)
-                Winkel = float((int(Winkel) + 180) % 360);
+                Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -386,9 +386,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             Winkel = WinkelUebergabe;
 
             if (pParent->Blickrichtung == PlayerClass::LINKS)
-                Winkel = float((int(Winkel) + 180) % 360);
+                Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -421,10 +421,10 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
 
             if (pParent != nullptr) {
                 if (pParent->Blickrichtung == PlayerClass::LINKS)
-                    Winkel = float((int(Winkel) + 180) % 360);
+                    Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
             }
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -447,9 +447,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             Winkel = WinkelUebergabe;
 
             if (pParent != nullptr && pParent->Blickrichtung == PlayerClass::LINKS)
-                Winkel = float((int(Winkel) + 180) % 360);
+                Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -477,9 +477,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             Winkel = WinkelUebergabe;
 
             if (pParent->Blickrichtung == PlayerClass::LINKS)
-                Winkel = float((int(Winkel) + 180) % 360);
+                Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -503,9 +503,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             Winkel = WinkelUebergabe;
 
             if (pParent != nullptr && pParent->Blickrichtung == PlayerClass::LINKS)
-                Winkel = float((int(Winkel) + 180) % 360);
+                Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -529,9 +529,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             Winkel = WinkelUebergabe;
 
             if (pParent != nullptr && pParent->Blickrichtung == PlayerClass::LINKS)
-                Winkel = float((int(Winkel) + 180) % 360);
+                Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -723,7 +723,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
         {
             Damage = 10;
             DamagePlayer = false;
-            ySpeed = float(M_PI);
+            ySpeed = static_cast<float>(M_PI);
             xSpeed = 1.0f;
             ShotArt = SHIELDSPAWNER;
             // DKS - off-by-one error:
@@ -843,7 +843,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
         {
             Winkel = WinkelUebergabe;
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -861,7 +861,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
         {
             Winkel = WinkelUebergabe;
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -972,12 +972,12 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
         case FLAMME:  // Splitter-Flamme aus dem Fass
         {
             ShotArt = FLAMME;
-            xSpeed = (static_cast<float>(random(120) - 60) / 3);
-            ySpeed = -static_cast<float>(random(60) + 30) / 2;
+            xSpeed = static_cast<float>(random(120) - 60) / 3.0f;
+            ySpeed = -static_cast<float>(random(60) + 30) / 2.0f;
             yAcc = 4.0f;
             Damage = 50;
             AnimEnde = 7;
-            AnimSpeed = static_cast<float>(random(20) + 20) / 100;
+            AnimSpeed = static_cast<float>(random(20) + 20) / 100.0f;
             DamagePlayer = false;
         } break;
 
@@ -989,7 +989,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             Damage = 1;
             ySpeed = 1.0f;
             DamagePlayer = true;
-            xSpeed = (static_cast<float>(random(20) - 10) / 8);
+            xSpeed = static_cast<float>(random(20) - 10) / 8.0f;
             CheckBlock = false;
             ExplodeOnImpact = false;
             OwnDraw = true;
@@ -1003,7 +1003,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             Damage = 1;
             DamagePlayer = true;
             ySpeed = -20.0f;
-            xSpeed = (static_cast<float>(random(20) - 10) / 8);
+            xSpeed = static_cast<float>(random(20) - 10) / 8.0f;
             yPos -= 40;
             xPos += 5;
             ExplodeOnImpact = false;
@@ -1019,7 +1019,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             AnimCount = 0.1f;
 
             Winkel = WinkelUebergabe;
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -1036,7 +1036,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             DamagePlayer = true;
 
             Winkel = WinkelUebergabe;
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -1068,7 +1068,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             DamagePlayer = true;
 
             Winkel = WinkelUebergabe;
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -1101,7 +1101,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             AnimSpeed = (random(3) + 10) / 20.0f;
             Damage = 1;
             DamagePlayer = true;
-            ySpeed = (static_cast<float>(random(20) - 10) / 8) - 1.0f;
+            ySpeed = (static_cast<float>(random(20) - 10) / 8.0f) - 1.0f;
             xSpeed = 25.0f;
             yPos -= 7 + (static_cast<float>(random(20)) / 10.0f);
             xPos += 33;
@@ -1119,7 +1119,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             Damage = 1;
             DamagePlayer = true;
             ySpeed = 20.0f;
-            xSpeed = (static_cast<float>(random(20) - 10) / 8);
+            xSpeed = static_cast<float>(random(20) - 10) / 8.0f;
             yPos += 30;
             ExplodeOnImpact = false;
             Winkel = static_cast<float>(random(360));
@@ -1134,7 +1134,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             AnimSpeed = (random(3) + 10) / 20.0f;
             Damage = 1;
             DamagePlayer = true;
-            ySpeed = (static_cast<float>(random(20) - 10) / 8) - 1.0f;
+            ySpeed = (static_cast<float>(random(20) - 10) / 8.0f) - 1.0f;
             xSpeed = -25.0f;
             yPos -= 15 + (static_cast<float>(random(20)) / 10.0f);
             xPos -= 28;
@@ -1251,9 +1251,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
 
             Winkel = WinkelUebergabe - 5 + random(10);
             if (pParent->Blickrichtung == PlayerClass::LINKS)
-                Winkel = float((int(Winkel) + 180) % 360);
+                Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -1300,9 +1300,9 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             Winkel = WinkelUebergabe;
 
             if (pParent->Blickrichtung == PlayerClass::LINKS)
-                Winkel = float((int(Winkel) + 180) % 360);
+                Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -1739,7 +1739,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             DamagePlayer = true;
             Winkel = WinkelUebergabe;
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -1755,7 +1755,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             DamagePlayer = true;
             Winkel = WinkelUebergabe;
 
-            int w = int(Winkel) - 90;
+            int w = static_cast<int>(Winkel) - 90;
             w = w % 360;
 
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
@@ -1791,7 +1791,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             DamagePlayer = false;
             CheckBlock = false;
             ExplodeOnImpact = false;
-            Damage = int(255 - AnimCount) * 2;
+            Damage = static_cast<int>(255.0f - AnimCount) * 2;
             OwnDraw = true;
         } break;
 
@@ -1842,10 +1842,10 @@ void ProjectileClass::CheckCollision() {
             // Beim BlitzBeam die größe vom Rect dynamisch anpassen
             if (ShotArt == BLITZBEAM) {
                 // DKS - Fixed ending commas on next two lines, changed to semicolons. No idea why they were commas.
-                ShotRect[BLITZBEAM].left = int(Damage / 4.0f);
-                ShotRect[BLITZBEAM].top = int(Damage / 4.0f);
-                ShotRect[BLITZBEAM].right = ShotRect[BLITZBEAM].left + int(Damage / 2.0f);
-                ShotRect[BLITZBEAM].bottom = ShotRect[BLITZBEAM].top + int(Damage / 2.0f);
+                ShotRect[BLITZBEAM].left = Damage / 4;
+                ShotRect[BLITZBEAM].top = Damage / 4;
+                ShotRect[BLITZBEAM].right = ShotRect[BLITZBEAM].left + (Damage / 2);
+                ShotRect[BLITZBEAM].bottom = ShotRect[BLITZBEAM].top + (Damage / 2);
             }
 
             // Überschneiden sich die Rechtecke ?
@@ -2012,10 +2012,10 @@ void ProjectileClass::Render() {
         // Schuss gedreht rendern?
         //
         if (Winkel > -10000.0f) {
-            Winkel = float(int(Winkel) % 360);
+            Winkel = static_cast<float>(static_cast<int>(Winkel) % 360);
 
             // Rotationsmatrix
-            matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[int(Winkel)], glm::vec3(0.0f, 0.0f, 1.0f));
+            matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[static_cast<int>(Winkel)], glm::vec3(0.0f, 0.0f, 1.0f));
 
             float x = -TileEngine.XOffset + xPos;
             float y = -TileEngine.YOffset + yPos;
@@ -2061,10 +2061,10 @@ void ProjectileClass::Render() {
 
 #ifndef NDEBUG
         if (DebugMode == true)
-            RenderRect(float(xPos - TileEngine.XOffset + ShotRect[ShotArt].left),
-                       float(yPos - TileEngine.YOffset + ShotRect[ShotArt].top),
-                       float(ShotRect[ShotArt].right - ShotRect[ShotArt].left),
-                       float(ShotRect[ShotArt].bottom - ShotRect[ShotArt].top), 0x88FFFFFF);
+            RenderRect(static_cast<float>(xPos - TileEngine.XOffset + ShotRect[ShotArt].left),
+                       static_cast<float>(yPos - TileEngine.YOffset + ShotRect[ShotArt].top),
+                       static_cast<float>(ShotRect[ShotArt].right - ShotRect[ShotArt].left),
+                       static_cast<float>(ShotRect[ShotArt].bottom - ShotRect[ShotArt].top), 0x88FFFFFF);
 #endif  //NDEBUG
 
     }
@@ -2114,8 +2114,9 @@ void ProjectileClass::Render() {
         int a = 30 - AnimPhase;
 
         ProjectileGrafix[ShotArt].RenderSpriteScaled(46 + (xPos - TileEngine.XOffset) - (a + 30),
-                                                     54 + (yPos - TileEngine.YOffset) - (a + 30), int(a * 2.2f + 20),
-                                                     int(a * 2.2f + 20), AnimPhase, Color);
+                                                     54 + (yPos - TileEngine.YOffset) - (a + 30),
+                                                     static_cast<int>(a * 2.2f + 20.0f),
+                                                     static_cast<int>(a * 2.2f + 20.0f), AnimPhase, Color);
         DirectGraphics.SetColorKeyMode();
     }
 
@@ -2125,11 +2126,11 @@ void ProjectileClass::Render() {
         ShotRect[ShotArt].bottom = (255 - Damage / 2) * 2;
         ShotRect[ShotArt].right = (255 - Damage / 2) * 2;
 
-        Color = D3DCOLOR_RGBA(255, 255, 255, int(Damage / 2));
+        Color = D3DCOLOR_RGBA(255, 255, 255, Damage / 2);
         ProjectileGrafix[ShotArt].RenderSpriteScaled(xPos - TileEngine.XOffset, yPos - TileEngine.YOffset,
                                                      (255 - Damage / 2) * 2, (255 - Damage / 2) * 2, Color);
 
-        Color = D3DCOLOR_RGBA(255, 255, 255, int(Damage / 4));
+        Color = D3DCOLOR_RGBA(255, 255, 255, Damage / 4);
         ProjectileGrafix[ShotArt].RenderSpriteScaled(xPos - TileEngine.XOffset, yPos - TileEngine.YOffset,
                                                      (255 - Damage / 2) * 2, (255 - Damage / 2) * 2, Color);
 
@@ -2180,7 +2181,8 @@ void ProjectileClass::Render() {
         }
 
         ProjectileGrafix[ShotArt].RenderSpriteScaled(
-            xPos - TileEngine.XOffset - 10.0f, yPos - TileEngine.YOffset - size / 2.0f, length, int(size), 0, col);
+            xPos - TileEngine.XOffset - 10.0f, yPos - TileEngine.YOffset - size / 2.0f,
+            length, static_cast<int>(size), 0, col);
         DirectGraphics.SetColorKeyMode();
     } else if (ShotArt == BRATKLOPSSHOT) {
         DirectGraphics.SetAdditiveMode();
@@ -2208,7 +2210,7 @@ void ProjectileClass::Render() {
             Projectiles.LavaFlare.RenderSpriteScaled(xPos - 28 - TileEngine.XOffset, yPos - 28 - TileEngine.YOffset,
                                                      100, 100, 0xFFFF22BB);
         } else if (ShotArt == LASERSHOT || ShotArt == LASERSHOT2) {
-            switch (int(Winkel)) {
+            switch (static_cast<int>(Winkel)) {
                 case 0:
                     Projectiles.LaserSmoke.RenderSpriteRotated(
                         xPos - TileEngine.XOffset - 60 + (ShotArt - LASERSHOT) * 5, yPos - TileEngine.YOffset - 40,
@@ -2241,7 +2243,7 @@ void ProjectileClass::Render() {
         }
 
         else if (ShotArt == LASERSHOTBIG || ShotArt == LASERSHOTBIG2) {
-            switch (int(Winkel)) {
+            switch (static_cast<int>(Winkel)) {
                 case 0:
                     Projectiles.LaserSmokeBig.RenderSpriteRotated(xPos - TileEngine.XOffset - 120,
                                                                   yPos - TileEngine.YOffset - 80, Winkel, 0xBB1188FF);
@@ -2830,7 +2832,7 @@ void ProjectileClass::Run() {
             else if (pParent->ypos + 40 > yPos + 24)
                 yAcc = 5.0f;
 
-            for (int i = 0; i < int(200 * Timer.getElapsed()) + 1; i++)
+            for (int i = 0; i < static_cast<int>(200.0 * Timer.getElapsed()) + 1; i++)
                 PartikelSystem.PushPartikel(xPos + 18, yPos + 18, PHARAOSMOKE);
 
             if (bu & BLOCKWERT_WAND && ySpeed > 0.0f)
@@ -2844,7 +2846,7 @@ void ProjectileClass::Run() {
 
         case ROCKETSPIDER: {
             // Flamme erzeugen
-            for (int i = 0; i < int(200 * Timer.getElapsed()) + 1; i++) {
+            for (int i = 0; i < static_cast<int>(200.0 * Timer.getElapsed()) + 1; i++) {
                 switch (AnimPhase) {
                     case 0: {
                         PartikelSystem.PushPartikel(xPos + 33, yPos + 70, ROCKETSMOKE);
@@ -2899,7 +2901,7 @@ void ProjectileClass::Run() {
 
             {
                 // Flamme erzeugen
-                for (int i = 0; i < int(200 * Timer.getElapsed()) + 1; i++) {
+                for (int i = 0; i < static_cast<int>(200.0 * Timer.getElapsed()) + 1; i++) {
                     switch (AnimPhase) {
                         case 0: {
                             PartikelSystem.PushPartikel(xPos + 40, yPos, ROCKETSMOKE);
@@ -2965,7 +2967,7 @@ void ProjectileClass::Run() {
         } break;
 
         case EVILBLITZ: {
-            for (int i = 0; i < int(200 * Timer.getElapsed()) + 1; i++)
+            for (int i = 0; i < static_cast<int>(200.0 * Timer.getElapsed()) + 1; i++)
                 PartikelSystem.PushPartikel(xPos + 10 + random(50), yPos + 60 + random(20), EVILFUNKE);
 
             if (ySpeed < -45.0f) {
@@ -3010,10 +3012,10 @@ void ProjectileClass::Run() {
             // Wand getroffen?
             //
             // DKS - Fixed indentation / replaced commas with semicolons on first two lines here:
-            ShotRect[BLITZBEAM].left = int(Damage / 4.0f);
-            ShotRect[BLITZBEAM].top = int(Damage / 4.0f);
-            ShotRect[BLITZBEAM].right = ShotRect[BLITZBEAM].left + int(Damage / 2.0f);
-            ShotRect[BLITZBEAM].bottom = ShotRect[BLITZBEAM].top + int(Damage / 2.0f);
+            ShotRect[BLITZBEAM].left = Damage / 4;
+            ShotRect[BLITZBEAM].top = Damage / 4;
+            ShotRect[BLITZBEAM].right = ShotRect[BLITZBEAM].left + (Damage / 2);
+            ShotRect[BLITZBEAM].bottom = ShotRect[BLITZBEAM].top + (Damage / 2);
 
             bo = TileEngine.BlockOben(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
             bu = TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
@@ -3047,7 +3049,7 @@ void ProjectileClass::Run() {
         case SKELETORGRANATE: {
             // Drehwinkel aus der Geschwindigkeit errechnen
             // DKS - Converted to float, new Rad/Deg macros:
-            // float w = 90 + float(atan(ySpeed / xSpeed) * 360.0f / (float(M_PI) * 2));
+            // float w = 90 + static_cast<float>(atan(ySpeed / xSpeed) * 360.0f / (static_cast<float>(M_PI) * 2));
             float w = 90.0f + RadToDeg(atanf(ySpeed / xSpeed));
             Winkel = w;
 
@@ -3107,7 +3109,7 @@ void ProjectileClass::Run() {
 
         case SNOWBOMB: {
             // Rauch erzeugen
-            //			for (int i=0; i < int(50 * Timer.getElapsed())+1; i++)
+            //			for (int i=0; i < static_cast<int>(50 * Timer.getElapsed())+1; i++)
             //				PartikelSystem.PushPartikel(xPos - 2, yPos - 2, ROCKETSMOKEBLUE);
 
             if (bl & BLOCKWERT_WAND || br & BLOCKWERT_WAND || bo & BLOCKWERT_WAND || bu & BLOCKWERT_WAND ||
@@ -3234,7 +3236,7 @@ void ProjectileClass::Run() {
             if (AnimCount > 256.0f)
                 AnimCount = 256.0f;
 
-            Damage = int(255 - AnimCount) * 2;
+            Damage = static_cast<int>(255.0f - AnimCount) * 2;
         } break;
 
         case GRENADE: {
@@ -3244,7 +3246,7 @@ void ProjectileClass::Run() {
 
             while (AnimCount <= 0.0f) {
                 AnimCount += 0.1f;
-                PartikelSystem.PushPartikel(xPos - 4, yPos - 4 + float(random(3)), SMOKE2);
+                PartikelSystem.PushPartikel(xPos - 4, yPos - 4 + static_cast<float>(random(3)), SMOKE2);
             }
 
             if (TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) & BLOCKWERT_WAND ||
@@ -3266,10 +3268,10 @@ void ProjectileClass::Run() {
                 ySpeed -= 0.5f SYNC;
 
             // Grenzen checken
-            if (ySpeed > float(M_PI) * 2)
-                ySpeed -= float(M_PI) * 2;
+            if (ySpeed > static_cast<float>(M_PI) * 2)
+                ySpeed -= static_cast<float>(M_PI) * 2;
             if (ySpeed < 0.0f)
-                ySpeed += float(M_PI) * 2;
+                ySpeed += static_cast<float>(M_PI) * 2;
 
             if (pParent->Handlung != PlayerActionEnum::RADELN &&
                     pParent->Handlung != PlayerActionEnum::RADELN_FALL) {
@@ -3319,7 +3321,7 @@ void ProjectileClass::Run() {
 
             // Schüsse, die bei Berührung verschwinden
             else {
-                Player[p].DamagePlayer(float(Damage));
+                Player[p].DamagePlayer(static_cast<float>(Damage));
 
                 ExplodeShot();  // Schuss Explodieren lassen
                 Damage = 0;     // und verschwinden lassen
@@ -4794,8 +4796,8 @@ bool ProjectileListClass::PushBlitzBeam(int Size, float Richtung, PlayerClass *p
     // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
     // In Rad umwandeln
     // Richtung = PI * Richtung / 180.0f;
-    // pNew->xSpeed	= float(-40.0f * sin(Richtung));
-    // pNew->ySpeed	= float( 40.0f * cos(Richtung));
+    // pNew->xSpeed	= static_cast<float>(-40.0f * sin(Richtung));
+    // pNew->ySpeed	= static_cast<float>( 40.0f * cos(Richtung));
     pNew->xSpeed = -40.0f * sin_deg(Richtung);
     pNew->ySpeed = 40.0f * cos_deg(Richtung);
 
@@ -4808,10 +4810,11 @@ bool ProjectileListClass::PushBlitzBeam(int Size, float Richtung, PlayerClass *p
     pNew->Winkel = -10000.0f;  // wird von den wenigsten Schüssen verwendet
 
     // DKS - Dividing an int by a float and then casting to an int again makes no sense at all:
-    // ShotRect[BLITZBEAM].left   = int(Size / 4.0f),
-    //                    ShotRect[BLITZBEAM].top    = int(Size / 4.0f),
-    //                                        ShotRect[BLITZBEAM].right  = ShotRect[BLITZBEAM].left + int(Size / 2.0f);
-    // ShotRect[BLITZBEAM].bottom = ShotRect[BLITZBEAM].top  + int(Size / 2.0f);
+    // ShotRect[BLITZBEAM].left   = static_cast<int>(Size / 4.0f),
+    //                    ShotRect[BLITZBEAM].top    = static_cast<int>(Size / 4.0f),
+    //                                        ShotRect[BLITZBEAM].right  = ShotRect[BLITZBEAM].left +
+    //                                        static_cast<int>(Size / 2.0f);
+    // ShotRect[BLITZBEAM].bottom = ShotRect[BLITZBEAM].top  + static_cast<int>(Size / 2.0f);
     ShotRect[BLITZBEAM].left = Size / 4;
     ShotRect[BLITZBEAM].top = Size / 4;
     ShotRect[BLITZBEAM].right = ShotRect[BLITZBEAM].left + Size / 2;
