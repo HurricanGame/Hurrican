@@ -12,6 +12,12 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR
     #set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsingle-precision-constant -fno-rtti")
 endif()
 
+# Add Ubsan build type
+set(CMAKE_CXX_FLAGS_UBSAN
+    "-fsanitize=undefined -fno-omit-frame-pointer -g"
+    CACHE STRING "Flags used by the C++ compiler during UndefinedBehaviourSanitizer builds."
+    FORCE)
+
 include(CheckIPOSupported)
 check_ipo_supported(RESULT result OUTPUT output)
 if(result)
