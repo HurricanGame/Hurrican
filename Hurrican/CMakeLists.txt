@@ -447,11 +447,17 @@ ENDIF(FBO)
 add_definitions(-DPLATFORM_SDL)
 add_definitions(-DENABLE_CONSOLE_COMMANDS) # make optional?
 
+OPTION(DISABLE_EXCEPTIONS "Disable exception handling to reduce binary size" OFF)
+IF(DISABLE_EXCEPTIONS)
+    add_definitions(-DUSE_NO_EXCEPTIONS)
+ENDIF(DISABLE_EXCEPTIONS)
+
+OPTION(DISABLE_MEMPOOLING "Bypass pooled memory manager (for debugging purposes)" OFF)
+IF(DISABLE_MEMPOOLING)
+    add_definitions(-DUSE_NO_DISABLE_MEMPOOLING)
+ENDIF(DISABLE_MEMPOOLING)
+
 # TODO add options
-# C++ exceptions can be turned off, reducing unnecessary code bloat and speed-hit
-# add_definitions(-DUSE_NO_EXCEPTIONS)
-# Bypass pooled memory manager (for debugging purposes)
-# add_definitions(-DUSE_NO_MEMPOOLING)
 # Use the Unrarlib library, for support of packing of data files
 # add_definitions(-DUSE_UNRARLIB)
 # ETC1 texture compression support

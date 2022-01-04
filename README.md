@@ -46,3 +46,7 @@ Sound
 Generic
 * -DFAST_RANDOM=ON        : Use a fast linear congruential generator for random numbers
 * -DFAST_TRIG=ON          : Use fast approximation for trigonometric functions
+* -DDISABLE_EXCEPTIONS=ON : Disable exception handling to reduce binary size
+
+Debug
+* -DDISABLE_MEMPOOLING=ON : Bypass pooled memory manager
