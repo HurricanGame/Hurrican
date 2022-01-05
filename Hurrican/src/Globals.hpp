@@ -66,10 +66,10 @@ inline void clampAngle(T& angle) {
     constexpr T MIN_ANGLE = static_cast<T>(0);
     constexpr T MAX_ANGLE = static_cast<T>(360);
 
-    while (angle >= MAX_ANGLE)
-      angle -= MAX_ANGLE;
     while (angle < MIN_ANGLE)
       angle += MAX_ANGLE;
+    while (angle >= MAX_ANGLE)
+      angle -= MAX_ANGLE;
 }
 
 // --------------------------------------------------------------------------------------
