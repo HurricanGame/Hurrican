@@ -22,8 +22,6 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#define MYMATH_FTOL(fx, x) (x) = static_cast<long>(fx)
-
 // DKS - When the following is defined, all calls to rand() end up calling fast_rand()
 #ifdef USE_FAST_RNG
 extern void seed_fast_rand(uint32_t seed);

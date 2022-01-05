@@ -121,10 +121,7 @@ void GegnerClass::Render() {
     // Gegner getroffen? Dann nochmal in weiss aufleuchten lassen
     if (Handlung != GEGNER_NOTVISIBLE)
         if (DamageTaken > 0.0f) {
-            int Wert;
-            float f = DamageTaken;
-
-            MYMATH_FTOL(f, Wert);
+            int const Wert = static_cast<int>(DamageTaken);
 
             Color = D3DCOLOR_RGBA(255, 255, 255, Wert);
 
@@ -323,11 +320,7 @@ int GegnerClass::PlayerAbstand(bool both) const {
         Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
     }
 
-    int a;
-
-    MYMATH_FTOL(Abstand, a);
-
-    return a;
+    return static_cast<int>(Abstand);
 }
 
 // --------------------------------------------------------------------------------------
@@ -344,11 +337,7 @@ int GegnerClass::PlayerAbstandHoriz(PlayerClass *pTarget) const {
         (pTarget->xpos + pTarget->CollideRect.left + (pTarget->CollideRect.right - pTarget->CollideRect.left) / 2) -
         (xPos + GegnerRect[GegnerArt].left + (GegnerRect[GegnerArt].right - GegnerRect[GegnerArt].left) / 2);
 
-    int a;
-
-    MYMATH_FTOL(Abstand, a);
-
-    return abs(a);
+    return abs(static_cast<int>(Abstand));
 }
 
 // --------------------------------------------------------------------------------------
@@ -365,11 +354,7 @@ int GegnerClass::PlayerAbstandVert(PlayerClass *pTarget) const {
         (pTarget->ypos + pTarget->CollideRect.top + (pTarget->CollideRect.bottom - pTarget->CollideRect.top) / 2) -
         (yPos + GegnerRect[GegnerArt].bottom / 2);
 
-    int a;
-
-    MYMATH_FTOL(Abstand, a);
-
-    return abs(a);
+    return abs(static_cast<int>(Abstand));
 }
 
 // --------------------------------------------------------------------------------------

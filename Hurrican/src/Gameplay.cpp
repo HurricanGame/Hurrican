@@ -522,11 +522,8 @@ void LeaveGameLoop() {
 
 void SetScreenShake() {
     glm::mat4x4 matView, matRot, matTrans, matTrans2;  // Rotations und Translations Matrizen
-    int Winkel;                                       // Rotationswinkel
 
-    float f = (ScreenWinkel + WackelValue);
-
-    MYMATH_FTOL(f, Winkel);
+    int Winkel = static_cast<int>(ScreenWinkel + WackelValue);  // Rotationswinkel
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
     //
