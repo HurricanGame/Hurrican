@@ -314,8 +314,7 @@ void GegnerTheWall::DoKI() {
         // Kringel drehen lassen
         KringelWinkel += 10.0f SYNC;
 
-        if (KringelWinkel > 360.0f)
-            KringelWinkel -= 360.0f;
+        clampAngle(KringelWinkel);
 
         // Herz klopfen lassen
         float e = 1.0f;

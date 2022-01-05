@@ -19,6 +19,8 @@
 #include "SDL_port.hpp"
 #include "Texts.hpp"
 
+#include <type_traits>
+
 // --------------------------------------------------------------------------------------
 // Defines
 // --------------------------------------------------------------------------------------
@@ -53,6 +55,22 @@ constexpr int DIAMONDS_FOR_EXTRALIFE = 50;  // Diamanten die man für 200 Zeitei
 #else
 #  define TEMP_FILE_PREFIX
 #endif
+
+// --------------------------------------------------------------------------------------
+// Functions
+// --------------------------------------------------------------------------------------
+template<typename T>
+inline void clampAngle(T& angle) {
+    static_assert(std::is_arithmetic<T>::value, "Arithmetic value required in clampAngle.");
+
+    constexpr T MIN_ANGLE = static_cast<T>(0);
+    constexpr T MAX_ANGLE = static_cast<T>(360);
+
+    while (angle >= MAX_ANGLE)
+      angle -= MAX_ANGLE;
+    while (angle < MIN_ANGLE)
+      angle += MAX_ANGLE;
+}
 
 // --------------------------------------------------------------------------------------
 // Externals

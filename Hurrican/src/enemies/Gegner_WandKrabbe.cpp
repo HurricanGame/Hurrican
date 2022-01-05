@@ -98,8 +98,7 @@ void GegnerWandKrabbe::DoKI() {
         case GEGNER_DREHEN: {
             rot += float(random(50) + 20) SYNC;
 
-            while (rot > 360.0f)
-                rot -= 360.0f;
+            clampAngle(rot);
 
             if (ySpeed > 20.0f)
                 ySpeed = 20.0f;
@@ -111,8 +110,7 @@ void GegnerWandKrabbe::DoKI() {
         case GEGNER_FALLEN: {
             rot += float(random(50) + 20) SYNC;
 
-            while (rot > 360.0f)
-                rot -= 360.0f;
+            clampAngle(rot);
 
             if (ySpeed > 40.0f)
                 ySpeed = 40.0f;
@@ -122,8 +120,7 @@ void GegnerWandKrabbe::DoKI() {
         case GEGNER_EXPLODIEREN: {
             rot += float(random(50) + 20) SYNC;
 
-            while (rot > 360.0f)
-                rot -= 360.0f;
+            clampAngle(rot);
 
             if (ySpeed > 40.0f)
                 ySpeed = 40.0f;

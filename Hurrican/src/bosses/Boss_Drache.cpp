@@ -1047,8 +1047,7 @@ void GegnerDrache::DoKI() {
     // Flare drehen
     FlareRot += 1.0f SYNC;
 
-    while (FlareRot > 360.0)
-        FlareRot -= 360.0f;
+    clampAngle(FlareRot);
 
     // Schwanz animieren
     if (!(Handlung == GEGNER_EINFLIEGEN && Attack == GEGNER_STEHEN))

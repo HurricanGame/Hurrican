@@ -37,10 +37,8 @@ void GegnerColumn::DoDraw() {
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
     //
-    if (Winkel > 360)
-        Winkel -= 360;
-    if (Winkel < 0)
-        Winkel += 360;
+    clampAngle(Winkel);
+
     matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[Winkel], glm::vec3(0.0f, 0.0f, 1.0f));
 
     D3DXMatrixTranslation(&matTrans, float(-(xPos - TileEngine.XOffset + 40)),

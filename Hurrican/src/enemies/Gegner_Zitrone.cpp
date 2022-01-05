@@ -54,10 +54,7 @@ void GegnerZitrone::CalcKnarreWinkel() {
         newwinkel = 180 + newwinkel;
 
     // Winkel begrenzen
-    while (newwinkel > 360.0f)
-        newwinkel -= 360.0f;
-    while (newwinkel < 0.0f)
-        newwinkel += 360.0f;
+    clampAngle(newwinkel);
 
     newwinkel = std::clamp(newwinkel, 100.0f, 260.0f);
 

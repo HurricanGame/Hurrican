@@ -3188,10 +3188,7 @@ bool PartikelClass::Render() {
     if (Rotate) {
         DrawMode = DrawModeEnum::ROTATED;
 
-        if (Rot < 0.0f)
-            Rot += 360.0f;
-        if (Rot > 360.0f)
-            Rot -= 360.0f;
+        clampAngle(Rot);
 
         DirectGraphics.SetFilterMode(true);
 

@@ -169,8 +169,7 @@ void GegnerFireSpider::DoKI() {
         case GEGNER_FALLEN: {
             rot += Value2 SYNC;
 
-            while (rot > 360.0f)
-                rot -= 360.0f;
+            clampAngle(rot);
 
             // An Wand gestossen ?
             //

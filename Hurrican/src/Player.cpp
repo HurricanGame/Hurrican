@@ -3439,10 +3439,7 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
         // auf 0 gerundet wird
 
         // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
-        if (Winkel > 360)
-            Winkel -= 360;
-        if (Winkel < 0)
-            Winkel += 360;
+        clampAngle(Winkel);
         matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[Winkel], glm::vec3(0.0f, 0.0f, 1.0f));
 
         if (WackelMaximum <= 0.0f)  // Wackeln zuende ?
@@ -3569,10 +3566,10 @@ bool PlayerClass::DoLightning() {
 
     DrawLength = BlitzLength - 1;  // Vom Maximum ausgehen (das wird später "gekürzt")
 
-    if (BlitzWinkel < 0)     // Einmal im Kreis rumgedreht ? Dann wieder
-        BlitzWinkel += 360;  // von vorne beginnen mit der Rotation
-    if (BlitzWinkel > 360)   // und zwar im und gegen den Uhrzeigersinn
-        BlitzWinkel -= 360;
+    // Einmal im Kreis rumgedreht ? Dann wieder
+    // von vorne beginnen mit der Rotation
+    // und zwar im und gegen den Uhrzeigersinn
+    clampAngle(BlitzWinkel);
 
     // Ende des Blitzes beim Spieler leuchten lassen, falls er ihn grade noch auflädt
 
@@ -3815,10 +3812,7 @@ bool PlayerClass::DoLightning() {
         // auf 0 gerundet wird
 
         // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
-        if (Winkel > 360)
-            Winkel -= 360;
-        if (Winkel < 0)
-            Winkel += 360;
+        clampAngle(Winkel);
         matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[Winkel], glm::vec3(0.0f, 0.0f, 1.0f));
 
         if (WackelMaximum <= 0.0f)  // Wackeln zuende ?
@@ -3843,10 +3837,10 @@ bool PlayerClass::DoLightning() {
 // --------------------------------------------------------------------------------------
 
 bool PlayerClass::LoadBeam() {
-    if (BlitzWinkel < 0)     // Einmal im Kreis rumgedreht ? Dann wieder
-        BlitzWinkel += 360;  // von vorne beginnen mit der Rotation
-    if (BlitzWinkel > 360)   // und zwar im und gegen den Uhrzeigersinn
-        BlitzWinkel -= 360;
+    // Einmal im Kreis rumgedreht ? Dann wieder
+    // von vorne beginnen mit der Rotation
+    // und zwar im und gegen den Uhrzeigersinn
+    clampAngle(BlitzWinkel);
 
     //----- Blitz animieren
 

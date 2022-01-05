@@ -417,8 +417,7 @@ void MenuClass::ShowMenu() {
     // Hintergrund rotieren lassen
     ScrollPos += 0.1f SYNC;
 
-    if (ScrollPos > 360.0f)
-        ScrollPos -= 360.0f;
+    clampAngle(ScrollPos);
 
     // Total löschen
     DirectGraphics.ClearBackBuffer();

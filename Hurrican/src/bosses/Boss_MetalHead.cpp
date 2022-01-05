@@ -133,10 +133,7 @@ void GegnerMetalHead::DoDraw() {
         Hals[i].w = float(tanh(ay / ax));
         Hals[i].w = float(Hals[i].w / PI * 180.0f) + 90.0f;
 
-        while (Hals[i].w < 0.0f)
-            Hals[i].w += 360.0f;
-        while (Hals[i].w > 360.0f)
-            Hals[i].w -= 360.0f;
+        clampAngle(Hals[i].w);
     }
 
     // Halsteile rendern

@@ -48,10 +48,7 @@ void GegnerDeckenKrabbe::DoDraw() {
 // --------------------------------------------------------------------------------------
 
 void GegnerDeckenKrabbe::DoKI() {
-    if (zRot > 360.0f)
-        zRot = 0.0f;
-    if (zRot < 0.0f)
-        zRot = 360.0f;
+    clampAngle(zRot);
 
     // runterfallen?
     //

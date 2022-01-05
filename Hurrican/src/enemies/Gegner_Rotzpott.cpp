@@ -35,10 +35,7 @@ void GegnerRotzpott::CalcKnarreWinkel() {
     float dx, dy;
     static float dir = 0.0f;
 
-    while (GunWinkel > 360.0f)
-        GunWinkel -= 360.0f;
-    while (GunWinkel < 0.0f)
-        GunWinkel += 360.0f;
+    clampAngle(GunWinkel);
 
     if (pAim->ypos > yPos + 30) {
         dx = (xPos + 27) - (pAim->xpos + 35);

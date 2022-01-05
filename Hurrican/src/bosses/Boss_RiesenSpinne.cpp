@@ -257,8 +257,7 @@ void GegnerRiesenSpinne::DoDraw() {
     tempdamage = sin(DamageWackel * 2 * PI) * 10.0f;
     tempwinkel = HeadWinkel - sin(DamageWackel) * 12.0f;
 
-    while (tempwinkel > 360.0f)
-        tempwinkel -= 360.0f;
+    clampAngle(tempwinkel);
 
     // Rumpf
     pGegnerGrafix[GegnerArt]->RenderSprite(

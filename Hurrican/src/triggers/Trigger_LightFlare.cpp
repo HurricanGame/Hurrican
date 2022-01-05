@@ -73,10 +73,7 @@ GegnerLightFlare::GegnerLightFlare(int Wert1, int Wert2, bool Light) {
 
 void GegnerLightFlare::DoDraw() {
     DirectGraphics.SetAdditiveMode();
-    while (rot > 360.0f)
-        rot -= 360.0f;
-    while (rot < 0.0f)
-        rot += 360.0f;
+    clampAngle(rot);
 
     D3DCOLOR Color = D3DCOLOR_RGBA(r, g, b, int(Alpha));
 
