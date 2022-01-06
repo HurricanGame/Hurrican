@@ -342,7 +342,7 @@ class WaterSinTableClass {
         //  value pi/10 past the one to the left, but we'll instead
         //  make that 3(pi/32) past the one to the left. Close enough
         //  to be unnoticeable.
-        int ext_idx = WaterSinTableIdx + i * 3 + j * 16;
+        int ext_idx = WaterSinTableIdx + (i + 1) * 3 + (j + 1) * 16;
 
         for (int ctr = 0; ctr < 2; ++ctr) {
             int table_idx = ext_idx;
@@ -357,7 +357,7 @@ class WaterSinTableClass {
     // The top two vertices of a tile use sin_pair[0]
     // and the bottom two vertices use sin_pair[1].
     void GetNonWaterSin(const int j, float (&sin_pair)[2]) {
-        int ext_idx = NonWaterSinTableIdx + j * 3;
+        int ext_idx = NonWaterSinTableIdx + (j + 1) * 3;
 
         for (int ctr = 0; ctr < 2; ++ctr) {
             int table_idx = ext_idx;
