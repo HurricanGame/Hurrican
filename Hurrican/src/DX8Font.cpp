@@ -328,25 +328,25 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
         if (Text[i] == 32)
             // DKS - Added support for font scaling
             if (mScaleFactor == 1) {
-                x += float(mXCharSize - 3);  // Bei Space frei lassen
+                x += static_cast<float>(mXCharSize - 3);  // Bei Space frei lassen
             } else {
-                x += float((mXCharSize - 3) * mScaleFactor);  // Bei Space frei lassen
+                x += static_cast<float>((mXCharSize - 3) * mScaleFactor);  // Bei Space frei lassen
             }
         else if (Text[i] == '\n')  // Zeilenumbruch
         {
             x = oldx;
             // DKS - Added support for font scaling
             if (mScaleFactor == 1) {
-                y += float(mYCharSize + 6);
+                y += static_cast<float>(mYCharSize + 6);
             } else {
-                y += float(mYCharSize * mScaleFactor + 6);
+                y += static_cast<float>(mYCharSize * mScaleFactor + 6);
             }
         } else {
             // DKS - Added support for font scaling
             if (mScaleFactor == 1) {
-                x += float(mCharLength[z] - 1);  // Ansonsten Breite des Zeichens weiter
+                x += static_cast<float>(mCharLength[z] - 1);  // Ansonsten Breite des Zeichens weiter
             } else {
-                x += float((mCharLength[z] - 1) * mScaleFactor);  // Ansonsten Breite des Zeichens weiter
+                x += static_cast<float>((mCharLength[z] - 1) * mScaleFactor);  // Ansonsten Breite des Zeichens weiter
             }
         }
     }
@@ -458,25 +458,25 @@ bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR 
         if (Text[i] == 32)
             // DKS - Added support for font scaling
             if (mScaleFactor == 1) {
-                x += float(mXCharSize - 3 - Spacing * 2);  // Bei Space frei lassen
+                x += static_cast<float>(mXCharSize - 3 - Spacing * 2);  // Bei Space frei lassen
             } else {
-                x += float(((mXCharSize - 3) - Spacing * 2) * mScaleFactor);  // Bei Space frei lassen
+                x += static_cast<float>(((mXCharSize - 3) - Spacing * 2) * mScaleFactor);  // Bei Space frei lassen
             }
         else if (Text[i] == '\n')  // Zeilenumbruch
         {
             x = oldx;
             // DKS - Added support for font scaling
             if (mScaleFactor == 1) {
-                y += float(mYCharSize + 6 + Spacing);
+                y += static_cast<float>(mYCharSize + 6 + Spacing);
             } else {
-                y += float((mYCharSize + 6 + Spacing) * mScaleFactor);
+                y += static_cast<float>((mYCharSize + 6 + Spacing) * mScaleFactor);
             }
         } else
             // DKS - Added support for font scaling
             if (mScaleFactor == 1) {
-            x += float(mCharLength[z] - 1 + Spacing);  // Ansonsten Breite des Zeichens weiter
+            x += static_cast<float>(mCharLength[z] - 1 + Spacing);  // Ansonsten Breite des Zeichens weiter
         } else {
-            x += float(((mCharLength[z] - 1) + Spacing) * mScaleFactor);  // Ansonsten Breite des Zeichens weiter
+            x += static_cast<float>(((mCharLength[z] - 1) + Spacing) * mScaleFactor);  // Ansonsten Breite des Zeichens weiter
         }
     }
 

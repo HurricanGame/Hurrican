@@ -44,7 +44,7 @@ void GegnerFahrstuhl::DoDraw() {
     float l = static_cast<float>(g_Fahrstuhl_yPos - TileEngine.YOffset) - 80;
     pGegnerGrafix[GegnerArt]->RenderSpriteScaled(
         static_cast<float>(xPos - TileEngine.XOffset - 10), static_cast<float>(g_Fahrstuhl_yPos - TileEngine.YOffset),
-        GegnerRect[GegnerArt].right + 20, int(GegnerRect[GegnerArt].bottom + l / 5.0f), AnimPhase, 0x99000000);
+        GegnerRect[GegnerArt].right + 20, static_cast<int>(GegnerRect[GegnerArt].bottom + l / 5.0f), AnimPhase, 0x99000000);
 
     DirectGraphics.SetFilterMode(false);
 

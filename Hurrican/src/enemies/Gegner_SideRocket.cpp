@@ -39,7 +39,7 @@ void GegnerSideRocket::DoKI() {
         // Jaeger wird "aktiviert", sprich, der Timer wird gestartet
         //
         case GEGNER_INIT: {
-            AnimCount = float(Value2);
+            AnimCount = static_cast<float>(Value2);
 
             if (PlayerAbstandVert() < 100 && PlayerAbstandHoriz() < 400 &&
                 ((Value1 == 0 && xPos > pAim->xpos) || (Value1 != 0 && xPos < pAim->xpos)))

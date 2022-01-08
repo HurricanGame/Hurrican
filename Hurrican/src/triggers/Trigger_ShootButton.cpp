@@ -65,7 +65,7 @@ void GegnerShootButton::DoKI() {
             PartikelSystem.PushPartikel(pPlattForm->xPos + 51 + random(2), pPlattForm->yPos + 40, FLUGSACKSMOKE2);
             PartikelSystem.PushPartikel(pPlattForm->xPos + 48 + random(2), pPlattForm->yPos + 40, FUNKE);
         }
-    } else if (int(pPlattForm->yPos) < pPlattForm->Value1)
+    } else if (static_cast<int>(pPlattForm->yPos) < pPlattForm->Value1)
         pPlattForm->yAcc = 3.0f;
 }
 

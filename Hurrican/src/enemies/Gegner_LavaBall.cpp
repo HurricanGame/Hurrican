@@ -22,7 +22,7 @@ GegnerLavaBall::GegnerLavaBall(int Wert1, int Wert2, bool Light) {
     AnimSpeed = 0.5f;
     ChangeLight = Light;
     Destroyable = false;
-    ySpeed = float(-Value1);
+    ySpeed = static_cast<float>(-Value1);
     yAcc = 4.0f;
     SmokeDelay = 0.0f;
     FlareDelay = 0.0f;
@@ -42,8 +42,8 @@ void GegnerLavaBall::DoDraw() {
     // Flare rendern
     DirectGraphics.SetAdditiveMode();
     float w = yPos / 4;
-    Projectiles.LavaFlare.RenderSpriteScaledRotated(float(xPos - 60 - TileEngine.XOffset),
-                                                    float(yPos - 60 - TileEngine.YOffset), 180, 180, w, 0xFFFFCC88);
+    Projectiles.LavaFlare.RenderSpriteScaledRotated(static_cast<float>(xPos - 60 - TileEngine.XOffset),
+                                                    static_cast<float>(yPos - 60 - TileEngine.YOffset), 180, 180, w, 0xFFFFCC88);
     DirectGraphics.SetColorKeyMode();
 }
 

@@ -78,37 +78,37 @@ void GegnerBratklops::DoDraw() {
     if (a > 5)
         a = 10 - a;
 
-    pGfx[a]->RenderSprite(float(xPos - TileEngine.XOffset), float(yPos - TileEngine.YOffset), 0xFFFFFFFF);
+    pGfx[a]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset), static_cast<float>(yPos - TileEngine.YOffset), 0xFFFFFFFF);
 
     // Laser rendern ?
     //
     if (FlareDelay > 0.0f) {
-        int c = int(FlareDelay);
+        int c = static_cast<int>(FlareDelay);
 
         if (c > 128.0f)
             c = 128;
 
         if (FlareDelay > 544)
-            c = int(128 - (FlareDelay - 544) / 2.0f);
+            c = static_cast<int>(128 - (FlareDelay - 544) / 2.0f);
 
         DirectGraphics.SetAdditiveMode();
         D3DCOLOR Color = D3DCOLOR_RGBA(255, 255, 255, c);
-        pFlare->RenderSpriteRotated(float(xPos - TileEngine.XOffset) + 64.0f, float(yPos - TileEngine.YOffset) + 122.0f,
+        pFlare->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset) + 64.0f, static_cast<float>(yPos - TileEngine.YOffset) + 122.0f,
                                     FlareDelay * 2, Color);
-        pFlare->RenderSpriteRotated(float(xPos - TileEngine.XOffset) + 64.0f, float(yPos - TileEngine.YOffset) + 122.0f,
+        pFlare->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset) + 64.0f, static_cast<float>(yPos - TileEngine.YOffset) + 122.0f,
                                     FlareDelay * 2, Color);
 
         // Laser rendern
         //
         if (FlareDelay > 150.0f &&
-            ((Handlung == GEGNER_SPECIAL && int(FlareDelay) % 90 < 60) || Handlung == GEGNER_SPECIAL3)) {
+            ((Handlung == GEGNER_SPECIAL && static_cast<int>(FlareDelay) % 90 < 60) || Handlung == GEGNER_SPECIAL3)) {
             // DKS - Added function WaveIsPlaying() to SoundManagerClass:
             if (!SoundManager.WaveIsPlaying(SOUND_BRATLASER))
                 SoundManager.PlayWave(100, 128, 11025, SOUND_BRATLASER);
 
             VERTEX2D TriangleStrip[4];  // Strip für ein Sprite
             int Winkel;
-            Winkel = int((FlareDelay - 128.0f) / 4.5f) - 20;
+            Winkel = static_cast<int>((FlareDelay - 128.0f) / 4.5f) - 20;
 
             while (Winkel < 0)
                 Winkel += 360;
@@ -116,10 +116,10 @@ void GegnerBratklops::DoDraw() {
             float l, r, o, u;      // Vertice Koordinaten
             float tl, tr, to, tu;  // Textur Koordinaten
 
-            l = float(xPos - TileEngine.XOffset + 140.0f - 0.5f);  // Links
-            o = float(yPos - TileEngine.YOffset + 215.0f - 0.5f);  // Oben
-            r = float(xPos - TileEngine.XOffset + 170.0f + 0.5f);  // Rechts
-            u = float(yPos - TileEngine.YOffset + 800.0f + 0.5f);  // Unten
+            l = static_cast<float>(xPos - TileEngine.XOffset + 140.0f - 0.5f);  // Links
+            o = static_cast<float>(yPos - TileEngine.YOffset + 215.0f - 0.5f);  // Oben
+            r = static_cast<float>(xPos - TileEngine.XOffset + 170.0f + 0.5f);  // Rechts
+            u = static_cast<float>(yPos - TileEngine.YOffset + 800.0f + 0.5f);  // Unten
 
             tl = 0.0f;
             tr = 1.0f;
@@ -189,23 +189,23 @@ void GegnerBratklops::DoDraw() {
             Rect.bottom = 24;
 
             float xs, ys;
-            float xstart = float(xPos + 145.0f);
-            float ystart = float(yPos + 203.0f);
+            float xstart = static_cast<float>(xPos + 145.0f);
+            float ystart = static_cast<float>(yPos + 203.0f);
 
             // Rechtecke für die Kollisionsabfrage rotieren lassen
             for (int i = 0; i < 25; i++) {
             // Zum anzeigen der Rects, die geprüft werden
 #ifndef NDEBUG
                 if (DebugMode == true)
-                    RenderRect(float(xstart - TileEngine.XOffset), float(ystart - TileEngine.YOffset), 24, 24,
+                    RenderRect(static_cast<float>(xstart - TileEngine.XOffset), static_cast<float>(ystart - TileEngine.YOffset), 24, 24,
                                0x80FFFFFF);
 #endif  //NDEBUG
 
                 // Laser auf Kollision mit dem Spieler prüfen
                 //
 
-                xs = float(xstart);
-                ys = float(ystart);
+                xs = static_cast<float>(xstart);
+                ys = static_cast<float>(ystart);
 
                 for (int j = 0; j < NUMPLAYERS; j++)
                     if (SpriteCollision(Player[j].xpos, Player[j].ypos, Player[j].CollideRect, xs, ys, Rect) == true) {
@@ -215,8 +215,8 @@ void GegnerBratklops::DoDraw() {
                 // Und nächstes Rechteck
                 //
                 // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
-                // xstart += float(24*cos(PI * (360 - Winkel + 90) / 180));
-                // ystart += float(24*sin(PI * (360 - Winkel + 90) / 180));
+                // xstart += static_cast<float>(24*cos(PI * (360 - Winkel + 90) / 180));
+                // ystart += static_cast<float>(24*sin(PI * (360 - Winkel + 90) / 180));
                 xstart += 24.0f * cos_deg(360 - Winkel + 90);
                 ystart += 24.0f * sin_deg(360 - Winkel + 90);
 
@@ -331,7 +331,7 @@ void GegnerBratklops::DoKI() {
             xPos += 4.0f SYNC;
 
             if (xPos > Value1) {
-                xPos = float(Value1);
+                xPos = static_cast<float>(Value1);
                 Handlung = GEGNER_STEHEN;
             }
         } break;

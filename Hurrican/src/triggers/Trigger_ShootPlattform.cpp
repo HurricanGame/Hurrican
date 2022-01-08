@@ -39,12 +39,12 @@ void GegnerShootPlattform::DoDraw() {
     if (Value2 == 1) {
         // Lighflare rendern, wenn angeschossen
         DirectGraphics.SetAdditiveMode();
-        Projectiles.LavaFlare.RenderSprite(float(xPos - 9 - TileEngine.XOffset), float(yPos - 5 - TileEngine.YOffset),
+        Projectiles.LavaFlare.RenderSprite(static_cast<float>(xPos - 9 - TileEngine.XOffset), static_cast<float>(yPos - 5 - TileEngine.YOffset),
                                            0, 0xAAFFFFFF);
 
-        Projectiles.LavaFlare.RenderSprite(float(xPos - 9 - TileEngine.XOffset), float(yPos - 5 - TileEngine.YOffset),
+        Projectiles.LavaFlare.RenderSprite(static_cast<float>(xPos - 9 - TileEngine.XOffset), static_cast<float>(yPos - 5 - TileEngine.YOffset),
                                            0, 0x88AAAA00);
-        Projectiles.LavaFlare.RenderSprite(float(xPos - 9 - TileEngine.XOffset), float(yPos - 5 - TileEngine.YOffset),
+        Projectiles.LavaFlare.RenderSprite(static_cast<float>(xPos - 9 - TileEngine.XOffset), static_cast<float>(yPos - 5 - TileEngine.YOffset),
                                            0, 0x88AA0000);
         DirectGraphics.SetColorKeyMode();
 
@@ -69,8 +69,8 @@ void GegnerShootPlattform::DoKI() {
 
     // Wieder am Ausgangspunkt gelandet ?
     //
-    if (ySpeed > 0.0f && int(yPos) > Value1) {
-        yPos = float(Value1);
+    if (ySpeed > 0.0f && static_cast<int>(yPos) > Value1) {
+        yPos = static_cast<float>(Value1);
         ySpeed = 0.0f;
         yAcc = 0.0f;
     }

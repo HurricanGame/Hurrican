@@ -86,7 +86,7 @@ void GegnerEisFaust::DoKI() {
             Energy = 7000;
             DamageTaken = 0.0f;
 
-            yPos += float(8.0 SYNC);           // Faust nach unten bewegen
+            yPos += static_cast<float>(8.0 SYNC);           // Faust nach unten bewegen
             if (yPos >= TileEngine.ScrolltoY)  // Weit genug unten ?
             {
                 Handlung = GEGNER_LAUFEN;
@@ -96,7 +96,7 @@ void GegnerEisFaust::DoKI() {
 
         case GEGNER_EINFLIEGEN:  // Gegner kommt in den Screen geflogen
         {
-            yPos += float(8.0 SYNC);           // Faust nach unten bewegen
+            yPos += static_cast<float>(8.0 SYNC);           // Faust nach unten bewegen
             if (yPos >= TileEngine.ScrolltoY)  // Weit genug unten ?
             {
                 Handlung = GEGNER_LAUFEN;
@@ -175,7 +175,7 @@ void GegnerEisFaust::DoKI() {
                 Handlung = GEGNER_LAUFEN;
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
-                yPos = float(TileEngine.ScrolltoY);
+                yPos = static_cast<float>(TileEngine.ScrolltoY);
                 xAcc = -8.0f;
             }
         } break;
@@ -193,8 +193,8 @@ void GegnerEisFaust::DoKI() {
                 } else {
                     Handlung = GEGNER_BOMBARDIEREN;
 
-                    xPos = float(Value1) - 250.0f;
-                    yPos = float(Value2) - 200.0f;
+                    xPos = static_cast<float>(Value1) - 250.0f;
+                    yPos = static_cast<float>(Value2) - 200.0f;
                     yAcc = 0;
                     ySpeed = 10.0f;
                     yAcc = -0.4f;
@@ -221,13 +221,13 @@ void GegnerEisFaust::DoKI() {
                     Gegner.PushGegner(xPos + 100, yPos + 220, EISZAPFEN, 1, 0, false);
             }
 
-            if (xSpeed > 0.0f && xPos > float(Value1) + 640.0f + 30.0f) {
+            if (xSpeed > 0.0f && xPos > static_cast<float>(Value1) + 640.0f + 30.0f) {
                 xSpeed = -20.0f;
                 ySpeed = 10.0f;
-                yPos = float(Value2) - 100.0f;
+                yPos = static_cast<float>(Value2) - 100.0f;
             }
 
-            if (xSpeed < 0.0f && xPos < float(Value1) - 300.0f) {
+            if (xSpeed < 0.0f && xPos < static_cast<float>(Value1) - 300.0f) {
                 xSpeed = 0.0f;
                 AnimCount = 50.0f;
 
@@ -237,8 +237,8 @@ void GegnerEisFaust::DoKI() {
                 xAcc = 0.0f;
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
-                yPos = float(TileEngine.ScrolltoY - 400.0f);
-                xPos = float(Value1) + 200;
+                yPos = static_cast<float>(TileEngine.ScrolltoY - 400.0f);
+                xPos = static_cast<float>(Value1) + 200;
             }
 
         } break;
@@ -275,7 +275,7 @@ void GegnerEisFaust::DoKI() {
                 Handlung = GEGNER_EINFLIEGEN;
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
-                yPos = float(TileEngine.ScrolltoY - 250.0f);
+                yPos = static_cast<float>(TileEngine.ScrolltoY - 250.0f);
             }
         } break;
 

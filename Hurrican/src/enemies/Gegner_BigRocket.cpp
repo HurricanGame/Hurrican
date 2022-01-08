@@ -42,12 +42,12 @@ void GegnerBigRocket::DoDraw() {
     //
     if (options_Detail >= DETAIL_HIGH) {
         DirectGraphics.SetAdditiveMode();
-        Projectiles.LavaFlare.RenderSprite(float(xPos - 27 - TileEngine.XOffset),
-                                           float(yPos + 237 - TileEngine.YOffset), 0, 0xCCFFFFFF);
-        Projectiles.LavaFlare.RenderSprite(float(xPos - 27 - TileEngine.XOffset),
-                                           float(yPos + 237 - TileEngine.YOffset), 0, 0xCCAAAA00);
-        Projectiles.LavaFlare.RenderSprite(float(xPos - 27 - TileEngine.XOffset),
-                                           float(yPos + 237 - TileEngine.YOffset), 0, 0xCCAA0000);
+        Projectiles.LavaFlare.RenderSprite(static_cast<float>(xPos - 27 - TileEngine.XOffset),
+                                           static_cast<float>(yPos + 237 - TileEngine.YOffset), 0, 0xCCFFFFFF);
+        Projectiles.LavaFlare.RenderSprite(static_cast<float>(xPos - 27 - TileEngine.XOffset),
+                                           static_cast<float>(yPos + 237 - TileEngine.YOffset), 0, 0xCCAAAA00);
+        Projectiles.LavaFlare.RenderSprite(static_cast<float>(xPos - 27 - TileEngine.XOffset),
+                                           static_cast<float>(yPos + 237 - TileEngine.YOffset), 0, 0xCCAA0000);
         DirectGraphics.SetColorKeyMode();
     }
 }
@@ -64,14 +64,14 @@ void GegnerBigRocket::DoKI() {
         case GEGNER_STEHEN: {
             Handlung = GEGNER_FALLEN;
             yPos += 480.0f + 300.0f;
-            ySpeed = -float(Value1 + 7);
+            ySpeed = -static_cast<float>(Value1 + 7);
 
-            Value2 = int(xPos);
+            Value2 = static_cast<int>(xPos);
         } break;
 
         // Rakete fliegt
         case GEGNER_FALLEN: {
-            xPos = float(Value2) + ((int(yPos) % 14) / 7);
+            xPos = static_cast<float>(Value2) + ((static_cast<int>(yPos) % 14) / 7);
 
             smokedelay -= 1.0f SYNC;
 

@@ -70,7 +70,7 @@ void GegnerShrine::DoKI() {
             Player[p].Handlung == PlayerActionEnum::DUCKEN && Value1 == 1) {
             Value1 = 0;
             for (int i = 0; i < 2; i++)
-                Gegner.PushGegner(float(xPos - 20 + i * 110), yPos - 100, ONEUP, 0, 0, true);
+                Gegner.PushGegner(static_cast<float>(xPos - 20 + i * 110), yPos - 100, ONEUP, 0, 0, true);
 
             for (int i = 0; i < 8; i++)
                 Gegner.PushGegner(xPos + random(100), yPos - 50 + random(100), EXTRAS, 3, 0, true);

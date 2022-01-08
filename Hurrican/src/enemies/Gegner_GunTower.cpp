@@ -95,7 +95,7 @@ void GegnerGunTower::DoKI() {
                 AnimPhase = 0;
                 AnimEnde = 0;
                 AnimStart = 0;
-                AnimCount = float(Value1);  // Je nach Editor-Einstellung die Reload-Sperre
+                AnimCount = static_cast<float>(Value1);  // Je nach Editor-Einstellung die Reload-Sperre
                 Handlung = GEGNER_STEHEN;   // setzen
             }
         } break;
@@ -110,9 +110,9 @@ void GegnerGunTower::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerGunTower::GegnerExplode() {
-    PartikelSystem.PushPartikel(float(xPos - 20), float(yPos - 40), EXPLOSION_BIG);
+    PartikelSystem.PushPartikel(static_cast<float>(xPos - 20), static_cast<float>(yPos - 40), EXPLOSION_BIG);
     for (int i = 0; i < 2; i++)
-        PartikelSystem.PushPartikel(float(xPos - 10 + random(60)), float(yPos - 40 + random(20)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(static_cast<float>(xPos - 10 + random(60)), static_cast<float>(yPos - 40 + random(20)), EXPLOSION_MEDIUM2);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

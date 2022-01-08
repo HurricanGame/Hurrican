@@ -98,10 +98,10 @@ void GegnerFlugBoss::DoDraw() {
     Hitzone[0].RenderSprite(xHit, 380.0f + yHit, 0, 0xFFFFFFFF);
     Hitzone[1].RenderSprite(xHit, 401.0f + yHit, 0, 0xFFFFFFFF);
 
-    GegnerRect[GegnerArt].left = int(xHit + TileEngine.XOffset - xPos);
-    GegnerRect[GegnerArt].right = int(GegnerRect[GegnerArt].left + 52);
-    GegnerRect[GegnerArt].top = int(380 + TileEngine.YOffset - yPos + yHit);
-    GegnerRect[GegnerArt].bottom = int(GegnerRect[GegnerArt].top + 100);
+    GegnerRect[GegnerArt].left = static_cast<int>(xHit + TileEngine.XOffset - xPos);
+    GegnerRect[GegnerArt].right = static_cast<int>(GegnerRect[GegnerArt].left + 52);
+    GegnerRect[GegnerArt].top = static_cast<int>(380 + TileEngine.YOffset - yPos + yHit);
+    GegnerRect[GegnerArt].bottom = static_cast<int>(GegnerRect[GegnerArt].top + 100);
 
     // Geschuetz
     Geschuetz.RenderSpriteRotated(xKanone - 62, static_cast<float>(-TileEngine.YOffset + yPos + 160), Winkel[0], 0,
@@ -321,7 +321,7 @@ void GegnerFlugBoss::DoKI() {
                 if (dy == 0.0f)
                     dy = 0.01f;
 
-                w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+                w = static_cast<float>(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
 
                 if (dx >= 0 && dy >= 0) winkel = w;		  else
                 if (dx > 0  && dy < 0 ) winkel = 180 + w;  else
@@ -344,7 +344,7 @@ void GegnerFlugBoss::DoKI() {
                 if (dy == 0.0f)
                     dy = 0.01f;
 
-                w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+                w = static_cast<float>(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
 
                 if (dx >= 0 && dy >= 0) winkel = w;		  else
                 if (dx > 0  && dy < 0 ) winkel = 180 + w;  else

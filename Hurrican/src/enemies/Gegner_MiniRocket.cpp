@@ -94,7 +94,7 @@ void GegnerMiniRocket::DoKI() {
         float w;
 
         // DKS - converted to float, optimized:
-        // w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+        // w = static_cast<float>(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
         w = RadToDeg(atanf(dx / dy));
 
         if (dx >= 0 && dy >= 0)
@@ -129,8 +129,8 @@ void GegnerMiniRocket::DoKI() {
     while (SmokeDelay < 0.0f) {
         SmokeDelay += 0.5f;
         // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
-        // PartikelSystem.PushPartikel(xPos - 8 + float(sin((360 - rot) / 180.0f * PI) * 15.0f),
-        //                              yPos - 8 + float(cos((360 - rot) / 180.0f * PI) * 15.0f), SMOKE);
+        // PartikelSystem.PushPartikel(xPos - 8 + static_cast<float>(sin((360 - rot) / 180.0f * PI) * 15.0f),
+        //                              yPos - 8 + static_cast<float>(cos((360 - rot) / 180.0f * PI) * 15.0f), SMOKE);
         PartikelSystem.PushPartikel(xPos - 8.0f + (sin_deg(360.0f - rot) * 15.0f),
                                     yPos - 8.0f + (cos_deg(360.0f - rot) * 15.0f), SMOKE);
     }

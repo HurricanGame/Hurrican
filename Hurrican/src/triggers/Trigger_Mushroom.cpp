@@ -34,7 +34,7 @@ void GegnerMushroom::DoDraw() {
     //
     pGegnerGrafix[GegnerArt]->RenderSpriteScaled(static_cast<float>(xPos - TileEngine.XOffset),
                                                  static_cast<float>(yPos - TileEngine.YOffset + (61.0f - ySize) * 2),
-                                                 135, int(ySize), 0, 0xFFFFFFFF);
+                                                 135, static_cast<int>(ySize), 0, 0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ void GegnerMushroom::PlayerJumps(PlayerClass *pPlayer) {
         pPlayer->yadd = PLAYER_JUMPADDSPEED;
         pPlayer->Handlung = PlayerActionEnum::SPRINGEN;
 
-        SoundManager.PlayWave(100, 128, int(11000), SOUND_MUSHROOMJUMP);
+        SoundManager.PlayWave(100, 128, static_cast<int>(11000), SOUND_MUSHROOMJUMP);
     }
 }
 

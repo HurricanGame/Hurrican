@@ -20,7 +20,7 @@ GegnerGlubschi2::GegnerGlubschi2(int Wert1, int Wert2, bool Light) {
     ChangeLight = Light;
     Destroyable = false;
     rot = 0.0;
-    rotspeed = float(random(10) + 1) / 5.0f;
+    rotspeed = static_cast<float>(random(10) + 1) / 5.0f;
     TestBlock = false;
     OwnDraw = true;
 }
@@ -40,7 +40,7 @@ void GegnerGlubschi2::DoDraw() {
     a = xPos - pAim->xpos;
 
     if (a < 200) {
-        anim = int((200 - a) / 18);
+        anim = static_cast<int>((200 - a) / 18);
 
         if (anim > 20)
             anim = 20;
@@ -57,8 +57,8 @@ void GegnerGlubschi2::DoDraw() {
     //
     DirectGraphics.SetAdditiveMode();
     Projectiles.LavaFlare.RenderSpriteScaledRotated(
-        float(xPos - TileEngine.XOffset - 36 + anim * 1.5f),
-        float(yPos - TileEngine.YOffset - 60 + GegnerRect[GegnerArt].bottom), 92, 92, rot, 0x60FFFFFF);
+        static_cast<float>(xPos - TileEngine.XOffset - 36 + anim * 1.5f),
+        static_cast<float>(yPos - TileEngine.YOffset - 60 + GegnerRect[GegnerArt].bottom), 92, 92, rot, 0x60FFFFFF);
     DirectGraphics.SetColorKeyMode();
 }
 

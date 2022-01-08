@@ -128,7 +128,7 @@ void GegnerAuge::DoKI() {
 void GegnerAuge::GegnerExplode() {
     // Explosion
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(float(xPos - 15) + random(20), float(yPos - 15) + random(40), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(static_cast<float>(xPos - 15) + random(20), static_cast<float>(yPos - 15) + random(40), EXPLOSION_MEDIUM2);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

@@ -23,7 +23,7 @@ GegnerKugelGross::GegnerKugelGross(int Wert1, int Wert2, bool Light) {
     Value1 = Wert1;
     Value2 = Wert2;
     if (Value1 != 0)  // ggf vorgegebene Speed benutzen
-        xSpeed = float(Value1);
+        xSpeed = static_cast<float>(Value1);
     AnimSpeed = 0.3f;
     AnimStart = 0;
     AnimEnde = 19;
@@ -106,7 +106,7 @@ void GegnerKugelGross::GegnerExplode() {
     Gegner.PushGegner(xPos + 12, yPos + 12, KUGELMEDIUM, 8, 0, ChangeLight);
 
     // Explosion
-    PartikelSystem.PushPartikel(float(xPos - 20), float(yPos - 20), EXPLOSION_BIG);
+    PartikelSystem.PushPartikel(static_cast<float>(xPos - 20), static_cast<float>(yPos - 20), EXPLOSION_BIG);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION4);  // Sound ausgeben
 

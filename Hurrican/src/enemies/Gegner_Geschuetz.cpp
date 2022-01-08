@@ -81,12 +81,12 @@ void GegnerGeschuetz::DoKI() {
 
 void GegnerGeschuetz::GegnerExplode() {
     // Explosion
-    PartikelSystem.PushPartikel(float(xPos - 10), float(yPos - 10), EXPLOSION_MEDIUM2);
+    PartikelSystem.PushPartikel(static_cast<float>(xPos - 10), static_cast<float>(yPos - 10), EXPLOSION_MEDIUM2);
 
-    PartikelSystem.PushPartikel(float(xPos - 10), float(yPos - 10), SMOKEBIG);
+    PartikelSystem.PushPartikel(static_cast<float>(xPos - 10), static_cast<float>(yPos - 10), SMOKEBIG);
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(float(xPos + 10 + random(40)), float(yPos + random(40)), LONGFUNKE);
+        PartikelSystem.PushPartikel(static_cast<float>(xPos + 10 + random(40)), static_cast<float>(yPos + random(40)), LONGFUNKE);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

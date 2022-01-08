@@ -221,7 +221,7 @@ void ShowGameOver() {
     int col;
 
     // Transparent Wert des Game Over Schriftzuges bestimmen
-    col = int((50.0f - Player[0].GameOverTimer) * 10);
+    col = static_cast<int>((50.0f - Player[0].GameOverTimer) * 10);
     if (col > 255)  // Obergrenze checken
         col = 255;
 
@@ -347,7 +347,7 @@ void GameLoop() {
         if (Player[p].BlinkCounter > 0.0f)  // noch farbig blinken vom PowerUp?
         {
             if (Player[p].BlinkCounter < 4.0f) {
-                int a = int((Player[p].BlinkCounter) * 63.0f);
+                int a = static_cast<int>((Player[p].BlinkCounter) * 63.0f);
 
                 if (Player[p].BlinkColor == 1)
                     Player[p].CurrentColor = D3DCOLOR_RGBA(255, 64, 64, a);
@@ -397,16 +397,16 @@ void GameLoop() {
         int a;
         int off;
 
-        a = int(WarningCount * 2.55f);
+        a = static_cast<int>(WarningCount * 2.55f);
         Col = D3DCOLOR_RGBA(255, 255, 255, a);
 
         DirectGraphics.SetFilterMode(true);
 
-        off = 100 - int(WarningCount);
+        off = 100 - static_cast<int>(WarningCount);
 
         pGegnerGrafix[WARNING]->SetRect(0, 0, 180, 40);
         pGegnerGrafix[WARNING]->RenderSpriteScaled(230 - off * 4.5f / 4.0f, 390 - off / 4.0f,
-                                                   int(180 + off * 4.5f / 2.0f), int(40 + off * 1.0f / 2.0f), Col);
+                                                   static_cast<int>(180 + off * 4.5f / 2.0f), static_cast<int>(40 + off * 1.0f / 2.0f), Col);
 
         DirectGraphics.SetFilterMode(false);
 
@@ -576,7 +576,7 @@ void ShakeScreen(float staerke) {
     WackelMaximum = staerke;
     WackelValue = 0.0f;
     WackelDir = 1.0f;
-    WackelSpeed = float(random(10) + 5);
+    WackelSpeed = static_cast<float>(random(10) + 5);
 }
 
 // --------------------------------------------------------------------------------------
@@ -961,7 +961,7 @@ bool DisplayLoadInfo(const char Text[100]) {
     pMenu->UpdateProgressBar();
 
     /*for (i=0; i<24; i++)
-        pDefaultFont->DrawText(10, float(230+i*10), LoadInfoText[i], D3DCOLOR_RGBA(0, 255, 0, i*10));*/
+        pDefaultFont->DrawText(10, static_cast<float>(230+i*10), LoadInfoText[i], D3DCOLOR_RGBA(0, 255, 0, i*10));*/
 
     DirectGraphics.ShowBackBuffer();
 
@@ -1076,8 +1076,8 @@ void SummaryScreen() {
         GUI.Run();
         D3DCOLOR color = D3DCOLOR_RGBA(0, 255, 0, static_cast<int>(GUI.GetFadingAlpha()));
         pDefaultFont->DrawText(
-            float(RENDERWIDTH - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_TITLE])) / 2,
-            float(title_txt_y), TextArray[TEXT_SUMMARY_TITLE], color);
+            static_cast<float>(RENDERWIDTH - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_TITLE])) / 2,
+            static_cast<float>(title_txt_y), TextArray[TEXT_SUMMARY_TITLE], color);
 
         if (delay_ctr >= delay_can_leave) {
             std::string str_pressanykey(TextArray[TEXT_SUMMARY_PRESSFIRE]);
@@ -1088,41 +1088,41 @@ void SummaryScreen() {
             }
 
             pDefaultFont->DrawText(
-                float(RENDERWIDTH - pDefaultFont->StringLength(str_pressanykey.c_str())) / 2,
-                float(pressanykey_txt_y), str_pressanykey.c_str(), color);
+                static_cast<float>(RENDERWIDTH - pDefaultFont->StringLength(str_pressanykey.c_str())) / 2,
+                static_cast<float>(pressanykey_txt_y), str_pressanykey.c_str(), color);
         }
 
-        pGegnerGrafix[POWERBLOCK]->RenderSpriteScaled(float(sprite1_x - 16), float(sprites_y - 16), 32, 32, 1, color);
-        pGegnerGrafix[DIAMANT]->RenderSprite(float(sprite2_x - 14), float(sprites_y - 14), 0, color, false);
-        pGegnerGrafix[ONEUP]->RenderSpriteScaled(float(sprite3_x - 16), float(sprites_y - 16), 32, 32, 0, color);
-        pDefaultFont->DrawText(float(secrets_x - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_SECRETS]) / 2),
-                               float(sprites_y - pDefaultFont->GetYCharSize() / 2), TextArray[TEXT_SUMMARY_SECRETS],
+        pGegnerGrafix[POWERBLOCK]->RenderSpriteScaled(static_cast<float>(sprite1_x - 16), static_cast<float>(sprites_y - 16), 32, 32, 1, color);
+        pGegnerGrafix[DIAMANT]->RenderSprite(static_cast<float>(sprite2_x - 14), static_cast<float>(sprites_y - 14), 0, color, false);
+        pGegnerGrafix[ONEUP]->RenderSpriteScaled(static_cast<float>(sprite3_x - 16), static_cast<float>(sprites_y - 16), 32, 32, 0, color);
+        pDefaultFont->DrawText(static_cast<float>(secrets_x - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_SECRETS]) / 2),
+                               static_cast<float>(sprites_y - pDefaultFont->GetYCharSize() / 2), TextArray[TEXT_SUMMARY_SECRETS],
                                color);
 
         std::string buf;
         buf = std::to_string(Player[0].BlocksThisLevel)
             .append("/")
             .append(std::to_string(TileEngine.MaxBlocks));
-        pDefaultFont->DrawText(float(sprite1_x - pDefaultFont->StringLength(buf.c_str()) / 2), 
-                               float(stats_txt_y), buf.c_str(), color);
+        pDefaultFont->DrawText(static_cast<float>(sprite1_x - pDefaultFont->StringLength(buf.c_str()) / 2), 
+                               static_cast<float>(stats_txt_y), buf.c_str(), color);
 
         buf = std::to_string(Player[0].DiamondsThisLevel)
             .append("/")
             .append(std::to_string(TileEngine.MaxDiamonds));
-        pDefaultFont->DrawText(float(sprite2_x - pDefaultFont->StringLength(buf.c_str()) / 2),
-                               float(stats_txt_y), buf.c_str(), color);
+        pDefaultFont->DrawText(static_cast<float>(sprite2_x - pDefaultFont->StringLength(buf.c_str()) / 2),
+                               static_cast<float>(stats_txt_y), buf.c_str(), color);
 
         buf = std::to_string(Player[0].LivesThisLevel)
             .append("/")
             .append(std::to_string(TileEngine.MaxOneUps));
-        pDefaultFont->DrawText(float(sprite3_x - pDefaultFont->StringLength(buf.c_str()) / 2),
-                               float(stats_txt_y), buf.c_str(), color);
+        pDefaultFont->DrawText(static_cast<float>(sprite3_x - pDefaultFont->StringLength(buf.c_str()) / 2),
+                               static_cast<float>(stats_txt_y), buf.c_str(), color);
 
         buf = std::to_string(Player[0].SecretThisLevel)
             .append("/")
             .append(std::to_string(TileEngine.MaxSecrets));
-        pDefaultFont->DrawText(float(secrets_x - pDefaultFont->StringLength(buf.c_str()) / 2),
-                               float(stats_txt_y), buf.c_str(), color);
+        pDefaultFont->DrawText(static_cast<float>(secrets_x - pDefaultFont->StringLength(buf.c_str()) / 2),
+                               static_cast<float>(stats_txt_y), buf.c_str(), color);
 
         // Cheat freigespielt? -> Wenn alle Diamanten gefunden
         if (reveal_cheat) {
@@ -1134,8 +1134,8 @@ void SummaryScreen() {
             buf = std::string(TextArray[TEXT_SUMMARY_CHEATUNLOCK])
                 .append(": ")
                 .append(buf2);
-            pDefaultFont->DrawText(float(RENDERWIDTH / 2 - pDefaultFont->StringLength(buf.c_str(), 0) / 2),
-                                   float(cheat_txt_y), buf.c_str(), color,
+            pDefaultFont->DrawText(static_cast<float>(RENDERWIDTH / 2 - pDefaultFont->StringLength(buf.c_str(), 0) / 2),
+                                   static_cast<float>(cheat_txt_y), buf.c_str(), color,
                                    0);
         }
 
@@ -1319,7 +1319,7 @@ void RecordDemo() {
     //
     int fps;
 
-    fps = int(Timer.getFrameRate());
+    fps = static_cast<int>(Timer.getFrameRate());
     DEMOFile.write(reinterpret_cast<char *>(&fps), sizeof(fps));
 
 }  // RecordDemo
@@ -1371,7 +1371,7 @@ void ScrolltoPlayeAfterBoss() {
 
 void ShowPissText() {
     if (Player[0].BronsonCounter > 220.0f) {
-        int TextNr = int((Player[0].BronsonCounter - 220.0f) / 50.0f);
+        int TextNr = static_cast<int>((Player[0].BronsonCounter - 220.0f) / 50.0f);
 
         // DKS - Trying to get the infamous "piss text" centered on the player..
         //      I had gotten the boxes centered in the tutorial, only to find

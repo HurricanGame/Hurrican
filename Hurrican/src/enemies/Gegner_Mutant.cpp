@@ -89,7 +89,7 @@ void GegnerMutant::DoKI() {
                     // DKS - Sound was barely audible with volume of 10, pretty sure this was a typo..
                     //      I went ahead and added 3D panning effect while fixing volume problem:
                     // SoundManager.PlayWave(10, 128, 12000 + rand()%2000, SOUND_MUTANT);
-                    SoundManager.PlayWave3D(static_cast<int>(xPos) + 50, int(yPos) + 45, 12000 + random(2000),
+                    SoundManager.PlayWave3D(static_cast<int>(xPos) + 50, static_cast<int>(yPos) + 45, 12000 + random(2000),
                                             SOUND_MUTANT);
                 }
             }
@@ -125,7 +125,7 @@ void GegnerMutant::DoKI() {
             if (blocku & BLOCKWERT_WAND && ySpeed > 0.0f) {
                 // DKS - While fixing volume of jumping (look at note further above), made this 3D too:
                 // SoundManager.PlayWave(100, 128, 11025, SOUND_SCHLEIM);
-                SoundManager.PlayWave3D(static_cast<int>(xPos) + 50, int(yPos) + 45, 11025, SOUND_SCHLEIM);
+                SoundManager.PlayWave3D(static_cast<int>(xPos) + 50, static_cast<int>(yPos) + 45, 11025, SOUND_SCHLEIM);
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
             }

@@ -59,7 +59,7 @@ void GegnerDeckenturm::DoKI() {
                 AnimEnde = AnimPhase;
                 AnimStart = AnimPhase;
                 AnimCount = 0;
-                AnimSpeed = float(Value1);
+                AnimSpeed = static_cast<float>(Value1);
             }
         } break;
 
@@ -79,7 +79,7 @@ void GegnerDeckenturm::DoKI() {
             float d1, d2;
 
             // Hypothenuse
-            d1 = float(PlayerAbstand());
+            d1 = static_cast<float>(PlayerAbstand());
 
             // Ankathete
             d2 = (pAim->xpos + pAim->CollideRect.left + (pAim->CollideRect.right - pAim->CollideRect.left) / 2) -
@@ -89,7 +89,7 @@ void GegnerDeckenturm::DoKI() {
             // Winkel = (d2/d1)*180/PI;
             Winkel = RadToDeg(d2 / d1);
 
-            AnimPhase = int(16 - Winkel / 12);
+            AnimPhase = static_cast<int>(16 - Winkel / 12);
 
             // Nicht über die Seitengrenze hinausgehen
             AnimPhase = std::clamp(AnimPhase, 10, 21);
@@ -129,7 +129,7 @@ void GegnerDeckenturm::DoKI() {
 
 void GegnerDeckenturm::GegnerExplode() {
     // Explosion
-    PartikelSystem.PushPartikel(float(xPos - 10), float(yPos - 10), EXPLOSION_MEDIUM2);
+    PartikelSystem.PushPartikel(static_cast<float>(xPos - 10), static_cast<float>(yPos - 10), EXPLOSION_MEDIUM2);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

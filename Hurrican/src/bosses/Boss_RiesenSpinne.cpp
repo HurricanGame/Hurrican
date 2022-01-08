@@ -61,10 +61,10 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
 
     // Je nach "winkel" die beine anderes positionieren
     if (winkel < PI) {
-        xp = x + (float(sin(winkel + PI / 2.0f) * 18.0f));
-        yp = y + (float(cos(winkel + PI / 2.0f) * 30.0f));
+        xp = x + (static_cast<float>(sin(winkel + PI / 2.0f) * 18.0f));
+        yp = y + (static_cast<float>(cos(winkel + PI / 2.0f) * 30.0f));
     } else {
-        //		xp = x + (float(sin(winkel + PI / 2.0f) * 20.0f));  //DKS - Was already commented out in original source
+        //		xp = x + (static_cast<float>(sin(winkel + PI / 2.0f) * 20.0f));  //DKS - Was already commented out in original source
         xp = x + (winkel - PI) * 10.0f - 16;
         yp = y;
     }
@@ -473,8 +473,8 @@ void GegnerRiesenSpinne::DoKI() {
 
                 coll.left = 50;
                 coll.right = 120;
-                coll.top = 40 + int(yBody);
-                coll.bottom = 140 + int(yBody);
+                coll.top = 40 + static_cast<int>(yBody);
+                coll.bottom = 140 + static_cast<int>(yBody);
                 Wegschieben(coll, 50.0f);
             }
 
@@ -764,8 +764,8 @@ void GegnerRiesenSpinne::DoKI() {
 
     GegnerRect[RIESENSPINNE].left = 60;
     GegnerRect[RIESENSPINNE].right = 360;
-    GegnerRect[RIESENSPINNE].top = 40 + int(yBody);
-    GegnerRect[RIESENSPINNE].bottom = 140 + int(yBody);
+    GegnerRect[RIESENSPINNE].top = 40 + static_cast<int>(yBody);
+    GegnerRect[RIESENSPINNE].bottom = 140 + static_cast<int>(yBody);
 
     // Testen, ob der Spieler den Boss berührt hat
     TestDamagePlayers(4.0f SYNC);

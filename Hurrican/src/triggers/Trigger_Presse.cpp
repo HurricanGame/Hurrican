@@ -49,7 +49,7 @@ void GegnerPresse::DoKI() {
             // An der Decke angekommen ? Dann warten
             if (blocko & BLOCKWERT_WAND) {
                 Handlung = GEGNER_STEHEN;
-                AnimCount = float(Value2);
+                AnimCount = static_cast<float>(Value2);
                 ySpeed = 0.0f;
             }
 
@@ -63,7 +63,7 @@ void GegnerPresse::DoKI() {
             if (AnimCount <= 0.0f) {
                 AnimCount = 0.0f;
                 Handlung = GEGNER_LAUFEN;
-                ySpeed = float(Value2);
+                ySpeed = static_cast<float>(Value2);
 
                 if (PlayerAbstand() < 600)
                     SoundManager.PlayWave(100, 128, 11025, SOUND_PRESSE);

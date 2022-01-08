@@ -89,7 +89,7 @@ void GegnerStahlfaust::DoKI() {
             Energy = 4000;
             DamageTaken = 0.0f;
 
-            yPos += float(8.0 SYNC);           // Faust nach unten bewegen
+            yPos += static_cast<float>(8.0 SYNC);           // Faust nach unten bewegen
             if (yPos >= TileEngine.ScrolltoY)  // Weit genug unten ?
             {
                 Handlung = GEGNER_LAUFEN;
@@ -99,7 +99,7 @@ void GegnerStahlfaust::DoKI() {
 
         case GEGNER_EINFLIEGEN:  // Gegner kommt in den Screen geflogen
         {
-            yPos += float(8.0 SYNC);           // Faust nach unten bewegen
+            yPos += static_cast<float>(8.0 SYNC);           // Faust nach unten bewegen
             if (yPos >= TileEngine.ScrolltoY)  // Weit genug unten ?
             {
                 Handlung = GEGNER_LAUFEN;
@@ -176,7 +176,7 @@ void GegnerStahlfaust::DoKI() {
                 Handlung = GEGNER_LAUFEN;
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
-                yPos = float(TileEngine.ScrolltoY);
+                yPos = static_cast<float>(TileEngine.ScrolltoY);
                 xAcc = -8.0f;
             }
         } break;
@@ -233,7 +233,7 @@ void GegnerStahlfaust::DoKI() {
                 Handlung = GEGNER_EINFLIEGEN;
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
-                yPos = float(TileEngine.ScrolltoY - 250.0f);
+                yPos = static_cast<float>(TileEngine.ScrolltoY - 250.0f);
             }
         } break;
 

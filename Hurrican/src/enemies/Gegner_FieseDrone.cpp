@@ -184,9 +184,9 @@ void GegnerFieseDrone::DoKI() {
 
 void GegnerFieseDrone::GegnerExplode() {
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(float(xPos - 25 + random(40)), float(yPos - 25 + random(40)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(static_cast<float>(xPos - 25 + random(40)), static_cast<float>(yPos - 25 + random(40)), EXPLOSION_MEDIUM2);
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(float(xPos + 10 + random(30)), float(yPos + 10 + random(30)), LASERFUNKE2);
+        PartikelSystem.PushPartikel(static_cast<float>(xPos + 10 + random(30)), static_cast<float>(yPos + 10 + random(30)), LASERFUNKE2);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

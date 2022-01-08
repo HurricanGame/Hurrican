@@ -79,9 +79,9 @@ void GegnerNeuFisch::DoKI() {
 
         if (pAim->InLiquid == true) {
             if (yPos < pAim->ypos - 8 && (blocku & BLOCKWERT_WASSER))
-                ySpeed = float(random(50) + 50) / 10.0f;
+                ySpeed = static_cast<float>(random(50) + 50) / 10.0f;
             if (yPos > pAim->ypos - 8 && (blocko & BLOCKWERT_WASSER))
-                ySpeed = -float(random(50) + 50) / 10.0f;
+                ySpeed = -static_cast<float>(random(50) + 50) / 10.0f;
         }
     }
 
@@ -170,16 +170,16 @@ void GegnerNeuFisch::GegnerExplode() {
 
     for (int i = 0; i < 10; i++) {
         // Fetzen erzeugen
-        PartikelSystem.PushPartikel(float(xPos - 20 + random(90)), float(yPos - 5 + random(70)), PIRANHATEILE);
+        PartikelSystem.PushPartikel(static_cast<float>(xPos - 20 + random(90)), static_cast<float>(yPos - 5 + random(70)), PIRANHATEILE);
 
         // und noch n paar Luftblässchen dazu
-        PartikelSystem.PushPartikel(float(xPos - 10 + random(90)), float(yPos + 10 + random(70)), BUBBLE);
+        PartikelSystem.PushPartikel(static_cast<float>(xPos - 10 + random(90)), static_cast<float>(yPos + 10 + random(70)), BUBBLE);
     }
 
     // Blutwolke dazu
     //
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(float(xPos + random(60)), float(yPos + random(40)), PIRANHABLUT);
+        PartikelSystem.PushPartikel(static_cast<float>(xPos + random(60)), static_cast<float>(yPos + random(40)), PIRANHABLUT);
 
     Player[0].Score += 250;
 }

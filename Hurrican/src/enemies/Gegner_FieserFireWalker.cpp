@@ -49,8 +49,8 @@ void GegnerFieserFireWalker::DoDraw() {
         // Leuchten beim Schiessen rendern
         //
         DirectGraphics.SetAdditiveMode();
-        Projectiles.LavaFlare.RenderSprite(float(xPos - TileEngine.XOffset - 30) + 6 + BlickRichtung * 36,
-                                           float(yPos - TileEngine.YOffset - 30), 0, 0xFFFF8822);
+        Projectiles.LavaFlare.RenderSprite(static_cast<float>(xPos - TileEngine.XOffset - 30) + 6 + BlickRichtung * 36,
+                                           static_cast<float>(yPos - TileEngine.YOffset - 30), 0, 0xFFFF8822);
         DirectGraphics.SetColorKeyMode();
     }
 

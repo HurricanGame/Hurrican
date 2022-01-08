@@ -82,8 +82,8 @@ MenuClass::MenuClass() {
 
     // Sterne initialisieren
     for (auto& star: Stars) {
-        star.Count = float(random(628)) / 100.0f;
-        star.Abstand = float(random(400) + 20);
+        star.Count = static_cast<float>(random(628)) / 100.0f;
+        star.Abstand = static_cast<float>(random(400) + 20);
         star.Ebene = random(120) + 20;
     }
 
@@ -393,8 +393,8 @@ void MenuClass::ShowMenuBack() {
 
     // Sterne anzeigen
     for (const auto& star: Stars)
-        MenuStar.RenderSpriteRotated(320 - float(sin(star.Count) * star.Abstand),
-                                     240 + float(cos(star.Count) * star.Abstand), star.Count,
+        MenuStar.RenderSpriteRotated(320 - static_cast<float>(sin(star.Count) * star.Abstand),
+                                     240 + static_cast<float>(cos(star.Count) * star.Abstand), star.Count,
                                      D3DCOLOR_RGBA(255, 255, 255, star.Ebene));
 
     DirectGraphics.SetColorKeyMode();
@@ -409,7 +409,7 @@ void MenuClass::ShowMenu() {
     D3DCOLOR menucolor2;
     D3DCOLOR menucolor3;
 
-    int alpha = int(Rotation);
+    int alpha = static_cast<int>(Rotation);
     menucolor = D3DCOLOR_RGBA(255, 255, 255, alpha);
     menucolor2 = D3DCOLOR_RGBA(255, 255, 255, alpha / 2);
     menucolor3 = D3DCOLOR_RGBA(255, 255, 255, alpha / 5);
@@ -428,7 +428,7 @@ void MenuClass::ShowMenu() {
     if (CommandLineParams.LowRes) {
         // Under Low-res, don't display controls message at bottom and shift other text up a bit
         pDefaultFont->DrawText(10.0f, 458, "www.poke53280.de", menucolor, 0);
-        pDefaultFont->DrawText(float(640 - pDefaultFont->StringLength("www.hurrican-game.de", 0) - 10), 458,
+        pDefaultFont->DrawText(static_cast<float>(640 - pDefaultFont->StringLength("www.hurrican-game.de", 0) - 10), 458,
                                "www.hurrican-game.de", menucolor, 0);
 #if defined(GCW)
         // Draw port credit text for Pickle & Senquack
@@ -441,7 +441,7 @@ void MenuClass::ShowMenu() {
 
             pDefaultFont->DrawTextCenterAlign(320.0f, 462, TextArray[TEXT_MENUE_ANLEITUNG], menucolor, 0);
         pDefaultFont->DrawText(10.0f, 462, "www.poke53280.de", menucolor, 0);
-        pDefaultFont->DrawText(float(640 - pDefaultFont->StringLength("www.hurrican-game.de", 0) - 10), 462,
+        pDefaultFont->DrawText(static_cast<float>(640 - pDefaultFont->StringLength("www.hurrican-game.de", 0) - 10), 462,
                                "www.hurrican-game.de", menucolor, 0);
     }
 
@@ -509,9 +509,9 @@ void MenuClass::ShowMenu() {
                 float d2 = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT_SOUND + i], 2));
 
                 if (i == 0)
-                    LoadingBar.SetRect(0, 0, int(SoundManager.g_sound_vol / 100.0f * 318.0f), 19);
+                    LoadingBar.SetRect(0, 0, static_cast<int>(SoundManager.g_sound_vol / 100.0f * 318.0f), 19);
                 else
-                    LoadingBar.SetRect(0, 0, int(SoundManager.g_music_vol / 100.0f * 318.0f), 19);
+                    LoadingBar.SetRect(0, 0, static_cast<int>(SoundManager.g_music_vol / 100.0f * 318.0f), 19);
 
                 if (i == AktuellerPunkt) {
                     pMenuFont->DrawText(xpos + OFFSET - 20 - d2, ypos + OFFSET - OFFSET2 + (i + 2) * 35,
@@ -907,17 +907,17 @@ void MenuClass::ShowMenu() {
                 Color = HighscoreColors[i + BlinkOffset];
 
                 //_itoa_s(i+1, Buffer, 10);
-                // pMenuFont->DrawText(xpos-90, ypos+float(105+i*26), Buffer, Color, 2);
+                // pMenuFont->DrawText(xpos-90, ypos+static_cast<float>(105+i*26), Buffer, Color, 2);
 
-                pMenuFont->DrawText(xpos - 120, ypos + float(105 + i * 26), Highscores[i].Name, Color, 2);
+                pMenuFont->DrawText(xpos - 120, ypos + static_cast<float>(105 + i * 26), Highscores[i].Name, Color, 2);
 
                 std::string strbuf = std::to_string(Highscores[i].Score);
-                pMenuFont->DrawTextRightAlign(xpos + 270, ypos + float(105 + i * 26), strbuf.c_str(), Color, 2);
+                pMenuFont->DrawTextRightAlign(xpos + 270, ypos + static_cast<float>(105 + i * 26), strbuf.c_str(), Color, 2);
 
                 strbuf = std::to_string(Highscores[i].Stage);
-                pMenuFont->DrawTextCenterAlign(xpos + 350, ypos + float(105 + i * 26), strbuf.c_str(), Color, 2);
+                pMenuFont->DrawTextCenterAlign(xpos + 350, ypos + static_cast<float>(105 + i * 26), strbuf.c_str(), Color, 2);
 
-                Skills.RenderSpriteScaled(xpos + 422, ypos + float(105 + i * 26), 30, 30, Highscores[i].Skill,
+                Skills.RenderSpriteScaled(xpos + 422, ypos + static_cast<float>(105 + i * 26), 30, 30, Highscores[i].Skill,
                                           0xFFFFFFFF);
             }
 
@@ -963,7 +963,7 @@ void MenuClass::ShowMenu() {
             for (i = 0; i < num_lines; i++) {
                 D3DCOLOR Color;
 
-                int alpha2 = int(i * yoff_inc - CreditsPosition);
+                int alpha2 = static_cast<int>(i * yoff_inc - CreditsPosition);
 
                 if (alpha2 > 360) {
                     alpha2 = 255 - (alpha2 - 360) * 4;
@@ -982,7 +982,7 @@ void MenuClass::ShowMenu() {
 
                 Color = D3DCOLOR_RGBA(255, 255, 255, alpha2);
 
-                pDefaultFont->DrawTextCenterAlign(320.0f, float(int(i * yoff_inc - CreditsPosition)),
+                pDefaultFont->DrawTextCenterAlign(320.0f, static_cast<float>(static_cast<int>(i * yoff_inc - CreditsPosition)),
                                                   credits_displayed[CreditsOffset + i], Color, 0);
             }
 
@@ -1476,7 +1476,7 @@ void MenuClass::DoMenu() {
 
             if (pressed) {
                 if (AktuellerPunkt == 0) {
-                    SoundManager.g_sound_vol -= float(5.0f SYNC);
+                    SoundManager.g_sound_vol -= static_cast<float>(5.0f SYNC);
                     if (SoundManager.g_sound_vol < 0.0f)
                         SoundManager.g_sound_vol = 0.0f;
                 }
@@ -2622,12 +2622,12 @@ void MenuClass::ShowLanguageInfo() {
     if (ShowLanguageInfoCounter < 0.0f)
         return;
 
-    a1 = int(ShowLanguageInfoCounter);
+    a1 = static_cast<int>(ShowLanguageInfoCounter);
 
     if (a1 > 255)
         a1 = 255;
 
-    a2 = int(a1 / 2);
+    a2 = static_cast<int>(a1 / 2);
 
     // Determine size and location of background rectangle:
     unsigned int longest_line = 0;
@@ -2646,8 +2646,8 @@ void MenuClass::ShowLanguageInfo() {
     RenderRect(rect_x - 2, rect_y - 2, rect_w + 4, rect_h + 4, D3DCOLOR_RGBA(64, 128, 255, a2));
     RenderRect(rect_x - 1, rect_y - 1, rect_w + 2, rect_h + 2, D3DCOLOR_RGBA(0, 0, 64, a2));
     RenderRect(rect_x, rect_y, rect_w, rect_h, D3DCOLOR_RGBA(0, 0, 64, a2));
-    pDefaultFont->DrawText(float(320 - pDefaultFont->StringLength(TextArray[TEXT_BENUTZTES_FILE]) / 2),
-                           float(rect_y + border), TextArray[TEXT_BENUTZTES_FILE], D3DCOLOR_RGBA(255, 255, 255, a1));
+    pDefaultFont->DrawText(static_cast<float>(320 - pDefaultFont->StringLength(TextArray[TEXT_BENUTZTES_FILE]) / 2),
+                           static_cast<float>(rect_y + border), TextArray[TEXT_BENUTZTES_FILE], D3DCOLOR_RGBA(255, 255, 255, a1));
 
     for (int i = 0; i < 9; i++) {
         int xoff = 320 - (strlen(TextArray[i]) - 1) * xoff_inc / 2;
@@ -2655,7 +2655,7 @@ void MenuClass::ShowLanguageInfo() {
             char c[2];
             c[0] = TextArray[i][j];
             c[1] = '\0';
-            pDefaultFont->DrawText(float(xoff), float(rect_y + border + ((2 + i) * yoff_inc)), c,
+            pDefaultFont->DrawText(static_cast<float>(xoff), static_cast<float>(rect_y + border + ((2 + i) * yoff_inc)), c,
                                    D3DCOLOR_RGBA(255, 255, 255, a1));
             xoff += xoff_inc;
         }
@@ -2732,7 +2732,7 @@ void MenuClass::StartProgressBar(int items) {
 void MenuClass::UpdateProgressBar() {
     LoadingScreen.RenderSprite((640 - 360) / 2, (480 - 60) / 2 + 5, 0x88FFFFFF);
 
-    LoadingBar.SetRect(0, 0, int(LoadingProgress), 19);
+    LoadingBar.SetRect(0, 0, static_cast<int>(LoadingProgress), 19);
     LoadingBar.RenderSprite((640 - 318) / 2, (480 - 19) / 2 + 5, 0x88FFFFFF);
 
     LoadingItemsLoaded++;

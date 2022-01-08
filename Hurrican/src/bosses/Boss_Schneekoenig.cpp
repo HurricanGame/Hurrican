@@ -57,7 +57,7 @@ void GegnerSchneeKoenig::DoDraw() {
 
     Color = 0xFFFFFFFF;
 
-    // int	Wert = 255-(int(DamageTaken));  // PICKLE not used
+    // int	Wert = 255-(static_cast<int>(DamageTaken));  // PICKLE not used
 
     if (Handlung == GEGNER_AUSFAHREN || WackelCount > 0.0f) {
         xoff += 15.0f SYNC;

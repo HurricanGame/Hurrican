@@ -81,8 +81,8 @@ void GegnerFloating3::DoKI() {
                     // Plattform dopst kurz runter
                     //
                     if (ySpeed == 0.0f) {
-                        Value2 = int(yPos);
-                        ySpeed = float(Player[p].yspeed) / 5;
+                        Value2 = static_cast<int>(yPos);
+                        ySpeed = static_cast<float>(Player[p].yspeed) / 5;
                         yAcc = -3.0f;
                     }
                 }
@@ -123,10 +123,10 @@ void GegnerFloating3::DoKI() {
 
     // Plattform wieder an Ausgangspos ?
     //
-    if (ySpeed < 0.0f && int(yPos) <= Value2) {
+    if (ySpeed < 0.0f && static_cast<int>(yPos) <= Value2) {
         ySpeed = 0.0f;
         yAcc = 0.0f;
-        yPos = float(Value2);
+        yPos = static_cast<float>(Value2);
     }
 
     // Counter für Partikel runterzählen

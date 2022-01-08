@@ -21,7 +21,7 @@ GegnerWandKannone::GegnerWandKannone(int Wert1, int Wert2, bool Light) {
     AnimStart = 0;
     AnimEnde = 0;
     AnimSpeed = 0.0f;
-    AnimCount = float(Value1);
+    AnimCount = static_cast<float>(Value1);
     ChangeLight = Light;
     Destroyable = true;
 }

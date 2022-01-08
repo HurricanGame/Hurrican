@@ -33,13 +33,13 @@ GegnerPowerBlock::GegnerPowerBlock(int Wert1, int Wert2, bool Light) {
     // Je mach Skill weniger Extras
     //
     if (Skill == SKILL_EASY)
-        Value1 = int(Value1 * 1.0f);
+        Value1 = static_cast<int>(Value1 * 1.0f);
     if (Skill == SKILL_MEDIUM)
-        Value1 = int(Value1 * 0.7f);
+        Value1 = static_cast<int>(Value1 * 0.7f);
     if (Skill == SKILL_HARD)
-        Value1 = int(Value1 * 0.5f);
+        Value1 = static_cast<int>(Value1 * 0.5f);
     if (Skill == SKILL_HURRICAN)
-        Value1 = int(Value1 * 0.3f);
+        Value1 = static_cast<int>(Value1 * 0.3f);
 #else
     // NOTE why has this been hardcoded?
     Value1 = 4;
@@ -69,7 +69,7 @@ void GegnerPowerBlock::DoDraw() {
 
     // nochmal leuchtend drüber (ausfadend)
     if (AnimPhase == 2) {
-        D3DCOLOR col = D3DCOLOR_RGBA(255, 255, 255, int(DamageTaken));
+        D3DCOLOR col = D3DCOLOR_RGBA(255, 255, 255, static_cast<int>(DamageTaken));
         pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
                                                static_cast<float>(yPos - TileEngine.YOffset),
                                                AnimPhase + TileEngine.DateiAppendix.UsedPowerblock * 2, col, false);
@@ -82,7 +82,7 @@ void GegnerPowerBlock::DoDraw() {
 
 void GegnerPowerBlock::DoKI() {
     if (AnimPhase == 0)
-        Value2 = int(yPos);  // yPos sichern
+        Value2 = static_cast<int>(yPos);  // yPos sichern
 
     if (AnimPhase > 0)
         PlattformTest(GegnerRect[GegnerArt]);
@@ -129,7 +129,7 @@ void GegnerPowerBlock::DoKI() {
     if (ySpeed != 0.0f) {
         if (yPos > Value2)  // Alte Position erreicht ?
         {
-            yPos = float(Value2);
+            yPos = static_cast<float>(Value2);
             ySpeed = 0.0f;
             yAcc = 0.0f;
             Handlung = GEGNER_STEHEN;

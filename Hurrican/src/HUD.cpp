@@ -86,7 +86,7 @@ void HUDClass::ShowHUD() {
 
     HUDGfx.RenderSprite(xpos, ypos, 0, Color);
 
-    BlitzOff = int(BLITZ_STAT_HEIGHT - Player[0].CurrentWeaponLevel[3] * BLITZ_STAT_HEIGHT / BLITZ_STAT_HEIGHT);
+    BlitzOff = static_cast<int>(BLITZ_STAT_HEIGHT - Player[0].CurrentWeaponLevel[3] * BLITZ_STAT_HEIGHT / BLITZ_STAT_HEIGHT);
 
     // DKS - Added support for font scaling
     int scale_factor = pDefaultFont->GetScaleFactor();
@@ -185,7 +185,7 @@ void HUDClass::ShowHUD() {
         // AutoFire anzeigen, wenn vorhanden
         if (Player[p].AutoFireExtra > 0.0f) {
             HUDAutoFire.RenderSprite(xpos + 263 + xoff, ypos + 61, 0, Color);
-            std::string buf = std::to_string(int(Player[p].AutoFireExtra));
+            std::string buf = std::to_string(static_cast<int>(Player[p].AutoFireExtra));
 
             if (Player[p].AutoFireExtra < 10) {
                 pDefaultFont->DrawText(xpos + 270 + xoff, ypos + 86, buf.c_str(), D3DCOLOR_RGBA(0, 0, 0, Alpha));
@@ -207,7 +207,7 @@ void HUDClass::ShowHUD() {
                 off2 += 37;
 
             HUDSuperShot.RenderSprite(xpos + 264 + xoff, ypos + 61 + off2, 0, Color);
-            std::string buf = std::to_string(int(Player[p].RiesenShotExtra));
+            std::string buf = std::to_string(static_cast<int>(Player[p].RiesenShotExtra));
 
             if (Player[p].RiesenShotExtra < 10) {
                 pDefaultFont->DrawText(xpos + 270 + xoff, ypos + 87 + off2, buf.c_str(), D3DCOLOR_RGBA(0, 0, 0, Alpha));
@@ -412,7 +412,7 @@ void HUDClass::ShowHUD() {
     }
 
     // Verbleibende Zeit anzeigen
-    buf = std::to_string(int(TileEngine.Timelimit));
+    buf = std::to_string(static_cast<int>(TileEngine.Timelimit));
 
     for (std::size_t i = 0; i < buf.length(); i++) {
         char z = buf[i] - 48;
@@ -450,7 +450,7 @@ void HUDClass::ShowHUD() {
 void HUDClass::RenderBossHUD() {
     // Boss HUD anzeigen
     if (BossHUDActive > 0.0f) {
-        int a = int(BossHUDActive * 0.75);
+        int a = static_cast<int>(BossHUDActive * 0.75);
         D3DCOLOR Color = D3DCOLOR_RGBA(red, green, blue, a);
 
         BossHUDActive -= 20.0f SYNC;  // Ausfaden lassen
@@ -470,10 +470,10 @@ void HUDClass::ShowBossHUD(float max, float act) {
     BossHUDActive += 40.0f SYNC;
 
     if (BossHUDActive > Alpha)
-        BossHUDActive = float(Alpha);
+        BossHUDActive = static_cast<float>(Alpha);
 
     // Balken länge berechnen
-    int off = int((act - 100) * 113 / (max - 100));
+    int off = static_cast<int>((act - 100) * 113 / (max - 100));
 
     if (off < 0)
         off = 0;
@@ -539,7 +539,7 @@ void HUDClass::RenderArrow() {
         alpha = std::clamp(alpha, 0.0f, 255.0f);
     }
 
-    D3DCOLOR Color = D3DCOLOR_RGBA(0, 255, 0, int(alpha));
+    D3DCOLOR Color = D3DCOLOR_RGBA(0, 255, 0, static_cast<int>(alpha));
 
     DirectGraphics.SetColorKeyMode();
     Arrow.RenderSprite(ArrowX, ArrowY, 0, Color);

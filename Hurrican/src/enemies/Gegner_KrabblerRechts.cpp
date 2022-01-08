@@ -18,9 +18,9 @@ GegnerKrabblerRechts::GegnerKrabblerRechts(int Wert1, int Wert2, bool Light) {
     Energy = 75;
     Value1 = Wert1;
     Value2 = Wert2;
-    ySpeed = float(Value2);
+    ySpeed = static_cast<float>(Value2);
     BlickRichtung = RECHTS;
-    ShotDelay = float(Value1);
+    ShotDelay = static_cast<float>(Value1);
     AnimSpeed = 0.5f;
     AnimStart = 0;
     AnimEnde = 9;
@@ -39,10 +39,10 @@ void GegnerKrabblerRechts::DoKI() {
 
     // An der Decke bzw dem Boden
     if (blocko & BLOCKWERT_WAND || blocko & BLOCKWERT_GEGNERWAND)
-        ySpeed = float(Value2);
+        ySpeed = static_cast<float>(Value2);
 
     if (blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_GEGNERWAND)
-        ySpeed = float(-Value2);
+        ySpeed = static_cast<float>(-Value2);
 
     // Schuss Delay verzögern
     ShotDelay -= 1.0f SYNC;
@@ -53,11 +53,11 @@ void GegnerKrabblerRechts::DoKI() {
         {
             // Schiessen ?
             if (ShotDelay <= 0.0f) {
-                ShotDelay = float(Value1);
+                ShotDelay = static_cast<float>(Value1);
                 Handlung = GEGNER_SCHIESSEN;
                 Projectiles.PushProjectile(xPos - 24, yPos + 23, KRABBLERLASER3);
                 PartikelSystem.PushPartikel(xPos - 12, yPos + 3, LASERFLAME);
-                SoundManager.PlayWave3D(int(xPos + 25), int(yPos + 37), 44100, SOUND_LASERSHOT);
+                SoundManager.PlayWave3D(static_cast<int>(xPos + 25), static_cast<int>(yPos + 37), 44100, SOUND_LASERSHOT);
                 AnimPhase = 10;
                 AnimEnde = 14;
                 AnimStart = 0;
@@ -87,7 +87,7 @@ void GegnerKrabblerRechts::DoKI() {
 void GegnerKrabblerRechts::GegnerExplode() {
     // Explosion
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(float(xPos - 15) + random(20), float(yPos - 15) + random(40), EXPLOSION_MEDIUM3);
+        PartikelSystem.PushPartikel(static_cast<float>(xPos - 15) + random(20), static_cast<float>(yPos - 15) + random(40), EXPLOSION_MEDIUM3);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

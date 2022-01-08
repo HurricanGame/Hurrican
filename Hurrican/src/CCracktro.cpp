@@ -325,7 +325,7 @@ void CCracktro::Load() {
     // farbige Balken
     for (int i = 0; i < 320; i++)
         RenderRect(0, static_cast<float>(i * 2), 640, static_cast<float>(i * 2),
-                   ScrollCol[rand() % (int(sizeof(ScrollCol) / sizeof(D3DCOLOR)))]);
+                   ScrollCol[rand() % (static_cast<int>(sizeof(ScrollCol) / sizeof(D3DCOLOR)))]);
 
     count -= 1.0f SYNC;
 

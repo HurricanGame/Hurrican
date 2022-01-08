@@ -64,7 +64,7 @@ void GegnerFireSpider::DoKI() {
     // float w, winkel;
 
     // DKS - converted to float, used new macros:
-    // w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+    // w = static_cast<float>(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
     float w = RadToDeg(atanf(dx / dy));
     float winkel = w;
 
@@ -114,7 +114,7 @@ void GegnerFireSpider::DoKI() {
             // Dann schiessen
             shotdelay -= 1.0f SYNC;
 
-            if (shotdelay < 0.0f && abs(int(winkel - rot)) < 10 && PlayerAbstand() < 200) {
+            if (shotdelay < 0.0f && abs(static_cast<int>(winkel - rot)) < 10 && PlayerAbstand() < 200) {
                 shotdelay = 0.3f;
                 Handlung = GEGNER_SCHIESSEN;
                 AnimPhase = 11;
@@ -155,12 +155,12 @@ void GegnerFireSpider::DoKI() {
 
             // Spieler nicht mehr im Schussfeld oder Schuss dauert schon eine Weile ?
             //
-            if (abs(int(winkel - rot)) > 10 || PlayerAbstand() > 350 || AnimCount > 20.0f) {
+            if (abs(static_cast<int>(winkel - rot)) > 10 || PlayerAbstand() > 350 || AnimCount > 20.0f) {
                 Handlung = GEGNER_LAUFEN;
                 AnimPhase = 0;
                 AnimStart = 0;
                 AnimEnde = 10;
-                shotdelay = float(random(20)) + 20.0f;
+                shotdelay = static_cast<float>(random(20)) + 20.0f;
             }
         } break;
 

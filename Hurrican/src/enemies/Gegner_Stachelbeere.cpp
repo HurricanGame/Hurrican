@@ -251,10 +251,10 @@ void GegnerStachelbeere::DoKI() {
 
 void GegnerStachelbeere::GegnerExplode() {
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(float(xPos - 30 + random(60)), float(yPos - 30 + random(60)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(static_cast<float>(xPos - 30 + random(60)), static_cast<float>(yPos - 30 + random(60)), EXPLOSION_MEDIUM2);
 
     // Explosion
-    PartikelSystem.PushPartikel(float(xPos - 15), float(yPos - 15), EXPLOSION_BIG);
+    PartikelSystem.PushPartikel(static_cast<float>(xPos - 15), static_cast<float>(yPos - 15), EXPLOSION_BIG);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION4);  // Sound ausgeben
 

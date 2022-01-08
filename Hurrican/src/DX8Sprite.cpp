@@ -687,7 +687,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
         Winkel += 360;
 
     // Rotationsmatrix
-    matRot = glm::rotate(glm::mat4x4(1.0f), float(PI * Winkel / 180), glm::vec3(0.0f, 0.0f, 1.0f));
+    matRot = glm::rotate(glm::mat4x4(1.0f), static_cast<float>(PI * Winkel / 180), glm::vec3(0.0f, 0.0f, 1.0f));
 
     // Transformation zum Ursprung
     D3DXMatrixTranslation(&matTrans, -x - (itsRect.right - itsRect.left) / 2.0f,
@@ -799,7 +799,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
         Winkel += 360;
 
     // Rotationsmatrix
-    matRot = glm::rotate(glm::mat4x4(1.0f), float(PI * Winkel / 180), glm::vec3(0.0f, 0.0f, 1.0f));
+    matRot = glm::rotate(glm::mat4x4(1.0f), static_cast<float>(PI * Winkel / 180), glm::vec3(0.0f, 0.0f, 1.0f));
 
     // Transformation zum Ursprung
     D3DXMatrixTranslation(&matTrans, -x - (itsRect.right - itsRect.left) / 2.0f,
@@ -908,7 +908,7 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
         Winkel += 360;
 
     // Rotationsmatrix
-    matRot = glm::rotate(glm::mat4x4(1.0f), float(PI * Winkel / 180), glm::vec3(0.0f, 0.0f, 1.0f));
+    matRot = glm::rotate(glm::mat4x4(1.0f), static_cast<float>(PI * Winkel / 180), glm::vec3(0.0f, 0.0f, 1.0f));
 
     // Transformation zum Ursprung
     D3DXMatrixTranslation(&matTrans, -x - (itsRect.right - itsRect.left) / 2.0f - offx,
@@ -1000,7 +1000,7 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x,
         Winkel += 360;
 
     // Rotationsmatrix
-    matRot = glm::rotate(glm::mat4x4(1.0f), float(PI * Winkel / 180), glm::vec3(0.0f, 0.0f, 1.0f));
+    matRot = glm::rotate(glm::mat4x4(1.0f), static_cast<float>(PI * Winkel / 180), glm::vec3(0.0f, 0.0f, 1.0f));
 
     // Transformation zum Ursprung
     D3DXMatrixTranslation(&matTrans, -x - (width) / 2, -y - (height) / 2, 0.0f);

@@ -41,8 +41,8 @@ GegnerMade::GegnerMade(int Wert1, int Wert2, bool Light) {
     else if (Value1 == 99) {
         AnimPhase = random(20);
         yAcc = 4.0f;
-        xSpeed = float((random(200) - 100) / 12);
-        ySpeed = -float(((random(40)) / 2.0f) + 12.0f);
+        xSpeed = static_cast<float>((random(200) - 100) / 12);
+        ySpeed = -static_cast<float>(((random(40)) / 2.0f) + 12.0f);
         Handlung = GEGNER_FALLEN;
     }
 }
@@ -130,5 +130,5 @@ void GegnerMade::GegnerExplode() {
     SoundManager.PlayWave(100, random(200) + 20, 8000 + random(4000), SOUND_MADE);
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(float(xPos - 10 + random(24)), float(yPos - 12 + random(22)), MADEBLUT);
+        PartikelSystem.PushPartikel(static_cast<float>(xPos - 10 + random(24)), static_cast<float>(yPos - 12 + random(22)), MADEBLUT);
 }

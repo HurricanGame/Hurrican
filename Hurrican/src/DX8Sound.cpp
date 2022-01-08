@@ -153,7 +153,7 @@ void SoundManagerClass::Update3DChannel(int ch) {
 
     Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
-    vol = int(100 - float(Abstand / 6.0f));
+    vol = static_cast<int>(100 - static_cast<float>(Abstand / 6.0f));
     if (vol < 0)
         vol = 0;
     else {
@@ -720,7 +720,7 @@ int SoundManagerClass::PlayWave3D_SDL(int x, int y, int nr) {
     // DKS - converted to float:
     Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
-    vol = int(100 - float(Abstand / 6.0f));
+    vol = static_cast<int>(100 - static_cast<float>(Abstand / 6.0f));
     if (vol < 0)
         vol = 0;
     else {
@@ -779,7 +779,7 @@ void SoundManagerClass::UnpauseSounds() {
     for (int i = 0; i < num_channels; ++i) {
         if (channels[i].paused) {
             // DKS - In case sound levels were adjusted after this channel had been paused:
-            SOUND_SetVolume(i, int(g_sound_vol * channels[i].vol * (2.55f / 100.0f)));
+            SOUND_SetVolume(i, static_cast<int>(g_sound_vol * channels[i].vol * (2.55f / 100.0f)));
             SOUND_SetPaused(i, false);
             channels[i].paused = false;
         }
@@ -837,7 +837,7 @@ void SoundManagerClass::StopChannel(int ch) {
 // DKS - Added:
 void SoundManagerClass::SetChannelVolume(int ch, float new_vol) {
     channels[ch].vol = new_vol;
-    SOUND_SetVolume(ch, int(g_sound_vol * new_vol * (2.55f / 100.0f)));
+    SOUND_SetVolume(ch, static_cast<int>(g_sound_vol * new_vol * (2.55f / 100.0f)));
 }
 
 // DKS - Added:

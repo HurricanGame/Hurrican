@@ -91,11 +91,11 @@ void GegnerGolem::DoDraw() {
     float wackel = 0.0f;
 
     if (Handlung == GEGNER_EXPLODIEREN)
-        wackel = static_cast<float>(int(ShotDelay) % 2);
+        wackel = static_cast<float>(static_cast<int>(ShotDelay) % 2);
 
     DirectGraphics.SetFilterMode(true);
 
-    int Wert = 255 - (int(DamageTaken));
+    int Wert = 255 - (static_cast<int>(DamageTaken));
     Color = D3DCOLOR_RGBA(255, Wert, Wert, 255);
 
     // Wert /= 2;
@@ -298,7 +298,7 @@ void GegnerGolem::DoKI() {
         case GEGNER_EINFLIEGEN: {
             Energy = 8000;
             DamageTaken = 0.0f;
-            xPos -= float(10.0 SYNC);  // Faust nach unten bewegen
+            xPos -= static_cast<float>(10.0 SYNC);  // Faust nach unten bewegen
             Wackel += WackelDir * 0.025f SYNC;
             rotarm1 -= WackelDir * 0.2f SYNC;
             rotarm2 += WackelDir * 0.2f SYNC;
@@ -312,7 +312,7 @@ void GegnerGolem::DoKI() {
 
         // Gegner läuft am Anfang langsam nach links
         case GEGNER_LAUFEN: {
-            xPos -= float(10.0 SYNC);
+            xPos -= static_cast<float>(10.0 SYNC);
             Wackel += WackelDir * 0.025f SYNC;
             rotarm1 -= WackelDir * 0.2f SYNC;
             rotarm2 += WackelDir * 0.2f SYNC;
@@ -326,7 +326,7 @@ void GegnerGolem::DoKI() {
 
         // Gegner läuft nach rechts
         case GEGNER_LAUFEN2: {
-            xPos += float(10.0 SYNC);
+            xPos += static_cast<float>(10.0 SYNC);
             Wackel += WackelDir * 0.025f SYNC;
             rotarm1 -= WackelDir * 0.2f SYNC;
             rotarm2 += WackelDir * 0.2f SYNC;
@@ -341,7 +341,7 @@ void GegnerGolem::DoKI() {
 
         // Gegner läuft ganz nach links zur mauer
         case GEGNER_LAUFEN3: {
-            xPos -= float(10.0 SYNC);
+            xPos -= static_cast<float>(10.0 SYNC);
             Wackel += WackelDir * 0.025f SYNC;
             rotarm1 -= WackelDir * 0.2f SYNC;
             rotarm2 += WackelDir * 0.2f SYNC;
@@ -358,7 +358,7 @@ void GegnerGolem::DoKI() {
 
         // von links zur mitte laufen
         case GEGNER_LAUFEN4: {
-            xPos += float(10.0 SYNC);
+            xPos += static_cast<float>(10.0 SYNC);
             Wackel += WackelDir * 0.025f SYNC;
             rotarm1 -= WackelDir * 0.2f SYNC;
             rotarm2 += WackelDir * 0.2f SYNC;
@@ -448,7 +448,7 @@ void GegnerGolem::DoKI() {
                     else {
                         Handlung = GEGNER_BOMBARDIEREN;
                         state2 = ARM_HEBEN;
-                        count = float(random(3) + 2);
+                        count = static_cast<float>(random(3) + 2);
                     }
                 }
 

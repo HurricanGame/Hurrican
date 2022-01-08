@@ -36,7 +36,7 @@ void GegnerSchleuseH::DoKI() {
         //
         case GEGNER_OEFFNEN: {
             Handlung = GEGNER_LAUFEN;
-            Value1 = int(xPos);
+            Value1 = static_cast<int>(xPos);
             xAcc = -0.5f;
             // DKS - Added function WaveIsPlaying() to SoundManagerClass:
             if (!SoundManager.WaveIsPlaying(SOUND_DOOR))
@@ -52,7 +52,7 @@ void GegnerSchleuseH::DoKI() {
             }
 
             // Ganz geöffnet?
-            if (xPos < float(Value1) - 201.0f) {
+            if (xPos < static_cast<float>(Value1) - 201.0f) {
                 xSpeed = 0.0f;
                 xAcc = 0.0f;
                 Handlung = GEGNER_STEHEN;

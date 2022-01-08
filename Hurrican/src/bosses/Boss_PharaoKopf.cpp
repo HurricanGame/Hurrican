@@ -139,17 +139,17 @@ void GegnerPharaoKopf::DoKI() {
             Energy = 6000;
             DamageTaken = 0.0f;
 
-            yPos -= float(4.5 SYNC);  // Pharao erscheint langsam
+            yPos -= static_cast<float>(4.5 SYNC);  // Pharao erscheint langsam
 
             AnimCount -= 1.0f SYNC;
 
             // Boden brodeln lassen wo er auftaucht
             if (AnimCount <= 0.0f) {
-                PartikelSystem.PushPartikel(xPos + float(random(230)) - 30, float(Value2 + 400 + random(12)),
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(230)) - 30, static_cast<float>(Value2 + 400 + random(12)),
                                             SMOKEBIG);
-                PartikelSystem.PushPartikel(xPos + float(random(230)) - 12, float(Value2 + 405 + random(12)),
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(230)) - 12, static_cast<float>(Value2 + 405 + random(12)),
                                             ROCKSPLITTER);
-                PartikelSystem.PushPartikel(xPos + float(random(230)) - 12, float(Value2 + 410 + random(12)),
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(230)) - 12, static_cast<float>(Value2 + 410 + random(12)),
                                             ROCKSPLITTERSMALL);
 
                 AnimCount += 0.2f;
@@ -401,7 +401,7 @@ void GegnerPharaoKopf::DoKI() {
         {
             if (Unten() && ySpeed > 0.0f) {
                 // Stein erscheinen lassen
-                Gegner.PushGegner(pAim->xpos, float(Value2), FALLINGROCK, 0, 0, false);
+                Gegner.PushGegner(pAim->xpos, static_cast<float>(Value2), FALLINGROCK, 0, 0, false);
 
                 // Partikel unter Boss
                 for (int i = 0; i < 20; i++) {

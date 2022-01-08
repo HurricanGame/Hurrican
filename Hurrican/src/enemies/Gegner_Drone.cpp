@@ -131,7 +131,7 @@ void GegnerDrone::DoKI() {
 
                 ShotDelay = 20.0f;
 
-                SoundManager.PlayWave3D(int(xPos), int(yPos), 12000, SOUND_DRONE);
+                SoundManager.PlayWave3D(static_cast<int>(xPos), static_cast<int>(yPos), 12000, SOUND_DRONE);
 
                 PartikelSystem.PushPartikel(xPos + 33, yPos + 60, BULLET, &Player[0]);
 
@@ -165,7 +165,7 @@ void GegnerDrone::DoKI() {
             // Schuss abgeben
             //
             if (ShotDelay <= 0.0f && PlayerAbstand() < 600) {
-                SoundManager.PlayWave3D(int(xPos), int(yPos), 12000, SOUND_DRONE);
+                SoundManager.PlayWave3D(static_cast<int>(xPos), static_cast<int>(yPos), 12000, SOUND_DRONE);
                 ShotDelay = 20.0f;
                 ShotCount--;
 
@@ -179,7 +179,7 @@ void GegnerDrone::DoKI() {
 
             // Flamme anzeigen
             //
-            if (int(ShotDelay) >= 12) {
+            if (static_cast<int>(ShotDelay) >= 12) {
                 DirectGraphics.SetAdditiveMode();
 
                 int anim;

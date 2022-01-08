@@ -87,7 +87,7 @@ void ConsoleClass::ShowConsole() {
     int console_lines = MAX_LINES / pDefaultFont->GetScaleFactor();  // DKS - ditto
     int line_spacing = 12 * scale_factor;
     // a = int (its_Alpha * 8 / 9);  //DKS - This line was commented out in original source
-    a = int(its_Alpha);
+    a = static_cast<int>(its_Alpha);
 
     yoffset = -255.0f + its_Alpha - 1.0f;
 
@@ -100,7 +100,7 @@ void ConsoleClass::ShowConsole() {
     //{
     //    a = int (its_Alpha * 8 / 9);
     //    Color = D3DCOLOR_RGBA(128, 128, 255, a);
-    //    pDefaultFont->DrawText(26, yoffset + float(10 + line_pos * line_spacing), Text[i], Color);
+    //    pDefaultFont->DrawText(26, yoffset + static_cast<float>(10 + line_pos * line_spacing), Text[i], Color);
     //}
 
     // DKS-Draw array of lines of text, but only draw the lines that will fit on the screen
@@ -111,7 +111,7 @@ void ConsoleClass::ShowConsole() {
         int array_off = MAX_LINES - console_lines + i;
         // DKS - Do a bounds check here just to be extra safe:
         if (array_off >= 0 && array_off < MAX_LINES)
-            pDefaultFont->DrawText(26, yoffset + float(10 + i * line_spacing), Text[array_off], Color);
+            pDefaultFont->DrawText(26, yoffset + static_cast<float>(10 + i * line_spacing), Text[array_off], Color);
     }
 
     std::string Temp(">");
@@ -135,7 +135,7 @@ void ConsoleClass::ShowConsole() {
     int cursor_h = 12 * scale_factor;
     int cursor_w = 9 * scale_factor;
 
-    switch (int(cursorcount)) {
+    switch (static_cast<int>(cursorcount)) {
         case 0:
             pDefaultFont->DrawText(cursor_x, cursor_y, CursorChar, Color);
             RenderRect(cursor_x, cursor_y, cursor_w, cursor_h, D3DCOLOR_RGBA(255, 255, 255, 140));
@@ -383,7 +383,7 @@ void ConsoleClass::CheckCommands() {
         this->print(StringBuffer);
 
         // und Speed Setzen
-        Timer.SetMoveSpeed(float(g_test));
+        Timer.SetMoveSpeed(static_cast<float>(g_test));
     }
     //#endif
 

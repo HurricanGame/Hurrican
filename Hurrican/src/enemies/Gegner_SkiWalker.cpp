@@ -159,7 +159,7 @@ void GegnerSkiWalker::DoKI() {
 
 void GegnerSkiWalker::GegnerExplode() {
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(float(xPos - 20 + random(45)), float(yPos - 20 + random(45)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(static_cast<float>(xPos - 20 + random(45)), static_cast<float>(yPos - 20 + random(45)), EXPLOSION_MEDIUM2);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

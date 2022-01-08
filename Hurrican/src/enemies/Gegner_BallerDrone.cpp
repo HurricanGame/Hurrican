@@ -37,7 +37,7 @@ void GegnerBallerdrone::DoDraw() {
     // Flare rendern
     if (AlreadyDrawn == false) {
         DirectGraphics.SetAdditiveMode();
-        Projectiles.LavaFlare.RenderSprite(float(xPos - TileEngine.XOffset - 15), float(yPos - TileEngine.YOffset - 45),
+        Projectiles.LavaFlare.RenderSprite(static_cast<float>(xPos - TileEngine.XOffset - 15), static_cast<float>(yPos - TileEngine.YOffset - 45),
                                            0, 0xFFFF0000);
         DirectGraphics.SetColorKeyMode();
     }
@@ -64,7 +64,7 @@ void GegnerBallerdrone::DoKI() {
         ySpeed = -10.0f;
 
     // Animationsphase je nach Speed festlegen
-    AnimPhase = 6 + int(xSpeed / 2.0f);
+    AnimPhase = 6 + static_cast<int>(xSpeed / 2.0f);
 
     AnimPhase = std::clamp(AnimPhase, 0, 12);
 

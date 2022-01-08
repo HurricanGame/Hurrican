@@ -50,7 +50,7 @@ void GegnerLift::DoKI() {
                 Handlung = GEGNER_STEHEN;
                 AnimPhase = 0;
                 AnimEnde = 0;
-                yPos = float(Value2);
+                yPos = static_cast<float>(Value2);
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
 
@@ -67,7 +67,7 @@ void GegnerLift::DoKI() {
     switch (Handlung) {
         // Lift wartet auf den Hurri
         case GEGNER_STEHEN: {
-            Value2 = int(yPos);
+            Value2 = static_cast<int>(yPos);
 
             for (int p = 0; p < NUMPLAYERS; p++)
                 if (Player[p].AufPlattform == this) {

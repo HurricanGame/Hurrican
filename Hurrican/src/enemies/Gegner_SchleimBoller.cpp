@@ -147,7 +147,7 @@ void GegnerSchleimBoller::DoKI() {
 void GegnerSchleimBoller::GegnerExplode() {
     // PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_GREEN);
 
-    for (int i = 0; i < 3 + int(Size / 8); i++)
+    for (int i = 0; i < 3 + static_cast<int>(Size / 8); i++)
         PartikelSystem.PushPartikel(xPos + 15 + random(20), yPos + 15 + random(20), SCHLEIM);
 
     // DKS - Added function WaveIsPlaying() to SoundManagerClass:
@@ -164,7 +164,7 @@ void GegnerSchleimBoller::GegnerExplode() {
         if (xPos + 30 - Size / 2 > pAim->xpos + 35)
             mul = -1;
 
-        Gegner.PushGegner(xPos + 20 * mul, yPos, SCHLEIMBOLLER, int(Size - 8), 5, ChangeLight);
-        Gegner.PushGegner(xPos - 20 * mul, yPos, SCHLEIMBOLLER, int(Size - 8), -5, ChangeLight);
+        Gegner.PushGegner(xPos + 20 * mul, yPos, SCHLEIMBOLLER, static_cast<int>(Size - 8), 5, ChangeLight);
+        Gegner.PushGegner(xPos - 20 * mul, yPos, SCHLEIMBOLLER, static_cast<int>(Size - 8), -5, ChangeLight);
     }
 }

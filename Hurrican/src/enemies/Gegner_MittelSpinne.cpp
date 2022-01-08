@@ -90,7 +90,7 @@ void GegnerMittelSpinne::DoKI() {
             // float w, winkel;
 
             // DKS - converted to float, optimized:
-            // w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+            // w = static_cast<float>(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
             float w = RadToDeg(atanf(dx / dy));
             float winkel = w;
 

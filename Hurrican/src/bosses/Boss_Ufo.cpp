@@ -145,10 +145,10 @@ void GegnerUfo::DoKI() {
             Energy = 4000;
             DamageTaken = 0.0f;
 
-            yPos += float(8.0 SYNC);                 // Ufo nach unten bewegen
+            yPos += static_cast<float>(8.0 SYNC);                 // Ufo nach unten bewegen
             if (yPos >= TileEngine.ScrolltoY + 100)  // Weit genug unten ?
             {
-                yPos = float(TileEngine.ScrolltoY + 100);
+                yPos = static_cast<float>(TileEngine.ScrolltoY + 100);
                 Handlung = GEGNER_LAUFEN;
                 xSpeed = -35.0f;
             }

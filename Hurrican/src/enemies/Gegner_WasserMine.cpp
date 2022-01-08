@@ -19,7 +19,7 @@ GegnerWasserMine::GegnerWasserMine(int Wert1, int Wert2, bool Light) {
     Destroyable = false;
     AnimSpeed = 4.0f;
     AnimEnde = 10;
-    Value1 = int(Wert1);
+    Value1 = static_cast<int>(Wert1);
 }
 
 // --------------------------------------------------------------------------------------

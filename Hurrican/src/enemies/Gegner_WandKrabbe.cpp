@@ -81,7 +81,7 @@ void GegnerWandKrabbe::DoKI() {
         case GEGNER_LAUFEN: {
             // Gegner in Nähe des Spielers? Dann springen
             //
-            if (abs(int(pAim->ypos - yPos)) < 100.0f) {
+            if (abs(static_cast<int>(pAim->ypos - yPos)) < 100.0f) {
                 float absx = pAim->xpos + 35 - (xPos + 20);
                 float absy = pAim->ypos + 40 - (yPos + 20) - 160;
 
@@ -96,7 +96,7 @@ void GegnerWandKrabbe::DoKI() {
         // auf den Spieler zufliegen und sich dabei drehen
         //
         case GEGNER_DREHEN: {
-            rot += float(random(50) + 20) SYNC;
+            rot += static_cast<float>(random(50) + 20) SYNC;
 
             clampAngle(rot);
 
@@ -108,7 +108,7 @@ void GegnerWandKrabbe::DoKI() {
         // nach "Abschütteln" runterfallen
         //
         case GEGNER_FALLEN: {
-            rot += float(random(50) + 20) SYNC;
+            rot += static_cast<float>(random(50) + 20) SYNC;
 
             clampAngle(rot);
 
@@ -118,7 +118,7 @@ void GegnerWandKrabbe::DoKI() {
         } break;
 
         case GEGNER_EXPLODIEREN: {
-            rot += float(random(50) + 20) SYNC;
+            rot += static_cast<float>(random(50) + 20) SYNC;
 
             clampAngle(rot);
 
@@ -217,8 +217,8 @@ void GegnerWandKrabbe::DoKI() {
 
         // Position am Spieler merken
         //
-        Value1 = int(xPos - pAim->xpos);
-        Value2 = int(yPos - pAim->ypos);
+        Value1 = static_cast<int>(xPos - pAim->xpos);
+        Value2 = static_cast<int>(yPos - pAim->ypos);
 
         Value1 = std::clamp(Value1, -10, 50);
         Value2 = std::clamp(Value2, -30, 80);
@@ -237,9 +237,9 @@ void GegnerWandKrabbe::DoKI() {
         yAcc = 3.0f;
 
         if (BlickRichtung == RECHTS)
-            xSpeed = float(random(8) + 4);
+            xSpeed = static_cast<float>(random(8) + 4);
         else
-            xSpeed = -float(random(8) + 4);
+            xSpeed = -static_cast<float>(random(8) + 4);
 
         Handlung = GEGNER_EXPLODIEREN;
 

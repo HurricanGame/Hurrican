@@ -68,7 +68,7 @@ GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light) {
 void GegnerSpinnenmaschine::DoDraw() {
     D3DCOLOR Color;
 
-    int Wert = 255 - (int(DamageTaken));
+    int Wert = 255 - (static_cast<int>(DamageTaken));
 
     if (DirectGraphics.BlendMode == BlendModeEnum::ADDITIV)
         Color = D3DCOLOR_RGBA(255, 255, 255, Wert);
@@ -528,7 +528,7 @@ void GegnerSpinnenmaschine::DoKI() {
 
     // if (SpriteCollision(xPos, yPos, rect,
     //					pPlayer->xpos, pPlayer->ypos, pPlayer->CollideRect) == true)
-    //	pPlayer->DamagePlayer(float(4.0 SYNC));
+    //	pPlayer->DamagePlayer(static_cast<float>(4.0 SYNC));
 
     // Deckel zu? Dann kann der Boss nicht getroffen werden
     if (HochStatus == ZU) {

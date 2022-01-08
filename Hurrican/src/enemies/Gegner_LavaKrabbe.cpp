@@ -33,9 +33,9 @@ void GegnerLavaKrabbe::DoDraw() {
         int r, g, b, w;
 
         // Farbe setzen (leichte orangetönung)
-        r = 60 + int(zPos);
-        g = 20 + int(zPos);
-        b = 20 + int(zPos);
+        r = 60 + static_cast<int>(zPos);
+        g = 20 + static_cast<int>(zPos);
+        b = 20 + static_cast<int>(zPos);
 
         if (r > 255)
             r = 255;

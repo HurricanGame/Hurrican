@@ -170,7 +170,7 @@ void GegnerClass::Render() {
     // Im Debug Mode noch den Abstand zum Spieler anzeigen
     if (DebugMode == true) {
         std::string Buffer = std::to_string(PlayerAbstand());
-        pMenuFont->DrawText(float(xPos - TileEngine.XOffset), float(yPos - TileEngine.YOffset), Buffer.c_str(), 0xFFFFFFFF);
+        pMenuFont->DrawText(static_cast<float>(xPos - TileEngine.XOffset), static_cast<float>(yPos - TileEngine.YOffset), Buffer.c_str(), 0xFFFFFFFF);
     }
 #endif  //NDEBUG
 }
@@ -242,7 +242,7 @@ bool GegnerClass::Run() {
                     DamageTaken = 255;
 
                 if (Player[p].WheelMode == false)
-                    Player[p].Armour -= float(3.0 SYNC);  // Spieler verliert Rad Energie
+                    Player[p].Armour -= static_cast<float>(3.0 SYNC);  // Spieler verliert Rad Energie
 
                 // Hit Sound
                 // DKS - Added function WaveIsPlaying() to SoundManagerClass:
@@ -307,7 +307,7 @@ int GegnerClass::PlayerAbstand(bool both) const {
             ydiff = (Player[p].ypos + 40) - (yPos + GegnerRect[GegnerArt].bottom / 2);
 
             // DKS - converted to float:
-            // Abstand = MIN(Abstand, float(sqrt((xdiff * xdiff) + (ydiff * ydiff))));
+            // Abstand = MIN(Abstand, static_cast<float>(sqrt((xdiff * xdiff) + (ydiff * ydiff))));
             Abstand = std::min(Abstand, sqrtf((xdiff * xdiff) + (ydiff * ydiff)));
         }
 
@@ -316,7 +316,7 @@ int GegnerClass::PlayerAbstand(bool both) const {
         ydiff = (pAim->ypos + 40) - (yPos + GegnerRect[GegnerArt].bottom / 2);
 
         // DKS - converted to float:
-        // Abstand = float(sqrt((xdiff * xdiff) + (ydiff * ydiff)));
+        // Abstand = static_cast<float>(sqrt((xdiff * xdiff) + (ydiff * ydiff)));
         Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
     }
 
@@ -393,7 +393,7 @@ void GegnerClass::PlattformTest(RECT_struct rect) {
             //
             int laenge;
 
-            laenge = abs(int(Player[p].ypos - Player[p].yposold)) + 2;
+            laenge = abs(static_cast<int>(Player[p].ypos - Player[p].yposold)) + 2;
 
             // TODO
             // eingestellt, weil man beim pharao boss am anfang nicht draufsteht, wenn er rauskommt
@@ -1684,11 +1684,11 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
         } break;
 
         case WASSERMINE: {
-            pNew = new GegnerWasserMine(int(y), Value2, Light);
+            pNew = new GegnerWasserMine(static_cast<int>(y), Value2, Light);
         } break;
 
         case FLEDERMAUS: {
-            pNew = new GegnerFledermaus(int(y), Value2, Light);
+            pNew = new GegnerFledermaus(static_cast<int>(y), Value2, Light);
         } break;
 
         case CLIMBSPIDER: {
@@ -1884,7 +1884,7 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
         } break;
 
         case BRUECKE: {
-            pNew = new GegnerBruecke(int(y), Value2, Light);
+            pNew = new GegnerBruecke(static_cast<int>(y), Value2, Light);
         } break;
 
         case FLOATING: {
@@ -1900,7 +1900,7 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
         } break;
 
         case SURFBRETT: {
-            pNew = new GegnerSurfBrett(int(y), Value2, Light);
+            pNew = new GegnerSurfBrett(static_cast<int>(y), Value2, Light);
         } break;
 
         case SHOOTBUTTON: {
@@ -1908,7 +1908,7 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
         } break;
 
         case SHOOTPLATTFORM: {
-            pNew = new GegnerShootPlattform(int(x), int(y), Light);
+            pNew = new GegnerShootPlattform(static_cast<int>(x), static_cast<int>(y), Light);
         } break;
 
         case GLUBSCHI: {

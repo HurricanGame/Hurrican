@@ -33,7 +33,7 @@ void GegnerColumn::DoDraw() {
     glm::mat4x4 matWorldLocal, matRot, matTrans, matTrans2;  // Rotations und Translations Matrizen
     int Winkel;                                             // Rotationswinkel
 
-    Winkel = int(AnimCount);
+    Winkel = static_cast<int>(AnimCount);
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
     //
@@ -41,9 +41,9 @@ void GegnerColumn::DoDraw() {
 
     matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[Winkel], glm::vec3(0.0f, 0.0f, 1.0f));
 
-    D3DXMatrixTranslation(&matTrans, float(-(xPos - TileEngine.XOffset + 40)),
-                          float(-(yPos - TileEngine.YOffset + 100)), 0.0f);  // Transformation zum Ursprung
-    D3DXMatrixTranslation(&matTrans2, float(xPos - TileEngine.XOffset + 40), float(yPos - TileEngine.YOffset + 100),
+    D3DXMatrixTranslation(&matTrans, static_cast<float>(-(xPos - TileEngine.XOffset + 40)),
+                          static_cast<float>(-(yPos - TileEngine.YOffset + 100)), 0.0f);  // Transformation zum Ursprung
+    D3DXMatrixTranslation(&matTrans2, static_cast<float>(xPos - TileEngine.XOffset + 40), static_cast<float>(yPos - TileEngine.YOffset + 100),
                           0.0f);  // Transformation wieder zurück
 
     matWorldLocal = glm::mat4x4(1.0f);

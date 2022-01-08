@@ -259,7 +259,7 @@ struct Vector2D {
 //      /* Vertex offset computation for tile i,j (that would not alllow water
 //         animation to smoothly move in sync when scrolling left/right):    */
 //      (...)
-//      int off = static_cast<int>(int(WaterPos) + xLevel % 32 + (yLevel * 10) % 40) % 1024;
+//      int off = static_cast<int>(static_cast<int>(WaterPos) + xLevel % 32 + (yLevel * 10) % 40) % 1024;
 //      if (..) v1.y += WaterList[off + j*10 + i * 2];      // Top left vertex
 //      if (..) v2.y += WaterList[off + j*10 + i * 2];      // Top right vertex
 //      if (..) v3.y += WaterList[off + j*10 + i * 2 + 10]; // Bottom left vertex (pi/2 past pair above)
@@ -271,7 +271,7 @@ struct Vector2D {
 //      /* How left/right swaying was calculated for a tile i,j using
 //         SinList2[] in DrawBackLevel() and DrawFrontLevel():        */
 //      (...)
-//      int off = (int(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
+//      int off = (static_cast<int>(SinPos2) + (yLevel * 2) % 40 + j*2) % 1024;
 //      if (..) v1.x += SinList2[off];                      // Top left vertex
 //      if (..) v2.x += SinList2[off];                      // Top right vertex
 //      if (..) v3.x += SinList2[off + 2];                  // Bottom left vertex (pi/10 past pair above)
@@ -317,9 +317,9 @@ class WaterSinTableClass {
     //  updated each frame before tiles are rendered)
     void UpdateTableIndexes(const int xlev, const int ylev) {
         // This is for the two water layers that sway up/down:
-        WaterSinTableIdx = (int(SinTablePos) + xlev * 3 + ylev * 16) % 64;
+        WaterSinTableIdx = (static_cast<int>(SinTablePos) + xlev * 3 + ylev * 16) % 64;
         // This is for any artwork that sways left/right in the water, like plants or backgrounds
-        NonWaterSinTableIdx = (int(SinTablePos) + ylev * 3) % 64;
+        NonWaterSinTableIdx = (static_cast<int>(SinTablePos) + ylev * 3) % 64;
     }
 
     // Called once per frame in TileEngineClass::UpdateLevel()

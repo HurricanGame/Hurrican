@@ -484,7 +484,7 @@ void PlayerClass::checkShoot() {
     }
 
     if (ShotDelay > 0.0f)
-        ShotDelay -= float(1.0 SYNC);
+        ShotDelay -= static_cast<float>(1.0 SYNC);
     else
         ShotDelay = 0.0f;
 }
@@ -1001,9 +1001,9 @@ void PlayerClass::AnimatePlayer() {
         float tmp_y = ypos + (CollideRect.top + 10);
         int tile_y = tmp_y * (1.0f / TILESIZE_Y);
         if (tile_y >= 0 && tile_y < levelsize_y) {
-            for (int i = int(xpos) + CollideRect.left + 5; i < int(xpos) + CollideRect.right - 5; i += 2) {
+            for (int i = static_cast<int>(xpos) + CollideRect.left + 5; i < static_cast<int>(xpos) + CollideRect.right - 5; i += 2) {
                 float tmp_x = i;
-                int tile_x = float(i) * (1.0f / TILESIZE_X);
+                int tile_x = static_cast<float>(i) * (1.0f / TILESIZE_X);
                 if (tile_x < 0)
                     continue;
                 else if (tile_x >= levelsize_x)
@@ -1505,7 +1505,7 @@ void PlayerClass::AnimatePlayer() {
                 DirectInput.Joysticks[JoystickIndex].StopForceFeedbackEffect(FFE_BLITZ);
 
                 if (BlitzStart >= 20.0f) {
-                    Projectiles.PushBlitzBeam(int(BlitzStart), BlitzWinkel, this);
+                    Projectiles.PushBlitzBeam(static_cast<int>(BlitzStart), BlitzWinkel, this);
                     SoundManager.PlayWave(100, 128, 7000, SOUND_BLITZENDE + SoundOff);
                     SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_BLITZENDE + SoundOff);
                     SoundManager.PlayWave(100, 128, 10000, SOUND_EXPLOSION3);
@@ -1550,7 +1550,7 @@ void PlayerClass::AnimatePlayer() {
     {
         // Rad-Energie abziehen
         if (!WheelMode)
-            Armour -= float(2.5 SYNC);
+            Armour -= static_cast<float>(2.5 SYNC);
 
         if (Armour < 0.0f)
             Armour = 0.0f;
@@ -1563,9 +1563,9 @@ void PlayerClass::AnimatePlayer() {
 
             for (int i = -1; i < 25; i++)  // Powerlines schiessen
             {
-                Projectiles.PushProjectile(xpos + 20, float(int(TileEngine.YOffset / 20) * 20 + i * 20), POWERLINE,
+                Projectiles.PushProjectile(xpos + 20, static_cast<float>(static_cast<int>(TileEngine.YOffset / 20) * 20 + i * 20), POWERLINE,
                                            this);
-                Projectiles.PushProjectile(xpos + 20, float(int(TileEngine.YOffset / 20) * 20 + i * 20), POWERLINE2,
+                Projectiles.PushProjectile(xpos + 20, static_cast<float>(static_cast<int>(TileEngine.YOffset / 20) * 20 + i * 20), POWERLINE2,
                                            this);
             }
         }
@@ -1959,8 +1959,8 @@ void PlayerClass::AnimatePlayer() {
 
         for (int i = -1; i < 25; i++)  // Powerlines schiessen
         {
-            Projectiles.PushProjectile(xpos + 20, float(int(TileEngine.YOffset / 20) * 20 + i * 20), POWERLINE, this);
-            Projectiles.PushProjectile(xpos + 20, float(int(TileEngine.YOffset / 20) * 20 + i * 20), POWERLINE2, this);
+            Projectiles.PushProjectile(xpos + 20, static_cast<float>(static_cast<int>(TileEngine.YOffset / 20) * 20 + i * 20), POWERLINE, this);
+            Projectiles.PushProjectile(xpos + 20, static_cast<float>(static_cast<int>(TileEngine.YOffset / 20) * 20 + i * 20), POWERLINE2, this);
         }
     }
 
@@ -2249,7 +2249,7 @@ void PlayerClass::AnimatePlayer() {
                 // man bei einem kleinen Sprung viel schneller wieder runterkommt
                 //
                 JumpAdd = PLAYER_JUMPADDSPEED;
-                JumpAdd = PLAYER_JUMPADDSPEED + abs(int((160 - (JumpySave - ypos)) / 10.0f));
+                JumpAdd = PLAYER_JUMPADDSPEED + abs(static_cast<int>((160 - (JumpySave - ypos)) / 10.0f));
 
                 if (JumpAdd > 18.0f)
                     JumpAdd = 18.0f;
@@ -2702,7 +2702,7 @@ void PlayerClass::MovePlayer() {
 
     // rechts raus
     if (xpos > TileEngine.LEVELPIXELSIZE_X - 80.0f)
-        xpos = float(TileEngine.LEVELPIXELSIZE_X - 80.0f);
+        xpos = static_cast<float>(TileEngine.LEVELPIXELSIZE_X - 80.0f);
 
     // unten raus
     if (ypos > TileEngine.LEVELPIXELSIZE_Y)
@@ -2746,9 +2746,9 @@ void PlayerClass::MovePlayer() {
     // Ränder für gelockten Screen prüfen
     if (TileEngine.Zustand != TileStateEnum::SCROLLBAR) {
         if (xpos < TileEngine.XOffset)
-            xpos = float(TileEngine.XOffset);
+            xpos = static_cast<float>(TileEngine.XOffset);
         if (xpos > TileEngine.XOffset + 580)
-            xpos = float(TileEngine.XOffset + 580);
+            xpos = static_cast<float>(TileEngine.XOffset + 580);
 
         // Im Fahrstuhllevel?
         //
@@ -2760,7 +2760,7 @@ void PlayerClass::MovePlayer() {
                 Energy = 0.0f;
         } else {
             if (ypos < TileEngine.YOffset)
-                ypos = float(TileEngine.YOffset);
+                ypos = static_cast<float>(TileEngine.YOffset);
         }
     }
 }
@@ -3399,7 +3399,7 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
     // Blitz rotieren lassen
     glm::mat4x4 matRot, matTrans, matTrans2;
 
-    matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[int(BlitzWinkel)], glm::vec3(0.0f, 0.0f, 1.0f));  // Rotationsmatrix
+    matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[static_cast<int>(BlitzWinkel)], glm::vec3(0.0f, 0.0f, 1.0f));  // Rotationsmatrix
     D3DXMatrixTranslation(&matTrans, -x - 16, -y - 56, 0.0f);     // Transformation zum Ursprung
 
     if (Blickrichtung == RECHTS)
@@ -3434,7 +3434,7 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
         load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
     } else {
-        int Winkel = int(WackelValue + 500) - 500;  // +500 und -500 damit er von -1.0 bis +1.0
+        int Winkel = static_cast<int>(WackelValue + 500) - 500;  // +500 und -500 damit er von -1.0 bis +1.0
         // nich stehen bleibt, weil -0.99 bis +0.99
         // auf 0 gerundet wird
 
@@ -3603,8 +3603,8 @@ bool PlayerClass::DoLightning() {
     float ystart = ypos + 21;
 
     // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
-    // xstart += float(36*cos(PI * (BlitzWinkel-90) / 180));
-    // ystart += float(36*sin(PI * (BlitzWinkel-90) / 180));
+    // xstart += static_cast<float>(36*cos(PI * (BlitzWinkel-90) / 180));
+    // ystart += static_cast<float>(36*sin(PI * (BlitzWinkel-90) / 180));
     xstart += 36.0f * cos_deg(BlitzWinkel - 90.0f);
     ystart += 36.0f * sin_deg(BlitzWinkel - 90.0f);
 
@@ -3612,8 +3612,8 @@ bool PlayerClass::DoLightning() {
         D3DCOLOR Color, Color2;
 
         if (BlitzStart < PLAYER_BLITZ_START) {
-            Color = D3DCOLOR_RGBA(255, 255, 255, int(BlitzStart * 25));
-            Color2 = D3DCOLOR_RGBA(255, 255, 255, int(BlitzStart * 25) / 5);
+            Color = D3DCOLOR_RGBA(255, 255, 255, static_cast<int>(BlitzStart * 25));
+            Color2 = D3DCOLOR_RGBA(255, 255, 255, static_cast<int>(BlitzStart * 25) / 5);
         } else {
             Color = D3DCOLOR_RGBA(255, 255, 255, 255);
             Color2 = D3DCOLOR_RGBA(255, 255, 255, 48);
@@ -3645,8 +3645,8 @@ bool PlayerClass::DoLightning() {
     }
 
     // Startpunkt der Kollisionsabfrage auch schon mit ein wenig Abstand zum Spieler
-    // xstart -= float(20*cos(PI * (BlitzWinkel-90) / 180));
-    // ystart -= float(20*sin(PI * (BlitzWinkel-90) / 180));
+    // xstart -= static_cast<float>(20*cos(PI * (BlitzWinkel-90) / 180));
+    // ystart -= static_cast<float>(20*sin(PI * (BlitzWinkel-90) / 180));
     xstart -= 20.0f * cos_deg(BlitzWinkel - 90);
     ystart -= 20.0f * sin_deg(BlitzWinkel - 90);
 
@@ -3665,7 +3665,7 @@ bool PlayerClass::DoLightning() {
 #ifndef NDEBUG
         // Zum anzeigen der Rects, die geprüft werden
         if (DebugMode == true)
-            RenderRect(float(xstart - TileEngine.XOffset), float(ystart - TileEngine.YOffset), 31, 31, 0x80FFFFFF);
+            RenderRect(static_cast<float>(xstart - TileEngine.XOffset), static_cast<float>(ystart - TileEngine.YOffset), 31, 31, 0x80FFFFFF);
 #endif  // NDEBUG
 
         xs = xstart;
@@ -3732,8 +3732,8 @@ bool PlayerClass::DoLightning() {
             if (BlitzCount == 0.0f && BlitzAnim % 2 == 0)
                 PartikelSystem.PushPartikel(xs + 12, ys + 12, LASERFUNKE);  // Funken sprühen
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
-            // xstart += float(32*cos(PI * (BlitzWinkel-90) / 180));
-            // ystart += float(32*sin(PI * (BlitzWinkel-90) / 180));
+            // xstart += static_cast<float>(32*cos(PI * (BlitzWinkel-90) / 180));
+            // ystart += static_cast<float>(32*sin(PI * (BlitzWinkel-90) / 180));
             xstart += 32.0f * cos_deg(BlitzWinkel - 90);
             ystart += 32.0f * sin_deg(BlitzWinkel - 90);
             DrawLength = i - 1;  // Blitz "kürzen"
@@ -3741,33 +3741,33 @@ bool PlayerClass::DoLightning() {
         }
 
         // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
-        // xstart += float(32*cos(PI * (BlitzWinkel-90) / 180));
-        // ystart += float(32*sin(PI * (BlitzWinkel-90) / 180));
+        // xstart += static_cast<float>(32*cos(PI * (BlitzWinkel-90) / 180));
+        // ystart += static_cast<float>(32*sin(PI * (BlitzWinkel-90) / 180));
         xstart += 32.0f * cos_deg(BlitzWinkel - 90);
         ystart += 32.0f * sin_deg(BlitzWinkel - 90);
     }
 
     // Position für das Ende des Blitzes wieder ein wenig zurückverschieben
     // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
-    // xstart -= float(16*cos(PI * (BlitzWinkel-90) / 180));
-    // ystart -= float(16*sin(PI * (BlitzWinkel-90) / 180));
+    // xstart -= static_cast<float>(16*cos(PI * (BlitzWinkel-90) / 180));
+    // ystart -= static_cast<float>(16*sin(PI * (BlitzWinkel-90) / 180));
     xstart -= 16.0f * cos_deg(BlitzWinkel - 90);
     ystart -= 16.0f * sin_deg(BlitzWinkel - 90);
 
     // Ende des Blitzes leuchten lassen
-    Projectiles.Blitzflash[BlitzAnim].RenderSprite(float(xstart - 18 - TileEngine.XOffset),
-                                                   float(ystart - 18 - TileEngine.YOffset), 0xFFFFFFFF);
+    Projectiles.Blitzflash[BlitzAnim].RenderSprite(static_cast<float>(xstart - 18 - TileEngine.XOffset),
+                                                   static_cast<float>(ystart - 18 - TileEngine.YOffset), 0xFFFFFFFF);
 
     // noch glow um die blitzenden?
     if (options_Detail >= DETAIL_HIGH) {
         Projectiles.Blitzflash[3 - BlitzAnim].RenderSpriteScaled(
-            float(xstart - 58 - TileEngine.XOffset), float(ystart - 58 - TileEngine.YOffset), 144, 144, 0, 0x30FFFFFF);
+            static_cast<float>(xstart - 58 - TileEngine.XOffset), static_cast<float>(ystart - 58 - TileEngine.YOffset), 144, 144, 0, 0x30FFFFFF);
     }
 
     // Blitz rotieren lassen
     glm::mat4x4 matRot, matTrans, matTrans2;
 
-    matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[int(BlitzWinkel)], glm::vec3(0.0f, 0.0f, 1.0f));  // Rotationsmatrix
+    matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[static_cast<int>(BlitzWinkel)], glm::vec3(0.0f, 0.0f, 1.0f));  // Rotationsmatrix
     D3DXMatrixTranslation(&matTrans, -x, -y, 0.0f);               // Transformation zum Ursprung
     if (Blickrichtung == RECHTS)
         D3DXMatrixTranslation(&matTrans2, x, y, 0.0f);  // Transformation wieder zurück
@@ -3807,7 +3807,7 @@ bool PlayerClass::DoLightning() {
         load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
     } else {
-        int Winkel = int(WackelValue + 500) - 500;  // +500 und -500 damit er von -1.0 bis +1.0
+        int Winkel = static_cast<int>(WackelValue + 500) - 500;  // +500 und -500 damit er von -1.0 bis +1.0
         // nich stehen bleibt, weil -0.99 bis +0.99
         // auf 0 gerundet wird
 
@@ -3872,7 +3872,7 @@ bool PlayerClass::LoadBeam() {
     D3DCOLOR Color;
     int a;
 
-    a = int(BlitzStart * 255 / 160);
+    a = static_cast<int>(BlitzStart * 255 / 160);
 
     if (BlitzStart < PLAYER_BEAM_MAX)
         Color = D3DCOLOR_RGBA(255, 255, 255, a);
@@ -3883,14 +3883,14 @@ bool PlayerClass::LoadBeam() {
     float ystart = ypos + 21;
 
     // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
-    // xstart += float(28*cos(PI * (BlitzWinkel-90) / 180));
-    // ystart += float(28*sin(PI * (BlitzWinkel-90) / 180));
+    // xstart += static_cast<float>(28*cos(PI * (BlitzWinkel-90) / 180));
+    // ystart += static_cast<float>(28*sin(PI * (BlitzWinkel-90) / 180));
     xstart += 28.0f * cos_deg(BlitzWinkel - 90);
     ystart += 28.0f * sin_deg(BlitzWinkel - 90);
 
     // Ende des Blitzes leuchten lassen
-    Projectiles.Blitzflash[BlitzAnim].RenderSprite(float(xstart - 18 - TileEngine.XOffset),
-                                                   float(ystart - 18 - TileEngine.YOffset), Color);
+    Projectiles.Blitzflash[BlitzAnim].RenderSprite(static_cast<float>(xstart - 18 - TileEngine.XOffset),
+                                                   static_cast<float>(ystart - 18 - TileEngine.YOffset), Color);
 
     BeamX = xstart + 12;
     BeamY = ystart + 12;
@@ -3898,7 +3898,7 @@ bool PlayerClass::LoadBeam() {
     // Auflade Partikel erzeugen?
     //
     if (BlitzStart < PLAYER_BEAM_MAX) {
-        BeamCount -= float(1.0 SYNC);
+        BeamCount -= static_cast<float>(1.0 SYNC);
 
         if (BeamCount < 0.0f) {
             BeamCount = 0.1f;

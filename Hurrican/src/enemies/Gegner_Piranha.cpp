@@ -154,9 +154,9 @@ void GegnerPiranha::DoKI() {
                 }
             } else {
                 if (BlickRichtung == LINKS)
-                    xSpeed = -float(random(10) + 4);
+                    xSpeed = -static_cast<float>(random(10) + 4);
                 else
-                    xSpeed = float(random(10) + 4);
+                    xSpeed = static_cast<float>(random(10) + 4);
             }
         } break;
 
@@ -194,13 +194,13 @@ void GegnerPiranha::GegnerExplode() {
     // Fetzen und Blasen erzeugen
     int i;
     for (i = 0; i < 3; i++)
-        PartikelSystem.PushPartikel(float(xPos - 20 + random(45)), float(yPos - 5 + random(30)), PIRANHATEILE);
+        PartikelSystem.PushPartikel(static_cast<float>(xPos - 20 + random(45)), static_cast<float>(yPos - 5 + random(30)), PIRANHATEILE);
 
     for (i = 0; i < 3; i++)
-        PartikelSystem.PushPartikel(float(xPos - 10 + random(45)), float(yPos + 10 + random(30)), BUBBLE);
+        PartikelSystem.PushPartikel(static_cast<float>(xPos - 10 + random(45)), static_cast<float>(yPos + 10 + random(30)), BUBBLE);
 
     // Blutwolke dazu
-    PartikelSystem.PushPartikel(float(xPos + 2), float(yPos - 5), PIRANHABLUT);
+    PartikelSystem.PushPartikel(static_cast<float>(xPos + 2), static_cast<float>(yPos - 5), PIRANHABLUT);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

@@ -64,7 +64,7 @@ void GegnerSchleuseV::DoKI() {
         //
         case GEGNER_OEFFNEN: {
             Handlung = GEGNER_LAUFEN;
-            Value1 = int(yPos);
+            Value1 = static_cast<int>(yPos);
             yAcc = -0.5f;
             // DKS - Added function WaveIsPlaying() to SoundManagerClass:
             if (!SoundManager.WaveIsPlaying(SOUND_DOOR))
@@ -80,7 +80,7 @@ void GegnerSchleuseV::DoKI() {
             }
 
             // Ganz geöffnet?
-            if (yPos < float(Value1) - 201.0f) {
+            if (yPos < static_cast<float>(Value1) - 201.0f) {
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
                 Handlung = GEGNER_STEHEN;

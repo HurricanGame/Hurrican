@@ -81,25 +81,25 @@ void GegnerWuxeSpinnen::DoKI() {
                 if (Energy > 500.0f) {
                     float x = static_cast<float>(random(520));
 
-                    Gegner.PushGegner(float(Value1) + x, float(Value2) - 100, MITTELSPINNE, 0, 1, false);
+                    Gegner.PushGegner(static_cast<float>(Value1) + x, static_cast<float>(Value2) - 100, MITTELSPINNE, 0, 1, false);
                 }
 
                 Energy -= 20;
 
                 // ab und zu ein Paar Augen einstreuen
                 //
-                if (int(Energy) % 1000 == 0) {
+                if (static_cast<int>(Energy) % 1000 == 0) {
                     for (int i = 0; i < 2; i++) {
-                        Gegner.PushGegner(float(Value1) - 20, float(Value2) + i * 60 + 150, AUGE, random(10), 0,
+                        Gegner.PushGegner(static_cast<float>(Value1) - 20, static_cast<float>(Value2) + i * 60 + 150, AUGE, random(10), 0,
                                           false);
-                        Gegner.PushGegner(float(Value1) + 620, float(Value2) + i * 60 + 180, AUGE, random(10), 0,
+                        Gegner.PushGegner(static_cast<float>(Value1) + 620, static_cast<float>(Value2) + i * 60 + 180, AUGE, random(10), 0,
                                           false);
                     }
                 }
 
                 // oder AutoFire ;)
                 //
-                if (int(Energy + 500) % 600 == 0) {
+                if (static_cast<int>(Energy + 500) % 600 == 0) {
                     Gegner.PushGegner(xPos, yPos - 40, EXTRAS, 10, 0, false);
                 }
             }

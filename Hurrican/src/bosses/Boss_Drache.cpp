@@ -252,12 +252,12 @@ void GegnerDrache::DoDraw() {
             if ((Handlung != GEGNER_WARTEN && Handlung != GEGNER_EXPLODIEREN) || Attack == GEGNER_LAUFEN) {
                 DirectGraphics.SetAdditiveMode();
                 Projectiles.LavaFlare.RenderSpriteScaledRotated(
-                    float(xPos - 100 - TileEngine.XOffset) - mirrorOffset * 230,
-                    float(yPos - 55 - TileEngine.YOffset) + DrawYOffset, 180, 180, FlareRot, 0xFF66FF66);
+                    static_cast<float>(xPos - 100 - TileEngine.XOffset) - mirrorOffset * 230,
+                    static_cast<float>(yPos - 55 - TileEngine.YOffset) + DrawYOffset, 180, 180, FlareRot, 0xFF66FF66);
 
                 Projectiles.LavaFlare.RenderSpriteScaledRotated(
-                    float(xPos - 40 - TileEngine.XOffset) - mirrorOffset * 230,
-                    float(yPos - 10 - TileEngine.YOffset) + DrawYOffset, 90, 90, FlareRot * 2, 0xFF88AAFF);
+                    static_cast<float>(xPos - 40 - TileEngine.XOffset) - mirrorOffset * 230,
+                    static_cast<float>(yPos - 10 - TileEngine.YOffset) + DrawYOffset, 90, 90, FlareRot * 2, 0xFF88AAFF);
                 DirectGraphics.SetColorKeyMode();
             }
 

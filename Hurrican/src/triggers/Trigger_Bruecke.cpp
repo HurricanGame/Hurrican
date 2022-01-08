@@ -39,7 +39,7 @@ void GegnerBruecke::DoKI() {
     // Ausgangsposition
     //
 
-    yPos = float(Value1);
+    yPos = static_cast<float>(Value1);
 
     if (options_Detail == DETAIL_MAXIMUM) {
         // Irgendein Gegner steht auf der Brücke
@@ -79,7 +79,7 @@ void GegnerBruecke::DoKI() {
 
                 // DKS - Optimized
                 // yPos = float (pTemp->yPos + GegnerRect[pTemp->GegnerArt].bottom - a / 2.5f + 13.0f);
-                yPos = pTemp->yPos + float(GegnerRect[pTemp->GegnerArt].bottom) - a * (1.0f / 2.5f) + 13.0f;
+                yPos = pTemp->yPos + static_cast<float>(GegnerRect[pTemp->GegnerArt].bottom) - a * (1.0f / 2.5f) + 13.0f;
             }
 
             pTemp = pTemp->pNext;  // Nächsten Gegner durchgehen
@@ -101,7 +101,7 @@ void GegnerBruecke::DoKI() {
                 // double a = sqrt ((dx * dx) + (dy * dy));
                 // yPos = float (Value1 + (32 - a / 1.5f));
                 float a = sqrtf((dx * dx) + (dy * dy));
-                yPos = float(Value1) + (32.0f - a * (1.0f / 1.5f));
+                yPos = static_cast<float>(Value1) + (32.0f - a * (1.0f / 1.5f));
             }
     } else
         yPos = static_cast<float>(Value1 + 3);

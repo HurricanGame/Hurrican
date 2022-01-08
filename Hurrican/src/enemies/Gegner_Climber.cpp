@@ -96,7 +96,7 @@ void GegnerClimber::DoKI() {
                 // float w, winkel;
 
                 // DKS - converted to float, macro:
-                // w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+                // w = static_cast<float>(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
                 float w = RadToDeg(atanf(dx / dy));
                 float winkel = w;
 
@@ -135,7 +135,7 @@ void GegnerClimber::DoKI() {
             // float w, winkel;
 
             // DKS - converted to float:
-            // w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+            // w = static_cast<float>(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
             float w = RadToDeg(atanf(dx / dy));
             float winkel = w;
 
@@ -210,8 +210,8 @@ void GegnerClimber::DoKI() {
 
             // Schusscounter unten und Blickwinkel in Richtung Spieler ?
             // Dann schiessen
-            if (shotdelay < 0.0f && Value1 != 99 && abs(int(winkel - rot)) < 10 && PlayerAbstand() < 350) {
-                shotdelay = float(random(10) + 10);
+            if (shotdelay < 0.0f && Value1 != 99 && abs(static_cast<int>(winkel - rot)) < 10 && PlayerAbstand() < 350) {
+                shotdelay = static_cast<float>(random(10) + 10);
                 Handlung = GEGNER_SCHIESSEN;
                 AnimPhase = 0;
                 AnimEnde = 3;

@@ -93,7 +93,7 @@ void GegnerEvilHurri::DoKI() {
 
             // Sonst Energie abziehen
             else {
-                Player[p].DamagePlayer(float(10.0 SYNC));
+                Player[p].DamagePlayer(static_cast<float>(10.0 SYNC));
 
                 // Spieler wegschieben
                 if (Player[p].xpos < xPos)
@@ -133,10 +133,10 @@ void GegnerEvilHurri::DoKI() {
         BlinkDirection = -1.0f;
 
     // Rand checken
-    if (xPos < float(Value1 + 10) && Handlung != GEGNER_EINFLIEGEN && Handlung != GEGNER_INIT)
-        xPos = float(Value1 + 10);
-    if (xPos > float(Value1 + 550) && Handlung != GEGNER_EINFLIEGEN && Handlung != GEGNER_INIT)
-        xPos = float(Value1 + 550);
+    if (xPos < static_cast<float>(Value1 + 10) && Handlung != GEGNER_EINFLIEGEN && Handlung != GEGNER_INIT)
+        xPos = static_cast<float>(Value1 + 10);
+    if (xPos > static_cast<float>(Value1 + 550) && Handlung != GEGNER_EINFLIEGEN && Handlung != GEGNER_INIT)
+        xPos = static_cast<float>(Value1 + 550);
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
@@ -424,7 +424,7 @@ void GegnerEvilHurri::DoKI() {
 
             // Screen blinken
             if (ActionDelay > 25.0f && ActionDelay < 35.0f) {
-                int w = 128 - int(ActionDelay - 25.0f) * 12;
+                int w = 128 - static_cast<int>(ActionDelay - 25.0f) * 12;
 
                 RenderRect(0, 0, 640, 480, D3DCOLOR_RGBA(255, 255, 128, w));
             }

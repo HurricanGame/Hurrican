@@ -300,7 +300,7 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
 
     // DegreetoRad-Tabelle füllen
     for (int i = 0; i < 360; i++)
-        DegreetoRad[i] = float(PI * i / 180);
+        DegreetoRad[i] = static_cast<float>(PI * i / 180);
 
     SetColorKeyMode();
 
@@ -440,8 +440,8 @@ bool DirectGraphicsClass::SetDeviceInfo() {
     g_matView = glm::mat4x4(1.0f);
     g_matModelView = glm::mat4x4(1.0f);
 
-    matProjWindow = glm::ortho(0.0f, float(WindowView.w), float(WindowView.h), 0.0f, 0.0f, 1.0f);
-    matProjRender = glm::ortho(0.0f, float(RenderView.w), float(RenderView.h), 0.0f, 0.0f, 1.0f);
+    matProjWindow = glm::ortho(0.0f, static_cast<float>(WindowView.w), static_cast<float>(WindowView.h), 0.0f, 0.0f, 1.0f);
+    matProjRender = glm::ortho(0.0f, static_cast<float>(RenderView.w), static_cast<float>(RenderView.h), 0.0f, 0.0f, 1.0f);
 
     matProj = matProjWindow;
 

@@ -100,37 +100,37 @@ void GegnerSchmidtOrgie::DoKI() {
                 int spawn = random(2);
 
                 if (spawn == 0)
-                    Gegner.PushGegner(float(Value1) + x, float(Value2) + 50 + random(200), FLEDERMAUS, 0, 1, false);
+                    Gegner.PushGegner(static_cast<float>(Value1) + x, static_cast<float>(Value2) + 50 + random(200), FLEDERMAUS, 0, 1, false);
 
                 if (spawn == 1)
-                    Gegner.PushGegner(float(Value1) + x, float(Value2) + 200 + random(50), SCHLEIMBOLLER, 24, 0,
+                    Gegner.PushGegner(static_cast<float>(Value1) + x, static_cast<float>(Value2) + 200 + random(50), SCHLEIMBOLLER, 24, 0,
                                       false);
 
                 Energy -= 10;
 
                 // ab und zu ein Paar Augen einstreuen
                 //
-                if (int(Energy) % 1000 == 0) {
-                    Gegner.PushGegner(float(Value1) - 20, float(Value2) + 130, AUGE, random(10), 0, false);
-                    Gegner.PushGegner(float(Value1) + 620, float(Value2) + 200, AUGE, random(10), 0, false);
+                if (static_cast<int>(Energy) % 1000 == 0) {
+                    Gegner.PushGegner(static_cast<float>(Value1) - 20, static_cast<float>(Value2) + 130, AUGE, random(10), 0, false);
+                    Gegner.PushGegner(static_cast<float>(Value1) + 620, static_cast<float>(Value2) + 200, AUGE, random(10), 0, false);
                 }
 
                 // oder eine Stachelkugel, einen Firewalker oder ein großer Schleimboller;)
                 //
-                if (int(Energy) % 500 == 0) {
+                if (static_cast<int>(Energy) % 500 == 0) {
                     int j = random(3);
 
                     switch (j) {
                         case 0:
-                            Gegner.PushGegner(float(Value1) + x, float(Value2) + 100, STACHELBEERE, 0, 0, false);
+                            Gegner.PushGegner(static_cast<float>(Value1) + x, static_cast<float>(Value2) + 100, STACHELBEERE, 0, 0, false);
                             break;
 
                         case 1:
-                            Gegner.PushGegner(float(Value1) + x, float(Value2) + 100, SCHLEIMBOLLER, 46, 0, false);
+                            Gegner.PushGegner(static_cast<float>(Value1) + x, static_cast<float>(Value2) + 100, SCHLEIMBOLLER, 46, 0, false);
                             break;
 
                         case 2:
-                            Gegner.PushGegner(float(Value1) + x, float(Value2) + 250, FIESERWALKER2, 0, 0, false);
+                            Gegner.PushGegner(static_cast<float>(Value1) + x, static_cast<float>(Value2) + 250, FIESERWALKER2, 0, 0, false);
                             break;
                     }
                 }

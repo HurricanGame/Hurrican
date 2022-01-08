@@ -25,7 +25,7 @@ GegnerBlueBoulder::GegnerBlueBoulder(int Wert1, int Wert2, bool Light) {
 
     // Im Fahrstuhl? Dann auf den Spieler runterfallen
     if (Light == false)
-        ySpeed = g_Fahrstuhl_Speed + float(Value1);
+        ySpeed = g_Fahrstuhl_Speed + static_cast<float>(Value1);
 }
 
 // --------------------------------------------------------------------------------------

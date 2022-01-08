@@ -66,7 +66,7 @@ void GegnerMiniDragon::DoDraw() {
 
     int a = 0;
 
-    switch (int(ShotDelay)) {
+    switch (static_cast<int>(ShotDelay)) {
         case 0:
             a = 1;
             break;

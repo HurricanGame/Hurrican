@@ -18,9 +18,9 @@ GegnerKrabblerOben::GegnerKrabblerOben(int Wert1, int Wert2, bool Light) {
     Energy = 75;
     Value1 = Wert1;
     Value2 = Wert2;
-    xSpeed = float(Value2);
+    xSpeed = static_cast<float>(Value2);
     BlickRichtung = LINKS;
-    ShotDelay = float(Value1);
+    ShotDelay = static_cast<float>(Value1);
     AnimSpeed = 0.5f;
     AnimStart = 0;
     AnimEnde = 9;
@@ -37,12 +37,12 @@ void GegnerKrabblerOben::DoKI() {
 
     // An der Seitenwand umdrehen
     if (blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND) {
-        xSpeed = float(Value2);
+        xSpeed = static_cast<float>(Value2);
         BlickRichtung = RECHTS;
     }
 
     if (blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND) {
-        xSpeed = float(-Value2);
+        xSpeed = static_cast<float>(-Value2);
         BlickRichtung = LINKS;
     }
 
@@ -55,11 +55,11 @@ void GegnerKrabblerOben::DoKI() {
         {
             // Schiessen ?
             if (ShotDelay <= 0.0f) {
-                ShotDelay = float(Value1);
+                ShotDelay = static_cast<float>(Value1);
                 Handlung = GEGNER_SCHIESSEN;
                 Projectiles.PushProjectile(xPos + 24, yPos + 48, KRABBLERLASER1);
                 PartikelSystem.PushPartikel(xPos - 1, yPos + 44, LASERFLAME);
-                SoundManager.PlayWave3D(int(xPos + 25), int(yPos + 37), 44100, SOUND_LASERSHOT);
+                SoundManager.PlayWave3D(static_cast<int>(xPos + 25), static_cast<int>(yPos + 37), 44100, SOUND_LASERSHOT);
                 AnimPhase = 10;
                 AnimEnde = 14;
                 AnimStart = 0;
@@ -89,7 +89,7 @@ void GegnerKrabblerOben::DoKI() {
 void GegnerKrabblerOben::GegnerExplode() {
     // Explosion
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(float(xPos - 15) + random(20), float(yPos - 15) + random(40), EXPLOSION_MEDIUM3);
+        PartikelSystem.PushPartikel(static_cast<float>(xPos - 15) + random(20), static_cast<float>(yPos - 15) + random(40), EXPLOSION_MEDIUM3);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

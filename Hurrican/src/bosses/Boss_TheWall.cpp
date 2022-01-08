@@ -69,10 +69,10 @@ void GegnerTheWall::DoDraw() {
     int toff = 0;
 
     if (AlreadyDrawn == false) {
-        toff = int(sin(DoorOffset) * 100);
+        toff = static_cast<int>(sin(DoorOffset) * 100);
         col = D3DCOLOR_RGBA(toff * 2 + 50, toff * 2 + 50, toff * 2 + 50, 255);
 
-        int Wert = 255 - (int(DamageTaken));
+        int Wert = 255 - (static_cast<int>(DamageTaken));
 
         if (DirectGraphics.BlendMode == BlendModeEnum::ADDITIV)
             Color = D3DCOLOR_RGBA(Wert, 0, 0, 255);
@@ -114,7 +114,7 @@ void GegnerTheWall::DoDraw() {
         DirectGraphics.SetAdditiveMode();
         D3DCOLOR supcol1 = D3DCOLOR_RGBA(150, 0, 0, static_cast<int>(toff * 1.5f));
         D3DCOLOR supcol2 = D3DCOLOR_RGBA(150, 0, 0, static_cast<int>(toff * 1.5f));
-        int start = int((4000 - Energy * 0.75f) / 4000.0f * 42);
+        int start = static_cast<int>((4000 - Energy * 0.75f) / 4000.0f * 42);
 
         RenderRect4(xPos - static_cast<float>(TileEngine.XOffset) + TunnelOffx + 117,
                     yPos - static_cast<float>(TileEngine.YOffset) + TunnelOffY + 59 + start, 37,

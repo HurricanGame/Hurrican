@@ -148,7 +148,7 @@ void IntroClass::DoIntro() {
                 Counter = 0.0f;
                 Zustand = IntroStateEnum::RUN;
             } else {
-                D3DCOLOR col = D3DCOLOR_RGBA(0, 0, 0, 255 - int(Counter));
+                D3DCOLOR col = D3DCOLOR_RGBA(0, 0, 0, 255 - static_cast<int>(Counter));
                 RenderRect(0, 0, 640, 480, col);
             }
         } break;
@@ -164,7 +164,7 @@ void IntroClass::DoIntro() {
                 Counter = 255.0f;
             }
 
-            D3DCOLOR col = D3DCOLOR_RGBA(0, 0, 0, 255 - int(Counter));
+            D3DCOLOR col = D3DCOLOR_RGBA(0, 0, 0, 255 - static_cast<int>(Counter));
             RenderRect(0, 0, 640, 480, col);
 
         } break;

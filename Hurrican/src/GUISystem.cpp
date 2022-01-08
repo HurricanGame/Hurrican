@@ -49,7 +49,7 @@ void CGUISystem::InitGUISystem() {
 
 void CGUISystem::RenderBox() {
     D3DCOLOR color;
-    int alpha = int(m_FadingAlpha);
+    int alpha = static_cast<int>(m_FadingAlpha);
 
     if (alpha < 0)
         return;
@@ -138,11 +138,11 @@ void CGUISystem::ShowBox(const char Text[BOXTEXTLENGTH], int yoff, int xoff /* =
     m_BoxSize.right = longest_length / TILESIZE * TILESIZE + TILESIZE;
     m_BoxSize.bottom = (m_BoxLines * (pDefaultFont->GetYCharSize() + 6)) / TILESIZE * TILESIZE + TILESIZE;
 
-    m_xPos = float(xoff - m_BoxSize.right / 2 - TILESIZE);
-    m_yPos = float(RENDERHEIGHT / 2 - m_BoxSize.bottom / 2 - TILESIZE);
+    m_xPos = static_cast<float>(xoff - m_BoxSize.right / 2 - TILESIZE);
+    m_yPos = static_cast<float>(RENDERHEIGHT / 2 - m_BoxSize.bottom / 2 - TILESIZE);
 
     if (yoff > -1)
-        m_yPos = float(yoff);
+        m_yPos = static_cast<float>(yoff);
 
     m_FadeMode = FadeMode::FADEIN;
 }
@@ -157,8 +157,8 @@ void CGUISystem::ShowBox(int xoff, int yoff, int w, int h) {
     // DKS - Fixed off-center box display
     //    m_xPos = (float)xoff;
     //    m_yPos = (float)yoff;
-    m_xPos = float(xoff - TILESIZE);
-    m_yPos = float(yoff - TILESIZE);
+    m_xPos = static_cast<float>(xoff - TILESIZE);
+    m_yPos = static_cast<float>(yoff - TILESIZE);
 
     strcpy_s(m_BoxText, 1, "");
 

@@ -68,13 +68,13 @@ void GegnerSchwabbel::DoKI() {
             if (AnimCount < 0.0f) {
                 AnimCount += 1.0f;
 
-                Gegner.PushGegner(float(xPos + 16 + random(6)), float(yPos - 10 + random(4)), MADE, 1, 0, false);
+                Gegner.PushGegner(static_cast<float>(xPos + 16 + random(6)), static_cast<float>(yPos - 10 + random(4)), MADE, 1, 0, false);
             }
 
             shotdelay -= 1.0f SYNC;
 
             if (shotdelay < 0.0f) {
-                shotdelay = float(random(4) + 6);
+                shotdelay = static_cast<float>(random(4) + 6);
                 Handlung = GEGNER_STEHEN;
             }
         } break;

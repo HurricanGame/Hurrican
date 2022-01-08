@@ -57,7 +57,7 @@ void GegnerRotzpott::CalcKnarreWinkel() {
         float w;
 
         // DKS - converted to float, used rad/cos macros:
-        // w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+        // w = static_cast<float>(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
         w = RadToDeg(atanf(dx / dy));
 
         if (dx >= 0 && dy >= 0)

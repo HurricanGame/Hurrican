@@ -48,9 +48,9 @@ void GegnerSoundTrigger::DoKI() {
 
                 // DKS - Sound is twice as loud here as it should be, and volume is
                 //      adjusted against the global sound volume in the sound manager itself:
-                // vol = int(100-float(Abstand/6.0f)) * 2;
+                // vol = static_cast<int>(100-static_cast<float>(Abstand/6.0f)) * 2;
                 // vol = int (vol * SoundManager.g_sound_vol /100.0f);
-                vol = int(100 - float(Abstand / 6.0f));
+                vol = static_cast<int>(100 - static_cast<float>(Abstand / 6.0f));
                 if (vol < 0) {
                     vol = 0;
                 } else {

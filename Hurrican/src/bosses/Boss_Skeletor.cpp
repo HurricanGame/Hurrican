@@ -86,7 +86,7 @@ void GegnerSkeletor::DoDraw() {
     D3DCOLOR Color;
     float yoff = 0.0f;
 
-    int Wert = 255 - (int(DamageTaken));
+    int Wert = 255 - (static_cast<int>(DamageTaken));
     Color = D3DCOLOR_RGBA(255, Wert, Wert, 255);
     bool mirror = BlickRichtung == RECHTS;
 

@@ -19,7 +19,7 @@ GegnerLavaBallSpawner::GegnerLavaBallSpawner(int Wert1, int Wert2, bool Light) {
     Value2 = Wert2;
     ChangeLight = Light;
     Destroyable = false;
-    Delay = float(Wert2);
+    Delay = static_cast<float>(Wert2);
     DontMove = true;
     OwnDraw = true;
 }
@@ -37,7 +37,7 @@ void GegnerLavaBallSpawner::DoKI() {
     }
 
     if (Delay <= 0.0f) {
-        Delay = float(Value2 + random(20));
+        Delay = static_cast<float>(Value2 + random(20));
         Gegner.PushGegner(xPos, yPos, LAVABALL, Value1, Value2, ChangeLight);
     }
 }

@@ -32,14 +32,14 @@ GegnerPartikelSpawner::GegnerPartikelSpawner(int Wert1, int Wert2, bool Light) {
     DontMove = true;
     Energy = 100;
     Aussetzer = 0.0f;  // für aussetzenden, auftreibenden Rauch
-    AnimCount = float(Value2);
+    AnimCount = static_cast<float>(Value2);
     Active = true;
     pAim = &Player[0];
 
     // Tropfen per Zufall anfangen
     //
     if (Value1 == 8)
-        AnimCount = float(rand() % Value2);
+        AnimCount = static_cast<float>(rand() % Value2);
 
     if (Value1 == 18)
         AnimCount = 3.0f;
@@ -78,7 +78,7 @@ void GegnerPartikelSpawner::DoKI() {
     // Wird ein neuer Partikel gespwant ?
     AnimCount -= 1.0f SYNC;
     if (AnimCount < 0) {
-        AnimCount = float(Value2);
+        AnimCount = static_cast<float>(Value2);
 
         if (Value1 == 18)
             AnimCount = 3.0f;
@@ -247,7 +247,7 @@ void GegnerPartikelSpawner::DoKI() {
                     if (random(4) == 0) {
                         // mit Sound?
                         if (Value1 == 3)
-                            SoundManager.PlayWave3D(int(xPos), int(yPos), 11025 + random(1000), SOUND_FUNKE);
+                            SoundManager.PlayWave3D(static_cast<int>(xPos), static_cast<int>(yPos), 11025 + random(1000), SOUND_FUNKE);
 
                         PartikelSystem.PushPartikel(xPos, yPos - 24, LASERFLAME);
 
@@ -260,7 +260,7 @@ void GegnerPartikelSpawner::DoKI() {
 
                 // Scrollspeed setzen und danach Trigger entfernen
                 case 10: {
-                    Player[0].AutoScrollspeed = float(Value2);
+                    Player[0].AutoScrollspeed = static_cast<float>(Value2);
                     Energy = 0.0f;
                 } break;
 

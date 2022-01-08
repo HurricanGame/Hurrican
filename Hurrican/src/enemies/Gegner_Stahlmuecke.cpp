@@ -173,10 +173,10 @@ void GegnerStahlmuecke::DoKI() {
         xAcc = 0.0f;
         yAcc = 2.0f;
 
-        PartikelSystem.PushPartikel(float(xPos + 2), float(yPos - 10), EXPLOSION_MEDIUM3);
+        PartikelSystem.PushPartikel(static_cast<float>(xPos + 2), static_cast<float>(yPos - 10), EXPLOSION_MEDIUM3);
 
         for (int i = 0; i < 5; i++)
-            PartikelSystem.PushPartikel(float(xPos + 2) + random(20), float(yPos - 10) + random(10), SMOKE2);
+            PartikelSystem.PushPartikel(static_cast<float>(xPos + 2) + random(20), static_cast<float>(yPos - 10) + random(10), SMOKE2);
 
         if (BlickRichtung == LINKS)
             xSpeed = -5.0f;
@@ -191,11 +191,11 @@ void GegnerStahlmuecke::DoKI() {
 
 void GegnerStahlmuecke::GegnerExplode() {
     // Explosion
-    PartikelSystem.PushPartikel(float(xPos + 2), float(yPos - 10), EXPLOSION_MEDIUM3);
+    PartikelSystem.PushPartikel(static_cast<float>(xPos + 2), static_cast<float>(yPos - 10), EXPLOSION_MEDIUM3);
 
     // Rauchende Splitter
     for (int i = 0; i < 3; i++)
-        PartikelSystem.PushPartikel(float(xPos + 15), float(yPos + 20), SPLITTER);
+        PartikelSystem.PushPartikel(static_cast<float>(xPos + 15), static_cast<float>(yPos + 20), SPLITTER);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

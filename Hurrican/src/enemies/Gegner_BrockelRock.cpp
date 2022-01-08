@@ -29,11 +29,11 @@ GegnerBrockelRock::GegnerBrockelRock(int Wert1, int Wert2, bool Light) {
 void GegnerBrockelRock::DoDraw() {
     pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
                                            static_cast<float>(yPos - TileEngine.YOffset), 0,
-                                           D3DCOLOR_RGBA(255, 255, 255, int(AnimCount)));
+                                           D3DCOLOR_RGBA(255, 255, 255, static_cast<int>(AnimCount)));
 
     pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
                                            static_cast<float>(yPos - TileEngine.YOffset), 1,
-                                           D3DCOLOR_RGBA(255, 255, 255, 255 - int(AnimCount)));
+                                           D3DCOLOR_RGBA(255, 255, 255, 255 - static_cast<int>(AnimCount)));
 }
 
 // --------------------------------------------------------------------------------------

@@ -20,7 +20,7 @@ GegnerLightFlare::GegnerLightFlare(int Wert1, int Wert2, bool Light) {
     ChangeLight = Light;
     Destroyable = false;
     rot = 0.0;
-    rotspeed = float(random(10) + 1) / 3.0f;
+    rotspeed = static_cast<float>(random(10) + 1) / 3.0f;
     TestBlock = false;
     OwnDraw = true;
 
@@ -64,7 +64,7 @@ GegnerLightFlare::GegnerLightFlare(int Wert1, int Wert2, bool Light) {
     }  // switch
 
     Value1 = 255;
-    Alpha = float(Value1);
+    Alpha = static_cast<float>(Value1);
 }
 
 // --------------------------------------------------------------------------------------
@@ -75,10 +75,10 @@ void GegnerLightFlare::DoDraw() {
     DirectGraphics.SetAdditiveMode();
     clampAngle(rot);
 
-    D3DCOLOR Color = D3DCOLOR_RGBA(r, g, b, int(Alpha));
+    D3DCOLOR Color = D3DCOLOR_RGBA(r, g, b, static_cast<int>(Alpha));
 
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotatedOffset(float(xPos - TileEngine.XOffset),
-                                                        float(yPos - TileEngine.YOffset), rot, -4, -4, Color);
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotatedOffset(static_cast<float>(xPos - TileEngine.XOffset),
+                                                        static_cast<float>(yPos - TileEngine.YOffset), rot, -4, -4, Color);
     DirectGraphics.SetColorKeyMode();
 }
 
@@ -97,10 +97,10 @@ void GegnerLightFlare::DoKI() {
         if (Alpha < 128.0f)
             Alpha = 128.0f;
     } else {
-        if (Alpha < float(Value1))
+        if (Alpha < static_cast<float>(Value1))
             Alpha += 75.0f SYNC;
-        if (Alpha > float(Value1))
-            Alpha = float(Value1);
+        if (Alpha > static_cast<float>(Value1))
+            Alpha = static_cast<float>(Value1);
     }
 }
 

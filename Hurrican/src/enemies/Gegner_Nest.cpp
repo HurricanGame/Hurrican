@@ -36,7 +36,7 @@ void GegnerNest::DoKI() {
 
         if (AnimCount <= 0.0f) {
             Gegner.PushGegner(xPos + 20, yPos - 10, STAHLMUECKE, 0, 0, false);
-            AnimCount = float(random(30) + 30);
+            AnimCount = static_cast<float>(random(30) + 30);
         }
     }
 

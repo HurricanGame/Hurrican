@@ -87,7 +87,7 @@ void GegnerFetteRakete::DoKI() {
             // float w, winkel;
 
             // DKS - Use new Rad/Deg macros, converted to float:
-            // w = float(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
+            // w = static_cast<float>(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
             float w = RadToDeg(atanf(dx / dy));
             float winkel = w;
 

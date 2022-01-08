@@ -207,7 +207,7 @@ void OuttroClass::DoOuttro() {
                 Zustand = OutroStateEnum::TOWER_EXPLODE;
             }
 
-            D3DCOLOR col = D3DCOLOR_RGBA(0, 0, 0, 255 - int(Counter));
+            D3DCOLOR col = D3DCOLOR_RGBA(0, 0, 0, 255 - static_cast<int>(Counter));
             RenderRect(0, 0, 640, 480, col);
 
             SmokeDelay -= 1.0f SYNC;
@@ -354,8 +354,8 @@ void OuttroClass::DoOuttro() {
 
             Counter += 1.5f SYNC;
 
-            while (Counter >= float(yoff_inc)) {
-                Counter -= float(yoff_inc);
+            while (Counter >= static_cast<float>(yoff_inc)) {
+                Counter -= static_cast<float>(yoff_inc);
                 TextOff++;
 
                 if (TEXT_OUTTRO1 + TextOff > TEXT_SEPERATOR_MARIO + CreditsCount - num_lines)
@@ -377,15 +377,15 @@ void OuttroClass::DoOuttro() {
                     if (CommandLineParams.LowRes && text.size() > 10 &&
                         pDefaultFont->StringLength(text.c_str(), 0) > max_draw_width) {
                         SplitLine(text1, text2, text.c_str());
-                        pDefaultFont->DrawTextCenterAlign(320, float(display_line * yoff_inc) - Counter, text1,
+                        pDefaultFont->DrawTextCenterAlign(320, static_cast<float>(display_line * yoff_inc) - Counter, text1,
                                                           0xFFEEFFFF, 0);
                         display_line++;
-                        pDefaultFont->DrawTextCenterAlign(320, float(display_line * yoff_inc) - Counter, text2,
+                        pDefaultFont->DrawTextCenterAlign(320, static_cast<float>(display_line * yoff_inc) - Counter, text2,
                                                           0xFFEEFFFF, 0);
 
                     } else {
                         if (!text.empty())
-                            pDefaultFont->DrawTextCenterAlign(320, float(display_line * yoff_inc) - Counter, text.c_str(),
+                            pDefaultFont->DrawTextCenterAlign(320, static_cast<float>(display_line * yoff_inc) - Counter, text.c_str(),
                                                               0xFFEEFFFF, 0);
                     }
                 }
