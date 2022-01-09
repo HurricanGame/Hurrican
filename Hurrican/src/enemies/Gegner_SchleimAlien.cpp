@@ -42,8 +42,8 @@ GegnerSchleimAlien::GegnerSchleimAlien(int Wert1, int Wert2, bool Light) {
 void GegnerSchleimAlien::DoDraw() {
     // Je nach Größe anders gestrecht rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteScaled(static_cast<float>(xPos - TileEngine.XOffset) + 30 - Size / 2.0f,
-                                                 static_cast<float>(yPos - TileEngine.YOffset) + 30 - Size / 2.0f,
+    pGegnerGrafix[GegnerArt]->RenderSpriteScaled(xPos - TileEngine.XOffset + 30.0f - Size / 2.0f,
+                                                 yPos - TileEngine.YOffset + 30.0f - Size / 2.0f,
                                                  static_cast<int>(Size), static_cast<int>(Size), AnimPhase, 0xAAFFFFFF);
 }
 
@@ -96,7 +96,8 @@ void GegnerSchleimAlien::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_ALIEN);
 
     for (int i = 0; i < 16; i++)
-        PartikelSystem.PushPartikel(xPos + 15 + random(20), yPos + 15 + random(20), SCHLEIM2);
+        PartikelSystem.PushPartikel(xPos + 15.0f + static_cast<float>(random(20)),
+                                    yPos + 15.0f + static_cast<float>(random(20)), SCHLEIM2);
 
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_SCHLEIM);  // Sound ausgeben
 

@@ -61,14 +61,15 @@ void GegnerLaFass::GegnerExplode() {
         WinkelUebergabe = xSpeed;
 
         // Kettenteile
-        PartikelSystem.PushPartikel(xPos, yPos + 78, KETTENTEILE);
-        PartikelSystem.PushPartikel(xPos + 39, yPos + 78, KETTENTEILE2);
-        PartikelSystem.PushPartikel(xPos + 16, yPos + 43, KETTENTEILE3);
+        PartikelSystem.PushPartikel(xPos, yPos + 78.0f, KETTENTEILE);
+        PartikelSystem.PushPartikel(xPos + 39.0f, yPos + 78.0f, KETTENTEILE2);
+        PartikelSystem.PushPartikel(xPos + 16.0f, yPos + 43.0f, KETTENTEILE3);
 
         for (int i = 0; i < 3; i++)
-            PartikelSystem.PushPartikel(xPos + 33, yPos + i * 18, KETTENTEILE4);
+            PartikelSystem.PushPartikel(xPos + 33.0f,
+                                        yPos + static_cast<float>(i * 18), KETTENTEILE4);
 
         // Fass
-        Projectiles.PushProjectile(xPos + 7, yPos + 90, LAFASSSHOT);
+        Projectiles.PushProjectile(xPos + 7.0f, yPos + 90.0f, LAFASSSHOT);
     }
 }

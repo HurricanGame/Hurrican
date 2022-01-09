@@ -97,14 +97,14 @@ void GegnerMiniRocket::DoKI() {
         // w = static_cast<float>(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
         w = RadToDeg(atanf(dx / dy));
 
-        if (dx >= 0 && dy >= 0)
+        if (dx >= 0.0f && dy >= 0.0f)
             rot = w;
-        else if (dx > 0 && dy < 0)
-            rot = 180 + w;
-        else if (dx < 0 && dy > 0)
-            rot = 360 + w;
-        else if (dx < 0 && dy < 0)
-            rot = 180 + w;
+        else if (dx > 0.0f && dy < 0.0f)
+            rot = 180.0f + w;
+        else if (dx < 0.0f && dy > 0.0f)
+            rot = 360.0f + w;
+        else if (dx < 0.0f && dy < 0.0f)
+            rot = 180.0f + w;
         rot = 360.0f - rot;
 
         // Auf Spieler zubewegen
@@ -155,11 +155,11 @@ void GegnerMiniRocket::GegnerExplode() {
     int i = 0;
     for (i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
-                                    yPos + static_cast<float>(random(20) - 10), SMOKE);
+                                    yPos - 10.0f + static_cast<float>(random(20)), SMOKE);
 
     for (i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
-                                    yPos + static_cast<float>(random(20) - 10), MINIFLARE);
+                                    yPos - 10.0f + static_cast<float>(random(20)), MINIFLARE);
 
     Player[0].Score += 50;
 }

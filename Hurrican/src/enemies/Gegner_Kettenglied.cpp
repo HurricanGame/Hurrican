@@ -41,8 +41,8 @@ void GegnerKettenglied::DoDraw() {
         Color = D3DCOLOR_RGBA(255, 255, 255, Wert);
     }
 
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset),
-                                                  static_cast<float>(yPos - TileEngine.YOffset), AnimCount, AnimPhase,
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(xPos - TileEngine.XOffset,
+                                                  yPos - TileEngine.YOffset, AnimCount, AnimPhase,
                                                   Color);
 }
 

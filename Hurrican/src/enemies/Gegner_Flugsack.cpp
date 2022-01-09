@@ -83,9 +83,9 @@ void GegnerFlugsack::DoKI() {
                 SmokeCount += 0.1f;
 
                 if (BlickRichtung == LINKS)
-                    PartikelSystem.PushPartikel(xPos + 66, yPos + 50, FLUGSACKSMOKE2);
+                    PartikelSystem.PushPartikel(xPos + 66.0f, yPos + 50.0f, FLUGSACKSMOKE2);
                 else
-                    PartikelSystem.PushPartikel(xPos, yPos + 50, FLUGSACKSMOKE);
+                    PartikelSystem.PushPartikel(xPos, yPos + 50.0f, FLUGSACKSMOKE);
             }
 
             // Bei bestimmten Mindestabstand schiessen lassen
@@ -96,11 +96,11 @@ void GegnerFlugsack::DoKI() {
                     SoundManager.PlayWave(100, 128, 11025, SOUND_CANON);
 
                     if (BlickRichtung == LINKS) {
-                        PartikelSystem.PushPartikel(xPos + 10, yPos + 2, SMOKE);
-                        Projectiles.PushProjectile(xPos + 17, yPos + 10, SUCHSCHUSS);
+                        PartikelSystem.PushPartikel(xPos + 10.0f, yPos + 2.0f, SMOKE);
+                        Projectiles.PushProjectile(xPos + 17.0f, yPos + 10.0f, SUCHSCHUSS);
                     } else {
-                        PartikelSystem.PushPartikel(xPos + 45, yPos + 2, SMOKE);
-                        Projectiles.PushProjectile(xPos + 53, yPos + 10, SUCHSCHUSS);
+                        PartikelSystem.PushPartikel(xPos + 45.0f, yPos + 2.0f, SMOKE);
+                        Projectiles.PushProjectile(xPos + 53.0f, yPos + 10.0f, SUCHSCHUSS);
                     }
 
                     switch (Skill) {
@@ -126,11 +126,13 @@ void GegnerFlugsack::DoKI() {
 
             // FlugSack rauchen lassen
             if (AnimCount == 0.0f) {
-                PartikelSystem.PushPartikel(xPos + 20 + random(40), yPos + 20 + random(30), SMOKE);
+                PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(40)),
+                                            yPos + 20.0f + static_cast<float>(random(30)), SMOKE);
             }
 
             if (PlayerAbstand() <= 600 && AnimCount == 0.0f && AnimPhase % 2 == 0 && random(2) == 0) {
-                PartikelSystem.PushPartikel(xPos + random(80) - 30, yPos + random(70) - 30, EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(80)),
+                                            yPos - 30.0f + static_cast<float>(random(70)), EXPLOSION_MEDIUM2);
                 SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_EXPLOSION1);
             }
         } break;
@@ -168,10 +170,12 @@ void GegnerFlugsack::DoKI() {
 
 void GegnerFlugsack::GegnerExplode() {
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos + random(80) - 30, yPos + random(70) - 30, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(80)),
+                                    yPos - 30.0f + static_cast<float>(random(70)), EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos + random(40) + 20, yPos + random(30) + 20, SPLITTER);
+        PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(40)),
+                                    yPos + 20.0f + static_cast<float>(random(30)), SPLITTER);
 
     SoundManager.PlayWave(75, 128, 11025 + random(2000), SOUND_EXPLOSION4);  // Sound ausgeben
 

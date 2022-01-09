@@ -41,9 +41,9 @@ GegnerFetteRakete::GegnerFetteRakete(int Wert1, int Wert2, bool Light) {
 void GegnerFetteRakete::DoDraw() {
     // Rakete rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset),
-                                                  static_cast<float>(yPos - TileEngine.YOffset),
-                                                  static_cast<float>(rot), AnimPhase, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(xPos - TileEngine.XOffset,
+                                                  yPos - TileEngine.YOffset,
+                                                  rot, AnimPhase, 0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------
@@ -76,8 +76,8 @@ void GegnerFetteRakete::DoKI() {
             float dx, dy;
 
             // Abstände berechnen
-            dx = (xPos + 12) - (pAim->xpos + 35);
-            dy = (yPos + 17) - (pAim->ypos + 40);
+            dx = (xPos + 12.0f) - (pAim->xpos + 35.0f);
+            dy = (yPos + 17.0f) - (pAim->ypos + 40.0f);
 
             // Division durch Null verhinden
             if (dy == 0.0f)
@@ -91,14 +91,14 @@ void GegnerFetteRakete::DoKI() {
             float w = RadToDeg(atanf(dx / dy));
             float winkel = w;
 
-            if (dx >= 0 && dy >= 0)
+            if (dx >= 0.0f && dy >= 0.0f)
                 winkel = w;
-            else if (dx > 0 && dy < 0)
-                winkel = 180 + w;
-            else if (dx < 0 && dy > 0)
-                winkel = 360 + w;
-            else if (dx < 0 && dy < 0)
-                winkel = 180 + w;
+            else if (dx > 0.0f && dy < 0.0f)
+                winkel = 180.0f + w;
+            else if (dx < 0.0f && dy > 0.0f)
+                winkel = 360.0f + w;
+            else if (dx < 0.0f && dy < 0.0f)
+                winkel = 180.0f + w;
 
             winkel = 360.0f - winkel;
 
@@ -132,7 +132,7 @@ void GegnerFetteRakete::DoKI() {
             if (SmokeDelay < 0.0f) {
                 SmokeDelay = 0.3f;
 
-                PartikelSystem.PushPartikel(xPos + 2, yPos + 5, SMOKE);
+                PartikelSystem.PushPartikel(xPos + 2.0f, yPos + 5.0f, SMOKE);
                 // PartikelSystem.PushPartikel(xPos + 8, yPos + 12, ROCKETSMOKE);
             }
 
@@ -161,11 +161,13 @@ void GegnerFetteRakete::DoKI() {
 void GegnerFetteRakete::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
 
-    PartikelSystem.PushPartikel(xPos - 10, yPos - 20, EXPLOSION_MEDIUM2);
+    PartikelSystem.PushPartikel(xPos - 10.0f, yPos - 20.0f, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 5; i++) {
-        PartikelSystem.PushPartikel(xPos + random(20), yPos - 10 + random(20), MINIFLARE);
-        PartikelSystem.PushPartikel(xPos + random(20), yPos - 10 + random(20), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
+                                    yPos - 10.0f + static_cast<float>(random(20)), MINIFLARE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
+                                    yPos - 10.0f + static_cast<float>(random(20)), SPIDERSPLITTER);
     }
 
     Player[0].Score += 50;

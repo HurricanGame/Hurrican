@@ -62,9 +62,9 @@ void GegnerSwimWalker::DoKI() {
                 SoundManager.PlayWave(100, 128, 11025, SOUND_ROCKET);
 
                 if (BlickRichtung == LINKS)
-                    Projectiles.PushProjectile(xPos - 25, yPos + 10, TORPEDO, pAim);
+                    Projectiles.PushProjectile(xPos - 25.0f, yPos + 10.0f, TORPEDO, pAim);
                 else
-                    Projectiles.PushProjectile(xPos + 55, yPos + 10, TORPEDO, pAim);
+                    Projectiles.PushProjectile(xPos + 55.0f, yPos + 10.0f, TORPEDO, pAim);
 
                 Handlung = GEGNER_SCHIESSEN;
             }
@@ -89,12 +89,14 @@ void GegnerSwimWalker::DoKI() {
 
 void GegnerSwimWalker::GegnerExplode() {
     // blubbern
-    PartikelSystem.PushPartikel(xPos + random(20), yPos + random(20), EXPLOSION_MEDIUM3);
+    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
+                                yPos + static_cast<float>(random(20)), EXPLOSION_MEDIUM3);
 
     PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 30; i++) {
-        PartikelSystem.PushPartikel(xPos - 10 + random(85), yPos - 10 + random(65), BUBBLE);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(85)),
+                                    yPos - 10.0f + static_cast<float>(random(65)), BUBBLE);
     }
 
     SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_EXPLOSION1);  // Sound ausgeben

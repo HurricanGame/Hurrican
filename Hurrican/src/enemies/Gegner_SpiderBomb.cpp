@@ -159,8 +159,8 @@ void GegnerSpiderBomb::GegnerExplode() {
     ShakeScreen(5);
 
     for (int i = 0; i < 6; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80) + 60),
-                                    yPos + static_cast<float>(random(30) + 40), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(random(80)),
+                                    yPos + 40.0f + static_cast<float>(random(30)), EXPLOSION_MEDIUM2);
 
     PartikelSystem.PushPartikel(xPos - 20.0f,
                                 yPos - 40.0f, EXPLOSION_BIG);

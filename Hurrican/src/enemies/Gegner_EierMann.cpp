@@ -48,7 +48,7 @@ void GegnerEierMann::DoKI() {
                 AnimPhase = AnimStart;  // Dann wieder von vorne beginnen
 
                 if (PlayerAbstand() <= 700)
-                    Projectiles.PushProjectile(xPos + 16, yPos + 40, EIERBOMBE, pAim);
+                    Projectiles.PushProjectile(xPos + 16.0f, yPos + 40.0f, EIERBOMBE, pAim);
             }
         }
     }  // animieren
@@ -73,12 +73,15 @@ void GegnerEierMann::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_GIANT);
 
     for (int i = 0; i < 10; i++) {
-        PartikelSystem.PushPartikel(xPos - 30 + random(100), yPos - 30 + random(80), EXPLOSION_MEDIUM2);
-        PartikelSystem.PushPartikel(xPos + 10 + random(40), yPos + 10 + random(40), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(100)),
+                                    yPos - 30.0f + static_cast<float>(random(80)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(40)),
+                                    yPos + 10.0f + static_cast<float>(random(40)), SPIDERSPLITTER);
     }
 
     for (int i = 0; i < 4; i++)
-        PartikelSystem.PushPartikel(xPos + random(80), yPos + random(80), SPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80)),
+                                    yPos + static_cast<float>(random(80)), SPLITTER);
 
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION4);
 

@@ -44,7 +44,7 @@ void GegnerPokeNuke::DoKI() {
 
             if (SmokeDelay <= 0.0f) {
                 SmokeDelay = 0.2f;
-                PartikelSystem.PushPartikel(xPos - random(26) + 24, yPos - 16, SMOKEBIG);
+                PartikelSystem.PushPartikel(xPos + 24.0f - static_cast<float>(random(26)), yPos - 16.0f, SMOKEBIG);
             }
         } break;
 
@@ -75,16 +75,22 @@ void GegnerPokeNuke::GegnerExplode() {
     }
 
     for (int i = 0; i < 16; i++)
-        PartikelSystem.PushPartikel(xPos - 60 + random(90), yPos - 40 + random(200), SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos - 60.0f + static_cast<float>(random(90)),
+                                    yPos - 40.0f + static_cast<float>(random(200)), SMOKEBIG);
     for (int i = 0; i < 8; i++)
-        PartikelSystem.PushPartikel(xPos - 50 + random(90), yPos - 30 + random(200), EXPLOSION_BIG);
+        PartikelSystem.PushPartikel(xPos - 50.0f + static_cast<float>(random(90)),
+                                    yPos - 30.0f + static_cast<float>(random(200)), EXPLOSION_BIG);
     for (int i = 0; i < 12; i++)
-        PartikelSystem.PushPartikel(xPos - 30 + random(90), yPos - 20 + random(200), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(90)),
+                                    yPos - 20.0f + static_cast<float>(random(200)), EXPLOSION_MEDIUM2);
     for (int i = 0; i < 12; i++)
-        PartikelSystem.PushPartikel(xPos - 30 + random(90), yPos + 100 + random(100), SPLITTER);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(90)),
+                                    yPos + 100.0f + static_cast<float>(random(100)), SPLITTER);
     for (int i = 0; i < 200; i++)
-        PartikelSystem.PushPartikel(xPos + random(90), yPos + 50 + random(150), FUNKE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(90)),
+                                    yPos + 50.0f + static_cast<float>(random(150)), FUNKE);
 
     for (int i = 0; i < 48; i++)
-        PartikelSystem.PushPartikel(xPos - 67 + random(130), yPos - 30 + random(200), EXPLOSIONFLARE);
+        PartikelSystem.PushPartikel(xPos - 67.0f + static_cast<float>(random(130)),
+                                    yPos - 30.0f + static_cast<float>(random(200)), EXPLOSIONFLARE);
 }

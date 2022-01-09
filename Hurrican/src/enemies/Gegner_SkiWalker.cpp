@@ -99,9 +99,9 @@ void GegnerSkiWalker::DoKI() {
                     SoundManager.PlayWave(100, 128, 18000 + random(2000), SOUND_LASERSHOT);
 
                     if (BlickRichtung == LINKS)
-                        Projectiles.PushProjectile(xPos - 18, yPos + 9, WALKER_LASER);
+                        Projectiles.PushProjectile(xPos - 18.0f, yPos + 9.0f, WALKER_LASER);
                     else
-                        Projectiles.PushProjectile(xPos + 40, yPos + 9, WALKER_LASER2);
+                        Projectiles.PushProjectile(xPos + 40.0f, yPos + 9.0f, WALKER_LASER2);
                 }
             }
         } break;
@@ -159,8 +159,8 @@ void GegnerSkiWalker::DoKI() {
 
 void GegnerSkiWalker::GegnerExplode() {
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(45) - 20),
-                                    yPos + static_cast<float>(random(45) - 20), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(45)),
+                                    yPos - 20.0f + static_cast<float>(random(45)), EXPLOSION_MEDIUM2);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

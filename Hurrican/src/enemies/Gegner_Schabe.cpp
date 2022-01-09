@@ -327,14 +327,14 @@ void GegnerSchabe::DoDraw() {
 void GegnerSchabe::GegnerExplode() {
     // Explosion
     for (int i = 0; i < 2; i++) {
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(10) - 20),
-                                    yPos + static_cast<float>(random(10) - 20), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(10)),
+                                    yPos - 20.0f + static_cast<float>(random(10)), EXPLOSION_MEDIUM2);
 
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(10) + 5),
-                                    yPos + static_cast<float>(random(10) + 5), FUNKE);
+        PartikelSystem.PushPartikel(xPos + 5.0f + static_cast<float>(random(10)),
+                                    yPos + 5.0f + static_cast<float>(random(10)), FUNKE);
 
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(10) + 5),
-                                    yPos + static_cast<float>(random(10) + 5), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + 5.0f + static_cast<float>(random(10)),
+                                    yPos + 5.0f + static_cast<float>(random(10)), SPIDERSPLITTER);
     }
 
     SoundManager.PlayWave(100, 128, -random(2000) + 13000, SOUND_EXPLOSION1);  // Sound ausgeben

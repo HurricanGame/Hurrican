@@ -52,8 +52,8 @@ void GegnerFallingRock::DoKI() {
 
                     // Rauch erzeugen wo der Stein die Decke verlässt
                     for (int i = 0; i < 3; i++) {
-                        PartikelSystem.PushPartikel(xPos - 10, yPos + i * 10, SMOKE);
-                        PartikelSystem.PushPartikel(xPos + 63, yPos + i * 10, SMOKE);
+                        PartikelSystem.PushPartikel(xPos - 10.0f, yPos + static_cast<float>(i * 10), SMOKE);
+                        PartikelSystem.PushPartikel(xPos + 63.0f, yPos + static_cast<float>(i * 10), SMOKE);
                     }
 
                     // Sound ausgeben
@@ -77,9 +77,12 @@ void GegnerFallingRock::DoKI() {
 void GegnerFallingRock::GegnerExplode() {
     // und Splitter erzeugen Rauch
     for (int i = 0; i < 10; i++) {
-        PartikelSystem.PushPartikel(xPos + random(80) - 12, yPos + random(20) + 20, SMOKE);
-        PartikelSystem.PushPartikel(xPos + random(80) - 12, yPos + random(40), ROCKSPLITTER);
-        PartikelSystem.PushPartikel(xPos + random(80) - 12, yPos + random(40), ROCKSPLITTERSMALL);
+        PartikelSystem.PushPartikel(xPos - 12.0f + static_cast<float>(random(80)),
+                                    yPos + 20.0f + static_cast<float>(random(20)), SMOKE);
+        PartikelSystem.PushPartikel(xPos - 12.0f + static_cast<float>(random(80)),
+                                    yPos + static_cast<float>(random(40)), ROCKSPLITTER);
+        PartikelSystem.PushPartikel(xPos - 12.0f + static_cast<float>(random(80)),
+                                    yPos + static_cast<float>(random(40)), ROCKSPLITTERSMALL);
     }
     SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEEXPLODE);  // Sound ausgeben
 

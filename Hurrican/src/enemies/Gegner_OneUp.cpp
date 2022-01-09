@@ -87,11 +87,11 @@ void GegnerOneUp::DoKI() {
             Player[0].LivesThisLevel++;
             Energy = 0.0f;  // Und Leben verschwinden lassen
 
-            PartikelSystem.PushPartikel(xPos - 40, yPos - 40, EXPLOSIONFLARE);
-            PartikelSystem.PushPartikel(xPos - 40, yPos - 40, EXPLOSIONFLARE);
+            PartikelSystem.PushPartikel(xPos - 40.0f, yPos - 40.0f, EXPLOSIONFLARE);
+            PartikelSystem.PushPartikel(xPos - 40.0f, yPos - 40.0f, EXPLOSIONFLARE);
 
             for (int j = 0; j < 200; j++)
-                PartikelSystem.PushPartikel(xPos + 20, yPos + 20, KRINGELSECRET);
+                PartikelSystem.PushPartikel(xPos + 20.0f, yPos + 20.0f, KRINGELSECRET);
         }
 }
 

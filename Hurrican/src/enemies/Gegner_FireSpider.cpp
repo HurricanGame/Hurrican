@@ -35,8 +35,8 @@ GegnerFireSpider::GegnerFireSpider(int Wert1, int Wert2, bool Light) {
 void GegnerFireSpider::DoDraw() {
     // Spinne rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset),
-                                                  static_cast<float>(yPos - TileEngine.YOffset), rot, AnimPhase,
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(xPos - TileEngine.XOffset,
+                                                  yPos - TileEngine.YOffset, rot, AnimPhase,
                                                   0xFFFFFFFF);
 }
 
@@ -53,8 +53,8 @@ void GegnerFireSpider::DoKI() {
     float dx, dy;
 
     // Abstände berechnen
-    dx = (xPos + 25) - (pAim->xpos + 35);
-    dy = (yPos + 18) - (pAim->ypos + 40);
+    dx = (xPos + 25.0f) - (pAim->xpos + 35.0f);
+    dy = (yPos + 18.0f) - (pAim->ypos + 40.0f);
 
     // Division durch Null verhinden
     if (dy == 0.0f)
@@ -68,14 +68,14 @@ void GegnerFireSpider::DoKI() {
     float w = RadToDeg(atanf(dx / dy));
     float winkel = w;
 
-    if (dx >= 0 && dy >= 0)
+    if (dx >= 0.0f && dy >= 0.0f)
         winkel = w;
-    else if (dx > 0 && dy < 0)
-        winkel = 180 + w;
-    else if (dx < 0 && dy > 0)
-        winkel = 360 + w;
-    else if (dx < 0 && dy < 0)
-        winkel = 180 + w;
+    else if (dx > 0.0f && dy < 0.0f)
+        winkel = 180.0f + w;
+    else if (dx < 0.0f && dy > 0.0f)
+        winkel = 360.0f + w;
+    else if (dx < 0.0f && dy < 0.0f)
+        winkel = 180.0f + w;
 
     winkel = 360.0f - winkel;
 
@@ -181,9 +181,12 @@ void GegnerFireSpider::DoKI() {
 
             if (shotdelay < 0.0f) {
                 shotdelay = 8.0f SYNC;
-                PartikelSystem.PushPartikel(xPos + 35 + random(5), yPos + 20 + random(5), ROCKETSMOKE);
-                PartikelSystem.PushPartikel(xPos + 30 + random(5), yPos + 20 + random(5), SMOKE3);
-                PartikelSystem.PushPartikel(xPos + 30 + random(5), yPos + 20 + random(5), FUNKE);
+                PartikelSystem.PushPartikel(xPos + 35.0f + static_cast<float>(random(5)),
+                                            yPos + 20.0f + static_cast<float>(random(5)), ROCKETSMOKE);
+                PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(random(5)),
+                                            yPos + 20.0f + static_cast<float>(random(5)), SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(random(5)),
+                                            yPos + 20.0f + static_cast<float>(random(5)), FUNKE);
             }
         } break;
     }
@@ -199,7 +202,7 @@ void GegnerFireSpider::DoKI() {
     if (Energy <= 0.0f && Handlung != GEGNER_FALLEN) {
         Energy = 100.0f;
         Handlung = GEGNER_FALLEN;
-        xSpeed = random(15) - 7.0f, ySpeed = -(random(8)) - 8.0f;
+        xSpeed = static_cast<float>(random(15)) - 7.0f, ySpeed = -static_cast<float>(random(8)) - 8.0f;
         yAcc = 3.0f;
 
         // Drehspeed beim Runterfallen setzen
@@ -227,8 +230,10 @@ void GegnerFireSpider::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos + 5, yPos, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 10; i++) {
-        PartikelSystem.PushPartikel(xPos + random(40), yPos + random(30), SPIDERSPLITTER);
-        PartikelSystem.PushPartikel(xPos + random(40), yPos + random(30), FUNKE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)),
+                                    yPos + static_cast<float>(random(30)), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)),
+                                    yPos + static_cast<float>(random(30)), FUNKE);
     }
 
     Player[0].Score += 250;

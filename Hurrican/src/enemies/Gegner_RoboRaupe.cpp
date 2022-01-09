@@ -47,17 +47,17 @@ void GegnerRoboRaupe::DoKI() {
             // evtl schiessen wenn Spieler zu nahe
             if (PlayerAbstand(true) < 200 && random(2) == 0) {
                 if (BlickRichtung == RECHTS) {
-                    Projectiles.PushProjectile(xPos + 31, yPos + 10, ARCSHOT);
+                    Projectiles.PushProjectile(xPos + 31.0f, yPos + 10.0f, ARCSHOT);
 
                     WinkelUebergabe = 1.5f;
-                    Projectiles.PushProjectile(xPos + 15, yPos + 10, ARCSHOTLEFT);
-                    Projectiles.PushProjectile(xPos + 51, yPos + 10, ARCSHOTRIGHT);
+                    Projectiles.PushProjectile(xPos + 15.0f, yPos + 10.0f, ARCSHOTLEFT);
+                    Projectiles.PushProjectile(xPos + 51.0f, yPos + 10.0f, ARCSHOTRIGHT);
                 } else {
-                    Projectiles.PushProjectile(xPos + 50, yPos + 10, ARCSHOT);
+                    Projectiles.PushProjectile(xPos + 50.0f, yPos + 10.0f, ARCSHOT);
 
                     WinkelUebergabe = 1.5f;
-                    Projectiles.PushProjectile(xPos + 32, yPos + 10, ARCSHOTLEFT);
-                    Projectiles.PushProjectile(xPos + 70, yPos + 10, ARCSHOTRIGHT);
+                    Projectiles.PushProjectile(xPos + 32.0f, yPos + 10.0f, ARCSHOTLEFT);
+                    Projectiles.PushProjectile(xPos + 70.0f, yPos + 10.0f, ARCSHOTRIGHT);
                 }
 
                 SoundManager.PlayWave(100, 128, 11025, SOUND_GRANATE);
@@ -93,10 +93,12 @@ void GegnerRoboRaupe::DoKI() {
 void GegnerRoboRaupe::GegnerExplode() {
     // blaue Explosionen erzeugen
     for (int i = 0; i < 50; i++)
-        PartikelSystem.PushPartikel(xPos + random(90) - 10, yPos + random(40) - 10, BLUE_EXPLOSION);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(90)),
+                                    yPos - 10.0f + static_cast<float>(random(40)), BLUE_EXPLOSION);
 
     for (int i = 0; i < 300; i++)
-        PartikelSystem.PushPartikel(xPos + random(90) - 10, yPos + random(25) + 5, ROCKETSMOKEBLUE);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(90)),
+                                    yPos + 5.0f + static_cast<float>(random(25)), ROCKETSMOKEBLUE);
 
     SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_EXPLOSION3);  // Sound ausgeben
 

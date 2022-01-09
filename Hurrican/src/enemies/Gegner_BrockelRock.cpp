@@ -27,12 +27,12 @@ GegnerBrockelRock::GegnerBrockelRock(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerBrockelRock::DoDraw() {
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                           static_cast<float>(yPos - TileEngine.YOffset), 0,
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset, 0,
                                            D3DCOLOR_RGBA(255, 255, 255, static_cast<int>(AnimCount)));
 
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                           static_cast<float>(yPos - TileEngine.YOffset), 1,
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset, 1,
                                            D3DCOLOR_RGBA(255, 255, 255, 255 - static_cast<int>(AnimCount)));
 }
 
@@ -65,8 +65,10 @@ void GegnerBrockelRock::DoKI() {
                 // Partikel erzeugen
                 //
                 for (int i = 0; i < 5; i++) {
-                    PartikelSystem.PushPartikel(xPos + random(60), yPos + 20, ROCKSPLITTERSMALL);
-                    PartikelSystem.PushPartikel(xPos + i * 10 - 10, yPos, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(60)),
+                                                yPos + 20.0f, ROCKSPLITTERSMALL);
+                    PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(i * 10),
+                                                yPos, SMOKEBIG);
                 }
 
                 // Sound ausgeben
@@ -107,9 +109,12 @@ void GegnerBrockelRock::GegnerExplode() {
 
     // Splitter erzeugen Rauch
     for (int i = 0; i < 10; i++) {
-        PartikelSystem.PushPartikel(xPos + random(80) - 12, yPos + random(20) + 20, SMOKE);
-        PartikelSystem.PushPartikel(xPos + random(80) - 12, yPos + random(40), ROCKSPLITTER);
-        PartikelSystem.PushPartikel(xPos + random(80) - 12, yPos + random(40), ROCKSPLITTERSMALL);
+        PartikelSystem.PushPartikel(xPos - 12.0f + static_cast<float>(random(80)),
+                                    yPos + 20.0f + static_cast<float>(random(20)), SMOKE);
+        PartikelSystem.PushPartikel(xPos - 12.0f + static_cast<float>(random(80)),
+                                    yPos + static_cast<float>(random(40)), ROCKSPLITTER);
+        PartikelSystem.PushPartikel(xPos - 12.0f + static_cast<float>(random(80)),
+                                    yPos + static_cast<float>(random(40)), ROCKSPLITTERSMALL);
     }
 
     SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEEXPLODE);  // Sound ausgeben

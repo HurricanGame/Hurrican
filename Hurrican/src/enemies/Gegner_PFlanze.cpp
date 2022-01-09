@@ -39,9 +39,9 @@ void GegnerPflanze::DoKI() {
         if (AnimPhase == 14)  // Schuss abgeben
         {
             if (BlickRichtung == RECHTS)
-                Projectiles.PushProjectile(xPos + 84, yPos + 16, PFLANZESHOT, pAim);
+                Projectiles.PushProjectile(xPos + 84.0f, yPos + 16.0f, PFLANZESHOT, pAim);
             else
-                Projectiles.PushProjectile(xPos + 12, yPos + 16, PFLANZESHOT, pAim);
+                Projectiles.PushProjectile(xPos + 12.0f, yPos + 16.0f, PFLANZESHOT, pAim);
         }
 
         if (AnimPhase >= AnimEnde)  // Animation von zu Ende	?
@@ -93,12 +93,13 @@ void GegnerPflanze::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
 
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos + random(50), yPos + random(40), EXPLOSION_GREEN);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(50)),
+                                    yPos + static_cast<float>(random(40)), EXPLOSION_GREEN);
 
     for (int i = 0; i < 30; i++)
         // Blätter erzeugen
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
-                                    yPos + static_cast<float>(10 + random(50)), BLATT);
+                                    yPos + 10.0f + static_cast<float>(random(50)), BLATT);
 
     Player[0].Score += 300;
 }

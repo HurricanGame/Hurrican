@@ -60,14 +60,14 @@ void GegnerRotzpott::CalcKnarreWinkel() {
         // w = static_cast<float>(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
         w = RadToDeg(atanf(dx / dy));
 
-        if (dx >= 0 && dy >= 0)
+        if (dx >= 0.0f && dy >= 0.0f)
             NewWinkel = w;
-        else if (dx > 0 && dy < 0)
-            NewWinkel = 180 + w;
-        else if (dx < 0 && dy > 0)
-            NewWinkel = 360 + w;
-        else if (dx < 0 && dy < 0)
-            NewWinkel = 180 + w;
+        else if (dx > 0.0f && dy < 0.0f)
+            NewWinkel = 180.0f + w;
+        else if (dx < 0.0f && dy > 0.0f)
+            NewWinkel = 360.0f + w;
+        else if (dx < 0.0f && dy < 0.0f)
+            NewWinkel = 180.0f + w;
     }
 
     while (NewWinkel > 360.0f)
@@ -110,11 +110,13 @@ void GegnerRotzpott::CalcKnarreWinkel() {
 
 void GegnerRotzpott::DoDraw() {
     // Knarre
-    Gegner.DroneGun.RenderSpriteRotatedOffset(-TileEngine.XOffset + xPos + 20.0f, -TileEngine.YOffset + yPos - 28.0f,
+    Gegner.DroneGun.RenderSpriteRotatedOffset(-TileEngine.XOffset + xPos + 20.0f,
+                                              -TileEngine.YOffset + yPos - 28.0f,
                                               GunWinkel, 0, 0, 0xFFFFFFFF);
 
     // Körper
-    pGegnerGrafix[GegnerArt]->RenderSprite(-TileEngine.XOffset + xPos, -TileEngine.YOffset + yPos, 0, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite(-TileEngine.XOffset + xPos,
+                                           -TileEngine.YOffset + yPos, 0, 0xFFFFFFFF);
 
     AlreadyDrawn = true;
 }
@@ -179,12 +181,15 @@ void GegnerRotzpott::GegnerExplode() {
 
     // int i = 0;
     for (int i = 0; i < 8; i++) {
-        PartikelSystem.PushPartikel(xPos + random(40) - 10, yPos - 10 + random(20), EXPLOSION_MEDIUM2);
-        PartikelSystem.PushPartikel(xPos + random(40) - 10, yPos - 10 + random(20), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(40)),
+                                    yPos - 10.0f + static_cast<float>(random(20)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(40)),
+                                    yPos - 10.0f + static_cast<float>(random(20)), SPIDERSPLITTER);
     }
 
     for (int i = 0; i < 4; i++)
-        PartikelSystem.PushPartikel(xPos - 10 + random(40), yPos - 10 + random(20), SCHROTT1);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(40)),
+                                    yPos - 10.0f + static_cast<float>(random(20)), SCHROTT1);
 
     Player[0].Score += 350;
 }

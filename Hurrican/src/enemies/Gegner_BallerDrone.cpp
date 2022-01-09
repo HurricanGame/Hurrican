@@ -37,7 +37,8 @@ void GegnerBallerdrone::DoDraw() {
     // Flare rendern
     if (AlreadyDrawn == false) {
         DirectGraphics.SetAdditiveMode();
-        Projectiles.LavaFlare.RenderSprite(xPos - TileEngine.XOffset - 15.0f, yPos - TileEngine.YOffset - 45.0f,
+        Projectiles.LavaFlare.RenderSprite(xPos - TileEngine.XOffset - 15.0f,
+                                           yPos - TileEngine.YOffset - 45.0f,
                                            0, 0xFFFF0000);
         DirectGraphics.SetColorKeyMode();
     }
@@ -56,7 +57,8 @@ void GegnerBallerdrone::DoKI() {
     if (AnimCount < 0.0f) {
         AnimCount += 0.2f;
 
-        PartikelSystem.PushPartikel(xPos + 37 + random(3), yPos + 35, ROBOMANSMOKE);
+        PartikelSystem.PushPartikel(xPos + 37.0f + static_cast<float>(random(3)),
+                                    yPos + 35.0f, ROBOMANSMOKE);
     }
 
     xSpeed = std::clamp(xSpeed, -20.0f, 20.0f);
@@ -97,8 +99,8 @@ void GegnerBallerdrone::DoKI() {
                 */
                 {
                     shotdelay = 15.0f;
-                    Projectiles.PushProjectile(xPos + 12, yPos + 50, SUCHSCHUSS2);
-                    Projectiles.PushProjectile(xPos + 64, yPos + 50, SUCHSCHUSS2);
+                    Projectiles.PushProjectile(xPos + 12.0f, yPos + 50.0f, SUCHSCHUSS2);
+                    Projectiles.PushProjectile(xPos + 64.0f, yPos + 50.0f, SUCHSCHUSS2);
                     SoundManager.PlayWave(50, 128, 14000 + random(2000), SOUND_GOLEMSHOT);
                 }
             }
@@ -117,9 +119,12 @@ void GegnerBallerdrone::DoKI() {
 
             if (shotdelay < 0.0f) {
                 shotdelay = 5.0f SYNC;
-                PartikelSystem.PushPartikel(xPos + 35 + random(5), yPos + 20 + random(5), ROCKETSMOKE);
-                PartikelSystem.PushPartikel(xPos + 30 + random(5), yPos + 20 + random(5), SMOKE3);
-                PartikelSystem.PushPartikel(xPos + 30 + random(5), yPos + 20 + random(5), FUNKE);
+                PartikelSystem.PushPartikel(xPos + 35.0f + static_cast<float>(random(5)),
+                                            yPos + 20.0f + static_cast<float>(random(5)), ROCKETSMOKE);
+                PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(random(5)),
+                                            yPos + 20.0f + static_cast<float>(random(5)), SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(random(5)),
+                                            yPos + 20.0f + static_cast<float>(random(5)), FUNKE);
             }
         } break;
     }
@@ -138,7 +143,7 @@ void GegnerBallerdrone::DoKI() {
         Handlung = GEGNER_FALLEN;
         yAcc = 3.0f;
         SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
-        PartikelSystem.PushPartikel(xPos - 20, yPos - 40, EXPLOSION_BIG);
+        PartikelSystem.PushPartikel(xPos - 20.0f, yPos - 40.0f, EXPLOSION_BIG);
         shotdelay = 1.0f;
     }
 }
@@ -153,13 +158,16 @@ void GegnerBallerdrone::GegnerExplode() {
     int i;
 
     for (i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 30 + random(90), yPos - 30 + random(60), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(90)),
+                                    yPos - 30.0f + static_cast<float>(random(60)), EXPLOSION_MEDIUM2);
 
     for (i = 0; i < 30; i++)
-        PartikelSystem.PushPartikel(xPos - 40 + random(90), yPos - 30 + random(60), SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos - 40.0f + static_cast<float>(random(90)),
+                                    yPos - 30.0f + static_cast<float>(random(60)), SMOKEBIG);
 
     for (i = 0; i < 40; i++)
-        PartikelSystem.PushPartikel(xPos + random(90), yPos + random(60), FUNKE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(90)),
+                                    yPos + static_cast<float>(random(60)), FUNKE);
 
     Player[0].Score += 300;
 }

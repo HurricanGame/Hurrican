@@ -77,14 +77,14 @@ void GegnerDrone::DoKI() {
     // in Richtung Spieler fliegen
     //
     if (Handlung != GEGNER_FALLEN) {
-        if (xPos + 30 < pAim->xpos + 35)
+        if (xPos + 30.0f < pAim->xpos + 35.0f)
             xAcc = 1.5f;
-        if (xPos + 30 > pAim->xpos + 35)
+        if (xPos + 30.0f > pAim->xpos + 35.0f)
             xAcc = -1.5f;
 
-        if (yPos < pAim->ypos - 60)
+        if (yPos < pAim->ypos - 60.0f)
             yAcc = 1.5f;
-        if (yPos > pAim->ypos - 60)
+        if (yPos > pAim->ypos - 60.0f)
             yAcc = -1.5f;
 
         xSpeed = std::clamp(xSpeed, -20.0f, 20.0f);
@@ -109,8 +109,8 @@ void GegnerDrone::DoKI() {
         // In der Luft rumdümpeln
         //
         case GEGNER_LAUFEN:
-            if ((xPos + 30 < pAim->xpos + 35 && BlickRichtung == LINKS) ||
-                (xPos + 30 > pAim->xpos + 35 && BlickRichtung == RECHTS)) {
+            if ((xPos + 30.0f < pAim->xpos + 35.0f && BlickRichtung == LINKS) ||
+                (xPos + 30.0f > pAim->xpos + 35.0f && BlickRichtung == RECHTS)) {
                 Handlung = GEGNER_DREHEN;
                 AnimPhase = 6;
                 AnimCount = 0.0f;
@@ -133,20 +133,20 @@ void GegnerDrone::DoKI() {
 
                 SoundManager.PlayWave3D(static_cast<int>(xPos), static_cast<int>(yPos), 12000, SOUND_DRONE);
 
-                PartikelSystem.PushPartikel(xPos + 33, yPos + 60, BULLET, &Player[0]);
+                PartikelSystem.PushPartikel(xPos + 33.0f, yPos + 60.0f, BULLET, &Player[0]);
 
                 if (BlickRichtung == RECHTS)
-                    Projectiles.PushProjectile(xPos + 58, yPos + 68, DRONEBULLET);
+                    Projectiles.PushProjectile(xPos + 58.0f, yPos + 68.0f, DRONEBULLET);
                 else
-                    Projectiles.PushProjectile(xPos - 10, yPos + 68, DRONEBULLET2);
+                    Projectiles.PushProjectile(xPos - 10.0f, yPos + 68.0f, DRONEBULLET2);
             }
             break;
 
         // Auf den Spieler ballern
         //
         case GEGNER_SCHIESSEN:
-            if ((xPos + 30 < pAim->xpos + 35 && BlickRichtung == LINKS) ||
-                (xPos + 30 > pAim->xpos + 35 && BlickRichtung == RECHTS)) {
+            if ((xPos + 30.0f < pAim->xpos + 35.0f && BlickRichtung == LINKS) ||
+                (xPos + 30.0f > pAim->xpos + 35.0f && BlickRichtung == RECHTS)) {
                 Handlung = GEGNER_DREHEN;
                 AnimPhase = 6;
                 AnimCount = 0.0f;
@@ -169,12 +169,12 @@ void GegnerDrone::DoKI() {
                 ShotDelay = 20.0f;
                 ShotCount--;
 
-                PartikelSystem.PushPartikel(xPos + 36, yPos + 57, BULLET, &Player[0]);
+                PartikelSystem.PushPartikel(xPos + 36.0f, yPos + 57.0f, BULLET, &Player[0]);
 
                 if (BlickRichtung == RECHTS)
-                    Projectiles.PushProjectile(xPos + 58, yPos + 68, DRONEBULLET);
+                    Projectiles.PushProjectile(xPos + 58.0f, yPos + 68.0f, DRONEBULLET);
                 else
-                    Projectiles.PushProjectile(xPos - 10, yPos + 68, DRONEBULLET2);
+                    Projectiles.PushProjectile(xPos - 10.0f, yPos + 68.0f, DRONEBULLET2);
             }
 
             // Flamme anzeigen
@@ -188,8 +188,8 @@ void GegnerDrone::DoKI() {
                 else
                     anim = 1;
 
-                Gegner.DroneFlame.RenderSprite(static_cast<float>(xPos - TileEngine.XOffset) + BlickRichtung * 56 - 5,
-                                               static_cast<float>(yPos - TileEngine.YOffset) + 60, anim, 0xFFFFFFFF);
+                Gegner.DroneFlame.RenderSprite(xPos - TileEngine.XOffset - 5.0f + static_cast<float>(BlickRichtung * 56),
+                                               yPos - TileEngine.YOffset + 60.0f, anim, 0xFFFFFFFF);
                 DirectGraphics.SetColorKeyMode();
             }
             break;
@@ -209,8 +209,10 @@ void GegnerDrone::DoKI() {
             // Drone rauchen lassen
             if (AnimCount >= 0.5f) {
                 AnimCount = 0.0f;
-                PartikelSystem.PushPartikel(xPos + random(30) + 20, yPos + 10 + random(40), SMOKE);
-                PartikelSystem.PushPartikel(xPos + random(30) + 20, yPos + 10 + random(40), SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 20 + static_cast<float>(random(30)),
+                                            yPos + 10 + static_cast<float>(random(40)), SMOKE);
+                PartikelSystem.PushPartikel(xPos + 20 + static_cast<float>(random(30)),
+                                            yPos + 10 + static_cast<float>(random(40)), SMOKE3);
             }
         } break;
     }
@@ -235,14 +237,17 @@ void GegnerDrone::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
 
     for (int i = 0; i < 5; i++) {
-        PartikelSystem.PushPartikel(xPos - 30 + random(70), yPos - 30 + random(80), EXPLOSION_MEDIUM2);
-        PartikelSystem.PushPartikel(xPos - 30 + random(70), yPos - 30 + random(80), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(70)),
+                                    yPos - 30.0f + static_cast<float>(random(80)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(70)),
+                                    yPos - 30.0f + static_cast<float>(random(80)), SPIDERSPLITTER);
     }
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 30 + random(70), yPos - 30 + random(80), SPLITTER);
+        PartikelSystem.PushPartikel(xPos - 30 + static_cast<float>(random(70)),
+                                    yPos - 30 + static_cast<float>(random(80)), SPLITTER);
 
-    PartikelSystem.PushPartikel(xPos - 24, yPos - 16, EXPLOSION_GIANT);
+    PartikelSystem.PushPartikel(xPos - 24.0f, yPos - 16.0f, EXPLOSION_GIANT);
 
     Player[0].Score += 300;
 }

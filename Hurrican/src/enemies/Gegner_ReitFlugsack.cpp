@@ -38,8 +38,8 @@ GegnerReitFlugsack::GegnerReitFlugsack(int Wert1, int Wert2, bool Light) {
 void GegnerReitFlugsack::DoDraw() {
     bool mirror = BlickRichtung != LINKS;
 
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                           static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFFFFFFFF,
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset, AnimPhase, 0xFFFFFFFF,
                                            mirror);
 
     if (Handlung == GEGNER_SPECIAL) {
@@ -48,8 +48,8 @@ void GegnerReitFlugsack::DoDraw() {
             ArrowCount = 2.0f;
 
         if (static_cast<int>(ArrowCount) % 2 == 0)
-            HUD.Arrow.RenderMirroredSprite(static_cast<float>(xPos - TileEngine.XOffset) + 35,
-                                           static_cast<float>(yPos - TileEngine.YOffset) - 40, 0xFF00FF00, false, true);
+            HUD.Arrow.RenderMirroredSprite(xPos - TileEngine.XOffset + 35.0f,
+                                           yPos - TileEngine.YOffset - 40.0f, 0xFF00FF00, false, true);
     }
 }
 
@@ -100,9 +100,9 @@ void GegnerReitFlugsack::DoKI() {
                 SmokeCount += 0.1f;
 
                 if (BlickRichtung == LINKS)
-                    PartikelSystem.PushPartikel(xPos + 66, yPos + 50, FLUGSACKSMOKE2);
+                    PartikelSystem.PushPartikel(xPos + 66.0f, yPos + 50.0f, FLUGSACKSMOKE2);
                 else
-                    PartikelSystem.PushPartikel(xPos, yPos + 50, FLUGSACKSMOKE);
+                    PartikelSystem.PushPartikel(xPos, yPos + 50.0f, FLUGSACKSMOKE);
             }
         } break;
 
@@ -127,7 +127,8 @@ void GegnerReitFlugsack::DoKI() {
 
             // FlugSack rauchen lassen
             if (AnimCount == 0.0f) {
-                PartikelSystem.PushPartikel(xPos + 20 + random(40), yPos + 20 + random(30), SMOKE);
+                PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(40)),
+                                            yPos + 20.0f + static_cast<float>(random(30)), SMOKE);
             }
 
             if (AnimCount == 0.0f && AnimPhase % 2 == 0 && random(2) == 0) {
@@ -140,7 +141,8 @@ void GegnerReitFlugsack::DoKI() {
         case GEGNER_SPECIAL: {
             // FlugSack rauchen lassen
             if (AnimCount == 0.0f) {
-                PartikelSystem.PushPartikel(xPos + 20 + random(40), yPos + 20 + random(30), SMOKE);
+                PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(40)),
+                                            yPos + 20.0f + static_cast<float>(random(30)), SMOKE);
             }
 
             // Testen, ob der Spieler den Sack berührt hat

@@ -36,8 +36,8 @@ GegnerSchleimMaul::GegnerSchleimMaul(float x, float y, int Wert1, int Wert2, boo
         //
         r = static_cast<float>(random(360));
 
-        r1 = static_cast<float>(random(40)) + 30;
-        r2 = static_cast<float>(random(40)) + 30;
+        r1 = static_cast<float>(random(40)) + 30.0f;
+        r2 = static_cast<float>(random(40)) + 30.0f;
 
         // DKS - Obvious bug I am fixing here: passing a value between 0-359 to sin()/cos(), which take
         //      radian inputs, while also adding support of deg/rad cos/sin w/ lookup table support:
@@ -75,8 +75,8 @@ void GegnerSchleimMaul::DoKI() {
             //
             r = static_cast<float>(random(360));
 
-            r1 = static_cast<float>(random(40)) + 30;
-            r2 = static_cast<float>(random(40)) + 30;
+            r1 = static_cast<float>(random(40)) + 30.0f;
+            r2 = static_cast<float>(random(40)) + 30.0f;
 
             // DKS - Obvious bug I am fixing here: passing a value between 0-359 to sin()/cos(), which take
             //      radian inputs, while also adding support of deg/rad cos/sin w/ lookup table support:
@@ -106,7 +106,8 @@ void GegnerSchleimMaul::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_ALIEN);
 
     for (int i = 0; i < 16; i++)
-        PartikelSystem.PushPartikel(xPos + 15 + random(20), yPos + 15 + random(20), SCHLEIM2);
+        PartikelSystem.PushPartikel(xPos + 15.0f + static_cast<float>(random(20)),
+                                    yPos + 15.0f + static_cast<float>(random(20)), SCHLEIM2);
 
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_SCHLEIM);  // Sound ausgeben
 

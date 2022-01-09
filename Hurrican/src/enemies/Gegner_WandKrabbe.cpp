@@ -42,14 +42,14 @@ void GegnerWandKrabbe::DoDraw() {
 
     // gerade im Flug? Dann rotiert rendern
     if (Handlung == GEGNER_DREHEN || Handlung == GEGNER_FALLEN || Handlung == GEGNER_EXPLODIEREN)
-        pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset),
-                                                      static_cast<float>(yPos - TileEngine.YOffset), rot, AnimPhase,
+        pGegnerGrafix[GegnerArt]->RenderSpriteRotated(xPos - TileEngine.XOffset,
+                                                      yPos - TileEngine.YOffset, rot, AnimPhase,
                                                       0xFFFFFFFF);
     // andernfalls normal an der Wand entlang rendern
     else {
         pGegnerGrafix[GegnerArt]->itsRect = pGegnerGrafix[GegnerArt]->itsPreCalcedRects[AnimPhase];
-        pGegnerGrafix[GegnerArt]->RenderMirroredSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                                       static_cast<float>(yPos - TileEngine.YOffset), 0xFFFFFFFF,
+        pGegnerGrafix[GegnerArt]->RenderMirroredSprite(xPos - TileEngine.XOffset,
+                                                       yPos - TileEngine.YOffset, 0xFFFFFFFF,
                                                        mirrored, ySpeed < 0.0f);
     }
 }
@@ -138,8 +138,10 @@ void GegnerWandKrabbe::DoKI() {
             while (AnimCount <= 0.0f) {
                 AnimCount += 0.2f;
 
-                PartikelSystem.PushPartikel(xPos + 8 + random(5), yPos + 25 + random(5), SMOKE3);
-                PartikelSystem.PushPartikel(xPos + 8 + random(5), yPos + 28 + random(5), FUNKE);
+                PartikelSystem.PushPartikel(xPos + 8.0f + static_cast<float>(random(5)),
+                                            yPos + 25.0f + static_cast<float>(random(5)), SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 8.0f + static_cast<float>(random(5)),
+                                            yPos + 28.0f + static_cast<float>(random(5)), FUNKE);
             }
 
             // bei Aufprall explodieren lassen
@@ -261,11 +263,14 @@ void GegnerWandKrabbe::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 6; i++)
-        PartikelSystem.PushPartikel(xPos - 20 + random(10), yPos + random(30), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(10)),
+                                    yPos + static_cast<float>(random(30)), EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 20; i++) {
-        PartikelSystem.PushPartikel(xPos + random(30), yPos + random(64), FUNKE);
-        PartikelSystem.PushPartikel(xPos + random(25), yPos + random(50), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(30)),
+                                    yPos + static_cast<float>(random(64)), FUNKE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(25)),
+                                    yPos + static_cast<float>(random(50)), SPIDERSPLITTER);
     }
 
     Player[0].Score += 100;

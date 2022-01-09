@@ -125,7 +125,8 @@ void GegnerMutant::DoKI() {
             if (blocku & BLOCKWERT_WAND && ySpeed > 0.0f) {
                 // DKS - While fixing volume of jumping (look at note further above), made this 3D too:
                 // SoundManager.PlayWave(100, 128, 11025, SOUND_SCHLEIM);
-                SoundManager.PlayWave3D(static_cast<int>(xPos) + 50, static_cast<int>(yPos) + 45, 11025, SOUND_SCHLEIM);
+                SoundManager.PlayWave3D(static_cast<int>(xPos) + 50,
+                                        static_cast<int>(yPos) + 45, 11025, SOUND_SCHLEIM);
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
             }
@@ -151,16 +152,16 @@ void GegnerMutant::DoKI() {
 
 void GegnerMutant::GegnerExplode() {
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(60) - 10),
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(60)),
                                     yPos + static_cast<float>(random(60)), EXPLOSION_GREEN);
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(60) + 15),
-                                    yPos + static_cast<float>(10 + random(60)), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + 15.0f + static_cast<float>(random(60)),
+                                    yPos + 10.0f + static_cast<float>(random(60)), SPIDERSPLITTER);
 
     for (int i = 0; i < 15; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(60) + 15),
-                                    yPos + static_cast<float>(10 + random(60)), SCHLEIM);
+        PartikelSystem.PushPartikel(xPos + 15.0f + static_cast<float>(random(60)),
+                                    yPos + 10.0f + static_cast<float>(random(60)), SCHLEIM);
 
     // DKS - While fixing volume of jumping (look at note further above), made this 3D too:
     // SoundManager.PlayWave(75, 128, 8000 + rand()%4000, SOUND_MUTANT);

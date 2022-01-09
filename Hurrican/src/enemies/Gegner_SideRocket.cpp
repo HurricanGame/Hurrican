@@ -85,9 +85,9 @@ void GegnerSideRocket::DoKI() {
                 AnimCount += 0.05f;
 
                 if (Value1 == 0)
-                    PartikelSystem.PushPartikel(xPos + 35, yPos + 3, ROCKETSMOKE);
+                    PartikelSystem.PushPartikel(xPos + 35.0f, yPos + 3.0f, ROCKETSMOKE);
                 else
-                    PartikelSystem.PushPartikel(xPos - 5, yPos + 3, ROCKETSMOKE);
+                    PartikelSystem.PushPartikel(xPos - 5.0f, yPos + 3.0f, ROCKETSMOKE);
             }
 
             // Gegen die Wand geflogen? Dann explodieren lassen
@@ -118,8 +118,10 @@ void GegnerSideRocket::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos - 10, yPos - 20, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 10; i++) {
-        PartikelSystem.PushPartikel(xPos + random(20), yPos - 10 + random(20), MINIFLARE);
-        PartikelSystem.PushPartikel(xPos + random(20), yPos - 10 + random(20), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
+                                    yPos - 10.0f + static_cast<float>(random(20)), MINIFLARE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
+                                    yPos - 10.0f + static_cast<float>(random(20)), SPIDERSPLITTER);
     }
 
     Player[0].Score += 50;

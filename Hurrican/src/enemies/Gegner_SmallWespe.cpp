@@ -173,8 +173,8 @@ void GegnerSmallWespe::DoKI() {
                                     yPos - 10.0f, EXPLOSION_MEDIUM);
 
         for (int i = 0; i < 5; i++)
-            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20) + 2),
-                                        yPos + static_cast<float>(random(10) - 10), SMOKE2);
+            PartikelSystem.PushPartikel(xPos + 2.0f + static_cast<float>(random(20)),
+                                        yPos - 10.0f + static_cast<float>(random(10)), SMOKE2);
 
         if (BlickRichtung == LINKS)
             xSpeed = -5.0f;

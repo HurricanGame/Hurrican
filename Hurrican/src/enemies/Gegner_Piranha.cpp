@@ -194,12 +194,12 @@ void GegnerPiranha::GegnerExplode() {
     // Fetzen und Blasen erzeugen
     int i;
     for (i = 0; i < 3; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(45) - 20),
-                                    yPos + static_cast<float>(random(30) - 5), PIRANHATEILE);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(45)),
+                                    yPos - 5.0f + static_cast<float>(random(30)), PIRANHATEILE);
 
     for (i = 0; i < 3; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(45) - 10),
-                                    yPos + static_cast<float>(random(30) + 10), BUBBLE);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(45)),
+                                    yPos + 10.0f + static_cast<float>(random(30)), BUBBLE);
 
     // Blutwolke dazu
     PartikelSystem.PushPartikel(xPos + 2.0f,

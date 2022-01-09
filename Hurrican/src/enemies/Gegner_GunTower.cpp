@@ -46,12 +46,12 @@ void GegnerGunTower::DoKI() {
             {
                 if (BlickRichtung == LINKS)  // Schuss Links
                 {
-                    PartikelSystem.PushPartikel(xPos - 10, yPos + 6, SMOKE);
-                    Projectiles.PushProjectile(xPos, yPos + 15, CANONBALL);
+                    PartikelSystem.PushPartikel(xPos - 10.0f, yPos + 6.0f, SMOKE);
+                    Projectiles.PushProjectile(xPos, yPos + 15.0f, CANONBALL);
                 } else  // Schuss Rechts
                 {
-                    PartikelSystem.PushPartikel(xPos + 35, yPos + 6, SMOKE);
-                    Projectiles.PushProjectile(xPos + 35, yPos + 15, CANONBALL2);
+                    PartikelSystem.PushPartikel(xPos + 35.0f, yPos + 6.0f, SMOKE);
+                    Projectiles.PushProjectile(xPos + 35.0f, yPos + 15.0f, CANONBALL2);
                 }
                 SoundManager.PlayWave(100, 128, 11025, SOUND_CANON);
                 Handlung = GEGNER_SCHIESSEN;
@@ -112,8 +112,8 @@ void GegnerGunTower::DoKI() {
 void GegnerGunTower::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos - 20.0f, yPos - 40.0f, EXPLOSION_BIG);
     for (int i = 0; i < 2; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(60) - 10),
-                                    yPos + static_cast<float>(random(20) - 40), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(60)),
+                                    yPos - 40.0f + static_cast<float>(random(20)), EXPLOSION_MEDIUM2);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

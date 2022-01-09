@@ -39,7 +39,9 @@ void GegnerEiszapfen::DoKI() {
 
     switch (Handlung) {
         case GEGNER_STEHEN: {
-            if (pAim->ypos > yPos && pAim->xpos + 35 > xPos + 10 - 60 && pAim->xpos + 35 < xPos + 10 + 60) {
+            if (pAim->ypos > yPos &&
+                pAim->xpos + 35.0f > xPos + 10.0f - 60.0f &&
+                pAim->xpos + 35.0f < xPos + 10.0f + 60.0f) {
                 Handlung = GEGNER_FALLEN;
                 ySpeed = 30.0f;
                 yAcc = 5.0f;
@@ -47,8 +49,10 @@ void GegnerEiszapfen::DoKI() {
                 SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEFALL);
 
                 for (int i = 0; i < 15; i++) {
-                    PartikelSystem.PushPartikel(xPos - 20 + random(35), yPos - 10 + random(20), WATERFLUSH2);
-                    PartikelSystem.PushPartikel(xPos - 20 + random(35), yPos - 10 + random(20), SMOKE);
+                    PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(35)),
+                                                yPos - 10.0f + static_cast<float>(random(20)), WATERFLUSH2);
+                    PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(35)),
+                                                yPos - 10.0f + static_cast<float>(random(20)), SMOKE);
                 }
             }
         } break;
@@ -80,8 +84,10 @@ void GegnerEiszapfen::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 30; i++) {
-        PartikelSystem.PushPartikel(xPos - 20 + random(35), yPos - 10 + random(60), WATERFLUSH2);
-        PartikelSystem.PushPartikel(xPos - 20 + random(35), yPos - 10 + random(60), SMOKE);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(35)),
+                                    yPos - 10.0f + static_cast<float>(random(60)), WATERFLUSH2);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(35)),
+                                    yPos - 10.0f + static_cast<float>(random(60)), SMOKE);
     }
 
     Player[0].Score += 100;

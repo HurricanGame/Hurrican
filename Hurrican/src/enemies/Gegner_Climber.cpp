@@ -28,7 +28,7 @@ GegnerClimber::GegnerClimber(int Wert1, int Wert2, bool Light) {
 
     // Aus der Spinnenmaschine? Dann anfangs per Zufall drehen
     if (Wert1 == 99) {
-        rot = static_cast<float>(static_cast<int>(360.0f + random(50) - 50) % 360);
+        rot = static_cast<float>((360 + random(50) - 50) % 360);
     }
 
     rotspeed = static_cast<float>(random(8) + 3) / 2.0f;
@@ -41,8 +41,8 @@ GegnerClimber::GegnerClimber(int Wert1, int Wert2, bool Light) {
 void GegnerClimber::DoDraw() {
     // Spinne rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset),
-                                                  static_cast<float>(yPos - TileEngine.YOffset), rot, AnimPhase,
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(xPos - TileEngine.XOffset,
+                                                  yPos - TileEngine.YOffset, rot, AnimPhase,
                                                   0xFFFFFFFF);
 }
 
@@ -85,8 +85,8 @@ void GegnerClimber::DoKI() {
                 float dx, dy;
 
                 // Abstände berechnen
-                dx = (xPos + 25) - (pAim->xpos + 35);
-                dy = (yPos + 18) - (pAim->ypos + 20);
+                dx = (xPos + 25.0f) - (pAim->xpos + 35.0f);
+                dy = (yPos + 18.0f) - (pAim->ypos + 20.0f);
 
                 // Division durch Null verhinden
                 if (dy == 0.0f)
@@ -100,14 +100,14 @@ void GegnerClimber::DoKI() {
                 float w = RadToDeg(atanf(dx / dy));
                 float winkel = w;
 
-                if (dx >= 0 && dy >= 0)
+                if (dx >= 0.0f && dy >= 0.0f)
                     winkel = w;
-                else if (dx > 0 && dy < 0)
-                    winkel = 180 + w;
-                else if (dx < 0 && dy > 0)
-                    winkel = 360 + w;
-                else if (dx < 0 && dy < 0)
-                    winkel = 180 + w;
+                else if (dx > 0 && dy < 0.0f)
+                    winkel = 180.0f + w;
+                else if (dx < 0.0f && dy > 0.0f)
+                    winkel = 360.0f + w;
+                else if (dx < 0.0f && dy < 0.0f)
+                    winkel = 180.0f + w;
 
                 winkel = 360.0f - winkel;
                 rot = winkel;
@@ -124,8 +124,8 @@ void GegnerClimber::DoKI() {
             float dx, dy;
 
             // Abstände berechnen
-            dx = (xPos + 25) - (pAim->xpos + 35);
-            dy = (yPos + 18) - (pAim->ypos + 40);
+            dx = (xPos + 25.0f) - (pAim->xpos + 35.0f);
+            dy = (yPos + 18.0f) - (pAim->ypos + 40.0f);
 
             // Division durch Null verhinden
             if (dy == 0.0f)
@@ -139,21 +139,21 @@ void GegnerClimber::DoKI() {
             float w = RadToDeg(atanf(dx / dy));
             float winkel = w;
 
-            if (dx >= 0 && dy >= 0)
+            if (dx >= 0.0f && dy >= 0.0f)
                 winkel = w;
-            else if (dx > 0 && dy < 0)
-                winkel = 180 + w;
-            else if (dx < 0 && dy > 0)
-                winkel = 360 + w;
-            else if (dx < 0 && dy < 0)
-                winkel = 180 + w;
+            else if (dx > 0.0f && dy < 0.0f)
+                winkel = 180.0f + w;
+            else if (dx < 0.0f && dy > 0.0f)
+                winkel = 360.0f + w;
+            else if (dx < 0.0f && dy < 0.0f)
+                winkel = 180.0f + w;
 
             winkel = 360.0f - winkel;
 
             // Spinne aus der Spinnenmaschine erst ein stück nach rechts laufen lassen
             if (Value1 == 99) {
-                if (xPos - TileEngine.XOffset < 250 && winkel > 75)
-                    winkel = 75;
+                if (xPos - TileEngine.XOffset < 250.0f && winkel > 75.0f)
+                    winkel = 75.0f;
             }
 
             // Spinne rotieren
@@ -219,7 +219,7 @@ void GegnerClimber::DoKI() {
                 xSpeed = 0.0f;
                 ySpeed = 0.0f;
 
-                Projectiles.PushProjectile(xPos + 21, yPos + 13, SUCHSCHUSS);
+                Projectiles.PushProjectile(xPos + 21.0f, yPos + 13.0f, SUCHSCHUSS);
                 SoundManager.PlayWave(100, 128, 15000 + random(2000), SOUND_CANON);
             }
         } break;
@@ -239,7 +239,8 @@ void GegnerClimber::DoKI() {
 
             if (shotdelay < 0.0f) {
                 shotdelay = 0.2f SYNC;
-                PartikelSystem.PushPartikel(xPos + 20 + random(5), yPos + 15 + random(5), ROCKETSMOKE);
+                PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(5)),
+                                            yPos + 15.0f + static_cast<float>(random(5)), ROCKETSMOKE);
             }
         } break;
     }
@@ -255,7 +256,7 @@ void GegnerClimber::DoKI() {
     if (Energy <= 0.0f && Handlung != GEGNER_FALLEN) {
         Energy = 100.0f;
         Handlung = GEGNER_FALLEN;
-        xSpeed = random(15) - 7.0f, ySpeed = -(random(8)) - 8.0f;
+        xSpeed = static_cast<float>(random(15)) - 7.0f, ySpeed = -static_cast<float>(random(8)) - 8.0f;
         yAcc = 3.0f;
 
         // Drehspeed beim Runterfallen setzen
@@ -268,7 +269,7 @@ void GegnerClimber::DoKI() {
             Value2 *= -1;
 
         SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
-        PartikelSystem.PushPartikel(xPos + 5, yPos, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + 5.0f, yPos, EXPLOSION_MEDIUM2);
 
         shotdelay = 1.0f;
     }
@@ -280,11 +281,13 @@ void GegnerClimber::DoKI() {
 
 void GegnerClimber::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
-    PartikelSystem.PushPartikel(xPos + 5, yPos, EXPLOSION_MEDIUM2);
+    PartikelSystem.PushPartikel(xPos + 5.0f, yPos, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 10; i++) {
-        PartikelSystem.PushPartikel(xPos + random(40), yPos + random(30), SPIDERSPLITTER);
-        PartikelSystem.PushPartikel(xPos + random(40), yPos + random(30), FUNKE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)),
+                                    yPos + static_cast<float>(random(30)), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)),
+                                    yPos + static_cast<float>(random(30)), FUNKE);
     }
 
     Player[0].Score += 250;

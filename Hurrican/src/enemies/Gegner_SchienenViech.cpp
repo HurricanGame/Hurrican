@@ -33,8 +33,8 @@ void GegnerSchienenViech::DoDraw() {
     col = 0xFFCCCCCC;
 
     // Draw kommt jetzt erst hier, damit der Gegner über allen Leveltiles gerendert wird
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                           static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, col);
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset, AnimPhase, col);
 
     AlreadyDrawn = true;
 }
@@ -75,9 +75,9 @@ void GegnerSchienenViech::DoKI() {
                 // Schiessen
                 //
                 if (pAim->ypos < yPos)
-                    Projectiles.PushProjectile(xPos + 18, yPos - 8, STRAIGHTSCHUSS);
+                    Projectiles.PushProjectile(xPos + 18.0f, yPos - 8.0f, STRAIGHTSCHUSS);
                 else
-                    Projectiles.PushProjectile(xPos + 18, yPos + 48, STRAIGHTSCHUSS2);
+                    Projectiles.PushProjectile(xPos + 18.0f, yPos + 48.0f, STRAIGHTSCHUSS2);
             }
         } else {
             AnimPhase--;                // Und vorherige Animationsphase
@@ -88,9 +88,9 @@ void GegnerSchienenViech::DoKI() {
                 // Schiessen
                 //
                 if (pAim->ypos < yPos)
-                    Projectiles.PushProjectile(xPos + 18, yPos - 8, STRAIGHTSCHUSS);
+                    Projectiles.PushProjectile(xPos + 18.0f, yPos - 8.0f, STRAIGHTSCHUSS);
                 else
-                    Projectiles.PushProjectile(xPos + 18, yPos + 48, STRAIGHTSCHUSS2);
+                    Projectiles.PushProjectile(xPos + 18.0f, yPos + 48.0f, STRAIGHTSCHUSS2);
             }
         }
     }  // animieren
@@ -144,7 +144,8 @@ void GegnerSchienenViech::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
 
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos - 30 + random(30), yPos - 30 + random(40), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(30)),
+                                    yPos - 30.0f + static_cast<float>(random(40)), EXPLOSION_MEDIUM2);
 
     Player[0].Score += 500;
 }

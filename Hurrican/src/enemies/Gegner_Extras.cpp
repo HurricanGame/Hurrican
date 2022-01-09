@@ -138,7 +138,7 @@ void GegnerExtras::DoKI() {
         pCollector->Score += 10;
 
         // "Einsammel" Effekt anzeigen
-        PartikelSystem.PushPartikel(xPos - 4, yPos - 4, EXTRACOLLECTED);
+        PartikelSystem.PushPartikel(xPos - 4.0f, yPos - 4.0f, EXTRACOLLECTED);
 
         // Waffen-Upgrade eingesammelt ?
         if (Value1 < 3) {

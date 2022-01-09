@@ -84,8 +84,10 @@ void GegnerBlueBoulder::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_STONEEXPLODE);
 
     for (int i = 0; i < 16; i++)
-        PartikelSystem.PushPartikel(xPos - 10 + random(60), yPos + 5 + random(30), BOULDER_SMALL);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(60)),
+                                    yPos + 5.0f + static_cast<float>(random(30)), BOULDER_SMALL);
 
     for (int i = 0; i < 12; i++)
-        PartikelSystem.PushPartikel(xPos - 25 + random(60), yPos - 25 + random(50), SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos - 25.0f + static_cast<float>(random(60)),
+                                    yPos - 25.0f + static_cast<float>(random(50)), SMOKEBIG);
 }

@@ -49,7 +49,7 @@ void GegnerGeschuetz::DoKI() {
         case GEGNER_SCHIESSEN: {
             // Schuss abgeben?
             if (AnimPhase == AnimStart) {
-                Projectiles.PushProjectile(xPos + 27, yPos + 36, KRABBLERLASER1);
+                Projectiles.PushProjectile(xPos + 27.0f, yPos + 36.0f, KRABBLERLASER1);
                 SoundManager.PlayWave3D(static_cast<int>(xPos + 30.0f), static_cast<int>(yPos + 30.0f), 44000,
                                         SOUND_LASERSHOT);
                 Handlung = GEGNER_SCHLIESSEN;
@@ -86,7 +86,8 @@ void GegnerGeschuetz::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos - 10.0f, yPos - 10.0f, SMOKEBIG);
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(10 + random(40)), yPos + static_cast<float>(random(40)), LONGFUNKE);
+        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(40)),
+                                    yPos + static_cast<float>(random(40)), LONGFUNKE);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

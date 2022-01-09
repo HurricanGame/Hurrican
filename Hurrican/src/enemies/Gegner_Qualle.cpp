@@ -107,7 +107,7 @@ void GegnerQualle::DoKI() {
             ShotDelay -= 1.0f SYNC;
         else {
             ShotDelay = 20.0f + random(10);
-            Projectiles.PushProjectile(xPos + 10, yPos + 10, SUCHSCHUSS);
+            Projectiles.PushProjectile(xPos + 10.0f, yPos + 10.0f, SUCHSCHUSS);
         }
     }
 
@@ -122,8 +122,8 @@ void GegnerQualle::DoKI() {
 void GegnerQualle::GegnerExplode() {
     for (int i = 0; i < 5; i++) {
         // ein paar Luftblässchen erzeugen
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(45) - 10),
-                                    yPos + static_cast<float>(random(30) + 10), BUBBLE);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(45)),
+                                    yPos + 10.0f + static_cast<float>(random(30)), BUBBLE);
     }
 
     // Blutwolke dazu

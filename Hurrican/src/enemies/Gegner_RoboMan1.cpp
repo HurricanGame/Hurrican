@@ -59,8 +59,10 @@ void GegnerRoboMan1::DoKI() {
     if (SmokeCount < 0.0f) {
         SmokeCount += 0.1f;
 
-        PartikelSystem.PushPartikel(xPos + 29 + random(5), yPos + 90, ROBOMANSMOKE);
-        PartikelSystem.PushPartikel(xPos + 40 + random(5), yPos + 90, ROBOMANSMOKE);
+        PartikelSystem.PushPartikel(xPos + 29.0f + static_cast<float>(random(5)),
+                                    yPos + 90.0f, ROBOMANSMOKE);
+        PartikelSystem.PushPartikel(xPos + 40.0f + static_cast<float>(random(5)),
+                                    yPos + 90.0f, ROBOMANSMOKE);
     }
 
     // Immer den Spieler im Auge behalten
@@ -103,9 +105,9 @@ void GegnerRoboMan1::DoKI() {
             SoundManager.PlayWave(100, 128, 11025, SOUND_GRANATE);
 
             if (BlickRichtung == LINKS)
-                Projectiles.PushProjectile(xPos - 20, yPos + 75, ROBOROCKET, pAim);
+                Projectiles.PushProjectile(xPos - 20.0f, yPos + 75.0f, ROBOROCKET, pAim);
             else
-                Projectiles.PushProjectile(xPos + 70, yPos + 75, ROBOROCKET, pAim);
+                Projectiles.PushProjectile(xPos + 70.0f, yPos + 75.0f, ROBOROCKET, pAim);
 
             ShotCount = 15.0f;
             AnimEnde = 3;
@@ -147,7 +149,8 @@ void GegnerRoboMan1::DoKI() {
             // Robo rauchen lassen
             ShotCount -= 3.0f SYNC;
             if (ShotCount <= 0.0f) {
-                PartikelSystem.PushPartikel(xPos + random(80), yPos + random(90), SMOKE);
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80)),
+                                            yPos + static_cast<float>(random(90)), SMOKE);
                 ShotCount = 1.0f;
             }
         } break;
@@ -184,9 +187,12 @@ void GegnerRoboMan1::GegnerExplode() {
     int i;
 
     for (i = 0; i < 3; i++)
-        PartikelSystem.PushPartikel(xPos - 40 + random(70), yPos + random(40), EXPLOSION_BIG);
+        PartikelSystem.PushPartikel(xPos - 40.0f + static_cast<float>(random(70)),
+                                    yPos + static_cast<float>(random(40)), EXPLOSION_BIG);
     for (i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 10 + random(70), yPos + random(60), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(70)),
+                                    yPos + static_cast<float>(random(60)), EXPLOSION_MEDIUM2);
     for (i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos + random(70), yPos + 20 + random(60), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(70)),
+                                    yPos + 20.0f + static_cast<float>(random(60)), SPIDERSPLITTER);
 }

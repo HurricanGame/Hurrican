@@ -34,14 +34,14 @@ void GegnerJaeger::DoDraw() {
     // beim Hoch fliegen
     //
     if (Handlung == GEGNER_DREHEN)
-        pGegnerGrafix[GegnerArt]->RenderSpriteScaled(static_cast<float>(xPos - TileEngine.XOffset),
-                                                     static_cast<float>(yPos - TileEngine.YOffset), 35, 26, AnimPhase,
+        pGegnerGrafix[GegnerArt]->RenderSpriteScaled(xPos - TileEngine.XOffset,
+                                                     yPos - TileEngine.YOffset, 35, 26, AnimPhase,
                                                      0xFFFFFFFF);
     // und beim runterfliegen
     //
     else if (Handlung == GEGNER_DREHEN2)
-        pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset),
-                                                      static_cast<float>(yPos - TileEngine.YOffset), 180, AnimPhase,
+        pGegnerGrafix[GegnerArt]->RenderSpriteRotated(xPos - TileEngine.XOffset,
+                                                      yPos - TileEngine.YOffset, 180, AnimPhase,
                                                       0xFFFFFFFF);
 }
 
@@ -67,7 +67,7 @@ void GegnerJaeger::DoKI() {
 
             // Gegner oben aus dem Screeb raus? Dann kurz in Pausemodus setzen
             //
-            if (yPos - TileEngine.YOffset < -53) {
+            if (yPos - TileEngine.YOffset < -53.0f) {
                 Handlung = GEGNER_STEHEN;
                 smokeDelay = 50.0f;
             }
@@ -79,7 +79,7 @@ void GegnerJaeger::DoKI() {
         case GEGNER_DREHEN2: {
             // Gegner unten aus dem Screen raus? Dann explodieren lassen
             //
-            if (yPos - TileEngine.YOffset > 480) {
+            if (yPos - TileEngine.YOffset > 480.0f) {
                 Energy = 0.0f;
             }
 
@@ -90,8 +90,8 @@ void GegnerJaeger::DoKI() {
             while (smokeDelay <= 0.0f) {
                 smokeDelay += 0.1f;
 
-                PartikelSystem.PushPartikel(xPos + 18, yPos - 8, ROCKETSMOKE);
-                PartikelSystem.PushPartikel(xPos + 40, yPos - 8, ROCKETSMOKE);
+                PartikelSystem.PushPartikel(xPos + 18.0f, yPos - 8.0f, ROCKETSMOKE);
+                PartikelSystem.PushPartikel(xPos + 40.0f, yPos - 8.0f, ROCKETSMOKE);
             }
 
         } break;
@@ -129,11 +129,14 @@ void GegnerJaeger::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 6; i++)
-        PartikelSystem.PushPartikel(xPos - 10 + random(30), yPos - 8 + random(30), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(30)),
+                                    yPos - 8.0f + static_cast<float>(random(30)), EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 20; i++) {
-        PartikelSystem.PushPartikel(xPos + random(30), yPos + random(64), MINIFLARE);
-        PartikelSystem.PushPartikel(xPos + random(25), yPos + random(50), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(30)),
+                                    yPos + static_cast<float>(random(64)), MINIFLARE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(25)),
+                                    yPos + static_cast<float>(random(50)), SPIDERSPLITTER);
     }
 
     Player[0].Score += 100;

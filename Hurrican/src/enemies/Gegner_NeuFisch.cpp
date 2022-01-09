@@ -170,12 +170,12 @@ void GegnerNeuFisch::GegnerExplode() {
 
     for (int i = 0; i < 10; i++) {
         // Fetzen erzeugen
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(90) - 20),
-                                    yPos + static_cast<float>(random(70) - 5), PIRANHATEILE);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(90)),
+                                    yPos - 5.0f + static_cast<float>(random(70)), PIRANHATEILE);
 
         // und noch n paar Luftblässchen dazu
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(90) - 10),
-                                    yPos + static_cast<float>(random(70) + 10), BUBBLE);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(90)),
+                                    yPos + 10.0f + static_cast<float>(random(70)), BUBBLE);
     }
 
     // Blutwolke dazu

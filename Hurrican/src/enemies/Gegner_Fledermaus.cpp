@@ -157,9 +157,10 @@ void GegnerFledermaus::DoKI() {
 
 void GegnerFledermaus::GegnerExplode() {
     for (int i = 0; i < 100; i++)
-        PartikelSystem.PushPartikel(xPos + 10 + random(35), yPos + 10 + random(25), FUNKE);
+        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(35)),
+                                    yPos + 10.0f + static_cast<float>(random(25)), FUNKE);
 
-    PartikelSystem.PushPartikel(xPos - 5, yPos - 5, EXPLOSION_MEDIUM2);
+    PartikelSystem.PushPartikel(xPos - 5.0f, yPos - 5.0f, EXPLOSION_MEDIUM2);
 
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
 

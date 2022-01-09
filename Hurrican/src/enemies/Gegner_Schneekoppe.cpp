@@ -44,17 +44,17 @@ void GegnerSchneekoppe::DoDraw() {
     // float w = 180.0f - static_cast<float>(atan(xSpeed / ySpeed) * 360.0f / (D3DX_PI * 2));
     float w = 180.0f - RadToDeg(atanf(xSpeed / ySpeed));
 
-    if (xSpeed >= 0 && ySpeed >= 0)
+    if (xSpeed >= 0.0f && ySpeed >= 0.0f)
         w = w;
-    else if (xSpeed > 0 && ySpeed < 0)
-        w = 180 + w;
-    else if (xSpeed < 0 && ySpeed > 0)
-        w = 360 + w;
-    else if (xSpeed < 0 && ySpeed < 0)
-        w = 180 + w;
+    else if (xSpeed > 0.0f && ySpeed < 0.0f)
+        w = 180.0f + w;
+    else if (xSpeed < 0.0f && ySpeed > 0.0f)
+        w = 360.0f + w;
+    else if (xSpeed < 0.0f && ySpeed < 0.0f)
+        w = 180.0f + w;
 
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset),
-                                                  static_cast<float>(yPos - TileEngine.YOffset), w, AnimPhase,
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(xPos - TileEngine.XOffset,
+                                                  yPos - TileEngine.YOffset, w, AnimPhase,
                                                   0xFFFFFFFF);
 }
 
@@ -88,7 +88,8 @@ void GegnerSchneekoppe::DoKI() {
 
 void GegnerSchneekoppe::GegnerExplode() {
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 10 + random(20), yPos - 10 + random(20), BLUE_EXPLOSION);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(20)),
+                                    yPos - 10.0f + static_cast<float>(random(20)), BLUE_EXPLOSION);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 }

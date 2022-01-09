@@ -75,12 +75,12 @@ void GegnerWandKannone::DoKI() {
                 if (PlayerAbstand() < 600) {
                     SoundManager.PlayWave(100, 128, 22050, SOUND_LASERSHOT);
                     if (BlickRichtung == LINKS) {
-                        Projectiles.PushProjectile(xPos - 18, yPos + 15, WALKER_LASER);
-                        PartikelSystem.PushPartikel(xPos - 24, yPos - 10, LASERFLAME);
+                        Projectiles.PushProjectile(xPos - 18.0f, yPos + 15.0f, WALKER_LASER);
+                        PartikelSystem.PushPartikel(xPos - 24.0f, yPos - 10.0f, LASERFLAME);
 
                     } else {
-                        Projectiles.PushProjectile(xPos + 30, yPos + 15, WALKER_LASER2);
-                        PartikelSystem.PushPartikel(xPos + 21, yPos - 10, LASERFLAME);
+                        Projectiles.PushProjectile(xPos + 30.0f, yPos + 15.0f, WALKER_LASER2);
+                        PartikelSystem.PushPartikel(xPos + 21.0f, yPos - 10.0f, LASERFLAME);
                     }
                 }
             }
@@ -98,7 +98,8 @@ void GegnerWandKannone::DoKI() {
 
 void GegnerWandKannone::GegnerExplode() {
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 30 + random(42), yPos - 30 + random(32), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(42)),
+                                    yPos - 30.0f + static_cast<float>(random(32)), EXPLOSION_MEDIUM2);
 
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
 

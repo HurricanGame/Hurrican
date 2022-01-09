@@ -110,7 +110,8 @@ void GegnerFieserFireWalker::DoKI() {
                 ShotDelay2 = 0.4f;
                 ShotDelay -= 1.0f;
 
-                Projectiles.PushProjectile(xPos + 5 + BlickRichtung * 38, yPos - 7, WALKERFIRE, pAim);
+                Projectiles.PushProjectile(xPos + 5.0f + static_cast<float>(BlickRichtung * 38),
+                                           yPos - 7.0f, WALKERFIRE, pAim);
             }
 
             // Spieler nicht mehr vor dem Walker? Dann auch nicht mehr schiessen
@@ -154,12 +155,14 @@ void GegnerFieserFireWalker::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerFieserFireWalker::GegnerExplode() {
-    PartikelSystem.PushPartikel(xPos - 30, yPos - 30, EXPLOSION_BIG);
+    PartikelSystem.PushPartikel(xPos - 30.0f, yPos - 30.0f, EXPLOSION_BIG);
 
     for (int i = 0; i < 8; i++)
-        PartikelSystem.PushPartikel(xPos - 30 + random(60), yPos - 30 + random(60), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(60)),
+                                    yPos - 30.0f + static_cast<float>(random(60)), EXPLOSION_MEDIUM2);
     for (int i = 0; i < 12; i++)
-        PartikelSystem.PushPartikel(xPos + random(50), yPos + random(50), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(50)),
+                                    yPos + static_cast<float>(random(50)), SPIDERSPLITTER);
 
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION4);  // Sound ausgeben
 

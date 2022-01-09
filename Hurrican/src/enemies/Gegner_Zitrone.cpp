@@ -38,20 +38,20 @@ void GegnerZitrone::CalcKnarreWinkel() {
     if (ydiv == 0.0f)
         ydiv = 0.00001f;
 
-    xdiv = (pAim->xpos + 35) - (xPos + 60);
+    xdiv = (pAim->xpos + 35.0f) - (xPos + 60.0f);
 
     // DKS-converting to float, new rad/deg macros:
     // newwinkel = (float)atan(xdiv / ydiv) * 180.0f / D3DX_PI + 180.0f;
     newwinkel = RadToDeg(atanf(xdiv / ydiv)) + 180.0f;
 
-    if (xdiv >= 0 && ydiv >= 0)
+    if (xdiv >= 0.0f && ydiv >= 0.0f)
         newwinkel = newwinkel;
-    else if (xdiv > 0 && ydiv < 0)
-        newwinkel = 180 + newwinkel;
-    else if (xdiv < 0 && ydiv > 0)
-        newwinkel = 360 + newwinkel;
-    else if (xdiv < 0 && ydiv < 0)
-        newwinkel = 180 + newwinkel;
+    else if (xdiv > 0.0f && ydiv < 0.0f)
+        newwinkel = 180.0f + newwinkel;
+    else if (xdiv < 0.0f && ydiv > 0.0f)
+        newwinkel = 360.0f + newwinkel;
+    else if (xdiv < 0.0f && ydiv < 0.0f)
+        newwinkel = 180.0f + newwinkel;
 
     // Winkel begrenzen
     clampAngle(newwinkel);
@@ -80,33 +80,34 @@ void GegnerZitrone::DoDraw() {
     if (AlreadyDrawn == false) {
         DirectGraphics.SetAdditiveMode();
         if (AnimPhase >= 5)
-            Projectiles.LavaFlare.RenderSprite(-TileEngine.XOffset + xPos - 60 + a * 4,
-                                               -TileEngine.YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
+            Projectiles.LavaFlare.RenderSprite(-TileEngine.XOffset + xPos - 60.0f + static_cast<float>(a * 4),
+                                               -TileEngine.YOffset + yPos - 10.0f + yoff, 0, 0xBBFFAA66);
 
         if (AnimPhase <= 5)
-            Projectiles.LavaFlare.RenderSprite(-TileEngine.XOffset + xPos + 40 + (a - 5) * 4,
-                                               -TileEngine.YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
+            Projectiles.LavaFlare.RenderSprite(-TileEngine.XOffset + xPos + 40.0f + static_cast<float>((a - 5) * 4),
+                                               -TileEngine.YOffset + yPos - 10.0f + yoff, 0, 0xBBFFAA66);
         DirectGraphics.SetColorKeyMode();
     }
 
     // Knarre
-    Gegner.DroneGun.RenderSpriteRotatedOffset(-TileEngine.XOffset + xPos + 73.0f - (a)*5,
+    Gegner.DroneGun.RenderSpriteRotatedOffset(-TileEngine.XOffset + xPos + 73.0f - static_cast<float>(a * 5),
                                               -TileEngine.YOffset + yPos + 48.0f + yoff, KnarreWinkel, 0, 0,
                                               0xFFFFFFFF);
 
     // Körper
-    pGegnerGrafix[GegnerArt]->RenderSprite(-TileEngine.XOffset + xPos, -TileEngine.YOffset + yPos + yoff, AnimPhase,
+    pGegnerGrafix[GegnerArt]->RenderSprite(-TileEngine.XOffset + xPos,
+                                           -TileEngine.YOffset + yPos + yoff, AnimPhase,
                                            0xFFFFFFFF);
 
     if (AlreadyDrawn == false) {
         DirectGraphics.SetAdditiveMode();
         if (AnimPhase < 5)
-            Projectiles.LavaFlare.RenderSprite(-TileEngine.XOffset + xPos - 70 + a * 4,
-                                               -TileEngine.YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
+            Projectiles.LavaFlare.RenderSprite(-TileEngine.XOffset + xPos - 70.0f + static_cast<float>(a * 4),
+                                               -TileEngine.YOffset + yPos - 10.0f + yoff, 0, 0xBBFFAA66);
 
         if (AnimPhase > 5)
-            Projectiles.LavaFlare.RenderSprite(-TileEngine.XOffset + xPos + 60 - (a - 5) * 4,
-                                               -TileEngine.YOffset + yPos - 10 + yoff, 0, 0xBBFFAA66);
+            Projectiles.LavaFlare.RenderSprite(-TileEngine.XOffset + xPos + 60.0f - static_cast<float>((a - 5) * 4),
+                                               -TileEngine.YOffset + yPos - 10.0f + yoff, 0, 0xBBFFAA66);
         DirectGraphics.SetColorKeyMode();
     }
 
@@ -272,8 +273,10 @@ void GegnerZitrone::DoKI() {
             SmokeDelay -= 1.0f SYNC;
             if (SmokeDelay <= 0.0f) {
                 SmokeDelay = 0.1f;
-                PartikelSystem.PushPartikel(xPos + random(30) + 20, yPos + 10 + random(40), SMOKE);
-                PartikelSystem.PushPartikel(xPos + random(30) + 20, yPos + 10 + random(40), SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(30)),
+                                            yPos + 10.0f + static_cast<float>(random(40)), SMOKE);
+                PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(30)),
+                                            yPos + 10.0f + static_cast<float>(random(40)), SMOKE3);
             }
         } break;
     }
@@ -295,8 +298,10 @@ void GegnerZitrone::DoKI() {
         SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION4);
 
         for (int i = 0; i < 8; i++) {
-            PartikelSystem.PushPartikel(xPos + random(80), yPos - 10 + random(90), EXPLOSION_MEDIUM2);
-            PartikelSystem.PushPartikel(xPos + random(80), yPos - 10 + random(90), SPIDERSPLITTER);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80)),
+                                        yPos - 10.0f + static_cast<float>(random(90)), EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80)),
+                                        yPos - 10.0f + static_cast<float>(random(90)), SPIDERSPLITTER);
         }
     }
 }
@@ -309,13 +314,17 @@ void GegnerZitrone::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION4);
 
     for (int i = 0; i < 12; i++) {
-        PartikelSystem.PushPartikel(xPos + random(80), yPos - 10 + random(90), EXPLOSION_MEDIUM2);
-        PartikelSystem.PushPartikel(xPos + random(80), yPos - 10 + random(90), SPIDERSPLITTER);
-        PartikelSystem.PushPartikel(xPos + 10 + random(80), yPos - 10 + random(90), SCHROTT1);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80)),
+                                    yPos - 10.0f + static_cast<float>(random(90)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80)),
+                                    yPos - 10.0f + static_cast<float>(random(90)), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(80)),
+                                    yPos - 10.0f + static_cast<float>(random(90)), SCHROTT1);
     }
 
     for (int i = 0; i < 4; i++)
-        PartikelSystem.PushPartikel(xPos - 30 + random(70), yPos - 30 + random(80), SPLITTER);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(70)),
+                                    yPos - 30.0f + static_cast<float>(random(80)), SPLITTER);
 
     Player[0].Score += 400;
 }

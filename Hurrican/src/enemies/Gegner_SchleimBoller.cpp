@@ -148,8 +148,8 @@ void GegnerSchleimBoller::GegnerExplode() {
     // PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_GREEN);
 
     for (int i = 0; i < 3 + Size / 8; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(15 + random(20)),
-                                    yPos + static_cast<float>(15 + random(20)), SCHLEIM);
+        PartikelSystem.PushPartikel(xPos + 15.0f + static_cast<float>(random(20)),
+                                    yPos + 15.0f + static_cast<float>(random(20)), SCHLEIM);
 
     // DKS - Added function WaveIsPlaying() to SoundManagerClass:
     if (!SoundManager.WaveIsPlaying(SOUND_SCHLEIM))

@@ -35,8 +35,8 @@ void GegnerDeckenKrabbe::DoDraw() {
     else
         mirror = true;
 
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset),
-                                                  static_cast<float>(yPos - TileEngine.YOffset), zRot, AnimPhase,
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(xPos - TileEngine.XOffset,
+                                                  yPos - TileEngine.YOffset, zRot, AnimPhase,
                                                   0xFFFFFFFF, mirror);
 
     // Testen, ob der Spieler die Krabbe berührt hat
@@ -89,11 +89,13 @@ void GegnerDeckenKrabbe::DoKI() {
                 //
                 int a = 0;
                 uint32_t b =
-                    TileEngine.TileAt(static_cast<int>(xPos / TILESIZE_X), static_cast<int>(yPos / TILESIZE_Y) + a)
+                    TileEngine.TileAt(static_cast<int>(xPos / TILESIZE_X),
+                                      static_cast<int>(yPos / TILESIZE_Y) + a)
                         .Block;
 
                 while (a < 20 && !(b & BLOCKWERT_WAND)) {
-                    b = TileEngine.TileAt(static_cast<int>(xPos / TILESIZE_X), static_cast<int>(yPos / TILESIZE_Y) + a)
+                    b = TileEngine.TileAt(static_cast<int>(xPos / TILESIZE_X),
+                                          static_cast<int>(yPos / TILESIZE_Y) + a)
                             .Block;
                     a++;
                 }
@@ -175,7 +177,7 @@ void GegnerDeckenKrabbe::DoKI() {
                 }
             }
 
-            xPos += 7.0f * BlickRichtung * -1 SYNC;
+            xPos += 7.0f * static_cast<float>(BlickRichtung) * -1.0f SYNC;
 
             AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
@@ -187,8 +189,8 @@ void GegnerDeckenKrabbe::DoKI() {
             }
 
             // Rumdrehen ?
-            if ((BlickRichtung == LINKS && xPos + 35 > pAim->xpos + 35) ||
-                (BlickRichtung == RECHTS && xPos + 35 < pAim->xpos + 35)) {
+            if ((BlickRichtung == LINKS && xPos + 35.0f > pAim->xpos + 35.0f) ||
+                (BlickRichtung == RECHTS && xPos + 35.0f < pAim->xpos + 35.0f)) {
                 Handlung = GEGNER_DREHEN;
                 AnimCount = 0.0f;
                 AnimPhase = 4;
@@ -217,9 +219,9 @@ void GegnerDeckenKrabbe::DoKI() {
                 AnimSpeed = 0.75f;
                 Destroyable = true;
 
-                if (xPos + 35 < pAim->xpos + 35)
+                if (xPos + 35.0f < pAim->xpos + 35.0f)
                     BlickRichtung = LINKS;
-                if (xPos + 35 > pAim->xpos + 35)
+                if (xPos + 35.0f > pAim->xpos + 35.0f)
                     BlickRichtung = RECHTS;
             }
         } break;
@@ -236,11 +238,13 @@ void GegnerDeckenKrabbe::DoKI() {
 void GegnerDeckenKrabbe::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 9000 + random(2000), SOUND_EXPLOSION3);
 
-    PartikelSystem.PushPartikel(xPos + 15, yPos + 10, LAVAKRABBE_KOPF);
+    PartikelSystem.PushPartikel(xPos + 15.0f, yPos + 10.0f, LAVAKRABBE_KOPF);
 
     for (int i = 0; i < 4; i++)
-        PartikelSystem.PushPartikel(xPos - 10 + random(30), yPos - 10 + random(10), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(30)),
+                                    yPos - 10.0f + static_cast<float>(random(10)), EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 4; i++)
-        PartikelSystem.PushPartikel(xPos - 10 + random(30), yPos - 10 + random(10), LAVAKRABBE_BEIN);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(30)),
+                                    yPos - 10.0f + static_cast<float>(random(10)), LAVAKRABBE_BEIN);
 }

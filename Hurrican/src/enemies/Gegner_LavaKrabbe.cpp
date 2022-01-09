@@ -59,9 +59,9 @@ void GegnerLavaKrabbe::DoDraw() {
         size = 70.0f - size;
 
         pGegnerGrafix[GegnerArt]->SetRect(0, 0, 70, 34);
-        pGegnerGrafix[GegnerArt]->RenderSpriteScaledRotated(static_cast<float>(xPos - TileEngine.XOffset + size / 2),
-                                                            static_cast<float>(yPos - TileEngine.YOffset), 70 - size,
-                                                            34 - size / 2.0f, zPos * 4.0f, Color);
+        pGegnerGrafix[GegnerArt]->RenderSpriteScaledRotated(xPos - TileEngine.XOffset + size / 2.0f,
+                                                            yPos - TileEngine.YOffset, 70.0f - size,
+                                                            34.0f - size / 2.0f, zPos * 4.0f, Color);
     }
 
     // oder schon auf dem Fahrstuhl?
@@ -76,8 +76,8 @@ void GegnerLavaKrabbe::DoDraw() {
             mirrored = false;
 
         D3DCOLOR Color = D3DCOLOR_RGBA(255, a, a, 255);
-        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                               static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, Color,
+        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                               yPos - TileEngine.YOffset, AnimPhase, Color,
                                                mirrored);
     }
 }
@@ -94,7 +94,7 @@ void GegnerLavaKrabbe::DoKI() {
     switch (Handlung) {
         case GEGNER_NOTVISIBLE: {
             Handlung = GEGNER_FALLEN;
-            yPos = static_cast<float>(TileEngine.YOffset) + 200.0f;
+            yPos = TileEngine.YOffset + 200.0f;
             yAcc = 1.0f;
             ySpeed = g_Fahrstuhl_Speed - 15.05f;
         } break;
@@ -201,11 +201,13 @@ void GegnerLavaKrabbe::DoKI() {
 void GegnerLavaKrabbe::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 9000 + random(2000), SOUND_EXPLOSION3);
 
-    PartikelSystem.PushPartikel(xPos + 15, yPos + 10, LAVAKRABBE_KOPF);
+    PartikelSystem.PushPartikel(xPos + 15.0f, yPos + 10.0f, LAVAKRABBE_KOPF);
 
     for (int i = 0; i < 4; i++)
-        PartikelSystem.PushPartikel(xPos - 10 + random(30), yPos - 10 + random(10), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(30)),
+                                    yPos - 10.0f + static_cast<float>(random(10)), EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 4; i++)
-        PartikelSystem.PushPartikel(xPos - 10 + random(30), yPos - 10 + random(10), LAVAKRABBE_BEIN);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(30)),
+                                    yPos - 10.0f + static_cast<float>(random(10)), LAVAKRABBE_BEIN);
 }

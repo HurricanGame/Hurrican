@@ -102,8 +102,8 @@ void GegnerKugelGross::DoKI() {
 
 void GegnerKugelGross::GegnerExplode() {
     // Zwei neue Kugeln spawnen
-    Gegner.PushGegner(xPos + 12, yPos + 12, KUGELMEDIUM, -8, 0, ChangeLight);
-    Gegner.PushGegner(xPos + 12, yPos + 12, KUGELMEDIUM, 8, 0, ChangeLight);
+    Gegner.PushGegner(xPos + 12.0f, yPos + 12.0f, KUGELMEDIUM, -8, 0, ChangeLight);
+    Gegner.PushGegner(xPos + 12.0f, yPos + 12.0f, KUGELMEDIUM, 8, 0, ChangeLight);
 
     // Explosion
     PartikelSystem.PushPartikel(xPos - 20.0f, yPos - 20.0f, EXPLOSION_BIG);

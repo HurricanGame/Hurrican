@@ -50,9 +50,9 @@ void GegnerAuge::DoKI() {
     if (smokedelay < 0.0f) {
         smokedelay = 0.1f;
         if (BlickRichtung == RECHTS)
-            PartikelSystem.PushPartikel(xPos + 8, yPos + 18, SMOKE2);
+            PartikelSystem.PushPartikel(xPos + 8.0f, yPos + 18.0f, SMOKE2);
         else
-            PartikelSystem.PushPartikel(xPos + 42, yPos + 18, SMOKE2);
+            PartikelSystem.PushPartikel(xPos + 42.0f, yPos + 18.0f, SMOKE2);
     }
     // Animieren (nur drehen)
     //
@@ -128,13 +128,13 @@ void GegnerAuge::DoKI() {
 void GegnerAuge::GegnerExplode() {
     // Explosion
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20) - 15),
-                                    yPos + static_cast<float>(random(40) - 15), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 15.0f + static_cast<float>(random(20)),
+                                    yPos - 15.0f + static_cast<float>(random(40)), EXPLOSION_MEDIUM2);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 100;
 
     // Extra spawnen
-    Gegner.PushGegner(xPos + 12, yPos + 12, EXTRAS, Value1, 0, true);
+    Gegner.PushGegner(xPos + 12.0f, yPos + 12.0f, EXTRAS, Value1, 0, true);
 }

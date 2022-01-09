@@ -43,8 +43,8 @@ void GegnerSpitter::DoKI() {
             AnimPhase++;    // Und nächste Animationsphase
 
             if (AnimPhase == 2) {
-                Projectiles.PushProjectile(xPos + 8, yPos, STRAIGHTSCHUSS);
-                PartikelSystem.PushPartikel(xPos, yPos - 8, SMOKE);
+                Projectiles.PushProjectile(xPos + 8.0f, yPos, STRAIGHTSCHUSS);
+                PartikelSystem.PushPartikel(xPos, yPos - 8.0f, SMOKE);
             }
 
             if (AnimPhase >= AnimEnde)  // Animation von zu Ende	?

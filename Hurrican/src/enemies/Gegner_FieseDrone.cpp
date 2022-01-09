@@ -77,14 +77,14 @@ void GegnerFieseDrone::DoKI() {
 
     // in Richtung Spieler fliegen
     //
-    if (xPos + 30 < pAim->xpos + 35)
+    if (xPos + 30.0f < pAim->xpos + 35.0f)
         xAcc = 1.0f;
-    if (xPos + 30 > pAim->xpos + 35)
+    if (xPos + 30.0f > pAim->xpos + 35.0f)
         xAcc = -1.0f;
 
-    if (yPos < pAim->ypos - 100)
+    if (yPos < pAim->ypos - 100.0f)
         yAcc = 1.0f;
-    if (yPos > pAim->ypos - 100)
+    if (yPos > pAim->ypos - 100.0f)
         yAcc = -1.0f;
 
     xSpeed = std::clamp(xSpeed, -10.0f, 10.0f);
@@ -98,30 +98,30 @@ void GegnerFieseDrone::DoKI() {
 
             float xdiv, ydiv, newwinkel;
 
-            ydiv = (pAim->ypos + 40) - (yPos + 20);
+            ydiv = (pAim->ypos + 40.0f) - (yPos + 20.0f);
 
             if (ydiv == 0.0f)
                 ydiv = 0.00001f;
 
-            xdiv = (pAim->xpos + 35) - (xPos + 20);
+            xdiv = (pAim->xpos + 35.0f) - (xPos + 20.0f);
 
             // DKS - Use new Rad/Deg macros - converted to float:
             // newwinkel = (float)atan(xdiv / ydiv) * 180.0f / D3DX_PI + 180.0f;
             newwinkel = RadToDeg(atanf(xdiv / ydiv)) + 180.0f;
 
-            if (xdiv >= 0 && ydiv >= 0)
+            if (xdiv >= 0.0f && ydiv >= 0.0f)
                 newwinkel = newwinkel;
-            else if (xdiv > 0 && ydiv < 0)
-                newwinkel = 180 + newwinkel;
-            else if (xdiv < 0 && ydiv > 0)
-                newwinkel = 360 + newwinkel;
-            else if (xdiv < 0 && ydiv < 0)
-                newwinkel = 180 + newwinkel;
+            else if (xdiv > 0.0f && ydiv < 0.0f)
+                newwinkel = 180.0f + newwinkel;
+            else if (xdiv < 0.0f && ydiv > 0)
+                newwinkel = 360.0f + newwinkel;
+            else if (xdiv < 0.0f && ydiv < 0.0f)
+                newwinkel = 180.0f + newwinkel;
 
             WinkelUebergabe = 360.0f - newwinkel;
 
-            Projectiles.PushProjectile(xPos + 20, yPos + 20, FLUGLASER);
-            PartikelSystem.PushPartikel(xPos + 20, yPos + 20, SMOKE);
+            Projectiles.PushProjectile(xPos + 20.0f, yPos + 20.0f, FLUGLASER);
+            PartikelSystem.PushPartikel(xPos + 20.0f, yPos + 20.0f, SMOKE);
             SoundManager.PlayWave(50, 128, 25000 + random(5000), SOUND_LASERSHOT);
         }
     }
@@ -139,8 +139,8 @@ void GegnerFieseDrone::DoKI() {
         // In der Luft rumdümpeln
         //
         case GEGNER_LAUFEN: {
-            if ((xPos + 30 < pAim->xpos + 35 && BlickRichtung == LINKS) ||
-                (xPos + 30 > pAim->xpos + 35 && BlickRichtung == RECHTS)) {
+            if ((xPos + 30.0f < pAim->xpos + 35.0f && BlickRichtung == LINKS) ||
+                (xPos + 30.0f > pAim->xpos + 35.0f && BlickRichtung == RECHTS)) {
                 Handlung = GEGNER_DREHEN;
                 AnimPhase = 13;
                 AnimStart = 13;
@@ -171,7 +171,7 @@ void GegnerFieseDrone::DoKI() {
     while (SmokeDelay < 0.0f) {
         SmokeDelay += 0.7f;
 
-        PartikelSystem.PushPartikel(xPos + flamex, yPos + 28, SMOKE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(flamex), yPos + 28.0f, SMOKE);
     }
 
     // Testen, ob der Spieler die Drone berührt hat
@@ -184,11 +184,11 @@ void GegnerFieseDrone::DoKI() {
 
 void GegnerFieseDrone::GegnerExplode() {
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40) - 25),
-                                    yPos + static_cast<float>(random(40) - 25), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 25.0f + static_cast<float>(random(40)),
+                                    yPos - 25.0f + static_cast<float>(random(40)), EXPLOSION_MEDIUM2);
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(30) + 10),
-                                    yPos + static_cast<float>(random(30) + 10), LASERFUNKE2);
+        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(30)),
+                                    yPos + 10.0f + static_cast<float>(random(30)), LASERFUNKE2);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

@@ -91,7 +91,8 @@ void GegnerSnowBomb::DoKI() {
                 }
 
                 for (int i = 0; i < 10; i++)
-                    PartikelSystem.PushPartikel(xPos + random(50), yPos + random(20) + 50, WATERFLUSH2);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(50)),
+                                                yPos + static_cast<float>(random(20)) + 50, WATERFLUSH2);
 
                 SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND_LANDEN);
             }
@@ -132,8 +133,8 @@ void GegnerSnowBomb::GegnerExplode() {
                                    yPos + static_cast<float>(random(50)), SNOWBOMBSMALL);
 
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(70)) - 10,
-                                    yPos + static_cast<float>(random(70)) - 10, SNOWFLUSH);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(70)),
+                                    yPos - 10.0f + static_cast<float>(random(70)), SNOWFLUSH);
 
     SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND_LANDEN);
 

@@ -57,8 +57,8 @@ void GegnerKrabblerOben::DoKI() {
             if (ShotDelay <= 0.0f) {
                 ShotDelay = static_cast<float>(Value1);
                 Handlung = GEGNER_SCHIESSEN;
-                Projectiles.PushProjectile(xPos + 24, yPos + 48, KRABBLERLASER1);
-                PartikelSystem.PushPartikel(xPos - 1, yPos + 44, LASERFLAME);
+                Projectiles.PushProjectile(xPos + 24.0f, yPos + 48.0f, KRABBLERLASER1);
+                PartikelSystem.PushPartikel(xPos - 1.0f, yPos + 44.0f, LASERFLAME);
                 SoundManager.PlayWave3D(static_cast<int>(xPos + 25.0f),
                                         static_cast<int>(yPos + 37.0f), 44100, SOUND_LASERSHOT);
                 AnimPhase = 10;
@@ -90,8 +90,8 @@ void GegnerKrabblerOben::DoKI() {
 void GegnerKrabblerOben::GegnerExplode() {
     // Explosion
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20) - 15),
-                                    yPos + static_cast<float>(random(40) - 15), EXPLOSION_MEDIUM3);
+        PartikelSystem.PushPartikel(xPos - 15.0f + static_cast<float>(random(20)),
+                                    yPos - 15.0f + static_cast<float>(random(40)), EXPLOSION_MEDIUM3);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

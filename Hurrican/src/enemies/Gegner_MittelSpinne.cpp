@@ -50,7 +50,10 @@ void GegnerMittelSpinne::DoDraw() {
         lightred = light;
 
     D3DCOLOR Color =
-        D3DCOLOR_RGBA(static_cast<int>(light), static_cast<int>(lightred), static_cast<int>(lightred), 255);
+        D3DCOLOR_RGBA(static_cast<int>(light),
+                      static_cast<int>(lightred),
+                      static_cast<int>(lightred),
+                      255);
 
     // Schatten rendern
     //
@@ -94,14 +97,14 @@ void GegnerMittelSpinne::DoKI() {
             float w = RadToDeg(atanf(dx / dy));
             float winkel = w;
 
-            if (dx >= 0 && dy >= 0)
+            if (dx >= 0.0f && dy >= 0.f)
                 winkel = w;
-            else if (dx > 0 && dy < 0)
-                winkel = 180 + w;
-            else if (dx < 0 && dy > 0)
-                winkel = 360 + w;
-            else if (dx < 0 && dy < 0)
-                winkel = 180 + w;
+            else if (dx > 0.0f && dy < 0.0f)
+                winkel = 180.0f + w;
+            else if (dx < 0.0f && dy > 0.0f)
+                winkel = 360.0f + w;
+            else if (dx < 0.0f && dy < 0.0f)
+                winkel = 180.0f + w;
 
             winkel = 360.0f - winkel;
 
@@ -142,7 +145,8 @@ void GegnerMittelSpinne::DoKI() {
 
             if (shotdelay < 0.0f) {
                 shotdelay = 0.2f SYNC;
-                PartikelSystem.PushPartikel(xPos + 20 + random(5), yPos + 15 + random(5), ROCKETSMOKE);
+                PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(5)),
+                                            yPos + 15.0f + static_cast<float>(random(5)), ROCKETSMOKE);
             }
         } break;
     }
@@ -159,7 +163,7 @@ void GegnerMittelSpinne::DoKI() {
 
 void GegnerMittelSpinne::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
-    PartikelSystem.PushPartikel(xPos + 5, yPos, EXPLOSION_MEDIUM3);
+    PartikelSystem.PushPartikel(xPos + 5.0f, yPos, EXPLOSION_MEDIUM3);
 
     for (int i = 0; i < 10; i++)
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80)),
@@ -170,8 +174,8 @@ void GegnerMittelSpinne::GegnerExplode() {
                                     yPos + static_cast<float>(random(50)), FUNKE);
 
     for (int i = 0; i < 7; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(60) - 10),
-                                    yPos + static_cast<float>(random(60) - 10), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(60)),
+                                    yPos - 10.0f + static_cast<float>(random(60)), EXPLOSION_MEDIUM2);
 
     Player[0].Score += 250;
 }
