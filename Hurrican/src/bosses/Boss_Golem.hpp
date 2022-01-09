@@ -4,18 +4,13 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-#define WACKELMAX 0.1f
-#define ARMX -55.0f
-#define ARMY 20.0f
-
-#define ARMSIZEX 193
-#define ARMSIZEY 179
-
-#define ARM_HEBEN 0
-#define ARM_SENKEN 1
-#define ARM_SENKEN2 2
-#define ARM_UEBERKOPF 3
-#define ARM_WERFEN 4
+enum class ArmState {
+  HEBEN,
+  SENKEN,
+  SENKEN2,
+  UEBERKOPF,
+  WERFEN
+};
 
 class GegnerGolem : public GegnerClass {
   private:
@@ -28,7 +23,7 @@ class GegnerGolem : public GegnerClass {
     float yoff;
     float ShotDelay;
     float count;
-    int state2;
+    ArmState state2;
     int StoneCount;
     int last;
 

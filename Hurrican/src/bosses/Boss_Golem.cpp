@@ -8,6 +8,17 @@
 #include "stdafx.hpp"
 
 // --------------------------------------------------------------------------------------
+// Defines
+// --------------------------------------------------------------------------------------
+
+constexpr float WACKELMAX = 0.1f;
+constexpr float ARMX = -55.0f;
+constexpr float ARMY = 20.0f;
+
+constexpr int ARMSIZEX = 193;
+constexpr int ARMSIZEY = 179;
+
+// --------------------------------------------------------------------------------------
 // Konstruktor
 // --------------------------------------------------------------------------------------
 
@@ -352,7 +363,7 @@ void GegnerGolem::DoKI() {
                 xPos = TileEngine.ScrolltoX + 100.0f;
                 Handlung = GEGNER_SPECIAL2;
                 last = GEGNER_SPECIAL2;
-                state2 = ARM_SENKEN;
+                state2 = ArmState::SENKEN;
                 StoneCount = 3 + random(2);
             }
         } break;
@@ -374,7 +385,7 @@ void GegnerGolem::DoKI() {
         // gegen die wand bollern und lavabälle spawnen
         case GEGNER_SPECIAL2: {
             switch (state2) {
-                case ARM_SENKEN: {
+                case ArmState::SENKEN: {
                     if (Wackel > -0.2f)
                         Wackel -= 0.03f SYNC;
                     else
@@ -384,7 +395,7 @@ void GegnerGolem::DoKI() {
                     rotarm2 += 0.25f SYNC;
 
                     if (rotarm2 > 1.0f) {
-                        state2 = ARM_HEBEN;
+                        state2 = ArmState::HEBEN;
                         ShakeScreen(3.0f);
                         SoundManager.PlayWave(75, 128, 15000 + random(2000), SOUND_DOORSTOP);
 
@@ -394,7 +405,7 @@ void GegnerGolem::DoKI() {
                     }
                 } break;
 
-                case ARM_HEBEN: {
+                case ArmState::HEBEN: {
                     if (Wackel > -0.2f)
                         Wackel -= 0.03f SYNC;
                     else
@@ -404,7 +415,7 @@ void GegnerGolem::DoKI() {
                     rotarm2 -= 0.25f SYNC;
 
                     if (rotarm1 > 1.0f) {
-                        state2 = ARM_SENKEN;
+                        state2 = ArmState::SENKEN;
                         ShakeScreen(3.0f);
                         SoundManager.PlayWave(75, 128, 15000 + random(2000), SOUND_DOORSTOP);
 
@@ -441,14 +452,14 @@ void GegnerGolem::DoKI() {
                     if (random(2) == 0) {
                         Handlung = GEGNER_CRUSHEN;
                         last = GEGNER_CRUSHEN;
-                        state2 = ARM_SENKEN;
+                        state2 = ArmState::SENKEN;
                         StoneCount = random(2) + 2;
                     }
 
                     // oder auf die lava dreschen
                     else {
                         Handlung = GEGNER_BOMBARDIEREN;
-                        state2 = ARM_HEBEN;
+                        state2 = ArmState::HEBEN;
                         count = static_cast<float>(random(3) + 2);
                     }
                 }
@@ -534,23 +545,23 @@ void GegnerGolem::DoKI() {
         case GEGNER_CRUSHEN: {
             switch (state2) {
                 // absenken und stein holen
-                case ARM_SENKEN: {
+                case ArmState::SENKEN: {
                     Wackel -= 0.05f SYNC;
                     rotarm1 += 0.1f SYNC;
                     yoff += 5.0f SYNC;
 
                     if (Wackel < -0.5f)
-                        state2 = ARM_HEBEN;
+                        state2 = ArmState::HEBEN;
                 } break;
 
                 // wieder aufrichten
-                case ARM_HEBEN: {
+                case ArmState::HEBEN: {
                     yoff -= 5.0f SYNC;
                     Wackel += 0.05f SYNC;
                     rotarm1 -= 0.1f SYNC;
 
                     if (Wackel >= 0.0f) {
-                        state2 = ARM_UEBERKOPF;
+                        state2 = ArmState::UEBERKOPF;
                         Wackel = 0.0f;
                         rotarm1 = 0.0f;
                         yoff = 0.0f;
@@ -558,19 +569,19 @@ void GegnerGolem::DoKI() {
                 } break;
 
                 // Stein nach hinten nehmen
-                case ARM_UEBERKOPF: {
+                case ArmState::UEBERKOPF: {
                     // yoff += 5.0f SYNC;
                     Wackel += 0.04f SYNC;
                     rotarm1 += 0.4f SYNC;
 
                     if (Wackel >= 0.35f) {
-                        state2 = ARM_WERFEN;
+                        state2 = ArmState::WERFEN;
                         SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND_MUTANT);
                     }
                 } break;
 
                 // Stein werfen
-                case ARM_WERFEN: {
+                case ArmState::WERFEN: {
                     if (Wackel > 0.0f)
                         Wackel -= 0.1f SYNC;
                     else
@@ -584,12 +595,12 @@ void GegnerGolem::DoKI() {
                         Gegner.PushGegner(xPos - 40.0f, yPos + 30.0f, BOULDER, -(random(40) + 10), -(random(10) + 10),
                                           true);
                         SoundManager.PlayWave(100, 128, 14000 + random(4000), SOUND_STONEFALL);
-                        state2 = ARM_SENKEN2;
+                        state2 = ArmState::SENKEN2;
                     }
                 } break;
 
                 // wieder in wurf ausgangsposition
-                case ARM_SENKEN2: {
+                case ArmState::SENKEN2: {
                     bool fertig[3] = {true, true, true};
 
                     // zuende wackeln
@@ -605,7 +616,7 @@ void GegnerGolem::DoKI() {
                         if (StoneCount == 0)
                             Handlung = GEGNER_LAUFEN;
                         else
-                            state2 = ARM_SENKEN;
+                            state2 = ArmState::SENKEN;
                     }
                 } break;
             }
@@ -645,18 +656,18 @@ void GegnerGolem::DoKI() {
             // arm heben
             switch (state2) {
                 // schnell heben
-                case ARM_HEBEN: {
+                case ArmState::HEBEN: {
                     rotarm1 += 0.3f SYNC;
                     rotarm2 += 0.2f SYNC;
 
                     if (rotarm1 > 3.0f) {
                         rotarm1 = 3.0f;
-                        state2 = ARM_SENKEN;
+                        state2 = ArmState::SENKEN;
                     }
                 } break;
 
                 // schnell absenken
-                case ARM_SENKEN: {
+                case ArmState::SENKEN: {
                     rotarm1 -= 0.8f SYNC;
                     rotarm2 -= 0.7f SYNC;
 
@@ -664,7 +675,7 @@ void GegnerGolem::DoKI() {
                     if (rotarm1 < 0.7f) {
                         rotarm1 = 0.7f;
                         rotarm2 = 0.7f;
-                        state2 = ARM_SENKEN2;
+                        state2 = ArmState::SENKEN2;
 
                         // Spritzer
                         for (int i = 0; i < 48; i++)
@@ -680,7 +691,7 @@ void GegnerGolem::DoKI() {
                 } break;
 
                 // langsam wieder ein stück hoch federn
-                case ARM_SENKEN2: {
+                case ArmState::SENKEN2: {
                     rotarm1 += 0.25f SYNC;
                     rotarm2 += 0.25f SYNC;
 
@@ -693,7 +704,7 @@ void GegnerGolem::DoKI() {
                         if (count < 0.0f)
                             Handlung = GEGNER_SPECIAL;
                         else
-                            state2 = ARM_HEBEN;
+                            state2 = ArmState::HEBEN;
                     }
                 } break;
             }
