@@ -36,18 +36,18 @@ void GegnerEvilHurri::DoDraw() {
     for (int i = 0; i < 4; i++) {
         DirectGraphics.SetAdditiveMode();
         if (BlickRichtung == LINKS) {
-            Player[0].PlayerRun.RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                             static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xAA444444,
+            Player[0].PlayerRun.RenderSprite(xPos - TileEngine.XOffset,
+                                             yPos - TileEngine.YOffset, AnimPhase, 0xAA444444,
                                              true);
-            Player[0].PlayerRun.RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                             static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFF0022FF,
+            Player[0].PlayerRun.RenderSprite(xPos - TileEngine.XOffset,
+                                             yPos - TileEngine.YOffset, AnimPhase, 0xFF0022FF,
                                              true);
         } else {
-            Player[0].PlayerRun.RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                             static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xAA444444);
+            Player[0].PlayerRun.RenderSprite(xPos - TileEngine.XOffset,
+                                             yPos - TileEngine.YOffset, AnimPhase, 0xAA444444);
 
-            Player[0].PlayerRun.RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                             static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFF0022FF);
+            Player[0].PlayerRun.RenderSprite(xPos - TileEngine.XOffset,
+                                             yPos - TileEngine.YOffset, AnimPhase, 0xFF0022FF);
         }
     }
 }
@@ -66,7 +66,8 @@ void GegnerEvilHurri::DoKI() {
 
     // Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
     if (Active == true && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
-        TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
+        TileEngine.ScrollLevel(static_cast<float>(Value1),
+                               static_cast<float>(Value2),
                                TileStateEnum::SCROLLTOLOCK);  // Level auf die Faust zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
@@ -310,11 +311,11 @@ void GegnerEvilHurri::DoKI() {
                 SoundManager.PlayWave(100, random(255), 8000 + random(4000), SOUND_CANON);
 
                 if (BlickRichtung == RECHTS) {
-                    PartikelSystem.PushPartikel(xPos + 50, yPos + 20, SMOKE);
-                    Projectiles.PushProjectile(xPos + 55, yPos + 30, EVILSHOT);
+                    PartikelSystem.PushPartikel(xPos + 50.0f, yPos + 20.0f, SMOKE);
+                    Projectiles.PushProjectile(xPos + 55.0f, yPos + 30.0f, EVILSHOT);
                 } else {
-                    PartikelSystem.PushPartikel(xPos + 10, yPos + 20, SMOKE);
-                    Projectiles.PushProjectile(xPos, yPos + 30, EVILSHOT2);
+                    PartikelSystem.PushPartikel(xPos + 10.0f, yPos + 20.0f, SMOKE);
+                    Projectiles.PushProjectile(xPos, yPos + 30.0f, EVILSHOT2);
                 }
             }
 
@@ -362,11 +363,11 @@ void GegnerEvilHurri::DoKI() {
                 SoundManager.PlayWave(100, random(255), 8000 + random(4000), SOUND_CANON);
 
                 if (BlickRichtung == RECHTS) {
-                    PartikelSystem.PushPartikel(xPos + 50, yPos + 20, SMOKE);
-                    Projectiles.PushProjectile(xPos + 55, yPos + 30, EVILSHOT);
+                    PartikelSystem.PushPartikel(xPos + 50.0f, yPos + 20.0f, SMOKE);
+                    Projectiles.PushProjectile(xPos + 55.0f, yPos + 30.0f, EVILSHOT);
                 } else {
-                    PartikelSystem.PushPartikel(xPos + 10, yPos + 20, SMOKE);
-                    Projectiles.PushProjectile(xPos, yPos + 30, EVILSHOT2);
+                    PartikelSystem.PushPartikel(xPos + 10.0f, yPos + 20.0f, SMOKE);
+                    Projectiles.PushProjectile(xPos, yPos + 30.0f, EVILSHOT2);
                 }
             }
 
@@ -388,10 +389,12 @@ void GegnerEvilHurri::DoKI() {
 
             if (ActionDelay < 0.0f) {
                 SoundManager.PlayWave(100, random(255), 8000 + random(4000), SOUND_CANON);
-                PartikelSystem.PushPartikel(xPos + (AnimPhase - 36) * 5, yPos - 23 + abs(AnimPhase - 41) * 8, SMOKE);
+                PartikelSystem.PushPartikel(xPos + static_cast<float>((AnimPhase - 36) * 5),
+                                            yPos - 23.0f + static_cast<float>(abs(AnimPhase - 41) * 8), SMOKE);
                 //				PartikelSystem.PushPartikel(xPos+30, yPos+28, BULLET);
 
-                Projectiles.PushProjectile(xPos + 5 + (AnimPhase - 36) * 5, yPos - 10 + abs(AnimPhase - 41) * 8,
+                Projectiles.PushProjectile(xPos + 5.0f + static_cast<float>((AnimPhase - 36) * 5),
+                                           yPos - 10.0f + static_cast<float>(abs(AnimPhase - 41) * 8),
                                            EVILROUND1 + (AnimPhase - 35));
 
                 ActionDelay = 3.0f;
@@ -416,7 +419,8 @@ void GegnerEvilHurri::DoKI() {
                 AnimPhase = 0;
 
                 for (int i = 0; i < 30; i++)
-                    PartikelSystem.PushPartikel(xPos + 30 + random(10), yPos + random(10), LASERFUNKE2);
+                    PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(random(10)),
+                                                yPos + static_cast<float>(random(10)), LASERFUNKE2);
 
                 Projectiles.PushProjectile(xPos, yPos - 20, EVILBLITZ);
                 SoundManager.PlayWave(100, 128, 11025, SOUND_SPIDERGRENADE);
@@ -484,9 +488,9 @@ void GegnerEvilHurri::DoKI() {
                     xSpeed = 0.0f;
                     AnimEnde = 0;
                     AnimPhase = 40;
-                    Projectiles.PushProjectile(xPos + 20, yPos + 10, ARCSHOT);
-                    Projectiles.PushProjectile(xPos + 20, yPos + 10, ARCSHOTLEFT);
-                    Projectiles.PushProjectile(xPos + 20, yPos + 10, ARCSHOTRIGHT);
+                    Projectiles.PushProjectile(xPos + 20.0f, yPos + 10.0f, ARCSHOT);
+                    Projectiles.PushProjectile(xPos + 20.0f, yPos + 10.0f, ARCSHOTLEFT);
+                    Projectiles.PushProjectile(xPos + 20.0f, yPos + 10.0f, ARCSHOTRIGHT);
                     SoundManager.PlayWave(100, 128, 11025, SOUND_SPIDERGRENADE);
 
                     ActionDelay = 3.0f;
@@ -520,7 +524,7 @@ void GegnerEvilHurri::DoKI() {
                     xSpeed = 0.0f;
                     AnimEnde = 0;
                     AnimPhase = 40;
-                    Projectiles.PushProjectile(xPos, yPos + 10, ROCKETSPIDER);
+                    Projectiles.PushProjectile(xPos, yPos + 10.0f, ROCKETSPIDER);
                     SoundManager.PlayWave(100, 128, 11025, SOUND_ROCKET);
 
                     ActionDelay = 4.0f;
@@ -548,9 +552,12 @@ void GegnerEvilHurri::DoKI() {
                 AnimCount = 2.0f;
 
                 SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
-                PartikelSystem.PushPartikel(xPos - 20 + random(70), yPos + random(80), EXPLOSION_MEDIUM);
-                PartikelSystem.PushPartikel(xPos - 20 + random(70), yPos + random(80), EXPLOSION_MEDIUM2);
-                PartikelSystem.PushPartikel(xPos - 50 + random(70), yPos - 30 + random(80), EXPLOSION_BIG);
+                PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(70)),
+                                            yPos + static_cast<float>(random(80)), EXPLOSION_MEDIUM);
+                PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(70)),
+                                            yPos + static_cast<float>(random(80)), EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(xPos - 50.0f + static_cast<float>(random(70)),
+                                            yPos - 30.0f + static_cast<float>(random(80)), EXPLOSION_BIG);
             }
         } break;
 
@@ -567,10 +574,12 @@ void GegnerEvilHurri::GegnerExplode() {
     Player[0].Score += 9000;
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 20 + random(70), yPos + random(80), SPLITTER);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(70)),
+                                    yPos + static_cast<float>(random(80)), SPLITTER);
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 20 + random(70), yPos + random(80), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(70)),
+                                    yPos + static_cast<float>(random(80)), EXPLOSION_MEDIUM2);
 
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 

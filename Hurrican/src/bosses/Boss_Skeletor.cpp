@@ -109,15 +109,15 @@ void GegnerSkeletor::DoDraw() {
     }
     */
 
-    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - static_cast<float>(TileEngine.XOffset),
-                                           yPos - static_cast<float>(TileEngine.YOffset) + yoff, AnimPhase, Color,
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset + yoff, AnimPhase, Color,
                                            mirror);
 
     if (Handlung == GEGNER_SPECIAL2) {
         for (int i = 0; i < 4; i++) {
             D3DCOLOR col = D3DCOLOR_RGBA(255, 255, 255, 200 - i * 30);
-            pGegnerGrafix[GegnerArt]->RenderSprite(xPos - static_cast<float>(TileEngine.XOffset) - (xSpeed * i * 2),
-                                                   yPos - static_cast<float>(TileEngine.YOffset) + yoff, AnimPhase, col,
+            pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset - xSpeed * static_cast<float>(i * 2),
+                                                   yPos - TileEngine.YOffset + yoff, AnimPhase, col,
                                                    mirror);
         }
     }
@@ -133,12 +133,12 @@ void GegnerSkeletor::DoDraw() {
         Flamme.itsRect = Flamme.itsPreCalcedRects[ShotCount % 2];
 
         if (BlickRichtung == RECHTS)
-            Flamme.RenderSpriteRotatedOffset(xPos - static_cast<float>(TileEngine.XOffset) + foff,
-                                             yPos - static_cast<float>(TileEngine.YOffset) + 60, 90 - GunWinkel, -50, 0,
+            Flamme.RenderSpriteRotatedOffset(xPos - TileEngine.XOffset + static_cast<float>(foff),
+                                             yPos - TileEngine.YOffset + 60.0f, 90 - GunWinkel, -50, 0,
                                              0xFFFFFFFF, !mirror);
         else
-            Flamme.RenderSpriteRotatedOffset(xPos - static_cast<float>(TileEngine.XOffset) + foff,
-                                             yPos - static_cast<float>(TileEngine.YOffset) + 60, GunWinkel - 90, -50, 0,
+            Flamme.RenderSpriteRotatedOffset(xPos - TileEngine.XOffset + static_cast<float>(foff),
+                                             yPos - TileEngine.YOffset + 60.0f, GunWinkel - 90, -50, 0,
                                              0xFFFFFFFF, !mirror);
 
         DirectGraphics.SetColorKeyMode();
@@ -160,8 +160,8 @@ void GegnerSkeletor::DoKI() {
     //
     if (Active == true && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         // Ausserhalb des Screens setzen
-        xPos = static_cast<float>(TileEngine.XOffset) + 100.0f;
-        yPos = static_cast<float>(TileEngine.YOffset) - 250.0f;
+        xPos = TileEngine.XOffset + 100.0f;
+        yPos = TileEngine.YOffset - 250.0f;
         DrawNow = true;
 
         TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
@@ -283,7 +283,7 @@ void GegnerSkeletor::DoKI() {
                 BlickRichtung = RECHTS;
                 AnimPhase = 10 + a;
             } else {
-                a = static_cast<int>(xPos - TileEngine.XOffset - 320 + 60) / 56;
+                a = static_cast<int>(xPos - TileEngine.XOffset - 320.0f + 60.0f) / 56;
                 BlickRichtung = LINKS;
                 AnimPhase = 15 - a;
             }
@@ -313,7 +313,7 @@ void GegnerSkeletor::DoKI() {
                 BlickRichtung = RECHTS;
                 AnimPhase = 10 + a;
             } else {
-                a = static_cast<int>(xPos - TileEngine.XOffset - 320 + 60) / 56;
+                a = static_cast<int>(xPos - TileEngine.XOffset - 320.0f + 60.0f) / 56;
                 BlickRichtung = LINKS;
                 AnimPhase = 15 - a;
             }
@@ -327,7 +327,7 @@ void GegnerSkeletor::DoKI() {
                     for (int i = 0; i < 5; i++) {
                         WinkelUebergabe = 180.0f - 50 + i * 25;
 
-                        Projectiles.PushProjectile(xPos + 50, yPos + 70, FIREBALL_BIG);
+                        Projectiles.PushProjectile(xPos + 50.0f, yPos + 70.0f, FIREBALL_BIG);
                     }
                 }
             }
@@ -346,10 +346,12 @@ void GegnerSkeletor::DoKI() {
                 AnimCount = 0.0f;
 
                 for (int i = 0; i < 10; i++)
-                    PartikelSystem.PushPartikel(xPos + random(100) - 20, yPos + random(20) + 130, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100) - 20),
+                                                yPos + static_cast<float>(random(20) + 130), SMOKEBIG);
 
                 for (int i = 0; i < 10; i++)
-                    PartikelSystem.PushPartikel(xPos + random(100), yPos + 180 + random(10), SPIDERSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
+                                                yPos + static_cast<float>(random(10) + 180), SPIDERSPLITTER);
 
                 ShakeScreen(5.0f);
                 SoundManager.PlayWave(100, 128, 11025, SOUND_DOORSTOP);
@@ -376,8 +378,8 @@ void GegnerSkeletor::DoKI() {
 
                     AnimCount = 1.5f;
                     SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND_GRANATE);
-                    PartikelSystem.PushPartikel(xPos + 50 + off, yPos + 35, EXPLOSIONFLARE);
-                    PartikelSystem.PushPartikel(xPos + 50 + off, yPos + 35, EXPLOSIONFLARE);
+                    PartikelSystem.PushPartikel(xPos + 50.0f + off, yPos + 35.0f, EXPLOSIONFLARE);
+                    PartikelSystem.PushPartikel(xPos + 50.0f + off, yPos + 35.0f, EXPLOSIONFLARE);
 
                     WinkelUebergabe = 40.0f - static_cast<float>(AnimPhase) * 4 - random(8);
 
@@ -389,7 +391,7 @@ void GegnerSkeletor::DoKI() {
 
                     WinkelUebergabe *= BlickRichtung;
 
-                    Projectiles.PushProjectile(xPos + 100 + off, yPos + 80, SKELETORGRANATE);
+                    Projectiles.PushProjectile(xPos + 100.0f + off, yPos + 80.0f, SKELETORGRANATE);
 
                     ShotCount--;
                 }
@@ -431,7 +433,7 @@ void GegnerSkeletor::DoKI() {
                 if (BlickRichtung == LINKS)
                     off = 30;
 
-                PartikelSystem.PushPartikel(xPos + off, yPos + 75, BULLET_SKELETOR);
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(off), yPos + 75.0f, BULLET_SKELETOR);
 
                 // Sound
                 SoundManager.PlayWave(100, 128, 10000 + random(400), SOUND_GATLING);
@@ -447,7 +449,7 @@ void GegnerSkeletor::DoKI() {
                 if (BlickRichtung == LINKS)
                     off = 20;
 
-                Projectiles.PushProjectile(xPos + off, yPos + 75, SKELETOR_SHOT);
+                Projectiles.PushProjectile(xPos + static_cast<float>(off), yPos + 75.0f, SKELETOR_SHOT);
 
                 // fertig?
                 if (ShotCount < 0)
@@ -480,10 +482,12 @@ void GegnerSkeletor::DoKI() {
                 AnimCount = 0.0f;
 
                 for (int i = 0; i < 50; i++)
-                    PartikelSystem.PushPartikel(xPos + random(100), yPos + random(150) + 30, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
+                                                yPos + static_cast<float>(random(150) + 30), SMOKEBIG);
 
                 for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos + random(100), yPos + 180 + random(10), SPIDERSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
+                                                yPos + static_cast<float>(random(10) + 180), SPIDERSPLITTER);
 
                 ShakeScreen(5.0f);
                 SoundManager.PlayWave(100, 128, 11025, SOUND_DOORSTOP);
@@ -509,24 +513,28 @@ void GegnerSkeletor::DoKI() {
         ShotDelay = 20.0f;
 
         // Schädel spawnen
-        Gegner.PushGegner(xPos + 50, yPos + 50, SKULL, 0, 99, false);
+        Gegner.PushGegner(xPos + 50.0f, yPos + 50.0f, SKULL, 0, 99, false);
 
         // Explosionen
         // int i = 0;	// PICKLE not used
 
         for (int i = 0; i < 15; i++)
-            PartikelSystem.PushPartikel(xPos + random(100), yPos + random(200), SPLITTER);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
+                                        yPos + static_cast<float>(random(200)), SPLITTER);
 
         for (int i = 0; i < 40; i++)
-            PartikelSystem.PushPartikel(xPos + random(200) - 50, yPos + random(250) - 20, SPIDERSPLITTER);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200) - 50),
+                                        yPos + static_cast<float>(random(250) - 20), SPIDERSPLITTER);
 
         for (int i = 0; i < 40; i++)
-            PartikelSystem.PushPartikel(xPos + random(200) - 50, yPos + random(250) - 20, SCHROTT1);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200) - 50),
+                                        yPos + static_cast<float>(random(250) - 20), SCHROTT1);
 
         for (int i = 0; i < 60; i++)
-            PartikelSystem.PushPartikel(xPos + random(200) - 50, yPos + random(200) - 50, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200) - 50),
+                                        yPos + static_cast<float>(random(200) - 50), EXPLOSION_MEDIUM2);
 
-        PartikelSystem.PushPartikel(xPos + 62, yPos + 100, SHOCKEXPLOSION);
+        PartikelSystem.PushPartikel(xPos + 62.0f, yPos + 100.0f, SHOCKEXPLOSION);
         SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
         Player[0].Score += 12500;
         ShakeScreen(5.0f);

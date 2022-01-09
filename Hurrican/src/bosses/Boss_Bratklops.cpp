@@ -78,7 +78,8 @@ void GegnerBratklops::DoDraw() {
     if (a > 5)
         a = 10 - a;
 
-    pGfx[a]->RenderSprite(xPos - TileEngine.XOffset, yPos - TileEngine.YOffset, 0xFFFFFFFF);
+    pGfx[a]->RenderSprite(xPos - TileEngine.XOffset,
+                          yPos - TileEngine.YOffset, 0xFFFFFFFF);
 
     // Laser rendern ?
     //
@@ -93,9 +94,11 @@ void GegnerBratklops::DoDraw() {
 
         DirectGraphics.SetAdditiveMode();
         D3DCOLOR Color = D3DCOLOR_RGBA(255, 255, 255, c);
-        pFlare->RenderSpriteRotated(xPos - TileEngine.XOffset + 64.0f, yPos - TileEngine.YOffset + 122.0f,
+        pFlare->RenderSpriteRotated(xPos - TileEngine.XOffset + 64.0f,
+                                    yPos - TileEngine.YOffset + 122.0f,
                                     FlareDelay * 2, Color);
-        pFlare->RenderSpriteRotated(xPos - TileEngine.XOffset + 64.0f, yPos - TileEngine.YOffset + 122.0f,
+        pFlare->RenderSpriteRotated(xPos - TileEngine.XOffset + 64.0f,
+                                    yPos - TileEngine.YOffset + 122.0f,
                                     FlareDelay * 2, Color);
 
         // Laser rendern
@@ -224,9 +227,11 @@ void GegnerBratklops::DoDraw() {
                     // Funken und Rauch am Boden
                     //
                     if (random(2) == 0)
-                        PartikelSystem.PushPartikel(xs + random(24), ys + random(24), FUNKE2);
+                        PartikelSystem.PushPartikel(xs + static_cast<float>(random(24)),
+                                                    ys + static_cast<float>(random(24)), FUNKE2);
                     if (random(2) == 0)
-                        PartikelSystem.PushPartikel(xs + random(24) - 15, ys + random(8) - 40, SMOKE2);
+                        PartikelSystem.PushPartikel(xs - 15.0f + static_cast<float>(random(24)),
+                                                    ys - 40.0f + static_cast<float>(random(8)), SMOKE2);
                 }
             }
         } else
@@ -358,7 +363,7 @@ void GegnerBratklops::DoKI() {
                 if (j == 0) {
                     Handlung = GEGNER_BOMBARDIEREN;
                     ActionDelay = 8.0f;
-                    Projectiles.PushProjectile(xPos + 146, yPos + 186, BRATKLOPSSHOT);
+                    Projectiles.PushProjectile(xPos + 146.0f, yPos + 186.0f, BRATKLOPSSHOT);
                     SoundManager.PlayWave(100, 128, 8000, SOUND_GRANATE);
                     Shots = random(3) + 3;
                 }
@@ -409,7 +414,7 @@ void GegnerBratklops::DoKI() {
 
             if (ActionDelay <= 0.0f) {
                 ActionDelay = 8.0f;
-                Projectiles.PushProjectile(xPos + 146, yPos + 186, BRATKLOPSSHOT);
+                Projectiles.PushProjectile(xPos + 146.0f, yPos + 186.0f, BRATKLOPSSHOT);
                 SoundManager.PlayWave(100, 128, 8000, SOUND_GRANATE);
                 Shots--;
                 if (Shots == 0)
@@ -443,15 +448,15 @@ void GegnerBratklops::DoKI() {
                 Handlung = GEGNER_STEHEN;
                 ActionDelay = 8.0f;
 
-                Projectiles.PushProjectile(xPos + 60, yPos + 50, BRATKLOPSSHOT);
-                Projectiles.PushProjectile(xPos + 84, yPos + 80, BRATKLOPSSHOT);
-                Projectiles.PushProjectile(xPos + 108, yPos + 115, BRATKLOPSSHOT);
-                Projectiles.PushProjectile(xPos + 130, yPos + 150, BRATKLOPSSHOT);
-                Projectiles.PushProjectile(xPos + 145, yPos + 185, BRATKLOPSSHOT);
-                Projectiles.PushProjectile(xPos + 130, yPos + 220, BRATKLOPSSHOT);
-                Projectiles.PushProjectile(xPos + 108, yPos + 255, BRATKLOPSSHOT);
-                Projectiles.PushProjectile(xPos + 84, yPos + 290, BRATKLOPSSHOT);
-                Projectiles.PushProjectile(xPos + 60, yPos + 320, BRATKLOPSSHOT);
+                Projectiles.PushProjectile(xPos + 60.0f, yPos + 50.0f, BRATKLOPSSHOT);
+                Projectiles.PushProjectile(xPos + 84.0f, yPos + 80.0f, BRATKLOPSSHOT);
+                Projectiles.PushProjectile(xPos + 108.0f, yPos + 115.0f, BRATKLOPSSHOT);
+                Projectiles.PushProjectile(xPos + 130.0f, yPos + 150.0f, BRATKLOPSSHOT);
+                Projectiles.PushProjectile(xPos + 145.0f, yPos + 185.0f, BRATKLOPSSHOT);
+                Projectiles.PushProjectile(xPos + 130.0f, yPos + 220.0f, BRATKLOPSSHOT);
+                Projectiles.PushProjectile(xPos + 108.0f, yPos + 255.0f, BRATKLOPSSHOT);
+                Projectiles.PushProjectile(xPos + 84.0f, yPos + 290.0f, BRATKLOPSSHOT);
+                Projectiles.PushProjectile(xPos + 60.0f, yPos + 320.0f, BRATKLOPSSHOT);
 
                 SoundManager.PlayWave(100, 128, 8000, SOUND_GRANATE);
                 SoundManager.PlayWave(100, 128, 11025, SOUND_GRANATE);
@@ -465,9 +470,11 @@ void GegnerBratklops::DoKI() {
             // Explodieren
             //
             if (random(5) == 0)
-                PartikelSystem.PushPartikel(xPos + random(180), yPos + random(500), EXPLOSION_GREEN);
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(180)),
+                                            yPos + static_cast<float>(random(500)), EXPLOSION_GREEN);
             if (random(3) == 0)
-                PartikelSystem.PushPartikel(xPos + random(150), yPos + random(200) + 100, MADEBLUT);
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(150)),
+                                            yPos + 100.0f + static_cast<float>(random(200)) , MADEBLUT);
             if (random(8) == 0)
                 SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
 
@@ -500,7 +507,8 @@ void GegnerBratklops::DoKI() {
                 else
                     ShotDelay = 0.20f;
 
-                Gegner.PushGegner(xPos + 121 + random(6), yPos + 105 + random(6), MADE, 0, 0, false);
+                Gegner.PushGegner(xPos + 121.0f + static_cast<float>(random(6)),
+                                  yPos + 105.0f + static_cast<float>(random(6)), MADE, 0, 0, false);
             }
         } break;
 

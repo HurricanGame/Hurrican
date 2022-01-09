@@ -70,7 +70,8 @@ void GegnerTheWall::DoDraw() {
 
     if (AlreadyDrawn == false) {
         toff = static_cast<int>(sin(DoorOffset) * 100);
-        col = D3DCOLOR_RGBA(toff * 2 + 50, toff * 2 + 50, toff * 2 + 50, 255);
+        int const comp = toff * 2 + 50;
+        col = D3DCOLOR_RGBA(comp, comp, comp, 255);
 
         int Wert = 255 - (static_cast<int>(DamageTaken));
 
@@ -93,31 +94,32 @@ void GegnerTheWall::DoDraw() {
         Brain.SetRect(0, 123, 27, 157);
         if (DirectGraphics.BlendMode == BlendModeEnum::ADDITIV)
             DirectGraphics.SetAdditiveMode();
-        Brain.RenderSprite(xPos - TileEngine.XOffset + 3 + VorneX,
-                           yPos - TileEngine.YOffset + 228 + VorneY, Color);
+        Brain.RenderSprite(xPos - TileEngine.XOffset + 3.0f + VorneX,
+                           yPos - TileEngine.YOffset + 228.0f + VorneY, Color);
     }
 
     if (AlreadyDrawn == true)
         return;
 
     // Kringel im Hintergrund
-    Kringel[1].RenderSprite(xPos - TileEngine.XOffset + TunnelOffx + 38,
-                            yPos - TileEngine.YOffset + TunnelOffY - 14,
+    Kringel[1].RenderSprite(xPos - TileEngine.XOffset + static_cast<float>(TunnelOffx + 38),
+                            yPos - TileEngine.YOffset + static_cast<float>(TunnelOffY - 14),
                             static_cast<int>(KringelWinkel / 3.0f) % 5, col);
 
     // Herz rendern
     if (Handlung != GEGNER_EXPLODIEREN) {
-        Brain.RenderSprite(xPos - TileEngine.XOffset + TunnelOffx + 116,
-                           yPos - TileEngine.YOffset + TunnelOffY + 59, HeartAnim, col);
+        Brain.RenderSprite(xPos - TileEngine.XOffset + static_cast<float>(TunnelOffx + 116),
+                           yPos - TileEngine.YOffset + static_cast<float>(TunnelOffY + 59), HeartAnim, col);
 
         // Suppe rendern
         DirectGraphics.SetAdditiveMode();
-        D3DCOLOR supcol1 = D3DCOLOR_RGBA(150, 0, 0, static_cast<int>(toff * 1.5f));
-        D3DCOLOR supcol2 = D3DCOLOR_RGBA(150, 0, 0, static_cast<int>(toff * 1.5f));
+        int const alpha = toff + toff/2;
+        D3DCOLOR supcol1 = D3DCOLOR_RGBA(150, 0, 0, alpha);
+        D3DCOLOR supcol2 = D3DCOLOR_RGBA(150, 0, 0, alpha);
         int start = static_cast<int>((4000.0f - Energy * 0.75f) / 4000.0f * 42.0f);
 
-        RenderRect4(xPos - TileEngine.XOffset + TunnelOffx + 117,
-                    yPos - TileEngine.YOffset + TunnelOffY + 59 + start, 37,
+        RenderRect4(xPos - TileEngine.XOffset + static_cast<float>(TunnelOffx + 117),
+                    yPos - TileEngine.YOffset + static_cast<float>(TunnelOffY + 59 + start), 37,
                     static_cast<float>(42 - start), supcol1, supcol1, supcol2, supcol2);
 
         DirectGraphics.SetColorKeyMode();
@@ -125,8 +127,8 @@ void GegnerTheWall::DoDraw() {
 
     // Röhrenaufhängung rendern
     Brain.SetRect(76, 0, 129, 157);
-    Brain.RenderSprite(xPos - TileEngine.XOffset + TunnelOffx + 110,
-                       yPos - TileEngine.YOffset + TunnelOffY + 2, col);
+    Brain.RenderSprite(xPos - TileEngine.XOffset + static_cast<float>(TunnelOffx + 110),
+                       yPos - TileEngine.YOffset + static_cast<float>(TunnelOffY + 2), col);
 
     // abdeckenden Kringel rendern
     // DKS - Changed to use simple version of RenderSpriteRotated (original code was
@@ -134,8 +136,8 @@ void GegnerTheWall::DoDraw() {
     // Kringel[0].RenderSpriteRotated(xPos - TileEngine.XOffset + TunnelOffx + 37,
     //                               yPos - TileEngine.YOffset + TunnelOffY - 16, 360.0f -
     //                               KringelWinkel, 0, col);
-    Kringel[0].RenderSpriteRotated(xPos - TileEngine.XOffset + TunnelOffx + 37,
-                                   yPos - TileEngine.YOffset + TunnelOffY - 16,
+    Kringel[0].RenderSpriteRotated(xPos - TileEngine.XOffset + static_cast<float>(TunnelOffx + 37),
+                                   yPos - TileEngine.YOffset + static_cast<float>(TunnelOffY - 16),
                                    360.0f - KringelWinkel, col);
 
     // Türen
@@ -144,23 +146,23 @@ void GegnerTheWall::DoDraw() {
     Tuer.SetRect(toff, 0, 138, 185);
 
     // Schatten
-    Tuer.RenderSprite(xPos - TileEngine.XOffset + TunnelOffx + 20,
-                      yPos - TileEngine.YOffset + TunnelOffY - 10, 0x80000000);
+    Tuer.RenderSprite(xPos - TileEngine.XOffset + static_cast<float>(TunnelOffx + 20),
+                      yPos - TileEngine.YOffset + static_cast<float>(TunnelOffY - 10), 0x80000000);
 
-    Tuer.RenderSprite(xPos - TileEngine.XOffset + TunnelOffx + 10,
-                      yPos - TileEngine.YOffset + TunnelOffY - 10, -1, 0xFF333333, col, 0xFF333333,
+    Tuer.RenderSprite(xPos - TileEngine.XOffset + static_cast<float>(TunnelOffx + 10),
+                      yPos - TileEngine.YOffset + static_cast<float>(TunnelOffY - 10), -1, 0xFF333333, col, 0xFF333333,
                       col);
 
     // Tür rechts
     Tuer.SetRect(138, 0, 266 - toff, 185);
 
-    Tuer.RenderSprite(xPos - TileEngine.XOffset + TunnelOffx + 128 + toff,
-                      yPos - TileEngine.YOffset + TunnelOffY - 10, -1, col, 0xFF333333, col,
+    Tuer.RenderSprite(xPos - TileEngine.XOffset + static_cast<float>(TunnelOffx + 128 + toff),
+                      yPos - TileEngine.YOffset + static_cast<float>(TunnelOffY - 10), -1, col, 0xFF333333, col,
                       0xFF333333);
 
     // rahmen aussenrum
-    Rahmen.RenderSprite(xPos - TileEngine.XOffset + TunnelOffx - 8,
-                        yPos - TileEngine.YOffset + TunnelOffY - 26, 0xFFA0A0A0);
+    Rahmen.RenderSprite(xPos - TileEngine.XOffset + static_cast<float>(TunnelOffx - 8),
+                        yPos - TileEngine.YOffset + static_cast<float>(TunnelOffY - 26), 0xFFA0A0A0);
 
     AlreadyDrawn = true;
 }
@@ -184,7 +186,7 @@ void GegnerTheWall::NeueAktion() {
 
         // Schädel rumfliegen lassen
         Value1 = -1;
-        Gegner.PushGegner(xPos + 3, yPos + 228, SKULL, 99, 0, false);
+        Gegner.PushGegner(xPos + 3.0f, yPos + 228.0f, SKULL, 99, 0, false);
     } else {
         int i = random(3);
 
@@ -363,26 +365,29 @@ void GegnerTheWall::DoKI() {
             SmokeDelay = 0.2f;
 
             if (Energy < 3500)
-                PartikelSystem.PushPartikel(xPos + 82, yPos + 260, SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 82.0f, yPos + 260.0f, SMOKE3);
 
             if (Energy < 3000)
-                PartikelSystem.PushPartikel(xPos + 180, yPos + 250, SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 180.0f, yPos + 250.0f, SMOKE3);
 
             if (Energy < 2500)
-                PartikelSystem.PushPartikel(xPos + 110, yPos + 320, SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 110.0f, yPos + 320.0f, SMOKE3);
 
             if (Energy < 2000)
-                PartikelSystem.PushPartikel(xPos + 255, yPos + 130, SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 255.0f, yPos + 130.0f, SMOKE3);
 
             if (Energy < 1500)
                 if (random(20) == 0) {
-                    PartikelSystem.PushPartikel(xPos - 10 + random(10), yPos + 220 + random(10), LASERFLAME);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(10) - 10),
+                                                yPos + static_cast<float>(random(10) + 220), LASERFLAME);
 
                     for (int i = 0; i < 10; i++)
-                        PartikelSystem.PushPartikel(xPos + 10 + random(10), yPos + 240 + random(10), FUNKE);
+                        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(10) + 10),
+                                                    yPos + static_cast<float>(random(10) + 240), FUNKE);
 
                     for (int i = 0; i < 10; i++)
-                        PartikelSystem.PushPartikel(xPos + 20 + random(2), yPos + 240 + random(10), LASERFUNKE2);
+                        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(2) + 20),
+                                                    yPos + static_cast<float>(random(10) + 240), LASERFUNKE2);
                 }
         }
 
@@ -394,7 +399,7 @@ void GegnerTheWall::DoKI() {
         //
         if (Active == true && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
             if (PlayerAbstand() < 800 && PlayerAbstandHoriz() < 400.0f) {
-                TileEngine.ScrollLevel(xPos - 355, yPos, TileStateEnum::SCROLLTOLOCK);  // Level auf den Boss zentrieren
+                TileEngine.ScrollLevel(xPos - 355.0f, yPos, TileStateEnum::SCROLLTOLOCK);  // Level auf den Boss zentrieren
                 SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);         // Ausfaden und pausieren
             }
         }
@@ -405,7 +410,7 @@ void GegnerTheWall::DoKI() {
             Destroyable = false;
 
             // Level wieder zum Spieler scrollen und dann weiterscrollen lassen
-            TileEngine.ScrollLevel(Player[0].xpos - 300, Player[0].ypos - 280, TileStateEnum::SCROLLTOPLAYER);
+            TileEngine.ScrollLevel(Player[0].xpos - 300.0f, Player[0].ypos - 280.0f, TileStateEnum::SCROLLTOPLAYER);
 
             // Rad checken
             for (int p = 0; p < NUMPLAYERS; p++) {
@@ -436,11 +441,13 @@ void GegnerTheWall::DoKI() {
 
             int i;
             for (i = 0; i < 20; i++)
-                PartikelSystem.PushPartikel(xPos + TunnelOffx + 114 + random(30), yPos + TunnelOffY + 59 + random(45),
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(TunnelOffx + 114 + random(30)),
+                                            yPos + static_cast<float>(TunnelOffY + 59 + random(45)),
                                             SCHLEIM);
 
             for (i = 0; i < 80; i++)
-                PartikelSystem.PushPartikel(xPos + TunnelOffx + 114 + random(30), yPos + TunnelOffY + 59 + random(45),
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(TunnelOffx + 114 + random(30)),
+                                            yPos + static_cast<float>(TunnelOffY + 59 + random(45)),
                                             GLASSPLITTER);
 
             // Wie lange warten?
@@ -492,9 +499,9 @@ void GegnerTheWall::DoKI() {
 
                 SoundManager.PlayWave(50, 128, 8000 + random(2000), SOUND_GOLEMSHOT);
 
-                Projectiles.PushProjectile(xPos, yPos + 332, GOLEMSCHUSS);
-                PartikelSystem.PushPartikel(xPos - 30, yPos + 295, EXPLOSIONFLARE);
-                PartikelSystem.PushPartikel(xPos, yPos + 320, SMOKEBIG);
+                Projectiles.PushProjectile(xPos, yPos + 332.0f, GOLEMSCHUSS);
+                PartikelSystem.PushPartikel(xPos - 30.0f, yPos + 295.0f, EXPLOSIONFLARE);
+                PartikelSystem.PushPartikel(xPos, yPos + 320.0f, SMOKEBIG);
                 ShotDelay = 1.2f;
                 VorneX = 5.0f;
                 ShotCount--;
@@ -510,9 +517,9 @@ void GegnerTheWall::DoKI() {
 
             if (ShotDelay < 0.0f) {
                 SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_LILA);
-                Projectiles.PushProjectile(xPos, yPos + 332, SPIDERSHOT2);
-                PartikelSystem.PushPartikel(xPos - 30, yPos + 295, EXPLOSIONFLARE);
-                PartikelSystem.PushPartikel(xPos, yPos + 320, SMOKEBIG);
+                Projectiles.PushProjectile(xPos, yPos + 332.0f, SPIDERSHOT2);
+                PartikelSystem.PushPartikel(xPos - 30.0f, yPos + 295.0f, EXPLOSIONFLARE);
+                PartikelSystem.PushPartikel(xPos, yPos + 320.0f, SMOKEBIG);
                 ShotDelay = 5.0f;
                 VorneX = 5.0f;
                 ShotCount--;
@@ -603,12 +610,14 @@ void GegnerTheWall::DoKI() {
                 SoundManager.StopWave(SOUND_DOOR);
 
                 for (int i = 0; i < 36; i++)
-                    PartikelSystem.PushPartikel(xPos + TunnelOffx + 110 + random(30),
-                                                yPos + TunnelOffY + random(10) + i * 5 - 25, SMOKE);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(TunnelOffx + 110 + random(30)),
+                                                yPos + static_cast<float>(TunnelOffY + random(10) + i * 5 - 25),
+                                                SMOKE);
 
                 for (int i = 0; i < 15; i++)
-                    PartikelSystem.PushPartikel(xPos + TunnelOffx + 95 + random(30),
-                                                yPos + TunnelOffY + random(10) + i * 10 - 25, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(TunnelOffx + 95 + random(30)),
+                                                yPos + static_cast<float>(TunnelOffY + random(10) + i * 10 - 25),
+                                                SMOKEBIG);
 
                 Handlung = GEGNER_STEHEN;
                 AnimCount = 20.0f;

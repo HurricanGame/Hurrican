@@ -48,7 +48,8 @@ void GegnerRiesenPiranha::DoKI() {
 
     // Per Zufall Bläschen erzeugen
     if (random(10) == 0)
-        PartikelSystem.PushPartikel(xPos + 10 + random(230), yPos + 10 + random(190), BUBBLE);
+        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(230)),
+                                    yPos + 10.0f + static_cast<float>(random(190)), BUBBLE);
 
     // Nach links bzw rechts auf Kollision prüfen und dann ggf umkehren
     if (BlickRichtung == LINKS)
@@ -74,7 +75,7 @@ void GegnerRiesenPiranha::DoKI() {
     if (pAim->InLiquid == true && PlayerAbstand() <= 300) {
         // ggf kleinen Piranha ausspucken
         if (AnimPhase == 0 && AnimCount == 0.0f && random(2) == 0) {
-            Gegner.PushGegner(xPos + 110, yPos + 100, PIRANHA, 0, 0, ChangeLight);
+            Gegner.PushGegner(xPos + 110.0f, yPos + 100.0f, PIRANHA, 0, 0, ChangeLight);
         }
 
         if (pAim->ypos - 70 < yPos &&  // Spieler oberhalb oder

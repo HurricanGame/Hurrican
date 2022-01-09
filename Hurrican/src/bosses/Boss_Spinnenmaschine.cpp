@@ -79,8 +79,8 @@ void GegnerSpinnenmaschine::DoDraw() {
         // evtl strahl rendern, wenn der deckel aufgeht
         if (DeckelStatus != ZU) {
             DirectGraphics.SetAdditiveMode();
-            Strahl.RenderSpriteScaled(static_cast<float>(xPos - TileEngine.XOffset) - LightRayCount * 8.0f + 170,
-                                      static_cast<float>(yPos - TileEngine.YOffset),
+            Strahl.RenderSpriteScaled(xPos - TileEngine.XOffset - LightRayCount * 8.0f + 170.0f,
+                                      yPos - TileEngine.YOffset,
                                       static_cast<int>(LightRayCount * 16.0f), 190, 0xFFFF8822);
             DirectGraphics.SetColorKeyMode();
         }
@@ -89,24 +89,24 @@ void GegnerSpinnenmaschine::DoDraw() {
         // DKS - Optimized cos(PI) to be a constant (-1):
         // DeckelOffset = -(static_cast<float>(cos(DeckelCount) * 20.0f) + static_cast<float>(cos(PI) * 20));
         DeckelOffset = -(static_cast<float>(cos(DeckelCount) * 20.0f) - 20.0f);
-        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                               static_cast<float>(yPos - TileEngine.YOffset) - DeckelOffset, 0, Color,
+        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                               yPos - TileEngine.YOffset - DeckelOffset, 0, Color,
                                                true);
 
         // Anzeige
-        Display.RenderSprite(static_cast<float>(xPos - TileEngine.XOffset) + 133,
-                             static_cast<float>(yPos - TileEngine.YOffset) + 263 - DeckelOffset, DisplayState, Color,
+        Display.RenderSprite(xPos - TileEngine.XOffset + 133.0f,
+                             yPos - TileEngine.YOffset + 263.0f - DeckelOffset, DisplayState, Color,
                              true);
 
         // Topfdeckel
-        Deckel.RenderSprite(static_cast<float>(xPos - TileEngine.XOffset) + 75,
-                            static_cast<float>(yPos - TileEngine.YOffset) - DeckelOffset + 159, DeckelPhase, Color,
+        Deckel.RenderSprite(xPos - TileEngine.XOffset + 75.0f,
+                            yPos - TileEngine.YOffset + 159.0f - DeckelOffset, DeckelPhase, Color,
                             true);
     }
 
     // Unterteil
-    Unten[AnimUnten].RenderSprite(static_cast<float>(xPos - TileEngine.XOffset) + 45,
-                                  static_cast<float>(yPos - TileEngine.YOffset) + 352, 0, 0xFFFFFFFF, true);
+    Unten[AnimUnten].RenderSprite(xPos - TileEngine.XOffset + 45.0f,
+                                  yPos - TileEngine.YOffset + 352.0f, 0, 0xFFFFFFFF, true);
 }
 
 // --------------------------------------------------------------------------------------
@@ -162,20 +162,23 @@ void GegnerSpinnenmaschine::DoDeckel() {
                     // Climber
                     case 1: {
                         SpawnDelay = 6.0f;
-                        Gegner.PushGegner(xPos + 100 + random(60), yPos + 190 - DeckelOffset, CLIMBSPIDER, 99, 0,
+                        Gegner.PushGegner(xPos + static_cast<float>(random(60) + 100),
+                                          yPos + 190.0f - DeckelOffset, CLIMBSPIDER, 99, 0,
                                           false, false);
                     } break;
 
                     // Dronen
                     case 2: {
                         SpawnDelay = 20.0f;
-                        Gegner.PushGegner(xPos + 135, yPos + 190 - DeckelOffset, DRONE, 99, 0, false, false);
+                        Gegner.PushGegner(xPos + 135.0f,
+                                          yPos + 190.0f - DeckelOffset, DRONE, 99, 0, false, false);
                     } break;
 
                     // Spinnenbombe
                     case 3: {
                         SpawnDelay = 15.0f;
-                        Gegner.PushGegner(xPos + 100 + random(80), yPos + 180 - DeckelOffset, SPIDERBOMB, 99, 0, false,
+                        Gegner.PushGegner(xPos + static_cast<float>(random(80) + 100),
+                                          yPos + 180.0f - DeckelOffset, SPIDERBOMB, 99, 0, false,
                                           false);
                     } break;
                 }
@@ -242,8 +245,8 @@ void GegnerSpinnenmaschine::DoHoch() {
 
                 if (SmokeDelay < 0.0f) {
                     SmokeDelay = 0.4f;
-                    PartikelSystem.PushPartikel(xPos + 55.0f, yPos + 375, SMOKE3_LU);
-                    PartikelSystem.PushPartikel(xPos + 245.0f, yPos + 375, SMOKE3_RU);
+                    PartikelSystem.PushPartikel(xPos + 55.0f, yPos + 375.0f, SMOKE3_LU);
+                    PartikelSystem.PushPartikel(xPos + 245.0f, yPos + 375.0f, SMOKE3_RU);
                 }
             }
         } break;
@@ -265,7 +268,7 @@ void GegnerSpinnenmaschine::DoHoch() {
             if (ShotDelay <= 0.0f) {
                 ShotDelay = 15.0f;
 
-                Projectiles.PushProjectile(xPos + 230, yPos + 310, PHARAOLASER, pAim);
+                Projectiles.PushProjectile(xPos + 230.0f, yPos + 310.0f, PHARAOLASER, pAim);
 
                 // Sound ausgeben
                 SoundManager.PlayWave(50, 128, 22050, SOUND_PHARAODIE);
@@ -284,7 +287,7 @@ void GegnerSpinnenmaschine::DoHoch() {
 
                 // Rauch
                 for (int i = 1; i < 10; i++)
-                    PartikelSystem.PushPartikel(xPos + i * 25.0f, yPos + 330, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(i * 25), yPos + 330.0f, SMOKEBIG);
 
                 SoundManager.PlayWave(100, 128, 11025, SOUND_DOORSTOP);
 
@@ -440,7 +443,8 @@ void GegnerSpinnenmaschine::DoKI() {
 
                 if (SmokeDelay < 0.0f) {
                     SmokeDelay = 1.0f;
-                    PartikelSystem.PushPartikel(xPos + random(250), yPos + 300 + random(100), SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(250)),
+                                                yPos + static_cast<float>(random(100) + 300), SMOKEBIG);
                 }
             }
         } break;
@@ -456,15 +460,18 @@ void GegnerSpinnenmaschine::DoKI() {
                 int xo = random(300);
                 int yo = random(400);
 
-                PartikelSystem.PushPartikel(xPos + xo, yPos + yo, EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(xo),
+                                            yPos + static_cast<float>(yo), EXPLOSION_MEDIUM2);
 
                 // ggf. Rauch
                 if (random(2) == 0)
-                    PartikelSystem.PushPartikel(xPos + random(300), yPos + random(400), SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(300)),
+                                                yPos + static_cast<float>(random(400)), SMOKEBIG);
 
                 // ggf Explosion Traces
                 if (random(10) == 0)
-                    PartikelSystem.PushPartikel(xPos + 100 + random(100), yPos + 200 + random(200), EXPLOSION_TRACE);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100) + 100),
+                                                yPos + static_cast<float>(random(200) + 200), EXPLOSION_TRACE);
 
                 // ggf. Sound
                 if (random(3) == 0)
@@ -473,7 +480,8 @@ void GegnerSpinnenmaschine::DoKI() {
                 // ggf. Splitter erzeugen
                 if (yo > 100 && random(5) == 0)
                     for (int i = 0; i < 10; i++)
-                        PartikelSystem.PushPartikel(xPos + xo - 10 + random(20), yPos + yo - 10 + random(20),
+                        PartikelSystem.PushPartikel(xPos + static_cast<float>(xo - 10 + random(20)),
+                                                    yPos + static_cast<float>(yo - 10 + random(20)),
                                                     SPIDERSPLITTER);
             }
 
@@ -493,19 +501,24 @@ void GegnerSpinnenmaschine::DoKI() {
 
                 // Splitter und Große Explosionen
                 for (int i = 0; i < 10; i++) {
-                    PartikelSystem.PushPartikel(xPos + random(300), yPos + random(400), SPIDERSPLITTER);
-                    PartikelSystem.PushPartikel(xPos + 50 + random(200), yPos + 100 + random(300), EXPLOSION_TRACE);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(300)),
+                                                yPos + static_cast<float>(random(400)), SPIDERSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200) + 50),
+                                                yPos + static_cast<float>(random(300) + 100), EXPLOSION_TRACE);
                 }
 
                 // Explosionen und Rauch
                 for (int i = 0; i < 50; i++) {
-                    PartikelSystem.PushPartikel(xPos + random(300), yPos + random(300) + 100, EXPLOSION_MEDIUM2);
-                    PartikelSystem.PushPartikel(xPos + random(300), yPos + random(300) + 100, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(300)),
+                                                yPos + static_cast<float>(random(300) + 100), EXPLOSION_MEDIUM2);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(300)),
+                                                yPos + static_cast<float>(random(300) + 100), SMOKEBIG);
                 }
 
                 // Funken
                 for (int i = 0; i < 300; i++)
-                    PartikelSystem.PushPartikel(xPos + random(300), yPos + random(300) + 100, FUNKE);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(300)),
+                                                yPos + static_cast<float>(random(300) + 100), FUNKE);
 
                 // Unterteilanim == kaputt
                 AnimUnten = 1;

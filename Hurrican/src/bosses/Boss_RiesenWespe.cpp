@@ -88,10 +88,12 @@ void GegnerRiesenWasp::DoKI() {
             ShotDelay = 10.0f;
 
             SoundManager.PlayWave(100, 128, 8000 + random(1000), SOUND_CANON);
-            Projectiles.PushProjectile(xPos + 25 + BlickRichtung * 56, yPos + 51, SUCHSCHUSS2);
+            Projectiles.PushProjectile(xPos + 25.0f + static_cast<float>(BlickRichtung * 56),
+                                       yPos + 51.0f, SUCHSCHUSS2);
 
             for (int i = 0; i < 5; i++)
-                PartikelSystem.PushPartikel(xPos + random(5) + 50 + BlickRichtung * 60, yPos + 75 + random(5),
+                PartikelSystem.PushPartikel(xPos + 50.0f + static_cast<float>(random(5) + BlickRichtung * 60),
+                                            yPos + 75.0f + static_cast<float>(random(5)),
                                             SMOKE3);
         }
     }
@@ -114,8 +116,10 @@ void GegnerRiesenWasp::DoKI() {
             // Wespe rauchen lassen
             if (AnimCount >= 0.5f) {
                 AnimCount = 0.0f;
-                PartikelSystem.PushPartikel(xPos + random(80) + 30, yPos + 30 + random(50), SMOKE);
-                PartikelSystem.PushPartikel(xPos + random(80) + 30, yPos + 30 + random(50), SMOKE3);
+                PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(random(80)),
+                                            yPos + 30.0f + static_cast<float>(random(50)), SMOKE);
+                PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(random(80)),
+                                            yPos + 30.0f + static_cast<float>(random(50)), SMOKE3);
             }
         } break;
     }
@@ -142,16 +146,20 @@ void GegnerRiesenWasp::DoKI() {
 void GegnerRiesenWasp::GegnerExplode() {
     // Explosionen erzeugen
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos + random(110) - 30, yPos + random(60) - 30, EXPLOSION_BIG);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(110) - 30),
+                                    yPos + static_cast<float>(random(60) - 30), EXPLOSION_BIG);
 
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos + random(110) - 10, yPos + random(60) - 10, EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(110) - 10),
+                                    yPos + static_cast<float>(random(60) - 10), EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 200; i++)
-        PartikelSystem.PushPartikel(xPos + random(110) - 10, yPos + random(50), ROCKETSMOKE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(110) - 10),
+                                    yPos + static_cast<float>(random(50)), ROCKETSMOKE);
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos + random(100), yPos + 30 + random(50), SPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
+                                    yPos + static_cast<float>(random(50) + 30), SPLITTER);
 
     SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_EXPLOSION1);  // Sound ausgeben
 

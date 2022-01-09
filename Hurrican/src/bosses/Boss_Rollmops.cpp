@@ -47,7 +47,7 @@ void GegnerRollmops::CalcGunWinkel() {
     float xdiv, ydiv;
     float neww;
 
-    ydiv = (pAim->ypos + 40) - (yPos + 60);
+    ydiv = (pAim->ypos + 40) - (yPos + 60.0f);
     if (ydiv == 0.0f)
         ydiv = 0.00001f;
 
@@ -62,7 +62,7 @@ void GegnerRollmops::CalcGunWinkel() {
         xdiv = (pAim->xpos + 35) - (xPos + 50);
         neww = -(float)atan(ydiv / xdiv) * 180.0f / PI;
     } */
-    xdiv = (pAim->xpos + 35) - (xPos + 50);
+    xdiv = (pAim->xpos + 35) - (xPos + 50.0f);
     neww = RadToDeg(atanf(ydiv / xdiv));
 
     if (xPos >= (Value1 + 320.0f)) {
@@ -91,7 +91,7 @@ void GegnerRollmops::DoDraw() {
         case GEGNER_AUSSPUCKEN: {
             float x, y;
 
-            x = ((xPos + 65 - 9) - HookX) / NUM_KETTENGLIEDER;
+            x = ((xPos + 65.0f - 9.0f) - HookX) / NUM_KETTENGLIEDER;
             y = ((yPos + 65.0f) - HookY) / NUM_KETTENGLIEDER;
 
             for (int i = 0; i < NUM_KETTENGLIEDER; i++) {
@@ -105,8 +105,8 @@ void GegnerRollmops::DoDraw() {
                 pKettenTeile[i]->AnimCount = 360.0f - RadToDeg(Schwung);
             }
 
-            Rollen.RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFFFFFFFF, mirrored);
+            Rollen.RenderSprite(xPos - TileEngine.XOffset,
+                                yPos - TileEngine.YOffset, AnimPhase, 0xFFFFFFFF, mirrored);
 
         } break;
 
@@ -120,14 +120,14 @@ void GegnerRollmops::DoDraw() {
         case GEGNER_SPECIAL3:
         case GEGNER_WARTEN:
         case GEGNER_EXPLODIEREN: {
-            Rollen.RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFFFFFFFF, mirrored);
+            Rollen.RenderSprite(xPos - TileEngine.XOffset,
+                                yPos - TileEngine.YOffset, AnimPhase, 0xFFFFFFFF, mirrored);
         } break;
 
         case GEGNER_INIT:
         case GEGNER_STEHEN: {
-            pGegnerGrafix[GegnerArt]->RenderSpriteScaled(static_cast<float>(xPos - TileEngine.XOffset) + 16.0f,
-                                                         static_cast<float>(yPos - TileEngine.YOffset), 120, 120,
+            pGegnerGrafix[GegnerArt]->RenderSpriteScaled(xPos - TileEngine.XOffset + 16.0f,
+                                                         yPos - TileEngine.YOffset, 120, 120,
                                                          AnimPhase, 0xFFFFFFFF);
         } break;
 
@@ -135,8 +135,8 @@ void GegnerRollmops::DoDraw() {
         case GEGNER_SCHLIESSEN: {
             mirrored = (xPos < Value1 + 320.0f);
 
-            Aufklappen.RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                    static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFFFFFFFF, mirrored);
+            Aufklappen.RenderSprite(xPos - TileEngine.XOffset,
+                                    yPos - TileEngine.YOffset, AnimPhase, 0xFFFFFFFF, mirrored);
         } break;
 
         case GEGNER_VERFOLGEN: {
@@ -148,13 +148,13 @@ void GegnerRollmops::DoDraw() {
                 xoff = 65.0f;
 
             // Knarre rendern
-            Gun.RenderSpriteRotatedOffset(static_cast<float>(xPos - TileEngine.XOffset) + 6.0f + xoff,
-                                          static_cast<float>(yPos - TileEngine.YOffset) + 38.0f, GunWinkel, 53, 20,
+            Gun.RenderSpriteRotatedOffset(xPos - TileEngine.XOffset + 6.0f + xoff,
+                                          yPos - TileEngine.YOffset + 38.0f, GunWinkel, 53, 20,
                                           0xFFFFFFFF, mirrored);
 
             // Mops ohne Knarre rendern
-            Aufklappen.RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                    static_cast<float>(yPos - TileEngine.YOffset), 8, 0xFFFFFFFF, mirrored);
+            Aufklappen.RenderSprite(xPos - TileEngine.XOffset,
+                                    yPos - TileEngine.YOffset, 8, 0xFFFFFFFF, mirrored);
         } break;
     }
 }
@@ -215,7 +215,7 @@ void GegnerRollmops::Abhopsen(float mul) {
         ySpeed *= mul;
 
         for (int i = 0; i < 10; i++)
-            PartikelSystem.PushPartikel(xPos + 10 + random(80), yPos + 100, SNOWFLUSH);
+            PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(80)), yPos + 100.0f, SNOWFLUSH);
 
         if (ySpeed > -1.0f) {
             ySpeed = 0.0f;
@@ -353,8 +353,8 @@ void GegnerRollmops::DoKI() {
                     // DKS - This was already commented out in original source:
                     // xPos = pPlayer->xpos;
 
-                    xPos = static_cast<float>(Value1 + 320.0f - 65.0f + sin(Schwung) * 300.0f);
-                    yPos = static_cast<float>(Value2 - 500.0f + cos(Schwung * 0.75f) * 830.0f);
+                    xPos = static_cast<float>(Value1) + 320.0f - 65.0f + sin(Schwung) * 300.0f;
+                    yPos = static_cast<float>(Value2) - 500.0f + cos(Schwung * 0.75f) * 830.0f;
 
                     SchwungDir += 0.16f SYNC;
                     if (SchwungDir > 2 * PI)
@@ -362,7 +362,7 @@ void GegnerRollmops::DoKI() {
 
                     Schwung = sin(SchwungDir);
 
-                    AnimPhase = -static_cast<int>(((Value1 + 640.0f) - xPos) / 200.0f);
+                    AnimPhase = -static_cast<int>(((static_cast<float>(Value1) + 640.0f) - xPos) / 200.0f);
 
                     if (AnimPhase < 0)
                         AnimPhase += 10;
@@ -372,9 +372,11 @@ void GegnerRollmops::DoKI() {
                          (SchwungDir > 2 * PI - 0.2f && SchwungDir < 2 * PI + 0.2f)) &&
                         random(2) == 0) {
                         shot = false;
-                        PartikelSystem.PushPartikel(xPos + 60 + random(20), yPos + 120.0f, LONGFUNKE);
+                        PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(random(20)),
+                                                    yPos + 120.0f, LONGFUNKE);
 
-                        PartikelSystem.PushPartikel(xPos + 60 + random(20), yPos + 100.0f, FUNKE);
+                        PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(random(20)),
+                                                    yPos + 100.0f, FUNKE);
 
                         // DKS - Added function WaveIsPlaying() to SoundManagerClass:
                         if (!SoundManager.WaveIsPlaying(SOUND_KLONG))
@@ -532,10 +534,12 @@ void GegnerRollmops::DoKI() {
 
                     int i;
                     for (i = 0; i < 30; i++)
-                        PartikelSystem.PushPartikel(xPos + 10 + random(80), yPos + 10 + random(80), SNOWFLUSH);
+                        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(80)),
+                                                    yPos + 10.0f + static_cast<float>(random(80)), SNOWFLUSH);
 
                     for (i = 0; i < 8; i++)
-                        Projectiles.PushProjectile(xPos + 10 + random(80), yPos + 10 + random(80), SNOWBOMBSMALL);
+                        Projectiles.PushProjectile(xPos + 10.0f + static_cast<float>(random(80)),
+                                                   yPos + 10.0f + static_cast<float>(random(80)), SNOWBOMBSMALL);
                 }
             } break;
 
@@ -596,7 +600,7 @@ void GegnerRollmops::DoKI() {
 
                     // schiessen?
                     if (Handlung == GEGNER_OEFFNEN) {
-                        ShotCount = static_cast<float>(random(15)) + 15;
+                        ShotCount = static_cast<float>(random(15) + 15);
                         Handlung = GEGNER_VERFOLGEN;
                         Destroyable = true;
                     }
@@ -718,11 +722,13 @@ void GegnerRollmops::DoKI() {
                 while (AnimCount > AnimSpeed) {
                     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
 
-                    PartikelSystem.PushPartikel(xPos - 20 + random(140), yPos - 20 + random(140),
+                    PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(140)),
+                                                yPos - 20.0f + static_cast<float>(random(140)),
                                                 EXPLOSION_MEDIUM2 + random(1));
 
                     if (random(3) == 0)
-                        PartikelSystem.PushPartikel(xPos + random(100), yPos + random(100), SPLITTER);
+                        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
+                                                    yPos + static_cast<float>(random(100)), SPLITTER);
 
                     AnimCount -= AnimSpeed;
                     AnimSpeed -= 0.01f;
@@ -748,7 +754,8 @@ void GegnerRollmops::DoKI() {
             SmokeCount -= 1.0f SYNC;
 
         if (SmokeCount < 0.0f) {
-            PartikelSystem.PushPartikel(xPos + 10 + random(80), yPos + 80 + random(10), SNOWFLUSH);
+            PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(80)),
+                                        yPos + 80.0f + static_cast<float>(random(10)), SNOWFLUSH);
             SmokeCount = 0.8f;
         }
     }
@@ -790,10 +797,12 @@ void GegnerRollmops::GegnerExplode() {
 
     int i;
     for (i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos - 20 + random(140), yPos - 20 + random(140), EXPLOSION_TRACE);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(140)),
+                                    yPos - 20.0f + static_cast<float>(random(140)), EXPLOSION_TRACE);
 
     for (i = 0; i < 150; i++)
-        PartikelSystem.PushPartikel(xPos - 20 + random(140), yPos - 20 + random(140), WATERFLUSH_HIGH);
+        PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(140)),
+                                    yPos - 20.0f + static_cast<float>(random(140)), WATERFLUSH_HIGH);
 
     ShakeScreen(5.0f);
 

@@ -85,7 +85,8 @@ void GegnerFlugBoss::DoDraw() {
                               -TileEngine.YOffset + yPos + 251.0f - yKanone[3], 0xFFFFFFFF);
 
     // Schatten
-    RenderRect(xPos - TileEngine.XOffset + 255.0f, yPos - TileEngine.YOffset + 161.0f,
+    RenderRect(xPos - TileEngine.XOffset + 255.0f,
+               yPos - TileEngine.YOffset + 161.0f,
                18, 80, 0x88000000);
 
     // Main
@@ -539,7 +540,8 @@ void GegnerFlugBoss::DoKI() {
 void GegnerFlugBoss::GegnerExplode() {
     // Splitter
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos + random(500) + 30, yPos + random(2000) + 30, SPLITTER);
+        PartikelSystem.PushPartikel(xPos + 30 + static_cast<float>(random(500)),
+                                    yPos + 30 + static_cast<float>(random(2000)), SPLITTER);
 
     Player[0].Score += 6000;
 

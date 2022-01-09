@@ -273,11 +273,13 @@ void GegnerUfo::DoKI() {
             AnimCount -= 1.0f SYNC;
 
             if (AnimCount < 0.0f) {
-                PartikelSystem.PushPartikel(xPos + random(180), yPos + random(70) + 20, EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(180)),
+                                            yPos + static_cast<float>(random(70) + 20), EXPLOSION_MEDIUM2);
                 SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
 
                 if (random(4) == 0)
-                    PartikelSystem.PushPartikel(xPos + random(180) - 40, yPos + random(40), EXPLOSION_BIG);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(180) - 40),
+                                                yPos + static_cast<float>(random(40)), EXPLOSION_BIG);
 
                 AnimCount = 2.0f;
             }
@@ -311,7 +313,8 @@ void GegnerUfo::GegnerExplode() {
 
     // Splitter
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos + random(190), yPos + random(60) + 30, SPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(190)),
+                                    yPos + static_cast<float>(random(60) + 30), SPLITTER);
 
     Player[0].Score += 4000;
     Gegner.PushGegner(xPos + 80.0f, yPos + 20.0f, ONEUP, 0, 0, false);

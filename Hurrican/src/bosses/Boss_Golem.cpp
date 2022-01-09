@@ -108,8 +108,8 @@ void GegnerGolem::DoDraw() {
     // Körper
     int offx = 0;
     int offy = 80;
-    float x = static_cast<float>(xPos - TileEngine.XOffset);
-    float y = static_cast<float>(yPos - TileEngine.YOffset);
+    float x = xPos - TileEngine.XOffset;
+    float y = yPos - TileEngine.YOffset;
 
     itsRect = GegnerRect[GegnerArt];
     matRotBody = glm::rotate(glm::mat4x4(1.0f), Wackel, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -125,8 +125,8 @@ void GegnerGolem::DoDraw() {
     // arm bewegen
     offx = 0;
     offy = 80;
-    x = static_cast<float>(xPos + ARMX - TileEngine.XOffset);
-    y = static_cast<float>(yPos + ARMY - TileEngine.YOffset);
+    x = xPos + ARMX - TileEngine.XOffset;
+    y = yPos + ARMY - TileEngine.YOffset;
     D3DXMatrixTranslation(&matTransArm, -x - 205, -y - 10, 0.0f);
 
     // Transformation wieder zurück
@@ -145,8 +145,8 @@ void GegnerGolem::DoDraw() {
 #endif
 
     // Arm hinten zeichnen
-    arm[0].RenderSprite(static_cast<float>(xPos - TileEngine.XOffset) + wackel,
-                        static_cast<float>(yPos - TileEngine.YOffset) + yoff, Color);
+    arm[0].RenderSprite(xPos - TileEngine.XOffset + wackel,
+                        yPos - TileEngine.YOffset + yoff, Color);
 
     // Körper zeichnen
     matWorld = glm::mat4x4(1.0f);
@@ -158,14 +158,14 @@ void GegnerGolem::DoDraw() {
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset) + wackel,
-                                           static_cast<float>(yPos - TileEngine.YOffset) + yoff, Color);
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset + wackel,
+                                           yPos - TileEngine.YOffset + yoff, Color);
 
     // Arm
     offx = 0;
     offy = 0;
-    x = static_cast<float>(xPos + ARMX - TileEngine.XOffset);
-    y = static_cast<float>(yPos + ARMY - TileEngine.YOffset);
+    x = xPos + ARMX - TileEngine.XOffset;
+    y = yPos + ARMY - TileEngine.YOffset;
 
     itsRect.left = 0;
     itsRect.top = 0;
@@ -193,8 +193,8 @@ void GegnerGolem::DoDraw() {
 #endif
 
     // Arm zeichnen
-    arm[1].RenderSprite(static_cast<float>(xPos - TileEngine.XOffset) + wackel,
-                        static_cast<float>(yPos - TileEngine.YOffset) + yoff, Color);
+    arm[1].RenderSprite(xPos - TileEngine.XOffset + wackel,
+                        yPos - TileEngine.YOffset + yoff, Color);
 
     // Normale Projektions-Matrix wieder herstellen
     matWorld = glm::mat4x4(1.0f);
@@ -251,7 +251,8 @@ void GegnerGolem::DoKI() {
         xPos += 400;
 
         // hinscrollen
-        TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2), TileStateEnum::SCROLLTOLOCK);
+        TileEngine.ScrollLevel(static_cast<float>(Value1),
+                               static_cast<float>(Value2), TileStateEnum::SCROLLTOLOCK);
 
         // Ausfaden und pausieren
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);
@@ -317,9 +318,9 @@ void GegnerGolem::DoKI() {
             rotarm1 -= WackelDir * 0.2f SYNC;
             rotarm2 += WackelDir * 0.2f SYNC;
             Wackeln();
-            if (xPos <= TileEngine.ScrolltoX + 380)  // Weit genug in Mitte  ?
+            if (xPos <= TileEngine.ScrolltoX + 380.0f)  // Weit genug in Mitte  ?
             {
-                xPos = static_cast<float>(TileEngine.ScrolltoX + 380);
+                xPos = TileEngine.ScrolltoX + 380.0f;
                 Handlung = GEGNER_SPECIAL;
             }
         } break;
@@ -331,10 +332,10 @@ void GegnerGolem::DoKI() {
             rotarm1 -= WackelDir * 0.2f SYNC;
             rotarm2 += WackelDir * 0.2f SYNC;
             Wackeln();
-            if (xPos >= TileEngine.ScrolltoX + 540)  // Weit genug rechts ?
+            if (xPos >= TileEngine.ScrolltoX + 540.0f)  // Weit genug rechts ?
             {
                 // zurücklaufen?
-                xPos = static_cast<float>(TileEngine.ScrolltoX + 540);
+                xPos = TileEngine.ScrolltoX + 540.0f;
                 Handlung = GEGNER_SPECIAL;
             }
         } break;
@@ -346,9 +347,9 @@ void GegnerGolem::DoKI() {
             rotarm1 -= WackelDir * 0.2f SYNC;
             rotarm2 += WackelDir * 0.2f SYNC;
             Wackeln();
-            if (xPos <= TileEngine.ScrolltoX + 100)  // Weit genug links ?
+            if (xPos <= TileEngine.ScrolltoX + 100.0f)  // Weit genug links ?
             {
-                xPos = static_cast<float>(TileEngine.ScrolltoX + 100);
+                xPos = TileEngine.ScrolltoX + 100.0f;
                 Handlung = GEGNER_SPECIAL2;
                 last = GEGNER_SPECIAL2;
                 state2 = ARM_SENKEN;
@@ -363,9 +364,9 @@ void GegnerGolem::DoKI() {
             rotarm1 -= WackelDir * 0.2f SYNC;
             rotarm2 += WackelDir * 0.2f SYNC;
             Wackeln();
-            if (xPos >= TileEngine.ScrolltoX + 380)  // Weit genug in Mitte  ?
+            if (xPos >= TileEngine.ScrolltoX + 380.0f)  // Weit genug in Mitte  ?
             {
-                xPos = static_cast<float>(TileEngine.ScrolltoX + 380);
+                xPos = TileEngine.ScrolltoX + 380.0f;
                 Handlung = GEGNER_SPECIAL;
             }
         } break;
@@ -387,8 +388,8 @@ void GegnerGolem::DoKI() {
                         ShakeScreen(3.0f);
                         SoundManager.PlayWave(75, 128, 15000 + random(2000), SOUND_DOORSTOP);
 
-                        Gegner.PushGegner(static_cast<float>(TileEngine.XOffset + 100.0f + random(540)),
-                                          static_cast<float>(TileEngine.YOffset + 480), LAVABALL, 50 + random(10), 0,
+                        Gegner.PushGegner(TileEngine.XOffset + 100.0f + static_cast<float>(random(540)),
+                                          TileEngine.YOffset + 480.0f, LAVABALL, 50 + random(10), 0,
                                           false);
                     }
                 } break;
@@ -407,8 +408,8 @@ void GegnerGolem::DoKI() {
                         ShakeScreen(3.0f);
                         SoundManager.PlayWave(75, 128, 15000 + random(2000), SOUND_DOORSTOP);
 
-                        Gegner.PushGegner(static_cast<float>(pAim->xpos - 20.0f + random(70)),
-                                          static_cast<float>(TileEngine.YOffset + 480), LAVABALL, 50 + random(10), 0,
+                        Gegner.PushGegner(pAim->xpos - 20.0f + static_cast<float>(random(70)),
+                                          TileEngine.YOffset + 480.0f, LAVABALL, 50 + random(10), 0,
                                           false);
 
                         StoneCount--;
@@ -435,7 +436,7 @@ void GegnerGolem::DoKI() {
                 // int j = 0; // PICKLE not used
 
                 // Golem steht gerade rechts?
-                if (xPos > TileEngine.ScrolltoX + 400) {
+                if (xPos > TileEngine.ScrolltoX + 400.0f) {
                     // Dann Steine werfen
                     if (random(2) == 0) {
                         Handlung = GEGNER_CRUSHEN;
@@ -453,7 +454,7 @@ void GegnerGolem::DoKI() {
                 }
 
                 // Golem steht gerade in der Mitte?
-                else if (xPos > TileEngine.ScrolltoX + 120) {
+                else if (xPos > TileEngine.ScrolltoX + 120.0f) {
                     // Weiterlaufen?
                     if (random(3) > 0) {
                         // Die Aktion ausführen, die eben nicht dran war
@@ -473,7 +474,7 @@ void GegnerGolem::DoKI() {
                 }
 
                 // Golem steht schon links? Dann zurück zur Mitte
-                else if (xPos <= TileEngine.ScrolltoX + 120) {
+                else if (xPos <= TileEngine.ScrolltoX + 120.0f) {
                     Handlung = GEGNER_LAUFEN4;
                 }
             }
@@ -578,9 +579,9 @@ void GegnerGolem::DoKI() {
                     rotarm1 -= 0.6f SYNC;
 
                     if (rotarm1 <= 2.0f) {
-                        Gegner.PushGegner(xPos - 40, yPos + 30, BOULDER, -(random(80) + 10), -(random(20) + 10),
+                        Gegner.PushGegner(xPos - 40.0f, yPos + 30.0f, BOULDER, -(random(80) + 10), -(random(20) + 10),
                                           true);
-                        Gegner.PushGegner(xPos - 40, yPos + 30, BOULDER, -(random(40) + 10), -(random(10) + 10),
+                        Gegner.PushGegner(xPos - 40.0f, yPos + 30.0f, BOULDER, -(random(40) + 10), -(random(10) + 10),
                                           true);
                         SoundManager.PlayWave(100, 128, 14000 + random(4000), SOUND_STONEFALL);
                         state2 = ARM_SENKEN2;
@@ -631,7 +632,7 @@ void GegnerGolem::DoKI() {
 
             if (ShotDelay <= 0.0f) {
                 ShotDelay = 0.5f;
-                Projectiles.PushProjectile(xPos - 10, yPos + 80, WALKERFIRE, pAim);
+                Projectiles.PushProjectile(xPos - 10.0f, yPos + 80.0f, WALKERFIRE, pAim);
             }
 
             if (count > 30.0f)
@@ -667,12 +668,13 @@ void GegnerGolem::DoKI() {
 
                         // Spritzer
                         for (int i = 0; i < 48; i++)
-                            PartikelSystem.PushPartikel(xPos - 80 + random(50), yPos + 245, LAVA_SPRITZER2);
+                            PartikelSystem.PushPartikel(xPos - 80.0f + static_cast<float>(random(50)),
+                                                        yPos + 245.0f, LAVA_SPRITZER2);
 
                         SoundManager.PlayWave3D(static_cast<int>(xPos) + 30, static_cast<int>(yPos) + 30,
                                                 10000 + random(2050), SOUND_WATERIN);
 
-                        Projectiles.PushProjectile(xPos - 90, yPos + 300, GOLEMSAEULE);
+                        Projectiles.PushProjectile(xPos - 90.0f, yPos + 300.0f, GOLEMSAEULE);
                     }
 
                 } break;
@@ -705,11 +707,13 @@ void GegnerGolem::DoKI() {
                 AnimCount = 0.5f;
 
                 // brodeln lassen
-                PartikelSystem.PushPartikel(xPos + random(160), yPos + random(300) + yoff, EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(160)),
+                                            yPos + static_cast<float>(random(300)) + yoff, EXPLOSION_MEDIUM2);
                 SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
 
                 if (random(2) == 0)
-                    PartikelSystem.PushPartikel(xPos + random(160), yPos + random(300) + yoff, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(160)),
+                                                yPos + static_cast<float>(random(300)) + yoff, SMOKEBIG);
             }
 
             ShotDelay -= 1.0f SYNC;
@@ -740,16 +744,20 @@ void GegnerGolem::GegnerExplode() {
     int i;
 
     for (i = 0; i < 100; i++)
-        PartikelSystem.PushPartikel(xPos + random(200) - 50, yPos + yoff + random(300), ROCKSPLITTER);
+        PartikelSystem.PushPartikel(xPos - 50 + static_cast<float>(random(200)),
+                                    yPos + yoff + static_cast<float>(random(300)), ROCKSPLITTER);
 
     for (i = 0; i < 80; i++)
-        PartikelSystem.PushPartikel(xPos + random(200) - 50, yPos + yoff + random(300), SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos - 50 + static_cast<float>(random(200)),
+                                    yPos + yoff + static_cast<float>(random(300)), SMOKEBIG);
 
     for (i = 0; i < 40; i++)
-        PartikelSystem.PushPartikel(xPos + random(200) - 50, yPos + yoff + random(300), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 50 + static_cast<float>(random(200)),
+                                    yPos + yoff + static_cast<float>(random(300)), EXPLOSION_MEDIUM2);
 
     for (i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos + random(200) - 50, yPos + yoff + random(300), EXPLOSION_BIG);
+        PartikelSystem.PushPartikel(xPos - 50 + static_cast<float>(random(200)),
+                                    yPos + yoff + static_cast<float>(random(300)), EXPLOSION_BIG);
 
     ShakeScreen(4);
 

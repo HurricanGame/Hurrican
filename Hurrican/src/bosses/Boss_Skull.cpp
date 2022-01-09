@@ -58,7 +58,7 @@ void GegnerSkull::DoKI() {
     // Animphase abhängig von Position zum Spieler setzen
     //
     float dx = static_cast<float>(pAim->xpos + 35) - (xPos + 16);
-    AnimPhase = static_cast<int>(dx / 30);
+    AnimPhase = static_cast<int>(dx / 30.0f);
     AnimPhase = std::clamp(AnimPhase, -5, 9);
     AnimPhase += 5;
     if (xSpeed < 0.0f)
@@ -75,7 +75,7 @@ void GegnerSkull::DoKI() {
 
         if (random(20) == 0)
             for (int i = 0; i < 10; i++)
-                PartikelSystem.PushPartikel(xPos + 10, yPos + 40, FUNKE);
+                PartikelSystem.PushPartikel(xPos + 10.0f, yPos + 40.0f, FUNKE);
     }
 
     // Je nach Handlung richtig verhalten
@@ -100,12 +100,14 @@ void GegnerSkull::DoKI() {
                 AnimCount = 0.8f;
 
                 SoundManager.StopWave(SOUND_EXPLOSION2);
-                SoundManager.PlayWave(75, 128, 8000 + static_cast<int>(endwert * 800), SOUND_EXPLOSION2);
+                SoundManager.PlayWave(75, 128, 8000 + static_cast<int>(endwert * 800.0f), SOUND_EXPLOSION2);
 
-                PartikelSystem.PushPartikel(xPos + random(30) - 30, yPos + random(30) - 30, EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(30) - 30),
+                                            yPos + static_cast<float>(random(30) - 30), EXPLOSION_MEDIUM2);
 
                 for (int i = 0; i < 3; i++)
-                    PartikelSystem.PushPartikel(xPos + random(30) - 10, yPos + random(20) - 10, SPIDERSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(30) - 10),
+                                                yPos + static_cast<float>(random(20) - 10), SPIDERSPLITTER);
             }
 
             if (xPos + 16 > TileEngine.XOffset + 320.0f)
@@ -130,33 +132,37 @@ void GegnerSkull::DoKI() {
                 Energy = 0.0f;
                 SoundManager.PlayWave(100, 128, 7000, SOUND_MUTANT);
 
-                PartikelSystem.PushPartikel(xPos + 20, yPos + 20, SHOCKEXPLOSION);
-                PartikelSystem.PushPartikel(xPos + 20, yPos + 20, SHOCKEXPLOSION);
-                PartikelSystem.PushPartikel(xPos + 20, yPos + 20, SHOCKEXPLOSION);
+                PartikelSystem.PushPartikel(xPos + 20.0f, yPos + 20.0f, SHOCKEXPLOSION);
+                PartikelSystem.PushPartikel(xPos + 20.0f, yPos + 20.0f, SHOCKEXPLOSION);
+                PartikelSystem.PushPartikel(xPos + 20.0f, yPos + 20.0f, SHOCKEXPLOSION);
 
                 for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos + random(30), yPos + random(30), SPIDERSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(30)),
+                                                yPos + static_cast<float>(random(30)), SPIDERSPLITTER);
 
                 for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos - 50 + random(100), yPos - 50 + random(100), EXPLOSION_BIG);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100) - 50),
+                                                yPos + static_cast<float>(random(100) - 50), EXPLOSION_BIG);
 
                 for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos - 50 + random(100), yPos - 50 + random(100), SPLITTER);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100) - 50),
+                                                yPos + static_cast<float>(random(100) - 50), SPLITTER);
 
                 for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos - 50 + random(100), yPos - 50 + random(100), SCHROTT1);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100) - 50),
+                                                yPos + static_cast<float>(random(100) - 50), SCHROTT1);
 
-                PartikelSystem.PushPartikel(xPos - 80, yPos - 80, EXPLOSION_GIGA);
+                PartikelSystem.PushPartikel(xPos - 80.0f, yPos - 80.0f, EXPLOSION_GIGA);
 
                 Timer.SetMoveSpeed(10.0f);
 
                 // Flugsäcke spawnen
-                Gegner.PushGegner(static_cast<float>(TileEngine.XOffset + 200.0f),
-                                  static_cast<float>(TileEngine.YOffset - 40.0f), REITFLUGSACK, 1, 0, false);
+                Gegner.PushGegner(TileEngine.XOffset + 200.0f,
+                                  TileEngine.YOffset - 40.0f, REITFLUGSACK, 1, 0, false);
 
                 if (NUMPLAYERS == 2)
-                    Gegner.PushGegner(static_cast<float>(TileEngine.XOffset + 300.0f),
-                                      static_cast<float>(TileEngine.YOffset - 50.0f), REITFLUGSACK, 1, 0, false);
+                    Gegner.PushGegner(TileEngine.XOffset + 300.0f,
+                                      TileEngine.YOffset - 50.0f, REITFLUGSACK, 1, 0, false);
             }
         } break;
 
@@ -256,7 +262,7 @@ void GegnerSkull::DoKI() {
 
         if (ShotDelay < 0.0f) {
             ShotDelay = 15.0f;
-            Projectiles.PushProjectile(xPos - 10, yPos, SUCHSCHUSS2, pAim);
+            Projectiles.PushProjectile(xPos - 10.0f, yPos, SUCHSCHUSS2, pAim);
             SoundManager.PlayWave(50, 128, 14000 + random(2000), SOUND_GOLEMSHOT);
         }
     }

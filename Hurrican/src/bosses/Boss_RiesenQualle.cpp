@@ -77,7 +77,7 @@ void GegnerRiesenQualle::DoKI() {
             // Nach oben abstossen
             if (yPos - 20 > pAim->ypos || blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_GEGNERWAND) {
                 // Bläschen erzeugen
-                PartikelSystem.PushPartikel(xPos + 20, yPos + 30, BUBBLE);
+                PartikelSystem.PushPartikel(xPos + 20.0f, yPos + 30.0f, BUBBLE);
 
                 // rechts / links bewegen
                 if (xPos < pAim->xpos)

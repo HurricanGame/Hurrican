@@ -108,9 +108,9 @@ void GegnerBigFish::NewAction() {
         float newx = pAim->xpos;
 
         if (newx > Value1 + 400)
-            newx = static_cast<float>(Value1) + 400;
+            newx = static_cast<float>(Value1) + 400.0f;
 
-        MoveTo(newx, static_cast<float>(Value2) + 200);
+        MoveTo(newx, static_cast<float>(Value2) + 200.0f);
     }
 
     // neue Aktion festlegen
@@ -152,29 +152,33 @@ void GegnerBigFish::DoDraw() {
     float YOff = sin(SinOff) * 5.0f;
 
     // Maul rendern
-    Maul.RenderSpriteRotatedOffset((xPos - TileEngine.XOffset) + 51.0f, (yPos - TileEngine.YOffset) + YOff + 94.0f, mw,
+    Maul.RenderSpriteRotatedOffset(xPos - TileEngine.XOffset + 51.0f,
+                                   yPos - TileEngine.YOffset + YOff + 94.0f, mw,
                                    12, -17, 0xFFFFFFFF, false);
 
     // Schwanzflosse rendern
-    FlosseGross.RenderSpriteScaled((xPos - TileEngine.XOffset) + 203.0f, (yPos - TileEngine.YOffset) + YOff - 9.0f,
+    FlosseGross.RenderSpriteScaled(xPos - TileEngine.XOffset + 203.0f,
+                                   yPos - TileEngine.YOffset + YOff - 9.0f,
                                    88 + static_cast<int>(fs2), 157, 0, 0xFFFFFFFF);
 
     // obere Floße rendern
-    FlosseOben.RenderSpriteScaled((xPos - TileEngine.XOffset) + 151.0f,
-                                  (yPos - TileEngine.YOffset) + YOff - 20.0f + static_cast<int>(fs2), 74,
+    FlosseOben.RenderSpriteScaled(xPos - TileEngine.XOffset + 151.0f,
+                                  yPos - TileEngine.YOffset + YOff - 20.0f + static_cast<int>(fs2), 74,
                                   59 - static_cast<int>(fs2), 0, 0xFFFFFFFF);
 
     // untere Floße rendern
-    FlosseUnten.RenderSpriteScaled((xPos - TileEngine.XOffset) + 140.0f, (yPos - TileEngine.YOffset) + YOff + 120.0f,
+    FlosseUnten.RenderSpriteScaled(xPos - TileEngine.XOffset + 140.0f,
+                                   yPos - TileEngine.YOffset + YOff + 120.0f,
                                    97, 72 + static_cast<int>(fs2), 0, 0xFFFFFFFF);
 
     // Fisch rendern
-    pGegnerGrafix[GegnerArt]->RenderSprite((xPos - TileEngine.XOffset), (yPos - TileEngine.YOffset) + YOff, 0,
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset + YOff, 0,
                                            0xFFFFFFFF, false);
 
     // kleine Floße rendern
-    FlosseKlein.RenderSpriteRotatedOffset((xPos - TileEngine.XOffset) + 184.0f,
-                                          (yPos - TileEngine.YOffset) + YOff + 80.0f, fs, -28, -9, 0xFFFFFFFF, false);
+    FlosseKlein.RenderSpriteRotatedOffset(xPos - TileEngine.XOffset + 184.0f,
+                                          yPos - TileEngine.YOffset + YOff + 80.0f, fs, -28, -9, 0xFFFFFFFF, false);
 
     if (!AlreadyDrawn) {
         DirectGraphics.SetAdditiveMode();
@@ -188,7 +192,8 @@ void GegnerBigFish::DoDraw() {
         col = D3DCOLOR_RGBA(255, 224, 80, a);
 
         for (int i = 0; i < 2; i++)
-            Projectiles.LavaFlare.RenderSprite(xPos - TileEngine.XOffset - 49, yPos - TileEngine.YOffset - 22 + YOff, 0,
+            Projectiles.LavaFlare.RenderSprite(xPos - TileEngine.XOffset - 49.0f,
+                                               yPos - TileEngine.YOffset - 22.0f + YOff, 0,
                                                col, false);
 
         // Flossen bewegen
@@ -233,11 +238,13 @@ void GegnerBigFish::DoKI() {
             LeftOrRight *= -1;
 
         if (IsKugel)
-            Gegner.PushGegner(TileEngine.XOffset + 300.0f + 300 * LeftOrRight, TileEngine.YOffset + 200,
+            Gegner.PushGegner(TileEngine.XOffset + 300.0f + static_cast<float>(300 * LeftOrRight),
+                              TileEngine.YOffset + 200.0f,
                               KUGELKLEIN + Art, 5, 0, false);
         else
-            Gegner.PushGegner(TileEngine.XOffset + 300.0f + 320 * LeftOrRight, TileEngine.YOffset + 350, SWIMWALKER, 5,
-                              0, false);
+            Gegner.PushGegner(TileEngine.XOffset + 300.0f + static_cast<float>(320 * LeftOrRight),
+                              TileEngine.YOffset + 350.0f,
+                              SWIMWALKER, 5, 0, false);
         IsKugel = !IsKugel;
     }
 
@@ -266,7 +273,8 @@ void GegnerBigFish::DoKI() {
 
     // Schon schwer angeschlagen ? Dann blutet der Fish
     if (Energy < 1000 && random(20) == 0)
-        PartikelSystem.PushPartikel(xPos + random(200) + 40, yPos + 50 + random(100), PIRANHABLUT);
+        PartikelSystem.PushPartikel(xPos + 40.0f + static_cast<float>(random(200)),
+                                    yPos + 50.0f + static_cast<float>(random(100)), PIRANHABLUT);
 
     // Hat der Boss keine Energie mehr ? Dann explodiert er
     if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN) {
@@ -309,11 +317,12 @@ void GegnerBigFish::DoKI() {
                 DamageTaken = 0.0f;
 
                 NewAction();
-                MoveTo(static_cast<float>(Value1) + 450, yPos);
+                MoveTo(static_cast<float>(Value1 + 450), yPos);
             } break;
 
             case GEGNER_LAUFEN: {
-                MoveTo(static_cast<float>(Value1) + 50 + random(300), static_cast<float>(Value2) + 50 + random(200));
+                MoveTo(static_cast<float>(Value1 + 50 + random(300)),
+                       static_cast<float>(Value2 + 50 + random(200)));
                 ShotCount--;
 
                 if (ShotCount <= 0)
@@ -406,10 +415,12 @@ void GegnerBigFish::GegnerExplode() {
 
     // Blut
     for (int i = 0; i < 80; i++)
-        PartikelSystem.PushPartikel(xPos + random(200) + 40, yPos + 50 + random(100), PIRANHABLUT);
+        PartikelSystem.PushPartikel(xPos + 40.0f + static_cast<float>(random(200)),
+                                    yPos + 50.0f + static_cast<float>(random(100)), PIRANHABLUT);
 
     for (int i = 0; i < 20; i++)
-        Gegner.PushGegner(xPos + random(200) + 40, yPos + 30 + random(80), PIRANHA, 99, 0, false);
+        Gegner.PushGegner(xPos + 40.0f + static_cast<float>(random(200)),
+                          yPos + 30.0f + static_cast<float>(random(80)), PIRANHA, 99, 0, false);
 
     for (int i = 0; i < NUMPLAYERS; i++)
         DirectInput.Joysticks[Player[i].JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);

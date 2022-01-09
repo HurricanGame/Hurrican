@@ -248,8 +248,8 @@ void GegnerRiesenSpinne::DoDraw() {
         if (w > 2 * PI)
             w -= 2 * PI;
 
-        DrawLeg(static_cast<float>(xPos - TileEngine.XOffset - 70 + a * 110),
-                static_cast<float>(yPos - TileEngine.YOffset + 130), w, a, 10, 0xFF888888);
+        DrawLeg(xPos - TileEngine.XOffset - 70.0f + static_cast<float>(a * 110),
+                yPos - TileEngine.YOffset + 130.0f, w, a, 10, 0xFF888888);
     }
 
     float tempwinkel, tempdamage;
@@ -261,14 +261,14 @@ void GegnerRiesenSpinne::DoDraw() {
 
     // Rumpf
     pGegnerGrafix[GegnerArt]->RenderSprite(
-        static_cast<float>(xPos - TileEngine.XOffset),
-        static_cast<float>(yPos - TileEngine.YOffset) + static_cast<float>(sin(WalkCount) * 2.0f) + tempdamage + yBody,
+        xPos - TileEngine.XOffset,
+        yPos - TileEngine.YOffset + static_cast<float>(sin(WalkCount) * 2.0f) + tempdamage + yBody,
         0, Color);
 
     // Kopf
     Head.RenderSpriteRotatedOffset(
-        static_cast<float>(xPos - TileEngine.XOffset - 90 + 120) + static_cast<float>(sin(HeadXOffset) * 10.0f),
-        static_cast<float>(yPos - TileEngine.YOffset + 60) + static_cast<float>(sin(WalkCount) * 2.0f) + tempdamage +
+        xPos - TileEngine.XOffset - 90.0f + 120.0f + static_cast<float>(sin(HeadXOffset) * 10.0f),
+        yPos - TileEngine.YOffset + 60.0f + static_cast<float>(sin(WalkCount) * 2.0f) + tempdamage +
             yBody,
         tempwinkel, 127, 0, Color);
 
@@ -285,8 +285,8 @@ void GegnerRiesenSpinne::DoDraw() {
         if (i == 3)
             a = 2;
 
-        DrawLeg(static_cast<float>(xPos - TileEngine.XOffset - 70 + a * 110),
-                static_cast<float>(yPos - TileEngine.YOffset + 130), LegsAnim[a], a, 0, 0xFFFFFFFF);
+        DrawLeg(xPos - TileEngine.XOffset - 70.0f + static_cast<float>(a * 110),
+                yPos - TileEngine.YOffset + 130.0f, LegsAnim[a], a, 0, 0xFFFFFFFF);
     }
 
     // Evtl. Lila Leuchten vor kopf
@@ -296,14 +296,14 @@ void GegnerRiesenSpinne::DoDraw() {
         DirectGraphics.SetAdditiveMode();
 
         Projectiles.LavaFlare.RenderSprite(
-            static_cast<float>(xPos - TileEngine.XOffset) - 10.0f + static_cast<float>(sin(HeadXOffset) * 10.0f),
-            static_cast<float>(yPos - TileEngine.YOffset) + 50.0f + static_cast<float>(sin(WalkCount) * 2.0f) +
+            xPos - TileEngine.XOffset - 10.0f + static_cast<float>(sin(HeadXOffset) * 10.0f),
+            yPos - TileEngine.YOffset + 50.0f + static_cast<float>(sin(WalkCount) * 2.0f) +
                 tempdamage + yBody,
             D3DCOLOR_RGBA(255, 0, 255, a));
 
         Projectiles.LavaFlare.RenderSpriteScaled(
-            static_cast<float>(xPos - TileEngine.XOffset) + 30.0f + static_cast<float>(sin(HeadXOffset) * 10.0f),
-            static_cast<float>(yPos - TileEngine.YOffset) + 90.0f + static_cast<float>(sin(WalkCount) * 2.0f) +
+            xPos - TileEngine.XOffset + 30.0f + static_cast<float>(sin(HeadXOffset) * 10.0f),
+            yPos - TileEngine.YOffset + 90.0f + static_cast<float>(sin(WalkCount) * 2.0f) +
                 tempdamage + yBody,
             40, 40, D3DCOLOR_RGBA(255, 255, 255, a));
     }
@@ -315,14 +315,14 @@ void GegnerRiesenSpinne::DoDraw() {
         DirectGraphics.SetAdditiveMode();
 
         Projectiles.LavaFlare.RenderSpriteScaled(
-            static_cast<float>(xPos - TileEngine.XOffset) - 20.0f + static_cast<float>(sin(HeadXOffset) * 10.0f),
-            static_cast<float>(yPos - TileEngine.YOffset) + 60.0f + static_cast<float>(sin(WalkCount) * 2.0f) +
+            xPos - TileEngine.XOffset - 20.0f + static_cast<float>(sin(HeadXOffset) * 10.0f),
+            yPos - TileEngine.YOffset + 60.0f + static_cast<float>(sin(WalkCount) * 2.0f) +
                 tempdamage + yBody,
             100, 100, D3DCOLOR_RGBA(255, 255, 255, a));
 
         Projectiles.LavaFlare.RenderSpriteScaled(
-            static_cast<float>(xPos - TileEngine.XOffset) - 90.0f + static_cast<float>(sin(HeadXOffset) * 10.0f),
-            static_cast<float>(yPos - TileEngine.YOffset) - 10.0f + static_cast<float>(sin(WalkCount) * 2.0f) +
+            xPos - TileEngine.XOffset - 90.0f + static_cast<float>(sin(HeadXOffset) * 10.0f),
+            yPos - TileEngine.YOffset - 10.0f + static_cast<float>(sin(WalkCount) * 2.0f) +
                 tempdamage + yBody,
             240, 240, D3DCOLOR_RGBA(255, 255, 255, a));
     }
@@ -563,9 +563,11 @@ void GegnerRiesenSpinne::DoKI() {
                 if (AnimCount < 0.0f) {
                     AnimCount = 0.4f;
 
-                    PartikelSystem.PushPartikel(xPos + random(400), yPos + random(100),
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(400)),
+                                                yPos + static_cast<float>(random(100)),
                                                 EXPLOSION_MEDIUM + random(2));
-                    PartikelSystem.PushPartikel(xPos + random(400), yPos + random(100), SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(400)),
+                                                yPos + static_cast<float>(random(100)), SMOKEBIG);
 
                     if (random(5) == 0)
                         SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3 + random(2));
@@ -577,7 +579,7 @@ void GegnerRiesenSpinne::DoKI() {
 
             // AnimStufen für die einzelnen Beine setzen
             for (int i = 0; i < 4; i++) {
-                LegsAnim[i] = WalkCount + (PI / 3.0f) * i;
+                LegsAnim[i] = WalkCount + (PI / 3.0f) * static_cast<float>(i);
 
                 while (LegsAnim[i] > 2 * PI)
                     LegsAnim[i] -= 2 * PI;
