@@ -18,7 +18,7 @@ GegnerQualle::GegnerQualle(int Wert1, int Wert2, bool Light) {
     Value1 = Wert1;
     Value2 = Wert2;
 
-    AnimSpeed = static_cast<float>((8 + random(3)) / 10.0f);
+    AnimSpeed = static_cast<float>(8 + random(3)) / 10.0f;
     AnimPhase = 1;
     AnimStart = 0;
     AnimEnde = 16;
@@ -73,7 +73,7 @@ void GegnerQualle::DoKI() {
 
                 AnimPhase = 0;
                 AnimEnde = 16;
-                AnimSpeed = static_cast<float>((8 + random(3)) / 10.0f);
+                AnimSpeed = static_cast<float>(8 + random(3)) / 10.0f;
                 AnimCount = 0.0f;
                 ySpeed = -7.0f;
                 yAcc = 0.6f;
@@ -86,7 +86,7 @@ void GegnerQualle::DoKI() {
 
                 AnimPhase = 0;
                 AnimEnde = 16;
-                AnimSpeed = static_cast<float>((8 + random(3)) / 10.0f);
+                AnimSpeed = static_cast<float>(8 + random(3)) / 10.0f;
                 AnimCount = 0.0f;
                 ySpeed = -7.0f;
                 yAcc = 0.6f;
@@ -122,11 +122,13 @@ void GegnerQualle::DoKI() {
 void GegnerQualle::GegnerExplode() {
     for (int i = 0; i < 5; i++) {
         // ein paar Luftblässchen erzeugen
-        PartikelSystem.PushPartikel(static_cast<float>(xPos - 10 + random(45)), static_cast<float>(yPos + 10 + random(30)), BUBBLE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(45) - 10),
+                                    yPos + static_cast<float>(random(30) + 10), BUBBLE);
     }
 
     // Blutwolke dazu
-    PartikelSystem.PushPartikel(static_cast<float>(xPos + 2), static_cast<float>(yPos - 5), PIRANHABLUT);
+    PartikelSystem.PushPartikel(xPos + 2.0f,
+                                yPos - 5.0f, PIRANHABLUT);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

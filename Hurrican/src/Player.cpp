@@ -1003,7 +1003,7 @@ void PlayerClass::AnimatePlayer() {
         if (tile_y >= 0 && tile_y < levelsize_y) {
             for (int i = static_cast<int>(xpos) + CollideRect.left + 5; i < static_cast<int>(xpos) + CollideRect.right - 5; i += 2) {
                 float tmp_x = i;
-                int tile_x = static_cast<float>(i) * (1.0f / TILESIZE_X);
+                int tile_x = static_cast<int>(static_cast<float>(i) * (1.0f / TILESIZE_X));
                 if (tile_x < 0)
                     continue;
                 else if (tile_x >= levelsize_x)
@@ -1563,9 +1563,11 @@ void PlayerClass::AnimatePlayer() {
 
             for (int i = -1; i < 25; i++)  // Powerlines schiessen
             {
-                Projectiles.PushProjectile(xpos + 20, static_cast<float>(static_cast<int>(TileEngine.YOffset / 20) * 20 + i * 20), POWERLINE,
+                Projectiles.PushProjectile(xpos + 20, 
+                                           static_cast<float>(static_cast<int>(TileEngine.YOffset / 20.0f) * 20 + i * 20), POWERLINE,
                                            this);
-                Projectiles.PushProjectile(xpos + 20, static_cast<float>(static_cast<int>(TileEngine.YOffset / 20) * 20 + i * 20), POWERLINE2,
+                Projectiles.PushProjectile(xpos + 20,
+                                           static_cast<float>(static_cast<int>(TileEngine.YOffset / 20.0f) * 20 + i * 20), POWERLINE2,
                                            this);
             }
         }
@@ -1959,8 +1961,10 @@ void PlayerClass::AnimatePlayer() {
 
         for (int i = -1; i < 25; i++)  // Powerlines schiessen
         {
-            Projectiles.PushProjectile(xpos + 20, static_cast<float>(static_cast<int>(TileEngine.YOffset / 20) * 20 + i * 20), POWERLINE, this);
-            Projectiles.PushProjectile(xpos + 20, static_cast<float>(static_cast<int>(TileEngine.YOffset / 20) * 20 + i * 20), POWERLINE2, this);
+            Projectiles.PushProjectile(xpos + 20,
+                                       static_cast<float>(static_cast<int>(TileEngine.YOffset / 20.0f) * 20 + i * 20), POWERLINE, this);
+            Projectiles.PushProjectile(xpos + 20,
+                                       static_cast<float>(static_cast<int>(TileEngine.YOffset / 20.0f) * 20 + i * 20), POWERLINE2, this);
         }
     }
 
@@ -2236,7 +2240,7 @@ void PlayerClass::AnimatePlayer() {
         if (InLiquid == false)
             ypos += yspeed SYNC;
         else
-            ypos += yspeed * 2 / 3 SYNC;
+            ypos += yspeed * 2.0f / 3.0f SYNC;
 
         if (yspeed > PLAYER_MAXJUMPSPEED)  // Schnellste "Fall-Geschwindigkeit" erreicht ?
             yspeed = PLAYER_MAXJUMPSPEED;
@@ -2248,8 +2252,7 @@ void PlayerClass::AnimatePlayer() {
                 // Der Wert, wie schnell man wieder runterkommt, wird jetzt aus der Sprunghöhe errechnet, sodass
                 // man bei einem kleinen Sprung viel schneller wieder runterkommt
                 //
-                JumpAdd = PLAYER_JUMPADDSPEED;
-                JumpAdd = PLAYER_JUMPADDSPEED + abs(static_cast<int>((160 - (JumpySave - ypos)) / 10.0f));
+                JumpAdd = PLAYER_JUMPADDSPEED + abs(static_cast<int>((160.0f - (JumpySave - ypos)) / 10.0f));
 
                 if (JumpAdd > 18.0f)
                     JumpAdd = 18.0f;
@@ -2702,7 +2705,7 @@ void PlayerClass::MovePlayer() {
 
     // rechts raus
     if (xpos > TileEngine.LEVELPIXELSIZE_X - 80.0f)
-        xpos = static_cast<float>(TileEngine.LEVELPIXELSIZE_X - 80.0f);
+        xpos = TileEngine.LEVELPIXELSIZE_X - 80.0f;
 
     // unten raus
     if (ypos > TileEngine.LEVELPIXELSIZE_Y)
@@ -2746,9 +2749,9 @@ void PlayerClass::MovePlayer() {
     // Ränder für gelockten Screen prüfen
     if (TileEngine.Zustand != TileStateEnum::SCROLLBAR) {
         if (xpos < TileEngine.XOffset)
-            xpos = static_cast<float>(TileEngine.XOffset);
-        if (xpos > TileEngine.XOffset + 580)
-            xpos = static_cast<float>(TileEngine.XOffset + 580);
+            xpos = TileEngine.XOffset;
+        if (xpos > TileEngine.XOffset + 580.0f)
+            xpos = TileEngine.XOffset + 580.0f;
 
         // Im Fahrstuhllevel?
         //
@@ -2760,7 +2763,7 @@ void PlayerClass::MovePlayer() {
                 Energy = 0.0f;
         } else {
             if (ypos < TileEngine.YOffset)
-                ypos = static_cast<float>(TileEngine.YOffset);
+                ypos = TileEngine.YOffset;
         }
     }
 }
@@ -3434,7 +3437,7 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
         load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
     } else {
-        int Winkel = static_cast<int>(WackelValue + 500) - 500;  // +500 und -500 damit er von -1.0 bis +1.0
+        int Winkel = static_cast<int>(WackelValue + 500.0f) - 500;  // +500 und -500 damit er von -1.0 bis +1.0
         // nich stehen bleibt, weil -0.99 bis +0.99
         // auf 0 gerundet wird
 
@@ -3612,8 +3615,8 @@ bool PlayerClass::DoLightning() {
         D3DCOLOR Color, Color2;
 
         if (BlitzStart < PLAYER_BLITZ_START) {
-            Color = D3DCOLOR_RGBA(255, 255, 255, static_cast<int>(BlitzStart * 25));
-            Color2 = D3DCOLOR_RGBA(255, 255, 255, static_cast<int>(BlitzStart * 25) / 5);
+            Color = D3DCOLOR_RGBA(255, 255, 255, static_cast<int>(BlitzStart * 25.0f));
+            Color2 = D3DCOLOR_RGBA(255, 255, 255, static_cast<int>(BlitzStart * 25.0f) / 5);
         } else {
             Color = D3DCOLOR_RGBA(255, 255, 255, 255);
             Color2 = D3DCOLOR_RGBA(255, 255, 255, 48);
@@ -3665,7 +3668,7 @@ bool PlayerClass::DoLightning() {
 #ifndef NDEBUG
         // Zum anzeigen der Rects, die geprüft werden
         if (DebugMode == true)
-            RenderRect(static_cast<float>(xstart - TileEngine.XOffset), static_cast<float>(ystart - TileEngine.YOffset), 31, 31, 0x80FFFFFF);
+            RenderRect(xstart - TileEngine.XOffset, ystart - TileEngine.YOffset, 31, 31, 0x80FFFFFF);
 #endif  // NDEBUG
 
         xs = xstart;
@@ -3755,13 +3758,14 @@ bool PlayerClass::DoLightning() {
     ystart -= 16.0f * sin_deg(BlitzWinkel - 90);
 
     // Ende des Blitzes leuchten lassen
-    Projectiles.Blitzflash[BlitzAnim].RenderSprite(static_cast<float>(xstart - 18 - TileEngine.XOffset),
-                                                   static_cast<float>(ystart - 18 - TileEngine.YOffset), 0xFFFFFFFF);
+    Projectiles.Blitzflash[BlitzAnim].RenderSprite(xstart - 18.0f - TileEngine.XOffset,
+                                                   ystart - 18.0f - TileEngine.YOffset, 0xFFFFFFFF);
 
     // noch glow um die blitzenden?
     if (options_Detail >= DETAIL_HIGH) {
         Projectiles.Blitzflash[3 - BlitzAnim].RenderSpriteScaled(
-            static_cast<float>(xstart - 58 - TileEngine.XOffset), static_cast<float>(ystart - 58 - TileEngine.YOffset), 144, 144, 0, 0x30FFFFFF);
+            xstart - 58.0f - TileEngine.XOffset,
+            ystart - 58.0f - TileEngine.YOffset, 144, 144, 0, 0x30FFFFFF);
     }
 
     // Blitz rotieren lassen
@@ -3807,7 +3811,7 @@ bool PlayerClass::DoLightning() {
         load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
     } else {
-        int Winkel = static_cast<int>(WackelValue + 500) - 500;  // +500 und -500 damit er von -1.0 bis +1.0
+        int Winkel = static_cast<int>(WackelValue + 500.0f) - 500;  // +500 und -500 damit er von -1.0 bis +1.0
         // nich stehen bleibt, weil -0.99 bis +0.99
         // auf 0 gerundet wird
 
@@ -3872,7 +3876,7 @@ bool PlayerClass::LoadBeam() {
     D3DCOLOR Color;
     int a;
 
-    a = static_cast<int>(BlitzStart * 255 / 160);
+    a = static_cast<int>(BlitzStart * 255.0f / 160.0f);
 
     if (BlitzStart < PLAYER_BEAM_MAX)
         Color = D3DCOLOR_RGBA(255, 255, 255, a);
@@ -3889,8 +3893,8 @@ bool PlayerClass::LoadBeam() {
     ystart += 28.0f * sin_deg(BlitzWinkel - 90);
 
     // Ende des Blitzes leuchten lassen
-    Projectiles.Blitzflash[BlitzAnim].RenderSprite(static_cast<float>(xstart - 18 - TileEngine.XOffset),
-                                                   static_cast<float>(ystart - 18 - TileEngine.YOffset), Color);
+    Projectiles.Blitzflash[BlitzAnim].RenderSprite(xstart - 18.0f - TileEngine.XOffset,
+                                                   ystart - 18.0f - TileEngine.YOffset, Color);
 
     BeamX = xstart + 12;
     BeamY = ystart + 12;

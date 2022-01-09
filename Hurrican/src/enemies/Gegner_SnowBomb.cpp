@@ -36,8 +36,8 @@ void GegnerSnowBomb::DoDraw() {
     // Nur rendern, wenn die Kugel auch rollt
     //
     if (Handlung != GEGNER_INIT)
-        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                               static_cast<float>(yPos - TileEngine.YOffset), anim, 0xFFFFFFFF);
+        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                               yPos - TileEngine.YOffset, anim, 0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------
@@ -128,10 +128,12 @@ void GegnerSnowBomb::DoKI() {
 
 void GegnerSnowBomb::GegnerExplode() {
     for (int i = 0; i < 8; i++)
-        Projectiles.PushProjectile(xPos + random(60), yPos + random(50), SNOWBOMBSMALL);
+        Projectiles.PushProjectile(xPos + static_cast<float>(random(60)),
+                                   yPos + static_cast<float>(random(50)), SNOWBOMBSMALL);
 
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos + random(70) - 10, yPos + random(70) - 10, SNOWFLUSH);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(70)) - 10,
+                                    yPos + static_cast<float>(random(70)) - 10, SNOWFLUSH);
 
     SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND_LANDEN);
 

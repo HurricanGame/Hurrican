@@ -39,8 +39,8 @@ void GegnerFieserFireWalker::DoDraw() {
         mirror = true;
 
     D3DCOLOR Color = D3DCOLOR_RGBA(255, Wert, Wert, 255);
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                           static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, Color, mirror);
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset, AnimPhase, Color, mirror);
 
     if (AlreadyDrawn)
         return;
@@ -49,8 +49,8 @@ void GegnerFieserFireWalker::DoDraw() {
         // Leuchten beim Schiessen rendern
         //
         DirectGraphics.SetAdditiveMode();
-        Projectiles.LavaFlare.RenderSprite(static_cast<float>(xPos - TileEngine.XOffset - 30) + 6 + BlickRichtung * 36,
-                                           static_cast<float>(yPos - TileEngine.YOffset - 30), 0, 0xFFFF8822);
+        Projectiles.LavaFlare.RenderSprite(xPos - TileEngine.XOffset - 30.0f + static_cast<float>(6 + BlickRichtung * 36),
+                                           yPos - TileEngine.YOffset - 30.0f, 0, 0xFFFF8822);
         DirectGraphics.SetColorKeyMode();
     }
 

@@ -62,16 +62,16 @@ void GegnerPowerBlock::DoDraw() {
 
     // normal
     if (AnimPhase > 0) {
-        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                               static_cast<float>(yPos - TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                               yPos - TileEngine.YOffset,
                                                1 + TileEngine.DateiAppendix.UsedPowerblock * 2, 0xFFFFFFFF, false);
     }
 
     // nochmal leuchtend drüber (ausfadend)
     if (AnimPhase == 2) {
         D3DCOLOR col = D3DCOLOR_RGBA(255, 255, 255, static_cast<int>(DamageTaken));
-        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                               static_cast<float>(yPos - TileEngine.YOffset),
+        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                               yPos - TileEngine.YOffset,
                                                AnimPhase + TileEngine.DateiAppendix.UsedPowerblock * 2, col, false);
     }
 }
@@ -207,7 +207,7 @@ void GegnerPowerBlock::GegnerExplode() {
     Player[0].Score += 100;
 
     // Explosion erzeugen
-    PartikelSystem.PushPartikel(xPos - 30, yPos - 30, EXPLOSION_BIG);
+    PartikelSystem.PushPartikel(xPos - 30.0f, yPos - 30.0f, EXPLOSION_BIG);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 }

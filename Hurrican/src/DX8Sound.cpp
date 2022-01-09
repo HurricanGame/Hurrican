@@ -153,7 +153,7 @@ void SoundManagerClass::Update3DChannel(int ch) {
 
     Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
-    vol = static_cast<int>(100 - static_cast<float>(Abstand / 6.0f));
+    vol = static_cast<int>(100.0f - Abstand / 6.0f);
     if (vol < 0)
         vol = 0;
     else {
@@ -720,7 +720,7 @@ int SoundManagerClass::PlayWave3D_SDL(int x, int y, int nr) {
     // DKS - converted to float:
     Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
-    vol = static_cast<int>(100 - static_cast<float>(Abstand / 6.0f));
+    vol = static_cast<int>(100.0f - Abstand / 6.0f);
     if (vol < 0)
         vol = 0;
     else {

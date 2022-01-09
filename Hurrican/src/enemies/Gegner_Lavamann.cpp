@@ -42,8 +42,8 @@ void GegnerLavamann::DoDraw() {
     // gegner leuchtend rendern
     //
     DirectGraphics.SetAdditiveMode();
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                           static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFFFFFFFF,
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset, AnimPhase, 0xFFFFFFFF,
                                            mirror);
     DirectGraphics.SetColorKeyMode();
 }
@@ -156,15 +156,20 @@ void GegnerLavamann::DoKI() {
 
 void GegnerLavamann::GegnerExplode() {
     for (int i = 0; i < 8; i++) {
-        PartikelSystem.PushPartikel(static_cast<float>(xPos - 30 + random(40)), static_cast<float>(yPos - 30 + random(50)), SMOKEBIG);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40) - 30),
+                                    yPos + static_cast<float>(random(50) - 30), SMOKEBIG);
 
-        PartikelSystem.PushPartikel(static_cast<float>(xPos - 10 + random(40)), static_cast<float>(yPos - 10 + random(50)), SMOKE3);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40) - 10),
+                                    yPos + static_cast<float>(random(50) - 10), SMOKE3);
 
-        PartikelSystem.PushPartikel(static_cast<float>(xPos - 60 + random(80)), static_cast<float>(yPos - 50 + random(60)), EXPLOSIONFLARE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80) - 60),
+                                    yPos + static_cast<float>(random(60) - 50), EXPLOSIONFLARE);
 
-        PartikelSystem.PushPartikel(static_cast<float>(xPos - 40 + random(40)), static_cast<float>(yPos - 30 + random(50)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40) - 40),
+                                    yPos + static_cast<float>(random(50) - 30), EXPLOSION_MEDIUM2);
 
-        PartikelSystem.PushPartikel(static_cast<float>(xPos - 20 + random(50)), static_cast<float>(yPos - 20 + random(50)), MINIFLARE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(50) - 20),
+                                    yPos + static_cast<float>(random(50) - 20), MINIFLARE);
     }
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben

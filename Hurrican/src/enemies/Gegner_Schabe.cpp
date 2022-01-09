@@ -59,8 +59,8 @@ void GegnerSchabe::DoKI() {
     // An der Wand krabbeln
     int xl, yl;
 
-    xl = static_cast<int>(xPos + 10) / TILESIZE_X;
-    yl = static_cast<int>(yPos + 10) / TILESIZE_X;
+    xl = static_cast<int>(xPos + 10.0f) / TILESIZE_X;
+    yl = static_cast<int>(yPos + 10.0f) / TILESIZE_X;
 
     // Schabe läuft nach links
     if (xSpeed < 0.0f) {
@@ -315,8 +315,8 @@ void GegnerSchabe::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerSchabe::DoDraw() {
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset),
-                                                  static_cast<float>(yPos - TileEngine.YOffset), winkel, AnimPhase,
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(xPos - TileEngine.XOffset,
+                                                  yPos - TileEngine.YOffset, winkel, AnimPhase,
                                                   0xFFFFFFFF, mirror);
 }
 
@@ -327,11 +327,14 @@ void GegnerSchabe::DoDraw() {
 void GegnerSchabe::GegnerExplode() {
     // Explosion
     for (int i = 0; i < 2; i++) {
-        PartikelSystem.PushPartikel(static_cast<float>(xPos - 20) + random(10), static_cast<float>(yPos - 20) + random(10), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(10) - 20),
+                                    yPos + static_cast<float>(random(10) - 20), EXPLOSION_MEDIUM2);
 
-        PartikelSystem.PushPartikel(static_cast<float>(xPos + 5) + random(10), static_cast<float>(yPos + 5) + random(10), FUNKE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(10) + 5),
+                                    yPos + static_cast<float>(random(10) + 5), FUNKE);
 
-        PartikelSystem.PushPartikel(static_cast<float>(xPos + 5) + random(10), static_cast<float>(yPos + 5) + random(10), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(10) + 5),
+                                    yPos + static_cast<float>(random(10) + 5), SPIDERSPLITTER);
     }
 
     SoundManager.PlayWave(100, 128, -random(2000) + 13000, SOUND_EXPLOSION1);  // Sound ausgeben

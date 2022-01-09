@@ -86,7 +86,7 @@ void HUDClass::ShowHUD() {
 
     HUDGfx.RenderSprite(xpos, ypos, 0, Color);
 
-    BlitzOff = static_cast<int>(BLITZ_STAT_HEIGHT - Player[0].CurrentWeaponLevel[3] * BLITZ_STAT_HEIGHT / BLITZ_STAT_HEIGHT);
+    BlitzOff = static_cast<int>(BLITZ_STAT_HEIGHT - Player[0].CurrentWeaponLevel[3] * BLITZ_STAT_HEIGHT / BLITZ_STAT_HEIGHT); // ???
 
     // DKS - Added support for font scaling
     int scale_factor = pDefaultFont->GetScaleFactor();
@@ -450,7 +450,7 @@ void HUDClass::ShowHUD() {
 void HUDClass::RenderBossHUD() {
     // Boss HUD anzeigen
     if (BossHUDActive > 0.0f) {
-        int a = static_cast<int>(BossHUDActive * 0.75);
+        int a = static_cast<int>(BossHUDActive * 0.75f);
         D3DCOLOR Color = D3DCOLOR_RGBA(red, green, blue, a);
 
         BossHUDActive -= 20.0f SYNC;  // Ausfaden lassen
@@ -473,7 +473,7 @@ void HUDClass::ShowBossHUD(float max, float act) {
         BossHUDActive = static_cast<float>(Alpha);
 
     // Balken länge berechnen
-    int off = static_cast<int>((act - 100) * 113 / (max - 100));
+    int off = static_cast<int>((act - 100.0f) * 113.0f / (max - 100.0f));
 
     if (off < 0)
         off = 0;

@@ -57,7 +57,8 @@ void GegnerKrabblerRechts::DoKI() {
                 Handlung = GEGNER_SCHIESSEN;
                 Projectiles.PushProjectile(xPos - 24, yPos + 23, KRABBLERLASER3);
                 PartikelSystem.PushPartikel(xPos - 12, yPos + 3, LASERFLAME);
-                SoundManager.PlayWave3D(static_cast<int>(xPos + 25), static_cast<int>(yPos + 37), 44100, SOUND_LASERSHOT);
+                SoundManager.PlayWave3D(static_cast<int>(xPos + 25.0f),
+                                        static_cast<int>(yPos + 37.0f), 44100, SOUND_LASERSHOT);
                 AnimPhase = 10;
                 AnimEnde = 14;
                 AnimStart = 0;
@@ -87,7 +88,8 @@ void GegnerKrabblerRechts::DoKI() {
 void GegnerKrabblerRechts::GegnerExplode() {
     // Explosion
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(static_cast<float>(xPos - 15) + random(20), static_cast<float>(yPos - 15) + random(40), EXPLOSION_MEDIUM3);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20) - 15),
+                                    yPos + static_cast<float>(random(40) - 15), EXPLOSION_MEDIUM3);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

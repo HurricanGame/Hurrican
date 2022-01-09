@@ -175,7 +175,7 @@ void GegnerEisFaust::DoKI() {
                 Handlung = GEGNER_LAUFEN;
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
-                yPos = static_cast<float>(TileEngine.ScrolltoY);
+                yPos = TileEngine.ScrolltoY;
                 xAcc = -8.0f;
             }
         } break;
@@ -237,8 +237,8 @@ void GegnerEisFaust::DoKI() {
                 xAcc = 0.0f;
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
-                yPos = static_cast<float>(TileEngine.ScrolltoY - 400.0f);
-                xPos = static_cast<float>(Value1) + 200;
+                yPos = TileEngine.ScrolltoY - 400.0f;
+                xPos = static_cast<float>(Value1) + 200.0f;
             }
 
         } break;
@@ -275,7 +275,7 @@ void GegnerEisFaust::DoKI() {
                 Handlung = GEGNER_EINFLIEGEN;
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
-                yPos = static_cast<float>(TileEngine.ScrolltoY - 250.0f);
+                yPos = TileEngine.ScrolltoY - 250.0f;
             }
         } break;
 

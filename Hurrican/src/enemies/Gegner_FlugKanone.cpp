@@ -104,9 +104,11 @@ void GegnerFlugKanone::DoKI() {
 
 void GegnerFlugKanone::GegnerExplode() {
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(static_cast<float>(xPos - 20 + random(45)), static_cast<float>(yPos - 20 + random(45)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(45) - 20),
+                                    yPos + static_cast<float>(random(45) - 20), EXPLOSION_MEDIUM2);
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(static_cast<float>(xPos + random(65)), static_cast<float>(yPos + random(35)), LASERFUNKE2);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(65)),
+                                    yPos + static_cast<float>(random(35)), LASERFUNKE2);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

@@ -38,18 +38,18 @@ GegnerUfo::GegnerUfo(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerUfo::DoDraw() {
-    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - static_cast<float>(TileEngine.XOffset),
-                                           yPos - static_cast<float>(TileEngine.YOffset), AnimPhase, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset, AnimPhase, 0xFFFFFFFF);
 
     if (AlreadyDrawn == false) {
         DirectGraphics.SetAdditiveMode();
-        Projectiles.LavaFlare.RenderSpriteRotated(xPos + 40.0f - static_cast<float>(TileEngine.XOffset),
-                                                  yPos + 20.0f - static_cast<float>(TileEngine.YOffset), xPos * 0.5f,
+        Projectiles.LavaFlare.RenderSpriteRotated(xPos + 40.0f - TileEngine.XOffset,
+                                                  yPos + 20.0f - TileEngine.YOffset, xPos * 0.5f,
                                                   0xFFFF2288);
 
         // DKS - This was commented out in original source code:
-        //		Projectiles.LavaFlare.RenderSpriteRotated(xPos + 40.0f - static_cast<float>(TileEngine.XOffset),
-        //									  yPos + 30.0f - static_cast<float>(TileEngine.YOffset),
+        //		Projectiles.LavaFlare.RenderSpriteRotated(xPos + 40.0f - TileEngine.XOffset,
+        //									  yPos + 30.0f - TileEngine.YOffset,
         //									  360.0f - xPos * 0.5f, 0x88FFFF88);
 
         DirectGraphics.SetColorKeyMode();
@@ -146,9 +146,9 @@ void GegnerUfo::DoKI() {
             DamageTaken = 0.0f;
 
             yPos += static_cast<float>(8.0 SYNC);                 // Ufo nach unten bewegen
-            if (yPos >= TileEngine.ScrolltoY + 100)  // Weit genug unten ?
+            if (yPos >= TileEngine.ScrolltoY + 100.0f)  // Weit genug unten ?
             {
-                yPos = static_cast<float>(TileEngine.ScrolltoY + 100);
+                yPos = TileEngine.ScrolltoY + 100.0f;
                 Handlung = GEGNER_LAUFEN;
                 xSpeed = -35.0f;
             }

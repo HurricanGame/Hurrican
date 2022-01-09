@@ -55,9 +55,9 @@ void GegnerMiniRocket::DoDraw() {
 
     // Rakete rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset),
-                                                  static_cast<float>(yPos - TileEngine.YOffset),
-                                                  static_cast<float>(rot), 0, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(xPos - TileEngine.XOffset,
+                                                  yPos - TileEngine.YOffset,
+                                                  rot, 0, 0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------
@@ -154,10 +154,12 @@ void GegnerMiniRocket::GegnerExplode() {
 
     int i = 0;
     for (i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos + random(20), yPos - 10 + random(20), SMOKE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
+                                    yPos + static_cast<float>(random(20) - 10), SMOKE);
 
     for (i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos + random(20), yPos - 10 + random(20), MINIFLARE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
+                                    yPos + static_cast<float>(random(20) - 10), MINIFLARE);
 
     Player[0].Score += 50;
 }

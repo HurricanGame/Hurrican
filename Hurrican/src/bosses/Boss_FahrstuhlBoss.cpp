@@ -48,21 +48,21 @@ GegnerFahrstuhlBoss::GegnerFahrstuhlBoss(int Wert1, int Wert2, bool Light) {
 void GegnerFahrstuhlBoss::DoDraw() {
     // Gegner mit Kopf und Kanonen rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset), static_cast<float>(yPos - TileEngine.YOffset), 0,
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset, yPos - TileEngine.YOffset, 0,
                                            0xFFFFFFFF);
 
-    Head.RenderSprite(static_cast<float>(xPos + x1 - TileEngine.XOffset), static_cast<float>(yPos + y1 - TileEngine.YOffset), 0xFFFFFFFF);
-    Canon.RenderSprite(static_cast<float>(xPos + x2 - TileEngine.XOffset), static_cast<float>(yPos + y2 - TileEngine.YOffset), static_cast<int>(CanonAnim),
+    Head.RenderSprite(static_cast<float>(xPos + x1 - TileEngine.XOffset), yPos + y1 - TileEngine.YOffset, 0xFFFFFFFF);
+    Canon.RenderSprite(xPos + x2 - TileEngine.XOffset, yPos + y2 - TileEngine.YOffset, static_cast<int>(CanonAnim),
                        0xFFFFFFFF);
-    Canon.RenderSprite(static_cast<float>(xPos + x3 - TileEngine.XOffset), static_cast<float>(yPos + y2 - TileEngine.YOffset), 5 - static_cast<int>(CanonAnim),
+    Canon.RenderSprite(xPos + x3 - TileEngine.XOffset, yPos + y2 - TileEngine.YOffset, 5 - static_cast<int>(CanonAnim),
                        0xFFFFFFFF);
 
-    GegnerRect[FAHRSTUHLBOSS].left = static_cast<int>(x1 + 60);
-    GegnerRect[FAHRSTUHLBOSS].right = static_cast<int>(x1 + 60 + 25);
+    GegnerRect[FAHRSTUHLBOSS].left = static_cast<int>(x1 + 60.0f);
+    GegnerRect[FAHRSTUHLBOSS].right = static_cast<int>(x1 + 60.0f + 25.0f);
     // GegnerRect[FAHRSTUHLBOSS].left   = int (140 + 76);
     // GegnerRect[FAHRSTUHLBOSS].right  = int (140 + 76 + 34);
-    GegnerRect[FAHRSTUHLBOSS].top = static_cast<int>(y1 + 46);
-    GegnerRect[FAHRSTUHLBOSS].bottom = static_cast<int>(y1 + 46 + 34);
+    GegnerRect[FAHRSTUHLBOSS].top = static_cast<int>(y1 + 46.0f);
+    GegnerRect[FAHRSTUHLBOSS].bottom = static_cast<int>(y1 + 46.0f + 34.0f);
 }
 
 // --------------------------------------------------------------------------------------

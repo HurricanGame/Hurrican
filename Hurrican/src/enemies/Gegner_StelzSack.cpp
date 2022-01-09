@@ -17,7 +17,7 @@ GegnerStelzSack::GegnerStelzSack(int Wert1, int Wert2, bool Light) {
     Value1 = Wert1;
     Value2 = Wert2;
     if (Wert1 == 0)
-        Value1 = static_cast<int>(g_Fahrstuhl_Speed + 25);
+        Value1 = static_cast<int>(g_Fahrstuhl_Speed + 25.0f);
     ChangeLight = Light;
     Destroyable = true;
     AnimStart = 0;

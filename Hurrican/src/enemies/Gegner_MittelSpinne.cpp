@@ -25,7 +25,7 @@ GegnerMittelSpinne::GegnerMittelSpinne(int Wert1, int Wert2, bool Light) {
     TestBlock = false;
     shotdelay = 0.0f;
     Active = true;
-    yStart = static_cast<float>(TileEngine.YOffset);
+    yStart = TileEngine.YOffset;
 }
 
 // --------------------------------------------------------------------------------------
@@ -54,14 +54,14 @@ void GegnerMittelSpinne::DoDraw() {
 
     // Schatten rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset) + 6,
-                                                  static_cast<float>(yPos - TileEngine.YOffset) + 6, rot, AnimPhase,
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(xPos - TileEngine.XOffset + 6.0f,
+                                                  yPos - TileEngine.YOffset + 6.0f, rot, AnimPhase,
                                                   0x55000000);
 
     // Spinne rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset),
-                                                  static_cast<float>(yPos - TileEngine.YOffset), rot, AnimPhase, Color);
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotated(xPos - TileEngine.XOffset,
+                                                  yPos - TileEngine.YOffset, rot, AnimPhase, Color);
 }
 
 // --------------------------------------------------------------------------------------
@@ -162,13 +162,16 @@ void GegnerMittelSpinne::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos + 5, yPos, EXPLOSION_MEDIUM3);
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos + random(80), yPos + random(50), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80)),
+                                    yPos + static_cast<float>(random(50)), SPIDERSPLITTER);
 
     for (int i = 0; i < 30; i++)
-        PartikelSystem.PushPartikel(xPos + random(80), yPos + random(50), FUNKE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80)),
+                                    yPos + static_cast<float>(random(50)), FUNKE);
 
     for (int i = 0; i < 7; i++)
-        PartikelSystem.PushPartikel(xPos - 10 + random(60), yPos - 10 + random(60), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(60) - 10),
+                                    yPos + static_cast<float>(random(60) - 10), EXPLOSION_MEDIUM2);
 
     Player[0].Score += 250;
 }

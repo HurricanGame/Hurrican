@@ -176,7 +176,7 @@ void GegnerStahlfaust::DoKI() {
                 Handlung = GEGNER_LAUFEN;
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
-                yPos = static_cast<float>(TileEngine.ScrolltoY);
+                yPos = TileEngine.ScrolltoY;
                 xAcc = -8.0f;
             }
         } break;
@@ -233,7 +233,7 @@ void GegnerStahlfaust::DoKI() {
                 Handlung = GEGNER_EINFLIEGEN;
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
-                yPos = static_cast<float>(TileEngine.ScrolltoY - 250.0f);
+                yPos = TileEngine.ScrolltoY - 250.0f;
             }
         } break;
 

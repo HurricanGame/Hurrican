@@ -51,8 +51,8 @@ GegnerSchleimBoller::GegnerSchleimBoller(int Wert1, int Wert2, bool Light) {
 void GegnerSchleimBoller::DoDraw() {
     // Je nach Größe anders gestrecht rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteScaled(static_cast<float>(xPos - TileEngine.XOffset) + (30 - Size / 2),
-                                                 static_cast<float>(yPos - TileEngine.YOffset) + (60 - Size), Size,
+    pGegnerGrafix[GegnerArt]->RenderSpriteScaled(xPos - TileEngine.XOffset + static_cast<float>(30 - Size / 2),
+                                                 yPos - TileEngine.YOffset + static_cast<float>(60 - Size), Size,
                                                  Size, AnimPhase, 0xFFFFFFFF);
 
     // Leuchten noch dazurendern?
@@ -60,8 +60,8 @@ void GegnerSchleimBoller::DoDraw() {
     if (AlreadyDrawn == false) {
         if (options_Detail >= DETAIL_HIGH) {
             DirectGraphics.SetAdditiveMode();
-            Projectiles.LavaFlare.RenderSpriteScaled(static_cast<float>(xPos - TileEngine.XOffset) + 30 - Size,
-                                                     static_cast<float>(yPos - TileEngine.YOffset) + 40 - Size,
+            Projectiles.LavaFlare.RenderSpriteScaled(xPos - TileEngine.XOffset + static_cast<float>(30 - Size),
+                                                     yPos - TileEngine.YOffset + static_cast<float>(40 - Size),
                                                      Size * 2, Size * 2, 0x8888FF88);
             DirectGraphics.SetColorKeyMode();
         }
@@ -147,8 +147,9 @@ void GegnerSchleimBoller::DoKI() {
 void GegnerSchleimBoller::GegnerExplode() {
     // PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_GREEN);
 
-    for (int i = 0; i < 3 + static_cast<int>(Size / 8); i++)
-        PartikelSystem.PushPartikel(xPos + 15 + random(20), yPos + 15 + random(20), SCHLEIM);
+    for (int i = 0; i < 3 + Size / 8; i++)
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(15 + random(20)),
+                                    yPos + static_cast<float>(15 + random(20)), SCHLEIM);
 
     // DKS - Added function WaveIsPlaying() to SoundManagerClass:
     if (!SoundManager.WaveIsPlaying(SOUND_SCHLEIM))
@@ -164,7 +165,7 @@ void GegnerSchleimBoller::GegnerExplode() {
         if (xPos + 30 - Size / 2 > pAim->xpos + 35)
             mul = -1;
 
-        Gegner.PushGegner(xPos + 20 * mul, yPos, SCHLEIMBOLLER, static_cast<int>(Size - 8), 5, ChangeLight);
-        Gegner.PushGegner(xPos - 20 * mul, yPos, SCHLEIMBOLLER, static_cast<int>(Size - 8), -5, ChangeLight);
+        Gegner.PushGegner(xPos + static_cast<float>(20 * mul), yPos, SCHLEIMBOLLER, Size - 8, 5, ChangeLight);
+        Gegner.PushGegner(xPos - static_cast<float>(20 * mul), yPos, SCHLEIMBOLLER, Size - 8, -5, ChangeLight);
     }
 }

@@ -41,16 +41,19 @@ void GegnerFahrstuhl::DoDraw() {
     DirectGraphics.SetFilterMode(true);
 
     // Schatten rendern
-    float l = static_cast<float>(g_Fahrstuhl_yPos - TileEngine.YOffset) - 80;
+    float l = static_cast<float>(g_Fahrstuhl_yPos) - TileEngine.YOffset - 80.0f;
     pGegnerGrafix[GegnerArt]->RenderSpriteScaled(
-        static_cast<float>(xPos - TileEngine.XOffset - 10), static_cast<float>(g_Fahrstuhl_yPos - TileEngine.YOffset),
-        GegnerRect[GegnerArt].right + 20, static_cast<int>(GegnerRect[GegnerArt].bottom + l / 5.0f), AnimPhase, 0x99000000);
+        xPos - TileEngine.XOffset - 10.0f,
+        static_cast<float>(g_Fahrstuhl_yPos) - TileEngine.YOffset,
+        GegnerRect[GegnerArt].right + 20,
+        static_cast<int>(static_cast<float>(GegnerRect[GegnerArt].bottom) + l / 5.0f),
+        AnimPhase, 0x99000000);
 
     DirectGraphics.SetFilterMode(false);
 
     // Fahrstuhl rendern
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                           static_cast<float>(g_Fahrstuhl_yPos - TileEngine.YOffset), AnimPhase,
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           g_Fahrstuhl_yPos - TileEngine.YOffset, AnimPhase,
                                            0xFFFFFFFF);
 }
 
@@ -149,11 +152,14 @@ void GegnerFahrstuhl::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
 
     for (int j = 0; j < 100; j++)
-        PartikelSystem.PushPartikel(xPos + random(400), yPos + random(100), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(400)),
+                                    yPos + static_cast<float>(random(100)), SPIDERSPLITTER);
 
     for (int j = 0; j < 50; j++) {
-        PartikelSystem.PushPartikel(xPos + random(400), yPos + random(100), ROCKETSMOKE);
-        PartikelSystem.PushPartikel(xPos - 30 + random(400), yPos - 30 + random(100), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(400)),
+                                    yPos + static_cast<float>(random(100)), ROCKETSMOKE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(400) - 30),
+                                    yPos + static_cast<float>(random(100) - 30), EXPLOSION_MEDIUM2);
     }
 
     for (int j = 0; j < 20; j++)

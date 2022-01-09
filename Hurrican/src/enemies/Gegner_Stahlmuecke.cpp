@@ -37,12 +37,12 @@ void GegnerStahlmuecke::DoDraw() {
     bool mirrored = BlickRichtung == RECHTS;
 
     if (Handlung != GEGNER_FALLEN)
-        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                               static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFFFFFFFF,
+        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                               yPos - TileEngine.YOffset, AnimPhase, 0xFFFFFFFF,
                                                mirrored);
     else
-        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                               static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFFFF0000,
+        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                               yPos - TileEngine.YOffset, AnimPhase, 0xFFFF0000,
                                                mirrored);
 }
 
@@ -109,8 +109,8 @@ void GegnerStahlmuecke::DoKI() {
             xSpeed = std::clamp(xSpeed, -10.0f, 10.0f);
             ySpeed = std::clamp(ySpeed, -10.0f, 10.0f);
 
-            int dx = abs(static_cast<int>(xPos - Value1));
-            int dy = abs(static_cast<int>(yPos - Value2));
+            int dx = abs(static_cast<int>(xPos) - Value1);
+            int dy = abs(static_cast<int>(yPos) - Value2);
 
             // Punkt erreicht oder Abstand zu groß ? Dann neues Ziel setzen
             if (PlayerAbstand() > 400 || (dx * dx + dy * dy) < 20 * 20)
@@ -173,10 +173,11 @@ void GegnerStahlmuecke::DoKI() {
         xAcc = 0.0f;
         yAcc = 2.0f;
 
-        PartikelSystem.PushPartikel(static_cast<float>(xPos + 2), static_cast<float>(yPos - 10), EXPLOSION_MEDIUM3);
+        PartikelSystem.PushPartikel(xPos + 2.0f, yPos - 10.0f, EXPLOSION_MEDIUM3);
 
         for (int i = 0; i < 5; i++)
-            PartikelSystem.PushPartikel(static_cast<float>(xPos + 2) + random(20), static_cast<float>(yPos - 10) + random(10), SMOKE2);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20) + 2),
+                                        yPos + static_cast<float>(random(10) - 10), SMOKE2);
 
         if (BlickRichtung == LINKS)
             xSpeed = -5.0f;
@@ -191,11 +192,11 @@ void GegnerStahlmuecke::DoKI() {
 
 void GegnerStahlmuecke::GegnerExplode() {
     // Explosion
-    PartikelSystem.PushPartikel(static_cast<float>(xPos + 2), static_cast<float>(yPos - 10), EXPLOSION_MEDIUM3);
+    PartikelSystem.PushPartikel(xPos + 2.0f, yPos - 10.0f, EXPLOSION_MEDIUM3);
 
     // Rauchende Splitter
     for (int i = 0; i < 3; i++)
-        PartikelSystem.PushPartikel(static_cast<float>(xPos + 15), static_cast<float>(yPos + 20), SPLITTER);
+        PartikelSystem.PushPartikel(xPos + 15.0f, yPos + 20.0f, SPLITTER);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

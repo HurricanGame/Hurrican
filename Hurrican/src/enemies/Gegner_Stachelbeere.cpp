@@ -40,8 +40,8 @@ void GegnerStachelbeere::DoDraw() {
         case GEGNER_LAUFEN:
         case GEGNER_LAUFEN2: {
             pGegnerGrafix[GegnerArt]->SetRect(AnimPhase * 60, 0, (AnimPhase + 1) * 60, 60);
-            pGegnerGrafix[GegnerArt]->RenderSprite(xPos - static_cast<float>(TileEngine.XOffset),
-                                                   yPos - static_cast<float>(TileEngine.YOffset), AnimPhase, color,
+            pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                                   yPos - TileEngine.YOffset, AnimPhase, color,
                                                    mirrored);
 
         } break;
@@ -53,11 +53,11 @@ void GegnerStachelbeere::DoDraw() {
                                               (AnimPhase % 3) * 120 + 120, (AnimPhase / 3 + 2) * 60);
 
             if (!mirrored)
-                pGegnerGrafix[GegnerArt]->RenderMirroredSprite(xPos - static_cast<float>(TileEngine.XOffset) - 60.0f,
-                                                               yPos - static_cast<float>(TileEngine.YOffset), color);
+                pGegnerGrafix[GegnerArt]->RenderMirroredSprite(xPos - TileEngine.XOffset - 60.0f,
+                                                               yPos - TileEngine.YOffset, color);
             else
-                pGegnerGrafix[GegnerArt]->RenderSprite(xPos - static_cast<float>(TileEngine.XOffset),
-                                                       yPos - static_cast<float>(TileEngine.YOffset), color);
+                pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                                       yPos - TileEngine.YOffset, color);
         } break;
     }
 }
@@ -102,10 +102,10 @@ void GegnerStachelbeere::DoKI() {
             // Partikel erzeugen
             // int i = 0;
             for (int i = 0; i < 10; i++)
-                PartikelSystem.PushPartikel(xPos + random(60), yPos + 50, FUNKE);
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(60)), yPos + 50.0f, FUNKE);
 
             for (int i = 0; i < 5; i++)
-                PartikelSystem.PushPartikel(xPos + random(40), yPos + 40, SMOKE);
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)), yPos + 40.0f, SMOKE);
 
             // Geschwindigkeit umdrehen
             ySpeed *= -0.5f;
@@ -251,10 +251,12 @@ void GegnerStachelbeere::DoKI() {
 
 void GegnerStachelbeere::GegnerExplode() {
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(static_cast<float>(xPos - 30 + random(60)), static_cast<float>(yPos - 30 + random(60)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(60) - 30),
+                                    yPos + static_cast<float>(random(60) - 30), EXPLOSION_MEDIUM2);
 
     // Explosion
-    PartikelSystem.PushPartikel(static_cast<float>(xPos - 15), static_cast<float>(yPos - 15), EXPLOSION_BIG);
+    PartikelSystem.PushPartikel(xPos - 15.0f,
+                                yPos - 15.0f, EXPLOSION_BIG);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION4);  // Sound ausgeben
 

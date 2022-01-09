@@ -73,8 +73,8 @@ void GegnerPiranha::DoDraw() {
     else
         off = 20;
 
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                           static_cast<float>(yPos - TileEngine.YOffset), off + AnimPhase, 0xFFFFFFFF,
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset, off + AnimPhase, 0xFFFFFFFF,
                                            mirror);
 }
 
@@ -194,13 +194,16 @@ void GegnerPiranha::GegnerExplode() {
     // Fetzen und Blasen erzeugen
     int i;
     for (i = 0; i < 3; i++)
-        PartikelSystem.PushPartikel(static_cast<float>(xPos - 20 + random(45)), static_cast<float>(yPos - 5 + random(30)), PIRANHATEILE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(45) - 20),
+                                    yPos + static_cast<float>(random(30) - 5), PIRANHATEILE);
 
     for (i = 0; i < 3; i++)
-        PartikelSystem.PushPartikel(static_cast<float>(xPos - 10 + random(45)), static_cast<float>(yPos + 10 + random(30)), BUBBLE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(45) - 10),
+                                    yPos + static_cast<float>(random(30) + 10), BUBBLE);
 
     // Blutwolke dazu
-    PartikelSystem.PushPartikel(static_cast<float>(xPos + 2), static_cast<float>(yPos - 5), PIRANHABLUT);
+    PartikelSystem.PushPartikel(xPos + 2.0f,
+                                yPos - 5.0f, PIRANHABLUT);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

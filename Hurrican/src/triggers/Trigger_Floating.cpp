@@ -50,7 +50,7 @@ void GegnerFloating::DoKI() {
             //
             if (ySpeed == 0.0f) {
                 Value2 = static_cast<int>(yPos);
-                ySpeed = static_cast<float>(Player[p].yspeed) / 3;
+                ySpeed = static_cast<float>(Player[p].yspeed) / 3.0f;
                 yAcc = -3.0f;
             }
         }

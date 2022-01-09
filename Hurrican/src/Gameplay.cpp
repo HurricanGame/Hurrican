@@ -221,7 +221,7 @@ void ShowGameOver() {
     int col;
 
     // Transparent Wert des Game Over Schriftzuges bestimmen
-    col = static_cast<int>((50.0f - Player[0].GameOverTimer) * 10);
+    col = static_cast<int>((50.0f - Player[0].GameOverTimer) * 10.0f);
     if (col > 255)  // Obergrenze checken
         col = 255;
 
@@ -405,8 +405,9 @@ void GameLoop() {
         off = 100 - static_cast<int>(WarningCount);
 
         pGegnerGrafix[WARNING]->SetRect(0, 0, 180, 40);
-        pGegnerGrafix[WARNING]->RenderSpriteScaled(230 - off * 4.5f / 4.0f, 390 - off / 4.0f,
-                                                   static_cast<int>(180 + off * 4.5f / 2.0f), static_cast<int>(40 + off * 1.0f / 2.0f), Col);
+        pGegnerGrafix[WARNING]->RenderSpriteScaled(230.0f - off * 4.5f / 4.0f, 390.0f - off / 4.0f,
+                                                   180 + static_cast<int>(off * 4.5f / 2.0f),
+                                                   40 + static_cast<int>(off * 1.0f / 2.0f), Col);
 
         DirectGraphics.SetFilterMode(false);
 
@@ -1076,7 +1077,7 @@ void SummaryScreen() {
         GUI.Run();
         D3DCOLOR color = D3DCOLOR_RGBA(0, 255, 0, static_cast<int>(GUI.GetFadingAlpha()));
         pDefaultFont->DrawText(
-            static_cast<float>(RENDERWIDTH - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_TITLE])) / 2,
+            static_cast<float>((RENDERWIDTH - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_TITLE])) / 2),
             static_cast<float>(title_txt_y), TextArray[TEXT_SUMMARY_TITLE], color);
 
         if (delay_ctr >= delay_can_leave) {
@@ -1088,16 +1089,20 @@ void SummaryScreen() {
             }
 
             pDefaultFont->DrawText(
-                static_cast<float>(RENDERWIDTH - pDefaultFont->StringLength(str_pressanykey.c_str())) / 2,
+                static_cast<float>((RENDERWIDTH - pDefaultFont->StringLength(str_pressanykey.c_str())) / 2),
                 static_cast<float>(pressanykey_txt_y), str_pressanykey.c_str(), color);
         }
 
-        pGegnerGrafix[POWERBLOCK]->RenderSpriteScaled(static_cast<float>(sprite1_x - 16), static_cast<float>(sprites_y - 16), 32, 32, 1, color);
-        pGegnerGrafix[DIAMANT]->RenderSprite(static_cast<float>(sprite2_x - 14), static_cast<float>(sprites_y - 14), 0, color, false);
-        pGegnerGrafix[ONEUP]->RenderSpriteScaled(static_cast<float>(sprite3_x - 16), static_cast<float>(sprites_y - 16), 32, 32, 0, color);
-        pDefaultFont->DrawText(static_cast<float>(secrets_x - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_SECRETS]) / 2),
-                               static_cast<float>(sprites_y - pDefaultFont->GetYCharSize() / 2), TextArray[TEXT_SUMMARY_SECRETS],
-                               color);
+        pGegnerGrafix[POWERBLOCK]->RenderSpriteScaled(static_cast<float>(sprite1_x - 16),
+                                                      static_cast<float>(sprites_y - 16), 32, 32, 1, color);
+        pGegnerGrafix[DIAMANT]->RenderSprite(static_cast<float>(sprite2_x - 14),
+                                             static_cast<float>(sprites_y - 14), 0, color, false);
+        pGegnerGrafix[ONEUP]->RenderSpriteScaled(static_cast<float>(sprite3_x - 16),
+                                                 static_cast<float>(sprites_y - 16), 32, 32, 0, color);
+        pDefaultFont->DrawText(
+            static_cast<float>(secrets_x - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_SECRETS]) / 2),
+            static_cast<float>(sprites_y - pDefaultFont->GetYCharSize() / 2), TextArray[TEXT_SUMMARY_SECRETS],
+            color);
 
         std::string buf;
         buf = std::to_string(Player[0].BlocksThisLevel)

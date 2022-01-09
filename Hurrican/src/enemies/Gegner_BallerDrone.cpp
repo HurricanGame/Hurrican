@@ -28,16 +28,16 @@ GegnerBallerdrone::GegnerBallerdrone(int Wert1, int Wert2, bool Light) {
 
 void GegnerBallerdrone::DoDraw() {
     if (Handlung == GEGNER_FALLEN)
-        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                               static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFFFF0000);
+        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                               yPos - TileEngine.YOffset, AnimPhase, 0xFFFF0000);
     else
-        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                               static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFFFFFFFF);
+        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                               yPos - TileEngine.YOffset, AnimPhase, 0xFFFFFFFF);
 
     // Flare rendern
     if (AlreadyDrawn == false) {
         DirectGraphics.SetAdditiveMode();
-        Projectiles.LavaFlare.RenderSprite(static_cast<float>(xPos - TileEngine.XOffset - 15), static_cast<float>(yPos - TileEngine.YOffset - 45),
+        Projectiles.LavaFlare.RenderSprite(xPos - TileEngine.XOffset - 15.0f, yPos - TileEngine.YOffset - 45.0f,
                                            0, 0xFFFF0000);
         DirectGraphics.SetColorKeyMode();
     }

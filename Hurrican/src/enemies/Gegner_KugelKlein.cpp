@@ -102,7 +102,7 @@ void GegnerKugelKlein::DoKI() {
 
 void GegnerKugelKlein::GegnerExplode() {
     // Explosion
-    PartikelSystem.PushPartikel(static_cast<float>(xPos - 15), static_cast<float>(yPos - 15), EXPLOSION_MEDIUM2);
+    PartikelSystem.PushPartikel(xPos - 15.0f, yPos - 15.0f, EXPLOSION_MEDIUM2);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION4);  // Sound ausgeben
 

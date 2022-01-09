@@ -95,8 +95,8 @@ void GegnerSmallWespe::DoKI() {
             if (ySpeed < -MAXSPEED)
                 ySpeed = -MAXSPEED;
 
-            int dx = abs(static_cast<int>(xPos - Value1));
-            int dy = abs(static_cast<int>(yPos - Value2));
+            int dx = abs(static_cast<int>(xPos) - Value1);
+            int dy = abs(static_cast<int>(yPos) - Value2);
 
             // nah am Spieler "zuschlagen" ?
             if (PlayerAbstand() < 200)
@@ -169,10 +169,12 @@ void GegnerSmallWespe::DoKI() {
         xAcc = 0.0f;
         yAcc = 2.0f;
 
-        PartikelSystem.PushPartikel(static_cast<float>(xPos + 2), static_cast<float>(yPos - 10), EXPLOSION_MEDIUM);
+        PartikelSystem.PushPartikel(xPos + 2.0f,
+                                    yPos - 10.0f, EXPLOSION_MEDIUM);
 
         for (int i = 0; i < 5; i++)
-            PartikelSystem.PushPartikel(static_cast<float>(xPos + 2) + random(20), static_cast<float>(yPos - 10) + random(10), SMOKE2);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20) + 2),
+                                        yPos + static_cast<float>(random(10) - 10), SMOKE2);
 
         if (BlickRichtung == LINKS)
             xSpeed = -5.0f;
@@ -187,11 +189,11 @@ void GegnerSmallWespe::DoKI() {
 
 void GegnerSmallWespe::GegnerExplode() {
     // Explosion
-    PartikelSystem.PushPartikel(static_cast<float>(xPos + 2), static_cast<float>(yPos - 10), EXPLOSION_MEDIUM);
+    PartikelSystem.PushPartikel(xPos + 2.0f, yPos - 10.0f, EXPLOSION_MEDIUM);
 
     // Rauchende Splitter
     for (int i = 0; i < 3; i++)
-        PartikelSystem.PushPartikel(static_cast<float>(xPos + 15), static_cast<float>(yPos + 20), SPLITTER);
+        PartikelSystem.PushPartikel(xPos + 15.0f, yPos + 20.0f, SPLITTER);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

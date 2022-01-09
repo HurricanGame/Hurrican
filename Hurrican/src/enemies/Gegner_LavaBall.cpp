@@ -36,14 +36,14 @@ GegnerLavaBall::GegnerLavaBall(int Wert1, int Wert2, bool Light) {
 
 void GegnerLavaBall::DoDraw() {
     // Render
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                           static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset, AnimPhase, 0xFFFFFFFF);
 
     // Flare rendern
     DirectGraphics.SetAdditiveMode();
     float w = yPos / 4;
-    Projectiles.LavaFlare.RenderSpriteScaledRotated(static_cast<float>(xPos - 60 - TileEngine.XOffset),
-                                                    static_cast<float>(yPos - 60 - TileEngine.YOffset), 180, 180, w, 0xFFFFCC88);
+    Projectiles.LavaFlare.RenderSpriteScaledRotated(xPos - 60.0f - TileEngine.XOffset,
+                                                    yPos - 60.0f - TileEngine.YOffset, 180, 180, w, 0xFFFFCC88);
     DirectGraphics.SetColorKeyMode();
 }
 

@@ -111,7 +111,7 @@ void GegnerWalker::DoKI() {
                 AnimStart = 0;
                 AnimPhase = 0;
                 AnimEnde = 11;
-                xSpeed = static_cast<float>(10.0 * BlickRichtung);
+                xSpeed = static_cast<float>(10 * BlickRichtung);
             }
 
             // Schuss abgeben
@@ -159,7 +159,7 @@ void GegnerWalker::DoKI() {
                 Handlung = GEGNER_WATSCHELN;
                 yAcc = 0.0f;
                 ySpeed = 0.0f;
-                xSpeed = 25.0f * BlickRichtung;
+                xSpeed = static_cast<float>(25 * BlickRichtung);
             }
         } break;
 
@@ -209,7 +209,8 @@ void GegnerWalker::DoKI() {
 
 void GegnerWalker::GegnerExplode() {
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(static_cast<float>(xPos - 20 + random(45)), static_cast<float>(yPos - 20 + random(45)), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(45) - 20),
+                                    yPos + static_cast<float>(random(45) - 20), EXPLOSION_MEDIUM2);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

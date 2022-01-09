@@ -53,7 +53,8 @@ void GegnerNest::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION4);
 
     for (int i = 0; i < 5; i++)
-        PartikelSystem.PushPartikel(xPos - 25 + random(20), yPos - 30 + random(50), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20) - 25),
+                                    yPos + static_cast<float>(random(50) - 30), EXPLOSION_MEDIUM2);
 
     PartikelSystem.PushPartikel(xPos - 5, yPos - 5, NESTLUFT);
 

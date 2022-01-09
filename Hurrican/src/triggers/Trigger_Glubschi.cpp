@@ -40,7 +40,7 @@ void GegnerGlubschi::DoDraw() {
     a = xPos - pAim->xpos;
 
     if (a < 200) {
-        anim = static_cast<int>((200 - a) / 18);
+        anim = static_cast<int>((200.0f - a) / 18.0f);
 
         if (anim > 20)
             anim = 20;
@@ -50,13 +50,13 @@ void GegnerGlubschi::DoDraw() {
 
     // Glubschi rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                           static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset, AnimPhase, 0xFFFFFFFF);
 
     // Corona rendern
     DirectGraphics.SetAdditiveMode();
-    Projectiles.LavaFlare.RenderSpriteScaledRotated(static_cast<float>(xPos - TileEngine.XOffset - 36 + anim * 1.5f),
-                                                    static_cast<float>(yPos - TileEngine.YOffset - 33), 92, 92, rot, 0x60FFFFFF);
+    Projectiles.LavaFlare.RenderSpriteScaledRotated(xPos - TileEngine.XOffset - 36.0f + static_cast<float>(anim) * 1.5f,
+                                                    yPos - TileEngine.YOffset - 33.0f, 92, 92, rot, 0x60FFFFFF);
     DirectGraphics.SetColorKeyMode();
 }
 

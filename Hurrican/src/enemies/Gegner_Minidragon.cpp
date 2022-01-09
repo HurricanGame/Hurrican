@@ -54,8 +54,8 @@ void GegnerMiniDragon::DoDraw() {
     mirrored = pAim->xpos + 35 < xPos + 30;
 
     for (int i = 0; i < Segments; i++)
-        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset) + (6 - i) * mulx,
-                                               static_cast<float>(yPos - TileEngine.YOffset) + (6 - i) * muly, 4,
+        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset + static_cast<float>(6 - i) * mulx,
+                                               yPos - TileEngine.YOffset + static_cast<float>(6 - i) * muly, 4,
                                                0xFFFFFFFF);
 
     // Kopf
@@ -91,8 +91,8 @@ void GegnerMiniDragon::DoDraw() {
     }
 
     if (Segments == 6) {
-        pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset) + BlickRichtung * 15.0f,
-                                               static_cast<float>(yPos - TileEngine.YOffset), a, 0xFFFFFFFF, mirrored);
+        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset + BlickRichtung * 15.0f,
+                                               yPos - TileEngine.YOffset, a, 0xFFFFFFFF, mirrored);
     }
 }
 

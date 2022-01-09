@@ -32,8 +32,8 @@ GegnerMushroom::GegnerMushroom(int Wert1, int Wert2, bool Light) {
 void GegnerMushroom::DoDraw() {
     // Mushroom rendern
     //
-    pGegnerGrafix[GegnerArt]->RenderSpriteScaled(static_cast<float>(xPos - TileEngine.XOffset),
-                                                 static_cast<float>(yPos - TileEngine.YOffset + (61.0f - ySize) * 2),
+    pGegnerGrafix[GegnerArt]->RenderSpriteScaled(xPos - TileEngine.XOffset,
+                                                 yPos - TileEngine.YOffset + (61.0f - ySize) * 2.0f,
                                                  135, static_cast<int>(ySize), 0, 0xFFFFFFFF);
 }
 
@@ -52,7 +52,7 @@ void GegnerMushroom::PlayerJumps(PlayerClass *pPlayer) {
         pPlayer->yadd = PLAYER_JUMPADDSPEED;
         pPlayer->Handlung = PlayerActionEnum::SPRINGEN;
 
-        SoundManager.PlayWave(100, 128, static_cast<int>(11000), SOUND_MUSHROOMJUMP);
+        SoundManager.PlayWave(100, 128, 11000, SOUND_MUSHROOMJUMP);
     }
 }
 

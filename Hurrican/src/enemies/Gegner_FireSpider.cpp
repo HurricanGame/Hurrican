@@ -160,7 +160,7 @@ void GegnerFireSpider::DoKI() {
                 AnimPhase = 0;
                 AnimStart = 0;
                 AnimEnde = 10;
-                shotdelay = static_cast<float>(random(20)) + 20.0f;
+                shotdelay = static_cast<float>(random(20) + 20);
             }
         } break;
 

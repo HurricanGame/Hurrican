@@ -78,7 +78,7 @@ void GegnerBratklops::DoDraw() {
     if (a > 5)
         a = 10 - a;
 
-    pGfx[a]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset), static_cast<float>(yPos - TileEngine.YOffset), 0xFFFFFFFF);
+    pGfx[a]->RenderSprite(xPos - TileEngine.XOffset, yPos - TileEngine.YOffset, 0xFFFFFFFF);
 
     // Laser rendern ?
     //
@@ -89,13 +89,13 @@ void GegnerBratklops::DoDraw() {
             c = 128;
 
         if (FlareDelay > 544)
-            c = static_cast<int>(128 - (FlareDelay - 544) / 2.0f);
+            c = static_cast<int>(128.0f - (FlareDelay - 544.0f) / 2.0f);
 
         DirectGraphics.SetAdditiveMode();
         D3DCOLOR Color = D3DCOLOR_RGBA(255, 255, 255, c);
-        pFlare->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset) + 64.0f, static_cast<float>(yPos - TileEngine.YOffset) + 122.0f,
+        pFlare->RenderSpriteRotated(xPos - TileEngine.XOffset + 64.0f, yPos - TileEngine.YOffset + 122.0f,
                                     FlareDelay * 2, Color);
-        pFlare->RenderSpriteRotated(static_cast<float>(xPos - TileEngine.XOffset) + 64.0f, static_cast<float>(yPos - TileEngine.YOffset) + 122.0f,
+        pFlare->RenderSpriteRotated(xPos - TileEngine.XOffset + 64.0f, yPos - TileEngine.YOffset + 122.0f,
                                     FlareDelay * 2, Color);
 
         // Laser rendern
@@ -116,10 +116,10 @@ void GegnerBratklops::DoDraw() {
             float l, r, o, u;      // Vertice Koordinaten
             float tl, tr, to, tu;  // Textur Koordinaten
 
-            l = static_cast<float>(xPos - TileEngine.XOffset + 140.0f - 0.5f);  // Links
-            o = static_cast<float>(yPos - TileEngine.YOffset + 215.0f - 0.5f);  // Oben
-            r = static_cast<float>(xPos - TileEngine.XOffset + 170.0f + 0.5f);  // Rechts
-            u = static_cast<float>(yPos - TileEngine.YOffset + 800.0f + 0.5f);  // Unten
+            l = xPos - TileEngine.XOffset + 140.0f - 0.5f;  // Links
+            o = yPos - TileEngine.YOffset + 215.0f - 0.5f;  // Oben
+            r = xPos - TileEngine.XOffset + 170.0f + 0.5f;  // Rechts
+            u = yPos - TileEngine.YOffset + 800.0f + 0.5f;  // Unten
 
             tl = 0.0f;
             tr = 1.0f;
@@ -189,23 +189,23 @@ void GegnerBratklops::DoDraw() {
             Rect.bottom = 24;
 
             float xs, ys;
-            float xstart = static_cast<float>(xPos + 145.0f);
-            float ystart = static_cast<float>(yPos + 203.0f);
+            float xstart = xPos + 145.0f;
+            float ystart = yPos + 203.0f;
 
             // Rechtecke für die Kollisionsabfrage rotieren lassen
             for (int i = 0; i < 25; i++) {
             // Zum anzeigen der Rects, die geprüft werden
 #ifndef NDEBUG
                 if (DebugMode == true)
-                    RenderRect(static_cast<float>(xstart - TileEngine.XOffset), static_cast<float>(ystart - TileEngine.YOffset), 24, 24,
+                    RenderRect(xstart - TileEngine.XOffset, ystart - TileEngine.YOffset, 24, 24,
                                0x80FFFFFF);
 #endif  //NDEBUG
 
                 // Laser auf Kollision mit dem Spieler prüfen
                 //
 
-                xs = static_cast<float>(xstart);
-                ys = static_cast<float>(ystart);
+                xs = xstart;
+                ys = ystart;
 
                 for (int j = 0; j < NUMPLAYERS; j++)
                     if (SpriteCollision(Player[j].xpos, Player[j].ypos, Player[j].CollideRect, xs, ys, Rect) == true) {

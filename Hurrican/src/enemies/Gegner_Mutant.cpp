@@ -151,17 +151,21 @@ void GegnerMutant::DoKI() {
 
 void GegnerMutant::GegnerExplode() {
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos + random(60) - 10, yPos + random(60), EXPLOSION_GREEN);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(60) - 10),
+                                    yPos + static_cast<float>(random(60)), EXPLOSION_GREEN);
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos + random(60) + 15, yPos + 10 + random(60), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(60) + 15),
+                                    yPos + static_cast<float>(10 + random(60)), SPIDERSPLITTER);
 
     for (int i = 0; i < 15; i++)
-        PartikelSystem.PushPartikel(xPos + random(60) + 15, yPos + 10 + random(60), SCHLEIM);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(60) + 15),
+                                    yPos + static_cast<float>(10 + random(60)), SCHLEIM);
 
     // DKS - While fixing volume of jumping (look at note further above), made this 3D too:
     // SoundManager.PlayWave(75, 128, 8000 + rand()%4000, SOUND_MUTANT);
-    SoundManager.PlayWave3D(static_cast<int>(xPos) + 50, static_cast<int>(yPos) + 45, 8000 + random(4000),
+    SoundManager.PlayWave3D(static_cast<int>(xPos) + 50,
+                            static_cast<int>(yPos) + 45, 8000 + random(4000),
                             SOUND_MUTANT);
 
     SoundManager.PlayWave(40, 128, 11025, SOUND_EXPLOSION4);

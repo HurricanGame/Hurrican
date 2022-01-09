@@ -41,9 +41,10 @@ void GegnerColumn2::DoDraw() {
 
     matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[Winkel], glm::vec3(0.0f, 0.0f, 1.0f));
 
-    D3DXMatrixTranslation(&matTrans, static_cast<float>(-(xPos - TileEngine.XOffset + 40)),
-                          static_cast<float>(-(yPos - TileEngine.YOffset + 100)), 0.0f);  // Transformation zum Ursprung
-    D3DXMatrixTranslation(&matTrans2, static_cast<float>(xPos - TileEngine.XOffset + 40), static_cast<float>(yPos - TileEngine.YOffset + 100),
+    D3DXMatrixTranslation(&matTrans, -(xPos - TileEngine.XOffset + 40.0f),
+                          -(yPos - TileEngine.YOffset + 100.0f), 0.0f);  // Transformation zum Ursprung
+    D3DXMatrixTranslation(&matTrans2, xPos - TileEngine.XOffset + 40.0f,
+                          yPos - TileEngine.YOffset + 100.0f,
                           0.0f);  // Transformation wieder zurück
 
     matWorldLocal = glm::mat4x4(1.0f);
@@ -57,8 +58,8 @@ void GegnerColumn2::DoDraw() {
     load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
 #endif
 
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                           static_cast<float>(yPos - TileEngine.YOffset), 0, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset, 0, 0xFFFFFFFF);
 
     // Normale Projektions-Matrix wieder herstellen
     matWorldLocal = glm::mat4x4(1.0f);
@@ -131,11 +132,14 @@ void GegnerColumn2::DoKI() {
 
 void GegnerColumn2::GegnerExplode() {
     for (int i = 0; i < 30; i++)
-        PartikelSystem.PushPartikel(xPos + random(100), yPos + 80 + random(40), SMOKE);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
+                                    yPos + static_cast<float>(80 + random(40)), SMOKE);
 
     for (int i = 0; i < 40; i++) {
-        PartikelSystem.PushPartikel(xPos + random(90) + 10, yPos + 60 + random(40), ROCKSPLITTERSMALL);
-        PartikelSystem.PushPartikel(xPos + random(90) + 10, yPos + 60 + random(40), ROCKSPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(90) + 10),
+                                    yPos + static_cast<float>(60 + random(40)), ROCKSPLITTERSMALL);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(90) + 10),
+                                    yPos + static_cast<float>(60 + random(40)), ROCKSPLITTER);
     }
 
     SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEEXPLODE);

@@ -89,7 +89,7 @@ void GegnerDeckenturm::DoKI() {
             // Winkel = (d2/d1)*180/PI;
             Winkel = RadToDeg(d2 / d1);
 
-            AnimPhase = static_cast<int>(16 - Winkel / 12);
+            AnimPhase = static_cast<int>(16.0f - Winkel / 12.0f);
 
             // Nicht über die Seitengrenze hinausgehen
             AnimPhase = std::clamp(AnimPhase, 10, 21);
@@ -129,7 +129,7 @@ void GegnerDeckenturm::DoKI() {
 
 void GegnerDeckenturm::GegnerExplode() {
     // Explosion
-    PartikelSystem.PushPartikel(static_cast<float>(xPos - 10), static_cast<float>(yPos - 10), EXPLOSION_MEDIUM2);
+    PartikelSystem.PushPartikel(xPos - 10.0f, yPos - 10.0f, EXPLOSION_MEDIUM2);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 

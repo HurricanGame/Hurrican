@@ -32,8 +32,8 @@ GegnerMade::GegnerMade(int Wert1, int Wert2, bool Light) {
     if (Value1 == 98) {
         AnimPhase = random(20);
         yAcc = 4.0f;
-        xSpeed = (random(120)) / 3.0f;
-        ySpeed = -(((random(40)) / 3.0f) + 8.0f);
+        xSpeed = static_cast<float>(random(120)) / 3.0f;
+        ySpeed = -((static_cast<float>(random(40)) / 3.0f) + 8.0f);
         Handlung = GEGNER_FALLEN;
     }
 
@@ -41,8 +41,8 @@ GegnerMade::GegnerMade(int Wert1, int Wert2, bool Light) {
     else if (Value1 == 99) {
         AnimPhase = random(20);
         yAcc = 4.0f;
-        xSpeed = static_cast<float>((random(200) - 100) / 12);
-        ySpeed = -static_cast<float>(((random(40)) / 2.0f) + 12.0f);
+        xSpeed = static_cast<float>(random(200) - 100) / 12.0f;
+        ySpeed = -((static_cast<float>(random(40)) / 2.0f) + 12.0f);
         Handlung = GEGNER_FALLEN;
     }
 }
@@ -60,15 +60,18 @@ void GegnerMade::DoDraw() {
     switch (Handlung) {
         case GEGNER_LAUFEN: {
             pGegnerGrafix[GegnerArt]->RenderSpriteScaled(
-                static_cast<float>(xPos - TileEngine.XOffset) - static_cast<int>(sin(movesin) * 2.5f),
-                static_cast<float>(yPos - TileEngine.YOffset), 20 + static_cast<int>(sin(movesin) * 5.0f), 20, 15,
+                xPos - TileEngine.XOffset - static_cast<float>(sin(movesin) * 2.5f),
+                yPos - TileEngine.YOffset,
+                20 + static_cast<int>(sin(movesin) * 5.0f),
+                20,
+                15,
                 0xFFFFFFFF);
 
         } break;
 
         default: {
-            pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                                   static_cast<float>(yPos - TileEngine.YOffset), AnimPhase,
+            pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                                   yPos - TileEngine.YOffset, AnimPhase,
                                                    0xFFFFFFFF);
         } break;
     }
@@ -130,5 +133,6 @@ void GegnerMade::GegnerExplode() {
     SoundManager.PlayWave(100, random(200) + 20, 8000 + random(4000), SOUND_MADE);
 
     for (int i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(static_cast<float>(xPos - 10 + random(24)), static_cast<float>(yPos - 12 + random(22)), MADEBLUT);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(24) - 10),
+                                    yPos + static_cast<float>(random(22) - 12), MADEBLUT);
 }

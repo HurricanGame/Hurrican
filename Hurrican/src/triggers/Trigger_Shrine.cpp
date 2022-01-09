@@ -70,10 +70,12 @@ void GegnerShrine::DoKI() {
             Player[p].Handlung == PlayerActionEnum::DUCKEN && Value1 == 1) {
             Value1 = 0;
             for (int i = 0; i < 2; i++)
-                Gegner.PushGegner(static_cast<float>(xPos - 20 + i * 110), yPos - 100, ONEUP, 0, 0, true);
+                Gegner.PushGegner(xPos + static_cast<float>(i * 110 - 20),
+                                  yPos - 100.0f, ONEUP, 0, 0, true);
 
             for (int i = 0; i < 8; i++)
-                Gegner.PushGegner(xPos + random(100), yPos - 50 + random(100), EXTRAS, 3, 0, true);
+                Gegner.PushGegner(xPos + static_cast<float>(random(100)),
+                                  yPos + static_cast<float>(random(100) - 50), EXTRAS, 3, 0, true);
 
             SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);
             SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);

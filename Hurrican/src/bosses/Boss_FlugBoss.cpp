@@ -64,33 +64,33 @@ GegnerFlugBoss::GegnerFlugBoss(int Wert1, int Wert2, bool Light) {
 
 void GegnerFlugBoss::DoDraw() {
     // Schienen
-    SchieneL.RenderSprite(-SchienePos, static_cast<float>(yPos - TileEngine.YOffset) + 161, 0xFFFFFFFF);
+    SchieneL.RenderSprite(-SchienePos, yPos - TileEngine.YOffset + 161.0f, 0xFFFFFFFF);
 
-    SchieneR.RenderSprite(320 + SchienePos, static_cast<float>(yPos - TileEngine.YOffset) + 161, 0xFFFFFFFF);
+    SchieneR.RenderSprite(320 + SchienePos, yPos - TileEngine.YOffset + 161.0f, 0xFFFFFFFF);
 
     // Fette Kanone
-    Kanone_big.RenderSprite(static_cast<float>(-TileEngine.XOffset + xPos + 121),
-                            static_cast<float>(-TileEngine.YOffset + yPos + 249 - yKanone[0]), 0xFFFFFFFF);
+    Kanone_big.RenderSprite(-TileEngine.XOffset + xPos + 121.0f,
+                            -TileEngine.YOffset + yPos + 249.0f - yKanone[0], 0xFFFFFFFF);
 
     // Medium Kanone
-    Kanone_medium.RenderSprite(static_cast<float>(-TileEngine.XOffset + xPos + 148),
-                               static_cast<float>(-TileEngine.YOffset + yPos + 254 - yKanone[1]), 0xFFFFFFFF);
+    Kanone_medium.RenderSprite(-TileEngine.XOffset + xPos + 148.0f,
+                               -TileEngine.YOffset + yPos + 254.0f - yKanone[1], 0xFFFFFFFF);
 
     // Mini Kanone 1
-    Kanone_small.RenderSprite(static_cast<float>(-TileEngine.XOffset + xPos + 68),
-                              static_cast<float>(-TileEngine.YOffset + yPos + 261 - yKanone[2]), 0xFFFFFFFF);
+    Kanone_small.RenderSprite(-TileEngine.XOffset + xPos + 68.0f,
+                              -TileEngine.YOffset + yPos + 261.0f - yKanone[2], 0xFFFFFFFF);
 
     // Mini Kanone 2
-    Kanone_small.RenderSprite(static_cast<float>(-TileEngine.XOffset + xPos + 78),
-                              static_cast<float>(-TileEngine.YOffset + yPos + 251 - yKanone[3]), 0xFFFFFFFF);
+    Kanone_small.RenderSprite(-TileEngine.XOffset + xPos + 78.0f,
+                              -TileEngine.YOffset + yPos + 251.0f - yKanone[3], 0xFFFFFFFF);
 
     // Schatten
-    RenderRect(static_cast<float>(xPos - TileEngine.XOffset + 255), static_cast<float>(yPos - TileEngine.YOffset + 161),
+    RenderRect(xPos - TileEngine.XOffset + 255.0f, yPos - TileEngine.YOffset + 161.0f,
                18, 80, 0x88000000);
 
     // Main
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                           static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset, AnimPhase, 0xFFFFFFFF);
 
     // int a = int (alphaAuge); // PICKLE not used
 
@@ -99,16 +99,16 @@ void GegnerFlugBoss::DoDraw() {
     Hitzone[1].RenderSprite(xHit, 401.0f + yHit, 0, 0xFFFFFFFF);
 
     GegnerRect[GegnerArt].left = static_cast<int>(xHit + TileEngine.XOffset - xPos);
-    GegnerRect[GegnerArt].right = static_cast<int>(GegnerRect[GegnerArt].left + 52);
-    GegnerRect[GegnerArt].top = static_cast<int>(380 + TileEngine.YOffset - yPos + yHit);
-    GegnerRect[GegnerArt].bottom = static_cast<int>(GegnerRect[GegnerArt].top + 100);
+    GegnerRect[GegnerArt].right = GegnerRect[GegnerArt].left + 52;
+    GegnerRect[GegnerArt].top = static_cast<int>(380.0f + TileEngine.YOffset - yPos + yHit);
+    GegnerRect[GegnerArt].bottom = GegnerRect[GegnerArt].top + 100;
 
     // Geschuetz
-    Geschuetz.RenderSpriteRotated(xKanone - 62, static_cast<float>(-TileEngine.YOffset + yPos + 160), Winkel[0], 0,
+    Geschuetz.RenderSpriteRotated(xKanone - 62, -TileEngine.YOffset + yPos + 160.0f, Winkel[0], 0,
                                   0xFFFFFFFF);
 
     // Geschuetz
-    Geschuetz.RenderSpriteRotated(640 - xKanone, static_cast<float>(-TileEngine.YOffset + yPos + 160), Winkel[1], 0,
+    Geschuetz.RenderSpriteRotated(640 - xKanone, -TileEngine.YOffset + yPos + 160.0f, Winkel[1], 0,
                                   0xFFFFFFFF);
 
     // Auge
@@ -125,8 +125,8 @@ void GegnerFlugBoss::DoDraw() {
         alphaDir = 1.0f;
     }
 
-    Auge.RenderSprite(static_cast<float>(-TileEngine.XOffset + xPos + 175),
-                      static_cast<float>(-TileEngine.YOffset + yPos + 182), 0, 0xFFFFFFFF);
+    Auge.RenderSprite(-TileEngine.XOffset + xPos + 175.0f,
+                      -TileEngine.YOffset + yPos + 182.0f, 0, 0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------

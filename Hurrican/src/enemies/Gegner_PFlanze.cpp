@@ -97,7 +97,8 @@ void GegnerPflanze::GegnerExplode() {
 
     for (int i = 0; i < 30; i++)
         // Blätter erzeugen
-        PartikelSystem.PushPartikel(static_cast<float>(xPos + random(100)), static_cast<float>(yPos + 10 + random(50)), BLATT);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
+                                    yPos + static_cast<float>(10 + random(50)), BLATT);
 
     Player[0].Score += 300;
 }

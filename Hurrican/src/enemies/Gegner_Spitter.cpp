@@ -124,7 +124,7 @@ void GegnerSpitter::DoKI() {
 void GegnerSpitter::GegnerExplode() {
     Player[0].Score += 50;
 
-    PartikelSystem.PushPartikel(static_cast<float>(xPos - 10), static_cast<float>(yPos - 10), EXPLOSION_MEDIUM);
+    PartikelSystem.PushPartikel(xPos - 10.0f, yPos - 10.0f, EXPLOSION_MEDIUM);
 
     SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
 }

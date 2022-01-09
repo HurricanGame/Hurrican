@@ -300,7 +300,7 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
 
     // DegreetoRad-Tabelle füllen
     for (int i = 0; i < 360; i++)
-        DegreetoRad[i] = static_cast<float>(PI * i / 180);
+        DegreetoRad[i] = PI * static_cast<float>(i) / 180.0f;
 
     SetColorKeyMode();
 

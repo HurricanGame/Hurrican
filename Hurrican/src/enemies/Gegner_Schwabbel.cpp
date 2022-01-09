@@ -68,7 +68,8 @@ void GegnerSchwabbel::DoKI() {
             if (AnimCount < 0.0f) {
                 AnimCount += 1.0f;
 
-                Gegner.PushGegner(static_cast<float>(xPos + 16 + random(6)), static_cast<float>(yPos - 10 + random(4)), MADE, 1, 0, false);
+                Gegner.PushGegner(xPos + static_cast<float>(random(6) + 16),
+                                  yPos + static_cast<float>(random(4) - 10), MADE, 1, 0, false);
             }
 
             shotdelay -= 1.0f SYNC;
@@ -94,10 +95,12 @@ void GegnerSchwabbel::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
 
     for (int i = 0; i < 80; i++)
-        PartikelSystem.PushPartikel(xPos + random(40), yPos - 10 + random(60), MADEBLUT);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)),
+                                    yPos + static_cast<float>(random(60) - 10), MADEBLUT);
 
     for (int i = 0; i < 30; i++)
-        Gegner.PushGegner(xPos + random(40), yPos - 10 + random(60), MADE, 1, 0, false);
+        Gegner.PushGegner(xPos + static_cast<float>(random(40)),
+                          yPos + static_cast<float>(random(60) - 10), MADE, 1, 0, false);
 
     Player[0].Score += 400;
 }

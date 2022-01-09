@@ -39,15 +39,15 @@ void GegnerFloating3::DoDraw() {
     // Standfläche rendern
     //
     pGegnerGrafix[GegnerArt]->itsRect = pGegnerGrafix[GegnerArt]->itsPreCalcedRects[0];
-    pGegnerGrafix[GegnerArt]->RenderSpriteRotatedOffset(static_cast<float>(xPos - TileEngine.XOffset),
-                                                        static_cast<float>(yPos - TileEngine.YOffset), winkel, 0.0f,
+    pGegnerGrafix[GegnerArt]->RenderSpriteRotatedOffset(xPos - TileEngine.XOffset,
+                                                        yPos - TileEngine.YOffset, winkel, 0.0f,
                                                         -6.0f, 0xFFFFFFFF);
 
     // Mittelteil rendern
     //
     pGegnerGrafix[GegnerArt]->itsRect = pGegnerGrafix[GegnerArt]->itsPreCalcedRects[1];
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                           static_cast<float>(yPos - TileEngine.YOffset), 1, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset, 1, 0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ void GegnerFloating3::DoKI() {
                     //
                     if (ySpeed == 0.0f) {
                         Value2 = static_cast<int>(yPos);
-                        ySpeed = static_cast<float>(Player[p].yspeed) / 5;
+                        ySpeed = static_cast<float>(Player[p].yspeed) / 5.0f;
                         yAcc = -3.0f;
                     }
                 }

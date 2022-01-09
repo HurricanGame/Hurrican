@@ -963,7 +963,7 @@ void MenuClass::ShowMenu() {
             for (i = 0; i < num_lines; i++) {
                 D3DCOLOR Color;
 
-                int alpha2 = static_cast<int>(i * yoff_inc - CreditsPosition);
+                int alpha2 = i * yoff_inc - static_cast<int>(CreditsPosition);
 
                 if (alpha2 > 360) {
                     alpha2 = 255 - (alpha2 - 360) * 4;
@@ -982,7 +982,8 @@ void MenuClass::ShowMenu() {
 
                 Color = D3DCOLOR_RGBA(255, 255, 255, alpha2);
 
-                pDefaultFont->DrawTextCenterAlign(320.0f, static_cast<float>(static_cast<int>(i * yoff_inc - CreditsPosition)),
+                pDefaultFont->DrawTextCenterAlign(320.0f,
+                                                  static_cast<float>(i * yoff_inc - static_cast<int>(CreditsPosition)),
                                                   credits_displayed[CreditsOffset + i], Color, 0);
             }
 
@@ -1476,7 +1477,7 @@ void MenuClass::DoMenu() {
 
             if (pressed) {
                 if (AktuellerPunkt == 0) {
-                    SoundManager.g_sound_vol -= static_cast<float>(5.0f SYNC);
+                    SoundManager.g_sound_vol -= 5.0f SYNC;
                     if (SoundManager.g_sound_vol < 0.0f)
                         SoundManager.g_sound_vol = 0.0f;
                 }
@@ -2627,7 +2628,7 @@ void MenuClass::ShowLanguageInfo() {
     if (a1 > 255)
         a1 = 255;
 
-    a2 = static_cast<int>(a1 / 2);
+    a2 = a1 / 2;
 
     // Determine size and location of background rectangle:
     unsigned int longest_line = 0;
