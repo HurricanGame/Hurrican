@@ -682,9 +682,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
     glm::mat4x4 matRot, matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
-    Winkel = std::fmod(Winkel, 360);
-    if (Winkel < 0)
-        Winkel += 360;
+    clampAngle(Winkel);
 
     // Rotationsmatrix
     matRot = glm::rotate(glm::mat4x4(1.0f), PI * Winkel / 180.0f, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -743,7 +741,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
                         // r = x+(itsRect.right-itsRect.left-1)+0.5f;	// Rechts   //DKS
         r = x + width;  // Rechts
 
-        Winkel = 360 - Winkel;
+        Winkel = 360.0f - Winkel;
     }
 
     // oder gespiegelt
@@ -794,9 +792,7 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
     glm::mat4x4 matRot, matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
-    Winkel = std::fmod(Winkel, 360);
-    if (Winkel < 0)
-        Winkel += 360;
+    clampAngle(Winkel);
 
     // Rotationsmatrix
     matRot = glm::rotate(glm::mat4x4(1.0f), PI * Winkel / 180.0f, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -858,10 +854,8 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
         std::swap(l, r);
 
         offx = -offx;
+    } else
         Winkel = 360.0f - Winkel;
-    }
-
-    Winkel = 360 - Winkel;
 
     o = y;           // Oben
                      // u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten        //DKS
@@ -903,9 +897,7 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
     glm::mat4x4 matRot, matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
-    Winkel = std::fmod(Winkel, 360);
-    if (Winkel < 0)
-        Winkel += 360;
+    clampAngle(Winkel);
 
     // Rotationsmatrix
     matRot = glm::rotate(glm::mat4x4(1.0f), PI * Winkel / 180.0f, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -995,9 +987,7 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x,
     glm::mat4x4 matRot, matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
-    Winkel = std::fmod(Winkel, 360);
-    if (Winkel < 0)
-        Winkel += 360;
+    clampAngle(Winkel);
 
     // Rotationsmatrix
     matRot = glm::rotate(glm::mat4x4(1.0f), PI * Winkel / 180.0f, glm::vec3(0.0f, 0.0f, 1.0f));
