@@ -94,8 +94,8 @@ void GegnerBruecke::DoKI() {
                 Player[p].yspeed >= 0.0f) {
                 float dx, dy;
 
-                dx = (Player[p].xpos + 35) - (xPos + 5);
-                dy = (Player[p].ypos + 40) - (yPos + 5);
+                dx = (Player[p].xpos + 35.0f) - (xPos + 5.0f);
+                dy = (Player[p].ypos + 40.0f) - (yPos + 5.0f);
 
                 // DKS - converted to float, optimized:
                 // double a = sqrt ((dx * dx) + (dy * dy));

@@ -74,7 +74,7 @@ void GegnerFahrstuhl::DoKI() {
                 if (Value1 == 0) {
                     TileEngine.Zustand = TileStateEnum::LOCKED;
                 } else if (TileEngine.Zustand != TileStateEnum::SCROLLTOPLAYER)
-                    TileEngine.ScrollLevel(xPos - 50, yPos - 400, TileStateEnum::SCROLLTOLOCK);
+                    TileEngine.ScrollLevel(xPos - 50.0f, yPos - 400.0f, TileStateEnum::SCROLLTOLOCK);
             }
 
             Handlung = GEGNER_FALLEN;  // Fahrstuhl fährt los
@@ -117,13 +117,17 @@ void GegnerFahrstuhl::DoKI() {
             if (sparkcount < 0.0f) {
                 sparkcount = 0.05f;
 
-                PartikelSystem.PushPartikel(xPos + random(5), yPos + random(5), FUNKE);
-                PartikelSystem.PushPartikel(xPos + random(5) + GegnerRect[GegnerArt].right, yPos + random(5), FUNKE);
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(5)),
+                                            yPos + static_cast<float>(random(5)), FUNKE);
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(5)) +
+                                                static_cast<float>(GegnerRect[GegnerArt].right),
+                                            yPos + static_cast<float>(random(5)), FUNKE);
 
                 if (random(20) == 0)
-                    PartikelSystem.PushPartikel(xPos - 20, yPos - 10, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos - 20.0f, yPos - 10.0f, SMOKEBIG);
                 if (random(20) == 0)
-                    PartikelSystem.PushPartikel(xPos - 20 + GegnerRect[GegnerArt].right, yPos - 10, SMOKEBIG);
+                    PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(GegnerRect[GegnerArt].right),
+                                                yPos - 10.0f, SMOKEBIG);
             }
 
         } break;
@@ -158,12 +162,13 @@ void GegnerFahrstuhl::GegnerExplode() {
     for (int j = 0; j < 50; j++) {
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(400)),
                                     yPos + static_cast<float>(random(100)), ROCKETSMOKE);
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(400) - 30),
-                                    yPos + static_cast<float>(random(100) - 30), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(400)),
+                                    yPos - 30.0f + static_cast<float>(random(100)), EXPLOSION_MEDIUM2);
     }
 
     for (int j = 0; j < 20; j++)
-        PartikelSystem.PushPartikel(xPos + random(400), yPos + random(100), SPLITTER);
+        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(400)),
+                                    yPos + static_cast<float>(random(100)), SPLITTER);
 
     TileEngine.Zustand = TileStateEnum::SCROLLBAR;
 

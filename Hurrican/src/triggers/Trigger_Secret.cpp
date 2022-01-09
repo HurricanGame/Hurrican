@@ -54,12 +54,12 @@ void GegnerSecret::DoKI() {
                     SoundManager.PlayWave(100, 128, 11025, SOUND_SECRET);
 
                     for (int i = 0; i < 200; i++)
-                        PartikelSystem.PushPartikel(xPos + 20, yPos + 20, KRINGELSECRET);
+                        PartikelSystem.PushPartikel(xPos + 20.0f, yPos + 20.0f, KRINGELSECRET);
 
                     WinkelUebergabe = -1.0f;
-                    PartikelSystem.PushPartikel(xPos + 20, yPos + 12, TEXTSECRET);
-                    PartikelSystem.PushPartikel(xPos - 100, yPos - 100, GRENADEFLARE);
-                    PartikelSystem.PushPartikel(xPos + 5, yPos + 5, EXPLOSION_KRINGEL);
+                    PartikelSystem.PushPartikel(xPos + 20.0f, yPos + 12.0f, TEXTSECRET);
+                    PartikelSystem.PushPartikel(xPos - 100.0f, yPos - 100.0f, GRENADEFLARE);
+                    PartikelSystem.PushPartikel(xPos + 5.0f, yPos + 5.0f, EXPLOSION_KRINGEL);
                 }
         } break;
     }

@@ -44,10 +44,10 @@ void GegnerShootPlattform::DoDraw() {
                                            0, 0xAAFFFFFF);
 
         Projectiles.LavaFlare.RenderSprite(xPos - 9.0f - TileEngine.XOffset,
-                                           yPos - 5 - TileEngine.YOffset,
+                                           yPos - 5.0f - TileEngine.YOffset,
                                            0, 0x88AAAA00);
         Projectiles.LavaFlare.RenderSprite(xPos - 9.0f - TileEngine.XOffset,
-                                           yPos - 5 - TileEngine.YOffset,
+                                           yPos - 5.0f - TileEngine.YOffset,
                                            0, 0x88AA0000);
         DirectGraphics.SetColorKeyMode();
 

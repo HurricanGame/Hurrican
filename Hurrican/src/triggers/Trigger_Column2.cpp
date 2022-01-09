@@ -41,9 +41,11 @@ void GegnerColumn2::DoDraw() {
 
     matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[Winkel], glm::vec3(0.0f, 0.0f, 1.0f));
 
-    D3DXMatrixTranslation(&matTrans, -(xPos - TileEngine.XOffset + 40.0f),
+    D3DXMatrixTranslation(&matTrans,
+                          -(xPos - TileEngine.XOffset + 40.0f),
                           -(yPos - TileEngine.YOffset + 100.0f), 0.0f);  // Transformation zum Ursprung
-    D3DXMatrixTranslation(&matTrans2, xPos - TileEngine.XOffset + 40.0f,
+    D3DXMatrixTranslation(&matTrans2,
+                          xPos - TileEngine.XOffset + 40.0f,
                           yPos - TileEngine.YOffset + 100.0f,
                           0.0f);  // Transformation wieder zurück
 
@@ -82,10 +84,12 @@ void GegnerColumn2::DoKI() {
         Handlung = GEGNER_EXPLODIEREN;
 
         for (int i = 0; i < 20; i++)
-            PartikelSystem.PushPartikel(xPos + random(40), yPos + random(15) - 20, SMOKE);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)),
+                                        yPos + static_cast<float>(random(15)) - 20, SMOKE);
 
         for (int i = 0; i < 10; i++)
-            PartikelSystem.PushPartikel(xPos + random(40), yPos + random(10) - 5, ROCKSPLITTERSMALL);
+            PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)),
+                                        yPos + static_cast<float>(random(10)) - 5, ROCKSPLITTERSMALL);
 
         FallSpeed = 2.0f;
 
@@ -133,13 +137,13 @@ void GegnerColumn2::DoKI() {
 void GegnerColumn2::GegnerExplode() {
     for (int i = 0; i < 30; i++)
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
-                                    yPos + static_cast<float>(80 + random(40)), SMOKE);
+                                    yPos + 80.0f + static_cast<float>(random(40)), SMOKE);
 
     for (int i = 0; i < 40; i++) {
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(90) + 10),
-                                    yPos + static_cast<float>(60 + random(40)), ROCKSPLITTERSMALL);
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(90) + 10),
-                                    yPos + static_cast<float>(60 + random(40)), ROCKSPLITTER);
+        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(90)),
+                                    yPos + 60.0f + static_cast<float>(random(40)), ROCKSPLITTERSMALL);
+        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(90)),
+                                    yPos + 60.0f + static_cast<float>(random(40)), ROCKSPLITTER);
     }
 
     SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEEXPLODE);

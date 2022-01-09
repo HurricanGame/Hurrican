@@ -33,8 +33,8 @@ GegnerShootButton::GegnerShootButton(GegnerClass *Plattform) {
 
 void GegnerShootButton::DoDraw() {
     // Button rendern
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(pPlattForm->xPos - TileEngine.XOffset + 41),
-                                           static_cast<float>(pPlattForm->yPos - TileEngine.YOffset - 8), AnimPhase,
+    pGegnerGrafix[GegnerArt]->RenderSprite(pPlattForm->xPos - TileEngine.XOffset + 41.0f,
+                                           pPlattForm->yPos - TileEngine.YOffset - 8.0f, AnimPhase,
                                            0xFFFFFFFF);
 }
 
@@ -45,7 +45,7 @@ void GegnerShootButton::DoDraw() {
 void GegnerShootButton::DoKI() {
     SimpleAnimation();
 
-    yPos = pPlattForm->yPos - 9 + pPlattForm->ySpeed SYNC;
+    yPos = pPlattForm->yPos - 9.0f + pPlattForm->ySpeed SYNC;
 
     // beschossen ?
     //
@@ -60,10 +60,14 @@ void GegnerShootButton::DoKI() {
         SmokeCount -= 1.0f SYNC;
         if (SmokeCount <= 0.0f) {
             SmokeCount = 0.2f;
-            Projectiles.PushProjectile(pPlattForm->xPos + 23 + random(4), pPlattForm->yPos - 15, FEUERFALLE3);
-            PartikelSystem.PushPartikel(pPlattForm->xPos + 33 + random(2), pPlattForm->yPos + 40, FLUGSACKSMOKE);
-            PartikelSystem.PushPartikel(pPlattForm->xPos + 51 + random(2), pPlattForm->yPos + 40, FLUGSACKSMOKE2);
-            PartikelSystem.PushPartikel(pPlattForm->xPos + 48 + random(2), pPlattForm->yPos + 40, FUNKE);
+            Projectiles.PushProjectile(pPlattForm->xPos + 23.0f + static_cast<float>(random(4)),
+                                       pPlattForm->yPos - 15.0f, FEUERFALLE3);
+            PartikelSystem.PushPartikel(pPlattForm->xPos + 33.0f + static_cast<float>(random(2)),
+                                        pPlattForm->yPos + 40.0f, FLUGSACKSMOKE);
+            PartikelSystem.PushPartikel(pPlattForm->xPos + 51.0f + static_cast<float>(random(2)),
+                                        pPlattForm->yPos + 40.0f, FLUGSACKSMOKE2);
+            PartikelSystem.PushPartikel(pPlattForm->xPos + 48.0f + static_cast<float>(random(2)),
+                                        pPlattForm->yPos + 40.0f, FUNKE);
         }
     } else if (static_cast<int>(pPlattForm->yPos) < pPlattForm->Value1)
         pPlattForm->yAcc = 3.0f;

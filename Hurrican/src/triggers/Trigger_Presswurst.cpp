@@ -37,8 +37,8 @@ void GegnerPresswurst::DoDraw() {
     //
     int size = static_cast<int>(oldy - yPos) + GegnerRect[GegnerArt].top;
     pGegnerGrafix[GegnerArt]->SetRect(0, size, 185, 357);
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                           static_cast<float>(yPos - TileEngine.YOffset) + size, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset + static_cast<float>(size), 0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------
@@ -84,7 +84,8 @@ void GegnerPresswurst::DoKI() {
                     yAcc = 2.5f;
 
                     if (PlayerAbstand(true) < 600)
-                        SoundManager.PlayWave3D(static_cast<int>(xPos + 90), static_cast<int>(yPos + 330), 11025,
+                        SoundManager.PlayWave3D(static_cast<int>(xPos + 90.0f),
+                                                static_cast<int>(yPos + 330.0f), 11025,
                                                 SOUND_PRESSE);
                 }
         } break;
@@ -128,7 +129,8 @@ void GegnerPresswurst::DoKI() {
                 SmokeCount = 5.0f;
 
                 if (PlayerAbstand() < 600)
-                    SoundManager.PlayWave3D(static_cast<int>(xPos + 90), static_cast<int>(yPos + 330), 11025,
+                    SoundManager.PlayWave3D(static_cast<int>(xPos + 90.0f),
+                                            static_cast<int>(yPos + 330.0f), 11025,
                                             SOUND_DOORSTOP);
 
                 ShakeScreen(2.0f);
@@ -154,7 +156,8 @@ void GegnerPresswurst::DoKI() {
                 Handlung = GEGNER_SPECIAL2;
                 AnimCount = 28.0f;
                 if (PlayerAbstand() < 600)
-                    SoundManager.PlayWave3D(static_cast<int>(xPos + 90), static_cast<int>(yPos + 330), 13000,
+                    SoundManager.PlayWave3D(static_cast<int>(xPos + 90.0f),
+                                            static_cast<int>(yPos + 330.0f), 13000,
                                             SOUND_STEAM2);
             }
         } break;
@@ -183,7 +186,8 @@ void GegnerPresswurst::DoKI() {
                 yAcc = 0.2f;
 
                 if (PlayerAbstand() < 600)
-                    SoundManager.PlayWave3D(static_cast<int>(xPos + 90), static_cast<int>(yPos + 330), 11025,
+                    SoundManager.PlayWave3D(static_cast<int>(xPos + 90.0f),
+                                            static_cast<int>(yPos + 330.0f), 11025,
                                             SOUND_PRESSE);
             }
         } break;

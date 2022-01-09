@@ -41,28 +41,28 @@ void GegnerTube::DoDraw() {
     // Mutant drin?
     if (Value1 >= 4)
         pGegnerGrafix[MUTANT]->RenderSprite(
-            xPos - static_cast<float>(TileEngine.XOffset) - 1,
-            yPos - static_cast<float>(TileEngine.YOffset) + 60 + static_cast<float>(sin(SinOff)) * 1.8f, 0, 0xFFFFFFFF);
+            xPos - TileEngine.XOffset - 1.0f,
+            yPos - TileEngine.YOffset + 60.0f + static_cast<float>(sin(SinOff)) * 1.8f, 0, 0xFFFFFFFF);
 
     // Flüssigkeit drin?
     if (Value2 == 1) {
         DirectGraphics.SetAdditiveMode();
 
         if (Value1 % 4 == 0 || Value1 == 5) {
-            RenderRect4(xPos - static_cast<float>(TileEngine.XOffset) + 18,
-                        yPos - static_cast<float>(TileEngine.YOffset) + 75, 62, 3, 0xFF008822, 0xFF008822, 0xFF004411,
+            RenderRect4(xPos - TileEngine.XOffset + 18.0f,
+                        yPos - TileEngine.YOffset + 75.0f, 62.0f, 3.0f, 0xFF008822, 0xFF008822, 0xFF004411,
                         0xFF004411);
 
-            RenderRect4(xPos - static_cast<float>(TileEngine.XOffset) + 18,
-                        yPos - static_cast<float>(TileEngine.YOffset) + 78, 62, 89, 0xFF004411, 0xFF004411, 0xFF00DD22,
+            RenderRect4(xPos - TileEngine.XOffset + 18.0f,
+                        yPos - TileEngine.YOffset + 78.0f, 62.0f, 89.0f, 0xFF004411, 0xFF004411, 0xFF00DD22,
                         0xFF00DD22);
         } else {
-            RenderRect4(xPos - static_cast<float>(TileEngine.XOffset) + 18,
-                        yPos - static_cast<float>(TileEngine.YOffset) + 145, 62, 3, 0xFF008822, 0xFF008822, 0xFF004411,
+            RenderRect4(xPos - TileEngine.XOffset + 18.0f,
+                        yPos - TileEngine.YOffset + 145.0f, 62.0f, 3.0f, 0xFF008822, 0xFF008822, 0xFF004411,
                         0xFF004411);
 
-            RenderRect4(xPos - static_cast<float>(TileEngine.XOffset) + 18,
-                        yPos - static_cast<float>(TileEngine.YOffset) + 148, 62, 19, 0xFF004411, 0xFF004411, 0xFF008822,
+            RenderRect4(xPos - TileEngine.XOffset + 18.0f,
+                        yPos - TileEngine.YOffset + 148.0f, 62.0f, 19.0f, 0xFF004411, 0xFF004411, 0xFF008822,
                         0xFF008822);
         }
 
@@ -75,8 +75,8 @@ void GegnerTube::DoDraw() {
 
     if (Value1 == 5)
         a = 0;
-    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - static_cast<float>(TileEngine.XOffset),
-                                           yPos - static_cast<float>(TileEngine.YOffset), a, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset, a, 0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------
@@ -96,10 +96,11 @@ void GegnerTube::DoKI() {
                 Value1 = 1;
 
                 for (int i = 0; i < 100; i++)
-                    PartikelSystem.PushPartikel(xPos + 5 + random(55), yPos + 70 + random(60), GLASSPLITTER);
+                    PartikelSystem.PushPartikel(xPos + 5.0f + static_cast<float>(random(55)),
+                                                yPos + 70.0f + static_cast<float>(random(60)), GLASSPLITTER);
 
-                Gegner.PushGegner(xPos - 1, yPos + 60, MUTANT, 1, 0, false);
-                Gegner.PushGegner(xPos + 50 - 10, yPos + 150, PARTIKELSPAWN, 11, 80, false);
+                Gegner.PushGegner(xPos - 1.0f, yPos + 60.0f, MUTANT, 1, 0, false);
+                Gegner.PushGegner(xPos + 50.0f - 10.0f, yPos + 150.0f, PARTIKELSPAWN, 11, 80, false);
 
                 SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_GLASSBREAK);
             }

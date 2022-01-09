@@ -40,7 +40,7 @@ void GegnerPresse::DoKI() {
 
                 // Staub erzeugen
                 for (int i = 0; i < 8; i++)
-                    PartikelSystem.PushPartikel(xPos + i * 10, yPos + 244, SMOKE);
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(i * 10), yPos + 244.0f, SMOKE);
 
                 if (PlayerAbstand() < 600)
                     SoundManager.PlayWave(100, 128, 11025, SOUND_PRESSE);
@@ -68,8 +68,8 @@ void GegnerPresse::DoKI() {
                 if (PlayerAbstand() < 600)
                     SoundManager.PlayWave(100, 128, 11025, SOUND_PRESSE);
 
-                PartikelSystem.PushPartikel(xPos + 14, yPos + 230, SMOKE);
-                PartikelSystem.PushPartikel(xPos + 54, yPos + 230, SMOKE);
+                PartikelSystem.PushPartikel(xPos + 14.0f, yPos + 230.0f, SMOKE);
+                PartikelSystem.PushPartikel(xPos + 54.0f, yPos + 230.0f, SMOKE);
             }
         } break;
     }  // switch

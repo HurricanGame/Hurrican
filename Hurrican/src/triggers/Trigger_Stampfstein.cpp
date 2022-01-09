@@ -41,8 +41,8 @@ void GegnerStampfstein::DoDraw() {
     DirectGraphics.SetColorKeyMode();
     int size = static_cast<int>(oldy - yPos) + 165;
     pGegnerGrafix[GegnerArt]->SetRect(0, size, 80, 256);
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                           static_cast<float>(yPos - TileEngine.YOffset) + size, 0xFFFFFFFF);
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset + size, 0xFFFFFFFF);
 }
 
 // --------------------------------------------------------------------------------------
@@ -117,7 +117,8 @@ void GegnerStampfstein::DoKI() {
 
                 // Trümmer erzeugen
                 for (int i = 0; i < 20; i++)
-                    PartikelSystem.PushPartikel(xPos + i * 5 - 10, yPos + 236, ROCKSPLITTER + random(2));
+                    PartikelSystem.PushPartikel(xPos + static_cast<float>(i * 5 - 10),
+                                                yPos + static_cast<float>(236), ROCKSPLITTER + random(2));
 
                 SoundManager.PlayWave(175, 128, 8000 + random(4000), SOUND_PHARAORAMM);
 
@@ -161,7 +162,8 @@ void GegnerStampfstein::DoKI() {
                 //      (falling blocks on chains) can be retracting at once, each one must
                 //      keep track of which channel its chain sound is playing on, so when it
                 //      is fully retracted, the correct sound channel is halted:
-                sfx_chain_channel = SoundManager.PlayWave3D(static_cast<int>(xPos) + 40, static_cast<int>(yPos) + 20,
+                sfx_chain_channel = SoundManager.PlayWave3D(static_cast<int>(xPos) + 40,
+                                                            static_cast<int>(yPos) + 20,
                                                             11025, SOUND_CHAIN);
             }
         } break;

@@ -27,8 +27,8 @@ GegnerLuefterGross::GegnerLuefterGross(int Wert1, int Wert2, bool Light) {
 
 void GegnerLuefterGross::DoDraw() {
     D3DCOLOR Color = TileEngine.LightValue(xPos, yPos, GegnerRect[GegnerArt], ForceLight);
-    pGegnerGrafix[GegnerArt]->RenderSprite(static_cast<float>(xPos - TileEngine.XOffset),
-                                           static_cast<float>(yPos - TileEngine.YOffset), AnimPhase, Color, false);
+    pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
+                                           yPos - TileEngine.YOffset, AnimPhase, Color, false);
 }
 
 // --------------------------------------------------------------------------------------

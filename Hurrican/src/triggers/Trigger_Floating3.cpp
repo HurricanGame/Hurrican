@@ -137,9 +137,9 @@ void GegnerFloating3::DoKI() {
     //
     if (AnimCount <= 0.0f) {
         AnimCount = 0.15f;
-        PartikelSystem.PushPartikel(xPos + 44, yPos + 21, FLOATSMOKE);
-        PartikelSystem.PushPartikel(xPos + 27, yPos + 10, FLUGSACKSMOKE);
-        PartikelSystem.PushPartikel(xPos + 57, yPos + 10, FLUGSACKSMOKE2);
+        PartikelSystem.PushPartikel(xPos + 44.0f, yPos + 21.0f, FLOATSMOKE);
+        PartikelSystem.PushPartikel(xPos + 27.0f, yPos + 10.0f, FLUGSACKSMOKE);
+        PartikelSystem.PushPartikel(xPos + 57.0f, yPos + 10.0f, FLUGSACKSMOKE2);
     }
 }
 

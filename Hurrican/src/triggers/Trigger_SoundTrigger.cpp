@@ -40,8 +40,8 @@ void GegnerSoundTrigger::DoKI() {
                 int vol = 0, pan = 128;
                 float xdiff, ydiff, Abstand;
 
-                xdiff = ((Player[0].xpos + 45) - xPos);
-                ydiff = ((Player[0].ypos + 45) - yPos);
+                xdiff = ((Player[0].xpos + 45.0f) - xPos);
+                ydiff = ((Player[0].ypos + 45.0f) - yPos);
 
                 // DKS - Converted to float:
                 Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
