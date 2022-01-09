@@ -301,10 +301,7 @@ void GegnerDrache::ComputeHeadWinkel() {
         HeadWinkel = -RadToDeg(atanf(xdiv / ydiv)) - 82.0f;
     }
 
-    if (HeadWinkel < -90.0f)
-        HeadWinkel = -90.0f;
-    if (HeadWinkel > 90.0f)
-        HeadWinkel = 90.0f;
+    HeadWinkel = std::clamp(HeadWinkel, -90.0f, 90.0f);
 }
 
 // --------------------------------------------------------------------------------------

@@ -66,10 +66,7 @@ void GegnerSkeletor::CalcGunWinkel() {
     // GunWinkel = 90.0f + (float)atan(ydiv / xdiv) * 180.0f / PI;
     GunWinkel = 90.0f + RadToDeg(atanf(ydiv / xdiv));
 
-    if (GunWinkel > 120)
-        GunWinkel = 120;
-    if (GunWinkel < 50)
-        GunWinkel = 50;
+    GunWinkel = std::clamp(GunWinkel, 50.0f, 120.0f);
 }
 
 // --------------------------------------------------------------------------------------
