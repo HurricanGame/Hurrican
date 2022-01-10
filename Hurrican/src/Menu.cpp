@@ -2463,6 +2463,20 @@ void MenuClass::ShowSavegames(int Highlight) {
 }
 
 // --------------------------------------------------------------------------------------
+// Highscore checksum
+// --------------------------------------------------------------------------------------
+inline long CalcChecksum(const HighscoreStruct& Highscore) {
+
+    long Pruefsumme = 0;
+    unsigned int const nameLen = strlen(Highscore.Name);
+    for (unsigned int j = 0; j < nameLen; j++)
+        Pruefsumme += Highscore.Name[j];
+
+    Pruefsumme += nameLen + Highscore.Score + Highscore.Stage + Highscore.Skill;
+    return Pruefsumme;
+}
+
+// --------------------------------------------------------------------------------------
 // Highscore-Liste laden
 // --------------------------------------------------------------------------------------
 
@@ -2494,7 +2508,6 @@ void MenuClass::LoadHighscore() {
         // ansonsten wieder standard Highscore setzen
 
         for (int i = 0; i < MAX_HIGHSCORES; i++) {
-            long Pruefsumme = 0;
 
             Highscores[i].Score = FixEndian(Highscores[i].Score);
             Highscores[i].Stage = FixEndian(Highscores[i].Stage);
@@ -2506,11 +2519,8 @@ void MenuClass::LoadHighscore() {
                 Highscores[i].Skill > SKILL_HURRICAN) {
                 Highscores[i].Skill = SKILL_EASY;
             }
-
-            for (unsigned int j = 0; j < strlen(Highscores[i].Name); j++)
-                Pruefsumme += Highscores[i].Name[j];
-
-            Pruefsumme += strlen(Highscores[i].Name) + Highscores[i].Score + Highscores[i].Stage + Highscores[i].Skill;
+            
+            long Pruefsumme = CalcChecksum(Highscores[i]);
 
             // Pruefsumme stimmt nicht mehr ?
             //
@@ -2543,13 +2553,7 @@ void MenuClass::SaveHighscore() {
         for (int i = 0; i < MAX_HIGHSCORES; i++) {
             // Prüfsumme erstellen
             //
-            Highscores[i].Pruefsumme = 0;
-
-            for (unsigned int j = 0; j < strlen(Highscores[i].Name); j++)
-                Highscores[i].Pruefsumme += Highscores[i].Name[j];
-
-            Highscores[i].Pruefsumme +=
-                strlen(Highscores[i].Name) + Highscores[i].Score + Highscores[i].Stage + Highscores[i].Skill;
+            Highscores[i].Pruefsumme = CalcChecksum(Highscores[i]);
 
             // SixK - SWAP TO LITTLE ENDIAN before saving (Tweaked by DKS)
             Highscores[i].Score = FixEndian(Highscores[i].Score);
@@ -2593,10 +2597,7 @@ void MenuClass::ResetHighscore() {
 
         strcpy_s(Highscores[i].Name, HighscoreNames[i]);
 
-        for (unsigned int j = 0; j < strlen(Highscores[i].Name); j++)
-            Highscores[i].Pruefsumme += Highscores[i].Name[j];
-
-        Highscores[i].Pruefsumme += strlen(Highscores[i].Name) + Highscores[i].Score + Highscores[i].Stage;
+        Highscores[i].Pruefsumme = CalcChecksum(Highscores[i]);
     }
 }
 
