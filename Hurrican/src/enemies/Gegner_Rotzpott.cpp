@@ -70,10 +70,7 @@ void GegnerRotzpott::CalcKnarreWinkel() {
             NewWinkel = 180.0f + w;
     }
 
-    while (NewWinkel > 360.0f)
-        NewWinkel -= 360.0f;
-    while (NewWinkel < 0.0f)
-        NewWinkel += 360.0f;
+    clampAngle(NewWinkel);
 
     // neue Drehrichtung festlegen
     if (NewWinkel > GunWinkel) {
