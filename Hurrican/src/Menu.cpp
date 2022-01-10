@@ -2501,6 +2501,12 @@ void MenuClass::LoadHighscore() {
             Highscores[i].Skill = FixEndian(Highscores[i].Skill);
             Highscores[i].Pruefsumme = FixEndian(Highscores[i].Pruefsumme);
 
+            // Sanity check
+            if (Highscores[i].Skill < SKILL_EASY ||
+                Highscores[i].Skill > SKILL_HURRICAN) {
+                Highscores[i].Skill = SKILL_EASY;
+            }
+
             for (unsigned int j = 0; j < strlen(Highscores[i].Name); j++)
                 Pruefsumme += Highscores[i].Name[j];
 
