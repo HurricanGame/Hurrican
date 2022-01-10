@@ -116,10 +116,7 @@ void GegnerSchienenViech::DoKI() {
 
     // Verfolgungsspeed begrenzen wenn er auf den Spieler zufährt
     //
-    if (xSpeed > 20.0f)
-        xSpeed = 20.0f;
-    if (xSpeed < -20.0f)
-        xSpeed = -20.0f;
+    xSpeed = std::clamp(xSpeed, -20.0f, 20.0f);
 
     // ansonten Verfolgungsspeed begrenzen wenn er am Spieler dran ist
     //

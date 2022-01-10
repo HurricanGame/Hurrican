@@ -86,14 +86,8 @@ void GegnerSmallWespe::DoKI() {
                 }
             }
 
-            if (xSpeed > MAXSPEED)
-                xSpeed = MAXSPEED;
-            if (xSpeed < -MAXSPEED)
-                xSpeed = -MAXSPEED;
-            if (ySpeed > MAXSPEED)
-                ySpeed = MAXSPEED;
-            if (ySpeed < -MAXSPEED)
-                ySpeed = -MAXSPEED;
+            xSpeed = std::clamp(xSpeed, -MAXSPEED, MAXSPEED);
+            ySpeed = std::clamp(ySpeed, -MAXSPEED, MAXSPEED);
 
             int dx = abs(static_cast<int>(xPos) - Value1);
             int dy = abs(static_cast<int>(yPos) - Value2);
