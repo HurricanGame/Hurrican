@@ -14,7 +14,7 @@ class GegnerBratklops : public GegnerClass {
     glm::mat4x4 matWorld;
 
   public:
-    DirectGraphicsSprite *pGfx[7];  // Animationen sind einzeln
+    DirectGraphicsSprite *pGfx[6];  // Animationen sind einzeln
     DirectGraphicsSprite *pLaser;   // Lasergrafik
     DirectGraphicsSprite *pFlare;   // Laserflare
 
