@@ -11,8 +11,6 @@ class GegnerBratklops : public GegnerClass {
     float FlareDelay;
     int Shots;
 
-    glm::mat4x4 matWorld;
-
   public:
     DirectGraphicsSprite *pGfx[6];  // Animationen sind einzeln
     DirectGraphicsSprite *pLaser;   // Lasergrafik
