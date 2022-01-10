@@ -736,12 +736,14 @@ void GegnerDrache::DoKI() {
                     ySpeed = 0.0f;
                     yAcc = 0.0f;
 
+                    // FIXME
+#if 0
                     // Handlung festlegen, was er während dem Überfliegen macht
                     int j = random(2);
-
-                    // REMOVE ???
-                    j = 0;
-
+#else
+                    // REMOVE
+                    int j = 0;
+#endif
                     switch (j) {
                         // Suchgegner werden
                         case 0: {
