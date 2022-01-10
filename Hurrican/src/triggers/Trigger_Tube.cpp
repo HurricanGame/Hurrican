@@ -70,8 +70,7 @@ void GegnerTube::DoDraw() {
     }
 
     // Und Röhre drüber
-    int a;
-    a = Value1 % 4;
+    int a = Value1 % 4;
 
     if (Value1 == 5)
         a = 0;

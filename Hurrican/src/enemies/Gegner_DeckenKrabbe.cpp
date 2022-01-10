@@ -28,12 +28,7 @@ GegnerDeckenKrabbe::GegnerDeckenKrabbe(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerDeckenKrabbe::DoDraw() {
-    bool mirror;
-
-    if (BlickRichtung == LINKS)
-        mirror = false;
-    else
-        mirror = true;
+    bool mirror = (BlickRichtung != LINKS);
 
     pGegnerGrafix[GegnerArt]->RenderSpriteRotated(xPos - TileEngine.XOffset,
                                                   yPos - TileEngine.YOffset, zRot, AnimPhase,

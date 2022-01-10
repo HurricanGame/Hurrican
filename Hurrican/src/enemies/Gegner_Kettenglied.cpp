@@ -26,10 +26,10 @@ GegnerKettenglied::GegnerKettenglied(int Wert1, int Wert2, bool Light) {
 void GegnerKettenglied::DoDraw() {
     // rendern
     //
-    D3DCOLOR Color;
-
     // Gegner getroffen? Dann nochmal in weiss aufleuchten lassen
     int Wert = 255 - static_cast<int>(DamageTaken);
+
+    D3DCOLOR Color;
 
     if (AnimSpeed < 0.0f) {
         if (DirectGraphics.BlendMode == BlendModeEnum::ADDITIV)

@@ -31,8 +31,8 @@ GegnerBruecke::GegnerBruecke(int Wert1, int Wert2, bool Light) {
 void GegnerBruecke::DoKI() {
     // Brücke nicht im Bild ?
     //
-    if (xPos + 10 < TileEngine.XOffset || xPos > TileEngine.XOffset + 640 || yPos + 10 < TileEngine.YOffset ||
-        yPos > TileEngine.YOffset + 480) {
+    if (xPos + 10.0f < TileEngine.XOffset || xPos > TileEngine.XOffset + 640.0f ||
+        yPos + 10.0f < TileEngine.YOffset || yPos > TileEngine.YOffset + 480.0f) {
         return;
     }
 
@@ -52,20 +52,18 @@ void GegnerBruecke::DoKI() {
                 pTemp->GegnerArt != STAHLMUECKE && pTemp->ySpeed == 0.0f &&
                 SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], pTemp->xPos, pTemp->yPos,
                                 GegnerRect[pTemp->GegnerArt]) == true) {
-                float dx, dy;
-                float w, h;
 
                 // DKS - Optimized
                 // w = (GegnerRect[pTemp->GegnerArt].right  - GegnerRect[pTemp->GegnerArt].left) / 2.0f;
                 // h = (GegnerRect[pTemp->GegnerArt].bottom - GegnerRect[pTemp->GegnerArt].top)  / 2.0f;
-                w = (GegnerRect[pTemp->GegnerArt].right - GegnerRect[pTemp->GegnerArt].left) * 0.5f;
-                h = (GegnerRect[pTemp->GegnerArt].bottom - GegnerRect[pTemp->GegnerArt].top) * 0.5f;
+                float w = (GegnerRect[pTemp->GegnerArt].right - GegnerRect[pTemp->GegnerArt].left) * 0.5f;
+                float h = (GegnerRect[pTemp->GegnerArt].bottom - GegnerRect[pTemp->GegnerArt].top) * 0.5f;
 
                 if (pTemp->GegnerArt == DIAMANT)
                     h = 2;
 
-                dx = pTemp->xPos + w - (xPos + 5);
-                dy = pTemp->yPos + h - (yPos + 5);
+                float dx = pTemp->xPos + w - (xPos + 5);
+                float dy = pTemp->yPos + h - (yPos + 5);
 
                 // DKS - converted to float:
                 // double a = sqrt ((dx * dx) + (dy * dy));
@@ -92,10 +90,9 @@ void GegnerBruecke::DoKI() {
             if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[p].xpos, Player[p].ypos,
                                 Player[p].CollideRect) == true &&
                 Player[p].yspeed >= 0.0f) {
-                float dx, dy;
 
-                dx = (Player[p].xpos + 35.0f) - (xPos + 5.0f);
-                dy = (Player[p].ypos + 40.0f) - (yPos + 5.0f);
+                float dx = (Player[p].xpos + 35.0f) - (xPos + 5.0f);
+                float dy = (Player[p].ypos + 40.0f) - (yPos + 5.0f);
 
                 // DKS - converted to float, optimized:
                 // double a = sqrt ((dx * dx) + (dy * dy));

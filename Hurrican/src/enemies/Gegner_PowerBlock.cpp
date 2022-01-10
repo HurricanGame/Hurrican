@@ -141,7 +141,7 @@ void GegnerPowerBlock::DoKI() {
         AnimPhase = 2;
         Player[0].Score += 10;  // Punkte geben
 
-        int r, extra;
+        int extra;
 
         // Spezielle Items ausspucken?
         //
@@ -159,6 +159,7 @@ void GegnerPowerBlock::DoKI() {
 
                 while (AlreadySpawned[extra]) {
                     // Per Zufallsverteilung entsprechendes Extra setzen
+                    int r;
                     if (WeaponSpawned > 0)
                         r = random(675);
                     else

@@ -146,10 +146,10 @@ void GegnerBigFish::NewAction() {
 void GegnerBigFish::DoDraw() {
     static float FlossenSin = 0.0f;
     static float FlossenSin2 = 0.0f;
-    float mw = sin(-PI / 2 + MaulWinkel) * 35.0f;
-    float fs = sin(FlossenSin) * 40.0f;
-    float fs2 = sin(FlossenSin2) * 10.0f;
-    float YOff = sin(SinOff) * 5.0f;
+    float const mw = sin(-PI / 2 + MaulWinkel) * 35.0f;
+    float const fs = sin(FlossenSin) * 40.0f;
+    int const fs2 = static_cast<int>(sin(FlossenSin2) * 10.0f);
+    float const YOff = sin(SinOff) * 5.0f;
 
     // Maul rendern
     Maul.RenderSpriteRotatedOffset(xPos - TileEngine.XOffset + 51.0f,
@@ -159,17 +159,17 @@ void GegnerBigFish::DoDraw() {
     // Schwanzflosse rendern
     FlosseGross.RenderSpriteScaled(xPos - TileEngine.XOffset + 203.0f,
                                    yPos - TileEngine.YOffset + YOff - 9.0f,
-                                   88 + static_cast<int>(fs2), 157, 0, 0xFFFFFFFF);
+                                   88 + fs2, 157, 0, 0xFFFFFFFF);
 
     // obere Floße rendern
     FlosseOben.RenderSpriteScaled(xPos - TileEngine.XOffset + 151.0f,
-                                  yPos - TileEngine.YOffset + YOff - 20.0f + static_cast<int>(fs2), 74,
-                                  59 - static_cast<int>(fs2), 0, 0xFFFFFFFF);
+                                  yPos - TileEngine.YOffset + YOff - 20.0f + fs2, 74,
+                                  59 - fs2, 0, 0xFFFFFFFF);
 
     // untere Floße rendern
     FlosseUnten.RenderSpriteScaled(xPos - TileEngine.XOffset + 140.0f,
                                    yPos - TileEngine.YOffset + YOff + 120.0f,
-                                   97, 72 + static_cast<int>(fs2), 0, 0xFFFFFFFF);
+                                   97, 72 + fs2, 0, 0xFFFFFFFF);
 
     // Fisch rendern
     pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
@@ -184,12 +184,10 @@ void GegnerBigFish::DoDraw() {
         DirectGraphics.SetAdditiveMode();
 
         // Leuchtflare rendern
-        D3DCOLOR col;
-        int a;
 
-        a = static_cast<int>(Energy / 2000.0f * 255.0f);
+        int a = static_cast<int>(Energy / 2000.0f * 255.0f);
 
-        col = D3DCOLOR_RGBA(255, 224, 80, a);
+        D3DCOLOR col = D3DCOLOR_RGBA(255, 224, 80, a);
 
         for (int i = 0; i < 2; i++)
             Projectiles.LavaFlare.RenderSprite(xPos - TileEngine.XOffset - 49.0f,
@@ -197,9 +195,7 @@ void GegnerBigFish::DoDraw() {
                                                col, false);
 
         // Flossen bewegen
-        float fact;
-
-        fact = (xSpeed * xSpeed + ySpeed * ySpeed + 20.0f) / 200.0f;
+        float fact = (xSpeed * xSpeed + ySpeed * ySpeed + 20.0f) / 200.0f;
 
         FlossenSin += fact SYNC;
         if (FlossenSin > 2 * PI)

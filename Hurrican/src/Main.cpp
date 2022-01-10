@@ -121,7 +121,6 @@ HUDClass HUD;                           // Das HUD
 GameStateEnum SpielZustand = GameStateEnum::CRACKTRO;  // Aktueller Zustand des Spieles
 
 void FillCommandLineParams(int argc, char *args[]) {
-    uint16_t i;
 
     // Set some sensible defaults
     CommandLineParams.RunWindowMode = ScreenMode::FULLSCREEN;
@@ -136,7 +135,7 @@ void FillCommandLineParams(int argc, char *args[]) {
     CommandLineParams.DataPath = nullptr;
     CommandLineParams.SavePath = nullptr;
 
-    for (i = 1; i < argc; i++) {
+    for (int i = 1; i < argc; i++) {
         if ((strstr(args[i], "--help") != nullptr) || (strstr(args[i], "-?") != nullptr) ||
             (strstr(args[i], "-H") != nullptr) || (strstr(args[i], "-h") != nullptr)) {
             Protokoll << "Hurrican" << std::endl;
@@ -994,7 +993,7 @@ void ShowDebugInfo() {
 
 // DKS - added FPS reporting via command switch
 void ShowFPS() {
-    const unsigned int fps_update_freq_in_ticks = 500;
+    constexpr unsigned int FPS_UPDATE_FREQ_IN_TICKS = 500;
     static unsigned int ticks_fps_last_updated = 0;
     static int frame_ctr = 0;
     static std::stringstream char_buf;
@@ -1002,10 +1001,10 @@ void ShowFPS() {
     frame_ctr++;
     unsigned int cur_ticks = SDL_GetTicks();
     unsigned int ticks_elapsed = cur_ticks - ticks_fps_last_updated;
-    if (ticks_elapsed > fps_update_freq_in_ticks && frame_ctr > 0) {
+    if (ticks_elapsed > FPS_UPDATE_FREQ_IN_TICKS && frame_ctr > 0) {
         char_buf.str("");
-        float avg_fps = static_cast<float>(frame_ctr) * (1000.0f / static_cast<float>(fps_update_freq_in_ticks)) *
-                        (static_cast<float>(fps_update_freq_in_ticks) / static_cast<float>(ticks_elapsed));
+        float avg_fps = static_cast<float>(frame_ctr) * (1000.0f / static_cast<float>(FPS_UPDATE_FREQ_IN_TICKS)) *
+                        (static_cast<float>(FPS_UPDATE_FREQ_IN_TICKS) / static_cast<float>(ticks_elapsed));
         char_buf << std::fixed << std::setprecision(1) << "FPS: " << avg_fps;
         std::cout << char_buf.str() << std::endl;
         frame_ctr = 0;

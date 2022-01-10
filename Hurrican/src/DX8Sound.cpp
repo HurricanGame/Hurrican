@@ -145,18 +145,17 @@ void SoundManagerClass::UpdateChannels() {
 
 // DKS - Added:
 void SoundManagerClass::Update3DChannel(int ch) {
-    int vol, pan;
-    float xdiff, ydiff, Abstand;
 
-    xdiff = ((Player[0].xpos + 45) - channels[ch].xpos);
-    ydiff = ((Player[0].ypos + 45) - channels[ch].ypos);
+    float xdiff = ((Player[0].xpos + 45) - channels[ch].xpos);
+    float ydiff = ((Player[0].ypos + 45) - channels[ch].ypos);
 
-    Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
+    float Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
-    vol = static_cast<int>(100.0f - Abstand / 6.0f);
+    int vol = static_cast<int>(100.0f - Abstand / 6.0f);
     if (vol < 0)
         vol = 0;
     else {
+        int pan;
         // Sound links oder rechts vom Spieler ?
         if (channels[ch].xpos < Player[0].xpos + 45) {
             pan = 128 - (100 - vol);
@@ -711,19 +710,18 @@ int SoundManagerClass::PlayWave3D_SDL(int x, int y, int nr) {
     int channel = -1;
 
     // DKS - Functionality here also copied into Update3DChannel()
-    int vol, pan;
-    float xdiff, ydiff, Abstand;
 
-    xdiff = ((Player[0].xpos + 45) - x);
-    ydiff = ((Player[0].ypos + 45) - y);
+    float xdiff = ((Player[0].xpos + 45) - x);
+    float ydiff = ((Player[0].ypos + 45) - y);
 
     // DKS - converted to float:
-    Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
+    float Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
-    vol = static_cast<int>(100.0f - Abstand / 6.0f);
+    int vol = static_cast<int>(100.0f - Abstand / 6.0f);
     if (vol < 0)
         vol = 0;
     else {
+        int pan;
         // Sound links oder rechts vom Spieler ?
         if (x < Player[0].xpos + 45) {
             pan = 128 - (100 - vol);

@@ -162,9 +162,9 @@ void GegnerEvilHurri::DoKI() {
             xSpeed = 0.0f;
             ySpeed = 0.0f;
 
-            if (xPos + 70 < pAim->xpos)
+            if (xPos + 70.0f < pAim->xpos)
                 BlickRichtung = RECHTS;
-            if (xPos > pAim->xpos + 70)
+            if (xPos > pAim->xpos + 70.0f)
                 BlickRichtung = LINKS;
 
             ActionDelay -= 1.0f SYNC;

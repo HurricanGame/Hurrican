@@ -63,8 +63,7 @@ bool CFbo::Open(uint16_t w, uint16_t h) {
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
 
     /* Verify the framebuffer is valid */
-    GLenum status;
-    status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
     switch (status) {
         case GL_FRAMEBUFFER_COMPLETE:
             Enabled = true;

@@ -540,8 +540,8 @@ void GegnerFlugBoss::DoKI() {
 void GegnerFlugBoss::GegnerExplode() {
     // Splitter
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos + 30 + static_cast<float>(random(500)),
-                                    yPos + 30 + static_cast<float>(random(2000)), SPLITTER);
+        PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(random(500)),
+                                    yPos + 30.0f + static_cast<float>(random(2000)), SPLITTER);
 
     Player[0].Score += 6000;
 

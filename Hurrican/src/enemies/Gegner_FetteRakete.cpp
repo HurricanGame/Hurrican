@@ -73,11 +73,10 @@ void GegnerFetteRakete::DoKI() {
 
             // Gegner auf Spieler ausrichten
             //
-            float dx, dy;
 
             // Abstände berechnen
-            dx = (xPos + 12.0f) - (pAim->xpos + 35.0f);
-            dy = (yPos + 17.0f) - (pAim->ypos + 40.0f);
+            float dx = (xPos + 12.0f) - (pAim->xpos + 35.0f);
+            float dy = (yPos + 17.0f) - (pAim->ypos + 40.0f);
 
             // Division durch Null verhinden
             if (dy == 0.0f)

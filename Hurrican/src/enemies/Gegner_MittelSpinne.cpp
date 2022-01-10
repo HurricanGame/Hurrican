@@ -37,14 +37,13 @@ void GegnerMittelSpinne::DoDraw() {
     // es aussieht, als kämen die Spinnen aus der Dunkelheit
     // Ich bin schon ein Fux ;)
     //
-    float light, lightred;
 
     // DKS - Removed superfluous "/1.0f"
     // light = (yPos - 20) - yStart / 1.0f;
-    light = (yPos - 20) - yStart;
+    float light = (yPos - 20) - yStart;
     light = std::clamp(light, 0.0f, 255.0f);
 
-    lightred = 255 - DamageTaken;
+    float lightred = 255 - DamageTaken;
 
     if (lightred > light)
         lightred = light;
@@ -79,11 +78,10 @@ void GegnerMittelSpinne::DoKI() {
         case GEGNER_LAUFEN: {
             // Gegner auf Spieler ausrichten
             //
-            float dx, dy;
 
             // Abstände berechnen
-            dx = (xPos + 25) - (pAim->xpos + 35);
-            dy = (yPos + 18) - (pAim->ypos + 40);
+            float dx = (xPos + 25) - (pAim->xpos + 35);
+            float dy = (yPos + 18) - (pAim->ypos + 40);
 
             // Division durch Null verhinden
             if (dy == 0.0f)

@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerMutant::GegnerMutant(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    //Handlung = GEGNER_STEHEN;
     HitSound = 1;
     Value1 = Wert1;
     Value2 = Wert2;

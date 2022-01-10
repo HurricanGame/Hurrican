@@ -207,13 +207,12 @@ void PlayerClass::InitPlayer(int player_num) {
 
     CollectedDiamonds = 0;
 
-    int i = 0;
     /*
-        for(i=0; i<4; i++)
+        for(int i=0; i<4; i++)
             CollectedPowerUps[i] = 0;
     */
 
-    for (i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) {
         CurrentWeaponLevel[i] = 0;
         //		NextWeaponLevel	  [i] = 3;
     }
@@ -825,10 +824,9 @@ void PlayerClass::CheckForExplode() {
         DirectInput.Joysticks[JoystickIndex].StopForceFeedbackEffect(FFE_BLITZ);
 
         // Screen bei evtl. Ruckeln begradigen
-        glm::mat4x4 matRot;  // Rotationsmatrix
         WackelMaximum = 0.0f;
         WackelValue = 0.0f;
-        matRot = glm::mat4x4(1.0f);
+        glm::mat4x4 matRot = glm::mat4x4(1.0f); // Rotationsmatrix
         g_matModelView = matRot * g_matView;
 #if defined(USE_GL1)
         load_matrix(GL_MODELVIEW, glm::value_ptr(g_matModelView));
@@ -1461,9 +1459,8 @@ void PlayerClass::AnimatePlayer() {
             if (BlitzStart < PLAYER_BLITZ_START)
                 BlitzStart += 1.0f SYNC;
             else {
-                float Winkel;
 
-                Winkel = BlitzWinkel - 270;  // 270° beim nach links kucken = Animphase 0
+                float Winkel = BlitzWinkel - 270;  // 270° beim nach links kucken = Animphase 0
                 if (Winkel < 0.0f)
                     Winkel += 360.0f;
 
@@ -1484,9 +1481,7 @@ void PlayerClass::AnimatePlayer() {
             if (BlitzStart < PLAYER_BEAM_MAX)
                 BlitzStart += CurrentWeaponLevel[3] * 1.0f SYNC;
 
-            float Winkel;
-
-            Winkel = BlitzWinkel - 270;  // 270° beim nach links kucken = Animphase 0
+            float Winkel = BlitzWinkel - 270;  // 270° beim nach links kucken = Animphase 0
             if (Winkel < 0.0f)
                 Winkel += 360.0f;
 
@@ -1563,10 +1558,10 @@ void PlayerClass::AnimatePlayer() {
 
             for (int i = -1; i < 25; i++)  // Powerlines schiessen
             {
-                Projectiles.PushProjectile(xpos + 20, 
+                Projectiles.PushProjectile(xpos + 20.0f, 
                                            static_cast<float>(static_cast<int>(TileEngine.YOffset / 20.0f) * 20 + i * 20), POWERLINE,
                                            this);
-                Projectiles.PushProjectile(xpos + 20,
+                Projectiles.PushProjectile(xpos + 20.0f,
                                            static_cast<float>(static_cast<int>(TileEngine.YOffset / 20.0f) * 20 + i * 20), POWERLINE2,
                                            this);
             }
@@ -1578,7 +1573,7 @@ void PlayerClass::AnimatePlayer() {
             PowerLinePossible = false;  // Taste einrasten
             SmartBombs--;               // SmartBombs verringern
 
-            Projectiles.PushProjectile(xpos + 40 - 32, ypos + 55 - 32, SMARTBOMB, this);
+            Projectiles.PushProjectile(xpos + 40.0f - 32.0f, ypos + 55.0f - 32.0f, SMARTBOMB, this);
         }
 
         // Taste losgelassen ? Dann können wir wieder eine Powerline schiessen
@@ -2101,26 +2096,26 @@ void PlayerClass::AnimatePlayer() {
     // TILESIZE_Y).Block;
     uint32_t middle = 0;
     {
-        int tile_x = (xpos + 35.0f) * (1.0f / TILESIZE_X);
-        int tile_y = (ypos + 40.0f) * (1.0f / TILESIZE_Y);
+        int const tile_x = (xpos + 35.0f) * (1.0f / TILESIZE_X);
+        int const tile_y = (ypos + 40.0f) * (1.0f / TILESIZE_Y);
         if (tile_x >= 0 && tile_x < levelsize_x && tile_y >= 0 && tile_y < levelsize_y)
             middle = TileEngine.TileAt(tile_x, tile_y).Block;
     }
 
-    int spritzertype = 0;
     if ((bu & BLOCKWERT_LIQUID) || (br & BLOCKWERT_LIQUID) || (bl & BLOCKWERT_LIQUID) || (bo & BLOCKWERT_LIQUID) ||
         middle & BLOCKWERT_LIQUID) {
-        spritzertype = WASSER_SPRITZER2;
 
         // Gerade erst in Flüssigkeit gesprungen ?
         if (InLiquid == false) {
             if (Handlung == PlayerActionEnum::SPRINGEN || Handlung == PlayerActionEnum::RADELN_FALL) {
                 for (int i = 0; i < 12; i++)
-                    PartikelSystem.PushPartikel(xpos + 18 + random(20), ypos + CollideRect.bottom - 25, spritzertype);
+                    PartikelSystem.PushPartikel(xpos + 18.0f + static_cast<float>(random(20)),
+                                                ypos - 25.0f + static_cast<float>(CollideRect.bottom), WASSER_SPRITZER2);
 
                 WinkelUebergabe = -1.0f;
                 for (int i = 0; i < 15; i++)
-                    PartikelSystem.PushPartikel(xpos + 10 + random(40), ypos + CollideRect.bottom + random(20),
+                    PartikelSystem.PushPartikel(xpos + 10.0f + static_cast<float>(random(40)),
+                                                ypos + static_cast<float>(CollideRect.bottom + random(20)),
                                                 BUBBLE);
             }
 
@@ -2133,11 +2128,11 @@ void PlayerClass::AnimatePlayer() {
             // Welcher Liquid Type?
             // if (bu & BLOCKWERT_WASSER) spritzertype = WASSER_SPRITZER;
             // if (bu & BLOCKWERT_LAVA)   spritzertype = LAVA_SPRITZER;
-            spritzertype = WASSER_SPRITZER2;
 
             if (Handlung == PlayerActionEnum::SPRINGEN || Handlung == PlayerActionEnum::RADELN_FALL) {
                 for (int i = 0; i < 12; i++)
-                    PartikelSystem.PushPartikel(xpos + 10 + random(20), ypos + CollideRect.bottom - 25, spritzertype);
+                    PartikelSystem.PushPartikel(xpos + 10.0f + static_cast<float>(random(20)),
+                                                ypos - 25.0f + static_cast<float>(CollideRect.bottom), WASSER_SPRITZER2);
             }
 
             SoundManager.PlayWave(100, 128, 10000 + random(2050), SOUND_WATEROUT);
@@ -2158,7 +2153,7 @@ void PlayerClass::AnimatePlayer() {
         //        SoundManager.its_Sounds[SOUND_DIVE]->isPlaying == false)
         //    SoundManager.PlayWave(100, rand()%255, 8000 + rand()%4000, SOUND_DIVE);
         if (random(500) == 0) {
-            PartikelSystem.PushPartikel(xpos + 30, ypos + 20, BUBBLE);
+            PartikelSystem.PushPartikel(xpos + 30.0f, ypos + 20.0f, BUBBLE);
             // ggf noch Tauchgeräusche abspielen
             if (!SoundManager.WaveIsPlaying(SOUND_DIVE))
                 SoundManager.PlayWave(100, random(255), 8000 + random(4000), SOUND_DIVE);
@@ -2270,13 +2265,13 @@ void PlayerClass::AnimatePlayer() {
         if (InLiquid == false)
             yspeed += JumpAdd SYNC;
         else
-            yspeed += JumpAdd * 2 / 3 SYNC;
+            yspeed += JumpAdd * 2.0f / 3.0f SYNC;
 
         // y-Position manipulieren, wenn oben frei ist
         if (InLiquid == false)
             ypos += yspeed SYNC;
         else
-            ypos += yspeed * 2 / 3 SYNC;
+            ypos += yspeed * 2.0f / 3.0f SYNC;
 
         if (yspeed > PLAYER_MAXJUMPSPEED)  // Schnellste "Fall-Geschwindigkeit" erreicht ?
             yspeed = PLAYER_MAXJUMPSPEED;
@@ -2284,7 +2279,7 @@ void PlayerClass::AnimatePlayer() {
         if (bo & BLOCKWERT_WAND)  // An die Decke gestossen ?
         {
             if (yspeed < 0.0f)  // Richtung umkehren
-                yspeed = -yspeed / 3;
+                yspeed = -yspeed / 3.0f;
             JumpAdd = PLAYER_JUMPADDSPEED;
         }
     }
@@ -2302,9 +2297,9 @@ void PlayerClass::AnimatePlayer() {
         // Zwei Spieler Mode? Dann auf Screen beschränken
         if (NUMPLAYERS == 2 && StageClearRunning == false) {
             if (xpos < TileEngine.XOffset)
-                xpos = static_cast<float>(TileEngine.XOffset);
-            if (xpos > TileEngine.XOffset + 570)
-                xpos = static_cast<float>(TileEngine.XOffset) + 570;
+                xpos = TileEngine.XOffset;
+            if (xpos > TileEngine.XOffset + 570.0f)
+                xpos = TileEngine.XOffset + 570.0f;
         }
     }
 
@@ -2314,10 +2309,10 @@ void PlayerClass::AnimatePlayer() {
         TileEngine.YOffset -= PLAYER_MAXJUMPSPEED SYNC;*/
 
     if (NUMPLAYERS == 1 && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
-        if (xpos - TileEngine.XOffset < 20)
-            TileEngine.XOffset = xpos - 20;
-        if (xpos - TileEngine.XOffset > 550)
-            TileEngine.XOffset = xpos - 550;
+        if (xpos - TileEngine.XOffset < 20.0f)
+            TileEngine.XOffset = xpos - 20.0f;
+        if (xpos - TileEngine.XOffset > 550.0f)
+            TileEngine.XOffset = xpos - 550.0f;
     }
 
     // DKS - By using a bounds-checked array for itsPreCalcedRects[] when debugging,
@@ -2398,14 +2393,11 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe) {
     if (Energy <= 0.0f && Handlung == PlayerActionEnum::TOT)
         return false;
 
-    float xdraw, ydraw;
-    D3DCOLOR Color;
-
     if (leuchten)
         DirectGraphics.SetAdditiveMode();
 
-    xdraw = static_cast<float>(static_cast<int>(xpos) - static_cast<int>(TileEngine.XOffset));
-    ydraw = ypos - TileEngine.YOffset;
+    float xdraw = static_cast<float>(static_cast<int>(xpos) - static_cast<int>(TileEngine.XOffset));
+    float ydraw = ypos - TileEngine.YOffset;
 
     // Im Wasser? Dann schwabbeln lassen
     // DKS - This original block of code never had an effect because there are no platforms
@@ -2439,7 +2431,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe) {
     if (DamageCounter == 0.0f)
         SoundManager.StopWave(SOUND_ABZUG + SoundOff);
 
-    Color = TileEngine.LightValue(xpos, ypos, CollideRect, false);
+    D3DCOLOR Color = TileEngine.LightValue(xpos, ypos, CollideRect, false);
 
     if (Handlung == PlayerActionEnum::BLITZEN)
         Color = Color | 0xFF0000FF;
@@ -2455,9 +2447,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe) {
     //	if (this == Player[1])
     //		Color = 0xFFBBFFBB;
 
-    bool blick = false;
-    if (Blickrichtung == RECHTS)
-        blick = true;
+    bool blick = (Blickrichtung == RECHTS);
 
     //----- Spieler anzeigen
     switch (Handlung) {
@@ -2472,17 +2462,15 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe) {
             if (Aktion[AKTION_UNTEN] && !Aktion[AKTION_SHOOT] && !Aktion[AKTION_GRANATE])
                 PlayerKucken.RenderSprite(xdraw, ydraw, 1, Color, !blick);
             else {
-                int a;
-
                 if (AnimPhase < FRAMES_IDLE * 3) {
-                    a = AnimPhase % FRAMES_IDLE;
+                    int a = AnimPhase % FRAMES_IDLE;
 
                     if (ShotDelay > 0.25f && FlameThrower == false)
                         PlayerIdle.RenderSprite(xdraw, ydraw, FRAMES_IDLE, Color, !blick);
                     else
                         PlayerIdle.RenderSprite(xdraw, ydraw, a, Color, !blick);
                 } else {
-                    a = AnimPhase - FRAMES_IDLE * 3;
+                    int a = AnimPhase - FRAMES_IDLE * 3;
                     PlayerIdle2.RenderSprite(xdraw, ydraw, a, Color, !blick);
                 }
             }
@@ -2827,12 +2815,12 @@ void PlayerClass::PlayerShoot() {
 
     if (Handlung != PlayerActionEnum::RADELN &&  // Normal schiessen ?
         Handlung != PlayerActionEnum::RADELN_FALL) {
-        int tempadd = 0;
+        float tempadd = 0.0f;
         int tempshot = 0;
 
         if (FlameThrower) {
             WinkelUebergabe = 90.0f + wadd;
-            Projectiles.PushProjectile(xpos - tempadd + AustrittX - 29, ypos - tempadd + AustrittY - 33, PLAYERFIRE,
+            Projectiles.PushProjectile(xpos - tempadd + AustrittX - 29.0f, ypos - tempadd + AustrittY - 33.0f, PLAYERFIRE,
                                        this);
             ShotDelay = PLAYER_SHOTDELAY / 5.0f;
 
@@ -2847,11 +2835,11 @@ void PlayerClass::PlayerShoot() {
                     // Normale Schüsse
                     //
                     if (RiesenShotExtra <= 0.0f) {
-                        tempadd = 8;
+                        tempadd = 8.0f;
                         tempshot = SPREADSHOT;
                         SoundManager.PlayWave(100, 128, 11025, SOUND_SPREADSHOT);
                     } else {
-                        tempadd = 16;
+                        tempadd = 16.0f;
                         tempshot = SPREADSHOTBIG;
                         SoundManager.PlayWave(100, 128, 8000, SOUND_SPREADSHOT);
                     }
@@ -2930,19 +2918,19 @@ void PlayerClass::PlayerShoot() {
                     //----- LaserShot
 
                 case 1: {
-                    int tempaddx, tempaddy;
+                    float tempaddx, tempaddy;
                     float mul1 = 7.0f / 8.0f;
 
                     // Normale Schüsse
                     //
                     if (RiesenShotExtra <= 0.0f) {
-                        tempaddx = 8;
-                        tempaddy = 24;
+                        tempaddx = 8.0f;
+                        tempaddy = 24.0f;
                         tempshot = LASERSHOT;
                         SoundManager.PlayWave(100, 128, 11025, SOUND_LASERSHOT);
                     } else {
-                        tempaddx = 12;
-                        tempaddy = 40;
+                        tempaddx = 12.0f;
+                        tempaddy = 40.0f;
                         tempshot = LASERSHOTBIG;
                         SoundManager.PlayWave(100, 128, 8000, SOUND_LASERSHOT);
                     }
@@ -2950,7 +2938,7 @@ void PlayerClass::PlayerShoot() {
                     WinkelUebergabe = 90.0f + wadd;
 
                     if (CurrentWeaponLevel[SelectedWeapon] == 4 || CurrentWeaponLevel[SelectedWeapon] == 6)
-                        Projectiles.PushProjectile(xpos - tempaddx + AustrittX - 4, ypos - tempaddy + AustrittY,
+                        Projectiles.PushProjectile(xpos - tempaddx + AustrittX - 4.0f, ypos - tempaddy + AustrittY,
                                                    tempshot + 1, this);
 
                     if (CurrentWeaponLevel[SelectedWeapon] == 1 || CurrentWeaponLevel[SelectedWeapon] == 3 ||
@@ -2967,16 +2955,16 @@ void PlayerClass::PlayerShoot() {
                         }
 
                         if (wadd == 45.0f) {
-                            Projectiles.PushProjectile(xpos - tempaddx + tempaddx * mul1 + AustrittX - 2,
+                            Projectiles.PushProjectile(xpos - tempaddx + tempaddx * mul1 + AustrittX - 2.0f,
                                                        ypos - tempaddy + AustrittY - tempaddx * mul1, tempshot, this);
-                            Projectiles.PushProjectile(xpos - tempaddx - tempaddx * mul1 + AustrittX + 2,
+                            Projectiles.PushProjectile(xpos - tempaddx - tempaddx * mul1 + AustrittX + 2.0f,
                                                        ypos - tempaddy + AustrittY + tempaddx * mul1, tempshot, this);
                         }
 
                         if (wadd == -45.0f) {
-                            Projectiles.PushProjectile(xpos - tempaddx - tempaddx * mul1 + AustrittX + 6,
+                            Projectiles.PushProjectile(xpos - tempaddx - tempaddx * mul1 + AustrittX + 6.0f,
                                                        ypos - tempaddy + AustrittY - tempaddx * mul1, tempshot, this);
-                            Projectiles.PushProjectile(xpos - tempaddx + tempaddx * mul1 + AustrittX + 2,
+                            Projectiles.PushProjectile(xpos - tempaddx + tempaddx * mul1 + AustrittX + 2.0f,
                                                        ypos - tempaddy + AustrittY + tempaddx * mul1, tempshot, this);
                         }
 
@@ -3155,17 +3143,17 @@ void PlayerClass::PlayerShoot() {
                     //----- BounceShot
 
                 case 2: {
-                    int tempadd2;
+                    float tempadd2;
 
                     // Normale Schüsse
                     //
                     if (RiesenShotExtra <= 0.0f) {
-                        tempadd2 = 12;
+                        tempadd2 = 12.0f;
                         tempshot = BOUNCESHOT1;
 
                         SoundManager.PlayWave(100, 128, 11025, SOUND_BOUNCESHOT);
                     } else {
-                        tempadd2 = 24;
+                        tempadd2 = 24.0f;
                         tempshot = BOUNCESHOTBIG1;
                         SoundManager.PlayWave(100, 128, 8000, SOUND_BOUNCESHOT);
                     }
@@ -3268,18 +3256,19 @@ void PlayerClass::PlayerShoot() {
         if (!FlameThrower) {
             // Patronenhülse auswerfen bei SpreadShot
             if (SelectedWeapon == 0)
-                PartikelSystem.PushPartikel(xpos + 30, ypos + 24 + yoff, BULLET, this);
+                PartikelSystem.PushPartikel(xpos + 30.0f, ypos + 24.0f + yoff, BULLET, this);
             else
 
                 // Rauchwolke bei Laser
                 if (SelectedWeapon == 1)
-                PartikelSystem.PushPartikel(xpos + 30, ypos + 24 + yoff, SMOKE3);
+                PartikelSystem.PushPartikel(xpos + 30.0f, ypos + 24.0f + yoff, SMOKE3);
             else
 
                 // Grüne Funken beim Bounce
                 if (SelectedWeapon == 2)
                 for (int i = 0; i < 2; i++)
-                    PartikelSystem.PushPartikel(xpos + 30 + random(4), ypos + 28 + yoff + random(4), FUNKE2);
+                    PartikelSystem.PushPartikel(xpos + 30.0f + static_cast<float>(random(4)),
+                                                ypos + 28.0f + yoff + static_cast<float>(random(4)), FUNKE2);
         }
 
         // Schussflamme
@@ -3291,11 +3280,11 @@ void PlayerClass::PlayerShoot() {
     {
         // Riesen Bombe?
         if (RiesenShotExtra > 0.0f)
-            Projectiles.PushProjectile(xpos + 26, ypos + 46, BOMBEBIG, this);
+            Projectiles.PushProjectile(xpos + 26.0f, ypos + 46.0f, BOMBEBIG, this);
 
         // oder normal
         else
-            Projectiles.PushProjectile(xpos + 30, ypos + 56, BOMBE, this);
+            Projectiles.PushProjectile(xpos + 30.0f, ypos + 56.0f, BOMBE, this);
     }
 }
 
@@ -3335,7 +3324,7 @@ void PlayerClass::PlayerGrenadeShoot() {
         wadd = -45.0f;
 
     WinkelUebergabe = 90.0f + wadd;
-    Projectiles.PushProjectile(xpos + AustrittX - 4, ypos + AustrittY - 4, GRENADE, this);
+    Projectiles.PushProjectile(xpos + AustrittX - 4.0f, ypos + AustrittY - 4.0f, GRENADE, this);
 
     SoundManager.PlayWave(100, 128, 11025, SOUND_GRANATE);
     PowerLinePossible = false;  // Taste einrasten
@@ -3353,25 +3342,23 @@ void PlayerClass::PlayerGrenadeShoot() {
 void PlayerClass::DrawNormalLightning(int DrawLength) {
     //----- Strahl des Blitzes anzeigen
 
-    float l, r, o, u;      // Vertice Koordinaten
-    float tl, tr, to, tu;  // Textur Koordinaten
-    float x, y;
-
-    x = static_cast<float>(xpos - TileEngine.XOffset + 60);  // Position errechnen
-    y = static_cast<float>(ypos - TileEngine.YOffset + 36);
+    float x = static_cast<float>(xpos - TileEngine.XOffset + 60);  // Position errechnen
+    float y = static_cast<float>(ypos - TileEngine.YOffset + 36);
 
     if (Blickrichtung == LINKS)
         x -= 56;
 
-    l = x - 0.5f;                    // Links
-    o = y - DrawLength * 32 - 0.5f;  // Oben
-    r = x + 31 + 0.5f;               // Rechts
-    u = y + 31 + 0.5f;               // Unten
+    // Vertice Koordinaten
+    float l = x - 0.5f;                    // Links
+    float o = y - DrawLength * 32 - 0.5f;  // Oben
+    float r = x + 31 + 0.5f;               // Rechts
+    float u = y + 31 + 0.5f;               // Unten
 
-    tl = 0.0f;
-    tr = 1.0f;
-    to = 0.0f;
-    tu = 1.0f * DrawLength;
+    // Textur Koordinaten
+    float tl = 0.0f;
+    float tr = 1.0f;
+    float to = 0.0f;
+    float tu = 1.0f * DrawLength;
     if (tu == 0.0f)
         tu = 1.0f;
 
@@ -3399,10 +3386,12 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
 
     DirectGraphics.SetTexture(Projectiles.Blitzstrahl[BlitzAnim].itsTexIdx);
 
-    // Blitz rotieren lassen
-    glm::mat4x4 matRot, matTrans, matTrans2;
+    // Rotationsmatrix
+    glm::mat4x4 matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[static_cast<int>(BlitzWinkel)], glm::vec3(0.0f, 0.0f, 1.0f));
 
-    matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[static_cast<int>(BlitzWinkel)], glm::vec3(0.0f, 0.0f, 1.0f));  // Rotationsmatrix
+    // Blitz rotieren lassen
+    glm::mat4x4 matTrans, matTrans2;
+
     D3DXMatrixTranslation(&matTrans, -x - 16, -y - 56, 0.0f);     // Transformation zum Ursprung
 
     if (Blickrichtung == RECHTS)
@@ -3465,24 +3454,12 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
 // --------------------------------------------------------------------------------------
 
 void PlayerClass::DrawCoolLightning(int DrawLength, float mul) {
-    int r = 0;
-    int zufall = 0;
-    int ystrahl = 0;
-    int xstrahl = 0;
-    float xstart = 0.0f;
-    float ystart = 0.0f;
-    int yoff = 0;
-    int size = 0;
-    int maxintersections = 0;  // anzahl zwischenschritte im blitz
-    D3DCOLOR col;
 
-    ystrahl = 0;
-    xstrahl = 0;
+    constexpr float XSTART = 18.0f;
+    constexpr float YSTART = 4.0f;
 
-    xstart = static_cast<float>(18);
-    ystart = static_cast<float>(4);
-
-    maxintersections = DrawLength + 2;
+    // anzahl zwischenschritte im blitz
+    int const maxintersections = DrawLength + 2;
 
     // Blitze neu zusammensetzen?
     if (Console.Showing == false)
@@ -3493,7 +3470,9 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul) {
 
         for (int n = 0; n < 12; n++) {
             // Farbe festlegen, hell oder dunkel oder fast weiss
-            zufall = random(6);
+            int zufall = random(6);
+            int r;
+            D3DCOLOR col;
             if (zufall < 3) {
                 r = random(64);
                 col = D3DCOLOR_RGBA(r / 2, r, random(32) + 224, random(64) + 192);
@@ -3506,30 +3485,30 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul) {
             }
 
             // Startpunkt auf 0 setzen
-            yoff = 0;
-            size = random(4) + 1;
+            int yoff = 0;
+            int size = random(4) + 1;
 
             for (int i = 0; i < maxintersections * 2; i += 2) {
                 // zwei neue Punkte zwischen letztem Punkt und Endpunkt per Zufall setzen
-                xstrahl = static_cast<int>((xpos - TileEngine.XOffset + xstart) + (random(32) - 16) * mul);
-                ystrahl = static_cast<int>(ypos - TileEngine.YOffset + ystart - yoff);
+                int xstrahl = static_cast<int>((xpos - TileEngine.XOffset + XSTART) + (random(32) - 16) * mul);
+                int ystrahl = static_cast<int>(ypos - TileEngine.YOffset + YSTART - yoff);
 
                 // Am End- und Austrittspunkt gebündelt
                 if (i == 0) {
-                    xstrahl = static_cast<int>(xpos - TileEngine.XOffset + xstart) + random(6) - 2;
-                    ystrahl = static_cast<int>(ypos - TileEngine.YOffset + ystart);
+                    xstrahl = static_cast<int>(xpos - TileEngine.XOffset + XSTART) + random(6) - 2;
+                    ystrahl = static_cast<int>(ypos - TileEngine.YOffset + YSTART);
                 }
 
                 if (i >= (maxintersections - 1) * 2) {
-                    xstrahl = static_cast<int>(xpos - TileEngine.XOffset + xstart) + random(6) - 2;
-                    ystrahl = static_cast<int>(ypos - TileEngine.YOffset + ystart - (DrawLength + 1) * 32);
+                    xstrahl = static_cast<int>(xpos - TileEngine.XOffset + XSTART) + random(6) - 2;
+                    ystrahl = static_cast<int>(ypos - TileEngine.YOffset + YSTART - (DrawLength + 1) * 32);
                 }
 
                 // Position setzen
-                strahlen[n][i + 0].x = static_cast<float>(xstrahl - size + xstart);
-                strahlen[n][i + 1].x = static_cast<float>(xstrahl + size + xstart);
-                strahlen[n][i + 0].y = static_cast<float>(ystrahl + ystart);
-                strahlen[n][i + 1].y = static_cast<float>(ystrahl + ystart);
+                strahlen[n][i + 0].x = static_cast<float>(xstrahl - size + XSTART);
+                strahlen[n][i + 1].x = static_cast<float>(xstrahl + size + XSTART);
+                strahlen[n][i + 0].y = static_cast<float>(ystrahl + YSTART);
+                strahlen[n][i + 1].y = static_cast<float>(ystrahl + YSTART);
 
                 // texturkoordinaten setzen
                 strahlen[n][i + 0].tu = 0.0f;
@@ -3564,10 +3543,9 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul) {
 // --------------------------------------------------------------------------------------
 
 bool PlayerClass::DoLightning() {
-    int DrawLength;       // Länge des Blitze mit berücksichtigten Wänden im Weg
-    GegnerClass *pEnemy;  // Für die Blitz/Gegner Kollision
 
-    DrawLength = BlitzLength - 1;  // Vom Maximum ausgehen (das wird später "gekürzt")
+    // Länge des Blitze mit berücksichtigten Wänden im Weg
+    int DrawLength = BlitzLength - 1;  // Vom Maximum ausgehen (das wird später "gekürzt")
 
     // Einmal im Kreis rumgedreht ? Dann wieder
     // von vorne beginnen mit der Rotation
@@ -3576,10 +3554,8 @@ bool PlayerClass::DoLightning() {
 
     // Ende des Blitzes beim Spieler leuchten lassen, falls er ihn grade noch auflädt
 
-    float x, y;
-
-    x = xpos - TileEngine.XOffset + 35;  // Position errechnen
-    y = ypos - TileEngine.YOffset + 35;
+    float x = xpos - TileEngine.XOffset + 35;  // Position errechnen
+    float y = ypos - TileEngine.YOffset + 35;
 
     // if (Blickrichtung == LINKS)
     //	x -= 56;
@@ -3622,13 +3598,13 @@ bool PlayerClass::DoLightning() {
             Color2 = D3DCOLOR_RGBA(255, 255, 255, 48);
         }
 
-        Projectiles.Blitzflash[BlitzAnim].RenderSprite(xstart - 18 - TileEngine.XOffset,
-                                                       ystart - 18 - TileEngine.YOffset, Color);
+        Projectiles.Blitzflash[BlitzAnim].RenderSprite(xstart - 18.0f - TileEngine.XOffset,
+                                                       ystart - 18.0f - TileEngine.YOffset, Color);
 
         // noch glow um die blitzenden?
         if (options_Detail >= DETAIL_HIGH)
             Projectiles.Blitzflash[3 - BlitzAnim].RenderSpriteScaled(
-                xstart - 58 - TileEngine.XOffset, ystart - 58 - TileEngine.YOffset, 144, 144, 0, Color2);
+                xstart - 58 - TileEngine.XOffset, ystart - 58.0f - TileEngine.YOffset, 144, 144, 0, Color2);
 
         DirectGraphics.SetColorKeyMode();
         return true;
@@ -3638,13 +3614,13 @@ bool PlayerClass::DoLightning() {
     //		d.h., ob er eine Wand getroffen hat
 
     // Anfang des Blitzes leuchten lassen
-    Projectiles.Blitzflash[BlitzAnim].RenderSprite(xstart - 18 - TileEngine.XOffset, ystart - 18 - TileEngine.YOffset,
+    Projectiles.Blitzflash[BlitzAnim].RenderSprite(xstart - 18.0f - TileEngine.XOffset, ystart - 18.0f - TileEngine.YOffset,
                                                    0xFFFFFFFF);
 
     // noch glow um die blitzenden?
     if (options_Detail >= DETAIL_HIGH) {
         Projectiles.Blitzflash[3 - BlitzAnim].RenderSpriteScaled(
-            xstart - 58 - TileEngine.XOffset, ystart - 58 - TileEngine.YOffset, 144, 144, 0, 0x30FFFFFF);
+            xstart - 58 - TileEngine.XOffset, ystart - 58.0f - TileEngine.YOffset, 144, 144, 0, 0x30FFFFFF);
     }
 
     // Startpunkt der Kollisionsabfrage auch schon mit ein wenig Abstand zum Spieler
@@ -3660,8 +3636,6 @@ bool PlayerClass::DoLightning() {
     Rect.right = 31;
     Rect.bottom = 31;
 
-    float xs, ys;
-
     // Rechtecke für die Kollisionsabfrage rotieren lassen
     for (int i = 0; i < BlitzLength + 1; i++) {
         // DKS - #ifdef'd this check
@@ -3671,11 +3645,11 @@ bool PlayerClass::DoLightning() {
             RenderRect(xstart - TileEngine.XOffset, ystart - TileEngine.YOffset, 31, 31, 0x80FFFFFF);
 #endif  // NDEBUG
 
-        xs = xstart;
-        ys = ystart;
+        float xs = xstart;
+        float ys = ystart;
 
         // Blitz auf Kollision mit den Gegnern prüfen
-        pEnemy = Gegner.pStart;    // Anfang der Gegnerliste
+        GegnerClass *pEnemy = Gegner.pStart;    // Anfang der Gegnerliste
         while (pEnemy != nullptr)  // Noch nicht alle durch ?
         {
             if (pEnemy->Active &&     // Ist der Gegner überhaupt aktiv ?
@@ -3687,7 +3661,7 @@ bool PlayerClass::DoLightning() {
                     ystart + 31 > pEnemy->yPos && ystart < pEnemy->yPos + GegnerRect[pEnemy->GegnerArt].bottom) {
                     // Funken sprühen
                     if (BlitzCount == 0.0f && BlitzAnim % 2 == 0)
-                        PartikelSystem.PushPartikel(xs + 12, ys + 12, LASERFUNKE);
+                        PartikelSystem.PushPartikel(xs + 12.0f, ys + 12.0f, LASERFUNKE);
 
                     // Gegner blinken lassen
                     pEnemy->DamageTaken = 255;
@@ -3704,7 +3678,7 @@ bool PlayerClass::DoLightning() {
                     //
                     if (pEnemy->GegnerArt == SHOOTBUTTON) {
                         if (BlitzCount == 0.0f && BlitzAnim % 2 == 0)
-                            PartikelSystem.PushPartikel(xs + 12, ys + 12, LASERFUNKE);  // Funken sprühen
+                            PartikelSystem.PushPartikel(xs + 12.0f, ys + 12.0f, LASERFUNKE);  // Funken sprühen
                         DrawLength = i - 1;                                             // Blitz "kürzen"
                         i = BlitzLength + 2;
                         break;  // Und Schleife verlassen
@@ -3859,24 +3833,21 @@ bool PlayerClass::LoadBeam() {
 
     // Ende des Blitzes beim Spieler leuchten lassen, falls er ihn grade noch auflädt
     //
-    float x;
-    // float y;
 
-    x = xpos - TileEngine.XOffset + 60;  // Position errechnen
+    float x = xpos - TileEngine.XOffset + 60.0f;  // Position errechnen
     // y = static_cast<float>(ypos - TileEngine.YOffset+36);
 
     if (Blickrichtung == LINKS)
-        x -= 56;
+        x -= 56.0f;
 
     DirectGraphics.SetAdditiveMode();
 
     //----- Wird der Blitz schon angezeigt ?
     //----- wenn nicht, dann das Aufladen anzeigen
 
-    D3DCOLOR Color;
-    int a;
+    int a = static_cast<int>(BlitzStart * 255.0f / 160.0f);
 
-    a = static_cast<int>(BlitzStart * 255.0f / 160.0f);
+    D3DCOLOR Color;
 
     if (BlitzStart < PLAYER_BEAM_MAX)
         Color = D3DCOLOR_RGBA(255, 255, 255, a);
@@ -3965,8 +3936,8 @@ void PlayerClass::DamagePlayer(float amount, bool Override) {
 // --------------------------------------------------------------------------------------
 
 void PlayerClass::CenterLevel() {
-    TileEngine.XOffset = xpos - 300;
-    TileEngine.YOffset = ypos - 280;
+    TileEngine.XOffset = xpos - 300.0f;
+    TileEngine.YOffset = ypos - 280.0f;
 }
 
 // --------------------------------------------------------------------------------------

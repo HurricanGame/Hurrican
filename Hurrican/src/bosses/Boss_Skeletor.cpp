@@ -55,13 +55,12 @@ void GegnerSkeletor::Laugh() {
 // --------------------------------------------------------------------------------------
 
 void GegnerSkeletor::CalcGunWinkel() {
-    float xdiv, ydiv;
 
-    ydiv = (pAim->ypos + 40) - (yPos + 100);
+    float ydiv = (pAim->ypos + 40.0f) - (yPos + 100.0f);
     if (ydiv == 0.0f)
         ydiv = 0.00001f;
 
-    xdiv = (pAim->xpos + 35) - (xPos + 60);
+    float xdiv = (pAim->xpos + 35.0f) - (xPos + 60.0f);
     // DKS - converted to float:
     // GunWinkel = 90.0f + (float)atan(ydiv / xdiv) * 180.0f / PI;
     GunWinkel = 90.0f + RadToDeg(atanf(ydiv / xdiv));
@@ -80,11 +79,10 @@ void GegnerSkeletor::DoDraw() {
     if (Handlung == GEGNER_EXPLODIEREN)
         return;
 
-    D3DCOLOR Color;
     float yoff = 0.0f;
 
     int Wert = 255 - (static_cast<int>(DamageTaken));
-    Color = D3DCOLOR_RGBA(255, Wert, Wert, 255);
+    D3DCOLOR Color = D3DCOLOR_RGBA(255, Wert, Wert, 255);
     bool mirror = BlickRichtung == RECHTS;
 
     if (AnimPhase >= 10)
@@ -267,8 +265,6 @@ void GegnerSkeletor::DoKI() {
             }
 
             // Animationsphase setzen
-            int a;
-
             if ((xSpeed > 31.0f && xAcc > 0.0f) || (xSpeed < -31.0f && xAcc < 0.0f))
                 xAcc *= -1.0f;
 
@@ -276,11 +272,11 @@ void GegnerSkeletor::DoKI() {
                 xAcc = 0.0f;
 
             if (xPos + 60 < Value1 + 320) {
-                a = static_cast<int>(xPos - TileEngine.XOffset) / 56;
+                int a = static_cast<int>(xPos - TileEngine.XOffset) / 56;
                 BlickRichtung = RECHTS;
                 AnimPhase = 10 + a;
             } else {
-                a = static_cast<int>(xPos - TileEngine.XOffset - 320.0f + 60.0f) / 56;
+                int a = static_cast<int>(xPos - TileEngine.XOffset - 320.0f + 60.0f) / 56;
                 BlickRichtung = LINKS;
                 AnimPhase = 15 - a;
             }
@@ -303,14 +299,13 @@ void GegnerSkeletor::DoKI() {
 
         case GEGNER_SPRINGEN: {
             // Animationsphase setzen
-            int a;
 
             if (xPos + 60 < Value1 + 320) {
-                a = static_cast<int>(xPos - TileEngine.XOffset) / 56;
+                int a = static_cast<int>(xPos - TileEngine.XOffset) / 56;
                 BlickRichtung = RECHTS;
                 AnimPhase = 10 + a;
             } else {
-                a = static_cast<int>(xPos - TileEngine.XOffset - 320.0f + 60.0f) / 56;
+                int a = static_cast<int>(xPos - TileEngine.XOffset - 320.0f + 60.0f) / 56;
                 BlickRichtung = LINKS;
                 AnimPhase = 15 - a;
             }

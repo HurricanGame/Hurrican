@@ -219,9 +219,9 @@ void GegnerEisFaust::DoKI() {
             while (AnimCount <= 0.0f) {
                 AnimCount += 4.0f;
 
-                if (xPos + 100 > TileEngine.XOffset && xPos + 100 < TileEngine.XOffset + 620.0f &&
-                    yPos + 220 > TileEngine.XOffset && yPos + 220 < TileEngine.XOffset + 440.0f)
-                    Gegner.PushGegner(xPos + 100, yPos + 220, EISZAPFEN, 1, 0, false);
+                if (xPos + 100.0f > TileEngine.XOffset && xPos + 100.0f < TileEngine.XOffset + 620.0f &&
+                    yPos + 220.0f > TileEngine.XOffset && yPos + 220.0f < TileEngine.XOffset + 440.0f)
+                    Gegner.PushGegner(xPos + 100.0f, yPos + 220.0f, EISZAPFEN, 1, 0, false);
             }
 
             if (xSpeed > 0.0f && xPos > static_cast<float>(Value1) + 640.0f + 30.0f) {

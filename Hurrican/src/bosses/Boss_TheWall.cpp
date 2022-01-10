@@ -241,8 +241,7 @@ void GegnerTheWall::NeueAktion() {
 // --------------------------------------------------------------------------------------
 
 void GegnerTheWall::ReturnSkull() {
-    GegnerClass *pTemp;
-    pTemp = Gegner.pStart;
+    GegnerClass *pTemp = Gegner.pStart;
 
     while (pTemp != nullptr) {
         if (pTemp->GegnerArt == SKULL)
@@ -378,16 +377,16 @@ void GegnerTheWall::DoKI() {
 
             if (Energy < 1500)
                 if (random(20) == 0) {
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(10) - 10),
-                                                yPos + static_cast<float>(random(10) + 220), LASERFLAME);
+                    PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(10)),
+                                                yPos + 220.0f + static_cast<float>(random(10)), LASERFLAME);
 
                     for (int i = 0; i < 10; i++)
-                        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(10) + 10),
-                                                    yPos + static_cast<float>(random(10) + 240), FUNKE);
+                        PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(10)),
+                                                    yPos + 240.0f + static_cast<float>(random(10)), FUNKE);
 
                     for (int i = 0; i < 10; i++)
-                        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(2) + 20),
-                                                    yPos + static_cast<float>(random(10) + 240), LASERFUNKE2);
+                        PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(2)),
+                                                    yPos + 240.0f + static_cast<float>(random(10)), LASERFUNKE2);
                 }
         }
 
@@ -439,13 +438,12 @@ void GegnerTheWall::DoKI() {
             // Glassplitter
             SoundManager.PlayWave(100, 128, 11025, SOUND_GLASSBREAK);
 
-            int i;
-            for (i = 0; i < 20; i++)
+            for (int i = 0; i < 20; i++)
                 PartikelSystem.PushPartikel(xPos + static_cast<float>(TunnelOffx + 114 + random(30)),
                                             yPos + static_cast<float>(TunnelOffY + 59 + random(45)),
                                             SCHLEIM);
 
-            for (i = 0; i < 80; i++)
+            for (int i = 0; i < 80; i++)
                 PartikelSystem.PushPartikel(xPos + static_cast<float>(TunnelOffx + 114 + random(30)),
                                             yPos + static_cast<float>(TunnelOffY + 59 + random(45)),
                                             GLASSPLITTER);

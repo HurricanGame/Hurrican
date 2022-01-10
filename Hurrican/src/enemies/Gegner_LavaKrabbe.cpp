@@ -30,12 +30,11 @@ void GegnerLavaKrabbe::DoDraw() {
     // rotierend runterfallen?
     //
     if (Handlung == GEGNER_FALLEN) {
-        int r, g, b, w;
 
         // Farbe setzen (leichte orangetönung)
-        r = 60 + static_cast<int>(zPos);
-        g = 20 + static_cast<int>(zPos);
-        b = 20 + static_cast<int>(zPos);
+        int r = 60 + static_cast<int>(zPos);
+        int g = 20 + static_cast<int>(zPos);
+        int b = 20 + static_cast<int>(zPos);
 
         if (r > 255)
             r = 255;
@@ -44,7 +43,7 @@ void GegnerLavaKrabbe::DoDraw() {
         if (b > 255)
             b = 255;
 
-        w = static_cast<int>(255 - DamageTaken);
+        int w = static_cast<int>(255 - DamageTaken);
 
         if (g > w)
             g = w;
@@ -68,12 +67,7 @@ void GegnerLavaKrabbe::DoDraw() {
     //
     else {
         int a = static_cast<int>(255 - DamageTaken);
-        bool mirrored;
-
-        if (BlickRichtung == RECHTS)
-            mirrored = true;
-        else
-            mirrored = false;
+        bool mirrored = (BlickRichtung == RECHTS);
 
         D3DCOLOR Color = D3DCOLOR_RGBA(255, a, a, 255);
         pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,

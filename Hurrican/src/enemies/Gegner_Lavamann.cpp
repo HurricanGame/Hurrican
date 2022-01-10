@@ -32,12 +32,7 @@ GegnerLavamann::GegnerLavamann(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerLavamann::DoDraw() {
-    bool mirror = false;
-
-    if (BlickRichtung == LINKS)
-        mirror = true;
-    else
-        mirror = false;
+    bool mirror =  (BlickRichtung == LINKS);
 
     // gegner leuchtend rendern
     //

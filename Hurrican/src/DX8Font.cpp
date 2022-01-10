@@ -232,17 +232,14 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
 
     // Einzelne Zeichen durchgehen
     for (int i=0; i < xChars; i++)
-        for (int j=0; j < yChars; j++)
-        {
-            int		last  = 0;
-            bool	found = false;
+        for (int j=0; j < yChars; j++) {
+            int last  = 0;
+            bool found = false;
 
-            for (int k = 0; k<xCharsize; k++)
-            {
+            for (int k = 0; k<xCharsize; k++) {
                 found = false;
 
-                for (int l = 0; l<yCharsize; l++)
-                {
+                for (int l = 0; l<yCharsize; l++) {
                     if (((std::uint32_t*)image.data)[(j * yCharsize + l) * image.w + (i*xCharsize + k)] != key)
                         found = true;
                     /*
@@ -296,19 +293,18 @@ bool DirectGraphicsFont::DrawValue(float x, float y, float Value, D3DCOLOR Color
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR Color) {
-    RECT_struct rect;
-    unsigned char z;
-    float oldx = x;
+    float const oldx = x;
 
     // DKS - Added:
     if (!Text || strlen(Text) == 0)
         return true;
 
     for (unsigned int i = 0; i < strlen(Text); i++) {
-        z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
-        z -= 33;      // "!" als erstes Zeichen setzen, das heisst,
+        unsigned char z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
+        z -= 33;                    // "!" als erstes Zeichen setzen, das heisst,
         // Fontgrafik muss mit "!" beginnen
         // Position des aktuellen Zeichens in der Grafik berechnen
+        RECT_struct rect;
         rect.left = (z % mXChars) * mXCharSize;
         rect.top = (z / mXChars) * mYCharSize;
         rect.right = rect.left + mXCharSize;
@@ -370,13 +366,11 @@ bool DirectGraphicsFont::DrawDemoChar(float x, float y, const char Text, D3DCOLO
     if (Text == 32 || Text == '\n')
         return false;
 
-    RECT_struct rect;
-    unsigned char z;
-
-    z = Text;  // Aktuell zu bearbeitendes Zeichen holen
-    z -= 33;   // "!" als erstes Zeichen setzen, das heisst,
+    unsigned char z = Text;  // Aktuell zu bearbeitendes Zeichen holen
+    z -= 33;                 // "!" als erstes Zeichen setzen, das heisst,
     // Fontgrafik muss mit "!" beginnen
     // Position des aktuellen Zeichens in der Grafik berechnen
+    RECT_struct rect;
     rect.left = (z % mXChars) * mXCharSize;
     rect.top = (z / mXChars) * mYCharSize;
     rect.right = rect.left + mXCharSize;
@@ -393,15 +387,14 @@ bool DirectGraphicsFont::DrawDemoChar(float x, float y, const char Text, D3DCOLO
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsFont::DrawDemoText(float x, float y, const char Text[], D3DCOLOR Color) {
-    RECT_struct rect;
-    unsigned char z;
-    float oldx = x;
+    float const oldx = x;
 
     for (unsigned int i = 0; i < strlen(Text); i++) {
-        z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
-        z -= 33;      // "!" als erstes Zeichen setzen, das heisst,
+        unsigned char z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
+        z -= 33;                    // "!" als erstes Zeichen setzen, das heisst,
         // Fontgrafik muss mit "!" beginnen
         // Position des aktuellen Zeichens in der Grafik berechnen
+        RECT_struct rect;
         rect.left = (z % mXChars) * mXCharSize;
         rect.top = (z / mXChars) * mYCharSize;
         rect.right = rect.left + mXCharSize;
@@ -430,15 +423,14 @@ bool DirectGraphicsFont::DrawDemoText(float x, float y, const char Text[], D3DCO
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsFont::DrawText(float x, float y, const char Text[], D3DCOLOR Color, int Spacing) {
-    RECT_struct rect;
-    unsigned char z;
-    float oldx = x;
+    float const oldx = x;
 
     for (unsigned int i = 0; i < strlen(Text); i++) {
-        z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
-        z -= 33;      // "!" als erstes Zeichen setzen, das heisst,
+        unsigned char z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
+        z -= 33;                    // "!" als erstes Zeichen setzen, das heisst,
         // Fontgrafik muss mit "!" beginnen
         // Position des aktuellen Zeichens in der Grafik berechnen
+        RECT_struct rect;
         rect.left = (z % mXChars) * mXCharSize;
         rect.top = (z / mXChars) * mYCharSize;
         rect.right = rect.left + mXCharSize;
@@ -491,13 +483,10 @@ int DirectGraphicsFont::DemoStringLength(const char Text[]) {
     if (strlen(Text) <= 1)
         return 0;
 
-    unsigned char z;
-    int l;
-
-    l = 0;
+    int l = 0;
     for (unsigned int i = 0; i < strlen(Text) - 1; i++) {
-        z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
-        z -= 33;      // "!" als erstes Zeichen setzen, das heisst,
+        unsigned char z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
+        z -= 33;                    // "!" als erstes Zeichen setzen, das heisst,
         // Fontgrafik muss mit "!" beginnen
         if (Text[i] == 32)
             l += mXCharSize - 3;  // Bei Space frei lassen
@@ -516,14 +505,11 @@ int DirectGraphicsFont::StringLength(const char Text[]) {
     if (strlen(Text) < 1)
         return 0;
 
-    unsigned char z;
-    int l;
-
-    l = 0;
+    int l = 0;
     unsigned int length = strlen(Text);
     for (unsigned int i = 0; i < length; i++) {
-        z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
-        z -= 33;      // "!" als erstes Zeichen setzen, das heisst,
+        unsigned char z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
+        z -= 33;                    // "!" als erstes Zeichen setzen, das heisst,
         // Fontgrafik muss mit "!" beginnen
         // DKS - Added support for font scaling
         if (mScaleFactor == 1) {
@@ -550,14 +536,11 @@ int DirectGraphicsFont::StringLength(const char Text[], int Spacing) {
     if (strlen(Text) < 1)
         return 0;
 
-    unsigned char z;
-    int l;
-
-    l = 0;
+    int l = 0;
     unsigned int length = strlen(Text);
     for (unsigned int i = 0; i < length; i++) {
-        z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
-        z -= 33;      // "!" als erstes Zeichen setzen, das heisst,
+        unsigned char z = Text[i];  // Aktuell zu bearbeitendes Zeichen holen
+        z -= 33;                    // "!" als erstes Zeichen setzen, das heisst,
         // Fontgrafik muss mit "!" beginnen
         // DKS - Added support for font scaling
         if (mScaleFactor == 1) {

@@ -12,15 +12,11 @@
 // --------------------------------------------------------------------------------------
 
 GegnerSpiderBomb::GegnerSpiderBomb(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
     AnimStart = 0;
     AnimEnde = 5;
     AnimSpeed = 0.75f;
     BlickRichtung = LINKS;
-    xSpeed = 0.0;
-    ySpeed = 0.0f;
     xAcc = 0.0f;
-    yAcc = 0.0f;
     Energy = 30;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -34,6 +30,11 @@ GegnerSpiderBomb::GegnerSpiderBomb(int Wert1, int Wert2, bool Light) {
         xSpeed = static_cast<float>(random(10)) + 20.0f;
         ySpeed = -(static_cast<float>(random(10)) + 30.0f);
         yAcc = 5.0f;
+    } else {
+        Handlung = GEGNER_LAUFEN;
+        xSpeed = 0.0;
+        ySpeed = 0.0f;
+        yAcc = 0.0f;
     }
 }
 

@@ -89,10 +89,9 @@ void GegnerNeuFisch::DoKI() {
         // In der Suppe rumdümpeln
         //
         case GEGNER_LAUFEN: {
-            bool onWall = false;
 
-            onWall = (BlickRichtung == LINKS && ((blockl & BLOCKWERT_WAND) || (blockl & BLOCKWERT_GEGNERWAND))) ||
-                     (BlickRichtung == RECHTS && ((blockr & BLOCKWERT_WAND) || (blockr & BLOCKWERT_GEGNERWAND)));
+            bool onWall = (BlickRichtung == LINKS && ((blockl & BLOCKWERT_WAND) || (blockl & BLOCKWERT_GEGNERWAND))) ||
+                          (BlickRichtung == RECHTS && ((blockr & BLOCKWERT_WAND) || (blockr & BLOCKWERT_GEGNERWAND)));
 
             if (onWall || (pAim->InLiquid == true && ((xPos + 30 < pAim->xpos + 35 && BlickRichtung == LINKS) ||
                                                       (xPos + 30 > pAim->xpos + 35 && BlickRichtung == RECHTS)))) {

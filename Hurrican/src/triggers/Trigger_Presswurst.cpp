@@ -177,8 +177,9 @@ void GegnerPresswurst::DoKI() {
             AnimCount -= 1.0f SYNC;
             if (AnimCount < 0.0f) {
                 // Spinne spawnen
-                Gegner.PushGegner(xPos + 60.0f, yPos + 357 - GegnerRect[SPIDERBOMB].bottom, SPIDERBOMB, 0, 0, false,
-                                  true);
+                Gegner.PushGegner(xPos + 60.0f,
+                                  yPos + 357.0f - GegnerRect[SPIDERBOMB].bottom,
+                                  SPIDERBOMB, 0, 0, false, true);
 
                 // wieder hochfahren
                 Handlung = GEGNER_LAUFEN;

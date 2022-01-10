@@ -792,8 +792,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255;
                 alpha = 144;
-                xSpeed = (static_cast<float>(random(40) - 20) / 40);
-                ySpeed = static_cast<float>(random(10) + 40) / 5;
+                xSpeed = static_cast<float>(random(40) - 20) / 40.0f;
+                ySpeed = static_cast<float>(random(10) + 40) / 5.0f;
                 Lebensdauer = static_cast<float>(180 + random(10));
                 PartikelArt = ROCKETSMOKE;
 
@@ -826,7 +826,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 AnimEnde = 19;
                 AnimSpeed = (random(10) + 10) / 20.0f;
 
-                xSpeed = (static_cast<float>(random(80) - 40) / 4.0f);
+                xSpeed = static_cast<float>(random(80) - 40) / 4.0f;
                 ySpeed = -static_cast<float>(random(10) + 8);
                 xAcc = 0.0f;
                 yAcc = 3.0f;
@@ -850,7 +850,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                     xAcc = -0.2f;
 
                 AnimPhase = random(3);
-                ySpeed = static_cast<float>(random(10) + 15) / 10;
+                ySpeed = static_cast<float>(random(10) + 15) / 10.0f;
                 ySpeed *= (AnimPhase + 1);
 
                 if (PartikelArt == SCHNEEFLOCKE_END) {
@@ -867,7 +867,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (static_cast<float>(random(80) - 40) / 3.0f);
+                xSpeed = static_cast<float>(random(80) - 40) / 3.0f;
                 ySpeed = -(static_cast<float>(random(80) - 20) / 3.0f);
                 xAcc = 0.0f;
                 yAcc = 5.0f;
@@ -876,7 +876,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - off-by-one error:
                 // AnimEnde	= 15;
                 AnimEnde = 14;
-                AnimSpeed = static_cast<float>((random(10) + 5) / 20.0f);
+                AnimSpeed = static_cast<float>(random(10) + 5) / 20.0f;
 
             } break;
 
@@ -885,7 +885,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (static_cast<float>(random(80) - 40) / 3.0f);
+                xSpeed = static_cast<float>(random(80) - 40) / 3.0f;
                 ySpeed = -(static_cast<float>(random(60) + 20) / 2.0f);
                 xAcc = 0.0f;
                 yAcc = 5.0f;
@@ -901,7 +901,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (static_cast<float>(random(80) - 40) / 3.0f);
+                xSpeed = static_cast<float>(random(80) - 40) / 3.0f;
                 ySpeed = -(static_cast<float>(random(60) + 20) / 2.0f);
                 xAcc = 0.0f;
                 yAcc = 5.0f;
@@ -1160,8 +1160,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (static_cast<float>(random(60) - 30) / 10);
-                ySpeed = (static_cast<float>(random(60) - 30) / 10);
+                xSpeed = (static_cast<float>(random(60) - 30) / 10.0f);
+                ySpeed = (static_cast<float>(random(60) - 30) / 10.0f);
 
                 Lebensdauer = 180;
                 BounceWalls = false;
@@ -1172,8 +1172,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (static_cast<float>(random(20) - 10) / 20);
-                ySpeed = (static_cast<float>(random(20) - 10) / 20);
+                xSpeed = (static_cast<float>(random(20) - 10) / 20.0f);
+                ySpeed = (static_cast<float>(random(20) - 10) / 20.0f);
 
                 AnimCount = 30.0f;
                 Lebensdauer = 140;
@@ -1276,8 +1276,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (static_cast<float>(random(60) - 30) / 20);
-                ySpeed = (static_cast<float>(random(60) - 30) / 20);
+                xSpeed = (static_cast<float>(random(60) - 30) / 20.0f);
+                ySpeed = (static_cast<float>(random(60) - 30) / 20.0f);
                 yAcc = 0.5f;
 
                 Lebensdauer = 140;
@@ -1327,8 +1327,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                     blue = TileEngine.ColB3;
                 }
 
-                xSpeed = (static_cast<float>(random(80) - 40) / 20);
-                ySpeed = -(static_cast<float>(random(40) + 40) / 20);
+                xSpeed = (static_cast<float>(random(80) - 40) / 20.0f);
+                ySpeed = -(static_cast<float>(random(40) + 40) / 20.0f);
                 yAcc = 1.0f;
 
                 BounceWalls = true;
@@ -1403,8 +1403,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             {
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
-                xSpeed = (static_cast<float>(random(80) - 40) / 5);
-                ySpeed = -static_cast<float>(random(40) + 20) / 5;
+                xSpeed = (static_cast<float>(random(80) - 40) / 5.0f);
+                ySpeed = -static_cast<float>(random(40) + 20) / 5.0f;
                 yAcc = 5.0f;
                 BounceWalls = true;
 
@@ -1416,8 +1416,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             {
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
-                xSpeed = (static_cast<float>(random(80) - 40) / 5);
-                ySpeed = -static_cast<float>(random(40) + 20) / 5;
+                xSpeed = (static_cast<float>(random(80) - 40) / 5.0f);
+                ySpeed = -static_cast<float>(random(40) + 20) / 5.0f;
                 yAcc = 5.0f;
                 BounceWalls = true;
 
@@ -1429,8 +1429,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             {
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
-                xSpeed = (static_cast<float>(random(80) - 40) / 2);
-                ySpeed = -static_cast<float>(random(40) + 20) / 5;
+                xSpeed = (static_cast<float>(random(80) - 40) / 2.0f);
+                ySpeed = -static_cast<float>(random(40) + 20) / 5.0f;
                 yAcc = 5.0f;
                 BounceWalls = true;
 
@@ -1442,8 +1442,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             {
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
-                xSpeed = (static_cast<float>(random(20) - 10) / 2);
-                ySpeed = -static_cast<float>(random(40) + 20) / 5;
+                xSpeed = (static_cast<float>(random(20) - 10) / 2.0f);
+                ySpeed = -static_cast<float>(random(40) + 20) / 5.0f;
                 yAcc = 5.0f;
                 BounceWalls = true;
                 // DKS - off-by-one error:
@@ -1459,8 +1459,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
             {
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
-                xSpeed = (static_cast<float>(random(80) - 40) / 40);
-                ySpeed = -static_cast<float>(random(80) - 40) / 40;
+                xSpeed = (static_cast<float>(random(80) - 40) / 40.0f);
+                ySpeed = -static_cast<float>(random(80) - 40) / 40.0f;
                 // Lebensdauer = 255;      //DKS - now redundant
 
             } break;
@@ -1483,7 +1483,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255;
                 alpha = 128;
-                xSpeed = -(8.0f + (static_cast<float>(random(20)) / 10));
+                xSpeed = -(8.0f + (static_cast<float>(random(20)) / 10.0f));
                 ySpeed = 15.0f;
                 Lebensdauer = static_cast<float>(150 + random(10));
 
@@ -1501,7 +1501,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255;
                 alpha = 128;
-                xSpeed = 8.0f + (static_cast<float>(random(20)) / 10);
+                xSpeed = 8.0f + (static_cast<float>(random(20)) / 10.0f);
                 ySpeed = 15.0f;
                 Lebensdauer = static_cast<float>(150 + random(10));
 
@@ -1518,7 +1518,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255;
                 alpha = 128;
-                ySpeed = 15.0f + (static_cast<float>(random(20)) / 5);
+                ySpeed = 15.0f + (static_cast<float>(random(20)) / 5.0f);
                 Lebensdauer = static_cast<float>(150 + random(10));
 
                 AnimSpeed = 0.8f;
@@ -1578,13 +1578,12 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 PartikelArt = KRINGEL;
 
                 // DKS - converted to float:
-                float absx, absy, speed;  // Variablen für die Geschwindigkeits-
                 // berechnung
-                absx = m_pParent->xpos + 35 - (xPos + 4);  // Differenz der x
-                absy = m_pParent->ypos + 40 - (yPos + 4);  // und y Strecke
+                float absx = m_pParent->xpos + 35 - (xPos + 4);  // Differenz der x
+                float absy = m_pParent->ypos + 40 - (yPos + 4);  // und y Strecke
 
                 // DKS - converted to float:
-                speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
+                float speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
                 speed = speed * static_cast<float>(8 + AnimPhase);                  // Geschwindigkeit ist 4 fach
 
                 absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
@@ -1606,13 +1605,12 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 PartikelArt = KRINGEL;
 
                 // DKS - converted to float:
-                float absx, absy, speed;  // Variablen für die Geschwindigkeits-
                 // berechnung
-                absx = m_pParent->xpos + 35 - (xPos + 4);  // Differenz der x
-                absy = m_pParent->ypos + 40 - (yPos + 4);  // und y Strecke
+                float absx = m_pParent->xpos + 35 - (xPos + 4);  // Differenz der x
+                float absy = m_pParent->ypos + 40 - (yPos + 4);  // und y Strecke
 
                 // DKS - converted to float:
-                speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
+                float speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
                 speed = speed * static_cast<float>(8 + AnimPhase);                  // Geschwindigkeit ist 4 fach
 
                 absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
@@ -1634,13 +1632,12 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 PartikelArt = KRINGEL;
 
                 // DKS - converted to float:
-                float absx, absy, speed;  // Variablen für die Geschwindigkeits-
                 // berechnung
-                absx = m_pParent->xpos + 35 - (xPos + 4);  // Differenz der x
-                absy = m_pParent->ypos + 40 - (yPos + 4);  // und y Strecke
+                float absx = m_pParent->xpos + 35 - (xPos + 4);  // Differenz der x
+                float absy = m_pParent->ypos + 40 - (yPos + 4);  // und y Strecke
 
                 // DKS - converted to float:
-                speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
+                float speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
                 speed = speed * (8 + AnimPhase);                  // Geschwindigkeit ist 4 fach
 
                 absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
@@ -1662,13 +1659,12 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 PartikelArt = KRINGEL;
 
                 // DKS - converted to float:
-                float absx, absy, speed;  // Variablen für die Geschwindigkeits-
                 // berechnung
-                absx = m_pParent->xpos + 35 - (xPos + 4);  // Differenz der x
-                absy = m_pParent->ypos + 40 - (yPos + 4);  // und y Strecke
+                float absx = m_pParent->xpos + 35 - (xPos + 4);  // Differenz der x
+                float absy = m_pParent->ypos + 40 - (yPos + 4);  // und y Strecke
 
                 // DKS - converted to float:
-                speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
+                float speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
                 speed = speed * (8 + AnimPhase);                  // Geschwindigkeit ist 4 fach
 
                 absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
@@ -1684,8 +1680,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 green = 192;
                 blue = 24;
                 alpha = 255;
-                xSpeed = (static_cast<float>(random(100) - 50) / 2);
-                ySpeed = -static_cast<float>(random(40) + 40) / 2;
+                xSpeed = (static_cast<float>(random(100) - 50) / 2.0f);
+                ySpeed = -static_cast<float>(random(40) + 40) / 2.0f;
                 yAcc = 5.0f;
                 BounceWalls = true;
                 OwnDraw = true;
@@ -1717,7 +1713,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 green = 255;
                 blue = 255;
                 alpha = 128;
-                ySpeed = 8.0f + (static_cast<float>(random(20)) / 10);
+                ySpeed = 8.0f + (static_cast<float>(random(20)) / 10.0f);
                 Lebensdauer = static_cast<float>(150 + random(10));
 
                 BounceWalls = true;
@@ -1749,7 +1745,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 
                 AnimCount = static_cast<float>(random(10) + 10) / 10.0f;
 
-                ySpeed = -static_cast<float>(random(10) + 20) / 10;
+                ySpeed = -static_cast<float>(random(10) + 20) / 10.0f;
 
                 if (WinkelUebergabe == -1.0f) {
                     ySpeed *= -3.0f;
@@ -1817,13 +1813,12 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 BounceWalls = false;
 
                 // DKS - converted to float:
-                float absx, absy, speed;  // Variablen für die Geschwindigkeits-
                 // berechnung
-                absx = PartikelSystem.xtarget - xPos;  // Differenz der x
-                absy = PartikelSystem.ytarget - yPos;  // und y Strecke
+                float absx = PartikelSystem.xtarget - xPos;  // Differenz der x
+                float absy = PartikelSystem.ytarget - yPos;  // und y Strecke
 
                 // DKS - converted to float:
-                speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
+                float speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
                 speed = speed * (8 + AnimPhase);                  // Geschwindigkeit ist 4 fach
 
                 absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
@@ -1884,8 +1879,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255;
                 alpha = 224;
-                xSpeed = (static_cast<float>(random(80) - 40) / 3);
-                ySpeed = -static_cast<float>(random(40) + 40) / 3;
+                xSpeed = (static_cast<float>(random(80) - 40) / 3.0f);
+                ySpeed = -static_cast<float>(random(40) + 40) / 3.0f;
                 yAcc = 5.0f;
                 BounceWalls = true;
                 // DKS - off-by-one error:
@@ -2045,6 +2040,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 blue = 64;
                 alpha = 255;
 
+                // ???
                 if (random(2) == 0)
                     xAcc = -0.4f;
                 else
@@ -2095,7 +2091,6 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
 // --------------------------------------------------------------------------------------
 
 void PartikelClass::Run() {
-    uint32_t bo, bu, bl, br;
 
     // DKS - alpha color was getting set outside its range, so set
     //      a temp value and fix at the end:
@@ -2121,6 +2116,8 @@ void PartikelClass::Run() {
         xPos += xSpeed SYNC;
         yPos += ySpeed SYNC;
     }
+
+    uint32_t bo, bu, bl, br;
 
     if (BounceWalls) {
         bo = TileEngine.BlockOben(xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
@@ -2419,16 +2416,14 @@ void PartikelClass::Run() {
 
                     // Platschen im Wasser
                     //
-                    int vol;
-                    float xdiff, ydiff, Abstand;
 
-                    xdiff = ((m_pParent->xpos + 45) - xPos);
-                    ydiff = ((m_pParent->ypos + 45) - yPos);
+                    float xdiff = ((m_pParent->xpos + 45) - xPos);
+                    float ydiff = ((m_pParent->ypos + 45) - yPos);
 
                     // DKS - converted to float:
-                    Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
+                    float Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
-                    vol = static_cast<int>((100.0f - Abstand / 6.0f) * 1.5f);
+                    int vol = static_cast<int>((100.0f - Abstand / 6.0f) * 1.5f);
                     if (vol < 0)
                         vol = 0;
 
@@ -2641,8 +2636,8 @@ void PartikelClass::Run() {
                 // if (TileEngine.TileAt(static_cast<int>((xPos + 5) / TILESIZE_X), static_cast<int>((yPos + 5) /
                 // TILESIZE_Y)).Block & BLOCKWERT_LIQUID)
                 // ADDED CHECK AND CONVERTED TO float DIV-BY-RECIPROCAL:
-                int tmp_x = static_cast<int>((xPos + 5.0f) * (1.0f / TILESIZE_X));
-                int tmp_y = static_cast<int>((yPos + 5.0f) * (1.0f / TILESIZE_Y));
+                int const tmp_x = static_cast<int>((xPos + 5.0f) * (1.0f / TILESIZE_X));
+                int const tmp_y = static_cast<int>((yPos + 5.0f) * (1.0f / TILESIZE_Y));
                 if (tmp_x >= 0 && tmp_x < TileEngine.LEVELSIZE_X && tmp_y >= 0 && tmp_y < TileEngine.LEVELSIZE_Y &&
                     TileEngine.TileAt(tmp_x, tmp_y).Block & BLOCKWERT_LIQUID) {
                     float off = 0;
@@ -2989,13 +2984,12 @@ void PartikelClass::Run() {
                 // Richtung neu berechnen
                 //
                 // DKS - converted to float:
-                float absx, absy, speed;  // Variablen für die Geschwindigkeits-
                 // berechnung
-                absx = m_pParent->xpos + 35 - (xPos + 4);  // Differenz der x
-                absy = m_pParent->ypos + 40 - (yPos + 4);  // und y Strecke
+                float absx = m_pParent->xpos + 35 - (xPos + 4);  // Differenz der x
+                float absy = m_pParent->ypos + 40 - (yPos + 4);  // und y Strecke
 
                 // DKS - converted to float:
-                speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
+                float speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
                 speed = speed * (8 + AnimPhase);                  // Geschwindigkeit ist 4 fach
 
                 absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
@@ -3013,13 +3007,12 @@ void PartikelClass::Run() {
                 // Richtung neu berechnen
                 //
                 // DKS - converted to float:
-                float absx, absy, speed;  // Variablen für die Geschwindigkeits-
                 // berechnung
-                absx = PartikelSystem.xtarget - xPos;  // Differenz der x
-                absy = PartikelSystem.ytarget - yPos;  // und y Strecke
+                float absx = PartikelSystem.xtarget - xPos;  // Differenz der x
+                float absy = PartikelSystem.ytarget - yPos;  // und y Strecke
 
                 // DKS - converted to float:
-                speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
+                float speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
                 speed = speed * (15 + AnimPhase * 2);             // Geschwindigkeit ist 4 fach
 
                 absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
@@ -3192,15 +3185,16 @@ bool PartikelClass::Render() {
 
         DirectGraphics.SetFilterMode(true);
 
-        glm::mat4x4 matRot, matTrans, matTrans2;
         int width = PartikelGrafix[PartikelArt].itsXFrameSize;
         int height = PartikelGrafix[PartikelArt].itsYFrameSize;
 
         // Rotationsmatrix
-        matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[static_cast<int>(Rot)], glm::vec3(0.0f, 0.0f, 1.0f));
+        glm::mat4x4 matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[static_cast<int>(Rot)], glm::vec3(0.0f, 0.0f, 1.0f));
 
         float x = static_cast<float>(xPos - TileEngine.XOffset);
         float y = static_cast<float>(yPos - TileEngine.YOffset);
+
+        glm::mat4x4 matTrans, matTrans2;
 
         // Transformation zum Ursprung
         D3DXMatrixTranslation(&matTrans, -x - (width) / 2, -y - (height) / 2, 0.0f);
@@ -3238,10 +3232,8 @@ bool PartikelClass::Render() {
     //      we never step outside itsPreCalcedRects boundaries
     // if (OwnDraw == false)
     if (!OwnDraw && AnimPhase <= AnimEnde) {
-        float l, r, o, u;      // Vertice Koordinaten
-        float tl, tr, to, tu;  // Textur Koordinaten
-        float xts = PartikelGrafix[PartikelArt].itsXTexScale;
-        float yts = PartikelGrafix[PartikelArt].itsYTexScale;
+        float const xts = PartikelGrafix[PartikelArt].itsXTexScale;
+        float const yts = PartikelGrafix[PartikelArt].itsYTexScale;
 
         // DKS - There is no need to compute this, it's already in the sprite's itsPreCalcedRects array:
         // int   xfs, yfs, xfc;
@@ -3257,15 +3249,17 @@ bool PartikelClass::Render() {
 
         RECT_struct &Rect = PartikelGrafix[PartikelArt].itsPreCalcedRects[AnimPhase];
 
-        l = -TileEngine.XOffset + xPos - 0.5f;                                 // Links
-        r = -TileEngine.XOffset + xPos + (Rect.right - Rect.left - 1) + 0.5f;  // Rechts
-        o = -TileEngine.YOffset + yPos - 0.5f;                                 // Oben
-        u = -TileEngine.YOffset + yPos + (Rect.bottom - Rect.top - 1) + 0.5f;  // Unten
+        // Vertice Koordinaten
+        float l = -TileEngine.XOffset + xPos - 0.5f;                                 // Links
+        float r = -TileEngine.XOffset + xPos + (Rect.right - Rect.left - 1) + 0.5f;  // Rechts
+        float o = -TileEngine.YOffset + yPos - 0.5f;                                 // Oben
+        float u = -TileEngine.YOffset + yPos + (Rect.bottom - Rect.top - 1) + 0.5f;  // Unten
 
-        tl = Rect.left * xts;    // Links
-        tr = Rect.right * xts;   // Rechts
-        to = Rect.top * yts;     // Oben
-        tu = Rect.bottom * yts;  // Unten
+        // Textur Koordinaten
+        float tl = Rect.left * xts;    // Links
+        float tr = Rect.right * xts;   // Rechts
+        float to = Rect.top * yts;     // Oben
+        float tu = Rect.bottom * yts;  // Unten
 
         // DKS - Altered this code to assign to TriangleStrip directly:
         QUAD2D TriangleStrip;
@@ -3405,9 +3399,9 @@ bool PartikelClass::Render() {
 
     // Langer Funke/Wasserspritzer
     else if (PartikelArt == WASSER_SPRITZER || PartikelArt == WASSER_SPRITZER2) {
-        int h, b;
 
-        h = 100;
+        int h = 100;
+        int b;
         if (PartikelArt == WASSER_SPRITZER)
             b = 200 - alpha / 2;
         else
@@ -4239,11 +4233,10 @@ bool PartikelsystemClass::PushPartikel(float x, float y, int Art, PlayerClass *p
         (Art == GRENADEFLARE || Art == SHOTFLARE || Art == SHOTFLARE2 || Art == EXPLOSIONFLARE))
         return false;
 
-    PartikelClass *pNew = nullptr;
 #ifdef USE_NO_MEMPOOLING
-    pNew = new PartikelClass;  // Neuer zu erstellender Partikel
+    PartikelClass *pNew = new PartikelClass;  // Neuer zu erstellender Partikel
 #else
-    pNew = particle_pool.alloc();
+    PartikelClass *pNew = particle_pool.alloc();
 #endif
 
 #ifndef NDEBUG

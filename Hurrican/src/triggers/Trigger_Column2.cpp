@@ -30,16 +30,17 @@ GegnerColumn2::GegnerColumn2(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerColumn2::DoDraw() {
-    glm::mat4x4 matWorldLocal, matRot, matTrans, matTrans2;  // Rotations und Translations Matrizen
-    int Winkel;                                             // Rotationswinkel
 
-    Winkel = static_cast<int>(AnimCount);
+    // Rotationswinkel
+    int Winkel = static_cast<int>(AnimCount);
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
     //
     clampAngle(Winkel);
 
-    matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[Winkel], glm::vec3(0.0f, 0.0f, 1.0f));
+    glm::mat4x4 matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[Winkel], glm::vec3(0.0f, 0.0f, 1.0f));
+
+    glm::mat4x4 matTrans, matTrans2;  // Rotations und Translations Matrizen
 
     D3DXMatrixTranslation(&matTrans,
                           -(xPos - TileEngine.XOffset + 40.0f),
@@ -49,7 +50,7 @@ void GegnerColumn2::DoDraw() {
                           yPos - TileEngine.YOffset + 100.0f,
                           0.0f);  // Transformation wieder zurück
 
-    matWorldLocal = glm::mat4x4(1.0f);
+    glm::mat4x4 matWorldLocal = glm::mat4x4(1.0f);
     matWorldLocal = matTrans * matWorldLocal;   // Verschieben
     matWorldLocal = matRot * matWorldLocal;     // rotieren
     matWorldLocal = matTrans2 * matWorldLocal;  // und wieder zurück verschieben
@@ -85,11 +86,11 @@ void GegnerColumn2::DoKI() {
 
         for (int i = 0; i < 20; i++)
             PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)),
-                                        yPos + static_cast<float>(random(15)) - 20, SMOKE);
+                                        yPos - 20.0f + static_cast<float>(random(15)), SMOKE);
 
         for (int i = 0; i < 10; i++)
             PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)),
-                                        yPos + static_cast<float>(random(10)) - 5, ROCKSPLITTERSMALL);
+                                        yPos - 5.0f + static_cast<float>(random(10)), ROCKSPLITTERSMALL);
 
         FallSpeed = 2.0f;
 

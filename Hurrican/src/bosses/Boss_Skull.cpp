@@ -33,8 +33,7 @@ GegnerSkull::GegnerSkull(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER_SPECIAL;
 
     // Position der Endboss Wand rausfinden
-    GegnerClass *pTemp;
-    pTemp = Gegner.pStart;
+    GegnerClass *pTemp = Gegner.pStart;
     while (pTemp != nullptr) {
         if (pTemp->GegnerArt == THEWALL) {
             mxPos = pTemp->xPos + 5;
@@ -85,8 +84,7 @@ void GegnerSkull::DoKI() {
         case GEGNER_SPECIAL3: {
             Disappear -= 1.0f SYNC;
 
-            float endwert;
-            endwert = 10.0f - (Disappear / 20.0f * 10.0f);
+            float endwert = 10.0f - (Disappear / 20.0f * 10.0f);
 
             if (endwert < 1.0f)
                 endwert = 1.0f;

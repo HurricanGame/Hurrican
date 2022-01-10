@@ -27,8 +27,9 @@ GegnerPharaoKopf::GegnerPharaoKopf(int Wert1, int Wert2, bool Light) {
 }
 
 bool GegnerPharaoKopf::Links() {
-    if (static_cast<int>(xPos) < Value1 + BORDER) {
-        xPos = static_cast<float>(Value1 + BORDER);
+    int const limit = Value1 + BORDER;
+    if (static_cast<int>(xPos) < limit) {
+        xPos = static_cast<float>(limit);
         return true;
     }
 
@@ -36,8 +37,9 @@ bool GegnerPharaoKopf::Links() {
 }
 
 bool GegnerPharaoKopf::Rechts() {
-    if (static_cast<int>(xPos) + GegnerRect[GegnerArt].right > Value1 + 652 - BORDER) {
-        xPos = static_cast<float>(Value1 + 652 - BORDER - GegnerRect[GegnerArt].right);
+    int const limit = Value1 + 652 - BORDER;
+    if (static_cast<int>(xPos) + GegnerRect[GegnerArt].right > limit) {
+        xPos = static_cast<float>(limit - GegnerRect[GegnerArt].right);
         return true;
     }
 
@@ -45,8 +47,9 @@ bool GegnerPharaoKopf::Rechts() {
 }
 
 bool GegnerPharaoKopf::Unten() {
-    if (static_cast<int>(yPos) + GegnerRect[GegnerArt].bottom > Value2 + 480 - BORDER2) {
-        yPos = static_cast<float>(Value2 + 480 - BORDER2 - GegnerRect[GegnerArt].bottom);
+    int const limit = Value2 + 480 - BORDER2;
+    if (static_cast<int>(yPos) + GegnerRect[GegnerArt].bottom > limit) {
+        yPos = static_cast<float>(limit - GegnerRect[GegnerArt].bottom);
         return true;
     }
 
@@ -160,8 +163,8 @@ void GegnerPharaoKopf::DoKI() {
                 AnimCount += 0.2f;
             }
 
-            if (yPos <=
-                static_cast<float>(Value2) + 480 - BORDER2 - GegnerRect[GegnerArt].bottom)  // Weit genug unten ?
+            float const limit = static_cast<float>(Value2 + 480 - BORDER2 - GegnerRect[GegnerArt].bottom);
+            if (yPos <= limit)  // Weit genug unten ?
             {
                 for (int p = 0; p < NUMPLAYERS; p++)
                     if (Player[p].AufPlattform == this) {
@@ -178,7 +181,7 @@ void GegnerPharaoKopf::DoKI() {
                     xAcc = 3.0f;
                 }
             _weiter:
-                yPos = static_cast<float>(Value2 + 480 - BORDER2 - GegnerRect[GegnerArt].bottom);
+                yPos = limit;
                 SoundManager.PlayWave(100, 128, 8000, SOUND_STONEFALL);
 
                 Handlung = GEGNER_LAUFEN;

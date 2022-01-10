@@ -96,18 +96,16 @@ void GegnerFieseDrone::DoKI() {
         else {
             ShotDelay = static_cast<float>(random(12) + 12);
 
-            float xdiv, ydiv, newwinkel;
-
-            ydiv = (pAim->ypos + 40.0f) - (yPos + 20.0f);
+            float ydiv = (pAim->ypos + 40.0f) - (yPos + 20.0f);
 
             if (ydiv == 0.0f)
                 ydiv = 0.00001f;
 
-            xdiv = (pAim->xpos + 35.0f) - (xPos + 20.0f);
+            float xdiv = (pAim->xpos + 35.0f) - (xPos + 20.0f);
 
             // DKS - Use new Rad/Deg macros - converted to float:
             // newwinkel = (float)atan(xdiv / ydiv) * 180.0f / D3DX_PI + 180.0f;
-            newwinkel = RadToDeg(atanf(xdiv / ydiv)) + 180.0f;
+            float newwinkel = RadToDeg(atanf(xdiv / ydiv)) + 180.0f;
 
             if (xdiv >= 0.0f && ydiv >= 0.0f)
                 newwinkel = newwinkel;

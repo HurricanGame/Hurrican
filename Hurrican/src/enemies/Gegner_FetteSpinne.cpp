@@ -31,20 +31,11 @@ GegnerFetteSpinne::GegnerFetteSpinne(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerFetteSpinne::DoDraw() {
-    bool h, v;
 
-    // normal
-    if (WalkState == 0)
-        v = false;
+    // normal oder auf dem Kopf?
+    bool v = (WalkState != 0);
 
-    // oder auf dem Kopf?
-    else
-        v = true;
-
-    if (BlickRichtung == RECHTS)
-        h = true;
-    else
-        h = false;
+    bool h = (BlickRichtung == RECHTS);
 
     pGegnerGrafix[GegnerArt]->itsRect = pGegnerGrafix[GegnerArt]->itsPreCalcedRects[AnimPhase];
     pGegnerGrafix[GegnerArt]->RenderMirroredSprite(xPos - TileEngine.XOffset,

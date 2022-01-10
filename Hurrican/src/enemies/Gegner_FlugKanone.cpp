@@ -83,7 +83,7 @@ void GegnerFlugKanone::DoKI() {
         xSpeed *= 1.0f;
     if ((blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND) && xSpeed > 0.0f)
         xSpeed *= 1.0f;
-
+#if 0
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
         case GEGNER_LAUFEN:  // Durch die Gegend rasen
@@ -93,7 +93,7 @@ void GegnerFlugKanone::DoKI() {
         default:
             break;
     }  // switch
-
+#endif
     // Testen, ob der Spieler die FlugKanone berührt hat
     TestDamagePlayers(1.0f SYNC);
 }

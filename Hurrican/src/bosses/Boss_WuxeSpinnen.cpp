@@ -39,7 +39,7 @@ void GegnerWuxeSpinnen::DoKI() {
                                TileStateEnum::SCROLLTOLOCK);  // Level auf den Boss zentrieren
 
         SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
-        Gegner.PushGegner(xPos, yPos - 40, EXTRAS, 10, 0, false);
+        Gegner.PushGegner(xPos, yPos - 40.0f, EXTRAS, 10, 0, false);
     }
 
     // Hat der Boss keine Energie mehr ? Dann explodiert er
@@ -83,7 +83,7 @@ void GegnerWuxeSpinnen::DoKI() {
                                       static_cast<float>(Value2 - 100), MITTELSPINNE, 0, 1, false);
                 }
 
-                Energy -= 20;
+                Energy -= 20.0f;
 
                 // ab und zu ein Paar Augen einstreuen
                 //
@@ -100,8 +100,8 @@ void GegnerWuxeSpinnen::DoKI() {
 
                 // oder AutoFire ;)
                 //
-                if (static_cast<int>(Energy + 500) % 600 == 0) {
-                    Gegner.PushGegner(xPos, yPos - 40, EXTRAS, 10, 0, false);
+                if (static_cast<int>(Energy + 500.0f) % 600 == 0) {
+                    Gegner.PushGegner(xPos, yPos - 40.0f, EXTRAS, 10, 0, false);
                 }
             }
         } break;
@@ -129,7 +129,7 @@ void GegnerWuxeSpinnen::DoKI() {
 
 void GegnerWuxeSpinnen::GegnerExplode() {
     // Extra Leben
-    Gegner.PushGegner(xPos, yPos - 250, ONEUP, 10, 0, false);
+    Gegner.PushGegner(xPos, yPos - 250.0f, ONEUP, 10, 0, false);
 
     ScrolltoPlayeAfterBoss();
 }

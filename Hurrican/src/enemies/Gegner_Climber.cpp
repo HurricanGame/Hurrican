@@ -82,11 +82,10 @@ void GegnerClimber::DoKI() {
         //
         case GEGNER_INIT: {
             if (Value1 != 99) {
-                float dx, dy;
 
                 // Abstände berechnen
-                dx = (xPos + 25.0f) - (pAim->xpos + 35.0f);
-                dy = (yPos + 18.0f) - (pAim->ypos + 20.0f);
+                float dx = (xPos + 25.0f) - (pAim->xpos + 35.0f);
+                float dy = (yPos + 18.0f) - (pAim->ypos + 20.0f);
 
                 // Division durch Null verhinden
                 if (dy == 0.0f)
@@ -121,11 +120,10 @@ void GegnerClimber::DoKI() {
         case GEGNER_LAUFEN: {
             // Gegner auf Spieler ausrichten
             //
-            float dx, dy;
 
             // Abstände berechnen
-            dx = (xPos + 25.0f) - (pAim->xpos + 35.0f);
-            dy = (yPos + 18.0f) - (pAim->ypos + 40.0f);
+            float dx = (xPos + 25.0f) - (pAim->xpos + 35.0f);
+            float dy = (yPos + 18.0f) - (pAim->ypos + 40.0f);
 
             // Division durch Null verhinden
             if (dy == 0.0f)

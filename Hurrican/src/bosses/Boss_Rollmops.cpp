@@ -44,10 +44,8 @@ GegnerRollmops::GegnerRollmops(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerRollmops::CalcGunWinkel() {
-    float xdiv, ydiv;
-    float neww;
 
-    ydiv = (pAim->ypos + 40) - (yPos + 60.0f);
+    float ydiv = (pAim->ypos + 40) - (yPos + 60.0f);
     if (ydiv == 0.0f)
         ydiv = 0.00001f;
 
@@ -62,8 +60,8 @@ void GegnerRollmops::CalcGunWinkel() {
         xdiv = (pAim->xpos + 35) - (xPos + 50);
         neww = -(float)atan(ydiv / xdiv) * 180.0f / PI;
     } */
-    xdiv = (pAim->xpos + 35) - (xPos + 50.0f);
-    neww = RadToDeg(atanf(ydiv / xdiv));
+    float xdiv = (pAim->xpos + 35) - (xPos + 50.0f);
+    float neww = RadToDeg(atanf(ydiv / xdiv));
 
     if (xPos >= (Value1 + 320.0f)) {
         neww *= -1.0f;
@@ -89,10 +87,9 @@ void GegnerRollmops::DoDraw() {
     //
     switch (Handlung) {
         case GEGNER_AUSSPUCKEN: {
-            float x, y;
 
-            x = ((xPos + 65.0f - 9.0f) - HookX) / NUM_KETTENGLIEDER;
-            y = ((yPos + 65.0f) - HookY) / NUM_KETTENGLIEDER;
+            float x = ((xPos + 65.0f - 9.0f) - HookX) / NUM_KETTENGLIEDER;
+            float y = ((yPos + 65.0f) - HookY) / NUM_KETTENGLIEDER;
 
             for (int i = 0; i < NUM_KETTENGLIEDER; i++) {
                 // Position setzen
@@ -795,12 +792,11 @@ void GegnerRollmops::DoKI() {
 void GegnerRollmops::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION2);
 
-    int i;
-    for (i = 0; i < 5; i++)
+    for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(140)),
                                     yPos - 20.0f + static_cast<float>(random(140)), EXPLOSION_TRACE);
 
-    for (i = 0; i < 150; i++)
+    for (int i = 0; i < 150; i++)
         PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(140)),
                                     yPos - 20.0f + static_cast<float>(random(140)), WATERFLUSH_HIGH);
 

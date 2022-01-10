@@ -50,11 +50,10 @@ void GegnerFireSpider::DoKI() {
 
     // Gegner auf Spieler ausrichten
     //
-    float dx, dy;
 
     // Abstände berechnen
-    dx = (xPos + 25.0f) - (pAim->xpos + 35.0f);
-    dy = (yPos + 18.0f) - (pAim->ypos + 40.0f);
+    float dx = (xPos + 25.0f) - (pAim->xpos + 35.0f);
+    float dy = (yPos + 18.0f) - (pAim->ypos + 40.0f);
 
     // Division durch Null verhinden
     if (dy == 0.0f)
@@ -134,11 +133,10 @@ void GegnerFireSpider::DoKI() {
             AnimCount += 1.0f SYNC;
 
             if (shotdelay <= 0.0f) {
-                float xs, ys, r;
 
-                xs = xPos + 8;
-                ys = yPos - 13;
-                r = 180.0f - rot;
+                float xs = xPos + 8;
+                float ys = yPos - 13;
+                float r = 180.0f - rot;
                 if (r < 0.0f)
                     r += 360.0f;
 

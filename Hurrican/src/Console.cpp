@@ -79,19 +79,16 @@ void ConsoleClass::LoadSprites() {
 
 void ConsoleClass::ShowConsole() {
     // DKS - modified code to support scaled fonts (less lines displayed) and allow joystick input
-    D3DCOLOR Color;
-    int a;
-    float yoffset;
     static float cursorcount = 0.0f;
     int scale_factor = pDefaultFont->GetScaleFactor();               // DKS - added font scaling support
     int console_lines = MAX_LINES / pDefaultFont->GetScaleFactor();  // DKS - ditto
     int line_spacing = 12 * scale_factor;
     // a = int (its_Alpha * 8 / 9);  //DKS - This line was commented out in original source
-    a = static_cast<int>(its_Alpha);
+    int a = static_cast<int>(its_Alpha);
 
-    yoffset = -255.0f + its_Alpha - 1.0f;
+    float yoffset = -255.0f + its_Alpha - 1.0f;
 
-    Color = D3DCOLOR_RGBA(255, 255, 255, a);
+    D3DCOLOR Color = D3DCOLOR_RGBA(255, 255, 255, a);
     ConsoleGFX.RenderSpriteScaled(0, yoffset, 640, 256, Color);
 
     // DKS- Fixed for low-res devices using scaled fonts:
@@ -156,10 +153,9 @@ void ConsoleClass::ShowConsole() {
 // --------------------------------------------------------------------------------------
 
 bool ConsoleClass::CONSOLE_CHEAT(char *cheat) {
-    bool result = false;
 
     // TODO FIX
-    result = CONSOLE_COMMAND(convertText(cheat));
+    bool result = CONSOLE_COMMAND(convertText(cheat));
 
     if (result) {
         SoundManager.PlayWave(100, 128, 15000, SOUND_MESSAGE);
@@ -438,9 +434,7 @@ void ConsoleClass::CheckCommands() {
                     RenderRect(static_cast<float>(i), static_cast<float>(j), 1, 1, 0xFF0000FF);
             }
 
-        std::string buf;
-        buf = "Level ";
-        buf += std::to_string(Stage);
+        std::string buf = "Level " + std::to_string(Stage);
         pDefaultFont->DrawText(3, 458, buf.c_str(), 0xFF00FF00);
         pDefaultFont->DrawText(3, 470, TileEngine.Beschreibung, 0xFF00FF00);
 
@@ -572,14 +566,14 @@ void ConsoleClass::ScrollUp() {
 // DKS - Added joystick support:
 void ConsoleClass::CheckInput() {
     static float joy_counter = 0.0f;
-    const float joy_delay = 30.0f;  // Only accept joy input once every time counter reaches this value
+    constexpr float JOY_DELAY = 30.0f;  // Only accept joy input once every time counter reaches this value
 
     joy_counter += 30.0f SYNC;
-    if (joy_counter > joy_delay) {
-        joy_counter = joy_delay;
+    if (joy_counter > JOY_DELAY) {
+        joy_counter = JOY_DELAY;
     }
 
-    if (joy_counter >= joy_delay && Player[0].ControlType == CONTROLTYPE_JOY && JoystickFound) {
+    if (joy_counter >= JOY_DELAY && Player[0].ControlType == CONTROLTYPE_JOY && JoystickFound) {
         joy_counter = 0.0f;
         int joy_idx = Player[0].JoystickIndex;
         bool up = false;

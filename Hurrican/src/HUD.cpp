@@ -76,17 +76,16 @@ void HUDClass::UpdateValues() {}
 // --------------------------------------------------------------------------------------
 
 void HUDClass::ShowHUD() {
-    int BlitzOff;      // Für die Balken-Offsets
-    D3DCOLOR Color;    // Farbe des Huds
-    D3DCOLOR playercol;
 
     DirectGraphics.SetColorKeyMode();
 
-    Color = D3DCOLOR_RGBA(red, green, blue, Alpha);
+    // Farbe des Huds
+    D3DCOLOR Color = D3DCOLOR_RGBA(red, green, blue, Alpha);
 
     HUDGfx.RenderSprite(xpos, ypos, 0, Color);
 
-    BlitzOff = static_cast<int>(BLITZ_STAT_HEIGHT - Player[0].CurrentWeaponLevel[3] * BLITZ_STAT_HEIGHT / BLITZ_STAT_HEIGHT); // ???
+    // Für die Balken-Offsets
+    int BlitzOff = static_cast<int>(BLITZ_STAT_HEIGHT - Player[0].CurrentWeaponLevel[3] * BLITZ_STAT_HEIGHT / BLITZ_STAT_HEIGHT); // ???
 
     // DKS - Added support for font scaling
     int scale_factor = pDefaultFont->GetScaleFactor();
@@ -96,8 +95,7 @@ void HUDClass::ShowHUD() {
         pDefaultFont->SetScaleFactor(2);  // Anything more than 2 won't fit, force it
 
     if (NUMPLAYERS == 1) {
-        float off;
-        off = floor((MAX_ENERGY - Player[0].Energy) * 69.0f / MAX_ENERGY);
+        float off = floor((MAX_ENERGY - Player[0].Energy) * 69.0f / MAX_ENERGY);
         HUDBall[0].SetRect(0, off, 69, 69);
         HUDBall[0].RenderSprite(xpos, ypos + off, D3DCOLOR_RGBA(255, 255, 255, 255));
 
@@ -155,6 +153,8 @@ void HUDClass::ShowHUD() {
     WeaponRahmen.RenderSprite(xpos + 216 + 3 * 32, ypos + 35, 0, color);
     for (int j = 0; j < Player[0].CurrentWeaponLevel[3]; j++)
         WeaponPunkt.RenderSprite(xpos + 217 + 3 * 32, ypos + 50 - j, 0, color);
+
+    D3DCOLOR playercol;
 
     // Anzahl verbleibender Powerlines anzeigen
     for (int p = 0; p < NUMPLAYERS; p++) {
@@ -227,11 +227,9 @@ void HUDClass::ShowHUD() {
             // Basically, draw the two numbers for the powerlines and grenades a bit to the left and a tad higher
 
             // Only ever display a max of 9, since we've no room
-            int digit;
-            digit = std::clamp(Player[p].PowerLines, 0, 9);
+            int digit = std::clamp(Player[p].PowerLines, 0, 9);
 
-            std::string buf;
-            buf = std::to_string(digit);
+            std::string buf = std::to_string(digit);
 
             pDefaultFont->DrawText(xpos + 350 + off + p * 10, ypos + 36, buf.c_str(), playercol);
 
@@ -365,9 +363,7 @@ void HUDClass::ShowHUD() {
     }
 
     // Anzahl verbleibender Leben anzeigen
-    int LivesToShow;
-
-    LivesToShow = std::max(0, Player[0].Lives);
+    int LivesToShow = std::max(0, Player[0].Lives);
 
     std::string buf = std::to_string(LivesToShow);
 
@@ -495,8 +491,7 @@ void HUDClass::DoHUD() {
 
     // Einheitsmatrix setzen, da das HUD nie rotiert gerendert wird
     //
-    glm::mat4x4 matView;
-    matView = glm::mat4x4(1.0f);
+    glm::mat4x4 matView = glm::mat4x4(1.0f);
     g_matView = matView;
 
     // Hud anzeigen

@@ -41,11 +41,11 @@ GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light) {
     DeckelPhase = 0;
     DeckelOffset = 0.0f;
     DeckelCount = 0.0f;
-    DeckelStatus = ZU;
+    DeckelStatus = DeckelStateEnum::ZU;
     OpenCounter = TIME_TILL_OPEN;
 
     HochCounter = TIME_TILL_HOCH;
-    HochStatus = ZU;
+    HochStatus = DeckelStateEnum::ZU;
 
     SpawnDelay = 8.0f;
 
@@ -66,9 +66,10 @@ GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerSpinnenmaschine::DoDraw() {
-    D3DCOLOR Color;
 
     int Wert = 255 - (static_cast<int>(DamageTaken));
+
+    D3DCOLOR Color;
 
     if (DirectGraphics.BlendMode == BlendModeEnum::ADDITIV)
         Color = D3DCOLOR_RGBA(255, 255, 255, Wert);
@@ -77,7 +78,7 @@ void GegnerSpinnenmaschine::DoDraw() {
 
     if (Handlung != GEGNER_SPECIAL) {
         // evtl strahl rendern, wenn der deckel aufgeht
-        if (DeckelStatus != ZU) {
+        if (DeckelStatus != DeckelStateEnum::ZU) {
             DirectGraphics.SetAdditiveMode();
             Strahl.RenderSpriteScaled(xPos - TileEngine.XOffset - LightRayCount * 8.0f + 170.0f,
                                       yPos - TileEngine.YOffset,
@@ -116,18 +117,18 @@ void GegnerSpinnenmaschine::DoDraw() {
 void GegnerSpinnenmaschine::DoDeckel() {
     switch (DeckelStatus) {
         // deckel ist zu und Counter zählt, wann er auf geht
-        case ZU: {
+        case DeckelStateEnum::ZU: {
             OpenCounter -= 1.0f SYNC;
 
             if (OpenCounter < 0.0f) {
                 OpenCounter = 0.0f;
-                DeckelStatus = OEFFNEN;
+                DeckelStatus = DeckelStateEnum::OEFFNEN;
                 AnimCount = 0.0f;
             }
         } break;
 
         // Deckel öffnet sich gerade
-        case OEFFNEN: {
+        case DeckelStateEnum::OEFFNEN: {
             LightRayCount += 1.0f SYNC;
 
             AnimCount += 1.0f SYNC;
@@ -139,18 +140,18 @@ void GegnerSpinnenmaschine::DoDeckel() {
 
             if (DeckelPhase > 10) {
                 DeckelPhase = 10;
-                DeckelStatus = OFFEN;
+                DeckelStatus = DeckelStateEnum::OFFEN;
                 OpenCounter = TIME_TILL_CLOSE;
             }
         } break;
 
         // deckel ist offen und Counter zählt, wann er zugeht
-        case OFFEN: {
+        case DeckelStateEnum::OFFEN: {
             OpenCounter -= 1.0f SYNC;
 
             if (OpenCounter < 0.0f) {
                 OpenCounter = 0.0f;
-                DeckelStatus = SCHLIESSEN;
+                DeckelStatus = DeckelStateEnum::SCHLIESSEN;
                 AnimCount = 0.0f;
             }
 
@@ -162,7 +163,7 @@ void GegnerSpinnenmaschine::DoDeckel() {
                     // Climber
                     case 1: {
                         SpawnDelay = 6.0f;
-                        Gegner.PushGegner(xPos + static_cast<float>(random(60) + 100),
+                        Gegner.PushGegner(xPos + 100.0f + static_cast<float>(random(60)),
                                           yPos + 190.0f - DeckelOffset, CLIMBSPIDER, 99, 0,
                                           false, false);
                     } break;
@@ -177,7 +178,7 @@ void GegnerSpinnenmaschine::DoDeckel() {
                     // Spinnenbombe
                     case 3: {
                         SpawnDelay = 15.0f;
-                        Gegner.PushGegner(xPos + static_cast<float>(random(80) + 100),
+                        Gegner.PushGegner(xPos + 100.0f + static_cast<float>(random(80)),
                                           yPos + 180.0f - DeckelOffset, SPIDERBOMB, 99, 0, false,
                                           false);
                     } break;
@@ -186,7 +187,7 @@ void GegnerSpinnenmaschine::DoDeckel() {
         } break;
 
         // Deckel schliesst sich gerade
-        case SCHLIESSEN: {
+        case DeckelStateEnum::SCHLIESSEN: {
             LightRayCount -= 1.0f SYNC;
 
             AnimCount += 1.0f SYNC;
@@ -198,7 +199,7 @@ void GegnerSpinnenmaschine::DoDeckel() {
 
             if (DeckelPhase < 0) {
                 DeckelPhase = 0;
-                DeckelStatus = ZU;
+                DeckelStatus = DeckelStateEnum::ZU;
                 OpenCounter = TIME_TILL_OPEN;
                 LightRayCount = 0.0f;
 
@@ -216,24 +217,24 @@ void GegnerSpinnenmaschine::DoDeckel() {
 void GegnerSpinnenmaschine::DoHoch() {
     switch (HochStatus) {
         // Kopf ist unten, Counter zählt, wann er hochgeht
-        case ZU: {
+        case DeckelStateEnum::ZU: {
             HochCounter -= 1.0f SYNC;
 
             if (HochCounter < 0.0f) {
                 HochCounter = 0.0f;
-                HochStatus = OEFFNEN;
+                HochStatus = DeckelStateEnum::OEFFNEN;
 
                 SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
             }
         } break;
 
         // Kopf fährt gerade hoch
-        case OEFFNEN: {
+        case DeckelStateEnum::OEFFNEN: {
             DeckelCount += 0.2f SYNC;
 
             if (DeckelCount > PI) {
                 DeckelCount = PI;
-                HochStatus = OFFEN;
+                HochStatus = DeckelStateEnum::OFFEN;
                 HochCounter = TIME_TILL_HOCH * 2;
                 ShotDelay = 10.0f;
 
@@ -252,12 +253,12 @@ void GegnerSpinnenmaschine::DoHoch() {
         } break;
 
         // Kopf ist oben und Counter zählt, wann er runtergeht
-        case OFFEN: {
+        case DeckelStateEnum::OFFEN: {
             HochCounter -= 1.0f SYNC;
 
             if (HochCounter < 0.0f) {
                 HochCounter = 0.0f;
-                HochStatus = SCHLIESSEN;
+                HochStatus = DeckelStateEnum::SCHLIESSEN;
 
                 SoundManager.PlayWave(50, 128, 11025, SOUND_STEAM);
             }
@@ -277,12 +278,12 @@ void GegnerSpinnenmaschine::DoHoch() {
         } break;
 
         // Kopf geht wieder runter
-        case SCHLIESSEN: {
+        case DeckelStateEnum::SCHLIESSEN: {
             DeckelCount -= 0.2f SYNC;
 
             if (DeckelCount <= 0.0f) {
                 DeckelCount = 0.0f;
-                HochStatus = ZU;
+                HochStatus = DeckelStateEnum::ZU;
                 HochCounter = TIME_TILL_HOCH;
 
                 // Rauch
@@ -503,22 +504,22 @@ void GegnerSpinnenmaschine::DoKI() {
                 for (int i = 0; i < 10; i++) {
                     PartikelSystem.PushPartikel(xPos + static_cast<float>(random(300)),
                                                 yPos + static_cast<float>(random(400)), SPIDERSPLITTER);
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200) + 50),
-                                                yPos + static_cast<float>(random(300) + 100), EXPLOSION_TRACE);
+                    PartikelSystem.PushPartikel(xPos + 50.0f + static_cast<float>(random(200)),
+                                                yPos + 100.0f + static_cast<float>(random(300)), EXPLOSION_TRACE);
                 }
 
                 // Explosionen und Rauch
                 for (int i = 0; i < 50; i++) {
                     PartikelSystem.PushPartikel(xPos + static_cast<float>(random(300)),
-                                                yPos + static_cast<float>(random(300) + 100), EXPLOSION_MEDIUM2);
+                                                yPos + 100.0f + static_cast<float>(random(300)), EXPLOSION_MEDIUM2);
                     PartikelSystem.PushPartikel(xPos + static_cast<float>(random(300)),
-                                                yPos + static_cast<float>(random(300) + 100), SMOKEBIG);
+                                                yPos + 100.0f + static_cast<float>(random(300)), SMOKEBIG);
                 }
 
                 // Funken
                 for (int i = 0; i < 300; i++)
                     PartikelSystem.PushPartikel(xPos + static_cast<float>(random(300)),
-                                                yPos + static_cast<float>(random(300) + 100), FUNKE);
+                                                yPos + 100.0f + static_cast<float>(random(300)), FUNKE);
 
                 // Unterteilanim == kaputt
                 AnimUnten = 1;
@@ -544,7 +545,7 @@ void GegnerSpinnenmaschine::DoKI() {
     //	pPlayer->DamagePlayer(static_cast<float>(4.0 SYNC));
 
     // Deckel zu? Dann kann der Boss nicht getroffen werden
-    if (HochStatus == ZU) {
+    if (HochStatus == DeckelStateEnum::ZU) {
         GegnerRect[GegnerArt].left = 0;
         GegnerRect[GegnerArt].top = 0;
         GegnerRect[GegnerArt].bottom = 0;
@@ -566,13 +567,13 @@ void GegnerSpinnenmaschine::DoKI() {
     // Spieler kommt nicht dran vorbei
     if (Handlung != GEGNER_SPECIAL)
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (Player[p].xpos < xPos + 250) {
+            if (Player[p].xpos < xPos + 250.0f) {
                 if (Player[p].Handlung == PlayerActionEnum::RADELN ||
                         Player[p].Handlung == PlayerActionEnum::RADELN_FALL) {
                     if (Player[p].Blickrichtung == LINKS)
                         Player[p].Blickrichtung = RECHTS;
                 } else
-                    Player[p].xpos = xPos + 250;
+                    Player[p].xpos = xPos + 250.0f;
             }
 }
 

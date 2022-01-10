@@ -4,15 +4,17 @@
 #include "GegnerClass.hpp"
 #include "enemies/Gegner_Stuff.hpp"
 
-#define TIME_TILL_OPEN 10.0f
-#define TIME_TILL_CLOSE 40.0f
+constexpr float TIME_TILL_OPEN = 10.0f;
+constexpr float TIME_TILL_CLOSE = 40.0f;
 
-#define TIME_TILL_HOCH 30.0f
+constexpr float TIME_TILL_HOCH = 30.0f;
 
-#define ZU 0
-#define OFFEN 1
-#define OEFFNEN 2
-#define SCHLIESSEN 3
+enum class DeckelStateEnum {
+  ZU,
+  OFFEN,
+  OEFFNEN,
+  SCHLIESSEN
+};
 
 class GegnerSpinnenmaschine : public GegnerClass {
   private:
@@ -21,11 +23,11 @@ class GegnerSpinnenmaschine : public GegnerClass {
     int DeckelPhase;      // AnimPhase des Deckels
     float DeckelCount;    // Counter für Sinusbewegung des Hochgehenden Deckels
     float DeckelOffset;   // Tatsächlicher Offset (=sin(DeckelCount) * X)
-    int DeckelStatus;     // Aktueller Status (siehe #defines)
+    DeckelStateEnum DeckelStatus;     // Aktueller Status (siehe #defines)
     float SizeCount;
     float OpenCounter;  // Cunter wann der Deckel aufgeht
     float HochCounter;  // Conter wann der Kopf hochfährt
-    int HochStatus;     // Status des Kopfs (siehe #defines)
+    DeckelStateEnum HochStatus;     // Status des Kopfs (siehe #defines)
     float ShotDelay;
 
     float SpawnDelay;  // Delay zum Gegner ausspucken

@@ -149,13 +149,10 @@ void GegnerDrache::DoDraw() {
     // Halswirbel?
     if ((Handlung == GEGNER_LAUFEN3 || Handlung == GEGNER_EXPLODIEREN) && Attack != GEGNER_EINFLIEGEN &&
         Attack != GEGNER_SCHIESSEN) {
-        float xoff, yoff;
-        int render;
-        float winkel;
+        float xoff = 0.0f;
+        float yoff = 0.0f;
 
-        xoff = 0.0f;
-        yoff = 0.0f;
-        render = true;
+        float winkel;
 
         if (Position == LINKS)
             winkel = HeadWinkel - 180.0f;
@@ -165,7 +162,7 @@ void GegnerDrache::DoDraw() {
         // DKS - converted to float:
         // render   = (int) sqrt(HeadX * HeadX + HeadY * HeadY) / 10;
         // float dist = (float)sqrt(HeadX * HeadX + HeadY * HeadY);
-        render = sqrtf(HeadX * HeadX + HeadY * HeadY) / 10;
+        int render = sqrtf(HeadX * HeadX + HeadY * HeadY) / 10;
         float dist = sqrtf(HeadX * HeadX + HeadY * HeadY);
 
         float xadd = HeadX / dist * 10.0f;
@@ -214,8 +211,7 @@ void GegnerDrache::DoDraw() {
 
     // Schwanz Spitze
     //
-    bool isMirrored = false;
-    isMirrored = (mirrored < 0);
+    bool isMirrored = (mirrored < 0);
     Spitze.RenderSprite(tempx - 37 - mirrorOffset * 37.0f,
                         yPos - TileEngine.YOffset + 17.0f +
                             static_cast<float>(sin(TailSinus + static_cast<float>(i) / 7.0f) * i) + 36.0f + DrawYOffset,
@@ -283,19 +279,17 @@ void GegnerDrache::ComputeHeadWinkel() {
     if (HeadLocked == true)
         return;
 
-    float xdiv, ydiv;
-
-    ydiv = (pAim->ypos + 40) - yPos;
+    float ydiv = (pAim->ypos + 40) - yPos;
     if (ydiv == 0.0f)
         ydiv = 0.00001f;
 
     if (BlickRichtung == 1) {
-        xdiv = (pAim->xpos + 35) - (xPos + 210);
+        float xdiv = (pAim->xpos + 35) - (xPos + 210);
         // DKS - converted to float:
         // HeadWinkel = (float)atan(xdiv / ydiv) * 180.0f / PI - 90.0f;
         HeadWinkel = RadToDeg(atanf(xdiv / ydiv)) - 90.0f;
     } else {
-        xdiv = (pAim->xpos + 35) - (xPos - 80);
+        float xdiv = (pAim->xpos + 35) - (xPos - 80);
         // DKS - converted to float:
         // HeadWinkel = -(float)atan(xdiv / ydiv) * 180.0f / PI - 82.0f;
         HeadWinkel = -RadToDeg(atanf(xdiv / ydiv)) - 82.0f;
@@ -341,8 +335,7 @@ void GegnerDrache::DoKI() {
         HeadLocked = true;
 
         // Alle übrigen Mini-Drachen zerstören
-        GegnerClass *pTemp;
-        pTemp = Gegner.pStart;
+        GegnerClass *pTemp = Gegner.pStart;
         while (pTemp != nullptr) {
             if (pTemp->GegnerArt == MINIDRAGON)
                 pTemp->Energy = 0.0f;
@@ -357,8 +350,9 @@ void GegnerDrache::DoKI() {
     if (!(Handlung == GEGNER_EINFLIEGEN && Attack == GEGNER_STEHEN))
         AnimWinkel += 0.2f SYNC;
 
-    while (AnimWinkel > 2 * PI)
-        AnimWinkel -= 2 * PI;
+    constexpr float TWO_PI = 2 * PI;
+    while (AnimWinkel > TWO_PI)
+        AnimWinkel -= TWO_PI;
 
     // Headwinkel ausrechnen
     ComputeHeadWinkel();
@@ -745,7 +739,7 @@ void GegnerDrache::DoKI() {
                     // Handlung festlegen, was er während dem Überfliegen macht
                     int j = random(2);
 
-                    // REMOVE
+                    // REMOVE ???
                     j = 0;
 
                     switch (j) {

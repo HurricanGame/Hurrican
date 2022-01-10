@@ -31,10 +31,10 @@ GegnerStachelbeere::GegnerStachelbeere(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerStachelbeere::DoDraw() {
-    bool mirrored;
+
     D3DCOLOR color = 0xFFFFFFFF;
 
-    mirrored = (BlickRichtung == RECHTS);
+    bool mirrored = (BlickRichtung == RECHTS);
 
     switch (Handlung) {
         case GEGNER_LAUFEN:
@@ -84,9 +84,8 @@ void GegnerStachelbeere::DoKI() {
 
     // AnimSpeed passend zur Bewegugnsgeschwindigkeit setzen
     if (Handlung == GEGNER_LAUFEN || Handlung == GEGNER_LAUFEN2) {
-        float temp;
 
-        temp = xSpeed;
+        float temp = xSpeed;
         if (temp < 0.0f)
             temp *= -1;
 

@@ -72,9 +72,7 @@ void GegnerBratklops::DoDraw() {
     // Animation existiert nur von 1-5, danach läuft sie rückwärts
     //
 
-    int a;
-
-    a = AnimPhase;
+    int a = AnimPhase;
     if (a > 5)
         a = 10 - a;
 
@@ -84,22 +82,25 @@ void GegnerBratklops::DoDraw() {
     // Laser rendern ?
     //
     if (FlareDelay > 0.0f) {
-        int c = static_cast<int>(FlareDelay);
+        int c;
 
-        if (c > 128.0f)
-            c = 128;
-
-        if (FlareDelay > 544)
+        if (FlareDelay > 544.0f)
             c = static_cast<int>(128.0f - (FlareDelay - 544.0f) / 2.0f);
+        else {
+            c = static_cast<int>(FlareDelay);
+
+            if (c > 128)
+                c = 128;
+        }
 
         DirectGraphics.SetAdditiveMode();
         D3DCOLOR Color = D3DCOLOR_RGBA(255, 255, 255, c);
         pFlare->RenderSpriteRotated(xPos - TileEngine.XOffset + 64.0f,
                                     yPos - TileEngine.YOffset + 122.0f,
-                                    FlareDelay * 2, Color);
+                                    FlareDelay * 2.0f, Color);
         pFlare->RenderSpriteRotated(xPos - TileEngine.XOffset + 64.0f,
                                     yPos - TileEngine.YOffset + 122.0f,
-                                    FlareDelay * 2, Color);
+                                    FlareDelay * 2.0f, Color);
 
         // Laser rendern
         //
@@ -110,24 +111,22 @@ void GegnerBratklops::DoDraw() {
                 SoundManager.PlayWave(100, 128, 11025, SOUND_BRATLASER);
 
             VERTEX2D TriangleStrip[4];  // Strip für ein Sprite
-            int Winkel;
-            Winkel = static_cast<int>((FlareDelay - 128.0f) / 4.5f) - 20;
+            int Winkel = static_cast<int>((FlareDelay - 128.0f) / 4.5f) - 20;
 
             while (Winkel < 0)
                 Winkel += 360;
 
-            float l, r, o, u;      // Vertice Koordinaten
-            float tl, tr, to, tu;  // Textur Koordinaten
+            // Vertice Koordinaten
+            float l = xPos - TileEngine.XOffset + 140.0f - 0.5f;  // Links
+            float o = yPos - TileEngine.YOffset + 215.0f - 0.5f;  // Oben
+            float r = xPos - TileEngine.XOffset + 170.0f + 0.5f;  // Rechts
+            float u = yPos - TileEngine.YOffset + 800.0f + 0.5f;  // Unten
 
-            l = xPos - TileEngine.XOffset + 140.0f - 0.5f;  // Links
-            o = yPos - TileEngine.YOffset + 215.0f - 0.5f;  // Oben
-            r = xPos - TileEngine.XOffset + 170.0f + 0.5f;  // Rechts
-            u = yPos - TileEngine.YOffset + 800.0f + 0.5f;  // Unten
-
-            tl = 0.0f;
-            tr = 1.0f;
-            to = 0.0f;
-            tu = 1.0f;
+            // Textur Koordinaten
+            float tl = 0.0f;
+            float tr = 1.0f;
+            float to = 0.0f;
+            float tu = 1.0f;
 
             TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color =
                 0xFFFFFFFF;
@@ -152,9 +151,9 @@ void GegnerBratklops::DoDraw() {
             DirectGraphics.SetTexture(pLaser->itsTexIdx);
 
             // Blitz rotieren lassen
-            glm::mat4x4 matRot, matTrans, matTrans2;
+            glm::mat4x4 matTrans, matTrans2;
 
-            matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[360 - Winkel], glm::vec3(0.0f, 0.0f, 1.0f));  // Rotationsmatrix
+            glm::mat4x4 matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[360 - Winkel], glm::vec3(0.0f, 0.0f, 1.0f));  // Rotationsmatrix
             D3DXMatrixTranslation(&matTrans, -l - 15, -o, 0.0f);      // Transformation zum Ursprung
             D3DXMatrixTranslation(&matTrans2, l + 15, o, 0.0f);       // Transformation wieder zurück
             matWorld = matRot * matTrans;        // Verschieben und rotieren
@@ -191,7 +190,6 @@ void GegnerBratklops::DoDraw() {
             Rect.right = 24;
             Rect.bottom = 24;
 
-            float xs, ys;
             float xstart = xPos + 145.0f;
             float ystart = yPos + 203.0f;
 
@@ -207,8 +205,8 @@ void GegnerBratklops::DoDraw() {
                 // Laser auf Kollision mit dem Spieler prüfen
                 //
 
-                xs = xstart;
-                ys = ystart;
+                float xs = xstart;
+                float ys = ystart;
 
                 for (int j = 0; j < NUMPLAYERS; j++)
                     if (SpriteCollision(Player[j].xpos, Player[j].ypos, Player[j].CollideRect, xs, ys, Rect) == true) {

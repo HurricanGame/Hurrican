@@ -40,10 +40,6 @@ void GegnerTutorialText::DoKI() {
     if (PlayerAbstand() < 120 && Value1 != 9 &&
             (GUI.GetFadeMode() == FadeMode::INVISIBLE || GUI.GetTextID() != Value1) &&
             !(Value1 == 20 && Player[0].PowerLines == 5)) {
-        std::size_t pos;           // Position, an der das zu ersetzende Wort steht
-        std::string newWord = "";  // neuer Text für das zu ersetzende Wort
-        std::string s_text = "";   // Alter Text, in dem ersetzt wird
-        char c_text[512];          // Neuer Text, nachdem alles ersetzt wurde
 
         // Bei Trigger 7 Anzahl der Diamanten auf fünf setzen (falls die ersten fünf nicht richtig
         // eingesammelt wurden)
@@ -56,12 +52,15 @@ void GegnerTutorialText::DoKI() {
         if (Value1 == 28 && Player[0].SmartBombs == 0)
             Player[0].SmartBombs = 1;
 
-        s_text = TextArray[TEXT_TUTORIAL1 + Value1];
+        // Alter Text, in dem ersetzt wird
+        std::string s_text(TextArray[TEXT_TUTORIAL1 + Value1]);
+        std::string newWord;  // neuer Text für das zu ersetzende Wort
 
         // die Makros für die Aktionstasten mit den Namen der aktuell eingestellten Tasten ersetzen
         //
 
         for (int i = 0; i < MAX_AKTIONEN * 2; i += 2) {
+            std::size_t pos; // Position, an der das zu ersetzende Wort steht
             do {
                 pos = s_text.find(s_Replacers[i]);
                 if (pos != std::string::npos) {
@@ -77,7 +76,8 @@ void GegnerTutorialText::DoKI() {
         //
 
         int i = 0;
-        int len = s_text.length();
+        int const len = s_text.length();
+        char c_text[512];          // Neuer Text, nachdem alles ersetzt wurde
         for (i = 0; i < len; i++)
             c_text[i] = s_text[i];
 
@@ -125,9 +125,7 @@ void GegnerTutorialText::DoKI() {
             // die ersten drei augen plattgemacht?
             //
             case 9: {
-                GegnerClass *pTemp;
-
-                pTemp = Gegner.pStart;
+                GegnerClass *pTemp = Gegner.pStart;
 
                 while (pTemp != nullptr) {
                     // noch mind. ein Auge am Leben=
@@ -163,9 +161,7 @@ void GegnerTutorialText::DoKI() {
 
             // ersten Powerblock angeschoßen?
             case 16: {
-                GegnerClass *pTemp;
-
-                pTemp = Gegner.pStart;
+                GegnerClass *pTemp = Gegner.pStart;
 
                 while (pTemp != nullptr) {
                     if (pTemp->GegnerArt == POWERBLOCK) {

@@ -53,19 +53,16 @@ GegnerGolem::GegnerGolem(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 float GegnerGolem::WinkelToPlayer() {
-    float xdiv, ydiv;
-    float w;
 
-    ydiv = (pAim->ypos + 40) - (yPos + yoff + 50);
+    float ydiv = (pAim->ypos + 40) - (yPos + yoff + 50);
     if (ydiv == 0.0f)
         ydiv = 0.00001f;
 
-    xdiv = (pAim->xpos + 35) - (xPos + 50);
+    float xdiv = (pAim->xpos + 35) - (xPos + 50);
     // DKS - converted to float, used new macros:
     // w = 90.0f + (float)atan(ydiv / xdiv) * 180.0f / PI;
-    w = 90.0f + RadToDeg(atanf(ydiv / xdiv));
 
-    return w;
+    return 90.0f + RadToDeg(atanf(ydiv / xdiv));
 }
 
 // --------------------------------------------------------------------------------------
@@ -97,8 +94,7 @@ void GegnerGolem::Wackeln() {
 // --------------------------------------------------------------------------------------
 
 void GegnerGolem::DoDraw() {
-    D3DCOLOR Color;
-    // D3DCOLOR Color2;
+
     float wackel = 0.0f;
 
     if (Handlung == GEGNER_EXPLODIEREN)
@@ -107,7 +103,7 @@ void GegnerGolem::DoDraw() {
     DirectGraphics.SetFilterMode(true);
 
     int Wert = 255 - (static_cast<int>(DamageTaken));
-    Color = D3DCOLOR_RGBA(255, Wert, Wert, 255);
+    D3DCOLOR Color = D3DCOLOR_RGBA(255, Wert, Wert, 255);
 
     // Wert /= 2;
     // Color2 = D3DCOLOR_RGBA(128, Wert, Wert, 255);
@@ -434,16 +430,15 @@ void GegnerGolem::DoKI() {
 
         // Ausgangsposition für Aktionen herstellen
         case GEGNER_SPECIAL: {
-            bool fertig[3] = {true, true, true};
 
             // zuende wackeln
             Wackeln();
 
-            fertig[0] = GoToZero(Wackel);
-            fertig[1] = GoToZero(rotarm1);
-            fertig[2] = GoToZero(rotarm2);
+            bool fertig0 = GoToZero(Wackel);
+            bool fertig1 = GoToZero(rotarm1);
+            bool fertig2 = GoToZero(rotarm2);
 
-            if (fertig[0] && fertig[1] && fertig[2]) {
+            if (fertig0 && fertig1 && fertig2) {
                 // int j = 0; // PICKLE not used
 
                 // Golem steht gerade rechts?
@@ -601,16 +596,15 @@ void GegnerGolem::DoKI() {
 
                 // wieder in wurf ausgangsposition
                 case ArmState::SENKEN2: {
-                    bool fertig[3] = {true, true, true};
 
                     // zuende wackeln
                     Wackeln();
 
-                    fertig[0] = GoToZero(Wackel, 0.5f);
-                    fertig[1] = GoToZero(rotarm1, 0.5f);
-                    fertig[2] = GoToZero(rotarm2, 0.5f);
+                    bool fertig0 = GoToZero(Wackel, 0.5f);
+                    bool fertig1 = GoToZero(rotarm1, 0.5f);
+                    bool fertig2 = GoToZero(rotarm2, 0.5f);
 
-                    if (fertig[0] && fertig[1] && fertig[2]) {
+                    if (fertig0 && fertig1 && fertig2) {
                         StoneCount--;
 
                         if (StoneCount == 0)
@@ -755,19 +749,19 @@ void GegnerGolem::GegnerExplode() {
     int i;
 
     for (i = 0; i < 100; i++)
-        PartikelSystem.PushPartikel(xPos - 50 + static_cast<float>(random(200)),
+        PartikelSystem.PushPartikel(xPos - 50.0f + static_cast<float>(random(200)),
                                     yPos + yoff + static_cast<float>(random(300)), ROCKSPLITTER);
 
     for (i = 0; i < 80; i++)
-        PartikelSystem.PushPartikel(xPos - 50 + static_cast<float>(random(200)),
+        PartikelSystem.PushPartikel(xPos - 50.0f + static_cast<float>(random(200)),
                                     yPos + yoff + static_cast<float>(random(300)), SMOKEBIG);
 
     for (i = 0; i < 40; i++)
-        PartikelSystem.PushPartikel(xPos - 50 + static_cast<float>(random(200)),
+        PartikelSystem.PushPartikel(xPos - 50.0f + static_cast<float>(random(200)),
                                     yPos + yoff + static_cast<float>(random(300)), EXPLOSION_MEDIUM2);
 
     for (i = 0; i < 10; i++)
-        PartikelSystem.PushPartikel(xPos - 50 + static_cast<float>(random(200)),
+        PartikelSystem.PushPartikel(xPos - 50.0f + static_cast<float>(random(200)),
                                     yPos + yoff + static_cast<float>(random(300)), EXPLOSION_BIG);
 
     ShakeScreen(4);

@@ -31,18 +31,17 @@ GegnerZitrone::GegnerZitrone(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerZitrone::CalcKnarreWinkel() {
-    float xdiv, ydiv, newwinkel;
 
-    ydiv = (pAim->ypos + 40) - (yPos + 40);
+    float ydiv = (pAim->ypos + 40) - (yPos + 40);
 
     if (ydiv == 0.0f)
         ydiv = 0.00001f;
 
-    xdiv = (pAim->xpos + 35.0f) - (xPos + 60.0f);
+    float xdiv = (pAim->xpos + 35.0f) - (xPos + 60.0f);
 
     // DKS-converting to float, new rad/deg macros:
     // newwinkel = (float)atan(xdiv / ydiv) * 180.0f / D3DX_PI + 180.0f;
-    newwinkel = RadToDeg(atanf(xdiv / ydiv)) + 180.0f;
+    float newwinkel = RadToDeg(atanf(xdiv / ydiv)) + 180.0f;
 
     if (xdiv >= 0.0f && ydiv >= 0.0f)
         newwinkel = newwinkel;
@@ -134,8 +133,7 @@ void GegnerZitrone::DoKI() {
     // Richtige Animationsphase setzen
     // abhängig von der Position zum Spieler
     //
-    float dummy;
-    dummy = (pAim->xpos + 35) - (xPos + 57);
+    float dummy = (pAim->xpos + 35) - (xPos + 57);
     dummy /= 50.0f;
 
     AnimPhase = 5 - static_cast<int>(dummy);
@@ -166,9 +164,7 @@ void GegnerZitrone::DoKI() {
             if (FollowCount < 0.0f) {
                 FollowCount = 20.0f;
 
-                int dx;
-
-                dx = random(60) + 30;
+                int dx = random(60) + 30;
                 if (random(2) == 0)
                     dx *= -1;
 

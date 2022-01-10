@@ -155,17 +155,15 @@ void GegnerBallerdrone::DoKI() {
 void GegnerBallerdrone::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
 
-    int i;
-
-    for (i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++)
         PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(90)),
                                     yPos - 30.0f + static_cast<float>(random(60)), EXPLOSION_MEDIUM2);
 
-    for (i = 0; i < 30; i++)
+    for (int i = 0; i < 30; i++)
         PartikelSystem.PushPartikel(xPos - 40.0f + static_cast<float>(random(90)),
                                     yPos - 30.0f + static_cast<float>(random(60)), SMOKEBIG);
 
-    for (i = 0; i < 40; i++)
+    for (int i = 0; i < 40; i++)
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(90)),
                                     yPos + static_cast<float>(random(60)), FUNKE);
 

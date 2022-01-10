@@ -22,8 +22,6 @@ GegnerSchabe::GegnerSchabe(int Wert1, int Wert2, bool Light) {
     Destroyable = true;
     AnimSpeed = 0.5f;
     AnimEnde = 10;
-    xSpeed = SPEED;
-    mirror = false;
     ySpeed = 0.0f;
     winkel = 0.0f;
     TestBlock = false;
@@ -33,6 +31,9 @@ GegnerSchabe::GegnerSchabe(int Wert1, int Wert2, bool Light) {
     if (Value1 != 0) {
         xSpeed = -SPEED;
         mirror = true;
+    } else {
+        xSpeed = SPEED;
+        mirror = false;
     }
 }
 
@@ -57,10 +58,9 @@ void GegnerSchabe::DoKI() {
     SimpleAnimation();
 
     // An der Wand krabbeln
-    int xl, yl;
 
-    xl = static_cast<int>(xPos + 10.0f) / TILESIZE_X;
-    yl = static_cast<int>(yPos + 10.0f) / TILESIZE_X;
+    int xl = static_cast<int>(xPos + 10.0f) / TILESIZE_X;
+    int yl = static_cast<int>(yPos + 10.0f) / TILESIZE_X;
 
     // Schabe läuft nach links
     if (xSpeed < 0.0f) {

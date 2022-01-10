@@ -136,14 +136,9 @@ TileEngineClass::TileEngineClass() {
     // LiquidGfx[1].LoadImage("water2.png", 128, 128, 128, 128, 1, 1);
 
     // Texturkoordinaten für das Wasser vorberechnen
-    float fx, fy;
-
     for (int i = 0; i < 9; i++) {
-        fx = 128.0f / 8.0f * i / 128.0f;
-        fy = 128.0f / 8.0f * i / 128.0f;
-
-        WasserU[i] = fx;
-        WasserV[i] = fy;
+        WasserU[i] = 128.0f / 8.0f * static_cast<float>(i) / 128.0f;
+        WasserV[i] = 128.0f / 8.0f * static_cast<float>(i) / 128.0f;
     }
 
     // DKS - Moved these to the new TileEngineClass::LoadSprites() function (see note there)
@@ -884,33 +879,32 @@ void TileEngineClass::CalcRenderRange() {
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::DrawBackground() {
-    int xoff;
-    float yoff;
 
     // Hintergrund nicht rotieren
     //
-    glm::mat4x4 matView;
-    matView = glm::mat4x4(1.0f);
+    glm::mat4x4 matView = glm::mat4x4(1.0f);
     g_matView = matView;
 
     //----- Hintergrund-Bild
 
-    xoff = static_cast<int>(XOffset / 5.0f) % 640;
-
     if (bScrollBackground)  // Hintergrundbild mitscrollen
     {
+        int const x_off = static_cast<int>(XOffset / 5.0f) % 640;
         // Linke Hälfte
-        Background.SetRect(0, 0, xoff, 480);
-        Background.RenderSprite(static_cast<float>(640 - xoff), 0.0f, 0xFFFFFFFF);
+        Background.SetRect(0, 0, x_off, 480);
+        Background.RenderSprite(static_cast<float>(640 - x_off), 0.0f, 0xFFFFFFFF);
 
         // Rechte Hälfte
-        Background.SetRect(xoff, 0, 640, 480);
+        Background.SetRect(x_off, 0, 640, 480);
         Background.RenderSprite(0.0f, 0.0f, 0xFFFFFFFF);
     } else  // oder statisch ?
     {
         Background.SetRect(0, 0, 640, 480);
         Background.RenderSprite(0.0f, 0.0f, 0xFFFFFFFF);
     }
+
+    int xoff;
+    float yoff;
 
     //----- Layer ganz hinten (ausser im Flugsack Level)
 
@@ -944,14 +938,14 @@ void TileEngineClass::DrawBackground() {
     //----- Im Fahrstuhl-Level noch den vertikalen Parallax-Layer anzeigen
 
     if (IsElevatorLevel) {
-        yoff = static_cast<float>(static_cast<int>(YOffset / 1.5f) % 480);
+        int const y_off = static_cast<int>(YOffset / 1.5f) % 480;
 
         // Obere Hälfte
-        ParallaxLayer[2].SetRect(0, 0, 640, static_cast<int>(yoff));
-        ParallaxLayer[2].RenderSprite(390.0f - XOffset, 480.0f - yoff, 0xFFFFFFFF);
+        ParallaxLayer[2].SetRect(0, 0, 640, y_off);
+        ParallaxLayer[2].RenderSprite(390.0f - XOffset, 480.0f - static_cast<float>(y_off), 0xFFFFFFFF);
 
         // Untere Hälfte
-        ParallaxLayer[2].SetRect(0, static_cast<int>(yoff), 640, 480);
+        ParallaxLayer[2].SetRect(0, y_off, 640, 480);
         ParallaxLayer[2].RenderSprite(390.0f - XOffset, 0.0f, 0xFFFFFFFF);
     }
 
@@ -1103,7 +1097,7 @@ void TileEngineClass::DrawBackLevel() {
                 //      trying to access a row higher than the top screen border which doesn't
                 //      exist. Loading the Eis map (level 7) would crash on some machines.
                 //if (TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)                    // Original line
-                if ( yLevel+j > 0 &&    // DKS Added this check to above line
+                if (yLevel+j > 0 &&    // DKS Added this check to above line
                         TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)
                 {
                     if (TileAt(xLevel+i, yLevel+j).move_v1 == true) v1.x += SinList2[off];
@@ -1140,7 +1134,7 @@ void TileEngineClass::DrawBackLevel() {
                 }
 
                 // Zu rendernde Vertices ins Array schreiben
-                TilesToRender[NumToRender * 6] = v1;      // Jeweils 2 Dreicke als
+                TilesToRender[NumToRender * 6 + 0] = v1;  // Jeweils 2 Dreicke als
                 TilesToRender[NumToRender * 6 + 1] = v2;  // als ein viereckiges
                 TilesToRender[NumToRender * 6 + 2] = v3;  // Tile ins Array kopieren
                 TilesToRender[NumToRender * 6 + 3] = v3;
@@ -1270,7 +1264,7 @@ void TileEngineClass::DrawFrontLevel() {
                 //      trying to access a row higher than the top screen border which doesn't
                 //      exist. Loading the Eis map (level 7) would crash on some machines.
                 //if (TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)                    // Original line
-                if ( yLevel+j > 0 &&    // DKS Added this check to above line
+                if (yLevel+j > 0 &&    // DKS Added this check to above line
                         TileAt(xLevel+i, yLevel+j-1).Block & BLOCKWERT_LIQUID)
                 {
                     if (TileAt(xLevel+i, yLevel+j).move_v1 == true) v1.x += SinList2[off];
@@ -1307,7 +1301,7 @@ void TileEngineClass::DrawFrontLevel() {
                 }
 
                 // Zu rendernde Vertices ins Array schreiben
-                TilesToRender[NumToRender * 6] = v1;      // Jeweils 2 Dreicke als
+                TilesToRender[NumToRender * 6 + 0] = v1;  // Jeweils 2 Dreicke als
                 TilesToRender[NumToRender * 6 + 1] = v2;  // als ein viereckiges
                 TilesToRender[NumToRender * 6 + 2] = v3;  // Tile ins Array kopieren
                 TilesToRender[NumToRender * 6 + 3] = v3;
@@ -1440,7 +1434,7 @@ void TileEngineClass::DrawBackLevelOverlay() {
                 v4.tv = tu;
 
                 // Zu rendernde Vertices ins Array schreiben
-                TilesToRender[NumToRender * 6] = v1;      // Jeweils 2 Dreicke als
+                TilesToRender[NumToRender * 6 + 0] = v1;  // Jeweils 2 Dreicke als
                 TilesToRender[NumToRender * 6 + 1] = v2;  // als ein viereckiges
                 TilesToRender[NumToRender * 6 + 2] = v3;  // Tile ins Array kopieren
                 TilesToRender[NumToRender * 6 + 3] = v3;
@@ -1639,7 +1633,7 @@ void TileEngineClass::DrawOverlayLevel() {
                     v4.tv = tu;
 
                     // Zu rendernde Vertices ins Array schreiben
-                    TilesToRender[NumToRender * 6] = v1;      // Jeweils 2 Dreicke als
+                    TilesToRender[NumToRender * 6 + 0] = v1;  // Jeweils 2 Dreicke als
                     TilesToRender[NumToRender * 6 + 1] = v2;  // als ein viereckiges
                     TilesToRender[NumToRender * 6 + 2] = v3;  // Tile ins Array kopieren
                     TilesToRender[NumToRender * 6 + 3] = v3;
@@ -1729,7 +1723,7 @@ void TileEngineClass::DrawWater() {
                     v1.color = v2.color = v3.color = v4.color = Col1;
 
                     // Zu rendernde Vertices ins Array schreiben
-                    TilesToRender[NumToRender * 6] = v1;      // Jeweils 2 Dreicke als
+                    TilesToRender[NumToRender * 6 + 0] = v1;  // Jeweils 2 Dreicke als
                     TilesToRender[NumToRender * 6 + 1] = v2;  // als ein viereckiges
                     TilesToRender[NumToRender * 6 + 2] = v3;  // Tile ins Array kopieren
                     TilesToRender[NumToRender * 6 + 3] = v3;
@@ -1869,7 +1863,7 @@ void TileEngineClass::DrawWater() {
                         }
 
                         // Zu rendernde Vertices ins Array schreiben
-                        TilesToRender[NumToRender * 6] = v1;      // Jeweils 2 Dreicke als
+                        TilesToRender[NumToRender * 6 + 0] = v1;  // Jeweils 2 Dreicke als
                         TilesToRender[NumToRender * 6 + 1] = v2;  // als ein viereckiges
                         TilesToRender[NumToRender * 6 + 2] = v3;  // Tile ins Array kopieren
                         TilesToRender[NumToRender * 6 + 3] = v3;
@@ -1958,8 +1952,8 @@ void TileEngineClass::DrawWater() {
 // --------------------------------------------------------------------------------------
 
 void TileEngineClass::CheckBounds() {
-    float const xtilesize = static_cast<float>(TILESIZE_X);
-    float const ytilesize = static_cast<float>(TILESIZE_Y);
+    constexpr float xtilesize = static_cast<float>(TILESIZE_X);
+    constexpr float ytilesize = static_cast<float>(TILESIZE_Y);
 
     // Grenzen des Levels checken
     XOffset = std::clamp(XOffset, xtilesize, LEVELPIXELSIZE_X - 640.0f - xtilesize);
@@ -3339,8 +3333,6 @@ void TileEngineClass::ComputeCoolLight() {
     // Farben der Nachbarfelder werden allerdings nur mit verrechnet, wenn es sich nicht um eine massive Wand handelt.
     // In diesem Falle wird die Standard-Tilefarbe verwendet
     //
-    int rn, gn, bn, r1, r2, r3, g1, g2, g3, b1, b2, b3;
-
     for (int i = 1; i < LEVELSIZE_X - 1; i += 1)
         for (int j = 1; j < LEVELSIZE_Y - 1; j += 1) {
             LevelTileStruct& tile = TileAt(i, j);
@@ -3350,6 +3342,8 @@ void TileEngineClass::ComputeCoolLight() {
             int const r4 = tile.Red;
             int const g4 = tile.Green;
             int const b4 = tile.Blue;
+
+            int rn, gn, bn, r1, r2, r3, g1, g2, g3, b1, b2, b3;
 
             // Ecke links oben
             //
@@ -3413,16 +3407,14 @@ void TileEngineClass::DrawShadow() {
     float x, y;
 
     if (NUMPLAYERS == 1) {
-        x = Player[0].xpos + 35 - 512 - XOffset;
-        y = Player[0].ypos + 40 - 512 - YOffset;
+        x = Player[0].xpos + 35.0f - 512.0f - XOffset;
+        y = Player[0].ypos + 40.0f - 512.0f - YOffset;
     } else {
         x = XOffset + 320.0f;
         y = YOffset + 240.0f;
     }
 
-    D3DCOLOR col;
-
-    col = D3DCOLOR_RGBA(255, 255, 255, static_cast<int>(ShadowAlpha));
+    D3DCOLOR col = D3DCOLOR_RGBA(255, 255, 255, static_cast<int>(ShadowAlpha));
 
     Shadow.RenderSprite(x, y, col);
     Shadow.RenderSprite(x + 512, y, 0, col, true);

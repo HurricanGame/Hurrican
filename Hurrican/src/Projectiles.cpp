@@ -133,14 +133,13 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
                 return;
 
             // DKS - Converted to float:
-            float absx, absy, speed;  // Variablen für die Geschwindigkeits-
-            // berechnung
-            absx = pAim->xPos + 85 - xPos;  // Differenz der x
-            absy = pAim->yPos + 40 - yPos;  // und y Strecke
+
+            float absx = pAim->xPos + 85 - xPos;  // Differenz der x
+            float absy = pAim->yPos + 40 - yPos;  // und y Strecke
 
             // DKS - Converted to float:
-            speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
-            speed = speed * 85;                               // Geschwindigkeit ist 4 fach
+            float speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
+            speed = speed * 85;                                     // Geschwindigkeit ist 4 fach
 
             absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
             absy = speed * absy;  // (xSpeed*ySpeed ergibt 4)
@@ -625,14 +624,13 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
                 pAim = pParent;
 
             // DKS - Converted to float:
-            float absx, absy, speed;  // Variablen für die Geschwindigkeits-
-            // berechnung
-            absx = pAim->xpos + 35 - xPos;  // Differenz der x
-            absy = pAim->ypos + 40 - yPos;  // und y Strecke
+
+            float absx = pAim->xpos + 35 - xPos;  // Differenz der x
+            float absy = pAim->ypos + 40 - yPos;  // und y Strecke
 
             // DKS - Converted to float:
-            speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
-            speed = speed * 20;                               // Geschwindigkeit ist 4 fach
+            float speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
+            speed = speed * 20;                                     // Geschwindigkeit ist 4 fach
 
             absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
             absy = speed * absy;  // (xSpeed*ySpeed ergibt 4)
@@ -738,14 +736,13 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             PlayerClass *pAim = ChooseAim();
 
             // DKS - Converted to float:
-            float absx, absy, speed;  // Variablen für die Geschwindigkeits-
-            // berechnung
-            absx = pAim->xpos + 35 - xPos - 20;  // Differenz der x
-            absy = pAim->ypos + 40 - yPos - 20;  // und y Strecke
+
+            float absx = pAim->xpos + 35 - xPos - 20;  // Differenz der x
+            float absy = pAim->ypos + 40 - yPos - 20;  // und y Strecke
 
             // DKS - Converted to float:
-            speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
-            speed = speed * 20;                               // Geschwindigkeit setzen
+            float speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
+            speed = speed * 20;                                     // Geschwindigkeit setzen
 
             absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
             absy = speed * absy;  // (xSpeed*ySpeed ergibt 4)
@@ -800,13 +797,12 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             PlayerClass *pAim = ChooseAim();
 
             // DKS - Converted to float:
-            float absx, absy, speed;  // Variablen für die Geschwindigkeits-
-            // berechnung
-            absx = pAim->xpos + 35 - xPos - 20;  // Differenz der x
-            absy = pAim->ypos + 40 - yPos - 20;  // und y Strecke
+
+            float absx = pAim->xpos + 35 - xPos - 20;  // Differenz der x
+            float absy = pAim->ypos + 40 - yPos - 20;  // und y Strecke
 
             // DKS - Converted to float:
-            speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
+            float speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
             speed = speed * 20;                               // Geschwindigkeit setzen
 
             absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
@@ -907,13 +903,12 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             PlayerClass *pAim = ChooseAim();
 
             // DKS - Converted to float:
-            float absx, absy, speed;  // Variablen für die Geschwindigkeits-
-            // berechnung
-            absx = pAim->xpos + 35 - (xPos + 24);  // Differenz der x
-            absy = pAim->ypos + 40 - (yPos + 24);  // und y Strecke
+
+            float absx = pAim->xpos + 35 - (xPos + 24);  // Differenz der x
+            float absy = pAim->ypos + 40 - (yPos + 24);  // und y Strecke
 
             // DKS - Converted to float:
-            speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
+            float speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
             speed = speed * 40;
 
             absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
@@ -1152,14 +1147,13 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             DamagePlayer = true;
 
             // DKS - Converted to float:
-            float absx, absy, speed;  // Variablen für die Geschwindigkeits-
-            // berechnung
-            absx = pParent->xpos + 35 - xPos;  // Differenz der x
-            absy = pParent->ypos + 40 - yPos;  // und y Strecke
+
+            float absx = pParent->xpos + 35 - xPos;  // Differenz der x
+            float absy = pParent->ypos + 40 - yPos;  // und y Strecke
 
             // DKS - Converted to float:
-            speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
-            speed = speed * 20;                               // Geschwindigkeit
+            float speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
+            speed = speed * 20;                                    // Geschwindigkeit
 
             absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
             absy = speed * absy;
@@ -1181,14 +1175,13 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             DamagePlayer = true;
 
             // DKS - Converted to float:
-            float absx, absy, speed;  // Variablen für die Geschwindigkeits-
-            // berechnung
-            absx = pParent->xpos + 35 - xPos;  // Differenz der x
-            absy = pParent->ypos + 5 - yPos;   // und y Strecke
+
+            float absx = pParent->xpos + 35 - xPos;  // Differenz der x
+            float absy = pParent->ypos + 5 - yPos;   // und y Strecke
 
             // DKS - Converted to float:
-            speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
-            speed = speed * 22;                               // Geschwindigkeit ist 4 fach
+            float speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
+            speed = speed * 22;                                     // Geschwindigkeit ist 4 fach
 
             absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
             absy = speed * absy;  // (xSpeed*ySpeed ergibt 4)
@@ -1653,13 +1646,13 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
         case BRATKLOPSSHOT:  // Suchschuss des Bratklopses
         {
             // DKS - Converted to float:
-            float absx, absy, speed;                  // Variablen für die Geschwindigkeitsberechnung
-            absx = pParent->xpos + 35 - (xPos + 30);  // Differenz der x
-            absy = pParent->ypos + 40 - (yPos + 30);  // und y Strecke
+
+            float absx = pParent->xpos + 35 - (xPos + 30);  // Differenz der x
+            float absy = pParent->ypos + 40 - (yPos + 30);  // und y Strecke
 
             // DKS - Converted to float:
-            speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
-            speed = speed * 20;                               // Geschwindigkeit ist 4 fach
+            float speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
+            speed = speed * 20;                                     // Geschwindigkeit ist 4 fach
 
             absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
             absy = speed * absy;  // (xSpeed*ySpeed ergibt 4)
@@ -1696,13 +1689,13 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
         case SCHLEIMSHOT:  // Schuss der Drone
         {
             // DKS - Converted to float:
-            float absx, absy, speed;           // Variablen für die Geschwindigkeitsberechnung
-            absx = pParent->xpos + 35 - xPos;  // Differenz der x
-            absy = pParent->ypos + 40 - yPos;  // und y Strecke
+
+            float absx = pParent->xpos + 35 - xPos;  // Differenz der x
+            float absy = pParent->ypos + 40 - yPos;  // und y Strecke
 
             // DKS - Converted to float:
-            speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
-            speed = speed * 20;                               // Geschwindigkeit ist 4 fach
+            float speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
+            speed = speed * 20;                                     // Geschwindigkeit ist 4 fach
 
             absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
             absy = speed * absy;  // (xSpeed*ySpeed ergibt 4)
@@ -1937,7 +1930,6 @@ void ProjectileClass::CheckCollision() {
 // --------------------------------------------------------------------------------------
 
 void ProjectileClass::Render() {
-    D3DCOLOR Color;
 
     // Schuss rendern
     //
@@ -1945,13 +1937,9 @@ void ProjectileClass::Render() {
         return;
 
     if (!OwnDraw) {
-        float l, r, o, u;      // Vertice Koordinaten
-        float tl, tr, to, tu;  // Textur Koordinaten
 
-        glm::mat4x4 matRot, matTrans, matTrans2;
-
-        float xts = ProjectileGrafix[ShotArt].itsXTexScale;
-        float yts = ProjectileGrafix[ShotArt].itsYTexScale;
+        float const xts = ProjectileGrafix[ShotArt].itsXTexScale;
+        float const yts = ProjectileGrafix[ShotArt].itsYTexScale;
 
         // DKS - There is no need to compute this, it's already in the sprite's itsPreCalcedRects array:
         // int xfs, yfs, xfc
@@ -1967,17 +1955,19 @@ void ProjectileClass::Render() {
 
         RECT_struct &Rect = ProjectileGrafix[ShotArt].itsPreCalcedRects[AnimPhase];
 
-        l = -TileEngine.XOffset + xPos - 0.5f;                                 // Links
-        r = -TileEngine.XOffset + xPos + (Rect.right - Rect.left - 1) + 0.5f;  // Rechts
-        o = -TileEngine.YOffset + yPos - 0.5f;                                 // Oben
-        u = -TileEngine.YOffset + yPos + (Rect.bottom - Rect.top - 1) + 0.5f;  // Unten
+        // Vertice Koordinaten
+        float l = -TileEngine.XOffset + xPos - 0.5f;                                 // Links
+        float r = -TileEngine.XOffset + xPos + (Rect.right - Rect.left - 1) + 0.5f;  // Rechts
+        float o = -TileEngine.YOffset + yPos - 0.5f;                                 // Oben
+        float u = -TileEngine.YOffset + yPos + (Rect.bottom - Rect.top - 1) + 0.5f;  // Unten
 
-        tl = Rect.left * xts;    // Links
-        tr = Rect.right * xts;   // Rechts
-        to = Rect.top * yts;     // Oben
-        tu = Rect.bottom * yts;  // Unten
+        // Textur Koordinaten
+        float tl = Rect.left * xts;    // Links
+        float tr = Rect.right * xts;   // Rechts
+        float to = Rect.top * yts;     // Oben
+        float tu = Rect.bottom * yts;  // Unten
 
-        Color = 0xFFFFFFFF;
+        D3DCOLOR Color = 0xFFFFFFFF;
 
         QUAD2D TriangleStrip;  // DKS - Added local declaration
 
@@ -2010,12 +2000,14 @@ void ProjectileClass::Render() {
             Winkel = static_cast<float>(static_cast<int>(Winkel) % 360);
 
             // Rotationsmatrix
-            matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[static_cast<int>(Winkel)], glm::vec3(0.0f, 0.0f, 1.0f));
+            glm::mat4x4 matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[static_cast<int>(Winkel)], glm::vec3(0.0f, 0.0f, 1.0f));
 
             float x = -TileEngine.XOffset + xPos;
             float y = -TileEngine.YOffset + yPos;
             float mx = ProjectileGrafix[ShotArt].itsXFrameSize / 2.0f;
             float my = ProjectileGrafix[ShotArt].itsYFrameSize / 2.0f;
+
+            glm::mat4x4 matTrans, matTrans2;
 
             // Transformation zum Ursprung
             D3DXMatrixTranslation(&matTrans, -x - mx, -y - my, 0.0f);
@@ -2069,12 +2061,13 @@ void ProjectileClass::Render() {
         int size = (pParent->CurrentWeaponLevel[2] * 2 + 12);
         if (size < 20)
             size = 20;
-        ProjectileGrafix[ShotArt].RenderSpriteScaled(xPos - TileEngine.XOffset + 12 - size / 2.0f,
-                                                     yPos - TileEngine.YOffset + 12 - size / 2.0f, size, size,
+        ProjectileGrafix[ShotArt].RenderSpriteScaled(xPos - TileEngine.XOffset + 12.0f - size / 2.0f,
+                                                     yPos - TileEngine.YOffset + 12.0f - size / 2.0f, size, size,
                                                      0xFFFFFFFF);
     } else if (ShotArt == ELEKTROPAMPE) {
         DirectGraphics.SetAdditiveMode();
 
+        D3DCOLOR Color;
         if (Counter > 255.0f)
             Color = D3DCOLOR_RGBA(255, 255, 255, 255);
         else
@@ -2087,6 +2080,7 @@ void ProjectileClass::Render() {
     } else if (ShotArt == FEUERFALLE || ShotArt == SPIDERFIRE || ShotArt == PLAYERFIRE) {
         DirectGraphics.SetAdditiveMode();
 
+        D3DCOLOR Color;
         if (ShotArt == PLAYERFIRE)
             Color = D3DCOLOR_RGBA(255, 128, 80, static_cast<int>(Counter));
         else
@@ -2095,8 +2089,10 @@ void ProjectileClass::Render() {
         ProjectileGrafix[ShotArt].itsRect = ProjectileGrafix[ShotArt].itsPreCalcedRects[AnimPhase];
 
         ProjectileGrafix[ShotArt].RenderSpriteScaledRotated(
-            46 + (xPos - TileEngine.XOffset) - (AnimPhase + 30), 54 + (yPos - TileEngine.YOffset) - (AnimPhase + 30),
-            AnimPhase * 2.2f + 20, AnimPhase * 2.2f + 20, Winkel, Color);
+            46.0f + (xPos - TileEngine.XOffset) - static_cast<float>(AnimPhase + 30),
+            54.0f + (yPos - TileEngine.YOffset) - static_cast<float>(AnimPhase + 30),
+            static_cast<int>(AnimPhase * 2.2f + 20.0f),
+            static_cast<int>(AnimPhase * 2.2f + 20.0f), Winkel, Color);
         DirectGraphics.SetColorKeyMode();
     }
 
@@ -2104,12 +2100,12 @@ void ProjectileClass::Render() {
     //
     else if (ShotArt == FEUERFALLE_LAVAMANN) {
         DirectGraphics.SetAdditiveMode();
-        Color = D3DCOLOR_RGBA(255, 255, 255, 192 - (AnimPhase * 6));
+        D3DCOLOR Color = D3DCOLOR_RGBA(255, 255, 255, 192 - (AnimPhase * 6));
 
         int a = 30 - AnimPhase;
 
-        ProjectileGrafix[ShotArt].RenderSpriteScaled(46 + (xPos - TileEngine.XOffset) - (a + 30),
-                                                     54 + (yPos - TileEngine.YOffset) - (a + 30),
+        ProjectileGrafix[ShotArt].RenderSpriteScaled(46.0f + (xPos - TileEngine.XOffset) - static_cast<float>(a + 30),
+                                                     54.0f + (yPos - TileEngine.YOffset) - static_cast<float>(a + 30),
                                                      static_cast<int>(a * 2.2f + 20.0f),
                                                      static_cast<int>(a * 2.2f + 20.0f), AnimPhase, Color);
         DirectGraphics.SetColorKeyMode();
@@ -2121,7 +2117,7 @@ void ProjectileClass::Render() {
         ShotRect[ShotArt].bottom = (255 - Damage / 2) * 2;
         ShotRect[ShotArt].right = (255 - Damage / 2) * 2;
 
-        Color = D3DCOLOR_RGBA(255, 255, 255, Damage / 2);
+        D3DCOLOR Color = D3DCOLOR_RGBA(255, 255, 255, Damage / 2);
         ProjectileGrafix[ShotArt].RenderSpriteScaled(xPos - TileEngine.XOffset, yPos - TileEngine.YOffset,
                                                      (255 - Damage / 2) * 2, (255 - Damage / 2) * 2, Color);
 
@@ -2132,7 +2128,7 @@ void ProjectileClass::Render() {
         DirectGraphics.SetColorKeyMode();
     } else if (ShotArt == BLITZBEAM) {
         DirectGraphics.SetAdditiveMode();
-        Color = 0xFFFFFFFF;
+        D3DCOLOR Color = 0xFFFFFFFF;
 
         ProjectileGrafix[ShotArt].RenderSpriteScaled(xPos - TileEngine.XOffset, yPos - TileEngine.YOffset, Damage,
                                                      Damage, AnimPhase, Color);
@@ -2142,15 +2138,15 @@ void ProjectileClass::Render() {
 
     // Fetter Spinnenlaser
     else if (ShotArt == SPIDERLASER) {
-        D3DCOLOR col;
         static float off = 0.0f;
 
         DirectGraphics.SetAdditiveMode();
         ShotRect[ShotArt].bottom = 0;
         ShotRect[ShotArt].right = 0;
 
-        float size = 0.0f;
-        int length = 0;
+        D3DCOLOR col;
+        float size;
+        int length;
 
         // Größe festlegen
         if (AnimCount < 45.0f) {
@@ -2176,17 +2172,18 @@ void ProjectileClass::Render() {
         }
 
         ProjectileGrafix[ShotArt].RenderSpriteScaled(
-            xPos - TileEngine.XOffset - 10.0f, yPos - TileEngine.YOffset - size / 2.0f,
+            xPos - TileEngine.XOffset - 10.0f,
+            yPos - TileEngine.YOffset - size / 2.0f,
             length, static_cast<int>(size), 0, col);
         DirectGraphics.SetColorKeyMode();
     } else if (ShotArt == BRATKLOPSSHOT) {
         DirectGraphics.SetAdditiveMode();
 
         ProjectileGrafix[ShotArt].RenderSpriteRotated(xPos - TileEngine.XOffset, yPos - TileEngine.YOffset,
-                                                      (xPos + yPos) / 2, 0x88FFFFFF);
+                                                      (xPos + yPos) / 2.0f, 0x88FFFFFF);
 
         ProjectileGrafix[ShotArt].RenderSpriteRotated(xPos - TileEngine.XOffset, yPos - TileEngine.YOffset,
-                                                      (xPos + yPos) / 2, 0x88FFFFFF);
+                                                      (xPos + yPos) / 2.0f, 0x88FFFFFF);
 
         DirectGraphics.SetColorKeyMode();
     }
@@ -2199,37 +2196,37 @@ void ProjectileClass::Render() {
         CurrentShotTexture = -1;  // Erst mal einstellen dass wir jetzt die falsche Textur gesetzt haben =)
 
         if (ShotArt == UFOLASER) {
-            PartikelGrafix[UFOLASERFLARE].RenderSpriteRotated(xPos - TileEngine.XOffset - 63,
-                                                              yPos - TileEngine.YOffset - 30, yPos * 0.5f, 0xFFFF22EE);
+            PartikelGrafix[UFOLASERFLARE].RenderSpriteRotated(xPos - TileEngine.XOffset - 63.0f,
+                                                              yPos - TileEngine.YOffset - 30.0f, yPos * 0.5f, 0xFFFF22EE);
         } else if (ShotArt == ELEKTROSCHUSS) {
-            Projectiles.LavaFlare.RenderSpriteScaled(xPos - 28 - TileEngine.XOffset, yPos - 28 - TileEngine.YOffset,
+            Projectiles.LavaFlare.RenderSpriteScaled(xPos - 28.0f - TileEngine.XOffset, yPos - 28.0f - TileEngine.YOffset,
                                                      100, 100, 0xFFFF22BB);
         } else if (ShotArt == LASERSHOT || ShotArt == LASERSHOT2) {
             switch (static_cast<int>(Winkel)) {
                 case 0:
                     Projectiles.LaserSmoke.RenderSpriteRotated(
-                        xPos - TileEngine.XOffset - 60 + (ShotArt - LASERSHOT) * 5, yPos - TileEngine.YOffset - 40,
+                        xPos - TileEngine.XOffset - 60.0f + (ShotArt - LASERSHOT) * 5, yPos - TileEngine.YOffset - 40.0f,
                         Winkel, 0xBB1188FF);
                     break;
 
                 case 45:
-                    Projectiles.LaserSmoke.RenderSpriteRotated(xPos - TileEngine.XOffset - 60,
-                                                               yPos - TileEngine.YOffset - 40, Winkel, 0xBB1188FF);
+                    Projectiles.LaserSmoke.RenderSpriteRotated(xPos - TileEngine.XOffset - 60.0f,
+                                                               yPos - TileEngine.YOffset - 40.0f, Winkel, 0xBB1188FF);
                     break;
 
                 case 90:
-                    Projectiles.LaserSmoke.RenderSpriteRotated(xPos - TileEngine.XOffset - 53,
-                                                               yPos - TileEngine.YOffset - 40, Winkel, 0xBB1188FF);
+                    Projectiles.LaserSmoke.RenderSpriteRotated(xPos - TileEngine.XOffset - 53.0f,
+                                                               yPos - TileEngine.YOffset - 40.0f, Winkel, 0xBB1188FF);
                     break;
 
                 case 270:
-                    Projectiles.LaserSmoke.RenderSpriteRotated(xPos - TileEngine.XOffset - 52,
-                                                               yPos - TileEngine.YOffset - 40, Winkel, 0xBB1188FF);
+                    Projectiles.LaserSmoke.RenderSpriteRotated(xPos - TileEngine.XOffset - 52.0f,
+                                                               yPos - TileEngine.YOffset - 40.0f, Winkel, 0xBB1188FF);
                     break;
 
                 case 315:
-                    Projectiles.LaserSmoke.RenderSpriteRotated(xPos - TileEngine.XOffset - 60,
-                                                               yPos - TileEngine.YOffset - 40, Winkel, 0xBB1188FF);
+                    Projectiles.LaserSmoke.RenderSpriteRotated(xPos - TileEngine.XOffset - 60.0f,
+                                                               yPos - TileEngine.YOffset - 40.0f, Winkel, 0xBB1188FF);
                     break;
 
                 default:
@@ -2240,23 +2237,23 @@ void ProjectileClass::Render() {
         else if (ShotArt == LASERSHOTBIG || ShotArt == LASERSHOTBIG2) {
             switch (static_cast<int>(Winkel)) {
                 case 0:
-                    Projectiles.LaserSmokeBig.RenderSpriteRotated(xPos - TileEngine.XOffset - 120,
-                                                                  yPos - TileEngine.YOffset - 80, Winkel, 0xBB1188FF);
+                    Projectiles.LaserSmokeBig.RenderSpriteRotated(xPos - TileEngine.XOffset - 120.0f,
+                                                                  yPos - TileEngine.YOffset - 80.0f, Winkel, 0xBB1188FF);
                     break;
 
                 case 45:
-                    Projectiles.LaserSmokeBig.RenderSpriteRotated(xPos - TileEngine.XOffset - 120,
-                                                                  yPos - TileEngine.YOffset - 85, Winkel, 0xBB1188FF);
+                    Projectiles.LaserSmokeBig.RenderSpriteRotated(xPos - TileEngine.XOffset - 120.0f,
+                                                                  yPos - TileEngine.YOffset - 85.0f, Winkel, 0xBB1188FF);
                     break;
 
                 case 90:
-                    Projectiles.LaserSmokeBig.RenderSpriteRotated(xPos - TileEngine.XOffset - 120,
-                                                                  yPos - TileEngine.YOffset - 85, Winkel, 0xBB1188FF);
+                    Projectiles.LaserSmokeBig.RenderSpriteRotated(xPos - TileEngine.XOffset - 120.0f,
+                                                                  yPos - TileEngine.YOffset - 85.0f, Winkel, 0xBB1188FF);
                     break;
 
                 case 270:
-                    Projectiles.LaserSmokeBig.RenderSpriteRotated(xPos - TileEngine.XOffset - 105,
-                                                                  yPos - TileEngine.YOffset - 85, Winkel, 0xBB1188FF);
+                    Projectiles.LaserSmokeBig.RenderSpriteRotated(xPos - TileEngine.XOffset - 105.0f,
+                                                                  yPos - TileEngine.YOffset - 85.0f, Winkel, 0xBB1188FF);
                     break;
 
                 case 315:
@@ -2270,37 +2267,37 @@ void ProjectileClass::Render() {
         }
 
         else if (ShotArt == SPREADSHOTBIG || ShotArt == SPREADSHOTBIG2) {
-            Projectiles.SpreadShotSmoke.RenderSprite(xPos - 16 - TileEngine.XOffset, yPos - 18 - TileEngine.YOffset, 0,
+            Projectiles.SpreadShotSmoke.RenderSprite(xPos - 16.0f - TileEngine.XOffset, yPos - 18.0f - TileEngine.YOffset, 0,
                                                      0xAAFFFFFF);
         }
 
         else if (ShotArt == PFLANZESHOT) {
-            Projectiles.SpreadShotSmoke.RenderSprite(xPos - 24 - TileEngine.XOffset, yPos - 24 - TileEngine.YOffset, 0,
+            Projectiles.SpreadShotSmoke.RenderSprite(xPos - 24.0f - TileEngine.XOffset, yPos - 24.0f - TileEngine.YOffset, 0,
                                                      0xAAFFFFFF);
         }
 
         else if (ShotArt == SUCHSCHUSS2) {
-            Projectiles.LavaFlare.RenderSpriteScaled(xPos - 24 - TileEngine.XOffset, yPos - 24 - TileEngine.YOffset, 64,
+            Projectiles.LavaFlare.RenderSpriteScaled(xPos - 24.0f - TileEngine.XOffset, yPos - 24.0f - TileEngine.YOffset, 64,
                                                      64, 0xCC0088FF);
         }
 
         else if (ShotArt == WALKER_LASER)
-            Projectiles.LavaFlare.RenderSprite(xPos - 45 - TileEngine.XOffset, yPos - 60 - TileEngine.YOffset, 0,
+            Projectiles.LavaFlare.RenderSprite(xPos - 45.0f - TileEngine.XOffset, yPos - 60.0f - TileEngine.YOffset, 0,
                                                0xAAFF3300);
 
         else if (ShotArt == FETTESPINNESHOT || ShotArt == FETTESPINNESHOT2)  // Laser der fetten Spinne
         {
-            Projectiles.SpreadShotSmoke.RenderSprite(xPos - 12 - TileEngine.XOffset, yPos - 7 - TileEngine.YOffset, 0,
+            Projectiles.SpreadShotSmoke.RenderSprite(xPos - 12.0f - TileEngine.XOffset, yPos - 7.0f - TileEngine.YOffset, 0,
                                                      0xFFFF0000);
         }
 
         if (ShotArt == POWERLINE)  // Powerline leuchten lassen ?
         {
             if (xSpeed < 0.0f)
-                Projectiles.PowerlineSmoke.RenderSprite(xPos - 10 - TileEngine.XOffset, yPos - TileEngine.YOffset, 0,
+                Projectiles.PowerlineSmoke.RenderSprite(xPos - 10.0f - TileEngine.XOffset, yPos - TileEngine.YOffset, 0,
                                                         0xFFFFFFFF);
             else
-                Projectiles.PowerlineSmoke.RenderSprite(xPos - 28 - TileEngine.XOffset, yPos - TileEngine.YOffset, 1,
+                Projectiles.PowerlineSmoke.RenderSprite(xPos - 28.0f - TileEngine.XOffset, yPos - TileEngine.YOffset, 1,
                                                         0xFFFFFFFF);
         }
 
@@ -2624,13 +2621,12 @@ void ProjectileClass::Run() {
                             pAim = pParent;
 
                         // DKS - Converted to float:
-                        float absx, absy, speed;        // Variablen für die Geschwindigkeitsberechnung
-                        absx = pAim->xpos + 35 - xPos;  // Differenz der x
-                        absy = pAim->ypos + 40 - yPos;  // und y Strecke
+                        float absx = pAim->xpos + 35 - xPos;  // Differenz der x
+                        float absy = pAim->ypos + 40 - yPos;  // und y Strecke
 
                         // DKS - Converted to float:
-                        speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
-                        speed = speed * 35;                               // Geschwindigkeit ist 4 fach
+                        float speed = 1.0f / sqrtf(absx * absx + absy * absy);  // Länge der Strecke berechnen
+                        speed = speed * 35;                                     // Geschwindigkeit ist 4 fach
 
                         absx = speed * absx;  // Und jeweilige Geschwindigkeit setzen
                         absy = speed * absy;  // (xSpeed*ySpeed ergibt 4)
@@ -2665,10 +2661,9 @@ void ProjectileClass::Run() {
 
         case BOMBE:
         case BOMBEBIG: {
-            bool fahrstuhlunten = false;
-
             bu = TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]);
 
+            bool fahrstuhlunten = false;
             if (TileEngine.IsElevatorLevel && yPos + ShotRect[ShotArt].bottom + 4 > g_Fahrstuhl_yPos)
                 fahrstuhlunten = true;
 
@@ -2841,11 +2836,11 @@ void ProjectileClass::Run() {
             for (int i = 0; i < static_cast<int>(200.0 * Timer.getElapsed()) + 1; i++) {
                 switch (AnimPhase) {
                     case 0: {
-                        PartikelSystem.PushPartikel(xPos + 33, yPos + 70, ROCKETSMOKE);
+                        PartikelSystem.PushPartikel(xPos + 33.0f, yPos + 70.0f, ROCKETSMOKE);
                     } break;
 
                     case 4: {
-                        PartikelSystem.PushPartikel(xPos + 33, yPos - 2, ROCKETSMOKE);
+                        PartikelSystem.PushPartikel(xPos + 33.0f, yPos - 2.0f, ROCKETSMOKE);
                     } break;
                 }
             }
@@ -2896,7 +2891,7 @@ void ProjectileClass::Run() {
                 for (int i = 0; i < static_cast<int>(200.0 * Timer.getElapsed()) + 1; i++) {
                     switch (AnimPhase) {
                         case 0: {
-                            PartikelSystem.PushPartikel(xPos + 40, yPos, ROCKETSMOKE);
+                            PartikelSystem.PushPartikel(xPos + 40.0f, yPos, ROCKETSMOKE);
                         } break;
 
                         case 1: {
@@ -2938,7 +2933,7 @@ void ProjectileClass::Run() {
 
                 switch (AnimPhase) {
                     case 0: {
-                        PartikelSystem.PushPartikel(xPos + 30, yPos, BUBBLE);
+                        PartikelSystem.PushPartikel(xPos + 30.0f, yPos, BUBBLE);
                     } break;
 
                     case 1: {
@@ -2957,7 +2952,8 @@ void ProjectileClass::Run() {
 
         case EVILBLITZ: {
             for (int i = 0; i < static_cast<int>(200.0 * Timer.getElapsed()) + 1; i++)
-                PartikelSystem.PushPartikel(xPos + 10 + random(50), yPos + 60 + random(20), EVILFUNKE);
+                PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(50)),
+                                            yPos + 60.0f + static_cast<float>(random(20)), EVILFUNKE);
 
             if (ySpeed < -45.0f) {
                 Damage = 0;
@@ -2991,10 +2987,12 @@ void ProjectileClass::Run() {
             if (Counter <= 0.0f) {
                 Counter = 0.1f;
 
-                PartikelSystem.PushPartikel(xPos + Damage / 2 + 1 + random(3), yPos + Damage / 2 + 1 + random(3),
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(Damage / 2 + 1 + random(3)),
+                                            yPos + static_cast<float>(Damage / 2 + 1 + random(3)),
                                             BEAMSMOKE);
 
-                PartikelSystem.PushPartikel(xPos + Damage / 2 - 2 + random(3), yPos + Damage / 2 - 6 + random(3),
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(Damage / 2 - 2 + random(3)),
+                                            yPos + static_cast<float>(Damage / 2 - 6 + random(3)),
                                             BEAMSMOKE2);
             }
 
@@ -3039,8 +3037,7 @@ void ProjectileClass::Run() {
             // Drehwinkel aus der Geschwindigkeit errechnen
             // DKS - Converted to float, new Rad/Deg macros:
             // float w = 90 + static_cast<float>(atan(ySpeed / xSpeed) * 360.0f / (static_cast<float>(M_PI) * 2));
-            float w = 90.0f + RadToDeg(atanf(ySpeed / xSpeed));
-            Winkel = w;
+            Winkel = 90.0f + RadToDeg(atanf(ySpeed / xSpeed));
 
             if (xSpeed < 0.0f)
                 Winkel = Winkel + 180.0f;
@@ -3206,7 +3203,7 @@ void ProjectileClass::Run() {
             if (AnimCount < 0.0f) {
                 // Rauch erzeugen
                 for (int i = 0; i < 2; i++)
-                    PartikelSystem.PushPartikel(xPos - 2, yPos - 2, EVILROUNDSMOKE);
+                    PartikelSystem.PushPartikel(xPos - 2.0f, yPos - 2.0f, EVILROUNDSMOKE);
 
                 AnimCount += 0.1f;
             }
@@ -3235,7 +3232,7 @@ void ProjectileClass::Run() {
 
             while (AnimCount <= 0.0f) {
                 AnimCount += 0.1f;
-                PartikelSystem.PushPartikel(xPos - 4, yPos - 4 + static_cast<float>(random(3)), SMOKE2);
+                PartikelSystem.PushPartikel(xPos - 4.0f, yPos - 4.0f + static_cast<float>(random(3)), SMOKE2);
             }
 
             if (TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, ShotRect[ShotArt]) & BLOCKWERT_WAND ||
@@ -3257,10 +3254,11 @@ void ProjectileClass::Run() {
                 ySpeed -= 0.5f SYNC;
 
             // Grenzen checken
-            if (ySpeed > static_cast<float>(M_PI * 2.0))
-                ySpeed -= static_cast<float>(M_PI * 2.0);
+            constexpr float TWO_PI = static_cast<float>(M_PI * 2.0);
+            if (ySpeed > TWO_PI)
+                ySpeed -= TWO_PI;
             if (ySpeed < 0.0f)
-                ySpeed += static_cast<float>(M_PI * 2.0);
+                ySpeed += TWO_PI;
 
             if (pParent->Handlung != PlayerActionEnum::RADELN &&
                     pParent->Handlung != PlayerActionEnum::RADELN_FALL) {
@@ -3357,12 +3355,15 @@ void ProjectileClass::ExplodeShot() {
             PartikelSystem.PushPartikel(xPos, yPos, SHOTFLARE);
 
             for (int i = 0; i < 4; i++) {
-                PartikelSystem.PushPartikel(xPos + 5 + random(20), yPos + 5 + random(10), FUNKE);
-                PartikelSystem.PushPartikel(xPos + random(20), yPos - 5 + random(10), SMOKE);
-                PartikelSystem.PushPartikel(xPos + 5 + random(20), yPos + 5 + random(10), LASERFUNKE2);
+                PartikelSystem.PushPartikel(xPos + 5.0f + static_cast<float>(random(20)),
+                                            yPos + 5.0f + static_cast<float>(random(10)), FUNKE);
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
+                                            yPos - 5.0f + static_cast<float>(random(10)), SMOKE);
+                PartikelSystem.PushPartikel(xPos + 5.0f + static_cast<float>(random(20)),
+                                            yPos + 5.0f + static_cast<float>(random(10)), LASERFUNKE2);
             }
 
-            PartikelSystem.PushPartikel(xPos - 10, yPos, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos - 10.0f, yPos, EXPLOSION_MEDIUM2);
         } break;
 
         case FIREBALL_BIG: {
@@ -3370,25 +3371,30 @@ void ProjectileClass::ExplodeShot() {
             PartikelSystem.PushPartikel(xPos, yPos, SHOTFLARE);
 
             for (int i = 0; i < 4; i++) {
-                PartikelSystem.PushPartikel(xPos + 5 + random(20), yPos + 5 + random(10), FUNKE);
-                PartikelSystem.PushPartikel(xPos + random(20), yPos - 5 + random(10), SMOKEBIG);
-                PartikelSystem.PushPartikel(xPos + 5 + random(20), yPos + 5 + random(10), LASERFUNKE2);
+                PartikelSystem.PushPartikel(xPos + 5.0f + static_cast<float>(random(20)),
+                                            yPos + 5.0f + static_cast<float>(random(10)), FUNKE);
+                PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
+                                            yPos - 5.0f + static_cast<float>(random(10)), SMOKEBIG);
+                PartikelSystem.PushPartikel(xPos + 5.0f + static_cast<float>(random(20)),
+                                            yPos + 5.0f + static_cast<float>(random(10)), LASERFUNKE2);
             }
 
-            PartikelSystem.PushPartikel(xPos - 10, yPos - 20, EXPLOSION_BIG);
+            PartikelSystem.PushPartikel(xPos - 10.0f, yPos - 20.0f, EXPLOSION_BIG);
         } break;
 
         case FIREBALL_BOMB: {
             SoundManager.PlayWave(80, 128, 10000 + random(2000), SOUND_EXPLOSION1);
 
             for (int i = 0; i < 2; i++)
-                PartikelSystem.PushPartikel(xPos - 30, yPos - 20, EXPLOSIONFLARE);
+                PartikelSystem.PushPartikel(xPos - 30.0f, yPos - 20.0f, EXPLOSIONFLARE);
 
             for (int i = 0; i < 4; i++)
-                PartikelSystem.PushPartikel(xPos + random(20) - 10, yPos - 5 + random(10), SMOKEBIG);
+                PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(20)),
+                                            yPos - 5.0f + static_cast<float>(random(10)), SMOKEBIG);
 
             for (int i = 0; i < 8; i++)
-                Projectiles.PushProjectile(xPos - 20 + random(30), yPos + 20 + random(30), FEUERFALLE);
+                Projectiles.PushProjectile(xPos - 20.0f + static_cast<float>(random(30)),
+                                           yPos + 20.0f + static_cast<float>(random(30)), FEUERFALLE);
 
         } break;
 
@@ -3397,8 +3403,10 @@ void ProjectileClass::ExplodeShot() {
             PartikelSystem.PushPartikel(xPos, yPos, SHOTFLARE);
 
             for (int i = 0; i < 4; i++) {
-                PartikelSystem.PushPartikel(xPos - 5 + random(10), yPos - 5 + random(10), FUNKE);
-                PartikelSystem.PushPartikel(xPos - 5 + random(10), yPos - 5 + random(10), LASERFUNKE2);
+                PartikelSystem.PushPartikel(xPos - 5.0f + static_cast<float>(random(10)),
+                                            yPos - 5.0f + static_cast<float>(random(10)), FUNKE);
+                PartikelSystem.PushPartikel(xPos - 5.0f + static_cast<float>(random(10)),
+                                            yPos - 5.0f + static_cast<float>(random(10)), LASERFUNKE2);
             }
         } break;
 
@@ -3409,15 +3417,15 @@ void ProjectileClass::ExplodeShot() {
         } break;
 
         case SKELETOR_SHOT: {
-            PartikelSystem.PushPartikel(xPos + 5, yPos + 5, SHOTFLARE);
+            PartikelSystem.PushPartikel(xPos + 5.0f, yPos + 5.0f, SHOTFLARE);
 
             for (int i = 0; i < 4; i++)
-                PartikelSystem.PushPartikel(xPos + 10, yPos + 10, FUNKE);
+                PartikelSystem.PushPartikel(xPos + 10.0f, yPos + 10.0f, FUNKE);
 
             if (random(3) == 0)
                 for (int i = 0; i < 3; i++)
                     if (random(2) == 0)
-                        PartikelSystem.PushPartikel(xPos + 10, yPos + 5, LONGFUNKE);
+                        PartikelSystem.PushPartikel(xPos + 10.0f, yPos + 5.0f, LONGFUNKE);
         } break;
 
         case SPREADSHOT:
@@ -3425,7 +3433,7 @@ void ProjectileClass::ExplodeShot() {
             PartikelSystem.PushPartikel(xPos, yPos, SHOTFLARE);
 
             for (int i = 0; i < 4; i++)
-                PartikelSystem.PushPartikel(xPos + 5, yPos + 5, FUNKE);
+                PartikelSystem.PushPartikel(xPos + 5.0f, yPos + 5.0f, FUNKE);
 
             if (random(3) == 0)
                 for (int i = 0; i < 3; i++)
@@ -3442,66 +3450,69 @@ void ProjectileClass::ExplodeShot() {
         case SPREADSHOTBIG2: {
             SoundManager.PlayWave(50, 128, random(2000) + 11025, SOUND_SPREADHIT);
             for (int i = 0; i < 8; i++)
-                PartikelSystem.PushPartikel(xPos + 5, yPos + 5, FUNKE);
+                PartikelSystem.PushPartikel(xPos + 5.0f, yPos + 5.0f, FUNKE);
 
             for (int i = 0; i < 3; i++)
-                PartikelSystem.PushPartikel(xPos + 5, yPos + 5, LONGFUNKE);
+                PartikelSystem.PushPartikel(xPos + 5.0f, yPos + 5.0f, LONGFUNKE);
         } break;
 
         case LASERSHOT:
         case LASERSHOT2: {
-            PartikelSystem.PushPartikel(xPos - 50, yPos - 30, LASERFLARE);
+            PartikelSystem.PushPartikel(xPos - 50.0f, yPos - 30.0f, LASERFLARE);
 
             for (int i = 0; i < 3; i++)
-                PartikelSystem.PushPartikel(xPos + 10, yPos + 5, LASERFUNKE);
+                PartikelSystem.PushPartikel(xPos + 10.0f, yPos + 5.0f, LASERFUNKE);
 
             if (xSpeed > 0.0f)
-                PartikelSystem.PushPartikel(xPos + 25, yPos + 8, BLUE_EXPLOSION);
+                PartikelSystem.PushPartikel(xPos + 25.f, yPos + 8.0f, BLUE_EXPLOSION);
             else
-                PartikelSystem.PushPartikel(xPos - 5, yPos + 8, BLUE_EXPLOSION);
+                PartikelSystem.PushPartikel(xPos - 5.f, yPos + 8.0f, BLUE_EXPLOSION);
         } break;
 
         case LASERSHOTBIG:
         case LASERSHOTBIG2: {
             for (int i = 0; i < 8; i++)
-                PartikelSystem.PushPartikel(xPos + 10 + random(70), yPos + 5, LASERFUNKE);
+                PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(70)),
+                                            yPos + 5.0f, LASERFUNKE);
 
             if (xSpeed > 0.0f)
                 for (int i = 0; i < 5; i++)
-                    PartikelSystem.PushPartikel(xPos + 10 + random(70), yPos - 10 + random(20), BLUE_EXPLOSION);
+                    PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(70)),
+                                                yPos - 10.0f + static_cast<float>(random(20)), BLUE_EXPLOSION);
             else
                 for (int i = 0; i < 5; i++)
-                    PartikelSystem.PushPartikel(xPos - 20 + random(20), yPos - 10 + random(20), BLUE_EXPLOSION);
+                    PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(20)),
+                                                yPos - 10.0f + static_cast<float>(random(20)), BLUE_EXPLOSION);
         } break;
 
         case BOUNCESHOT1: {
-            PartikelSystem.PushPartikel(xPos + 4, yPos + 4, SHOTFLARE2);
+            PartikelSystem.PushPartikel(xPos + 4.0f, yPos + 4.0f, SHOTFLARE2);
 
             for (int i = 0; i < 4; i++)
-                PartikelSystem.PushPartikel(xPos + 8, yPos + 8, FUNKE2);
+                PartikelSystem.PushPartikel(xPos + 8.0f, yPos + 8.0f, FUNKE2);
 
             // Aufsplitten ?
             if (pParent->CurrentWeaponLevel[pParent->SelectedWeapon] > 2) {
                 if (bl & BLOCKWERT_WAND) {
                     WinkelUebergabe = 45;
-                    Projectiles.PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
+                    Projectiles.PushProjectile(xPos + 4.0f - xSpeed SYNC, yPos + 4.0f - ySpeed SYNC, BOUNCESHOT2, pParent);
                     WinkelUebergabe = 135;
-                    Projectiles.PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
+                    Projectiles.PushProjectile(xPos + 4.0f - xSpeed SYNC, yPos + 4.0f - ySpeed SYNC, BOUNCESHOT2, pParent);
                 } else if (br & BLOCKWERT_WAND) {
                     WinkelUebergabe = 315;
-                    Projectiles.PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
+                    Projectiles.PushProjectile(xPos + 4.0f - xSpeed SYNC, yPos + 4.0f - ySpeed SYNC, BOUNCESHOT2, pParent);
                     WinkelUebergabe = 225;
-                    Projectiles.PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
+                    Projectiles.PushProjectile(xPos + 4.0f - xSpeed SYNC, yPos + 4.0f - ySpeed SYNC, BOUNCESHOT2, pParent);
                 } else if (bo & BLOCKWERT_WAND) {
                     WinkelUebergabe = 225;
-                    Projectiles.PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
+                    Projectiles.PushProjectile(xPos + 4.0f - xSpeed SYNC, yPos + 4.0f - ySpeed SYNC, BOUNCESHOT2, pParent);
                     WinkelUebergabe = 135;
-                    Projectiles.PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
+                    Projectiles.PushProjectile(xPos + 4.0f - xSpeed SYNC, yPos + 4.0f - ySpeed SYNC, BOUNCESHOT2, pParent);
                 } else {
                     WinkelUebergabe = 315;
-                    Projectiles.PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
+                    Projectiles.PushProjectile(xPos + 4.0f - xSpeed SYNC, yPos + 4.0f - ySpeed SYNC, BOUNCESHOT2, pParent);
                     WinkelUebergabe = 45;
-                    Projectiles.PushProjectile(xPos + 4 - xSpeed SYNC, yPos + 4 - ySpeed SYNC, BOUNCESHOT2, pParent);
+                    Projectiles.PushProjectile(xPos + 4.0f - xSpeed SYNC, yPos + 4.0f - ySpeed SYNC, BOUNCESHOT2, pParent);
                 }
             }
 
@@ -3514,30 +3525,30 @@ void ProjectileClass::ExplodeShot() {
             PartikelSystem.PushPartikel(xPos, yPos, SHOTFLARE2);
 
             for (int i = 0; i < 2; i++)
-                PartikelSystem.PushPartikel(xPos + 8, yPos + 8, FUNKE2);
+                PartikelSystem.PushPartikel(xPos + 8.0f, yPos + 8.0f, FUNKE2);
 
             // Aufsplitten ?
             if (pParent->CurrentWeaponLevel[pParent->SelectedWeapon] >= 5) {
                 if (bl & BLOCKWERT_WAND) {
                     WinkelUebergabe = 45;
-                    Projectiles.PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
+                    Projectiles.PushProjectile(xPos + 3.0f - xSpeed SYNC, yPos + 3.0f - ySpeed SYNC, BOUNCESHOT3, pParent);
                     WinkelUebergabe = 135;
-                    Projectiles.PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
+                    Projectiles.PushProjectile(xPos + 3.0f - xSpeed SYNC, yPos + 3.0f - ySpeed SYNC, BOUNCESHOT3, pParent);
                 } else if (br & BLOCKWERT_WAND) {
                     WinkelUebergabe = 315;
-                    Projectiles.PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
+                    Projectiles.PushProjectile(xPos + 3.0f - xSpeed SYNC, yPos + 3.0f - ySpeed SYNC, BOUNCESHOT3, pParent);
                     WinkelUebergabe = 225;
-                    Projectiles.PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
+                    Projectiles.PushProjectile(xPos + 3.0f - xSpeed SYNC, yPos + 3.0f - ySpeed SYNC, BOUNCESHOT3, pParent);
                 } else if (bo & BLOCKWERT_WAND) {
                     WinkelUebergabe = 225;
-                    Projectiles.PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
+                    Projectiles.PushProjectile(xPos + 3.0f - xSpeed SYNC, yPos + 3.0f - ySpeed SYNC, BOUNCESHOT3, pParent);
                     WinkelUebergabe = 135;
-                    Projectiles.PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
+                    Projectiles.PushProjectile(xPos + 3.0f - xSpeed SYNC, yPos + 3.0f - ySpeed SYNC, BOUNCESHOT3, pParent);
                 } else {
                     WinkelUebergabe = 315;
-                    Projectiles.PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
+                    Projectiles.PushProjectile(xPos + 3.0f - xSpeed SYNC, yPos + 3.0f - ySpeed SYNC, BOUNCESHOT3, pParent);
                     WinkelUebergabe = 45;
-                    Projectiles.PushProjectile(xPos + 3 - xSpeed SYNC, yPos + 3 - ySpeed SYNC, BOUNCESHOT3, pParent);
+                    Projectiles.PushProjectile(xPos + 3.0f - xSpeed SYNC, yPos + 3.0f - ySpeed SYNC, BOUNCESHOT3, pParent);
                 }
             }
 
@@ -3548,7 +3559,7 @@ void ProjectileClass::ExplodeShot() {
             SoundManager.PlayWave(100, 128, 11025, SOUND_BOUNCESHOT);
 
             for (int i = 0; i < 3; i++)
-                PartikelSystem.PushPartikel(xPos + 4, yPos + 4, FUNKE2);
+                PartikelSystem.PushPartikel(xPos + 4.0f, yPos + 4.0f, FUNKE2);
 
         } break;
 
@@ -3556,33 +3567,33 @@ void ProjectileClass::ExplodeShot() {
             SoundManager.StopWave(SOUND_BOUNCESHOT);
             SoundManager.PlayWave(100, 128, 11025, SOUND_BOUNCESHOT);
 
-            PartikelSystem.PushPartikel(xPos - 32, yPos - 32, EXPLOSIONFLARE);
+            PartikelSystem.PushPartikel(xPos - 32.0f, yPos - 32.0f, EXPLOSIONFLARE);
 
             for (int i = 0; i < 4; i++)
-                PartikelSystem.PushPartikel(xPos + 8, yPos + 8, FUNKE2);
+                PartikelSystem.PushPartikel(xPos + 8.0f, yPos + 8.0f, FUNKE2);
 
             // Aufsplitten ?
             if (pParent->CurrentWeaponLevel[pParent->SelectedWeapon] > 2) {
                 if (bl & BLOCKWERT_WAND) {
                     WinkelUebergabe = 45;
-                    Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
                     WinkelUebergabe = 135;
-                    Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
                 } else if (br & BLOCKWERT_WAND) {
                     WinkelUebergabe = 315;
-                    Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
                     WinkelUebergabe = 225;
-                    Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
                 } else if (bo & BLOCKWERT_WAND) {
                     WinkelUebergabe = 225;
-                    Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
                     WinkelUebergabe = 135;
-                    Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
                 } else {
                     WinkelUebergabe = 315;
-                    Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
                     WinkelUebergabe = 45;
-                    Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
                 }
             }
 
@@ -3592,33 +3603,33 @@ void ProjectileClass::ExplodeShot() {
             SoundManager.StopWave(SOUND_BOUNCESHOT);
             SoundManager.PlayWave(100, 128, 11025, SOUND_BOUNCESHOT);
 
-            PartikelSystem.PushPartikel(xPos - 32, yPos - 32, EXPLOSIONFLARE);
+            PartikelSystem.PushPartikel(xPos - 32.0f, yPos - 32.0f, EXPLOSIONFLARE);
 
             for (int i = 0; i < 4; i++)
-                PartikelSystem.PushPartikel(xPos + 8, yPos + 8, FUNKE2);
+                PartikelSystem.PushPartikel(xPos + 8.0f, yPos + 8.0f, FUNKE2);
 
             // Aufsplitten ?
             if (pParent->CurrentWeaponLevel[pParent->SelectedWeapon] >= 5) {
                 if (bl & BLOCKWERT_WAND) {
                     WinkelUebergabe = 45;
-                    Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
                     WinkelUebergabe = 135;
-                    Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
                 } else if (br & BLOCKWERT_WAND) {
                     WinkelUebergabe = 315;
-                    Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
                     WinkelUebergabe = 225;
-                    Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
                 } else if (bo & BLOCKWERT_WAND) {
                     WinkelUebergabe = 225;
-                    Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
                     WinkelUebergabe = 135;
-                    Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
                 } else {
                     WinkelUebergabe = 315;
-                    Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
                     WinkelUebergabe = 45;
-                    Projectiles.PushProjectile(xPos + 8 - xSpeed SYNC, yPos + 8 - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
                 }
             }
 
@@ -3628,16 +3639,17 @@ void ProjectileClass::ExplodeShot() {
         case SUCHSCHUSS: {
             SoundManager.PlayWave(25, 128, 11025, SOUND_SPREADHIT);
             for (int i = 0; i < 4; i++)
-                PartikelSystem.PushPartikel(xPos + 5, yPos + 5, FUNKE);
+                PartikelSystem.PushPartikel(xPos + 5.0f, yPos + 5.0f, FUNKE);
 
-            PartikelSystem.PushPartikel(xPos - 10, yPos - 10, SMOKE);
+            PartikelSystem.PushPartikel(xPos - 10.0f, yPos - 10.0f, SMOKE);
         } break;
 
         case SPIDERSHOT:
         case SPIDERSHOT2:
         case SPIDERSLOW: {
             for (int i = 0; i < 10; i++)
-                PartikelSystem.PushPartikel(xPos - 10.0f + random(40), yPos - 10.0f + random(40), LILA2);
+                PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(40)),
+                                            yPos - 10.0f + static_cast<float>(random(40)), LILA2);
 
             PartikelSystem.PushPartikel(xPos - 40.0f, yPos - 40.0f, EXPLOSIONFLARE2);
         } break;
@@ -3648,7 +3660,7 @@ void ProjectileClass::ExplodeShot() {
             SoundManager.PlayWave(100, 128, 9000, SOUND_BLITZENDE);
             SoundManager.PlayWave(100, 128, 9000, SOUND_BLITZENDE);
 
-            Projectiles.PushProjectile(TileEngine.XOffset - 60, TileEngine.YOffset + 480.0f - 128.0f, ELEKTROPAMPE);
+            Projectiles.PushProjectile(TileEngine.XOffset - 60.0f, TileEngine.YOffset + 480.0f - 128.0f, ELEKTROPAMPE);
         } break;
 
             /*
@@ -3662,13 +3674,13 @@ void ProjectileClass::ExplodeShot() {
             SoundManager.PlayWave(25, 128, 11025, SOUND_FUNKE2);
             SoundManager.PlayWave(25, 128, 11025, SOUND_FUNKE3);
 
-            PartikelSystem.PushPartikel(xPos - 50, yPos - 50, LASERFLARE);
+            PartikelSystem.PushPartikel(xPos - 50.0f, yPos - 50.0f, LASERFLARE);
 
             for (int i = 0; i < 10; i++)
                 PartikelSystem.PushPartikel(xPos + random(12), yPos + random(12), LASERFUNKE);
 
             for (int i = 0; i < 4; i++)
-                PartikelSystem.PushPartikel(xPos - 4 + random(8), yPos - 4 + random(8), SMOKE3);
+                PartikelSystem.PushPartikel(xPos - 4.0f + random(8), yPos - 4.0f + random(8), SMOKE3);
         } break;
 
         case TURRIEXTRAWURST:
@@ -3683,12 +3695,12 @@ void ProjectileClass::ExplodeShot() {
         case SPIDER_LASER: {
             SoundManager.PlayWave(25, 128, 11025, SOUND_SPREADHIT);
             for (int i = 0; i < 8; i++)
-                PartikelSystem.PushPartikel(xPos + 10, yPos, FUNKE);
+                PartikelSystem.PushPartikel(xPos + 10.0f, yPos, FUNKE);
         } break;
 
         case PHARAOLASER: {
             for (int i = 0; i < 50; i++)
-                PartikelSystem.PushPartikel(xPos + random(48) - 6, yPos + random(48) - 6, PHARAOSMOKE);
+                PartikelSystem.PushPartikel(xPos + random(48) - 6.0f, yPos + random(48) - 6.0f, PHARAOSMOKE);
         } break;
 
         case ROCKET:
@@ -3696,8 +3708,8 @@ void ProjectileClass::ExplodeShot() {
             PartikelSystem.PushPartikel(xPos + 8, yPos + 8, EXPLOSION_MEDIUM2);
 
             for (int i = 0; i < 100; i++) {
-                PartikelSystem.PushPartikel(xPos + random(55) + 10 - 6, yPos + random(55) + 10 - 6, ROCKETSMOKE);
-                PartikelSystem.PushPartikel(xPos + random(35) + 20 - 6, yPos + random(35) + 20 - 6, ROCKETSMOKE);
+                PartikelSystem.PushPartikel(xPos + random(55) + 10.0f - 6.0f, yPos + random(55) + 10.0f - 6.0f, ROCKETSMOKE);
+                PartikelSystem.PushPartikel(xPos + random(35) + 20.0f - 6.0f, yPos + random(35) + 20.0f - 6.0f, ROCKETSMOKE);
             }
 
             SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
@@ -3707,15 +3719,15 @@ void ProjectileClass::ExplodeShot() {
             PartikelSystem.PushPartikel(xPos + 8, yPos - 20, EXPLOSION_MEDIUM2);
 
             for (int i = 0; i < 75; i++) {
-                PartikelSystem.PushPartikel(xPos + random(40) + 18, yPos + random(40) - 20, ROCKETSMOKE);
-                PartikelSystem.PushPartikel(xPos + random(20) + 26, yPos + random(20) - 10, ROCKETSMOKE);
+                PartikelSystem.PushPartikel(xPos + random(40) + 18.0f, yPos + random(40) - 20.0f, ROCKETSMOKE);
+                PartikelSystem.PushPartikel(xPos + random(20) + 26.0f, yPos + random(20) - 10.0f, ROCKETSMOKE);
             }
 
             SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
         } break;
 
         case TORPEDO: {
-            PartikelSystem.PushPartikel(xPos + 8, yPos - 20, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos + 8.0f, yPos - 20.0f, EXPLOSION_MEDIUM2);
 
             for (int i = 0; i < 20; i++)
                 PartikelSystem.PushPartikel(xPos + random(33), yPos + random(10), BUBBLE);
@@ -3725,32 +3737,32 @@ void ProjectileClass::ExplodeShot() {
 
         case EVILSHOT:
         case EVILSHOT2: {
-            PartikelSystem.PushPartikel(xPos, yPos - 20, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos, yPos - 20.0f, EXPLOSION_MEDIUM2);
 
             SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
         } break;
 
         case FLUGLASER: {
             for (int i = 0; i < 12; i++)
-                PartikelSystem.PushPartikel(xPos + random(4), yPos + 10 + random(14), FUNKE);
+                PartikelSystem.PushPartikel(xPos + random(4), yPos + 10.0f + random(14), FUNKE);
 
             for (int i = 0; i < 6; i++)
-                PartikelSystem.PushPartikel(xPos + random(4), yPos + 10 + random(14), LASERFUNKE2);
+                PartikelSystem.PushPartikel(xPos + random(4), yPos + 10.0f + random(14), LASERFUNKE2);
 
             SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_SPREADHIT);
         } break;
 
         case EISZAPFENSHOT: {
-            PartikelSystem.PushPartikel(xPos - 10, yPos + 8, SNOWFLUSH);
+            PartikelSystem.PushPartikel(xPos - 10.0f, yPos + 8.0f, SNOWFLUSH);
 
             SoundManager.PlayWave(25, 128, 8000 + random(4000), SOUND_SPREADHIT);
         } break;
 
         case EVILBLITZ: {
-            Projectiles.PushProjectile(xPos - 290, yPos - 300, EVILBLITZ2);
-            Projectiles.PushProjectile(xPos - 100, yPos - 200, EVILBLITZ2);
-            Projectiles.PushProjectile(xPos + 100, yPos - 100, EVILBLITZ2);
-            Projectiles.PushProjectile(xPos + 290, yPos, EVILBLITZ2);
+            Projectiles.PushProjectile(xPos - 290.0f, yPos - 300.0f, EVILBLITZ2);
+            Projectiles.PushProjectile(xPos - 100.0f, yPos - 200.0f, EVILBLITZ2);
+            Projectiles.PushProjectile(xPos + 100.0f, yPos - 100.0f, EVILBLITZ2);
+            Projectiles.PushProjectile(xPos + 290.0f, yPos, EVILBLITZ2);
 
             SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
         } break;
@@ -3771,8 +3783,10 @@ void ProjectileClass::ExplodeShot() {
             // aus)
             //
 
-            PartikelSystem.PushPartikel(xPos - 32 + Damage / 2.0f, yPos - 32 + Damage / 2.0f, BEAMSMOKE5);
-            PartikelSystem.PushPartikel(xPos - 31 + Damage / 2.0f, yPos - 32 + Damage / 2.0f, BEAMSMOKE5);
+            PartikelSystem.PushPartikel(xPos - 32.0f + static_cast<int>(Damage / 2),
+                                        yPos - 32.0f + static_cast<int>(Damage / 2), BEAMSMOKE5);
+            PartikelSystem.PushPartikel(xPos - 31.0f + static_cast<int>(Damage / 2),
+                                        yPos - 32.0f + static_cast<int>(Damage / 2), BEAMSMOKE5);
 
             // Screen aufblitzen
             PartikelSystem.ThunderAlpha = Damage * 2.0f;
@@ -3806,7 +3820,7 @@ void ProjectileClass::ExplodeShot() {
 
         case STELZLASER: {
             for (int i = 0; i < 50; i++)
-                PartikelSystem.PushPartikel(xPos + random(60) - 6, yPos + random(35) + 5, PHARAOSMOKE);
+                PartikelSystem.PushPartikel(xPos + random(60) - 6.0f, yPos + random(35) + 5.0f, PHARAOSMOKE);
 
             SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_SPREADHIT);
         } break;
@@ -3820,10 +3834,10 @@ void ProjectileClass::ExplodeShot() {
 
         case BRATKLOPSSHOT: {
             for (int i = 0; i < 5; i++)
-                PartikelSystem.PushPartikel(xPos - 20 + random(40), yPos - 20 + random(40), EXPLOSION_GREEN);
+                PartikelSystem.PushPartikel(xPos - 20.0f + random(40), yPos - 20.0f + random(40), EXPLOSION_GREEN);
 
             for (int i = 0; i < 100; i++)
-                PartikelSystem.PushPartikel(xPos + 10 + random(40), yPos + 10 + random(40), FUNKE2);
+                PartikelSystem.PushPartikel(xPos + 10.0f + random(40), yPos + 10.0f + random(40), FUNKE2);
 
             SoundManager.PlayWave(100, 128, 10000 + random(4000), SOUND_EXPLOSION1);
         } break;
@@ -3831,14 +3845,14 @@ void ProjectileClass::ExplodeShot() {
         case DRONEBULLET: {
             SoundManager.PlayWave(50, 128, random(2000) + 11025, SOUND_SPREADHIT);
             for (int i = 0; i < 12; i++)
-                PartikelSystem.PushPartikel(xPos + 2, yPos + 2, FUNKE);
+                PartikelSystem.PushPartikel(xPos + 2.0f, yPos + 2.0f, FUNKE);
 
             PartikelSystem.PushPartikel(xPos, yPos, SMOKE3);
 
             if (random(3) == 0)
                 for (int i = 0; i < 3; i++)
                     if (random(2) == 0)
-                        PartikelSystem.PushPartikel(xPos + 2, yPos - 12, LONGFUNKE);
+                        PartikelSystem.PushPartikel(xPos + 2.0f, yPos - 12.0f, LONGFUNKE);
         } break;
 
         case SCHLEIMSHOT: {
@@ -3849,23 +3863,23 @@ void ProjectileClass::ExplodeShot() {
         case SKELETORGRANATE: {
             SoundManager.PlayWave(50, 128, random(4000) + 8000, SOUND_EXPLOSION3);
 
-            PartikelSystem.PushPartikel(xPos - 20, yPos - 20, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos - 20.0f, yPos - 20.0f, EXPLOSION_MEDIUM2);
 
             for (int i = 0; i < 2; i++)
-                PartikelSystem.PushPartikel(xPos - 10 + random(5), yPos - 10, SPIDERSPLITTER);
+                PartikelSystem.PushPartikel(xPos - 10.0f + random(5), yPos - 10.0f, SPIDERSPLITTER);
 
             for (int i = 0; i < 15; i++)
-                Projectiles.PushProjectile(xPos - 20, yPos + i * 9, FEUERFALLE);
+                Projectiles.PushProjectile(xPos - 20.0f, yPos + i * 9.0f, FEUERFALLE);
         } break;
 
         case BLUEBOMB: {
             SoundManager.PlayWave(50, 128, random(4000) + 8000, SOUND_EXPLOSION3);
 
             for (int i = 0; i < 10; i++)
-                PartikelSystem.PushPartikel(xPos - 10 + random(20), yPos - 10 + random(20), BLUE_EXPLOSION);
+                PartikelSystem.PushPartikel(xPos - 10.0f + random(20), yPos - 10.0f + random(20), BLUE_EXPLOSION);
 
             for (int i = 0; i < 15; i++)
-                PartikelSystem.PushPartikel(xPos - 10 + random(20), yPos - 10 + random(20), WATERFLUSH_HIGH2);
+                PartikelSystem.PushPartikel(xPos - 10.0f + random(20), yPos - 10.0f + random(20), WATERFLUSH_HIGH2);
 
         } break;
 
@@ -3874,18 +3888,18 @@ void ProjectileClass::ExplodeShot() {
             PartikelSystem.PushPartikel(xPos, yPos, EXPLOSION_TRACE);
 
             for (int i = 0; i < 20; i++)
-                PartikelSystem.PushPartikel(xPos + 10 + random(40), yPos + 10 + random(60), SPIDERSPLITTER);
+                PartikelSystem.PushPartikel(xPos + 10.0f + random(40), yPos + 10.0f + random(60), SPIDERSPLITTER);
 
             for (int i = 0; i < 5; i++)
-                PartikelSystem.PushPartikel(xPos - 30 + random(66), yPos - 30 + random(83), EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(xPos - 30.0f + random(66), yPos - 30.0f + random(83), EXPLOSION_MEDIUM2);
         } break;
 
         case ARCSHOT: {
             // PartikelSystem.PushPartikel(xPos + 8, yPos + 8, EXPLOSION_MEDIUM2);
 
             for (int i = 0; i < 50; i++) {
-                PartikelSystem.PushPartikel(xPos + random(20) - 10, yPos + random(20) - 10, ROCKETSMOKEBLUE);
-                PartikelSystem.PushPartikel(xPos + random(20) - 10, yPos + random(20) - 10, ROCKETSMOKEBLUE);
+                PartikelSystem.PushPartikel(xPos + random(20) - 10.0f, yPos + random(20) - 10.0f, ROCKETSMOKEBLUE);
+                PartikelSystem.PushPartikel(xPos + random(20) - 10.0f, yPos + random(20) - 10.0f, ROCKETSMOKEBLUE);
             }
 
             SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
@@ -3896,14 +3910,14 @@ void ProjectileClass::ExplodeShot() {
                 Projectiles.PushProjectile(xPos + random(60), yPos + random(50), SNOWBOMBSMALL);
 
             for (int i = 0; i < 20; i++)
-                PartikelSystem.PushPartikel(xPos + random(70) - 10, yPos + random(70) - 10, SNOWFLUSH);
+                PartikelSystem.PushPartikel(xPos + random(70) - 10.0f, yPos + random(70) - 10.0f, SNOWFLUSH);
 
             SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND_LANDEN);
         } break;
 
         case SNOWBOMBSMALL: {
             for (int i = 0; i < 4; i++)
-                PartikelSystem.PushPartikel(xPos - 25 + random(20), yPos - 25 + random(20), SNOWFLUSH);
+                PartikelSystem.PushPartikel(xPos - 25.0f + random(20), yPos - 25.0f + random(20), SNOWFLUSH);
 
             SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND_LANDEN);
         } break;
@@ -3914,13 +3928,13 @@ void ProjectileClass::ExplodeShot() {
             SoundManager.PlayWave(100, 128, 8000, SOUND_SPREADHIT);
 
             for (int i = 0; i < 100; i++)
-                PartikelSystem.PushPartikel(xPos - 5 + random(40), yPos - 5 + random(50), SMOKE2);
+                PartikelSystem.PushPartikel(xPos - 5.0f + random(40), yPos - 5.0f + random(50), SMOKE2);
 
             for (int i = 0; i < 30; i++)
                 PartikelSystem.PushPartikel(xPos + random(40), yPos + random(50), FUNKE);
 
             for (int i = 0; i < 40; i++)
-                PartikelSystem.PushPartikel(xPos + random(20) + 10, yPos + random(30) + 10, PHARAOSMOKE);
+                PartikelSystem.PushPartikel(xPos + random(20) + 10.0f, yPos + random(30) + 10.0f, PHARAOSMOKE);
 
         } break;
 
@@ -3928,18 +3942,18 @@ void ProjectileClass::ExplodeShot() {
             SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
 
             for (int i = 0; i < 30; i++)
-                PartikelSystem.PushPartikel(xPos - 20 + random(60), yPos - 20 + random(60), SMOKE3);
+                PartikelSystem.PushPartikel(xPos - 20.0f + random(60), yPos - 20.0f + random(60), SMOKE3);
 
-            PartikelSystem.PushPartikel(xPos - 40, yPos - 40, EXPLOSION_GIANT);
+            PartikelSystem.PushPartikel(xPos - 40.0f, yPos - 40.0f, EXPLOSION_GIANT);
 
             for (int i = 0; i < 4; i++)
-                PartikelSystem.PushPartikel(xPos - 30 + random(40), yPos - 30 + random(40), EXPLOSION_MEDIUM2);
+                PartikelSystem.PushPartikel(xPos - 30.0f + random(40), yPos - 30.0f + random(40), EXPLOSION_MEDIUM2);
 
         } break;
 
         case EVILROUND1: {
             for (int i = 0; i < 50; i++) {
-                PartikelSystem.PushPartikel(xPos + random(20) - 10, yPos + random(20) - 10, EVILROUNDSMOKE);
+                PartikelSystem.PushPartikel(xPos + random(20) - 10.0f, yPos + random(20) - 10.0f, EVILROUNDSMOKE);
             }
 
             SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
@@ -3963,14 +3977,14 @@ void ProjectileClass::ExplodeShot() {
                 g = 5;
 
             for (int i = 0; i < g; i++) {
-                PartikelSystem.PushPartikel(xPos - 26, yPos - 26, SMOKEBIG);
+                PartikelSystem.PushPartikel(xPos - 26.0f, yPos - 26.0f, SMOKEBIG);
                 PartikelSystem.PushPartikel(xPos + random(4), yPos + random(4), SPIDERSPLITTER);
             }
 
-            PartikelSystem.PushPartikel(xPos - 24, yPos - 24, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos - 24.0f, yPos - 24.0f, EXPLOSION_MEDIUM2);
 
             if (ShotArt == BOMBEBIG)
-                PartikelSystem.PushPartikel(xPos - 55, yPos - 55, EXPLOSION_GIANT);
+                PartikelSystem.PushPartikel(xPos - 55.0f, yPos - 55.0f, EXPLOSION_GIANT);
 
             // Prüfen, ob ein Gegner in der Nähe war und dann je nach Abstand
             // Energie abziehen
@@ -4042,7 +4056,7 @@ void ProjectileClass::ExplodeShot() {
             PartikelSystem.PushPartikel(xPos - 16, yPos - 16, EXPLOSION_MEDIUM2);
 
             for (int i = 0; i < 8; i++)
-                PartikelSystem.PushPartikel(xPos + 4, yPos + 4, FUNKE);
+                PartikelSystem.PushPartikel(xPos + 4.0f, yPos + 4.0f, FUNKE);
 
         } break;
 
@@ -4050,14 +4064,14 @@ void ProjectileClass::ExplodeShot() {
             SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_SPREADHIT);
 
             for (int i = 0; i < 24; i++)
-                PartikelSystem.PushPartikel(xPos - 1 + random(2), yPos + i * 2 + random(2), LASERFUNKE2);
+                PartikelSystem.PushPartikel(xPos - 1.0f + random(2), yPos + static_cast<float>(i * 2) + random(2), LASERFUNKE2);
         } break;
 
         case KRABBLERLASER2: {
             SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_SPREADHIT);
 
             for (int i = 0; i < 8; i++)
-                PartikelSystem.PushPartikel(xPos + 36, yPos, LASERFUNKE2);
+                PartikelSystem.PushPartikel(xPos + 36.0f, yPos, LASERFUNKE2);
         } break;
 
         case KRABBLERLASER3: {
@@ -4070,20 +4084,20 @@ void ProjectileClass::ExplodeShot() {
         case GRENADE: {
             SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_EXPLOSION1);
 
-            PartikelSystem.PushPartikel(xPos - 100, yPos - 100, EXPLOSION_GIGA);
+            PartikelSystem.PushPartikel(xPos - 100.0f, yPos - 100.0f, EXPLOSION_GIGA);
 
-            PartikelSystem.PushPartikel(xPos - 20, yPos - 20, EXPLOSION_MEDIUM2);
+            PartikelSystem.PushPartikel(xPos - 20.0f, yPos - 20.0f, EXPLOSION_MEDIUM2);
 
             for (int i = 0; i < 100; i++) {
-                PartikelSystem.PushPartikel(xPos - 20 + random(40), yPos - 20 + random(40), ROCKETSMOKE);
+                PartikelSystem.PushPartikel(xPos - 20.0f + random(40), yPos - 20.0f + random(40), ROCKETSMOKE);
 
-                PartikelSystem.PushPartikel(xPos - 20 + random(40), yPos - 20 + random(40), FUNKE);
+                PartikelSystem.PushPartikel(xPos - 20.0f + random(40), yPos - 20.0f + random(40), FUNKE);
             }
 
             for (int i = 0; i < 50; i++)
-                PartikelSystem.PushPartikel(xPos - 20 + random(40), yPos - 20 + random(40), LONGFUNKE);
+                PartikelSystem.PushPartikel(xPos - 20.0f + random(40), yPos - 20.0f + random(40), LONGFUNKE);
 
-            PartikelSystem.PushPartikel(xPos - 128, yPos - 128, GRENADEFLARE);
+            PartikelSystem.PushPartikel(xPos - 128.0f, yPos - 128.0f, GRENADEFLARE);
 
             ShakeScreen(5);
             Gegner.DamageEnemiesonScreen(xPos, yPos, 400);
@@ -4098,9 +4112,9 @@ void ProjectileClass::ExplodeShot() {
             SoundManager.PlayWave(75, 128, 15000 + random(2000), SOUND_EXPLOSION1);
 
             for (int i = 0; i < 10; i++)
-                PartikelSystem.PushPartikel(xPos - 5 + random(10), yPos - 5 + random(10), SMOKE);
+                PartikelSystem.PushPartikel(xPos - 5.0f + random(10), yPos - 5.0f + random(10), SMOKE);
             for (int i = 0; i < 30; i++)
-                PartikelSystem.PushPartikel(xPos - 5 + random(10), yPos - 5 + random(10), FUNKE);
+                PartikelSystem.PushPartikel(xPos - 5.0f + random(10), yPos - 5.0f + random(10), FUNKE);
         } break;
 
         default:

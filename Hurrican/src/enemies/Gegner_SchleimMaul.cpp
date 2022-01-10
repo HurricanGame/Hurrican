@@ -30,14 +30,12 @@ GegnerSchleimMaul::GegnerSchleimMaul(float x, float y, int Wert1, int Wert2, boo
     for (int i = 0; i < 8; i++) {
         pChildren[i] = nullptr;
 
-        float r, r1, r2;
-
         // Zufallspunkt um die Mama rum
         //
-        r = static_cast<float>(random(360));
+        float r = static_cast<float>(random(360));
 
-        r1 = static_cast<float>(random(40)) + 30.0f;
-        r2 = static_cast<float>(random(40)) + 30.0f;
+        float r1 = static_cast<float>(random(40)) + 30.0f;
+        float r2 = static_cast<float>(random(40)) + 30.0f;
 
         // DKS - Obvious bug I am fixing here: passing a value between 0-359 to sin()/cos(), which take
         //      radian inputs, while also adding support of deg/rad cos/sin w/ lookup table support:
@@ -69,14 +67,13 @@ void GegnerSchleimMaul::DoKI() {
     // Ein Child weg? Dann neu spawnen
     for (int i = 0; i < 8; i++) {
         if (pChildren[i]->Energy <= 0.0f) {
-            float r, r1, r2;
 
             // Zufallspunkt um die Mama rum
             //
-            r = static_cast<float>(random(360));
+            float r = static_cast<float>(random(360));
 
-            r1 = static_cast<float>(random(40)) + 30.0f;
-            r2 = static_cast<float>(random(40)) + 30.0f;
+            float r1 = static_cast<float>(random(40)) + 30.0f;
+            float r2 = static_cast<float>(random(40)) + 30.0f;
 
             // DKS - Obvious bug I am fixing here: passing a value between 0-359 to sin()/cos(), which take
             //      radian inputs, while also adding support of deg/rad cos/sin w/ lookup table support:

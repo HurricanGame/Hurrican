@@ -90,9 +90,9 @@ void GegnerMetalHead::DoDraw() {
 
     int Wert = 255 - (static_cast<int>(DamageTaken));
 
-    if (Turbine_dran == false)
+    if (Turbine_dran == false) {
         Color = D3DCOLOR_RGBA(255, Wert, Wert, 255);
-    else
+    } else
         Color = D3DCOLOR_RGBA(255, 255, 255, 255);
 
     Kiefer.RenderSprite(xPos - TileEngine.XOffset + 87.0f, yPos - TileEngine.YOffset + 107.0f + KieferPos,
@@ -104,20 +104,18 @@ void GegnerMetalHead::DoDraw() {
     // Diese dann durch Anzahl der Wirbel teilen
 
     // Strecke linker Rand bis zum Kopf
-    float dx = xPos - Value1 + 40;
+    float dx = xPos - static_cast<float>(Value1 + 40);
 
     // Strecke ypos linker Rand bis zum Kopf
-    float dy = yPos - (Value2 + 250);
+    float dy = yPos - static_cast<float>(Value2 + 250);
 
     // Halsteile an richtige Position setzen
     for (int i = 0; i < MAXWIRBEL; i++) {
         Hals[i].x = static_cast<float>(Value1 - 40 + i * dx / (MAXWIRBEL - 1)) - TileEngine.XOffset;
         Hals[i].y = static_cast<float>(Value2 + 400);
 
-        float dummy;
-
         // Die Strecke von linkem Rand Punkt zum Kopf soll der Strecke 0 - PI entsprechen
-        dummy = (i * dy / MAXWIRBEL * PI) / dy;
+        float dummy = (i * dy / MAXWIRBEL * PI) / dy;
 
         Hals[i].y += dy / 2.0f - cos(dummy) * dy / 2.0f;
         Hals[i].w = 0.0f;
@@ -125,10 +123,8 @@ void GegnerMetalHead::DoDraw() {
 
     // Halsteile richtig drehen
     for (int i = 0; i < MAXWIRBEL - 1; i++) {
-        float ax, ay;
-
-        ax = Hals[i + 1].x - Hals[i].x;
-        ay = Hals[i + 1].y - Hals[i].y;
+        float ax = Hals[i + 1].x - Hals[i].x;
+        float ay = Hals[i + 1].y - Hals[i].y;
 
         Hals[i].w = static_cast<float>(tanh(ay / ax));
         Hals[i].w = Hals[i].w / PI * 180.0f + 90.0f;
@@ -160,7 +156,7 @@ void GegnerMetalHead::DoDraw() {
             a = 255;
 
         DirectGraphics.SetAdditiveMode();
-        Turbine2.RenderSprite(xPos - TileEngine.XOffset + 20, yPos - TileEngine.YOffset + 130.0f,
+        Turbine2.RenderSprite(xPos - TileEngine.XOffset + 20.0f, yPos - TileEngine.YOffset + 130.0f,
                               D3DCOLOR_RGBA(255, 144, 80, a));
         DirectGraphics.SetColorKeyMode();
     }
@@ -220,22 +216,22 @@ void GegnerMetalHead::MoveToNewPoint(float x, float y, float s, int Aktion) {
 // --------------------------------------------------------------------------------------
 
 void GegnerMetalHead::WinkelToPlayer() {
-    float xdiv, ydiv;
-    float neww;
 
-    ydiv = (pAim->ypos + 40) - (yPos + 200);
+    float ydiv = (pAim->ypos + 40) - (yPos + 200);
     if (ydiv == 0.0f)
         ydiv = 0.00001f;
 
-    xdiv = (pAim->xpos + 35) - (xPos + 100);
+    float xdiv = (pAim->xpos + 35) - (xPos + 100);
     // DKS - converted to float, used new macros:
     // neww = (float)atan(ydiv / xdiv) * 180.0f / PI;
-    neww = RadToDeg(atanf(ydiv / xdiv));
-
-    neww = std::clamp(neww, -20.0f, 50.0f);
+    float neww;
 
     if (Akt != GEGNER_SCHIESSEN)
         neww = 0.0f;
+    else {
+        neww = RadToDeg(atanf(ydiv / xdiv));
+        neww = std::clamp(neww, -20.0f, 50.0f);
+    }
 
     if (GunWinkel < neww)
         GunWinkel += 8.0f SYNC;

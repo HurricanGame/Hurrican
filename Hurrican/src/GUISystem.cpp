@@ -48,13 +48,13 @@ void CGUISystem::InitGUISystem() {
 //
 
 void CGUISystem::RenderBox() {
-    D3DCOLOR color;
+
     int alpha = static_cast<int>(m_FadingAlpha);
 
     if (alpha < 0)
         return;
 
-    color = D3DCOLOR_RGBA(0, 255, 0, alpha);
+    D3DCOLOR color = D3DCOLOR_RGBA(0, 255, 0, alpha);
 
     // Ecken
     //
@@ -104,7 +104,7 @@ void CGUISystem::ShowBox(const char Text[BOXTEXTLENGTH], int yoff, int xoff /* =
     bool done = false;
     int longest_length = 0;
     int this_length = 0;
-    const int max_length = BOXSIZEMAX - 60;
+    constexpr int MAX_LENGTH = BOXSIZEMAX - 60;
 
     // Start with a full buffer in srcbuf
     strcpy_s(srcbuf, Text);
@@ -115,7 +115,7 @@ void CGUISystem::ShowBox(const char Text[BOXTEXTLENGTH], int yoff, int xoff /* =
 
     while (!done) {
         // Copy as much as will fit into buf1, remainder without leading whitespace into buf2.
-        done = !ExtractStringOfLength(buf1, buf2, srcbuf, max_length, pDefaultFont);
+        done = !ExtractStringOfLength(buf1, buf2, srcbuf, MAX_LENGTH, pDefaultFont);
 
         if (done) {
             // Line did not need to be split, so nothing was placed in buf1 or buf2

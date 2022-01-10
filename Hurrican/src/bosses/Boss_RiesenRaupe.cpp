@@ -108,18 +108,18 @@ void GegnerRiesenRaupe::DoKI() {
 void GegnerRiesenRaupe::GegnerExplode() {
     // Explosionen erzeugen
     for (int i = 0; i < 10; i++) {
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(180) - 30),
-                                    yPos + static_cast<float>(random(60) - 30), EXPLOSION_BIG);
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(180) - 30),
-                                    yPos + static_cast<float>(random(60) - 30), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(180)),
+                                    yPos - 30.0f + static_cast<float>(random(60)), EXPLOSION_BIG);
+        PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(180)),
+                                    yPos - 30.0f + static_cast<float>(random(60)), SPIDERSPLITTER);
     }
 
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(180) - 10),
-                                    yPos + static_cast<float>(random(60) - 10), EXPLOSION_MEDIUM2);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(180)),
+                                    yPos - 10.0f + static_cast<float>(random(60)), EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 300; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(180) - 10),
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(180)),
                                     yPos + static_cast<float>(random(50)), ROCKETSMOKE);
 
     SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_EXPLOSION3);  // Sound ausgeben

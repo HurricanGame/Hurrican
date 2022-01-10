@@ -52,7 +52,7 @@ void GegnerEierMann::DoKI() {
             }
         }
     }  // animieren
-
+#if 0
     // Je nach Handlung richtig verhalten
     //
     switch (Handlung) {
@@ -63,6 +63,7 @@ void GegnerEierMann::DoKI() {
             break;
 
     }  // switch
+#endif
 }
 
 // --------------------------------------------------------------------------------------

@@ -265,7 +265,7 @@ bool ExtractStringOfLength(char *dst1, char *dst2, char *source, int width, Dire
         return false;
 
     int split_pos = 0;
-    int source_len = strlen(source);
+    int const source_len = strlen(source);
     dst1[0] = '\0';
     dst2[0] = '\0';
 

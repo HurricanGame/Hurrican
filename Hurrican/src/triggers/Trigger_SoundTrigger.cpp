@@ -37,20 +37,19 @@ void GegnerSoundTrigger::DoKI() {
             // Sound auf die richtige Lautstärke und den Pitch setzen
             //
             if (PlayerAbstand() < 700) {
-                int vol = 0, pan = 128;
-                float xdiff, ydiff, Abstand;
-
-                xdiff = ((Player[0].xpos + 45.0f) - xPos);
-                ydiff = ((Player[0].ypos + 45.0f) - yPos);
+                float xdiff = ((Player[0].xpos + 45.0f) - xPos);
+                float ydiff = ((Player[0].ypos + 45.0f) - yPos);
 
                 // DKS - Converted to float:
-                Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
+                float Abstand = sqrtf((xdiff * xdiff) + (ydiff * ydiff));
 
                 // DKS - Sound is twice as loud here as it should be, and volume is
                 //      adjusted against the global sound volume in the sound manager itself:
                 // vol = static_cast<int>(100-static_cast<float>(Abstand/6.0f)) * 2;
                 // vol = int (vol * SoundManager.g_sound_vol /100.0f);
-                vol = static_cast<int>(100.0f - Abstand / 6.0f);
+                int pan = 128;
+
+                int vol = static_cast<int>(100.0f - Abstand / 6.0f);
                 if (vol < 0) {
                     vol = 0;
                 } else {

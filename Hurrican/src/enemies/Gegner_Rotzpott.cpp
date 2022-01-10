@@ -32,11 +32,11 @@ GegnerRotzpott::GegnerRotzpott(int Wert1, int Wert2, bool Light) {
 void GegnerRotzpott::CalcKnarreWinkel() {
     // Gegner auf Spieler ausrichten
     //
-    float dx, dy;
     static float dir = 0.0f;
 
     clampAngle(GunWinkel);
 
+    float dx, dy;
     if (pAim->ypos > yPos + 30) {
         dx = (xPos + 27) - (pAim->xpos + 35);
         dy = (yPos + 20) - (pAim->ypos + 40);
@@ -179,7 +179,6 @@ void GegnerRotzpott::DoKI() {
 void GegnerRotzpott::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
 
-    // int i = 0;
     for (int i = 0; i < 8; i++) {
         PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(40)),
                                     yPos - 10.0f + static_cast<float>(random(20)), EXPLOSION_MEDIUM2);

@@ -71,16 +71,16 @@ DirectGraphicsClass::~DirectGraphicsClass() {}
 // D3D Initialisieren
 // --------------------------------------------------------------------------------------
 bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, std::uint32_t dwZ_Bits, bool VSync) {
-    bool isFullscreen = CommandLineParams.RunWindowMode != ScreenMode::WINDOW;
-    uint16_t ScreenWidth = SCREENWIDTH;
-    uint16_t ScreenHeight = SCREENHEIGHT;
+    bool const isFullscreen = CommandLineParams.RunWindowMode != ScreenMode::WINDOW;
+    int ScreenWidth = SCREENWIDTH;
+    int ScreenHeight = SCREENHEIGHT;
 
     if (CommandLineParams.LowRes) {
         ScreenWidth = LOWRES_SCREENWIDTH;
         ScreenHeight = LOWRES_SCREENHEIGHT;
     }
 
-    uint16_t ScreenDepth = CommandLineParams.ScreenDepth;
+    int const ScreenDepth = CommandLineParams.ScreenDepth;
 #if SDL_VERSION_ATLEAST(2, 0, 0)
     uint32_t flags = SDL_WINDOW_OPENGL;
 #else /* SDL 1.2 */
@@ -108,12 +108,12 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
     Protokoll << "SDL initialized." << std::endl;
 
 #if !defined(USE_EGL_SDL) && !defined(USE_EGL_RAW) && !defined(USE_EGL_RPI)
-    if (CommandLineParams.ScreenDepth > 16) {     // DKS - Screen depth is now default 16 under GLES, 32 others
+    if (ScreenDepth > 16) {     // DKS - Screen depth is now default 16 under GLES, 32 others
         SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);  //      (Can now be changed via command line switch)
         SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
         SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
 
-        if (CommandLineParams.ScreenDepth >= 32) {
+        if (ScreenDepth >= 32) {
             SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
             SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
         } else {

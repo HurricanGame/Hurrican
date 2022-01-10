@@ -315,18 +315,18 @@ bool DirectGraphicsSprite::LoadImage(const std::string &filename,
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsSprite::RenderSprite(float x, float y, D3DCOLOR Color) {
-    float l, r, o, u;      // Vertice Koordinaten
-    float tl, tr, to, tu;  // Textur Koordinaten
 
-    l = x;                                   // Links
-    r = x + (itsRect.right - itsRect.left);  // Rechts
-    o = y;                                   // Oben
-    u = y + (itsRect.bottom - itsRect.top);  // Unten
+    // Vertice Koordinaten
+    float l = x;                                   // Links
+    float r = x + (itsRect.right - itsRect.left);  // Rechts
+    float o = y;                                   // Oben
+    float u = y + (itsRect.bottom - itsRect.top);  // Unten
 
-    tl = itsRect.left * itsXTexScale;    // Links
-    tr = itsRect.right * itsXTexScale;   // Rechts
-    to = itsRect.top * itsYTexScale;     // Oben
-    tu = itsRect.bottom * itsYTexScale;  // Unten
+    // Textur Koordinaten
+    float tl = itsRect.left * itsXTexScale;    // Links
+    float tr = itsRect.right * itsXTexScale;   // Rechts
+    float to = itsRect.top * itsYTexScale;     // Oben
+    float tu = itsRect.bottom * itsYTexScale;  // Unten
 
     VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
@@ -370,8 +370,6 @@ void DirectGraphicsSprite::RenderSprite(float x,
                                         D3DCOLOR c2,
                                         D3DCOLOR c3,
                                         D3DCOLOR c4) {
-    float l, r, o, u;      // Vertice Koordinaten
-    float tl, tr, to, tu;  // Textur Koordinaten
 
     // Ausschnitt einstellen
     Anim %= 255;
@@ -379,15 +377,17 @@ void DirectGraphicsSprite::RenderSprite(float x,
     if (Anim > -1)
         itsRect = itsPreCalcedRects[Anim];
 
-    l = x;                                   // Links
-    r = x + (itsRect.right - itsRect.left);  // Rechts
-    o = y;                                   // Oben
-    u = y + (itsRect.bottom - itsRect.top);  // Unten
+    // Vertice Koordinaten
+    float l = x;                                   // Links
+    float r = x + (itsRect.right - itsRect.left);  // Rechts
+    float o = y;                                   // Oben
+    float u = y + (itsRect.bottom - itsRect.top);  // Unten
 
-    tl = itsRect.left * itsXTexScale;    // Links
-    tr = itsRect.right * itsXTexScale;   // Rechts
-    to = itsRect.top * itsYTexScale;     // Oben
-    tu = itsRect.bottom * itsYTexScale;  // Unten
+    // Textur Koordinaten
+    float tl = itsRect.left * itsXTexScale;    // Links
+    float tr = itsRect.right * itsXTexScale;   // Rechts
+    float to = itsRect.top * itsYTexScale;     // Oben
+    float tu = itsRect.bottom * itsYTexScale;  // Unten
 
     VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
@@ -426,7 +426,6 @@ void DirectGraphicsSprite::RenderSprite(float x,
 // --------------------------------------------------------------------------------------
 void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color, bool h, bool v) {
     float l, r, o, u;      // Vertice Koordinaten
-    float tl, tr, to, tu;  // Textur Koordinaten
 
     if (!v) {
         o = y;                                   // Unten
@@ -444,10 +443,11 @@ void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
         r = x;
     }
 
-    tl = itsRect.left * itsXTexScale;    // Links
-    tr = itsRect.right * itsXTexScale;   // Rechts
-    to = itsRect.top * itsYTexScale;     // Oben
-    tu = itsRect.bottom * itsYTexScale;  // Unten
+    // Textur Koordinaten
+    float tl = itsRect.left * itsXTexScale;    // Links
+    float tr = itsRect.right * itsXTexScale;   // Rechts
+    float to = itsRect.top * itsYTexScale;     // Oben
+    float tu = itsRect.bottom * itsYTexScale;  // Unten
 
     // tl = 0; tr = 0.5f; to = 0; tu = 0.5f;
 
@@ -486,18 +486,18 @@ void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color) {
-    float l, r, o, u;      // Vertice Koordinaten
-    float tl, tr, to, tu;  // Textur Koordinaten
 
-    r = x;                                   // Links
-    l = x + (itsRect.right - itsRect.left);  // Rechts
-    o = y;                                   // Oben
-    u = y + (itsRect.bottom - itsRect.top);  // Unten
+    // Vertice Koordinaten
+    float r = x;                                   // Links
+    float l = x + (itsRect.right - itsRect.left);  // Rechts
+    float o = y;                                   // Oben
+    float u = y + (itsRect.bottom - itsRect.top);  // Unten
 
-    tl = itsRect.left * itsXTexScale;    // Links
-    tr = itsRect.right * itsXTexScale;   // Rechts
-    to = itsRect.top * itsYTexScale;     // Oben
-    tu = itsRect.bottom * itsYTexScale;  // Unten
+    // Textur Koordinaten
+    float tl = itsRect.left * itsXTexScale;    // Links
+    float tr = itsRect.right * itsXTexScale;   // Rechts
+    float to = itsRect.top * itsYTexScale;     // Oben
+    float tu = itsRect.bottom * itsYTexScale;  // Unten
 
     VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
@@ -534,18 +534,18 @@ void DirectGraphicsSprite::RenderMirroredSprite(float x, float y, D3DCOLOR Color
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsSprite::RenderSpriteScaled(float x, float y, int width, int height, D3DCOLOR col) {
-    float l, r, o, u;      // Vertice Koordinaten
-    float tl, tr, to, tu;  // Textur Koordinaten
 
-    l = x;           // Links
-    r = x + width;   // Rechts
-    o = y;           // Oben
-    u = y + height;  // Unten
+    // Vertice Koordinaten
+    float l = x;           // Links
+    float r = x + width;   // Rechts
+    float o = y;           // Oben
+    float u = y + height;  // Unten
 
-    tl = itsRect.left * itsXTexScale;    // Links
-    tr = itsRect.right * itsXTexScale;   // Rechts
-    to = itsRect.top * itsYTexScale;     // Oben
-    tu = itsRect.bottom * itsYTexScale;  // Unten
+    // Textur Koordinaten
+    float tl = itsRect.left * itsXTexScale;    // Links
+    float tr = itsRect.right * itsXTexScale;   // Rechts
+    float to = itsRect.top * itsYTexScale;     // Oben
+    float tu = itsRect.bottom * itsYTexScale;  // Unten
 
     VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
@@ -586,18 +586,18 @@ void DirectGraphicsSprite::RenderSpriteScaled(float x, float y, int width, int h
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsSprite::RenderSpriteScaled(float x, float y, int width, int height, int Anim, D3DCOLOR col) {
-    float l, r, o, u;      // Vertice Koordinaten
-    float tl, tr, to, tu;  // Textur Koordinaten
 
-    l = x;           // Links
-    r = x + width;   // Rechts
-    o = y;           // Oben
-    u = y + height;  // Unten
+    // Vertice Koordinaten
+    float l = x;           // Links
+    float r = x + width;   // Rechts
+    float o = y;           // Oben
+    float u = y + height;  // Unten
 
-    tl = ((Anim % itsXFrameCount) * itsXFrameSize) * itsXTexScale;                  // Links
-    tr = ((Anim % itsXFrameCount) * itsXFrameSize + itsXFrameSize) * itsXTexScale;  // Rechts
-    to = ((Anim / itsXFrameCount) * itsYFrameSize) * itsYTexScale;                  // Oben
-    tu = ((Anim / itsXFrameCount) * itsYFrameSize + itsYFrameSize) * itsYTexScale;  // Unten
+    // Textur Koordinaten
+    float tl = ((Anim % itsXFrameCount) * itsXFrameSize) * itsXTexScale;                  // Links
+    float tr = ((Anim % itsXFrameCount) * itsXFrameSize + itsXFrameSize) * itsXTexScale;  // Rechts
+    float to = ((Anim / itsXFrameCount) * itsYFrameSize) * itsYTexScale;                  // Oben
+    float tu = ((Anim / itsXFrameCount) * itsYFrameSize + itsYFrameSize) * itsYTexScale;  // Unten
 
     VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
@@ -638,18 +638,18 @@ void DirectGraphicsSprite::RenderSpriteScaled(float x, float y, int width, int h
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D3DCOLOR Color) {
-    float l, r, o, u;      // Vertice Koordinaten
-    float tl, tr, to, tu;  // Textur Koordinaten
 
-    l = x;                                   // Links
-    r = x + (itsRect.right - itsRect.left);  // Rechts
-    o = y;                                   // Oben
-    u = y + (itsRect.bottom - itsRect.top);  // Unten
+    // Vertice Koordinaten
+    float l = x;                                   // Links
+    float r = x + (itsRect.right - itsRect.left);  // Rechts
+    float o = y;                                   // Oben
+    float u = y + (itsRect.bottom - itsRect.top);  // Unten
 
-    tl = itsRect.left * itsXTexScale;    // Links
-    tr = itsRect.right * itsXTexScale;   // Rechts
-    to = itsRect.top * itsYTexScale;     // Oben
-    tu = itsRect.bottom * itsYTexScale;  // Unten
+    // Textur Koordinaten
+    float tl = itsRect.left * itsXTexScale;    // Links
+    float tr = itsRect.right * itsXTexScale;   // Rechts
+    float to = itsRect.top * itsYTexScale;     // Oben
+    float tu = itsRect.bottom * itsYTexScale;  // Unten
 
     VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
@@ -679,13 +679,13 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
 
     //----- Sprite rotieren
 
-    glm::mat4x4 matRot, matTrans, matTrans2;
+    glm::mat4x4 matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
     clampAngle(Winkel);
 
     // Rotationsmatrix
-    matRot = glm::rotate(glm::mat4x4(1.0f), PI * Winkel / 180.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+    glm::mat4x4 matRot = glm::rotate(glm::mat4x4(1.0f), PI * Winkel / 180.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 
     // Transformation zum Ursprung
     D3DXMatrixTranslation(&matTrans, -x - (itsRect.right - itsRect.left) / 2.0f,
@@ -723,8 +723,6 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, D
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, int Anim, D3DCOLOR Color, bool mirror) {
-    float l, r, o, u;      // Vertice Koordinaten
-    float tl, tr, to, tu;  // Textur Koordinaten
 
     // Ausschnitt einstellen
     Anim %= 255;
@@ -733,6 +731,8 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
     // DKS - Pulled duplicated math out of logic below:
     float height = itsRect.bottom - itsRect.top;
     float width = itsRect.right - itsRect.left;
+
+    float l, r, o, u;      // Vertice Koordinaten
 
     // normal
     //
@@ -756,10 +756,11 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
                      // u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten    //DKS
     u = y + height;  // Unten
 
-    tl = itsRect.left * itsXTexScale;    // Links
-    tr = itsRect.right * itsXTexScale;   // Rechts
-    to = itsRect.top * itsYTexScale;     // Oben
-    tu = itsRect.bottom * itsYTexScale;  // Unten
+    // Textur Koordinaten
+    float tl = itsRect.left * itsXTexScale;    // Links
+    float tr = itsRect.right * itsXTexScale;   // Rechts
+    float to = itsRect.top * itsYTexScale;     // Oben
+    float tu = itsRect.bottom * itsYTexScale;  // Unten
 
     VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
@@ -789,13 +790,13 @@ void DirectGraphicsSprite::RenderSpriteRotated(float x, float y, float Winkel, i
 
     //----- Sprite rotieren
 
-    glm::mat4x4 matRot, matTrans, matTrans2;
+    glm::mat4x4 matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
     clampAngle(Winkel);
 
     // Rotationsmatrix
-    matRot = glm::rotate(glm::mat4x4(1.0f), PI * Winkel / 180.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+    glm::mat4x4 matRot = glm::rotate(glm::mat4x4(1.0f), PI * Winkel / 180.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 
     // Transformation zum Ursprung
     D3DXMatrixTranslation(&matTrans, -x - (itsRect.right - itsRect.left) / 2.0f,
@@ -839,12 +840,12 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
                                                      float offy,
                                                      D3DCOLOR Color,
                                                      bool mirrored) {
-    float l, r, o, u;      // Vertice Koordinaten
-    float tl, tr, to, tu;  // Textur Koordinaten
 
     // DKS - Pulled duplicated math out of logic below:
     float height = itsRect.bottom - itsRect.top;
     float width = itsRect.right - itsRect.left;
+
+    float l, r, o, u;      // Vertice Koordinaten
 
     l = x;          // Links
                     // r = x+(itsRect.right-itsRect.left-1)+0.5f;	// Rechts       //DKS
@@ -861,10 +862,11 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
                      // u = y+(itsRect.bottom-itsRect.top-1)+0.5f;	// Unten        //DKS
     u = y + height;  // Unten
 
-    tl = itsRect.left * itsXTexScale;    // Links
-    tr = itsRect.right * itsXTexScale;   // Rechts
-    to = itsRect.top * itsYTexScale;     // Oben
-    tu = itsRect.bottom * itsYTexScale;  // Unten
+    // Textur Koordinaten
+    float tl = itsRect.left * itsXTexScale;    // Links
+    float tr = itsRect.right * itsXTexScale;   // Rechts
+    float to = itsRect.top * itsYTexScale;     // Oben
+    float tu = itsRect.bottom * itsYTexScale;  // Unten
 
     VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
@@ -894,13 +896,13 @@ void DirectGraphicsSprite::RenderSpriteRotatedOffset(float x,
 
     //----- Sprite rotieren
 
-    glm::mat4x4 matRot, matTrans, matTrans2;
+    glm::mat4x4 matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
     clampAngle(Winkel);
 
     // Rotationsmatrix
-    matRot = glm::rotate(glm::mat4x4(1.0f), PI * Winkel / 180.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+    glm::mat4x4 matRot = glm::rotate(glm::mat4x4(1.0f), PI * Winkel / 180.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 
     // Transformation zum Ursprung
     D3DXMatrixTranslation(&matTrans, -x - (itsRect.right - itsRect.left) / 2.0f - offx,
@@ -943,18 +945,18 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x,
                                                      float height,
                                                      float Winkel,
                                                      D3DCOLOR Color) {
-    float l, r, o, u;      // Vertice Koordinaten
-    float tl, tr, to, tu;  // Textur Koordinaten
 
-    l = x;           // Links
-    r = x + width;   // Rechts
-    o = y;           // Oben
-    u = y + height;  // Unten
+    // Vertice Koordinaten
+    float l = x;           // Links
+    float r = x + width;   // Rechts
+    float o = y;           // Oben
+    float u = y + height;  // Unten
 
-    tl = itsRect.left * itsXTexScale;    // Links
-    tr = itsRect.right * itsXTexScale;   // Rechts
-    to = itsRect.top * itsYTexScale;     // Oben
-    tu = itsRect.bottom * itsYTexScale;  // Unten
+    // Textur Koordinaten
+    float tl = itsRect.left * itsXTexScale;    // Links
+    float tr = itsRect.right * itsXTexScale;   // Rechts
+    float to = itsRect.top * itsYTexScale;     // Oben
+    float tu = itsRect.bottom * itsYTexScale;  // Unten
 
     VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 
@@ -984,13 +986,13 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x,
 
     //----- Sprite rotieren
 
-    glm::mat4x4 matRot, matTrans, matTrans2;
+    glm::mat4x4 matTrans, matTrans2;
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
     clampAngle(Winkel);
 
     // Rotationsmatrix
-    matRot = glm::rotate(glm::mat4x4(1.0f), PI * Winkel / 180.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+    glm::mat4x4 matRot = glm::rotate(glm::mat4x4(1.0f), PI * Winkel / 180.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 
     // Transformation zum Ursprung
     D3DXMatrixTranslation(&matTrans, -x - (width) / 2, -y - (height) / 2, 0.0f);
@@ -1032,12 +1034,12 @@ void DirectGraphicsSprite::RenderSpriteScaledRotated(float x,
 // --------------------------------------------------------------------------------------
 
 void RenderRect4(float x, float y, float width, float height, D3DCOLOR c1, D3DCOLOR c2, D3DCOLOR c3, D3DCOLOR c4) {
-    float l, r, o, u;  // Vertice Koordinaten
 
-    l = x;           // Links
-    r = x + width;   // Rechts
-    o = y;           // Oben
-    u = y + height;  // Unten
+    // Vertice Koordinaten
+    float l = x;           // Links
+    float r = x + width;   // Rechts
+    float o = y;           // Oben
+    float u = y + height;  // Unten
 
     VERTEX2D TriangleStrip[4];  // DKS - Added local declaration
 

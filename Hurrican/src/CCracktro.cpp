@@ -138,12 +138,10 @@ void CCracktro::Main() {
     // Sinus Scroller
     // --------------------------------------------------------------------------------------
     float xchar = 0;
-    float s;
     static float colpos = 0.0f;
     static float LogoPos = 0.0f;
 
-    s = SinPos;
-    s = sinf(s) * 80.0f;
+    float s = sinf(SinPos) * 80.0f;
     s = abs(static_cast<int>(s));
 
     colpos += 6.0f SYNC;
@@ -197,13 +195,10 @@ void CCracktro::Main() {
         if (numsin > 2 * PI)
             numsin -= 2 * PI;
 
-        float off = 0;
-        float off2 = 0;
-
         // Zahlen
         for (int i = 0; i < 5; i++) {
-            off = sin(numsin + i / 3.0f) * 10.0f;
-            off2 = sin(numsin + i / 3.0f + PI / 2) * 20.0f;
+            float off = sin(numsin + i / 3.0f) * 10.0f;
+            float off2 = sin(numsin + i / 3.0f + PI / 2) * 20.0f;
 
             Zahlen.RenderSprite(75 + i * 40 - off + (640 - 341) / 2 + sin(LogoPos) * 100.0f, 110 - off2, i, 0xFFFFFFFF);
         }
@@ -260,13 +255,10 @@ void CCracktro::Main() {
         if (numsin > 2 * PI)
             numsin -= 2 * PI;
 
-        float off = 0;
-        float off2 = 0;
-
         // Zahlen
         for (int i = 0; i < 5; i++) {
-            off = sin(numsin + i / 3.0f) * 10.0f;
-            off2 = sin(numsin + i / 3.0f + PI / 2) * 20.0f;
+            float off = sin(numsin + i / 3.0f) * 10.0f;
+            float off2 = sin(numsin + i / 3.0f + PI / 2) * 20.0f;
 
             Zahlen.RenderSprite(75 + i * 40 - off + (640 - 341) / 2 + sin(LogoPos) * 100.0f, 110 - off2, i, 0xFFFFFFFF);
         }

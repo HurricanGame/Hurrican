@@ -81,21 +81,18 @@ void GegnerMiniRocket::DoKI() {
     if (AnimCount <= 0.0f) {
         // Winkel zum Spieler ausrechnen
         //
-        float dx, dy;
 
         // Abstände berechnen
-        dx = (xPos + 6) - (pAim->xpos + 35);
-        dy = (yPos + 12) - (pAim->ypos + 20);
+        float dx = (xPos + 6) - (pAim->xpos + 35);
+        float dy = (yPos + 12) - (pAim->ypos + 20);
 
         // Division durch Null verhinden
         if (dy == 0.0f)
             dy = 0.01f;
 
-        float w;
-
         // DKS - converted to float, optimized:
         // w = static_cast<float>(atan(dx / dy) * 360.0f / (D3DX_PI * 2));
-        w = RadToDeg(atanf(dx / dy));
+        float w = RadToDeg(atanf(dx / dy));
 
         if (dx >= 0.0f && dy >= 0.0f)
             rot = w;
@@ -152,12 +149,11 @@ void GegnerMiniRocket::DoKI() {
 void GegnerMiniRocket::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
 
-    int i = 0;
-    for (i = 0; i < 5; i++)
+    for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
                                     yPos - 10.0f + static_cast<float>(random(20)), SMOKE);
 
-    for (i = 0; i < 5; i++)
+    for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),
                                     yPos - 10.0f + static_cast<float>(random(20)), MINIFLARE);
 

@@ -76,13 +76,12 @@ void GegnerDeckenturm::DoKI() {
         {
             // wieder zusammenklappen
             // Je nach Winkel zum Spieler die Kanone richtig ausrichten
-            float d1, d2;
 
             // Hypothenuse
-            d1 = static_cast<float>(PlayerAbstand());
+            float d1 = static_cast<float>(PlayerAbstand());
 
             // Ankathete
-            d2 = (pAim->xpos + pAim->CollideRect.left + (pAim->CollideRect.right - pAim->CollideRect.left) / 2) -
+            float d2 = (pAim->xpos + pAim->CollideRect.left + (pAim->CollideRect.right - pAim->CollideRect.left) / 2) -
                  (xPos + GegnerRect[GegnerArt].right / 2);
 
             // DKS - Use new Rad/Deg macros:

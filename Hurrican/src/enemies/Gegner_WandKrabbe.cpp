@@ -33,12 +33,7 @@ GegnerWandKrabbe::GegnerWandKrabbe(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerWandKrabbe::DoDraw() {
-    bool mirrored;
-
-    if (BlickRichtung == RECHTS)
-        mirrored = false;
-    else
-        mirrored = true;
+    bool mirrored = (BlickRichtung != RECHTS);
 
     // gerade im Flug? Dann rotiert rendern
     if (Handlung == GEGNER_DREHEN || Handlung == GEGNER_FALLEN || Handlung == GEGNER_EXPLODIEREN)

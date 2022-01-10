@@ -405,14 +405,11 @@ void MenuClass::ShowMenuBack() {
 // --------------------------------------------------------------------------------------
 
 void MenuClass::ShowMenu() {
-    D3DCOLOR menucolor;
-    D3DCOLOR menucolor2;
-    D3DCOLOR menucolor3;
 
     int alpha = static_cast<int>(Rotation);
-    menucolor = D3DCOLOR_RGBA(255, 255, 255, alpha);
-    menucolor2 = D3DCOLOR_RGBA(255, 255, 255, alpha / 2);
-    menucolor3 = D3DCOLOR_RGBA(255, 255, 255, alpha / 5);
+    D3DCOLOR menucolor = D3DCOLOR_RGBA(255, 255, 255, alpha);
+    D3DCOLOR menucolor2 = D3DCOLOR_RGBA(255, 255, 255, alpha / 2);
+    D3DCOLOR menucolor3 = D3DCOLOR_RGBA(255, 255, 255, alpha / 5);
 
     // Hintergrund rotieren lassen
     ScrollPos += 0.1f SYNC;
@@ -470,7 +467,7 @@ void MenuClass::ShowMenu() {
         AktuellerZustand != MENUZUSTAND_ENTERNAME)
         MenuBackground.RenderSprite(xpos, ypos, 0xFFFFFFFF);*/
 
-    const int OFFSET = 80;
+    constexpr int OFFSET = 80;
 
     // Je nach Zustand das richtige Menu anzeigen
     switch (AktuellerZustand) {
@@ -498,7 +495,7 @@ void MenuClass::ShowMenu() {
         } break;
 
         case MENUZUSTAND_VOLUMES: {
-            const int OFFSET2 = 20;
+            constexpr int OFFSET2 = 20;
 
             float d = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT_MENUE_EINSTELLUNGEN], 2));
             pMenuFont->DrawText(320 - d / 2.0f, ypos + OFFSET - OFFSET2, TextArray[TEXT_MENUE_EINSTELLUNGEN], menucolor,
@@ -719,15 +716,10 @@ void MenuClass::ShowMenu() {
 
             // Für beide Spieler den ganzen Klumbatsch anzeigen
             for (int j = 0; j < 2; j++) {
-                D3DCOLOR col;
-                PlayerClass *pCurrentPlayer;
-
-                if (j == 0)
-                    pCurrentPlayer = &Player[0];
-                else
-                    pCurrentPlayer = &Player[1];
+                PlayerClass *pCurrentPlayer = &Player[j];
 
                 // Typ (Tastatur, Joystick (mit Name)
+                D3DCOLOR col;
                 if (CurrentPlayer == j && AktuellerPunkt == MENU_TASTEN_TYPE_LINE)
                     col = 0xFFFFFFFF;
                 else
@@ -902,9 +894,8 @@ void MenuClass::ShowMenu() {
             pMenuFont->DrawText(xpos + 420, ypos + 55, TextArray[TEXT_HIGHSCORE_SKILL], 0xFFFFFFFF, 2);
 
             for (int i = 0; i < MAX_HIGHSCORES; i++) {
-                D3DCOLOR Color;
 
-                Color = HighscoreColors[i + BlinkOffset];
+                D3DCOLOR Color = HighscoreColors[i + BlinkOffset];
 
                 //_itoa_s(i+1, Buffer, 10);
                 // pMenuFont->DrawText(xpos-90, ypos+static_cast<float>(105+i*26), Buffer, Color, 2);
@@ -949,17 +940,17 @@ void MenuClass::ShowMenu() {
             // DKS - There are now two credits text arrays, one original, one meant for low-res display
             // (LowResCredits[])
             //      Altered this code to allow for displaying on low-res devices with new font-scaling:
-            int i = 0;
 
-            float scale_factor = pDefaultFont->GetScaleFactor();
-            int num_lines = 40 / pDefaultFont->GetScaleFactor();
-            int yoff_inc = 12 * pDefaultFont->GetScaleFactor();
+            float const scale_factor = pDefaultFont->GetScaleFactor();
+            int const num_lines = 40 / pDefaultFont->GetScaleFactor();
+            int const yoff_inc = 12 * pDefaultFont->GetScaleFactor();
             const char **credits_displayed = Credits;
 
             if (CommandLineParams.LowRes) {
                 credits_displayed = LowResCredits;  // Use the low-res text instead
             }
 
+            int i;
             for (i = 0; i < num_lines; i++) {
                 D3DCOLOR Color;
 
@@ -1139,16 +1130,15 @@ void MenuClass::DoMenu() {
     bool joy_delete = false;
     //    int joy_idx = Player[0].JoystickIndex;
     static float input_counter = 0.0f;
-    const float input_delay = 40.0f;  // Only accept joy input once every time counter reaches this value
+    constexpr float INPUT_DELAY = 40.0f;  // Only accept joy input once every time counter reaches this value
     input_counter += 30.0f SYNC;
-    if (input_counter > input_delay) {
-        input_counter = input_delay;
+    if (input_counter > INPUT_DELAY) {
+        input_counter = INPUT_DELAY;
     }
 
     // Einheitsmatrix setzen, damit das Menu richtig angezeigt wird
     //
-    glm::mat4x4 matView;
-    matView = glm::mat4x4(1.0f);
+    glm::mat4x4 matView = glm::mat4x4(1.0f);
     g_matView = matView;
 
     // Wird noch keine Menu Musik gespielt ?
@@ -1195,7 +1185,7 @@ void MenuClass::DoMenu() {
     if (DirectInput.AnyButtonDown())
         anybutton = true;
 
-    if (input_counter >= input_delay && JoystickFound == true) {
+    if (input_counter >= INPUT_DELAY && JoystickFound == true) {
         // Normally, for menu input we only check Player 1's joystick.
         int num_joys_to_check = 1;
         int joy_idx = Player[0].JoystickIndex;
@@ -1260,10 +1250,8 @@ void MenuClass::DoMenu() {
         selected = true;
     }
 
-    bool JoyOK, KeyOK;
-
-    KeyOK = false;
-    JoyOK = false;
+    bool KeyOK = false;
+    bool JoyOK = false;
 
     if (!KeyDown(DIK_NUMPAD4) && !KeyDown(DIK_NUMPAD6) && !KeyDown(DIK_NUMPAD2) && !KeyDown(DIK_NUMPAD8) &&
         !KeyDown(DIK_LEFT) && !KeyDown(DIK_RIGHT) && !KeyDown(DIK_UP) && !KeyDown(DIK_DOWN) && !KeyDown(DIK_RETURN) &&
@@ -1741,7 +1729,7 @@ void MenuClass::DoMenu() {
                         pCurrentPlayer2 = &Player[1];
 
                     if (KeyDown(DIK_NUMPAD6) || KeyDown(DIK_RIGHT) || joy_right) {
-                        input_counter = input_delay * 0.75f;  // Delay less than usual
+                        input_counter = INPUT_DELAY * 0.75f;  // Delay less than usual
 
                         if (AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE) {
                             pCurrentPlayer2->JoystickSchwelle -= 100.0f SYNC;
@@ -1762,7 +1750,7 @@ void MenuClass::DoMenu() {
 
                     // DKS - TODO allow a second joystick to adjust this
                     if (KeyDown(DIK_NUMPAD4) || KeyDown(DIK_LEFT) || joy_left) {
-                        input_counter = input_delay * 0.75f;  // Delay less than usual
+                        input_counter = INPUT_DELAY * 0.75f;  // Delay less than usual
 
                         if (AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE) {
                             pCurrentPlayer2->JoystickSchwelle += 100.0f SYNC;
@@ -2253,8 +2241,6 @@ void MenuClass::DoMenu() {
                     // Werte von Spieler auf das Savegame übertragen
                     // Name des Save games aus aktuellem Datum und aktueller Zeit erstelen
 
-                    char timestr[20];
-
                     time_t seconds = time(nullptr);
                     struct tm *ptm = localtime(&seconds);
 
@@ -2267,6 +2253,8 @@ void MenuClass::DoMenu() {
                                                (int)ptm->tm_hour,
                                                (int)ptm->tm_min);
                     */
+                    char timestr[20];
+
                     strcpy_s(timestr, asctime(ptm));
 
                     strcpy_s(Savegames[AktuellerPunkt].Name, 1, "");
@@ -2311,15 +2299,13 @@ void MenuClass::DoMenu() {
                                                             Player[0].Grenades + Player[0].SmartBombs + NUMPLAYERS;
 
                     // Und Savegame in Datei schreiben
-                    std::string Name;    // Für die Dateinamen
-                    std::string Buffer;  // Für _itoa
 
                     // Name des Savegames erstellen
-                    Buffer = std::to_string(AktuellerPunkt);
+                    std::string Buffer = std::to_string(AktuellerPunkt);
 
                     // Versuchen, die Datei zu erstellen
                     // nur weitermachen falls es keinen Fehler gibt
-                    Name = g_save_ext + "/Savegame" + Buffer + ".save";
+                    std::string Name = g_save_ext + "/Savegame" + Buffer + ".save";
                     std::ofstream Datei(Name, std::ofstream::binary);
 
                     // Fehler beim Öffnen ? Dann leeren Slot erzeugen
@@ -2355,12 +2341,11 @@ void MenuClass::DoMenu() {
 // --------------------------------------------------------------------------------------
 
 void MenuClass::LoadSavegames() {
-    std::string Name;  // Für die Dateinamen
 
     // Versuchen, die einzelnen Savegames zu laden
     for (int i = 0; i < MAX_SAVEGAMES; i++) {
         // Name des Savegames erstellen
-        Name = g_save_ext + "/Savegame" + std::to_string(i) + ".save";
+        std::string Name = g_save_ext + "/Savegame" + std::to_string(i) + ".save";
 
         // Versuchen, die Datei zu öffnen
         // falls sie nicht existiert oder es eine Fehler gibt, ist der Slot noch leer
@@ -2411,7 +2396,6 @@ void MenuClass::LoadSavegames() {
 
 // DKS - Altered to allow scaled fonts on low resolution devices
 void MenuClass::ShowSavegames(int Highlight) {
-    D3DCOLOR col;
     const int scale_factor = pDefaultFont->GetScaleFactor();
     int line_off_y = 14;
     int title_bar_off_y = ypos + 120;
@@ -2436,6 +2420,7 @@ void MenuClass::ShowSavegames(int Highlight) {
 
     // Alle Savegames anzeigen
     for (int i = 0; i < MAX_SAVEGAMES; i++) {
+        D3DCOLOR col;
         if (i == Highlight)
             col = 0xFFFFFFFF;
         else
@@ -2482,12 +2467,11 @@ void MenuClass::ShowSavegames(int Highlight) {
 // --------------------------------------------------------------------------------------
 
 void MenuClass::LoadHighscore() {
-    std::string name;
 
     // Versuchen, die Highscore Datei zu öffnen
     // falls sie nicht existiert oder es eine Fehler gibt, wird die Standard
     // Highscore gesetzt
-    name = g_save_ext + "/Hurrican.hsl";
+    std::string name = g_save_ext + "/Hurrican.hsl";
     std::ifstream Datei(name, std::ifstream::binary);
 
     // Fehler beim Öffnen ? Dann standard Highscore setzen
@@ -2508,10 +2492,9 @@ void MenuClass::LoadHighscore() {
         // Checken ob die Pruefsumme noch stimmt
         // und nur wenn diese stimmt die Highscore übernehmen
         // ansonsten wieder standard Highscore setzen
-        long Pruefsumme;
 
         for (int i = 0; i < MAX_HIGHSCORES; i++) {
-            Pruefsumme = 0;
+            long Pruefsumme = 0;
 
             Highscores[i].Score = FixEndian(Highscores[i].Score);
             Highscores[i].Stage = FixEndian(Highscores[i].Stage);
@@ -2538,10 +2521,9 @@ void MenuClass::LoadHighscore() {
 // --------------------------------------------------------------------------------------
 
 void MenuClass::SaveHighscore() {
-    std::string name;
 
     // Highscore Datei öffnen
-    name = g_save_ext + "/Hurrican.hsl";
+    std::string name = g_save_ext + "/Hurrican.hsl";
     std::ofstream Datei(name, std::ofstream::binary);
 
     // Fehler beim Öffnen ? Dann standard Highscore setzen
@@ -2618,32 +2600,32 @@ void MenuClass::ResetHighscore() {
 
 // DKS - Fixed displaying language info with scaled fonts, made rectangle drawing smarter and sized dynamically
 void MenuClass::ShowLanguageInfo() {
-    int a1, a2;
 
     if (ShowLanguageInfoCounter < 0.0f)
         return;
 
-    a1 = static_cast<int>(ShowLanguageInfoCounter);
+    int a1 = static_cast<int>(ShowLanguageInfoCounter);
 
     if (a1 > 255)
         a1 = 255;
 
-    a2 = a1 / 2;
+    int a2 = a1 / 2;
 
     // Determine size and location of background rectangle:
     unsigned int longest_line = 0;
     for (int i = 0; i < 9; i++) {
-        if (strlen(TextArray[i]) > longest_line) {
-            longest_line = strlen(TextArray[i]);
+        unsigned int const line_len = strlen(TextArray[i]);
+        if (line_len > longest_line) {
+            longest_line = line_len;
         }
     }
-    int xoff_inc = 8 * pDefaultFont->GetScaleFactor();
-    int yoff_inc = 12 * pDefaultFont->GetScaleFactor();
-    int border = 20 / pDefaultFont->GetScaleFactor();
-    int rect_w = longest_line * xoff_inc + border * 2;
-    int rect_h = 11 * yoff_inc + border * 2;
-    int rect_x = 320 - rect_w / 2;
-    int rect_y = 240 - rect_h / 2;
+    int const xoff_inc = 8 * pDefaultFont->GetScaleFactor();
+    int const yoff_inc = 12 * pDefaultFont->GetScaleFactor();
+    int const border = 20 / pDefaultFont->GetScaleFactor();
+    int const rect_w = longest_line * xoff_inc + border * 2;
+    int const rect_h = 11 * yoff_inc + border * 2;
+    int const rect_x = 320 - rect_w / 2;
+    int const rect_y = 240 - rect_h / 2;
     RenderRect(rect_x - 2, rect_y - 2, rect_w + 4, rect_h + 4, D3DCOLOR_RGBA(64, 128, 255, a2));
     RenderRect(rect_x - 1, rect_y - 1, rect_w + 2, rect_h + 2, D3DCOLOR_RGBA(0, 0, 64, a2));
     RenderRect(rect_x, rect_y, rect_w, rect_h, D3DCOLOR_RGBA(0, 0, 64, a2));

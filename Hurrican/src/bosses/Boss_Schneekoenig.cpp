@@ -52,10 +52,9 @@ void GegnerSchneeKoenig::DoDraw() {
 
     BlickRichtung = LINKS;
 
-    D3DCOLOR Color;
     static float xoff = 0;
 
-    Color = 0xFFFFFFFF;
+    D3DCOLOR Color = 0xFFFFFFFF;
 
     // int	Wert = 255-(static_cast<int>(DamageTaken));  // PICKLE not used
 
@@ -98,14 +97,13 @@ void GegnerSchneeKoenig::DoDraw() {
 // --------------------------------------------------------------------------------------
 
 void GegnerSchneeKoenig::RenderLaser() {
-    float w;
 
     // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
     // w = (KnarreWinkel + 180.0f) * PI / 180.0f;
     // Laser.RenderSpriteRotatedOffset(static_cast<float>(xPos - TileEngine.XOffset) + 90.0f + (float)sin(w) * 70.0f,
     //                                static_cast<float>(yPos - TileEngine.YOffset) + 5.0f + (float)cos(w) * 70.0f,
     //                                KnarreWinkel, 0, 0, 0xFFFFFFFF);
-    w = KnarreWinkel + 180.0f;
+    float w = KnarreWinkel + 180.0f;
     Laser.RenderSpriteRotatedOffset(xPos - TileEngine.XOffset + 90.0f + sin_deg(w) * 70.0f,
                                     yPos - TileEngine.YOffset + 5.0f + cos_deg(w) * 70.0f, KnarreWinkel, 0, 0,
                                     0xFFFFFFFF);
@@ -116,16 +114,11 @@ void GegnerSchneeKoenig::RenderLaser() {
 // --------------------------------------------------------------------------------------
 
 float GegnerSchneeKoenig::WinkelToPlayer() {
-    float dx;
 
     // Abstände berechnen
-    dx = (xPos + 100.0f) - (pAim->xpos + 35);
+    float dx = (xPos + 100.0f) - (pAim->xpos + 35.0f);
 
-    float winkel;
-
-    winkel = dx / 10.0f;
-
-    return winkel;
+    return dx / 10.0f;
 }
 
 // --------------------------------------------------------------------------------------
@@ -521,9 +514,7 @@ void GegnerSchneeKoenig::DoKI() {
                     }
                 }
 
-                int a;
-
-                a = static_cast<int>((yPos - TileEngine.YOffset - 200.0f) / 10.0f);
+                int a = static_cast<int>((yPos - TileEngine.YOffset - 200.0f) / 10.0f);
                 a = std::clamp(a, 0, 10);
 
                 AnimPhase = a;
@@ -534,7 +525,7 @@ void GegnerSchneeKoenig::DoKI() {
         case GEGNER_VERFOLGEN: {
             // Winkel zum Spieler ausrechnen
 
-            float aim = WinkelToPlayer();
+            float const aim = WinkelToPlayer();
 
             if (KnarreWinkel < aim) {
                 KnarreWinkel += 8.0f SYNC;
@@ -618,8 +609,7 @@ void GegnerSchneeKoenig::DoKI() {
     }
 
     // Checken, ob der Schneekönig von einer Schneekoppe getroffen wurde =)
-    GegnerClass *pTemp;
-    pTemp = Gegner.pStart;
+    GegnerClass *pTemp = Gegner.pStart;
 
     if (Handlung != GEGNER_AUSFAHREN)
         while (pTemp != nullptr) {

@@ -30,8 +30,8 @@ GegnerSecret::GegnerSecret(int Wert1, int Wert2, bool Light) {
 void GegnerSecret::DoKI() {
     // Secret nicht im Bild ?
     //
-    if (xPos + 10 < TileEngine.XOffset || xPos > TileEngine.XOffset + 640 || yPos + 10 < TileEngine.YOffset ||
-        yPos > TileEngine.YOffset + 480) {
+    if (xPos + 10.0f < TileEngine.XOffset || xPos > TileEngine.XOffset + 640.0f ||
+        yPos + 10.0f < TileEngine.YOffset || yPos > TileEngine.YOffset + 480.0f) {
         return;
     }
 

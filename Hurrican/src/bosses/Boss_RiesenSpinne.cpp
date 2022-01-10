@@ -53,11 +53,10 @@ void GegnerRiesenSpinne::StopCurrentAction() {}
 // --------------------------------------------------------------------------------------
 
 void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int off, D3DCOLOR col) {
-    float xp, yp, yoff, yoff2;
-
-    VERTEX2D TriangleStrip[4];  // Strip für einen Schuss
 
     x += 120;
+
+    float xp, yp;
 
     // Je nach "winkel" die beine anderes positionieren
     if (winkel < PI) {
@@ -69,26 +68,27 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
         yp = y;
     }
 
-    float l, r, o, u;      // Vertice Koordinaten
-    float tl, tr, to, tu;  // Textur Koordinaten
-
     float tempdamage = sin(DamageWackel * 2 * PI) * 10.0f;
 
     //----- Oberteil des Beins rendern
 
-    yoff = sin(WalkCount * 2.0f);
-    yoff2 = sin(winkel - PI - 0.5f) * 5.0f;
+    float yoff = sin(WalkCount * 2.0f);
+    float yoff2 = sin(winkel - PI - 0.5f) * 5.0f;
     Legs[2].itsRect = Legs[2].itsPreCalcedRects[anim * 3 + off];
 
-    l = xp - 0.5f;                                                                          // Links
-    r = xp + (Legs[2].itsRect.right - Legs[2].itsRect.left - 1) + 0.5f;                     // Rechts
-    o = y + 55.0f - 0.5f - (Legs[2].itsRect.bottom - Legs[2].itsRect.top) + yoff2 + yBody;  // Oben
-    u = y + 30.0f + 0.5f + yoff + tempdamage + yBody;                                       // unten
+    // Vertice Koordinaten
+    float l = xp - 0.5f;                                                                          // Links
+    float r = xp + (Legs[2].itsRect.right - Legs[2].itsRect.left - 1) + 0.5f;                     // Rechts
+    float o = y + 55.0f - 0.5f - (Legs[2].itsRect.bottom - Legs[2].itsRect.top) + yoff2 + yBody;  // Oben
+    float u = y + 30.0f + 0.5f + yoff + tempdamage + yBody;                                       // unten
 
-    tl = Legs[2].itsRect.left * Legs[2].itsXTexScale;    // Links
-    tr = Legs[2].itsRect.right * Legs[2].itsXTexScale;   // Rechts
-    to = Legs[2].itsRect.top * Legs[2].itsYTexScale;     // Oben
-    tu = Legs[2].itsRect.bottom * Legs[2].itsYTexScale;  // Unten
+    // Textur Koordinaten
+    float tl = Legs[2].itsRect.left * Legs[2].itsXTexScale;    // Links
+    float tr = Legs[2].itsRect.right * Legs[2].itsXTexScale;   // Rechts
+    float to = Legs[2].itsRect.top * Legs[2].itsYTexScale;     // Oben
+    float tu = Legs[2].itsRect.bottom * Legs[2].itsYTexScale;  // Unten
+
+    VERTEX2D TriangleStrip[4];  // Strip für einen Schuss
 
     TriangleStrip[0].color = TriangleStrip[1].color = TriangleStrip[2].color = TriangleStrip[3].color = col;
 
@@ -232,7 +232,6 @@ void GegnerRiesenSpinne::DoDraw() {
     // Beine hinter dem Körper
     for (int i = 0; i < 4; i++) {
         int a;
-        float w;
 
         if (i == 0)
             a = 0;
@@ -243,19 +242,18 @@ void GegnerRiesenSpinne::DoDraw() {
         if (i == 3)
             a = 2;
 
-        w = LegsAnim[a] + PI;
+        float w = LegsAnim[a] + PI;
 
-        if (w > 2 * PI)
-            w -= 2 * PI;
+        constexpr float TWO_PI = 2 * PI;
+        if (w > TWO_PI)
+            w -= TWO_PI;
 
         DrawLeg(xPos - TileEngine.XOffset - 70.0f + static_cast<float>(a * 110),
                 yPos - TileEngine.YOffset + 130.0f, w, a, 10, 0xFF888888);
     }
 
-    float tempwinkel, tempdamage;
-
-    tempdamage = sin(DamageWackel * 2 * PI) * 10.0f;
-    tempwinkel = HeadWinkel - sin(DamageWackel) * 12.0f;
+    float tempdamage = sin(DamageWackel * 2 * PI) * 10.0f;
+    float tempwinkel = HeadWinkel - sin(DamageWackel) * 12.0f;
 
     clampAngle(tempwinkel);
 
@@ -340,7 +338,7 @@ void GegnerRiesenSpinne::RandomHandlung() {
     xSpeed = 0.0f;
 
     static int last = -1;
-    int j = -1;
+    int j;
 
     // Per Zufall neue Aktion, die eben noch nicht dran war
     do {
@@ -448,10 +446,11 @@ void GegnerRiesenSpinne::DoKI() {
             xSpeed = WalkDir;
             WalkCount -= WalkDir / 10.0f SYNC;
 
-            if (WalkCount > 2 * PI)
-                WalkCount -= 2 * PI;
+            constexpr float TWO_PI = 2 * PI;
+            if (WalkCount > TWO_PI)
+                WalkCount -= TWO_PI;
             if (WalkCount < 0.0f)
-                WalkCount += 2 * PI;
+                WalkCount += TWO_PI;
 
             if (Handlung == GEGNER_CRUSHEN) {
                 if (HeadWinkel < 45.0f)

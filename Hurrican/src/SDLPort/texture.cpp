@@ -328,8 +328,6 @@ bool loadImagePVRTC(image_t &image, const std::string &fullpath) {
 #endif
 
 bool loadImageSDL(image_t &image, const std::string &fullpath, void *buf, unsigned int buf_size) {
-    uint8_t factor;
-    SDL_Rect rawDimensions;
     SDL_Surface *rawSurf = nullptr;  // This surface will tell us the details of the image
     SDL_Surface *finSurf = nullptr;
 
@@ -363,6 +361,7 @@ bool loadImageSDL(image_t &image, const std::string &fullpath, void *buf, unsign
     }
 
     if (rawSurf != nullptr) {
+        SDL_Rect rawDimensions;
         //  Store dimensions of original RAW surface
         rawDimensions.x = rawSurf->w;
         rawDimensions.y = rawSurf->h;
@@ -400,7 +399,7 @@ bool loadImageSDL(image_t &image, const std::string &fullpath, void *buf, unsign
         SDL_BlitSurface(rawSurf, nullptr, finSurf, nullptr);
         SDL_FreeSurface(rawSurf);
 
-        factor = 1;
+        uint8_t factor = 1;
 
         if (((finSurf->w >= CommandLineParams.TexSizeMin) || (finSurf->h >= CommandLineParams.TexSizeMin)) &&
             (CommandLineParams.TexFactor > 1)) {
@@ -454,15 +453,14 @@ std::vector<char> LowerResolution(SDL_Surface *surface, int factor) {
         return std::vector<char>();
     }
 
-    int x, y;
     std::vector<char> dataout;
     dataout.reserve((surface->h / factor) * (surface->w / factor) * sizeof(uint32_t));
 
     uint32_t *dataout32 = reinterpret_cast<uint32_t *>(dataout.data());
 
-    for (y = 0; y < surface->h; y += factor) {
+    for (int y = 0; y < surface->h; y += factor) {
         uint32_t *datain32 = (reinterpret_cast<uint32_t *>(surface->pixels)) + surface->w * y;
-        for (x = 0; x < surface->w; x += factor) {
+        for (int x = 0; x < surface->w; x += factor) {
             *dataout32 = *datain32;
             datain32 += factor;
             dataout32++;

@@ -34,12 +34,11 @@ void GegnerGlubschi2::DoDraw() {
 
     // Je nach horizontalem Spielerabstand richtige Animationsphase setzen
     //
-    float a;
     int anim = 0;
 
-    a = xPos - pAim->xpos;
+    float a = xPos - pAim->xpos;
 
-    if (a < 200) {
+    if (a < 200.0f) {
         anim = static_cast<int>((200.0f - a) / 18.0f);
 
         if (anim > 20)

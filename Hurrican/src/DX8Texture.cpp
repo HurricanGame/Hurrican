@@ -166,8 +166,7 @@ void TexturesystemClass::ReadScaleFactorsFiles() {
     std::string path, fullpath;
 
     if (CommandLineParams.RunOwnLevelList) {
-        path =
-            g_storage_ext + "/data/levels/" + std::string(CommandLineParams.OwnLevelList);
+        path = g_storage_ext + "/data/levels/" + std::string(CommandLineParams.OwnLevelList);
     } else {
         path = g_storage_ext + "/data/textures/";
     }
@@ -177,8 +176,8 @@ void TexturesystemClass::ReadScaleFactorsFiles() {
     if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
         ReadScaleFactorsFile(fullpath);
 
-        // Then, handle any files in the compressed-textures subfolders, their data will also be loaded,
-        // and any data they contain will override what's already loaded, on a file-by-file basis.
+    // Then, handle any files in the compressed-textures subfolders, their data will also be loaded,
+    // and any data they contain will override what's already loaded, on a file-by-file basis.
 #if defined(USE_ETC1)
     fullpath = path + "etc1/" + scalefactors_filename;
     if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
@@ -204,8 +203,7 @@ bool TexturesystemClass::LoadTextureFromFile(const std::string &filename, Textur
 
     // Zuerst checken, ob sich der Song in einem MOD-Ordner befindet
     if (CommandLineParams.RunOwnLevelList) {
-        path =
-            g_storage_ext + "/data/levels/" + std::string(CommandLineParams.OwnLevelList);
+        path = g_storage_ext + "/data/levels/" + std::string(CommandLineParams.OwnLevelList);
         fullpath = path + "/" + filename;
         if (fs::exists(fullpath) && fs::is_regular_file(fullpath))
             goto loadfile;

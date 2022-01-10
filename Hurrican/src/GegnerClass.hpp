@@ -124,7 +124,7 @@ class GegnerListClass {
                     bool atEnd = true);
     void DelSel(GegnerClass *pTemp);  // Ausgewählten Gegner entfernen
     void ClearAll();                  // Alle Gegner löschen
-    int GetNumGegner();               // Zahl der Gegner zurückliefern
+    int GetNumGegner() const;         // Zahl der Gegner zurückliefern
     void RunAll();                    // Alle Gegner der Liste animieren
     void RenderAll();                 // Alle Gegner der Liste rendern
     void DamageEnemiesonScreen(float x,

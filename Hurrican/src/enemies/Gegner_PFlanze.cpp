@@ -72,14 +72,14 @@ void GegnerPflanze::DoKI() {
         BlickRichtung = LINKS;
     else
         BlickRichtung = RECHTS;
-
+#if 0
     switch (Handlung) {
         // Nur rumwackeln
         //
         case GEGNER_LAUFEN:
             break;
     }
-
+#endif
     // Testen, ob der Spieler die Pflanze berührt hat
     //
     TestDamagePlayers(1.5f SYNC);

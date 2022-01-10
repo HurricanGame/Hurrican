@@ -204,10 +204,9 @@ void CShader::FindUniforms() {
     for (GLint index(0); index < numUniforms; ++index) {
         GLint size;
         GLenum type;
-        GLint location;
 
         glGetActiveUniform(Program, index, maxUniformLen, nullptr, &size, &type, uniformName);
-        location = glGetUniformLocation(Program, uniformName);
+        GLint location = glGetUniformLocation(Program, uniformName);
 
         std::pair<std::string, GLint> parameter;
         parameter.first = std::string(uniformName);
@@ -242,12 +241,11 @@ GLint CShader::GetUniform(const std::string &uniform) {
 
 void CShader::PrintLog(uint8_t type, GLuint shader) {
     GLint loglength;
-    char *log;
 
     if (CHECK_FLAG(type, SHADER)) {
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &loglength);
 
-        log = new char[loglength + 1];
+        char *log = new char[loglength + 1];
         glGetShaderInfoLog(shader, loglength, nullptr, log);
         Protokoll << "Shader: Shader log:\n " << log << std::endl;
         delete[] log;
@@ -256,7 +254,7 @@ void CShader::PrintLog(uint8_t type, GLuint shader) {
     if (CHECK_FLAG(type, PROGRAM)) {
         glGetProgramiv(Program, GL_INFO_LOG_LENGTH, &loglength);
 
-        log = new char[loglength + 1];
+        char *log = new char[loglength + 1];
         glGetProgramInfoLog(Program, loglength, nullptr, log);
         Protokoll << "Shader: Program log:\n " << log << std::endl;
         delete[] log;

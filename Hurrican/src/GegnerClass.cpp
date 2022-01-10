@@ -86,11 +86,11 @@ void GegnerClass::Render() {
     if (IsOnScreen() == false)
         return;
 
-    bool mirrored;  // Gegner kuckt in die andere Richtung ?
     int Anim = AnimPhase;
     D3DCOLOR Color;
 
-    mirrored = (BlickRichtung == RECHTS);
+    // Gegner kuckt in die andere Richtung ?
+    bool mirrored = (BlickRichtung == RECHTS);
 
     if (GegnerArt == DIAMANT)  // Diamant
         Color = 0xFFFFFFFF;
@@ -297,14 +297,13 @@ bool GegnerClass::Run() {
 // --------------------------------------------------------------------------------------
 
 int GegnerClass::PlayerAbstand(bool both) const {
-    float xdiff, ydiff, Abstand;
 
-    Abstand = 99999.9f;
+    float Abstand = 99999.9f;
 
     if (both) {
         for (int p = 0; p < NUMPLAYERS; p++) {
-            xdiff = (Player[p].xpos + 35) - (xPos + GegnerRect[GegnerArt].right / 2);
-            ydiff = (Player[p].ypos + 40) - (yPos + GegnerRect[GegnerArt].bottom / 2);
+            float xdiff = (Player[p].xpos + 35) - (xPos + GegnerRect[GegnerArt].right / 2);
+            float ydiff = (Player[p].ypos + 40) - (yPos + GegnerRect[GegnerArt].bottom / 2);
 
             // DKS - converted to float:
             // Abstand = MIN(Abstand, static_cast<float>(sqrt((xdiff * xdiff) + (ydiff * ydiff))));
@@ -312,8 +311,8 @@ int GegnerClass::PlayerAbstand(bool both) const {
         }
 
     } else {
-        xdiff = (pAim->xpos + 35) - (xPos + GegnerRect[GegnerArt].right / 2);
-        ydiff = (pAim->ypos + 40) - (yPos + GegnerRect[GegnerArt].bottom / 2);
+        float xdiff = (pAim->xpos + 35) - (xPos + GegnerRect[GegnerArt].right / 2);
+        float ydiff = (pAim->ypos + 40) - (yPos + GegnerRect[GegnerArt].bottom / 2);
 
         // DKS - converted to float:
         // Abstand = static_cast<float>(sqrt((xdiff * xdiff) + (ydiff * ydiff)));
@@ -328,12 +327,11 @@ int GegnerClass::PlayerAbstand(bool both) const {
 // --------------------------------------------------------------------------------------
 
 int GegnerClass::PlayerAbstandHoriz(PlayerClass *pTarget) const {
-    float Abstand;
 
     if (pTarget == nullptr)
         pTarget = pAim;
 
-    Abstand =
+    float Abstand =
         (pTarget->xpos + pTarget->CollideRect.left + (pTarget->CollideRect.right - pTarget->CollideRect.left) / 2) -
         (xPos + GegnerRect[GegnerArt].left + (GegnerRect[GegnerArt].right - GegnerRect[GegnerArt].left) / 2);
 
@@ -345,12 +343,11 @@ int GegnerClass::PlayerAbstandHoriz(PlayerClass *pTarget) const {
 // --------------------------------------------------------------------------------------
 
 int GegnerClass::PlayerAbstandVert(PlayerClass *pTarget) const {
-    float Abstand;
 
     if (pTarget == nullptr)
         pTarget = pAim;
 
-    Abstand =
+    float Abstand =
         (pTarget->ypos + pTarget->CollideRect.top + (pTarget->CollideRect.bottom - pTarget->CollideRect.top) / 2) -
         (yPos + GegnerRect[GegnerArt].bottom / 2);
 
@@ -391,9 +388,7 @@ void GegnerClass::PlattformTest(RECT_struct rect) {
                 Player[p].Handlung != PlayerActionEnum::DREHEN) {
             // Feststellen ob der Hurri auf die Plattform gesprungen ist
             //
-            int laenge;
-
-            laenge = abs(static_cast<int>(Player[p].ypos - Player[p].yposold)) + 2;
+            int laenge = abs(static_cast<int>(Player[p].ypos - Player[p].yposold)) + 2;
 
             // TODO
             // eingestellt, weil man beim pharao boss am anfang nicht draufsteht, wenn er rauskommt
@@ -518,13 +513,11 @@ bool GegnerClass::TurnonShot() {
 // --------------------------------------------------------------------------------------
 
 bool GegnerClass::IsOnScreen() const {
-    int off;
-    int xsize, ysize;
 
-    off = std::min(GegnerRect[GegnerArt].left, 0);
+    int off = std::min(GegnerRect[GegnerArt].left, 0);
 
-    xsize = pGegnerGrafix[GegnerArt]->itsXFrameSize;
-    ysize = pGegnerGrafix[GegnerArt]->itsYFrameSize;
+    int xsize = pGegnerGrafix[GegnerArt]->itsXFrameSize;
+    int ysize = pGegnerGrafix[GegnerArt]->itsYFrameSize;
 
     if (GegnerArt == DRACHE || GegnerArt == THEWALL) {
         xsize = 400;
@@ -1463,10 +1456,11 @@ void GegnerListClass::LoadSprites() {
 // --------------------------------------------------------------------------------------
 
 bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Value2, bool Light, bool atEnd) {
-    GegnerClass *pNew;  // Das wird der neue Gegner;
 
     if (NumGegner >= MAX_GEGNER)  // Grenze überschritten ?
         return false;
+
+    GegnerClass *pNew;  // Das wird der neue Gegner;
 
     // Unterscheiden, was für ein Gegner erstellt wird
     switch (Art) {
@@ -2127,13 +2121,11 @@ bool GegnerListClass::PushGegner(float x, float y, int Art, int Value1, int Valu
 // --------------------------------------------------------------------------------------
 
 void GegnerListClass::DelSel(GegnerClass *pTemp) {
-    GegnerClass *pN;
-    GegnerClass *pP;
 
     if (pTemp != nullptr)  // zu löschender Gegner existiert
     {
-        pN = pTemp->pNext;
-        pP = pTemp->pPrev;
+        GegnerClass *pN = pTemp->pNext;
+        GegnerClass *pP = pTemp->pPrev;
 
         if (pP == nullptr)   // Wird der erste Gegner gelöscht ?
             pStart = pN;  // Dann wird dessen Nächster zum Ersten
@@ -2157,12 +2149,11 @@ void GegnerListClass::DelSel(GegnerClass *pTemp) {
 // --------------------------------------------------------------------------------------
 
 void GegnerListClass::ClearAll() {
-    GegnerClass *pTemp = pStart;  // Zeiger auf den ersten   Gegner
-    GegnerClass *pNaechst;        // Zeiger auf den nächsten Gegner (falls
-    // der eine gelöscht wird)
+    GegnerClass *pTemp = pStart;  // Zeiger auf den ersten Gegner
+
     while (pTemp != nullptr)  // Ende der Liste erreicht ?
     {
-        pNaechst = pTemp->pNext;  // Zeiger auf das nächste Element
+        GegnerClass *pNaechst = pTemp->pNext;  // Zeiger auf den nächsten Gegner (falls der eine gelöscht wird)
         DelSel(pTemp);            // Das aktuelle löschen
         pTemp = pNaechst;         // und das nächste bearbeiten
     }
@@ -2175,7 +2166,7 @@ void GegnerListClass::ClearAll() {
 // Zahl der Gegner zurückliefern
 // --------------------------------------------------------------------------------------
 
-int GegnerListClass::GetNumGegner() {
+int GegnerListClass::GetNumGegner() const {
     return NumGegner;
 }
 
@@ -2237,13 +2228,12 @@ void GegnerListClass::RenderAll() {
 
 void GegnerListClass::RunAll() {
     GegnerClass *pTemp = pStart;  // Anfang der Liste
-    GegnerClass *pNext = nullptr;
 
     // Alle Einträge der Gegnerliste durchgehen
     //
     while (pTemp != nullptr)  // noch nicht alle durch ?
     {
-        pNext = pTemp->pNext;
+        GegnerClass *pNext = pTemp->pNext;
 
         pTemp->Run();
 
@@ -2264,7 +2254,6 @@ void GegnerListClass::RunAll() {
 void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage) {
     // Gegner durchgehen und die auf dem Screen löschen
     GegnerClass *pTemp = pStart;  // Anfang der Liste
-    GegnerClass *pNext = nullptr;    // Nächster Gegner in der Liste
 
     while (pTemp != nullptr)  // Noch nicht alle durch ?
     {
@@ -2272,7 +2261,7 @@ void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage) {
         float ay = y - pTemp->yPos;
         float dx = sqrtf((ax * ax) + (ay * ay));
 
-        pNext = pTemp->pNext;  // Nächsten sichern
+        GegnerClass *pNext = pTemp->pNext;  // Nächster Gegner in der Liste
 
         // Stampfstein? Fällt runter bei Wackeln
         if (pTemp->Active == true && pTemp->GegnerArt == STAMPFSTEIN && pTemp->Handlung == GEGNER_STEHEN && dx < 300 &&

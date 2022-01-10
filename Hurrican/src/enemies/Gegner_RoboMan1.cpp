@@ -184,15 +184,13 @@ void GegnerRoboMan1::DoKI() {
 void GegnerRoboMan1::GegnerExplode() {
     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
 
-    int i;
-
-    for (i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++)
         PartikelSystem.PushPartikel(xPos - 40.0f + static_cast<float>(random(70)),
                                     yPos + static_cast<float>(random(40)), EXPLOSION_BIG);
-    for (i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++)
         PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(70)),
                                     yPos + static_cast<float>(random(60)), EXPLOSION_MEDIUM2);
-    for (i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++)
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(70)),
                                     yPos + 20.0f + static_cast<float>(random(60)), SPIDERSPLITTER);
 }

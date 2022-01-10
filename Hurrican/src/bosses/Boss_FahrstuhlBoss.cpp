@@ -146,9 +146,9 @@ void GegnerFahrstuhlBoss::DoKI() {
     if (CanonAnim < 0.0f)
         CanonAnim = 6.0f;
 
-    if (x2 > 340) {
-        x2 = 25;
-        x3 = 340;
+    if (x2 > 340.0f) {
+        x2 = 25.0f;
+        x3 = 340.0f;
     }
 
     // Riesen Wumme begradigen
@@ -310,7 +310,7 @@ void GegnerFahrstuhlBoss::DoKI() {
                 PartikelSystem.PushPartikel(xPos + x3 + 28.0f - 25.0f,
                                             yPos + y2 + 95.0f - 4.0f, LASERFLAME);
 
-                y2 = 75;
+                y2 = 75.0f;
 
                 // Genug geschossen ?
                 Shots--;
@@ -350,13 +350,13 @@ void GegnerFahrstuhlBoss::DoKI() {
                 ShotDelay -= 1.0f SYNC;
 
             // Bewegen
-            if (pAim->xpos + 35 < xPos + x1 + 60)
+            if (pAim->xpos + 35.0f < xPos + x1 + 60.0f)
                 x1 -= 8.0f SYNC;
-            if (pAim->xpos + 35 > xPos + x1 + 80)
+            if (pAim->xpos + 35.0f > xPos + x1 + 80.0f)
                 x1 += 8.0f SYNC;
 
             // Schiessen
-            if (pAim->xpos + 35 < xPos + x1 + 100 && pAim->xpos + 35 > xPos + x1 + 40 && ShotDelay <= 0.0f) {
+            if (pAim->xpos + 35.0f < xPos + x1 + 100.0f && pAim->xpos + 35.0f > xPos + x1 + 40.0f && ShotDelay <= 0.0f) {
                 ShotDelay = 8.0f;
 
                 SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_LASERSHOT);
@@ -366,7 +366,7 @@ void GegnerFahrstuhlBoss::DoKI() {
                 PartikelSystem.PushPartikel(xPos + x1 + 80.0f - 90.0f,
                                             yPos + y1 + 110.0f, UFOLASERFLARE);
 
-                y1 = 155;
+                y1 = 155.0f;
 
                 // Aufhören zu ballern
                 Shots--;
@@ -428,7 +428,7 @@ void GegnerFahrstuhlBoss::DoKI() {
                 PartikelSystem.PushPartikel(xPos + x3 + 28.0f - 10.0f,
                                             yPos + y2 + 95.0f, SMOKE);
 
-                y2 = 77;
+                y2 = 77.0f;
 
                 // Genug losgelassen ?
                 Shots--;
@@ -534,7 +534,7 @@ void GegnerFahrstuhlBoss::DoKI() {
     }
 
     // Level-Hintergrund wiederholen und alle Objekte wieder nach oben setzen
-    const int A = 2 * 24 * 20;
+    constexpr int A = 2 * 24 * 20;
     if (yPos > Value1 + A) {
         TileEngine.YOffset -= A;
 

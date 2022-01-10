@@ -12,22 +12,19 @@
 // --------------------------------------------------------------------------------------
 
 GegnerMiniDragon::GegnerMiniDragon(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_INIT;
     Energy = 200;
-    AnimSpeed = 0.5f;
+    //AnimSpeed = 0.5f;
     ChangeLight = Light;
     Destroyable = false;
     Value1 = Wert1;
     Value2 = Wert2;
     OwnDraw = true;
     Segments = 6;
-    AnimEnde = 3;
-    AnimSpeed = 1.0f;
     ShotDelay = 4.0f;
 
     // Vom Drache abgeworfen?
     if (Value2 == 99) {
-        ySpeed = -(13.0f + random(4));
+        ySpeed = -(13.0f + static_cast<float>(random(4)));
         yAcc = 3.0f;
         xSpeed = static_cast<float>(random(10) - 5) / 2.0f;
         Handlung = GEGNER_FALLEN;
@@ -37,6 +34,10 @@ GegnerMiniDragon::GegnerMiniDragon(int Wert1, int Wert2, bool Light) {
         AnimPhase = 5;
         AnimEnde = 15;
         AnimSpeed = 0.5f;
+    } else {
+        Handlung = GEGNER_INIT;
+        AnimEnde = 3;
+        AnimSpeed = 1.0f;
     }
 }
 
@@ -45,13 +46,11 @@ GegnerMiniDragon::GegnerMiniDragon(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerMiniDragon::DoDraw() {
-    bool mirrored;
-    float mulx, muly;
 
-    muly = (OldY - yPos) / 6.0f;
-    mulx = (OldX - xPos) / 6.0f;
+    float muly = (OldY - yPos) / 6.0f;
+    float mulx = (OldX - xPos) / 6.0f;
 
-    mirrored = pAim->xpos + 35 < xPos + 30;
+    bool mirrored = pAim->xpos + 35.0f < xPos + 30.0f;
 
     for (int i = 0; i < Segments; i++)
         pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset + static_cast<float>(6 - i) * mulx,

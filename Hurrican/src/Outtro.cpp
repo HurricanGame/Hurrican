@@ -137,10 +137,8 @@ void OuttroClass::DoOuttro() {
         else
             col1 = 0xFFFFFFFF;
 
-        int a;
-
         // Spieler 2
-        a = static_cast<int>((Counter - 15.0f) / 10);
+        int a = static_cast<int>((Counter - 15.0f) / 10);
         if (a > 8)
             a = 7;
 
@@ -320,9 +318,6 @@ void OuttroClass::DoOuttro() {
             //      Note that, for here, we don't use the LowResCredts[] text array,
             //      as the logic here requires lines to be at specific locations.
             //      We end up with a little jerkiness when lines are split, but that's OK.
-            std::string text;
-            char text1[255];
-            char text2[255];
 
             // Explosionen und Qualm
             SmokeDelay -= 1.0f SYNC;
@@ -340,8 +335,8 @@ void OuttroClass::DoOuttro() {
             // Note: original code had each line spaced by 20.0f, 30 lines drawn total, which is more than
             //      will fit on a screen. This code keeps this behavior, but supports low-resolution using
             //      scaled fonts.
+            constexpr int MAX_DRAW_WIDTH = RENDERWIDTH - 20;  // Want a 10-pixel border minimum
             int num_lines;
-            int max_draw_width = RENDERWIDTH - 20;  // Want a 10-pixel border minimum
             int yoff_inc = 20;
             if (CommandLineParams.LowRes) {
                 // DKS - Only increase the line spacing a bit if running low-res, as it's already spaced quite a big:
@@ -366,6 +361,7 @@ void OuttroClass::DoOuttro() {
                 int AnzahlCredits = CreditsCount - 65;
                 int off2 = TextOff + i - 27;
                 if (off2 > 0) {
+                    std::string text;
                     if (TEXT_OUTTRO1 + off2 < TEXT_SEPERATOR_MARIO)
                         text = TextArray[TEXT_OUTTRO1 + off2];
                     else if (TEXT_OUTTRO1 + off2 <= TEXT_SEPERATOR_MARIO + AnzahlCredits)
@@ -375,7 +371,9 @@ void OuttroClass::DoOuttro() {
 
                     // rendern
                     if (CommandLineParams.LowRes && text.size() > 10 &&
-                        pDefaultFont->StringLength(text.c_str(), 0) > max_draw_width) {
+                        pDefaultFont->StringLength(text.c_str(), 0) > MAX_DRAW_WIDTH) {
+                        char text1[255];
+                        char text2[255];
                         SplitLine(text1, text2, text.c_str());
                         pDefaultFont->DrawTextCenterAlign(320, static_cast<float>(display_line * yoff_inc) - Counter, text1,
                                                           0xFFEEFFFF, 0);

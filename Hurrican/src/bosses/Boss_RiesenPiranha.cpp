@@ -149,21 +149,21 @@ void GegnerRiesenPiranha::DoKI() {
 void GegnerRiesenPiranha::GegnerExplode() {
     // Fetzen erzeugen
     for (int i = 0; i < 8; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(64) + 64),
-                                    yPos + static_cast<float>(random(64) + 64), PIRANHATEILE2);
+        PartikelSystem.PushPartikel(xPos + 64.0f + static_cast<float>(random(64)),
+                                    yPos + 64.0f + static_cast<float>(random(64)), PIRANHATEILE2);
 
     // und noch n paar Luftblässchen dazu
     for (int i = 0; i < 100; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(256) - 10),
-                                    yPos + static_cast<float>(random(210) + 10), BUBBLE);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(256)),
+                                    yPos + 10.0f + static_cast<float>(random(210)), BUBBLE);
 
     // Blutwolken dazu
     for (int i = 0; i < 70; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(256) - 10),
-                                    yPos + static_cast<float>(random(210) + 10), PIRANHABLUT);
+        PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(256)),
+                                    yPos + 10.0f + static_cast<float>(random(210)), PIRANHABLUT);
 
     // und Extra Leben rauslassen
-    Gegner.PushGegner(xPos + 110, yPos + 100, ONEUP, 0, 0, ChangeLight);
+    Gegner.PushGegner(xPos + 110.0f, yPos + 100.0f, ONEUP, 0, 0, ChangeLight);
 
     // SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
 

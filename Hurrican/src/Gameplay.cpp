@@ -71,16 +71,16 @@ bool FlugsackFliesFree;
 int DisplayHintNr = -1;
 
 const int TextureCount[10] = {
-117, // Tutorial
-106, // Stages
-109,
- 87,
- 82,
-130,
-118,
-135,
- 88,
-127
+  117, // Tutorial
+  106, // Stages
+  109,
+   87,
+   82,
+  130,
+  118,
+  135,
+   88,
+  127
 };
 
 // --------------------------------------------------------------------------------------
@@ -124,8 +124,6 @@ void InitNewGame() {
 // --------------------------------------------------------------------------------------
 
 void InitNewGameLevel() {
-    std::string Name;
-
     SoundManager.StopSong(MUSIC_STAGEMUSIC, false);
     // DKS - Might as well stop any boss music too:
     SoundManager.StopSong(MUSIC_BOSS, false);
@@ -141,6 +139,8 @@ void InitNewGameLevel() {
     // Externes Level aus Command Line laden ?
     //
     int NumTextures = 75; // unknown, use a default
+    std::string Name;
+
     if (!CommandLineParams.RunUserLevel) {
         // Nein, dann normales Level in der Reihenfolge laden oder Tutorial Level
         if (RunningTutorial) {
@@ -218,10 +218,8 @@ void ShowGameOver() {
     // if (MUSIC_IsFinished(SoundManager.its_Songs[MUSIC_GAMEOVER]->SongData))
     //    SoundManager.StopSong(MUSIC_GAMEOVER, false);
 
-    int col;
-
     // Transparent Wert des Game Over Schriftzuges bestimmen
-    col = static_cast<int>((50.0f - Player[0].GameOverTimer) * 10.0f);
+    int col = static_cast<int>((50.0f - Player[0].GameOverTimer) * 10.0f);
     if (col > 255)  // Obergrenze checken
         col = 255;
 
@@ -262,8 +260,8 @@ void GameLoop() {
     TileEngine.NewYOffset = -1;
 
     constexpr float SPD_INC = 0.3f;
+    float const SpeedFaktorMax = SpeedFaktor;
     float i = 0;
-    float SpeedFaktorMax = SpeedFaktor;
 
     while (i < SpeedFaktorMax) {
         // If the hardware can not render fast enough the logic catch up becomes too large
@@ -393,16 +391,13 @@ void GameLoop() {
 
     // evtl Warning Schild rendern
     if (WarningCount > 0.0f) {
-        D3DCOLOR Col;
-        int a;
-        int off;
 
-        a = static_cast<int>(WarningCount * 2.55f);
-        Col = D3DCOLOR_RGBA(255, 255, 255, a);
+        int a = static_cast<int>(WarningCount * 2.55f);
+        D3DCOLOR Col = D3DCOLOR_RGBA(255, 255, 255, a);
 
         DirectGraphics.SetFilterMode(true);
 
-        off = 100 - static_cast<int>(WarningCount);
+        int off = 100 - static_cast<int>(WarningCount);
 
         pGegnerGrafix[WARNING]->SetRect(0, 0, 180, 40);
         pGegnerGrafix[WARNING]->RenderSpriteScaled(230.0f - off * 4.5f / 4.0f, 390.0f - off / 4.0f,
@@ -522,19 +517,19 @@ void LeaveGameLoop() {
 // --------------------------------------------------------------------------------------
 
 void SetScreenShake() {
-    glm::mat4x4 matView, matRot, matTrans, matTrans2;  // Rotations und Translations Matrizen
-
     int Winkel = static_cast<int>(ScreenWinkel + WackelValue);  // Rotationswinkel
 
     // Winkel angleichen, damit er immer zwischen 0° und 360° bleibt
     //
     clampAngle(Winkel);
-    matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[Winkel], glm::vec3(0.0f, 0.0f, 1.0f));
+    glm::mat4x4 matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[Winkel], glm::vec3(0.0f, 0.0f, 1.0f));
+
+    glm::mat4x4 matTrans, matTrans2;  // Rotations und Translations Matrizen
 
     D3DXMatrixTranslation(&matTrans, -320.0f, -240.0f, 0.0f);  // Transformation zum Ursprung
     D3DXMatrixTranslation(&matTrans2, 320.0f, 240.0f, 0.0f);   // Transformation wieder zurück
 
-    matView = glm::mat4x4(1.0f);
+    glm::mat4x4 matView = glm::mat4x4(1.0f);
     matView = matTrans * matView;   // Verschieben
     matView = matRot * matView;     // rotieren
     matView = matTrans2 * matView;  // und wieder zurück verschieben
@@ -752,8 +747,6 @@ void CreateDefaultConfig() {
 // --------------------------------------------------------------------------------------
 
 bool LoadConfig() {
-    float Sound, Musik;
-
     std::string filename = g_config_ext + "/" + CONFIGFILE;
 
     std::ifstream Datei(filename, std::ifstream::binary);  // versuchen Datei zu öffnen
@@ -770,6 +763,8 @@ bool LoadConfig() {
         strcpy_s(ActualLanguage, "english.lng");
         LoadLanguage(ActualLanguage);
     }
+
+    float Sound, Musik;
 
     // Daten für Sound und Musik-Lautstärke auslesen
     Datei.read(reinterpret_cast<char *>(&Sound), sizeof(Sound));
@@ -854,7 +849,6 @@ bool LoadConfig() {
 // --------------------------------------------------------------------------------------
 
 void SaveConfig() {
-    float Sound, Musik;
 
     std::string filename = g_config_ext + "/" + CONFIGFILE;
 
@@ -869,8 +863,8 @@ void SaveConfig() {
     Datei.write(reinterpret_cast<char *>(&ActualLanguage), sizeof(ActualLanguage));
 
     // Daten für Sound und Musik-Lautstärke schreiben
-    Sound = SoundManager.g_sound_vol;
-    Musik = SoundManager.g_music_vol;
+    float Sound = SoundManager.g_sound_vol;
+    float Musik = SoundManager.g_music_vol;
 
     Datei.write(reinterpret_cast<char *>(&Sound), sizeof(Sound));
     Datei.write(reinterpret_cast<char *>(&Musik), sizeof(Musik));
@@ -1011,8 +1005,8 @@ void SummaryScreen() {
     bool reveal_cheat = !RunningTutorial && (Player[0].DiamondsThisLevel == TileEngine.MaxDiamonds);
 
     // DKS - Added counter to prevent accidental early-exit:
-    const float delay_can_leave = 400.0f;
-    const float delay_inc = 30.0f;
+    constexpr float DELAY_CAN_LEAVE = 400.0f;
+    constexpr float DELAY_INC = 30.0f;
     float delay_ctr = 0.0f;
 
     ShowSummary = true;
@@ -1080,7 +1074,7 @@ void SummaryScreen() {
             static_cast<float>((RENDERWIDTH - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_TITLE])) / 2),
             static_cast<float>(title_txt_y), TextArray[TEXT_SUMMARY_TITLE], color);
 
-        if (delay_ctr >= delay_can_leave) {
+        if (delay_ctr >= DELAY_CAN_LEAVE) {
             std::string str_pressanykey(TextArray[TEXT_SUMMARY_PRESSFIRE]);
 
             // If player 1 is controlled with joystick, replace all references to 'key' with 'button'
@@ -1162,7 +1156,7 @@ void SummaryScreen() {
             all_controls_unpressed_yet = true;
         }
 
-        if (all_controls_unpressed_yet && delay_ctr >= delay_can_leave) {
+        if (all_controls_unpressed_yet && delay_ctr >= DELAY_CAN_LEAVE) {
             if (buttonpressed || keypressed)
                 leave = true;
         }
@@ -1172,9 +1166,9 @@ void SummaryScreen() {
         // if (MUSIC_IsFinished(SoundManager.its_Songs[MUSIC_STAGECLEAR]->SongData))
         //    SoundManager.StopSong(MUSIC_STAGECLEAR, false);
 
-        delay_ctr += delay_inc SYNC;
-        if (delay_ctr > delay_can_leave)
-            delay_ctr = delay_can_leave;
+        delay_ctr += DELAY_INC SYNC;
+        if (delay_ctr > DELAY_CAN_LEAVE)
+            delay_ctr = DELAY_CAN_LEAVE;
     }
 
     //    //DKS - I revamped this summary screen code quite a bit so that no delay should ever be necessary
@@ -1241,8 +1235,6 @@ bool NewDemo(const char Filename[]) {
 // --------------------------------------------------------------------------------------
 
 bool LoadDemo(const char Filename[]) {
-    char Kennung[20];
-
     TileEngine.XOffset = 0;
     TileEngine.YOffset = 0;
 
@@ -1252,6 +1244,8 @@ bool LoadDemo(const char Filename[]) {
 
     if (!DEMOFile)
         return false;
+
+    char Kennung[20];
 
     // DateiHeader lesen
     //
@@ -1322,9 +1316,7 @@ void RecordDemo() {
 
     // FPS speichern
     //
-    int fps;
-
-    fps = static_cast<int>(Timer.getFrameRate());
+    int fps = static_cast<int>(Timer.getFrameRate());
     DEMOFile.write(reinterpret_cast<char *>(&fps), sizeof(fps));
 
 }  // RecordDemo
@@ -1399,9 +1391,8 @@ void ShowPissText() {
 // --------------------------------------------------------------------------------------
 
 PlayerClass *ChooseAim() {
-    PlayerClass *pAim;
 
-    pAim = &Player[rand() % NUMPLAYERS];
+    PlayerClass *pAim = &Player[rand() % NUMPLAYERS];
 
     if (pAim == &Player[0] && Player[0].Handlung == PlayerActionEnum::TOT)
         pAim = &Player[1];

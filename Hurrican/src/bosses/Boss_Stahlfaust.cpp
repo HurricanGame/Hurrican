@@ -250,16 +250,16 @@ void GegnerStahlfaust::DoKI() {
                 SmokeDelay = 1.0f;
 
                 PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200)),
-                                            yPos +static_cast<float>( random(200) + 20), EXPLOSION_MEDIUM2);
+                                            yPos + 20.0f + static_cast<float>(random(200)), EXPLOSION_MEDIUM2);
                 SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
 
                 if (random(8) == 0)
                     PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200)),
-                                                yPos + static_cast<float>(random(200) + 20), EXPLOSION_BIG);
+                                                yPos + 20.0f + static_cast<float>(random(200)), EXPLOSION_BIG);
 
                 if (random(20) == 0)
-                    PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100) + 60),
-                                                yPos + static_cast<float>(random(100) + 60), SPLITTER);
+                    PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(random(100)),
+                                                yPos + 60.0f + static_cast<float>(random(100)), SPLITTER);
             }
 
             // Fertig explodiert ? Dann wird sie ganz zerlegt
@@ -285,8 +285,8 @@ void GegnerStahlfaust::GegnerExplode() {
 
     // Splitter
     for (int i = 0; i < 20; i++)
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(60) + 60),
-                                    yPos + static_cast<float>(random(40) + 80), SPLITTER);
+        PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(random(60)),
+                                    yPos + 80.0f + static_cast<float>(random(40)), SPLITTER);
 
     // DKS - In the course of optimizing PartikelsystemClass, I discovered that
     //      SPIDERSPLITTER2 was not handled in CreatePartikel(), and that
@@ -301,8 +301,8 @@ void GegnerStahlfaust::GegnerExplode() {
     for (int i = 0; i < 60; i++)
         // PartikelSystem.PushPartikel(xPos + 20 + rand()%100,
         //                              yPos + 40 + rand()%100, SPIDERSPLITTER2);
-        PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100) + 20),
-                                    yPos + static_cast<float>(random(100) + 40), SPIDERSPLITTER);
+        PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(100)),
+                                    yPos + 40.0f + static_cast<float>(random(100)), SPIDERSPLITTER);
 
     for (int p = 0; p < NUMPLAYERS; p++)
         DirectInput.Joysticks[Player[p].JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);

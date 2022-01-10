@@ -18,12 +18,13 @@ GegnerKugelRiesig::GegnerKugelRiesig(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER_LAUFEN;
     Energy = 50;
     BlickRichtung = LINKS;
-    (random(2) == 0) ? xSpeed = -8.0f : xSpeed = 8.0f;  // x-Richtung zu Beginn Zufall
     yAcc = 5.0f;                                         // Fallen lassen
     Value1 = Wert1;
     Value2 = Wert2;
     if (Value1 != 0)  // ggf vorgegebene Speed benutzen
         xSpeed = static_cast<float>(Value1);
+    else
+        xSpeed = (random(2) == 0) ? -8.0f : 8.0f;  // x-Richtung zu Beginn Zufall
     AnimSpeed = 0.3f;
     AnimStart = 0;
     AnimEnde = 19;
