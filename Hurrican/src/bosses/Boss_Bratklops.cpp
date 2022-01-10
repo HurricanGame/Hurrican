@@ -358,49 +358,47 @@ void GegnerBratklops::DoKI() {
 
                 // Ballern
                 //
-                if (j == 0) {
-                    Handlung = GEGNER_BOMBARDIEREN;
-                    ActionDelay = 8.0f;
-                    Projectiles.PushProjectile(xPos + 146.0f, yPos + 186.0f, BRATKLOPSSHOT);
-                    SoundManager.PlayWave(100, 128, 8000, SOUND_GRANATE);
-                    Shots = random(3) + 3;
-                }
-
-                // Kotzen
-                //
-                else if (j == 1) {
-                    Handlung = GEGNER_SCHIESSEN;
-                    ShotDelay = 1.0f;
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_KOTZEN);
-                } else
-
+                switch (j) {
+                    case 0: {
+                        Handlung = GEGNER_BOMBARDIEREN;
+                        ActionDelay = 8.0f;
+                        Projectiles.PushProjectile(xPos + 146.0f, yPos + 186.0f, BRATKLOPSSHOT);
+                        SoundManager.PlayWave(100, 128, 8000, SOUND_GRANATE);
+                        Shots = random(3) + 3;
+                    } break;
+                    // Kotzen
+                    //
+                    case 1: {
+                        Handlung = GEGNER_SCHIESSEN;
+                        ShotDelay = 1.0f;
+                        SoundManager.PlayWave(100, 128, 11025, SOUND_KOTZEN);
+                    } break;
                     // Laser
                     //
-                    if (j == 2) {
-                    Handlung = GEGNER_SPECIAL;
-                    FlareDelay = 0.0f;
-                    SoundManager.PlayWave(100, 128, 8000, SOUND_SPIDERSCREAM);
-                }
-                // FettBoller
-                //
-                else if (j == 3) {
-                    Handlung = GEGNER_SPECIAL2;
-                    FlareDelay = 0.0f;
-                    SoundManager.PlayWave(100, 128, 8000, SOUND_SPIDERSCREAM);
-                }
-
-                // Laser von Rechts nach Links
-                //
-                else if (j == 4) {
-                    Handlung = GEGNER_SPECIAL3;
-                    FlareDelay = 800.0f;
-                    SoundManager.PlayWave(100, 128, 8000, SOUND_SPIDERSCREAM);
-                }
-
-                // Pause
-                //
-                else if (j == 5) {
-                    ActionDelay = 16.0f;
+                    case 2: {
+                        Handlung = GEGNER_SPECIAL;
+                        FlareDelay = 0.0f;
+                        SoundManager.PlayWave(100, 128, 8000, SOUND_SPIDERSCREAM);
+                    } break;
+                    // FettBoller
+                    //
+                    case 3: {
+                        Handlung = GEGNER_SPECIAL2;
+                        FlareDelay = 0.0f;
+                        SoundManager.PlayWave(100, 128, 8000, SOUND_SPIDERSCREAM);
+                    } break;
+                    // Laser von Rechts nach Links
+                    //
+                    case 4: {
+                        Handlung = GEGNER_SPECIAL3;
+                        FlareDelay = 800.0f;
+                        SoundManager.PlayWave(100, 128, 8000, SOUND_SPIDERSCREAM);
+                    } break;
+                    // Pause
+                    //
+                    case 5: {
+                        ActionDelay = 16.0f;
+                    } break;
                 }
             }
         } break;

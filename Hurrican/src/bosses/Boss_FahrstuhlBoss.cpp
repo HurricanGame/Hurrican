@@ -211,23 +211,30 @@ void GegnerFahrstuhlBoss::DoKI() {
             // Gegner an der richtigen Position ?
             if (TempY < 500.0f) {
                 int j = random(6);
-                if (j == 0) {
-                    Handlung = GEGNER_ABSENKEN;
-                    TempY = 500.0f;
-                    dx2 = 0.0f;
-                } else if (j == 1 || j == 2) {
-                    Handlung = GEGNER_ABSENKEN;
-                    TempY = 500.0f;
-                    dx2 = 5.0f;
-                } else if (j == 3) {
-                    Handlung = GEGNER_AUSSPUCKEN;
-                    TempY = 500.0f;
-                    Shots = 1 + random(2);
-                } else if (j == 4 || j == 5) {
-                    Handlung = GEGNER_CRUSHEN;
-                    TempY = 500.0f;
-                    Shots = 10 + random(20);
-                    ShotDelay = 2.0f;
+                switch (j) {
+                    case 0: {
+                        Handlung = GEGNER_ABSENKEN;
+                        TempY = 500.0f;
+                        dx2 = 0.0f;
+                    } break;
+                    case 1:
+                    case 2: {
+                        Handlung = GEGNER_ABSENKEN;
+                        TempY = 500.0f;
+                        dx2 = 5.0f;
+                    } break;
+                    case 3: {
+                        Handlung = GEGNER_AUSSPUCKEN;
+                        TempY = 500.0f;
+                        Shots = 1 + random(2);
+                    } break;
+                    case 4:
+                    case 5: {
+                        Handlung = GEGNER_CRUSHEN;
+                        TempY = 500.0f;
+                        Shots = 10 + random(20);
+                        ShotDelay = 2.0f;
+                    } break;
                 }
             }
 
@@ -269,24 +276,28 @@ void GegnerFahrstuhlBoss::DoKI() {
             // Gegner an der richtigen Position ?
             if (TempY > 600.0f) {
                 int j = random(3);
-                if (j == 0) {
-                    Handlung = GEGNER_BOMBARDIEREN;
-                    dx1 = 40.0f;
-                    TempY = 600.0f;
-                    ShotDelay = 1.0f;
-                    Shots = random(8) + 5;
-                } else if (j == 1) {
-                    Handlung = GEGNER_SPECIAL;
-                    dx1 = 0.0f;
-                    TempY = 600.0f;
-                    ShotDelay = 5.0f;
-                    Shots = random(8) + 5;
-                } else if (j == 2) {
-                    Handlung = GEGNER_AUSSPUCKEN;
-                    dx1 = 0.0f;
-                    TempY = 600.0f;
-                    ShotDelay = 5.0f;
-                    Shots = random(4) + 2;
+                switch (j) {
+                    case 0: {
+                        Handlung = GEGNER_BOMBARDIEREN;
+                        dx1 = 40.0f;
+                        TempY = 600.0f;
+                        ShotDelay = 1.0f;
+                        Shots = random(8) + 5;
+                    } break;
+                    case 1: {
+                        Handlung = GEGNER_SPECIAL;
+                        dx1 = 0.0f;
+                        TempY = 600.0f;
+                        ShotDelay = 5.0f;
+                        Shots = random(8) + 5;
+                    } break;
+                    case 2: {
+                        Handlung = GEGNER_AUSSPUCKEN;
+                        dx1 = 0.0f;
+                        TempY = 600.0f;
+                        ShotDelay = 5.0f;
+                        Shots = random(4) + 2;
+                    } break;
                 }
             }
         } break;

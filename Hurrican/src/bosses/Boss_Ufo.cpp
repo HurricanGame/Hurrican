@@ -187,18 +187,22 @@ void GegnerUfo::DoKI() {
 
                 LastAction = j;
 
-                if (j == 0)
-                    Handlung = GEGNER_SCHIESSEN;
-                if (j == 1)
-                    Handlung = GEGNER_BOMBARDIEREN;
-                if (j == 2) {
-                    Handlung = GEGNER_FALLEN;
-                    ySpeed = 28.0f;
-                    yAcc = -2.0f;
-                    ShotDelay = 1.0f;
+                switch (j) {
+                    case 0:
+                        Handlung = GEGNER_SCHIESSEN;
+                        break;
+                    case 1:
+                        Handlung = GEGNER_BOMBARDIEREN;
+                        break;
+                    case 2: {
+                        Handlung = GEGNER_FALLEN;
+                        ySpeed = 28.0f;
+                        yAcc = -2.0f;
+                        ShotDelay = 1.0f; // FIXME this one is overwritten below
+                    } break;
                 }
 
-                ShotDelay = 10.0f;
+                ShotDelay = 10.0f; // FIXME move before the switch?
                 ActionDelay = 60.0f;
             }
         } break;
