@@ -117,7 +117,7 @@ void GegnerDrone::DoKI() {
                 AnimEnde = 11;
             }
 
-            ActionDelay -= 1.0f SYNC;
+            ActionDelay -= Timer.sync(1.0f);
 
             if (ActionDelay <= 0.0f && PlayerAbstand() < 600) {
                 Handlung = GEGNER::SCHIESSEN;
@@ -153,7 +153,7 @@ void GegnerDrone::DoKI() {
                 AnimEnde = 11;
             }
 
-            ShotDelay -= 12.0f SYNC;
+            ShotDelay -= Timer.sync(12.0f);
 
             // Salve zuende und weiterfliegen ?
             //

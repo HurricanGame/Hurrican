@@ -91,7 +91,7 @@ void GegnerWandKrabbe::DoKI() {
         // auf den Spieler zufliegen und sich dabei drehen
         //
         case GEGNER::DREHEN: {
-            rot += static_cast<float>(random(50) + 20) SYNC;
+            rot += Timer.sync(static_cast<float>(random(50) + 20));
 
             clampAngle(rot);
 
@@ -103,7 +103,7 @@ void GegnerWandKrabbe::DoKI() {
         // nach "Abschütteln" runterfallen
         //
         case GEGNER::FALLEN: {
-            rot += static_cast<float>(random(50) + 20) SYNC;
+            rot += Timer.sync(static_cast<float>(random(50) + 20));
 
             clampAngle(rot);
 
@@ -113,7 +113,7 @@ void GegnerWandKrabbe::DoKI() {
         } break;
 
         case GEGNER::EXPLODIEREN: {
-            rot += static_cast<float>(random(50) + 20) SYNC;
+            rot += Timer.sync(static_cast<float>(random(50) + 20));
 
             clampAngle(rot);
 
@@ -128,7 +128,7 @@ void GegnerWandKrabbe::DoKI() {
 
             // rauchen lassen
             //
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             while (AnimCount <= 0.0f) {
                 AnimCount += 0.2f;

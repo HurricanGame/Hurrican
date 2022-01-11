@@ -43,7 +43,7 @@ void GegnerReitFlugsack::DoDraw() {
                                            mirror);
 
     if (Handlung == GEGNER::SPECIAL) {
-        ArrowCount -= 0.2f SYNC;
+        ArrowCount -= Timer.sync(0.2f);
         if (ArrowCount < 0.0f)
             ArrowCount = 2.0f;
 
@@ -81,9 +81,9 @@ void GegnerReitFlugsack::DoKI() {
 
             // Spieler verfolgen
             if (pAim->ypos + 45 < yPos + 45 && !(blocko & BLOCKWERT_WAND))
-                yPos -= 4.0f SYNC;
+                yPos -= Timer.sync(4.0f);
             if (pAim->ypos + 45 > yPos + 45 && !(blocku & BLOCKWERT_WAND))
-                yPos += 4.0f SYNC;
+                yPos += Timer.sync(4.0f);
 
             if (blocko & BLOCKWERT_WAND || blocko & BLOCKWERT_GEGNERWAND)
                 ySpeed = 4.0f;
@@ -95,7 +95,7 @@ void GegnerReitFlugsack::DoKI() {
                 xSpeed = -4.0f;
 
             // Rauch ausgeben
-            SmokeCount -= 1.0f SYNC;
+            SmokeCount -= Timer.sync(1.0f);
             if (SmokeCount < 0.0f) {
                 SmokeCount += 0.1f;
 

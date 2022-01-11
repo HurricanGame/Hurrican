@@ -168,9 +168,9 @@ void GegnerClimber::DoKI() {
                 inc *= 5.0f;
 
             if (rot < winkel)
-                rot += inc SYNC;
+                rot += Timer.sync(inc);
             if (rot > winkel)
-                rot -= inc SYNC;
+                rot -= Timer.sync(inc);
 
             // Direkt in Richtung Spieler kucken?
             if (PlayerAbstand() > 300 && Value1 != 99)
@@ -204,7 +204,7 @@ void GegnerClimber::DoKI() {
             if (ySpeed > 0.0f && (blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_GEGNERWAND))
                 ySpeed = 0.0f;
 
-            shotdelay -= 1.0f SYNC;
+            shotdelay -= Timer.sync(1.0f);
 
             // Schusscounter unten und Blickwinkel in Richtung Spieler ?
             // Dann schiessen
@@ -223,7 +223,7 @@ void GegnerClimber::DoKI() {
         } break;
 
         case GEGNER::FALLEN: {
-            rot += Value2 SYNC;
+            rot += Timer.sync(static_cast<float>(Value2));
 
             clampAngle(rot);
 
@@ -233,10 +233,10 @@ void GegnerClimber::DoKI() {
                 blockr & BLOCKWERT_WAND)
                 Energy = 0.0f;
 
-            shotdelay -= 1.0f SYNC;
+            shotdelay -= Timer.sync(1.0f);
 
             if (shotdelay < 0.0f) {
-                shotdelay = 0.2f SYNC;
+                shotdelay = Timer.sync(0.2f);
                 PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(5)),
                                             yPos + 15.0f + static_cast<float>(random(5)), ROCKETSMOKE);
             }
@@ -246,7 +246,7 @@ void GegnerClimber::DoKI() {
     // Spieler berührt ?
     //
     if (Handlung != GEGNER::FALLEN)
-        TestDamagePlayers(4.0f SYNC);
+        TestDamagePlayers(Timer.sync(4.0f));
 
     // Spinne abgeknallt ?
     // Dann Explosion erzeugen und Spinne lossegeln lassen ;)

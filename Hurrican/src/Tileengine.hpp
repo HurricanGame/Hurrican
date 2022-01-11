@@ -288,11 +288,11 @@ struct Vector2D {
 //      higher resolution than the original table. Using a factor of 3 in the
 //      offset calculations ends up being visually indistinguishable in
 //      comparison (3pi/32 == 0.2945  vs. pi/10 == .3142).
-//       Because the universal table offset was originally advanced 2.0 SYNC per
-//      frame, SinTablePos is instead advanced (16.0/5.0) SYNC. Thus, the overall
+//       Because the universal table offset was originally advanced Timer.sync(2.0) per
+//      frame, SinTablePos is instead advanced (16.0/5.0)Timer.sync(). Thus, the overall
 //      speed of the animation remains the exact same, i.e.
-//      (2 SYNC)*(pi/20) == ((16/5) SYNC)*(pi/32)
-//      (NOTE: SYNC is a timer macro that expands to '* SpeedFaktor')
+//      (Timer.sync(2))*(pi/20) == ((16/5)Timer.sync())*(pi/32)
+//      (NOTE:Timer.sync() is a timer macro that expands to '* SpeedFaktor')
 
 class WaterSinTableClass {
   public:
@@ -327,7 +327,7 @@ class WaterSinTableClass {
         // Advance primary offset by 3.20, which is the same as
         // advancing the original code's sin table offset by
         // 2, which was the original position advancement, i.e.
-        // 2 * (pi/20) SYNC == (16/5) *(pi/32) SYNC
+        // 2 * (pi/20)Timer.sync() == (16/5) *(pi/32)Timer.sync()
         SinTablePos += static_cast<float>(16.0 / 5.0) * speed_faktor;
         while (SinTablePos >= 64.0f)
             SinTablePos -= 64.0f;

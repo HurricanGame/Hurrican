@@ -56,7 +56,7 @@ void GegnerBrockelRock::DoKI() {
         // Counter zählt runter bis Stein fällt
         //
         case GEGNER::SPRINGEN: {
-            AnimCount -= 50.0f SYNC;
+            AnimCount -= Timer.sync(50.0f);
 
             if (AnimCount < 0.0f)  // Langsam zerbröckeln
             {

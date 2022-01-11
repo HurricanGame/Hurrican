@@ -449,7 +449,7 @@ void HUDClass::RenderBossHUD() {
         int a = static_cast<int>(BossHUDActive * 0.75f);
         D3DCOLOR Color = D3DCOLOR_RGBA(red, green, blue, a);
 
-        BossHUDActive -= 20.0f SYNC;  // Ausfaden lassen
+        BossHUDActive -= Timer.sync(20.0f);  // Ausfaden lassen
 
         BossHUD.RenderSprite((640 - 130) / 2, ypos + 434, Color);
         BossBar.RenderSprite((640 - 130) / 2 + 9, ypos + 434 + 13, Color);
@@ -463,7 +463,7 @@ void HUDClass::RenderBossHUD() {
 
 void HUDClass::ShowBossHUD(float max, float act) {
     // Boss HUD einfaden
-    BossHUDActive += 40.0f SYNC;
+    BossHUDActive += Timer.sync(40.0f);
 
     if (BossHUDActive > Alpha)
         BossHUDActive = static_cast<float>(Alpha);
@@ -526,7 +526,7 @@ void HUDClass::RenderArrow() {
     static float alpha = 0.0f;
     static float alphadir = 50.0f;
 
-    alpha += alphadir SYNC;
+    alpha += Timer.sync(alphadir);
 
     if ((alphadir > 0.0f && alpha > 255.0f) || (alphadir < 0.0f && alpha < 0.0f)) {
         alphadir *= -1.0f;

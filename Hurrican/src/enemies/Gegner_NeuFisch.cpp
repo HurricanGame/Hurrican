@@ -139,7 +139,7 @@ void GegnerNeuFisch::DoKI() {
         case GEGNER::SPECIAL: {
             pFest->GegnerDran = true;
             AnimPhase = 0;
-            TestDamagePlayers(1.5f SYNC);
+            TestDamagePlayers(Timer.sync(1.5f));
 
             xPos = pFest->xpos - Value1;
             yPos = pFest->ypos - Value2;

@@ -70,10 +70,10 @@ void GegnerRollmops::CalcGunWinkel() {
     neww = std::clamp(neww, -30.0f, 90.0f);
 
     if (GunWinkel < neww)
-        GunWinkel += 5.0f SYNC;
+        GunWinkel += Timer.sync(5.0f);
 
     if (GunWinkel > neww)
-        GunWinkel -= 5.0f SYNC;
+        GunWinkel -= Timer.sync(5.0f);
 }
 
 // --------------------------------------------------------------------------------------
@@ -275,12 +275,12 @@ void GegnerRollmops::DoKI() {
 
     // Boss blinkt nicht so lange wie die restlichen Gegner
     if (DamageTaken > 0.0f)
-        DamageTaken -= 100 SYNC;  // Rotwerden langsam ausfaden lassen
+        DamageTaken -= Timer.sync(100.0f);  // Rotwerden langsam ausfaden lassen
     else
         DamageTaken = 0.0f;  // oder ganz anhalten
 
     if (Delay > 0.0f) {
-        Delay -= 1.0f SYNC;
+        Delay -= Timer.sync(1.0f);
     } else
         // Je nach Handlung richtig verhalten
         switch (Handlung) {
@@ -307,14 +307,14 @@ void GegnerRollmops::DoKI() {
             case GEGNER::INIT: {
                 SimpleAnimation();
 
-                AnimSpeed += 0.02f SYNC;
+                AnimSpeed += Timer.sync(0.02f);
 
                 Abhopsen();
 
                 // ausrollen
                 if (ySpeed == 0.0f) {
                     xAcc = 1.0f;
-                    AnimSpeed += 0.02f SYNC;
+                    AnimSpeed += Timer.sync(0.02f);
 
                     // ausgerollt? Dann kette ausfahren
                     if (xSpeed >= 0.0f) {
@@ -334,9 +334,9 @@ void GegnerRollmops::DoKI() {
                 static bool shot = false;
 
                 if (AnimCount > 0.0f)
-                    AnimCount -= 1.0f SYNC;
+                    AnimCount -= Timer.sync(1.0f);
 
-                HookY -= 40.0f SYNC;
+                HookY -= Timer.sync(40.0f);
 
                 if (HookY < Value2 + 20) {
                     // evtl schiessen
@@ -353,7 +353,7 @@ void GegnerRollmops::DoKI() {
                     xPos = static_cast<float>(Value1) + 320.0f - 65.0f + sin(Schwung) * 300.0f;
                     yPos = static_cast<float>(Value2) - 500.0f + cos(Schwung * 0.75f) * 830.0f;
 
-                    SchwungDir += 0.16f SYNC;
+                    SchwungDir += Timer.sync(0.16f);
                     if (SchwungDir > TWO_PI)
                         SchwungDir = 0.0f;
 
@@ -422,7 +422,7 @@ void GegnerRollmops::DoKI() {
                 }
 
                 // Animphase anpassen
-                AnimCount -= xSpeed * 0.1f SYNC;
+                AnimCount -= Timer.sync(xSpeed * 0.1f);
 
                 if (AnimCount > AnimSpeed) {
                     AnimCount = 0.0f;
@@ -481,7 +481,7 @@ void GegnerRollmops::DoKI() {
                 }
 
                 // Animphase anpassen
-                AnimCount += xSpeed * 0.1f SYNC;
+                AnimCount += Timer.sync(xSpeed * 0.1f);
 
                 if (AnimCount > AnimSpeed) {
                     AnimCount = 0.0f;
@@ -513,7 +513,7 @@ void GegnerRollmops::DoKI() {
             } break;
 
             case GEGNER::STEHEN: {
-                ShotDelay -= 1.0f SYNC;
+                ShotDelay -= Timer.sync(1.0f);
 
                 if (ShotDelay <= 0.0f) {
                     ShotDelay = 0.0f;
@@ -549,7 +549,7 @@ void GegnerRollmops::DoKI() {
                 Abhopsen(-0.4f);
 
                 if (ySpeed == 0.0f)
-                    AnimSpeed -= 1.0f SYNC;
+                    AnimSpeed -= Timer.sync(1.0f);
 
                 if (AnimSpeed <= 0.0f) {
                     ShotDelay = 5.0f;
@@ -571,7 +571,7 @@ void GegnerRollmops::DoKI() {
                 bool fertig = false;
 
                 // auf/zuklappen
-                AnimCount += 1.0f SYNC;
+                AnimCount += Timer.sync(1.0f);
 
                 if (AnimCount > AnimSpeed) {
                     AnimCount = 0.0f;
@@ -636,7 +636,7 @@ void GegnerRollmops::DoKI() {
                 CalcGunWinkel();
 
                 // schiessen
-                ShotDelay -= 1.0f SYNC;
+                ShotDelay -= Timer.sync(1.0f);
                 if (ShotDelay < 0.0f) {
                     SoundManager.PlayWave(50, 128, 16000 + random(2000), SOUND::STONEFALL);
 
@@ -680,7 +680,7 @@ void GegnerRollmops::DoKI() {
                 }
 
                 if (yPos < Value2 + 260.0f) {
-                    ShotCount -= 1.0f SYNC;
+                    ShotCount -= Timer.sync(1.0f);
 
                     if (ShotCount <= 0.0f) {
                         RoundShot(false);
@@ -701,7 +701,7 @@ void GegnerRollmops::DoKI() {
                 }
 
                 if (yPos < Value2 + 250.0f) {
-                    ShotCount -= 1.0f SYNC;
+                    ShotCount -= Timer.sync(1.0f);
 
                     if (ShotCount <= 0.0f) {
                         RoundShot(true);
@@ -714,7 +714,7 @@ void GegnerRollmops::DoKI() {
                 Abhopsen(-0.3f);
 
                 // animieren
-                AnimCount += 1.0f SYNC;
+                AnimCount += Timer.sync(1.0f);
 
                 while (AnimCount > AnimSpeed) {
                     SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION3);
@@ -748,7 +748,7 @@ void GegnerRollmops::DoKI() {
     if (Handlung == GEGNER::LAUFEN_RECHTS || Handlung == GEGNER::LAUFEN_LINKS || Handlung == GEGNER::LAUFEN ||
         Handlung == GEGNER::SPECIAL) {
         if (ySpeed == 0.0f)
-            SmokeCount -= 1.0f SYNC;
+            SmokeCount -= Timer.sync(1.0f);
 
         if (SmokeCount < 0.0f) {
             PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(80)),
@@ -762,7 +762,7 @@ void GegnerRollmops::DoKI() {
     GegnerRect[GegnerArt].left = 20;
     GegnerRect[GegnerArt].right = 80;
     GegnerRect[GegnerArt].bottom = 80;
-    TestDamagePlayers(20.0f SYNC);
+    TestDamagePlayers(Timer.sync(20.0f));
 
     // Keine Energie mehr? Dann explodieren
     if (Energy <= 0.0f && Energy > -500.0f && Handlung != GEGNER::EXPLODIEREN) {

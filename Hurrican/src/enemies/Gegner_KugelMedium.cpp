@@ -90,7 +90,7 @@ void GegnerKugelMedium::DoKI() {
     }  // switch
 
     // Verletzt sie den Spieler ?
-    TestDamagePlayers(4.0f SYNC);
+    TestDamagePlayers(Timer.sync(4.0f));
 }
 
 // --------------------------------------------------------------------------------------

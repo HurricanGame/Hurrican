@@ -66,7 +66,7 @@ void GegnerMushroom::DoKI() {
     switch (Handlung) {
         case GEGNER::STEHEN: {
             // Pilz wieder vergrößern
-            ySize += 10.0f SYNC;
+            ySize += Timer.sync(10.0f);
             if (ySize > 61.0f)
                 ySize = 61.0f;
 
@@ -79,11 +79,11 @@ void GegnerMushroom::DoKI() {
 
         case GEGNER::SPRINGEN: {
             // Pilz verkleinern
-            ySize -= 20.0f SYNC;
+            ySize -= Timer.sync(20.0f);
             if (ySize < 55.0f)
                 ySize = 55.0f;
 
-            count -= 1.0f SYNC;
+            count -= Timer.sync(1.0f);
 
             // Keiner mehr drauf? Dann wieder normalzustand
             bool beideweg = true;

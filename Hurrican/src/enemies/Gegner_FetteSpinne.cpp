@@ -147,7 +147,7 @@ void GegnerFetteSpinne::DoKI() {
 
         // kurz in die Hocke gehen
         case GEGNER::SPECIAL: {
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             // abspringen
             if (AnimCount < 0.0f) {

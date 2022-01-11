@@ -109,12 +109,12 @@ void GegnerColumn::DoKI() {
         // Säule fällt gerade um ?
         //
         case GEGNER::EXPLODIEREN: {
-            FallSpeed += 0.5f SYNC;
-            AnimCount += FallSpeed SYNC;
+            FallSpeed += Timer.sync(0.5f);
+            AnimCount += Timer.sync(FallSpeed);
 
-            FallValue += 0.5f SYNC;
+            FallValue += Timer.sync(0.5f);
             if (FallValue < 6.0f)
-                ScreenWinkel -= 0.5f SYNC;
+                ScreenWinkel -= Timer.sync(0.5f);
 
             Energy = 100.0f;
 

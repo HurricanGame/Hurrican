@@ -64,28 +64,28 @@ void GegnerBigFish::MoveTo(float x, float y) {
 
 void GegnerBigFish::DoMove() {
     if (xSpeed < 0.0f && NewX > xPos) {
-        xSpeed += 1.0f SYNC;
+        xSpeed += Timer.sync(1.0f);
 
         if (xSpeed > 0.0f)
             xSpeed = 0.0f;
     }
 
     if (xSpeed > 0.0f && NewX < xPos) {
-        xSpeed -= 1.0f SYNC;
+        xSpeed -= Timer.sync(1.0f);
 
         if (xSpeed < 0.0f)
             xSpeed = 0.0f;
     }
 
     if (ySpeed < 0.0f && NewY > yPos) {
-        ySpeed += 1.0f SYNC;
+        ySpeed += Timer.sync(1.0f);
 
         if (ySpeed > 0.0f)
             ySpeed = 0.0f;
     }
 
     if (ySpeed > 0.0f && NewY < yPos) {
-        ySpeed -= 1.0f SYNC;
+        ySpeed -= Timer.sync(1.0f);
 
         if (ySpeed < 0.0f)
             ySpeed = 0.0f;
@@ -197,11 +197,11 @@ void GegnerBigFish::DoDraw() {
         // Flossen bewegen
         float fact = (xSpeed * xSpeed + ySpeed * ySpeed + 20.0f) / 200.0f;
 
-        FlossenSin += fact SYNC;
+        FlossenSin += Timer.sync(fact);
         if (FlossenSin > TWO_PI)
             FlossenSin = 0.0f;
 
-        FlossenSin2 += fact SYNC;
+        FlossenSin2 += Timer.sync(fact);
         if (FlossenSin2 > TWO_PI)
             FlossenSin2 = 0.0f;
     }
@@ -217,7 +217,7 @@ void GegnerBigFish::DoDraw() {
 void GegnerBigFish::DoKI() {
     static bool IsKugel = false;
 
-    KugelCount -= 1.0f SYNC;
+    KugelCount -= Timer.sync(1.0f);
 
     if (KugelCount <= 0.0f) {
         int LeftOrRight = 1;
@@ -245,7 +245,7 @@ void GegnerBigFish::DoKI() {
     }
 
     // Schwimmbewegung
-    SinOff += 0.2f SYNC;
+    SinOff += Timer.sync(0.2f);
 
     if (SinOff > TWO_PI)
         SinOff = 0.0f;
@@ -263,7 +263,7 @@ void GegnerBigFish::DoKI() {
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
     if (DamageTaken > 0.0f)
-        DamageTaken -= 100 SYNC;  // Rotwerden langsam ausfaden lassen
+        DamageTaken -= Timer.sync(100.0f);  // Rotwerden langsam ausfaden lassen
     else
         DamageTaken = 0.0f;  // oder ganz anhalten
 
@@ -330,7 +330,7 @@ void GegnerBigFish::DoKI() {
                 static bool shot = false;
 
                 // und Maulbewegung
-                MaulWinkel += 0.6f SYNC;
+                MaulWinkel += Timer.sync(0.6f);
 
                 if (MaulWinkel > PI && !shot) {
                     shot = true;
@@ -354,7 +354,7 @@ void GegnerBigFish::DoKI() {
                 static bool shot = false;
 
                 // und Maulbewegung
-                MaulWinkel += 0.1f SYNC;
+                MaulWinkel += Timer.sync(0.1f);
 
                 if (MaulWinkel > PI && !shot) {
                     shot = true;
@@ -393,7 +393,7 @@ void GegnerBigFish::DoKI() {
     GegnerRect[BIGFISH].top = 28 + static_cast<int>(sin(SinOff) * 5.0f);
     GegnerRect[BIGFISH].bottom = 156 + static_cast<int>(sin(SinOff) * 5.0f);
 
-    TestDamagePlayers(8.0f SYNC);
+    TestDamagePlayers(Timer.sync(8.0f));
 
     // Normales Cliprect setzen
     GegnerRect[BIGFISH].left = 0;

@@ -91,13 +91,13 @@ void GegnerKettenglied::DoKI() {
                     ySpeed = 0.0f;
             }
 
-            AnimSpeed -= 5.0f SYNC;
+            AnimSpeed -= Timer.sync(5.0f);
 
             if (AnimSpeed < 0.0f)
                 Energy = 0.0f;
 
             if (ySpeed != 0.0f)
-                AnimCount += 50.0f SYNC;
+                AnimCount += Timer.sync(50.0f);
 
             if (AnimCount > 360.0f)
                 AnimCount = 0.0f;

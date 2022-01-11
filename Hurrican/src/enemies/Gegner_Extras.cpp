@@ -107,14 +107,14 @@ void GegnerExtras::DoKI() {
 
             // Speed verlangsamen
             if (xSpeed > 0.0f) {
-                xSpeed -= 0.5f SYNC;
+                xSpeed -= Timer.sync(0.5f);
 
                 if (xSpeed < 0.0f)
                     xSpeed = 0.0f;
             }
 
             if (xSpeed < 0.0f) {
-                xSpeed += 0.5f SYNC;
+                xSpeed += Timer.sync(0.5f);
 
                 if (xSpeed > 0.0f)
                     xSpeed = 0.0f;

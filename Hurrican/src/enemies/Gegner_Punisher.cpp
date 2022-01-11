@@ -111,7 +111,7 @@ void GegnerPunisher::DoKI() {
         // einfaden
         case GEGNER::INIT2: {
             // einfaden
-            alpha += 5.0f SYNC;
+            alpha += Timer.sync(5.0f);
 
             if (alpha > 255.0f) {
                 alpha = 255.0f;
@@ -151,13 +151,13 @@ void GegnerPunisher::DoKI() {
             if (xAcc < 0.0f) {
                 if (AnimCount > 20.0f)
                     AnimCount = 20.0f;
-                AnimCount -= 1.0f SYNC;
+                AnimCount -= Timer.sync(1.0f);
                 if (AnimCount < 0.0f)
                     AnimCount = 10.0f;
             } else {
                 if (AnimCount < 10.0f)
                     AnimCount = 10.0f;
-                AnimCount += 1.0f SYNC;
+                AnimCount += Timer.sync(1.0f);
                 if (AnimCount > 30.0f)
                     AnimCount = 20.0f;
             }
@@ -173,7 +173,7 @@ void GegnerPunisher::DoKI() {
             ySpeed = 0.0f;
 
             // ausfaden
-            alpha -= 5.0f SYNC;
+            alpha -= Timer.sync(5.0f);
 
             if (alpha < 0.0f) {
                 alpha = 0.0f;

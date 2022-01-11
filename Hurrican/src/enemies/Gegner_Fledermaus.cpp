@@ -130,7 +130,7 @@ void GegnerFledermaus::DoKI() {
             static float DeckenCount = 0.0f;
 
             if (DeckenCount > 0.0f)
-                DeckenCount -= 1.0f SYNC;
+                DeckenCount -= Timer.sync(1.0f);
 
             if (DeckenCount <= 0.0f && blocko & BLOCKWERT_WAND) {
                 DeckenCount = 10.0f;
@@ -148,7 +148,7 @@ void GegnerFledermaus::DoKI() {
     }
 
     // Spieler berührt ?
-    TestDamagePlayers(4.0f SYNC);
+    TestDamagePlayers(Timer.sync(4.0f));
 }
 
 // --------------------------------------------------------------------------------------

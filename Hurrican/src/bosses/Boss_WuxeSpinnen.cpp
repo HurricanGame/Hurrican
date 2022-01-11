@@ -71,7 +71,7 @@ void GegnerWuxeSpinnen::DoKI() {
         case GEGNER::STEHEN: {
             // ActionCounter runterzählen
             // bei null Gegner spawnen
-            ActionCounter -= 0.8f SYNC;
+            ActionCounter -= Timer.sync(0.8f);
 
             if (ActionCounter <= 0.0f) {
                 ActionCounter = 1.5f + Energy / 500.0f;

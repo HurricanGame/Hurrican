@@ -234,10 +234,10 @@ void GegnerMetalHead::WinkelToPlayer() {
     }
 
     if (GunWinkel < neww)
-        GunWinkel += 8.0f SYNC;
+        GunWinkel += Timer.sync(8.0f);
 
     if (GunWinkel > neww)
-        GunWinkel -= 8.0f SYNC;
+        GunWinkel -= Timer.sync(8.0f);
 }
 
 // --------------------------------------------------------------------------------------
@@ -246,28 +246,28 @@ void GegnerMetalHead::WinkelToPlayer() {
 
 void GegnerMetalHead::DoMove() {
     if (xSpeed < 0.0f && NewX > xPos) {
-        xSpeed += 1.0f SYNC;
+        xSpeed += Timer.sync(1.0f);
 
         if (xSpeed > 0.0f)
             xSpeed = 0.0f;
     }
 
     if (xSpeed > 0.0f && NewX < xPos) {
-        xSpeed -= 1.0f SYNC;
+        xSpeed -= Timer.sync(1.0f);
 
         if (xSpeed < 0.0f)
             xSpeed = 0.0f;
     }
 
     if (ySpeed < 0.0f && NewY > yPos) {
-        ySpeed += 1.0f SYNC;
+        ySpeed += Timer.sync(1.0f);
 
         if (ySpeed > 0.0f)
             ySpeed = 0.0f;
     }
 
     if (ySpeed > 0.0f && NewY < yPos) {
-        ySpeed -= 1.0f SYNC;
+        ySpeed -= Timer.sync(1.0f);
 
         if (ySpeed < 0.0f)
             ySpeed = 0.0f;
@@ -285,12 +285,12 @@ void GegnerMetalHead::DoMove() {
 void GegnerMetalHead::DoKI() {
     if (Handlung != GEGNER::EXPLODIEREN) {
         if (ShadowAlpha > 0.0f)
-            ShadowAlpha -= 5.0f SYNC;
+            ShadowAlpha -= Timer.sync(5.0f);
         else
             ShadowAlpha = 0.0f;
     } else {
         if (ShadowAlpha < 255.0f)
-            ShadowAlpha += 5.0f SYNC;
+            ShadowAlpha += Timer.sync(5.0f);
         else
             ShadowAlpha = 255.0f;
     }
@@ -353,13 +353,13 @@ void GegnerMetalHead::DoKI() {
             }
         }
 
-        DamageTaken -= 10 SYNC;  // Rotwerden langsam ausfaden lassen
+        DamageTaken -= Timer.sync(10.0f);  // Rotwerden langsam ausfaden lassen
     } else
         DamageTaken = 0.0f;  // oder ganz anhalten
 
     // Wenig Energie? Dann Hals dampfen lassen und ggf Funken erzeugen
     if (Energy < 2500 && Handlung != GEGNER::EXPLODIEREN) {
-        SmokeCount -= 1.0f SYNC;
+        SmokeCount -= Timer.sync(1.0f);
 
         while (SmokeCount < 0.0f) {
             SmokeCount += 0.8f;
@@ -429,8 +429,8 @@ void GegnerMetalHead::DoKI() {
     // Bei diversen Handlungen den Kiefer bewegen
     //
     if (Handlung == GEGNER::SPECIAL || Handlung == GEGNER::SPECIAL2 || Handlung == GEGNER::SPECIAL3) {
-        KieferSpeed -= 2.0f SYNC;
-        KieferPos += KieferSpeed SYNC;
+        KieferSpeed -= Timer.sync(2.0f);
+        KieferPos += Timer.sync(KieferSpeed);
 
         // Oben umdrehen?
         //
@@ -453,13 +453,13 @@ void GegnerMetalHead::DoKI() {
             case GEGNER::CRUSHEN2: {
                 TurbineOff = 0.0f;
                 if (GunWinkel > 0.0f)
-                    GunWinkel -= 50.0f SYNC;
+                    GunWinkel -= Timer.sync(50.0f);
 
                 if (GunWinkel < 0.0f)
-                    GunWinkel += 50.0f SYNC;
+                    GunWinkel += Timer.sync(50.0f);
 
                 if (KieferPos > 0.0f)
-                    KieferPos -= 50.0f SYNC;
+                    KieferPos -= Timer.sync(50.0f);
                 else
                     KieferPos = 0.0f;
 
@@ -536,7 +536,7 @@ void GegnerMetalHead::DoKI() {
                 Energy = 4000;
                 DamageTaken = 0.0f;
 
-                Eye_Alpha += 10.0f SYNC;
+                Eye_Alpha += Timer.sync(10.0f);
 
                 if (Eye_Alpha > 255.0f) {
                     Eye_Alpha = 255.0f;
@@ -553,16 +553,16 @@ void GegnerMetalHead::DoKI() {
             case GEGNER::SCHIESSEN: {
                 if (ShotArt == 2) {
                     if (GunWinkel > 0.0f)
-                        GunWinkel -= 50.0f SYNC;
+                        GunWinkel -= Timer.sync(50.0f);
 
                     if (GunWinkel < 0.0f)
-                        GunWinkel += 50.0f SYNC;
+                        GunWinkel += Timer.sync(50.0f);
                 } else
                     WinkelToPlayer();
 
                 if (ShotArt == 1) {
-                    yPos += 1.5f SYNC;
-                    xPos -= 1.0f SYNC;
+                    yPos += Timer.sync(1.5f);
+                    xPos -= Timer.sync(1.0f);
                 }
 
                 KieferPos = static_cast<float>(sin(SinCount)) * 50.0f;
@@ -570,7 +570,7 @@ void GegnerMetalHead::DoKI() {
                 switch (Akt) {
                     case GEGNER::OEFFNEN: {
                         TurbineOff = static_cast<float>(sin(SinCount)) * 30.0f;
-                        SinCount += 0.2f SYNC;
+                        SinCount += Timer.sync(0.2f);
 
                         if (SinCount >= HALF_PI) {
                             Destroyable = true;
@@ -599,15 +599,15 @@ void GegnerMetalHead::DoKI() {
                     case GEGNER::SCHIESSEN: {
                         // DKS - sin(pi/2) is 1.0, so I am optimizing this math:
                         // if (TurbineOff < (float)sin(PI / 2.0f) * 30.0f)
-                        //    TurbineOff += 5.0f SYNC;
+                        //    TurbineOff += Timer.sync(5.0f);
                         // else
                         //    TurbineOff = (float)sin(PI / 2.0f) * 30.0f;
                         if (TurbineOff < 30.0f)
-                            TurbineOff += 5.0f SYNC;
+                            TurbineOff += Timer.sync(5.0f);
                         else
                             TurbineOff = 30.0f;
 
-                        ShotDelay -= 1.0f SYNC;
+                        ShotDelay -= Timer.sync(1.0f);
 
                         if (ShotDelay <= 0.0f) {
                             if (ShotCount <= 0) {
@@ -687,7 +687,7 @@ void GegnerMetalHead::DoKI() {
                     case GEGNER::SCHLIESSEN: {
                         TurbineOff = static_cast<float>(sin(SinCount)) * 30.0f;
 
-                        SinCount -= 0.2f SYNC;
+                        SinCount -= Timer.sync(0.2f);
 
                         if (SinCount <= 0) {
                             int j;
@@ -746,7 +746,7 @@ void GegnerMetalHead::DoKI() {
                 // Something's broken here...
                 if (Akt == SK_BANGEN) {
                     if (KieferPos < 60.0f)
-                        KieferPos += 5.0f SYNC;
+                        KieferPos += Timer.sync(5.0f);
                     else
                         KieferPos = 60.0f;
                 }
@@ -755,7 +755,7 @@ void GegnerMetalHead::DoKI() {
                 //
                 if (Akt == SK_AUSGANG) {
                     if (KieferPos > 0.0f)
-                        KieferPos -= 5.0f SYNC;
+                        KieferPos -= Timer.sync(5.0f);
                     else
                         KieferPos = 0.0f;
                 }
@@ -765,11 +765,11 @@ void GegnerMetalHead::DoKI() {
             case GEGNER::EXPLODIEREN: {
                 Energy = 100.0f;
 
-                Eye_Alpha -= 0.3f SYNC;
+                Eye_Alpha -= Timer.sync(0.3f);
                 while (Eye_Alpha < 0)
                     Eye_Alpha += TWO_PI;
 
-                AnimCount -= 1.0f SYNC;
+                AnimCount -= Timer.sync(1.0f);
 
                 // Ein weiterer Halswirbel explodiert und fliegt weg
                 //
@@ -846,7 +846,7 @@ void GegnerMetalHead::DoKI() {
                     Player[p].DamagePlayer(500.0f);
                 AnimPhase = 1600;
             } else
-                Player[p].DamagePlayer(static_cast<float>(4.0 SYNC));
+                Player[p].DamagePlayer(Timer.sync(4.0f));
         }
 }
 

@@ -84,7 +84,7 @@ void GegnerSchleimMaul::DoKI() {
         }
     }
 
-    ShotDelay -= 1.0f SYNC;
+    ShotDelay -= Timer.sync(1.0f);
 
     if (ShotDelay <= 0.0f) {
         ShotDelay = 5.0f + (4 - Skill) * 3.0f;

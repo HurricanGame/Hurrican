@@ -114,22 +114,22 @@ void GegnerMittelSpinne::DoKI() {
                 inc = 0.0f;
 
             if (rot < winkel)
-                rot += inc SYNC;
+                rot += Timer.sync(inc);
             if (rot > winkel)
-                rot -= inc SYNC;
+                rot -= Timer.sync(inc);
 
             // Bewegen
             //
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
             // xSpeed = float ( sin(rot * D3DX_PI / 180.0f) * 15.0f * (5.0f - AnimSpeed) SYNC);
             // ySpeed = float (-cos(rot * D3DX_PI / 180.0f) * 15.0f * (5.0f - AnimSpeed) SYNC);
-            xSpeed = sin_deg(rot) * 15.0f * (5.0f - AnimSpeed) SYNC;
-            ySpeed = -cos_deg(rot) * 15.0f * (5.0f - AnimSpeed) SYNC;
+            xSpeed = Timer.sync(sin_deg(rot) * 15.0f * (5.0f - AnimSpeed));
+            ySpeed = Timer.sync(-cos_deg(rot) * 15.0f * (5.0f - AnimSpeed));
 
         } break;
 
         case GEGNER::FALLEN: {
-            rot += Value2 SYNC;
+            rot += Timer.sync(static_cast<float>(Value2));
 
             clampAngle(rot);
 
@@ -139,10 +139,10 @@ void GegnerMittelSpinne::DoKI() {
                 blockr & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM)
                 Energy = 0.0f;
 
-            shotdelay -= 1.0f SYNC;
+            shotdelay -= Timer.sync(1.0f);
 
             if (shotdelay < 0.0f) {
-                shotdelay = 0.2f SYNC;
+                shotdelay = Timer.sync(0.2f);
                 PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(5)),
                                             yPos + 15.0f + static_cast<float>(random(5)), ROCKETSMOKE);
             }
@@ -152,7 +152,7 @@ void GegnerMittelSpinne::DoKI() {
     // Spieler berührt ?
     //
     if (Handlung != GEGNER::FALLEN)
-        TestDamagePlayers(4.0f SYNC);
+        TestDamagePlayers(Timer.sync(4.0f));
 }
 
 // --------------------------------------------------------------------------------------

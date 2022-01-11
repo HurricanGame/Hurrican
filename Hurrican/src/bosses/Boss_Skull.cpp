@@ -66,7 +66,7 @@ void GegnerSkull::DoKI() {
 
     // Antrieb
     //
-    SmokeDelay -= 1.0f SYNC;
+    SmokeDelay -= Timer.sync(1.0f);
     if (SmokeDelay <= 0.0f) {
         SmokeDelay = 5.0f;
 
@@ -82,7 +82,7 @@ void GegnerSkull::DoKI() {
     switch (Handlung) {
         // In die Mitte fliegen und explodieren
         case GEGNER::SPECIAL3: {
-            Disappear -= 1.0f SYNC;
+            Disappear -= Timer.sync(1.0f);
 
             float endwert = 10.0f - (Disappear / 20.0f * 10.0f);
 
@@ -93,7 +93,7 @@ void GegnerSkull::DoKI() {
 
             // Explosionen
             if (AnimCount > 0.0f)
-                AnimCount -= 1.0f SYNC;
+                AnimCount -= Timer.sync(1.0f);
             else {
                 AnimCount = 0.8f;
 
@@ -169,7 +169,7 @@ void GegnerSkull::DoKI() {
         // dann setzt er sich wieder auf die Endboss Maschine
         case GEGNER::SPECIAL: {
             if (AnimCount > 0.0f)
-                AnimCount -= 1.0f SYNC;
+                AnimCount -= Timer.sync(1.0f);
             else {
                 if (xPos + 16 > pAim->xpos + 35)
                     xAcc = -2.0f;
@@ -200,37 +200,37 @@ void GegnerSkull::DoKI() {
             yAcc = 0.0f;
 
             if (xSpeed < 0.0f)
-                xSpeed += 1.0f SYNC;
+                xSpeed += Timer.sync(1.0f);
             if (xSpeed > 0.0f)
-                xSpeed -= 1.0f SYNC;
+                xSpeed -= Timer.sync(1.0f);
             if (ySpeed < 0.0f)
-                ySpeed += 1.0f SYNC;
+                ySpeed += Timer.sync(1.0f);
             if (ySpeed > 0.0f)
-                ySpeed -= 1.0f SYNC;
+                ySpeed -= Timer.sync(1.0f);
 
             if (xPos < mxPos) {
-                xPos += 10.0f SYNC;
+                xPos += Timer.sync(10.0f);
 
                 if (xPos > mxPos)
                     xPos = mxPos;
             }
 
             if (xPos > mxPos) {
-                xPos -= 10.0f SYNC;
+                xPos -= Timer.sync(10.0f);
 
                 if (xPos < mxPos)
                     xPos = mxPos;
             }
 
             if (yPos < myPos) {
-                yPos += 10.0f SYNC;
+                yPos += Timer.sync(10.0f);
 
                 if (yPos > myPos)
                     yPos = myPos;
             }
 
             if (yPos > myPos) {
-                yPos -= 10.0f SYNC;
+                yPos -= Timer.sync(10.0f);
 
                 if (yPos < myPos)
                     yPos = myPos;
@@ -256,7 +256,7 @@ void GegnerSkull::DoKI() {
     // Auf den Spieler schiessen?
     if (Value1 == 99) {
         if (pMachine->Energy < 1500.0f)
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
         if (ShotDelay < 0.0f) {
             ShotDelay = 15.0f;
@@ -266,7 +266,7 @@ void GegnerSkull::DoKI() {
     }
 
     if (Handlung != GEGNER::SPECIAL3)
-        TestDamagePlayers(1.0f SYNC);
+        TestDamagePlayers(Timer.sync(1.0f));
 }
 
 // --------------------------------------------------------------------------------------

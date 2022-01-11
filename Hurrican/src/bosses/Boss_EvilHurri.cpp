@@ -75,7 +75,7 @@ void GegnerEvilHurri::DoKI() {
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
     if (DamageTaken > 0.0f)
-        DamageTaken -= 100 SYNC;  // Rotwerden langsam ausfaden lassen
+        DamageTaken -= Timer.sync(100.0f);  // Rotwerden langsam ausfaden lassen
     else
         DamageTaken = 0.0f;  // oder ganz anhalten
 
@@ -94,7 +94,7 @@ void GegnerEvilHurri::DoKI() {
 
             // Sonst Energie abziehen
             else {
-                Player[p].DamagePlayer(static_cast<float>(10.0 SYNC));
+                Player[p].DamagePlayer(Timer.sync(10.0f));
 
                 // Spieler wegschieben
                 if (Player[p].xpos < xPos)
@@ -126,7 +126,7 @@ void GegnerEvilHurri::DoKI() {
     }
 
     // EvilHurri blinken lassen
-    BlinkWert += BlinkDirection * 30.0f SYNC;
+    BlinkWert += Timer.sync(BlinkDirection * 30.0f);
 
     if (BlinkWert <= 0)
         BlinkDirection = 1.0f;
@@ -167,7 +167,7 @@ void GegnerEvilHurri::DoKI() {
             if (xPos > pAim->xpos + 70.0f)
                 BlickRichtung = LINKS;
 
-            ActionDelay -= 1.0f SYNC;
+            ActionDelay -= Timer.sync(1.0f);
             if (ActionDelay < 0.0f) {
                 ActionDelay = 0.0f;
 
@@ -255,7 +255,7 @@ void GegnerEvilHurri::DoKI() {
         } break;
 
         case GEGNER::CRUSHEN: {
-            ActionDelay -= 1.0f SYNC;
+            ActionDelay -= Timer.sync(1.0f);
 
             if (ActionDelay < 0.0f) {
                 ActionDelay = 1.0f;
@@ -276,7 +276,7 @@ void GegnerEvilHurri::DoKI() {
 
         case GEGNER::CRUSHEN2:  // Nur bis zur Mitte des Screens und dann blitzen
         {
-            ActionDelay -= 1.0f SYNC;
+            ActionDelay -= Timer.sync(1.0f);
 
             if (ActionDelay < 0.0f) {
                 ActionDelay = 1.0f;
@@ -302,7 +302,7 @@ void GegnerEvilHurri::DoKI() {
         case GEGNER::LAUFEN:  // Auf Spieler zulaufen
         {
             // Ballern
-            ActionDelay -= 1.0f SYNC;
+            ActionDelay -= Timer.sync(1.0f);
             if (ActionDelay < 0.0f) {
                 ActionDelay = 2.5f;
 
@@ -354,7 +354,7 @@ void GegnerEvilHurri::DoKI() {
         case GEGNER::LAUFEN2:  // In die Mitte des Screens laufen und da Schweinereien machen
         {
             // Ballern
-            ActionDelay -= 1.0f SYNC;
+            ActionDelay -= Timer.sync(1.0f);
             if (ActionDelay < 0.0f) {
                 ActionDelay = 2.5f;
 
@@ -385,7 +385,7 @@ void GegnerEvilHurri::DoKI() {
 
         // Boss ballert im Kreis um sich herum
         case GEGNER::BOMBARDIEREN: {
-            ActionDelay -= 1.0f SYNC;
+            ActionDelay -= Timer.sync(1.0f);
 
             if (ActionDelay < 0.0f) {
                 SoundManager.PlayWave(100, random(255), 8000 + random(4000), SOUND::CANON);
@@ -410,7 +410,7 @@ void GegnerEvilHurri::DoKI() {
 
         // Gegner Blitzt in den Himmel und Schüsse fallen von oben
         case GEGNER::SPECIAL: {
-            ActionDelay += 1.0f SYNC;
+            ActionDelay += Timer.sync(1.0f);
 
             if (ActionDelay > 5.0f && ActionDelay < 20.0f && AnimPhase == 0)
                 AnimPhase = 40;
@@ -480,7 +480,7 @@ void GegnerEvilHurri::DoKI() {
                 Handlung = GEGNER::STEHEN;
             }
 
-            ActionDelay -= 1.0f SYNC;
+            ActionDelay -= Timer.sync(1.0f);
 
             if (ActionDelay < 0.0f) {
                 // schiessen ?
@@ -516,7 +516,7 @@ void GegnerEvilHurri::DoKI() {
                 Handlung = GEGNER::STEHEN;
             }
 
-            ActionDelay -= 1.0f SYNC;
+            ActionDelay -= Timer.sync(1.0f);
 
             if (ActionDelay < 0.0f) {
                 // schiessen ?
@@ -543,11 +543,11 @@ void GegnerEvilHurri::DoKI() {
         case GEGNER::EXPLODIEREN: {
             Energy = 80.0f;
 
-            ActionDelay += 1.0f SYNC;
+            ActionDelay += Timer.sync(1.0f);
             if (ActionDelay >= 50.0f)
                 Energy = 0.0f;
 
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
             if (AnimCount < 0.0f) {
                 AnimCount = 2.0f;
 

@@ -34,7 +34,7 @@ void GegnerShrine::DoKI() {
     BlickRichtung = LINKS;
 
     if (AnimCount > 0.0f)
-        AnimCount -= 1.0f SYNC;
+        AnimCount -= Timer.sync(1.0f);
     else
         AnimCount = 0.0f;
 

@@ -1971,7 +1971,7 @@ void TileEngineClass::WertAngleichen(float &nachx, float &nachy, float vonx, flo
     float const rangex = std::clamp(vonx - nachx, -50.0f, 50.0f);
     float const rangey = std::clamp(vony - nachy, -60.0f, 60.0f);
 
-    nachx += rangex * 0.8f SYNC;
+    nachx += Timer.sync(rangex * 0.8f);
 
     /*
     if (NUMPLAYERS == 1 &&
@@ -1986,7 +1986,7 @@ void TileEngineClass::WertAngleichen(float &nachx, float &nachy, float vonx, flo
     }
     else */
     if (FlugsackFliesFree == true)
-        nachy += rangey * 0.75f SYNC;
+        nachy += Timer.sync(rangey * 0.75f);
 }
 
 // --------------------------------------------------------------------------------------
@@ -2000,11 +2000,11 @@ void TileEngineClass::UpdateLevel() {
     // Zeit ablaufen lassen
     if (RunningTutorial == false && Timelimit > 0.0f && HUD.BossHUDActive == 0.0f) {
         if (Skill == SKILL_EASY)
-            Timelimit -= 0.05f SYNC;
+            Timelimit -= Timer.sync(0.05f);
         else if (Skill == SKILL_MEDIUM)
-            Timelimit -= 0.075f SYNC;
+            Timelimit -= Timer.sync(0.075f);
         else
-            Timelimit -= 0.1f SYNC;
+            Timelimit -= Timer.sync(0.1f);
     }
 
     // Zeit abgelaufen? Dann Punisher erscheinen lassen
@@ -2039,28 +2039,28 @@ void TileEngineClass::UpdateLevel() {
     // Sichtbaren Level-Ausschnitt scrollen
     if (Zustand == TileStateEnum::SCROLLTO || Zustand == TileStateEnum::SCROLLTOLOCK) {
         if (XOffset < ScrolltoX) {
-            XOffset += SpeedX SYNC;
+            XOffset += Timer.sync(SpeedX);
 
             if (XOffset > ScrolltoX)
                 XOffset = ScrolltoX;
         }
 
         if (XOffset > ScrolltoX) {
-            XOffset -= SpeedX SYNC;
+            XOffset -= Timer.sync(SpeedX);
 
             if (XOffset < ScrolltoX)
                 XOffset = ScrolltoX;
         }
 
         if (YOffset < ScrolltoY) {
-            YOffset += SpeedY SYNC;
+            YOffset += Timer.sync(SpeedY);
 
             if (YOffset > ScrolltoY)
                 YOffset = ScrolltoY;
         }
 
         if (YOffset > ScrolltoY) {
-            YOffset -= SpeedY SYNC;
+            YOffset -= Timer.sync(SpeedY);
 
             if (YOffset < ScrolltoY)
                 YOffset = ScrolltoY;
@@ -2099,23 +2099,23 @@ void TileEngineClass::UpdateLevel() {
         /*
                 if (ScrolltoX - XOffset <  SCROLL_BORDER_LEFT)
                 {
-                    XOffset -= SpeedX SYNC;
+                    XOffset -= Timer.sync(SpeedX);
                     isScrolling = true;
                 }
 
                 if (ScrolltoX - XOffset >  SCROLL_BORDER_RIGHT)
                 {
-                    XOffset += SpeedX SYNC;
+                    XOffset += Timer.sync(SpeedX);
                     isScrolling = true;
                 }
         */
         if (ScrolltoY - YOffset < SCROLL_BORDER_EXTREME_TOP) {
-            YOffset -= SpeedY SYNC;
+            YOffset -= Timer.sync(SpeedY);
             isScrolling = true;
         }
 
         if (ScrolltoY - YOffset > SCROLL_BORDER_EXTREME_BOTTOM) {
-            YOffset += SpeedY SYNC;
+            YOffset += Timer.sync(SpeedY);
             isScrolling = true;
         }
 
@@ -2194,7 +2194,7 @@ void TileEngineClass::UpdateLevel() {
     }
 
     // Wasserfall animieren
-    WasserfallOffset += 16.0f SYNC;
+    WasserfallOffset += Timer.sync(16.0f);
 
     while (WasserfallOffset >= 120.0f)
         WasserfallOffset -= 120.0f;
@@ -2204,9 +2204,9 @@ void TileEngineClass::UpdateLevel() {
     WaterSinTable.AdvancePosition(SpeedFaktor);
 #if 0
     // Schwabbeln des Levels animieren
-    //SinPos   += 3.0f SYNC;    //DKS - unused; disabled
-    SinPos2  += 2.0f SYNC;
-    WaterPos += 2.0f SYNC;
+    //SinPos   += Timer.sync(3.0f);    //DKS - unused; disabled
+    SinPos2  += Timer.sync(2.0f);
+    WaterPos += Timer.sync(2.0f);
 
     //while (SinPos   >= 40.0f) SinPos   -= 40.0f;  //DKS - unused; disabled
     while (SinPos2  >= 40.0f) SinPos2  -= 40.0f;
@@ -2302,7 +2302,7 @@ int	TileEngineClass::BlockRechts(float &x, float &y, float  &xo, float &yo, RECT
     int ylevel;
     int laenge;
 
-    //laenge = abs(static_cast<int>(xs SYNC))+1;
+    //laenge = abs(static_cast<int>(Timer.sync(xs)))+1;
     laenge = 5;
 
     for (int l=0; l<laenge && Art == 0; l++)
@@ -2350,7 +2350,7 @@ bool TileEngineClass::BlockDestroyRechts(float &x, float &y, float  &xo, float &
             y > LEVELPIXELSIZE_Y)
         return false;
 
-    //laenge = abs(static_cast<int>(xs SYNC))+1;
+    //laenge = abs(static_cast<int>(Timer.sync(xs)))+1;
     laenge = 5;
 
     for (int l=0; l<laenge; l++)
@@ -2422,7 +2422,7 @@ int	TileEngineClass::BlockLinks(float &x, float &y, float &xo, float &yo, RECT_s
     int ylevel;
     int laenge;
 
-    //laenge = abs(static_cast<int>(xs SYNC))+1;
+    //laenge = abs(static_cast<int>(Timer.sync(xs)))+1;
     laenge = 5;
 
     for (int l=0; l<laenge && Art == 0; l++)
@@ -2473,7 +2473,7 @@ bool TileEngineClass::BlockDestroyLinks(float &x, float &y, float &xo, float &yo
     int ylevel;
     int laenge;
 
-    //laenge = abs(static_cast<int>(xs SYNC))+1;
+    //laenge = abs(static_cast<int>(Timer.sync(xs)))+1;
     laenge = 5;
 
     for (int l=0; l<laenge; l++)
@@ -3246,8 +3246,8 @@ bool TileEngineClass::CheckDestroyableWalls(float x, float y, float xs, float ys
             y < 0 || y > LEVELPIXELSIZE_Y)
         return false;
 
-    int xstart = static_cast<int>((x+xs SYNC) * (1.0f / TILESIZE_X));
-    int ystart = static_cast<int>((y+ys SYNC) * (1.0f / TILESIZE_Y));
+    int xstart = static_cast<int>((x + Timer.sync(xs)) * (1.0f / TILESIZE_X));
+    int ystart = static_cast<int>((y + Timer.sync(ys)) * (1.0f / TILESIZE_Y));
 
     int const xl = rect.right / TILESIZE_X + 2;
     int const yl = rect.bottom / TILESIZE_Y + 2;

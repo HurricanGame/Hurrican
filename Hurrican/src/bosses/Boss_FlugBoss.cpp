@@ -113,7 +113,7 @@ void GegnerFlugBoss::DoDraw() {
                                   0xFFFFFFFF);
 
     // Auge
-    alphaAuge += alphaSpeed * alphaDir SYNC;
+    alphaAuge += Timer.sync(alphaSpeed * alphaDir);
 
     // Grenzen für Alpha checken
     if (alphaAuge > 255.0f) {
@@ -169,7 +169,7 @@ void GegnerFlugBoss::DoKI() {
 
         // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
         if (DamageTaken > 0.0f)
-            DamageTaken -= 100 SYNC;				// Rotwerden langsam ausfaden lassen
+            DamageTaken -= Timer.sync(100-0f);				// Rotwerden langsam ausfaden lassen
         else
             DamageTaken = 0.0f;						// oder ganz anhalten
 
@@ -204,12 +204,12 @@ void GegnerFlugBoss::DoKI() {
             //
             case GEGNER::INIT2 :
             {
-                tempSpeed -= 1.35f SYNC;
+                tempSpeed -= Timer.sync(1.35f);
 
                 if (tempSpeed < 3.0f)
                     tempSpeed = 3.0f;
 
-                yPos += tempSpeed SYNC;
+                yPos += Timer.sync(tempSpeed);
 
                 // Endposition erreicht? Dann Schienen einfahren
                 //
@@ -230,12 +230,12 @@ void GegnerFlugBoss::DoKI() {
             //
             case GEGNER::INIT3:
             {
-                tempSpeed -= 0.2f SYNC;
+                tempSpeed -= Timer.sync(0.2f);
 
                 if (tempSpeed < 2.0f)
                     tempSpeed = 2.0f;
 
-                SchienePos -= tempSpeed SYNC;
+                SchienePos -= Timer.sync(tempSpeed);
 
                 if (SchienePos <= 0.0f)
                 {
@@ -260,12 +260,12 @@ void GegnerFlugBoss::DoKI() {
             //
             case GEGNER::EINFAHREN:
             {
-                tempSpeed -= 0.5f SYNC;
+                tempSpeed -= Timer.sync(0.5f);
 
                 if (tempSpeed < 2.0f)
                     tempSpeed = 2.0f;
 
-                xKanone += tempSpeed SYNC;
+                xKanone += Timer.sync(tempSpeed);
 
                 if (xKanone >= 110.0f)
                 {
@@ -283,12 +283,12 @@ void GegnerFlugBoss::DoKI() {
             //
             case GEGNER::AUSFAHREN:
             {
-                tempSpeed += 0.5f SYNC;
+                tempSpeed += Timer.sync(0.5f);
 
                 if (tempSpeed > 10.0f)
                     tempSpeed = 10.0f;
 
-                xKanone -= tempSpeed SYNC;
+                xKanone -= Timer.sync(tempSpeed);
 
                 if (xKanone <= 0.0f)
                 {
@@ -332,8 +332,8 @@ void GegnerFlugBoss::DoKI() {
                 winkel = 180.0f - winkel;
 
                 if (Winkel[0] < winkel)
-                    Winkel[0] += 5.0f SYNC;
-                if (Winkel[0] > winkel)	Winkel[0] -= 5.0f SYNC;
+                    Winkel[0] += Timer.sync(5.0f);
+                if (Winkel[0] > winkel)	Winkel[0] -= Timer.sync(5.0f);
 
                 // Kanone rechts
 
@@ -355,12 +355,12 @@ void GegnerFlugBoss::DoKI() {
                 winkel = 180.0f - winkel;
 
                 if (Winkel[1] < winkel)
-                    Winkel[1] += 5.0f SYNC;
-                if (Winkel[1] > winkel)	Winkel[1] -= 5.0f SYNC;
+                    Winkel[1] += Timer.sync(5.0f);
+                if (Winkel[1] > winkel)	Winkel[1] -= Timer.sync(5.0f);
 
                 // Schiessen lassen
                 //
-                ShotDelay -= 1.0f SYNC;
+                ShotDelay -= Timer.sync(1.0f);
 
                 while (ShotDelay <= 0.0f)
                 {
@@ -391,7 +391,7 @@ void GegnerFlugBoss::DoKI() {
             case GEGNER::EXPLODIEREN:
             {
                 //Energy = 100.0f;
-                AnimCount -= 1.0f SYNC;
+                AnimCount -= Timer.sync(1.0f);
 
                 if (AnimCount < 0.0f)
                 {
@@ -406,7 +406,7 @@ void GegnerFlugBoss::DoKI() {
             //
             case GEGNER::LAUFEN:
             {
-                AnimCount -= 1.0f SYNC;
+                AnimCount -= Timer.sync(1.0f);
 
                 if (AnimCount < 0.0f)
                 {
@@ -455,7 +455,7 @@ void GegnerFlugBoss::DoKI() {
                 //
                 case GEGNER::SCHIESSEN:
                 {
-                    ShotDelay -= 1.0f SYNC;
+                    ShotDelay -= Timer.sync(1.0f);
 
                     while (ShotDelay <= 0.0f)
                     {
@@ -500,7 +500,7 @@ void GegnerFlugBoss::DoKI() {
         for (int i = 0; i < 4; i++)
         {
             if (yKanone[i] > 0.0f)
-                yKanone[i] -= 10.0f SYNC;
+                yKanone[i] -= Timer.sync(10.0f);
             else
                 yKanone[i] = 0.0f;
         }*/
@@ -519,7 +519,7 @@ void GegnerFlugBoss::DoKI() {
 
     // Hitzone erscheinen lassen
     //
-    yHit += dHit SYNC;
+    yHit += Timer.sync(dHit);
 
     if (yHit < 0.0f) {
         yHit = 0.0f;

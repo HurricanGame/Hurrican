@@ -35,7 +35,7 @@ void GegnerDeckenKrabbe::DoDraw() {
                                                   0xFFFFFFFF, mirror);
 
     // Testen, ob der Spieler die Krabbe berührt hat
-    TestDamagePlayers(8.0f SYNC);
+    TestDamagePlayers(Timer.sync(8.0f));
 }
 
 // --------------------------------------------------------------------------------------
@@ -146,12 +146,12 @@ void GegnerDeckenKrabbe::DoKI() {
                 if (BlickRichtung == RECHTS) {
                     if (blockl & BLOCKWERT_SCHRAEGE_L) {
                         if (zRot < 45.0f) {
-                            zRot += 20.0f SYNC;
+                            zRot += Timer.sync(20.0f);
                             if (zRot > 45.0f)
                                 zRot = 45.0f;
                         }
                     } else if (zRot > 0.0f) {
-                        zRot -= 20.0f SYNC;
+                        zRot -= Timer.sync(20.0f);
                         if (zRot < 0.0f)
                             zRot = 0.0f;
                     }
@@ -160,19 +160,19 @@ void GegnerDeckenKrabbe::DoKI() {
                 if (BlickRichtung == LINKS) {
                     if (blockr & BLOCKWERT_SCHRAEGE_R) {
                         if (zRot < 45.0f) {
-                            zRot += 20.0f SYNC;
+                            zRot += Timer.sync(20.0f);
                             if (zRot > 45.0f)
                                 zRot = 45.0f;
                         }
                     } else if (zRot > 0.0f) {
-                        zRot -= 20.0f SYNC;
+                        zRot -= Timer.sync(20.0f);
                         if (zRot < 0.0f)
                             zRot = 0.0f;
                     }
                 }
             }
 
-            xPos += 7.0f * static_cast<float>(BlickRichtung) * -1.0f SYNC;
+            xPos += Timer.sync(7.0f * static_cast<float>(BlickRichtung * -1));
 
             AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
@@ -200,7 +200,7 @@ void GegnerDeckenKrabbe::DoKI() {
             }
 
             if (zRot >= 180.0f)
-                zRot += zSpeed SYNC;
+                zRot += Timer.sync(zSpeed);
             else
                 zRot = 0.0f;
 

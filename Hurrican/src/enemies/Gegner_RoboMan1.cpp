@@ -55,7 +55,7 @@ void GegnerRoboMan1::DoKI() {
     }  // animieren
 
     // Rauch ausgeben
-    SmokeCount -= 1.0f SYNC;
+    SmokeCount -= Timer.sync(1.0f);
     if (SmokeCount < 0.0f) {
         SmokeCount += 0.1f;
 
@@ -84,22 +84,22 @@ void GegnerRoboMan1::DoKI() {
     // Vor dem Spieler wegfliegen ?
     if (PlayerAbstand() < 200 && Handlung != GEGNER::FALLEN) {
         if (pAim->xpos + 45 > xPos + 45)
-            xPos -= 8.0f SYNC;
+            xPos -= Timer.sync(8.0f);
         if (pAim->xpos + 45 < xPos + 45)
-            xPos += 8.0f SYNC;
+            xPos += Timer.sync(8.0f);
     }
 
     // Zum Spieler hinfliegen ?
     if (PlayerAbstand() > 300 && Handlung != GEGNER::FALLEN) {
         if (pAim->xpos + 45 > xPos + 45)
-            xPos += 8.0f SYNC;
+            xPos += Timer.sync(8.0f);
         if (pAim->xpos + 45 < xPos + 45)
-            xPos -= 8.0f SYNC;
+            xPos -= Timer.sync(8.0f);
     }
 
     // evtl schiessen
     if (PlayerAbstand() < 500 && PlayerAbstand() > 50 && Handlung != GEGNER::FALLEN && AnimEnde == 0) {
-        ShotCount -= 1.0f SYNC;
+        ShotCount -= Timer.sync(1.0f);
 
         if (ShotCount <= 0.0f) {
             SoundManager.PlayWave(100, 128, 11025, SOUND::GRANATE);
@@ -147,7 +147,7 @@ void GegnerRoboMan1::DoKI() {
                 yAcc = 0.0f;
 
             // Robo rauchen lassen
-            ShotCount -= 3.0f SYNC;
+            ShotCount -= Timer.sync(3.0f);
             if (ShotCount <= 0.0f) {
                 PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80)),
                                             yPos + static_cast<float>(random(90)), SMOKE);
@@ -161,7 +161,7 @@ void GegnerRoboMan1::DoKI() {
 
     // Testen, ob der Spieler den Robo berührt hat
     if (Handlung != GEGNER::FALLEN)
-        TestDamagePlayers(4.0f SYNC);
+        TestDamagePlayers(Timer.sync(4.0f));
 
     // Soviel Energie verloren, dass der Robo abstürzt ?
     if (Energy <= 0.0f && Handlung != GEGNER::FALLEN) {

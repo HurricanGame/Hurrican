@@ -89,7 +89,7 @@ void GegnerFloating3::DoKI() {
 
             // Spieler war drauf? Dann Counter hochzählen, dass die Plattform sich bald dreht
             if (turncount > 0.0f)
-                turncount += 1.0f SYNC;
+                turncount += Timer.sync(1.0f);
 
             // drehen? -> Spieler fällt runter
             if (turncount > 8.0f) {
@@ -112,7 +112,7 @@ void GegnerFloating3::DoKI() {
 
         // plattform dreht sich
         case GEGNER::DREHEN: {
-            winkel += 25.0f * drehdir SYNC;
+            winkel += Timer.sync(25.0f * drehdir);
 
             if (winkel > 180.0f || winkel < -180.0f) {
                 winkel = 0.0f;
@@ -131,7 +131,7 @@ void GegnerFloating3::DoKI() {
 
     // Counter für Partikel runterzählen
     //
-    AnimCount -= 1.0f SYNC;
+    AnimCount -= Timer.sync(1.0f);
 
     // Partikel erzeugen und counter wieder hochsetzen
     //

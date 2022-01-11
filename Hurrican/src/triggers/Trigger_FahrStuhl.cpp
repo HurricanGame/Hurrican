@@ -105,14 +105,14 @@ void GegnerFahrstuhl::DoKI() {
 
             // Speed angleichen
             if (ySpeed < new_ySpeed)
-                ySpeed += 0.3f SYNC;
+                ySpeed += Timer.sync(0.3f);
             if (ySpeed > new_ySpeed)
-                ySpeed -= 0.3f SYNC;
+                ySpeed -= Timer.sync(0.3f);
 
             // Funken sprühen
             static float sparkcount = 0.0f;
 
-            sparkcount -= 1.0f SYNC;
+            sparkcount -= Timer.sync(1.0f);
 
             if (sparkcount < 0.0f) {
                 sparkcount = 0.05f;

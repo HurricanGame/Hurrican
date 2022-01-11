@@ -150,7 +150,7 @@ void GegnerPresswurst::DoKI() {
 
         // Presse wartet unten und spuckt dann Dampf
         case GEGNER::SPECIAL: {
-            SmokeCount -= 1.0f SYNC;
+            SmokeCount -= Timer.sync(1.0f);
 
             if (SmokeCount <= 0.0f) {
                 Handlung = GEGNER::SPECIAL2;
@@ -165,7 +165,7 @@ void GegnerPresswurst::DoKI() {
         // Presse dampft
         case GEGNER::SPECIAL2: {
             // rauchen lassen
-            SmokeCount -= 1.0f SYNC;
+            SmokeCount -= Timer.sync(1.0f);
             if (SmokeCount <= 0.0f) {
                 SmokeCount = 0.2f;
 
@@ -174,7 +174,7 @@ void GegnerPresswurst::DoKI() {
             }
 
             // Spinne spawnen
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
             if (AnimCount < 0.0f) {
                 // Spinne spawnen
                 Gegner.PushGegner(xPos + 60.0f,

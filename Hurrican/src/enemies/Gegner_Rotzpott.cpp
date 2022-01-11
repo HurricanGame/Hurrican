@@ -89,12 +89,12 @@ void GegnerRotzpott::CalcKnarreWinkel() {
 
     // Knarre an neuen Winkel annähern
     if (dir < 0.0f) {
-        GunWinkel += dir SYNC;
+        GunWinkel += Timer.sync(dir);
 
         if (GunWinkel < NewWinkel)
             GunWinkel = NewWinkel;
     } else if (dir > 0.0f) {
-        GunWinkel += dir SYNC;
+        GunWinkel += Timer.sync(dir);
 
         if (GunWinkel > NewWinkel)
             GunWinkel = NewWinkel;
@@ -127,14 +127,14 @@ void GegnerRotzpott::DoKI() {
 
     // Testen, ob der Spieler den gegner berührt hat
     //
-    TestDamagePlayers(2.0f SYNC);
+    TestDamagePlayers(Timer.sync(2.0f));
 
     CalcKnarreWinkel();
 
     // schiessen, wenn Spieler in der Nähe und Turm kurz
     // vor finalem Winkel?
     if (PlayerAbstand() < 400 && abs(static_cast<int>(GunWinkel - NewWinkel)) < 10)
-        ShotDelay -= 1.0f SYNC;
+        ShotDelay -= Timer.sync(1.0f);
 
     if (ShotDelay <= 0.0f) {
         // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:

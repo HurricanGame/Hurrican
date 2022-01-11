@@ -80,7 +80,7 @@ void GegnerPharaoKopf::DoKI() {
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
     if (DamageTaken > 0.0f)
-        DamageTaken -= 100 SYNC;  // Rotwerden langsam ausfaden lassen
+        DamageTaken -= Timer.sync(100.0f);  // Rotwerden langsam ausfaden lassen
     else
         DamageTaken = 0.0f;  // oder ganz anhalten
 
@@ -101,7 +101,7 @@ void GegnerPharaoKopf::DoKI() {
     }
 
     // Kopf zieht dem Spieler Energie an wenn er ihn berührt
-    TestDamagePlayers(2.0f SYNC);
+    TestDamagePlayers(Timer.sync(2.0f));
 
     if (Energy >= 3000 && AnimPhase > 1)
         AnimPhase = 0;
@@ -144,9 +144,9 @@ void GegnerPharaoKopf::DoKI() {
             Energy = 6000;
             DamageTaken = 0.0f;
 
-            yPos -= static_cast<float>(4.5 SYNC);  // Pharao erscheint langsam
+            yPos -= Timer.sync(4.5f);  // Pharao erscheint langsam
 
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             // Boden brodeln lassen wo er auftaucht
             if (AnimCount <= 0.0f) {
@@ -239,7 +239,7 @@ void GegnerPharaoKopf::DoKI() {
                         !(TileEngine.BlockLinks(Player[p].xpos, Player[p].ypos, Player[p].xposold, Player[p].yposold,
                                                 Player[p].CollideRect) &
                           BLOCKWERT_WAND))
-                        Player[p].xpos += xSpeed SYNC;
+                        Player[p].xpos += Timer.sync(xSpeed);
 
                 // an die Wand gekommen?
                 if (Links()) {
@@ -277,7 +277,7 @@ void GegnerPharaoKopf::DoKI() {
                     if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[p].xpos, Player[p].ypos,
                                         Player[p].CollideRect) == true &&
                         !(blockr & BLOCKWERT_WAND))
-                        Player[p].xpos += xSpeed SYNC;
+                        Player[p].xpos += Timer.sync(xSpeed);
 
                 // an die Wand gekommen?
                 if (Rechts()) {
@@ -374,7 +374,7 @@ void GegnerPharaoKopf::DoKI() {
 
         case GEGNER::CRUSHENERHOLEN: {
             // ErholungsCounter runterzählen
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             if (AnimCount <= 0.0f) {
                 int j = random(3);
@@ -451,7 +451,7 @@ void GegnerPharaoKopf::DoKI() {
 
         case GEGNER::SCHIESSEN:  // Gegner schiesst aus den Augen
         {
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             if (AnimCount <= 0) {
                 // Augen leuchten lassen

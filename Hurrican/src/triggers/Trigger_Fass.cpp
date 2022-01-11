@@ -35,8 +35,8 @@ void GegnerFass::DoKI() {
     for (int p = 0; p < NUMPLAYERS; p++)
         if (SpriteCollision(Player[p].xpos, Player[p].ypos, Player[p].CollideRect, xPos, yPos, GegnerRect[GegnerArt]) ==
             true) {
-            xPos += Player[p].xspeed / 2 SYNC;
-            Player[p].xpos -= Player[p].xspeed / 2 SYNC;
+            xPos += Timer.sync(Player[p].xspeed / 2.0f);
+            Player[p].xpos -= Timer.sync(Player[p].xspeed / 2.0f);
         }
 
     // Je nach Handlung richtig verhalten

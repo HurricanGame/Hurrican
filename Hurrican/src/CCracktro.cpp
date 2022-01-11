@@ -126,7 +126,7 @@ void CCracktro::Main() {
     // --------------------------------------------------------------------------------------
 
     for (auto& star: Stars) {
-        star.Count -= star.Ebene * 0.1f SYNC;
+        star.Count -= Timer.sync(star.Ebene * 0.1f);
 
         if (star.Count < 0.0f)
             star.Count += 640;
@@ -144,7 +144,7 @@ void CCracktro::Main() {
     float s = sinf(SinPos) * 80.0f;
     s = abs(static_cast<int>(s));
 
-    colpos += 6.0f SYNC;
+    colpos += Timer.sync(6.0f);
 
     for (int i = 0; i < 43; i++) {
         pFont->DrawDemoChar(xchar - ScrollOffset, static_cast<float>(450 - s), CrackText[i + ScrollPos],
@@ -156,7 +156,7 @@ void CCracktro::Main() {
             xchar += pFont->GetXCharSize();
     }
 
-    ScrollOffset += 12.0f SYNC;
+    ScrollOffset += Timer.sync(12.0f);
 
     int l;
     if (CrackText[ScrollPos] == 32)
@@ -172,11 +172,11 @@ void CCracktro::Main() {
             ScrollPos = 0;
     }
 
-    SinPos += 0.3f SYNC;
+    SinPos += Timer.sync(0.3f);
     if (SinPos > TWO_PI)
         SinPos -= TWO_PI;
 
-    LogoPos += 0.2f SYNC;
+    LogoPos += Timer.sync(0.2f);
     if (LogoPos > TWO_PI)
         LogoPos -= TWO_PI;
 
@@ -190,7 +190,7 @@ void CCracktro::Main() {
         DirectGraphics.SetColorKeyMode();
         Logo[0].RenderSprite((640 - 341) / 2 + sin(LogoPos) * 100.0f, 50, 0, 0xFFFFFFFF);
 
-        numsin += 0.4f SYNC;
+        numsin += Timer.sync(0.4f);
 
         if (numsin > TWO_PI)
             numsin -= TWO_PI;
@@ -232,7 +232,7 @@ void CCracktro::Main() {
     else
         l = pFont->GetCharLength(StaticText[ScrollPos2] - 33) + 2;
 
-    ScrollOffset2 += 10.0f SYNC;
+    ScrollOffset2 += Timer.sync(10.0f);
 
     if (ScrollOffset2 > l) {
         ScrollOffset2 -= l;
@@ -250,7 +250,7 @@ void CCracktro::Main() {
         DirectGraphics.SetColorKeyMode();
         Logo[0].RenderSprite((640 - 341) / 2 + sin(LogoPos) * 100.0f, 50, 0, 0xFFFFFFFF);
 
-        numsin += 0.4f SYNC;
+        numsin += Timer.sync(0.4f);
 
         if (numsin > TWO_PI)
             numsin -= TWO_PI;
@@ -271,7 +271,7 @@ void CCracktro::Main() {
     static float blinkpos = 0.0f;
     static int fontoff = 0;
 
-    blinkpos += 5.0f SYNC;
+    blinkpos += Timer.sync(5.0f);
 
     fontoff = static_cast<int>(blinkpos / 100.0f);
 
@@ -319,7 +319,7 @@ void CCracktro::Load() {
         RenderRect(0, static_cast<float>(i * 2), 640, static_cast<float>(i * 2),
                    ScrollCol[rand() % (static_cast<int>(sizeof(ScrollCol) / sizeof(D3DCOLOR)))]);
 
-    count -= 1.0f SYNC;
+    count -= Timer.sync(1.0f);
 
     if (count <= 0.0f)
         b_running = false;

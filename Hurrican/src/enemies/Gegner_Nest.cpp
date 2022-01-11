@@ -32,7 +32,7 @@ void GegnerNest::DoKI() {
 
     if (PlayerAbstand() < 800 && Value2 != 99)  // Im Tutorial keine Wespen spawnen
     {
-        AnimCount -= 1.0f SYNC;
+        AnimCount -= Timer.sync(1.0f);
 
         if (AnimCount <= 0.0f) {
             Gegner.PushGegner(xPos + 20.0f, yPos - 10.0f, STAHLMUECKE, 0, 0, false);
@@ -42,7 +42,7 @@ void GegnerNest::DoKI() {
 
     // Testen, ob der Spieler das Nest berührt
     //
-    TestDamagePlayers(0.5f SYNC);
+    TestDamagePlayers(Timer.sync(0.5f));
 }
 
 // --------------------------------------------------------------------------------------

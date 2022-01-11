@@ -85,7 +85,7 @@ void GegnerJaeger::DoKI() {
 
             // Antriebspartikel erzeugen
 
-            smokeDelay -= 1.0f SYNC;
+            smokeDelay -= Timer.sync(1.0f);
 
             while (smokeDelay <= 0.0f) {
                 smokeDelay += 0.1f;
@@ -99,7 +99,7 @@ void GegnerJaeger::DoKI() {
         // warten, bis Counter abgelaufen ist, und dann nach unten fliegen
         //
         case GEGNER::STEHEN: {
-            smokeDelay -= 10.0f SYNC;
+            smokeDelay -= Timer.sync(10.0f);
 
             if (smokeDelay <= 0.0f) {
                 smokeDelay = 0.1f;

@@ -115,7 +115,7 @@ void ConsoleClass::ShowConsole() {
     Temp.append(Buffer);
 
     // Cursor animieren
-    cursorcount += 0.3f SYNC;
+    cursorcount += Timer.sync(0.3f);
 
     if (cursorcount >= 2.0f)
         cursorcount = 0.0f;
@@ -568,7 +568,7 @@ void ConsoleClass::CheckInput() {
     static float joy_counter = 0.0f;
     constexpr float JOY_DELAY = 30.0f;  // Only accept joy input once every time counter reaches this value
 
-    joy_counter += 30.0f SYNC;
+    joy_counter += Timer.sync(30.0f);
     if (joy_counter > JOY_DELAY) {
         joy_counter = JOY_DELAY;
     }
@@ -783,8 +783,8 @@ bool ConsoleClass::DoConsole() {
 #endif  // GCW
 
     // Konsole fadet gerade ?
-    if (Fade != 0)
-        its_Alpha += 2.0f * Fade SYNC;
+    if (Fade != 0.0f)
+        its_Alpha += Timer.sync(2.0f * Fade);
 
     // Überlauf verhindern
     if (its_Alpha > 255.0f) {

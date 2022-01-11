@@ -69,11 +69,11 @@ void GegnerMiniRocket::DoKI() {
 
     // Am Anfang erst etwas senkrecht hoch fliegen
     if (AnimCount > 0.0f)
-        AnimCount -= 1.0f SYNC;
+        AnimCount -= Timer.sync(1.0f);
 
     // Flare pulsieren lassen
     //
-    FlareSin += 3.0f SYNC;
+    FlareSin += Timer.sync(3.0f);
 
     if (FlareSin > TWO_PI)
         FlareSin = 0;
@@ -121,7 +121,7 @@ void GegnerMiniRocket::DoKI() {
     }
 
     // Rauchen lassen
-    SmokeDelay -= 1.0f SYNC;
+    SmokeDelay -= Timer.sync(1.0f);
 
     while (SmokeDelay < 0.0f) {
         SmokeDelay += 0.5f;

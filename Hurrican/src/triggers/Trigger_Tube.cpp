@@ -83,7 +83,7 @@ void GegnerTube::DoDraw() {
 // --------------------------------------------------------------------------------------
 
 void GegnerTube::DoKI() {
-    SinOff += 0.3f SYNC;
+    SinOff += Timer.sync(0.3f);
 
     if (SinOff > TWO_PI)
         SinOff = 0.0f;

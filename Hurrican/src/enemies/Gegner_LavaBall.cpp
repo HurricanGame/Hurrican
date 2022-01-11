@@ -96,7 +96,7 @@ void GegnerLavaBall::DoKI() {
 
     // Rauchen lassen und Funken erzeugen
     //
-    SmokeDelay -= 1.0f SYNC;
+    SmokeDelay -= Timer.sync(1.0f);
 
     if (SmokeDelay < 0.0f) {
         SmokeDelay = 0.5f;
@@ -106,7 +106,7 @@ void GegnerLavaBall::DoKI() {
                                         yPos + static_cast<float>(random(40)), SMOKEBIG);
     }
 
-    FlareDelay -= 1.0f SYNC;
+    FlareDelay -= Timer.sync(1.0f);
 
     if (FlareDelay < 0.0f) {
         FlareDelay = 2.0f;

@@ -259,7 +259,7 @@ void GegnerDrache::DoDraw() {
 
     // Pfeile anzeigen
     if (Handlung == GEGNER::WARTEN) {
-        ArrowCount -= 0.2f SYNC;
+        ArrowCount -= Timer.sync(0.2f);
         if (ArrowCount < 0.0f)
             ArrowCount = 2.0f;
 
@@ -319,7 +319,7 @@ void GegnerDrache::DoKI() {
 
     // Boss blinkt nicht so lange wie die restlichen Gegner
     if (DamageTaken > 0.0f)
-        DamageTaken -= 100 SYNC;  // Rotwerden langsam ausfaden lassen
+        DamageTaken -= Timer.sync(100.0f);  // Rotwerden langsam ausfaden lassen
     else
         DamageTaken = 0.0f;  // oder ganz anhalten
 
@@ -348,7 +348,7 @@ void GegnerDrache::DoKI() {
     }
 
     if (!(Handlung == GEGNER::EINFLIEGEN && Attack == GEGNER::STEHEN))
-        AnimWinkel += 0.2f SYNC;
+        AnimWinkel += Timer.sync(0.2f);
 
     while (AnimWinkel > TWO_PI)
         AnimWinkel -= TWO_PI;
@@ -361,12 +361,12 @@ void GegnerDrache::DoKI() {
         // warten, bis der Hurri aufspringt
         case GEGNER::WARTEN: {
             if (KieferWinkel > HALF_PI)
-                KieferWinkel -= 5.0f SYNC;
+                KieferWinkel -= Timer.sync(5.0f);
             else
                 KieferWinkel = HALF_PI;
 
             if (HeadWinkel > -50)
-                HeadWinkel -= 25.0f SYNC;
+                HeadWinkel -= Timer.sync(25.0f);
             else
                 HeadWinkel = -50;
 
@@ -414,10 +414,10 @@ void GegnerDrache::DoKI() {
             PlattformTest(GegnerRect[GegnerArt]);
 
             if (HeadWinkel < 30.0f)
-                HeadWinkel += 3.0f SYNC;
+                HeadWinkel += Timer.sync(3.0f);
 
             if (KieferWinkel < PI)
-                KieferWinkel += 0.5f SYNC;
+                KieferWinkel += Timer.sync(0.5f);
 
             if (xPos < Value1 - 500.0f) {
                 xPos = Value1 - 500.0f;
@@ -476,7 +476,7 @@ void GegnerDrache::DoKI() {
                 case GEGNER::LAUFEN: {
                     static float off = 0.0f;
 
-                    off += 0.5f SYNC;
+                    off += Timer.sync(0.5f);
 
                     if (off > TWO_PI)
                         off -= TWO_PI;
@@ -484,7 +484,7 @@ void GegnerDrache::DoKI() {
                     DrawYOffset = static_cast<float>(sin(off)) * 8.0f;
 
                     if (Energy > 100.0f)
-                        Energy -= 85 SYNC;
+                        Energy -= Timer.sync(85.0f);
                     else {
                         yAcc = 2.0f;
                         Attack = GEGNER::LAUFEN2;
@@ -494,7 +494,7 @@ void GegnerDrache::DoKI() {
                 // abstürzen
                 case GEGNER::LAUFEN2: {
                     if (DrawYOffset > 0.0f)
-                        DrawYOffset -= 1.0f SYNC;
+                        DrawYOffset -= Timer.sync(1.0f);
                     else
                         DrawYOffset = 0.0f;
 
@@ -522,16 +522,16 @@ void GegnerDrache::DoKI() {
                 // rutschen
                 case GEGNER::LAUFEN3: {
                     if (KieferWinkel < HALF_PI)
-                        KieferWinkel += 0.1f SYNC;
+                        KieferWinkel += Timer.sync(0.1f);
                     else
                         KieferWinkel = HALF_PI;
 
                     if (HeadWinkel > -70.0f)
-                        HeadWinkel -= 2.0f SYNC;
+                        HeadWinkel -= Timer.sync(2.0f);
                     else
                         HeadWinkel = -70.0f;
 
-                    SmokeCount -= 1.0f SYNC;
+                    SmokeCount -= Timer.sync(1.0f);
 
                     if (SmokeCount < 0.0f) {
                         SmokeCount = 0.2f;
@@ -555,12 +555,12 @@ void GegnerDrache::DoKI() {
                 // liegen bleiben und rauchen
                 case GEGNER::STEHEN: {
                     if (KieferWinkel > HALF_PI)
-                        KieferWinkel -= 0.1f SYNC;
+                        KieferWinkel -= Timer.sync(0.1f);
                     else
                         KieferWinkel = HALF_PI;
 
                     if (HeadWinkel > -70.0f)
-                        HeadWinkel -= 2.0f SYNC;
+                        HeadWinkel -= Timer.sync(2.0f);
                     else
                         HeadWinkel = -70.0f;
                 } break;
@@ -574,7 +574,7 @@ void GegnerDrache::DoKI() {
             Energy = 100.0f;
 
             // Explosionen
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
             if (ShotDelay < 0.0f) {
                 ShotDelay = 0.5f;
 
@@ -591,10 +591,10 @@ void GegnerDrache::DoKI() {
                 case GEGNER::LAUFEN: {
                     // Kopf nach unten und Maul öffnen
                     if (HeadWinkel > -70.0f)
-                        HeadWinkel -= 5.0f SYNC;
+                        HeadWinkel -= Timer.sync(5.0f);
 
                     if (KieferWinkel < 30.0f)
-                        HeadWinkel += 1.0f SYNC;
+                        HeadWinkel += Timer.sync(1.0f);
 
                     // xSpeed verringern
                     if (xSpeed < 0.0f)
@@ -785,11 +785,11 @@ void GegnerDrache::DoKI() {
             switch (Attack) {
                 // Feuerbälle schiessen
                 case GEGNER::SCHIESSEN: {
-                    KieferWinkel += 0.75f SYNC;
+                    KieferWinkel += Timer.sync(0.75f);
                     while (KieferWinkel > TWO_PI)
                         KieferWinkel -= TWO_PI;
 
-                    AnimCount += 0.75f SYNC;
+                    AnimCount += Timer.sync(0.75f);
 
                     while (AnimCount > TWO_PI) {
                         AnimCount -= TWO_PI;
@@ -813,7 +813,7 @@ void GegnerDrache::DoKI() {
                 case GEGNER::BOMBARDIEREN: {
                     if (xPos + 100.0f - mirrorOffset > TileEngine.XOffset + 0.0f &&
                         xPos + 100.0f - mirrorOffset < TileEngine.XOffset + 640.0f)
-                        AnimCount -= 1.0f SYNC;
+                        AnimCount -= Timer.sync(1.0f);
 
                     if (AnimCount < 0.0f) {
                         AnimCount = 25.0f;
@@ -837,7 +837,7 @@ void GegnerDrache::DoKI() {
                     // Raketen gegner abwerfen
                     if (xPos + 100.0f - mirrorOffset > TileEngine.XOffset + 50.0f &&
                         xPos + 100.0f - mirrorOffset < TileEngine.XOffset + 600.0f)
-                        ShotDelay -= 1.0f SYNC;
+                        ShotDelay -= Timer.sync(1.0f);
 
                     if (ShotDelay < 0.0f) {
                         ShotDelay = 3.0f;
@@ -845,7 +845,7 @@ void GegnerDrache::DoKI() {
                     }
 
                     // Blätter spawnen
-                    AnimCount -= 1.0f SYNC;
+                    AnimCount -= Timer.sync(1.0f);
                     if (AnimCount < 0.0f) {
                         AnimCount = 0.3f;
                         if (BlickRichtung == RECHTS) {
@@ -857,7 +857,7 @@ void GegnerDrache::DoKI() {
                                                             BLATT2);
 
                             for (int p = 0; p < NUMPLAYERS; p++)
-                                Player[p].xpos += 8.0f SYNC;
+                                Player[p].xpos += Timer.sync(8.0f);
                         } else {
                             WinkelUebergabe = 0.0f;
 
@@ -867,7 +867,7 @@ void GegnerDrache::DoKI() {
                                                             BLATT2);
 
                             for (int p = 0; p < NUMPLAYERS; p++)
-                                Player[p].xpos -= 8.0f SYNC;
+                                Player[p].xpos -= Timer.sync(8.0f);
                         }
                     }
                 } break;
@@ -901,12 +901,12 @@ void GegnerDrache::DoKI() {
                         } else
                             AnimCount = HALF_PI;
                     } else
-                        AnimCount += 0.075f SYNC;
+                        AnimCount += Timer.sync(0.075f);
                 } break;
 
                 // Kiefer öffnen
                 case GEGNER::SCHIESSEN: {
-                    KieferWinkel -= 0.5f SYNC;
+                    KieferWinkel -= Timer.sync(0.5f);
 
                     // Kiefer offen? Dann Kopf losschiessen
                     if (KieferWinkel < -HALF_PI) {
@@ -940,8 +940,8 @@ void GegnerDrache::DoKI() {
 
                     bool PlayerHit = false;
 
-                    HeadX += HeadXSpeed SYNC;
-                    HeadY += HeadYSpeed SYNC;
+                    HeadX += Timer.sync(HeadXSpeed);
+                    HeadY += Timer.sync(HeadYSpeed);
 
                     for (int p = 0; p < NUMPLAYERS; p++)
                         if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[p].xpos, Player[p].ypos,
@@ -973,12 +973,12 @@ void GegnerDrache::DoKI() {
 
                 case GEGNER::SCHLIESSEN: {
                     if (AnimCount > 0.0f)
-                        AnimCount -= 1.0f SYNC;
+                        AnimCount -= Timer.sync(1.0f);
 
                     else {
                         AnimCount = 0.0f;
-                        HeadX += HeadXSpeed SYNC;
-                        HeadY += HeadYSpeed SYNC;
+                        HeadX += Timer.sync(HeadXSpeed);
+                        HeadY += Timer.sync(HeadYSpeed);
 
                         // Kopf wieder an Ausgansposition?
                         if (HeadY < 0.0f &&
@@ -1010,7 +1010,7 @@ void GegnerDrache::DoKI() {
                     }
 
                     // Angekommen?
-                    AnimCount -= 0.075f SYNC;
+                    AnimCount -= Timer.sync(0.075f);
                     if (AnimCount <= -HALF_PI)
                         Handlung = GEGNER::AUSWAHL;
                 } break;
@@ -1025,10 +1025,10 @@ void GegnerDrache::DoKI() {
     // Hat der Drache den Hurri getroffen ?
     // Testen, ob der Spieler den Boss berührt hat
     if (Destroyable == true)
-        TestDamagePlayers(5.0f SYNC);
+        TestDamagePlayers(Timer.sync(5.0f));
 
     // Partikel an der Düse erzeugen
-    SmokeCount -= 1.0f SYNC;
+    SmokeCount -= Timer.sync(1.0f);
 
     if (Handlung != GEGNER::EINFLIEGEN || (Handlung == GEGNER::EINFLIEGEN && Attack == GEGNER::LAUFEN))
 
@@ -1046,13 +1046,13 @@ void GegnerDrache::DoKI() {
             }
 
     // Flare drehen
-    FlareRot += 1.0f SYNC;
+    FlareRot += Timer.sync(1.0f);
 
     clampAngle(FlareRot);
 
     // Schwanz animieren
     if (!(Handlung == GEGNER::EINFLIEGEN && Attack == GEGNER::STEHEN))
-        TailSinus += 1.0f SYNC;
+        TailSinus += Timer.sync(1.0f);
 
     while (TailSinus > TWO_PI)
         TailSinus -= TWO_PI;

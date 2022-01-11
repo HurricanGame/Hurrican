@@ -99,8 +99,8 @@ void SoundManagerClass::UpdateChannels() {
                         //      the sounded faded much too fast compared to the song fade rate,
                         //      2.5 seems a better value than 30 here:)
                         //      See Trigger_FadeMusic.cpp and its fade-rate of just 1.0 for .hppe song)
-                        // channels[i].vol += 30.0f SYNC;
-                        new_vol += 2.5f SYNC;
+                        // channels[i].vol += Timer.sync(30.0f);
+                        new_vol += Timer.sync(2.5f);
 
                         // maximum? Dann fading anhalten
                         //
@@ -122,8 +122,8 @@ void SoundManagerClass::UpdateChannels() {
                         //      the sounded faded much too fast compared to the song fade rate,
                         //      2.5 seems a better value than 30 here:)
                         //      See Trigger_FadeMusic.cpp and its fade-rate of just 1.0 for .hppe song)
-                        // new_vol -= 30.0f SYNC;
-                        new_vol -= 2.5f SYNC;
+                        // new_vol -= Timer.sync(30.0f);
+                        new_vol -= Timer.sync(2.5f);
 
                         // < 0 ? Dann anhalten
                         if (new_vol < 0.0f) {
@@ -184,7 +184,7 @@ void SoundManagerClass::UpdateSongs() {
         // Fadet der Song grade ?
         if (songs[i].fade_speed != 0.0f) {
             if (SongIsPlaying(i)) {
-                songs[i].vol += songs[i].fade_speed SYNC;
+                songs[i].vol += Timer.sync(songs[i].fade_speed);
 
                 // Grenze Überschritten ?
                 if ((songs[i].fade_speed > 0.0f && songs[i].vol >= songs[i].fade_end_vol) ||

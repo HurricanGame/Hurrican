@@ -83,7 +83,7 @@ void GegnerRoboRaupe::DoKI() {
         BlickRichtung = LINKS;
 
     // Testen, ob der Spieler die Raupe berührt hat
-    TestDamagePlayers(5.0f SYNC);
+    TestDamagePlayers(Timer.sync(5.0f));
 }
 
 // --------------------------------------------------------------------------------------

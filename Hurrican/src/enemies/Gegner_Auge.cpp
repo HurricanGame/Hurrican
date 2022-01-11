@@ -45,7 +45,7 @@ GegnerAuge::GegnerAuge(int Wert1, int Wert2, bool Light) {
 void GegnerAuge::DoKI() {
     // rauchen lassen
     //
-    smokedelay -= 0.25f SYNC;
+    smokedelay -= Timer.sync(0.25f);
 
     if (smokedelay < 0.0f) {
         smokedelay = 0.1f;
@@ -118,7 +118,7 @@ void GegnerAuge::DoKI() {
     //
     /*if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt],
                         pPlayer->xpos, pPlayer->ypos, pPlayer->CollideRect) == true)
-        pPlayer->DamagePlayer(2.0f SYNC);*/
+        pPlayer->DamagePlayer(Timer.sync(2.0f));*/
 }
 
 // --------------------------------------------------------------------------------------

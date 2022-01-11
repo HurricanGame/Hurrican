@@ -118,7 +118,7 @@ void GegnerSpinnenmaschine::DoDeckel() {
     switch (DeckelStatus) {
         // deckel ist zu und Counter zählt, wann er auf geht
         case DeckelStateEnum::ZU: {
-            OpenCounter -= 1.0f SYNC;
+            OpenCounter -= Timer.sync(1.0f);
 
             if (OpenCounter < 0.0f) {
                 OpenCounter = 0.0f;
@@ -129,9 +129,9 @@ void GegnerSpinnenmaschine::DoDeckel() {
 
         // Deckel öffnet sich gerade
         case DeckelStateEnum::OEFFNEN: {
-            LightRayCount += 1.0f SYNC;
+            LightRayCount += Timer.sync(1.0f);
 
-            AnimCount += 1.0f SYNC;
+            AnimCount += Timer.sync(1.0f);
 
             if (AnimCount > 0.8f) {
                 AnimCount = 0.0f;
@@ -147,7 +147,7 @@ void GegnerSpinnenmaschine::DoDeckel() {
 
         // deckel ist offen und Counter zählt, wann er zugeht
         case DeckelStateEnum::OFFEN: {
-            OpenCounter -= 1.0f SYNC;
+            OpenCounter -= Timer.sync(1.0f);
 
             if (OpenCounter < 0.0f) {
                 OpenCounter = 0.0f;
@@ -156,7 +156,7 @@ void GegnerSpinnenmaschine::DoDeckel() {
             }
 
             // Gegner spawnen
-            SpawnDelay -= 1.0f SYNC;
+            SpawnDelay -= Timer.sync(1.0f);
             if (SpawnDelay < 0.0f) {
                 // Je nach Art der grünen Anzeige vorne einen anderen Gegner spawnen
                 switch (DisplayState) {
@@ -188,9 +188,9 @@ void GegnerSpinnenmaschine::DoDeckel() {
 
         // Deckel schliesst sich gerade
         case DeckelStateEnum::SCHLIESSEN: {
-            LightRayCount -= 1.0f SYNC;
+            LightRayCount -= Timer.sync(1.0f);
 
-            AnimCount += 1.0f SYNC;
+            AnimCount += Timer.sync(1.0f);
 
             if (AnimCount > 0.8f) {
                 AnimCount = 0.0f;
@@ -218,7 +218,7 @@ void GegnerSpinnenmaschine::DoHoch() {
     switch (HochStatus) {
         // Kopf ist unten, Counter zählt, wann er hochgeht
         case DeckelStateEnum::ZU: {
-            HochCounter -= 1.0f SYNC;
+            HochCounter -= Timer.sync(1.0f);
 
             if (HochCounter < 0.0f) {
                 HochCounter = 0.0f;
@@ -230,7 +230,7 @@ void GegnerSpinnenmaschine::DoHoch() {
 
         // Kopf fährt gerade hoch
         case DeckelStateEnum::OEFFNEN: {
-            DeckelCount += 0.2f SYNC;
+            DeckelCount += Timer.sync(0.2f);
 
             if (DeckelCount > PI) {
                 DeckelCount = PI;
@@ -242,7 +242,7 @@ void GegnerSpinnenmaschine::DoHoch() {
             }
 
             if (DeckelCount < PI) {
-                SmokeDelay -= 1.0f SYNC;
+                SmokeDelay -= Timer.sync(1.0f);
 
                 if (SmokeDelay < 0.0f) {
                     SmokeDelay = 0.4f;
@@ -254,7 +254,7 @@ void GegnerSpinnenmaschine::DoHoch() {
 
         // Kopf ist oben und Counter zählt, wann er runtergeht
         case DeckelStateEnum::OFFEN: {
-            HochCounter -= 1.0f SYNC;
+            HochCounter -= Timer.sync(1.0f);
 
             if (HochCounter < 0.0f) {
                 HochCounter = 0.0f;
@@ -263,7 +263,7 @@ void GegnerSpinnenmaschine::DoHoch() {
                 SoundManager.PlayWave(50, 128, 11025, SOUND::STEAM);
             }
 
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
             // schuss abgeben
             if (ShotDelay <= 0.0f) {
@@ -279,7 +279,7 @@ void GegnerSpinnenmaschine::DoHoch() {
 
         // Kopf geht wieder runter
         case DeckelStateEnum::SCHLIESSEN: {
-            DeckelCount -= 0.2f SYNC;
+            DeckelCount -= Timer.sync(0.2f);
 
             if (DeckelCount <= 0.0f) {
                 DeckelCount = 0.0f;
@@ -320,7 +320,7 @@ void GegnerSpinnenmaschine::DoKI() {
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
     if (DamageTaken > 0.0f)
-        DamageTaken -= 50 SYNC;  // Rotwerden langsam ausfaden lassen
+        DamageTaken -= Timer.sync(50.0f);  // Rotwerden langsam ausfaden lassen
     else
         DamageTaken = 0.0f;  // oder ganz anhalten
 
@@ -344,7 +344,7 @@ void GegnerSpinnenmaschine::DoKI() {
 
     // Bei Damage dampfen lassen
     if (Handlung != GEGNER::SPECIAL)
-        SmokeDelay2 -= 1.0f SYNC;
+        SmokeDelay2 -= Timer.sync(1.0f);
 
     if (SmokeDelay2 < 0.0f) {
         SmokeDelay2 = 0.3f;
@@ -440,7 +440,7 @@ void GegnerSpinnenmaschine::DoKI() {
 
         case GEGNER::SPECIAL: {
             if (PlayerAbstand(true) < 800) {
-                SmokeDelay -= 1.0f SYNC;
+                SmokeDelay -= Timer.sync(1.0f);
 
                 if (SmokeDelay < 0.0f) {
                     SmokeDelay = 1.0f;
@@ -453,7 +453,7 @@ void GegnerSpinnenmaschine::DoKI() {
         case GEGNER::EXPLODIEREN: {
             Energy = 100.0f;
 
-            SpawnDelay -= 1.0f SYNC;
+            SpawnDelay -= Timer.sync(1.0f);
 
             if (SpawnDelay < 0.0f) {
                 SpawnDelay = 0.4f;
@@ -486,7 +486,7 @@ void GegnerSpinnenmaschine::DoKI() {
                                                     SPIDERSPLITTER);
             }
 
-            DeathCount -= 1.0f SYNC;
+            DeathCount -= Timer.sync(1.0f);
 
             // fertig explodiert? Dann ganz zerlegen, Unterteil bleibt stehen
             if (DeathCount < 0.0f) {
@@ -542,7 +542,7 @@ void GegnerSpinnenmaschine::DoKI() {
 
     // if (SpriteCollision(xPos, yPos, rect,
     //					pPlayer->xpos, pPlayer->ypos, pPlayer->CollideRect) == true)
-    //	pPlayer->DamagePlayer(static_cast<float>(4.0 SYNC));
+    //	pPlayer->DamagePlayer(static_cast<float>(Timer.sync(4.0)));
 
     // Deckel zu? Dann kann der Boss nicht getroffen werden
     if (HochStatus == DeckelStateEnum::ZU) {

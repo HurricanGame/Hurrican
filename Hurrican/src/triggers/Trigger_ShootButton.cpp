@@ -45,7 +45,7 @@ void GegnerShootButton::DoDraw() {
 void GegnerShootButton::DoKI() {
     SimpleAnimation();
 
-    yPos = pPlattForm->yPos - 9.0f + pPlattForm->ySpeed SYNC;
+    yPos = pPlattForm->yPos - 9.0f + Timer.sync(pPlattForm->ySpeed);
 
     // beschossen ?
     //
@@ -57,7 +57,7 @@ void GegnerShootButton::DoKI() {
 
         // Flamme ausgeben
         //
-        SmokeCount -= 1.0f SYNC;
+        SmokeCount -= Timer.sync(1.0f);
         if (SmokeCount <= 0.0f) {
             SmokeCount = 0.2f;
             Projectiles.PushProjectile(pPlattForm->xPos + 23.0f + static_cast<float>(random(4)),

@@ -72,7 +72,7 @@ void GegnerGeschuetz::DoKI() {
             break;
     }  // switch
 
-    TestDamagePlayers(5.0f SYNC);
+    TestDamagePlayers(Timer.sync(5.0f));
 }
 
 // --------------------------------------------------------------------------------------

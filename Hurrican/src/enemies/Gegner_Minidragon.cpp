@@ -181,7 +181,7 @@ void GegnerMiniDragon::DoKI() {
 
         // kurz nach oben "stechen"
         case GEGNER::INIT2: {
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
             if (AnimCount <= 0.0f) {
                 AnimCount = 0.0f;
                 Handlung = GEGNER::STEHEN;
@@ -191,7 +191,7 @@ void GegnerMiniDragon::DoKI() {
         // auf der stelle wackeln in Höhe des Hurris
         case GEGNER::STEHEN: {
             if (PlayerAbstand() < 600)
-                ShotDelay -= 0.8f SYNC;
+                ShotDelay -= Timer.sync(0.8f);
 
             if (ShotDelay < 0.0f) {
                 ShotDelay = 9.0f;
@@ -235,7 +235,7 @@ void GegnerMiniDragon::DoKI() {
         case GEGNER::EXPLODIEREN: {
             Energy = 100.0f;
             Destroyable = false;
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
             // Ein Segment explodieren lassen
             if (ShotDelay < 0.0f) {
@@ -287,7 +287,7 @@ void GegnerMiniDragon::DoKI() {
     // Spieler berührt ?
     //
     if (Handlung != GEGNER::EXPLODIEREN)
-        TestDamagePlayers(4.0f SYNC);
+        TestDamagePlayers(Timer.sync(4.0f));
 }
 
 // --------------------------------------------------------------------------------------

@@ -91,7 +91,7 @@ void GegnerStelzSack::DoKI() {
         case GEGNER::LAUFEN:  // rumstehen und ballern oder drehen
         {
             // Schiessen ?
-            AnimCount += 1.0f SYNC;
+            AnimCount += Timer.sync(1.0f);
 
             if (AnimCount >= 12.0f) {
                 AnimCount = 0.0f;
@@ -153,7 +153,7 @@ void GegnerStelzSack::DoKI() {
     }  // switch
 
     // Testen, ob der Spieler den Stelzsack berührt hat
-    TestDamagePlayers(5.0f SYNC);
+    TestDamagePlayers(Timer.sync(5.0f));
 }
 
 // --------------------------------------------------------------------------------------

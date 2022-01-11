@@ -114,7 +114,7 @@ void GegnerSpiderBomb::DoKI() {
 
         // kurz geduckt am Boden bleiben
         case GEGNER::SPECIAL: {
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             if (AnimCount <= 0.0f) {
                 Handlung = GEGNER::FALLEN;

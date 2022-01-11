@@ -40,7 +40,7 @@ void GegnerDiamant::DoKI() {
         AnimSpeed = 1.0f;
 
     // Animieren
-    AnimCount += 1.0f SYNC;     // Animationscounter weiterzählen
+    AnimCount += Timer.sync(1.0f);     // Animationscounter weiterzählen
     if (AnimCount > AnimSpeed)  // Grenze überschritten ?
     {
         AnimCount = 0;              // Dann wieder auf Null setzen

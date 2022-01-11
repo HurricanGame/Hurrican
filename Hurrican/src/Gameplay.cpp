@@ -225,7 +225,7 @@ void ShowGameOver() {
 
     TileEngine.GameOver.RenderSprite((640 - 400) * 0.5f, (480 - 90) * 0.5f, D3DCOLOR_RGBA(255, 255, 255, col));
 
-    Player[0].GameOverTimer -= 0.75f SYNC;
+    Player[0].GameOverTimer -= Timer.sync(0.75f);
 
     // GameOver vorbei ?
     // Dann schön alle löschen und auf ein neues Spiel vorbereiten
@@ -361,7 +361,7 @@ void GameLoop() {
                 Player[p].DrawPlayer(false, true);
             }
 
-            Player[p].BlinkCounter -= 0.5f SYNC;
+            Player[p].BlinkCounter -= Timer.sync(0.5f);
         } else if (Player[p].WasDamaged)
             Player[p].DrawPlayer(true, false);
     }
@@ -546,7 +546,7 @@ void ScreenWackeln() {
     // Weiterwackeln
     //
     if (!Console.Active) {
-        WackelValue += WackelDir SYNC * WackelSpeed;
+        WackelValue += Timer.sync(WackelDir * WackelSpeed);
 
         if (WackelValue < -WackelMaximum ||  // An der aktuellen oberen  Grenze oder
             WackelValue > WackelMaximum)     //				    unteren Grenze angekommen ?
@@ -1166,7 +1166,7 @@ void SummaryScreen() {
         // if (MUSIC::IsFinished(SoundManager.its_Songs[MUSIC::STAGECLEAR]->SongData))
         //    SoundManager.StopSong(MUSIC::STAGECLEAR, false);
 
-        delay_ctr += DELAY_INC SYNC;
+        delay_ctr += Timer.sync(DELAY_INC);
         if (delay_ctr > DELAY_CAN_LEAVE)
             delay_ctr = DELAY_CAN_LEAVE;
     }

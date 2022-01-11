@@ -89,9 +89,9 @@ void GegnerFireSpider::DoKI() {
             if (PlayerAbstand() > 250)
                 inc = 12.0f;
             if (rot < winkel)
-                rot += inc SYNC;
+                rot += Timer.sync(inc);
             if (rot > winkel)
-                rot -= inc SYNC;
+                rot -= Timer.sync(inc);
 
             if (PlayerAbstand() > 300)
                 rot = winkel;
@@ -111,7 +111,7 @@ void GegnerFireSpider::DoKI() {
 
             // Schusscounter unten und Blickwinkel in Richtung Spieler ?
             // Dann schiessen
-            shotdelay -= 1.0f SYNC;
+            shotdelay -= Timer.sync(1.0f);
 
             if (shotdelay < 0.0f && abs(static_cast<int>(winkel - rot)) < 10 && PlayerAbstand() < 200) {
                 shotdelay = 0.3f;
@@ -129,8 +129,8 @@ void GegnerFireSpider::DoKI() {
         // solange, bis Hurri aus dem Schussfeld raus ist, oder der Counter abgelaufen ist
         //
         case GEGNER::SCHIESSEN: {
-            shotdelay -= 1.0f SYNC;
-            AnimCount += 1.0f SYNC;
+            shotdelay -= Timer.sync(1.0f);
+            AnimCount += Timer.sync(1.0f);
 
             if (shotdelay <= 0.0f) {
 
@@ -165,7 +165,7 @@ void GegnerFireSpider::DoKI() {
         // rumfliegen, weil abgeschossen ?
         //
         case GEGNER::FALLEN: {
-            rot += Value2 SYNC;
+            rot += Timer.sync(static_cast<float>(Value2));
 
             clampAngle(rot);
 
@@ -175,10 +175,10 @@ void GegnerFireSpider::DoKI() {
                 blockr & BLOCKWERT_WAND)
                 Energy = 0.0f;
 
-            shotdelay -= 1.0f SYNC;
+            shotdelay -= Timer.sync(1.0f);
 
             if (shotdelay < 0.0f) {
-                shotdelay = 8.0f SYNC;
+                shotdelay = Timer.sync(8.0f);
                 PartikelSystem.PushPartikel(xPos + 35.0f + static_cast<float>(random(5)),
                                             yPos + 20.0f + static_cast<float>(random(5)), ROCKETSMOKE);
                 PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(random(5)),
@@ -192,7 +192,7 @@ void GegnerFireSpider::DoKI() {
     // Spieler berührt ?
     //
     if (Handlung != GEGNER::FALLEN)
-        TestDamagePlayers(4.0f SYNC);
+        TestDamagePlayers(Timer.sync(4.0f));
 
     // Spinne abgeknallt ?
     // Dann Explosion erzeugen und Spinne lossegeln lassen ;)

@@ -40,7 +40,7 @@ void GegnerPokeNuke::DoKI() {
             if (yPos > g_Fahrstuhl_yPos - 217.0f)
                 Energy = 0.0f;
 
-            SmokeDelay -= 1.0f SYNC;
+            SmokeDelay -= Timer.sync(1.0f);
 
             if (SmokeDelay <= 0.0f) {
                 SmokeDelay = 0.2f;

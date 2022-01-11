@@ -92,7 +92,7 @@ void GegnerFieseDrone::DoKI() {
 
     if (Handlung == GEGNER::LAUFEN && PlayerAbstand() < 600) {
         if (ShotDelay > 0.0f)
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
         else {
             ShotDelay = static_cast<float>(random(12) + 12);
 
@@ -164,7 +164,7 @@ void GegnerFieseDrone::DoKI() {
             flamex = -12 + (AnimPhase - 13) * 5;
     }
 
-    SmokeDelay -= 1.0f SYNC;
+    SmokeDelay -= Timer.sync(1.0f);
 
     while (SmokeDelay < 0.0f) {
         SmokeDelay += 0.7f;
@@ -173,7 +173,7 @@ void GegnerFieseDrone::DoKI() {
     }
 
     // Testen, ob der Spieler die Drone berührt hat
-    TestDamagePlayers(1.0f SYNC);
+    TestDamagePlayers(Timer.sync(1.0f));
 }
 
 // --------------------------------------------------------------------------------------

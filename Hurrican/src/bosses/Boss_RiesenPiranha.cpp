@@ -80,11 +80,11 @@ void GegnerRiesenPiranha::DoKI() {
 
         if (pAim->ypos - 70 < yPos &&  // Spieler oberhalb oder
             !(blocko & BLOCKWERT_WAND) && !(blocko & BLOCKWERT_GEGNERWAND))
-            yPos -= 6.0f SYNC;
+            yPos -= Timer.sync(6.0f);
 
         if (pAim->ypos - 70 > yPos &&  // unterhalb des Piranhas
             !(blocku & BLOCKWERT_WAND) && !(blocku & BLOCKWERT_GEGNERWAND))
-            yPos += 6.0f SYNC;  // Dann auf ihn zu schwimmen
+            yPos += Timer.sync(6.0f);  // Dann auf ihn zu schwimmen
     }
 
     // Je nach Handlung richtig verhalten
@@ -139,7 +139,7 @@ void GegnerRiesenPiranha::DoKI() {
     }  // switch
 
     // Testen, ob der Spieler den Piranha berührt hat
-    TestDamagePlayers(5.0f SYNC);
+    TestDamagePlayers(Timer.sync(5.0f));
 }
 
 // --------------------------------------------------------------------------------------

@@ -69,7 +69,7 @@ void GegnerFetteRakete::DoKI() {
 
         // Rakete dreht sich in Richtung Hurrican
         case GEGNER::DREHEN: {
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             // Gegner auf Spieler ausrichten
             //
@@ -102,9 +102,9 @@ void GegnerFetteRakete::DoKI() {
             winkel = 360.0f - winkel;
 
             if (rot < winkel)
-                rot += 25.0f SYNC;
+                rot += Timer.sync(25.0f);
             if (rot > winkel)
-                rot -= 25.0f SYNC;
+                rot -= Timer.sync(25.0f);
 
             // zuende gedreht? Dann losfliegen
             if (AnimCount < 0.0f) {
@@ -126,7 +126,7 @@ void GegnerFetteRakete::DoKI() {
         case GEGNER::LAUFEN: {
             SimpleAnimation();
 
-            SmokeDelay -= 1.0f SYNC;
+            SmokeDelay -= Timer.sync(1.0f);
 
             if (SmokeDelay < 0.0f) {
                 SmokeDelay = 0.3f;

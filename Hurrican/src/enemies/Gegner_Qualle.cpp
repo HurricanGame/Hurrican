@@ -104,7 +104,7 @@ void GegnerQualle::DoKI() {
 
     if (pAim->InLiquid == true) {
         if (ShotDelay > 0.0f)
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
         else {
             ShotDelay = 20.0f + random(10);
             Projectiles.PushProjectile(xPos + 10.0f, yPos + 10.0f, SUCHSCHUSS);
@@ -112,7 +112,7 @@ void GegnerQualle::DoKI() {
     }
 
     // Testen, ob der Spieler die Qualle berührt hat
-    TestDamagePlayers(2.0f SYNC);
+    TestDamagePlayers(Timer.sync(2.0f));
 }
 
 // --------------------------------------------------------------------------------------

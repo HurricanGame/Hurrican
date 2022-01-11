@@ -37,7 +37,7 @@ GegnerLaFassSpawner::GegnerLaFassSpawner(int Wert1, int Wert2, bool Light) {
 void GegnerLaFassSpawner::DoKI() {
     // Fass spawnen?
     if (PlayerAbstand() < 800)
-        AnimCount -= 1.0f SYNC;
+        AnimCount -= Timer.sync(1.0f);
 
     if (AnimCount <= 0.0f) {
         AnimCount = static_cast<float>(Value2);

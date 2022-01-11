@@ -47,7 +47,7 @@ void GegnerStahlfaust::DoKI() {
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
     if (DamageTaken > 0.0f)
-        DamageTaken -= 100 SYNC;  // Rotwerden langsam ausfaden lassen
+        DamageTaken -= Timer.sync(100.0f);  // Rotwerden langsam ausfaden lassen
     else
         DamageTaken = 0.0f;  // oder ganz anhalten
 
@@ -89,7 +89,7 @@ void GegnerStahlfaust::DoKI() {
             Energy = 4000;
             DamageTaken = 0.0f;
 
-            yPos += static_cast<float>(8.0 SYNC);           // Faust nach unten bewegen
+            yPos += Timer.sync(8.0f);           // Faust nach unten bewegen
             if (yPos >= TileEngine.ScrolltoY)  // Weit genug unten ?
             {
                 Handlung = GEGNER::LAUFEN;
@@ -99,7 +99,7 @@ void GegnerStahlfaust::DoKI() {
 
         case GEGNER::EINFLIEGEN:  // Gegner kommt in den Screen geflogen
         {
-            yPos += static_cast<float>(8.0 SYNC);           // Faust nach unten bewegen
+            yPos += Timer.sync(8.0f);           // Faust nach unten bewegen
             if (yPos >= TileEngine.ScrolltoY)  // Weit genug unten ?
             {
                 Handlung = GEGNER::LAUFEN;
@@ -241,8 +241,8 @@ void GegnerStahlfaust::DoKI() {
 
         // Faust fliegt in die Luft
         case GEGNER::EXPLODIEREN: {
-            AnimCount -= 1.0f SYNC;
-            SmokeDelay -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
+            SmokeDelay -= Timer.sync(1.0f);
 
             Energy = 100.0f;
 
@@ -273,7 +273,7 @@ void GegnerStahlfaust::DoKI() {
 
     // Hat die Faust den Hurri getroffen ?
     if (Handlung != GEGNER::EXPLODIEREN)
-        TestDamagePlayers(5.0f SYNC);
+        TestDamagePlayers(Timer.sync(5.0f));
 }
 
 // --------------------------------------------------------------------------------------

@@ -228,14 +228,14 @@ bool GegnerGolem::GoToZero(float &Value, float speed) {
 
     if (Value > 0.0f) {
         fertig = false;
-        Value -= speed SYNC;
+        Value -= Timer.sync(speed);
         if (Value < 0.0f)
             Value = 0.0f;
     }
 
     if (Value < 0.0f) {
         fertig = false;
-        Value += speed SYNC;
+        Value += Timer.sync(speed);
         if (Value > 0.0f)
             Value = 0.0f;
     }
@@ -267,7 +267,7 @@ void GegnerGolem::DoKI() {
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
     if (DamageTaken > 0.0f)
-        DamageTaken -= 100 SYNC;  // Rotwerden langsam ausfaden lassen
+        DamageTaken -= Timer.sync(100.0f);  // Rotwerden langsam ausfaden lassen
     else
         DamageTaken = 0.0f;  // oder ganz anhalten
 
@@ -306,10 +306,10 @@ void GegnerGolem::DoKI() {
         case GEGNER::EINFLIEGEN: {
             Energy = 8000;
             DamageTaken = 0.0f;
-            xPos -= static_cast<float>(10.0 SYNC);  // Faust nach unten bewegen
-            Wackel += WackelDir * 0.025f SYNC;
-            rotarm1 -= WackelDir * 0.2f SYNC;
-            rotarm2 += WackelDir * 0.2f SYNC;
+            xPos -= Timer.sync(10.0f);  // Faust nach unten bewegen
+            Wackel += Timer.sync(WackelDir * 0.025f);
+            rotarm1 -= Timer.sync(WackelDir * 0.2f);
+            rotarm2 += Timer.sync(WackelDir * 0.2f);
             Wackeln();
             if (xPos <= TileEngine.ScrolltoX + 380)  // Weit genug oben ?
             {
@@ -320,10 +320,10 @@ void GegnerGolem::DoKI() {
 
         // Gegner läuft am Anfang langsam nach links
         case GEGNER::LAUFEN: {
-            xPos -= static_cast<float>(10.0 SYNC);
-            Wackel += WackelDir * 0.025f SYNC;
-            rotarm1 -= WackelDir * 0.2f SYNC;
-            rotarm2 += WackelDir * 0.2f SYNC;
+            xPos -= Timer.sync(10.0f);
+            Wackel += Timer.sync(WackelDir * 0.025f);
+            rotarm1 -= Timer.sync(WackelDir * 0.2f);
+            rotarm2 += Timer.sync(WackelDir * 0.2f);
             Wackeln();
             if (xPos <= TileEngine.ScrolltoX + 380.0f)  // Weit genug in Mitte  ?
             {
@@ -334,10 +334,10 @@ void GegnerGolem::DoKI() {
 
         // Gegner läuft nach rechts
         case GEGNER::LAUFEN2: {
-            xPos += static_cast<float>(10.0 SYNC);
-            Wackel += WackelDir * 0.025f SYNC;
-            rotarm1 -= WackelDir * 0.2f SYNC;
-            rotarm2 += WackelDir * 0.2f SYNC;
+            xPos += Timer.sync(10.0f);
+            Wackel += Timer.sync(WackelDir * 0.025f);
+            rotarm1 -= Timer.sync(WackelDir * 0.2f);
+            rotarm2 += Timer.sync(WackelDir * 0.2f);
             Wackeln();
             if (xPos >= TileEngine.ScrolltoX + 540.0f)  // Weit genug rechts ?
             {
@@ -349,10 +349,10 @@ void GegnerGolem::DoKI() {
 
         // Gegner läuft ganz nach links zur mauer
         case GEGNER::LAUFEN3: {
-            xPos -= static_cast<float>(10.0 SYNC);
-            Wackel += WackelDir * 0.025f SYNC;
-            rotarm1 -= WackelDir * 0.2f SYNC;
-            rotarm2 += WackelDir * 0.2f SYNC;
+            xPos -= Timer.sync(10.0f);
+            Wackel += Timer.sync(WackelDir * 0.025f);
+            rotarm1 -= Timer.sync(WackelDir * 0.2f);
+            rotarm2 += Timer.sync(WackelDir * 0.2f);
             Wackeln();
             if (xPos <= TileEngine.ScrolltoX + 100.0f)  // Weit genug links ?
             {
@@ -366,10 +366,10 @@ void GegnerGolem::DoKI() {
 
         // von links zur mitte laufen
         case GEGNER::LAUFEN4: {
-            xPos += static_cast<float>(10.0 SYNC);
-            Wackel += WackelDir * 0.025f SYNC;
-            rotarm1 -= WackelDir * 0.2f SYNC;
-            rotarm2 += WackelDir * 0.2f SYNC;
+            xPos += Timer.sync(10.0f);
+            Wackel += Timer.sync(WackelDir * 0.025f);
+            rotarm1 -= Timer.sync(WackelDir * 0.2f);
+            rotarm2 += Timer.sync(WackelDir * 0.2f);
             Wackeln();
             if (xPos >= TileEngine.ScrolltoX + 380.0f)  // Weit genug in Mitte  ?
             {
@@ -383,12 +383,12 @@ void GegnerGolem::DoKI() {
             switch (state2) {
                 case ArmState::SENKEN: {
                     if (Wackel > -0.2f)
-                        Wackel -= 0.03f SYNC;
+                        Wackel -= Timer.sync(0.03f);
                     else
                         Wackel = -0.2f;
 
-                    rotarm1 -= 0.25f SYNC;
-                    rotarm2 += 0.25f SYNC;
+                    rotarm1 -= Timer.sync(0.25f);
+                    rotarm2 += Timer.sync(0.25f);
 
                     if (rotarm2 > 1.0f) {
                         state2 = ArmState::HEBEN;
@@ -403,12 +403,12 @@ void GegnerGolem::DoKI() {
 
                 case ArmState::HEBEN: {
                     if (Wackel > -0.2f)
-                        Wackel -= 0.03f SYNC;
+                        Wackel -= Timer.sync(0.03f);
                     else
                         Wackel = -0.2f;
 
-                    rotarm1 += 0.25f SYNC;
-                    rotarm2 -= 0.25f SYNC;
+                    rotarm1 += Timer.sync(0.25f);
+                    rotarm2 -= Timer.sync(0.25f);
 
                     if (rotarm1 > 1.0f) {
                         state2 = ArmState::SENKEN;
@@ -490,16 +490,16 @@ void GegnerGolem::DoKI() {
         // Grüne Rotzbobel schiessen
         case GEGNER::AUSSPUCKEN: {
             if (ShotDelay > 10.0f) {
-                Wackel += 0.03f SYNC;
-                rotarm1 -= 0.054f SYNC;
-                rotarm2 -= 0.054f SYNC;
+                Wackel += Timer.sync(0.03f);
+                rotarm1 -= Timer.sync(0.054f);
+                rotarm2 -= Timer.sync(0.054f);
             } else {
-                Wackel -= 0.2f SYNC;
-                rotarm1 += 0.4f SYNC;
-                rotarm2 += 0.4f SYNC;
+                Wackel -= Timer.sync(0.2f);
+                rotarm1 += Timer.sync(0.4f);
+                rotarm2 += Timer.sync(0.4f);
             }
 
-            ShotDelay -= 10.0f SYNC;
+            ShotDelay -= Timer.sync(10.0f);
 
             if (ShotDelay < 0.0f) {
                 // Suchschuss erzeugen
@@ -530,7 +530,7 @@ void GegnerGolem::DoKI() {
 
         // nach dem Schiessen kurz warten bis zur nächsten Aktion
         case GEGNER::WARTEN: {
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay <= 0.0f)
                 Handlung = GEGNER::SPECIAL;
@@ -541,9 +541,9 @@ void GegnerGolem::DoKI() {
             switch (state2) {
                 // absenken und stein holen
                 case ArmState::SENKEN: {
-                    Wackel -= 0.05f SYNC;
-                    rotarm1 += 0.1f SYNC;
-                    yoff += 5.0f SYNC;
+                    Wackel -= Timer.sync(0.05f);
+                    rotarm1 += Timer.sync(0.1f);
+                    yoff += Timer.sync(5.0f);
 
                     if (Wackel < -0.5f)
                         state2 = ArmState::HEBEN;
@@ -551,9 +551,9 @@ void GegnerGolem::DoKI() {
 
                 // wieder aufrichten
                 case ArmState::HEBEN: {
-                    yoff -= 5.0f SYNC;
-                    Wackel += 0.05f SYNC;
-                    rotarm1 -= 0.1f SYNC;
+                    yoff -= Timer.sync(5.0f);
+                    Wackel += Timer.sync(0.05f);
+                    rotarm1 -= Timer.sync(0.1f);
 
                     if (Wackel >= 0.0f) {
                         state2 = ArmState::UEBERKOPF;
@@ -565,9 +565,9 @@ void GegnerGolem::DoKI() {
 
                 // Stein nach hinten nehmen
                 case ArmState::UEBERKOPF: {
-                    // yoff += 5.0f SYNC;
-                    Wackel += 0.04f SYNC;
-                    rotarm1 += 0.4f SYNC;
+                    // yoff += Timer.sync(5.0f);
+                    Wackel += Timer.sync(0.04f);
+                    rotarm1 += Timer.sync(0.4f);
 
                     if (Wackel >= 0.35f) {
                         state2 = ArmState::WERFEN;
@@ -578,11 +578,11 @@ void GegnerGolem::DoKI() {
                 // Stein werfen
                 case ArmState::WERFEN: {
                     if (Wackel > 0.0f)
-                        Wackel -= 0.1f SYNC;
+                        Wackel -= Timer.sync(0.1f);
                     else
                         Wackel = 0.0f;
 
-                    rotarm1 -= 0.6f SYNC;
+                    rotarm1 -= Timer.sync(0.6f);
 
                     if (rotarm1 <= 2.0f) {
                         Gegner.PushGegner(xPos - 40.0f, yPos + 30.0f, BOULDER, -(random(80) + 10), -(random(20) + 10),
@@ -618,11 +618,11 @@ void GegnerGolem::DoKI() {
 
         // Feuer spucken
         case GEGNER::SCHIESSEN: {
-            count += 1.0f SYNC;
+            count += Timer.sync(1.0f);
 
             // vorbeugen
             if (count < 10.0f) {
-                Wackel += 1.0f SYNC;
+                Wackel += Timer.sync(1.0f);
             }
 
             // schiessen
@@ -632,7 +632,7 @@ void GegnerGolem::DoKI() {
                     SoundManager.PlayWave(100, 128, 11025, SOUND::FEUERFALLE);
 
                 Wackel = 10.0f;
-                ShotDelay -= 1.0f SYNC;
+                ShotDelay -= Timer.sync(1.0f);
             }
 
             if (ShotDelay <= 0.0f) {
@@ -651,8 +651,8 @@ void GegnerGolem::DoKI() {
             switch (state2) {
                 // schnell heben
                 case ArmState::HEBEN: {
-                    rotarm1 += 0.3f SYNC;
-                    rotarm2 += 0.2f SYNC;
+                    rotarm1 += Timer.sync(0.3f);
+                    rotarm2 += Timer.sync(0.2f);
 
                     if (rotarm1 > 3.0f) {
                         rotarm1 = 3.0f;
@@ -662,8 +662,8 @@ void GegnerGolem::DoKI() {
 
                 // schnell absenken
                 case ArmState::SENKEN: {
-                    rotarm1 -= 0.8f SYNC;
-                    rotarm2 -= 0.7f SYNC;
+                    rotarm1 -= Timer.sync(0.8f);
+                    rotarm2 -= Timer.sync(0.7f);
 
                     // Lava berührt?
                     if (rotarm1 < 0.7f) {
@@ -686,8 +686,8 @@ void GegnerGolem::DoKI() {
 
                 // langsam wieder ein stück hoch federn
                 case ArmState::SENKEN2: {
-                    rotarm1 += 0.25f SYNC;
-                    rotarm2 += 0.25f SYNC;
+                    rotarm1 += Timer.sync(0.25f);
+                    rotarm2 += Timer.sync(0.25f);
 
                     if (rotarm1 > 1.5f) {
                         rotarm1 = 1.5f;
@@ -721,7 +721,7 @@ void GegnerGolem::DoKI() {
                                                 yPos + static_cast<float>(random(300)) + yoff, SMOKEBIG);
             }
 
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay <= 0.0f)
                 Energy = 0.0f;
@@ -733,7 +733,7 @@ void GegnerGolem::DoKI() {
 
     // Hat der Golem den Hurri berührt ?
     if (Handlung != GEGNER::EXPLODIEREN)
-        TestDamagePlayers(5.0f SYNC);
+        TestDamagePlayers(Timer.sync(5.0f));
 }
 
 // --------------------------------------------------------------------------------------

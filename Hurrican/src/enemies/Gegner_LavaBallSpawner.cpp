@@ -33,7 +33,7 @@ void GegnerLavaBallSpawner::DoKI() {
     //
     int pa = PlayerAbstand();
     if (pa < 2000) {
-        Delay -= 1.0f SYNC;
+        Delay -= Timer.sync(1.0f);
     }
 
     if (Delay <= 0.0f) {

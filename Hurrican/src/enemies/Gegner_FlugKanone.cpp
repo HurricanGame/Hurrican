@@ -59,7 +59,7 @@ void GegnerFlugKanone::DoKI() {
     ySpeed = std::clamp(ySpeed, -10.0f, 10.0f);
 
     if (ShotDelay > 0.0f)
-        ShotDelay -= 1.0f SYNC;
+        ShotDelay -= Timer.sync(1.0f);
     if (ShotDelay <= 0.0f) {
         if (Skill == SKILL_EASY)
             ShotDelay = 10.0f;
@@ -95,7 +95,7 @@ void GegnerFlugKanone::DoKI() {
     }  // switch
 #endif
     // Testen, ob der Spieler die FlugKanone berührt hat
-    TestDamagePlayers(1.0f SYNC);
+    TestDamagePlayers(Timer.sync(1.0f));
 }
 
 // --------------------------------------------------------------------------------------

@@ -202,7 +202,7 @@ void CGUISystem::Run() {
 
     if (m_FadeMode == FadeMode::FADEIN) {
         if (m_FadingAlpha < MAXFADE)
-            m_FadingAlpha += FADESPEED SYNC;
+            m_FadingAlpha += Timer.sync(FADESPEED);
         else {
             m_FadingAlpha = MAXFADE;
             m_FadeMode = FadeMode::VISIBLE;
@@ -214,7 +214,7 @@ void CGUISystem::Run() {
 
     if (m_FadeMode == FadeMode::FADEOUT) {
         if (m_FadingAlpha > 0.0f)
-            m_FadingAlpha -= FADESPEED SYNC;
+            m_FadingAlpha -= Timer.sync(FADESPEED);
         else {
             m_FadingAlpha = 0.0f;
             m_FadeMode = FadeMode::INVISIBLE;

@@ -52,7 +52,7 @@ void GegnerBallerdrone::DoDraw() {
 
 void GegnerBallerdrone::DoKI() {
     BlickRichtung = LINKS;
-    AnimCount -= 1.0f SYNC;
+    AnimCount -= Timer.sync(1.0f);
 
     if (AnimCount < 0.0f) {
         AnimCount += 0.2f;
@@ -88,7 +88,7 @@ void GegnerBallerdrone::DoKI() {
                 ySpeed = 10.0f;
 
             if (PlayerAbstand() < 800)
-                shotdelay -= 1.0f SYNC;
+                shotdelay -= Timer.sync(1.0f);
 
             if (shotdelay <= 0.0f) {
                 /*				if ((xPos + 45 > pAim->xpos + 35 &&
@@ -115,10 +115,10 @@ void GegnerBallerdrone::DoKI() {
                 blockr & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM)
                 Energy = 0.0f;
 
-            shotdelay -= 1.0f SYNC;
+            shotdelay -= Timer.sync(1.0f);
 
             if (shotdelay < 0.0f) {
-                shotdelay = 5.0f SYNC;
+                shotdelay = Timer.sync(5.0f);
                 PartikelSystem.PushPartikel(xPos + 35.0f + static_cast<float>(random(5)),
                                             yPos + 20.0f + static_cast<float>(random(5)), ROCKETSMOKE);
                 PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(random(5)),
@@ -133,7 +133,7 @@ void GegnerBallerdrone::DoKI() {
     //
 
     if (Handlung != GEGNER::FALLEN)
-        TestDamagePlayers(4.0f SYNC);
+        TestDamagePlayers(Timer.sync(4.0f));
 
     // abgeknallt ?
     // Dann Explosion erzeugen und lossegeln lassen ;)

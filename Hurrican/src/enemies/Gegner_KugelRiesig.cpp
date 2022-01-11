@@ -90,7 +90,7 @@ void GegnerKugelRiesig::DoKI() {
     }  // switch
 
     // Verletzt sie den Spieler ?
-    TestDamagePlayers(8.0f SYNC);
+    TestDamagePlayers(Timer.sync(8.0f));
 }
 
 // --------------------------------------------------------------------------------------

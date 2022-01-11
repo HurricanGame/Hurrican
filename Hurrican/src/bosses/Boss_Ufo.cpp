@@ -63,7 +63,7 @@ void GegnerUfo::DoDraw() {
 // --------------------------------------------------------------------------------------
 
 void GegnerUfo::DoKI() {
-    SmokeDelay -= 1.0f SYNC;
+    SmokeDelay -= Timer.sync(1.0f);
 
     // Energie anzeigen
     if (Handlung != GEGNER::INIT && Handlung != GEGNER::EXPLODIEREN)
@@ -94,7 +94,7 @@ void GegnerUfo::DoKI() {
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
     if (DamageTaken > 0.0f)
-        DamageTaken -= 100 SYNC;  // Rotwerden langsam ausfaden lassen
+        DamageTaken -= Timer.sync(100.0f);  // Rotwerden langsam ausfaden lassen
     else
         DamageTaken = 0.0f;  // oder ganz anhalten
 
@@ -145,7 +145,7 @@ void GegnerUfo::DoKI() {
             Energy = 4000;
             DamageTaken = 0.0f;
 
-            yPos += static_cast<float>(8.0 SYNC);                 // Ufo nach unten bewegen
+            yPos += Timer.sync(8.0f);                 // Ufo nach unten bewegen
             if (yPos >= TileEngine.ScrolltoY + 100.0f)  // Weit genug unten ?
             {
                 yPos = TileEngine.ScrolltoY + 100.0f;
@@ -158,14 +158,14 @@ void GegnerUfo::DoKI() {
         {
             // Nach unten fliegen oder oben
             if (yPos < Value2 + 100)
-                yPos += 5.0f SYNC;
+                yPos += Timer.sync(5.0f);
             if (yPos > Value2 + 100)
-                yPos -= 5.0f SYNC;
+                yPos -= Timer.sync(5.0f);
 
             // Wenig Energie? Dann Gegner spawnen
             // if (Energy <= 2000.0f)
             {
-                ShotDelay -= 1.0f SYNC;
+                ShotDelay -= Timer.sync(1.0f);
 
                 if (ShotDelay < 0.0f) {
                     Gegner.PushGegner(xPos + 45.0f, yPos + 40.0f, FETTERAKETE, 360, 99, false);
@@ -177,7 +177,7 @@ void GegnerUfo::DoKI() {
 
             // Neue Action ausführen ?
             //
-            ActionDelay -= 1.0f SYNC;
+            ActionDelay -= Timer.sync(1.0f);
 
             if (ActionDelay < 0.0f) {
                 int j = random(3);
@@ -211,19 +211,19 @@ void GegnerUfo::DoKI() {
         {
             // Nach unten fliegen
             if (yPos > Value2 + 50)
-                yPos -= 5.0f SYNC;
+                yPos -= Timer.sync(5.0f);
             else
                 yPos = Value2 + 50.0f;
 
             // Wieder nur rumschweben ?
-            ActionDelay -= 1.0f SYNC;
+            ActionDelay -= Timer.sync(1.0f);
             if (ActionDelay < 0.0f) {
                 ActionDelay = 80.0f;
                 Handlung = GEGNER::LAUFEN;
             }
 
             if (ShotDelay > 0.0f)
-                ShotDelay -= 1.0f SYNC;
+                ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay <= 0.0f) {
                 SoundManager.PlayWave(50, 128, 14000 + random(2000), SOUND::GOLEMSHOT);
@@ -237,19 +237,19 @@ void GegnerUfo::DoKI() {
         {
             // Nach oben fliegen
             if (yPos > Value2 + 50)
-                yPos -= 5.0f SYNC;
+                yPos -= Timer.sync(5.0f);
             else
                 yPos = Value2 + 50.0f;
 
             // Wieder nur rumschweben ?
-            ActionDelay -= 1.0f SYNC;
+            ActionDelay -= Timer.sync(1.0f);
             if (ActionDelay < 0.0f) {
                 ActionDelay = 60.0f;
                 Handlung = GEGNER::LAUFEN;
             }
 
             if (ShotDelay > 0.0f)
-                ShotDelay -= 1.0f SYNC;
+                ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay <= 0.0f) {
                 ShotDelay = 4.0f;
@@ -274,7 +274,7 @@ void GegnerUfo::DoKI() {
         // Ufo fliegt in die Luft
         case GEGNER::EXPLODIEREN: {
             Energy = 100.0f;
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             if (AnimCount < 0.0f) {
                 PartikelSystem.PushPartikel(xPos + static_cast<float>(random(180)),
@@ -304,7 +304,7 @@ void GegnerUfo::DoKI() {
     }  // switch
 
     // Hat das Ufo den Hurri berührt ?
-    TestDamagePlayers(20.0f SYNC);
+    TestDamagePlayers(Timer.sync(20.0f));
 }
 
 // --------------------------------------------------------------------------------------

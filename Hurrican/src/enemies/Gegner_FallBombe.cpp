@@ -48,7 +48,7 @@ void GegnerFallBombe::DoKI() {
             if (ySpeed > g_Fahrstuhl_Speed + 50.0f)
                 ySpeed = g_Fahrstuhl_Speed + 50.0f;
 
-            SmokeDelay -= 1.0f SYNC;
+            SmokeDelay -= Timer.sync(1.0f);
 
             if (SmokeDelay <= 0.0f) {
                 SmokeDelay = 0.15f;

@@ -88,17 +88,17 @@ void GegnerLightFlare::DoDraw() {
 
 void GegnerLightFlare::DoKI() {
     // rotieren
-    rot += rotspeed SYNC;
+    rot += Timer.sync(rotspeed);
 
     // Spieler "davor?" Dann ausfaden
     if (PlayerAbstand(true) < 20) {
         if (Alpha > 128.0f)
-            Alpha -= 75.0f SYNC;
+            Alpha -= Timer.sync(75.0f);
         if (Alpha < 128.0f)
             Alpha = 128.0f;
     } else {
         if (Alpha < static_cast<float>(Value1))
-            Alpha += 75.0f SYNC;
+            Alpha += Timer.sync(75.0f);
         if (Alpha > static_cast<float>(Value1))
             Alpha = static_cast<float>(Value1);
     }

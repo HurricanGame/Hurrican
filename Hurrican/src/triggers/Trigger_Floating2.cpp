@@ -66,7 +66,7 @@ void GegnerFloating2::DoKI() {
 
     // Counter für Partikel runterzählen
     //
-    AnimCount -= 1.0f SYNC;
+    AnimCount -= Timer.sync(1.0f);
 
     // Partikel erzeugen und counter wieder hochsetzen
     //

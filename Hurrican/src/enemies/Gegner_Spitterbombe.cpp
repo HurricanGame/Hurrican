@@ -43,7 +43,7 @@ void GegnerSpitterbombe::DoKI() {
 
     // Testen, ob der Spieler die Bombe berührt hat
     //
-    TestDamagePlayers(1.0f SYNC);
+    TestDamagePlayers(Timer.sync(1.0f));
 
     // Auf den Boden aufgekommen ? Dann Spitter rauslassen
     if ((blocku & BLOCKWERT_WAND) || (blocku & BLOCKWERT_PLATTFORM)) {

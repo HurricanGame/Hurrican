@@ -258,7 +258,7 @@ void GegnerTheWall::ReturnSkull() {
 void GegnerTheWall::DoKI() {
     // Auf den Spieler schiessen?
     if (Energy < 1500.0f && Value1 == 1) {
-        SkullShotDelay -= 1.0f SYNC;
+        SkullShotDelay -= Timer.sync(1.0f);
 
         if (SkullShotDelay < 0.0f) {
             SkullShotDelay = 15.0f;
@@ -268,14 +268,14 @@ void GegnerTheWall::DoKI() {
     }
 
     if (Laughing > 0.0f) {
-        Laughing -= 1.0f SYNC;
+        Laughing -= Timer.sync(1.0f);
         return;
     }
 
     if (Handlung != GEGNER::EXPLODIEREN) {
         // Vorderteil zurückfahren?
         if (VorneX > 0.0f)
-            VorneX -= 1.0f SYNC;
+            VorneX -= Timer.sync(1.0f);
         else
             VorneX = 0.0f;
 
@@ -313,7 +313,7 @@ void GegnerTheWall::DoKI() {
         }
 
         // Kringel drehen lassen
-        KringelWinkel += 10.0f SYNC;
+        KringelWinkel += Timer.sync(10.0f);
 
         clampAngle(KringelWinkel);
 
@@ -339,7 +339,7 @@ void GegnerTheWall::DoKI() {
         if (Energy < 150.0f)
             e = 9.0f;
 
-        HeartBeat += e SYNC;
+        HeartBeat += Timer.sync(e);
 
         if (HeartBeat > 10.0f) {
             if (HeartAnim == 0) {
@@ -358,7 +358,7 @@ void GegnerTheWall::DoKI() {
         }
 
         // Rauch
-        SmokeDelay -= 1.0f SYNC;
+        SmokeDelay -= Timer.sync(1.0f);
 
         if (SmokeDelay < 0.0f) {
             SmokeDelay = 0.2f;
@@ -482,7 +482,7 @@ void GegnerTheWall::DoKI() {
 
                 // und loslegen (nach kurzer Pause)
                 if (Value1 == 1) {
-                    AnimCount -= 1.0f SYNC;
+                    AnimCount -= Timer.sync(1.0f);
                     if (AnimCount <= 0.0f)
                         NeueAktion();
                 }
@@ -490,7 +490,7 @@ void GegnerTheWall::DoKI() {
         } break;
 
         case GEGNER::SPECIAL: {
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay < 0.0f) {
                 WinkelUebergabe = dummy;
@@ -511,7 +511,7 @@ void GegnerTheWall::DoKI() {
 
         // lila boller schiessen
         case GEGNER::SPECIAL2: {
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay < 0.0f) {
                 SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::LILA);
@@ -529,7 +529,7 @@ void GegnerTheWall::DoKI() {
 
         // Elektropampe schiessen
         case GEGNER::SPECIAL3: {
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay < 0.0f) {
                 if (ShotCount > 1) {
@@ -548,7 +548,7 @@ void GegnerTheWall::DoKI() {
 
         // Fetten Laser schiessen
         case GEGNER::BOMBARDIEREN: {
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay < 0.0f) {
                 if (ShotCount > 1) {
@@ -573,7 +573,7 @@ void GegnerTheWall::DoKI() {
         case GEGNER::OEFFNEN: {
             // Tür bewegen
             if (DoorOffset < HALF_PI)
-                DoorOffset += 0.075f SYNC;
+                DoorOffset += Timer.sync(0.075f);
 
             // Tür offen? Dann countdown, bis sie wieder zugeht
             else {
@@ -586,7 +586,7 @@ void GegnerTheWall::DoKI() {
                     SoundManager.PlayWave(100, 128, 22000, SOUND::STEAM2);
                 }
 
-                AnimCount -= 1.0f SYNC;
+                AnimCount -= Timer.sync(1.0f);
                 if (AnimCount < 0.0f) {
                     SoundManager.PlayWave(100, 128, 10000 + random(1000), SOUND::DOOR);
                     Handlung = GEGNER::SCHLIESSEN;
@@ -597,7 +597,7 @@ void GegnerTheWall::DoKI() {
 
         case GEGNER::SCHLIESSEN: {
             // Tür
-            DoorOffset += 0.125f SYNC;
+            DoorOffset += Timer.sync(0.125f);
 
             if (DoorOffset > PI) {
                 DoorOffset = 0.0f;
@@ -628,7 +628,7 @@ void GegnerTheWall::DoKI() {
         } break;
 
         case GEGNER::EXPLODIEREN: {
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             if (AnimCount < 0.0f) {
                 if (ShotCount > 0) {

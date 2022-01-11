@@ -45,7 +45,7 @@ void GegnerKrabblerRechts::DoKI() {
         ySpeed = static_cast<float>(-Value2);
 
     // Schuss Delay verzögern
-    ShotDelay -= 1.0f SYNC;
+    ShotDelay -= Timer.sync(1.0f);
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {

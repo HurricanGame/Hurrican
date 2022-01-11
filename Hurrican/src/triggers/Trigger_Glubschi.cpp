@@ -66,7 +66,7 @@ void GegnerGlubschi::DoDraw() {
 void GegnerGlubschi::DoKI() {
     // Corona rotieren
     //
-    rot += rotspeed SYNC;
+    rot += Timer.sync(rotspeed);
     clampAngle(rot);
 }
 

@@ -120,7 +120,7 @@ void GegnerSurfBrett::DoKI() {
 
             // Spritzer erzeugen
             //
-            SmokeCount -= 1.0f SYNC;
+            SmokeCount -= Timer.sync(1.0f);
             if (SmokeCount < 0.0f)
             {
                 SmokeCount += 0.5f;
@@ -150,7 +150,7 @@ void GegnerSurfBrett::DoKI() {
     {
         ySpeed = 0.0f;
         yAcc   = 0.0f;
-        yPos -= (pPlayer->xadd + pPlayer->AutoScrollspeed) SYNC;
+        yPos -= Timer.sync(pPlayer->xadd + pPlayer->AutoScrollspeed);
     }
 
     // "Sprungschanzen" abspringen ?

@@ -59,7 +59,7 @@ void GegnerSchleimAlien::DoKI() {
         DamageTaken = 0.0f;
         Energy = 2.0f;
         Destroyable = false;
-        Size += 2.5f SYNC;
+        Size += Timer.sync(2.5f);
     } else {
         Destroyable = true;
         Size = 60.0f;
@@ -81,7 +81,7 @@ void GegnerSchleimAlien::DoKI() {
     }
 
     // Energie anziehen
-    TestDamagePlayers(4.0f SYNC);
+    TestDamagePlayers(Timer.sync(4.0f));
 }
 
 // --------------------------------------------------------------------------------------

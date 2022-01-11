@@ -82,7 +82,7 @@ void GegnerRiesenWasp::DoKI() {
     if (PlayerAbstand() < 500 && PlayerAbstand() > 100 &&
         ((BlickRichtung == RECHTS && xPos + 50 < pAim->xpos + 35) ||
          (BlickRichtung == LINKS && xPos + 50 > pAim->xpos + 35))) {
-        ShotDelay -= 1.0f SYNC;
+        ShotDelay -= Timer.sync(1.0f);
 
         if (ShotDelay <= 0.0f) {
             ShotDelay = 10.0f;
@@ -125,7 +125,7 @@ void GegnerRiesenWasp::DoKI() {
     }
 
     // Testen, ob der Spieler die Wespe berührt hat
-    TestDamagePlayers(5.0f SYNC);
+    TestDamagePlayers(Timer.sync(5.0f));
 
     // Wespe stürzt ab ?
     //

@@ -44,7 +44,7 @@ GegnerSchabe::GegnerSchabe(int Wert1, int Wert2, bool Light) {
 void GegnerSchabe::DoKI() {
     // Schiessen
     if (PlayerAbstand() < 600)
-        ShotDelay -= 1.0f SYNC;
+        ShotDelay -= Timer.sync(1.0f);
 
     if (ShotDelay < 0.0f) {
         ShotDelay = 8.0f + (4.0f - Skill) * 2;
@@ -307,7 +307,7 @@ void GegnerSchabe::DoKI() {
             xSpeed = SPEED;
     }
 
-    TestDamagePlayers(2.0f SYNC);
+    TestDamagePlayers(Timer.sync(2.0f));
 }
 
 // --------------------------------------------------------------------------------------

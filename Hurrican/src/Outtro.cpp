@@ -181,7 +181,7 @@ void OuttroClass::DoOuttro() {
         return;
 
     // Schnee
-    Snow -= 1.0f SYNC;
+    Snow -= Timer.sync(1.0f);
 
     if (Snow <= 0.0f) {
         Snow = 1.0f;
@@ -198,7 +198,7 @@ void OuttroClass::DoOuttro() {
                 SoundManager.PlayWave(50, 128, 8000, SOUND::WIND);
             }
 
-            Counter += 10.0f SYNC;
+            Counter += Timer.sync(10.0f);
 
             if (Counter > 255.0f) {
                 Counter = 255.0f;
@@ -208,7 +208,7 @@ void OuttroClass::DoOuttro() {
             D3DCOLOR col = D3DCOLOR_RGBA(0, 0, 0, 255 - static_cast<int>(Counter));
             RenderRect(0, 0, 640, 480, col);
 
-            SmokeDelay -= 1.0f SYNC;
+            SmokeDelay -= Timer.sync(1.0f);
 
             // Explosionen und Qualm
             if (SmokeDelay < 0.0f) {
@@ -225,8 +225,8 @@ void OuttroClass::DoOuttro() {
         // Explosionen
         case OutroStateEnum::TOWER_EXPLODE:
         case OutroStateEnum::PLAYER_FLEES: {
-            SmokeDelay -= 1.0f SYNC;
-            TowerOffset += 0.5f SYNC;
+            SmokeDelay -= Timer.sync(1.0f);
+            TowerOffset += Timer.sync(0.5f);
 
             // Explosionen und Qualm
             if (SmokeDelay < 0.0f) {
@@ -249,7 +249,7 @@ void OuttroClass::DoOuttro() {
             }
 
             if (Zustand == OutroStateEnum::PLAYER_FLEES) {
-                PlayerSmoke -= 1.0f SYNC;
+                PlayerSmoke -= Timer.sync(1.0f);
 
                 if (PlayerSmoke < 0.0f) {
                     WinkelUebergabe = (Counter) / 2.0f;
@@ -273,31 +273,31 @@ void OuttroClass::DoOuttro() {
                 }
 
                 if (Counter < 40.0f) {
-                    xs[0] -= 0.5f SYNC;
-                    xs[1] -= 0.4f SYNC;
+                    xs[0] -= Timer.sync(0.5f);
+                    xs[1] -= Timer.sync(0.4f);
                 } else if (Counter < 50.0f) {
-                    xs[0] -= 2.0f SYNC;
-                    ys[0] -= 1.0f SYNC;
+                    xs[0] -= Timer.sync(2.0f);
+                    ys[0] -= Timer.sync(1.0f);
 
-                    xs[1] -= 1.5f SYNC;
-                    ys[1] += 1.0f SYNC;
+                    xs[1] -= Timer.sync(1.5f);
+                    ys[1] += Timer.sync(1.0f);
                 } else {
-                    xs[0] -= 4.0f SYNC;
-                    ys[0] -= 2.0f SYNC;
+                    xs[0] -= Timer.sync(4.0f);
+                    ys[0] -= Timer.sync(2.0f);
 
-                    xs[1] -= 3.0f SYNC;
-                    ys[1] += 2.0f SYNC;
+                    xs[1] -= Timer.sync(3.0f);
+                    ys[1] += Timer.sync(2.0f);
                 }
 
-                px[0] += xs[0] SYNC;
-                py[0] += ys[0] SYNC;
-                px[1] += xs[1] SYNC;
-                py[1] += ys[1] SYNC;
+                px[0] += Timer.sync(xs[0]);
+                py[0] += Timer.sync(ys[0]);
+                px[1] += Timer.sync(xs[1]);
+                py[1] += Timer.sync(ys[1]);
 
                 if (Counter < 20.0f)
-                    Counter += 0.6f SYNC;
+                    Counter += Timer.sync(0.6f);
                 else
-                    Counter += 1.2f SYNC;
+                    Counter += Timer.sync(1.2f);
 
                 // Spieler sind weg? Dann nur noch scroller anzeigen und fertig =)
                 if (Counter > 80.0f) {
@@ -320,7 +320,7 @@ void OuttroClass::DoOuttro() {
             //      We end up with a little jerkiness when lines are split, but that's OK.
 
             // Explosionen und Qualm
-            SmokeDelay -= 1.0f SYNC;
+            SmokeDelay -= Timer.sync(1.0f);
             if (SmokeDelay < 0.0f) {
                 SmokeDelay = static_cast<float>(random(10)) + 5.0f;
 
@@ -347,7 +347,7 @@ void OuttroClass::DoOuttro() {
                 num_lines = 30;
             }
 
-            Counter += 1.5f SYNC;
+            Counter += Timer.sync(1.5f);
 
             while (Counter >= static_cast<float>(yoff_inc)) {
                 Counter -= static_cast<float>(yoff_inc);

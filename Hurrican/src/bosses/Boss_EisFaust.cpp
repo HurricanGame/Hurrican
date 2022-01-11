@@ -46,7 +46,7 @@ void GegnerEisFaust::DoKI() {
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
     if (DamageTaken > 0.0f)
-        DamageTaken -= 100 SYNC;  // Rotwerden langsam ausfaden lassen
+        DamageTaken -= Timer.sync(100.0f);  // Rotwerden langsam ausfaden lassen
     else
         DamageTaken = 0.0f;  // oder ganz anhalten
 
@@ -88,7 +88,7 @@ void GegnerEisFaust::DoKI() {
             Energy = 7000;
             DamageTaken = 0.0f;
 
-            yPos += static_cast<float>(8.0 SYNC);           // Faust nach unten bewegen
+            yPos += Timer.sync(8.0f);          // Faust nach unten bewegen
             if (yPos >= TileEngine.ScrolltoY)  // Weit genug unten ?
             {
                 Handlung = GEGNER::LAUFEN;
@@ -98,7 +98,7 @@ void GegnerEisFaust::DoKI() {
 
         case GEGNER::EINFLIEGEN:  // Gegner kommt in den Screen geflogen
         {
-            yPos += static_cast<float>(8.0 SYNC);           // Faust nach unten bewegen
+            yPos += Timer.sync(8.0f);          // Faust nach unten bewegen
             if (yPos >= TileEngine.ScrolltoY)  // Weit genug unten ?
             {
                 Handlung = GEGNER::LAUFEN;
@@ -214,7 +214,7 @@ void GegnerEisFaust::DoKI() {
             else
                 BlickRichtung = LINKS;
 
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             while (AnimCount <= 0.0f) {
                 AnimCount += 4.0f;
@@ -314,7 +314,7 @@ void GegnerEisFaust::DoKI() {
 
     // Hat die Faust den Hurri getroffen ?
     if (Handlung != GEGNER::EXPLODIEREN)
-        TestDamagePlayers(5.0f SYNC);
+        TestDamagePlayers(Timer.sync(5.0f));
 }
 
 // --------------------------------------------------------------------------------------

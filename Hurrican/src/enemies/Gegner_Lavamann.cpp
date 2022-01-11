@@ -59,7 +59,7 @@ void GegnerLavamann::DoKI() {
 
     // Flammenwand entstehen lassen
     //
-    FlameCount -= 1.0f SYNC;
+    FlameCount -= Timer.sync(1.0f);
     if (FlameCount < 0.0f) {
         FlameCount = 0.5f;
         Projectiles.PushProjectile(xPos - 10.0f - xSpeed * 0.75f, yPos, FEUERFALLE_LAVAMANN);

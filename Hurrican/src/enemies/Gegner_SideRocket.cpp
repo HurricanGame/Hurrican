@@ -49,7 +49,7 @@ void GegnerSideRocket::DoKI() {
         // Timer läuft ab
         //
         case GEGNER::STEHEN: {
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             // Timer zu ende? Dann Rakete starten
             //
@@ -79,7 +79,7 @@ void GegnerSideRocket::DoKI() {
 
             // Antriebspartikel erzeugen
             //
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             while (AnimCount <= 0.0f) {
                 AnimCount += 0.05f;

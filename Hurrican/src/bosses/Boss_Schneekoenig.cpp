@@ -59,10 +59,10 @@ void GegnerSchneeKoenig::DoDraw() {
     // int	Wert = 255-(static_cast<int>(DamageTaken));  // PICKLE not used
 
     if (Handlung == GEGNER::AUSFAHREN || WackelCount > 0.0f) {
-        xoff += 15.0f SYNC;
+        xoff += Timer.sync(15.0f);
 
         if (WackelCount > 0.0f)
-            WackelCount -= 1.0f SYNC;
+            WackelCount -= Timer.sync(1.0f);
     }
 
     // Knarre
@@ -80,7 +80,7 @@ void GegnerSchneeKoenig::DoDraw() {
     // Body
     if (WackelAnim > 0.0f) {
         AnimPhase = 10 - DamageAnims[static_cast<int>(WackelAnim) % 4];
-        WackelAnim -= 2.0f SYNC;
+        WackelAnim -= Timer.sync(2.0f);
 
         if (WackelAnim < 0.0f)
             AnimPhase = 10;
@@ -198,7 +198,7 @@ void GegnerSchneeKoenig::DoKI() {
 
     // Kanone zurückfahren
     if (GunSlide > 0.0f)
-        GunSlide -= 1.0f SYNC;
+        GunSlide -= Timer.sync(1.0f);
     else
         GunSlide = 0.0f;
 
@@ -230,7 +230,7 @@ void GegnerSchneeKoenig::DoKI() {
 
         // kurz abwarten nach dem Runterfallen und Kamera hochscrollen
         case GEGNER::INIT2: {
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             if (AnimCount < 0.0f) {
                 Handlung = GEGNER::EINFLIEGEN;
@@ -265,7 +265,7 @@ void GegnerSchneeKoenig::DoKI() {
                 } break;
 
                 case GEGNER::INIT2: {
-                    KnarreY -= 5.0f SYNC;
+                    KnarreY -= Timer.sync(5.0f);
 
                     if (KnarreY < 0.0f) {
                         KnarreY = 0.0f;
@@ -277,7 +277,7 @@ void GegnerSchneeKoenig::DoKI() {
                 } break;
 
                 case GEGNER::INIT3: {
-                    KnarreY -= 5.0f SYNC;
+                    KnarreY -= Timer.sync(5.0f);
 
                     if (KnarreY < 0.0f) {
                         KnarreY = 0.0f;
@@ -296,7 +296,7 @@ void GegnerSchneeKoenig::DoKI() {
                 } break;
 
                 case GEGNER::INIT4: {
-                    KnarreY -= 5.0f SYNC;
+                    KnarreY -= Timer.sync(5.0f);
 
                     if (KnarreY < 0.0f) {
                         KnarreY = 0.0f;
@@ -322,7 +322,7 @@ void GegnerSchneeKoenig::DoKI() {
         case GEGNER::SPRINGEN: {
             // Kanone zurückfahren
             if (KnarreY < 60.0f)
-                KnarreY += 5.0f SYNC;
+                KnarreY += Timer.sync(5.0f);
             else {
                 KnarreY = 60.0f;
 
@@ -330,7 +330,7 @@ void GegnerSchneeKoenig::DoKI() {
                     // abspringen
                     case GEGNER::STEHEN:
                     case GEGNER::BOMBARDIEREN: {
-                        AnimCount -= 4.0f SYNC;
+                        AnimCount -= Timer.sync(4.0f);
                         if (AnimCount <= 0.0f) {
                             AnimCount = 1.0f;
                             AnimPhase--;
@@ -375,7 +375,7 @@ void GegnerSchneeKoenig::DoKI() {
                     // aufkommen
                     case GEGNER::SCHLIESSEN:
                     case GEGNER::AUSSPUCKENZWEI: {
-                        AnimCount -= 4.0f SYNC;
+                        AnimCount -= Timer.sync(4.0f);
                         if (AnimCount <= 0.0f) {
                             AnimCount = 1.0f;
                             AnimPhase++;
@@ -401,7 +401,7 @@ void GegnerSchneeKoenig::DoKI() {
                     case GEGNER::SPRINGEN:
                     case GEGNER::AUSSPUCKEN: {
                         if (Action == GEGNER::AUSSPUCKEN && ShotCount > 1) {
-                            ShotDelay -= 1.0f SYNC;
+                            ShotDelay -= Timer.sync(1.0f);
 
                             if (ShotDelay <= 0.0f) {
                                 ShotDelay = 2.0f;
@@ -445,16 +445,16 @@ void GegnerSchneeKoenig::DoKI() {
         case GEGNER::AUSFAHREN: {
             // Kanone zurück
             if (KnarreWinkel < 0.0f)
-                KnarreWinkel += 5.0f SYNC;
+                KnarreWinkel += Timer.sync(5.0f);
 
             if (KnarreWinkel > 0.0f)
-                KnarreWinkel -= 5.0f SYNC;
+                KnarreWinkel -= Timer.sync(5.0f);
 
             if (KnarreY < 60.0f)
-                KnarreY += 5.0f SYNC;
+                KnarreY += Timer.sync(5.0f);
             else {
                 KnarreY = 60.0f;
-                AnimCount -= 1.0f SYNC;
+                AnimCount -= Timer.sync(1.0f);
 
                 // losfliegen
                 if (AnimCount < 0.0f && yAcc == 0.0f) {
@@ -494,7 +494,7 @@ void GegnerSchneeKoenig::DoKI() {
                 }
 
                 // Dampf ablassen =)
-                SmokeDelay -= 1.0f SYNC;
+                SmokeDelay -= Timer.sync(1.0f);
 
                 if (SmokeDelay < 0.0f) {
                     SmokeDelay = 0.5f;
@@ -528,14 +528,14 @@ void GegnerSchneeKoenig::DoKI() {
             float const aim = WinkelToPlayer();
 
             if (KnarreWinkel < aim) {
-                KnarreWinkel += 8.0f SYNC;
+                KnarreWinkel += Timer.sync(8.0f);
 
                 if (KnarreWinkel > aim)
                     KnarreWinkel = aim;
             }
 
             if (KnarreWinkel > aim) {
-                KnarreWinkel -= 8.0f SYNC;
+                KnarreWinkel -= Timer.sync(8.0f);
 
                 if (KnarreWinkel < aim)
                     KnarreWinkel = aim;
@@ -544,7 +544,7 @@ void GegnerSchneeKoenig::DoKI() {
             if (PlayerAbstandHoriz() < 100 && Value1 > 0)
                 ShotCount--;
             else if (abs(static_cast<int>(aim - KnarreWinkel)) < 10.0f)
-                ShotDelay -= 1.0f SYNC;
+                ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay <= 0.0f) {
                 ShotDelay = 8.0f;

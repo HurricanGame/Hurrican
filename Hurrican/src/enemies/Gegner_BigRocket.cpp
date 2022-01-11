@@ -73,7 +73,7 @@ void GegnerBigRocket::DoKI() {
         case GEGNER::FALLEN: {
             xPos = static_cast<float>(Value2) + ((static_cast<int>(yPos) % 14) / 7);
 
-            smokedelay -= 1.0f SYNC;
+            smokedelay -= Timer.sync(1.0f);
 
             if (smokedelay <= 0.0f) {
                 smokedelay += 0.2f;

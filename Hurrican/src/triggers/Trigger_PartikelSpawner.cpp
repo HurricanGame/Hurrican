@@ -65,18 +65,18 @@ void GegnerPartikelSpawner::DoKI() {
                 Player[p].ypos + Player[p].CollideRect.top < yPos + 40 &&
                 yPos - 300 < Player[p].ypos + Player[p].CollideRect.bottom) {
                 if (Value1 == 19)
-                    Player[p].yspeed -= Value2 SYNC;
+                    Player[p].yspeed -= Timer.sync(static_cast<float>(Value2));
                 else
-                    Player[p].yspeed -= 6.0f SYNC;
+                    Player[p].yspeed -= Timer.sync(6.0f);
             }
     }
 
-    Aussetzer += 0.2f SYNC;
+    Aussetzer += Timer.sync(0.2f);
     if (Aussetzer > 10.0f)
         Aussetzer = 0.0f;
 
     // Wird ein neuer Partikel gespwant ?
-    AnimCount -= 1.0f SYNC;
+    AnimCount -= Timer.sync(1.0f);
     if (AnimCount < 0) {
         AnimCount = static_cast<float>(Value2);
 

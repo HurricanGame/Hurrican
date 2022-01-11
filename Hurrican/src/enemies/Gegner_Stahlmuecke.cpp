@@ -163,7 +163,7 @@ void GegnerStahlmuecke::DoKI() {
 
     // Testen, ob der Spieler die Mücke berührt hat
     if (Handlung != GEGNER::FALLEN)
-        TestDamagePlayers(1.5f SYNC);
+        TestDamagePlayers(Timer.sync(1.5f));
 
     // Soviel Energie verloren, dass die Mücke abstürzt ?
     if (Energy <= 0.0f && Handlung != GEGNER::FALLEN) {

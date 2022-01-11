@@ -60,13 +60,13 @@ void GegnerFlugsack::DoKI() {
 
             // Spieler verfolgen
             if (pAim->xpos + 45 < xPos + 40 && !(blockl & BLOCKWERT_WAND))
-                xPos -= 4.0f SYNC;
+                xPos -= Timer.sync(4.0f);
             if (pAim->xpos + 45 > xPos + 40 && !(blockr & BLOCKWERT_WAND))
-                xPos += 4.0f SYNC;
+                xPos += Timer.sync(4.0f);
             if (pAim->ypos + 45 < yPos + 45 && !(blocko & BLOCKWERT_WAND))
-                yPos -= 4.0f SYNC;
+                yPos -= Timer.sync(4.0f);
             if (pAim->ypos + 45 > yPos + 45 && !(blocku & BLOCKWERT_WAND))
-                yPos += 4.0f SYNC;
+                yPos += Timer.sync(4.0f);
 
             if (blocko & BLOCKWERT_WAND || blocko & BLOCKWERT_GEGNERWAND)
                 ySpeed = 4.0f;
@@ -78,7 +78,7 @@ void GegnerFlugsack::DoKI() {
                 xSpeed = -4.0f;
 
             // Rauch ausgeben
-            SmokeCount -= 1.0f SYNC;
+            SmokeCount -= Timer.sync(1.0f);
             if (SmokeCount < 0.0f) {
                 SmokeCount += 0.1f;
 
@@ -91,7 +91,7 @@ void GegnerFlugsack::DoKI() {
             // Bei bestimmten Mindestabstand schiessen lassen
             if (PlayerAbstand() <= 400 && ((BlickRichtung == LINKS && pAim->xpos + 45 <= xPos) ||
                                            (BlickRichtung == RECHTS && pAim->xpos - 45 >= xPos))) {
-                ShotCount -= 1.0f SYNC;
+                ShotCount -= Timer.sync(1.0f);
                 if (ShotCount < 0.0f) {
                     SoundManager.PlayWave(100, 128, 11025, SOUND::CANON);
 
@@ -161,7 +161,7 @@ void GegnerFlugsack::DoKI() {
 
     // Testen, ob der Spieler den Sack berührt hat
     if (Handlung != GEGNER::FALLEN)
-        TestDamagePlayers(4.0f SYNC);
+        TestDamagePlayers(Timer.sync(4.0f));
 }
 
 // --------------------------------------------------------------------------------------

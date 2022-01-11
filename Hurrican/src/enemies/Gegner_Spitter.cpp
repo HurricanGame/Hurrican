@@ -114,7 +114,7 @@ void GegnerSpitter::DoKI() {
 
     // Testen, ob der Spieler den Spitter berührt hat
     //
-    TestDamagePlayers(1.0f SYNC);
+    TestDamagePlayers(Timer.sync(1.0f));
 }
 
 // --------------------------------------------------------------------------------------

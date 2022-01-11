@@ -52,7 +52,7 @@ GegnerMade::GegnerMade(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerMade::DoDraw() {
-    movesin += 0.8f SYNC;
+    movesin += Timer.sync(0.8f);
 
     if (movesin > TWO_PI)
         movesin = 0.0f;
@@ -83,7 +83,7 @@ void GegnerMade::DoDraw() {
 
 void GegnerMade::DoKI() {
     // langsame zugrunde gehen :P
-    Energy -= 0.1f SYNC;
+    Energy -= Timer.sync(0.1f);
 
     BlickRichtung = LINKS;
 
@@ -122,7 +122,7 @@ void GegnerMade::DoKI() {
 
     // Testen, ob der Spieler die Made berührt hat
     //
-    TestDamagePlayers(2.0f SYNC);
+    TestDamagePlayers(Timer.sync(2.0f));
 }
 
 // --------------------------------------------------------------------------------------

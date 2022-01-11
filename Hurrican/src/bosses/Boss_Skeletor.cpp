@@ -170,14 +170,14 @@ void GegnerSkeletor::DoKI() {
     switch (Handlung) {
         // Abwarten nach dem Lachen
         case GEGNER::SPECIAL: {
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
             if (AnimCount < 0.0f) {
                 Handlung = GEGNER::STEHEN;
             }
         } break;
 
         case GEGNER::CRUSHENERHOLEN: {
-            AnimCount += 1.0f SYNC;
+            AnimCount += Timer.sync(1.0f);
 
             if (AnimCount > 10.0f && AnimPhase == 0) {
                 // SoundManager.PlayWave(100, 128, 11025, SOUND::STANDUP);
@@ -253,7 +253,7 @@ void GegnerSkeletor::DoKI() {
         case GEGNER::SPECIAL2: {
             // Rakete schiessen
             if (ShotCount > 0)
-                ShotDelay -= 1.0f SYNC;
+                ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay < 0.0f) {
                 WinkelUebergabe = 2.0f * ShotCount + 8.0f;
@@ -352,9 +352,9 @@ void GegnerSkeletor::DoKI() {
 
         // Granaten
         case GEGNER::BOMBARDIEREN: {
-            ShotDelay -= 0.1f SYNC;
+            ShotDelay -= Timer.sync(0.1f);
 
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             if (AnimCount <= 0.0f) {
                 AnimOffset++;
@@ -406,7 +406,7 @@ void GegnerSkeletor::DoKI() {
 
         // Gatling
         case GEGNER::SCHIESSEN: {
-            ShotDelay -= 0.5f SYNC;
+            ShotDelay -= Timer.sync(0.5f);
 
             // Animationsphase setzen
             if (ShotDelay > 0.5f)
@@ -487,7 +487,7 @@ void GegnerSkeletor::DoKI() {
         } break;
 
         case GEGNER::EXPLODIEREN: {
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay < 0.0f)
                 Energy = 0.0f;
@@ -535,7 +535,7 @@ void GegnerSkeletor::DoKI() {
         SoundManager.FadeSong(MUSIC::BOSS, -2.0f, 0, false);
     }
 
-    TestDamagePlayers(10.0f SYNC);
+    TestDamagePlayers(Timer.sync(10.0f));
 }
 
 // --------------------------------------------------------------------------------------

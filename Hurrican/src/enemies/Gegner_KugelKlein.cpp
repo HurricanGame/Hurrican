@@ -94,7 +94,7 @@ void GegnerKugelKlein::DoKI() {
 
     // Berührt die Kugel den Spieler ?
     //
-    TestDamagePlayers(2.0f SYNC);
+    TestDamagePlayers(Timer.sync(2.0f));
 }
 
 // --------------------------------------------------------------------------------------

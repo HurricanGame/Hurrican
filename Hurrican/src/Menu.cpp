@@ -412,7 +412,7 @@ void MenuClass::ShowMenu() {
     D3DCOLOR menucolor3 = D3DCOLOR_RGBA(255, 255, 255, alpha / 5);
 
     // Hintergrund rotieren lassen
-    ScrollPos += 0.1f SYNC;
+    ScrollPos += Timer.sync(0.1f);
 
     clampAngle(ScrollPos);
 
@@ -979,12 +979,12 @@ void MenuClass::ShowMenu() {
             }
 
             // Credits scrollen
-            CreditsCounter -= (0.7f * scale_factor) SYNC;  // Credits-Delay veringern
+            CreditsCounter -= Timer.sync(0.7f * scale_factor);  // Credits-Delay veringern
 
             // Bei Taste nach unten schneller scrollen
             //
             if (KeyDown(DIK_DOWN) || KeyDown(DIK_NUMPAD2))
-                CreditsCounter -= (2.0f * scale_factor) SYNC;
+                CreditsCounter -= Timer.sync(2.0f * scale_factor);
 
             // Bei Taste nach oben langsamer werden
             //
@@ -1131,7 +1131,7 @@ void MenuClass::DoMenu() {
     //    int joy_idx = Player[0].JoystickIndex;
     static float input_counter = 0.0f;
     constexpr float INPUT_DELAY = 40.0f;  // Only accept joy input once every time counter reaches this value
-    input_counter += 30.0f SYNC;
+    input_counter += Timer.sync(30.0f);
     if (input_counter > INPUT_DELAY) {
         input_counter = INPUT_DELAY;
     }
@@ -1154,7 +1154,7 @@ void MenuClass::DoMenu() {
 
     // Logo einfaden
     if (RotationDir > 0)
-        Rotation += RotationDir * 10 SYNC;
+        Rotation += Timer.sync(static_cast<float>(RotationDir * 10));
 
     if (Rotation >= 255.0f) {
         Rotation = 255.0f;
@@ -1164,7 +1164,7 @@ void MenuClass::DoMenu() {
     // Sterne bewegen
     //
     for (auto& star: Stars) {
-        star.Count += star.Ebene / 20000.0f SYNC;
+        star.Count += Timer.sync(star.Ebene / 20000.0f);
 
         if (star.Count > TWO_PI)
             star.Count -= TWO_PI;
@@ -1283,7 +1283,7 @@ void MenuClass::DoMenu() {
     // LanguageFile Info Fenster Counter runterzählen und Fenster ggf anzeigen
     //
     if (ShowLanguageInfoCounter > 0.0f) {
-        ShowLanguageInfoCounter -= 50.0f SYNC;
+        ShowLanguageInfoCounter -= Timer.sync(50.0f);
         ShowLanguageInfo();
         return;  // Do not accept menu input until language counter reaches 0
     }
@@ -1465,13 +1465,13 @@ void MenuClass::DoMenu() {
 
             if (pressed) {
                 if (AktuellerPunkt == 0) {
-                    SoundManager.g_sound_vol -= 5.0f SYNC;
+                    SoundManager.g_sound_vol -= Timer.sync(5.0f);
                     if (SoundManager.g_sound_vol < 0.0f)
                         SoundManager.g_sound_vol = 0.0f;
                 }
 
                 if (AktuellerPunkt == 1) {
-                    SoundManager.g_music_vol -= 5.0f SYNC;
+                    SoundManager.g_music_vol -= Timer.sync(5.0f);
                     if (SoundManager.g_music_vol < 0.0f)
                         SoundManager.g_music_vol = 0.0f;
                 }
@@ -1485,12 +1485,12 @@ void MenuClass::DoMenu() {
 
             if (pressed) {
                 if (AktuellerPunkt == 0) {
-                    SoundManager.g_sound_vol += 5.0f SYNC;
+                    SoundManager.g_sound_vol += Timer.sync(5.0f);
                     if (SoundManager.g_sound_vol > 100.0f)
                         SoundManager.g_sound_vol = 100.0f;
                 }
                 if (AktuellerPunkt == 1) {
-                    SoundManager.g_music_vol += 5.0f SYNC;
+                    SoundManager.g_music_vol += Timer.sync(5.0f);
                     if (SoundManager.g_music_vol > 100.0f)
                         SoundManager.g_music_vol = 100.0f;
                 }
@@ -1732,7 +1732,7 @@ void MenuClass::DoMenu() {
                         input_counter = INPUT_DELAY * 0.75f;  // Delay less than usual
 
                         if (AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE) {
-                            pCurrentPlayer2->JoystickSchwelle -= 100.0f SYNC;
+                            pCurrentPlayer2->JoystickSchwelle -= Timer.sync(100.0f);
 
                             if (pCurrentPlayer2->JoystickSchwelle < 100.0f)
                                 pCurrentPlayer2->JoystickSchwelle = 100.0f;
@@ -1753,7 +1753,7 @@ void MenuClass::DoMenu() {
                         input_counter = INPUT_DELAY * 0.75f;  // Delay less than usual
 
                         if (AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE) {
-                            pCurrentPlayer2->JoystickSchwelle += 100.0f SYNC;
+                            pCurrentPlayer2->JoystickSchwelle += Timer.sync(100.0f);
 
                             if (pCurrentPlayer2->JoystickSchwelle > 900.0f)
                                 pCurrentPlayer2->JoystickSchwelle = 900.0f;

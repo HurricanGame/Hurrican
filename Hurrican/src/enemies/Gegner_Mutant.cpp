@@ -73,7 +73,7 @@ void GegnerMutant::DoKI() {
                 yAcc = 0.0f;
 
                 if (PlayerAbstand() < 400.0f)
-                    JumpDelay -= 1.0f SYNC;
+                    JumpDelay -= Timer.sync(1.0f);
 
                 if (JumpDelay <= 0.0f) {
                     Handlung = GEGNER::SPRINGEN;
@@ -143,7 +143,7 @@ void GegnerMutant::DoKI() {
     }
 
     if (Handlung != GEGNER::EINFLIEGEN)
-        TestDamagePlayers(6.0f SYNC);
+        TestDamagePlayers(Timer.sync(6.0f));
 }
 
 // --------------------------------------------------------------------------------------

@@ -80,7 +80,7 @@ void GegnerSwimWalker::DoKI() {
     }  // switch
 
     // Testen, ob der Spieler den Walker berührt hat
-    TestDamagePlayers(4.0f SYNC);
+    TestDamagePlayers(Timer.sync(4.0f));
 }
 
 // --------------------------------------------------------------------------------------

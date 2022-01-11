@@ -148,7 +148,7 @@ void GegnerStampfstein::DoKI() {
         case GEGNER::INIT: {
             PlattformTest(GegnerRect[GegnerArt]);
 
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
             if (AnimCount < 0.0f) {
                 ySpeed = -4.0f;
                 Handlung = GEGNER::SPRINGEN;
@@ -210,7 +210,7 @@ void GegnerStampfstein::DoKI() {
         if (SpriteCollision(Player[p].xpos, Player[p].ypos, Player[p].CollideRect, xPos, yPos, GegnerRect[GegnerArt]) ==
                 true &&
             Player[p].ypos > yPos)
-            Player[p].DamagePlayer(20.0f SYNC);
+            Player[p].DamagePlayer(Timer.sync(20.0f));
 }
 
 // --------------------------------------------------------------------------------------

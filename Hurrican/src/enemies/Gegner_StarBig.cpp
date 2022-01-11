@@ -88,7 +88,7 @@ void GegnerStarBig::DoKI() {
     }  // switch
 
     // Testen, ob der Spieler den Sack berührt hat
-    TestDamagePlayers(2.0f SYNC);
+    TestDamagePlayers(Timer.sync(2.0f));
 }
 
 // --------------------------------------------------------------------------------------

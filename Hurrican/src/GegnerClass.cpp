@@ -157,9 +157,9 @@ void GegnerClass::Render() {
             // und ggf anhalten
             //
             if (GegnerArt != POWERBLOCK)
-                DamageTaken -= 250 SYNC;
+                DamageTaken -= Timer.sync(250.0f);
             else
-                DamageTaken -= 75 SYNC;
+                DamageTaken -= Timer.sync(75.0f);
 
             if (DamageTaken < 0.0f)
                 DamageTaken = 0.0f;
@@ -198,7 +198,7 @@ bool GegnerClass::Run() {
 
         // pAim wechseln?
         if (TimeToChange > 0.0f)
-            TimeToChange -= 1.0f SYNC;
+            TimeToChange -= Timer.sync(1.0f);
 
         // Feststellen welche Blockarten um den Gegner herum existieren
         if (TestBlock == true) {
@@ -210,16 +210,16 @@ bool GegnerClass::Run() {
             blockl = blockr = blocko = blocku = 0;
 
         // Geschwindigkeit anpassen
-        xSpeed += xAcc SYNC;
-        ySpeed += yAcc SYNC;
+        xSpeed += Timer.sync(xAcc);
+        ySpeed += Timer.sync(yAcc);
 
         // Bewegen (nur, wenn keine Wand im Weg ist)
         //
         if ((xSpeed < 0.0f && !(blockl & BLOCKWERT_WAND)) || (xSpeed > 0.0f && !(blockr & BLOCKWERT_WAND)))
-            xPos += xSpeed SYNC;
+            xPos += Timer.sync(xSpeed);
 
         if ((ySpeed < 0.0f && !(blocko & BLOCKWERT_WAND)) || (ySpeed > 0.0f && !(blocku & BLOCKWERT_WAND)))
-            yPos += ySpeed SYNC;
+            yPos += Timer.sync(ySpeed);
 
         // Level verlassen ?
         //
@@ -235,14 +235,14 @@ bool GegnerClass::Run() {
                     Destroyable == true &&
                     SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[p].xpos, Player[p].ypos,
                                 Player[p].CollideRect) == true) {
-                Energy -= 10.0f SYNC;  // Energie abziehen
+                Energy -= Timer.sync(10.0f);  // Energie abziehen
 
                 // blinken lassen, wenn noch nicht blinkt
                 if (DamageTaken <= 0.0f)
                     DamageTaken = 255;
 
                 if (Player[p].WheelMode == false)
-                    Player[p].Armour -= static_cast<float>(3.0 SYNC);  // Spieler verliert Rad Energie
+                    Player[p].Armour -= Timer.sync(3.0f);  // Spieler verliert Rad Energie
 
                 // Hit Sound
                 // DKS - Added function WaveIsPlaying() to SoundManagerClass:
@@ -372,9 +372,9 @@ void GegnerClass::PlattformTest(RECT_struct rect) {
             uint32_t bl = TileEngine.BlockLinks(x, y, x, y, Player[p].CollideRect);
 
             if ((xSpeed > 0.0f && !(br & BLOCKWERT_WAND)) || (xSpeed < 0.0f && !(bl & BLOCKWERT_WAND)))
-                Player[p].xpos += xSpeed SYNC;
+                Player[p].xpos += Timer.sync(xSpeed);
 
-            Player[p].ypos = yPos - Player[p].CollideRect.bottom + GegnerRect[GegnerArt].top + ySpeed SYNC;
+            Player[p].ypos = yPos - Player[p].CollideRect.bottom + GegnerRect[GegnerArt].top + Timer.sync(ySpeed);
 
             // Runtergefallen ?
             //
@@ -429,20 +429,20 @@ void GegnerClass::Wegschieben(RECT_struct rect, float dam) {
             // Sonst Energie abziehen
             else {
                 if (dam > 0.0f)
-                    Player[i].DamagePlayer(dam SYNC);
+                    Player[i].DamagePlayer(Timer.sync(dam));
 
                 // Spieler wegschieben
                 if (Player[i].xpos + 35 < xPos + rect.left + (rect.right - rect.left) / 2 &&
                     !(TileEngine.BlockLinks(Player[i].xpos, Player[i].ypos, Player[i].xpos, Player[i].ypos,
                                             Player[i].CollideRect) &
                       BLOCKWERT_WAND))
-                    Player[i].xpos -= (PLAYER_MOVESPEED + 1) SYNC;
+                    Player[i].xpos -= Timer.sync(PLAYER_MOVESPEED + 1.0f);
 
                 if (Player[i].xpos + 35 >= xPos + rect.left + (rect.right - rect.left) / 2 &&
                     !(TileEngine.BlockRechts(Player[i].xpos, Player[i].ypos, Player[i].xpos, Player[i].ypos,
                                              Player[i].CollideRect) &
                       BLOCKWERT_WAND))
-                    Player[i].xpos += (PLAYER_MOVESPEED + 1) SYNC;
+                    Player[i].xpos += Timer.sync(PLAYER_MOVESPEED + 1.0f);
             }
         }
 }
@@ -492,7 +492,7 @@ void GegnerClass::TurnonWall() {
 
 bool GegnerClass::TurnonShot() {
     if (TurnCount > 0.0f)
-        TurnCount -= 1.0f SYNC;
+        TurnCount -= Timer.sync(1.0f);
 
     if (DamageTaken > 0 && TurnCount <= 0.0f) {
         TurnCount = 20.0f;

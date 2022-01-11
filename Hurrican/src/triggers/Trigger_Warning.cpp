@@ -32,7 +32,7 @@ void GegnerWarning::DoKI() {
     xPos = TileEngine.XOffset + 230.0f;
     yPos = TileEngine.YOffset + 400.0f;
 
-    WarningCount -= 8.0f SYNC;
+    WarningCount -= Timer.sync(8.0f);
 
     if (WarningCount <= 0.0f) {
         Value2++;

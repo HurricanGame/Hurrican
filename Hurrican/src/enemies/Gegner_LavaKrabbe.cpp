@@ -128,7 +128,7 @@ void GegnerLavaKrabbe::DoKI() {
 
         // Krabbe ist gelandet und Krabbelt auf den Spieler zu
         case GEGNER::STEHEN: {
-            xPos += 5.0f * BlickRichtung * -1 SYNC;
+            xPos += Timer.sync(5.0f * static_cast<float>(BlickRichtung * -1));
 
             AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
@@ -155,7 +155,7 @@ void GegnerLavaKrabbe::DoKI() {
                 yAcc = 0.0f;
             }
 
-            zPos += 9.2f SYNC;
+            zPos += Timer.sync(9.2f);
             if (zPos > 360.0f)
                 zPos = 360.0f;
 
@@ -185,7 +185,7 @@ void GegnerLavaKrabbe::DoKI() {
 
     // Testen, ob der Spieler die Krabbe berührt hat
     if (Handlung == GEGNER::STEHEN || Handlung == GEGNER::DREHEN || Handlung == GEGNER::DREHEN2)
-        TestDamagePlayers(8.0f SYNC);
+        TestDamagePlayers(Timer.sync(8.0f));
 }
 
 // --------------------------------------------------------------------------------------

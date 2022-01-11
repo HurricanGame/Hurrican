@@ -437,13 +437,13 @@ void GegnerRiesenSpinne::DoKI() {
         case GEGNER::EXPLODIEREN: {
             // Kopf gerade richten
             if (HeadWinkel > 0.0f)
-                HeadWinkel -= 1.0f SYNC;
+                HeadWinkel -= Timer.sync(1.0f);
 
             if (HeadWinkel < 0.0f)
-                HeadWinkel += 1.0f SYNC;
+                HeadWinkel += Timer.sync(1.0f);
 
             xSpeed = WalkDir;
-            WalkCount -= WalkDir / 10.0f SYNC;
+            WalkCount -= Timer.sync(WalkDir / 10.0f);
 
             if (WalkCount > TWO_PI)
                 WalkCount -= TWO_PI;
@@ -452,9 +452,9 @@ void GegnerRiesenSpinne::DoKI() {
 
             if (Handlung == GEGNER::CRUSHEN) {
                 if (HeadWinkel < 45.0f)
-                    HeadWinkel += 1.0f SYNC;
+                    HeadWinkel += Timer.sync(1.0f);
 
-                WalkDir -= 10.0f SYNC;
+                WalkDir -= Timer.sync(10.0f);
 
                 if (WalkDir < -35.0f)
                     WalkDir = -35.0f;
@@ -476,7 +476,7 @@ void GegnerRiesenSpinne::DoKI() {
             }
 
             if (Handlung == GEGNER::LAUFEN_LINKS) {
-                WalkDir -= 1.0f SYNC;
+                WalkDir -= Timer.sync(1.0f);
 
                 if (WalkDir < -8.0f)
                     WalkDir = -8.0f;
@@ -488,7 +488,7 @@ void GegnerRiesenSpinne::DoKI() {
 
                 // evtl schiessen
                 if (Energy < 75000.0f) {
-                    ShotDelay -= 1.0f SYNC;
+                    ShotDelay -= Timer.sync(1.0f);
 
                     if (DamageWackel > 0.0f)
                         ShotDelay = 15.0f;
@@ -513,11 +513,11 @@ void GegnerRiesenSpinne::DoKI() {
             }
 
             if (Handlung == GEGNER::LAUFEN_RECHTS || Handlung == GEGNER::EXPLODIEREN) {
-                WalkDir += 1.0f SYNC;
+                WalkDir += Timer.sync(1.0f);
 
                 // Körper hoch, wenn er grade unten ist
                 if (yBody > 0.0f) {
-                    yBody -= 1.0f SYNC;
+                    yBody -= Timer.sync(1.0f);
 
                     if (yBody < 0.0f)
                         yBody -= 0.0f;
@@ -525,7 +525,7 @@ void GegnerRiesenSpinne::DoKI() {
 
                 if (Handlung == GEGNER::LAUFEN_RECHTS) {
                     // Spinnen hinten rauslassen
-                    ShotDelay -= 1.0f SYNC;
+                    ShotDelay -= Timer.sync(1.0f);
                     if (ShotDelay < 0.0f) {
                         ShotDelay = 15.0f;
 
@@ -555,7 +555,7 @@ void GegnerRiesenSpinne::DoKI() {
             if (Handlung == GEGNER::EXPLODIEREN) {
                 Energy = 100.0f;
 
-                AnimCount -= 1.0f SYNC;
+                AnimCount -= Timer.sync(1.0f);
 
                 if (AnimCount < 0.0f) {
                     AnimCount = 0.4f;
@@ -586,7 +586,7 @@ void GegnerRiesenSpinne::DoKI() {
 
         // Raketen abschiessen
         case GEGNER::SCHIESSEN: {
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay < 0.0f) {
                 ShotDelay = 4.0f;
@@ -613,14 +613,14 @@ void GegnerRiesenSpinne::DoKI() {
         case GEGNER::SPECIAL: {
             static float headdir = 1.0f;
 
-            HeadWinkel += headdir SYNC;
+            HeadWinkel += Timer.sync(headdir);
 
             if (HeadWinkel > 15.0f)
                 headdir = -1.0f;
             if (HeadWinkel < -10.0f)
                 headdir = 1.0f;
 
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay < 0.0f) {
                 ShotDelay = 3.5f;
@@ -652,12 +652,12 @@ void GegnerRiesenSpinne::DoKI() {
         case GEGNER::SPECIAL2: {
             // Flare einfaden
             if (ShotDelay < 255.0f)
-                ShotDelay += 5.8f SYNC;
+                ShotDelay += Timer.sync(5.8f);
             else
                 ShotDelay = 255.0f;
 
             // Counter runterzählen
-            AnimCount -= 2.5f SYNC;
+            AnimCount -= Timer.sync(2.5f);
             if (AnimCount < 0.0f) {
                 Handlung = GEGNER::LAUFEN_LINKS;
                 ShotMode = random(2);
@@ -666,7 +666,7 @@ void GegnerRiesenSpinne::DoKI() {
         } break;
 
         case GEGNER::ABSENKEN: {
-            yBody += 1.0f SYNC;
+            yBody += Timer.sync(1.0f);
 
             // ganz unten?
             if (yBody > 50.0f) {
@@ -674,7 +674,7 @@ void GegnerRiesenSpinne::DoKI() {
             }
 
             // schiessen
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay < 0.0f) {
                 ShotDelay = 10.0f;
@@ -690,7 +690,7 @@ void GegnerRiesenSpinne::DoKI() {
         } break;
 
         case GEGNER::ABSENKENZWEI: {
-            yBody += 8.0f SYNC;
+            yBody += Timer.sync(8.0f);
 
             // ganz unten? Dann nach links losrennen
             if (yBody > 50.0f) {
@@ -700,7 +700,7 @@ void GegnerRiesenSpinne::DoKI() {
         } break;
 
         case GEGNER::AUFRICHTEN: {
-            yBody -= 1.0f SYNC;
+            yBody -= Timer.sync(1.0f);
 
             if (yBody <= 0.0f) {
                 yBody = 0.0f;
@@ -711,7 +711,7 @@ void GegnerRiesenSpinne::DoKI() {
             }
 
             // schiessen
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay < 0.0f) {
                 ShotDelay = 10.0f;
@@ -733,7 +733,7 @@ void GegnerRiesenSpinne::DoKI() {
 
     // Kopf zurückgeschnellt?
     if (HeadXOffset > PI)
-        HeadXOffset -= 0.8f SYNC;
+        HeadXOffset -= Timer.sync(0.8f);
     else
         HeadXOffset = PI;
 
@@ -757,7 +757,7 @@ void GegnerRiesenSpinne::DoKI() {
 
     // Spinne wackelt gerade mit dem Kopf wegen Schaden?
     if (DamageWackel > 0.0f) {
-        DamageWackel -= 0.2f SYNC;
+        DamageWackel -= Timer.sync(0.2f);
     } else
         DamageWackel = 0.0f;
 
@@ -767,7 +767,7 @@ void GegnerRiesenSpinne::DoKI() {
     GegnerRect[RIESENSPINNE].bottom = 140 + static_cast<int>(yBody);
 
     // Testen, ob der Spieler den Boss berührt hat
-    TestDamagePlayers(4.0f SYNC);
+    TestDamagePlayers(Timer.sync(4.0f));
 
     // Hat die Spinnen keine Energie mehr ? Dann explodiert sie
     if (Energy <= 100.0f && Handlung != GEGNER::EXPLODIEREN) {

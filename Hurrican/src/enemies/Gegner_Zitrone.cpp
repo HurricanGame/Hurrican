@@ -58,9 +58,9 @@ void GegnerZitrone::CalcKnarreWinkel() {
     newwinkel = std::clamp(newwinkel, 100.0f, 260.0f);
 
     if (KnarreWinkel < newwinkel)
-        KnarreWinkel += 20.0f SYNC;
+        KnarreWinkel += Timer.sync(20.0f);
     if (KnarreWinkel > newwinkel)
-        KnarreWinkel -= 20.0f SYNC;
+        KnarreWinkel -= Timer.sync(20.0f);
 }
 
 // --------------------------------------------------------------------------------------
@@ -126,7 +126,7 @@ void GegnerZitrone::DoKI() {
     CalcKnarreWinkel();
 
     // Wackeln lassen
-    WackelOffset += 0.25f SYNC;
+    WackelOffset += Timer.sync(0.25f);
     while (WackelOffset > TWO_PI)
         WackelOffset -= TWO_PI;
 
@@ -159,7 +159,7 @@ void GegnerZitrone::DoKI() {
 
             // neuen punkt aussuchen?
             //
-            FollowCount -= 1.0f SYNC;
+            FollowCount -= Timer.sync(1.0f);
 
             if (FollowCount < 0.0f) {
                 FollowCount = 20.0f;
@@ -185,7 +185,7 @@ void GegnerZitrone::DoKI() {
             }
 
             // Schiessen
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay < 0.0f) {
                 ShotDelay = 5.0f;
@@ -215,7 +215,7 @@ void GegnerZitrone::DoKI() {
             if (xSpeed < 0.0f && xPos < NewX) {
                 xAcc = 0.0f;
 
-                xSpeed += 7.0f SYNC;
+                xSpeed += Timer.sync(7.0f);
                 if (xSpeed > 0.0f)
                     xSpeed = 0.0f;
             }
@@ -223,7 +223,7 @@ void GegnerZitrone::DoKI() {
             if (xSpeed > 0.0f && xPos > NewX) {
                 xAcc = 0.0f;
 
-                xSpeed -= 7.0f SYNC;
+                xSpeed -= Timer.sync(7.0f);
                 if (xSpeed < 0.0f)
                     xSpeed = 0.0f;
             }
@@ -232,7 +232,7 @@ void GegnerZitrone::DoKI() {
             if (ySpeed < 0.0f && yPos < NewY) {
                 yAcc = 0.0f;
 
-                ySpeed += 7.0f SYNC;
+                ySpeed += Timer.sync(7.0f);
                 if (ySpeed > 0.0f)
                     ySpeed = 0.0f;
             }
@@ -240,7 +240,7 @@ void GegnerZitrone::DoKI() {
             if (ySpeed > 0.0f && yPos > NewY) {
                 yAcc = 0.0f;
 
-                ySpeed -= 7.0f SYNC;
+                ySpeed -= Timer.sync(7.0f);
                 if (ySpeed < 0.0f)
                     ySpeed = 0.0f;
             }
@@ -266,7 +266,7 @@ void GegnerZitrone::DoKI() {
                 yAcc = 0.0f;
 
             // Drone rauchen lassen
-            SmokeDelay -= 1.0f SYNC;
+            SmokeDelay -= Timer.sync(1.0f);
             if (SmokeDelay <= 0.0f) {
                 SmokeDelay = 0.1f;
                 PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(30)),

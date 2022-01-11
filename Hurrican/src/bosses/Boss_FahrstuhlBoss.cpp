@@ -89,7 +89,7 @@ void GegnerFahrstuhlBoss::DoKI() {
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
     if (DamageTaken > 0.0f)
-        DamageTaken -= 50 SYNC;  // Rotwerden langsam ausfaden lassen
+        DamageTaken -= Timer.sync(50.0f);  // Rotwerden langsam ausfaden lassen
     else
         DamageTaken = 0.0f;  // oder ganz anhalten
 
@@ -113,7 +113,7 @@ void GegnerFahrstuhlBoss::DoKI() {
 
     // Füße an der Seite rauchen lassen
     //
-    smokecount -= 1.0f SYNC;
+    smokecount -= Timer.sync(1.0f);
     if (smokecount < 0.0f) {
         smokecount = 1.0f;
 
@@ -136,11 +136,11 @@ void GegnerFahrstuhlBoss::DoKI() {
     }
 
     // Kanonen bewegen
-    x1 += dx1 SYNC;
-    x2 += dx2 SYNC;
-    x3 -= dx2 SYNC;
+    x1 += Timer.sync(dx1);
+    x2 += Timer.sync(dx2);
+    x3 -= Timer.sync(dx2);
 
-    CanonAnim += dx2 SYNC;
+    CanonAnim += Timer.sync(dx2);
     if (CanonAnim >= 6.0f)
         CanonAnim = 0.0f;
     if (CanonAnim < 0.0f)
@@ -188,7 +188,7 @@ void GegnerFahrstuhlBoss::DoKI() {
             Energy = 6000;
             DamageTaken = 0.0f;
 
-            TempY -= 5.0f SYNC;
+            TempY -= Timer.sync(5.0f);
 
             // Gegner an der richtigen Position ?
             if (TempY < 500.0f) {
@@ -199,14 +199,14 @@ void GegnerFahrstuhlBoss::DoKI() {
 
             // Levelausschnitt weiter nach unten scrollen damit man mehr vom Boss sieht
             if (g_Fahrstuhl_Offset < 150.0f)
-                g_Fahrstuhl_Offset += 4.0f SYNC;
+                g_Fahrstuhl_Offset += Timer.sync(4.0f);
             else
                 g_Fahrstuhl_Offset = 150.0f;
         } break;
 
         case GEGNER::EINFLIEGEN:  // Gegner kommt in den Screen geflogen
         {
-            TempY -= 5.0f SYNC;
+            TempY -= Timer.sync(5.0f);
 
             // Gegner an der richtigen Position ?
             if (TempY < 500.0f) {
@@ -240,7 +240,7 @@ void GegnerFahrstuhlBoss::DoKI() {
 
             // Levelausschnitt weiter nach unten scrollen damit man mehr vom Boss sieht
             if (g_Fahrstuhl_Offset < 150.0f)
-                g_Fahrstuhl_Offset += 4.0f SYNC;
+                g_Fahrstuhl_Offset += Timer.sync(4.0f);
             else
                 g_Fahrstuhl_Offset = 150.0f;
         } break;
@@ -251,7 +251,7 @@ void GegnerFahrstuhlBoss::DoKI() {
 
         case GEGNER::ABSENKEN:  // Gegner kommt nach unten
         {
-            TempY -= 5.0f SYNC;
+            TempY -= Timer.sync(5.0f);
 
             // Gegner an der richtigen Position ?
             if (TempY < 380.0f) {
@@ -271,7 +271,7 @@ void GegnerFahrstuhlBoss::DoKI() {
 
         case GEGNER::AUFRICHTEN:  // Gegner fährt wieder hoch
         {
-            TempY += 5.0f SYNC;
+            TempY += Timer.sync(5.0f);
 
             // Gegner an der richtigen Position ?
             if (TempY > 600.0f) {
@@ -304,7 +304,7 @@ void GegnerFahrstuhlBoss::DoKI() {
 
         case GEGNER::SCHIESSEN:  // Mit zwei lasern ballern
         {
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay < 0.0f) {
                 ShotDelay = 6.0f;
@@ -358,13 +358,13 @@ void GegnerFahrstuhlBoss::DoKI() {
         case GEGNER::SPECIAL:  // Hurri anvisieren und Laser ballern
         {
             if (ShotDelay > 0.0f)
-                ShotDelay -= 1.0f SYNC;
+                ShotDelay -= Timer.sync(1.0f);
 
             // Bewegen
             if (pAim->xpos + 35.0f < xPos + x1 + 60.0f)
-                x1 -= 8.0f SYNC;
+                x1 -= Timer.sync(8.0f);
             if (pAim->xpos + 35.0f > xPos + x1 + 80.0f)
-                x1 += 8.0f SYNC;
+                x1 += Timer.sync(8.0f);
 
             // Schiessen
             if (pAim->xpos + 35.0f < xPos + x1 + 100.0f && pAim->xpos + 35.0f > xPos + x1 + 40.0f && ShotDelay <= 0.0f) {
@@ -394,7 +394,7 @@ void GegnerFahrstuhlBoss::DoKI() {
 
         case GEGNER::AUSSPUCKEN:  // Stelzis herbeirufen =)
         {
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay < 0.0f) {
                 ShotDelay = 35.0f;
@@ -422,7 +422,7 @@ void GegnerFahrstuhlBoss::DoKI() {
 
         case GEGNER::CRUSHEN:  // Suchschüsse ballern
         {
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay < 0.0f) {
                 ShotDelay = 5.0f;
@@ -462,7 +462,7 @@ void GegnerFahrstuhlBoss::DoKI() {
         // Gegner fliegt in die Luft
         //
         case GEGNER::EXPLODIEREN: {
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay < 0.0f) {
                 ShotDelay = 0.5f;
@@ -482,11 +482,11 @@ void GegnerFahrstuhlBoss::DoKI() {
 
             // Levelausschnitt wieder weiter nach oben Scrollen
             if (g_Fahrstuhl_Offset > 20.0f)
-                g_Fahrstuhl_Offset -= 4.0f SYNC;
+                g_Fahrstuhl_Offset -= Timer.sync(4.0f);
             else
                 g_Fahrstuhl_Offset = 20.0f;
 
-            TempY -= 10.0f SYNC;
+            TempY -= Timer.sync(10.0f);
 
             // Gegner aus dem Screen, dann fetzen
             if (TempY < -400.0f)
@@ -506,11 +506,11 @@ void GegnerFahrstuhlBoss::DoKI() {
 
     // Anhängsel am Fahrstuhl richtig positionieren
     if (y2 < 80.0f)
-        y2 += 2.0f SYNC;
+        y2 += Timer.sync(2.0f);
     else
         y2 = 80.0f;
     if (y1 < 160.0f)
-        y1 += 2.0f SYNC;
+        y1 += Timer.sync(2.0f);
     else
         y1 = 160.0f;
 
@@ -519,17 +519,17 @@ void GegnerFahrstuhlBoss::DoKI() {
 
     for (int i = 0; i < NUMPLAYERS; i++)
         if (Player[i].AufPlattform == nullptr) {
-            Player[i].ypos += 40.0f SYNC;
-            Player[i].yposold += 40.0f SYNC;
-            Player[i].JumpStart += 40.0f SYNC;
+            Player[i].ypos += Timer.sync(40.0f);
+            Player[i].yposold += Timer.sync(40.0f);
+            Player[i].JumpStart += Timer.sync(40.0f);
         }
 
     PartikelClass *pTemp = PartikelSystem.pStart;  // Zeiger auf den ersten Partikel
     while (pTemp != nullptr)                          // Ende der Liste erreicht ?
     {
         if (pTemp->PartikelArt != FUNKE && pTemp->PartikelArt != BULLET && pTemp->PartikelArt != SMOKE) {
-            pTemp->yPos += 40.0f SYNC;  // Nach unten bewegen
-            pTemp->yPosOld += 40.0f SYNC;
+            pTemp->yPos += Timer.sync(40.0f);  // Nach unten bewegen
+            pTemp->yPosOld += Timer.sync(40.0f);
         }
         pTemp = pTemp->pNext;  // Zeiger auf das nächste Element
     }
@@ -538,8 +538,8 @@ void GegnerFahrstuhlBoss::DoKI() {
     while (pTemp2 != nullptr)                         // Ende der Liste erreicht ?
     {
         if (pTemp2->ShotArt != STELZLASER) {
-            pTemp2->yPos += 40.0f SYNC;  // Nach unten bewegen
-            pTemp2->yPosOld += 40.0f SYNC;
+            pTemp2->yPos += Timer.sync(40.0f);  // Nach unten bewegen
+            pTemp2->yPosOld += Timer.sync(40.0f);
         }
         pTemp2 = pTemp2->pNext;  // Zeiger auf das nächste Element
     }

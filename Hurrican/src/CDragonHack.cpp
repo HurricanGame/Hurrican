@@ -42,7 +42,7 @@ CDragonHack::~CDragonHack() {}
 // --------------------------------------------------------------------------------------
 
 void CDragonHack::Run() {
-    m_AnimCount += 3.0f SYNC;
+    m_AnimCount += Timer.sync(3.0f);
 
     if (m_AnimCount >= 4.0f)
         m_AnimCount = 0.0f;
@@ -51,7 +51,7 @@ void CDragonHack::Run() {
         // nicht zu sehen
         case DragonState::WAIT: {
             if (m_AppearCount > 0.0f)
-                m_AppearCount -= 1.0f SYNC;
+                m_AppearCount -= Timer.sync(1.0f);
             else {
                 m_AppearCount = 20.0f;
                 m_State = DragonState::FLY;
@@ -81,8 +81,8 @@ void CDragonHack::Run() {
             m_GFX.RenderSprite(m_xPos - TileEngine.XOffset,
                                m_yPos - TileEngine.YOffset, m_AnimCount, 0xDDFFFFFF, mirrored);
 
-            m_xPos += m_xSpeed SYNC;
-            m_yPos += m_ySpeed SYNC;
+            m_xPos += Timer.sync(m_xSpeed);
+            m_yPos += Timer.sync(m_ySpeed);
 
             // Ausserhalb des sichtbaren Bereichs? Dann verschwinden lassen
             if (m_xPos + 260.0f < TileEngine.XOffset || m_xPos - 260.0f > TileEngine.XOffset + 640.0f ||

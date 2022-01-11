@@ -99,7 +99,7 @@ void GegnerRiesenQualle::DoKI() {
     }  // switch
 
     // Testen, ob der Spieler die Qualle berührt hat
-    TestDamagePlayers(5.0f SYNC);
+    TestDamagePlayers(Timer.sync(5.0f));
 }
 
 // --------------------------------------------------------------------------------------

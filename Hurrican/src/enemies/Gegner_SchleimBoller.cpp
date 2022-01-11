@@ -136,7 +136,7 @@ void GegnerSchleimBoller::DoKI() {
     }
 
     // Testen, ob der Spieler den SchleimBoller berührt hat
-    TestDamagePlayers(2.0f SYNC);
+    TestDamagePlayers(Timer.sync(2.0f));
     Wegschieben(GegnerRect[GegnerArt], 2.0f);
 }
 

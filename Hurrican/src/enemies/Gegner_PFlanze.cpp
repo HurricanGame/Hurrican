@@ -82,7 +82,7 @@ void GegnerPflanze::DoKI() {
 #endif
     // Testen, ob der Spieler die Pflanze berührt hat
     //
-    TestDamagePlayers(1.5f SYNC);
+    TestDamagePlayers(Timer.sync(1.5f));
 }
 
 // --------------------------------------------------------------------------------------

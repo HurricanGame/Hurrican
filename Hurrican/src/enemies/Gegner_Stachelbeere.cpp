@@ -137,7 +137,7 @@ void GegnerStachelbeere::DoKI() {
 
         case GEGNER::SCHIESSEN:  // Kugel ballert
         {
-            RollCount -= 1.0f SYNC;
+            RollCount -= Timer.sync(1.0f);
 
             if (RollCount < 0.0f) {
                 int off = 25;
@@ -179,12 +179,12 @@ void GegnerStachelbeere::DoKI() {
 
             // abbremsen
             if (xSpeed > 0.0f) {
-                xSpeed -= 1.0f SYNC;
+                xSpeed -= Timer.sync(1.0f);
 
                 if (xSpeed < 0.0f)
                     stop = true;
             } else if (xSpeed < 0.0f) {
-                xSpeed += 1.0f SYNC;
+                xSpeed += Timer.sync(1.0f);
 
                 if (xSpeed > 0.0f)
                     stop = true;
@@ -206,7 +206,7 @@ void GegnerStachelbeere::DoKI() {
         case GEGNER::LAUFEN:  // Kugel hüpft im Gang rum
         {
             if (RollCount > 0.0f)
-                RollCount -= 1.0f SYNC;
+                RollCount -= Timer.sync(1.0f);
 
             SimpleAnimation();
 

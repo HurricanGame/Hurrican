@@ -97,19 +97,19 @@ void GegnerPiranha::DoKI() {
     if (pAim->InLiquid == true && Value1 == 99 && (PlayerAbstand() <= 150 || Value2 == 1)) {
         if (pAim->ypos + 4 + Value2 < yPos &&  // Spieler oberhalb oder
             !(blocko & BLOCKWERT_WAND) && !(blocko & BLOCKWERT_GEGNERWAND) && blocko & BLOCKWERT_WASSER)
-            yPos -= 4.0f SYNC;
+            yPos -= Timer.sync(4.0f);
 
         if (pAim->ypos + 4 + Value2 > yPos &&  // unterhalb des Piranhas
             !(TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_WAND) &&
             !(TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_GEGNERWAND))
-            yPos += 4.0f SYNC;  // Dann auf ihn zu schwimmen
+            yPos += Timer.sync(4.0f);  // Dann auf ihn zu schwimmen
     }
 
     // Je nach Handlung richtig verhalten
     //
     switch (Handlung) {
         case GEGNER::SPECIAL: {
-            AnimCount -= 0.1f SYNC;
+            AnimCount -= Timer.sync(0.1f);
 
             xSpeed = xsave * AnimCount;
             ySpeed = ysave * AnimCount;
@@ -179,7 +179,7 @@ void GegnerPiranha::DoKI() {
     }  // switch
 
     // Testen, ob der Spieler den Piranha berührt hat
-    TestDamagePlayers(1.0f SYNC);
+    TestDamagePlayers(Timer.sync(1.0f));
 }
 
 // --------------------------------------------------------------------------------------

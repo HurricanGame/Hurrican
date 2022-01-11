@@ -210,7 +210,7 @@ void GegnerBratklops::DoDraw() {
 
                 for (int j = 0; j < NUMPLAYERS; j++)
                     if (SpriteCollision(Player[j].xpos, Player[j].ypos, Player[j].CollideRect, xs, ys, Rect) == true) {
-                        Player[j].DamagePlayer(10.0f SYNC);
+                        Player[j].DamagePlayer(Timer.sync(10.0f));
                     }
 
                 // Und nächstes Rechteck
@@ -253,7 +253,7 @@ void GegnerBratklops::DoKI() {
     static float c = 480.0f;
     static float d = 40.0f;
 
-    c += d SYNC;
+    c += Timer.sync(d);
     if ((d > 0.0f && c > 480.0f)||
         (d < 0.0f && c < 0.0f))
         d *= -1.0f;
@@ -293,7 +293,7 @@ void GegnerBratklops::DoKI() {
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
     if (DamageTaken > 0.0f)
-        DamageTaken -= 50 SYNC;  // Rotwerden langsam ausfaden lassen
+        DamageTaken -= Timer.sync(50.0f);  // Rotwerden langsam ausfaden lassen
     else
         DamageTaken = 0.0f;  // oder ganz anhalten
 
@@ -331,7 +331,7 @@ void GegnerBratklops::DoKI() {
             Energy = 8000;
             DamageTaken = 0.0f;
 
-            xPos += 4.0f SYNC;
+            xPos += Timer.sync(4.0f);
 
             if (xPos > Value1) {
                 xPos = static_cast<float>(Value1);
@@ -344,7 +344,7 @@ void GegnerBratklops::DoKI() {
 
             // Auf nächste Aktion warten
             //
-            ActionDelay -= 1.0f SYNC;
+            ActionDelay -= Timer.sync(1.0f);
             if (ActionDelay <= 0.0f) {
                 int j;
 
@@ -406,7 +406,7 @@ void GegnerBratklops::DoKI() {
         // Gegner ballert grüne Rotzbollen
         //
         case GEGNER::BOMBARDIEREN: {
-            ActionDelay -= 1.0f SYNC;
+            ActionDelay -= Timer.sync(1.0f);
 
             if (ActionDelay <= 0.0f) {
                 ActionDelay = 8.0f;
@@ -421,13 +421,13 @@ void GegnerBratklops::DoKI() {
         // Laser schiessen, der am Boden entlang wandert (von links nach rechts)
         //
         case GEGNER::SPECIAL: {
-            FlareDelay += (10000.0f - Energy) / 1000.0f SYNC;
+            FlareDelay += Timer.sync((10000.0f - Energy) / 1000.0f);
         } break;
 
         // Laser schiessen, der am Boden entlang wandert (von rechts nach links)
         //
         case GEGNER::SPECIAL3: {
-            FlareDelay -= (10000.0f - Energy) / 750.0f SYNC;
+            FlareDelay -= Timer.sync((10000.0f - Energy) / 750.0f);
             if (FlareDelay < 210.0f) {
                 FlareDelay = 0.0f;
                 Handlung = GEGNER::STEHEN;
@@ -438,7 +438,7 @@ void GegnerBratklops::DoKI() {
         // Laser aufladen und dann drei Fett Boller schiessen
         //
         case GEGNER::SPECIAL2: {
-            FlareDelay += (10000.0f - Energy) / 1000.0f SYNC;
+            FlareDelay += Timer.sync((10000.0f - Energy) / 1000.0f);
             if (FlareDelay > 255.0f) {
                 FlareDelay = 0.0f;
                 Handlung = GEGNER::STEHEN;
@@ -474,7 +474,7 @@ void GegnerBratklops::DoKI() {
             if (random(8) == 0)
                 SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
 
-            xPos -= 3.0f SYNC;
+            xPos -= Timer.sync(3.0f);
 
             // Fertig explodiert ? Dann wird der Spacko ganz zerlegt
             //
@@ -494,7 +494,7 @@ void GegnerBratklops::DoKI() {
 
             // Made kotzen
             //
-            ShotDelay -= 1.0f SYNC;
+            ShotDelay -= Timer.sync(1.0f);
             if (ShotDelay <= 0.0f) {
                 if (Skill == SKILL_EASY)
                     ShotDelay = 0.40f;
@@ -523,14 +523,14 @@ void GegnerBratklops::DoKI() {
     // rect.bottom = 340;
     // rect.right  = 60;
 
-    TestDamagePlayers(4.0f SYNC);
+    TestDamagePlayers(Timer.sync(4.0f));
 
     // rect.top    = 100;
     // rect.left   = 0;
     // rect.bottom = 300;
     // rect.right  = 120;
 
-    TestDamagePlayers(4.0f SYNC);
+    TestDamagePlayers(Timer.sync(4.0f));
 }
 
 // --------------------------------------------------------------------------------------

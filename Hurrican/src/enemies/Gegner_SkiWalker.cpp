@@ -92,7 +92,7 @@ void GegnerSkiWalker::DoKI() {
             // Bei bestimmten Mindestabstand schiessen lassen
             if (PlayerAbstand() <= 220 && ((BlickRichtung == LINKS && pAim->xpos + 45 <= xPos) ||
                                            (BlickRichtung == RECHTS && pAim->xpos - 45 >= xPos))) {
-                ShotDelay -= 1.0f SYNC;
+                ShotDelay -= Timer.sync(1.0f);
 
                 if (ShotDelay <= 0.0f) {
                     ShotDelay = static_cast<float>(10 + random(5));
@@ -150,7 +150,7 @@ void GegnerSkiWalker::DoKI() {
 
     // Testen, ob der Spieler den Walker berührt hat
     if (Handlung != GEGNER::WATSCHELN && Handlung != GEGNER::SPRINGEN)
-        TestDamagePlayers(4.0f SYNC, false);
+        TestDamagePlayers(Timer.sync(4.0f), false);
 }
 
 // --------------------------------------------------------------------------------------

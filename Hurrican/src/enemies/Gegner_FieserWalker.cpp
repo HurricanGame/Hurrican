@@ -52,7 +52,7 @@ void GegnerFieserWalker::DoKI() {
             }
 
             if (ShotDelay > 0.0f)
-                ShotDelay -= 1.0f SYNC;
+                ShotDelay -= Timer.sync(1.0f);
 
             TurnonShot();
 
@@ -60,7 +60,7 @@ void GegnerFieserWalker::DoKI() {
 
         case GEGNER::STEHEN: {
             if (ShotDelay > 0.0f)
-                ShotDelay -= 1.0f SYNC;
+                ShotDelay -= Timer.sync(1.0f);
 
             if (ShotDelay < 12.0f) {
                 Handlung = GEGNER::LAUFEN;
@@ -95,7 +95,7 @@ void GegnerFieserWalker::DoKI() {
     TurnonWall();
 
     // Spieler berührt den Gegner?
-    TestDamagePlayers(4.0f SYNC);
+    TestDamagePlayers(Timer.sync(4.0f));
 }
 
 // --------------------------------------------------------------------------------------

@@ -123,7 +123,7 @@ void GegnerSpikelift::DoKI() {
     GegnerRect[GegnerArt].top = 10;
 
     if (pPlayer->ypos < yPos)
-        TestDamagePlayers(20.0f SYNC);
+        TestDamagePlayers(Timer.sync(20.0f));
 
     // Wieder normale Collision Box
     GegnerRect[GegnerArt].top = 40;

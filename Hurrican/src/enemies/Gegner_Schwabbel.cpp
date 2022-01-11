@@ -63,7 +63,7 @@ void GegnerSchwabbel::DoKI() {
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
         case GEGNER::SCHIESSEN: {
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             if (AnimCount < 0.0f) {
                 AnimCount += 1.0f;
@@ -72,7 +72,7 @@ void GegnerSchwabbel::DoKI() {
                                   yPos - 10.0f + static_cast<float>(random(4)), MADE, 1, 0, false);
             }
 
-            shotdelay -= 1.0f SYNC;
+            shotdelay -= Timer.sync(1.0f);
 
             if (shotdelay < 0.0f) {
                 shotdelay = static_cast<float>(random(4) + 6);
@@ -83,7 +83,7 @@ void GegnerSchwabbel::DoKI() {
 
     // Spieler berührt ?
     //
-    TestDamagePlayers(2.0f SYNC);
+    TestDamagePlayers(Timer.sync(2.0f));
 }
 
 // --------------------------------------------------------------------------------------

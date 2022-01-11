@@ -35,7 +35,7 @@ void GegnerFeuerspucker::DoKI() {
     switch (Handlung) {
         // Pausieren
         case GEGNER::STEHEN: {
-            AnimCount += 1.0f SYNC;
+            AnimCount += Timer.sync(1.0f);
 
             // Wieder losballern ?
             if (AnimCount >= 20.0f) {
@@ -50,7 +50,7 @@ void GegnerFeuerspucker::DoKI() {
 
         // Feuer spucken
         case GEGNER::SCHIESSEN: {
-            AnimCount += 1.0f SYNC;
+            AnimCount += Timer.sync(1.0f);
 
             // Pausieren ?
             if (AnimCount >= Value2) {
@@ -60,7 +60,7 @@ void GegnerFeuerspucker::DoKI() {
 
             if (PlayerAbstand() < 800) {
                 // Flamme erzeugen (je nach Richtung)
-                ShotDelay -= 1.0f SYNC;
+                ShotDelay -= Timer.sync(1.0f);
 
                 if (ShotDelay <= 0.0f) {
                     ShotDelay = 0.3f;

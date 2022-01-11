@@ -142,7 +142,7 @@ void IntroClass::DoIntro() {
                 SoundManager.PlaySong(MUSIC::INTRO, false);
 
             // und einfaden
-            Counter += 10.0f SYNC;
+            Counter += Timer.sync(10.0f);
 
             if (Counter > 255.0f) {
                 Counter = 0.0f;
@@ -155,7 +155,7 @@ void IntroClass::DoIntro() {
 
         case IntroStateEnum::FADEOUT: {
             // und ausfaden
-            Counter -= 5.0f SYNC;
+            Counter -= Timer.sync(5.0f);
 
             if (Counter < 0.0f) {
                 Counter = 0.0f;
@@ -175,7 +175,7 @@ void IntroClass::DoIntro() {
             {
                 int scale_factor = pDefaultFont->GetScaleFactor();
 
-                Counter += 25.5f SYNC;
+                Counter += Timer.sync(25.5f);
                 if (Counter > 1300.0f) {
                     HorizCounter = 0.0f;
                     Counter = 0.0f;
@@ -191,7 +191,7 @@ void IntroClass::DoIntro() {
 
                 // DKS - Horizontal text scrolling now depends on an identical counter that doesn't get reset on skipped
                 // lines
-                HorizCounter += 25.5f SYNC;
+                HorizCounter += Timer.sync(25.5f);
                 if (HorizCounter > 1300.0f) {
                     HorizCounter = 0.0f;
                 }

@@ -2111,10 +2111,10 @@ void PartikelClass::Run() {
 
     // Bewegen (nur wenn sichtbar)
     if (alpha > 0) {
-        xSpeed += xAcc SYNC;
-        ySpeed += yAcc SYNC;
-        xPos += xSpeed SYNC;
-        yPos += ySpeed SYNC;
+        xSpeed += Timer.sync(xAcc);
+        ySpeed += Timer.sync(yAcc);
+        xPos += Timer.sync(xSpeed);
+        yPos += Timer.sync(ySpeed);
     }
 
     uint32_t bo, bu, bl, br;
@@ -2176,9 +2176,9 @@ void PartikelClass::Run() {
     if (PartikelArt < ADDITIV_GRENZE)
         switch (PartikelArt) {
             case GLASSPLITTER: {
-                Rot += xSpeed * 10.0f SYNC;
+                Rot += Timer.sync(xSpeed * 10.0f);
 
-                Lebensdauer -= 20.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(20.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
@@ -2216,9 +2216,9 @@ void PartikelClass::Run() {
                 if ((xSpeed > 0.0f && br & BLOCKWERT_WAND) || (xSpeed < 0.0f && bl & BLOCKWERT_WAND))
                     xSpeed *= -1.0f;
 
-                Rot += xSpeed * 10.0f SYNC;
+                Rot += Timer.sync(xSpeed * 10.0f);
 
-                Lebensdauer -= 5.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(5.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
             } break;
@@ -2232,19 +2232,19 @@ void PartikelClass::Run() {
             case EXPLOSION_BIG:      // Grosse Explosion
             case EXPLOSION_GIANT:    // Grosse Explosion
             {
-                Lebensdauer -= 5.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(5.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
                 if (AnimPhase > AnimEnde)  // Animation zu Ende	?
                     Lebensdauer = 0;       // Dann Explosion verschwinden lassen
 
                 if (Rotate)
-                    Rot += RotDir * AnimSpeed * 10.0f SYNC;
+                    Rot += Timer.sync(RotDir * AnimSpeed * 10.0f);
 
             } break;
 
             case BLUE_EXPLOSION:  // Kleine blaue Explosion
             {
-                Lebensdauer -= 12.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(12.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
                 if (AnimPhase > AnimEnde)  // Animation zu Ende	?
                     Lebensdauer = 0;       // Dann Explosion verschwinden lassen
@@ -2253,7 +2253,7 @@ void PartikelClass::Run() {
 
             case SPLITTER:  // Kleiner animierter Splitter
             {
-                Lebensdauer -= 7.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(7.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
                 if (AnimPhase > AnimEnde)  // Animation zu Ende	?
                     AnimPhase = 0;         // Dann von vorne beginnen lassen
@@ -2266,21 +2266,21 @@ void PartikelClass::Run() {
             case HURRITEILE:     // Teile des explodierten Hurris
             case HURRITEILE_P2:  // DKS - Added blue-colored hurrican piece particles for player 2
             {
-                Lebensdauer -= 5.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(5.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
                 // Partikel drehen
-                Rot += static_cast<float>(AnimPhase + 1) * 8.0f SYNC;
+                Rot += Timer.sync(static_cast<float>(AnimPhase + 1) * 8.0f);
 
             } break;
 
             case LAVAKRABBE_KOPF:  // Teile der explodierten Lavakrabbe
             {
-                Lebensdauer -= 10.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(10.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
                 // Partikel drehen
-                Rot += 32.0f SYNC;
+                Rot += Timer.sync(32.0f);
 
             } break;
 
@@ -2288,11 +2288,11 @@ void PartikelClass::Run() {
             case KETTENTEILE2:
             case KETTENTEILE3:
             case KETTENTEILE4: {
-                Lebensdauer -= 10.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(10.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
                 // Partikel drehen
-                Rot += 40.0f SYNC;
+                Rot += Timer.sync(40.0f);
 
             } break;
 
@@ -2348,7 +2348,7 @@ void PartikelClass::Run() {
                     ySpeed = -2.0f;
 
                 if (ySpeed == 0.0f)  // an der Oberfläche langsam ausfaden lassen
-                    Lebensdauer -= 7.0f SYNC;
+                    Lebensdauer -= Timer.sync(7.0f);
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
                 if ((xAcc > 0.0f && xSpeed > 0.0f) || (xAcc < 0.0f && xSpeed < 0.0f)) {
@@ -2375,7 +2375,7 @@ void PartikelClass::Run() {
             {
                 bo = TileEngine.BlockOben(xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]);
 
-                Lebensdauer -= 5.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(5.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
                 // Nicht mehr im Wasser ? Dann gleich verschwinden lassen
@@ -2386,12 +2386,12 @@ void PartikelClass::Run() {
                 if (AnimPhase > AnimEnde)
                     AnimPhase = 0;
 
-                Rot += 5.0f SYNC;
+                Rot += Timer.sync(5.0f);
             } break;
 
             case MADEBLUT:  // Blut einer kaputten Made
             {
-                Lebensdauer -= 15.0f SYNC;  // ausfaden lassen
+                Lebensdauer -= Timer.sync(15.0f);  // ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
                 // Animation von vorne beginnen
@@ -2444,7 +2444,7 @@ void PartikelClass::Run() {
                     xSpeed = 0.0f;
                     xAcc = 0.0f;
 
-                    Lebensdauer -= 10.0f SYNC;
+                    Lebensdauer -= Timer.sync(10.0f);
                 }
 
                 if (xSpeed > 0.0f)
@@ -2452,24 +2452,24 @@ void PartikelClass::Run() {
                 else
                     xAcc = 0.5f;
 
-                Rot += RotDir * ySpeed * 8.0f SYNC;
+                Rot += Timer.sync(RotDir * ySpeed * 8.0f);
 
-                Lebensdauer -= 5.0f SYNC;
+                Lebensdauer -= Timer.sync(5.0f);
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
             } break;
 
             case BLATT2: {
-                Rot += -xSpeed / 10.0f * RotDir * ySpeed * 8.0f SYNC;
+                Rot += Timer.sync(-xSpeed / 10.0f * RotDir * ySpeed * 8.0f);
             } break;
 
             case NESTLUFT: {
-                Lebensdauer -= 5.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(5.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
                 // drehen
                 if (yAcc != 0.0f)
-                    Rot += RotDir SYNC;
+                    Rot += Timer.sync(RotDir);
 
                 while (Rot > 360.0f)
                     Rot -= 360.0f;
@@ -2492,7 +2492,7 @@ void PartikelClass::Run() {
             {
                 // Nebel faden
                 //
-                AnimCount += 4.0f SYNC;
+                AnimCount += Timer.sync(4.0f);
 
                 // Fadet ein ?
                 //
@@ -2514,18 +2514,18 @@ void PartikelClass::Run() {
                 if (AnimPhase > AnimEnde)  // Animation von zu Ende	?
                     AnimPhase = 0;         // Dann wieder von vorne beginnen
 
-                Lebensdauer -= 6.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(6.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
             case WASSER_SPRITZER: {
-                Lebensdauer -= AnimSpeed SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(AnimSpeed);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
                 OwnDraw = true;
             } break;
 
             case WASSER_SPRITZER2: {
-                Lebensdauer -= AnimSpeed SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(AnimSpeed);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
                 OwnDraw = true;
             } break;
@@ -2535,7 +2535,7 @@ void PartikelClass::Run() {
                 if (AnimPhase > AnimEnde)  // Animation von zu Ende	?
                     AnimPhase = 0;         // Dann wieder von vorne beginnen
 
-                Lebensdauer -= 6.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(6.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
@@ -2555,7 +2555,7 @@ void PartikelClass::Run() {
             case EVILSMOKE:
             case EVILSMOKE2:
             case EVILROUNDSMOKE: {
-                Lebensdauer -= 25.0f SYNC;  // schnell ausfaden lassen
+                Lebensdauer -= Timer.sync(25.0f);  // schnell ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
@@ -2564,11 +2564,11 @@ void PartikelClass::Run() {
                 if (AnimPhase > AnimEnde)  // Animation von zu Ende	?
                     AnimPhase = 0;
 
-                Rot += xSpeed * 2.0f SYNC;
+                Rot += Timer.sync(xSpeed * 2.0f);
             } break;
 
             case STELZHEAD: {
-                AnimCount -= 1.0f SYNC;
+                AnimCount -= Timer.sync(1.0f);
 
                 if (AnimCount < 0.0f) {
                     AnimCount = 0.5f;
@@ -2578,19 +2578,19 @@ void PartikelClass::Run() {
 
             case SMOKEBIG:  // Riesen Rauch
             {
-                Lebensdauer -= 4.5f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(4.5f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
-                Rot += RotDir * ySpeed * 3.0f SYNC;
+                Rot += Timer.sync(RotDir * ySpeed * 3.0f);
 
             } break;
 
             case SMOKEBIG2:  // Riesen Rauch
             {
-                Lebensdauer -= 4.5f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(4.5f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
-                Rot += RotDir * ySpeed SYNC;
+                Rot += Timer.sync(RotDir * ySpeed);
 
                 if (ySpeed < -5.0f) {
                     yAcc = 0.0f;
@@ -2598,36 +2598,36 @@ void PartikelClass::Run() {
                 }
 
                 if (xSpeed > 0.0f)
-                    xSpeed -= 3.0f SYNC;
+                    xSpeed -= Timer.sync(3.0f);
 
                 if (xSpeed < 0.0f)
-                    xSpeed += 3.0f SYNC;
+                    xSpeed += Timer.sync(3.0f);
 
             } break;
 
             case SMOKEBIG_OUTTRO:  // Riesen Rauch
             {
-                Lebensdauer -= 1.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(1.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
-                Rot += RotDir * ySpeed * 1.0f SYNC;
+                Rot += Timer.sync(RotDir * ySpeed * 1.0f);
 
             } break;
 
             case SMOKE:  // Rauchwolke
             {
-                Lebensdauer -= 30.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(30.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
-                Rot += RotDir * ySpeed * 5.0f SYNC;
+                Rot += Timer.sync(RotDir * ySpeed * 5.0f);
             } break;
 
             case SMOKE2:  // Rauchwolke bei LavaBall zb
             case SMOKE3: {
-                Lebensdauer -= 4.5f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(4.5f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
-                Rot += RotDir * ySpeed * 3.0f SYNC;
+                Rot += Timer.sync(RotDir * ySpeed * 3.0f);
 
                 // Rauch im Wasser ? Dann zur Blubberblase werden lassen
                 // DKS - Fixed out-of-bounds access to Tiles[][] array here when particle rises to top of screen
@@ -2671,16 +2671,16 @@ void PartikelClass::Run() {
 
             case HALSWIRBEL:
             case KAPUTTETURBINE: {
-                Lebensdauer -= 5.0f SYNC;  // schnell ausfaden lassen
+                Lebensdauer -= Timer.sync(5.0f);  // schnell ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
-                AnimCount += 0.8f SYNC;
+                AnimCount += Timer.sync(0.8f);
 
                 while (AnimCount > TWO_PI)
                     AnimCount -= TWO_PI;
             } break;
 
             case DUST: {
-                Lebensdauer -= 1.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(1.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
                 // Richtung umdrehen ?
@@ -2693,7 +2693,7 @@ void PartikelClass::Run() {
 
             case SCHROTT1:
             case SCHROTT2: {
-                Lebensdauer -= 5.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(5.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
                 // DKS - we weren't getting our full animation
@@ -2725,7 +2725,7 @@ void PartikelClass::Run() {
 
                 // Ausfaden am Boden
                 if (ySpeed == 0.0f) {
-                    Lebensdauer -= static_cast<float>(10.0 SYNC);
+                    Lebensdauer -= Timer.sync(10.0f);
                     tmp_alpha = static_cast<int>(Lebensdauer);
                 }
 
@@ -2755,27 +2755,27 @@ void PartikelClass::Run() {
                 // Rauch des Blitzbeams, wird langsam größer
 
             case BEAMSMOKE: {
-                Lebensdauer -= 15.0f SYNC;  // langsam
+                Lebensdauer -= Timer.sync(15.0f);  // langsam
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
-                AnimCount += 3.0f SYNC;
+                AnimCount += Timer.sync(3.0f);
 
             } break;
 
             case BEAMSMOKE3:
             case BEAMSMOKE4: {
-                Rot += RotDir SYNC;
-                Lebensdauer -= 10.0f SYNC;  // langsam
+                Rot += Timer.sync(RotDir);
+                Lebensdauer -= Timer.sync(10.0f);  // langsam
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
             case BEAMSMOKE5: {
-                Lebensdauer -= AnimPhase SYNC;  // langsam
+                Lebensdauer -= Timer.sync(AnimPhase);  // langsam
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
             case BEAMSMOKE2: {
-                Lebensdauer -= 20.0f SYNC;  // langsam
+                Lebensdauer -= Timer.sync(20.0f);  // langsam
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
                 if (m_pParent != nullptr) {
@@ -2797,57 +2797,57 @@ void PartikelClass::Run() {
             } break;
 
             case SNOWFLUSH: {
-                Lebensdauer -= 8.0f SYNC;
+                Lebensdauer -= Timer.sync(8.0f);
 
                 // Im Wasser gelandet ?
                 if (TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) & BLOCKWERT_LIQUID)
-                    Lebensdauer -= 20.0f SYNC;
+                    Lebensdauer -= Timer.sync(20.0f);
 
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
-                Rot += RotDir * 10.0f SYNC;
+                Rot += Timer.sync(RotDir * 10.0f);
             } break;
 
             case WATERFLUSH: {
-                Lebensdauer -= 1.5f SYNC;
+                Lebensdauer -= Timer.sync(1.5f);
 
                 // Im Wasser gelandet ?
                 if (TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) & BLOCKWERT_LIQUID ||
                     TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) &
                         BLOCKWERT_PLATTFORM ||
                     TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, PartikelRect[PartikelArt]) & BLOCKWERT_WAND)
-                    Lebensdauer -= 4.0f SYNC;
+                    Lebensdauer -= Timer.sync(4.0f);
 
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
-                Rot += RotDir * 10.0f SYNC;
+                Rot += Timer.sync(RotDir * 10.0f);
             } break;
 
             case UFOLASERFLARE: {
-                Lebensdauer -= 20.0f SYNC;
+                Lebensdauer -= Timer.sync(20.0f);
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
             case FUNKE:  // RoterFunken
             {
-                Lebensdauer -= 14.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(14.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
             case FUNKE2:  // Grüner Funken
             {
-                Lebensdauer -= 16.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(16.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
             case LONGFUNKE: {
-                Lebensdauer -= 12.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(12.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
                 // steckt in der Wand?
                 //
                 if (yPosOld == yPos)
-                    Lebensdauer -= 100.0f SYNC;
+                    Lebensdauer -= Timer.sync(100.0f);
 
                 if (Lebensdauer < 0.0f)
                     Lebensdauer = 0.0f;
@@ -2860,19 +2860,19 @@ void PartikelClass::Run() {
                     Lebensdauer = 0.0f;
 
                 // langsam ausfaden lassen
-                Lebensdauer -= 18.0f SYNC;
+                Lebensdauer -= Timer.sync(18.0f);
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
             case LASERFUNKE:  // Laser-Funken
             {
-                Lebensdauer -= 16.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(16.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
             case LASERFUNKE2:  // Laser-Funken
             {
-                Lebensdauer -= 16.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(16.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
                 if (AnimPhase > AnimEnde)
                     AnimPhase = 0;
@@ -2880,36 +2880,36 @@ void PartikelClass::Run() {
 
             case PHARAOSMOKE:  // Rauch des Pharao-Schusses
             {
-                Lebensdauer -= 20.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(20.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
             case ROCKETSMOKE:      // Rauch einer Rakete
             case ROCKETSMOKEBLUE:  // in blau
             {
-                Lebensdauer -= 50.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(50.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
             case ROCKETSMOKEGREEN:  // in grün
             {
-                Lebensdauer -= 20.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(20.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
             case FLUGSACKSMOKE: {
-                Lebensdauer -= 30.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(30.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
             case EVILFUNKE: {
-                Lebensdauer -= 30.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(30.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
             case WASSERTROPFEN:  // Verschindet an der Wasseroberfläche
             {
-                Lebensdauer -= 16.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(16.0f);  // langsam ausfaden lassen
 
                 if (Lebensdauer > 255.0f)
                     tmp_alpha = 0;
@@ -2942,14 +2942,14 @@ void PartikelClass::Run() {
 
             case LASERFLAME:  // Wird immer durchsichtiger
             case STELZFLARE: {
-                Lebensdauer -= static_cast<float>(50.0 SYNC);
+                Lebensdauer -= Timer.sync(50.0f);
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
             } break;
 
             case SHIELD:  // Verschwindet nach Ablauf der Animation
             {
-                Lebensdauer -= 20.0f SYNC;
+                Lebensdauer -= Timer.sync(20.0f);
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
                 // an Spieler anpassen
@@ -2962,24 +2962,24 @@ void PartikelClass::Run() {
             } break;
 
             case TEXTSECRET: {
-                Lebensdauer -= static_cast<float>(10.0 SYNC);
+                Lebensdauer -= Timer.sync(10.0f);
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
             case KRINGELSECRET: {
-                Lebensdauer -= static_cast<float>(10.0 SYNC + AnimPhase);
+                Lebensdauer -= Timer.sync(10.0f) + static_cast<float>(AnimPhase);
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
-                xSpeed -= (xSpeed * 0.1f) SYNC;
-                ySpeed -= (ySpeed * 0.1f) SYNC;
+                xSpeed -= Timer.sync(xSpeed * 0.1f);
+                ySpeed -= Timer.sync(ySpeed * 0.1f);
             } break;
 
             case KRINGEL: {
-                Lebensdauer -= static_cast<float>(20.0 SYNC);
+                Lebensdauer -= Timer.sync(20.0f);
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
-                xPos += m_pParent->xspeed SYNC;
-                yPos += m_pParent->yspeed SYNC;
+                xPos += Timer.sync(m_pParent->xspeed);
+                yPos += Timer.sync(m_pParent->yspeed);
 
                 // Richtung neu berechnen
                 //
@@ -3001,7 +3001,7 @@ void PartikelClass::Run() {
 
             case TURBINESMOKE:  // Partikel, die in die Turbine des Metalhead Bosses gesaugt werden
             {
-                Lebensdauer -= static_cast<float>(10.0 SYNC);
+                Lebensdauer -= Timer.sync(10.0f);
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
                 // Richtung neu berechnen
@@ -3024,7 +3024,7 @@ void PartikelClass::Run() {
 
             case MINIFLARE:  // Flare beim Lava Ball
             {
-                Lebensdauer -= static_cast<float>(5.0 SYNC);
+                Lebensdauer -= Timer.sync(5.0f);
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
                 if (xSpeed > 2.0f)
@@ -3039,23 +3039,23 @@ void PartikelClass::Run() {
 
             case GRENADEFLARE:  // Flare beim Granaten Treffer
             {
-                Lebensdauer -= static_cast<float>(20.0 SYNC);
+                Lebensdauer -= Timer.sync(20.0f);
                 tmp_alpha = static_cast<int>(Lebensdauer);
-                Rot += RotDir * 20.0f SYNC;
+                Rot += Timer.sync(RotDir * 20.0f);
 
             } break;
 
             case EXPLOSIONFLARE:   // Flare bei Explosion
             case EXPLOSIONFLARE2:  // Flare bei Explosion
             {
-                Lebensdauer -= static_cast<float>(50.0 SYNC);
+                Lebensdauer -= Timer.sync(50.0f);
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
             case SCHLEIM:   // kleiner Schleimbollen
             case SCHLEIM2:  // kleiner Alien Schleimbollen
             {
-                Lebensdauer -= 18.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(18.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
                 if (AnimPhase > AnimEnde)
@@ -3064,67 +3064,67 @@ void PartikelClass::Run() {
 
             case SHOCKEXPLOSION:  // Schockwelle bei Spieler Explosion
             {
-                Lebensdauer -= 10.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(10.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
-                AnimCount += 130.0f SYNC;
+                AnimCount += Timer.sync(130.0f);
             } break;
 
             case SHOTFLARE:  // Leuchten bei Schuss-Aufprall
             case SHOTFLARE2: {
-                Lebensdauer -= 100.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(100.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
             case EXTRACOLLECTED: {
-                Lebensdauer -= (100.0f - AnimPhase * 20.0f) SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(100.0f - static_cast<float>(AnimPhase) * 20.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
-                AnimCount += AnimPhase * 40.0f SYNC;
+                AnimCount += Timer.sync(static_cast<float>(AnimPhase) * 40.0f);
             } break;
 
             case DIAMANTCOLLECTED: {
-                Lebensdauer -= 120.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(120.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
-                AnimCount += 40.0f SYNC;
+                AnimCount += Timer.sync(40.0f);
             } break;
 
             case DRACHE_SMOKE: {
-                Lebensdauer -= 25.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(25.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
-                Rot += RotDir * 10.0f SYNC;
+                Rot += RotDir * Timer.sync(10.0f);
             } break;
 
             case FIREBALL_SMOKE: {
-                Lebensdauer -= 150.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(150.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
-                Rot += RotDir * 10.0f SYNC;
+                Rot += RotDir * Timer.sync(10.0f);
             } break;
 
             case LILA: {
-                Lebensdauer -= 30.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(30.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
             case LASERFLARE: {
-                Lebensdauer -= 150.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(150.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
             } break;
 
             case EXPLOSION_TRACE_END: {
-                Lebensdauer -= 4.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(4.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
                 if (AnimPhase > AnimEnde)  // Animation zu Ende	?
                     Lebensdauer = 0;       // Dann Explosion verschwinden lassen
 
-                Rot += RotDir * AnimSpeed * 3.0f SYNC;
+                Rot += Timer.sync(RotDir * AnimSpeed * 3.0f);
 
             } break;
 
             case LAVADUST: {
-                Lebensdauer -= 1.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(1.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
 
                 // Richtung umdrehen ?
@@ -3138,22 +3138,22 @@ void PartikelClass::Run() {
             case EXPLOSION_MEDIUM2_ADD:
             case EXPLOSION_MEDIUM3_ADD:
             case EXPLOSION_REGULAR: {
-                Lebensdauer -= 5.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(5.0f);  // langsam ausfaden lassen
                 tmp_alpha = static_cast<int>(Lebensdauer);
                 // DKS - off-by-one error:
                 // if (AnimPhase >= AnimEnde)		// Animation zu Ende	?
                 if (AnimPhase > AnimEnde)  // Animation zu Ende	?
                     Lebensdauer = 0;       // Dann Explosion verschwinden lassen
 
-                Rot += RotDir * AnimSpeed * 10.0f SYNC;
+                Rot += Timer.sync(RotDir * AnimSpeed * 10.0f);
 
             } break;
 
             case EXPLOSION_TRACE: {
-                Lebensdauer -= 5.0f SYNC;  // langsam ausfaden lassen
+                Lebensdauer -= Timer.sync(5.0f);  // langsam ausfaden lassen
 
                 // Explosion spawnen
-                AnimCount -= 1.0f SYNC;
+                AnimCount -= Timer.sync(1.0f);
                 if (AnimCount < 0.0f) {
                     AnimCount = 0.4f;
                     PartikelSystem.PushPartikel(xPos + 30, yPos + 30, EXPLOSION_REGULAR);
@@ -4559,7 +4559,7 @@ void PartikelsystemClass::DoThunder() {
     if (ThunderAlpha > 0.0f) {
         D3DCOLOR col = D3DCOLOR_RGBA(ThunderColor[0], ThunderColor[1], ThunderColor[2], static_cast<int>(ThunderAlpha));
         RenderRect(0, 0, 640, 480, col);
-        ThunderAlpha -= 40.0f SYNC;
+        ThunderAlpha -= Timer.sync(40.0f);
     }
 }
 

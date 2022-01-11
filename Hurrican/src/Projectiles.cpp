@@ -1872,7 +1872,7 @@ void ProjectileClass::CheckCollision() {
                     ExplodeShot();  // aber explodieren tut er auch =)
                 } else {
                     // War es ein Laser oder ne Powerline oder ähnliches ?
-                    pEnemy->Energy -= BossZiehtWenigerAb * Damage SYNC;  // Dann fliegt er
+                    pEnemy->Energy -= Timer.sync(BossZiehtWenigerAb * Damage);  // Dann fliegt er
 
                     // Hit-Sound
                     // DKS - Added function WaveIsPlaying() to SoundManagerClass:
@@ -2161,7 +2161,7 @@ void ProjectileClass::Render() {
         } else {
             length = 560;
             size = (7.0f) * 30.0f + sin(off) * 10.0f;
-            off += 5.0f SYNC;
+            off += Timer.sync(5.0f);
             col = 0xFFFFFFFF;
 
             ShotRect[SPIDERLASER].left = 0;
@@ -2326,13 +2326,13 @@ void ProjectileClass::Run() {
     bo = bu = bl = br = 0;
 
     if (AnimEnde > 0)            // Soll überhaupt anmiert werden ?
-        AnimCount += 1.0f SYNC;  // Animationscounter weiterzählen
+        AnimCount += Timer.sync(1.0f);  // Animationscounter weiterzählen
 
     // Bewegen
-    xSpeed += xAcc SYNC;
-    ySpeed += yAcc SYNC;
-    xPos += xSpeed SYNC;
-    yPos += ySpeed SYNC;
+    xSpeed += Timer.sync(xAcc);
+    ySpeed += Timer.sync(yAcc);
+    xPos += Timer.sync(xSpeed);
+    yPos += Timer.sync(ySpeed);
 
     // Screen verlassen ?
     if (ShotArt != FLAMME && ShotArt != ROCKETSPIDER && ShotArt != EVILBLITZ && ShotArt != EVILBLITZ2 &&
@@ -2495,7 +2495,7 @@ void ProjectileClass::Run() {
         } break;
 
         case FIREBALL: {
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             if (AnimCount < 0.0f) {
                 AnimCount = 0.1f;
@@ -2509,7 +2509,7 @@ void ProjectileClass::Run() {
         } break;
 
         case FIREBALL_BIG: {
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             if (AnimCount < 0.0f) {
                 AnimCount = 0.1f;
@@ -2525,8 +2525,8 @@ void ProjectileClass::Run() {
         } break;
 
         case FIREBALL_BOMB: {
-            Winkel += 100.0f SYNC;
-            AnimCount -= 1.0f SYNC;
+            Winkel += Timer.sync(100.0f);
+            AnimCount -= Timer.sync(1.0f);
 
             if (AnimCount < 0.0f) {
                 AnimCount = 1.0f;
@@ -2544,11 +2544,11 @@ void ProjectileClass::Run() {
         } break;
 
         case SPIDERLASER: {
-            AnimCount += 2.5f SYNC;
+            AnimCount += Timer.sync(2.5f);
 
             // Partikel fliegen
             if (AnimCount > 45.0f)
-                AnimSpeed -= 1.0f SYNC;
+                AnimSpeed -= Timer.sync(1.0f);
 
             if (AnimSpeed < 0.0f) {
                 AnimSpeed = 0.25f;
@@ -2578,7 +2578,7 @@ void ProjectileClass::Run() {
         } break;
 
         case SPIDERSHOT2: {
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
             if (AnimCount <= 0.0f) {
                 AnimCount = 0.3f;
                 PartikelSystem.PushPartikel(xPos + 12, yPos + 12, LILA);
@@ -2605,7 +2605,7 @@ void ProjectileClass::Run() {
                     yAcc *= -1.0f;
             } else {
                 if (Counter > 0.0f) {
-                    Counter -= 1.0f SYNC;
+                    Counter -= Timer.sync(1.0f);
 
                     if (ySpeed >= 0.0f)
                         ySpeed = 0.0f;
@@ -2644,7 +2644,7 @@ void ProjectileClass::Run() {
         } break;
 
         case ROTZSHOT: {
-            Counter -= 1.0f SYNC;
+            Counter -= Timer.sync(1.0f);
 
             if (Counter <= 0.0f) {
                 Counter = 0.1f;
@@ -2708,7 +2708,7 @@ void ProjectileClass::Run() {
 
         case FEUERFALLE:
         case FEUERFALLE_LAVAMANN: {
-            Winkel += 10.0f SYNC;
+            Winkel += Timer.sync(10.0f);
             if (AnimPhase >= 29) {
                 Damage = 0;
                 ExplodeShot();
@@ -2717,7 +2717,7 @@ void ProjectileClass::Run() {
 
         case GOLEMSAEULE: {
             // Counter runterzählen
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             if (AnimCount <= 0.0f) {
                 AnimCount = 13.0f;
@@ -2730,7 +2730,7 @@ void ProjectileClass::Run() {
         } break;
 
         case SPIDERFIRE: {
-            Winkel += 10.0f SYNC;
+            Winkel += Timer.sync(10.0f);
             if (AnimPhase >= 29) {
                 Damage = 0;
                 ExplodeShot();
@@ -2738,7 +2738,7 @@ void ProjectileClass::Run() {
         } break;
 
         case ELEKTROSCHUSS: {
-            Counter -= 100.0f SYNC;
+            Counter -= Timer.sync(100.0f);
 
             if (Counter < 750.0f) {
                 xAcc = -6.0f;
@@ -2766,7 +2766,7 @@ void ProjectileClass::Run() {
             if (AnimPhase > AnimEnde)
                 AnimPhase = 0;
 
-            Counter -= 70.0f SYNC;
+            Counter -= Timer.sync(70.0f);
 
             if (Counter <= 0.0f)
                 Damage = 0;
@@ -2780,9 +2780,9 @@ void ProjectileClass::Run() {
             }
 
             if (AnimPhase > 10)
-                Counter -= 50.0f SYNC;
+                Counter -= Timer.sync(50.0f);
 
-            Winkel += 10.0f SYNC;
+            Winkel += Timer.sync(10.0f);
             if (AnimPhase >= 29 || Counter <= 0.0f) {
                 Damage = 0;
                 ExplodeShot();
@@ -2846,7 +2846,7 @@ void ProjectileClass::Run() {
             }
 
             // Counter runzerzählen wann die Rakete von oben auf den Spieler runtersaust
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             if (AnimCount <= 0.0f && AnimPhase == 0) {
                 AnimPhase = 4;
@@ -2927,7 +2927,7 @@ void ProjectileClass::Run() {
             ySpeed = std::clamp(ySpeed, -10.0f, 10.0f);
 
             // Blubbern
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
             if (AnimCount < 0) {
                 AnimCount += 0.5f;
 
@@ -2972,7 +2972,7 @@ void ProjectileClass::Run() {
             }
 
             if (ySpeed == 0.0f) {
-                AnimCount -= 40.0f SYNC;
+                AnimCount -= Timer.sync(40.0f);
                 if (AnimCount < 0.0f) {
                     Damage = 0;
                     ExplodeShot();
@@ -2982,7 +2982,7 @@ void ProjectileClass::Run() {
 
         case BLITZBEAM: {
             if (Damage > 0)
-                Counter -= 1.0f SYNC;
+                Counter -= Timer.sync(1.0f);
 
             if (Counter <= 0.0f) {
                 Counter = 0.1f;
@@ -3051,7 +3051,7 @@ void ProjectileClass::Run() {
                 Winkel = 180.0f;
             }
 
-            Counter -= 2.0f SYNC;
+            Counter -= Timer.sync(2.0f);
 
             if (Counter <= 0.0f) {
                 if (!(bu & BLOCKWERT_WAND)) {
@@ -3080,7 +3080,7 @@ void ProjectileClass::Run() {
 
         case ARCSHOT: {
             // Rauch erzeugen
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
             if (AnimCount <= 0.0f) {
                 PartikelSystem.PushPartikel(xPos - 2, yPos - 2, ROCKETSMOKEBLUE);
                 AnimCount = 0.1f;
@@ -3198,7 +3198,7 @@ void ProjectileClass::Run() {
         } break;
 
         case EVILROUND1: {
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             if (AnimCount < 0.0f) {
                 // Rauch erzeugen
@@ -3216,9 +3216,9 @@ void ProjectileClass::Run() {
         } break;
 
         case SMARTBOMB: {
-            AnimCount += 32.0f SYNC;
-            xPos -= 32.0f SYNC;
-            yPos -= 32.0f SYNC;
+            AnimCount += Timer.sync(32.0f);
+            xPos -= Timer.sync(32.0f);
+            yPos -= Timer.sync(32.0f);
             if (AnimCount > 256.0f)
                 AnimCount = 256.0f;
 
@@ -3228,7 +3228,7 @@ void ProjectileClass::Run() {
         case GRENADE: {
             // rauchen lassen
             //
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             while (AnimCount <= 0.0f) {
                 AnimCount += 0.1f;
@@ -3249,9 +3249,9 @@ void ProjectileClass::Run() {
         case SHIELDSPAWNER: {
             // Schild um Spieler kreisen lassen
             if (pParent->Blickrichtung == PlayerClass::LINKS)
-                ySpeed += 0.5f SYNC;
+                ySpeed += Timer.sync(0.5f);
             else
-                ySpeed -= 0.5f SYNC;
+                ySpeed -= Timer.sync(0.5f);
 
             // Grenzen checken
             if (ySpeed > TWO_PI)
@@ -3275,7 +3275,7 @@ void ProjectileClass::Run() {
             }
 
             // Schild Partikel spawnen
-            xSpeed -= 1.0f SYNC;
+            xSpeed -= Timer.sync(1.0f);
 
             if (xSpeed < 0.0f) {
                 xSpeed = 0.1f;
@@ -3303,7 +3303,7 @@ void ProjectileClass::Run() {
             SpriteCollision(xPos, yPos, ShotRect[ShotArt], Player[p].xpos, Player[p].ypos, Player[p].CollideRect)) {
             // Schüsse, die durch den Spieler durchgehen
             if (!ExplodeOnImpact)
-                Player[p].DamagePlayer(Damage SYNC);
+                Player[p].DamagePlayer(Timer.sync(Damage));
 
             // Schüsse, die bei Berührung verschwinden
             else {
@@ -3494,24 +3494,24 @@ void ProjectileClass::ExplodeShot() {
             if (pParent->CurrentWeaponLevel[pParent->SelectedWeapon] > 2) {
                 if (bl & BLOCKWERT_WAND) {
                     WinkelUebergabe = 45;
-                    Projectiles.PushProjectile(xPos + 4.0f - xSpeed SYNC, yPos + 4.0f - ySpeed SYNC, BOUNCESHOT2, pParent);
+                    Projectiles.PushProjectile(xPos + 4.0f - Timer.sync(xSpeed), yPos + 4.0f - Timer.sync(ySpeed), BOUNCESHOT2, pParent);
                     WinkelUebergabe = 135;
-                    Projectiles.PushProjectile(xPos + 4.0f - xSpeed SYNC, yPos + 4.0f - ySpeed SYNC, BOUNCESHOT2, pParent);
+                    Projectiles.PushProjectile(xPos + 4.0f - Timer.sync(xSpeed), yPos + 4.0f - Timer.sync(ySpeed), BOUNCESHOT2, pParent);
                 } else if (br & BLOCKWERT_WAND) {
                     WinkelUebergabe = 315;
-                    Projectiles.PushProjectile(xPos + 4.0f - xSpeed SYNC, yPos + 4.0f - ySpeed SYNC, BOUNCESHOT2, pParent);
+                    Projectiles.PushProjectile(xPos + 4.0f - Timer.sync(xSpeed), yPos + 4.0f - Timer.sync(ySpeed), BOUNCESHOT2, pParent);
                     WinkelUebergabe = 225;
-                    Projectiles.PushProjectile(xPos + 4.0f - xSpeed SYNC, yPos + 4.0f - ySpeed SYNC, BOUNCESHOT2, pParent);
+                    Projectiles.PushProjectile(xPos + 4.0f - Timer.sync(xSpeed), yPos + 4.0f - Timer.sync(ySpeed), BOUNCESHOT2, pParent);
                 } else if (bo & BLOCKWERT_WAND) {
                     WinkelUebergabe = 225;
-                    Projectiles.PushProjectile(xPos + 4.0f - xSpeed SYNC, yPos + 4.0f - ySpeed SYNC, BOUNCESHOT2, pParent);
+                    Projectiles.PushProjectile(xPos + 4.0f - Timer.sync(xSpeed), yPos + 4.0f - Timer.sync(ySpeed), BOUNCESHOT2, pParent);
                     WinkelUebergabe = 135;
-                    Projectiles.PushProjectile(xPos + 4.0f - xSpeed SYNC, yPos + 4.0f - ySpeed SYNC, BOUNCESHOT2, pParent);
+                    Projectiles.PushProjectile(xPos + 4.0f - Timer.sync(xSpeed), yPos + 4.0f - Timer.sync(ySpeed), BOUNCESHOT2, pParent);
                 } else {
                     WinkelUebergabe = 315;
-                    Projectiles.PushProjectile(xPos + 4.0f - xSpeed SYNC, yPos + 4.0f - ySpeed SYNC, BOUNCESHOT2, pParent);
+                    Projectiles.PushProjectile(xPos + 4.0f - Timer.sync(xSpeed), yPos + 4.0f - Timer.sync(ySpeed), BOUNCESHOT2, pParent);
                     WinkelUebergabe = 45;
-                    Projectiles.PushProjectile(xPos + 4.0f - xSpeed SYNC, yPos + 4.0f - ySpeed SYNC, BOUNCESHOT2, pParent);
+                    Projectiles.PushProjectile(xPos + 4.0f - Timer.sync(xSpeed), yPos + 4.0f - Timer.sync(ySpeed), BOUNCESHOT2, pParent);
                 }
             }
 
@@ -3530,24 +3530,24 @@ void ProjectileClass::ExplodeShot() {
             if (pParent->CurrentWeaponLevel[pParent->SelectedWeapon] >= 5) {
                 if (bl & BLOCKWERT_WAND) {
                     WinkelUebergabe = 45;
-                    Projectiles.PushProjectile(xPos + 3.0f - xSpeed SYNC, yPos + 3.0f - ySpeed SYNC, BOUNCESHOT3, pParent);
+                    Projectiles.PushProjectile(xPos + 3.0f - Timer.sync(xSpeed), yPos + 3.0f - Timer.sync(ySpeed), BOUNCESHOT3, pParent);
                     WinkelUebergabe = 135;
-                    Projectiles.PushProjectile(xPos + 3.0f - xSpeed SYNC, yPos + 3.0f - ySpeed SYNC, BOUNCESHOT3, pParent);
+                    Projectiles.PushProjectile(xPos + 3.0f - Timer.sync(xSpeed), yPos + 3.0f - Timer.sync(ySpeed), BOUNCESHOT3, pParent);
                 } else if (br & BLOCKWERT_WAND) {
                     WinkelUebergabe = 315;
-                    Projectiles.PushProjectile(xPos + 3.0f - xSpeed SYNC, yPos + 3.0f - ySpeed SYNC, BOUNCESHOT3, pParent);
+                    Projectiles.PushProjectile(xPos + 3.0f - Timer.sync(xSpeed), yPos + 3.0f - Timer.sync(ySpeed), BOUNCESHOT3, pParent);
                     WinkelUebergabe = 225;
-                    Projectiles.PushProjectile(xPos + 3.0f - xSpeed SYNC, yPos + 3.0f - ySpeed SYNC, BOUNCESHOT3, pParent);
+                    Projectiles.PushProjectile(xPos + 3.0f - Timer.sync(xSpeed), yPos + 3.0f - Timer.sync(ySpeed), BOUNCESHOT3, pParent);
                 } else if (bo & BLOCKWERT_WAND) {
                     WinkelUebergabe = 225;
-                    Projectiles.PushProjectile(xPos + 3.0f - xSpeed SYNC, yPos + 3.0f - ySpeed SYNC, BOUNCESHOT3, pParent);
+                    Projectiles.PushProjectile(xPos + 3.0f - Timer.sync(xSpeed), yPos + 3.0f - Timer.sync(ySpeed), BOUNCESHOT3, pParent);
                     WinkelUebergabe = 135;
-                    Projectiles.PushProjectile(xPos + 3.0f - xSpeed SYNC, yPos + 3.0f - ySpeed SYNC, BOUNCESHOT3, pParent);
+                    Projectiles.PushProjectile(xPos + 3.0f - Timer.sync(xSpeed), yPos + 3.0f - Timer.sync(ySpeed), BOUNCESHOT3, pParent);
                 } else {
                     WinkelUebergabe = 315;
-                    Projectiles.PushProjectile(xPos + 3.0f - xSpeed SYNC, yPos + 3.0f - ySpeed SYNC, BOUNCESHOT3, pParent);
+                    Projectiles.PushProjectile(xPos + 3.0f - Timer.sync(xSpeed), yPos + 3.0f - Timer.sync(ySpeed), BOUNCESHOT3, pParent);
                     WinkelUebergabe = 45;
-                    Projectiles.PushProjectile(xPos + 3.0f - xSpeed SYNC, yPos + 3.0f - ySpeed SYNC, BOUNCESHOT3, pParent);
+                    Projectiles.PushProjectile(xPos + 3.0f - Timer.sync(xSpeed), yPos + 3.0f - Timer.sync(ySpeed), BOUNCESHOT3, pParent);
                 }
             }
 
@@ -3575,24 +3575,24 @@ void ProjectileClass::ExplodeShot() {
             if (pParent->CurrentWeaponLevel[pParent->SelectedWeapon] > 2) {
                 if (bl & BLOCKWERT_WAND) {
                     WinkelUebergabe = 45;
-                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - Timer.sync(xSpeed), yPos + 8.0f - Timer.sync(ySpeed), BOUNCESHOTBIG2, pParent);
                     WinkelUebergabe = 135;
-                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - Timer.sync(xSpeed), yPos + 8.0f - Timer.sync(ySpeed), BOUNCESHOTBIG2, pParent);
                 } else if (br & BLOCKWERT_WAND) {
                     WinkelUebergabe = 315;
-                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - Timer.sync(xSpeed), yPos + 8.0f - Timer.sync(ySpeed), BOUNCESHOTBIG2, pParent);
                     WinkelUebergabe = 225;
-                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - Timer.sync(xSpeed), yPos + 8.0f - Timer.sync(ySpeed), BOUNCESHOTBIG2, pParent);
                 } else if (bo & BLOCKWERT_WAND) {
                     WinkelUebergabe = 225;
-                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - Timer.sync(xSpeed), yPos + 8.0f - Timer.sync(ySpeed), BOUNCESHOTBIG2, pParent);
                     WinkelUebergabe = 135;
-                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - Timer.sync(xSpeed), yPos + 8.0f - Timer.sync(ySpeed), BOUNCESHOTBIG2, pParent);
                 } else {
                     WinkelUebergabe = 315;
-                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - Timer.sync(xSpeed), yPos + 8.0f - Timer.sync(ySpeed), BOUNCESHOTBIG2, pParent);
                     WinkelUebergabe = 45;
-                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG2, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - Timer.sync(xSpeed), yPos + 8.0f - Timer.sync(ySpeed), BOUNCESHOTBIG2, pParent);
                 }
             }
 
@@ -3611,24 +3611,24 @@ void ProjectileClass::ExplodeShot() {
             if (pParent->CurrentWeaponLevel[pParent->SelectedWeapon] >= 5) {
                 if (bl & BLOCKWERT_WAND) {
                     WinkelUebergabe = 45;
-                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - Timer.sync(xSpeed), yPos + 8.0f - Timer.sync(ySpeed), BOUNCESHOTBIG3, pParent);
                     WinkelUebergabe = 135;
-                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - Timer.sync(xSpeed), yPos + 8.0f - Timer.sync(ySpeed), BOUNCESHOTBIG3, pParent);
                 } else if (br & BLOCKWERT_WAND) {
                     WinkelUebergabe = 315;
-                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - Timer.sync(xSpeed), yPos + 8.0f - Timer.sync(ySpeed), BOUNCESHOTBIG3, pParent);
                     WinkelUebergabe = 225;
-                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - Timer.sync(xSpeed), yPos + 8.0f - Timer.sync(ySpeed), BOUNCESHOTBIG3, pParent);
                 } else if (bo & BLOCKWERT_WAND) {
                     WinkelUebergabe = 225;
-                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - Timer.sync(xSpeed), yPos + 8.0f - Timer.sync(ySpeed), BOUNCESHOTBIG3, pParent);
                     WinkelUebergabe = 135;
-                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - Timer.sync(xSpeed), yPos + 8.0f - Timer.sync(ySpeed), BOUNCESHOTBIG3, pParent);
                 } else {
                     WinkelUebergabe = 315;
-                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - Timer.sync(xSpeed), yPos + 8.0f - Timer.sync(ySpeed), BOUNCESHOTBIG3, pParent);
                     WinkelUebergabe = 45;
-                    Projectiles.PushProjectile(xPos + 8.0f - xSpeed SYNC, yPos + 8.0f - ySpeed SYNC, BOUNCESHOTBIG3, pParent);
+                    Projectiles.PushProjectile(xPos + 8.0f - Timer.sync(xSpeed), yPos + 8.0f - Timer.sync(ySpeed), BOUNCESHOTBIG3, pParent);
                 }
             }
 

@@ -31,12 +31,12 @@ void GegnerSchmidtOrgie::DoKI() {
     // Linseneffekt ausfaden
     if (Handlung != GEGNER::EXPLODIEREN) {
         if (ShadowAlpha > 0.0f)
-            ShadowAlpha -= 5.0f SYNC;
+            ShadowAlpha -= Timer.sync(5.0f);
         else
             ShadowAlpha = 0.0f;
     } else {
         if (ShadowAlpha < 255.0f)
-            ShadowAlpha += 5.0f SYNC;
+            ShadowAlpha += Timer.sync(5.0f);
         else
             ShadowAlpha = 255.0f;
     }
@@ -84,7 +84,7 @@ void GegnerSchmidtOrgie::DoKI() {
         case GEGNER::STEHEN: {
             // ActionCounter runterzählen
             // bei null Gegner spawnen
-            ActionCounter -= 1.5f SYNC;
+            ActionCounter -= Timer.sync(1.5f);
 
             float x;
             if (random(2) == 0)

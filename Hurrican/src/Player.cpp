@@ -310,7 +310,7 @@ void PlayerClass::InitNewLevel() {
 // --------------------------------------------------------------------------------------
 
 void PlayerClass::runExplode() {
-    ExplodingTimer -= 1.0f SYNC;
+    ExplodingTimer -= Timer.sync(1.0f);
 
     // Zuende explodiert?
     //
@@ -483,7 +483,7 @@ void PlayerClass::checkShoot() {
     }
 
     if (ShotDelay > 0.0f)
-        ShotDelay -= static_cast<float>(1.0 SYNC);
+        ShotDelay -= Timer.sync(1.0f);
     else
         ShotDelay = 0.0f;
 }
@@ -496,7 +496,7 @@ void PlayerClass::handleAutoFire() {
     // Eingesammeltes Autofire runterzählen
     //
     if (AutoFireExtra > 0.0f) {
-        AutoFireExtra -= 0.5f SYNC;
+        AutoFireExtra -= Timer.sync(0.5f);
         AutoFireCount = 3;
     } else {
         AutoFireExtra = 0.0f;
@@ -505,7 +505,7 @@ void PlayerClass::handleAutoFire() {
     // Eingesammeltes RiesenShotExtra runterzählen
     //
     if (RiesenShotExtra > 0.0f)
-        RiesenShotExtra -= 0.5f SYNC;
+        RiesenShotExtra -= Timer.sync(0.5f);
     else
         RiesenShotExtra = 0.0f;
 }
@@ -703,7 +703,7 @@ bool PlayerClass::GetPlayerInput() {
     // Bronson-Counter erhöhen
     if ((Handlung == PlayerActionEnum::STEHEN || Handlung == PlayerActionEnum::PISSEN) &&
             !RunningTutorial) {
-        BronsonCounter += 1.0f SYNC;
+        BronsonCounter += Timer.sync(1.0f);
     } else {
         BronsonCounter = 0.0f;
 
@@ -743,7 +743,7 @@ void PlayerClass::DoStuffWhenDamaged() {
     // Funkenzähler runterzählen
     //
     if (sparkcount > 0.0f)
-        sparkcount -= 1.0f SYNC;
+        sparkcount -= Timer.sync(1.0f);
     else {
         sparkcount = static_cast<float>(rand() % static_cast<int>(Energy / 2 + 2)) + 5;
 
@@ -783,7 +783,7 @@ void PlayerClass::DoStuffWhenDamaged() {
     // Rauchzähler runterzählen
     //
     if (smokecount > 0.0f)
-        smokecount -= 1.0f SYNC;
+        smokecount -= Timer.sync(1.0f);
     else {
         smokecount = 0.8f;
 
@@ -1027,10 +1027,10 @@ void PlayerClass::AnimatePlayer() {
 
     // Auf Fliessband ?
     if ((bo & BLOCKWERT_FLIESSBANDL || bu & BLOCKWERT_FLIESSBANDL) && !(bl & BLOCKWERT_WAND))
-        xpos -= 11.0f SYNC;
+        xpos -= Timer.sync(11.0f);
 
     if ((bo & BLOCKWERT_FLIESSBANDR || bu & BLOCKWERT_FLIESSBANDR) && !(br & BLOCKWERT_WAND))
-        xpos += 11.0f SYNC;
+        xpos += Timer.sync(11.0f);
 
     //---------------------------------------------------------------------------
     // Spieler im normalen Modus, also kein Rad und nicht auf dem FlugSack reiten
@@ -1045,7 +1045,7 @@ void PlayerClass::AnimatePlayer() {
             Handlung != PlayerActionEnum::DREHEN) {
         // Stehen animieren?
         if (Handlung == PlayerActionEnum::STEHEN) {
-            AnimCount += 1.0f SYNC;
+            AnimCount += Timer.sync(1.0f);
 
             if (AnimCount > 1.0f) {
                 AnimCount -= 1.0f;
@@ -1060,13 +1060,13 @@ void PlayerClass::AnimatePlayer() {
         if (Armour < 0.0f)
             Armour = 0.0f;
 
-        Armour += 0.2f SYNC;
+        Armour += Timer.sync(0.2f);
 
         // Oder schneller?
         if (Handlung == PlayerActionEnum::STEHEN ||
                 Handlung == PlayerActionEnum::DUCKEN ||
                 Handlung == PlayerActionEnum::SCHIESSEN_O)
-            Armour += 1.0f SYNC;
+            Armour += Timer.sync(1.0f);
 
         if (Armour > MAX_ARMOUR)
             Armour = MAX_ARMOUR;
@@ -1085,10 +1085,10 @@ void PlayerClass::AnimatePlayer() {
             if (Handlung == PlayerActionEnum::BLITZEN)  // Blitzen und dabei den Blitz bewegen ?
             {
                 if (BlitzStart >= PLAYER_BLITZ_START)  // Bewegen schon möglich ?
-                    BlitzWinkel -= 20 SYNC;
+                    BlitzWinkel -= Timer.sync(20.0f);
             } else if (Handlung == PlayerActionEnum::BEAMLADEN)  // Rundum bewegen und den Beam aufladen ?
             {
-                BlitzWinkel -= 20 SYNC;
+                BlitzWinkel -= Timer.sync(20.0f);
             } else if (!(bl & BLOCKWERT_WAND))  // Keine Wand im Weg ?
             {
                 Blickrichtung = LINKS;   // nach links kucken
@@ -1107,7 +1107,7 @@ void PlayerClass::AnimatePlayer() {
                     if (!InLiquid) {
                         // auf Eis?
                         if (bu & BLOCKWERT_EIS) {
-                            xspeed -= PLAYER_ICESPEED SYNC;
+                            xspeed -= Timer.sync(PLAYER_ICESPEED);
 
                             if (xspeed < -PLAYER_MOVESPEED)
                                 xspeed = -PLAYER_MOVESPEED;
@@ -1134,10 +1134,10 @@ void PlayerClass::AnimatePlayer() {
             if (Handlung == PlayerActionEnum::BLITZEN)  // Blitzen und dabei den Blitz bewegen ?
             {
                 if (BlitzStart >= PLAYER_BLITZ_START)  // Bewegen schon möglich ?
-                    BlitzWinkel += 20 SYNC;
+                    BlitzWinkel += Timer.sync(20.0f);
             } else if (Handlung == PlayerActionEnum::BEAMLADEN)  // Rundum bewegen und den Beam aufladen ?
             {
-                BlitzWinkel += 20 SYNC;
+                BlitzWinkel += Timer.sync(20.0f);
             } else if (br | BLOCKWERT_WAND)  // Keine Wand im Weg ?
             {
                 Blickrichtung = RECHTS;  // nach rechts kucken
@@ -1156,7 +1156,7 @@ void PlayerClass::AnimatePlayer() {
                     if (!InLiquid) {
                         // auf Eis?
                         if (bu & BLOCKWERT_EIS) {
-                            xspeed += PLAYER_ICESPEED SYNC;
+                            xspeed += Timer.sync(PLAYER_ICESPEED);
 
                             if (xspeed > PLAYER_MOVESPEED)
                                 xspeed = PLAYER_MOVESPEED;
@@ -1216,7 +1216,7 @@ void PlayerClass::AnimatePlayer() {
                 JumpPossible = true;
 
             if (!(busumpf & BLOCKWERT_WAND) && yspeed >= 0.0f)
-                ypos += 4.0f SYNC;
+                ypos += Timer.sync(4.0f);
 
             if (Handlung == PlayerActionEnum::SPRINGEN && yspeed >= 0.0f)
                 Handlung = PlayerActionEnum::LAUFEN;
@@ -1457,7 +1457,7 @@ void PlayerClass::AnimatePlayer() {
         if (Handlung == PlayerActionEnum::BLITZEN) {
             // Verzögerung beim Blitzen
             if (BlitzStart < PLAYER_BLITZ_START)
-                BlitzStart += 1.0f SYNC;
+                BlitzStart += Timer.sync(1.0f);
             else {
 
                 float Winkel = BlitzWinkel - 270;  // 270° beim nach links kucken = Animphase 0
@@ -1479,7 +1479,7 @@ void PlayerClass::AnimatePlayer() {
         if (Handlung == PlayerActionEnum::BEAMLADEN) {
             // Beam aufladen. Je länger der Blitz desto schneller lädt der Beam
             if (BlitzStart < PLAYER_BEAM_MAX)
-                BlitzStart += CurrentWeaponLevel[3] * 1.0f SYNC;
+                BlitzStart += Timer.sync(static_cast<float>(CurrentWeaponLevel[3]) * 1.0f);
 
             float Winkel = BlitzWinkel - 270;  // 270° beim nach links kucken = Animphase 0
             if (Winkel < 0.0f)
@@ -1516,7 +1516,7 @@ void PlayerClass::AnimatePlayer() {
         // Piss-Animation
         //
         if (Handlung == PlayerActionEnum::PISSEN) {
-            AnimCount += 1.0f SYNC;
+            AnimCount += Timer.sync(1.0f);
 
             if (AnimCount > 1.0f) {
                 AnimCount = 0.0f;
@@ -1545,7 +1545,7 @@ void PlayerClass::AnimatePlayer() {
     {
         // Rad-Energie abziehen
         if (!WheelMode)
-            Armour -= static_cast<float>(2.5 SYNC);
+            Armour -= Timer.sync(2.5f);
 
         if (Armour < 0.0f)
             Armour = 0.0f;
@@ -1687,7 +1687,7 @@ void PlayerClass::AnimatePlayer() {
                 BeideFrei = false;
 
         if (FlugsackFliesFree == false && Riding() && BeideFrei == true)
-            ypos -= PLAYER_FLUGSACKSPEED SYNC;
+            ypos -= Timer.sync(PLAYER_FLUGSACKSPEED);
 
         JumpySave = ypos;
         JumpxSave = xpos;
@@ -1723,7 +1723,7 @@ void PlayerClass::AnimatePlayer() {
                 yadd = -yadd / 2.0f;
 
         // Rauch am Flugsack erzeugen
-        SmokeCount -= 1.0f SYNC;
+        SmokeCount -= Timer.sync(1.0f);
         if (SmokeCount < 0.0f) {
             SmokeCount += 0.1f;
 
@@ -1749,7 +1749,7 @@ void PlayerClass::AnimatePlayer() {
 
         // Umdrehen
         if (Handlung == PlayerActionEnum::DREHEN) {
-            AnimCount += 1.2f SYNC;
+            AnimCount += Timer.sync(1.2f);
 
             if (AnimCount > 0.6f) {
                 AnimCount -= 0.6f;
@@ -1773,7 +1773,7 @@ void PlayerClass::AnimatePlayer() {
 
         // Links fliegen
         if (Aktion[AKTION_LINKS] == true && Aktion[AKTION_RECHTS] == false) {
-            xadd -= 10.0f SYNC;
+            xadd -= Timer.sync(10.0f);
 
             // Drehen ?
             if (Aktion[AKTION_SHOOT] == false && Handlung == PlayerActionEnum::SACKREITEN &&
@@ -1787,7 +1787,7 @@ void PlayerClass::AnimatePlayer() {
 
         // Rechts fliegen
         if (Aktion[AKTION_RECHTS] == true && Aktion[AKTION_LINKS] == false) {
-            xadd += 10.0f SYNC;
+            xadd += Timer.sync(10.0f);
 
             // Drehen ?
             if (Aktion[AKTION_SHOOT] == false && Handlung == PlayerActionEnum::SACKREITEN &&
@@ -1801,22 +1801,22 @@ void PlayerClass::AnimatePlayer() {
 
         // Hoch fliegen
         if ((Aktion[AKTION_OBEN] == true || Aktion[AKTION_JUMP] == true) && Aktion[AKTION_DUCKEN] == false)
-            yadd -= 10.0f SYNC;
+            yadd -= Timer.sync(10.0f);
 
         // Runter fliegen
         if (Aktion[AKTION_DUCKEN] == true && Aktion[AKTION_OBEN] == false)
-            yadd += 10.0f SYNC;
+            yadd += Timer.sync(10.0f);
 
         // Bewegung abbremsen
         if (!Aktion[AKTION_LINKS] && !Aktion[AKTION_RECHTS]) {
             if (xadd < 0.0f) {
-                xadd += 4.0f SYNC;
+                xadd += Timer.sync(4.0f);
                 if (xadd > 0.0f)
                     xadd = 0.0f;
             }
 
             if (xadd > 0.0f) {
-                xadd -= 4.0f SYNC;
+                xadd -= Timer.sync(4.0f);
                 if (xadd < 0.0f)
                     xadd = 0.0f;
             }
@@ -1824,13 +1824,13 @@ void PlayerClass::AnimatePlayer() {
 
         if (!Aktion[AKTION_OBEN] && !Aktion[AKTION_DUCKEN]) {
             if (yadd < 0.0f) {
-                yadd += 4.0f SYNC;
+                yadd += Timer.sync(4.0f);
                 if (yadd > 0.0f)
                     yadd = 0.0f;
             }
 
             if (yadd > 0.0f) {
-                yadd -= 4.0f SYNC;
+                yadd -= Timer.sync(4.0f);
                 if (yadd < 0.0f)
                     yadd = 0.0f;
             }
@@ -1847,7 +1847,7 @@ void PlayerClass::AnimatePlayer() {
             yadd = -25.0f;
 
         xspeed = xadd;
-        ypos += yadd SYNC;
+        ypos += Timer.sync(yadd);
 
         // Wendepunkt erreicht? Dann automatisch abspringen
         float ytemp = ypos - 1;
@@ -1891,8 +1891,8 @@ void PlayerClass::AnimatePlayer() {
 
         // Spieler und Level bewegen (wenn nicht beim Endboss bzw wenn Level scrollbar)
         //
-        xpos			     += AutoScrollspeed SYNC;
-        TileEngine.XOffset += AutoScrollspeed SYNC;
+        xpos               += Timer.sync(AutoScrollspeed);
+        TileEngine.XOffset += Timer.sync(AutoScrollspeed);
 
         if (Handlung == PlayerActionEnum::SURFENCROUCH)
             Handlung = PlayerActionEnum::SURFEN;
@@ -1916,13 +1916,13 @@ void PlayerClass::AnimatePlayer() {
 
         // Links surfen
         if (Aktion[AKTION_LINKS] == true && Aktion[AKTION_RECHTS]== false)
-            xadd -= 12.0f SYNC;
+            xadd -= Timer.sync(12.0f);
 
         // Rechts surfen
         if (Aktion[AKTION_RECHTS] == true && Aktion[AKTION_LINKS]== false)
         {
-            xadd += 12.0f SYNC;
-            Antrieb -= 1.0f SYNC;
+            xadd += Timer.sync(12.0f);
+            Antrieb -= Timer.sync(1.0f);
 
             // Antriebsflamme erzeugen
             //
@@ -2020,11 +2020,11 @@ void PlayerClass::AnimatePlayer() {
         if (Handlung != PlayerActionEnum::SPRINGEN) {
             // Hoch scrollen / nach oben zielen
             if (Aktion[AKTION_OBEN]) {
-                look += 1.0f SYNC;
+                look += Timer.sync(1.0f);
 
                 if (look > 5.0f) {
                     if (TileEngine.YOffset > ypos - 400.0f)
-                        TileEngine.YOffset -= 19.0f SYNC;
+                        TileEngine.YOffset -= Timer.sync(19.0f);
                     else
                         TileEngine.YOffset = ypos - 400.0f;
                 }
@@ -2032,11 +2032,11 @@ void PlayerClass::AnimatePlayer() {
 
             // Runter scrollen bzw. runter zielen
             if (Aktion[AKTION_UNTEN]) {
-                look += 1.0f SYNC;
+                look += Timer.sync(1.0f);
 
                 if (look > 5.0f || AktionKeyboard[AKTION_UNTEN] != AktionKeyboard[AKTION_DUCKEN]) {
                     if (TileEngine.YOffset < ypos - 40.0f)
-                        TileEngine.YOffset += 19.0f SYNC;
+                        TileEngine.YOffset += Timer.sync(19.0f);
                     else
                         TileEngine.YOffset = ypos - 40.0f;
                 }
@@ -2071,21 +2071,21 @@ void PlayerClass::AnimatePlayer() {
     // Hat der Spieler ein Schutzschild ?
 
     if (Shield > 0.0f)
-        Shield -= 0.4f SYNC;
+        Shield -= Timer.sync(0.4f);
 
     //-----------------------------------------------
     // Energie abziehen
 
     if ((bo & BLOCKWERT_SCHADEN) || (bu & BLOCKWERT_SCHADEN) || (bl & BLOCKWERT_SCHADEN) || (br & BLOCKWERT_SCHADEN)) {
         switch (Skill) {
-            case SKILL_EASY:     DamagePlayer(10.0f SYNC); break;
-            case SKILL_MEDIUM:   DamagePlayer(20.0f SYNC); break;
-            case SKILL_HARD:     DamagePlayer(30.0f SYNC); break;
-            case SKILL_HURRICAN: DamagePlayer(40.0f SYNC); break;
+            case SKILL_EASY:     DamagePlayer(Timer.sync(10.0f)); break;
+            case SKILL_MEDIUM:   DamagePlayer(Timer.sync(20.0f)); break;
+            case SKILL_HARD:     DamagePlayer(Timer.sync(30.0f)); break;
+            case SKILL_HURRICAN: DamagePlayer(Timer.sync(40.0f)); break;
         }
 
         if ((Handlung == PlayerActionEnum::RADELN || Handlung == PlayerActionEnum::RADELN_FALL) && WheelMode == false)
-            Armour -= 5.0f SYNC;
+            Armour -= Timer.sync(5.0f);
     }
 
     //-----------------------------------------------
@@ -2163,7 +2163,7 @@ void PlayerClass::AnimatePlayer() {
     // schräg laufen?
     if ((Handlung == PlayerActionEnum::SCHIESSEN_LO || Handlung == PlayerActionEnum::SCHIESSEN_RO) && WalkLock == false) {
         // Nächste Animations-Phase ?
-        AnimCount += 1.0f SYNC;
+        AnimCount += Timer.sync(1.0f);
         while (AnimCount > PLAYER_ANIMSPEED) {
             AnimCount = AnimCount - PLAYER_ANIMSPEED;
 
@@ -2181,13 +2181,13 @@ void PlayerClass::AnimatePlayer() {
             (Handlung == PlayerActionEnum::SPRINGEN &&    // springt, sprich, wird animiert ?
             yspeed > -PLAYER_MAXJUMPSPEED / 1.5f)) {
         if (InLiquid == false)
-            AnimCount += 1.0f SYNC;  // Dann animieren, je nachdem, ob man im
+            AnimCount += Timer.sync(1.0f);  // Dann animieren, je nachdem, ob man im
         else                         // Wasser ist oder nicht
-            AnimCount += 0.5f SYNC;  // verschieden schnell animieren
+            AnimCount += Timer.sync(0.5f);  // verschieden schnell animieren
 
         if (Handlung == PlayerActionEnum::RADELN ||
                 Handlung == PlayerActionEnum::RADELN_FALL)  // Als Rad schneller animieren, also
-            AnimCount += 4.0f SYNC;                         // einfach nochmal den Wert viermal dazu
+            AnimCount += Timer.sync(4.0f);                         // einfach nochmal den Wert viermal dazu
 
         while (AnimCount > PLAYER_ANIMSPEED) {
             AnimCount = AnimCount - PLAYER_ANIMSPEED;
@@ -2227,15 +2227,15 @@ void PlayerClass::AnimatePlayer() {
     if (Handlung == PlayerActionEnum::SPRINGEN || (Handlung == PlayerActionEnum::BLITZEN && yspeed > 0.0f)) {
         // Sprung-Geschwindigkeit manipulieren
         if (InLiquid == false)
-            yspeed += JumpAdd SYNC;
+            yspeed += Timer.sync(JumpAdd);
         else
-            yspeed += JumpAdd * 2 / 3 SYNC;
+            yspeed += Timer.sync(JumpAdd * 2.0f / 3.0f);
 
         // y-Position manipulieren, wenn oben frei ist
         if (InLiquid == false)
-            ypos += yspeed SYNC;
+            ypos += Timer.sync(yspeed);
         else
-            ypos += yspeed * 2.0f / 3.0f SYNC;
+            ypos += Timer.sync(yspeed * 2.0f / 3.0f);
 
         if (yspeed > PLAYER_MAXJUMPSPEED)  // Schnellste "Fall-Geschwindigkeit" erreicht ?
             yspeed = PLAYER_MAXJUMPSPEED;
@@ -2263,15 +2263,15 @@ void PlayerClass::AnimatePlayer() {
     if (Handlung == PlayerActionEnum::RADELN_FALL) {
         // Sprung-Geschwindigkeit manipulieren
         if (InLiquid == false)
-            yspeed += JumpAdd SYNC;
+            yspeed += Timer.sync(JumpAdd);
         else
-            yspeed += JumpAdd * 2.0f / 3.0f SYNC;
+            yspeed += Timer.sync(JumpAdd * 2.0f / 3.0f);
 
         // y-Position manipulieren, wenn oben frei ist
         if (InLiquid == false)
-            ypos += yspeed SYNC;
+            ypos += Timer.sync(yspeed);
         else
-            ypos += yspeed * 2.0f / 3.0f SYNC;
+            ypos += Timer.sync(yspeed * 2.0f / 3.0f);
 
         if (yspeed > PLAYER_MAXJUMPSPEED)  // Schnellste "Fall-Geschwindigkeit" erreicht ?
             yspeed = PLAYER_MAXJUMPSPEED;
@@ -2286,13 +2286,13 @@ void PlayerClass::AnimatePlayer() {
 
     // Spieler "rutscht" weg, weil Level schräg steht?
     if (bu & BLOCKWERT_WAND || bu & BLOCKWERT_PLATTFORM)
-        xspeed += ScreenWinkel * 7.0f SYNC;
+        xspeed += Timer.sync(ScreenWinkel * 7.0f);
 
     // Level abhängig von der Spieler-Position scrollen
     if (xspeed != 0.0f) {
         // nur bewegen, wenn keine Wand im Weg ist
         if ((xspeed < 0.0f && !(bl & BLOCKWERT_WAND)) || (xspeed > 0.0f && !(br & BLOCKWERT_WAND)))
-            xpos += xspeed SYNC;  // Spieler bewegen*/
+            xpos += Timer.sync(xspeed);  // Spieler bewegen*/
 
         // Zwei Spieler Mode? Dann auf Screen beschränken
         if (NUMPLAYERS == 2 && StageClearRunning == false) {
@@ -2306,7 +2306,7 @@ void PlayerClass::AnimatePlayer() {
     /*if (Handlung != PlayerActionEnum::SPRINGEN	&&
         Handlung != PlayerActionEnum::RADELN_FALL &&
         yspeed <= 0.0f)
-        TileEngine.YOffset -= PLAYER_MAXJUMPSPEED SYNC;*/
+        TileEngine.YOffset -= Timer.sync(PLAYER_MAXJUMPSPEED);*/
 
     if (NUMPLAYERS == 1 && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         if (xpos - TileEngine.XOffset < 20.0f)
@@ -2419,7 +2419,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe) {
 
     // Schaden genommen ? Dann Spieler blinken lassen
     if (DamageCounter > 0.0f)
-        DamageCounter -= 5.0f SYNC;
+        DamageCounter -= Timer.sync(5.0f);
     else
         DamageCounter = 0.0f;
 
@@ -3463,7 +3463,7 @@ void PlayerClass::DrawCoolLightning(int DrawLength, float mul) {
 
     // Blitze neu zusammensetzen?
     if (Console.Showing == false)
-        changecount -= 1.0f SYNC;
+        changecount -= Timer.sync(1.0f);
 
     if (changecount <= 0.0f) {
         changecount = static_cast<float>(random(10) + 1) / 10.0f;
@@ -3667,7 +3667,7 @@ bool PlayerClass::DoLightning() {
                     pEnemy->DamageTaken = 255;
 
                     // Energy abziehen
-                    pEnemy->Energy = pEnemy->Energy - BLITZ_POWER SYNC;
+                    pEnemy->Energy -= Timer.sync(BLITZ_POWER);
 
                     // Hit Sound
                     // DKS - Added function WaveIsPlaying() to SoundManagerClass:
@@ -3873,7 +3873,7 @@ bool PlayerClass::LoadBeam() {
     // Auflade Partikel erzeugen?
     //
     if (BlitzStart < PLAYER_BEAM_MAX) {
-        BeamCount -= static_cast<float>(1.0 SYNC);
+        BeamCount -= Timer.sync(1.0f);
 
         if (BeamCount < 0.0f) {
             BeamCount = 0.1f;
@@ -4267,7 +4267,7 @@ void PlayerClass::ScrollFlugsack() {
         if (Player[p].FesteAktion > -1)
             BeideFrei = false;
     if (!FlugsackFliesFree && Riding() && BeideFrei)
-        TileEngine.YOffset -= static_cast<float>(PLAYER_FLUGSACKSPEED SYNC);
+        TileEngine.YOffset -= Timer.sync(PLAYER_FLUGSACKSPEED);
 }
 
 // --------------------------------------------------------------------------------------

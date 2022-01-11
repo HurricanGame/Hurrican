@@ -14,13 +14,6 @@
 #define _TIMER_HPP_
 
 // --------------------------------------------------------------------------------------
-// Defines
-// --------------------------------------------------------------------------------------
-
-// Variable mit der aktuellen FrameRate synchronisieren
-#define SYNC *SpeedFaktor
-
-// --------------------------------------------------------------------------------------
 // Includes
 // --------------------------------------------------------------------------------------
 #include "SDL_port.hpp"
@@ -67,6 +60,9 @@ class TimerClass {
     double getSpeedFactor() const;  // Wert holen, mit dem die Bewegungen verrechnet werden
     void resetMaxMinFPS();          // Max und Min FPS resetten
     void WriteLogValues();          // Werte in Logdatei sichern
+
+    // Variable mit der aktuellen FrameRate synchronisieren
+    inline float sync(float val) const { return val * SpeedFaktor; }
 };
 
 // --------------------------------------------------------------------------------------

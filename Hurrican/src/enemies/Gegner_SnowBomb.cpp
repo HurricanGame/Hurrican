@@ -107,7 +107,7 @@ void GegnerSnowBomb::DoKI() {
 
     // Testen, ob der Spieler die Kugel berührt hat (nur, wenn er nicht drauf steht)
     //
-    // TestDamagePlayers(4.0f SYNC);
+    // TestDamagePlayers(Timer.sync(4.0f));
 
     // an der Wand abprallen (und dabei Energie verlieren)
     //
@@ -120,7 +120,7 @@ void GegnerSnowBomb::DoKI() {
     //
     // for (int i = 0; i < NUMPLAYERS; i++)
     //	if (Player[i].AufPlattform == this)
-    //		Player[i].xpos += xSpeed / 2.0f SYNC;
+    //		Player[i].xpos += Timer.sync(xSpeed / 2.0f);
 }
 
 // --------------------------------------------------------------------------------------

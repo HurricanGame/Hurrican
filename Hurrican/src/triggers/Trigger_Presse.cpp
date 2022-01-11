@@ -58,7 +58,7 @@ void GegnerPresse::DoKI() {
         // Warten
         case GEGNER::STEHEN: {
             // Wieder nach unten fahren
-            AnimCount -= 1.0f SYNC;
+            AnimCount -= Timer.sync(1.0f);
 
             if (AnimCount <= 0.0f) {
                 AnimCount = 0.0f;
