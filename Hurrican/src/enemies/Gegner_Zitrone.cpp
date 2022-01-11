@@ -127,8 +127,8 @@ void GegnerZitrone::DoKI() {
 
     // Wackeln lassen
     WackelOffset += 0.25f SYNC;
-    while (WackelOffset > 2 * PI)
-        WackelOffset -= 2 * PI;
+    while (WackelOffset > TWO_PI)
+        WackelOffset -= TWO_PI;
 
     // Richtige Animationsphase setzen
     // abhängig von der Position zum Spieler

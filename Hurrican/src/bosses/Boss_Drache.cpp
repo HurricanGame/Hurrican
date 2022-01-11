@@ -350,7 +350,6 @@ void GegnerDrache::DoKI() {
     if (!(Handlung == GEGNER::EINFLIEGEN && Attack == GEGNER::STEHEN))
         AnimWinkel += 0.2f SYNC;
 
-    constexpr float TWO_PI = 2 * PI;
     while (AnimWinkel > TWO_PI)
         AnimWinkel -= TWO_PI;
 
@@ -361,10 +360,10 @@ void GegnerDrache::DoKI() {
     switch (Handlung) {
         // warten, bis der Hurri aufspringt
         case GEGNER::WARTEN: {
-            if (KieferWinkel > PI / 2.0f)
+            if (KieferWinkel > HALF_PI)
                 KieferWinkel -= 5.0f SYNC;
             else
-                KieferWinkel = PI / 2.0f;
+                KieferWinkel = HALF_PI;
 
             if (HeadWinkel > -50)
                 HeadWinkel -= 25.0f SYNC;
@@ -479,8 +478,8 @@ void GegnerDrache::DoKI() {
 
                     off += 0.5f SYNC;
 
-                    if (off > 2 * PI)
-                        off -= 2 * PI;
+                    if (off > TWO_PI)
+                        off -= TWO_PI;
 
                     DrawYOffset = static_cast<float>(sin(off)) * 8.0f;
 
@@ -522,10 +521,10 @@ void GegnerDrache::DoKI() {
 
                 // rutschen
                 case GEGNER::LAUFEN3: {
-                    if (KieferWinkel < PI / 2.0f)
+                    if (KieferWinkel < HALF_PI)
                         KieferWinkel += 0.1f SYNC;
                     else
-                        KieferWinkel = PI / 2.0f;
+                        KieferWinkel = HALF_PI;
 
                     if (HeadWinkel > -70.0f)
                         HeadWinkel -= 2.0f SYNC;
@@ -555,10 +554,10 @@ void GegnerDrache::DoKI() {
 
                 // liegen bleiben und rauchen
                 case GEGNER::STEHEN: {
-                    if (KieferWinkel > PI / 2.0f)
+                    if (KieferWinkel > HALF_PI)
                         KieferWinkel -= 0.1f SYNC;
                     else
-                        KieferWinkel = PI / 2.0f;
+                        KieferWinkel = HALF_PI;
 
                     if (HeadWinkel > -70.0f)
                         HeadWinkel -= 2.0f SYNC;
@@ -771,7 +770,7 @@ void GegnerDrache::DoKI() {
 
                     yPos = StartPosY + 50.0f + static_cast<float>(random(50));
 
-                    KieferWinkel = PI / 2.0f;
+                    KieferWinkel = HALF_PI;
                     xSpeed = 0.0f;
                     ySpeed = 0.0f;
                     xAcc = 0.0f;
@@ -787,13 +786,13 @@ void GegnerDrache::DoKI() {
                 // Feuerbälle schiessen
                 case GEGNER::SCHIESSEN: {
                     KieferWinkel += 0.75f SYNC;
-                    while (KieferWinkel > 2 * PI)
-                        KieferWinkel -= 2 * PI;
+                    while (KieferWinkel > TWO_PI)
+                        KieferWinkel -= TWO_PI;
 
                     AnimCount += 0.75f SYNC;
 
-                    while (AnimCount > 2 * PI) {
-                        AnimCount -= 2 * PI;
+                    while (AnimCount > TWO_PI) {
+                        AnimCount -= TWO_PI;
 
                         if (BlickRichtung == 1) {
                             WinkelUebergabe = 90 - HeadWinkel;
@@ -895,12 +894,12 @@ void GegnerDrache::DoKI() {
                     }
 
                     // Angekommen?
-                    if (AnimCount >= PI / 2.0f) {
+                    if (AnimCount >= HALF_PI) {
                         // schon genau am richtigen Punkt? Dann auf Angriff umschalten
-                        if (AnimCount == PI / 2.0f) {
+                        if (AnimCount == HALF_PI) {
                             Attack = GEGNER::SCHIESSEN;
                         } else
-                            AnimCount = PI / 2.0f;
+                            AnimCount = HALF_PI;
                     } else
                         AnimCount += 0.075f SYNC;
                 } break;
@@ -910,8 +909,8 @@ void GegnerDrache::DoKI() {
                     KieferWinkel -= 0.5f SYNC;
 
                     // Kiefer offen? Dann Kopf losschiessen
-                    if (KieferWinkel < -PI / 2.0f) {
-                        KieferWinkel = -PI / 2.0f;
+                    if (KieferWinkel < -HALF_PI) {
+                        KieferWinkel = -HALF_PI;
                         Attack = GEGNER::VERFOLGEN;
 
                         HeadLocked = true;
@@ -959,7 +958,7 @@ void GegnerDrache::DoKI() {
                         PlayerHit == true) {
                         Attack = GEGNER::SCHLIESSEN;
                         AnimCount = 4.0f;
-                        KieferWinkel = PI / 2.0f;
+                        KieferWinkel = HALF_PI;
                         SoundManager.PlayWave(100, 128, 10000 + random(1000), SOUND::KLONG);
                         HeadYSpeed *= -1;
                         HeadXSpeed *= -1;
@@ -994,7 +993,7 @@ void GegnerDrache::DoKI() {
                             else
                             // oder wieder zurückziehen?
                             {
-                                AnimCount = PI / 2.0f;
+                                AnimCount = HALF_PI;
                                 Attack = GEGNER::EINFLIEGEN2;
                             }
                         }
@@ -1012,7 +1011,7 @@ void GegnerDrache::DoKI() {
 
                     // Angekommen?
                     AnimCount -= 0.075f SYNC;
-                    if (AnimCount <= -PI / 2.0f)
+                    if (AnimCount <= -HALF_PI)
                         Handlung = GEGNER::AUSWAHL;
                 } break;
 
@@ -1055,8 +1054,8 @@ void GegnerDrache::DoKI() {
     if (!(Handlung == GEGNER::EINFLIEGEN && Attack == GEGNER::STEHEN))
         TailSinus += 1.0f SYNC;
 
-    while (TailSinus > 2 * PI)
-        TailSinus -= 2 * PI;
+    while (TailSinus > TWO_PI)
+        TailSinus -= TWO_PI;
 }
 
 // --------------------------------------------------------------------------------------

@@ -60,15 +60,15 @@ void GegnerRiesenSpinne::DrawLeg(float x, float y, float winkel, int anim, int o
 
     // Je nach "winkel" die beine anderes positionieren
     if (winkel < PI) {
-        xp = x + (static_cast<float>(sin(winkel + PI / 2.0f) * 18.0f));
-        yp = y + (static_cast<float>(cos(winkel + PI / 2.0f) * 30.0f));
+        xp = x + (static_cast<float>(sin(winkel + HALF_PI) * 18.0f));
+        yp = y + (static_cast<float>(cos(winkel + HALF_PI) * 30.0f));
     } else {
         //		xp = x + (static_cast<float>(sin(winkel + PI / 2.0f) * 20.0f));  //DKS - Was already commented out in original source
         xp = x + (winkel - PI) * 10.0f - 16;
         yp = y;
     }
 
-    float tempdamage = sin(DamageWackel * 2 * PI) * 10.0f;
+    float tempdamage = sin(DamageWackel * TWO_PI) * 10.0f;
 
     //----- Oberteil des Beins rendern
 
@@ -244,7 +244,6 @@ void GegnerRiesenSpinne::DoDraw() {
 
         float w = LegsAnim[a] + PI;
 
-        constexpr float TWO_PI = 2 * PI;
         if (w > TWO_PI)
             w -= TWO_PI;
 
@@ -252,7 +251,7 @@ void GegnerRiesenSpinne::DoDraw() {
                 yPos - TileEngine.YOffset + 130.0f, w, a, 10, 0xFF888888);
     }
 
-    float tempdamage = sin(DamageWackel * 2 * PI) * 10.0f;
+    float tempdamage = sin(DamageWackel * TWO_PI) * 10.0f;
     float tempwinkel = HeadWinkel - sin(DamageWackel) * 12.0f;
 
     clampAngle(tempwinkel);
@@ -446,7 +445,6 @@ void GegnerRiesenSpinne::DoKI() {
             xSpeed = WalkDir;
             WalkCount -= WalkDir / 10.0f SYNC;
 
-            constexpr float TWO_PI = 2 * PI;
             if (WalkCount > TWO_PI)
                 WalkCount -= TWO_PI;
             if (WalkCount < 0.0f)
@@ -580,8 +578,8 @@ void GegnerRiesenSpinne::DoKI() {
             for (int i = 0; i < 4; i++) {
                 LegsAnim[i] = WalkCount + (PI / 3.0f) * static_cast<float>(i);
 
-                while (LegsAnim[i] > 2 * PI)
-                    LegsAnim[i] -= 2 * PI;
+                while (LegsAnim[i] > TWO_PI)
+                    LegsAnim[i] -= TWO_PI;
             }
 
         } break;
@@ -598,7 +596,7 @@ void GegnerRiesenSpinne::DoKI() {
                 Gegner.PushGegner(xPos + 35.0f, yPos + 95.0f, FETTERAKETE, random(60) - 130, 0, false);
 
                 // Kopf zurückschnellen lassen
-                HeadXOffset = 2 * PI;
+                HeadXOffset = TWO_PI;
 
                 // Shusscounter runterzählen
                 ShotCount--;
@@ -638,7 +636,7 @@ void GegnerRiesenSpinne::DoKI() {
                                            yPos + sin_deg(HeadWinkel) * 140.0f + 90.0f + yBody, SPIDERSHOT);
 
                 // Kopf zurückschnellen lassen
-                HeadXOffset = 2 * PI;
+                HeadXOffset = TWO_PI;
 
                 // Shusscounter runterzählen
                 ShotCount--;
@@ -687,7 +685,7 @@ void GegnerRiesenSpinne::DoKI() {
                 Projectiles.PushProjectile(xPos + 20.0f, yPos + 100.0f + yBody, SPIDERSHOT2);
 
                 // Kopf zurückschnellen lassen
-                HeadXOffset = 3 * PI;
+                HeadXOffset = static_cast<float>(M_PI * 3.0);
             }
         } break;
 
@@ -725,7 +723,7 @@ void GegnerRiesenSpinne::DoKI() {
                 Projectiles.PushProjectile(xPos + 20.0f, yPos + 100.0f + yBody, SPIDERSHOT2);
 
                 // Kopf zurückschnellen lassen
-                HeadXOffset = 3 * PI;
+                HeadXOffset = static_cast<float>(M_PI * 3.0);
             }
         } break;
 

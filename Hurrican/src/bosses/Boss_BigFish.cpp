@@ -146,7 +146,7 @@ void GegnerBigFish::NewAction() {
 void GegnerBigFish::DoDraw() {
     static float FlossenSin = 0.0f;
     static float FlossenSin2 = 0.0f;
-    float const mw = sin(-PI / 2 + MaulWinkel) * 35.0f;
+    float const mw = sin(-HALF_PI + MaulWinkel) * 35.0f;
     float const fs = sin(FlossenSin) * 40.0f;
     int const fs2 = static_cast<int>(sin(FlossenSin2) * 10.0f);
     float const YOff = sin(SinOff) * 5.0f;
@@ -198,11 +198,11 @@ void GegnerBigFish::DoDraw() {
         float fact = (xSpeed * xSpeed + ySpeed * ySpeed + 20.0f) / 200.0f;
 
         FlossenSin += fact SYNC;
-        if (FlossenSin > 2 * PI)
+        if (FlossenSin > TWO_PI)
             FlossenSin = 0.0f;
 
         FlossenSin2 += fact SYNC;
-        if (FlossenSin2 > 2 * PI)
+        if (FlossenSin2 > TWO_PI)
             FlossenSin2 = 0.0f;
     }
 
@@ -247,7 +247,7 @@ void GegnerBigFish::DoKI() {
     // Schwimmbewegung
     SinOff += 0.2f SYNC;
 
-    if (SinOff > 2 * PI)
+    if (SinOff > TWO_PI)
         SinOff = 0.0f;
 
     // Energie anzeigen
@@ -338,7 +338,7 @@ void GegnerBigFish::DoKI() {
                     ShotCount--;
                 }
 
-                if (MaulWinkel > 2 * PI) {
+                if (MaulWinkel > TWO_PI) {
                     shot = false;
                     MaulWinkel = 0.0f;
                     SoundManager.PlayWave(50, 128, 6000 + random(500), SOUND::KLONG);
@@ -365,7 +365,7 @@ void GegnerBigFish::DoKI() {
                     ShotCount--;
                 }
 
-                if (MaulWinkel > 2 * PI) {
+                if (MaulWinkel > TWO_PI) {
                     shot = false;
                     MaulWinkel = 0.0f;
                     SoundManager.PlayWave(50, 128, 6000 + random(500), SOUND::KLONG);

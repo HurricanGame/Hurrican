@@ -572,12 +572,12 @@ void GegnerTheWall::DoKI() {
 
         case GEGNER::OEFFNEN: {
             // Tür bewegen
-            if (DoorOffset < PI / 2.0f)
+            if (DoorOffset < HALF_PI)
                 DoorOffset += 0.075f SYNC;
 
             // Tür offen? Dann countdown, bis sie wieder zugeht
             else {
-                DoorOffset = PI / 2.0f;
+                DoorOffset = HALF_PI;
 
                 // Tür öffnen Sound anhalten
                 // DKS - Added function WaveIsPlaying() to SoundManagerClass:

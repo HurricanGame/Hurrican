@@ -354,7 +354,7 @@ void GegnerRollmops::DoKI() {
                     yPos = static_cast<float>(Value2) - 500.0f + cos(Schwung * 0.75f) * 830.0f;
 
                     SchwungDir += 0.16f SYNC;
-                    if (SchwungDir > 2 * PI)
+                    if (SchwungDir > TWO_PI)
                         SchwungDir = 0.0f;
 
                     Schwung = sin(SchwungDir);
@@ -366,7 +366,7 @@ void GegnerRollmops::DoKI() {
 
                     if (((SchwungDir > PI - 0.2f && SchwungDir < PI + 0.2f) ||
 
-                         (SchwungDir > 2 * PI - 0.2f && SchwungDir < 2 * PI + 0.2f)) &&
+                         (SchwungDir > TWO_PI - 0.2f && SchwungDir < TWO_PI + 0.2f)) &&
                         random(2) == 0) {
                         shot = false;
                         PartikelSystem.PushPartikel(xPos + 60.0f + static_cast<float>(random(20)),

@@ -1166,8 +1166,8 @@ void MenuClass::DoMenu() {
     for (auto& star: Stars) {
         star.Count += star.Ebene / 20000.0f SYNC;
 
-        if (star.Count > 2 * PI)
-            star.Count -= 2 * PI;
+        if (star.Count > TWO_PI)
+            star.Count -= TWO_PI;
     }
 
     ShowMenu();

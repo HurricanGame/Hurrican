@@ -2675,8 +2675,8 @@ void PartikelClass::Run() {
                 tmp_alpha = static_cast<int>(Lebensdauer);
                 AnimCount += 0.8f SYNC;
 
-                while (AnimCount > 2 * PI)
-                    AnimCount -= 2 * PI;
+                while (AnimCount > TWO_PI)
+                    AnimCount -= TWO_PI;
             } break;
 
             case DUST: {

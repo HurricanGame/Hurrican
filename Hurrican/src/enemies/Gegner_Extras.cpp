@@ -178,7 +178,7 @@ void GegnerExtras::DoKI() {
                     //}
                     // DKS-Rewrote the above to use radians directly and allow bitwise ops to replace mod operator.
                     for (int i = 0; i < 300; i++) {
-                        float ang = (static_cast<float>(M_PI) * 2.0f * (1.0f / 512.0f)) * static_cast<float>(random(512));
+                        float ang = TWO_PI * (1.0f / 512.0f) * static_cast<float>(random(512));
                         float r = static_cast<float>(random(32) + 98);
                         PartikelSystem.PushPartikel(pCollector->xpos + (40.0f - 6.0f) + sin_rad(ang) * r,
                                                     pCollector->ypos + (40.0f - 6.0f) + cos_rad(ang) * r,

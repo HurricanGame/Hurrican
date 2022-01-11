@@ -39,7 +39,9 @@ inline int random(int max) { return rand() % max; }
 #define M_PI 3.1415926535897932384626433832795
 #endif
 
-#define PI 3.14159265358979f  // Pi =)
+constexpr float PI      = static_cast<float>(M_PI);
+constexpr float TWO_PI  = static_cast<float>(M_PI * 2.0);
+constexpr float HALF_PI = static_cast<float>(M_PI / 2.0);
 
 // DKS - RAD/DEG conversions:
 // Multiply by a constant ratio (these save a division):

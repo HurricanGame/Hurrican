@@ -173,12 +173,12 @@ void CCracktro::Main() {
     }
 
     SinPos += 0.3f SYNC;
-    if (SinPos > 2 * PI)
-        SinPos -= 2 * PI;
+    if (SinPos > TWO_PI)
+        SinPos -= TWO_PI;
 
     LogoPos += 0.2f SYNC;
-    if (LogoPos > 2 * PI)
-        LogoPos -= 2 * PI;
+    if (LogoPos > TWO_PI)
+        LogoPos -= TWO_PI;
 
     // --------------------------------------------------------------------------------------
     // Logo (hinter Copper Bars)
@@ -192,13 +192,13 @@ void CCracktro::Main() {
 
         numsin += 0.4f SYNC;
 
-        if (numsin > 2 * PI)
-            numsin -= 2 * PI;
+        if (numsin > TWO_PI)
+            numsin -= TWO_PI;
 
         // Zahlen
         for (int i = 0; i < 5; i++) {
             float off = sin(numsin + i / 3.0f) * 10.0f;
-            float off2 = sin(numsin + i / 3.0f + PI / 2) * 20.0f;
+            float off2 = sin(numsin + i / 3.0f + HALF_PI) * 20.0f;
 
             Zahlen.RenderSprite(75 + i * 40 - off + (640 - 341) / 2 + sin(LogoPos) * 100.0f, 110 - off2, i, 0xFFFFFFFF);
         }
@@ -252,13 +252,13 @@ void CCracktro::Main() {
 
         numsin += 0.4f SYNC;
 
-        if (numsin > 2 * PI)
-            numsin -= 2 * PI;
+        if (numsin > TWO_PI)
+            numsin -= TWO_PI;
 
         // Zahlen
         for (int i = 0; i < 5; i++) {
             float off = sin(numsin + i / 3.0f) * 10.0f;
-            float off2 = sin(numsin + i / 3.0f + PI / 2) * 20.0f;
+            float off2 = sin(numsin + i / 3.0f + HALF_PI) * 20.0f;
 
             Zahlen.RenderSprite(75 + i * 40 - off + (640 - 341) / 2 + sin(LogoPos) * 100.0f, 110 - off2, i, 0xFFFFFFFF);
         }
@@ -295,8 +295,8 @@ void CCracktro::Main() {
     // --------------------------------------------------------------------------------------
 
     for (int i = 0; i < 16; i++) {
-        RenderRect(-sin(LogoPos) * 140.0f + 320 + sin(SinPos + i * (2 * PI / 16)) * 140,
-                   yo + 10 + cos(SinPos + i * (2 * PI / 16)) * 20, 4, 2, 0xFFFFFFFF);
+        RenderRect(-sin(LogoPos) * 140.0f + 320 + sin(SinPos + i * (TWO_PI / 16)) * 140,
+                   yo + 10 + cos(SinPos + i * (TWO_PI / 16)) * 20, 4, 2, 0xFFFFFFFF);
     }
 
     // beenden

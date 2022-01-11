@@ -54,7 +54,7 @@ GegnerMade::GegnerMade(int Wert1, int Wert2, bool Light) {
 void GegnerMade::DoDraw() {
     movesin += 0.8f SYNC;
 
-    if (movesin > 2 * PI)
+    if (movesin > TWO_PI)
         movesin = 0.0f;
 
     switch (Handlung) {

@@ -3254,7 +3254,6 @@ void ProjectileClass::Run() {
                 ySpeed -= 0.5f SYNC;
 
             // Grenzen checken
-            constexpr float TWO_PI = static_cast<float>(M_PI * 2.0);
             if (ySpeed > TWO_PI)
                 ySpeed -= TWO_PI;
             if (ySpeed < 0.0f)

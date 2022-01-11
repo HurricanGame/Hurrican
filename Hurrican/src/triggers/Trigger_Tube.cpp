@@ -85,7 +85,7 @@ void GegnerTube::DoDraw() {
 void GegnerTube::DoKI() {
     SinOff += 0.3f SYNC;
 
-    if (SinOff > 2 * PI)
+    if (SinOff > TWO_PI)
         SinOff = 0.0f;
 
     // Mutant kann rausspringen?

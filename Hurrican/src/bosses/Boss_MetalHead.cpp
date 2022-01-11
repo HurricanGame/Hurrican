@@ -404,7 +404,7 @@ void GegnerMetalHead::DoKI() {
         xAcc = 0.0f;
         yAcc = 5.0f;
         AnimCount = 8.0f;
-        Eye_Alpha = 2 * PI;
+        Eye_Alpha = TWO_PI;
 
         for (int p = 0; p < NUMPLAYERS; p++)
             if (Player[p].AufPlattform == this)
@@ -572,7 +572,7 @@ void GegnerMetalHead::DoKI() {
                         TurbineOff = static_cast<float>(sin(SinCount)) * 30.0f;
                         SinCount += 0.2f SYNC;
 
-                        if (SinCount >= PI / 2.0f) {
+                        if (SinCount >= HALF_PI) {
                             Destroyable = true;
                             GegnerRect[GegnerArt].left = static_cast<int>(85.0f + TurbineOff);
                             GegnerRect[GegnerArt].top = 210;
@@ -767,7 +767,7 @@ void GegnerMetalHead::DoKI() {
 
                 Eye_Alpha -= 0.3f SYNC;
                 while (Eye_Alpha < 0)
-                    Eye_Alpha += 2 * PI;
+                    Eye_Alpha += TWO_PI;
 
                 AnimCount -= 1.0f SYNC;
 

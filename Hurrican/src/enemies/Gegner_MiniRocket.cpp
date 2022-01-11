@@ -75,7 +75,7 @@ void GegnerMiniRocket::DoKI() {
     //
     FlareSin += 3.0f SYNC;
 
-    if (FlareSin > 2 * PI)
+    if (FlareSin > TWO_PI)
         FlareSin = 0;
 
     if (AnimCount <= 0.0f) {
