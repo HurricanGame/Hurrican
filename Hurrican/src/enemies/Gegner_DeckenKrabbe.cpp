@@ -79,7 +79,7 @@ void GegnerDeckenKrabbe::DoKI() {
         case GEGNER::STEHEN: {
             // angeschossen oder Spieler drunter? Dann runterfallen
             //
-            if (DamageTaken != 0.0 || (PlayerAbstandHoriz() < 100 && PlayerAbstandVert() < 800 && pAim->ypos > yPos)) {
+            if (DamageTaken != 0.0f || (PlayerAbstandHoriz() < 100 && PlayerAbstandVert() < 800 && pAim->ypos > yPos)) {
                 // Rotationsspeed errechnen, je nachdem, wie weit der Boden entfernt ist
                 //
                 int a = 0;

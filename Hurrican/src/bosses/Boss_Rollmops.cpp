@@ -401,12 +401,12 @@ void GegnerRollmops::DoKI() {
                     xSpeed = -60.0f;
 
                 // Grenze überschritten, ab der abgebremst wird?
-                if (xPos + 65 < Value1 + 135.0)
+                if (xPos + 65.0f < static_cast<float>(Value1 + 135))
                     xAcc = 19.0f;
 
                 // in der Mitte stoppen und abspringen
                 if (Handlung == GEGNER::LAUFEN_LINKS2 && ySpeed == 0.0f) {
-                    if (xPos + 65 < Value1 + 380.0)
+                    if (xPos + 65.0f < static_cast<float>(Value1 + 380))
                         xAcc = 23.0f;
 
                     if (xSpeed > 0.0f) {
@@ -460,12 +460,12 @@ void GegnerRollmops::DoKI() {
                     xSpeed = 60.0f;
 
                 // Grenze überschritten, ab der abgebremst wird?
-                if (xPos + 65 > Value1 + 505.0)
+                if (xPos + 65.0f > static_cast<float>(Value1 + 505))
                     xAcc = -19.0f;
 
                 // in der Mitte stoppen und abspringen
                 if (Handlung == GEGNER::LAUFEN_RECHTS2 && ySpeed == 0.0f) {
-                    if (xPos + 65 > Value1 + 300.0)
+                    if (xPos + 65.0f > static_cast<float>(Value1 + 300))
                         xAcc = -23.0f;
 
                     if (xSpeed < 0.0f) {

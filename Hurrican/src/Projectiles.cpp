@@ -1843,9 +1843,9 @@ void ProjectileClass::CheckCollision() {
                  pEnemy->GegnerArt == SCHLEUSEH || pEnemy->GegnerArt == SCHLEUSEV)) {
                 // blinken lassen, wenn noch nicht blinkt
                 if (pEnemy->DamageTaken <= 0.0f)
-                    pEnemy->DamageTaken = 255;
+                    pEnemy->DamageTaken = 255.0f;
 
-                float BossZiehtWenigerAb = 1;
+                float BossZiehtWenigerAb = 1.0f;
 
                 if ((ShotArt == GRENADE || ShotArt == POWERLINE || ShotArt == SMARTBOMB) &&
                     pEnemy->GegnerArt >= STAHLFAUST && pEnemy->GegnerArt < PARTIKELSPAWN)
@@ -1853,7 +1853,7 @@ void ProjectileClass::CheckCollision() {
 
                 // Im 2 Spieler Modus sind die Gegner fieser
                 if (NUMPLAYERS == 2)
-                    BossZiehtWenigerAb *= 0.75;
+                    BossZiehtWenigerAb *= 0.75f;
 
                 // Schuss explodiert beim Auftreffen?
                 if (ExplodeOnImpact) {

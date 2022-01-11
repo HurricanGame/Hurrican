@@ -2597,7 +2597,7 @@ void PartikelClass::Run() {
                     ySpeed = -5.0f;
                 }
 
-                if (xSpeed > 0.0)
+                if (xSpeed > 0.0f)
                     xSpeed -= 3.0f SYNC;
 
                 if (xSpeed < 0.0f)

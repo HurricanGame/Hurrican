@@ -62,7 +62,7 @@ void GegnerWandKannone::DoKI() {
         case GEGNER::LAUFEN: {
             AnimCount -= 1.0f SYNC;
 
-            if (AnimCount <= 0.0) {
+            if (AnimCount <= 0.0f) {
                 AnimCount = 0.0f;
                 Handlung = GEGNER::SCHIESSEN;
                 AnimEnde = 3;

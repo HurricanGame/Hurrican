@@ -66,7 +66,7 @@ void TimerClass::update() {
     DurchschnittFramerate = (vergangeneFrames * DurchschnittFramerate + aktuelleFramerate) / (vergangeneFrames + 1);
 
     // Speedfaktor errechnen
-    SpeedFaktor = static_cast<float>(MoveSpeed * vergangeneZeit);
+    SpeedFaktor = static_cast<float>(static_cast<double>(MoveSpeed) * vergangeneZeit);
 
     // begrenzen
     constexpr float MAX_FACTOR = 2.0f;

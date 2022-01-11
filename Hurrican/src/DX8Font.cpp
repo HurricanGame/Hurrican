@@ -282,7 +282,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
 bool DirectGraphicsFont::DrawValue(float x, float y, float Value, D3DCOLOR Color) {
     char Buf[20];
 
-    snprintf(Buf, 20, "%f", Value);
+    snprintf(Buf, 20, "%f", static_cast<double>(Value));
     DrawText(x, y, Buf, Color);
 
     return true;
