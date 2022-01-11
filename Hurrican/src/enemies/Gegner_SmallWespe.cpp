@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerSmallWespe::GegnerSmallWespe(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     AnimStart = 0;
     AnimEnde = 4;
     AnimSpeed = 0.5f;
@@ -38,17 +38,17 @@ void GegnerSmallWespe::DoKI() {
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_LAUFEN:  // Warten bis der Spieler nahe genug rankommt
+        case GEGNER::LAUFEN:  // Warten bis der Spieler nahe genug rankommt
         {
             if (PlayerAbstand() < 500) {
                 Value1 =
                     static_cast<int>(pAim->xpos) + 35 - 50 + random(100);  // Flugziel zufällig in Richtung Spieler
                 Value2 = static_cast<int>(pAim->ypos) + 40 - 50 + random(30);  // setzen mit etwas Variation
-                Handlung = GEGNER_VERFOLGEN;
+                Handlung = GEGNER::VERFOLGEN;
             }
         } break;
 
-        case GEGNER_VERFOLGEN:  // Wespe verfolgt den Spieler
+        case GEGNER::VERFOLGEN:  // Wespe verfolgt den Spieler
         {
             // Punkt links von der Wespe
             if (Value1 < xPos) {
@@ -71,7 +71,7 @@ void GegnerSmallWespe::DoKI() {
                 if (!(blocko & BLOCKWERT_WAND))
                     yAcc = -3.0;
                 else {
-                    Handlung = GEGNER_VERFOLGEN;
+                    Handlung = GEGNER::VERFOLGEN;
                     ySpeed = 20;
                 }
             }
@@ -116,7 +116,7 @@ void GegnerSmallWespe::DoKI() {
         } break;
 
         // Wespe stürzt ab
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             // An die Wand gekracht ?
             if (blockl & BLOCKWERT_WAND || blockr & BLOCKWERT_WAND || blocko & BLOCKWERT_WAND ||
                 blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM)
@@ -136,7 +136,7 @@ void GegnerSmallWespe::DoKI() {
     }  // switch
 
     // Testen, ob die Wespe einen Spieler berührt hat. Wenn ja, dann prallt sie ab und wirft den Spieler etwas zurück
-    if (Handlung != GEGNER_FALLEN)
+    if (Handlung != GEGNER::FALLEN)
         for (int p = 0; p < NUMPLAYERS; p++)
             if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[p].xpos, Player[p].ypos,
                                 Player[p].CollideRect) == true) {
@@ -152,12 +152,12 @@ void GegnerSmallWespe::DoKI() {
 
     // beim Abstürzen rot
     //
-    if (Handlung == GEGNER_FALLEN)
+    if (Handlung == GEGNER::FALLEN)
         DamageTaken = 192.0f;
 
     // Soviel Energie verloren, dass die Wespe abstürzt ?
-    if (Energy <= 0.0f && Handlung != GEGNER_FALLEN) {
-        Handlung = GEGNER_FALLEN;
+    if (Energy <= 0.0f && Handlung != GEGNER::FALLEN) {
+        Handlung = GEGNER::FALLEN;
         Energy = 30.0f;
         ySpeed = 3.0f;
         xAcc = 0.0f;
@@ -189,7 +189,7 @@ void GegnerSmallWespe::GegnerExplode() {
     for (int i = 0; i < 3; i++)
         PartikelSystem.PushPartikel(xPos + 15.0f, yPos + 20.0f, SPLITTER);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 200;
 }

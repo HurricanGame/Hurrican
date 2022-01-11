@@ -23,7 +23,7 @@ constexpr int ARMSIZEY = 179;
 // --------------------------------------------------------------------------------------
 
 GegnerGolem::GegnerGolem(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_NOTVISIBLE;
+    Handlung = GEGNER::NOTVISIBLE;
     BlickRichtung = LINKS;
     Energy = 8000;
     Value1 = Wert1;
@@ -81,10 +81,10 @@ void GegnerGolem::Wackeln() {
         WackelDir *= -1.0f;
         Wackel = WACKELMAX * -WackelDir;
 
-        if (Handlung == GEGNER_EINFLIEGEN || Handlung == GEGNER_LAUFEN || Handlung == GEGNER_LAUFEN2 ||
-            Handlung == GEGNER_LAUFEN3 || Handlung == GEGNER_LAUFEN4) {
+        if (Handlung == GEGNER::EINFLIEGEN || Handlung == GEGNER::LAUFEN || Handlung == GEGNER::LAUFEN2 ||
+            Handlung == GEGNER::LAUFEN3 || Handlung == GEGNER::LAUFEN4) {
             ShakeScreen(4.0f);
-            SoundManager.PlayWave(100, 128, 15000 + random(2000), SOUND_DOORSTOP);
+            SoundManager.PlayWave(100, 128, 15000 + random(2000), SOUND::DOORSTOP);
         }
     }
 }
@@ -97,7 +97,7 @@ void GegnerGolem::DoDraw() {
 
     float wackel = 0.0f;
 
-    if (Handlung == GEGNER_EXPLODIEREN)
+    if (Handlung == GEGNER::EXPLODIEREN)
         wackel = static_cast<float>(static_cast<int>(ShotDelay) % 2);
 
     DirectGraphics.SetFilterMode(true);
@@ -249,7 +249,7 @@ bool GegnerGolem::GoToZero(float &Value, float speed) {
 
 void GegnerGolem::DoKI() {
     // Energie anzeigen
-    if (Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER::NOTVISIBLE && Handlung != GEGNER::EXPLODIEREN)
         HUD.ShowBossHUD(8000, Energy);
 
     // Levelausschnitt auf den Golem zentrieren, sobald dieser sichtbar wird
@@ -262,7 +262,7 @@ void GegnerGolem::DoKI() {
                                static_cast<float>(Value2), TileStateEnum::SCROLLTOLOCK);
 
         // Ausfaden und pausieren
-        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);
+        SoundManager.FadeSong(MUSIC::STAGEMUSIC, -2.0f, 0, true);
     }
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
@@ -272,9 +272,9 @@ void GegnerGolem::DoKI() {
         DamageTaken = 0.0f;  // oder ganz anhalten
 
     // Hat der Golem keine Energie mehr ? Dann explodiert er
-    if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN) {
+    if (Energy <= 100.0f && Handlung != GEGNER::EXPLODIEREN) {
         Destroyable = false;
-        Handlung = GEGNER_EXPLODIEREN;
+        Handlung = GEGNER::EXPLODIEREN;
         xSpeed = 0.0f;
         ySpeed = 0.0f;
         xAcc = 0.0f;
@@ -283,27 +283,27 @@ void GegnerGolem::DoKI() {
         ShotDelay = 30.0f;
 
         // Endboss-Musik ausfaden und abschalten
-        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC::BOSS, -2.0f, 0, false);
     }
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_NOTVISIBLE:  // Warten bis der Screen zentriert wurde
+        case GEGNER::NOTVISIBLE:  // Warten bis der Screen zentriert wurde
         {
             if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 // DKS - Added function SongIsPlaying() to SoundManagerClass:
-                if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
-                    SoundManager.PlaySong(MUSIC_BOSS, false);
+                if (!SoundManager.SongIsPlaying(MUSIC::BOSS))
+                    SoundManager.PlaySong(MUSIC::BOSS, false);
 
                 // Und Boss erscheinen lassen
-                Handlung = GEGNER_EINFLIEGEN;
-                SoundManager.PlayWave(100, 128, 7000, SOUND_MUTANT);
+                Handlung = GEGNER::EINFLIEGEN;
+                SoundManager.PlayWave(100, 128, 7000, SOUND::MUTANT);
             }
         } break;
 
         // Gegner läuft am Anfang langsam nach links
-        case GEGNER_EINFLIEGEN: {
+        case GEGNER::EINFLIEGEN: {
             Energy = 8000;
             DamageTaken = 0.0f;
             xPos -= static_cast<float>(10.0 SYNC);  // Faust nach unten bewegen
@@ -314,12 +314,12 @@ void GegnerGolem::DoKI() {
             if (xPos <= TileEngine.ScrolltoX + 380)  // Weit genug oben ?
             {
                 xPos = static_cast<float>(TileEngine.ScrolltoX + 380);
-                Handlung = GEGNER_SPECIAL;
+                Handlung = GEGNER::SPECIAL;
             }
         } break;
 
         // Gegner läuft am Anfang langsam nach links
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             xPos -= static_cast<float>(10.0 SYNC);
             Wackel += WackelDir * 0.025f SYNC;
             rotarm1 -= WackelDir * 0.2f SYNC;
@@ -328,12 +328,12 @@ void GegnerGolem::DoKI() {
             if (xPos <= TileEngine.ScrolltoX + 380.0f)  // Weit genug in Mitte  ?
             {
                 xPos = TileEngine.ScrolltoX + 380.0f;
-                Handlung = GEGNER_SPECIAL;
+                Handlung = GEGNER::SPECIAL;
             }
         } break;
 
         // Gegner läuft nach rechts
-        case GEGNER_LAUFEN2: {
+        case GEGNER::LAUFEN2: {
             xPos += static_cast<float>(10.0 SYNC);
             Wackel += WackelDir * 0.025f SYNC;
             rotarm1 -= WackelDir * 0.2f SYNC;
@@ -343,12 +343,12 @@ void GegnerGolem::DoKI() {
             {
                 // zurücklaufen?
                 xPos = TileEngine.ScrolltoX + 540.0f;
-                Handlung = GEGNER_SPECIAL;
+                Handlung = GEGNER::SPECIAL;
             }
         } break;
 
         // Gegner läuft ganz nach links zur mauer
-        case GEGNER_LAUFEN3: {
+        case GEGNER::LAUFEN3: {
             xPos -= static_cast<float>(10.0 SYNC);
             Wackel += WackelDir * 0.025f SYNC;
             rotarm1 -= WackelDir * 0.2f SYNC;
@@ -357,15 +357,15 @@ void GegnerGolem::DoKI() {
             if (xPos <= TileEngine.ScrolltoX + 100.0f)  // Weit genug links ?
             {
                 xPos = TileEngine.ScrolltoX + 100.0f;
-                Handlung = GEGNER_SPECIAL2;
-                last = GEGNER_SPECIAL2;
+                Handlung = GEGNER::SPECIAL2;
+                last = GEGNER::SPECIAL2;
                 state2 = ArmState::SENKEN;
                 StoneCount = 3 + random(2);
             }
         } break;
 
         // von links zur mitte laufen
-        case GEGNER_LAUFEN4: {
+        case GEGNER::LAUFEN4: {
             xPos += static_cast<float>(10.0 SYNC);
             Wackel += WackelDir * 0.025f SYNC;
             rotarm1 -= WackelDir * 0.2f SYNC;
@@ -374,12 +374,12 @@ void GegnerGolem::DoKI() {
             if (xPos >= TileEngine.ScrolltoX + 380.0f)  // Weit genug in Mitte  ?
             {
                 xPos = TileEngine.ScrolltoX + 380.0f;
-                Handlung = GEGNER_SPECIAL;
+                Handlung = GEGNER::SPECIAL;
             }
         } break;
 
         // gegen die wand bollern und lavabälle spawnen
-        case GEGNER_SPECIAL2: {
+        case GEGNER::SPECIAL2: {
             switch (state2) {
                 case ArmState::SENKEN: {
                     if (Wackel > -0.2f)
@@ -393,7 +393,7 @@ void GegnerGolem::DoKI() {
                     if (rotarm2 > 1.0f) {
                         state2 = ArmState::HEBEN;
                         ShakeScreen(3.0f);
-                        SoundManager.PlayWave(75, 128, 15000 + random(2000), SOUND_DOORSTOP);
+                        SoundManager.PlayWave(75, 128, 15000 + random(2000), SOUND::DOORSTOP);
 
                         Gegner.PushGegner(TileEngine.XOffset + 100.0f + static_cast<float>(random(540)),
                                           TileEngine.YOffset + 480.0f, LAVABALL, 50 + random(10), 0,
@@ -413,7 +413,7 @@ void GegnerGolem::DoKI() {
                     if (rotarm1 > 1.0f) {
                         state2 = ArmState::SENKEN;
                         ShakeScreen(3.0f);
-                        SoundManager.PlayWave(75, 128, 15000 + random(2000), SOUND_DOORSTOP);
+                        SoundManager.PlayWave(75, 128, 15000 + random(2000), SOUND::DOORSTOP);
 
                         Gegner.PushGegner(pAim->xpos - 20.0f + static_cast<float>(random(70)),
                                           TileEngine.YOffset + 480.0f, LAVABALL, 50 + random(10), 0,
@@ -422,14 +422,14 @@ void GegnerGolem::DoKI() {
                         StoneCount--;
 
                         if (StoneCount <= 0)
-                            Handlung = GEGNER_SPECIAL;
+                            Handlung = GEGNER::SPECIAL;
                     }
                 } break;
             }
         } break;
 
         // Ausgangsposition für Aktionen herstellen
-        case GEGNER_SPECIAL: {
+        case GEGNER::SPECIAL: {
 
             // zuende wackeln
             Wackeln();
@@ -445,15 +445,15 @@ void GegnerGolem::DoKI() {
                 if (xPos > TileEngine.ScrolltoX + 400.0f) {
                     // Dann Steine werfen
                     if (random(2) == 0) {
-                        Handlung = GEGNER_CRUSHEN;
-                        last = GEGNER_CRUSHEN;
+                        Handlung = GEGNER::CRUSHEN;
+                        last = GEGNER::CRUSHEN;
                         state2 = ArmState::SENKEN;
                         StoneCount = random(2) + 2;
                     }
 
                     // oder auf die lava dreschen
                     else {
-                        Handlung = GEGNER_BOMBARDIEREN;
+                        Handlung = GEGNER::BOMBARDIEREN;
                         state2 = ArmState::HEBEN;
                         count = static_cast<float>(random(3) + 2);
                     }
@@ -464,15 +464,15 @@ void GegnerGolem::DoKI() {
                     // Weiterlaufen?
                     if (random(3) > 0) {
                         // Die Aktion ausführen, die eben nicht dran war
-                        if (last == GEGNER_SPECIAL2)
-                            Handlung = GEGNER_LAUFEN2;
+                        if (last == GEGNER::SPECIAL2)
+                            Handlung = GEGNER::LAUFEN2;
                         else
-                            Handlung = GEGNER_LAUFEN3;
+                            Handlung = GEGNER::LAUFEN3;
                     }
 
                     // oder Suschuss schiessen
                     else {
-                        Handlung = GEGNER_AUSSPUCKEN;
+                        Handlung = GEGNER::AUSSPUCKEN;
                         ShotDelay = 80.0f;
                         count = 4.0f + random(4);
                         Wackel = 0.0f;
@@ -481,14 +481,14 @@ void GegnerGolem::DoKI() {
 
                 // Golem steht schon links? Dann zurück zur Mitte
                 else if (xPos <= TileEngine.ScrolltoX + 120.0f) {
-                    Handlung = GEGNER_LAUFEN4;
+                    Handlung = GEGNER::LAUFEN4;
                 }
             }
 
         } break;
 
         // Grüne Rotzbobel schiessen
-        case GEGNER_AUSSPUCKEN: {
+        case GEGNER::AUSSPUCKEN: {
             if (ShotDelay > 10.0f) {
                 Wackel += 0.03f SYNC;
                 rotarm1 -= 0.054f SYNC;
@@ -509,7 +509,7 @@ void GegnerGolem::DoKI() {
                 PartikelSystem.PushPartikel(xPos - 60.0f, yPos + yoff - 70.0f, GRENADEFLARE);
 
                 // Sound ausgeben
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_FIREBALL);
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::FIREBALL);
 
                 ShotDelay = 80.0f;
 
@@ -518,7 +518,7 @@ void GegnerGolem::DoKI() {
 
                 // kein schuss mehr? dann neue aktion
                 if (count <= 0.0f) {
-                    Handlung = GEGNER_WARTEN;
+                    Handlung = GEGNER::WARTEN;
                     ShotDelay = 10.0f;
                 }
 
@@ -529,15 +529,15 @@ void GegnerGolem::DoKI() {
         } break;
 
         // nach dem Schiessen kurz warten bis zur nächsten Aktion
-        case GEGNER_WARTEN: {
+        case GEGNER::WARTEN: {
             ShotDelay -= 1.0f SYNC;
 
             if (ShotDelay <= 0.0f)
-                Handlung = GEGNER_SPECIAL;
+                Handlung = GEGNER::SPECIAL;
         } break;
 
         // stein raufholen und werfen
-        case GEGNER_CRUSHEN: {
+        case GEGNER::CRUSHEN: {
             switch (state2) {
                 // absenken und stein holen
                 case ArmState::SENKEN: {
@@ -571,7 +571,7 @@ void GegnerGolem::DoKI() {
 
                     if (Wackel >= 0.35f) {
                         state2 = ArmState::WERFEN;
-                        SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND_MUTANT);
+                        SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND::MUTANT);
                     }
                 } break;
 
@@ -589,7 +589,7 @@ void GegnerGolem::DoKI() {
                                           true);
                         Gegner.PushGegner(xPos - 40.0f, yPos + 30.0f, BOULDER, -(random(40) + 10), -(random(10) + 10),
                                           true);
-                        SoundManager.PlayWave(100, 128, 14000 + random(4000), SOUND_STONEFALL);
+                        SoundManager.PlayWave(100, 128, 14000 + random(4000), SOUND::STONEFALL);
                         state2 = ArmState::SENKEN2;
                     }
                 } break;
@@ -608,7 +608,7 @@ void GegnerGolem::DoKI() {
                         StoneCount--;
 
                         if (StoneCount == 0)
-                            Handlung = GEGNER_LAUFEN;
+                            Handlung = GEGNER::LAUFEN;
                         else
                             state2 = ArmState::SENKEN;
                     }
@@ -617,7 +617,7 @@ void GegnerGolem::DoKI() {
         } break;
 
         // Feuer spucken
-        case GEGNER_SCHIESSEN: {
+        case GEGNER::SCHIESSEN: {
             count += 1.0f SYNC;
 
             // vorbeugen
@@ -629,7 +629,7 @@ void GegnerGolem::DoKI() {
             else {
                 // einmalig Sound abspielen
                 if (ShotDelay == 3.0f)
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_FEUERFALLE);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::FEUERFALLE);
 
                 Wackel = 10.0f;
                 ShotDelay -= 1.0f SYNC;
@@ -641,12 +641,12 @@ void GegnerGolem::DoKI() {
             }
 
             if (count > 30.0f)
-                Handlung = GEGNER_SPECIAL;
+                Handlung = GEGNER::SPECIAL;
 
         } break;
 
         //
-        case GEGNER_BOMBARDIEREN: {
+        case GEGNER::BOMBARDIEREN: {
             // arm heben
             switch (state2) {
                 // schnell heben
@@ -677,7 +677,7 @@ void GegnerGolem::DoKI() {
                                                         yPos + 245.0f, LAVA_SPRITZER2);
 
                         SoundManager.PlayWave3D(static_cast<int>(xPos) + 30, static_cast<int>(yPos) + 30,
-                                                10000 + random(2050), SOUND_WATERIN);
+                                                10000 + random(2050), SOUND::WATERIN);
 
                         Projectiles.PushProjectile(xPos - 90.0f, yPos + 300.0f, GOLEMSAEULE);
                     }
@@ -696,7 +696,7 @@ void GegnerGolem::DoKI() {
                         count -= 1.0f;
 
                         if (count < 0.0f)
-                            Handlung = GEGNER_SPECIAL;
+                            Handlung = GEGNER::SPECIAL;
                         else
                             state2 = ArmState::HEBEN;
                     }
@@ -704,7 +704,7 @@ void GegnerGolem::DoKI() {
             }
         } break;
 
-        case GEGNER_EXPLODIEREN: {
+        case GEGNER::EXPLODIEREN: {
             Energy = 100.0f;
 
             AnimCount -= SpeedFaktor;
@@ -714,7 +714,7 @@ void GegnerGolem::DoKI() {
                 // brodeln lassen
                 PartikelSystem.PushPartikel(xPos + static_cast<float>(random(160)),
                                             yPos + static_cast<float>(random(300)) + yoff, EXPLOSION_MEDIUM2);
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
 
                 if (random(2) == 0)
                     PartikelSystem.PushPartikel(xPos + static_cast<float>(random(160)),
@@ -732,7 +732,7 @@ void GegnerGolem::DoKI() {
     }  // switch
 
     // Hat der Golem den Hurri berührt ?
-    if (Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER::EXPLODIEREN)
         TestDamagePlayers(5.0f SYNC);
 }
 
@@ -741,7 +741,7 @@ void GegnerGolem::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerGolem::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION2);
 
     for (int p = 0; p < NUMPLAYERS; p++)
         DirectInput.Joysticks[Player[p].JoystickIndex].ForceFeedbackEffect(FFE_BIGRUMBLE);

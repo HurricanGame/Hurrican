@@ -1144,13 +1144,13 @@ void MenuClass::DoMenu() {
     // Wird noch keine Menu Musik gespielt ?
     //
     // DKS - Added function SongIsPlaying() to SoundManagerClass:
-    // if (SoundManager.CurrentSongNr != MUSIC_MENU &&
-    //        SoundManager.CurrentSongNr != MUSIC_HIGHSCORE &&
-    //        SoundManager.CurrentSongNr != MUSIC_CREDITS)
-    //    SoundManager.PlaySong(MUSIC_MENU, false);
-    if (!SoundManager.SongIsPlaying(MUSIC_MENU) && !SoundManager.SongIsPlaying(MUSIC_HIGHSCORE) &&
-        !SoundManager.SongIsPlaying(MUSIC_CREDITS))
-        SoundManager.PlaySong(MUSIC_MENU, false);
+    // if (SoundManager.CurrentSongNr != MUSIC::MENU &&
+    //        SoundManager.CurrentSongNr != MUSIC::HIGHSCORE &&
+    //        SoundManager.CurrentSongNr != MUSIC::CREDITS)
+    //    SoundManager.PlaySong(MUSIC::MENU, false);
+    if (!SoundManager.SongIsPlaying(MUSIC::MENU) && !SoundManager.SongIsPlaying(MUSIC::HIGHSCORE) &&
+        !SoundManager.SongIsPlaying(MUSIC::CREDITS))
+        SoundManager.PlaySong(MUSIC::MENU, false);
 
     // Logo einfaden
     if (RotationDir > 0)
@@ -1275,7 +1275,7 @@ void MenuClass::DoMenu() {
     if ((ShowLanguageInfoCounter > 256.0f && ShowLanguageInfoCounter < 1600.0f) &&
         (KeyDown(DIK_ESCAPE) || KeyDown(DIK_RETURN) || joy_escape || joy_enter)) {
         ShowLanguageInfoCounter = 256.0f;
-        SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+        SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
         AuswahlPossible = false;
         input_counter = 0.0f;
     }
@@ -1292,7 +1292,7 @@ void MenuClass::DoMenu() {
         input_counter = 0.0f;
         AuswahlPossible = false;
         AktuellerPunkt--;
-        SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+        SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
 
         // Spieler will auf "spiel fortsetzen" wechseln, aber es läuft noch kein spiel
         //
@@ -1325,7 +1325,7 @@ void MenuClass::DoMenu() {
         input_counter = 0.0f;
         AuswahlPossible = false;
         AktuellerPunkt++;
-        SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+        SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
 
         // Spieler will auf "spiel fortsetzen" wechseln, aber es läuft noch kein spiel
         //
@@ -1385,21 +1385,21 @@ void MenuClass::DoMenu() {
                     AktuellerPunkt = 1;
                 } else if (AktuellerPunkt == MENUPUNKT_CONTINUEGAME && Stage > -1) {
                     AktuellerPunkt = 0;
-                    SoundManager.StopSong(MUSIC_MENU, false);
+                    SoundManager.StopSong(MUSIC::MENU, false);
                     SpielZustand = GameStateEnum::GAMELOOP;
 
                     // DKS - We now use the sound manager's already-present pause functions here:
 #if 0
-                if (MUSIC_GetPaused(SoundManager.its_Songs[MUSIC_BOSS]->SongData))
-                    SoundManager.PlaySong(MUSIC_BOSS, true);
+                if (MUSIC::GetPaused(SoundManager.its_Songs[MUSIC::BOSS]->SongData))
+                    SoundManager.PlaySong(MUSIC::BOSS, true);
                 else if (Player[0].PunisherActive == true) {
-                    SoundManager.PlaySong(MUSIC_PUNISHER, true);
+                    SoundManager.PlaySong(MUSIC::PUNISHER, true);
                 }
                 else if (Player[0].Riding()) {
-                    SoundManager.PlaySong(MUSIC_FLUGSACK, true);
+                    SoundManager.PlaySong(MUSIC::FLUGSACK, true);
                 }
                 else
-                    SoundManager.PlaySong(MUSIC_STAGEMUSIC, true);
+                    SoundManager.PlaySong(MUSIC::STAGEMUSIC, true);
 #endif  // 0
                     SoundManager.UnpauseSongs();
                     SoundManager.UnpauseSounds();
@@ -1407,16 +1407,16 @@ void MenuClass::DoMenu() {
                     Player[0].PowerLinePossible = false;
                     Player[0].ShotDelay = 2.0f;
                 } else if (AktuellerPunkt == MENUPUNKT_CREDITS) {
-                    SoundManager.StopSong(MUSIC_MENU, false);
+                    SoundManager.StopSong(MUSIC::MENU, false);
                     // DKS
-                    // SoundManager.its_Songs[MUSIC_CREDITS]->FadingVolume = 0.0f;
-                    SoundManager.PlaySong(MUSIC_CREDITS, false);
-                    SoundManager.SetSongVolume(MUSIC_CREDITS, 100);
+                    // SoundManager.its_Songs[MUSIC::CREDITS]->FadingVolume = 0.0f;
+                    SoundManager.PlaySong(MUSIC::CREDITS, false);
+                    SoundManager.SetSongVolume(MUSIC::CREDITS, 100);
                     CreditsCounter = 0.0f;
                 } else if (AktuellerPunkt == MENUPUNKT_HIGHSCORES) {
-                    SoundManager.SetSongVolume(MUSIC_HIGHSCORE, 0);
-                    SoundManager.FadeSong(MUSIC_MENU, -5.0f, 0, false);
-                    SoundManager.FadeSong(MUSIC_HIGHSCORE, 5.0f, 100, false);
+                    SoundManager.SetSongVolume(MUSIC::HIGHSCORE, 0);
+                    SoundManager.FadeSong(MUSIC::MENU, -5.0f, 0, false);
+                    SoundManager.FadeSong(MUSIC::HIGHSCORE, 5.0f, 100, false);
                 }
 
                 if (AktuellerPunkt != MENUPUNKT_CONTINUEGAME && AktuellerPunkt != MENUPUNKT_STARTGAME)
@@ -1432,7 +1432,7 @@ void MenuClass::DoMenu() {
                 if (AktuellerPunkt == MENUPUNKT_HIGHSCORES)
                     AktuellerPunkt = MENUZUSTAND_ENTERNAME;
 
-                SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
 
                 // Highscore wieder von Anfang an blinken lassen
                 BlinkOffset = 0;
@@ -1548,7 +1548,7 @@ void MenuClass::DoMenu() {
                 AuswahlPossible = false;
                 AktuellerZustand = MENUZUSTAND_MAINMENU;
                 AktuellerPunkt = MENUPUNKT_VOLUMES;
-                SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
             }
         } break;  // Sound / Musik Lautstärke
 
@@ -1580,14 +1580,14 @@ void MenuClass::DoMenu() {
 
                     AktuellerZustand = MENUZUSTAND_VOLUMES;
                     AktuellerPunkt = MENUPUNKT_VOLUMES_LANGUAGE;
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
                 }
 
                 // oder nur zurück ?
                 else {
                     AktuellerZustand = MENUZUSTAND_VOLUMES;
                     AktuellerPunkt = MENUPUNKT_VOLUMES_LANGUAGE;
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
                 }
             }
 
@@ -1598,7 +1598,7 @@ void MenuClass::DoMenu() {
                 AuswahlPossible = false;
                 AktuellerZustand = MENUZUSTAND_VOLUMES;
                 AktuellerPunkt = MENUPUNKT_VOLUMES_LANGUAGE;
-                SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
             }
 
         } break;  // Languages
@@ -1856,7 +1856,7 @@ void MenuClass::DoMenu() {
                     AuswahlPossible = false;
                     AktuellerZustand = MENUZUSTAND_VOLUMES;
                     AktuellerPunkt = MENUPUNKT_VOLUMES_TASTEN;
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
                 }
             }
         } break;  // Tasten
@@ -1869,23 +1869,23 @@ void MenuClass::DoMenu() {
                 input_counter = 0.0f;
 
                 if (AktuellerZustand == MENUPUNKT_CREDITS) {
-                    SoundManager.SetSongVolume(MUSIC_MENU, 0);
-                    SoundManager.FadeSong(MUSIC_CREDITS, -5.0f, 0, false);
-                    SoundManager.FadeSong(MUSIC_MENU, 5.0f, 100, false);
+                    SoundManager.SetSongVolume(MUSIC::MENU, 0);
+                    SoundManager.FadeSong(MUSIC::CREDITS, -5.0f, 0, false);
+                    SoundManager.FadeSong(MUSIC::MENU, 5.0f, 100, false);
                     CreditsCounter = 0.0f;
                     AktuellerPunkt = 4;
                 }
 
                 if (AktuellerZustand == MENUPUNKT_HIGHSCORES) {
-                    SoundManager.SetSongVolume(MUSIC_MENU, 0);
-                    SoundManager.FadeSong(MUSIC_HIGHSCORE, -5.0f, 0, false);
-                    SoundManager.FadeSong(MUSIC_MENU, 5.0f, 100, false);
+                    SoundManager.SetSongVolume(MUSIC::MENU, 0);
+                    SoundManager.FadeSong(MUSIC::HIGHSCORE, -5.0f, 0, false);
+                    SoundManager.FadeSong(MUSIC::MENU, 5.0f, 100, false);
                     AktuellerPunkt = 3;
                 }
 
                 AuswahlPossible = false;
                 AktuellerZustand = MENUZUSTAND_MAINMENU;
-                SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
             }
         } break;  // Credits und Highscore
 
@@ -1958,7 +1958,7 @@ void MenuClass::DoMenu() {
                 SpielZustand = GameStateEnum::MAINMENU;
                 AktuellerZustand = MENUPUNKT_HIGHSCORES;
 
-                SoundManager.SetSongVolume(MUSIC_MENU, 0.0f);
+                SoundManager.SetSongVolume(MUSIC::MENU, 0.0f);
 
                 // Highscore noch sichern
                 SaveHighscore();
@@ -1982,7 +1982,7 @@ void MenuClass::DoMenu() {
                     if (KeyDown(DIK_BACK)) {
                         // DKS - added in missing/disabled backspace support
                         if (newname_len > 1) {
-                            SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+                            SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
                             NewName[newname_len - 2] = '_';
                             NewName[newname_len - 1] = '\0';
                             newname_len--;
@@ -1991,7 +1991,7 @@ void MenuClass::DoMenu() {
                         // DKS - added in missing/disabled space support
                         // Only insert a space if the string is not empty
                         if (newname_len > 1 && NewName[newname_len - 1] == '_' && newname_len < newname_maxlen) {
-                            SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+                            SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
                             NewName[newname_len - 1] = ' ';
                             NewName[newname_len] = '_';
                             NewName[newname_len + 1] = '\0';
@@ -2005,7 +2005,7 @@ void MenuClass::DoMenu() {
                             strcpy_s(keyname, GetKeyName(Taste));
                             keyname[0] = toupper(keyname[0]);
                             if ((keyname[0] >= 'A' && keyname[0] <= 'Z') || (keyname[0] >= '0' && keyname[0] <= '9')) {
-                                SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+                                SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
                                 // NewName should already have a trailing underscore, indicating the cursor..
                                 //  replace it with the new char and a new underscore
                                 if (newname_len > 0) {
@@ -2056,13 +2056,13 @@ void MenuClass::DoMenu() {
 
                 // Tutorial spielen?
                 if (AktuellerPunkt == MENUPUNKT_NEWGAME_TUTORIAL) {
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
 
                     // Game starten mit Tutorial
                     NUMPLAYERS = 1;
                     RunningTutorial = true;
                     Skill = SKILL_EASY;
-                    //					SoundManager.StopSong(MUSIC_MENU, false);
+                    //					SoundManager.StopSong(MUSIC::MENU, false);
                     InitNewGame();
                     InitNewGameLevel();
                     SpielZustand = GameStateEnum::GAMELOOP;
@@ -2081,7 +2081,7 @@ void MenuClass::DoMenu() {
                     LoadSavegames();
                 }
 
-                SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
             }
         } break;  // SPIEL VERLASSEN
 
@@ -2106,7 +2106,7 @@ void MenuClass::DoMenu() {
                 AktuellerPunkt = 1;
 
                 AktuellerZustand = MENUZUSTAND_SELECTSKILL;
-                SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
 
                 AuswahlPossible = false;
             }
@@ -2133,7 +2133,7 @@ void MenuClass::DoMenu() {
                 NUMPLAYERS = tempNUMPLAYERS;
                 AuswahlPossible = false;
                 RunningTutorial = false;
-                SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
 
                 // Game starten
                 // mit gewähltem Skill
@@ -2171,7 +2171,7 @@ void MenuClass::DoMenu() {
                 RunningTutorial = false;
 
                 AuswahlPossible = false;
-                SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
 
                 // Aktuell gewähltes Savegame laden, wenn es existiert
                 // bzw die Werte aus den schon geladenen Savegames übernehmen
@@ -2213,7 +2213,7 @@ void MenuClass::DoMenu() {
                     // An der Stelle im Savegame weiterspielen
                     AktuellerZustand = 3; // MAINMENU ???
                     AktuellerPunkt = 0;
-                    //					SoundManager.StopSong(MUSIC_MENU, false);
+                    //					SoundManager.StopSong(MUSIC::MENU, false);
                     InitNewGameLevel();  // Neues level laden
                     SpielZustand = GameStateEnum::GAMELOOP;     // Weiterspielen
                 }
@@ -2233,7 +2233,7 @@ void MenuClass::DoMenu() {
             // oder weiterspielen ohne zu speichern (je nach Auswahl)
             if (selected) {
                 AuswahlPossible = false;
-                SoundManager.PlayWave(100, 128, 11025, SOUND_CLICK);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::CLICK);
 
                 // Bestimmtes Savegame ausgewählt
                 // Dann hier speichern
@@ -2660,7 +2660,7 @@ void MenuClass::CheckForNewHighscore() {
     AktuellerZustand = MENUPUNKT_HIGHSCORES;
     SoundManager.StopSongs();
     SoundManager.StopSounds();
-    SoundManager.PlaySong(MUSIC_HIGHSCORE, false);
+    SoundManager.PlaySong(MUSIC::HIGHSCORE, false);
 
     // Feststellen ob wir eine neue Highscore erreicht haben
     //

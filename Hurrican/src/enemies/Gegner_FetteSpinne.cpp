@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerFetteSpinne::GegnerFetteSpinne(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 180;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -73,7 +73,7 @@ void GegnerFetteSpinne::DoKI() {
     // Je nach Handlung richtig verhalten
     //
     switch (Handlung) {
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             // Speed setzen
             xAcc = 5.0f * BlickRichtung;
 
@@ -114,7 +114,7 @@ void GegnerFetteSpinne::DoKI() {
 
                     // Decke drüber? Dann hochspringen
                     if (block == true) {
-                        Handlung = GEGNER_SPECIAL;
+                        Handlung = GEGNER::SPECIAL;
                         AnimPhase = 20;
                         AnimEnde = 0;
                         AnimSpeed = 0.0f;
@@ -127,7 +127,7 @@ void GegnerFetteSpinne::DoKI() {
             // An der Decke? Dann auf den Spieler fallen lassen
             if (WalkState == 1) {
                 if (yPos < pAim->ypos && PlayerAbstandHoriz() < 20) {
-                    Handlung = GEGNER_SPECIAL;
+                    Handlung = GEGNER::SPECIAL;
                     AnimPhase = 20;
                     AnimEnde = 0;
                     AnimSpeed = 0.0f;
@@ -146,12 +146,12 @@ void GegnerFetteSpinne::DoKI() {
         } break;
 
         // kurz in die Hocke gehen
-        case GEGNER_SPECIAL: {
+        case GEGNER::SPECIAL: {
             AnimCount -= 1.0f SYNC;
 
             // abspringen
             if (AnimCount < 0.0f) {
-                Handlung = GEGNER_SPRINGEN;
+                Handlung = GEGNER::SPRINGEN;
                 AnimPhase = 10;
                 AnimEnde = 19;
                 AnimSpeed = 0.5f;
@@ -167,7 +167,7 @@ void GegnerFetteSpinne::DoKI() {
         } break;
 
         // im Flug drehen
-        case GEGNER_SPRINGEN: {
+        case GEGNER::SPRINGEN: {
             // An der Decke oder am Boden angekommen?
             if ((ySpeed < 0.0f && blocko & BLOCKWERT_WAND) || (ySpeed > 0.0f && blocku & BLOCKWERT_WAND) ||
                 (ySpeed > 0.0f && blocku & BLOCKWERT_PLATTFORM)) {
@@ -179,7 +179,7 @@ void GegnerFetteSpinne::DoKI() {
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
 
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
 
                 // umdrehen
                 if (WalkState == 0)
@@ -213,7 +213,7 @@ void GegnerFetteSpinne::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
                                     yPos + static_cast<float>(random(30)), SPIDERSPLITTER);
 
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION3);
 
     Player[0].Score += 800;  // Punkte geben
 }

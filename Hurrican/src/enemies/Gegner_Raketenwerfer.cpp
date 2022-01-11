@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerRaketenwerfer::GegnerRaketenwerfer(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 60;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -41,7 +41,7 @@ void GegnerRaketenwerfer::DoKI() {
 
         // Rakete schiessen
         if (AnimPhase == 6) {
-            SoundManager.PlayWave(100, 128, 11025, SOUND_GRANATE);
+            SoundManager.PlayWave(100, 128, 11025, SOUND::GRANATE);
             Projectiles.PushProjectile(xPos + 2.0f, yPos + 5.0f, ROCKETWERFER, pAim);
         }
 
@@ -65,7 +65,7 @@ void GegnerRaketenwerfer::GegnerExplode() {
                                     yPos - 8.0f + static_cast<float>(random(20)), SMOKE);
     }
 
-    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_EXPLOSION4);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::EXPLOSION4);  // Sound ausgeben
 
     Player[0].Score += 400;
 }

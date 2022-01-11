@@ -14,9 +14,9 @@
 // --------------------------------------------------------------------------------------
 
 GegnerFadeMusic::GegnerFadeMusic(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     Value1 = Wert1;
-    Value2 = SOUND_TRIGGER_START + Wert2;
+    Value2 = SOUND::TRIGGER_START + Wert2;
     ChangeLight = Light;
     Destroyable = false;
     Energy = 100;
@@ -34,18 +34,18 @@ void GegnerFadeMusic::DoKI() {
         if (Value1 == 0) {
             // Spielt die Levelmusik überhaupt oder fadet nicht (oder ein) ?
             // DKS - No need to check for this, overhauled sound manager:
-            // if (MUSIC_IsPlaying(SoundManager.its_Songs[MUSIC_STAGEMUSIC]->SongData))// &&
-            // SoundManager.its_Songs[MUSIC_STAGEMUSIC]->FadingVolume >= 0.0f)
-            SoundManager.FadeSong(MUSIC_STAGEMUSIC, -1.0f, 0, true);
+            // if (MUSIC::IsPlaying(SoundManager.its_Songs[MUSIC::STAGEMUSIC]->SongData))// &&
+            // SoundManager.its_Songs[MUSIC::STAGEMUSIC]->FadingVolume >= 0.0f)
+            SoundManager.FadeSong(MUSIC::STAGEMUSIC, -1.0f, 0, true);
         }
 
         // Musik Einfaden
         if (Value1 == 1) {
             // Ist die LevelMusik aus oder fadet nicht schon oder gerade aus ?
             // DKS - No need to check for this, overhauled sound manager:
-            // if (FMUSIC_GetPaused(SoundManager.its_Songs[MUSIC_STAGEMUSIC]->SongData)) //&&
-            // SoundManager.its_Songs[MUSIC_STAGEMUSIC]->FadingVolume <= 0.0f)
-            SoundManager.FadeSong(MUSIC_STAGEMUSIC, 1.0f, 100, true);
+            // if (FMUSIC::GetPaused(SoundManager.its_Songs[MUSIC::STAGEMUSIC]->SongData)) //&&
+            // SoundManager.its_Songs[MUSIC::STAGEMUSIC]->FadingVolume <= 0.0f)
+            SoundManager.FadeSong(MUSIC::STAGEMUSIC, 1.0f, 100, true);
         }
 
         // SoundTrigger Ausfaden

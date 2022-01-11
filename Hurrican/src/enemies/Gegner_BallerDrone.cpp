@@ -11,7 +11,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerBallerdrone::GegnerBallerdrone(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 120;
     ChangeLight = Light;
     Destroyable = true;
@@ -27,7 +27,7 @@ GegnerBallerdrone::GegnerBallerdrone(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerBallerdrone::DoDraw() {
-    if (Handlung == GEGNER_FALLEN)
+    if (Handlung == GEGNER::FALLEN)
         pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
                                                yPos - TileEngine.YOffset, AnimPhase, 0xFFFF0000);
     else
@@ -74,7 +74,7 @@ void GegnerBallerdrone::DoKI() {
     switch (Handlung) {
         // fliegen und evtl. ballern ?
         //
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             // in Richtung Spieler fliegen
             if (xPos + 45 < pAim->xpos + 35)
                 xAcc = 2.5f;
@@ -101,14 +101,14 @@ void GegnerBallerdrone::DoKI() {
                     shotdelay = 15.0f;
                     Projectiles.PushProjectile(xPos + 12.0f, yPos + 50.0f, SUCHSCHUSS2);
                     Projectiles.PushProjectile(xPos + 64.0f, yPos + 50.0f, SUCHSCHUSS2);
-                    SoundManager.PlayWave(50, 128, 14000 + random(2000), SOUND_GOLEMSHOT);
+                    SoundManager.PlayWave(50, 128, 14000 + random(2000), SOUND::GOLEMSHOT);
                 }
             }
         } break;
 
         // rumfliegen, weil abgeschossen ?
         //
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             // An Wand gestossen ?
             //
             if (blocko & BLOCKWERT_WAND || blocku & BLOCKWERT_WAND || blockl & BLOCKWERT_WAND ||
@@ -132,17 +132,17 @@ void GegnerBallerdrone::DoKI() {
     // Spieler berührt ?
     //
 
-    if (Handlung != GEGNER_FALLEN)
+    if (Handlung != GEGNER::FALLEN)
         TestDamagePlayers(4.0f SYNC);
 
     // abgeknallt ?
     // Dann Explosion erzeugen und lossegeln lassen ;)
     //
-    if (Energy <= 0.0f && Handlung != GEGNER_FALLEN) {
+    if (Energy <= 0.0f && Handlung != GEGNER::FALLEN) {
         Energy = 100.0f;
-        Handlung = GEGNER_FALLEN;
+        Handlung = GEGNER::FALLEN;
         yAcc = 3.0f;
-        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
         PartikelSystem.PushPartikel(xPos - 20.0f, yPos - 40.0f, EXPLOSION_BIG);
         shotdelay = 1.0f;
     }
@@ -153,7 +153,7 @@ void GegnerBallerdrone::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerBallerdrone::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION3);
 
     for (int i = 0; i < 10; i++)
         PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(90)),

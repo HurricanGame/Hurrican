@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerBigFish::GegnerBigFish(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_NOTVISIBLE;
+    Handlung = GEGNER::NOTVISIBLE;
     BlickRichtung = LINKS;
     Energy = 2000;
     Value1 = Wert1;
@@ -124,17 +124,17 @@ void GegnerBigFish::NewAction() {
     switch (j) {
         case 0: {
             ShotCount = 1;
-            Handlung = GEGNER_SPECIAL;
+            Handlung = GEGNER::SPECIAL;
         } break;
 
         case 1: {
             ShotCount = 5;
-            Handlung = GEGNER_SCHIESSEN;
+            Handlung = GEGNER::SCHIESSEN;
         } break;
 
         case 2: {
             ShotCount = 3;
-            Handlung = GEGNER_LAUFEN;
+            Handlung = GEGNER::LAUFEN;
         } break;
     }
 }
@@ -251,13 +251,13 @@ void GegnerBigFish::DoKI() {
         SinOff = 0.0f;
 
     // Energie anzeigen
-    if (Handlung != GEGNER_INIT && Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER::INIT && Handlung != GEGNER::EXPLODIEREN)
         HUD.ShowBossHUD(2000, Energy);
 
     // Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
-    if (Active && Handlung != GEGNER_EXPLODIEREN && TileEngine.Zustand == TileStateEnum::SCROLLBAR && Energy > 0.0f) {
+    if (Active && Handlung != GEGNER::EXPLODIEREN && TileEngine.Zustand == TileStateEnum::SCROLLBAR && Energy > 0.0f) {
         TileEngine.ScrollLevel(Value1, Value2, TileStateEnum::SCROLLTOLOCK);  // Level auf die Faust zentrieren
-        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);       // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC::STAGEMUSIC, -2.0f, 0, true);       // Ausfaden und pausieren
         xPos += 400;
     }
 
@@ -273,14 +273,14 @@ void GegnerBigFish::DoKI() {
                                     yPos + 50.0f + static_cast<float>(random(100)), PIRANHABLUT);
 
     // Hat der Boss keine Energie mehr ? Dann explodiert er
-    if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN) {
+    if (Energy <= 100.0f && Handlung != GEGNER::EXPLODIEREN) {
         // Endboss-Musik ausfaden und abschalten
-        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC::BOSS, -2.0f, 0, false);
 
         // zum Spieler scrollen
         ScrolltoPlayeAfterBoss();
 
-        Handlung = GEGNER_EXPLODIEREN;
+        Handlung = GEGNER::EXPLODIEREN;
         xSpeed = 0.0f;
         ySpeed = 2.0f;
         xAcc = 0.0f;
@@ -295,19 +295,19 @@ void GegnerBigFish::DoKI() {
         DoMove();
     else
         switch (Handlung) {
-            case GEGNER_NOTVISIBLE:  // Warten bis der Screen zentriert wurde
+            case GEGNER::NOTVISIBLE:  // Warten bis der Screen zentriert wurde
             {
                 if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                     // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-                    if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
-                        SoundManager.PlaySong(MUSIC_BOSS, false);
+                    if (!SoundManager.SongIsPlaying(MUSIC::BOSS))
+                        SoundManager.PlaySong(MUSIC::BOSS, false);
 
                     // Und Boss erscheinen lassen
-                    Handlung = GEGNER_EINFLIEGEN;
+                    Handlung = GEGNER::EINFLIEGEN;
                 }
             } break;
 
-            case GEGNER_EINFLIEGEN:  // Gegner kommt DAS ERSTE MAL in den Screen geflogen
+            case GEGNER::EINFLIEGEN:  // Gegner kommt DAS ERSTE MAL in den Screen geflogen
             {
                 Energy = 2000;
                 DamageTaken = 0.0f;
@@ -316,7 +316,7 @@ void GegnerBigFish::DoKI() {
                 MoveTo(static_cast<float>(Value1 + 450), yPos);
             } break;
 
-            case GEGNER_LAUFEN: {
+            case GEGNER::LAUFEN: {
                 MoveTo(static_cast<float>(Value1 + 50 + random(300)),
                        static_cast<float>(Value2 + 50 + random(200)));
                 ShotCount--;
@@ -326,7 +326,7 @@ void GegnerBigFish::DoKI() {
             } break;
 
             // einzelne Fische ausspucken
-            case GEGNER_SCHIESSEN: {
+            case GEGNER::SCHIESSEN: {
                 static bool shot = false;
 
                 // und Maulbewegung
@@ -341,7 +341,7 @@ void GegnerBigFish::DoKI() {
                 if (MaulWinkel > 2 * PI) {
                     shot = false;
                     MaulWinkel = 0.0f;
-                    SoundManager.PlayWave(50, 128, 6000 + random(500), SOUND_KLONG);
+                    SoundManager.PlayWave(50, 128, 6000 + random(500), SOUND::KLONG);
 
                     if (ShotCount <= 0)
                         NewAction();
@@ -350,7 +350,7 @@ void GegnerBigFish::DoKI() {
             } break;
 
             // mehrere Fische ausspucken
-            case GEGNER_SPECIAL: {
+            case GEGNER::SPECIAL: {
                 static bool shot = false;
 
                 // und Maulbewegung
@@ -368,7 +368,7 @@ void GegnerBigFish::DoKI() {
                 if (MaulWinkel > 2 * PI) {
                     shot = false;
                     MaulWinkel = 0.0f;
-                    SoundManager.PlayWave(50, 128, 6000 + random(500), SOUND_KLONG);
+                    SoundManager.PlayWave(50, 128, 6000 + random(500), SOUND::KLONG);
 
                     if (ShotCount <= 0)
                         NewAction();
@@ -377,7 +377,7 @@ void GegnerBigFish::DoKI() {
             } break;
 
             // Boss fliegt in die Luft
-            case GEGNER_EXPLODIEREN: {
+            case GEGNER::EXPLODIEREN: {
                 Energy = 100;
                 if (yPos > Value2 + 300.0f)
                     Energy = 0.0f;
@@ -407,7 +407,7 @@ void GegnerBigFish::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerBigFish::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION2);
 
     // Blut
     for (int i = 0; i < 80; i++)

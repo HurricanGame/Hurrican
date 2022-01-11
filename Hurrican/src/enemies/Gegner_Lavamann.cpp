@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerLavamann::GegnerLavamann(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_INIT;
+    Handlung = GEGNER::INIT;
     AnimStart = 0;
     AnimEnde = 20;
     AnimSpeed = 0.15f;
@@ -81,7 +81,7 @@ void GegnerLavamann::DoKI() {
 
     // runterfallen?
     //
-    if (Handlung != GEGNER_STEHEN) {
+    if (Handlung != GEGNER::STEHEN) {
         if (!(blocku & BLOCKWERT_SCHRAEGE_R) && !(blocku & BLOCKWERT_SCHRAEGE_L)) {
             blocku = TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
@@ -117,12 +117,12 @@ void GegnerLavamann::DoKI() {
         // Zum ersten mal im Screen?
         // Dann Sound ausgeben
         //
-        case GEGNER_INIT: {
-            SoundManager.PlayWave(100, 128, 10000 + random(1000), SOUND_FEUERFALLE);
-            Handlung = GEGNER_LAUFEN;
+        case GEGNER::INIT: {
+            SoundManager.PlayWave(100, 128, 10000 + random(1000), SOUND::FEUERFALLE);
+            Handlung = GEGNER::LAUFEN;
         } break;
 
-        case GEGNER_FALLEN:  // Normal runterfallen
+        case GEGNER::FALLEN:  // Normal runterfallen
         {
             // Keine zu hohe Geschwindigkeit
             if (ySpeed > 25.0f)
@@ -130,7 +130,7 @@ void GegnerLavamann::DoKI() {
 
             // Testen, ob der Lavamann auf den Boden kommt
             if (blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM) {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 yAcc = 0.0f;
                 ySpeed = 0.0f;
             }
@@ -141,7 +141,7 @@ void GegnerLavamann::DoKI() {
     }  // switch
 
     // Testen, ob der Spieler den Lavamann berührt hat
-    if (Handlung != GEGNER_WATSCHELN && Handlung != GEGNER_SPRINGEN)
+    if (Handlung != GEGNER::WATSCHELN && Handlung != GEGNER::SPRINGEN)
         TestDamagePlayers(35.0f, true);
 }
 
@@ -167,7 +167,7 @@ void GegnerLavamann::GegnerExplode() {
                                     yPos - 20.0f + static_cast<float>(random(50)), MINIFLARE);
     }
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 350;
 }

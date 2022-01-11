@@ -14,7 +14,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerEisFaust::GegnerEisFaust(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_NOTVISIBLE;
+    Handlung = GEGNER::NOTVISIBLE;
     BlickRichtung = LINKS;
     Energy = 7000;
     Value1 = Wert1;
@@ -31,7 +31,7 @@ GegnerEisFaust::GegnerEisFaust(int Wert1, int Wert2, bool Light) {
 
 void GegnerEisFaust::DoKI() {
     // Energie anzeigen
-    if (Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER::NOTVISIBLE && Handlung != GEGNER::EXPLODIEREN)
         HUD.ShowBossHUD(7000, Energy);
 
     // Levelausschnitt auf die Faust zentrieren, sobald dieses sichtbar wird
@@ -41,7 +41,7 @@ void GegnerEisFaust::DoKI() {
                                TileStateEnum::SCROLLTOLOCK);  // Level auf die Faust zentrieren
         yPos -= 300;                                   // und Faust aus dem Screen setzen
 
-        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC::STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
@@ -56,8 +56,8 @@ void GegnerEisFaust::DoKI() {
                                     yPos + 60.0f + static_cast<float>(random(200)), SMOKE);
 
     // Hat die Faust keine Energie mehr ? Dann explodiert sie
-    if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN) {
-        Handlung = GEGNER_EXPLODIEREN;
+    if (Energy <= 100.0f && Handlung != GEGNER::EXPLODIEREN) {
+        Handlung = GEGNER::EXPLODIEREN;
         xSpeed = 0.0f;
         ySpeed = 0.0f;
         xAcc = 0.0f;
@@ -65,25 +65,25 @@ void GegnerEisFaust::DoKI() {
         AnimCount = 50.0f;
 
         // Endboss-Musik ausfaden und abschalten
-        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC::BOSS, -2.0f, 0, false);
     }
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_NOTVISIBLE:  // Warten bis der Screen zentriert wurde
+        case GEGNER::NOTVISIBLE:  // Warten bis der Screen zentriert wurde
         {
             if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 // DKS - Added function SongIsPlaying() to SoundManagerClass:
-                if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
-                    SoundManager.PlaySong(MUSIC_BOSS, false);
+                if (!SoundManager.SongIsPlaying(MUSIC::BOSS))
+                    SoundManager.PlaySong(MUSIC::BOSS, false);
 
                 // Und Boss erscheinen lassen
-                Handlung = GEGNER_EINFLIEGEN;
+                Handlung = GEGNER::EINFLIEGEN;
             }
         } break;
 
-        case GEGNER_EINFLIEGEN2:  // Gegner kommt DAS ERSTE MAL in den Screen geflogen
+        case GEGNER::EINFLIEGEN2:  // Gegner kommt DAS ERSTE MAL in den Screen geflogen
         {
             Energy = 7000;
             DamageTaken = 0.0f;
@@ -91,22 +91,22 @@ void GegnerEisFaust::DoKI() {
             yPos += static_cast<float>(8.0 SYNC);           // Faust nach unten bewegen
             if (yPos >= TileEngine.ScrolltoY)  // Weit genug unten ?
             {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 xAcc = -8.0f;
             }
         } break;
 
-        case GEGNER_EINFLIEGEN:  // Gegner kommt in den Screen geflogen
+        case GEGNER::EINFLIEGEN:  // Gegner kommt in den Screen geflogen
         {
             yPos += static_cast<float>(8.0 SYNC);           // Faust nach unten bewegen
             if (yPos >= TileEngine.ScrolltoY)  // Weit genug unten ?
             {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 xAcc = -8.0f;
             }
         } break;
 
-        case GEGNER_LAUFEN:  // Über dem Spieler schweben und ggf runtersausen
+        case GEGNER::LAUFEN:  // Über dem Spieler schweben und ggf runtersausen
         {
             AnimCount -= SpeedFaktor;
 
@@ -127,7 +127,7 @@ void GegnerEisFaust::DoKI() {
             // Spieler unter der Faust ? Dann crushen
             if (pAim->xpos < xPos + GegnerRect[GegnerArt].right - 115 &&
                 pAim->xpos + pAim->CollideRect.right > xPos + 155 && random(2) == 0) {
-                Handlung = GEGNER_CRUSHEN;
+                Handlung = GEGNER::CRUSHEN;
                 ySpeed = 0.0f;
                 yAcc = 10.0f;
                 xSpeed = 0.0f;
@@ -137,7 +137,7 @@ void GegnerEisFaust::DoKI() {
             // Faust Spezial Aktion und oben rausfliegen ?
             if (AnimCount <= 0.0f) {
                 AnimCount = 50.0f;  // Nächste Spezial Aktion planen
-                Handlung = GEGNER_SPRINGEN;
+                Handlung = GEGNER::SPRINGEN;
                 xAcc = 0.0f;
                 xSpeed = 0.0f;
                 ySpeed = -5.0f;
@@ -147,12 +147,12 @@ void GegnerEisFaust::DoKI() {
         } break;
 
         // Faust zerquetscht den Hurri
-        case GEGNER_CRUSHEN: {
+        case GEGNER::CRUSHEN: {
             // Auf den Boden gecrashed ?
             if (blocku & BLOCKWERT_WAND) {
                 // Sound ausgeben
-                SoundManager.PlayWave(100, 128, 6000, SOUND_EXPLOSION1);
-                SoundManager.PlayWave(100, 128, 6000, SOUND_LANDEN);
+                SoundManager.PlayWave(100, 128, 6000, SOUND::EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 6000, SOUND::LANDEN);
 
                 // Schnee am Boden erzeugen
                 for (int i = 0; i < 80; i++)
@@ -167,15 +167,15 @@ void GegnerEisFaust::DoKI() {
                 // Screen Wackeln lassen
                 ShakeScreen(2.5);
 
-                Handlung = GEGNER_CRUSHENERHOLEN;
+                Handlung = GEGNER::CRUSHENERHOLEN;
             }
         } break;
 
         // Faust fliegt nach dem Crushen wieder nach oben
-        case GEGNER_CRUSHENERHOLEN: {
+        case GEGNER::CRUSHENERHOLEN: {
             // Nach dem nach oben fliegen wieder ganz oben ?
             if (ySpeed < 0.0f && yPos <= TileEngine.ScrolltoY) {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
                 yPos = TileEngine.ScrolltoY;
@@ -184,17 +184,17 @@ void GegnerEisFaust::DoKI() {
         } break;
 
         // Faust fliegt oben raus
-        case GEGNER_SPRINGEN: {
+        case GEGNER::SPRINGEN: {
             // Oben umkehren neue Aktion machen?
             if (yPos <= TileEngine.ScrolltoY - 280.0f) {
                 if (random(2) == 0) {
-                    Handlung = GEGNER_FALLEN;
+                    Handlung = GEGNER::FALLEN;
                     AnimPhase = 1;
                     yAcc = 0;
                     ySpeed = 50.0f;
                     xPos = pAim->xpos - 110;
                 } else {
-                    Handlung = GEGNER_BOMBARDIEREN;
+                    Handlung = GEGNER::BOMBARDIEREN;
 
                     xPos = static_cast<float>(Value1) - 250.0f;
                     yPos = static_cast<float>(Value2) - 200.0f;
@@ -208,7 +208,7 @@ void GegnerEisFaust::DoKI() {
         } break;
 
         // Faust fliegt von rechts nach links und wirft dabei Eiszapfen
-        case GEGNER_BOMBARDIEREN: {
+        case GEGNER::BOMBARDIEREN: {
             if (xSpeed > 0.0f)
                 BlickRichtung = RECHTS;
             else
@@ -235,7 +235,7 @@ void GegnerEisFaust::DoKI() {
                 AnimCount = 50.0f;
 
                 AnimPhase = 0;  // Wieder Faust von der Seite
-                Handlung = GEGNER_EINFLIEGEN;
+                Handlung = GEGNER::EINFLIEGEN;
                 xSpeed = 0.0f;
                 xAcc = 0.0f;
                 ySpeed = 0.0f;
@@ -247,12 +247,12 @@ void GegnerEisFaust::DoKI() {
         } break;
 
         // Faust fällt auf den Hurri drauf und fliegt dann wieder oben raus
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             // Auf den Boden gecrashed ?
             if (blocku & BLOCKWERT_WAND) {
                 // Sound ausgeben
-                SoundManager.PlayWave(100, 128, 6000, SOUND_EXPLOSION1);
-                SoundManager.PlayWave(100, 128, 6000, SOUND_LANDEN);
+                SoundManager.PlayWave(100, 128, 6000, SOUND::EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 6000, SOUND::LANDEN);
 
                 // Schnee am Boden erzeugen
                 for (int i = 0; i < 80; i++)
@@ -267,16 +267,16 @@ void GegnerEisFaust::DoKI() {
                 // Screen Wackeln lassen
                 ShakeScreen(5);
 
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
             }
         } break;
 
         // Faust fliegt nach dem Crushen wieder nach oben raus
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             // Nach dem nach oben fliegen wieder ganz oben ?
             if (yPos <= TileEngine.ScrolltoY - 280.0f) {
                 AnimPhase = 0;  // Wieder Faust von der Seite
-                Handlung = GEGNER_EINFLIEGEN;
+                Handlung = GEGNER::EINFLIEGEN;
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
                 yPos = TileEngine.ScrolltoY - 250.0f;
@@ -284,7 +284,7 @@ void GegnerEisFaust::DoKI() {
         } break;
 
         // Faust fliegt in die Luft
-        case GEGNER_EXPLODIEREN: {
+        case GEGNER::EXPLODIEREN: {
             AnimCount -= SpeedFaktor;
 
             Energy = 100.0f;
@@ -292,7 +292,7 @@ void GegnerEisFaust::DoKI() {
             if (random(5) == 0) {
                 PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200)),
                                             yPos + 20.0f + static_cast<float>(random(200)), EXPLOSION_MEDIUM2);
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
             }
 
             if (random(8) == 0)
@@ -313,7 +313,7 @@ void GegnerEisFaust::DoKI() {
     }  // switch
 
     // Hat die Faust den Hurri getroffen ?
-    if (Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER::EXPLODIEREN)
         TestDamagePlayers(5.0f SYNC);
 }
 

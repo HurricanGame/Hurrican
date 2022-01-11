@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerSideRocket::GegnerSideRocket(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_INIT;
+    Handlung = GEGNER::INIT;
     Energy = 50;
     ChangeLight = Light;
     Destroyable = true;
@@ -38,25 +38,25 @@ void GegnerSideRocket::DoKI() {
     switch (Handlung) {
         // Jaeger wird "aktiviert", sprich, der Timer wird gestartet
         //
-        case GEGNER_INIT: {
+        case GEGNER::INIT: {
             AnimCount = static_cast<float>(Value2);
 
             if (PlayerAbstandVert() < 100 && PlayerAbstandHoriz() < 400 &&
                 ((Value1 == 0 && xPos > pAim->xpos) || (Value1 != 0 && xPos < pAim->xpos)))
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
         } break;
 
         // Timer läuft ab
         //
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             AnimCount -= 1.0f SYNC;
 
             // Timer zu ende? Dann Rakete starten
             //
             if (AnimCount <= 0.0f) {
                 AnimCount = 0.1f;
-                Handlung = GEGNER_LAUFEN;
-                SoundManager.PlayWave(75, 128, 8000 + random(4000), SOUND_ROCKET);
+                Handlung = GEGNER::LAUFEN;
+                SoundManager.PlayWave(75, 128, 8000 + random(4000), SOUND::ROCKET);
 
                 if (Value1 == 0) {
                     xSpeed = -20.0f;
@@ -71,7 +71,7 @@ void GegnerSideRocket::DoKI() {
 
         // Rakete fliegt
         //
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             if (xSpeed < -30.0f)
                 xSpeed = -30.0f;
             else if (xSpeed > 30.0f)
@@ -113,7 +113,7 @@ void GegnerSideRocket::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerSideRocket::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
 
     PartikelSystem.PushPartikel(xPos - 10, yPos - 20, EXPLOSION_MEDIUM2);
 

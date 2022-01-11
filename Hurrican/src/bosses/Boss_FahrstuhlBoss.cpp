@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerFahrstuhlBoss::GegnerFahrstuhlBoss(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_NOTVISIBLE;
+    Handlung = GEGNER::NOTVISIBLE;
     BlickRichtung = LINKS;
     Energy = 6000;
     ChangeLight = Light;
@@ -77,12 +77,12 @@ void GegnerFahrstuhlBoss::DoKI() {
         x1 = 0;
 
     // Energie anzeigen
-    if (Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER::NOTVISIBLE && Handlung != GEGNER::EXPLODIEREN)
         HUD.ShowBossHUD(6000, Energy);
 
     // Boss aktivieren und Mucke laufen lassen
     if (Active == true && Activated == false) {
-        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC::STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
         Activated = true;
         Value1 = static_cast<int>(TileEngine.YOffset + 100.0f);
     }
@@ -94,8 +94,8 @@ void GegnerFahrstuhlBoss::DoKI() {
         DamageTaken = 0.0f;  // oder ganz anhalten
 
     // Hat der Boss keine Energie mehr ? Dann explodiert er
-    if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN) {
-        Handlung = GEGNER_EXPLODIEREN;
+    if (Energy <= 100.0f && Handlung != GEGNER::EXPLODIEREN) {
+        Handlung = GEGNER::EXPLODIEREN;
         ShotDelay = 1.0f;
         g_Fahrstuhl_Speed = -1.0f;
         dx1 = 0.0f;
@@ -106,7 +106,7 @@ void GegnerFahrstuhlBoss::DoKI() {
         TileEngine.ScrollLevel(Player[0].xpos - 300, Player[0].ypos - 280, TileStateEnum::SCROLLTOPLAYER, 10.0f, 50.0f);
 
         // Endboss-Musik ausfaden und abschalten
-        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC::BOSS, -2.0f, 0, false);
     }
 
     static float smokecount = 0.0f;
@@ -152,7 +152,7 @@ void GegnerFahrstuhlBoss::DoKI() {
     }
 
     // Riesen Wumme begradigen
-    if (Handlung == GEGNER_EINFLIEGEN || Handlung == GEGNER_ABSENKEN || Handlung == GEGNER_AUFRICHTEN) {
+    if (Handlung == GEGNER::EINFLIEGEN || Handlung == GEGNER::ABSENKEN || Handlung == GEGNER::AUFRICHTEN) {
         if ((dx1 < 0.0f && x1 < 140.0f) || (dx1 > 0.0f && x1 > 140.0f)) {
             x1 = 140.0f;
             dx1 = 0.0f;
@@ -161,29 +161,29 @@ void GegnerFahrstuhlBoss::DoKI() {
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_NOTVISIBLE:  // Boss einfliegen lassen
+        case GEGNER::NOTVISIBLE:  // Boss einfliegen lassen
         {
             // Warten bis die Level Mucke ausgefadet ist
             // DKS - Overhauled SoundManagerClass:
-            // if (SoundManager.its_Songs[MUSIC_STAGEMUSIC]->Volume ==
-            // SoundManager.its_Songs[MUSIC_STAGEMUSIC]->FadingEnd)
+            // if (SoundManager.its_Songs[MUSIC::STAGEMUSIC]->Volume ==
+            // SoundManager.its_Songs[MUSIC::STAGEMUSIC]->FadingEnd)
             //{
             //    // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-            //    if (MUSIC_IsPlaying(SoundManager.its_Songs[MUSIC_BOSS]->SongData) == false)
-            //        SoundManager.PlaySong(MUSIC_BOSS, false);
+            //    if (MUSIC::IsPlaying(SoundManager.its_Songs[MUSIC::BOSS]->SongData) == false)
+            //        SoundManager.PlaySong(MUSIC::BOSS, false);
 
-            //    Handlung = GEGNER_EINFLIEGEN2;				// Und Boss erscheinen lassen
+            //    Handlung = GEGNER::EINFLIEGEN2;				// Und Boss erscheinen lassen
             //}
-            if (SoundManager.SongIsPaused(MUSIC_STAGEMUSIC)) {
+            if (SoundManager.SongIsPaused(MUSIC::STAGEMUSIC)) {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
-                if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
-                    SoundManager.PlaySong(MUSIC_BOSS, false);
+                if (!SoundManager.SongIsPlaying(MUSIC::BOSS))
+                    SoundManager.PlaySong(MUSIC::BOSS, false);
 
-                Handlung = GEGNER_EINFLIEGEN2;  // Und Boss erscheinen lassen
+                Handlung = GEGNER::EINFLIEGEN2;  // Und Boss erscheinen lassen
             }
         } break;
 
-        case GEGNER_EINFLIEGEN2:  // Gegner kommt in den Screen geflogen am Anfang (einmalig)
+        case GEGNER::EINFLIEGEN2:  // Gegner kommt in den Screen geflogen am Anfang (einmalig)
         {
             Energy = 6000;
             DamageTaken = 0.0f;
@@ -192,7 +192,7 @@ void GegnerFahrstuhlBoss::DoKI() {
 
             // Gegner an der richtigen Position ?
             if (TempY < 500.0f) {
-                Handlung = GEGNER_ABSENKEN;
+                Handlung = GEGNER::ABSENKEN;
                 TempY = 500.0f;
                 dx2 = 5.0f;
             }
@@ -204,7 +204,7 @@ void GegnerFahrstuhlBoss::DoKI() {
                 g_Fahrstuhl_Offset = 150.0f;
         } break;
 
-        case GEGNER_EINFLIEGEN:  // Gegner kommt in den Screen geflogen
+        case GEGNER::EINFLIEGEN:  // Gegner kommt in den Screen geflogen
         {
             TempY -= 5.0f SYNC;
 
@@ -213,24 +213,24 @@ void GegnerFahrstuhlBoss::DoKI() {
                 int j = random(6);
                 switch (j) {
                     case 0: {
-                        Handlung = GEGNER_ABSENKEN;
+                        Handlung = GEGNER::ABSENKEN;
                         TempY = 500.0f;
                         dx2 = 0.0f;
                     } break;
                     case 1:
                     case 2: {
-                        Handlung = GEGNER_ABSENKEN;
+                        Handlung = GEGNER::ABSENKEN;
                         TempY = 500.0f;
                         dx2 = 5.0f;
                     } break;
                     case 3: {
-                        Handlung = GEGNER_AUSSPUCKEN;
+                        Handlung = GEGNER::AUSSPUCKEN;
                         TempY = 500.0f;
                         Shots = 1 + random(2);
                     } break;
                     case 4:
                     case 5: {
-                        Handlung = GEGNER_CRUSHEN;
+                        Handlung = GEGNER::CRUSHEN;
                         TempY = 500.0f;
                         Shots = 10 + random(20);
                         ShotDelay = 2.0f;
@@ -245,23 +245,23 @@ void GegnerFahrstuhlBoss::DoKI() {
                 g_Fahrstuhl_Offset = 150.0f;
         } break;
 
-        case GEGNER_LAUFEN:  // yPos über dem Fahrstuhl
+        case GEGNER::LAUFEN:  // yPos über dem Fahrstuhl
         {
         } break;
 
-        case GEGNER_ABSENKEN:  // Gegner kommt nach unten
+        case GEGNER::ABSENKEN:  // Gegner kommt nach unten
         {
             TempY -= 5.0f SYNC;
 
             // Gegner an der richtigen Position ?
             if (TempY < 380.0f) {
                 if (dx2 != 0.0f) {
-                    Handlung = GEGNER_SCHIESSEN;
+                    Handlung = GEGNER::SCHIESSEN;
                     TempY = 380.0f;
                     ShotDelay = 1.0f;
                     Shots = random(10) + 10;
                 } else {
-                    Handlung = GEGNER_AUSSPUCKEN;
+                    Handlung = GEGNER::AUSSPUCKEN;
                     TempY = 380.0f;
                     ShotDelay = 5.0f;
                     Shots = 2 + random(2);
@@ -269,7 +269,7 @@ void GegnerFahrstuhlBoss::DoKI() {
             }
         } break;
 
-        case GEGNER_AUFRICHTEN:  // Gegner fährt wieder hoch
+        case GEGNER::AUFRICHTEN:  // Gegner fährt wieder hoch
         {
             TempY += 5.0f SYNC;
 
@@ -278,21 +278,21 @@ void GegnerFahrstuhlBoss::DoKI() {
                 int j = random(3);
                 switch (j) {
                     case 0: {
-                        Handlung = GEGNER_BOMBARDIEREN;
+                        Handlung = GEGNER::BOMBARDIEREN;
                         dx1 = 40.0f;
                         TempY = 600.0f;
                         ShotDelay = 1.0f;
                         Shots = random(8) + 5;
                     } break;
                     case 1: {
-                        Handlung = GEGNER_SPECIAL;
+                        Handlung = GEGNER::SPECIAL;
                         dx1 = 0.0f;
                         TempY = 600.0f;
                         ShotDelay = 5.0f;
                         Shots = random(8) + 5;
                     } break;
                     case 2: {
-                        Handlung = GEGNER_AUSSPUCKEN;
+                        Handlung = GEGNER::AUSSPUCKEN;
                         dx1 = 0.0f;
                         TempY = 600.0f;
                         ShotDelay = 5.0f;
@@ -302,14 +302,14 @@ void GegnerFahrstuhlBoss::DoKI() {
             }
         } break;
 
-        case GEGNER_SCHIESSEN:  // Mit zwei lasern ballern
+        case GEGNER::SCHIESSEN:  // Mit zwei lasern ballern
         {
             ShotDelay -= 1.0f SYNC;
 
             if (ShotDelay < 0.0f) {
                 ShotDelay = 6.0f;
 
-                SoundManager.PlayWave(100, 128, 44100, SOUND_LASERSHOT);
+                SoundManager.PlayWave(100, 128, 44100, SOUND::LASERSHOT);
 
                 Projectiles.PushProjectile(xPos + x2 + 28.0f,
                                            yPos + y2 + 95.0f, KRABBLERLASER1);
@@ -327,12 +327,12 @@ void GegnerFahrstuhlBoss::DoKI() {
                 Shots--;
                 if (Shots <= 0) {
                     dx2 = 0.0f;
-                    Handlung = GEGNER_AUFRICHTEN;
+                    Handlung = GEGNER::AUFRICHTEN;
                 }
             }
         } break;
 
-        case GEGNER_BOMBARDIEREN:  // Steine bröckeln lassen
+        case GEGNER::BOMBARDIEREN:  // Steine bröckeln lassen
         {
             // An der Seite angekommen ? Dann ruckeln lassen und Steine werfen
             if ((x1 > 280 && dx1 > 0.0f) || (x1 < 0 && dx1 < 0.0f)) {
@@ -345,7 +345,7 @@ void GegnerFahrstuhlBoss::DoKI() {
                 // aufhören damit ?
                 Shots--;
                 if (Shots <= 0) {
-                    Handlung = GEGNER_EINFLIEGEN;
+                    Handlung = GEGNER::EINFLIEGEN;
 
                     if (x1 < 140.0f)
                         dx1 = 10.0f;
@@ -355,7 +355,7 @@ void GegnerFahrstuhlBoss::DoKI() {
             }
         } break;
 
-        case GEGNER_SPECIAL:  // Hurri anvisieren und Laser ballern
+        case GEGNER::SPECIAL:  // Hurri anvisieren und Laser ballern
         {
             if (ShotDelay > 0.0f)
                 ShotDelay -= 1.0f SYNC;
@@ -370,7 +370,7 @@ void GegnerFahrstuhlBoss::DoKI() {
             if (pAim->xpos + 35.0f < xPos + x1 + 100.0f && pAim->xpos + 35.0f > xPos + x1 + 40.0f && ShotDelay <= 0.0f) {
                 ShotDelay = 8.0f;
 
-                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_LASERSHOT);
+                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::LASERSHOT);
 
                 Projectiles.PushProjectile(xPos + x1 + 80.0f - 28.0f,
                                            yPos + y1 + 155.0f, UFOLASER);
@@ -382,7 +382,7 @@ void GegnerFahrstuhlBoss::DoKI() {
                 // Aufhören zu ballern
                 Shots--;
                 if (Shots <= 0) {
-                    Handlung = GEGNER_EINFLIEGEN;
+                    Handlung = GEGNER::EINFLIEGEN;
 
                     if (x1 < 140.0f)
                         dx1 = 10.0f;
@@ -392,7 +392,7 @@ void GegnerFahrstuhlBoss::DoKI() {
             }
         } break;
 
-        case GEGNER_AUSSPUCKEN:  // Stelzis herbeirufen =)
+        case GEGNER::AUSSPUCKEN:  // Stelzis herbeirufen =)
         {
             ShotDelay -= 1.0f SYNC;
 
@@ -407,9 +407,9 @@ void GegnerFahrstuhlBoss::DoKI() {
                 if (Shots <= 0) {
                     dx2 = 0.0f;
                     if (TempY != 380.0f)
-                        Handlung = GEGNER_EINFLIEGEN;
+                        Handlung = GEGNER::EINFLIEGEN;
                     else
-                        Handlung = GEGNER_AUFRICHTEN;
+                        Handlung = GEGNER::AUFRICHTEN;
 
                     if (x1 < 140.0f)
                         dx1 = 10.0f;
@@ -420,14 +420,14 @@ void GegnerFahrstuhlBoss::DoKI() {
 
         } break;
 
-        case GEGNER_CRUSHEN:  // Suchschüsse ballern
+        case GEGNER::CRUSHEN:  // Suchschüsse ballern
         {
             ShotDelay -= 1.0f SYNC;
 
             if (ShotDelay < 0.0f) {
                 ShotDelay = 5.0f;
 
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_CANON);
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::CANON);
 
                 Projectiles.PushProjectile(xPos + x2 + 28.0f,
                                            yPos + y2 + 95.0f + 5.0f, SUCHSCHUSS);
@@ -445,7 +445,7 @@ void GegnerFahrstuhlBoss::DoKI() {
                 Shots--;
                 if (Shots <= 0) {
                     dx2 = 5.0f;
-                    Handlung = GEGNER_ABSENKEN;
+                    Handlung = GEGNER::ABSENKEN;
 
                     if (x1 < 140.0f)
                         dx1 = 10.0f;
@@ -456,17 +456,17 @@ void GegnerFahrstuhlBoss::DoKI() {
 
         } break;
 
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
         } break;
 
         // Gegner fliegt in die Luft
         //
-        case GEGNER_EXPLODIEREN: {
+        case GEGNER::EXPLODIEREN: {
             ShotDelay -= 1.0f SYNC;
 
             if (ShotDelay < 0.0f) {
                 ShotDelay = 0.5f;
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
 
                 PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(400)),
                                             yPos + static_cast<float>(random(280)), EXPLOSION_MEDIUM2);
@@ -587,11 +587,11 @@ void GegnerFahrstuhlBoss::DoKI() {
 
 void GegnerFahrstuhlBoss::GegnerExplode() {
     ShakeScreen(10);
-    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION2);
     Player[0].Score += 9000;
 
     // Level Musik wieder einfaden lassen (aus Pause Zustand)
-    SoundManager.FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);
+    SoundManager.FadeSong(MUSIC::STAGEMUSIC, 2.0f, 100, true);
 
     // TileEngine.YOffset = float (Value1);
 }

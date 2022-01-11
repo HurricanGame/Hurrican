@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerStahlmuecke::GegnerStahlmuecke(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     AnimStart = 0;
     AnimEnde = 8;
     AnimSpeed = 0.5f;
@@ -36,7 +36,7 @@ GegnerStahlmuecke::GegnerStahlmuecke(int Wert1, int Wert2, bool Light) {
 void GegnerStahlmuecke::DoDraw() {
     bool mirrored = BlickRichtung == RECHTS;
 
-    if (Handlung != GEGNER_FALLEN)
+    if (Handlung != GEGNER::FALLEN)
         pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
                                                yPos - TileEngine.YOffset, AnimPhase, 0xFFFFFFFF,
                                                mirrored);
@@ -55,7 +55,7 @@ void GegnerStahlmuecke::DoKI() {
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_LAUFEN:  // Warten bis der Spieler nahe genug rankommt
+        case GEGNER::LAUFEN:  // Warten bis der Spieler nahe genug rankommt
         {
             if ((xSpeed < 0.0f && blockl & BLOCKWERT_WAND) || (xSpeed > 0.0f && blockr & BLOCKWERT_WAND))
                 xSpeed *= -1.0f;
@@ -64,11 +64,11 @@ void GegnerStahlmuecke::DoKI() {
                 Value1 =
                     static_cast<int>(pAim->xpos) + 35 - 50 + random(100);  // Flugziel zufällig in Richtung Spieler
                 Value2 = static_cast<int>(pAim->ypos) + 40 - 50 + random(100);  // setzen mit etwas Variation
-                Handlung = GEGNER_VERFOLGEN;
+                Handlung = GEGNER::VERFOLGEN;
             }
         } break;
 
-        case GEGNER_VERFOLGEN:  // Mücke verfolgt den Spieler
+        case GEGNER::VERFOLGEN:  // Mücke verfolgt den Spieler
         {
             // Punkt links von der Mücke
             if (Value1 < xPos) {
@@ -91,7 +91,7 @@ void GegnerStahlmuecke::DoKI() {
                 if (!(blocko & BLOCKWERT_WAND))
                     yAcc = -3.0;
                 else {
-                    Handlung = GEGNER_VERFOLGEN;
+                    Handlung = GEGNER::VERFOLGEN;
                     ySpeed = 20;
                 }
             }
@@ -131,7 +131,7 @@ void GegnerStahlmuecke::DoKI() {
             // Nicht ins Wasser fliegen
             if (blockl & BLOCKWERT_WASSER || blockr & BLOCKWERT_WASSER || blocko & BLOCKWERT_WASSER ||
                 blocku & BLOCKWERT_WASSER) {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
 
                 if (ySpeed > 0.0f)
                     ySpeed *= -1.0f;
@@ -142,7 +142,7 @@ void GegnerStahlmuecke::DoKI() {
         } break;
 
         // Mücke stürzt ab
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             // An die Wand gekracht ?
             if (blockl & BLOCKWERT_WAND || blockr & BLOCKWERT_WAND || blocko & BLOCKWERT_WAND ||
                 blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM)
@@ -162,12 +162,12 @@ void GegnerStahlmuecke::DoKI() {
     }  // switch
 
     // Testen, ob der Spieler die Mücke berührt hat
-    if (Handlung != GEGNER_FALLEN)
+    if (Handlung != GEGNER::FALLEN)
         TestDamagePlayers(1.5f SYNC);
 
     // Soviel Energie verloren, dass die Mücke abstürzt ?
-    if (Energy <= 0.0f && Handlung != GEGNER_FALLEN) {
-        Handlung = GEGNER_FALLEN;
+    if (Energy <= 0.0f && Handlung != GEGNER::FALLEN) {
+        Handlung = GEGNER::FALLEN;
         Energy = 30.0f;
         ySpeed = 3.0f;
         xAcc = 0.0f;
@@ -198,7 +198,7 @@ void GegnerStahlmuecke::GegnerExplode() {
     for (int i = 0; i < 3; i++)
         PartikelSystem.PushPartikel(xPos + 15.0f, yPos + 20.0f, SPLITTER);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 200;
 }

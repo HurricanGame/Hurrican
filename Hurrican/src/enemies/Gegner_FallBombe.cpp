@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerFallBombe::GegnerFallBombe(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_NOTVISIBLE;
+    Handlung = GEGNER::NOTVISIBLE;
     Energy = 10;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -36,15 +36,15 @@ void GegnerFallBombe::DoKI() {
 
     switch (Handlung) {
         // Stein wird "aktiviert" (über den Hurri gesetzt damit er von dort runterfallen kann)
-        case GEGNER_NOTVISIBLE: {
-            Handlung = GEGNER_FALLEN;
+        case GEGNER::NOTVISIBLE: {
+            Handlung = GEGNER::FALLEN;
             yPos -= 480.0f + 59.0f;
             if (yPos < 0.0f)
                 yPos = 0.0f;
         } break;
 
         // Stein fällt runter
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             if (ySpeed > g_Fahrstuhl_Speed + 50.0f)
                 ySpeed = g_Fahrstuhl_Speed + 50.0f;
 
@@ -73,7 +73,7 @@ void GegnerFallBombe::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerFallBombe::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
     PartikelSystem.PushPartikel(xPos - 40.0f, yPos, EXPLOSION_BIG);
 
     for (int i = 0; i < 40; i++)

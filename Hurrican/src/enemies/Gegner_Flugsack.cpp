@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerFlugsack::GegnerFlugsack(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 50;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -40,7 +40,7 @@ void GegnerFlugsack::DoKI() {
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_LAUFEN:  // Normal fliegen und dabei ab und zu schiessen
+        case GEGNER::LAUFEN:  // Normal fliegen und dabei ab und zu schiessen
         {
             if (pAim->xpos + 45 < xPos + GegnerRect[GegnerArt].left)
                 BlickRichtung = LINKS;
@@ -93,7 +93,7 @@ void GegnerFlugsack::DoKI() {
                                            (BlickRichtung == RECHTS && pAim->xpos - 45 >= xPos))) {
                 ShotCount -= 1.0f SYNC;
                 if (ShotCount < 0.0f) {
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_CANON);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::CANON);
 
                     if (BlickRichtung == LINKS) {
                         PartikelSystem.PushPartikel(xPos + 10.0f, yPos + 2.0f, SMOKE);
@@ -114,7 +114,7 @@ void GegnerFlugsack::DoKI() {
         } break;
 
         // Sack stürzt ab
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             // An die Wand gekracht ?
             if (blockl & BLOCKWERT_WAND || blockr & BLOCKWERT_WAND || blocko & BLOCKWERT_WAND ||
                 blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM)
@@ -133,7 +133,7 @@ void GegnerFlugsack::DoKI() {
             if (PlayerAbstand() <= 600 && AnimCount == 0.0f && AnimPhase % 2 == 0 && random(2) == 0) {
                 PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(80)),
                                             yPos - 30.0f + static_cast<float>(random(70)), EXPLOSION_MEDIUM2);
-                SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::EXPLOSION1);
             }
         } break;
 
@@ -142,8 +142,8 @@ void GegnerFlugsack::DoKI() {
     }  // switch
 
     // Soviel Energie verloren, dass der Spacko abstürzt ?
-    if (Energy <= 0.0f && Handlung != GEGNER_FALLEN) {
-        Handlung = GEGNER_FALLEN;
+    if (Energy <= 0.0f && Handlung != GEGNER::FALLEN) {
+        Handlung = GEGNER::FALLEN;
         Energy = 40.0f;
         ySpeed = 3.0f;
         yAcc = 2.0f;
@@ -160,7 +160,7 @@ void GegnerFlugsack::DoKI() {
     }
 
     // Testen, ob der Spieler den Sack berührt hat
-    if (Handlung != GEGNER_FALLEN)
+    if (Handlung != GEGNER::FALLEN)
         TestDamagePlayers(4.0f SYNC);
 }
 
@@ -177,7 +177,7 @@ void GegnerFlugsack::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(40)),
                                     yPos + 20.0f + static_cast<float>(random(30)), SPLITTER);
 
-    SoundManager.PlayWave(75, 128, 11025 + random(2000), SOUND_EXPLOSION4);  // Sound ausgeben
+    SoundManager.PlayWave(75, 128, 11025 + random(2000), SOUND::EXPLOSION4);  // Sound ausgeben
 
     Player[0].Score += 225;
 }

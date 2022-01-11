@@ -171,63 +171,67 @@ enum Enemy {
 
 //----- Handlungen der Gegner
 
+namespace GEGNER {
+
 enum EnemyAction {
-  GEGNER_STEHEN = 0,
-  GEGNER_LAUFEN = 1,
-  GEGNER_LAUFEN2 = 2,
-  GEGNER_LAUFEN3 = 3,
-  GEGNER_LAUFEN4 = 4,
-  GEGNER_SCHIESSEN = 5,
-  GEGNER_SPRINGEN = 6,
-  GEGNER_FALLEN = 7,
-  GEGNER_WATSCHELN = 8,      // Für Walker
-  GEGNER_DREHEN = 9,         // Für Geschützturm
-  GEGNER_DREHEN2 = 10,       // Für Stelzsack
-  GEGNER_VERFOLGEN = 11,     // Für Stahlmücke
-  GEGNER_UNVERWUNDBAR = 12,  // Für Deckenturm
-  GEGNER_OEFFNEN = 13,       // Für Deckenturm nochmal
-  GEGNER_SCHLIESSEN = 14,    // Für Deckenturm (einmal noch :P )
-  GEGNER_NOTVISIBLE = 99,
+  STEHEN = 0,
+  LAUFEN = 1,
+  LAUFEN2 = 2,
+  LAUFEN3 = 3,
+  LAUFEN4 = 4,
+  SCHIESSEN = 5,
+  SPRINGEN = 6,
+  FALLEN = 7,
+  WATSCHELN = 8,      // Für Walker
+  DREHEN = 9,         // Für Geschützturm
+  DREHEN2 = 10,       // Für Stelzsack
+  VERFOLGEN = 11,     // Für Stahlmücke
+  UNVERWUNDBAR = 12,  // Für Deckenturm
+  OEFFNEN = 13,       // Für Deckenturm nochmal
+  SCHLIESSEN = 14,    // Für Deckenturm (einmal noch :P )
+  NOTVISIBLE = 99,
 };
 
 // Zwischenbosse
 
 enum {
-  GEGNER_INIT = 30,            // Warten bis der Screen zentriert wurde
-  GEGNER_EINFLIEGEN = 31,      // Gegner erscheint am Screen
-  GEGNER_CRUSHEN = 32,         // Stahlfaust/Pharao zerquetscht den Hurri
-  GEGNER_CRUSHEN2 = 33,        // Stahlfaust/Pharao zerquetscht den Hurri
-  GEGNER_CRUSHENERHOLEN = 34,  // Stahlfaust fliegt nach dem Crushen hoch
-  GEGNER_SPECIAL = 35,         // Special Move  (Pharao Steine rieseln lassen etc)
-  GEGNER_SPECIAL2 = 36,        // Special Move2 (Bratklops Fettboller usw)
-  GEGNER_SPECIAL3 = 37,        // Special Move3 (Bratklops Laser usw)
-  GEGNER_ABSENKEN = 38,        // Spinne senkt sich ab
-  GEGNER_ABSENKENZWEI = 39,    // Spinne senkt sich ab und schiesst fetten laser
-  GEGNER_AUFRICHTEN = 40,      // Spinne richtet sich wieder auf
-  GEGNER_AUFRICHTENZWEI = 41,  // Spinne richtet sich wieder auf und schiesst fetten laser =)
-  GEGNER_AUSSPUCKEN = 42,      // Spinne spuckt kleine Spinnen Bomben aus
-  GEGNER_AUSSPUCKENZWEI = 43,
-  GEGNER_BOMBARDIEREN = 44,  // Spinne wirft Granaten
+  INIT = 30,            // Warten bis der Screen zentriert wurde
+  EINFLIEGEN = 31,      // Gegner erscheint am Screen
+  CRUSHEN = 32,         // Stahlfaust/Pharao zerquetscht den Hurri
+  CRUSHEN2 = 33,        // Stahlfaust/Pharao zerquetscht den Hurri
+  CRUSHENERHOLEN = 34,  // Stahlfaust fliegt nach dem Crushen hoch
+  SPECIAL = 35,         // Special Move  (Pharao Steine rieseln lassen etc)
+  SPECIAL2 = 36,        // Special Move2 (Bratklops Fettboller usw)
+  SPECIAL3 = 37,        // Special Move3 (Bratklops Laser usw)
+  ABSENKEN = 38,        // Spinne senkt sich ab
+  ABSENKENZWEI = 39,    // Spinne senkt sich ab und schiesst fetten laser
+  AUFRICHTEN = 40,      // Spinne richtet sich wieder auf
+  AUFRICHTENZWEI = 41,  // Spinne richtet sich wieder auf und schiesst fetten laser =)
+  AUSSPUCKEN = 42,      // Spinne spuckt kleine Spinnen Bomben aus
+  AUSSPUCKENZWEI = 43,
+  BOMBARDIEREN = 44,  // Spinne wirft Granaten
 
-  GEGNER_INIT2 = 45,
-  GEGNER_INIT3 = 46,
-  GEGNER_INIT4 = 47,
+  INIT2 = 45,
+  INIT3 = 46,
+  INIT4 = 47,
 
-  GEGNER_EINFAHREN = 48,
-  GEGNER_AUSFAHREN = 49,
-  GEGNER_EINFLIEGEN2 = 50,
-  GEGNER_WARTEN = 51,
+  EINFAHREN = 48,
+  AUSFAHREN = 49,
+  EINFLIEGEN2 = 50,
+  WARTEN = 51,
 
-  GEGNER_LAUFEN_LINKS = 52,
-  GEGNER_LAUFEN_RECHTS = 53,
+  LAUFEN_LINKS = 52,
+  LAUFEN_RECHTS = 53,
 
-  GEGNER_LAUFEN_LINKS2 = 54,
-  GEGNER_LAUFEN_RECHTS2 = 55,
+  LAUFEN_LINKS2 = 54,
+  LAUFEN_RECHTS2 = 55,
 
-  GEGNER_AUSWAHL = 56,
+  AUSWAHL = 56,
 
-  GEGNER_EXPLODIEREN = 80,  // Endboss fliegt in die Luft
+  EXPLODIEREN = 80,  // Endboss fliegt in die Luft
 };
+
+} // namespace
 
 //----- Sonstiges
 

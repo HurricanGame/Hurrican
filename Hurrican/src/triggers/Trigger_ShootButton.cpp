@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerShootButton::GegnerShootButton(GegnerClass *Plattform) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     BlickRichtung = RECHTS;
     Energy = 100;
     Value1 = 0;

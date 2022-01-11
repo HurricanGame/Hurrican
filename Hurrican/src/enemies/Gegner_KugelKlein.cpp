@@ -14,7 +14,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerKugelKlein::GegnerKugelKlein(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 20;
     BlickRichtung = LINKS;
     yAcc = 5.0f;                                         // Fallen lassen
@@ -63,7 +63,7 @@ void GegnerKugelKlein::DoKI() {
     // Je nach Handlung richtig verhalten
     //
     switch (Handlung) {
-        case GEGNER_LAUFEN:  // Kugel hüpft im Gang rum
+        case GEGNER::LAUFEN:  // Kugel hüpft im Gang rum
         {
             // Vertikal abhüpfen
             //
@@ -105,7 +105,7 @@ void GegnerKugelKlein::GegnerExplode() {
     // Explosion
     PartikelSystem.PushPartikel(xPos - 15.0f, yPos - 15.0f, EXPLOSION_MEDIUM2);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION4);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION4);  // Sound ausgeben
 
     Player[0].Score += 300;
 }

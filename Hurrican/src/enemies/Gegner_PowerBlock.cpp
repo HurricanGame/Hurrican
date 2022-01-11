@@ -17,7 +17,7 @@ int WaffenVerteilung[14] = {100, 200, 300, 500, 505, 530, 550, 600, 650, 675, 68
 // --------------------------------------------------------------------------------------
 
 GegnerPowerBlock::GegnerPowerBlock(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     AnimPhase = 0;
     Energy = 100.0f;
 
@@ -112,7 +112,7 @@ void GegnerPowerBlock::DoKI() {
             Player[i].xpos + Player[i].CollideRect.right >= xPos) {
             Energy = 0;  // Extra verlieren
             AnimPhase = 2;
-            Handlung = GEGNER_SPRINGEN;  // Block spingen lassen
+            Handlung = GEGNER::SPRINGEN;  // Block spingen lassen
 
             yAcc = 4.0f;
 
@@ -132,7 +132,7 @@ void GegnerPowerBlock::DoKI() {
             yPos = static_cast<float>(Value2);
             ySpeed = 0.0f;
             yAcc = 0.0f;
-            Handlung = GEGNER_STEHEN;
+            Handlung = GEGNER::STEHEN;
         }
     }
 
@@ -210,5 +210,5 @@ void GegnerPowerBlock::GegnerExplode() {
     // Explosion erzeugen
     PartikelSystem.PushPartikel(xPos - 30.0f, yPos - 30.0f, EXPLOSION_BIG);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 }

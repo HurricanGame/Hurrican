@@ -40,7 +40,7 @@ GegnerExtras::GegnerExtras(int Wert1, int Wert2, bool Light) {
 
     // Rausfliegen?
     if (Value2 == 0) {
-        Handlung = GEGNER_SPRINGEN;
+        Handlung = GEGNER::SPRINGEN;
         ySpeed = static_cast<float>(random(40)) / 10.0f - 20.0f;
         yAcc = 5.0f;
 
@@ -61,7 +61,7 @@ GegnerExtras::GegnerExtras(int Wert1, int Wert2, bool Light) {
 
     // ansonsten liegenbleiben
     else
-        Handlung = GEGNER_SPECIAL;
+        Handlung = GEGNER::SPECIAL;
 
     Destroyable = false;
 }
@@ -74,7 +74,7 @@ void GegnerExtras::DoKI() {
     BlickRichtung = LINKS;
 
     switch (Handlung) {
-        case GEGNER_SPRINGEN:  // Extra fällt noch im Bogen raus
+        case GEGNER::SPRINGEN:  // Extra fällt noch im Bogen raus
         {
             // an der Decke abprallen
             /*if (blocko & BLOCKWERT_WAND &&
@@ -90,7 +90,7 @@ void GegnerExtras::DoKI() {
                 ySpeed = -1.0f;
                 xSpeed = 0;
                 yAcc = 0;
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
 
                 // Im Tutorial fliegen die Granaten schneller nach oben =)
                 if (RunningTutorial == true && Value1 == 8)
@@ -99,7 +99,7 @@ void GegnerExtras::DoKI() {
 
         } break;
 
-        case GEGNER_STEHEN:  // Extra schwebt langsam nach oben
+        case GEGNER::STEHEN:  // Extra schwebt langsam nach oben
         {
             // An der Decke anhalten
             if (blocko & BLOCKWERT_WAND)
@@ -132,7 +132,7 @@ void GegnerExtras::DoKI() {
             pCollector = &Player[i];
 
     if (pCollector != nullptr)  // &&
-                             // Handlung != GEGNER_SPRINGEN)
+                             // Handlung != GEGNER::SPRINGEN)
     {
         // Punkte fürs Extras sammeln gebe
         pCollector->Score += 10;
@@ -185,7 +185,7 @@ void GegnerExtras::DoKI() {
                                                     KRINGELR + Value1, pCollector);
                     }
 
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_UPGRADE);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::UPGRADE);
                     pCollector->BlinkCounter = 9.5f;
                     pCollector->BlinkColor = Value1 + 1;
                 }
@@ -232,7 +232,7 @@ void GegnerExtras::DoKI() {
                                                     pCollector);
                     }
 
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_UPGRADE);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::UPGRADE);
                     pCollector->BlinkCounter = 9.5f;
                     pCollector->BlinkColor = 4;
                 }
@@ -285,28 +285,28 @@ void GegnerExtras::DoKI() {
 
         Energy = 0.0f;
 
-        SoundManager.PlayWave(100, 128, 11025, SOUND_VOICE_SPREAD + Value1);  // Sound ausgeben
+        SoundManager.PlayWave(100, 128, 11025, SOUND::VOICE_SPREAD + Value1);  // Sound ausgeben
 
         switch (Value1) {
             case 0:
             case 1:
             case 2:
             case 4:
-                SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);  // Sound ausgeben
+                SoundManager.PlayWave(100, 128, 11025, SOUND::COLLECT);  // Sound ausgeben
                 break;
 
             case 8:
             case 9:
             case 10:
-                SoundManager.PlayWave(100, 128, 11000 + random(1000), SOUND_AMMO);  // Sound ausgeben
+                SoundManager.PlayWave(100, 128, 11000 + random(1000), SOUND::AMMO);  // Sound ausgeben
                 break;
 
             default:
-                SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);  // Sound ausgeben
+                SoundManager.PlayWave(100, 128, 11025, SOUND::COLLECT);  // Sound ausgeben
                 break;
         }
 
-        SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);  // Sound ausgeben
+        SoundManager.PlayWave(100, 128, 11025, SOUND::COLLECT);  // Sound ausgeben
     }
 }
 

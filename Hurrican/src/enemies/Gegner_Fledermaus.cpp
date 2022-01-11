@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerFledermaus::GegnerFledermaus(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     Energy = 35;
     AnimSpeed = 0.75f;
     ChangeLight = Light;
@@ -27,7 +27,7 @@ GegnerFledermaus::GegnerFledermaus(int Wert1, int Wert2, bool Light) {
     // gleich losfliegen ? (Beim Cave "Boss" T.R.Schmidt Orgien Quark)
     //
     if (Value2 == 1)
-        Handlung = GEGNER_LAUFEN;
+        Handlung = GEGNER::LAUFEN;
 }
 
 // --------------------------------------------------------------------------------------
@@ -52,25 +52,25 @@ void GegnerFledermaus::DoKI() {
 
     // Je nach Handlung richtig
     switch (Handlung) {
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             // Hurri in der Nähe oder von einem Schuss getroffen ?
             // Dann losfliegen
             //
             if ((PlayerAbstandHoriz() < 240 && pAim->ypos > yPos) || DamageTaken > 0)
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
         } break;
 
-        case GEGNER_LAUFEN:  // Warten bis der Spieler nahe genug rankommt
+        case GEGNER::LAUFEN:  // Warten bis der Spieler nahe genug rankommt
         {
             AnimSpeed = 0.5f;
             AnimEnde = 14;
             AnimStart = 0;
             Value1 = static_cast<int>(pAim->xpos) + random(80) - 30;   // Flugziel zufällig in Richtung Spieler
             Value2 = static_cast<int>(pAim->ypos) - 50 + random(100);  // setzen mit etwas Variation
-            Handlung = GEGNER_VERFOLGEN;
+            Handlung = GEGNER::VERFOLGEN;
         } break;
 
-        case GEGNER_VERFOLGEN:  // Mücke verfolgt den Spieler
+        case GEGNER::VERFOLGEN:  // Mücke verfolgt den Spieler
         {
             // Punkt links
             if (Value1 < xPos) {
@@ -115,13 +115,13 @@ void GegnerFledermaus::DoKI() {
             // Punkt erreicht oder Abstand zu groß ? Dann neues Ziel setzen
             //
             if (PlayerAbstand() > 300 || (dx * dx + dy * dy) < 20 * 20)
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
 
             // An die Wand gekommen ? Dann auch neues Ziel setzen
             //
             if (blockl & BLOCKWERT_WAND || blockr & BLOCKWERT_WAND || blocko & BLOCKWERT_WAND ||
                 blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM) {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 AnimPhase = 0;
             }
 
@@ -134,7 +134,7 @@ void GegnerFledermaus::DoKI() {
 
             if (DeckenCount <= 0.0f && blocko & BLOCKWERT_WAND) {
                 DeckenCount = 10.0f;
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
                 AnimPhase = 15;
                 AnimStart = 15;
                 AnimEnde = 21;
@@ -162,7 +162,7 @@ void GegnerFledermaus::GegnerExplode() {
 
     PartikelSystem.PushPartikel(xPos - 5.0f, yPos - 5.0f, EXPLOSION_MEDIUM2);
 
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
 
     Player[0].Score += 100;
 }

@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerNest::GegnerNest(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     Energy = 120;
     AnimSpeed = 1.0f;
     ChangeLight = Light;
@@ -50,7 +50,7 @@ void GegnerNest::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerNest::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION4);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION4);
 
     for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(xPos - 25.0f + static_cast<float>(random(20)),

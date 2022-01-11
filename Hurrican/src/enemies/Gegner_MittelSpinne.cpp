@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerMittelSpinne::GegnerMittelSpinne(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 50;
     AnimSpeed = static_cast<float>(random(8) + 5) / 8.0f;
     ChangeLight = Light;
@@ -75,7 +75,7 @@ void GegnerMittelSpinne::DoKI() {
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             // Gegner auf Spieler ausrichten
             //
 
@@ -128,7 +128,7 @@ void GegnerMittelSpinne::DoKI() {
 
         } break;
 
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             rot += Value2 SYNC;
 
             clampAngle(rot);
@@ -151,7 +151,7 @@ void GegnerMittelSpinne::DoKI() {
 
     // Spieler berührt ?
     //
-    if (Handlung != GEGNER_FALLEN)
+    if (Handlung != GEGNER::FALLEN)
         TestDamagePlayers(4.0f SYNC);
 }
 
@@ -160,7 +160,7 @@ void GegnerMittelSpinne::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerMittelSpinne::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
     PartikelSystem.PushPartikel(xPos + 5.0f, yPos, EXPLOSION_MEDIUM3);
 
     for (int i = 0; i < 10; i++)

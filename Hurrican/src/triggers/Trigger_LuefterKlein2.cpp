@@ -10,7 +10,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerLuefterKlein2::GegnerLuefterKlein2(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     Value1 = Wert1;
     Value2 = Wert2;
     ChangeLight = Light;

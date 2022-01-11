@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerFireSpider::GegnerFireSpider(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 75;
     AnimSpeed = 0.75f;
     ChangeLight = Light;
@@ -80,7 +80,7 @@ void GegnerFireSpider::DoKI() {
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             // Spinne rotieren
             //
             float inc = 5.0f;
@@ -115,7 +115,7 @@ void GegnerFireSpider::DoKI() {
 
             if (shotdelay < 0.0f && abs(static_cast<int>(winkel - rot)) < 10 && PlayerAbstand() < 200) {
                 shotdelay = 0.3f;
-                Handlung = GEGNER_SCHIESSEN;
+                Handlung = GEGNER::SCHIESSEN;
                 AnimPhase = 11;
                 AnimEnde = 11;
                 AnimStart = 11;
@@ -128,7 +128,7 @@ void GegnerFireSpider::DoKI() {
         // ballern ?
         // solange, bis Hurri aus dem Schussfeld raus ist, oder der Counter abgelaufen ist
         //
-        case GEGNER_SCHIESSEN: {
+        case GEGNER::SCHIESSEN: {
             shotdelay -= 1.0f SYNC;
             AnimCount += 1.0f SYNC;
 
@@ -154,7 +154,7 @@ void GegnerFireSpider::DoKI() {
             // Spieler nicht mehr im Schussfeld oder Schuss dauert schon eine Weile ?
             //
             if (abs(static_cast<int>(winkel - rot)) > 10 || PlayerAbstand() > 350 || AnimCount > 20.0f) {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 AnimPhase = 0;
                 AnimStart = 0;
                 AnimEnde = 10;
@@ -164,7 +164,7 @@ void GegnerFireSpider::DoKI() {
 
         // rumfliegen, weil abgeschossen ?
         //
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             rot += Value2 SYNC;
 
             clampAngle(rot);
@@ -191,15 +191,15 @@ void GegnerFireSpider::DoKI() {
 
     // Spieler berührt ?
     //
-    if (Handlung != GEGNER_FALLEN)
+    if (Handlung != GEGNER::FALLEN)
         TestDamagePlayers(4.0f SYNC);
 
     // Spinne abgeknallt ?
     // Dann Explosion erzeugen und Spinne lossegeln lassen ;)
     //
-    if (Energy <= 0.0f && Handlung != GEGNER_FALLEN) {
+    if (Energy <= 0.0f && Handlung != GEGNER::FALLEN) {
         Energy = 100.0f;
-        Handlung = GEGNER_FALLEN;
+        Handlung = GEGNER::FALLEN;
         xSpeed = static_cast<float>(random(15)) - 7.0f, ySpeed = -static_cast<float>(random(8)) - 8.0f;
         yAcc = 3.0f;
 
@@ -212,7 +212,7 @@ void GegnerFireSpider::DoKI() {
         if (random(2) == 0)
             Value2 *= -1;
 
-        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
         PartikelSystem.PushPartikel(xPos + 5, yPos, EXPLOSION_MEDIUM2);
 
         shotdelay = 1.0f;
@@ -224,7 +224,7 @@ void GegnerFireSpider::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerFireSpider::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
     PartikelSystem.PushPartikel(xPos + 5, yPos, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 10; i++) {

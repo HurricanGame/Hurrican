@@ -12,7 +12,7 @@
 
 GegnerSkeletor::GegnerSkeletor(int Wert1, int Wert2, bool Light) {
     AnimPhase = 10;
-    Handlung = GEGNER_NOTVISIBLE;
+    Handlung = GEGNER::NOTVISIBLE;
     BlickRichtung = RECHTS;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -40,13 +40,13 @@ GegnerSkeletor::GegnerSkeletor(int Wert1, int Wert2, bool Light) {
 
 void GegnerSkeletor::Laugh() {
     AnimPhase = 2;
-    SoundManager.PlayWave(100, 128, 11025, SOUND_LAUGH);
+    SoundManager.PlayWave(100, 128, 11025, SOUND::LAUGH);
 
     xSpeed = 0.0f;
     ySpeed = 0.0f;
     xAcc = 0.0f;
     yAcc = 0.0f;
-    Handlung = GEGNER_SPECIAL;
+    Handlung = GEGNER::SPECIAL;
     AnimCount = 20.0f;
 }
 
@@ -76,7 +76,7 @@ void GegnerSkeletor::DoDraw() {
     if (DrawNow == false)
         return;
 
-    if (Handlung == GEGNER_EXPLODIEREN)
+    if (Handlung == GEGNER::EXPLODIEREN)
         return;
 
     float yoff = 0.0f;
@@ -89,7 +89,7 @@ void GegnerSkeletor::DoDraw() {
         yoff = 10.0f;
 
     /*
-    if (Handlung == GEGNER_SPRINGEN)
+    if (Handlung == GEGNER::SPRINGEN)
     {
         DirectGraphics.SetAdditiveMode();
         LavaFlare.RenderSpriteScaled(xPos - static_cast<float>(TileEngine.XOffset) - 90,
@@ -108,7 +108,7 @@ void GegnerSkeletor::DoDraw() {
                                            yPos - TileEngine.YOffset + yoff, AnimPhase, Color,
                                            mirror);
 
-    if (Handlung == GEGNER_SPECIAL2) {
+    if (Handlung == GEGNER::SPECIAL2) {
         for (int i = 0; i < 4; i++) {
             D3DCOLOR col = D3DCOLOR_RGBA(255, 255, 255, 200 - i * 30);
             pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset - xSpeed * static_cast<float>(i * 2),
@@ -118,7 +118,7 @@ void GegnerSkeletor::DoDraw() {
     }
 
     // Flamme rendern
-    if (Handlung == GEGNER_SCHIESSEN && ShotDelay > 0.5f) {
+    if (Handlung == GEGNER::SCHIESSEN && ShotDelay > 0.5f) {
         DirectGraphics.SetAdditiveMode();
 
         int foff = -120;
@@ -148,7 +148,7 @@ void GegnerSkeletor::DoKI() {
     CalcGunWinkel();
 
     // Energie anzeigen
-    if (Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER::NOTVISIBLE && Handlung != GEGNER::EXPLODIEREN)
         HUD.ShowBossHUD(7000, Energy);
 
     // Boss aktivieren und Stagemusik ausfaden
@@ -162,25 +162,25 @@ void GegnerSkeletor::DoKI() {
         TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
                                TileStateEnum::SCROLLTOLOCK);  // Level auf den Boss zentrieren
 
-        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC::STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
 
     // Je nach Handlung richtig verhalten
     //
     switch (Handlung) {
         // Abwarten nach dem Lachen
-        case GEGNER_SPECIAL: {
+        case GEGNER::SPECIAL: {
             AnimCount -= 1.0f SYNC;
             if (AnimCount < 0.0f) {
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
             }
         } break;
 
-        case GEGNER_CRUSHENERHOLEN: {
+        case GEGNER::CRUSHENERHOLEN: {
             AnimCount += 1.0f SYNC;
 
             if (AnimCount > 10.0f && AnimPhase == 0) {
-                // SoundManager.PlayWave(100, 128, 11025, SOUND_STANDUP);
+                // SoundManager.PlayWave(100, 128, 11025, SOUND::STANDUP);
                 AnimPhase = 1;
             }
 
@@ -188,20 +188,20 @@ void GegnerSkeletor::DoKI() {
                 AnimPhase = 2;
 
                 if (HasLaughed == false)
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_LAUGH);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::LAUGH);
             }
 
             if (AnimCount > 25.0f) {
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
                 if (HasLaughed == false) {
                     HasLaughed = true;
-                    SoundManager.PlaySong(MUSIC_BOSS, false);
+                    SoundManager.PlaySong(MUSIC::BOSS, false);
                 }
             }
 
         } break;
 
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             int j = random(4);
 
             while (j == LastHandlung)
@@ -214,7 +214,7 @@ void GegnerSkeletor::DoKI() {
                     ShotDelay = 0.0f;
                     ShotCount = 40;
 
-                    Handlung = GEGNER_SCHIESSEN;
+                    Handlung = GEGNER::SCHIESSEN;
                     AnimOffset = 0;
                 } break;
 
@@ -222,21 +222,21 @@ void GegnerSkeletor::DoKI() {
                     ShotDelay = 0.0f;
                     ShotCount = 20;
 
-                    Handlung = GEGNER_BOMBARDIEREN;
+                    Handlung = GEGNER::BOMBARDIEREN;
                     AnimOffset = 0;
                 } break;
 
                 case 2: {
                     ShotDelay = 3.0f;
                     ShotCount = 1;
-                    Handlung = GEGNER_SPRINGEN;
+                    Handlung = GEGNER::SPRINGEN;
                     xSpeed = 25.0f;
                     ySpeed = -60.0f;
                     yAcc = 6.0f;
                 } break;
 
                 case 3: {
-                    Handlung = GEGNER_SPECIAL2;
+                    Handlung = GEGNER::SPECIAL2;
                     xSpeed = 0.0f;
                     xAcc = 2.0f;
                     ShotDelay = 9.0f;
@@ -250,14 +250,14 @@ void GegnerSkeletor::DoKI() {
             }
         } break;
 
-        case GEGNER_SPECIAL2: {
+        case GEGNER::SPECIAL2: {
             // Rakete schiessen
             if (ShotCount > 0)
                 ShotDelay -= 1.0f SYNC;
 
             if (ShotDelay < 0.0f) {
                 WinkelUebergabe = 2.0f * ShotCount + 8.0f;
-                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_ROCKET);
+                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::ROCKET);
                 Projectiles.PushProjectile(xPos + 50.0f, yPos + 80.0f, TURRIEXTRAWURST);
 
                 ShotDelay = 3.0f;
@@ -297,7 +297,7 @@ void GegnerSkeletor::DoKI() {
             }
         } break;
 
-        case GEGNER_SPRINGEN: {
+        case GEGNER::SPRINGEN: {
             // Animationsphase setzen
 
             if (xPos + 60 < Value1 + 320) {
@@ -313,7 +313,7 @@ void GegnerSkeletor::DoKI() {
             // 5er Schuss abgeben?
             if (ShotCount == 1) {
                 if (xPos + 62.0f > Value1 + 300 && xPos + 62.0f < Value1 + 340) {
-                    SoundManager.PlayWave(100, 128, 8000 + random(2000), SOUND_FIREBALL);
+                    SoundManager.PlayWave(100, 128, 8000 + random(2000), SOUND::FIREBALL);
                     ShotCount = 0;
 
                     for (int i = 0; i < 5; i++) {
@@ -334,7 +334,7 @@ void GegnerSkeletor::DoKI() {
 
                 AnimPhase = 0;
                 ySpeed = 0.0f;
-                Handlung = GEGNER_CRUSHENERHOLEN;
+                Handlung = GEGNER::CRUSHENERHOLEN;
                 AnimCount = 0.0f;
 
                 for (int i = 0; i < 10; i++)
@@ -346,12 +346,12 @@ void GegnerSkeletor::DoKI() {
                                                 yPos + static_cast<float>(random(10) + 180), SPIDERSPLITTER);
 
                 ShakeScreen(5.0f);
-                SoundManager.PlayWave(100, 128, 11025, SOUND_DOORSTOP);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::DOORSTOP);
             }
         } break;
 
         // Granaten
-        case GEGNER_BOMBARDIEREN: {
+        case GEGNER::BOMBARDIEREN: {
             ShotDelay -= 0.1f SYNC;
 
             AnimCount -= 1.0f SYNC;
@@ -369,7 +369,7 @@ void GegnerSkeletor::DoKI() {
                         off = -95;
 
                     AnimCount = 1.5f;
-                    SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND_GRANATE);
+                    SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND::GRANATE);
                     PartikelSystem.PushPartikel(xPos + 50.0f + off, yPos + 35.0f, EXPLOSIONFLARE);
                     PartikelSystem.PushPartikel(xPos + 50.0f + off, yPos + 35.0f, EXPLOSIONFLARE);
 
@@ -405,7 +405,7 @@ void GegnerSkeletor::DoKI() {
         } break;
 
         // Gatling
-        case GEGNER_SCHIESSEN: {
+        case GEGNER::SCHIESSEN: {
             ShotDelay -= 0.5f SYNC;
 
             // Animationsphase setzen
@@ -428,7 +428,7 @@ void GegnerSkeletor::DoKI() {
                 PartikelSystem.PushPartikel(xPos + static_cast<float>(off), yPos + 75.0f, BULLET_SKELETOR);
 
                 // Sound
-                SoundManager.PlayWave(100, 128, 10000 + random(400), SOUND_GATLING);
+                SoundManager.PlayWave(100, 128, 10000 + random(400), SOUND::GATLING);
 
                 // Schuss
                 WinkelUebergabe = GunWinkel + random(4) - 2;
@@ -449,20 +449,20 @@ void GegnerSkeletor::DoKI() {
             }
         } break;
 
-        case GEGNER_NOTVISIBLE:  // Warten bis der Screen zentriert wurde
+        case GEGNER::NOTVISIBLE:  // Warten bis der Screen zentriert wurde
         {
             if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Boss erscheinen lassen
                 //
-                SoundManager.PlayWave(100, 128, 11025, SOUND_STONEFALL);
-                Handlung = GEGNER_EINFLIEGEN;
+                SoundManager.PlayWave(100, 128, 11025, SOUND::STONEFALL);
+                Handlung = GEGNER::EINFLIEGEN;
                 xSpeed = 0.0f;
                 ySpeed = 80.0f;
                 Destroyable = true;
             }
         } break;
 
-        case GEGNER_EINFLIEGEN:  // Kopf erhebt sich aus dem Schrotthaufen
+        case GEGNER::EINFLIEGEN:  // Kopf erhebt sich aus dem Schrotthaufen
         {
             BlickRichtung = RECHTS;
 
@@ -470,7 +470,7 @@ void GegnerSkeletor::DoKI() {
                 yPos = static_cast<float>(Value2) + 250;
                 AnimPhase = 0;
                 ySpeed = 0.0f;
-                Handlung = GEGNER_CRUSHENERHOLEN;
+                Handlung = GEGNER::CRUSHENERHOLEN;
                 AnimCount = 0.0f;
 
                 for (int i = 0; i < 50; i++)
@@ -482,11 +482,11 @@ void GegnerSkeletor::DoKI() {
                                                 yPos + static_cast<float>(random(10) + 180), SPIDERSPLITTER);
 
                 ShakeScreen(5.0f);
-                SoundManager.PlayWave(100, 128, 11025, SOUND_DOORSTOP);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::DOORSTOP);
             }
         } break;
 
-        case GEGNER_EXPLODIEREN: {
+        case GEGNER::EXPLODIEREN: {
             ShotDelay -= 1.0f SYNC;
 
             if (ShotDelay < 0.0f)
@@ -498,10 +498,10 @@ void GegnerSkeletor::DoKI() {
             break;
     }  // switch
 
-    if (Energy < 0.0f && Handlung != GEGNER_EXPLODIEREN) {
+    if (Energy < 0.0f && Handlung != GEGNER::EXPLODIEREN) {
         Energy = 1.0f;
         Destroyable = false;
-        Handlung = GEGNER_EXPLODIEREN;
+        Handlung = GEGNER::EXPLODIEREN;
         ShotDelay = 20.0f;
 
         // Schädel spawnen
@@ -527,12 +527,12 @@ void GegnerSkeletor::DoKI() {
                                         yPos + static_cast<float>(random(200) - 50), EXPLOSION_MEDIUM2);
 
         PartikelSystem.PushPartikel(xPos + 62.0f, yPos + 100.0f, SHOCKEXPLOSION);
-        SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+        SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION2);
         Player[0].Score += 12500;
         ShakeScreen(5.0f);
 
         // Endboss-Musik ausfaden und abschalten
-        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC::BOSS, -2.0f, 0, false);
     }
 
     TestDamagePlayers(10.0f SYNC);

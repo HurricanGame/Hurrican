@@ -11,7 +11,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerEvilHurri::GegnerEvilHurri(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_INIT;
+    Handlung = GEGNER::INIT;
     BlickRichtung = RECHTS;
 
     Energy = 6000;
@@ -61,7 +61,7 @@ void GegnerEvilHurri::DoKI() {
     SimpleAnimation();
 
     // Energie anzeigen
-    if (Handlung != GEGNER_INIT && Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER::INIT && Handlung != GEGNER::EXPLODIEREN)
         HUD.ShowBossHUD(6000, Energy);
 
     // Levelausschnitt auf den Boss zentrieren, sobald dieser sichtbar wird
@@ -70,7 +70,7 @@ void GegnerEvilHurri::DoKI() {
                                static_cast<float>(Value2),
                                TileStateEnum::SCROLLTOLOCK);  // Level auf die Faust zentrieren
 
-        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC::STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
@@ -105,7 +105,7 @@ void GegnerEvilHurri::DoKI() {
         }
 
     // Hat der Boss keine Energie mehr ? Dann fliegt er in die Luft
-    if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN) {
+    if (Energy <= 100.0f && Handlung != GEGNER::EXPLODIEREN) {
         ShakeScreen(5);
 
         AnimPhase = 40;
@@ -116,13 +116,13 @@ void GegnerEvilHurri::DoKI() {
         yAcc = 0.0f;
         xAcc = 0.0f;
 
-        SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+        SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION2);
 
-        Handlung = GEGNER_EXPLODIEREN;
+        Handlung = GEGNER::EXPLODIEREN;
         ActionDelay = 0.0f;
 
         // Endboss-Musik ausfaden und abschalten
-        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC::BOSS, -2.0f, 0, false);
     }
 
     // EvilHurri blinken lassen
@@ -134,27 +134,27 @@ void GegnerEvilHurri::DoKI() {
         BlinkDirection = -1.0f;
 
     // Rand checken
-    if (xPos < static_cast<float>(Value1 + 10) && Handlung != GEGNER_EINFLIEGEN && Handlung != GEGNER_INIT)
+    if (xPos < static_cast<float>(Value1 + 10) && Handlung != GEGNER::EINFLIEGEN && Handlung != GEGNER::INIT)
         xPos = static_cast<float>(Value1 + 10);
-    if (xPos > static_cast<float>(Value1 + 550) && Handlung != GEGNER_EINFLIEGEN && Handlung != GEGNER_INIT)
+    if (xPos > static_cast<float>(Value1 + 550) && Handlung != GEGNER::EINFLIEGEN && Handlung != GEGNER::INIT)
         xPos = static_cast<float>(Value1 + 550);
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_INIT:  // Warten bis der Screen zentriert wurde
+        case GEGNER::INIT:  // Warten bis der Screen zentriert wurde
         {
             if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 // DKS - Added function SongIsPlaying() to SoundManagerClass:
-                if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
-                    SoundManager.PlaySong(MUSIC_BOSS, false);
+                if (!SoundManager.SongIsPlaying(MUSIC::BOSS))
+                    SoundManager.PlaySong(MUSIC::BOSS, false);
 
                 // Und Boss erscheinen lassen
-                Handlung = GEGNER_EINFLIEGEN;
+                Handlung = GEGNER::EINFLIEGEN;
             }
         } break;
 
-        case GEGNER_STEHEN:  // Counter runterzählen und nächste Aktion entscheiden
+        case GEGNER::STEHEN:  // Counter runterzählen und nächste Aktion entscheiden
         {
             AnimPhase = 0;
             AnimStart = 0;
@@ -174,7 +174,7 @@ void GegnerEvilHurri::DoKI() {
                 // Bei großem Abstand spieler zerquetschen
                 if (PlayerAbstand() > 300) {
                     if (random(2) == 0) {
-                        Handlung = GEGNER_CRUSHEN;
+                        Handlung = GEGNER::CRUSHEN;
                         ActionDelay = 1.0f;
                         AnimPhase = 48;
 
@@ -183,7 +183,7 @@ void GegnerEvilHurri::DoKI() {
                         else
                             xSpeed = -40.0f;
                     } else {
-                        Handlung = GEGNER_CRUSHEN2;
+                        Handlung = GEGNER::CRUSHEN2;
                         ActionDelay = 1.0f;
                         AnimPhase = 48;
 
@@ -198,7 +198,7 @@ void GegnerEvilHurri::DoKI() {
                 // Ansonsten im Kreis rum ballern
                 else {
                     if (random(2) == 0 && xPos > Value1 + 200 && xPos < Value1 + 440) {
-                        Handlung = GEGNER_BOMBARDIEREN;
+                        Handlung = GEGNER::BOMBARDIEREN;
                         ActionDelay = 3.0f;
                         AnimEnde = 0;
                         AnimStart = 0;
@@ -209,7 +209,7 @@ void GegnerEvilHurri::DoKI() {
                     // oder ballernd auf den Spieler zurennen
                     else {
                         if (random(2) == 0) {
-                            Handlung = GEGNER_LAUFEN;
+                            Handlung = GEGNER::LAUFEN;
                             ActionDelay = 1.0f;
                             AnimPhase = 3;
                             AnimStart = 3;
@@ -223,7 +223,7 @@ void GegnerEvilHurri::DoKI() {
                         }
 
                         else {
-                            Handlung = GEGNER_LAUFEN2;
+                            Handlung = GEGNER::LAUFEN2;
                             ActionDelay = 1.0f;
                             AnimPhase = 3;
                             AnimStart = 3;
@@ -240,7 +240,7 @@ void GegnerEvilHurri::DoKI() {
             }
         } break;
 
-        case GEGNER_EINFLIEGEN:  // EvilHurri läuft ins Level
+        case GEGNER::EINFLIEGEN:  // EvilHurri läuft ins Level
         {
             Energy = 6000;
             DamageTaken = 0.0f;
@@ -249,12 +249,12 @@ void GegnerEvilHurri::DoKI() {
 
             if (xPos >= Value1 + 30)  // Weit genug eingelaufen ?
             {
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
                 ActionDelay = 10.0f;
             }
         } break;
 
-        case GEGNER_CRUSHEN: {
+        case GEGNER::CRUSHEN: {
             ActionDelay -= 1.0f SYNC;
 
             if (ActionDelay < 0.0f) {
@@ -268,13 +268,13 @@ void GegnerEvilHurri::DoKI() {
 
             if ((BlickRichtung == RECHTS && xPos > pAim->xpos + 140) ||
                 (BlickRichtung == LINKS && xPos + 140 < pAim->xpos)) {
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
                 ActionDelay = 10.0f;
             }
 
         } break;
 
-        case GEGNER_CRUSHEN2:  // Nur bis zur Mitte des Screens und dann blitzen
+        case GEGNER::CRUSHEN2:  // Nur bis zur Mitte des Screens und dann blitzen
         {
             ActionDelay -= 1.0f SYNC;
 
@@ -289,17 +289,17 @@ void GegnerEvilHurri::DoKI() {
 
             if ((BlickRichtung == RECHTS && xPos + 35 > Value1 + 320) ||
                 (BlickRichtung == LINKS && xPos + 35 < Value1 + 320)) {
-                Handlung = GEGNER_SPECIAL;
+                Handlung = GEGNER::SPECIAL;
                 AnimPhase = 0;
                 AnimEnde = 0;
                 ActionDelay = 0.0f;
                 xSpeed = 0.0f;
 
-                SoundManager.PlayWave(100, 128, 11025, SOUND_BLITZSTART);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::BLITZSTART);
             }
         } break;
 
-        case GEGNER_LAUFEN:  // Auf Spieler zulaufen
+        case GEGNER::LAUFEN:  // Auf Spieler zulaufen
         {
             // Ballern
             ActionDelay -= 1.0f SYNC;
@@ -308,7 +308,7 @@ void GegnerEvilHurri::DoKI() {
 
                 // PartikelSystem.PushPartikel(xPos+30, yPos+28, BULLET);
 
-                SoundManager.PlayWave(100, random(255), 8000 + random(4000), SOUND_CANON);
+                SoundManager.PlayWave(100, random(255), 8000 + random(4000), SOUND::CANON);
 
                 if (BlickRichtung == RECHTS) {
                     PartikelSystem.PushPartikel(xPos + 50.0f, yPos + 20.0f, SMOKE);
@@ -346,12 +346,12 @@ void GegnerEvilHurri::DoKI() {
             if (((BlickRichtung == RECHTS && xPos > pAim->xpos + 70) ||
                  (BlickRichtung == LINKS && xPos + 70 < pAim->xpos)) &&
                 ySpeed == 0.0f) {
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
                 ActionDelay = 10.0f;
             }
         } break;
 
-        case GEGNER_LAUFEN2:  // In die Mitte des Screens laufen und da Schweinereien machen
+        case GEGNER::LAUFEN2:  // In die Mitte des Screens laufen und da Schweinereien machen
         {
             // Ballern
             ActionDelay -= 1.0f SYNC;
@@ -360,7 +360,7 @@ void GegnerEvilHurri::DoKI() {
 
                 //				PartikelSystem.PushPartikel(xPos+30, yPos+28, BULLET);
 
-                SoundManager.PlayWave(100, random(255), 8000 + random(4000), SOUND_CANON);
+                SoundManager.PlayWave(100, random(255), 8000 + random(4000), SOUND::CANON);
 
                 if (BlickRichtung == RECHTS) {
                     PartikelSystem.PushPartikel(xPos + 50.0f, yPos + 20.0f, SMOKE);
@@ -373,22 +373,22 @@ void GegnerEvilHurri::DoKI() {
 
             if ((BlickRichtung == RECHTS && xPos + 35 > Value1 + 320) ||
                 (BlickRichtung == LINKS && xPos + 35 < Value1 + 320)) {
-                Handlung = GEGNER_SPECIAL;
+                Handlung = GEGNER::SPECIAL;
                 AnimPhase = 0;
                 AnimEnde = 0;
                 ActionDelay = 0.0f;
                 xSpeed = 0.0f;
 
-                SoundManager.PlayWave(100, 128, 11025, SOUND_BLITZSTART);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::BLITZSTART);
             }
         } break;
 
         // Boss ballert im Kreis um sich herum
-        case GEGNER_BOMBARDIEREN: {
+        case GEGNER::BOMBARDIEREN: {
             ActionDelay -= 1.0f SYNC;
 
             if (ActionDelay < 0.0f) {
-                SoundManager.PlayWave(100, random(255), 8000 + random(4000), SOUND_CANON);
+                SoundManager.PlayWave(100, random(255), 8000 + random(4000), SOUND::CANON);
                 PartikelSystem.PushPartikel(xPos + static_cast<float>((AnimPhase - 36) * 5),
                                             yPos - 23.0f + static_cast<float>(abs(AnimPhase - 41) * 8), SMOKE);
                 //				PartikelSystem.PushPartikel(xPos+30, yPos+28, BULLET);
@@ -401,7 +401,7 @@ void GegnerEvilHurri::DoKI() {
                 AnimPhase++;
 
                 if (AnimPhase > 46) {
-                    Handlung = GEGNER_STEHEN;
+                    Handlung = GEGNER::STEHEN;
                     AnimPhase = 0;
                     ActionDelay = 10.0f;
                 }
@@ -409,7 +409,7 @@ void GegnerEvilHurri::DoKI() {
         } break;
 
         // Gegner Blitzt in den Himmel und Schüsse fallen von oben
-        case GEGNER_SPECIAL: {
+        case GEGNER::SPECIAL: {
             ActionDelay += 1.0f SYNC;
 
             if (ActionDelay > 5.0f && ActionDelay < 20.0f && AnimPhase == 0)
@@ -423,7 +423,7 @@ void GegnerEvilHurri::DoKI() {
                                                 yPos + static_cast<float>(random(10)), LASERFUNKE2);
 
                 Projectiles.PushProjectile(xPos, yPos - 20, EVILBLITZ);
-                SoundManager.PlayWave(100, 128, 11025, SOUND_SPIDERGRENADE);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::SPIDERGRENADE);
             }
 
             // Screen blinken
@@ -435,14 +435,14 @@ void GegnerEvilHurri::DoKI() {
 
             if (ActionDelay > 70.0f) {
                 if (random(2) == 0) {
-                    Handlung = GEGNER_AUFRICHTEN;
+                    Handlung = GEGNER::AUFRICHTEN;
                     BlickRichtung = LINKS;
                     AnimPhase = 3;
                     AnimStart = 3;
                     AnimEnde = 21;
                     xSpeed = -20;
                 } else {
-                    Handlung = GEGNER_AUFRICHTENZWEI;
+                    Handlung = GEGNER::AUFRICHTENZWEI;
                     BlickRichtung = RECHTS;
                     AnimPhase = 3;
                     AnimStart = 3;
@@ -452,32 +452,32 @@ void GegnerEvilHurri::DoKI() {
             }
         } break;
 
-        case GEGNER_AUFRICHTEN: {
+        case GEGNER::AUFRICHTEN: {
             if (xPos < Value1 + 20) {
                 BlickRichtung = RECHTS;
                 xSpeed = 15.0f;
                 ActionDelay = 4.0f;
-                Handlung = GEGNER_AUSSPUCKEN;
+                Handlung = GEGNER::AUSSPUCKEN;
             }
         } break;
 
-        case GEGNER_AUFRICHTENZWEI: {
+        case GEGNER::AUFRICHTENZWEI: {
             if (xPos >= Value1 + 550) {
                 BlickRichtung = LINKS;
                 xSpeed = -15.0f;
                 ActionDelay = 4.0f;
-                Handlung = GEGNER_AUSSPUCKENZWEI;
+                Handlung = GEGNER::AUSSPUCKENZWEI;
             }
         } break;
 
         // Über den Screen rennen und dabei nach oben ballern
-        case GEGNER_AUSSPUCKEN: {
+        case GEGNER::AUSSPUCKEN: {
             // Am Rand angekommen ?
             if (xPos >= Value1 + 550) {
                 xSpeed = 0;
                 AnimPhase = 0;
                 ActionDelay = 10.0f;
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
             }
 
             ActionDelay -= 1.0f SYNC;
@@ -491,7 +491,7 @@ void GegnerEvilHurri::DoKI() {
                     Projectiles.PushProjectile(xPos + 20.0f, yPos + 10.0f, ARCSHOT);
                     Projectiles.PushProjectile(xPos + 20.0f, yPos + 10.0f, ARCSHOTLEFT);
                     Projectiles.PushProjectile(xPos + 20.0f, yPos + 10.0f, ARCSHOTRIGHT);
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_SPIDERGRENADE);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::SPIDERGRENADE);
 
                     ActionDelay = 3.0f;
                 }
@@ -507,13 +507,13 @@ void GegnerEvilHurri::DoKI() {
         } break;
 
         // Über den Screen rennen und dabei nach oben ballern
-        case GEGNER_AUSSPUCKENZWEI: {
+        case GEGNER::AUSSPUCKENZWEI: {
             // Am Rand angekommen ?
             if (xPos <= Value1 + 20) {
                 xSpeed = 0;
                 AnimPhase = 0;
                 ActionDelay = 10.0f;
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
             }
 
             ActionDelay -= 1.0f SYNC;
@@ -525,7 +525,7 @@ void GegnerEvilHurri::DoKI() {
                     AnimEnde = 0;
                     AnimPhase = 40;
                     Projectiles.PushProjectile(xPos, yPos + 10.0f, ROCKETSPIDER);
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_ROCKET);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::ROCKET);
 
                     ActionDelay = 4.0f;
                 }
@@ -540,7 +540,7 @@ void GegnerEvilHurri::DoKI() {
             }
         } break;
 
-        case GEGNER_EXPLODIEREN: {
+        case GEGNER::EXPLODIEREN: {
             Energy = 80.0f;
 
             ActionDelay += 1.0f SYNC;
@@ -551,7 +551,7 @@ void GegnerEvilHurri::DoKI() {
             if (AnimCount < 0.0f) {
                 AnimCount = 2.0f;
 
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
                 PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(70)),
                                             yPos + static_cast<float>(random(80)), EXPLOSION_MEDIUM);
                 PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(70)),
@@ -581,7 +581,7 @@ void GegnerEvilHurri::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(70)),
                                     yPos + static_cast<float>(random(80)), EXPLOSION_MEDIUM2);
 
-    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION2);
 
     ScrolltoPlayeAfterBoss();
 

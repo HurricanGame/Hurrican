@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerStalagtit::GegnerStalagtit(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 10;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -28,7 +28,7 @@ GegnerStalagtit::GegnerStalagtit(int Wert1, int Wert2, bool Light) {
 void GegnerStalagtit::DoKI() {
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_FALLEN:  // Stein fällt runter
+        case GEGNER::FALLEN:  // Stein fällt runter
         {
             // Maximale Geschwindigkeitsbegrenzung
             if (ySpeed > 50.0f)
@@ -42,7 +42,7 @@ void GegnerStalagtit::DoKI() {
             }
         } break;
 
-        case GEGNER_LAUFEN:  // Stein wartet bis der Spieler vorbeikommt
+        case GEGNER::LAUFEN:  // Stein wartet bis der Spieler vorbeikommt
         {
             if (pAim->xpos + pAim->CollideRect.right > xPos && pAim->xpos < xPos + 80 && pAim->ypos > yPos &&
                 PlayerAbstand() < 640) {
@@ -53,9 +53,9 @@ void GegnerStalagtit::DoKI() {
                 }
 
                 // Sound ausgeben
-                SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEFALL);
+                SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::STONEFALL);
 
-                Handlung = GEGNER_FALLEN;
+                Handlung = GEGNER::FALLEN;
                 ySpeed = 0.0f;
                 yAcc = 12.0f;
             }
@@ -78,7 +78,7 @@ void GegnerStalagtit::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos - 8.0f + static_cast<float>(random(40)),
                                     yPos - 8.0f + static_cast<float>(random(80)), ROCKSPLITTERSMALLBLUE);
     }
-    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEEXPLODE);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::STONEEXPLODE);  // Sound ausgeben
 
     Player[0].Score += 100;
 }

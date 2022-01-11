@@ -13,7 +13,7 @@
 
 GegnerTheWall::GegnerTheWall(int Wert1, int Wert2, bool Light) {
     Active = true;
-    Handlung = GEGNER_INIT;
+    Handlung = GEGNER::INIT;
     BlickRichtung = LINKS;
     Energy = 4000;
     OldEnergy = Energy;
@@ -107,7 +107,7 @@ void GegnerTheWall::DoDraw() {
                             static_cast<int>(KringelWinkel / 3.0f) % 5, col);
 
     // Herz rendern
-    if (Handlung != GEGNER_EXPLODIEREN) {
+    if (Handlung != GEGNER::EXPLODIEREN) {
         Brain.RenderSprite(xPos - TileEngine.XOffset + static_cast<float>(TunnelOffx + 116),
                            yPos - TileEngine.YOffset + static_cast<float>(TunnelOffY + 59), HeartAnim, col);
 
@@ -176,13 +176,13 @@ void GegnerTheWall::NeueAktion() {
     if (CountOpen <= 0) {
         CountOpen = 1;
         AnimCount = 50.0f;
-        Handlung = GEGNER_OEFFNEN;
-        SoundManager.PlayWave(100, 128, 10000 + random(1000), SOUND_DOOR);
+        Handlung = GEGNER::OEFFNEN;
+        SoundManager.PlayWave(100, 128, 10000 + random(1000), SOUND::DOOR);
 
         // Laser beenden
         Projectiles.ClearType(SPIDERLASER);
-        SoundManager.StopWave(SOUND_SPIDERLASER);
-        SoundManager.StopWave(SOUND_BEAMLOAD2);
+        SoundManager.StopWave(SOUND::SPIDERLASER);
+        SoundManager.StopWave(SOUND::BEAMLOAD2);
 
         // Schädel rumfliegen lassen
         Value1 = -1;
@@ -209,14 +209,14 @@ void GegnerTheWall::NeueAktion() {
             case 0: {
                 ShotCount = 20;
                 ShotDelay = 5.0f;
-                Handlung = GEGNER_SPECIAL;
+                Handlung = GEGNER::SPECIAL;
                 dummy = static_cast<float>(random(10)) + 15;
             } break;
 
             case 1: {
                 ShotCount = 16;
                 ShotDelay = 5.0f;
-                Handlung = GEGNER_SPECIAL2;
+                Handlung = GEGNER::SPECIAL2;
             } break;
 
             case 2: {
@@ -224,16 +224,16 @@ void GegnerTheWall::NeueAktion() {
                 ShotDelay = 20.0f;
 
                 if (DoLaser)
-                    Handlung = GEGNER_BOMBARDIEREN;
+                    Handlung = GEGNER::BOMBARDIEREN;
                 else
-                    Handlung = GEGNER_SPECIAL3;
+                    Handlung = GEGNER::SPECIAL3;
 
             } break;
         }
     }
 
     Laughing = 10.0f;
-    SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_LAUGH);
+    SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::LAUGH);
 }
 
 // --------------------------------------------------------------------------------------
@@ -245,7 +245,7 @@ void GegnerTheWall::ReturnSkull() {
 
     while (pTemp != nullptr) {
         if (pTemp->GegnerArt == SKULL)
-            pTemp->Handlung = GEGNER_SPECIAL2;
+            pTemp->Handlung = GEGNER::SPECIAL2;
 
         pTemp = pTemp->pNext;
     }
@@ -263,7 +263,7 @@ void GegnerTheWall::DoKI() {
         if (SkullShotDelay < 0.0f) {
             SkullShotDelay = 15.0f;
             Projectiles.PushProjectile(xPos, yPos + 240.0f, SUCHSCHUSS2, pAim);
-            SoundManager.PlayWave(50, 128, 14000 + random(2000), SOUND_GOLEMSHOT);
+            SoundManager.PlayWave(50, 128, 14000 + random(2000), SOUND::GOLEMSHOT);
         }
     }
 
@@ -272,7 +272,7 @@ void GegnerTheWall::DoKI() {
         return;
     }
 
-    if (Handlung != GEGNER_EXPLODIEREN) {
+    if (Handlung != GEGNER::EXPLODIEREN) {
         // Vorderteil zurückfahren?
         if (VorneX > 0.0f)
             VorneX -= 1.0f SYNC;
@@ -285,7 +285,7 @@ void GegnerTheWall::DoKI() {
                 SkullEnergy -= (OldEnergy - Energy);
                 Energy = OldEnergy;
             } else {
-                if (Handlung != GEGNER_OEFFNEN && Handlung != GEGNER_SCHLIESSEN) {
+                if (Handlung != GEGNER::OEFFNEN && Handlung != GEGNER::SCHLIESSEN) {
                     CountOpen = 0;
                     NeueAktion();
                 }
@@ -295,7 +295,7 @@ void GegnerTheWall::DoKI() {
         Destroyable = false;
 
         // Schädel kann man treffen?
-        if (Handlung != GEGNER_OEFFNEN && Handlung != GEGNER_SCHLIESSEN && Value1 == 1) {
+        if (Handlung != GEGNER::OEFFNEN && Handlung != GEGNER::SCHLIESSEN && Value1 == 1) {
             GegnerRect[GegnerArt].left = 5;
             GegnerRect[GegnerArt].top = 232;
             GegnerRect[GegnerArt].right = 5 + 20;
@@ -304,7 +304,7 @@ void GegnerTheWall::DoKI() {
         }
 
         // Herz kann man treffen
-        if (Handlung == GEGNER_OEFFNEN || Handlung == GEGNER_SCHLIESSEN) {
+        if (Handlung == GEGNER::OEFFNEN || Handlung == GEGNER::SCHLIESSEN) {
             GegnerRect[GegnerArt].left = TunnelOffx + 116;
             GegnerRect[GegnerArt].top = TunnelOffY + 59;
             GegnerRect[GegnerArt].right = TunnelOffx + 116 + 38;
@@ -346,14 +346,14 @@ void GegnerTheWall::DoKI() {
                 HeartAnim = 1;
                 HeartBeat = 5.0f;
 
-                if (Handlung == GEGNER_OEFFNEN || Handlung == GEGNER_SCHLIESSEN)
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_HEART2);
+                if (Handlung == GEGNER::OEFFNEN || Handlung == GEGNER::SCHLIESSEN)
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::HEART2);
             } else {
                 HeartAnim = 0;
                 HeartBeat = 0.0f;
 
-                if (Handlung == GEGNER_OEFFNEN || Handlung == GEGNER_SCHLIESSEN)
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_HEART1);
+                if (Handlung == GEGNER::OEFFNEN || Handlung == GEGNER::SCHLIESSEN)
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::HEART1);
             }
         }
 
@@ -391,7 +391,7 @@ void GegnerTheWall::DoKI() {
         }
 
         // Energie anzeigen
-        if (Handlung != GEGNER_INIT)
+        if (Handlung != GEGNER::INIT)
             HUD.ShowBossHUD(4000, Energy);
 
         // Boss aktivieren und Mucke laufen lassen
@@ -399,7 +399,7 @@ void GegnerTheWall::DoKI() {
         if (Active == true && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
             if (PlayerAbstand() < 800 && PlayerAbstandHoriz() < 400.0f) {
                 TileEngine.ScrollLevel(xPos - 355.0f, yPos, TileStateEnum::SCROLLTOLOCK);  // Level auf den Boss zentrieren
-                SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);         // Ausfaden und pausieren
+                SoundManager.FadeSong(MUSIC::STAGEMUSIC, -2.0f, 0, true);         // Ausfaden und pausieren
             }
         }
 
@@ -419,7 +419,7 @@ void GegnerTheWall::DoKI() {
             }
 
             ShotCount = 1;
-            Handlung = GEGNER_EXPLODIEREN;
+            Handlung = GEGNER::EXPLODIEREN;
             Laughing = 0.0f;
 
             // Alle Schüsse löschen
@@ -436,7 +436,7 @@ void GegnerTheWall::DoKI() {
             SoundManager.StopSounds();
 
             // Glassplitter
-            SoundManager.PlayWave(100, 128, 11025, SOUND_GLASSBREAK);
+            SoundManager.PlayWave(100, 128, 11025, SOUND::GLASSBREAK);
 
             for (int i = 0; i < 20; i++)
                 PartikelSystem.PushPartikel(xPos + static_cast<float>(TunnelOffx + 114 + random(30)),
@@ -459,7 +459,7 @@ void GegnerTheWall::DoKI() {
                 if (pTemp->GegnerArt == SKULL) {
                     pTemp->Value1 = 0;
                     pTemp->AnimCount = 0.5f;
-                    pTemp->Handlung = GEGNER_SPECIAL3;
+                    pTemp->Handlung = GEGNER::SPECIAL3;
                 }
 
                 pTemp = pTemp->pNext;
@@ -471,13 +471,13 @@ void GegnerTheWall::DoKI() {
 
     // je nach handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_INIT: {
+        case GEGNER::INIT: {
             if (PlayerAbstandHoriz() < 400.0f && PlayerAbstandVert() < 400.0f && PlayerAbstand(true) < 600.0f) {
                 // Den Schädel wieder zurückpfeiffen
                 if (Value1 == -1) {
                     Value1 = -2;
                     ReturnSkull();
-                    SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_LAUGH);
+                    SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::LAUGH);
                 }
 
                 // und loslegen (nach kurzer Pause)
@@ -489,13 +489,13 @@ void GegnerTheWall::DoKI() {
             }
         } break;
 
-        case GEGNER_SPECIAL: {
+        case GEGNER::SPECIAL: {
             ShotDelay -= 1.0f SYNC;
 
             if (ShotDelay < 0.0f) {
                 WinkelUebergabe = dummy;
 
-                SoundManager.PlayWave(50, 128, 8000 + random(2000), SOUND_GOLEMSHOT);
+                SoundManager.PlayWave(50, 128, 8000 + random(2000), SOUND::GOLEMSHOT);
 
                 Projectiles.PushProjectile(xPos, yPos + 332.0f, GOLEMSCHUSS);
                 PartikelSystem.PushPartikel(xPos - 30.0f, yPos + 295.0f, EXPLOSIONFLARE);
@@ -510,11 +510,11 @@ void GegnerTheWall::DoKI() {
         } break;
 
         // lila boller schiessen
-        case GEGNER_SPECIAL2: {
+        case GEGNER::SPECIAL2: {
             ShotDelay -= 1.0f SYNC;
 
             if (ShotDelay < 0.0f) {
-                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_LILA);
+                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::LILA);
                 Projectiles.PushProjectile(xPos, yPos + 332.0f, SPIDERSHOT2);
                 PartikelSystem.PushPartikel(xPos - 30.0f, yPos + 295.0f, EXPLOSIONFLARE);
                 PartikelSystem.PushPartikel(xPos, yPos + 320.0f, SMOKEBIG);
@@ -528,13 +528,13 @@ void GegnerTheWall::DoKI() {
         } break;
 
         // Elektropampe schiessen
-        case GEGNER_SPECIAL3: {
+        case GEGNER::SPECIAL3: {
             ShotDelay -= 1.0f SYNC;
 
             if (ShotDelay < 0.0f) {
                 if (ShotCount > 1) {
-                    SoundManager.PlayWave(128, 128, 11025, SOUND_LILA);
-                    SoundManager.PlayWave(128, 128, 25050, SOUND_GOLEMLOAD);
+                    SoundManager.PlayWave(128, 128, 11025, SOUND::LILA);
+                    SoundManager.PlayWave(128, 128, 25050, SOUND::GOLEMLOAD);
                     Projectiles.PushProjectile(xPos + 220.0f, yPos + 210.0f, ELEKTROSCHUSS);
                 }
 
@@ -547,14 +547,14 @@ void GegnerTheWall::DoKI() {
         } break;
 
         // Fetten Laser schiessen
-        case GEGNER_BOMBARDIEREN: {
+        case GEGNER::BOMBARDIEREN: {
             ShotDelay -= 1.0f SYNC;
 
             if (ShotDelay < 0.0f) {
                 if (ShotCount > 1) {
                     Projectiles.PushProjectile(TileEngine.XOffset - 40.0f, yPos + 240.0f,
                                                SPIDERLASER);
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_BEAMLOAD2);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::BEAMLOAD2);
                 }
 
                 ShotDelay = 60.0f;
@@ -565,12 +565,12 @@ void GegnerTheWall::DoKI() {
             }
         } break;
 
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             if (Value1 == 1)
                 NeueAktion();
         } break;
 
-        case GEGNER_OEFFNEN: {
+        case GEGNER::OEFFNEN: {
             // Tür bewegen
             if (DoorOffset < PI / 2.0f)
                 DoorOffset += 0.075f SYNC;
@@ -581,31 +581,31 @@ void GegnerTheWall::DoKI() {
 
                 // Tür öffnen Sound anhalten
                 // DKS - Added function WaveIsPlaying() to SoundManagerClass:
-                if (SoundManager.WaveIsPlaying(SOUND_DOOR)) {
-                    SoundManager.StopWave(SOUND_DOOR);
-                    SoundManager.PlayWave(100, 128, 22000, SOUND_STEAM2);
+                if (SoundManager.WaveIsPlaying(SOUND::DOOR)) {
+                    SoundManager.StopWave(SOUND::DOOR);
+                    SoundManager.PlayWave(100, 128, 22000, SOUND::STEAM2);
                 }
 
                 AnimCount -= 1.0f SYNC;
                 if (AnimCount < 0.0f) {
-                    SoundManager.PlayWave(100, 128, 10000 + random(1000), SOUND_DOOR);
-                    Handlung = GEGNER_SCHLIESSEN;
+                    SoundManager.PlayWave(100, 128, 10000 + random(1000), SOUND::DOOR);
+                    Handlung = GEGNER::SCHLIESSEN;
                 }
             }
 
         } break;
 
-        case GEGNER_SCHLIESSEN: {
+        case GEGNER::SCHLIESSEN: {
             // Tür
             DoorOffset += 0.125f SYNC;
 
             if (DoorOffset > PI) {
                 DoorOffset = 0.0f;
                 ShakeScreen(2.0f);
-                SoundManager.PlayWave(100, 128, 11000 + random(1500), SOUND_DOORSTOP);
+                SoundManager.PlayWave(100, 128, 11000 + random(1500), SOUND::DOORSTOP);
 
                 // Tür öffnen Sound anhalten
-                SoundManager.StopWave(SOUND_DOOR);
+                SoundManager.StopWave(SOUND::DOOR);
 
                 for (int i = 0; i < 36; i++)
                     PartikelSystem.PushPartikel(xPos + static_cast<float>(TunnelOffx + 110 + random(30)),
@@ -617,7 +617,7 @@ void GegnerTheWall::DoKI() {
                                                 yPos + static_cast<float>(TunnelOffY + random(10) + i * 10 - 25),
                                                 SMOKEBIG);
 
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
                 AnimCount = 20.0f;
                 OldEnergy = Energy;
                 SkullEnergy = 250.0f;
@@ -627,7 +627,7 @@ void GegnerTheWall::DoKI() {
             }
         } break;
 
-        case GEGNER_EXPLODIEREN: {
+        case GEGNER::EXPLODIEREN: {
             AnimCount -= 1.0f SYNC;
 
             if (AnimCount < 0.0f) {

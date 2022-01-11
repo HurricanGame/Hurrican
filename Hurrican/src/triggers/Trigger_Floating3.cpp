@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerFloating3::GegnerFloating3(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     BlickRichtung = RECHTS;
     Energy = 100;
     Value1 = Wert1;
@@ -62,7 +62,7 @@ void GegnerFloating3::DoKI() {
             playeron = true;
 
     switch (Handlung) {
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             PlattformTest(GegnerRect[GegnerArt]);
 
             // Spieler in diesem Frame auf die Plattform gehopst ?
@@ -105,18 +105,18 @@ void GegnerFloating3::DoKI() {
                     Player[p].AufPlattform = nullptr;
 
                     turncount = 0.0f;
-                    Handlung = GEGNER_DREHEN;
+                    Handlung = GEGNER::DREHEN;
                 }
             }
         } break;
 
         // plattform dreht sich
-        case GEGNER_DREHEN: {
+        case GEGNER::DREHEN: {
             winkel += 25.0f * drehdir SYNC;
 
             if (winkel > 180.0f || winkel < -180.0f) {
                 winkel = 0.0f;
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
             }
         } break;
     }

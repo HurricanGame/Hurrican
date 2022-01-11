@@ -18,7 +18,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerPunisher::GegnerPunisher(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_INIT;
+    Handlung = GEGNER::INIT;
     Energy = 20000;
 
     ChangeLight = Light;
@@ -44,8 +44,8 @@ void GegnerPunisher::DoDraw() {
     //
     switch (Handlung) {
         // in Schwabbelstreifen rendern
-        case GEGNER_INIT2:
-        case GEGNER_SPECIAL: {
+        case GEGNER::INIT2:
+        case GEGNER::SPECIAL: {
             for (int i = 0; i < 170; i++) {
                 pGegnerGrafix[GegnerArt]->SetRect(3 * 170, 2 * 170 + i, 4 * 170, 2 * 170 + i + 1);
                 pGegnerGrafix[GegnerArt]->RenderSprite(
@@ -57,7 +57,7 @@ void GegnerPunisher::DoDraw() {
         } break;
 
         // normal rendern
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
                                                    yPos - TileEngine.YOffset, AnimPhase,
                                                    D3DCOLOR_RGBA(255, 255, 255, 255), false);
@@ -91,38 +91,38 @@ void GegnerPunisher::FollowPlayer() {
 void GegnerPunisher::DoKI() {
     switch (Handlung) {
         // initialisieren
-        case GEGNER_INIT: {
+        case GEGNER::INIT: {
             // zentrieren
             xPos = static_cast<float>(TileEngine.XOffset + 320.0f - 100.0f / 2.0f);
             yPos = static_cast<float>(TileEngine.YOffset + 240.0f - 95.0f / 2.0f);
 
             alpha = 0.0f;
-            Handlung = GEGNER_INIT2;
+            Handlung = GEGNER::INIT2;
 
-            SoundManager.StopSong(MUSIC_STAGEMUSIC, true);
+            SoundManager.StopSong(MUSIC::STAGEMUSIC, true);
 
             // DKS - Punisher music is now loaded on-demand:
-            SoundManager.LoadSong("Punisher.it", MUSIC_PUNISHER);
+            SoundManager.LoadSong("Punisher.it", MUSIC::PUNISHER);
 
-            SoundManager.PlaySong(MUSIC_PUNISHER, false);
+            SoundManager.PlaySong(MUSIC::PUNISHER, false);
 
         } break;
 
         // einfaden
-        case GEGNER_INIT2: {
+        case GEGNER::INIT2: {
             // einfaden
             alpha += 5.0f SYNC;
 
             if (alpha > 255.0f) {
                 alpha = 255.0f;
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 Destroyable = true;
             }
 
         } break;
 
         // Spieler verfolgen
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             // Spieler verfolgen
             FollowPlayer();
 
@@ -166,7 +166,7 @@ void GegnerPunisher::DoKI() {
         } break;
 
         // ausfaden
-        case GEGNER_SPECIAL: {
+        case GEGNER::SPECIAL: {
             xAcc = 0.0f;
             yAcc = 0.0f;
             xSpeed = 0.0f;
@@ -190,7 +190,7 @@ void GegnerPunisher::DoKI() {
     if (HUD.BossHUDActive != 0.0f || ShowSummary == true)
         Energy = 0.0f;
 
-    if (Energy <= 0.0f && alpha > 0.0f && Handlung != GEGNER_SPECIAL)
+    if (Energy <= 0.0f && alpha > 0.0f && Handlung != GEGNER::SPECIAL)
         Vanish();
 }
 
@@ -200,11 +200,11 @@ void GegnerPunisher::DoKI() {
 
 void GegnerPunisher::Vanish() {
     if (ShowSummary == true)
-        SoundManager.StopSong(MUSIC_PUNISHER, false);
+        SoundManager.StopSong(MUSIC::PUNISHER, false);
     else
-        SoundManager.FadeSong(MUSIC_PUNISHER, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC::PUNISHER, -2.0f, 0, false);
 
-    Handlung = GEGNER_SPECIAL;
+    Handlung = GEGNER::SPECIAL;
     Energy = 1.0f;
     Destroyable = false;
 }
@@ -219,6 +219,6 @@ void GegnerPunisher::GegnerExplode() {
     Player[0].PunisherActive = false;
     Player[1].PunisherActive = false;
 
-    SoundManager.SetSongVolume(MUSIC_STAGEMUSIC, 0);
-    SoundManager.FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);
+    SoundManager.SetSongVolume(MUSIC::STAGEMUSIC, 0);
+    SoundManager.FadeSong(MUSIC::STAGEMUSIC, 2.0f, 100, true);
 }

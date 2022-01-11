@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerFass::GegnerFass(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     BlickRichtung = LINKS;
     Energy = 10;
     Value1 = Wert1;
@@ -42,17 +42,17 @@ void GegnerFass::DoKI() {
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
         // Warten auf den Hurri =)
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             if (!(blocku & BLOCKWERT_WAND) && !(blocku & BLOCKWERT_PLATTFORM)) {
                 ySpeed = 1.0f;
                 yAcc = 8.0f;
 
-                Handlung = GEGNER_FALLEN;
+                Handlung = GEGNER::FALLEN;
             }
         } break;
 
         // Fass fällt nach unten
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             // Auf den Boden gecrasht ? Dann explodieren lassen
             if (blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM)
 
@@ -70,7 +70,7 @@ void GegnerFass::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerFass::GegnerExplode() {
-    SoundManager.PlayWave(25, 128, 11025, SOUND_EXPLOSION1);
+    SoundManager.PlayWave(25, 128, 11025, SOUND::EXPLOSION1);
 
     for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(xPos - 50.0f + static_cast<float>(random(48)),

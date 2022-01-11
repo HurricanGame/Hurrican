@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerDrone::GegnerDrone(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 125;
     AnimEnde = 7;
     AnimSpeed = 0.75f;
@@ -39,7 +39,7 @@ void GegnerDrone::DoKI() {
     // Animieren
     //
     AnimCount += SpeedFaktor;  // Animationscounter weiterzählen
-    if (Handlung == GEGNER_LAUFEN) {
+    if (Handlung == GEGNER::LAUFEN) {
         if (AnimCount > AnimSpeed)  // Grenze überschritten ?
         {
             AnimCount = 0;              // Dann wieder auf Null setzen
@@ -47,7 +47,7 @@ void GegnerDrone::DoKI() {
             if (AnimPhase >= AnimEnde)  // Animation von zu Ende	?
                 AnimPhase = AnimStart;  // Dann wieder von vorne beginnen
         }
-    } else if (Handlung == GEGNER_DREHEN) {
+    } else if (Handlung == GEGNER::DREHEN) {
         if (AnimCount > AnimSpeed)  // Grenze überschritten ?
         {
             AnimCount = 0;              // Dann wieder auf Null setzen
@@ -55,11 +55,11 @@ void GegnerDrone::DoKI() {
             if (AnimPhase >= AnimEnde)  // Animation von zu Ende	?
             {
                 AnimCount = 0.0f;
-                Handlung = GEGNER_DREHEN2;
+                Handlung = GEGNER::DREHEN2;
                 BlickRichtung *= -1;
             }
         }
-    } else if (Handlung == GEGNER_DREHEN2) {
+    } else if (Handlung == GEGNER::DREHEN2) {
         if (AnimCount > AnimSpeed)  // Grenze überschritten ?
         {
             AnimCount = 0;       // Dann wieder auf Null setzen
@@ -68,7 +68,7 @@ void GegnerDrone::DoKI() {
             {
                 AnimPhase = AnimStart;  // Dann wieder von vorne beginnen
                 AnimEnde = 7;
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 ActionDelay = 1.0f;
             }
         }
@@ -76,7 +76,7 @@ void GegnerDrone::DoKI() {
 
     // in Richtung Spieler fliegen
     //
-    if (Handlung != GEGNER_FALLEN) {
+    if (Handlung != GEGNER::FALLEN) {
         if (xPos + 30.0f < pAim->xpos + 35.0f)
             xAcc = 1.5f;
         if (xPos + 30.0f > pAim->xpos + 35.0f)
@@ -108,10 +108,10 @@ void GegnerDrone::DoKI() {
     switch (Handlung) {
         // In der Luft rumdümpeln
         //
-        case GEGNER_LAUFEN:
+        case GEGNER::LAUFEN:
             if ((xPos + 30.0f < pAim->xpos + 35.0f && BlickRichtung == LINKS) ||
                 (xPos + 30.0f > pAim->xpos + 35.0f && BlickRichtung == RECHTS)) {
-                Handlung = GEGNER_DREHEN;
+                Handlung = GEGNER::DREHEN;
                 AnimPhase = 6;
                 AnimCount = 0.0f;
                 AnimEnde = 11;
@@ -120,7 +120,7 @@ void GegnerDrone::DoKI() {
             ActionDelay -= 1.0f SYNC;
 
             if (ActionDelay <= 0.0f && PlayerAbstand() < 600) {
-                Handlung = GEGNER_SCHIESSEN;
+                Handlung = GEGNER::SCHIESSEN;
 
                 switch (Skill) {
                     case SKILL_EASY:     ShotCount =  4; break;
@@ -131,7 +131,7 @@ void GegnerDrone::DoKI() {
 
                 ShotDelay = 20.0f;
 
-                SoundManager.PlayWave3D(static_cast<int>(xPos), static_cast<int>(yPos), 12000, SOUND_DRONE);
+                SoundManager.PlayWave3D(static_cast<int>(xPos), static_cast<int>(yPos), 12000, SOUND::DRONE);
 
                 PartikelSystem.PushPartikel(xPos + 33.0f, yPos + 60.0f, BULLET, &Player[0]);
 
@@ -144,10 +144,10 @@ void GegnerDrone::DoKI() {
 
         // Auf den Spieler ballern
         //
-        case GEGNER_SCHIESSEN:
+        case GEGNER::SCHIESSEN:
             if ((xPos + 30.0f < pAim->xpos + 35.0f && BlickRichtung == LINKS) ||
                 (xPos + 30.0f > pAim->xpos + 35.0f && BlickRichtung == RECHTS)) {
-                Handlung = GEGNER_DREHEN;
+                Handlung = GEGNER::DREHEN;
                 AnimPhase = 6;
                 AnimCount = 0.0f;
                 AnimEnde = 11;
@@ -159,13 +159,13 @@ void GegnerDrone::DoKI() {
             //
             if (ShotCount <= 0 && ShotDelay < 12.0f) {
                 ActionDelay = 10.0f;
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
             }
 
             // Schuss abgeben
             //
             if (ShotDelay <= 0.0f && PlayerAbstand() < 600) {
-                SoundManager.PlayWave3D(static_cast<int>(xPos), static_cast<int>(yPos), 12000, SOUND_DRONE);
+                SoundManager.PlayWave3D(static_cast<int>(xPos), static_cast<int>(yPos), 12000, SOUND::DRONE);
                 ShotDelay = 20.0f;
                 ShotCount--;
 
@@ -196,7 +196,7 @@ void GegnerDrone::DoKI() {
 
         // Drone stürzt ab
         //
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             // An die Wand gekracht ?
             if (blockl & BLOCKWERT_WAND || blockr & BLOCKWERT_WAND || blocko & BLOCKWERT_WAND ||
                 blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM)
@@ -219,8 +219,8 @@ void GegnerDrone::DoKI() {
 
     // Drone stürzt ab ?
     //
-    if (Energy <= 0.0f && Handlung != GEGNER_FALLEN) {
-        Handlung = GEGNER_FALLEN;
+    if (Energy <= 0.0f && Handlung != GEGNER::FALLEN) {
+        Handlung = GEGNER::FALLEN;
         AnimCount = 0.0f;
         Energy = 50.0f;
         ySpeed = 1.0f;
@@ -234,7 +234,7 @@ void GegnerDrone::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerDrone::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION3);
 
     for (int i = 0; i < 5; i++) {
         PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(70)),

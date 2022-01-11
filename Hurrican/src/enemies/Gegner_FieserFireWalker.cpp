@@ -10,7 +10,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerFieserFireWalker::GegnerFieserFireWalker(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 120;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -40,7 +40,7 @@ void GegnerFieserFireWalker::DoDraw() {
     if (AlreadyDrawn)
         return;
 
-    if (Handlung == GEGNER_STEHEN) {
+    if (Handlung == GEGNER::STEHEN) {
         // Leuchten beim Schiessen rendern
         //
         DirectGraphics.SetAdditiveMode();
@@ -64,9 +64,9 @@ void GegnerFieserFireWalker::DoKI() {
     switch (Handlung) {
         // rumhopsen
         //
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             if (!(blocku & BLOCKWERT_WAND) && !(blocku & BLOCKWERT_PLATTFORM)) {
-                Handlung = GEGNER_FALLEN;
+                Handlung = GEGNER::FALLEN;
                 ySpeed = 2.0f;
                 yAcc = 3.0f;
             }
@@ -80,11 +80,11 @@ void GegnerFieserFireWalker::DoKI() {
                   xPos + GegnerRect[GegnerArt].left > pAim->xpos + pAim->CollideRect.right))) {
                 ShotDelay = 40.0f;
                 ShotDelay2 = 0.0f;
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
                 xSpeed = 0.0f;
                 AnimEnde = 0;
 
-                SoundManager.PlayWave(100, 128, 11025, SOUND_FEUERFALLE);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::FEUERFALLE);
             }
 
             if (ShotDelay > 0.0f)
@@ -97,7 +97,7 @@ void GegnerFieserFireWalker::DoKI() {
 
         // Flammenwerfer schiessen
         //
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             if (ShotDelay2 > 0.0f)
                 ShotDelay2 -= 1.0f SYNC;
 
@@ -116,14 +116,14 @@ void GegnerFieserFireWalker::DoKI() {
 
             if (ShotDelay < 0.0f) {
                 ShotDelay = 20.0f;
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 AnimEnde = 14;
                 xSpeed = 5.0f * BlickRichtung;
             }
 
         } break;
 
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             if (ySpeed > 35.0f) {
                 ySpeed = 35.0f;
                 yAcc = 0.0f;
@@ -132,7 +132,7 @@ void GegnerFieserFireWalker::DoKI() {
             if (blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM) {
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
             }
 
         } break;
@@ -159,7 +159,7 @@ void GegnerFieserFireWalker::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(50)),
                                     yPos + static_cast<float>(random(50)), SPIDERSPLITTER);
 
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION4);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION4);  // Sound ausgeben
 
     Player[0].Score += 80;
 }

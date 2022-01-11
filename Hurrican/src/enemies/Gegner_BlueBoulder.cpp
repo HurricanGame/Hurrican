@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerBlueBoulder::GegnerBlueBoulder(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_NOTVISIBLE;
+    Handlung = GEGNER::NOTVISIBLE;
     Energy = 10;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -40,8 +40,8 @@ void GegnerBlueBoulder::DoKI() {
 
     switch (Handlung) {
         // Stein wird "aktiviert" (über den Hurri gesetzt damit er von dort runterfallen kann)
-        case GEGNER_NOTVISIBLE: {
-            Handlung = GEGNER_FALLEN;
+        case GEGNER::NOTVISIBLE: {
+            Handlung = GEGNER::FALLEN;
 
             // Im Fahrstuhllevel runterfallen
             if (g_Fahrstuhl_yPos > -1.0f)
@@ -57,7 +57,7 @@ void GegnerBlueBoulder::DoKI() {
         } break;
 
         // Stein fällt runter
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
         } break;
 
         default:
@@ -81,7 +81,7 @@ void GegnerBlueBoulder::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerBlueBoulder::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_STONEEXPLODE);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::STONEEXPLODE);
 
     for (int i = 0; i < 16; i++)
         PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(60)),

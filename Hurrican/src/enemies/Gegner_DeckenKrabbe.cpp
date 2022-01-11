@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerDeckenKrabbe::GegnerDeckenKrabbe(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     Energy = 80;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -47,7 +47,7 @@ void GegnerDeckenKrabbe::DoKI() {
 
     // runterfallen?
     //
-    if (Handlung != GEGNER_STEHEN) {
+    if (Handlung != GEGNER::STEHEN) {
         if (!(blocku & BLOCKWERT_SCHRAEGE_R) && !(blocku & BLOCKWERT_SCHRAEGE_L)) {
             blocku = TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
@@ -65,7 +65,7 @@ void GegnerDeckenKrabbe::DoKI() {
         }
     }
 
-    if (Handlung == GEGNER_LAUFEN || Handlung == GEGNER_DREHEN || Handlung == GEGNER_DREHEN2) {
+    if (Handlung == GEGNER::LAUFEN || Handlung == GEGNER::DREHEN || Handlung == GEGNER::DREHEN2) {
         // Schrägen checken
         //
         if (ySpeed >= 0.0f)
@@ -76,7 +76,7 @@ void GegnerDeckenKrabbe::DoKI() {
 
     switch (Handlung) {
         // Krabbe hängt an der Decke
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             // angeschossen oder Spieler drunter? Dann runterfallen
             //
             if (DamageTaken != 0.0 || (PlayerAbstandHoriz() < 100 && PlayerAbstandVert() < 800 && pAim->ypos > yPos)) {
@@ -98,12 +98,12 @@ void GegnerDeckenKrabbe::DoKI() {
                 zSpeed = 50.0f - a * 1.8f;
                 ySpeed = 5.0f;
                 yAcc = 5.0f;
-                Handlung = GEGNER_FALLEN;
+                Handlung = GEGNER::FALLEN;
             }
         } break;
 
         // Krabbe ist gelandet und dreht sich in Richtung Spieler
-        case GEGNER_DREHEN: {
+        case GEGNER::DREHEN: {
             zRot = 0.0f;
             AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
@@ -114,14 +114,14 @@ void GegnerDeckenKrabbe::DoKI() {
                 {
                     AnimPhase = 0;
                     AnimCount = 0.0f;
-                    Handlung = GEGNER_DREHEN2;
+                    Handlung = GEGNER::DREHEN2;
                     BlickRichtung *= -1;
                 }
             }
         } break;
 
         // Krabbe ist gelandet und dreht sich in Richtung Spieler
-        case GEGNER_DREHEN2: {
+        case GEGNER::DREHEN2: {
             zRot = 0.0f;
             AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
@@ -132,16 +132,16 @@ void GegnerDeckenKrabbe::DoKI() {
                 {
                     AnimPhase = 5;
                     AnimCount = 0.0f;
-                    Handlung = GEGNER_LAUFEN;
+                    Handlung = GEGNER::LAUFEN;
                 }
             }
         } break;
 
         // Krabbe ist gelandet und Krabbelt auf den Spieler zu
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             // an Schrägen drehen?
             //
-            if (Handlung != GEGNER_STEHEN && Handlung != GEGNER_FALLEN) {
+            if (Handlung != GEGNER::STEHEN && Handlung != GEGNER::FALLEN) {
                 // schräge links hochlaufen
                 if (BlickRichtung == RECHTS) {
                     if (blockl & BLOCKWERT_SCHRAEGE_L) {
@@ -186,14 +186,14 @@ void GegnerDeckenKrabbe::DoKI() {
             // Rumdrehen ?
             if ((BlickRichtung == LINKS && xPos + 35.0f > pAim->xpos + 35.0f) ||
                 (BlickRichtung == RECHTS && xPos + 35.0f < pAim->xpos + 35.0f)) {
-                Handlung = GEGNER_DREHEN;
+                Handlung = GEGNER::DREHEN;
                 AnimCount = 0.0f;
                 AnimPhase = 4;
             }
         } break;
 
         // Krabbe fliegt von der Decke runter
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             if (ySpeed > 30.0f) {
                 ySpeed = 30.0f;
                 yAcc = 0.0f;
@@ -206,7 +206,7 @@ void GegnerDeckenKrabbe::DoKI() {
 
             // Auf Boden gelandet ?
             if (blocku & BLOCKWERT_WAND) {
-                Handlung = GEGNER_DREHEN2;
+                Handlung = GEGNER::DREHEN2;
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
                 AnimPhase = 1;
@@ -231,7 +231,7 @@ void GegnerDeckenKrabbe::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerDeckenKrabbe::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 9000 + random(2000), SOUND_EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 9000 + random(2000), SOUND::EXPLOSION3);
 
     PartikelSystem.PushPartikel(xPos + 15.0f, yPos + 10.0f, LAVAKRABBE_KOPF);
 

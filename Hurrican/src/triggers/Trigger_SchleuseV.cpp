@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerSchleuseV::GegnerSchleuseV(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     BlickRichtung = LINKS;
     Energy = 100;
     Value1 = Wert1;
@@ -62,18 +62,18 @@ void GegnerSchleuseV::DoKI() {
     switch (Handlung) {
         // Schleuse wird geöffnet
         //
-        case GEGNER_OEFFNEN: {
-            Handlung = GEGNER_LAUFEN;
+        case GEGNER::OEFFNEN: {
+            Handlung = GEGNER::LAUFEN;
             Value1 = static_cast<int>(yPos);
             yAcc = -0.5f;
             // DKS - Added function WaveIsPlaying() to SoundManagerClass:
-            if (!SoundManager.WaveIsPlaying(SOUND_DOOR))
-                SoundManager.PlayWave(100, 128, 11025, SOUND_DOOR);
+            if (!SoundManager.WaveIsPlaying(SOUND::DOOR))
+                SoundManager.PlayWave(100, 128, 11025, SOUND::DOOR);
         } break;
 
         // Schleuse öffnet sich
         //
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             if (ySpeed < -5.0f) {
                 ySpeed = -5.0f;
                 yAcc = 0.0f;
@@ -83,9 +83,9 @@ void GegnerSchleuseV::DoKI() {
             if (yPos < static_cast<float>(Value1) - 201.0f) {
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
-                Handlung = GEGNER_STEHEN;
-                SoundManager.StopWave(SOUND_DOOR);
-                SoundManager.PlayWave(100, 128, 11025, SOUND_DOORSTOP);
+                Handlung = GEGNER::STEHEN;
+                SoundManager.StopWave(SOUND::DOOR);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::DOORSTOP);
             }
         } break;
     }  // switch

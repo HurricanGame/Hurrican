@@ -13,7 +13,7 @@
 
 GegnerLavaBall::GegnerLavaBall(int Wert1, int Wert2, bool Light) {
     Active = true;
-    Handlung = GEGNER_EINFLIEGEN;
+    Handlung = GEGNER::EINFLIEGEN;
     Energy = 100;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -56,9 +56,9 @@ void GegnerLavaBall::DoKI() {
 
     // erst erschienen? Dann yPos merken
     //
-    if (Handlung == GEGNER_EINFLIEGEN) {
+    if (Handlung == GEGNER::EINFLIEGEN) {
         yStart = yPos;
-        Handlung = GEGNER_LAUFEN;
+        Handlung = GEGNER::LAUFEN;
         return;
     }
 
@@ -73,7 +73,7 @@ void GegnerLavaBall::DoKI() {
 
             SoundManager.PlayWave3D(static_cast<int>(xPos) + 30,
                                     static_cast<int>(yPos) + 30, 10000 + random(2050),
-                                    SOUND_WATERIN);
+                                    SOUND::WATERIN);
         }
 
         InLava = true;
@@ -88,7 +88,7 @@ void GegnerLavaBall::DoKI() {
 
             SoundManager.PlayWave3D(static_cast<int>(xPos) + 30,
                                     static_cast<int>(yPos) + 30, 10000 + random(2050),
-                                    SOUND_WATEROUT);
+                                    SOUND::WATEROUT);
         }
 
         InLava = false;
@@ -133,7 +133,7 @@ void GegnerLavaBall::DoKI() {
             Player[i].DamagePlayer(50.0f);
             Energy = 0.0f;
 
-            SoundManager.PlayWave(100, 128, 9000 + random(2000), SOUND_EXPLOSION1);
+            SoundManager.PlayWave(100, 128, 9000 + random(2000), SOUND::EXPLOSION1);
 
             PartikelSystem.PushPartikel(xPos - 10.0f, yPos - 30.0f, EXPLOSION_GIANT);
 

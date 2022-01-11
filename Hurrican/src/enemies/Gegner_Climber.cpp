@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerClimber::GegnerClimber(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_INIT;
+    Handlung = GEGNER::INIT;
     Energy = 20;
     AnimSpeed = 0.5f;
     ChangeLight = Light;
@@ -60,15 +60,15 @@ void GegnerClimber::DoKI() {
     {
         AnimCount = 0;  // Dann wieder auf Null setzen
 
-        if (Handlung == GEGNER_LAUFEN) {
+        if (Handlung == GEGNER::LAUFEN) {
             AnimPhase--;                 // Und nächste Animationsphase
             if (AnimPhase <= AnimStart)  // Animation von zu Ende	?
                 AnimPhase = AnimEnde;    // Dann wieder von vorne beginnen
-        } else if (Handlung == GEGNER_SCHIESSEN) {
+        } else if (Handlung == GEGNER::SCHIESSEN) {
             AnimPhase++;                // Und nächste Animationsphase
             if (AnimPhase >= AnimEnde)  // Animation von zu Ende? Dann wieder laufen
             {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 AnimPhase = 3;
                 AnimStart = 3;
                 AnimEnde = 13;
@@ -80,7 +80,7 @@ void GegnerClimber::DoKI() {
     switch (Handlung) {
         // Gegner zu Beginn einmalig auf Spieler ausrichten, falls nicht Value1 auf 99 steht
         //
-        case GEGNER_INIT: {
+        case GEGNER::INIT: {
             if (Value1 != 99) {
 
                 // Abstände berechnen
@@ -113,11 +113,11 @@ void GegnerClimber::DoKI() {
             } else
                 rot = 0;
 
-            Handlung = GEGNER_LAUFEN;
+            Handlung = GEGNER::LAUFEN;
 
         } break;
 
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             // Gegner auf Spieler ausrichten
             //
 
@@ -210,7 +210,7 @@ void GegnerClimber::DoKI() {
             // Dann schiessen
             if (shotdelay < 0.0f && Value1 != 99 && abs(static_cast<int>(winkel - rot)) < 10 && PlayerAbstand() < 350) {
                 shotdelay = static_cast<float>(random(10) + 10);
-                Handlung = GEGNER_SCHIESSEN;
+                Handlung = GEGNER::SCHIESSEN;
                 AnimPhase = 0;
                 AnimEnde = 3;
                 AnimStart = 0;
@@ -218,11 +218,11 @@ void GegnerClimber::DoKI() {
                 ySpeed = 0.0f;
 
                 Projectiles.PushProjectile(xPos + 21.0f, yPos + 13.0f, SUCHSCHUSS);
-                SoundManager.PlayWave(100, 128, 15000 + random(2000), SOUND_CANON);
+                SoundManager.PlayWave(100, 128, 15000 + random(2000), SOUND::CANON);
             }
         } break;
 
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             rot += Value2 SYNC;
 
             clampAngle(rot);
@@ -245,15 +245,15 @@ void GegnerClimber::DoKI() {
 
     // Spieler berührt ?
     //
-    if (Handlung != GEGNER_FALLEN)
+    if (Handlung != GEGNER::FALLEN)
         TestDamagePlayers(4.0f SYNC);
 
     // Spinne abgeknallt ?
     // Dann Explosion erzeugen und Spinne lossegeln lassen ;)
     //
-    if (Energy <= 0.0f && Handlung != GEGNER_FALLEN) {
+    if (Energy <= 0.0f && Handlung != GEGNER::FALLEN) {
         Energy = 100.0f;
-        Handlung = GEGNER_FALLEN;
+        Handlung = GEGNER::FALLEN;
         xSpeed = static_cast<float>(random(15)) - 7.0f, ySpeed = -static_cast<float>(random(8)) - 8.0f;
         yAcc = 3.0f;
 
@@ -266,7 +266,7 @@ void GegnerClimber::DoKI() {
         if (random(2) == 0)
             Value2 *= -1;
 
-        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
         PartikelSystem.PushPartikel(xPos + 5.0f, yPos, EXPLOSION_MEDIUM2);
 
         shotdelay = 1.0f;
@@ -278,7 +278,7 @@ void GegnerClimber::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerClimber::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
     PartikelSystem.PushPartikel(xPos + 5.0f, yPos, EXPLOSION_MEDIUM2);
 
     for (int i = 0; i < 10; i++) {

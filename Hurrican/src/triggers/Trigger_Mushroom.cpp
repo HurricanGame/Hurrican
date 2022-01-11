@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerMushroom::GegnerMushroom(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     BlickRichtung = LINKS;
     Energy = 100;
     Value1 = Wert1;  // yPos der Plattform
@@ -52,7 +52,7 @@ void GegnerMushroom::PlayerJumps(PlayerClass *pPlayer) {
         pPlayer->yadd = PLAYER_JUMPADDSPEED;
         pPlayer->Handlung = PlayerActionEnum::SPRINGEN;
 
-        SoundManager.PlayWave(100, 128, 11000, SOUND_MUSHROOMJUMP);
+        SoundManager.PlayWave(100, 128, 11000, SOUND::MUSHROOMJUMP);
     }
 }
 
@@ -64,7 +64,7 @@ void GegnerMushroom::DoKI() {
     BlickRichtung = LINKS;
 
     switch (Handlung) {
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             // Pilz wieder vergrößern
             ySize += 10.0f SYNC;
             if (ySize > 61.0f)
@@ -72,12 +72,12 @@ void GegnerMushroom::DoKI() {
 
             for (int p = 0; p < NUMPLAYERS; p++)
                 if (Player[p].AufPlattform == this) {
-                    Handlung = GEGNER_SPRINGEN;
+                    Handlung = GEGNER::SPRINGEN;
                     count = 2.0f;
                 }
         } break;
 
-        case GEGNER_SPRINGEN: {
+        case GEGNER::SPRINGEN: {
             // Pilz verkleinern
             ySize -= 20.0f SYNC;
             if (ySize < 55.0f)
@@ -92,7 +92,7 @@ void GegnerMushroom::DoKI() {
                     beideweg = false;
 
             if (beideweg)
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
         } break;
     }
 

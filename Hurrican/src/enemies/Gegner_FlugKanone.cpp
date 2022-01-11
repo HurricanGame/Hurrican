@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerFlugKanone::GegnerFlugKanone(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 30;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -71,7 +71,7 @@ void GegnerFlugKanone::DoKI() {
         if (abs(static_cast<int>(pAim->xpos - xPos)) < 100 && PlayerAbstand() < 300) {
             Projectiles.PushProjectile(xPos + 30.0f, yPos + 40.0f, FLUGLASER);
             PartikelSystem.PushPartikel(xPos + 24.0f, yPos + 30.0f, SMOKE);
-            SoundManager.PlayWave(50, 128, 30000, SOUND_LASERSHOT);
+            SoundManager.PlayWave(50, 128, 30000, SOUND::LASERSHOT);
         }
     }
 
@@ -86,7 +86,7 @@ void GegnerFlugKanone::DoKI() {
 #if 0
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_LAUFEN:  // Durch die Gegend rasen
+        case GEGNER::LAUFEN:  // Durch die Gegend rasen
         {
         } break;
 
@@ -110,7 +110,7 @@ void GegnerFlugKanone::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(65)),
                                     yPos + static_cast<float>(random(35)), LASERFUNKE2);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 150;
 }

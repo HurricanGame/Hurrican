@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerShrine::GegnerShrine(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     BlickRichtung = RECHTS;
     Energy = 100;
     Value1 = Wert1;
@@ -56,7 +56,7 @@ void GegnerShrine::DoKI() {
                                      Player[1].ypos - 50,
                                      FALLINGROCK, 0, 0, true);
 
-                SoundManager.PlayWave (100, 128, 11025, SOUND_PHARAODIE);
+                SoundManager.PlayWave (100, 128, 11025, SOUND::PHARAODIE);
 
                 AnimCount = 5.0f;
             }
@@ -77,12 +77,12 @@ void GegnerShrine::DoKI() {
                 Gegner.PushGegner(xPos + static_cast<float>(random(100)),
                                   yPos - 50.0f + static_cast<float>(random(100)), EXTRAS, 3, 0, true);
 
-            SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);
-            SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);
-            SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);
-            SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);
-            SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);
-            SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);
+            SoundManager.PlayWave(100, 128, 11025, SOUND::COLLECT);
+            SoundManager.PlayWave(100, 128, 11025, SOUND::COLLECT);
+            SoundManager.PlayWave(100, 128, 11025, SOUND::COLLECT);
+            SoundManager.PlayWave(100, 128, 11025, SOUND::COLLECT);
+            SoundManager.PlayWave(100, 128, 11025, SOUND::COLLECT);
+            SoundManager.PlayWave(100, 128, 11025, SOUND::COLLECT);
         }
 }
 

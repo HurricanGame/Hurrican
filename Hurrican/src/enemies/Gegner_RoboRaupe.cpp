@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerRoboRaupe::GegnerRoboRaupe(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 60;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -60,7 +60,7 @@ void GegnerRoboRaupe::DoKI() {
                     Projectiles.PushProjectile(xPos + 70.0f, yPos + 10.0f, ARCSHOTRIGHT);
                 }
 
-                SoundManager.PlayWave(100, 128, 11025, SOUND_GRANATE);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::GRANATE);
             }
         }
     }
@@ -100,7 +100,7 @@ void GegnerRoboRaupe::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(90)),
                                     yPos + 5.0f + static_cast<float>(random(25)), ROCKETSMOKEBLUE);
 
-    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_EXPLOSION3);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::EXPLOSION3);  // Sound ausgeben
 
     Player[0].Score += 250;
 }

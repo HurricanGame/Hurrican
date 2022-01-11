@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerPlattform::GegnerPlattform(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     BlickRichtung = LINKS;
     Energy = 100;
     Value1 = Wert1;

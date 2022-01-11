@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerDiamant::GegnerDiamant(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     Energy = 1.0f;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -50,7 +50,7 @@ void GegnerDiamant::DoKI() {
     }
 
     switch (Handlung) {
-        case GEGNER_FALLEN:  // Diamant fällt runter
+        case GEGNER::FALLEN:  // Diamant fällt runter
         {
             if (ySpeed > 35.0f)  // Fall-Limit nicht überschreiten
                 ySpeed = 35.0f;
@@ -66,14 +66,14 @@ void GegnerDiamant::DoKI() {
                     {
                         ySpeed = 0.0f;
                         yAcc = 0.0f;
-                        Handlung = GEGNER_STEHEN;
+                        Handlung = GEGNER::STEHEN;
                         yPos += 1.0f;
                     }
                 }
             }
         } break;
 
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             // Value1 == 0? Dann runterfallen lassen
             //
             if (Value1 == 0)
@@ -81,7 +81,7 @@ void GegnerDiamant::DoKI() {
                     !(TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) &
                       BLOCKWERT_PLATTFORM)) {
                     yAcc = 2.0f;
-                    Handlung = GEGNER_FALLEN;
+                    Handlung = GEGNER::FALLEN;
                 }
 
         } break;
@@ -140,5 +140,5 @@ void GegnerDiamant::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerDiamant::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025, SOUND::COLLECT);  // Sound ausgeben
 }

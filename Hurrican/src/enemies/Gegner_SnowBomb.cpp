@@ -10,7 +10,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerSnowBomb::GegnerSnowBomb(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_INIT;
+    Handlung = GEGNER::INIT;
     Energy = 30;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -35,7 +35,7 @@ void GegnerSnowBomb::DoDraw() {
 
     // Nur rendern, wenn die Kugel auch rollt
     //
-    if (Handlung != GEGNER_INIT)
+    if (Handlung != GEGNER::INIT)
         pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
                                                yPos - TileEngine.YOffset, anim, 0xFFFFFFFF);
 }
@@ -53,7 +53,7 @@ void GegnerSnowBomb::DoKI() {
     switch (Handlung) {
         // Kommt zum ersten mal ins Bild? Dann an die gewünschte Position setzen (Value1/Value2)
         //
-        case GEGNER_INIT: {
+        case GEGNER::INIT: {
             // Schneebombe losrollen lassen, wenn Spieler in der Nähe ist
             //
             if (pAim->xpos > xPos)
@@ -61,29 +61,29 @@ void GegnerSnowBomb::DoKI() {
             else
                 xSpeed = -15.0f;
 
-            Handlung = GEGNER_LAUFEN;
+            Handlung = GEGNER::LAUFEN;
         } break;
 
         // Zur Seite kugeln
         //
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             if (!(blocku & BLOCKWERT_WAND)) {
                 ySpeed = 10.0f;
                 yAcc = 5.0f;
-                Handlung = GEGNER_FALLEN;
+                Handlung = GEGNER::FALLEN;
             }
         } break;
 
         // Fallen und ggf am Boden abspringen
         //
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             if (ySpeed > 0.0f && (blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM)) {
                 ySpeed *= -0.7f;
 
                 if (ySpeed > -1.0f) {
                     ySpeed = 0.0f;
                     yAcc = 0.0f;
-                    Handlung = GEGNER_LAUFEN;
+                    Handlung = GEGNER::LAUFEN;
 
                     // Position "begradigen"
                     //
@@ -94,7 +94,7 @@ void GegnerSnowBomb::DoKI() {
                     PartikelSystem.PushPartikel(xPos + static_cast<float>(random(50)),
                                                 yPos + static_cast<float>(random(20)) + 50, WATERFLUSH2);
 
-                SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND_LANDEN);
+                SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND::LANDEN);
             }
 
             if (ySpeed > 30.0f)
@@ -136,7 +136,7 @@ void GegnerSnowBomb::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(70)),
                                     yPos - 10.0f + static_cast<float>(random(70)), SNOWFLUSH);
 
-    SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND_LANDEN);
+    SoundManager.PlayWave(100, 128, 6000 + random(2000), SOUND::LANDEN);
 
     for (int i = 0; i < NUMPLAYERS; i++)
         if (Player[i].AufPlattform == this)

@@ -14,7 +14,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerWandKannone::GegnerWandKannone(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 30;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -51,7 +51,7 @@ void GegnerWandKannone::DoKI() {
                 AnimPhase = AnimStart;  // Dann wieder von vorne beginnen
                 AnimEnde = 0;
                 AnimCount = static_cast<float>(Value1);
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
             }
         }
     }  // animieren
@@ -59,12 +59,12 @@ void GegnerWandKannone::DoKI() {
     // Je nach Handlung richtig verhalten
     //
     switch (Handlung) {
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             AnimCount -= 1.0f SYNC;
 
             if (AnimCount <= 0.0) {
                 AnimCount = 0.0f;
-                Handlung = GEGNER_SCHIESSEN;
+                Handlung = GEGNER::SCHIESSEN;
                 AnimEnde = 3;
                 AnimSpeed = 0.5f;
                 AnimStart = 0;
@@ -73,7 +73,7 @@ void GegnerWandKannone::DoKI() {
                 // Schuss abgeben
                 //
                 if (PlayerAbstand() < 600) {
-                    SoundManager.PlayWave(100, 128, 22050, SOUND_LASERSHOT);
+                    SoundManager.PlayWave(100, 128, 22050, SOUND::LASERSHOT);
                     if (BlickRichtung == LINKS) {
                         Projectiles.PushProjectile(xPos - 18.0f, yPos + 15.0f, WALKER_LASER);
                         PartikelSystem.PushPartikel(xPos - 24.0f, yPos - 10.0f, LASERFLAME);
@@ -101,7 +101,7 @@ void GegnerWandKannone::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(42)),
                                     yPos - 30.0f + static_cast<float>(random(32)), EXPLOSION_MEDIUM2);
 
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
 
     Player[0].Score += 150;  // Punkte geben
 }

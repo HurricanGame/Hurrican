@@ -14,7 +14,7 @@ int DamageAnims[4] = {1, 2, 1, 0};
 // --------------------------------------------------------------------------------------
 
 GegnerSchneeKoenig::GegnerSchneeKoenig(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_INIT;
+    Handlung = GEGNER::INIT;
     BlickRichtung = LINKS;
     Energy = 50000;
     LastEnergy = 50000;
@@ -58,7 +58,7 @@ void GegnerSchneeKoenig::DoDraw() {
 
     // int	Wert = 255-(static_cast<int>(DamageTaken));  // PICKLE not used
 
-    if (Handlung == GEGNER_AUSFAHREN || WackelCount > 0.0f) {
+    if (Handlung == GEGNER::AUSFAHREN || WackelCount > 0.0f) {
         xoff += 15.0f SYNC;
 
         if (WackelCount > 0.0f)
@@ -129,7 +129,7 @@ void GegnerSchneeKoenig::NextAction(int NewAction) {
     static int LastAttack = 0;
     static int NextAttack = 0;
 
-    Handlung = GEGNER_EINFLIEGEN;
+    Handlung = GEGNER::EINFLIEGEN;
 
     // Neuen Angriff festgelegt?
     if (NewAction != -1)
@@ -147,23 +147,23 @@ void GegnerSchneeKoenig::NextAction(int NewAction) {
     switch (NextAttack) {
         // Schneekoppen ballern
         case 0: {
-            Action = GEGNER_INIT2;
+            Action = GEGNER::INIT2;
         } break;
 
         // Knarre einziehen und springen
         case 1: {
-            Action = GEGNER_INIT3;
+            Action = GEGNER::INIT3;
         } break;
 
         // Knarre einziehen, von links nach rechts hopsen und wieder zurück
         // und dabei Blaue Bomben abwerfen
         case 2: {
-            Action = GEGNER_INIT2;
+            Action = GEGNER::INIT2;
         } break;
 
         // Schneekoppen ballern
         case 3: {
-            Action = GEGNER_INIT4;
+            Action = GEGNER::INIT4;
         } break;
     }
 
@@ -178,14 +178,14 @@ void GegnerSchneeKoenig::NextAction(int NewAction) {
 
 void GegnerSchneeKoenig::DoKI() {
     // Energie anzeigen
-    if (Handlung != GEGNER_INIT && Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER::INIT && Handlung != GEGNER::EXPLODIEREN)
         HUD.ShowBossHUD(50000, Energy);
 
     // Boss aktivieren und Mucke laufen lassen
     //
     if (Active && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
-        SoundManager.StopSong(MUSIC_STAGEMUSIC, true);  // Ausfaden und pausieren
-        SoundManager.PlaySong(MUSIC_BOSS, false);
+        SoundManager.StopSong(MUSIC::STAGEMUSIC, true);  // Ausfaden und pausieren
+        SoundManager.PlaySong(MUSIC::BOSS, false);
         ySave = yPos;
 
         // kommt von oben in der mitte des screens runter
@@ -205,12 +205,12 @@ void GegnerSchneeKoenig::DoKI() {
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
         // Warten bis der Screen zentriert wurde
-        case GEGNER_INIT: {
+        case GEGNER::INIT: {
             // auf den Boden geknallt?
             if (yPos > ySave) {
                 yPos = ySave;
                 ShakeScreen(3.0f);
-                Handlung = GEGNER_INIT2;
+                Handlung = GEGNER::INIT2;
                 ySpeed = 0.0f;
                 AnimCount = 20.0f;
 
@@ -224,28 +224,28 @@ void GegnerSchneeKoenig::DoKI() {
 
                 TileEngine.ScrollLevel(TileEngine.XOffset, yPos - 320.0f, TileStateEnum::SCROLLTOLOCK);
 
-                SoundManager.PlayWave(50, 128, 11025, SOUND_DOORSTOP);
+                SoundManager.PlayWave(50, 128, 11025, SOUND::DOORSTOP);
             }
         } break;
 
         // kurz abwarten nach dem Runterfallen und Kamera hochscrollen
-        case GEGNER_INIT2: {
+        case GEGNER::INIT2: {
             AnimCount -= 1.0f SYNC;
 
             if (AnimCount < 0.0f) {
-                Handlung = GEGNER_EINFLIEGEN;
-                Action = GEGNER_EINFLIEGEN;
+                Handlung = GEGNER::EINFLIEGEN;
+                Action = GEGNER::EINFLIEGEN;
                 AnimEnde = 12;
                 AnimSpeed = 1.0f;
 
-                SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::STEAM);
             }
         } break;
 
         // Bein ausfahren
-        case GEGNER_EINFLIEGEN: {
+        case GEGNER::EINFLIEGEN: {
             switch (Action) {
-                case GEGNER_EINFLIEGEN: {
+                case GEGNER::EINFLIEGEN: {
                     SimpleAnimation();
 
                     yOffset = -AnimPhase * 8.0f;
@@ -264,30 +264,30 @@ void GegnerSchneeKoenig::DoKI() {
 
                 } break;
 
-                case GEGNER_INIT2: {
+                case GEGNER::INIT2: {
                     KnarreY -= 5.0f SYNC;
 
                     if (KnarreY < 0.0f) {
                         KnarreY = 0.0f;
                         Action = -1;
-                        Handlung = GEGNER_VERFOLGEN;
+                        Handlung = GEGNER::VERFOLGEN;
                         ShotDelay = 1.0f;
                         ShotCount = 10 + random(6);
                     }
                 } break;
 
-                case GEGNER_INIT3: {
+                case GEGNER::INIT3: {
                     KnarreY -= 5.0f SYNC;
 
                     if (KnarreY < 0.0f) {
                         KnarreY = 0.0f;
-                        Action = GEGNER_STEHEN;
-                        Handlung = GEGNER_SPRINGEN;
+                        Action = GEGNER::STEHEN;
+                        Handlung = GEGNER::SPRINGEN;
                         AnimPhase = 10;
                         AnimCount = 1.0f;
                         ShotCount = 6;
 
-                        SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
+                        SoundManager.PlayWave(100, 128, 11025, SOUND::STEAM);
 
                         for (int p = 0; p < NUMPLAYERS; p++)
                             if (Player[p].AufPlattform == this)
@@ -295,19 +295,19 @@ void GegnerSchneeKoenig::DoKI() {
                     }
                 } break;
 
-                case GEGNER_INIT4: {
+                case GEGNER::INIT4: {
                     KnarreY -= 5.0f SYNC;
 
                     if (KnarreY < 0.0f) {
                         KnarreY = 0.0f;
-                        Action = GEGNER_BOMBARDIEREN;
-                        Handlung = GEGNER_SPRINGEN;
+                        Action = GEGNER::BOMBARDIEREN;
+                        Handlung = GEGNER::SPRINGEN;
                         AnimPhase = 10;
                         AnimCount = 1.0f;
                         ShotCount = 6;
                         ShotDelay = 1.5f;
 
-                        SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
+                        SoundManager.PlayWave(100, 128, 11025, SOUND::STEAM);
 
                         for (int p = 0; p < NUMPLAYERS; p++)
                             if (Player[p].AufPlattform == this)
@@ -319,7 +319,7 @@ void GegnerSchneeKoenig::DoKI() {
 
         } break;
 
-        case GEGNER_SPRINGEN: {
+        case GEGNER::SPRINGEN: {
             // Kanone zurückfahren
             if (KnarreY < 60.0f)
                 KnarreY += 5.0f SYNC;
@@ -328,8 +328,8 @@ void GegnerSchneeKoenig::DoKI() {
 
                 switch (Action) {
                     // abspringen
-                    case GEGNER_STEHEN:
-                    case GEGNER_BOMBARDIEREN: {
+                    case GEGNER::STEHEN:
+                    case GEGNER::BOMBARDIEREN: {
                         AnimCount -= 4.0f SYNC;
                         if (AnimCount <= 0.0f) {
                             AnimCount = 1.0f;
@@ -337,8 +337,8 @@ void GegnerSchneeKoenig::DoKI() {
 
                             if (AnimPhase < 5) {
                                 // Auf Spieler springen?
-                                if (Action == GEGNER_STEHEN) {
-                                    Action = GEGNER_SPRINGEN;
+                                if (Action == GEGNER::STEHEN) {
+                                    Action = GEGNER::SPRINGEN;
                                     ySpeed = -80.0f;
                                     yAcc = 18.0f;
                                     xSpeed = PlayerAbstandHoriz() / 8.0f;
@@ -360,7 +360,7 @@ void GegnerSchneeKoenig::DoKI() {
                                     if (ShotCount == 1)
                                         target = static_cast<float>(TileEngine.XOffset) + 320.0f;
 
-                                    Action = GEGNER_AUSSPUCKEN;
+                                    Action = GEGNER::AUSSPUCKEN;
                                     ySpeed = -110.0f;
                                     yAcc = 16.0f;
                                     xSpeed = (target - (xPos + 100.0f)) / 12.0f;
@@ -373,8 +373,8 @@ void GegnerSchneeKoenig::DoKI() {
                     } break;
 
                     // aufkommen
-                    case GEGNER_SCHLIESSEN:
-                    case GEGNER_AUSSPUCKENZWEI: {
+                    case GEGNER::SCHLIESSEN:
+                    case GEGNER::AUSSPUCKENZWEI: {
                         AnimCount -= 4.0f SYNC;
                         if (AnimCount <= 0.0f) {
                             AnimCount = 1.0f;
@@ -383,24 +383,24 @@ void GegnerSchneeKoenig::DoKI() {
                             if (AnimPhase > 10) {
                                 AnimPhase = 10;
 
-                                if (Action == GEGNER_SCHLIESSEN)
-                                    Action = GEGNER_STEHEN;
+                                if (Action == GEGNER::SCHLIESSEN)
+                                    Action = GEGNER::STEHEN;
                                 else
-                                    Action = GEGNER_BOMBARDIEREN;
+                                    Action = GEGNER::BOMBARDIEREN;
 
                                 ShotCount--;
 
                                 if (ShotCount <= 0) {
-                                    Handlung = GEGNER_EINFLIEGEN;
+                                    Handlung = GEGNER::EINFLIEGEN;
                                     NextAction();
                                 }
                             }
                         }
                     } break;
 
-                    case GEGNER_SPRINGEN:
-                    case GEGNER_AUSSPUCKEN: {
-                        if (Action == GEGNER_AUSSPUCKEN && ShotCount > 1) {
+                    case GEGNER::SPRINGEN:
+                    case GEGNER::AUSSPUCKEN: {
+                        if (Action == GEGNER::AUSSPUCKEN && ShotCount > 1) {
                             ShotDelay -= 1.0f SYNC;
 
                             if (ShotDelay <= 0.0f) {
@@ -426,15 +426,15 @@ void GegnerSchneeKoenig::DoKI() {
                                 xAcc = 0.0f;
                                 yAcc = 0.0f;
 
-                                if (Action == GEGNER_SPRINGEN)
-                                    Action = GEGNER_SCHLIESSEN;
+                                if (Action == GEGNER::SPRINGEN)
+                                    Action = GEGNER::SCHLIESSEN;
                                 else
-                                    Action = GEGNER_AUSSPUCKENZWEI;
+                                    Action = GEGNER::AUSSPUCKENZWEI;
 
                                 // Spieler zerquetscht?
                                 TestDamagePlayers(500.0f);
 
-                                SoundManager.PlayWave(50, 128, 11025, SOUND_DOORSTOP);
+                                SoundManager.PlayWave(50, 128, 11025, SOUND::DOORSTOP);
                             }
                         }
                     } break;
@@ -442,7 +442,7 @@ void GegnerSchneeKoenig::DoKI() {
             }
         } break;
 
-        case GEGNER_AUSFAHREN: {
+        case GEGNER::AUSFAHREN: {
             // Kanone zurück
             if (KnarreWinkel < 0.0f)
                 KnarreWinkel += 5.0f SYNC;
@@ -467,7 +467,7 @@ void GegnerSchneeKoenig::DoKI() {
 
                 // Auf der Hälfte explodieren lassen?
                 if (Value1 >= 2 && yPos < TileEngine.YOffset + 150.0f) {
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION2);
                     ShakeScreen(5.0f);
 
                     for (int i = 0; i < 50; i++)
@@ -508,7 +508,7 @@ void GegnerSchneeKoenig::DoKI() {
 
                     // Explodieren?
                     if (Value1 >= 2 && random(2) == 0) {
-                        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+                        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
                         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(150)),
                                                     yPos + static_cast<float>(random(100)), EXPLOSION_MEDIUM2);
                     }
@@ -522,7 +522,7 @@ void GegnerSchneeKoenig::DoKI() {
         } break;
 
         // Auf Spieler ballern
-        case GEGNER_VERFOLGEN: {
+        case GEGNER::VERFOLGEN: {
             // Winkel zum Spieler ausrechnen
 
             float const aim = WinkelToPlayer();
@@ -574,7 +574,7 @@ void GegnerSchneeKoenig::DoKI() {
                                   yPos + cos_deg(KnarreWinkel + 180.0f) * 60.0f + KnarreY + 5.0f + yOffset, SCHNEEKOPPE,
                                   -static_cast<int>(w) - 3 + random(7), 40, false);
 
-                SoundManager.PlayWave(100, 128, 8000 + random(1000), SOUND_GRANATE);
+                SoundManager.PlayWave(100, 128, 8000 + random(1000), SOUND::GRANATE);
 
                 GunSlide = 5.0f;
 
@@ -603,7 +603,7 @@ void GegnerSchneeKoenig::DoKI() {
 
     GegnerRect[GegnerArt].top = 60 + static_cast<int>(yOffset);
 
-    if (Handlung != GEGNER_SPRINGEN && Handlung != GEGNER_AUSFAHREN) {
+    if (Handlung != GEGNER::SPRINGEN && Handlung != GEGNER::AUSFAHREN) {
         Wegschieben(GegnerRect[GegnerArt], 0);
         PlattformTest(GegnerRect[GegnerArt]);
     }
@@ -611,7 +611,7 @@ void GegnerSchneeKoenig::DoKI() {
     // Checken, ob der Schneekönig von einer Schneekoppe getroffen wurde =)
     GegnerClass *pTemp = Gegner.pStart;
 
-    if (Handlung != GEGNER_AUSFAHREN)
+    if (Handlung != GEGNER::AUSFAHREN)
         while (pTemp != nullptr) {
             if (pTemp->GegnerArt == SCHNEEKOPPE)
                 if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], pTemp->xPos, pTemp->yPos,
@@ -619,7 +619,7 @@ void GegnerSchneeKoenig::DoKI() {
                     pTemp->Energy = 0.0f;
                     Energy -= 5000.0f;
 
-                    if (Handlung != GEGNER_SPRINGEN)
+                    if (Handlung != GEGNER::SPRINGEN)
                         WackelAnim = 8.0f;
                 }
 
@@ -627,7 +627,7 @@ void GegnerSchneeKoenig::DoKI() {
         }
 
     // kaputt? Dann rausfliegen
-    if (Energy < 100.0f && Handlung != GEGNER_AUSFAHREN) {
+    if (Energy < 100.0f && Handlung != GEGNER::AUSFAHREN) {
         // Spieler fliegt runter
         for (int p = 0; p < NUMPLAYERS; p++)
             if (Player[p].AufPlattform == this)
@@ -635,7 +635,7 @@ void GegnerSchneeKoenig::DoKI() {
 
         Energy = 100;
         Destroyable = false;
-        Handlung = GEGNER_AUSFAHREN;
+        Handlung = GEGNER::AUSFAHREN;
         AnimCount = 10.0f;
 
         xSpeed = 0.0f;
@@ -643,10 +643,10 @@ void GegnerSchneeKoenig::DoKI() {
         xAcc = 0.0f;
         yAcc = 0.0f;
 
-        SoundManager.PlayWave(100, 128, 11025, SOUND_TAKEOFF);
+        SoundManager.PlayWave(100, 128, 11025, SOUND::TAKEOFF);
 
         // Endboss-Musik ausfaden und abschalten
-        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC::BOSS, -2.0f, 0, false);
     }
 }
 
@@ -656,7 +656,7 @@ void GegnerSchneeKoenig::DoKI() {
 
 void GegnerSchneeKoenig::GegnerExplode() {
     // Endboss-Musik ausfaden und abschalten
-    SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+    SoundManager.FadeSong(MUSIC::BOSS, -2.0f, 0, false);
 
     for (int p = 0; p < NUMPLAYERS; p++)
         if (Player[p].AufPlattform == this)

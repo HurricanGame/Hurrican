@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerSchienenViech::GegnerSchienenViech(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 80;
     AnimSpeed = 1.0f;
     AnimEnde = 4;
@@ -53,7 +53,7 @@ void GegnerSchienenViech::DoKI() {
 
     if ((((blockl & BLOCKWERT_GEGNERWAND) || (blockl & BLOCKWERT_WAND)) && xSpeed < 0.0f) ||
         (((blockr & BLOCKWERT_GEGNERWAND) || (blockl & BLOCKWERT_WAND)) && xSpeed > 0.0f)) {
-        Handlung = GEGNER_LAUFEN;
+        Handlung = GEGNER::LAUFEN;
         xSpeed *= -1.0f;
         xAcc *= -1.0f;
     }
@@ -96,15 +96,15 @@ void GegnerSchienenViech::DoKI() {
 
     switch (Handlung) {
         // Spieler nicht verfolgen
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             // Spieler in Fahrtrichtung gesehen? Dann wieder verfolgen
             if ((xSpeed > 0.0f && pAim->xpos + 35 > xPos + 24) || (xSpeed < 0.0f && pAim->xpos + 35 < xPos + 24))
-                Handlung = GEGNER_VERFOLGEN;
+                Handlung = GEGNER::VERFOLGEN;
 
         } break;
 
         // Spieler verfolgen
-        case GEGNER_VERFOLGEN: {
+        case GEGNER::VERFOLGEN: {
             if (PlayerAbstandHoriz() < 250) {
                 if (pAim->xpos + 35 > xPos + 24)
                     xAcc = 4.0f;
@@ -137,7 +137,7 @@ void GegnerSchienenViech::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerSchienenViech::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION3);
 
     for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(30)),

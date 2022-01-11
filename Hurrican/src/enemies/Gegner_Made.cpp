@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerMade::GegnerMade(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_INIT;
+    Handlung = GEGNER::INIT;
     HitSound = 1;
     Energy = 10;
     Value1 = Wert1;
@@ -34,7 +34,7 @@ GegnerMade::GegnerMade(int Wert1, int Wert2, bool Light) {
         yAcc = 4.0f;
         xSpeed = static_cast<float>(random(120)) / 3.0f;
         ySpeed = -((static_cast<float>(random(40)) / 3.0f) + 8.0f);
-        Handlung = GEGNER_FALLEN;
+        Handlung = GEGNER::FALLEN;
     }
 
     // oder in alle Richtungen (Schwabbel)
@@ -43,7 +43,7 @@ GegnerMade::GegnerMade(int Wert1, int Wert2, bool Light) {
         yAcc = 4.0f;
         xSpeed = static_cast<float>(random(200) - 100) / 12.0f;
         ySpeed = -((static_cast<float>(random(40)) / 2.0f) + 12.0f);
-        Handlung = GEGNER_FALLEN;
+        Handlung = GEGNER::FALLEN;
     }
 }
 
@@ -58,7 +58,7 @@ void GegnerMade::DoDraw() {
         movesin = 0.0f;
 
     switch (Handlung) {
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             pGegnerGrafix[GegnerArt]->RenderSpriteScaled(
                 xPos - TileEngine.XOffset - static_cast<float>(sin(movesin) * 2.5f),
                 yPos - TileEngine.YOffset,
@@ -87,8 +87,8 @@ void GegnerMade::DoKI() {
 
     BlickRichtung = LINKS;
 
-    if (Handlung == GEGNER_INIT) {
-        Handlung = GEGNER_LAUFEN;
+    if (Handlung == GEGNER::INIT) {
+        Handlung = GEGNER::LAUFEN;
 
         if (xPos + 10 < pAim->xpos + 35)
             xSpeed = 0.8f;
@@ -96,11 +96,11 @@ void GegnerMade::DoKI() {
             xSpeed = -0.8f;
     }
 
-    if (Handlung == GEGNER_FALLEN) {
+    if (Handlung == GEGNER::FALLEN) {
         SimpleAnimation();
 
         if ((blocku & BLOCKWERT_WAND) || (blocku & BLOCKWERT_GEGNERWAND) || (blocku & BLOCKWERT_PLATTFORM)) {
-            Handlung = GEGNER_LAUFEN;
+            Handlung = GEGNER::LAUFEN;
         }
     } else {
         AnimPhase = 15;
@@ -108,7 +108,7 @@ void GegnerMade::DoKI() {
         ySpeed = 0.0f;
 
         if (!(blocku & BLOCKWERT_WAND) && !(blocku & BLOCKWERT_GEGNERWAND) && !(blocku & BLOCKWERT_PLATTFORM)) {
-            Handlung = GEGNER_FALLEN;
+            Handlung = GEGNER::FALLEN;
             yAcc = 4.0f;
         }
     }
@@ -130,7 +130,7 @@ void GegnerMade::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerMade::GegnerExplode() {
-    SoundManager.PlayWave(100, random(200) + 20, 8000 + random(4000), SOUND_MADE);
+    SoundManager.PlayWave(100, random(200) + 20, 8000 + random(4000), SOUND::MADE);
 
     for (int i = 0; i < 10; i++)
         PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(24)),

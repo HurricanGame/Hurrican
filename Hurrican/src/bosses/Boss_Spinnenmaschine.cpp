@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_INIT;
+    Handlung = GEGNER::INIT;
     BlickRichtung = LINKS;
     Energy = 4000;
     ChangeLight = Light;
@@ -76,7 +76,7 @@ void GegnerSpinnenmaschine::DoDraw() {
     else
         Color = 0xFFFFFFFF;
 
-    if (Handlung != GEGNER_SPECIAL) {
+    if (Handlung != GEGNER::SPECIAL) {
         // evtl strahl rendern, wenn der deckel aufgeht
         if (DeckelStatus != DeckelStateEnum::ZU) {
             DirectGraphics.SetAdditiveMode();
@@ -224,7 +224,7 @@ void GegnerSpinnenmaschine::DoHoch() {
                 HochCounter = 0.0f;
                 HochStatus = DeckelStateEnum::OEFFNEN;
 
-                SoundManager.PlayWave(100, 128, 11025, SOUND_STEAM);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::STEAM);
             }
         } break;
 
@@ -238,7 +238,7 @@ void GegnerSpinnenmaschine::DoHoch() {
                 HochCounter = TIME_TILL_HOCH * 2;
                 ShotDelay = 10.0f;
 
-                SoundManager.PlayWave(50, 128, 14000, SOUND_DOORSTOP);
+                SoundManager.PlayWave(50, 128, 14000, SOUND::DOORSTOP);
             }
 
             if (DeckelCount < PI) {
@@ -260,7 +260,7 @@ void GegnerSpinnenmaschine::DoHoch() {
                 HochCounter = 0.0f;
                 HochStatus = DeckelStateEnum::SCHLIESSEN;
 
-                SoundManager.PlayWave(50, 128, 11025, SOUND_STEAM);
+                SoundManager.PlayWave(50, 128, 11025, SOUND::STEAM);
             }
 
             ShotDelay -= 1.0f SYNC;
@@ -272,8 +272,8 @@ void GegnerSpinnenmaschine::DoHoch() {
                 Projectiles.PushProjectile(xPos + 230.0f, yPos + 310.0f, PHARAOLASER, pAim);
 
                 // Sound ausgeben
-                SoundManager.PlayWave(50, 128, 22050, SOUND_PHARAODIE);
-                SoundManager.PlayWave(70, 128, 11025, SOUND_LASERSHOT);
+                SoundManager.PlayWave(50, 128, 22050, SOUND::PHARAODIE);
+                SoundManager.PlayWave(70, 128, 11025, SOUND::LASERSHOT);
             }
         } break;
 
@@ -290,7 +290,7 @@ void GegnerSpinnenmaschine::DoHoch() {
                 for (int i = 1; i < 10; i++)
                     PartikelSystem.PushPartikel(xPos + static_cast<float>(i * 25), yPos + 330.0f, SMOKEBIG);
 
-                SoundManager.PlayWave(100, 128, 11025, SOUND_DOORSTOP);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::DOORSTOP);
 
                 AktionFertig = true;
             }
@@ -305,16 +305,16 @@ void GegnerSpinnenmaschine::DoHoch() {
 
 void GegnerSpinnenmaschine::DoKI() {
     // Energie anzeigen
-    if (Handlung != GEGNER_INIT && Handlung != GEGNER_SPECIAL && Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER::INIT && Handlung != GEGNER::SPECIAL && Handlung != GEGNER::EXPLODIEREN)
         HUD.ShowBossHUD(4000, Energy);
 
     // Boss aktivieren und Mucke laufen lassen
     //
-    if (Active == true && Handlung != GEGNER_SPECIAL && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
+    if (Active == true && Handlung != GEGNER::SPECIAL && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         if (PlayerAbstandHoriz() < 450) {
             TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
                                    TileStateEnum::SCROLLTOLOCK);             // Level auf den Boss zentrieren
-            SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+            SoundManager.FadeSong(MUSIC::STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
         }
     }
 
@@ -325,8 +325,8 @@ void GegnerSpinnenmaschine::DoKI() {
         DamageTaken = 0.0f;  // oder ganz anhalten
 
     // Hat die Maschine keine Energie mehr ? Dann explodiert sie
-    if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN && Handlung != GEGNER_SPECIAL) {
-        Handlung = GEGNER_EXPLODIEREN;
+    if (Energy <= 100.0f && Handlung != GEGNER::EXPLODIEREN && Handlung != GEGNER::SPECIAL) {
+        Handlung = GEGNER::EXPLODIEREN;
         SpawnDelay = 0.0f;
         xSpeed = 0.0f;
         ySpeed = 0.0f;
@@ -339,11 +339,11 @@ void GegnerSpinnenmaschine::DoKI() {
         TileEngine.MaxOneUps++;
 
         // Endboss-Musik ausfaden und abschalten
-        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC::BOSS, -2.0f, 0, false);
     }
 
     // Bei Damage dampfen lassen
-    if (Handlung != GEGNER_SPECIAL)
+    if (Handlung != GEGNER::SPECIAL)
         SmokeDelay2 -= 1.0f SYNC;
 
     if (SmokeDelay2 < 0.0f) {
@@ -382,22 +382,22 @@ void GegnerSpinnenmaschine::DoKI() {
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
         // Warten bis der Screen zentriert wurde
-        case GEGNER_INIT: {
+        case GEGNER::INIT: {
             if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 //
                 // DKS - Added function SongIsPlaying() to SoundManagerClass:
-                if (!SoundManager.SongIsPlaying(MUSIC_BOSS)) {
-                    SoundManager.PlaySong(MUSIC_BOSS, false);
+                if (!SoundManager.SongIsPlaying(MUSIC::BOSS)) {
+                    SoundManager.PlaySong(MUSIC::BOSS, false);
 
                     // Und Boss erscheinen lassen
                     //
-                    Handlung = GEGNER_EINFLIEGEN;
+                    Handlung = GEGNER::EINFLIEGEN;
                 }
             }
         } break;
 
-        case GEGNER_EINFLIEGEN:  // Gegner kommt in den Screen geflogen
+        case GEGNER::EINFLIEGEN:  // Gegner kommt in den Screen geflogen
         {
             Energy = 4000;
             DamageTaken = 0.0f;
@@ -405,18 +405,18 @@ void GegnerSpinnenmaschine::DoKI() {
             DisplayState = random(3) + 1;
             OldDisplayState = DisplayState;
 
-            Handlung = GEGNER_LAUFEN;
+            Handlung = GEGNER::LAUFEN;
 
         } break;
 
         // Kopf hoch- /runterfahren
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             // Abhandeln, wann der Kopf hochfährt
             DoHoch();
 
             if (AktionFertig == true) {
                 AktionFertig = false;
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
 
                 do {
                     DisplayState = random(3) + 1;
@@ -427,18 +427,18 @@ void GegnerSpinnenmaschine::DoKI() {
         } break;
 
         // Deckel öffnen
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             // Deckel abhandeln
             DoDeckel();
 
             if (AktionFertig == true) {
                 AktionFertig = false;
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
                 DisplayState = 0;
             }
         } break;
 
-        case GEGNER_SPECIAL: {
+        case GEGNER::SPECIAL: {
             if (PlayerAbstand(true) < 800) {
                 SmokeDelay -= 1.0f SYNC;
 
@@ -450,7 +450,7 @@ void GegnerSpinnenmaschine::DoKI() {
             }
         } break;
 
-        case GEGNER_EXPLODIEREN: {
+        case GEGNER::EXPLODIEREN: {
             Energy = 100.0f;
 
             SpawnDelay -= 1.0f SYNC;
@@ -476,7 +476,7 @@ void GegnerSpinnenmaschine::DoKI() {
 
                 // ggf. Sound
                 if (random(3) == 0)
-                    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3 + random(2));
+                    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION3 + random(2));
 
                 // ggf. Splitter erzeugen
                 if (yo > 100 && random(5) == 0)
@@ -490,12 +490,12 @@ void GegnerSpinnenmaschine::DoKI() {
 
             // fertig explodiert? Dann ganz zerlegen, Unterteil bleibt stehen
             if (DeathCount < 0.0f) {
-                Handlung = GEGNER_SPECIAL;
+                Handlung = GEGNER::SPECIAL;
                 Energy = 1.0f;
                 Destroyable = false;
                 Player[0].Score += 8000;
 
-                SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION2);
                 ScrolltoPlayeAfterBoss();
 
                 ShakeScreen(5.0f);
@@ -555,7 +555,7 @@ void GegnerSpinnenmaschine::DoKI() {
     }
 
     // andererseits kann man ihn am Auge treffen
-    else if (Handlung != GEGNER_SPECIAL) {
+    else if (Handlung != GEGNER::SPECIAL) {
         GegnerRect[GegnerArt].left = 204;
         GegnerRect[GegnerArt].top = 350 - static_cast<int>(DeckelOffset);
         GegnerRect[GegnerArt].bottom = 350;
@@ -565,7 +565,7 @@ void GegnerSpinnenmaschine::DoKI() {
     }
 
     // Spieler kommt nicht dran vorbei
-    if (Handlung != GEGNER_SPECIAL)
+    if (Handlung != GEGNER::SPECIAL)
         for (int p = 0; p < NUMPLAYERS; p++)
             if (Player[p].xpos < xPos + 250.0f) {
                 if (Player[p].Handlung == PlayerActionEnum::RADELN ||

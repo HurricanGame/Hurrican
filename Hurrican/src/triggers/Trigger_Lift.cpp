@@ -15,7 +15,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerLift::GegnerLift(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     BlickRichtung = LINKS;
     Energy = 100;
     Value1 = Wert1;
@@ -48,7 +48,7 @@ void GegnerLift::DoKI() {
                     PartikelSystem.PushPartikel(xPos - 30.0f + static_cast<float>(random(80)),
                                                 yPos - 20.0f + static_cast<float>(random(20)), EXPLOSION_MEDIUM2);
 
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
                 AnimPhase = 0;
                 AnimEnde = 0;
                 yPos = static_cast<float>(Value2);
@@ -58,7 +58,7 @@ void GegnerLift::DoKI() {
                 for (int p = 0; p < NUMPLAYERS; p++)
                     Player[p].AufPlattform = nullptr;
 
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
             }
         }
     }  // animieren
@@ -67,12 +67,12 @@ void GegnerLift::DoKI() {
 
     switch (Handlung) {
         // Lift wartet auf den Hurri
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             Value2 = static_cast<int>(yPos);
 
             for (int p = 0; p < NUMPLAYERS; p++)
                 if (Player[p].AufPlattform == this) {
-                    Handlung = GEGNER_LAUFEN;
+                    Handlung = GEGNER::LAUFEN;
                     ySpeed = -3.0f;
                     yAcc = -3.0f;
                     AnimPhase = 0;
@@ -82,7 +82,7 @@ void GegnerLift::DoKI() {
         } break;
 
         // Lift fährt nach oben
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             // Max Speed
             if (ySpeed < -30.0f) {
                 yAcc = 0.0f;

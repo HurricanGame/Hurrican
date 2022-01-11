@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerFieseDrone::GegnerFieseDrone(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 70;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -37,7 +37,7 @@ void GegnerFieseDrone::DoKI() {
     // Animieren
     //
     AnimCount += SpeedFaktor;  // Animationscounter weiterzählen
-    if (Handlung == GEGNER_LAUFEN) {
+    if (Handlung == GEGNER::LAUFEN) {
         if (AnimCount > AnimSpeed)  // Grenze überschritten ?
         {
             AnimCount = 0;              // Dann wieder auf Null setzen
@@ -45,7 +45,7 @@ void GegnerFieseDrone::DoKI() {
             if (AnimPhase >= AnimEnde)  // Animation von zu Ende	?
                 AnimPhase = AnimStart;  // Dann wieder von vorne beginnen
         }
-    } else if (Handlung == GEGNER_DREHEN) {
+    } else if (Handlung == GEGNER::DREHEN) {
         if (AnimCount > AnimSpeed)  // Grenze überschritten ?
         {
             AnimCount = 0;             // Dann wieder auf Null setzen
@@ -53,13 +53,13 @@ void GegnerFieseDrone::DoKI() {
             if (AnimPhase > AnimEnde)  // Animation von zu Ende	?
             {
                 AnimCount = 0.0f;
-                Handlung = GEGNER_DREHEN2;
+                Handlung = GEGNER::DREHEN2;
                 BlickRichtung *= -1;
                 xPos -= BlickRichtung * 5.0f;
                 AnimPhase = AnimEnde;
             }
         }
-    } else if (Handlung == GEGNER_DREHEN2) {
+    } else if (Handlung == GEGNER::DREHEN2) {
         if (AnimCount > AnimSpeed)  // Grenze überschritten ?
         {
             AnimCount = 0;        // Dann wieder auf Null setzen
@@ -69,7 +69,7 @@ void GegnerFieseDrone::DoKI() {
                 AnimPhase = 0;  // Dann wieder von vorne beginnen
                 AnimStart = 0;
                 AnimEnde = 12;
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 AnimSpeed = 1.5f;
             }
         }
@@ -90,7 +90,7 @@ void GegnerFieseDrone::DoKI() {
     xSpeed = std::clamp(xSpeed, -10.0f, 10.0f);
     ySpeed = std::clamp(ySpeed, -8.0f, 8.0f);
 
-    if (Handlung == GEGNER_LAUFEN && PlayerAbstand() < 600) {
+    if (Handlung == GEGNER::LAUFEN && PlayerAbstand() < 600) {
         if (ShotDelay > 0.0f)
             ShotDelay -= 1.0f SYNC;
         else {
@@ -120,7 +120,7 @@ void GegnerFieseDrone::DoKI() {
 
             Projectiles.PushProjectile(xPos + 20.0f, yPos + 20.0f, FLUGLASER);
             PartikelSystem.PushPartikel(xPos + 20.0f, yPos + 20.0f, SMOKE);
-            SoundManager.PlayWave(50, 128, 25000 + random(5000), SOUND_LASERSHOT);
+            SoundManager.PlayWave(50, 128, 25000 + random(5000), SOUND::LASERSHOT);
         }
     }
 
@@ -136,10 +136,10 @@ void GegnerFieseDrone::DoKI() {
     switch (Handlung) {
         // In der Luft rumdümpeln
         //
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             if ((xPos + 30.0f < pAim->xpos + 35.0f && BlickRichtung == LINKS) ||
                 (xPos + 30.0f > pAim->xpos + 35.0f && BlickRichtung == RECHTS)) {
-                Handlung = GEGNER_DREHEN;
+                Handlung = GEGNER::DREHEN;
                 AnimPhase = 13;
                 AnimStart = 13;
                 AnimCount = 0.0f;
@@ -152,7 +152,7 @@ void GegnerFieseDrone::DoKI() {
 
     // Rauch
     //
-    if (Handlung == GEGNER_LAUFEN) {
+    if (Handlung == GEGNER::LAUFEN) {
         if (BlickRichtung == LINKS)
             flamex = 31;
         else
@@ -188,7 +188,7 @@ void GegnerFieseDrone::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(30)),
                                     yPos + 10.0f + static_cast<float>(random(30)), LASERFUNKE2);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 80;
 }

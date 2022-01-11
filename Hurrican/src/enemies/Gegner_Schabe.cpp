@@ -14,7 +14,7 @@ constexpr float SPEED = 5.0f;
 // --------------------------------------------------------------------------------------
 
 GegnerSchabe::GegnerSchabe(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 10;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -49,7 +49,7 @@ void GegnerSchabe::DoKI() {
     if (ShotDelay < 0.0f) {
         ShotDelay = 8.0f + (4.0f - Skill) * 2;
 
-        SoundManager.PlayWave(50, 128, 10000 + random(4000), SOUND_CANON);
+        SoundManager.PlayWave(50, 128, 10000 + random(4000), SOUND::CANON);
         Projectiles.PushProjectile(xPos + 5.0f, yPos + 5.0f, SUCHSCHUSS);
     }
 
@@ -337,7 +337,7 @@ void GegnerSchabe::GegnerExplode() {
                                     yPos + 5.0f + static_cast<float>(random(10)), SPIDERSPLITTER);
     }
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 13000, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 13000, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 10;
 }

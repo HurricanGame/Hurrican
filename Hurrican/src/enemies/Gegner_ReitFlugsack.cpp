@@ -14,7 +14,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerReitFlugsack::GegnerReitFlugsack(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 50;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -42,7 +42,7 @@ void GegnerReitFlugsack::DoDraw() {
                                            yPos - TileEngine.YOffset, AnimPhase, 0xFFFFFFFF,
                                            mirror);
 
-    if (Handlung == GEGNER_SPECIAL) {
+    if (Handlung == GEGNER::SPECIAL) {
         ArrowCount -= 0.2f SYNC;
         if (ArrowCount < 0.0f)
             ArrowCount = 2.0f;
@@ -62,7 +62,7 @@ void GegnerReitFlugsack::DoKI() {
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_LAUFEN:  // Normal fliegen und dabei ab und zu schiessen
+        case GEGNER::LAUFEN:  // Normal fliegen und dabei ab und zu schiessen
         {
             if (pAim->xpos + 45 <= xPos + 40)
                 BlickRichtung = LINKS;
@@ -107,7 +107,7 @@ void GegnerReitFlugsack::DoKI() {
         } break;
 
         // Sack stürzt ab
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             // Am Boden abhopfen ?
             if (ySpeed > 0.0f && (blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM)) {
                 ySpeed *= -0.3f;
@@ -116,7 +116,7 @@ void GegnerReitFlugsack::DoKI() {
                 if (ySpeed > -1.0f) {
                     ySpeed = 0.0f;
                     yAcc = 0.0f;
-                    Handlung = GEGNER_SPECIAL;  // Warten dass der Hurri draufhopst
+                    Handlung = GEGNER::SPECIAL;  // Warten dass der Hurri draufhopst
                     ArrowCount = 2.0f;
                 }
             }
@@ -133,12 +133,12 @@ void GegnerReitFlugsack::DoKI() {
 
             if (AnimCount == 0.0f && AnimPhase % 2 == 0 && random(2) == 0) {
                 PartikelSystem.PushPartikel(xPos + random(80) - 30, yPos + random(70) - 30, EXPLOSION_MEDIUM2);
-                SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::EXPLOSION1);
             }
 
         } break;
 
-        case GEGNER_SPECIAL: {
+        case GEGNER::SPECIAL: {
             // FlugSack rauchen lassen
             if (AnimCount == 0.0f) {
                 PartikelSystem.PushPartikel(xPos + 20.0f + static_cast<float>(random(40)),
@@ -166,11 +166,11 @@ void GegnerReitFlugsack::DoKI() {
                     // Flugsack Musik spielen
                     if (Value1 == 1 && Player[0].Riding()) {
                         // DKS - Really, we should stop all music
-                        // SoundManager.StopSong(MUSIC_STAGEMUSIC, true);
-                        // SoundManager.StopSong(MUSIC_BOSS, false);
-                        // SoundManager.StopSong(MUSIC_PUNISHER, false);
+                        // SoundManager.StopSong(MUSIC::STAGEMUSIC, true);
+                        // SoundManager.StopSong(MUSIC::BOSS, false);
+                        // SoundManager.StopSong(MUSIC::PUNISHER, false);
                         SoundManager.StopSongs();  // DKS - Added this to replace above 3 lines
-                        SoundManager.PlaySong(MUSIC_FLUGSACK, false);
+                        SoundManager.PlaySong(MUSIC::FLUGSACK, false);
                     }
                 }
 
@@ -181,9 +181,9 @@ void GegnerReitFlugsack::DoKI() {
     }  // switch
 
     // Soviel Energie verloren, dass der Spacko abstürzt ?
-    if (Energy <= 0.0f && Handlung != GEGNER_FALLEN && Handlung != GEGNER_SPECIAL) {
+    if (Energy <= 0.0f && Handlung != GEGNER::FALLEN && Handlung != GEGNER::SPECIAL) {
         Destroyable = false;
-        Handlung = GEGNER_FALLEN;
+        Handlung = GEGNER::FALLEN;
         Energy = 40.0f;
         xSpeed = 0.0f;
         ySpeed = 3.0f;

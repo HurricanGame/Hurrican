@@ -25,13 +25,13 @@ GegnerSpiderBomb::GegnerSpiderBomb(int Wert1, int Wert2, bool Light) {
 
     // von der Spinnenmaschine ausgespuckt? Dann erstmal rausfliegen
     if (Wert1 == 99) {
-        Handlung = GEGNER_FALLEN;
+        Handlung = GEGNER::FALLEN;
         AnimPhase = 6;
         xSpeed = static_cast<float>(random(10)) + 20.0f;
         ySpeed = -(static_cast<float>(random(10)) + 30.0f);
         yAcc = 5.0f;
     } else {
-        Handlung = GEGNER_LAUFEN;
+        Handlung = GEGNER::LAUFEN;
         xSpeed = 0.0;
         ySpeed = 0.0f;
         yAcc = 0.0f;
@@ -43,7 +43,7 @@ GegnerSpiderBomb::GegnerSpiderBomb(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerSpiderBomb::DoKI() {
-    if (Handlung == GEGNER_LAUFEN)
+    if (Handlung == GEGNER::LAUFEN)
         SimpleAnimation();
 
     // Nach links bzw rechts auf Kollision prüfen und dann ggf umkehren
@@ -71,11 +71,11 @@ void GegnerSpiderBomb::DoKI() {
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_LAUFEN:  // Spinne läuft rum
+        case GEGNER::LAUFEN:  // Spinne läuft rum
         {
             // Kein Boden mehr unter den Füssen ? Dann runterfallen lassen
             if (!(blocku & BLOCKWERT_WAND) && !(blocku & BLOCKWERT_PLATTFORM)) {
-                Handlung = GEGNER_FALLEN;
+                Handlung = GEGNER::FALLEN;
                 yAcc = 5.0f;
                 ySpeed = 1.0f;
             }
@@ -102,7 +102,7 @@ void GegnerSpiderBomb::DoKI() {
 
             // Spieler in Reichweite? Dann in Lauerstellung gehen
             if (PlayerAbstand() < 150) {
-                Handlung = GEGNER_SPECIAL;
+                Handlung = GEGNER::SPECIAL;
                 AnimPhase = 5;
                 AnimCount = 5.0f;
                 xSpeed = 0.0f;
@@ -113,11 +113,11 @@ void GegnerSpiderBomb::DoKI() {
         } break;
 
         // kurz geduckt am Boden bleiben
-        case GEGNER_SPECIAL: {
+        case GEGNER::SPECIAL: {
             AnimCount -= 1.0f SYNC;
 
             if (AnimCount <= 0.0f) {
-                Handlung = GEGNER_FALLEN;
+                Handlung = GEGNER::FALLEN;
                 AnimPhase = 6;
                 ySpeed = -22.0f;
                 yPos -= 5.0f;
@@ -130,14 +130,14 @@ void GegnerSpiderBomb::DoKI() {
             }
         } break;
 
-        case GEGNER_SPRINGEN: {
+        case GEGNER::SPRINGEN: {
         } break;
 
-        case GEGNER_FALLEN:  // Spinne fällt runter
+        case GEGNER::FALLEN:  // Spinne fällt runter
         {
             // Wieder Boden unter den Füssen ? Dann wieder normal laufen
             if (blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM) {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
                 AnimPhase = 0;
@@ -170,7 +170,7 @@ void GegnerSpiderBomb::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos + 10.0f,
                                     yPos + 10.0f, SPLITTER);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION3);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION3);  // Sound ausgeben
 
     Player[0].Score += 250;
 }

@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerQualle::GegnerQualle(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_SPRINGEN;
+    Handlung = GEGNER::SPRINGEN;
     HitSound = 1;
     Energy = 35;
     Value1 = Wert1;
@@ -39,7 +39,7 @@ void GegnerQualle::DoKI() {
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_SPRINGEN:  // Nach oben abgestossen zum Schwimmen
+        case GEGNER::SPRINGEN:  // Nach oben abgestossen zum Schwimmen
         {
             // Geschwindigkeits-Begrenzung
             if (ySpeed > 0.0f)
@@ -55,11 +55,11 @@ void GegnerQualle::DoKI() {
                 AnimStart = 16;
                 AnimEnde = 17;
                 AnimSpeed = 4.0f;
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
             }
         } break;
 
-        case GEGNER_LAUFEN:  // Qualle sinkt ab
+        case GEGNER::LAUFEN:  // Qualle sinkt ab
         {
             if (pAim->InLiquid == true && yPos - 20 > pAim->ypos) {
                 // Bläschen erzeugen
@@ -77,7 +77,7 @@ void GegnerQualle::DoKI() {
                 AnimCount = 0.0f;
                 ySpeed = -7.0f;
                 yAcc = 0.6f;
-                Handlung = GEGNER_SPRINGEN;
+                Handlung = GEGNER::SPRINGEN;
             } else if ((pAim->InLiquid == false && random(100) == 0) || blocku & BLOCKWERT_WAND ||
                        blocku & BLOCKWERT_GEGNERWAND) {
                 xSpeed = 1.2f;
@@ -90,7 +90,7 @@ void GegnerQualle::DoKI() {
                 AnimCount = 0.0f;
                 ySpeed = -7.0f;
                 yAcc = 0.6f;
-                Handlung = GEGNER_SPRINGEN;
+                Handlung = GEGNER::SPRINGEN;
             }
         } break;
 
@@ -130,7 +130,7 @@ void GegnerQualle::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos + 2.0f,
                                 yPos - 5.0f, PIRANHABLUT);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 200;
 }

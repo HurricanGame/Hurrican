@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerDeckenturm::GegnerDeckenturm(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_UNVERWUNDBAR;
+    Handlung = GEGNER::UNVERWUNDBAR;
     BlickRichtung = LINKS;
     Energy = 50;
     Value1 = Wert1;
@@ -35,7 +35,7 @@ void GegnerDeckenturm::DoKI() {
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_UNVERWUNDBAR:  // Kanone hängt an der Decke und wartet
+        case GEGNER::UNVERWUNDBAR:  // Kanone hängt an der Decke und wartet
                                    // bis der Spieler in seine Reichweite kommt
         {
             DamageTaken = 0.0f;               // Auch nicht rot leuchten
@@ -43,7 +43,7 @@ void GegnerDeckenturm::DoKI() {
             if (PlayerAbstand() <= Value2 &&  // Spieler in Sichtweite ? Dann aufmachen
                 pAim->ypos + 70 >= yPos) {
                 Destroyable = true;  // Gegner wird verwundbar
-                Handlung = GEGNER_OEFFNEN;
+                Handlung = GEGNER::OEFFNEN;
                 AnimPhase = 1;
                 AnimStart = 0;
                 AnimEnde = 10;
@@ -51,10 +51,10 @@ void GegnerDeckenturm::DoKI() {
             }
         } break;
 
-        case GEGNER_OEFFNEN: {
+        case GEGNER::OEFFNEN: {
             if (AnimPhase == AnimStart)  // Fertig mit öffnen ?
             {
-                Handlung = GEGNER_VERFOLGEN;
+                Handlung = GEGNER::VERFOLGEN;
                 AnimPhase = 10;
                 AnimEnde = AnimPhase;
                 AnimStart = AnimPhase;
@@ -63,16 +63,16 @@ void GegnerDeckenturm::DoKI() {
             }
         } break;
 
-        case GEGNER_SCHLIESSEN: {
+        case GEGNER::SCHLIESSEN: {
             if (AnimPhase == AnimStart)  // Fertig mit schliessen ?
             {
-                Handlung = GEGNER_UNVERWUNDBAR;
+                Handlung = GEGNER::UNVERWUNDBAR;
                 AnimEnde = 0;
                 AnimStart = 0;
             }
         } break;
 
-        case GEGNER_VERFOLGEN:  // Auf den Spieler ballern oder ggf
+        case GEGNER::VERFOLGEN:  // Auf den Spieler ballern oder ggf
         {
             // wieder zusammenklappen
             // Je nach Winkel zum Spieler die Kanone richtig ausrichten
@@ -108,7 +108,7 @@ void GegnerDeckenturm::DoKI() {
 
             if (PlayerAbstand() > Value2 ||  // Spieler ausserhalb der Sichtweite ? Dann zumachen
                 pAim->ypos + 70 < yPos) {
-                Handlung = GEGNER_SCHLIESSEN;
+                Handlung = GEGNER::SCHLIESSEN;
                 AnimStart = 0;
                 AnimPhase = 22;
                 AnimEnde = 30;
@@ -130,7 +130,7 @@ void GegnerDeckenturm::GegnerExplode() {
     // Explosion
     PartikelSystem.PushPartikel(xPos - 10.0f, yPos - 10.0f, EXPLOSION_MEDIUM2);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 200;
 }

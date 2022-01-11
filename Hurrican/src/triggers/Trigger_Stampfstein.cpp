@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerStampfstein::GegnerStampfstein(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_NOTVISIBLE;
+    Handlung = GEGNER::NOTVISIBLE;
     BlickRichtung = LINKS;
     Energy = 5000.0f;
     Value1 = Wert1;
@@ -68,12 +68,12 @@ void GegnerStampfstein::DoKI() {
     switch (Handlung) {
         // warten, bis der Hurri vorbeikommt ;)
         //
-        case GEGNER_NOTVISIBLE: {
+        case GEGNER::NOTVISIBLE: {
             oldy = yPos;
-            Handlung = GEGNER_STEHEN;
+            Handlung = GEGNER::STEHEN;
         } break;
 
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             oldy = yPos;
 
             // Spieler in der Nähe? Dann runterfallen lassen
@@ -82,18 +82,18 @@ void GegnerStampfstein::DoKI() {
                 pAim = &Player[p];
 
                 if (PlayerAbstandHoriz() < 50 && PlayerAbstandVert() < 600 && Player[p].ypos > yPos) {
-                    Handlung = GEGNER_FALLEN;
+                    Handlung = GEGNER::FALLEN;
                     ySpeed = 20.0f;
                     yAcc = 15.0f;
 
-                    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_STONEFALL);
+                    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::STONEFALL);
                 }
             }
         } break;
 
         // Stein fällt gerade runter
         //
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             // Fallgeschwindigkeit begrenzen
             //
             if (ySpeed > 40.0f)
@@ -120,12 +120,12 @@ void GegnerStampfstein::DoKI() {
                     PartikelSystem.PushPartikel(xPos + static_cast<float>(i * 5 - 10),
                                                 yPos + static_cast<float>(236), ROCKSPLITTER + random(2));
 
-                SoundManager.PlayWave(175, 128, 8000 + random(4000), SOUND_PHARAORAMM);
+                SoundManager.PlayWave(175, 128, 8000 + random(4000), SOUND::PHARAORAMM);
 
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
                 AnimCount = 20.0f;
-                Handlung = GEGNER_INIT;
+                Handlung = GEGNER::INIT;
 
                 // Checken, ob Gegner darunter waren
                 GegnerClass *pTemp;
@@ -145,17 +145,17 @@ void GegnerStampfstein::DoKI() {
         } break;
 
         // Stein wartet kurz und wird dann wieder hochgezogen
-        case GEGNER_INIT: {
+        case GEGNER::INIT: {
             PlattformTest(GegnerRect[GegnerArt]);
 
             AnimCount -= 1.0f SYNC;
             if (AnimCount < 0.0f) {
                 ySpeed = -4.0f;
-                Handlung = GEGNER_SPRINGEN;
+                Handlung = GEGNER::SPRINGEN;
 
                 // Hochzieh Sound
-                //				if (SoundManager.its_Sounds[SOUND_CHAIN]->isPlaying == false)
-                //					SoundManager.PlayWave(100, 128, 11000 + rand()%50, SOUND_CHAIN);
+                //				if (SoundManager.its_Sounds[SOUND::CHAIN]->isPlaying == false)
+                //					SoundManager.PlayWave(100, 128, 11000 + rand()%50, SOUND::CHAIN);
 
                 // DKS - Chain retracting sound was commented out (above) in the original code,
                 //      but I've added support for it. Since multiple trigger stampfsteins
@@ -164,25 +164,25 @@ void GegnerStampfstein::DoKI() {
                 //      is fully retracted, the correct sound channel is halted:
                 sfx_chain_channel = SoundManager.PlayWave3D(static_cast<int>(xPos) + 40,
                                                             static_cast<int>(yPos) + 20,
-                                                            11025, SOUND_CHAIN);
+                                                            11025, SOUND::CHAIN);
             }
         } break;
 
         // Stein wird hochgezogen
         //
-        case GEGNER_SPRINGEN: {
+        case GEGNER::SPRINGEN: {
             PlattformTest(GegnerRect[GegnerArt]);
 
-            //			SoundManager.Update3D(static_cast<int>(xPos + 40), static_cast<int>(yPos + 20), SOUND_CHAIN);
+            //			SoundManager.Update3D(static_cast<int>(xPos + 40), static_cast<int>(yPos + 20), SOUND::CHAIN);
 
             if (blocko & BLOCKWERT_WAND) {
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
                 ySpeed = 0.0f;
 
-                //				SoundManager.StopWave(SOUND_CHAIN);
+                //				SoundManager.StopWave(SOUND::CHAIN);
 
                 // DKS - Added support for chain retracting sound back into original source:
-                if (sfx_chain_channel != -1 && SoundManager.WaveIsPlayingOnChannel(SOUND_CHAIN, sfx_chain_channel)) {
+                if (sfx_chain_channel != -1 && SoundManager.WaveIsPlayingOnChannel(SOUND::CHAIN, sfx_chain_channel)) {
                     SoundManager.StopChannel(sfx_chain_channel);
                     sfx_chain_channel = -1;
                 }

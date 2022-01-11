@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerColumn2::GegnerColumn2(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     BlickRichtung = LINKS;
     Energy = 120;
     Value1 = Wert1;  // yPos der Plattform
@@ -81,8 +81,8 @@ void GegnerColumn2::DoDraw() {
 void GegnerColumn2::DoKI() {
     // Säule wird umgeschossen ?
     //
-    if (Energy < 100.0f && Handlung != GEGNER_EXPLODIEREN) {
-        Handlung = GEGNER_EXPLODIEREN;
+    if (Energy < 100.0f && Handlung != GEGNER::EXPLODIEREN) {
+        Handlung = GEGNER::EXPLODIEREN;
 
         for (int i = 0; i < 20; i++)
             PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)),
@@ -94,8 +94,8 @@ void GegnerColumn2::DoKI() {
 
         FallSpeed = 2.0f;
 
-        SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEFALL);
-        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_COLUMN);
+        SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::STONEFALL);
+        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::COLUMN);
         PartikelSystem.ThunderColor[0] = 255;
         PartikelSystem.ThunderColor[1] = 255;
         PartikelSystem.ThunderColor[2] = 255;
@@ -103,12 +103,12 @@ void GegnerColumn2::DoKI() {
     }
 
     switch (Handlung) {
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
         } break;
 
         // Säule fällt gerade um ?
         //
-        case GEGNER_EXPLODIEREN: {
+        case GEGNER::EXPLODIEREN: {
             FallSpeed += 0.5f SYNC;
             AnimCount += FallSpeed SYNC;
 
@@ -127,7 +127,7 @@ void GegnerColumn2::DoKI() {
 
     // Testen, ob der Spieler die Säule berührt hat
     //
-    if (Handlung == GEGNER_STEHEN)
+    if (Handlung == GEGNER::STEHEN)
         Wegschieben(GegnerRect[GegnerArt], 0.0f);
 }
 
@@ -147,7 +147,7 @@ void GegnerColumn2::GegnerExplode() {
                                     yPos + 60.0f + static_cast<float>(random(40)), ROCKSPLITTER);
     }
 
-    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEEXPLODE);
+    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::STONEEXPLODE);
 
     ShakeScreen(2.0f);
 }

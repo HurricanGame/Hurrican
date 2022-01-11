@@ -18,7 +18,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerTube::GegnerTube(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     Value1 = Wert1;
     Value2 = Wert2;
     ChangeLight = Light;
@@ -101,7 +101,7 @@ void GegnerTube::DoKI() {
                 Gegner.PushGegner(xPos - 1.0f, yPos + 60.0f, MUTANT, 1, 0, false);
                 Gegner.PushGegner(xPos + 50.0f - 10.0f, yPos + 150.0f, PARTIKELSPAWN, 11, 80, false);
 
-                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_GLASSBREAK);
+                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::GLASSBREAK);
             }
     }
 }

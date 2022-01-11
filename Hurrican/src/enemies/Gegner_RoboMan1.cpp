@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerRoboMan1::GegnerRoboMan1(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 150;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -82,7 +82,7 @@ void GegnerRoboMan1::DoKI() {
     }
 
     // Vor dem Spieler wegfliegen ?
-    if (PlayerAbstand() < 200 && Handlung != GEGNER_FALLEN) {
+    if (PlayerAbstand() < 200 && Handlung != GEGNER::FALLEN) {
         if (pAim->xpos + 45 > xPos + 45)
             xPos -= 8.0f SYNC;
         if (pAim->xpos + 45 < xPos + 45)
@@ -90,7 +90,7 @@ void GegnerRoboMan1::DoKI() {
     }
 
     // Zum Spieler hinfliegen ?
-    if (PlayerAbstand() > 300 && Handlung != GEGNER_FALLEN) {
+    if (PlayerAbstand() > 300 && Handlung != GEGNER::FALLEN) {
         if (pAim->xpos + 45 > xPos + 45)
             xPos += 8.0f SYNC;
         if (pAim->xpos + 45 < xPos + 45)
@@ -98,11 +98,11 @@ void GegnerRoboMan1::DoKI() {
     }
 
     // evtl schiessen
-    if (PlayerAbstand() < 500 && PlayerAbstand() > 50 && Handlung != GEGNER_FALLEN && AnimEnde == 0) {
+    if (PlayerAbstand() < 500 && PlayerAbstand() > 50 && Handlung != GEGNER::FALLEN && AnimEnde == 0) {
         ShotCount -= 1.0f SYNC;
 
         if (ShotCount <= 0.0f) {
-            SoundManager.PlayWave(100, 128, 11025, SOUND_GRANATE);
+            SoundManager.PlayWave(100, 128, 11025, SOUND::GRANATE);
 
             if (BlickRichtung == LINKS)
                 Projectiles.PushProjectile(xPos - 20.0f, yPos + 75.0f, ROBOROCKET, pAim);
@@ -119,7 +119,7 @@ void GegnerRoboMan1::DoKI() {
     }
 
     // yPosition mit dem Spieler angleichen
-    if (Handlung != GEGNER_FALLEN) {
+    if (Handlung != GEGNER::FALLEN) {
         if (yPos < pAim->ypos - 40)
             yAcc = 2.5f;
         if (yPos > pAim->ypos - 40)
@@ -136,7 +136,7 @@ void GegnerRoboMan1::DoKI() {
 
     switch (Handlung) {
         // Robo stürzt ab
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             // An die Wand gekracht ?
             if (blockl & BLOCKWERT_WAND || blockr & BLOCKWERT_WAND || blocko & BLOCKWERT_WAND ||
                 blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM)
@@ -160,12 +160,12 @@ void GegnerRoboMan1::DoKI() {
     }  // switch
 
     // Testen, ob der Spieler den Robo berührt hat
-    if (Handlung != GEGNER_FALLEN)
+    if (Handlung != GEGNER::FALLEN)
         TestDamagePlayers(4.0f SYNC);
 
     // Soviel Energie verloren, dass der Robo abstürzt ?
-    if (Energy <= 0.0f && Handlung != GEGNER_FALLEN) {
-        Handlung = GEGNER_FALLEN;
+    if (Energy <= 0.0f && Handlung != GEGNER::FALLEN) {
+        Handlung = GEGNER::FALLEN;
         Energy = 60.0f;
         ySpeed = 3.0f;
         yAcc = 2.0f;
@@ -182,7 +182,7 @@ void GegnerRoboMan1::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerRoboMan1::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION3);
 
     for (int i = 0; i < 3; i++)
         PartikelSystem.PushPartikel(xPos - 40.0f + static_cast<float>(random(70)),

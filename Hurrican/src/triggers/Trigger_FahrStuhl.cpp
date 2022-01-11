@@ -14,7 +14,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerFahrstuhl::GegnerFahrstuhl(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     BlickRichtung = LINKS;
     Energy = 100;
     Value1 = Wert1;
@@ -70,24 +70,24 @@ void GegnerFahrstuhl::DoKI() {
 
     for (int p = 0; p < NUMPLAYERS; p++)
         if (Player[p].AufPlattform == this) {
-            if (Handlung != GEGNER_FALLEN) {
+            if (Handlung != GEGNER::FALLEN) {
                 if (Value1 == 0) {
                     TileEngine.Zustand = TileStateEnum::LOCKED;
                 } else if (TileEngine.Zustand != TileStateEnum::SCROLLTOPLAYER)
                     TileEngine.ScrollLevel(xPos - 50.0f, yPos - 400.0f, TileStateEnum::SCROLLTOLOCK);
             }
 
-            Handlung = GEGNER_FALLEN;  // Fahrstuhl fährt los
+            Handlung = GEGNER::FALLEN;  // Fahrstuhl fährt los
         }
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
         // Warten auf den Hurri =)
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
         } break;
 
         // Fahrstuhl fährt nach unten
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             if (Value1 == 0)
                 TileEngine.NewYOffset = yPos - 320.0f - g_Fahrstuhl_Offset;
 
@@ -153,7 +153,7 @@ void GegnerFahrstuhl::GegnerExplode() {
     FahrstuhlPos = -1.0f;
 
     ShakeScreen(10);
-    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION2);
 
     for (int j = 0; j < 100; j++)
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(400)),

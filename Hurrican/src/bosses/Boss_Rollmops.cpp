@@ -10,7 +10,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerRollmops::GegnerRollmops(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_EINFLIEGEN;
+    Handlung = GEGNER::EINFLIEGEN;
     Energy = 4000;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -86,7 +86,7 @@ void GegnerRollmops::DoDraw() {
     // Je nach Handlung andere Grafik rendern
     //
     switch (Handlung) {
-        case GEGNER_AUSSPUCKEN: {
+        case GEGNER::AUSSPUCKEN: {
 
             float x = ((xPos + 65.0f - 9.0f) - HookX) / NUM_KETTENGLIEDER;
             float y = ((yPos + 65.0f) - HookY) / NUM_KETTENGLIEDER;
@@ -107,36 +107,36 @@ void GegnerRollmops::DoDraw() {
 
         } break;
 
-        case GEGNER_LAUFEN:
-        case GEGNER_LAUFEN_LINKS:
-        case GEGNER_LAUFEN_RECHTS:
-        case GEGNER_LAUFEN_LINKS2:
-        case GEGNER_LAUFEN_RECHTS2:
-        case GEGNER_SPECIAL:
-        case GEGNER_SPECIAL2:
-        case GEGNER_SPECIAL3:
-        case GEGNER_WARTEN:
-        case GEGNER_EXPLODIEREN: {
+        case GEGNER::LAUFEN:
+        case GEGNER::LAUFEN_LINKS:
+        case GEGNER::LAUFEN_RECHTS:
+        case GEGNER::LAUFEN_LINKS2:
+        case GEGNER::LAUFEN_RECHTS2:
+        case GEGNER::SPECIAL:
+        case GEGNER::SPECIAL2:
+        case GEGNER::SPECIAL3:
+        case GEGNER::WARTEN:
+        case GEGNER::EXPLODIEREN: {
             Rollen.RenderSprite(xPos - TileEngine.XOffset,
                                 yPos - TileEngine.YOffset, AnimPhase, 0xFFFFFFFF, mirrored);
         } break;
 
-        case GEGNER_INIT:
-        case GEGNER_STEHEN: {
+        case GEGNER::INIT:
+        case GEGNER::STEHEN: {
             pGegnerGrafix[GegnerArt]->RenderSpriteScaled(xPos - TileEngine.XOffset + 16.0f,
                                                          yPos - TileEngine.YOffset, 120, 120,
                                                          AnimPhase, 0xFFFFFFFF);
         } break;
 
-        case GEGNER_OEFFNEN:
-        case GEGNER_SCHLIESSEN: {
+        case GEGNER::OEFFNEN:
+        case GEGNER::SCHLIESSEN: {
             mirrored = (xPos < Value1 + 320.0f);
 
             Aufklappen.RenderSprite(xPos - TileEngine.XOffset,
                                     yPos - TileEngine.YOffset, AnimPhase, 0xFFFFFFFF, mirrored);
         } break;
 
-        case GEGNER_VERFOLGEN: {
+        case GEGNER::VERFOLGEN: {
             mirrored = (xPos < Value1 + 320.0f);
 
             float xoff = 0.0f;
@@ -174,17 +174,17 @@ void GegnerRollmops::GunAusfahren(bool Auf) {
     xAcc = 0.0f;
     yAcc = 0.0f;
 
-    SoundManager.PlayWave(100, 128, 14000, SOUND_STEAM);
+    SoundManager.PlayWave(100, 128, 14000, SOUND::STEAM);
 
     if (Auf == true) {
-        Handlung = GEGNER_OEFFNEN;
+        Handlung = GEGNER::OEFFNEN;
 
         AnimPhase = 0;
         AnimStart = 0;
         AnimEnde = 9;
         HitsToTake = Energy;
     } else {
-        Handlung = GEGNER_SCHLIESSEN;
+        Handlung = GEGNER::SCHLIESSEN;
 
         AnimPhase = 7;
         AnimStart = 7;
@@ -204,10 +204,10 @@ void GegnerRollmops::Abhopsen(float mul) {
     if (ySpeed > 0.0f && yPos > Value2 + 480.0f - 100.0f - 40.0f) {
         yPos = Value2 + 480.0f - 100.0f - 40.0f;
 
-        SoundManager.PlayWave(100, 128, 8000 + random(2000), SOUND_LANDEN);
+        SoundManager.PlayWave(100, 128, 8000 + random(2000), SOUND::LANDEN);
 
         if (mul != -0.6f)
-            SoundManager.PlayWave(40, 128, 10000 + random(1000), SOUND_KLONG);
+            SoundManager.PlayWave(40, 128, 10000 + random(1000), SOUND::KLONG);
 
         ySpeed *= mul;
 
@@ -251,7 +251,7 @@ void GegnerRollmops::RoundShot(bool single) {
                                        yPos + 50.0f - cos_deg(WinkelCount) * 50.0f, EISZAPFENSHOT);
         }
 
-    SoundManager.PlayWave(50, 128, 16000 + random(2000), SOUND_STONEFALL);
+    SoundManager.PlayWave(50, 128, 16000 + random(2000), SOUND::STONEFALL);
 }
 
 // --------------------------------------------------------------------------------------
@@ -260,7 +260,7 @@ void GegnerRollmops::RoundShot(bool single) {
 
 void GegnerRollmops::DoKI() {
     // Energie anzeigen
-    if (Handlung != GEGNER_INIT && Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER::INIT && Handlung != GEGNER::EXPLODIEREN)
         HUD.ShowBossHUD(4000, Energy);
 
     // Levelausschnitt auf den Mops zentrieren, sobald dieser sichtbar wird
@@ -270,7 +270,7 @@ void GegnerRollmops::DoKI() {
         // Mops aus Screen bringen
         xPos = Value1 + 640.0f;
         // yPos = Value2 + 100.0f;
-        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC::STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
 
     // Boss blinkt nicht so lange wie die restlichen Gegner
@@ -285,26 +285,26 @@ void GegnerRollmops::DoKI() {
         // Je nach Handlung richtig verhalten
         switch (Handlung) {
             // warten bis Kamera am richtigen Fleck ist, dann reinhopsen lassen
-            case GEGNER_EINFLIEGEN: {
+            case GEGNER::EINFLIEGEN: {
                 // Kamera an der richtigen Position?
                 if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                     // dann reinhopsen
                     xSpeed = -10.0f;
                     yAcc = 4.0f;
-                    Handlung = GEGNER_INIT;
+                    Handlung = GEGNER::INIT;
                     AnimEnde = 19;
                     AnimSpeed = 0.25f;
                     //				NeueAktion();
 
                     // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                     // DKS - Added function SongIsPlaying() to SoundManagerClass:
-                    if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
-                        SoundManager.PlaySong(MUSIC_BOSS, false);
+                    if (!SoundManager.SongIsPlaying(MUSIC::BOSS))
+                        SoundManager.PlaySong(MUSIC::BOSS, false);
                 }
             } break;
 
             // Schneekugel hopst rein
-            case GEGNER_INIT: {
+            case GEGNER::INIT: {
                 SimpleAnimation();
 
                 AnimSpeed += 0.02f SYNC;
@@ -319,7 +319,7 @@ void GegnerRollmops::DoKI() {
                     // ausgerollt? Dann kette ausfahren
                     if (xSpeed >= 0.0f) {
                         xAcc = 0.0f;
-                        Handlung = GEGNER_STEHEN;
+                        Handlung = GEGNER::STEHEN;
                         HookX = xPos + 65 - 9;
                         HookY = yPos;
                         Schwung = 0.0f;
@@ -330,7 +330,7 @@ void GegnerRollmops::DoKI() {
             } break;
 
             // Haken nach oben schiessen
-            case GEGNER_AUSSPUCKEN: {
+            case GEGNER::AUSSPUCKEN: {
                 static bool shot = false;
 
                 if (AnimCount > 0.0f)
@@ -376,26 +376,26 @@ void GegnerRollmops::DoKI() {
                                                     yPos + 100.0f, FUNKE);
 
                         // DKS - Added function WaveIsPlaying() to SoundManagerClass:
-                        if (!SoundManager.WaveIsPlaying(SOUND_KLONG))
-                            SoundManager.PlayWave(50, 128, 14000 + random(2000), SOUND_KLONG);
+                        if (!SoundManager.WaveIsPlaying(SOUND::KLONG))
+                            SoundManager.PlayWave(50, 128, 14000 + random(2000), SOUND::KLONG);
                     }
                 }
 
                 // abgeschossen?
                 if (Energy < 2000.0f) {
-                    Handlung = GEGNER_WARTEN;
+                    Handlung = GEGNER::WARTEN;
                     ySpeed = -20.0f;
                     yAcc = 6.0f;
                     AnimSpeed = 10.0f;
 
                     // Kette fliegt weg
                     for (int i = 0; i < NUM_KETTENGLIEDER; i++)
-                        pKettenTeile[i]->Handlung = GEGNER_SPECIAL;
+                        pKettenTeile[i]->Handlung = GEGNER::SPECIAL;
                 }
             } break;
 
-            case GEGNER_LAUFEN_LINKS:
-            case GEGNER_LAUFEN_LINKS2: {
+            case GEGNER::LAUFEN_LINKS:
+            case GEGNER::LAUFEN_LINKS2: {
                 // Speed begrenzen
                 if (xSpeed < -60.0f)
                     xSpeed = -60.0f;
@@ -405,7 +405,7 @@ void GegnerRollmops::DoKI() {
                     xAcc = 19.0f;
 
                 // in der Mitte stoppen und abspringen
-                if (Handlung == GEGNER_LAUFEN_LINKS2 && ySpeed == 0.0f) {
+                if (Handlung == GEGNER::LAUFEN_LINKS2 && ySpeed == 0.0f) {
                     if (xPos + 65 < Value1 + 380.0)
                         xAcc = 23.0f;
 
@@ -414,7 +414,7 @@ void GegnerRollmops::DoKI() {
                         ySpeed = 0.0f;
                         xAcc = 0.0f;
                         yAcc = 10.0f;
-                        Handlung = GEGNER_SPECIAL2;
+                        Handlung = GEGNER::SPECIAL2;
                         ShotCount = 2.0f;
                         ySpeed = -77.0f;
                         break;
@@ -434,7 +434,7 @@ void GegnerRollmops::DoKI() {
 
                 // Richtung umdrehen?
                 if (xSpeed > 0.0f) {
-                    Handlung = GEGNER_LAUFEN_RECHTS;
+                    Handlung = GEGNER::LAUFEN_RECHTS;
                     ShotDelay -= 1.0f;
 
                     // abspringen?
@@ -453,8 +453,8 @@ void GegnerRollmops::DoKI() {
 
             } break;
 
-            case GEGNER_LAUFEN_RECHTS:
-            case GEGNER_LAUFEN_RECHTS2: {
+            case GEGNER::LAUFEN_RECHTS:
+            case GEGNER::LAUFEN_RECHTS2: {
                 // Speed begrenzen
                 if (xSpeed > 60.0f)
                     xSpeed = 60.0f;
@@ -464,7 +464,7 @@ void GegnerRollmops::DoKI() {
                     xAcc = -19.0f;
 
                 // in der Mitte stoppen und abspringen
-                if (Handlung == GEGNER_LAUFEN_RECHTS2 && ySpeed == 0.0f) {
+                if (Handlung == GEGNER::LAUFEN_RECHTS2 && ySpeed == 0.0f) {
                     if (xPos + 65 > Value1 + 300.0)
                         xAcc = -23.0f;
 
@@ -473,7 +473,7 @@ void GegnerRollmops::DoKI() {
                         ySpeed = 0.0f;
                         xAcc = 0.0f;
                         yAcc = 8.0f;
-                        Handlung = GEGNER_SPECIAL3;
+                        Handlung = GEGNER::SPECIAL3;
                         ShotCount = 2.0f;
                         ySpeed = -65.0f;
                         break;
@@ -493,7 +493,7 @@ void GegnerRollmops::DoKI() {
 
                 // Richtung umdrehen?
                 if (xSpeed < 0.0f) {
-                    Handlung = GEGNER_LAUFEN_LINKS;
+                    Handlung = GEGNER::LAUFEN_LINKS;
                     ShotDelay -= 1.0f;
 
                     // abspringen?
@@ -512,22 +512,22 @@ void GegnerRollmops::DoKI() {
 
             } break;
 
-            case GEGNER_STEHEN: {
+            case GEGNER::STEHEN: {
                 ShotDelay -= 1.0f SYNC;
 
                 if (ShotDelay <= 0.0f) {
                     ShotDelay = 0.0f;
-                    Handlung = GEGNER_AUSSPUCKEN;
+                    Handlung = GEGNER::AUSSPUCKEN;
                     AnimPhase = 0;
                     AnimStart = 0;
                     AnimEnde = 10;
                     AnimSpeed = 0.5f;
                     //				xSpeed = -5.0f;
 
-                    SoundManager.PlayWave(100, 128, 7000, SOUND_LANDEN);
-                    SoundManager.PlayWave(100, 128, 9000, SOUND_LANDEN);
+                    SoundManager.PlayWave(100, 128, 7000, SOUND::LANDEN);
+                    SoundManager.PlayWave(100, 128, 9000, SOUND::LANDEN);
 
-                    SoundManager.PlayWave(80, 128, 11025, SOUND_STEAM);
+                    SoundManager.PlayWave(80, 128, 11025, SOUND::STEAM);
 
                     int i;
                     for (i = 0; i < 30; i++)
@@ -540,12 +540,12 @@ void GegnerRollmops::DoKI() {
                 }
             } break;
 
-            case GEGNER_LAUFEN: {
+            case GEGNER::LAUFEN: {
                 Abhopsen(-0.4f);
                 SimpleAnimation();
             } break;
 
-            case GEGNER_WARTEN: {
+            case GEGNER::WARTEN: {
                 Abhopsen(-0.4f);
 
                 if (ySpeed == 0.0f)
@@ -554,7 +554,7 @@ void GegnerRollmops::DoKI() {
                 if (AnimSpeed <= 0.0f) {
                     ShotDelay = 5.0f;
 
-                    Handlung = GEGNER_LAUFEN_LINKS;
+                    Handlung = GEGNER::LAUFEN_LINKS;
 
                     xSpeed = -60.0f;
                     xAcc = 0.0f;
@@ -566,8 +566,8 @@ void GegnerRollmops::DoKI() {
             } break;
 
             //
-            case GEGNER_OEFFNEN:
-            case GEGNER_SCHLIESSEN: {
+            case GEGNER::OEFFNEN:
+            case GEGNER::SCHLIESSEN: {
                 bool fertig = false;
 
                 // auf/zuklappen
@@ -576,7 +576,7 @@ void GegnerRollmops::DoKI() {
                 if (AnimCount > AnimSpeed) {
                     AnimCount = 0.0f;
 
-                    if (Handlung == GEGNER_OEFFNEN) {
+                    if (Handlung == GEGNER::OEFFNEN) {
                         AnimPhase++;
 
                         if (AnimPhase >= AnimEnde - 1) {
@@ -596,9 +596,9 @@ void GegnerRollmops::DoKI() {
                     AnimPhase = AnimEnde;
 
                     // schiessen?
-                    if (Handlung == GEGNER_OEFFNEN) {
+                    if (Handlung == GEGNER::OEFFNEN) {
                         ShotCount = static_cast<float>(random(15) + 15);
-                        Handlung = GEGNER_VERFOLGEN;
+                        Handlung = GEGNER::VERFOLGEN;
                         Destroyable = true;
                     }
                     // wieder rollen
@@ -614,16 +614,16 @@ void GegnerRollmops::DoKI() {
 
                         if (xPos > Value1 + 320.0f) {
                             if (Energy < 1000.0f)
-                                Handlung = GEGNER_LAUFEN_LINKS2;
+                                Handlung = GEGNER::LAUFEN_LINKS2;
                             else
-                                Handlung = GEGNER_LAUFEN_LINKS;
+                                Handlung = GEGNER::LAUFEN_LINKS;
 
                             xSpeed = -40.0f;
                         } else {
                             if (Energy < 1000.0f)
-                                Handlung = GEGNER_LAUFEN_RECHTS2;
+                                Handlung = GEGNER::LAUFEN_RECHTS2;
                             else
-                                Handlung = GEGNER_LAUFEN_RECHTS;
+                                Handlung = GEGNER::LAUFEN_RECHTS;
 
                             xSpeed = 40.0f;
                         }
@@ -632,13 +632,13 @@ void GegnerRollmops::DoKI() {
             } break;
 
             // Mit der Kanone zielen
-            case GEGNER_VERFOLGEN: {
+            case GEGNER::VERFOLGEN: {
                 CalcGunWinkel();
 
                 // schiessen
                 ShotDelay -= 1.0f SYNC;
                 if (ShotDelay < 0.0f) {
-                    SoundManager.PlayWave(50, 128, 16000 + random(2000), SOUND_STONEFALL);
+                    SoundManager.PlayWave(50, 128, 16000 + random(2000), SOUND::STONEFALL);
 
                     float xoff = 0.0f;
 
@@ -669,12 +669,12 @@ void GegnerRollmops::DoKI() {
                 }
             } break;
 
-            case GEGNER_SPECIAL2: {
+            case GEGNER::SPECIAL2: {
                 Abhopsen(-0.3f);
 
                 if (ySpeed == 0.0f) {
                     ShotDelay = 3.0f;
-                    Handlung = GEGNER_LAUFEN_LINKS;
+                    Handlung = GEGNER::LAUFEN_LINKS;
                     xSpeed = -30.0f;
                     xAcc = -10.0f;
                 }
@@ -690,12 +690,12 @@ void GegnerRollmops::DoKI() {
             } break;
 
             // hochspringen, kreiseln und in alle Richtungen schiessen
-            case GEGNER_SPECIAL3: {
+            case GEGNER::SPECIAL3: {
                 Abhopsen(-0.3f);
 
                 if (ySpeed == 0.0f) {
                     ShotDelay = 3.0f;
-                    Handlung = GEGNER_LAUFEN_RECHTS;
+                    Handlung = GEGNER::LAUFEN_RECHTS;
                     xSpeed = 30.0f;
                     xAcc = 10.0f;
                 }
@@ -710,14 +710,14 @@ void GegnerRollmops::DoKI() {
                 }
             } break;
 
-            case GEGNER_EXPLODIEREN: {
+            case GEGNER::EXPLODIEREN: {
                 Abhopsen(-0.3f);
 
                 // animieren
                 AnimCount += 1.0f SYNC;
 
                 while (AnimCount > AnimSpeed) {
-                    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
+                    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION3);
 
                     PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(140)),
                                                 yPos - 20.0f + static_cast<float>(random(140)),
@@ -745,8 +745,8 @@ void GegnerRollmops::DoKI() {
         }  // switch
 
     // Schnee beim Rollen?
-    if (Handlung == GEGNER_LAUFEN_RECHTS || Handlung == GEGNER_LAUFEN_LINKS || Handlung == GEGNER_LAUFEN ||
-        Handlung == GEGNER_SPECIAL) {
+    if (Handlung == GEGNER::LAUFEN_RECHTS || Handlung == GEGNER::LAUFEN_LINKS || Handlung == GEGNER::LAUFEN ||
+        Handlung == GEGNER::SPECIAL) {
         if (ySpeed == 0.0f)
             SmokeCount -= 1.0f SYNC;
 
@@ -765,8 +765,8 @@ void GegnerRollmops::DoKI() {
     TestDamagePlayers(20.0f SYNC);
 
     // Keine Energie mehr? Dann explodieren
-    if (Energy <= 0.0f && Energy > -500.0f && Handlung != GEGNER_EXPLODIEREN) {
-        Handlung = GEGNER_EXPLODIEREN;
+    if (Energy <= 0.0f && Energy > -500.0f && Handlung != GEGNER::EXPLODIEREN) {
+        Handlung = GEGNER::EXPLODIEREN;
         xSpeed = 0.0f;
         ySpeed = 0.0f;
         xAcc = 0.0f;
@@ -781,7 +781,7 @@ void GegnerRollmops::DoKI() {
         AnimStart = 0;
 
         // Endboss-Musik ausfaden und abschalten
-        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC::BOSS, -2.0f, 0, false);
     }
 }
 
@@ -790,7 +790,7 @@ void GegnerRollmops::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerRollmops::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION2);
 
     for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(140)),

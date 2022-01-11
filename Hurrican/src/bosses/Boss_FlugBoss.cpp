@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerFlugBoss::GegnerFlugBoss(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_NOTVISIBLE;
+    Handlung = GEGNER::NOTVISIBLE;
     Energy = 6000;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -139,7 +139,7 @@ void GegnerFlugBoss::DoKI() {
         BlickRichtung	= LINKS;
 
         // Energie anzeigen
-        if (Handlung != GEGNER_INIT && Handlung != GEGNER_EXPLODIEREN)
+        if (Handlung != GEGNER::INIT && Handlung != GEGNER::EXPLODIEREN)
             HUD.ShowBossHUD(6000, Energy);
 
         // Animieren
@@ -162,7 +162,7 @@ void GegnerFlugBoss::DoKI() {
                                      static_cast<float>(Value2), ZUSTAND_SCROLLTOLOCK);		// Level auf den Boss
        zentrieren
 
-            SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+            SoundManager.FadeSong(MUSIC::STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
 
             yPos -= 480;
         }
@@ -175,34 +175,34 @@ void GegnerFlugBoss::DoKI() {
 
         // Hat der Boss keine Energie mehr ? Dann explodiert er
         //
-        if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN)
+        if (Energy <= 100.0f && Handlung != GEGNER::EXPLODIEREN)
         {
-            Handlung  = GEGNER_EXPLODIEREN;
+            Handlung  = GEGNER::EXPLODIEREN;
 
             // Endboss-Musik ausfaden und abschalten
-            SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+            SoundManager.FadeSong(MUSIC::BOSS, -2.0f, 0, false);
         }
 
         // Je nach Handlung richtig verhalten
         //
         switch (Handlung)
         {
-            case GEGNER_INIT:			// Warten bis der Screen zentriert wurde
+            case GEGNER::INIT:			// Warten bis der Screen zentriert wurde
             {
                 if (TileEngine.Zustand == ZUSTAND_LOCKED)
                 {
                     tempSpeed = 35.0f;
-                    Handlung  = GEGNER_INIT2;
+                    Handlung  = GEGNER::INIT2;
 
-                    SoundManager.PlayWave (100, 128, 3500, SOUND_ROCKET);
-                    SoundManager.PlayWave (100, 128, 4500, SOUND_ROCKET);
+                    SoundManager.PlayWave (100, 128, 3500, SOUND::ROCKET);
+                    SoundManager.PlayWave (100, 128, 4500, SOUND::ROCKET);
                 }
             } break;
 
 
             // von oben einfliegen
             //
-            case GEGNER_INIT2 :
+            case GEGNER::INIT2 :
             {
                 tempSpeed -= 1.35f SYNC;
 
@@ -217,18 +217,18 @@ void GegnerFlugBoss::DoKI() {
                 {
                     yPos	  = float (Value2 - 60);
                     tempSpeed = 15.0f;
-                    Handlung  = GEGNER_INIT3;
+                    Handlung  = GEGNER::INIT3;
 
-                    SoundManager.StopWave (SOUND_ROCKET);
-                    SoundManager.PlayWave (100, 128, 11025, SOUND_DOORSTOP);
-                    SoundManager.PlayWave (100, 128, 11025, SOUND_DOOR);
+                    SoundManager.StopWave (SOUND::ROCKET);
+                    SoundManager.PlayWave (100, 128, 11025, SOUND::DOORSTOP);
+                    SoundManager.PlayWave (100, 128, 11025, SOUND::DOOR);
                 }
 
             } break;
 
             // Schienen einfahren
             //
-            case GEGNER_INIT3:
+            case GEGNER::INIT3:
             {
                 tempSpeed -= 0.2f SYNC;
 
@@ -241,24 +241,24 @@ void GegnerFlugBoss::DoKI() {
                 {
                     xKanone    = 0.0f;
                     AnimCount  = 10.0f;
-                    Handlung   = GEGNER_LAUFEN;
+                    Handlung   = GEGNER::LAUFEN;
                     SchienePos = 0.0f;
-                    SoundManager.StopWave (SOUND_DOOR);
-                    SoundManager.PlayWave (100, 128, 13000, SOUND_DOORSTOP);
-                    SoundManager.PlayWave (100, 128, 11000, SOUND_ROCKET);
+                    SoundManager.StopWave (SOUND::DOOR);
+                    SoundManager.PlayWave (100, 128, 13000, SOUND::DOORSTOP);
+                    SoundManager.PlayWave (100, 128, 11000, SOUND::ROCKET);
                     tempSpeed = 12.0f;
 
                     // Boss-Musik abspielen, sofern diese noch nicht gespielt wird
                     //
-                    if (MUSIC_IsPlaying(SoundManager.its_Songs[MUSIC_BOSS]->SongData) == false)
-                        SoundManager.PlaySong(MUSIC_BOSS, false);
+                    if (MUSIC::IsPlaying(SoundManager.its_Songs[MUSIC::BOSS]->SongData) == false)
+                        SoundManager.PlaySong(MUSIC::BOSS, false);
                 }
 
             } break;
 
             // Geschütze reinfahren
             //
-            case GEGNER_EINFAHREN:
+            case GEGNER::EINFAHREN:
             {
                 tempSpeed -= 0.5f SYNC;
 
@@ -270,18 +270,18 @@ void GegnerFlugBoss::DoKI() {
                 if (xKanone >= 110.0f)
                 {
                     AnimCount  = 10.0f;
-                    Handlung   = GEGNER_SPECIAL;
+                    Handlung   = GEGNER::SPECIAL;
                     ShotDelay  = 1.0f;
                     ShotCount  = 20.0f;
                     xKanone	   = 110.0f;
-                    SoundManager.PlayWave (100, 128, 15000, SOUND_DOORSTOP);
+                    SoundManager.PlayWave (100, 128, 15000, SOUND::DOORSTOP);
                 }
 
             } break;
 
             // Geschütze rausfahren
             //
-            case GEGNER_AUSFAHREN:
+            case GEGNER::AUSFAHREN:
             {
                 tempSpeed += 0.5f SYNC;
 
@@ -293,19 +293,19 @@ void GegnerFlugBoss::DoKI() {
                 if (xKanone <= 0.0f)
                 {
                     AnimCount  = 10.0f;
-                    Handlung   = GEGNER_EINFAHREN;
+                    Handlung   = GEGNER::EINFAHREN;
                     xKanone	   = 0.0f;
                     tempSpeed  = 12.0f;
-                    SoundManager.StopWave (SOUND_DOOR);
-                    SoundManager.PlayWave (100, 128, 15000, SOUND_DOORSTOP);
-                    SoundManager.PlayWave (100, 128, 11000, SOUND_ROCKET);
+                    SoundManager.StopWave (SOUND::DOOR);
+                    SoundManager.PlayWave (100, 128, 15000, SOUND::DOORSTOP);
+                    SoundManager.PlayWave (100, 128, 11000, SOUND::ROCKET);
                 }
 
             } break;
 
             // Mit Geschützen ballern
             //
-            case GEGNER_SPECIAL:
+            case GEGNER::SPECIAL:
             {
                 // Kanonen ausrichten
                 //
@@ -367,7 +367,7 @@ void GegnerFlugBoss::DoKI() {
                     ShotDelay += 0.2f;
                     ShotCount -= 1.0f;
 
-                    SoundManager.PlayWave (100, 128, 8000 + rand()%1000, SOUND_CANON);
+                    SoundManager.PlayWave (100, 128, 8000 + rand()%1000, SOUND::CANON);
 
                     if (int (ShotCount) % 2 == 0)
                     {
@@ -388,7 +388,7 @@ void GegnerFlugBoss::DoKI() {
 
             } break;
 
-            case GEGNER_EXPLODIEREN:
+            case GEGNER::EXPLODIEREN:
             {
                 //Energy = 100.0f;
                 AnimCount -= 1.0f SYNC;
@@ -396,7 +396,7 @@ void GegnerFlugBoss::DoKI() {
                 if (AnimCount < 0.0f)
                 {
                     PartikelSystem.PushPartikel(xPos + rand()%500, yPos + rand()%300, EXPLOSION_MEDIUM2);
-                    SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND_EXPLOSION1);
+                    SoundManager.PlayWave(100, 128, 8000 + rand()%4000, SOUND::EXPLOSION1);
 
                     AnimCount = 1.0f;
                 }
@@ -404,7 +404,7 @@ void GegnerFlugBoss::DoKI() {
 
             // Wait Counter runterzählen und neue Aktion bestimmen
             //
-            case GEGNER_LAUFEN:
+            case GEGNER::LAUFEN:
             {
                 AnimCount -= 1.0f SYNC;
 
@@ -424,7 +424,7 @@ void GegnerFlugBoss::DoKI() {
                         //
                         case 0 :
                         {
-                            Handlung = GEGNER_SCHIESSEN;
+                            Handlung = GEGNER::SCHIESSEN;
 
                             ShotDelay = 1.0f;
                             ShotCount = 50;
@@ -437,9 +437,9 @@ void GegnerFlugBoss::DoKI() {
                         {
                             xKanone    = 0.0f;
                             AnimCount  = 10.0f;
-                            Handlung   = GEGNER_EINFAHREN;
+                            Handlung   = GEGNER::EINFAHREN;
                             SchienePos = 0.0f;
-                            SoundManager.PlayWave (100, 128, 11000, SOUND_ROCKET);
+                            SoundManager.PlayWave (100, 128, 11000, SOUND::ROCKET);
                             tempSpeed = 12.0f;
                         } break;
 
@@ -453,7 +453,7 @@ void GegnerFlugBoss::DoKI() {
 
                 // Boss schiesst mit den zwei kleinen Kanonen
                 //
-                case GEGNER_SCHIESSEN:
+                case GEGNER::SCHIESSEN:
                 {
                     ShotDelay -= 1.0f SYNC;
 
@@ -461,7 +461,7 @@ void GegnerFlugBoss::DoKI() {
                     {
                         ShotDelay += 3.0f;
 
-                        SoundManager.PlayWave (100, 128, 15000, SOUND_LASERSHOT);
+                        SoundManager.PlayWave (100, 128, 15000, SOUND::LASERSHOT);
                         ShotCount -= 1.0f;
 
                         if (int (ShotCount) % 2 == 0)
@@ -481,7 +481,7 @@ void GegnerFlugBoss::DoKI() {
 
                         if (ShotCount <= 0.0f)
                         {
-                            Handlung = GEGNER_LAUFEN;
+                            Handlung = GEGNER::LAUFEN;
                         }
                     }
 
@@ -560,5 +560,5 @@ void GegnerFlugBoss::GegnerExplode() {
                                      */
 
     // Level Musik wieder einfaden lassen (aus Pause Zustand)
-    SoundManager.FadeSong(MUSIC_STAGEMUSIC, 2.0f, 100, true);
+    SoundManager.FadeSong(MUSIC::STAGEMUSIC, 2.0f, 100, true);
 }

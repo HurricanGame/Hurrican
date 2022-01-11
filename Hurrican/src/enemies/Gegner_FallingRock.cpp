@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerFallingRock::GegnerFallingRock(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 10;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -28,7 +28,7 @@ GegnerFallingRock::GegnerFallingRock(int Wert1, int Wert2, bool Light) {
 void GegnerFallingRock::DoKI() {
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_FALLEN:  // Stein fällt runter
+        case GEGNER::FALLEN:  // Stein fällt runter
         {
             // Maximale Geschwindigkeitsbegrenzung
             if (ySpeed > 50.0f)
@@ -43,7 +43,7 @@ void GegnerFallingRock::DoKI() {
             }
         } break;
 
-        case GEGNER_LAUFEN:  // Stein wartet bis der Spieler vorbeikommt
+        case GEGNER::LAUFEN:  // Stein wartet bis der Spieler vorbeikommt
         {
             for (int p = 0; p < NUMPLAYERS; p++)
                 if (Player[p].xpos + Player[p].CollideRect.right > xPos && Player[p].xpos < xPos + 80 &&
@@ -57,9 +57,9 @@ void GegnerFallingRock::DoKI() {
                     }
 
                     // Sound ausgeben
-                    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEFALL);
+                    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::STONEFALL);
 
-                    Handlung = GEGNER_FALLEN;
+                    Handlung = GEGNER::FALLEN;
                     ySpeed = 0.0f;
                     yAcc = 12.0f;
                 }
@@ -84,7 +84,7 @@ void GegnerFallingRock::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos - 12.0f + static_cast<float>(random(80)),
                                     yPos + static_cast<float>(random(40)), ROCKSPLITTERSMALL);
     }
-    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEEXPLODE);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::STONEEXPLODE);  // Sound ausgeben
 
     Player[0].Score += 100;
 }

@@ -27,7 +27,7 @@ GegnerMiniDragon::GegnerMiniDragon(int Wert1, int Wert2, bool Light) {
         ySpeed = -(13.0f + static_cast<float>(random(4)));
         yAcc = 3.0f;
         xSpeed = static_cast<float>(random(10) - 5) / 2.0f;
-        Handlung = GEGNER_FALLEN;
+        Handlung = GEGNER::FALLEN;
 
         AnimCount = 0.0f;
         AnimStart = 5;
@@ -35,7 +35,7 @@ GegnerMiniDragon::GegnerMiniDragon(int Wert1, int Wert2, bool Light) {
         AnimEnde = 15;
         AnimSpeed = 0.5f;
     } else {
-        Handlung = GEGNER_INIT;
+        Handlung = GEGNER::INIT;
         AnimEnde = 3;
         AnimSpeed = 1.0f;
     }
@@ -83,7 +83,7 @@ void GegnerMiniDragon::DoDraw() {
             a = 0;
     }
 
-    if (Handlung == GEGNER_FALLEN) {
+    if (Handlung == GEGNER::FALLEN) {
         a = AnimPhase;
         mirrored = xSpeed > 0.0f;
         BlickRichtung = 0;
@@ -108,7 +108,7 @@ void GegnerMiniDragon::DoKI() {
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             SimpleAnimation();
 
             if (ySpeed > 40.0f)
@@ -121,12 +121,12 @@ void GegnerMiniDragon::DoKI() {
                 ySpeed = 0.0f;
                 xAcc = 0.0f;
                 yAcc = 0.0f;
-                Handlung = GEGNER_INIT;
+                Handlung = GEGNER::INIT;
 
                 AnimEnde = 0;
                 AnimPhase = 0;
 
-                SoundManager.PlayWave(100, 128, 8000 + random(8000), SOUND_EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 8000 + random(8000), SOUND::EXPLOSION1);
 
                 // int i = 0;
                 for (int i = 0; i < 10; i++)
@@ -140,14 +140,14 @@ void GegnerMiniDragon::DoKI() {
         } break;
 
         // Position sichern
-        case GEGNER_INIT: {
+        case GEGNER::INIT: {
             OldX = xPos;
             OldY = yPos;
 
             // Spieler nah genug dran?
             for (int p = 0; p < NUMPLAYERS; p++)
                 if (PlayerAbstandHoriz(&Player[p]) < 300 && PlayerAbstandVert(&Player[p]) < 300) {
-                    Handlung = GEGNER_INIT2;
+                    Handlung = GEGNER::INIT2;
 
                     if (pAim->xpos + 35 < xPos + 30) {
                         xSpeed = 10.0f;
@@ -166,9 +166,9 @@ void GegnerMiniDragon::DoKI() {
                     }
 
                     // DKS - Added function WaveIsPlaying() to SoundManagerClass:
-                    if (!SoundManager.WaveIsPlaying(SOUND_STEAM) && !SoundManager.WaveIsPlaying(SOUND_SPIDERSCREAM)) {
-                        SoundManager.PlayWave(80, 128, 11025, SOUND_STEAM);
-                        SoundManager.PlayWave(80, 128, 18000, SOUND_SPIDERSCREAM);
+                    if (!SoundManager.WaveIsPlaying(SOUND::STEAM) && !SoundManager.WaveIsPlaying(SOUND::SPIDERSCREAM)) {
+                        SoundManager.PlayWave(80, 128, 11025, SOUND::STEAM);
+                        SoundManager.PlayWave(80, 128, 18000, SOUND::SPIDERSCREAM);
                     }
 
                     Destroyable = true;
@@ -180,16 +180,16 @@ void GegnerMiniDragon::DoKI() {
         } break;
 
         // kurz nach oben "stechen"
-        case GEGNER_INIT2: {
+        case GEGNER::INIT2: {
             AnimCount -= 1.0f SYNC;
             if (AnimCount <= 0.0f) {
                 AnimCount = 0.0f;
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
             }
         } break;
 
         // auf der stelle wackeln in Höhe des Hurris
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             if (PlayerAbstand() < 600)
                 ShotDelay -= 0.8f SYNC;
 
@@ -201,7 +201,7 @@ void GegnerMiniDragon::DoKI() {
                 else
                     WinkelUebergabe = 1.0f;
 
-                SoundManager.PlayWave(100, 128, 11000 + random(2000), SOUND_FIREBALL);
+                SoundManager.PlayWave(100, 128, 11000 + random(2000), SOUND::FIREBALL);
 
                 WinkelUebergabe = static_cast<float>(90 * BlickRichtung);
                 Projectiles.PushProjectile(xPos + static_cast<float>(BlickRichtung * 10), yPos, FIREBALL);
@@ -232,7 +232,7 @@ void GegnerMiniDragon::DoKI() {
         } break;
 
         // Glieder explodieren der Reihe nach
-        case GEGNER_EXPLODIEREN: {
+        case GEGNER::EXPLODIEREN: {
             Energy = 100.0f;
             Destroyable = false;
             ShotDelay -= 1.0f SYNC;
@@ -244,7 +244,7 @@ void GegnerMiniDragon::DoKI() {
                 muly = (OldY - yPos) / 6.0f;
                 mulx = (OldX - xPos) / 6.0f;
 
-                SoundManager.PlayWave(100, 128, 8000 + random(8000), SOUND_EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 8000 + random(8000), SOUND::EXPLOSION1);
                 PartikelSystem.PushPartikel(xPos + (6 - Segments) * mulx, yPos + (6 - Segments) * muly,
                                             EXPLOSION_MEDIUM2);
 
@@ -271,8 +271,8 @@ void GegnerMiniDragon::DoKI() {
         } break;
     }
 
-    if (Energy < 100.0f && Handlung != GEGNER_EXPLODIEREN) {
-        Handlung = GEGNER_EXPLODIEREN;
+    if (Energy < 100.0f && Handlung != GEGNER::EXPLODIEREN) {
+        Handlung = GEGNER::EXPLODIEREN;
         Energy = 1.0f;
         ShotDelay = 0.0f;
         xSpeed = 0.0f;
@@ -280,13 +280,13 @@ void GegnerMiniDragon::DoKI() {
         xAcc = 0.0f;
         yAcc = 0.0f;
 
-        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
+        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION3);
         PartikelSystem.PushPartikel(xPos - 26.0f, yPos - 22.0f, EXPLOSION_BIG);
     }
 
     // Spieler berührt ?
     //
-    if (Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER::EXPLODIEREN)
         TestDamagePlayers(4.0f SYNC);
 }
 

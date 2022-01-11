@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerLavaKrabbe::GegnerLavaKrabbe(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_NOTVISIBLE;
+    Handlung = GEGNER::NOTVISIBLE;
     Energy = 90;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -29,7 +29,7 @@ GegnerLavaKrabbe::GegnerLavaKrabbe(int Wert1, int Wert2, bool Light) {
 void GegnerLavaKrabbe::DoDraw() {
     // rotierend runterfallen?
     //
-    if (Handlung == GEGNER_FALLEN) {
+    if (Handlung == GEGNER::FALLEN) {
 
         // Farbe setzen (leichte orangetönung)
         int r = 60 + static_cast<int>(zPos);
@@ -81,20 +81,20 @@ void GegnerLavaKrabbe::DoDraw() {
 // --------------------------------------------------------------------------------------
 
 void GegnerLavaKrabbe::DoKI() {
-    if (Handlung == GEGNER_STEHEN || Handlung == GEGNER_DREHEN || Handlung == GEGNER_DREHEN2) {
+    if (Handlung == GEGNER::STEHEN || Handlung == GEGNER::DREHEN || Handlung == GEGNER::DREHEN2) {
         yPos = g_Fahrstuhl_yPos - 34.0f;
     }
 
     switch (Handlung) {
-        case GEGNER_NOTVISIBLE: {
-            Handlung = GEGNER_FALLEN;
+        case GEGNER::NOTVISIBLE: {
+            Handlung = GEGNER::FALLEN;
             yPos = TileEngine.YOffset + 200.0f;
             yAcc = 1.0f;
             ySpeed = g_Fahrstuhl_Speed - 15.05f;
         } break;
 
         // Krabbe ist gelandet und dreht sich in Richtung Spieler
-        case GEGNER_DREHEN: {
+        case GEGNER::DREHEN: {
             AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
             {
@@ -104,14 +104,14 @@ void GegnerLavaKrabbe::DoKI() {
                 {
                     AnimPhase = 0;
                     AnimCount = 0.0f;
-                    Handlung = GEGNER_DREHEN2;
+                    Handlung = GEGNER::DREHEN2;
                     BlickRichtung *= -1;
                 }
             }
         } break;
 
         // Krabbe ist gelandet und dreht sich in Richtung Spieler
-        case GEGNER_DREHEN2: {
+        case GEGNER::DREHEN2: {
             AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
             {
@@ -121,13 +121,13 @@ void GegnerLavaKrabbe::DoKI() {
                 {
                     AnimPhase = 5;
                     AnimCount = 0.0f;
-                    Handlung = GEGNER_STEHEN;
+                    Handlung = GEGNER::STEHEN;
                 }
             }
         } break;
 
         // Krabbe ist gelandet und Krabbelt auf den Spieler zu
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             xPos += 5.0f * BlickRichtung * -1 SYNC;
 
             AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
@@ -142,14 +142,14 @@ void GegnerLavaKrabbe::DoKI() {
             // Rumdrehen ?
             if ((BlickRichtung == LINKS && xPos + 35 > pAim->xpos + 35) ||
                 (BlickRichtung == RECHTS && xPos + 35 < pAim->xpos + 35)) {
-                Handlung = GEGNER_DREHEN;
+                Handlung = GEGNER::DREHEN;
                 AnimCount = 0.0f;
                 AnimPhase = 4;
             }
         } break;
 
         // Krabbe fliegt vom Hintergrund ein
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             if (ySpeed > g_Fahrstuhl_Speed + 60.0f) {
                 ySpeed = g_Fahrstuhl_Speed + 60.0f;
                 yAcc = 0.0f;
@@ -164,7 +164,7 @@ void GegnerLavaKrabbe::DoKI() {
 
             // Auf Fahrstuhl gelandet ?
             if (yPos >= g_Fahrstuhl_yPos - 34 && ySpeed > 0.0f) {
-                Handlung = GEGNER_DREHEN2;
+                Handlung = GEGNER::DREHEN2;
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
                 AnimPhase = 1;
@@ -184,7 +184,7 @@ void GegnerLavaKrabbe::DoKI() {
     }  // switch
 
     // Testen, ob der Spieler die Krabbe berührt hat
-    if (Handlung == GEGNER_STEHEN || Handlung == GEGNER_DREHEN || Handlung == GEGNER_DREHEN2)
+    if (Handlung == GEGNER::STEHEN || Handlung == GEGNER::DREHEN || Handlung == GEGNER::DREHEN2)
         TestDamagePlayers(8.0f SYNC);
 }
 
@@ -193,7 +193,7 @@ void GegnerLavaKrabbe::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerLavaKrabbe::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 9000 + random(2000), SOUND_EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 9000 + random(2000), SOUND::EXPLOSION3);
 
     PartikelSystem.PushPartikel(xPos + 15.0f, yPos + 10.0f, LAVAKRABBE_KOPF);
 

@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerStelzSack::GegnerStelzSack(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_NOTVISIBLE;
+    Handlung = GEGNER::NOTVISIBLE;
     Energy = 80;
     if (Wert1 == 0)
         Value1 = static_cast<int>(g_Fahrstuhl_Speed + 25.0f);
@@ -41,20 +41,20 @@ GegnerStelzSack::GegnerStelzSack(int Wert1, int Wert2, bool Light) {
 
 void GegnerStelzSack::DoKI() {
     // y-Position auf Höhe des Fahrstuhls setzen
-    if (Handlung != GEGNER_INIT && Handlung != GEGNER_FALLEN)
+    if (Handlung != GEGNER::INIT && Handlung != GEGNER::FALLEN)
         yPos = g_Fahrstuhl_yPos - 147;
 
     switch (Handlung) {
         // Sack wird "aktiviert" (über den Hurri gesetzt damit er von dort runterfallen kann)
-        case GEGNER_NOTVISIBLE: {
-            Handlung = GEGNER_FALLEN;
+        case GEGNER::NOTVISIBLE: {
+            Handlung = GEGNER::FALLEN;
             yPos -= 480.0f + 160.0f;
             if (yPos < 0.0f)
                 yPos = 0.0f;
         } break;
 
         // Sack fällt runter
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             if (ySpeed > 80.0f + g_Fahrstuhl_Speed) {
                 ySpeed = 80.0f + g_Fahrstuhl_Speed;
                 yAcc = 0.0f;
@@ -63,7 +63,7 @@ void GegnerStelzSack::DoKI() {
             if (yPos + 147 > g_Fahrstuhl_yPos) {
                 ySpeed = 0.0f;
                 yPos = g_Fahrstuhl_yPos - 147;
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
                 AnimEnde = 10;
                 AnimStart = 9;
                 AnimPhase = 2;
@@ -71,7 +71,7 @@ void GegnerStelzSack::DoKI() {
             }
         } break;
 
-        case GEGNER_STEHEN:  // Aufkommen und abfedern
+        case GEGNER::STEHEN:  // Aufkommen und abfedern
         {
             AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
@@ -83,12 +83,12 @@ void GegnerStelzSack::DoKI() {
                     AnimPhase = 9;
                     AnimEnde = 0;
                     AnimCount = 0.0f;
-                    Handlung = GEGNER_LAUFEN;
+                    Handlung = GEGNER::LAUFEN;
                 }
             }
         } break;
 
-        case GEGNER_LAUFEN:  // rumstehen und ballern oder drehen
+        case GEGNER::LAUFEN:  // rumstehen und ballern oder drehen
         {
             // Schiessen ?
             AnimCount += 1.0f SYNC;
@@ -96,7 +96,7 @@ void GegnerStelzSack::DoKI() {
             if (AnimCount >= 12.0f) {
                 AnimCount = 0.0f;
 
-                SoundManager.PlayWave(100, 128, 18000 + random(4000), SOUND_LASERSHOT);
+                SoundManager.PlayWave(100, 128, 18000 + random(4000), SOUND::LASERSHOT);
 
                 if (BlickRichtung == LINKS) {
                     PartikelSystem.PushPartikel(xPos - 50.0f, yPos, STELZFLARE);
@@ -110,12 +110,12 @@ void GegnerStelzSack::DoKI() {
             // Rumdrehen ?
             if ((BlickRichtung == LINKS && xPos + 50 < pAim->xpos + 35) ||
                 (BlickRichtung == RECHTS && xPos + 50 > pAim->xpos + 35)) {
-                Handlung = GEGNER_DREHEN;
+                Handlung = GEGNER::DREHEN;
                 AnimCount = 0.0f;
             }
         } break;
 
-        case GEGNER_DREHEN:  // rumdrehen
+        case GEGNER::DREHEN:  // rumdrehen
         {
             AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
@@ -126,13 +126,13 @@ void GegnerStelzSack::DoKI() {
                 {
                     AnimPhase = 13;
                     AnimCount = 0.0f;
-                    Handlung = GEGNER_DREHEN2;
+                    Handlung = GEGNER::DREHEN2;
                     BlickRichtung *= -1;
                 }
             }
         } break;
 
-        case GEGNER_DREHEN2:  // von der Mitte aus fertig rumdrehen
+        case GEGNER::DREHEN2:  // von der Mitte aus fertig rumdrehen
         {
             AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
@@ -143,7 +143,7 @@ void GegnerStelzSack::DoKI() {
                 {
                     AnimPhase = 9;
                     AnimCount = 0.0f;
-                    Handlung = GEGNER_LAUFEN;
+                    Handlung = GEGNER::LAUFEN;
                 }
             }
         } break;
@@ -166,7 +166,7 @@ void GegnerStelzSack::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos - 20.0f, yPos - 10.0f, STELZE);
     PartikelSystem.PushPartikel(xPos + 20.0f, yPos - 20.0f, STELZE);
 
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION4);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION4);
 
     Player[0].Score += 500;  // Punkte geben
 }

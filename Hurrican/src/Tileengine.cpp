@@ -297,12 +297,12 @@ void TileEngineClass::ClearLevel() {
     SoundManager.StopSounds();
 
     // DKS - Added unloading of Punisher.it music (it is now loaded on-demand in Gegner_Helper.cpp)
-    SoundManager.UnloadSong(MUSIC_PUNISHER);
+    SoundManager.UnloadSong(MUSIC::PUNISHER);
     // DKS - Added unloading of flugsack.it music (it is now loaded on-demand in Gegner_Helper.cpp)
-    SoundManager.UnloadSong(MUSIC_FLUGSACK);
+    SoundManager.UnloadSong(MUSIC::FLUGSACK);
     // DKS - Might as well unload stage & boss music too, although LoadSong() will free any old songs for us
-    SoundManager.UnloadSong(MUSIC_STAGEMUSIC);
-    SoundManager.UnloadSong(MUSIC_BOSS);
+    SoundManager.UnloadSong(MUSIC::STAGEMUSIC);
+    SoundManager.UnloadSong(MUSIC::BOSS);
 }
 
 // --------------------------------------------------------------------------------------
@@ -3460,7 +3460,7 @@ void TileEngineClass::ExplodeWall(int x, int y) {
     PartikelSystem.PushPartikel(static_cast<float>(x * TILESIZE_X - TILESIZE_X),
                                 static_cast<float>(y * TILESIZE_Y - TILESIZE_Y), SMOKEBIG);
 
-    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::EXPLOSION1);
 }
 
 // --------------------------------------------------------------------------------------

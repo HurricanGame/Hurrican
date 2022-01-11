@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerSkull::GegnerSkull(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_INIT;
+    Handlung = GEGNER::INIT;
     Value1 = Wert1;
     Value2 = Wert2;
     Energy = 100000;
@@ -30,7 +30,7 @@ GegnerSkull::GegnerSkull(int Wert1, int Wert2, bool Light) {
     if (Value2 == 99)
         AnimCount = 20.0f;
 
-    Handlung = GEGNER_SPECIAL;
+    Handlung = GEGNER::SPECIAL;
 
     // Position der Endboss Wand rausfinden
     GegnerClass *pTemp = Gegner.pStart;
@@ -81,7 +81,7 @@ void GegnerSkull::DoKI() {
     //
     switch (Handlung) {
         // In die Mitte fliegen und explodieren
-        case GEGNER_SPECIAL3: {
+        case GEGNER::SPECIAL3: {
             Disappear -= 1.0f SYNC;
 
             float endwert = 10.0f - (Disappear / 20.0f * 10.0f);
@@ -97,8 +97,8 @@ void GegnerSkull::DoKI() {
             else {
                 AnimCount = 0.8f;
 
-                SoundManager.StopWave(SOUND_EXPLOSION2);
-                SoundManager.PlayWave(75, 128, 8000 + static_cast<int>(endwert * 800.0f), SOUND_EXPLOSION2);
+                SoundManager.StopWave(SOUND::EXPLOSION2);
+                SoundManager.PlayWave(75, 128, 8000 + static_cast<int>(endwert * 800.0f), SOUND::EXPLOSION2);
 
                 PartikelSystem.PushPartikel(xPos + static_cast<float>(random(30) - 30),
                                             yPos + static_cast<float>(random(30) - 30), EXPLOSION_MEDIUM2);
@@ -123,12 +123,12 @@ void GegnerSkull::DoKI() {
 
             if (Disappear < 0.0f) {
                 // explodieren lassen
-                SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
-                SoundManager.PlayWave(100, 128, 9000, SOUND_EXPLOSION3);
-                SoundManager.PlayWave(100, 128, 7000, SOUND_EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION2);
+                SoundManager.PlayWave(100, 128, 9000, SOUND::EXPLOSION3);
+                SoundManager.PlayWave(100, 128, 7000, SOUND::EXPLOSION1);
                 ShakeScreen(10.0f);
                 Energy = 0.0f;
-                SoundManager.PlayWave(100, 128, 7000, SOUND_MUTANT);
+                SoundManager.PlayWave(100, 128, 7000, SOUND::MUTANT);
 
                 PartikelSystem.PushPartikel(xPos + 20.0f, yPos + 20.0f, SHOCKEXPLOSION);
                 PartikelSystem.PushPartikel(xPos + 20.0f, yPos + 20.0f, SHOCKEXPLOSION);
@@ -167,7 +167,7 @@ void GegnerSkull::DoKI() {
         // Der Schädel fliegt um den Spieler herum. Darf nicht aus dem Screen gedrängt werden
         // So lange, bis der Counter abgelaufen ist
         // dann setzt er sich wieder auf die Endboss Maschine
-        case GEGNER_SPECIAL: {
+        case GEGNER::SPECIAL: {
             if (AnimCount > 0.0f)
                 AnimCount -= 1.0f SYNC;
             else {
@@ -195,7 +195,7 @@ void GegnerSkull::DoKI() {
         } break;
 
         // Auf die Maschine zufliegen?
-        case GEGNER_SPECIAL2: {
+        case GEGNER::SPECIAL2: {
             xAcc = 0.0f;
             yAcc = 0.0f;
 
@@ -241,11 +241,11 @@ void GegnerSkull::DoKI() {
                 Energy = 0.0f;
                 pMachine->Value1 = 1;
 
-                SoundManager.PlayWave(50, 128, 15000, SOUND_KLONG);
+                SoundManager.PlayWave(50, 128, 15000, SOUND::KLONG);
 
                 // DKS - Added function SongIsPlaying() to SoundManagerClass:
-                if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
-                    SoundManager.PlaySong(MUSIC_BOSS, false);
+                if (!SoundManager.SongIsPlaying(MUSIC::BOSS))
+                    SoundManager.PlaySong(MUSIC::BOSS, false);
             }
         } break;
 
@@ -261,11 +261,11 @@ void GegnerSkull::DoKI() {
         if (ShotDelay < 0.0f) {
             ShotDelay = 15.0f;
             Projectiles.PushProjectile(xPos - 10.0f, yPos, SUCHSCHUSS2, pAim);
-            SoundManager.PlayWave(50, 128, 14000 + random(2000), SOUND_GOLEMSHOT);
+            SoundManager.PlayWave(50, 128, 14000 + random(2000), SOUND::GOLEMSHOT);
         }
     }
 
-    if (Handlung != GEGNER_SPECIAL3)
+    if (Handlung != GEGNER::SPECIAL3)
         TestDamagePlayers(1.0f SYNC);
 }
 

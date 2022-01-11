@@ -36,140 +36,148 @@ constexpr int MAX_SONGS = 15;    // Anzahl verschiedener Musikstücke
 
 // Definitionen der einzelnen Soundeffekte
 
+namespace SOUND {
+
 enum {
-  SOUND_SPREADSHOT = 0,     // Spreadshot
-  SOUND_LASERSHOT = 1,      // Lasershot
-  SOUND_BOUNCESHOT = 2,     // Bounceshot
-  SOUND_EXPLOSION1 = 3,     // Explosion 1 leicht
-  SOUND_EXPLOSION2 = 4,     // Explosion 2 fett
-  SOUND_EXPLOSION3 = 5,     // Explosion 3 mittel
-  SOUND_EXPLOSION4 = 6,     // Explosion 4 mittel
-  SOUND_WALKERGIGGLE = 7,   // Walker wird zerstampft
-  SOUND_CANON = 8,          // Kanonenschuss
-  SOUND_CLICK = 9,          // Klicken
-  SOUND_COLLECT = 10,       // Extra eingesammelt
-  SOUND_SPREADHIT = 11,     // Spread Shot Hit
-  SOUND_POWERLINE = 12,     // Powerline Sound
-  SOUND_LANDEN = 13,        // Hurri landet nach Sprung
-  SOUND_WATERIN = 14,       // Ins Wasser springen
-  SOUND_WATEROUT = 15,      // Aus dem Wasser springen
-  SOUND_FEUERFALLE = 16,    // Feuerfalle geht an
-  SOUND_DIVE = 17,          // Tauchgeräusch
-  SOUND_ABZUG = 18,         // Spieler verliert Energie
-  SOUND_ABZUG_P2 = 19,      // Spieler verliert Energie
-  SOUND_FUNKE = 20,         // Bruzel Sound für die Funken Partikel
-  SOUND_FUNKE2 = 21,        // Bruzel Sound für die Funken Partikel
-  SOUND_FUNKE3 = 22,        // Bruzel Sound für die Funken Partikel
-  SOUND_FUNKE4 = 23,        // Bruzel Sound für die Funken Partikel
-  SOUND_GRANATE = 24,       // Granate schiessen
-  SOUND_STONEFALL = 25,     // Stein fällt runter
-  SOUND_STONEEXPLODE = 26,  // Stein geht kaputt =)
-  SOUND_ROCKET = 27,        // Rakete wird abgeschossen
-  SOUND_PRESSE = 28,        // Stahlpresse geht los
-  SOUND_AMMO = 29,          // Granate zb gesammelt
-  SOUND_KOTZEN = 30,        // Bratklops kotzt
-  SOUND_MADE = 31,          // Made Explodiert
-  SOUND_DRONE = 32,         // Schuss der Drone
-  SOUND_DROP = 33,          // Wassertropfen ins Wasser getropft =)
-  SOUND_THUNDER = 34,       // Donner (zum Blitz)
-  SOUND_UPGRADE = 35,       // Waffen Upgrade
-  SOUND_COLUMN = 36,        // Säule fällt um
-  SOUND_SWITCH = 37,        // Schalter wird umgelegt
-  SOUND_DOOR = 38,          // Tür Schleuse fährt hoch
-  SOUND_DOORSTOP = 39,      // Tür ist hochgefahren
-  SOUND_SCHLEIM = 40,       // Tür ist hochgefahren
-  SOUND_MESSAGE = 41,       // MessageBox
-  SOUND_MUSHROOMJUMP = 42,  // Auf dem Pilzkopf abspringen
-  SOUND_STEAM = 43,         // Dampfsound
-  SOUND_STEAM2 = 44,        // Dampfsound2
-  SOUND_HIT = 45,           // Gegner getroffen, Metall
-  SOUND_HIT2 = 46,          // Gegner getroffen, Organisch
-  SOUND_LILA = 47,          // Lila Laser
-  SOUND_FIREBALL = 48,      // Was wohl?
-  SOUND_TAKEOFF = 49,       // "irgendwas" startet
-  SOUND_LAUGH = 50,         // Fiese Lache
-  SOUND_STANDUP = 51,       // Skeletor steht auf
-  SOUND_GATLING = 52,       // Skeletor Gun
-  SOUND_GLASSBREAK = 53,    // Mutantenröhre explodiert
-  SOUND_MUTANT = 54,        // Mutant springt / stirbt
-  SOUND_HEART1 = 55,        // Heartbeat
-  SOUND_HEART2 = 56,        // Heartbeat2 =)
-  SOUND_SECRET = 57,
-  SOUND_FLAMETHROWER = 58,
-  SOUND_FLAMETHROWER2 = 59,
+  SPREADSHOT = 0,     // Spreadshot
+  LASERSHOT = 1,      // Lasershot
+  BOUNCESHOT = 2,     // Bounceshot
+  EXPLOSION1 = 3,     // Explosion 1 leicht
+  EXPLOSION2 = 4,     // Explosion 2 fett
+  EXPLOSION3 = 5,     // Explosion 3 mittel
+  EXPLOSION4 = 6,     // Explosion 4 mittel
+  WALKERGIGGLE = 7,   // Walker wird zerstampft
+  CANON = 8,          // Kanonenschuss
+  CLICK = 9,          // Klicken
+  COLLECT = 10,       // Extra eingesammelt
+  SPREADHIT = 11,     // Spread Shot Hit
+  POWERLINE = 12,     // Powerline Sound
+  LANDEN = 13,        // Hurri landet nach Sprung
+  WATERIN = 14,       // Ins Wasser springen
+  WATEROUT = 15,      // Aus dem Wasser springen
+  FEUERFALLE = 16,    // Feuerfalle geht an
+  DIVE = 17,          // Tauchgeräusch
+  ABZUG = 18,         // Spieler verliert Energie
+  ABZUG_P2 = 19,      // Spieler verliert Energie
+  FUNKE = 20,         // Bruzel Sound für die Funken Partikel
+  FUNKE2 = 21,        // Bruzel Sound für die Funken Partikel
+  FUNKE3 = 22,        // Bruzel Sound für die Funken Partikel
+  FUNKE4 = 23,        // Bruzel Sound für die Funken Partikel
+  GRANATE = 24,       // Granate schiessen
+  STONEFALL = 25,     // Stein fällt runter
+  STONEEXPLODE = 26,  // Stein geht kaputt =)
+  ROCKET = 27,        // Rakete wird abgeschossen
+  PRESSE = 28,        // Stahlpresse geht los
+  AMMO = 29,          // Granate zb gesammelt
+  KOTZEN = 30,        // Bratklops kotzt
+  MADE = 31,          // Made Explodiert
+  DRONE = 32,         // Schuss der Drone
+  DROP = 33,          // Wassertropfen ins Wasser getropft =)
+  THUNDER = 34,       // Donner (zum Blitz)
+  UPGRADE = 35,       // Waffen Upgrade
+  COLUMN = 36,        // Säule fällt um
+  SWITCH = 37,        // Schalter wird umgelegt
+  DOOR = 38,          // Tür Schleuse fährt hoch
+  DOORSTOP = 39,      // Tür ist hochgefahren
+  SCHLEIM = 40,       // Tür ist hochgefahren
+  MESSAGE = 41,       // MessageBox
+  MUSHROOMJUMP = 42,  // Auf dem Pilzkopf abspringen
+  STEAM = 43,         // Dampfsound
+  STEAM2 = 44,        // Dampfsound2
+  HIT = 45,           // Gegner getroffen, Metall
+  HIT2 = 46,          // Gegner getroffen, Organisch
+  LILA = 47,          // Lila Laser
+  FIREBALL = 48,      // Was wohl?
+  TAKEOFF = 49,       // "irgendwas" startet
+  LAUGH = 50,         // Fiese Lache
+  STANDUP = 51,       // Skeletor steht auf
+  GATLING = 52,       // Skeletor Gun
+  GLASSBREAK = 53,    // Mutantenröhre explodiert
+  MUTANT = 54,        // Mutant springt / stirbt
+  HEART1 = 55,        // Heartbeat
+  HEART2 = 56,        // Heartbeat2 =)
+  SECRET = 57,
+  FLAMETHROWER = 58,
+  FLAMETHROWER2 = 59,
 
   // Voices bei eingesammelten Extras
-  SOUND_VOICE_EXTRALIFE = 60,
-  SOUND_VOICE_SPREAD = 61,
-  SOUND_VOICE_LASER = 62,
-  SOUND_VOICE_BOUNCE = 63,
-  SOUND_VOICE_LIGHTNING = 64,
-  SOUND_VOICE_SHIELD = 65,
-  SOUND_VOICE_POWERUP = 66,
-  SOUND_VOICE_WHEELPOWER = 67,
-  SOUND_VOICE_POWERLINE = 68,
-  SOUND_VOICE_GRENADE = 69,
-  SOUND_VOICE_SMARTBOMB = 70,
-  SOUND_VOICE_RAPIDFIRE = 71,
-  SOUND_VOICE_SUPERSHOT = 72,
+  VOICE_EXTRALIFE = 60,
+  VOICE_SPREAD = 61,
+  VOICE_LASER = 62,
+  VOICE_BOUNCE = 63,
+  VOICE_LIGHTNING = 64,
+  VOICE_SHIELD = 65,
+  VOICE_POWERUP = 66,
+  VOICE_WHEELPOWER = 67,
+  VOICE_POWERLINE = 68,
+  VOICE_GRENADE = 69,
+  VOICE_SMARTBOMB = 70,
+  VOICE_RAPIDFIRE = 71,
+  VOICE_SUPERSHOT = 72,
 
   // Endgegner Sounds
-  SOUND_PHARAORAMM = 73,     // Pharao Kopf rammt die Wand
-  SOUND_PHARAODIE = 74,      // Pharao Kopf stirb
-  SOUND_SPIDERSCREAM = 75,   // Schrei der Spinne
-  SOUND_SPIDERWALK = 76,     // Spinne Laufgeräusch
-  SOUND_SPIDERLASER = 77,    // Spinne Riesen Laser auflade Geräusch
-  SOUND_SPIDERGRENADE = 78,  // Riesenspinne schiesst Granate
-  SOUND_BLITZHIT = 79,       // Evil Blitz trifft
-  SOUND_BLITZHIT2 = 80,      // Evil Blitz trifft
-  SOUND_BRATLASER = 81,      // Bratklops Laser
-  SOUND_KLONG = 82,          // Metall Schädel beisst zu
-  SOUND_GOLEMLOAD = 83,      // Ladesound vom Golemklops
-  SOUND_GOLEMSHOT = 84,      // Schuss vom Golemklops
+  PHARAORAMM = 73,     // Pharao Kopf rammt die Wand
+  PHARAODIE = 74,      // Pharao Kopf stirb
+  SPIDERSCREAM = 75,   // Schrei der Spinne
+  SPIDERWALK = 76,     // Spinne Laufgeräusch
+  SPIDERLASER = 77,    // Spinne Riesen Laser auflade Geräusch
+  SPIDERGRENADE = 78,  // Riesenspinne schiesst Granate
+  BLITZHIT = 79,       // Evil Blitz trifft
+  BLITZHIT2 = 80,      // Evil Blitz trifft
+  BRATLASER = 81,      // Bratklops Laser
+  KLONG = 82,          // Metall Schädel beisst zu
+  GOLEMLOAD = 83,      // Ladesound vom Golemklops
+  GOLEMSHOT = 84,      // Schuss vom Golemklops
 
-  SOUND_MARIO = 85,  // Mario Röhre im Tutorial Level
+  MARIO = 85,  // Mario Röhre im Tutorial Level
 
   // geloopte Sounds
   // der Blitzsound muss für beide Spieler geladen werden
-  SOUND_BLITZSTART = 100,     // Blitzwaffe aufladen
-  SOUND_BLITZSTART_P2 = 101,  // Blitzwaffe aufladen
-  SOUND_BLITZENDE = 102,      // Blitzwaffe losgelassen
-  SOUND_BLITZENDE_P2 = 103,   // Blitzwaffe losgelassen
-  SOUND_BLITZ = 104,          // Blitzwaffe, wird geloopt
-  SOUND_BLITZ_P2 = 105,       // Blitzwaffe, wird geloopt
-  SOUND_BEAMLOAD = 106,
-  SOUND_BEAMLOAD_P2 = 107,
-  SOUND_BEAMLOAD2 = 108,
-  SOUND_BEAMLOAD2_P2 = 109,
-  SOUND_CHAIN = 110,
+  BLITZSTART = 100,     // Blitzwaffe aufladen
+  BLITZSTART_P2 = 101,  // Blitzwaffe aufladen
+  BLITZENDE = 102,      // Blitzwaffe losgelassen
+  BLITZENDE_P2 = 103,   // Blitzwaffe losgelassen
+  BLITZ = 104,          // Blitzwaffe, wird geloopt
+  BLITZ_P2 = 105,       // Blitzwaffe, wird geloopt
+  BEAMLOAD = 106,
+  BEAMLOAD_P2 = 107,
+  BEAMLOAD2 = 108,
+  BEAMLOAD2_P2 = 109,
+  CHAIN = 110,
 
   // Sounds für Sound-Trigger
   //
-  SOUND_TRIGGER_START = 120,
+  TRIGGER_START = 120,
 
-  SOUND_WASSERFALL = 120,  // Sound Trigger 0
-  SOUND_DAMPF = 121,       // Sound Trigger 1
-  SOUND_WIND = 122,        // Sound Trigger 2
+  WASSERFALL = 120,  // Sound Trigger 0
+  DAMPF = 121,       // Sound Trigger 1
+  WIND = 122,        // Sound Trigger 2
 };
+
+} // namespace
+
+namespace MUSIC {
 
 // Definitionen der einzelnen Musik-Stücke
 enum {
-  MUSIC_STAGEMUSIC = 0,  // Level-Musik
-  MUSIC_INTRO = 1,       // Intro-Mucke
-  MUSIC_CREDITS = 2,     // Credits-Mucke
-  MUSIC_MENU = 3,        // Menu-Mucke
-  MUSIC_VORSPANN = 4,    // Vorspann Musik
-  MUSIC_VORSPANN2 = 5,   // Vorspann Musik 2
-  MUSIC_STAGECLEAR = 6,  // Stage Clear Mucke
-  MUSIC_GAMEOVER = 7,    // Game  Over  Mucke
-  MUSIC_LOADING = 8,     // Loading Mucke
-  MUSIC_HIGHSCORE = 9,   // Highscore Mucke
-  MUSIC_BOSS = 10,       // Boss Musik (in jedem Level anders)
-  MUSIC_CRACKTRO = 11,   // Crack Intro Musik
-  MUSIC_PUNISHER = 12,   // Musik für den Punisher
-  MUSIC_OUTTRO = 13,     // Musik für Abspann
-  MUSIC_FLUGSACK = 14    // Musik für Flugsack Modus
+  STAGEMUSIC = 0,  // Level-Musik
+  INTRO = 1,       // Intro-Mucke
+  CREDITS = 2,     // Credits-Mucke
+  MENU = 3,        // Menu-Mucke
+  VORSPANN = 4,    // Vorspann Musik
+  VORSPANN2 = 5,   // Vorspann Musik 2
+  STAGECLEAR = 6,  // Stage Clear Mucke
+  GAMEOVER = 7,    // Game  Over  Mucke
+  LOADING = 8,     // Loading Mucke
+  HIGHSCORE = 9,   // Highscore Mucke
+  BOSS = 10,       // Boss Musik (in jedem Level anders)
+  CRACKTRO = 11,   // Crack Intro Musik
+  PUNISHER = 12,   // Musik für den Punisher
+  OUTTRO = 13,     // Musik für Abspann
+  FLUGSACK = 14    // Musik für Flugsack Modus
 };
+
+} // namespace
 
 // Fadezustände für in Wave
 enum class FadeModeEnum {

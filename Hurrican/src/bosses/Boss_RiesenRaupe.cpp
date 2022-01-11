@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerRiesenRaupe::GegnerRiesenRaupe(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 800;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -63,7 +63,7 @@ void GegnerRiesenRaupe::DoKI() {
                 Projectiles.PushProjectile(xPos + 30.0f, yPos - 2.0f, PFLANZESHOT, pAim);
                 Projectiles.PushProjectile(xPos + 120.0f, yPos - 2.0f, PFLANZESHOT, pAim);
 
-                SoundManager.PlayWave(100, 128, 11025, SOUND_ROCKET);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::ROCKET);
             }
         }
     }
@@ -122,7 +122,7 @@ void GegnerRiesenRaupe::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(180)),
                                     yPos + static_cast<float>(random(50)), ROCKETSMOKE);
 
-    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_EXPLOSION3);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::EXPLOSION3);  // Sound ausgeben
 
     Player[0].Score += 250;
 }

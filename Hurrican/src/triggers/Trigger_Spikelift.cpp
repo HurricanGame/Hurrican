@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerSpikelift::GegnerSpikelift(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_INIT;
+    Handlung = GEGNER::INIT;
     BlickRichtung = RECHTS;
     Energy = 100;
     Value1 = Wert1;
@@ -52,39 +52,39 @@ void GegnerSpikelift::DoKI() {
     switch (Handlung)
     {
     // init
-    case GEGNER_INIT:
+    case GEGNER::INIT:
     {
         // ypos merken
         oldypos = yPos;
 
         // Auf hurri warten?
         if (Value1 == 0)
-            Handlung = GEGNER_STEHEN;
+            Handlung = GEGNER::STEHEN;
 
         // oder "runterdrückbar sein"
         else
         {
             yAcc = -1.0f;
-            Handlung = GEGNER_LAUFEN;
+            Handlung = GEGNER::LAUFEN;
         }
     }
     break;
 
     // warten, bis der hurri oben drüber ist
-    case GEGNER_STEHEN:
+    case GEGNER::STEHEN:
     {
         if (PlayerAbstandHoriz() < 200 &&
                 PlayerAbstandVert()  > 100 &&
                 PlayerAbstandVert()  < 300 &&
                 pPlayer->ypos < yPos)
         {
-            Handlung = GEGNER_LAUFEN;
+            Handlung = GEGNER::LAUFEN;
             yAcc = -1.0f;
         }
     }
     break;
 
-    case GEGNER_LAUFEN:
+    case GEGNER::LAUFEN:
     {
         // nach oben fahren
         if (ySpeed < - 7.0f)

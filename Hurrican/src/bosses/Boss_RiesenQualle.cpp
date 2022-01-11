@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerRiesenQualle::GegnerRiesenQualle(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     AnimStart = 0;
     AnimEnde = 6;
     AnimSpeed = 2.0f;
@@ -44,7 +44,7 @@ void GegnerRiesenQualle::DoKI() {
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_SPRINGEN:  // Nach oben abgestossen zum Schwimmen
+        case GEGNER::SPRINGEN:  // Nach oben abgestossen zum Schwimmen
         {
             // Geschwindigkeits-Begrenzung
             if (ySpeed > 0.0f)
@@ -59,20 +59,20 @@ void GegnerRiesenQualle::DoKI() {
                 AnimPhase = 0;
                 AnimEnde = 0;
                 AnimStart = 0;
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
             }
         } break;
 
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             if (PlayerAbstand() < 200)  // spieler verfolgen ?
             {
                 AnimPhase = 0;
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 yAcc = 0.0f;
             }
         } break;
 
-        case GEGNER_LAUFEN:  // Qualle sinkt ab
+        case GEGNER::LAUFEN:  // Qualle sinkt ab
         {
             // Nach oben abstossen
             if (yPos - 20.0f > pAim->ypos || blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_GEGNERWAND) {
@@ -90,7 +90,7 @@ void GegnerRiesenQualle::DoKI() {
                 AnimCount = 0.0f;
                 ySpeed = -8.0f;
                 yAcc = 0.4f;
-                Handlung = GEGNER_SPRINGEN;
+                Handlung = GEGNER::SPRINGEN;
             }
         } break;
 
@@ -122,7 +122,7 @@ void GegnerRiesenQualle::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(256)),
                                     yPos + 10.0f + static_cast<float>(random(210)), PIRANHABLUT);
 
-    // SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
+    // SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND::EXPLOSION1);	// Sound ausgeben
 
     Player[0].Score += 4000;
 }

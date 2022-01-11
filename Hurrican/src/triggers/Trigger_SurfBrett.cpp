@@ -14,7 +14,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerSurfBrett::GegnerSurfBrett(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     BlickRichtung = RECHTS;
     Energy = 100;
     Value1 = Wert1;
@@ -41,15 +41,15 @@ void GegnerSurfBrett::DoKI() {
     // LevelMusik beeinflussen ?
     // Denn in stage xx geht die Musik erst los, wenn der Spieler auf das SurfBrett springt !
     //
-    if (MUSIC_IsPlaying(SoundManager.its_Songs[MUSIC_STAGEMUSIC]->SongData))
-        SoundManager.StopSong(MUSIC_STAGEMUSIC, true);
+    if (MUSIC::IsPlaying(SoundManager.its_Songs[MUSIC::STAGEMUSIC]->SongData))
+        SoundManager.StopSong(MUSIC::STAGEMUSIC, true);
 
     // Draufgesprungen, dann gehts los
     //
     if (pPlayer->AufPlattform == this &&
-        Handlung == GEGNER_STEHEN)
+        Handlung == GEGNER::STEHEN)
     {
-        Handlung = GEGNER_LAUFEN;
+        Handlung = GEGNER::LAUFEN;
         pPlayer->Handlung = SURFEN;
         TileEngine.ScrollLevel (xPos - 150, yPos - 350,  ZUSTAND_SCROLLTOLOCK);
 
@@ -57,7 +57,7 @@ void GegnerSurfBrett::DoKI() {
         //
         yPos = float (Value1);
         pPlayer->JumpedOnSurfboard = true;
-        SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
+        SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION1);
         PartikelSystem.PushPartikel (xPos - 20, yPos - 20, EXPLOSION_MEDIUM2);
     }
 
@@ -66,7 +66,7 @@ void GegnerSurfBrett::DoKI() {
     {
         // Auf den Hurri warten
         //
-        case GEGNER_STEHEN:
+        case GEGNER::STEHEN:
         {
             // schaukeln lassen
             //
@@ -77,7 +77,7 @@ void GegnerSurfBrett::DoKI() {
             if (ySpeed < -1.0f)	ySpeed = -1.0f;
         } break;
 
-        case GEGNER_SPRINGEN:
+        case GEGNER::SPRINGEN:
         {
             // xPos an und yPos von Spielerpos angleichen
             //
@@ -96,12 +96,12 @@ void GegnerSurfBrett::DoKI() {
             {
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 pPlayer->Handlung = SURFEN;
             }
         } break;
 
-        case GEGNER_LAUFEN:						// Normal fliegen und dabei ab und zu schiessen
+        case GEGNER::LAUFEN:						// Normal fliegen und dabei ab und zu schiessen
         {
             // schaukeln lassen
             //
@@ -140,7 +140,7 @@ void GegnerSurfBrett::DoKI() {
                 Value2 = int (pPlayer->ypos);
                 ySpeed = -30;
                 yAcc   = 0.0f;
-                Handlung = GEGNER_SPRINGEN;
+                Handlung = GEGNER::SPRINGEN;
             }
         } break;
     }
@@ -160,7 +160,7 @@ void GegnerSurfBrett::DoKI() {
     {
         ySpeed = -30.0f;
         yAcc   = 8.0f;
-        Handlung = GEGNER_SPRINGEN;
+        Handlung = GEGNER::SPRINGEN;
     }
     */
 }

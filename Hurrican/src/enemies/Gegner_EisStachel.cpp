@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerEisStachel::GegnerEisStachel(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 100;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -35,7 +35,7 @@ void GegnerEisStachel::DoKI() {
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_LAUFEN:  // Umherdrehen
+        case GEGNER::LAUFEN:  // Umherdrehen
         {
             // Bei der Beschleunigungsgrenze umdrehen
             if (xSpeed > Value1 && xAcc > 0.0f)

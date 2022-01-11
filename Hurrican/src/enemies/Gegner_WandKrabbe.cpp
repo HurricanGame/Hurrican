@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerWandKrabbe::GegnerWandKrabbe(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 100;
     ChangeLight = Light;
     Destroyable = true;
@@ -36,7 +36,7 @@ void GegnerWandKrabbe::DoDraw() {
     bool mirrored = (BlickRichtung != RECHTS);
 
     // gerade im Flug? Dann rotiert rendern
-    if (Handlung == GEGNER_DREHEN || Handlung == GEGNER_FALLEN || Handlung == GEGNER_EXPLODIEREN)
+    if (Handlung == GEGNER::DREHEN || Handlung == GEGNER::FALLEN || Handlung == GEGNER::EXPLODIEREN)
         pGegnerGrafix[GegnerArt]->RenderSpriteRotated(xPos - TileEngine.XOffset,
                                                       yPos - TileEngine.YOffset, rot, AnimPhase,
                                                       0xFFFFFFFF);
@@ -54,7 +54,7 @@ void GegnerWandKrabbe::DoDraw() {
 // --------------------------------------------------------------------------------------
 
 void GegnerWandKrabbe::DoKI() {
-    if (Handlung != GEGNER_DREHEN && Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER::DREHEN && Handlung != GEGNER::EXPLODIEREN)
         SimpleAnimation();
 
     blockl = TileEngine.BlockLinks(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
@@ -67,13 +67,13 @@ void GegnerWandKrabbe::DoKI() {
 
     // an Wänden oben und unten umdrehen
     if (((blocko & BLOCKWERT_WAND || blocko & BLOCKWERT_GEGNERWAND) && ySpeed < 0.0f) ||
-        (((blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_GEGNERWAND) && ySpeed > 0.0f) && Handlung == GEGNER_LAUFEN))
+        (((blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_GEGNERWAND) && ySpeed > 0.0f) && Handlung == GEGNER::LAUFEN))
         ySpeed *= -1.0f;
 
     switch (Handlung) {
         // an der Wand entlang laufen
         //
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             // Gegner in Nähe des Spielers? Dann springen
             //
             if (abs(static_cast<int>(pAim->ypos - yPos)) < 100.0f) {
@@ -84,13 +84,13 @@ void GegnerWandKrabbe::DoKI() {
                 ySpeed = absy / 10.0f;
                 yAcc = 3.25f;
 
-                Handlung = GEGNER_DREHEN;
+                Handlung = GEGNER::DREHEN;
             }
         } break;
 
         // auf den Spieler zufliegen und sich dabei drehen
         //
-        case GEGNER_DREHEN: {
+        case GEGNER::DREHEN: {
             rot += static_cast<float>(random(50) + 20) SYNC;
 
             clampAngle(rot);
@@ -102,7 +102,7 @@ void GegnerWandKrabbe::DoKI() {
 
         // nach "Abschütteln" runterfallen
         //
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             rot += static_cast<float>(random(50) + 20) SYNC;
 
             clampAngle(rot);
@@ -112,7 +112,7 @@ void GegnerWandKrabbe::DoKI() {
 
         } break;
 
-        case GEGNER_EXPLODIEREN: {
+        case GEGNER::EXPLODIEREN: {
             rot += static_cast<float>(random(50) + 20) SYNC;
 
             clampAngle(rot);
@@ -146,7 +146,7 @@ void GegnerWandKrabbe::DoKI() {
 
         } break;
 
-        case GEGNER_SPECIAL: {
+        case GEGNER::SPECIAL: {
             // Gegner hängt am Spieler
             //
             xPos = pAim->xpos + Value1;
@@ -176,7 +176,7 @@ void GegnerWandKrabbe::DoKI() {
                 if (Value2 > 80) {
                     ySpeed = 5.0f;
                     yAcc = 3.0f;
-                    Handlung = GEGNER_FALLEN;
+                    Handlung = GEGNER::FALLEN;
                 }
             }
 
@@ -185,7 +185,7 @@ void GegnerWandKrabbe::DoKI() {
             if (pAim->Energy <= 0.0f) {
                 ySpeed = 5.0f;
                 yAcc = 3.0f;
-                Handlung = GEGNER_FALLEN;
+                Handlung = GEGNER::FALLEN;
             }
 
         } break;
@@ -196,7 +196,7 @@ void GegnerWandKrabbe::DoKI() {
 
     // Testen, ob der Spieler die Krabbe berührt hat
     // Wenn ja, dann bleibt sie an ihm hängen
-    if (Handlung == GEGNER_DREHEN &&
+    if (Handlung == GEGNER::DREHEN &&
         SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], pAim->xpos, pAim->ypos, pAim->CollideRect) == true) {
         rot = 0.0f;
         xSpeed = 0.0f;
@@ -210,7 +210,7 @@ void GegnerWandKrabbe::DoKI() {
         //
         pAim->DamagePlayer(10.0f);
 
-        Handlung = GEGNER_SPECIAL;
+        Handlung = GEGNER::SPECIAL;
 
         // Position am Spieler merken
         //
@@ -223,7 +223,7 @@ void GegnerWandKrabbe::DoKI() {
 
     // Keine Energie mehr, aber noch nicht am "abschmieren"? Dann abschmieren lassen ;)
     //
-    if (Handlung != GEGNER_EXPLODIEREN && (Energy <= 0.0f || (blocku & BLOCKWERT_WAND && Handlung != GEGNER_LAUFEN))) {
+    if (Handlung != GEGNER::EXPLODIEREN && (Energy <= 0.0f || (blocku & BLOCKWERT_WAND && Handlung != GEGNER::LAUFEN))) {
         Energy = 100.0f;
 
         AnimEnde = 0;
@@ -238,9 +238,9 @@ void GegnerWandKrabbe::DoKI() {
         else
             xSpeed = -static_cast<float>(random(8) + 4);
 
-        Handlung = GEGNER_EXPLODIEREN;
+        Handlung = GEGNER::EXPLODIEREN;
 
-        SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
+        SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION1);
         PartikelSystem.PushPartikel(xPos - 20, yPos, EXPLOSION_MEDIUM2);
     }
 
@@ -255,7 +255,7 @@ void GegnerWandKrabbe::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerWandKrabbe::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION1);
 
     for (int i = 0; i < 6; i++)
         PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(10)),

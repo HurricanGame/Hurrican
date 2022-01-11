@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerNeuFisch::GegnerNeuFisch(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     HitSound = 1;
     Energy = 60;
     AnimEnde = 9;
@@ -32,7 +32,7 @@ void GegnerNeuFisch::DoKI() {
     // Animieren
     //
     AnimCount += SpeedFaktor;  // Animationscounter weiterzählen
-    if (Handlung == GEGNER_LAUFEN || Handlung == GEGNER_SPECIAL) {
+    if (Handlung == GEGNER::LAUFEN || Handlung == GEGNER::SPECIAL) {
         if (AnimCount > AnimSpeed)  // Grenze überschritten ?
         {
             AnimCount = 0;              // Dann wieder auf Null setzen
@@ -40,7 +40,7 @@ void GegnerNeuFisch::DoKI() {
             if (AnimPhase >= AnimEnde)  // Animation von zu Ende	?
                 AnimPhase = AnimStart;  // Dann wieder von vorne beginnen
         }
-    } else if (Handlung == GEGNER_DREHEN) {
+    } else if (Handlung == GEGNER::DREHEN) {
         if (AnimCount > AnimSpeed)  // Grenze überschritten ?
         {
             AnimCount = 0;              // Dann wieder auf Null setzen
@@ -48,11 +48,11 @@ void GegnerNeuFisch::DoKI() {
             if (AnimPhase >= AnimEnde)  // Animation von zu Ende	?
             {
                 AnimCount = 0.0f;
-                Handlung = GEGNER_DREHEN2;
+                Handlung = GEGNER::DREHEN2;
                 BlickRichtung *= -1;
             }
         }
-    } else if (Handlung == GEGNER_DREHEN2) {
+    } else if (Handlung == GEGNER::DREHEN2) {
         if (AnimCount > AnimSpeed)  // Grenze überschritten ?
         {
             AnimCount = 0;       // Dann wieder auf Null setzen
@@ -61,7 +61,7 @@ void GegnerNeuFisch::DoKI() {
             {
                 AnimPhase = AnimStart;  // Dann wieder von vorne beginnen
                 AnimEnde = 9;
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 AnimSpeed = 0.5f;
 
                 xSpeed = BlickRichtung * MoveSpeed;
@@ -73,7 +73,7 @@ void GegnerNeuFisch::DoKI() {
     //
     ySpeed = 0.0f;
 
-    if (Handlung != GEGNER_SPECIAL) {
+    if (Handlung != GEGNER::SPECIAL) {
         // verfolgen
         xSpeed = BlickRichtung * MoveSpeed;
 
@@ -88,14 +88,14 @@ void GegnerNeuFisch::DoKI() {
     switch (Handlung) {
         // In der Suppe rumdümpeln
         //
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
 
             bool onWall = (BlickRichtung == LINKS && ((blockl & BLOCKWERT_WAND) || (blockl & BLOCKWERT_GEGNERWAND))) ||
                           (BlickRichtung == RECHTS && ((blockr & BLOCKWERT_WAND) || (blockr & BLOCKWERT_GEGNERWAND)));
 
             if (onWall || (pAim->InLiquid == true && ((xPos + 30 < pAim->xpos + 35 && BlickRichtung == LINKS) ||
                                                       (xPos + 30 > pAim->xpos + 35 && BlickRichtung == RECHTS)))) {
-                Handlung = GEGNER_DREHEN;
+                Handlung = GEGNER::DREHEN;
                 AnimPhase = 9;
                 AnimCount = 0.0f;
                 AnimEnde = 14;
@@ -123,7 +123,7 @@ void GegnerNeuFisch::DoKI() {
                 if (SpriteCollision(Player[p].xpos, Player[p].ypos, Player[p].CollideRect, xPos, yPos, rect) == true) {
                     pFest = &Player[p];
                     TestBlock = false;
-                    Handlung = GEGNER_SPECIAL;
+                    Handlung = GEGNER::SPECIAL;
                     AnimSpeed = 0.3f;
 
                     Value1 = static_cast<int>(pAim->xpos - xPos);
@@ -136,7 +136,7 @@ void GegnerNeuFisch::DoKI() {
         } break;
 
         // Fisch hängt am Spieler fest
-        case GEGNER_SPECIAL: {
+        case GEGNER::SPECIAL: {
             pFest->GegnerDran = true;
             AnimPhase = 0;
             TestDamagePlayers(1.5f SYNC);
@@ -146,7 +146,7 @@ void GegnerNeuFisch::DoKI() {
 
             if (pFest->Handlung == PlayerActionEnum::RADELN ||
                     pFest->Handlung == PlayerActionEnum::RADELN_FALL) {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 ;
                 AnimEnde = 9;
                 AnimSpeed = 0.5f;
@@ -165,7 +165,7 @@ void GegnerNeuFisch::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerNeuFisch::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
 
     for (int i = 0; i < 10; i++) {
         // Fetzen erzeugen

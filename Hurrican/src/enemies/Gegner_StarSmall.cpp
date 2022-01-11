@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerStarSmall::GegnerStarSmall(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 20;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -50,7 +50,7 @@ void GegnerStarSmall::DoKI() {
     // Je nach Handlung richtig verhalten
     //
     switch (Handlung) {
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             // An den Wänden umdrehen
             //
             if ((xSpeed < 0.0f && blockl & BLOCKWERT_WAND) || (xSpeed > 0.0f && blockr & BLOCKWERT_WAND))
@@ -84,7 +84,7 @@ void GegnerStarSmall::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(40)),
                                     yPos + static_cast<float>(random(40)), LONGFUNKE);
 
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
 
     Player[0].Score += 150;  // Punkte geben
 }

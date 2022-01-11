@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerEiszapfen::GegnerEiszapfen(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     Energy = 100;
     ChangeLight = Light;
     Destroyable = false;
@@ -22,11 +22,11 @@ GegnerEiszapfen::GegnerEiszapfen(int Wert1, int Wert2, bool Light) {
     // schon vorher runterfallen? (bei Eisfaust Boss)
     //
     if (Value1 == 1.0f) {
-        Handlung = GEGNER_FALLEN;
+        Handlung = GEGNER::FALLEN;
         ySpeed = 30.0f;
         yAcc = 5.0f;
 
-        SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEFALL);
+        SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::STONEFALL);
     }
 }
 
@@ -38,15 +38,15 @@ void GegnerEiszapfen::DoKI() {
     SimpleAnimation();
 
     switch (Handlung) {
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             if (pAim->ypos > yPos &&
                 pAim->xpos + 35.0f > xPos + 10.0f - 60.0f &&
                 pAim->xpos + 35.0f < xPos + 10.0f + 60.0f) {
-                Handlung = GEGNER_FALLEN;
+                Handlung = GEGNER::FALLEN;
                 ySpeed = 30.0f;
                 yAcc = 5.0f;
 
-                SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEFALL);
+                SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::STONEFALL);
 
                 for (int i = 0; i < 15; i++) {
                     PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(35)),
@@ -57,7 +57,7 @@ void GegnerEiszapfen::DoKI() {
             }
         } break;
 
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             if (ySpeed > 40.0f) {
                 ySpeed = 40.0f;
                 yAcc = 0.0f;
@@ -81,7 +81,7 @@ void GegnerEiszapfen::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerEiszapfen::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION1);
 
     for (int i = 0; i < 30; i++) {
         PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(35)),

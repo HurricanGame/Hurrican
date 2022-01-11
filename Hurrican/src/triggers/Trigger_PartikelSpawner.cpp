@@ -24,7 +24,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerPartikelSpawner::GegnerPartikelSpawner(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     Value1 = Wert1;
     Value2 = Wert2;
     ChangeLight = Light;
@@ -164,7 +164,7 @@ void GegnerPartikelSpawner::DoKI() {
                     PartikelSystem.ThunderColor[0] = 228;
                     PartikelSystem.ThunderColor[1] = 242;
                     PartikelSystem.ThunderColor[2] = 255;
-                    SoundManager.PlayWave(20 + random(60), 128, 8000 + random(4000), SOUND_THUNDER);
+                    SoundManager.PlayWave(20 + random(60), 128, 8000 + random(4000), SOUND::THUNDER);
 
                     Value2 = random(80) + 10;
                 } break;
@@ -181,7 +181,7 @@ void GegnerPartikelSpawner::DoKI() {
                     PartikelSystem.ThunderColor[0] = 0;
                     PartikelSystem.ThunderColor[1] = 0;
                     PartikelSystem.ThunderColor[2] = 0;
-                    SoundManager.PlayWave(80, 128, 11025 + random(2000), SOUND_FUNKE + random(4));
+                    SoundManager.PlayWave(80, 128, 11025 + random(2000), SOUND::FUNKE + random(4));
 
                     Value2 = random(20) + 10;
                 } break;
@@ -252,7 +252,7 @@ void GegnerPartikelSpawner::DoKI() {
                     if (random(4) == 0) {
                         // mit Sound?
                         if (Value1 == 3)
-                            SoundManager.PlayWave3D(static_cast<int>(xPos), static_cast<int>(yPos), 11025 + random(1000), SOUND_FUNKE);
+                            SoundManager.PlayWave3D(static_cast<int>(xPos), static_cast<int>(yPos), 11025 + random(1000), SOUND::FUNKE);
 
                         PartikelSystem.PushPartikel(xPos, yPos - 24.0f, LASERFLAME);
 

@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerOneUp::GegnerOneUp(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_FALLEN;  // Zu Beginn fällt das Extraleben
+    Handlung = GEGNER::FALLEN;  // Zu Beginn fällt das Extraleben
     Energy = 1.0f;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -44,7 +44,7 @@ void GegnerOneUp::DoKI() {
     BlickRichtung = LINKS;
 
     switch (Handlung) {
-        case GEGNER_FALLEN:  // Leben fällt runter
+        case GEGNER::FALLEN:  // Leben fällt runter
         {
             if (ySpeed > 50.0f)  // Fall-Limit nicht überschreiten
                 ySpeed = 50.0f;
@@ -59,18 +59,18 @@ void GegnerOneUp::DoKI() {
                     xSpeed = 0.0f;
                     ySpeed = 0.0f;
                     yAcc = 0.0f;
-                    Handlung = GEGNER_SPECIAL;
+                    Handlung = GEGNER::SPECIAL;
                 }
             }
         } break;
 
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             // Wieder runterfallen
             //
             if (!(TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) & BLOCKWERT_WAND) &&
                 !(TileEngine.BlockUntenNormal(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]) &
                   BLOCKWERT_PLATTFORM)) {
-                Handlung = GEGNER_FALLEN;
+                Handlung = GEGNER::FALLEN;
                 yAcc = 2.0f;
             }
         } break;
@@ -100,6 +100,6 @@ void GegnerOneUp::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerOneUp::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 11025, SOUND_COLLECT);          // Sound ausgeben
-    SoundManager.PlayWave(100, 128, 11025, SOUND_VOICE_EXTRALIFE);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025, SOUND::COLLECT);          // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025, SOUND::VOICE_EXTRALIFE);  // Sound ausgeben
 }

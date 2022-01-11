@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerEierMann::GegnerEierMann(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 50;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -56,7 +56,7 @@ void GegnerEierMann::DoKI() {
     // Je nach Handlung richtig verhalten
     //
     switch (Handlung) {
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
         } break;
 
         default:
@@ -84,7 +84,7 @@ void GegnerEierMann::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80)),
                                     yPos + static_cast<float>(random(80)), SPLITTER);
 
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION4);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION4);
 
     Player[0].Score += 1500;  // Punkte geben
 }

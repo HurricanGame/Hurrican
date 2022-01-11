@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerPflanze::GegnerPflanze(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     HitSound = 1;
     Energy = 80;
     AnimPhase = random(8);
@@ -49,7 +49,7 @@ void GegnerPflanze::DoKI() {
             // Schiessen ?
             //
             if (RunningTutorial == false && (PlayerAbstand() < 300 || random(2) == 0)) {
-                Handlung = GEGNER_SCHIESSEN;
+                Handlung = GEGNER::SCHIESSEN;
                 AnimEnde = 17;
                 AnimSpeed = 2.2f - Skill * 0.4f;
                 AnimPhase = 9;
@@ -58,7 +58,7 @@ void GegnerPflanze::DoKI() {
             // oder normal wippen
             //
             else {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 AnimEnde = 8;
                 AnimSpeed = 1.8f;
                 AnimPhase = 0;
@@ -76,7 +76,7 @@ void GegnerPflanze::DoKI() {
     switch (Handlung) {
         // Nur rumwackeln
         //
-        case GEGNER_LAUFEN:
+        case GEGNER::LAUFEN:
             break;
     }
 #endif
@@ -90,7 +90,7 @@ void GegnerPflanze::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerPflanze::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
 
     for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(50)),

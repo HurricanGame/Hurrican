@@ -87,14 +87,14 @@ CCracktro::CCracktro() {
     }
 
     // DKS - No need to check for any return value:
-    // if (SoundManager.LoadSong("Cracktro.it", MUSIC_CRACKTRO) == true)
+    // if (SoundManager.LoadSong("Cracktro.it", MUSIC::CRACKTRO) == true)
     //{
-    //    SoundManager.PlaySong(MUSIC_CRACKTRO, false);
-    //    SoundManager.SetAbsoluteSongVolume(MUSIC_CRACKTRO, 255);
+    //    SoundManager.PlaySong(MUSIC::CRACKTRO, false);
+    //    SoundManager.SetAbsoluteSongVolume(MUSIC::CRACKTRO, 255);
     //}
-    SoundManager.LoadSong("Cracktro.it", MUSIC_CRACKTRO);
-    SoundManager.PlaySong(MUSIC_CRACKTRO, false);
-    SoundManager.SetAbsoluteSongVolume(MUSIC_CRACKTRO, 255);
+    SoundManager.LoadSong("Cracktro.it", MUSIC::CRACKTRO);
+    SoundManager.PlaySong(MUSIC::CRACKTRO, false);
+    SoundManager.SetAbsoluteSongVolume(MUSIC::CRACKTRO, 255);
 
     DirectGraphics.SetAdditiveMode();
     DirectGraphics.SetColorKeyMode();
@@ -109,7 +109,7 @@ CCracktro::CCracktro() {
 
 CCracktro::~CCracktro() {
     // DKS - Game was not freeing music data, added this:
-    SoundManager.UnloadSong(MUSIC_CRACKTRO);
+    SoundManager.UnloadSong(MUSIC::CRACKTRO);
 
     delete (pFont);
 }  // Destruktor
@@ -302,7 +302,7 @@ void CCracktro::Main() {
     // beenden
     //
     if (DirectInput.AnyKeyDown() || DirectInput.AnyButtonDown()) {
-        SoundManager.StopSong(MUSIC_CRACKTRO, false);
+        SoundManager.StopSong(MUSIC::CRACKTRO, false);
         State = StateEnum::LOAD;
     }
 }

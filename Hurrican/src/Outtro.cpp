@@ -48,7 +48,7 @@ OuttroClass::OuttroClass() {
     Snow = 0.0f;
 
     PartikelSystem.ClearAll();
-    SoundManager.LoadSong("outtro.it", MUSIC_OUTTRO);
+    SoundManager.LoadSong("outtro.it", MUSIC::OUTTRO);
 
     // DKS -
     // SoundManager.StopAllSongs(false);
@@ -75,7 +75,7 @@ OuttroClass::~OuttroClass() {
     SoundManager.StopSongs();
 
     // DKS - Game was not freeing music data, added this:
-    SoundManager.UnloadSong(MUSIC_OUTTRO);
+    SoundManager.UnloadSong(MUSIC::OUTTRO);
 }
 
 // --------------------------------------------------------------------------------------
@@ -193,9 +193,9 @@ void OuttroClass::DoOuttro() {
         case OutroStateEnum::FADEIN:  // Text scrollen
         {
             // DKS - Added function WaveIsPlaying() to SoundManagerClass:
-            if (!SoundManager.WaveIsPlaying(SOUND_TAKEOFF)) {
-                SoundManager.PlayWave(100, 128, 5000, SOUND_TAKEOFF);
-                SoundManager.PlayWave(50, 128, 8000, SOUND_WIND);
+            if (!SoundManager.WaveIsPlaying(SOUND::TAKEOFF)) {
+                SoundManager.PlayWave(100, 128, 5000, SOUND::TAKEOFF);
+                SoundManager.PlayWave(50, 128, 8000, SOUND::WIND);
             }
 
             Counter += 10.0f SYNC;
@@ -243,7 +243,7 @@ void OuttroClass::DoOuttro() {
                 if (TowerOffset >= 20.0f) {
                     Counter = 0.0f;
                     Zustand = OutroStateEnum::PLAYER_FLEES;
-                    SoundManager.PlayWave(100, 128, 10000, SOUND_TAKEOFF);
+                    SoundManager.PlayWave(100, 128, 10000, SOUND::TAKEOFF);
                     InitPlayerPos();
                 }
             }
@@ -305,10 +305,10 @@ void OuttroClass::DoOuttro() {
                     TextOff = 0;
                     Counter = 0.0f;
 
-                    SoundManager.StopWave(SOUND_WIND);
-                    SoundManager.PlayWave(100, 128, 6000, SOUND_DOORSTOP);
-                    SoundManager.PlayWave(100, 128, 8000, SOUND_EXPLOSION2);
-                    SoundManager.PlaySong(MUSIC_OUTTRO, false);
+                    SoundManager.StopWave(SOUND::WIND);
+                    SoundManager.PlayWave(100, 128, 6000, SOUND::DOORSTOP);
+                    SoundManager.PlayWave(100, 128, 8000, SOUND::EXPLOSION2);
+                    SoundManager.PlaySong(MUSIC::OUTTRO, false);
                 }
             }
         } break;

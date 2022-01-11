@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerBrockelRock::GegnerBrockelRock(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     Energy = 10;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -47,15 +47,15 @@ void GegnerBrockelRock::DoKI() {
     //
     switch (Handlung) {
         // Stein wartet bis der Spieler darüber läuft
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             for (int i = 0; i < NUMPLAYERS; i++)
                 if (Player[i].AufPlattform == this)
-                    Handlung = GEGNER_SPRINGEN;
+                    Handlung = GEGNER::SPRINGEN;
         } break;
 
         // Counter zählt runter bis Stein fällt
         //
-        case GEGNER_SPRINGEN: {
+        case GEGNER::SPRINGEN: {
             AnimCount -= 50.0f SYNC;
 
             if (AnimCount < 0.0f)  // Langsam zerbröckeln
@@ -73,8 +73,8 @@ void GegnerBrockelRock::DoKI() {
 
                 // Sound ausgeben
                 //
-                SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEFALL);
-                Handlung = GEGNER_FALLEN;
+                SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::STONEFALL);
+                Handlung = GEGNER::FALLEN;
                 yAcc = 4.0f;
             }
 
@@ -82,7 +82,7 @@ void GegnerBrockelRock::DoKI() {
 
         // Stein fällt runter
         //
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             // Maximale Geschwindigkeitsbegrenzung
             if (ySpeed > 50.0f)
                 yAcc = 0.0f;
@@ -117,5 +117,5 @@ void GegnerBrockelRock::GegnerExplode() {
                                     yPos + static_cast<float>(random(40)), ROCKSPLITTERSMALL);
     }
 
-    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_STONEEXPLODE);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::STONEEXPLODE);  // Sound ausgeben
 }

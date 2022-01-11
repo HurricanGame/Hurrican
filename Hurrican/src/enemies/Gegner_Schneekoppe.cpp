@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerSchneekoppe::GegnerSchneekoppe(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 600;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -91,5 +91,5 @@ void GegnerSchneekoppe::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos - 10.0f + static_cast<float>(random(20)),
                                     yPos - 10.0f + static_cast<float>(random(20)), BLUE_EXPLOSION);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 }

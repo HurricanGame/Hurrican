@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerRiesenWasp::GegnerRiesenWasp(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 125;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -51,7 +51,7 @@ void GegnerRiesenWasp::DoKI() {
 
     // in Richtung Spieler fliegen
     //
-    if (Handlung != GEGNER_FALLEN) {
+    if (Handlung != GEGNER::FALLEN) {
         if (xPos + 50 < pAim->xpos + 35)
             xAcc = 2.5f;
         if (xPos + 50 > pAim->xpos + 35)
@@ -87,7 +87,7 @@ void GegnerRiesenWasp::DoKI() {
         if (ShotDelay <= 0.0f) {
             ShotDelay = 10.0f;
 
-            SoundManager.PlayWave(100, 128, 8000 + random(1000), SOUND_CANON);
+            SoundManager.PlayWave(100, 128, 8000 + random(1000), SOUND::CANON);
             Projectiles.PushProjectile(xPos + 25.0f + static_cast<float>(BlickRichtung * 56),
                                        yPos + 51.0f, SUCHSCHUSS2);
 
@@ -103,7 +103,7 @@ void GegnerRiesenWasp::DoKI() {
     switch (Handlung) {
         // Wespe stürzt ab
         //
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             // An die Wand gekracht ?
             if (blockl & BLOCKWERT_WAND || blockr & BLOCKWERT_WAND || blocko & BLOCKWERT_WAND ||
                 blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM)
@@ -129,8 +129,8 @@ void GegnerRiesenWasp::DoKI() {
 
     // Wespe stürzt ab ?
     //
-    if (Energy <= 0.0f && Handlung != GEGNER_FALLEN) {
-        Handlung = GEGNER_FALLEN;
+    if (Energy <= 0.0f && Handlung != GEGNER::FALLEN) {
+        Handlung = GEGNER::FALLEN;
         AnimCount = 0.0f;
         Energy = 50.0f;
         ySpeed = 1.0f;
@@ -161,7 +161,7 @@ void GegnerRiesenWasp::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(100)),
                                     yPos + 30.0f + static_cast<float>(random(50)), SPLITTER);
 
-    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 11025 + random(2000), SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 250;
 }

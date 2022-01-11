@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerStarBig::GegnerStarBig(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 100;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -61,7 +61,7 @@ void GegnerStarBig::DoKI() {
             //
             if (ShotCount > Skill + 2) {
                 ShotCount = 0;
-                SoundManager.PlayWave(100, 128, 15000 + random(4000), SOUND_CANON);
+                SoundManager.PlayWave(100, 128, 15000 + random(4000), SOUND::CANON);
                 Projectiles.PushProjectile(xPos + 36.0f, yPos + 36.0f, SUCHSCHUSS);
             }
         }
@@ -70,7 +70,7 @@ void GegnerStarBig::DoKI() {
     // Je nach Handlung richtig verhalten
     //
     switch (Handlung) {
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             // An den Wänden umdrehen
             //
             if ((xSpeed < 0.0f && blockl & BLOCKWERT_WAND) || (xSpeed > 0.0f && blockr & BLOCKWERT_WAND))
@@ -106,7 +106,7 @@ void GegnerStarBig::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80)),
                                     yPos + static_cast<float>(random(80)), LONGFUNKE);
 
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION3);
 
     Player[0].Score += 150;  // Punkte geben
 }

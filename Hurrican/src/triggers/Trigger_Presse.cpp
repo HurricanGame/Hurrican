@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerPresse::GegnerPresse(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     BlickRichtung = LINKS;
     Energy = 100;
     Value1 = Wert1;
@@ -32,7 +32,7 @@ void GegnerPresse::DoKI() {
     // Ja nach Handlung richtig verhalten
     switch (Handlung) {
         // Pressen (während der Wehen ...)
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             // Am Boden ? Dann aufstampfen und wieder nach oben fahren
             if (ySpeed > 0.0f &&
                 (blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_GEGNERWAND || blocku & BLOCKWERT_WAND)) {
@@ -43,12 +43,12 @@ void GegnerPresse::DoKI() {
                     PartikelSystem.PushPartikel(xPos + static_cast<float>(i * 10), yPos + 244.0f, SMOKE);
 
                 if (PlayerAbstand() < 600)
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_PRESSE);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::PRESSE);
             }
 
             // An der Decke angekommen ? Dann warten
             if (blocko & BLOCKWERT_WAND) {
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
                 AnimCount = static_cast<float>(Value2);
                 ySpeed = 0.0f;
             }
@@ -56,17 +56,17 @@ void GegnerPresse::DoKI() {
         } break;
 
         // Warten
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             // Wieder nach unten fahren
             AnimCount -= 1.0f SYNC;
 
             if (AnimCount <= 0.0f) {
                 AnimCount = 0.0f;
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 ySpeed = static_cast<float>(Value2);
 
                 if (PlayerAbstand() < 600)
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_PRESSE);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::PRESSE);
 
                 PartikelSystem.PushPartikel(xPos + 14.0f, yPos + 230.0f, SMOKE);
                 PartikelSystem.PushPartikel(xPos + 54.0f, yPos + 230.0f, SMOKE);

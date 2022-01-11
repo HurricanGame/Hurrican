@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerPresswurst::GegnerPresswurst(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_INIT;
+    Handlung = GEGNER::INIT;
     BlickRichtung = LINKS;
     Energy = 100;
     Value1 = Wert1;
@@ -67,31 +67,31 @@ void GegnerPresswurst::DoKI() {
     // Ja nach Handlung richtig verhalten
     switch (Handlung) {
         // Am Anfang einmal initialisieren
-        case GEGNER_INIT: {
+        case GEGNER::INIT: {
             yPos -= GegnerRect[GegnerArt].top;
             oldy = yPos;
-            Handlung = GEGNER_INIT2;
+            Handlung = GEGNER::INIT2;
 
         } break;
 
         // Auf Spieler warten
-        case GEGNER_INIT2: {
+        case GEGNER::INIT2: {
             for (int p = 0; p < NUMPLAYERS; p++)
                 if (Player[p].ypos > yPos && PlayerAbstandHoriz(&Player[p]) < 200 &&
                     PlayerAbstandVert(&Player[p]) < 500) {
-                    Handlung = GEGNER_LAUFEN;
+                    Handlung = GEGNER::LAUFEN;
                     ySpeed = 10.0f;
                     yAcc = 2.5f;
 
                     if (PlayerAbstand(true) < 600)
                         SoundManager.PlayWave3D(static_cast<int>(xPos + 90.0f),
                                                 static_cast<int>(yPos + 330.0f), 11025,
-                                                SOUND_PRESSE);
+                                                SOUND::PRESSE);
                 }
         } break;
 
         // Pressen
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             // Spieler beim Runterfallen berührt? Dann stirbt er leider ;)
             //
             for (int p = 0; p < NUMPLAYERS; p++)
@@ -131,11 +131,11 @@ void GegnerPresswurst::DoKI() {
                 if (PlayerAbstand() < 600)
                     SoundManager.PlayWave3D(static_cast<int>(xPos + 90.0f),
                                             static_cast<int>(yPos + 330.0f), 11025,
-                                            SOUND_DOORSTOP);
+                                            SOUND::DOORSTOP);
 
                 ShakeScreen(2.0f);
 
-                Handlung = GEGNER_SPECIAL;
+                Handlung = GEGNER::SPECIAL;
             }
 
             // An der Decke ? Dann wieder in den Wartezustand setzen
@@ -143,27 +143,27 @@ void GegnerPresswurst::DoKI() {
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
 
-                Handlung = GEGNER_INIT2;
+                Handlung = GEGNER::INIT2;
             }
 
         } break;
 
         // Presse wartet unten und spuckt dann Dampf
-        case GEGNER_SPECIAL: {
+        case GEGNER::SPECIAL: {
             SmokeCount -= 1.0f SYNC;
 
             if (SmokeCount <= 0.0f) {
-                Handlung = GEGNER_SPECIAL2;
+                Handlung = GEGNER::SPECIAL2;
                 AnimCount = 28.0f;
                 if (PlayerAbstand() < 600)
                     SoundManager.PlayWave3D(static_cast<int>(xPos + 90.0f),
                                             static_cast<int>(yPos + 330.0f), 13000,
-                                            SOUND_STEAM2);
+                                            SOUND::STEAM2);
             }
         } break;
 
         // Presse dampft
-        case GEGNER_SPECIAL2: {
+        case GEGNER::SPECIAL2: {
             // rauchen lassen
             SmokeCount -= 1.0f SYNC;
             if (SmokeCount <= 0.0f) {
@@ -182,14 +182,14 @@ void GegnerPresswurst::DoKI() {
                                   SPIDERBOMB, 0, 0, false, true);
 
                 // wieder hochfahren
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 ySpeed = -15.0f;
                 yAcc = 0.2f;
 
                 if (PlayerAbstand() < 600)
                     SoundManager.PlayWave3D(static_cast<int>(xPos + 90.0f),
                                             static_cast<int>(yPos + 330.0f), 11025,
-                                            SOUND_PRESSE);
+                                            SOUND::PRESSE);
             }
         } break;
 

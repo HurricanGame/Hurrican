@@ -102,7 +102,7 @@ void GegnerClass::Render() {
     }
 
     // Gegner rendern (einige bekommen ne Extra Wurst)
-    if (Handlung != GEGNER_NOTVISIBLE) {
+    if (Handlung != GEGNER::NOTVISIBLE) {
         if (OwnDraw == false && DontMove == false) {
             DirectGraphics.SetColorKeyMode();
 
@@ -119,14 +119,14 @@ void GegnerClass::Render() {
     }
 
     // Gegner getroffen? Dann nochmal in weiss aufleuchten lassen
-    if (Handlung != GEGNER_NOTVISIBLE)
+    if (Handlung != GEGNER::NOTVISIBLE)
         if (DamageTaken > 0.0f) {
             int const Wert = static_cast<int>(DamageTaken);
 
             Color = D3DCOLOR_RGBA(255, 255, 255, Wert);
 
             // neu rendern
-            if (Handlung != GEGNER_NOTVISIBLE) {
+            if (Handlung != GEGNER::NOTVISIBLE) {
                 DirectGraphics.SetAdditiveMode();
 
                 if (OwnDraw == false && DontMove == false) {
@@ -246,8 +246,8 @@ bool GegnerClass::Run() {
 
                 // Hit Sound
                 // DKS - Added function WaveIsPlaying() to SoundManagerClass:
-                if (!SoundManager.WaveIsPlaying(SOUND_HIT + HitSound))
-                    SoundManager.PlayWave(100, 128, 22050, SOUND_HIT + HitSound);
+                if (!SoundManager.WaveIsPlaying(SOUND::HIT + HitSound))
+                    SoundManager.PlayWave(100, 128, 22050, SOUND::HIT + HitSound);
             }
         }
     } else
@@ -2264,18 +2264,18 @@ void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage) {
         GegnerClass *pNext = pTemp->pNext;  // Nächster Gegner in der Liste
 
         // Stampfstein? Fällt runter bei Wackeln
-        if (pTemp->Active == true && pTemp->GegnerArt == STAMPFSTEIN && pTemp->Handlung == GEGNER_STEHEN && dx < 300 &&
+        if (pTemp->Active == true && pTemp->GegnerArt == STAMPFSTEIN && pTemp->Handlung == GEGNER::STEHEN && dx < 300 &&
             pTemp->xPos + GegnerRect[pTemp->GegnerArt].right > TileEngine.XOffset &&
             pTemp->xPos + GegnerRect[pTemp->GegnerArt].left < TileEngine.XOffset + 640 &&
             pTemp->yPos + GegnerRect[pTemp->GegnerArt].bottom > TileEngine.YOffset &&
             pTemp->yPos + GegnerRect[pTemp->GegnerArt].top < TileEngine.YOffset + 480) {
-            pTemp->Handlung = GEGNER_FALLEN;
+            pTemp->Handlung = GEGNER::FALLEN;
             pTemp->ySpeed = 20.0f;
             pTemp->yAcc = 15.0f;
 
             // DKS - Added function WaveIsPlaying() to SoundManagerClass:
-            if (!SoundManager.WaveIsPlaying(SOUND_STONEFALL))
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_STONEFALL);
+            if (!SoundManager.WaveIsPlaying(SOUND::STONEFALL))
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::STONEFALL);
         }
 
         // Gegner in der Nähe? Dann Energie abziehen

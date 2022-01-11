@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerZitrone::GegnerZitrone(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     Energy = 200;
     ChangeLight = Light;
     Destroyable = true;
@@ -149,7 +149,7 @@ void GegnerZitrone::DoKI() {
     switch (Handlung) {
         // In der Luft rumdümpeln
         //
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             // Abstand zu groß?
             // Oder getroffen?
             // Dann gleich hinterherflitzen
@@ -181,7 +181,7 @@ void GegnerZitrone::DoKI() {
                 else
                     yAcc = -5.0f;
 
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
             }
 
             // Schiessen
@@ -200,13 +200,13 @@ void GegnerZitrone::DoKI() {
                                                static_cast<float>(sin(WackelOffset) * 10.0f),
                                            FLUGLASER);
 
-                SoundManager.PlayWave(100, 128, 24000 + random(500), SOUND_LASERSHOT);
+                SoundManager.PlayWave(100, 128, 24000 + random(500), SOUND::LASERSHOT);
             }
         } break;
 
         // Zu neuem Punkt hinfliegen
         //
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             // speed begrenzen
             xSpeed = std::clamp(xSpeed, -20.0f, 20.0f);
             ySpeed = std::clamp(ySpeed, -20.0f, 20.0f);
@@ -247,7 +247,7 @@ void GegnerZitrone::DoKI() {
 
             // Punkt komplett erreicht?
             if (xSpeed == 0.0f && ySpeed == 0.0f) {
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
                 FollowCount = 20.0f;
                 ShotDelay = 5.0f;
             }
@@ -255,7 +255,7 @@ void GegnerZitrone::DoKI() {
 
         // Drone stürzt ab
         //
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             // An die Wand gekracht ?
             if (blockl & BLOCKWERT_WAND || blockr & BLOCKWERT_WAND || blocko & BLOCKWERT_WAND ||
                 blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM)
@@ -279,8 +279,8 @@ void GegnerZitrone::DoKI() {
 
     // Drone stürzt ab ?
     //
-    if (Energy <= 0.0f && Handlung != GEGNER_FALLEN) {
-        Handlung = GEGNER_FALLEN;
+    if (Energy <= 0.0f && Handlung != GEGNER::FALLEN) {
+        Handlung = GEGNER::FALLEN;
         AnimCount = 0.0f;
         Energy = 200.0f;
         ySpeed = 4.0f;
@@ -291,7 +291,7 @@ void GegnerZitrone::DoKI() {
         if (random(2) == 0)
             xSpeed *= -1;
 
-        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION4);
+        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION4);
 
         for (int i = 0; i < 8; i++) {
             PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80)),
@@ -307,7 +307,7 @@ void GegnerZitrone::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerZitrone::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION4);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION4);
 
     for (int i = 0; i < 12; i++) {
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(80)),

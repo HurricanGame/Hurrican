@@ -17,7 +17,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerMetalHead::GegnerMetalHead(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_NOTVISIBLE;
+    Handlung = GEGNER::NOTVISIBLE;
     BlickRichtung = LINKS;
     Energy = 4000;
     ChangeLight = Light;
@@ -64,7 +64,7 @@ void GegnerMetalHead::DoDraw() {
         return;
 
     // am explodieren? Dann nicht rendern
-    if (Handlung == GEGNER_EXPLODIEREN) {
+    if (Handlung == GEGNER::EXPLODIEREN) {
         // Kopf wirbelt herum
         //
         if (AnimEnde > MAXWIRBEL - 5)
@@ -139,7 +139,7 @@ void GegnerMetalHead::DoDraw() {
 
     // Turbine läuft? Dann Orange leuchten lassen
     //
-    if (Handlung == GEGNER_SPECIAL2) {
+    if (Handlung == GEGNER::SPECIAL2) {
         // Anglühen und abglühen lassen
         //
         int a = AnimPhase;
@@ -226,7 +226,7 @@ void GegnerMetalHead::WinkelToPlayer() {
     // neww = (float)atan(ydiv / xdiv) * 180.0f / PI;
     float neww;
 
-    if (Akt != GEGNER_SCHIESSEN)
+    if (Akt != GEGNER::SCHIESSEN)
         neww = 0.0f;
     else {
         neww = RadToDeg(atanf(ydiv / xdiv));
@@ -283,7 +283,7 @@ void GegnerMetalHead::DoMove() {
 // --------------------------------------------------------------------------------------
 
 void GegnerMetalHead::DoKI() {
-    if (Handlung != GEGNER_EXPLODIEREN) {
+    if (Handlung != GEGNER::EXPLODIEREN) {
         if (ShadowAlpha > 0.0f)
             ShadowAlpha -= 5.0f SYNC;
         else
@@ -303,15 +303,15 @@ void GegnerMetalHead::DoKI() {
     }
 
     // Spieler unter Kopf? Dann runtercrashen
-    if (Handlung != GEGNER_CRUSHENERHOLEN && Handlung != GEGNER_EINFLIEGEN && Handlung != GEGNER_EXPLODIEREN &&
-        Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_CRUSHEN && Handlung != GEGNER_CRUSHEN2 &&
+    if (Handlung != GEGNER::CRUSHENERHOLEN && Handlung != GEGNER::EINFLIEGEN && Handlung != GEGNER::EXPLODIEREN &&
+        Handlung != GEGNER::NOTVISIBLE && Handlung != GEGNER::CRUSHEN && Handlung != GEGNER::CRUSHEN2 &&
         yPos < static_cast<float>(Value2 + 230))
         for (int p = 0; p < NUMPLAYERS; p++) {
             if (Player[p].xpos + 35 < xPos + 200) {
                 ySpeed = 50.0f;
-                Handlung = GEGNER_CRUSHEN;
+                Handlung = GEGNER::CRUSHEN;
 
-                SoundManager.PlayWave(100, 128, 11025, SOUND_STONEFALL);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::STONEFALL);
                 yAcc = 10.0f;
 
                 Moving = false;
@@ -319,7 +319,7 @@ void GegnerMetalHead::DoKI() {
         }
 
     // Energie anzeigen
-    if (Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER::NOTVISIBLE && Handlung != GEGNER::EXPLODIEREN)
         HUD.ShowBossHUD(4000, Energy);
 
     // Boss aktivieren und Mucke laufen lassen
@@ -328,7 +328,7 @@ void GegnerMetalHead::DoKI() {
         TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
                                TileStateEnum::SCROLLTOLOCK);  // Level auf den Boss zentrieren
 
-        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC::STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
@@ -348,7 +348,7 @@ void GegnerMetalHead::DoKI() {
                 PartikelSystem.PushPartikel(xPos + 85.0f + TurbineOff,
                                             yPos + 202.0f, KAPUTTETURBINE);
 
-                SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION2);
                 ShakeScreen(3.0f);
             }
         }
@@ -358,7 +358,7 @@ void GegnerMetalHead::DoKI() {
         DamageTaken = 0.0f;  // oder ganz anhalten
 
     // Wenig Energie? Dann Hals dampfen lassen und ggf Funken erzeugen
-    if (Energy < 2500 && Handlung != GEGNER_EXPLODIEREN) {
+    if (Energy < 2500 && Handlung != GEGNER::EXPLODIEREN) {
         SmokeCount -= 1.0f SYNC;
 
         while (SmokeCount < 0.0f) {
@@ -384,7 +384,7 @@ void GegnerMetalHead::DoKI() {
                                             yPos + 140.0f, LASERFLAME);
                 PartikelSystem.PushPartikel(xPos + 5.0f, yPos + 110.0f, EXPLOSIONFLARE);
                 PartikelSystem.PushPartikel(xPos + 5.0f, yPos + 110.0f, EXPLOSIONFLARE);
-                SoundManager.PlayWave(100, 128, 11025, SOUND_FUNKE);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::FUNKE);
             }
         }
     }
@@ -394,10 +394,10 @@ void GegnerMetalHead::DoKI() {
     PartikelSystem.ytarget = yPos + 130.0f + 55.0f;
 
     // Hat der Boss keine Energie mehr ? Dann explodiert er
-    if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN) {
+    if (Energy <= 100.0f && Handlung != GEGNER::EXPLODIEREN) {
         Destroyable = false;
         Energy = 100.0f;
-        Handlung = GEGNER_EXPLODIEREN;
+        Handlung = GEGNER::EXPLODIEREN;
         AnimEnde = MAXWIRBEL - 1;
         xSpeed = 20.0f;
         ySpeed = -30.0f;
@@ -411,7 +411,7 @@ void GegnerMetalHead::DoKI() {
                 Player[p].AufPlattform = nullptr;
 
         // Endboss-Musik ausfaden und abschalten
-        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC::BOSS, -2.0f, 0, false);
 
         // Kopf fliegt wech (mit Explosion)
         for (int i = 0; i < 60; i++)
@@ -420,7 +420,7 @@ void GegnerMetalHead::DoKI() {
 
         PartikelSystem.PushPartikel(xPos - 40.0f, yPos + 40.0f, EXPLOSION_GIANT);
 
-        SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+        SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION2);
     }
 
     // Corona des Auges drehen
@@ -428,7 +428,7 @@ void GegnerMetalHead::DoKI() {
 
     // Bei diversen Handlungen den Kiefer bewegen
     //
-    if (Handlung == GEGNER_SPECIAL || Handlung == GEGNER_SPECIAL2 || Handlung == GEGNER_SPECIAL3) {
+    if (Handlung == GEGNER::SPECIAL || Handlung == GEGNER::SPECIAL2 || Handlung == GEGNER::SPECIAL3) {
         KieferSpeed -= 2.0f SYNC;
         KieferPos += KieferSpeed SYNC;
 
@@ -436,7 +436,7 @@ void GegnerMetalHead::DoKI() {
         //
         if (KieferPos < 0 && KieferSpeed < 0.0f) {
             KieferSpeed = 10.0f;
-            SoundManager.PlayWave(25, 128, 10000 + random(2000), SOUND_KLONG);
+            SoundManager.PlayWave(25, 128, 10000 + random(2000), SOUND::KLONG);
 
             for (int i = 0; i < 10; i++)
                 PartikelSystem.PushPartikel(xPos + 130.0f + static_cast<float>(i * 4), yPos + 160.0f, LONGFUNKE);
@@ -449,8 +449,8 @@ void GegnerMetalHead::DoKI() {
         DoMove();
     else
         switch (Handlung) {
-            case GEGNER_CRUSHEN:
-            case GEGNER_CRUSHEN2: {
+            case GEGNER::CRUSHEN:
+            case GEGNER::CRUSHEN2: {
                 TurbineOff = 0.0f;
                 if (GunWinkel > 0.0f)
                     GunWinkel -= 50.0f SYNC;
@@ -470,10 +470,10 @@ void GegnerMetalHead::DoKI() {
                     yAcc = -1.0f;
 
                     ShakeScreen(5.0f);
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_STONEEXPLODE);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::STONEEXPLODE);
 
                     // Schleimboller spawnen?
-                    if (Handlung == GEGNER_CRUSHEN2) {
+                    if (Handlung == GEGNER::CRUSHEN2) {
                         int size = 32;
 
                         switch (Skill) {
@@ -487,7 +487,7 @@ void GegnerMetalHead::DoKI() {
                                           static_cast<float>(Value2 - 40), SCHLEIMBOLLER, size, 0, false);
                     }
 
-                    Handlung = GEGNER_CRUSHENERHOLEN;
+                    Handlung = GEGNER::CRUSHENERHOLEN;
 
                     for (int i = 0; i < 20; i++)
                         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(180)),
@@ -500,38 +500,38 @@ void GegnerMetalHead::DoKI() {
                 }
             } break;
 
-            case GEGNER_CRUSHENERHOLEN: {
+            case GEGNER::CRUSHENERHOLEN: {
                 if (ySpeed < 0.0f && yPos < Value2 + 50) {
                     ySpeed = 0.0f;
                     yAcc = 0.0f;
                     MoveToNewPoint(static_cast<float>(Value1 + 130),
-                                   static_cast<float>(Value2 + 0), 10.0f, GEGNER_SCHIESSEN);
+                                   static_cast<float>(Value2 + 0), 10.0f, GEGNER::SCHIESSEN);
                     ShotArt = 1;
                 }
             } break;
 
-            case GEGNER_NOTVISIBLE:  // Warten bis der Screen zentriert wurde
+            case GEGNER::NOTVISIBLE:  // Warten bis der Screen zentriert wurde
             {
-                Handlung = GEGNER_INIT;
+                Handlung = GEGNER::INIT;
             } break;
 
-            case GEGNER_INIT:  // Warten bis der Screen zentriert wurde
+            case GEGNER::INIT:  // Warten bis der Screen zentriert wurde
             {
                 if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                     // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                     //
                     // DKS - Added function SongIsPlaying() to SoundManagerClass:
-                    if (!SoundManager.SongIsPlaying(MUSIC_BOSS)) {
-                        SoundManager.PlaySong(MUSIC_BOSS, false);
+                    if (!SoundManager.SongIsPlaying(MUSIC::BOSS)) {
+                        SoundManager.PlaySong(MUSIC::BOSS, false);
 
                         // Und Boss erscheinen lassen
                         //
-                        Handlung = GEGNER_EINFLIEGEN;
+                        Handlung = GEGNER::EINFLIEGEN;
                     }
                 }
             } break;
 
-            case GEGNER_EINFLIEGEN:  // Kopf erhebt sich aus dem Schrotthaufen
+            case GEGNER::EINFLIEGEN:  // Kopf erhebt sich aus dem Schrotthaufen
             {
                 Energy = 4000;
                 DamageTaken = 0.0f;
@@ -542,15 +542,15 @@ void GegnerMetalHead::DoKI() {
                     Eye_Alpha = 255.0f;
 
                     MoveToNewPoint(static_cast<float>(Value1 + 70),
-                                   static_cast<float>(Value2 + 130), 10.0f, GEGNER_SCHIESSEN);
+                                   static_cast<float>(Value2 + 130), 10.0f, GEGNER::SCHIESSEN);
 
                     ShotArt = 0;
-                    Akt = GEGNER_OEFFNEN;
+                    Akt = GEGNER::OEFFNEN;
                     SinCount = 0.0f;
                 }
             } break;
 
-            case GEGNER_SCHIESSEN: {
+            case GEGNER::SCHIESSEN: {
                 if (ShotArt == 2) {
                     if (GunWinkel > 0.0f)
                         GunWinkel -= 50.0f SYNC;
@@ -568,7 +568,7 @@ void GegnerMetalHead::DoKI() {
                 KieferPos = static_cast<float>(sin(SinCount)) * 50.0f;
 
                 switch (Akt) {
-                    case GEGNER_OEFFNEN: {
+                    case GEGNER::OEFFNEN: {
                         TurbineOff = static_cast<float>(sin(SinCount)) * 30.0f;
                         SinCount += 0.2f SYNC;
 
@@ -579,7 +579,7 @@ void GegnerMetalHead::DoKI() {
                             GegnerRect[GegnerArt].right = GegnerRect[GegnerArt].left + Turbine.itsXFrameSize;
                             GegnerRect[GegnerArt].bottom = GegnerRect[GegnerArt].top + Turbine.itsYFrameSize + 20;
 
-                            Akt = GEGNER_SCHIESSEN;
+                            Akt = GEGNER::SCHIESSEN;
 
                             if (Turbine_dran) {
                                 if (ShotArt == 0)
@@ -596,7 +596,7 @@ void GegnerMetalHead::DoKI() {
 
                     } break;
 
-                    case GEGNER_SCHIESSEN: {
+                    case GEGNER::SCHIESSEN: {
                         // DKS - sin(pi/2) is 1.0, so I am optimizing this math:
                         // if (TurbineOff < (float)sin(PI / 2.0f) * 30.0f)
                         //    TurbineOff += 5.0f SYNC;
@@ -611,11 +611,11 @@ void GegnerMetalHead::DoKI() {
 
                         if (ShotDelay <= 0.0f) {
                             if (ShotCount <= 0) {
-                                Akt = GEGNER_SCHLIESSEN;
+                                Akt = GEGNER::SCHLIESSEN;
                                 Destroyable = !(Turbine_dran == true);
                             } else {
                                 if (Turbine_dran) {
-                                    SoundManager.PlayWave(100, 128, 8000 + random(2000), SOUND_FIREBALL);
+                                    SoundManager.PlayWave(100, 128, 8000 + random(2000), SOUND::FIREBALL);
 
                                     ShotDelay = 9.0f;
 
@@ -633,7 +633,7 @@ void GegnerMetalHead::DoKI() {
                                     }
 
                                     if (ShotArt == 1) {
-                                        SoundManager.PlayWave(100, 128, 14000 + random(2000), SOUND_FIREBALL);
+                                        SoundManager.PlayWave(100, 128, 14000 + random(2000), SOUND::FIREBALL);
 
                                         for (int i = -40; i <= 40; i += 40) {
                                             WinkelUebergabe = GunWinkel + 90 + i;
@@ -652,7 +652,7 @@ void GegnerMetalHead::DoKI() {
                                     }
 
                                     if (ShotArt == 2) {
-                                        SoundManager.PlayWave(100, 128, 14000 + random(2000), SOUND_FIREBALL);
+                                        SoundManager.PlayWave(100, 128, 14000 + random(2000), SOUND::FIREBALL);
                                         Projectiles.PushProjectile(xPos + 180.0f, yPos + 195.0f, FIREBALL_BOMB, pAim);
                                     }
 
@@ -684,7 +684,7 @@ void GegnerMetalHead::DoKI() {
                         }
                     } break;
 
-                    case GEGNER_SCHLIESSEN: {
+                    case GEGNER::SCHLIESSEN: {
                         TurbineOff = static_cast<float>(sin(SinCount)) * 30.0f;
 
                         SinCount -= 0.2f SYNC;
@@ -707,27 +707,27 @@ void GegnerMetalHead::DoKI() {
                             ShotArt = j;
 
                             if (ShotArt == 2) {
-                                Akt = GEGNER_OEFFNEN;
+                                Akt = GEGNER::OEFFNEN;
                                 MoveToNewPoint(static_cast<float>(Value1 + 10),
-                                               static_cast<float>(Value2 + 0), 10.0f, GEGNER_SCHIESSEN);
+                                               static_cast<float>(Value2 + 0), 10.0f, GEGNER::SCHIESSEN);
                             } else if (ShotArt == 1) {
-                                Akt = GEGNER_OEFFNEN;
+                                Akt = GEGNER::OEFFNEN;
                                 MoveToNewPoint(static_cast<float>(Value1 + 130),
-                                               static_cast<float>(Value2 + 0), 10.0f, GEGNER_SCHIESSEN);
+                                               static_cast<float>(Value2 + 0), 10.0f, GEGNER::SCHIESSEN);
                             } else if (ShotArt == 0) {
-                                Akt = GEGNER_OEFFNEN;
+                                Akt = GEGNER::OEFFNEN;
                                 MoveToNewPoint(static_cast<float>(Value1 + 70),
-                                               static_cast<float>(Value2 + 80), 10.0f, GEGNER_SCHIESSEN);
+                                               static_cast<float>(Value2 + 80), 10.0f, GEGNER::SCHIESSEN);
                             } else {
                                 ySpeed = 50.0f;
-                                Handlung = GEGNER_CRUSHEN2;
+                                Handlung = GEGNER::CRUSHEN2;
 
-                                SoundManager.PlayWave(100, 128, 11025, SOUND_STONEFALL);
+                                SoundManager.PlayWave(100, 128, 11025, SOUND::STONEFALL);
                                 yAcc = 10.0f;
 
                                 Moving = false;
 
-                                Akt = GEGNER_OEFFNEN;
+                                Akt = GEGNER::OEFFNEN;
                                 SinCount = 0.0f;
                             }
                         }
@@ -737,12 +737,12 @@ void GegnerMetalHead::DoKI() {
                 [[fallthrough]];
 
             // Head flies towards xto/yto
-            case GEGNER_STEHEN: {
+            case GEGNER::STEHEN: {
                 // Open jaw when headbanging
                 //
                 // FIXME
                 // Akt is initialized to SK_AUSGANG
-                // and then only assigned values GEGNER_OEFFNEN, GEGNER_SCHLIESSEN and GEGNER_SCHIESSEN
+                // and then only assigned values GEGNER::OEFFNEN, GEGNER::SCHLIESSEN and GEGNER::SCHIESSEN
                 // Something's broken here...
                 if (Akt == SK_BANGEN) {
                     if (KieferPos < 60.0f)
@@ -762,7 +762,7 @@ void GegnerMetalHead::DoKI() {
 
             } break;
 
-            case GEGNER_EXPLODIEREN: {
+            case GEGNER::EXPLODIEREN: {
                 Energy = 100.0f;
 
                 Eye_Alpha -= 0.3f SYNC;
@@ -785,7 +785,7 @@ void GegnerMetalHead::DoKI() {
                             Hals[AnimEnde].x + static_cast<float>(random(20) - 20) + TileEngine.XOffset,
                             Hals[AnimEnde].y + static_cast<float>(random(20) - 20), FUNKE);
 
-                    SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_EXPLOSION1);
+                    SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::EXPLOSION1);
                     AnimCount = 2.5f;
                     AnimEnde--;
 
@@ -813,7 +813,7 @@ void GegnerMetalHead::DoKI() {
                             PartikelSystem.PushPartikel(xPos + 30.0f + static_cast<float>(random(160)),
                                                         yPos + 50.0f + static_cast<float>(random(80)), SMOKE3);
 
-                        SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+                        SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION2);
                     }
 
                     if (AnimEnde <= 0)
@@ -835,12 +835,12 @@ void GegnerMetalHead::DoKI() {
     r.right = 110;
 
     for (int p = 0; p < NUMPLAYERS; p++)
-        if (Handlung != GEGNER_EXPLODIEREN &&
+        if (Handlung != GEGNER::EXPLODIEREN &&
             SpriteCollision(xPos + 50.0f, yPos + 130.0f, r,
                             Player[p].xpos, Player[p].ypos, Player[p].CollideRect) == true) {
             // Beim Ansaugen gleich viel abziehen und Ansaugen beenden
             //
-            if (Handlung == GEGNER_SPECIAL2 &&
+            if (Handlung == GEGNER::SPECIAL2 &&
                     Player[p].Handlung != PlayerActionEnum::RADELN &&
                     Player[p].Handlung != PlayerActionEnum::RADELN_FALL) {
                     Player[p].DamagePlayer(500.0f);
@@ -855,7 +855,7 @@ void GegnerMetalHead::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerMetalHead::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION2);
 
     Player[0].Score += 12500;
 

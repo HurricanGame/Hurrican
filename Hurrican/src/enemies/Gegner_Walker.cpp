@@ -14,7 +14,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerWalker::GegnerWalker(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     AnimStart = 0;
     AnimEnde = 11;
     AnimSpeed = 0.5f;
@@ -43,7 +43,7 @@ void GegnerWalker::DoKI() {
             BlickRichtung = RECHTS;
             xSpeed = 10.0f;
 
-            if (Handlung == GEGNER_WATSCHELN)
+            if (Handlung == GEGNER::WATSCHELN)
                 Energy = 0;
         }
 
@@ -52,7 +52,7 @@ void GegnerWalker::DoKI() {
             BlickRichtung = LINKS;
             xSpeed = -10.0f;
 
-            if (Handlung == GEGNER_WATSCHELN)
+            if (Handlung == GEGNER::WATSCHELN)
                 Energy = 0;
         }
 
@@ -60,7 +60,7 @@ void GegnerWalker::DoKI() {
 
     // In Richtung Spieler laufen, wenn angeschossen
     //
-    if (DamageTaken > 0 && Handlung != GEGNER_WATSCHELN && Handlung != GEGNER_SPRINGEN) {
+    if (DamageTaken > 0 && Handlung != GEGNER::WATSCHELN && Handlung != GEGNER::SPRINGEN) {
         if (pAim->xpos < xPos) {
             BlickRichtung = LINKS;
             xSpeed = -10.0f;
@@ -72,16 +72,16 @@ void GegnerWalker::DoKI() {
 
     // Spieler kann Walker auf die Birne hopsen
     //
-    if (Handlung != GEGNER_WATSCHELN && Handlung != GEGNER_SPRINGEN)
+    if (Handlung != GEGNER::WATSCHELN && Handlung != GEGNER::SPRINGEN)
         PlattformTest(GegnerRect[GegnerArt]);
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_LAUFEN:  // Normal laufen und dabei ab und zu schiessen
+        case GEGNER::LAUFEN:  // Normal laufen und dabei ab und zu schiessen
         {
             // Testen, ob der Walker runterfällt
             if (!(blocku & BLOCKWERT_WAND) && !(blocku & BLOCKWERT_PLATTFORM)) {
-                Handlung = GEGNER_FALLEN;
+                Handlung = GEGNER::FALLEN;
                 yAcc = 4.0f;
             }
 
@@ -96,18 +96,18 @@ void GegnerWalker::DoKI() {
                     AnimPhase = 12;
                     AnimEnde = 20;
                     xSpeed = 0.0f;
-                    Handlung = GEGNER_SCHIESSEN;
+                    Handlung = GEGNER::SCHIESSEN;
                 }
             }
         } break;
 
-        case GEGNER_SCHIESSEN:  // gegner schiesst auf den Spieler und läuft dann
+        case GEGNER::SCHIESSEN:  // gegner schiesst auf den Spieler und läuft dann
         {
             xSpeed = 0.0f;
 
             if (AnimPhase == AnimStart &&  // Weiterlaufen
                 AnimCount == 0.0f) {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 AnimStart = 0;
                 AnimPhase = 0;
                 AnimEnde = 11;
@@ -116,7 +116,7 @@ void GegnerWalker::DoKI() {
 
             // Schuss abgeben
             if (AnimPhase == 17 && AnimCount == 0.0f) {
-                SoundManager.PlayWave(100, 128, 18000 + random(2000), SOUND_LASERSHOT);
+                SoundManager.PlayWave(100, 128, 18000 + random(2000), SOUND::LASERSHOT);
 
                 if (BlickRichtung == LINKS)
                     Projectiles.PushProjectile(xPos - 18.0f, yPos + 23.0f, WALKER_LASER);
@@ -125,16 +125,16 @@ void GegnerWalker::DoKI() {
             }
         } break;
 
-        case GEGNER_WATSCHELN:  // Walker ist getroffen und haut ab
+        case GEGNER::WATSCHELN:  // Walker ist getroffen und haut ab
         {
             // Testen, ob der Walker runterfällt
             if (!(blocku & BLOCKWERT_WAND) && !(blocku & BLOCKWERT_PLATTFORM)) {
-                Handlung = GEGNER_SPRINGEN;
+                Handlung = GEGNER::SPRINGEN;
                 yAcc = 3.0f;
             }
         } break;
 
-        case GEGNER_FALLEN:  // Normal runterfallen
+        case GEGNER::FALLEN:  // Normal runterfallen
         {
             // Keine zu hohe Geschwindigkeit
             if (ySpeed > 25.0f)
@@ -142,13 +142,13 @@ void GegnerWalker::DoKI() {
 
             // Testen, ob der Walker auf den Boden kommt
             if (blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM) {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 yAcc = 0.0f;
                 ySpeed = 0.0f;
             }
         } break;
 
-        case GEGNER_SPRINGEN:  // Getroffen fallen
+        case GEGNER::SPRINGEN:  // Getroffen fallen
         {
             // Keine zu hohe Geschwindigkeit
             if (ySpeed > 30.0f)
@@ -156,7 +156,7 @@ void GegnerWalker::DoKI() {
 
             // Testen, ob der Walker auf den Boden kommt
             if (ySpeed > 0.0f && (blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM)) {
-                Handlung = GEGNER_WATSCHELN;
+                Handlung = GEGNER::WATSCHELN;
                 yAcc = 0.0f;
                 ySpeed = 0.0f;
                 xSpeed = static_cast<float>(25 * BlickRichtung);
@@ -186,20 +186,20 @@ void GegnerWalker::DoKI() {
                 AnimPhase = 20;
                 AnimStart = 20;
                 AnimEnde = 31;
-                Handlung = GEGNER_SPRINGEN;
+                Handlung = GEGNER::SPRINGEN;
 
                 xSpeed = 0.0f;
                 ySpeed = -30.0f;
                 yAcc = 5.0f;
 
-                SoundManager.PlayWave(100, 128, 11025, SOUND_WALKERGIGGLE);
+                SoundManager.PlayWave(100, 128, 11025, SOUND::WALKERGIGGLE);
                 blocku = TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
                 yPos -= 5.0f;
             }
         }
 
     // Testen, ob der Spieler den Walker berührt hat
-    if (Handlung != GEGNER_WATSCHELN && Handlung != GEGNER_SPRINGEN)
+    if (Handlung != GEGNER::WATSCHELN && Handlung != GEGNER::SPRINGEN)
         TestDamagePlayers(4.0f SYNC, false);
 }
 
@@ -212,7 +212,7 @@ void GegnerWalker::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos - 20.0f + static_cast<float>(random(45)),
                                     yPos - 20.0f + static_cast<float>(random(45)), EXPLOSION_MEDIUM2);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 100;
 }

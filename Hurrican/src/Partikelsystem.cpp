@@ -2428,8 +2428,8 @@ void PartikelClass::Run() {
                         vol = 0;
 
                     // DKS - Added function WaveIsPlaying() to SoundManagerClass:
-                    if (!SoundManager.WaveIsPlaying(SOUND_DROP))
-                        SoundManager.PlayWave(vol, 128, 6000 + random(6000), SOUND_DROP);
+                    if (!SoundManager.WaveIsPlaying(SOUND::DROP))
+                        SoundManager.PlayWave(vol, 128, 6000 + random(6000), SOUND::DROP);
                 }
 
             } break;

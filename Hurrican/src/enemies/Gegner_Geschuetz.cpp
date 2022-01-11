@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerGeschuetz::GegnerGeschuetz(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     BlickRichtung = LINKS;
     Energy = 50;
     Value1 = Wert1;
@@ -35,10 +35,10 @@ void GegnerGeschuetz::DoKI() {
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
         // Kanone hängt an der Decke und wartet bis der Spieler in seine Reichweite kommt
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             // Spieler in Sichtweite ? Dann aufmachen
             if (pAim->ypos + 70 >= yPos && PlayerAbstandHoriz() < 400 && PlayerAbstandVert() < 400) {
-                Handlung = GEGNER_SCHIESSEN;
+                Handlung = GEGNER::SCHIESSEN;
                 AnimPhase = 1;
                 AnimStart = 11;
                 AnimEnde = 11;
@@ -46,22 +46,22 @@ void GegnerGeschuetz::DoKI() {
             }
         } break;
 
-        case GEGNER_SCHIESSEN: {
+        case GEGNER::SCHIESSEN: {
             // Schuss abgeben?
             if (AnimPhase == AnimStart) {
                 Projectiles.PushProjectile(xPos + 27.0f, yPos + 36.0f, KRABBLERLASER1);
                 SoundManager.PlayWave3D(static_cast<int>(xPos + 30.0f), static_cast<int>(yPos + 30.0f), 44000,
-                                        SOUND_LASERSHOT);
-                Handlung = GEGNER_SCHLIESSEN;
+                                        SOUND::LASERSHOT);
+                Handlung = GEGNER::SCHLIESSEN;
                 AnimEnde = 25;
                 AnimStart = 0;
             }
         } break;
 
-        case GEGNER_SCHLIESSEN: {
+        case GEGNER::SCHLIESSEN: {
             // ganz geschlossen?
             if (AnimPhase == AnimStart) {
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
                 AnimEnde = 0;
                 AnimStart = 0;
                 AnimPhase = 0;
@@ -89,7 +89,7 @@ void GegnerGeschuetz::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(random(40)),
                                     yPos + static_cast<float>(random(40)), LONGFUNKE);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 200;
 }

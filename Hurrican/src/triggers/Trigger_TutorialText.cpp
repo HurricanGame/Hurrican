@@ -19,7 +19,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerTutorialText::GegnerTutorialText(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     BlickRichtung = LINKS;
     Energy = 100;
     Value1 = Wert1;
@@ -93,7 +93,7 @@ void GegnerTutorialText::DoKI() {
         GUI.ShowBox(displayed_text.c_str(), 100);
         GUI.SetTextID(Value1);
 
-        SoundManager.PlayWave(100, 128, 11025, SOUND_MESSAGE);
+        SoundManager.PlayWave(100, 128, 11025, SOUND::MESSAGE);
     }
 
     // Spieler weg und Trigger auf dem Screen? Dann ausfaden

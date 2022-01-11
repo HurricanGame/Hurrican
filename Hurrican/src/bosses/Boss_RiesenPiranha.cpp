@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerRiesenPiranha::GegnerRiesenPiranha(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     AnimStart = 0;
     AnimEnde = 4;
     AnimSpeed = 2.0f;
@@ -55,7 +55,7 @@ void GegnerRiesenPiranha::DoKI() {
     if (BlickRichtung == LINKS)
         if (blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND) {
             xSpeed = 0;
-            Handlung = GEGNER_DREHEN;
+            Handlung = GEGNER::DREHEN;
             AnimPhase = 4;
             AnimStart = 0;
             AnimEnde = 8;
@@ -65,7 +65,7 @@ void GegnerRiesenPiranha::DoKI() {
         if (blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND) {
             xSpeed = 0;
             xPos -= 1.0f;
-            Handlung = GEGNER_DREHEN;
+            Handlung = GEGNER::DREHEN;
             AnimPhase = 4;
             AnimStart = 0;
             AnimEnde = 8;
@@ -89,19 +89,19 @@ void GegnerRiesenPiranha::DoKI() {
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_LAUFEN:  // Piranha schwimmt rum
+        case GEGNER::LAUFEN:  // Piranha schwimmt rum
         {
             if (pAim->InLiquid == true &&  // Spieler im Wasser und
                 PlayerAbstand() <= 300)    // in Sichtweite ?
             {
                 // Piranha links oder rechts am Spieler vorbei ?
                 // Dann umdrehen und weiter verfolgen
-                if (Handlung == GEGNER_LAUFEN) {
+                if (Handlung == GEGNER::LAUFEN) {
                     if ((BlickRichtung == LINKS && pAim->xpos > xPos + GegnerRect[GegnerArt].right - 20) ||
 
                         (BlickRichtung == RECHTS && pAim->xpos + pAim->CollideRect.right < xPos)) {
                         xSpeed = 0;
-                        Handlung = GEGNER_DREHEN;
+                        Handlung = GEGNER::DREHEN;
                         AnimPhase = 4;
                         AnimStart = 0;
                         AnimEnde = 8;
@@ -115,10 +115,10 @@ void GegnerRiesenPiranha::DoKI() {
             }
         } break;
 
-        case GEGNER_DREHEN:  // Piranha dreht sich um
+        case GEGNER::DREHEN:  // Piranha dreht sich um
         {
             if (AnimPhase == AnimStart) {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 AnimEnde = 4;
                 AnimStart = 0;
                 AnimPhase = 0;
@@ -165,7 +165,7 @@ void GegnerRiesenPiranha::GegnerExplode() {
     // und Extra Leben rauslassen
     Gegner.PushGegner(xPos + 110.0f, yPos + 100.0f, ONEUP, 0, 0, ChangeLight);
 
-    // SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND_EXPLOSION1);	// Sound ausgeben
+    // SoundManager.PlayWave(100, 128, -rand()%2000+11025, SOUND::EXPLOSION1);	// Sound ausgeben
 
     Player[0].Score += 4000;
 }

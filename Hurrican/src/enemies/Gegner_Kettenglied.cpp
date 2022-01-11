@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerKettenglied::GegnerKettenglied(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     Energy = 1000;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -55,7 +55,7 @@ void GegnerKettenglied::DoKI() {
     //
     switch (Handlung) {
         // Stein wartet bis der Spieler darüber läuft
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             // Schaden genommen? Dann diesen Schaden dem Parent zufügen
             if (Energy < 1000.0f) {
                 if (pParent->AnimCount <= 0.0f) {
@@ -68,7 +68,7 @@ void GegnerKettenglied::DoKI() {
         } break;
 
         // Kettenglied fliegt los
-        case GEGNER_SPECIAL: {
+        case GEGNER::SPECIAL: {
             AnimCount = static_cast<float>(random(360));
 
             Destroyable = false;
@@ -76,12 +76,12 @@ void GegnerKettenglied::DoKI() {
             ySpeed = -static_cast<float>(random(40) - 20);
             yAcc = 5.0f;
 
-            Handlung = GEGNER_SPECIAL2;
+            Handlung = GEGNER::SPECIAL2;
 
             AnimSpeed = 255.0f;
         } break;
 
-        case GEGNER_SPECIAL2: {
+        case GEGNER::SPECIAL2: {
             uint32_t bu = TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
 
             if (bu & BLOCKWERT_WAND && ySpeed > 0.0f) {

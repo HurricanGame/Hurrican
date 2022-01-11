@@ -11,7 +11,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerMiniRocket::GegnerMiniRocket(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_INIT;
+    Handlung = GEGNER::INIT;
     Energy = 20;
     ChangeLight = Light;
     Destroyable = true;
@@ -147,7 +147,7 @@ void GegnerMiniRocket::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerMiniRocket::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
 
     for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(xPos + static_cast<float>(random(20)),

@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerMutant::GegnerMutant(int Wert1, int Wert2, bool Light) {
-    //Handlung = GEGNER_STEHEN;
+    //Handlung = GEGNER::STEHEN;
     HitSound = 1;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -24,13 +24,13 @@ GegnerMutant::GegnerMutant(int Wert1, int Wert2, bool Light) {
     JumpDelay = 0;
 
     if (Value1 == 0) {
-        Handlung = GEGNER_LAUFEN;
+        Handlung = GEGNER::LAUFEN;
         AnimSpeed = 0.8f;
         AnimStart = 4;
         AnimPhase = 4;
         AnimEnde = 17;
     } else {
-        Handlung = GEGNER_EINFLIEGEN;
+        Handlung = GEGNER::EINFLIEGEN;
         AnimSpeed = 3.0f;
         AnimStart = 1;
         AnimPhase = 1;
@@ -49,7 +49,7 @@ GegnerMutant::GegnerMutant(int Wert1, int Wert2, bool Light) {
 
 void GegnerMutant::DoKI() {
     switch (Handlung) {
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             if (PlayerAbstandHoriz() > 20) {
                 SimpleAnimation();
 
@@ -76,7 +76,7 @@ void GegnerMutant::DoKI() {
                     JumpDelay -= 1.0f SYNC;
 
                 if (JumpDelay <= 0.0f) {
-                    Handlung = GEGNER_SPRINGEN;
+                    Handlung = GEGNER::SPRINGEN;
                     xSpeed = 15.0f * BlickRichtung;
                     AnimStart = 18;
                     AnimPhase = 18;
@@ -88,15 +88,15 @@ void GegnerMutant::DoKI() {
 
                     // DKS - Sound was barely audible with volume of 10, pretty sure this was a typo..
                     //      I went ahead and added 3D panning effect while fixing volume problem:
-                    // SoundManager.PlayWave(10, 128, 12000 + rand()%2000, SOUND_MUTANT);
+                    // SoundManager.PlayWave(10, 128, 12000 + rand()%2000, SOUND::MUTANT);
                     SoundManager.PlayWave3D(static_cast<int>(xPos) + 50, static_cast<int>(yPos) + 45, 12000 + random(2000),
-                                            SOUND_MUTANT);
+                                            SOUND::MUTANT);
                 }
             }
 
         } break;
 
-        case GEGNER_SPRINGEN: {
+        case GEGNER::SPRINGEN: {
             if (AnimPhase < 24)
                 SimpleAnimation();
             else {
@@ -106,7 +106,7 @@ void GegnerMutant::DoKI() {
 
             // wieder laufen?
             if (ySpeed > 0.0f && (blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM)) {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 AnimSpeed = 0.8f;
                 AnimStart = 4;
                 AnimPhase = 4;
@@ -114,7 +114,7 @@ void GegnerMutant::DoKI() {
             }
         } break;
 
-        case GEGNER_EINFLIEGEN: {
+        case GEGNER::EINFLIEGEN: {
             SimpleAnimation();
 
             // Am Boden kurz warten
@@ -124,16 +124,16 @@ void GegnerMutant::DoKI() {
             // Aufgekommen?
             if (blocku & BLOCKWERT_WAND && ySpeed > 0.0f) {
                 // DKS - While fixing volume of jumping (look at note further above), made this 3D too:
-                // SoundManager.PlayWave(100, 128, 11025, SOUND_SCHLEIM);
+                // SoundManager.PlayWave(100, 128, 11025, SOUND::SCHLEIM);
                 SoundManager.PlayWave3D(static_cast<int>(xPos) + 50,
-                                        static_cast<int>(yPos) + 45, 11025, SOUND_SCHLEIM);
+                                        static_cast<int>(yPos) + 45, 11025, SOUND::SCHLEIM);
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
             }
 
             // Jetzt loskrabbeln
             if (AnimPhase > 3) {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 AnimSpeed = 0.8f;
                 AnimStart = 4;
                 AnimPhase = 4;
@@ -142,7 +142,7 @@ void GegnerMutant::DoKI() {
         } break;
     }
 
-    if (Handlung != GEGNER_EINFLIEGEN)
+    if (Handlung != GEGNER::EINFLIEGEN)
         TestDamagePlayers(6.0f SYNC);
 }
 
@@ -164,13 +164,13 @@ void GegnerMutant::GegnerExplode() {
                                     yPos + 10.0f + static_cast<float>(random(60)), SCHLEIM);
 
     // DKS - While fixing volume of jumping (look at note further above), made this 3D too:
-    // SoundManager.PlayWave(75, 128, 8000 + rand()%4000, SOUND_MUTANT);
+    // SoundManager.PlayWave(75, 128, 8000 + rand()%4000, SOUND::MUTANT);
     SoundManager.PlayWave3D(static_cast<int>(xPos) + 50,
                             static_cast<int>(yPos) + 45, 8000 + random(4000),
-                            SOUND_MUTANT);
+                            SOUND::MUTANT);
 
-    SoundManager.PlayWave(40, 128, 11025, SOUND_EXPLOSION4);
-    SoundManager.PlayWave(40, 128, 6000 + random(4000), SOUND_SCHLEIM);
+    SoundManager.PlayWave(40, 128, 11025, SOUND::EXPLOSION4);
+    SoundManager.PlayWave(40, 128, 6000 + random(4000), SOUND::SCHLEIM);
 
     Player[0].Score += 500;
 }

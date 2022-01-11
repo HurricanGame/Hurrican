@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerWasserMine::GegnerWasserMine(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 20;
     AnimSpeed = 3.0f;
     ChangeLight = Light;
@@ -38,8 +38,8 @@ void GegnerWasserMine::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerWasserMine::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000, SOUND_EXPLOSION3);
-    SoundManager.PlayWave(100, 128, 14000, SOUND_EXPLOSION4);
+    SoundManager.PlayWave(100, 128, 8000, SOUND::EXPLOSION3);
+    SoundManager.PlayWave(100, 128, 14000, SOUND::EXPLOSION4);
 
     ShakeScreen(5.0f);
 

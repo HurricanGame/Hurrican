@@ -15,7 +15,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerKugelRiesig::GegnerKugelRiesig(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 50;
     BlickRichtung = LINKS;
     yAcc = 5.0f;                                         // Fallen lassen
@@ -61,7 +61,7 @@ void GegnerKugelRiesig::DoKI() {
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_LAUFEN:  // Kugel hüpft im Gang rum
+        case GEGNER::LAUFEN:  // Kugel hüpft im Gang rum
         {
             // Vertikal abhüpfen
             //
@@ -105,7 +105,7 @@ void GegnerKugelRiesig::GegnerExplode() {
     // Explosion
     PartikelSystem.PushPartikel(xPos - 5.0f, yPos - 5.0f, EXPLOSION_BIG);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION4);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION4);  // Sound ausgeben
 
     Player[0].Score += 300;
 }

@@ -158,7 +158,7 @@ bool ConsoleClass::CONSOLE_CHEAT(char *cheat) {
     bool result = CONSOLE_COMMAND(convertText(cheat));
 
     if (result) {
-        SoundManager.PlayWave(100, 128, 15000, SOUND_MESSAGE);
+        SoundManager.PlayWave(100, 128, 15000, SOUND::MESSAGE);
         Player[0].Score = 0;
         HasCheated = true;
     }
@@ -650,7 +650,7 @@ void ConsoleClass::CheckInput() {
 
     for (int i = 0; i < 256; i++) {
         if (KeyDown(i) && !Pressed[i]) {
-            SoundManager.PlayWave(100, 128, 15000, SOUND_CLICK);
+            SoundManager.PlayWave(100, 128, 15000, SOUND::CLICK);
 
             Pressed[i] = true;
 

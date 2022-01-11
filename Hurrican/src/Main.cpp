@@ -576,13 +576,13 @@ bool GameInit2() {
     }
 
     // Menumusik laden und spielen
-    SoundManager.LoadSong("menu.it", MUSIC_MENU);
+    SoundManager.LoadSong("menu.it", MUSIC::MENU);
 
     // DKS - Renamed:
     // SoundManager.ResetAllSongVolumes();
     SoundManager.ResetAllSoundVolumes();
 
-    SoundManager.PlaySong(MUSIC_MENU, false);
+    SoundManager.PlaySong(MUSIC::MENU, false);
 
     // Menu initialisieren
     // DKS - Resized menufont.png and added missing glyphs to make Swedish translation work:
@@ -623,132 +623,132 @@ bool GameInit2() {
     InitReplacers();
 
     // Sounds laden
-    SoundManager.LoadWave("spreadshot.wav", SOUND_SPREADSHOT, false);
-    SoundManager.LoadWave("lasershot.wav", SOUND_LASERSHOT, false);
-    SoundManager.LoadWave("bounceshot.wav", SOUND_BOUNCESHOT, false);
-    SoundManager.LoadWave("explosion1.wav", SOUND_EXPLOSION1, false);
-    SoundManager.LoadWave("explosion2.wav", SOUND_EXPLOSION2, false);
-    SoundManager.LoadWave("explosion3.wav", SOUND_EXPLOSION3, false);
-    SoundManager.LoadWave("explosion4.wav", SOUND_EXPLOSION4, false);
-    SoundManager.LoadWave("walkergiggle.wav", SOUND_WALKERGIGGLE, false);
-    SoundManager.LoadWave("collect.wav", SOUND_COLLECT, false);
-    SoundManager.LoadWave("hit.wav", SOUND_SPREADHIT, false);
-    SoundManager.LoadWave("canon.wav", SOUND_CANON, false);
-    SoundManager.LoadWave("click.wav", SOUND_CLICK, false);
-    SoundManager.LoadWave("blitzstart.wav", SOUND_BLITZSTART, false);
-    SoundManager.LoadWave("blitzende.wav", SOUND_BLITZENDE, false);
-    SoundManager.LoadWave("blitz.wav", SOUND_BLITZ, true);
-    SoundManager.LoadWave("blitzstart.wav", SOUND_BLITZSTART_P2, false);
-    SoundManager.LoadWave("blitzende.wav", SOUND_BLITZENDE_P2, false);
-    SoundManager.LoadWave("blitz.wav", SOUND_BLITZ_P2, true);
-    SoundManager.LoadWave("powerline.wav", SOUND_POWERLINE, false);
-    SoundManager.LoadWave("landen.wav", SOUND_LANDEN, false);
-    SoundManager.LoadWave("waterin.wav", SOUND_WATERIN, false);
-    SoundManager.LoadWave("waterout.wav", SOUND_WATEROUT, false);
-    SoundManager.LoadWave("dive.wav", SOUND_DIVE, false);
-    SoundManager.LoadWave("feuerfalle.wav", SOUND_FEUERFALLE, false);
-    SoundManager.LoadWave("abzug.wav", SOUND_ABZUG, false);
-    SoundManager.LoadWave("abzug.wav", SOUND_ABZUG_P2, false);
-    SoundManager.LoadWave("funke.wav", SOUND_FUNKE, false);
-    SoundManager.LoadWave("funke2.wav", SOUND_FUNKE2, false);
-    SoundManager.LoadWave("funke3.wav", SOUND_FUNKE3, false);
-    SoundManager.LoadWave("funke4.wav", SOUND_FUNKE4, false);
-    SoundManager.LoadWave("granate.wav", SOUND_GRANATE, false);
-    SoundManager.LoadWave("stonefall.wav", SOUND_STONEFALL, false);
-    SoundManager.LoadWave("stoneexplode.wav", SOUND_STONEEXPLODE, false);
-    SoundManager.LoadWave("rocket.wav", SOUND_ROCKET, false);
-    SoundManager.LoadWave("presse.wav", SOUND_PRESSE, false);
-    SoundManager.LoadWave("ammo.wav", SOUND_AMMO, false);
-    SoundManager.LoadWave("kotzen.wav", SOUND_KOTZEN, false);
-    SoundManager.LoadWave("made.wav", SOUND_MADE, false);
-    SoundManager.LoadWave("droneshot.wav", SOUND_DRONE, false);
-    SoundManager.LoadWave("waterdrop.wav", SOUND_DROP, false);
-    SoundManager.LoadWave("thunder.wav", SOUND_THUNDER, false);
-    SoundManager.LoadWave("upgrade.wav", SOUND_UPGRADE, false);
-    SoundManager.LoadWave("column.wav", SOUND_COLUMN, false);
-    SoundManager.LoadWave("door.wav", SOUND_DOOR, true);
-    SoundManager.LoadWave("doorstop.wav", SOUND_DOORSTOP, false);
-    SoundManager.LoadWave("switch.wav", SOUND_SWITCH, false);
-    SoundManager.LoadWave("schleim.wav", SOUND_SCHLEIM, false);
-    SoundManager.LoadWave("message.wav", SOUND_MESSAGE, false);
-    SoundManager.LoadWave("beamload.wav", SOUND_BEAMLOAD, true);
-    SoundManager.LoadWave("beamload2.wav", SOUND_BEAMLOAD2, true);
-    SoundManager.LoadWave("beamload.wav", SOUND_BEAMLOAD_P2, true);
-    SoundManager.LoadWave("beamload2.wav", SOUND_BEAMLOAD2_P2, true);
+    SoundManager.LoadWave("spreadshot.wav", SOUND::SPREADSHOT, false);
+    SoundManager.LoadWave("lasershot.wav", SOUND::LASERSHOT, false);
+    SoundManager.LoadWave("bounceshot.wav", SOUND::BOUNCESHOT, false);
+    SoundManager.LoadWave("explosion1.wav", SOUND::EXPLOSION1, false);
+    SoundManager.LoadWave("explosion2.wav", SOUND::EXPLOSION2, false);
+    SoundManager.LoadWave("explosion3.wav", SOUND::EXPLOSION3, false);
+    SoundManager.LoadWave("explosion4.wav", SOUND::EXPLOSION4, false);
+    SoundManager.LoadWave("walkergiggle.wav", SOUND::WALKERGIGGLE, false);
+    SoundManager.LoadWave("collect.wav", SOUND::COLLECT, false);
+    SoundManager.LoadWave("hit.wav", SOUND::SPREADHIT, false);
+    SoundManager.LoadWave("canon.wav", SOUND::CANON, false);
+    SoundManager.LoadWave("click.wav", SOUND::CLICK, false);
+    SoundManager.LoadWave("blitzstart.wav", SOUND::BLITZSTART, false);
+    SoundManager.LoadWave("blitzende.wav", SOUND::BLITZENDE, false);
+    SoundManager.LoadWave("blitz.wav", SOUND::BLITZ, true);
+    SoundManager.LoadWave("blitzstart.wav", SOUND::BLITZSTART_P2, false);
+    SoundManager.LoadWave("blitzende.wav", SOUND::BLITZENDE_P2, false);
+    SoundManager.LoadWave("blitz.wav", SOUND::BLITZ_P2, true);
+    SoundManager.LoadWave("powerline.wav", SOUND::POWERLINE, false);
+    SoundManager.LoadWave("landen.wav", SOUND::LANDEN, false);
+    SoundManager.LoadWave("waterin.wav", SOUND::WATERIN, false);
+    SoundManager.LoadWave("waterout.wav", SOUND::WATEROUT, false);
+    SoundManager.LoadWave("dive.wav", SOUND::DIVE, false);
+    SoundManager.LoadWave("feuerfalle.wav", SOUND::FEUERFALLE, false);
+    SoundManager.LoadWave("abzug.wav", SOUND::ABZUG, false);
+    SoundManager.LoadWave("abzug.wav", SOUND::ABZUG_P2, false);
+    SoundManager.LoadWave("funke.wav", SOUND::FUNKE, false);
+    SoundManager.LoadWave("funke2.wav", SOUND::FUNKE2, false);
+    SoundManager.LoadWave("funke3.wav", SOUND::FUNKE3, false);
+    SoundManager.LoadWave("funke4.wav", SOUND::FUNKE4, false);
+    SoundManager.LoadWave("granate.wav", SOUND::GRANATE, false);
+    SoundManager.LoadWave("stonefall.wav", SOUND::STONEFALL, false);
+    SoundManager.LoadWave("stoneexplode.wav", SOUND::STONEEXPLODE, false);
+    SoundManager.LoadWave("rocket.wav", SOUND::ROCKET, false);
+    SoundManager.LoadWave("presse.wav", SOUND::PRESSE, false);
+    SoundManager.LoadWave("ammo.wav", SOUND::AMMO, false);
+    SoundManager.LoadWave("kotzen.wav", SOUND::KOTZEN, false);
+    SoundManager.LoadWave("made.wav", SOUND::MADE, false);
+    SoundManager.LoadWave("droneshot.wav", SOUND::DRONE, false);
+    SoundManager.LoadWave("waterdrop.wav", SOUND::DROP, false);
+    SoundManager.LoadWave("thunder.wav", SOUND::THUNDER, false);
+    SoundManager.LoadWave("upgrade.wav", SOUND::UPGRADE, false);
+    SoundManager.LoadWave("column.wav", SOUND::COLUMN, false);
+    SoundManager.LoadWave("door.wav", SOUND::DOOR, true);
+    SoundManager.LoadWave("doorstop.wav", SOUND::DOORSTOP, false);
+    SoundManager.LoadWave("switch.wav", SOUND::SWITCH, false);
+    SoundManager.LoadWave("schleim.wav", SOUND::SCHLEIM, false);
+    SoundManager.LoadWave("message.wav", SOUND::MESSAGE, false);
+    SoundManager.LoadWave("beamload.wav", SOUND::BEAMLOAD, true);
+    SoundManager.LoadWave("beamload2.wav", SOUND::BEAMLOAD2, true);
+    SoundManager.LoadWave("beamload.wav", SOUND::BEAMLOAD_P2, true);
+    SoundManager.LoadWave("beamload2.wav", SOUND::BEAMLOAD2_P2, true);
 
     // DKS - This was commented out in original code, but I've added support for
     //      Trigger_Stampfstein's chain retraction sound back in:
-    SoundManager.LoadWave("chain.wav", SOUND_CHAIN, true);
+    SoundManager.LoadWave("chain.wav", SOUND::CHAIN, true);
 
-    SoundManager.LoadWave("mushroomjump.wav", SOUND_MUSHROOMJUMP, false);
-    SoundManager.LoadWave("golemload.wav", SOUND_GOLEMLOAD, false);
-    SoundManager.LoadWave("golemshot.wav", SOUND_GOLEMSHOT, false);
-    SoundManager.LoadWave("dampf.wav", SOUND_STEAM, false);
-    SoundManager.LoadWave("dampf2.wav", SOUND_STEAM2, false);
-    SoundManager.LoadWave("hit2.wav", SOUND_HIT, false);
-    SoundManager.LoadWave("hit3.wav", SOUND_HIT2, false);
-    SoundManager.LoadWave("spiderlila.wav", SOUND_LILA, false);
-    SoundManager.LoadWave("fireball.wav", SOUND_FIREBALL, false);
-    SoundManager.LoadWave("takeoff.wav", SOUND_TAKEOFF, false);
-    SoundManager.LoadWave("laugh.wav", SOUND_LAUGH, false);
-    SoundManager.LoadWave("standup.wav", SOUND_STANDUP, false);
-    SoundManager.LoadWave("gatling.wav", SOUND_GATLING, false);
-    SoundManager.LoadWave("glassbreak.wav", SOUND_GLASSBREAK, false);
-    SoundManager.LoadWave("mutant.wav", SOUND_MUTANT, false);
-    SoundManager.LoadWave("heart1.wav", SOUND_HEART1, false);
-    SoundManager.LoadWave("heart2.wav", SOUND_HEART2, false);
-    SoundManager.LoadWave("secret.wav", SOUND_SECRET, false);
-    SoundManager.LoadWave("mario.wav", SOUND_MARIO, false);
-    SoundManager.LoadWave("flamethrower.wav", SOUND_FLAMETHROWER, true);
-    SoundManager.LoadWave("flamethrower.wav", SOUND_FLAMETHROWER2, true);
+    SoundManager.LoadWave("mushroomjump.wav", SOUND::MUSHROOMJUMP, false);
+    SoundManager.LoadWave("golemload.wav", SOUND::GOLEMLOAD, false);
+    SoundManager.LoadWave("golemshot.wav", SOUND::GOLEMSHOT, false);
+    SoundManager.LoadWave("dampf.wav", SOUND::STEAM, false);
+    SoundManager.LoadWave("dampf2.wav", SOUND::STEAM2, false);
+    SoundManager.LoadWave("hit2.wav", SOUND::HIT, false);
+    SoundManager.LoadWave("hit3.wav", SOUND::HIT2, false);
+    SoundManager.LoadWave("spiderlila.wav", SOUND::LILA, false);
+    SoundManager.LoadWave("fireball.wav", SOUND::FIREBALL, false);
+    SoundManager.LoadWave("takeoff.wav", SOUND::TAKEOFF, false);
+    SoundManager.LoadWave("laugh.wav", SOUND::LAUGH, false);
+    SoundManager.LoadWave("standup.wav", SOUND::STANDUP, false);
+    SoundManager.LoadWave("gatling.wav", SOUND::GATLING, false);
+    SoundManager.LoadWave("glassbreak.wav", SOUND::GLASSBREAK, false);
+    SoundManager.LoadWave("mutant.wav", SOUND::MUTANT, false);
+    SoundManager.LoadWave("heart1.wav", SOUND::HEART1, false);
+    SoundManager.LoadWave("heart2.wav", SOUND::HEART2, false);
+    SoundManager.LoadWave("secret.wav", SOUND::SECRET, false);
+    SoundManager.LoadWave("mario.wav", SOUND::MARIO, false);
+    SoundManager.LoadWave("flamethrower.wav", SOUND::FLAMETHROWER, true);
+    SoundManager.LoadWave("flamethrower.wav", SOUND::FLAMETHROWER2, true);
 
     // Sound Trigger
-    SoundManager.LoadWave("ambient_wasserfall.wav", SOUND_WASSERFALL, true);
-    SoundManager.LoadWave("ambient_wind.wav", SOUND_WIND, true);
+    SoundManager.LoadWave("ambient_wasserfall.wav", SOUND::WASSERFALL, true);
+    SoundManager.LoadWave("ambient_wind.wav", SOUND::WIND, true);
 
     // Voices laden
-    SoundManager.LoadWave("v_spread.wav", SOUND_VOICE_SPREAD, false);
-    SoundManager.LoadWave("v_laser.wav", SOUND_VOICE_LASER, false);
-    SoundManager.LoadWave("v_bounce.wav", SOUND_VOICE_BOUNCE, false);
-    SoundManager.LoadWave("v_lightning.wav", SOUND_VOICE_LIGHTNING, false);
-    SoundManager.LoadWave("v_shield.wav", SOUND_VOICE_SHIELD, false);
-    SoundManager.LoadWave("v_powerup.wav", SOUND_VOICE_POWERUP, false);
-    SoundManager.LoadWave("v_wheel.wav", SOUND_VOICE_WHEELPOWER, false);
-    SoundManager.LoadWave("v_grenade.wav", SOUND_VOICE_GRENADE, false);
-    SoundManager.LoadWave("v_powerline.wav", SOUND_VOICE_POWERLINE, false);
-    SoundManager.LoadWave("v_smartbomb.wav", SOUND_VOICE_SMARTBOMB, false);
-    SoundManager.LoadWave("v_rapidfire.wav", SOUND_VOICE_RAPIDFIRE, false);
-    SoundManager.LoadWave("v_supershot.wav", SOUND_VOICE_SUPERSHOT, false);
-    SoundManager.LoadWave("v_extralife.wav", SOUND_VOICE_EXTRALIFE, false);
+    SoundManager.LoadWave("v_spread.wav", SOUND::VOICE_SPREAD, false);
+    SoundManager.LoadWave("v_laser.wav", SOUND::VOICE_LASER, false);
+    SoundManager.LoadWave("v_bounce.wav", SOUND::VOICE_BOUNCE, false);
+    SoundManager.LoadWave("v_lightning.wav", SOUND::VOICE_LIGHTNING, false);
+    SoundManager.LoadWave("v_shield.wav", SOUND::VOICE_SHIELD, false);
+    SoundManager.LoadWave("v_powerup.wav", SOUND::VOICE_POWERUP, false);
+    SoundManager.LoadWave("v_wheel.wav", SOUND::VOICE_WHEELPOWER, false);
+    SoundManager.LoadWave("v_grenade.wav", SOUND::VOICE_GRENADE, false);
+    SoundManager.LoadWave("v_powerline.wav", SOUND::VOICE_POWERLINE, false);
+    SoundManager.LoadWave("v_smartbomb.wav", SOUND::VOICE_SMARTBOMB, false);
+    SoundManager.LoadWave("v_rapidfire.wav", SOUND::VOICE_RAPIDFIRE, false);
+    SoundManager.LoadWave("v_supershot.wav", SOUND::VOICE_SUPERSHOT, false);
+    SoundManager.LoadWave("v_extralife.wav", SOUND::VOICE_EXTRALIFE, false);
 
     // Endgegner Sounds
-    SoundManager.LoadWave("pharaoramm.wav", SOUND_PHARAORAMM, false);
-    SoundManager.LoadWave("pharaodie.wav", SOUND_PHARAODIE, false);
-    SoundManager.LoadWave("spiderscream.wav", SOUND_SPIDERSCREAM, false);
-    SoundManager.LoadWave("spiderwalk.wav", SOUND_SPIDERWALK, false);
-    SoundManager.LoadWave("spiderlaser.wav", SOUND_SPIDERLASER, false);
-    SoundManager.LoadWave("spidergrenade.wav", SOUND_SPIDERGRENADE, false);
-    SoundManager.LoadWave("blitzhit.wav", SOUND_BLITZHIT, false);
-    SoundManager.LoadWave("blitzhit2.wav", SOUND_BLITZHIT2, false);
-    SoundManager.LoadWave("bratlaser.wav", SOUND_BRATLASER, false);
-    SoundManager.LoadWave("metal.wav", SOUND_KLONG, false);
+    SoundManager.LoadWave("pharaoramm.wav", SOUND::PHARAORAMM, false);
+    SoundManager.LoadWave("pharaodie.wav", SOUND::PHARAODIE, false);
+    SoundManager.LoadWave("spiderscream.wav", SOUND::SPIDERSCREAM, false);
+    SoundManager.LoadWave("spiderwalk.wav", SOUND::SPIDERWALK, false);
+    SoundManager.LoadWave("spiderlaser.wav", SOUND::SPIDERLASER, false);
+    SoundManager.LoadWave("spidergrenade.wav", SOUND::SPIDERGRENADE, false);
+    SoundManager.LoadWave("blitzhit.wav", SOUND::BLITZHIT, false);
+    SoundManager.LoadWave("blitzhit2.wav", SOUND::BLITZHIT2, false);
+    SoundManager.LoadWave("bratlaser.wav", SOUND::BRATLASER, false);
+    SoundManager.LoadWave("metal.wav", SOUND::KLONG, false);
 
     // restliche musiken laden
     // DKS - Flugsack song is now loaded on-demand in Gegner_Helper.cpp:
-    // SoundManager.LoadSong("flugsack.it",	MUSIC_FLUGSACK);
+    // SoundManager.LoadSong("flugsack.it",	MUSIC::FLUGSACK);
 
-    SoundManager.LoadSong("credits.it", MUSIC_CREDITS);
+    SoundManager.LoadSong("credits.it", MUSIC::CREDITS);
 
     // DKS - New parameter specifies whether to loop, and stage-clear music shouldn't:
-    SoundManager.LoadSong("stageclear.it", MUSIC_STAGECLEAR, false);
+    SoundManager.LoadSong("stageclear.it", MUSIC::STAGECLEAR, false);
 
     // DKS - New parameter specifies whether to loop, and game-over music shouldn't:
-    SoundManager.LoadSong("gameover.it", MUSIC_GAMEOVER, false);
+    SoundManager.LoadSong("gameover.it", MUSIC::GAMEOVER, false);
 
-    SoundManager.LoadSong("highscore.it", MUSIC_HIGHSCORE);
+    SoundManager.LoadSong("highscore.it", MUSIC::HIGHSCORE);
 
     // DKS - Punisher music is now loaded on-demand in Gegner_Punisher.cpp
-    // SoundManager.LoadSong("Punisher.it", MUSIC_PUNISHER);
+    // SoundManager.LoadSong("Punisher.it", MUSIC::PUNISHER);
 
     if (!GameRunning)
         return false;
@@ -849,7 +849,7 @@ bool Heartbeat() {
                 if (DirectInput.AnyKeyDown() || DirectInput.AnyButtonDown())
                     pIntro->EndIntro();
             } else {
-                SoundManager.StopSong(MUSIC_INTRO, false);
+                SoundManager.StopSong(MUSIC::INTRO, false);
                 delete (pIntro);
                 InitNewGame();
                 InitNewGameLevel();
@@ -863,7 +863,7 @@ bool Heartbeat() {
 
             if (KeyDown(DIK_ESCAPE))  // Intro beenden ?
             {
-                SoundManager.StopSong(MUSIC_OUTTRO, false);
+                SoundManager.StopSong(MUSIC::OUTTRO, false);
                 delete (pOuttro);
                 Stage = MAX_LEVELS;
                 pMenu->CheckForNewHighscore();

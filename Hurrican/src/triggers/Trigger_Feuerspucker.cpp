@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerFeuerspucker::GegnerFeuerspucker(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     BlickRichtung = LINKS;
     Energy = 10000;
     Value1 = Wert1;
@@ -34,28 +34,28 @@ void GegnerFeuerspucker::DoKI() {
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
         // Pausieren
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             AnimCount += 1.0f SYNC;
 
             // Wieder losballern ?
             if (AnimCount >= 20.0f) {
                 AnimCount = 0.0f;
-                Handlung = GEGNER_SCHIESSEN;
+                Handlung = GEGNER::SCHIESSEN;
 
                 // Sound abspielen, je nach Player Abstand lauter oder leiser
                 SoundManager.PlayWave3D(static_cast<int>(xPos) + 20,
-                                        static_cast<int>(yPos) + 20, 11025, SOUND_FEUERFALLE);
+                                        static_cast<int>(yPos) + 20, 11025, SOUND::FEUERFALLE);
             }
         } break;
 
         // Feuer spucken
-        case GEGNER_SCHIESSEN: {
+        case GEGNER::SCHIESSEN: {
             AnimCount += 1.0f SYNC;
 
             // Pausieren ?
             if (AnimCount >= Value2) {
                 AnimCount = 0.0f;
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
             }
 
             if (PlayerAbstand() < 800) {
@@ -94,7 +94,7 @@ void GegnerFeuerspucker::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerFeuerspucker::GegnerExplode() {
-    SoundManager.PlayWave(25, 128, 11025, SOUND_EXPLOSION1);
+    SoundManager.PlayWave(25, 128, 11025, SOUND::EXPLOSION1);
 
     for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(xPos - 50.0f + static_cast<float>(random(48)),

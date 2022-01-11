@@ -14,7 +14,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerSchleimAlien::GegnerSchleimAlien(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     Energy = 30;
     HitSound = 1;
 
@@ -99,7 +99,7 @@ void GegnerSchleimAlien::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos + 15.0f + static_cast<float>(random(20)),
                                     yPos + 15.0f + static_cast<float>(random(20)), SCHLEIM2);
 
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_SCHLEIM);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::SCHLEIM);  // Sound ausgeben
 
     Player[0].Score += 120;
 }

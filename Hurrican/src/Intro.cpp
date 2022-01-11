@@ -39,7 +39,7 @@ IntroClass::IntroClass() {
     BildNr = 0;
     HorizCounter = 0.0f;
     Counter = 0.0f;
-    SoundManager.LoadSong("intro.it", MUSIC_INTRO);
+    SoundManager.LoadSong("intro.it", MUSIC::INTRO);
 
     while (DirectInput.AreAllKeysReleased() == false)
         DirectInput.UpdateTastatur();
@@ -91,7 +91,7 @@ IntroClass::~IntroClass() {
     SoundManager.StopSongs();
 
     // DKS - Game was not freeing music data, added this:
-    SoundManager.UnloadSong(MUSIC_INTRO);
+    SoundManager.UnloadSong(MUSIC::INTRO);
 }
 
 // --------------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ void IntroClass::EndIntro() {
         }
 
         Zustand = IntroStateEnum::FADEOUT;
-        SoundManager.FadeSong(MUSIC_INTRO, -1.5f, 0, false);
+        SoundManager.FadeSong(MUSIC::INTRO, -1.5f, 0, false);
     }
 }
 
@@ -138,8 +138,8 @@ void IntroClass::DoIntro() {
         {
             // Mucke spielen
             // DKS - Added function SongIsPlaying() to SoundManagerClass:
-            if (!SoundManager.SongIsPlaying(MUSIC_INTRO))
-                SoundManager.PlaySong(MUSIC_INTRO, false);
+            if (!SoundManager.SongIsPlaying(MUSIC::INTRO))
+                SoundManager.PlaySong(MUSIC::INTRO, false);
 
             // und einfaden
             Counter += 10.0f SYNC;

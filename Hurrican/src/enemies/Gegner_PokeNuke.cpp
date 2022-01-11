@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerPokeNuke::GegnerPokeNuke(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     Energy = 10;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -30,13 +30,13 @@ void GegnerPokeNuke::DoKI() {
     BlickRichtung = LINKS;
 
     switch (Handlung) {
-        case GEGNER_STEHEN: {
-            Handlung = GEGNER_FALLEN;
+        case GEGNER::STEHEN: {
+            Handlung = GEGNER::FALLEN;
             yPos -= 480.0f + 217.0f;
         } break;
 
         // Stein fällt runter
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             if (yPos > g_Fahrstuhl_yPos - 217.0f)
                 Energy = 0.0f;
 
@@ -61,7 +61,7 @@ void GegnerPokeNuke::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerPokeNuke::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION2);
     ShakeScreen(7);
 
     pAim = &Player[0];

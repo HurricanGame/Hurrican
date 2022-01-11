@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerStachelbeere::GegnerStachelbeere(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 120;
     BlickRichtung = LINKS;
     Value1 = Wert1;
@@ -37,8 +37,8 @@ void GegnerStachelbeere::DoDraw() {
     bool mirrored = (BlickRichtung == RECHTS);
 
     switch (Handlung) {
-        case GEGNER_LAUFEN:
-        case GEGNER_LAUFEN2: {
+        case GEGNER::LAUFEN:
+        case GEGNER::LAUFEN2: {
             pGegnerGrafix[GegnerArt]->SetRect(AnimPhase * 60, 0, (AnimPhase + 1) * 60, 60);
             pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
                                                    yPos - TileEngine.YOffset, AnimPhase, color,
@@ -46,9 +46,9 @@ void GegnerStachelbeere::DoDraw() {
 
         } break;
 
-        case GEGNER_OEFFNEN:
-        case GEGNER_SCHLIESSEN:
-        case GEGNER_SCHIESSEN: {
+        case GEGNER::OEFFNEN:
+        case GEGNER::SCHLIESSEN:
+        case GEGNER::SCHIESSEN: {
             pGegnerGrafix[GegnerArt]->SetRect((AnimPhase % 3) * 120, (AnimPhase / 3 + 1) * 60,
                                               (AnimPhase % 3) * 120 + 120, (AnimPhase / 3 + 2) * 60);
 
@@ -83,7 +83,7 @@ void GegnerStachelbeere::DoKI() {
     }
 
     // AnimSpeed passend zur Bewegugnsgeschwindigkeit setzen
-    if (Handlung == GEGNER_LAUFEN || Handlung == GEGNER_LAUFEN2) {
+    if (Handlung == GEGNER::LAUFEN || Handlung == GEGNER::LAUFEN2) {
 
         float temp = xSpeed;
         if (temp < 0.0f)
@@ -121,7 +121,7 @@ void GegnerStachelbeere::DoKI() {
     // Je nach Handlung richtig verhalten
     //
     switch (Handlung) {
-        case GEGNER_OEFFNEN:  // Kugel klappt auf
+        case GEGNER::OEFFNEN:  // Kugel klappt auf
         {
             SimpleAnimation();
 
@@ -129,13 +129,13 @@ void GegnerStachelbeere::DoKI() {
                 ShotCount = 4;
                 RollCount = 4.0f;
 
-                Handlung = GEGNER_SCHIESSEN;
+                Handlung = GEGNER::SCHIESSEN;
                 AnimStart = -1;
                 AnimPhase = AnimEnde - 2;
             }
         } break;
 
-        case GEGNER_SCHIESSEN:  // Kugel ballert
+        case GEGNER::SCHIESSEN:  // Kugel ballert
         {
             RollCount -= 1.0f SYNC;
 
@@ -145,7 +145,7 @@ void GegnerStachelbeere::DoKI() {
                 if (BlickRichtung == LINKS)
                     off = -60;
 
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_GRANATE);
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::GRANATE);
 
                 Gegner.PushGegner(xPos + static_cast<float>(ShotCount * 15 + off),
                                   yPos + 10.0f, MINIROCKET, 0, 99, false, false);
@@ -154,26 +154,26 @@ void GegnerStachelbeere::DoKI() {
                 ShotCount--;
 
                 if (ShotCount <= 0) {
-                    Handlung = GEGNER_SCHLIESSEN;
+                    Handlung = GEGNER::SCHLIESSEN;
                 }
             }
         } break;
 
-        case GEGNER_SCHLIESSEN:  // Kugel klappt wieder zu
+        case GEGNER::SCHLIESSEN:  // Kugel klappt wieder zu
         {
             SimpleAnimation(true);
 
             if (AnimPhase <= AnimStart + 1) {
                 AnimStart = 0;
                 AnimEnde = 5;
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 RollCount = 50.0f;
                 Destroyable = false;
             }
         } break;
 
         // abbremsen
-        case GEGNER_LAUFEN2: {
+        case GEGNER::LAUFEN2: {
             SimpleAnimation();
             bool stop = false;
 
@@ -194,16 +194,16 @@ void GegnerStachelbeere::DoKI() {
             // angehalten?
             if (stop) {
                 xSpeed = 0.0f;
-                Handlung = GEGNER_OEFFNEN;
+                Handlung = GEGNER::OEFFNEN;
                 Destroyable = true;
                 AnimPhase = 0;
                 AnimEnde = 16;
                 AnimSpeed = 1.0f;
-                SoundManager.PlayWave(50, 128, 12000 + random(1000), SOUND_STEAM);
+                SoundManager.PlayWave(50, 128, 12000 + random(1000), SOUND::STEAM);
             }
         } break;
 
-        case GEGNER_LAUFEN:  // Kugel hüpft im Gang rum
+        case GEGNER::LAUFEN:  // Kugel hüpft im Gang rum
         {
             if (RollCount > 0.0f)
                 RollCount -= 1.0f SYNC;
@@ -232,7 +232,7 @@ void GegnerStachelbeere::DoKI() {
             }
 
             if (ySpeed == 0.0f && RollCount <= 0.0f && (blocku & BLOCKWERT_WAND) && PlayerAbstand() < 400) {
-                Handlung = GEGNER_LAUFEN2;
+                Handlung = GEGNER::LAUFEN2;
                 xAcc = 0.0f;
             }
 
@@ -260,7 +260,7 @@ void GegnerStachelbeere::GegnerExplode() {
     PartikelSystem.PushPartikel(xPos - 15.0f,
                                 yPos - 15.0f, EXPLOSION_BIG);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION4);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION4);  // Sound ausgeben
 
     Player[0].Score += 300;
 

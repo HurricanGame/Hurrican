@@ -16,7 +16,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerSchleimBoller::GegnerSchleimBoller(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_FALLEN;
+    Handlung = GEGNER::FALLEN;
     HitSound = 1;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -77,7 +77,7 @@ void GegnerSchleimBoller::DoDraw() {
 void GegnerSchleimBoller::DoKI() {
     BlickRichtung = LINKS;
 
-    if (Handlung == GEGNER_FALLEN)
+    if (Handlung == GEGNER::FALLEN)
         SimpleAnimation();
 
     // nach Animation am Boden wieder abspringen
@@ -90,7 +90,7 @@ void GegnerSchleimBoller::DoKI() {
             AnimPhase++;                // Und nächste Animationsphase
             if (AnimPhase >= AnimEnde)  // Animation von zu Ende	?
             {
-                Handlung = GEGNER_FALLEN;
+                Handlung = GEGNER::FALLEN;
                 ySpeed = -static_cast<float>(random(10) + 30);
                 yAcc = 8.0f;
                 AnimPhase = 0;
@@ -108,7 +108,7 @@ void GegnerSchleimBoller::DoKI() {
     switch (Handlung) {
         // rumhopsen
         //
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             if (ySpeed > 50.0f) {
                 ySpeed = 50.0f;
                 yAcc = 0.0f;
@@ -117,7 +117,7 @@ void GegnerSchleimBoller::DoKI() {
             // am Boden abhopfen?
             //
             if (ySpeed > 0.0f && (blocku & BLOCKWERT_WAND || blocku & BLOCKWERT_PLATTFORM)) {
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
                 AnimEnde = 12;
                 AnimSpeed = 0.5f;
                 ySpeed = 0.0f;
@@ -131,7 +131,7 @@ void GegnerSchleimBoller::DoKI() {
 
         } break;
 
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
         } break;
     }
 
@@ -152,8 +152,8 @@ void GegnerSchleimBoller::GegnerExplode() {
                                     yPos + 15.0f + static_cast<float>(random(20)), SCHLEIM);
 
     // DKS - Added function WaveIsPlaying() to SoundManagerClass:
-    if (!SoundManager.WaveIsPlaying(SOUND_SCHLEIM))
-        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_SCHLEIM);  // Sound ausgeben
+    if (!SoundManager.WaveIsPlaying(SOUND::SCHLEIM))
+        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::SCHLEIM);  // Sound ausgeben
 
     Player[0].Score += 150;
 

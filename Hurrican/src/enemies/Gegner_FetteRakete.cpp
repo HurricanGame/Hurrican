@@ -11,7 +11,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerFetteRakete::GegnerFetteRakete(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_INIT;
+    Handlung = GEGNER::INIT;
     Energy = 50;
     ChangeLight = Light;
     Destroyable = true;
@@ -29,7 +29,7 @@ GegnerFetteRakete::GegnerFetteRakete(int Wert1, int Wert2, bool Light) {
         xSpeed = 0.0f;
         ySpeed = -10.0f;
         yAcc = 2.0f;
-        Handlung = GEGNER_DREHEN;
+        Handlung = GEGNER::DREHEN;
         AnimCount = 12.0f;
     }
 }
@@ -54,7 +54,7 @@ void GegnerFetteRakete::DoKI() {
     BlickRichtung = LINKS;
 
     switch (Handlung) {
-        case GEGNER_INIT: {
+        case GEGNER::INIT: {
             // Rakete kam nicht vom Drachen? Dann
             // enthält Wert1 den Winkel, in den die Raketen fliegen sollen
 
@@ -64,11 +64,11 @@ void GegnerFetteRakete::DoKI() {
             xSpeed = sin_deg(Value1) * 35.0f;
             ySpeed = -cos_deg(Value1) * 35.0f;
 
-            Handlung = GEGNER_LAUFEN;
+            Handlung = GEGNER::LAUFEN;
         } break;
 
         // Rakete dreht sich in Richtung Hurrican
-        case GEGNER_DREHEN: {
+        case GEGNER::DREHEN: {
             AnimCount -= 1.0f SYNC;
 
             // Gegner auf Spieler ausrichten
@@ -108,8 +108,8 @@ void GegnerFetteRakete::DoKI() {
 
             // zuende gedreht? Dann losfliegen
             if (AnimCount < 0.0f) {
-                Handlung = GEGNER_LAUFEN;
-                SoundManager.PlayWave(100, 128, 9000 + random(2000), SOUND_ROCKET);
+                Handlung = GEGNER::LAUFEN;
+                SoundManager.PlayWave(100, 128, 9000 + random(2000), SOUND::ROCKET);
 
                 xAcc = 0;
                 yAcc = 0;
@@ -123,7 +123,7 @@ void GegnerFetteRakete::DoKI() {
 
         // Rakete fliegt
         //
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             SimpleAnimation();
 
             SmokeDelay -= 1.0f SYNC;
@@ -158,7 +158,7 @@ void GegnerFetteRakete::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerFetteRakete::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
 
     PartikelSystem.PushPartikel(xPos - 10.0f, yPos - 20.0f, EXPLOSION_MEDIUM2);
 

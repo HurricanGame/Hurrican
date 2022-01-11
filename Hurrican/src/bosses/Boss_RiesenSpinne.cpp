@@ -11,7 +11,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerRiesenSpinne::GegnerRiesenSpinne(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_NOTVISIBLE;
+    Handlung = GEGNER::NOTVISIBLE;
     BlickRichtung = LINKS;
 
     Energy = 100000;
@@ -288,7 +288,7 @@ void GegnerRiesenSpinne::DoDraw() {
     }
 
     // Evtl. Lila Leuchten vor kopf
-    if (Handlung == GEGNER_LAUFEN_LINKS && Energy < 75000.0f) {
+    if (Handlung == GEGNER::LAUFEN_LINKS && Energy < 75000.0f) {
         int a = static_cast<int>(255.0f - ShotDelay / 15.0f * 255.0f);
 
         DirectGraphics.SetAdditiveMode();
@@ -307,7 +307,7 @@ void GegnerRiesenSpinne::DoDraw() {
     }
 
     // Evtl. Lila Leuchten vor kopf
-    if (Handlung == GEGNER_SPECIAL2) {
+    if (Handlung == GEGNER::SPECIAL2) {
         int a = static_cast<int>(ShotDelay);
 
         DirectGraphics.SetAdditiveMode();
@@ -352,32 +352,32 @@ void GegnerRiesenSpinne::RandomHandlung() {
     switch (j) {
         case 0: {
             ShotCount = 10 + random(10);
-            Handlung = GEGNER_SCHIESSEN;
+            Handlung = GEGNER::SCHIESSEN;
         } break;
 
         case 1: {
-            Handlung = GEGNER_ABSENKEN;
+            Handlung = GEGNER::ABSENKEN;
         } break;
 
         case 2: {
             ShotCount = 20 + random(10);
-            Handlung = GEGNER_SPECIAL;
+            Handlung = GEGNER::SPECIAL;
         } break;
 
         case 3: {
-            Handlung = GEGNER_ABSENKENZWEI;
+            Handlung = GEGNER::ABSENKENZWEI;
         } break;
 
         case 4: {
-            Handlung = GEGNER_LAUFEN_LINKS;
+            Handlung = GEGNER::LAUFEN_LINKS;
             ShotDelay = 1.0f;
             ShotMode = random(2);
         } break;
 
         case 5: {
-            Handlung = GEGNER_SPECIAL2;
+            Handlung = GEGNER::SPECIAL2;
             Projectiles.PushProjectile(static_cast<float>(Value1), yPos + yBody + 110.0f, SPIDERLASER);
-            SoundManager.PlayWave(100, 128, 11025, SOUND_BEAMLOAD2);
+            SoundManager.PlayWave(100, 128, 11025, SOUND::BEAMLOAD2);
             AnimCount = 140;
             ShotDelay = 0.0f;
         } break;
@@ -390,7 +390,7 @@ void GegnerRiesenSpinne::RandomHandlung() {
 
 void GegnerRiesenSpinne::DoKI() {
     // Energie anzeigen
-    if (Handlung != GEGNER_NOTVISIBLE && Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER::NOTVISIBLE && Handlung != GEGNER::EXPLODIEREN)
         HUD.ShowBossHUD(100000, Energy);
 
     // Levelausschnitt auf die RiesenSpinne zentrieren, sobald diese sichtbar wird
@@ -398,25 +398,25 @@ void GegnerRiesenSpinne::DoKI() {
         TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
                                TileStateEnum::SCROLLTOLOCK);  // Level auf die Spinne zentrieren
 
-        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC::STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_NOTVISIBLE:  // Warten bis der Screen zentriert wurde
+        case GEGNER::NOTVISIBLE:  // Warten bis der Screen zentriert wurde
         {
             if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 // DKS - Added function SongIsPlaying() to SoundManagerClass:
-                if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
-                    SoundManager.PlaySong(MUSIC_BOSS, false);
+                if (!SoundManager.SongIsPlaying(MUSIC::BOSS))
+                    SoundManager.PlaySong(MUSIC::BOSS, false);
 
                 // Und Boss erscheinen lassen
-                Handlung = GEGNER_EINFLIEGEN;
+                Handlung = GEGNER::EINFLIEGEN;
             }
         } break;
 
-        case GEGNER_EINFLIEGEN:  // Spinne läuft ins Level ein
+        case GEGNER::EINFLIEGEN:  // Spinne läuft ins Level ein
         {
             yPos -= 55;
             Energy = 100000;
@@ -424,18 +424,18 @@ void GegnerRiesenSpinne::DoKI() {
 
             //			if (xPos <= Value1 + 460)			// Weit genug eingelaufen ?
             {
-                SoundManager.PlayWave(100, 128, 11025, SOUND_SPIDERSCREAM);
-                Handlung = GEGNER_LAUFEN_LINKS;
+                SoundManager.PlayWave(100, 128, 11025, SOUND::SPIDERSCREAM);
+                Handlung = GEGNER::LAUFEN_LINKS;
                 ShotDelay = 1.0f;
                 ShotMode = random(2);
             }
         } break;
 
         // Spinne läuft nach links oder rechts
-        case GEGNER_CRUSHEN:
-        case GEGNER_LAUFEN_LINKS:
-        case GEGNER_LAUFEN_RECHTS:
-        case GEGNER_EXPLODIEREN: {
+        case GEGNER::CRUSHEN:
+        case GEGNER::LAUFEN_LINKS:
+        case GEGNER::LAUFEN_RECHTS:
+        case GEGNER::EXPLODIEREN: {
             // Kopf gerade richten
             if (HeadWinkel > 0.0f)
                 HeadWinkel -= 1.0f SYNC;
@@ -452,7 +452,7 @@ void GegnerRiesenSpinne::DoKI() {
             if (WalkCount < 0.0f)
                 WalkCount += TWO_PI;
 
-            if (Handlung == GEGNER_CRUSHEN) {
+            if (Handlung == GEGNER::CRUSHEN) {
                 if (HeadWinkel < 45.0f)
                     HeadWinkel += 1.0f SYNC;
 
@@ -462,7 +462,7 @@ void GegnerRiesenSpinne::DoKI() {
                     WalkDir = -35.0f;
 
                 if (xPos < Value1 - 50) {
-                    Handlung = GEGNER_LAUFEN_RECHTS;
+                    Handlung = GEGNER::LAUFEN_RECHTS;
                     ShotDelay = 15.0f;
                 }
 
@@ -477,14 +477,14 @@ void GegnerRiesenSpinne::DoKI() {
                 Wegschieben(coll, 50.0f);
             }
 
-            if (Handlung == GEGNER_LAUFEN_LINKS) {
+            if (Handlung == GEGNER::LAUFEN_LINKS) {
                 WalkDir -= 1.0f SYNC;
 
                 if (WalkDir < -8.0f)
                     WalkDir = -8.0f;
 
                 if (xPos < Value1 + 100) {
-                    Handlung = GEGNER_LAUFEN_RECHTS;
+                    Handlung = GEGNER::LAUFEN_RECHTS;
                     ShotDelay = 15.0f;
                 }
 
@@ -498,7 +498,7 @@ void GegnerRiesenSpinne::DoKI() {
                     if (ShotDelay < 0.0f) {
                         ShotDelay = 12.0f;
 
-                        SoundManager.PlayWave(100, 128, 8000 + random(1000), SOUND_LILA);
+                        SoundManager.PlayWave(100, 128, 8000 + random(1000), SOUND::LILA);
                         PartikelSystem.PushPartikel(xPos + 30.0f - 50.0f, yPos + yBody + 85.0f - 35.0f,
                                                     EXPLOSIONFLARE2);
 
@@ -514,7 +514,7 @@ void GegnerRiesenSpinne::DoKI() {
                 }
             }
 
-            if (Handlung == GEGNER_LAUFEN_RECHTS || Handlung == GEGNER_EXPLODIEREN) {
+            if (Handlung == GEGNER::LAUFEN_RECHTS || Handlung == GEGNER::EXPLODIEREN) {
                 WalkDir += 1.0f SYNC;
 
                 // Körper hoch, wenn er grade unten ist
@@ -525,7 +525,7 @@ void GegnerRiesenSpinne::DoKI() {
                         yBody -= 0.0f;
                 }
 
-                if (Handlung == GEGNER_LAUFEN_RECHTS) {
+                if (Handlung == GEGNER::LAUFEN_RECHTS) {
                     // Spinnen hinten rauslassen
                     ShotDelay -= 1.0f SYNC;
                     if (ShotDelay < 0.0f) {
@@ -540,21 +540,21 @@ void GegnerRiesenSpinne::DoKI() {
                     WalkDir = 30.0f;
 
                 else {
-                    if (Handlung == GEGNER_LAUFEN_RECHTS)
+                    if (Handlung == GEGNER::LAUFEN_RECHTS)
                         if (WalkDir > 8.0f)
                             WalkDir = 8.0f;
 
-                    if (Handlung == GEGNER_EXPLODIEREN)
+                    if (Handlung == GEGNER::EXPLODIEREN)
                         if (WalkDir > 4.0f)
                             WalkDir = 4.0f;
                 }
 
-                if (Handlung == GEGNER_LAUFEN_RECHTS)
+                if (Handlung == GEGNER::LAUFEN_RECHTS)
                     if (xPos > Value1 + 400)
                         RandomHandlung();
             }
 
-            if (Handlung == GEGNER_EXPLODIEREN) {
+            if (Handlung == GEGNER::EXPLODIEREN) {
                 Energy = 100.0f;
 
                 AnimCount -= 1.0f SYNC;
@@ -569,7 +569,7 @@ void GegnerRiesenSpinne::DoKI() {
                                                 yPos + static_cast<float>(random(100)), SMOKEBIG);
 
                     if (random(5) == 0)
-                        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION3 + random(2));
+                        SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION3 + random(2));
                 }
 
                 if (xPos > Value1 + 640)
@@ -587,14 +587,14 @@ void GegnerRiesenSpinne::DoKI() {
         } break;
 
         // Raketen abschiessen
-        case GEGNER_SCHIESSEN: {
+        case GEGNER::SCHIESSEN: {
             ShotDelay -= 1.0f SYNC;
 
             if (ShotDelay < 0.0f) {
                 ShotDelay = 4.0f;
 
                 // Rakete abschiessen
-                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_ROCKET);
+                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::ROCKET);
                 Gegner.PushGegner(xPos + 35.0f, yPos + 95.0f, FETTERAKETE, random(60) - 130, 0, false);
 
                 // Kopf zurückschnellen lassen
@@ -603,7 +603,7 @@ void GegnerRiesenSpinne::DoKI() {
                 // Shusscounter runterzählen
                 ShotCount--;
                 if (ShotCount == 0 || pAim->xpos > xPos - 50) {
-                    Handlung = GEGNER_LAUFEN_LINKS;
+                    Handlung = GEGNER::LAUFEN_LINKS;
                     ShotMode = random(2);
                     ShotDelay = 5.0f;
                 }
@@ -612,7 +612,7 @@ void GegnerRiesenSpinne::DoKI() {
         } break;
 
         // Kopf bewegen und Schüsse abgeben
-        case GEGNER_SPECIAL: {
+        case GEGNER::SPECIAL: {
             static float headdir = 1.0f;
 
             HeadWinkel += headdir SYNC;
@@ -628,7 +628,7 @@ void GegnerRiesenSpinne::DoKI() {
                 ShotDelay = 3.5f;
 
                 // Böller abschiessen
-                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_LILA);
+                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::LILA);
                 WinkelUebergabe = 180 - HeadWinkel * 1.5f;
                 // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
                 // Projectiles.PushProjectile(xPos - (float)cos(HeadWinkel * PI / 180.0f) * 10.0f,
@@ -643,7 +643,7 @@ void GegnerRiesenSpinne::DoKI() {
                 // Shusscounter runterzählen
                 ShotCount--;
                 if (ShotCount == 0) {
-                    Handlung = GEGNER_LAUFEN_LINKS;
+                    Handlung = GEGNER::LAUFEN_LINKS;
                     ShotMode = random(2);
                     ShotDelay = 5.0f;
                 }
@@ -651,7 +651,7 @@ void GegnerRiesenSpinne::DoKI() {
             }
         } break;
 
-        case GEGNER_SPECIAL2: {
+        case GEGNER::SPECIAL2: {
             // Flare einfaden
             if (ShotDelay < 255.0f)
                 ShotDelay += 5.8f SYNC;
@@ -661,18 +661,18 @@ void GegnerRiesenSpinne::DoKI() {
             // Counter runterzählen
             AnimCount -= 2.5f SYNC;
             if (AnimCount < 0.0f) {
-                Handlung = GEGNER_LAUFEN_LINKS;
+                Handlung = GEGNER::LAUFEN_LINKS;
                 ShotMode = random(2);
                 ShotDelay = 5.0f;
             }
         } break;
 
-        case GEGNER_ABSENKEN: {
+        case GEGNER::ABSENKEN: {
             yBody += 1.0f SYNC;
 
             // ganz unten?
             if (yBody > 50.0f) {
-                Handlung = GEGNER_AUFRICHTEN;
+                Handlung = GEGNER::AUFRICHTEN;
             }
 
             // schiessen
@@ -682,7 +682,7 @@ void GegnerRiesenSpinne::DoKI() {
                 ShotDelay = 10.0f;
 
                 // Böller abschiessen
-                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_LILA);
+                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::LILA);
                 Projectiles.PushProjectile(xPos + 20.0f, yPos + 80.0f + yBody, SPIDERSHOT2);
                 Projectiles.PushProjectile(xPos + 20.0f, yPos + 100.0f + yBody, SPIDERSHOT2);
 
@@ -691,22 +691,22 @@ void GegnerRiesenSpinne::DoKI() {
             }
         } break;
 
-        case GEGNER_ABSENKENZWEI: {
+        case GEGNER::ABSENKENZWEI: {
             yBody += 8.0f SYNC;
 
             // ganz unten? Dann nach links losrennen
             if (yBody > 50.0f) {
-                Handlung = GEGNER_CRUSHEN;
-                SoundManager.PlayWave(100, 128, 11025, SOUND_SPIDERSCREAM);
+                Handlung = GEGNER::CRUSHEN;
+                SoundManager.PlayWave(100, 128, 11025, SOUND::SPIDERSCREAM);
             }
         } break;
 
-        case GEGNER_AUFRICHTEN: {
+        case GEGNER::AUFRICHTEN: {
             yBody -= 1.0f SYNC;
 
             if (yBody <= 0.0f) {
                 yBody = 0.0f;
-                Handlung = GEGNER_LAUFEN_LINKS;
+                Handlung = GEGNER::LAUFEN_LINKS;
                 ShotMode = random(2);
                 ShotDelay = 5.0f;
                 // RandomHandlung();
@@ -719,7 +719,7 @@ void GegnerRiesenSpinne::DoKI() {
                 ShotDelay = 10.0f;
 
                 // Böller abschiessen
-                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND_LILA);
+                SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::LILA);
                 WinkelUebergabe = PlayerAbstandHoriz() / 10.0f;
                 Projectiles.PushProjectile(xPos + 20.0f, yPos + 80.0f + yBody, SPIDERSHOT2);
                 Projectiles.PushProjectile(xPos + 20.0f, yPos + 100.0f + yBody, SPIDERSHOT2);
@@ -743,14 +743,14 @@ void GegnerRiesenSpinne::DoKI() {
     if (DamageTaken > 0.0f) {
         // War es ein Fass? Dann den Kopf heben
         if (LastEnergy - Energy > 5000) {
-            if (Handlung != GEGNER_SPECIAL2)
+            if (Handlung != GEGNER::SPECIAL2)
                 DamageWackel = PI;
 
-            SoundManager.PlayWave(100, 128, 15000, SOUND_SPIDERSCREAM);
+            SoundManager.PlayWave(100, 128, 15000, SOUND::SPIDERSCREAM);
 
-            if (Handlung == GEGNER_SCHIESSEN || Handlung == GEGNER_SPECIAL || Handlung == GEGNER_ABSENKEN ||
-                Handlung == GEGNER_AUFRICHTEN)
-                Handlung = GEGNER_LAUFEN_LINKS;
+            if (Handlung == GEGNER::SCHIESSEN || Handlung == GEGNER::SPECIAL || Handlung == GEGNER::ABSENKEN ||
+                Handlung == GEGNER::AUFRICHTEN)
+                Handlung = GEGNER::LAUFEN_LINKS;
         } else
             DamageTaken = 0.0f;
 
@@ -772,14 +772,14 @@ void GegnerRiesenSpinne::DoKI() {
     TestDamagePlayers(4.0f SYNC);
 
     // Hat die Spinnen keine Energie mehr ? Dann explodiert sie
-    if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN) {
+    if (Energy <= 100.0f && Handlung != GEGNER::EXPLODIEREN) {
         Energy = 100.0f;
-        Handlung = GEGNER_EXPLODIEREN;
+        Handlung = GEGNER::EXPLODIEREN;
         AnimCount = 1.0f;
         Projectiles.ClearType(SPIDERLASER);
 
         // Endboss-Musik ausfaden und abschalten
-        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC::BOSS, -2.0f, 0, false);
     }
 }
 
@@ -789,7 +789,7 @@ void GegnerRiesenSpinne::DoKI() {
 
 void GegnerRiesenSpinne::GegnerExplode() {
     Player[0].Score += 15000;
-    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION2);
     ShakeScreen(5.0f);
 
     ScrolltoPlayeAfterBoss();

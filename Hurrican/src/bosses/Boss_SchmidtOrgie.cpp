@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerSchmidtOrgie::GegnerSchmidtOrgie(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_VERFOLGEN;
+    Handlung = GEGNER::VERFOLGEN;
     BlickRichtung = LINKS;
     Energy = 4500;
     ChangeLight = Light;
@@ -29,7 +29,7 @@ GegnerSchmidtOrgie::GegnerSchmidtOrgie(int Wert1, int Wert2, bool Light) {
 
 void GegnerSchmidtOrgie::DoKI() {
     // Linseneffekt ausfaden
-    if (Handlung != GEGNER_EXPLODIEREN) {
+    if (Handlung != GEGNER::EXPLODIEREN) {
         if (ShadowAlpha > 0.0f)
             ShadowAlpha -= 5.0f SYNC;
         else
@@ -42,46 +42,46 @@ void GegnerSchmidtOrgie::DoKI() {
     }
 
     // Energie anzeigen
-    if (Handlung != GEGNER_INIT && Handlung != GEGNER_VERFOLGEN && Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER::INIT && Handlung != GEGNER::VERFOLGEN && Handlung != GEGNER::EXPLODIEREN)
         HUD.ShowBossHUD(4500, Energy);
 
     // Boss aktivieren und Mucke laufen lassen
     //
-    if (Active == true && Handlung != GEGNER_VERFOLGEN && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
+    if (Active == true && Handlung != GEGNER::VERFOLGEN && TileEngine.Zustand == TileStateEnum::SCROLLBAR) {
         TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
                                TileStateEnum::SCROLLTOLOCK);  // Level auf den Boss zentrieren
 
-        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC::STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
         Gegner.PushGegner(xPos, yPos - 40, EXTRAS, 10, 0, false);
     }
 
     // Hat der Boss keine Energie mehr ? Dann explodiert er
-    if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN) {
-        Handlung = GEGNER_EXPLODIEREN;
+    if (Energy <= 100.0f && Handlung != GEGNER::EXPLODIEREN) {
+        Handlung = GEGNER::EXPLODIEREN;
 
         // Endboss-Musik ausfaden und abschalten
-        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC::BOSS, -2.0f, 0, false);
     }
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_INIT:  // Warten bis der Screen zentriert wurde
+        case GEGNER::INIT:  // Warten bis der Screen zentriert wurde
         {
             if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 //
                 // DKS - Added function SongIsPlaying() to SoundManagerClass:
-                if (!SoundManager.SongIsPlaying(MUSIC_BOSS)) {
-                    SoundManager.PlaySong(MUSIC_BOSS, false);
+                if (!SoundManager.SongIsPlaying(MUSIC::BOSS)) {
+                    SoundManager.PlaySong(MUSIC::BOSS, false);
 
                     // Und Boss erscheinen lassen
                     //
-                    Handlung = GEGNER_STEHEN;
+                    Handlung = GEGNER::STEHEN;
                 }
             }
         } break;
 
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             // ActionCounter runterzählen
             // bei null Gegner spawnen
             ActionCounter -= 1.5f SYNC;
@@ -142,14 +142,14 @@ void GegnerSchmidtOrgie::DoKI() {
 
         // warten, bis der Spieler den Gegner berührt hat, und dann aktivieren
         //
-        case GEGNER_VERFOLGEN: {
+        case GEGNER::VERFOLGEN: {
             if (PlayerAbstand() < 600 && pAim->xpos + 80 > xPos)
 
-                Handlung = GEGNER_INIT;
+                Handlung = GEGNER::INIT;
 
         } break;
 
-        case GEGNER_EXPLODIEREN: {
+        case GEGNER::EXPLODIEREN: {
             Energy = 0.0f;
         } break;
 

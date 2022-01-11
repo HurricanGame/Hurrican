@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerLaFass::GegnerLaFass(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_INIT;
+    Handlung = GEGNER::INIT;
     Energy = 1.0f;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -36,7 +36,7 @@ void GegnerLaFass::DoKI() {
     BlickRichtung = LINKS;
 
     switch (Handlung) {
-        case GEGNER_LAUFEN: {
+        case GEGNER::LAUFEN: {
             if ((blockl & BLOCKWERT_WAND) || (blockr & BLOCKWERT_WAND)) {
                 Energy = 0.0f;
                 Value2 = 99;
@@ -44,8 +44,8 @@ void GegnerLaFass::DoKI() {
 
         } break;
 
-        case GEGNER_INIT:
-            Handlung = GEGNER_LAUFEN;
+        case GEGNER::INIT:
+            Handlung = GEGNER::LAUFEN;
             break;
     }
 }

@@ -23,7 +23,7 @@ GegnerAuge::GegnerAuge(int Wert1, int Wert2, bool Light) {
     if (Wert1 < 0 || Wert1 > 11)
         Wert1 = 7;
 
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 1;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -56,9 +56,9 @@ void GegnerAuge::DoKI() {
     }
     // Animieren (nur drehen)
     //
-    if (Handlung != GEGNER_STEHEN) {
+    if (Handlung != GEGNER::STEHEN) {
         AnimCount += SpeedFaktor;  // Animationscounter weiterzählen
-        if (Handlung == GEGNER_DREHEN) {
+        if (Handlung == GEGNER::DREHEN) {
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
             {
                 AnimCount = 0;              // Dann wieder auf Null setzen
@@ -66,11 +66,11 @@ void GegnerAuge::DoKI() {
                 if (AnimPhase >= AnimEnde)  // Animation von zu Ende	?
                 {
                     AnimCount = 0.0f;
-                    Handlung = GEGNER_DREHEN2;
+                    Handlung = GEGNER::DREHEN2;
                     BlickRichtung *= -1;
                 }
             }
-        } else if (Handlung == GEGNER_DREHEN2) {
+        } else if (Handlung == GEGNER::DREHEN2) {
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
             {
                 AnimCount = 0;       // Dann wieder auf Null setzen
@@ -79,7 +79,7 @@ void GegnerAuge::DoKI() {
                 {
                     AnimPhase = 0;  // Dann wieder von vorne beginnen
                     AnimEnde = 0;
-                    Handlung = GEGNER_LAUFEN;
+                    Handlung = GEGNER::LAUFEN;
                 }
             }
         }
@@ -107,7 +107,7 @@ void GegnerAuge::DoKI() {
     //
     if ((xSpeed < 0.0f && (blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND)) ||
         (xSpeed > 0.0f && (blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND))) {
-        Handlung = GEGNER_DREHEN;
+        Handlung = GEGNER::DREHEN;
         AnimPhase = 0;
         AnimCount = 0.0f;
         AnimEnde = 5;
@@ -131,7 +131,7 @@ void GegnerAuge::GegnerExplode() {
         PartikelSystem.PushPartikel(xPos - 15.0f + static_cast<float>(random(20)),
                                     yPos - 15.0f + static_cast<float>(random(40)), EXPLOSION_MEDIUM2);
 
-    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND_EXPLOSION1);  // Sound ausgeben
+    SoundManager.PlayWave(100, 128, -random(2000) + 11025, SOUND::EXPLOSION1);  // Sound ausgeben
 
     Player[0].Score += 100;
 

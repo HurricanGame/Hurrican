@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerStahlfaust::GegnerStahlfaust(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_NOTVISIBLE;
+    Handlung = GEGNER::NOTVISIBLE;
     BlickRichtung = LINKS;
     Energy = 4000;
     Value1 = Wert1;
@@ -32,7 +32,7 @@ GegnerStahlfaust::GegnerStahlfaust(int Wert1, int Wert2, bool Light) {
 
 void GegnerStahlfaust::DoKI() {
     // Energie anzeigen
-    if (Handlung != GEGNER_INIT && Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER::INIT && Handlung != GEGNER::EXPLODIEREN)
         HUD.ShowBossHUD(4000, Energy);
 
     // Levelausschnitt auf die Faust zentrieren, sobald dieses sichtbar wird
@@ -40,9 +40,9 @@ void GegnerStahlfaust::DoKI() {
         TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2),
                                TileStateEnum::SCROLLTOLOCK);  // Level auf die Faust zentrieren
         yPos -= 300;                                   // und Faust aus dem Screen setzen
-        Handlung = GEGNER_INIT;
+        Handlung = GEGNER::INIT;
 
-        SoundManager.FadeSong(MUSIC_STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
+        SoundManager.FadeSong(MUSIC::STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
 
     // Zwischenboss blinkt nicht so lange wie die restlichen Gegner
@@ -56,8 +56,8 @@ void GegnerStahlfaust::DoKI() {
         PartikelSystem.PushPartikel(xPos + random(200) + 20, yPos + random(200) + 60, SMOKE);
 
     // Hat die Faust keine Energie mehr ? Dann explodiert sie
-    if (Energy <= 100.0f && Handlung != GEGNER_EXPLODIEREN) {
-        Handlung = GEGNER_EXPLODIEREN;
+    if (Energy <= 100.0f && Handlung != GEGNER::EXPLODIEREN) {
+        Handlung = GEGNER::EXPLODIEREN;
         xSpeed = 0.0f;
         ySpeed = 0.0f;
         xAcc = 0.0f;
@@ -66,25 +66,25 @@ void GegnerStahlfaust::DoKI() {
         SmokeDelay = 1.0f;
 
         // Endboss-Musik ausfaden und abschalten
-        SoundManager.FadeSong(MUSIC_BOSS, -2.0f, 0, false);
+        SoundManager.FadeSong(MUSIC::BOSS, -2.0f, 0, false);
     }
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {
-        case GEGNER_INIT:  // Warten bis der Screen zentriert wurde
+        case GEGNER::INIT:  // Warten bis der Screen zentriert wurde
         {
             if (TileEngine.Zustand == TileStateEnum::LOCKED) {
                 // Zwischenboss-Musik abspielen, sofern diese noch nicht gespielt wird
                 // DKS - Added function SongIsPlaying() to SoundManagerClass:
-                if (!SoundManager.SongIsPlaying(MUSIC_BOSS))
-                    SoundManager.PlaySong(MUSIC_BOSS, false);
+                if (!SoundManager.SongIsPlaying(MUSIC::BOSS))
+                    SoundManager.PlaySong(MUSIC::BOSS, false);
 
                 // Und Boss erscheinen lassen
-                Handlung = GEGNER_EINFLIEGEN2;
+                Handlung = GEGNER::EINFLIEGEN2;
             }
         } break;
 
-        case GEGNER_EINFLIEGEN2:  // Gegner kommt DAS ERSTE MAL in den Screen geflogen
+        case GEGNER::EINFLIEGEN2:  // Gegner kommt DAS ERSTE MAL in den Screen geflogen
         {
             Energy = 4000;
             DamageTaken = 0.0f;
@@ -92,22 +92,22 @@ void GegnerStahlfaust::DoKI() {
             yPos += static_cast<float>(8.0 SYNC);           // Faust nach unten bewegen
             if (yPos >= TileEngine.ScrolltoY)  // Weit genug unten ?
             {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 xAcc = -8.0f;
             }
         } break;
 
-        case GEGNER_EINFLIEGEN:  // Gegner kommt in den Screen geflogen
+        case GEGNER::EINFLIEGEN:  // Gegner kommt in den Screen geflogen
         {
             yPos += static_cast<float>(8.0 SYNC);           // Faust nach unten bewegen
             if (yPos >= TileEngine.ScrolltoY)  // Weit genug unten ?
             {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 xAcc = -8.0f;
             }
         } break;
 
-        case GEGNER_LAUFEN:  // Über dem Spieler schweben und ggf runtersausen
+        case GEGNER::LAUFEN:  // Über dem Spieler schweben und ggf runtersausen
         {
             AnimCount -= SpeedFaktor;
 
@@ -125,7 +125,7 @@ void GegnerStahlfaust::DoKI() {
             // Spieler unter der Faust ? Dann crushen
             if (pAim->xpos < xPos + GegnerRect[GegnerArt].right - 115 &&
                 pAim->xpos + pAim->CollideRect.right > xPos + 155 && random(2) == 0) {
-                Handlung = GEGNER_CRUSHEN;
+                Handlung = GEGNER::CRUSHEN;
                 ySpeed = 0.0f;
                 yAcc = 10.0f;
                 xSpeed = 0.0f;
@@ -135,7 +135,7 @@ void GegnerStahlfaust::DoKI() {
             // Faust Spezial Aktion und oben rausfliegen ?
             if (AnimCount <= 0.0f) {
                 AnimCount = 70.0f;  // Nächste Spezial Aktion planen
-                Handlung = GEGNER_SPRINGEN;
+                Handlung = GEGNER::SPRINGEN;
                 xAcc = 0.0f;
                 xSpeed = 0.0f;
                 ySpeed = -5.0f;
@@ -145,14 +145,14 @@ void GegnerStahlfaust::DoKI() {
         } break;
 
         // Faust zerquetscht den Hurri
-        case GEGNER_CRUSHEN: {
+        case GEGNER::CRUSHEN: {
             blocku = TileEngine.BlockUnten(xPos, yPos, xPos, yPos, GegnerRect[GegnerArt]);
 
             // Auf den Boden gecrashed ?
             if (blocku & BLOCKWERT_WAND) {
                 // Sound ausgeben
-                SoundManager.PlayWave(100, 128, 6000, SOUND_EXPLOSION1);
-                SoundManager.PlayWave(100, 128, 6000, SOUND_LANDEN);
+                SoundManager.PlayWave(100, 128, 6000, SOUND::EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 6000, SOUND::LANDEN);
 
                 // Rauch am Boden erzeugen
                 for (int i = 0; i < 25; i++)
@@ -166,15 +166,15 @@ void GegnerStahlfaust::DoKI() {
                 // Screen Wackeln lassen
                 ShakeScreen(2.5);
 
-                Handlung = GEGNER_CRUSHENERHOLEN;
+                Handlung = GEGNER::CRUSHENERHOLEN;
             }
         } break;
 
         // Faust fliegt nach dem Crushen wieder nach oben
-        case GEGNER_CRUSHENERHOLEN: {
+        case GEGNER::CRUSHENERHOLEN: {
             // Nach dem nach oben fliegen wieder ganz oben ?
             if (ySpeed < 0.0f && yPos <= TileEngine.ScrolltoY) {
-                Handlung = GEGNER_LAUFEN;
+                Handlung = GEGNER::LAUFEN;
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
                 yPos = TileEngine.ScrolltoY;
@@ -183,10 +183,10 @@ void GegnerStahlfaust::DoKI() {
         } break;
 
         // Faust fliegt oben raus
-        case GEGNER_SPRINGEN: {
+        case GEGNER::SPRINGEN: {
             // Oben umkehren ?
             if (yPos <= TileEngine.ScrolltoY - 280.0f) {
-                Handlung = GEGNER_FALLEN;
+                Handlung = GEGNER::FALLEN;
                 AnimPhase = 1;
                 yAcc = 0;
                 ySpeed = 50.0f;
@@ -195,14 +195,14 @@ void GegnerStahlfaust::DoKI() {
         } break;
 
         // Faust fällt auf den Hurri drauf und fliegt dann wieder oben raus
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             blocku = TileEngine.BlockUnten(xPos, yPos, xPos, yPos, GegnerRect[GegnerArt]);
 
             // Auf den Boden gecrashed ?
             if (blocku & BLOCKWERT_WAND) {
                 // Sound ausgeben
-                SoundManager.PlayWave(100, 128, 6000, SOUND_EXPLOSION1);
-                SoundManager.PlayWave(100, 128, 6000, SOUND_LANDEN);
+                SoundManager.PlayWave(100, 128, 6000, SOUND::EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 6000, SOUND::LANDEN);
 
                 // Rauch am Boden erzeugen
                 for (int i = 0; i < 25; i++)
@@ -217,7 +217,7 @@ void GegnerStahlfaust::DoKI() {
                 // Screen Wackeln lassen
                 ShakeScreen(5);
 
-                Handlung = GEGNER_STEHEN;
+                Handlung = GEGNER::STEHEN;
 
                 // Spieler auch als Rad verwunden
                 for (int i = 0; i < NUMPLAYERS; i++)
@@ -228,11 +228,11 @@ void GegnerStahlfaust::DoKI() {
         } break;
 
         // Faust fliegt nach dem Crushen wieder nach oben raus
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             // Nach dem nach oben fliegen wieder ganz oben ?
             if (yPos <= TileEngine.ScrolltoY - 280.0f) {
                 AnimPhase = 0;  // Wieder Faust von der Seite
-                Handlung = GEGNER_EINFLIEGEN;
+                Handlung = GEGNER::EINFLIEGEN;
                 ySpeed = 0.0f;
                 yAcc = 0.0f;
                 yPos = TileEngine.ScrolltoY - 250.0f;
@@ -240,7 +240,7 @@ void GegnerStahlfaust::DoKI() {
         } break;
 
         // Faust fliegt in die Luft
-        case GEGNER_EXPLODIEREN: {
+        case GEGNER::EXPLODIEREN: {
             AnimCount -= 1.0f SYNC;
             SmokeDelay -= 1.0f SYNC;
 
@@ -251,7 +251,7 @@ void GegnerStahlfaust::DoKI() {
 
                 PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200)),
                                             yPos + 20.0f + static_cast<float>(random(200)), EXPLOSION_MEDIUM2);
-                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+                SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
 
                 if (random(8) == 0)
                     PartikelSystem.PushPartikel(xPos + static_cast<float>(random(200)),
@@ -272,7 +272,7 @@ void GegnerStahlfaust::DoKI() {
     }  // switch
 
     // Hat die Faust den Hurri getroffen ?
-    if (Handlung != GEGNER_EXPLODIEREN)
+    if (Handlung != GEGNER::EXPLODIEREN)
         TestDamagePlayers(5.0f SYNC);
 }
 
@@ -281,7 +281,7 @@ void GegnerStahlfaust::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerStahlfaust::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION2);
+    SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION2);
 
     // Splitter
     for (int i = 0; i < 20; i++)

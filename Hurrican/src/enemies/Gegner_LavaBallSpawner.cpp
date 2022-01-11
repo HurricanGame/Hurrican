@@ -13,7 +13,7 @@
 
 GegnerLavaBallSpawner::GegnerLavaBallSpawner(int Wert1, int Wert2, bool Light) {
     Active = true;
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 50;
     Value1 = Wert1;
     Value2 = Wert2;

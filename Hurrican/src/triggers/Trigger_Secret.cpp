@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerSecret::GegnerSecret(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     Energy = 100;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -36,7 +36,7 @@ void GegnerSecret::DoKI() {
     }
 
     switch (Handlung) {
-        case GEGNER_STEHEN: {
+        case GEGNER::STEHEN: {
             // Spieler berührt das Secret? Dann Counter erhöhen und deaktivieren
             //
             GegnerRect[GegnerArt].left = -(Value1 / 2) + 20;
@@ -49,9 +49,9 @@ void GegnerSecret::DoKI() {
                                     Player[p].CollideRect) == true) {
                     Player[0].SecretThisLevel++;
                     Player[0].SecretFullGame++;
-                    Handlung = GEGNER_FALLEN;
+                    Handlung = GEGNER::FALLEN;
 
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_SECRET);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::SECRET);
 
                     for (int i = 0; i < 200; i++)
                         PartikelSystem.PushPartikel(xPos + 20.0f, yPos + 20.0f, KRINGELSECRET);

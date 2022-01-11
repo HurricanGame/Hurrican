@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerEndLevel::GegnerEndLevel(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     Value1 = Wert1;
     Value2 = Wert2;
     ChangeLight = Light;
@@ -52,7 +52,7 @@ void GegnerEndLevel::DoKI() {
                 NewStage = Value1;
 
                 if (RunningTutorial && Value1 <= 9) {
-                    SoundManager.PlayWave(100, 128, 11025, SOUND_MARIO);
+                    SoundManager.PlayWave(100, 128, 11025, SOUND::MARIO);
                     StageClear(false);
                 } else
                     StageClear(true);

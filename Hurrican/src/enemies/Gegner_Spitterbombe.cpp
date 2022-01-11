@@ -13,7 +13,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerSpitterbombe::GegnerSpitterbombe(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_LAUFEN;
+    Handlung = GEGNER::LAUFEN;
     Energy = 20;
     AnimEnde = 6;
     AnimSpeed = 0.5;
@@ -57,7 +57,7 @@ void GegnerSpitterbombe::DoKI() {
 // --------------------------------------------------------------------------------------
 
 void GegnerSpitterbombe::GegnerExplode() {
-    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND_EXPLOSION1);
+    SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION1);
 
     for (int i = 0; i < 5; i++)
         PartikelSystem.PushPartikel(xPos - 25.0f + static_cast<float>(random(20)),

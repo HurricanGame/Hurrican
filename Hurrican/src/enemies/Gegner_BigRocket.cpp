@@ -12,7 +12,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerBigRocket::GegnerBigRocket(int Wert1, int Wert2, bool Light) {
-    Handlung = GEGNER_STEHEN;
+    Handlung = GEGNER::STEHEN;
     Energy = 1000;
     ChangeLight = Light;
     Destroyable = true;
@@ -35,7 +35,7 @@ void GegnerBigRocket::DoDraw() {
 
     // Noch warten?
     //
-    if (Handlung == GEGNER_STEHEN)
+    if (Handlung == GEGNER::STEHEN)
         return;
 
     // Im Flug noch den Schweif anzeigen
@@ -61,8 +61,8 @@ void GegnerBigRocket::DoKI() {
 
     switch (Handlung) {
         // Rakete wird "aktiviert" (unter den Hurri gesetzt, damit sie von unten nach oben fliegen kann)
-        case GEGNER_STEHEN: {
-            Handlung = GEGNER_FALLEN;
+        case GEGNER::STEHEN: {
+            Handlung = GEGNER::FALLEN;
             yPos += 480.0f + 300.0f;
             ySpeed = -static_cast<float>(Value1 + 7);
 
@@ -70,7 +70,7 @@ void GegnerBigRocket::DoKI() {
         } break;
 
         // Rakete fliegt
-        case GEGNER_FALLEN: {
+        case GEGNER::FALLEN: {
             xPos = static_cast<float>(Value2) + ((static_cast<int>(yPos) % 14) / 7);
 
             smokedelay -= 1.0f SYNC;
@@ -110,8 +110,8 @@ void GegnerBigRocket::GegnerExplode() {
     if (!(yPos + 350.0f < TileEngine.YOffset)) {
         ShakeScreen(5.0f);
 
-        SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION1);
-        SoundManager.PlayWave(100, 128, 11025, SOUND_EXPLOSION3);
+        SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION1);
+        SoundManager.PlayWave(100, 128, 11025, SOUND::EXPLOSION3);
 
         for (int i = 0; i < 30; i++) {
             PartikelSystem.PushPartikel(xPos + static_cast<float>(random(60)),
