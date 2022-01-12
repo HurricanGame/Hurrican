@@ -116,7 +116,7 @@ void InitNewGame() {
             Player[p].GodMode = true;
     }
 
-    HUD.BossHUDActive = 0.0f;
+    HUD.deactivateBossHUD();
 }
 
 // --------------------------------------------------------------------------------------

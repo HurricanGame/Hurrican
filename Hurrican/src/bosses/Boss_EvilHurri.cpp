@@ -585,5 +585,5 @@ void GegnerEvilHurri::GegnerExplode() {
 
     ScrolltoPlayeAfterBoss();
 
-    HUD.BossHUDActive = false;
+    HUD.deactivateBossHUD();
 }

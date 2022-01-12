@@ -663,7 +663,7 @@ void GegnerSchneeKoenig::GegnerExplode() {
             Player[p].AufPlattform = nullptr;
 
     Player[0].Score += 2000 * Value1;
-    HUD.BossHUDActive = false;
+    HUD.deactivateBossHUD();
 
     ScrolltoPlayeAfterBoss();
 }

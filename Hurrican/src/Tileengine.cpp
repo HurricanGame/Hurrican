@@ -1998,7 +1998,7 @@ void TileEngineClass::UpdateLevel() {
         return;
 
     // Zeit ablaufen lassen
-    if (RunningTutorial == false && Timelimit > 0.0f && HUD.BossHUDActive == 0.0f) {
+    if (RunningTutorial == false && Timelimit > 0.0f && !HUD.isBossHUDActive()) {
         if (Skill == SKILL_EASY)
             Timelimit -= Timer.sync(0.05f);
         else if (Skill == SKILL_MEDIUM)
@@ -2010,7 +2010,7 @@ void TileEngineClass::UpdateLevel() {
     // Zeit abgelaufen? Dann Punisher erscheinen lassen
     //
     if (Timelimit < 0.0f) {
-        if (Player[0].PunisherActive == false && HUD.BossHUDActive == 0.0f) {
+        if (Player[0].PunisherActive == false && !HUD.isBossHUDActive()) {
             Gegner.PushGegner(0, 0, PUNISHER, 0, 0, false);
             Player[0].PunisherActive = true;
             PartikelSystem.ThunderAlpha = 255.0f;

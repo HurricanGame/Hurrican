@@ -533,7 +533,7 @@ void GegnerPharaoKopf::GegnerExplode() {
 
     ShakeScreen(4);
 
-    HUD.BossHUDActive = false;
+    HUD.deactivateBossHUD();
 
     ScrolltoPlayeAfterBoss();
 }

@@ -187,7 +187,7 @@ void GegnerPunisher::DoKI() {
     }  // switch
 
     // Boss oder SummaryScreen ? Dann verschwinden
-    if (HUD.BossHUDActive != 0.0f || ShowSummary == true)
+    if (HUD.isBossHUDActive() || ShowSummary == true)
         Energy = 0.0f;
 
     if (Energy <= 0.0f && alpha > 0.0f && Handlung != GEGNER::SPECIAL)
