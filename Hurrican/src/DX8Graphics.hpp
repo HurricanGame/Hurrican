@@ -76,13 +76,17 @@ struct QUAD2D {
 
 class DirectGraphicsClass {
   private:
-    enum class shader_t {COLOR, TEXTURE, RENDER}; 
+    enum class shader_t {COLOR, TEXTURE, RENDER};
+
   private:
     bool VSyncEnabled;  // VSync ein/aus ?
     bool FilterMode;    // Linearer Filter an/aus?
     const char *glextensions;
     shader_t use_shader;
+    BlendModeEnum BlendMode;  // Additiv, Colorkey oder White mode aktiviert?
     int MaxTextureUnits;
+    bool SupportedETC1;
+    bool SupportedPVRTC;
 #if defined(USE_GL2) || defined(USE_GL3)
     GLuint ProgramCurrent;
     GLuint NameWW;
@@ -90,11 +94,9 @@ class DirectGraphicsClass {
     GLuint NameTime;
     CShader Shaders[PROGRAM_TOTAL];
 #endif
+    glm::mat4x4 matProjWindow;
+    glm::mat4x4 matProjRender;
 
-  public:
-    BlendModeEnum BlendMode;  // Additiv, Colorkey oder White mode aktiviert?
-    bool SupportedETC1;
-    bool SupportedPVRTC;
 #if SDL_VERSION_ATLEAST(2, 0, 0)
     SDL_Window *Window;
     SDL_GLContext GLcontext;
@@ -107,6 +109,8 @@ class DirectGraphicsClass {
 #if (defined(USE_GL2) || defined(USE_GL3)) && defined(USE_FBO)
     CFbo RenderBuffer;
 #endif
+
+  public:
     void ShowBackBuffer();  // Present aufrufen
 
     DirectGraphicsClass();   // Konstruktor
@@ -141,6 +145,14 @@ class DirectGraphicsClass {
     void DrawCircle(uint16_t x, uint16_t y, uint16_t radius);
 #endif
 #endif
+#endif
+
+    inline BlendModeEnum GetBlendMode() const { return BlendMode; }
+    inline bool IsETC1Supported() const { return SupportedETC1; }
+    inline bool IsPVRTCSupported() const { return SupportedPVRTC; }
+
+#if defined(ANDROID)
+    inline SDL_Rect GetWindowView() const {return WindowView); }
 #endif
 };
 

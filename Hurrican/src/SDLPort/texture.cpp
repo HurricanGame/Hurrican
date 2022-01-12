@@ -77,7 +77,7 @@ bool SDL_LoadTexture(const std::string &path,
     }
 
 #if defined(USE_ETC1)
-    if (DirectGraphics.SupportedETC1 == true) {
+    if (DirectGraphics.IsETC1Supported()) {
         image_t alpha_image;
 
         // First, load the RGB texture:
@@ -106,7 +106,7 @@ bool SDL_LoadTexture(const std::string &path,
 #endif
 
 #if defined(USE_PVRTC)
-    if (DirectGraphics.SupportedPVRTC) {
+    if (DirectGraphics.IsPVRTCSupported()) {
         fullpath = path + "/pvr/" + filename + ".pvr";
 
 #ifndef NDEBUG

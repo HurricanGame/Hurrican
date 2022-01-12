@@ -533,7 +533,7 @@ bool GameInit() {
     Textures.ReadScaleFactorsFiles();
 
 #if defined(ANDROID)
-    DirectInput.InitTouchBoxes(DirectGraphics.WindowView.w, DirectGraphics.WindowView.h);
+    DirectInput.InitTouchBoxes(DirectGraphics.GetWindowView().w, DirectGraphics.GetWindowView().h);
 #endif
 
     // DKS - Sound manager is now a static global, and initialized with Init()

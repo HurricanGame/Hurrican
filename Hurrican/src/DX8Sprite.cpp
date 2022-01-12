@@ -110,7 +110,7 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
         sprintf_s(Temp, "%s/levels/%s/%s", g_storage_ext, CommandLineParams.OwnLevelList, Filename);
 
 #if defined(USE_ETC1)
-        if (DirectGraphics.SupportedETC1 == true) {
+        if (DirectGraphics.IsETC1Supported()) {
             sprintf_s( compresstex, "%s/levels/%s/%s.pkm", g_storage_ext, CommandLineParams.OwnLevelList, Filename );
             if (FileExists(compresstex))
                 goto loadfile;
@@ -118,7 +118,7 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
 #endif
 
 #if defined(USE_PVRTC)
-        if (DirectGraphics.SupportedPVRTC == true) {
+        if (DirectGraphics.IsPVRTCSupported()) {
             sprintf_s( compresstex, "%s/levels/%s/%s.pvr", g_storage_ext,  CommandLineParams.OwnLevelList, Filename );
             if (FileExists(compresstex))
                 goto loadfile;
@@ -134,7 +134,7 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
     sprintf_s(Temp, "%s/data/textures/%s", g_storage_ext, Filename);
 
 #if defined(USE_ETC1)
-    if (DirectGraphics.SupportedETC1 == true) {
+    if (DirectGraphics.IsETC1Supported()) {
         sprintf_s( compresstex, "%s/data/textures/etc1/%s.pkm", g_storage_ext, Filename );
         if (FileExists(compresstex))
         {
@@ -145,7 +145,7 @@ bool DirectGraphicsSprite::LoadImage(const char *Filename, int xs, int ys, int x
 #endif
 
 #if defined(USE_PVRTC)
-    if (DirectGraphics.SupportedPVRTC == true) {
+    if (DirectGraphics.IsPVRTCSupported()) {
         sprintf_s( compresstex, "%s/data/textures/pvr/%s.pvr", g_storage_ext, Filename );
         if (FileExists(compresstex))
         {

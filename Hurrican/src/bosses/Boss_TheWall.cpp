@@ -75,7 +75,7 @@ void GegnerTheWall::DoDraw() {
 
         int Wert = 255 - (static_cast<int>(DamageTaken));
 
-        if (DirectGraphics.BlendMode == BlendModeEnum::ADDITIV)
+        if (DirectGraphics.GetBlendMode() == BlendModeEnum::ADDITIV)
             Color = D3DCOLOR_RGBA(Wert, 0, 0, 255);
         else
             Color = 0xFFFFFFFF;
@@ -92,7 +92,7 @@ void GegnerTheWall::DoDraw() {
     // Skeletorkopf rendern
     if (Value1 == 1) {
         Brain.SetRect(0, 123, 27, 157);
-        if (DirectGraphics.BlendMode == BlendModeEnum::ADDITIV)
+        if (DirectGraphics.GetBlendMode() == BlendModeEnum::ADDITIV)
             DirectGraphics.SetAdditiveMode();
         Brain.RenderSprite(xPos - TileEngine.XOffset + 3.0f + VorneX,
                            yPos - TileEngine.YOffset + 228.0f + VorneY, Color);

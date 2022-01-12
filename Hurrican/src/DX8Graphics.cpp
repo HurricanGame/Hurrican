@@ -35,8 +35,6 @@
 
 glm::mat4x4 matProj;   // Projektionsmatrix
 glm::mat4x4 matWorld;  // Weltmatrix
-glm::mat4x4 matProjWindow;
-glm::mat4x4 matProjRender;
 float DegreetoRad[360];  // Tabelle mit Rotationswerten
 
 // --------------------------------------------------------------------------------------
