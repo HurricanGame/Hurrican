@@ -246,8 +246,8 @@ loaded:
         Protokoll << "Error loading texture " << filename << std::endl;
         GameRunning = false;
     } else {
-        std::string tmpstr(std::string(TextArray[TEXT_LADE_BITMAP]) + ' ' + filename + ' ' +
-                           std::string(TextArray[TEXT_LADEN_ERFOLGREICH]) + '\n');
+        std::string tmpstr(std::string(TextArray[TEXT::LADE_BITMAP]) + ' ' + filename + ' ' +
+                           std::string(TextArray[TEXT::LADEN_ERFOLGREICH]) + '\n');
         DisplayLoadInfo(tmpstr.c_str());
     }
 

@@ -420,7 +420,7 @@ char *DirectInputClass::MapButtonToString(int joy_idx, int button) {
     static char buf[60];
 
     if (button < 0) {
-        return TextArray[TEXT_NICHT_DEFINIERT];
+        return TextArray[TEXT::NICHT_DEFINIERT];
     } else {
 #ifdef GCW
         // Special case for GCW Zero's internal controls:

@@ -218,7 +218,7 @@ loadfile:
     itsRect = itsPreCalcedRects[0];
 
     // Bild korrekt geladen
-    sprintf_s(Temp, "%s %s %s", TextArray [TEXT_LADE_BITMAP], Filename, TextArray [TEXT_LADEN_ERFOLGREICH]);
+    sprintf_s(Temp, "%s %s %s", TextArray[TEXT::LADE_BITMAP], Filename, TextArray[TEXT_LADEN::ERFOLGREICH]);
     Protokoll << Temp << std::endl;
 
     DisplayLoadInfo(Temp);

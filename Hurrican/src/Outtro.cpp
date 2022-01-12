@@ -353,7 +353,7 @@ void OuttroClass::DoOuttro() {
                 Counter -= static_cast<float>(yoff_inc);
                 TextOff++;
 
-                if (TEXT_OUTTRO1 + TextOff > TEXT_SEPERATOR_MARIO + CreditsCount - num_lines)
+                if (TEXT::OUTTRO1 + TextOff > TEXT::SEPERATOR_MARIO + CreditsCount - num_lines)
                     TextOff = 0;
             }
 
@@ -362,12 +362,12 @@ void OuttroClass::DoOuttro() {
                 int off2 = TextOff + i - 27;
                 if (off2 > 0) {
                     std::string text;
-                    if (TEXT_OUTTRO1 + off2 < TEXT_SEPERATOR_MARIO)
-                        text = TextArray[TEXT_OUTTRO1 + off2];
-                    else if (TEXT_OUTTRO1 + off2 <= TEXT_SEPERATOR_MARIO + AnzahlCredits)
+                    if (TEXT::OUTTRO1 + off2 < TEXT::SEPERATOR_MARIO)
+                        text = TextArray[TEXT::OUTTRO1 + off2];
+                    else if (TEXT::OUTTRO1 + off2 <= TEXT::SEPERATOR_MARIO + AnzahlCredits)
                         text = Credits[off2 + 25];
-                    else if (TEXT_OUTTRO1 + off2 <= TEXT_SEPERATOR_MARIO + AnzahlCredits + 10)
-                        text = TextArray[TEXT_OUTTRO1 + off2 - AnzahlCredits];
+                    else if (TEXT::OUTTRO1 + off2 <= TEXT::SEPERATOR_MARIO + AnzahlCredits + 10)
+                        text = TextArray[TEXT::OUTTRO1 + off2 - AnzahlCredits];
 
                     // rendern
                     if (CommandLineParams.LowRes && text.size() > 10 &&

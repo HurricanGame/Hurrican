@@ -918,13 +918,13 @@ bool DisplayLoadInfo(const char Text[100]) {
 
     DirectGraphics.SetAdditiveMode();
 
-    pMenuFont->DrawTextCenterAlign(320, 200, TextArray[TEXT_MENUE_LOADING], 0xFFFFFFFF);
+    pMenuFont->DrawTextCenterAlign(320, 200, TextArray[TEXT::MENUE_LOADING], 0xFFFFFFFF);
 
     // Anzahl anzeigen
 #ifndef NDEBUG
     std::string buf = std::to_string(pMenu->ItemsLoaded());
 
-    pDefaultFont->DrawText((700 - pMenuFont->StringLength(TextArray[TEXT_MENUE_LOADING])) / 2.0f, 300,
+    pDefaultFont->DrawText((700 - pMenuFont->StringLength(TextArray[TEXT::MENUE_LOADING])) / 2.0f, 300,
                            buf.c_str(), 0xFFFFFFFF);
 #endif
 
@@ -932,7 +932,7 @@ bool DisplayLoadInfo(const char Text[100]) {
     // DKS - Added support for displaying hints on low-resolution devices:
     if (DisplayHintNr > -1) {
         if (CommandLineParams.LowRes) {
-            const char *text = TextArray[TEXT_HINT1 + DisplayHintNr];
+            const char *text = TextArray[TEXT::HINT1 + DisplayHintNr];
             float y_pos = 270.0f;
             float y_inc = 28.0f;
             int max_width = RENDERWIDTH - 20;
@@ -947,7 +947,7 @@ bool DisplayLoadInfo(const char Text[100]) {
                 pDefaultFont->DrawTextCenterAlign(320.0f, y_pos, text, 0xFFFFFFFF, 0);
             }
         } else {
-            pDefaultFont->DrawTextCenterAlign(320.0f, 270.0f, TextArray[TEXT_HINT1 + DisplayHintNr], 0xFFFFFFFF, 0);
+            pDefaultFont->DrawTextCenterAlign(320.0f, 270.0f, TextArray[TEXT::HINT1 + DisplayHintNr], 0xFFFFFFFF, 0);
         }
     }
 
@@ -1071,11 +1071,11 @@ void SummaryScreen() {
         GUI.Run();
         D3DCOLOR color = D3DCOLOR_RGBA(0, 255, 0, static_cast<int>(GUI.GetFadingAlpha()));
         pDefaultFont->DrawText(
-            static_cast<float>((RENDERWIDTH - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_TITLE])) / 2),
-            static_cast<float>(title_txt_y), TextArray[TEXT_SUMMARY_TITLE], color);
+            static_cast<float>((RENDERWIDTH - pDefaultFont->StringLength(TextArray[TEXT::SUMMARY_TITLE])) / 2),
+            static_cast<float>(title_txt_y), TextArray[TEXT::SUMMARY_TITLE], color);
 
         if (delay_ctr >= DELAY_CAN_LEAVE) {
-            std::string str_pressanykey(TextArray[TEXT_SUMMARY_PRESSFIRE]);
+            std::string str_pressanykey(TextArray[TEXT::SUMMARY_PRESSFIRE]);
 
             // If player 1 is controlled with joystick, replace all references to 'key' with 'button'
             if (Player[0].ControlType == CONTROLTYPE_JOY) {
@@ -1094,8 +1094,8 @@ void SummaryScreen() {
         pGegnerGrafix[ONEUP]->RenderSpriteScaled(static_cast<float>(sprite3_x - 16),
                                                  static_cast<float>(sprites_y - 16), 32, 32, 0, color);
         pDefaultFont->DrawText(
-            static_cast<float>(secrets_x - pDefaultFont->StringLength(TextArray[TEXT_SUMMARY_SECRETS]) / 2),
-            static_cast<float>(sprites_y - pDefaultFont->GetYCharSize() / 2), TextArray[TEXT_SUMMARY_SECRETS],
+            static_cast<float>(secrets_x - pDefaultFont->StringLength(TextArray[TEXT::SUMMARY_SECRETS]) / 2),
+            static_cast<float>(sprites_y - pDefaultFont->GetYCharSize() / 2), TextArray[TEXT::SUMMARY_SECRETS],
             color);
 
         std::string buf;
@@ -1130,7 +1130,7 @@ void SummaryScreen() {
             for (unsigned int p = 0; p < strlen(buf2); p++)
                 buf2[p] ^= 64;
 
-            buf = std::string(TextArray[TEXT_SUMMARY_CHEATUNLOCK])
+            buf = std::string(TextArray[TEXT::SUMMARY_CHEATUNLOCK])
                 .append(": ")
                 .append(buf2);
             pDefaultFont->DrawText(static_cast<float>(RENDERWIDTH / 2 - pDefaultFont->StringLength(buf.c_str(), 0) / 2),
@@ -1375,10 +1375,10 @@ void ShowPissText() {
         //      them off-centered here. I had to offset by TILESIZE*2 to get
         //      them centered properly horizontally, which I found frustrating.
         //      Oh well..
-        //        GUI.ShowBox(TextArray[TEXT_PISS_1 + TextNr],
+        //        GUI.ShowBox(TextArray[TEXT::PISS_1 + TextNr],
         //                      static_cast<int>(Player[0].ypos - 70 - TileEngine.YOffset),
         //                      static_cast<int>(Player[0].xpos - TileEngine.XOffset) - 10);
-        GUI.ShowBox(TextArray[TEXT_PISS_1 + TextNr], static_cast<int>(Player[0].ypos - 70 - TileEngine.YOffset),
+        GUI.ShowBox(TextArray[TEXT::PISS_1 + TextNr], static_cast<int>(Player[0].ypos - 70 - TileEngine.YOffset),
                     static_cast<int>(Player[0].xpos - TileEngine.XOffset + TILESIZE * 2));
 
         if (Player[0].BronsonCounter > 220.0f + 50.0f * 18)

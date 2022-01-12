@@ -340,7 +340,7 @@ MenuClass::MenuClass() {
     BlinkCounter = 0.75f;
 
     // Sprache feststellen und schauen, welche Grafik wir anzeigen müssen
-    if (strcmp(TextArray[TEXT_BENUTZTE_GRAFIK], "0") == 0)
+    if (strcmp(TextArray[TEXT::BENUTZTE_GRAFIK], "0") == 0)
         Sprachgrafik = 0;  // deutsch ?
     else
         Sprachgrafik = 1;  // oder doch englisch ?
@@ -436,7 +436,7 @@ void MenuClass::ShowMenu() {
     } else {
         if (AktuellerZustand != MENUPUNKT_CREDITS && AktuellerZustand != MENUZUSTAND_ENTERNAME)
 
-            pDefaultFont->DrawTextCenterAlign(320.0f, 462, TextArray[TEXT_MENUE_ANLEITUNG], menucolor, 0);
+            pDefaultFont->DrawTextCenterAlign(320.0f, 462, TextArray[TEXT::MENUE_ANLEITUNG], menucolor, 0);
         pDefaultFont->DrawText(10.0f, 462, "www.poke53280.de", menucolor, 0);
         pDefaultFont->DrawText(static_cast<float>(640 - pDefaultFont->StringLength("www.hurrican-game.de", 0) - 10), 462,
                                "www.hurrican-game.de", menucolor, 0);
@@ -477,17 +477,17 @@ void MenuClass::ShowMenu() {
                     if (i == 1) {
                         if (Stage == -1)
                             pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + i * 35,
-                                                           TextArray[TEXT_MENUE_SPIEL_STARTEN + i], menucolor3, 2);
+                                                           TextArray[TEXT::MENUE_SPIEL_STARTEN + i], menucolor3, 2);
                         else
                             pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + i * 35,
-                                                           TextArray[TEXT_MENUE_SPIEL_STARTEN + i], menucolor2, 2);
+                                                           TextArray[TEXT::MENUE_SPIEL_STARTEN + i], menucolor2, 2);
                     } else
                         pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + i * 35,
-                                                       TextArray[TEXT_MENUE_SPIEL_STARTEN + i], menucolor2, 2);
+                                                       TextArray[TEXT::MENUE_SPIEL_STARTEN + i], menucolor2, 2);
                 }
 
             pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + AktuellerPunkt * 35,
-                                           TextArray[TEXT_MENUE_SPIEL_STARTEN + AktuellerPunkt], menucolor, 2);
+                                           TextArray[TEXT::MENUE_SPIEL_STARTEN + AktuellerPunkt], menucolor, 2);
 
         } break;
 
@@ -497,13 +497,13 @@ void MenuClass::ShowMenu() {
         case MENUZUSTAND_VOLUMES: {
             constexpr int OFFSET2 = 20;
 
-            float d = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT_MENUE_EINSTELLUNGEN], 2));
-            pMenuFont->DrawText(320 - d / 2.0f, ypos + OFFSET - OFFSET2, TextArray[TEXT_MENUE_EINSTELLUNGEN], menucolor,
+            float d = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT::MENUE_EINSTELLUNGEN], 2));
+            pMenuFont->DrawText(320 - d / 2.0f, ypos + OFFSET - OFFSET2, TextArray[TEXT::MENUE_EINSTELLUNGEN], menucolor,
                                 2);
 
             // Sound / Musik Lautstärke
             for (int i = 0; i < 2; i++) {
-                float d2 = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT_SOUND + i], 2));
+                float d2 = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT::SOUND + i], 2));
 
                 if (i == 0)
                     LoadingBar.SetRect(0, 0, static_cast<int>(SoundManager.g_sound_vol / 100.0f * 318.0f), 19);
@@ -512,12 +512,12 @@ void MenuClass::ShowMenu() {
 
                 if (i == AktuellerPunkt) {
                     pMenuFont->DrawText(xpos + OFFSET - 20 - d2, ypos + OFFSET - OFFSET2 + (i + 2) * 35,
-                                        TextArray[TEXT_SOUND + i], menucolor, 2);
+                                        TextArray[TEXT::SOUND + i], menucolor, 2);
                     LoadingScreen.RenderSprite(220, ypos + OFFSET - OFFSET2 + (i + 2) * 35 - 18, menucolor);
                     LoadingBar.RenderSprite(241, ypos + OFFSET - OFFSET2 + (i + 2) * 35 + 2, menucolor);
                 } else {
                     pMenuFont->DrawText(xpos + OFFSET - 20 - d2, ypos + OFFSET - OFFSET2 + (i + 2) * 35,
-                                        TextArray[TEXT_SOUND + i], menucolor2, 2);
+                                        TextArray[TEXT::SOUND + i], menucolor2, 2);
                     LoadingScreen.RenderSprite(220, ypos + OFFSET - OFFSET2 + (i + 2) * 35 - 18, menucolor2);
                     LoadingBar.RenderSprite(241, ypos + OFFSET - OFFSET2 + (i + 2) * 35 + 2, menucolor2);
                 }
@@ -529,26 +529,26 @@ void MenuClass::ShowMenu() {
 
             // Sonstige Menu-Punkte anzeigen
             for (int i = 2; i < 4; i++) {
-                float d2 = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT_SOUND + i], 2));
+                float d2 = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT::SOUND + i], 2));
 
                 // Schrift anzeigen
                 //
                 if (i == AktuellerPunkt)
                     pMenuFont->DrawText(320.0f - d2 / 2.0f, ypos + OFFSET - OFFSET2 + (i + 2) * 35,
-                                        TextArray[TEXT_SOUND + i], menucolor, 2);
+                                        TextArray[TEXT::SOUND + i], menucolor, 2);
                 else
                     pMenuFont->DrawText(320.0f - d2 / 2.0f, ypos + OFFSET - OFFSET2 + (i + 2) * 35,
-                                        TextArray[TEXT_SOUND + i], menucolor2, 2);
+                                        TextArray[TEXT::SOUND + i], menucolor2, 2);
             }
 
             // Detailstufe
-            d = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT_DETAIL_LOW + options_Detail], 2));
+            d = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT::DETAIL_LOW + options_Detail], 2));
             if (4 == AktuellerPunkt)
                 pMenuFont->DrawText(320.0f - d / 2.0f, ypos + OFFSET - OFFSET2 + (4 + 2) * 35,
-                                    TextArray[TEXT_DETAIL_LOW + options_Detail], menucolor, 2);
+                                    TextArray[TEXT::DETAIL_LOW + options_Detail], menucolor, 2);
             else
                 pMenuFont->DrawText(320.0f - d / 2.0f, ypos + OFFSET - OFFSET2 + (4 + 2) * 35,
-                                    TextArray[TEXT_DETAIL_LOW + options_Detail], menucolor2, 2);
+                                    TextArray[TEXT::DETAIL_LOW + options_Detail], menucolor2, 2);
 
         } break;  // MENUZUSTAND_VOLUMES
 
@@ -559,8 +559,8 @@ void MenuClass::ShowMenu() {
                 vertical_spacing += 8;
             }
 
-            float d = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT_SPRACHE], 2));
-            pMenuFont->DrawText(320 - d / 2.0f, ypos + OFFSET, TextArray[TEXT_SPRACHE], menucolor, 2);
+            float d = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT::SPRACHE], 2));
+            pMenuFont->DrawText(320 - d / 2.0f, ypos + OFFSET, TextArray[TEXT::SPRACHE], menucolor, 2);
 
             char lang_name[256] = "";
             const int num_lang = LanguageFiles.size();
@@ -580,12 +580,12 @@ void MenuClass::ShowMenu() {
                                            ypos + 120 + i * vertical_spacing, lang_name, 0x88FFFFFF);
             }
 
-            pDefaultFont->DrawText(320 - pDefaultFont->StringLength(TextArray[TEXT_ZURUECK]) / 2.0f,
-                                   ypos + 136 + vertical_spacing * LanguageFiles.size(), (TextArray[TEXT_ZURUECK]),
+            pDefaultFont->DrawText(320 - pDefaultFont->StringLength(TextArray[TEXT::ZURUECK]) / 2.0f,
+                                   ypos + 136 + vertical_spacing * LanguageFiles.size(), (TextArray[TEXT::ZURUECK]),
                                    0x88FFFFFF);
             if (AktuellerPunkt == num_lang)
-                pDefaultFont->DrawText(320 - pDefaultFont->StringLength(TextArray[TEXT_ZURUECK]) / 2.0f,
-                                       ypos + 136 + vertical_spacing * LanguageFiles.size(), (TextArray[TEXT_ZURUECK]),
+                pDefaultFont->DrawText(320 - pDefaultFont->StringLength(TextArray[TEXT::ZURUECK]) / 2.0f,
+                                       ypos + 136 + vertical_spacing * LanguageFiles.size(), (TextArray[TEXT::ZURUECK]),
                                        0x88FFFFFF);
 
         } break;  // MENUZUSTAND_LANGUAGE
@@ -617,7 +617,7 @@ void MenuClass::ShowMenu() {
 
             // "CONFIGURE CONTROLS" title - Do not draw when using scaled fonts, as there's no room
             if (scale_factor <= 1) {
-                pMenuFont->DrawTextCenterAlign(320, title_off_y, TextArray[TEXT_STEUERUNG], menucolor, 2);
+                pMenuFont->DrawTextCenterAlign(320, title_off_y, TextArray[TEXT::STEUERUNG], menucolor, 2);
             }
 
             // Überschrift "Spieler1" "Spieler2"
@@ -627,12 +627,12 @@ void MenuClass::ShowMenu() {
                     p1_col = 0xFFFFFFFF;
                     p2_col = 0x88FFFFFF;
                     RenderRect(col1_off_x - 4, line1_off_y + MENU_TASTEN_PLAYER_LINE * line_spacing - 2,
-                               pDefaultFont->StringLength(TextArray[TEXT_PLAYER_ONE]) + 10, line_spacing, 0x30FFFFFF);
+                               pDefaultFont->StringLength(TextArray[TEXT::PLAYER_ONE]) + 10, line_spacing, 0x30FFFFFF);
                 } else {
                     p1_col = 0x88FFFFFF;
                     p2_col = 0xFFFFFFFF;
                     RenderRect(col1_off_x + col2_off_x - 4, line1_off_y + MENU_TASTEN_PLAYER_LINE * line_spacing - 2,
-                               pDefaultFont->StringLength(TextArray[TEXT_PLAYER_TWO]) + 10, line_spacing, 0x30FFFFFF);
+                               pDefaultFont->StringLength(TextArray[TEXT::PLAYER_TWO]) + 10, line_spacing, 0x30FFFFFF);
                 }
             } else {
                 p1_col = 0x88FFFFFF;
@@ -640,9 +640,9 @@ void MenuClass::ShowMenu() {
             }
 
             pDefaultFont->DrawText(col1_off_x, line1_off_y + MENU_TASTEN_PLAYER_LINE * line_spacing,
-                                   TextArray[TEXT_PLAYER_ONE], p1_col);
+                                   TextArray[TEXT::PLAYER_ONE], p1_col);
             pDefaultFont->DrawText(col1_off_x + col2_off_x, line1_off_y + MENU_TASTEN_PLAYER_LINE * line_spacing,
-                                   TextArray[TEXT_PLAYER_TWO], p2_col);
+                                   TextArray[TEXT::PLAYER_TWO], p2_col);
 
             // Force-feedback checkbox:
             {
@@ -670,45 +670,45 @@ void MenuClass::ShowMenu() {
                     RenderRect(col0_off_x - border_w - bar_dim, bar_off_y + border_w, bar_dim, bar_dim, col);
 
                 pDefaultFont->DrawText(col1_off_x, line1_off_y + MENU_TASTEN_FORCEFEEDBACK_LINE * line_spacing,
-                                       TextArray[TEXT_FORCEFEEDBACK], col);
+                                       TextArray[TEXT::FORCEFEEDBACK], col);
             }
 
             // Defaults, type, mode, sensitivity lines
             if (AktuellerPunkt == MENU_TASTEN_DEFAULTS_LINE)
                 pDefaultFont->DrawText(col1_off_x, line1_off_y + MENU_TASTEN_DEFAULTS_LINE * line_spacing,
-                                       TextArray[TEXT_DEFAULTS], 0xFFFFFFFF);
+                                       TextArray[TEXT::DEFAULTS], 0xFFFFFFFF);
             else
                 pDefaultFont->DrawText(col1_off_x, line1_off_y + MENU_TASTEN_DEFAULTS_LINE * line_spacing,
-                                       TextArray[TEXT_DEFAULTS], 0x88FFFFFF);
+                                       TextArray[TEXT::DEFAULTS], 0x88FFFFFF);
 
             if (AktuellerPunkt == MENU_TASTEN_TYPE_LINE)
                 pDefaultFont->DrawTextRightAlign(col0_off_x, line1_off_y + MENU_TASTEN_TYPE_LINE * line_spacing,
-                                                 TextArray[TEXT_TYP], 0xFFFFFFFF);
+                                                 TextArray[TEXT::TYP], 0xFFFFFFFF);
             else
                 pDefaultFont->DrawTextRightAlign(col0_off_x, line1_off_y + MENU_TASTEN_TYPE_LINE * line_spacing,
-                                                 TextArray[TEXT_TYP], 0x88FFFFFF);
+                                                 TextArray[TEXT::TYP], 0x88FFFFFF);
 
             if (AktuellerPunkt == MENU_TASTEN_MODE_LINE)
                 pDefaultFont->DrawTextRightAlign(col0_off_x, line1_off_y + MENU_TASTEN_MODE_LINE * line_spacing,
-                                                 TextArray[TEXT_MODUS], 0xFFFFFFFF);
+                                                 TextArray[TEXT::MODUS], 0xFFFFFFFF);
             else
                 pDefaultFont->DrawTextRightAlign(col0_off_x, line1_off_y + MENU_TASTEN_MODE_LINE * line_spacing,
-                                                 TextArray[TEXT_MODUS], 0x88FFFFFF);
+                                                 TextArray[TEXT::MODUS], 0x88FFFFFF);
 
             if (AktuellerPunkt == MENU_TASTEN_SENSITIVITY_LINE)
                 pDefaultFont->DrawTextRightAlign(col0_off_x, line1_off_y + MENU_TASTEN_SENSITIVITY_LINE * line_spacing,
-                                                 TextArray[TEXT_EMPFINDLICHKEIT], 0xFFFFFFFF);
+                                                 TextArray[TEXT::EMPFINDLICHKEIT], 0xFFFFFFFF);
             else
                 pDefaultFont->DrawTextRightAlign(col0_off_x, line1_off_y + MENU_TASTEN_SENSITIVITY_LINE * line_spacing,
-                                                 TextArray[TEXT_EMPFINDLICHKEIT], 0x88FFFFFF);
+                                                 TextArray[TEXT::EMPFINDLICHKEIT], 0x88FFFFFF);
 
             for (int i = 0; i < MENU_TASTEN_NUM_CONTROLS; i++) {
                 pDefaultFont->DrawTextRightAlign(col0_off_x, controls_off_y + i * line_spacing,
-                                                 TextArray[TEXT_TASTEN_L + i], 0x88FFFFFF);
+                                                 TextArray[TEXT::TASTEN_L + i], 0x88FFFFFF);
 
                 if (AktuellerPunkt - MENU_TASTEN_NUM_NON_CONTROLS == i)
                     pDefaultFont->DrawTextRightAlign(col0_off_x, controls_off_y + i * line_spacing,
-                                                     TextArray[TEXT_TASTEN_L + i], 0x88FFFFFF);
+                                                     TextArray[TEXT::TASTEN_L + i], 0x88FFFFFF);
             }
 
             // Selection bar:
@@ -728,7 +728,7 @@ void MenuClass::ShowMenu() {
                 if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD)
                     // Keyboard text
                     pDefaultFont->DrawText(col1_off_x + j * col2_off_x,
-                                           line1_off_y + MENU_TASTEN_TYPE_LINE * line_spacing, TextArray[TEXT_KEYBOARD],
+                                           line1_off_y + MENU_TASTEN_TYPE_LINE * line_spacing, TextArray[TEXT::KEYBOARD],
                                            col);
                 else {
                     // Print joystick name, truncated to fit if necessary
@@ -782,11 +782,11 @@ void MenuClass::ShowMenu() {
                     if (pCurrentPlayer->JoystickMode == JOYMODE_JOYSTICK)
                         pDefaultFont->DrawText(col1_off_x + j * col2_off_x,
                                                line1_off_y + MENU_TASTEN_MODE_LINE * line_spacing,
-                                               TextArray[TEXT_JOYMODE_STICK], col);
+                                               TextArray[TEXT::JOYMODE_STICK], col);
                     else
                         pDefaultFont->DrawText(col1_off_x + j * col2_off_x,
                                                line1_off_y + MENU_TASTEN_MODE_LINE * line_spacing,
-                                               TextArray[TEXT_JOYMODE_PAD], col);
+                                               TextArray[TEXT::JOYMODE_PAD], col);
                 }
 
                 for (int i = 0; i < MENU_TASTEN_NUM_CONTROLS; i++) {
@@ -810,7 +810,7 @@ void MenuClass::ShowMenu() {
                              pCurrentPlayer->AktionJoystick[i] == -1)) {
                             // Action is not defined
                             pDefaultFont->DrawText(col1_off_x + j * col2_off_x, controls_off_y + i * line_spacing,
-                                                   TextArray[TEXT_NICHT_DEFINIERT], col2);
+                                                   TextArray[TEXT::NICHT_DEFINIERT], col2);
                         } else {
                             if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD) {
                                 // Keyboard key
@@ -826,33 +826,33 @@ void MenuClass::ShowMenu() {
                                     //  assigned to DPAD or X/Y-analog-axis and are a special case:
                                     if (pCurrentPlayer->Walk_UseAxxis) {
                                         // Movement is assigned to analog stick
-                                        Buf = TextArray[TEXT_JOY_ACHSE];
+                                        Buf = TextArray[TEXT::JOY_ACHSE];
                                     } else {
                                         // Movement is assigned to D-PAD HAT
-                                        Buf = TextArray[TEXT_JOY_COOLIE];
+                                        Buf = TextArray[TEXT::JOY_COOLIE];
                                     }
                                 } else if (on_look_line) {
                                     // Similarly, the two look assignments can only be assigned to DPAD or
                                     // X/Y-analog-axis
                                     if (pCurrentPlayer->Look_UseAxxis) {
                                         // Look up/down is assigned to analog stick
-                                        Buf = TextArray[TEXT_JOY_ACHSE];
+                                        Buf = TextArray[TEXT::JOY_ACHSE];
                                     } else {
                                         // Look up/down is assigned to DPAD HAT
-                                        Buf = TextArray[TEXT_JOY_COOLIE];
+                                        Buf = TextArray[TEXT::JOY_COOLIE];
                                     }
                                 } else if (on_jump_line && pCurrentPlayer->JoystickMode == JOYMODE_JOYSTICK) {
                                     // When in joystick mode, jump is handled by movement (DPAD or analog axis)
                                     if (pCurrentPlayer->Walk_UseAxxis) {
                                         // Jump/Movement is assigned to analog stick
-                                        Buf = TextArray[TEXT_JOY_ACHSE];
+                                        Buf = TextArray[TEXT::JOY_ACHSE];
                                     } else {
                                         // Jump/Movement is assigned to DPAD HAT
-                                        Buf = TextArray[TEXT_JOY_COOLIE];
+                                        Buf = TextArray[TEXT::JOY_COOLIE];
                                     }
                                 } else {
                                     // Joy button
-                                    Buf.append(TextArray[TEXT_BUTTON]).append(" ").append(
+                                    Buf.append(TextArray[TEXT::BUTTON]).append(" ").append(
                                               DirectInput.MapButtonToString(pCurrentPlayer->JoystickIndex,
                                                                             pCurrentPlayer->AktionJoystick[i]));
                                 }
@@ -867,10 +867,10 @@ void MenuClass::ShowMenu() {
                         if (scale_factor <= 1) {
                             if (pCurrentPlayer->ControlType == CONTROLTYPE_KEYBOARD)
                                 // Ask for new key
-                                Buf=TextArray[TEXT_TASTEN_NEU_T];
+                                Buf=TextArray[TEXT::TASTEN_NEU_T];
                             else
                                 // Ask for new button
-                                Buf=TextArray[TEXT_TASTEN_NEU_B];
+                                Buf=TextArray[TEXT::TASTEN_NEU_B];
                         } else {
                             // When using scaled fonts (low-res device), there's not enough room for the text prompt
                             Buf="???";
@@ -884,14 +884,14 @@ void MenuClass::ShowMenu() {
         } break;  // MENUZUSTAND_TASTEN
 
         case MENUPUNKT_HIGHSCORES: {
-            float d = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT_MENUE_HIGHSCORES], 2));
-            pMenuFont->DrawText(320 - d / 2.0f, ypos, TextArray[TEXT_MENUE_HIGHSCORES], menucolor, 2);
+            float d = static_cast<float>(pMenuFont->StringLength(TextArray[TEXT::MENUE_HIGHSCORES], 2));
+            pMenuFont->DrawText(320 - d / 2.0f, ypos, TextArray[TEXT::MENUE_HIGHSCORES], menucolor, 2);
 
-            // pMenuFont->DrawText(xpos-120,  ypos+55, TextArray [TEXT_HIGHSCORE_PLATZ],  0xFFFFFFFF, 2);
-            pMenuFont->DrawText(xpos - 120, ypos + 55, TextArray[TEXT_HIGHSCORE_NAME], 0xFFFFFFFF, 2);
-            pMenuFont->DrawTextRightAlign(xpos + 270, ypos + 55, TextArray[TEXT_HIGHSCORE_PUNKTE], 0xFFFFFFFF, 2);
-            pMenuFont->DrawTextCenterAlign(xpos + 350, ypos + 55, TextArray[TEXT_HIGHSCORE_STAGE], 0xFFFFFFFF, 2);
-            pMenuFont->DrawText(xpos + 420, ypos + 55, TextArray[TEXT_HIGHSCORE_SKILL], 0xFFFFFFFF, 2);
+            // pMenuFont->DrawText(xpos-120,  ypos+55, TextArray [TEXT::HIGHSCORE_PLATZ],  0xFFFFFFFF, 2);
+            pMenuFont->DrawText(xpos - 120, ypos + 55, TextArray[TEXT::HIGHSCORE_NAME], 0xFFFFFFFF, 2);
+            pMenuFont->DrawTextRightAlign(xpos + 270, ypos + 55, TextArray[TEXT::HIGHSCORE_PUNKTE], 0xFFFFFFFF, 2);
+            pMenuFont->DrawTextCenterAlign(xpos + 350, ypos + 55, TextArray[TEXT::HIGHSCORE_STAGE], 0xFFFFFFFF, 2);
+            pMenuFont->DrawText(xpos + 420, ypos + 55, TextArray[TEXT::HIGHSCORE_SKILL], 0xFFFFFFFF, 2);
 
             for (int i = 0; i < MAX_HIGHSCORES; i++) {
 
@@ -924,13 +924,13 @@ void MenuClass::ShowMenu() {
         } break;  // HIGHSCORE
 
         case MENUZUSTAND_ENTERNAME: {
-            pMenuFont->DrawTextCenterAlign(320, ypos + 90, TextArray[TEXT_WAHNSINN], D3DCOLOR_RGBA(255, 255, 255, 255),
+            pMenuFont->DrawTextCenterAlign(320, ypos + 90, TextArray[TEXT::WAHNSINN], D3DCOLOR_RGBA(255, 255, 255, 255),
                                            2);
 
-            pMenuFont->DrawTextCenterAlign(320, ypos + 180, TextArray[TEXT_NAMEN_EINGEBEN],
+            pMenuFont->DrawTextCenterAlign(320, ypos + 180, TextArray[TEXT::NAMEN_EINGEBEN],
                                            D3DCOLOR_RGBA(255, 255, 255, 255), 2);
 
-            std::string Buffer(TextArray[TEXT_NEUE_HIGHSCORE]);
+            std::string Buffer(TextArray[TEXT::NEUE_HIGHSCORE]);
             Buffer.append(std::to_string(NewRank + 1));
 
             pMenuFont->DrawTextCenterAlign(320, ypos + 150, Buffer.c_str(), D3DCOLOR_RGBA(255, 255, 255, 255), 2);
@@ -1010,41 +1010,41 @@ void MenuClass::ShowMenu() {
         } break;  // CREDITS
 
         case MENUZUSTAND_NEWGAME: {
-            pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET, TextArray[TEXT_MENUE_SPIEL_STARTEN], menucolor, 2);
+            pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET, TextArray[TEXT::MENUE_SPIEL_STARTEN], menucolor, 2);
 
             for (int i = 0; i < 3; i++)
                 if (AktuellerPunkt != i)
                     pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + (i + 2) * 35,
-                                                   TextArray[TEXT_MENUE_TUTORIAL_SPIELEN + i], menucolor2, 2);
+                                                   TextArray[TEXT::MENUE_TUTORIAL_SPIELEN + i], menucolor2, 2);
 
             pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + (AktuellerPunkt + 2) * 35,
-                                           TextArray[TEXT_MENUE_TUTORIAL_SPIELEN + AktuellerPunkt], menucolor, 2);
+                                           TextArray[TEXT::MENUE_TUTORIAL_SPIELEN + AktuellerPunkt], menucolor, 2);
 
         } break;
 
         case MENUZUSTAND_PLAYERCOUNT: {
-            pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET, TextArray[TEXT_MENUE_SPIEL_STARTEN], menucolor, 2);
+            pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET, TextArray[TEXT::MENUE_SPIEL_STARTEN], menucolor, 2);
 
             for (int i = 0; i < 2; i++)
                 if (AktuellerPunkt != i)
-                    pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + (i + 2) * 35, TextArray[TEXT_ONE_PLAYER + i],
+                    pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + (i + 2) * 35, TextArray[TEXT::ONE_PLAYER + i],
                                                    menucolor2, 2);
 
             pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET + (AktuellerPunkt + 2) * 35,
-                                           TextArray[TEXT_ONE_PLAYER + AktuellerPunkt], menucolor, 2);
+                                           TextArray[TEXT::ONE_PLAYER + AktuellerPunkt], menucolor, 2);
 
         } break;
 
         case MENUZUSTAND_SELECTSKILL: {
-            pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET, TextArray[TEXT_MENUE_SPIEL_STARTEN], menucolor, 2);
+            pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET, TextArray[TEXT::MENUE_SPIEL_STARTEN], menucolor, 2);
 
             for (int i = 0; i < 4; i++)
                 if (AktuellerPunkt != i)
-                    pMenuFont->DrawText(310, ypos + OFFSET + (i + 2) * 35, TextArray[TEXT_MENUE_LEICHT + i], menucolor2,
+                    pMenuFont->DrawText(310, ypos + OFFSET + (i + 2) * 35, TextArray[TEXT::MENUE_LEICHT + i], menucolor2,
                                         2);
 
             pMenuFont->DrawText(310, ypos + OFFSET + (AktuellerPunkt + 2) * 35,
-                                TextArray[TEXT_MENUE_LEICHT + AktuellerPunkt], menucolor, 2);
+                                TextArray[TEXT::MENUE_LEICHT + AktuellerPunkt], menucolor, 2);
 
             // Skill anzeigen
             DirectGraphics.SetColorKeyMode();
@@ -1056,11 +1056,11 @@ void MenuClass::ShowMenu() {
         case MENUZUSTAND_LOADGAME: {
             // "Continue saved game"
             if (pDefaultFont->GetScaleFactor() <= 1) {
-                pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET, TextArray[TEXT_MENUE_ALTES_SPIEL_FORTSETZEN],
+                pMenuFont->DrawTextCenterAlign(320, ypos + OFFSET, TextArray[TEXT::MENUE_ALTES_SPIEL_FORTSETZEN],
                                                menucolor, 2);
             } else {
                 // DKS - When using scaled fonts, display the text higher and using the small default font
-                pDefaultFont->DrawTextCenterAlign(320, ypos + 20, TextArray[TEXT_MENUE_ALTES_SPIEL_FORTSETZEN],
+                pDefaultFont->DrawTextCenterAlign(320, ypos + 20, TextArray[TEXT::MENUE_ALTES_SPIEL_FORTSETZEN],
                                                   menucolor, 2);
             }
 
@@ -1082,11 +1082,11 @@ void MenuClass::ShowMenu() {
 
             // "Save Game"
             if (scale_factor <= 1) {
-                pMenuFont->DrawTextCenterAlign(320.0f, ypos + OFFSET, TextArray[TEXT_MENUE_SPIEL_SPEICHERN], 0xFFFFFFFF,
+                pMenuFont->DrawTextCenterAlign(320.0f, ypos + OFFSET, TextArray[TEXT::MENUE_SPIEL_SPEICHERN], 0xFFFFFFFF,
                                                2);
             } else {
                 // Use the smaller default font since this we're using scaled fonts and need it to fit:
-                pDefaultFont->DrawTextCenterAlign(320.0f, ypos + 20, TextArray[TEXT_MENUE_SPIEL_SPEICHERN], 0xFFFFFFFF,
+                pDefaultFont->DrawTextCenterAlign(320.0f, ypos + 20, TextArray[TEXT::MENUE_SPIEL_SPEICHERN], 0xFFFFFFFF,
                                                   2);
             }
 
@@ -1094,17 +1094,17 @@ void MenuClass::ShowMenu() {
             // "Continue"
             if (scale_factor <= 1) {
                 pMenuFont->DrawTextCenterAlign(320, continue_text_off_y + (MAX_SAVEGAMES + 1) * line_off_y,
-                                               TextArray[TEXT_WEITER], 0x80FFFFFF, 2);
+                                               TextArray[TEXT::WEITER], 0x80FFFFFF, 2);
                 if (AktuellerPunkt == MAX_SAVEGAMES)
                     pMenuFont->DrawTextCenterAlign(320, continue_text_off_y + (MAX_SAVEGAMES + 1) * line_off_y,
-                                                   TextArray[TEXT_WEITER], 0xFFFFFFFF, 2);
+                                                   TextArray[TEXT::WEITER], 0xFFFFFFFF, 2);
             } else {
                 // If using scaled fonts, use the smaller default font:
                 pDefaultFont->DrawTextCenterAlign(320, continue_text_off_y + (MAX_SAVEGAMES + 1) * line_off_y,
-                                                  TextArray[TEXT_WEITER], 0x80FFFFFF, 2);
+                                                  TextArray[TEXT::WEITER], 0x80FFFFFF, 2);
                 if (AktuellerPunkt == MAX_SAVEGAMES)
                     pDefaultFont->DrawTextCenterAlign(320, continue_text_off_y + (MAX_SAVEGAMES + 1) * line_off_y,
-                                                      TextArray[TEXT_WEITER], 0xFFFFFFFF, 2);
+                                                      TextArray[TEXT::WEITER], 0xFFFFFFFF, 2);
             }
         } break;  // Save Game
 
@@ -1573,7 +1573,7 @@ void MenuClass::DoMenu() {
                     ShowLanguageInfoCounter = 2000.0f;
 
                     // Sprache feststellen und schauen, welche Grafik wir anzeigen müssen
-                    if (strcmp(TextArray[TEXT_BENUTZTE_GRAFIK], "0") == 0)
+                    if (strcmp(TextArray[TEXT::BENUTZTE_GRAFIK], "0") == 0)
                         Sprachgrafik = 0;  // deutsch ?
                     else
                         Sprachgrafik = 1;  // oder doch englisch ?
@@ -2414,9 +2414,9 @@ void MenuClass::ShowSavegames(int Highlight) {
         col3_off_x = xpos / 2 + 350;
     }
 
-    pDefaultFont->DrawTextCenterAlign(col1_off_x, title_bar_off_y, TextArray[TEXT_SAVE_STAGE], 0xFFFFFFFF, 0);
-    pDefaultFont->DrawTextCenterAlign(col2_off_x, title_bar_off_y, TextArray[TEXT_SAVE_SPIELER], 0xFFFFFFFF, 0);
-    pDefaultFont->DrawTextCenterAlign(col3_off_x, title_bar_off_y, TextArray[TEXT_SAVE_DATUM], 0xFFFFFFFF, 0);
+    pDefaultFont->DrawTextCenterAlign(col1_off_x, title_bar_off_y, TextArray[TEXT::SAVE_STAGE], 0xFFFFFFFF, 0);
+    pDefaultFont->DrawTextCenterAlign(col2_off_x, title_bar_off_y, TextArray[TEXT::SAVE_SPIELER], 0xFFFFFFFF, 0);
+    pDefaultFont->DrawTextCenterAlign(col3_off_x, title_bar_off_y, TextArray[TEXT::SAVE_DATUM], 0xFFFFFFFF, 0);
 
     // Alle Savegames anzeigen
     for (int i = 0; i < MAX_SAVEGAMES; i++) {
@@ -2457,7 +2457,7 @@ void MenuClass::ShowSavegames(int Highlight) {
 
         // oder ist dort noch ein leerer Slot ?
         else {
-            pDefaultFont->DrawTextCenterAlign(320, savegames_off_y + i * line_off_y, TextArray[TEXT_SAVE_LEER], col, 0);
+            pDefaultFont->DrawTextCenterAlign(320, savegames_off_y + i * line_off_y, TextArray[TEXT::SAVE_LEER], col, 0);
         }
     }
 }
@@ -2636,8 +2636,8 @@ void MenuClass::ShowLanguageInfo() {
     RenderRect(rect_x - 2, rect_y - 2, rect_w + 4, rect_h + 4, D3DCOLOR_RGBA(64, 128, 255, a2));
     RenderRect(rect_x - 1, rect_y - 1, rect_w + 2, rect_h + 2, D3DCOLOR_RGBA(0, 0, 64, a2));
     RenderRect(rect_x, rect_y, rect_w, rect_h, D3DCOLOR_RGBA(0, 0, 64, a2));
-    pDefaultFont->DrawText(static_cast<float>(320 - pDefaultFont->StringLength(TextArray[TEXT_BENUTZTES_FILE]) / 2),
-                           static_cast<float>(rect_y + border), TextArray[TEXT_BENUTZTES_FILE], D3DCOLOR_RGBA(255, 255, 255, a1));
+    pDefaultFont->DrawText(static_cast<float>(320 - pDefaultFont->StringLength(TextArray[TEXT::BENUTZTES_FILE]) / 2),
+                           static_cast<float>(rect_y + border), TextArray[TEXT::BENUTZTES_FILE], D3DCOLOR_RGBA(255, 255, 255, a1));
 
     for (int i = 0; i < 9; i++) {
         int xoff = 320 - (strlen(TextArray[i]) - 1) * xoff_inc / 2;

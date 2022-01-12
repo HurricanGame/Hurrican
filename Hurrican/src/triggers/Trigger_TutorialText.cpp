@@ -53,7 +53,7 @@ void GegnerTutorialText::DoKI() {
             Player[0].SmartBombs = 1;
 
         // Alter Text, in dem ersetzt wird
-        std::string s_text(TextArray[TEXT_TUTORIAL1 + Value1]);
+        std::string s_text(TextArray[TEXT::TUTORIAL1 + Value1]);
         std::string newWord;  // neuer Text für das zu ersetzende Wort
 
         // die Makros für die Aktionstasten mit den Namen der aktuell eingestellten Tasten ersetzen

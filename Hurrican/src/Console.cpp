@@ -52,7 +52,7 @@ ConsoleClass::ConsoleClass() {
 
     // Text in Konsole schreiben
     for (int i = 0; i < 9; i++)
-        this->print(TextArray[TEXT_CONSOLE1 + i]);
+        this->print(TextArray[TEXT::CONSOLE1 + i]);
 
     // Lock-Puffer leeren
     for (int i = 0; i < 256; i++)
@@ -234,7 +234,7 @@ void ConsoleClass::CheckCommands() {
     } else
 
         // Volle Extrawaffen
-        if (CONSOLE_CHEAT(Cheats[CHEAT_EXTRAS])) {
+        if (CONSOLE_CHEAT(Cheats[CHEAT::EXTRAS])) {
         for (int p = 0; p < NUMPLAYERS; p++) {
             Player[p].PowerLines = 999;
             Player[p].Grenades = 999;
@@ -245,14 +245,14 @@ void ConsoleClass::CheckCommands() {
     } else
 
         // Volle Zeit
-        if (CONSOLE_CHEAT(Cheats[CHEAT_ZEIT])) {
+        if (CONSOLE_CHEAT(Cheats[CHEAT::ZEIT])) {
         TileEngine.Timelimit = 999;
 
         this->print("-> knowing that there's no rhyme...");
     } else
 
         // Volle Waffen
-        if (CONSOLE_CHEAT(Cheats[CHEAT_WAFFEN])) {
+        if (CONSOLE_CHEAT(Cheats[CHEAT::WAFFEN])) {
         for (int p = 0; p < NUMPLAYERS; p++) {
             Player[p].CurrentWeaponLevel[3] = 16;
 
@@ -264,7 +264,7 @@ void ConsoleClass::CheckCommands() {
     } else
 
         // Schild
-        if (CONSOLE_CHEAT(Cheats[CHEAT_SCHILD])) {
+        if (CONSOLE_CHEAT(Cheats[CHEAT::SCHILD])) {
         for (int i = 0; i < NUMPLAYERS; i++) {
             /*
             if (Player[i].Shield <= 0.0f)
@@ -283,7 +283,7 @@ void ConsoleClass::CheckCommands() {
     } else
 
         // Dauerfeuer
-        if (CONSOLE_CHEAT(Cheats[CHEAT_SUPERSHOT])) {
+        if (CONSOLE_CHEAT(Cheats[CHEAT::SUPERSHOT])) {
         for (int i = 0; i < NUMPLAYERS; i++)
             Player[i].RiesenShotExtra += 500;
 
@@ -291,7 +291,7 @@ void ConsoleClass::CheckCommands() {
     } else
 
         // Dauerfeuer
-        if (CONSOLE_CHEAT(Cheats[CHEAT_AUTOFIRE])) {
+        if (CONSOLE_CHEAT(Cheats[CHEAT::AUTOFIRE])) {
         for (int i = 0; i < NUMPLAYERS; i++)
             Player[i].AutoFireExtra += 500;
 
@@ -299,7 +299,7 @@ void ConsoleClass::CheckCommands() {
     } else
 
         // Flammenwerfer Mode
-        if (CONSOLE_CHEAT(Cheats[CHEAT_FLAMER])) {
+        if (CONSOLE_CHEAT(Cheats[CHEAT::FLAMER])) {
         FlameThrower = !FlameThrower;
 
         if (FlameThrower) {
@@ -310,7 +310,7 @@ void ConsoleClass::CheckCommands() {
     }  // else
 
     // GodMode
-    if (CONSOLE_CHEAT(Cheats[CHEAT_GOD])) {
+    if (CONSOLE_CHEAT(Cheats[CHEAT::GOD])) {
         if (Player[0].GodMode == false) {
             Player[0].GodMode = true;
             Player[1].GodMode = true;
@@ -323,7 +323,7 @@ void ConsoleClass::CheckCommands() {
     }  // else
 
     // GodMode
-    if (CONSOLE_CHEAT(Cheats[CHEAT_RAD])) {
+    if (CONSOLE_CHEAT(Cheats[CHEAT::RAD])) {
         if (Player[0].WheelMode == false) {
             Player[0].WheelMode = true;
             Player[1].WheelMode = true;

@@ -46,13 +46,13 @@ IntroClass::IntroClass() {
 
     // Generate a series of lines from the intro text that are split if too long to display:
     for (int line_ctr = 0; line_ctr <= 23; line_ctr++) {
-        int off = TEXT_INTRO1 + line_ctr;
+        int off = TEXT::INTRO1 + line_ctr;
         const int max_length = RENDERWIDTH - 20;
 
         // There are two versions of one line, one after the other, depending on number of players:
-        if (off == TEXT_INTRO1 + 22 && NUMPLAYERS == 2)
+        if (off == TEXT::INTRO1 + 22 && NUMPLAYERS == 2)
             off++;
-        else if (off >= TEXT_INTRO1 + 23)
+        else if (off >= TEXT::INTRO1 + 23)
             off++;
 
         char buf1[255];

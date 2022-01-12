@@ -639,8 +639,8 @@ loadfile:
     sounds[nr].looped = looped;
 
     // DisplayLoadInfo(Buffer);
-    std::string loadinfo_str = std::string(TextArray[TEXT_LADE_WAVE]) + filename +
-                               std::string(TextArray[TEXT_LADEN_ERFOLGREICH]) + std::string("\n");
+    std::string loadinfo_str = std::string(TextArray[TEXT::LADE_WAVE]) + filename +
+                               std::string(TextArray[TEXT::LADEN_ERFOLGREICH]) + std::string("\n");
     DisplayLoadInfo(loadinfo_str.c_str());
 }
 

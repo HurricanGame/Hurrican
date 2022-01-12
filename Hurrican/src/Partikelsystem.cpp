@@ -3297,7 +3297,7 @@ bool PartikelClass::Render() {
 
     } else if (PartikelArt == TEXTSECRET) {
         D3DCOLOR col = D3DCOLOR_RGBA(255, 224, 64, alpha);
-        pMenuFont->DrawTextCenterAlign(xPos - TileEngine.XOffset, yPos - TileEngine.YOffset, TextArray[TEXT_SECRET],
+        pMenuFont->DrawTextCenterAlign(xPos - TileEngine.XOffset, yPos - TileEngine.YOffset, TextArray[TEXT::SECRET],
                                        col);
 
         CurrentPartikelTexture = -1;

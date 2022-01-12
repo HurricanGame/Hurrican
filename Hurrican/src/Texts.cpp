@@ -37,7 +37,7 @@ extern Logdatei Protokoll;
 
 std::vector<std::string> LanguageFiles;
 char ActualLanguage[256];  // Gewählte Language
-char TextArray[TEXT_LASTTEXT][1024];
+char TextArray[TEXT::LASTTEXT][1024];
 char s_Replacers[MAX_AKTIONEN * 2][256];
 
 char Cheats[MAX_CHEATS][256] = {"$.345&&",            // 99 Extras = dnstuff
@@ -94,7 +94,7 @@ loadfile:
 
     // Texte auslesen
     //
-    for (int i = 0; i < TEXT_LASTTEXT - 2; i++) {
+    for (int i = 0; i < TEXT::LASTTEXT - 2; i++) {
         strcpy_s(TextArray[i], 1, "");
         count = 0;
         c = Datei.get();
@@ -355,62 +355,62 @@ void InitReplacers() {
     } else {
         int joy_idx = Player[0].JoystickIndex;
         std::string buf;
-        buf.assign(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_LEFT]);
+        buf.assign(TextArray[TEXT::JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT::LEFT]);
         strcpy(s_Replacers[1], buf.c_str());
 
-        buf.assign(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_RIGHT]);
+        buf.assign(TextArray[TEXT::JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT::RIGHT]);
         strcpy(s_Replacers[3], buf.c_str());
 
-        buf.assign(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_DOWN]);
+        buf.assign(TextArray[TEXT::JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT::DOWN]);
         strcpy(s_Replacers[5], buf.c_str());
 
-        buf.assign(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_UP]);
+        buf.assign(TextArray[TEXT::JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT::UP]);
         strcpy(s_Replacers[7], buf.c_str());
 
-        buf.assign(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_DOWN]);
+        buf.assign(TextArray[TEXT::JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT::DOWN]);
         strcpy(s_Replacers[9], buf.c_str());
 
         if (Player[0].JoystickMode == JOYMODE_JOYSTICK)
-            buf.assign(TextArray[TEXT_JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT_UP]);
+            buf.assign(TextArray[TEXT::JOYMODE_PAD + Player[0].JoystickMode - 1]).append(" ").append(TextArray[TEXT::UP]);
         else
-            buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
+            buf.assign(TextArray[TEXT::BUTTON]).append(" ").append(
                       DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_JUMP]));
 
         strcpy(s_Replacers[11], buf.c_str());
 
-        buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
+        buf.assign(TextArray[TEXT::BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_SHOOT]));
         strcpy(s_Replacers[13], buf.c_str());
 
-        buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
+        buf.assign(TextArray[TEXT::BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_BLITZ]));
         strcpy(s_Replacers[15], buf.c_str());
 
-        buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
+        buf.assign(TextArray[TEXT::BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_POWERLINE]));
         strcpy(s_Replacers[17], buf.c_str());
 
-        buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
+        buf.assign(TextArray[TEXT::BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_GRANATE]));
         strcpy(s_Replacers[19], buf.c_str());
 
-        buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
+        buf.assign(TextArray[TEXT::BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_SMARTBOMB]));
         strcpy(s_Replacers[21], buf.c_str());
 
-        buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
+        buf.assign(TextArray[TEXT::BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_WAFFEN_CYCLE]));
         strcpy(s_Replacers[23], buf.c_str());
 
-        buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
+        buf.assign(TextArray[TEXT::BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_WAFFE_SPREAD]));
         strcpy(s_Replacers[25], buf.c_str());
 
-        buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
+        buf.assign(TextArray[TEXT::BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_WAFFE_LASER]));
         strcpy(s_Replacers[27], buf.c_str());
 
-        buf.assign(TextArray[TEXT_BUTTON]).append(" ").append(
+        buf.assign(TextArray[TEXT::BUTTON]).append(" ").append(
                   DirectInput.MapButtonToString(joy_idx, Player[0].AktionJoystick[AKTION_WAFFE_BOUNCE]));
         strcpy(s_Replacers[29], buf.c_str());
     }
