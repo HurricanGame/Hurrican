@@ -447,6 +447,7 @@ class TileEngineClass {
     int yTileOffs;
     float xScreen;
     float yScreen;
+    float TimelimitSave;  // usprüngliches Zeitlimit
 
     bool bScrollBackground;  // Hintegrundbild scrollen ?
 
@@ -496,8 +497,7 @@ class TileEngineClass {
     float WasserfallOffset;                      // Wasserfall Offset
     float XOffset, YOffset;                      // Scrolloffset des Levels
     float NewXOffset, NewYOffset;                // Neue Scrolloffsets, falls das Level von einem Gegner gelockt ist
-    double Timelimit;                            // Zeitlimit
-    double TimelimitSave;                        // usprüngliches Zeitlimit
+    float Timelimit;                             // Zeitlimit
     int LEVELSIZE_X;                             // Grösse des Levels
     int LEVELSIZE_Y;                             // in Tiles
     float LEVELPIXELSIZE_X;                      // Levelgrösse in Pixeln
@@ -587,6 +587,8 @@ class TileEngineClass {
 #endif
         return Tiles[i][j];
     }
+
+    inline void resetTimelimit() { Timelimit = TimelimitSave; }
 };
 
 // --------------------------------------------------------------------------------------

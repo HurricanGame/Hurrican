@@ -141,7 +141,7 @@ void GegnerPunisher::DoKI() {
                     Player[p].CalcWeaponLevels();
 
                     // bekommt dafür aber wieder Zeit
-                    TileEngine.Timelimit = TileEngine.TimelimitSave;
+                    TileEngine.resetTimelimit();
 
                     // ausfaden
                     Energy = 0.0f;

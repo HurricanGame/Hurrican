@@ -415,11 +415,11 @@ loadfile:
     ParallaxLayer[0].LoadImage(DateiHeader.ParallaxAFile, 640, 480, 640, 480, 1, 1);
     ParallaxLayer[1].LoadImage(DateiHeader.ParallaxBFile, 640, 480, 640, 480, 1, 1);
     CloudLayer.LoadImage(DateiHeader.CloudFile, 640, 240, 640, 240, 1, 1);
-    Timelimit = FixEndian(DateiHeader.Timelimit);
+    Timelimit = static_cast<float>(FixEndian(DateiHeader.Timelimit));
     DateiHeader.NumObjects = FixEndian(DateiHeader.NumObjects);
 
-    if (Timelimit <= 0)
-        Timelimit = 500;
+    if (Timelimit <= 0.0f)
+        Timelimit = 500.0f;
 
     Player[0].PunisherActive = false;
     Player[1].PunisherActive = false;

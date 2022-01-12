@@ -246,7 +246,7 @@ void ConsoleClass::CheckCommands() {
 
         // Volle Zeit
         if (CONSOLE_CHEAT(Cheats[CHEAT::ZEIT])) {
-        TileEngine.Timelimit = 999;
+        TileEngine.Timelimit = 999.0f;
 
         this->print("-> knowing that there's no rhyme...");
     } else
