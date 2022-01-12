@@ -62,6 +62,8 @@ bool RunningTutorial = false;
 constexpr const char* DEMO_ID = "Hurrican Demo File";  // Kennung
 constexpr const char* CONFIGFILE = "Hurrican.cfg";  // Name der Konfigurationsdatei
 
+constexpr const char* DEFAULT_LANG_FILE = "english.lng";
+
 std::string StageReihenfolge[256];
 
 int options_Detail;
@@ -717,7 +719,7 @@ void CreateDefaultControlsConfig(int player) {
 void CreateDefaultConfig() {
     Protokoll << "Creating new configuration file" << std::endl;
 
-    strcpy_s(ActualLanguage, strlen("english.lng") + 1, "english.lng");
+    ActualLanguage = DEFAULT_LANG_FILE;
     bool language_loaded = LoadLanguage(ActualLanguage);
     if (!language_loaded) {
         Protokoll << "ERROR: Failed to find default language file." << std::endl;
@@ -755,12 +757,14 @@ bool LoadConfig() {
         return false;
 
     // Spracheinstellung laden
-    Datei.read(reinterpret_cast<char *>(&ActualLanguage), sizeof(ActualLanguage));
+    char lang[256];
+    Datei.read(reinterpret_cast<char *>(&lang), sizeof(lang));
+    ActualLanguage = lang;
     // DKS - Made language loading default back to english if saved language not found:
     bool language_loaded = LoadLanguage(ActualLanguage);
     if (!language_loaded) {
         Protokoll << "ERROR loading " << ActualLanguage << ", reverting to default language file." << std::endl;
-        strcpy_s(ActualLanguage, "english.lng");
+        ActualLanguage = DEFAULT_LANG_FILE;
         LoadLanguage(ActualLanguage);
     }
 
@@ -860,7 +864,10 @@ void SaveConfig() {
     }
 
     // Spracheinstellung speichern
-    Datei.write(reinterpret_cast<char *>(&ActualLanguage), sizeof(ActualLanguage));
+    char lang[256];
+    std::size_t length = ActualLanguage.copy(lang, 255);
+    lang[length]='\0';
+    Datei.write(reinterpret_cast<char *>(&lang), sizeof(lang));
 
     // Daten für Sound und Musik-Lautstärke schreiben
     float Sound = SoundManager.g_sound_vol;

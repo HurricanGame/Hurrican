@@ -1567,7 +1567,7 @@ void MenuClass::DoMenu() {
 
                 // Language File gewählt ?
                 if (AktuellerPunkt < num_lang) {
-                    strcpy_s(ActualLanguage, 256-1, LanguageFiles[AktuellerPunkt].c_str());
+                    ActualLanguage = LanguageFiles[AktuellerPunkt];
                     LoadLanguage(ActualLanguage);
                     SaveConfig();
                     ShowLanguageInfoCounter = 2000.0f;

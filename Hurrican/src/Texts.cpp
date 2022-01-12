@@ -36,7 +36,7 @@ namespace fs = std::filesystem;
 extern Logdatei Protokoll;
 
 std::vector<std::string> LanguageFiles;
-char ActualLanguage[256];  // Gewählte Language
+std::string ActualLanguage;  // Gewählte Language
 char TextArray[TEXT::LASTTEXT][1024];
 char s_Replacers[MAX_AKTIONEN * 2][256];
 
@@ -54,7 +54,7 @@ char Cheats[MAX_CHEATS][256] = {"$.345&&",            // 99 Extras = dnstuff
 // Bestimmte Sprachdatei laden
 // --------------------------------------------------------------------------------------
 //
-bool LoadLanguage(char *filename) {
+bool LoadLanguage(const std::string& filename) {
     bool fromrar = false;
     std::ifstream in;
     char c;
