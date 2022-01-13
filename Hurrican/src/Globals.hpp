@@ -76,13 +76,11 @@ inline void clampAngle(T& angle) {
 // Externals
 // --------------------------------------------------------------------------------------
 
-extern bool Sprache;      // true == deutsch / false == englisch (nur für Menugrafiken)
 extern bool GameRunning;  // Spiel läuft :-)
 #ifndef NDEBUG
 extern bool DebugMode;  // Debug Mode ein/aus
 #endif
 extern bool FlameThrower;
 extern bool HasCheated;
-extern RECT_struct srcrect, destrect;
 
 #endif
