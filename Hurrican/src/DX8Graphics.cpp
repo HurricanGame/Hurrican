@@ -520,9 +520,9 @@ void DirectGraphicsClass::SetFilterMode(bool filteron) {
 void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
                                          std::uint32_t PrimitiveCount,
                                          void *pVertexStreamZeroData) {
-    int stride = sizeof(VERTEX2D);
-    size_t clr_offset = offsetof(VERTEX2D, color);
-    size_t tex_offset = offsetof(VERTEX2D, tu);
+    constexpr int STRIDE = sizeof(VERTEX2D);
+    constexpr size_t CLR_OFFSET = offsetof(VERTEX2D, color);
+    constexpr size_t TEX_OFFSET = offsetof(VERTEX2D, tu);
 
 #if defined(USE_GL2) || defined(USE_GL3)
     uint8_t program_next;
@@ -572,14 +572,14 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
     // Enable the client states for transfer
     if (use_shader == shader_t::TEXTURE) {
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-        glTexCoordPointer(2, GL_FLOAT, stride, reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + tex_offset);
+        glTexCoordPointer(2, GL_FLOAT, STRIDE, reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + TEX_OFFSET);
     }
 
     glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(2, GL_FLOAT, stride, pVertexStreamZeroData);
+    glVertexPointer(2, GL_FLOAT, STRIDE, pVertexStreamZeroData);
 
     glEnableClientState(GL_COLOR_ARRAY);
-    glColorPointer(4, GL_UNSIGNED_BYTE, stride, reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + clr_offset);
+    glColorPointer(4, GL_UNSIGNED_BYTE, STRIDE, reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + CLR_OFFSET);
 #elif defined(USE_GL2) || defined(USE_GL3)
         // Enable attributes and uniforms for transfer
         if (is_texture) {
@@ -590,16 +590,16 @@ void DirectGraphicsClass::RendertoBuffer(GLenum PrimitiveType,
             }
 #endif
             glEnableVertexAttribArray(Shaders[ProgramCurrent].NameTex);
-            glVertexAttribPointer(Shaders[ProgramCurrent].NameTex, 2, GL_FLOAT, GL_FALSE, stride,
-                                  reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + tex_offset);
+            glVertexAttribPointer(Shaders[ProgramCurrent].NameTex, 2, GL_FLOAT, GL_FALSE, STRIDE,
+                                  reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + TEX_OFFSET);
         }
 
         glEnableVertexAttribArray(Shaders[ProgramCurrent].NamePos);
-        glVertexAttribPointer(Shaders[ProgramCurrent].NamePos, 2, GL_FLOAT, GL_FALSE, stride, pVertexStreamZeroData);
+        glVertexAttribPointer(Shaders[ProgramCurrent].NamePos, 2, GL_FLOAT, GL_FALSE, STRIDE, pVertexStreamZeroData);
 
         glEnableVertexAttribArray(Shaders[ProgramCurrent].NameClr);
-        glVertexAttribPointer(Shaders[ProgramCurrent].NameClr, 4, GL_UNSIGNED_BYTE, GL_TRUE, stride,
-                              reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + clr_offset);
+        glVertexAttribPointer(Shaders[ProgramCurrent].NameClr, 4, GL_UNSIGNED_BYTE, GL_TRUE, STRIDE,
+                              reinterpret_cast<uint8_t *>(pVertexStreamZeroData) + CLR_OFFSET);
 
         glm::mat4x4 matMVP = matProj * g_matModelView;
         glUniformMatrix4fv(Shaders[ProgramCurrent].NameMvp, 1, GL_FALSE, glm::value_ptr(matMVP));

@@ -940,18 +940,18 @@ bool DisplayLoadInfo(const char Text[100]) {
     if (DisplayHintNr > -1) {
         if (CommandLineParams.LowRes) {
             const char *text = TextArray[TEXT::HINT1 + DisplayHintNr];
-            float y_pos = 270.0f;
-            float y_inc = 28.0f;
-            int max_width = RENDERWIDTH - 20;
-            if (pDefaultFont->StringLength(text, 0) > max_width) {
+            constexpr float Y_POS = 270.0f;
+            constexpr float Y_INC = 28.0f;
+            constexpr int MAX_WIDTH = RENDERWIDTH - 20;
+            if (pDefaultFont->StringLength(text, 0) > MAX_WIDTH) {
                 // Split the line in two if too long to display on low-res device:
                 char text1[255];
                 char text2[255];
                 SplitLine(text1, text2, text);
-                pDefaultFont->DrawTextCenterAlign(320.0f, y_pos, text1, 0xFFFFFFFF, 0);
-                pDefaultFont->DrawTextCenterAlign(320.0f, y_pos + y_inc, text2, 0xFFFFFFFF, 0);
+                pDefaultFont->DrawTextCenterAlign(320.0f, Y_POS, text1, 0xFFFFFFFF, 0);
+                pDefaultFont->DrawTextCenterAlign(320.0f, Y_POS + Y_INC, text2, 0xFFFFFFFF, 0);
             } else {
-                pDefaultFont->DrawTextCenterAlign(320.0f, y_pos, text, 0xFFFFFFFF, 0);
+                pDefaultFont->DrawTextCenterAlign(320.0f, Y_POS, text, 0xFFFFFFFF, 0);
             }
         } else {
             pDefaultFont->DrawTextCenterAlign(320.0f, 270.0f, TextArray[TEXT::HINT1 + DisplayHintNr], 0xFFFFFFFF, 0);

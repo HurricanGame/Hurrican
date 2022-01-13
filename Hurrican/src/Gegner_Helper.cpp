@@ -186,7 +186,7 @@ SpriteData sprites[] = {
     { "fahrstuhlboss_rahmen.png", 420, 280, 420, 280, 1, 1 },
     { "flugboss_main.png", 280, 285, 280, 285, 1, 1 },
     // DKS - Corrected dimensions from 323x400 to 232x400, to match actual image file:
-    //      NOTE: also see my notes in Boss_Bratklops.cpp regarding this and o.hpper sprites. (TODO)
+    //      NOTE: also see my notes in Boss_Bratklops.cpp regarding this and other sprites. (TODO)
     { "bratklops0000.png", 232, 400, 232, 400, 1, 1 },
     { 0, 0, 0, 0, 0, 0, 0 }, // GEGNERSTURM
     { "metalhead_birne.png", 204, 242, 204, 242, 1, 1 },

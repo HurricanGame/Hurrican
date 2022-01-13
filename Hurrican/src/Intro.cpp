@@ -47,7 +47,7 @@ IntroClass::IntroClass() {
     // Generate a series of lines from the intro text that are split if too long to display:
     for (int line_ctr = 0; line_ctr <= 23; line_ctr++) {
         int off = TEXT::INTRO1 + line_ctr;
-        const int max_length = RENDERWIDTH - 20;
+        constexpr int MAX_LENGTH = RENDERWIDTH - 20;
 
         // There are two versions of one line, one after the other, depending on number of players:
         if (off == TEXT::INTRO1 + 22 && NUMPLAYERS == 2)
@@ -60,7 +60,7 @@ IntroClass::IntroClass() {
         char *srcbuf = TextArray[off];
 
         // Copy as much as will fit into buf1, remainder without leading whitespace into buf2.
-        bool was_split = ExtractStringOfLength(buf1, buf2, srcbuf, max_length, pDefaultFont);
+        bool was_split = ExtractStringOfLength(buf1, buf2, srcbuf, MAX_LENGTH, pDefaultFont);
 
         IntroEntry tmp_entry;
         if (was_split) {
