@@ -33,15 +33,15 @@ void GegnerSwimWalker::DoKI() {
     SimpleAnimation();
 
     // Nach links bzw rechts auf Kollision prüfen und dann ggf umkehren
-    if (BlickRichtung == LINKS)
+    if (BlickRichtung == DirectionEnum::LINKS)
         if (blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND) {
-            BlickRichtung = RECHTS;
+            BlickRichtung = DirectionEnum::RECHTS;
             xSpeed = 7.0f;
         }
 
-    if (BlickRichtung == RECHTS)
+    if (BlickRichtung == DirectionEnum::RECHTS)
         if (blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND) {
-            BlickRichtung = LINKS;
+            BlickRichtung = DirectionEnum::LINKS;
             xSpeed = -7.0f;
         }
 
@@ -57,11 +57,11 @@ void GegnerSwimWalker::DoKI() {
         {
             // Bei bestimmten Mindestabstand schiessen lassen
             if (PlayerAbstand() <= 250 && random(200) == 0 &&
-                ((BlickRichtung == LINKS && pAim->xpos + 45 <= xPos) ||
-                 (BlickRichtung == RECHTS && pAim->xpos - 45 >= xPos))) {
+                ((BlickRichtung == DirectionEnum::LINKS && pAim->xpos + 45 <= xPos) ||
+                 (BlickRichtung == DirectionEnum::RECHTS && pAim->xpos - 45 >= xPos))) {
                 SoundManager.PlayWave(100, 128, 11025, SOUND::ROCKET);
 
-                if (BlickRichtung == LINKS)
+                if (BlickRichtung == DirectionEnum::LINKS)
                     Projectiles.PushProjectile(xPos - 25.0f, yPos + 10.0f, TORPEDO, pAim);
                 else
                     Projectiles.PushProjectile(xPos + 55.0f, yPos + 10.0f, TORPEDO, pAim);

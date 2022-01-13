@@ -31,9 +31,9 @@ GegnerSideRocket::GegnerSideRocket(int Wert1, int Wert2, bool Light) {
 
 void GegnerSideRocket::DoKI() {
     if (Value1 == 0)
-        BlickRichtung = LINKS;
+        BlickRichtung = DirectionEnum::LINKS;
     else
-        BlickRichtung = RECHTS;
+        BlickRichtung = DirectionEnum::RECHTS;
 
     switch (Handlung) {
         // Jaeger wird "aktiviert", sprich, der Timer wird gestartet

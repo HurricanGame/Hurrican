@@ -43,10 +43,10 @@ void GegnerFlugsack::DoKI() {
         case GEGNER::LAUFEN:  // Normal fliegen und dabei ab und zu schiessen
         {
             if (pAim->xpos + 45 < xPos + GegnerRect[GegnerArt].left)
-                BlickRichtung = LINKS;
+                BlickRichtung = DirectionEnum::LINKS;
 
             if (pAim->xpos + 45 > xPos + GegnerRect[GegnerArt].right)
-                BlickRichtung = RECHTS;
+                BlickRichtung = DirectionEnum::RECHTS;
 
             // umherfliegen
             if (ySpeed > 6.0f)
@@ -82,20 +82,20 @@ void GegnerFlugsack::DoKI() {
             if (SmokeCount < 0.0f) {
                 SmokeCount += 0.1f;
 
-                if (BlickRichtung == LINKS)
+                if (BlickRichtung == DirectionEnum::LINKS)
                     PartikelSystem.PushPartikel(xPos + 66.0f, yPos + 50.0f, FLUGSACKSMOKE2);
                 else
                     PartikelSystem.PushPartikel(xPos, yPos + 50.0f, FLUGSACKSMOKE);
             }
 
             // Bei bestimmten Mindestabstand schiessen lassen
-            if (PlayerAbstand() <= 400 && ((BlickRichtung == LINKS && pAim->xpos + 45 <= xPos) ||
-                                           (BlickRichtung == RECHTS && pAim->xpos - 45 >= xPos))) {
+            if (PlayerAbstand() <= 400 && ((BlickRichtung == DirectionEnum::LINKS && pAim->xpos + 45 <= xPos) ||
+                                           (BlickRichtung == DirectionEnum::RECHTS && pAim->xpos - 45 >= xPos))) {
                 ShotCount -= Timer.sync(1.0f);
                 if (ShotCount < 0.0f) {
                     SoundManager.PlayWave(100, 128, 11025, SOUND::CANON);
 
-                    if (BlickRichtung == LINKS) {
+                    if (BlickRichtung == DirectionEnum::LINKS) {
                         PartikelSystem.PushPartikel(xPos + 10.0f, yPos + 2.0f, SMOKE);
                         Projectiles.PushProjectile(xPos + 17.0f, yPos + 10.0f, SUCHSCHUSS);
                     } else {
@@ -150,7 +150,7 @@ void GegnerFlugsack::DoKI() {
         xAcc = 0.0f;
         AnimSpeed = 0.5f;
 
-        if (BlickRichtung == LINKS)
+        if (BlickRichtung == DirectionEnum::LINKS)
             xSpeed = -5.0f;
         else
             xSpeed = 5.0f;

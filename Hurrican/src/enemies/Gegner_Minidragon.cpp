@@ -59,9 +59,9 @@ void GegnerMiniDragon::DoDraw() {
 
     // Kopf
     if (mirrored)
-        BlickRichtung = -1;
+        BlickRichtung = DirectionEnum::LINKS;
     else
-        BlickRichtung = 1;
+        BlickRichtung = DirectionEnum::RECHTS;
 
     int a = 0;
 
@@ -86,11 +86,11 @@ void GegnerMiniDragon::DoDraw() {
     if (Handlung == GEGNER::FALLEN) {
         a = AnimPhase;
         mirrored = xSpeed > 0.0f;
-        BlickRichtung = 0;
+        BlickRichtung = DirectionEnum::LINKS; // was = 0
     }
 
     if (Segments == 6) {
-        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset + BlickRichtung * 15.0f,
+        pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset + Direction::asInt(BlickRichtung) * 15.0f,
                                                yPos - TileEngine.YOffset, a, 0xFFFFFFFF, mirrored);
     }
 }
@@ -196,15 +196,15 @@ void GegnerMiniDragon::DoKI() {
             if (ShotDelay < 0.0f) {
                 ShotDelay = 9.0f;
 
-                if (BlickRichtung == 1)
+                if (BlickRichtung == DirectionEnum::RECHTS)
                     WinkelUebergabe = 0.0f;
                 else
                     WinkelUebergabe = 1.0f;
 
                 SoundManager.PlayWave(100, 128, 11000 + random(2000), SOUND::FIREBALL);
 
-                WinkelUebergabe = static_cast<float>(90 * BlickRichtung);
-                Projectiles.PushProjectile(xPos + static_cast<float>(BlickRichtung * 10), yPos, FIREBALL);
+                WinkelUebergabe = static_cast<float>(90 * Direction::asInt(BlickRichtung));
+                Projectiles.PushProjectile(xPos + static_cast<float>(Direction::asInt(BlickRichtung) * 10), yPos, FIREBALL);
             }
 
             float xdiv = (pAim->xpos + 30.0f) - (OldX + 30.0f);

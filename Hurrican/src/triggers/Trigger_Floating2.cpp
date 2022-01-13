@@ -14,7 +14,7 @@
 
 GegnerFloating2::GegnerFloating2(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::LAUFEN;
-    BlickRichtung = RECHTS;
+    BlickRichtung = DirectionEnum::RECHTS;
     Energy = 100;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -31,7 +31,7 @@ GegnerFloating2::GegnerFloating2(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerFloating2::DoKI() {
-    BlickRichtung = RECHTS;
+    BlickRichtung = DirectionEnum::RECHTS;
 
     playeron = false;
 

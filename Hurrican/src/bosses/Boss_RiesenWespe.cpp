@@ -20,7 +20,7 @@ GegnerRiesenWasp::GegnerRiesenWasp(int Wert1, int Wert2, bool Light) {
     Destroyable = true;
     AnimEnde = 5;
     AnimSpeed = 1.0f;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     ShotDelay = 10.0f;
 }
 
@@ -45,9 +45,9 @@ void GegnerRiesenWasp::DoKI() {
     // in richtige Richtung kucken
     //
     if (xSpeed > 0.0f)
-        BlickRichtung = RECHTS;
+        BlickRichtung = DirectionEnum::RECHTS;
     else
-        BlickRichtung = LINKS;
+        BlickRichtung = DirectionEnum::LINKS;
 
     // in Richtung Spieler fliegen
     //
@@ -80,19 +80,19 @@ void GegnerRiesenWasp::DoKI() {
     // evtl schiessen lassen
     //
     if (PlayerAbstand() < 500 && PlayerAbstand() > 100 &&
-        ((BlickRichtung == RECHTS && xPos + 50 < pAim->xpos + 35) ||
-         (BlickRichtung == LINKS && xPos + 50 > pAim->xpos + 35))) {
+        ((BlickRichtung == DirectionEnum::RECHTS && xPos + 50 < pAim->xpos + 35) ||
+         (BlickRichtung == DirectionEnum::LINKS && xPos + 50 > pAim->xpos + 35))) {
         ShotDelay -= Timer.sync(1.0f);
 
         if (ShotDelay <= 0.0f) {
             ShotDelay = 10.0f;
 
             SoundManager.PlayWave(100, 128, 8000 + random(1000), SOUND::CANON);
-            Projectiles.PushProjectile(xPos + 25.0f + static_cast<float>(BlickRichtung * 56),
+            Projectiles.PushProjectile(xPos + 25.0f + static_cast<float>(Direction::asInt(BlickRichtung) * 56),
                                        yPos + 51.0f, SUCHSCHUSS2);
 
             for (int i = 0; i < 5; i++)
-                PartikelSystem.PushPartikel(xPos + 50.0f + static_cast<float>(random(5) + BlickRichtung * 60),
+                PartikelSystem.PushPartikel(xPos + 50.0f + static_cast<float>(random(5) + Direction::asInt(BlickRichtung) * 60),
                                             yPos + 75.0f + static_cast<float>(random(5)),
                                             SMOKE3);
         }

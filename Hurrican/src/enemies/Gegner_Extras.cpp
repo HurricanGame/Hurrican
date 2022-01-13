@@ -31,7 +31,7 @@
 // --------------------------------------------------------------------------------------
 
 GegnerExtras::GegnerExtras(int Wert1, int Wert2, bool Light) {
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     Energy = 1.0f;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -71,7 +71,7 @@ GegnerExtras::GegnerExtras(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerExtras::DoKI() {
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     switch (Handlung) {
         case GEGNER::SPRINGEN:  // Extra fällt noch im Bogen raus

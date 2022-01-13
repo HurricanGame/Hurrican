@@ -51,7 +51,7 @@ void GegnerBallerdrone::DoDraw() {
 // --------------------------------------------------------------------------------------
 
 void GegnerBallerdrone::DoKI() {
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     AnimCount -= Timer.sync(1.0f);
 
     if (AnimCount < 0.0f) {

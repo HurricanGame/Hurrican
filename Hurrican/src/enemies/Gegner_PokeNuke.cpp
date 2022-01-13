@@ -27,7 +27,7 @@ GegnerPokeNuke::GegnerPokeNuke(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerPokeNuke::DoKI() {
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     switch (Handlung) {
         case GEGNER::STEHEN: {

@@ -41,7 +41,7 @@ void GegnerOneUp::DoKI() {
     if (blocku & BLOCKWERT_FLIESSBANDR)
         xSpeed = 11.0f;
 
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     switch (Handlung) {
         case GEGNER::FALLEN:  // Leben fällt runter

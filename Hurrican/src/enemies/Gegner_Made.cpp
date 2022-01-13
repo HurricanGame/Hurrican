@@ -85,7 +85,7 @@ void GegnerMade::DoKI() {
     // langsame zugrunde gehen :P
     Energy -= Timer.sync(0.1f);
 
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     if (Handlung == GEGNER::INIT) {
         Handlung = GEGNER::LAUFEN;

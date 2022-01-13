@@ -113,7 +113,7 @@ PlayerClass::PlayerClass() {
     BlitzCount = 0;
     BlitzAnim = 0;
     Handlung = PlayerActionEnum::STEHEN;
-    Blickrichtung = 0;
+    Blickrichtung = DirectionEnum::RECHTS;
     Energy = 0;
     Armour = 0;
     Shield = 0;
@@ -260,7 +260,7 @@ void PlayerClass::InitNewLevel() {
     yspeed = 0.0f;
     xadd = 0.0f;
     yadd = 0.0f;
-    Blickrichtung = RECHTS;
+    Blickrichtung = DirectionEnum::RECHTS;
     JumpPossible = true;
     CollideRect.left = 20;
     CollideRect.top = 12;
@@ -455,7 +455,7 @@ void PlayerClass::checkShoot() {
         // Beim Sackreiten den Spieler durch den Rückschlag noch bewegen
         //
         if (Handlung == PlayerActionEnum::SACKREITEN) {
-            if (Blickrichtung == LINKS)
+            if (Blickrichtung == DirectionEnum::LINKS)
                 xadd += 2.0f;
             else
                 xadd -= 2.0f;
@@ -792,7 +792,8 @@ void PlayerClass::DoStuffWhenDamaged() {
         // Rauchsäule
         //
         if (Energy < MAX_ENERGY / 4 + 5.0f)
-            PartikelSystem.PushPartikel(xpos + 26 + Blickrichtung * 4 + random(4), ypos + 20 + random(4), SMOKE3);
+            PartikelSystem.PushPartikel(xpos + 26 + Direction::asInt(Blickrichtung) * 4 + random(4),
+                                        ypos + 20 + random(4), SMOKE3);
     }
 }
 
@@ -949,8 +950,8 @@ void PlayerClass::AnimatePlayer() {
         bu = TileEngine.BlockSlopes(xpos, ypos, CollideRect, yspeed);
 
     if (Handlung == PlayerActionEnum::RADELN) {
-        if ((Blickrichtung == LINKS && bu & BLOCKWERT_SCHRAEGE_R) ||
-            (Blickrichtung == RECHTS && bu & BLOCKWERT_SCHRAEGE_L)) {
+        if ((Blickrichtung == DirectionEnum::LINKS && bu & BLOCKWERT_SCHRAEGE_R) ||
+            (Blickrichtung == DirectionEnum::RECHTS && bu & BLOCKWERT_SCHRAEGE_L)) {
             bu = TileEngine.BlockUnten(xpos, ypos, xposold, yposold, CollideRect, yspeed >= 0.0f);
             yspeed = -2.0f;
             ypos -= 1.0f;
@@ -1087,7 +1088,7 @@ void PlayerClass::AnimatePlayer() {
                 BlitzWinkel -= Timer.sync(20.0f);
             } else if (!(bl & BLOCKWERT_WAND))  // Keine Wand im Weg ?
             {
-                Blickrichtung = LINKS;   // nach links kucken
+                Blickrichtung = DirectionEnum::LINKS;   // nach links kucken
                 if (Handlung == PlayerActionEnum::STEHEN)  // Aus dem Stehen heraus
                     // Aktion[AKTION_OBEN]  == false &&	// und nicht nach oben zielen ?
                     // Aktion[AKTION_UNTEN] == false)		// und nicht nach unten zielen ?
@@ -1136,7 +1137,7 @@ void PlayerClass::AnimatePlayer() {
                 BlitzWinkel += Timer.sync(20.0f);
             } else if (br | BLOCKWERT_WAND)  // Keine Wand im Weg ?
             {
-                Blickrichtung = RECHTS;  // nach rechts kucken
+                Blickrichtung = DirectionEnum::RECHTS;  // nach rechts kucken
                 if (Handlung == PlayerActionEnum::STEHEN)  // Aus dem Stehen heraus
                     // Aktion[AKTION_OBEN]  == false &&	// nicht nach oben zielen ?
                     // Aktion[AKTION_UNTEN] == false)		// und nicht nach unten zielen ?
@@ -1364,13 +1365,13 @@ void PlayerClass::AnimatePlayer() {
                 Handlung = PlayerActionEnum::BEAMLADEN;
                 BlitzStart = 5.0f;
                 AnimPhase = 0;
-                if (Blickrichtung == LINKS)  // Blitz je nach Blickrichtung neu
+                if (Blickrichtung == DirectionEnum::LINKS)  // Blitz je nach Blickrichtung neu
                     BlitzWinkel = 270;       // geradeaus richten
                 else
                     BlitzWinkel = 90;
 
                 if (Aktion[AKTION_OBEN]) {
-                    Blickrichtung *= -1;
+                    Blickrichtung = Direction::invert(Blickrichtung);
                     BlitzWinkel = 0;
                 }
             }
@@ -1389,7 +1390,7 @@ void PlayerClass::AnimatePlayer() {
                     // Blitz Startsound ausgeben
                     SoundManager.PlayWave(100, 128, random(500) + 18025, SOUND::BLITZSTART + SoundOff);
 
-                    if (Blickrichtung == LINKS)  // Blitz je nach Blickrichtung neu
+                    if (Blickrichtung == DirectionEnum::LINKS)  // Blitz je nach Blickrichtung neu
                         BlitzWinkel = 270;       // geradeaus richten
                     else
                         BlitzWinkel = 90;
@@ -1408,7 +1409,7 @@ void PlayerClass::AnimatePlayer() {
             //
             else {
                 if (AnimPhase >= 9 && AnimPhase <= 18)
-                    Blickrichtung *= -1;
+                    Blickrichtung = Direction::invert(Blickrichtung);
 
                 Handlung = PlayerActionEnum::STEHEN;
             }
@@ -1461,7 +1462,7 @@ void PlayerClass::AnimatePlayer() {
                     Winkel += 360.0f;
 
                 // Je nach Richtung Winkel umdrehen
-                if (Blickrichtung == LINKS)
+                if (Blickrichtung == DirectionEnum::LINKS)
                     Winkel = 360.0f - Winkel;
                 else
                     Winkel = 180 + Winkel;
@@ -1482,7 +1483,7 @@ void PlayerClass::AnimatePlayer() {
                 Winkel += 360.0f;
 
             // Je nach Richtung Winkel umdrehen
-            if (Blickrichtung == LINKS)
+            if (Blickrichtung == DirectionEnum::LINKS)
                 Winkel = 360.0f - Winkel;
             else
                 Winkel = 180 + Winkel;
@@ -1505,7 +1506,7 @@ void PlayerClass::AnimatePlayer() {
                 // je nach Ausrichtung der Waffe in die richtige Richtung kucken
                 //
                 if (AnimPhase >= 12 && AnimPhase <= 24)
-                    Blickrichtung *= -1;
+                    Blickrichtung = Direction::invert(Blickrichtung);
             }
         }
 
@@ -1577,12 +1578,12 @@ void PlayerClass::AnimatePlayer() {
             PowerLinePossible = true;
 
         // Ja nach Blickrichtung in die richtige Richtung scrollen
-        if (Blickrichtung == LINKS && (!(bl & BLOCKWERT_WAND))) {
+        if (Blickrichtung == DirectionEnum::LINKS && (!(bl & BLOCKWERT_WAND))) {
             if (!InLiquid)
                 xspeed = -40.0f;
             else
                 xspeed = -30.0f;
-        } else if (Blickrichtung == RECHTS && (!(br & BLOCKWERT_WAND))) {
+        } else if (Blickrichtung == DirectionEnum::RECHTS && (!(br & BLOCKWERT_WAND))) {
             if (!InLiquid)
                 xspeed = 40.0f;
             else
@@ -1592,12 +1593,12 @@ void PlayerClass::AnimatePlayer() {
         if (Aktion[AKTION_LINKS] &&  // Nach Links rollen ?
             (Handlung == PlayerActionEnum::RADELN ||   // Nur wenn man Boden unter den Füßen hat
              AufPlattform != nullptr || bu & BLOCKWERT_WAND || bu & BLOCKWERT_PLATTFORM))
-            Blickrichtung = LINKS;
+            Blickrichtung = DirectionEnum::LINKS;
 
         if (Aktion[AKTION_RECHTS] &&  // Nach Rechts rollen ?
             (Handlung == PlayerActionEnum::RADELN ||    // Nur wenn man Boden unter den Füßen hat
              AufPlattform != nullptr || bu & BLOCKWERT_WAND || bu & BLOCKWERT_PLATTFORM))
-            Blickrichtung = RECHTS;
+            Blickrichtung = DirectionEnum::RECHTS;
 
         if (Handlung != PlayerActionEnum::RADELN_FALL &&
                 (!(bu & BLOCKWERT_SCHRAEGE_R)) && (!(bu & BLOCKWERT_SCHRAEGE_L)) &&
@@ -1632,11 +1633,11 @@ void PlayerClass::AnimatePlayer() {
 
         // An die Wand gestossen ? Dann Richtung umkehren
         if (!(bu & BLOCKWERT_SCHRAEGE_R) && !(bu & BLOCKWERT_SCHRAEGE_L)) {
-            if (Blickrichtung == RECHTS && (br & BLOCKWERT_WAND))
-                Blickrichtung = LINKS;
+            if (Blickrichtung == DirectionEnum::RECHTS && (br & BLOCKWERT_WAND))
+                Blickrichtung = DirectionEnum::LINKS;
 
-            if (Blickrichtung == LINKS && (bl & BLOCKWERT_WAND))
-                Blickrichtung = RECHTS;
+            if (Blickrichtung == DirectionEnum::LINKS && (bl & BLOCKWERT_WAND))
+                Blickrichtung = DirectionEnum::RECHTS;
         }
 
         // Aufhören zu kullern und zurückverwandeln, wenn man springt oder keine Energie mehr hat
@@ -1725,7 +1726,7 @@ void PlayerClass::AnimatePlayer() {
 
             // Beim Reiten
             if (Handlung == PlayerActionEnum::SACKREITEN) {
-                if (Blickrichtung == LINKS)
+                if (Blickrichtung == DirectionEnum::LINKS)
                     PartikelSystem.PushPartikel(xpos + 72, ypos + 100, FLUGSACKSMOKE2);
                 else
                     PartikelSystem.PushPartikel(xpos - 2, ypos + 100, FLUGSACKSMOKE);
@@ -1733,7 +1734,7 @@ void PlayerClass::AnimatePlayer() {
 
             // oder beim Drehen
             if (Handlung == PlayerActionEnum::DREHEN) {
-                if (Blickrichtung == LINKS) {
+                if (Blickrichtung == DirectionEnum::LINKS) {
                     PartikelSystem.PushPartikel(xpos + 70 - AnimPhase * 10, ypos + 100, FLUGSACKSMOKE2);
                     PartikelSystem.PushPartikel(xpos + 87 - AnimPhase * 10, ypos + 100, FLUGSACKSMOKE);
                 } else {
@@ -1756,12 +1757,12 @@ void PlayerClass::AnimatePlayer() {
                     AnimEnde = 0;
                     Handlung = PlayerActionEnum::SACKREITEN;
 
-                    if (Blickrichtung == RECHTS) {
+                    if (Blickrichtung == DirectionEnum::RECHTS) {
                         AnimPhase = 0;
-                        Blickrichtung = LINKS;
+                        Blickrichtung = DirectionEnum::LINKS;
                     } else {
                         AnimPhase = 10;
-                        Blickrichtung = RECHTS;
+                        Blickrichtung = DirectionEnum::RECHTS;
                     }
                 }
             }
@@ -1773,7 +1774,7 @@ void PlayerClass::AnimatePlayer() {
 
             // Drehen ?
             if (Aktion[AKTION_SHOOT] == false && Handlung == PlayerActionEnum::SACKREITEN &&
-                    Blickrichtung == RECHTS) {
+                    Blickrichtung == DirectionEnum::RECHTS) {
                 Handlung = PlayerActionEnum::DREHEN;
                 AnimEnde = 19;
                 AnimCount = 0.0f;
@@ -1787,7 +1788,7 @@ void PlayerClass::AnimatePlayer() {
 
             // Drehen ?
             if (Aktion[AKTION_SHOOT] == false && Handlung == PlayerActionEnum::SACKREITEN &&
-                    Blickrichtung == LINKS) {
+                    Blickrichtung == DirectionEnum::LINKS) {
                 Handlung = PlayerActionEnum::DREHEN;
                 AnimEnde = 9;
                 AnimCount = 0.0f;
@@ -1991,10 +1992,10 @@ void PlayerClass::AnimatePlayer() {
                 Handlung == PlayerActionEnum::LAUFEN) {
             if (Aktion[AKTION_LINKS]) {
                 Handlung = PlayerActionEnum::SCHIESSEN_LO;
-                Blickrichtung = LINKS;
+                Blickrichtung = DirectionEnum::LINKS;
             } else if (Aktion[AKTION_RECHTS]) {
                 Handlung = PlayerActionEnum::SCHIESSEN_RO;
-                Blickrichtung = RECHTS;
+                Blickrichtung = DirectionEnum::RECHTS;
             } else
                 Handlung = PlayerActionEnum::SCHIESSEN_O;
         }
@@ -2443,7 +2444,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe) {
     //	if (this == Player[1])
     //		Color = 0xFFBBFFBB;
 
-    bool blick = (Blickrichtung == RECHTS);
+    bool blick = (Blickrichtung == DirectionEnum::RECHTS);
 
     //----- Spieler anzeigen
     switch (Handlung) {
@@ -2576,9 +2577,9 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe) {
 
             // Spieler reitet auf dem FlugSack
         case PlayerActionEnum::SACKREITEN: {
-            if (Blickrichtung == LINKS)
+            if (Blickrichtung == DirectionEnum::LINKS)
                 PlayerRide.RenderSprite(xdraw, ydraw, 0, Color);
-            else if (Blickrichtung == RECHTS)
+            else if (Blickrichtung == DirectionEnum::RECHTS)
                 PlayerRide.RenderSprite(xdraw, ydraw, 10, Color);
         } break;
 
@@ -2610,7 +2611,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe) {
         //      SchussFlamme[] had 4 elements, but only the first 3 elements actually were
         //      ever loaded with textures.
         if (AustrittAnim >= 0 && AustrittAnim < 3) {
-            if (Blickrichtung == RECHTS)
+            if (Blickrichtung == DirectionEnum::RECHTS)
                 Projectiles.SchussFlamme[AustrittAnim].RenderSprite(xpos + AustrittX, ypos + AustrittY,
                                                                     FlameAnim + FlameOff * 2, 0xFFFFFFFF);
             else
@@ -2790,7 +2791,7 @@ void PlayerClass::PlayerShoot() {
     if (Handlung == PlayerActionEnum::SCHIESSEN_O ||
         (Handlung == PlayerActionEnum::SPRINGEN && Aktion[AKTION_OBEN] &&
         !Aktion[AKTION_LINKS] && !Aktion[AKTION_RECHTS])) {
-        if (Blickrichtung == LINKS)
+        if (Blickrichtung == DirectionEnum::LINKS)
             wadd = 90.0f;
         else
             wadd = -90.0f;
@@ -3010,10 +3011,10 @@ void PlayerClass::PlayerShoot() {
 
                     if (CurrentWeaponLevel[SelectedWeapon] >= 3 && CurrentWeaponLevel[SelectedWeapon] <= 4) {
                         if (wadd == 0.0f) {
-                            Projectiles.PushProjectile(xpos - tempaddx + AustrittX - tempaddx * Blickrichtung,
+                            Projectiles.PushProjectile(xpos - tempaddx + AustrittX - tempaddx * Direction::asInt(Blickrichtung),
                                                        ypos - tempaddy - tempaddx * mul1 * 2.3f + AustrittY, tempshot,
                                                        this);
-                            Projectiles.PushProjectile(xpos - tempaddx + AustrittX - tempaddx * Blickrichtung,
+                            Projectiles.PushProjectile(xpos - tempaddx + AustrittX - tempaddx * Direction::asInt(Blickrichtung),
                                                        ypos - tempaddy + tempaddx * mul1 * 2.3f + AustrittY, tempshot,
                                                        this);
                         }
@@ -3042,10 +3043,10 @@ void PlayerClass::PlayerShoot() {
 
                     if (CurrentWeaponLevel[SelectedWeapon] == 5 || CurrentWeaponLevel[SelectedWeapon] == 6) {
                         if (wadd == 0.0f) {
-                            Projectiles.PushProjectile(xpos - tempaddx + AustrittX - tempaddx * Blickrichtung * 2,
+                            Projectiles.PushProjectile(xpos - tempaddx + AustrittX - tempaddx * Direction::asInt(Blickrichtung) * 2,
                                                        ypos - tempaddy + AustrittY - tempaddx * mul1 * 2, tempshot + 1,
                                                        this);
-                            Projectiles.PushProjectile(xpos - tempaddx + AustrittX - tempaddx * Blickrichtung * 2,
+                            Projectiles.PushProjectile(xpos - tempaddx + AustrittX - tempaddx * Direction::asInt(Blickrichtung) * 2,
                                                        ypos - tempaddy + AustrittY + tempaddx * mul1 * 2, tempshot + 1,
                                                        this);
                         }
@@ -3074,10 +3075,10 @@ void PlayerClass::PlayerShoot() {
 
                     if (CurrentWeaponLevel[SelectedWeapon] == 7) {
                         if (wadd == 0.0f) {
-                            Projectiles.PushProjectile(xpos - tempaddx + AustrittX - tempaddx * Blickrichtung * 2,
+                            Projectiles.PushProjectile(xpos - tempaddx + AustrittX - tempaddx * Direction::asInt(Blickrichtung) * 2,
                                                        ypos - tempaddy + AustrittY - tempaddx * mul1 * 3, tempshot,
                                                        this);
-                            Projectiles.PushProjectile(xpos - tempaddx + AustrittX - tempaddx * Blickrichtung * 2,
+                            Projectiles.PushProjectile(xpos - tempaddx + AustrittX - tempaddx * Direction::asInt(Blickrichtung) * 2,
                                                        ypos - tempaddy + AustrittY + tempaddx * mul1 * 3, tempshot,
                                                        this);
                         }
@@ -3106,9 +3107,9 @@ void PlayerClass::PlayerShoot() {
 
                     if (CurrentWeaponLevel[SelectedWeapon] == 8) {
                         if (wadd == 0.0f) {
-                            Projectiles.PushProjectile(xpos - tempaddx + AustrittX - tempaddx * Blickrichtung * 2,
+                            Projectiles.PushProjectile(xpos - tempaddx + AustrittX - tempaddx * Direction::asInt(Blickrichtung) * 2,
                                                        ypos - tempaddy + AustrittY - tempaddx * 3, tempshot + 1, this);
-                            Projectiles.PushProjectile(xpos - tempaddx + AustrittX - tempaddx * Blickrichtung * 2,
+                            Projectiles.PushProjectile(xpos - tempaddx + AustrittX - tempaddx * Direction::asInt(Blickrichtung) * 2,
                                                        ypos - tempaddy + AustrittY + tempaddx * 3, tempshot + 1, this);
                         }
 
@@ -3300,7 +3301,7 @@ void PlayerClass::PlayerGrenadeShoot() {
     if (Handlung == PlayerActionEnum::SCHIESSEN_O ||
             (Handlung == PlayerActionEnum::SPRINGEN &&
             Aktion[AKTION_OBEN] && !Aktion[AKTION_LINKS] && !Aktion[AKTION_RECHTS])) {
-        if (Blickrichtung == LINKS)
+        if (Blickrichtung == DirectionEnum::LINKS)
             wadd = 90.0f;
         else
             wadd = -90.0f;
@@ -3341,7 +3342,7 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
     float x = static_cast<float>(xpos - TileEngine.XOffset + 60);  // Position errechnen
     float y = static_cast<float>(ypos - TileEngine.YOffset + 36);
 
-    if (Blickrichtung == LINKS)
+    if (Blickrichtung == DirectionEnum::LINKS)
         x -= 56;
 
     // Vertice Koordinaten
@@ -3390,7 +3391,7 @@ void PlayerClass::DrawNormalLightning(int DrawLength) {
 
     D3DXMatrixTranslation(&matTrans, -x - 16, -y - 56, 0.0f);     // Transformation zum Ursprung
 
-    if (Blickrichtung == RECHTS)
+    if (Blickrichtung == DirectionEnum::RECHTS)
         D3DXMatrixTranslation(&matTrans2, x - 23, y, 0.0f);  // Transformation wieder zurück
     else
         D3DXMatrixTranslation(&matTrans2, x + 31, y, 0.0f);  // Transformation wieder zurück
@@ -3553,7 +3554,7 @@ bool PlayerClass::DoLightning() {
     float x = xpos - TileEngine.XOffset + 35;  // Position errechnen
     float y = ypos - TileEngine.YOffset + 35;
 
-    // if (Blickrichtung == LINKS)
+    // if (Blickrichtung == DirectionEnum::LINKS)
     //	x -= 56;
 
     DirectGraphics.SetAdditiveMode();
@@ -3743,7 +3744,7 @@ bool PlayerClass::DoLightning() {
 
     matRot = glm::rotate(glm::mat4x4(1.0f), DegreetoRad[static_cast<int>(BlitzWinkel)], glm::vec3(0.0f, 0.0f, 1.0f));  // Rotationsmatrix
     D3DXMatrixTranslation(&matTrans, -x, -y, 0.0f);               // Transformation zum Ursprung
-    if (Blickrichtung == RECHTS)
+    if (Blickrichtung == DirectionEnum::RECHTS)
         D3DXMatrixTranslation(&matTrans2, x, y, 0.0f);  // Transformation wieder zurück
     else
         D3DXMatrixTranslation(&matTrans2, x, y, 0.0f);     // Transformation wieder zurück
@@ -3833,7 +3834,7 @@ bool PlayerClass::LoadBeam() {
     float x = xpos - TileEngine.XOffset + 60.0f;  // Position errechnen
     // y = static_cast<float>(ypos - TileEngine.YOffset+36);
 
-    if (Blickrichtung == LINKS)
+    if (Blickrichtung == DirectionEnum::LINKS)
         x -= 56.0f;
 
     DirectGraphics.SetAdditiveMode();
@@ -3959,7 +3960,7 @@ void PlayerClass::CalcFlamePos() {
     // auf dem FlugSack reiten
     if (Handlung == PlayerActionEnum::SACKREITEN) {
         yoff = 1;
-        if (Blickrichtung == RECHTS)
+        if (Blickrichtung == DirectionEnum::RECHTS)
             xoff = 80;
         else
             xoff = -35;
@@ -3972,7 +3973,7 @@ void PlayerClass::CalcFlamePos() {
         else
             yoff = 0;
 
-        if (Blickrichtung == RECHTS)
+        if (Blickrichtung == DirectionEnum::RECHTS)
             xoff = 66;
         else
             xoff = -33;
@@ -3983,7 +3984,7 @@ void PlayerClass::CalcFlamePos() {
     yoff -= static_cast<int>(TileEngine.YOffset);
 
     // Und dann je nach Blickrichtung die Flamme und den Flare dazu setzen
-    if (Blickrichtung == RECHTS) {
+    if (Blickrichtung == DirectionEnum::RECHTS) {
         if (Handlung == PlayerActionEnum::STEHEN ||
                 Handlung == PlayerActionEnum::SACKREITEN ||
                 Handlung == PlayerActionEnum::DUCKEN) {
@@ -4125,7 +4126,7 @@ void PlayerClass::CalcAustrittsPunkt() {
     switch (AustrittAnim) {
         // gerade flamme
         case 0: {
-            if (Blickrichtung == LINKS)
+            if (Blickrichtung == DirectionEnum::LINKS)
                 AustrittX += 34;
             else
                 AustrittX += 4;
@@ -4135,7 +4136,7 @@ void PlayerClass::CalcAustrittsPunkt() {
 
         // schräg oben
         case 1: {
-            if (Blickrichtung == LINKS)
+            if (Blickrichtung == DirectionEnum::LINKS)
                 AustrittX += 32;
             else
                 AustrittX += 8;

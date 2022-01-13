@@ -54,8 +54,8 @@ void GegnerFieseDrone::DoKI() {
             {
                 AnimCount = 0.0f;
                 Handlung = GEGNER::DREHEN2;
-                BlickRichtung *= -1;
-                xPos -= BlickRichtung * 5.0f;
+                BlickRichtung = Direction::invert(BlickRichtung);
+                xPos -= Direction::asInt(BlickRichtung) * 5.0f;
                 AnimPhase = AnimEnde;
             }
         }
@@ -137,8 +137,8 @@ void GegnerFieseDrone::DoKI() {
         // In der Luft rumdümpeln
         //
         case GEGNER::LAUFEN: {
-            if ((xPos + 30.0f < pAim->xpos + 35.0f && BlickRichtung == LINKS) ||
-                (xPos + 30.0f > pAim->xpos + 35.0f && BlickRichtung == RECHTS)) {
+            if ((xPos + 30.0f < pAim->xpos + 35.0f && BlickRichtung == DirectionEnum::LINKS) ||
+                (xPos + 30.0f > pAim->xpos + 35.0f && BlickRichtung == DirectionEnum::RECHTS)) {
                 Handlung = GEGNER::DREHEN;
                 AnimPhase = 13;
                 AnimStart = 13;
@@ -153,12 +153,12 @@ void GegnerFieseDrone::DoKI() {
     // Rauch
     //
     if (Handlung == GEGNER::LAUFEN) {
-        if (BlickRichtung == LINKS)
+        if (BlickRichtung == DirectionEnum::LINKS)
             flamex = 31;
         else
             flamex = -12;
     } else {
-        if (BlickRichtung == LINKS)
+        if (BlickRichtung == DirectionEnum::LINKS)
             flamex = 31 - (AnimPhase - 13) * 5;
         else
             flamex = -12 + (AnimPhase - 13) * 5;

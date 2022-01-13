@@ -57,10 +57,10 @@ void GegnerSpitter::DoKI() {
 
     if (PlayerAbstand() > 100) {
         if (pAim->xpos < xPos) {
-            BlickRichtung = LINKS;
+            BlickRichtung = DirectionEnum::LINKS;
             xAcc = -2.0f;
         } else {
-            BlickRichtung = RECHTS;
+            BlickRichtung = DirectionEnum::RECHTS;
             xAcc = 2.0f;
         }
     }

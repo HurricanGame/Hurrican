@@ -7,7 +7,7 @@
 class GegnerWandKrabbe : public GegnerClass {
   private:
     float rot;
-    int lastPlayerAction;
+    DirectionEnum lastPlayerAction;
 
   public:
     GegnerWandKrabbe(int Wert1,

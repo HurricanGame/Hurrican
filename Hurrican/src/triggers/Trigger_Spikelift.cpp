@@ -14,7 +14,7 @@
 
 GegnerSpikelift::GegnerSpikelift(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::INIT;
-    BlickRichtung = RECHTS;
+    BlickRichtung = DirectionEnum::RECHTS;
     Energy = 100;
     Value1 = Wert1;
     Value2 = Wert2;

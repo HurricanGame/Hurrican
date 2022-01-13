@@ -38,7 +38,7 @@ void GegnerSkiWalker::DoKI() {
         if (Handlung == GEGNER::WATSCHELN && blockr & BLOCKWERT_WAND)
             Energy = 0;
 
-        BlickRichtung = LINKS;
+        BlickRichtung = DirectionEnum::LINKS;
         xSpeed = -xSpeed;
     }
 
@@ -46,7 +46,7 @@ void GegnerSkiWalker::DoKI() {
         if (Handlung == GEGNER::WATSCHELN && blockl & BLOCKWERT_WAND)
             Energy = 0;
 
-        BlickRichtung = RECHTS;
+        BlickRichtung = DirectionEnum::RECHTS;
         xSpeed = -xSpeed;
     }
 
@@ -90,15 +90,15 @@ void GegnerSkiWalker::DoKI() {
             }
 
             // Bei bestimmten Mindestabstand schiessen lassen
-            if (PlayerAbstand() <= 220 && ((BlickRichtung == LINKS && pAim->xpos + 45 <= xPos) ||
-                                           (BlickRichtung == RECHTS && pAim->xpos - 45 >= xPos))) {
+            if (PlayerAbstand() <= 220 && ((BlickRichtung == DirectionEnum::LINKS && pAim->xpos + 45 <= xPos) ||
+                                           (BlickRichtung == DirectionEnum::RECHTS && pAim->xpos - 45 >= xPos))) {
                 ShotDelay -= Timer.sync(1.0f);
 
                 if (ShotDelay <= 0.0f) {
                     ShotDelay = static_cast<float>(10 + random(5));
                     SoundManager.PlayWave(100, 128, 18000 + random(2000), SOUND::LASERSHOT);
 
-                    if (BlickRichtung == LINKS)
+                    if (BlickRichtung == DirectionEnum::LINKS)
                         Projectiles.PushProjectile(xPos - 18.0f, yPos + 9.0f, WALKER_LASER);
                     else
                         Projectiles.PushProjectile(xPos + 40.0f, yPos + 9.0f, WALKER_LASER2);
@@ -131,7 +131,7 @@ void GegnerSkiWalker::DoKI() {
                 Handlung = GEGNER::WATSCHELN;
                 yAcc = 0.0f;
                 ySpeed = 0.0f;
-                xSpeed = 43.0f * BlickRichtung;
+                xSpeed = 43.0f * Direction::asInt(BlickRichtung);
                 TileEngine.BlockUnten(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt]);
             }
         } break;

@@ -17,7 +17,7 @@
 GegnerKugelMedium::GegnerKugelMedium(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::LAUFEN;
     Energy = 30;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     yAcc = 5.0f;                                         // Fallen lassen
     Value1 = Wert1;
     Value2 = Wert2;
@@ -37,7 +37,7 @@ GegnerKugelMedium::GegnerKugelMedium(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerKugelMedium::DoKI() {
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
     if (AnimCount > AnimSpeed)  // Grenze überschritten ?
     {

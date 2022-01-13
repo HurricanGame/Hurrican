@@ -49,7 +49,7 @@ void GegnerNeuFisch::DoKI() {
             {
                 AnimCount = 0.0f;
                 Handlung = GEGNER::DREHEN2;
-                BlickRichtung *= -1;
+                BlickRichtung = Direction::invert(BlickRichtung);
             }
         }
     } else if (Handlung == GEGNER::DREHEN2) {
@@ -64,7 +64,7 @@ void GegnerNeuFisch::DoKI() {
                 Handlung = GEGNER::LAUFEN;
                 AnimSpeed = 0.5f;
 
-                xSpeed = BlickRichtung * MoveSpeed;
+                xSpeed = Direction::asInt(BlickRichtung) * MoveSpeed;
             }
         }
     }
@@ -75,7 +75,7 @@ void GegnerNeuFisch::DoKI() {
 
     if (Handlung != GEGNER::SPECIAL) {
         // verfolgen
-        xSpeed = BlickRichtung * MoveSpeed;
+        xSpeed = Direction::asInt(BlickRichtung) * MoveSpeed;
 
         if (pAim->InLiquid == true) {
             if (yPos < pAim->ypos - 8 && (blocku & BLOCKWERT_WASSER))
@@ -90,11 +90,11 @@ void GegnerNeuFisch::DoKI() {
         //
         case GEGNER::LAUFEN: {
 
-            bool onWall = (BlickRichtung == LINKS && ((blockl & BLOCKWERT_WAND) || (blockl & BLOCKWERT_GEGNERWAND))) ||
-                          (BlickRichtung == RECHTS && ((blockr & BLOCKWERT_WAND) || (blockr & BLOCKWERT_GEGNERWAND)));
+            bool onWall = (BlickRichtung == DirectionEnum::LINKS && ((blockl & BLOCKWERT_WAND) || (blockl & BLOCKWERT_GEGNERWAND))) ||
+                          (BlickRichtung == DirectionEnum::RECHTS && ((blockr & BLOCKWERT_WAND) || (blockr & BLOCKWERT_GEGNERWAND)));
 
-            if (onWall || (pAim->InLiquid == true && ((xPos + 30 < pAim->xpos + 35 && BlickRichtung == LINKS) ||
-                                                      (xPos + 30 > pAim->xpos + 35 && BlickRichtung == RECHTS)))) {
+            if (onWall || (pAim->InLiquid == true && ((xPos + 30 < pAim->xpos + 35 && BlickRichtung == DirectionEnum::LINKS) ||
+                                                      (xPos + 30 > pAim->xpos + 35 && BlickRichtung == DirectionEnum::RECHTS)))) {
                 Handlung = GEGNER::DREHEN;
                 AnimPhase = 9;
                 AnimCount = 0.0f;
@@ -110,7 +110,7 @@ void GegnerNeuFisch::DoKI() {
             rect.top = 32;
             rect.bottom = 40;
 
-            if (BlickRichtung == LINKS) {
+            if (BlickRichtung == DirectionEnum::LINKS) {
                 rect.left = 10;
                 rect.right = 20;
             } else {

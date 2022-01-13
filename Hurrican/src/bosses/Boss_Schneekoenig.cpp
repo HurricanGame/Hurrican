@@ -15,7 +15,7 @@ int DamageAnims[4] = {1, 2, 1, 0};
 
 GegnerSchneeKoenig::GegnerSchneeKoenig(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::INIT;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     Energy = 50000;
     LastEnergy = 50000;
 
@@ -50,7 +50,7 @@ void GegnerSchneeKoenig::DoDraw() {
     if (!DrawNow)
         return;
 
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     static float xoff = 0;
 

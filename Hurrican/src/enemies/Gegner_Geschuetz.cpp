@@ -13,7 +13,7 @@
 
 GegnerGeschuetz::GegnerGeschuetz(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::STEHEN;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     Energy = 50;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -28,7 +28,7 @@ GegnerGeschuetz::GegnerGeschuetz(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerGeschuetz::DoKI() {
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     SimpleAnimation();
 

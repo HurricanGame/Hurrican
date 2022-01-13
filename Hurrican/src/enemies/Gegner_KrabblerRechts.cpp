@@ -19,7 +19,7 @@ GegnerKrabblerRechts::GegnerKrabblerRechts(int Wert1, int Wert2, bool Light) {
     Value1 = Wert1;
     Value2 = Wert2;
     ySpeed = static_cast<float>(Value2);
-    BlickRichtung = RECHTS;
+    BlickRichtung = DirectionEnum::RECHTS;
     ShotDelay = static_cast<float>(Value1);
     AnimSpeed = 0.5f;
     AnimStart = 0;
@@ -33,7 +33,7 @@ GegnerKrabblerRechts::GegnerKrabblerRechts(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerKrabblerRechts::DoKI() {
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     SimpleAnimation();
 

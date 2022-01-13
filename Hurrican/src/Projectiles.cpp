@@ -178,7 +178,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             DamagePlayer = false;
             Winkel = WinkelUebergabe;
 
-            if (pParent->Blickrichtung == PlayerClass::LINKS)
+            if (pParent->Blickrichtung == DirectionEnum::LINKS)
                 Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
             int w = static_cast<int>(Winkel) - 90;
@@ -203,7 +203,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             DamagePlayer = false;
             Winkel = WinkelUebergabe;
 
-            if (pParent->Blickrichtung == PlayerClass::LINKS)
+            if (pParent->Blickrichtung == DirectionEnum::LINKS)
                 Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
             int w = static_cast<int>(Winkel) - 90;
@@ -227,7 +227,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             Winkel = WinkelUebergabe;
             HasGlow = true;
 
-            if (pParent->Blickrichtung == PlayerClass::LINKS)
+            if (pParent->Blickrichtung == DirectionEnum::LINKS)
                 Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
             int w = static_cast<int>(Winkel) - 90;
@@ -253,7 +253,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             Winkel = WinkelUebergabe;
             HasGlow = true;
 
-            if (pParent->Blickrichtung == PlayerClass::LINKS)
+            if (pParent->Blickrichtung == DirectionEnum::LINKS)
                 Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
             int w = static_cast<int>(Winkel) - 90;
@@ -277,7 +277,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             Winkel = WinkelUebergabe;
             HasGlow = true;
 
-            if (pParent->Blickrichtung == PlayerClass::LINKS)
+            if (pParent->Blickrichtung == DirectionEnum::LINKS)
                 Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
             int w = static_cast<int>(Winkel) - 90;
@@ -302,7 +302,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             Winkel = WinkelUebergabe;
             HasGlow = true;
 
-            if (pParent->Blickrichtung == PlayerClass::LINKS)
+            if (pParent->Blickrichtung == DirectionEnum::LINKS)
                 Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
             int w = static_cast<int>(Winkel) - 90;
@@ -332,7 +332,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             Winkel = WinkelUebergabe;
             HasGlow = true;
 
-            if (pParent->Blickrichtung == PlayerClass::LINKS)
+            if (pParent->Blickrichtung == DirectionEnum::LINKS)
                 Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
             int w = static_cast<int>(Winkel) - 90;
@@ -357,7 +357,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             Winkel = WinkelUebergabe;
             HasGlow = true;
 
-            if (pParent->Blickrichtung == PlayerClass::LINKS)
+            if (pParent->Blickrichtung == DirectionEnum::LINKS)
                 Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
             int w = static_cast<int>(Winkel) - 90;
@@ -384,7 +384,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
         {
             Winkel = WinkelUebergabe;
 
-            if (pParent->Blickrichtung == PlayerClass::LINKS)
+            if (pParent->Blickrichtung == DirectionEnum::LINKS)
                 Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
             int w = static_cast<int>(Winkel) - 90;
@@ -419,7 +419,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
                 Damage = 8;
 
             if (pParent != nullptr) {
-                if (pParent->Blickrichtung == PlayerClass::LINKS)
+                if (pParent->Blickrichtung == DirectionEnum::LINKS)
                     Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
             }
 
@@ -445,7 +445,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
         {
             Winkel = WinkelUebergabe;
 
-            if (pParent != nullptr && pParent->Blickrichtung == PlayerClass::LINKS)
+            if (pParent != nullptr && pParent->Blickrichtung == DirectionEnum::LINKS)
                 Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
             int w = static_cast<int>(Winkel) - 90;
@@ -475,7 +475,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
         {
             Winkel = WinkelUebergabe;
 
-            if (pParent->Blickrichtung == PlayerClass::LINKS)
+            if (pParent->Blickrichtung == DirectionEnum::LINKS)
                 Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
             int w = static_cast<int>(Winkel) - 90;
@@ -501,7 +501,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
         {
             Winkel = WinkelUebergabe;
 
-            if (pParent != nullptr && pParent->Blickrichtung == PlayerClass::LINKS)
+            if (pParent != nullptr && pParent->Blickrichtung == DirectionEnum::LINKS)
                 Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
             int w = static_cast<int>(Winkel) - 90;
@@ -527,7 +527,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
         {
             Winkel = WinkelUebergabe;
 
-            if (pParent != nullptr && pParent->Blickrichtung == PlayerClass::LINKS)
+            if (pParent != nullptr && pParent->Blickrichtung == DirectionEnum::LINKS)
                 Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
             int w = static_cast<int>(Winkel) - 90;
@@ -1238,7 +1238,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
             CheckBlock = true;
 
             Winkel = WinkelUebergabe - 5 + random(10);
-            if (pParent->Blickrichtung == PlayerClass::LINKS)
+            if (pParent->Blickrichtung == DirectionEnum::LINKS)
                 Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
             int w = static_cast<int>(Winkel) - 90;
@@ -1287,7 +1287,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
         {
             Winkel = WinkelUebergabe;
 
-            if (pParent->Blickrichtung == PlayerClass::LINKS)
+            if (pParent->Blickrichtung == DirectionEnum::LINKS)
                 Winkel = static_cast<float>((static_cast<int>(Winkel) + 180) % 360);
 
             int w = static_cast<int>(Winkel) - 90;
@@ -3248,7 +3248,7 @@ void ProjectileClass::Run() {
         //
         case SHIELDSPAWNER: {
             // Schild um Spieler kreisen lassen
-            if (pParent->Blickrichtung == PlayerClass::LINKS)
+            if (pParent->Blickrichtung == DirectionEnum::LINKS)
                 ySpeed += Timer.sync(0.5f);
             else
                 ySpeed -= Timer.sync(0.5f);

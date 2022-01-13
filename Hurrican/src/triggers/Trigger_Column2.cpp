@@ -13,7 +13,7 @@
 
 GegnerColumn2::GegnerColumn2(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::STEHEN;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     Energy = 120;
     Value1 = Wert1;  // yPos der Plattform
     Value2 = Wert2;

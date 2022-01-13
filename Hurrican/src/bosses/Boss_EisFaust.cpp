@@ -15,7 +15,7 @@
 
 GegnerEisFaust::GegnerEisFaust(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::NOTVISIBLE;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     Energy = 7000;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -210,9 +210,9 @@ void GegnerEisFaust::DoKI() {
         // Faust fliegt von rechts nach links und wirft dabei Eiszapfen
         case GEGNER::BOMBARDIEREN: {
             if (xSpeed > 0.0f)
-                BlickRichtung = RECHTS;
+                BlickRichtung = DirectionEnum::RECHTS;
             else
-                BlickRichtung = LINKS;
+                BlickRichtung = DirectionEnum::LINKS;
 
             AnimCount -= Timer.sync(1.0f);
 

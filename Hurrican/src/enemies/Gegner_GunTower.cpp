@@ -44,7 +44,7 @@ void GegnerGunTower::DoKI() {
             else if (PlayerAbstandVert() < Value2 &&  // Schiessen, sobald der Spieler in den
                      PlayerAbstandHoriz() < 480)      // Toleranz Bereich kommt
             {
-                if (BlickRichtung == LINKS)  // Schuss Links
+                if (BlickRichtung == DirectionEnum::LINKS)  // Schuss Links
                 {
                     PartikelSystem.PushPartikel(xPos - 10.0f, yPos + 6.0f, SMOKE);
                     Projectiles.PushProjectile(xPos, yPos + 15.0f, CANONBALL);
@@ -61,12 +61,12 @@ void GegnerGunTower::DoKI() {
                 AnimStart = 0;
             }
 
-            if (BlickRichtung == LINKS && xPos + 30 < pAim->xpos) {
+            if (BlickRichtung == DirectionEnum::LINKS && xPos + 30 < pAim->xpos) {
                 Handlung = GEGNER::DREHEN;
                 AnimStart = 12;
                 AnimPhase = 5;
                 AnimEnde = 13;
-            } else if (BlickRichtung == RECHTS && xPos > pAim->xpos + 30) {
+            } else if (BlickRichtung == DirectionEnum::RECHTS && xPos > pAim->xpos + 30) {
                 Handlung = GEGNER::DREHEN;
                 AnimStart = 12;
                 AnimPhase = 5;
@@ -78,10 +78,7 @@ void GegnerGunTower::DoKI() {
         case GEGNER::DREHEN:  // Turm dreht sich in Richtung Spieler
         {
             if (AnimPhase == AnimStart) {
-                if (BlickRichtung == LINKS)
-                    BlickRichtung = RECHTS;
-                else
-                    BlickRichtung = LINKS;
+                BlickRichtung = Direction::invert(BlickRichtung);
                 AnimEnde = 0;
                 AnimPhase = 0;
                 Handlung = GEGNER::STEHEN;

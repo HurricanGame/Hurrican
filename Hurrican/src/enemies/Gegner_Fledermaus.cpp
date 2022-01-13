@@ -43,11 +43,11 @@ void GegnerFledermaus::DoKI() {
         ySpeed = -ySpeed;
     if (blockr & BLOCKWERT_WAND && xSpeed > 0.0f) {
         xSpeed = -xSpeed;
-        BlickRichtung = LINKS;
+        BlickRichtung = DirectionEnum::LINKS;
     }
     if (blockl & BLOCKWERT_WAND && xSpeed < 0.0f) {
         xSpeed = -xSpeed;
-        BlickRichtung = RECHTS;
+        BlickRichtung = DirectionEnum::RECHTS;
     }
 
     // Je nach Handlung richtig
@@ -76,7 +76,7 @@ void GegnerFledermaus::DoKI() {
             if (Value1 < xPos) {
                 if (!(blockl & BLOCKWERT_WAND)) {
                     xAcc = -3.0;
-                    BlickRichtung = LINKS;
+                    BlickRichtung = DirectionEnum::LINKS;
                 }
             }
 
@@ -84,7 +84,7 @@ void GegnerFledermaus::DoKI() {
             if (Value1 > xPos) {
                 if (!(blockr & BLOCKWERT_WAND)) {
                     xAcc = 3.0;
-                    BlickRichtung = RECHTS;
+                    BlickRichtung = DirectionEnum::RECHTS;
                 }
             }
 

@@ -14,7 +14,7 @@
 
 GegnerStampfstein::GegnerStampfstein(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::NOTVISIBLE;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     Energy = 5000.0f;
     Value1 = Wert1;
     Value2 = Wert2;

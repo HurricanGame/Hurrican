@@ -12,7 +12,7 @@
 
 GegnerEvilHurri::GegnerEvilHurri(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::INIT;
-    BlickRichtung = RECHTS;
+    BlickRichtung = DirectionEnum::RECHTS;
 
     Energy = 6000;
     Value1 = Wert1;
@@ -35,7 +35,7 @@ GegnerEvilHurri::GegnerEvilHurri(int Wert1, int Wert2, bool Light) {
 void GegnerEvilHurri::DoDraw() {
     for (int i = 0; i < 4; i++) {
         DirectGraphics.SetAdditiveMode();
-        if (BlickRichtung == LINKS) {
+        if (BlickRichtung == DirectionEnum::LINKS) {
             Player[0].PlayerRun.RenderSprite(xPos - TileEngine.XOffset,
                                              yPos - TileEngine.YOffset, AnimPhase, 0xAA444444,
                                              true);
@@ -87,9 +87,9 @@ void GegnerEvilHurri::DoKI() {
             if (Player[p].Handlung == PlayerActionEnum::RADELN ||
                     Player[p].Handlung == PlayerActionEnum::RADELN_FALL) {
                 if (Player[p].xpos < xPos)
-                    Player[p].Blickrichtung = LINKS;
+                    Player[p].Blickrichtung = DirectionEnum::LINKS;
                 if (Player[p].xpos > xPos)
-                    Player[p].Blickrichtung = RECHTS;
+                    Player[p].Blickrichtung = DirectionEnum::RECHTS;
             }
 
             // Sonst Energie abziehen
@@ -163,9 +163,9 @@ void GegnerEvilHurri::DoKI() {
             ySpeed = 0.0f;
 
             if (xPos + 70.0f < pAim->xpos)
-                BlickRichtung = RECHTS;
+                BlickRichtung = DirectionEnum::RECHTS;
             if (xPos > pAim->xpos + 70.0f)
-                BlickRichtung = LINKS;
+                BlickRichtung = DirectionEnum::LINKS;
 
             ActionDelay -= Timer.sync(1.0f);
             if (ActionDelay < 0.0f) {
@@ -178,7 +178,7 @@ void GegnerEvilHurri::DoKI() {
                         ActionDelay = 1.0f;
                         AnimPhase = 48;
 
-                        if (BlickRichtung == RECHTS)
+                        if (BlickRichtung == DirectionEnum::RECHTS)
                             xSpeed = 40.0f;
                         else
                             xSpeed = -40.0f;
@@ -187,7 +187,7 @@ void GegnerEvilHurri::DoKI() {
                         ActionDelay = 1.0f;
                         AnimPhase = 48;
 
-                        if (BlickRichtung == RECHTS)
+                        if (BlickRichtung == DirectionEnum::RECHTS)
                             xSpeed = 40.0f;
                         else
                             xSpeed = -40.0f;
@@ -203,7 +203,7 @@ void GegnerEvilHurri::DoKI() {
                         AnimEnde = 0;
                         AnimStart = 0;
                         AnimPhase = 35;
-                        BlickRichtung = RECHTS;
+                        BlickRichtung = DirectionEnum::RECHTS;
                     }
 
                     // oder ballernd auf den Spieler zurennen
@@ -216,7 +216,7 @@ void GegnerEvilHurri::DoKI() {
                             AnimEnde = FRAMES_RUN;
                             AnimSpeed = 0.4f;
 
-                            if (BlickRichtung == RECHTS)
+                            if (BlickRichtung == DirectionEnum::RECHTS)
                                 xSpeed = 20.0f;
                             else
                                 xSpeed = -20.0f;
@@ -230,7 +230,7 @@ void GegnerEvilHurri::DoKI() {
                             AnimEnde = 21;
                             AnimSpeed = 0.4f;
 
-                            if (BlickRichtung == RECHTS)
+                            if (BlickRichtung == DirectionEnum::RECHTS)
                                 xSpeed = 20.0f;
                             else
                                 xSpeed = -20.0f;
@@ -260,14 +260,14 @@ void GegnerEvilHurri::DoKI() {
             if (ActionDelay < 0.0f) {
                 ActionDelay = 1.0f;
 
-                if (BlickRichtung == RECHTS)
+                if (BlickRichtung == DirectionEnum::RECHTS)
                     PartikelSystem.PushPartikel(xPos, yPos, EVILSMOKE2);
                 else
                     PartikelSystem.PushPartikel(xPos, yPos, EVILSMOKE);
             }
 
-            if ((BlickRichtung == RECHTS && xPos > pAim->xpos + 140) ||
-                (BlickRichtung == LINKS && xPos + 140 < pAim->xpos)) {
+            if ((BlickRichtung == DirectionEnum::RECHTS && xPos > pAim->xpos + 140) ||
+                (BlickRichtung == DirectionEnum::LINKS && xPos + 140 < pAim->xpos)) {
                 Handlung = GEGNER::STEHEN;
                 ActionDelay = 10.0f;
             }
@@ -281,14 +281,14 @@ void GegnerEvilHurri::DoKI() {
             if (ActionDelay < 0.0f) {
                 ActionDelay = 1.0f;
 
-                if (BlickRichtung == RECHTS)
+                if (BlickRichtung == DirectionEnum::RECHTS)
                     PartikelSystem.PushPartikel(xPos, yPos, EVILSMOKE2);
                 else
                     PartikelSystem.PushPartikel(xPos, yPos, EVILSMOKE);
             }
 
-            if ((BlickRichtung == RECHTS && xPos + 35 > Value1 + 320) ||
-                (BlickRichtung == LINKS && xPos + 35 < Value1 + 320)) {
+            if ((BlickRichtung == DirectionEnum::RECHTS && xPos + 35 > Value1 + 320) ||
+                (BlickRichtung == DirectionEnum::LINKS && xPos + 35 < Value1 + 320)) {
                 Handlung = GEGNER::SPECIAL;
                 AnimPhase = 0;
                 AnimEnde = 0;
@@ -310,7 +310,7 @@ void GegnerEvilHurri::DoKI() {
 
                 SoundManager.PlayWave(100, random(255), 8000 + random(4000), SOUND::CANON);
 
-                if (BlickRichtung == RECHTS) {
+                if (BlickRichtung == DirectionEnum::RECHTS) {
                     PartikelSystem.PushPartikel(xPos + 50.0f, yPos + 20.0f, SMOKE);
                     Projectiles.PushProjectile(xPos + 55.0f, yPos + 30.0f, EVILSHOT);
                 } else {
@@ -343,8 +343,8 @@ void GegnerEvilHurri::DoKI() {
                 }
             }
 
-            if (((BlickRichtung == RECHTS && xPos > pAim->xpos + 70) ||
-                 (BlickRichtung == LINKS && xPos + 70 < pAim->xpos)) &&
+            if (((BlickRichtung == DirectionEnum::RECHTS && xPos > pAim->xpos + 70) ||
+                 (BlickRichtung == DirectionEnum::LINKS && xPos + 70 < pAim->xpos)) &&
                 ySpeed == 0.0f) {
                 Handlung = GEGNER::STEHEN;
                 ActionDelay = 10.0f;
@@ -362,7 +362,7 @@ void GegnerEvilHurri::DoKI() {
 
                 SoundManager.PlayWave(100, random(255), 8000 + random(4000), SOUND::CANON);
 
-                if (BlickRichtung == RECHTS) {
+                if (BlickRichtung == DirectionEnum::RECHTS) {
                     PartikelSystem.PushPartikel(xPos + 50.0f, yPos + 20.0f, SMOKE);
                     Projectiles.PushProjectile(xPos + 55.0f, yPos + 30.0f, EVILSHOT);
                 } else {
@@ -371,8 +371,8 @@ void GegnerEvilHurri::DoKI() {
                 }
             }
 
-            if ((BlickRichtung == RECHTS && xPos + 35 > Value1 + 320) ||
-                (BlickRichtung == LINKS && xPos + 35 < Value1 + 320)) {
+            if ((BlickRichtung == DirectionEnum::RECHTS && xPos + 35 > Value1 + 320) ||
+                (BlickRichtung == DirectionEnum::LINKS && xPos + 35 < Value1 + 320)) {
                 Handlung = GEGNER::SPECIAL;
                 AnimPhase = 0;
                 AnimEnde = 0;
@@ -436,14 +436,14 @@ void GegnerEvilHurri::DoKI() {
             if (ActionDelay > 70.0f) {
                 if (random(2) == 0) {
                     Handlung = GEGNER::AUFRICHTEN;
-                    BlickRichtung = LINKS;
+                    BlickRichtung = DirectionEnum::LINKS;
                     AnimPhase = 3;
                     AnimStart = 3;
                     AnimEnde = 21;
                     xSpeed = -20;
                 } else {
                     Handlung = GEGNER::AUFRICHTENZWEI;
-                    BlickRichtung = RECHTS;
+                    BlickRichtung = DirectionEnum::RECHTS;
                     AnimPhase = 3;
                     AnimStart = 3;
                     AnimEnde = 21;
@@ -454,7 +454,7 @@ void GegnerEvilHurri::DoKI() {
 
         case GEGNER::AUFRICHTEN: {
             if (xPos < Value1 + 20) {
-                BlickRichtung = RECHTS;
+                BlickRichtung = DirectionEnum::RECHTS;
                 xSpeed = 15.0f;
                 ActionDelay = 4.0f;
                 Handlung = GEGNER::AUSSPUCKEN;
@@ -463,7 +463,7 @@ void GegnerEvilHurri::DoKI() {
 
         case GEGNER::AUFRICHTENZWEI: {
             if (xPos >= Value1 + 550) {
-                BlickRichtung = LINKS;
+                BlickRichtung = DirectionEnum::LINKS;
                 xSpeed = -15.0f;
                 ActionDelay = 4.0f;
                 Handlung = GEGNER::AUSSPUCKENZWEI;

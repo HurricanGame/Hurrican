@@ -22,7 +22,7 @@ GegnerFetteRakete::GegnerFetteRakete(int Wert1, int Wert2, bool Light) {
     AnimSpeed = 0.3f;
     OwnDraw = true;
     rot = static_cast<float>(Wert1);
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     // Rakete kommt vom Drachen? Dann verhält sie sich anders
     if (Wert2 == 99) {
@@ -51,7 +51,7 @@ void GegnerFetteRakete::DoDraw() {
 // --------------------------------------------------------------------------------------
 
 void GegnerFetteRakete::DoKI() {
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     switch (Handlung) {
         case GEGNER::INIT: {

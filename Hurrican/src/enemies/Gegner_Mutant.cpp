@@ -55,11 +55,11 @@ void GegnerMutant::DoKI() {
 
                 // in Richtung Spieler kriechen
                 if (xPos + 50 < pAim->xpos + 35)
-                    BlickRichtung = RECHTS;
+                    BlickRichtung = DirectionEnum::RECHTS;
                 else
-                    BlickRichtung = LINKS;
+                    BlickRichtung = DirectionEnum::LINKS;
 
-                xSpeed = 5.0f * BlickRichtung;
+                xSpeed = 5.0f * Direction::asInt(BlickRichtung);
             } else {
                 xSpeed = 0.0f;
                 AnimPhase = 3;
@@ -77,7 +77,7 @@ void GegnerMutant::DoKI() {
 
                 if (JumpDelay <= 0.0f) {
                     Handlung = GEGNER::SPRINGEN;
-                    xSpeed = 15.0f * BlickRichtung;
+                    xSpeed = 15.0f * Direction::asInt(BlickRichtung);
                     AnimStart = 18;
                     AnimPhase = 18;
                     AnimEnde = 26;

@@ -13,7 +13,7 @@
 
 GegnerSchmidtOrgie::GegnerSchmidtOrgie(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::VERFOLGEN;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     Energy = 4500;
     ChangeLight = Light;
     Destroyable = false;

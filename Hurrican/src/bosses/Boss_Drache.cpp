@@ -13,7 +13,7 @@
 
 GegnerDrache::GegnerDrache(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::NOTVISIBLE;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     Energy = 7000;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -30,7 +30,7 @@ GegnerDrache::GegnerDrache(int Wert1, int Wert2, bool Light) {
     Growl = true;
     AlreadyDrawn = false;
     Attack = 0;
-    Position = LINKS;
+    Position = DirectionEnum::LINKS;
     HeadLocked = false;
     HeadX = 0.0f;
     HeadY = 0.0f;
@@ -89,7 +89,7 @@ void GegnerDrache::DoDraw() {
         mirrorOffset = 0;
         GegnerRect[DRACHE].left = 40;
         GegnerRect[DRACHE].right = 250;
-    } else if (Position == LINKS) {
+    } else if (Position == DirectionEnum::LINKS) {
         mirrored = -1;
         mirrorOffset = -1;
         GegnerRect[DRACHE].left = -50;
@@ -102,8 +102,8 @@ void GegnerDrache::DoDraw() {
     }
 
     if (Destroyable == false) {
-        Position = LINKS;
-        BlickRichtung = LINKS;
+        Position = DirectionEnum::LINKS;
+        BlickRichtung = DirectionEnum::LINKS;
         mirrored = -1;
         mirrorOffset = -1;
     }
@@ -113,7 +113,7 @@ void GegnerDrache::DoDraw() {
         GegnerRect[DRACHE].top = 20 + static_cast<int>(HeadY);
         GegnerRect[DRACHE].bottom = 130 + static_cast<int>(HeadY);
 
-        if (Position == LINKS) {
+        if (Position == DirectionEnum::LINKS) {
             GegnerRect[DRACHE].left = static_cast<int>(HeadX) - 60;
             GegnerRect[DRACHE].right = static_cast<int>(HeadX) + 20;
         } else {
@@ -132,7 +132,7 @@ void GegnerDrache::DoDraw() {
         GegnerRect[DRACHE].bottom = 135;
     }
 
-    BlickRichtung = mirrored;
+    BlickRichtung = mirrored < 0 ? DirectionEnum::LINKS : DirectionEnum::RECHTS;
 
     // Hinteres Bein rendern
     //
@@ -154,7 +154,7 @@ void GegnerDrache::DoDraw() {
 
         float winkel;
 
-        if (Position == LINKS)
+        if (Position == DirectionEnum::LINKS)
             winkel = HeadWinkel - 180.0f;
         else
             winkel = 180.0f - HeadWinkel;
@@ -169,10 +169,11 @@ void GegnerDrache::DoDraw() {
         float yadd = HeadY / dist * 10.0f;
         while (render-- > 0) {
             Tail.RenderSpriteRotated(
-                xPos - TileEngine.XOffset + 200.0f + static_cast<float>(mirrorOffset * 220) + xoff * static_cast<float>(Position),
+                xPos - TileEngine.XOffset + 200.0f + static_cast<float>(mirrorOffset * 220) +
+                    xoff * static_cast<float>(Direction::asInt(Position)),
                 yPos - TileEngine.YOffset + 60.0f + yoff + DrawYOffset, winkel, 0xFFFFFFFF);
             // ein wirbel weiter
-            if (Position == LINKS) {
+            if (Position == DirectionEnum::LINKS) {
                 xoff -= xadd;
                 yoff += yadd;
             } else {
@@ -283,7 +284,7 @@ void GegnerDrache::ComputeHeadWinkel() {
     if (ydiv == 0.0f)
         ydiv = 0.00001f;
 
-    if (BlickRichtung == 1) {
+    if (BlickRichtung == DirectionEnum::RECHTS) {
         float xdiv = (pAim->xpos + 35) - (xPos + 210);
         // DKS - converted to float:
         // HeadWinkel = (float)atan(xdiv / ydiv) * 180.0f / PI - 90.0f;
@@ -379,7 +380,7 @@ void GegnerDrache::DoKI() {
             }
 
             AnimWinkel = 0;
-            BlickRichtung = LINKS;
+            BlickRichtung = DirectionEnum::LINKS;
 
             // testen ob spieler draufsteht
             PlattformTest(GegnerRect[GegnerArt]);
@@ -444,7 +445,7 @@ void GegnerDrache::DoKI() {
                 for (int p = 0; p < NUMPLAYERS; p++) {
                     Player[p].xpos = xPos + 40.0f + p * 30.0f;
                     Player[p].ypos = yPos - 65.0f + DrawYOffset;
-                    Player[p].Blickrichtung = LINKS;
+                    Player[p].Blickrichtung = DirectionEnum::LINKS;
                     Player[p].AufPlattform = this;
                 }
             }
@@ -620,7 +621,7 @@ void GegnerDrache::DoKI() {
                 } break;
 
                 case GEGNER::LAUFEN2: {
-                    BlickRichtung = LINKS;
+                    BlickRichtung = DirectionEnum::LINKS;
 
                     // Runtergefallen? Dann warten, bis der Hurri aufsteigt
                     if (yPos > StartPosY + 295.0f && ySpeed > 0.0f) {
@@ -690,13 +691,13 @@ void GegnerDrache::DoKI() {
                     Handlung = GEGNER::LAUFEN;
 
                     if (xPos < Value1)
-                        BlickRichtung = -1;
+                        BlickRichtung = DirectionEnum::LINKS;
                     else
-                        BlickRichtung = 1;
+                        BlickRichtung = DirectionEnum::RECHTS;
 
-                    xPos = Value1 + 320.0f + 100 + 800.0f * BlickRichtung;
+                    xPos = Value1 + 320.0f + 100 + 800.0f * Direction::asInt(BlickRichtung);
                     yPos = StartPosY - 80.0f;
-                    xSpeed = -15.0f * BlickRichtung;
+                    xSpeed = -15.0f * Direction::asInt(BlickRichtung);
                     ySpeed = 5.0f;
                     yAcc = -0.1f;
 
@@ -725,13 +726,13 @@ void GegnerDrache::DoKI() {
                     Handlung = GEGNER::LAUFEN2;
 
                     if (xPos < Value1)
-                        BlickRichtung = -1;
+                        BlickRichtung = DirectionEnum::LINKS;
                     else
-                        BlickRichtung = 1;
+                        BlickRichtung = DirectionEnum::RECHTS;
 
-                    xPos = Value1 + 320.0f + 100 + 800.0f * BlickRichtung;
+                    xPos = Value1 + 320.0f + 100 + 800.0f * Direction::asInt(BlickRichtung);
                     yPos = StartPosY + 50.0f;
-                    xSpeed = -50.0f * BlickRichtung;
+                    xSpeed = -50.0f * Direction::asInt(BlickRichtung);
                     ySpeed = 0.0f;
                     yAcc = 0.0f;
 
@@ -764,9 +765,9 @@ void GegnerDrache::DoKI() {
                     ShotCount = 2 + random(2);
 
                     if (xPos < Value1)
-                        Position = RECHTS;
+                        Position = DirectionEnum::RECHTS;
                     else
-                        Position = LINKS;
+                        Position = DirectionEnum::LINKS;
 
                     yPos = StartPosY + 50.0f + static_cast<float>(random(50));
 
@@ -794,7 +795,7 @@ void GegnerDrache::DoKI() {
                     while (AnimCount > TWO_PI) {
                         AnimCount -= TWO_PI;
 
-                        if (BlickRichtung == 1) {
+                        if (BlickRichtung == DirectionEnum::RECHTS) {
                             WinkelUebergabe = 90 - HeadWinkel;
                             Projectiles.PushProjectile(xPos + 240.0f + HeadWinkel / 2.0f,
                                                        yPos + 50.0f - HeadWinkel / 2.0f, FIREBALL_BIG);
@@ -848,7 +849,7 @@ void GegnerDrache::DoKI() {
                     AnimCount -= Timer.sync(1.0f);
                     if (AnimCount < 0.0f) {
                         AnimCount = 0.3f;
-                        if (BlickRichtung == RECHTS) {
+                        if (BlickRichtung == DirectionEnum::RECHTS) {
                             WinkelUebergabe = 180.0f;
 
                             if (xPos > TileEngine.XOffset)
@@ -885,7 +886,7 @@ void GegnerDrache::DoKI() {
             switch (Attack) {
                 // Reinkommen?
                 case GEGNER::EINFLIEGEN: {
-                    if (Position == RECHTS) {
+                    if (Position == DirectionEnum::RECHTS) {
                         xPos = Value1 - 300.0f;
                         xPos += static_cast<float>(sin(AnimCount)) * 150.0f;
                     } else {
@@ -918,13 +919,13 @@ void GegnerDrache::DoKI() {
                         // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
                         // HeadXSpeed =  (float)cos(HeadWinkel / 180.0f * PI) * (40.0f + 10.0f * (Skill)) * Position;
                         // HeadYSpeed = -(float)sin(HeadWinkel / 180.0f * PI) * (30.0f +  8.0f * (Skill));
-                        HeadXSpeed = cos_deg(HeadWinkel) * (40.0f + 10.0f * (Skill)) * Position;
+                        HeadXSpeed = cos_deg(HeadWinkel) * (40.0f + 10.0f * (Skill)) * Direction::asInt(Position);
                         HeadYSpeed = -sin_deg(HeadWinkel) * (30.0f + 8.0f * (Skill));
 
-                        if (Position == LINKS && HeadXSpeed > -0.1f)
+                        if (Position == DirectionEnum::LINKS && HeadXSpeed > -0.1f)
                             HeadXSpeed = -0.01f;
 
-                        if (Position == RECHTS && HeadXSpeed < 0.1f)
+                        if (Position == DirectionEnum::RECHTS && HeadXSpeed < 0.1f)
                             HeadXSpeed = 0.01f;
                     }
                 } break;
@@ -1001,7 +1002,7 @@ void GegnerDrache::DoKI() {
                 } break;
 
                 case GEGNER::EINFLIEGEN2: {
-                    if (Position == RECHTS) {
+                    if (Position == DirectionEnum::RECHTS) {
                         xPos = Value1 - 300.0f;
                         xPos += static_cast<float>(sin(AnimCount)) * 150.0f;
                     } else {
@@ -1036,7 +1037,7 @@ void GegnerDrache::DoKI() {
             if (SmokeCount < 0.0f) {
                 SmokeCount = 0.2f;
 
-                if (BlickRichtung == -1) {
+                if (BlickRichtung == DirectionEnum::LINKS) {
                     WinkelUebergabe = 1.0f;
                     PartikelSystem.PushPartikel(xPos + 180.0f, yPos + 9.0f + DrawYOffset, DRACHE_SMOKE);
                 } else {

@@ -46,7 +46,7 @@ void GegnerRoboMan1::DoKI() {
             if (AnimPhase >= AnimEnde)  // Animation von zu Ende	?
             {
                 if (AnimPhase == 14)
-                    BlickRichtung = -BlickRichtung;
+                    BlickRichtung = Direction::invert(BlickRichtung);
 
                 AnimEnde = 0;
                 AnimPhase = 0;
@@ -67,14 +67,14 @@ void GegnerRoboMan1::DoKI() {
 
     // Immer den Spieler im Auge behalten
     //
-    if (AnimPhase == 0 && BlickRichtung == RECHTS && pAim->xpos + 45 < xPos + 45) {
+    if (AnimPhase == 0 && BlickRichtung == DirectionEnum::RECHTS && pAim->xpos + 45 < xPos + 45) {
         AnimPhase = 3;
         AnimStart = 0;
         AnimEnde = 14;
         AnimSpeed = 0.5f;
     }
 
-    if (AnimPhase == 0 && BlickRichtung == LINKS && pAim->xpos + 45 > xPos + 45) {
+    if (AnimPhase == 0 && BlickRichtung == DirectionEnum::LINKS && pAim->xpos + 45 > xPos + 45) {
         AnimPhase = 3;
         AnimStart = 0;
         AnimEnde = 14;
@@ -104,7 +104,7 @@ void GegnerRoboMan1::DoKI() {
         if (ShotCount <= 0.0f) {
             SoundManager.PlayWave(100, 128, 11025, SOUND::GRANATE);
 
-            if (BlickRichtung == LINKS)
+            if (BlickRichtung == DirectionEnum::LINKS)
                 Projectiles.PushProjectile(xPos - 20.0f, yPos + 75.0f, ROBOROCKET, pAim);
             else
                 Projectiles.PushProjectile(xPos + 70.0f, yPos + 75.0f, ROBOROCKET, pAim);
@@ -170,7 +170,7 @@ void GegnerRoboMan1::DoKI() {
         ySpeed = 3.0f;
         yAcc = 2.0f;
 
-        /*		if (BlickRichtung == LINKS)
+        /*		if (BlickRichtung == DirectionEnum::LINKS)
                     xSpeed = -5.0f;
                 else
                     xSpeed = 5.0f;*/

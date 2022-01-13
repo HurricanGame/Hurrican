@@ -14,7 +14,7 @@
 
 GegnerDeckenturm::GegnerDeckenturm(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::UNVERWUNDBAR;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     Energy = 50;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -29,7 +29,7 @@ GegnerDeckenturm::GegnerDeckenturm(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerDeckenturm::DoKI() {
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     SimpleAnimation();
 

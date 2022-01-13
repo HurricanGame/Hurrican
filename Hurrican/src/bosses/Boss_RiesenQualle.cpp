@@ -16,7 +16,7 @@ GegnerRiesenQualle::GegnerRiesenQualle(int Wert1, int Wert2, bool Light) {
     AnimStart = 0;
     AnimEnde = 6;
     AnimSpeed = 2.0f;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     xSpeed = 0.0f;
     ySpeed = -8.0f;
     yAcc = 0.4f;

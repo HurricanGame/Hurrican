@@ -31,7 +31,7 @@ GegnerFieserFireWalker::GegnerFieserFireWalker(int Wert1, int Wert2, bool Light)
 void GegnerFieserFireWalker::DoDraw() {
     // Gegner rendern
     int Wert = 255 - static_cast<int>(DamageTaken);
-    bool mirror = (BlickRichtung != LINKS);
+    bool mirror = (BlickRichtung != DirectionEnum::LINKS);
 
     D3DCOLOR Color = D3DCOLOR_RGBA(255, Wert, Wert, 255);
     pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
@@ -44,7 +44,8 @@ void GegnerFieserFireWalker::DoDraw() {
         // Leuchten beim Schiessen rendern
         //
         DirectGraphics.SetAdditiveMode();
-        Projectiles.LavaFlare.RenderSprite(xPos - TileEngine.XOffset - 30.0f + static_cast<float>(6 + BlickRichtung * 36),
+        Projectiles.LavaFlare.RenderSprite(xPos - TileEngine.XOffset - 30.0f +
+                                               static_cast<float>(6 + Direction::asInt(BlickRichtung) * 36),
                                            yPos - TileEngine.YOffset - 30.0f, 0, 0xFFFF8822);
         DirectGraphics.SetColorKeyMode();
     }
@@ -74,9 +75,9 @@ void GegnerFieserFireWalker::DoKI() {
             // nahe genug zum schiessen?
             //
             if (ShotDelay <= 0.0f && AnimPhase == 3 && PlayerAbstand() < 400 && PlayerAbstandVert() < 150 &&
-                ((BlickRichtung == RECHTS &&
+                ((BlickRichtung == DirectionEnum::RECHTS &&
                   xPos + GegnerRect[GegnerArt].right < pAim->xpos + pAim->CollideRect.left) ||
-                 (BlickRichtung == LINKS &&
+                 (BlickRichtung == DirectionEnum::LINKS &&
                   xPos + GegnerRect[GegnerArt].left > pAim->xpos + pAim->CollideRect.right))) {
                 ShotDelay = 40.0f;
                 ShotDelay2 = 0.0f;
@@ -105,20 +106,20 @@ void GegnerFieserFireWalker::DoKI() {
                 ShotDelay2 = 0.4f;
                 ShotDelay -= 1.0f;
 
-                Projectiles.PushProjectile(xPos + 5.0f + static_cast<float>(BlickRichtung * 38),
+                Projectiles.PushProjectile(xPos + 5.0f + static_cast<float>(Direction::asInt(BlickRichtung) * 38),
                                            yPos - 7.0f, WALKERFIRE, pAim);
             }
 
             // Spieler nicht mehr vor dem Walker? Dann auch nicht mehr schiessen
-            if ((BlickRichtung == RECHTS && xPos + 60 >= pAim->xpos) ||
-                (BlickRichtung == LINKS && xPos <= pAim->xpos + 80))
+            if ((BlickRichtung == DirectionEnum::RECHTS && xPos + 60 >= pAim->xpos) ||
+                (BlickRichtung == DirectionEnum::LINKS && xPos <= pAim->xpos + 80))
                 ShotDelay = -1.0f;
 
             if (ShotDelay < 0.0f) {
                 ShotDelay = 20.0f;
                 Handlung = GEGNER::LAUFEN;
                 AnimEnde = 14;
-                xSpeed = 5.0f * BlickRichtung;
+                xSpeed = 5.0f * Direction::asInt(BlickRichtung);
             }
 
         } break;

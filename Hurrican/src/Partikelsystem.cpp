@@ -155,7 +155,8 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
                 // DKS - now redundant:
                 // red	= 255; green = 255; blue = 255; alpha = 255;
 
-                xSpeed = (static_cast<float>(random(40) + 20) / 5) * static_cast<float>(-m_pParent->Blickrichtung);
+                xSpeed = (static_cast<float>(random(40) + 20) / 5) *
+                          static_cast<float>(Direction::asInt(Direction::invert(m_pParent->Blickrichtung)));
                 ySpeed = -static_cast<float>(random(40) + 20) / 5;
                 xAcc = 0.0f;
                 yAcc = 5.0f;

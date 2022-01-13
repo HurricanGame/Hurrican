@@ -56,7 +56,7 @@ void GegnerDrone::DoKI() {
             {
                 AnimCount = 0.0f;
                 Handlung = GEGNER::DREHEN2;
-                BlickRichtung *= -1;
+                BlickRichtung = Direction::invert(BlickRichtung);
             }
         }
     } else if (Handlung == GEGNER::DREHEN2) {
@@ -109,8 +109,8 @@ void GegnerDrone::DoKI() {
         // In der Luft rumdümpeln
         //
         case GEGNER::LAUFEN:
-            if ((xPos + 30.0f < pAim->xpos + 35.0f && BlickRichtung == LINKS) ||
-                (xPos + 30.0f > pAim->xpos + 35.0f && BlickRichtung == RECHTS)) {
+            if ((xPos + 30.0f < pAim->xpos + 35.0f && BlickRichtung == DirectionEnum::LINKS) ||
+                (xPos + 30.0f > pAim->xpos + 35.0f && BlickRichtung == DirectionEnum::RECHTS)) {
                 Handlung = GEGNER::DREHEN;
                 AnimPhase = 6;
                 AnimCount = 0.0f;
@@ -135,7 +135,7 @@ void GegnerDrone::DoKI() {
 
                 PartikelSystem.PushPartikel(xPos + 33.0f, yPos + 60.0f, BULLET, &Player[0]);
 
-                if (BlickRichtung == RECHTS)
+                if (BlickRichtung == DirectionEnum::RECHTS)
                     Projectiles.PushProjectile(xPos + 58.0f, yPos + 68.0f, DRONEBULLET);
                 else
                     Projectiles.PushProjectile(xPos - 10.0f, yPos + 68.0f, DRONEBULLET2);
@@ -145,8 +145,8 @@ void GegnerDrone::DoKI() {
         // Auf den Spieler ballern
         //
         case GEGNER::SCHIESSEN:
-            if ((xPos + 30.0f < pAim->xpos + 35.0f && BlickRichtung == LINKS) ||
-                (xPos + 30.0f > pAim->xpos + 35.0f && BlickRichtung == RECHTS)) {
+            if ((xPos + 30.0f < pAim->xpos + 35.0f && BlickRichtung == DirectionEnum::LINKS) ||
+                (xPos + 30.0f > pAim->xpos + 35.0f && BlickRichtung == DirectionEnum::RECHTS)) {
                 Handlung = GEGNER::DREHEN;
                 AnimPhase = 6;
                 AnimCount = 0.0f;
@@ -171,7 +171,7 @@ void GegnerDrone::DoKI() {
 
                 PartikelSystem.PushPartikel(xPos + 36.0f, yPos + 57.0f, BULLET, &Player[0]);
 
-                if (BlickRichtung == RECHTS)
+                if (BlickRichtung == DirectionEnum::RECHTS)
                     Projectiles.PushProjectile(xPos + 58.0f, yPos + 68.0f, DRONEBULLET);
                 else
                     Projectiles.PushProjectile(xPos - 10.0f, yPos + 68.0f, DRONEBULLET2);
@@ -183,12 +183,13 @@ void GegnerDrone::DoKI() {
                 DirectGraphics.SetAdditiveMode();
 
                 int anim;
-                if (BlickRichtung == -1)
+                if (BlickRichtung == DirectionEnum::LINKS)
                     anim = 0;
                 else
                     anim = 1;
 
-                Gegner.DroneFlame.RenderSprite(xPos - TileEngine.XOffset - 5.0f + static_cast<float>(BlickRichtung * 56),
+                Gegner.DroneFlame.RenderSprite(xPos - TileEngine.XOffset - 5.0f +
+                                                   static_cast<float>(Direction::asInt(BlickRichtung) * 56),
                                                yPos - TileEngine.YOffset + 60.0f, anim, 0xFFFFFFFF);
                 DirectGraphics.SetColorKeyMode();
             }

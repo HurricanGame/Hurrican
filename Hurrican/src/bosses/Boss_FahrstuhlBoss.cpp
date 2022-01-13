@@ -14,7 +14,7 @@
 
 GegnerFahrstuhlBoss::GegnerFahrstuhlBoss(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::NOTVISIBLE;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     Energy = 6000;
     ChangeLight = Light;
     Destroyable = true;

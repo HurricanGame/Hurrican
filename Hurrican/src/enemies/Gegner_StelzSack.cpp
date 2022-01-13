@@ -28,9 +28,9 @@ GegnerStelzSack::GegnerStelzSack(int Wert1, int Wert2, bool Light) {
 
     // Spieler ankucken
     if (xPos + 50 > pAim->xpos + 35)
-        BlickRichtung = LINKS;
+        BlickRichtung = DirectionEnum::LINKS;
     else
-        BlickRichtung = RECHTS;
+        BlickRichtung = DirectionEnum::RECHTS;
 
     TestBlock = false;
 }
@@ -98,7 +98,7 @@ void GegnerStelzSack::DoKI() {
 
                 SoundManager.PlayWave(100, 128, 18000 + random(4000), SOUND::LASERSHOT);
 
-                if (BlickRichtung == LINKS) {
+                if (BlickRichtung == DirectionEnum::LINKS) {
                     PartikelSystem.PushPartikel(xPos - 50.0f, yPos, STELZFLARE);
                     Projectiles.PushProjectile(xPos - 30.0f, yPos + 25.0f, STELZLASER);
                 } else {
@@ -108,8 +108,8 @@ void GegnerStelzSack::DoKI() {
             }
 
             // Rumdrehen ?
-            if ((BlickRichtung == LINKS && xPos + 50 < pAim->xpos + 35) ||
-                (BlickRichtung == RECHTS && xPos + 50 > pAim->xpos + 35)) {
+            if ((BlickRichtung == DirectionEnum::LINKS && xPos + 50 < pAim->xpos + 35) ||
+                (BlickRichtung == DirectionEnum::RECHTS && xPos + 50 > pAim->xpos + 35)) {
                 Handlung = GEGNER::DREHEN;
                 AnimCount = 0.0f;
             }
@@ -127,7 +127,7 @@ void GegnerStelzSack::DoKI() {
                     AnimPhase = 13;
                     AnimCount = 0.0f;
                     Handlung = GEGNER::DREHEN2;
-                    BlickRichtung *= -1;
+                    BlickRichtung = Direction::invert(BlickRichtung);
                 }
             }
         } break;

@@ -54,7 +54,7 @@ void GegnerSmallWespe::DoKI() {
             if (Value1 < xPos) {
                 if (!(blockl & BLOCKWERT_WAND)) {
                     xAcc = -3.0;
-                    BlickRichtung = LINKS;
+                    BlickRichtung = DirectionEnum::LINKS;
                 }
             }
 
@@ -62,7 +62,7 @@ void GegnerSmallWespe::DoKI() {
             if (Value1 > xPos) {
                 if (!(blockr & BLOCKWERT_WAND)) {
                     xAcc = 3.0;
-                    BlickRichtung = RECHTS;
+                    BlickRichtung = DirectionEnum::RECHTS;
                 }
             }
 
@@ -141,10 +141,10 @@ void GegnerSmallWespe::DoKI() {
             if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[p].xpos, Player[p].ypos,
                                 Player[p].CollideRect) == true) {
                 // Wegschieben(GegnerRect[GegnerArt], 0.0f);
-                if (xPos + 25 > Player[p].xpos + 35 && BlickRichtung == LINKS && xSpeed < -4.0f) {
+                if (xPos + 25 > Player[p].xpos + 35 && BlickRichtung == DirectionEnum::LINKS && xSpeed < -4.0f) {
                     xSpeed = 16.0f;
                     Player[p].DamagePlayer(8.0f);
-                } else if (xPos + 25 < Player[p].xpos + 35 && BlickRichtung == RECHTS && xSpeed > 4.0f) {
+                } else if (xPos + 25 < Player[p].xpos + 35 && BlickRichtung == DirectionEnum::RECHTS && xSpeed > 4.0f) {
                     xSpeed = -16.0f;
                     Player[p].DamagePlayer(8.0f);
                 }
@@ -170,7 +170,7 @@ void GegnerSmallWespe::DoKI() {
             PartikelSystem.PushPartikel(xPos + 2.0f + static_cast<float>(random(20)),
                                         yPos - 10.0f + static_cast<float>(random(10)), SMOKE2);
 
-        if (BlickRichtung == LINKS)
+        if (BlickRichtung == DirectionEnum::LINKS)
             xSpeed = -5.0f;
         else
             xSpeed = 5.0f;

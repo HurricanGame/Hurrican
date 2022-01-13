@@ -19,7 +19,7 @@ GegnerKrabblerOben::GegnerKrabblerOben(int Wert1, int Wert2, bool Light) {
     Value1 = Wert1;
     Value2 = Wert2;
     xSpeed = static_cast<float>(Value2);
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     ShotDelay = static_cast<float>(Value1);
     AnimSpeed = 0.5f;
     AnimStart = 0;
@@ -32,18 +32,18 @@ GegnerKrabblerOben::GegnerKrabblerOben(int Wert1, int Wert2, bool Light) {
 // "Bewegungs KI"
 
 void GegnerKrabblerOben::DoKI() {
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     SimpleAnimation();
 
     // An der Seitenwand umdrehen
     if (blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND) {
         xSpeed = static_cast<float>(Value2);
-        BlickRichtung = RECHTS;
+        BlickRichtung = DirectionEnum::RECHTS;
     }
 
     if (blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND) {
         xSpeed = static_cast<float>(-Value2);
-        BlickRichtung = LINKS;
+        BlickRichtung = DirectionEnum::LINKS;
     }
 
     // Schuss Delay verzögern

@@ -20,7 +20,7 @@ GegnerRoboRaupe::GegnerRoboRaupe(int Wert1, int Wert2, bool Light) {
     Destroyable = true;
     AnimEnde = 9;
     AnimSpeed = 1.0f;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 }
 
 // --------------------------------------------------------------------------------------
@@ -39,14 +39,14 @@ void GegnerRoboRaupe::DoKI() {
 
         if (AnimPhase == 5)  // Bewegen
         {
-            if (BlickRichtung == LINKS)
+            if (BlickRichtung == DirectionEnum::LINKS)
                 xPos -= 18.0f;
             else
                 xPos += 18.0f;
 
             // evtl schiessen wenn Spieler zu nahe
             if (PlayerAbstand(true) < 200 && random(2) == 0) {
-                if (BlickRichtung == RECHTS) {
+                if (BlickRichtung == DirectionEnum::RECHTS) {
                     Projectiles.PushProjectile(xPos + 31.0f, yPos + 10.0f, ARCSHOT);
 
                     WinkelUebergabe = 1.5f;
@@ -78,9 +78,9 @@ void GegnerRoboRaupe::DoKI() {
 
     // umdrehen ?
     if (blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND)
-        BlickRichtung = RECHTS;
+        BlickRichtung = DirectionEnum::RECHTS;
     if (blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND)
-        BlickRichtung = LINKS;
+        BlickRichtung = DirectionEnum::LINKS;
 
     // Testen, ob der Spieler die Raupe berührt hat
     TestDamagePlayers(Timer.sync(5.0f));

@@ -18,9 +18,9 @@ GegnerPiranha::GegnerPiranha(int Wert1, int Wert2, bool Light) {
     AnimEnde = 10;
     AnimSpeed = 0.75f;
     if (random(2) == 0)
-        BlickRichtung = LINKS;
+        BlickRichtung = DirectionEnum::LINKS;
     else
-        BlickRichtung = RECHTS;
+        BlickRichtung = DirectionEnum::RECHTS;
     xSpeed = -8.0;
     ySpeed = 0.0f;
     xAcc = 0.0f;
@@ -57,7 +57,7 @@ GegnerPiranha::GegnerPiranha(int Wert1, int Wert2, bool Light) {
 void GegnerPiranha::DoDraw() {
     // Piranha rendern
     //
-    bool mirror = (BlickRichtung != LINKS);
+    bool mirror = (BlickRichtung != DirectionEnum::LINKS);
 
     // Spieler angreifen?
     int off;
@@ -129,7 +129,7 @@ void GegnerPiranha::DoKI() {
             if (pAim->InLiquid == true &&                                 // Spieler im Wasser und
                 Value1 == 99 && (PlayerAbstand() <= 150 || Value2 == 1))  // in Sichtweite ?
             {
-                if (BlickRichtung == LINKS)  // Dann schneller schwimmen
+                if (BlickRichtung == DirectionEnum::LINKS)  // Dann schneller schwimmen
                     xSpeed = -14.0f;
                 else
                     xSpeed = 14.0f;
@@ -137,9 +137,9 @@ void GegnerPiranha::DoKI() {
                 // Piranha links oder rechts am Spieler vorbei ?
                 // Dann umdrehen und weiter verfolgen
                 if (Handlung == GEGNER::LAUFEN) {
-                    if ((BlickRichtung == LINKS && pAim->xpos > xPos + GegnerRect[GegnerArt].right - 20) ||
+                    if ((BlickRichtung == DirectionEnum::LINKS && pAim->xpos > xPos + GegnerRect[GegnerArt].right - 20) ||
 
-                        (BlickRichtung == RECHTS && pAim->xpos + pAim->CollideRect.right < xPos)) {
+                        (BlickRichtung == DirectionEnum::RECHTS && pAim->xpos + pAim->CollideRect.right < xPos)) {
                         xSpeed = 0;
                         Handlung = GEGNER::DREHEN;
                         AnimPhase = 10;
@@ -148,7 +148,7 @@ void GegnerPiranha::DoKI() {
                     }
                 }
             } else {
-                if (BlickRichtung == LINKS)
+                if (BlickRichtung == DirectionEnum::LINKS)
                     xSpeed = -static_cast<float>(random(10) + 4);
                 else
                     xSpeed = static_cast<float>(random(10) + 4);
@@ -163,12 +163,12 @@ void GegnerPiranha::DoKI() {
                 AnimStart = 0;
                 AnimPhase = 0;
 
-                if (BlickRichtung == LINKS)  // Ab jetzt in die andere Richtung schwimmen
+                if (BlickRichtung == DirectionEnum::LINKS)  // Ab jetzt in die andere Richtung schwimmen
                 {
-                    BlickRichtung = RECHTS;
+                    BlickRichtung = DirectionEnum::RECHTS;
                     xSpeed = 8.0f;
                 } else {
-                    BlickRichtung = LINKS;
+                    BlickRichtung = DirectionEnum::LINKS;
                     xSpeed = -8.0f;
                 }
             }

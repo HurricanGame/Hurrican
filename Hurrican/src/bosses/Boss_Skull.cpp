@@ -52,7 +52,7 @@ GegnerSkull::GegnerSkull(int Wert1, int Wert2, bool Light) {
 
 void GegnerSkull::DoKI() {
     Energy = 100000;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     // Animphase abhängig von Position zum Spieler setzen
     //

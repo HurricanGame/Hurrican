@@ -12,7 +12,7 @@
 
 GegnerRiesenSpinne::GegnerRiesenSpinne(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::NOTVISIBLE;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     Energy = 100000;
     LastEnergy = 100000;

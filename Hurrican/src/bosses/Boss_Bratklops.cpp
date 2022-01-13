@@ -23,7 +23,7 @@
 
 GegnerBratklops::GegnerBratklops(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::NOTVISIBLE;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     Energy = 8000;
     ChangeLight = Light;
     Destroyable = true;

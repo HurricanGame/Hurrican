@@ -33,7 +33,7 @@ GegnerLaFass::GegnerLaFass(int Wert1, int Wert2, bool Light) {
 
 void GegnerLaFass::DoKI() {
     SimpleAnimation();
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     switch (Handlung) {
         case GEGNER::LAUFEN: {

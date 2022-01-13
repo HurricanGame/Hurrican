@@ -543,9 +543,9 @@ loadfile:
             if (LoadObject.ObjectID == 0) {
                 // Anfängliche Blickrichtung auch aus Leveldatei lesen
                 if (LoadObject.Value1 == 0)                            
-                    Player[LoadObject.Value2].Blickrichtung = PlayerClass::RECHTS;
+                    Player[LoadObject.Value2].Blickrichtung = DirectionEnum::RECHTS;
                 else
-                    Player[LoadObject.Value2].Blickrichtung = PlayerClass::LINKS;
+                    Player[LoadObject.Value2].Blickrichtung = DirectionEnum::LINKS;
 
                 Player[LoadObject.Value2].xpos = static_cast<float>(LoadObject.XPos);
                 Player[LoadObject.Value2].ypos = static_cast<float>(LoadObject.YPos);

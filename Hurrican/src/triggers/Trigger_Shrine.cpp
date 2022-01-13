@@ -14,7 +14,7 @@
 
 GegnerShrine::GegnerShrine(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::LAUFEN;
-    BlickRichtung = RECHTS;
+    BlickRichtung = DirectionEnum::RECHTS;
     Energy = 100;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -31,7 +31,7 @@ GegnerShrine::GegnerShrine(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerShrine::DoKI() {
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     if (AnimCount > 0.0f)
         AnimCount -= Timer.sync(1.0f);

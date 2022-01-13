@@ -20,7 +20,7 @@ GegnerRiesenRaupe::GegnerRiesenRaupe(int Wert1, int Wert2, bool Light) {
     Destroyable = true;
     AnimEnde = 10;
     AnimSpeed = 1.5f;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     ShotCount = 0;
 }
 
@@ -69,7 +69,7 @@ void GegnerRiesenRaupe::DoKI() {
     }
 
     if (AnimPhase < 10) {
-        if (BlickRichtung == LINKS)
+        if (BlickRichtung == DirectionEnum::LINKS)
             xSpeed = -1.0f;
         else
             xSpeed = 1.0f;
@@ -88,12 +88,12 @@ void GegnerRiesenRaupe::DoKI() {
 
     // umdrehen ?
     if ((blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND) && xSpeed < 0.0f) {
-        BlickRichtung = RECHTS;
+        BlickRichtung = DirectionEnum::RECHTS;
         xSpeed *= -1;
     }
 
     if ((blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND) && xSpeed > 0.0f) {
-        BlickRichtung = LINKS;
+        BlickRichtung = DirectionEnum::LINKS;
         xSpeed *= -1;
     }
 

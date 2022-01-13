@@ -22,6 +22,27 @@
 #endif
 #include "DX8Sprite.hpp"
 
+// --------------------------------------------------------------------------------------
+// Defines
+// --------------------------------------------------------------------------------------
+
+enum class DirectionEnum {
+    RECHTS = 1,
+    LINKS  = -1
+};
+
+namespace Direction {
+
+constexpr auto asInt(DirectionEnum dir) noexcept {
+    return static_cast<typename std::underlying_type<DirectionEnum>::type>(dir);
+}
+
+constexpr auto invert(DirectionEnum dir) noexcept {
+    return static_cast<DirectionEnum>(static_cast<typename std::underlying_type<DirectionEnum>::type>(dir) * -1);
+}
+
+};
+
 class PlayerClass;
 
 // --------------------------------------------------------------------------------------
@@ -30,16 +51,9 @@ class PlayerClass;
 
 // DKS - TODO: Reduce size of member vars where appropriate
 class GegnerClass {
-  protected:
-    enum {
-        RECHTS = 1,
-        LINKS  = -1
-    };
-
-
   protected:            // protected wegen Ableitung
     int AnimStart;      // Erste Animationsphase
-    int BlickRichtung;  // Links oder Rechts :)
+    DirectionEnum BlickRichtung;  // Links oder Rechts :)
     bool ChangeLight;   // Licht des Levels annehmen ?
     float TurnCount;
 

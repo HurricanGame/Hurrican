@@ -34,7 +34,7 @@ GegnerStahlmuecke::GegnerStahlmuecke(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerStahlmuecke::DoDraw() {
-    bool mirrored = BlickRichtung == RECHTS;
+    bool mirrored = BlickRichtung == DirectionEnum::RECHTS;
 
     if (Handlung != GEGNER::FALLEN)
         pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
@@ -74,7 +74,7 @@ void GegnerStahlmuecke::DoKI() {
             if (Value1 < xPos) {
                 if (!(blockl & BLOCKWERT_WAND)) {
                     xAcc = -3.0;
-                    BlickRichtung = LINKS;
+                    BlickRichtung = DirectionEnum::LINKS;
                 }
             }
 
@@ -82,7 +82,7 @@ void GegnerStahlmuecke::DoKI() {
             if (Value1 > xPos) {
                 if (!(blockr & BLOCKWERT_WAND)) {
                     xAcc = 3.0;
-                    BlickRichtung = RECHTS;
+                    BlickRichtung = DirectionEnum::RECHTS;
                 }
             }
 
@@ -179,7 +179,7 @@ void GegnerStahlmuecke::DoKI() {
             PartikelSystem.PushPartikel(xPos + 2.0f + static_cast<float>(random(20)),
                                         yPos - 10.0f + static_cast<float>(random(10)), SMOKE2);
 
-        if (BlickRichtung == LINKS)
+        if (BlickRichtung == DirectionEnum::LINKS)
             xSpeed = -5.0f;
         else
             xSpeed = 5.0f;

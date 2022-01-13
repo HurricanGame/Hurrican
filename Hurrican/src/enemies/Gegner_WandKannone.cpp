@@ -34,9 +34,9 @@ void GegnerWandKannone::DoKI() {
     // Richtung setzen
     //
     if (Value2 == 0)
-        BlickRichtung = LINKS;
+        BlickRichtung = DirectionEnum::LINKS;
     else
-        BlickRichtung = RECHTS;
+        BlickRichtung = DirectionEnum::RECHTS;
 
     // Animieren
     if (AnimEnde > 0)  // Soll überhaupt anmiert werden ?
@@ -74,7 +74,7 @@ void GegnerWandKannone::DoKI() {
                 //
                 if (PlayerAbstand() < 600) {
                     SoundManager.PlayWave(100, 128, 22050, SOUND::LASERSHOT);
-                    if (BlickRichtung == LINKS) {
+                    if (BlickRichtung == DirectionEnum::LINKS) {
                         Projectiles.PushProjectile(xPos - 18.0f, yPos + 15.0f, WALKER_LASER);
                         PartikelSystem.PushPartikel(xPos - 24.0f, yPos - 10.0f, LASERFLAME);
 

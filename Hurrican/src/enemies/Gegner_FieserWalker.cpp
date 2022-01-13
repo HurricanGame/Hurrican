@@ -44,7 +44,8 @@ void GegnerFieserWalker::DoKI() {
             // nahe genug zum schiessen?
             //
             if (ShotDelay <= 0.0f && AnimPhase == 3 && PlayerAbstand() < 400 && PlayerAbstandVert() < 150 &&
-                ((BlickRichtung == RECHTS && xPos < pAim->xpos) || (BlickRichtung == LINKS && xPos > pAim->xpos))) {
+                ((BlickRichtung == DirectionEnum::RECHTS && xPos < pAim->xpos) ||
+                (BlickRichtung == DirectionEnum::LINKS && xPos > pAim->xpos))) {
                 ShotDelay = 15.0f;
                 Handlung = GEGNER::STEHEN;
                 xSpeed = 0.0f;
@@ -65,13 +66,13 @@ void GegnerFieserWalker::DoKI() {
             if (ShotDelay < 12.0f) {
                 Handlung = GEGNER::LAUFEN;
                 AnimEnde = 14;
-                xSpeed = 5.0f * BlickRichtung;
+                xSpeed = 5.0f * Direction::asInt(BlickRichtung);
 
                 SoundManager.PlayWave(100, 128, 10000 + random(2000), SOUND::LASERSHOT);
 
-                PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(BlickRichtung * 40),
+                PartikelSystem.PushPartikel(xPos + 10.0f + static_cast<float>(Direction::asInt(BlickRichtung) * 40),
                                             yPos + 6.0f, LASERFLAME);
-                Projectiles.PushProjectile(xPos + 26.0f + static_cast<float>(BlickRichtung * 40),
+                Projectiles.PushProjectile(xPos + 26.0f + static_cast<float>(Direction::asInt(BlickRichtung) * 40),
                                            yPos + 23.0f, SUCHSCHUSS);
             }
 

@@ -36,7 +36,7 @@ GegnerReitFlugsack::GegnerReitFlugsack(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerReitFlugsack::DoDraw() {
-    bool mirror = BlickRichtung != LINKS;
+    bool mirror = BlickRichtung != DirectionEnum::LINKS;
 
     pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
                                            yPos - TileEngine.YOffset, AnimPhase, 0xFFFFFFFF,
@@ -65,9 +65,9 @@ void GegnerReitFlugsack::DoKI() {
         case GEGNER::LAUFEN:  // Normal fliegen und dabei ab und zu schiessen
         {
             if (pAim->xpos + 45 <= xPos + 40)
-                BlickRichtung = LINKS;
+                BlickRichtung = DirectionEnum::LINKS;
             else
-                BlickRichtung = RECHTS;
+                BlickRichtung = DirectionEnum::RECHTS;
 
             // umherfliegen
             if (ySpeed > 6.0f)
@@ -99,7 +99,7 @@ void GegnerReitFlugsack::DoKI() {
             if (SmokeCount < 0.0f) {
                 SmokeCount += 0.1f;
 
-                if (BlickRichtung == LINKS)
+                if (BlickRichtung == DirectionEnum::LINKS)
                     PartikelSystem.PushPartikel(xPos + 66.0f, yPos + 50.0f, FLUGSACKSMOKE2);
                 else
                     PartikelSystem.PushPartikel(xPos, yPos + 50.0f, FLUGSACKSMOKE);

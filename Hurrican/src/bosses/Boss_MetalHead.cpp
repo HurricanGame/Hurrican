@@ -18,7 +18,7 @@
 
 GegnerMetalHead::GegnerMetalHead(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::NOTVISIBLE;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     Energy = 4000;
     ChangeLight = Light;
     Destroyable = false;

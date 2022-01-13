@@ -16,7 +16,7 @@
 
 GegnerLift::GegnerLift(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::STEHEN;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     Energy = 100;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -32,7 +32,7 @@ GegnerLift::GegnerLift(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerLift::DoKI() {
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     // Animieren
     if (AnimEnde > 0)  // Soll überhaupt animiert werden ?

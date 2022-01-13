@@ -15,7 +15,7 @@
 
 GegnerSurfBrett::GegnerSurfBrett(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::STEHEN;
-    BlickRichtung = RECHTS;
+    BlickRichtung = DirectionEnum::RECHTS;
     Energy = 100;
     Value1 = Wert1;
     Value2 = Wert2;
@@ -32,7 +32,7 @@ GegnerSurfBrett::GegnerSurfBrett(int Wert1, int Wert2, bool Light) {
 void GegnerSurfBrett::DoKI() {
     /*
     SimpleAnimation();
-    BlickRichtung	= LINKS;
+    BlickRichtung	= DirectionEnum::LINKS;
 
     // Testen, ob der Spieler den Sack berührt hat
     //

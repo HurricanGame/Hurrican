@@ -38,7 +38,7 @@ void GegnerPflanze::DoKI() {
 
         if (AnimPhase == 14)  // Schuss abgeben
         {
-            if (BlickRichtung == RECHTS)
+            if (BlickRichtung == DirectionEnum::RECHTS)
                 Projectiles.PushProjectile(xPos + 84.0f, yPos + 16.0f, PFLANZESHOT, pAim);
             else
                 Projectiles.PushProjectile(xPos + 12.0f, yPos + 16.0f, PFLANZESHOT, pAim);
@@ -69,9 +69,9 @@ void GegnerPflanze::DoKI() {
     // In Richtung Spieler kucken
     //
     if (pAim->xpos + 35 < xPos + 55)
-        BlickRichtung = LINKS;
+        BlickRichtung = DirectionEnum::LINKS;
     else
-        BlickRichtung = RECHTS;
+        BlickRichtung = DirectionEnum::RECHTS;
 #if 0
     switch (Handlung) {
         // Nur rumwackeln

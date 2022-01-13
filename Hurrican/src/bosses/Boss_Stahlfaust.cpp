@@ -14,7 +14,7 @@
 
 GegnerStahlfaust::GegnerStahlfaust(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::NOTVISIBLE;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     Energy = 4000;
     Value1 = Wert1;
     Value2 = Wert2;

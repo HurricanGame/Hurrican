@@ -126,12 +126,6 @@ enum {
 // --------------------------------------------------------------------------------------
 
 class PlayerClass {
-  public:
-    enum {
-        RECHTS = 1,
-        LINKS  = -1
-    };
-
   private:
     uint32_t bl, br, bo, bu;  // Blockwerte in diesem Frame, damit wir nicht jedesmal
     // die Funktion aufrufen müssen, sondern nur EINMAL pro Frame
@@ -199,7 +193,7 @@ class PlayerClass {
     float BlitzCount;           // Zähler für die Blitzanimation
     int BlitzAnim;              // Aktuelle Blitzanimation
     PlayerActionEnum Handlung;  // Was macht der Spieler gerade ?
-    int Blickrichtung;          // Wohin kuckt der Spieler ?
+    DirectionEnum Blickrichtung; // Wohin kuckt der Spieler ?
     float Energy;               // Energie
     float Armour;               // Rüstung
     float Shield;               // Noch Schild ?

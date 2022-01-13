@@ -25,7 +25,7 @@ GegnerWandKrabbe::GegnerWandKrabbe(int Wert1, int Wert2, bool Light) {
     rot = 0.0f;
     ySpeed = 3.0f;
 
-    lastPlayerAction = LINKS;
+    lastPlayerAction = DirectionEnum::LINKS;
 }
 
 // --------------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ GegnerWandKrabbe::GegnerWandKrabbe(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerWandKrabbe::DoDraw() {
-    bool mirrored = (BlickRichtung != RECHTS);
+    bool mirrored = (BlickRichtung != DirectionEnum::RECHTS);
 
     // gerade im Flug? Dann rotiert rendern
     if (Handlung == GEGNER::DREHEN || Handlung == GEGNER::FALLEN || Handlung == GEGNER::EXPLODIEREN)
@@ -61,9 +61,9 @@ void GegnerWandKrabbe::DoKI() {
     blockr = TileEngine.BlockRechts(xPos, yPos, xPosOld, yPosOld, GegnerRect[GegnerArt], true);
 
     if (blockl & BLOCKWERT_WAND)
-        BlickRichtung = RECHTS;
+        BlickRichtung = DirectionEnum::RECHTS;
     else
-        BlickRichtung = LINKS;
+        BlickRichtung = DirectionEnum::LINKS;
 
     // an Wänden oben und unten umdrehen
     if (((blocko & BLOCKWERT_WAND || blocko & BLOCKWERT_GEGNERWAND) && ySpeed < 0.0f) ||
@@ -153,21 +153,21 @@ void GegnerWandKrabbe::DoKI() {
             yPos = pAim->ypos + Value2;
 
             if (xPos + 15 < pAim->xpos + 35)
-                BlickRichtung = LINKS;
+                BlickRichtung = DirectionEnum::LINKS;
             else
-                BlickRichtung = RECHTS;
+                BlickRichtung = DirectionEnum::RECHTS;
 
             // Spieler schüttelt Gegner ab? (schnelles links/rechts drücken)
             // nur, wenn nicht beide gleichzeitig gedrückt werden
             //
             if (!(pAim->Aktion[AKTION_LINKS] == true && pAim->Aktion[AKTION_RECHTS] == true)) {
-                if (lastPlayerAction == LINKS && pAim->Aktion[AKTION_RECHTS]) {
-                    lastPlayerAction = RECHTS;
+                if (lastPlayerAction == DirectionEnum::LINKS && pAim->Aktion[AKTION_RECHTS]) {
+                    lastPlayerAction = DirectionEnum::RECHTS;
                     Value2 += random(4) + 2;
                 }
 
-                if (lastPlayerAction == RECHTS && pAim->Aktion[AKTION_LINKS]) {
-                    lastPlayerAction = LINKS;
+                if (lastPlayerAction == DirectionEnum::RECHTS && pAim->Aktion[AKTION_LINKS]) {
+                    lastPlayerAction = DirectionEnum::LINKS;
                     Value2 += random(4) + 2;
                 }
 
@@ -233,7 +233,7 @@ void GegnerWandKrabbe::DoKI() {
         ySpeed = -15.0f;
         yAcc = 3.0f;
 
-        if (BlickRichtung == RECHTS)
+        if (BlickRichtung == DirectionEnum::RECHTS)
             xSpeed = static_cast<float>(random(8) + 4);
         else
             xSpeed = -static_cast<float>(random(8) + 4);

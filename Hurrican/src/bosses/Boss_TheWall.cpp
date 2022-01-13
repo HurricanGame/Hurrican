@@ -14,7 +14,7 @@
 GegnerTheWall::GegnerTheWall(int Wert1, int Wert2, bool Light) {
     Active = true;
     Handlung = GEGNER::INIT;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     Energy = 4000;
     OldEnergy = Energy;
     ChangeLight = Light;

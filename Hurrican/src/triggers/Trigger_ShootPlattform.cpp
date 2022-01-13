@@ -17,7 +17,7 @@
 
 GegnerShootPlattform::GegnerShootPlattform(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::STEHEN;
-    BlickRichtung = RECHTS;
+    BlickRichtung = DirectionEnum::RECHTS;
     Energy = 100;
     Value1 = Wert2;  // yPos der Plattform
     Value2 = 0;
@@ -60,7 +60,7 @@ void GegnerShootPlattform::DoDraw() {
 // --------------------------------------------------------------------------------------
 
 void GegnerShootPlattform::DoKI() {
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     // Testen, ob der Spieler auf der Plattform steht
     //

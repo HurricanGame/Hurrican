@@ -32,7 +32,7 @@ GegnerLavamann::GegnerLavamann(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerLavamann::DoDraw() {
-    bool mirror =  (BlickRichtung == LINKS);
+    bool mirror =  (BlickRichtung == DirectionEnum::LINKS);
 
     // gegner leuchtend rendern
     //
@@ -71,10 +71,10 @@ void GegnerLavamann::DoKI() {
     //
     if (DamageTaken > 0) {
         if (pAim->xpos < xPos) {
-            BlickRichtung = LINKS;
+            BlickRichtung = DirectionEnum::LINKS;
             xSpeed = -24.0f;
         } else {
-            BlickRichtung = RECHTS;
+            BlickRichtung = DirectionEnum::RECHTS;
             xSpeed = 24.0f;
         }
     }
@@ -98,15 +98,15 @@ void GegnerLavamann::DoKI() {
             }
 
             // Nach links bzw rechts auf Kollision prüfen und ggf umdrehen
-            if (BlickRichtung == LINKS)
+            if (BlickRichtung == DirectionEnum::LINKS)
                 if (blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND) {
-                    BlickRichtung = RECHTS;
+                    BlickRichtung = DirectionEnum::RECHTS;
                     xSpeed *= -1.0f;
                 }
 
-            if (BlickRichtung == RECHTS)
+            if (BlickRichtung == DirectionEnum::RECHTS)
                 if (blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND) {
-                    BlickRichtung = LINKS;
+                    BlickRichtung = DirectionEnum::LINKS;
                     xSpeed *= -1.0f;
                 }
         }

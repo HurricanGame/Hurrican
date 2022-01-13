@@ -15,7 +15,7 @@ GegnerSpiderBomb::GegnerSpiderBomb(int Wert1, int Wert2, bool Light) {
     AnimStart = 0;
     AnimEnde = 5;
     AnimSpeed = 0.75f;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     xAcc = 0.0f;
     Energy = 30;
     Value1 = Wert1;
@@ -47,17 +47,17 @@ void GegnerSpiderBomb::DoKI() {
         SimpleAnimation();
 
     // Nach links bzw rechts auf Kollision prüfen und dann ggf umkehren
-    if (BlickRichtung == LINKS)
+    if (BlickRichtung == DirectionEnum::LINKS)
         if (blockl & BLOCKWERT_WAND)  // || blockl & BLOCKWERT_GEGNERWAND)
         {
-            BlickRichtung = RECHTS;
+            BlickRichtung = DirectionEnum::RECHTS;
             xSpeed = -xSpeed;
         }
 
-    if (BlickRichtung == RECHTS)
+    if (BlickRichtung == DirectionEnum::RECHTS)
         if (blockr & BLOCKWERT_WAND)  // || blockr & BLOCKWERT_GEGNERWAND)
         {
-            BlickRichtung = LINKS;
+            BlickRichtung = DirectionEnum::LINKS;
             xSpeed = -xSpeed;
         }
 
@@ -83,10 +83,10 @@ void GegnerSpiderBomb::DoKI() {
             // Spieler links von der Bombe ?
             if (pAim->xpos + 35 < xPos + 25) {
                 xAcc = -4.0f;
-                BlickRichtung = LINKS;
+                BlickRichtung = DirectionEnum::LINKS;
             } else {
                 xAcc = 4.0f;
-                BlickRichtung = RECHTS;
+                BlickRichtung = DirectionEnum::RECHTS;
             }
 
             // Speed begrenzen

@@ -35,7 +35,7 @@ void GegnerFetteSpinne::DoDraw() {
     // normal oder auf dem Kopf?
     bool v = (WalkState != 0);
 
-    bool h = (BlickRichtung == RECHTS);
+    bool h = (BlickRichtung == DirectionEnum::RECHTS);
 
     pGegnerGrafix[GegnerArt]->itsRect = pGegnerGrafix[GegnerArt]->itsPreCalcedRects[AnimPhase];
     pGegnerGrafix[GegnerArt]->RenderMirroredSprite(xPos - TileEngine.XOffset,
@@ -65,9 +65,9 @@ void GegnerFetteSpinne::DoKI() {
     //
     if (DamageTaken > 0.0f) {
         if (pAim->xpos + 40.0f < xPos + 70.0f)
-            BlickRichtung = -1;
+            BlickRichtung = DirectionEnum::LINKS;
         else
-            BlickRichtung = 1;
+            BlickRichtung = DirectionEnum::RECHTS;
     }
 
     // Je nach Handlung richtig verhalten
@@ -75,7 +75,7 @@ void GegnerFetteSpinne::DoKI() {
     switch (Handlung) {
         case GEGNER::LAUFEN: {
             // Speed setzen
-            xAcc = 5.0f * BlickRichtung;
+            xAcc = 5.0f * Direction::asInt(BlickRichtung);
 
             xSpeed = std::clamp(xSpeed, -12.0f, 12.0f);
 
@@ -83,13 +83,14 @@ void GegnerFetteSpinne::DoKI() {
             //
             if ((xSpeed < 0.0f && (blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND)) ||
                 (xSpeed > 0.0f && (blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND)))
-                BlickRichtung *= -1;
+                BlickRichtung = Direction::invert(BlickRichtung);
 
             // Am Boden? Dann checken : Spieler schiesst auf die Spinne?
             if (WalkState == 0)
-                if (((pAim->xpos + 35.0f < xPos + 50.0f && pAim->Blickrichtung == RECHTS && BlickRichtung == LINKS) ||
-
-                     (pAim->xpos + 35.0f >= xPos + 50.0f && pAim->Blickrichtung == LINKS && BlickRichtung == RECHTS)) &&
+                if (((pAim->xpos + 35.0f < xPos + 50.0f &&
+                    pAim->Blickrichtung == DirectionEnum::RECHTS && BlickRichtung == DirectionEnum::LINKS) ||
+                    (pAim->xpos + 35.0f >= xPos + 50.0f &&
+                    pAim->Blickrichtung == DirectionEnum::LINKS && BlickRichtung == DirectionEnum::RECHTS)) &&
                     pAim->Aktion[AKTION_SHOOT]) {
                     // Decke über der Spinne suchen
                     bool block = false;
@@ -139,9 +140,9 @@ void GegnerFetteSpinne::DoKI() {
 
             // Zu weit vom Spieler weg? Dann umdrehen
             if (xPos + 50.0f < pAim->xpos + 35.0f - 200.0f)
-                BlickRichtung = RECHTS;
+                BlickRichtung = DirectionEnum::RECHTS;
             if (xPos + 50.0f > pAim->xpos + 35.0f + 200.0f)
-                BlickRichtung = LINKS;
+                BlickRichtung = DirectionEnum::LINKS;
 
         } break;
 

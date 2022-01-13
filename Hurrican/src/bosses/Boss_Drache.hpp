@@ -22,7 +22,7 @@ class GegnerDrache : public GegnerClass {
     bool Growl;          // Heute schon gegröhlt? =)
     int Attack;          // Welche "Unterhandlung"
     int mirrorOffset;    // Zum Zeichnen wenn gespiegelt
-    int Position;
+    DirectionEnum Position;
     float HeadX, HeadY, HeadXSpeed, HeadYSpeed;
     int ShotCount;
     float ShotDelay;

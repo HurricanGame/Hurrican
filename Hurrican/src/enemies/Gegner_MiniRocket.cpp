@@ -65,7 +65,7 @@ void GegnerMiniRocket::DoDraw() {
 // --------------------------------------------------------------------------------------
 
 void GegnerMiniRocket::DoKI() {
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     // Am Anfang erst etwas senkrecht hoch fliegen
     if (AnimCount > 0.0f)

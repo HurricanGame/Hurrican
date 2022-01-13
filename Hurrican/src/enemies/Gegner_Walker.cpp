@@ -38,18 +38,18 @@ void GegnerWalker::DoKI() {
     SimpleAnimation();
 
     // Nach links bzw rechts auf Kollision prüfen und dann ggf umkehren
-    if (BlickRichtung == LINKS)
+    if (BlickRichtung == DirectionEnum::LINKS)
         if (blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND) {
-            BlickRichtung = RECHTS;
+            BlickRichtung = DirectionEnum::RECHTS;
             xSpeed = 10.0f;
 
             if (Handlung == GEGNER::WATSCHELN)
                 Energy = 0;
         }
 
-    if (BlickRichtung == RECHTS)
+    if (BlickRichtung == DirectionEnum::RECHTS)
         if (blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND) {
-            BlickRichtung = LINKS;
+            BlickRichtung = DirectionEnum::LINKS;
             xSpeed = -10.0f;
 
             if (Handlung == GEGNER::WATSCHELN)
@@ -62,10 +62,10 @@ void GegnerWalker::DoKI() {
     //
     if (DamageTaken > 0 && Handlung != GEGNER::WATSCHELN && Handlung != GEGNER::SPRINGEN) {
         if (pAim->xpos < xPos) {
-            BlickRichtung = LINKS;
+            BlickRichtung = DirectionEnum::LINKS;
             xSpeed = -10.0f;
         } else {
-            BlickRichtung = RECHTS;
+            BlickRichtung = DirectionEnum::RECHTS;
             xSpeed = 10.0f;
         }
     }
@@ -86,8 +86,8 @@ void GegnerWalker::DoKI() {
             }
 
             // Bei bestimmten Mindestabstand schiessen lassen
-            if (PlayerAbstand() <= 220 && ((BlickRichtung == LINKS && pAim->xpos + 45 <= xPos) ||
-                                           (BlickRichtung == RECHTS && pAim->xpos - 45 >= xPos))) {
+            if (PlayerAbstand() <= 220 && ((BlickRichtung == DirectionEnum::LINKS && pAim->xpos + 45 <= xPos) ||
+                                           (BlickRichtung == DirectionEnum::RECHTS && pAim->xpos - 45 >= xPos))) {
                 ShotDelay -= Timer.sync(1.0f);
 
                 if (ShotDelay <= 0.0f) {
@@ -111,14 +111,14 @@ void GegnerWalker::DoKI() {
                 AnimStart = 0;
                 AnimPhase = 0;
                 AnimEnde = 11;
-                xSpeed = static_cast<float>(10 * BlickRichtung);
+                xSpeed = static_cast<float>(10 * Direction::asInt(BlickRichtung));
             }
 
             // Schuss abgeben
             if (AnimPhase == 17 && AnimCount == 0.0f) {
                 SoundManager.PlayWave(100, 128, 18000 + random(2000), SOUND::LASERSHOT);
 
-                if (BlickRichtung == LINKS)
+                if (BlickRichtung == DirectionEnum::LINKS)
                     Projectiles.PushProjectile(xPos - 18.0f, yPos + 23.0f, WALKER_LASER);
                 else
                     Projectiles.PushProjectile(xPos + 30.0f, yPos + 23.0f, WALKER_LASER2);
@@ -159,7 +159,7 @@ void GegnerWalker::DoKI() {
                 Handlung = GEGNER::WATSCHELN;
                 yAcc = 0.0f;
                 ySpeed = 0.0f;
-                xSpeed = static_cast<float>(25 * BlickRichtung);
+                xSpeed = static_cast<float>(25 * Direction::asInt(BlickRichtung));
             }
         } break;
 

@@ -67,7 +67,7 @@ void GegnerLavaKrabbe::DoDraw() {
     //
     else {
         int a = static_cast<int>(255 - DamageTaken);
-        bool mirrored = (BlickRichtung == RECHTS);
+        bool mirrored = (BlickRichtung == DirectionEnum::RECHTS);
 
         D3DCOLOR Color = D3DCOLOR_RGBA(255, a, a, 255);
         pGegnerGrafix[GegnerArt]->RenderSprite(xPos - TileEngine.XOffset,
@@ -105,7 +105,7 @@ void GegnerLavaKrabbe::DoKI() {
                     AnimPhase = 0;
                     AnimCount = 0.0f;
                     Handlung = GEGNER::DREHEN2;
-                    BlickRichtung *= -1;
+                    BlickRichtung = Direction::invert(BlickRichtung);
                 }
             }
         } break;
@@ -128,7 +128,7 @@ void GegnerLavaKrabbe::DoKI() {
 
         // Krabbe ist gelandet und Krabbelt auf den Spieler zu
         case GEGNER::STEHEN: {
-            xPos += Timer.sync(5.0f * static_cast<float>(BlickRichtung * -1));
+            xPos += Timer.sync(5.0f * static_cast<float>(Direction::asInt(Direction::invert(BlickRichtung))));
 
             AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
@@ -140,8 +140,8 @@ void GegnerLavaKrabbe::DoKI() {
             }
 
             // Rumdrehen ?
-            if ((BlickRichtung == LINKS && xPos + 35 > pAim->xpos + 35) ||
-                (BlickRichtung == RECHTS && xPos + 35 < pAim->xpos + 35)) {
+            if ((BlickRichtung == DirectionEnum::LINKS && xPos + 35 > pAim->xpos + 35) ||
+                (BlickRichtung == DirectionEnum::RECHTS && xPos + 35 < pAim->xpos + 35)) {
                 Handlung = GEGNER::DREHEN;
                 AnimCount = 0.0f;
                 AnimPhase = 4;
@@ -173,9 +173,9 @@ void GegnerLavaKrabbe::DoKI() {
                 Destroyable = true;
 
                 if (xPos + 35 < pAim->xpos + 35)
-                    BlickRichtung = LINKS;
+                    BlickRichtung = DirectionEnum::LINKS;
                 if (xPos + 35 > pAim->xpos + 35)
-                    BlickRichtung = RECHTS;
+                    BlickRichtung = DirectionEnum::RECHTS;
             }
         } break;
 

@@ -13,7 +13,7 @@
 GegnerSkeletor::GegnerSkeletor(int Wert1, int Wert2, bool Light) {
     AnimPhase = 10;
     Handlung = GEGNER::NOTVISIBLE;
-    BlickRichtung = RECHTS;
+    BlickRichtung = DirectionEnum::RECHTS;
     Value1 = Wert1;
     Value2 = Wert2;
     Energy = 7000;
@@ -83,7 +83,7 @@ void GegnerSkeletor::DoDraw() {
 
     int Wert = 255 - (static_cast<int>(DamageTaken));
     D3DCOLOR Color = D3DCOLOR_RGBA(255, Wert, Wert, 255);
-    bool mirror = BlickRichtung == RECHTS;
+    bool mirror = BlickRichtung == DirectionEnum::RECHTS;
 
     if (AnimPhase >= 10)
         yoff = 10.0f;
@@ -127,7 +127,7 @@ void GegnerSkeletor::DoDraw() {
 
         Flamme.itsRect = Flamme.itsPreCalcedRects[ShotCount % 2];
 
-        if (BlickRichtung == RECHTS)
+        if (BlickRichtung == DirectionEnum::RECHTS)
             Flamme.RenderSpriteRotatedOffset(xPos - TileEngine.XOffset + static_cast<float>(foff),
                                              yPos - TileEngine.YOffset + 60.0f, 90 - GunWinkel, -50, 0,
                                              0xFFFFFFFF, !mirror);
@@ -273,11 +273,11 @@ void GegnerSkeletor::DoKI() {
 
             if (xPos + 60 < Value1 + 320) {
                 int a = static_cast<int>(xPos - TileEngine.XOffset) / 56;
-                BlickRichtung = RECHTS;
+                BlickRichtung = DirectionEnum::RECHTS;
                 AnimPhase = 10 + a;
             } else {
                 int a = static_cast<int>(xPos - TileEngine.XOffset - 320.0f + 60.0f) / 56;
-                BlickRichtung = LINKS;
+                BlickRichtung = DirectionEnum::LINKS;
                 AnimPhase = 15 - a;
             }
 
@@ -302,11 +302,11 @@ void GegnerSkeletor::DoKI() {
 
             if (xPos + 60 < Value1 + 320) {
                 int a = static_cast<int>(xPos - TileEngine.XOffset) / 56;
-                BlickRichtung = RECHTS;
+                BlickRichtung = DirectionEnum::RECHTS;
                 AnimPhase = 10 + a;
             } else {
                 int a = static_cast<int>(xPos - TileEngine.XOffset - 320.0f + 60.0f) / 56;
-                BlickRichtung = LINKS;
+                BlickRichtung = DirectionEnum::LINKS;
                 AnimPhase = 15 - a;
             }
 
@@ -365,7 +365,7 @@ void GegnerSkeletor::DoKI() {
                     // Granate abfeuern
                     int off = 0;
 
-                    if (BlickRichtung == LINKS)
+                    if (BlickRichtung == DirectionEnum::LINKS)
                         off = -95;
 
                     AnimCount = 1.5f;
@@ -375,13 +375,13 @@ void GegnerSkeletor::DoKI() {
 
                     WinkelUebergabe = 40.0f - static_cast<float>(AnimPhase) * 4 - random(8);
 
-                    if (BlickRichtung == LINKS)
+                    if (BlickRichtung == DirectionEnum::LINKS)
                         WinkelUebergabe += 1;
 
                     if (WinkelUebergabe < 0.0f)
                         WinkelUebergabe = 0.0f;
 
-                    WinkelUebergabe *= BlickRichtung;
+                    WinkelUebergabe *= Direction::asInt(BlickRichtung);
 
                     Projectiles.PushProjectile(xPos + 100.0f + off, yPos + 80.0f, SKELETORGRANATE);
 
@@ -422,7 +422,7 @@ void GegnerSkeletor::DoKI() {
 
                 // Hülse
                 int off = 70;
-                if (BlickRichtung == LINKS)
+                if (BlickRichtung == DirectionEnum::LINKS)
                     off = 30;
 
                 PartikelSystem.PushPartikel(xPos + static_cast<float>(off), yPos + 75.0f, BULLET_SKELETOR);
@@ -433,12 +433,12 @@ void GegnerSkeletor::DoKI() {
                 // Schuss
                 WinkelUebergabe = GunWinkel + random(4) - 2;
 
-                if (BlickRichtung == LINKS)
+                if (BlickRichtung == DirectionEnum::LINKS)
                     WinkelUebergabe += 180;
 
                 off = 100;
 
-                if (BlickRichtung == LINKS)
+                if (BlickRichtung == DirectionEnum::LINKS)
                     off = 20;
 
                 Projectiles.PushProjectile(xPos + static_cast<float>(off), yPos + 75.0f, SKELETOR_SHOT);
@@ -464,7 +464,7 @@ void GegnerSkeletor::DoKI() {
 
         case GEGNER::EINFLIEGEN:  // Kopf erhebt sich aus dem Schrotthaufen
         {
-            BlickRichtung = RECHTS;
+            BlickRichtung = DirectionEnum::RECHTS;
 
             if (yPos > Value2 + 250) {
                 yPos = static_cast<float>(Value2) + 250;

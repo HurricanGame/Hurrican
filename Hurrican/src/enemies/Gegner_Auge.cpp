@@ -49,7 +49,7 @@ void GegnerAuge::DoKI() {
 
     if (smokedelay < 0.0f) {
         smokedelay = 0.1f;
-        if (BlickRichtung == RECHTS)
+        if (BlickRichtung == DirectionEnum::RECHTS)
             PartikelSystem.PushPartikel(xPos + 8.0f, yPos + 18.0f, SMOKE2);
         else
             PartikelSystem.PushPartikel(xPos + 42.0f, yPos + 18.0f, SMOKE2);
@@ -67,7 +67,7 @@ void GegnerAuge::DoKI() {
                 {
                     AnimCount = 0.0f;
                     Handlung = GEGNER::DREHEN2;
-                    BlickRichtung *= -1;
+                    BlickRichtung = Direction::invert(BlickRichtung);
                 }
             }
         } else if (Handlung == GEGNER::DREHEN2) {

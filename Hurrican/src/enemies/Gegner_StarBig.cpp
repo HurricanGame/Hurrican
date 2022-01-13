@@ -42,9 +42,9 @@ GegnerStarBig::GegnerStarBig(int Wert1, int Wert2, bool Light) {
 
 void GegnerStarBig::DoKI() {
     if (xSpeed > 0.0f)
-        BlickRichtung = RECHTS;
+        BlickRichtung = DirectionEnum::RECHTS;
     else
-        BlickRichtung = LINKS;
+        BlickRichtung = DirectionEnum::LINKS;
 
     // Animieren
     AnimCount += SpeedFaktor;   // Animationscounter weiterzählen

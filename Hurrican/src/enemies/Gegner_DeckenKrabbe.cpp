@@ -28,7 +28,7 @@ GegnerDeckenKrabbe::GegnerDeckenKrabbe(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerDeckenKrabbe::DoDraw() {
-    bool mirror = (BlickRichtung != LINKS);
+    bool mirror = (BlickRichtung != DirectionEnum::LINKS);
 
     pGegnerGrafix[GegnerArt]->RenderSpriteRotated(xPos - TileEngine.XOffset,
                                                   yPos - TileEngine.YOffset, zRot, AnimPhase,
@@ -115,7 +115,7 @@ void GegnerDeckenKrabbe::DoKI() {
                     AnimPhase = 0;
                     AnimCount = 0.0f;
                     Handlung = GEGNER::DREHEN2;
-                    BlickRichtung *= -1;
+                    BlickRichtung = Direction::invert(BlickRichtung);
                 }
             }
         } break;
@@ -143,7 +143,7 @@ void GegnerDeckenKrabbe::DoKI() {
             //
             if (Handlung != GEGNER::STEHEN && Handlung != GEGNER::FALLEN) {
                 // schräge links hochlaufen
-                if (BlickRichtung == RECHTS) {
+                if (BlickRichtung == DirectionEnum::RECHTS) {
                     if (blockl & BLOCKWERT_SCHRAEGE_L) {
                         if (zRot < 45.0f) {
                             zRot += Timer.sync(20.0f);
@@ -157,7 +157,7 @@ void GegnerDeckenKrabbe::DoKI() {
                     }
                 }
 
-                if (BlickRichtung == LINKS) {
+                if (BlickRichtung == DirectionEnum::LINKS) {
                     if (blockr & BLOCKWERT_SCHRAEGE_R) {
                         if (zRot < 45.0f) {
                             zRot += Timer.sync(20.0f);
@@ -172,7 +172,7 @@ void GegnerDeckenKrabbe::DoKI() {
                 }
             }
 
-            xPos += Timer.sync(7.0f * static_cast<float>(BlickRichtung * -1));
+            xPos += Timer.sync(7.0f * static_cast<float>(Direction::asInt(Direction::invert(BlickRichtung))));
 
             AnimCount += SpeedFaktor;   // Animationscounter weiterzählen
             if (AnimCount > AnimSpeed)  // Grenze überschritten ?
@@ -184,8 +184,8 @@ void GegnerDeckenKrabbe::DoKI() {
             }
 
             // Rumdrehen ?
-            if ((BlickRichtung == LINKS && xPos + 35.0f > pAim->xpos + 35.0f) ||
-                (BlickRichtung == RECHTS && xPos + 35.0f < pAim->xpos + 35.0f)) {
+            if ((BlickRichtung == DirectionEnum::LINKS && xPos + 35.0f > pAim->xpos + 35.0f) ||
+                (BlickRichtung == DirectionEnum::RECHTS && xPos + 35.0f < pAim->xpos + 35.0f)) {
                 Handlung = GEGNER::DREHEN;
                 AnimCount = 0.0f;
                 AnimPhase = 4;
@@ -215,9 +215,9 @@ void GegnerDeckenKrabbe::DoKI() {
                 Destroyable = true;
 
                 if (xPos + 35.0f < pAim->xpos + 35.0f)
-                    BlickRichtung = LINKS;
+                    BlickRichtung = DirectionEnum::LINKS;
                 if (xPos + 35.0f > pAim->xpos + 35.0f)
-                    BlickRichtung = RECHTS;
+                    BlickRichtung = DirectionEnum::RECHTS;
             }
         } break;
 

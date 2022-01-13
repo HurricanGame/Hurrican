@@ -14,7 +14,7 @@
 GegnerStachelbeere::GegnerStachelbeere(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::LAUFEN;
     Energy = 120;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     Value1 = Wert1;
     Value2 = Wert2;
     AnimSpeed = 0.3f;
@@ -34,7 +34,7 @@ void GegnerStachelbeere::DoDraw() {
 
     D3DCOLOR color = 0xFFFFFFFF;
 
-    bool mirrored = (BlickRichtung == RECHTS);
+    bool mirrored = (BlickRichtung == DirectionEnum::RECHTS);
 
     switch (Handlung) {
         case GEGNER::LAUFEN:
@@ -142,7 +142,7 @@ void GegnerStachelbeere::DoKI() {
             if (RollCount < 0.0f) {
                 int off = 25;
 
-                if (BlickRichtung == LINKS)
+                if (BlickRichtung == DirectionEnum::LINKS)
                     off = -60;
 
                 SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::GRANATE);
@@ -210,7 +210,7 @@ void GegnerStachelbeere::DoKI() {
 
             SimpleAnimation();
 
-            if (BlickRichtung == LINKS)
+            if (BlickRichtung == DirectionEnum::LINKS)
                 xAcc = -10.0f;
             else
                 xAcc = 10.0f;
@@ -219,16 +219,16 @@ void GegnerStachelbeere::DoKI() {
 
             // an der Wand umdrehen
             // oder am Screenrand, wenn der Screen gelockt ist
-            if ((TileEngine.Zustand == TileStateEnum::LOCKED && BlickRichtung == LINKS && xPos < TileEngine.XOffset) ||
+            if ((TileEngine.Zustand == TileStateEnum::LOCKED && BlickRichtung == DirectionEnum::LINKS && xPos < TileEngine.XOffset) ||
 
-                (TileEngine.Zustand == TileStateEnum::LOCKED && BlickRichtung == RECHTS &&
+                (TileEngine.Zustand == TileStateEnum::LOCKED && BlickRichtung == DirectionEnum::RECHTS &&
                  xPos > TileEngine.XOffset + 640 - 50) ||
 
-                (BlickRichtung == LINKS && (blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND)) ||
+                (BlickRichtung == DirectionEnum::LINKS && (blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND)) ||
 
-                (BlickRichtung == RECHTS && (blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND))) {
+                (BlickRichtung == DirectionEnum::RECHTS && (blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND))) {
                 xSpeed *= -1;
-                BlickRichtung *= -1;
+                BlickRichtung = Direction::invert(BlickRichtung);
             }
 
             if (ySpeed == 0.0f && RollCount <= 0.0f && (blocku & BLOCKWERT_WAND) && PlayerAbstand() < 400) {

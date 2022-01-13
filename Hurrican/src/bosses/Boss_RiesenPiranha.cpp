@@ -52,7 +52,7 @@ void GegnerRiesenPiranha::DoKI() {
                                     yPos + 10.0f + static_cast<float>(random(190)), BUBBLE);
 
     // Nach links bzw rechts auf Kollision prüfen und dann ggf umkehren
-    if (BlickRichtung == LINKS)
+    if (BlickRichtung == DirectionEnum::LINKS)
         if (blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND) {
             xSpeed = 0;
             Handlung = GEGNER::DREHEN;
@@ -61,7 +61,7 @@ void GegnerRiesenPiranha::DoKI() {
             AnimEnde = 8;
         }
 
-    if (BlickRichtung == RECHTS)
+    if (BlickRichtung == DirectionEnum::RECHTS)
         if (blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND) {
             xSpeed = 0;
             xPos -= 1.0f;
@@ -97,9 +97,9 @@ void GegnerRiesenPiranha::DoKI() {
                 // Piranha links oder rechts am Spieler vorbei ?
                 // Dann umdrehen und weiter verfolgen
                 if (Handlung == GEGNER::LAUFEN) {
-                    if ((BlickRichtung == LINKS && pAim->xpos > xPos + GegnerRect[GegnerArt].right - 20) ||
+                    if ((BlickRichtung == DirectionEnum::LINKS && pAim->xpos > xPos + GegnerRect[GegnerArt].right - 20) ||
 
-                        (BlickRichtung == RECHTS && pAim->xpos + pAim->CollideRect.right < xPos)) {
+                        (BlickRichtung == DirectionEnum::RECHTS && pAim->xpos + pAim->CollideRect.right < xPos)) {
                         xSpeed = 0;
                         Handlung = GEGNER::DREHEN;
                         AnimPhase = 4;
@@ -108,7 +108,7 @@ void GegnerRiesenPiranha::DoKI() {
                     }
                 }
             } else {
-                if (BlickRichtung == LINKS)
+                if (BlickRichtung == DirectionEnum::LINKS)
                     xSpeed = -7.0f;
                 else
                     xSpeed = 7.0f;
@@ -123,12 +123,12 @@ void GegnerRiesenPiranha::DoKI() {
                 AnimStart = 0;
                 AnimPhase = 0;
 
-                if (BlickRichtung == LINKS)  // Ab jetzt in die andere Richtung schwimmen
+                if (BlickRichtung == DirectionEnum::LINKS)  // Ab jetzt in die andere Richtung schwimmen
                 {
-                    BlickRichtung = RECHTS;
+                    BlickRichtung = DirectionEnum::RECHTS;
                     xSpeed = 7.0f;
                 } else {
-                    BlickRichtung = LINKS;
+                    BlickRichtung = DirectionEnum::LINKS;
                     xSpeed = -7.0f;
                 }
             }

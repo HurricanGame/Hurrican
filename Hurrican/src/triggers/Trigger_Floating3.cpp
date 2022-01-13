@@ -14,7 +14,7 @@
 
 GegnerFloating3::GegnerFloating3(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::STEHEN;
-    BlickRichtung = RECHTS;
+    BlickRichtung = DirectionEnum::RECHTS;
     Energy = 100;
     Value1 = Wert1;
     Value2 = Wert2;

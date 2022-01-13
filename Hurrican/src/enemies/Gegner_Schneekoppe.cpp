@@ -63,7 +63,7 @@ void GegnerSchneekoppe::DoDraw() {
 // --------------------------------------------------------------------------------------
 
 void GegnerSchneekoppe::DoKI() {
-    BlickRichtung = RECHTS;
+    BlickRichtung = DirectionEnum::RECHTS;
 
     SimpleAnimation();
 

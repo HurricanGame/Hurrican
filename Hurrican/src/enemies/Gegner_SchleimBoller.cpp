@@ -75,7 +75,7 @@ void GegnerSchleimBoller::DoDraw() {
 // --------------------------------------------------------------------------------------
 
 void GegnerSchleimBoller::DoKI() {
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     if (Handlung == GEGNER::FALLEN)
         SimpleAnimation();

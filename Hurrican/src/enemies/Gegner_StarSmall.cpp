@@ -41,9 +41,9 @@ GegnerStarSmall::GegnerStarSmall(int Wert1, int Wert2, bool Light) {
 
 void GegnerStarSmall::DoKI() {
     if (xSpeed > 0.0f)
-        BlickRichtung = RECHTS;
+        BlickRichtung = DirectionEnum::RECHTS;
     else
-        BlickRichtung = LINKS;
+        BlickRichtung = DirectionEnum::LINKS;
 
     SimpleAnimation();
 

@@ -90,7 +90,7 @@ void GegnerClass::Render() {
     D3DCOLOR Color;
 
     // Gegner kuckt in die andere Richtung ?
-    bool mirrored = (BlickRichtung == RECHTS);
+    bool mirrored = (BlickRichtung == DirectionEnum::RECHTS);
 
     if (GegnerArt == DIAMANT)  // Diamant
         Color = 0xFFFFFFFF;
@@ -261,13 +261,13 @@ bool GegnerClass::Run() {
 
         if (Player[0].xpos + 35 <
             xPos + GegnerRect[GegnerArt].left + (GegnerRect[GegnerArt].right - GegnerRect[GegnerArt].left) / 2)
-            BlickRichtung = LINKS;
+            BlickRichtung = DirectionEnum::LINKS;
         else
-            BlickRichtung = RECHTS;
+            BlickRichtung = DirectionEnum::RECHTS;
 
         if (GegnerArt != EXTRAS) {
-            xSpeed = xSpeed * BlickRichtung;
-            xAcc = xAcc * BlickRichtung;
+            xSpeed = xSpeed * Direction::asInt(BlickRichtung);
+            xAcc = xAcc * Direction::asInt(BlickRichtung);
         }
 
         if (TestBlock == true) {
@@ -421,9 +421,9 @@ void GegnerClass::Wegschieben(RECT_struct rect, float dam) {
             if (Player[i].Handlung == PlayerActionEnum::RADELN ||
                     Player[i].Handlung == PlayerActionEnum::RADELN_FALL) {
                 if (Player[i].xpos < xPos)
-                    Player[i].Blickrichtung = LINKS;
+                    Player[i].Blickrichtung = DirectionEnum::LINKS;
                 if (Player[i].xpos > xPos)
-                    Player[i].Blickrichtung = RECHTS;
+                    Player[i].Blickrichtung = DirectionEnum::RECHTS;
             }
 
             // Sonst Energie abziehen
@@ -481,7 +481,7 @@ void GegnerClass::TurnonWall() {
     if (((blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND) && xSpeed < 0.0f) ||
         ((blockr & BLOCKWERT_WAND || blockr & BLOCKWERT_GEGNERWAND) && xSpeed > 0.0f)) {
         xSpeed *= -1;
-        BlickRichtung *= -1;
+        BlickRichtung = Direction::invert(BlickRichtung);
     }
 
 }  // TurnonWall
@@ -496,8 +496,9 @@ bool GegnerClass::TurnonShot() {
 
     if (DamageTaken > 0 && TurnCount <= 0.0f) {
         TurnCount = 20.0f;
-        if ((Player[0].xpos < xPos && BlickRichtung == RECHTS) || (Player[0].xpos > xPos && BlickRichtung == LINKS)) {
-            BlickRichtung *= -1;
+        if ((Player[0].xpos < xPos && BlickRichtung == DirectionEnum::RECHTS) ||
+            (Player[0].xpos > xPos && BlickRichtung == DirectionEnum::LINKS)) {
+            BlickRichtung = Direction::invert(BlickRichtung);
             xSpeed *= -1;
         }
 

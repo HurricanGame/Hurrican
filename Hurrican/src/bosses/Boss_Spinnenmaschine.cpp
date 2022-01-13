@@ -13,7 +13,7 @@
 
 GegnerSpinnenmaschine::GegnerSpinnenmaschine(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::INIT;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     Energy = 4000;
     ChangeLight = Light;
     Destroyable = true;
@@ -570,8 +570,8 @@ void GegnerSpinnenmaschine::DoKI() {
             if (Player[p].xpos < xPos + 250.0f) {
                 if (Player[p].Handlung == PlayerActionEnum::RADELN ||
                         Player[p].Handlung == PlayerActionEnum::RADELN_FALL) {
-                    if (Player[p].Blickrichtung == LINKS)
-                        Player[p].Blickrichtung = RECHTS;
+                    if (Player[p].Blickrichtung == DirectionEnum::LINKS)
+                        Player[p].Blickrichtung = DirectionEnum::RECHTS;
                 } else
                     Player[p].xpos = xPos + 250.0f;
             }

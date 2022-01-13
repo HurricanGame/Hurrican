@@ -31,7 +31,7 @@ GegnerDiamant::GegnerDiamant(int Wert1, int Wert2, bool Light) {
 // --------------------------------------------------------------------------------------
 
 void GegnerDiamant::DoKI() {
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     // Bei Animationsphase 1 kurze Pause damit er nich blinkt wie ein Feuerwehrauto =)
     if (AnimPhase == 0)

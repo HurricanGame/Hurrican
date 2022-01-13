@@ -13,7 +13,7 @@
 
 GegnerMushroom::GegnerMushroom(int Wert1, int Wert2, bool Light) {
     Handlung = GEGNER::STEHEN;
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
     Energy = 100;
     Value1 = Wert1;  // yPos der Plattform
     Value2 = Wert2;
@@ -61,7 +61,7 @@ void GegnerMushroom::PlayerJumps(PlayerClass *pPlayer) {
 // --------------------------------------------------------------------------------------
 
 void GegnerMushroom::DoKI() {
-    BlickRichtung = LINKS;
+    BlickRichtung = DirectionEnum::LINKS;
 
     switch (Handlung) {
         case GEGNER::STEHEN: {
