@@ -40,8 +40,8 @@ enum class GameStateEnum {
 // Definitionen für den Spielablauf
 // --------------------------------------------------------------------------------------
 
-constexpr int MAX_ENERGY = 100;             // Maximalwert für die Spielerenergie
-constexpr int MAX_ARMOUR = 200;             // Maximalwert für das Rad
+constexpr float MAX_ENERGY = 100.0f;        // Maximalwert für die Spielerenergie
+constexpr float MAX_ARMOUR = 200.0f;        // Maximalwert für das Rad
 constexpr int DIAMONDS_FOR_EXTRALIFE = 50;  // Diamanten die man für 200 Zeiteinheiten
 
 #define RARFILENAME "Hurrican.dat"
