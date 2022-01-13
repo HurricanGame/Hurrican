@@ -36,9 +36,6 @@ enum class GameStateEnum {
   OUTTRO
 };
 
-// Tasten Abfragen (simple Methode)
-#define SimpleKeydown(vk_code) ((GetAsyncKeyState(vk_code) & 0x8000) ? 1 : 0)
-
 // --------------------------------------------------------------------------------------
 // Definitionen für den Spielablauf
 // --------------------------------------------------------------------------------------
