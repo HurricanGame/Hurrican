@@ -529,7 +529,7 @@ loadfile:
         }
 
     // Objekt Daten laden und gleich Liste mit Objekten erstellen
-    if (DateiHeader.NumObjects > 0)
+    if (DateiHeader.NumObjects > 0) {
         for (i = 0; i < static_cast<int>(DateiHeader.NumObjects); i++) {
             Datei.read(reinterpret_cast<char *>(&LoadObject), sizeof(LoadObject));  // Objekt laden
 
@@ -542,7 +542,7 @@ loadfile:
             // Startposition des Spielers
             if (LoadObject.ObjectID == 0) {
                 // Anfängliche Blickrichtung auch aus Leveldatei lesen
-                if (LoadObject.Value1 == 0)                            
+                if (LoadObject.Value1 == 0)
                     Player[LoadObject.Value2].Blickrichtung = DirectionEnum::RECHTS;
                 else
                     Player[LoadObject.Value2].Blickrichtung = DirectionEnum::LINKS;
@@ -555,228 +555,179 @@ loadfile:
                 Player[LoadObject.Value2].JumpySave = Player[LoadObject.Value2].ypos;
                 Player[LoadObject.Value2].CenterLevel();
                 UpdateLevel();
-            }
+            } else {
+                // Gegner und andere Objekte laden und ins Level setzen
+                switch (LoadObject.ObjectID) {
+                    // Count Secrets, OneUps etc., for Summary-Box
+                    case SECRET:
+                        MaxSecrets++;
+                        break;
+                    case DIAMANT:
+                        MaxDiamonds++;
+                        break;
+                    case ONEUP:
+                        MaxOneUps++;
+                        break;
+                    case POWERBLOCK:
+                        MaxBlocks++;
+                        break;
 
-            // Anzahl Secrets, OneUps usw zählen, für Summary-Box
-
-            // Secret
-            if (LoadObject.ObjectID == SECRET)
-                MaxSecrets++;
-
-            // Diamant
-            if (LoadObject.ObjectID == DIAMANT)
-                MaxDiamonds++;
-
-            // OneUp
-            if (LoadObject.ObjectID == ONEUP)
-                MaxOneUps++;
-
-            // Powerblock
-            if (LoadObject.ObjectID == POWERBLOCK)
-                MaxBlocks++;
-
-            // Gegner und andere Objekte laden und ins Level setzen
-            switch (LoadObject.ObjectID) {
-                case SPITTERBOMBE:
-                    // Spitter laden, wenn die Spitterbombe geladen wird
-                    if (pGegnerGrafix[SPITTER] == nullptr)
+                    case SPITTERBOMBE:
+                        // Spitter laden, wenn die Spitterbombe geladen wird
                         LoadGegnerGrafik(SPITTER);
-                    break;
+                        break;
 
-                case RIESENPIRANHA:
-                    // Kleinen Piranha laden, wenn der Riesen Piranha geladen wird
-                    if (pGegnerGrafix[PIRANHA] == nullptr)
+                    case RIESENPIRANHA:
+                        // Kleinen Piranha laden, wenn der Riesen Piranha geladen wird
                         LoadGegnerGrafik(PIRANHA);
-                    break;
+                        break;
 
-                case NEST:
-                    // Mücke laden, wenn das Nest geladen wird
-                    if (pGegnerGrafix[STAHLMUECKE] == nullptr)
+                    case NEST:
+                        // Mücke laden, wenn das Nest geladen wird
                         LoadGegnerGrafik(STAHLMUECKE);
-                    break;
+                        break;
 
-                case KUGELRIESIG:
-                case KUGELGROSS:
-                case KUGELMEDIUM:
-                    // Kleine Kugeln laden, wenn eine grosse geladen wird
-                    if (pGegnerGrafix[KUGELGROSS] == nullptr)
+                    case KUGELRIESIG:
+                    case KUGELGROSS:
+                    case KUGELMEDIUM:
+                        // Kleine Kugeln laden, wenn eine grosse geladen wird
                         LoadGegnerGrafik(KUGELGROSS);
-
-                    if (pGegnerGrafix[KUGELMEDIUM] == nullptr)
                         LoadGegnerGrafik(KUGELMEDIUM);
-
-                    if (pGegnerGrafix[KUGELKLEIN] == nullptr)
                         LoadGegnerGrafik(KUGELKLEIN);
-                    break;
+                        break;
 
-                case FAHRSTUHLBOSS:
-                    // Boulder und Stelzsack laden, wenn der Fahrstuhlendboss geladen wird
-                    if (pGegnerGrafix[BOULDER] == nullptr)
+                    case FAHRSTUHLBOSS:
+                        // Boulder und Stelzsack laden, wenn der Fahrstuhlendboss geladen wird
                         LoadGegnerGrafik(BOULDER);
-                    if (pGegnerGrafix[STELZSACK] == nullptr)
                         LoadGegnerGrafik(STELZSACK);
-                    break;
+                        break;
 
-                case LAVABALLSPAWNER:
-                    // lava Ball laden, wenn dessen Spawner geladen wird
-                    if (pGegnerGrafix[LAVABALL] == nullptr)
+                    case LAVABALLSPAWNER:
+                        // lava Ball laden, wenn dessen Spawner geladen wird
                         LoadGegnerGrafik(LAVABALL);
-                    break;
+                        break;
 
-                case BRATKLOPS:
-                case PARTIKELSPAWN:
-                    // Made laden, wenn der Bratklops oder der Partikelspawner geladen wird
-                    if (pGegnerGrafix[MADE] == nullptr)
+                    case BRATKLOPS:
+                    case PARTIKELSPAWN:
+                        // Made laden, wenn der Bratklops oder der Partikelspawner geladen wird
                         LoadGegnerGrafik(MADE);
-                    break;
+                        break;
 
-                case SHRINE:
-                    // Steine laden, wenn der Schrein geladen wird
-                    if (pGegnerGrafix[FALLINGROCK] == nullptr)
+                    case SHRINE:
+                        // Steine laden, wenn der Schrein geladen wird
                         LoadGegnerGrafik(FALLINGROCK);
-                    break;
+                        break;
 
-                case SHOOTPLATTFORM:
-                    // ShootButton laden, wenn die entsprechende Plattform geladen wird
-                    if (pGegnerGrafix[SHOOTBUTTON] == nullptr)
+                    case SHOOTPLATTFORM:
+                        // ShootButton laden, wenn die entsprechende Plattform geladen wird
                         LoadGegnerGrafik(SHOOTBUTTON);
-                    break;
+                        break;
 
-                case SCHWABBEL:
-                    // Made laden, wenn der Schwabbelsack geladen wird
-                    if (pGegnerGrafix[MADE] == nullptr)
+                    case SCHWABBEL:
+                        // Made laden, wenn der Schwabbelsack geladen wird
                         LoadGegnerGrafik(MADE);
-                    break;
+                        break;
 
-                case METALHEAD:
-                    // Boulder laden, wenn der MetalHead Boss geladen wird
-                    if (pGegnerGrafix[BOULDER] == nullptr)
+                    case METALHEAD:
+                        // Boulder laden, wenn der MetalHead Boss geladen wird
                         LoadGegnerGrafik(BOULDER);
-                    break;
+                        break;
 
-                case SCHLEIMMAUL:
-                    // Schleimbollen laden, wenn das Schleimmaul geladen wird
-                    if (pGegnerGrafix[SCHLEIMALIEN] == nullptr)
+                    case SCHLEIMMAUL:
+                        // Schleimbollen laden, wenn das Schleimmaul geladen wird
                         LoadGegnerGrafik(SCHLEIMALIEN);
-                    break;
+                        break;
 
-                case WUXESPINNEN:
-                    // Mittelgroße Spinne laden, wenn der Spinnen Ansturm geladen wird
-                    if (pGegnerGrafix[MITTELSPINNE] == nullptr)
+                    case WUXESPINNEN:
+                        // Mittelgroße Spinne laden, wenn der Spinnen Ansturm geladen wird
                         LoadGegnerGrafik(MITTELSPINNE);
-                    break;
+                        break;
 
-                case GOLEM:
-                    // Blauen Boulder laden, wenn der Golem geladen wird
-                    if (pGegnerGrafix[BOULDER] == nullptr)
+                    case GOLEM:
+                        // Blauen Boulder laden, wenn der Golem geladen wird
                         LoadGegnerGrafik(BOULDER);
-                    break;
+                        break;
 
-                case SPINNENMASCHINE:
-                    // Climbspider laden, wenn die Spinnenmaschine geladen wird
-                    if (pGegnerGrafix[CLIMBSPIDER] == nullptr)
+                    case SPINNENMASCHINE:
+                        // Climbspider laden, wenn die Spinnenmaschine geladen wird
                         LoadGegnerGrafik(CLIMBSPIDER);
-                    // Drone laden, wenn die Spinnenmaschine geladen wird
-                    if (pGegnerGrafix[DRONE] == nullptr)
+                        // Drone laden, wenn die Spinnenmaschine geladen wird
                         LoadGegnerGrafik(DRONE);
-                    break;
+                        break;
 
-                case PRESSWURST:
-                    // Fette Spinne laden, wenn die Spinnen Presswurst geladen wird
-                    if (pGegnerGrafix[FETTESPINNE] == nullptr)
+                    case PRESSWURST:
+                        // Fette Spinne laden, wenn die Spinnen Presswurst geladen wird
                         LoadGegnerGrafik(FETTESPINNE);
-                    break;
+                        break;
 
-                case LAFASSSPAWNER:
-                    // La Fass laden, wenn der La Fass Spawner geladen wird
-                    if (pGegnerGrafix[LAFASS] == nullptr)
+                    case LAFASSSPAWNER:
+                        // La Fass laden, wenn der La Fass Spawner geladen wird
                         LoadGegnerGrafik(LAFASS);
-                    break;
+                        break;
 
-                case STACHELBEERE:
-                    // Minirakete laden, wenn Stachelbeere geladen wird
-                    if (pGegnerGrafix[MINIROCKET] == nullptr)
+                    case STACHELBEERE:
+                        // Minirakete laden, wenn Stachelbeere geladen wird
                         LoadGegnerGrafik(MINIROCKET);
-                    break;
+                        break;
 
-                case RIESENSPINNE:
-                case UFO:
-                case SKELETOR:
-                case DRACHE:
-                    // Fette Rakete laden, wenn Riesenspinne oder Drache geladen wird
-                    if (pGegnerGrafix[FETTERAKETE] == nullptr)
+                    case RIESENSPINNE:
+                    case UFO:
+                    case SKELETOR:
+                    case DRACHE:
+                        // Fette Rakete laden, wenn Riesenspinne oder Drache geladen wird
                         LoadGegnerGrafik(FETTERAKETE);
 
-                    if (LoadObject.ObjectID == RIESENSPINNE) {
-                        // Spinnenbombe laden, wenn die Riesenspinne geladen wird
-                        if (pGegnerGrafix[SPIDERBOMB] == nullptr)
+                        if (LoadObject.ObjectID == RIESENSPINNE) {
+                            // Spinnenbombe laden, wenn die Riesenspinne geladen wird
                             LoadGegnerGrafik(SPIDERBOMB);
-                    }
+                        }
 
-                    // Minidragon laden, wenn Drache geladen wird
-                    if (LoadObject.ObjectID == DRACHE) {
-                        if (pGegnerGrafix[MINIDRAGON] == nullptr)
+                        // Minidragon laden, wenn Drache geladen wird
+                        if (LoadObject.ObjectID == DRACHE) {
                             LoadGegnerGrafik(MINIDRAGON);
 
-                        // Drache wird geladen?
-                        if (LoadObject.Value2 == 0)
-                            pDragonHack = new CDragonHack();
-                    }
+                            // Drache wird geladen?
+                            if (LoadObject.Value2 == 0)
+                                pDragonHack = new CDragonHack();
+                        }
 
-                    // Skull laden, wenn der Skeletor geladen wird
-                    if (LoadObject.ObjectID == SKELETOR) {
-                        if (pGegnerGrafix[SKULL] == nullptr)
+                        // Skull laden, wenn der Skeletor geladen wird
+                        if (LoadObject.ObjectID == SKELETOR) {
                             LoadGegnerGrafik(SKULL);
-                    }
-                    break;
+                        }
+                        break;
 
-                case SCHNEEKOENIG:
-                    // Schneekoppe laden, wenn der Schneekönig geladen wird
-                    if (pGegnerGrafix[SCHNEEKOPPE] == nullptr)
+                    case SCHNEEKOENIG:
+                        // Schneekoppe laden, wenn der Schneekönig geladen wird
                         LoadGegnerGrafik(SCHNEEKOPPE);
-                    break;
+                        break;
 
-                case BIGFISH:
-                    // Ein Paar Gegner laden, wenn der BigFish geladen wird
-                    if (pGegnerGrafix[PIRANHA] == nullptr)
+                    case BIGFISH:
+                        // Ein Paar Gegner laden, wenn der BigFish geladen wird
                         LoadGegnerGrafik(PIRANHA);
-
-                    if (pGegnerGrafix[SWIMWALKER] == nullptr)
                         LoadGegnerGrafik(SWIMWALKER);
-
-                    if (pGegnerGrafix[KUGELKLEIN] == nullptr)
                         LoadGegnerGrafik(KUGELKLEIN);
-
-                    if (pGegnerGrafix[KUGELMEDIUM] == nullptr)
                         LoadGegnerGrafik(KUGELMEDIUM);
-
-                    if (pGegnerGrafix[KUGELGROSS] == nullptr)
                         LoadGegnerGrafik(KUGELGROSS);
-
-                    if (pGegnerGrafix[KUGELRIESIG] == nullptr)
                         LoadGegnerGrafik(KUGELRIESIG);
-                    break;
+                        break;
 
-                case ROLLMOPS:
-                    // Kettenglied laden, wenn der Rollmops geladen wird
-                    if (pGegnerGrafix[KETTENGLIED] == nullptr)
+                    case ROLLMOPS:
+                        // Kettenglied laden, wenn der Rollmops geladen wird
                         LoadGegnerGrafik(KETTENGLIED);
-                    break;
+                        break;
 
-                case TUBE:
-                    // Mutant laden, wenn die Tube geladen wird
-                    if (pGegnerGrafix[MUTANT] == nullptr)
+                    case TUBE:
+                        // Mutant laden, wenn die Tube geladen wird
                         LoadGegnerGrafik(MUTANT);
-                    break;
+                        break;
 
-                default:
-                    break;
-            }
+                    default:
+                        break;
+                }
 
-            if (LoadObject.ObjectID > 0) {
                 // Gegner laden, wenn er nicht schon geladen wurde
-                if (pGegnerGrafix[LoadObject.ObjectID] == nullptr)
-                    LoadGegnerGrafik(LoadObject.ObjectID);
+                LoadGegnerGrafik(LoadObject.ObjectID);
 
                 // Gegner bei aktuellem Skill level überhaupt erzeugen ?
                 if (LoadObject.Skill <= Skill) {
@@ -785,12 +736,13 @@ loadfile:
                                       LoadObject.Value1, LoadObject.Value2, LoadObject.ChangeLight);
 
                     if (LoadObject.ObjectID == REITFLUGSACK && NUMPLAYERS == 2)
-                        Gegner.PushGegner(static_cast<float>(LoadObject.XPos) + 60,
-                                          static_cast<float>(LoadObject.YPos) + 40, LoadObject.ObjectID,
+                        Gegner.PushGegner(static_cast<float>(LoadObject.XPos + 60),
+                                          static_cast<float>(LoadObject.YPos + 40), LoadObject.ObjectID,
                                           LoadObject.Value1, LoadObject.Value2, LoadObject.ChangeLight);
                 }
             }
         }
+    }
 
     // Kein Startpunkt für Spieler 2 gefunden? Dann von Spieler 1 kopieren
     if (Player[1].xpos == 0.0f && Player[1].ypos == 0.0f) {
