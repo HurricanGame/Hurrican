@@ -789,7 +789,7 @@ void DirectGraphicsClass::ShowBackBuffer() {
 #endif
 #endif
 
-#if defined(DEBUG)
+#ifndef NDEBUG
     int error = glGetError();
 
     if (error != 0) {
