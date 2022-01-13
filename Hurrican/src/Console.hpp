@@ -20,6 +20,8 @@
 #include "DX8Sprite.hpp"
 #include "Globals.hpp"
 
+#include <bitset>
+
 // --------------------------------------------------------------------------------------
 // Defines
 // --------------------------------------------------------------------------------------
@@ -56,7 +58,8 @@ class ConsoleClass {
     bool Activate;                    // Aktivierungstaste gedrückt oder nicht
     char Text[MAX_LINES][MAX_CHARS];  // Text in der Konsole
     char Buffer[MAX_CHARS];
-    bool Pressed[256];  // Für Tasten-lock
+    std::bitset<256> Pressed;         // Für Tasten-lock
+
     bool CONSOLE_CHEAT(char *cheat);
     // DKS - New console joystick support - CursorChar stores the candidate character (space by default)
     char CursorChar[2];

@@ -73,7 +73,7 @@ PlayerClass::PlayerClass() {
     weaponswitchlock = false;
     GegnerDran = false;
     AlreadyDrawn = false;
-    memset(Aktion, 0, sizeof(Aktion));
+    Aktion.reset();
     memset(AktionKeyboard, 0, sizeof(AktionKeyboard));
     memset(AktionJoystick, 0, sizeof(AktionJoystick));
     Walk_UseAxxis = false;
@@ -528,9 +528,7 @@ bool PlayerClass::GetPlayerInput() {
 
     // Zuerst alle Aktionen auf false setzen
     //
-    for (bool &i : Aktion) {
-        i = false;
-    }
+    Aktion.reset();
 
     // und Bewegungsgeschwindigkeit für den nächsten Frame auf 0 setzen,
     // es sei denn, man läuft auf Eis
@@ -690,13 +688,11 @@ bool PlayerClass::GetPlayerInput() {
     // waffe wechseln?
     checkWeaponSwitch();
 
-    for (bool i : Aktion) {
-        if (i) {
-            if (Handlung == PlayerActionEnum::PISSEN) {
-                GUI.HideBoxFast();
-                BronsonCounter = 0.0f;
-                Handlung = PlayerActionEnum::STEHEN;
-            }
+    if (Aktion.any()) {
+        if (Handlung == PlayerActionEnum::PISSEN) {
+            GUI.HideBoxFast();
+            BronsonCounter = 0.0f;
+            Handlung = PlayerActionEnum::STEHEN;
         }
     }
 

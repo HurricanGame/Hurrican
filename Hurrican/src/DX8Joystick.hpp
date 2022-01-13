@@ -24,6 +24,7 @@ constexpr int MAX_JOYSTICKBUTTONS = 128;
 #  include "SDL_port.hpp"
 #endif
 
+#include <bitset>
 #include <string>
 
 // --------------------------------------------------------------------------------------
@@ -53,7 +54,7 @@ class DirectJoystickClass {
     int JoystickY2;                             // Joystick y-Koordinaten 2. analog Stick
     int JoystickPOV;                            // POV (für coolie hat)
     int JoystickMode;                           // Joypad oder Stickmode
-    bool JoystickButtons[MAX_JOYSTICKBUTTONS];  // Feuerknopf gedrückt?
+    std::bitset<MAX_JOYSTICKBUTTONS> JoystickButtons;  // Feuerknopf gedrückt?
     std::string JoystickName;                   // Joystick Produktname
     int NumButtons;                             // How many buttons joystick supports
 

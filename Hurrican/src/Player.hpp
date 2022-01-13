@@ -22,6 +22,8 @@
 #include "DX8Sprite.hpp"
 #include "GegnerClass.hpp"
 
+#include <bitset>
+
 // --------------------------------------------------------------------------------------
 // Defines
 // --------------------------------------------------------------------------------------
@@ -154,7 +156,7 @@ class PlayerClass {
     bool GegnerDran;
     bool AlreadyDrawn;
     int SoundOff;
-    bool Aktion[MAX_AKTIONEN];         // Array mit Tasten für Aktionen
+    std::bitset<MAX_AKTIONEN> Aktion;  // Array mit Tasten für Aktionen
     int AktionKeyboard[MAX_AKTIONEN];  // Array mit Tasten  für Aktionen
     int AktionJoystick[MAX_AKTIONEN];  // Array mit Buttons für Aktionen
     bool Walk_UseAxxis;                // true = achsen / false = coolie hat

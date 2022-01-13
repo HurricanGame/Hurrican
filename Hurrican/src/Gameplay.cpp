@@ -1217,8 +1217,7 @@ bool NewDemo(const char Filename[]) {
     DEMOPress = 0;
 
     // Tasten auf false setzen
-    for (bool &i : Player[0].Aktion)
-        i = false;
+    Player[0].Aktion.reset();
 
     // Level neu initialisieren und dann gehts los
     int l = Stage;
@@ -1269,8 +1268,7 @@ bool LoadDemo(const char Filename[]) {
     DEMOPress = 0;
 
     // Tasten auf false setzen
-    for (bool &i : Player[0].Aktion)
-        i = false;
+    Player[0].Aktion.reset();
 
     // Level neu initialisieren und dann gehts los
     int l = NewStage;
@@ -1318,8 +1316,10 @@ void RecordDemo() {
 
     // Tasten speichern
     //
-    for (int i = 0; i < MAX_AKTIONEN; i++)
-        DEMOFile.write(reinterpret_cast<char *>(&Player[0].Aktion[i]), sizeof(Player[0].Aktion[i]));
+    for (int i = 0; i < MAX_AKTIONEN; i++) {
+        char aktion = Player[0].Aktion[i];
+        DEMOFile.write(reinterpret_cast<char *>(&aktion), sizeof(aktion));
+    }
 
     // FPS speichern
     //
@@ -1339,8 +1339,11 @@ void PlayDemo() {
 
     // Tasten laden
     //
-    for (int i = 0; i < MAX_AKTIONEN; i++)
-        DEMOFile.read(reinterpret_cast<char *>(&Player[0].Aktion[i]), sizeof(Player[0].Aktion[i]));
+    for (int i = 0; i < MAX_AKTIONEN; i++) {
+        char aktion;
+        DEMOFile.read(reinterpret_cast<char *>(&aktion), sizeof(aktion));
+        Player[0].Aktion[i] = aktion;
+    }
 
     // FPS laden
     //
