@@ -1834,14 +1834,8 @@ void PlayerClass::AnimatePlayer() {
         }
 
         // Geschwindigkeitsgrenzen checken
-        if (xadd > 25.0f)
-            xadd = 25.0f;
-        if (xadd < -25.0f)
-            xadd = -25.0f;
-        if (yadd > 25.0f)
-            yadd = 25.0f;
-        if (yadd < -25.0f)
-            yadd = -25.0f;
+        xadd = std::clamp(xadd, -25.0f, 25.0f);
+        yadd = std::clamp(yadd, -25.0f, 25.0f);
 
         xspeed = xadd;
         ypos += Timer.sync(yadd);
