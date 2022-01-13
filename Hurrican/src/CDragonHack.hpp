@@ -38,14 +38,16 @@ class CDragonHack {
     float m_xSpeed, m_ySpeed;
     float m_AnimCount;
 
-  public:
     DragonState m_State;
 
+  public:
     CDragonHack();   // CutScene initialisieren
     ~CDragonHack();  // CutScene freigeben
 
     void Run();  // laufen, pardon: "fliegen" lassen
     // abgebrochen wurde
+
+    inline DragonState GetState() const { return m_State; }
 };  // CDragonHack
 
 #endif
