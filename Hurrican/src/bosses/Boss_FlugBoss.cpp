@@ -109,7 +109,7 @@ void GegnerFlugBoss::DoDraw() {
                                   0xFFFFFFFF);
 
     // Geschuetz
-    Geschuetz.RenderSpriteRotated(640 - xKanone, -TileEngine.YOffset + yPos + 160.0f, Winkel[1], 0,
+    Geschuetz.RenderSpriteRotated(RENDERWIDTH - xKanone, -TileEngine.YOffset + yPos + 160.0f, Winkel[1], 0,
                                   0xFFFFFFFF);
 
     // Auge

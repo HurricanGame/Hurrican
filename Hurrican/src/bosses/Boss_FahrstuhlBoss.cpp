@@ -340,7 +340,7 @@ void GegnerFahrstuhlBoss::DoKI() {
                 dx1 *= -1.0f;
 
                 Gegner.PushGegner(xPos + 10.0f + static_cast<float>(random(360)),
-                                  yPos + 480.0f, BOULDER, 40 + random(20), 0, false);
+                                  yPos + RENDERHEIGHT, BOULDER, 40 + random(20), 0, false);
 
                 // aufhören damit ?
                 Shots--;
@@ -400,7 +400,7 @@ void GegnerFahrstuhlBoss::DoKI() {
                 ShotDelay = 35.0f;
 
                 Gegner.PushGegner(xPos + 10.0f + static_cast<float>(random(360)),
-                                  yPos + 480.0f, STELZSACK, 80, 0, false);
+                                  yPos + RENDERHEIGHT, STELZSACK, 80, 0, false);
 
                 // Genug losgelassen ?
                 Shots--;

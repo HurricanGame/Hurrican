@@ -189,7 +189,7 @@ void GegnerSchneeKoenig::DoKI() {
         ySave = yPos;
 
         // kommt von oben in der mitte des screens runter
-        xPos = TileEngine.XOffset + (640.0f - 140.0f) / 2.0f;
+        xPos = TileEngine.XOffset + (RENDERWIDTH - 140.0f) / 2.0f;
         yPos = TileEngine.YOffset - 300.0f;
         ySpeed = 50.0f;
         DrawNow = true;

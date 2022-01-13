@@ -889,17 +889,17 @@ void TileEngineClass::DrawBackground() {
 
     if (bScrollBackground)  // Hintergrundbild mitscrollen
     {
-        int const x_off = static_cast<int>(XOffset / 5.0f) % 640;
+        int const x_off = static_cast<int>(XOffset / 5.0f) % RENDERWIDTH;
         // Linke Hälfte
-        Background.SetRect(0, 0, x_off, 480);
-        Background.RenderSprite(static_cast<float>(640 - x_off), 0.0f, 0xFFFFFFFF);
+        Background.SetRect(0, 0, x_off, RENDERHEIGHT);
+        Background.RenderSprite(static_cast<float>(RENDERWIDTH - x_off), 0.0f, 0xFFFFFFFF);
 
         // Rechte Hälfte
-        Background.SetRect(x_off, 0, 640, 480);
+        Background.SetRect(x_off, 0, RENDERWIDTH, RENDERHEIGHT);
         Background.RenderSprite(0.0f, 0.0f, 0xFFFFFFFF);
     } else  // oder statisch ?
     {
-        Background.SetRect(0, 0, 640, 480);
+        Background.SetRect(0, 0, RENDERWIDTH, RENDERHEIGHT);
         Background.RenderSprite(0.0f, 0.0f, 0xFFFFFFFF);
     }
 
@@ -908,44 +908,44 @@ void TileEngineClass::DrawBackground() {
 
     //----- Layer ganz hinten (ausser im Flugsack Level)
 
-    xoff = static_cast<int>(XOffset / 3.0f) % 640;
+    xoff = static_cast<int>(XOffset / 3.0f) % RENDERWIDTH;
     yoff = static_cast<float>((LEVELSIZE_Y - SCREENSIZE_Y) * TILESIZE_Y);  // Grösse des Levels in Pixeln (-1 Screen)
     yoff = 220.0f - 150.0f / yoff * YOffset;                               // y-Offset des Layers berechnen
     yoff -= 40.0f;
 
     // Linke Hälfte
-    ParallaxLayer[0].SetRect(0, 0, xoff, 480);
-    ParallaxLayer[0].RenderSprite(static_cast<float>(640 - xoff), yoff, 0xFFFFFFFF);
+    ParallaxLayer[0].SetRect(0, 0, xoff, RENDERHEIGHT);
+    ParallaxLayer[0].RenderSprite(static_cast<float>(RENDERWIDTH - xoff), yoff, 0xFFFFFFFF);
 
     // Rechte Hälfte
-    ParallaxLayer[0].SetRect(xoff, 0, 640, 480);
+    ParallaxLayer[0].SetRect(xoff, 0, RENDERWIDTH, RENDERHEIGHT);
     ParallaxLayer[0].RenderSprite(0.0f, yoff, 0xFFFFFFFF);
 
     //----- vorletzter Layer
 
     yoff = static_cast<float>((LEVELSIZE_Y - SCREENSIZE_Y) * TILESIZE_Y);  // Grösse des Levels in Pixeln (-1 Screen)
     yoff = 200.0f - 200.0f / yoff * YOffset;                               // y-Offset des Layers berechnen
-    xoff = static_cast<int>(XOffset / 2.0f) % 640;
+    xoff = static_cast<int>(XOffset / 2.0f) % RENDERWIDTH;
 
     // Linke Hälfte
-    ParallaxLayer[1].SetRect(0, 0, xoff, 480);
-    ParallaxLayer[1].RenderSprite(static_cast<float>(640 - xoff), yoff, 0xFFFFFFFF);
+    ParallaxLayer[1].SetRect(0, 0, xoff, RENDERHEIGHT);
+    ParallaxLayer[1].RenderSprite(static_cast<float>(RENDERWIDTH - xoff), yoff, 0xFFFFFFFF);
 
     // Rechte Hälfte
-    ParallaxLayer[1].SetRect(xoff, 0, 640, 480);
+    ParallaxLayer[1].SetRect(xoff, 0, RENDERWIDTH, RENDERHEIGHT);
     ParallaxLayer[1].RenderSprite(0.0f, yoff, 0xFFFFFFFF);
 
     //----- Im Fahrstuhl-Level noch den vertikalen Parallax-Layer anzeigen
 
     if (IsElevatorLevel) {
-        int const y_off = static_cast<int>(YOffset / 1.5f) % 480;
+        int const y_off = static_cast<int>(YOffset / 1.5f) % RENDERHEIGHT;
 
         // Obere Hälfte
-        ParallaxLayer[2].SetRect(0, 0, 640, y_off);
-        ParallaxLayer[2].RenderSprite(390.0f - XOffset, 480.0f - static_cast<float>(y_off), 0xFFFFFFFF);
+        ParallaxLayer[2].SetRect(0, 0, RENDERWIDTH, y_off);
+        ParallaxLayer[2].RenderSprite(390.0f - XOffset, static_cast<float>(RENDERHEIGHT - y_off), 0xFFFFFFFF);
 
         // Untere Hälfte
-        ParallaxLayer[2].SetRect(0, y_off, 640, 480);
+        ParallaxLayer[2].SetRect(0, y_off, RENDERWIDTH, RENDERHEIGHT);
         ParallaxLayer[2].RenderSprite(390.0f - XOffset, 0.0f, 0xFFFFFFFF);
     }
 
@@ -953,21 +953,21 @@ void TileEngineClass::DrawBackground() {
 
     // Wolken bewegen
     CloudMovement += SpeedFaktor;
-    if (CloudMovement > 640.0f)
+    if (CloudMovement > RENDERWIDTH)
         CloudMovement = 0.0f;
 
     DirectGraphics.SetAdditiveMode();
 
-    xoff = static_cast<int>(XOffset / 4.0f + CloudMovement) % 640;
+    xoff = static_cast<int>(XOffset / 4.0f + CloudMovement) % RENDERWIDTH;
     yoff = static_cast<float>((LEVELSIZE_Y - SCREENSIZE_Y) * 40);  // Grösse des Levels in Pixeln (-1 Screen)
     yoff = 240.0f / yoff * YOffset;               // y-Offset des Layers berechnen
 
     // Linke Hälfte
     CloudLayer.SetRect(0, static_cast<int>(yoff), xoff, 240);
-    CloudLayer.RenderSprite(static_cast<float>(640 - xoff), 0.0f, 0xFFFFFFFF);
+    CloudLayer.RenderSprite(static_cast<float>(RENDERWIDTH - xoff), 0.0f, 0xFFFFFFFF);
 
     // Rechte Hälfte
-    CloudLayer.SetRect(xoff, static_cast<int>(yoff), 640, 240);
+    CloudLayer.SetRect(xoff, static_cast<int>(yoff), RENDERWIDTH, 240);
     CloudLayer.RenderSprite(0.0f, 0.0f, 0xFFFFFFFF);
 
     DirectGraphics.SetColorKeyMode();
@@ -1928,9 +1928,10 @@ void TileEngineClass::DrawWater() {
 
                     // Glanzschicht (Schicht 3) drüber
                     //
-                    Wasserfall[1].SetRect((i * TILESIZE_X - xTileOffs) % 640, (j * TILESIZE_Y - yTileOffs) % 480,
-                                          (i * TILESIZE_X - xTileOffs) % 640 + TILESIZE_X,
-                                          (j * TILESIZE_Y - yTileOffs) % 480 + TILESIZE_Y);
+                    Wasserfall[1].SetRect((i * TILESIZE_X - xTileOffs) % RENDERWIDTH,
+                                          (j * TILESIZE_Y - yTileOffs) % RENDERHEIGHT,
+                                          (i * TILESIZE_X - xTileOffs) % RENDERWIDTH + TILESIZE_X,
+                                          (j * TILESIZE_Y - yTileOffs) % RENDERHEIGHT + TILESIZE_Y);
 
                     Wasserfall[1].RenderSprite(static_cast<float>(i * TILESIZE_X - xTileOffs),
                                                static_cast<float>(j * TILESIZE_Y - yTileOffs),
@@ -1956,8 +1957,8 @@ void TileEngineClass::CheckBounds() {
     constexpr float ytilesize = static_cast<float>(TILESIZE_Y);
 
     // Grenzen des Levels checken
-    XOffset = std::clamp(XOffset, xtilesize, LEVELPIXELSIZE_X - 640.0f - xtilesize);
-    YOffset = std::clamp(YOffset, ytilesize, LEVELPIXELSIZE_Y - 480.0f - ytilesize);
+    XOffset = std::clamp(XOffset, xtilesize, LEVELPIXELSIZE_X - RENDERWIDTH - xtilesize);
+    YOffset = std::clamp(YOffset, ytilesize, LEVELPIXELSIZE_Y - RENDERHEIGHT - ytilesize);
 }
 
 // --------------------------------------------------------------------------------------

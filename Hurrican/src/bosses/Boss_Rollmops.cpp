@@ -201,8 +201,8 @@ void GegnerRollmops::GunAusfahren(bool Auf) {
 // --------------------------------------------------------------------------------------
 
 void GegnerRollmops::Abhopsen(float mul) {
-    if (ySpeed > 0.0f && yPos > Value2 + 480.0f - 100.0f - 40.0f) {
-        yPos = Value2 + 480.0f - 100.0f - 40.0f;
+    if (ySpeed > 0.0f && yPos > Value2 + RENDERHEIGHT - 100.0f - 40.0f) {
+        yPos = Value2 + RENDERHEIGHT - 100.0f - 40.0f;
 
         SoundManager.PlayWave(100, 128, 8000 + random(2000), SOUND::LANDEN);
 
@@ -268,7 +268,7 @@ void GegnerRollmops::DoKI() {
         TileEngine.ScrollLevel(static_cast<float>(Value1), static_cast<float>(Value2), TileStateEnum::SCROLLTOLOCK);
 
         // Mops aus Screen bringen
-        xPos = Value1 + 640.0f;
+        xPos = Value1 + RENDERWIDTH;
         // yPos = Value2 + 100.0f;
         SoundManager.FadeSong(MUSIC::STAGEMUSIC, -2.0f, 0, true);  // Ausfaden und pausieren
     }
@@ -359,7 +359,7 @@ void GegnerRollmops::DoKI() {
 
                     Schwung = sin(SchwungDir);
 
-                    AnimPhase = -static_cast<int>(((static_cast<float>(Value1) + 640.0f) - xPos) / 200.0f);
+                    AnimPhase = -static_cast<int>(((static_cast<float>(Value1 + RENDERWIDTH)) - xPos) / 200.0f);
 
                     if (AnimPhase < 0)
                         AnimPhase += 10;

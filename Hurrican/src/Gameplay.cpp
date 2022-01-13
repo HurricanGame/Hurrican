@@ -225,7 +225,7 @@ void ShowGameOver() {
     if (col > 255)  // Obergrenze checken
         col = 255;
 
-    TileEngine.GameOver.RenderSprite((640 - 400) * 0.5f, (480 - 90) * 0.5f, D3DCOLOR_RGBA(255, 255, 255, col));
+    TileEngine.GameOver.RenderSprite((RENDERWIDTH - 400) * 0.5f, (RENDERHEIGHT - 90) * 0.5f, D3DCOLOR_RGBA(255, 255, 255, col));
 
     Player[0].GameOverTimer -= Timer.sync(0.75f);
 
@@ -958,7 +958,7 @@ bool DisplayLoadInfo(const char Text[100]) {
         }
     }
 
-    pMenu->LoadingScreen.RenderSprite((640 - 360) / 2, (480 - 60) / 2 + 5, 0x88FFFFFF);
+    pMenu->LoadingScreen.RenderSprite((RENDERWIDTH - 360) / 2, (RENDERHEIGHT - 60) / 2 + 5, 0x88FFFFFF);
 
     pMenu->UpdateProgressBar();
 

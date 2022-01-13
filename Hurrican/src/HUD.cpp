@@ -34,7 +34,7 @@ HUDClass::HUDClass() {
     red = 0;
     green = 255;
     blue = 0;
-    xpos = (640 - 548) / 2;
+    xpos = (RENDERWIDTH - 548) / 2;
     ypos = 2;
     BossHUDActive = 0.0f;
 }
@@ -451,8 +451,8 @@ void HUDClass::RenderBossHUD() {
 
         BossHUDActive -= Timer.sync(20.0f);  // Ausfaden lassen
 
-        BossHUD.RenderSprite((640 - 130) / 2, ypos + 434, Color);
-        BossBar.RenderSprite((640 - 130) / 2 + 9, ypos + 434 + 13, Color);
+        BossHUD.RenderSprite((RENDERWIDTH - 130) / 2, ypos + 434, Color);
+        BossBar.RenderSprite((RENDERWIDTH - 130) / 2 + 9, ypos + 434 + 13, Color);
     } else
         BossHUDActive = 0.0f;
 }

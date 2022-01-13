@@ -32,7 +32,7 @@ void GegnerPokeNuke::DoKI() {
     switch (Handlung) {
         case GEGNER::STEHEN: {
             Handlung = GEGNER::FALLEN;
-            yPos -= 480.0f + 217.0f;
+            yPos -= RENDERHEIGHT + 217.0f;
         } break;
 
         // Stein fällt runter

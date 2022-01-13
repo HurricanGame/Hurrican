@@ -61,7 +61,7 @@ OuttroClass::OuttroClass() {
 
     // Ein paar Schneepartikel adden
     for (int i = 0; i < 100; i++)
-        PartikelSystem.PushPartikel(static_cast<float>(random(640)), static_cast<float>(random(480)),
+        PartikelSystem.PushPartikel(static_cast<float>(random(RENDERWIDTH)), static_cast<float>(random(RENDERHEIGHT)),
                                     SCHNEEFLOCKE_END);
 }
 
@@ -120,7 +120,7 @@ void OuttroClass::DoOuttro() {
     Henry.RenderSprite(276, 291, 0xFFFFFFFF);
 
     // Und nochmal den unteren Teil vom Background drüber
-    Background.SetRect(0, 360, 640, 480);
+    Background.SetRect(0, 360, RENDERWIDTH, RENDERHEIGHT);
     Background.RenderSprite(0, 360, 0xFFFFFFFF);
 
     // Auspuff Partikel =)
@@ -186,7 +186,7 @@ void OuttroClass::DoOuttro() {
     if (Snow <= 0.0f) {
         Snow = 1.0f;
 
-        PartikelSystem.PushPartikel(static_cast<float>(random(640)), -8, SCHNEEFLOCKE_END);
+        PartikelSystem.PushPartikel(static_cast<float>(random(RENDERWIDTH)), -8, SCHNEEFLOCKE_END);
     }
 
     switch (Zustand) {
@@ -206,7 +206,7 @@ void OuttroClass::DoOuttro() {
             }
 
             D3DCOLOR col = D3DCOLOR_RGBA(0, 0, 0, 255 - static_cast<int>(Counter));
-            RenderRect(0, 0, 640, 480, col);
+            RenderRect(0, 0, RENDERWIDTH, RENDERHEIGHT, col);
 
             SmokeDelay -= Timer.sync(1.0f);
 

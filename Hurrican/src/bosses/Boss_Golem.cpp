@@ -396,7 +396,7 @@ void GegnerGolem::DoKI() {
                         SoundManager.PlayWave(75, 128, 15000 + random(2000), SOUND::DOORSTOP);
 
                         Gegner.PushGegner(TileEngine.XOffset + 100.0f + static_cast<float>(random(540)),
-                                          TileEngine.YOffset + 480.0f, LAVABALL, 50 + random(10), 0,
+                                          TileEngine.YOffset + RENDERHEIGHT, LAVABALL, 50 + random(10), 0,
                                           false);
                     }
                 } break;
@@ -416,7 +416,7 @@ void GegnerGolem::DoKI() {
                         SoundManager.PlayWave(75, 128, 15000 + random(2000), SOUND::DOORSTOP);
 
                         Gegner.PushGegner(pAim->xpos - 20.0f + static_cast<float>(random(70)),
-                                          TileEngine.YOffset + 480.0f, LAVABALL, 50 + random(10), 0,
+                                          TileEngine.YOffset + RENDERHEIGHT, LAVABALL, 50 + random(10), 0,
                                           false);
 
                         StoneCount--;

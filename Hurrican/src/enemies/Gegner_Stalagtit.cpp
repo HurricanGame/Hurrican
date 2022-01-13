@@ -44,8 +44,9 @@ void GegnerStalagtit::DoKI() {
 
         case GEGNER::LAUFEN:  // Stein wartet bis der Spieler vorbeikommt
         {
-            if (pAim->xpos + pAim->CollideRect.right > xPos && pAim->xpos < xPos + 80 && pAim->ypos > yPos &&
-                PlayerAbstand() < 640) {
+            if (pAim->xpos + pAim->CollideRect.right > xPos && pAim->xpos < xPos + 80 &&
+                pAim->ypos > yPos &&
+                PlayerAbstand() < RENDERWIDTH) {
                 // Partikel erzeugen wo der Stein die Decke verlässt
                 for (int i = 0; i < 3; i++) {
                     PartikelSystem.PushPartikel(xPos + static_cast<float>(i * 10),

@@ -2705,13 +2705,13 @@ void PlayerClass::MovePlayer() {
         PlayerClass *pSurvivor = nullptr;
 
         // Spieler 1 fällt unten raus?
-        if (Player[0].ypos > Player[1].ypos + 480.0f) {
+        if (Player[0].ypos > Player[1].ypos + RENDERHEIGHT) {
             pVictim = &Player[0];
             pSurvivor = &Player[1];
         }
 
         // Spieler 2 fällt unten raus?
-        if (Player[1].ypos > Player[0].ypos + 480.0f) {
+        if (Player[1].ypos > Player[0].ypos + RENDERHEIGHT) {
             pVictim = &Player[1];
             pSurvivor = &Player[0];
         }
@@ -2744,7 +2744,7 @@ void PlayerClass::MovePlayer() {
             // ja, dann checken ob Spieler ausserhalb des Screens, und wenn ja, dann
             // lassen wir ihn halt mal einfach so sterben. Das gehört sich ja auch nicht ;)
             //
-            if (ypos + CollideRect.bottom < TileEngine.YOffset || ypos > TileEngine.YOffset + 480.0f)
+            if (ypos + CollideRect.bottom < TileEngine.YOffset || ypos > TileEngine.YOffset + RENDERHEIGHT)
                 Energy = 0.0f;
         } else {
             if (ypos < TileEngine.YOffset)
@@ -4164,9 +4164,9 @@ void PlayerClass::CalcAustrittsPunkt() {
 bool PlayerClass::CheckLevelExit() const {
     // Spieler aus Level draussen?
     return xpos + Player[0].CollideRect.right < TileEngine.XOffset ||
-           xpos + Player[0].CollideRect.left > TileEngine.XOffset + 640 ||
+           xpos + Player[0].CollideRect.left > TileEngine.XOffset + RENDERWIDTH ||
            ypos + Player[0].CollideRect.bottom < TileEngine.YOffset ||
-           ypos + Player[0].CollideRect.top > TileEngine.YOffset + 480;
+           ypos + Player[0].CollideRect.top > TileEngine.YOffset + RENDERHEIGHT;
 }
 
 // --------------------------------------------------------------------------------------

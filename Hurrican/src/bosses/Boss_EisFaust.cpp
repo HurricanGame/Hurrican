@@ -224,7 +224,7 @@ void GegnerEisFaust::DoKI() {
                     Gegner.PushGegner(xPos + 100.0f, yPos + 220.0f, EISZAPFEN, 1, 0, false);
             }
 
-            if (xSpeed > 0.0f && xPos > static_cast<float>(Value1) + 640.0f + 30.0f) {
+            if (xSpeed > 0.0f && xPos > static_cast<float>(Value1 + RENDERWIDTH) + 30.0f) {
                 xSpeed = -20.0f;
                 ySpeed = 10.0f;
                 yPos = static_cast<float>(Value2) - 100.0f;

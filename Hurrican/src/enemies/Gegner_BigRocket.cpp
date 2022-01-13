@@ -63,7 +63,7 @@ void GegnerBigRocket::DoKI() {
         // Rakete wird "aktiviert" (unter den Hurri gesetzt, damit sie von unten nach oben fliegen kann)
         case GEGNER::STEHEN: {
             Handlung = GEGNER::FALLEN;
-            yPos += 480.0f + 300.0f;
+            yPos += RENDERHEIGHT + 300.0f;
             ySpeed = -static_cast<float>(Value1 + 7);
 
             Value2 = static_cast<int>(xPos);

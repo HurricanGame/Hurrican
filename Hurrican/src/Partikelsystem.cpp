@@ -2100,8 +2100,8 @@ void PartikelClass::Run() {
     // Screen verlassen oder eh schon weg wegen der Lebensdauer ?
     //
     if (RemoveWhenOffScreen) {
-        if (yPos - TileEngine.YOffset > 480 + 20 || yPos - TileEngine.YOffset + PartikelRect[PartikelArt].bottom < 20 ||
-            xPos - TileEngine.XOffset > 640 + 20 || xPos - TileEngine.XOffset + PartikelRect[PartikelArt].right < 20)
+        if (yPos - TileEngine.YOffset > RENDERHEIGHT + 20 || yPos - TileEngine.YOffset + PartikelRect[PartikelArt].bottom < 20 ||
+            xPos - TileEngine.XOffset > RENDERWIDTH + 20 || xPos - TileEngine.XOffset + PartikelRect[PartikelArt].right < 20)
             Lebensdauer = 0.0f;
     }
 
@@ -2742,7 +2742,7 @@ void PartikelClass::Run() {
                     xAcc = -0.1f;
 
                 // Unten aus dem Screen raus? Dann verschwinden lassen
-                if (yPos > 480.0f)
+                if (yPos > RENDERHEIGHT)
                     Lebensdauer = 0.0f;
             } break;
 
@@ -4559,7 +4559,7 @@ void PartikelsystemClass::DoPartikel() {
 void PartikelsystemClass::DoThunder() {
     if (ThunderAlpha > 0.0f) {
         D3DCOLOR col = D3DCOLOR_RGBA(ThunderColor[0], ThunderColor[1], ThunderColor[2], static_cast<int>(ThunderAlpha));
-        RenderRect(0, 0, 640, 480, col);
+        RenderRect(0, 0, RENDERWIDTH, RENDERHEIGHT, col);
         ThunderAlpha -= Timer.sync(40.0f);
     }
 }

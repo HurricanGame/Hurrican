@@ -570,7 +570,7 @@ void GegnerRiesenSpinne::DoKI() {
                         SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::EXPLOSION3 + random(2));
                 }
 
-                if (xPos > Value1 + 640)
+                if (xPos > Value1 + RENDERWIDTH)
                     Energy = 0.0f;
             }
 

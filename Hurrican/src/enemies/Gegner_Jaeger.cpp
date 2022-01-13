@@ -79,7 +79,7 @@ void GegnerJaeger::DoKI() {
         case GEGNER::DREHEN2: {
             // Gegner unten aus dem Screen raus? Dann explodieren lassen
             //
-            if (yPos - TileEngine.YOffset > 480.0f) {
+            if (yPos - TileEngine.YOffset > RENDERHEIGHT) {
                 Energy = 0.0f;
             }
 

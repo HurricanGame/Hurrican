@@ -2720,10 +2720,10 @@ void MenuClass::StartProgressBar(int items) {
 }
 
 void MenuClass::UpdateProgressBar() {
-    LoadingScreen.RenderSprite((640 - 360) / 2, (480 - 60) / 2 + 5, 0x88FFFFFF);
+    LoadingScreen.RenderSprite((RENDERWIDTH - 360) / 2, (RENDERHEIGHT - 60) / 2 + 5, 0x88FFFFFF);
 
     LoadingBar.SetRect(0, 0, static_cast<int>(LoadingProgress), 19);
-    LoadingBar.RenderSprite((640 - 318) / 2, (480 - 19) / 2 + 5, 0x88FFFFFF);
+    LoadingBar.RenderSprite((RENDERWIDTH - 318) / 2, (RENDERHEIGHT - 19) / 2 + 5, 0x88FFFFFF);
 
     LoadingItemsLoaded++;
 

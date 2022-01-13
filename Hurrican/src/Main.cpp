@@ -918,7 +918,7 @@ jump:
     // Screenshot machen
 #ifndef NDEBUG
     if (KeyDown(DIK_F12))
-        DirectGraphics.TakeScreenshot("HurricanShot", 640, 480);
+        DirectGraphics.TakeScreenshot("HurricanShot", RENDERWIDTH, RENDERHEIGHT);
 
     // Screenshot machen
     if (KeyDown(DIK_F9))

@@ -45,7 +45,7 @@ void GegnerBlueBoulder::DoKI() {
 
             // Im Fahrstuhllevel runterfallen
             if (g_Fahrstuhl_yPos > -1.0f)
-                yPos -= 480.0f;
+                yPos -= RENDERHEIGHT;
 
             // andererseits, bei Golemwurf direkt auf den Spieler zufliegen
             else {

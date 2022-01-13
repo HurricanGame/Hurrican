@@ -28,8 +28,9 @@ GegnerEndLevel::GegnerEndLevel(int Wert1, int Wert2, bool Light) {
 
 void GegnerEndLevel::DoKI() {
     // Ist der Trigger im Bild ?
-    if (Energy > 0.0f && (NewStage != Value1 || RunningTutorial) && xPos + 120 > TileEngine.XOffset &&
-        xPos < TileEngine.XOffset + 640 && yPos + 120 > TileEngine.YOffset && yPos < TileEngine.YOffset + 480) {
+    if (Energy > 0.0f && (NewStage != Value1 || RunningTutorial) &&
+        xPos + 120 > TileEngine.XOffset && xPos < TileEngine.XOffset + RENDERWIDTH &&
+        yPos + 120 > TileEngine.YOffset && yPos < TileEngine.YOffset + RENDERHEIGHT) {
         // Ausgang berührt ? Dann Nächsten Level laden
         for (int p = 0; p < NUMPLAYERS; p++)
             if (SpriteCollision(xPos, yPos, GegnerRect[GegnerArt], Player[p].xpos, Player[p].ypos,

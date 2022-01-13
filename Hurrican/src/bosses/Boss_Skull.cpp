@@ -185,11 +185,11 @@ void GegnerSkull::DoKI() {
                 ySpeed = std::clamp(ySpeed, -15.0f, 15.0f);
 
                 if ((xSpeed < 0.0f && xPos < TileEngine.XOffset) ||
-                    (xSpeed > 0.0f && xPos > TileEngine.XOffset + 640.0f))
+                    (xSpeed > 0.0f && xPos > TileEngine.XOffset + RENDERWIDTH))
                     xSpeed *= -1.0f;
 
                 if ((ySpeed < 0.0f && yPos < TileEngine.YOffset) ||
-                    (ySpeed > 0.0f && yPos > TileEngine.YOffset + 640.0f))
+                    (ySpeed > 0.0f && yPos > TileEngine.YOffset + RENDERWIDTH))
                     ySpeed *= -1.0f;
             }
         } break;

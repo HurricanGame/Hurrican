@@ -96,10 +96,10 @@ void GegnerPartikelSpawner::DoKI() {
                     // Wäre der Partikel überhaupt im Screen?
                     float sx, sy;
 
-                    sx = xPos - 320.0f + static_cast<float>(random(640));
+                    sx = xPos - 320.0f + static_cast<float>(random(RENDERWIDTH));
                     sy = TileEngine.YOffset - 16.0f - static_cast<float>(random(64));
 
-                    if (sx + 20.0f < TileEngine.XOffset || sx - 180.0f > TileEngine.XOffset + 640.0f)
+                    if (sx + 20.0f < TileEngine.XOffset || sx - 180.0f > TileEngine.XOffset + RENDERWIDTH)
                         break;
 
                     PartikelSystem.PushPartikel(sx, sy, REGENTROPFEN);
@@ -110,7 +110,7 @@ void GegnerPartikelSpawner::DoKI() {
 
                 // Schneeflocke
                 case 1: {
-                    PartikelSystem.PushPartikel(xPos - 320.0f + static_cast<float>(random(640)),
+                    PartikelSystem.PushPartikel(xPos - 320.0f + static_cast<float>(random(RENDERWIDTH)),
                                                 TileEngine.YOffset - 16.0f - static_cast<float>(random(64)),
                                                 SCHNEEFLOCKE);
                     AnimCount = 0.5f;
@@ -150,8 +150,8 @@ void GegnerPartikelSpawner::DoKI() {
                 case 8: {
                     float xdrop = xPos + random(40);
 
-                    if (xdrop < TileEngine.XOffset || xdrop > TileEngine.XOffset + 640.0f ||
-                        yPos < TileEngine.YOffset - 240.0f || yPos > TileEngine.YOffset + 480.0f) {
+                    if (xdrop < TileEngine.XOffset || xdrop > TileEngine.XOffset + RENDERWIDTH ||
+                        yPos < TileEngine.YOffset - 240.0f || yPos > TileEngine.YOffset + RENDERHEIGHT) {
                     } else
                         PartikelSystem.PushPartikel(xdrop, yPos, SPAWNDROP, &Player[0]);
 
@@ -198,12 +198,12 @@ void GegnerPartikelSpawner::DoKI() {
                     WinkelUebergabe = 0.0f;
 
                     if (Value2 == 0) {
-                        PartikelSystem.PushPartikel(TileEngine.XOffset + 640.0f,
-                                                    yPos - 240.0f + static_cast<float>(random(480)), BLATT2);
+                        PartikelSystem.PushPartikel(TileEngine.XOffset + RENDERWIDTH,
+                                                    yPos - 240.0f + static_cast<float>(random(RENDERHEIGHT)), BLATT2);
                         AnimCount = (random(5) + 1) / 5.0f;
                     } else {
-                        PartikelSystem.PushPartikel(TileEngine.XOffset + 640.0f,
-                                                    yPos - 240.0f + static_cast<float>(random(480)), DUST);
+                        PartikelSystem.PushPartikel(TileEngine.XOffset + RENDERWIDTH,
+                                                    yPos - 240.0f + static_cast<float>(random(RENDERHEIGHT)), DUST);
                         AnimCount = (random(5) + 1) / 2.0f;
                     }
 
@@ -237,8 +237,8 @@ void GegnerPartikelSpawner::DoKI() {
 
         // Partikel, die nur gespwant werden, wenn der Trigger im Bild ist
         // Ist der Trigger im Bild ?
-        if (xPos + 40 > TileEngine.XOffset && xPos < TileEngine.XOffset + 640 && yPos + 40 > TileEngine.YOffset &&
-            yPos < TileEngine.YOffset + 480) {
+        if (xPos + 40 > TileEngine.XOffset && xPos < TileEngine.XOffset + RENDERWIDTH &&
+            yPos + 40 > TileEngine.YOffset && yPos < TileEngine.YOffset + RENDERHEIGHT) {
             // Richtigen Partikel Spawnen
             switch (Value1) {
                 // Rauch

@@ -31,8 +31,8 @@ GegnerBruecke::GegnerBruecke(int Wert1, int Wert2, bool Light) {
 void GegnerBruecke::DoKI() {
     // Brücke nicht im Bild ?
     //
-    if (xPos + 10.0f < TileEngine.XOffset || xPos > TileEngine.XOffset + 640.0f ||
-        yPos + 10.0f < TileEngine.YOffset || yPos > TileEngine.YOffset + 480.0f) {
+    if (xPos + 10.0f < TileEngine.XOffset || xPos > TileEngine.XOffset + RENDERWIDTH ||
+        yPos + 10.0f < TileEngine.YOffset || yPos > TileEngine.YOffset + RENDERHEIGHT) {
         return;
     }
 

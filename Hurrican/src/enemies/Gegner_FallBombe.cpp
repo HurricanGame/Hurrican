@@ -38,7 +38,7 @@ void GegnerFallBombe::DoKI() {
         // Stein wird "aktiviert" (über den Hurri gesetzt damit er von dort runterfallen kann)
         case GEGNER::NOTVISIBLE: {
             Handlung = GEGNER::FALLEN;
-            yPos -= 480.0f + 59.0f;
+            yPos -= RENDERHEIGHT + 59.0f;
             if (yPos < 0.0f)
                 yPos = 0.0f;
         } break;

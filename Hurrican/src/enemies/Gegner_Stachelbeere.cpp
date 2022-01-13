@@ -222,7 +222,7 @@ void GegnerStachelbeere::DoKI() {
             if ((TileEngine.Zustand == TileStateEnum::LOCKED && BlickRichtung == DirectionEnum::LINKS && xPos < TileEngine.XOffset) ||
 
                 (TileEngine.Zustand == TileStateEnum::LOCKED && BlickRichtung == DirectionEnum::RECHTS &&
-                 xPos > TileEngine.XOffset + 640 - 50) ||
+                 xPos > TileEngine.XOffset + RENDERWIDTH - 50) ||
 
                 (BlickRichtung == DirectionEnum::LINKS && (blockl & BLOCKWERT_WAND || blockl & BLOCKWERT_GEGNERWAND)) ||
 

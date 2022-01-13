@@ -47,7 +47,7 @@ bool GegnerPharaoKopf::Rechts() {
 }
 
 bool GegnerPharaoKopf::Unten() {
-    int const limit = Value2 + 480 - BORDER2;
+    int const limit = Value2 + RENDERHEIGHT - BORDER2;
     if (static_cast<int>(yPos) + GegnerRect[GegnerArt].bottom > limit) {
         yPos = static_cast<float>(limit - GegnerRect[GegnerArt].bottom);
         return true;
@@ -163,7 +163,7 @@ void GegnerPharaoKopf::DoKI() {
                 AnimCount += 0.2f;
             }
 
-            float const limit = static_cast<float>(Value2 + 480 - BORDER2 - GegnerRect[GegnerArt].bottom);
+            float const limit = static_cast<float>(Value2 + RENDERHEIGHT - BORDER2 - GegnerRect[GegnerArt].bottom);
             if (yPos <= limit)  // Weit genug unten ?
             {
                 for (int p = 0; p < NUMPLAYERS; p++)

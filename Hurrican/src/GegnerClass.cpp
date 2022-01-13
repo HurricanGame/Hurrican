@@ -255,8 +255,8 @@ bool GegnerClass::Run() {
         // Taucht der Gegner im Screen auf und wird dadurch aktiviert ?
         // Dann auch in Richtung Spieler blicken lassen
         //
-        if (yPos - TileEngine.YOffset < 480 && yPos - TileEngine.YOffset > 0 - GegnerRect[GegnerArt].bottom &&
-            xPos - TileEngine.XOffset < 640 && xPos - TileEngine.XOffset > 0 - GegnerRect[GegnerArt].right) {
+        if (yPos - TileEngine.YOffset < RENDERHEIGHT && yPos - TileEngine.YOffset > 0 - GegnerRect[GegnerArt].bottom &&
+            xPos - TileEngine.XOffset < RENDERWIDTH && xPos - TileEngine.XOffset > 0 - GegnerRect[GegnerArt].right) {
         Active = true;
 
         if (Player[0].xpos + 35 <
@@ -525,8 +525,8 @@ bool GegnerClass::IsOnScreen() const {
         off = -400;
     }
 
-    if (xPos + xsize < TileEngine.XOffset || xPos + off > TileEngine.XOffset + 640.0f ||
-        yPos + ysize < TileEngine.YOffset || yPos > TileEngine.YOffset + 480.0f)
+    if (xPos + xsize < TileEngine.XOffset || xPos + off > TileEngine.XOffset + RENDERWIDTH ||
+        yPos + ysize < TileEngine.YOffset || yPos > TileEngine.YOffset + RENDERHEIGHT)
         return false;
 
     return true;
@@ -2267,9 +2267,9 @@ void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage) {
         // Stampfstein? Fällt runter bei Wackeln
         if (pTemp->Active == true && pTemp->GegnerArt == STAMPFSTEIN && pTemp->Handlung == GEGNER::STEHEN && dx < 300 &&
             pTemp->xPos + GegnerRect[pTemp->GegnerArt].right > TileEngine.XOffset &&
-            pTemp->xPos + GegnerRect[pTemp->GegnerArt].left < TileEngine.XOffset + 640 &&
+            pTemp->xPos + GegnerRect[pTemp->GegnerArt].left < TileEngine.XOffset + RENDERWIDTH &&
             pTemp->yPos + GegnerRect[pTemp->GegnerArt].bottom > TileEngine.YOffset &&
-            pTemp->yPos + GegnerRect[pTemp->GegnerArt].top < TileEngine.YOffset + 480) {
+            pTemp->yPos + GegnerRect[pTemp->GegnerArt].top < TileEngine.YOffset + RENDERHEIGHT) {
             pTemp->Handlung = GEGNER::FALLEN;
             pTemp->ySpeed = 20.0f;
             pTemp->yAcc = 15.0f;
@@ -2282,9 +2282,9 @@ void GegnerListClass::DamageEnemiesonScreen(float x, float y, int MaxDamage) {
         // Gegner in der Nähe? Dann Energie abziehen
         if (pTemp->Active == true && dx < 300 && pTemp->Destroyable == true && pTemp->GegnerArt != POWERBLOCK &&
             pTemp->GegnerArt < RIESENPIRANHA && pTemp->xPos + GegnerRect[pTemp->GegnerArt].right > TileEngine.XOffset &&
-            pTemp->xPos + GegnerRect[pTemp->GegnerArt].left < TileEngine.XOffset + 640 &&
+            pTemp->xPos + GegnerRect[pTemp->GegnerArt].left < TileEngine.XOffset + RENDERWIDTH &&
             pTemp->yPos + GegnerRect[pTemp->GegnerArt].bottom > TileEngine.YOffset &&
-            pTemp->yPos + GegnerRect[pTemp->GegnerArt].top < TileEngine.YOffset + 480) {
+            pTemp->yPos + GegnerRect[pTemp->GegnerArt].top < TileEngine.YOffset + RENDERHEIGHT) {
             int amount = static_cast<int>(MaxDamage - dx);
 
             if (amount < 0)

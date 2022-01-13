@@ -65,7 +65,7 @@ void CDragonHack::Run() {
 
                 // von rechts
                 else {
-                    m_xPos = TileEngine.XOffset + 640.0f + 160.0f;
+                    m_xPos = TileEngine.XOffset + RENDERWIDTH + 160.0f;
                     m_yPos = TileEngine.YOffset + 200;
                     m_xSpeed = -10.0f;
                 }
@@ -85,8 +85,8 @@ void CDragonHack::Run() {
             m_yPos += Timer.sync(m_ySpeed);
 
             // Ausserhalb des sichtbaren Bereichs? Dann verschwinden lassen
-            if (m_xPos + 260.0f < TileEngine.XOffset || m_xPos - 260.0f > TileEngine.XOffset + 640.0f ||
-                m_yPos + 240.0f < TileEngine.YOffset || m_yPos - 240.0f > TileEngine.YOffset + 480.0f) {
+            if (m_xPos + 260.0f < TileEngine.XOffset || m_xPos - 260.0f > TileEngine.XOffset + RENDERWIDTH ||
+                m_yPos + 240.0f < TileEngine.YOffset || m_yPos - 240.0f > TileEngine.YOffset + RENDERHEIGHT) {
                 m_State = DragonState::WAIT;
                 m_AppearCount = random(100) + 50.0f;
             }

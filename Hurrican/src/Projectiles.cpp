@@ -2337,8 +2337,8 @@ void ProjectileClass::Run() {
     // Screen verlassen ?
     if (ShotArt != FLAMME && ShotArt != ROCKETSPIDER && ShotArt != EVILBLITZ && ShotArt != EVILBLITZ2 &&
         ShotArt != SNOWBOMB && ShotArt != EIERBOMBE &&
-        (yPos - TileEngine.YOffset > 480 + 100 || yPos - TileEngine.YOffset + ShotRect[ShotArt].bottom < 0 - 100 ||
-         xPos - TileEngine.XOffset > 640 + 100 || xPos - TileEngine.XOffset + ShotRect[ShotArt].right < 0 - 100))
+        (yPos - TileEngine.YOffset > RENDERHEIGHT + 100 || yPos - TileEngine.YOffset + ShotRect[ShotArt].bottom < 0 - 100 ||
+         xPos - TileEngine.XOffset > RENDERWIDTH + 100 || xPos - TileEngine.XOffset + ShotRect[ShotArt].right < 0 - 100))
         Damage = 0;
 
     // Level verlassen ?
@@ -3659,7 +3659,7 @@ void ProjectileClass::ExplodeShot() {
             SoundManager.PlayWave(100, 128, 9000, SOUND::BLITZENDE);
             SoundManager.PlayWave(100, 128, 9000, SOUND::BLITZENDE);
 
-            Projectiles.PushProjectile(TileEngine.XOffset - 60.0f, TileEngine.YOffset + 480.0f - 128.0f, ELEKTROPAMPE);
+            Projectiles.PushProjectile(TileEngine.XOffset - 60.0f, TileEngine.YOffset + RENDERHEIGHT - 128.0f, ELEKTROPAMPE);
         } break;
 
             /*

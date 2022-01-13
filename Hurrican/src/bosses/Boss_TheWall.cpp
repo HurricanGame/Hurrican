@@ -197,7 +197,7 @@ void GegnerTheWall::NeueAktion() {
         bool DoLaser = false;
 
         for (int p = 0; p < NUMPLAYERS; p++)
-            if (Player[p].ypos < TileEngine.YOffset + 480.0f - 20.0f * 8)
+            if (Player[p].ypos < TileEngine.YOffset + RENDERHEIGHT - 20.0f * 8)
                 DoLaser = true;
 
         if (DoLaser == true)

@@ -419,7 +419,7 @@ void ConsoleClass::CheckCommands() {
         DirectGraphics.ShowBackBuffer();
 
         // Screen schwarz färben
-        RenderRect(0, 0, 640, 480, 0xFF000000);
+        RenderRect(0, 0, RENDERWIDTH, RENDERHEIGHT, 0xFF000000);
 
         // Mini Map anzeigen
         for (int i = 0; i < TileEngine.LEVELSIZE_X; i++)
@@ -441,7 +441,7 @@ void ConsoleClass::CheckCommands() {
         DirectGraphics.ShowBackBuffer();
 
         // Screenshot machen
-        DirectGraphics.TakeScreenshot("MiniMap", 640, 480);
+        DirectGraphics.TakeScreenshot("MiniMap", RENDERWIDTH, RENDERHEIGHT);
         this->print("Mini Map saved !");
     }
 

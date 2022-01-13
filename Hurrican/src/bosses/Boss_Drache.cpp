@@ -813,7 +813,7 @@ void GegnerDrache::DoKI() {
                 // Feuerbälle schiessen
                 case GEGNER::BOMBARDIEREN: {
                     if (xPos + 100.0f - mirrorOffset > TileEngine.XOffset + 0.0f &&
-                        xPos + 100.0f - mirrorOffset < TileEngine.XOffset + 640.0f)
+                        xPos + 100.0f - mirrorOffset < TileEngine.XOffset + RENDERWIDTH)
                         AnimCount -= Timer.sync(1.0f);
 
                     if (AnimCount < 0.0f) {
@@ -854,7 +854,7 @@ void GegnerDrache::DoKI() {
 
                             if (xPos > TileEngine.XOffset)
                                 PartikelSystem.PushPartikel(TileEngine.XOffset + 10.0f,
-                                                            TileEngine.YOffset + static_cast<float>(random(480)),
+                                                            TileEngine.YOffset + static_cast<float>(random(RENDERHEIGHT)),
                                                             BLATT2);
 
                             for (int p = 0; p < NUMPLAYERS; p++)
@@ -863,8 +863,8 @@ void GegnerDrache::DoKI() {
                             WinkelUebergabe = 0.0f;
 
                             if (xPos < TileEngine.XOffset + 550.0f)
-                                PartikelSystem.PushPartikel(TileEngine.XOffset + 640.0f,
-                                                            TileEngine.YOffset + static_cast<float>(random(480)),
+                                PartikelSystem.PushPartikel(TileEngine.XOffset + RENDERWIDTH,
+                                                            TileEngine.YOffset + static_cast<float>(random(RENDERHEIGHT)),
                                                             BLATT2);
 
                             for (int p = 0; p < NUMPLAYERS; p++)
