@@ -106,10 +106,7 @@ void ProjectileClass::CreateShot(float x, float y, int Art, PlayerClass *pTemp) 
     Winkel = -10000.0f;  // wird von den wenigsten Schüssen verwendet
 
     // Winkel zwischen 0 und 360
-    while (WinkelUebergabe > 360.0f)
-        WinkelUebergabe -= 360.0f;
-    while (WinkelUebergabe < 0.0f)
-        WinkelUebergabe += 360.0f;
+    clampAngle(WinkelUebergabe);
 
     pParent = pTemp;
 
