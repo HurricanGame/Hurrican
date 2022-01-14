@@ -24,7 +24,7 @@ GegnerEvilHurri::GegnerEvilHurri(int Wert1, int Wert2, bool Light) {
     ChangeLight = Light;
     Destroyable = true;
     OwnDraw = true;
-    BlinkDirection = 1.0f;
+    BlinkDirection = DirectionEnum::RECHTS;
     BlinkWert = 0.0f;
 }
 
@@ -126,12 +126,12 @@ void GegnerEvilHurri::DoKI() {
     }
 
     // EvilHurri blinken lassen
-    BlinkWert += Timer.sync(BlinkDirection * 30.0f);
+    BlinkWert += Timer.sync(static_cast<float>(Direction::asInt(BlinkDirection)) * 30.0f);
 
     if (BlinkWert <= 0)
-        BlinkDirection = 1.0f;
+        BlinkDirection = DirectionEnum::RECHTS;
     if (BlinkWert >= 128)
-        BlinkDirection = -1.0f;
+        BlinkDirection = DirectionEnum::LINKS;
 
     // Rand checken
     if (xPos < static_cast<float>(Value1 + 10) && Handlung != GEGNER::EINFLIEGEN && Handlung != GEGNER::INIT)
