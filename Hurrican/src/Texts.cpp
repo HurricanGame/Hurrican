@@ -57,8 +57,6 @@ char Cheats[MAX_CHEATS][256] = {"$.345&&",            // 99 Extras = dnstuff
 bool LoadLanguage(const std::string& filename) {
     bool fromrar = false;
     std::ifstream in;
-    char c;
-    int count;
     std::string temp;
 
     if (CommandLineParams.RunOwnLevelList) {
@@ -96,8 +94,8 @@ loadfile:
     //
     for (int i = 0; i < TEXT::LASTTEXT - 2; i++) {
         strcpy_s(TextArray[i], 1, "");
-        count = 0;
-        c = Datei.get();
+        int count = 0;
+        char c = Datei.get();
 
         // Zeichen für Zeichen auslesen, bis ein c==10 gelesen wird. Dies markiert das Zeilenende
         //
@@ -128,14 +126,12 @@ loadfile:
             return false;
         }
     } else {
-        std::string Temp;
-
         fromrar = false;
 
         // DKS - levellist.dat now resides in its new subfolder, data/levels/levellist.dat, along with
         //      the rest of the level data.
         // Checken, ob sich das File im Standard Ordner befindet
-        Temp = g_storage_ext + "/data/levels/levellist.dat";
+        std::string Temp = g_storage_ext + "/data/levels/levellist.dat";
         if (fs::exists(Temp) && fs::is_regular_file(Temp))
             goto loadfilelevel;
 

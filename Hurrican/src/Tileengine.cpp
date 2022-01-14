@@ -403,10 +403,8 @@ loadfile:
     strcpy_s(Beschreibung, DateiHeader.Beschreibung);
     bScrollBackground = DateiHeader.ScrollBackground;
 
-    int i;
-
     // Benutzte Tilesets laden
-    for (i = 0; i < LoadedTilesets; i++)
+    for (int i = 0; i < LoadedTilesets; i++)
         TileGfx[i].LoadImage(DateiHeader.SetNames[i], 256, 256, TILESIZE_X, TILESIZE_Y, 12, 12);
 
     // Benutzte Hintergrundgrafiken laden
@@ -438,7 +436,7 @@ loadfile:
 
     LevelTileLoadStruct LoadTile;
 
-    for (i = 0; i < LEVELSIZE_X; i++)
+    for (int i = 0; i < LEVELSIZE_X; i++)
         for (int j = 0; j < LEVELSIZE_Y; j++) {
             Datei.read(reinterpret_cast<char *>(&LoadTile), sizeof(LoadTile));
 
@@ -478,7 +476,7 @@ loadfile:
     // EDIT_ME wieder reinmachen und diesmal richtig machen =)
     uint32_t bl, br, bo, bu;
 
-    for (i = 1; i < LEVELSIZE_X - 1; i++)
+    for (int i = 1; i < LEVELSIZE_X - 1; i++)
         for (int j = 2; j < LEVELSIZE_Y - 1; j++) {
             // Schräge links hoch
             if (TileAt(i + 0, j + 0).Block & BLOCKWERT_WAND && !(TileAt(i + 1, j + 0).Block & BLOCKWERT_WAND) &&
@@ -530,7 +528,7 @@ loadfile:
 
     // Objekt Daten laden und gleich Liste mit Objekten erstellen
     if (DateiHeader.NumObjects > 0) {
-        for (i = 0; i < static_cast<int>(DateiHeader.NumObjects); i++) {
+        for (int i = 0; i < static_cast<int>(DateiHeader.NumObjects); i++) {
             Datei.read(reinterpret_cast<char *>(&LoadObject), sizeof(LoadObject));  // Objekt laden
 
             LoadObject.ObjectID = FixEndian(LoadObject.ObjectID);

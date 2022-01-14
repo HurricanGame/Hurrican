@@ -952,7 +952,6 @@ void MenuClass::ShowMenu() {
 
             int i;
             for (i = 0; i < num_lines; i++) {
-                D3DCOLOR Color;
 
                 int alpha2 = i * yoff_inc - static_cast<int>(CreditsPosition);
 
@@ -971,7 +970,7 @@ void MenuClass::ShowMenu() {
                 else
                     alpha2 = 255;
 
-                Color = D3DCOLOR_RGBA(255, 255, 255, alpha2);
+                D3DCOLOR Color = D3DCOLOR_RGBA(255, 255, 255, alpha2);
 
                 pDefaultFont->DrawTextCenterAlign(320.0f,
                                                   static_cast<float>(i * yoff_inc - static_cast<int>(CreditsPosition)),

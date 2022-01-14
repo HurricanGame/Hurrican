@@ -239,10 +239,9 @@ void GegnerMiniDragon::DoKI() {
 
             // Ein Segment explodieren lassen
             if (ShotDelay < 0.0f) {
-                float mulx, muly;
 
-                muly = (OldY - yPos) / 6.0f;
-                mulx = (OldX - xPos) / 6.0f;
+                float muly = (OldY - yPos) / 6.0f;
+                float mulx = (OldX - xPos) / 6.0f;
 
                 SoundManager.PlayWave(100, 128, 8000 + random(8000), SOUND::EXPLOSION1);
                 PartikelSystem.PushPartikel(xPos + (6 - Segments) * mulx, yPos + (6 - Segments) * muly,
