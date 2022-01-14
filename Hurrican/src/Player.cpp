@@ -3934,7 +3934,7 @@ void PlayerClass::CenterLevel() {
 // --------------------------------------------------------------------------------------
 // Waffenlevels für die nächste Stufe berechnen
 // --------------------------------------------------------------------------------------
-
+#if 0
 void PlayerClass::CalcWeaponLevels() {
     /*
         for (int i = 0; i < 3; i++)
@@ -3943,7 +3943,7 @@ void PlayerClass::CalcWeaponLevels() {
         pPlayer->NextWeaponLevel[3] = 3;
     */
 }
-
+#endif
 // --------------------------------------------------------------------------------------
 // Position der Schussflamme errechnen
 // --------------------------------------------------------------------------------------

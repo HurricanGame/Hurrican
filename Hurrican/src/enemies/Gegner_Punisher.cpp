@@ -138,7 +138,7 @@ void GegnerPunisher::DoKI() {
                         if (Player[p].CurrentWeaponLevel[i] > 1)
                             Player[p].CurrentWeaponLevel[i]--;
 
-                    Player[p].CalcWeaponLevels();
+                    //Player[p].CalcWeaponLevels();
 
                     // bekommt dafür aber wieder Zeit
                     TileEngine.resetTimelimit();

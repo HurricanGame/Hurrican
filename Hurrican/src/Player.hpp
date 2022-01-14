@@ -281,7 +281,7 @@ class PlayerClass {
     void DoStuffWhenDamaged();  // Funken und Rauch, wenn der Spieler wenig Energie hat
     void DoPlattformStuff();    // Auf einer Plattform bewegen
     void CheckForExplode();     // Keine Energy mehr? Dann explodieren
-    void CalcWeaponLevels();
+    //void CalcWeaponLevels();
     void CalcFlamePos();        // Position der Flamme berechnen
     void CalcAustrittsPunkt();  // Austrittspunkt des Schusses berechnen
     bool CheckLevelExit() const; // Spieler im Ausgang?
