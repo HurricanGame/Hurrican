@@ -132,7 +132,7 @@ void PartikelClass::CreatePartikel(float x, float y, int Art, PlayerClass *pPare
     Rotate = false;
     Rot = 0.0f;
     RemoveWhenOffScreen = true;
-    (random(2) == 0) ? (RotDir = 1) : (RotDir = -1);
+    RotDir = (random(2) == 0) ? 1 : -1;
 
     m_pParent = pParent;
     xPos = x;

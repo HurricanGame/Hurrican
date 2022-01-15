@@ -117,13 +117,13 @@ void IntroClass::DoIntro() {
     // Hintergrund rendern
     DirectGraphics.SetColorKeyMode();
 
-    int a = std::clamp((TextOff - 1) / 4, 0, 5);
+    int const a = std::clamp((TextOff - 1) / 4, 0, 5);
 
     Background[a].RenderSprite(0, 0, 0, 0xFFFFFFFF);
 
     // nächstes Bild überblenden?
     if ((TextOff - 1) % 4 == 3 && a < 5) {
-        int alpha = static_cast<int>(Counter / 1300.0f * 255.0f);
+        int const alpha = static_cast<int>(Counter / 1300.0f * 255.0f);
         D3DCOLOR fadecol = D3DCOLOR_RGBA(255, 255, 255, static_cast<uint8_t>(alpha));
         Background[a + 1].RenderSprite(0, 0, 0, fadecol);
     }
@@ -173,7 +173,7 @@ void IntroClass::DoIntro() {
         case IntroStateEnum::RUN:
             // DKS - Added low-resolution scaled-font support:
             {
-                int scale_factor = pDefaultFont->GetScaleFactor();
+                int const scale_factor = pDefaultFont->GetScaleFactor();
 
                 Counter += Timer.sync(25.5f);
                 if (Counter > 1300.0f) {
@@ -206,7 +206,7 @@ void IntroClass::DoIntro() {
                 const int lines_displayed = 10 / scale_factor;
                 const int line_y_off = 12 * scale_factor;
 
-                int num_entries = entries.size();
+                int const num_entries = entries.size();
                 for (int t = 0; t <= num_entries; t++) {
 
                     int alpha = 255 - (scale_factor * (EntriesOff - t) * 25);

@@ -474,7 +474,6 @@ loadfile:
 
     // eventuelle Schrägen ermitteln und Ecken für die Wasseranim festlegen
     // EDIT_ME wieder reinmachen und diesmal richtig machen =)
-    uint32_t bl, br, bo, bu;
 
     for (int i = 1; i < LEVELSIZE_X - 1; i++)
         for (int j = 2; j < LEVELSIZE_Y - 1; j++) {
@@ -494,10 +493,10 @@ loadfile:
 
             // Wasseranim
             //
-            bl = TileAt(i - 1, j + 0).Block;
-            br = TileAt(i + 1, j + 0).Block;
-            bo = TileAt(i + 0, j - 1).Block;
-            bu = TileAt(i + 0, j + 1).Block;
+            uint32_t bl = TileAt(i - 1, j + 0).Block;
+            uint32_t br = TileAt(i + 1, j + 0).Block;
+            uint32_t bo = TileAt(i + 0, j - 1).Block;
+            uint32_t bu = TileAt(i + 0, j + 1).Block;
 
             LevelTileStruct& tile = TileAt(i, j);
 

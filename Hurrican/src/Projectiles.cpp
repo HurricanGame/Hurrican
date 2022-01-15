@@ -2201,8 +2201,9 @@ void ProjectileClass::Render() {
         } else if (ShotArt == LASERSHOT || ShotArt == LASERSHOT2) {
             switch (static_cast<int>(Winkel)) {
                 case 0:
-                    Projectiles.LaserSmoke.RenderSpriteRotated(
-                        xPos - TileEngine.XOffset - 60.0f + (ShotArt - LASERSHOT) * 5, yPos - TileEngine.YOffset - 40.0f,
+                    Projectiles.LaserSmoke.RenderSpriteRotated(xPos - TileEngine.XOffset - 60.0f +
+                                                                   (ShotArt - LASERSHOT) * 5,
+                                                               yPos - TileEngine.YOffset - 40.0f,
                         Winkel, 0xBB1188FF);
                     break;
 

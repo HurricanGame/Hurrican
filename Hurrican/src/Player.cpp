@@ -62,10 +62,10 @@ PlayerClass::PlayerClass() {
     // DKS - Added initialization of member vars here, since Main.cpp was just doing a memset to
     //      fill the entire class with 0's and that won't do now that we have the sprites as
     //      member vars.
-    AnimCount = 0;
-    BlitzStart = 0;
-    FlameTime = 0;
-    AustrittX = AustrittY = 0;
+    AnimCount = 0.0f;
+    BlitzStart = 0.0f;
+    FlameTime = 0.0f;
+    AustrittX = AustrittY = 0.0f;
     AustrittAnim = 0;
     FlameAnim = 0;
     randomwert = 0;
@@ -109,16 +109,16 @@ PlayerClass::PlayerClass() {
     JumpStart = 0;
     JumpAdd = 0;
     SmokeCount = 0;
-    BlitzWinkel = 0;
+    BlitzWinkel = 0.0f;
     BlitzCount = 0;
     BlitzAnim = 0;
     Handlung = PlayerActionEnum::STEHEN;
     Blickrichtung = DirectionEnum::RECHTS;
-    Energy = 0;
-    Armour = 0;
-    Shield = 0;
-    DamageCounter = 0;
-    BlinkCounter = 0;
+    Energy = 0.0f;
+    Armour = 0.0f;
+    Shield = 0.0f;
+    DamageCounter = 0.0f;
+    BlinkCounter = 0.0f;
     BlinkColor = 0;
     CurrentColor = 0;
     Score = 0;
@@ -569,10 +569,10 @@ bool PlayerClass::GetPlayerInput() {
                     }
             } else if (JoystickIndex >= 0 && JoystickIndex < DirectInput.JoysticksFound &&
                        DirectInput.Joysticks[JoystickIndex].Active) {
-                bool stick_right = DirectInput.Joysticks[JoystickIndex].JoystickX > JoystickSchwelle;
-                bool stick_left = DirectInput.Joysticks[JoystickIndex].JoystickX < -JoystickSchwelle;
-                bool stick_up = DirectInput.Joysticks[JoystickIndex].JoystickY < -JoystickSchwelle;
-                bool stick_down = DirectInput.Joysticks[JoystickIndex].JoystickY > JoystickSchwelle;
+                bool const stick_right = DirectInput.Joysticks[JoystickIndex].JoystickX > JoystickSchwelle;
+                bool const stick_left = DirectInput.Joysticks[JoystickIndex].JoystickX < -JoystickSchwelle;
+                bool const stick_up = DirectInput.Joysticks[JoystickIndex].JoystickY < -JoystickSchwelle;
+                bool const stick_down = DirectInput.Joysticks[JoystickIndex].JoystickY > JoystickSchwelle;
                 bool hat_right = false;
                 bool hat_left = false;
                 bool hat_up = false;
@@ -733,7 +733,7 @@ void PlayerClass::DoStuffWhenDamaged() {
 
     // Noch viel Energie? Dann gleich wieder raus
     //
-    if (Energy > MAX_ENERGY / 2)
+    if (Energy > MAX_ENERGY / 2.0f)
         return;
 
     // Funkenzähler runterzählen
@@ -741,7 +741,7 @@ void PlayerClass::DoStuffWhenDamaged() {
     if (sparkcount > 0.0f)
         sparkcount -= Timer.sync(1.0f);
     else {
-        sparkcount = static_cast<float>(rand() % static_cast<int>(Energy / 2 + 2)) + 5;
+        sparkcount = static_cast<float>(rand() % static_cast<int>(Energy / 2.0f + 2.0f)) + 5;
 
         // ein Funken "Schadenseffekt" per Zufall einbauen
         //
@@ -757,7 +757,7 @@ void PlayerClass::DoStuffWhenDamaged() {
                 for (int i = 0; i < 5; i++)
                     PartikelSystem.PushPartikel(x + random(4), y + random(4), FUNKE);
 
-                PartikelSystem.PushPartikel(x - 20, y - 20, LASERFLAME);
+                PartikelSystem.PushPartikel(x - 20.0f, y - 20.0f, LASERFLAME);
                 SoundManager.PlayWave(100, 128, 8000 + random(4000), SOUND::FUNKE);
             } break;
 
@@ -785,15 +785,15 @@ void PlayerClass::DoStuffWhenDamaged() {
 
         // Rauch per Zufall
         //
-        if (Energy < MAX_ENERGY / 3 + 5.0f)
+        if (Energy < MAX_ENERGY / 3.0f + 5.0f)
             if (random(2) == 0)
-                PartikelSystem.PushPartikel(xpos + 10 + random(30), ypos + 20 + random(40), SMOKE2);
+                PartikelSystem.PushPartikel(xpos + 10.0f + random(30), ypos + 20.0f + random(40), SMOKE2);
 
         // Rauchsäule
         //
-        if (Energy < MAX_ENERGY / 4 + 5.0f)
-            PartikelSystem.PushPartikel(xpos + 26 + Direction::asInt(Blickrichtung) * 4 + random(4),
-                                        ypos + 20 + random(4), SMOKE3);
+        if (Energy < MAX_ENERGY / 4.0f + 5.0f)
+            PartikelSystem.PushPartikel(xpos + 26.0f + Direction::asInt(Blickrichtung) * 4 + random(4),
+                                        ypos + 20.0f + random(4), SMOKE3);
     }
 }
 
@@ -1366,13 +1366,13 @@ void PlayerClass::AnimatePlayer() {
                 BlitzStart = 5.0f;
                 AnimPhase = 0;
                 if (Blickrichtung == DirectionEnum::LINKS)  // Blitz je nach Blickrichtung neu
-                    BlitzWinkel = 270;       // geradeaus richten
+                    BlitzWinkel = 270.0f;       // geradeaus richten
                 else
-                    BlitzWinkel = 90;
+                    BlitzWinkel = 90.0f;
 
                 if (Aktion[AKTION_OBEN]) {
                     Blickrichtung = Direction::invert(Blickrichtung);
-                    BlitzWinkel = 0;
+                    BlitzWinkel = 0.0f;
                 }
             }
 
@@ -1391,9 +1391,9 @@ void PlayerClass::AnimatePlayer() {
                     SoundManager.PlayWave(100, 128, random(500) + 18025, SOUND::BLITZSTART + SoundOff);
 
                     if (Blickrichtung == DirectionEnum::LINKS)  // Blitz je nach Blickrichtung neu
-                        BlitzWinkel = 270;       // geradeaus richten
+                        BlitzWinkel = 270.0f;       // geradeaus richten
                     else
-                        BlitzWinkel = 90;
+                        BlitzWinkel = 90.0f;
                 }
         }
 
@@ -1457,7 +1457,7 @@ void PlayerClass::AnimatePlayer() {
                 BlitzStart += Timer.sync(1.0f);
             else {
 
-                float Winkel = BlitzWinkel - 270;  // 270° beim nach links kucken = Animphase 0
+                float Winkel = BlitzWinkel - 270.0f;  // 270° beim nach links kucken = Animphase 0
                 if (Winkel < 0.0f)
                     Winkel += 360.0f;
 
@@ -1478,7 +1478,7 @@ void PlayerClass::AnimatePlayer() {
             if (BlitzStart < PLAYER_BEAM_MAX)
                 BlitzStart += Timer.sync(static_cast<float>(CurrentWeaponLevel[3]) * 1.0f);
 
-            float Winkel = BlitzWinkel - 270;  // 270° beim nach links kucken = Animphase 0
+            float Winkel = BlitzWinkel - 270.0f;  // 270° beim nach links kucken = Animphase 0
             if (Winkel < 0.0f)
                 Winkel += 360.0f;
 
@@ -2596,10 +2596,7 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe) {
         DirectGraphics.SetAdditiveMode();
         CalcFlamePos();
 
-        int FlameOff = SelectedWeapon;
-
-        if (FlameThrower)
-            FlameOff = 1;
+        int FlameOff = FlameThrower ? 1 : SelectedWeapon;
 
         // DKS - Added check that AustrittAnim was between 0-2, because in the original code,
         //      SchussFlamme[] had 4 elements, but only the first 3 elements actually were
@@ -2616,27 +2613,25 @@ bool PlayerClass::DrawPlayer(bool leuchten, bool farbe) {
         CalcAustrittsPunkt();
 
         if (options_Detail >= DETAIL_MEDIUM) {
-            FlameOff = SelectedWeapon;
-            if (FlameThrower)
-                FlameOff = 0;
+            FlameOff = FlameThrower ? 0 : SelectedWeapon;
 
             switch (FlameOff) {
                 case 0:
                     Projectiles.SchussFlammeFlare.RenderSprite(
-                        xpos + AustrittX - 70 - static_cast<float>(TileEngine.XOffset),
-                        ypos + AustrittY - 70 - static_cast<float>(TileEngine.YOffset), 0, 0x88FFCC99);
+                        xpos + AustrittX - 70.0f - static_cast<float>(TileEngine.XOffset),
+                        ypos + AustrittY - 70.0f - static_cast<float>(TileEngine.YOffset), 0, 0x88FFCC99);
                     break;
 
                 case 1:
                     Projectiles.SchussFlammeFlare.RenderSprite(
-                        xpos + AustrittX - 70 - static_cast<float>(TileEngine.XOffset),
-                        ypos + AustrittY - 70 - static_cast<float>(TileEngine.YOffset), 0, 0x8899CCFF);
+                        xpos + AustrittX - 70.0f - static_cast<float>(TileEngine.XOffset),
+                        ypos + AustrittY - 70.0f - static_cast<float>(TileEngine.YOffset), 0, 0x8899CCFF);
                     break;
 
                 case 2:
                     Projectiles.SchussFlammeFlare.RenderSprite(
-                        xpos + AustrittX - 70 - static_cast<float>(TileEngine.XOffset),
-                        ypos + AustrittY - 70 - static_cast<float>(TileEngine.YOffset), 0, 0x8899FFCC);
+                        xpos + AustrittX - 70.0f - static_cast<float>(TileEngine.XOffset),
+                        ypos + AustrittY - 70.0f - static_cast<float>(TileEngine.YOffset), 0, 0x8899FFCC);
                     break;
             }
         }
@@ -3617,8 +3612,8 @@ bool PlayerClass::DoLightning() {
     // Startpunkt der Kollisionsabfrage auch schon mit ein wenig Abstand zum Spieler
     // xstart -= static_cast<float>(20*cos(PI * (BlitzWinkel-90) / 180));
     // ystart -= static_cast<float>(20*sin(PI * (BlitzWinkel-90) / 180));
-    xstart -= 20.0f * cos_deg(BlitzWinkel - 90);
-    ystart -= 20.0f * sin_deg(BlitzWinkel - 90);
+    xstart -= 20.0f * cos_deg(BlitzWinkel - 90.0f);
+    ystart -= 20.0f * sin_deg(BlitzWinkel - 90.0f);
 
     RECT_struct Rect;  // Rechteck für die Kollisionserkennung
     // ein Blitz-Stück wird grob durch
@@ -3702,8 +3697,8 @@ bool PlayerClass::DoLightning() {
             // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
             // xstart += static_cast<float>(32*cos(PI * (BlitzWinkel-90) / 180));
             // ystart += static_cast<float>(32*sin(PI * (BlitzWinkel-90) / 180));
-            xstart += 32.0f * cos_deg(BlitzWinkel - 90);
-            ystart += 32.0f * sin_deg(BlitzWinkel - 90);
+            xstart += 32.0f * cos_deg(BlitzWinkel - 90.0f);
+            ystart += 32.0f * sin_deg(BlitzWinkel - 90.0f);
             DrawLength = i - 1;  // Blitz "kürzen"
             break;               // und Schleife verlassen
         }
@@ -3711,16 +3706,16 @@ bool PlayerClass::DoLightning() {
         // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
         // xstart += static_cast<float>(32*cos(PI * (BlitzWinkel-90) / 180));
         // ystart += static_cast<float>(32*sin(PI * (BlitzWinkel-90) / 180));
-        xstart += 32.0f * cos_deg(BlitzWinkel - 90);
-        ystart += 32.0f * sin_deg(BlitzWinkel - 90);
+        xstart += 32.0f * cos_deg(BlitzWinkel - 90.0f);
+        ystart += 32.0f * sin_deg(BlitzWinkel - 90.0f);
     }
 
     // Position für das Ende des Blitzes wieder ein wenig zurückverschieben
     // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
     // xstart -= static_cast<float>(16*cos(PI * (BlitzWinkel-90) / 180));
     // ystart -= static_cast<float>(16*sin(PI * (BlitzWinkel-90) / 180));
-    xstart -= 16.0f * cos_deg(BlitzWinkel - 90);
-    ystart -= 16.0f * sin_deg(BlitzWinkel - 90);
+    xstart -= 16.0f * cos_deg(BlitzWinkel - 90.0f);
+    ystart -= 16.0f * sin_deg(BlitzWinkel - 90.0f);
 
     // Ende des Blitzes leuchten lassen
     Projectiles.Blitzflash[BlitzAnim].RenderSprite(xstart - 18.0f - TileEngine.XOffset,
@@ -3845,14 +3840,14 @@ bool PlayerClass::LoadBeam() {
     else
         Color = D3DCOLOR_RGBA(255, 255, 255, 255);
 
-    float xstart = xpos + 20;
-    float ystart = ypos + 21;
+    float xstart = xpos + 20.0f;
+    float ystart = ypos + 21.0f;
 
     // DKS - Support new trig sin/cos lookup table and use deg/rad versions of sin/cos:
     // xstart += static_cast<float>(28*cos(PI * (BlitzWinkel-90) / 180));
     // ystart += static_cast<float>(28*sin(PI * (BlitzWinkel-90) / 180));
-    xstart += 28.0f * cos_deg(BlitzWinkel - 90);
-    ystart += 28.0f * sin_deg(BlitzWinkel - 90);
+    xstart += 28.0f * cos_deg(BlitzWinkel - 90.0f);
+    ystart += 28.0f * sin_deg(BlitzWinkel - 90.0f);
 
     // Ende des Blitzes leuchten lassen
     Projectiles.Blitzflash[BlitzAnim].RenderSprite(xstart - 18.0f - TileEngine.XOffset,
@@ -3869,7 +3864,7 @@ bool PlayerClass::LoadBeam() {
         if (BeamCount < 0.0f) {
             BeamCount = 0.1f;
 
-            int j = random(360);
+            int const j = random(360);
             // DKS - pretty obviously a bug, they mean to convert to degrees before calling sin (which takes radians)
             //      When I fixed this, I went ahead and added support for trig lookup table, and support for
             //      rad/deg versions of sin/cos
@@ -3955,22 +3950,22 @@ void PlayerClass::CalcFlamePos() {
     if (Handlung == PlayerActionEnum::SACKREITEN) {
         yoff = 1;
         if (Blickrichtung == DirectionEnum::RECHTS)
-            xoff = 80;
+            xoff = 80.0f;
         else
-            xoff = -35;
+            xoff = -35.0f;
     }
 
     // alle anderen Handlugen
     else {
         if (Handlung == PlayerActionEnum::DUCKEN)
-            yoff = 23;
+            yoff = 23.0f;
         else
-            yoff = 0;
+            yoff = 0.0f;
 
         if (Blickrichtung == DirectionEnum::RECHTS)
-            xoff = 66;
+            xoff = 66.0f;
         else
-            xoff = -33;
+            xoff = -33.0f;
     }
 
     // X-Offset richtig berechnen
@@ -3983,8 +3978,8 @@ void PlayerClass::CalcFlamePos() {
                 Handlung == PlayerActionEnum::SACKREITEN ||
                 Handlung == PlayerActionEnum::DUCKEN) {
             AustrittAnim = 0;
-            AustrittX = xoff - 10;
-            AustrittY = yoff + 20;
+            AustrittX = xoff - 10.0f;
+            AustrittY = yoff + 20.0f;
         } else
 
             // im Sprung?
@@ -3994,60 +3989,60 @@ void PlayerClass::CalcFlamePos() {
                 // nur noch?
                 if (!(Aktion[AKTION_LINKS] || Aktion[AKTION_RECHTS])) {
                     AustrittAnim = 2;
-                    AustrittX = xoff - 47;
-                    AustrittY = yoff - 34;
+                    AustrittX = xoff - 47.0f;
+                    AustrittY = yoff - 34.0f;
                 }
 
                 // oder schräg?
                 else {
                     AustrittAnim = 1;
-                    AustrittX = xoff - 21;
-                    AustrittY = yoff - 12;
+                    AustrittX = xoff - 21.0f;
+                    AustrittY = yoff - 12.0f;
                 }
             }
 
             // normal springen
             else {
                 AustrittAnim = 0;
-                AustrittX = xoff - 10;
-                AustrittY = yoff + 15;
+                AustrittX = xoff - 10.0f;
+                AustrittY = yoff + 15.0f;
             }
         }
 
         else if (Handlung == PlayerActionEnum::LAUFEN) {
             AustrittAnim = 0;
-            AustrittX = xoff - 2;
-            AustrittY = yoff + 19;
+            AustrittX = xoff - 2.0f;
+            AustrittY = yoff + 19.0f;
         }
 
         else if (Handlung == PlayerActionEnum::SCHIESSEN_RO) {
             // im Stehen?
             if (WalkLock) {
                 AustrittAnim = 1;
-                AustrittX = xoff - 25;
-                AustrittY = yoff - 8;
+                AustrittX = xoff - 25.0f;
+                AustrittY = yoff - 8.0f;
             }
 
             // oder Laufen?
             else {
                 AustrittAnim = 1;
-                AustrittX = xoff - 21;
-                AustrittY = yoff - 12;
+                AustrittX = xoff - 21.0f;
+                AustrittY = yoff - 12.0f;
             }
         }
 
         else if (Handlung == PlayerActionEnum::SCHIESSEN_O) {
             AustrittAnim = 2;
-            AustrittX = xoff - 49;
-            AustrittY = yoff - 33;
+            AustrittX = xoff - 49.0f;
+            AustrittY = yoff - 33.0f;
         }
     } else {
         if (Handlung == PlayerActionEnum::STEHEN ||
                 Handlung == PlayerActionEnum::SACKREITEN ||
                 Handlung == PlayerActionEnum::DUCKEN) {
             AustrittAnim = 0;
-            AustrittX = xoff + 10;
-            AustrittY = yoff + 20;
+            AustrittX = xoff + 10.0f;
+            AustrittY = yoff + 20.0f;
         } else
 
             // im Sprung?
@@ -4057,50 +4052,50 @@ void PlayerClass::CalcFlamePos() {
                 // nur noch?
                 if (!(Aktion[AKTION_LINKS] || Aktion[AKTION_RECHTS])) {
                     AustrittAnim = 2;
-                    AustrittX = xoff + 62;
-                    AustrittY = yoff - 34;
+                    AustrittX = xoff + 62.0f;
+                    AustrittY = yoff - 34.0f;
                 }
 
                 // oder schräg?
                 else {
                     AustrittAnim = 1;
-                    AustrittX = xoff + 21;
-                    AustrittY = yoff - 12;
+                    AustrittX = xoff + 21.0f;
+                    AustrittY = yoff - 12.0f;
                 }
             }
 
             // normal springen
             else {
                 AustrittAnim = 0;
-                AustrittX = xoff + 6;
-                AustrittY = yoff + 15;
+                AustrittX = xoff + 6.0f;
+                AustrittY = yoff + 15.0f;
             }
         }
 
         else if (Handlung == PlayerActionEnum::LAUFEN) {
             AustrittAnim = 0;
             AustrittX = xoff;
-            AustrittY = yoff + 19;
+            AustrittY = yoff + 19.0f;
         }
 
         else if (Handlung == PlayerActionEnum::SCHIESSEN_LO) {
             // im Stehen?
             if (WalkLock) {
                 AustrittAnim = 1;
-                AustrittX = xoff + 21;
-                AustrittY = yoff - 8;
+                AustrittX = xoff + 21.0f;
+                AustrittY = yoff - 8.0f;
             }
 
             // oder im Laufen
             else {
                 AustrittAnim = 1;
-                AustrittX = xoff + 8;
-                AustrittY = yoff - 10;
+                AustrittX = xoff + 8.0f;
+                AustrittY = yoff - 10.0f;
             }
         } else if (Handlung == PlayerActionEnum::SCHIESSEN_O) {
             AustrittAnim = 2;
-            AustrittX = xoff + 62;
-            AustrittY = yoff - 33;
+            AustrittX = xoff + 62.0f;
+            AustrittY = yoff - 33.0f;
         }
     }
 }

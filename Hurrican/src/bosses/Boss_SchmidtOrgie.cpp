@@ -118,7 +118,7 @@ void GegnerSchmidtOrgie::DoKI() {
                 // oder eine Stachelkugel, einen Firewalker oder ein großer Schleimboller;)
                 //
                 if (static_cast<int>(Energy) % 500 == 0) {
-                    int j = random(3);
+                    int const j = random(3);
 
                     switch (j) {
                         case 0:

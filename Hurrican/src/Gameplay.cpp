@@ -1220,7 +1220,7 @@ bool NewDemo(const char Filename[]) {
     Player[0].Aktion.reset();
 
     // Level neu initialisieren und dann gehts los
-    int l = Stage;
+    int const l = Stage;
 
     srand(5);
 
@@ -1271,7 +1271,7 @@ bool LoadDemo(const char Filename[]) {
     Player[0].Aktion.reset();
 
     // Level neu initialisieren und dann gehts los
-    int l = NewStage;
+    int const l = NewStage;
 
     srand(5);
 
@@ -1388,10 +1388,10 @@ void ShowPissText() {
         //        GUI.ShowBox(TextArray[TEXT::PISS_1 + TextNr],
         //                      static_cast<int>(Player[0].ypos - 70 - TileEngine.YOffset),
         //                      static_cast<int>(Player[0].xpos - TileEngine.XOffset) - 10);
-        GUI.ShowBox(TextArray[TEXT::PISS_1 + TextNr], static_cast<int>(Player[0].ypos - 70 - TileEngine.YOffset),
+        GUI.ShowBox(TextArray[TEXT::PISS_1 + TextNr], static_cast<int>(Player[0].ypos - 70.0f - TileEngine.YOffset),
                     static_cast<int>(Player[0].xpos - TileEngine.XOffset + TILESIZE * 2));
 
-        if (Player[0].BronsonCounter > 220.0f + 50.0f * 18)
+        if (Player[0].BronsonCounter > 220.0f + 50.0f * 18.0f)
             Player[0].BronsonCounter = 270.0f;
     }
 }
