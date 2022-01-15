@@ -134,10 +134,8 @@ void GegnerEvilHurri::DoKI() {
         BlinkDirection = DirectionEnum::LINKS;
 
     // Rand checken
-    if (xPos < static_cast<float>(Value1 + 10) && Handlung != GEGNER::EINFLIEGEN && Handlung != GEGNER::INIT)
-        xPos = static_cast<float>(Value1 + 10);
-    if (xPos > static_cast<float>(Value1 + 550) && Handlung != GEGNER::EINFLIEGEN && Handlung != GEGNER::INIT)
-        xPos = static_cast<float>(Value1 + 550);
+    if (Handlung != GEGNER::EINFLIEGEN && Handlung != GEGNER::INIT)
+        xPos = std::clamp(xPos, static_cast<float>(Value1 + 10), static_cast<float>(Value1 + 550));
 
     // Je nach Handlung richtig verhalten
     switch (Handlung) {

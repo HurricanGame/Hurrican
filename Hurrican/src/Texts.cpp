@@ -224,12 +224,12 @@ void FindLanguageFiles(const char *path) {
 // DKS - Added function to split a longer line into two shorter lines, for when
 //      running on a lower-resolution device w/ scaled font
 void SplitLine(char *dst1, char *dst2, const char *source) {
-    if (!source || strlen(source) < 10)
+    unsigned int const source_length = strlen(source);
+
+    if (!source || source_length < 10)
         return;
 
-    int split_point = strlen(source) / 2;  // Begin in the middle
-    int source_length = strlen(source);
-    int i;
+    unsigned int split_point = source_length / 2;  // Begin in the middle
 
     // Find the first space past the middle
     while (split_point < source_length && source[split_point] != ' ') {
@@ -237,6 +237,7 @@ void SplitLine(char *dst1, char *dst2, const char *source) {
     }
 
     // Copy source string to dst1, up to the split point
+    unsigned int i;
     for (i = 0; i < split_point; i++) {
         dst1[i] = source[i];
     }

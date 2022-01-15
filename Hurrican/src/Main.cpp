@@ -892,10 +892,7 @@ bool Heartbeat() {
 
     // Debug-Mode ein/ausschalten
     if (KeyDown(DIK_F10)) {
-        if (DebugMode == true)
-            DebugMode = false;
-        else
-            DebugMode = true;
+        DebugMode = !DebugMode;
         while (KeyDown(DIK_F10))
             DirectInput.UpdateTastatur();
     }
