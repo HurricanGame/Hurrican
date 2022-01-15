@@ -152,11 +152,8 @@ void GegnerPowerBlock::DoKI() {
         //
         else {
             // erstes Powerup immer Energie
-            if (Value1 == 4)
-                extra = 5;
-            else {
-                extra = 5;
-
+            extra = 5;
+            if (Value1 != 4) {
                 while (AlreadySpawned[extra]) {
                     // Per Zufallsverteilung entsprechendes Extra setzen
                     int r;

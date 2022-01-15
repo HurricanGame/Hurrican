@@ -171,26 +171,19 @@ void GegnerEvilHurri::DoKI() {
 
                 // Bei großem Abstand spieler zerquetschen
                 if (PlayerAbstand() > 300) {
+                    AnimPhase = 48;
+                    ActionDelay = 1.0f;
+
+                    if (BlickRichtung == DirectionEnum::RECHTS)
+                        xSpeed = 40.0f;
+                    else
+                        xSpeed = -40.0f;
+
                     if (random(2) == 0) {
                         Handlung = GEGNER::CRUSHEN;
-                        ActionDelay = 1.0f;
-                        AnimPhase = 48;
-
-                        if (BlickRichtung == DirectionEnum::RECHTS)
-                            xSpeed = 40.0f;
-                        else
-                            xSpeed = -40.0f;
                     } else {
                         Handlung = GEGNER::CRUSHEN2;
-                        ActionDelay = 1.0f;
-                        AnimPhase = 48;
-
-                        if (BlickRichtung == DirectionEnum::RECHTS)
-                            xSpeed = 40.0f;
-                        else
-                            xSpeed = -40.0f;
                     }
-
                 }
 
                 // Ansonsten im Kreis rum ballern
@@ -206,32 +199,22 @@ void GegnerEvilHurri::DoKI() {
 
                     // oder ballernd auf den Spieler zurennen
                     else {
+                        ActionDelay = 1.0f;
+                        AnimPhase = 3;
+                        AnimStart = 3;
+                        AnimSpeed = 0.4f;
+
+                        if (BlickRichtung == DirectionEnum::RECHTS)
+                            xSpeed = 20.0f;
+                        else
+                            xSpeed = -20.0f;
+
                         if (random(2) == 0) {
                             Handlung = GEGNER::LAUFEN;
-                            ActionDelay = 1.0f;
-                            AnimPhase = 3;
-                            AnimStart = 3;
                             AnimEnde = FRAMES_RUN;
-                            AnimSpeed = 0.4f;
-
-                            if (BlickRichtung == DirectionEnum::RECHTS)
-                                xSpeed = 20.0f;
-                            else
-                                xSpeed = -20.0f;
-                        }
-
-                        else {
+                        } else {
                             Handlung = GEGNER::LAUFEN2;
-                            ActionDelay = 1.0f;
-                            AnimPhase = 3;
-                            AnimStart = 3;
                             AnimEnde = 21;
-                            AnimSpeed = 0.4f;
-
-                            if (BlickRichtung == DirectionEnum::RECHTS)
-                                xSpeed = 20.0f;
-                            else
-                                xSpeed = -20.0f;
                         }
                     }
                 }
@@ -432,19 +415,16 @@ void GegnerEvilHurri::DoKI() {
             }
 
             if (ActionDelay > 70.0f) {
+                AnimPhase = 3;
+                AnimStart = 3;
+                AnimEnde = 21;
                 if (random(2) == 0) {
                     Handlung = GEGNER::AUFRICHTEN;
                     BlickRichtung = DirectionEnum::LINKS;
-                    AnimPhase = 3;
-                    AnimStart = 3;
-                    AnimEnde = 21;
                     xSpeed = -20;
                 } else {
                     Handlung = GEGNER::AUFRICHTENZWEI;
                     BlickRichtung = DirectionEnum::RECHTS;
-                    AnimPhase = 3;
-                    AnimStart = 3;
-                    AnimEnde = 21;
                     xSpeed = 20;
                 }
             }

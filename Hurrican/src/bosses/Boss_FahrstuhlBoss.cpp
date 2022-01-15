@@ -210,28 +210,25 @@ void GegnerFahrstuhlBoss::DoKI() {
 
             // Gegner an der richtigen Position ?
             if (TempY < 500.0f) {
+                TempY = 500.0f;
                 int j = random(6);
                 switch (j) {
                     case 0: {
                         Handlung = GEGNER::ABSENKEN;
-                        TempY = 500.0f;
                         dx2 = 0.0f;
                     } break;
                     case 1:
                     case 2: {
                         Handlung = GEGNER::ABSENKEN;
-                        TempY = 500.0f;
                         dx2 = 5.0f;
                     } break;
                     case 3: {
                         Handlung = GEGNER::AUSSPUCKEN;
-                        TempY = 500.0f;
                         Shots = 1 + random(2);
                     } break;
                     case 4:
                     case 5: {
                         Handlung = GEGNER::CRUSHEN;
-                        TempY = 500.0f;
                         Shots = 10 + random(20);
                         ShotDelay = 2.0f;
                     } break;
@@ -255,14 +252,13 @@ void GegnerFahrstuhlBoss::DoKI() {
 
             // Gegner an der richtigen Position ?
             if (TempY < 380.0f) {
+                TempY = 380.0f;
                 if (dx2 != 0.0f) {
                     Handlung = GEGNER::SCHIESSEN;
-                    TempY = 380.0f;
                     ShotDelay = 1.0f;
                     Shots = random(10) + 10;
                 } else {
                     Handlung = GEGNER::AUSSPUCKEN;
-                    TempY = 380.0f;
                     ShotDelay = 5.0f;
                     Shots = 2 + random(2);
                 }
@@ -275,26 +271,24 @@ void GegnerFahrstuhlBoss::DoKI() {
 
             // Gegner an der richtigen Position ?
             if (TempY > 600.0f) {
+                TempY = 600.0f;
                 int j = random(3);
                 switch (j) {
                     case 0: {
                         Handlung = GEGNER::BOMBARDIEREN;
                         dx1 = 40.0f;
-                        TempY = 600.0f;
                         ShotDelay = 1.0f;
                         Shots = random(8) + 5;
                     } break;
                     case 1: {
                         Handlung = GEGNER::SPECIAL;
                         dx1 = 0.0f;
-                        TempY = 600.0f;
                         ShotDelay = 5.0f;
                         Shots = random(8) + 5;
                     } break;
                     case 2: {
                         Handlung = GEGNER::AUSSPUCKEN;
                         dx1 = 0.0f;
-                        TempY = 600.0f;
                         ShotDelay = 5.0f;
                         Shots = random(4) + 2;
                     } break;
