@@ -137,8 +137,9 @@ TileEngineClass::TileEngineClass() {
 
     // Texturkoordinaten für das Wasser vorberechnen
     for (int i = 0; i < 9; i++) {
-        WasserU[i] = 128.0f / 8.0f * static_cast<float>(i) / 128.0f;
-        WasserV[i] = 128.0f / 8.0f * static_cast<float>(i) / 128.0f;
+        float const w = 128.0f / 8.0f * static_cast<float>(i) / 128.0f;
+        WasserU[i] = w;
+        WasserV[i] = w;
     }
 
     // DKS - Moved these to the new TileEngineClass::LoadSprites() function (see note there)
