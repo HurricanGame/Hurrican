@@ -58,8 +58,7 @@ DirectInputClass::DirectInputClass() {
     // Zu Beginn alle Eingabegeräte zurücksetzen
     MausX = 0;
     MausY = 0;
-    for (int i = 0; i < MAX_MOUSEBUTTONS; i++)
-        MausButtons[i] = false;
+    MausButtons.reset();
 
     JoysticksFound = 0;
     UseForceFeedback = false;

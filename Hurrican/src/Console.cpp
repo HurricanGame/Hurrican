@@ -55,8 +55,7 @@ ConsoleClass::ConsoleClass() {
         this->print(TextArray[TEXT::CONSOLE1 + i]);
 
     // Lock-Puffer leeren
-    for (int i = 0; i < 256; i++)
-        Pressed[i] = false;
+    Pressed.reset();
 
 }  // Konstruktor
 
@@ -513,8 +512,7 @@ void ConsoleClass::CheckCommands() {
             InitNewGame();
 
             for (int p = 0; p < NUMPLAYERS; p++) {
-                for (int i = 0; i < MAX_AKTIONEN; i++)
-                    Player[p].Aktion[i] = false;
+                Player[p].Aktion.reset();
 
                 Stage = g_test;
                 NewStage = g_test;

@@ -21,6 +21,8 @@
 #endif
 #include "DX8Joystick.hpp"
 
+#include <bitset>
+
 // --------------------------------------------------------------------------------------
 // Defines
 // --------------------------------------------------------------------------------------
@@ -78,7 +80,7 @@ class DirectInputClass {
 
     int MausX;  // Koordinaten der
     int MausY;  // der Maus und ihre Buttons
-    bool MausButtons[MAX_MOUSEBUTTONS];
+    std::bitset<MAX_MOUSEBUTTONS> MausButtons;
 
     DirectInputClass();   // Konstruktor
     ~DirectInputClass();  // Desktruktor
