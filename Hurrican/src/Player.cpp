@@ -16,6 +16,7 @@
 
 #include "Player.hpp"
 #include <stdio.h>
+#include <algorithm>
 #include <string>
 #include "Console.hpp"
 #include "DX8Font.hpp"
@@ -212,10 +213,7 @@ void PlayerClass::InitPlayer(int player_num) {
             CollectedPowerUps[i] = 0;
     */
 
-    for (int i = 0; i < 4; i++) {
-        CurrentWeaponLevel[i] = 0;
-        //		NextWeaponLevel	  [i] = 3;
-    }
+   std::fill(std::begin(CurrentWeaponLevel), std::end(CurrentWeaponLevel), 0);
 
     CurrentWeaponLevel[0] = 1;
 
