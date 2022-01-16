@@ -124,9 +124,9 @@ TileEngineClass::TileEngineClass() {
             tile.move_v1 = tile.move_v2 = tile.move_v3 = tile.move_v4 = false;
         }
 
-    for (auto &i : TileGfx)
+    for (auto &gfx : TileGfx)
         // DKS - Adapted to new TexturesystemClass
-        i.itsTexIdx = -1;
+        gfx.itsTexIdx = -1;
 
     // DKS - Moved these to the new TileEngineClass::LoadSprites() function (see note there)
     //// Wasserfall Textur laden
@@ -272,17 +272,17 @@ void TileEngineClass::ClearLevel() {
             pGegnerGrafix[i] = nullptr;    // und auf NULL setzen
         }
 
-    for (int i = 0; i < MAX_TILESETS; i++) {
+    for (auto &gfx : TileGfx) {
         // DKS - Adapted to new TexturesystemClass
 #if 0
-        if (TileGfx[i].itsTexture)
+        if (gfx.itsTexture)
         {
-            glDeleteTextures( 1, &TileGfx[i].itsTexture );
-            TileGfx[i].itsTexture = 0;
+            glDeleteTextures( 1, &gfx.itsTexture );
+            gfx.itsTexture = 0;
         }
 #endif  // 0
-        Textures.UnloadTexture(TileGfx[i].itsTexIdx);
-        TileGfx[i].itsTexIdx = -1;
+        Textures.UnloadTexture(gfx.itsTexIdx);
+        gfx.itsTexIdx = -1;
     }
 
     Projectiles.ClearAll();
