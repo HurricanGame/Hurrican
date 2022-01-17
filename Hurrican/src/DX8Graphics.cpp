@@ -150,6 +150,7 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 #endif /* defined(USE_GLES1) */
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
+#endif // !EGL
 
     // Setup SDL Screen
     if (isFullscreen) {
@@ -305,7 +306,6 @@ bool DirectGraphicsClass::Init(std::uint32_t dwBreite, std::uint32_t dwHoehe, st
 
     return true;
 }
-#endif
 
 // --------------------------------------------------------------------------------------
 // Direct3D beenden
