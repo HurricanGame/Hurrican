@@ -280,10 +280,8 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
 
 // DKS - Note: This function does not appear to actually be used anywhere:
 bool DirectGraphicsFont::DrawValue(float x, float y, float Value, D3DCOLOR Color) {
-    char Buf[20];
-
-    snprintf(Buf, 20, "%f", static_cast<double>(Value));
-    DrawText(x, y, Buf, Color);
+    std::string Buf = std::to_string(Value);
+    DrawText(x, y, Buf.c_str(), Color);
 
     return true;
 }
