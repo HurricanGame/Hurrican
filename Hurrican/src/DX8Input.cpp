@@ -26,6 +26,7 @@
 
 const Uint8 *TastaturPuffer;
 
+#if 0
 // --------------------------------------------------------------------------------------
 // Joystick mit ForceFeedback Enumeration Callback-Funktion
 // --------------------------------------------------------------------------------------
@@ -33,7 +34,6 @@ const Uint8 *TastaturPuffer;
 bool EnumForceFeedbackDevices(int lpddi, void *pv) {
     return true;
 }
-
 // --------------------------------------------------------------------------------------
 // Joystick Enumeration Callback-Funktion
 // --------------------------------------------------------------------------------------
@@ -41,6 +41,8 @@ bool EnumForceFeedbackDevices(int lpddi, void *pv) {
 bool EnumJoystickDevices(int lpddi, void *pv) {
     return true;
 }
+#endif
+
 
 // --------------------------------------------------------------------------------------
 // Klassenfunktionen
@@ -170,11 +172,13 @@ bool DirectInputClass::UpdateMaus(bool gepuffert) {
     return true;
 }
 
+#if 0
 // --------------------------------------------------------------------------------------
 // Keyboard wieder akquirieren (wenn Fenster gewechselt zB)
 // --------------------------------------------------------------------------------------
 
 void DirectInputClass::AcquireKeyboard() {}
+#endif
 
 // --------------------------------------------------------------------------------------
 // Alle Joysticks updaten

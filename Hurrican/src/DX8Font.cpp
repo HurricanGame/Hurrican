@@ -274,6 +274,7 @@ bool DirectGraphicsFont::LoadFont(const char *Filename,
     return true;
 }
 
+#if 0
 // --------------------------------------------------------------------------------------
 // Zahlenwert an xPos,yPos mit Farbe Color ausgeben
 // --------------------------------------------------------------------------------------
@@ -285,6 +286,7 @@ bool DirectGraphicsFont::DrawValue(float x, float y, float Value, D3DCOLOR Color
 
     return true;
 }
+#endif
 
 // --------------------------------------------------------------------------------------
 // Text an xPos,yPos mit Farbe Color ausgeben

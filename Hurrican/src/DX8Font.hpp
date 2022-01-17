@@ -58,10 +58,12 @@ class DirectGraphicsFont {
                   float y,  // Text an xPos,yPos mit Farbe
                   const char Text[],
                   D3DCOLOR Color);  // Color ausgeben
+#if 0
     bool DrawValue(float x,
                    float y,  // Zahlenwert an xPos,yPos mit Farbe
                    float Value,
                    D3DCOLOR Color);  // Color ausgeben
+#endif
     void DrawTextRightAlign(float x,
                             float y,  // Text an xPos,yPos mit Farbe
                             const char Text[],

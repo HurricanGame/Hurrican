@@ -89,7 +89,7 @@ class DirectInputClass {
     void Exit();                      // DirectInput beenden
     bool UpdateTastatur();            // Tasten abfragen und im Puffer speichern
     bool UpdateMaus(bool gepuffert);  // Maus abfragen gepuffert/ungepuffert
-    void AcquireKeyboard();           // Keyboard akquirierens
+    //void AcquireKeyboard();           // Keyboard akquirierens
     bool AreAllKeysReleased() const;  // Checken ob keine Taste mehr gedrückt ist
     bool AnyKeyDown() const;
     bool AnyButtonDown() const;
