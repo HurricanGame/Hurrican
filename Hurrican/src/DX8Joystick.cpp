@@ -40,8 +40,7 @@ DirectJoystickClass::DirectJoystickClass() :
     backButton = 1;
     deleteButton = 4;
 
-    for (int i = 0; i < MAX_JOYSTICKBUTTONS; i++)
-        JoystickButtons[i] = false;
+    JoystickButtons.reset();
 }
 
 // --------------------------------------------------------------------------------------
