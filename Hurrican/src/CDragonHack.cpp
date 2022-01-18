@@ -58,15 +58,15 @@ void CDragonHack::Run() {
 
                 // von links
                 if (random(2) == 0) {
-                    m_xPos = TileEngine.XOffset - 160;
-                    m_yPos = TileEngine.YOffset + 200;
+                    m_xPos = TileEngine.XOffset - 160.0f;
+                    m_yPos = TileEngine.YOffset + 200.0f;
                     m_xSpeed = 10.0f;
                 }
 
                 // von rechts
                 else {
                     m_xPos = TileEngine.XOffset + RENDERWIDTH + 160.0f;
-                    m_yPos = TileEngine.YOffset + 200;
+                    m_yPos = TileEngine.YOffset + 200.0f;
                     m_xSpeed = -10.0f;
                 }
 

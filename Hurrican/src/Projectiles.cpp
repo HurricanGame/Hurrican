@@ -2202,9 +2202,8 @@ void ProjectileClass::Render() {
             switch (static_cast<int>(Winkel)) {
                 case 0:
                     Projectiles.LaserSmoke.RenderSpriteRotated(xPos - TileEngine.XOffset - 60.0f +
-                                                                   (ShotArt - LASERSHOT) * 5,
-                                                               yPos - TileEngine.YOffset - 40.0f,
-                        Winkel, 0xBB1188FF);
+                                                                   static_cast<float>((ShotArt - LASERSHOT) * 5),
+                                                               yPos - TileEngine.YOffset - 40.0f, Winkel, 0xBB1188FF);
                     break;
 
                 case 45:

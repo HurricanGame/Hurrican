@@ -399,7 +399,7 @@ void GameLoop() {
 
         DirectGraphics.SetFilterMode(true);
 
-        int off = 100 - static_cast<int>(WarningCount);
+        float off = 100.0f - WarningCount;
 
         pGegnerGrafix[WARNING]->SetRect(0, 0, 180, 40);
         pGegnerGrafix[WARNING]->RenderSpriteScaled(230.0f - off * 4.5f / 4.0f, 390.0f - off / 4.0f,
@@ -1388,8 +1388,9 @@ void ShowPissText() {
         //        GUI.ShowBox(TextArray[TEXT::PISS_1 + TextNr],
         //                      static_cast<int>(Player[0].ypos - 70 - TileEngine.YOffset),
         //                      static_cast<int>(Player[0].xpos - TileEngine.XOffset) - 10);
-        GUI.ShowBox(TextArray[TEXT::PISS_1 + TextNr], static_cast<int>(Player[0].ypos - 70.0f - TileEngine.YOffset),
-                    static_cast<int>(Player[0].xpos - TileEngine.XOffset + TILESIZE * 2));
+        GUI.ShowBox(TextArray[TEXT::PISS_1 + TextNr],
+                    static_cast<int>(Player[0].ypos - 70.0f - TileEngine.YOffset),
+                    static_cast<int>(Player[0].xpos - TileEngine.XOffset) + TILESIZE * 2);
 
         if (Player[0].BronsonCounter > 220.0f + 50.0f * 18.0f)
             Player[0].BronsonCounter = 270.0f;
