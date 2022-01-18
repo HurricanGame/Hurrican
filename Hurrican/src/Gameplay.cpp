@@ -1134,7 +1134,8 @@ void SummaryScreen() {
         if (reveal_cheat) {
             char buf2[50];
             strcpy_s(buf2, Cheats[Stage - 1]);
-            for (unsigned int p = 0; p < strlen(buf2); p++)
+            unsigned int const len = strlen(buf2);
+            for (unsigned int p = 0; p < len; p++)
                 buf2[p] ^= 64;
 
             buf = std::string(TextArray[TEXT::SUMMARY_CHEATUNLOCK])
@@ -1418,8 +1419,9 @@ const char *convertText(const char *text) {
     // Text konvertieren
     static char temp[MAX_CHARS];
 
+    unsigned int const len = strlen(text);
     unsigned int i = 0;
-    for (i = 0; i < strlen(text); i++)
+    for (i = 0; i < len; i++)
         temp[i] = text[i] ^ 64;
     temp[i] = 0;
 

@@ -2639,8 +2639,9 @@ void MenuClass::ShowLanguageInfo() {
                            static_cast<float>(rect_y + border), TextArray[TEXT::BENUTZTES_FILE], D3DCOLOR_RGBA(255, 255, 255, a1));
 
     for (int i = 0; i < 9; i++) {
-        int xoff = 320 - (strlen(TextArray[i]) - 1) * xoff_inc / 2;
-        for (unsigned int j = 0; j < strlen(TextArray[i]); j++) {
+        unsigned int const len = strlen(TextArray[i]);
+        int xoff = 320 - (len - 1) * xoff_inc / 2;
+        for (unsigned int j = 0; j < len; j++) {
             char c[2];
             c[0] = TextArray[i][j];
             c[1] = '\0';
